@@ -29,9 +29,8 @@
  *					ÉfÅ[É^
 */
 //=============================================================================
-int g_debug_use_flag        = TRUE;
 int g_debug_force_visible   = FALSE;
-int g_debug_camera_distance = 30;
+int g_debug_camera_distance = 60;
 int g_debug_use_obj_id      = 0;
 
 //=============================================================================

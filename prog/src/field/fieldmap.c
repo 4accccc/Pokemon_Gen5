@@ -121,6 +121,7 @@
 #include "savedata/person_state.h"
 
 #include "pleasure_boat.h"    //for PL_BOAT_
+#include "field_goout_data.h" //for FIELD_GOOUT_ROOM_COUNT_MAX
 
 #include "scrcmd_overlay.h"
 
@@ -899,7 +900,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
         fieldWork->weather_sys, GAMEDATA_GetWeatherNo( fieldWork->gamedata ), HEAPID_WEATHER );
 
     //外出エフェクト
-    fieldWork->goout_eff  = FIELD_GOOUT_EFFECT_Init( fieldWork->ExpObjCntPtr, fieldWork->heapID );
+    fieldWork->goout_eff  = FIELD_GOOUT_EFFECT_Init( fieldWork->gamedata, fieldWork->ExpObjCntPtr, FIELDMAP_GetZoneID( fieldWork ), GAMEDATA_GetSeasonID(fieldWork->gamedata), FIELDMAP_GetSeasonTimeZone( fieldWork ), fieldWork->heapID );
     
     SET_CHECK("setup: gimmick setup");  //デバッグ：処理負荷計測
     //フィールドギミックセットアップ
@@ -1193,6 +1194,7 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
     PL_BOAT_WORK_PTR *wk_ptr = GAMEDATA_GetPlBoatWorkPtr(fieldWork->gamedata);
     PL_BOAT_Main(*wk_ptr);
   }
+
   SET_CHECK("update_top:CLACT");
 
   // ----------------------top側3D描画処理---------------------------------------
@@ -3032,7 +3034,7 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
 
   //侵入：通信プレイヤー更新停止フラグリセット
   Intrude_ResetStopCommPlayerUpdateMapFlag(GAMESYSTEM_GetGameCommSysPtr(fieldWork->gsys));
-	
+
   SET_CHECK("zonechange:tail");
 
 #ifdef DEBUG_FIELDMAP_ZONE_CHANGE_SYNC

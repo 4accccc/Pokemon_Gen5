@@ -287,7 +287,7 @@ static GMEVENT_RESULT ExitEvent_DoorOut( GMEVENT * event, int *seq, void * wk )
   FIELD_CAMERA *          camera     = FIELDMAP_GetFieldCamera( fieldmap ); 
   FIELD_TASK_MAN *        task_man   = FIELDMAP_GetTaskManager( fieldmap );
   u16                     zone_id    = FIELDMAP_GetZoneID( fieldmap );
-  FIELD_GOOUT_EFFECT *p_goout = FIELDMAP_GetGooutEffect( fieldmap );
+  //FIELD_GOOUT_EFFECT *p_goout = FIELDMAP_GetGooutEffect( fieldmap );
 
   switch( *seq ) {
   // イベント初期設定
@@ -320,7 +320,7 @@ static GMEVENT_RESULT ExitEvent_DoorOut( GMEVENT * event, int *seq, void * wk )
   case SEQ_DOOROUT_EFFECT_START:
     ENTRANCE_CAMERA_Setup( work->ECamWork, &work->ECamParam ); // カメラ演出をセットアップ
 
-    FIELD_GOOUT_EFFECT_Setup( p_goout );  //外出表現表示
+    //FIELD_GOOUT_EFFECT_Setup( p_goout );  //外出表現表示
     FSND_PlayStartBGM( fieldSound, gameData ); // BGM 再生開始
     StartFadeInEvent( event, work ); // 画面フェードイン開始
     *seq = GetNextSeq( work );
@@ -329,7 +329,7 @@ static GMEVENT_RESULT ExitEvent_DoorOut( GMEVENT * event, int *seq, void * wk )
 
   // 外出エフェクト再生
   case SEQ_GOOUT_EFFECT_START:
-    FIELD_GOOUT_EFFECT_Start( p_goout );
+    //FIELD_GOOUT_EFFECT_Start( p_goout );
     *seq = GetNextSeq( work );
     FinishCurrentSeq( work );
     break;

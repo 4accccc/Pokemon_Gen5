@@ -145,8 +145,10 @@ struct _GAMEDATA{
   u32 scriptCommandOverlayID; //フィールドスクリプトコマンド用オーバーレイID
 
   BOOL  is_livecaster_secret_call;  //隠しキャラに電話できるかどうかフラグ
-
+  u32   goout_effect_room_count;    //室外演出部屋内カウンタ
+  u8    goout_effect_flag;
   u8    top_medal_id;  // メダルボックスを開いた時に最初に表示されるメダルID
+  u8    dummy[2];
 };
 
 //==============================================================================
@@ -2170,7 +2172,56 @@ BOOL GAMEDATA_GetLiveCasterSecretCallFlag( const GAMEDATA *gamedata )
 {
   return gamedata->is_livecaster_secret_call;
 }
-
+//----------------------------------------------------------------------------
+/**
+ *	@brief  室外演出で使用する部屋内カウントを取得
+ *
+ *	@param	const GAMEDATA *gamedata  ゲームデータ
+ *
+ *	@return 部屋内カウンタ
+ */
+//-----------------------------------------------------------------------------
+u32  GAMEDATA_GetGooutEffectRoomCount( const GAMEDATA *gamedata )
+{
+  return gamedata->goout_effect_room_count;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  室外演出で使用する部屋内カウントを設定
+ *
+ *	@param	GAMEDATA *gamedata  ゲームデータ
+ *	@param	count 部屋内カウント
+ */
+//-----------------------------------------------------------------------------
+void GAMEDATA_SetGooutEffectRoomCount( GAMEDATA *gamedata, u32 count )
+{
+  gamedata->goout_effect_room_count = count;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  室外演出フラグを取得
+ *
+ *	@param	const GAMEDATA *gamedata  ゲームデータ
+ *
+ *	@return TRUEで次回エフェクトスタート  FALSEでスタートしない
+ */
+//-----------------------------------------------------------------------------
+BOOL  GAMEDATA_GetGooutEffectFlag( const GAMEDATA *gamedata )
+{
+  return gamedata->goout_effect_flag;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  室外演出フラグを設定
+ *
+ *	@param	GAMEDATA *gamedata  ゲームデータ
+ *	@param	flag  TRUEで次回エフェクトスタート  FALSEでスタートしない
+ */
+//-----------------------------------------------------------------------------
+void GAMEDATA_SetGooutEffectFlag( GAMEDATA *gamedata, BOOL flag )
+{
+  gamedata->goout_effect_flag = flag;
+}
 //----------------------------------------------------------------------------
 /**
  *	@brief  メダルボックスを開いた時に最初に表示されるメダルIDを設定
@@ -2198,4 +2249,3 @@ u8 GAMEDATA_GetMedalBoxTopMedalID( GAMEDATA *gamedata )
 {
   return gamedata->top_medal_id;
 }
-

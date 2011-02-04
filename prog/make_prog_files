@@ -798,7 +798,8 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/event_game_manual.c \
         field/fld_vreq.c \
     		field/field_palace_sys.c \
-        field/field_goout_effect.c
+        field/field_goout_effect.c \
+        field/field_goout_effect_data.c
 #        field/scrcmd_c03center.c は未使用だったのでなくしました
 
 # デバッグメニュー並列化  ジャンプ系

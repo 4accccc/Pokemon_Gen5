@@ -1,0 +1,128 @@
+//============================================================================================
+/**
+ * @file field_goout_data.cdat
+ * @brief field_goout_dataのリメ[ス情報です
+ * @author Toru=Nagihashi
+ * @note field_goout_effect_converter.rbから自動生成されています。
+*/
+//============================================================================================
+#pragma once
+#include "field_goout_data.h"
+#include "field_goout_effect.naix"
+//室外阜ｻ素材リスト
+static const struct {
+ u16  imd;
+ u16  ica;
+ u16  ima;
+ u16  ita;
+ u16  itp;
+ u16  dummy;
+} sc_goout_effect_resource[] = {
+ //GOOUT_EFF_DAYLIGHT_SPRING
+ {
+   NARC_field_goout_effect_g_eff_haru_nsbmd,
+   NARC_field_goout_effect_g_eff_haru_nsbca,
+   NARC_field_goout_effect_g_eff_haru_nsbma,
+   NARC_field_goout_effect_g_eff_haru_nsbta,
+   NARC_field_goout_effect_g_eff_haru_nsbtp,
+ },
+ //GOOUT_EFF_DAYLIGHT_SUMMER
+ {
+   NARC_field_goout_effect_g_eff_natsu_nsbmd,
+   NARC_field_goout_effect_g_eff_natsu_nsbca,
+   NARC_field_goout_effect_g_eff_natsu_nsbma,
+   NARC_field_goout_effect_g_eff_natsu_nsbta,
+   NARC_field_goout_effect_g_eff_natsu_nsbtp,
+ },
+ //GOOUT_EFF_DAYLIGHT_AUTUMN
+ {
+   NARC_field_goout_effect_g_eff_aki_nsbmd,
+   NARC_field_goout_effect_g_eff_aki_nsbca,
+   NARC_field_goout_effect_g_eff_aki_nsbma,
+   NARC_field_goout_effect_g_eff_aki_nsbta,
+   NARC_field_goout_effect_g_eff_aki_nsbtp,
+ },
+ //GOOUT_EFF_DAYLIGHT_WINTER
+ {
+   NARC_field_goout_effect_g_eff_fuyu_nsbmd,
+   NARC_field_goout_effect_g_eff_fuyu_nsbca,
+   NARC_field_goout_effect_g_eff_fuyu_nsbma,
+   NARC_field_goout_effect_g_eff_fuyu_nsbta,
+   NARC_field_goout_effect_g_eff_fuyu_nsbtp,
+ },
+ //GOOUT_EFF_SUNSET_ALL
+ {
+   NARC_field_goout_effect_g_eff_yugata_nsbmd,
+   NARC_field_goout_effect_g_eff_yugata_nsbca,
+   NARC_field_goout_effect_g_eff_yugata_nsbma,
+   NARC_field_goout_effect_g_eff_yugata_nsbta,
+   NARC_field_goout_effect_g_eff_yugata_nsbtp,
+ },
+ //GOOUT_EFF_MOONLIGHT_ALL
+ {
+   NARC_field_goout_effect_g_eff_yoru_nsbmd,
+   NARC_field_goout_effect_g_eff_yoru_nsbca,
+   NARC_field_goout_effect_g_eff_yoru_nsbma,
+   NARC_field_goout_effect_g_eff_yoru_nsbta,
+   NARC_field_goout_effect_g_eff_yoru_nsbtp,
+ },
+};
+//室外阜ｻ素材リスト
+static const u16 sc_goout_effect_conmbi[][4] = {
+ //GOOUT_COMBI_NONE
+ {
+   GOOUT_EFF_NULL,
+   GOOUT_EFF_NULL,
+   GOOUT_EFF_NULL,
+   GOOUT_EFF_NULL,
+ },
+ //GOOUT_COMBI_DAYLIGHT_SPRING_ONLY
+ {
+   GOOUT_EFF_DAYLIGHT_SPRING,
+   GOOUT_EFF_NULL,
+   GOOUT_EFF_NULL,
+   GOOUT_EFF_NULL,
+ },
+ //GOOUT_COMBI_DAYLIGHT_SUMMER_ONLY
+ {
+   GOOUT_EFF_DAYLIGHT_SUMMER,
+   GOOUT_EFF_NULL,
+   GOOUT_EFF_NULL,
+   GOOUT_EFF_NULL,
+ },
+ //GOOUT_COMBI_DAYLIGHT_AUTUMN_ONLY
+ {
+   GOOUT_EFF_DAYLIGHT_AUTUMN,
+   GOOUT_EFF_NULL,
+   GOOUT_EFF_NULL,
+   GOOUT_EFF_NULL,
+ },
+ //GOOUT_COMBI_DAYLIGHT_WINTER_ONLY
+ {
+   GOOUT_EFF_DAYLIGHT_WINTER,
+   GOOUT_EFF_NULL,
+   GOOUT_EFF_NULL,
+   GOOUT_EFF_NULL,
+ },
+ //GOOUT_COMBI_SUNSET_ALL_ONLY
+ {
+   GOOUT_EFF_SUNSET_ALL,
+   GOOUT_EFF_NULL,
+   GOOUT_EFF_NULL,
+   GOOUT_EFF_NULL,
+ },
+ //GOOUT_COMBI_MOONLIGHT_ALL_ONLY
+ {
+   GOOUT_EFF_MOONLIGHT_ALL,
+   GOOUT_EFF_NULL,
+   GOOUT_EFF_NULL,
+   GOOUT_EFF_NULL,
+ },
+ //GOOUT_COMBI_TEST_CONBI
+ {
+   GOOUT_EFF_DAYLIGHT_SPRING,
+   GOOUT_EFF_DAYLIGHT_SUMMER,
+   GOOUT_EFF_DAYLIGHT_AUTUMN,
+   GOOUT_EFF_DAYLIGHT_WINTER,
+ },
+};

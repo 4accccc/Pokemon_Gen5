@@ -12,12 +12,18 @@ USERS	= toru_nagihashi ibe_mana ohkubo_tomohiko
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
 #------------------------------------------------------------------------------
-targetname = field_goout_effect
+targetname			= field_goout_effect
+targetname_dat	= field_goout_data
+xlsname					= field_goout_effect_data
+converter				= field_goout_effect_converter.rb
+xls2csv					= ../../tools/exceltool/xls2xml/tab_out_sheet.rb
+zonename				= ..\fldmapdata\zonetable\zone_id.h
 
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
 #------------------------------------------------------------------------------
-TARGETDIR = $(PROJECT_ARCDIR)
+TARGETDIR 			= $(PROJECT_ARCDIR)
+TARGETDIR_PROG	= $(PROJECT_ROOT)/prog/src/field
 
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
@@ -110,7 +116,7 @@ endif
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	subdir $(TARGETDIR)/$(targetname).narc
+do-build:	subdir $(TARGETDIR)/$(targetname).narc $(TARGETDIR)/$(targetname).naix $(TARGETDIR_PROG)/$(targetname_dat).cdat $(TARGETDIR_PROG)/$(targetname_dat).h $(TARGETDIR)/$(targetname_dat).narc $(TARGETDIR)/$(targetname_dat).naix
 
 subdir:
 	@$(MAKE_SUBDIR)
@@ -118,13 +124,36 @@ subdir:
 # narc のコピーだけ実行する
 $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 	$(COPY) $(targetname).narc $(TARGETDIR)
+
+$(TARGETDIR)/$(targetname).naix: $(targetname).naix
 	$(COPY) $(targetname).naix $(TARGETDIR)
+
+$(TARGETDIR)/$(targetname_dat).narc: $(targetname_dat).narc
+	$(COPY) $(targetname_dat).narc $(TARGETDIR)
+
+$(TARGETDIR)/$(targetname_dat).naix: $(targetname_dat).naix
+	$(COPY) $(targetname_dat).naix $(TARGETDIR)
+
+$(TARGETDIR_PROG)/$(targetname_dat).cdat:	$(targetname_dat).cdat
+	$(COPY) $(targetname_dat).cdat $(TARGETDIR_PROG)
+
+$(TARGETDIR_PROG)/$(targetname_dat).h:	$(targetname_dat).h
+	$(COPY) $(targetname_dat).h $(TARGETDIR_PROG)
 
 
 #コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 ifeq	($(CONVERTUSER),true)	
-# コピー先のnarcが古い場合実行する
-$(targetname).narc: $(OBJ_FILE)
+
+$(targetname_dat).narc $(targetname_dat).naix: $(targetname_dat).dat
+	nnsarc -c -l -n -i $(targetname_dat) $^
+	$(NAIXCUT) $(targetname_dat).naix
+
+$(targetname_dat).dat $(targetname_dat).cdat $(targetname_dat).h: $(xlsname).xls $(zonename) $(targetname).naix
+	ruby $(xls2csv) -n 0 -c $(xlsname).xls > $(xlsname)_data.csv
+	ruby $(xls2csv) -n 1 -c $(xlsname).xls > $(xlsname)_def.csv
+	ruby $(converter) $(xlsname)_data.csv $(xlsname)_def.csv $(zonename) $(targetname).naix $(targetname_dat)
+
+$(targetname).narc $(targetname).naix: $(OBJ_FILE)
 	-ls *.nsb* > $(LIST_FILE)
 	$(ARCLIST_MAKE) $(LIST_FILE)
 	nnsarc -c -l -n -i $(targetname) -S $(LIST_FILE)

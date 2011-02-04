@@ -1,0 +1,18 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: field_goout_data.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_FIELD_GOOUT_DATA_NAIX_
+#define NARC_FIELD_GOOUT_DATA_NAIX_
+
+enum {
+	NARC_field_goout_data_field_goout_data_dat = 0
+};
+
+/* NARC_FIELD_GOOUT_DATA_NAIX_ */
+#endif

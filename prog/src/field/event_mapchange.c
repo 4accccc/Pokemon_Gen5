@@ -97,6 +97,7 @@ FS_EXTERN_OVERLAY(debug_data);
 #include "../../../resource/quiz/pms_answer.h"
 #include "amprotect.h"
 
+#include "field_goout_effect.h"
 
 //============================================================================================
 
@@ -894,6 +895,11 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
       FIELD_STATUS * fldstatus = GAMEDATA_GetFieldStatus( gameData );
       FIELD_STATUS_SetProcAction( fldstatus, PROC_ACTION_MAPCHG );
     }
+    //室外表現のために次のゾーンをチェック
+    {
+      FIELD_GOOUT_EFFECT *p_goout = FIELDMAP_GetGooutEffect( fieldmap );
+      FIELD_GOOUT_EFFECT_CheckZone( p_goout, work->loc_req.zone_id );
+    }
     //フィールドマップを終了待ち
     GMEVENT_CallEvent( event, EVENT_FieldClose_FieldProcOnly(gameSystem, fieldmap) );
     (*seq)++;
@@ -1010,6 +1016,11 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
       PAIRSYS_PairMapChangeRecover( work->gameData );
     }
 #endif
+    {
+      FIELDMAP_WORK *p_fld = GAMESYSTEM_GetFieldMapWork(gameSystem);
+      FIELD_GOOUT_EFFECT *p_goout = FIELDMAP_GetGooutEffect( p_fld );
+      FIELD_GOOUT_EFFECT_Setup( p_goout );  //外出表現表示
+    }
     ENCOUNT_WORK_MapJumpUpdate( gameData, GAMESYSTEM_GetFieldMapWork(gameSystem) );
 
     // BGM フェード完了待ち
@@ -1017,6 +1028,11 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
     (*seq) ++;
     break;
   case MAPCORE_SEQ_FINISH:
+    {
+      FIELDMAP_WORK *p_fld = GAMESYSTEM_GetFieldMapWork(gameSystem);
+      FIELD_GOOUT_EFFECT *p_goout = FIELDMAP_GetGooutEffect( p_fld );
+      FIELD_GOOUT_EFFECT_Start( p_goout );
+    }
     return GMEVENT_RES_FINISH; 
   }
   return GMEVENT_RES_CONTINUE;

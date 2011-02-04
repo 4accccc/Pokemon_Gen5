@@ -907,8 +907,44 @@ extern void GAMEDATA_SetLiveCasterSecretCallFlag( GAMEDATA *gamedata, BOOL is_ca
  */
 //-----------------------------------------------------------------------------
 extern BOOL GAMEDATA_GetLiveCasterSecretCallFlag( const GAMEDATA *gamedata );
-
-
+//----------------------------------------------------------------------------
+/**
+ *	@brief  室外演出で使用する部屋内カウントを取得
+ *
+ *	@param	const GAMEDATA *gamedata  ゲームデータ
+ *
+ *	@return 部屋内カウンタ
+ */
+//-----------------------------------------------------------------------------
+extern u32  GAMEDATA_GetGooutEffectRoomCount( const GAMEDATA *gamedata );
+//----------------------------------------------------------------------------
+/**
+ *	@brief  室外演出で使用する部屋内カウントを設定
+ *
+ *	@param	GAMEDATA *gamedata  ゲームデータ
+ *	@param	count 部屋内カウント
+ */
+//-----------------------------------------------------------------------------
+extern void GAMEDATA_SetGooutEffectRoomCount( GAMEDATA *gamedata, u32 count );
+//----------------------------------------------------------------------------
+/**
+ *	@brief  室外演出フラグを取得
+ *
+ *	@param	const GAMEDATA *gamedata  ゲームデータ
+ *
+ *	@return TRUEで次回エフェクトスタート  FALSEでスタートしない
+ */
+//-----------------------------------------------------------------------------
+extern BOOL GAMEDATA_GetGooutEffectFlag( const GAMEDATA *gamedata );
+//----------------------------------------------------------------------------
+/**
+ *	@brief  室外演出フラグを設定
+ *
+ *	@param	GAMEDATA *gamedata  ゲームデータ
+ *	@param	flag  TRUEで次回エフェクトスタート  FALSEでスタートしない
+ */
+//-----------------------------------------------------------------------------
+extern void GAMEDATA_SetGooutEffectFlag( GAMEDATA *gamedata, BOOL flag );
 //----------------------------------------------------------------------------
 /**
  *	@brief  メダルボックスを開いた時に最初に表示されるメダルIDを設定
@@ -918,7 +954,7 @@ extern BOOL GAMEDATA_GetLiveCasterSecretCallFlag( const GAMEDATA *gamedata );
  *
  */
 //-----------------------------------------------------------------------------
-void GAMEDATA_SetMedalBoxTopMedalID( GAMEDATA *gamedata, u8 medal_id );
+extern void GAMEDATA_SetMedalBoxTopMedalID( GAMEDATA *gamedata, u8 medal_id );
 
 //----------------------------------------------------------------------------
 /**
@@ -929,5 +965,4 @@ void GAMEDATA_SetMedalBoxTopMedalID( GAMEDATA *gamedata, u8 medal_id );
  *	@retval 最初に表示されるメダルID
  */
 //-----------------------------------------------------------------------------
-u8 GAMEDATA_GetMedalBoxTopMedalID( GAMEDATA *gamedata );
-
+extern u8 GAMEDATA_GetMedalBoxTopMedalID( GAMEDATA *gamedata );

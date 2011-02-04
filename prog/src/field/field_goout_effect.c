@@ -9,6 +9,8 @@
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #include <gflib.h>
+#include "system/gfl_use.h"
+#include "field/zonedata.h"
 
 #include "field_goout_effect.naix"
 #include "arc_def.h"
@@ -16,6 +18,7 @@
 #include "field_goout_effect.h"
 
 #include "debug/debugwin_sys.h"
+#include "field_goout_effect_data.h"
 
 
 #ifdef PM_DEBUG
@@ -28,7 +31,7 @@
 */
 //=============================================================================
 #define FIELD_GOOUT_EFFECT_EXP_OBJ_REGISTER_NUM (3)
-#define FIELD_GOOUT_EFFECT_CAMERA_DISTANCE      (30)
+#define FIELD_GOOUT_EFFECT_CAMERA_DISTANCE      (60)
 
 //=============================================================================
 /**
@@ -43,8 +46,11 @@ struct _FIELD_GOOUT_EFFECT
   FLD_EXP_OBJ_CNT_PTR p_ex_obj;
   BOOL is_setup;
   BOOL is_start;
+  BOOL is_enable;
   s32 seq;
-  s32 use_obj_id;
+  FIELD_GOOUT_DATA *p_data;
+  GOOUT_EFFECT_ID effectID;
+  GAMEDATA *p_gamedata;
 };
 
 //=============================================================================
@@ -53,25 +59,28 @@ struct _FIELD_GOOUT_EFFECT
 */
 //=============================================================================
 static void Field_Goout_Effect_AttachCamera( FIELD_GOOUT_EFFECT *p_wk, const GFL_G3D_CAMERA* cp_camera );
+static void Field_Goout_Effect_LoadResource( FLD_EXP_OBJ_CNT_PTR p_ex_obj, const FIELD_GOOUT_DATA *cp_data, GOOUT_EFFECT_ID effectID );
+
+
+static BOOL Field_Goout_Effect_IsOutZone( const GAMEDATA *cp_gamedata, ZONEID zoneID );
+static FIELD_GOOUT_TIMEZONE Field_Goout_Effect_GetTimeZone( u32 timezone );
 
 //-------------------------------------
 ///	デバッグ
 //=====================================
 #ifdef DEBUGMENU_GOOUT_EFFECT
-static void GOOUT_DEBUG_Init( HEAPID heapID );
+static void GOOUT_DEBUG_Init( FIELD_GOOUT_EFFECT *p_wk, GAMEDATA *p_gamedata, HEAPID heapID );
 static void GOOUT_DEBUG_Exit( void );
-static BOOL GOOUT_DEBUG_GetUseFlag( void );
+static void GOOUT_DEBUG_Main( void );
 static BOOL GOOUT_DEBUG_GetForceVisible( void );
 static int  GOOUT_DEBUG_GetCameraDistance( void );
 static int  GOOUT_DEBUG_GetCameraDistance( void );
-static int  GOOUT_DEBUG_GetUseObjID( void );
 #else
-#define GOOUT_DEBUG_Init( x )   /*  */
+#define GOOUT_DEBUG_Init( x, y, z )   /*  */
 #define GOOUT_DEBUG_Exit()      /*  */
-#define GOOUT_DEBUG_GetUseFlag()  1
+#define GOOUT_DEBUG_Main()      /*  */
 #define GOOUT_DEBUG_GetForceVisible() 0
 #define GOOUT_DEBUG_GetCameraDistance() FIELD_GOOUT_EFFECT_CAMERA_DISTANCE
-#define GOOUT_DEBUG_GetUseObjID() OBJ_ID_NORMAL
 #endif //DEBUGMENU_GOOUT_EFFECT
 
 //=============================================================================
@@ -79,131 +88,54 @@ static int  GOOUT_DEBUG_GetUseObjID( void );
  *					データ
 */
 //=============================================================================
-//リソースの並び順番
-enum 
-{
-  RES_ID_NORMAL_MDL = 0,
-  RES_ID_NORMAL_ICA,
-  RES_ID_NORMAL_ITA,
-  RES_ID_NORMAL_IMA,
-  RES_ID_Z_MDL,
-  RES_ID_Z_ICA,
-  RES_ID_Z_IMA,
-  RES_ID_NORMAL_ITP,
-  RES_ID_AUTUMN_IMD,
-  RES_ID_AUTUMN_ICA,
-  RES_ID_AUTUMN_ITA,
-  RES_ID_AUTUMN_IMA,
-  RES_ID_MAX
-};
-//読み込む3Dリソース
-static const GFL_G3D_UTIL_RES sc_g3d_util_res_tbl[RES_ID_MAX] = 
-{
-  { ARCID_FIELD_GOOUT_EFFECT, NARC_field_goout_effect_d_effect_nsbmd, GFL_G3D_UTIL_RESARC },      //RES_ID_NORMAL_MDL
-  { ARCID_FIELD_GOOUT_EFFECT, NARC_field_goout_effect_d_effect_nsbca, GFL_G3D_UTIL_RESARC },      //RES_ID_NORMAL_ICA,
-  { ARCID_FIELD_GOOUT_EFFECT, NARC_field_goout_effect_d_effect_nsbta, GFL_G3D_UTIL_RESARC },      //RES_ID_NORMAL_ITA,
-  { ARCID_FIELD_GOOUT_EFFECT, NARC_field_goout_effect_d_effect_nsbma, GFL_G3D_UTIL_RESARC },      //RES_ID_NORMAL_IMA,
-  { ARCID_FIELD_GOOUT_EFFECT, NARC_field_goout_effect_d_effect_z_nsbmd, GFL_G3D_UTIL_RESARC },    //RES_ID_Z_MDL,
-  { ARCID_FIELD_GOOUT_EFFECT, NARC_field_goout_effect_d_effect_z_nsbca, GFL_G3D_UTIL_RESARC },    //RES_ID_Z_ICA,
-  { ARCID_FIELD_GOOUT_EFFECT, NARC_field_goout_effect_d_effect_z_nsbma, GFL_G3D_UTIL_RESARC },    //RES_ID_Z_IMA,
-  { ARCID_FIELD_GOOUT_EFFECT, NARC_field_goout_effect_d_effect_nsbtp, GFL_G3D_UTIL_RESARC },      //RES_ID_NORMAL_ITP,
-  { ARCID_FIELD_GOOUT_EFFECT, NARC_field_goout_effect_d_effect_aki_nsbmd, GFL_G3D_UTIL_RESARC },  //RES_ID_AUTUMN_IMD,
-  { ARCID_FIELD_GOOUT_EFFECT, NARC_field_goout_effect_d_effect_aki_nsbca, GFL_G3D_UTIL_RESARC },  //RES_ID_AUTUMN_ICA,
-  { ARCID_FIELD_GOOUT_EFFECT, NARC_field_goout_effect_d_effect_aki_nsbta, GFL_G3D_UTIL_RESARC },  //RES_ID_AUTUMN_ITA,
-  { ARCID_FIELD_GOOUT_EFFECT, NARC_field_goout_effect_d_effect_aki_nsbma, GFL_G3D_UTIL_RESARC },  //RES_ID_AUTUMN_IMA,
-};
-
-//3Dアニメ
-static const GFL_G3D_UTIL_ANM sc_g3d_util_normal_anm_tbl[] = 
-{
-	{ RES_ID_NORMAL_ICA, 0 },
-  { RES_ID_NORMAL_ITA, 0 },
-  { RES_ID_NORMAL_ITP, 0 },
-  { RES_ID_NORMAL_IMA, 0 },
-};
-static const GFL_G3D_UTIL_ANM sc_g3d_util_z_anm_tbl[] = 
-{
-	{ RES_ID_Z_ICA, 0 },
-  { RES_ID_Z_IMA, 0 },
-};
-static const GFL_G3D_UTIL_ANM sc_g3d_util_autumn_anm_tbl[] = 
-{
-	{ RES_ID_AUTUMN_ICA, 0 },
-  { RES_ID_AUTUMN_ITA, 0 },
-  { RES_ID_AUTUMN_IMA, 0 },
-};
-
-enum
-{
-  OBJ_ID_NORMAL,
-  OBJ_ID_Z,
-  OBJ_ID_AUTUMN,
-  OBJ_ID_MAX,
-};
-
-//3Dオブジェクト設定テーブル
-static const GFL_G3D_UTIL_OBJ sc_g3d_util_obj_tbl[OBJ_ID_MAX] = {
-	{
-		RES_ID_NORMAL_MDL, 	      //モデルリソースID
-		0, 							          //モデルデータID(リソース内部INDEX)
-		RES_ID_NORMAL_MDL, 	      //テクスチャリソースID
-		sc_g3d_util_normal_anm_tbl,			//アニメテーブル(複数指定のため)
-		NELEMS(sc_g3d_util_normal_anm_tbl),	//アニメリソース数
-	},
-	{
-		RES_ID_Z_MDL, 	      //モデルリソースID
-		0, 							          //モデルデータID(リソース内部INDEX)
-		RES_ID_Z_MDL, 	      //テクスチャリソースID
-		sc_g3d_util_z_anm_tbl,			//アニメテーブル(複数指定のため)
-		NELEMS(sc_g3d_util_z_anm_tbl),	//アニメリソース数
-	},
-  {
-    RES_ID_AUTUMN_IMD,
-    0,
-    RES_ID_AUTUMN_IMD,
-    sc_g3d_util_autumn_anm_tbl,
-    NELEMS(sc_g3d_util_autumn_anm_tbl),
-  },
-};
-
-static const GFL_G3D_UTIL_SETUP sc_g3d_util_setup =
-{
-  sc_g3d_util_res_tbl,				    //リソーステーブル
-	RES_ID_MAX,		//リソース数
-	sc_g3d_util_obj_tbl,				    //オブジェクト設定テーブル
-	OBJ_ID_MAX,		//オブジェクト数
-};
 //----------------------------------------------------------------------------
 /**
  *	@brief  外出表現  作成
  *
  *  @param  フィールド3D拡張オブジェクト
+ *  @param  zoneID  ゾーンID
  *	@param	HEAPID heapID ヒープID
  *
  *	@return ワークハンドル
  */
 //-----------------------------------------------------------------------------
-FIELD_GOOUT_EFFECT * FIELD_GOOUT_EFFECT_Init( FLD_EXP_OBJ_CNT_PTR p_ex_obj, HEAPID heapID )
+FIELD_GOOUT_EFFECT * FIELD_GOOUT_EFFECT_Init( GAMEDATA *p_gamedata, FLD_EXP_OBJ_CNT_PTR p_ex_obj, ZONEID zoneID, u8 season, u32 timezone, HEAPID heapID )
 {
   FIELD_GOOUT_EFFECT  *p_wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_GOOUT_EFFECT) );
-  p_wk->p_ex_obj  = p_ex_obj;
-  p_wk->use_obj_id  = OBJ_ID_NORMAL;
+  p_wk->p_data      = FIELD_GOOUT_DATA_Init( heapID );
+  p_wk->p_ex_obj    = p_ex_obj;
+  p_wk->p_gamedata  = p_gamedata;
 
+  //リソース読込み
   {
-    int i;
-    FLD_EXP_OBJ_AddUnit( p_wk->p_ex_obj,
-                          &sc_g3d_util_setup,
-                          FIELD_GOOUT_EFFECT_EXP_OBJ_REGISTER_NUM );
-
-    for( i = 0; i < OBJ_ID_MAX; i++ )
+    FIELD_GOOUT_TIMEZONE goout_tz = Field_Goout_Effect_GetTimeZone( timezone );
+    GOOUT_COMBI_ID combiID  = FIELD_GOOUT_DATA_GetCombiIDByZoneID( p_wk->p_data, zoneID, season, goout_tz );
+    u8  max =  FIELD_GOOUT_DATA_GetEffectNum( p_wk->p_data, combiID );
+    if( max == 0 )
     {
+      p_wk->effectID = GOOUT_EFF_NULL;
+    }
+    else
+    {
+      p_wk->effectID  = FIELD_GOOUT_DATA_GetEffectID( p_wk->p_data, combiID, GFUser_GetPublicRand(max) );
+    }
 
-      FLD_EXP_OBJ_SetVanish
-          (p_wk->p_ex_obj, FIELD_GOOUT_EFFECT_EXP_OBJ_REGISTER_NUM, i, TRUE );
+    NAGI_Printf( "室外表現：組み合わせ=%d 演出=%d\n　ゾーンID=%d 季節=%d 時刻=%d\n", combiID, p_wk->effectID, zoneID, season, timezone );
+
+    if( p_wk->effectID != GOOUT_EFF_NULL )
+    {
+      Field_Goout_Effect_LoadResource( p_wk->p_ex_obj, p_wk->p_data, p_wk->effectID );
     }
   }
 
-  GOOUT_DEBUG_Init( heapID );
+  //使用チェック
+  {
+    p_wk->is_enable = GAMEDATA_GetGooutEffectFlag( p_wk->p_gamedata );
+    NAGI_Printf( "室外表現許可=%d\n", p_wk->is_enable );
+  }
+
+  //デバッグ開始
+  GOOUT_DEBUG_Init( p_wk, p_gamedata, heapID );
 
   return p_wk;
 }
@@ -218,8 +150,12 @@ void FIELD_GOOUT_EFFECT_Exit( FIELD_GOOUT_EFFECT *p_wk )
 {
   GOOUT_DEBUG_Exit();
 
-  FLD_EXP_OBJ_DelUnit( p_wk->p_ex_obj, FIELD_GOOUT_EFFECT_EXP_OBJ_REGISTER_NUM );
+  if( p_wk->effectID != GOOUT_EFF_NULL )
+  {
+    FLD_EXP_OBJ_DelUnit( p_wk->p_ex_obj, FIELD_GOOUT_EFFECT_EXP_OBJ_REGISTER_NUM );
+  }
 
+  FIELD_GOOUT_DATA_Exit( p_wk->p_data );
   GFL_HEAP_FreeMemory( p_wk );
 }
 
@@ -242,7 +178,26 @@ void FIELD_GOOUT_EFFECT_Main( FIELD_GOOUT_EFFECT *p_wk, const FIELD_CAMERA * cp_
     SEQ_END,
   };
 
-  if( !GOOUT_DEBUG_GetUseFlag() )
+#ifdef PM_DEBUG
+  GOOUT_DEBUG_Main();
+#endif
+
+  //室内カウント
+  {
+    ZONEID  zoneID  = PLAYERWORK_getZoneID( GAMEDATA_GetMyPlayerWork(p_wk->p_gamedata) );
+    if( !Field_Goout_Effect_IsOutZone( p_wk->p_gamedata, zoneID ) )
+    {
+      u32 count = GAMEDATA_GetGooutEffectRoomCount( p_wk->p_gamedata );
+      if( count != 0xffffffff )
+      {
+        count+=2; //1/30なので
+      }
+      GAMEDATA_SetGooutEffectRoomCount( p_wk->p_gamedata, count );
+    }
+  }
+
+  //演出なしならなにもしない
+  if( p_wk->effectID == GOOUT_EFF_NULL )
   {
     return;
   }
@@ -257,8 +212,6 @@ void FIELD_GOOUT_EFFECT_Main( FIELD_GOOUT_EFFECT *p_wk, const FIELD_CAMERA * cp_
     }
   }
 
-  p_wk->use_obj_id  = GOOUT_DEBUG_GetUseObjID();
-
   if( p_wk->is_setup )
   {
     switch( p_wk->seq )
@@ -267,18 +220,18 @@ void FIELD_GOOUT_EFFECT_Main( FIELD_GOOUT_EFFECT *p_wk, const FIELD_CAMERA * cp_
       {
         int i;
         EXP_OBJ_ANM_CNT_PTR p_anm_cnt;
-        for( i = 0; i < sc_g3d_util_obj_tbl[p_wk->use_obj_id].anmCount; i++ )
+        for( i = 0; i < FIELD_GOOUT_RESOURCE_MAX-1; i++ )
         {
-          FLD_EXP_OBJ_ValidCntAnm(p_wk->p_ex_obj, FIELD_GOOUT_EFFECT_EXP_OBJ_REGISTER_NUM, p_wk->use_obj_id, i, TRUE);
-          p_anm_cnt = FLD_EXP_OBJ_GetAnmCnt( p_wk->p_ex_obj, FIELD_GOOUT_EFFECT_EXP_OBJ_REGISTER_NUM, p_wk->use_obj_id, i);
+          FLD_EXP_OBJ_ValidCntAnm(p_wk->p_ex_obj, FIELD_GOOUT_EFFECT_EXP_OBJ_REGISTER_NUM, 0, i, TRUE);
+          p_anm_cnt = FLD_EXP_OBJ_GetAnmCnt( p_wk->p_ex_obj, FIELD_GOOUT_EFFECT_EXP_OBJ_REGISTER_NUM, 0, i);
           FLD_EXP_OBJ_ChgAnmStopFlg(p_anm_cnt, TRUE );
           //頭出し
-          FLD_EXP_OBJ_SetObjAnmFrm( p_wk->p_ex_obj, FIELD_GOOUT_EFFECT_EXP_OBJ_REGISTER_NUM, p_wk->use_obj_id, i, 0 );
+          FLD_EXP_OBJ_SetObjAnmFrm( p_wk->p_ex_obj, FIELD_GOOUT_EFFECT_EXP_OBJ_REGISTER_NUM, 0, i, 0 );
           FLD_EXP_OBJ_ChgAnmLoopFlg(p_anm_cnt, 0);
         }
       }
       FLD_EXP_OBJ_SetVanish
-      (p_wk->p_ex_obj, FIELD_GOOUT_EFFECT_EXP_OBJ_REGISTER_NUM, p_wk->use_obj_id, FALSE );
+        (p_wk->p_ex_obj, FIELD_GOOUT_EFFECT_EXP_OBJ_REGISTER_NUM, 0, FALSE );
       p_wk->seq++;
       break;
     case SEQ_WAIT:
@@ -291,9 +244,9 @@ void FIELD_GOOUT_EFFECT_Main( FIELD_GOOUT_EFFECT *p_wk, const FIELD_CAMERA * cp_
       {
         int i;
         EXP_OBJ_ANM_CNT_PTR p_anm_cnt;
-        for( i = 0; i < sc_g3d_util_obj_tbl[p_wk->use_obj_id].anmCount; i++ )
+        for( i = 0; i < FIELD_GOOUT_RESOURCE_MAX-1; i++ )
         {
-          p_anm_cnt = FLD_EXP_OBJ_GetAnmCnt( p_wk->p_ex_obj, FIELD_GOOUT_EFFECT_EXP_OBJ_REGISTER_NUM, p_wk->use_obj_id, i);
+          p_anm_cnt = FLD_EXP_OBJ_GetAnmCnt( p_wk->p_ex_obj, FIELD_GOOUT_EFFECT_EXP_OBJ_REGISTER_NUM, 0, i);
           FLD_EXP_OBJ_ChgAnmStopFlg(p_anm_cnt, 0);
         }
       }
@@ -303,9 +256,9 @@ void FIELD_GOOUT_EFFECT_Main( FIELD_GOOUT_EFFECT *p_wk, const FIELD_CAMERA * cp_
       {
         int i;
         BOOL result = TRUE;
-        for( i = 0; i < sc_g3d_util_obj_tbl[p_wk->use_obj_id].anmCount; i++ )
+        for( i = 0; i < FIELD_GOOUT_RESOURCE_MAX-1; i++ )
         {
-          EXP_OBJ_ANM_CNT_PTR p_anm_cnt = FLD_EXP_OBJ_GetAnmCnt( p_wk->p_ex_obj, FIELD_GOOUT_EFFECT_EXP_OBJ_REGISTER_NUM, p_wk->use_obj_id, i);
+          EXP_OBJ_ANM_CNT_PTR p_anm_cnt = FLD_EXP_OBJ_GetAnmCnt( p_wk->p_ex_obj, FIELD_GOOUT_EFFECT_EXP_OBJ_REGISTER_NUM, 0, i);
 
           if( !FLD_EXP_OBJ_ChkAnmEnd(p_anm_cnt) )
           {
@@ -320,7 +273,7 @@ void FIELD_GOOUT_EFFECT_Main( FIELD_GOOUT_EFFECT *p_wk, const FIELD_CAMERA * cp_
         {
           p_wk->seq++;
           FLD_EXP_OBJ_SetVanish
-          (p_wk->p_ex_obj, FIELD_GOOUT_EFFECT_EXP_OBJ_REGISTER_NUM, p_wk->use_obj_id, TRUE );
+          (p_wk->p_ex_obj, FIELD_GOOUT_EFFECT_EXP_OBJ_REGISTER_NUM, 0, TRUE );
         }
       }
       break;
@@ -346,8 +299,11 @@ void FIELD_GOOUT_EFFECT_Main( FIELD_GOOUT_EFFECT *p_wk, const FIELD_CAMERA * cp_
 //-----------------------------------------------------------------------------
 void FIELD_GOOUT_EFFECT_Setup( FIELD_GOOUT_EFFECT *p_wk )
 {
-  p_wk->is_setup  = TRUE;
-  p_wk->seq       = 0;
+  if( p_wk->is_enable )
+  {
+    p_wk->is_setup  = TRUE;
+    p_wk->seq       = 0;
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -359,9 +315,37 @@ void FIELD_GOOUT_EFFECT_Setup( FIELD_GOOUT_EFFECT *p_wk )
 //-----------------------------------------------------------------------------
 void FIELD_GOOUT_EFFECT_Start( FIELD_GOOUT_EFFECT *p_wk )
 {
-  p_wk->is_start  = TRUE;
+  if( p_wk->is_enable )
+  {
+    p_wk->is_start  = TRUE;
+  }
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ゾーンの切り替わりをチェック
+ *
+ *	@param	FIELD_GOOUT_EFFECT *p_wk  ワーク
+ *	@param	zoneID  ゾーンID
+ */
+//-----------------------------------------------------------------------------
+void FIELD_GOOUT_EFFECT_CheckZone( FIELD_GOOUT_EFFECT *p_wk, ZONEID zoneID )
+{
+  BOOL is_enable  = FALSE;
+  if( Field_Goout_Effect_IsOutZone( p_wk->p_gamedata, zoneID) )
+  {
+    //もし規定時間以上かつ外ならば、外出表現開始してもOK
+    if( FIELD_GOOUT_ROOM_COUNT_MAX*60 < GAMEDATA_GetGooutEffectRoomCount( p_wk->p_gamedata ) )
+    {
+      is_enable = TRUE;
+    }
+
+    //もし外ならカウンタリセット
+    GAMEDATA_SetGooutEffectRoomCount( p_wk->p_gamedata, 0 );
+  }
+
+  GAMEDATA_SetGooutEffectFlag( p_wk->p_gamedata, is_enable );
+}
 //----------------------------------------------------------------------------
 /**
  *	@brief  モデルをカメラからの距離の位置におく
@@ -386,16 +370,109 @@ static void Field_Goout_Effect_AttachCamera( FIELD_GOOUT_EFFECT *p_wk, const GFL
   VEC_MultAdd( FX32_CONST(GOOUT_DEBUG_GetCameraDistance()), &pos, &cam_pos, &pos );
 
   {
-    int i;
     GFL_G3D_OBJSTATUS *p_status;
-    for( i = 0; i < OBJ_ID_MAX; i++ )
-    {
-      p_status = FLD_EXP_OBJ_GetUnitObjStatus(p_wk->p_ex_obj, FIELD_GOOUT_EFFECT_EXP_OBJ_REGISTER_NUM, i );
-      p_status->trans = pos;
-    }
+    p_status = FLD_EXP_OBJ_GetUnitObjStatus(p_wk->p_ex_obj, FIELD_GOOUT_EFFECT_EXP_OBJ_REGISTER_NUM, 0 );
+    p_status->trans = pos;
   }
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  リソース読込み
+ *
+ *	@param	FLD_EXP_OBJ_CNT_PTR p_ex_obj  拡張オブジェクト
+ *	@param	FIELD_GOOUT_DATA *cp_data     データ
+ *	@param  GOOUT_EFFECT_ID effectID      エフェクトID
+ */
+//-----------------------------------------------------------------------------
+static void Field_Goout_Effect_LoadResource( FLD_EXP_OBJ_CNT_PTR p_ex_obj, const FIELD_GOOUT_DATA *cp_data, GOOUT_EFFECT_ID effectID )
+{
+  GFL_G3D_UTIL_SETUP  setup = {0};
+  GFL_G3D_UTIL_RES    res_tbl[FIELD_GOOUT_RESOURCE_MAX] = {0};
+  GFL_G3D_UTIL_OBJ    obj = {0};
+  GFL_G3D_UTIL_ANM    anm_tbl[FIELD_GOOUT_RESOURCE_MAX-1] = {0};
 
+  //リソース
+  {
+    int i;
+    for( i = 0; i < FIELD_GOOUT_RESOURCE_MAX; i++ )
+    {
+      res_tbl[i].arcive   = ARCID_FIELD_GOOUT_EFFECT;
+      res_tbl[i].datID    = FIELD_GOOUT_DATA_GetResource( cp_data, effectID, i );
+      res_tbl[i].arcType  = GFL_G3D_UTIL_RESARC;
+    }
+  }
+  
+  //アニメ
+  {
+    int i;
+    for( i = 0; i < (FIELD_GOOUT_RESOURCE_MAX-1); i++ )
+    {
+      anm_tbl[i].anmresID  = FIELD_GOOUT_RESOURCE_ICA+i;
+      anm_tbl[i].anmdatID  = 0;
+    }
+  }
+
+  //OBJ
+  obj.mdlresID  = FIELD_GOOUT_RESOURCE_IMD;
+  obj.mdldatID  = 0;
+  obj.texresID  = FIELD_GOOUT_RESOURCE_IMD;
+  obj.anmTbl    = anm_tbl;
+  obj.anmCount  = (FIELD_GOOUT_RESOURCE_MAX-1);
+
+  //設定
+  setup.resTbl    = res_tbl;
+  setup.resCount  = FIELD_GOOUT_RESOURCE_MAX;
+  setup.objTbl    = &obj;
+  setup.objCount  = 1;
+
+  FLD_EXP_OBJ_AddUnit( p_ex_obj,
+      &setup,
+      FIELD_GOOUT_EFFECT_EXP_OBJ_REGISTER_NUM );
+
+  FLD_EXP_OBJ_SetVanish
+        (p_ex_obj, FIELD_GOOUT_EFFECT_EXP_OBJ_REGISTER_NUM, 0, TRUE );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  外判定
+ *
+ *	@param	const GAMEDATA *cp_gamedata ゲームデータ
+ *	@param	zoneID  ゾーンID
+ *
+ *	@return TRUE外  FALSE中
+ */
+//-----------------------------------------------------------------------------
+static BOOL Field_Goout_Effect_IsOutZone( const GAMEDATA *cp_gamedata, ZONEID zoneID )
+{
+  return ZONEDATA_FlyEnable( zoneID );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  共通タイムゾーンから室外表現内のタイムゾーンへ変換
+ *
+ *	@param	u32 timezone  タイムゾーン
+ *
+ *	@return 室外表現のタイムゾーン
+ */
+//-----------------------------------------------------------------------------
+static FIELD_GOOUT_TIMEZONE Field_Goout_Effect_GetTimeZone( u32 timezone )
+{
+  switch( timezone )
+  {
+  case TIMEZONE_MORNING:
+  case TIMEZONE_NOON:
+    return FIELD_GOOUT_TIMEZONE_MORNING;
+  case TIMEZONE_EVENING:
+    return FIELD_GOOUT_TIMEZONE_EVENING;
+  case TIMEZONE_NIGHT:
+  case TIMEZONE_MIDNIGHT:
+    return FIELD_GOOUT_TIMEZONE_NIGHT;
+  default:
+    GF_ASSERT(0);
+    return 0;
+  }
+}
 #ifdef DEBUGMENU_GOOUT_EFFECT
 //=============================================================================
 /**
@@ -413,15 +490,15 @@ static void Field_Goout_Effect_AttachCamera( FIELD_GOOUT_EFFECT *p_wk, const GFL
 //    （staticにしてしまうとマップ遷移のとき情報が消えてしまうので
 //    常駐にあります。）
 //=====================================
-extern int g_debug_use_flag;
 extern int g_debug_force_visible;
 extern int g_debug_camera_distance;
 extern int g_debug_use_obj_id;
-
+static BOOL s_debug_obj_change  = FALSE;
+static FIELD_GOOUT_EFFECT *s_debug_wk  = NULL;
 //-------------------------------------
 ///	プロトタイプ
 //=====================================
-static void DebugWin_Util_ChangeValue( DEBUGWIN_ITEM* p_item, int *p_param, int min, int max );
+static BOOL DebugWin_Util_ChangeValue( int *p_param, int min, int max );
 static void Goout_Debug_Update_UserFlag( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
 static void Goout_Debug_Draw_UserFlag( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
 static void Goout_Debug_Update_ForceVisible( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
@@ -431,6 +508,8 @@ static void Goout_Debug_Draw_CameraDistance( void* p_wk_adrs, DEBUGWIN_ITEM* p_i
 
 static void Goout_Debug_Update_UseObjID( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
 static void Goout_Debug_Draw_UseObjID( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
+static void Goout_Debug_Update_RoomCount( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
+static void Goout_Debug_Draw_RoomCount( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
 
 //----------------------------------------------------------------------------
 /**
@@ -439,14 +518,15 @@ static void Goout_Debug_Draw_UseObjID( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
  *	@param	HEAPID heapID 
  */
 //-----------------------------------------------------------------------------
-static void GOOUT_DEBUG_Init( HEAPID heapID )
+static void GOOUT_DEBUG_Init( FIELD_GOOUT_EFFECT *p_wk, GAMEDATA *p_gamedata, HEAPID heapID )
 {
+  s_debug_wk  = p_wk;
   DEBUGWIN_AddGroupToTop( DEBUGWIN_GOTOU_EFFECT, "しつがいエフェクト", heapID );
 
   //使う、使わない設定
   DEBUGWIN_AddItemToGroupEx( Goout_Debug_Update_UserFlag , 
                                 Goout_Debug_Draw_UserFlag , 
-                                NULL, 
+                                p_wk, 
                                 DEBUGWIN_GOTOU_EFFECT,
                                 heapID );
   //強制表示
@@ -467,6 +547,12 @@ static void GOOUT_DEBUG_Init( HEAPID heapID )
                                 NULL, 
                                 DEBUGWIN_GOTOU_EFFECT,
                                 heapID );
+  //室内カウンタ
+  DEBUGWIN_AddItemToGroupEx( Goout_Debug_Update_RoomCount, 
+                                Goout_Debug_Draw_RoomCount,
+                                p_gamedata,
+                                DEBUGWIN_GOTOU_EFFECT,
+                                heapID );
 
 }
 //----------------------------------------------------------------------------
@@ -480,13 +566,24 @@ static void GOOUT_DEBUG_Exit( void )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  デバッグメニュー  使用フラグ設定
- *	@return TRUE使用  FALSE不使用
+ *	@brief  デバッグメニューメイン処理
  */
 //-----------------------------------------------------------------------------
-static BOOL GOOUT_DEBUG_GetUseFlag( void )
+static void GOOUT_DEBUG_Main( void )
 {
-  return g_debug_use_flag != 0;
+  if( s_debug_obj_change )
+  {
+    if( s_debug_wk->effectID != GOOUT_EFF_NULL )
+    {
+      FLD_EXP_OBJ_DelUnit( s_debug_wk->p_ex_obj, FIELD_GOOUT_EFFECT_EXP_OBJ_REGISTER_NUM );
+    }
+    s_debug_wk->effectID  = g_debug_use_obj_id;
+    if( s_debug_wk->effectID != GOOUT_EFF_NULL )
+    {
+      Field_Goout_Effect_LoadResource( s_debug_wk->p_ex_obj, s_debug_wk->p_data, s_debug_wk->effectID );
+    }
+    s_debug_obj_change  = FALSE;
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -510,25 +607,14 @@ static int  GOOUT_DEBUG_GetCameraDistance( void )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  デバッグメニュー  使用OBJIDの取得
- *	@return 使用OBJID
- */
-//-----------------------------------------------------------------------------
-static int  GOOUT_DEBUG_GetUseObjID( void )
-{
-  return g_debug_use_obj_id;
-}
-//----------------------------------------------------------------------------
-/**
  *	@brief  デバッグメニュー  汎用値更新関数
  *
- *	@param	DEBUGWIN_ITEM* p_item アイテム
  *	@param	*p_param  更新する値
  *	@param	min 最小値
  *	@param	max 最大値
  */
 //-----------------------------------------------------------------------------
-static void DebugWin_Util_ChangeValue( DEBUGWIN_ITEM* p_item, int *p_param, int min, int max )
+static BOOL DebugWin_Util_ChangeValue( int *p_param, int min, int max )
 { 
   int value = 0;
 
@@ -560,8 +646,10 @@ static void DebugWin_Util_ChangeValue( DEBUGWIN_ITEM* p_item, int *p_param, int 
 
   if( value != 0 )
   { 
-    DEBUGWIN_RefreshScreen();
+    return TRUE;
   }
+
+  return FALSE;
 }
 
 //----------------------------------------------------------------------------
@@ -574,7 +662,13 @@ static void DebugWin_Util_ChangeValue( DEBUGWIN_ITEM* p_item, int *p_param, int 
 //-----------------------------------------------------------------------------
 static void Goout_Debug_Update_UserFlag( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
 {
-  DebugWin_Util_ChangeValue( p_item, &g_debug_use_flag, 0, 1 );
+  FIELD_GOOUT_EFFECT  *p_wk = p_wk_adrs;
+  int flag  = p_wk->is_enable;
+  if( DebugWin_Util_ChangeValue( &flag, 0, 1 ) )
+  {
+    p_wk->is_enable = flag;
+    DEBUGWIN_RefreshScreen();
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -591,8 +685,8 @@ static void Goout_Debug_Draw_UserFlag( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
     "OFF",
     "ON",
   };
-
-  DEBUGWIN_ITEM_SetNameV( p_item , "しようフラグ[%s]", sc_label[g_debug_use_flag] );
+  FIELD_GOOUT_EFFECT  *p_wk = p_wk_adrs;
+  DEBUGWIN_ITEM_SetNameV( p_item , "しようフラグ[%s]", sc_label[p_wk->is_enable] );
 }
 //----------------------------------------------------------------------------
 /**
@@ -604,7 +698,10 @@ static void Goout_Debug_Draw_UserFlag( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
 //-----------------------------------------------------------------------------
 static void Goout_Debug_Update_ForceVisible( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
 {
-  DebugWin_Util_ChangeValue( p_item, &g_debug_force_visible, 0, 1 );
+  if( DebugWin_Util_ChangeValue( &g_debug_force_visible, 0, 1 ) )
+  {
+    DEBUGWIN_RefreshScreen();
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -633,7 +730,10 @@ static void Goout_Debug_Draw_ForceVisible( void* p_wk_adrs, DEBUGWIN_ITEM* p_ite
  */
 //-----------------------------------------------------------------------------
 static void Goout_Debug_Update_CameraDistance( void* p_wk_adrs, DEBUGWIN_ITEM* p_item ){
-  DebugWin_Util_ChangeValue( p_item, &g_debug_camera_distance, 0, 0xFFFFFFFF/2 );
+  if( DebugWin_Util_ChangeValue( &g_debug_camera_distance, 0, 0xFFFFFFFF/2 ) )
+  {
+    DEBUGWIN_RefreshScreen();
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -657,7 +757,11 @@ static void Goout_Debug_Draw_CameraDistance( void* p_wk_adrs, DEBUGWIN_ITEM* p_i
 //-----------------------------------------------------------------------------
 static void Goout_Debug_Update_UseObjID( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
 {
-  DebugWin_Util_ChangeValue( p_item, &g_debug_use_obj_id, 0, OBJ_ID_MAX-1 );
+  if( DebugWin_Util_ChangeValue( &g_debug_use_obj_id, 0, GOOUT_EFF_MAX-1 ) )
+  {
+    s_debug_obj_change  = TRUE;
+    DEBUGWIN_RefreshScreen();
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -669,12 +773,38 @@ static void Goout_Debug_Update_UseObjID( void* p_wk_adrs, DEBUGWIN_ITEM* p_item 
 //-----------------------------------------------------------------------------
 static void Goout_Debug_Draw_UseObjID( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
 {
-  static const char * sc_label[OBJ_ID_MAX]  =
+  DEBUGWIN_ITEM_SetNameV( p_item , "えんしゅつ[%d]", g_debug_use_obj_id );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  室内カウンタ 更新
+ *
+ *	@param	void* p_wk_adrs ワーク
+ *	@param	p_item          アイテム
+ */
+//-----------------------------------------------------------------------------
+static void Goout_Debug_Update_RoomCount( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
+{
+  GAMEDATA *p_gamedata  = p_wk_adrs;
+  int cnt = GAMEDATA_GetGooutEffectRoomCount( p_gamedata );
+  if( DebugWin_Util_ChangeValue( &cnt, 0, 0xFFFFFFFF/2 ) )
   {
-    "げんてん",
-    "Zずらし",
-    "あき",
-  };
-  DEBUGWIN_ITEM_SetNameV( p_item , "モデル[%s]", sc_label[g_debug_use_obj_id] );
+    GAMEDATA_SetGooutEffectRoomCount( p_gamedata, cnt );
+    DEBUGWIN_RefreshScreen();
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  室内カウンタ 描画
+ *
+ *	@param	void* p_wk_adrs ワーク
+ *	@param	p_item          アイテム
+ */
+//-----------------------------------------------------------------------------
+static void Goout_Debug_Draw_RoomCount( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
+{
+  GAMEDATA *p_gamedata  = p_wk_adrs;
+  u32 cnt = GAMEDATA_GetGooutEffectRoomCount( p_gamedata );
+  DEBUGWIN_ITEM_SetNameV( p_item , "へやカウンタ[%d]", cnt  );
 }
 #endif //DEBUGMENU_GOOUT_EFFECT
