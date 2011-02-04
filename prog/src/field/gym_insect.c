@@ -503,7 +503,7 @@ static s16 gatemv_SePitchCalc( EVWORK_GATE_MOVE* evwk )
   {
     fx32 step = len-FX32_CONST(5);
     OS_Printf("vec_len=%f, step=%f ",FX_FX32_TO_F32(len),FX_FX32_TO_F32(step));
-    pitch = FX_Whole(FX_Mul(step,FX32_CONST(100)));
+    pitch = FX_Whole(FX_Mul(step,FX32_CONST(70)));
     OS_Printf("pitch=%d\n\n",pitch);
   }
   return pitch;
@@ -526,7 +526,7 @@ static void gatemv_IcaAnmSet( GYM_INSECT_TMP* wk, EVWORK_GATE_MOVE* evwk )
   PMSND_PlaySE(GYM_INSECT_SE_DRIVE);
   PMSND_SetStatusSE_byPlayerID( evwk->se_player, PMSND_NOEFFECT, gatemv_SePitchCalc(evwk), PMSND_NOEFFECT);
   
-  FLD_EXP_OBJ_SetVanish( wk->exp_obj, GYM_INSECT_UNIT_IDX, OBJ_SPHERE, FALSE );
+//  FLD_EXP_OBJ_SetVanish( wk->exp_obj, GYM_INSECT_UNIT_IDX, OBJ_SPHERE, TRUE );
   
   //初期座標セット
   gatemv_IcaAnmPosSet( wk, evwk );
@@ -561,6 +561,11 @@ static void gatemv_IcaAnmPosSet( GYM_INSECT_TMP* wk, EVWORK_GATE_MOVE* evwk )
         GFL_CALC3D_MTX_CreateRot( FX_DEG_TO_IDX(rot.x), FX_DEG_TO_IDX(rot.y), FX_DEG_TO_IDX(rot.z), &status->rotate );
       }
       if( ICA_ANIME_GetScaleAt( evwk->ica_anm, &scale, evwk->ica_anm_frm_idx )){
+        fx32 s = scale.x+scale.y+scale.z;
+        OS_Printf("scale = %f,%f,%f\n", FX_FX32_TO_F32(scale.x), FX_FX32_TO_F32(scale.y), FX_FX32_TO_F32(scale.z));
+        if( s > 0 ){
+          FLD_EXP_OBJ_SetVanish( wk->exp_obj, GYM_INSECT_UNIT_IDX, OBJ_SPHERE, FALSE );
+        }
         status->scale = scale; 
       }
     }
@@ -609,12 +614,12 @@ void GYM_INSECT_VacuumAnmTaskAdd( FIELDMAP_WORK* fieldWork )
    
     dir = MMDL_GetDirDisp( twk->p_mmdl);
     MMDL_GetVectorPos(twk->p_mmdl, &status->trans );
-    MMDL_TOOL_AddDirVector( dir, &status->trans, FX32_CONST(1) );
+    MMDL_TOOL_AddDirVector( dir, &status->trans, FX32_CONST(32) );
    
     if( dir == DIR_LEFT ){
-      rot = 270;
-    }else if( dir == DIR_RIGHT ){
       rot = 90;
+    }else if( dir == DIR_RIGHT ){
+      rot = 270;
     }
     GFL_CALC3D_MTX_CreateRot( 0, FX_DEG_TO_IDX(FX32_CONST(rot)), 0, &status->rotate );
 
@@ -625,6 +630,7 @@ void GYM_INSECT_VacuumAnmTaskAdd( FIELDMAP_WORK* fieldWork )
       FLD_EXP_OBJ_ChgAnmStopFlg( anm, FALSE ); //アニメ開始
     }
   }
+  PMSND_PlaySE(GYM_INSECT_SE_VACUUM);
   GFL_TCB_AddTask( tcbsys, tcb_VacuumAnm, (void*)twk, 0);
 }
 

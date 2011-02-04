@@ -90,6 +90,7 @@ EVENT_START ev_prog_c03gym0101_gate_out
   CASE DIR_RIGHT THEN
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gateout_r )
   ENDSWITCH
+  _SE_PLAY( SEQ_SE_GYM_M03 ) //飛び出す音
   _OBJ_ANIME_WAIT()
 
 //	_CAMERA_BIND()	//カメラのバインドを復活
@@ -127,8 +128,12 @@ EVENT_START ev_prog_c03gym0101_gate_out_1c
   _OBJ_ANIME_WAIT()
   
   IF FLAG_OFF(FE_C03GYM0101_COCCON_01) THEN
-    _SE_PLAY( SEQ_SE_BDEMO_01 ) //繭が破れる音
+    _SE_PLAY( SEQ_SE_GYM_M04 ) //繭が破れる音
     _GYM_INSECT_COCCON_OPEN( COCCON_ID_1C )
+    _SE_WAIT()
+    _SE_PLAY( SEQ_SE_GYM_M04 ) //繭が破れる音
+    _SE_WAIT()
+    _SE_PLAY( SEQ_SE_GYM_M05 ) //繭が破れる音
     _TIME_WAIT(COCCON_OPEN_ANM_WAIT)
 	  _FLAG_SET( FE_C03GYM0101_COCCON_01 )
   ENDIF
@@ -225,10 +230,14 @@ EVENT_START ev_pos_c03gym0101_gate_3b
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gate_3b_turn_u )
   _OBJ_ANIME_WAIT()
   
-  _SE_PLAY( SEQ_SE_BDEMO_01 ) //繭が破れる音
+  _SE_PLAY( SEQ_SE_GYM_M04 ) //繭が揺れる音
   _GYM_INSECT_COCCON_OPEN( COCCON_ID_3B )
-  _FLAG_SET( FE_C03GYM0101_COCCON_02 )
+  _SE_WAIT()
+  _SE_PLAY( SEQ_SE_GYM_M04 ) //繭が破れる音
+  _SE_WAIT()
+  _SE_PLAY( SEQ_SE_GYM_M05 ) //繭が破れる音
   _TIME_WAIT(COCCON_OPEN_ANM_WAIT)
+  _FLAG_SET( FE_C03GYM0101_COCCON_02 )
 
   //視線曲を再生
 	_TRAINER_BGM_SET( TRID_JUGGLING_11 )
