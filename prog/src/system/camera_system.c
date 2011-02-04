@@ -4,6 +4,7 @@
  * @brief	TWLのカメラライブラリ
  * @author	ariizumi
  * @data	  09/05/18
+ * @data    11/02/04  ichiraku シャッター音再生の仕組み追加 
  *
  * モジュール名：CAMERA_SYS
  */
@@ -35,13 +36,15 @@
 #pragma mark [> enum
 typedef enum
 {
-  CSS_NONE,
-  CSS_WAIT_PLAY_START,
-  CSS_PLAYING_START,
-  CSS_ACTIVE,
-  CSS_WAIT_PLAY_END,
-  CSS_PLAYING_END,
-  CSS_FINISH,
+  CSS_NONE,             // 
+  CSS_WAIT_PLAY_START,  // カメラ起動音再生
+  CSS_PLAYING_START,    // カメラ起動音再生待ち
+  CSS_ACTIVE,           // カメラ起動中という意味。中はダミー
+  CSS_WAIT_PLAY_END,    // カメラ終了音再生
+  CSS_PLAYING_END,      // カメラ終了音再生待ち
+  CSS_FINISH,           // カメラ終了してよい状態
+  CSS_WAIT_PLAY_SHUTTER,// シャッター音再生
+  CSS_PLAYING_SHUTTER,  // シャッター音再生待ち
 }CAMERA_SND_STATE;
 
 //======================================================================
@@ -90,8 +93,10 @@ struct _CAMERA_SYSTEM_WORK
 
 static void CAMERA_SYS_SoftResetCallBack( void *work ); ///<ソフトリセットコールバック関数
 
-static void CAMERA_SYS_LoadSutterSnd( CAMERA_SYSTEM_WORK *work , const BOOL isStart );
-static void CAMERA_SYS_ReleaseSutterSnd( CAMERA_SYSTEM_WORK *work );
+static void CAMERA_SYS_LoadVideoRecSnd( CAMERA_SYSTEM_WORK *work , const BOOL isStart );
+static void CAMERA_SYS_ReleaseSnd( CAMERA_SYSTEM_WORK *work );
+
+static void CAMERA_SYS_LoadShutterSnd( CAMERA_SYSTEM_WORK *work );
 
 static void CAMERA_SYS_VSyncCallBack(CAMERAResult result);
 static void CAMERA_SYS_ErrorCallBack(CAMERAResult result);
@@ -237,7 +242,7 @@ void CAMERA_SYS_ExitSystem( CAMERA_SYSTEM_WORK* work )
   CAMERA_Stop();
   MI_StopNDma(NDMA_NO);
   CAMERA_End();
-  CAMERA_SYS_ReleaseSutterSnd( work );
+  CAMERA_SYS_ReleaseSnd( work );
   
   CAMERA_SYS_DeleteReadBuffer( work );
   
@@ -264,7 +269,7 @@ void CAMERA_SYS_UpdateCameta( CAMERA_SYSTEM_WORK *work )
   switch(work->sndState)
   {
   case CSS_WAIT_PLAY_START:
-    CAMERA_SYS_LoadSutterSnd( work , TRUE );
+    CAMERA_SYS_LoadVideoRecSnd( work , TRUE );
     {
       BOOL ret = DSP_PlayShutterSound( work->sndData , work->sndSize );
       ARI_TPrintf("Play shutter start[%d].\n",ret);
@@ -275,14 +280,14 @@ void CAMERA_SYS_UpdateCameta( CAMERA_SYSTEM_WORK *work )
   case CSS_PLAYING_START:
     if( DSP_IsShutterSoundPlaying() == FALSE )
     {
-      CAMERA_SYS_ReleaseSutterSnd( work );
+      CAMERA_SYS_ReleaseSnd( work );
       work->sndState = CSS_ACTIVE;
       ARI_TPrintf("Finish play shutter start.\n");
     }
     break;
 
   case CSS_WAIT_PLAY_END:
-    CAMERA_SYS_LoadSutterSnd( work , FALSE );
+    CAMERA_SYS_LoadVideoRecSnd( work , FALSE );
     {
       BOOL ret = DSP_PlayShutterSound( work->sndData , work->sndSize );
       ARI_TPrintf("Play shutter end[%d].\n",ret);
@@ -292,24 +297,63 @@ void CAMERA_SYS_UpdateCameta( CAMERA_SYSTEM_WORK *work )
   case CSS_PLAYING_END:
     if( DSP_IsShutterSoundPlaying() == FALSE )
     {
-      CAMERA_SYS_ReleaseSutterSnd( work );
+      CAMERA_SYS_ReleaseSnd( work );
       work->sndState = CSS_FINISH;
       ARI_TPrintf("Finish play shutter end.\n");
     }
     break;
+
+  case CSS_WAIT_PLAY_SHUTTER:
+    CAMERA_SYS_LoadShutterSnd( work );
+    {
+      BOOL ret = DSP_PlayShutterSound( work->sndData , work->sndSize );
+      ICHI_Printf("Play shutter start[%d].\n",ret);
+    }
+    work->sndState = CSS_PLAYING_SHUTTER;
+    break;
     
+  case CSS_PLAYING_SHUTTER:
+    if( DSP_IsShutterSoundPlaying() == FALSE )
+    {
+      CAMERA_SYS_ReleaseSnd( work );
+      work->sndState = CSS_ACTIVE;
+      ICHI_Printf("Finish play shutter start.\n");
+    }
+    break;
+
   case CSS_FINISH:
     break;
     
   }
 }
 
+// DSPロード・ソフトウェアリセット関数セットなど
+void CAMERA_SYS_DspInit( CAMERA_SYSTEM_WORK *work )
+{
+  {
+    FSFile  file[1];
+    DSP_OpenStaticComponentG711(file);
+    if (!DSP_LoadG711(file, 0xFF, 0xFF))
+    {
+      GF_PANIC("can't allocate WRAM Slot");
+    }
+  }
+  GFL_UI_SoftResetSetFunc( CAMERA_SYS_SoftResetCallBack, work );
+}
+// DSPアンロード
+void CAMERA_SYS_DspExit( CAMERA_SYSTEM_WORK *work )
+{
+  GFL_UI_SoftResetSetFunc( NULL , NULL );
+  DSP_StopSound();
+  DSP_UnloadG711();
+}
+
 //16バイトアライメントが要るのでオリジナル読み
-static void CAMERA_SYS_LoadSutterSnd( CAMERA_SYSTEM_WORK *work , const BOOL isStart )
+static void CAMERA_SYS_LoadVideoRecSnd( CAMERA_SYSTEM_WORK *work , const BOOL isStart )
 {
   const u16 datId = (isStart == TRUE ? NARC_camera_sys_videorec_sound_begin_32730_wav:NARC_camera_sys_videorec_sound_end_32730_wav );
   
-  CAMERA_SYS_ReleaseSutterSnd( work );
+  CAMERA_SYS_ReleaseSnd( work );
     //ARCID_CAMERA_SYS
   work->sndSize = GFL_ARC_GetDataSize( ARCID_CAMERA_SYS , datId );
   work->sndData = GFL_NET_Align32Alloc( work->heapId , work->sndSize );
@@ -317,7 +361,7 @@ static void CAMERA_SYS_LoadSutterSnd( CAMERA_SYSTEM_WORK *work , const BOOL isSt
   DC_FlushRange( work->sndData , work->sndSize );
 }
 
-static void CAMERA_SYS_ReleaseSutterSnd( CAMERA_SYSTEM_WORK *work )
+static void CAMERA_SYS_ReleaseSnd( CAMERA_SYSTEM_WORK *work )
 {
   if( work->sndData != NULL )
   {
@@ -325,6 +369,20 @@ static void CAMERA_SYS_ReleaseSutterSnd( CAMERA_SYSTEM_WORK *work )
     work->sndData = NULL;
   }
 }
+
+//16バイトアライメントが要るのでオリジナル読み
+static void CAMERA_SYS_LoadShutterSnd( CAMERA_SYSTEM_WORK *work )
+{
+  const u16 datId = NARC_camera_sys_shutter_sound_32730_wav;
+  
+  CAMERA_SYS_ReleaseSnd( work );
+    //ARCID_CAMERA_SYS
+  work->sndSize = GFL_ARC_GetDataSize( ARCID_CAMERA_SYS , datId );
+  work->sndData = GFL_NET_Align32Alloc( work->heapId , work->sndSize );
+  GFL_ARC_LoadData(work->sndData, ARCID_CAMERA_SYS, datId);
+  DC_FlushRange( work->sndData , work->sndSize );
+}
+
 //--------------------------------------------------------------------------------
 //    カメラ割り込み処理 (エラー時とVsync時の両方で発生)
 //
@@ -776,6 +834,22 @@ const BOOL CAMERA_SYS_IsPlaySe( CAMERA_SYSTEM_WORK* work )
   return FALSE;
 }
 
+void CAMERA_SYS_PlayShutterSe( CAMERA_SYSTEM_WORK* work )
+{
+  //GF_ASSERT( work->sndState==CSS_ACTIVE );
+  work->sndState = CSS_WAIT_PLAY_SHUTTER;
+}
+
+const BOOL CAMERA_SYS_IsPlayShutterSe( CAMERA_SYSTEM_WORK* work )
+{
+  if( work->sndState == CSS_WAIT_PLAY_SHUTTER ||
+      work->sndState == CSS_PLAYING_SHUTTER )
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
+
 #else
 #pragma mark [>Dummy
 //ダミー
@@ -786,6 +860,8 @@ struct _CAMERA_SYSTEM_WORK
 CAMERA_SYSTEM_WORK* CAMERA_SYS_InitSystem( HEAPID heapId ){return NULL;}
 void CAMERA_SYS_ExitSystem( CAMERA_SYSTEM_WORK* work ){}
 void CAMERA_SYS_UpdateCameta( CAMERA_SYSTEM_WORK *work ){}
+void CAMERA_SYS_DspInit( CAMERA_SYSTEM_WORK *work ){}
+void CAMERA_SYS_DspExit( CAMERA_SYSTEM_WORK *work ){}
 
 void CAMERA_SYS_CreateReadBuffer( CAMERA_SYSTEM_WORK* work , const int bufferNum , const HEAPID heapId ){}
 const u32 CAMERA_SYS_GetBufferSize( CAMERA_SYSTEM_WORK* work , const int bufferNum ){return 0;}
@@ -814,5 +890,7 @@ void CAMERA_SYS_SwapCameraPos( CAMERA_SYSTEM_WORK* work ){}
 void CAMERA_SYS_PlayStartSe( CAMERA_SYSTEM_WORK* work ){}
 void CAMERA_SYS_PlayStopSe( CAMERA_SYSTEM_WORK* work ){}
 const BOOL CAMERA_SYS_IsPlaySe( CAMERA_SYSTEM_WORK* work ){return FALSE;}
+void CAMERA_SYS_PlayShutterSe( CAMERA_SYSTEM_WORK* work ){}
+const BOOL CAMERA_SYS_IsPlayShutterSe( CAMERA_SYSTEM_WORK* work ){return FALSE;}
 
 #endif //def SDK_TWL

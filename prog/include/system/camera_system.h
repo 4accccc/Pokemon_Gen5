@@ -4,6 +4,7 @@
  * @brief	TWLのカメラライブラリ
  * @author	ariizumi
  * @data	  09/05/18
+ * @data    11/02/04  ichiraku シャッター音再生の仕組み追加 
  *
  * モジュール名：CAMERA
  */
@@ -77,6 +78,10 @@ extern CAMERA_SYSTEM_WORK* CAMERA_SYS_InitSystem( HEAPID heapId );
 extern void CAMERA_SYS_ExitSystem( CAMERA_SYSTEM_WORK* work );
 extern void CAMERA_SYS_UpdateCameta( CAMERA_SYSTEM_WORK *work );
 
+// 他のDSPを使用するときに呼ぶ
+extern void CAMERA_SYS_DspInit( CAMERA_SYSTEM_WORK *work );
+extern void CAMERA_SYS_DspExit( CAMERA_SYSTEM_WORK *work );
+
 extern void CAMERA_SYS_CreateReadBuffer( CAMERA_SYSTEM_WORK* work , const int bufferNum , const HEAPID heapId );
 extern const u32 CAMERA_SYS_GetBufferSize( CAMERA_SYSTEM_WORK* work , const int bufferNum );
 extern void CAMERA_SYS_SetReadBuffer( CAMERA_SYSTEM_WORK* work , void *topAdr , const int bufferNum );
@@ -122,6 +127,8 @@ extern void CAMERA_SYS_SwapCameraPos( CAMERA_SYSTEM_WORK* work );
 extern void CAMERA_SYS_PlayStartSe( CAMERA_SYSTEM_WORK* work );
 extern void CAMERA_SYS_PlayStopSe( CAMERA_SYSTEM_WORK* work );
 extern const BOOL CAMERA_SYS_IsPlaySe( CAMERA_SYSTEM_WORK* work );
+extern void CAMERA_SYS_PlayShutterSe( CAMERA_SYSTEM_WORK* work );
+extern const BOOL CAMERA_SYS_IsPlayShutterSe( CAMERA_SYSTEM_WORK* work );
 
 //--------------------------------------------------------------
 //	

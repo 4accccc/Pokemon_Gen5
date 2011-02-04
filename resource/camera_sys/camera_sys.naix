@@ -11,8 +11,9 @@
 #define NARC_CAMERA_SYS_NAIX_
 
 enum {
-	NARC_camera_sys_videorec_sound_begin_32730_wav = 0,
-	NARC_camera_sys_videorec_sound_end_32730_wav = 1
+	NARC_camera_sys_shutter_sound_32730_wav = 0,
+	NARC_camera_sys_videorec_sound_begin_32730_wav = 1,
+	NARC_camera_sys_videorec_sound_end_32730_wav = 2
 };
 
 /* NARC_CAMERA_SYS_NAIX_ */
