@@ -117,6 +117,7 @@ EVENT_START ev_prog_c03gym0101_gate_out_4x
   _MAP_FADE_END_CHECK()
   
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gateout_4x )
+  _SE_PLAY( SEQ_SE_GYM_M03 ) //îÚÇ—èoÇ∑âπ
   _OBJ_ANIME_WAIT()
 }
 EVENT_END
