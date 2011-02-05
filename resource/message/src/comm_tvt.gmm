@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ichiraku_katsuhiko" host="W00241" date="2011-02-02T12:44:33"/>
+	<create user="ichiraku_katsuhiko" host="W00241" date="2011-02-05T19:35:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -690,11 +690,9 @@ Ariizumi 100506</comment>
 
 	<row id="COMM_TVT_GAME_13">
 		<comment>写真撮影画面</comment>
-		<language name="JPN">これで　しゅんびかんりょうです　
-ほかの　ひとの　じゅんびが
+		<language name="JPN">ほかの　ひとの　じゅんびが
 おわるまで　おまちください</language>
-		<language name="JPN_KANJI">これで　準備完了です　
-他の　人の　準備が
+		<language name="JPN_KANJI">他の　人の　準備が
 終わるまで　お待ちください</language>
 	</row>
 

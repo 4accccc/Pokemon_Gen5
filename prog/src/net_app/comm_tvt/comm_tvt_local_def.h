@@ -196,6 +196,8 @@ typedef enum
   CTOAS_PITCH_9,
   CTOAS_SCROLL_BAR_BLINK,
   CTOAS_TALK_NO,
+  CTOAS_BALLOON1,   // ミニゲーム1
+  CTOAS_BALLOON2,   // ミニゲーム2
   
   
 }COMM_TVT_OBJ_ANM_SUB;

@@ -64,13 +64,6 @@ static GFL_STD_RandContext gRandContext = {0};
 #define BALLOON_RND_W_MAX       (4)     // 出現位置乱数のMAX値
 #define BALLOON_RND_V_MAX       (3)     // 出現位置乱数のMAX値
 
-#define PLATE_CELLNUM     (6)
-#define PLATE_RENDER_MAIN (0)
-
-// CELL_UNITの表示順
-#define CELLUNIT_PRI_MAIN       (5)
-#define CELLUNIT_PRI_PLATE      (0)
-
 // PLATE関係  
 #define PLATE_NUM       (4)
 #define PLATE_OFFSET_X  (-8)        // プレートの中央から名前までの距離
@@ -122,55 +115,73 @@ typedef enum
 ///	セルリソースインデックス
 //=====================================
 typedef enum {
-  CGOR_COMMON_PLT,      // ゲーム共通
+  CGOR_UPPER_PLT,     // ゲーム上画面
+  CGOR_LOWER_PLT,     // ゲーム下画面  
 
-  CGOR_COMMON_NCG,      // ゲーム共通
+  CGOR_UPPER_NCG,     // ゲーム上画面
+  CGOR_LOWER_NCG,     // ゲーム下画面  
 
-  CGOR_COMMON_ANM,      // ゲーム共通
+  CGOR_UPPER_ANM,     // ゲーム上画面
+  CGOR_LOWER_ANM,     // ゲーム下画面  
   
   CGOR_MAX,   // 最大値
 } CTVT_GAME_OBJ_RES;
-#define CGOR_PLT_TOP  ( CGOR_COMMON_PLT )   // パレットTOP
-#define CGOR_NCG_TOP  ( CGOR_COMMON_NCG )   // キャラクタTOP
-#define CGOR_ANM_TOP  ( CGOR_COMMON_ANM )   // セルアニメTOP
+#define CGOR_PLT_TOP  ( CGOR_UPPER_PLT )   // パレットTOP
+#define CGOR_NCG_TOP  ( CGOR_UPPER_NCG )   // キャラクタTOP
+#define CGOR_ANM_TOP  ( CGOR_UPPER_ANM )   // セルアニメTOP
 
 //-------------------------------------
 ///	セルアニメインデックス
 //=====================================
 typedef enum {
-  CGOA_NUM_0,    // 数字 0
-  CGOA_NUM_1,    // 数字 1
-  CGOA_NUM_2,    // 数字 2
-  CGOA_NUM_3,    // 数字 3
-  CGOA_NUM_4,    // 数字 4
-  CGOA_NUM_5,    // 数字 5
-  CGOA_NUM_6,    // 数字 6
-  CGOA_NUM_7,    // 数字 7
-  CGOA_NUM_8,    // 数字 8
-  CGOA_NUM_9,    // 数字 9
-  CGOA_NUM_DRUM, // 数字回転
-  CGOA_TIME,     // TIMEゲージ
-  CGOA_PLATE_R,  // プレート赤
-  CGOA_PLATE_S_R,// スコアプレート赤
-  CGOA_PLATE_CLOUD1,  // 雲1 (倍角)
-  CGOA_PLATE_CLOUD2,  // 雲2 (倍角)
-  CGOA_LAST,      // 「ラストスパート」
-  CGOA_KEKKA,     // 「けっかはっぴょう」
-  CGOA_OME_FONT1, // 「おめでとう」 (倍角)
-  CGOA_OME_FONT2, //  (倍角)
-  CGOA_OME_CLOUD_L,//  (倍角)
-  CGOA_OME_CLOUD_R,//  (倍角)
-  CGOA_OME_KAKUSHI_L,
-  CGOA_OME_KAKUSHI_R,
-  CGOA_OME_NIJI,
-  CGOA_OME_STAR, // おめでとうの星1
-  CGOA_OME_STAR2, // おめでとうの星2
-  CGOA_TITLE1,    // タイトル
-  CGOA_TITLE2,    // 
-  CGOA_TITLE3,    // 
-  CGOA_CROWN,     // 王冠
-  CGOA_P,         // スコアの「P」
-} CTVT_GAME_OBJ_ANM;
+  CGOAS_TIMEBAR,      // タイムバー
+  CGOAS_PLATE,        // プレート
+  CGOAS_LAST,         // 「ラストスパート」
+  CGOAS_KEKKA,        // 「けっかはっぴょう」
+  CGOAS_TITLE1,       // タイトル1
+  CGOAS_TITLE2,       // タイトル2
+  CGOAS_RAINBOW1,     // 虹 昼
+  CGOAS_RAINBOW2,     // 虹 夜
+  CGOAS_PART2,        // 2の文字
+  CGOAS_P,            // P
+} CTVT_GAME_OBJ_ANM_SUB;
+
+typedef enum {
+  CGOAM_NUM_0,        // 数字 0
+  CGOAM_NUM_1,        // 数字 1
+  CGOAM_NUM_2,        // 数字 2
+  CGOAM_NUM_3,        // 数字 3
+  CGOAM_NUM_4,        // 数字 4
+  CGOAM_NUM_5,        // 数字 5
+  CGOAM_NUM_6,        // 数字 6
+  CGOAM_NUM_7,        // 数字 7
+  CGOAM_NUM_8,        // 数字 8
+  CGOAM_NUM_9,        // 数字 9
+  CGOAM_P,            // P
+  CGOAM_NUM_DRUM,     // 0-9ドラムロール
+  CGOAM_PLATE_S,      // 結果発表のプレート
+  CGOAM_CLOUD1,       // 雲1 倍角
+  CGOAM_CLOUD2,       // 雲2 倍角
+  CGOAM_OME1,         // おめでとうアニメ 倍角
+  CGOAM_TEXT_O,       // 「お」 倍角
+  CGOAM_TEXT_ME,      // 「め」 倍角
+  CGOAM_TEXT_DE,      // 「で」 倍角
+  CGOAM_TEXT_TO,      // 「と」 倍角
+  CGOAM_TEXT_U,       // 「う」 倍角
+  CGOAM_TEXT_EX,      // 「！」 倍角
+  CGOAM_OME_CLOUD_L,  // おめでとう 雲  倍角
+  CGOAM_OME_CLOUD_R,  // おめでとう 雲  倍角
+  CGOAM_OME_PLATE_L,  // おめでとう 隠しプレート
+  CGOAM_OME_PLATE_R,  // おめでとう 隠しプレート
+  CGOAM_RAINBOW1,     // 虹 昼
+  CGOAM_RAINBOW2,     // 虹 夜
+  CGOAM_STAR1,        // 星 昼
+  CGOAM_STAR2,        // 星 夜
+
+  CGOAM_POMP1,
+  CGOAM_POMP2,
+  CGOAM_POMP3,
+} CTVT_GAME_OBJ_ANM_MAIN;
 
 // PLATE task seq
 enum
@@ -228,10 +239,6 @@ typedef struct {
   int           move_value;       // アニメカウント
   BOOL          is_move;        // 移動開始フラグ
 
-  // OBJ系
-  GFL_CLSYS_REND  *cellRender;
-  GFL_CLUNIT      *cellUnit;
-  
   GFL_CLWK*       clwkPlate;      // 土台
   GFL_CLWK*       clwkPoint[3];   // 点数
   //GFL_CLWK*       clwkCrown;      // 王冠
@@ -360,6 +367,7 @@ struct _CTVT_GAME_WORK
   // 結果発表
   GFL_CLWK    *clwkKekka;               // けっかはっぴょうの文字
   GFL_CLWK    *clwkOmeFont;             // 「おめでとう」倍角
+  GFL_CLWK    *clwkOmeText[6];          // 「おめでとう」単文字 倍角
   GFL_CLWK    *clwkOmeCloud[2];         // エフェクト雲倍角
   GFL_CLWK    *clwkOmeHide[2];          // エフェクト隠すプレート
   GFL_CLWK    *clwkOmeNiji;             // エフェクト虹
@@ -2042,16 +2050,21 @@ static void game_update_seq_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork 
         CTVT_GAME_FRAME_M_BG, 0, 0, FALSE, heapID );
 
     // 上画面
-    GFL_ARC_UTIL_TransVramPalette( ARCID_TVT_BALLOON, NARC_tvt_balloon_tv_game_bg_u1_NCLR , 
-        PALTYPE_SUB_BG, CTVT_GAME_PAL_BG_S_BG*32, 32*1, heapID );
-    GFL_ARC_UTIL_TransVramBgCharacter( ARCID_TVT_BALLOON, NARC_tvt_balloon_tv_game_bg_u1_NCGR,
+    GFL_ARC_UTIL_TransVramPalette( ARCID_TVT_BALLOON, NARC_tvt_balloon_tv_game_bg_u_NCLR , 
+        PALTYPE_SUB_BG, CTVT_GAME_PAL_BG_S_BG*32, 32*3, heapID );
+    GFL_ARC_UTIL_TransVramBgCharacter( ARCID_TVT_BALLOON, NARC_tvt_balloon_tv_game_bg_u_NCGR,
         CTVT_GAME_FRAME_S_BG, 0, 0, FALSE, heapID );
-    GFL_ARC_UTIL_TransVramScreen( ARCID_TVT_BALLOON, NARC_tvt_balloon_tv_game_bg_u1_NSCR, 
+    GFL_ARC_UTIL_TransVramScreen( ARCID_TVT_BALLOON, NARC_tvt_balloon_tv_game_bg_u_NSCR, 
         CTVT_GAME_FRAME_S_BG,  0, 0, FALSE, heapID );
 
     // タイムゲージ用にパレットを読み込む
     GFL_ARC_UTIL_TransVramPalette( ARCID_TVT_BALLOON, NARC_tvt_balloon_time_bar_NCLR, 
         PALTYPE_SUB_BG, CTVT_GAME_PAL_BG_S_TIMEBAR*32, 32, heapID );
+    ICHI_Printf("タイトルBG読み込み\n");
+
+
+    // ゲーム1はパレット1を使用
+    GFL_BG_ChangeScreenPalette( CTVT_GAME_FRAME_S_BG, 0, 0, 32, 32, 0 );
   }
   // OBJ作成
   {
@@ -2065,13 +2078,13 @@ static void game_update_seq_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork 
 
     for( i=0; i<3; i++ )
     {
-      cellInitData.anmseq = CGOA_TITLE1 + i;
-      cellInitData.softpri = 3-i;
+      cellInitData.anmseq = CGOAS_TITLE1 + i;
+      cellInitData.softpri = i;
 
       gameWork->clwkTitle[i] = GFL_CLACT_WK_Create( gameWork->cellUnit,
-          gameWork->cellResIdx[CGOR_COMMON_PLT],
-          gameWork->cellResIdx[CGOR_COMMON_NCG],
-          gameWork->cellResIdx[CGOR_COMMON_ANM],
+          gameWork->cellResIdx[CGOR_UPPER_PLT],
+          gameWork->cellResIdx[CGOR_UPPER_NCG],
+          gameWork->cellResIdx[CGOR_UPPER_ANM],
           &cellInitData ,CLSYS_DEFREND_SUB, heapID );
       GFL_CLACT_WK_SetDrawEnable( gameWork->clwkTitle[i] , TRUE );
       GFL_CLACT_WK_SetAutoAnmFlag( gameWork->clwkTitle[i] , TRUE );
@@ -2082,29 +2095,30 @@ static void game_update_seq_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork 
     // タイムゲージ
     cellInitData.pos_x = 128;
     cellInitData.pos_y = 168;
-    cellInitData.anmseq = CGOA_TIME;
+    cellInitData.anmseq = CGOAS_TIMEBAR;
     cellInitData.bgpri = 1;
 
     gameWork->clwkTime = GFL_CLACT_WK_Create( gameWork->cellUnit,
-        gameWork->cellResIdx[CGOR_COMMON_PLT],
-        gameWork->cellResIdx[CGOR_COMMON_NCG],
-        gameWork->cellResIdx[CGOR_COMMON_ANM],
+        gameWork->cellResIdx[CGOR_UPPER_PLT],
+        gameWork->cellResIdx[CGOR_UPPER_NCG],
+        gameWork->cellResIdx[CGOR_UPPER_ANM],
         &cellInitData ,CLSYS_DEFREND_SUB, heapID );
     GFL_CLACT_WK_SetDrawEnable( gameWork->clwkTime, FALSE );
 
     // ラストスパートの文字
     cellInitData.pos_x = 128;
     cellInitData.pos_y = 96;
-    cellInitData.anmseq = CGOA_LAST;
+    cellInitData.anmseq = CGOAS_LAST;
     cellInitData.bgpri = 1;
 
     gameWork->clwkLast = GFL_CLACT_WK_Create( gameWork->cellUnit,
-        gameWork->cellResIdx[CGOR_COMMON_PLT],
-        gameWork->cellResIdx[CGOR_COMMON_NCG],
-        gameWork->cellResIdx[CGOR_COMMON_ANM],
+        gameWork->cellResIdx[CGOR_UPPER_PLT],
+        gameWork->cellResIdx[CGOR_UPPER_NCG],
+        gameWork->cellResIdx[CGOR_UPPER_ANM],
         &cellInitData ,CLSYS_DEFREND_SUB, heapID );
     GFL_CLACT_WK_SetDrawEnable( gameWork->clwkLast, FALSE );
   }
+  ICHI_Printf("セル作成\n");
   // OBJ作成  倍角を使っているのでaffineで。
   {
     GFL_CLWK_AFFINEDATA cellAffineData;
@@ -2113,7 +2127,7 @@ static void game_update_seq_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork 
     // 雲
     cellAffineData.clwkdata.pos_x  = 60;
     cellAffineData.clwkdata.pos_y  = 50;
-    cellAffineData.clwkdata.anmseq = CGOA_PLATE_CLOUD1;
+    cellAffineData.clwkdata.anmseq = CGOAM_CLOUD1;
     cellAffineData.clwkdata.softpri= 0;
     cellAffineData.clwkdata.bgpri  = 3;
 
@@ -2125,26 +2139,27 @@ static void game_update_seq_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork 
     cellAffineData.affine_type  = CLSYS_AFFINETYPE_DOUBLE;
 
     gameWork->clwkCloud_M[0] = GFL_CLACT_WK_CreateAffine( gameWork->cellUnit,
-        gameWork->cellResIdx[CGOR_COMMON_PLT],
-        gameWork->cellResIdx[CGOR_COMMON_NCG],
-        gameWork->cellResIdx[CGOR_COMMON_ANM],
+        gameWork->cellResIdx[CGOR_LOWER_PLT],
+        gameWork->cellResIdx[CGOR_LOWER_NCG],
+        gameWork->cellResIdx[CGOR_LOWER_ANM],
         &cellAffineData ,CLSYS_DEFREND_MAIN, heapID );
     GFL_CLACT_WK_SetDrawEnable( gameWork->clwkCloud_M[0], FALSE );
     GFL_CLACT_WK_SetAutoAnmFlag( gameWork->clwkCloud_M[0], TRUE );
 
     cellAffineData.clwkdata.pos_x  = 200;
     cellAffineData.clwkdata.pos_y  = 90;
-    cellAffineData.clwkdata.anmseq = CGOA_PLATE_CLOUD2;
+    cellAffineData.clwkdata.anmseq = CGOAM_CLOUD2;
     cellAffineData.clwkdata.bgpri  = 3;
 
     gameWork->clwkCloud_M[1] = GFL_CLACT_WK_CreateAffine( gameWork->cellUnit,
-        gameWork->cellResIdx[CGOR_COMMON_PLT],
-        gameWork->cellResIdx[CGOR_COMMON_NCG],
-        gameWork->cellResIdx[CGOR_COMMON_ANM],
+        gameWork->cellResIdx[CGOR_LOWER_PLT],
+        gameWork->cellResIdx[CGOR_LOWER_NCG],
+        gameWork->cellResIdx[CGOR_LOWER_ANM],
         &cellAffineData ,CLSYS_DEFREND_MAIN, heapID );
     GFL_CLACT_WK_SetDrawEnable( gameWork->clwkCloud_M[1], FALSE );
     GFL_CLACT_WK_SetAutoAnmFlag( gameWork->clwkCloud_M[1], TRUE );
   }
+  ICHI_Printf("セルaffie作成\n");
 
   // プレート作成
   {
@@ -2648,11 +2663,11 @@ static void game_update_seq_score_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
 
   // BGロード
   // 下画面
-  GFL_ARC_UTIL_TransVramPalette( ARCID_COMM_TVT_GRA, NARC_comm_tvt_tv_score_bg_NCLR , 
+  GFL_ARC_UTIL_TransVramPalette( ARCID_TVT_BALLOON, NARC_tvt_balloon_tv_score_bg_NCLR , 
       PALTYPE_MAIN_BG, CTVT_GAME_PAL_BG_M_BG*32, 32*2, gameWork->heapId );
-  GFL_ARC_UTIL_TransVramBgCharacter( ARCID_COMM_TVT_GRA, NARC_comm_tvt_tv_score_bg_NCGR,
+  GFL_ARC_UTIL_TransVramBgCharacter( ARCID_TVT_BALLOON, NARC_tvt_balloon_tv_score_bg_NCGR,
       CTVT_GAME_FRAME_M_BG, 0, 0, FALSE, gameWork->heapId );
-  GFL_ARC_UTIL_TransVramScreen( ARCID_COMM_TVT_GRA, NARC_comm_tvt_tv_score_bg_NSCR, 
+  GFL_ARC_UTIL_TransVramScreen( ARCID_TVT_BALLOON, NARC_tvt_balloon_tv_score_bg_NSCR, 
       CTVT_GAME_FRAME_M_BG,  0, 0, FALSE, gameWork->heapId );
   GFL_BG_SetVisible( CTVT_GAME_FRAME_S_TIMEBAR, VISIBLE_OFF );
 
@@ -2721,45 +2736,45 @@ static void game_update_seq_score_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
     cellInitData.pos_y  = 96;
     cellInitData.softpri= 0;
     cellInitData.bgpri  = 1;
-    cellInitData.anmseq = CGOA_KEKKA;
+    cellInitData.anmseq = CGOAS_KEKKA;
     gameWork->clwkKekka = GFL_CLACT_WK_Create( gameWork->cellUnit,
-        gameWork->cellResIdx[CGOR_COMMON_PLT],
-        gameWork->cellResIdx[CGOR_COMMON_NCG],
-        gameWork->cellResIdx[CGOR_COMMON_ANM],
+        gameWork->cellResIdx[CGOR_UPPER_PLT],
+        gameWork->cellResIdx[CGOR_UPPER_NCG],
+        gameWork->cellResIdx[CGOR_UPPER_ANM],
         &cellInitData ,CLSYS_DEFREND_SUB, heapID );
     GFL_CLACT_WK_SetDrawEnable( gameWork->clwkKekka, TRUE );
 
     // 隠しプレート
     cellInitData.softpri= 0;
-    cellInitData.bgpri  = 2;
+    cellInitData.bgpri  = 3;
     for( i=0; i<2; i++ )
     {
-      cellInitData.anmseq = CGOA_OME_KAKUSHI_L+i;
+      cellInitData.anmseq = CGOAM_OME_PLATE_L+i;
       gameWork->clwkOmeHide[i] = GFL_CLACT_WK_Create( gameWork->cellUnit,
-          gameWork->cellResIdx[CGOR_COMMON_PLT],
-          gameWork->cellResIdx[CGOR_COMMON_NCG],
-          gameWork->cellResIdx[CGOR_COMMON_ANM],
+          gameWork->cellResIdx[CGOR_LOWER_PLT],
+          gameWork->cellResIdx[CGOR_LOWER_NCG],
+          gameWork->cellResIdx[CGOR_LOWER_ANM],
           &cellInitData ,CLSYS_DEFREND_MAIN, heapID );
       GFL_CLACT_WK_SetDrawEnable( gameWork->clwkOmeHide[i], FALSE );
     }
     // 虹
-    cellInitData.softpri= 4;
-    cellInitData.bgpri  = 2;
-    cellInitData.anmseq = CGOA_OME_NIJI;
+    cellInitData.softpri= 1;
+    cellInitData.bgpri  = 3;
+    cellInitData.anmseq = CGOAM_RAINBOW1;
     gameWork->clwkOmeNiji = GFL_CLACT_WK_Create( gameWork->cellUnit,
-        gameWork->cellResIdx[CGOR_COMMON_PLT],
-        gameWork->cellResIdx[CGOR_COMMON_NCG],
-        gameWork->cellResIdx[CGOR_COMMON_ANM],
+        gameWork->cellResIdx[CGOR_LOWER_PLT],
+        gameWork->cellResIdx[CGOR_LOWER_NCG],
+        gameWork->cellResIdx[CGOR_LOWER_ANM],
         &cellInitData ,CLSYS_DEFREND_MAIN, heapID );
     GFL_CLACT_WK_SetDrawEnable( gameWork->clwkOmeNiji, FALSE );
     // 星
     cellInitData.softpri= 2;
-    cellInitData.bgpri  = 2;
-    cellInitData.anmseq = CGOA_OME_STAR;
+    cellInitData.bgpri  = 3;
+    cellInitData.anmseq = CGOAM_STAR1;
     gameWork->clwkOmeStar = GFL_CLACT_WK_Create( gameWork->cellUnit,
-        gameWork->cellResIdx[CGOR_COMMON_PLT],
-        gameWork->cellResIdx[CGOR_COMMON_NCG],
-        gameWork->cellResIdx[CGOR_COMMON_ANM],
+        gameWork->cellResIdx[CGOR_LOWER_PLT],
+        gameWork->cellResIdx[CGOR_LOWER_NCG],
+        gameWork->cellResIdx[CGOR_LOWER_ANM],
         &cellInitData ,CLSYS_DEFREND_MAIN, heapID );
     GFL_CLACT_WK_SetDrawEnable( gameWork->clwkOmeStar, FALSE );
   }
@@ -2771,9 +2786,9 @@ static void game_update_seq_score_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
     // おめでとう
     cellAffineData.clwkdata.pos_x  = 128;
     cellAffineData.clwkdata.pos_y  = 96;
-    cellAffineData.clwkdata.anmseq = CGOA_OME_FONT1;
+    cellAffineData.clwkdata.anmseq = CGOAM_OME1;
     cellAffineData.clwkdata.softpri= 1;
-    cellAffineData.clwkdata.bgpri  = 2;
+    cellAffineData.clwkdata.bgpri  = 1;
 
     cellAffineData.affinepos_x  = 0;
     cellAffineData.affinepos_y  = 0;
@@ -2783,21 +2798,101 @@ static void game_update_seq_score_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
     cellAffineData.affine_type  = CLSYS_AFFINETYPE_DOUBLE;
 
     gameWork->clwkOmeFont = GFL_CLACT_WK_CreateAffine( gameWork->cellUnit,
-        gameWork->cellResIdx[CGOR_COMMON_PLT],
-        gameWork->cellResIdx[CGOR_COMMON_NCG],
-        gameWork->cellResIdx[CGOR_COMMON_ANM],
+        gameWork->cellResIdx[CGOR_LOWER_PLT],
+        gameWork->cellResIdx[CGOR_LOWER_NCG],
+        gameWork->cellResIdx[CGOR_LOWER_ANM],
         &cellAffineData ,CLSYS_DEFREND_MAIN, heapID );
     GFL_CLACT_WK_SetDrawEnable( gameWork->clwkOmeFont, FALSE );
 
+    // お
+    cellAffineData.clwkdata.pos_x  = 59;
+    cellAffineData.clwkdata.pos_y  = 80;
+    cellAffineData.clwkdata.anmseq = CGOAM_TEXT_O;
+    cellAffineData.clwkdata.softpri= 2;
+    cellAffineData.clwkdata.bgpri  = 1;
+    gameWork->clwkOmeText[0] = GFL_CLACT_WK_CreateAffine( gameWork->cellUnit,
+        gameWork->cellResIdx[CGOR_LOWER_PLT],
+        gameWork->cellResIdx[CGOR_LOWER_NCG],
+        gameWork->cellResIdx[CGOR_LOWER_ANM],
+        &cellAffineData ,CLSYS_DEFREND_MAIN, heapID );
+    GFL_CLACT_WK_SetDrawEnable( gameWork->clwkOmeText[0], FALSE );
+
+    // め
+    cellAffineData.clwkdata.pos_x  = 90;
+    cellAffineData.clwkdata.pos_y  = 80;
+    cellAffineData.clwkdata.anmseq = CGOAM_TEXT_ME;
+    cellAffineData.clwkdata.softpri= 3;
+    cellAffineData.clwkdata.bgpri  = 1;
+    gameWork->clwkOmeText[1] = GFL_CLACT_WK_CreateAffine( gameWork->cellUnit,
+        gameWork->cellResIdx[CGOR_LOWER_PLT],
+        gameWork->cellResIdx[CGOR_LOWER_NCG],
+        gameWork->cellResIdx[CGOR_LOWER_ANM],
+        &cellAffineData ,CLSYS_DEFREND_MAIN, heapID );
+    GFL_CLACT_WK_SetDrawEnable( gameWork->clwkOmeText[1], FALSE );
+
+    // で
+    cellAffineData.clwkdata.pos_x  = 120;
+    cellAffineData.clwkdata.pos_y  = 80;
+    cellAffineData.clwkdata.anmseq = CGOAM_TEXT_DE;
+    cellAffineData.clwkdata.softpri= 4;
+    cellAffineData.clwkdata.bgpri  = 1;
+    gameWork->clwkOmeText[2] = GFL_CLACT_WK_CreateAffine( gameWork->cellUnit,
+        gameWork->cellResIdx[CGOR_LOWER_PLT],
+        gameWork->cellResIdx[CGOR_LOWER_NCG],
+        gameWork->cellResIdx[CGOR_LOWER_ANM],
+        &cellAffineData ,CLSYS_DEFREND_MAIN, heapID );
+    GFL_CLACT_WK_SetDrawEnable( gameWork->clwkOmeText[2], FALSE );
+
+    // と
+    cellAffineData.clwkdata.pos_x  = 150;
+    cellAffineData.clwkdata.pos_y  = 80;
+    cellAffineData.clwkdata.anmseq = CGOAM_TEXT_TO;
+    cellAffineData.clwkdata.softpri= 5;
+    cellAffineData.clwkdata.bgpri  = 1;
+    gameWork->clwkOmeText[3] = GFL_CLACT_WK_CreateAffine( gameWork->cellUnit,
+        gameWork->cellResIdx[CGOR_LOWER_PLT],
+        gameWork->cellResIdx[CGOR_LOWER_NCG],
+        gameWork->cellResIdx[CGOR_LOWER_ANM],
+        &cellAffineData ,CLSYS_DEFREND_MAIN, heapID );
+    GFL_CLACT_WK_SetDrawEnable( gameWork->clwkOmeText[3], FALSE );
+
+    // う
+    cellAffineData.clwkdata.pos_x  = 177;
+    cellAffineData.clwkdata.pos_y  = 80;
+    cellAffineData.clwkdata.anmseq = CGOAM_TEXT_U;
+    cellAffineData.clwkdata.softpri= 6;
+    cellAffineData.clwkdata.bgpri  = 1;
+    gameWork->clwkOmeText[4] = GFL_CLACT_WK_CreateAffine( gameWork->cellUnit,
+        gameWork->cellResIdx[CGOR_LOWER_PLT],
+        gameWork->cellResIdx[CGOR_LOWER_NCG],
+        gameWork->cellResIdx[CGOR_LOWER_ANM],
+        &cellAffineData ,CLSYS_DEFREND_MAIN, heapID );
+    GFL_CLACT_WK_SetDrawEnable( gameWork->clwkOmeText[4], FALSE );
+
+    // ！
+    cellAffineData.clwkdata.pos_x  = 200;
+    cellAffineData.clwkdata.pos_y  = 80;
+    cellAffineData.clwkdata.anmseq = CGOAM_TEXT_EX;
+    cellAffineData.clwkdata.softpri= 6;
+    cellAffineData.clwkdata.bgpri  = 1;
+    gameWork->clwkOmeText[5] = GFL_CLACT_WK_CreateAffine( gameWork->cellUnit,
+        gameWork->cellResIdx[CGOR_LOWER_PLT],
+        gameWork->cellResIdx[CGOR_LOWER_NCG],
+        gameWork->cellResIdx[CGOR_LOWER_ANM],
+        &cellAffineData ,CLSYS_DEFREND_MAIN, heapID );
+    GFL_CLACT_WK_SetDrawEnable( gameWork->clwkOmeText[5], FALSE );
+
     // 雲
+    cellAffineData.clwkdata.pos_x  = 128;
+    cellAffineData.clwkdata.pos_y  = 96;
     cellAffineData.clwkdata.softpri= 3;
     for( i=0; i<2; i++ )
     {
-      cellAffineData.clwkdata.anmseq = CGOA_OME_CLOUD_L+i;
+      cellAffineData.clwkdata.anmseq = CGOAM_OME_CLOUD_L+i;
       gameWork->clwkOmeCloud[i] = GFL_CLACT_WK_CreateAffine( gameWork->cellUnit,
-        gameWork->cellResIdx[CGOR_COMMON_PLT],
-        gameWork->cellResIdx[CGOR_COMMON_NCG],
-        gameWork->cellResIdx[CGOR_COMMON_ANM],
+        gameWork->cellResIdx[CGOR_LOWER_PLT],
+        gameWork->cellResIdx[CGOR_LOWER_NCG],
+        gameWork->cellResIdx[CGOR_LOWER_ANM],
         &cellAffineData ,CLSYS_DEFREND_MAIN, heapID );
       GFL_CLACT_WK_SetDrawEnable( gameWork->clwkOmeCloud[i], FALSE );
     }
@@ -2806,7 +2901,7 @@ static void game_update_seq_score_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
 
   // BGパレットアニメ用
   gameWork->bg_pal_anm = 0;
-  gameWork->p_plt_buff = GFL_ARC_UTIL_LoadPalette( ARCID_COMM_TVT_GRA, NARC_comm_tvt_tv_score_bg_NCLR, &gameWork->p_plt_data, gameWork->heapId );
+  gameWork->p_plt_buff = GFL_ARC_UTIL_LoadPalette( ARCID_TVT_BALLOON, NARC_tvt_balloon_tv_score_bg_NCLR, &gameWork->p_plt_data, gameWork->heapId );
 
   gameWork->sub_seq = 0;
   gameWork->score_cnt = 0;
@@ -2922,9 +3017,16 @@ static BOOL game_update_seq_score( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork
       GFL_CLACT_WK_SetAutoAnmFlag( gameWork->clwkOmeStar, TRUE );
       GFL_CLACT_WK_ResetAnm( gameWork->clwkOmeStar );
 
-      GFL_CLACT_WK_SetAnmSeq( gameWork->clwkOmeFont, CGOA_OME_FONT2 );
-      GFL_CLACT_WK_SetAutoAnmFlag( gameWork->clwkOmeFont, TRUE );
-      GFL_CLACT_WK_ResetAnm( gameWork->clwkOmeFont );
+      GFL_CLACT_WK_SetDrawEnable( gameWork->clwkOmeFont, FALSE );
+
+      // おめでとう 単文字表示
+      for( i=0; i<6; i++ )
+      {
+        GFL_CLACT_WK_SetDrawEnable( gameWork->clwkOmeText[i], TRUE );
+        GFL_CLACT_WK_SetAutoAnmFlag( gameWork->clwkOmeText[i], TRUE );
+        GFL_CLACT_WK_ResetAnm( gameWork->clwkOmeText[i] );
+      }
+
       gameWork->sub_seq = SUB_SEQ_END_WAIT;
     }
     break;
@@ -3091,6 +3193,10 @@ static void game_update_seq_exit( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork 
   GFL_CLACT_WK_Remove( gameWork->clwkOmeFont );
   GFL_CLACT_WK_Remove( gameWork->clwkOmeNiji );
   GFL_CLACT_WK_Remove( gameWork->clwkOmeStar );
+  for( i=0; i<6; i++ )
+  {
+    GFL_CLACT_WK_Remove( gameWork->clwkOmeText[i] );
+  }
   for( i=0; i<2; i++ )
   {
     GFL_CLACT_WK_Remove( gameWork->clwkOmeCloud[i] );
@@ -3169,8 +3275,8 @@ static void GRAPHIC_Init( CTVT_GAME_WORK* p_wk, HEAPID heapID )
     GX_VRAM_SUB_OBJEXTPLTT_NONE,// サブ2DエンジンのOBJ拡張パレット
     GX_VRAM_TEX_0_B,          // テクスチャイメージスロット
     GX_VRAM_TEXPLTT_0_G,      // テクスチャパレットスロット
-    GX_OBJVRAMMODE_CHAR_1D_32K, // メインOBJマッピングモード
-    GX_OBJVRAMMODE_CHAR_1D_32K, // サブOBJマッピングモード
+    GX_OBJVRAMMODE_CHAR_1D_128K, // メインOBJマッピングモード
+    GX_OBJVRAMMODE_CHAR_1D_128K, // サブOBJマッピングモード
   };
 
   // レジスタ初期化
@@ -3205,7 +3311,7 @@ static void GRAPHIC_Init( CTVT_GAME_WORK* p_wk, HEAPID heapID )
     GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ , TRUE );
     GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ , TRUE );
 
-    p_wk->cellUnit = GFL_CLACT_UNIT_Create( 64, CELLUNIT_PRI_MAIN, heapID );
+    p_wk->cellUnit = GFL_CLACT_UNIT_Create( 64, 0, heapID );
     GFL_CLACT_UNIT_SetDefaultRend( p_wk->cellUnit );
   }
   // ライブｷｬｽﾀｰのセルアクターを作り直さないといけない
@@ -3374,8 +3480,8 @@ static void GRAPHIC_BG_Init( CTVT_GAME_WORK* p_wk, HEAPID heapID )
     // Sub
     // BG0 SUB (背景
     static const GFL_BG_BGCNT_HEADER header_sub0 = {
-      0, 0, 0x0800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
-      GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      0, 0, 0x1000, 0,  // scrX, scrY, scrbufSize, scrbufofs,
+      GFL_BG_SCRSIZ_256x512, GX_BG_COLORMODE_16,
       GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x04000,GFL_BG_CHRSIZ_256x256,
       GX_BG_EXTPLTT_23, 3, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
@@ -3669,15 +3775,23 @@ static void RESOURCE_Init( CTVT_GAME_WORK* p_wk, HEAPID heapID, ARCHANDLE* arcHa
   u8  i;
 
   // OBJ
-  // 共通
-  p_wk->cellResIdx[CGOR_COMMON_PLT] = GFL_CLGRP_PLTT_RegisterComp( arcHandle, 
-      NARC_tvt_balloon_game_obj_NCLR, CLSYS_DRAW_MAX, 
+  // 上画面(SUB)
+  p_wk->cellResIdx[CGOR_UPPER_PLT] = GFL_CLGRP_PLTT_RegisterComp( arcHandle, 
+      NARC_tvt_balloon_game_obj_u_NCLR, CLSYS_DRAW_SUB, 
       CTVT_GAME_PAL_OBJ_COMMON*32, heapID );
-  p_wk->cellResIdx[CGOR_COMMON_NCG] = GFL_CLGRP_CGR_Register( arcHandle, 
-      NARC_tvt_balloon_game_obj_NCGR, FALSE, CLSYS_DRAW_MAX, heapID );
-  p_wk->cellResIdx[CGOR_COMMON_ANM] = GFL_CLGRP_CELLANIM_Register( arcHandle, 
-      NARC_tvt_balloon_game_obj_NCER, NARC_tvt_balloon_game_obj_NANR, heapID );
+  p_wk->cellResIdx[CGOR_UPPER_NCG] = GFL_CLGRP_CGR_Register( arcHandle, 
+      NARC_tvt_balloon_game_obj_u_NCGR, FALSE, CLSYS_DRAW_SUB, heapID );
+  p_wk->cellResIdx[CGOR_UPPER_ANM] = GFL_CLGRP_CELLANIM_Register( arcHandle, 
+      NARC_tvt_balloon_game_obj_u_NCER, NARC_tvt_balloon_game_obj_u_NANR, heapID );
 
+  // 下画面(MAIN)
+  p_wk->cellResIdx[CGOR_LOWER_PLT] = GFL_CLGRP_PLTT_RegisterComp( arcHandle, 
+      NARC_tvt_balloon_game_obj_l_NCLR, CLSYS_DRAW_MAIN, 
+      CTVT_GAME_PAL_OBJ_COMMON*32, heapID );
+  p_wk->cellResIdx[CGOR_LOWER_NCG] = GFL_CLGRP_CGR_Register( arcHandle, 
+      NARC_tvt_balloon_game_obj_l_NCGR, FALSE, CLSYS_DRAW_MAIN, heapID );
+  p_wk->cellResIdx[CGOR_LOWER_ANM] = GFL_CLGRP_CELLANIM_Register( arcHandle, 
+      NARC_tvt_balloon_game_obj_l_NCER, NARC_tvt_balloon_game_obj_l_NANR, heapID );
   
   // 3Dリソース
   {
@@ -4517,33 +4631,19 @@ static GAME_PLATE_WORK* GAME_PLATE_CreatePlate( COMM_TVT_WORK *work, CTVT_GAME_W
   p_plate->is_blank = FALSE;
   p_plate->is_mine = (netID==selfId) ? TRUE : FALSE;
 
-  //Obj系
-  {
-    //ユニットとレンダーをそれぞれ作る
-    GFL_REND_SURFACE_INIT renderInit;
-    renderInit.lefttop_x = 0;
-    renderInit.lefttop_y = 0;
-    renderInit.width  = 256;
-    renderInit.height = 192;
-    renderInit.type = CLSYS_DRAW_SUB;
-    renderInit.culling = CLSYS_REND_CULLING_TYPE_NORMAL;
-    p_plate->cellRender = GFL_CLACT_USERREND_Create( &renderInit, 1, gameWork->heapId );
-    p_plate->cellUnit = GFL_CLACT_UNIT_Create( PLATE_CELLNUM, CELLUNIT_PRI_PLATE, gameWork->heapId );
-    GFL_CLACT_UNIT_SetUserRend( p_plate->cellUnit, p_plate->cellRender );
-  }
   // セル作成
   {
     GFL_CLWK_DATA cellInitData;
     cellInitData.pos_x = baseX;
     cellInitData.pos_y = baseY;
-    cellInitData.anmseq = CGOA_PLATE_R;
+    cellInitData.anmseq = CGOAS_PLATE;
     cellInitData.softpri= 3;
     cellInitData.bgpri  = 1;
-    p_plate->clwkPlate = GFL_CLACT_WK_Create( p_plate->cellUnit,
-          gameWork->cellResIdx[CGOR_COMMON_PLT],
-          gameWork->cellResIdx[CGOR_COMMON_NCG],
-          gameWork->cellResIdx[CGOR_COMMON_ANM],
-          &cellInitData ,PLATE_RENDER_MAIN, gameWork->heapId );
+    p_plate->clwkPlate = GFL_CLACT_WK_Create( gameWork->cellUnit,
+          gameWork->cellResIdx[CGOR_UPPER_PLT],
+          gameWork->cellResIdx[CGOR_UPPER_NCG],
+          gameWork->cellResIdx[CGOR_UPPER_ANM],
+          &cellInitData ,CLSYS_DEFREND_SUB, gameWork->heapId );
     GFL_CLACT_WK_SetDrawEnable( p_plate->clwkPlate, FALSE );
 
     // 番号順でパレットをずらす 色変え
@@ -4552,14 +4652,14 @@ static GAME_PLATE_WORK* GAME_PLATE_CreatePlate( COMM_TVT_WORK *work, CTVT_GAME_W
     // ポイントのP
     cellInitData.pos_x = baseX + PLATE_OFFSET_X_P;
     cellInitData.pos_y = baseY;
-    cellInitData.anmseq = CGOA_P;
+    cellInitData.anmseq = CGOAS_P;
     cellInitData.softpri= 1;
     cellInitData.bgpri  = 1;
-    p_plate->clwkP = GFL_CLACT_WK_Create( p_plate->cellUnit,
-          gameWork->cellResIdx[CGOR_COMMON_PLT],
-          gameWork->cellResIdx[CGOR_COMMON_NCG],
-          gameWork->cellResIdx[CGOR_COMMON_ANM],
-          &cellInitData ,PLATE_RENDER_MAIN, gameWork->heapId );
+    p_plate->clwkP = GFL_CLACT_WK_Create( gameWork->cellUnit,
+          gameWork->cellResIdx[CGOR_UPPER_PLT],
+          gameWork->cellResIdx[CGOR_UPPER_NCG],
+          gameWork->cellResIdx[CGOR_UPPER_ANM],
+          &cellInitData ,CLSYS_DEFREND_SUB, gameWork->heapId );
     GFL_CLACT_WK_SetDrawEnable( p_plate->clwkP, FALSE );
     
 #if 0
@@ -4572,23 +4672,14 @@ static GAME_PLATE_WORK* GAME_PLATE_CreatePlate( COMM_TVT_WORK *work, CTVT_GAME_W
       cellInitData.softpri= 1;
       cellInitData.bgpri  = 1;
       p_plate->clwkCrown = GFL_CLACT_WK_Create( p_plate->cellUnit,
-          gameWork->cellResIdx[CGOR_COMMON_PLT],
-          gameWork->cellResIdx[CGOR_COMMON_NCG],
-          gameWork->cellResIdx[CGOR_COMMON_ANM],
-          &cellInitData ,PLATE_RENDER_MAIN, gameWork->heapId );
+          gameWork->cellResIdx[CGOR_LOWER_PLT],
+          gameWork->cellResIdx[CGOR_LOWER_NCG],
+          gameWork->cellResIdx[CGOR_LOWER_ANM],
+          &cellInitData ,CLSYS_DEFREND_SUB, gameWork->heapId );
       GFL_CLACT_WK_SetDrawEnable( p_plate->clwkCrown, FALSE );
     }
 #endif
   }
-#if 0
-  {
-    //設定が終わったらレンダラを動かす
-    GFL_CLACTPOS surfacePos;
-    surfacePos.x = baseX;
-    surfacePos.y = baseY;
-    GFL_CLACT_USERREND_SetSurfacePos( p_plate->cellRender, PLATE_RENDER_MAIN, &surfacePos );
-  }
-#endif
 
   // BMPWIN作成
   {
@@ -4640,8 +4731,6 @@ static GAME_PLATE_WORK* GAME_PLATE_CreatePlate( COMM_TVT_WORK *work, CTVT_GAME_W
 //-----------------------------------------------------------------------------
 static GAME_PLATE_WORK* GAME_PLATE_CreatePlate_Blank( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork, const u8 netID )
 {
-
-#if 1
   GAME_PLATE_WORK *p_plate;
   p_plate = GFL_HEAP_AllocClearMemory( gameWork->heapId, sizeof(GAME_PLATE_WORK) );
   p_plate->heapID = gameWork->heapId;
@@ -4650,51 +4739,7 @@ static GAME_PLATE_WORK* GAME_PLATE_CreatePlate_Blank( COMM_TVT_WORK *work, CTVT_
   p_plate->is_update_name = FALSE;
   p_plate->is_update_score = FALSE;
   p_plate->is_blank = TRUE;
-#endif
 
-#if 0
-  const u8 baseX = PLATE_POS[netID][0];
-  const u8 baseY = PLATE_POS[netID][1];
-  GAME_PLATE_WORK *p_plate;
-  p_plate = GFL_HEAP_AllocClearMemory( gameWork->heapId, sizeof(GAME_PLATE_WORK) );
-  p_plate->rank   = netID + 1;
-  p_plate->netID  = netID;
-  p_plate->is_blank = FALSE;
-
-  //Obj系
-  {
-    //ユニットとレンダーをそれぞれ作る
-    GFL_REND_SURFACE_INIT renderInit;
-    renderInit.lefttop_x = 0;
-    renderInit.lefttop_y = 0;
-    renderInit.width  = 256;
-    renderInit.height = 192;
-    renderInit.type = CLSYS_DRAW_SUB;
-    renderInit.culling = CLSYS_REND_CULLING_TYPE_NORMAL;
-    p_plate->cellRender = GFL_CLACT_USERREND_Create( &renderInit, 1, gameWork->heapId );
-    p_plate->cellUnit = GFL_CLACT_UNIT_Create( PLATE_CELLNUM, CELLUNIT_PRI_PLATE, gameWork->heapId );
-    GFL_CLACT_UNIT_SetUserRend( p_plate->cellUnit , p_plate->cellRender );
-  }
-  // セル作成
-  {
-    u8 i;
-    GFL_CLWK_DATA cellInitData;
-    cellInitData.pos_x = baseX;
-    cellInitData.pos_y = baseY;
-    cellInitData.anmseq = CGOA_PLATE_R;
-    cellInitData.softpri= 1;
-    cellInitData.bgpri  = 1;
-    p_plate->clwkPlate = GFL_CLACT_WK_Create( p_plate->cellUnit,
-          gameWork->cellResIdx[CGOR_COMMON_PLT],
-          gameWork->cellResIdx[CGOR_COMMON_NCG],
-          gameWork->cellResIdx[CGOR_COMMON_ANM],
-          &cellInitData ,PLATE_RENDER_MAIN, gameWork->heapId );
-    GFL_CLACT_WK_SetDrawEnable( p_plate->clwkPlate, FALSE );
-
-    // 番号順でパレットをずらす 色変え
-    GFL_CLACT_WK_SetPlttOffs( p_plate->clwkPlate, netID, CLWK_PLTTOFFS_MODE_PLTT_TOP );
-  }
-#endif
 #ifdef PM_DEBUG
   p_plate->debug_blank = TRUE;
 #endif
@@ -4735,8 +4780,6 @@ static void GAME_PLATE_DeletePlate( GAME_PLATE_WORK *p_wk )
       GFL_CLACT_WK_Remove( p_wk->clwkCrown );
     }
 #endif
-    GFL_CLACT_USERREND_Delete( p_wk->cellRender );
-    GFL_CLACT_UNIT_Delete( p_wk->cellUnit );
   }
 
   GFL_HEAP_FreeMemory( p_wk );
@@ -5002,18 +5045,18 @@ static BOOL GAME_PLATE_MovePlate( GAME_PLATE_WORK *p_wk, const int value )
   // 動かす
   GFL_CLACTPOS pos;
   s16 tmpx;
-  GFL_CLACT_WK_GetPos( p_wk->clwkPlate, &pos, PLATE_RENDER_MAIN );
+  GFL_CLACT_WK_GetPos( p_wk->clwkPlate, &pos, CLSYS_DEFREND_SUB );
   pos.x += value*8;
-  GFL_CLACT_WK_SetPos( p_wk->clwkPlate, &pos, PLATE_RENDER_MAIN ); 
+  GFL_CLACT_WK_SetPos( p_wk->clwkPlate, &pos, CLSYS_DEFREND_SUB ); 
   tmpx = pos.x;
 
   pos.x = tmpx + PLATE_OFFSET_X_P;
-  GFL_CLACT_WK_SetPos( p_wk->clwkP, &pos, PLATE_RENDER_MAIN ); 
+  GFL_CLACT_WK_SetPos( p_wk->clwkP, &pos, CLSYS_DEFREND_SUB ); 
 #if 0
   if( p_wk->is_mine == TRUE )
   {
     pos.x = tmpx + PLATE_OFFSET_X_CROWN;
-    GFL_CLACT_WK_SetPos( p_wk->clwkCrown, &pos, PLATE_RENDER_MAIN ); 
+    GFL_CLACT_WK_SetPos( p_wk->clwkCrown, &pos, CLSYS_DEFREND_SUB ); 
   }
 #endif
 
@@ -5065,15 +5108,15 @@ static void GAME_PLATE_ClearPlate( GAME_PLATE_WORK *p_wk )
   s16   tmpx;
   pos.x = 384;
   pos.y = PLATE_POS[p_wk->rank-1][1];
-  GFL_CLACT_WK_SetPos( p_wk->clwkPlate, &pos, PLATE_RENDER_MAIN ); 
+  GFL_CLACT_WK_SetPos( p_wk->clwkPlate, &pos, CLSYS_DEFREND_SUB ); 
   tmpx = pos.x;
   pos.x = tmpx + PLATE_OFFSET_X_P;
-  GFL_CLACT_WK_SetPos( p_wk->clwkP, &pos, PLATE_RENDER_MAIN ); 
+  GFL_CLACT_WK_SetPos( p_wk->clwkP, &pos, CLSYS_DEFREND_SUB ); 
 #if 0
   if( p_wk->is_mine == TRUE )
   {
     pos.x = tmpx + PLATE_OFFSET_X_CROWN;
-    GFL_CLACT_WK_SetPos( p_wk->clwkCrown, &pos, PLATE_RENDER_MAIN ); 
+    GFL_CLACT_WK_SetPos( p_wk->clwkCrown, &pos, CLSYS_DEFREND_SUB ); 
   }
 #endif
 
@@ -5218,90 +5261,100 @@ static void GAME_PLATE_ChangePlate( COMM_TVT_WORK *work, GAME_PLATE_WORK *p_wk )
     const u8 baseY = PLATE_S_POS[p_wk->netID][1];
 
     // 上画面から下画面表示に変更
-    GFL_CLACT_USERREND_Delete( p_wk->cellRender );
-    {
-      // レンダーをそれぞれ作る
-      GFL_REND_SURFACE_INIT renderInit;
-      renderInit.lefttop_x = 0;
-      renderInit.lefttop_y = 0;
-      renderInit.width  = 256;
-      renderInit.height = 192;
-      renderInit.type = CLSYS_DRAW_MAIN;
-      renderInit.culling = CLSYS_REND_CULLING_TYPE_NORMAL;
-      p_wk->cellRender = GFL_CLACT_USERREND_Create( &renderInit, 1, gameWork->heapId );
-    }
-    GFL_CLACT_UNIT_SetUserRend( p_wk->cellUnit , p_wk->cellRender );
+    GFL_CLACT_WK_Remove( p_wk->clwkPlate );
+    GFL_CLACT_WK_Remove( p_wk->clwkP );
 
     // セルを変更
-    GFL_CLACT_WK_SetAnmSeq( p_wk->clwkPlate, CGOA_PLATE_S_R );
-
     {
-      GFL_CLACTPOS pos;
-      pos.x = baseX;
-      pos.y = baseY;
+      GFL_CLWK_DATA cellInitData;
+      cellInitData.pos_x = baseX;
+      cellInitData.pos_y = baseY;
+      cellInitData.anmseq = CGOAM_PLATE_S;
+      cellInitData.softpri= 3;
+      cellInitData.bgpri  = 1;
+      p_wk->clwkPlate = GFL_CLACT_WK_Create( gameWork->cellUnit,
+          gameWork->cellResIdx[CGOR_LOWER_PLT],
+          gameWork->cellResIdx[CGOR_LOWER_NCG],
+          gameWork->cellResIdx[CGOR_LOWER_ANM],
+          &cellInitData ,CLSYS_DEFREND_MAIN, gameWork->heapId );
+      GFL_CLACT_WK_SetDrawEnable( p_wk->clwkPlate, TRUE );
 
-      GFL_CLACT_WK_SetPos( p_wk->clwkPlate, &pos, PLATE_RENDER_MAIN );
-      pos.x = baseX + PLATE_S_OFFSET_X_P;
-      pos.y = baseY + 8;
-      GFL_CLACT_WK_SetPos( p_wk->clwkP, &pos, PLATE_RENDER_MAIN );
-#if 0
-      if( p_wk->is_mine == TRUE )
-      {
-        GFL_CLACT_WK_SetDrawEnable( p_wk->clwkCrown, FALSE );
-      }
-#endif
-      
-      // 点数はセル作成
-      for( i=0; i<3; i++ )
-      {
-        GFL_CLWK_DATA cellInitData;
-        cellInitData.pos_x = baseX + (i*9);
-        cellInitData.pos_y = baseY + 8;
-        cellInitData.anmseq = CGOA_NUM_DRUM;
-        cellInitData.softpri= 0;
-        cellInitData.bgpri  = 1;
-        p_wk->clwkPoint[i] = GFL_CLACT_WK_Create( p_wk->cellUnit,
-            gameWork->cellResIdx[CGOR_COMMON_PLT],
-            gameWork->cellResIdx[CGOR_COMMON_NCG],
-            gameWork->cellResIdx[CGOR_COMMON_ANM],
-            &cellInitData ,PLATE_RENDER_MAIN, gameWork->heapId );
-        GFL_CLACT_WK_SetAutoAnmFlag( p_wk->clwkPoint[i], TRUE );
-        GFL_CLACT_WK_SetAnmIndex( p_wk->clwkPoint[i], i*3 );
-        ICHI_Printf("anmIndex %d \n",GFL_CLACT_WK_GetAnmIndex(p_wk->clwkPoint[i]) );
-      }
+      // 番号順でパレットをずらす 色変え
+      GFL_CLACT_WK_SetPlttOffs( p_wk->clwkPlate, p_wk->netID, CLWK_PLTTOFFS_MODE_PLTT_TOP );
+
+      // ポイントのP
+      cellInitData.pos_x = baseX + PLATE_S_OFFSET_X_P;
+      cellInitData.pos_y = baseY + 8;
+      cellInitData.anmseq = CGOAM_P;
+      cellInitData.softpri= 1;
+      cellInitData.bgpri  = 1;
+      p_wk->clwkP = GFL_CLACT_WK_Create( gameWork->cellUnit,
+          gameWork->cellResIdx[CGOR_LOWER_PLT],
+          gameWork->cellResIdx[CGOR_LOWER_NCG],
+          gameWork->cellResIdx[CGOR_LOWER_ANM],
+          &cellInitData ,CLSYS_DEFREND_MAIN, gameWork->heapId );
+      GFL_CLACT_WK_SetDrawEnable( p_wk->clwkP, TRUE );
     }
 
-    // 名前
-#ifdef PM_DEBUG
-    if( p_wk->debug_blank == FALSE )
-#endif
+#if 0
+    if( p_wk->is_mine == TRUE )
     {
-      GFL_FONT *fontHandle = COMM_TVT_GetFontHandle( work );
-      GFL_MSGDATA *msgHandle = COMM_TVT_GetMegHandle( work );
-      PRINT_QUE *printQue = COMM_TVT_GetPrintQue( work );
+      GFL_CLACT_WK_SetDrawEnable( p_wk->clwkCrown, FALSE );
+    }
+#endif
 
-      CTVT_COMM_WORK        *commWork = COMM_TVT_GetCommWork( work );
-      CTVT_COMM_MEMBER_DATA *memData = CTVT_COMM_GetMemberData( work, commWork, p_wk->netID );
-      MYSTATUS *myStatus = (MYSTATUS*)memData->myStatusBuff;
-      STRBUF *str = MyStatus_CreateNameString( myStatus, gameWork->heapId );
-      const u8 nameLen = PRINTSYS_GetStrWidth( str, fontHandle, 0 );
-
-      // BMPWINは作り直す
-      GFL_BMPWIN_ClearTransWindow( p_wk->bmpwin_name );
-      GFL_BMPWIN_Delete( p_wk->bmpwin_name );
-      GFL_BG_SetVisible( CTVT_GAME_FRAME_S_PLATE, VISIBLE_OFF ); 
-      p_wk->bmpwin_name = GFL_BMPWIN_Create( CTVT_GAME_FRAME_M_PLATE,
-          8*p_wk->netID, 20, 2*PERSON_NAME_SIZE, 4, CTVT_GAME_PAL_BG_M_FONT, GFL_BMP_CHRAREA_GET_B );
-      GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->bmpwin_name), 0x0 );
-
-      PRINTSYS_PrintQueColor( printQue, GFL_BMPWIN_GetBmp(p_wk->bmpwin_name),
-           32 - (nameLen/2), 0, str, fontHandle, CTVT_FONT_COLOR_BLACK );
-      GFL_STR_DeleteBuffer( str );
-      GFL_BMPWIN_TransVramCharacter( p_wk->bmpwin_name );
-      GFL_BMPWIN_MakeScreen( p_wk->bmpwin_name );
-      p_wk->is_update_name = TRUE;
+    // 点数はセル作成
+    for( i=0; i<3; i++ )
+    {
+      GFL_CLWK_DATA cellInitData;
+      cellInitData.pos_x = baseX + (i*9);
+      cellInitData.pos_y = baseY + 8;
+      cellInitData.anmseq = CGOAM_NUM_DRUM;
+      cellInitData.softpri= 0;
+      cellInitData.bgpri  = 1;
+      p_wk->clwkPoint[i] = GFL_CLACT_WK_Create( gameWork->cellUnit,
+          gameWork->cellResIdx[CGOR_LOWER_PLT],
+          gameWork->cellResIdx[CGOR_LOWER_NCG],
+          gameWork->cellResIdx[CGOR_LOWER_ANM],
+          &cellInitData ,CLSYS_DEFREND_MAIN, gameWork->heapId );
+      GFL_CLACT_WK_SetAutoAnmFlag( p_wk->clwkPoint[i], TRUE );
+      GFL_CLACT_WK_SetAnmIndex( p_wk->clwkPoint[i], i*3 );
+      ICHI_Printf("anmIndex %d \n",GFL_CLACT_WK_GetAnmIndex(p_wk->clwkPoint[i]) );
     }
   }
+
+
+  // 名前
+#ifdef PM_DEBUG
+  if( p_wk->debug_blank == FALSE )
+#endif
+  {
+    GFL_FONT *fontHandle = COMM_TVT_GetFontHandle( work );
+    GFL_MSGDATA *msgHandle = COMM_TVT_GetMegHandle( work );
+    PRINT_QUE *printQue = COMM_TVT_GetPrintQue( work );
+
+    CTVT_COMM_WORK        *commWork = COMM_TVT_GetCommWork( work );
+    CTVT_COMM_MEMBER_DATA *memData = CTVT_COMM_GetMemberData( work, commWork, p_wk->netID );
+    MYSTATUS *myStatus = (MYSTATUS*)memData->myStatusBuff;
+    STRBUF *str = MyStatus_CreateNameString( myStatus, gameWork->heapId );
+    const u8 nameLen = PRINTSYS_GetStrWidth( str, fontHandle, 0 );
+
+    // BMPWINは作り直す
+    GFL_BMPWIN_ClearTransWindow( p_wk->bmpwin_name );
+    GFL_BMPWIN_Delete( p_wk->bmpwin_name );
+    GFL_BG_SetVisible( CTVT_GAME_FRAME_S_PLATE, VISIBLE_OFF ); 
+    p_wk->bmpwin_name = GFL_BMPWIN_Create( CTVT_GAME_FRAME_M_PLATE,
+        8*p_wk->netID, 20, 2*PERSON_NAME_SIZE, 4, CTVT_GAME_PAL_BG_M_FONT, GFL_BMP_CHRAREA_GET_B );
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->bmpwin_name), 0x0 );
+
+    PRINTSYS_PrintQueColor( printQue, GFL_BMPWIN_GetBmp(p_wk->bmpwin_name),
+        32 - (nameLen/2), 0, str, fontHandle, CTVT_FONT_COLOR_BLACK );
+    GFL_STR_DeleteBuffer( str );
+    GFL_BMPWIN_TransVramCharacter( p_wk->bmpwin_name );
+    GFL_BMPWIN_MakeScreen( p_wk->bmpwin_name );
+    p_wk->is_update_name = TRUE;
+  }
+
 }
 
 //----------------------------------------------------------------------------
@@ -5348,11 +5401,11 @@ static void TaskFuncScorePlate( GFL_TCB* p_tcb, void* p_work )
   case PLATE_SEQ_DRUMROLL_STOP:
     // 得点を計算
     // 百の位
-    GFL_CLACT_WK_SetAnmSeq( p_wk->clwkPoint[0], CGOA_NUM_0 + (p_wk->point/100));
+    GFL_CLACT_WK_SetAnmSeq( p_wk->clwkPoint[0], CGOAM_NUM_0 + (p_wk->point/100));
     // 十の位
-    GFL_CLACT_WK_SetAnmSeq( p_wk->clwkPoint[1], CGOA_NUM_0 + (p_wk->point/10));
+    GFL_CLACT_WK_SetAnmSeq( p_wk->clwkPoint[1], CGOAM_NUM_0 + (p_wk->point/10));
     // 一の位
-    GFL_CLACT_WK_SetAnmSeq( p_wk->clwkPoint[2], CGOA_NUM_0 + (p_wk->point%10));
+    GFL_CLACT_WK_SetAnmSeq( p_wk->clwkPoint[2], CGOAM_NUM_0 + (p_wk->point%10));
     p_wk->sub_seq = PLATE_SEQ_WAIT;
     break;
   case PLATE_SEQ_WAIT:

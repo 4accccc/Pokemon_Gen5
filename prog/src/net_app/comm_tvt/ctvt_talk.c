@@ -192,6 +192,8 @@ struct _CTVT_TALK_WORK
   GFL_CLWK    *clwkReturn;
   GFL_CLWK    *clwkDraw;
   GFL_CLWK    *clwkTalk;
+  GFL_CLWK    *clwkBalloon1;
+  GFL_CLWK    *clwkBalloon2;
 
   CTVT_REC_BUTTON_TYPE recButtonState;
   CTVT_REC_BUTTON_TYPE befRecButtonState;
@@ -258,14 +260,21 @@ static void CTVT_TALK_AcceptMsg_Sub( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkW
 //形が矩形ではないので2個判定
 static const GFL_UI_TP_HITTBL CTVT_TALK_HitDrawButton[3] = 
 {
-  {   8, 48 ,184, 240 },
-  {  40, 64 ,208, 255 },
+  {   8, 24 ,184, 232 },
+  {  24, 40 ,184, 240 },
   {GFL_UI_TP_HIT_END,0,0,0}
 };
-// らくがき用のボタン判定を2つに分けた add ichiraku
-static const GFL_UI_TP_HITTBL CTVT_TALK_HitBalloonButton[3] = 
+// ミニゲームボタン1
+static const GFL_UI_TP_HITTBL CTVT_TALK_HitBalloonButton1[3] = 
 {
-  {  64, 88 ,184, 255 },
+  {  40, 64 ,192, 255 },
+  {  64, 72 ,200, 255 },
+  {GFL_UI_TP_HIT_END,0,0,0}
+};
+// ミニゲームボタン2
+static const GFL_UI_TP_HITTBL CTVT_TALK_HitBalloonButton2[3] = 
+{
+  {  72, 88 ,200, 255 },
   {  88,104 ,208, 255 },
   {GFL_UI_TP_HIT_END,0,0,0}
 };
@@ -368,6 +377,23 @@ void CTVT_TALK_InitMode( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
               COMM_TVT_GetObjResIdx( work, CTOR_COMMON_S_ANM ),
               &cellInitData ,CLSYS_DRAW_SUB , heapId );
     GFL_CLACT_WK_SetDrawEnable( talkWork->clwkDraw , TRUE );
+
+    // ミニゲームボタン1
+    cellInitData.anmseq = CTOAS_BALLOON1;
+    talkWork->clwkBalloon1 = GFL_CLACT_WK_Create( COMM_TVT_GetCellUnit(work) ,
+              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_S_NCG ),
+              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_S_PLT ),
+              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_S_ANM ),
+              &cellInitData ,CLSYS_DRAW_SUB , heapId );
+    GFL_CLACT_WK_SetDrawEnable( talkWork->clwkBalloon1 , TRUE );
+    // ミニゲームボタン2
+    cellInitData.anmseq = CTOAS_BALLOON2;
+    talkWork->clwkBalloon2 = GFL_CLACT_WK_Create( COMM_TVT_GetCellUnit(work) ,
+              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_S_NCG ),
+              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_S_PLT ),
+              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_S_ANM ),
+              &cellInitData ,CLSYS_DRAW_SUB , heapId );
+    GFL_CLACT_WK_SetDrawEnable( talkWork->clwkBalloon2 , TRUE );
 
     //通話ボタン
     cellInitData.anmseq = CTOAS_TALK_OFF;
@@ -488,6 +514,8 @@ void CTVT_TALK_TermMode( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
   GFL_CLACT_WK_Remove( talkWork->clwkReturn );
   GFL_CLACT_WK_Remove( talkWork->clwkTalk );
   GFL_CLACT_WK_Remove( talkWork->clwkDraw );
+  GFL_CLACT_WK_Remove( talkWork->clwkBalloon1 );
+  GFL_CLACT_WK_Remove( talkWork->clwkBalloon2 );
   GFL_CLACT_WK_Remove( talkWork->clwkPause );
   GFL_CLACT_WK_Remove( talkWork->clwkSlider );
   GFL_BG_ClearScreen( CTVT_FRAME_SUB_MISC );
@@ -1373,15 +1401,24 @@ static void CTVT_TALK_UpdateWait( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork
   if( talkWork->state == CTS_WAIT )
   {
     // 親しか押せない
+    // ミニゲーム1
     if( COMM_TVT_GetSelfIdx(work) == 0 && 
-        GFL_UI_TP_HitTrg( CTVT_TALK_HitBalloonButton ) != GFL_UI_TP_HIT_NONE  )
+        GFL_UI_TP_HitTrg( CTVT_TALK_HitBalloonButton1 ) != GFL_UI_TP_HIT_NONE  )
     {
-      //talkWork->state = CTS_FADEOUT_BOTH;
-      //talkWork->subState = CTSS_GO_BALLOON;
       CTVT_TALK_GameEnter_Init( work, talkWork );   // 初期化
       talkWork->state = CTS_REQ_GAME;
-      GFL_CLACT_WK_SetAnmSeq( talkWork->clwkDraw , CTOAS_GO_DRAW );
-      GFL_CLACT_WK_SetAutoAnmFlag( talkWork->clwkDraw , TRUE );
+      GFL_CLACT_WK_SetAnmSeq( talkWork->clwkBalloon1 , CTOAS_BALLOON1 );
+      GFL_CLACT_WK_SetAutoAnmFlag( talkWork->clwkBalloon1 , TRUE );
+      PMSND_PlaySystemSE( CTVT_SND_TOUCH );
+    }
+    // ミニゲーム2
+    if( COMM_TVT_GetSelfIdx(work) == 0 && 
+        GFL_UI_TP_HitTrg( CTVT_TALK_HitBalloonButton2 ) != GFL_UI_TP_HIT_NONE  )
+    {
+      CTVT_TALK_GameEnter_Init( work, talkWork );   // 初期化
+      talkWork->state = CTS_REQ_GAME;
+      GFL_CLACT_WK_SetAnmSeq( talkWork->clwkBalloon2, CTOAS_BALLOON2 );
+      GFL_CLACT_WK_SetAutoAnmFlag( talkWork->clwkBalloon2 , TRUE );
       PMSND_PlaySystemSE( CTVT_SND_TOUCH );
     }
 
