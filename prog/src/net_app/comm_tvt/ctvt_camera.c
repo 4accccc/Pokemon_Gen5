@@ -498,7 +498,6 @@ static void CTVT_CAMERA_CapCallBack( void *captureArea , void *userWork )
   const BOOL isDouble = COMM_TVT_IsDoubleMode( work );
   const u8 idx = COMM_TVT_GetSelfIdx( work );
 
-  ICHI_Printf("カメラ用コールバック関数 始め\n");
   //サスペンドは完全停止、ポーズは更新扱い
 
   if( COMM_TVT_GetSusspend(work) == TRUE )
@@ -594,8 +593,6 @@ static void CTVT_CAMERA_CapCallBack( void *captureArea , void *userWork )
       camWork->isUpdateBit |= 1<<idx;
     }
   }
-
-  ICHI_Printf("カメラ用コールバック関数 終わり\n");
 }
 
 //--------------------------------------------------------------
@@ -936,9 +933,7 @@ void CTVT_CAMERA_PlayStartSe( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
 {
   if( COMM_TVT_CanUseCamera() == TRUE )
   {
-//#ifndef DEBUG_ONLY_FOR_ichiraku_katsuhiko
-    //CAMERA_SYS_PlayStartSe( camWork->camSys );
-//#endif
+    CAMERA_SYS_PlayStartSe( camWork->camSys );
     camWork->isPlayStartSe = TRUE;
   }
 }
@@ -949,9 +944,7 @@ void CTVT_CAMERA_PlayStopSe( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
     if( camWork->isPlayStartSe == TRUE &&
         camWork->isPlayStopSe == FALSE )
     {
-//#ifndef DEBUG_ONLY_FOR_ichiraku_katsuhiko
-      //CAMERA_SYS_PlayStopSe( camWork->camSys );
-//#endif
+      CAMERA_SYS_PlayStopSe( camWork->camSys );
       camWork->isPlayStopSe = TRUE;
     }
   }
@@ -1001,8 +994,6 @@ void CTVT_CAMERA_Init_RetrunGame( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWor
   camWork->isRefreshClearName = FALSE;
   camWork->isDispDouble = FALSE;
   camWork->isWaitWindow = FALSE;
-  camWork->isPlayStartSe = FALSE;
-  camWork->isPlayStopSe = FALSE;
   
   for( i=0;i<CTVT_MEMBER_NUM;i++ )
   {

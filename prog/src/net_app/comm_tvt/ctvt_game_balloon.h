@@ -77,10 +77,10 @@ typedef struct {
   BALLOON_SIZE      size;             // サイズ (1～3)
 
   // 当たったときのエフェクト用
-  u8                alpha;            // α値(0～31)
-  u8                alpha_cnt;        // α値カウント用
+  s8                alpha;            // α値(0～31)
   fx32              anm_frm;          // アニメフレームカウンタ
   BOOL              anm_flg;          // エフェクトON/OFFフラグ
+  fx32              scale;            // 拡大率
 
   //========================
   // 風船の動きに関するもの
@@ -107,10 +107,10 @@ typedef struct {
   GFL_G3D_OBJSTATUS status;           // OBJ情報
 
   // 当たったときのエフェクト用
-  u8                alpha;            // α値(0～31)
-  u8                alpha_cnt;        // α値カウント用
+  s8                alpha;            // α値(0～31)
   fx32              anm_frm;          // アニメフレームカウンタ
   BOOL              anm_flg;          // エフェクトON/OFFフラグ
+  fx32              scale;            // 拡大率
 
   //========================
   // 風船の動きに関するもの

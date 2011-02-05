@@ -24,6 +24,7 @@
 #include "arc_def.h"
 #include "comm_tvt.naix"
 #include "tvt_balloon.naix"
+#include "tvt_camera.naix"
 #include "font/font.naix"
 
 #include "ctvt_game.h"
@@ -574,6 +575,12 @@ void CTVT_GAME_InitMode( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
     const u8 connectNum = GFL_NET_GetConnectNum();
     u8  mem = 0;
     u8  netId;
+    ARCDATID  dat_tbl[4] = {
+      NARC_tvt_camera_char1_1_ntft,
+      NARC_tvt_camera_char2_1_ntft,
+      NARC_tvt_camera_char3_1_ntft,
+      NARC_tvt_camera_char4_1_ntft,
+    };
 
     for( i=0; i<CTVT_MEMBER_NUM-1; i++ )
     {
@@ -581,7 +588,7 @@ void CTVT_GAME_InitMode( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
     }
     ICHI_Printf("接続人数 %d\n", connectNum);
     ICHI_Printf("メンバーのバッファアドレス\n");
-    for( netId=0;netId<connectNum;netId++ )
+    for( netId=0;netId<CTVT_MEMBER_NUM;netId++ )
     {
       GF_ASSERT( selfId < 4 );
       if( selfId == netId )
@@ -594,6 +601,7 @@ void CTVT_GAME_InitMode( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
       gameWork->cam_member[mem].netID = netId;
 
       // 接続している人がTWL起動のみ受信用メモリを確保する
+      // NITROの場合かNPCだとキャラBMPを読み込む
       if( gameWork->cam_member[mem].isTwl == TRUE )
       {
         u8 j;
@@ -603,6 +611,15 @@ void CTVT_GAME_InitMode( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
           ICHI_Printf("mem[%d] %d adrs %x \n", mem,j,gameWork->cam_member[mem].p_cap_buf[j]);
         }
         ICHI_Printf("netId %d mem %d \n", netId, mem);
+      }
+      else
+      {
+        u8 j;
+        u8 char_id = CTVT_COMM_GetCharId( work, commWork, netId );
+        for( j=0; j<CAPTURE_NUM; j++ )
+        {
+          gameWork->cam_member[mem].p_cap_buf[j] = GFL_ARC_UTIL_Load( ARCID_TVT_CAMERA, dat_tbl[char_id]+j, FALSE, heapID );
+        }
       }
       mem++;
     }
@@ -620,6 +637,7 @@ void CTVT_GAME_InitMode( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
     BOOL isTwl = COMM_TVT_CanUseCamera();
     CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork(work);
     CAMERA_SYSTEM_WORK *camSys = CTVT_CAMERA_GetCamSys( work, camWork );
+    u8  select_chara = CTVT_COMM_GetCharId( work, commWork, selfId );
 
 #ifdef PM_DEBUG
     if(GFL_UI_KEY_GetCont()&PAD_BUTTON_L)
@@ -628,11 +646,7 @@ void CTVT_GAME_InitMode( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
     }
 #endif
 
-    gameWork->p_cam_param = CTVT_GAME_CAM_AllocParam( heapID, isTwl, 0, gameWork->cam_member, camSys );
-
-    // DSモード時の場合の時のキャラIDを設定
-    // DSiでは使用しない
-    gameWork->p_cam_param->select_chara = CTVT_COMM_GetCharId( work, commWork, selfId );
+    gameWork->p_cam_param = CTVT_GAME_CAM_AllocParam( heapID, isTwl, select_chara, gameWork->cam_member, camSys );
   }
 
   // 構造体初期化
@@ -664,24 +678,21 @@ void CTVT_GAME_TermMode( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
   // カメラ撮影用メンバー情報破棄
   for( i=0; i<CTVT_MEMBER_NUM-1; i++ )
   {
+    u8 j;
     if( gameWork->cam_member[i].isTwl == TRUE )
     {
-      u8 j;
       for( j=0; j<CAPTURE_NUM; j++ )
       {
         GFL_NET_Align32Free( gameWork->cam_member[i].p_cap_buf[j] );
       }
     }
-  }
-
-  // 会話モードの低優先度システム作成
-  //GFL_NET_LDATA_InitSystem( heapId , FALSE );
-  // ↑の後に通信のリフレッシュを行う必要あり
-  //
-  
-  // カメラ コールバック関数戻す
-  {
-
+    else
+    {
+      for( j=0; j<CAPTURE_NUM; j++ )
+      {
+        GFL_HEAP_FreeMemory( gameWork->cam_member[i].p_cap_buf[j] );
+      }
+    }
   }
 }
 
@@ -814,9 +825,8 @@ const COMM_TVT_MODE CTVT_GAME_Main( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWo
     CTVT_GAME_Exit( work, gameWork );
     {
       CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork( work );
-      COMM_TVT_SetSusspend( work , TRUE );
+      //COMM_TVT_SetSusspend( work , TRUE );
       CTVT_CAMERA_StopCapture( work , camWork );
-      CTVT_CAMERA_PlayStopSe(work,camWork);
     }
 
     // 次の処理 フェードアウトはもうしてあるのでやらなくてよい
@@ -1962,7 +1972,6 @@ static void game_update_seq_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork 
   ICHI_Printf("乱数Seed値 %d \n", gameWork->rnd_seed);
   ICHI_Printf("送信データサイズ:%d \n", sizeof(CTVT_GAME_SEND_DATA));
 
-#if (defined(SDK_TWL))
   // 3Dにカメラキャプチャを貼り付ける
   {
     BOOL  rc;
@@ -1973,31 +1982,9 @@ static void game_update_seq_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork 
     u8    mem_cnt=0;  // メンバーIDX
 
     ICHI_Printf("テクスチャ貼り付け\n");
-#if 0
-    {
-      u8 i, j;
-      for( i=0; i<1; i++)
-      {
-        ICHI_Printf("i %d netID %d isTWL %d \n", i, gameWork->cam_member[i].netID, gameWork->cam_member[i].isTwl );
-        for( j=0; j<3; j++ )
-        {
-          ICHI_Printf("j %d addrs %x \n ", j, gameWork->cam_member[i].p_cap_buf[j] );
-          {
-            u8 m;
-            u16 *tmp = gameWork->cam_member[i].p_cap_buf[j];
-            ICHI_Printf("キャプチャのデータ 少しだけ\n");
-            for(m=0; m<64; m++ )
-            {
-              ICHI_Printf("%x ", *(tmp+m));
-            }
-          }
-        }
-      }
-    }
-#endif
 
-#if 0
-    for(i=0; i<connectNum; i++ )
+#if 1
+    for(i=0; i<CTVT_MEMBER_NUM; i++ )
     {
       // ほんとはループ3回だが、今はボーナス風船をわかりやすくするため2回
       for( type=0; type<CAPTURE_NUM; type++ )
@@ -2011,31 +1998,20 @@ static void game_update_seq_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork 
 
         // 転送
         {
-          dst = tex_adr + 0x100; // 0x100分足しているのは、次のテクスチャにする為
+          u16 tex_offset = (128*2) + (64*2*6);
+          dst = tex_adr + tex_offset; // tex_offset分足しているのは、写真のテクスチャにする為
           // 貼り付ける画像選択
           if( selfId == i )
           {
             // TWLはキャプチャ画像、NITOROはキャラ画像
-            if( COMM_TVT_CanUseCamera() )
-            {
-              src = (u16*)gameWork->p_cam_param->p_cap[type];
-            }
-            else
-            {
-            }
+            src = (u16*)gameWork->p_cam_param->p_cap[type];
           }
           else
           {
             // 他のメンバーの場合
             // 
             // TWLなら受信した画像、NITOROならキャラ画像
-            if( gameWork->cam_member[mem_cnt].isTwl == TRUE )
-            {
-              src = (u16*)gameWork->cam_member[mem_cnt].p_cap_buf[type];
-            }
-            else
-            {
-            }
+            src = (u16*)gameWork->cam_member[mem_cnt].p_cap_buf[type];
           }
           size = CAPTURE_SIZE;
           rc = NNS_GfdRegisterNewVramTransferTask(NNS_GFD_DST_3D_TEX_VRAM, dst, src, size);
@@ -2052,7 +2028,6 @@ static void game_update_seq_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork 
     }
 #endif
   }
-#endif
 
   // ゲーム用のリソース
   // BGロード
@@ -4071,7 +4046,6 @@ static void balloon_set( CTVT_GAME_WORK *p_game_wk, BALLOON_WORK*  p_wk, u16  un
   p_wk->visible     = TRUE;       // フラグON
   p_wk->color = unit_idx;    // unit_idx と 対になっている
   p_wk->alpha = 31;
-  p_wk->alpha_cnt = 5;
 
   p_wk->save_frame = p_game_wk->frame;
 

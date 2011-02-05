@@ -22,7 +22,9 @@
 */
 //=============================================================================
 
-#define YURA_END    (0xFFFF)    // 揺れるテーブルの終わりを示す
+#define SCALE_ADD   ( 0x4A )      // 1フレームの拡大率加算値
+#define SCALE_MAX   ( 0x310 )     // 風船の拡大率MAX
+#define SCALE_S_MAX   ( 0x260 )   // 風船の拡大率MAX 結果発表版
 
 //=============================================================================
 /**
@@ -67,9 +69,9 @@ void CTVT_BALLOON_Init( BALLOON_WORK* p_wk )
   p_wk->type  = BALLOON_NORMAL;
   p_wk->size  = BALLOON_SIZE_M;
   p_wk->alpha = 31;
-  p_wk->alpha_cnt = 0;
   p_wk->anm_frm = 0;
   p_wk->anm_flg = FALSE;
+  p_wk->scale   = 0;
 
   // タスクは必ずNULL
   p_wk->tcb = NULL;
@@ -110,14 +112,26 @@ void CTVT_BALLOON_Update( BALLOON_WORK*  p_wk )
   // HIT時は移動しない
   if( p_wk->type == BALLOON_HIT )
   {
-    // 当たったときのエフェクト
-    p_wk->alpha -= 2;
-    if( p_wk->alpha <= 10 )
-    {
-      p_wk->alpha = 30;
-      p_wk->alpha_cnt--;
+    VecFx32 scale_tmp;
 
-      if( p_wk->alpha_cnt <= 0 )
+    // 風船を徐々に拡大する
+    if( p_wk->scale < SCALE_MAX )
+    {
+      p_wk->scale += SCALE_ADD;
+      if( p_wk->scale > SCALE_MAX )
+      {
+        p_wk->scale = SCALE_MAX;
+      }
+
+      VEC_Set( &scale_tmp, SCALE_ADD, SCALE_ADD, SCALE_ADD );
+      VEC_Add( &p_wk->status.scale, &scale_tmp, &p_wk->status.scale );
+    }
+
+    // 拡大したら、αフェードして消える
+    if( p_wk->scale == SCALE_MAX )
+    {
+      p_wk->alpha -= 3;
+      if( p_wk->alpha <= 0 )
       {
         CTVT_BALLOON_Destroy( p_wk );
         return;
@@ -238,6 +252,7 @@ void CTVT_BALLOON_Draw( BALLOON_WORK*  p_wk )
       //NNS_G3dMdlUseMdlAlpha(mdl);
       NNS_G3dMdlSetMdlAlphaAll(mdl, p_wk->alpha);
 
+      // 拡大率設定
       GFL_G3D_DRAW_DrawObject( obj, &p_wk->status );
     }
   }
@@ -264,9 +279,9 @@ BALLOON_S_WORK* CTVT_BALLOON_S_Create( CTVT_GAME_WORK *gameWork, u16 unit_idx, u
   p_wk->parent_g3dUtil = CTVT_GAME_GetgG3DUtil( gameWork );
   p_wk->unit_idx= unit_idx;
   p_wk->alpha   = 31;
-  p_wk->alpha_cnt = 5;
   p_wk->anm_frm = 0;
   p_wk->anm_flg = FALSE;
+  p_wk->scale   = 0;
   p_wk->rank    = rank;
   p_wk->max_y   = max_y;
 
@@ -324,14 +339,26 @@ void CTVT_BALLOON_S_Update( BALLOON_S_WORK *p_wk )
     // エフェクト時移動しない
     if( p_wk->effect == TRUE )
     {
-      // 当たったときのエフェクト
-      p_wk->alpha -= 2;
-      if( p_wk->alpha <= 10 )
-      {
-        p_wk->alpha = 30;
-        p_wk->alpha_cnt--;
+      VecFx32 scale_tmp;
 
-        if( p_wk->alpha_cnt <= 0 )
+      // 風船を徐々に拡大する
+      if( p_wk->scale < SCALE_S_MAX )
+      {
+        p_wk->scale += SCALE_ADD;
+        if( p_wk->scale > SCALE_S_MAX )
+        {
+          p_wk->scale = SCALE_S_MAX;
+        }
+
+        VEC_Set( &scale_tmp, SCALE_ADD, SCALE_ADD, SCALE_ADD );
+        VEC_Add( &p_wk->status.scale, &scale_tmp, &p_wk->status.scale );
+      }
+
+      // 拡大したら、αフェードして消える
+      if( p_wk->scale == SCALE_S_MAX )
+      {
+        p_wk->alpha -= 2;
+        if( p_wk->alpha <= 0 )
         {
           p_wk->visible = FALSE;
           return;

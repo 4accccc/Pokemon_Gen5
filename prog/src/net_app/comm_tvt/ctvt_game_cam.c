@@ -38,6 +38,7 @@
 // Module
 #include "system/camera_system.h"
 #include "system/bmp_winframe.h"
+#include "system/wipe.h"
 
 // mine
 #include "ctvt_game_cam.h"
@@ -125,14 +126,10 @@ typedef enum
 ///	NITRO時のルーレット用
 //=====================================
 #define CHAR_NUM (4)  // キャラクターの数
-#define ROULETET_WAIT (6)    // 次のフレームに移動するまでの待ちフレーム数
-#define ROULETET_WAIT_MAX (60) // 次のフレームに移動するまでの待ちフレーム数MAX
-#define ROULETTE_TIME (800)   // ルーレットの回るフレーム数
-#define ROULETTE_DIV  (10)
-
-#ifdef PM_DEBUG
-static u16  gWait = 6;
-#endif
+#define ROULETET_WAIT (5)       // 次のフレームに移動するまでの待ちフレーム数
+#define ROULETET_WAIT_MAX (60)  // 次のフレームに移動するまでの待ちフレーム数MAX
+#define ROULETTE_TIME (720)     // ルーレットの回るフレーム数 12秒
+#define ROULETTE_DIV  (25)      // 何フレームごとにウェイトが加算されるか
 
 //=============================================================================
 /**
@@ -173,6 +170,7 @@ typedef struct {
   GFL_BMPWIN*       p_bmpwin;   // BMPWIN
   WORDSET           *p_word;    // 単語
   STRBUF*           p_strbuf;   // 文字バッファ
+  STRBUF*           p_strexpand;// 文字バッファ
   u16               clear_chr;  // クリアキャラ
   u16               dummy;
 } MSGWND_WORK;
@@ -195,6 +193,7 @@ typedef struct {
   void  *scr_buf;   // 0x18000 -> 256x192x2
   BOOL  is_update;  // カメラキャプチャが更新されたか
   u8    cnt;        // 撮影枚数 3枚
+  CAMERA_SYSTEM_WORK  *p_cam_sys;
 } CAMERA_WORK;
 
 //-------------------------------------
@@ -307,7 +306,8 @@ static BOOL MSGWND_PrintMain( MSGWND_WORK* p_wk );
 //=====================================
 static void PS_Init( PS_WORK *p_wk, HEAPID heapID );
 static void PS_Exit( PS_WORK *p_wk );
-static void PS_ReadyMsg( PS_WORK *p_wk, MSGWND_WORK *p_msgwnd, SEQ_FUNCTION next_seq_function, HEAPID heapID );
+static void PS_Print( PS_WORK *p_wk, MSGWND_WORK *p_msgwnd, SEQ_FUNCTION next_seq_function, u32 msgID, HEAPID heapID );
+static void PS_PrintNumber( PS_WORK *p_wk, MSGWND_WORK *p_msgwnd, SEQ_FUNCTION next_seq_function, u8 number, u32 msgID, HEAPID heapID );
 
 //-------------------------------------
 ///	INFO 上画面写真
@@ -317,10 +317,14 @@ static void INFO_AddBmp( u16 posx, u16 posy, u16 sizex, u16 sizey, const u16 *p_
 //-------------------------------------
 ///	CAMERA  TWL専用
 //=====================================
-static void CAM_Init( CAMERA_WORK *p_wk, HEAPID heapID );
+static void CAM_Init( CAMERA_WORK *p_wk, CAMERA_SYSTEM_WORK *p_cam_sys, HEAPID heapID );
 static void CAM_Exit( CAMERA_WORK *p_wk );
 static void CAM_CaptureScaling( CAMERA_WORK *p_wk, void* dst, HEAPID heapID );
 static void CAM_CaptureSave( CAMERA_WORK *p_wk, void* dst );
+static void CAM_CaptureStart( CAMERA_WORK *p_wk );
+static void CAM_CaptureStop( CAMERA_WORK *p_wk );
+static void CAM_PlayShutterSe( CAMERA_WORK *p_wk );
+static const BOOL CAM_IsPlayShutterSe( CAMERA_WORK *p_wk );
 
 //-------------------------------------
 ///	ROULETTE NITRO専用
@@ -368,6 +372,8 @@ static void SEQFUNC_PrintStream( SEQ_WORK *p_seqwk, int *p_seq, void *p_param );
 
 // TWL
 static void SEQFUNC_TWL_Init( SEQ_WORK *p_seqwk, int *p_seq, void *p_param );
+static void SEQFUNC_TWL_Count( SEQ_WORK *p_seqwk, int *p_seq, void *p_param );
+static void SEQFUNC_TWL_MsgWait( SEQ_WORK *p_seqwk, int *p_seq, void *p_param );
 static void SEQFUNC_TWL_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param );
 static void SEQFUNC_TWL_Wait( SEQ_WORK *p_seqwk, int *p_seq, void *p_param );
 // カメラキャプチャコールバック
@@ -412,7 +418,7 @@ CTVT_GAME_CAM_WORK* CTVT_GAME_CAM_Init( CTVT_GAME_CAM_PARAM *p_param, HEAPID hea
   // 共通モジュールの作成
   p_wk->p_font  = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
 GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
-  p_wk->p_que   = PRINTSYS_QUE_CreateEx( 4096, heapID );
+  p_wk->p_que   = PRINTSYS_QUE_CreateEx( 1024*2, heapID );
   p_wk->p_msg   = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_comm_tvt_dat, heapID );
   p_wk->p_word  = WORDSET_Create( heapID );
 
@@ -531,24 +537,41 @@ void CTVT_GAME_CAM_Exit( CTVT_GAME_CAM_WORK *p_wk )
 //-----------------------------------------------------------------------------
 CTVT_GAME_CAM_PARAM *CTVT_GAME_CAM_AllocParam( HEAPID heapID, BOOL isTwl, u8 select_chara, CTVT_GAME_CAM_MEMBER_WORK p_member[], CAMERA_SYSTEM_WORK *p_cam_sys )
 {
+  u8 i, j;
   CTVT_GAME_CAM_PARAM *p_param;
-  p_param = GFL_HEAP_AllocClearMemory( heapID, sizeof(CTVT_GAME_CAM_PARAM) );
+  ARCDATID  dat_tbl[4] = {
+    NARC_tvt_camera_char1_1_ntft,
+    NARC_tvt_camera_char2_1_ntft,
+    NARC_tvt_camera_char3_1_ntft,
+    NARC_tvt_camera_char4_1_ntft,
+  };
 
+  p_param = GFL_HEAP_AllocClearMemory( heapID, sizeof(CTVT_GAME_CAM_PARAM) );
   p_param->isTwl        = isTwl;
   p_param->select_chara = select_chara;
   p_param->p_cam_sys    = p_cam_sys;
 
 
+  // TWLはキャプチャ用のメモリ確保
+  // NITROはキャラBMPを読み込む
+  //
+  // 自分
   if( isTwl == TRUE )
   {
-    u8 i;
     for( i=0; i<CAPTURE_NUM; i++ )
     {
       p_param->p_cap[i] = GFL_NET_Align32Alloc( heapID, CAPTURE_SIZE);
     }
   }
+  else
   {
-    u8 i, j;
+    for( i=0; i<CAPTURE_NUM; i++ )
+    {
+      p_param->p_cap[i] = GFL_ARC_UTIL_Load( ARCID_TVT_CAMERA, dat_tbl[select_chara]+i, FALSE, heapID );
+    }
+  }
+  // メンバー
+  {
     for( i=0; i<CTVT_MEMBER_NUM-1; i++ )
     {
       p_param->member[i] = p_member[i];
@@ -559,7 +582,7 @@ CTVT_GAME_CAM_PARAM *CTVT_GAME_CAM_AllocParam( HEAPID heapID, BOOL isTwl, u8 sel
       }
     }
   }
-#if 1
+#if 0
   {
     u8 i, j;
     for( i=0; i<3; i++)
@@ -585,12 +608,19 @@ CTVT_GAME_CAM_PARAM *CTVT_GAME_CAM_AllocParam( HEAPID heapID, BOOL isTwl, u8 sel
 //-----------------------------------------------------------------------------
 void CTVT_GAME_CAM_FreeParam( CTVT_GAME_CAM_PARAM *p_param)
 {
+  u8 i;
   if( p_param->isTwl == TRUE )
   {
-    u8 i;
     for( i=0; i<CAPTURE_NUM; i++ )
     {
       GFL_NET_Align32Free( p_param->p_cap[i] );
+    }
+  }
+  else
+  {
+    for( i=0; i<CAPTURE_NUM; i++ )
+    {
+      GFL_HEAP_FreeMemory( p_param->p_cap[i] );
     }
   }
   GFL_HEAP_FreeMemory( p_param );
@@ -838,7 +868,8 @@ static void MSGWND_Init( MSGWND_WORK *p_wk, GFL_FONT *p_font, GFL_MSGDATA *p_msg
   p_wk->p_word    = p_word;
 
   // バッファ作成
-  p_wk->p_strbuf  = GFL_STR_CreateBuffer( 255, heapID );
+  p_wk->p_strbuf    = GFL_STR_CreateBuffer( (18*3*2+EOM_SIZE), heapID );
+  p_wk->p_strexpand = GFL_STR_CreateBuffer( (18*3*2+EOM_SIZE), heapID );
 
   // BMPWIN作成
   p_wk->p_bmpwin  = GFL_BMPWIN_Create( BG_FRAME_TEXT_M, MSGWND_BMPWIN_X, MSGWND_BMPWIN_Y, MSGWND_BMPWIN_W, MSGWND_BMPWIN_H, PLT_BG_FONT_M, GFL_BMP_CHRAREA_GET_B );
@@ -868,6 +899,7 @@ static void MGSWND_Exit( MSGWND_WORK *p_wk )
   GFL_BMPWIN_Delete( p_wk->p_bmpwin );
 
   // バッファ破棄
+  GFL_STR_DeleteBuffer( p_wk->p_strexpand );
   GFL_STR_DeleteBuffer( p_wk->p_strbuf );
 
   // クリア
@@ -913,7 +945,24 @@ static void MSGWND_Print( MSGWND_WORK *p_wk, u32 msgID )
 //-----------------------------------------------------------------------------
 static void MSGWND_PrintNumber( MSGWND_WORK *p_wk, u8 number, u32 msgID )
 {
+  // 描画残り待ち
+  while( PRINTSYS_QUE_IsExistTarget( p_wk->p_que, GFL_BMPWIN_GetBmp(p_wk->p_bmpwin) ) )
+  {
+    PRINTSYS_QUE_Main( p_wk->p_que );
+  }
 
+  // クリア
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( p_wk->p_bmpwin ), p_wk->clear_chr );
+
+  // 文字列作成
+  GFL_MSG_GetString( p_wk->p_msg, msgID, p_wk->p_strbuf );
+
+  // 数字入力
+  WORDSET_RegisterNumber( p_wk->p_word, 0, number, 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+  WORDSET_ExpandStr( p_wk->p_word, p_wk->p_strexpand, p_wk->p_strbuf );
+
+  // 文字列描画
+  PRINT_UTIL_Print( &p_wk->util, p_wk->p_que, 0, 0, p_wk->p_strexpand, p_wk->p_font );
 }
 //----------------------------------------------------------------------------
 /**
@@ -948,7 +997,7 @@ static void PS_Init( PS_WORK *p_wk, HEAPID heapID )
   GFL_STD_MemClear( p_wk, sizeof(PS_WORK) );
 
   // GFL_TCBLシステム
-  p_wk->p_tcblsys = GFL_TCBL_Init( heapID, heapID, 3, 0x100 );
+  p_wk->p_tcblsys = GFL_TCBL_Init( heapID, heapID, 2, 0 );
 }
 
 //----------------------------------------------------------------------------
@@ -975,15 +1024,19 @@ static void PS_Exit( PS_WORK *p_wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  PS  説明メッセージをプリントストリーム表示
+ *	@brief  PS  メッセージをプリントストリーム表示
  *
- *	@param	PS_WORK *p_wk ワーク
- *	@param	*p_msgwnd     メッセージウィンドウワーク
- *	@param	heapID        ヒープID
+ *	@param	PS_WORK *p_wk     ワーク
+ *	@param	*p_msgwnd         メッセージウィンドウワーク
+ *	@param	next_seq_function 次シーケンス関数
+ *	@param	msgID             メッセージID
+ *	@param	heapID            ヒープID
  */
 //-----------------------------------------------------------------------------
-static void PS_ReadyMsg( PS_WORK *p_wk, MSGWND_WORK *p_msgwnd, SEQ_FUNCTION next_seq_function, HEAPID heapID )
+static void PS_Print( PS_WORK *p_wk, MSGWND_WORK *p_msgwnd, SEQ_FUNCTION next_seq_function, u32 msgID, HEAPID heapID )
 {
+  // 文字列作成
+  GFL_MSG_GetString( p_msgwnd->p_msg, msgID, p_msgwnd->p_strbuf );
 
   // 設定をクリア
   if( p_wk->p_stream )
@@ -991,17 +1044,69 @@ static void PS_ReadyMsg( PS_WORK *p_wk, MSGWND_WORK *p_msgwnd, SEQ_FUNCTION next
     PRINTSYS_PrintStreamDelete( p_wk->p_stream );
   }
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp( p_msgwnd->p_bmpwin ), p_msgwnd->clear_chr );
+	GFL_BMPWIN_TransVramCharacter( p_msgwnd->p_bmpwin );
   //GFL_STR_ClearBuffer( p_msgwnd->p_strbuf );
 
   // 文字描画関連の設定を行う
-  // wait値を固定で3にしている
+  // wait値を固定で0にしている
   p_wk->p_stream = PRINTSYS_PrintStream( p_msgwnd->p_bmpwin, 0, 0, p_msgwnd->p_strbuf,
-      p_msgwnd->p_font, 3,
+      p_msgwnd->p_font, MSGSPEED_GetWait(),
       p_wk->p_tcblsys, 2, heapID, p_msgwnd->clear_chr );
+	GFL_BMPWIN_MakeScreen( p_msgwnd->p_bmpwin );
+	GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(p_msgwnd->p_bmpwin) );
+
+
+  PRINTSYS_PrintStream_StartTempSpeedMode( p_wk->p_stream, 0 );
 
   // その他設定
   p_wk->next_seq_function = next_seq_function;
-  p_wk->wait_max  = 60;
+  p_wk->wait_max  = 90;
+  p_wk->wait_count= 0;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  PS  メッセージをプリントストリーム表示 数字付き
+ *
+ *	@param	PS_WORK *p_wk     ワーク
+ *	@param	*p_msgwnd         メッセージウィンドウワーク
+ *	@param	next_seq_function 次シーケンス関数
+ *	@param	number            出したい数字
+ *	@param	msgID             メッセージID
+ *	@param	heapID            ヒープID
+ */
+//-----------------------------------------------------------------------------
+static void PS_PrintNumber( PS_WORK *p_wk, MSGWND_WORK *p_msgwnd, SEQ_FUNCTION next_seq_function, u8 number, u32 msgID, HEAPID heapID )
+{
+  // 文字列作成
+  GFL_MSG_GetString( p_msgwnd->p_msg, msgID, p_msgwnd->p_strbuf );
+
+  // 数字入力
+  WORDSET_RegisterNumber( p_msgwnd->p_word, 0, number, 1, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+  WORDSET_ExpandStr( p_msgwnd->p_word, p_msgwnd->p_strexpand, p_msgwnd->p_strbuf );
+
+  // 設定をクリア
+  if( p_wk->p_stream )
+  {
+    PRINTSYS_PrintStreamDelete( p_wk->p_stream );
+  }
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( p_msgwnd->p_bmpwin ), p_msgwnd->clear_chr );
+	GFL_BMPWIN_TransVramCharacter( p_msgwnd->p_bmpwin );
+
+  // 文字描画関連の設定を行う
+  // wait値を固定で0にしている
+  p_wk->p_stream = PRINTSYS_PrintStream( p_msgwnd->p_bmpwin, 0, 0, p_msgwnd->p_strexpand,
+      p_msgwnd->p_font, MSGSPEED_GetWait(),
+      p_wk->p_tcblsys, 2, heapID, p_msgwnd->clear_chr );
+	GFL_BMPWIN_MakeScreen( p_msgwnd->p_bmpwin );
+	GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(p_msgwnd->p_bmpwin) );
+
+  PRINTSYS_PrintStream_StartTempSpeedMode( p_wk->p_stream, 0 );
+
+  // その他設定
+  p_wk->next_seq_function = next_seq_function;
+  p_wk->wait_max  = 90;
   p_wk->wait_count= 0;
 }
 
@@ -1053,42 +1158,13 @@ static void INFO_AddBmp( u16 posx, u16 posy, u16 sizex, u16 sizey, const u16 *p_
  *	@param	heapID            ヒープID
  */
 //-----------------------------------------------------------------------------
-static void CAM_Init( CAMERA_WORK *p_wk, HEAPID heapID )
+static void CAM_Init( CAMERA_WORK *p_wk, CAMERA_SYSTEM_WORK *p_cam_sys, HEAPID heapID )
 {
   // メモリ作成
   p_wk->scr_buf = GFL_NET_Align32Alloc( heapID, CTVT_BUFFER_SCR_SIZE );
   p_wk->is_update = FALSE;
-  p_wk->cnt     = 0;
-
-#if (defined(SDK_TWL))
-  // DSP初期化
-  {
-#ifdef PM_DEBUG
-    // ブロッキングモードはOS_Printfを確実に出力
-    BOOL prev = OS_GetPrintBlockingMode();
-    OS_SetPrintBlockingMode( TRUE );
-    // WRAMの状態を表示
-    MI_DumpWramList_B();
-    MI_DumpWramList_C();
-    OS_SetPrintBlockingMode( prev );
-#endif
-    // 他のコンポーネントと共存できない
-    // ↓はカメラの音で使用している
-    DSP_UnloadG711();
-  }
-  // DSP_Graphicロード
-  // DSPグラフィックを使用して、画像サイズを変更する
-  // ※DSPを使うとプログラムの常駐サイズが増える
-  {
-    FSFile  file[1];
-
-    DSP_OpenStaticComponentGraphics(file);
-    if (!DSP_LoadGraphics(file, 0xFF, 0xFF))
-    {
-      GF_PANIC("can't allocate WRAM Slot");
-    }
-  }
-#endif
+  p_wk->cnt       = 0;
+  p_wk->p_cam_sys = p_cam_sys;
 }
 
 //----------------------------------------------------------------------------
@@ -1098,13 +1174,9 @@ static void CAM_Init( CAMERA_WORK *p_wk, HEAPID heapID )
  *	@param	CAMERA_WORK *p_wk ワーク
  *	@param	heapID            ヒープID
  */
+//----------------------------------------------------------------------------
 static void CAM_Exit( CAMERA_WORK *p_wk )
 {
-#if (defined(SDK_TWL))
-  // DSP アンロード
-  DSP_UnloadGraphics( );
-#endif
-
   // メモリ破棄
   GFL_NET_Align32Free( p_wk->scr_buf );
 }
@@ -1127,6 +1199,28 @@ static void CAM_CaptureScaling( CAMERA_WORK *p_wk, void* dst, HEAPID heapID )
 {
   void *trimming_tmp;   // 128x128
   trimming_tmp = GFL_NET_Align32Alloc( heapID, TRIMMING_SIZE);
+
+#if (defined(SDK_TWL))
+  // DSP初期化
+  {
+    // 他のコンポーネントと共存できない
+    // ↓はカメラの音で使用している
+    CAMERA_SYS_DspExit( p_wk->p_cam_sys );
+
+    // DSP_Graphicロード
+    // DSPグラフィックを使用して、画像サイズを変更する
+    // ※DSP_OpenStaticComponent*()を使うとプログラムの常駐サイズが増える
+    {
+      FSFile  file[1];
+
+      DSP_OpenStaticComponentGraphics(file);
+      if (!DSP_LoadGraphics(file, 0xFF, 0xFF))
+      {
+        GF_PANIC("can't allocate WRAM Slot");
+      }
+    }
+  }
+#endif
 
   // 128x128にトリミング
   {
@@ -1168,6 +1262,17 @@ static void CAM_CaptureScaling( CAMERA_WORK *p_wk, void* dst, HEAPID heapID )
   }
 #endif
 
+#if (defined(SDK_TWL))
+  // DSP解放
+  {
+    // DSP Graphic アンロード
+    DSP_UnloadGraphics( );
+
+    // DSP G.711をロードし直す
+    CAMERA_SYS_DspInit( p_wk->p_cam_sys );
+  }
+#endif
+
   GFL_NET_Align32Free( trimming_tmp );
 }
 
@@ -1182,6 +1287,56 @@ static void CAM_CaptureScaling( CAMERA_WORK *p_wk, void* dst, HEAPID heapID )
 static void CAM_CaptureSave( CAMERA_WORK *p_wk, void* dst )
 {
   GFL_STD_MemCopy32( p_wk->scr_buf, dst, CAPTURE_SIZE );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  キャプチャースタート
+ *
+ *	@param	CAMERA_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void CAM_CaptureStart( CAMERA_WORK *p_wk )
+{
+  CAMERA_SYS_StartCapture( p_wk->p_cam_sys );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  キャプチャーストップ
+ *
+ *	@param	CAMERA_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void CAM_CaptureStop( CAMERA_WORK *p_wk )
+{
+  CAMERA_SYS_StopCapture( p_wk->p_cam_sys );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  シャッター音再生
+ *
+ *	@param	CAMERA_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void CAM_PlayShutterSe( CAMERA_WORK *p_wk )
+{
+  CAMERA_SYS_PlayShutterSe( p_wk->p_cam_sys );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  シャッター音再生中かチェック
+ *
+ *	@param	CAMERA_WORK *p_wk ワーク
+ *
+ *	@return TRUEで再生中
+ */
+//-----------------------------------------------------------------------------
+static const BOOL CAM_IsPlayShutterSe( CAMERA_WORK *p_wk )
+{
+  return CAMERA_SYS_IsPlayShutterSe( p_wk->p_cam_sys );
 }
 
 //=============================================================================
@@ -1788,7 +1943,14 @@ static void SEQFUNC_SYNC_Init( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
     // TWL起動かNITRO起動か判定
     if( p_wk->p_param->isTwl )
     {
-      SEQ_SetNext( p_seqwk, SEQFUNC_TWL_Init );
+      if( COMM_TVT_CanUseCamera() == TRUE )
+      {
+        SEQ_SetNext( p_seqwk, SEQFUNC_TWL_Init );
+      }
+      else
+      {
+        SEQ_SetNext( p_seqwk, SEQFUNC_NITRO_Init );
+      }
     }
     else
     {
@@ -1868,12 +2030,12 @@ static void SEQFUNC_PrintStream( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
   CTVT_GAME_CAM_WORK *p_wk = p_param;
   PS_WORK *p_ps = &(p_wk->ps);
 
+  ICHI_Printf("|");
   switch( *p_seq ){
   case SEQ_STREAM:   // ストリーム表示中
     {
-      PRINTSTREAM_STATE state;
+      PRINTSTREAM_STATE state = PRINTSYS_PrintStreamGetState( p_ps->p_stream );
       GFL_TCBL_Main( p_ps->p_tcblsys );
-      state = PRINTSYS_PrintStreamGetState( p_ps->p_stream );
       switch( state ) {
       case PRINTSTREAM_STATE_RUNNING:
         {
@@ -1881,6 +2043,7 @@ static void SEQFUNC_PrintStream( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
           {
             //PRINTSYS_PrintStreamShortWait( p_ps->p_stream, 0 );
           }
+          ICHI_Printf("*");
         }
         break;
       case PRINTSTREAM_STATE_DONE:
@@ -1890,10 +2053,6 @@ static void SEQFUNC_PrintStream( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
         break;
       case PRINTSTREAM_STATE_PAUSE:
         {
-          if( GFL_UI_TP_GetTrg() )
-          {
-            PRINTSYS_PrintStreamReleasePause( p_ps->p_stream );
-          }
         }
         break;
       }
@@ -1918,6 +2077,8 @@ static void SEQFUNC_PrintStream( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
       {
         PRINTSYS_PrintStream_StopTempSpeedMode( p_ps->p_stream );
       }
+      PRINTSYS_PrintStreamDelete( p_ps->p_stream );
+      p_ps->p_stream = NULL;
 
       SEQ_SetNext( p_seqwk, p_ps->next_seq_function );
     }
@@ -1947,7 +2108,7 @@ static void SEQFUNC_TWL_Init( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
   CTVT_GAME_CAM_WORK *p_wk = p_param;
 
   // カメラモジュール作成
-  CAM_Init( &p_wk->camera, p_wk->heapID );
+  CAM_Init( &p_wk->camera, p_wk->p_param->p_cam_sys, p_wk->heapID );
 
   // TWL時のみ表示するもの
   GFL_CLACT_WK_SetDrawEnable( OBJ_GetClwk( &p_wk->obj, CLWKID_FRAME_S ), TRUE );
@@ -1958,8 +2119,43 @@ static void SEQFUNC_TWL_Init( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
   
   // 最初の説明メッセージ
   // プリントストリームは3つで1セット
-  MSGWND_Print( &p_wk->msgwnd, COMM_TVT_GAME_06 );
-  PS_ReadyMsg( &p_wk->ps, &p_wk->msgwnd, SEQFUNC_TWL_Main, p_wk->heapID );
+  PS_Print( &p_wk->ps, &p_wk->msgwnd, SEQFUNC_TWL_Count, COMM_TVT_GAME_06, p_wk->heapID );
+  SEQ_SetNext( p_seqwk, SEQFUNC_PrintStream );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  TWL 枚数メッセージ待ち
+ *
+ *	@param	SEQ_WORK *p_seqwk シーケンスワーク
+ *	@param	*p_seq            シーケンス
+ *	@param	*p_param          ワーク
+ */
+//-----------------------------------------------------------------------------
+static void SEQFUNC_TWL_Count( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
+{
+  CTVT_GAME_CAM_WORK *p_wk = p_param;
+
+  // X枚目の写真を撮影します メッセージ
+  PS_PrintNumber( &p_wk->ps, &p_wk->msgwnd, SEQFUNC_TWL_MsgWait, (p_wk->camera.cnt+1), COMM_TVT_GAME_07, p_wk->heapID );
+  SEQ_SetNext( p_seqwk, SEQFUNC_PrintStream );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  TWL 撮影メッセージ待ち
+ *
+ *	@param	SEQ_WORK *p_seqwk シーケンスワーク
+ *	@param	*p_seq            シーケンス
+ *	@param	*p_param          ワーク
+ */
+//-----------------------------------------------------------------------------
+static void SEQFUNC_TWL_MsgWait( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
+{
+  CTVT_GAME_CAM_WORK *p_wk = p_param;
+
+  // X枚目の写真を撮影します メッセージ
+  PS_Print( &p_wk->ps, &p_wk->msgwnd, SEQFUNC_TWL_Main, (COMM_TVT_GAME_08 + p_wk->camera.cnt), p_wk->heapID );
   SEQ_SetNext( p_seqwk, SEQFUNC_PrintStream );
 }
 
@@ -1978,6 +2174,8 @@ static void SEQFUNC_TWL_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
   {
     SEQ_CAPTURE_MSG,  // 写真撮影メッセージ表示
     SEQ_CAPTURE,      // 写真撮影
+    SEQ_SE_WAIT,      // シャッター音再生待ち
+    SEQ_FADE_WAIT,    // フェードイン待ち
     SEQ_SEND,         // 送信する
     SEQ_SEND_WAIT,    // 送信完了待ち
     SEQ_NEXT,         // 次の写真撮影へ
@@ -1988,7 +2186,6 @@ static void SEQFUNC_TWL_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 
   switch( *p_seq ){
   case SEQ_CAPTURE_MSG:
-    MSGWND_Print( &p_wk->msgwnd, (COMM_TVT_GAME_08 + p_wk->camera.cnt) );
     // カウントダウン開始
     GFL_CLACT_WK_SetDrawEnable( OBJ_GetClwk( &p_wk->obj, CLWKID_COUNT ), TRUE );
     GFL_CLACT_WK_ResetAnm( OBJ_GetClwk( &p_wk->obj, CLWKID_COUNT ) );
@@ -1997,15 +2194,48 @@ static void SEQFUNC_TWL_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
   case SEQ_CAPTURE:     // 写真撮影
     if( GFL_CLACT_WK_CheckAnmActive( OBJ_GetClwk( &p_wk->obj, CLWKID_COUNT ) ) == FALSE )
     {
-      void* tmp = COMM_GetSendBuf( &p_wk->comm );
-      CAM_CaptureScaling( &p_wk->camera, tmp, p_wk->heapID );
-      COMM_CaptureSave( &p_wk->comm, p_wk->p_param->p_cap[p_wk->camera.cnt] );
-      ICHI_Printf("変換 addr %x \n", tmp);
+      // キャプチャストップ
+      CAM_CaptureStop( &p_wk->camera );
 
+      // 数字非表示
       GFL_CLACT_WK_SetDrawEnable( OBJ_GetClwk( &p_wk->obj, CLWKID_COUNT ), FALSE );
+
+      // ホワイトフェードアウト
+      WIPE_SYS_Start( WIPE_PATTERN_S, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, 
+          WIPE_FADE_WHITE, WIPE_DEF_DIV, 2, p_wk->heapID );
+
+      // シャッター音再生
+      CAM_PlayShutterSe( &p_wk->camera );
+
+      *p_seq = SEQ_SE_WAIT;
+    }
+    break;
+
+  case SEQ_SE_WAIT:
+    if( WIPE_SYS_EndCheck() == TRUE 
+       && CAM_IsPlayShutterSe( &p_wk->camera ) == FALSE )
+    {
+      // ホワイトフェードイン
+      WIPE_SYS_Start( WIPE_PATTERN_S, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN, 
+          WIPE_FADE_WHITE, WIPE_DEF_DIV, 2, p_wk->heapID );
+      *p_seq = SEQ_FADE_WAIT;
+    }
+    break;
+
+  case SEQ_FADE_WAIT:
+    if( WIPE_SYS_EndCheck() == TRUE )
+    {
+      // 画像縮小
+      void* dst = COMM_GetSendBuf( &p_wk->comm );
+      CAM_CaptureScaling( &p_wk->camera, dst, p_wk->heapID );
+      // キャプチャ保存しておく
+      // 縮小した後に保存しないとデータがおかしくなる
+      COMM_CaptureSave( &p_wk->comm, p_wk->p_param->p_cap[p_wk->camera.cnt] );
+
       *p_seq = SEQ_SEND;
     }
     break;
+
   case SEQ_SEND:        // 送信する
     COMM_SendCapture( &p_wk->comm );
 
@@ -2026,10 +2256,10 @@ static void SEQFUNC_TWL_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
     {
       p_wk->comm.can_next = FALSE;    // フラグリセット
 
-      // プリントストリームでメッセージ表示
-      MSGWND_Print( &p_wk->msgwnd, COMM_TVT_GAME_06 );
-      PS_ReadyMsg( &p_wk->ps, &p_wk->msgwnd, SEQFUNC_TWL_Main, p_wk->heapID );
-      SEQ_SetNext( p_seqwk, SEQFUNC_PrintStream );
+      // キャプチャスタート
+      CAM_CaptureStart( &p_wk->camera );
+
+      SEQ_SetNext( p_seqwk, SEQFUNC_TWL_Count );
     }
     else
     {
@@ -2198,6 +2428,7 @@ static void SEQFUNC_NITRO_Trans( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
     SEQ_END,
   };
 
+  // 転送順番を1->2->4->3にしているのはわざと。
   switch( *p_seq ){
   case SEQ_CHARA1_TRANS:   // キャラ画像転送
     ROU_AddBmp( pos_x, pos_y, 64, 64, p_wk->roulette.pic_buf[ 0 ] );
@@ -2219,8 +2450,7 @@ static void SEQFUNC_NITRO_Trans( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
     p_wk->roulette.select = 0;
     // 最初の説明メッセージ
     // プリントストリームは3つで1セット
-    MSGWND_Print( &p_wk->msgwnd, COMM_TVT_GAME_11 );
-    PS_ReadyMsg( &p_wk->ps, &p_wk->msgwnd, SEQFUNC_NITRO_Start, p_wk->heapID );
+    PS_Print( &p_wk->ps, &p_wk->msgwnd, SEQFUNC_NITRO_Start, COMM_TVT_GAME_11, p_wk->heapID );
     SEQ_SetNext( p_seqwk, SEQFUNC_PrintStream );
     return;
   }
@@ -2241,8 +2471,7 @@ static void SEQFUNC_NITRO_Start( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 {
   CTVT_GAME_CAM_WORK *p_wk = p_param;
 
-  MSGWND_Print( &p_wk->msgwnd, COMM_TVT_GAME_12 );
-  PS_ReadyMsg( &p_wk->ps, &p_wk->msgwnd, SEQFUNC_NITRO_Main, p_wk->heapID );
+  PS_Print( &p_wk->ps, &p_wk->msgwnd, SEQFUNC_NITRO_Main, COMM_TVT_GAME_12, p_wk->heapID );
   SEQ_SetNext( p_seqwk, SEQFUNC_PrintStream );
 }
 
@@ -2259,54 +2488,87 @@ static void SEQFUNC_NITRO_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 {
   enum
   {
-    SEQ_ROULETTE,     // ルーレット中
-    SEQ_JUST,         // キャラの位置調整
+    SEQ_ROULETTE_12_7,  // ルーレット中
+    SEQ_ROULETTE_7_1,   // ルーレット中
+    SEQ_JUST,           // キャラの位置調整
+    SEQ_FLASH,          // 当たったキャラの点滅
     SEQ_END,
   };
 
   CTVT_GAME_CAM_WORK *p_wk = p_param;
 
-  u16 wait_frame; 
-
-  // frame_cntを足すことで徐々に遅くしている
-#ifdef PM_DEBUG
-  wait_frame = gWait + ( (p_wk->roulette.frame_cnt/150) * ROULETTE_DIV );
-#else
-  wait_frame = ROULETET_WAIT + ( (p_wk->roulette.frame_cnt/150) * ROULETTE_DIV );
-#endif
-
-  if( wait_frame >= ROULETET_WAIT_MAX )
-  {
-    wait_frame = ROULETET_WAIT_MAX;
-  }
-
   switch( *p_seq ){
-  case SEQ_ROULETTE:     // ルーレット中
+  case SEQ_ROULETTE_12_7:     // ルーレット中
     if( ROU_GetStopFlg( &p_wk->roulette ) == FALSE )
     {
       // ルーレット設定
-      ROU_WaitSet( &p_wk->roulette, wait_frame );
+      ROU_WaitSet( &p_wk->roulette, ROULETET_WAIT );
     }
-    // 経過フレームを見て、0になると調整に移行
+    // 経過フレームを見て、5秒経つと次に移行
     p_wk->roulette.frame_cnt++;
-    if( p_wk->roulette.frame_cnt >= ROULETTE_TIME )
+    if( p_wk->roulette.frame_cnt >= 300 )
     {
-      *p_seq = SEQ_JUST;
+      *p_seq = SEQ_ROULETTE_7_1;
     }
     break;
 
-  case SEQ_JUST:
-    if( p_wk->roulette.select != p_wk->p_param->select_chara )
+  case SEQ_ROULETTE_7_1:
     {
+      u16 wait_frame; 
+      // frame_cntを足すことで徐々に遅くしている
+      wait_frame = ROULETET_WAIT + (p_wk->roulette.frame_cnt-300)/ROULETTE_DIV;
+
       if( ROU_GetStopFlg( &p_wk->roulette ) == FALSE )
       {
         // ルーレット設定
         ROU_WaitSet( &p_wk->roulette, wait_frame );
       }
+      // 経過フレームを見て、12秒経つと調整に移行
+      p_wk->roulette.frame_cnt++;
+      if( p_wk->roulette.frame_cnt >= ROULETTE_TIME )
+      {
+        *p_seq = SEQ_JUST;
+      }
     }
-    else
+    break;
+
+  case SEQ_JUST:
     {
-      *p_seq = SEQ_END;
+      u16 wait_frame; 
+      // frame_cntを足すことで徐々に遅くしている
+      wait_frame = ROULETET_WAIT + (p_wk->roulette.frame_cnt-300)/ROULETTE_DIV;
+      if( p_wk->roulette.select != p_wk->p_param->select_chara )
+      {
+        if( ROU_GetStopFlg( &p_wk->roulette ) == FALSE )
+        {
+          // ルーレット設定
+          ROU_WaitSet( &p_wk->roulette, wait_frame );
+        }
+      }
+      else
+      {
+        // 点滅に使用するため初期化
+        p_wk->roulette.frame_cnt = 0;
+        p_wk->roulette.wait = 0;
+        *p_seq = SEQ_FLASH;
+      }
+    }
+    break;
+
+  case SEQ_FLASH:
+    {
+      if( !(p_wk->roulette.frame_cnt%6) )
+      {
+        u8  clwkID = CLWKID_CHARA_TOP + p_wk->roulette.select;
+        p_wk->roulette.wait ^= 1;
+
+        GFL_CLACT_WK_SetPlttOffs( OBJ_GetClwk( &p_wk->obj, clwkID ), p_wk->roulette.wait, CLWK_PLTTOFFS_MODE_PLTT_TOP );
+      }
+      p_wk->roulette.frame_cnt++;
+      if( p_wk->roulette.frame_cnt > 80 )
+      {
+        *p_seq = SEQ_END;
+      }
     }
     break;
 
@@ -2315,10 +2577,10 @@ static void SEQFUNC_NITRO_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
     {
       u8 i;
       ARCDATID  dat_tbl[4] = {
-       NARC_tvt_camera_char1_1_ntft,
-       NARC_tvt_camera_char2_1_ntft,
-       NARC_tvt_camera_char3_1_ntft,
-       NARC_tvt_camera_char4_1_ntft,
+        NARC_tvt_camera_char1_1_ntft,
+        NARC_tvt_camera_char2_1_ntft,
+        NARC_tvt_camera_char3_1_ntft,
+        NARC_tvt_camera_char4_1_ntft,
       };
 
       for( i=0; i<CAPTURE_NUM; i++ )
@@ -2328,33 +2590,10 @@ static void SEQFUNC_NITRO_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
         GFL_HEAP_FreeMemory( tmp_buf );
       }
     }
-    MSGWND_Print( &p_wk->msgwnd, COMM_TVT_GAME_13 );
-    PS_ReadyMsg( &p_wk->ps, &p_wk->msgwnd, SEQFUNC_NITRO_Wait, p_wk->heapID );
+    PS_Print( &p_wk->ps, &p_wk->msgwnd, SEQFUNC_NITRO_Wait, COMM_TVT_GAME_13, p_wk->heapID );
     SEQ_SetNext( p_seqwk, SEQFUNC_PrintStream );
     break;
   }
-
-#ifdef PM_DEBUG
-  if(GFL_UI_KEY_GetTrg()&PAD_KEY_UP)
-  {
-    gWait++;
-    OS_Printf("gWait %d\n", gWait);
-  }
-  if(GFL_UI_KEY_GetTrg()&PAD_KEY_DOWN)
-  {
-    gWait--;
-    OS_Printf("gWait %d\n", gWait);
-  }
-
-  if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_A)
-  {
-    GFL_STD_MemClear( G2S_GetBG3ScrPtr(), CTVT_BUFFER_SCR_SIZE );
-  }
-  if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_B)
-  {
-    GFL_STD_MemClear( G2S_GetBG0ScrPtr(), 0x8000 );
-  }
-#endif
 
   // メイン処理
   MSGWND_PrintMain( &p_wk->msgwnd );
