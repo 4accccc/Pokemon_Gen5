@@ -108,7 +108,7 @@ static GMEVENT * createScriptEvent(
 //特殊スクリプト
 //--------------------------------------------------------------
 static BOOL searchMapInitScript( GAMESYS_WORK * gsys, HEAPID heapID, u8 key, SCRIPT_TYPE scr_type );
-static u16 searchSpecialScript( const u8 * p, u8 key );
+static const u8 * searchSpecialScript( const u8 * p, u8 key, u16 * scr_id );
 static u16 searchSceneScript( GAMEDATA * gamedata, const u8 * p, u8 key );
 
 //--------------------------------------------------------------
@@ -627,6 +627,7 @@ void SCRIPT_CallSpecialScript(
 //------------------------------------------------------------------
 static BOOL searchMapInitScript( GAMESYS_WORK * gsys, HEAPID heapID, u8 key, SCRIPT_TYPE scr_type )
 {
+  BOOL run_flag = FALSE;
   u16 scr_id;
 
   GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
@@ -634,7 +635,19 @@ static BOOL searchMapInitScript( GAMESYS_WORK * gsys, HEAPID heapID, u8 key, SCR
   const u8 * p = EVENTDATA_GetSpecialScriptData(evdata);
 
   GF_ASSERT(key != SP_SCRID_SCENE_CHANGE);
-  scr_id = searchSpecialScript( p, key );
+  do 
+  {
+    p = searchSpecialScript( p, key, &scr_id );
+    if ( scr_id != SCRIPT_NOT_EXIST_ID )
+    {
+      SCRIPT_CallSpecialScript( gsys, NULL, scr_id, scr_type );
+      run_flag = TRUE;
+    }
+  }
+  while (scr_id != SCRIPT_NOT_EXIST_ID );
+  return run_flag;
+#if 0
+  searchSpecialScript( p, key, &scr_id );
 	if( scr_id == SCRIPT_NOT_EXIST_ID )
   {
 		return FALSE;
@@ -643,6 +656,7 @@ static BOOL searchMapInitScript( GAMESYS_WORK * gsys, HEAPID heapID, u8 key, SCR
   //特殊スクリプト実行
   SCRIPT_CallSpecialScript( gsys, NULL, scr_id, scr_type );
 	return TRUE;
+#endif
 }
 
 //------------------------------------------------------------------
@@ -717,24 +731,29 @@ static inline u32 GETU32( const u8 * p )
  * @return	"スクリプトID"
  */
 //------------------------------------------------------------------
-static u16 searchSpecialScript( const u8 * p, u8 key )
+static const u8 * searchSpecialScript( const u8 * p, u8 key, u16 * scr_id )
 {
   while (TRUE)
   {
     if ( GETU16(p) == SP_SCRID_NONE )
     {
-      return SCRIPT_NOT_EXIST_ID;
+      *scr_id = SCRIPT_NOT_EXIST_ID;
+      return p;
     }
 		//指定タイプの特殊スクリプト検索
     if ( GETU16(p) == key )
     {
       p+= sizeof(u16); //特殊スクリプトID分足す
-      return GETU16( p );		//スクリプトIDを返す
+      *scr_id = GETU16( p );		//スクリプトIDを返す
+      //スクリプトID+ダミー分足す
+      p += (sizeof(u16) + sizeof(u16));
+      return p;
     }
     //特殊スクリプトID+スクリプトID+ダミー分足す
     p += (sizeof(u16) + sizeof(u16) + sizeof(u16));
   }
-  return SCRIPT_NOT_EXIST_ID;                //何も見つからなかった
+  *scr_id = SCRIPT_NOT_EXIST_ID;                //何も見つからなかった
+  return p;
 }
 
 //------------------------------------------------------------------
