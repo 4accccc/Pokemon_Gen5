@@ -919,7 +919,7 @@
 		/* not used   895(0x037f) */
 		/* not used   896(0x0380) */
 		/* not used   897(0x0381) */
-		/* not used   898(0x0382) */
+#define FV_PC_MEDALOYAJI                   898 /* 0x0382 ポケセンのメダルおやじ */
 #define FV_D06R0101_PAIR                   899 /* 0x0383 電気穴の洞窟連れ歩き */
 
 #define FV_AREA_END                        899 /* 0x0383  */
