@@ -3,6 +3,8 @@
 //
 //    スクリプトファイル：medal_scr用
 //
+//    2011.02.05  tamada@gamefreak.co.jp
+//
 //======================================================================
 
   .text
@@ -23,13 +25,61 @@ _EVENT_DATA_END
 /*						FIELD_INIT_LABEL                                      */
 /********************************************************************/
 INIT_EVENT_START   ev_init_medal_oyaji
+  _CALL sub_medaloyaji_on_off
 INIT_EVENT_END
 
 /********************************************************************/
 /*						FIELD_RECOVER_LABEL                                   */
 /********************************************************************/
 INIT_EVENT_START   ev_recover_medal_oyaji
+  _CHECK_CONTINUE_RECOVER( SCWK_ANSWER )
+  IF $SCWK_ANSWER == TRUE THEN
+    //「つづきから」の場合だけ呼び出す
+    _CALL   sub_medaloyaji_on_off
+  ENDIF
 INIT_EVENT_END
+
+/********************************************************************/
+/*						メダルおやじの出現・引っ込み処理                      */
+/********************************************************************/
+sub_medaloyaji_on_off:
+{
+  DEFINE_LOCAL  LWK_MEDAL_BOX
+  DEFINE_LOCAL  LWK_MEDAL_TITLE
+  DEFINE_LOCAL  LWK_MEDAL_HINT
+
+  _CALL sub_medaloyaji_status
+  IF $SCWK_ANSWER == 1 THEN
+    //メダルおやじの表示
+    //_FLAG_RESET( FV_POSTMAN )
+  ELSE
+    //メダルおやじの削除
+    //_FLAG_SET( FV_POSTMAN )
+  ENDIF
+
+}
+  _RET
+
+
+sub_medaloyaji_status:
+  _ITEM_CHK( ITEM_MEDARUBOKKUSU, 1, SCWK_ANSWER )
+  _DEBUG_PRINT_WK( SCWK_ANSWER )
+  IF $SCWK_ANSWER == 0 THEN
+    $SCWK_ANSWER = 0
+    _RET
+  ENDIF
+  //タイトルメダルをもらえるか？
+  IF $SCWK_ANSWER == 1 THEN
+    $SCWK_ANSWER = 1
+    _RET
+  ENDIF
+  //ヒントメダルをもらえるか？
+  IF $SCWK_ANSWER == 1 THEN
+    $SCWK_ANSWER = 1
+    _RET
+  ENDIF
+
+  _RET
 
 /********************************************************************/
 /*            メダル初回イベント                                    */
@@ -66,14 +116,52 @@ EVENT_START ev_medal_oyaji_intro
 
   //メダルおやじ去る
 
+  $WK_SCENE_MEDAL_EVENT = MEDALEV_SEQ_1ST_STAGE
 EVENT_END
 
 /********************************************************************/
 /*            メダルおやじ                                          */
 /********************************************************************/
 EVENT_START ev_medal_oyaji_pc
+  _TALK_OBJ_START()
+
+  _CALL sub_medaloyaji_goodbye
+  _LAST_KEYWAIT()
+  _BALLOONWIN_CLOSE()
 EVENT_END
 
+
+sub_goal_check1:
+  _RET
+sub_goal_check2:
+  _RET
+sub_medaloyaji_title_check:
+  _RET
+sub_medaloyaji_hint_check:
+  _RET
+sub_medaloyaji_rankup_check:
+  _RET
+
+/********************************************************************/
+//  サブルーチン：オヤジ〆の台詞
+/********************************************************************/
+sub_medaloyaji_goodbye:
+  IF $SCWK_ANSWER == 0 THEN
+    //メダルを集めるだけ集めたので事務局へ誘導
+    _PLAYER_NAME( 0 )
+    _BALLOONWIN_TALKOBJ_MSG( msg_mdloyj_comp_01 )
+    _RET
+  ENDIF
+  //メダリストランク取得
+  IF $SCWK_ANSWER == 5 THEN
+    //ランクが最高の場合
+    _BALLOONWIN_TALKOBJ_MSG( msg_mdloyj_end_02 )
+    _RET
+  ENDIF
+  //次のランクまでの獲得メダル数を取得
+  _NUMBER( 0, SCWK_ANSWER, 3 )
+  _BALLOONWIN_TALKOBJ_MSG( msg_mdloyj_end_01 )
+  _RET
 
 
 

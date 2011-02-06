@@ -86,3 +86,13 @@
 #define	ELBOARD_CAMERA_FRAME	( 36 )
 
 
+//======================================================================
+//  メダルイベントのシーン定義
+//======================================================================
+#define MEDALEV_SEQ_START             (0)   //イベント開始前
+#define MEDALEV_SEQ_1ST_STAGE         (1)   //最初の表彰前
+#define MEDALEV_SEQ_1ST_PRIZE_OK      (2)   //最初の表彰条件が整った
+#define MEDALEV_SEQ_1ST_PRIZE_AFTER   (3)   //最初の表彰が完了
+#define MEDALEV_SEQ_COMP_PRIZE_OK     (4)   //コンプ表彰条件が整った
+#define MEDALEV_SEQ_COMP_PRIZE_AFTER  (5)   //コンプ表彰が完了
+
