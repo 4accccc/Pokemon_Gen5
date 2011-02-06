@@ -860,7 +860,33 @@ void WORDSET_RegisterTrialHouseRank( WORDSET* wordset, u32 bufID, u8 rank )
 }
 #endif //MULTI_BOOT_MAKE
 
+//------------------------------------------------------------------
+/**
+ * @brief 指定バッファにメダル名を展開
+ * @date  2011.02.06
+ * @param   wordset ワードセットオブジェクト
+ * @param   bufID   バッファID
+ * @param   medalID メダルを指定するID
+ */
+//------------------------------------------------------------------
+void WORDSET_RegisterMedalName( WORDSET* wordset, u32 bufID, u8 medalID )
+{
+  RegisterWordFormMsgArc( wordset, bufID, NARC_message_medalname_dat, medalID );
+}
 
+//------------------------------------------------------------------
+/**
+ * @brief 指定バッファにメダリストランク名を展開
+ * @date  2011.02.06
+ * @param   wordset ワードセットオブジェクト
+ * @param   bufID   バッファID
+ * @param   rankID  ランクを指定するID
+ */
+//------------------------------------------------------------------
+void WORDSET_RegisterMedalRankName( WORDSET* wordset, u32 bufID, u8 rankID )
+{
+  RegisterWordFormMsgArc( wordset, bufID, NARC_message_medalrank_dat, rankID );
+}
 
 
 //======================================================================================================

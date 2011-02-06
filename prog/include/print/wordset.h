@@ -65,6 +65,9 @@ extern void WORDSET_RegisterHobbyName( WORDSET* wordset, u32 bufID, u8 hobbyID )
 extern void WORDSET_RegisterAnswerName( WORDSET* wordset, u32 bufID, u8 answerID );
 extern void WORDSET_RegisterJobName( WORDSET* wordset, u32 bufID, u8 jobID );
 extern void WORDSET_RegisterTrialHouseRank( WORDSET* wordset, u32 bufID, u8 rank );
+extern void WORDSET_RegisterMedalName( WORDSET* wordset, u32 bufID, u8 medalID );
+extern void WORDSET_RegisterMedalRankName( WORDSET* wordset, u32 bufID, u8 rankID );
+
 extern void WORDSET_ExpandStr( const WORDSET* wordset, STRBUF* dstbuf, const STRBUF* srcbuf );
 extern void WORDSET_ClearAllBuffer( WORDSET* wordset );
 
