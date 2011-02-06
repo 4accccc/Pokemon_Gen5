@@ -141,6 +141,9 @@ tv_scr_def.h: tv_scr.ev
 pair_scr_def.h: pair_scr.ev
 	$(EV_DEF) pair_scr.ev $(SCR_OFFS_ID_H)
 
+medal_scr_def.h: medal_scr.ev
+	$(EV_DEF) medal_scr.ev $(SCR_OFFS_ID_H)
+
 bc10_def.h: bc10.ev
 	$(EV_DEF) bc10.ev $(SCR_OFFS_ID_H)
 

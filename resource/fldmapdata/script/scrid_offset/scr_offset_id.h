@@ -3,7 +3,7 @@
  * @file  scr_offset_id.h
  * @bfief  スクリプトIDのオフセット定義
  * @author  tamada GAMEFREAK inc.
- * @date  2010 11/15 (Mon) 17:30
+ * @date  2011 02/02 (Wed) 13:46
  *
  * このファイルはコンバータにより自動生成されています
  */
@@ -156,6 +156,9 @@
 
 #define ID_PAIR_SCR_OFFSET               (10525) //連れ歩き制御用スクリプト
 #define ID_PAIR_SCR_OFFSET_END           (10534)
+
+#define ID_MEDAL_SCR_OFFSET              (10535) //メダル関連イベント
+#define ID_MEDAL_SCR_OFFSET_END          (10554)
 
 #define ID_DEBUG_SCR_OFFSET              (12000) //デバッグ用共通スクリプト（この下にはファイルを追加しない！！）
 #define ID_DEBUG_SCR_OFFSET_END          (12199)

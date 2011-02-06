@@ -1,0 +1,79 @@
+//======================================================================
+//                medal_scr.ev
+//
+//    スクリプトファイル：medal_scr用
+//
+//======================================================================
+
+  .text
+
+  .include  "scr_seq_def.h"
+  .include  "msg_medal_ev.h"
+
+//----------------------------------------------------------------------
+//               スクリプトテーブル
+//----------------------------------------------------------------------
+_EVENT_DATA   ev_init_medal_oyaji
+_EVENT_DATA   ev_recover_medal_oyaji
+_EVENT_DATA   ev_medal_oyaji_intro
+_EVENT_DATA   ev_medal_oyaji_pc
+_EVENT_DATA_END
+
+/********************************************************************/
+/*						FIELD_INIT_LABEL                                      */
+/********************************************************************/
+INIT_EVENT_START   ev_init_medal_oyaji
+INIT_EVENT_END
+
+/********************************************************************/
+/*						FIELD_RECOVER_LABEL                                   */
+/********************************************************************/
+INIT_EVENT_START   ev_recover_medal_oyaji
+INIT_EVENT_END
+
+/********************************************************************/
+/*            メダル初回イベント                                    */
+/********************************************************************/
+EVENT_START ev_medal_oyaji_intro
+
+  //メダルおやじ出現
+
+  _TALK_OBJ_START()
+
+  //前口上
+  _BALLOONWIN_TALKOBJ_MSG( msg_mdloyj_intro_01 )
+  _AB_KEYWAIT_MARK()
+  _BALLOONWIN_CLOSE()
+
+  //メダルボックスをもらう
+  _ITEM_EVENT_KEYWAIT( ITEM_MEDARUBOKKUSU, 1 )
+
+  //知ってるか尋ねる（尋ねるだけ）
+  _BALLOONWIN_TALKOBJ_MSG( msg_mdloyj_intro_02 )
+  _YES_NO_WIN( SCWK_ANSWER )
+
+  _BALLOONWIN_TALKOBJ_MSG( msg_mdloyj_intro_03 )
+  //メダルをもらう
+  //_CALL_FLD3D_CUTIN( ... )
+  //_ADD_MEDAL( medal_id )
+
+  _BALLOONWIN_TALKOBJ_MSG( msg_mdloyj_intro_04 )
+  //ヒントメダルをもらう
+  //_CALL_FLD3D_CUTIN( ... )
+  //_ADD_MEDAL( medal_id )
+
+  _BALLOONWIN_TALKOBJ_MSG( msg_mdloyj_intro_05 )
+
+  //メダルおやじ去る
+
+EVENT_END
+
+/********************************************************************/
+/*            メダルおやじ                                          */
+/********************************************************************/
+EVENT_START ev_medal_oyaji_pc
+EVENT_END
+
+
+
+
