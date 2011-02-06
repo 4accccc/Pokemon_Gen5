@@ -16,6 +16,7 @@
 #define T02PC0101_CONNECT_01               4
 #define T02PC0101_CONNECT_02               5
 #define T02PC0101_DELIVERY                 6
+#define T02PC0101_MEDALOYAJI               7
 
 #endif //ZONE_T02PC0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/t02pc0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
