@@ -11726,6 +11726,11 @@
   .short \ret_index5
   .endm
   
+//======================================================================
+//
+//  ローカルライブキャスター関連
+//
+//======================================================================
 //--------------------------------------------------------------
 /**
  * @brief 人物状態  アララギ博士
@@ -11899,3 +11904,101 @@
   .macro _ASM_PERSON_STATE_SET_SECRET_DATE_END
   .short EV_SEQ_PERSON_SET_SECRET_DATE_END
   .endm
+
+//======================================================================
+//
+//  メダルイベント関連
+//
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * @brief メダル名を指定タグにセット
+ * @param  idx    タグ位置
+ * @param medal_id  メダルID
+ */
+//--------------------------------------------------------------
+#define _MEDAL_NAME( idx, medal_id )  \
+    _ASM_MEDAL_NAME idx, medal_id
+    .macro  _ASM_MEDAL_NAME idx, medal_id
+    .short  EV_SEQ_MEDAL_NAME
+    .byte   \idx
+    .short  \medal_id
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief メダリストランク名を指定タグにセット
+ * @param  idx    タグ位置
+ * @param rank_id  メダリストランク指定
+ */
+//--------------------------------------------------------------
+#define _MEDAL_RANK_NAME( idx, rank_id )  \
+    _ASM_MEDAL_RANK_NAME idx, rank_id
+    .macro  _ASM_MEDAL_RANK_NAME idx, rank_id
+    .short  EV_SEQ_MEDAL_RANK_NAME
+    .byte   \idx
+    .short  \rank_id
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief メダルに関するカウントを取得する
+ * @param[in] type    取得する内容指定（script_def.hのSCR_MEDALCOUNT_～を参照）
+ * @param[out] ret_wk    結果を受け取るためのワーク
+ */
+//--------------------------------------------------------------
+#define _GET_MEDAL_COUNT( type, ret_wk ) \
+    _ASM_GET_MEDAL_COUNT type, ret_wk
+
+    .macro _ASM_GET_MEDAL_COUNT type, ret_wk
+    .short  EV_SEQ_GET_MEDAL_COUNT
+    .byte  \type
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief 最新の達成タイトルメダルのIDを取得する
+ * @param[out] ret_result    TRUEのとき、取得できた
+ * @param[out] ret_medalid    取得した最新の達成メダルID
+ */
+//--------------------------------------------------------------
+#define _GET_LAST_ACHIEVE_MEDAL_ID( ret_result, ret_medalid ) \
+    _ASM_GET_LAST_ACHIEVE_MEDAL_ID ret_result, ret_medalid
+
+    .macro  _ASM_GET_LAST_ACHIEVE_MEDAL_ID ret_result, ret_medalid
+    .short  EV_SEQ_GET_LAST_ACHIEVE_MEDAL_ID
+    .short  \ret_result
+    .short  \ret_medalid
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief メダル情報の更新処理を呼び出す
+ * @param type
+ */
+//--------------------------------------------------------------
+#define _UPDATE_MEDAL_INFO( type ) \
+    _ASM_UPDATE_MEDAL_INFO type
+
+    .macro  _ASM_UPDATE_MEDAL_INFO type
+    .short  EV_SEQ_UPDATE_MEDAL_INFO
+    .short  \type
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief メダルの取得処理
+ */
+//--------------------------------------------------------------
+#define _GET_MEDAL( medal_id, mode ) \
+    _ASM_GET_MEDAL medal_id, mode
+
+    .macro  _ASM_GET_MEDAL medal_id, mode
+    .short  EV_SEQ_GET_MEDAL
+    .short  \medal_id
+    .short  \mode
+    .endm
+
+
+

@@ -2,16 +2,13 @@
 /**
  * @file  scrcmd_word.h
  * @brief  スクリプトコマンド：単語関連
- * @author	Satoshi Nohara
  */
 //======================================================================
-#ifndef SCR_WORD_H
-#define SCR_WORD_H
+#pragma once
 
 //======================================================================
 //  extern 
 //======================================================================
-#ifndef	__ASM_NO_DEF_ //アセンブラソースは無効に
 extern VMCMD_RESULT EvCmdPlayerName( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdItemName( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdItemWazaName( VMHANDLE *core, void *wk );
@@ -34,7 +31,7 @@ extern VMCMD_RESULT EvCmdGPowerName( VMHANDLE* core, void* wk );
 extern VMCMD_RESULT EvCmdTrTypeName( VMHANDLE* core, void* wk );
 extern VMCMD_RESULT EvCmdSuretigaiCount( VMHANDLE* core, void* wk );
 extern VMCMD_RESULT EvCmdSuretigaiThanksReceiveCount( VMHANDLE* core, void* wk );
+extern VMCMD_RESULT EvCmdMedalName( VMHANDLE * core, void *wk );
+extern VMCMD_RESULT EvCmdMedalRankName( VMHANDLE * core, void *wk );
 
-#endif	/* __ASM_NO_DEF_ */
 
-#endif	/* SCR_WORD_H */

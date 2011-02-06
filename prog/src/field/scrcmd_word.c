@@ -542,3 +542,40 @@ VMCMD_RESULT EvCmdSuretigaiThanksReceiveCount( VMHANDLE *core, void *wk )
 
   return VMCMD_RESULT_CONTINUE;
 }
+
+//--------------------------------------------------------------------
+/**
+ * @brief メダル名をバッファにセットする
+ */
+//--------------------------------------------------------------------
+VMCMD_RESULT EvCmdMedalName( VMHANDLE * core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  WORDSET *wordset    = SCRIPT_GetWordSet( sc );
+ 	u8 idx = VMGetU8( core );
+	u16 medal_id = SCRCMD_GetVMWorkValue( core, work );
+
+  WORDSET_RegisterMedalName( wordset, idx, medal_id );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+
+//--------------------------------------------------------------------
+/**
+ * @brief メダルランク名をバッファにセットする
+ */
+//--------------------------------------------------------------------
+VMCMD_RESULT EvCmdMedalRankName( VMHANDLE * core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  WORDSET *wordset    = SCRIPT_GetWordSet( sc );
+ 	u8 idx = VMGetU8( core );
+	u16 rank_id = SCRCMD_GetVMWorkValue( core, work );
+
+  WORDSET_RegisterMedalRankName( wordset, idx, rank_id );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+

@@ -107,6 +107,7 @@
 #include "scrcmd_t01_gmk.h"
 #include "scrcmd_pair.h"
 #include "scrcmd_person.h"
+#include "scrcmd_medal.h"
 
 #include "../../../resource/fldmapdata/script/usescript.h"
 

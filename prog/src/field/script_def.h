@@ -586,3 +586,26 @@
 //--------------------------------------------------------------
 #define SCR_PASOKON_OFF_NORMAL (0) // 通常
 #define SCR_PASOKON_OFF_QUICK  (1) // XBREAK
+
+//--------------------------------------------------------------
+//  scrcmd_medal.c
+//  メダルイベント関連定義
+//--------------------------------------------------------------
+#define SCR_MEDALCOUNT_HINT_ACHIEVE   (0) // 達成したヒントメダル数
+#define SCR_MEDALCOUNT_HINT_GET       (1) // 取得したヒントメダル数
+#define SCR_MEDALCOUNT_TITLE_ACHIEVE  (2) // 達成したタイトルメダル数
+#define SCR_MEDALCOUNT_TITLE_GET      (3) // 取得したタイトルメダル数
+#define SCR_MEDALCOUNT_NEXT_RANK      (4) // 次のランクまでに必要なタイトルメダル数
+#define SCR_MEDALCOUNT_HINT_REST      (5) // 残りのヒントメダル数
+#define SCR_MEDALCOUNT_TITLE_REST     (6) // 残りのタイトルメダル数
+#define SCR_MEDALCOUNT_RANK           (7) // 現在のランク
+
+#define SCR_MEDALUPDATE_INFO        (1000)  //メダル状態の更新（レコードを参照）
+#define SCR_MEDALUPDATE_TITLE       (1001)  //タイトルメダルの更新（達成→取得）
+#define SCR_MEDALUPDATE_HINT        (1002)  //ヒントメダルの更新（達成→取得）
+#define SCR_MEDALUPDATE_RANK        (1003)  //ランクの更新
+
+
+
+
+

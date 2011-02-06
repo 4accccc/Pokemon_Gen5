@@ -945,6 +945,17 @@
   NO_CMD()
   NO_CMD()
   
+  //メダルイベント関連
+  DEF_CMD( EvCmdMedalName, EV_SEQ_MEDAL_NAME )
+  DEF_CMD( EvCmdMedalRankName, EV_SEQ_MEDAL_RANK_NAME )
+  DEF_CMD( EvCmdGetMedalCount, EV_SEQ_GET_MEDAL_COUNT )
+  DEF_CMD( EvCmdGetLastAchieveMedalID, EV_SEQ_GET_LAST_ACHIEVE_MEDAL_ID )
+  
+  DEF_CMD( EvCmdUpdateMedalInfo, EV_SEQ_UPDATE_MEDAL_INFO )
+  DEF_CMD( EvCmdGetMedal, EV_SEQ_GET_MEDAL )
+  NO_CMD()
+  NO_CMD()
+
   END_CMD
   //スクリプトコマンドテーブル終了
 
