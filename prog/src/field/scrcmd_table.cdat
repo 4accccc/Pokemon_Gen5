@@ -953,7 +953,7 @@
   
   DEF_CMD( EvCmdUpdateMedalInfo, EV_SEQ_UPDATE_MEDAL_INFO )
   DEF_CMD( EvCmdGetMedal, EV_SEQ_GET_MEDAL )
-  NO_CMD()
+  DEF_CMD( EvCmdGetMedalOyajiObjID, EV_SEQ_GET_MEDALOYAJI_OBJID )
   NO_CMD()
 
   END_CMD

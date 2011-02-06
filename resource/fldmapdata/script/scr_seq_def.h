@@ -12000,5 +12000,20 @@
     .short  \mode
     .endm
 
+//--------------------------------------------------------------
+/**
+ * @brief メダルおやじのOBJID取得
+ * @param[out]  ret_wk  TRUEのとき、OBJが存在する
+ * @param[out]  obj_id  OBJIDを受け取るワーク
+ */
+//--------------------------------------------------------------
+#define _GET_MEDALOYAJI_OBJID( ret_wk, obj_id ) \
+    _ASM_GET_MEDALOYAJI_OBJID ret_wk, obj_id
+
+    .macro  _ASM_GET_MEDALOYAJI_OBJID ret_wk, obj_id
+    .short  EV_SEQ_GET_MEDALOYAJI_OBJID
+    .short  \ret_wk
+    .short  \obj_id
+    .endm
 
 

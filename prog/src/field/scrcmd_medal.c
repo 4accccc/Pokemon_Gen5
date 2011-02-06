@@ -25,6 +25,13 @@
 
 #include "savedata/medalbox.h"
 
+#include "fldmmdl.h"
+#include "fieldmap.h" //FIELDMAP_GetMMdlSys
+#include "field/eventdata_system.h"
+#include "field/eventdata_sxy.h"
+
+#include "../../../resource/fldmapdata/script/medal_scr_def.h"  //SCRID_MEDAL_OYAJI_PC
+
 
 //======================================================================
 //======================================================================
@@ -33,6 +40,8 @@ static int getLastAchieveMedal( SCRCMD_WORK * work );
 static u32 countMedals( SCRCMD_WORK * work, u32 match_state );
 static void updateHintMedals( SCRCMD_WORK * work );
 static void updateTitleMedal( SCRCMD_WORK * work );
+static MMDL * searchMedalOyajiOBJ( FIELDMAP_WORK * fieldWork );
+static int searchEventDataMedalOyajiObj( GAMEDATA * gamedata );
 
 //======================================================================
 //======================================================================
@@ -81,6 +90,7 @@ VMCMD_RESULT EvCmdGetMedalCount( VMHANDLE * core, void *wk )
     GF_ASSERT(0);
 
   }
+  TAMADA_Printf("EvCmdGetMedalCount:%d:%d\n", idx, *ret_wk );
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -96,7 +106,7 @@ VMCMD_RESULT EvCmdUpdateMedalInfo( VMHANDLE * core, void * wk )
   SAVE_CONTROL_WORK* save     = GAMEDATA_GetSaveControlWork( gameData );
   MEDALBOX *       medalbox   = SaveData_GetMedalBox( save );
 
- 	u8 idx = VMGetU8( core );
+ 	u16 idx = VMGetU16( core );
   switch ( idx )
   {
   case SCR_MEDALUPDATE_INFO://メダル状態の更新（レコードを参照）
@@ -114,6 +124,7 @@ VMCMD_RESULT EvCmdUpdateMedalInfo( VMHANDLE * core, void * wk )
   default:
     GF_ASSERT( 0 );
   }
+  TAMADA_Printf("EvCmdUpdateMedalInfo:%d\n", idx );
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -138,6 +149,7 @@ VMCMD_RESULT EvCmdGetLastAchieveMedalID( VMHANDLE * core, void * wk )
     *ret_result = TRUE;
     *ret_medalid = id;
   }
+  TAMADA_Printf("EvCmdGetLastAchieveMedalID:%d\n", id );
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -166,19 +178,45 @@ VMCMD_RESULT EvCmdGetMedal( VMHANDLE * core, void * wk )
   } else {
     MEDALBOX_SetHintMedalGetFlg( medalbox, medal_id, date.year, date.month, date.day );
   }
+  TAMADA_Printf("EvCmdGetMedal:%d:%d\n", medal_id, mode );
   return VMCMD_RESULT_CONTINUE;
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：メダルを取得する
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGetMedalOyajiObjID( VMHANDLE * core, void * wk )
+{
+  SCRCMD_WORK * work = wk;
+  FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( SCRCMD_WORK_GetGameSysWork( work ) );
+  GAMEDATA * gamedata = SCRCMD_WORK_GetGameData( wk );
+
+  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
+  u16 * obj_id = SCRCMD_GetVMWork( core, wk );
+
+  if ( searchMedalOyajiOBJ( fieldmap ) != NULL )
+  {
+    *ret_wk = TRUE;
+    *obj_id = searchEventDataMedalOyajiObj( gamedata );
+  } else {
+    *ret_wk = FALSE;
+    *obj_id = searchEventDataMedalOyajiObj( gamedata );
+  }
+  TAMADA_Printf("EvCmdGetMedalOyajiObjID:%d:%d\n", *ret_wk, *obj_id );
+  return VMCMD_RESULT_CONTINUE;
+}
 
 //======================================================================
 //======================================================================
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 /**
  * @brief 最新の達成メダルのIDを取得する
  * @retval  -1  達成メダルが存在しない
  * @retval  それ以外  達成メダルのID
  */
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 static int getLastAchieveMedal( SCRCMD_WORK * work )
 {
   u32 id;
@@ -197,13 +235,13 @@ static int getLastAchieveMedal( SCRCMD_WORK * work )
   return -1;
 }
 
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 /**
  * @brief 最新の達成メダルのIDを取得する
  * @retval  -1  達成メダルが存在しない
  * @retval  それ以外  達成メダルのID
  */
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 static u32 countMedals( SCRCMD_WORK * work, u32 match_state )
 {
   u32 id, count;
@@ -222,13 +260,13 @@ static u32 countMedals( SCRCMD_WORK * work, u32 match_state )
   return count;
 }
 
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 /**
  * @brief 最新の達成メダルのIDを取得する
  * @retval  -1  達成メダルが存在しない
  * @retval  それ以外  達成メダルのID
  */
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 static void updateHintMedals( SCRCMD_WORK * work )
 {
   u32 id;
@@ -249,13 +287,13 @@ static void updateHintMedals( SCRCMD_WORK * work )
   }
 }
 
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 /**
  * @brief 最新の達成メダルのIDを取得する
  * @retval  -1  達成メダルが存在しない
  * @retval  それ以外  達成メダルのID
  */
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
 static void updateTitleMedal( SCRCMD_WORK * work )
 {
   u32 id;
@@ -272,4 +310,48 @@ static void updateTitleMedal( SCRCMD_WORK * work )
     MEDALBOX_SetTitleMedalGetFlg( medalbox, id, date.year, date.month, date.day );
   }
 }
+
+//--------------------------------------------------------------
+/**
+ * @brief メダルおやじOBJ検索
+ *
+ * 現在存在している動作モデルデータからメダルおやじを検索しポインタを返す
+ */
+//--------------------------------------------------------------
+static MMDL * searchMedalOyajiOBJ( FIELDMAP_WORK * fieldWork )
+{
+  u32 no = 0;
+	MMDL *mmdl;
+  MMDLSYS * mmdlsys = FIELDMAP_GetMMdlSys( fieldWork );
+	while( MMDLSYS_SearchUseMMdl(mmdlsys,&mmdl,&no) == TRUE ){
+		if( MMDL_GetEventID(mmdl) == SCRID_MEDAL_OYAJI_PC ){
+			return( mmdl );
+		}
+	}
+  return NULL;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief メダルおやじOBJデータ検索
+ *
+ * イベントデータから、メダルおやじOBJを検索しobj_idを返す
+ */
+//--------------------------------------------------------------
+static int searchEventDataMedalOyajiObj( GAMEDATA * gamedata )
+{
+  EVENTDATA_SYSTEM * evdata = GAMEDATA_GetEventData( gamedata );
+  const MMDL_HEADER * tbl = EVENTDATA_GetNpcData( evdata );
+  int max = EVENTDATA_GetNpcCount( evdata );
+  int i;
+
+  if ( tbl == NULL || max == 0 ) return -1;
+  
+  for ( i = 0; i < max; i ++ )
+  {
+    if ( tbl[i].event_id == SCRID_MEDAL_OYAJI_PC ) return tbl[i].id;
+  }
+  return -1;
+}
+
 

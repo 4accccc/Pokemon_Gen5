@@ -15,4 +15,5 @@ extern VMCMD_RESULT EvCmdGetMedalCount( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdUpdateMedalInfo( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdGetLastAchieveMedalID( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdGetMedal( VMHANDLE * core, void * wk );
+extern VMCMD_RESULT EvCmdGetMedalOyajiObjID( VMHANDLE * core, void * wk );
 
