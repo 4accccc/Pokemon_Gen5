@@ -32,7 +32,6 @@
 #include "item/itemsym.h" //for ITEM_
 #include "../../../resource/fld3d_ci/fldci_id_def.h"  //for FLDCIID_
 
-#define ITEM_CUTIN_MAX  (17)
 
 typedef struct ITEM_CI_NO_tag
 {
@@ -40,7 +39,7 @@ typedef struct ITEM_CI_NO_tag
   u16 CutinNo;
 }ITEM_CI_NO;
 
-const ITEM_CI_NO ItemCutinNo[ITEM_CUTIN_MAX] = {
+const ITEM_CI_NO ItemCutinNo[] = {
   {ITEM_RAITOSUTOON, FLDCIID_GET1},
   {ITEM_DAAKUSUTOON, FLDCIID_GET1_02},
   {ITEM_GODDOSUTOON, FLDCIID_GET1_03},
@@ -60,6 +59,7 @@ const ITEM_CI_NO ItemCutinNo[ITEM_CUTIN_MAX] = {
   {ITEM_HAITATUBUTU2, FLDCIID_GET2_11},
   {ITEM_HAITATUBUTU3, FLDCIID_GET2_12},
   {ITEM_DORAGONNOHONE, FLDCIID_GET2_13},
+  {ITEM_MEDARUBOKKUSU, FLDCIID_GET2_05},   //仮追加2011.02.07
 //※リバティチケットは配達員からなのでここにはなし
 };
 
@@ -179,7 +179,7 @@ VMCMD_RESULT EvCmdFldCi_CallItemCutin( VMHANDLE *core, void *wk )
   find = FALSE;
 
   //カットインナンバー検索
-  for (i=0;i<ITEM_CUTIN_MAX;i++)
+  for (i=0;i<NELEMS(ItemCutinNo);i++)
   {
     if (ItemCutinNo[i].ItemNo == item_no)
     {
