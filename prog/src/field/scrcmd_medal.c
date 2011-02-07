@@ -30,6 +30,8 @@
 #include "field/eventdata_system.h"
 #include "field/eventdata_sxy.h"
 
+#include "system/medaldata.h"
+
 #include "../../../resource/fldmapdata/script/medal_scr_def.h"  //SCRID_MEDAL_OYAJI_PC
 
 
@@ -40,6 +42,7 @@ static int getLastAchieveMedal( SCRCMD_WORK * work );
 static u32 countMedals( SCRCMD_WORK * work, u32 match_state );
 static void updateHintMedals( SCRCMD_WORK * work );
 static void updateTitleMedal( SCRCMD_WORK * work );
+static u32 countRestHintMedal( SCRCMD_WORK * work );
 static MMDL * searchMedalOyajiOBJ( FIELDMAP_WORK * fieldWork );
 static int searchEventDataMedalOyajiObj( GAMEDATA * gamedata );
 
@@ -75,10 +78,10 @@ VMCMD_RESULT EvCmdGetMedalCount( VMHANDLE * core, void *wk )
     *ret_wk = countMedals( work, MEDAL_STATE_TITLE_GET );
     break;
   case SCR_MEDALCOUNT_NEXT_RANK: // (4) 次のランクまでに必要なタイトルメダル数
-    *ret_wk = MEDALBOX_GetMedalBoxMax( medalbox );
+    *ret_wk = MEDALBOX_GetMedalBoxMax( medalbox ) + 1;
     break;
   case SCR_MEDALCOUNT_HINT_REST: // (5) 残りのヒントメダル数
-    /* 未実装 */
+    *ret_wk = countRestHintMedal( work );
     break;
   case SCR_MEDALCOUNT_TITLE_REST: // (6) 残りのタイトルメダル数
     *ret_wk = MDLID_MAX - countMedals( work, MEDAL_STATE_TITLE_GET );
@@ -309,6 +312,31 @@ static void updateTitleMedal( SCRCMD_WORK * work )
   {
     MEDALBOX_SetTitleMedalGetFlg( medalbox, id, date.year, date.month, date.day );
   }
+}
+//--------------------------------------------------------------
+/**
+ * @brief 獲得可能な残りのヒントメダルを数える
+ */
+//--------------------------------------------------------------
+static u32 countRestHintMedal( SCRCMD_WORK * work )
+{
+  u32 id, count;
+  GAMEDATA*          gameData = SCRCMD_WORK_GetGameData( work );
+  SAVE_CONTROL_WORK* save     = GAMEDATA_GetSaveControlWork( gameData );
+  MEDALBOX * medalbox   = SaveData_GetMedalBox( save );
+  ARCHANDLE *p_handle = GFL_ARC_OpenDataHandle( ARCID_MEDALDATA , SCRCMD_WORK_GetHeapID(work) );
+  MEDALDATA medal_data;
+  for ( id = 0, count = 0; id < MDLID_MAX; id ++ )
+  {
+    GFL_ARC_LoadDataByHandle( p_handle , id, &medal_data );
+    if ( medal_data.hint_type != MEDALDATA_HINTTYPE_NONE
+        && MEDALBOX_GetMedalState( medalbox, id ) == MEDAL_STATE_NONE )
+    {
+      count ++;
+    }
+  }
+  GFL_ARC_CloseDataHandle(p_handle);
+  return count;
 }
 
 //--------------------------------------------------------------

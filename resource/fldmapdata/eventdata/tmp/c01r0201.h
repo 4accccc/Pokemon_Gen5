@@ -10,6 +10,7 @@
 #ifndef ZONE_C01R0201_EVC_H
 #define ZONE_C01R0201_EVC_H
 
+#define C01R0201_MEDALOYAJI                0
 
 #endif //ZONE_C01R0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c01r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

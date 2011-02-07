@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2011-02-08T00:19:08"/>
+	<create user="tamada" host="W00139" date="2011-02-08T03:28:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -497,7 +497,19 @@
 ヒントメダルを　さしあげましょう！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_mdloyj_hintget_02_01">
+	<row id="msg_mdloyj_hintget_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>ヒント開放MAX時
+・0=主人公名</comment>
+		<attribute name="キャラ指定">メダルおやじ</attribute>
+		<language name="JPN" width="256">えーと……　わたしから　おわたしする
+ヒントメダルは　もう　ありませんね[BE:01:ページ切り替え（クリア）]
+</language>
+		<language name="JPN_KANJI" width="256">えーと……　わたしから　お渡しする
+ヒントメダルは　もう　ありませんね[BE:01:ページ切り替え（クリア）]
+</language>
+	</row>
+
+	<row id="msg_mdloyj_hintget_02_01" back-color="#808080,,,#808080,,#808080,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>ヒント開放MAX時かつ最高ランクでない
 ・0=主人公名</comment>
 		<attribute name="キャラ指定">メダルおやじ</attribute>
@@ -511,7 +523,7 @@
 目指して　ファイトッ！</language>
 	</row>
 
-	<row id="msg_mdloyj_hintget_02_02">
+	<row id="msg_mdloyj_hintget_02_02" back-color="#808080,,,#808080,,#808080,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>ヒント開放MAXかつ最高ランク
 ・0=主人公名</comment>
 		<attribute name="キャラ指定">メダルおやじ</attribute>
@@ -525,7 +537,7 @@
 獲得できるよう　がんばってください！</language>
 	</row>
 
-	<row id="msg_mdloyj_hintget_sys" back-color="#808080,,,#808080,,#808080,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+	<row id="msg_mdloyj_hintget_sys">
 		<comment>・0=主人公名
 ・1=もらうヒントメダルの数</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は
@@ -635,13 +647,13 @@
 やー！　とー！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_mdloyj_rankup_sys" back-color="#808080,,,#808080,,#808080,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+	<row id="msg_mdloyj_rankup_sys">
 		<comment>・0=主人公名
 ・1=ランク名</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]の　メダルボックスが
-[FF:00:色:2][1:36:メダリストランク名:1][FF:00:色:0]ランクに　リニューアルされた！[BE:01:ページ切り替え（クリア）]</language>
+[FF:00:色:2][1:36:メダリストランク名:1][FF:00:色:0]ランクに　リニューアルされた！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　メダルボックスが
-[FF:00:色:2][1:36:メダリストランク名:1][FF:00:色:0]ランクに　リニューアルされた！[BE:01:ページ切り替え（クリア）]</language>
+[FF:00:色:2][1:36:メダリストランク名:1][FF:00:色:0]ランクに　リニューアルされた！</language>
 	</row>
 
 	<row id="msg_mdloyj_titleget_01">
@@ -666,18 +678,18 @@
 メダルが　あります！　どうぞどうぞ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_mdloyj_titleget_sys" back-color="#808080,,,#808080,,#808080,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+	<row id="msg_mdloyj_titleget_sys">
 		<comment>・0=主人公名
 ・1=メダル名</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は
 メダル[FF:00:色:2]「[1:35:メダル名:1]」[FF:00:色:0]を[BE:00:ページ切り替え（行送り）]
-てにいれた！[BE:01:ページ切り替え（クリア）]</language>
+てにいれた！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
 メダル[FF:00:色:2]「[1:35:メダル名:1]」[FF:00:色:0]を[BE:00:ページ切り替え（行送り）][FF:00:色:2]
-[FF:00:色:0]手に入れた！[BE:01:ページ切り替え（クリア）]</language>
+[FF:00:色:0]手に入れた！</language>
 	</row>
 
-	<row id="msg_mdloyj_prize_1st" back-color="#808080,,,,,,,#808080,,,#808080,,,#808080,,,#808080,,">
+	<row id="msg_mdloyj_prize_1st" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<language name="JPN" width="256">仮メッセージ[BE:01:ページ切り替え（クリア）]
 メダルラリーじむきょくです！
 チェックポイントクリア　おめでとう！</language>
@@ -686,7 +698,7 @@
 チェックポイントクリア　おめでとう！</language>
 	</row>
 
-	<row id="msg_mdloyj_prize_max" back-color="#808080,,,,,,,#808080,,,#808080,,,#808080,,,#808080,,">
+	<row id="msg_mdloyj_prize_max" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<language name="JPN" width="256">仮メッセージ[BE:01:ページ切り替え（クリア）]
 メダルラリーじむきょくです！
 コンプリート　おめでとう！</language>

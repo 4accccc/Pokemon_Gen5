@@ -16,6 +16,7 @@
 #define C01PC0101_CONNECT_01               4
 #define C01PC0101_CONNECT_00               5
 #define C01PC0101_DELIVERY                 6
+#define C01PC0101_MEDALOYAJI               7
 
 #endif //ZONE_C01PC0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c01pc0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

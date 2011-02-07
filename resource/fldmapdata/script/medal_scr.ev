@@ -21,6 +21,7 @@ _EVENT_DATA   ev_init_medal_oyaji
 _EVENT_DATA   ev_recover_medal_oyaji
 _EVENT_DATA   ev_medal_oyaji_intro
 _EVENT_DATA   ev_medal_oyaji_pc
+_EVENT_DATA   ev_medal_office
 _EVENT_DATA_END
 
 
@@ -95,7 +96,13 @@ sub_medaloyaji_status:
     $SCWK_ANSWER = 1
     _RET
   ENDIF
-
+  //上のランクに達するだけのメダルを持っているか？（初回表彰前のみ発生）
+  _GET_MEDAL_COUNT( SCR_MEDALCOUNT_TITLE_GET,LWK_MEDAL_COUNT  )
+  _GET_MEDAL_COUNT( SCR_MEDALCOUNT_NEXT_RANK,LWK_MEDAL_NEXT  )
+  IF $LWK_MEDAL_COUNT >= $LWK_MEDAL_NEXT THEN
+    $SCWK_ANSWER = 1
+    _RET
+  ENDIF
   $SCWK_ANSWER = 0
   _RET
 
@@ -112,9 +119,16 @@ EVENT_START ev_medal_oyaji_intro
 
   _TALK_OBJ_START()
 
+  _CALL sub_medaloyaji_intro
+
+  //メダルおやじ去る
+
+  $WK_SCENE_MEDAL_EVENT = MEDALEV_SEQ_1ST_STAGE
+EVENT_END
+
+sub_medaloyaji_intro:
   //前口上
   _BALLOONWIN_TALKOBJ_MSG( msg_mdloyj_intro_01 )
-  _AB_KEYWAIT_MARK()
   _BALLOONWIN_CLOSE()
 
   //メダルボックスをもらう
@@ -127,19 +141,17 @@ EVENT_START ev_medal_oyaji_intro
   _BALLOONWIN_TALKOBJ_MSG( msg_mdloyj_intro_03 )
   //メダルをもらう
   //_CALL_FLD3D_CUTIN( ... )
-  _GET_MEDAL( 0, TRUE )
+  //_GET_MEDAL( 0, TRUE )
 
   _BALLOONWIN_TALKOBJ_MSG( msg_mdloyj_intro_04 )
   //ヒントメダルをもらう
   //_CALL_FLD3D_CUTIN( ... )
-  _GET_MEDAL( 1, FALSE )
+  //_GET_MEDAL( 1, FALSE )
 
   _BALLOONWIN_TALKOBJ_MSG( msg_mdloyj_intro_05 )
-
-  //メダルおやじ去る
-
-  $WK_SCENE_MEDAL_EVENT = MEDALEV_SEQ_1ST_STAGE
-EVENT_END
+  _LAST_KEYWAIT()
+  _BALLOONWIN_CLOSE()
+  _RET
 
 /********************************************************************/
 /*            メダルおやじ                                          */
@@ -148,14 +160,20 @@ EVENT_START ev_medal_oyaji_pc
   _TALK_OBJ_START()
 
   SWITCH $WK_SCENE_MEDAL_EVENT
+  CASE MEDALEV_SEQ_START THEN
+    //ありえないはずだが、とりあえず
+    _CALL sub_medaloyaji_intro
+    $WK_SCENE_MEDAL_EVENT = MEDALEV_SEQ_1ST_STAGE
+
   CASE MEDALEV_SEQ_1ST_PRIZE_OK THEN
     //事務局で表彰式（最初）
+    _PLACE_NAME( 0, ZONE_ID_C01 )  //とりあえず。不要になる予定
     _BALLOONWIN_TALKOBJ_MSG( msg_mdloyj_end_03 )
     _LAST_KEYWAIT()
     _BALLOONWIN_CLOSE()
 
   CASE MEDALEV_SEQ_COMP_PRIZE_OK THEN
-    //事務局で表彰式（最初）
+    //事務局で表彰式（コンプリート）
     _BALLOONWIN_TALKOBJ_MSG( msg_mdloyj_comp_01 )
     _LAST_KEYWAIT()
     _BALLOONWIN_CLOSE()
@@ -173,14 +191,15 @@ EVENT_START ev_medal_oyaji_pc
       $WK_SCENE_MEDAL_EVENT = MEDALEV_SEQ_1ST_PRIZE_OK
 
       _PLAYER_NAME( 0 )
-      _PLACE_NAME( 1, ZONE_ID_C03 )  //とりあえず。不要になる予定
+      _PLACE_NAME( 1, ZONE_ID_C01 )  //とりあえず。不要になる予定
       _BALLOONWIN_TALKOBJ_MSG( msg_mdloyj_goal_01 )
     ELSE
       _CALL sub_medaloyaji_goodbye
     ENDIF
     _LAST_KEYWAIT()
     _BALLOONWIN_CLOSE()
-  DEFAULT
+
+  CASE MEDALEV_SEQ_1ST_PRIZE_AFTER THEN
     //タイトルメダル獲得チェック
     _CALL sub_medaloyaji_title_check
     //ヒントメダル獲得チェック
@@ -248,6 +267,7 @@ sub_medaloyaji_hint_check:
   ENDIF
 
   _PLAYER_NAME( 0 )
+  _NUMBER( 1, SCWK_ANSWER, 3 )
   _BALLOONWIN_TALKOBJ_MSG( msg_mdloyj_hintget_01 )
   _BALLOONWIN_CLOSE()
   _SYSWIN_MSG( msg_mdloyj_hintget_sys, POS_DEFAULT )
@@ -257,15 +277,17 @@ sub_medaloyaji_hint_check:
   _UPDATE_MEDAL_INFO( SCR_MEDALUPDATE_HINT )
   
   //まだ取得していないヒントがある？
-  _GET_MEDAL_COUNT( SCR_MEDALCOUNT_HINT_REST,SCWK_ANSWER  )
+  _GET_MEDAL_COUNT( SCR_MEDALCOUNT_HINT_REST, SCWK_ANSWER  )
   IF $SCWK_ANSWER != 0 THEN
-    _GET_MEDAL_COUNT( SCR_MEDALCOUNT_RANK,LWK_MEDAL_RANK  )
-    IF $LWK_MEDAL_RANK != 5 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_mdloyj_hintget_02_01 )
-    ELSE
-      _BALLOONWIN_TALKOBJ_MSG( msg_mdloyj_hintget_02_02 )
-    ENDIF
-    _BALLOONWIN_CLOSE()
+    _BALLOONWIN_TALKOBJ_MSG( msg_mdloyj_hintget_02 )
+    //_GET_MEDAL_COUNT( SCR_MEDALCOUNT_RANK,LWK_MEDAL_RANK  )
+    //IF $LWK_MEDAL_RANK != 5 THEN
+    //  _GET_MEDAL_COUNT( SCR_MEDALCOUNT_NEXT_RANK, SCWK_ANSWER )
+    //  _NUMBER( 0, SCWK_ANSWER, 3 )
+    //  _BALLOONWIN_TALKOBJ_MSG( msg_mdloyj_hintget_02_01 )
+    //ELSE
+    //  _BALLOONWIN_TALKOBJ_MSG( msg_mdloyj_hintget_02_02 )
+    //ENDIF
   ENDIF
   _RET
 
@@ -289,7 +311,9 @@ sub_medaloyaji_rankup_check:
     _GET_MEDAL_COUNT( SCR_MEDALCOUNT_RANK,LWK_MEDAL_RANK  )
     _MEDAL_RANK_NAME( 1, LWK_MEDAL_RANK )
     _SYSWIN_MSG( msg_mdloyj_rankup_sys, POS_DEFAULT )
-    //MEを鳴らす？
+    _ME_PLAY(	SEQ_ME_KEYITEM )  //仮
+    _ME_WAIT()
+    _AB_KEYWAIT_MARK()
     _SYSWIN_CLOSE()
 
     //ランクアップによって取得するメダルを変更する
@@ -309,7 +333,7 @@ sub_medaloyaji_rankup_check:
       //万が一のために
       $LWK_MEDAL_ID = MDLID_CHAMPION_NORMAL
     ENDSWITCH
-    _CALL sub_medaloyaji_goodbye
+    //あがったランクでも必要なメダルを満たしているかチェック
     _GET_MEDAL_COUNT( SCR_MEDALCOUNT_TITLE_GET,LWK_MEDAL_COUNT  )
     _GET_MEDAL_COUNT( SCR_MEDALCOUNT_NEXT_RANK,LWK_MEDAL_NEXT  )
     IF $LWK_MEDAL_COUNT >= $LWK_MEDAL_NEXT THEN
@@ -353,6 +377,53 @@ sub_medaloyaji_gettitle:
   _PLAYER_NAME( 0 )
   _MEDAL_NAME( 1, LWK_MEDAL_ID )
   _SYSWIN_MSG( msg_mdloyj_titleget_sys, POS_DEFAULT )
+  _ME_PLAY(	SEQ_ME_ITEM ) //仮
+  _ME_WAIT()
+  _AB_KEYWAIT_MARK()
   _SYSWIN_CLOSE()
   _RET
+
+/********************************************************************/
+//    メダル事務局（仮）
+//    ※実際にはちゃんとイベントを作成するが現状は話しかけただけで遷移
+/********************************************************************/
+EVENT_START ev_medal_office
+  _TALK_OBJ_START()
+
+  SWITCH $WK_SCENE_MEDAL_EVENT
+  CASE MEDALEV_SEQ_START  THEN
+    _CALL sub_medaloyaji_intro
+    $WK_SCENE_MEDAL_EVENT = MEDALEV_SEQ_1ST_STAGE
+
+  CASE MEDALEV_SEQ_1ST_PRIZE_OK THEN
+
+    _BALLOONWIN_TALKOBJ_MSG( msg_mdloyj_prize_1st )
+    _ME_PLAY(	SEQ_ME_KEYITEM )  //仮
+    _ME_WAIT()
+    _LAST_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+
+    $WK_SCENE_MEDAL_EVENT = MEDALEV_SEQ_1ST_PRIZE_AFTER
+
+  CASE MEDALEV_SEQ_COMP_PRIZE_OK THEN
+
+    _BALLOONWIN_TALKOBJ_MSG( msg_mdloyj_prize_max )
+    _ME_PLAY(	SEQ_ME_KEYITEM )  //仮
+    _ME_WAIT()
+    _LAST_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+
+    $WK_SCENE_MEDAL_EVENT = MEDALEV_SEQ_COMP_PRIZE_AFTER
+
+  DEFAULT
+    _BALLOONWIN_TALKOBJ_MSG( msg_mdloyj_intro_05 )
+    _LAST_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+  ENDSWITCH
+
+EVENT_END
+
+
+
+
 
