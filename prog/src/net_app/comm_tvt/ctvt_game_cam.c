@@ -222,6 +222,7 @@ typedef struct {
   BOOL    can_next;       // 次の写真撮影にいってよいか
   u8      seq;
   BOOL    is_end;         // すべて受信完了したか
+  BOOL    is_init;        // 初期化が完了したか(カメラ同期をとる)
 } COMM_WORK;
 
 //-------------------------------------
@@ -474,9 +475,6 @@ BOOL CTVT_GAME_CAM_Main( CTVT_GAME_CAM_WORK *p_wk )
 
   // プリント
   PRINTSYS_QUE_Main( p_wk->p_que );
-
-  // カメラ
-  CAMERA_SYS_UpdateCameta( p_wk->p_param->p_cam_sys );
 
   // 終了
   if( SEQ_IsEnd( &p_wk->seq ) && COMM_IsEnd(&p_wk->comm) )
@@ -1526,12 +1524,19 @@ static void COMM_Init( COMM_WORK *p_wk, CTVT_GAME_CAM_MEMBER_WORK member[], BOOL
     u8  i;
     u8  mem_cnt = 0;
     const u8 connectNum = GFL_NET_GetConnectNum();
+    const u8 selfId = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
     for( i=0; i<connectNum; i++ )
     {
-      // TWLのみ受信設定
-      if( member[i].isTwl == TRUE )
+      if( selfId == i )
       {
-        u8  netID = member[i].netID;
+        // 自分だとスキップ
+        continue;
+      }
+
+      // TWLのみ受信設定
+      if( member[mem_cnt].isTwl == TRUE )
+      {
+        u8  netID = member[mem_cnt].netID;
 
         // バッファ設定
         GFL_NET_LDATA_CreatePostBuffer_SetAddres( CAPTURE_SIZE, netID, heapID, member[mem_cnt].p_cap_buf[0] );
@@ -1554,6 +1559,8 @@ static void COMM_Init( COMM_WORK *p_wk, CTVT_GAME_CAM_MEMBER_WORK member[], BOOL
       p_wk->cap_cnt[i] = 0;
     }
   }
+
+  p_wk->is_init = FALSE;    // カメラ開始同期後にTRUEにする
 }
 
 //----------------------------------------------------------------------------
@@ -1598,6 +1605,12 @@ static void COMM_Main( COMM_WORK *p_wk, CTVT_GAME_CAM_MEMBER_WORK member[] )
     return;
   }
 
+  if( p_wk->is_init == FALSE )
+  {
+    // 初期化完了していない
+    return;
+  }
+
   switch( p_wk->seq ){
   case SEQ_POST:       // 受信中
     {
@@ -1605,6 +1618,7 @@ static void COMM_Main( COMM_WORK *p_wk, CTVT_GAME_CAM_MEMBER_WORK member[] )
       u8    mem_cnt = 0;
       BOOL  ret = TRUE;   // 次シーケンスへいってよいか判定用
       const u8 connectNum = GFL_NET_GetConnectNum();
+      const u8 selfId = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
 
       // 送信してくる人数分のみまわす
       for( i=0; i<connectNum; i++ )
@@ -1612,7 +1626,7 @@ static void COMM_Main( COMM_WORK *p_wk, CTVT_GAME_CAM_MEMBER_WORK member[] )
         // 送信してくるNetIDのみチェック
         if( p_wk->cap_buf_bit & (1<<i) )
         {
-          //ICHI_Printf("NetID %d Check \n", i);
+          ICHI_Printf("NetID %d Check \n", i);
           if( p_wk->cap_cnt_base != p_wk->cap_cnt[mem_cnt] )
           {
             // 既に受信した
@@ -1643,6 +1657,10 @@ static void COMM_Main( COMM_WORK *p_wk, CTVT_GAME_CAM_MEMBER_WORK member[] )
           {
             ret = FALSE;
           }
+        }
+        // メンバーカウント
+        if( selfId != i )
+        {
           mem_cnt++;
         }
       }
@@ -1934,6 +1952,7 @@ static void SEQFUNC_SYNC_Init( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
       GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
       if( GFL_NET_HANDLE_IsTimeSync( pNet, CAMERA_INIT_SYNC, WB_NET_COMM_TVT ) == TRUE )
       {
+        p_wk->comm.is_init = TRUE;
         *p_seq = SEQ_END;
         ICHI_Printf("カメラ開始同期完了\n");
       }
@@ -2204,8 +2223,10 @@ static void SEQFUNC_TWL_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
       WIPE_SYS_Start( WIPE_PATTERN_S, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, 
           WIPE_FADE_WHITE, WIPE_DEF_DIV, 2, p_wk->heapID );
 
+#ifndef DEBUG_ONLY_FOR_ichiraku_katsuhiko
       // シャッター音再生
       CAM_PlayShutterSe( &p_wk->camera );
+#endif
 
       *p_seq = SEQ_SE_WAIT;
     }
@@ -2274,6 +2295,9 @@ static void SEQFUNC_TWL_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 
   // メイン処理
   MSGWND_PrintMain( &p_wk->msgwnd );
+  // カメラ
+  CAMERA_SYS_UpdateCameta( p_wk->p_param->p_cam_sys );
+
 }
 
 //----------------------------------------------------------------------------
