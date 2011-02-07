@@ -586,28 +586,7 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
       }
       else if( talkWork->subState == CTSS_GO_BALLOON )
       {
-        if ( OS_IsRunOnTwl() )
-        {
-          int i, count;
-          for (i = 0, count = 0; i<CTVT_MEMBER_NUM; i++)
-          {
-            CTVT_COMM_WORK * commWork = COMM_TVT_GetCommWork( work );
-          if( CTVT_COMM_IsEnableMember( work , commWork , i ) == TRUE &&
-              CTVT_COMM_IsEnableMemberData( work , commWork , i ) == TRUE &&
-            CTVT_COMM_CanUseCameraMember( work, commWork, i ) == TRUE )
-            {
-              count ++;
-            }
-          }
-          if ( COMM_TVT_GetConnectNum( work ) == count )
-          {
-            return CTM_GAME;
-          } else {
-            return CTM_DRAW;
-          }
-        } else {
-          return CTM_DRAW;
-        }
+        return CTM_GAME;
       }
       else
       {

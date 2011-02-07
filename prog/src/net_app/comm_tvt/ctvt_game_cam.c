@@ -216,6 +216,7 @@ typedef struct {
 
   void*   cap_buf;        // 送信用バッファ 64x64x2
   u8      cap_buf_bit;    // バッファ管理用
+  u8      cap_send_bit;    // バッファ管理用
   u8      cap_cnt[ CTVT_MEMBER_NUM-1 ]; // 受信枚数カウンタ
 
   u8      cap_cnt_base;   // 受信枚数カウンタ基準
@@ -580,19 +581,6 @@ CTVT_GAME_CAM_PARAM *CTVT_GAME_CAM_AllocParam( HEAPID heapID, BOOL isTwl, u8 sel
       }
     }
   }
-#if 0
-  {
-    u8 i, j;
-    for( i=0; i<3; i++)
-    {
-      ICHI_Printf("i %d netID %d isTWL %d \n", i, p_member[i].netID, p_member[i].isTwl );
-      for( j=0; j<3; j++ )
-      {
-        ICHI_Printf("j %d addrs %x \n ", j, p_member[i].p_cap_buf[j] );
-      }
-    }
-  }
-#endif
 
   return p_param;
 }
@@ -1129,7 +1117,7 @@ static void INFO_AddBmp( u16 posx, u16 posy, u16 sizex, u16 sizey, const u16 *p_
   u8  iy;
   
   DC_FlushRange( p_adrs, (sizex * sizey * 2) );
-  ICHI_Printf("Flush Range Size %x\n", (sizex * sizey * 2));
+  //ICHI_Printf("Flush Range Size %x\n", (sizex * sizey * 2));
 
   // sizex * sizey 転送
   for( iy=0; iy<sizey; iy++ )
@@ -1236,8 +1224,8 @@ static void CAM_CaptureScaling( CAMERA_WORK *p_wk, void* dst, HEAPID heapID )
       GFL_STD_MemCopy32( (void*)capTopAdr, (void*)bufTopAdr, capSizeX*2 );
     }
   }
-  ICHI_Printf("scr_buf %x \n", p_wk->scr_buf);
-  ICHI_Printf("trim_tmp %x \n", trimming_tmp);
+  //ICHI_Printf("scr_buf %x \n", p_wk->scr_buf);
+  //ICHI_Printf("trim_tmp %x \n", trimming_tmp);
 
 #if (defined(SDK_TWL))
   // DSP を使用して64x64に圧縮
@@ -1247,7 +1235,7 @@ static void CAM_CaptureScaling( CAMERA_WORK *p_wk, void* dst, HEAPID heapID )
     f32  factx, facty;
     factx = DSP_CalcScalingFactorF32(CAPTURE_TRIMMING_W, OUTPUT_WIDTH);
     facty = DSP_CalcScalingFactorF32(CAPTURE_TRIMMING_H, OUTPUT_HEIGHT);
-    ICHI_Printf("変換率 %x %x\n", factx, facty);
+    //ICHI_Printf("変換率 %x %x\n", factx, facty);
 
     src = trimming_tmp;
 
@@ -1448,7 +1436,7 @@ static void ROU_AddBmp( u16 posx, u16 posy, u16 sizex, u16 sizey, const u16 *p_a
   u8  iy;
   
   DC_FlushRange( p_adrs, (sizex * sizey * 2) );
-  ICHI_Printf("Flush Range Size %x\n", (sizex * sizey * 2));
+  //ICHI_Printf("Flush Range Size %x\n", (sizex * sizey * 2));
 
   // sizex * sizey 転送
   for( iy=0; iy<sizey; iy++ )
@@ -1527,7 +1515,9 @@ static void COMM_Init( COMM_WORK *p_wk, CTVT_GAME_CAM_MEMBER_WORK member[], BOOL
     const u8 selfId = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
     for( i=0; i<connectNum; i++ )
     {
-      if( selfId == i )
+      u8  netID = member[mem_cnt].netID;
+
+      if( selfId == netID )
       {
         // 自分だとスキップ
         continue;
@@ -1536,8 +1526,6 @@ static void COMM_Init( COMM_WORK *p_wk, CTVT_GAME_CAM_MEMBER_WORK member[], BOOL
       // TWLのみ受信設定
       if( member[mem_cnt].isTwl == TRUE )
       {
-        u8  netID = member[mem_cnt].netID;
-
         // バッファ設定
         GFL_NET_LDATA_CreatePostBuffer_SetAddres( CAPTURE_SIZE, netID, heapID, member[mem_cnt].p_cap_buf[0] );
         p_wk->cap_buf_bit |= 1<<netID;
@@ -1546,6 +1534,9 @@ static void COMM_Init( COMM_WORK *p_wk, CTVT_GAME_CAM_MEMBER_WORK member[], BOOL
 
         mem_cnt++;
       }
+
+      // 送信するNetIDBitをたてる
+      p_wk->cap_send_bit |= 1<<netID;
     }
     ICHI_Printf("camera capture 通信設定完了 ");
     ICHI_Printf("UserBit %x \n", p_wk->cap_buf_bit);
@@ -1626,7 +1617,7 @@ static void COMM_Main( COMM_WORK *p_wk, CTVT_GAME_CAM_MEMBER_WORK member[] )
         // 送信してくるNetIDのみチェック
         if( p_wk->cap_buf_bit & (1<<i) )
         {
-          ICHI_Printf("NetID %d Check \n", i);
+          //ICHI_Printf("NetID %d Check \n", i);
           if( p_wk->cap_cnt_base != p_wk->cap_cnt[mem_cnt] )
           {
             // 既に受信した
@@ -1690,13 +1681,13 @@ static void COMM_Main( COMM_WORK *p_wk, CTVT_GAME_CAM_MEMBER_WORK member[] )
         p_wk->can_next = TRUE;
 
         p_wk->cap_cnt_base++;
+        ICHI_Printf("送信同期完了\n");
         if( p_wk->cap_cnt_base == CAPTURE_NUM )
         {
           p_wk->is_end = TRUE;
           p_wk->seq = SEQ_END;
           ICHI_Printf("全員分受信終わり\n");
         }
-        ICHI_Printf("送信同期完了\n");
       }
     }
     break;
@@ -1721,18 +1712,9 @@ static void COMM_SendCapture( COMM_WORK *p_wk )
   // カメラキャプチャ送信リクエスト
   {
     // 低優先度送信で一気に送る
-    GFL_NET_LDATA_SetSendData( p_wk->cap_buf, CAPTURE_SIZE, p_wk->cap_buf_bit, FALSE );
-    ICHI_Printf("Send CamCapture addr %x bit %x \n", p_wk->cap_buf, p_wk->cap_buf_bit);
+    GFL_NET_LDATA_SetSendData( p_wk->cap_buf, CAPTURE_SIZE, p_wk->cap_send_bit, FALSE );
+    ICHI_Printf("Send CamCapture addr %x bit %x \n", p_wk->cap_buf, p_wk->cap_send_bit);
 
-    {
-      u8 i;
-      u16 *tmp = p_wk->cap_buf;
-      ICHI_Printf("キャプチャのデータ 少しだけ\n");
-      for(i=0; i<64; i++ )
-      {
-        ICHI_Printf("%x ", *(tmp+i));
-      }
-    }
   }
 }
 
@@ -2049,7 +2031,6 @@ static void SEQFUNC_PrintStream( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
   CTVT_GAME_CAM_WORK *p_wk = p_param;
   PS_WORK *p_ps = &(p_wk->ps);
 
-  ICHI_Printf("|");
   switch( *p_seq ){
   case SEQ_STREAM:   // ストリーム表示中
     {
@@ -2058,11 +2039,6 @@ static void SEQFUNC_PrintStream( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
       switch( state ) {
       case PRINTSTREAM_STATE_RUNNING:
         {
-          if( GFL_UI_TP_GetCont() )
-          {
-            //PRINTSYS_PrintStreamShortWait( p_ps->p_stream, 0 );
-          }
-          ICHI_Printf("*");
         }
         break;
       case PRINTSTREAM_STATE_DONE:
@@ -2269,11 +2245,14 @@ static void SEQFUNC_TWL_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
     break;
   case SEQ_NEXT:        // 次の写真撮影へ
 
-    if( COMM_CanNext( &p_wk->comm ) == FALSE )
+    // 3枚撮ったから終了
+    if( p_wk->camera.cnt == CAPTURE_NUM )
     {
-      break;
+      *p_seq = SEQ_END;
     }
-    if( p_wk->camera.cnt < CAPTURE_NUM )
+
+    // 次の写真撮影にいってよいか
+    if( COMM_CanNext( &p_wk->comm ) == TRUE )
     {
       p_wk->comm.can_next = FALSE;    // フラグリセット
 
@@ -2281,11 +2260,6 @@ static void SEQFUNC_TWL_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
       CAM_CaptureStart( &p_wk->camera );
 
       SEQ_SetNext( p_seqwk, SEQFUNC_TWL_Count );
-    }
-    else
-    {
-      // 3枚撮ったから終了
-      *p_seq = SEQ_END;
     }
     break;
   case SEQ_END:
@@ -2297,7 +2271,6 @@ static void SEQFUNC_TWL_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
   MSGWND_PrintMain( &p_wk->msgwnd );
   // カメラ
   CAMERA_SYS_UpdateCameta( p_wk->p_param->p_cam_sys );
-
 }
 
 //----------------------------------------------------------------------------
