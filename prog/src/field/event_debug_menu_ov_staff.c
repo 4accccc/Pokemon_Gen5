@@ -891,16 +891,22 @@ BOOL debugMenuCallProc_DebugTest_Onoue( DEBUG_MENU_EVENT_WORK *wk )
 //=====================================
 typedef struct {
   int seq_no;
+  int sub_seq_no;
   HEAPID heapID;
   GAMESYS_WORK *gmSys;
   GMEVENT *gmEvent;
   FIELDMAP_WORK *fieldWork;
   FLDMENUFUNC *menuFunc;
+  GFL_ARCUTIL_TRANSINFO bgchar;
+  FLDSYSWIN * win;
+  GFL_MSGDATA * msgData;
+  MedalID       draw_medal_id;
 } DEBUG_MEDALBOX_WORK;
 
 ///メニューリスト
 static const DEBUG_MENU_LIST MedalBoxMenuList[] =
 {
+  { DEBUG_FIELD_MEDALBOX_MENU_MAKEDATA , (void*)DEBUG_FIELD_MEDALBOX_MENU_MAKEDATA , GFL_OVERLAY_BLANK_ID },  // ボックスをランクアップ
   { DEBUG_FIELD_MEDALBOX_MENU_ALL_TITLE_OPEN , (void*)DEBUG_FIELD_MEDALBOX_MENU_ALL_TITLE_OPEN , GFL_OVERLAY_BLANK_ID },  // メダルボックスを開く
   { DEBUG_FIELD_MEDALBOX_MENU_ALL_HINT_OPEN , (void*)DEBUG_FIELD_MEDALBOX_MENU_ALL_HINT_OPEN , GFL_OVERLAY_BLANK_ID },  // メダルボックスを開く
   { DEBUG_FIELD_MEDALBOX_MENU_ALL_TITLE_ACHIVE , (void*)DEBUG_FIELD_MEDALBOX_MENU_ALL_TITLE_ACHIVE , GFL_OVERLAY_BLANK_ID },  // メダルデータを全出力
@@ -915,7 +921,7 @@ static const DEBUG_MENU_LIST MedalBoxMenuList[] =
 static const FLDMENUFUNC_HEADER MedalBoxMenuHeader =
 {
   7,    //リスト項目数
-  7,    //表示最大項目数
+  8,    //表示最大項目数
   0,    //ラベル表示Ｘ座標
   13,   //項目表示Ｘ座標
   0,    //カーソル表示Ｘ座標
@@ -1221,6 +1227,107 @@ static void debugMenuMedalSaveOutPut( DEBUG_MEDALBOX_WORK* wk )
 
 }
 
+static void DrawMedalData( DEBUG_MEDALBOX_WORK* work , MedalID medal_id )
+{
+  STRBUF *str;
+  STRBUF *exp;
+  FLDMSGBG * msgBG;
+  WORDSET * wset;
+  GAMEDATA *p_gm_data=GAMESYSTEM_GetGameData( work->gmSys );
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_gm_data );
+  MEDALBOX* medal_box = SaveData_GetMedalBox( p_sv );
+  u8 medal_state = MEDALBOX_GetMedalState( medal_box , work->draw_medal_id );
+
+  str = GFL_MSG_CreateString( work->msgData, DEBUG_FIELD_MEDALBOX_MAKEDATA );
+  wset = WORDSET_Create( work->heapID );
+  exp  = GFL_STR_CreateBuffer( 128, work->heapID );
+  WORDSET_RegisterMedalName( wset, 0,medal_id );
+  WORDSET_RegisterNumber( wset, 1, medal_state, 1, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+  WORDSET_RegisterNumber( wset, 2, medal_id, 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+  WORDSET_ExpandStr( wset, exp, str );
+
+  msgBG = FIELDMAP_GetFldMsgBG( work->fieldWork );
+  FLDSYSWIN_ClearWindow( work->win );
+  FLDSYSWIN_PrintStrBuf( work->win, 0, 0, exp );
+
+  GFL_STR_DeleteBuffer( str );
+  GFL_STR_DeleteBuffer( exp );
+  WORDSET_Delete( wset );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  メダルデータ作成
+ *
+ *	@param	work 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL debugMenuMedalDataMake( DEBUG_MEDALBOX_WORK* work )
+{
+  GAMEDATA *p_gm_data=GAMESYSTEM_GetGameData( work->gmSys );
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_gm_data );
+  MEDALBOX* medal_box = SaveData_GetMedalBox( p_sv );
+
+  switch( work->sub_seq_no )
+  {
+  case 0:
+    {
+      FLDMSGBG * msgBG;
+      work->draw_medal_id = 0;
+      FLDMENUFUNC_DeleteMenu( work->menuFunc );
+      work->msgData = DEBUGFLDMENU_CreateMSGDATA(work->fieldWork, NARC_debug_message_d_field_dat );
+      msgBG = FIELDMAP_GetFldMsgBG( work->fieldWork );
+      work->win = FLDSYSWIN_AddEx( msgBG, work->msgData , 1, 1, 30, 2 );
+      DrawMedalData( work , work->draw_medal_id );
+      work->sub_seq_no++;
+    }
+    break;
+  case 1:
+    {
+      if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )
+      {
+        work->draw_medal_id--;
+        if( work->draw_medal_id < 0 )
+        {
+          work->draw_medal_id = MDLID_MAX-1;
+        }
+        DrawMedalData( work , work->draw_medal_id );
+      }
+
+      if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
+      {
+        work->draw_medal_id++;
+        if( work->draw_medal_id >= MDLID_MAX )
+        {
+          work->draw_medal_id = 0;
+        }
+        DrawMedalData( work , work->draw_medal_id );
+      }
+
+      if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+      {
+        u8 medal_state = MEDALBOX_GetMedalState( medal_box , work->draw_medal_id );
+        medal_state = medal_state + 1;
+
+        if( medal_state >= MEDAL_STATE_MAX )
+        {
+          medal_state = 0;
+        }
+        DEBUG_SetMedalState( medal_box , work->draw_medal_id , medal_state );
+        DrawMedalData( work , work->draw_medal_id );
+      }
+      if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START )
+      {
+        return TRUE;
+      }
+    }
+    break;
+  }
+  return FALSE;
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief      メダルデータのランダムセット
@@ -1345,6 +1452,7 @@ static GMEVENT_RESULT debugMenuMedalBoxEvent( GMEVENT *event, int *seq, void *wk
   // メニュー初期化
   case 0:
     work->menuFunc = DEBUGFLDMENU_Init( work->fieldWork, work->heapID, &DebugMenuMedalBoxImitializer );
+    work->sub_seq_no=0;
     (*seq)++;
     break;
 
@@ -1426,8 +1534,27 @@ static GMEVENT_RESULT debugMenuMedalBoxEvent( GMEVENT *event, int *seq, void *wk
         FLDMENUFUNC_DeleteMenu( work->menuFunc );
       }
       return GMEVENT_RES_FINISH;
+
+    // メダルセーブをランダム生成
+    case DEBUG_FIELD_MEDALBOX_MENU_MAKEDATA:     
+      {
+        (*seq)++;
+      }
+      return GMEVENT_RES_CONTINUE;
     }
     break;
+  case 2:
+    {
+      BOOL end = debugMenuMedalDataMake( work );
+      if( end == TRUE )
+      {
+        FLDSYSWIN_ClearWindow( work->win );
+        FLDSYSWIN_Delete( work->win );
+        GFL_MSG_Delete( work->msgData );
+        return GMEVENT_RES_FINISH;
+      }
+    }
+    return GMEVENT_RES_CONTINUE;
 
   }
 

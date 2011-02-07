@@ -106,3 +106,7 @@ extern u16 MEDALBOX_GetMedalBoxMax( const MEDALBOX *p_mdlbox );
 // セーブデータのポインタを返す
 extern MEDALBOX* SaveData_GetMedalBox( SAVE_CONTROL_WORK *p_sv );
 
+#ifdef PM_DEBUG
+extern void DEBUG_SetMedalState(MEDALBOX * p_mdlbox, MedalID medal_id , u8 state);
+#endif  //PM_DEBUG
+

@@ -447,3 +447,15 @@ MEDALBOX* SaveData_GetMedalBox( SAVE_CONTROL_WORK * p_sv )
   return &tentative_medal_box_save;
 }
 
+
+//==============================================================================
+//  デバッグ用
+//==============================================================================
+#ifdef PM_DEBUG
+void DEBUG_SetMedalState(MEDALBOX * p_mdlbox, MedalID medal_id , u8 state)
+{
+  MEDAL_ST* p_medal_st = GetMedalST( p_mdlbox , medal_id );
+  p_medal_st->medal_state = state;
+}
+#endif  //PM_DEBUG
+
