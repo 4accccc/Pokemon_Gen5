@@ -91,7 +91,8 @@ typedef enum
   CTS_START_WAIT2,      // 開始通知待ち確認用
   CTS_EXIT_WAIT,        // 中止
   // 共通
-  CTS_RETURN_WAIT,      // 会話モードへ戻るときのタッチ待ち
+  CTS_RETURN,           // 会話モードへ戻るときの同期
+  CTS_RETURN_WAIT,      // 会話モードへ戻るときの同期待ち
 
 
   //ここより下を終了状態との区別で使うので順番変更注意！！
@@ -255,7 +256,7 @@ static void CTVT_TALK_GameEnter_End( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkW
 static const BOOL CTVT_TALK_GameEnter_CheckFinishReq( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork );
 // メッセージ表示 上下画面
 static void CTVT_TALK_AcceptMsg_Main( COMM_TVT_WORK *work, CTVT_TALK_WORK *talkWork, const u16 msgId, s32 timeLimit );
-static void CTVT_TALK_AcceptMsg_Sub( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork , const u16 msgId, STRBUF* name, u32 sex );
+static void CTVT_TALK_AcceptMsg_Sub( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork , const u16 msgId, STRBUF* name, u16 msgWait );
 
 //形が矩形ではないので2個判定
 static const GFL_UI_TP_HITTBL CTVT_TALK_HitDrawButton[3] = 
@@ -819,9 +820,9 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
       const BOOL ret = CTVT_COMM_SendFlg( work , commWork , CCFT_EXIT_GAME , 0 );
       if( ret == TRUE )
       {
-        talkWork->state = CTS_RETURN_WAIT;
+        talkWork->state = CTS_RETURN;
         // 中止されましたメッセージ表示 
-        CTVT_TALK_AcceptMsg_Sub( work, talkWork, COMM_TVT_GAME_03, NULL, 0 );
+        CTVT_TALK_AcceptMsg_Sub( work, talkWork, COMM_TVT_GAME_03, NULL, 120 );
       }
       // 上画面のメッセージとちゅうしボタンを消す
       BmpWinFrame_Clear( talkWork->acceptMsgWin_Main, WINDOW_TRANS_ON_V );
@@ -835,7 +836,6 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
         APP_TASKMENU_CloseMenu( talkWork->cancelWork );
         talkWork->cancelWork = NULL;
       }
-
     }
     break;
   // 子
@@ -846,10 +846,9 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
       CTVT_COMM_MEMBER_DATA *memData = CTVT_COMM_GetMemberData( work, commWork, 0 );
       MYSTATUS *myStatus = (MYSTATUS*)memData->myStatusBuff;
       STRBUF *str = MyStatus_CreateNameString( myStatus, heapId );
-      u32    sex =  MyStatus_GetMySex( myStatus );
 
       // おさそいが～メッセージ表示
-      CTVT_TALK_AcceptMsg_Sub( work, talkWork, COMM_TVT_GAME_04, str, sex );
+      CTVT_TALK_AcceptMsg_Sub( work, talkWork, COMM_TVT_GAME_04, str, 0 );
       GFL_STR_DeleteBuffer( str );
 
       // はい・いいえ選択表示
@@ -885,8 +884,7 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
           // いいえ
           talkWork->state = CTS_EXIT_WAIT;
           // 参加を断りましたメッセージ表示 
-          CTVT_TALK_AcceptMsg_Sub( work, talkWork, COMM_TVT_GAME_05, NULL, 0 );
-          talkWork->msgWait = 120;    // メッセージ表示待ち時間
+          CTVT_TALK_AcceptMsg_Sub( work, talkWork, COMM_TVT_GAME_05, NULL, 120 );
         }
         APP_TASKMENU_CloseMenu( talkWork->yesNoWork );
         talkWork->yesNoWork = NULL;
@@ -918,7 +916,7 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
           // キャンセルした
           talkWork->state = CTS_EXIT_WAIT;
           // 中止されましたメッセージ表示 
-          CTVT_TALK_AcceptMsg_Sub( work, talkWork, COMM_TVT_GAME_03, NULL, 0 );
+          CTVT_TALK_AcceptMsg_Sub( work, talkWork, COMM_TVT_GAME_03, NULL, 120 );
         }
         
         APP_TASKMENU_CloseMenu( talkWork->cancelWork );
@@ -959,11 +957,29 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
       CTVT_COMM_SendFlg_Repeat( work, commWork, CCFT_CANCEL_GAME, 0 );
     }
     break;
-  case CTS_RETURN_WAIT:      // 会話モードへ戻るときのタッチ待ち
-    if( GFL_UI_TP_GetTrg() == TRUE )
+  case CTS_RETURN:           // 会話モードへ戻るときの同期
+    if( talkWork->msgWait > 0 )
     {
-      // 会話モードメインへ戻る
-      CTVT_TALK_GameEnter_End( work, talkWork );
+      talkWork->msgWait--;
+    }
+    if( talkWork->msgWait == 0 )
+    {
+      GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
+      GFL_NET_HANDLE_TimeSyncStart( pNet, CTVT_COMM_EXIT_GAME, WB_NET_COMM_TVT );
+      talkWork->state = CTS_RETURN_WAIT;
+
+      ICHI_Printf("受付中止同期待ち\n");
+    }
+    break;
+  case CTS_RETURN_WAIT:      // 会話モードへ戻るときの同期待ち
+    {
+      GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
+      if( GFL_NET_HANDLE_IsTimeSync( pNet, CTVT_COMM_EXIT_GAME , WB_NET_COMM_TVT ) == TRUE )
+      {
+        // 会話モードメインへ戻る
+        CTVT_TALK_GameEnter_End( work, talkWork );
+        ICHI_Printf("受付中止同期\n");
+      }
     }
     break;
 
@@ -1886,7 +1902,7 @@ static void CTVT_TALK_AcceptMsg_Main( COMM_TVT_WORK *work, CTVT_TALK_WORK *talkW
 }
 
 // ミニゲーム受付用のメッセージ表示(下画面)
-static void CTVT_TALK_AcceptMsg_Sub( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork , const u16 msgId, STRBUF* name, u32 sex )
+static void CTVT_TALK_AcceptMsg_Sub( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork , const u16 msgId, STRBUF* name, u16 msgWait )
 {
   const HEAPID heapId = COMM_TVT_GetHeapId( work );
   GFL_FONT *fontHandle = COMM_TVT_GetFontHandle( work );
@@ -1903,13 +1919,13 @@ static void CTVT_TALK_AcceptMsg_Sub( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkW
   // 名前 ある場合のみ
   if( name != NULL){
     //プレイヤー名展開
-    WORDSET_RegisterWord( wordSet, bufID, name, sex, TRUE, PM_LANG );
+    WORDSET_RegisterWord( wordSet, bufID, name, 0, TRUE, PM_LANG );
     bufID += 1;
   }
   // ゲーム名
   {
     STRBUF *gameName = GFL_MSG_CreateString( msgHandle, COMM_TVT_GAME_18 );
-    WORDSET_RegisterWord( wordSet, bufID, gameName, sex, TRUE, PM_LANG );
+    WORDSET_RegisterWord( wordSet, bufID, gameName, 0, TRUE, PM_LANG );
     GFL_STR_DeleteBuffer( gameName );
   }
   WORDSET_ExpandStr( wordSet, tempStr, str );
@@ -1925,6 +1941,9 @@ static void CTVT_TALK_AcceptMsg_Sub( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkW
 
   BmpWinFrame_Write( talkWork->acceptMsgWin_Sub , WINDOW_TRANS_ON_V , 
       CTVT_BMPWIN_CGX , CTVT_PAL_BG_SUB_WINFRAME );
+
+
+  talkWork->msgWait = msgWait;    // メッセージ表示待ち時間
   talkWork->isUpdateAcceptMsg_Sub = TRUE;
 }
 
@@ -2175,8 +2194,8 @@ static void CTVT_TALK_GameEnter_End( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkW
   BmpWinFrame_Clear( talkWork->acceptMsgWin_Main, WINDOW_TRANS_ON_V );
   BmpWinFrame_Clear( talkWork->acceptMsgWin_Sub, WINDOW_TRANS_ON_V );
 
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( talkWork->acceptMsgWin_Main) , 0xF );
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( talkWork->acceptMsgWin_Sub) , 0xF );
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( talkWork->acceptMsgWin_Main) , 0x0 );
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( talkWork->acceptMsgWin_Sub) , 0x0 );
   GFL_BMPWIN_ClearScreen( talkWork->acceptMsgWin_Main );
   GFL_BMPWIN_ClearScreen( talkWork->acceptMsgWin_Sub );
   GFL_BG_LoadScreenReq(CTVT_FRAME_MAIN_MSG);
@@ -2238,9 +2257,9 @@ static const BOOL CTVT_TALK_GameEnter_CheckFinishReq( COMM_TVT_WORK *work , CTVT
     if( COMM_TVT_GetSelfIdx(work) != 0 )
     {
       talkWork->isExitGame = FALSE;
-      talkWork->state = CTS_RETURN_WAIT;
+      talkWork->state = CTS_RETURN;
       // 中止されましたメッセージ表示 
-      CTVT_TALK_AcceptMsg_Sub( work, talkWork, COMM_TVT_GAME_03, NULL, 0 );
+      CTVT_TALK_AcceptMsg_Sub( work, talkWork, COMM_TVT_GAME_03, NULL, 120 );
       ret = TRUE;
     }
   }

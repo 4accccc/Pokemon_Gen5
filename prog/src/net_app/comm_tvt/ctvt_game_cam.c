@@ -109,13 +109,6 @@ typedef enum
 #define MSGWND_BMPWIN_H (4)
 
 //-------------------------------------
-///	通信用
-//=====================================
-#define CAMERA_INIT_SYNC  (30)    // カメラ開始同期
-#define CAMERA_END_SYNC   (31)    // カメラ終了同期
-#define CAMERA_SEND_SYNC  (32)    // 送信同期
-
-//-------------------------------------
 ///	TWL時の写真表示用
 //=====================================
 #define INFO_W  (72)  // 1枚目から2枚までの幅
@@ -1042,11 +1035,11 @@ static void PS_Print( PS_WORK *p_wk, MSGWND_WORK *p_msgwnd, SEQ_FUNCTION next_se
 	GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(p_msgwnd->p_bmpwin) );
 
 
-  PRINTSYS_PrintStream_StartTempSpeedMode( p_wk->p_stream, 0 );
+  PRINTSYS_PrintStream_StartTempSpeedMode( p_wk->p_stream, 3 );
 
   // その他設定
   p_wk->next_seq_function = next_seq_function;
-  p_wk->wait_max  = 90;
+  p_wk->wait_max  = 120;
   p_wk->wait_count= 0;
 }
 
@@ -1088,7 +1081,7 @@ static void PS_PrintNumber( PS_WORK *p_wk, MSGWND_WORK *p_msgwnd, SEQ_FUNCTION n
 	GFL_BMPWIN_MakeScreen( p_msgwnd->p_bmpwin );
 	GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(p_msgwnd->p_bmpwin) );
 
-  PRINTSYS_PrintStream_StartTempSpeedMode( p_wk->p_stream, 0 );
+  PRINTSYS_PrintStream_StartTempSpeedMode( p_wk->p_stream, 3 );
 
   // その他設定
   p_wk->next_seq_function = next_seq_function;

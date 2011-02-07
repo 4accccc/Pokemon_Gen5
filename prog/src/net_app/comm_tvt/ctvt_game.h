@@ -48,12 +48,6 @@
 #define CTVT_GAME_BMPWIN_CGX_MAIN (1)
 #define CTVT_GAME_BMPWIN_CGX (1)
 
-// ミニゲーム用 タイミングコマンド
-#define CTVT_COMM_GAME_TITLE_SYNC       (22)    // タイトル同期
-#define CTVT_COMM_GAME_BEFORE_SYNC      (23)    // ゲーム開始同期
-#define CTVT_COMM_GAME_SCORE_SYNC       (24)    // スコア同期
-#define CTVT_COMM_GAME_END_SYNC         (25)    // ゲーム終了同期
-
 #define CTVT_UNIT_IDX_EFFECT  (4)   // エフェクトのユニットID
 
 //======================================================================

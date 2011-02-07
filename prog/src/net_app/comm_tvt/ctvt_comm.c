@@ -47,10 +47,6 @@
 #define CTVT_COMM_DRAW_BUF_NUM (64)
 #define CTVT_COMM_DRAW_BUF_SEND_NUM (8) //8*ŒÂ”
 
-#define CTVT_COMM_ADD_COMMAND_SYNC (8)
-#define CTVT_COMM_RELEASE_COMMAND_SYNC (9)
-#define CTVT_COMM_SCAN_BEACON_NUM (16)
-
 //V‹KÚ‘±Žž‚Ì‚¨ŠG•`‚«‹¤—L
 #define CTVT_COMM_SHARE_DRAW_BUFF (0)
 

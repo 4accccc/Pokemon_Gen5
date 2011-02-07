@@ -232,6 +232,31 @@ typedef enum
   CTOAM_BUTTON_SELECT,
 }COMM_TVT_OBJ_ANM_MAIN;
 
+//-------------------------------------
+///	通信タイミングコマンド
+//  いろんなソースに渡っているためここに移した
+//=====================================
+enum{
+  // ctvt_comm.cで使用
+  CTVT_COMM_ADD_COMMAND_SYNC      = 8,
+  CTVT_COMM_RELEASE_COMMAND_SYNC  = 9,
+  CTVT_COMM_EXIT_GAME             = 10,   // ゲーム参加の受付中止
+
+  // ctvt_comm.h
+  CTVT_COMM_TIMING_END            = 47,
+
+  // ミニゲーム用
+  CTVT_COMM_GAME_TITLE_SYNC       = 22,   // タイトル同期
+  CTVT_COMM_GAME_BEFORE_SYNC      = 23,   // ゲーム開始同期
+  CTVT_COMM_GAME_SCORE_SYNC       = 24,   // スコア同期
+  CTVT_COMM_GAME_END_SYNC         = 25,   // ゲーム終了同期
+  // ミニゲームカメラ撮影用
+  CAMERA_INIT_SYNC                = 30,   // カメラ開始同期
+  CAMERA_END_SYNC                 = 31,   // カメラ終了同期
+  CAMERA_SEND_SYNC                = 32,   // 送信同期
+};
+
+
 //======================================================================
 //	typedef struct
 //======================================================================

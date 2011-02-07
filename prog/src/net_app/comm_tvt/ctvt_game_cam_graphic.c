@@ -437,8 +437,6 @@ CTVT_GAME_CAM_GRAPHIC_WORK * CTVT_GAME_CAM_GRAPHIC_Init( int display_select, HEA
 	GFL_STD_MemClear( p_wk, sizeof(CTVT_GAME_CAM_GRAPHIC_WORK) );
 
 	//ÉåÉWÉXÉ^èâä˙âª
-	G2_BlendNone();
-	G2S_BlendNone();	
 	GX_SetVisibleWnd( GX_WNDMASK_NONE );
 	GXS_SetVisibleWnd( GX_WNDMASK_NONE );
 

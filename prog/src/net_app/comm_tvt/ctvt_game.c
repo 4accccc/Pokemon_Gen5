@@ -50,6 +50,8 @@ static GFL_STD_RandContext gRandContext = {0};
 
 #define CTVT_UNIT_IDX_MAX       (5)     // 3Dユニットの数   
 #define CTVT_GAME_TIME_LIMIT    (60)    // 制限時間 (秒)
+#define CTVT_GAME_TIME_RETRY    (5)     // リトライがでるまでの時間 (秒)
+#define CTVT_GAME_TIME_RETRY_NO (30)    // 自動で「いいえ」を選択する時間 (秒)
 
 // タイムゲージ
 #define TIME_BAR_W        (23)          // 幅
@@ -82,14 +84,9 @@ static GFL_STD_RandContext gRandContext = {0};
 //ステート
 typedef enum
 {
-  CGS_FADEIN,
-  CGS_FADEIN_WAIT,
-
   CGS_FADEOUT, //両方フェード
   CGS_FADEOUT_WAIT,
 
-  CGS_FADEIN_CAMERA,      // カメラ用
-  CGS_FADEIN_WAIT_CAMERA, // カメラ用
   CGS_FADEOUT_CAMERA,     // カメラ用
   CGS_FADEOUT_WAIT_CAMERA,// カメラ用
 
@@ -325,6 +322,7 @@ struct _CTVT_GAME_WORK
   GFL_BMPWIN        *msgRetry;            // メッセージ描画用
   BOOL              isUpdateMsgRetry;     // メッセージ更新
   u16               msgWait;              // メッセージ表示待ち
+  u16               retry_cnt;            // メッセージ表示待ち
   APP_TASKMENU_RES  *taskMenuRes;         // 共通リソース
   APP_TASKMENU_WORK *yesNoWork;           // はい・いいえ選択
   APP_TASKMENU_WORK *cancelWork;          // ちゅうし
@@ -718,22 +716,7 @@ const COMM_TVT_MODE CTVT_GAME_Main( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWo
 #endif // DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
 
 
-  switch( gameWork->state )
-  {
-  case CGS_FADEIN:
-    WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
-        WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , heapId );
-    gameWork->state = CGS_FADEIN_WAIT;
-    break;
-
-  case CGS_FADEIN_WAIT:
-    if( WIPE_SYS_EndCheck() == TRUE )
-    {
-      gameWork->state = CGS_GAME_MAIN;
-      ICHI_Printf("フェードアウト終了\n");
-    }
-    break;
-
+  switch( gameWork->state ){
   case CGS_FADEOUT:
     {
       CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork( work );
@@ -755,30 +738,35 @@ const COMM_TVT_MODE CTVT_GAME_Main( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWo
     }
     break;
 
-  case CGS_FADEIN_CAMERA:      // カメラ用
-    WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN, 
-        WIPE_FADE_BLACK, WIPE_DEF_DIV, WIPE_DEF_SYNC, heapId );
-    gameWork->state = CGS_FADEIN_WAIT_CAMERA;
-    break;
-
-  case CGS_FADEIN_WAIT_CAMERA: // カメラ用
-    if( WIPE_SYS_EndCheck() == TRUE )
+  case CGS_CAMERA_INIT:  // カメラ撮影
     {
+      gameWork->p_cam_wk = CTVT_GAME_CAM_Init( gameWork->p_cam_param, heapId );
       gameWork->state = CGS_CAMERA_MAIN;
+
+      WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN, 
+          WIPE_FADE_BLACK, WIPE_DEF_DIV, WIPE_DEF_SYNC, heapId );
     }
     break;
 
-  case CGS_FADEOUT_CAMERA:     // カメラ用
+  case CGS_CAMERA_MAIN:  // カメラ撮影
+    if( WIPE_SYS_EndCheck() == TRUE 
+        && CTVT_GAME_CheckFinishReq( work, gameWork ) == FALSE )
     {
-      CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork( work );
-      //StopCaptureは停止音待ち
-      //if( CTVT_CAMERA_IsStopCapture( work , camWork ) == TRUE )
+      BOOL ret;
+      ret = CTVT_GAME_CAM_Main( gameWork->p_cam_wk );
+      if( ret == TRUE )
       {
-        WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, 
-            WIPE_FADE_BLACK, WIPE_DEF_DIV, WIPE_DEF_SYNC, heapId );
-        gameWork->state = CGS_FADEOUT_WAIT_CAMERA;
+        gameWork->state = CGS_CAMERA_EXIT;
       }
     }
+    break;
+
+  case CGS_CAMERA_EXIT:  // カメラ撮影
+    CTVT_GAME_CAM_Exit( gameWork->p_cam_wk );
+    gameWork->state = CGS_FADEOUT_WAIT_CAMERA;
+
+    WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, 
+        WIPE_FADE_BLACK, WIPE_DEF_DIV, WIPE_DEF_SYNC, heapId );
     break;
 
   case CGS_FADEOUT_WAIT_CAMERA:// カメラ用
@@ -786,39 +774,21 @@ const COMM_TVT_MODE CTVT_GAME_Main( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWo
     {
       CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork( work );
       CTVT_CAMERA_StopCapture( work, camWork );
-      gameWork->state = CGS_CAMERA_EXIT;
+      gameWork->state = CGS_GAME_INIT;
     }
-    break;
-
-  case CGS_CAMERA_INIT:  // カメラ撮影
-    gameWork->p_cam_wk = CTVT_GAME_CAM_Init( gameWork->p_cam_param, heapId );
-    gameWork->state = CGS_FADEIN_CAMERA;
-    break;
-
-  case CGS_CAMERA_MAIN:  // カメラ撮影
-    if( CTVT_GAME_CheckFinishReq( work, gameWork ) == FALSE )
-    {
-      BOOL ret;
-      ret = CTVT_GAME_CAM_Main( gameWork->p_cam_wk );
-      if( ret == TRUE )
-      {
-        gameWork->state = CGS_FADEOUT_CAMERA;
-      }
-    }
-    break;
-
-  case CGS_CAMERA_EXIT:  // カメラ撮影
-    CTVT_GAME_CAM_Exit( gameWork->p_cam_wk );
-    gameWork->state = CGS_GAME_INIT;
     break;
 
   case CGS_GAME_INIT:
     CTVT_GAME_Init( work, gameWork );
-    gameWork->state = CGS_FADEIN;
+    gameWork->state = CGS_GAME_MAIN;
+
+    WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN, 
+        WIPE_FADE_BLACK, WIPE_DEF_DIV, WIPE_DEF_SYNC, heapId );
     break;
 
   case CGS_GAME_MAIN:
-    if( CTVT_GAME_CheckFinishReq( work, gameWork ) == FALSE )
+    if( WIPE_SYS_EndCheck() == TRUE 
+        && CTVT_GAME_CheckFinishReq( work, gameWork ) == FALSE )
     {
       BOOL ret;
       ret = CTVT_GAME_Update( work , gameWork );
@@ -831,6 +801,7 @@ const COMM_TVT_MODE CTVT_GAME_Main( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWo
 
   case CGS_GAME_EXIT:
     CTVT_GAME_Exit( work, gameWork );
+
     {
       CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork( work );
       //COMM_TVT_SetSusspend( work , TRUE );
@@ -841,7 +812,10 @@ const COMM_TVT_MODE CTVT_GAME_Main( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWo
     if( gameWork->isRetry == TRUE )
     {
       // リトライ
-      gameWork->state = CGS_GAME_INIT;
+      gameWork->state = CGS_FADEOUT_WAIT_CAMERA;
+
+      WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, 
+          WIPE_FADE_BLACK, WIPE_DEF_DIV, WIPE_DEF_SYNC, heapId );
     }
     else
     {
@@ -1363,6 +1337,7 @@ static BOOL CTVT_GAME_Update( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
     SEQ_INIT_SYNC_WAIT,   // 初期化開始同期待ち
     SEQ_INIT,             // 初期化
     SEQ_TITLE,            // タイトル
+    SEQ_TITLE_FADE_WAIT,  // タイトルのフェード待ち
     // プレイ中
     SEQ_MAIN_SYNC_INIT,   // ゲーム開始同期
     SEQ_MAIN_SYNC_WAIT,   // ゲーム開始同期待ち
@@ -1381,8 +1356,6 @@ static BOOL CTVT_GAME_Update( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
     // 共通
     SEQ_RETRY_INIT,       // リトライ選択初期化
     SEQ_RETRY_EXIT,       // リトライ選択終了
-    SEQ_RETRY_FADEOUT,    // リトライフェードアウト
-    SEQ_RETRY_FADEOUT_WAIT,// リトライフェードアウト待ち
     SEQ_YES_NO_WAIT,      // はい・いいえ選択待ち
     // 親
     SEQ_PARENT_RETRY,            // 子参加チェックして、開始通知
@@ -1396,7 +1369,6 @@ static BOOL CTVT_GAME_Update( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
     SEQ_EXIT_SYNC_INIT,   // ゲーム終了同期
     SEQ_EXIT_SYNC_WAIT,   // ゲーム終了同期待ち
     SEQ_EXIT,             // 終了
-    SEQ_NEXT,       // 次のモードへ
   };
 
   // シーケンス別処理
@@ -1444,14 +1416,20 @@ static BOOL CTVT_GAME_Update( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
   case SEQ_INIT:             // 初期化
     game_update_seq_init( work, gameWork );
     gameWork->seq = SEQ_TITLE;
+    ICHI_Printf("Heap Free size[%x]\n",GFL_HEAP_GetHeapFreeSize(HEAPID_COMM_TVT));
     break;
+
   case SEQ_TITLE:
     if( game_update_seq_title( work, gameWork ) )
     {
+      WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT , 
+          WIPE_FADE_BLACK, WIPE_DEF_DIV, WIPE_DEF_SYNC, gameWork->heapId );
       gameWork->seq = SEQ_MAIN_SYNC_INIT;
     }
     break;
+
   case SEQ_MAIN_SYNC_INIT:   // ゲーム開始同期
+    if( WIPE_SYS_EndCheck() == TRUE )
     {
       GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
       GFL_NET_HANDLE_TimeSyncStart( pNet, CTVT_COMM_GAME_BEFORE_SYNC, WB_NET_COMM_TVT );
@@ -1460,19 +1438,34 @@ static BOOL CTVT_GAME_Update( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
       ICHI_Printf("ゲーム開始同期待ち\n");
     }
     break;
+
   case SEQ_MAIN_SYNC_WAIT:   // ゲーム開始同期待ち
     {
       GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
       if( GFL_NET_HANDLE_IsTimeSync( pNet, CTVT_COMM_GAME_BEFORE_SYNC , WB_NET_COMM_TVT ) == TRUE )
       {
-        gameWork->seq = SEQ_MAIN;
+        gameWork->seq = SEQ_TITLE_FADE_WAIT;
         PMSND_PlaySystemSE( SEQ_SE_LCG_03 );    // スタートのホイッスル音
         // BGM
         PMSND_PlayBGM( SEQ_BGM_LCG_01 );
+
+        // BG位置戻す
+        GFL_BG_SetScroll( CTVT_GAME_FRAME_S_BG, GFL_BG_SCROLL_Y_SET, 0 );
+
+        WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN , 
+            WIPE_FADE_BLACK, WIPE_DEF_DIV, WIPE_DEF_SYNC, gameWork->heapId );
         ICHI_Printf("ゲーム開始同期完了\n");
       }
     }
     break;
+
+  case SEQ_TITLE_FADE_WAIT:
+    if( WIPE_SYS_EndCheck() == TRUE )
+    {
+      gameWork->seq = SEQ_MAIN;
+    }
+    break;
+ 
   case SEQ_MAIN:             // ゲームメイン
     if( game_update_seq_main( work, gameWork ) )
     {
@@ -1576,6 +1569,7 @@ static BOOL CTVT_GAME_Update( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
       // その他初期化
       gameWork->isRetry  = FALSE;
       gameWork->msgWait = 0;
+      gameWork->retry_cnt   = 0;
       gameWork->isCancelGame= FALSE;
       gameWork->isExitGame  = FALSE;
       gameWork->isStartGame = FALSE;
@@ -1616,28 +1610,17 @@ static BOOL CTVT_GAME_Update( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
       // 画面を暗いのから戻す
       // 会話モードの設定に戻さないといけないかも
       G2_BlendNone();
+      G2S_BlendNone();
 
-      gameWork->seq = SEQ_RETRY_FADEOUT;
-      ICHI_Printf("isRetry = %d \n", gameWork->isRetry);
-    }
-    break;
-
-  case SEQ_RETRY_FADEOUT:    // リトライフェードアウト
-    WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT , 
-        WIPE_FADE_BLACK, WIPE_DEF_DIV, WIPE_DEF_SYNC, gameWork->heapId );
-    gameWork->seq = SEQ_RETRY_FADEOUT_WAIT;
-    break;
-
-  case SEQ_RETRY_FADEOUT_WAIT:// リトライフェードアウト待ち
-    if( WIPE_SYS_EndCheck() == TRUE )
-    {
       gameWork->seq = SEQ_EXIT_SYNC_INIT;
+      ICHI_Printf("isRetry = %d \n", gameWork->isRetry);
     }
     break;
 
   case SEQ_YES_NO_WAIT:      // はい・いいえ選択待ち
     if( retry_check_finish_req( work, gameWork ) == FALSE )
     {
+      gameWork->retry_cnt++;
       APP_TASKMENU_UpdateMenu( gameWork->yesNoWork );
       if( APP_TASKMENU_IsFinish( gameWork->yesNoWork ) == TRUE )
       {
@@ -1664,6 +1647,8 @@ static BOOL CTVT_GAME_Update( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
         {
           // いいえ
           // ちゅうしされました メッセージ表示
+          disp_message_retry( work, gameWork, COMM_TVT_GAME_03 );
+          gameWork->msgWait = 180;    // メッセージ表示待ち時間
           if( selfId == 0 )
           {
             gameWork->seq = SEQ_PARENT_EXIT;        // 親 中止
@@ -1676,6 +1661,25 @@ static BOOL CTVT_GAME_Update( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
         }
         APP_TASKMENU_CloseMenu( gameWork->yesNoWork );
         gameWork->yesNoWork = NULL;
+      }
+      // 一定時間経過すると「いいえ」を選択したことにする
+      else if( gameWork->retry_cnt > (CTVT_GAME_TIME_RETRY_NO*60) )
+      {
+        // いいえ
+        // ちゅうしされました メッセージ表示
+        disp_message_retry( work, gameWork, COMM_TVT_GAME_03 );
+        gameWork->msgWait = 180;    // メッセージ表示待ち時間
+        if( selfId == 0 )
+        {
+          gameWork->seq = SEQ_PARENT_EXIT;        // 親 中止
+        }
+        else
+        {
+          gameWork->seq = SEQ_CHILD_EXIT;   // 子 中止
+        }
+        APP_TASKMENU_CloseMenu( gameWork->yesNoWork );
+        gameWork->yesNoWork = NULL;
+        ICHI_Printf("いいえを選んだ\n");
       }
     }
     else
@@ -1880,17 +1884,11 @@ static BOOL CTVT_GAME_Update( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
     }
     break;
   case SEQ_EXIT:             // 終了
-    //if( GFL_UI_KEY_GetTrg() & PAD_ALL_MASK )
     {
       game_update_seq_exit( work, gameWork );
-      gameWork->seq = SEQ_NEXT;
-      
+      gameWork->seq = 0;    // 次モードの為、初期化
+      return TRUE;
     }
-    break;
-  case SEQ_NEXT:
-    gameWork->seq = 0;    // 次モードの為、初期化
-    return TRUE;
-    //gameWork->state = CGS_FADEOUT;
   }
 
   // =========================
@@ -1918,43 +1916,15 @@ static BOOL CTVT_GAME_Update( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
     }
   }
 
-#if 0
-  // デバッグカメラ
-  if(GFL_UI_KEY_GetCont()&PAD_BUTTON_L)
-  {
-    VecFx32 test_pos;
-
-    GFL_G3D_CAMERA_GetPos( gameWork->p_camera, &test_pos );
-
-    if(GFL_UI_KEY_GetCont()&PAD_BUTTON_X){
-      test_pos.z -= FX32_ONE /2;
-    }else if(GFL_UI_KEY_GetCont()&PAD_BUTTON_Y){
-      test_pos.z += FX32_ONE /2;
-    }else if(GFL_UI_KEY_GetCont()&PAD_KEY_UP){
-      test_pos.y -= FX32_ONE /2;
-    }else if(GFL_UI_KEY_GetCont()&PAD_KEY_DOWN){
-      test_pos.y += FX32_ONE /2;
-    }else if(GFL_UI_KEY_GetCont()&PAD_KEY_LEFT){
-      test_pos.x -= FX32_ONE /2;
-    }else if(GFL_UI_KEY_GetCont()&PAD_KEY_RIGHT){
-      test_pos.x += FX32_ONE /2;
-    }
-    GFL_G3D_CAMERA_SetPos( gameWork->p_camera, &test_pos );
-    OS_Printf("pos.y=%x pos.z=%x \n", test_pos.y, test_pos.z);
-  }
-#endif
-
   // COMM_TVT_Mainからコピーしてきた
-  if( !(GFL_UI_KEY_GetCont()&PAD_BUTTON_START) )
-  {
 #ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
-    DEBUG_MAIN_TIME_AVERAGE_StartFunc(4);
+  DEBUG_MAIN_TIME_AVERAGE_StartFunc(4);
 #endif // DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
-    GFL_CLACT_SYS_Main();
+  GFL_CLACT_SYS_Main();
 #ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
-    DEBUG_MAIN_TIME_AVERAGE_EndFunc(4);
+  DEBUG_MAIN_TIME_AVERAGE_EndFunc(4);
 #endif // DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
-  }
+
   PRINTSYS_QUE_Main( COMM_TVT_GetPrintQue(work) );
 
   return FALSE;
@@ -2391,12 +2361,8 @@ static BOOL game_update_seq_title( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork
     }
   }
 
-#if 1
-  if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_A)
-  {
-    disp_message_main( work, gameWork, COMM_TVT_SYS_05 );
-  }
-#endif
+  // BGスクロール
+  GFL_BG_SetScroll( CTVT_GAME_FRAME_S_BG, GFL_BG_SCROLL_Y_INC, 1 );
 
   return FALSE;
 }
@@ -2768,8 +2734,8 @@ static void game_update_seq_score_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
         &cellInitData ,CLSYS_DEFREND_MAIN, heapID );
     GFL_CLACT_WK_SetDrawEnable( gameWork->clwkOmeNiji, FALSE );
     // 星
-    cellInitData.softpri= 2;
-    cellInitData.bgpri  = 3;
+    cellInitData.softpri= 8;
+    cellInitData.bgpri  = 1;
     cellInitData.anmseq = CGOAM_STAR1;
     gameWork->clwkOmeStar = GFL_CLACT_WK_Create( gameWork->cellUnit,
         gameWork->cellResIdx[CGOR_LOWER_PLT],
@@ -3027,11 +2993,13 @@ static BOOL game_update_seq_score( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork
         GFL_CLACT_WK_ResetAnm( gameWork->clwkOmeText[i] );
       }
 
+      gameWork->score_cnt = 0;    // 次フレーム時用に初期化
       gameWork->sub_seq = SUB_SEQ_END_WAIT;
     }
     break;
   case SUB_SEQ_END_WAIT:     // 終了待ち
-    if( GFL_UI_TP_GetTrg() )
+    gameWork->score_cnt++;
+    if( gameWork->score_cnt > (CTVT_GAME_TIME_RETRY*60) )
     {
       gameWork->sub_seq = SUB_SEQ_END;
     }
@@ -3280,8 +3248,6 @@ static void GRAPHIC_Init( CTVT_GAME_WORK* p_wk, HEAPID heapID )
   };
 
   // レジスタ初期化
-  G2_BlendNone();
-  G2S_BlendNone();
 	GX_SetVisibleWnd( GX_WNDMASK_NONE );
 	GXS_SetVisibleWnd( GX_WNDMASK_NONE );
  
@@ -3480,8 +3446,8 @@ static void GRAPHIC_BG_Init( CTVT_GAME_WORK* p_wk, HEAPID heapID )
     // Sub
     // BG0 SUB (背景
     static const GFL_BG_BGCNT_HEADER header_sub0 = {
-      0, 0, 0x1000, 0,  // scrX, scrY, scrbufSize, scrbufofs,
-      GFL_BG_SCRSIZ_256x512, GX_BG_COLORMODE_16,
+      0, 0, 0x0800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
+      GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
       GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x04000,GFL_BG_CHRSIZ_256x256,
       GX_BG_EXTPLTT_23, 3, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
