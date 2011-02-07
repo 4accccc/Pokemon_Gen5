@@ -1191,8 +1191,8 @@ void CTVT_GAME_BalloonDestroy( CTVT_GAME_WORK *p_wk, u16 idx, u8 netId )
     if( selfId == netId )
     {
       // SE再生
-      PMSND_PlaySystemSE( SEQ_SE_DECIDE4 );
-      //PMSND_PlaySystemSE( SEQ_SE_LCG_01 );
+      //PMSND_PlaySystemSE( SEQ_SE_DECIDE4 );
+      PMSND_PlaySystemSE( SEQ_SE_LCG_05 );
     }
   }
   // ポイント減算
@@ -1215,8 +1215,8 @@ void CTVT_GAME_BalloonDestroy( CTVT_GAME_WORK *p_wk, u16 idx, u8 netId )
     if( selfId == netId )
     {
       // SE再生
-      PMSND_PlaySystemSE( SEQ_SE_BEEP );
-      //PMSND_PlaySystemSE( SEQ_SE_LCG_01 );
+      //PMSND_PlaySystemSE( SEQ_SE_BEEP );
+      PMSND_PlaySystemSE( SEQ_SE_LCG_02 );
     }
   }
 
@@ -2258,6 +2258,23 @@ static void game_update_seq_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork 
   GFL_STD_MemFill( gameWork->debug_b_cnt, 0, sizeof(u16)*4 );
 #endif
 
+  // サウンド
+  {
+    NNSSndHeapHandle  snd_heap = PMSND_GetSndHeap();
+    // 前の状態保存
+    {
+      int ret;
+      ret = NNS_SndHeapSaveState( snd_heap );
+      GF_ASSERT_MSG( (ret!=-1), "サウンドヒープ状態保存失敗\n");
+    }
+    // 新しいグループ読み込み
+    {
+      BOOL ret;
+      ret = NNS_SndArcLoadGroup(GROUP_LCG01, snd_heap);
+      GF_ASSERT(ret);
+    }
+  }
+
   gameWork->title_cnt = 0;
 
   ICHI_Printf("ゲーム初期化完了\n");
@@ -2610,6 +2627,20 @@ static void game_update_seq_score_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
 {
   u8 i;
   HEAPID heapID = gameWork->heapId;
+
+  // サウンド
+  {
+    NNSSndHeapHandle  snd_heap = PMSND_GetSndHeap();
+    // グループアンロード
+    // 状態を戻すと自動で解放するので呼ばなくて良い
+    //NNS_SndHeapDestroy(snd_heap);
+    
+    // 保存しておいた状態を戻す
+    {
+      int level = NNS_SndHeapGetCurrentLevel( snd_heap );
+      NNS_SndHeapLoadState( snd_heap, level );
+    }
+  }
 
   // プレートをスコアのものに変更
   {
