@@ -12,7 +12,7 @@
 #define FOG_SLOPE (6)
 #define FOG_OFFSET (32495)
 //アニメウェイト
-#define COCCON_OPEN_ANM_WAIT (70)	//繭オープンアニメウェイト
+#define COCCON_OPEN_ANM_WAIT (50)	//繭オープンアニメウェイト
 //カメラズーム
 #define CAMERA_ZOOM_DISTANCE (200)	//ズーム距離(Unit)
 #define CAMERA_ZOOM_IN_FRAME (20)	//ズームインウェイト
