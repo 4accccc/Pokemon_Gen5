@@ -1,11 +1,12 @@
 EFFSEQ
-$0003
+$0004
 C:\home\swan\resource\particle\wazaeffect\w_463.spa
 C:\home\swan\resource\wazaeffect\graphic\bg_463_maguma.NSCR
 C:\home\swan\resource\particle\wazaeffect\w_517.spa
+C:\home\swan\resource\wazaeffect\graphic\bg_517_rengoku.NSCR
 #001
 %00
-BGのロード	bg_463_maguma
+BGのロード	bg_517_rengoku
 BGの表示/非表示	エフェクト	表示
 BGのパレットフェード	すべて	0	16	1	0:0:0
 エフェクト終了待ち	すべて
