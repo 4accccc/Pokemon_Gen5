@@ -1209,14 +1209,7 @@ BOOL GAMEBEACON_Get_Action_FestMission(const GAMEBEACON_INFO *info, FEST_MISSION
   switch(info->action.action_no){
   case GAMEBEACON_ACTION_FEST_MISSION:
     FEST_MISSION_Clear(fmwk);
-    fmwk->id = info->action.fmission.id;
-    fmwk->time = info->action.fmission.time;
-    fmwk->key = info->action.fmission.key;
-    fmwk->life = info->action.fmission.life;
-    fmwk->my_score = info->action.fmission.my_score;
-    fmwk->reward = info->action.fmission.reward;
-    fmwk->quota = info->action.fmission.quota;
-    fmwk->param = info->action.fmission.param;
+    *fmwk = info->action.fmission;
     return TRUE;
   }
   GF_ASSERT(0);

@@ -12,37 +12,18 @@
 
 #define OSPRINT_LINKFEST_PAGE (2) //OS_FPrintf出力ページ指定
 
-typedef enum{
- FEST_MISSION_NULL,
- FEST_MISSION_WILDBTL_WIN,
- FEST_MISSION_ID_MAX,
- FEST_MISSION_ID_END = FEST_MISSION_ID_MAX-1,
-}FEST_MISSION_ID;
 
-typedef enum{
-  FMISSION_TYPE_WILDBTL_WIN,
-  FMISSION_TYPE_MAX,
-}FMISSION_TYPE_ID;
+#define BUFLEN_FMISSION_TITLE (15*2+EOM_SIZE) //15文字*2+EOM
+#define BUFLEN_FMISSION_EXP   (18*3*2+EOM_SIZE) //(18文字*3行)*2+EOM
 
 typedef struct{
   u8  time;
   u8  reward;
-  u16 quota;  //ノルマ 
+  u16 target;  //達成目標
   u16 param;
 }FEST_MISSION_PARAM;
 
-typedef struct{
-  u8  id;     ///<ミッションID
-  u8  time;   ///<設定時間(分)
-  u16 reward; ///<報酬
-  u16 quota; ///<ノルマ
-  u16 param;  ///<ミッション汎用パラメータ
-  u32 key;    ///<ミッション固有マジックナンバー
-
-  u32 life; ///<ミッション残り時間(frm)
-
-  u32 my_score; ///<自分のスコア
-}FEST_MISSION;
+#include "fest_mission_local.h"
 
 //---------------------------------------------------------
 /*
@@ -56,7 +37,7 @@ extern void FEST_MISSION_Clear( FEST_MISSION* fmwk );
  * @brief ミッションパラメータセット
  */
 //---------------------------------------------------------
-extern void FEST_MISSION_ParamSet( FEST_MISSION* fmwk, FEST_MISSION_ID id, u32 reward, u16 quota, u16 param, u32 time );
+extern void FEST_MISSION_ParamSet( FEST_MISSION* fmwk, FEST_MISSION_ID id, u16 reward_item, u16 reward_num, u16 target, u16 param, u32 time );
 
 //---------------------------------------------------------
 /*

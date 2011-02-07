@@ -1524,14 +1524,7 @@ void GAMEBEACON_Set_FestMission( FEST_MISSION* mission )
 void BEACONINFO_Set_FestMission(GAMEBEACON_INFO *info, FEST_MISSION* mission )
 {
   info->action.action_no = GAMEBEACON_ACTION_FEST_MISSION;
-  info->action.fmission.id = mission->id;
-  info->action.fmission.time = mission->time;
-  info->action.fmission.reward = mission->reward;
-  info->action.fmission.key = mission->key;
-  info->action.fmission.my_score = mission->my_score;
-  info->action.fmission.life = mission->life;
-  info->action.fmission.quota = mission->quota;
-  info->action.fmission.param = mission->param;
+  info->action.fmission = *mission;
   BEACONINFO_Set_Details_Walk(info);
 }
 

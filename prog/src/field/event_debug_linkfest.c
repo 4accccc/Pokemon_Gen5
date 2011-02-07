@@ -118,9 +118,10 @@ typedef enum{
 typedef enum{
   FAKE_ID,
   FAKE_TIME,
-  FAKE_QUATA,
+  FAKE_TARGET,
   FAKE_PARAM,
   FAKE_REWARD,
+  FAKE_REWARD_NUM,
   FAKE_DATA_MAX,
 }FAKE_DATA_ID;
 
@@ -360,12 +361,11 @@ static const  D_MISSION_PRM_SET DATA_DebugMissionParamSet[MISSION_PSET_MAX] = {
 
 static const D_FAKE_PRM_SET DATA_FakeParamSet[] = {
   { BPRM_WSET_NONE, 5, 0, 0xFFFF,}, //FAKE_ID,
-  { BPRM_WSET_NONE, 5, 0, 0xFFFF,}, //FAKE_ID,
-  { BPRM_WSET_NONE, 5, 0, 0xFFFF,}, //FAKE_ID,
-  { BPRM_WSET_NONE, 5, 0, 0xFFFF,}, //FAKE_ID,
-  { BPRM_WSET_NONE, 5, 0, 0xFFFF,}, //FAKE_ID,
-  { BPRM_WSET_NONE, 5, 0, 0xFFFF,}, //FAKE_ID,
-  { BPRM_WSET_NONE, 5, 0, 0xFFFF,}, //FAKE_ID,
+  { BPRM_WSET_NONE, 5, 0, 0xFFFF,}, //FAKE_TIME,
+  { BPRM_WSET_NONE, 5, 0, 0xFFFF,}, //FAKE_TARGET,
+  { BPRM_WSET_NONE, 5, 0, 0xFFFF,}, //FAKE_PARAM,
+  { BPRM_WSET_ITEMNAME, 5, 1, ITEM_DATA_MAX}, //FAKE_REWARD,
+  { BPRM_WSET_NONE, 5, 0, 0xFFFF,}, //FAKE_REWARD_NUM,
   { BPRM_WSET_TRNAME_EX, 3, 0, TRID_MAX-1,}, //FAKE_NAME,
   { BPRM_WSET_ZONE, 3, 0, ZONE_ID_MAX-1,}, //FAKE_ZONE,
   { BPRM_WSET_SEX, 1, PM_MALE, PM_FEMALE,}, //FAKE_SEX,
@@ -546,9 +546,10 @@ static void dmenu_WorkInit( DMENU_LINK_FEST* wk )
  
     fake[FAKE_ID] = MyStatus_GetID_Low( wk->my_status );
     fake[FAKE_TIME] = 3;
-    fake[FAKE_QUATA] = 10;
+    fake[FAKE_TARGET] = 10;
     fake[FAKE_PARAM] = 0;
-    fake[FAKE_REWARD] = 3;
+    fake[FAKE_REWARD] = ITEM_DERUDAMA;
+    fake[FAKE_REWARD_NUM] = 3;
 
     MI_CpuCopy8( fake, &(wk->fake_prm[TR_PAT_FAKE][0]),sizeof(int)*FAKE_DATA_MAX);
    
@@ -705,7 +706,7 @@ static GMEVENT_RESULT event_LinkFestFromFieldMain( GMEVENT * event, int *seq, vo
           GMEVENT* mission_ev;
           FEST_MISSION mission;
 
-          FEST_MISSION_ParamSet( &mission, FEST_MISSION_WILDBTL_WIN, 3, 10,0, 3);
+          FEST_MISSION_ParamSet( &mission, FEST_MISSION_WILDBTL_WIN, ITEM_DERUDAMA, 3, 10, MONSNO_TABUNNE, 3);
 
           mission_ev = GMEVENT_CreateOverlayEventCall( wk->gsys,
             FS_OVERLAY_ID( event_fmission ), EVENT_FestMissionStart, &mission );
@@ -1559,7 +1560,7 @@ static void mreq_MissionStart( DMENU_LINK_FEST* wk, EVWK_MISSION_REQ* evwk, u8 d
   if( evwk->m_prm_set->max >= 0 ){
     value = wk->mission_prm[ evwk->m_prm->prm_type ];
   }
-  FEST_MISSION_ParamSet( &mission, evwk->action, fake[FAKE_REWARD], fake[FAKE_QUATA], fake[FAKE_PARAM], fake[FAKE_TIME] );
+  FEST_MISSION_ParamSet( &mission, evwk->action, fake[FAKE_REWARD], fake[FAKE_REWARD_NUM], fake[FAKE_TARGET], fake[FAKE_PARAM], fake[FAKE_TIME] );
 
   mission_ev = GMEVENT_CreateOverlayEventCall( wk->gsys,
     FS_OVERLAY_ID( event_fmission ), EVENT_FestMissionStart, &mission );

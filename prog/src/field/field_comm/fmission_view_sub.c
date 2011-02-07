@@ -28,6 +28,7 @@
 #include "beacon_view_common.h"
 #include "fmission_view_sub.h"
 
+#include "gamesystem/fest_mission_nw.h"
 #include "arc/wifi_unionobj_plt.cdat"
 #include "msg/script/msg_festmission_event.h"
 
@@ -309,7 +310,7 @@ static BOOL effReq_PopupMsg( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info, BOOL new
  */
 static void draw_MissionInfo( BEACON_VIEW_PTR wk )
 {
-  LINK_FESTIVAL_MissionParamWordset( wk->wordset, wk->fmwk );
+  FEST_MISSION_WordsetParamAll( wk->wordset, wk->fmwk );
   BVCPrint_GetMsgToBufEx( wk, msg_fmission_exp00+wk->fmwk->id, wk->mm_fmission );
   BVCPrintReq_BmpwinPrint( wk, &wk->win[WIN_FMISSION], wk->str_expand, 0, 0, FCOL_LOGNUM_BASE, FCOL_LOGNUM, NULL );
   

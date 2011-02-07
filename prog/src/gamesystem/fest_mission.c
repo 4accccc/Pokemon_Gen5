@@ -21,6 +21,8 @@
 
 #include "gamesystem/link_festival.h"
 
+SDK_COMPILER_ASSERT( sizeof(FEST_MISSION) <= 20); //フェスミッション構造体型サイズはmax20byteまで
+
 static const FEST_MISSION_PARAM  DATA_FestMissionParam[] = {
   { 0, 0, 0, 0, }, //0
   { 3, 3, 10, 0, }, //0
@@ -43,19 +45,20 @@ void FEST_MISSION_Clear( FEST_MISSION* fmwk )
  * @brief ミッションパラメータセット
  */
 //---------------------------------------------------------
-void FEST_MISSION_ParamSet( FEST_MISSION* fmwk, FEST_MISSION_ID id, u32 reward, u16 quota, u16 param, u32 time )
+void FEST_MISSION_ParamSet( FEST_MISSION* fmwk, FEST_MISSION_ID id, u16 reward_item, u16 reward_num, u16 target, u16 param, u32 time )
 {
   FEST_MISSION_Clear( fmwk );
   fmwk->id = id;
   fmwk->key = GFUser_GetPublicRand(GFL_STD_RAND_MAX);  //32bitランダムキー生成
   fmwk->time = time;
-  fmwk->quota = quota;
+  fmwk->target = target;
   fmwk->param = param;
-  fmwk->reward = reward;
+  fmwk->reward_item = reward_item;
+  fmwk->reward_num = reward_num;
   fmwk->life = fmwk->time*60*60;
   
-  OS_FPrintf(OSPRINT_LINKFEST_PAGE,"フェスミッション パラメータセット id=%d, key = %08x, quota=%d, param=%d, time=%dmin\n",
-    id, fmwk->key, quota, param, time);
+  OS_FPrintf(OSPRINT_LINKFEST_PAGE,"フェスミッション パラメータセット id=%d, key = %08x, target=%d, param=%d, time=%dmin\n",
+    id, fmwk->key, target, param, time);
 }
 
 
@@ -69,8 +72,8 @@ void FEST_MISSION_Start( FEST_MISSION* fmwk, const FEST_MISSION* src )
   FEST_MISSION_Clear( fmwk );
   *fmwk = *src;
 
-  OS_FPrintf(OSPRINT_LINKFEST_PAGE,"フェスミッション スタート id=%d, key = %08x, quota=%d, param=%d, time=%d min life=%d sec\n",
-    fmwk->id, fmwk->key, fmwk->quota, fmwk->param, fmwk->time, fmwk->life/60);
+  OS_FPrintf(OSPRINT_LINKFEST_PAGE,"フェスミッション スタート id=%d, key = %08x, target=%d, param=%d, time=%d min life=%d sec\n",
+    fmwk->id, fmwk->key, fmwk->target, fmwk->param, fmwk->time, fmwk->life/60);
 }
 
 //---------------------------------------------------------
@@ -164,7 +167,7 @@ void FEST_MISSION_ScoreCalc( FEST_MISSION* fmwk, FMISSION_TYPE_ID type, u32 para
     if( fmwk->param == 0 || fmwk->param == param){
       fmwk->my_score += value;
     }
-    OS_FPrintf(OSPRINT_LINKFEST_PAGE,"ミッション id=%d key=%08x スコア加算 %d ノルマ %d\n",fmwk->id, fmwk->key, fmwk->my_score, fmwk->quota );
+    OS_FPrintf(OSPRINT_LINKFEST_PAGE,"ミッション id=%d key=%08x スコア加算 %d ノルマ %d\n",fmwk->id, fmwk->key, fmwk->my_score, fmwk->target );
   }
 }
 

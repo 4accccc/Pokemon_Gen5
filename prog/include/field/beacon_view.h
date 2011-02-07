@@ -9,7 +9,9 @@
 #pragma once
 
 
+FS_EXTERN_OVERLAY(beacon_view_common);
 FS_EXTERN_OVERLAY(beacon_view);
+FS_EXTERN_OVERLAY(fmission_view);
 
 //==============================================================================
 //  Œ^’è‹`

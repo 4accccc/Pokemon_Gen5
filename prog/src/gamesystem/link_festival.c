@@ -134,11 +134,11 @@ BOOL LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, u32* score )
   }
   *score += wk->mission.my_score;
 
-  if( *score >= wk->mission.quota){
-//    OS_FPrintf( OSPRINT_LINKFEST_PAGE,"ミッションノルマ達成 %d/%d\n",*score,wk->mission.quota );
+  if( *score >= wk->mission.target){
+//    OS_FPrintf( OSPRINT_LINKFEST_PAGE,"ミッションノルマ達成 %d/%d\n",*score,wk->mission.target );
     return TRUE;
   }
-//  OS_FPrintf( OSPRINT_LINKFEST_PAGE,"ミッションノルマ未達成 %d/%d\n",*score,wk->mission.quota );
+//  OS_FPrintf( OSPRINT_LINKFEST_PAGE,"ミッションノルマ未達成 %d/%d\n",*score,wk->mission.target );
   return FALSE;
 }
 
@@ -157,21 +157,6 @@ void LINK_FESTIVAL_MissionScoreCalc( GAMESYS_WORK* gsys, FMISSION_TYPE_ID type, 
   }
   wk = GAMESYSTEM_GetLinkFestivalWork( gsys );
   FEST_MISSION_ScoreCalc( &wk->mission, type, param, value );
-}
-
-//---------------------------------------------------------
-/*
- * @brief リンクフェスティバル ミッションパラメータワードセット
- */
-//---------------------------------------------------------
-void LINK_FESTIVAL_MissionParamWordset( WORDSET* wset, FEST_MISSION* fmwk )
-{
-  WORDSET_RegisterNumber( wset, 0, fmwk->time, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-  WORDSET_RegisterNumber( wset, 1, fmwk->quota, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-  WORDSET_RegisterNumber( wset, 2, fmwk->param, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-  WORDSET_RegisterNumber( wset, 3, fmwk->reward, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-  WORDSET_RegisterNumber( wset, 4, fmwk->life/(60*60), 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-  WORDSET_RegisterNumber( wset, 5, (fmwk->life/60)%60, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
 }
 
 //---------------------------------------------------------

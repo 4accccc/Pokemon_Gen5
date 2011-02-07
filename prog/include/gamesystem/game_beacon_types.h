@@ -91,16 +91,7 @@ typedef struct{
       u16 target_trainer_id;                ///<対象相手のトレーナーID(下位16ビット)
     }thanks;
     STRCODE freeword_message[GAMEBEACON_FREEWORD_MESSAGE_LEN]; ///一言メッセージ
-    struct{ //4*5=20byte
-      u8  id;
-      u8  time;
-      u16 reward;
-      u16 quota;
-      u16 param;
-      u32 key;
-      u32 life;
-      u32 my_score;
-    }fmission;
+    FEST_MISSION  fmission;
   };
 }GAMEBEACON_INFO_ACTION;
 
