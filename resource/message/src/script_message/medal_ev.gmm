@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-02-02T13:22:21"/>
+	<create user="tamada" host="W00139" date="2011-02-08T00:19:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -377,14 +377,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1787" top="128" right="2476" bottom="746" maximized="no" rayout="Vertical2">
+	<dialog left="6" top="97" right="711" bottom="717" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="42" right="1280" bottom="440" visible="yes"/>
-		<band id="0" index="1" style="0000" width="514"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="527"/>
+		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="681"/>
+		<band id="4" index="0" style="0000" width="697"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -553,12 +553,12 @@
 そして　わたしは　ひとよんで
 メダルおやじ！[BE:01:ページ切り替え（クリア）]
 ……ところで　ごぞんじですか
-メダルラリーという　きょうぎかいを？[BE:01:ページ切り替え（クリア）]</language>
+メダルラリーという　きょうぎかいを？</language>
 		<language name="JPN_KANJI" width="256">それは　メダルボックス！[BE:01:ページ切り替え（クリア）]
 そして　わたしは　ひと呼んで
 メダルおやじ！[BE:01:ページ切り替え（クリア）]
 ……ところで　ご存知ですか
-メダルラリー　という　競技会を？[BE:01:ページ切り替え（クリア）]</language>
+メダルラリー　という　競技会を？</language>
 	</row>
 
 	<row id="msg_mdloyj_intro_03">
@@ -670,11 +670,29 @@
 		<comment>・0=主人公名
 ・1=メダル名</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は
-メダル[FF:00:色:2]「[1:35:メダル名:1]」[FF:00:色:0]を[BE:00:ページ切り替え（行送り）][FF:00:色:2]
-[FF:00:色:0]てにいれた！[BE:01:ページ切り替え（クリア）]</language>
+メダル[FF:00:色:2]「[1:35:メダル名:1]」[FF:00:色:0]を[BE:00:ページ切り替え（行送り）]
+てにいれた！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
 メダル[FF:00:色:2]「[1:35:メダル名:1]」[FF:00:色:0]を[BE:00:ページ切り替え（行送り）][FF:00:色:2]
 [FF:00:色:0]手に入れた！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_mdloyj_prize_1st" back-color="#808080,,,,,,,#808080,,,#808080,,,#808080,,,#808080,,">
+		<language name="JPN" width="256">仮メッセージ[BE:01:ページ切り替え（クリア）]
+メダルラリーじむきょくです！
+チェックポイントクリア　おめでとう！</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ[BE:01:ページ切り替え（クリア）]
+メダルラリーじむきょくです！
+チェックポイントクリア　おめでとう！</language>
+	</row>
+
+	<row id="msg_mdloyj_prize_max" back-color="#808080,,,,,,,#808080,,,#808080,,,#808080,,,#808080,,">
+		<language name="JPN" width="256">仮メッセージ[BE:01:ページ切り替え（クリア）]
+メダルラリーじむきょくです！
+コンプリート　おめでとう！</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ[BE:01:ページ切り替え（クリア）]
+メダルラリーじむきょくです！
+コンプリート　おめでとう！</language>
 	</row>
 
 	<flowchart-group-list>
