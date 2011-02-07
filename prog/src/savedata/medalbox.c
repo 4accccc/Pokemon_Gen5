@@ -47,6 +47,7 @@ struct _MEDALBOX{
 */
 //=============================================================================
 static MEDAL_ST* GetMedalST( MEDALBOX *p_mdlbox , MedalID medal_id );
+static const MEDAL_ST* GetMedalSTConst( const MEDALBOX *p_mdlbox , MedalID medal_id );
 
 
 //=============================================================================
@@ -66,6 +67,23 @@ static MEDAL_ST* GetMedalST( MEDALBOX *p_mdlbox , MedalID medal_id );
  */
 //-----------------------------------------------------------------------------
 static MEDAL_ST* GetMedalST( MEDALBOX *p_mdlbox , MedalID medal_id )
+{
+  GF_ASSERT( p_mdlbox );
+  GF_ASSERT( medal_id < MDLID_MAX );
+  return &p_mdlbox->medal[ medal_id ];
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  メダルSTの取得(const)
+ *
+ *	@param	*p_mdlbox 
+ *	@param	medal_id 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static const MEDAL_ST* GetMedalSTConst( const MEDALBOX *p_mdlbox , MedalID medal_id )
 {
   GF_ASSERT( p_mdlbox );
   GF_ASSERT( medal_id < MDLID_MAX );
@@ -105,9 +123,9 @@ static void SetMedalState( MEDAL_ST* p_medal_st , u8 state )
  *	@retval メダル取得状況
  */
 //-----------------------------------------------------------------------------
-u8 MEDALBOX_GetMedalState( MEDALBOX *p_mdlbox, MedalID medal_id )
+u8 MEDALBOX_GetMedalState( const MEDALBOX *p_mdlbox, MedalID medal_id )
 {
-  MEDAL_ST* p_medal_st = GetMedalST( p_mdlbox , medal_id );
+  const MEDAL_ST* p_medal_st = GetMedalSTConst( p_mdlbox , medal_id );
 
   return p_medal_st->medal_state;
 }
@@ -272,7 +290,7 @@ void MEDALBOX_RankUpMedalBox( MEDALBOX *p_mdlbox )
  *	@retval イチオシメダル番号
  */
 //-----------------------------------------------------------------------------
-MedalID MEDALBOX_GetPushMedalID( MEDALBOX *p_mdlbox )
+MedalID MEDALBOX_GetPushMedalID( const MEDALBOX *p_mdlbox )
 {
   GF_ASSERT( p_mdlbox );
 
@@ -289,7 +307,7 @@ MedalID MEDALBOX_GetPushMedalID( MEDALBOX *p_mdlbox )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-u8 MEDALBOX_GetMedalBoxRank( MEDALBOX *p_mdlbox )
+u8 MEDALBOX_GetMedalBoxRank( const MEDALBOX *p_mdlbox )
 {
   GF_ASSERT( p_mdlbox );
 
@@ -306,9 +324,9 @@ u8 MEDALBOX_GetMedalBoxRank( MEDALBOX *p_mdlbox )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-BOOL MEDALBOX_GetNewMedalFlg( MEDALBOX *p_mdlbox, MedalID medal_id )
+BOOL MEDALBOX_GetNewMedalFlg( const MEDALBOX *p_mdlbox, MedalID medal_id )
 {
-  MEDAL_ST* p_medal_st = GetMedalST( p_mdlbox , medal_id );
+  const MEDAL_ST* p_medal_st = GetMedalSTConst( p_mdlbox , medal_id );
 
   return p_medal_st->is_new;
 }
@@ -326,9 +344,9 @@ BOOL MEDALBOX_GetNewMedalFlg( MEDALBOX *p_mdlbox, MedalID medal_id )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-void MEDALBOX_GetDate( MEDALBOX *p_mdlbox, MedalID medal_id , u8 *p_year , u8 *p_month , u8 *p_day )
+void MEDALBOX_GetDate( const MEDALBOX *p_mdlbox, MedalID medal_id , u8 *p_year , u8 *p_month , u8 *p_day )
 {
-  MEDAL_ST* p_medal_st = GetMedalST( p_mdlbox , medal_id );
+  const MEDAL_ST* p_medal_st = GetMedalSTConst( p_mdlbox , medal_id );
   
   GF_ASSERT( p_year );
   GF_ASSERT( p_month );
@@ -348,7 +366,7 @@ void MEDALBOX_GetDate( MEDALBOX *p_mdlbox, MedalID medal_id , u8 *p_year , u8 *p
  *	@retval
  */
 //-----------------------------------------------------------------------------
-u16 MEDALBOX_GetMedalBoxMax( MEDALBOX *p_mdlbox )
+u16 MEDALBOX_GetMedalBoxMax( const MEDALBOX *p_mdlbox )
 {
   u8 box_rank = MEDALBOX_GetMedalBoxRank( p_mdlbox );
 
@@ -382,7 +400,7 @@ u16 MEDALBOX_GetMedalBoxMax( MEDALBOX *p_mdlbox )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-u16 MEDALBOX_GetMedalCount( MEDALBOX *p_mdlbox , BOOL is_hint_count )
+u16 MEDALBOX_GetMedalCount( const MEDALBOX *p_mdlbox , BOOL is_hint_count )
 {
   MedalID medal_id;
   u16 count = 0;
@@ -391,7 +409,7 @@ u16 MEDALBOX_GetMedalCount( MEDALBOX *p_mdlbox , BOOL is_hint_count )
 
   for( medal_id = 0; medal_id < MDLID_MAX ; medal_id++ )
   {
-    MEDAL_ST* p_medal_st = GetMedalST( p_mdlbox , medal_id );
+    const MEDAL_ST* p_medal_st = GetMedalSTConst( p_mdlbox , medal_id );
 
     if( is_hint_count )
     {

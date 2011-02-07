@@ -70,7 +70,7 @@ typedef struct _MEDALBOX MEDALBOX;
 //=============================================================================
 
 // メダル状態取得
-extern u8 MEDALBOX_GetMedalState( MEDALBOX *p_mdlbox, MedalID medal_id );
+extern u8 MEDALBOX_GetMedalState( const MEDALBOX *p_mdlbox, MedalID medal_id );
 
 // 達成状態
 extern void MEDALBOX_SetTitleMedalAchive( MEDALBOX * p_mdlbox, MedalID medal_id );
@@ -82,25 +82,25 @@ extern void MEDALBOX_SetHintMedalGetFlg( MEDALBOX *p_mdlbox, MedalID medal_id , 
 
 // 新着フラグ
 extern void MEDALBOX_SetNewMedalFlgOff( MEDALBOX *p_mdlbox, MedalID medal_id );
-extern BOOL MEDALBOX_GetNewMedalFlg( MEDALBOX *p_mdlbox, MedalID medal_id );
+extern BOOL MEDALBOX_GetNewMedalFlg( const MEDALBOX *p_mdlbox, MedalID medal_id );
 
 // 年月日
-extern void MEDALBOX_GetDate( MEDALBOX *p_mdlbox, MedalID medal_id , u8 *p_year , u8 *p_month , u8 *p_day );
+extern void MEDALBOX_GetDate( const MEDALBOX *p_mdlbox, MedalID medal_id , u8 *p_year , u8 *p_month , u8 *p_day );
 
 
 // イチオシメダル番号
-extern MedalID MEDALBOX_GetPushMedalID( MEDALBOX *p_mdlbox );
+extern MedalID MEDALBOX_GetPushMedalID( const MEDALBOX *p_mdlbox );
 extern void MEDALBOX_SetPushMedalID( MEDALBOX *p_mdlbox , MedalID medal_id );
 
 // ボックスランク
 extern void MEDALBOX_RankUpMedalBox( MEDALBOX *p_mdlbox );
-extern u8 MEDALBOX_GetMedalBoxRank( MEDALBOX *p_mdlbox );
+extern u8 MEDALBOX_GetMedalBoxRank( const MEDALBOX *p_mdlbox );
 
 // 現在のメダル取得数
-extern u16 MEDALBOX_GetMedalCount( MEDALBOX *p_mdlbox , BOOL is_hint_count );
+extern u16 MEDALBOX_GetMedalCount( const MEDALBOX *p_mdlbox , BOOL is_hint_count );
 
 // 現在のランクでメダルボックスに入るメダル最大数を取得
-extern u16 MEDALBOX_GetMedalBoxMax( MEDALBOX *p_mdlbox );
+extern u16 MEDALBOX_GetMedalBoxMax( const MEDALBOX *p_mdlbox );
 
 
 // セーブデータのポインタを返す
