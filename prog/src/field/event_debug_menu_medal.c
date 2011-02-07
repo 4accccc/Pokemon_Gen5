@@ -91,14 +91,18 @@ typedef struct {
 ///メニューリスト
 static const DEBUG_MENU_LIST MedalBoxMenuList[] =
 {
-  { DEBUG_STR_MEDALBOX_MENU_MAKEDATA , (void*)DEBUG_STR_MEDALBOX_MENU_MAKEDATA , GFL_OVERLAY_BLANK_ID },  // ボックスをランクアップ
-  { DEBUG_STR_MEDALBOX_MENU_ALL_TITLE_OPEN , (void*)DEBUG_STR_MEDALBOX_MENU_ALL_TITLE_OPEN , GFL_OVERLAY_BLANK_ID },  // メダルボックスを開く
-  { DEBUG_STR_MEDALBOX_MENU_ALL_HINT_OPEN , (void*)DEBUG_STR_MEDALBOX_MENU_ALL_HINT_OPEN , GFL_OVERLAY_BLANK_ID },  // メダルボックスを開く
-  { DEBUG_STR_MEDALBOX_MENU_ALL_TITLE_ACHIVE , (void*)DEBUG_STR_MEDALBOX_MENU_ALL_TITLE_ACHIVE , GFL_OVERLAY_BLANK_ID },  // メダルデータを全出力
-  { DEBUG_STR_MEDALBOX_MENU_ALL_HINT_ACHIVE , (void*)DEBUG_STR_MEDALBOX_MENU_ALL_HINT_ACHIVE , GFL_OVERLAY_BLANK_ID },  // メダルデータを全出力
-  { DEBUG_STR_MEDALBOX_MENU_RANDOMSET , (void*)DEBUG_STR_MEDALBOX_MENU_RANDOMSET , GFL_OVERLAY_BLANK_ID },  // ボックスをランクアップ
-  { DEBUG_STR_MEDALBOX_MENU_OUTSAVE , (void*)DEBUG_STR_MEDALBOX_MENU_OUTSAVE , GFL_OVERLAY_BLANK_ID },  // メダルデータを全出力
-  { DEBUG_STR_MEDALBOX_MENU_BOXRANK , (void*)DEBUG_STR_MEDALBOX_MENU_BOXRANK , GFL_OVERLAY_BLANK_ID },  // メダルデータをランダム出力
+  { DEBUG_STR_MEDALBOX_MENU_MAKEDATA , (void*)DEBUG_STR_MEDALBOX_MENU_MAKEDATA , GFL_OVERLAY_BLANK_ID },  // メダルデータを個別指定
+  { DEBUG_STR_MEDALBOX_MENU_ALL_TITLE_OPEN , (void*)DEBUG_STR_MEDALBOX_MENU_ALL_TITLE_OPEN , GFL_OVERLAY_BLANK_ID },  // タイトル全解放
+  { DEBUG_STR_MEDALBOX_MENU_ALL_HINT_OPEN , (void*)DEBUG_STR_MEDALBOX_MENU_ALL_HINT_OPEN , GFL_OVERLAY_BLANK_ID },  // ヒント全解放
+  { DEBUG_STR_MEDALBOX_MENU_ALL_TITLE_ACHIVE , (void*)DEBUG_STR_MEDALBOX_MENU_ALL_TITLE_ACHIVE , GFL_OVERLAY_BLANK_ID },  // タイトル全達成
+  { DEBUG_STR_MEDALBOX_MENU_ALL_HINT_ACHIVE , (void*)DEBUG_STR_MEDALBOX_MENU_ALL_HINT_ACHIVE , GFL_OVERLAY_BLANK_ID },  // ヒント全達成
+  { DEBUG_STR_MEDALBOX_MENU_RANDOMSET , (void*)DEBUG_STR_MEDALBOX_MENU_RANDOMSET , GFL_OVERLAY_BLANK_ID },  // ランダムセット
+  { DEBUG_STR_MEDALBOX_MENU_PRIZE_00, (void*)DEBUG_STR_MEDALBOX_MENU_PRIZE_00, GFL_OVERLAY_BLANK_ID },  //表彰直前
+  { DEBUG_STR_MEDALBOX_MENU_PRIZE_01, (void*)DEBUG_STR_MEDALBOX_MENU_PRIZE_01, GFL_OVERLAY_BLANK_ID },  //表彰できる
+  { DEBUG_STR_MEDALBOX_MENU_COMP_00, (void*)DEBUG_STR_MEDALBOX_MENU_COMP_00, GFL_OVERLAY_BLANK_ID },  //コンプリート直前
+  { DEBUG_STR_MEDALBOX_MENU_COMP_01, (void*)DEBUG_STR_MEDALBOX_MENU_COMP_01, GFL_OVERLAY_BLANK_ID },  //コンプリートできる
+  { DEBUG_STR_MEDALBOX_MENU_OUTSAVE , (void*)DEBUG_STR_MEDALBOX_MENU_OUTSAVE , GFL_OVERLAY_BLANK_ID },  // メダルボックスセーブデータを全出力
+  { DEBUG_STR_MEDALBOX_MENU_BOXRANK , (void*)DEBUG_STR_MEDALBOX_MENU_BOXRANK , GFL_OVERLAY_BLANK_ID },  // ボックスをランクアップ
   { DEBUG_STR_MEDALBOX_MENU_OUTDATA , (void*)DEBUG_STR_MEDALBOX_MENU_OUTDATA , GFL_OVERLAY_BLANK_ID },  // メダルデータを全出力
 };
 
@@ -516,6 +520,109 @@ static BOOL debugMenuMedalDataMake( DEBUG_MEDALBOX_WORK* work )
 }
 
 //----------------------------------------------------------------------------
+//----------------------------------------------------------------------------
+static MEDALDATA * allocMedalData( HEAPID heapID )
+{
+  MEDALDATA * medal_data = GFL_HEAP_AllocClearMemory( heapID, sizeof(MEDALDATA) * MDLID_MAX );
+  int i;
+  ARCHANDLE *p_handle = GFL_ARC_OpenDataHandle( ARCID_MEDALDATA , heapID );
+  for( i = 0; i < MDLID_MAX ; i++ )
+  {
+    GFL_ARC_LoadDataByHandle( p_handle , i, &medal_data[i] );
+  }
+  GFL_ARC_CloseDataHandle(p_handle);
+  return medal_data;
+}
+//----------------------------------------------------------------------------
+//----------------------------------------------------------------------------
+static void setMedalState( MEDALBOX * medal_box, u8 id, u8 state )
+{
+  DEBUG_SetMedalState( medal_box, id, MEDAL_STATE_NONE );
+  switch ( state )
+  {
+  case MEDAL_STATE_HINT_GET:
+    DEBUG_SetMedalState( medal_box, id, MEDAL_STATE_HINT_ACHIVE );
+    MEDALBOX_SetHintMedalGetFlg( medal_box, id, 11, 11, 11 );
+    break;
+  case MEDAL_STATE_HINT_ACHIVE:
+    MEDALBOX_SetHintMedalAchive( medal_box, id );
+    break;
+  case MEDAL_STATE_TITLE_ACHIVE:
+    MEDALBOX_SetTitleMedalAchive( medal_box, id );
+    break;
+  case MEDAL_STATE_TITLE_GET:
+    DEBUG_SetMedalState( medal_box, id, MEDAL_STATE_TITLE_ACHIVE );
+    MEDALBOX_SetTitleMedalGetFlg( medal_box, id, 12, 12, 12 );
+    break;
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ * @brief メダルボックスを指定した状態にする
+ */
+//----------------------------------------------------------------------------
+static void debugMenuMedalDataSet( DEBUG_MEDALBOX_WORK * wk,
+    u8 title_get, u8 title_achieve, u8 hint_get, u8 hint_achive )
+{
+  GAMEDATA *p_gm_data=GAMESYSTEM_GetGameData( wk->gmSys );
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_gm_data );
+  MEDALBOX* medal_box = SaveData_GetMedalBox( p_sv );
+
+  int id;
+  int hint_max = 0;
+  MEDALDATA * medal_data = allocMedalData( wk->heapID );
+
+  for ( id = 0; id < MDLID_MAX; id ++ ) {
+    DEBUG_SetMedalState( medal_box, id, MEDAL_STATE_NONE );
+    switch ( medal_data[id].hint_type ) {
+    case MEDALDATA_HINTTYPE_NONE:
+      if ( title_get ) {
+        title_get --;
+        setMedalState( medal_box, id, MEDAL_STATE_TITLE_GET );
+      } else if ( title_achieve ) {
+        title_achieve --;
+        setMedalState( medal_box, id, MEDAL_STATE_TITLE_ACHIVE );
+      }
+      break;
+    case MEDALDATA_HINTTYPE_FIRST:
+      if ( hint_get ) { hint_get --; }
+      setMedalState( medal_box, id, MEDAL_STATE_HINT_GET );
+      break;
+    case MEDALDATA_HINTTYPE_LEVEL:
+    case MEDALDATA_HINTTYPE_PROGRAM:
+      if ( hint_get ) {
+        hint_get --;
+        setMedalState( medal_box, id, MEDAL_STATE_HINT_GET );
+      } else if ( hint_achive ) {
+        hint_achive --;
+        setMedalState( medal_box, id, MEDAL_STATE_HINT_ACHIVE );
+      } else if ( title_achieve ) {
+        title_achieve --;
+        setMedalState( medal_box, id, MEDAL_STATE_TITLE_ACHIVE );
+      } else if ( title_get ) {
+        title_get --;
+        setMedalState( medal_box, id, MEDAL_STATE_TITLE_GET );
+      }
+      break;
+    }
+  }
+  //タイトル優先のため、必要なら上書きする
+  for ( id = 0; id < MDLID_MAX; id ++ )
+  {
+    if ( MEDALBOX_GetMedalState( medal_box, id ) < MEDAL_STATE_TITLE_ACHIVE ) {
+      if ( title_get ) {
+        title_get --;
+        setMedalState( medal_box, id, MEDAL_STATE_TITLE_GET );
+      } else if ( title_achieve ) {
+        title_achieve --;
+        setMedalState( medal_box, id, MEDAL_STATE_TITLE_ACHIVE );
+      }
+    }
+  }
+  GFL_HEAP_FreeMemory( medal_data );
+}
+
+//----------------------------------------------------------------------------
 /**
  *	@brief      メダルデータのランダムセット
  *
@@ -722,6 +829,31 @@ static GMEVENT_RESULT debugMenuMedalBoxEvent( GMEVENT *event, int *seq, void *wk
       }
       return GMEVENT_RES_FINISH;
 
+    case DEBUG_STR_MEDALBOX_MENU_PRIZE_00:
+      {
+        debugMenuMedalDataSet( work, 48, 1, 0, 1 );
+        FLDMENUFUNC_DeleteMenu( work->menuFunc );
+      }
+      return GMEVENT_RES_FINISH;
+    case DEBUG_STR_MEDALBOX_MENU_PRIZE_01:
+      {
+        debugMenuMedalDataSet( work, 50, 1, 0, 1 );
+        FLDMENUFUNC_DeleteMenu( work->menuFunc );
+      }
+      return GMEVENT_RES_FINISH;
+    case DEBUG_STR_MEDALBOX_MENU_COMP_00:
+      {
+        debugMenuMedalDataSet( work, MDLID_MAX - 2, 1, 0, 1 );
+        FLDMENUFUNC_DeleteMenu( work->menuFunc );
+      }
+      return GMEVENT_RES_FINISH;
+    case DEBUG_STR_MEDALBOX_MENU_COMP_01:
+      {
+        debugMenuMedalDataSet( work, MDLID_MAX - 1, 1, 0, 1 );
+        FLDMENUFUNC_DeleteMenu( work->menuFunc );
+      }
+      return GMEVENT_RES_FINISH;
+      
     // メダルセーブをランダム生成
     case DEBUG_STR_MEDALBOX_MENU_MAKEDATA:     
       {
