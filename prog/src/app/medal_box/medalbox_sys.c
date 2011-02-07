@@ -628,6 +628,7 @@ typedef struct {
   u32               scroll_speed;   // スクロールスピード
   PAGEDATA          page[ MEDALBOX_DRAW_PAGE_NUM_LIST ];   // 表示しているページデータ
   u8                cursor_pos;         // カーソル位置
+  u8                cursor_pos_tmp;     // 保存カーソル位置
   CURSOR_STATE      cursor_state;       // カーソル状態
 
   fx32              scroll_button_pos;  // スクロールバーの位置(初期座標からのオフセット)
@@ -803,7 +804,7 @@ static BOOL SlideTouchMain( MEDALBOXSYS_WORK *p_wk );
 //=============================================================================
 static GFL_PROC_RESULT MDLSYS_SCROLLPAGE_Main( MEDALBOXSYS_WORK *p_wk );
 static BOOL ScrollPage( MEDALBOXSYS_WORK *p_wk , fx32 move_speed );
-static void PageRefresh( MEDALBOXSYS_WORK *p_wk , BOOL is_draw_medal_name );
+static void PageRefresh( MEDALBOXSYS_WORK *p_wk , BOOL is_draw_medal_name , BOOL is_scrollbutton_refresh );
 static void SetScrollDirection( MEDALBOXSYS_WORK *p_wk , SCROLL_DIR dir );
 static void DrawMedalName( MEDALBOXSYS_WORK *p_wk , MedalID medal_id , u8 DrawPos );
 static void ClearMedalName( MEDALBOXSYS_WORK *p_wk );
@@ -816,6 +817,8 @@ static u8 GetCursolSelectMedalPos( MEDALBOXSYS_WORK *p_wk );
 static void SetScrollCount( MEDALBOXSYS_WORK *p_wk , s32 count );
 static void SetScrollSpeed( MEDALBOXSYS_WORK *p_wk , u32 speed );
 static void SetScrollEndCursorPos( MEDALBOXSYS_WORK *p_wk , SCROLLEND_CURSOR_POS pos );
+static void RefreshMedalScrollPos( MEDALBOXSYS_WORK *p_wk );
+static void MoveNewEffectPos( MEDALBOXSYS_WORK *p_wk , s16 scroll_size );
 
 //=============================================================================
 // スクロールボタン
@@ -2029,7 +2032,7 @@ static void MDLSYS_MedalInit( MEDALBOXSYS_WORK *p_wk )
   }
 
   // ページのリフレッシュ
-  PageRefresh( p_wk ,TRUE);
+  PageRefresh( p_wk ,TRUE , TRUE);
 }
 
 //----------------------------------------------------------------------------
@@ -2299,6 +2302,9 @@ static void MDLSYS_SetNextSeq( MEDALBOXSYS_WORK *p_wk ,MEDALBOXSYS_SEQ next_seq 
   // シーケンスを切り替える
   p_wk->now_seq = next_seq;
   p_wk->sub_seq = 0;
+
+  // タッチスライドを初期化
+  p_wk->is_slide_touch = FALSE;
 }
 
 //----------------------------------------------------------------------------
@@ -2658,43 +2664,6 @@ static void MainKeyStateCheck( MEDALBOXSYS_WORK *p_wk )
       }
     }
 
-    // イチオシ登録
-    if( trg & PAD_BUTTON_A )
-    {
-      u8 unit_pos   = GetCursolSelectUnitPos( p_wk ); // カーソルがどのユニット位置にいるか
-      u8 curpos_in_page = GetCursolSelectMedalPos( p_wk );
-      // メダルがあるかどうかの判定
-      if( p_wk->page[unit_pos].medal_max > curpos_in_page )
-      {
-        MY_MEDAL_ST *p_medal_st = p_wk->page[unit_pos].p_medal_st[curpos_in_page];
-        if( p_medal_st->medal_state == MEDAL_STATE_TITLE_GET )
-        {
-          MedalID medal_id = p_medal_st->medal_id;
-          if( medal_id != p_wk->medal_data.push_medalid )
-          {
-            SetPushMedalData( p_wk ,medal_id , PUSHMEDAL_TYPE_SET );
-          }
-          else
-          {
-            SetPushMedalData( p_wk ,medal_id , PUSHMEDAL_TYPE_REMOVE );
-          }
-          MDLSYS_SetNextSeq( p_wk , SEQ_PUSUMEDALBUTTON );
-          GFL_UI_SetTouchOrKey(GFL_APP_KTST_KEY);
-          return;
-        }
-        else
-        {
-          // カーソル位置をせっていする
-          SetCursor( p_wk , tp_hit  , FALSE );
-
-          // シーケンスを切り替える
-          SetPushMedalData( p_wk , 0 , PUSHMEDAL_TYPE_HINT );
-          MDLSYS_SetNextSeq( p_wk , SEQ_PUSUMEDALBUTTON );
-          GFL_UI_SetTouchOrKey(GFL_APP_KTST_TOUCH);
-          return;
-        }
-      }
-    }
   }
 
   // キャンセル
@@ -2702,6 +2671,7 @@ static void MainKeyStateCheck( MEDALBOXSYS_WORK *p_wk )
   {
     MDLSYS_SetNextSeq( p_wk , SEQ_MDLBOX_EXIT );
     GFL_UI_SetTouchOrKey(GFL_APP_END_KEY);
+    return;
   }
 
   // 戻る
@@ -2709,6 +2679,7 @@ static void MainKeyStateCheck( MEDALBOXSYS_WORK *p_wk )
   {
     MDLSYS_SetNextSeq( p_wk , SEQ_MDLBOX_RETURN );
     GFL_UI_SetTouchOrKey(GFL_APP_END_KEY);
+    return;
   }
 
   // ==========================
@@ -2787,9 +2758,27 @@ static void MainKeyStateCheck( MEDALBOXSYS_WORK *p_wk )
     {
     case UI_HIT_TABLE_CONT_SCROLL_BUTTON:
       {
-        ONOUE_Printf("UI_HIT_TABLE_CONT_SCROLL_BUTTON\n");
-        MDLSYS_SetNextSeq( p_wk , SEQ_MDLBOX_SCROLL_BUTTON );
-        GFL_UI_SetTouchOrKey(GFL_APP_KTST_TOUCH);
+        u32 tp_x,tp_y;
+        if( GFL_UI_TP_GetPointCont( &tp_x ,&tp_y )  )
+        {
+          // タッチフレームのスクロールボタン位置を設定
+          if( tp_x < UI_SCROLBTN_POS_X )
+          {
+            p_wk->scroll_button_pos = 0;
+          }
+          else if( (tp_x - UI_SCROLBTN_POS_X) > SCROLLBAR_LENGTH )
+          {
+            p_wk->scroll_button_pos = SCROLLBAR_LENGTH;
+          }
+          else
+          {
+            p_wk->scroll_button_pos = tp_x - UI_SCROLBTN_POS_X;
+          }
+
+          ONOUE_Printf("UI_HIT_TABLE_CONT_SCROLL_BUTTON\n");
+          MDLSYS_SetNextSeq( p_wk , SEQ_MDLBOX_SCROLL_BUTTON );
+          GFL_UI_SetTouchOrKey(GFL_APP_KTST_TOUCH);
+        }
       }
       return;
     }
@@ -2961,26 +2950,39 @@ static GFL_PROC_RESULT MDLSYS_SCROLLPAGE_Main( MEDALBOXSYS_WORK *p_wk )
 
       // カーソルの存在するユニットの一番上のカーソル位置を計算
       top_pos   = (p_wk->cursor_pos/PAGE_MEDAL_MAX) * PAGE_MEDAL_MAX;
-
-      // カーソル位置をセットしなおす
-      switch( p_wk->scrollend_cursor_pos )
+ 
+      // カーソル位置をせっていする
+      if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY )
       {
-      case SCROLLEND_CURSOR_STAY:
+        // カーソル位置をセットしなおす
+        switch( p_wk->scrollend_cursor_pos )
         {
-          SetCursor( p_wk , p_wk->cursor_pos , TRUE );
+        case SCROLLEND_CURSOR_STAY:
+          {
+            SetCursor( p_wk , p_wk->cursor_pos , TRUE );
+          }
+          break;
+        case SCROLLEND_CURSOR_TOP:
+          {
+            SetCursor( p_wk , top_pos  , TRUE);
+          }
+          break;
+        case SCROLLEND_CURSOR_BOTTOM:
+          {
+            SetCursor( p_wk , top_pos+(PAGE_MEDAL_MAX-1)  , TRUE);
+          }
+          break;
         }
-        break;
-      case SCROLLEND_CURSOR_TOP:
-        {
-          SetCursor( p_wk , top_pos  , TRUE);
-        }
-        break;
-      case SCROLLEND_CURSOR_BOTTOM:
-        {
-          SetCursor( p_wk , top_pos+(PAGE_MEDAL_MAX-1)  , TRUE);
-        }
-        break;
       }
+      else
+      {
+        // 戻り先を現在のカーソル位置に設定
+        p_wk->cursor_pos_tmp = p_wk->cursor_pos;
+
+        // スクロール状態を未選択
+        SetCursorState( p_wk , CURSOR_STATE_NOT_SELECT , MDLID_MAX );
+      }
+
       // 次のカーソル終了位置を元に戻しておく
       p_wk->scrollend_cursor_pos = SCROLLEND_CURSOR_STAY;
 
@@ -3043,7 +3045,6 @@ static BOOL ScrollPage( MEDALBOXSYS_WORK *p_wk , fx32 move_speed )
 {
   int i;
   BOOL scroll_end = FALSE;
-  GFL_CLACTPOS pos;
   s32 offset;
 
   // ページのスクロール
@@ -3069,11 +3070,36 @@ static BOOL ScrollPage( MEDALBOXSYS_WORK *p_wk , fx32 move_speed )
     offset = 0;
 
     // ページのリフレッシュ
-    PageRefresh( p_wk , TRUE );
+    PageRefresh( p_wk , TRUE , FALSE);
 
     scroll_end = TRUE;
   }
 
+  // スクロールするオブジェクトの位置を反映する
+  RefreshMedalScrollPos( p_wk );
+  MoveNewEffectPos( p_wk , FX_Whole( move_speed ) );
+
+  return scroll_end;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スクロールオフセットに合わせて、メダルの位置を移動させる
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void RefreshMedalScrollPos( MEDALBOXSYS_WORK *p_wk )
+{
+  GFL_CLACTPOS pos;
+  s32 offset;
+  int i;
+
+  // ページのスクロール
+  offset = FX_Whole(p_wk->page_offset);
+ 
   // 位置データの書き込み
   for( i = 0 ; i < MEDALBOXSYS_OBJ_MEDAL_CLWK_MAX ; i++ )
   {
@@ -3091,25 +3117,34 @@ static BOOL ScrollPage( MEDALBOXSYS_WORK *p_wk , fx32 move_speed )
     // OBJウィンドウも同時に移動
     obj_win_id = MDLSYS_GetMedalObjWindID( i );
     GFL_CLACT_WK_SetPos( p_wk->p_clwk[obj_win_id] , &pos , CLSYS_DEFREND_MAIN );
-
-   
-
   }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  新着エフェクトをスクロールさせる
+ *
+ *	@param	*p_wk 
+ *	@param	scroll_size スクロールサイズ
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void MoveNewEffectPos( MEDALBOXSYS_WORK *p_wk , s16 scroll_size )
+{
+  GFL_CLACTPOS pos;
+
+  int n;
+  // 新品エフェクトのスクロール
+  for( n=0 ; n<NEW_EFFETC_MAX; n++ )
   {
-    int n;
-    // 新品エフェクトのスクロール
-    for( n=0 ; n<NEW_EFFETC_MAX; n++ )
+    if( GFL_CLACT_WK_CheckAnmActive(p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_NEWEFFECT_0+n]) == TRUE )
     {
-      if( GFL_CLACT_WK_CheckAnmActive(p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_NEWEFFECT_0+n]) == TRUE )
-      {
-        GFL_CLACT_WK_GetPos( p_wk->p_clwk[ MEDALBOXSYS_OBJ_CLWK_NEWEFFECT_0+n ] ,&pos , CLSYS_DEFREND_MAIN);
-        pos.x -= FX_Whole(move_speed);
-        GFL_CLACT_WK_SetPos( p_wk->p_clwk[ MEDALBOXSYS_OBJ_CLWK_NEWEFFECT_0+n ] ,&pos , CLSYS_DEFREND_MAIN);
-      }
+      GFL_CLACT_WK_GetPos( p_wk->p_clwk[ MEDALBOXSYS_OBJ_CLWK_NEWEFFECT_0+n ] ,&pos , CLSYS_DEFREND_MAIN);
+      pos.x -= scroll_size;
+      GFL_CLACT_WK_SetPos( p_wk->p_clwk[ MEDALBOXSYS_OBJ_CLWK_NEWEFFECT_0+n ] ,&pos , CLSYS_DEFREND_MAIN);
     }
   }
-
-  return scroll_end;
 }
 
 //----------------------------------------------------------------------------
@@ -3118,11 +3153,12 @@ static BOOL ScrollPage( MEDALBOXSYS_WORK *p_wk , fx32 move_speed )
  *
  *	@param	*p_wk 
  *	@param	refresh_num リフレッシュするページ数
+ *	@param	is_scrollbutton_refresh スクロールボタンのリフレッシュを行う
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void PageRefresh( MEDALBOXSYS_WORK *p_wk , BOOL is_draw_medal_name )
+static void PageRefresh( MEDALBOXSYS_WORK *p_wk , BOOL is_draw_medal_name , BOOL is_scrollbutton_refresh )
 {
   int i;
   u8 refresh_num;
@@ -3172,21 +3208,24 @@ static void PageRefresh( MEDALBOXSYS_WORK *p_wk , BOOL is_draw_medal_name )
     TransMedalName( p_wk );
   }
 
-  // ボタン位置を設定
+  if( is_scrollbutton_refresh == TRUE )
   {
-    GFL_CLACTPOS pos;
-    fx32 page_ratio;
-    fx32 fx_page_pos;
+    // ボタン位置を設定
+    {
+      GFL_CLACTPOS pos;
+      fx32 page_ratio;
+      fx32 fx_page_pos;
 
-    // ページ位置を取得
-    page_ratio = FX_Div( p_wk->top_page_num << FX32_SHIFT ,((p_wk->medal_data.page_max-1) << FX32_SHIFT) );
-    fx_page_pos = FX_Mul( (SCROLLBAR_LENGTH<< FX32_SHIFT) ,  page_ratio);
-    p_wk->scroll_button_pos = FX_Whole(fx_page_pos);
+      // ページ位置を取得
+      page_ratio = FX_Div( p_wk->top_page_num << FX32_SHIFT ,((p_wk->medal_data.page_max-1) << FX32_SHIFT) );
+      fx_page_pos = FX_Mul( (SCROLLBAR_LENGTH<< FX32_SHIFT) ,  page_ratio);
+      p_wk->scroll_button_pos = FX_Whole(fx_page_pos);
 
-    // スクロールボタンの位置を設定
-    pos.x = UI_SCROLBTN_POS_X + p_wk->scroll_button_pos;
-    pos.y = UI_SCROLBTN_POS_Y;
-    GFL_CLACT_WK_SetPos( p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_SCROLBTN] , &pos , CLSYS_DEFREND_MAIN );
+      // スクロールボタンの位置を設定
+      pos.x = UI_SCROLBTN_POS_X + p_wk->scroll_button_pos;
+      pos.y = UI_SCROLBTN_POS_Y;
+      GFL_CLACT_WK_SetPos( p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_SCROLBTN] , &pos , CLSYS_DEFREND_MAIN );
+    }
   }
 }
 
@@ -3767,10 +3806,11 @@ static BOOL CursorUpdate( MEDALBOXSYS_WORK *p_wk )
   // カーソルが選択されていない状態
   if( p_wk->cursor_state == CURSOR_STATE_NOT_SELECT )
   {
-    if( (trg & PAD_KEY_UP) || (trg & PAD_KEY_DOWN) || (trg & PAD_KEY_LEFT) || (trg & PAD_KEY_RIGHT) || (trg & PAD_BUTTON_L) || (trg & PAD_BUTTON_R) )
+    if( (trg & PAD_KEY_UP) || (trg & PAD_KEY_DOWN) || (trg & PAD_KEY_LEFT) || (trg & PAD_KEY_RIGHT) || (trg & PAD_BUTTON_L) || (trg & PAD_BUTTON_R) || (trg & PAD_BUTTON_A) )
     {
       GFL_UI_SetTouchOrKey(GFL_APP_KTST_KEY);
-      SetCursor( p_wk , 0  , TRUE);
+      SetCursor( p_wk , p_wk->cursor_pos_tmp  , TRUE);
+      p_wk->cursor_pos_tmp = 0;
       return TRUE;
     }
   }
@@ -3880,6 +3920,44 @@ static BOOL CursorUpdate( MEDALBOXSYS_WORK *p_wk )
       MDLSYS_SetNextSeq( p_wk , SEQ_MDLBOX_SCROLLPAGE );
       GFL_UI_SetTouchOrKey(GFL_APP_KTST_KEY);
       return TRUE;
+    }
+    
+    // イチオシ登録
+    if( trg & PAD_BUTTON_A )
+    {
+      u8 unit_pos   = GetCursolSelectUnitPos( p_wk ); // カーソルがどのユニット位置にいるか
+      u8 curpos_in_page = GetCursolSelectMedalPos( p_wk );
+      // メダルがあるかどうかの判定
+      if( p_wk->page[unit_pos].medal_max > curpos_in_page )
+      {
+        MY_MEDAL_ST *p_medal_st = p_wk->page[unit_pos].p_medal_st[curpos_in_page];
+        if( p_medal_st->medal_state == MEDAL_STATE_TITLE_GET )
+        {
+          MedalID medal_id = p_medal_st->medal_id;
+          if( medal_id != p_wk->medal_data.push_medalid )
+          {
+            SetPushMedalData( p_wk ,medal_id , PUSHMEDAL_TYPE_SET );
+          }
+          else
+          {
+            SetPushMedalData( p_wk ,medal_id , PUSHMEDAL_TYPE_REMOVE );
+          }
+          MDLSYS_SetNextSeq( p_wk , SEQ_PUSUMEDALBUTTON );
+          GFL_UI_SetTouchOrKey(GFL_APP_KTST_KEY);
+          return TRUE;
+        }
+        else
+        {
+          // カーソル位置をせっていする
+          SetCursor( p_wk , tp_hit  , FALSE );
+
+          // シーケンスを切り替える
+          SetPushMedalData( p_wk , 0 , PUSHMEDAL_TYPE_HINT );
+          MDLSYS_SetNextSeq( p_wk , SEQ_PUSUMEDALBUTTON );
+          GFL_UI_SetTouchOrKey(GFL_APP_KTST_TOUCH);
+          return TRUE;
+        }
+      }
     }
   }
   return FALSE;
@@ -4288,11 +4366,11 @@ static GFL_PROC_RESULT MDLSYS_SCROLLBUTTON_Main( MEDALBOXSYS_WORK *p_wk )
       p_wk->scroll_speed = AUTO_SCROLL_SPEED_MIN;
       p_wk->sub_seq++;
     }
-    break;
+    // タッチフレームはスルーして、処理を継続する
   case 1:
     {
       u32 tp_x,tp_y;
-      if( GFL_UI_TP_GetPointCont( &tp_x ,&tp_y ) )
+      if( GFL_UI_TP_GetPointCont( &tp_x ,&tp_y )  )
       {
         fx32 page_ratio;
         fx32 fx_page_pos;
@@ -4335,8 +4413,13 @@ static GFL_PROC_RESULT MDLSYS_SCROLLBUTTON_Main( MEDALBOXSYS_WORK *p_wk )
       result = move_speed_scroll( p_wk );
       if( result == SCROLL_RESULT_END )
       {
-        // カーソル位置を決定
-        SetCursor( p_wk , p_wk->cursor_pos  , TRUE);
+ 
+        // 戻り先を現在のカーソル位置に設定
+        p_wk->cursor_pos_tmp = p_wk->cursor_pos;
+
+        // カーソルを消す
+        SetCursorState( p_wk , CURSOR_STATE_NOT_SELECT , MDLID_MAX );
+
         MDLSYS_SetNextSeq( p_wk , SEQ_MDLBOX_MAIN );
       }
     }
@@ -4382,21 +4465,19 @@ static SCROLL_RESULT move_speed_scroll( MEDALBOXSYS_WORK *p_wk )
   }
   else
   {
-    // ページ位置まで移動している時はオフセットを見て方向を決める
-    s32 offset = FX_Whole(p_wk->page_offset);
-    if( offset > 0 )
-    {
-      SetScrollDirection( p_wk , SCROLL_DIR_LEFT );
-    }
-    else if( offset < 0 )
-    {
-      SetScrollDirection( p_wk , SCROLL_DIR_RIGHT );
-    }
-    else
-    {
-      // ぴったりなのでスクロールする必要はない
-      return SCROLL_RESULT_END;
-    }
+    // オフセットの初期化
+    p_wk->page_offset = 0;
+
+    // スクロールするオブジェクトの位置を反映(オフセット分新着エフェクトを動かす)
+    RefreshMedalScrollPos( p_wk );
+    MoveNewEffectPos( p_wk , FX_Whole( p_wk->page_offset) );
+
+    // ページのリフレッシュ
+    PageRefresh( p_wk , TRUE , FALSE);
+
+    // スクロール終了
+    return SCROLL_RESULT_END;
+
   }
 
   // ページの距離を計算する
@@ -4505,6 +4586,9 @@ static GFL_PROC_RESULT MDLSYS_MENU_Main( MEDALBOXSYS_WORK *p_wk )
       {
         p_wk->modechange_top_page_num = 0;
       }
+
+      // 戻り先を現在のカーソル位置に設定
+      p_wk->cursor_pos_tmp = p_wk->cursor_pos;
 
       // カーソルを消す
       SetCursorState( p_wk , CURSOR_STATE_NOT_SELECT , MDLID_MAX );
@@ -4619,10 +4703,21 @@ static GFL_PROC_RESULT MDLSYS_MENU_Main( MEDALBOXSYS_WORK *p_wk )
             MEDALDATASYS_SortMedal( &p_wk->medal_data , SORT_MODE_DEFAULT );
             MDLSYS_SetNextSeq( p_wk , SEQ_MDLBOX_SORT );
             break;
-
           // デフォルトとキャンセルは同じ処理を行う
           default:
           case MENU_MSG_CANCEL:
+             
+            // カーソル位置をせっていする
+            if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY )
+            {
+              // 戻るときは同じ位置にカーソルを表示する
+              SetCursor( p_wk , p_wk->cursor_pos  , TRUE );
+            }
+            else
+            {
+              // 戻り先を現在のカーソル位置に設定
+              p_wk->cursor_pos_tmp = p_wk->cursor_pos;
+            }
             MDLSYS_SetNextSeq( p_wk , SEQ_MDLBOX_MAIN );
             break;
           }
@@ -4848,7 +4943,7 @@ static GFL_PROC_RESULT MDLSYS_MODECHANGE_Main( MEDALBOXSYS_WORK *p_wk )
       p_wk->top_page_num = p_wk->modechange_top_page_num;
 
       // ページをリフレッシュ
-      PageRefresh( p_wk , FALSE );
+      PageRefresh( p_wk , FALSE , TRUE);
 
       // メダル名を非表示に
       ClearMedalName( p_wk );
@@ -4920,11 +5015,30 @@ static GFL_PROC_RESULT MDLSYS_MODECHANGE_Main( MEDALBOXSYS_WORK *p_wk )
         GFL_BG_SetScrollReq( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_FONT_M) ,GFL_BG_SCROLL_X_SET , FX_Whole(p_wk->fontbord_offset) );
       }
 
+      // カーソル位置を補正（移動した時点でカーソル位置は見えていなくてもかえる）
+      if( p_wk->box_mode == BOXMODE_NORMAL )
+      {
+        p_wk->cursor_pos %= MEDALBOX_DRAW_PAGE_NUM_LIST;
+      }
       // 次のシーケンスへ移動
       if( cap_scroll_end && fontbord_scroll_end )
       {
+
         // メダル名を表示するためにリフレッシュ
-        PageRefresh( p_wk , TRUE);
+        PageRefresh( p_wk , TRUE , TRUE);
+
+        // タッチキーで終了した場合はカーソルを表示する
+        if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY )
+        {
+          // カーソル位置は必ず0番に初期化
+          SetCursor( p_wk , p_wk->cursor_pos  , TRUE );
+        }
+        else
+        {
+          // カーソル位置を0番に初期化
+          p_wk->cursor_pos_tmp = p_wk->cursor_pos;
+        }
+
         MDLSYS_SetNextSeq( p_wk , SEQ_MDLBOX_MAIN );
       }
     }
@@ -4983,7 +5097,7 @@ static GFL_PROC_RESULT MDLSYS_PUSHMEDALBUTTON_Main( MEDALBOXSYS_WORK *p_wk )
           2   , 24-6   ,
           28  , 4  ,
           SYSTEM_FONT_PAL , GFL_BMP_CHRAREA_GET_B );
-
+      
       // スクリーンの作成
       GFL_BMPWIN_MakeScreen( p_wk->p_menu_win );
 
@@ -5027,7 +5141,7 @@ static GFL_PROC_RESULT MDLSYS_PUSHMEDALBUTTON_Main( MEDALBOXSYS_WORK *p_wk )
       GFL_STR_DeleteBuffer( str );
 
       // ページのリフレッシュ
-      PageRefresh( p_wk ,FALSE);
+      PageRefresh( p_wk ,FALSE , TRUE);
 
       GFL_BG_SetVisible( MDLSYS_BG_GetFrame(MEDALBOXSYS_BG_FRAME_ETC_M), VISIBLE_ON );
       p_wk->sub_seq++;
@@ -5201,7 +5315,7 @@ static GFL_PROC_RESULT MDLSYS_SORT_Main( MEDALBOXSYS_WORK *p_wk )
       p_wk->top_page_num = 0;
 
       // ページをリフレッシュ
-      PageRefresh( p_wk , FALSE);
+      PageRefresh( p_wk , FALSE , TRUE);
 
       // メダル名を非表示に
       ClearMedalName( p_wk );
@@ -5276,8 +5390,20 @@ static GFL_PROC_RESULT MDLSYS_SORT_Main( MEDALBOXSYS_WORK *p_wk )
       // 次のシーケンスへ移動
       if( cap_scroll_end && fontbord_scroll_end )
       {
+        // タッチキーで終了した場合はカーソルを表示する
+        if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY )
+        {
+          // カーソル位置は必ず0番に初期化
+          SetCursor( p_wk , 0  , TRUE );
+        }
+        else
+        {
+          // カーソル位置を0番に初期化
+          p_wk->cursor_pos_tmp = 0;
+        }
+
         // メダル名を表示するためにリフレッシュ
-        PageRefresh( p_wk , TRUE);
+        PageRefresh( p_wk , TRUE , TRUE);
         MDLSYS_SetNextSeq( p_wk , SEQ_MDLBOX_MAIN );
       }
     }
