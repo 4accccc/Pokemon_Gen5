@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="onoue_masayuki" host="W00240" date="2011-02-08T00:11:53"/>
+	<create user="tamada" host="W00139" date="2011-02-08T00:52:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -2270,56 +2270,6 @@ LR→補完&quot;</language>
 	<row id="DEBUG_FIELD_MEDALBOX_01">
 		<language name="JPN" width="240">メダルボックス</language>
 		<language name="JPN_KANJI" width="240">メダルボックス</language>
-	</row>
-
-	<row id="DEBUG_FIELD_MEDALBOX_MENU_ALL_TITLE_OPEN">
-		<language name="JPN" width="240">タイトルメダルぜんかいほう</language>
-		<language name="JPN_KANJI" width="240">タイトルメダル全開放</language>
-	</row>
-
-	<row id="DEBUG_FIELD_MEDALBOX_MENU_ALL_HINT_OPEN">
-		<language name="JPN" width="240">ヒントメダルぜんかいほう</language>
-		<language name="JPN_KANJI" width="240">ヒントメダル全開放</language>
-	</row>
-
-	<row id="DEBUG_FIELD_MEDALBOX_MENU_ALL_TITLE_ACHIVE">
-		<language name="JPN" width="240">タイトルメダルぜんたっせい</language>
-		<language name="JPN_KANJI" width="240">タイトルメダル全達成</language>
-	</row>
-
-	<row id="DEBUG_FIELD_MEDALBOX_MENU_ALL_HINT_ACHIVE">
-		<language name="JPN" width="240">ヒントメダルぜんたっせい</language>
-		<language name="JPN_KANJI" width="240">ヒントメダル全達成</language>
-	</row>
-
-	<row id="DEBUG_FIELD_MEDALBOX_MENU_OUTDATA">
-		<language name="JPN" width="240">メダルデータをデバッグプリント</language>
-		<language name="JPN_KANJI" width="240">メダルデータをデバッグ出力</language>
-	</row>
-
-	<row id="DEBUG_FIELD_MEDALBOX_MENU_OUTSAVE">
-		<language name="JPN" width="240">メダルセーブをデバッグプリント</language>
-		<language name="JPN_KANJI" width="240">メダルセーブをデバッグプリント</language>
-	</row>
-
-	<row id="DEBUG_FIELD_MEDALBOX_MENU_RANDOMSET">
-		<language name="JPN" width="240">メダルセーブをランダムセット</language>
-		<language name="JPN_KANJI" width="240">メダルセーブをランダムセット</language>
-	</row>
-
-	<row id="DEBUG_FIELD_MEDALBOX_MENU_BOXRANK">
-		<language name="JPN" width="240">ボックスをランクアップ</language>
-		<language name="JPN_KANJI" width="240">ボックスをランクアップ</language>
-	</row>
-
-	<row id="DEBUG_FIELD_MEDALBOX_MENU_MAKEDATA">
-		<language name="JPN" width="240">メダルデータをさくせい</language>
-		<language name="JPN_KANJI" width="240">メダルデータを作成</language>
-	</row>
-
-	<row id="DEBUG_FIELD_MEDALBOX_MAKEDATA">
-		<language name="JPN" width="240">[2:02:３桁:2]：[1:35:メダル名:0]（[2:01:２桁:1]）</language>
-		<language name="JPN_KANJI" width="240">[2:02:３桁:2]：[1:35:メダル名:0]（[2:01:２桁:1]）</language>
 	</row>
 
 	<flowchart-group-list>

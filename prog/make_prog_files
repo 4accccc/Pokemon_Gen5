@@ -837,7 +837,8 @@ SRCS_OVERLAY_DEBUGMENU_APP  = field/event_debug_menu_ov_app.c
 # デバッグメニュー並列化  スタッフ系
 #===> SRCS_OVERLAY_FIELDMAP
 #GROUP_OVERLAY_DEBUGMENU
-SRCS_OVERLAY_DEBUGMENU_STAFF  = field/event_debug_menu_ov_staff.c
+SRCS_OVERLAY_DEBUGMENU_STAFF  = field/event_debug_menu_ov_staff.c \
+                                field/event_debug_menu_medal.c
 
 # デバッグメニュー並列化  バトルサブウェイ系
 #===> SRCS_OVERLAY_FIELDMAP
