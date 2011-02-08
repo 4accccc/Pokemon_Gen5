@@ -55,7 +55,7 @@ File.open("tokusei_aiueo_header_table.cdat","w"){|file|
   file.puts "// 特性あいうえお頭だし位置テーブル"
   file.puts "//=============================="
 
-  file.puts "static const u8 tokusei_aiueo_table[][2] = {"
+  file.puts "static const u8 tokusei_header_aiueo_table[][2] = {"
   HEADSTR.split(//).each{|code|
     start_pos = -1
     end_pos = -1
