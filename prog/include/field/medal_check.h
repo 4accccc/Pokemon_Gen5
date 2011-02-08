@@ -16,4 +16,5 @@
 //
 //=============================================================================
 extern void MEDAL_AchiveCheck( SAVE_CONTROL_WORK *p_sv , HEAPID heapID );
+extern void MEDAL_InitHintMedal( SAVE_CONTROL_WORK *p_sv , HEAPID heapID );
 

@@ -4,7 +4,7 @@
  *	@file		medal_check.c
  *	@brief  メダル達成関数
  *	@author	Masayuki Onoue
- *	@data		2011.02.07
+ *	@date		2011.02.07
  *
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
@@ -179,6 +179,59 @@ void MEDAL_AchiveCheck( SAVE_CONTROL_WORK *p_sv , HEAPID heapID )
           }
         }
 
+      }
+    }
+  }
+
+  // アーカイブクローズ
+  GFL_ARC_CloseDataHandle(p_handle);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ヒント取得条件が最初からのメダルをヒント取得状態にする
+ *
+ *	@param	*p_sv 
+ *	@param	heapID 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void MEDAL_InitHintMedal( SAVE_CONTROL_WORK *p_sv , HEAPID heapID )
+{
+  MedalID     medal_id;
+  MEDALBOX    *p_medal_box;
+  ARCHANDLE   *p_handle;
+  MEDALDATA   medal_data[MDLID_MAX];
+  RECORD      *p_rec;
+  RTCDate     rtc;
+  u8          medal_state;
+
+  GF_ASSERT_HEAVY( p_sv );
+
+  // 獲得条件アーカイブデータハンドル取得
+  p_handle = GFL_ARC_OpenDataHandle( ARCID_MEDALDATA , heapID );
+
+  // 達成条件データを取得
+  GFL_ARC_LoadDataOfsByHandle( p_handle , 0 , 0 , sizeof(MEDALDATA)*MDLID_MAX ,medal_data );
+
+  // セーブデータの取得
+  p_medal_box = SaveData_GetMedalBox( p_sv );
+  p_rec = SaveData_GetRecord(p_sv);
+  
+  // 現在の時間を取得する
+  GFL_RTC_GetDate(&rtc);
+
+  // 最初から持っているヒントメダルを初期化する
+  for( medal_id = 0; medal_id < MDLID_MAX ; medal_id++ )
+  {
+    medal_state = MEDALBOX_GetMedalState( p_medal_box , medal_id );
+    if( medal_state < MEDAL_STATE_HINT_ACHIVE )
+    {
+      if( medal_data[medal_id].hint_type == MEDALDATA_HINTTYPE_FIRST )
+      {
+        MEDALBOX_SetHintMedalAchive( p_medal_box , medal_id );
+        MEDALBOX_SetHintMedalGetFlg( p_medal_box , medal_id ,rtc.year ,rtc.month ,rtc.day);
       }
     }
   }
