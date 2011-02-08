@@ -140,13 +140,9 @@ void CTVT_BALLOON_Update( BALLOON_WORK*  p_wk )
   }
   else
   {
-    // 移動
-    //VEC_Add( &p_wk->status.trans, &p_wk->vec, &p_wk->status.trans );
-
-#if 1
     // 経過フレーム数で移動するように変更
     u16   now_frame;
-    s16   def;  // マイナスになる可能性がある
+    s32   def;  // マイナスになる可能性がある
     u8    i;
     now_frame = CTVT_GAME_GetFrame( p_wk->p_game_wk );
     def   = now_frame - p_wk->save_frame;
@@ -160,7 +156,6 @@ void CTVT_BALLOON_Update( BALLOON_WORK*  p_wk )
       }
     }
     //GFL_CALC3D_VEC_MulScalar( &p_wk->vec, mul, &p_wk->status.trans );
-#endif
   }
 
   // 画面外判定
@@ -171,25 +166,18 @@ void CTVT_BALLOON_Update( BALLOON_WORK*  p_wk )
     // ワールド座標からスクリーン座標を求める
     ret = NNS_G3dWorldPosToScrPos( &p_wk->status.trans, &x, &y );
 
-    //ICHI_Printf("風船SCR_POS  %d:%d  ret:%d \n", x, y, ret);
-
-#if 1
     // 画面外 両端のみ
     if( ( x<-64 || x>320 ) && ret == 0  )
     {
       CTVT_BALLOON_Destroy( p_wk );
       return;
     }
-#endif
-
-#if 1
     // 3D画面外判定　(曖昧)
-    if( p_wk->status.trans.y > FX32_CONST(150) )
+    if( p_wk->status.trans.y > FX32_CONST(240) )
     {
       CTVT_BALLOON_Destroy( p_wk );
       return;
     }
-#endif
   }
 }
 

@@ -26,6 +26,7 @@
 #include "ctvt_talk.h"
 #include "ctvt_comm.h"
 #include "ctvt_camera.h"
+#include "ctvt_game.h"
 #include "ctvt_mic.h"
 #include "ctvt_snd_def.h"
 #include "enc_adpcm.h"
@@ -670,7 +671,9 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
     if( CTVT_TALK_GameEnter_CheckFinishReq( work , talkWork ) == FALSE )
     {
       CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
-      const BOOL ret = CTVT_COMM_SendFlg( work , commWork , CCFT_REQ_GAME , 0 );
+      CTVT_GAME_WORK *gameWork = COMM_TVT_GetGameWork( work );
+      u32 game_id = CTVT_GAME_GetGameID( gameWork );
+      const BOOL ret = CTVT_COMM_SendFlg( work, commWork, CCFT_REQ_GAME, game_id );
       if( ret == TRUE )
       {
         talkWork->state = CTS_REQ_GAME_WAIT;
@@ -686,8 +689,10 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
     if( CTVT_TALK_GameEnter_CheckFinishReq( work , talkWork ) == FALSE )
     {
       CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
+      CTVT_GAME_WORK *gameWork = COMM_TVT_GetGameWork( work );
+      u32 game_id = CTVT_GAME_GetGameID( gameWork );
       // いつ乱入してきても良いように常に送信しておく
-      CTVT_COMM_SendFlg_Repeat( work , commWork , CCFT_REQ_GAME , 0 );
+      CTVT_COMM_SendFlg_Repeat( work, commWork, CCFT_REQ_GAME, game_id );
 
       // キャンセルボタン処理
       APP_TASKMENU_UpdateMenu( talkWork->cancelWork );
@@ -1400,8 +1405,12 @@ static void CTVT_TALK_UpdateWait( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork
     if( COMM_TVT_GetSelfIdx(work) == 0 && 
         GFL_UI_TP_HitTrg( CTVT_TALK_HitBalloonButton1 ) != GFL_UI_TP_HIT_NONE  )
     {
+      // 選択したゲームをセット
+      CTVT_GAME_WORK *gameWork = COMM_TVT_GetGameWork( work );
+      CTVT_GAME_SetGameID( gameWork, CGI_BALLOON1 );
+
       CTVT_TALK_GameEnter_Init( work, talkWork );   // 初期化
-      talkWork->state = CTS_REQ_GAME;
+      talkWork->state = CTS_REQ_GAME;               // ゲーム開始要求
       GFL_CLACT_WK_SetAnmSeq( talkWork->clwkBalloon1 , CTOAS_BALLOON1 );
       GFL_CLACT_WK_SetAutoAnmFlag( talkWork->clwkBalloon1 , TRUE );
       PMSND_PlaySystemSE( CTVT_SND_TOUCH );
@@ -1410,8 +1419,12 @@ static void CTVT_TALK_UpdateWait( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork
     if( COMM_TVT_GetSelfIdx(work) == 0 && 
         GFL_UI_TP_HitTrg( CTVT_TALK_HitBalloonButton2 ) != GFL_UI_TP_HIT_NONE  )
     {
+      // 選択したゲームをセット
+      CTVT_GAME_WORK *gameWork = COMM_TVT_GetGameWork( work );
+      CTVT_GAME_SetGameID( gameWork, CGI_BALLOON2 );
+
       CTVT_TALK_GameEnter_Init( work, talkWork );   // 初期化
-      talkWork->state = CTS_REQ_GAME;
+      talkWork->state = CTS_REQ_GAME;               // ゲーム開始要求
       GFL_CLACT_WK_SetAnmSeq( talkWork->clwkBalloon2, CTOAS_BALLOON2 );
       GFL_CLACT_WK_SetAutoAnmFlag( talkWork->clwkBalloon2 , TRUE );
       PMSND_PlaySystemSE( CTVT_SND_TOUCH );
@@ -1871,6 +1884,7 @@ static void CTVT_TALK_DispMessage( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWor
 static void CTVT_TALK_AcceptMsg_Main( COMM_TVT_WORK *work, CTVT_TALK_WORK *talkWork, const u16 msgId, s32 timeLimit )
 {
   const HEAPID heapId = COMM_TVT_GetHeapId( work );
+  CTVT_GAME_WORK *gameWork = COMM_TVT_GetGameWork( work );
   GFL_FONT *fontHandle = COMM_TVT_GetFontHandle( work );
   GFL_MSGDATA *msgHandle = COMM_TVT_GetMegHandle( work );
   PRINT_QUE *printQue = COMM_TVT_GetPrintQue( work );
@@ -1882,7 +1896,8 @@ static void CTVT_TALK_AcceptMsg_Main( COMM_TVT_WORK *work, CTVT_TALK_WORK *talkW
   GFL_MSG_GetString( msgHandle, msgId, talkWork->str_tmp);
   // ゲーム名 と 秒数
   {
-    STRBUF *gameName = GFL_MSG_CreateString( msgHandle, COMM_TVT_GAME_18 );
+    u32 strID = COMM_TVT_GAME_18 + CTVT_GAME_GetGameID( gameWork );
+    STRBUF *gameName = GFL_MSG_CreateString( msgHandle, strID );
 
     WORDSET_RegisterWord( wordSet, 0, gameName, 0, TRUE, PM_LANG );
     WORDSET_RegisterNumber( wordSet, 1, timeLimit, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
@@ -1905,6 +1920,7 @@ static void CTVT_TALK_AcceptMsg_Main( COMM_TVT_WORK *work, CTVT_TALK_WORK *talkW
 static void CTVT_TALK_AcceptMsg_Sub( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork , const u16 msgId, STRBUF* name, u16 msgWait )
 {
   const HEAPID heapId = COMM_TVT_GetHeapId( work );
+  CTVT_GAME_WORK *gameWork = COMM_TVT_GetGameWork( work );
   GFL_FONT *fontHandle = COMM_TVT_GetFontHandle( work );
   GFL_MSGDATA *msgHandle = COMM_TVT_GetMegHandle( work );
   PRINT_QUE *printQue = COMM_TVT_GetPrintQue( work );
@@ -1924,7 +1940,8 @@ static void CTVT_TALK_AcceptMsg_Sub( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkW
   }
   // ゲーム名
   {
-    STRBUF *gameName = GFL_MSG_CreateString( msgHandle, COMM_TVT_GAME_18 );
+    u32 strID = COMM_TVT_GAME_18 + CTVT_GAME_GetGameID( gameWork );
+    STRBUF *gameName = GFL_MSG_CreateString( msgHandle, strID );
     WORDSET_RegisterWord( wordSet, bufID, gameName, 0, TRUE, PM_LANG );
     GFL_STR_DeleteBuffer( gameName );
   }

@@ -3,7 +3,7 @@
  * @file	ctvt_game.c
  * @brief	通信TVTシステム：ミニゲーム画面
  * @author	ichiraku
- * @data	2010/11/25
+ * @date	2010/11/25
  *
  * モジュール名：CTVT_GAME
  */
@@ -54,6 +54,12 @@
 //	enum
 //======================================================================
 #pragma mark [> enum
+
+// ミニゲーム種類
+typedef enum {
+  CGI_BALLOON1 = 0,   // ミニゲーム1
+  CGI_BALLOON2,       // ミニゲーム2
+}CTVT_GAME_ID;
 
 // ゲーム専用通信フラグ
 typedef enum {
@@ -115,7 +121,11 @@ extern const COMM_TVT_MODE CTVT_GAME_Main( COMM_TVT_WORK *work , CTVT_GAME_WORK 
 extern void CTVT_GAME_InitMode( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork );
 extern void CTVT_GAME_TermMode( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork );
 
+// セット・取得系
+extern void CTVT_GAME_SetGameID( CTVT_GAME_WORK *gameWork, const CTVT_GAME_ID game_id );
+extern const CTVT_GAME_ID CTVT_GAME_GetGameID( CTVT_GAME_WORK *gameWork );
 extern GFL_G3D_UTIL* CTVT_GAME_GetgG3DUtil( CTVT_GAME_WORK *gameWork );
+extern const BOOL CTVT_GAME_IsMain( CTVT_GAME_WORK *gameWork );
 
 // リトライ画面
 // 通信で内部フラグを変更する用

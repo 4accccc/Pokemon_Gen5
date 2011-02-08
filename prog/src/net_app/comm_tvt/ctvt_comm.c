@@ -1485,6 +1485,10 @@ static void CTVT_COMM_PostFlg( const int netID, const int size , const void* pDa
     {
       // 子に対して参加「はい」「いいえ」選択へ移動するフラグをたてる
       CTVT_TALK_WORK *talkWork = COMM_TVT_GetTalkWork( commWork->parentWork );
+      CTVT_GAME_WORK *gameWork = COMM_TVT_GetGameWork( commWork->parentWork );
+
+      // ゲームIDも届いているのでセットする
+      CTVT_GAME_SetGameID( gameWork, pkt->value );
       CTVT_TALK_SetIsReqGame( talkWork, TRUE );
     }
     break;
@@ -1855,7 +1859,7 @@ static void CTVT_COMM_UpdateGameComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *comm
   const u8 selfId = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
   BOOL  isSendGameData = FALSE;
   
-#if 1   // いらないかも
+#if 0   // いらないかも
   // 接続人数の更新
   {
     const u8 connectNum = GFL_NET_GetConnectNum();
@@ -1896,7 +1900,7 @@ static void CTVT_COMM_UpdateGameComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *comm
 
   // ゲームがメインかどうか？
   // （メインでフレーム数を増やしているから0以上だとメイン状態）
-  if( selfId == 0 && CTVT_GAME_GetOyaFrame( gameWork ) > 0 )
+  if( selfId == 0 && CTVT_GAME_IsMain( gameWork ) == TRUE )
   {
     // 経過フレーム数更新
     // 送信より前に行わないと、frameにはゴミ値が入っている
@@ -1945,7 +1949,7 @@ static void CTVT_COMM_UpdateGameComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *comm
   if( selfId == 0 )
   {
     // ゲームがメインかどうか？（メインでフレーム数を増やしている為）
-    if( CTVT_GAME_GetOyaFrame( gameWork ) > 0 )
+    if( CTVT_GAME_IsMain( gameWork ) == TRUE )
     {
       // 送信データがなかったら、フレームのみ送る
       if( isSendGameData == FALSE )
@@ -2167,8 +2171,8 @@ static void CTVT_COMM_PostGameData( const int netID, const int size , const void
   // 受信データ出力
   //ICHI_Printf("Post GameData type%d\n", p_recv->data_type);
 
-  // 親からのフレームのみ更新
-  if( netID == 0 )
+  // 親からのフレーム かつ プレイ中のみ更新
+  if( netID == 0 && CTVT_GAME_IsMain( gameWork ) == TRUE )
   {
     //ICHI_Printf("受信フレーム %d ", p_recv->frame);
     // フレーム更新

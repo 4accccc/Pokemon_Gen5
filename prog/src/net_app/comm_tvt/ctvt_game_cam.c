@@ -114,6 +114,7 @@ typedef enum
 #define INFO_W  (72)  // 1枚目から2枚までの幅
 #define INFO_X  (24)  // 最初の1枚のX座標
 #define INFO_Y  (20)  // Y座標
+#define NEXT_WAIT_FRAME (80)  // 次の写真撮影にいくまでの待ちフレーム数
 
 //-------------------------------------
 ///	NITRO時のルーレット用
@@ -214,6 +215,7 @@ typedef struct {
 
   u8      cap_cnt_base;   // 受信枚数カウンタ基準
   BOOL    can_next;       // 次の写真撮影にいってよいか
+  u8      wait_frame;     // 待ち時間調整用
   u8      seq;
   BOOL    is_end;         // すべて受信完了したか
   BOOL    is_init;        // 初期化が完了したか(カメラ同期をとる)
@@ -338,7 +340,7 @@ static void COMM_Init( COMM_WORK *p_wk, CTVT_GAME_CAM_MEMBER_WORK member[], BOOL
 static void COMM_Exit( COMM_WORK *p_wk, BOOL isTwl );
 static void COMM_Main( COMM_WORK *p_wk, CTVT_GAME_CAM_MEMBER_WORK member[] );
 static void COMM_SendCapture( COMM_WORK *p_wk );
-static BOOL COMM_CanNext( const COMM_WORK *p_wk );
+static BOOL COMM_CanNext( COMM_WORK *p_wk );
 static void* COMM_GetSendBuf( const COMM_WORK *p_wk );
 static BOOL COMM_IsEnd( const COMM_WORK *p_wk );
 static void COMM_CaptureSave( COMM_WORK *p_wk, void* dst );
@@ -1035,11 +1037,11 @@ static void PS_Print( PS_WORK *p_wk, MSGWND_WORK *p_msgwnd, SEQ_FUNCTION next_se
 	GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(p_msgwnd->p_bmpwin) );
 
 
-  PRINTSYS_PrintStream_StartTempSpeedMode( p_wk->p_stream, 3 );
+  PRINTSYS_PrintStream_StartTempSpeedMode( p_wk->p_stream, 0 );
 
   // その他設定
   p_wk->next_seq_function = next_seq_function;
-  p_wk->wait_max  = 120;
+  p_wk->wait_max  = 90;
   p_wk->wait_count= 0;
 }
 
@@ -1081,11 +1083,11 @@ static void PS_PrintNumber( PS_WORK *p_wk, MSGWND_WORK *p_msgwnd, SEQ_FUNCTION n
 	GFL_BMPWIN_MakeScreen( p_msgwnd->p_bmpwin );
 	GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(p_msgwnd->p_bmpwin) );
 
-  PRINTSYS_PrintStream_StartTempSpeedMode( p_wk->p_stream, 3 );
+  PRINTSYS_PrintStream_StartTempSpeedMode( p_wk->p_stream, 0 );
 
   // その他設定
   p_wk->next_seq_function = next_seq_function;
-  p_wk->wait_max  = 90;
+  p_wk->wait_max  = 60;
   p_wk->wait_count= 0;
 }
 
@@ -1544,6 +1546,7 @@ static void COMM_Init( COMM_WORK *p_wk, CTVT_GAME_CAM_MEMBER_WORK member[], BOOL
     }
   }
 
+  p_wk->wait_frame = 0;
   p_wk->is_init = FALSE;    // カメラ開始同期後にTRUEにする
 }
 
@@ -1721,7 +1724,7 @@ static void COMM_SendCapture( COMM_WORK *p_wk )
  *	@return TRUEでOK
  */
 //-----------------------------------------------------------------------------
-static BOOL COMM_CanNext( const COMM_WORK *p_wk )
+static BOOL COMM_CanNext( COMM_WORK *p_wk )
 {
   // 送信完了まで待つ
   if( GFL_NET_LDATA_IsFinishSend() == FALSE )
@@ -1729,6 +1732,13 @@ static BOOL COMM_CanNext( const COMM_WORK *p_wk )
     return FALSE;
   }
   
+  // 待ち時間調整用
+  if( p_wk->wait_frame < NEXT_WAIT_FRAME )
+  {
+    p_wk->wait_frame++;
+    return FALSE;
+  }
+
   return p_wk->can_next;
 }
 
@@ -2248,6 +2258,7 @@ static void SEQFUNC_TWL_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
     if( COMM_CanNext( &p_wk->comm ) == TRUE )
     {
       p_wk->comm.can_next = FALSE;    // フラグリセット
+      p_wk->comm.wait_frame = 0;
 
       // キャプチャスタート
       CAM_CaptureStart( &p_wk->camera );
