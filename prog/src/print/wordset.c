@@ -14,6 +14,7 @@
 #include "str_tool_local.h"
 #include "tr_tool/trtype_def.h" // for TRTYPE_xxxx
 #include "savedata/th_rank_def.h" // for TH_RANK_xxxx
+#include "savedata/medalbox_rank_def.h" // for MEDALBOX_RANK_xxxx
 #include "../../../resource/research_radar/data/hobby_id.h"  // for HOBBY_ID_xxxx
 #include "../../../resource/research_radar/data/job_id.h"  // for JOB_ID_xxxx
 #include "../../../resource/research_radar/data/answer_id.h"  // for ANSWER_ID_xxxx
@@ -883,8 +884,12 @@ void WORDSET_RegisterMedalName( WORDSET* wordset, u32 bufID, u8 medalID )
  * @param   rankID  ランクを指定するID
  */
 //------------------------------------------------------------------
-void WORDSET_RegisterMedalRankName( WORDSET* wordset, u32 bufID, u8 rankID )
+void WORDSET_RegisterMedalRankName( WORDSET* wordset, u32 bufID, u8 rankID, u8 rom_version )
 {
+  if ( rankID == MEDALBOX_RANK_BW && rom_version == VERSION_W2 )
+  { //同じランクでもバージョンにより名前が違う
+    rankID ++;
+  }
   RegisterWordFormMsgArc( wordset, bufID, NARC_message_medalrank_dat, rankID );
 }
 
