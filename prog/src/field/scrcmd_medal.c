@@ -66,7 +66,7 @@ VMCMD_RESULT EvCmdGetMedalCount( VMHANDLE * core, void *wk )
   SCRCMD_WORK*       work     = (SCRCMD_WORK*)wk;
   GAMEDATA*          gameData = SCRCMD_WORK_GetGameData( work );
   SAVE_CONTROL_WORK* save     = GAMEDATA_GetSaveControlWork( gameData );
-  /*const*/ MEDALBOX * medalbox   = SaveData_GetMedalBox( save );
+  const MEDALBOX * medalbox   = SaveData_GetMedalBox( save );
 
  	u8 idx = VMGetU8( core );
   u16 * ret_wk  = SCRCMD_GetVMWork( core, wk );
@@ -132,6 +132,9 @@ VMCMD_RESULT EvCmdUpdateMedalInfo( VMHANDLE * core, void * wk )
     break;
   case SCR_MEDALUPDATE_RANK://ランクの更新
     MEDALBOX_RankUpMedalBox( medalbox );
+    break;
+  case SCR_MEDALUPDATE_INIT://メダルの初期化（ヒントメダルの初期設定など）
+    MEDAL_InitHintMedal( save, heapID );
     break;
   default:
     GF_ASSERT( 0 );
@@ -234,7 +237,7 @@ static int getLastAchieveMedal( SCRCMD_WORK * work )
   u32 id;
   GAMEDATA*          gameData = SCRCMD_WORK_GetGameData( work );
   SAVE_CONTROL_WORK* save     = GAMEDATA_GetSaveControlWork( gameData );
-  /*const*/ MEDALBOX * medalbox   = SaveData_GetMedalBox( save );
+  const MEDALBOX * medalbox   = SaveData_GetMedalBox( save );
 
   for ( id = 0; id < MDLID_MAX; id ++ )
   {
@@ -259,7 +262,7 @@ static u32 countMedals( SCRCMD_WORK * work, u32 match_state )
   u32 id, count;
   GAMEDATA*          gameData = SCRCMD_WORK_GetGameData( work );
   SAVE_CONTROL_WORK* save     = GAMEDATA_GetSaveControlWork( gameData );
-  /*const*/ MEDALBOX * medalbox   = SaveData_GetMedalBox( save );
+  const MEDALBOX * medalbox   = SaveData_GetMedalBox( save );
 
   for ( count = 0, id = 0; id < MDLID_MAX; id ++ )
   {

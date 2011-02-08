@@ -604,6 +604,7 @@
 #define SCR_MEDALUPDATE_TITLE       (1001)  //タイトルメダルの更新（達成→取得）
 #define SCR_MEDALUPDATE_HINT        (1002)  //ヒントメダルの更新（達成→取得）
 #define SCR_MEDALUPDATE_RANK        (1003)  //ランクの更新
+#define SCR_MEDALUPDATE_INIT        (1004)  //メダルの初期化（ヒントメダル初期設定など）
 
 #define SCR_MEDALRANK_IRON            (0)   // メダルランクアイアン（初期値）
 #define SCR_MEDALRANK_COPPER          (1)   // メダルランクカッパー
