@@ -83,6 +83,7 @@
 #endif //USE_DEBUGWIN_SYSTEM
 
 #include "field_place_name.h"
+#include "field_fmission_info.h"
 #include "field_palace_sys.h"
 
 #include "field_sound.h"
@@ -316,6 +317,7 @@ struct _FIELDMAP_WORK
   FLDMSGWIN *goldMsgWin;  // 所持金表示用ウィンドウ
 
 	FIELD_PLACE_NAME* placeNameSys;	// 地名表示ウィンドウ
+	FIELD_FMISSION_INFO* fmissionInfoSys;	// フェスミッション情報表示ウィンドウ
   FLD_EXP_OBJ_CNT_PTR ExpObjCntPtr;
 	
 	MMDLSYS *fldMMdlSys;
@@ -680,7 +682,9 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     SET_CHECK("setup: place name");  //デバッグ：処理負荷計測
     // 地名表示システム作成
     fieldWork->placeNameSys = FIELD_PLACE_NAME_Create( gsys, HEAPID_PLACE_NAME, fieldWork->fldMsgBG );
-
+    // フェスミッション情報表示システム作成
+  	fieldWork->fmissionInfoSys = FIELD_FMISSION_INFO_Create( gsys, /*HEAPID_FIELD_FMISSION_INFO*/fieldWork->heapID );
+ 
     SET_CHECK("setup: camera & scene");  //デバッグ：処理負荷計測
     // フラッシュチェック
     {
@@ -1135,6 +1139,8 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
   SET_CHECK("update_top:placename & skill eff");
   // 地名表示システム動作処理
   if(fieldWork->placeNameSys){ FIELD_PLACE_NAME_Process( fieldWork->placeNameSys ); }
+  // フェスミッション情報表示システム動作処理
+  if(fieldWork->fmissionInfoSys){ FIELD_FMISSION_INFO_Process( fieldWork->fmissionInfoSys ); }
   // フラッシュ処理
   FIELDSKILL_MAPEFF_Main( fieldWork->fieldskill_mapeff );
   SET_CHECK("update_top:player update");
@@ -1287,6 +1293,7 @@ static MAINSEQ_RESULT mainSeqFunc_update_tail(GAMESYS_WORK *gsys, FIELDMAP_WORK 
 
   SET_CHECK("update_tail:place name");
   if(fieldWork->placeNameSys){ FIELD_PLACE_NAME_Draw( fieldWork->placeNameSys ); }
+  if(fieldWork->fmissionInfoSys){ FIELD_FMISSION_INFO_Draw( fieldWork->fmissionInfoSys ); }
   
 	MI_SetMainMemoryPriority(MI_PROCESSOR_ARM9);
 	fldmap_G3D_Draw_tail( fieldWork );
@@ -1381,6 +1388,8 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
     GameCommSys_Callback_FieldDelete( game_comm, fieldWork );
   }
   
+  //フェスミッション情報表示システム破棄
+  if(fieldWork->fmissionInfoSys){ FIELD_FMISSION_INFO_Delete( fieldWork->fmissionInfoSys ); }
   // 地名表示システム破棄
   if(fieldWork->placeNameSys){ FIELD_PLACE_NAME_Delete( fieldWork->placeNameSys ); }
 
@@ -2102,6 +2111,15 @@ FLDMAP_BASESYS_TYPE FIELDMAP_GetBaseSystemType( const FIELDMAP_WORK *fieldWork )
 FIELD_PLACE_NAME * FIELDMAP_GetPlaceNameSys( FIELDMAP_WORK * fieldWork )
 {
   return fieldWork->placeNameSys;
+}
+
+//--------------------------------------------------------------
+/**
+ */
+//--------------------------------------------------------------
+FIELD_FMISSION_INFO * FIELDMAP_GetFMissionInfoSys( FIELDMAP_WORK * fieldWork )
+{
+  return fieldWork->fmissionInfoSys;
 }
 
 //--------------------------------------------------------------

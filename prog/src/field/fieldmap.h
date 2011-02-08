@@ -32,6 +32,7 @@
 #include "field_effect.h"
 #include "field_encount.h"
 #include "field_place_name.h"
+#include "field_fmission_info.h"
 #include "fieldmap_func_def.h"
 #include "fld_exp_obj.h"
 #include "field_g3dobj.h"
@@ -128,6 +129,7 @@ extern FLD_G3DOBJ_CTRL * FIELDMAP_GetFldG3dOBJCtrl( FIELDMAP_WORK *fieldWork );
 extern UNION_EFF_SYSTEM * FIELDMAP_GetUnionEffSystem( FIELDMAP_WORK *fieldWork );
 extern FLDMAP_BASESYS_TYPE FIELDMAP_GetBaseSystemType( const FIELDMAP_WORK *fieldWork );
 extern FIELD_PLACE_NAME * FIELDMAP_GetPlaceNameSys( FIELDMAP_WORK * fieldWork );
+extern FIELD_FMISSION_INFO * FIELDMAP_GetFMissionInfoSys( FIELDMAP_WORK * fieldWork );
 extern FLDMAPFUNC_SYS * FIELDMAP_GetFldmapFuncSys( FIELDMAP_WORK * fieldWork );
 extern FLD_EXP_OBJ_CNT_PTR FIELDMAP_GetExpObjCntPtr( FIELDMAP_WORK *fieldWork );
 extern GFL_TCBSYS* FIELDMAP_GetFieldmapTCBSys( FIELDMAP_WORK * fieldWork );

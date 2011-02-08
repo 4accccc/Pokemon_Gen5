@@ -22,6 +22,7 @@ typedef enum{
   FLDOAM_PALNO_Y_MENU,        ///<Yボタンショートカットメニュー
   FLDOAM_PALNO_PLACENAME_PLACE_ICON,  //地名表示  場所アイコン
   FLDOAM_PALNO_PLACENAME_SEAZON_ICON, //地名表示  季節アイコン
+  FLDOAM_PALNO_FMISSION_INFO, ///<フェスミッション情報表示
   
 //--------------------------------------------------------------
 //  フリーエリア
