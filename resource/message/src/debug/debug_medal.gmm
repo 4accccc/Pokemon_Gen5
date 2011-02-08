@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2011-02-08T02:10:43"/>
+	<create user="tamada" host="W00139" date="2011-02-08T18:02:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -458,9 +458,24 @@
 		<language name="JPN_KANJI" width="240">表彰　直前</language>
 	</row>
 
-	<row id="DEBUG_STR_MEDALBOX_MENU_PRIZE_01">
-		<language name="JPN" width="240">ひょうしょう　できる</language>
-		<language name="JPN_KANJI" width="240">表彰　できる</language>
+	<row id="DEBUG_STR_MEDALBOX_MENU_RANK_02">
+		<language name="JPN" width="240">ランク２</language>
+		<language name="JPN_KANJI" width="240">ランク２</language>
+	</row>
+
+	<row id="DEBUG_STR_MEDALBOX_MENU_RANK_03">
+		<language name="JPN" width="240">ランク３</language>
+		<language name="JPN_KANJI" width="240">ランク３</language>
+	</row>
+
+	<row id="DEBUG_STR_MEDALBOX_MENU_RANK_04">
+		<language name="JPN" width="240">ランク４</language>
+		<language name="JPN_KANJI" width="240">ランク４</language>
+	</row>
+
+	<row id="DEBUG_STR_MEDALBOX_MENU_RANK_05">
+		<language name="JPN" width="240">ランク５</language>
+		<language name="JPN_KANJI" width="240">ランク５</language>
 	</row>
 
 	<row id="DEBUG_STR_MEDALBOX_MENU_COMP_00">

@@ -98,7 +98,10 @@ static const DEBUG_MENU_LIST MedalBoxMenuList[] =
   { DEBUG_STR_MEDALBOX_MENU_ALL_HINT_ACHIVE , (void*)DEBUG_STR_MEDALBOX_MENU_ALL_HINT_ACHIVE , GFL_OVERLAY_BLANK_ID },  // ヒント全達成
   { DEBUG_STR_MEDALBOX_MENU_RANDOMSET , (void*)DEBUG_STR_MEDALBOX_MENU_RANDOMSET , GFL_OVERLAY_BLANK_ID },  // ランダムセット
   { DEBUG_STR_MEDALBOX_MENU_PRIZE_00, (void*)DEBUG_STR_MEDALBOX_MENU_PRIZE_00, GFL_OVERLAY_BLANK_ID },  //表彰直前
-  { DEBUG_STR_MEDALBOX_MENU_PRIZE_01, (void*)DEBUG_STR_MEDALBOX_MENU_PRIZE_01, GFL_OVERLAY_BLANK_ID },  //表彰できる
+  { DEBUG_STR_MEDALBOX_MENU_RANK_02, (void*)DEBUG_STR_MEDALBOX_MENU_RANK_02, GFL_OVERLAY_BLANK_ID },  //ランク２へ
+  { DEBUG_STR_MEDALBOX_MENU_RANK_03, (void*)DEBUG_STR_MEDALBOX_MENU_RANK_03, GFL_OVERLAY_BLANK_ID },  //ランク３へ
+  { DEBUG_STR_MEDALBOX_MENU_RANK_04, (void*)DEBUG_STR_MEDALBOX_MENU_RANK_04, GFL_OVERLAY_BLANK_ID },  //ランク４へ
+  { DEBUG_STR_MEDALBOX_MENU_RANK_05, (void*)DEBUG_STR_MEDALBOX_MENU_RANK_05, GFL_OVERLAY_BLANK_ID },  //ランク４へ
   { DEBUG_STR_MEDALBOX_MENU_COMP_00, (void*)DEBUG_STR_MEDALBOX_MENU_COMP_00, GFL_OVERLAY_BLANK_ID },  //コンプリート直前
   { DEBUG_STR_MEDALBOX_MENU_COMP_01, (void*)DEBUG_STR_MEDALBOX_MENU_COMP_01, GFL_OVERLAY_BLANK_ID },  //コンプリートできる
   { DEBUG_STR_MEDALBOX_MENU_OUTSAVE , (void*)DEBUG_STR_MEDALBOX_MENU_OUTSAVE , GFL_OVERLAY_BLANK_ID },  // メダルボックスセーブデータを全出力
@@ -835,9 +838,27 @@ static GMEVENT_RESULT debugMenuMedalBoxEvent( GMEVENT *event, int *seq, void *wk
         FLDMENUFUNC_DeleteMenu( work->menuFunc );
       }
       return GMEVENT_RES_FINISH;
-    case DEBUG_STR_MEDALBOX_MENU_PRIZE_01:
+    case DEBUG_STR_MEDALBOX_MENU_RANK_02:
       {
-        debugMenuMedalDataSet( work, 50, 1, 0, 1 );
+        debugMenuMedalDataSet( work, MEDALBOX_RANK_IRON_MAX, 1, 0, 0 );
+        FLDMENUFUNC_DeleteMenu( work->menuFunc );
+      }
+      return GMEVENT_RES_FINISH;
+    case DEBUG_STR_MEDALBOX_MENU_RANK_03:
+      {
+        debugMenuMedalDataSet( work, MEDALBOX_RANK_COPPER_MAX, 1, 0, 0 );
+        FLDMENUFUNC_DeleteMenu( work->menuFunc );
+      }
+      return GMEVENT_RES_FINISH;
+    case DEBUG_STR_MEDALBOX_MENU_RANK_04:
+      {
+        debugMenuMedalDataSet( work, MEDALBOX_RANK_SILVER_MAX, 1, 0, 0 );
+        FLDMENUFUNC_DeleteMenu( work->menuFunc );
+      }
+      return GMEVENT_RES_FINISH;
+    case DEBUG_STR_MEDALBOX_MENU_RANK_05:
+      {
+        debugMenuMedalDataSet( work, MEDALBOX_RANK_GOLD_MAX, 1, 0, 0 );
         FLDMENUFUNC_DeleteMenu( work->menuFunc );
       }
       return GMEVENT_RES_FINISH;
