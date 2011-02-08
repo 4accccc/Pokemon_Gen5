@@ -605,6 +605,11 @@
 #define SCR_MEDALUPDATE_HINT        (1002)  //ヒントメダルの更新（達成→取得）
 #define SCR_MEDALUPDATE_RANK        (1003)  //ランクの更新
 
+#define SCR_MEDALRANK_IRON            (0)   // メダルランクアイアン（初期値）
+#define SCR_MEDALRANK_COPPER          (1)   // メダルランクカッパー
+#define SCR_MEDALRANK_SILVER          (2)   // メダルランクシルバー
+#define SCR_MEDALRANK_GOLD            (3)   // メダルランクゴールド
+#define SCR_MEDALRANK_BW              (4)   // メダルランクホワイト or ブラック（最高ランク）
 
 
 

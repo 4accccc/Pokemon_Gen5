@@ -36,6 +36,13 @@
 
 #include "field/medal_check.h"
 
+//スクリプト参照の値とプログラム中のenum定義の値に差がでた場合Assertとなる
+SDK_COMPILER_ASSERT( SCR_MEDALRANK_IRON == MEDALBOX_RANK_IRON );
+SDK_COMPILER_ASSERT( SCR_MEDALRANK_COPPER == MEDALBOX_RANK_COPPER );
+SDK_COMPILER_ASSERT( SCR_MEDALRANK_SILVER == MEDALBOX_RANK_SILVER );
+SDK_COMPILER_ASSERT( SCR_MEDALRANK_GOLD == MEDALBOX_RANK_GOLD );
+SDK_COMPILER_ASSERT( SCR_MEDALRANK_BW == MEDALBOX_RANK_BW );
+
 //======================================================================
 //======================================================================
 
@@ -383,5 +390,4 @@ static int searchEventDataMedalOyajiObj( GAMEDATA * gamedata )
   }
   return -1;
 }
-
 

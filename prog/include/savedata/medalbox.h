@@ -14,6 +14,7 @@
 #include "savedata/save_control.h"	//SAVE_CONTROL_WORK参照のため
 #include "../../../resource/medal/data/mdlid_def.h" // for MDLID_MAX
 
+#include "savedata/medalbox_rank_def.h" // rankに関する定義ファイル
 //=============================================================================
 /**
  *					定数定義
@@ -31,29 +32,6 @@ enum{
   MEDAL_STATE_TITLE_ACHIVE, // タイトル達成
   MEDAL_STATE_TITLE_GET,    // タイトル取得
   MEDAL_STATE_MAX,
-};
-
-// ===========================
-// ボックスランク
-// ===========================
-enum{
-  MEDALBOX_RANK_IRON,
-  MEDALBOX_RANK_COPPER,
-  MEDALBOX_RANK_SILVER,
-  MEDALBOX_RANK_GOLD,
-  MEDALBOX_RANK_BW,
-  MEDALBOX_RANK_MAX,
-};
-
-// ===========================
-// ボックスランク毎のメダル最大数
-// ===========================
-enum{
-  MEDALBOX_RANK_IRON_MAX    = 49,
-  MEDALBOX_RANK_COPPER_MAX  = 99,
-  MEDALBOX_RANK_SILVER_MAX  = 149,
-  MEDALBOX_RANK_GOLD_MAX    = 199,
-  MEDALBOX_RANK_BW_MAX      = 200,
 };
 
 //=============================================================================

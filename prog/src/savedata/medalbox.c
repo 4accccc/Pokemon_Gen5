@@ -189,7 +189,6 @@ void MEDALBOX_SetTitleMedalGetFlg( MEDALBOX *p_mdlbox, MedalID medal_id, u8 year
   GF_ASSERT( month <= 12 );
   GF_ASSERT( day <= 31 );
 
-  GF_ASSERT( p_medal_st->medal_state == MEDAL_STATE_TITLE_ACHIVE );
   SetMedalState( p_medal_st , MEDAL_STATE_TITLE_GET );
 
   // 新品フラグを立てる

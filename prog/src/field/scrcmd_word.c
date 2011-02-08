@@ -574,7 +574,7 @@ VMCMD_RESULT EvCmdMedalRankName( VMHANDLE * core, void *wk )
  	u8 idx = VMGetU8( core );
 	u16 rank_id = SCRCMD_GetVMWorkValue( core, work );
 
-  WORDSET_RegisterMedalRankName( wordset, idx, rank_id );
+  WORDSET_RegisterMedalRankName( wordset, idx, rank_id, GET_VERSION() );
   return VMCMD_RESULT_CONTINUE;
 }
 
