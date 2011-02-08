@@ -3042,3 +3042,7 @@ $(DIR_WBTMP)/m_labo04_00_00.tbl: $(DIR_RES)/m_labo04_00_00.bin
 	@echo create_bintbl m_labo04_00_00
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_labo04_00_00.bin
 
+$(DIR_WBTMP)/m_Wbt02_01_00.tbl: $(DIR_RES)/m_Wbt02_01_00.bin
+	@echo create_bintbl m_Wbt02_01_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_Wbt02_01_00.bin
+
