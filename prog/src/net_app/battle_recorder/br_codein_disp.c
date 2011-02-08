@@ -274,7 +274,7 @@ void CI_pv_disp_BtnOAM_Create( BR_CODEIN_WORK* wk )
 		pos.y =  wk->sys.rht[ eHRT_END ].rect.top + 16;	
 		
 		GFL_CLACT_WK_SetPos( wk->btn[ 1 ].clwk, &pos , CLSYS_DEFREND_SUB );
-		GFL_CLACT_WK_SetAnmSeq( wk->btn[ 1 ].clwk, 0 );
+		GFL_CLACT_WK_SetAnmSeq( wk->btn[ 1 ].clwk, 1 );
 	}
 }
 

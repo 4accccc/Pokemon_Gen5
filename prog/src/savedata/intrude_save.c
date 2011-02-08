@@ -209,12 +209,12 @@ void ISC_SAVE_SetItem(INTRUDE_SAVE_WORK *intsave, const INTRUDE_SECRET_ITEM_SAVE
   {
     STRCODE EOMCODE = GFL_STR_GetEOMCode();
     int pos;
-    for(pos = 0; pos < PERSON_NAME_SIZE; pos++){
+    for(pos = 0; pos < (PERSON_NAME_SIZE + EOM_SIZE); pos++){
       if(src->name[pos] == EOMCODE){
         break;
       }
     }
-    if(pos == PERSON_NAME_SIZE){
+    if(pos == (PERSON_NAME_SIZE + EOM_SIZE)){
       return;
     }
     if(src->tbl_no >= SECRET_ITEM_DATA_TBL_MAX){

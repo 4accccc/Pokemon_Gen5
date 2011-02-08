@@ -346,7 +346,7 @@ static const u8 nation_table[][2]={
 #define INPUT_PAGE_X		(  5 )	// レベルとポケモン名のページ表示座標
 #define INPUT_PAGE_Y		( 14 )
 
-#define INPUT_NATION_PAGE_X			( 14 )	// 国名ページ位置X
+#define INPUT_NATION_PAGE_X			( 13 )	// 国名ページ位置X
 #define INPUT_NATION_PAGE_Y			( 16 )	// 国名ページ位置Y
 
 #define HEAD1_MOVE_INIT_X 		( 32 )

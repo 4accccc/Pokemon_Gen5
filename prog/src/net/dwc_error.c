@@ -175,7 +175,8 @@ GFL_NET_DWC_ERROR_RESULT GFL_NET_DWC_ERROR_ReqErrorDisp( BOOL is_heavy, BOOL is_
     }
     //システムエラー（ヘビー）系
     else  if( cp_error->errorUser == ERRORCODE_HEAP
-        || cp_error->errorUser == ERRORCODE_USER_WIFILOGOUT )
+        || cp_error->errorUser == ERRORCODE_USER_WIFILOGOUT
+        || cp_error->errorUser == ERRORCODE_USER_TIMEOUT )
     {
       NetErr_App_ReqErrorDisp();
       NetErr_App_ReqErrorDispForce( dwc_error_0014 );

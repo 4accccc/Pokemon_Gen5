@@ -1453,6 +1453,8 @@ static int SubSeq_ServerResult( WORLDTRADE_WORK *wk )
       PMSND_StopSE();
 
 			// サーバーと通信できません→終了
+      wk->SearchResult  = 0;
+      GFL_STD_MemClear( &wk->Search, sizeof(Dpw_Tr_PokemonSearchData) );
 			wk->subprocess_seq = SUBSEQ_SEARCH_ERROR_DICONNECT_MES1;
 
       NetErr_ExitNetSystem();
@@ -1593,6 +1595,7 @@ static int SubSeq_ServerQueryFailure( WORLDTRADE_WORK *wk )
   // 「GTSで検索失敗したあと選ぶ選択すると確定でブラックアウトする」バグ修正
   //失敗なので、押せる状態になっていたボタンは消す
   wk->SearchResult  = 0;
+
   FriendViewButtonPrint(  wk->InfoWin[8], wk->MsgManager, FALSE, &wk->print );
 #endif  //BUGFIX_AF_GFBTS2027_2010107
 
