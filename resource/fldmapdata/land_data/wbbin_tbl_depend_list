@@ -1338,6 +1338,10 @@ $(DIR_WBTMP)/h06_a01_06.tbl: $(DIR_RES)/h06_a01_06.bin
 	@echo create_bintbl h06_a01_06
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/h06_a01_06.bin
 
+$(DIR_WBTMP)/resort01_00_00.tbl: $(DIR_RES)/resort01_00_00.bin
+	@echo create_bintbl resort01_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/resort01_00_00.bin
+
 $(DIR_WBTMP)/m_dun0101_00_00.tbl: $(DIR_RES)/m_dun0101_00_00.bin
 	@echo create_bintbl m_dun0101_00_00
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun0101_00_00.bin
@@ -3021,4 +3025,20 @@ $(DIR_WBTMP)/m_mugen10_00_00.tbl: $(DIR_RES)/m_mugen10_00_00.bin
 $(DIR_WBTMP)/m_gym0302_00_00.tbl: $(DIR_RES)/m_gym0302_00_00.bin
 	@echo create_bintbl m_gym0302_00_00
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_gym0302_00_00.bin
+
+$(DIR_WBTMP)/m_gym0102_00_00.tbl: $(DIR_RES)/m_gym0102_00_00.bin
+	@echo create_bintbl m_gym0102_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_gym0102_00_00.bin
+
+$(DIR_WBTMP)/m_rresort01_00_00.tbl: $(DIR_RES)/m_rresort01_00_00.bin
+	@echo create_bintbl m_rresort01_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_rresort01_00_00.bin
+
+$(DIR_WBTMP)/m_medal01_00_00.tbl: $(DIR_RES)/m_medal01_00_00.bin
+	@echo create_bintbl m_medal01_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_medal01_00_00.bin
+
+$(DIR_WBTMP)/m_labo04_00_00.tbl: $(DIR_RES)/m_labo04_00_00.bin
+	@echo create_bintbl m_labo04_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_labo04_00_00.bin
 

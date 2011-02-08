@@ -323,6 +323,7 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/h06_a01_04.3dppack \
 	$(DIR_OUTPUT)/h06_a01_05.3dppack \
 	$(DIR_OUTPUT)/h06_a01_06.3dppack \
+	$(DIR_OUTPUT)/resort01_00_00.3dppack \
 	$(DIR_OUTPUT)/m_dun0101_00_00.3dppack \
 	$(DIR_OUTPUT)/m_dun0101_01_00.3dppack \
 	$(DIR_OUTPUT)/m_dun0101_00_01.3dppack \
@@ -723,6 +724,10 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/m_mugen09_00_00.3dppack \
 	$(DIR_OUTPUT)/m_mugen10_00_00.3dppack \
 	$(DIR_OUTPUT)/m_gym0302_00_00.3dppack \
+	$(DIR_OUTPUT)/m_gym0102_00_00.3dppack \
+	$(DIR_OUTPUT)/m_rresort01_00_00.3dppack \
+	$(DIR_OUTPUT)/m_medal01_00_00.3dppack \
+	$(DIR_OUTPUT)/m_labo04_00_00.3dppack \
 	$(DIR_OUTPUT)/C3_00_00.ngpack \
 	$(DIR_OUTPUT)/C3_00_01.ngpack \
 	$(DIR_OUTPUT)/C3_01_00.ngpack \
