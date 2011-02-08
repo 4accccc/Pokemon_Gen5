@@ -230,13 +230,17 @@ _ANIME_LABEL  anm_player_vanish_off
 /***************************************************************/
 EVENT_START ev_pos_c03gym0101_gate_3b
 {
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gate_3b_turn_u )
+  //éÂêlåˆ
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gate_3b_goright )
   _OBJ_ANIME_WAIT()
   
   _SE_PLAY( SEQ_SE_GYM_M04 ) //ñöÇ™óhÇÍÇÈâπ
   _GYM_INSECT_COCCON_OPEN( COCCON_ID_3B )
+  //éÂêlåˆêUÇËå¸Ç´
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gate_3b_gyoe )
+  _OBJ_ANIME_WAIT()
   _SE_WAIT()
-  _SE_PLAY( SEQ_SE_GYM_M04 ) //ñöÇ™îjÇÍÇÈâπ
+  _SE_PLAY( SEQ_SE_GYM_M04 ) //ñöÇ™óhÇÍÇÈâπ
   _SE_WAIT()
   _SE_PLAY( SEQ_SE_GYM_M05 ) //ñöÇ™îjÇÍÇÈâπ
   _TIME_WAIT(COCCON_OPEN_ANM_WAIT)
@@ -277,9 +281,13 @@ EVENT_START ev_pos_c03gym0101_gate_3b
 }
 EVENT_END
 
-_ANIME_LABEL  anm_player_gate_3b_turn_u
+_ANIME_LABEL  anm_player_gate_3b_goright
+  _ANIME_DATA AC_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+ 
+_ANIME_LABEL  anm_player_gate_3b_gyoe
   _ANIME_DATA AC_MARK_GYOE,1
-  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
   _ANIME_DATA ACMD_END,0
 
 _ANIME_LABEL  anm_player_gate_3b_move_r
@@ -288,11 +296,11 @@ _ANIME_LABEL  anm_player_gate_3b_move_r
   _ANIME_DATA ACMD_END,0
 
 _ANIME_LABEL  anm_trainer_gate_3b_walk_d
-  _ANIME_DATA AC_WALK_D_8F,1
+  _ANIME_DATA AC_WALK_D_8F,2
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
   _ANIME_DATA ACMD_END,0
 
 _ANIME_LABEL  anm_trainer_gate_3b_move
-  _ANIME_DATA AC_WALK_D_8F,1
   _ANIME_DATA AC_WALK_L_8F,2
   _ANIME_DATA AC_WALK_U_8F,1
   _ANIME_DATA AC_STAY_WALK_D_8F,1
