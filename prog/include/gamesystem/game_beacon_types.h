@@ -92,6 +92,7 @@ typedef struct{
     }thanks;
     STRCODE freeword_message[GAMEBEACON_FREEWORD_MESSAGE_LEN]; ///一言メッセージ
     FEST_MISSION  fmission;
+    u8 extend_buff[20];   ///<２０バイトのフリーエリア
   };
 }GAMEBEACON_INFO_ACTION;
 

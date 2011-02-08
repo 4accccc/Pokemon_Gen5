@@ -56,6 +56,8 @@
 #include "savedata/person_state.h"
 #include "app/local_tvt/local_tvt_call.h"
 #include "debug/debug_flg.h"
+#include "gamesystem/game_beacon.h"
+#include "gamesystem/game_beacon_local.h"
 
 //======================================================================
 //======================================================================
@@ -223,6 +225,18 @@ static void DebugSetLivecasterSecretDateDay(GAMESYS_WORK * gsys, GAMEDATA * gdat
 static u32 DebugGetLivecasterSecretNotRnd( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param );
 static void DebugSetLivecasterSecretNotRnd(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value );
 
+//レゾナンスリゾート
+static u32 DebugGetRResortBeaconFlag( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param );
+static void DebugSetRResortBeaconFlag(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value );
+static u32 DebugGetRResortBeaconOnly( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param );
+static void DebugSetRResortBeaconOnly(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value );
+static u32 DebugGetRResortBeaconFrameResort( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param );
+static void DebugSetRResortBeaconFrameResort(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value );
+static u32 DebugGetRResortBeaconFrameLive( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param );
+static void DebugSetRResortBeaconFrameLive(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value );
+
+
+
 #include "debug_numinput.cdat"
 
 static const DEBUG_NUMINPUT_PARAM DNUM_DATA_EventFlag;
@@ -309,6 +323,10 @@ static const DEBUG_NUMINPUT_INITIALIZER DATA_LocalLivecaster  =
 {
   D_NINPUT_DATA_LIST, NELEMS( DNI_Livecaster ), DNI_Livecaster
 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_ResonanceResort  =
+{
+  D_NINPUT_DATA_LIST, NELEMS( DNI_ResonanceResort ), DNI_ResonanceResort
+};
 
 /// 数値入力　メニューヘッダー
 static const FLDMENUFUNC_HEADER DATA_DNumInput_MenuFuncHeader =
@@ -360,6 +378,7 @@ static const DEBUG_MENU_LIST DATA_DNumInputMenu[] =
   { dni_view_offset_00, (void*)&DATA_ViewOffsets, GFL_OVERLAY_BLANK_ID },
   { dni_palace_time_00, (void*)&DATA_PalaceTime, GFL_OVERLAY_BLANK_ID },
   { dni_ltvt_00, (void*)&DATA_LocalLivecaster, GFL_OVERLAY_BLANK_ID },
+  { dni_resort_00, (void*)&DATA_ResonanceResort, GFL_OVERLAY_BLANK_ID },
 };
 
 static const DEBUG_MENU_INITIALIZER DATA_DNumInput_MenuInitializer = {
@@ -1753,7 +1772,44 @@ static void DebugSetLivecasterSecretNotRnd(GAMESYS_WORK * gsys, GAMEDATA * gdata
     DEBUG_FLG_FlgOn( DEBUG_FLG_LTvtSecretNotRnd );
   }
 }
-
+//=============================================================================
+/**
+ *    レゾナンスリゾート
+ */
+//=============================================================================
+extern GAMEBEACON_SYSTEM * GameBeaconSys;
+static u32 DebugGetRResortBeaconFlag( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param )
+{
+  return GameBeaconSys->resort_enable;
+}
+static void DebugSetRResortBeaconFlag(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value )
+{
+  GameBeaconSys->resort_enable  = value;
+}
+static u32 DebugGetRResortBeaconOnly( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param )
+{
+  return GameBeaconSys->resort_force;
+}
+static void DebugSetRResortBeaconOnly(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value )
+{
+  GameBeaconSys->resort_force = value;
+}
+static u32 DebugGetRResortBeaconFrameResort( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param )
+{
+  return GameBeaconSys->debug_resort_frame;
+}
+static void DebugSetRResortBeaconFrameResort(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value )
+{
+  GameBeaconSys->debug_resort_frame = value;
+}
+static u32 DebugGetRResortBeaconFrameLive( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param )
+{
+  return GameBeaconSys->debug_live_frame;
+}
+static void DebugSetRResortBeaconFrameLive(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value )
+{
+  GameBeaconSys->debug_live_frame = value;
+}
 
 #endif  //PM_DEBUG
 

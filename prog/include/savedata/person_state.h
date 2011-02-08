@@ -44,7 +44,7 @@ typedef enum
 //=====================================
 typedef struct _PERSON_STATE PERSON_STATE;
 
-//現在はMISCへ統合するため公開しています。
+//現在はETCへ統合するため公開しています。
 //セーブが開いたら隠す予定
 #define PERSON_STATE_MAX  (8)
 struct _PERSON_STATE
@@ -59,6 +59,8 @@ struct _PERSON_STATE
 };
 
 #define PERSON_STATE_WORK_SIZE  (24)
+
+SDK_COMPILER_ASSERT( PERSON_STATE_WORK_SIZE == sizeof(PERSON_STATE) );
 
 //=============================================================================
 /**

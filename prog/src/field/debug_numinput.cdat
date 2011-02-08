@@ -388,4 +388,30 @@ static const DEBUG_NUMINPUT_LIST DNI_Livecaster[] = {
   { dni_ltvt_20, 0, &DNI_LivecasterSecretNotRnd }, //隠し乱数なし
 };
 
+//////////////////////////////////////////////////////
+///レゾナンスリゾート
+static const DEBUG_NUMINPUT_PARAM DNI_RResortBeaconFlag  =
+{
+  0,  1, DebugGetRResortBeaconFlag, DebugSetRResortBeaconFlag,
+};
+static const DEBUG_NUMINPUT_PARAM DNI_RResortBeaconOnly  =
+{
+  0,  1, DebugGetRResortBeaconOnly, DebugSetRResortBeaconOnly,
+};
+static const DEBUG_NUMINPUT_PARAM DNI_RResortBeaconFrameResort  =
+{
+  0,  0xFFFF, DebugGetRResortBeaconFrameResort, DebugSetRResortBeaconFrameResort,
+};
+static const DEBUG_NUMINPUT_PARAM DNI_RResortBeaconFrameLive  =
+{
+  0,  0xFFFF, DebugGetRResortBeaconFrameLive, DebugSetRResortBeaconFrameLive,
+};
+
+static const DEBUG_NUMINPUT_LIST DNI_ResonanceResort[] = { 
+  //gmm_id, param, dni_param
+  { dni_resort_01, 0, &DNI_RResortBeaconFlag }, //ビーコン配信On,OFF
+  { dni_resort_02, 0, &DNI_RResortBeaconOnly }, //リゾートビーコンのみ
+  { dni_resort_03, 0, &DNI_RResortBeaconFrameResort }, //ビーコン間隔リゾート
+  { dni_resort_04, 0, &DNI_RResortBeaconFrameLive }, //ビーコン間隔ライブ
+};
 #endif  //PM_DEBUG

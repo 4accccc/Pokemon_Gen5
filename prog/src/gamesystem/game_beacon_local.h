@@ -44,10 +44,14 @@ typedef struct{
   s8 log_num;                         ///<ログ件数
   u8 new_entry;                       ///<TRUE:新しい人物とすれ違った
   u16 backup_hour;                    ///<プレイ時間バックアップ
-  u16 padding;
+  u8 resort_enable;                   ///<リゾート用のデータ配信許可フラグ
+  u8 resort_force;                    ///<リゾート用切り替え制御フラグ
+  u32 flip_count;                     ///<リゾート用切り替えカウンタ
   
 #ifdef PM_DEBUG
   BOOL  deb_beacon_priority_egnore;  //TRUEならビーコンリクエスト時にプライオリティ判定を無視する
+  u16   debug_resort_frame;
+  u16   debug_live_frame;
 #endif
 }GAMEBEACON_SYSTEM;
 

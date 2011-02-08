@@ -1,0 +1,942 @@
+//[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
+/**
+ *
+ *	@file		resonance_resort_data.c
+ *	@brief  レゾナンスリゾートのデータ
+ *	@author		Toru=Nagihashi
+ *	@data		2011.02.07
+ *
+ */
+//]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+//ライブラリ
+#include <gflib.h>
+#include "gamesystem/game_data.h"
+//外部公開
+#include "field/resonance_resort_data.h"
+
+
+#ifdef PM_DEBUG
+#define DEBUG_RESORT_PRINT_ON
+#endif
+
+#if defined(DEBUG_RESORT_PRINT_ON) && defined(DEBUG_ONLY_FOR_toru_nagihashi)
+#define RESORT_Printf(...)  OS_TFPrintf(0,__VA_ARGS__)
+#else
+#define RESORT_Printf(...)  /* */
+#endif
+
+//=============================================================================
+/**
+ *	リゾート用基本、拡張データ
+*/
+//=============================================================================
+//-------------------------------------
+/// 基本データ１
+//=====================================
+typedef struct
+{
+  STRCODE name[PERSON_NAME_SIZE];   ///<トレーナー名(!! EOM除く !!)
+  u16 trainerID;                   ///<トレーナーID(下位16ビット)
+}RESORT_BASIC1_DATA;
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  基本データ１に自分のデータを設定
+ *
+ *	@param	RESORT_BASIC1_DATA *p_wk  ワーク
+ *	@param	GAMEDATA *cp_gamedata     ゲームデータ
+ */
+//-----------------------------------------------------------------------------
+static void RESORT_BASIC1_DATA_SetMyData( RESORT_BASIC1_DATA *p_wk, const GAMEDATA *cp_gamedata )
+{
+  GFL_STD_MemClear( p_wk, sizeof(RESORT_BASIC1_DATA) );
+  {
+    MYSTATUS *p_mystatus  = GAMEDATA_GetMyStatus((GAMEDATA*)cp_gamedata);
+    //EOMが入らないサイズを取得するので、自分でコピーする
+    GFL_STD_MemCopy( MyStatus_GetMyName(p_mystatus), p_wk->name, sizeof(STRCODE)*PERSON_NAME_SIZE );
+    p_wk->trainerID = MyStatus_GetID_Low( p_mystatus );
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  基本データ１にビーコンからのデータを設定
+ *
+ *	@param	RESORT_BASIC1_DATA *p_wk  ワーク
+ *	@param	GAMEBEACON_INFO   ビーコン
+ */
+//-----------------------------------------------------------------------------
+static void RESORT_BASIC1_DATA_SetBeaconInfo( RESORT_BASIC1_DATA *p_wk, const GAMEBEACON_INFO *cp_beacon_info )
+{
+  GFL_STD_MemClear( p_wk, sizeof(RESORT_BASIC1_DATA) );
+  
+  GFL_STD_MemCopy( cp_beacon_info->name, p_wk->name, sizeof(STRCODE)*PERSON_NAME_SIZE );
+  p_wk->trainerID = cp_beacon_info->trainer_id;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  基本データ１の正当性チェック
+ *
+ *	@param	const RESORT_BASIC1_DATA *cp_wk ワーク
+ *
+ *	@return TRUE正当  FALSE不正
+ */
+//-----------------------------------------------------------------------------
+static BOOL RESORT_BASIC1_DATA_IsValid( const RESORT_BASIC1_DATA *cp_wk )
+{
+  return TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  同じ所有者かチェック
+ *
+ *	@param	const RESORT_BASIC1_DATA *cp_a  比較１
+ *	@param	RESORT_BASIC1_DATA *cp_b      比較２
+ *
+ *	@return TRUEで同じ所有者  FALSEで異なる所有者
+ */
+//-----------------------------------------------------------------------------
+static BOOL RESORT_BASIC1_DATA_IsSameOwner( const RESORT_BASIC1_DATA *cp_a, const RESORT_BASIC1_DATA *cp_b )
+{
+  BOOL is_trainerID = (cp_a->trainerID == cp_b->trainerID);
+  BOOL is_name  = (GFL_STD_MemComp( cp_a->name, cp_b->name ,  sizeof(STRCODE)*PERSON_NAME_SIZE) == 0);
+  BOOL is_sex   = TRUE; //TODO
+
+  return is_trainerID && is_name;
+}
+
+#ifdef PM_DEBUG
+//----------------------------------------------------------------------------
+/**
+ *	@brief  デバッグ表示
+ *
+ *	@param	const RESORT_BASIC1_DATA *cp_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void RESORT_BASIC1_DATA_PrintDebug( const RESORT_BASIC1_DATA *cp_wk )
+{
+  STRCODE name[PERSON_NAME_SIZE+1];
+  char str_name[PERSON_NAME_SIZE+1];
+
+  GFL_STD_MemCopy( cp_wk->name, name, PERSON_NAME_SIZE*sizeof(STRCODE) );
+  name[PERSON_NAME_SIZE]  = GFL_STR_GetEOMCode();
+
+  GFL_STR_CONV_StrcodeToSjis( name,str_name,PERSON_NAME_SIZE+1 );
+  RESORT_Printf( "name=%s\n", str_name );
+  RESORT_Printf( "trainerID=%d\n", cp_wk->trainerID );
+}
+#endif
+
+//-------------------------------------
+///	基本データ２
+//=====================================
+typedef struct
+{
+  int dummy;  //TODO
+}RESORT_BASIC2_DATA;
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  基本データ2に自分のデータを設定
+ *
+ *	@param	RESORT_BASIC2_DATA *p_wk  ワーク
+ *	@param	GAMEDATA *cp_gamedata     ゲームデータ
+ */
+//-----------------------------------------------------------------------------
+static void RESORT_BASIC2_DATA_SetMyData( RESORT_BASIC2_DATA *p_wk, const GAMEDATA *cp_gamedata )
+{
+  GFL_STD_MemClear( p_wk, sizeof(RESORT_BASIC2_DATA) );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  基本データ2にビーコンからのデータを設定
+ *
+ *	@param	RESORT_BASIC2_DATA *p_wk  ワーク
+ *	@param	GAMEBEACON_INFO   ビーコン
+ */
+//-----------------------------------------------------------------------------
+static void RESORT_BASIC2_DATA_SetBeaconInfo( RESORT_BASIC2_DATA *p_wk, const GAMEBEACON_INFO *cp_beacon_info )
+{
+  GFL_STD_MemClear( p_wk, sizeof(RESORT_BASIC2_DATA) );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  基本データ2の正当性チェック
+ *
+ *	@param	const RESORT_BASIC2_DATA *cp_wk ワーク
+ *
+ *	@return TRUE正当  FALSE不正
+ */
+//-----------------------------------------------------------------------------
+static BOOL RESORT_BASIC2_DATA_IsValid( const RESORT_BASIC2_DATA *cp_wk )
+{
+  return TRUE;
+}
+
+//-------------------------------------
+///	拡張データ１
+//=====================================
+typedef struct
+{
+  u8  dummy[20];
+} RESORT_EXTEND1_DATA;
+SDK_COMPILER_ASSERT( sizeof(RESORT_EXTEND1_DATA) == RESORT_EXTEND_DATA_SIZE );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  拡張データ1に自分のデータを設定
+ *
+ *	@param	RESORT_EXTEND1_DATA *p_wk  ワーク
+ *	@param	GAMEDATA *cp_gamedata     ゲームデータ
+ */
+//-----------------------------------------------------------------------------
+static void RESORT_EXTEND1_DATA_SetMyData( RESORT_EXTEND1_DATA *p_wk, const GAMEDATA *cp_gamedata )
+{
+  GFL_STD_MemClear( p_wk, sizeof(RESORT_EXTEND1_DATA) );
+  {
+    int i;
+    for( i = 0; i < 20; i++ )
+    {
+      p_wk->dummy[i]  = i;
+    }
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  拡張データ1の正当性チェック
+ *
+ *	@param	RESORT_EXTEND1_DATA *p_wk  ワーク
+ */
+//-----------------------------------------------------------------------------
+static BOOL RESORT_EXTEND1_DATA_IsValid( const RESORT_EXTEND1_DATA *cp_wk )
+{
+  return TRUE;
+}
+
+//-------------------------------------
+///	拡張データ2
+//=====================================
+typedef struct
+{
+  u8  dummy[20];
+} RESORT_EXTEND2_DATA;
+SDK_COMPILER_ASSERT( sizeof(RESORT_EXTEND2_DATA) == RESORT_EXTEND_DATA_SIZE );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  拡張データ2に自分のデータを設定
+ *
+ *	@param	RESORT_BASIC2_DATA *p_wk  ワーク
+ *	@param	GAMEDATA *cp_gamedata     ゲームデータ
+ */
+//-----------------------------------------------------------------------------
+static void RESORT_EXTEND2_DATA_SetMyData( RESORT_EXTEND2_DATA *p_wk, const GAMEDATA *cp_gamedata )
+{
+  GFL_STD_MemClear( p_wk, sizeof(RESORT_EXTEND2_DATA) );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  拡張データ2の正当性チェック
+ *
+ *	@param	RESORT_EXTEND2_DATA *p_wk  ワーク
+ */
+//-----------------------------------------------------------------------------
+static BOOL RESORT_EXTEND2_DATA_IsValid( const RESORT_EXTEND2_DATA *cp_wk )
+{
+  return TRUE;
+}
+
+//-------------------------------------
+///	拡張データ3
+//=====================================
+typedef struct
+{
+  u8  dummy[20];
+} RESORT_EXTEND3_DATA;
+SDK_COMPILER_ASSERT( sizeof(RESORT_EXTEND3_DATA) == RESORT_EXTEND_DATA_SIZE );
+//----------------------------------------------------------------------------
+/**
+ *	@brief  拡張データ3に自分のデータを設定
+ *
+ *	@param	RESORT_BASIC3_DATA *p_wk  ワーク
+ *	@param	GAMEDATA *cp_gamedata     ゲームデータ
+ */
+//-----------------------------------------------------------------------------
+static void RESORT_EXTEND3_DATA_SetMyData( RESORT_EXTEND3_DATA *p_wk, const GAMEDATA *cp_gamedata )
+{
+  GFL_STD_MemClear( p_wk, sizeof(RESORT_EXTEND3_DATA) );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  拡張データ3の正当性チェック
+ *
+ *	@param	RESORT_EXTEND3_DATA *p_wk  ワーク
+ */
+//-----------------------------------------------------------------------------
+static BOOL RESORT_EXTEND3_DATA_IsValid( const RESORT_EXTEND3_DATA *cp_wk )
+{
+  return TRUE;
+}
+//-------------------------------------
+///	拡張データ4
+//=====================================
+typedef struct
+{
+  u8  dummy[20];
+} RESORT_EXTEND4_DATA;
+SDK_COMPILER_ASSERT( sizeof(RESORT_EXTEND4_DATA) == RESORT_EXTEND_DATA_SIZE );
+//----------------------------------------------------------------------------
+/**
+ *	@brief  拡張データ4に自分のデータを設定
+ *
+ *	@param	RESORT_BASIC4_DATA *p_wk  ワーク
+ *	@param	GAMEDATA *cp_gamedata     ゲームデータ
+ */
+//-----------------------------------------------------------------------------
+static void RESORT_EXTEND4_DATA_SetMyData( RESORT_EXTEND4_DATA *p_wk, const GAMEDATA *cp_gamedata )
+{
+  GFL_STD_MemClear( p_wk, sizeof(RESORT_EXTEND4_DATA) );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  拡張データ4の正当性チェック
+ *
+ *	@param	RESORT_EXTEND4_DATA *p_wk  ワーク
+ */
+//-----------------------------------------------------------------------------
+static BOOL RESORT_EXTEND4_DATA_IsValid( const RESORT_EXTEND4_DATA *cp_wk )
+{
+  return TRUE;
+}
+//-------------------------------------
+///	拡張データ5
+//=====================================
+typedef struct
+{
+  u8  dummy[20];
+} RESORT_EXTEND5_DATA;
+SDK_COMPILER_ASSERT( sizeof(RESORT_EXTEND5_DATA) == RESORT_EXTEND_DATA_SIZE );
+//----------------------------------------------------------------------------
+/**
+ *	@brief  拡張データ5に自分のデータを設定
+ *
+ *	@param	RESORT_BASIC5_DATA *p_wk  ワーク
+ *	@param	GAMEDATA *cp_gamedata     ゲームデータ
+ */
+//-----------------------------------------------------------------------------
+static void RESORT_EXTEND5_DATA_SetMyData( RESORT_EXTEND5_DATA *p_wk, const GAMEDATA *cp_gamedata )
+{
+  GFL_STD_MemClear( p_wk, sizeof(RESORT_EXTEND5_DATA) );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  拡張データ5の正当性チェック
+ *
+ *	@param	RESORT_EXTEND5_DATA *p_wk  ワーク
+ */
+//-----------------------------------------------------------------------------
+static BOOL RESORT_EXTEND5_DATA_IsValid( const RESORT_EXTEND5_DATA *cp_wk )
+{
+  return TRUE;
+}
+//-------------------------------------
+///	拡張データ6
+//=====================================
+typedef struct
+{
+  u8  dummy[20];
+} RESORT_EXTEND6_DATA;
+SDK_COMPILER_ASSERT( sizeof(RESORT_EXTEND6_DATA) == RESORT_EXTEND_DATA_SIZE );
+//----------------------------------------------------------------------------
+/**
+ *	@brief  拡張データ6に自分のデータを設定
+ *
+ *	@param	RESORT_BASIC6_DATA *p_wk  ワーク
+ *	@param	GAMEDATA *cp_gamedata     ゲームデータ
+ */
+//-----------------------------------------------------------------------------
+static void RESORT_EXTEND6_DATA_SetMyData( RESORT_EXTEND6_DATA *p_wk, const GAMEDATA *cp_gamedata )
+{
+  GFL_STD_MemClear( p_wk, sizeof(RESORT_EXTEND6_DATA) );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  拡張データ6の正当性チェック
+ *
+ *	@param	RESORT_EXTEND6_DATA *p_wk  ワーク
+ */
+//-----------------------------------------------------------------------------
+static BOOL RESORT_EXTEND6_DATA_IsValid( const RESORT_EXTEND6_DATA *cp_wk )
+{
+  return TRUE;
+}
+//-------------------------------------
+///	拡張データ7
+//=====================================
+typedef struct
+{
+  u8  dummy[20];
+} RESORT_EXTEND7_DATA;
+SDK_COMPILER_ASSERT( sizeof(RESORT_EXTEND7_DATA) == RESORT_EXTEND_DATA_SIZE );
+//----------------------------------------------------------------------------
+/**
+ *	@brief  拡張データ7に自分のデータを設定
+ *
+ *	@param	RESORT_BASIC7_DATA *p_wk  ワーク
+ *	@param	GAMEDATA *cp_gamedata     ゲームデータ
+ */
+//-----------------------------------------------------------------------------
+static void RESORT_EXTEND7_DATA_SetMyData( RESORT_EXTEND7_DATA *p_wk, const GAMEDATA *cp_gamedata )
+{
+  GFL_STD_MemClear( p_wk, sizeof(RESORT_EXTEND7_DATA) );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  拡張データ7の正当性チェック
+ *
+ *	@param	RESORT_EXTEND7_DATA *p_wk  ワーク
+ */
+//-----------------------------------------------------------------------------
+static BOOL RESORT_EXTEND7_DATA_IsValid( const RESORT_EXTEND7_DATA *cp_wk )
+{
+  return TRUE;
+}
+//-------------------------------------
+///	拡張データ8
+//=====================================
+typedef struct
+{
+  u8  dummy[20];
+} RESORT_EXTEND8_DATA;
+SDK_COMPILER_ASSERT( sizeof(RESORT_EXTEND8_DATA) == RESORT_EXTEND_DATA_SIZE );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  拡張データ8に自分のデータを設定
+ *
+ *	@param	RESORT_BASIC8_DATA *p_wk  ワーク
+ *	@param	GAMEDATA *cp_gamedata     ゲームデータ
+ */
+//-----------------------------------------------------------------------------
+static void RESORT_EXTEND8_DATA_SetMyData( RESORT_EXTEND8_DATA *p_wk, const GAMEDATA *cp_gamedata )
+{
+  GFL_STD_MemClear( p_wk, sizeof(RESORT_EXTEND8_DATA) );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  拡張データ8の正当性チェック
+ *
+ *	@param	RESORT_EXTEND7_DATA *p_wk  ワーク
+ */
+//-----------------------------------------------------------------------------
+static BOOL RESORT_EXTEND8_DATA_IsValid( const RESORT_EXTEND8_DATA *cp_wk )
+{
+  return TRUE;
+}
+
+//-------------------------------------
+///	拡張データ関数
+//=====================================
+typedef void (*RESORT_EXTEND_DATA_SetMyData)( void *p_wk_adrs, const GAMEDATA *cp_gamedata );
+static const RESORT_EXTEND_DATA_SetMyData sc_ResortExtendData_SetMyData[RESORT_EXTEND_TYPE_MAX] = 
+{
+  (RESORT_EXTEND_DATA_SetMyData)RESORT_EXTEND1_DATA_SetMyData,
+  (RESORT_EXTEND_DATA_SetMyData)RESORT_EXTEND2_DATA_SetMyData,
+  (RESORT_EXTEND_DATA_SetMyData)RESORT_EXTEND3_DATA_SetMyData,
+  (RESORT_EXTEND_DATA_SetMyData)RESORT_EXTEND4_DATA_SetMyData,
+  (RESORT_EXTEND_DATA_SetMyData)RESORT_EXTEND5_DATA_SetMyData,
+  (RESORT_EXTEND_DATA_SetMyData)RESORT_EXTEND6_DATA_SetMyData,
+  (RESORT_EXTEND_DATA_SetMyData)RESORT_EXTEND7_DATA_SetMyData,
+  (RESORT_EXTEND_DATA_SetMyData)RESORT_EXTEND8_DATA_SetMyData,
+};
+
+typedef BOOL (*RESORT_EXTEND_DATA_IsValid)( const void *cp_wk_adrs );
+
+static const RESORT_EXTEND_DATA_IsValid sc_ResortExtendData_IsValid[RESORT_EXTEND_TYPE_MAX] =
+{
+  (RESORT_EXTEND_DATA_IsValid)RESORT_EXTEND1_DATA_IsValid,
+  (RESORT_EXTEND_DATA_IsValid)RESORT_EXTEND2_DATA_IsValid,
+  (RESORT_EXTEND_DATA_IsValid)RESORT_EXTEND3_DATA_IsValid,
+  (RESORT_EXTEND_DATA_IsValid)RESORT_EXTEND4_DATA_IsValid,
+  (RESORT_EXTEND_DATA_IsValid)RESORT_EXTEND5_DATA_IsValid,
+  (RESORT_EXTEND_DATA_IsValid)RESORT_EXTEND6_DATA_IsValid,
+  (RESORT_EXTEND_DATA_IsValid)RESORT_EXTEND7_DATA_IsValid,
+  (RESORT_EXTEND_DATA_IsValid)RESORT_EXTEND8_DATA_IsValid,
+};
+
+//=============================================================================
+/**
+ *    データ定義
+ */
+//=============================================================================
+//-------------------------------------
+///	１…リゾート用全受信データ
+//=====================================
+struct _RESORT_RECV_DATA
+{
+  RESORT_BASIC1_DATA  basic1;
+  RESORT_BASIC2_DATA  basic2;
+  RESORT_EXTEND1_DATA extend1;
+  RESORT_EXTEND2_DATA extend2;
+  RESORT_EXTEND3_DATA extend3;
+  RESORT_EXTEND4_DATA extend4;
+  RESORT_EXTEND5_DATA extend5;
+  RESORT_EXTEND6_DATA extend6;
+  RESORT_EXTEND7_DATA extend7;
+  RESORT_EXTEND8_DATA extend8;
+  u32                 extend_flag;
+};
+SDK_COMPILER_ASSERT( sizeof(RESORT_RECV_DATA) == RESORT_RECV_DATA_SIZE );
+
+//-------------------------------------
+///	２…リゾート用ビーコンパックデータ
+//=====================================
+struct _RESORT_BEACON_DATA
+{
+  RESORT_BASIC1_DATA  basic1;
+  RESORT_BASIC2_DATA  basic2;
+  u8                  extend[RESORT_EXTEND_DATA_SIZE];
+  RESORT_EXTEND_TYPE  extend_type;
+};
+
+//-------------------------------------
+///	３…リゾート用代理データ
+//=====================================
+struct _RESORT_PROXY_DATA
+{
+  RESORT_BASIC1_DATA  basic1;
+  RESORT_BASIC2_DATA  basic2;
+  u8                  extend[RESORT_EXTEND_DATA_SIZE];
+  RESORT_EXTEND_TYPE  extend_type;
+};
+
+//=============================================================================
+/**
+ *    RESORT_RECV_DATAの関数
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  受信データ  クリア
+ *
+ *	@param	RESORT_RECV_DATA *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void RESORT_RECV_DATA_Clear( RESORT_RECV_DATA *p_wk )
+{
+  GFL_STD_MemClear( p_wk, sizeof(RESORT_RECV_DATA) );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  受信データ  中身が空かチェック
+ *
+ *	@param	const RESORT_RECV_DATA *cp_wk   ワーク
+ *
+ *	@return TRUEで空  FALSEでデータあり
+ */
+//-----------------------------------------------------------------------------
+BOOL RESORT_RECV_DATA_IsEmpty( const RESORT_RECV_DATA *cp_wk )
+{
+  return cp_wk->extend_flag == 0;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  同じ所有者かチェック
+ *
+ *	@param	const RESORT_RECV_DATA *cp_wk   ワーク
+ *	@param	RESORT_BEACON_DATA *cp_beacon   ビーコン
+ *
+ *	@return TRUEで同じ所有者  FALSEで異なる所有者
+ */
+//-----------------------------------------------------------------------------
+BOOL RESORT_RECV_DATA_IsSameOwnerBeacon( const RESORT_RECV_DATA *cp_wk, const RESORT_BEACON_DATA *cp_beacon )
+{
+  return RESORT_BASIC1_DATA_IsSameOwner( &cp_wk->basic1, &cp_beacon->basic1 );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ビーコンをマージ
+ *
+ *	@param	RESORT_RECV_DATA *p_wk          ワーク
+ *	@param	RESORT_BEACON_DATA *cp_beacon   マージするビーコン
+ */
+//-----------------------------------------------------------------------------
+void RESORT_RECV_DATA_MergeBeacon( RESORT_RECV_DATA *p_wk, const RESORT_BEACON_DATA *cp_beacon )
+{
+  //不正対策
+  if( !RESORT_BEACON_DATA_IsValid( cp_beacon ) )
+  {
+    return;
+  }
+
+  if( RESORT_RECV_DATA_IsEmpty( p_wk ) )
+  {
+    //空だったら、全部いれる
+    p_wk->basic1  = cp_beacon->basic1;
+    p_wk->basic2  = cp_beacon->basic2;
+    
+    //入れる処理
+
+    //拡張マージフラグ
+    p_wk->extend_flag |=  1<<cp_beacon->extend_type;
+  }
+  else
+  {
+    //なんらかのマージ処理
+    //TODO
+  }
+}
+
+//=============================================================================
+/**
+ *    RESORT_BEACON_DATAの関数
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ビーコンデータを作成
+ *
+ *	@param	HEAPID heapID   ヒープID
+ *
+ *	@return ビーコンデータ
+ */
+//-----------------------------------------------------------------------------
+RESORT_BEACON_DATA * RESORT_BEACON_DATA_Init( HEAPID heapID )
+{
+  RESORT_BEACON_DATA *p_wk  = GFL_HEAP_AllocClearMemory( heapID, sizeof(RESORT_BEACON_DATA) );
+
+  p_wk->extend_type = RESORT_EXTEND_TYPE_NULL;
+  return p_wk;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ビーコンデータを破棄
+ *
+ *	@param	RESORT_BEACON_DATA *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void RESORT_BEACON_DATA_Exit( RESORT_BEACON_DATA *p_wk )
+{
+  GFL_HEAP_FreeMemory( p_wk );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ビーコンデータに自分情報を作成
+ *
+ *	@param	RESORT_BEACON_DATA *p_wk  ワーク
+ *	@param	type  作成する拡張タイプ
+ */
+//-----------------------------------------------------------------------------
+void RESORT_BEACON_DATA_SetMyData( RESORT_BEACON_DATA *p_wk, RESORT_EXTEND_TYPE type, const GAMEDATA *cp_gamedata )
+{
+  RESORT_BASIC1_DATA_SetMyData( &p_wk->basic1, cp_gamedata );
+  RESORT_BASIC2_DATA_SetMyData( &p_wk->basic2, cp_gamedata );
+
+  //エラー値チェック
+  if( type >= RESORT_EXTEND_TYPE_MAX )
+  {
+    GF_ASSERT(0);
+    type  = RESORT_EXTEND_TYPE_01;
+  }
+
+  //拡張データセット
+  sc_ResortExtendData_SetMyData[type]( p_wk->extend, cp_gamedata );
+  p_wk->extend_type = type;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  拡張データを取得
+ *
+ *  @param  cp_wk             ビーコンデータ
+ *	@param	u8 *p_extend_buff 拡張データ（RESORT_EXTEND_DATA_SIZEサイズのバッファ）
+ *	@param	*p_type           拡張データの種類
+ */
+//-----------------------------------------------------------------------------
+void RESORT_BEACON_DATA_GetExtendData( const RESORT_BEACON_DATA *cp_wk, u8 *p_extend_buff, RESORT_EXTEND_TYPE *p_type )
+{
+  GF_ASSERT( cp_wk->extend_type < RESORT_EXTEND_TYPE_MAX );
+  GFL_STD_MemCopy( cp_wk->extend, p_extend_buff, RESORT_EXTEND_DATA_SIZE );
+  *p_type = cp_wk->extend_type;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ビーコンからデータを取得
+ *
+ *	@param	RESORT_BEACON_DATA *p_wk  ワーク
+ *	@param	GAMEBEACON_INFO *cp_beacon_info   ビーコンデータ
+ */
+//-----------------------------------------------------------------------------
+void RESORT_BEACON_DATA_SetBeaconInfo( RESORT_BEACON_DATA *p_wk, const GAMEBEACON_INFO *cp_beacon_info )
+{
+  GFL_STD_MemClear( p_wk, sizeof(RESORT_BEACON_DATA) );
+  RESORT_BASIC1_DATA_SetBeaconInfo( &p_wk->basic1, cp_beacon_info );
+  RESORT_BASIC2_DATA_SetBeaconInfo( &p_wk->basic2, cp_beacon_info );
+
+  GFL_STD_MemCopy( cp_beacon_info->action.extend_buff, p_wk->extend, RESORT_EXTEND_DATA_SIZE );
+  p_wk->extend_type = cp_beacon_info->action.action_no - GAMEBEACON_ACTION_RESORT_DATA_START;
+
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ビーコンデータの正当性チェック
+ *
+ *	@param	const RESORT_BEACON_DATA *cp_wk ワーク 
+ *
+ *	@return TRUEならば正常  FALSEならば不正
+ */
+//-----------------------------------------------------------------------------
+BOOL RESORT_BEACON_DATA_IsValid( const RESORT_BEACON_DATA *cp_wk )
+{
+  if( !RESORT_BASIC1_DATA_IsValid( &cp_wk->basic1 ) )
+  {
+    RESORT_Printf( "ビーコン情報の基本データ１が不正です\n" );
+    return FALSE;
+  }
+  if( !RESORT_BASIC2_DATA_IsValid( &cp_wk->basic2 ) )
+  {
+    RESORT_Printf( "ビーコン情報の基本データ２が不正です\n" );
+    return FALSE;
+  }
+  if( cp_wk->extend_type >= RESORT_EXTEND_TYPE_MAX )
+  {
+    RESORT_Printf( "ビーコン情報の拡張番号が不正です=%d\n", cp_wk->extend_type );
+    return FALSE;
+  }
+  if( !sc_ResortExtendData_IsValid[cp_wk->extend_type]( cp_wk->extend ) )
+  {
+    RESORT_Printf( "ビーコン情報の[%d]番拡張データが不正です\n", cp_wk->extend_type );
+    return FALSE;
+  }
+
+  return TRUE;
+}
+
+//=============================================================================
+/**
+ *    RESORT_PROXY_DATAの関数
+ */
+//=============================================================================
+
+//=============================================================================
+/**
+ *	リゾート用データ受信バッファ（セーブデータにも存在）
+*/
+//=============================================================================
+//-------------------------------------
+///	受信バッファ
+//=====================================
+struct _RESORT_DATA_BUFF
+{
+  u32         max;
+  BOOL        is_lock;
+  RESORT_RECV_DATA data[0];
+};
+
+SDK_COMPILER_ASSERT( sizeof(RESORT_DATA_BUFF) == RESORT_DATA_BUFF_HEADER_SIZE );
+
+//-------------------------------------
+///	private
+//=====================================
+static RESORT_RECV_DATA * Resort_Data_Buff_GetEmptyData( RESORT_DATA_BUFF *p_wk );
+static RESORT_RECV_DATA * Resort_Data_Buff_GetSameOwnerData( RESORT_DATA_BUFF *p_wk, const RESORT_BASIC1_DATA *cp_owner );
+
+//-------------------------------------
+///	外部公開
+//=====================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レゾナンスリゾートのデータ受信バッファ  作成
+ *
+ *	@param	HEAPID heapID ヒープID
+ *	@param	num           バッファ数
+ *
+ *	@return データバッファ
+ */
+//-----------------------------------------------------------------------------
+RESORT_DATA_BUFF * RESORT_DATA_BUFF_Init( HEAPID heapID, u32 num )
+{
+  RESORT_DATA_BUFF *p_wk  = GFL_HEAP_AllocClearMemory( heapID, RESORT_DATA_BUFF_SIZE( num ) );
+
+  RESORT_DATA_BUFF_InitInstance( p_wk, num );
+
+  return p_wk;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レゾナンスリゾートのデータ受信バッファ  破棄
+ *
+ *	@param	RESORT_DATA_BUFF *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void RESORT_DATA_BUFF_Exit( RESORT_DATA_BUFF *p_wk )
+{
+  GFL_HEAP_FreeMemory( p_wk );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レゾナンスリゾート  すでに生成した者に対しての初期化
+ *
+ *	@param	RESORT_DATA_BUFF *p_wk  ワーク
+ *	@param	num   バッファ数
+ */
+//-----------------------------------------------------------------------------
+void RESORT_DATA_BUFF_InitInstance( RESORT_DATA_BUFF *p_wk, u32 num )
+{
+  GFL_STD_MemClear( p_wk, sizeof(RESORT_DATA_BUFF) );
+
+  p_wk->max = num;
+  {
+    int i;
+    for( i = 0; i < p_wk->max; i++ )
+    {
+      RESORT_RECV_DATA *p_data  = &p_wk->data[i];
+      RESORT_RECV_DATA_Clear( p_data );
+    }
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  受信バッファへの追加アクセスをロック
+ *
+ *	@param	RESORT_DATA_BUFF *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void RESORT_DATA_BUFF_Lock( RESORT_DATA_BUFF *p_wk )
+{
+  p_wk->is_lock = TRUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  受信バッファへの追加アクセスロックを解除
+ *
+ *	@param	RESORT_DATA_BUFF *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void RESORT_DATA_BUFF_UnLock( RESORT_DATA_BUFF *p_wk )
+{
+  p_wk->is_lock = FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レゾナンスリゾートのデータ受信バッファ  データ取得
+ *
+ *	@param	RESORT_DATA_BUFF *p_wk  ワーク
+ *	@param	index   インデックス
+ *
+ *	@return データ取得
+ */
+//-----------------------------------------------------------------------------
+RESORT_RECV_DATA * RESORT_DATA_BUFF_GetData( RESORT_DATA_BUFF *p_wk, u32 index )
+{
+  GF_ASSERT( index < p_wk->max );
+  return &p_wk->data[ index ];
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  受信バッファクリア
+ *
+ *	@param	RESORT_DATA_BUFF *p_wk  ワーク
+ *	@param	index                   インデックス
+ */
+//-----------------------------------------------------------------------------
+void RESORT_DATA_BUFF_Clear( RESORT_DATA_BUFF *p_wk, u32 index )
+{
+  GF_ASSERT( index < p_wk->max );
+  RESORT_RECV_DATA_Clear( &p_wk->data[ index ] );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  データ受信バッファにビーコン差込
+ *
+ *	@param	RESORT_DATA_BUFF *p_wk  ワーク
+ *	@param	RESORT_BEACON_DATA *cp_beacon   ビーコンデータ
+ */
+//-----------------------------------------------------------------------------
+void RESORT_DATA_BUFF_AddBeacon( RESORT_DATA_BUFF *p_wk, const RESORT_BEACON_DATA *cp_beacon )
+{
+  RESORT_RECV_DATA *p_data;
+
+  //ロック中は追加しない
+  if( p_wk->is_lock )
+  {
+    return;
+  }
+
+  //同じ所有者のものがあったら優先的に入れる
+  p_data  = Resort_Data_Buff_GetSameOwnerData( p_wk, &cp_beacon->basic1 );
+  if( p_data )
+  {
+    RESORT_RECV_DATA_MergeBeacon( p_data, cp_beacon );
+    RESORT_Printf( "マージしていれた！\n" );
+    return;
+  }
+
+  //空のデータがあったら入れる
+  p_data  = Resort_Data_Buff_GetEmptyData( p_wk );
+  if( p_data )
+  {
+    RESORT_RECV_DATA_MergeBeacon( p_data, cp_beacon );
+
+#ifdef  PM_DEBUG
+    RESORT_BASIC1_DATA_PrintDebug( &cp_beacon->basic1 );
+#endif
+    RESORT_Printf( "空のデータに入れた！\n" );
+    return;
+  }
+
+  RESORT_Printf( "データを受け取ったが、バッファがいっぱい！\n" );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  空のデータを取得
+ *
+ *	@param	RESORT_DATA_BUFF *p_wk  ワーク
+ *
+ *	@return あいているデータ  NULLならばあいていない
+ */
+//-----------------------------------------------------------------------------
+static RESORT_RECV_DATA * Resort_Data_Buff_GetEmptyData( RESORT_DATA_BUFF *p_wk )
+{
+  int i;
+  for( i = 0; i < p_wk->max; i++ )
+  {
+    RESORT_RECV_DATA  *p_data = &p_wk->data[i];
+    if( RESORT_RECV_DATA_IsEmpty( p_data ) )
+    {
+      return p_data;
+    }
+  }
+
+  return NULL;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  同じ所有者のデータを取得
+ *
+ *	@param	RESORT_DATA_BUFF *p_wk        ワーク
+ *	@param	RESORT_BASIC1_DATA *cp_owner  比べる基本データ１
+ *
+ *	@return 同じ所有者のデータ  NULLならば同じ所有者のデータがない
+ */
+//-----------------------------------------------------------------------------
+static RESORT_RECV_DATA * Resort_Data_Buff_GetSameOwnerData( RESORT_DATA_BUFF *p_wk, const RESORT_BASIC1_DATA *cp_owner )
+{
+  int i;
+  for( i = 0; i < p_wk->max; i++ )
+  {
+    RESORT_RECV_DATA  *p_data = &p_wk->data[i];
+    if( RESORT_BASIC1_DATA_IsSameOwner( &p_data->basic1, cp_owner ) )
+    {
+      return p_data;
+    }
+  }
+
+  return NULL;
+}
