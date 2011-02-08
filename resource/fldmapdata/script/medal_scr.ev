@@ -133,15 +133,14 @@ sub_medaloyaji_intro:
   _YES_NO_WIN( SCWK_ANSWER )
 
   _BALLOONWIN_TALKOBJ_MSG( msg_mdloyj_intro_03 )
+  _BALLOONWIN_CLOSE()
   //メダルをもらう
   $LWK_MEDAL_ID = MDLID_FIRST_MEDAL
   _CALL sub_medaloyaji_gettitle
 
   _BALLOONWIN_TALKOBJ_MSG( msg_mdloyj_intro_04 )
-  //ヒントメダルをもらう  仮
-  //_UPDATE_MEDAL_INFO( SCR_MEDALUPDATE_INFO )
-  //_CALL_FLD3D_CUTIN( ... )
-  //_GET_MEDAL( 1, FALSE )
+  //ヒントメダルをもらう
+  _UPDATE_MEDAL_INFO( SCR_MEDALUPDATE_INIT )
 
   _BALLOONWIN_TALKOBJ_MSG( msg_mdloyj_intro_05 )
   _LAST_KEYWAIT()
@@ -169,6 +168,7 @@ EVENT_START ev_medal_oyaji_pc
 
   CASE MEDALEV_SEQ_COMP_PRIZE_OK THEN
     //事務局で表彰式（コンプリート）
+    _PLAYER_NAME( 0 )
     _BALLOONWIN_TALKOBJ_MSG( msg_mdloyj_comp_01 )
     _LAST_KEYWAIT()
     _BALLOONWIN_CLOSE()
