@@ -139,6 +139,7 @@ SUBDIRS	=	wmi \
 			guru2_2d \
 			oekaki \
 			beacon_status \
+			fmission \
 			tr_ai \
 			enceff_imd \
 			pl_boat \

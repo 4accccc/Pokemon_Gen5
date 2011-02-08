@@ -1,0 +1,21 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: fmission_gra.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_FMISSION_GRA_NAIX_
+#define NARC_FMISSION_GRA_NAIX_
+
+enum {
+	NARC_fmission_gra_field_info_NCLR = 0,
+	NARC_fmission_gra_field_info_lz_NCGR = 1,
+	NARC_fmission_gra_field_info_NCER = 2,
+	NARC_fmission_gra_field_info_NANR = 3
+};
+
+/* NARC_FMISSION_GRA_NAIX_ */
+#endif

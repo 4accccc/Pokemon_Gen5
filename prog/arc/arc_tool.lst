@@ -311,3 +311,4 @@
   ARCID_LOCAL_TVT_CALLDATA "local_tvt_call.narc" #ローカルライブキャスター呼び出しデータ
   ARCID_FIELD_GOOUT_DATA "field_goout_data.narc" #室外表現設定データ
   ARCID_TVT_CAMERA "tvt_camera.narc" #ライブキャスターミニゲーム カメラ撮影
+  ARCID_FMISSION_GRA "fmission_gra.narc" #フェスタミッション関連グラフィックアーカイブ
