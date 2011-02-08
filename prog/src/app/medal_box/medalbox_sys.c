@@ -2455,7 +2455,7 @@ static GFL_PROC_RESULT MDLSYS_INIT_Main( MEDALBOXSYS_WORK *p_wk )
       // フェードの終了待ち
       if( !GFL_FADE_CheckFade() )
       {
-        PMSND_PlaySE( SEQ_SE_MD_04 );
+        PMSND_PlaySE( SEQ_SE_MD_01 );
         p_wk->sub_seq++;
       }
     }
@@ -3948,9 +3948,6 @@ static BOOL CursorUpdate( MEDALBOXSYS_WORK *p_wk )
         }
         else
         {
-          // カーソル位置をせっていする
-          SetCursor( p_wk , tp_hit  , FALSE );
-
           // シーケンスを切り替える
           SetPushMedalData( p_wk , 0 , PUSHMEDAL_TYPE_HINT );
           MDLSYS_SetNextSeq( p_wk , SEQ_PUSUMEDALBUTTON );
@@ -4103,7 +4100,7 @@ static void SetCursorState( MEDALBOXSYS_WORK *p_wk , CURSOR_STATE state , u8 med
   case CURSOR_STATE_SELECT:
     {
       // カーソルの選択音を鳴らす
-      PMSND_PlaySE( SEQ_SE_SELECT1 );
+      PMSND_PlaySE( SEQ_SE_MD_03 );
       GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[MEDALBOXSYS_OBJ_CLWK_CURSOR] , TRUE );
     }
     break;
