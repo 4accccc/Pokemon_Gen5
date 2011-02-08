@@ -990,5 +990,9 @@ SCRIPTFILES += \
 	sp_c03gym0201.ev \
 	c12gym0201.ev \
 	sp_c12gym0201.ev \
+	c16.ev \
+	sp_c16.ev \
+	c16r0101.ev \
+	sp_c16r0101.ev \
 
 #©“®¶¬ƒtƒ@ƒCƒ‹ zone_script.list ––”ö
