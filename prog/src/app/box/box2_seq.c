@@ -726,7 +726,6 @@ static int MainSeq_Init( BOX2_SYS_WORK * syswk )
   // アプリヒープ作成
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BOX_APP, 0x80000 );
   syswk->app = GFL_HEAP_AllocClearMemory( HEAPID_BOX_APP, sizeof(BOX2_APP_WORK) );
-  syswk->search_data = GFL_HEAP_AllocClearMemory( HEAPID_BOX_APP, sizeof(BOX_SEARCH_DATA) );
 
   syswk->app->pokeicon_ah = GFL_ARC_OpenDataHandle( ARCID_POKEICON, HEAPID_BOX_APP );
 
@@ -810,11 +809,9 @@ static int MainSeq_Release( BOX2_SYS_WORK * syswk )
 
   GFL_ARC_CloseDataHandle( syswk->app->pokeicon_ah );
 
-  GFL_HEAP_FreeMemory( syswk->search_data );
   GFL_HEAP_FreeMemory( syswk->app );
   GFL_HEAP_DeleteHeap( HEAPID_BOX_APP );
   syswk->app = NULL;
-  syswk->search_data = NULL;
 
   // ブレンド初期化
   G2_BlendNone();
@@ -1525,6 +1522,18 @@ static int MainSeq_ArrangeMain( BOX2_SYS_WORK * syswk )
   case CURSORMOVE_NO_MOVE_DOWN:   // 十字キー下が押されたが、移動なし
   case CURSORMOVE_NONE:           // 動作なし
     break;
+  case BOX2UI_ARRANGE_MAIN_SEARCH: // 45: 絞り込み呼び出し
+    if( syswk->poke_get_key == 0 ){
+      u8  pos = CURSORMOVE_PosGet( syswk->app->cmwk );
+      syswk->get_tray = syswk->tray;
+      syswk->get_pos  = pos;
+      syswk->subProcMode = SUB_PROC_MODE_TB_BOX;
+    }else{
+      syswk->subProcMode = SUB_PROC_MODE_TB_BOX_GET;
+      syswk->tb_status_pos = CURSORMOVE_PosGet( syswk->app->cmwk );
+    }
+    PMSND_PlaySE( SE_BOX2_DECIDE );
+    return ObjButtonAnmSet( syswk, BOX2OBJ_ID_SEARCH, 1, BOX2SEQ_MAINSEQ_SEARCH_CALL );
 
   case CURSORMOVE_CURSOR_MOVE:    // 移動
     {
@@ -7277,6 +7286,7 @@ static int MainSeq_ItemMenuCheck( BOX2_SYS_WORK * syswk )
 //--------------------------------------------------------------------------------------------
 static int MainSeq_SearchCall( BOX2_SYS_WORK * syswk )
 {
+  OS_Printf("search go : get_pos=%d\n", syswk->get_pos);
   return SubProcSet( syswk, SUB_PROC_TYPE_SEARCH );
 }
 
@@ -7414,6 +7424,9 @@ static int MainSeq_BagRcv( BOX2_SYS_WORK * syswk )
 //----------------------------------------------------------------------------------
 static int MainSeq_SearchRcv( BOX2_SYS_WORK * syswk )
 {
+
+  OS_Printf("search go : get_pos=%d\n", syswk->get_pos);
+
   if( syswk->get_tray != BOX2MAIN_GETPOS_NONE ){
     BOX2MAIN_TrayPokeInfoPut( syswk, syswk->get_tray, syswk->get_pos );
   }else{

@@ -326,8 +326,7 @@ static const CURSORMOVE_DATA BoxArrangeMainCursorMoveData[] =
   { 0, 0, 0, 0, 42, 42, 42, 42, { 0, 8, 8, 56    } },   // 42: 通常モードボタン
   { 0, 0, 0, 0, 43, 43, 43, 43, { 0, 8, 64, 112  } },   // 43: 便利モード1
   { 0, 0, 0, 0, 44, 44, 44, 44, { 0, 8, 120, 168 } },   // 44: 便利モード2
-  { 0, 0, 0, 0, 45, 45, 45, 45, { 0, 8, 120, 168 } },   // 45: 便利モード3
-  { 0, 0, 0, 0, 46, 46, 46, 46, { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, TOUCHBAR_ICON_X_05, TOUCHBAR_ICON_X_05+TOUCHBAR_ICON_WIDTH-1 } },      // 46: 絞り込み画面ボタン
+  { 0, 0, 0, 0, 45, 45, 45, 45, { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, TOUCHBAR_ICON_X_05, TOUCHBAR_ICON_X_05+TOUCHBAR_ICON_WIDTH-1 } },      // 45: 絞り込み画面ボタン
 
   { 0, 0, 0, 0, 0, 0, 0, 0, { GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
@@ -1456,7 +1455,8 @@ static void BoxArrangeMainCallBack_Touch( void * work, int now_pos, int old_pos 
   BOX2_SYS_WORK * syswk = work;
 
   if( now_pos == BOX2UI_ARRANGE_MAIN_RETURN1 ||
-      now_pos == BOX2UI_ARRANGE_MAIN_RETURN2 ){
+      now_pos == BOX2UI_ARRANGE_MAIN_RETURN2 ||
+      now_pos == BOX2UI_ARRANGE_MAIN_SEARCH ){
   }else{
     CursorObjMove( syswk, now_pos );
   }
@@ -1552,7 +1552,8 @@ static void BoxArrangePokeMoveCallBack_Touch( void * work, int now_pos, int old_
       now_pos == BOX2UI_ARRANGE_PGT_RET ||          // 41: 戻る
       now_pos == BOX2UI_ARRANGE_PGT_NORMAL ||       // 42: 通常モード
       now_pos == BOX2UI_ARRANGE_PGT_MOVE ||         // 43: 移動モード
-      now_pos == BOX2UI_ARRANGE_PGT_MULTI ){     // 44: 複数選択モード
+      now_pos == BOX2UI_ARRANGE_PGT_MULTI ||        // 44: 複数選択モード
+      now_pos == BOX2UI_ARRANGE_PGT_SEARCH ){        // 45: 絞り込みモード
     CURSORMOVE_PosSet( syswk->app->cmwk, syswk->app->old_cur_pos );
     now_pos = syswk->app->old_cur_pos;
   }else{

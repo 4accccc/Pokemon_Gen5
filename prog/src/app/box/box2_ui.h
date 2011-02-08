@@ -65,6 +65,7 @@ enum {
   BOX2UI_ARRANGE_MAIN_NORMAL,   // 42: 通常モードボタン
   BOX2UI_ARRANGE_MAIN_MOVE,     // 43: 移動モードボタン
   BOX2UI_ARRANGE_MAIN_MULTI,    // 44: 複数選択モードボタン
+  BOX2UI_ARRANGE_MAIN_SEARCH,   // 45: 絞り込みボタン
 
   // ボックス整理・「つかむ」トレイ移動
   BOX2UI_ARRANGE_PGT_POKE1 = 0, // 00: ポケモン

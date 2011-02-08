@@ -98,14 +98,13 @@ enum {
 	NARC_box_gra_boxsearch_bgd_NCLR = 84,
 	NARC_box_gra_boxsearch_bgu_NCGR = 85,
 	NARC_box_gra_boxsearch_bgu_NCLR = 86,
-	NARC_box_gra_boxsearch_buton_bgd_NSCR = 87,
-	NARC_box_gra_boxsearch_frame_1_NSCR = 88,
-	NARC_box_gra_boxsearch_frame_2_NSCR = 89,
-	NARC_box_gra_boxsearch_frame_bgu_NSCR = 90,
-	NARC_box_gra_boxsearch_obj_NCER = 91,
-	NARC_box_gra_boxsearch_obj_NANR = 92,
-	NARC_box_gra_boxsearch_obj_NCGR = 93,
-	NARC_box_gra_boxsearch_obj_NCLR = 94
+	NARC_box_gra_boxsearch_frame_1_NSCR = 87,
+	NARC_box_gra_boxsearch_frame_2_NSCR = 88,
+	NARC_box_gra_boxsearch_frame_bgu_NSCR = 89,
+	NARC_box_gra_boxsearch_obj_NCER = 90,
+	NARC_box_gra_boxsearch_obj_NANR = 91,
+	NARC_box_gra_boxsearch_obj_NCGR = 92,
+	NARC_box_gra_boxsearch_obj_NCLR = 93
 };
 
 /* NARC_BOX_GRA_NAIX_ */

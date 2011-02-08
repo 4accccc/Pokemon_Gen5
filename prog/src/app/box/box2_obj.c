@@ -1110,8 +1110,8 @@ static BOOL CheckPokeSearchCondition( BOX_SEARCH_DATA* sp, const POKEMON_PASO_PA
     }
   }
   //道具(1オリジン)
-  if( sp->item != ITEM_DUMMY_DATA ){
-    if( PPP_Get(ppp,ID_PARA_item,NULL) != sp->item ){
+  if( sp->item != FALSE ){
+    if( PPP_Get(ppp,ID_PARA_item,NULL) == ITEM_DUMMY_DATA ){
       return FALSE;
     }
   }
@@ -1127,12 +1127,20 @@ static BOOL CheckPokeSearchCondition( BOX_SEARCH_DATA* sp, const POKEMON_PASO_PA
       return FALSE;
     }
   }
-  //性別(1オリジン)
-  if( sp->sex != 0 ){
-    if( PPP_Get(ppp,ID_PARA_sex,NULL) != sp->sex-1 ){
+  //性別(0オリジン)
+  if( sp->sex != PTL_SEX_UNKNOWN ){ // PTL_SEX_UNKNOWN=2
+    if( PPP_Get(ppp,ID_PARA_sex,NULL) != sp->sex ){
       return FALSE;
     }
   }
+  // マーキング
+  if( sp->mark != 0){
+    if( PPP_Get(ppp,ID_PARA_mark,NULL) != sp->mark ){
+      OS_Printf("search_mark=%d, poke_mark=%d\n", sp->mark, PPP_Get(ppp,ID_PARA_mark,NULL));
+      return FALSE;
+    }
+  }
+
   return TRUE;
 }
 
@@ -1151,7 +1159,7 @@ static BOOL CheckPokeSearchCondition( BOX_SEARCH_DATA* sp, const POKEMON_PASO_PA
 //--------------------------------------------------------------------------------------------
 static u8 PokeIconPalOfsGet( BOX2_SYS_WORK * syswk, const POKEMON_PASO_PARAM* ppp )
 {
-  if( CheckPokeSearchCondition( syswk->search_data, ppp )){
+  if( CheckPokeSearchCondition( &syswk->search_data, ppp )){
     return POKEICON_GetPalNumGetByPPP( ppp );
   }
   return POKEICON_GRAY_PAL_IDX;

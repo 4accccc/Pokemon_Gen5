@@ -97,7 +97,6 @@
 "boxsearch_bgd.NCLR"
 "boxsearch_bgu.NCGR"
 "boxsearch_bgu.NCLR"
-"boxsearch_buton_bgd.NSCR"
 "boxsearch_frame_1.NSCR"
 "boxsearch_frame_2.NSCR"
 "boxsearch_frame_bgu.NSCR"

@@ -64,7 +64,7 @@
 //=====================================
 #define GRAPHIC_BG_USE  //OFFにするとBG使用しません
 #define GRAPHIC_OBJ_USE //OFFにするとOBJ使用しません
-#define GRAPHIC_G3D_USE //OFFにすると3D使用しません
+//#define GRAPHIC_G3D_USE //OFFにすると3D使用しません
 //-------------------------------------
 /// バンク設定
 //=====================================
@@ -97,7 +97,7 @@ static const GFL_DISP_VRAM sc_vramSetTable =
 //=====================================
 static const GFL_BG_SYS_HEADER sc_bgsys_header  =
 { 
-  GX_DISPMODE_GRAPHICS,GX_BGMODE_0,GX_BGMODE_0,GX_BG0_AS_3D //グラフィックモード、メインBG面設定、サブBG面設定、BG0面設定
+  GX_DISPMODE_GRAPHICS,GX_BGMODE_0,GX_BGMODE_0,GX_BG0_AS_2D //グラフィックモード、メインBG面設定、サブBG面設定、BG0面設定
 };
 //-------------------------------------
 /// BG面設定
@@ -111,7 +111,6 @@ static const struct
 } sc_bgsetup[]  =
 { 
   //MAIN------------------------
-#if 0 //3D設定のためいらない
   { 
     GFL_BG_FRAME0_M,  //設定するフレーム
     {
@@ -123,7 +122,6 @@ static const struct
     GFL_BG_MODE_TEXT, //BGの種類
     TRUE, //初期表示
   },
-#endif
   { 
     GFL_BG_FRAME1_M,  //設定するフレーム
     {
@@ -186,7 +184,7 @@ static const struct
     {
       0, 0, 0x800, 0, //X,Y,ｽｸﾘｰﾝﾊﾞｯﾌｧ、ｽｸﾘｰﾝｵﾌｾｯﾄ
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,  //ｽｸﾘｰﾝｻｲｽﾞ、ｶﾗｰﾓｰﾄﾞ
-      GX_BG_SCRBASE_0x2000, GX_BG_CHARBASE_0x10000, GFL_BG_CHRSIZ_256x256,
+      GX_BG_SCRBASE_0x2000, GX_BG_CHARBASE_0x08000, GFL_BG_CHRSIZ_256x256,
       GX_BG_EXTPLTT_01, 2, 0, 0, FALSE//拡張ﾊﾟﾚｯﾄｽﾛｯﾄ、表示優先度、ｴﾘｱｵｰﾊﾞｰ、ﾀﾞﾐｰ、ﾓｻﾞｲｸﾌﾗｸﾞ
     },
     GFL_BG_MODE_TEXT,//BGの種類

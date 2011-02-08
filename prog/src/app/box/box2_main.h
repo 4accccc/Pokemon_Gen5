@@ -313,11 +313,12 @@ typedef struct {
 
 // ポケモン絞り込み用データ
 typedef struct{
-  u16 pokemon_id; //  開発NO
-  u16 item;       //  どうぐID
-  u8  seikaku;    //  性格
-  u8  tokusei;    //  特性
-  u8  sex;        //  性別
+  u16 pokemon_id; //  開発NO(ポケモンNO。1オリジン)
+  u8  item;       //  どうぐを持っているかどうか（TRUE=持っている,FALSE=持っていない）
+  u8  mark;       //  マーキング(各bitデータ。全BIT0はオールマイティ）
+  u8  seikaku;    //  性格+1(『性格なし』という項目が存在し無いのでここではL+1して１オリジンで管理する）
+  u8  tokusei;    //  特性(特性には『特性無し』がある）
+  u8  sex;        //  性別（PTL_SEX_MALE, PTL_SEX_FEMALE, PTL_SEX_UNKNOWN)
   u8  search_on;  //  絞り込みON/OFF
 }BOX_SEARCH_DATA;
 
@@ -468,7 +469,7 @@ typedef struct {
   int next_seq;         // 次のシーケンス
 
   BOX2_APP_WORK   * app;  // アプリワーク
-  BOX_SEARCH_DATA * search_data; // 絞り込みデータ
+  BOX_SEARCH_DATA   search_data; // 絞り込みデータ
 
 }BOX2_SYS_WORK;
 

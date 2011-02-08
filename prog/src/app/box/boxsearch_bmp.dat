@@ -1,0 +1,280 @@
+
+// -------------------------------------------------------------
+/** 
+ * @file boxsearch_bmp.dat
+ * @brief 
+ **/
+// -------------------------------------------------------------
+
+
+#define WINDOW0_WIN_X     (1)
+#define WINDOW0_WIN_Y     (1)
+#define WINDOW0_WIN_W     (20)
+#define WINDOW0_WIN_H     (2)
+#define WINDOW0_WIN_PAL     (14)
+#define WINDOW0_WIN_CHR     PRINTSYS_MACRO_LSB(1,2,0)
+
+
+#define WINDOW1_WIN_X     (3)
+#define WINDOW1_WIN_Y     (0)
+#define WINDOW1_WIN_W     (9)
+#define WINDOW1_WIN_H     (3)
+#define WINDOW1_WIN_PAL     (14)
+#define WINDOW1_WIN_CHR     PRINTSYS_MACRO_LSB(15,2,0)
+
+
+#define WINDOW2_WIN_X     (3)
+#define WINDOW2_WIN_Y     (3)
+#define WINDOW2_WIN_W     (9)
+#define WINDOW2_WIN_H     (3)
+#define WINDOW2_WIN_PAL     (14)
+#define WINDOW2_WIN_CHR     PRINTSYS_MACRO_LSB(15,2,0)
+
+
+#define WINDOW3_WIN_X     (3)
+#define WINDOW3_WIN_Y     (6)
+#define WINDOW3_WIN_W     (9)
+#define WINDOW3_WIN_H     (3)
+#define WINDOW3_WIN_PAL     (14)
+#define WINDOW3_WIN_CHR     PRINTSYS_MACRO_LSB(15,2,0)
+
+
+#define WINDOW4_WIN_X     (3)
+#define WINDOW4_WIN_Y     (9)
+#define WINDOW4_WIN_W     (9)
+#define WINDOW4_WIN_H     (3)
+#define WINDOW4_WIN_PAL     (14)
+#define WINDOW4_WIN_CHR     PRINTSYS_MACRO_LSB(15,2,0)
+
+
+#define WINDOW5_WIN_X     (3)
+#define WINDOW5_WIN_Y     (12)
+#define WINDOW5_WIN_W     (9)
+#define WINDOW5_WIN_H     (3)
+#define WINDOW5_WIN_PAL     (14)
+#define WINDOW5_WIN_CHR     PRINTSYS_MACRO_LSB(15,2,0)
+
+
+#define WINDOW6_WIN_X     (3)
+#define WINDOW6_WIN_Y     (15)
+#define WINDOW6_WIN_W     (9)
+#define WINDOW6_WIN_H     (3)
+#define WINDOW6_WIN_PAL     (14)
+#define WINDOW6_WIN_CHR     PRINTSYS_MACRO_LSB(15,2,0)
+
+
+#define WINDOW7_WIN_X     (16)
+#define WINDOW7_WIN_Y     (0)
+#define WINDOW7_WIN_W     (14)
+#define WINDOW7_WIN_H     (3)
+#define WINDOW7_WIN_PAL     (1)
+#define WINDOW7_WIN_CHR     PRINTSYS_MACRO_LSB(15,2,0)
+
+
+#define WINDOW8_WIN_X     (16)
+#define WINDOW8_WIN_Y     (3)
+#define WINDOW8_WIN_W     (14)
+#define WINDOW8_WIN_H     (3)
+#define WINDOW8_WIN_PAL     (1)
+#define WINDOW8_WIN_CHR     PRINTSYS_MACRO_LSB(15,2,0)
+
+
+#define WINDOW9_WIN_X     (16)
+#define WINDOW9_WIN_Y     (6)
+#define WINDOW9_WIN_W     (14)
+#define WINDOW9_WIN_H     (3)
+#define WINDOW9_WIN_PAL     (1)
+#define WINDOW9_WIN_CHR     PRINTSYS_MACRO_LSB(15,2,0)
+
+
+#define WINDOW10_WIN_X      (16)
+#define WINDOW10_WIN_Y      (9)
+#define WINDOW10_WIN_W      (14)
+#define WINDOW10_WIN_H      (3)
+#define WINDOW10_WIN_PAL      (1)
+#define WINDOW10_WIN_CHR      PRINTSYS_MACRO_LSB(15,2,0)
+
+
+#define WINDOW11_WIN_X      (16)
+#define WINDOW11_WIN_Y      (12)
+#define WINDOW11_WIN_W      (14)
+#define WINDOW11_WIN_H      (3)
+#define WINDOW11_WIN_PAL      (1)
+#define WINDOW11_WIN_CHR      PRINTSYS_MACRO_LSB(15,2,0)
+
+
+#define WINDOW12_WIN_X      (16)
+#define WINDOW12_WIN_Y      (15)
+#define WINDOW12_WIN_W      (14)
+#define WINDOW12_WIN_H      (3)
+#define WINDOW12_WIN_PAL      (14)
+#define WINDOW12_WIN_CHR      PRINTSYS_MACRO_LSB(15,2,0)
+
+
+#define WINDOW14_WIN_X      (1)
+#define WINDOW14_WIN_Y      (10)
+#define WINDOW14_WIN_W      (30)
+#define WINDOW14_WIN_H      (2)
+#define WINDOW14_WIN_PAL      (14)
+#define WINDOW14_WIN_CHR      PRINTSYS_MACRO_LSB(1,2,0)
+
+
+#define WINDOW15_WIN_X      (1)
+#define WINDOW15_WIN_Y      (13)
+#define WINDOW15_WIN_W      (30)
+#define WINDOW15_WIN_H      (10)
+#define WINDOW15_WIN_PAL      (14)
+#define WINDOW15_WIN_CHR      PRINTSYS_MACRO_LSB(1,2,0)
+
+#define WINDOW16_WIN_X      ( 1)
+#define WINDOW16_WIN_Y      (8)
+#define WINDOW16_WIN_W      (12)
+#define WINDOW16_WIN_H      ( 2)
+#define WINDOW16_WIN_PAL    (14)
+#define WINDOW16_WIN_CHR    PRINTSYS_MACRO_LSB(1,2,0)
+
+#define WINDOW17_WIN_X      ( 1)
+#define WINDOW17_WIN_Y      (11)
+#define WINDOW17_WIN_W      (12)
+#define WINDOW17_WIN_H      ( 2)
+#define WINDOW17_WIN_PAL    (14)
+#define WINDOW17_WIN_CHR    PRINTSYS_MACRO_LSB(1,2,0)
+
+
+const BMPWIN_DAT Window0BmpData={
+  GFL_BG_FRAME0_S,
+  WINDOW0_WIN_X,  WINDOW0_WIN_Y,
+  WINDOW0_WIN_W,  WINDOW0_WIN_H,
+  WINDOW0_WIN_PAL,  WINDOW0_WIN_CHR,
+};
+
+const BMPWIN_DAT Window1BmpData={
+  GFL_BG_FRAME0_M,
+  WINDOW1_WIN_X,  WINDOW1_WIN_Y,
+  WINDOW1_WIN_W,  WINDOW1_WIN_H,
+  WINDOW1_WIN_PAL,  WINDOW1_WIN_CHR,
+};
+
+const BMPWIN_DAT Window2BmpData={
+  GFL_BG_FRAME0_M,
+  WINDOW2_WIN_X,  WINDOW2_WIN_Y,
+  WINDOW2_WIN_W,  WINDOW2_WIN_H,
+  WINDOW2_WIN_PAL,  WINDOW2_WIN_CHR,
+};
+
+const BMPWIN_DAT Window3BmpData={
+  GFL_BG_FRAME0_M,
+  WINDOW3_WIN_X,  WINDOW3_WIN_Y,
+  WINDOW3_WIN_W,  WINDOW3_WIN_H,
+  WINDOW3_WIN_PAL,  WINDOW3_WIN_CHR,
+};
+
+const BMPWIN_DAT Window4BmpData={
+  GFL_BG_FRAME0_M,
+  WINDOW4_WIN_X,  WINDOW4_WIN_Y,
+  WINDOW4_WIN_W,  WINDOW4_WIN_H,
+  WINDOW4_WIN_PAL,  WINDOW4_WIN_CHR,
+};
+
+const BMPWIN_DAT Window5BmpData={
+  GFL_BG_FRAME0_M,
+  WINDOW5_WIN_X,  WINDOW5_WIN_Y,
+  WINDOW5_WIN_W,  WINDOW5_WIN_H,
+  WINDOW5_WIN_PAL,  WINDOW5_WIN_CHR,
+};
+
+const BMPWIN_DAT Window6BmpData={
+  GFL_BG_FRAME0_M,
+  WINDOW6_WIN_X,  WINDOW6_WIN_Y,
+  WINDOW6_WIN_W,  WINDOW6_WIN_H,
+  WINDOW6_WIN_PAL,  WINDOW6_WIN_CHR,
+};
+
+const BMPWIN_DAT Window7BmpData={
+  GFL_BG_FRAME0_M,
+  WINDOW7_WIN_X,  WINDOW7_WIN_Y,
+  WINDOW7_WIN_W,  WINDOW7_WIN_H,
+  WINDOW7_WIN_PAL,  WINDOW7_WIN_CHR,
+};
+
+const BMPWIN_DAT Window8BmpData={
+  GFL_BG_FRAME0_M,
+  WINDOW8_WIN_X,  WINDOW8_WIN_Y,
+  WINDOW8_WIN_W,  WINDOW8_WIN_H,
+  WINDOW8_WIN_PAL,  WINDOW8_WIN_CHR,
+};
+
+const BMPWIN_DAT Window9BmpData={
+  GFL_BG_FRAME0_M,
+  WINDOW9_WIN_X,  WINDOW9_WIN_Y,
+  WINDOW9_WIN_W,  WINDOW9_WIN_H,
+  WINDOW9_WIN_PAL,  WINDOW9_WIN_CHR,
+};
+
+const BMPWIN_DAT Window10BmpData={
+  GFL_BG_FRAME0_M,
+  WINDOW10_WIN_X, WINDOW10_WIN_Y,
+  WINDOW10_WIN_W, WINDOW10_WIN_H,
+  WINDOW10_WIN_PAL, WINDOW10_WIN_CHR,
+};
+
+const BMPWIN_DAT Window11BmpData={
+  GFL_BG_FRAME0_M,
+  WINDOW11_WIN_X, WINDOW11_WIN_Y,
+  WINDOW11_WIN_W, WINDOW11_WIN_H,
+  WINDOW11_WIN_PAL, WINDOW11_WIN_CHR,
+};
+
+const BMPWIN_DAT Window12BmpData={
+  GFL_BG_FRAME0_M,
+  WINDOW12_WIN_X, WINDOW12_WIN_Y,
+  WINDOW12_WIN_W, WINDOW12_WIN_H,
+  WINDOW12_WIN_PAL, WINDOW12_WIN_CHR,
+};
+
+const BMPWIN_DAT Window14BmpData={
+  GFL_BG_FRAME0_S,
+  WINDOW14_WIN_X, WINDOW14_WIN_Y,
+  WINDOW14_WIN_W, WINDOW14_WIN_H,
+  WINDOW14_WIN_PAL, WINDOW14_WIN_CHR,
+};
+
+const BMPWIN_DAT Window15BmpData={
+  GFL_BG_FRAME0_S,
+  WINDOW15_WIN_X, WINDOW15_WIN_Y,
+  WINDOW15_WIN_W, WINDOW15_WIN_H,
+  WINDOW15_WIN_PAL, WINDOW15_WIN_CHR,
+};
+
+const BMPWIN_DAT Window16BmpData={
+  GFL_BG_FRAME0_M,
+  WINDOW16_WIN_X,   WINDOW16_WIN_Y,
+  WINDOW16_WIN_W,   WINDOW16_WIN_H,
+  WINDOW16_WIN_PAL, WINDOW16_WIN_CHR,
+};
+const BMPWIN_DAT Window17BmpData={
+  GFL_BG_FRAME0_M,
+  WINDOW17_WIN_X,   WINDOW17_WIN_Y,
+  WINDOW17_WIN_W,   WINDOW17_WIN_H,
+  WINDOW17_WIN_PAL, WINDOW17_WIN_CHR,
+};
+
+const BMPWIN_DAT* Window0BmpDataTable[]={
+  &Window0BmpData,
+  &Window1BmpData,
+  &Window2BmpData,
+  &Window3BmpData,
+  &Window4BmpData,
+  &Window5BmpData,
+  &Window6BmpData,
+  &Window7BmpData,
+  &Window8BmpData,
+  &Window9BmpData,
+  &Window10BmpData,
+  &Window11BmpData,
+  &Window12BmpData,
+  &Window14BmpData,
+  &Window15BmpData,
+  &Window16BmpData,
+  &Window17BmpData,
+};
