@@ -34,6 +34,7 @@
 
 #include "../../../resource/fldmapdata/script/medal_scr_def.h"  //SCRID_MEDAL_OYAJI_PC
 
+#include "field/medal_check.h"
 
 //======================================================================
 //======================================================================
@@ -108,12 +109,13 @@ VMCMD_RESULT EvCmdUpdateMedalInfo( VMHANDLE * core, void * wk )
   GAMEDATA*          gameData = SCRCMD_WORK_GetGameData( work );
   SAVE_CONTROL_WORK* save     = GAMEDATA_GetSaveControlWork( gameData );
   MEDALBOX *       medalbox   = SaveData_GetMedalBox( save );
+  HEAPID           heapID     = SCRCMD_WORK_GetHeapID( work );
 
  	u16 idx = VMGetU16( core );
   switch ( idx )
   {
   case SCR_MEDALUPDATE_INFO://メダル状態の更新（レコードを参照）
-    /* 未実装 */
+    MEDAL_AchiveCheck( save , heapID );
     break;
   case SCR_MEDALUPDATE_TITLE://タイトルメダルの更新（達成→取得）
     updateTitleMedal( work );
