@@ -37,6 +37,7 @@ bsources:=$(wildcard *.bmp)
 IMDFILE = $(wildcard *.imd)
 ICAFILE = $(wildcard *.ica)
 ITPFILE = $(wildcard *.itp)
+IVAFILE = $(wildcard *.iva)
 
 # リソースが吐き出すファイルを自動でつくる
 lobjects = $(subst .ncl,.NCLR,$(lsources))
@@ -51,10 +52,11 @@ bobjects = $(subst .bmp,.ntft,$(bsources))
 NSBMDFILE = $(IMDFILE:.imd=.nsbmd)
 NSBCAFILE = $(ICAFILE:.ica=.nsbca)
 NSBTPFILE = $(ITPFILE:.itp=.nsbtp)
+NSBVAFILE = $(IVAFILE:.iva=.nsbva)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # サフィックスルールを定義することで 依存関係を自動で判断してくれる
-.SUFFIXES: .NCLR .ncl .NCGR .ncg  .NSCR .nsc .NCER .nce .ntft .bmp .imd .nsbmd .ica .nsbca .nsbtp .itp
+.SUFFIXES: .NCLR .ncl .NCGR .ncg  .NSCR .nsc .NCER .nce .ntft .bmp .imd .nsbmd .ica .nsbca .nsbtp .itp .nsbva .iva
 
 .ncl.NCLR:
 	g2dcvtr $<
@@ -81,6 +83,9 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 .itp.nsbtp:
 	g3dcvtr $<
 
+.iva.nsbva:
+	g3dcvtr $<
+
 endif
 
 .PHONY:	do-build clean subdir
@@ -100,7 +105,7 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(lobjects) $(gobjects) $(sobjects) $(eobjects) $(aobjects) $(gaobjects) $(bobjects) $(NSBMDFILE)  $(NSBCAFILE) $(NSBTPFILE)
+$(targetname).narc: $(lobjects) $(gobjects) $(sobjects) $(eobjects) $(aobjects) $(gaobjects) $(bobjects) $(NSBMDFILE)  $(NSBCAFILE) $(NSBTPFILE) $(NSBVAFILE)
 	nnsarc -r -l -n -i $(targetname) $^
 	$(NAIXCUT) $(targetname).naix
 endif

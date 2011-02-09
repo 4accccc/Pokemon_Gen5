@@ -4,7 +4,7 @@
  *	@file		ctvt_game_balloon.c
  *	@brief
  *	@author		Katsuhiko=Ichiraku
- *	@data		2010.12.14
+ *	@date		2010.12.14
  *
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
@@ -243,6 +243,123 @@ void CTVT_BALLOON_Draw( BALLOON_WORK*  p_wk )
       // Šg‘å—¦İ’è
       GFL_G3D_DRAW_DrawObject( obj, &p_wk->status );
     }
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  •—‘Dì¬  ƒQ[ƒ€‚Q—p
+ *
+ *	@param	gameWork  ƒQ[ƒ€ƒ[ƒN
+ *
+ *	@return ì¬‚µ‚½ƒ[ƒN
+ */
+//-----------------------------------------------------------------------------
+BALLOON2_WORK* CTVT_BALLOON2_Create( CTVT_GAME_WORK *gameWork, u16 unit_idx, HEAPID heapID )
+{
+  BALLOON2_WORK *p_wk;
+  p_wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(BALLOON2_WORK) );
+
+  p_wk->visible = TRUE;
+  p_wk->tcb     = NULL;
+  p_wk->p_game_wk = gameWork;
+  p_wk->parent_g3dUtil = CTVT_GAME_GetgG3DUtil( gameWork );
+  p_wk->unit_idx= unit_idx;
+
+  // OBJî•ñ‰Šú‰»
+  if( unit_idx == 0)
+  {
+    VEC_Set( &p_wk->status.scale, 0x900, 0x900, 0x900 );
+    MTX_Identity33( &p_wk->status.rotate );
+    VEC_Set( &p_wk->status.trans, 0, FX32_CONST(-60), 0 );
+  }
+  else
+  {
+    VecFx32 pos;
+    fx32    x, y;
+
+    // ¶E^‚ñ’†E‰E‚ÌˆÊ’u‚É‚È‚é‚æ‚¤‚É‚·‚éB
+    // ^‚ñ’†‚Í­‚µ‰º‚É‚È‚é
+    switch( unit_idx ){
+    case 1:
+      x = FX32_CONST(-75);
+      y = FX32_CONST(10);
+      break;
+    case 2:
+      x = FX32_CONST(0);
+      y = FX32_CONST(-10);
+      break;
+    case 3:
+      x = FX32_CONST(75);
+      y = FX32_CONST(10);
+      break;
+    }
+
+    VEC_Set( &p_wk->status.scale, 0x500, 0x500, 0x500 );
+    MTX_Identity33( &p_wk->status.rotate );
+    VEC_Set( &p_wk->status.trans, x, y, 0 );
+  }
+
+  return p_wk;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  •—‘D”jŠü  ƒQ[ƒ€‚Q—p
+ *
+ *	@param	BALLOON2_WORK *p_wk  ƒ[ƒN
+ */
+//-----------------------------------------------------------------------------
+void CTVT_BALLOON2_Delete( BALLOON2_WORK *p_wk )
+{
+  // ƒ^ƒXƒNíœ
+  if( p_wk->tcb != NULL )
+  {
+    GFL_TCB_DeleteTask( p_wk->tcb );
+  }
+
+  GFL_HEAP_FreeMemory( p_wk );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  •—‘DXV  ƒQ[ƒ€‚Q—p
+ *
+ *	@param	BALLOON2_WORK *p_wk  ƒ[ƒN
+ */
+//-----------------------------------------------------------------------------
+void CTVT_BALLOON2_Update( BALLOON2_WORK *p_wk )
+{
+  if( p_wk->visible == TRUE )
+  {
+    
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  •—‘D•`‰æ  ƒQ[ƒ€‚Q—p
+ *
+ *	@param	BALLOON2_WORK *p_wk  ƒ[ƒN
+ */
+//-----------------------------------------------------------------------------
+void CTVT_BALLOON2_Draw( BALLOON2_WORK *p_wk )
+{
+  GFL_G3D_OBJ*    obj;
+  NNSG3dResMdl*   mdl;
+  u16   head_obj_idx;
+
+  // 1ˆÊ‚Í–³ğŒ‚Å•\¦
+  if( p_wk->visible == TRUE  )
+  {
+    
+    // •—‘D‚Ì•`‰æ
+    head_obj_idx = GFL_G3D_UTIL_GetUnitObjIdx( p_wk->parent_g3dUtil, p_wk->unit_idx );
+    obj = GFL_G3D_UTIL_GetObjHandle( p_wk->parent_g3dUtil, head_obj_idx );
+    mdl = NNS_G3dRenderObjGetResMdl
+      (GFL_G3D_RENDER_GetRenderObj(GFL_G3D_OBJECT_GetG3Drnd(obj)) );
+
+    GFL_G3D_DRAW_DrawObject( obj, &p_wk->status );
   }
 }
 
