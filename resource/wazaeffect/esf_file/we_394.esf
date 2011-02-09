@@ -1,7 +1,9 @@
 EFFSEQ
-$0002
+$0004
 C:\home\swan\resource\particle\wazaeffect\w_394.spa
 C:\home\swan\resource\wazaeffect\graphic\bg_264_supernova2.NSCR
+C:\home\swan\resource\wazaeffect\graphic\bg_394_flaredrive.NSCR
+C:\home\swan\resource\wazaeffect\bg_palanm\bg_394_flaredrive_p.dat
 #001
 %00
 カメラ移動	追従	攻撃側	16	0	8
@@ -17,7 +19,7 @@ SE再生	SEQ_SE_W002_01	SE2	攻撃側	50:-100:40	0:0:0
 パーティクル再生	w_394	W_394_394_ATK_BALL	攻撃側	方向無し	2:0:0	1:1:1	1
 タイマーによるウエイト	30
 ポケモン移動	攻撃側	往復	1	0	3	2	1
-BGのロード	bg_264_supernova2
+BGのロード	bg_394_flaredrive
 BGのパレットフェード	エフェクト面	0	13	0	0:0:0
 BGの表示/非表示	エフェクト	表示
 BGのパレットフェード	お盆＋フィールド	0	13	1	0:0:0
@@ -41,11 +43,13 @@ BGの表示/非表示	フィールド	非表示
 エフェクト終了待ち	BG
 BGのパレットフェード	エフェクト面	13	0	2	0:0:0
 タイマーによるウエイト	2
+BGのパレットアニメ	bg_394_flaredrive_p	2
+BGのラスタースクロール	横	3	16	60	フェードなし	0
 ポケモンパレットフェード	防御側	0	13	0	0:0:0
 ポケモン移動	防御側	往復	0.3	0	2	1	2
-エフェクト終了待ち	SEPLAY1
-BGのパレットフェード	エフェクト面	0	13	0	0:0:0
-エフェクト終了待ち	すべて
+タイマーによるウエイト	45
+BGのパレットフェード	エフェクト面	0	13	2	0:0:0
+タイマーによるウエイト	10
 BGの表示/非表示	お盆	表示
 BGの表示/非表示	フィールド	表示
 ポケモンパレットフェード	防御側	13	0	0	0:0:0
