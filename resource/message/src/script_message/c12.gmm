@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-02-09T16:26:27"/>
+	<create user="matsumiya" host="W00224" date="2011-02-09T16:36:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="166"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1538" top="287" right="2243" bottom="907" maximized="no" rayout="Vertical2">
+	<dialog left="1297" top="186" right="2002" bottom="814" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,7 +292,22 @@
 	</lock>
 
 
-	<row id="msg_c12_sign1_01">
+	<row id="msg_t01_bigman_01">
+		<comment>♂
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">BIGMAN
+太った青年</attribute>
+		<language name="JPN" width="256">かがくの　ちからって　すげー！▼
+いまなら　せきがいせんで
+あんなことや　こんなことが▽
+あっ！　というまに　できるってよ！</language>
+		<language name="JPN_KANJI" width="256">科学の　力って　すげー！▼
+今なら　赤外線で
+あんなことや　こんなことが▽
+あっ！　というまに　できるってよ！</language>
+	</row>
+
+	<row id="msg_c12_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ</comment>
 		<attribute name="キャラ指定">看板：街</attribute>
 		<language name="JPN" width="256">ここは　ヒオウギシティ
@@ -301,7 +316,7 @@
 イッシュへ　広がっていく　街</language>
 	</row>
 
-	<row id="msg_c12_sign2_01">
+	<row id="msg_c12_sign2_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・0＝主人公の名前</comment>
 		<attribute name="キャラ指定">看板：主人公</attribute>
@@ -309,13 +324,46 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の家</language>
 	</row>
 
-	<row id="msg_c12_sign3_01">
+	<row id="msg_c12_sign3_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・友達♂の家
 ・1＝ライバルの名前</comment>
 		<attribute name="キャラ指定">看板：ライバル</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]の　いえ</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]の家</language>
+	</row>
+
+	<row id="msg_c12_sign4_01" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<comment>トレーナーズスクール</comment>
+		<attribute name="キャラ指定">看板</attribute>
+		<language name="JPN" width="256">ポケモンの　ために　まなぶ
+トレーナーズ　スクール</language>
+		<language name="JPN_KANJI" width="256">ポケモンの　ために　学ぶ
+トレーナーズ　スクール</language>
+	</row>
+
+	<row id="msg_c12_gymsign_01" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンジム
+・チェレン到着前
+　フラグ未定</comment>
+		<attribute name="キャラ指定">ポケモンジム</attribute>
+		<language name="JPN" width="256">ヒオウギシティ　ポケモンジム
+リーダー　？？？</language>
+		<language name="JPN_KANJI" width="256">ヒオウギシティ　ポケモンジム
+リーダー　？？？</language>
+	</row>
+
+	<row id="msg_c12_gymsign_02" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<comment>ポケモンジム
+・チェレン到着後
+　フラグ未定</comment>
+		<attribute name="キャラ指定">ポケモンジム</attribute>
+		<language name="JPN" width="256">ヒオウギシティ　ポケモンジム
+リーダー　チェレン[BE:00:ページ切り替え（行送り）]
+（キャッチフレーズ）</language>
+		<language name="JPN_KANJI" width="256">ヒオウギシティ　ポケモンジム
+リーダー　チェレン[BE:00:ページ切り替え（行送り）]
+（キャッチフレーズ）</language>
 	</row>
 
 	<flowchart-group-list>
