@@ -758,7 +758,17 @@ static int input_key_create(MAIL_VIEW_DAT* wk)
     return TRUE;
   }else if(GFL_UI_KEY_GetTrg() & (PAD_BUTTON_CANCEL)){
     PMSND_PlaySE(SND_MAIL_CANCEL);
+/*
+ *【同じ階層でカーソルが2箇所に表示される】
+ * 
+ * 編集するメールの行を示す枠にカーソルが表示されている時に、Bボタンで
+ * 「やめる」を決定して再度Bボタンで「キャンセル」を行うと、
+ * 同じ階層内で「やめる」とメールの行の2箇所にカーソルが表示されてしまいます。
+ */
+#ifdef BUGFIX_AF_SYSTEM303_20110209
+    wk->nowCol = wk->line   = 5;
     wk->mode = KEYIN_CANCEL;
+#endif
     return FALSE;
   }
 
