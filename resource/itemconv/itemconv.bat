@@ -10,6 +10,8 @@ del itempocket_def.h
 del item_data.naix
 del item_data.narc
 del itemsort_abc_def.h
+del itemsort_absolute_def.cdat
+del itemsort_jp_def.cdat
 del battle_pocket.dat
 
 md itemdata
@@ -17,6 +19,7 @@ md itemdata
 itemconv_wb.exe wb_item.csv >itemconv_wb.err
 itemcnv_gmm.exe wb_item.csv >itemcnv_gmm.err
 ruby makelist_sort_by_abc.rb
+ruby makelist_sort_pocket.rb
 rem notepad itemconv_dp.err
 rem notepad itemcnv_gmm.err
 
