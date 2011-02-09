@@ -19,9 +19,11 @@
 #define	BG_540_PSYCHO_BREAK_P_NCLR	(15)
 #define	BG_543_AFRO_P_DAT			(16)
 #define	BG_543_AFRO_P_NCLR			(17)
-#define	BG_553_FREEZE_VOLT_P_DAT	(18)
-#define	BG_553_FREEZE_VOLT_P_NCLR	(19)
-#define	TEST_PALANM_DAT				(20)
-#define	TEST_PALANM_NCLR			(21)
+#define	BG_551_AOIHONOO_P_DAT		(18)
+#define	BG_551_AOIHONOO_P_NCLR		(19)
+#define	BG_553_FREEZE_VOLT_P_DAT	(20)
+#define	BG_553_FREEZE_VOLT_P_NCLR	(21)
+#define	TEST_PALANM_DAT				(22)
+#define	TEST_PALANM_NCLR			(23)
 
 #endif

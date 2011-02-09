@@ -1,16 +1,21 @@
 EFFSEQ
-$0005
+$0010
 c:\home\swan\resource\particle\wazaeffect\w_001.spa
 C:\home\swan\resource\particle\wazaeffect\w_552.spa
 C:\home\swan\resource\particle\wazaeffect\w_551.spa
 C:\home\swan\resource\wazaeffect\graphic\bg_038_bashishi.NSCR
 C:\home\swan\resource\wazaeffect\graphic\bg_264_supernova2.NSCR
+C:\home\swan\resource\wazaeffect\graphic\bg_551_aoihonoo.NSCR
+C:\home\swan\resource\wazaeffect\bg_palanm\bg_551_aoihonoo_p.dat
+C:\home\swan\resource\wazaeffect\graphic\bg_177_spiral_ani.NSCR
+C:\home\swan\resource\wazaeffect\graphic\bg_177_spiral_ani.NSCR
+C:\home\swan\resource\wazaeffect\graphic\bg_551_aoihonoo.NSCR
 #001
 %00
 制御モード変更	継続
 SE再生	SEQ_SE_SDEMO_03	SE1	防御側	30:0:127	0:0:0
 制御モード変更	逐次
-BGのロード	bg_264_supernova2
+BGのロード	bg_551_aoihonoo
 カメラ移動	追従	防御側	16	0	8
 エフェクト終了待ち	すべて
 BGのパレットフェード	すべて	0	16	2	0:0:0
@@ -39,26 +44,27 @@ SE動的変化	SE1	追従	ピッチ	-800	0	81	140:0:0
 SE再生	SEQ_SE_W075_04	SE1	防御側	200:0:127	0:0:0
 SE再生	SEQ_SE_W310_01	SE2	防御側	190:0:127	0:0:0
 制御モード変更	逐次
-BGのスクロール	往復	0	8	2	0	70
 パーティクル再生	w_551	W_551_551_FIRE_SPIN_M	防御側	方向無し	1:0:0	1:1:0.6999512	1
 パーティクル再生	w_551	W_551_551_FIRE_SPIN_COR	防御側	方向無し	1:0:0	1:1:0.6999512	1
 タイマーによるウエイト	30
 ポケモンパレットフェード	防御側	0	8	4	31:0:0
 ポケモンアニメ	防御側	アニメストップ
 タイマーによるウエイト	140
-BGのパレットフェード	エフェクト面	16	0	2	0:0:0
+BGのパレットアニメ	bg_551_aoihonoo_p	3
+BGのラスタースクロール	横	3	20	90	フェードなし	0
+BGのパレットフェード	エフェクト面	16	0	1	0:0:0
 ポケモン拡縮	防御側	往復	0.1	-0.1	4	0	6
 パーティクル再生	w_551	W_551_551_FIRE_BURN_S	防御側	方向無し	2:0:0	1:1:1	1
 パーティクル再生	w_551	W_551_551_BALL_BURN	防御側	方向無し	2:0:0	1:1:1	1
-タイマーによるウエイト	20
+タイマーによるウエイト	40
 パーティクル再生	w_551	W_551_551_FIRE_BURN_L	防御側	方向無し	2:0:0	1:1:1	1
 BGのパレットフェード	エフェクト面	0	16	2	0:0:0
-エフェクト終了待ち	すべて
+タイマーによるウエイト	6
 ポケモンパレットフェード	防御側	8	0	2	31:0:0
-エフェクト終了待ち	すべて
+タイマーによるウエイト	30
 BGの表示/非表示	フィールド	表示
 BGの表示/非表示	お盆	表示
-エフェクト終了待ち	すべて
+タイマーによるウエイト	2
 BGのパレットフェード	すべて	16	0	2	0:0:0
 ポケモンアニメ	防御側	アニメスタート
 ポケモン影バニッシュ	すべて	バニッシュオフ
