@@ -1071,3 +1071,16 @@ src/app/beacon_detail/beacon_detail.c _sub_DataSetup()内 453行目付近
  * ※ローカライズ作業中に発見されたバグです。
  */
 #define BUGFIX_AF_SYSTEM247_20110209
+
+
+/*
+ * SYSTEM92 【ショップで「やめる」にカーソルを合わせると「たんけんセット」が表示される】
+ *
+ * 韓国版にて、ショップの購入画面で「やめる」にカーソルを合わせると、
+ * 「たんけんセット」が表示されてしまいます。
+ *
+ * 修正箇所：
+ * src/field/scrcmd_shop.c
+ */
+#define BUGFIX_AF_SYSTEM92_20110208
+

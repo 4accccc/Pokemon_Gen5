@@ -103,6 +103,10 @@ enum{
 #define SHOP_PAYMENT_BP       ( 1 )   // BPで払う
 
 
+#ifdef BUGFIX_AF_SYSTEM92_20110208
+// アイテム説明を消去する際、必ず無効なアイテムIDと判断されるアイテムID
+#define SHOP_ITEMID_NONE   (0xffff)
+#endif
 //====================================================================
 // ■構造体宣言１
 //====================================================================
@@ -1971,10 +1975,27 @@ static void move_callback( BMPMENULIST_WORK * wk, u32 param, u8 mode)
   GFL_CLACT_WK_SetPos( sbw->ClactWork[SHOP_OBJ_CURSOR], &clpos, CLSYS_DEFREND_MAIN );
   
   // どうぐ説明書き換え
+
+#ifdef BUGFIX_AF_SYSTEM92_20110208
+  // <localize> [潜在バグ] SHOP_BUY_APP_WORK::lineupの範囲外参照を修正（paramにBMPMENULIST_CANCELが来る）
+  if (param < SHOP_ITEM_MAX)
+  {
+    print_iteminfo( sbw, sbw->lineup[param].id );
+    itemicon_resource_change( sbw, sbw->lineup[param].id );
+  }
+  else
+  {
+    print_iteminfo( sbw, SHOP_ITEMID_NONE );
+    itemicon_resource_change( sbw, SHOP_ITEMID_NONE );
+  }
+#else
   print_iteminfo( sbw, sbw->lineup[param].id );
   itemicon_resource_change( sbw, sbw->lineup[param].id );
+#endif
 
 }
+
+
 
 //----------------------------------------------------------------------------------
 /**
