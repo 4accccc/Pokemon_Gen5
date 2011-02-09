@@ -47,9 +47,23 @@
 //ここのASSERTにひっかかったらupdate_logをbit管理ではなく配列管理に変更する
 SDK_COMPILER_ASSERT(GAMEBEACON_SYSTEM_LOG_MAX < 32);
 
-
-#define GAMEBEACON_UPDATE_RESORT_SYNC (4*60)
-#define GAMEBEACON_UPDATE_SEARCH_SYNC (4*60)
+//リゾート用に拡張パックを変えていくためのフレーム最大
+#ifdef PM_DEBUG
+//numinputで使っている
+u16 sc_extend_frame_max[RESORT_EXTEND_TYPE_MAX] =
+#else
+static const u16 sc_extend_frame_max[RESORT_EXTEND_TYPE_MAX] =
+#endif
+{
+  30,
+  30,
+  30,
+  30,
+  30,
+  30,
+  30,
+  30,
+};
 
 //==============================================================================
 //  構造体定義
@@ -70,9 +84,8 @@ static void BeaconInfo_SetFestMissionLog(GAMEBEACON_SYSTEM *bsys, const GAMEBEAC
 static GAMEBEACON_INFO * BeaconInfo_GetDirect(GAMEBEACON_SYSTEM *bsys, int log_no);
 static GAMEBEACON_INFO * BeaconInfo_Get(GAMEBEACON_SYSTEM *bsys, int log_no);
 static void SendBeacon_Init(GAMEBEACON_SEND_MANAGER *send, GAMEDATA * gamedata);
-static BOOL BeaconInfo_IsResortData( int action_no );
 static void BeaconInfo_SetResortData( GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info );
-static void GAMEBEACON_Set_ResortData( const RESORT_BEACON_DATA *cp_data );
+static void GAMEBEACON_Set_ResortData( GAMEBEACON_SYSTEM *bsys );
 
 #ifdef PM_DEBUG
 GAMEBEACON_INFO * DEBUG_SendBeaconInfo_GetPtr(void);
@@ -101,12 +114,6 @@ void GAMEBEACON_Init(HEAPID heap_id)
   
   GameBeaconSys = GFL_HEAP_AllocClearMemory(heap_id, sizeof(GAMEBEACON_SYSTEM));
   GameBeaconSys->end_log = -1;
-
-#ifdef PM_DEBUG
-  GameBeaconSys->debug_resort_frame = GAMEBEACON_UPDATE_RESORT_SYNC;
-  GameBeaconSys->debug_live_frame = GAMEBEACON_UPDATE_SEARCH_SYNC;
-#endif //PM_DEBUG
-
   GAMEBEACON_Set_ResortDataEnable( TRUE );
 }
 
@@ -120,6 +127,7 @@ void GAMEBEACON_Exit(void)
   GF_ASSERT_HEAVY(GameBeaconSys != NULL);
   
   GFL_HEAP_FreeMemory(GameBeaconSys);
+  GameBeaconSys = NULL;
 }
 
 //==================================================================
@@ -167,47 +175,8 @@ void GAMEBEACON_Update(void)
     bsys->backup_hour = play_hour;
   }
 
-  //データがないときだけ送信
-  if(bsys->send.info.action.action_no == GAMEBEACON_ACTION_SEARCH
-      || BeaconInfo_IsResortData( bsys->send.info.action.action_no ))
-  {
-#ifdef PM_DEBUG
-      const int resort_sync = GameBeaconSys->debug_resort_frame;
-      const int live_sync   = GameBeaconSys->debug_live_frame;
-#else 
-      const int resort_sync = GAMEBEACON_UPDATE_RESORT_SYNC;
-      const int live_sync   = GAMEBEACON_UPDATE_SEARCH_SYNC;
-#endif //PM_DEBUG
+  GAMEBEACON_Set_ResortData( bsys );
 
-    //リゾート情報
-    if(GameBeaconSys->resort_enable)
-    {
-      if( bsys->flip_count < resort_sync
-          || GameBeaconSys->resort_force )
-      {
-        RESORT_BEACON_DATA *p_data  = RESORT_BEACON_DATA_Init( GFL_HEAP_LOWID( GFL_HEAPID_APP ) );
-        //TODO 
-        //このあたりで、何秒間隔に拡張を進めるか決める
-        RESORT_BEACON_DATA_SetMyData( p_data, RESORT_EXTEND_TYPE_01, bsys->gamedata );
-        GAMEBEACON_Set_ResortData( p_data );
-        RESORT_BEACON_DATA_Exit( p_data );
-
-        NAGI_Printf( "send flip %d\n", bsys->flip_count);
-      }
-      else
-      {
-        bsys->send.info.action.action_no = GAMEBEACON_ACTION_SEARCH;
-      }
-    }
-
-    if( bsys->flip_count++ > resort_sync+live_sync )
-    {
-      bsys->flip_count  = 0;
-    }
-  }
-
-
-  NAGI_Printf( "send act %d\n", bsys->send.info.action.action_no);
   SendBeacon_Update(&bsys->send);
   
   for(i = 0; i < GAMEBEACON_SYSTEM_LOG_MAX; i++){
@@ -281,12 +250,13 @@ void GAMEBEACON_SendBeaconUpdate(void)
 //--------------------------------------------------------------
 static void SendBeacon_Update(GAMEBEACON_SEND_MANAGER *send)
 {
-  if(send->info.action.action_no != GAMEBEACON_ACTION_SEARCH
-      && !BeaconInfo_IsResortData( send->info.action.action_no ) ){
+  if(send->info.action.action_no != GAMEBEACON_ACTION_SEARCH){
     send->life++;
     if(send->life > CrossCommData[send->info.action.action_no].life){
       send->life = 0;
       send->info.action.action_no = GAMEBEACON_ACTION_SEARCH;
+
+      GAMEBEACON_Set_ResortData( GameBeaconSys );
     }
   }
 }
@@ -451,10 +421,9 @@ BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info)
   }
 
   //リゾートビーコン受け取り  これはログに設定しない
-  if( BeaconInfo_IsResortData( info->action.action_no ) )
+  if( info->action.action_no == GAMEBEACON_ACTION_SEARCH )
   {
     BeaconInfo_SetResortData( bsys, info );
-    return FALSE;
   }
 
   if(info->action.action_no == GAMEBEACON_ACTION_THANKYOU
@@ -806,20 +775,6 @@ static void SendBeacon_Init(GAMEBEACON_SEND_MANAGER *send, GAMEDATA * gamedata)
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  リゾート用データかどうか
- *
- *	@param	int action_no   アクション番号
- *
- *	@return   リゾート用データ
- */
-//-----------------------------------------------------------------------------
-static BOOL BeaconInfo_IsResortData( int action_no )
-{
-  return ( GAMEBEACON_ACTION_RESORT_DATA_START <= action_no )
-        && ( action_no <= GAMEBEACON_ACTION_RESORT_DATA_END );
-}
-//----------------------------------------------------------------------------
-/**
  *	@brief  リゾート用データを受け取る
  *
  *	@param	GAMEBEACON_SYSTEM *bsys ビーコンシステム
@@ -828,20 +783,37 @@ static BOOL BeaconInfo_IsResortData( int action_no )
 //-----------------------------------------------------------------------------
 static void BeaconInfo_SetResortData( GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info )
 {
-  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( bsys->gamedata );
-  RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( p_sv );
-  RESORT_DATA_BUFF *p_buff  =  RESONANCE_RESORT_SV_GetDataBuff( p_resort );
+  //拡張なしの場合は送られていない
+  if( info->action.resort_extend_type >= RESORT_EXTEND_TYPE_NULL )
+  {
+    NAGI_Printf( "リゾート受け取れない！\n" );
+    return;
+  }
+  else
+  {
+    SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( bsys->gamedata );
+    RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( p_sv );
+    RESORT_DATA_BUFF *p_buff  =  RESONANCE_RESORT_SV_GetDataBuff( p_resort );
 
-  //ビーコン情報取得
-  RESORT_BEACON_DATA *p_beacon  = RESORT_BEACON_DATA_Init( GFL_HEAP_LOWID(GFL_HEAPID_APP) );
-  RESORT_BEACON_DATA_SetBeaconInfo( p_beacon, info );
+    //ビーコン情報取得
+    RESORT_BEACON_DATA *p_beacon  = RESORT_BEACON_DATA_Init( GFL_HEAP_LOWID(GFL_HEAPID_APP) );
+    RESORT_BEACON_DATA_SetBeaconInfo( p_beacon, info );
 
-  //ビーコン追加
-  RESORT_DATA_BUFF_AddBeacon( p_buff, p_beacon );
+    //ビーコン追加
+    if( RESORT_DATA_BUFF_AddBeacon( p_buff, p_beacon ) == FALSE )
+    {
+      //セーブデータに入らなかったら、拡張バッファがあるか調べて入れる
+      if( GameBeaconSys->p_resort_buff )
+      {
+        NAGI_Printf( "セーブデータに入らなかったので拡張領域にいれるよ！\n" );
+        RESORT_DATA_BUFF_AddBeacon( GameBeaconSys->p_resort_buff, p_beacon );
+      }
+    }
 
-  RESORT_BEACON_DATA_Exit( p_beacon );
+    RESORT_BEACON_DATA_Exit( p_beacon );
 
-  NAGI_Printf( "リゾート受け取り！\n" );
+    NAGI_Printf( "リゾート受け取り！\n" );
+  }
 }
 
 //--------------------------------------------------------------
@@ -1630,20 +1602,28 @@ void GAMEBEACON_Set_FestMission( FEST_MISSION* mission )
 //==================================================================
 void GAMEBEACON_Set_ResortDataEnable( BOOL is_enable )
 {
-  GameBeaconSys->resort_enable  = is_enable;
+  if( GameBeaconSys )
+  {
+    GameBeaconSys->resort_enable  = is_enable;
+  }
 }
-
 //==================================================================
 /**
- * 送信ビーコンセット：レゾナンスリゾートとライブ通信の送信切り替えフラグ
+ * 送信ビーコンバッファをセット：レゾナンスリゾートのバッファ拡張設定
+ *  レゾナンスリゾートは通常はセーブデータへデータを設定するが、
+ *  特定の場所では特定のメモリ上にも確保する
  *
- * @param   BOOL  TRUE切り替えなしで常にレゾナンスリゾートデータ  FALSE切り替え
+ * @param   void *p_buff RESORT_DATA_BUFFのポインタ 使用しない場合はNULL
  */
 //==================================================================
-void GAMEBEACON_Set_ResortDataForce( BOOL is_enable )
+void GAMEBEACON_Set_ResortRecvBuffer( void *p_buff )
 {
-  GameBeaconSys->resort_force  = is_enable;
+  if( GameBeaconSys )
+  {
+    GameBeaconSys->p_resort_buff  = p_buff;
+  }
 }
+
 //==================================================================
 /**
  * 送信ビーコンセット：レゾナンスリゾートのデータ
@@ -1653,15 +1633,38 @@ void GAMEBEACON_Set_ResortDataForce( BOOL is_enable )
  * @param   const RESORT_BEACON_DATA *cp_data
  */
 //==================================================================
-static void GAMEBEACON_Set_ResortData( const RESORT_BEACON_DATA *cp_data )
+static void GAMEBEACON_Set_ResortData( GAMEBEACON_SYSTEM *bsys )
 {
-  GAMEBEACON_INFO *info   = &GameBeaconSys->send.info;
-  RESORT_EXTEND_TYPE  type;
+  if( bsys->send.info.action.action_no == GAMEBEACON_ACTION_SEARCH )
+  {
+    if( bsys->resort_enable )
+    {
+      RESORT_BEACON_DATA *p_data  = RESORT_BEACON_DATA_Init( GFL_HEAP_LOWID( GFL_HEAPID_APP ) );
 
-  RESORT_BEACON_DATA_GetExtendData( cp_data, info->action.extend_buff, &type );
-  info->action.action_no  = GAMEBEACON_ACTION_RESORT_DATA_START + type;
+      GAMEBEACON_INFO *info   = &bsys->send.info;
+      RESORT_EXTEND_TYPE  type;
+      RESORT_BEACON_DATA_SetMyData( p_data, bsys->resort_extend_index, bsys->gamedata );
 
-  GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+      RESORT_BEACON_DATA_GetExtendData( p_data, info->action.extend_buff, &type );
+      info->action.resort_extend_type = type;
+
+      GAMEBEACON_SUB_SendBeaconSetCommon(&bsys->send);
+
+      RESORT_BEACON_DATA_Exit( p_data );
+
+      //拡張切り替えカウント
+      if( bsys->resort_extend_count++ > sc_extend_frame_max[bsys->resort_extend_index] )
+      {
+        bsys->resort_extend_count = 0;
+        bsys->resort_extend_index++;
+        bsys->resort_extend_index %= RESORT_EXTEND_TYPE_MAX;
+      }
+    }
+    else
+    {
+      bsys->send.info.action.resort_extend_type = RESORT_EXTEND_TYPE_NULL;
+    }
+  }
 }
 //==================================================================
 /**

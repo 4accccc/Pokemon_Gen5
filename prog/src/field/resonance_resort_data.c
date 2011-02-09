@@ -11,6 +11,9 @@
 //ライブラリ
 #include <gflib.h>
 #include "gamesystem/game_data.h"
+#include "savedata/questionnaire_save.h"
+#include "net_app/union/union_beacon_tool.h"
+
 //外部公開
 #include "field/resonance_resort_data.h"
 
@@ -19,11 +22,14 @@
 #define DEBUG_RESORT_PRINT_ON
 #endif
 
-#if defined(DEBUG_RESORT_PRINT_ON) && defined(DEBUG_ONLY_FOR_toru_nagihashi)
+#if defined(DEBUG_RESORT_PRINT_ON) && ( defined(DEBUG_ONLY_FOR_toru_nagihashi) || defined(DEBUG_ONLY_FOR_shimoyamada) )
 #define RESORT_Printf(...)  OS_TFPrintf(0,__VA_ARGS__)
 #else
 #define RESORT_Printf(...)  /* */
 #endif
+
+
+#define RESORT_VALID_ASSERT(...) GF_ASSERT_MSG_LIGHT( 0, __VA_ARGS__ );
 
 //=============================================================================
 /**
@@ -35,9 +41,18 @@
 //=====================================
 typedef struct
 {
-  STRCODE name[PERSON_NAME_SIZE];   ///<トレーナー名(!! EOM除く !!)
-  u16 trainerID;                   ///<トレーナーID(下位16ビット)
+  STRCODE name[PERSON_NAME_SIZE];   ///<トレーナー名(!! EOM除く !!) 14
+  u16 trainerID;                    ///<トレーナーID(下位16ビット)  2 16
+  u8  nation;                       ///<国コード      1 17
+  u8  area;                         ///<地域コード    1 18
+  u8  version;                      ///<バージョン    1 19
+  u8  language;                     ///<言語コード    1 20
+  u8  trainer_view;                 ///<見た目        1 21
+  u8  sex;                          ///<性別          1 22
+  QUESTIONNAIRE_ANSWER_WORK qanswer;  ///<アンケート  10  32
 }RESORT_BASIC1_DATA;
+
+SDK_COMPILER_ASSERT( sizeof(RESORT_BASIC1_DATA) == RESORT_BASIC1_DATA_SIZE );
 
 //----------------------------------------------------------------------------
 /**
@@ -50,11 +65,34 @@ typedef struct
 static void RESORT_BASIC1_DATA_SetMyData( RESORT_BASIC1_DATA *p_wk, const GAMEDATA *cp_gamedata )
 {
   GFL_STD_MemClear( p_wk, sizeof(RESORT_BASIC1_DATA) );
+  //MYSTATUS
   {
     MYSTATUS *p_mystatus  = GAMEDATA_GetMyStatus((GAMEDATA*)cp_gamedata);
     //EOMが入らないサイズを取得するので、自分でコピーする
     GFL_STD_MemCopy( MyStatus_GetMyName(p_mystatus), p_wk->name, sizeof(STRCODE)*PERSON_NAME_SIZE );
     p_wk->trainerID = MyStatus_GetID_Low( p_mystatus );
+    p_wk->nation    = MyStatus_GetMyNation(p_mystatus);
+    p_wk->area      = MyStatus_GetMyArea(p_mystatus);
+    p_wk->sex       = MyStatus_GetMySex(p_mystatus);
+    p_wk->version   = GET_VERSION();
+    p_wk->language  = PM_LANG;
+
+    if( p_wk->sex == PM_MALE )
+    {
+      p_wk->trainer_view = MyStatus_GetTrainerView(p_mystatus);
+    }
+    else
+    {
+      p_wk->trainer_view = MyStatus_GetTrainerView(p_mystatus) - UNION_VIEW_INDEX_WOMAN_START;
+    }
+  }
+
+  //アンケート
+  {
+    SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork((GAMEDATA*)cp_gamedata);
+    QUESTIONNAIRE_SAVE_WORK *p_ques_sv = SaveData_GetQuestionnaire(p_sv);
+
+    GFL_STD_MemCopy( Questionnaire_GetAnswerWork(p_ques_sv), &p_wk->qanswer, sizeof(QUESTIONNAIRE_ANSWER_WORK) );
   }
 }
 //----------------------------------------------------------------------------
@@ -71,6 +109,13 @@ static void RESORT_BASIC1_DATA_SetBeaconInfo( RESORT_BASIC1_DATA *p_wk, const GA
   
   GFL_STD_MemCopy( cp_beacon_info->name, p_wk->name, sizeof(STRCODE)*PERSON_NAME_SIZE );
   p_wk->trainerID = cp_beacon_info->trainer_id;
+  p_wk->sex       = cp_beacon_info->sex;
+  p_wk->version   = cp_beacon_info->pm_version;
+  p_wk->language  = cp_beacon_info->language;
+  p_wk->nation    = cp_beacon_info->nation;
+  p_wk->area      = cp_beacon_info->area;
+  p_wk->trainer_view  = cp_beacon_info->trainer_view;
+  p_wk->qanswer   = cp_beacon_info->question_answer;
 }
 
 //----------------------------------------------------------------------------
@@ -84,6 +129,33 @@ static void RESORT_BASIC1_DATA_SetBeaconInfo( RESORT_BASIC1_DATA *p_wk, const GA
 //-----------------------------------------------------------------------------
 static BOOL RESORT_BASIC1_DATA_IsValid( const RESORT_BASIC1_DATA *cp_wk )
 {
+  //性別チェック
+  if( cp_wk->sex != PM_FEMALE && cp_wk->sex != PM_MALE )
+  {
+    RESORT_VALID_ASSERT( "基本データ１：性別が不正です\n" );
+    return FALSE;
+  }
+  //バージョンチェック
+  if( cp_wk->version != VERSION_W2 &&  cp_wk->version != VERSION_B2 )
+  {
+    RESORT_VALID_ASSERT( "基本データ１：バージョンが不正です\n" );
+    return FALSE;
+  }
+  //言語チェックはローカライズを増やす可能性を考えてやらない
+#if 0
+  if( cp_wk->language )
+  {
+    RESORT_VALID_ASSERT( "基本データ１：言語が不正です\n" );
+    return FALSE;
+  }
+#endif
+  //見た目
+  if( cp_wk->trainer_view > UNION_VIEW_INDEX_MAN_END )
+  {
+    RESORT_VALID_ASSERT( "基本データ１：見た目が不正です\n" );
+    return FALSE;
+  }
+
   return TRUE;
 }
 
@@ -101,9 +173,9 @@ static BOOL RESORT_BASIC1_DATA_IsSameOwner( const RESORT_BASIC1_DATA *cp_a, cons
 {
   BOOL is_trainerID = (cp_a->trainerID == cp_b->trainerID);
   BOOL is_name  = (GFL_STD_MemComp( cp_a->name, cp_b->name ,  sizeof(STRCODE)*PERSON_NAME_SIZE) == 0);
-  BOOL is_sex   = TRUE; //TODO
+  BOOL is_sex   = (cp_a->sex == cp_b->sex);
 
-  return is_trainerID && is_name;
+  return is_trainerID && is_name && is_sex;
 }
 
 #ifdef PM_DEBUG
@@ -135,6 +207,8 @@ typedef struct
 {
   int dummy;  //TODO
 }RESORT_BASIC2_DATA;
+
+SDK_COMPILER_ASSERT( sizeof(RESORT_BASIC2_DATA) == RESORT_BASIC2_DATA_SIZE );
 
 //----------------------------------------------------------------------------
 /**
@@ -583,11 +657,27 @@ void RESORT_RECV_DATA_MergeBeacon( RESORT_RECV_DATA *p_wk, const RESORT_BEACON_D
 
     //拡張マージフラグ
     p_wk->extend_flag |=  1<<cp_beacon->extend_type;
+
+    if( p_wk->extend_flag == 0xFF )
+    {
+      RESORT_Printf( "!!!すべてマージ完了\n!!!" );
+    }
   }
   else
   {
-    //なんらかのマージ処理
-    //TODO
+    //空だったら、全部いれる
+    p_wk->basic1  = cp_beacon->basic1;
+    p_wk->basic2  = cp_beacon->basic2;
+    
+    //入れる処理
+
+    //拡張マージフラグ
+    p_wk->extend_flag |=  1<<cp_beacon->extend_type;
+
+    if( p_wk->extend_flag == 0xFF )
+    {
+      RESORT_Printf( "!!!すべてマージ完了\n!!!" );
+    }
   }
 }
 
@@ -678,7 +768,7 @@ void RESORT_BEACON_DATA_SetBeaconInfo( RESORT_BEACON_DATA *p_wk, const GAMEBEACO
   RESORT_BASIC2_DATA_SetBeaconInfo( &p_wk->basic2, cp_beacon_info );
 
   GFL_STD_MemCopy( cp_beacon_info->action.extend_buff, p_wk->extend, RESORT_EXTEND_DATA_SIZE );
-  p_wk->extend_type = cp_beacon_info->action.action_no - GAMEBEACON_ACTION_RESORT_DATA_START;
+  p_wk->extend_type = cp_beacon_info->action.resort_extend_type;
 
 }
 
@@ -695,22 +785,22 @@ BOOL RESORT_BEACON_DATA_IsValid( const RESORT_BEACON_DATA *cp_wk )
 {
   if( !RESORT_BASIC1_DATA_IsValid( &cp_wk->basic1 ) )
   {
-    RESORT_Printf( "ビーコン情報の基本データ１が不正です\n" );
+    RESORT_VALID_ASSERT( "ビーコン情報の基本データ１が不正です\n" );
     return FALSE;
   }
   if( !RESORT_BASIC2_DATA_IsValid( &cp_wk->basic2 ) )
   {
-    RESORT_Printf( "ビーコン情報の基本データ２が不正です\n" );
+    RESORT_VALID_ASSERT( "ビーコン情報の基本データ２が不正です\n" );
     return FALSE;
   }
   if( cp_wk->extend_type >= RESORT_EXTEND_TYPE_MAX )
   {
-    RESORT_Printf( "ビーコン情報の拡張番号が不正です=%d\n", cp_wk->extend_type );
+    RESORT_VALID_ASSERT( "ビーコン情報の拡張番号が不正です=%d\n", cp_wk->extend_type );
     return FALSE;
   }
   if( !sc_ResortExtendData_IsValid[cp_wk->extend_type]( cp_wk->extend ) )
   {
-    RESORT_Printf( "ビーコン情報の[%d]番拡張データが不正です\n", cp_wk->extend_type );
+    RESORT_VALID_ASSERT( "ビーコン情報の[%d]番拡張データが不正です\n", cp_wk->extend_type );
     return FALSE;
   }
 
@@ -857,16 +947,18 @@ void RESORT_DATA_BUFF_Clear( RESORT_DATA_BUFF *p_wk, u32 index )
  *
  *	@param	RESORT_DATA_BUFF *p_wk  ワーク
  *	@param	RESORT_BEACON_DATA *cp_beacon   ビーコンデータ
+ *
+ *	@retval TRUEビーコン挿し込みした  FALSEしていない
  */
 //-----------------------------------------------------------------------------
-void RESORT_DATA_BUFF_AddBeacon( RESORT_DATA_BUFF *p_wk, const RESORT_BEACON_DATA *cp_beacon )
+BOOL RESORT_DATA_BUFF_AddBeacon( RESORT_DATA_BUFF *p_wk, const RESORT_BEACON_DATA *cp_beacon )
 {
   RESORT_RECV_DATA *p_data;
 
   //ロック中は追加しない
   if( p_wk->is_lock )
   {
-    return;
+    return FALSE;
   }
 
   //同じ所有者のものがあったら優先的に入れる
@@ -874,8 +966,8 @@ void RESORT_DATA_BUFF_AddBeacon( RESORT_DATA_BUFF *p_wk, const RESORT_BEACON_DAT
   if( p_data )
   {
     RESORT_RECV_DATA_MergeBeacon( p_data, cp_beacon );
-    RESORT_Printf( "マージしていれた！\n" );
-    return;
+    RESORT_Printf( "マージしていれた！%d\n", cp_beacon->extend_type );
+    return TRUE;
   }
 
   //空のデータがあったら入れる
@@ -887,11 +979,12 @@ void RESORT_DATA_BUFF_AddBeacon( RESORT_DATA_BUFF *p_wk, const RESORT_BEACON_DAT
 #ifdef  PM_DEBUG
     RESORT_BASIC1_DATA_PrintDebug( &cp_beacon->basic1 );
 #endif
-    RESORT_Printf( "空のデータに入れた！\n" );
-    return;
+    RESORT_Printf( "空のデータに入れた！%d\n", cp_beacon->extend_type );
+    return TRUE;
   }
 
   RESORT_Printf( "データを受け取ったが、バッファがいっぱい！\n" );
+  return FALSE;
 }
 //----------------------------------------------------------------------------
 /**

@@ -394,24 +394,21 @@ static const DEBUG_NUMINPUT_PARAM DNI_RResortBeaconFlag  =
 {
   0,  1, DebugGetRResortBeaconFlag, DebugSetRResortBeaconFlag,
 };
-static const DEBUG_NUMINPUT_PARAM DNI_RResortBeaconOnly  =
+static const DEBUG_NUMINPUT_PARAM DNI_RResortBeaconDiv  =
 {
-  0,  1, DebugGetRResortBeaconOnly, DebugSetRResortBeaconOnly,
-};
-static const DEBUG_NUMINPUT_PARAM DNI_RResortBeaconFrameResort  =
-{
-  0,  0xFFFF, DebugGetRResortBeaconFrameResort, DebugSetRResortBeaconFrameResort,
-};
-static const DEBUG_NUMINPUT_PARAM DNI_RResortBeaconFrameLive  =
-{
-  0,  0xFFFF, DebugGetRResortBeaconFrameLive, DebugSetRResortBeaconFrameLive,
+  0,  0xFFFF, DebugGetRResortBeaconDiv, DebugSetRResortBeaconDiv,
 };
 
 static const DEBUG_NUMINPUT_LIST DNI_ResonanceResort[] = { 
   //gmm_id, param, dni_param
   { dni_resort_01, 0, &DNI_RResortBeaconFlag }, //ビーコン配信On,OFF
-  { dni_resort_02, 0, &DNI_RResortBeaconOnly }, //リゾートビーコンのみ
-  { dni_resort_03, 0, &DNI_RResortBeaconFrameResort }, //ビーコン間隔リゾート
-  { dni_resort_04, 0, &DNI_RResortBeaconFrameLive }, //ビーコン間隔ライブ
+  { dni_resort_02, 0, &DNI_RResortBeaconDiv }, //リゾートビーコン拡張分割シンク
+  { dni_resort_03, 1, &DNI_RResortBeaconDiv }, //リゾートビーコン拡張分割シンク
+  { dni_resort_04, 2, &DNI_RResortBeaconDiv }, //リゾートビーコン拡張分割シンク
+  { dni_resort_05, 3, &DNI_RResortBeaconDiv }, //リゾートビーコン拡張分割シンク
+  { dni_resort_06, 4, &DNI_RResortBeaconDiv }, //リゾートビーコン拡張分割シンク
+  { dni_resort_07, 5, &DNI_RResortBeaconDiv }, //リゾートビーコン拡張分割シンク
+  { dni_resort_08, 6, &DNI_RResortBeaconDiv }, //リゾートビーコン拡張分割シンク
+  { dni_resort_09, 7, &DNI_RResortBeaconDiv }, //リゾートビーコン拡張分割シンク
 };
 #endif  //PM_DEBUG

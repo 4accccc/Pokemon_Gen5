@@ -228,12 +228,8 @@ static void DebugSetLivecasterSecretNotRnd(GAMESYS_WORK * gsys, GAMEDATA * gdata
 //ƒŒƒ]ƒiƒ“ƒXƒŠƒ][ƒg
 static u32 DebugGetRResortBeaconFlag( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param );
 static void DebugSetRResortBeaconFlag(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value );
-static u32 DebugGetRResortBeaconOnly( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param );
-static void DebugSetRResortBeaconOnly(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value );
-static u32 DebugGetRResortBeaconFrameResort( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param );
-static void DebugSetRResortBeaconFrameResort(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value );
-static u32 DebugGetRResortBeaconFrameLive( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param );
-static void DebugSetRResortBeaconFrameLive(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value );
+static u32 DebugGetRResortBeaconDiv( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param );
+static void DebugSetRResortBeaconDiv(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value );
 
 
 
@@ -1778,6 +1774,7 @@ static void DebugSetLivecasterSecretNotRnd(GAMESYS_WORK * gsys, GAMEDATA * gdata
  */
 //=============================================================================
 extern GAMEBEACON_SYSTEM * GameBeaconSys;
+extern u16 sc_extend_frame_max[8];
 static u32 DebugGetRResortBeaconFlag( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param )
 {
   return GameBeaconSys->resort_enable;
@@ -1786,29 +1783,13 @@ static void DebugSetRResortBeaconFlag(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32
 {
   GameBeaconSys->resort_enable  = value;
 }
-static u32 DebugGetRResortBeaconOnly( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param )
+static u32 DebugGetRResortBeaconDiv( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param )
 {
-  return GameBeaconSys->resort_force;
+  return sc_extend_frame_max[ param ];
 }
-static void DebugSetRResortBeaconOnly(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value )
+static void DebugSetRResortBeaconDiv(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value )
 {
-  GameBeaconSys->resort_force = value;
-}
-static u32 DebugGetRResortBeaconFrameResort( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param )
-{
-  return GameBeaconSys->debug_resort_frame;
-}
-static void DebugSetRResortBeaconFrameResort(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value )
-{
-  GameBeaconSys->debug_resort_frame = value;
-}
-static u32 DebugGetRResortBeaconFrameLive( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param )
-{
-  return GameBeaconSys->debug_live_frame;
-}
-static void DebugSetRResortBeaconFrameLive(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value )
-{
-  GameBeaconSys->debug_live_frame = value;
+  sc_extend_frame_max[ param ]  = value;
 }
 
 #endif  //PM_DEBUG

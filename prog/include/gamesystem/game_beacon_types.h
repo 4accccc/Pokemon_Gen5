@@ -62,10 +62,14 @@ typedef struct{
 //--------------------------------------------------------------
 typedef struct{
   u16 action_no;                            ///<行動No
-  u16 monsno;   ///<ポケモン番号 ※本来ならnormalの中に入っているものだが、action_noとunionの間に
+  union
+  {
+    u16 monsno;   ///<ポケモン番号 ※本来ならnormalの中に入っているものだが、action_noとunionの間に
                                  //アライメントが発生しているので、monsnoをアライメントに当てはめ、
                                  //最大サイズであるnormalを縮小し、共用体自体のアライメントも阻止
                                  //し、結果的に構造体全体のサイズを縮めている
+    u16 resort_extend_type;
+  };
 
   //action_noによってセットされるものが変わる
   union{  //最大20byteまで
@@ -92,7 +96,7 @@ typedef struct{
     }thanks;
     STRCODE freeword_message[GAMEBEACON_FREEWORD_MESSAGE_LEN]; ///一言メッセージ
     FEST_MISSION  fmission;
-    u8 extend_buff[20];   ///<２０バイトのフリーエリア
+    u8 extend_buff[20];   ///<２０バイトのフリーエリア  リゾートで使用
   };
 }GAMEBEACON_INFO_ACTION;
 

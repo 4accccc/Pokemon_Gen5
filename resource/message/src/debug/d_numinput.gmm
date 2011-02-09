@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00170" date="2011-02-08T19:53:35"/>
+	<create user="toru_nagihashi" host="W00170" date="2011-02-09T17:59:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -365,7 +365,7 @@
 		</language>
 	</columns>
 
-	<dialog left="-1184" top="174" right="-479" bottom="802" maximized="no" rayout="Vertical2">
+	<dialog left="-1205" top="145" right="-500" bottom="773" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="412" top="136" right="940" bottom="658" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -1056,18 +1056,43 @@
 	</row>
 
 	<row id="dni_resort_02" back-color="#8080ff,,,,,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
-		<language name="JPN" width="240">ビーコンリゾートのみ</language>
-		<language name="JPN_KANJI" width="240">ビーコンリゾートのみ</language>
+		<language name="JPN" width="240">拡張分割フレーム１</language>
+		<language name="JPN_KANJI" width="240">拡張分割フレーム１</language>
 	</row>
 
 	<row id="dni_resort_03" back-color="#8080ff,,,,,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
-		<language name="JPN" width="240">ビーコン間隔リゾート側</language>
-		<language name="JPN_KANJI" width="240">ビーコン間隔リゾート側</language>
+		<language name="JPN" width="240">拡張分割フレーム２</language>
+		<language name="JPN_KANJI" width="240">拡張分割フレーム２</language>
 	</row>
 
 	<row id="dni_resort_04" back-color="#8080ff,,,,,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
-		<language name="JPN" width="240">ビーコン間隔ライブ側</language>
-		<language name="JPN_KANJI" width="240">ビーコン間隔ライブ側</language>
+		<language name="JPN" width="240">拡張分割フレーム３</language>
+		<language name="JPN_KANJI" width="240">拡張分割フレーム３</language>
+	</row>
+
+	<row id="dni_resort_05" back-color="#8080ff,,,,,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<language name="JPN" width="240">拡張分割フレーム４</language>
+		<language name="JPN_KANJI" width="240">拡張分割フレーム４</language>
+	</row>
+
+	<row id="dni_resort_06" back-color="#8080ff,,,,,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<language name="JPN" width="240">拡張分割フレーム５</language>
+		<language name="JPN_KANJI" width="240">拡張分割フレーム５</language>
+	</row>
+
+	<row id="dni_resort_07" back-color="#8080ff,,,,,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<language name="JPN" width="240">拡張分割フレーム６</language>
+		<language name="JPN_KANJI" width="240">拡張分割フレーム６</language>
+	</row>
+
+	<row id="dni_resort_08" back-color="#8080ff,,,,,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<language name="JPN" width="240">拡張分割フレーム７</language>
+		<language name="JPN_KANJI" width="240">拡張分割フレーム７</language>
+	</row>
+
+	<row id="dni_resort_09" back-color="#8080ff,,,,,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<language name="JPN" width="240">拡張分割フレーム８</language>
+		<language name="JPN_KANJI" width="240">拡張分割フレーム８</language>
 	</row>
 
 	<flowchart-group-list>

@@ -33,13 +33,6 @@
  *        TODO
 */
 //=============================================================================
-//-------------------------------------
-///	定数
-//=====================================
-//リゾート用の拡張データ１つあたりのサイズ
-#define RESORT_EXTEND_DATA_SIZE   (20)
-//リゾート用全受信データの全サイズ
-#define RESORT_RECV_DATA_SIZE     (184)
 
 //-------------------------------------
 ///	拡張データ
@@ -57,6 +50,18 @@ typedef enum
   RESORT_EXTEND_TYPE_MAX,
   RESORT_EXTEND_TYPE_NULL = RESORT_EXTEND_TYPE_MAX,
 }RESORT_EXTEND_TYPE;
+
+//-------------------------------------
+///	定数
+//=====================================
+//リゾート用の基本データ１のサイズ
+#define RESORT_BASIC1_DATA_SIZE   (32)
+//リゾート用の基本データ２のサイズ
+#define RESORT_BASIC2_DATA_SIZE   (4)
+//リゾート用の拡張データ１つあたりのサイズ
+#define RESORT_EXTEND_DATA_SIZE   (20)
+//リゾート用全受信データの全サイズ
+#define RESORT_RECV_DATA_SIZE     (RESORT_BASIC1_DATA_SIZE+RESORT_BASIC2_DATA_SIZE+RESORT_EXTEND_DATA_SIZE*RESORT_EXTEND_TYPE_MAX+4)
 
 //-------------------------------------
 ///	１…リゾート用全受信データ
@@ -126,4 +131,4 @@ extern void RESORT_DATA_BUFF_UnLock( RESORT_DATA_BUFF *p_wk );
 extern RESORT_RECV_DATA * RESORT_DATA_BUFF_GetData( RESORT_DATA_BUFF *p_wk, u32 index );
 extern void RESORT_DATA_BUFF_Clear( RESORT_DATA_BUFF *p_wk, u32 index );
 
-extern void RESORT_DATA_BUFF_AddBeacon( RESORT_DATA_BUFF *p_wk, const RESORT_BEACON_DATA *cp_beacon );
+extern BOOL RESORT_DATA_BUFF_AddBeacon( RESORT_DATA_BUFF *p_wk, const RESORT_BEACON_DATA *cp_beacon );

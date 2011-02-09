@@ -95,15 +95,6 @@ typedef enum{
  
   //スワンで追加されたビーコン
   GAMEBEACON_ACTION_FEST_MISSION,             ///<フェスタミッション受信                51
-  GAMEBEACON_ACTION_RESORT_DATA_START,        ///<レゾナンスリゾート                    52
-  GAMEBEACON_ACTION_RESORT_DATA_02,           ///<レゾナンスリゾート                    53
-  GAMEBEACON_ACTION_RESORT_DATA_03,           ///<レゾナンスリゾート                    54
-  GAMEBEACON_ACTION_RESORT_DATA_04,           ///<レゾナンスリゾート                    55
-  GAMEBEACON_ACTION_RESORT_DATA_05,           ///<レゾナンスリゾート                    56
-  GAMEBEACON_ACTION_RESORT_DATA_06,           ///<レゾナンスリゾート                    57
-  GAMEBEACON_ACTION_RESORT_DATA_07,           ///<レゾナンスリゾート                    58
-  GAMEBEACON_ACTION_RESORT_DATA_END,          ///<レゾナンスリゾート                    59
-
   GAMEBEACON_ACTION_MAX,
 }GAMEBEACON_ACTION;
 
@@ -201,7 +192,7 @@ extern void GAMEBEACON_Set_FreeWord(const STRBUF *free_word);
 
 extern void GAMEBEACON_Set_FestMission( FEST_MISSION* mission );
 extern void GAMEBEACON_Set_ResortDataEnable( BOOL is_enable );
-extern void GAMEBEACON_Set_ResortDataForce( BOOL is_enable );
+extern void GAMEBEACON_Set_ResortRecvBuffer( void *p_buff );
 
 
 //=====詳細パラメータセット
