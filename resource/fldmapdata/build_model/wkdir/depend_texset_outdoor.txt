@@ -2178,6 +2178,9 @@ DEP_TEXSET_IMD_OUTDOOR055 = \
 	$(SRCDIR)/o_chair_01.imd \
 	$(SRCDIR)/o_parasol_01.imd \
 	$(SRCDIR)/o_table_01.imd \
+	$(SRCDIR)/d5_container_01.imd \
+	$(SRCDIR)/d5_container_02.imd \
+	$(SRCDIR)/d5_ship_01.imd \
 	$(SRCDIR)/searock_01.imd \
 	$(SRCDIR)/searock_02.imd \
 	$(SRCDIR)/plant_01.imd \
