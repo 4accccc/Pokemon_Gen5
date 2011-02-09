@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="onoue_masayuki" host="W00240" date="2011-02-08T17:42:00"/>
+	<create user="shimoyamada" host="W00184" date="2011-02-09T16:25:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,9 +305,9 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
-		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+	<dialog left="1094" top="392" right="1799" bottom="1020" maximized="no" rayout="Vertical2">
+		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
+		<tag-palette left="551" top="133" right="1024" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -358,7 +358,8 @@
 		<language name="JPN_KANJI" width="256">大切なもの</language>
 	</row>
 
-	<row id="msg_pocket_006">
+	<row id="msg_pocket_006" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>swan追加</comment>
 		<language name="JPN" width="256">ほかん</language>
 		<language name="JPN_KANJI" width="256">保管</language>
 	</row>
