@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohtani_mayo" host="W00238" date="2011-02-09T15:36:38" source="livecaster_test_001.mb"/>
+	<create user="ohtani_mayo" host="W00238" date="2011-02-09T20:22:25" source="livecaster_test_001.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ohtani_mayo" host="W00238" date="2011-02-09T15:36:38" source="livecaster_test_001.mb"/>
+<original_create user="ohtani_mayo" host="W00238" date="2011-02-09T20:22:25" source="livecaster_test_001.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -21,7 +21,7 @@
 	tool_start_frame="0"
 	tex_matrix_mode="maya"
 	compress_node="merge" node_size="5 1"
-	compress_material="on" material_size="4 4"
+	compress_material="on" material_size="3 3"
 	output_texture="used"
 	force_full_weight="off"
 	use_primitive_strip="on"
@@ -583,14 +583,14 @@
 		path="C:/livecaster_TEST/tex/x_himo.1.tga"
 	>
 		<bitmap size="64">
-			c000 0007 c000 0007 c000 0007 e000 0007
-			e000 0007 e000 0007 e000 0007 e000 0007
-			e000 000f 4000 000f 4000 000f 8000 002f
-			0000 001f 0000 003d 0000 00be 0000 007c
-			0000 00fc 0000 00f4 0000 02f8 0000 01f0
-			0000 03f0 0000 03d0 0000 0be0 0000 0bc0
-			0000 07c0 0000 07c0 0000 07c0 0000 0bc0
-			0000 0be0 0000 0be0 0000 09f8 0000 02f8
+			d000 0003 d000 0003 d000 0003 d000 000b
+			d000 000b d000 000b d000 000b d000 000b
+			f000 000b f000 0001 f000 0001 f800 0002
+			f400 0000 7c00 0000 be00 0000 3d00 0000
+			3f00 0000 1f00 0000 2f80 0000 0f40 0000
+			0fc0 0000 07c0 0000 0be0 0000 03e0 0000
+			03d0 0000 03d0 0000 03d0 0000 03e0 0000
+			0be0 0000 0be0 0000 2f60 0000 2f80 0000
 		</bitmap>
 	</tex_image>
 	<tex_image index="3" name="x_himo.2"
@@ -601,14 +601,14 @@
 		path="C:/livecaster_TEST/tex/x_himo.2.tga"
 	>
 		<bitmap size="64">
-			c000 0007 c000 0007 c000 0007 c000 0007
-			c000 0007 c000 0007 c000 0007 c000 0007
-			c000 0007 c000 0007 c000 0007 c000 000b
-			c000 000b c000 000b c000 000b c000 0003
-			c000 0003 e000 0003 e000 0003 d000 0001
-			d000 0001 d000 0001 d000 0001 d000 0003
-			d000 0003 e000 000b c000 0007 c000 0007
-			c000 002f 8000 002f 8000 001f 0000 00be
+			d000 0003 d000 0003 d000 0003 e000 000b
+			e000 000b e000 000b e000 000b e000 000b
+			e000 000b e000 000b d000 000b d000 0003
+			d000 0003 f000 0001 f000 0001 f000 0001
+			f000 0001 f000 0002 f800 0002 f400 0000
+			f400 0000 7c00 0000 7c00 0000 bc00 0000
+			bc00 0000 bc00 0000 bc00 0000 7c00 0000
+			fc00 0000 f400 0000 f800 0002 f000 0001
 		</bitmap>
 	</tex_image>
 	<tex_image index="4" name="x_himo.3"
@@ -619,14 +619,14 @@
 		path="C:/livecaster_TEST/tex/x_himo.3.tga"
 	>
 		<bitmap size="64">
-			c000 000b c000 000b c000 000b c000 000b
-			c000 000b c000 000b c000 000b c000 0007
-			c000 0007 c000 0007 e000 000b e000 000b
-			d000 0003 d000 0003 f000 0001 f000 0001
-			f000 0002 f800 0002 f400 0000 f400 0000
-			fc00 0000 7c00 0000 bc00 0000 bc00 0000
-			bc00 0000 fc00 0000 f400 0000 f400 0002
-			f800 0002 f000 0003 d000 000b 4000 002f
+			e000 0007 e000 0007 e000 0007 e000 0007
+			e000 0007 e000 0007 e000 0007 e000 0007
+			e000 0007 e000 0007 e000 0007 c000 0007
+			c000 0007 c000 0007 c000 0007 c000 000f
+			c000 000f 4000 000f 4000 000f 4000 000f
+			4000 000f 4000 002f 8000 002f 8000 001f
+			0000 001f 0000 003f 0000 00bf 0000 00bd
+			0000 007e 0000 00fc 0000 01f4 0000 01f8
 		</bitmap>
 	</tex_image>
 	<tex_image index="5" name="x_himo.4"
@@ -637,14 +637,14 @@
 		path="C:/livecaster_TEST/tex/x_himo.4.tga"
 	>
 		<bitmap size="64">
-			d000 0003 d000 0003 d000 0003 d000 0003
-			d000 0003 d000 0003 d000 0003 d000 0003
-			f000 0003 f000 0003 f800 0001 f400 0002
-			f400 0000 7c00 0000 7c00 0000 be00 0000
-			3d00 0000 1f00 0000 1f80 0000 2fc0 0000
-			0fc0 0000 07c0 0000 0be0 0000 03e0 0000
-			03d0 0000 03d0 0000 03d0 0000 03e0 0000
-			0be0 0000 0be0 0000 2f60 0000 2f80 0000
+			c000 0007 c000 0007 c000 0007 e000 0007
+			e000 0007 e000 0007 e000 0007 e000 0007
+			e000 000f 4000 000f 4000 000f 8000 002f
+			0000 001f 0000 003d 0000 00be 0000 007c
+			0000 00fc 0000 00f4 0000 02f8 0000 01f0
+			0000 03f0 0000 03d0 0000 0be0 0000 0bc0
+			0000 07c0 0000 07c0 0000 07c0 0000 0bc0
+			0000 0be0 0000 0be0 0000 09f8 0000 02f8
 		</bitmap>
 	</tex_image>
 	<tex_image index="6" name="x_himo.5"
@@ -655,14 +655,14 @@
 		path="C:/livecaster_TEST/tex/x_himo.5.tga"
 	>
 		<bitmap size="64">
-			d000 0003 d000 0003 d000 0003 d000 0003
-			d000 0003 d000 0003 d000 0003 d000 0003
-			d000 0003 d000 0003 d000 0003 e000 0003
-			e000 0003 e000 0003 e000 0003 c000 0003
-			c000 0003 c000 000b c000 000b 4000 0007
-			4000 0007 4000 0007 4000 0007 c000 0007
-			c000 0007 e000 000b d000 0003 d000 0003
-			f800 0003 f800 0002 f400 0002 be00 0000
+			c000 0007 c000 0007 c000 0007 e000 000b
+			e000 000b e000 000b e000 000b e000 000b
+			e000 000b e000 000b e000 0007 c000 0007
+			c000 0007 4000 000f 4000 000f 4000 000f
+			4000 000f 8000 000f 8000 002f 0000 001f
+			0000 001f 0000 003d 0000 003d 0000 003e
+			0000 003e 0000 003e 0000 003e 0000 003d
+			0000 003f 0000 001f 8000 002f 4000 000f
 		</bitmap>
 	</tex_image>
 	<tex_image index="7" name="x_himo.6"
@@ -673,14 +673,14 @@
 		path="C:/livecaster_TEST/tex/x_himo.6.tga"
 	>
 		<bitmap size="64">
-			d000 0003 d000 0003 d000 0003 d000 0003
-			e000 0003 e000 0003 e000 0003 e000 0003
-			e000 0003 e000 0003 e000 000b e000 0007
-			c000 0007 c000 0007 c000 000f 4000 000f
-			8000 000f 8000 002f 0000 001f 0000 001f
-			0000 003f 0000 003d 0000 003e 0000 003e
-			0000 003e 0000 003e 0000 003d 0000 001f
-			8000 002f 8000 000f e000 0007 e000 0009
+			d000 000b d000 000b d000 000b d000 000b
+			d000 000b d000 000b d000 000b d000 000b
+			d000 000b d000 000b d000 000b d000 0003
+			d000 0003 d000 0003 d000 0003 f000 0003
+			f000 0003 f000 0001 f000 0001 f000 0001
+			f000 0001 f800 0001 f800 0002 f400 0002
+			f400 0000 fc00 0000 fe00 0000 7e00 0000
+			bd00 0000 3f00 0000 1f40 0000 2f40 0000
 		</bitmap>
 	</tex_image>
 </tex_image_array>
@@ -709,7 +709,7 @@
 	</tex_palette>
 </tex_palette_array>
 
-<material_array size="4">
+<material_array size="3">
 	<material index="0" name="highlight1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
@@ -734,26 +734,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="1" name="lambert1"
-		light0="off" light1="off" light2="off" light3="off"
-		face="front"
-		alpha="31"
-		wire_mode="off"
-		polygon_mode="modulate"
-		polygon_id="0"
-		fog_flag="off"
-		depth_test_decal="off"
-		translucent_update_depth="off"
-		render_1_pixel="off"
-		far_clipping="off"
-		diffuse="12 12 12"
-		ambient="0 0 0"
-		specular="0 0 0"
-		emission="0 0 0"
-		shininess_table_flag="off"
-		tex_image_idx="-1" tex_palette_idx="-1"
-	/>
-	<material index="2" name="live_001_001"
+	<material index="1" name="live_001_001"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -777,7 +758,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="3" name="x_himo_1"
+	<material index="2" name="x_himo_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -852,13 +833,14 @@
 		volume_max="1.647949 2.001709 0.698730"
 		volume_r="2.252441"
 		mtx_prim_size="1"
-		nrm_flag="off" clr_flag="on" tex_flag="off"
+		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
 			<mtx_list size="1">0</mtx_list>
 			<primitive_array size="10">
 				<primitive index="0" type="quad_strip" vertex_size="14">
 					<mtx idx="0"/>
+					<tex st="-8.312500 8.375000"/>
 					<clr rgb="31 14 14"/>
 					<pos_xyz xyz="-1.272217 1.333252 0.000000"/>
 					<clr rgb="30 7 7"/>
@@ -1096,9 +1078,9 @@
 	<polygon index="3" name="polygon3"
 		vertex_size="8" polygon_size="3"
 		triangle_size="0" quad_size="3"
-		volume_min="-0.607910 -1.724854 0.000000"
-		volume_max="0.309326 1.724854 0.000000"
-		volume_r="1.828857"
+		volume_min="-0.505127 -1.724854 0.000000"
+		volume_max="0.244873 1.724854 0.000000"
+		volume_r="1.797363"
 		mtx_prim_size="1"
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
@@ -1109,23 +1091,23 @@
 					<mtx idx="0"/>
 					<tex st="1.500000 0.875000"/>
 					<clr rgb="25 25 24"/>
-					<pos_xyz xyz="1.997559 0.439453 0.000000"/>
+					<pos_xyz xyz="1.997559 0.375000 0.000000"/>
 					<tex st="-17.500000 0.875000"/>
-					<pos_xy xy="1.997559 -0.475586"/>
+					<pos_xy xy="1.997559 -0.375000"/>
 					<tex st="1.500000 5.812500"/>
 					<clr rgb="31 31 31"/>
-					<pos_xy xy="2.572510 0.438965"/>
+					<pos_xy xy="2.572510 0.375000"/>
 					<tex st="-17.500000 5.812500"/>
-					<pos_xy xy="2.572510 -0.476074"/>
+					<pos_xy xy="2.572510 -0.375000"/>
 					<tex st="1.500000 25.625000"/>
-					<pos_xy xy="4.872314 0.437744"/>
+					<pos_xy xy="4.872314 0.375000"/>
 					<tex st="-17.500000 25.625000"/>
-					<pos_xy xy="4.872314 -0.477295"/>
+					<pos_xy xy="4.872314 -0.375000"/>
 					<tex st="1.500000 30.562500"/>
 					<clr rgb="27 27 26"/>
-					<pos_xy xy="5.447266 0.437256"/>
+					<pos_xy xy="5.447266 0.375000"/>
 					<tex st="-17.500000 30.562500"/>
-					<pos_xy xy="5.447266 -0.477783"/>
+					<pos_xy xy="5.447266 -0.375000"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
@@ -1152,9 +1134,9 @@
 		volume_r="2.252441"
 	>
 		<display index="0" material="0" polygon="0" priority="0"/>
-		<display index="1" material="1" polygon="1" priority="0"/>
-		<display index="2" material="2" polygon="2" priority="0"/>
-		<display index="3" material="3" polygon="3" priority="0"/>
+		<display index="1" material="0" polygon="1" priority="0"/>
+		<display index="2" material="1" polygon="2" priority="0"/>
+		<display index="3" material="2" polygon="3" priority="0"/>
 	</node>
 </node_array>
 
