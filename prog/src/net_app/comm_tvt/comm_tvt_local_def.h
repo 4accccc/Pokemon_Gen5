@@ -253,7 +253,9 @@ enum{
   // ミニゲームカメラ撮影用
   CAMERA_INIT_SYNC                = 30,   // カメラ開始同期
   CAMERA_END_SYNC                 = 31,   // カメラ終了同期
-  CAMERA_SEND_SYNC                = 32,   // 送信同期
+  CAMERA_SEND_SYNC1               = 32,   // 送信同期 1枚目
+  CAMERA_SEND_SYNC2               = 33,   // 送信同期 2枚目
+  CAMERA_SEND_SYNC3               = 34,   // 送信同期 3枚目
 };
 
 

@@ -1547,6 +1547,7 @@ static void COMM_Init( COMM_WORK *p_wk, CTVT_GAME_CAM_MEMBER_WORK member[], BOOL
   }
 
   p_wk->wait_frame = 0;
+  p_wk->can_next = TRUE;   // 
   p_wk->is_init = FALSE;    // カメラ開始同期後にTRUEにする
 }
 
@@ -1661,23 +1662,25 @@ static void COMM_Main( COMM_WORK *p_wk, CTVT_GAME_CAM_MEMBER_WORK member[] )
     }
     break;
   case SEQ_SYNC:       // 同期
+    // ↓重要 カメラ撮影が次にいっていいなら同期をとる
+    if( p_wk->can_next == FALSE )
     {
       GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
-      GFL_NET_HANDLE_TimeSyncStart( pNet, CAMERA_SEND_SYNC, WB_NET_COMM_TVT );
+      GFL_NET_HANDLE_TimeSyncStart( pNet, CAMERA_SEND_SYNC1+p_wk->cap_cnt_base, WB_NET_COMM_TVT );
       p_wk->seq = SEQ_SYNC_WAIT;
-      ICHI_Printf("送信同期待ち\n");
+      ICHI_Printf("送信同期待ち %d\n",p_wk->cap_cnt_base );
     }
     break;
   case SEQ_SYNC_WAIT:  // 同期待ち
     {
       GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
-      if( GFL_NET_HANDLE_IsTimeSync( pNet, CAMERA_SEND_SYNC, WB_NET_COMM_TVT ) == TRUE )
+      if( GFL_NET_HANDLE_IsTimeSync( pNet, CAMERA_SEND_SYNC1+p_wk->cap_cnt_base, WB_NET_COMM_TVT ) == TRUE )
       {
         p_wk->seq = SEQ_POST;
         p_wk->can_next = TRUE;
 
         p_wk->cap_cnt_base++;
-        ICHI_Printf("送信同期完了\n");
+        ICHI_Printf("送信同期完了 %d\n",p_wk->cap_cnt_base );
         if( p_wk->cap_cnt_base == CAPTURE_NUM )
         {
           p_wk->is_end = TRUE;
@@ -1711,6 +1714,7 @@ static void COMM_SendCapture( COMM_WORK *p_wk )
     GFL_NET_LDATA_SetSendData( p_wk->cap_buf, CAPTURE_SIZE, p_wk->cap_send_bit, FALSE );
     ICHI_Printf("Send CamCapture addr %x bit %x \n", p_wk->cap_buf, p_wk->cap_send_bit);
 
+    p_wk->can_next = FALSE;    // フラグリセット
   }
 }
 
@@ -1986,6 +1990,12 @@ static void SEQFUNC_SYNC_End( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 
   CTVT_GAME_CAM_WORK *p_wk = p_param;
 
+  if( COMM_IsEnd( &p_wk->comm ) == FALSE )
+  {
+    // 写真の送受信が全て終わっていないなら戻す
+    return;
+  }
+
   switch( *p_seq ){
   case SEQ_SYNC:      // 同期
     {
@@ -2252,12 +2262,12 @@ static void SEQFUNC_TWL_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
     if( p_wk->camera.cnt == CAPTURE_NUM )
     {
       *p_seq = SEQ_END;
+      break;
     }
 
     // 次の写真撮影にいってよいか
     if( COMM_CanNext( &p_wk->comm ) == TRUE )
     {
-      p_wk->comm.can_next = FALSE;    // フラグリセット
       p_wk->comm.wait_frame = 0;
 
       // キャプチャスタート
@@ -2599,6 +2609,9 @@ static void SEQFUNC_NITRO_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
   // メイン処理
   MSGWND_PrintMain( &p_wk->msgwnd );
   ROU_Main( &p_wk->roulette, &p_wk->obj );
+
+
+  p_wk->comm.can_next = FALSE;   // NITROは常に受信なのでFALSE
 }
 
 //----------------------------------------------------------------------------
@@ -2620,6 +2633,7 @@ static void SEQFUNC_NITRO_Wait( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
     ROU_Exit( &p_wk->roulette );
     SEQ_SetNext( p_seqwk, SEQFUNC_SYNC_End );
   }
+  p_wk->comm.can_next = FALSE;   // NITROは常に受信なのでFALSE
 }
 
 //----------------------------------------------------------------------------
