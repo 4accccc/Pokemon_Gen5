@@ -17,6 +17,11 @@
 //======================================================================
 //  define
 //======================================================================
+typedef enum{
+ FLDEFF_RIPPLE_FOR_POOL,
+ FLDEFF_RIPPLE_FOR_MARSH,
+}FLDEFF_RIPPLE_TYPE;
+
 
 //======================================================================
 //  struct
@@ -28,4 +33,5 @@
 extern void * FLDEFF_RIPPLE_Init( FLDEFF_CTRL *fectrl, HEAPID heapID );
 extern void FLDEFF_RIPPLE_Delete( FLDEFF_CTRL *fectrl, void *work );
 
-extern void FLDEFF_RIPPLE_Set( FLDEFF_CTRL *fectrl, s16 gx, s16 gz, fx32 y );
+extern void FLDEFF_RIPPLE_Set( FLDEFF_CTRL *fectrl, MMDL* mmdl, FLDEFF_RIPPLE_TYPE type, BOOL old_pos );
+

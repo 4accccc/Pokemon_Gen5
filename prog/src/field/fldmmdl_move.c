@@ -863,7 +863,7 @@ static void MMdl_MapAttrSplashProc_12( MMDL *mmdl, ATTRDATA *data )
       MMDL_SetMoveBitShoalEffect( mmdl, TRUE );
     }
   }else if( MAPATTR_VALUE_CheckMarsh(data->attr_val_now) == TRUE ){
-    FLDEFF_SPLASH_SetMMdl( data->fectrl, mmdl );
+    FLDEFF_RIPPLE_Set( data->fectrl, mmdl, FLDEFF_RIPPLE_FOR_MARSH, FALSE );
   }else{
     MMDL_SetMoveBitShoalEffect( mmdl, FALSE );
   }
@@ -1089,10 +1089,7 @@ static void MMdl_MapAttrNGrassProc_1( MMDL *mmdl, ATTRDATA *data )
 static void MMdl_MapAttrPoolProc_1( MMDL *mmdl, ATTRDATA *data )
 {
   if( MAPATTR_VALUE_CheckPool(data->attr_val_old) == TRUE ){
-    FLDEFF_RIPPLE_Set( data->fectrl,
-      MMDL_GetOldGridPosX(mmdl),
-      MMDL_GetOldGridPosZ(mmdl),
-      MMDL_GetVectorPosY(mmdl) );
+    FLDEFF_RIPPLE_Set( data->fectrl, mmdl, FLDEFF_RIPPLE_FOR_POOL, TRUE);
   }
 }
 
@@ -1109,10 +1106,7 @@ static void MMdl_MapAttrPoolProc_1( MMDL *mmdl, ATTRDATA *data )
 static void MMdl_MapAttrPoolProc_2( MMDL *mmdl, ATTRDATA *data )
 {
   if( MAPATTR_VALUE_CheckPool(data->attr_val_now) == TRUE ){
-    FLDEFF_RIPPLE_Set( data->fectrl,
-      MMDL_GetGridPosX(mmdl),
-      MMDL_GetGridPosZ(mmdl),
-      MMDL_GetVectorPosY(mmdl) );
+    FLDEFF_RIPPLE_Set( data->fectrl, mmdl, FLDEFF_RIPPLE_FOR_POOL, FALSE );
   }
 }
 
@@ -2474,3 +2468,4 @@ u16 MMDL_TOOL_GetAngleYawToDirFour( u16 dir, u16 angleYaw )
   GF_ASSERT( angleYaw < DIR_MAX4 );
   return( angleYaw );
 }
+

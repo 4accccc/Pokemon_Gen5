@@ -18,8 +18,10 @@
 //======================================================================
 //	define
 //======================================================================
-#define RIPPLE_DRAW_Y_OFFSET (FX32_ONE*-14)		///<水波紋描画オフセット
-#define RIPPLE_DRAW_Z_OFFSET (FX32_ONE*-10)
+#define MARSH_DRAW_Y_OFFSET (FX32_ONE*-14)		///<湿原水波紋描画オフセット
+#define MARSH_DRAW_Z_OFFSET (FX32_ONE*-10)
+#define POOL_DRAW_Y_OFFSET (FX32_ONE*-8)		  ///<水たまり波紋描画オフセット
+#define POOL_DRAW_Z_OFFSET (FX32_ONE*-5)
 
 //======================================================================
 //	struct
@@ -162,15 +164,26 @@ static void ripple_DeleteResource( FLDEFF_RIPPLE *ripple )
  * @retval nothing
  */
 //--------------------------------------------------------------
-void FLDEFF_RIPPLE_Set( FLDEFF_CTRL *fectrl, s16 gx, s16 gz, fx32 y )
+void FLDEFF_RIPPLE_Set( FLDEFF_CTRL *fectrl, MMDL* mmdl, FLDEFF_RIPPLE_TYPE type, BOOL old_pos )
 {
   VecFx32 pos;
   FLDEFF_RIPPLE *ripple;
   TASKHEADER_RIPPLE head;
-  
-  MMDL_TOOL_GetCenterGridPos( gx, gz, &pos );
-  pos.y = y + RIPPLE_DRAW_Y_OFFSET;
-  pos.z += RIPPLE_DRAW_Z_OFFSET;
+ 
+  if( old_pos ){
+    MMDL_GRIDPOS grid;
+    MMDL_GetOldGridPos(mmdl,&grid);
+    MMDL_TOOL_GetCenterGridPos( grid.gx, grid.gz, &pos );
+  }else{
+    MMDL_GetVectorPos(mmdl,&pos);
+  }
+  if( type == FLDEFF_RIPPLE_FOR_POOL ){
+    pos.y += POOL_DRAW_Y_OFFSET;
+    pos.z += POOL_DRAW_Z_OFFSET;
+  }else{
+    pos.y += MARSH_DRAW_Y_OFFSET;
+    pos.z += MARSH_DRAW_Z_OFFSET;
+  }
   
   ripple = FLDEFF_CTRL_GetEffectWork( fectrl, FLDEFF_PROCID_RIPPLE );
   head.eff_ripple = ripple;

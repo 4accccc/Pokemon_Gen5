@@ -25,10 +25,6 @@
 //======================================================================
 //  extern
 //======================================================================
-extern void * FLDEFF_SPLASH_Init( FLDEFF_CTRL *fectrl, HEAPID heapID );
-extern void FLDEFF_SPLASH_Delete( FLDEFF_CTRL *fectrl, void *work );
-extern void FLDEFF_SPLASH_SetMMdl( FLDEFF_CTRL *fectrl, const MMDL *mmdl );
-
 extern void * FLDEFF_SHOAL_Init( FLDEFF_CTRL *fectrl, HEAPID heapID );
 extern void FLDEFF_SHOAL_Delete( FLDEFF_CTRL *fectrl, void *work );
 extern void FLDEFF_SHOAL_SetMMdl( FLDEFF_CTRL *fectrl, const MMDL *mmdl );
