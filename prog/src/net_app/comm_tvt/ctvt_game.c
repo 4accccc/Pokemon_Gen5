@@ -659,8 +659,8 @@ void CTVT_GAME_InitMode( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
   }
 
   // 構造体初期化
-  //gameWork->state = CGS_CAMERA_INIT;
-  gameWork->state = CGS_GAME_INIT;
+  gameWork->state = CGS_CAMERA_INIT;
+  //gameWork->state = CGS_GAME_INIT;
   gameWork->isRetry  = FALSE;
 
   //上画面の会話アイコンを消す
@@ -2112,7 +2112,7 @@ static void game_update_seq_init_common( COMM_TVT_WORK *work, CTVT_GAME_WORK *ga
   ICHI_Printf("乱数Seed値 %d \n", gameWork->rnd_seed);
   ICHI_Printf("送信データサイズ:%d \n", sizeof(CTVT_GAME_SEND_DATA));
 
-#if 0
+#if 1
   // 3Dにカメラキャプチャを貼り付ける
   {
     BOOL  rc;
