@@ -1533,6 +1533,30 @@ nsbtx_files/tex_set_out64_winter.nsbtx: src_imd_files/out00_tex_winter.imd src_i
 	@-$(TEX_MAG) -q -o marged_imd_files/tex_set_out64_winter.imd src_imd_files/out00_tex_winter.imd src_imd_files/out64_local_texset.imd src_imd_files/tex_griddmy.imd
 	@$(G3DCVTR) marged_imd_files/tex_set_out64_winter.imd -o nsbtx_files/tex_set_out64_winter.nsbtx -etex
 
+nsbtx_files/tex_set_out65_spring.nsbtx: src_imd_files/out00_tex_spring.imd src_imd_files/out65_local_texset.imd src_imd_files/tex_griddmy.imd
+	@echo src_imd_files/out00_tex_spring.imd + src_imd_files/out65_local_texset.imd Å® nsbtx_files/tex_set_out65_spring.nsbtx
+	@-rm marged_imd_files/tex_set_out65_spring.imd
+	@-$(TEX_MAG) -q -o marged_imd_files/tex_set_out65_spring.imd src_imd_files/out00_tex_spring.imd src_imd_files/out65_local_texset.imd src_imd_files/tex_griddmy.imd
+	@$(G3DCVTR) marged_imd_files/tex_set_out65_spring.imd -o nsbtx_files/tex_set_out65_spring.nsbtx -etex
+
+nsbtx_files/tex_set_out65_summer.nsbtx: src_imd_files/out00_tex_summer.imd src_imd_files/out65_local_texset.imd src_imd_files/tex_griddmy.imd
+	@echo src_imd_files/out00_tex_summer.imd + src_imd_files/out65_local_texset.imd Å® nsbtx_files/tex_set_out65_summer.nsbtx
+	@-rm marged_imd_files/tex_set_out65_summer.imd
+	@-$(TEX_MAG) -q -o marged_imd_files/tex_set_out65_summer.imd src_imd_files/out00_tex_summer.imd src_imd_files/out65_local_texset.imd src_imd_files/tex_griddmy.imd
+	@$(G3DCVTR) marged_imd_files/tex_set_out65_summer.imd -o nsbtx_files/tex_set_out65_summer.nsbtx -etex
+
+nsbtx_files/tex_set_out65_autumn.nsbtx: src_imd_files/out00_tex_autumn.imd src_imd_files/out65_local_texset.imd src_imd_files/tex_griddmy.imd
+	@echo src_imd_files/out00_tex_autumn.imd + src_imd_files/out65_local_texset.imd Å® nsbtx_files/tex_set_out65_autumn.nsbtx
+	@-rm marged_imd_files/tex_set_out65_autumn.imd
+	@-$(TEX_MAG) -q -o marged_imd_files/tex_set_out65_autumn.imd src_imd_files/out00_tex_autumn.imd src_imd_files/out65_local_texset.imd src_imd_files/tex_griddmy.imd
+	@$(G3DCVTR) marged_imd_files/tex_set_out65_autumn.imd -o nsbtx_files/tex_set_out65_autumn.nsbtx -etex
+
+nsbtx_files/tex_set_out65_winter.nsbtx: src_imd_files/out00_tex_winter.imd src_imd_files/out65_local_texset.imd src_imd_files/tex_griddmy.imd
+	@echo src_imd_files/out00_tex_winter.imd + src_imd_files/out65_local_texset.imd Å® nsbtx_files/tex_set_out65_winter.nsbtx
+	@-rm marged_imd_files/tex_set_out65_winter.imd
+	@-$(TEX_MAG) -q -o marged_imd_files/tex_set_out65_winter.imd src_imd_files/out00_tex_winter.imd src_imd_files/out65_local_texset.imd src_imd_files/tex_griddmy.imd
+	@$(G3DCVTR) marged_imd_files/tex_set_out65_winter.imd -o nsbtx_files/tex_set_out65_winter.nsbtx -etex
+
 nsbtx_files/tex_set_in01.nsbtx: src_imd_files/in00_texset.imd src_imd_files/in01_local_texset.imd src_imd_files/tex_griddmy.imd
 	@echo src_imd_files/in00_texset.imd + src_imd_files/in01_local_texset.imd Å® nsbtx_files/tex_set_in01.nsbtx
 	@-rm marged_imd_files/tex_set_in01.imd

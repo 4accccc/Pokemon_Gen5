@@ -258,6 +258,10 @@ NNSARC_DEPEND_FILES	= \
 	nsbtx_files/tex_set_out64_summer.nsbtx \
 	nsbtx_files/tex_set_out64_autumn.nsbtx \
 	nsbtx_files/tex_set_out64_winter.nsbtx \
+	nsbtx_files/tex_set_out65_spring.nsbtx \
+	nsbtx_files/tex_set_out65_summer.nsbtx \
+	nsbtx_files/tex_set_out65_autumn.nsbtx \
+	nsbtx_files/tex_set_out65_winter.nsbtx \
 	nsbtx_files/tex_set_in01.nsbtx \
 	nsbtx_files/tex_set_in02.nsbtx \
 	nsbtx_files/tex_set_in03.nsbtx \
