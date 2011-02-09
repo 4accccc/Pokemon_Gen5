@@ -3329,6 +3329,10 @@ static GMEVENT_RESULT EVENT_MapChangePalace( GMEVENT* event, int* seq, void* wk 
   switch(*seq)
   {
   case 0:
+#ifdef BUGFIX_AF_SYSTEM247_20110209
+    // 地名表示を消去
+    FIELD_PLACE_NAME_Hide( FIELDMAP_GetPlaceNameSys( fieldmap ) );
+#endif
     //ＳＥ
     PMSND_PlaySE( SEQ_SE_FLD_131 );
     //エフェクトコール
