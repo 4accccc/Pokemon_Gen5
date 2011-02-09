@@ -36,6 +36,7 @@ typedef enum
 	SHORTCUT_ID_BAG_WAZAMACHINE,	//バッグ＞技マシン
 	SHORTCUT_ID_BAG_NUTS,					//バッグ＞きのみ
 	SHORTCUT_ID_BAG_IMPORTANT,		//バッグ＞たいせつなもの
+	SHORTCUT_ID_BAG_REPOSITORY,		//バッグ＞ほかん
 	SHORTCUT_ID_ZUKAN_LIST,				//ずかん＞リスト
 	SHORTCUT_ID_ZUKAN_SEARCH,			//ずかん＞検索
 	SHORTCUT_ID_ZUKAN_INFO,		  	//ずかん＞詳細・説明

@@ -64,7 +64,7 @@ enum
 #define	WAZA_TYPE_MAX		( POKETYPE_MAX )	// 技のタイプ数
 
 #define ITEM_LIST_NUM (8)
-#define _CELLUNIT_NUM (32+WAZA_KIND_MAX+WAZA_TYPE_MAX)
+#define _CELLUNIT_NUM (34+WAZA_KIND_MAX+WAZA_TYPE_MAX)
 //#define _CELLUNIT_NUM (34)
 
 #define _SCROLL_TOP_Y  (24+2)  //スクロールバーの最初の位置
@@ -87,9 +87,11 @@ enum _ITEMLISTCELL_RESOURCE
   _PLT_COMMON,
   _NCG_CUR,
   _NCG_COMMON,
+  _NCG_SEARCH,
   _ANM_CUR,
   _ANM_LIST,
   _ANM_COMMON,
+  _ANM_SEARCH,
   _PTL_CHECK,
   _NCG_CHECK,
   _ANM_CHECK,
@@ -124,6 +126,7 @@ enum
   BAR_ICON_RETURN,
   BAR_ICON_INPUT_U, ///< 数値入力上
   BAR_ICON_INPUT_D, ///< 数値入力下
+  BAR_ICON_SEARCH,
   BAR_ICON_MAX,
 
   BAR_ICON_ANM_EXIT     = 0,
@@ -313,13 +316,13 @@ struct _FIELD_ITEMMENU_PARAM {
 #define _PAL_SORT_CELL          (_PAL_CUR_CELL+_PAL_CUR_CELL_NUM)     // ソートボタンのパレット展開位置
 #define _PAL_SORT_CELL_NUM      (2)                                   // ソートボタンのパレット本数
 #define _PAL_BAG_PARTS_CELL     (_PAL_SORT_CELL+_PAL_SORT_CELL_NUM)   // バッグのパーツCELLのパレット展開位置
-#define _PAL_BAG_PARTS_CELL_NUM (4)           // バッグのパーツCELLのパレット展開位置
+#define _PAL_BAG_PARTS_CELL_NUM (5)           // バッグのパーツCELLのパレット展開位置
 #define _PAL_COMMON_CELL        (_PAL_BAG_PARTS_CELL+_PAL_BAG_PARTS_CELL_NUM) // 共通パレット展開位置
 #define _PAL_COMMON_CELL_NUM    (APP_COMMON_BARICON_PLT_NUM)
 #define _PAL_MENU_CHECKBOX_CELL     (_PAL_COMMON_CELL+_PAL_COMMON_CELL_NUM) // チェックボックスのパレット展開位置
 #define _PAL_MENU_CHECKBOX_CELL_NUM (1)  // チェックボックスのパレット展開位置
 
-#define _PAL_FADE_OBJ_BIT       ( 0x23cf )  // パレットフェードを適用するOBJビット [ 0010_0011_1100_1111 ]
+#define _PAL_FADE_OBJ_BIT       ( 0x47cf )  // パレットフェードを適用するOBJビット [ 0100_0111_1100_1111 ]
 
 
 
@@ -389,8 +392,8 @@ enum
 { 
   BUTTONID_ITEM_AREA_NUM = 6,   ///< アイテムエリアの項目数
   BUTTONID_CHECK_AREA_NUM = 6,  ///< チェックエリアの項目数
-  // 0-4 : バッグのポケット
-  BUTTONID_LEFT = 5,
+  // 0-5 : バッグのポケット
+  BUTTONID_LEFT = 6,
   BUTTONID_RIGHT,
   BUTTONID_SORT,
   BUTTONID_CHECKBOX,

@@ -3538,7 +3538,7 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
 
   // バッグ
   if(BAG_POKE_MAX > bttnid){
-    int id2no[]={1,2,3,4,0};
+    int id2no[]={1,2,3,4,5,0};
     if( pWork->pocketno != id2no[bttnid] ){
       pocketno = id2no[bttnid];  //どうぐのあたりが広い為、順番を最後にしている
       KTST_SetDraw( pWork, FALSE );

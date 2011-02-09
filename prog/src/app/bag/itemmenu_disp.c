@@ -455,9 +455,19 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
     pWork->subbg2 = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_bag_bag_win01_02_u_NCGR,
                                                                  ITEMWIN_FRAME, 0, 0, pWork->heapID);
 
-    GFL_ARCHDL_UTIL_TransVramScreenCharOfs( p_handle, NARC_bag_bag_win01_u_NSCR,
-                                            ITEMWIN_FRAME, 0,
-                                            GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subbg2), 0, 0, pWork->heapID);
+    // バッグモードによって読み込むスクリーンを変える
+    if( pWork->pocketno == BAG_POKE_REPOSITORY )
+    {
+      GFL_ARCHDL_UTIL_TransVramScreenCharOfs( p_handle, NARC_bag_bag_win02_u_NSCR,
+          ITEMWIN_FRAME, 0,
+          GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subbg2), 0, 0, pWork->heapID);
+    }
+    else
+    {
+      GFL_ARCHDL_UTIL_TransVramScreenCharOfs( p_handle, NARC_bag_bag_win01_u_NSCR,
+          ITEMWIN_FRAME, 0,
+          GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subbg2), 0, 0, pWork->heapID);
+    }
 
     //下画面アイコン
     _load_parts( pWork, p_handle );
@@ -504,6 +514,13 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
 
     pWork->cellRes[_ANM_COMMON] = GFL_CLGRP_CELLANIM_Register(
       archandle, NARC_app_menu_common_bar_button_128k_NCER, NARC_app_menu_common_bar_button_128k_NANR , pWork->heapID);
+
+    // 検索ボタン
+    pWork->cellRes[_NCG_SEARCH] = GFL_CLGRP_CGR_Register(
+      archandle , NARC_app_menu_common_search_button_128k_NCGR , FALSE , CLSYS_DRAW_MAIN , pWork->heapID  );
+
+    pWork->cellRes[_ANM_SEARCH] = GFL_CLGRP_CELLANIM_Register(
+      archandle, NARC_app_menu_common_search_button_128k_NCER, NARC_app_menu_common_search_button_128k_NANR , pWork->heapID);
 
     GFL_ARC_CloseDataHandle(archandle);
   }
@@ -1839,8 +1856,23 @@ static void ITEMDISP_InitTaskBar( FIELD_ITEMMENU_WORK* pWork )
 
       GFL_CLACT_WK_SetDrawEnable( pWork->clwkBarIcon[i] , TRUE );
     }
-		GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkBarIcon[BAR_ICON_LEFT], TRUE );
-		GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkBarIcon[BAR_ICON_RIGHT], TRUE );
+
+    // 検索ボタン
+    {
+      cellInitData.pos_x = 0;
+      cellInitData.pos_y = 0;
+      cellInitData.anmseq = 0;
+
+      pWork->clwkBarIcon[BAR_ICON_SEARCH] = GFL_CLACT_WK_Create( pWork->cellUnit ,
+          pWork->cellRes[_NCG_SEARCH],
+          pWork->cellRes[_PLT_COMMON],
+          pWork->cellRes[_ANM_SEARCH],
+          &cellInitData ,CLSYS_DEFREND_MAIN , pWork->heapID );
+
+      GFL_CLACT_WK_SetDrawEnable( pWork->clwkBarIcon[BAR_ICON_SEARCH] , FALSE );
+
+      GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkBarIcon[BAR_ICON_SEARCH], TRUE );
+    }
 
     
 		//「売る」「持たせる」画面のときはチェックボックスを非表示
@@ -1899,7 +1931,8 @@ static const u8 BagSoftPriority[] = {
 	12,		// かいふく
 	10,		// わざマシン
 	12,		// きのみ
-	16		// たいせつなもの
+	16,		// たいせつなもの
+	16,		// 保管
 };
 static const u8 BagAnime[][2] =
 {	// 開, 閉
@@ -1908,6 +1941,7 @@ static const u8 BagAnime[][2] =
 	{ NANR_bag_parts_d_waza1,     NANR_bag_parts_d_waza },			// わざマシン
 	{ NANR_bag_parts_d_kinomi1,   NANR_bag_parts_d_kinomi },		// きのみ
 	{ NANR_bag_parts_d_taisetsu1, NANR_bag_parts_d_taisetsu },	// たいせつなもの
+	{ NANR_bag_parts_d_benri1,    NANR_bag_parts_d_benri },	    // ほかん
 };
 
 #define	BAG_OBJ_MOVE_SIZ	( 16 )
@@ -2037,15 +2071,23 @@ void ITEMDISP_MenuWinDisp(  FIELD_ITEMMENU_WORK *pWork , int *menustr,int num )
 void ITEMDISP_ItemInfoWindowChange(FIELD_ITEMMENU_WORK *pWork,int pocketno )
 {
   ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_BAG, pWork->heapID );
-  if(pocketno!=BAG_POKE_WAZA){
-    GFL_ARCHDL_UTIL_TransVramScreenCharOfsVBlank(
-      p_handle, NARC_bag_bag_win01_u_NSCR, ITEMWIN_FRAME, 0,
-      GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subbg2), 0, 0, pWork->heapID);
-  }
-  else{
-    GFL_ARCHDL_UTIL_TransVramScreenCharOfsVBlank(
-      p_handle, NARC_bag_bag_win02_u_NSCR, ITEMWIN_FRAME, 0,
-      GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subbg2), 0, 0, pWork->heapID);
+
+  switch( pocketno )
+  {
+  case BAG_POKE_REPOSITORY:
+    {
+      GFL_ARCHDL_UTIL_TransVramScreenCharOfsVBlank(
+          p_handle, NARC_bag_bag_win02_u_NSCR, ITEMWIN_FRAME, 0,
+          GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subbg2), 0, 0, pWork->heapID);
+    }
+    break;
+  default:
+    {
+      GFL_ARCHDL_UTIL_TransVramScreenCharOfsVBlank(
+          p_handle, NARC_bag_bag_win01_u_NSCR, ITEMWIN_FRAME, 0,
+          GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subbg2), 0, 0, pWork->heapID);
+    }
+    break;
   }
   GFL_ARC_CloseDataHandle(p_handle);
 }
@@ -2720,6 +2762,9 @@ SHORTCUT_ID ITEMDISP_GetPocketShortcut( int pocketno )
 		break;
 	case BAG_POKE_EVENT:
 		id = SHORTCUT_ID_BAG_IMPORTANT;
+		break;
+	case BAG_POKE_REPOSITORY:
+		id = SHORTCUT_ID_BAG_REPOSITORY;
 		break;
 	default:
 		GF_ASSERT(0);

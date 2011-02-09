@@ -24,6 +24,7 @@ typedef struct {
   u16 no;   // 個数
 }ITEM_ST;
 #define ITEM_MAX_NORMAL     ( 999 )   // 通常のアイテム所持数最大
+#define MYITEM_REPOSITORY_MAX (21)    // 保管ポケットサイズ
 #define ITEM_MAX_WAZAMACHINE  ( 1 )   // 技マシンの所持数最大
 
 #define BAG_EVENT_ITEM_MAX    ( 83 )    // 大切な物ポケット最大数
@@ -45,8 +46,6 @@ typedef struct {
 
 //
 #define BAG_TOTAL_NUM (BAG_EVENT_ITEM_MAX+BAG_WAZA_ITEM_MAX+BAG_DRUG_ITEM_MAX+BAG_NUTS_ITEM_MAX+BAG_NORMAL_ITEM_MAX)
-
-#define MYITEM_SHORTCUT_MAX (10)   // 便利ボタンの最大数 ※使用禁止
 
 //==============================================================================
 //  型定義

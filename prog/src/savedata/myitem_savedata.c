@@ -201,6 +201,11 @@ static u32 MyPocketDataGet( MYITEM_PTR myitem, s32 pocket, ITEM_ST ** item, u32 
 		*item = myitem->MySkillItem;
 		*max = BAG_WAZA_ITEM_MAX;
 		break;
+  case BAG_POKE_REPOSITORY:	//  保管 
+    // 保管アイテムを返すように変更する必要がある
+		*item = myitem->MyEventItem;
+		*max = BAG_EVENT_ITEM_MAX;
+    break;
 	default:
 		GF_ASSERT(0);
 		*item = NULL;
@@ -321,11 +326,9 @@ BOOL MYITEM_AddCheck( MYITEM_PTR myitem, u16 item_no, u16 num, HEAPID heap )
 //------------------------------------------------------------------
 BOOL MYITEM_AddItem( MYITEM_PTR myitem, u16 item_no, u16 num, HEAPID heap )
 {
-  int before = 0;
 	ITEM_ST * add = AddItemPosGet( myitem, item_no, num, heap );
 
 	if( add == NULL ){ return FALSE; }
-  before = add->no;
 	add->id = item_no;
 	add->no += num;
 
@@ -346,13 +349,15 @@ BOOL MYITEM_AddItem( MYITEM_PTR myitem, u16 item_no, u16 num, HEAPID heap )
 			MYITEM_SortNumber( add, max );
 		}
 */
-    else if(before == 0){  //加えたアイテムが一個目だった場合、リストの最初にもっていく
-      ITEM_ST * item;
-      u32	num;
-      MyPocketDataGet(myitem, pocket, &item, &num);
-      num = MYITEM_GetItemThisPocketNumber(item, num);
-      bottomInsert( item,  num );
-    }
+ 
+    /* スワンから、アイテムをリストの一番上に持っていく処理は廃止します */
+//    else if(before == 0){  //加えたアイテムが一個目だった場合、リストの最初にもっていく
+//      ITEM_ST * item;
+//      u32	num;
+//      MyPocketDataGet(myitem, pocket, &item, &num);
+//      num = MYITEM_GetItemThisPocketNumber(item, num);
+//      bottomInsert( item,  num );
+//    }
 	}
 	return TRUE;
 }
@@ -798,6 +803,11 @@ ITEM_ST * MYITEM_PosItemGet( MYITEM_PTR myitem, u16 pocket, u16 pos )
 		item = myitem->MySkillItem;
 		max  = BAG_WAZA_ITEM_MAX;
 		break;
+  case BAG_POKE_REPOSITORY:	//  保管 
+    // 保管アイテムを返すように変更する必要がある
+    item = myitem->MyEventItem;
+    max  = BAG_EVENT_ITEM_MAX;
+    break;
 	}
 
 	if( pos >= max ){ return NULL; }

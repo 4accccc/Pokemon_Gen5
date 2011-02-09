@@ -44,6 +44,7 @@
 //外部参照
 #include "event_shortcut_menu.h"
 #include "item/itemsym.h"
+#include "savedata/myitem_savedata_def.h" // for BAG_POKE_～
 //-------------------------------------
 ///	
 //=====================================
@@ -762,24 +763,28 @@ static CALLTYPE ShortCutMenu_SetCallType( EVENT_PROCLINK_PARAM *p_param, SHORTCU
 		return CALLTYPE_PROC;
 	case SHORTCUT_ID_BAG_ITEM:					//バッグ＞どうぐ
 		p_param->call = EVENT_PROCLINK_CALL_BAG;
-		p_param->data	= ITEMPOCKET_NORMAL;
+		p_param->data	= BAG_POKE_NORMAL;
 		return CALLTYPE_PROC;
 	case SHORTCUT_ID_BAG_RECOVERY:			//バッグ＞かいふく
 		p_param->call = EVENT_PROCLINK_CALL_BAG;
-		p_param->data	= ITEMPOCKET_DRUG;
+		p_param->data	= BAG_POKE_DRUG;
 		return CALLTYPE_PROC;
 	case SHORTCUT_ID_BAG_WAZAMACHINE:	//バッグ＞技マシン
 		p_param->call = EVENT_PROCLINK_CALL_BAG;
-		p_param->data	= ITEMPOCKET_WAZA;
+		p_param->data	= BAG_POKE_WAZA;
 		return CALLTYPE_PROC;
 	case SHORTCUT_ID_BAG_NUTS:					//バッグ＞きのみ
 		p_param->call = EVENT_PROCLINK_CALL_BAG;
-		p_param->data	= ITEMPOCKET_NUTS;
+		p_param->data	= BAG_POKE_NUTS;
 		return CALLTYPE_PROC;
 	case SHORTCUT_ID_BAG_IMPORTANT:		//バッグ＞たいせつなもの
 		p_param->call = EVENT_PROCLINK_CALL_BAG;
-		p_param->data	= ITEMPOCKET_EVENT;
+		p_param->data	= BAG_POKE_EVENT;
 		return CALLTYPE_PROC;
+  case SHORTCUT_ID_BAG_REPOSITORY:		//バッグ＞ほかん
+    p_param->call = EVENT_PROCLINK_CALL_BAG;
+    p_param->data	= BAG_POKE_REPOSITORY;
+    return CALLTYPE_PROC;
   case SHORTCUT_ID_ZUKAN_LIST:				//ずかん＞リスト
 		p_param->call = EVENT_PROCLINK_CALL_ZUKAN;
 		p_param->data	= ZUKAN_MODE_LIST;

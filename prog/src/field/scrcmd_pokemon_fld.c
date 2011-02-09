@@ -1051,7 +1051,7 @@ VMCMD_RESULT EvCmdWazaMachineLot( VMHANDLE * core, void * wk )
   GAMEDATA * gamedata = SCRCMD_WORK_GetGameData( work );
   MYITEM_PTR myitem = GAMEDATA_GetMyItem( gamedata );
 
-  int max = MYITEM_GetItemPocketNumber( myitem, ITEMPOCKET_WAZA );
+  int max = MYITEM_GetItemPocketNumber( myitem, BAG_POKE_WAZA );
   int pos = GFUser_GetPublicRand( max );
 
   if ( max == 0 )
@@ -1060,7 +1060,7 @@ VMCMD_RESULT EvCmdWazaMachineLot( VMHANDLE * core, void * wk )
   }
   else
   {
-    ITEM_ST * item_st = MYITEM_PosItemGet( myitem, ITEMPOCKET_WAZA, pos );
+    ITEM_ST * item_st = MYITEM_PosItemGet( myitem, BAG_POKE_WAZA, pos );
     *ret_wk = ITEM_GetWazaNo( item_st->id );
   }
 
