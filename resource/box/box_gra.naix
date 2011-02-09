@@ -104,7 +104,8 @@ enum {
 	NARC_box_gra_boxsearch_obj_NCER = 90,
 	NARC_box_gra_boxsearch_obj_NANR = 91,
 	NARC_box_gra_boxsearch_obj_NCGR = 92,
-	NARC_box_gra_boxsearch_obj_NCLR = 93
+	NARC_box_gra_boxsearch_obj_NCLR = 93,
+	NARC_box_gra_poke_mark_NCLR = 94
 };
 
 /* NARC_BOX_GRA_NAIX_ */

@@ -1,363 +1,363 @@
 //============================================================================================
 /**
- * @file		frame_list.h
- * @brief		ＢＧフレーム全体を使用したリスト処理
- * @author	Hiroyuki Nakamura
- * @date		10.01.23
+ * @file    frame_list.h
+ * @brief   ＢＧフレーム全体を使用したリスト処理
+ * @author  Hiroyuki Nakamura
+ * @date    10.01.23
  *
- *	モジュール名：FRAMELIST
+ *  モジュール名：FRAMELIST
  *
- *	・１画面につき、ＢＧ１面を占有します（スクロールするため）
- *	・内部でBMPWINを確保しているため、BMPWINの初期化後にリストを作成してください
+ *  ・１画面につき、ＢＧ１面を占有します（スクロールするため）
+ *  ・内部でBMPWINを確保しているため、BMPWINの初期化後にリストを作成してください
  */
 //============================================================================================
-#pragma	once
+#pragma once
 
 #include "print/printsys.h"
 
 
 //============================================================================================
-//	定数定義
+//  定数定義
 //============================================================================================
 
 // リスト動作結果
-#define	FRAMELIST_RET_CURSOR_ON				( 0xfffffff4 )		// カーソル表示
-#define	FRAMELIST_RET_MOVE						( 0xfffffff5 )		// カーソル移動
-#define	FRAMELIST_RET_SCROLL					( 0xfffffff6 )		// スクロール通常
-#define	FRAMELIST_RET_RAIL						( 0xfffffff7 )		// レールスクロール
-#define	FRAMELIST_RET_SLIDE						( 0xfffffff8 )		// スライドスクロール
-#define	FRAMELIST_RET_PAGE_UP					( 0xfffffff9 )		// １ページ上へ
-#define	FRAMELIST_RET_PAGE_DOWN				( 0xfffffffa )		// １ページ下へ
-#define	FRAMELIST_RET_PAGE_UP_NONE		( 0xfffffffb )		// ページ数が足りなくて１ページ上にスクロールできなかった
-#define	FRAMELIST_RET_PAGE_DOWN_NONE	( 0xfffffffc )		// ページ数が足りなくて１ページ下にスクロールできなかった
-#define	FRAMELIST_RET_JUMP_TOP				( 0xfffffffd )		// リスト最上部へジャンプ
-#define	FRAMELIST_RET_JUMP_BOTTOM			( 0xfffffffe )		// リスト最下部へジャンプ
-#define	FRAMELIST_RET_NONE						( 0xffffffff )		// 動作なし
+#define FRAMELIST_RET_CURSOR_ON       ( 0xfffffff4 )    // カーソル表示
+#define FRAMELIST_RET_MOVE            ( 0xfffffff5 )    // カーソル移動
+#define FRAMELIST_RET_SCROLL          ( 0xfffffff6 )    // スクロール通常
+#define FRAMELIST_RET_RAIL            ( 0xfffffff7 )    // レールスクロール
+#define FRAMELIST_RET_SLIDE           ( 0xfffffff8 )    // スライドスクロール
+#define FRAMELIST_RET_PAGE_UP         ( 0xfffffff9 )    // １ページ上へ
+#define FRAMELIST_RET_PAGE_DOWN       ( 0xfffffffa )    // １ページ下へ
+#define FRAMELIST_RET_PAGE_UP_NONE    ( 0xfffffffb )    // ページ数が足りなくて１ページ上にスクロールできなかった
+#define FRAMELIST_RET_PAGE_DOWN_NONE  ( 0xfffffffc )    // ページ数が足りなくて１ページ下にスクロールできなかった
+#define FRAMELIST_RET_JUMP_TOP        ( 0xfffffffd )    // リスト最上部へジャンプ
+#define FRAMELIST_RET_JUMP_BOTTOM     ( 0xfffffffe )    // リスト最下部へジャンプ
+#define FRAMELIST_RET_NONE            ( 0xffffffff )    // 動作なし
 
-#define	FRAMELIST_SUB_BG_NONE	( 0xff )		// 上画面ＢＧ未使用
+#define FRAMELIST_SUB_BG_NONE ( 0xff )    // 上画面ＢＧ未使用
 
-#define	FRAMELIST_SPEED_MAX		( 6 )				// スクロール速度の段階
+#define FRAMELIST_SPEED_MAX   ( 6 )       // スクロール速度の段階
 
 // タッチパラメータ
 typedef enum {
-	FRAMELIST_TOUCH_PARAM_SLIDE = 0,					// スライド
+  FRAMELIST_TOUCH_PARAM_SLIDE = 0,          // スライド（項目のこと）
 
-	FRAMELIST_TOUCH_PARAM_RAIL,								// レール
+  FRAMELIST_TOUCH_PARAM_RAIL,               // レール(スクロールバーのタッチ範囲を示す）
 
-	FRAMELIST_TOUCH_PARAM_UP,									// 上移動
-	FRAMELIST_TOUCH_PARAM_DOWN,								// 下移動
+  FRAMELIST_TOUCH_PARAM_UP,                 // 上移動
+  FRAMELIST_TOUCH_PARAM_DOWN,               // 下移動
 
-	FRAMELIST_TOUCH_PARAM_PAGE_UP,						// ページ上移動
-	FRAMELIST_TOUCH_PARAM_PAGE_DOWN,					// ページ下移動
+  FRAMELIST_TOUCH_PARAM_PAGE_UP,            // ページ上移動
+  FRAMELIST_TOUCH_PARAM_PAGE_DOWN,          // ページ下移動
 
-	FRAMELIST_TOUCH_PARAM_LIST_TOP,						// リスト最上位へ
-	FRAMELIST_TOUCH_PARAM_LIST_BOTTOM,				// リスト最下位へ
+  FRAMELIST_TOUCH_PARAM_LIST_TOP,           // リスト最上位へ
+  FRAMELIST_TOUCH_PARAM_LIST_BOTTOM,        // リスト最下位へ
 
-//	FRAMELIST_TOUCH_PARAM_ITEM = 0x80000000,	// 項目
-	FRAMELIST_TOUCH_PARAM_ITEM,								// 項目
+//  FRAMELIST_TOUCH_PARAM_ITEM = 0x80000000,  // 項目
+  FRAMELIST_TOUCH_PARAM_ITEM,               // 項目
 
 }FRAMELIST_TOUCH_PARAM;
 
 // コールバック関数
 typedef struct {
-	// ワーク, 項目位置, PRINT_UTIL, 表示Ｙ座標, 描画先
-	void (*draw)(void*,u32,PRINT_UTIL*,s16,BOOL);		// 描画処理
-	// ワーク, リスト位置, フラグ（初期化時FALSE）
-	void (*move)(void*,u32,BOOL);										// 移動処理
-	// ワーク, スクロール値
-	void (*scroll)(void*,s8);												// スクロール時
+  // ワーク, 項目位置, PRINT_UTIL, 表示Ｙ座標, 描画先
+  void (*draw)(void*,u32,PRINT_UTIL*,s16,BOOL);   // 描画処理
+  // ワーク, リスト位置, フラグ（初期化時FALSE）
+  void (*move)(void*,u32,BOOL);                   // 移動処理
+  // ワーク, スクロール値
+  void (*scroll)(void*,s8);                       // スクロール時
 }FRAMELIST_CALLBACK;
 
 // タッチデータ
 /*　※ タッチデータは、項目部分を最初に追加してください
-		{ { 0,15,128,255}, FRAMELIST_TOUCH_PARAM_ITEM or FRAMELIST_TOUCH_PARAM_SLIDE },	// 項目１
-		{ {16,31,128,255}, FRAMELIST_TOUCH_PARAM_ITEM or FRAMELIST_TOUCH_PARAM_SLIDE },	// 項目２
-		{ {32,47,128,255}, FRAMELIST_TOUCH_PARAM_ITEM or FRAMELIST_TOUCH_PARAM_SLIDE },	// 項目３
-		{ {48,63,128,255}, FRAMELIST_TOUCH_PARAM_ITEM or FRAMELIST_TOUCH_PARAM_SLIDE },	// 項目４
-				:
-				:
-		{ {....}, FRAMELIST_TOUCH_PARAM_RAIL },					// レール
-		{ {....}, FRAMELIST_TOUCH_PARAM_PAGE_UP },			// ページアップ
-		{ {....}, FRAMELIST_TOUCH_PARAM_PAGE_DOWN },		// ページダウン
+    { { 0,15,128,255}, FRAMELIST_TOUCH_PARAM_ITEM or FRAMELIST_TOUCH_PARAM_SLIDE }, // 項目１
+    { {16,31,128,255}, FRAMELIST_TOUCH_PARAM_ITEM or FRAMELIST_TOUCH_PARAM_SLIDE }, // 項目２
+    { {32,47,128,255}, FRAMELIST_TOUCH_PARAM_ITEM or FRAMELIST_TOUCH_PARAM_SLIDE }, // 項目３
+    { {48,63,128,255}, FRAMELIST_TOUCH_PARAM_ITEM or FRAMELIST_TOUCH_PARAM_SLIDE }, // 項目４
+        :
+        :
+    { {....}, FRAMELIST_TOUCH_PARAM_RAIL },         // レール
+    { {....}, FRAMELIST_TOUCH_PARAM_PAGE_UP },      // ページアップ
+    { {....}, FRAMELIST_TOUCH_PARAM_PAGE_DOWN },    // ページダウン
 
-		{ {GFL_UI_TP_HIT_END,0,0,0}, 0 },								// データ終了
+    { {GFL_UI_TP_HIT_END,0,0,0}, 0 },               // データ終了
 */
 typedef struct {
-	GFL_UI_TP_HITTBL	tbl;				// 範囲データ
-	FRAMELIST_TOUCH_PARAM	prm;		// パラメータ
+  GFL_UI_TP_HITTBL  tbl;        // 範囲データ
+  FRAMELIST_TOUCH_PARAM prm;    // パラメータ
 }FRAMELIST_TOUCH_DATA;
 
 // ヘッダーデータ
 typedef struct {
-	u8	mainBG;								// 下画面ＢＧ
-	u8	subBG;								// 上画面ＢＧ ( FRAMELIST_SUB_BG_NONE = 未使用 )
+  u8  mainBG;               // 下画面ＢＧ
+  u8  subBG;                // 上画面ＢＧ ( FRAMELIST_SUB_BG_NONE = 未使用 )
 
-	s8	itemPosX;							// 項目フレーム表示開始Ｘ座標
-	s8	itemPosY;							// 項目フレーム表示開始Ｙ座標
-	u8	itemSizX;							// 項目フレーム表示Ｘサイズ
-	u8	itemSizY;							// 項目フレーム表示Ｙサイズ
+  s8  itemPosX;             // 項目フレーム表示開始Ｘ座標（キャラ単位）
+  s8  itemPosY;             // 項目フレーム表示開始Ｙ座標（キャラ単位）
+  u8  itemSizX;             // 項目フレーム表示Ｘサイズ（キャラ単位）
+  u8  itemSizY;             // 項目フレーム表示Ｙサイズ（キャラ単位）
 
-	u8	bmpPosX;							// フレーム内に表示するBMPWINの表示Ｘ座標
-	u8	bmpPosY;							// フレーム内に表示するBMPWINの表示Ｙ座標
-	u8	bmpSizX;							// フレーム内に表示するBMPWINの表示Ｘサイズ
-	u8	bmpSizY;							// フレーム内に表示するBMPWINの表示Ｙサイズ
-	u8	bmpPal;								// フレーム内に表示するBMPWINのパレット
+  u8  bmpPosX;              // フレーム内に表示するBMPWINの表示Ｘ座標（キャラ単位）
+  u8  bmpPosY;              // フレーム内に表示するBMPWINの表示Ｙ座標（キャラ単位）
+  u8  bmpSizX;              // フレーム内に表示するBMPWINの表示Ｘサイズ（キャラ単位）
+  u8  bmpSizY;              // フレーム内に表示するBMPWINの表示Ｙサイズ（キャラ単位）
+  u8  bmpPal;               // フレーム内に表示するBMPWINのパレット
 
-	u8	scrollSpeed[FRAMELIST_SPEED_MAX];		// スクロール速度 [0] = 最速 ※itemSizY*8を割り切れる値であること！
+  u8  scrollSpeed[FRAMELIST_SPEED_MAX];   // スクロール速度 [0] = 最速 ※itemSizY*8を割り切れる値であること！
 
-	u8	selPal;								// 選択項目のパレット
+  u8  selPal;               // 選択項目のパレット
 
-	u8	barSize;							// スクロールバーのＹサイズ
+  u8  barSize;              // スクロールバーのＹサイズ（キャラ単位）
 
-	u16	itemMax;							// 項目登録数
-	u16	graMax;								// 背景登録数
+  u16 itemMax;              // 項目登録数(項目の総数）
+  u16 graMax;               // 背景登録数
 
-	u8	initPos;							// 初期カーソル位置
-	u8	posMax;								// カーソル移動範囲
-	u16	initScroll;						// 初期スクロール値
+  u8  initPos;              // 初期カーソル位置
+  u8  posMax;               // カーソル移動範囲
+  u16 initScroll;           // 初期スクロール値
 
-	const FRAMELIST_TOUCH_DATA * touch;	// タッチデータ
+  const FRAMELIST_TOUCH_DATA * touch; // タッチデータ
 
-	const FRAMELIST_CALLBACK * cbFunc;	// コールバック関数
-	void * cbWork;											// コールバック関数に渡されるワーク
+  const FRAMELIST_CALLBACK * cbFunc;  // コールバック関数
+  void * cbWork;                      // コールバック関数に渡されるワーク
 
 }FRAMELIST_HEADER;
 
-typedef struct _FRAMELIST_WORK	FRAMELIST_WORK;		// ＢＧフレームリストワーク
+typedef struct _FRAMELIST_WORK  FRAMELIST_WORK;   // ＢＧフレームリストワーク
 
 
 //============================================================================================
-//	プロトタイプ宣言
+//  プロトタイプ宣言
 //============================================================================================
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		ＢＧフレームリスト作成
+ * @brief   ＢＧフレームリスト作成
  *
- * @param		hed			ヘッダーデータ
- * @param		heapID	ヒープＩＤ
+ * @param   hed     ヘッダーデータ
+ * @param   heapID  ヒープＩＤ
  *
- * @return	ワーク
+ * @return  ワーク
  */
 //--------------------------------------------------------------------------------------------
 extern FRAMELIST_WORK * FRAMELIST_Create( FRAMELIST_HEADER * hed, HEAPID heapID );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		ＢＧフレームリスト削除
+ * @brief   ＢＧフレームリスト削除
  *
- * @param		wk		ワーク
+ * @param   wk    ワーク
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void FRAMELIST_Exit( FRAMELIST_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		項目追加
+ * @brief   項目追加
  *
- * @param		wk			ワーク
- * @param		type		背景番号
- * @param		param		パラメータ
+ * @param   wk      ワーク
+ * @param   type    背景番号
+ * @param   param   パラメータ
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void FRAMELIST_AddItem( FRAMELIST_WORK * wk, u32 type, u32 param );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		背景グラフィック読み込み
+ * @brief   背景グラフィック読み込み
  *
- * @param		wk				ワーク
- * @param		ah				アーカイブハンドル
- * @param		dataIdx		データインデックス
- * @param		comp			圧縮フラグ TRUE = 圧縮
- * @param		frameNum	背景番号
+ * @param   wk        ワーク
+ * @param   ah        アーカイブハンドル
+ * @param   dataIdx   データインデックス
+ * @param   comp      圧縮フラグ TRUE = 圧縮
+ * @param   frameNum  背景番号
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void FRAMELIST_LoadFrameGraphicAH( FRAMELIST_WORK * wk, ARCHANDLE * ah, u32 dataIdx, BOOL comp, u32 frameNum );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		カーソルパレットアニメ用データ読み込み
+ * @brief   カーソルパレットアニメ用データ読み込み
  *
- * @param		wk				ワーク
- * @param		ah				アーカイブハンドル
- * @param		dataIdx		データインデックス
- * @param		startPal	パレット１ 0～15
- * @param		endPal		パレット２ 0～15
+ * @param   wk        ワーク
+ * @param   ah        アーカイブハンドル
+ * @param   dataIdx   データインデックス
+ * @param   startPal  パレット１ 0～15
+ * @param   endPal    パレット２ 0～15
  *
- * @return	ワーク
+ * @return  ワーク
  */
 //--------------------------------------------------------------------------------------------
 extern void FRAMELIST_LoadBlinkPalette( FRAMELIST_WORK * wk, ARCHANDLE * ah, u32 dataIdx, u32 startPal, u32 endPal );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		ＢＧフレームリスト初期描画
+ * @brief   ＢＧフレームリスト初期描画
  *
- * @param		wk		ワーク
+ * @param   wk    ワーク
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern BOOL FRAMELIST_Init( FRAMELIST_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		ＢＧフレームリストメイン処理
+ * @brief   ＢＧフレームリストメイン処理
  *
- * @param		wk		ワーク
+ * @param   wk    ワーク
  *
- * @return	動作結果
+ * @return  動作結果
  */
 //--------------------------------------------------------------------------------------------
 extern u32 FRAMELIST_Main( FRAMELIST_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		スクロールバーの表示Ｙ座標を取得
+ * @brief   スクロールバーの表示Ｙ座標を取得
  *
- * @param		wk			ワーク
- * @param		barSY		バーのＹサイズ
+ * @param   wk      ワーク
+ * @param   barSY   バーのＹサイズ
  *
- * @return	Ｙ座標
+ * @return  Ｙ座標
  */
 //--------------------------------------------------------------------------------------------
 extern u32 FRAMELIST_GetScrollBarPY( FRAMELIST_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		スクロールバーの表示Ｙ座標を取得（拡張版）
+ * @brief   スクロールバーの表示Ｙ座標を取得（拡張版）
  *
- * @param		wk			ワーク
- * @param		now_y		現在のＹ座標
+ * @param   wk      ワーク
+ * @param   now_y   現在のＹ座標
  *
- * @return	Ｙ座標
+ * @return  Ｙ座標
  *
- * @li	レール処理中はタッチＹ座標を返す
- * @li	現在のＹ座標がスクロール幅に収まっていれば、現在のＹ座標を返す
+ * @li  レール処理中はタッチＹ座標を返す
+ * @li  現在のＹ座標がスクロール幅に収まっていれば、現在のＹ座標を返す
  */
 //--------------------------------------------------------------------------------------------
 extern u32 FRAMELIST_GetScrollBarPY2( FRAMELIST_WORK * wk, u32 now_y );
 
 //--------------------------------------------------------------------------------------------
 /**
- * 指定位置の項目のパレットを変更	
+ * 指定位置の項目のパレットを変更 
  *
- * @param		wk		ワーク
- * @param		pos		カーソル位置
- * @param		pal		パレット番号
+ * @param   wk    ワーク
+ * @param   pos   カーソル位置
+ * @param   pal   パレット番号
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void FRAMELIST_ChangePosPalette( FRAMELIST_WORK * wk, u16 pos, u16 pal );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		プリントキュー取得
+ * @brief   プリントキュー取得(Callback内で書くとき用に内部で生成されている）
  *
- * @param		wk				ワーク
+ * @param   wk        ワーク
  *
- * @return	プリントキュー
+ * @return  プリントキュー
  */
 //--------------------------------------------------------------------------------------------
 extern PRINT_QUE * FRAMELIST_GetPrintQue( FRAMELIST_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		項目パラメータ取得
+ * @brief   項目パラメータ取得
  *
- * @param		wk				ワーク
- * @param		itemIdx		項目インデックス
+ * @param   wk        ワーク
+ * @param   itemIdx   項目インデックス
  *
- * @return	項目パラメータ
+ * @return  項目パラメータ
  */
 //--------------------------------------------------------------------------------------------
 extern u32 FRAMELIST_GetItemParam( FRAMELIST_WORK * wk, u32 itemIdx );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		リスト位置取得
+ * @brief   リスト位置取得
  *
- * @param		wk				ワーク
+ * @param   wk        ワーク
  *
- * @return	リスト位置
+ * @return  リスト位置
  */
 //--------------------------------------------------------------------------------------------
 extern u32 FRAMELIST_GetListPos( FRAMELIST_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		カーソル位置取得
+ * @brief   カーソル位置取得
  *
- * @param		wk				ワーク
+ * @param   wk        ワーク
  *
- * @return	項目パラメータ
+ * @return  項目パラメータ
  */
 //--------------------------------------------------------------------------------------------
 extern u32 FRAMELIST_GetCursorPos( FRAMELIST_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		リストスクロールカウンタを取得
+ * @brief   リストスクロールカウンタを取得
  *
- * @param		wk		ワーク
+ * @param   wk    ワーク
  *
- * @return	スクロールカウンタ
+ * @return  スクロールカウンタ
  */
 //--------------------------------------------------------------------------------------------
 extern u32 FRAMELIST_GetScrollCount( FRAMELIST_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		リストを下にスクロールできるか
+ * @brief   リストを下にスクロールできるか
  *
- * @param		wk		ワーク
+ * @param   wk    ワーク
  *
- * @retval	"TRUE = 可"
- * @retval	"FALSE = 不可"
+ * @retval  "TRUE = 可"
+ * @retval  "FALSE = 不可"
  */
 //--------------------------------------------------------------------------------------------
 extern BOOL FRAMELIST_CheckScrollMax( FRAMELIST_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		カーソル位置を設定
+ * @brief   カーソル位置を設定
  *
- * @param		wk					ワーク
- * @param		pos					カーソル位置
+ * @param   wk          ワーク
+ * @param   pos         カーソル位置
  *
- * @return	none
+ * @return  none
  *
- *	コールバック[move]が呼ばれます
+ *  コールバック[move]が呼ばれます
  */
 //--------------------------------------------------------------------------------------------
 extern void FRAMELIST_SetCursorPos( FRAMELIST_WORK * wk, u32 pos );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		カーソル位置のパレットを光らせる
+ * @brief   カーソル位置のパレットを光らせる
  *
- * @param		wk					ワーク
+ * @param   wk          ワーク
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void FRAMELIST_SetCursorPosPalette( FRAMELIST_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		カーソル位置のパレットを戻す
+ * @brief   カーソル位置のパレットを戻す
  *
- * @param		wk					ワーク
+ * @param   wk          ワーク
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 extern void FRAMELIST_SetCursorPosPaletteOff( FRAMELIST_WORK * wk );

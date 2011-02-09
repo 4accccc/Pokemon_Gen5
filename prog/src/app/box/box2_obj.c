@@ -1109,10 +1109,17 @@ static BOOL CheckPokeSearchCondition( BOX_SEARCH_DATA* sp, const POKEMON_PASO_PA
       return FALSE;
     }
   }
-  //道具(1オリジン)
-  if( sp->item != FALSE ){
-    if( PPP_Get(ppp,ID_PARA_item,NULL) == ITEM_DUMMY_DATA ){
-      return FALSE;
+  //道具(1オリジン)(0:道具をみない, 1:道具なし 2:道具あり）
+  if( sp->item != 0 ){
+    sp->item--;
+    if(sp->item==TRUE){
+      if( PPP_Get(ppp,ID_PARA_item,NULL) == ITEM_DUMMY_DATA ){
+        return FALSE;
+      }
+    }else{
+      if( PPP_Get(ppp,ID_PARA_item,NULL) != ITEM_DUMMY_DATA ){
+        return FALSE;
+      }
     }
   }
   //性格(0オリジン)
@@ -1121,15 +1128,15 @@ static BOOL CheckPokeSearchCondition( BOX_SEARCH_DATA* sp, const POKEMON_PASO_PA
       return FALSE;
     }
   }
-  //特性(0オリジン)
+  //特性(0オリジン)（0:性別をみない,1=PTL_SEX_MALE, 2=PTL_SEX_FEMALE, 3=PTL_SEX_UNKNOWN)
   if( sp->tokusei != 0 ){
     if( PPP_Get(ppp,ID_PARA_speabino,NULL) != sp->tokusei ){
       return FALSE;
     }
   }
   //性別(0オリジン)
-  if( sp->sex != PTL_SEX_UNKNOWN ){ // PTL_SEX_UNKNOWN=2
-    if( PPP_Get(ppp,ID_PARA_sex,NULL) != sp->sex ){
+  if( sp->sex != 0 ){ // PTL_SEX_UNKNOWN=2
+    if( PPP_Get(ppp,ID_PARA_sex,NULL) != sp->sex-1 ){
       return FALSE;
     }
   }
