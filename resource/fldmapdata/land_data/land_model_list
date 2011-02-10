@@ -714,7 +714,6 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/m_gate10_00_00.nsbmd \
 	$(DIR_TEMP)/m_mugen01_00_00.nsbmd \
 	$(DIR_TEMP)/m_mugen02_00_00.nsbmd \
-	$(DIR_TEMP)/m_mugen02_00_00.nsbmd \
 	$(DIR_TEMP)/m_mugen03_00_00.nsbmd \
 	$(DIR_TEMP)/m_mugen04_00_00.nsbmd \
 	$(DIR_TEMP)/m_mugen05_00_00.nsbmd \
@@ -723,12 +722,14 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/m_mugen08_00_00.nsbmd \
 	$(DIR_TEMP)/m_mugen09_00_00.nsbmd \
 	$(DIR_TEMP)/m_mugen10_00_00.nsbmd \
+	$(DIR_TEMP)/m_mugen11_00_00.nsbmd \
 	$(DIR_TEMP)/m_gym0302_00_00.nsbmd \
 	$(DIR_TEMP)/m_gym0102_00_00.nsbmd \
 	$(DIR_TEMP)/m_rresort01_00_00.nsbmd \
 	$(DIR_TEMP)/m_medal01_00_00.nsbmd \
 	$(DIR_TEMP)/m_labo04_00_00.nsbmd \
 	$(DIR_TEMP)/m_Wbt02_01_00.nsbmd \
+	$(DIR_TEMP)/m_mugen12_00_00.nsbmd \
 	$(DIR_TEMP)/C3_00_00.nsbmd \
 	$(DIR_TEMP)/C3_00_01.nsbmd \
 	$(DIR_TEMP)/C3_01_00.nsbmd \

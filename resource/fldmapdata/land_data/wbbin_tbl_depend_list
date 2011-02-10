@@ -2994,10 +2994,6 @@ $(DIR_WBTMP)/m_mugen02_00_00.tbl: $(DIR_RES)/m_mugen02_00_00.bin
 	@echo create_bintbl m_mugen02_00_00
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_mugen02_00_00.bin
 
-$(DIR_WBTMP)/m_mugen02_00_00.tbl: $(DIR_RES)/m_mugen02_00_00.bin
-	@echo create_bintbl m_mugen02_00_00
-	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_mugen02_00_00.bin
-
 $(DIR_WBTMP)/m_mugen03_00_00.tbl: $(DIR_RES)/m_mugen03_00_00.bin
 	@echo create_bintbl m_mugen03_00_00
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_mugen03_00_00.bin
@@ -3030,6 +3026,10 @@ $(DIR_WBTMP)/m_mugen10_00_00.tbl: $(DIR_RES)/m_mugen10_00_00.bin
 	@echo create_bintbl m_mugen10_00_00
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_mugen10_00_00.bin
 
+$(DIR_WBTMP)/m_mugen11_00_00.tbl: $(DIR_RES)/m_mugen11_00_00.bin
+	@echo create_bintbl m_mugen11_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_mugen11_00_00.bin
+
 $(DIR_WBTMP)/m_gym0302_00_00.tbl: $(DIR_RES)/m_gym0302_00_00.bin
 	@echo create_bintbl m_gym0302_00_00
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_gym0302_00_00.bin
@@ -3053,4 +3053,8 @@ $(DIR_WBTMP)/m_labo04_00_00.tbl: $(DIR_RES)/m_labo04_00_00.bin
 $(DIR_WBTMP)/m_Wbt02_01_00.tbl: $(DIR_RES)/m_Wbt02_01_00.bin
 	@echo create_bintbl m_Wbt02_01_00
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_Wbt02_01_00.bin
+
+$(DIR_WBTMP)/m_mugen12_00_00.tbl: $(DIR_RES)/m_mugen12_00_00.bin
+	@echo create_bintbl m_mugen12_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_mugen12_00_00.bin
 

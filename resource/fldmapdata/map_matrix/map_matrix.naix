@@ -288,7 +288,19 @@ enum {
 	NARC_map_matrix_gym0302_mat_bin = 274,
 	NARC_map_matrix_gym0102_mat_bin = 275,
 	NARC_map_matrix_rresort01_mat_bin = 276,
-	NARC_map_matrix_resort01_mat_bin = 277
+	NARC_map_matrix_resort01_mat_bin = 277,
+	NARC_map_matrix_mugen01_mat_bin = 278,
+	NARC_map_matrix_mugen02_mat_bin = 279,
+	NARC_map_matrix_mugen03_mat_bin = 280,
+	NARC_map_matrix_mugen04_mat_bin = 281,
+	NARC_map_matrix_mugen05_mat_bin = 282,
+	NARC_map_matrix_mugen06_mat_bin = 283,
+	NARC_map_matrix_mugen07_mat_bin = 284,
+	NARC_map_matrix_mugen08_mat_bin = 285,
+	NARC_map_matrix_mugen09_mat_bin = 286,
+	NARC_map_matrix_mugen10_mat_bin = 287,
+	NARC_map_matrix_mugen11_mat_bin = 288,
+	NARC_map_matrix_mugen12_mat_bin = 289
 };
 
 /* NARC_MAP_MATRIX_NAIX_ */

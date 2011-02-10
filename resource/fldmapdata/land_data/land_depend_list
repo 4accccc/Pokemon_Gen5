@@ -714,7 +714,6 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/m_gate10_00_00.3dppack \
 	$(DIR_OUTPUT)/m_mugen01_00_00.3dppack \
 	$(DIR_OUTPUT)/m_mugen02_00_00.3dppack \
-	$(DIR_OUTPUT)/m_mugen02_00_00.3dppack \
 	$(DIR_OUTPUT)/m_mugen03_00_00.3dppack \
 	$(DIR_OUTPUT)/m_mugen04_00_00.3dppack \
 	$(DIR_OUTPUT)/m_mugen05_00_00.3dppack \
@@ -723,12 +722,14 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/m_mugen08_00_00.3dppack \
 	$(DIR_OUTPUT)/m_mugen09_00_00.3dppack \
 	$(DIR_OUTPUT)/m_mugen10_00_00.3dppack \
+	$(DIR_OUTPUT)/m_mugen11_00_00.3dppack \
 	$(DIR_OUTPUT)/m_gym0302_00_00.3dppack \
 	$(DIR_OUTPUT)/m_gym0102_00_00.3dppack \
 	$(DIR_OUTPUT)/m_rresort01_00_00.3dppack \
 	$(DIR_OUTPUT)/m_medal01_00_00.3dppack \
 	$(DIR_OUTPUT)/m_labo04_00_00.3dppack \
 	$(DIR_OUTPUT)/m_Wbt02_01_00.3dppack \
+	$(DIR_OUTPUT)/m_mugen12_00_00.3dppack \
 	$(DIR_OUTPUT)/C3_00_00.ngpack \
 	$(DIR_OUTPUT)/C3_00_01.ngpack \
 	$(DIR_OUTPUT)/C3_01_00.ngpack \
