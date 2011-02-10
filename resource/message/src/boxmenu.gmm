@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="mori" host="W00155" date="2011-02-09T03:08:36"/>
+	<create user="shimoyamada" host="W00184" date="2011-02-10T14:58:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,9 +305,9 @@
 		</language>
 	</columns>
 
-	<dialog left="216" top="291" right="921" bottom="919" maximized="no" rayout="Vertical2">
+	<dialog left="1513" top="603" right="2218" bottom="1231" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
-		<tag-palette left="551" top="133" right="1024" bottom="531" visible="no"/>
+		<tag-palette left="551" top="133" right="1024" bottom="531" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -1008,7 +1008,9 @@
 	</row>
 
 	<row id="mes_box_search_cap_01" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
-		<comment>絞込みアプリ見出し</comment>
+		<comment>※以下、全てSWANより追加
+
+絞込みアプリ見出し</comment>
 		<language name="JPN" font=" 1:small" width="72">ボックスを　せいりする</language>
 		<language name="JPN_KANJI" font=" 1:small" width="72">ボックスを　整理する</language>
 	</row>
@@ -1021,16 +1023,16 @@
 
 	<row id="mes_box_search_text_01" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
 		<comment>絞込みメイン画面見出し</comment>
-		<language name="JPN" font=" 1:small" width="72">ポケモン　しぼりこみ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモン　絞込み</language>
+		<language name="JPN" font=" 1:small" width="72">ポケモンを　しぼりこむ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンを　絞込む</language>
 	</row>
 
 	<row id="mes_box_search_text_02" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
 		<comment>絞込みメイン画面ガイド</comment>
-		<language name="JPN" font=" 1:small" width="72">じょうほうを　えらび　ＯＮを　おすと
-しぼりこみを　かいしします。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="72">じょうほうを　えらび　ＯＮを　おすと
-しぼりこみを　かいしします。</language>
+		<language name="JPN" font=" 1:small" width="72">じょうけんを　えらび　ＯＮに　すると
+しぼりこみを　おこないます。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">条件を　選び　ＯＮに　すると
+絞込みを　おこないます。</language>
 	</row>
 
 	<row id="mes_box_search_text_03" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
@@ -1039,8 +1041,8 @@
 種族名の頭文字選択</comment>
 		<language name="JPN" font=" 1:small" width="72">ポケモンの　なまえの　かしらもじを
 えらんでください。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンの　なまえの　かしらもじを
-えらんでください。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンの　なまえの　頭文字を
+選んでください。</language>
 	</row>
 
 	<row id="mes_box_search_text_03_01" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
@@ -1056,7 +1058,7 @@
 なまえ：[1:01:ポケモン種族名:0]
 タイプ１：[1:03:ポケモンタイプ:1]
 タイプ２：[1:03:ポケモンタイプ:2]</language>
-		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンを　えらんでください。
+		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンを　選んでください。
 
 なまえ：[1:01:ポケモン種族名:0]
 タイプ１：[1:03:ポケモンタイプ:1]
@@ -1069,13 +1071,11 @@
 		<language name="JPN" font=" 1:small" width="72">ポケモンの　せいかくを　えらんでください。
 
 せいかく：[FF:00:色:1]がんばりや
-[FF:00:色:0]バランスよく　せいちょう　しやすい。
-ー</language>
+[FF:00:色:0]バランスよく　せいちょう　しやすい。</language>
 		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンの　せいかくを　選んでください。
 
 せいかく：[FF:00:色:1]がんばりや
-[FF:00:色:0]バランスよく　せいちょう　しやすい。
-ー</language>
+[FF:00:色:0]バランスよく　成長　しやすい。</language>
 	</row>
 
 	<row id="mes_box_search_text_04_02" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
@@ -1084,13 +1084,13 @@
 		<language name="JPN" font=" 1:small" width="72">ポケモンの　せいかくを　えらんでください。
 
 せいかく：[FF:00:色:1]さみしがり
-[FF:00:色:0]バランスよく　せいちょう　しやすい。
-ー</language>
+[FF:00:色:0]ごうげきが　せいちょう　しやすい。
+ぼうぎょが　せいちょう　しにくい。</language>
 		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンの　せいかくを　選んでください。
 
 せいかく：[FF:00:色:1]さみしがり
-[FF:00:色:0]バランスよく　せいちょう　しやすい。
-ー</language>
+[FF:00:色:0]ごうげきが　成長　しやすい。
+ぼうぎょが　成長　しにくい。</language>
 	</row>
 
 	<row id="mes_box_search_text_04_03" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
@@ -1099,13 +1099,13 @@
 		<language name="JPN" font=" 1:small" width="72">ポケモンの　せいかくを　えらんでください。
 
 せいかく：[FF:00:色:1]ゆうかん
-[FF:00:色:0]バランスよく　せいちょう　しやすい。
-ー</language>
+[FF:00:色:0]ごうげきが　せいちょう　しやすい。
+すばやさが　せいちょう　しにくい。</language>
 		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンの　せいかくを　選んでください。
 
 せいかく：[FF:00:色:1]ゆうかん
-[FF:00:色:0]バランスよく　せいちょう　しやすい。
-ー</language>
+[FF:00:色:0]ごうげきが　成長　しやすい。
+すばやさが　成長　しにくい。</language>
 	</row>
 
 	<row id="mes_box_search_text_04_04" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
@@ -1114,13 +1114,13 @@
 		<language name="JPN" font=" 1:small" width="72">ポケモンの　せいかくを　えらんでください。
 
 せいかく：[FF:00:色:1]いじっぱり
-[FF:00:色:0]バランスよく　せいちょう　しやすい。
-ー</language>
+[FF:00:色:0]ごうげきが　せいちょう　しやすい。
+とくこうが　せいちょう　しにくい。</language>
 		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンの　せいかくを　選んでください。
 
 せいかく：[FF:00:色:1]いじっぱり
-[FF:00:色:0]バランスよく　せいちょう　しやすい。
-ー</language>
+[FF:00:色:0]ごうげきが　成長　しやすい。
+とくこうが　成長　しにくい。</language>
 	</row>
 
 	<row id="mes_box_search_text_04_05" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
@@ -1129,13 +1129,13 @@
 		<language name="JPN" font=" 1:small" width="72">ポケモンの　せいかくを　えらんでください。
 
 せいかく：[FF:00:色:1]やんちゃ
-[FF:00:色:0]バランスよく　せいちょう　しやすい。
-ー</language>
+[FF:00:色:0]ごうげきが　せいちょう　しやすい。
+とくぼうが　せいちょう　しにくい。</language>
 		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンの　せいかくを　選んでください。
 
 せいかく：[FF:00:色:1]やんちゃ
-[FF:00:色:0]バランスよく　せいちょう　しやすい。
-ー</language>
+[FF:00:色:0]ごうげきが　成長　しやすい。
+とくぼうが　成長　しにくい。</language>
 	</row>
 
 	<row id="mes_box_search_text_04_06" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
@@ -1144,13 +1144,13 @@
 		<language name="JPN" font=" 1:small" width="72">ポケモンの　せいかくを　えらんでください。
 
 せいかく：[FF:00:色:1]ずぶとい
-[FF:00:色:0]バランスよく　せいちょう　しやすい。
-ー</language>
+[FF:00:色:0]ぼうぎょが　せいちょう　しやすい。
+こうげきが　せいちょう　しにくい。</language>
 		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンの　せいかくを　選んでください。
 
 せいかく：[FF:00:色:1]ずぶとい
-[FF:00:色:0]バランスよく　せいちょう　しやすい。
-ー</language>
+[FF:00:色:0]ぼうぎょが　成長　しやすい。
+こうげきが　成長　しにくい。</language>
 	</row>
 
 	<row id="mes_box_search_text_04_07" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
@@ -1159,13 +1159,11 @@
 		<language name="JPN" font=" 1:small" width="72">ポケモンの　せいかくを　えらんでください。
 
 せいかく：[FF:00:色:1]すなお
-[FF:00:色:0]バランスよく　せいちょう　しやすい。
-ー</language>
+[FF:00:色:0]バランスよく　せいちょう　しやすい。</language>
 		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンの　せいかくを　選んでください。
 
 せいかく：[FF:00:色:1]すなお
-[FF:00:色:0]バランスよく　せいちょう　しやすい。
-ー</language>
+[FF:00:色:0]バランスよく　成長　しやすい。</language>
 	</row>
 
 	<row id="mes_box_search_text_04_08" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
@@ -1174,13 +1172,13 @@
 		<language name="JPN" font=" 1:small" width="72">ポケモンの　せいかくを　えらんでください。
 
 せいかく：[FF:00:色:1]のんき
-[FF:00:色:0]バランスよく　せいちょう　しやすい。
-ー</language>
+[FF:00:色:0]ぼうぎょが　せいちょう　しやすい。
+すばやさが　せいちょう　しにくい。</language>
 		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンの　せいかくを　選んでください。
 
 せいかく：[FF:00:色:1]のんき
-[FF:00:色:0]バランスよく　せいちょう　しやすい。
-ー</language>
+[FF:00:色:0]ぼうぎょが　成長　しやすい。
+すばやさが　成長　しにくい。</language>
 	</row>
 
 	<row id="mes_box_search_text_04_09" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
@@ -1189,13 +1187,13 @@
 		<language name="JPN" font=" 1:small" width="72">ポケモンの　せいかくを　えらんでください。
 
 せいかく：[FF:00:色:1]わんぱく
-[FF:00:色:0]バランスよく　せいちょう　しやすい。
-ー</language>
+[FF:00:色:0]ぼうぎょが　せいちょう　しやすい。
+とくこうが　せいちょう　しにくい。</language>
 		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンの　せいかくを　選んでください。
 
 せいかく：[FF:00:色:1]わんぱく
-[FF:00:色:0]バランスよく　せいちょう　しやすい。
-ー</language>
+[FF:00:色:0]ぼうぎょが　成長　しやすい。
+とくこうが　成長　しにくい。</language>
 	</row>
 
 	<row id="mes_box_search_text_04_10" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
@@ -1204,13 +1202,13 @@
 		<language name="JPN" font=" 1:small" width="72">ポケモンの　せいかくを　えらんでください。
 
 せいかく：[FF:00:色:1]のうてんき
-[FF:00:色:0]バランスよく　せいちょう　しやすい。
-ー</language>
+[FF:00:色:0]ぼうぎょが　せいちょう　しやすい。
+とくぼうが　せいちょう　しにくい。</language>
 		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンの　せいかくを　選んでください。
 
 せいかく：[FF:00:色:1]のうてんき
-[FF:00:色:0]バランスよく　せいちょう　しやすい。
-ー</language>
+[FF:00:色:0]ぼうぎょが　成長　しやすい。
+とくぼうが　成長　しにくい。</language>
 	</row>
 
 	<row id="mes_box_search_text_04_11" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
@@ -1219,13 +1217,13 @@
 		<language name="JPN" font=" 1:small" width="72">ポケモンの　せいかくを　えらんでください。
 
 せいかく：[FF:00:色:1]おくびょう
-[FF:00:色:0]バランスよく　せいちょう　しやすい。
-ー</language>
+[FF:00:色:0]すばやさが　せいちょう　しやすい。
+こうげきが　せいちょう　しにくい。</language>
 		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンの　せいかくを　選んでください。
 
 せいかく：[FF:00:色:1]おくびょう
-[FF:00:色:0]バランスよく　せいちょう　しやすい。
-ー</language>
+[FF:00:色:0]すばやさが　成長　しやすい。
+こうげきが　成長　しにくい。</language>
 	</row>
 
 	<row id="mes_box_search_text_04_12" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
@@ -1234,13 +1232,13 @@
 		<language name="JPN" font=" 1:small" width="72">ポケモンの　せいかくを　えらんでください。
 
 せいかく：[FF:00:色:1]せっかち
-[FF:00:色:0]バランスよく　せいちょう　しやすい。
-ー</language>
+[FF:00:色:0]すばやさが　せいちょう　しやすい。
+ぼうぎょが　せいちょう　しにくい。</language>
 		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンの　せいかくを　選んでください。
 
 せいかく：[FF:00:色:1]せっかち
-[FF:00:色:0]バランスよく　せいちょう　しやすい。
-ー</language>
+[FF:00:色:0]すばやさが　成長　しやすい。
+ぼうぎょが　成長　しにくい。</language>
 	</row>
 
 	<row id="mes_box_search_text_04_13" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
@@ -1249,13 +1247,11 @@
 		<language name="JPN" font=" 1:small" width="72">ポケモンの　せいかくを　えらんでください。
 
 せいかく：[FF:00:色:1]まじめ
-[FF:00:色:0]バランスよく　せいちょう　しやすい。
-ー</language>
+[FF:00:色:0]バランスよく　せいちょう　しやすい。</language>
 		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンの　せいかくを　選んでください。
 
 せいかく：[FF:00:色:1]まじめ
-[FF:00:色:0]バランスよく　せいちょう　しやすい。
-ー</language>
+[FF:00:色:0]バランスよく　成長　しやすい。</language>
 	</row>
 
 	<row id="mes_box_search_text_04_14" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
@@ -1264,13 +1260,13 @@
 		<language name="JPN" font=" 1:small" width="72">ポケモンの　せいかくを　えらんでください。
 
 せいかく：[FF:00:色:1]ようき
-[FF:00:色:0]バランスよく　せいちょう　しやすい。
-ー</language>
+[FF:00:色:0]すばやさが　せいちょう　しやすい。
+とくこうが　せいちょう　しにくい。</language>
 		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンの　せいかくを　選んでください。
 
 せいかく：[FF:00:色:1]ようき
-[FF:00:色:0]バランスよく　せいちょう　しやすい。
-ー</language>
+[FF:00:色:0]すばやさが　成長　しやすい。
+とくこうが　成長　しにくい。</language>
 	</row>
 
 	<row id="mes_box_search_text_04_15" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
@@ -1279,13 +1275,13 @@
 		<language name="JPN" font=" 1:small" width="72">ポケモンの　せいかくを　えらんでください。
 
 せいかく：[FF:00:色:1]むじゃき
-[FF:00:色:0]バランスよく　せいちょう　しやすい。
-ー</language>
+[FF:00:色:0]すばやさが　せいちょう　しやすい。
+とくぼうが　せいちょう　しにくい。</language>
 		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンの　せいかくを　選んでください。
 
 せいかく：[FF:00:色:1]むじゃき
-[FF:00:色:0]バランスよく　せいちょう　しやすい。
-ー</language>
+[FF:00:色:0]すばやさが　成長　しやすい。
+とくぼうが　成長　しにくい。</language>
 	</row>
 
 	<row id="mes_box_search_text_04_16" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
@@ -1294,13 +1290,13 @@
 		<language name="JPN" font=" 1:small" width="72">ポケモンの　せいかくを　えらんでください。
 
 せいかく：[FF:00:色:1]ひかえめ
-[FF:00:色:0]バランスよく　せいちょう　しやすい。
-ー</language>
+[FF:00:色:0]とくこうが　せいちょう　しやすい。
+こうげきが　せいちょう　しにくい。</language>
 		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンの　せいかくを　選んでください。
 
 せいかく：[FF:00:色:1]ひかえめ
-[FF:00:色:0]バランスよく　せいちょう　しやすい。
-ー</language>
+[FF:00:色:0]とくこうが　成長　しやすい。
+こうげきが　成長　しにくい。</language>
 	</row>
 
 	<row id="mes_box_search_text_04_17" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
@@ -1309,13 +1305,13 @@
 		<language name="JPN" font=" 1:small" width="72">ポケモンの　せいかくを　えらんでください。
 
 せいかく：[FF:00:色:1]おっとり
-[FF:00:色:0]バランスよく　せいちょう　しやすい。
-ー</language>
+[FF:00:色:0]とくこうが　せいちょう　しやすい。
+ぼうぎょが　せいちょう　しにくい。</language>
 		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンの　せいかくを　選んでください。
 
 せいかく：[FF:00:色:1]おっとり
-[FF:00:色:0]バランスよく　せいちょう　しやすい。
-ー</language>
+[FF:00:色:0]とくこうが　成長　しやすい。
+ぼうぎょが　成長　しにくい。</language>
 	</row>
 
 	<row id="mes_box_search_text_04_18" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
@@ -1324,13 +1320,13 @@
 		<language name="JPN" font=" 1:small" width="72">ポケモンの　せいかくを　えらんでください。
 
 せいかく：[FF:00:色:1]れいせい
-[FF:00:色:0]バランスよく　せいちょう　しやすい。
-ー</language>
+[FF:00:色:0]とくこうが　せいちょう　しやすい。
+すばやさが　せいちょう　しにくい。</language>
 		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンの　せいかくを　選んでください。
 
 せいかく：[FF:00:色:1]れいせい
-[FF:00:色:0]バランスよく　せいちょう　しやすい。
-ー</language>
+[FF:00:色:0]とくこうが　成長　しやすい。
+すばやさが　成長　しにくい。</language>
 	</row>
 
 	<row id="mes_box_search_text_04_19" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
@@ -1339,13 +1335,11 @@
 		<language name="JPN" font=" 1:small" width="72">ポケモンの　せいかくを　えらんでください。
 
 せいかく：[FF:00:色:1]てれや
-[FF:00:色:0]バランスよく　せいちょう　しやすい。
-ー</language>
+[FF:00:色:0]バランスよく　せいちょう　しやすい。</language>
 		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンの　せいかくを　選んでください。
 
 せいかく：[FF:00:色:1]てれや
-[FF:00:色:0]バランスよく　せいちょう　しやすい。
-ー</language>
+[FF:00:色:0]バランスよく　成長　しやすい。</language>
 	</row>
 
 	<row id="mes_box_search_text_04_20" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
@@ -1354,13 +1348,13 @@
 		<language name="JPN" font=" 1:small" width="72">ポケモンの　せいかくを　えらんでください。
 
 せいかく：[FF:00:色:1]うっかりや
-[FF:00:色:0]バランスよく　せいちょう　しやすい。
-ー</language>
+[FF:00:色:0]とくこうが　せいちょう　しやすい。
+とくぼうが　せいちょう　しにくい。</language>
 		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンの　せいかくを　選んでください。
 
 せいかく：[FF:00:色:1]うっかりや
-[FF:00:色:0]バランスよく　せいちょう　しやすい。
-ー</language>
+[FF:00:色:0]とくこうが　成長　しやすい。
+とくぼうが　成長　しにくい。</language>
 	</row>
 
 	<row id="mes_box_search_text_04_21" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
@@ -1369,13 +1363,13 @@
 		<language name="JPN" font=" 1:small" width="72">ポケモンの　せいかくを　えらんでください。
 
 せいかく：[FF:00:色:1]おだやか
-[FF:00:色:0]バランスよく　せいちょう　しやすい。
-ー</language>
+[FF:00:色:0]とくぼうが　せいちょう　しやすい。
+こうげきが　せいちょう　しにくい。</language>
 		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンの　せいかくを　選んでください。
 
 せいかく：[FF:00:色:1]おだやか
-[FF:00:色:0]バランスよく　せいちょう　しやすい。
-ー</language>
+[FF:00:色:0]とくぼうが　成長　しやすい。
+こうげきが　成長　しにくい。</language>
 	</row>
 
 	<row id="mes_box_search_text_04_22" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
@@ -1384,13 +1378,13 @@
 		<language name="JPN" font=" 1:small" width="72">ポケモンの　せいかくを　えらんでください。
 
 せいかく：[FF:00:色:1]おとなしい
-[FF:00:色:0]バランスよく　せいちょう　しやすい。
-ー</language>
+[FF:00:色:0]とくぼうが　せいちょう　しやすい。
+ぼうぎょが　せいちょう　しにくい。</language>
 		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンの　せいかくを　選んでください。
 
 せいかく：[FF:00:色:1]おとなしい
-[FF:00:色:0]バランスよく　せいちょう　しやすい。
-ー</language>
+[FF:00:色:0]とくぼうが　成長　しやすい。
+ぼうぎょが　成長　しにくい。</language>
 	</row>
 
 	<row id="mes_box_search_text_04_23" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
@@ -1399,13 +1393,13 @@
 		<language name="JPN" font=" 1:small" width="72">ポケモンの　せいかくを　えらんでください。
 
 せいかく：[FF:00:色:1]なまいき
-[FF:00:色:0]バランスよく　せいちょう　しやすい。
-ー</language>
+[FF:00:色:0]とくぼうが　せいちょう　しやすい。
+すばやさが　せいちょう　しにくい。</language>
 		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンの　せいかくを　選んでください。
 
 せいかく：[FF:00:色:1]なまいき
-[FF:00:色:0]バランスよく　せいちょう　しやすい。
-ー</language>
+[FF:00:色:0]とくぼうが　成長　しやすい。
+すばやさが　成長　しにくい。</language>
 	</row>
 
 	<row id="mes_box_search_text_04_24" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
@@ -1414,13 +1408,13 @@
 		<language name="JPN" font=" 1:small" width="72">ポケモンの　せいかくを　えらんでください。
 
 せいかく：[FF:00:色:1]しんちょう
-[FF:00:色:0]バランスよく　せいちょう　しやすい。
-ー</language>
+[FF:00:色:0]とくぼうが　せいちょう　しやすい。
+とくこうが　せいちょう　しにくい。</language>
 		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンの　せいかくを　選んでください。
 
 せいかく：[FF:00:色:1]しんちょう
-[FF:00:色:0]バランスよく　せいちょう　しやすい。
-ー</language>
+[FF:00:色:0]とくぼうが　成長　しやすい。
+とくこうが　成長　しにくい。</language>
 	</row>
 
 	<row id="mes_box_search_text_04_25" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
@@ -1429,13 +1423,11 @@
 		<language name="JPN" font=" 1:small" width="72">ポケモンの　せいかくを　えらんでください。
 
 せいかく：[FF:00:色:1]きまぐれ
-[FF:00:色:0]バランスよく　せいちょう　しやすい。
-ー</language>
+[FF:00:色:0]バランスよく　せいちょう　しやすい。</language>
 		<language name="JPN_KANJI" font=" 1:small" width="72">ポケモンの　せいかくを　選んでください。
 
 せいかく：[FF:00:色:1]きまぐれ
-[FF:00:色:0]バランスよく　せいちょう　しやすい。
-ー</language>
+[FF:00:色:0]バランスよく　成長　しやすい。</language>
 	</row>
 
 	<row id="mes_box_search_text_05" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
@@ -1443,7 +1435,7 @@
 
 特性の頭文字選択</comment>
 		<language name="JPN" font=" 1:small" width="72">とくせいの　かしらもじを　えらんでください。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="72">とくせいの　かしらもじを　選んでください。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">とくせいの　頭文字を　選んでください。</language>
 	</row>
 
 	<row id="mes_box_search_text_05_01" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
@@ -1494,38 +1486,38 @@
 
 	<row id="mes_box_search_type_01" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
 		<comment>検索の見出し</comment>
-		<language name="JPN" font=" 1:small" width="72">なまえ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="72">なまえ</language>
+		<language name="JPN" font=" 1:small" width="72">[BD:02:Ｘセンタリング]なまえ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">[BD:02:Ｘセンタリング]なまえ</language>
 	</row>
 
 	<row id="mes_box_search_type_02" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
 		<comment>検索の見出し</comment>
-		<language name="JPN" font=" 1:small" width="72">せいかく</language>
-		<language name="JPN_KANJI" font=" 1:small" width="72">せいかく</language>
+		<language name="JPN" font=" 1:small" width="72">[BD:02:Ｘセンタリング]せいかく</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">[BD:02:Ｘセンタリング]せいかく</language>
 	</row>
 
 	<row id="mes_box_search_type_03" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
 		<comment>検索の見出し</comment>
-		<language name="JPN" font=" 1:small" width="72">とくせい</language>
-		<language name="JPN_KANJI" font=" 1:small" width="72">とくせい</language>
+		<language name="JPN" font=" 1:small" width="72">[BD:02:Ｘセンタリング]とくせい</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">[BD:02:Ｘセンタリング]とくせい</language>
 	</row>
 
 	<row id="mes_box_search_type_04" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
 		<comment>検索の見出し</comment>
-		<language name="JPN" font=" 1:small" width="72">せいべつ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="72">せいべつ</language>
+		<language name="JPN" font=" 1:small" width="72">[BD:02:Ｘセンタリング]せいべつ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">[BD:02:Ｘセンタリング]せいべつ</language>
 	</row>
 
 	<row id="mes_box_search_type_05" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
 		<comment>検索の見出し</comment>
-		<language name="JPN" font=" 1:small" width="72">もちもの</language>
-		<language name="JPN_KANJI" font=" 1:small" width="72">もちもの</language>
+		<language name="JPN" font=" 1:small" width="72">[BD:02:Ｘセンタリング]もちもの</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">[BD:02:Ｘセンタリング]もちもの</language>
 	</row>
 
 	<row id="mes_box_search_type_06" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
 		<comment>検索の見出し</comment>
-		<language name="JPN" font=" 1:small" width="72">マーク</language>
-		<language name="JPN_KANJI" font=" 1:small" width="72">マーク</language>
+		<language name="JPN" font=" 1:small" width="72">[BD:02:Ｘセンタリング]マーク</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">[BD:02:Ｘセンタリング]マーク</language>
 	</row>
 
 	<row id="mes_box_search_initial_01" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
@@ -1819,13 +1811,13 @@
 	<row id="mes_box_search_item_01" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
 		<comment>道具</comment>
 		<language name="JPN" font=" 1:small" width="72">もっている</language>
-		<language name="JPN_KANJI" font=" 1:small" width="72">もっている</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">持っている</language>
 	</row>
 
 	<row id="mes_box_search_item_02" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff0000,,#ff78ff,#ff0000,#ff78ff,#ff78ff,,,#ff78ff,,">
 		<comment>道具</comment>
 		<language name="JPN" font=" 1:small" width="72">もっていない</language>
-		<language name="JPN_KANJI" font=" 1:small" width="72">もっていない</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">持っていない</language>
 	</row>
 
 	<flowchart-group-list>
