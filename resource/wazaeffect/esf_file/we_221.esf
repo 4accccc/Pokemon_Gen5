@@ -1,10 +1,11 @@
 EFFSEQ
-$0005
+$0006
 C:\home\swan\resource\particle\wazaeffect\w_221.spa
 C:\home\swan\resource\wazaeffect\graphic\bg_200_fire.NSCR
 C:\home\swan\resource\wazaeffect\graphic\bg_221_fire.NSCR
 C:\home\swan\resource\wazaeffect\graphic\bg_221_fire.NSCR
 C:\home\swan\resource\wazaeffect\graphic\bg_221_fire.NSCR
+C:\home\swan\resource\wazaeffect\graphic\bg_221_sacred_fire.NSCR
 #001
 %00
 カメラ移動	追従	防御側	16	0	8
@@ -19,11 +20,12 @@ SE動的変化	SE1	追従	ピッチ	200	2000	0	100:0:0
 SE再生	SEQ_SE_W001_01	SE1	防御側	105:-800:127	0:0:0
 SE再生	SEQ_SE_W307_02	SE2	防御側	95:500:127	0:0:0
 制御モード変更	逐次
-BGのロード	bg_221_fire
+BGのロード	bg_221_sacred_fire
 BGの表示/非表示	お盆	非表示
 BGの表示/非表示	フィールド	非表示
 BGの表示/非表示	エフェクト	表示
-BGのスクロール	追従	-1600	0	140	0	0
+BGのスクロール	常に	2	0	160	0	0
+BGのラスタースクロール	横	3	16	160	フェードなし	0
 パーティクルデータロード	w_221
 パーティクル再生	w_221	W_221_221_SEIHONOO_RING	防御側	方向無し	2:0:0	1:1:1	1
 タイマーによるウエイト	10
