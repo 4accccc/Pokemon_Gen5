@@ -4,7 +4,7 @@
  *	@file		event_debug_menu_medal.c
  *	@brief  デバッグメニュー：メダル関連
  *	@author	onoue
- *	@data		2011.02.08
+ *	@date		2011.02.08
  *
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
@@ -471,7 +471,7 @@ static BOOL debugMenuMedalDataMake( DEBUG_MEDALBOX_WORK* work )
       FLDMSGBG * msgBG;
       work->draw_medal_id = 0;
       FLDMENUFUNC_DeleteMenu( work->menuFunc );
-      work->msgData = DEBUGFLDMENU_CreateMSGDATA(work->fieldWork, NARC_debug_message_d_field_dat );
+      work->msgData = DEBUGFLDMENU_CreateMSGDATA(work->fieldWork, NARC_debug_message_debug_medal_dat );
       msgBG = FIELDMAP_GetFldMsgBG( work->fieldWork );
       work->win = FLDSYSWIN_AddEx( msgBG, work->msgData , 1, 1, 30, 2 );
       DrawMedalData( work , work->draw_medal_id );
@@ -480,7 +480,7 @@ static BOOL debugMenuMedalDataMake( DEBUG_MEDALBOX_WORK* work )
     break;
   case 1:
     {
-      if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )
+      if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP )
       {
         work->draw_medal_id--;
         if( work->draw_medal_id < 0 )
@@ -490,9 +490,34 @@ static BOOL debugMenuMedalDataMake( DEBUG_MEDALBOX_WORK* work )
         DrawMedalData( work , work->draw_medal_id );
       }
 
-      if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
+      if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN )
       {
         work->draw_medal_id++;
+        if( work->draw_medal_id >= MDLID_MAX )
+        {
+          work->draw_medal_id = 0;
+        }
+        DrawMedalData( work , work->draw_medal_id );
+      }
+
+      if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT )
+      {
+        int i;
+        for( i = 0 ; i<10 ; i++ )
+        {
+          work->draw_medal_id--;
+          if( work->draw_medal_id < 0 )
+          {
+            work->draw_medal_id = MDLID_MAX-1;
+          }
+        }
+        DrawMedalData( work , work->draw_medal_id );
+      }
+
+
+      if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT )
+      {
+        work->draw_medal_id+=10;
         if( work->draw_medal_id >= MDLID_MAX )
         {
           work->draw_medal_id = 0;
@@ -509,6 +534,22 @@ static BOOL debugMenuMedalDataMake( DEBUG_MEDALBOX_WORK* work )
         {
           medal_state = 0;
         }
+        DEBUG_SetMedalState( medal_box , work->draw_medal_id , medal_state );
+        DrawMedalData( work , work->draw_medal_id );
+      }
+      if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
+      {
+        u8 medal_state = MEDALBOX_GetMedalState( medal_box , work->draw_medal_id );
+
+        if( medal_state <= 0 )
+        {
+          medal_state = MEDAL_STATE_MAX-1;
+        }
+        else
+        {
+          medal_state = medal_state - 1;
+        }
+
         DEBUG_SetMedalState( medal_box , work->draw_medal_id , medal_state );
         DrawMedalData( work , work->draw_medal_id );
       }
