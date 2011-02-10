@@ -318,4 +318,5 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/c13_house_04.nsbmd \
 	$(RESDIR)/c13_gym_01.nsbmd \
 	$(RESDIR)/c13_ship_01.nsbmd \
+	$(RESDIR)/c12_gymlight_01.nsbmd \
 
