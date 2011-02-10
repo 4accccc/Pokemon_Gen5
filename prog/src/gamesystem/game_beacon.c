@@ -420,7 +420,7 @@ BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info)
     return FALSE;
   }
 
-  //リゾートビーコン受け取り  これはログに設定しない
+  //リゾートビーコン受け取り
   if( info->action.action_no == GAMEBEACON_ACTION_SEARCH )
   {
     BeaconInfo_SetResortData( bsys, info );
@@ -783,13 +783,6 @@ static void SendBeacon_Init(GAMEBEACON_SEND_MANAGER *send, GAMEDATA * gamedata)
 //-----------------------------------------------------------------------------
 static void BeaconInfo_SetResortData( GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info )
 {
-  //拡張なしの場合は送られていない
-  if( info->action.resort_extend_type >= RESORT_EXTEND_TYPE_NULL )
-  {
-    NAGI_Printf( "リゾート受け取れない！\n" );
-    return;
-  }
-  else
   {
     SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( bsys->gamedata );
     RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( p_sv );

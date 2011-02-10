@@ -113,34 +113,33 @@ struct _GAMEBEACON_INFO{
   u8 nation;                               ///<国コード
   u8 area;                                 ///<地域コード
   u8 g_power_id:7;                         ///<発動しているGパワーID(GPOWER_ID_xxx)
-  u8 sex:1;                                ///<性別
+  u8 sex:1;                                ///<性別       4
   
   u32 suretigai_count:17;                  ///<すれ違い人数
   u32 zone_id:10;                          ///<現在地
-  u32 language:5;                          ///<PM_LANG
+  u32 language:5;                          ///<PM_LANG  4
   
   u32 thanks_recv_count:17;                ///<お礼を受けた回数
   u32 send_counter:5;                      ///<送信No(同じデータの無視判定に使用)
-  u32 townmap_root_zone_id:10;             ///<タウンマップでの座標テーブルIndex
+  u32 townmap_root_zone_id:10;             ///<タウンマップでの座標テーブルIndex  4
 
   u32 pm_version:6;
   u32 trainer_view:3;                      ///<ユニオンルームでの見た目
   u32 research_team_rank:3;                ///<調査隊ランク(RESEARCH_TEAM_RANK)
   u32 favorite_color_index:4;              ///<本体情報の色(Index)
   u32 play_hour:10;                        ///<プレイ時間：時(MAX999)
-  u32 play_min:6;                          ///<プレイ時間：分(MAX59)
+  u32 play_min:6;                          ///<プレイ時間：分(MAX59)  4
 
-  u16 trainer_id;                          ///<トレーナーID(下位16ビット)
-  STRCODE name[PERSON_NAME_SIZE];          ///<トレーナー名(!! EOM除く !!)
+  u16 trainer_id;                          ///<トレーナーID(下位16ビット)   2
+  STRCODE name[PERSON_NAME_SIZE];          ///<トレーナー名(!! EOM除く !!)  14
 
-  STRCODE self_introduction[GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN]; ///<自己紹介メッセージ
+  STRCODE self_introduction[GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN]; ///<自己紹介メッセージ  16
 
-  GAMEBEACON_INFO_ACTION action;           ///<行動パラメータ   28(0)
-  GAMEBEACON_INFO_DETAILS details;         ///<詳細情報         10(+2)
+  GAMEBEACON_INFO_ACTION action;           ///<行動パラメータ   24
+  GAMEBEACON_INFO_DETAILS details;         ///<詳細情報         8
   QUESTIONNAIRE_ANSWER_WORK question_answer;  ///<アンケート回答    10
+  u16 dummy;                                ///<上記アンケートが10byteなので2byteパディングが空いていた 使用の際は変数名変えてください
 };
-
-
 
 //==================================================================
 /**

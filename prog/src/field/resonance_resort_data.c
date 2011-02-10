@@ -135,12 +135,6 @@ static BOOL RESORT_BASIC1_DATA_IsValid( const RESORT_BASIC1_DATA *cp_wk )
     RESORT_VALID_ASSERT( "基本データ１：性別が不正です\n" );
     return FALSE;
   }
-  //バージョンチェック
-  if( cp_wk->version != VERSION_W2 &&  cp_wk->version != VERSION_B2 )
-  {
-    RESORT_VALID_ASSERT( "基本データ１：バージョンが不正です\n" );
-    return FALSE;
-  }
   //言語チェックはローカライズを増やす可能性を考えてやらない
 #if 0
   if( cp_wk->language )
@@ -206,6 +200,7 @@ static void RESORT_BASIC1_DATA_PrintDebug( const RESORT_BASIC1_DATA *cp_wk )
 typedef struct
 {
   int dummy;  //TODO
+              //WBから受け取ったときは中身がからなので何らかの認識をすること
 }RESORT_BASIC2_DATA;
 
 SDK_COMPILER_ASSERT( sizeof(RESORT_BASIC2_DATA) == RESORT_BASIC2_DATA_SIZE );
@@ -595,12 +590,63 @@ struct _RESORT_PROXY_DATA
 //=============================================================================
 //----------------------------------------------------------------------------
 /**
- *	@brief  受信データ  クリア
+ *	@brief  受信データ  初期化
+ *
+ *	@param	HEAPID heapID   ヒープID
+ *
+ *	@return 受信データハンドル
+ */
+//-----------------------------------------------------------------------------
+RESORT_RECV_DATA * RESORT_RECV_DATA_Init( HEAPID heapID )
+{
+  RESORT_RECV_DATA *p_wk  = GFL_HEAP_AllocClearMemory( heapID, sizeof(RESORT_RECV_DATA));
+  RESORT_RECV_DATA_InitInstance( p_wk );
+  return p_wk;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  受信データ  破棄
  *
  *	@param	RESORT_RECV_DATA *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
-void RESORT_RECV_DATA_Clear( RESORT_RECV_DATA *p_wk )
+void RESORT_RECV_DATA_Exit( RESORT_RECV_DATA *p_wk )
+{
+  GFL_HEAP_FreeMemory( p_wk );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  受信データ  自分のデータを作成
+ *
+ *	@param	RESORT_RECV_DATA *p_wk ワーク
+ *	@param  GAMEDATA  ゲームデータ
+ */
+//-----------------------------------------------------------------------------
+void RESORT_RECV_DATA_SetMyData( RESORT_RECV_DATA *p_wk, const GAMEDATA *cp_gamedata )
+{
+  RESORT_BASIC1_DATA_SetMyData( &p_wk->basic1, cp_gamedata );
+  RESORT_BASIC2_DATA_SetMyData( &p_wk->basic2, cp_gamedata );
+
+  {
+    int i;
+    u8  *p_extend_adrs  = (u8*)&p_wk->extend1;
+    for( i = 0; i < RESORT_EXTEND_TYPE_MAX; i++ )
+    {
+      sc_ResortExtendData_SetMyData[i]( (void*)p_extend_adrs, cp_gamedata );
+      p_extend_adrs += RESORT_EXTEND_DATA_SIZE;
+    }
+  }
+
+  p_wk->extend_flag = 0xFF;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  受信データ  初期化
+ *
+ *	@param	RESORT_RECV_DATA *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void RESORT_RECV_DATA_InitInstance( RESORT_RECV_DATA *p_wk )
 {
   GFL_STD_MemClear( p_wk, sizeof(RESORT_RECV_DATA) );
 }
@@ -651,12 +697,18 @@ void RESORT_RECV_DATA_MergeBeacon( RESORT_RECV_DATA *p_wk, const RESORT_BEACON_D
   {
     //空だったら、全部いれる
     p_wk->basic1  = cp_beacon->basic1;
-    p_wk->basic2  = cp_beacon->basic2;
-    
-    //入れる処理
 
-    //拡張マージフラグ
-    p_wk->extend_flag |=  1<<cp_beacon->extend_type;
+    //中身があったら入れる
+    if( cp_beacon->extend_type !=  RESORT_EXTEND_TYPE_NULL )
+    {
+      p_wk->basic2  = cp_beacon->basic2;
+    
+      //入れる処理
+      //TODO
+
+      //拡張マージフラグ
+      p_wk->extend_flag |=  1<<cp_beacon->extend_type;
+    }
 
     if( p_wk->extend_flag == 0xFF )
     {
@@ -667,18 +719,89 @@ void RESORT_RECV_DATA_MergeBeacon( RESORT_RECV_DATA *p_wk, const RESORT_BEACON_D
   {
     //空だったら、全部いれる
     p_wk->basic1  = cp_beacon->basic1;
-    p_wk->basic2  = cp_beacon->basic2;
-    
-    //入れる処理
 
-    //拡張マージフラグ
-    p_wk->extend_flag |=  1<<cp_beacon->extend_type;
+
+    //中身があったら入れる
+    if( cp_beacon->extend_type !=  RESORT_EXTEND_TYPE_NULL )
+    {
+      p_wk->basic2  = cp_beacon->basic2;
+
+      //入れる処理
+      //TODO
+
+      //拡張マージフラグ
+      p_wk->extend_flag |=  1<<cp_beacon->extend_type;
+    };
 
     if( p_wk->extend_flag == 0xFF )
     {
       RESORT_Printf( "!!!すべてマージ完了\n!!!" );
     }
   }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  受信データをマージ
+ *
+ *	@param	RESORT_RECV_DATA *p_wk      ワーク
+ *	@param	RESORT_RECV_DATA *cp_recv   受信データ
+ */
+//-----------------------------------------------------------------------------
+void RESORT_RECV_DATA_MergeRecv( RESORT_RECV_DATA *p_wk, const RESORT_RECV_DATA *cp_recv )
+{
+  //不正対策
+  if( !RESORT_RECV_DATA_IsValid( cp_recv ) )
+  {
+    return;
+  }
+
+  if( RESORT_RECV_DATA_IsEmpty( p_wk ) )
+  {
+    GFL_STD_MemCopy( cp_recv, p_wk, sizeof(RESORT_RECV_DATA) );
+  }
+  else
+  {
+    //TODO
+    //マージ処理
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  受信データの正当性をチェック
+ *
+ *	@param	const RESORT_RECV_DATA *cp_wk   ワーク
+ *
+ *	@return TRUE正当  FALSE不正
+ */
+//-----------------------------------------------------------------------------
+BOOL RESORT_RECV_DATA_IsValid( const RESORT_RECV_DATA *cp_wk )
+{
+  if( !RESORT_BASIC1_DATA_IsValid( &cp_wk->basic1 ) )
+  {
+    RESORT_VALID_ASSERT( "受信データの基本データ１が不正です\n" );
+    return FALSE;
+  }
+  if( !RESORT_BASIC2_DATA_IsValid( &cp_wk->basic2 ) )
+  {
+    RESORT_VALID_ASSERT( "受信データの基本データ２が不正です\n" );
+    return FALSE;
+  }
+  //拡張データのチェック
+  {
+    int i;
+    u8  *p_extend_adrs  = (u8*)&cp_wk->extend1;
+    for( i = 0; i < RESORT_EXTEND_TYPE_MAX; i++ )
+    {
+      if( !sc_ResortExtendData_IsValid[i]( (void*)p_extend_adrs ) )
+      {
+        RESORT_VALID_ASSERT( "受信データの[%d]番拡張データが不正です\n", i );
+        return FALSE;
+      }
+      p_extend_adrs += RESORT_EXTEND_DATA_SIZE;
+    }
+  }
+
+  return TRUE;
 }
 
 //=============================================================================
@@ -765,11 +888,19 @@ void RESORT_BEACON_DATA_SetBeaconInfo( RESORT_BEACON_DATA *p_wk, const GAMEBEACO
 {
   GFL_STD_MemClear( p_wk, sizeof(RESORT_BEACON_DATA) );
   RESORT_BASIC1_DATA_SetBeaconInfo( &p_wk->basic1, cp_beacon_info );
-  RESORT_BASIC2_DATA_SetBeaconInfo( &p_wk->basic2, cp_beacon_info );
 
-  GFL_STD_MemCopy( cp_beacon_info->action.extend_buff, p_wk->extend, RESORT_EXTEND_DATA_SIZE );
-  p_wk->extend_type = cp_beacon_info->action.resort_extend_type;
-
+  if( cp_beacon_info->pm_version == VERSION_W2 || cp_beacon_info->pm_version == VERSION_B2 )
+  {
+    //W2B2ならば拡張データあり
+    RESORT_BASIC2_DATA_SetBeaconInfo( &p_wk->basic2, cp_beacon_info );
+    GFL_STD_MemCopy( cp_beacon_info->action.extend_buff, p_wk->extend, RESORT_EXTEND_DATA_SIZE );
+    p_wk->extend_type = cp_beacon_info->action.resort_extend_type;
+  }
+  else
+  {
+    //その他のソフトでは基本情報のみ
+    p_wk->extend_type = RESORT_EXTEND_TYPE_NULL;
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -793,15 +924,18 @@ BOOL RESORT_BEACON_DATA_IsValid( const RESORT_BEACON_DATA *cp_wk )
     RESORT_VALID_ASSERT( "ビーコン情報の基本データ２が不正です\n" );
     return FALSE;
   }
-  if( cp_wk->extend_type >= RESORT_EXTEND_TYPE_MAX )
+  if( cp_wk->extend_type > RESORT_EXTEND_TYPE_MAX )
   {
     RESORT_VALID_ASSERT( "ビーコン情報の拡張番号が不正です=%d\n", cp_wk->extend_type );
     return FALSE;
   }
-  if( !sc_ResortExtendData_IsValid[cp_wk->extend_type]( cp_wk->extend ) )
+  else if( cp_wk->extend_type < RESORT_EXTEND_TYPE_MAX )
   {
-    RESORT_VALID_ASSERT( "ビーコン情報の[%d]番拡張データが不正です\n", cp_wk->extend_type );
-    return FALSE;
+    if( !sc_ResortExtendData_IsValid[cp_wk->extend_type]( cp_wk->extend ) )
+    {
+      RESORT_VALID_ASSERT( "ビーコン情報の[%d]番拡張データが不正です\n", cp_wk->extend_type );
+      return FALSE;
+    }
   }
 
   return TRUE;
@@ -886,7 +1020,7 @@ void RESORT_DATA_BUFF_InitInstance( RESORT_DATA_BUFF *p_wk, u32 num )
     for( i = 0; i < p_wk->max; i++ )
     {
       RESORT_RECV_DATA *p_data  = &p_wk->data[i];
-      RESORT_RECV_DATA_Clear( p_data );
+      RESORT_RECV_DATA_InitInstance( p_data );
     }
   }
 }
@@ -939,7 +1073,7 @@ RESORT_RECV_DATA * RESORT_DATA_BUFF_GetData( RESORT_DATA_BUFF *p_wk, u32 index )
 void RESORT_DATA_BUFF_Clear( RESORT_DATA_BUFF *p_wk, u32 index )
 {
   GF_ASSERT( index < p_wk->max );
-  RESORT_RECV_DATA_Clear( &p_wk->data[ index ] );
+  RESORT_RECV_DATA_InitInstance( &p_wk->data[ index ] );
 }
 //----------------------------------------------------------------------------
 /**
@@ -983,7 +1117,52 @@ BOOL RESORT_DATA_BUFF_AddBeacon( RESORT_DATA_BUFF *p_wk, const RESORT_BEACON_DAT
     return TRUE;
   }
 
-  RESORT_Printf( "データを受け取ったが、バッファがいっぱい！\n" );
+  RESORT_Printf( "ビーコンを受け取ったが、バッファがいっぱい！\n" );
+  return FALSE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  データ受信バッファにビーコン差込
+ *
+ *	@param	RESORT_DATA_BUFF *p_wk  ワーク
+ *	@param	RESORT_RECV_DATA *cp_recv 受信したデータ
+ *
+ *	@retval TRUEビーコン挿し込みした  FALSEしていない*
+ */
+//-----------------------------------------------------------------------------
+BOOL RESORT_DATA_BUFF_AddRecv( RESORT_DATA_BUFF *p_wk, const RESORT_RECV_DATA *cp_recv )
+{
+  RESORT_RECV_DATA *p_data;
+
+  //ロック中は追加しない
+  if( p_wk->is_lock )
+  {
+    return FALSE;
+  }
+
+  //同じ所有者のものがあったら優先的に入れる
+  p_data  = Resort_Data_Buff_GetSameOwnerData( p_wk, &cp_recv->basic1 );
+  if( p_data )
+  {
+    RESORT_RECV_DATA_MergeRecv( p_data, cp_recv );
+    RESORT_Printf( "受信データをマージした！\n" );
+    return TRUE;
+  }
+
+  //空のデータがあったら入れる
+  p_data  = Resort_Data_Buff_GetEmptyData( p_wk );
+  if( p_data )
+  {
+    RESORT_RECV_DATA_MergeRecv( p_data, cp_recv );
+
+#ifdef  PM_DEBUG
+    RESORT_BASIC1_DATA_PrintDebug( &cp_recv->basic1 );
+#endif
+    RESORT_Printf( "受信データを空のデータに入れた！\n" );
+    return TRUE;
+  }
+
+  RESORT_Printf( "受信データを受け取ったが、バッファがいっぱい！\n" );
   return FALSE;
 }
 //----------------------------------------------------------------------------

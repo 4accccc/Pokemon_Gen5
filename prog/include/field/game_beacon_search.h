@@ -74,6 +74,8 @@ typedef struct
   };
 }GBS_BEACON;
 
+//8‚Í_BEACON_SIZE_FIX‚Å‚·
+SDK_COMPILER_ASSERT( sizeof(GBS_BEACON) <= (WM_SIZE_USER_GAMEINFO-8) );
 
 //==============================================================================
 //  ŠO•”ŠÖ”éŒ¾

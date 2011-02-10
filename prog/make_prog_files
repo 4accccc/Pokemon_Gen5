@@ -209,7 +209,8 @@ SRCS  +=    $(SOUNDSRC) \
 				field/field_skill_check.c \
         system/save_error_warning.c \
 		    title/title_control.c \
-        debug/debug_nagihashi.c
+        debug/debug_nagihashi.c \
+        field/resonance_resort_data.c
 
 
 #================================================
@@ -486,7 +487,6 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         field/pair_sys.c \
         field/scrcmd_pair.c \
         field/scrcmd_person.c \
-        field/resonance_resort_data.c \
         gamesystem/fest_mission_nw.c
 
 

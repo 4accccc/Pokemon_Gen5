@@ -33,7 +33,6 @@
  *        TODO
 */
 //=============================================================================
-
 //-------------------------------------
 ///	拡張データ
 //=====================================
@@ -82,10 +81,15 @@ typedef struct _RESORT_PROXY_DATA RESORT_PROXY_DATA;
 //-------------------------------------
 ///	１…リゾート用全受信データの外部公開
 //=====================================
-extern void RESORT_RECV_DATA_Clear( RESORT_RECV_DATA *p_wk );
+extern RESORT_RECV_DATA * RESORT_RECV_DATA_Init( HEAPID heapID );
+extern void RESORT_RECV_DATA_Exit( RESORT_RECV_DATA *p_wk );
+extern void RESORT_RECV_DATA_SetMyData( RESORT_RECV_DATA *p_wk, const GAMEDATA *cp_gamedata );
+extern void RESORT_RECV_DATA_InitInstance( RESORT_RECV_DATA *p_wk );
 extern BOOL RESORT_RECV_DATA_IsEmpty( const RESORT_RECV_DATA *cp_wk );
 extern BOOL RESORT_RECV_DATA_IsSameOwnerBeacon( const RESORT_RECV_DATA *cp_wk, const RESORT_BEACON_DATA *cp_beacon );
 extern void RESORT_RECV_DATA_MergeBeacon( RESORT_RECV_DATA *p_wk, const RESORT_BEACON_DATA *cp_beacon );
+extern void RESORT_RECV_DATA_MergeRecv( RESORT_RECV_DATA *p_wk, const RESORT_RECV_DATA *cp_recv );
+extern BOOL RESORT_RECV_DATA_IsValid( const RESORT_RECV_DATA *cp_wk );
 
 //-------------------------------------
 ///	２…リゾート用ビーコンパックデータの外部公開
@@ -97,6 +101,9 @@ extern void RESORT_BEACON_DATA_GetExtendData( const RESORT_BEACON_DATA *cp_wk, u
 extern void RESORT_BEACON_DATA_SetBeaconInfo( RESORT_BEACON_DATA *p_wk, const GAMEBEACON_INFO *cp_beacon_info );
 extern BOOL RESORT_BEACON_DATA_IsValid( const RESORT_BEACON_DATA *cp_wk );
 
+//-------------------------------------
+///	２…リゾート用代理データの外部公開
+//=====================================
 
 //=============================================================================
 /**
@@ -132,3 +139,4 @@ extern RESORT_RECV_DATA * RESORT_DATA_BUFF_GetData( RESORT_DATA_BUFF *p_wk, u32 
 extern void RESORT_DATA_BUFF_Clear( RESORT_DATA_BUFF *p_wk, u32 index );
 
 extern BOOL RESORT_DATA_BUFF_AddBeacon( RESORT_DATA_BUFF *p_wk, const RESORT_BEACON_DATA *cp_beacon );
+extern BOOL RESORT_DATA_BUFF_AddRecv( RESORT_DATA_BUFF *p_wk, const RESORT_RECV_DATA *cp_recv );
