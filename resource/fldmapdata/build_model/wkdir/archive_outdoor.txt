@@ -318,3 +318,4 @@
 "nsbmdfiles/c13_gym_01.nsbmd"
 "nsbmdfiles/c13_ship_01.nsbmd"
 "nsbmdfiles/c12_gymlight_01.nsbmd"
+"nsbmdfiles/door_c12_01.nsbmd"
