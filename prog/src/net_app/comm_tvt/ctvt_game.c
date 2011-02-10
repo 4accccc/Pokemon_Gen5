@@ -287,6 +287,7 @@ struct _CTVT_GAME_WORK
   u8    sub_seq;
   
   BOOL isRetry;     // TRUEだとリトライ
+  BOOL isFinish;    // TRUEだと終了
 
   //=====================================
   // カメラ関係
@@ -690,6 +691,7 @@ void CTVT_GAME_InitMode( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
   gameWork->state = CGS_GAME_INIT;
 #endif
   gameWork->isRetry  = FALSE;
+  gameWork->isFinish = FALSE;
 
   //上画面の会話アイコンを消す
   COMM_TVT_EraseTalkIcon( work );
@@ -764,8 +766,15 @@ const COMM_TVT_MODE CTVT_GAME_Main( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWo
   case CGS_FADEOUT_WAIT:
     if( WIPE_SYS_EndCheck() == TRUE )
     {
-      // エラー落ち
-      return CTM_END;
+      if( gameWork->isFinish == FALSE )
+      {
+        return CTM_TALK;
+      }
+      else
+      {
+        // エラー落ち
+        return CTM_END;
+      }
     }
     break;
 
@@ -839,19 +848,18 @@ const COMM_TVT_MODE CTVT_GAME_Main( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWo
       CTVT_CAMERA_StopCapture( work , camWork );
     }
 
-    // 次の処理 フェードアウトはもうしてあるのでやらなくてよい
     if( gameWork->isRetry == TRUE )
     {
       // リトライ
-      gameWork->state = CGS_FADEOUT_WAIT_CAMERA;
-
       WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, 
           WIPE_FADE_BLACK, WIPE_DEF_DIV, WIPE_DEF_SYNC, heapId );
+
+      gameWork->state = CGS_FADEOUT_WAIT_CAMERA;
     }
     else
     {
       // 会話モードに戻る
-      return CTM_TALK;
+      gameWork->state = CGS_FADEOUT;
     }
     break;
 
@@ -874,6 +882,7 @@ const COMM_TVT_MODE CTVT_GAME_Main( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWo
     //    GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) )
     {
       gameWork->state = CGS_FADEOUT;
+      gameWork->isFinish = TRUE;
       COMM_TVT_SetSusspend( work , TRUE );
       {
         CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork( work );
@@ -901,6 +910,7 @@ const COMM_TVT_MODE CTVT_GAME_Main( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWo
         GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) )
     {
       gameWork->state = CGS_FADEOUT;
+      gameWork->isFinish = TRUE;
       COMM_TVT_SetSusspend( work , TRUE );
       {
         CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork( work );
@@ -2722,8 +2732,13 @@ static BOOL game_update_seq_title( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork
     switch( game_id ){
     case CGI_BALLOON1:
       {
+        gameWork->bg_pal_anm++;
         // BGスクロール
-        GFL_BG_SetScroll( CTVT_GAME_FRAME_S_BG, GFL_BG_SCROLL_Y_INC, 1 );
+        if( !(gameWork->bg_pal_anm % 5) )
+        {
+          gameWork->bg_pal_anm = 0;
+          GFL_BG_SetScroll( CTVT_GAME_FRAME_S_BG, GFL_BG_SCROLL_Y_INC, 1 );
+        }
       }
       break;
     case CGI_BALLOON2:
