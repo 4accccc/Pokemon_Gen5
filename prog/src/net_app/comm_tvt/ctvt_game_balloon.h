@@ -21,16 +21,6 @@
 #define BALLOON_MAX             (8)    // 風船の出る個数MAX
 
 //-------------------------------------
-///	風船の色定義
-//=====================================
-typedef enum {
-  COLOR_R,  // 赤
-  COLOR_B,  // 青
-  COLOR_G,  // 緑
-  COLOR_Y,  // 黄
-} BALLOON_COLOR;
-
-//-------------------------------------
 ///	風船の種類
 //=====================================
 typedef enum {
@@ -72,7 +62,6 @@ typedef struct {
   u16               unit_idx;         // モデル指定用
 
   GFL_G3D_OBJSTATUS status;           // OBJ情報
-  BALLOON_COLOR     color;            // 色 (0～3)
   BALLOON_TYPE      type;             // 種類 (0～2)
   BALLOON_SIZE      size;             // サイズ (1～3)
 
@@ -104,8 +93,23 @@ typedef struct {
   GFL_G3D_UTIL      *parent_g3dUtil;  // G3D_OBJ取得用
   u16               unit_idx;         // モデル指定用
   GFL_G3D_OBJSTATUS status;           // OBJ情報
+  BALLOON_TYPE      type;             // 種類 (0～2)
+  BOOL              is_self;          // 自分の風船か
+  u8                cnt;              // 何個目の風船か(0～3)
 
-  // 当たったときのエフェクト用
+  u8                interval;         // 風船出現までのインターバル
+
+  // エフェクト用
+  fx32              scale_add;        // 1フレームの拡大率加算値
+  fx32              scale_max;        // 拡大率MAX
+  fx32              scale;            // 拡大率
+  BOOL              scale_flg;        // 拡大ON/OFFフラグ
+
+  fx32              anm_frm;          // アニメフレームカウンタ
+  BOOL              anm_flg;          // エフェクトON/OFFフラグ
+
+  s8                alpha;            // α値(0～31)
+  BOOL              alpha_flg;        // αONフラグ
 
   //========================
   // 風船の動きに関するもの
@@ -191,11 +195,14 @@ extern void CTVT_BALLOON_Draw( BALLOON_WORK*  p_wk );
  *	@brief  風船作成  ゲーム２用
  *
  *	@param	gameWork  ゲームワーク
+ *	@param  unit_idx  NetIDのこと
+ *	@param  visible   表示・非表示
+ *	@param  heapID    ヒープID
  *
  *	@return 作成したワーク
  */
 //-----------------------------------------------------------------------------
-extern BALLOON2_WORK* CTVT_BALLOON2_Create( CTVT_GAME_WORK *gameWork, u16 unit_idx, HEAPID heapID );
+extern BALLOON2_WORK* CTVT_BALLOON2_Create( CTVT_GAME_WORK *gameWork, u16 unit_idx, BOOL visible, HEAPID heapID );
 
 //----------------------------------------------------------------------------
 /**
@@ -223,6 +230,15 @@ extern void CTVT_BALLOON2_Update( BALLOON2_WORK *p_wk );
  */
 //-----------------------------------------------------------------------------
 extern void CTVT_BALLOON2_Draw( BALLOON2_WORK *p_wk );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  風船大きくなるor破裂
+ *
+ *	@param	BALLOON2_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+extern void CTVT_BALLOON2_Burst( BALLOON2_WORK *p_wk );
 
 //----------------------------------------------------------------------------
 /**

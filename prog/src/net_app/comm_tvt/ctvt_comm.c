@@ -2109,8 +2109,15 @@ void CTVT_COMM_SendGameReq( CTVT_COMM_WORK *commWork, CTVT_GAME_SEND_DATA data, 
   // 送信リクエスト
   commWork->reqSendGameData = TRUE;
 
+  // ゲーム2の場合はNetIDの送り方がビットで送る
+  if( data_type == CCGDT_BURST2 )
+  {
+    data.burst_netID |= commWork->sendGameData.burst_netID;
+  }
+
   // ゲームデータ更新
   commWork->sendGameData = data;
+
   // 何のデータ送信？ ↑より後に処理しないと上書きされる 当たり前だけど
   commWork->sendGameData.data_type = data_type;
 }
@@ -2204,6 +2211,22 @@ static void CTVT_COMM_PostGameData( const int netID, const int size , const void
   case CCGDT_BURST: // 風船割れた
     // 内部でスコア計算して、風船を消している
     CTVT_GAME_BalloonDestroy( gameWork, p_recv->burst_idx, p_recv->burst_netID );
+    break;
+
+  case CCGDT_TOUCH:      // タッチ範囲をタッチした
+    // 親のみ更新、処理する
+    if( selfId == 0 )
+    {
+      CTVT_GAME_CommDataSet_Touch( commWork, gameWork, netID );
+    }
+    break;
+
+  case CCGDT_BURST2:     // 風船が大きくなるor破裂
+    // 親からのデータのみ更新
+    if( netID == 0 )
+    {
+      CTVT_GAME_CommBalloonBurst( gameWork, p_recv->burst_netID );
+    }
     break;
   }
 }

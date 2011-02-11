@@ -314,6 +314,7 @@ struct _CTVT_GAME_WORK
   // 2つ目  本来は1つ目と2つ目でワークにわけてやるべきだが、
   // 今変えると変更点が多すぎるのでここに2つ目のものも書く
   BALLOON2_WORK *p_balloon2[CTVT_MEMBER_NUM];
+  u8            touch_cnt[CTVT_MEMBER_NUM];   // 4人分のタッチ計測
 
   // メッセージ系
   GFL_BMPWIN    *msgWinMain;        // 下画面
@@ -549,7 +550,7 @@ static void TaskFuncScorePlate( GFL_TCB* p_tcb, void* p_work );
 //------------------------------------------------------------------
 #ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
 
-#define DEBUG_MAIN_TIME_AVERAGE (1) // 時間AVERAGE　表示 １：ON　０：OFF
+#define DEBUG_MAIN_TIME_AVERAGE (0) // 時間AVERAGE　表示 １：ON　０：OFF
 #define DEBUG_AVERAGE_MAX (10)
 
 static OSTick DEBUG_DEBUG_MAIN_TIME_AVERAGE_Start[DEBUG_AVERAGE_MAX];    // 1フレーム開始
@@ -1042,6 +1043,80 @@ const BOOL CTVT_GAME_IsAcceptNum2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork
   return TRUE;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  指定した色(NetID)の風船に指定したテクスチャをはる
+ *
+ *	@param	CTVT_GAME_WORK *p_wk  ワーク
+ *	@param	u8 netID              NetID =色
+ *	@param	u8 tex_idx            テクスチャインデックス
+ */
+//-----------------------------------------------------------------------------
+void CTVT_GAME_BalloonTexTrans( CTVT_GAME_WORK *p_wk, const u8 netID, const u8 tex_idx )
+{
+  const u8 selfId = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
+
+#ifndef CAMERA_SKIP
+  // 3Dにカメラキャプチャを貼り付ける
+  {
+    BOOL  rc;
+    u32   dst;    // 転送先の実アドレス
+    u16*  src;    // 転送元データ
+    u32   size;   // 転送サイズ
+    u8    type;   // 貼り付ける風船 3つある
+    u8    mem_cnt=0;  // メンバーIDX
+    u8    i;
+
+    ICHI_Printf("テクスチャ貼り付け\n");
+
+    // メンバーIDXを計算
+    for( i=0; i<tex_idx; i++ )
+    {
+      // メンバーカウンタ
+      if( selfId != i )
+      {
+        mem_cnt++;
+      }
+    }
+
+    // 指定した色の風船の3種類のテクスチャをはる
+    for( type=0; type<CAPTURE_NUM; type++ )
+    {
+      u16 unit_res_cnt = GFL_G3D_UTIL_GetUnitResCount( p_wk->g3dUtil, p_wk->unit_idx[netID] );
+      GFL_G3D_RES* res = GFL_G3D_UTIL_GetResHandle( p_wk->g3dUtil, unit_res_cnt*netID + type );
+      NNSG3dTexKey texkey = GFL_G3D_GetTextureDataVramKey( res );
+      u32 tex_adr = NNS_GfdGetTexKeyAddr(texkey);
+      u32 tex_size = NNS_GfdGetTexKeySize(texkey);
+
+      // 転送
+      {
+        u16 tex_offset = (128*2);
+        dst = tex_adr + tex_offset; // tex_offset分足しているのは、写真のテクスチャにする為
+        // 貼り付ける画像選択
+        if( selfId == tex_idx )
+        {
+          // TWLはキャプチャ画像、NITOROはキャラ画像
+          src = (u16*)p_wk->p_cam_param->p_cap[type];
+        }
+        else
+        {
+          // 他のメンバーの場合
+          // 
+          // TWLなら受信した画像、NITOROならキャラ画像
+          src = (u16*)p_wk->cam_member[mem_cnt].p_cap_buf[type];
+        }
+        size = CAPTURE_SIZE;
+        rc = NNS_GfdRegisterNewVramTransferTask(NNS_GFD_DST_3D_TEX_VRAM, dst, src, size);
+        GF_ASSERT(rc);
+        ICHI_Printf("dst %x src %x size %x texsize %x \n", dst, src, size, tex_size);
+        ICHI_Printf("netID %d texIDX %d mem_cnt %d", netID, tex_idx, mem_cnt);
+      }
+    }
+
+  }
+#endif
+}
+
 
 //----------------------------------------------------------------------------
 /**
@@ -1306,6 +1381,7 @@ void CTVT_GAME_BalloonDestroy( CTVT_GAME_WORK *p_wk, u16 idx, u8 netId )
 
 }
 
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  通信から送られてくるゲーム情報を格納
@@ -1325,6 +1401,65 @@ void CTVT_GAME_CommScoreSet( CTVT_GAME_WORK *p_wk, const CTVT_GAME_SEND_SCORE *s
   }
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  通信からタッチしたと送られてきた時の処理関数
+ *	        親しか呼ばない
+ *
+ *	@param	CTVT_COMM_WORK *commWork  通信ワーク
+ *	@param	*p_wk                     ゲームワーク
+ *	@param	netID                     ネットID
+ */
+//-----------------------------------------------------------------------------
+void CTVT_GAME_CommDataSet_Touch( CTVT_COMM_WORK *commWork, CTVT_GAME_WORK *p_wk,  int netID )
+{
+  BOOL send = FALSE;
+
+  GF_ASSERT( netID < CTVT_MEMBER_NUM );
+
+  // タッチ数を計測しておく
+  p_wk->touch_cnt[ netID ]++;
+
+  if( p_wk->touch_cnt[ netID ] == 15
+      || p_wk->touch_cnt[ netID ] == 10
+      || p_wk->touch_cnt[ netID ] == 5 )
+  {
+    ICHI_Printf("NetID %d touchCNT %d \n", netID, p_wk->touch_cnt[netID]);
+    p_wk->touch_cnt[ netID ] %= 15;
+    send = TRUE;
+  }
+
+  // 通信データ送信
+  if( send == TRUE )
+  {
+    CTVT_GAME_SEND_DATA data ={0};
+    data.burst_netID = 1<<netID;
+    CTVT_COMM_SendGameReq( commWork, data, CCGDT_BURST2 );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  指定したNetIDの風船を処理する
+ *
+ *	@param	CTVT_GAME_WORK *p_wk  ゲームワーク
+ *	@param	netIdBit              処理する風船のNetID(ビット管理)
+ */
+//-----------------------------------------------------------------------------
+void CTVT_GAME_CommBalloonBurst( CTVT_GAME_WORK *p_wk, u8 netIdBit )
+{
+  u8  i;
+
+  for( i=0; i<CTVT_MEMBER_NUM; i++ )
+  {
+    // 処理する風船(=netID)をチェック
+    if( netIdBit & 1<<i )
+    {
+      // 風船大きくor破裂
+      CTVT_BALLOON2_Burst( p_wk->p_balloon2[i] );
+    }
+  }
+}
 
 //----------------------------------------------------------------------------
 /**
@@ -2150,62 +2285,6 @@ static void game_update_seq_init_common( COMM_TVT_WORK *work, CTVT_GAME_WORK *ga
   ICHI_Printf("乱数Seed値 %d \n", gameWork->rnd_seed);
   ICHI_Printf("送信データサイズ:%d \n", sizeof(CTVT_GAME_SEND_DATA));
 
-#ifndef CAMERA_SKIP
-  // 3Dにカメラキャプチャを貼り付ける
-  {
-    BOOL  rc;
-    u32   dst;    // 転送先の実アドレス
-    u16*  src;    // 転送元データ
-    u32   size;   // 転送サイズ
-    u8    type;   // 貼り付ける写真 3枚ある
-    u8    mem_cnt=0;  // メンバーIDX
-
-    ICHI_Printf("テクスチャ貼り付け\n");
-
-    for(i=0; i<CTVT_MEMBER_NUM; i++ )
-    {
-      // ほんとはループ3回だが、今はボーナス風船をわかりやすくするため2回
-      for( type=0; type<CAPTURE_NUM; type++ )
-      {
-        u16 unit_res_cnt = GFL_G3D_UTIL_GetUnitResCount( gameWork->g3dUtil, gameWork->unit_idx[i] );
-        GFL_G3D_RES* res = GFL_G3D_UTIL_GetResHandle( gameWork->g3dUtil, unit_res_cnt*i + type );
-        NNSG3dTexKey texkey = GFL_G3D_GetTextureDataVramKey( res );
-        u32 tex_adr = NNS_GfdGetTexKeyAddr(texkey);
-        u32 tex_size = NNS_GfdGetTexKeySize(texkey);
-
-
-        // 転送
-        {
-          u16 tex_offset = (128*2);
-          dst = tex_adr + tex_offset; // tex_offset分足しているのは、写真のテクスチャにする為
-          // 貼り付ける画像選択
-          if( selfId == i )
-          {
-            // TWLはキャプチャ画像、NITOROはキャラ画像
-            src = (u16*)gameWork->p_cam_param->p_cap[type];
-          }
-          else
-          {
-            // 他のメンバーの場合
-            // 
-            // TWLなら受信した画像、NITOROならキャラ画像
-            src = (u16*)gameWork->cam_member[mem_cnt].p_cap_buf[type];
-          }
-          size = CAPTURE_SIZE;
-          rc = NNS_GfdRegisterNewVramTransferTask(NNS_GFD_DST_3D_TEX_VRAM, dst, src, size);
-          GF_ASSERT(rc);
-          ICHI_Printf("dst %x src %x size %x texsize %x \n", dst, src, size, tex_size);
-        }
-      }
-
-      // メンバーカウンタ
-      if( selfId != i )
-      {
-        mem_cnt++;
-      }
-    }
-  }
-#endif
 
   // OBJ作成
   {
@@ -2312,6 +2391,14 @@ static void game_update_seq_init_part1( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
   const HEAPID heapID = gameWork->heapId;
   const u8 selfId = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
   const u8 connectNum = COMM_TVT_GetConnectNum( work );
+
+#ifndef CAMERA_SKIP
+  // 3Dにカメラキャプチャを貼り付ける
+  for(i=0; i<CTVT_MEMBER_NUM; i++ )
+  {
+    CTVT_GAME_BalloonTexTrans( gameWork, i, i );
+  }
+#endif
 
   // ゲーム用のリソース
   // BGロード
@@ -2516,6 +2603,14 @@ static void game_update_seq_init_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
   const u8 selfId = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
   const u8 connectNum = COMM_TVT_GetConnectNum( work );
 
+#ifndef CAMERA_SKIP
+  // 3Dにカメラキャプチャを貼り付ける
+  for(i=0; i<CTVT_MEMBER_NUM; i++ )
+  {
+    CTVT_GAME_BalloonTexTrans( gameWork, i, 0 );
+  }
+#endif
+
   // ゲーム用のリソース
   // BGロード
   {
@@ -2617,13 +2712,16 @@ static void game_update_seq_init_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
   gameWork->task = GFL_TCB_Init( CTVT_MEMBER_NUM, gameWork->taskMem );
 
   // 風船初期化
-  for( i=0; i<CTVT_MEMBER_NUM; i++ )
+  for( i=0; i<connectNum; i++ )
   {
-    gameWork->p_balloon2[i] = CTVT_BALLOON2_Create( gameWork, i, gameWork->heapId );
+    gameWork->p_balloon2[i] = CTVT_BALLOON2_Create( gameWork, i, TRUE, gameWork->heapId );
     gameWork->p_balloon2[i]->tcb = GFL_TCB_AddTask( gameWork->task, TaskFunc2, gameWork->p_balloon2[i], 0 );
-    //CTVT_BALLOON_Init( &gameWork->balloon_wk[i] );
   }
-
+  for( ; i<CTVT_MEMBER_NUM; i++ )
+  {
+    gameWork->p_balloon2[i] = CTVT_BALLOON2_Create( gameWork, i, FALSE, gameWork->heapId );
+    gameWork->p_balloon2[i]->tcb = GFL_TCB_AddTask( gameWork->task, TaskFunc2, gameWork->p_balloon2[i], 0 );
+  }
 
   // タイトルの文字描画
   {
@@ -2660,6 +2758,9 @@ static void game_update_seq_init_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
     gameWork->isUpdateMsgTitle = TRUE;
   }
   
+
+  // 初期化
+  GFL_STD_MemFill( gameWork->touch_cnt, 0, sizeof(u8)*CTVT_MEMBER_NUM );
 
   // サウンド
   {
@@ -3080,22 +3181,17 @@ static BOOL game_update_seq_main_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
 #endif
 
 
-  // 風船出現管理(親だけ)
-  
 
-  // タッチペンの座標を送信する
+  // タッチを送信する
   {
-    u32 tpx,tpy;
+    u32 tpx, tpy;
     const BOOL isTrg = GFL_UI_TP_GetPointTrg( &tpx,&tpy );
 
     if( isTrg == TRUE )
     {
       // 通信データ送信
-      CTVT_GAME_SEND_DATA data;
-      data.tpx = tpx;
-      data.tpy = tpy;
-      CTVT_COMM_SendGameReq( commWork, data, CCGDT_TP );
-      //ICHI_Printf("touch!\n");
+      CTVT_GAME_SEND_DATA data ={0};
+      CTVT_COMM_SendGameReq( commWork, data, CCGDT_TOUCH );
     }
   }
 
@@ -3517,35 +3613,35 @@ static void game_update_seq_score_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
 
       for(i=0; i<CTVT_MEMBER_NUM; i++ )
       {
-        
-          u16 unit_res_cnt = GFL_G3D_UTIL_GetUnitResCount( gameWork->g3dUtil, gameWork->unit_idx[i] );
-          GFL_G3D_RES* res = GFL_G3D_UTIL_GetResHandle( gameWork->g3dUtil, unit_res_cnt*i );
-          NNSG3dTexKey texkey = GFL_G3D_GetTextureDataVramKey( res );
-          u32 tex_adr = NNS_GfdGetTexKeyAddr(texkey);
-          u32 tex_size = NNS_GfdGetTexKeySize(texkey);
 
-          // 転送
+        u16 unit_res_cnt = GFL_G3D_UTIL_GetUnitResCount( gameWork->g3dUtil, gameWork->unit_idx[i] );
+        GFL_G3D_RES* res = GFL_G3D_UTIL_GetResHandle( gameWork->g3dUtil, unit_res_cnt*i );
+        NNSG3dTexKey texkey = GFL_G3D_GetTextureDataVramKey( res );
+        u32 tex_adr = NNS_GfdGetTexKeyAddr(texkey);
+        u32 tex_size = NNS_GfdGetTexKeySize(texkey);
+
+        // 転送
+        {
+          u16 tex_offset = (128*2);
+          dst = tex_adr + tex_offset; // tex_offset分足しているのは、写真のテクスチャにする為
+          // 貼り付ける画像選択
+          if( selfId == i )
           {
-            u16 tex_offset = (128*2);
-            dst = tex_adr + tex_offset; // tex_offset分足しているのは、写真のテクスチャにする為
-            // 貼り付ける画像選択
-            if( selfId == i )
-            {
-              // TWLはキャプチャ画像、NITOROはキャラ画像
-              src = (u16*)gameWork->p_cam_param->p_cap[0];
-            }
-            else
-            {
-              // 他のメンバーの場合
-              // 
-              // TWLなら受信した画像、NITOROならキャラ画像
-              src = (u16*)gameWork->cam_member[mem_cnt].p_cap_buf[0];
-            }
-            size = CAPTURE_SIZE;
-            rc = NNS_GfdRegisterNewVramTransferTask(NNS_GFD_DST_3D_TEX_VRAM, dst, src, size);
-            GF_ASSERT(rc);
-            ICHI_Printf("dst %x src %x size %x texsize %x \n", dst, src, size, tex_size);
+            // TWLはキャプチャ画像、NITOROはキャラ画像
+            src = (u16*)gameWork->p_cam_param->p_cap[0];
           }
+          else
+          {
+            // 他のメンバーの場合
+            // 
+            // TWLなら受信した画像、NITOROならキャラ画像
+            src = (u16*)gameWork->cam_member[mem_cnt].p_cap_buf[0];
+          }
+          size = CAPTURE_SIZE;
+          rc = NNS_GfdRegisterNewVramTransferTask(NNS_GFD_DST_3D_TEX_VRAM, dst, src, size);
+          GF_ASSERT(rc);
+          ICHI_Printf("dst %x src %x size %x texsize %x \n", dst, src, size, tex_size);
+        }
 
         // メンバーカウンタ
         if( selfId != i )
@@ -4759,27 +4855,13 @@ static void RESOURCE_Init_Part2( CTVT_GAME_WORK* p_wk, HEAPID heapID, ARCHANDLE*
     }
 
     // アニメーション有効化
-
-#if 1
     // エフェクトのアニメーション有効化
     {
       u16 head_obj_idx = GFL_G3D_UTIL_GetUnitObjIdx( p_wk->g3dUtil, CTVT_UNIT_IDX_EFFECT );
-      u16 unit_res_cnt = GFL_G3D_UTIL_GetUnitResCount( p_wk->g3dUtil, CTVT_UNIT_IDX_EFFECT );
-      u16 unit_obj_cnt = GFL_G3D_UTIL_GetUnitObjCount( p_wk->g3dUtil, CTVT_UNIT_IDX_EFFECT );
-      u16 res_idx = unit_res_cnt*CTVT_UNIT_IDX_EFFECT;
       u16 obj_idx = head_obj_idx;
       GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( p_wk->g3dUtil, obj_idx );
-      GFL_G3D_RES* res = GFL_G3D_UTIL_GetResHandle( p_wk->g3dUtil, res_idx );
-      ICHI_Printf("unit_res_cnt %d ", unit_res_cnt );
-      ICHI_Printf("unit_obj_cnt %d ", unit_obj_cnt );
-      ICHI_Printf("obj_idx %d res_idx %d res_addrs %x obj_addrs %x\n", obj_idx, res_idx, res, obj);
       GFL_G3D_OBJECT_EnableAnime( obj, 0 );
-      if( GFL_G3D_CheckResourceType( res, GFL_G3D_RES_CHKTYPE_TEX ) )
-      {
-        ICHI_Printf("テクスチャデータが存在するリソース\n");
-      }
     }
-#endif
 
     ICHI_Printf("総オブジェクト数 %d\n", GFL_G3D_UTIL_GetObjCount(p_wk->g3dUtil));
   }
@@ -5133,7 +5215,6 @@ static void balloon_set( CTVT_GAME_WORK *p_game_wk, BALLOON_WORK*  p_wk, u16  un
 
   p_wk->unit_idx    = unit_idx;   // モデル指定
   p_wk->visible     = TRUE;       // フラグON
-  p_wk->color = unit_idx;    // unit_idx と 対になっている
   p_wk->alpha = 31;
 
   p_wk->save_frame = p_game_wk->frame;
@@ -5311,7 +5392,6 @@ static void TaskFunc2( GFL_TCB* p_tcb, void* p_work )
 
   if( p_wk->visible == TRUE )
   {
-
 #ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
     DEBUG_MAIN_TIME_AVERAGE_StartFunc(2);
 #endif // DEBUG_MAIN_TIME_AVERAGE_MASTER_ON

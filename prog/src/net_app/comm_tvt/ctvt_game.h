@@ -78,6 +78,11 @@ typedef enum {
   CCGDT_FRAME,      // 毎フレーム送信
   CCGDT_TP,         // タッチ座標
   CCGDT_BURST,      // 風船割れた
+
+  // ミニゲーム2つ目
+  CCGDT_TOUCH,      // タッチ範囲をタッチした
+  CCGDT_BURST2,     // 風船が大きくなるor破裂
+  
 } CTVT_COMM_GAME_DATA_TYPE;
 
 //======================================================================
@@ -138,6 +143,9 @@ extern void CTVT_GAME_SetAcceptBit2( CTVT_GAME_WORK *gameWork, const u8 NetId );
 extern const BOOL CTVT_GAME_IsAcceptNum( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork );
 extern const BOOL CTVT_GAME_IsAcceptNum2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork );
 
+
+// 指定した色(netID)の風船に指定したテクスチャを貼り付ける
+extern void CTVT_GAME_BalloonTexTrans( CTVT_GAME_WORK *p_wk, const u8 netID, const u8 tex_idx );
 
 //----------------------------------------------------------------------------
 /**
@@ -226,3 +234,25 @@ extern void CTVT_GAME_BalloonDestroy( CTVT_GAME_WORK *p_wk, u16 idx, u8 netId );
  */
 //-----------------------------------------------------------------------------
 extern void CTVT_GAME_CommScoreSet( CTVT_GAME_WORK *p_wk, const CTVT_GAME_SEND_SCORE *score );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  通信からタッチしたと送られてきた時の処理関数
+ *	        親しか呼ばない
+ *
+ *	@param	CTVT_COMM_WORK *commWork  通信ワーク
+ *	@param	*p_wk                     ゲームワーク
+ *	@param	netID                     ネットID
+ */
+//-----------------------------------------------------------------------------
+extern void CTVT_GAME_CommDataSet_Touch( CTVT_COMM_WORK *commWork, CTVT_GAME_WORK *p_wk,  int netID );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  指定したNetIDの風船を処理する
+ *
+ *	@param	CTVT_GAME_WORK *p_wk  ゲームワーク
+ *	@param	netIdBit              処理する風船のNetID(ビット管理)
+ */
+//-----------------------------------------------------------------------------
+extern void CTVT_GAME_CommBalloonBurst( CTVT_GAME_WORK *p_wk, u8 netIdBit );
