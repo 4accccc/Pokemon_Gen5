@@ -189,7 +189,8 @@ typedef enum {
   CGOAM_STAR1_2,      // おめでとう 星
   CGOAM_STAR2_2,      // おめでとう 星
   CGOAM_OME_PLATE_2,  // おめでとう 隠しプレート
-  CGOAM_TOUCH,        // タッチするところ
+  CGOAM_BUTTON_STAY,  // タッチするところ 通常
+  CGOAM_BUTTON_TOUCH, // タッチするところ タッチ時
   CGOAM_RANK1,        // 「1st」
   CGOAM_RANK2,        // 「おしい2nd」
   CGOAM_RANK3,        // 「ざんねん3rd」
@@ -398,6 +399,8 @@ struct _CTVT_GAME_WORK
   GFL_CLWK    *clwkOmeHide[2];          // エフェクト隠すプレート
   GFL_CLWK    *clwkOmeNiji;             // エフェクト虹
   GFL_CLWK    *clwkOmeStar;             // エフェクト星
+  GFL_CLWK    *clwkRank;                // 順位 
+  GFL_CLWK    *clwkDot;                 // 三点リーダー 3,4位のみ
 
   // 3D
   GFL_G3D_UTIL    *g3dUtil;
@@ -2694,7 +2697,7 @@ static void game_update_seq_init_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
     cellInitData.pos_y = 96;
     cellInitData.softpri = 0;
     cellInitData.bgpri = 1;
-    cellInitData.anmseq = CGOAM_TOUCH;
+    cellInitData.anmseq = CGOAM_BUTTON_STAY;
     gameWork->clwkTouch = GFL_CLACT_WK_Create( gameWork->cellUnit,
         gameWork->cellResIdx[CGOR_LOWER_PLT],
         gameWork->cellResIdx[CGOR_LOWER_NCG],
@@ -3296,6 +3299,7 @@ static void game_update_seq_score_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
 {
   u8 i;
   HEAPID heapID = gameWork->heapId;
+  CTVT_GAME_ID game_id = CTVT_GAME_GetGameID( gameWork );
 
   // サウンド
   {
@@ -3317,7 +3321,7 @@ static void game_update_seq_score_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
     GFL_CLACT_WK_Remove( gameWork->clwkLast );  // ラストスパート
 
     // ゲーム1だけ破棄するもの
-    if( CTVT_GAME_GetGameID( gameWork ) == CGI_BALLOON1 )
+    if( game_id == CGI_BALLOON1 )
     {
       for( i=0; i<2; i++ )
       {
@@ -3325,7 +3329,7 @@ static void game_update_seq_score_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
       }
     }
     // ゲーム2だけ破棄するもの
-    else if( CTVT_GAME_GetGameID( gameWork ) == CGI_BALLOON2 )
+    else if( game_id == CGI_BALLOON2 )
     {
       GFL_CLACT_WK_Remove( gameWork->clwkTouch ); // タッチするボタン
 
@@ -3369,6 +3373,7 @@ static void game_update_seq_score_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
   }
 
   // 結果発表で使用するOBJ
+  // ※ミニゲーム1とミニゲーム2でアニメシーケンスを変えている
   {
     GFL_CLWK_DATA cellInitData;
     // けっかはっぴょう
@@ -3389,7 +3394,14 @@ static void game_update_seq_score_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
     cellInitData.bgpri  = 3;
     for( i=0; i<2; i++ )
     {
-      cellInitData.anmseq = CGOAM_OME_PLATE_L+i;
+      if( game_id == CGI_BALLOON1 )
+      {
+        cellInitData.anmseq = CGOAM_OME_PLATE_L+i;
+      }
+      else if( game_id == CGI_BALLOON2 )
+      {
+        cellInitData.anmseq = CGOAM_OME_PLATE_2;
+      }
       gameWork->clwkOmeHide[i] = GFL_CLACT_WK_Create( gameWork->cellUnit,
           gameWork->cellResIdx[CGOR_LOWER_PLT],
           gameWork->cellResIdx[CGOR_LOWER_NCG],
@@ -3400,7 +3412,7 @@ static void game_update_seq_score_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
     // 虹
     cellInitData.softpri= 1;
     cellInitData.bgpri  = 3;
-    cellInitData.anmseq = CGOAM_RAINBOW1;
+    cellInitData.anmseq = CGOAM_RAINBOW1 + game_id;
     gameWork->clwkOmeNiji = GFL_CLACT_WK_Create( gameWork->cellUnit,
         gameWork->cellResIdx[CGOR_LOWER_PLT],
         gameWork->cellResIdx[CGOR_LOWER_NCG],
@@ -3410,13 +3422,35 @@ static void game_update_seq_score_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
     // 星
     cellInitData.softpri= 8;
     cellInitData.bgpri  = 1;
-    cellInitData.anmseq = CGOAM_STAR1;
+    cellInitData.anmseq = CGOAM_STAR1 + game_id;
     gameWork->clwkOmeStar = GFL_CLACT_WK_Create( gameWork->cellUnit,
         gameWork->cellResIdx[CGOR_LOWER_PLT],
         gameWork->cellResIdx[CGOR_LOWER_NCG],
         gameWork->cellResIdx[CGOR_LOWER_ANM],
         &cellInitData ,CLSYS_DEFREND_MAIN, heapID );
     GFL_CLACT_WK_SetDrawEnable( gameWork->clwkOmeStar, FALSE );
+
+    // 順位
+    cellInitData.softpri= 1;
+    cellInitData.bgpri  = 1;
+    cellInitData.anmseq = CGOAM_RANK1;
+    gameWork->clwkRank = GFL_CLACT_WK_Create( gameWork->cellUnit,
+        gameWork->cellResIdx[CGOR_LOWER_PLT],
+        gameWork->cellResIdx[CGOR_LOWER_NCG],
+        gameWork->cellResIdx[CGOR_LOWER_ANM],
+        &cellInitData ,CLSYS_DEFREND_MAIN, heapID );
+    GFL_CLACT_WK_SetDrawEnable( gameWork->clwkRank, FALSE );
+
+    // 三点リーダ
+    cellInitData.softpri= 1;
+    cellInitData.bgpri  = 1;
+    cellInitData.anmseq = CGOAM_DOT;
+    gameWork->clwkDot = GFL_CLACT_WK_Create( gameWork->cellUnit,
+        gameWork->cellResIdx[CGOR_LOWER_PLT],
+        gameWork->cellResIdx[CGOR_LOWER_NCG],
+        gameWork->cellResIdx[CGOR_LOWER_ANM],
+        &cellInitData ,CLSYS_DEFREND_MAIN, heapID );
+    GFL_CLACT_WK_SetDrawEnable( gameWork->clwkDot, FALSE );
   }
   // 倍角を使っているのでaffineで
   {
@@ -3528,7 +3562,14 @@ static void game_update_seq_score_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
     cellAffineData.clwkdata.softpri= 3;
     for( i=0; i<2; i++ )
     {
-      cellAffineData.clwkdata.anmseq = CGOAM_OME_CLOUD_L+i;
+      if( game_id == CGI_BALLOON1 )
+      {
+        cellAffineData.clwkdata.anmseq = CGOAM_OME_CLOUD_L+i;
+      }
+      else if( game_id == CGI_BALLOON2 )
+      {
+        cellAffineData.clwkdata.anmseq = CGOAM_STAR1_2+i;
+      }
       gameWork->clwkOmeCloud[i] = GFL_CLACT_WK_CreateAffine( gameWork->cellUnit,
         gameWork->cellResIdx[CGOR_LOWER_PLT],
         gameWork->cellResIdx[CGOR_LOWER_NCG],
@@ -3684,7 +3725,9 @@ static BOOL game_update_seq_score( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork
     SUB_SEQ_DRUMROLL,     // ドラムロール中
     SUB_SEQ_DRUMROLL_STOP,// ドラムロールストップ
     SUB_SEQ_HIDE_ANIME,   // 隠すプレートアニメ
-    SUB_SEQ_HIDE_ANIME_WAIT, // 隠すプレートアニメ待ち
+    SUB_SEQ_HIDE_ANIME_WAIT1, // 隠すプレートアニメ待ち 1位用
+    SUB_SEQ_HIDE_ANIME_WAIT2, // 隠すプレートアニメ待ち 2位用
+    SUB_SEQ_HIDE_ANIME_WAIT3, // 隠すプレートアニメ待ち 3，4位用
     SUB_SEQ_OME_ANIME_WAIT, // おめでとうアニメ待ち
     SUB_SEQ_END_WAIT,     // 終了待ち
     SUB_SEQ_END,          // 終了
@@ -3723,6 +3766,7 @@ static BOOL game_update_seq_score( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork
     gameWork->sub_seq = SUB_SEQ_HIDE_ANIME;
     break;
   case SUB_SEQ_HIDE_ANIME:   // 隠すプレートアニメ
+
     GFL_CLACT_WK_SetDrawEnable( gameWork->clwkOmeNiji, TRUE );
 
     GFL_CLACT_WK_SetDrawEnable( gameWork->clwkOmeHide[0], TRUE );
@@ -3731,10 +3775,28 @@ static BOOL game_update_seq_score( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork
     GFL_CLACT_WK_SetAutoAnmFlag( gameWork->clwkOmeHide[1], TRUE );
     GFL_CLACT_WK_ResetAnm( gameWork->clwkOmeHide[0] );
     GFL_CLACT_WK_ResetAnm( gameWork->clwkOmeHide[1] );
-    gameWork->sub_seq = SUB_SEQ_HIDE_ANIME_WAIT;
+
+    // 順位によって演出が違う
+    if( gameWork->p_plate[selfId]->rank == 1 )
+    {
+      gameWork->sub_seq = SUB_SEQ_HIDE_ANIME_WAIT1;
+    }
+    else if( gameWork->p_plate[selfId]->rank == 2 ) 
+    {
+      gameWork->sub_seq = SUB_SEQ_HIDE_ANIME_WAIT2;
+    }
+    else
+    {
+      gameWork->sub_seq = SUB_SEQ_HIDE_ANIME_WAIT3;
+    }
+
+    // 順位に合ったアニメシーケンスに変更
+    GFL_CLACT_WK_SetAnmSeq( gameWork->clwkRank, ( CGOAM_RANK1 + (gameWork->p_plate[selfId]->rank-1) ) );
+    GFL_CLACT_WK_SetDrawEnable( gameWork->clwkRank, FALSE );
+
     ICHI_Printf("隠しプレートアニメ開始\n");
     break;
-  case SUB_SEQ_HIDE_ANIME_WAIT: // 隠すプレートアニメ待ち
+  case SUB_SEQ_HIDE_ANIME_WAIT1: // 隠すプレートアニメ待ち
     if( GFL_CLACT_WK_CheckAnmActive( gameWork->clwkOmeHide[0] ) == FALSE )
     {
       // プレートは消す
@@ -3758,6 +3820,61 @@ static BOOL game_update_seq_score( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork
       gameWork->sub_seq = SUB_SEQ_OME_ANIME_WAIT;
     }
     break;
+
+  case SUB_SEQ_HIDE_ANIME_WAIT2: // 隠すプレートアニメ待ち 2位用
+    if( GFL_CLACT_WK_CheckAnmActive( gameWork->clwkOmeHide[0] ) == FALSE )
+    {
+      // プレートは消す
+      GFL_CLACT_WK_SetDrawEnable( gameWork->clwkOmeHide[0], FALSE );
+      GFL_CLACT_WK_SetDrawEnable( gameWork->clwkOmeHide[1], FALSE );
+
+      // その他表示
+      GFL_CLACT_WK_SetDrawEnable( gameWork->clwkOmeCloud[0], TRUE );
+      GFL_CLACT_WK_SetDrawEnable( gameWork->clwkOmeCloud[1], TRUE );
+      GFL_CLACT_WK_SetAutoAnmFlag( gameWork->clwkOmeCloud[0], TRUE );
+      GFL_CLACT_WK_SetAutoAnmFlag( gameWork->clwkOmeCloud[1], TRUE );
+      GFL_CLACT_WK_ResetAnm( gameWork->clwkOmeCloud[0] );
+      GFL_CLACT_WK_ResetAnm( gameWork->clwkOmeCloud[1] );
+
+      // 「おしい2nd」
+      GFL_CLACT_WK_SetDrawEnable( gameWork->clwkRank, TRUE );
+      GFL_CLACT_WK_SetAutoAnmFlag( gameWork->clwkRank, TRUE );
+      GFL_CLACT_WK_ResetAnm( gameWork->clwkRank );
+
+      gameWork->score_cnt = 0;    // 次フレーム時用に初期化
+      gameWork->sub_seq = SUB_SEQ_END_WAIT;
+    }
+    break;
+
+  case SUB_SEQ_HIDE_ANIME_WAIT3: // 隠すプレートアニメ待ち 3，4位用
+    if( GFL_CLACT_WK_CheckAnmActive( gameWork->clwkOmeHide[0] ) == FALSE )
+    {
+      // プレートは消す
+      GFL_CLACT_WK_SetDrawEnable( gameWork->clwkOmeHide[0], FALSE );
+      GFL_CLACT_WK_SetDrawEnable( gameWork->clwkOmeHide[1], FALSE );
+
+      // その他表示
+      GFL_CLACT_WK_SetDrawEnable( gameWork->clwkOmeCloud[0], TRUE );
+      GFL_CLACT_WK_SetDrawEnable( gameWork->clwkOmeCloud[1], TRUE );
+      GFL_CLACT_WK_SetAutoAnmFlag( gameWork->clwkOmeCloud[0], TRUE );
+      GFL_CLACT_WK_SetAutoAnmFlag( gameWork->clwkOmeCloud[1], TRUE );
+      GFL_CLACT_WK_ResetAnm( gameWork->clwkOmeCloud[0] );
+      GFL_CLACT_WK_ResetAnm( gameWork->clwkOmeCloud[1] );
+
+      // 「ざんねん xxx ...」
+      GFL_CLACT_WK_SetDrawEnable( gameWork->clwkRank, TRUE );
+      GFL_CLACT_WK_SetAutoAnmFlag( gameWork->clwkRank, TRUE );
+      GFL_CLACT_WK_ResetAnm( gameWork->clwkRank );
+      // 三点リーダー
+      GFL_CLACT_WK_SetDrawEnable( gameWork->clwkDot, TRUE );
+      GFL_CLACT_WK_SetAutoAnmFlag( gameWork->clwkDot, TRUE );
+      GFL_CLACT_WK_ResetAnm( gameWork->clwkDot );
+
+      gameWork->score_cnt = 0;    // 次フレーム時用に初期化
+      gameWork->sub_seq = SUB_SEQ_END_WAIT;
+    }
+    break;
+
   case SUB_SEQ_OME_ANIME_WAIT: // おめでとうアニメ待ち
     if( GFL_CLACT_WK_CheckAnmActive( gameWork->clwkOmeFont ) == FALSE )
     {
@@ -3775,6 +3892,9 @@ static BOOL game_update_seq_score( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork
         GFL_CLACT_WK_SetAutoAnmFlag( gameWork->clwkOmeText[i], TRUE );
         GFL_CLACT_WK_ResetAnm( gameWork->clwkOmeText[i] );
       }
+      GFL_CLACT_WK_SetDrawEnable( gameWork->clwkRank, TRUE );
+      GFL_CLACT_WK_SetAutoAnmFlag( gameWork->clwkRank, TRUE );
+      GFL_CLACT_WK_ResetAnm( gameWork->clwkRank );
 
       gameWork->score_cnt = 0;    // 次フレーム時用に初期化
       gameWork->sub_seq = SUB_SEQ_END_WAIT;
@@ -3789,10 +3909,6 @@ static BOOL game_update_seq_score( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork
     break;
   case SUB_SEQ_END:          // 終了
     return TRUE;
-  }
-
-  // ドラムロール
-  {
   }
 
   // GRAPHIC
@@ -3920,7 +4036,8 @@ static void game_update_seq_exit_common( COMM_TVT_WORK *work, CTVT_GAME_WORK *ga
   GFL_CLACT_WK_Remove( gameWork->clwkKekka );
   GFL_CLACT_WK_Remove( gameWork->clwkOmeFont );
   GFL_CLACT_WK_Remove( gameWork->clwkOmeNiji );
-  GFL_CLACT_WK_Remove( gameWork->clwkOmeStar );
+  GFL_CLACT_WK_Remove( gameWork->clwkRank );
+  GFL_CLACT_WK_Remove( gameWork->clwkDot );
   for( i=0; i<6; i++ )
   {
     GFL_CLACT_WK_Remove( gameWork->clwkOmeText[i] );
