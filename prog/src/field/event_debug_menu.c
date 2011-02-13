@@ -42,6 +42,7 @@
 #include "event_debug_menu_ov_app.h"
 #include "event_debug_menu_ov_staff.h"
 #include "event_debug_menu_ov_bsubway.h"
+#include "event_debug_menu_ov_wbt.h"
 
 
 
@@ -176,6 +177,7 @@ static const DEBUG_MENU_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_TITLE_04, (void*)BMPMENULIST_LABEL, GFL_OVERLAY_BLANK_ID },       //○アプリ
   { DEBUG_FIELD_STR44, debugMenuCallProc_UITemplate, FS_OVERLAY_ID(debugmenu_app) },        //UIテンプレート
   { DEBUG_FIELD_DEMO3D,   debugMenuCallProc_Demo3d, FS_OVERLAY_ID(debugmenu_app) },             //３Dデモ
+  { DEBUG_FIELD_WBT,      debugMenuCallProc_WBT, FS_OVERLAY_ID(debugmenu_app) },      //WBT
 
   //event_debug_menu_ov_staff.c
   { DEBUG_FIELD_TITLE_05, (void*)BMPMENULIST_LABEL, GFL_OVERLAY_BLANK_ID },       //○スタッフ用
