@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-12T12:54:48"/>
+	<create user="matsumiya" host="W00224" date="2011-02-14T22:16:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -368,7 +368,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1297" top="186" right="2002" bottom="814" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -376,7 +376,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -397,7 +397,64 @@
 	</lock>
 
 
-	<row id="msg_c05r0501_veteranw_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c05r0501_goddess1_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+仮メッセージ</comment>
+		<attribute name="キャラ指定">GODDESS1
+愛の女神</attribute>
+		<language name="JPN" width="256">わたしは　あいの　めがみ……▼
+Ｎと　ことを　かまえる　トレーナーよ
+さあ　やすみなさい……</language>
+		<language name="JPN_KANJI" width="256">わたしは　愛の女神……▼
+Ｎと　事を構える　トレーナーよ
+さあ　やすみなさい……</language>
+	</row>
+
+	<row id="msg_c05r0501_goddess2_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・WHITEver
+　N＝レシラム＝真実
+
+仮メッセージ</comment>
+		<attribute name="キャラ指定">GODDESS2
+平和の女神</attribute>
+		<language name="JPN" width="256">わたしは　へいわの　めがみ……▼
+Ｎに　へいおんを　あたえるもの……▼
+……Ｎは　おさなきころより
+ひとと　はなされ▽
+ポケモンと　ともに　そだちました▼
+わるい　ひとに　うらぎられ
+しいたげられ　きずついた　ポケモン▼
+ゲーチスは　あえて
+そうした　ポケモンばかり▽
+Ｎに　ちかづけていたのです▼
+Ｎは　その　きずを　わかちあい
+ポケモンの　ことだけを　かんがえ▽
+しんじつを　もとめるように　なりました▼
+あまりにも　ピュアで
+イノセントな　Ｎの　こころ……▼
+イノセントほど
+うつくしく　こわいものは　ないのに</language>
+		<language name="JPN_KANJI" width="256">わたしは　平和の　女神……▼
+Ｎに　平穏を　与えるもの……▼
+……Ｎは　幼きころより
+人と　離され▽
+ポケモンと　共に　育ちました▼
+……悪意ある　人に　裏切られ
+虐げられ　傷ついた　ポケモン▼
+ゲーチスは　あえて
+そうした　ポケモンばかり▽
+Ｎに　近づけていたのです▼
+Ｎは　その傷を　分かち合い
+ポケモンの　ことだけを　考え▽
+真実を　求めるように　なりました▼
+あまりにも　ピュアで
+イノセントな　Ｎの　心……▼
+イノセントほど
+美しく　怖いものは　ないのに</language>
+	</row>
+
+	<row id="msg_c05r0501_veteranw_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・はい/いいえ
 　はい→veteranw_02
@@ -409,7 +466,7 @@
 わかりあえると　思いますか？</language>
 	</row>
 
-	<row id="msg_c05r0501_veteranw_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c05r0501_veteranw_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・はい選択時</comment>
 		<attribute name="キャラ指定">VETERANW</attribute>
 		<language name="JPN" width="256">……なるほど
@@ -418,7 +475,7 @@
 わたしも　そう　考えています！</language>
 	</row>
 
-	<row id="msg_c05r0501_veteranw_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c05r0501_veteranw_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・いいえ選択時</comment>
 		<attribute name="キャラ指定">VETERANW</attribute>
 		<language name="JPN" width="256">……そうですね▼
@@ -431,7 +488,7 @@
 そうでは　ないのですか？</language>
 	</row>
 
-	<row id="msg_c05r0501_gentleman_01">
+	<row id="msg_c05r0501_gentleman_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・ハイリンクの情報</comment>
 		<attribute name="キャラ指定">GENTLEMAN</attribute>
@@ -447,7 +504,7 @@
 やはり　人生　助け合い　だね</language>
 	</row>
 
-	<row id="msg_c05r0501_veteranm_01">
+	<row id="msg_c05r0501_veteranm_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂</comment>
 		<attribute name="キャラ指定">VETERANM</attribute>
 		<language name="JPN" width="256">つよい　こころ　とは　なんだろう？
@@ -460,7 +517,7 @@
 トレーナーや　ポケモンは　いるのか？</language>
 	</row>
 
-	<row id="msg_c05r0501_girl2_01">
+	<row id="msg_c05r0501_girl2_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・ハイリンクの情報</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
@@ -472,7 +529,7 @@
 みんなを　笑顔に　したいなあ！</language>
 	</row>
 
-	<row id="msg_c05r0501_oldwoman_01">
+	<row id="msg_c05r0501_oldwoman_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・ハイリンクの情報</comment>
 		<attribute name="キャラ指定">OLDWOMAN</attribute>
@@ -484,7 +541,7 @@
 ハイリンクとは　ユニークだねえ[BE:09:速度コントロール:0]</language>
 	</row>
 
-	<row id="msg_c05r0501_mountain_01">
+	<row id="msg_c05r0501_mountain_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂</comment>
 		<attribute name="キャラ指定">MOUNTAIN</attribute>
 		<language name="JPN" width="256">ひとから　よく　おもわれたい……
@@ -499,7 +556,7 @@
 すばらしいことじゃ　ないか！</language>
 	</row>
 
-	<row id="msg_c05r0501_man1_01">
+	<row id="msg_c05r0501_man1_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂</comment>
 		<attribute name="キャラ指定">MAN1</attribute>
 		<language name="JPN" width="256">いきると　いうことは
@@ -512,7 +569,7 @@
 そのことを　忘れないように……</language>
 	</row>
 
-	<row id="msg_c05r0501_woman2_01">
+	<row id="msg_c05r0501_woman2_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀</comment>
 		<attribute name="キャラ指定">WOMAN2</attribute>
 		<language name="JPN" width="256">しあわせとは　はかないもの……▼
