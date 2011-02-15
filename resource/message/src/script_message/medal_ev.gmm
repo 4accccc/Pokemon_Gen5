@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-02-10T16:42:07"/>
+	<create user="matsumiya" host="W00224" date="2011-02-15T20:48:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -377,7 +377,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1641" top="260" right="2346" bottom="880" maximized="no" rayout="Vertical2">
+	<dialog left="1298" top="165" right="2003" bottom="793" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="42" right="1280" bottom="440" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -692,21 +692,237 @@
 	</row>
 
 	<row id="msg_mdloyj_prize_1st" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
-		<language name="JPN" width="256">仮メッセージ[BE:01:ページ切り替え（クリア）]
-メダルラリーじむきょくです！
+		<language name="JPN" width="256">かりメッセージ[BE:01:ページ切り替え（クリア）]
+メダルラリーじむきょく　です！
 チェックポイントクリア　おめでとう！</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ[BE:01:ページ切り替え（クリア）]
-メダルラリーじむきょくです！
+メダルラリー事務局です！
 チェックポイントクリア　おめでとう！</language>
 	</row>
 
 	<row id="msg_mdloyj_prize_max" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
-		<language name="JPN" width="256">仮メッセージ[BE:01:ページ切り替え（クリア）]
-メダルラリーじむきょくです！
+		<language name="JPN" width="256">かりメッセージ[BE:01:ページ切り替え（クリア）]
+メダルラリーじむきょく　です！
 コンプリート　おめでとう！</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ[BE:01:ページ切り替え（クリア）]
-メダルラリーじむきょくです！
+メダルラリー事務局です！
 コンプリート　おめでとう！</language>
+	</row>
+
+	<row id="msg_mdloyj_prizegoal_01" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color=",,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>メダル事務局・ゴールイン表彰イベント</comment>
+		<language name="JPN" width="256">かりメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_mdloyj_prizegoal_02" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color=",,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>メダル事務局・ゴールイン表彰イベント</comment>
+		<language name="JPN" width="256">かりメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_mdloyj_prizegoal_03" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color=",,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>メダル事務局・ゴールイン表彰イベント</comment>
+		<language name="JPN" width="256">かりメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_mdloyj_prizegoal_04" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color=",,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>メダル事務局・ゴールイン表彰イベント</comment>
+		<language name="JPN" width="256">かりメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_mdloyj_prizegoal_end" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color=",,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>メダル事務局・ゴールイン表彰イベント</comment>
+		<language name="JPN" width="256">かりメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_mdloyj_prizegoal_sub_01" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color=",,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>メダル事務局・ゴールイン表彰イベント</comment>
+		<language name="JPN" width="256">かりメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_mdloyj_prizegoal_sub_02" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color=",,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>メダル事務局・ゴールイン表彰イベント</comment>
+		<language name="JPN" width="256">かりメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_mdloyj_prizegoal_sub_03" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color=",,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>メダル事務局・ゴールイン表彰イベント</comment>
+		<language name="JPN" width="256">かりメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_mdloyj_prizecomp_01" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color=",,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>メダル事務局・フルコンプリート表彰イベント</comment>
+		<language name="JPN" width="256">かりメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_mdloyj_prizecomp_02" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color=",,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>メダル事務局・フルコンプリート表彰イベント</comment>
+		<language name="JPN" width="256">かりメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_mdloyj_prizecomp_03" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color=",,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>メダル事務局・フルコンプリート表彰イベント</comment>
+		<language name="JPN" width="256">かりメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_mdloyj_prizecomp_04" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color=",,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>メダル事務局・フルコンプリート表彰イベント</comment>
+		<language name="JPN" width="256">かりメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_mdloyj_prizecomp_end" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color=",,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>メダル事務局・フルコンプリート表彰イベント</comment>
+		<language name="JPN" width="256">かりメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_mdloyj_prizecomp_sub_01" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color=",,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>メダル事務局・フルコンプリート表彰イベント</comment>
+		<language name="JPN" width="256">かりメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_mdloyj_prizecomp_sub_02" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color=",,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>メダル事務局・フルコンプリート表彰イベント</comment>
+		<language name="JPN" width="256">かりメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_mdloyj_prizecomp_sub_03" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color=",,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>メダル事務局・フルコンプリート表彰イベント</comment>
+		<language name="JPN" width="256">かりメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_mdlnpc_rank_01" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color=",,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>メダル事務局・NPC話しかけ</comment>
+		<language name="JPN" width="256">かりメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_mdlnpc_rank_02" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color=",,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>メダル事務局・NPC話しかけ</comment>
+		<language name="JPN" width="256">かりメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_mdlnpc_rank_03" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color=",,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>メダル事務局・NPC話しかけ</comment>
+		<language name="JPN" width="256">かりメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_mdlnpc_rank_04" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color=",,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>メダル事務局・NPC話しかけ</comment>
+		<language name="JPN" width="256">かりメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_mdlnpc_rank_05" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color=",,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>メダル事務局・NPC話しかけ</comment>
+		<language name="JPN" width="256">かりメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_mdlnpc_help_01" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color=",,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>メダル事務局・NPC話しかけ</comment>
+		<language name="JPN" width="256">かりメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_mdlnpc_help_02_01" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color=",,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>メダル事務局・NPC話しかけ</comment>
+		<language name="JPN" width="256">かりメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_mdlnpc_help_02_02" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color=",,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>メダル事務局・NPC話しかけ</comment>
+		<language name="JPN" width="256">かりメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_mdlnpc_help_02_03" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color=",,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>メダル事務局・NPC話しかけ</comment>
+		<language name="JPN" width="256">かりメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_mdlnpc_help_02_04" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color=",,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>メダル事務局・NPC話しかけ</comment>
+		<language name="JPN" width="256">かりメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_mdlnpc_help_02_05" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color=",,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>メダル事務局・NPC話しかけ</comment>
+		<language name="JPN" width="256">かりメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_mdlnpc_help_win01" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color=",,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>メダル事務局・NPC話しかけ</comment>
+		<language name="JPN" width="256">かりメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_mdlnpc_help_win02" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color=",,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>メダル事務局・NPC話しかけ</comment>
+		<language name="JPN" width="256">かりメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_mdlnpc_help_win03" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color=",,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>メダル事務局・NPC話しかけ</comment>
+		<language name="JPN" width="256">かりメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_mdlnpc_help_win04" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color=",,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>メダル事務局・NPC話しかけ</comment>
+		<language name="JPN" width="256">かりメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_mdlnpc_help_win05" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color=",,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>メダル事務局・NPC話しかけ</comment>
+		<language name="JPN" width="256">かりメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_mdlnpc_help_win06" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color=",,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>メダル事務局・NPC話しかけ</comment>
+		<language name="JPN" width="256">かりメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_mdlnpc_fan_01" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color=",,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>メダル事務局・NPC話しかけ</comment>
+		<language name="JPN" width="256">かりメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_mdlnpc_fan_02" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color=",,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>メダル事務局・NPC話しかけ</comment>
+		<language name="JPN" width="256">かりメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_mdlnpc_fan_03" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color=",,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>メダル事務局・NPC話しかけ</comment>
+		<language name="JPN" width="256">かりメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<flowchart-group-list>
