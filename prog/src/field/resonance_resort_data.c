@@ -1092,6 +1092,7 @@ BOOL RESORT_DATA_BUFF_AddBeacon( RESORT_DATA_BUFF *p_wk, const RESORT_BEACON_DAT
   //ロック中は追加しない
   if( p_wk->is_lock )
   {
+    RESORT_Printf( "リゾート　ロック中\n" );
     return FALSE;
   }
 
@@ -1137,6 +1138,7 @@ BOOL RESORT_DATA_BUFF_AddRecv( RESORT_DATA_BUFF *p_wk, const RESORT_RECV_DATA *c
   //ロック中は追加しない
   if( p_wk->is_lock )
   {
+    RESORT_Printf( "リゾート　ロック中\n" );
     return FALSE;
   }
 
