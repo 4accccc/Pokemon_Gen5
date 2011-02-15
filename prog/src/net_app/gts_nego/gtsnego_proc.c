@@ -51,9 +51,11 @@
 #include "system/net_err.h"
 #include "net/dwc_error.h"
 
+#include "savedata/resonance_resort_sv.h" //SWANから追加
 
 #define _NO2   (2)
 #define _NO3   (3)
+#define _NO4   (4)
 
 #define _WORK_HEAPSIZE (0x1000)  // 調整が必要
 
@@ -196,6 +198,10 @@ struct _GTSNEGO_WORK {
 
   BOOL is_pushpop_err;  //
   u32   err_repair_cnt;
+
+  //以下SWANから追加のデータ
+  u8  resort_send_buffer[RESORT_RECV_DATA_SIZE];
+  u8  resort_recv_buffer[RESORT_RECV_DATA_SIZE];
 };
 
 
@@ -204,6 +210,7 @@ typedef enum {
   _NETCMD_INFOSEND = GFL_NET_CMD_GTSNEGO,
   _NETCMD_MYSTATUSSEND,
   _NETCMD_MATCH,
+  _NETCMD_RESORT,//SWANから追加
 } _BATTLEIRC_SENDCMD;
 
 
@@ -236,12 +243,15 @@ static void _recvInfomationData(const int netID, const int size, const void* pDa
 static void _recvMystatusData(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void _cancelButtonCallback(u32 bttnid, u32 event,void* p_work);
 static void _recvMatchData(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
+static void _recvResort(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
+static u8* _getHugeBuffer(int netID, void* pWk, int size);
 
 ///通信コマンドテーブル
 static const NetRecvFuncTable _PacketTbl[] = {
   {_recvInfomationData,   NULL},    ///_NETCMD_INFOSEND
   {_recvMystatusData, NULL},    ///_NETCMD_MYSTATUSSEND
   {_recvMatchData, NULL},    ///_NETCMD_MATCH
+  {_recvResort, _getHugeBuffer, }, //_NETCMD_RESORT
 };
 
 
@@ -345,6 +355,48 @@ static void _recvMatchData(const int netID, const int size, const void* pData, v
   GFL_STD_MemCopy(pData,&pWork->MatchData, sizeof(MATCH_DATA));
 }
 
+//------------------------------------------------------------------------------
+/**
+ * @brief   通信コールバックリゾート受け取り _NETCMD_RESORT
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static void _recvResort(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
+{
+  GTSNEGO_WORK *pWork = pWk;
+  EVENT_GTSNEGO_WORK* pEv=pWork->dbw;
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork(pEv->gamedata);
+  RESONANCE_RESORT_SV *p_resort_sv  = RESONANCE_RESORT_SV_GetWork( p_sv );
+  RESORT_DATA_BUFF *p_buff  = RESONANCE_RESORT_SV_GetDataBuff( p_resort_sv );
+
+  if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
+    return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
+  }
+  if(netID == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
+    return;//自分のは今は受け取らない
+  }
+
+  OS_Printf( "リゾート受信コールバック！netID=%d size=%d \n", netID, size );
+  RESORT_DATA_BUFF_AddRecv( p_buff, pData );
+}
+//------------------------------------------------------------------------------
+/**
+ * @brief   通信コールバック大きいバッファ
+ * @retval  バッファ
+ */
+//------------------------------------------------------------------------------
+static u8* _getHugeBuffer(int netID, void* pWk, int size)
+{
+  GTSNEGO_WORK *pWork = pWk;
+
+  if(netID == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle()))
+  {
+    GF_ASSERT_HEAVY( 0 );
+    return NULL;  //自分のは受け取らない
+  }
+
+  return pWork->resort_recv_buffer;
+}
 
 //------------------------------------------------------------------------------
 /**
@@ -607,7 +659,6 @@ static void _timingCheck2( GTSNEGO_WORK *pWork )
   _CHANGE_STATE(pWork,_messagePMS);
 }
 
-
 //----------------------------------------------------------------------------
 /**
  *	@brief	不正文字検査
@@ -650,9 +701,6 @@ static void _timingCheck5( GTSNEGO_WORK *pWork )
   MYSTATUS* pMy = pEv->pStatus[1];
   STRBUF  *wordCheck;
   
-  if(!GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_NO3, WB_NET_GTSNEGO)){
-    return;
-  }
 
   // 不正文字検査
   wordCheck  = MyStatus_CreateNameString( pMy, HEAPID_IRCBATTLE );
@@ -662,6 +710,59 @@ static void _timingCheck5( GTSNEGO_WORK *pWork )
   _CHANGE_STATE(pWork,_timingCheck4);
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief	SWANからの追加  リゾートデータ受け取り
+ */
+//-----------------------------------------------------------------------------
+static void _resortWait( GTSNEGO_WORK *pWork )
+{
+  if(!GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_NO4, WB_NET_GTSNEGO)){
+    return;
+  }
+
+  _CHANGE_STATE(pWork,_timingCheck5);
+}
+
+static void _resortStart( GTSNEGO_WORK *pWork )
+{
+
+  EVENT_GTSNEGO_WORK* pEv=pWork->dbw;
+  NetID netID = GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle() );
+  netID = netID == 0? 1: 0;
+
+  RESORT_RECV_DATA_SetMyData( (RESORT_RECV_DATA *)pWork->resort_send_buffer, pEv->gamedata );
+
+  if( GFL_NET_SendDataEx( GFL_NET_HANDLE_GetCurrentHandle(), netID, _NETCMD_RESORT, RESORT_RECV_DATA_SIZE, pWork->resort_send_buffer, TRUE, FALSE, TRUE ) )
+  {
+    GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_NO4, WB_NET_GTSNEGO);
+    _CHANGE_STATE(pWork,_resortWait);
+  }
+}
+
+static void _statussendCheckEnd( GTSNEGO_WORK *pWork )
+{
+  if(!GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_NO3, WB_NET_GTSNEGO)){
+    return;
+  }
+  else
+  {
+    EVENT_GTSNEGO_WORK* pEv=pWork->dbw;
+    MYSTATUS* pMy = pEv->pStatus[1];
+
+    if( MyStatus_GetRomCode(pMy) == VERSION_W2
+        || MyStatus_GetRomCode(pMy) == VERSION_B2 )
+    {
+      OS_TPrintf( "相手がSWAN！リゾート送信\n" );
+      _CHANGE_STATE(pWork,_resortStart);
+    }
+    else
+    {
+      OS_TPrintf( "相手が前VER！\n" );
+      _CHANGE_STATE(pWork,_timingCheck5);
+    }
+  }
+}
 
 //----------------------------------------------------------------------------
 /**
@@ -675,7 +776,7 @@ static void _timingCheck5( GTSNEGO_WORK *pWork )
 static void _statussendCheck( GTSNEGO_WORK *pWork )
 {
   GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_NO3, WB_NET_GTSNEGO);
-  _CHANGE_STATE(pWork,_timingCheck5);
+  _CHANGE_STATE(pWork,_statussendCheckEnd);
 }
 
 //----------------------------------------------------------------------------
