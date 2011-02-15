@@ -28,7 +28,7 @@
 */
 //=============================================================================
 #ifdef PM_DEBUG
-#ifdef DEBUG_ONLY_FOR_toru_nagihashi
+#ifdef DEBUG_ONLY_FOR_nagihashi_toru
 #define DEBUG_DWC_ERROR_PRINT
 #endif //DEBUG_ONLY_FOR_
 #endif //PM_DEBUG

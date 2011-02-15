@@ -68,7 +68,7 @@
 #if defined(DEBUG_ONLY_FOR_shimoyamada)
 #undef  MATCHINGKEY
 #define MATCHINGKEY 0xFF
-#elif defined(DEBUG_ONLY_FOR_toru_nagihashi)
+#elif defined(DEBUG_ONLY_FOR_nagihashi_toru)
 #undef  MATCHINGKEY
 #define MATCHINGKEY 0xFE
 #endif  //defined
@@ -77,7 +77,7 @@
 //’S“–ŽÒ‚Ì‚Ý‚ÌƒvƒŠƒ“ƒg•\Ž¦
 #ifdef DEBUG_DEBUG_NET_Printf_ON
 
-#if defined(DEBUG_ONLY_FOR_toru_nagihashi)
+#if defined(DEBUG_ONLY_FOR_nagihashi_toru)
 #define DEBUG_NET_Printf(...)  OS_TFPrintf(1,__VA_ARGS__)
 #elif defined(DEBUG_ONLY_FOR_shimoyamada)
 #define DEBUG_NET_Printf(...)  OS_TPrintf(__VA_ARGS__)
@@ -684,7 +684,7 @@ WIFIBATTLEMATCH_NET_WORK * WIFIBATTLEMATCH_NET_Init( WIFIBATTLEMATCH_NET_DATA *p
 
   p_wk->magic_num = 0x573;
 
-#ifdef DEBUG_ONLY_FOR_toru_nagihashi
+#ifdef DEBUG_ONLY_FOR_nagihashi_toru
   GFL_NET_DebugGetPrintOn();
 #endif
 

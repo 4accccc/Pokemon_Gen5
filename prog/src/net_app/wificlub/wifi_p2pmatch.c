@@ -8012,7 +8012,7 @@ static GFL_PROC_RESULT WifiP2PMatchProc_Main( GFL_PROC * proc, int * seq, void *
 
   if( NetErr_App_CheckError() == NET_ERR_CHECK_NONE ){
 
-#ifdef DEBUG_ONLY_FOR_toru_nagihashi
+#ifdef DEBUG_ONLY_FOR_nagihashi_toru
     if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_L)
     {
       NAGI_Printf( "talk %d\n", wk->is_talk );
@@ -8031,7 +8031,7 @@ static GFL_PROC_RESULT WifiP2PMatchProc_Main( GFL_PROC * proc, int * seq, void *
     GFL_CLACT_SYS_Main();
   }
 
-//#ifdef DEBUG_ONLY_FOR_toru_nagihashi
+//#ifdef DEBUG_ONLY_FOR_nagihashi_toru
 #if 0
   {
     static const char *sc_print_tbl[] =

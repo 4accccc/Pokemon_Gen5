@@ -73,7 +73,7 @@ FS_EXTERN_OVERLAY(medalbox);
 
 //’S“–ŽÒ‚Ì‚Ý‚ÌPRINTƒIƒ“
 #ifdef DEBUG_PROCLINK_PRINT_ON
-#if defined( DEBUG_ONLY_FOR_toru_nagihashi )
+#if defined( DEBUG_ONLY_FOR_nagihashi_toru )
 #define DEBUG_PROCLINK_Printf(...)  OS_TFPrintf(1,__VA_ARGS__)
 //ˆÈ‰º‚Ì‚æ‚¤‚ÈŠ´‚¶‚Å’Ç‰Á‰Â”\‚Å‚·
 //#elif defined( DEBUG_ONLY_FOR_ )

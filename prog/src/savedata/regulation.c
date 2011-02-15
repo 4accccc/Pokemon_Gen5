@@ -30,7 +30,7 @@
 #define REGPRINT (0)
 #endif
 
-#ifdef DEBUG_ONLY_FOR_toru_nagihashi
+#ifdef DEBUG_ONLY_FOR_nagihashi_toru
 //#undef REGPRINT
 //#define REGPRINT  (1)
 #endif //def

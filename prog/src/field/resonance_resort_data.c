@@ -22,7 +22,7 @@
 #define DEBUG_RESORT_PRINT_ON
 #endif
 
-#if defined(DEBUG_RESORT_PRINT_ON) && ( defined(DEBUG_ONLY_FOR_toru_nagihashi) || defined(DEBUG_ONLY_FOR_shimoyamada) )
+#if defined(DEBUG_RESORT_PRINT_ON) && ( defined(DEBUG_ONLY_FOR_nagihashi_toru) || defined(DEBUG_ONLY_FOR_shimoyamada) )
 #define RESORT_Printf(...)  OS_TFPrintf(0,__VA_ARGS__)
 #else
 #define RESORT_Printf(...)  /* */

@@ -53,7 +53,7 @@
 
 #if DEBUG_ONLY_FOR_ohno
 #define _NET_DEBUG (1)
-#elif defined(DEBUG_ONLY_FOR_toru_nagihashi)
+#elif defined(DEBUG_ONLY_FOR_nagihashi_toru)
 #define _NET_DEBUG (1)
 #else
 #define _NET_DEBUG (0)

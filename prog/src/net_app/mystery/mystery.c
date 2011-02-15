@@ -77,7 +77,7 @@ FS_EXTERN_OVERLAY(dpw_common);
 #endif //PM_DEBUG
 
 #ifdef MYSTERY_PRINT_ON
-#ifdef DEBUG_ONLY_FOR_toru_nagihashi
+#ifdef DEBUG_ONLY_FOR_nagihashi_toru
 #define MYSTERY_Printf(...)  OS_Printf( __VA_ARGS__ )
 #elif DEBUG_ONLY_FOR_shimoyamada
 #define MYSTERY_Printf(...)  OS_Printf( __VA_ARGS__ )

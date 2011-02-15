@@ -33,7 +33,7 @@
 //=====================================
 #ifdef PM_DEBUG
 
-#if defined(DEBUG_ONLY_FOR_toru_nagihashi) || defined(DEBUG_ONLY_FOR_shimoyamada)
+#if defined(DEBUG_ONLY_FOR_nagihashi_toru) || defined(DEBUG_ONLY_FOR_shimoyamada)
 #define WBM_SYS_PRINT_ON
 #endif
 

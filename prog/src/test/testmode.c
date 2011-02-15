@@ -207,7 +207,7 @@ static BOOL TESTMODE_ITEM_DebugFight( TESTMODE_WORK *work , const int idx );
 #elif defined DEBUG_ONLY_FOR_ariizumi_nobuhiko
 //  #define QuickSelectFunc   TESTMODE_ITEM_SelectFuncDressUp
   #define QuickSelectFunc   TESTMODE_ITEM_SelectFuncAri
-#elif defined DEBUG_ONLY_FOR_toru_nagihashi
+#elif defined DEBUG_ONLY_FOR_nagihashi_toru
   #define QuickSelectFunc   TESTMODE_ITEM_SelectFuncNagi
 #elif defined DEBUG_ONLY_FOR_fujiwara
   #define QuickSelectFunc   TESTMODE_ITEM_SelectFuncSogabe

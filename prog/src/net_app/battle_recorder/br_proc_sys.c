@@ -36,7 +36,7 @@
 
 //’S“–ŽÒ‚Ì‚Ý‚ÌPRINTƒIƒ“
 #ifdef DEBUG_BR_PROCSYS_PRINT_ON
-#if defined( DEBUG_ONLY_FOR_toru_nagihashi )
+#if defined( DEBUG_ONLY_FOR_nagihashi_toru )
 #define BR_PROCSYS_Printf(...)  OS_TFPrintf(1,__VA_ARGS__)
 #elif defined( DEBUG_ONLY_FOR_shimoyamada )
 #define BR_PROCSYS_Printf(...)  OS_TPrintf(__VA_ARGS__)

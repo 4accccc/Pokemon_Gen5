@@ -561,7 +561,7 @@ void NetErr_DEBUG_ErrorSet(void)
 	NET_ERR_SYSTEM *nes = &NetErrSystem;
 
   //WiFi
-#if defined( DEBUG_ONLY_FOR_ohno ) | defined( DEBUG_ONLY_FOR_matsuda ) | defined( DEBUG_ONLY_FOR_toru_nagihashi ) | defined( DEBUG_ONLY_FOR_ariizumi_nobuhiko ) | defined( DEBUG_ONLY_FOR_shimoyamada )
+#if defined( DEBUG_ONLY_FOR_ohno ) | defined( DEBUG_ONLY_FOR_matsuda ) | defined( DEBUG_ONLY_FOR_nagihashi_toru ) | defined( DEBUG_ONLY_FOR_ariizumi_nobuhiko ) | defined( DEBUG_ONLY_FOR_shimoyamada )
 
 #ifndef MULTI_BOOT_MAKE  //í èÌéûèàóù
   if( GFL_NET_IsWifiConnect() )

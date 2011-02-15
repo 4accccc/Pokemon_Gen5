@@ -78,7 +78,7 @@ static void DEBUG_MyPokeAdd(GAMEDATA * gamedata, HEAPID heapID)
   DEBUG_MyPokeAdd_Saito( party, pp, GAMEDATA_GetZukanSave(gamedata), myStatus );
 #elif defined(DEBUG_ONLY_FOR_unno)
   DEBUG_MyPokeAdd_Saito( party, pp, GAMEDATA_GetZukanSave(gamedata), myStatus );
-#elif defined(DEBUG_ONLY_FOR_toru_nagihashi)
+#elif defined(DEBUG_ONLY_FOR_nagihashi_toru)
   DEBUG_MyPokeAdd_Nagi( party, pp, GAMEDATA_GetZukanSave(gamedata), myStatus, heapID );
 #else
 

@@ -60,11 +60,11 @@
 
 #define DEBUGWIN_USE                  //デバッグウィンドウを使用する
 
-#if defined(DEBUG_ONLY_FOR_toru_nagihashi)
+#if defined(DEBUG_ONLY_FOR_nagihashi_toru)
 //#define DEBUG_REGULATION_RECV_A_PASS  //レギュレーションの受信をAボタンで進む
 #elif defined(DEBUG_ONLY_FOR_shimoyamada)
 #define DEBUG_REGULATION_RECV_A_PASS  //レギュレーションの受信をAボタンで進む
-#endif //DEBUG_ONLY_FOR_toru_nagihashi
+#endif //DEBUG_ONLY_FOR_nagihashi_toru
 
 
 #endif //PM_DEBUG

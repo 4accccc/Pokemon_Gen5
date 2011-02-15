@@ -202,7 +202,7 @@ static const DEBUG_MENU_LIST DATA_DebugMenuList[] =
  *  上記のリストのSTRIDを書くと、STARTボタンをおしたときに、その位置までカーソルが動きます
  */
 //------------------------------------------------------------------------
-#if defined DEBUG_ONLY_FOR_toru_nagihashi
+#if defined DEBUG_ONLY_FOR_nagihashi_toru
 #define QuickJumpStart   DEBUG_FIELD_STR41
 #elif defined DEBUG_ONLY_FOR_matsumiya
 #define QuickJumpStart   DEBUG_FIELD_STR03

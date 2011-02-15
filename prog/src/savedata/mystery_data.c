@@ -24,7 +24,7 @@ FS_EXTERN_OVERLAY(outside_save);
 
 //’S“–ŽÒ‚Ì‚Ý‚ÌƒvƒŠƒ“ƒgON
 #ifdef DEBUG_MYSTERY_DATA_PRINT_ON
-#if defined(DEBUG_ONLY_FOR_toru_nagihashi)
+#if defined(DEBUG_ONLY_FOR_nagihashi_toru)
 //#define MYSTERY_DATA_Printf(...)  OS_TFPrintf(1,__VA_ARGS__)
 #endif  //def
 #endif //DEBUG_MYSTERY_DATA_PRINT_ON

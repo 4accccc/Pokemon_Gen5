@@ -65,7 +65,7 @@ FS_EXTERN_OVERLAY(dpw_common);
 #ifdef PM_DEBUG
 #define DEBUGWIN_USE
 
-//#if defined(DEBUG_ONLY_FOR_toru_nagihashi)||defined(DEBUG_ONLY_FOR_shimoyamada)
+//#if defined(DEBUG_ONLY_FOR_nagihashi_toru)||defined(DEBUG_ONLY_FOR_shimoyamada)
 //#define DEBUG_GPF_PASS
 //#endif
 //#define DEBUG_DIRTYCHECK_PASS
@@ -75,7 +75,7 @@ FS_EXTERN_OVERLAY(dpw_common);
 #define DEBUG_FLAG_GPF_PASS_ON    //GPFをスルーするフラグの使用
 
 
-#if defined(DEBUG_ONLY_FOR_toru_nagihashi)
+#if defined(DEBUG_ONLY_FOR_nagihashi_toru)
 //#define DEBUG_NONE_MATCHING
 #endif 
 
