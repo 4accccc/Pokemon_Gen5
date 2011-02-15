@@ -18,6 +18,7 @@
 #include "intrude_work.h"
 #include "net/net_whpipe.h"
 
+#include "savedata/resonance_resort_sv.h" //SWANから追加
 
 //==============================================================================
 //  プロトタイプ宣言
@@ -373,6 +374,17 @@ static void _IntrudeRecv_Profile(const int netID, const int size, const void* pD
   }
 
   Intrude_SetProfile(intcomm, netID, recv_profile);
+
+  //自分のデータではないとき、リゾートデータを取得する
+  if( netID != GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle()) )
+  {
+
+    SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork(gamedata);
+    RESONANCE_RESORT_SV *p_resort_sv  = RESONANCE_RESORT_SV_GetWork( p_sv );
+    RESORT_DATA_BUFF *p_buff  = RESONANCE_RESORT_SV_GetDataBuff( p_resort_sv );
+    OS_Printf( "リゾート受信コールバック！netID=%d size=%d \n", netID, size );
+    RESORT_DATA_BUFF_AddRecv( p_buff, (RESORT_RECV_DATA *)recv_profile->resort_data );
+  }
 
   //自分が親ではなくて、通信相手(親)がチュートリアル中の場合。
   //Intrude_SetProfileは非通信時に自分が呼び出しもしているので

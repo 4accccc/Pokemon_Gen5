@@ -33,6 +33,7 @@
 #include "savedata/intrude_save.h"
 #include "item/itemsym.h"
 
+#include "savedata/resonance_resort_sv.h" //SWANから追加
 
 //==============================================================================
 //  定数定義
@@ -475,6 +476,10 @@ void Intrude_SetSendProfileBuffer(INTRUDE_COMM_SYS_PTR intcomm)
   
   //侵入ステータスをセット
   Intrude_SetSendStatus(intcomm);
+
+  //リゾートデータをセット
+  RESORT_RECV_DATA_SetMyData( (RESORT_RECV_DATA *)intcomm->my_profile.resort_data, gamedata );
+
   //プロフィール送信時でも自分のパレス番号が入っていない場合はセット
   if(intcomm->intrude_status_mine.palace_area == PALACE_AREA_NO_NULL){
     Intrude_SetMinePalaceArea(intcomm, GFL_NET_SystemGetCurrentID());

@@ -15,6 +15,7 @@
 #include "field/field_comm/mission_types.h"
 #include "field/field_wfbc_data.h"
 #include "field/intrude_symbol.h"
+#include "field/resonance_resort_data.h"
 
 
 //==============================================================================
@@ -209,6 +210,7 @@ typedef struct{
   MYSTATUS mystatus;
   OCCUPY_INFO occupy;
   INTRUDE_STATUS status;
+  u8  resort_data[RESORT_RECV_DATA_SIZE];
 }INTRUDE_PROFILE;
 
 ///話しかける最初のデータ
