@@ -1805,6 +1805,9 @@ static void WbmRndSeq_Rate_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
 
     SEQ_SC_HEAP_EXIT,
 
+    SEQ_SEND_RESORT,
+    SEQ_RECV_RESORT,
+
     SEQ_START_DISCONNECT,
     SEQ_WAIT_DISCONNECT,
 
@@ -1933,10 +1936,65 @@ static void WbmRndSeq_Rate_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
     }
     else
     { 
-      *p_seq = SEQ_START_DISCONNECT;
+      *p_seq = SEQ_SEND_RESORT;
     }
     break;
 
+    //-------------------------------------
+    /// リゾートデータ交換「SWANからの追加処理」
+    //=====================================
+  case SEQ_SEND_RESORT:
+    //相手がSWANだったらリゾートデータ交換へ
+    {
+      MYSTATUS* p_enemy = (MYSTATUS*)p_param->p_enemy_data->mystatus;
+      if( MyStatus_GetRomCode(p_enemy) == VERSION_W2
+        || MyStatus_GetRomCode(p_enemy) == VERSION_B2 )
+      {
+        OS_TPrintf( "相手がB2W2!リゾートデータ送信\n" );
+        if( WIFIBATTLEMATCH_NET_SendResortData( p_wk->p_net ) )
+        {
+          *p_seq  = SEQ_RECV_RESORT;
+        }
+      }
+      else
+      {
+        OS_TPrintf( "相手が前VER!\n" );
+        *p_seq  = SEQ_START_DISCONNECT;
+      }
+    }
+    break;
+  case SEQ_RECV_RESORT:
+    if( WIFIBATTLEMATCH_NET_RecvResortData( p_wk->p_net ) )
+    {
+      *p_seq  = SEQ_START_DISCONNECT;
+    }
+
+    //エラー
+    switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, TRUE ) )
+    { 
+    case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:     //戻る
+      WIFIBATTLEMATCH_NET_SetDisConnectForce( p_wk->p_net );
+      /* fallthrough */
+    case WIFIBATTLEMATCH_NET_ERROR_REPAIR_TIMEOUT:
+#ifndef SCREPORT_TIMEOUT_IS_DISCONNECT
+      //相手に切断されていたら、録画を飛ばす
+      if( p_param->mode == WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE_ERR )
+      { 
+        WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Rate_EndRec );
+      }
+      else
+      { 
+        *p_seq = SEQ_START_SAVE_MSG;
+      }
+      break;
+#endif
+    case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
+      WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Err_ReturnLogin );
+      break;
+    }
+
+
+    break;
     //-------------------------------------
     /// 切断処理
     //=====================================

@@ -69,8 +69,8 @@
 #undef  MATCHINGKEY
 #define MATCHINGKEY 0xFF
 #elif defined(DEBUG_ONLY_FOR_toru_nagihashi)
-//#undef  MATCHINGKEY
-//#define MATCHINGKEY 0xFE
+#undef  MATCHINGKEY
+#define MATCHINGKEY 0xFE
 #endif  //defined
 #endif // DEBUGWIN_OWNER_NET_ONLY
 
