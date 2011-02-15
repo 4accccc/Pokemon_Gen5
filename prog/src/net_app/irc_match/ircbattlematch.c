@@ -45,6 +45,7 @@
 #include "poke_tool/status_rcv.h"
 #include "savedata/etc_save.h"
 
+#include "savedata/resonance_resort_sv.h"
 
 
 enum _IBMODE_SELECT {
@@ -157,7 +158,9 @@ static void _RecvPokePartyData(const int netID, const int size, const void* pDat
 static void _recvFriendCode(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void _recvMacAddr(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void _recvMultiPartyNo(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
+static void _recvResortData(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static u8* _getPokePartyBuff(int netID, void* pWork, int size);
+static u8* _getHugeBuffer(int netID, void* pWk, int size);
 static void _firstConnectMessage(IRC_BATTLE_MATCH* pWork);
 static void _msgWindowCreate(int* pMsgBuff,IRC_BATTLE_MATCH* pWork);
 static void _friendNumWindowCreate(int msgno,IRC_BATTLE_MATCH* pWork);
@@ -168,6 +171,8 @@ static void ircExitStart2(IRC_BATTLE_MATCH* pWork);
 static void _buttonWindowDelete(IRC_BATTLE_MATCH* pWork);
 static void _ReturnButtonStart(IRC_BATTLE_MATCH* pWork ,BOOL bDecide);
 static void _modeCheckStart2(IRC_BATTLE_MATCH* pWork);
+static void _modeResortStart(IRC_BATTLE_MATCH* pWork);//SWANにてレゾナンスリゾート送信用にシーケンス追加
+static void _modeResortWait(IRC_BATTLE_MATCH* pWork);//SWANにてレゾナンスリゾート送信用にシーケンス追加
 static void _YesNoStart(IRC_BATTLE_MATCH* pWork);
 static void _waitFinish(IRC_BATTLE_MATCH* pWork);
 
@@ -180,6 +185,8 @@ typedef enum {
   _NETCMD_FRIENDCODE,
   _NETCMD_MACADDR,
   _NETCMD_MULTIPARTY_NO,
+  //SWANから追加
+  _NETCMD_SEND_RESORT,
 } _BATTLEIRC_SENDCMD;
 
 
@@ -191,6 +198,7 @@ typedef enum {
 #define _TIMINGNO_MACADDR (125)
 #define _TIMINGNO_MULTISEND (126)
 #define _TIMINGNO_ENDFRIEND (127)
+#define _TIMINGNO_RESORT (128)
 
 //--------------------------------------------
 // 内部ワーク
@@ -248,6 +256,8 @@ static const NetRecvFuncTable _PacketTbl[] = {
   {_recvMacAddr,         NULL},  //  _NETCMD_MACADDR,
   {_recvMultiPartyNo,         NULL},  //  _NETCMD_MULTIPARTY_NO,
 
+  //SWANから追加
+  {_recvResortData, _getHugeBuffer},  //_NETCMD_SEND_RESORT
   
 };
 
@@ -367,7 +377,8 @@ struct _IRC_BATTLE_MATCH {
 
   int musicalNum;
   BOOL bBGBlack;
-
+  u8  recvBuffer[4][0x100];
+  u8  sendBuffer[RESORT_RECV_DATA_SIZE];
 };
 
 
@@ -766,7 +777,14 @@ static u8* _getPokePartyBuff(int netID, void* pWk, int size)
   }
   return NULL;
 }
-
+static u8* _getHugeBuffer(int netID, void* pWk, int size)
+{
+  IRC_BATTLE_MATCH* pWork = pWk;
+  if(netID >= 0 && netID < 4){
+    return pWork->recvBuffer[ netID ];
+  }
+  return NULL;
+}
 
 //--------------------------------------------------------------
 /**
@@ -863,6 +881,30 @@ static void _recvMultiPartyNo(const int netID, const int size, const void* pData
   GFL_STD_MemCopy(pData , pWork->pBattleWork->MultiNo, 4);
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief   レゾナンスリゾート用データ受信関数 _NETCMD_SEND_RESORT
+ *          SWANから追加
+ */
+//--------------------------------------------------------------
+static void _recvResortData(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
+{
+  IRC_BATTLE_MATCH *pWork = pWk;
+  GAMEDATA* pGameData = pWork->pBattleWork->gamedata;
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork(pGameData);
+  RESONANCE_RESORT_SV *p_resort_sv  = RESONANCE_RESORT_SV_GetWork( p_sv );
+  RESORT_DATA_BUFF *p_buff  = RESONANCE_RESORT_SV_GetDataBuff( p_resort_sv );
+
+  if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
+    return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
+  }
+  if(netID == GFL_NET_SystemGetCurrentID()){
+    return;	//自分のデータは無視
+  }
+
+  OS_TPrintf("リゾート受信 netID = %d\n", netID);
+  RESORT_DATA_BUFF_AddRecv( p_buff, pData );
+}
 
 
 
@@ -1043,7 +1085,9 @@ static void _modeCheckStart4(IRC_BATTLE_MATCH* pWork)
 static void _modeCheckStart33(IRC_BATTLE_MATCH* pWork)
 {
 
-  if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMINGNO_DSF, WB_NET_IRCBATTLE)){
+  //このifは_modeCheckStart32に写した
+ // if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMINGNO_DSF, WB_NET_IRCBATTLE)){
+    {
     switch(pWork->selectType){
     case EVENTIRCBTL_ENTRYMODE_FRIEND:
       {
@@ -1079,6 +1123,35 @@ static void _modeCheckStart33(IRC_BATTLE_MATCH* pWork)
   }
 }
 
+static void _modeCheckStart32(IRC_BATTLE_MATCH* pWork)
+{
+  if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMINGNO_DSF, WB_NET_IRCBATTLE)){
+    //接続者全員がSWANかどうか
+    int num = GFL_NET_GetConnectNum();
+    int i;
+    BOOL is_swan  = TRUE;
+    for( i = 0; i < num; i ++ )
+    {
+      MYSTATUS* myst  = GAMEDATA_GetMyStatusPlayer(pWork->pBattleWork->gamedata, i);
+      if( MyStatus_GetRomCode(myst) != VERSION_W2 && MyStatus_GetRomCode(myst) != VERSION_B2 )
+      {
+        is_swan   = FALSE;
+      }
+    }
+    OS_TPrintf( "全員[%d人]がswanかチェック=%d\n", num, is_swan );
+
+    if( is_swan )
+    {
+      //相手がSWANだったら、リゾート送受信シーケンスへ移行
+      //リゾート受信終わったら_modeCheckStart33へ行く
+      _CHANGE_STATE(pWork,_modeResortStart);
+    }
+    else
+    {
+      _CHANGE_STATE(pWork,_modeCheckStart33);
+    }
+  }
+}
 
 
 static void _modeCheckStart3(IRC_BATTLE_MATCH* pWork)
@@ -1091,7 +1164,7 @@ static void _modeCheckStart3(IRC_BATTLE_MATCH* pWork)
   if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), _NETCMD_MYSTATUSSEND,
                       MyStatus_GetWorkSize(), GAMEDATA_GetMyStatus(pWork->pBattleWork->gamedata))){
     GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(), _TIMINGNO_DSF, WB_NET_IRCBATTLE);
-    _CHANGE_STATE(pWork,_modeCheckStart33);
+    _CHANGE_STATE(pWork,_modeCheckStart32);
   }
 }
 
@@ -1184,8 +1257,23 @@ static void ircExitStart_TS2(IRC_BATTLE_MATCH* pWork)
   _CHANGE_STATE(pWork,_ircExitWait_TS2);
 }
 
+//SWANにてレゾナンスリゾート送信用にシーケンス追加
+static void _modeResortStart(IRC_BATTLE_MATCH* pWork)
+{
+  RESORT_RECV_DATA_SetMyData( (RESORT_RECV_DATA *)pWork->sendBuffer, pWork->pBattleWork->gamedata );
+  if( GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), GFL_NET_SENDID_ALLUSER, _NETCMD_SEND_RESORT, RESORT_RECV_DATA_SIZE, pWork->sendBuffer, TRUE, FALSE, TRUE)){
+    GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMINGNO_RESORT, WB_NET_IRCBATTLE);
+    _CHANGE_STATE(pWork, _modeResortWait);
+  }
+}
 
-
+//SWANにてレゾナンスリゾート送信用にシーケンス追加
+static void _modeResortWait(IRC_BATTLE_MATCH* pWork)
+{
+  if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMINGNO_RESORT,WB_NET_IRCBATTLE)){
+    _CHANGE_STATE(pWork,_modeCheckStart33);
+  }
+}
 
 static void _modeCheckStart2(IRC_BATTLE_MATCH* pWork)
 {
