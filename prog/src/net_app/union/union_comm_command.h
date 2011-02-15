@@ -43,6 +43,9 @@ enum UNION_CMD{
   UNION_CMD_MINIGAME_INTRUDE_READY,         ///<ミニゲーム乱入の準備完了宣言
   UNION_CMD_MINIGAME_LEAVE_CHILD,           ///<ミニゲームで子機の誰かが離脱しました
 
+  //SWANにて追加
+  UNION_CMD_FIRST_RESORT_DATA,              ///<最初の接続時送るリゾート情報
+
   UNION_CMD_MAX,
   UNION_CMD_NUM = UNION_CMD_MAX - UNION_CMD_START,
 };
@@ -78,3 +81,5 @@ extern BOOL UnionSend_MinigameMystatusReq(u8 send_bit, const MYSTATUS *myst);
 extern BOOL UnionSend_MinigameMystatus(u8 send_bit, const UNION_APP_MY_PARAM *pAppmy);
 extern BOOL UnionSend_MinigameIntrudeReady(u8 send_bit, const MYSTATUS *pMyst);
 extern BOOL UnionSend_MinigameLeaveChild(u8 send_bit, NetID leave_netid);
+
+extern BOOL UnionSend_ResortData(UNION_SYSTEM_PTR unisys);

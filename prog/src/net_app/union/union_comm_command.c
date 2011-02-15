@@ -20,7 +20,7 @@
 #include "union_local.h"
 #include "colosseum.h"
 #include "net_app/union_app.h"
-
+#include "savedata/resonance_resort_sv.h"
 
 //==============================================================================
 //  プロトタイプ宣言
@@ -47,6 +47,7 @@ static void _UnionRecv_MinigameMystatusReq(const int netID, const int size, cons
 static void _UnionRecv_MinigameMystatus(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _UnionRecv_MinigameIntrudeReady(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _UnionRecv_MinigameLeaveChild(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _UnionRecv_FirstResortData(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 
 
 //==============================================================================
@@ -75,6 +76,9 @@ const NetRecvFuncTable Union_CommPacketTbl[] = {
   {_UnionRecv_MinigameMystatus, NULL},                  //UNION_CMD_MINIGAME_MYSTATUS
   {_UnionRecv_MinigameIntrudeReady, NULL},              //UNION_CMD_MINIGAME_INTRUDE_READY
   {_UnionRecv_MinigameLeaveChild, NULL},                //UNION_CMD_MINIGAME_LEAVE_CHILD
+
+  //SWANから追加
+  {_UnionRecv_FirstResortData, _RecvHugeBuffer},        //UNION_CMD_FIRST_RESORT_DATA
 };
 SDK_COMPILER_ASSERT(NELEMS(Union_CommPacketTbl) == UNION_CMD_NUM);
 
@@ -1011,6 +1015,34 @@ static void _UnionRecv_MinigameLeaveChild(const int netID, const int size, const
   UnionAppSystem_SetLeaveChild(unisys->alloc.uniapp, *leave_netid);
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：リゾート用データを受信
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _UnionRecv_FirstResortData(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  UNION_SYSTEM_PTR unisys = pWork;
+  UNION_MY_SITUATION *situ = &unisys->my_situation;
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork(unisys->uniparent->game_data);
+  RESONANCE_RESORT_SV *p_resort_sv  = RESONANCE_RESORT_SV_GetWork( p_sv );
+  RESORT_DATA_BUFF *p_buff  = RESONANCE_RESORT_SV_GetDataBuff( p_resort_sv );
+
+	if(netID == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
+    return; //自分のデータなので無視
+  }
+
+  OS_TPrintf("COmmCOmmand リゾート受信 netID = %d\n", netID);
+  situ->mycomm.resort_receive = TRUE;
+  RESORT_DATA_BUFF_AddRecv( p_buff, pData );
+}
+
 //==================================================================
 /**
  * データ送信：ミニゲームで子機の誰かが離脱しました
@@ -1024,4 +1056,18 @@ BOOL UnionSend_MinigameLeaveChild(u8 send_bit, NetID leave_netid)
   return GFL_NET_SendDataExBit(GFL_NET_HANDLE_GetCurrentHandle(), 
     send_bit, UNION_CMD_MINIGAME_LEAVE_CHILD, sizeof(leave_netid), &leave_netid, 
     TRUE, FALSE, FALSE);
+}
+//==================================================================
+/**
+ * データ送信：リゾートデータを送信
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL UnionSend_ResortData(UNION_SYSTEM_PTR unisys)
+{
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(unisys->uniparent->gsys);
+  RESORT_RECV_DATA_SetMyData( (RESORT_RECV_DATA *)unisys->alloc.resort_data, gamedata );
+  return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), GFL_NET_SENDID_ALLUSER, 
+    UNION_CMD_FIRST_RESORT_DATA, RESORT_RECV_DATA_SIZE, 
+    unisys->alloc.resort_data, TRUE, FALSE, TRUE);
 }

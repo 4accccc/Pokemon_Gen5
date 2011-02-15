@@ -14,6 +14,7 @@
 #include "savedata/regulation.h"
 #include "poke_tool/poke_regulation.h"
 #include "field/party_select_list.h"
+#include "field/resonance_resort_data.h"
 
 
 //==============================================================================
@@ -417,6 +418,7 @@ typedef struct{
   u8 talk_exit_req_bit;       ///<会話中の切断リクエストbit
   u8 talk_exit_seq:7;         ///<会話中の切断リクエストにより実行されるシーケンスの管理番号
   u8 talk_exit_exe:1;         ///<TRUE:会話中の切断処理実行中
+  u8 resort_receive;          ///<リゾートデータ受信
 }UNION_MY_COMM;
 
 ///メニューでの選択レギュレーション項目
@@ -481,6 +483,7 @@ typedef struct{
   TRCARD_CALL_PARAM *card_param;  ///<カード画面呼び出しようのParentWork
   TR_CARD_DATA *my_card;      ///<自分のカード情報(送信バッファ)
   TR_CARD_DATA *target_card;  ///<相手のカード情報(受信バッファ)
+  u8  resort_data[RESORT_RECV_DATA_SIZE]; ///<リゾート情報
 }UNION_ALLOC;
 
 //--------------------------------------------------------------

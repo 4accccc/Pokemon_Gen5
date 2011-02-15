@@ -1121,6 +1121,10 @@ static BOOL OneselfSeq_ConnectReqUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUAT
     LOCALSEQ_RESTART_END,
     LOCALSEQ_RETRY,
     LOCALSEQ_RETRY_WAIT,
+
+    //SWANで追加されたシーケンス
+    LOCALSEQ_SEND_RESORT,
+    LOCALSEQ_RECV_RESORT,
   };
 
   if(_UnionCheckError_ForceExit(unisys) == TRUE){
@@ -1203,7 +1207,17 @@ static BOOL OneselfSeq_ConnectReqUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUAT
 
   case LOCALSEQ_END:
     if(UnionMsg_TalkStream_Check(unisys) == TRUE){
-      return TRUE;
+      //相手がB2orB2ならばリゾート用データ送信シーケンスへ
+      NAGI_Printf( "親機：相手のver=%d\n",situ->mycomm.connect_pc->beacon.pm_version);
+      if( situ->mycomm.connect_pc->beacon.pm_version == VERSION_B2
+          || situ->mycomm.connect_pc->beacon.pm_version == VERSION_W2 )
+      {
+        *seq  = LOCALSEQ_SEND_RESORT;
+      }
+      else
+      {
+        return TRUE;
+      }
     }
     break;
   case LOCALSEQ_LASTKEY_END:
@@ -1229,6 +1243,19 @@ static BOOL OneselfSeq_ConnectReqUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUAT
     if(UnionComm_Check_ShutdownRestarts(unisys) == FALSE){
       situ->mycomm.talk_first_param.occ = FALSE;
       *seq = LOCALSEQ_INIT;
+    }
+    break;
+
+  case LOCALSEQ_SEND_RESORT:
+    if( UnionSend_ResortData(unisys) )
+    {
+      *seq  = LOCALSEQ_RECV_RESORT;
+    }
+    break;
+  case LOCALSEQ_RECV_RESORT:
+    if( situ->mycomm.resort_receive )
+    {
+      return TRUE;
     }
     break;
   }
@@ -1296,6 +1323,10 @@ static BOOL OneselfSeq_ConnectAnswerUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SIT
     _LOCALSEQ_SEND_FIRST_PARAM,
     _LOCALSEQ_ANSWER_WAIT,
     _LOCALSEQ_NG_END,
+
+    //SWANで追加されたシーケンス
+    _LOCALSEQ_SEND_RESORT,
+    _LOCALSEQ_RECV_RESORT,
   };
 
   if(_UnionCheckError_ForceExit(unisys) == TRUE){
@@ -1346,7 +1377,17 @@ static BOOL OneselfSeq_ConnectAnswerUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SIT
   
   case _LOCALSEQ_SEND_FIRST_PARAM:
     if(UnionSend_FirstChildParam() == TRUE){
-      *seq = _LOCALSEQ_ANSWER_WAIT;
+      //相手がB2orB2ならばリゾート用データ送信シーケンスへ
+      NAGI_Printf( "子機：相手のver=%d\n",situ->mycomm.answer_pc->beacon.pm_version );
+      if( situ->mycomm.answer_pc->beacon.pm_version == VERSION_B2
+          || situ->mycomm.answer_pc->beacon.pm_version == VERSION_W2 )
+      {
+        *seq  = _LOCALSEQ_SEND_RESORT;
+      }
+      else
+      {
+        *seq = _LOCALSEQ_ANSWER_WAIT;
+      }
     }
     break;
   case _LOCALSEQ_ANSWER_WAIT:
@@ -1356,6 +1397,7 @@ static BOOL OneselfSeq_ConnectAnswerUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SIT
       UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_ANSWER_PC, NULL);
       UnionOneself_ReqStatus(unisys, UNION_STATUS_TALK_CHILD);
       return TRUE;  //UnionMsg_TalkStream_Checkは次のUNION_STATUS_TALK_CHILDで行う
+      break;
     case UNION_FIRST_PARENT_ANSWER_NG:
       UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_ANSWER_PC, NULL);
       UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_connect_00_03);
@@ -1371,6 +1413,18 @@ static BOOL OneselfSeq_ConnectAnswerUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SIT
         UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
         return TRUE;
       }
+    }
+    break;
+  case _LOCALSEQ_SEND_RESORT:
+    if( UnionSend_ResortData(unisys) )
+    {
+      *seq  = _LOCALSEQ_RECV_RESORT;
+    }
+    break;
+  case _LOCALSEQ_RECV_RESORT:
+    if( situ->mycomm.resort_receive )
+    {
+      *seq  = _LOCALSEQ_ANSWER_WAIT;
     }
     break;
   }
