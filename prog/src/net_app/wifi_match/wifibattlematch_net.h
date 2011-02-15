@@ -287,6 +287,10 @@ extern BOOL WIFIBATTLEMATCH_NET_WaitDisConnect( WIFIBATTLEMATCH_NET_WORK *p_wk )
 extern BOOL WIFIBATTLEMATCH_NET_SendMatchCancel( WIFIBATTLEMATCH_NET_WORK *p_wk );
 extern BOOL WIFIBATTLEMATCH_NET_RecvMatchCancel( WIFIBATTLEMATCH_NET_WORK *p_wk );
 
+//リゾート用データを送受信
+extern BOOL WIFIBATTLEMATCH_NET_SendResortData( WIFIBATTLEMATCH_NET_WORK *p_wk );
+extern BOOL WIFIBATTLEMATCH_NET_RecvResortData( WIFIBATTLEMATCH_NET_WORK *p_wk );
+
 //-------------------------------------
 ///	ATLAS統計・競争関係（SC）
 //=====================================

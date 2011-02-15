@@ -31,6 +31,7 @@
 //  セーブデータ
 #include "savedata/system_data.h"
 #include "savedata/wifilist.h"
+#include "savedata/resonance_resort_sv.h" //SWANから追加
 
 //  アトラス情報
 #include "atlas_syachi2ds_v1.h"
@@ -68,8 +69,8 @@
 #undef  MATCHINGKEY
 #define MATCHINGKEY 0xFF
 #elif defined(DEBUG_ONLY_FOR_toru_nagihashi)
-#undef  MATCHINGKEY
-#define MATCHINGKEY 0xFE
+//#undef  MATCHINGKEY
+//#define MATCHINGKEY 0xFE
 #endif  //defined
 #endif // DEBUGWIN_OWNER_NET_ONLY
 
@@ -271,6 +272,8 @@ typedef enum
   WIFIBATTLEMATCH_NET_RECVFLAG_DIRTYCNT,
   WIFIBATTLEMATCH_NET_RECVFLAG_FLAG,
 
+  WIFIBATTLEMATCH_NET_RECVFLAG_RESORT,  //SWANから追加
+
   WIFIBATTLEMATCH_NET_RECVFLAG_MAX
 } WIFIBATTLEMATCH_NET_RECVFLAG;
 
@@ -433,6 +436,9 @@ struct _WIFIBATTLEMATCH_NET_WORK
   //以下デバッグ用データ
   BOOL is_debug;
   WIFIBATTLEMATCH_SC_DEBUG_DATA * p_debug_data;
+
+  //以下SWANから追加のデータ
+  u8  resort_buffer[RESORT_RECV_DATA_SIZE];
 };
 
 //=============================================================================
@@ -469,6 +475,8 @@ static void WifiBattleMatch_RecvMatchCancel(const int netID, const int size, con
 static void WifiBattleMatch_RecvPokeParty(const int netID, const int size, const void* cp_data_adrs, void* p_wk_adrs, GFL_NETHANDLE* p_net_handle);
 static void WifiBattleMatch_RecvDirtyCnt(const int netID, const int size, const void* cp_data_adrs, void* p_wk_adrs, GFL_NETHANDLE* p_net_handle);
 static void WifiBattleMatch_RecvFlag(const int netID, const int size, const void* cp_data_adrs, void* p_wk_adrs, GFL_NETHANDLE* p_net_handle);
+static void WifiBattleMatch_RecvResort(const int netID, const int size, const void* cp_data_adrs, void* p_wk_adrs, GFL_NETHANDLE* p_net_handle);
+
 
 //-------------------------------------
 ///	SC関係
@@ -585,6 +593,8 @@ enum
   WIFIBATTLEMATCH_NETCMD_SEND_POKEPARTY,
   WIFIBATTLEMATCH_NETCMD_SEND_DIRTYCNT,
   WIFIBATTLEMATCH_NETCMD_SEND_FLAG,
+  WIFIBATTLEMATCH_NETCMD_SEND_RESORT, //SWANから追加
+
   WIFIBATTLEMATCH_NETCMD_MAX,
 };
 static const NetRecvFuncTable sc_net_recv_tbl[] = 
@@ -595,6 +605,8 @@ static const NetRecvFuncTable sc_net_recv_tbl[] =
   {WifiBattleMatch_RecvPokeParty, WifiBattleMatch_RecvBuffAddr },
   {WifiBattleMatch_RecvDirtyCnt, WifiBattleMatch_RecvBuffAddr },
   {WifiBattleMatch_RecvFlag, NULL },
+
+  {WifiBattleMatch_RecvResort, WifiBattleMatch_RecvBuffAddr },  //SWANから追加
 };
 
 //-------------------------------------
@@ -1445,6 +1457,46 @@ BOOL WIFIBATTLEMATCH_NET_RecvMatchCancel( WIFIBATTLEMATCH_NET_WORK *p_wk )
   if( ret )
   {
     p_wk->is_recv[WIFIBATTLEMATCH_NET_RECVFLAG_CANCELREQUEST] = FALSE;
+  }
+
+  return ret;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レゾナンスリゾート用データを送信「SWANから追加」
+ *
+ *	@param	WIFIBATTLEMATCH_NET_WORK *p_wk  ワーク
+ *
+ *	@return TRUEで送信  FALSEでまだ
+ */
+//-----------------------------------------------------------------------------
+BOOL WIFIBATTLEMATCH_NET_SendResortData( WIFIBATTLEMATCH_NET_WORK *p_wk )
+{
+  NetID netID = GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle() );
+  netID = netID == 0? 1: 0;
+
+  RESORT_RECV_DATA_SetMyData( (RESORT_RECV_DATA *)p_wk->resort_buffer, p_wk->p_gamedata );
+
+  return GFL_NET_SendDataEx( GFL_NET_HANDLE_GetCurrentHandle(), netID, WIFIBATTLEMATCH_NETCMD_SEND_RESORT, RESORT_RECV_DATA_SIZE, p_wk->resort_buffer, TRUE, FALSE, TRUE );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レゾナンスリゾート用データを受信チェック「SWANから追加」
+ *
+ *	@param	WIFIBATTLEMATCH_NET_WORK *p_wk ワーク
+ *
+ *	@return TRUEで受信  FALSEでまだ
+ */
+//-----------------------------------------------------------------------------
+BOOL WIFIBATTLEMATCH_NET_RecvResortData( WIFIBATTLEMATCH_NET_WORK *p_wk )
+{
+  BOOL  ret;
+  ret = p_wk->is_recv[WIFIBATTLEMATCH_NET_RECVFLAG_RESORT];
+
+  if( ret )
+  {
+    p_wk->is_recv[WIFIBATTLEMATCH_NET_RECVFLAG_RESORT] = FALSE;
   }
 
   return ret;
@@ -3433,6 +3485,38 @@ static void WifiBattleMatch_RecvFlag(const int netID, const int size, const void
 
   p_wk->recv_flag = data;
   p_wk->is_recv[WIFIBATTLEMATCH_NET_RECVFLAG_FLAG] = TRUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フラグ受信コールバック
+ *
+ *	@param	int netID           ネットID
+ *	@param	int size            サイズ
+ *	@param	void* cp_data_adrs  データ
+ *	@param	p_wk_adrs           自分で与えたアドレス
+ *	@param	p_net_handle        ネットハンドル
+ */
+//-----------------------------------------------------------------------------
+static void WifiBattleMatch_RecvResort(const int netID, const int size, const void* cp_data_adrs, void* p_wk_adrs, GFL_NETHANDLE* p_net_handle)
+{
+  WIFIBATTLEMATCH_NET_WORK *p_wk  = p_wk_adrs;
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork(p_wk->p_gamedata);
+  RESONANCE_RESORT_SV *p_resort_sv  = RESONANCE_RESORT_SV_GetWork( p_sv );
+  RESORT_DATA_BUFF *p_buff  = RESONANCE_RESORT_SV_GetDataBuff( p_resort_sv );
+
+  if( p_net_handle != GFL_NET_HANDLE_GetCurrentHandle() )
+  {
+    return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
+  }
+  if( netID == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle()) )
+  {
+    return;//自分のは今は受け取らない
+  }
+
+  OS_Printf( "リゾート受信コールバック！netID=%d size=%d \n", netID, size );
+
+  RESORT_DATA_BUFF_AddRecv( p_buff, cp_data_adrs );
+  p_wk->is_recv[WIFIBATTLEMATCH_NET_RECVFLAG_RESORT] = TRUE;
 }
 //=============================================================================
 /**
