@@ -1,7 +1,9 @@
 EFFSEQ
-$0002
+$0004
 C:\home\swan\resource\particle\wazaeffect\w_200.spa
 C:\home\swan\resource\wazaeffect\graphic\bg_200_fire.NSCR
+C:\home\swan\resource\wazaeffect\graphic\bg_200_gekirin_fire.NSCR
+C:\home\swan\resource\wazaeffect\bg_palanm\bg_200_gekirin_fire_p.dat
 #001
 %00
 カメラ移動	追従	ZOOM_OUT	CM	0	0
@@ -21,8 +23,10 @@ SE再生	SEQ_SE_DUMMY5	SE2	防御側	110:0:0	0:0:0
 SE動的変化	SE2	追従	ボリューム	120	0	70	40:0:0
 SE動的変化	SE2	追従	ピッチ	-1000	2000	0	100:0:0
 制御モード変更	逐次
-BGのロード	bg_200_fire
-BGのスクロール	追従	-1200	0	120	0	0
+BGのロード	bg_200_gekirin_fire
+BGのパレットアニメ	bg_200_gekirin_fire_p	12
+BGのラスタースクロール	横	4	16	120	フェードなし	0
+BGのスクロール	追従	320	0	120	0	0
 BGの表示/非表示	エフェクト	表示
 BGの表示/非表示	お盆	非表示
 BGの表示/非表示	フィールド	非表示
