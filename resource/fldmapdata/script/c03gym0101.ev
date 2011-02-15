@@ -129,13 +129,8 @@ EVENT_START ev_prog_c03gym0101_gate_out_1c
   _OBJ_ANIME_WAIT()
   
   IF FLAG_OFF(FE_C03GYM0101_COCCON_01) THEN
-    _SE_PLAY( SEQ_SE_GYM_M04 ) //–š‚ª”j‚ê‚é‰¹
     _GYM_INSECT_COCCON_OPEN( COCCON_ID_1C )
-    _SE_WAIT()
-    _SE_PLAY( SEQ_SE_GYM_M04 ) //–š‚ª”j‚ê‚é‰¹
-    _SE_WAIT()
-    _SE_PLAY( SEQ_SE_GYM_M05 ) //–š‚ª”j‚ê‚é‰¹
-    _TIME_WAIT(COCCON_OPEN_ANM_WAIT)
+    _CALL sub_coccon_open_se
 	  _FLAG_SET( FE_C03GYM0101_COCCON_01 )
   ENDIF
 
@@ -153,6 +148,19 @@ EVENT_START ev_prog_c03gym0101_gate_out_3d
 }
 EVENT_END
 
+sub_coccon_open_se:
+{
+  _SE_PLAY( SEQ_SE_GYM_M04 ) //–š‚ª”j‚ê‚é‰¹
+  _TIME_WAIT(5)
+  _SE_PLAY( SEQ_SE_GYM_M04 ) //–š‚ª”j‚ê‚é‰¹
+  _TIME_WAIT(5)
+  _SE_PLAY( SEQ_SE_GYM_M04 ) //–š‚ª”j‚ê‚é‰¹
+  _TIME_WAIT(7)
+  _SE_PLAY( SEQ_SE_GYM_M05 ) //–š‚Éƒqƒr
+  _TIME_WAIT(28)
+  _SE_PLAY( SEQ_SE_GYM_M06 ) //–š‚ª”j‚ê‚é‰¹
+}
+_RET
 
 //--------------------------------------------------------------
 //ƒQ[ƒgƒCƒ“ƒAƒjƒ
@@ -234,16 +242,11 @@ EVENT_START ev_pos_c03gym0101_gate_3b
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gate_3b_goright )
   _OBJ_ANIME_WAIT()
   
-  _SE_PLAY( SEQ_SE_GYM_M04 ) //–š‚ª—h‚ê‚é‰¹
   _GYM_INSECT_COCCON_OPEN( COCCON_ID_3B )
   //ŽålŒöU‚èŒü‚«
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gate_3b_gyoe )
+  _CALL sub_coccon_open_se
   _OBJ_ANIME_WAIT()
-  _SE_WAIT()
-  _SE_PLAY( SEQ_SE_GYM_M04 ) //–š‚ª—h‚ê‚é‰¹
-  _SE_WAIT()
-  _SE_PLAY( SEQ_SE_GYM_M05 ) //–š‚ª”j‚ê‚é‰¹
-  _TIME_WAIT(COCCON_OPEN_ANM_WAIT)
   _FLAG_SET( FE_C03GYM0101_COCCON_02 )
 
   //Ž‹ü‹È‚ðÄ¶
