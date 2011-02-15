@@ -18,6 +18,7 @@
 #include "arc_def.h"
 #include "system/main.h" //for HEAPID_FIELDMAP
 #include "font/font.naix"
+#include "sound/pm_sndsys.h"
 
 //フィールド
 #include "fieldmap.h"
@@ -34,19 +35,13 @@
 //デバッグ
 #include "event_debug_menu.h"
 #include "field_debug.h" 
-#include "event_gts.h"
-#include "bsubway_scr.h"
-#include "event_wifi_bsubway.h"
-#include "event_bsubway.h"
-#include "scrcmd_bsubway.h"
-#include "net_app\wifi_country.h"
-#include "savedata\medalbox.h"
-#include "msg/debug/msg_debug_medal.h"
+
+#include "msg/debug/msg_debug_wbt.h"
 
 //外部公開
 #include "event_debug_menu_ov_wbt.h"
 
-#include "wbt.h"
+#include "wbt_dl.h"
 
 //=============================================================================
 /**
@@ -60,17 +55,155 @@
 */
 //=============================================================================
 
+static GMEVENT_RESULT debugMenuWBTEvent( GMEVENT *event, int *seq, void *wk );
+static void debugCommand_printf( DEBUG_MENU_EVENT_WORK *p_wk );
+//=============================================================================
+//=============================================================================
+typedef struct {
+  int seq_no;
+  HEAPID heapID;
+  GAMESYS_WORK *gmSys;
+  GMEVENT *gmEvent;
+  FIELDMAP_WORK *fieldWork;
+  FLDMENUFUNC *menuFunc;
+  //ZUKAN_SAVEDATA * sv;
+}DEBUG_WBT_WORK;
+
 //=============================================================================
 /**
  *					外部公開
 */
 //=============================================================================
+
+///リスト メニューヘッダー
+static const FLDMENUFUNC_HEADER WBTMenuHeader =
+{
+  1,    //リスト項目数
+  9,    //表示最大項目数
+  0,    //ラベル表示Ｘ座標
+  13,   //項目表示Ｘ座標
+  0,    //カーソル表示Ｘ座標
+  0,    //表示Ｙ座標
+  1,    //表示文字色
+  15,   //表示背景色
+  2,    //表示文字影色
+  0,    //文字間隔Ｘ
+  1,    //文字間隔Ｙ
+  FLDMENUFUNC_SKIP_LRKEY, //ページスキップタイプ
+  12,   //文字サイズX(ドット
+  12,   //文字サイズY(ドット
+  0,    //表示座標X キャラ単位
+  0,    //表示座標Y キャラ単位
+  0,    //表示サイズX キャラ単位
+  0,    //表示サイズY キャラ単位
+};
+
+///メニューリスト
+static const DEBUG_MENU_LIST WBTMenuList[] =
+{
+  { DEBUG_STR_WBT_01, (void*)DEBUG_STR_WBT_01, GFL_OVERLAY_BLANK_ID },  // データ構造チェック
+  { DEBUG_STR_WBT_02, (void*)DEBUG_STR_WBT_02, GFL_OVERLAY_BLANK_ID },  // デバッグ出力
+  { DEBUG_STR_WBT_03, (void*)DEBUG_STR_WBT_03, GFL_OVERLAY_BLANK_ID },   // バックアップ読み込み
+};
+
+static const DEBUG_MENU_INITIALIZER DebugMenuWBTImitializer = {
+  NARC_debug_message_debug_wbt_dat,
+  NELEMS(WBTMenuList),
+  WBTMenuList,
+  &WBTMenuHeader,
+  1, 1, 24, 16,
+  NULL,
+  NULL
+};
+
+
+//--------------------------------------------------------------
+/**
+ * デバッグメニュー呼び出し　WBT
+ * @param wk  DEBUG_MENU_EVENT_WORK*
+ * @retval  BOOL  TRUE=イベント継続
+ */
+//--------------------------------------------------------------
+BOOL debugMenuCallProc_WBT( DEBUG_MENU_EVENT_WORK *wk )
+{
+  GAMESYS_WORK *gsys = wk->gmSys;
+  GMEVENT *event = wk->gmEvent;
+  HEAPID heapID = wk->heapID;
+  FIELDMAP_WORK *fieldWork = wk->fieldWork;
+  DEBUG_WBT_WORK *work;
+
+  GMEVENT_Change( event, debugMenuWBTEvent, sizeof(DEBUG_WBT_WORK) );
+
+  work = GMEVENT_GetEventWork( event );
+  GFL_STD_MemClear( work, sizeof(DEBUG_WBT_WORK) );
+
+  work->gmSys = gsys;
+  work->gmEvent = event;
+  work->heapID = heapID;
+  work->fieldWork = fieldWork;
+  //work->sv = GAMEDATA_GetWBTSave( GAMESYSTEM_GetGameData(wk->gmSys) );
+
+  return TRUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント：WBT
+ * @param event GMEVENT
+ * @param seq   シーケンス
+ * @param wk    event work
+ * @retval  GMEVENT_RESULT
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT debugMenuWBTEvent( GMEVENT *event, int *seq, void *wk )
+{
+  DEBUG_WBT_WORK *work = wk;
+
+  switch( *seq ){
+  case 0:
+    work->menuFunc = DEBUGFLDMENU_Init( work->fieldWork, work->heapID, &DebugMenuWBTImitializer );
+    (*seq)++;
+    break;
+
+  case 1:
+
+    switch( FLDMENUFUNC_ProcMenu(work->menuFunc) ){
+    case FLDMENUFUNC_NULL:    // 操作無し
+      break;
+
+    case FLDMENUFUNC_CANCEL:  // キャンセル
+      (*seq)++;
+      break;
+
+    case DEBUG_STR_WBT_01:
+      (*seq)++;
+      break;
+
+    case DEBUG_STR_WBT_02:
+      PMSND_PlaySE( SEQ_SE_KON );
+      debugCommand_printf( NULL );
+      return GMEVENT_RES_CONTINUE;
+
+    case DEBUG_STR_WBT_03:
+      (*seq)++;
+      break;
+    }
+    break;
+
+  case 2:
+    FLDMENUFUNC_DeleteMenu( work->menuFunc );
+    return GMEVENT_RES_FINISH;
+  }
+
+  return GMEVENT_RES_CONTINUE;
+}
+
 //--------------------------------------------------------------
 /**
  * WBTデバッグ出力
  */
 //--------------------------------------------------------------
-BOOL debugMenuCallProc_WBT( DEBUG_MENU_EVENT_WORK *p_wk )
+static void debugCommand_printf( DEBUG_MENU_EVENT_WORK *p_wk )
 {
   OS_Printf("size of WBT DL Regulation = \n");
   OS_Printf("%5d(0x%4x)\n", sizeof(WBT_DL_RULE), sizeof(WBT_DL_RULE) );
@@ -80,7 +213,6 @@ BOOL debugMenuCallProc_WBT( DEBUG_MENU_EVENT_WORK *p_wk )
   OS_Printf("%5d(0x%4x)\n", sizeof(WBT_DL_CHARACTER), sizeof(WBT_DL_CHARACTER) );
   OS_Printf("size of WBT DL DATA = \n");
   OS_Printf("%5d(0x%4x)\n", sizeof(WBT_DL_DATA), sizeof(WBT_DL_DATA) );
-  return FALSE;
 }
 
 #if 0
