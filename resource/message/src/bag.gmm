@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2011-02-09T22:24:37"/>
+	<create user="shimoyamada" host="W00184" date="2011-02-15T18:14:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1144" top="358" right="1849" bottom="986" maximized="no" rayout="Vertical2">
+	<dialog left="1210" top="419" right="1915" bottom="1047" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="551" top="230" right="1024" bottom="628" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -1517,11 +1517,34 @@ common_scr.gmmの変更も忘れないでください
 
 	<row id="mes_bag_123" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ffff00,,#ff8080,#ffff00,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>swan追加
-絞込み完了メッセージ</comment>
+絞込み完了メッセージ
+0：ポケット名</comment>
 		<language name="JPN">[1:12:バッグのポケット名:0]に　いれるものが
 [2:02:３桁:1]しゅるい　みつかりました！</language>
 		<language name="JPN_KANJI">[1:12:バッグのポケット名:0]に　入れるものが
 [2:02:３桁:1]しゅるい　みつかりました！</language>
+	</row>
+
+	<row id="mes_bag_124" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ffff00,,#ff8080,#ffff00,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>swan追加
+移動メッセージ
+0：ポケット名
+1：道具名</comment>
+		<language name="JPN">[1:09:どうぐ名:1]を
+[1:12:バッグのポケット名:0]に　いどう　しました！</language>
+		<language name="JPN_KANJI">[1:09:どうぐ名:1]を
+[1:12:バッグのポケット名:0]に　移動しました！</language>
+	</row>
+
+	<row id="mes_bag_125" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ffff00,,#ff8080,#ffff00,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>swan追加
+保管から戻した
+0：ポケット名
+1：道具名</comment>
+		<language name="JPN">[1:09:どうぐ名:1]を
+[1:12:バッグのポケット名:0]に　もどしました！</language>
+		<language name="JPN_KANJI">[1:09:どうぐ名:1]を
+[1:12:バッグのポケット名:0]に　戻しました！</language>
 	</row>
 
 	<flowchart-group-list>
