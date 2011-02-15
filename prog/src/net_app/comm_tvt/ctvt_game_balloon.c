@@ -27,10 +27,25 @@
 #define SCALE_MAX   ( 0x310 )     // •—‘D‚ÌŠg‘å—¦MAX
 
 // ƒQ[ƒ€2
+#define SCALE_SELF        ( 0x900 )     // Ž©•ª‚Ì•—‘D‚ÌŠg‘å’l
+#define SCALE_OTHER       ( 0x500 )     // ‘ŠŽè‚Ì•—‘D‚ÌŠg‘å’l
 #define SCALE_ADD_SELF    ( 0x75 )      // 1ƒtƒŒ[ƒ€‚ÌŠg‘å—¦‰ÁŽZ’l
 #define SCALE_MAX_SELF    ( 0x750 )     // •—‘D‚ÌŠg‘å—¦MAX
 #define SCALE_ADD_OTHER   ( 0x27 )      // 1ƒtƒŒ[ƒ€‚ÌŠg‘å—¦‰ÁŽZ’l
 #define SCALE_MAX_OTHER   ( 0x180 )     // •—‘D‚ÌŠg‘å—¦MAX
+
+// ’Êí—h‚ê
+#define ANGLE_ADD         ( 0x120 )     // •—‘D‚ª—h‚ê‚éŽž‚ÌŠp“x‰ÁŽZ’l
+#define ANGLE_MAX         ( 0x400 )     // •—‘D‚ª—h‚ê‚éŽž‚ÌŠp“xMAX
+// Šg‘åŽž‚Ì—h‚ê
+#define SCALE_ANGLE_ADD   ( 0x100 )     // •—‘D‚ª—h‚ê‚éŽž‚ÌŠp“x‰ÁŽZ’l
+#define SCALE_ANGLE_MAX   ( 0xc00 )     // •—‘D‚ª—h‚ê‚éŽž‚ÌŠp“xMAX
+// ‚ä‚ê‚éó‘Ô ã‚©‚ç‡
+enum{
+  ANG_STATE_RIGHT,    // ‰E‚É—h‚ê‚é
+  ANG_STATE_LEFT,     // ¶‚É—h‚ê‚é
+  ANG_STATE_RIGHT2,   // ‰E‚É—h‚ê‚é(’†‰›‚É–ß‚éˆ×)
+};
 
 // Œ‹‰Ê”­•\
 #define SCALE_S_MAX   ( 0x260 )   // •—‘D‚ÌŠg‘å—¦MAX Œ‹‰Ê”­•\”Å
@@ -290,18 +305,22 @@ BALLOON2_WORK* CTVT_BALLOON2_Create( CTVT_GAME_WORK *gameWork, u16 unit_idx, BOO
   p_wk->scale   = 0;
   p_wk->scale_flg = FALSE;
   p_wk->type    = BALLOON_NORMAL;
+  p_wk->stage   = 0;
   p_wk->cnt     = 0;
   p_wk->interval= 0;
   p_wk->anm_frm = 0;
   p_wk->anm_flg = FALSE;
   p_wk->alpha   = 31;
   p_wk->alpha_flg = FALSE;
+  p_wk->ang     = 0;
+  p_wk->ang_state = ANG_STATE_RIGHT;
+  p_wk->ang_flg = FALSE;
 
   // OBJî•ñ‰Šú‰»
   // Ž©•ª‚Í^‚ñ’†‚É’u‚­
   if( unit_idx == selfId )
   {
-    VEC_Set( &p_wk->status.scale, 0x900, 0x900, 0x900 );
+    VEC_Set( &p_wk->status.scale, SCALE_SELF, SCALE_SELF, SCALE_SELF );
     MTX_Identity33( &p_wk->status.rotate );
     VEC_Set( &p_wk->status.trans, 0, FX32_CONST(-60), 0 );
 
@@ -330,7 +349,7 @@ BALLOON2_WORK* CTVT_BALLOON2_Create( CTVT_GAME_WORK *gameWork, u16 unit_idx, BOO
       idx++;
     }
     
-    VEC_Set( &p_wk->status.scale, 0x500, 0x500, 0x500 );
+    VEC_Set( &p_wk->status.scale, SCALE_OTHER, SCALE_OTHER, SCALE_OTHER );
     MTX_Identity33( &p_wk->status.rotate );
     VEC_COPY( &p_wk->status.trans, &c_pos[ idx ] );
 
@@ -392,8 +411,47 @@ void CTVT_BALLOON2_Update( BALLOON2_WORK *p_wk )
         VEC_Add( &p_wk->status.scale, &scale_tmp, &p_wk->status.scale );
       }
 
+      // •—‘D‚ª‰¡‚É—h‚ê‚é(ZŽ²‰ñ“])
+      if( p_wk->ang_flg == TRUE )
+      {
+        fx16    sin;
+        fx16    cos;
+
+        switch( p_wk->ang_state ){
+        case ANG_STATE_RIGHT:    // ‰E‚É—h‚ê‚é
+          p_wk->ang += SCALE_ANGLE_ADD;
+          if( p_wk->ang >= SCALE_ANGLE_MAX )
+          {
+            p_wk->ang_state = ANG_STATE_LEFT;
+          }
+          break;
+        case ANG_STATE_LEFT:     // ¶‚É—h‚ê‚é
+          p_wk->ang -= SCALE_ANGLE_ADD;
+          if( p_wk->ang <= (-SCALE_ANGLE_MAX) )
+          {
+            p_wk->ang_state = ANG_STATE_RIGHT2;
+          }
+          break;
+        case ANG_STATE_RIGHT2:   // ‰E‚É—h‚ê‚é(’†‰›‚É–ß‚éˆ×)
+          p_wk->ang += SCALE_ANGLE_ADD;
+          if( p_wk->ang >= 0 )
+          {
+            p_wk->ang = 0;
+            p_wk->ang_state = ANG_STATE_RIGHT;
+            p_wk->ang_flg = FALSE;
+          }
+          break;
+        }
+
+        sin = FX_SinIdx( (u16)p_wk->ang );
+        cos = FX_CosIdx( (u16)p_wk->ang );
+        MTX_Identity33( &p_wk->status.rotate );
+        MTX_RotZ33( &p_wk->status.rotate, sin, cos );
+      }
+
       // Šg‘å‚µ‚«‚Á‚½
-      if( p_wk->scale == p_wk->scale_max )
+      if( p_wk->scale == p_wk->scale_max 
+          && p_wk->ang_flg == FALSE )
       {
         p_wk->scale = 0;
         p_wk->scale_flg = FALSE;
@@ -407,20 +465,21 @@ void CTVT_BALLOON2_Update( BALLOON2_WORK *p_wk )
           p_wk->type = BALLOON_HIT;
           break;
         case BALLOON_HIT:       // ‹Á‚«Šç
-          p_wk->type = BALLOON_NORMAL;
+          //‚±‚±‚Å•ÏX‚Í‚µ‚È‚¢
+          //p_wk->type = BALLOON_NORMAL;
           break;
         }
       }
     }
 
     // ™X‚É“§–¾‚É‚·‚é
-    if( p_wk->alpha_flg == TRUE )
+    else if( p_wk->alpha_flg == TRUE )
     {
       p_wk->alpha -= 2;
       if( p_wk->alpha <= 0 )
       {
         // •—‘D‚ªŠ„‚ê‚½
-        p_wk->interval = 60;
+        p_wk->interval = 60; // 1•b
 
         // ‰Šú‰»
         p_wk->alpha_flg = FALSE;
@@ -428,24 +487,91 @@ void CTVT_BALLOON2_Update( BALLOON2_WORK *p_wk )
         p_wk->cnt++;
         p_wk->cnt %= CTVT_MEMBER_NUM;
 
+        // ƒeƒNƒXƒ`ƒƒ‚ð‰Šú‚É–ß‚·
+        p_wk->type = BALLOON_NORMAL;
+
         // Šg‘å—¦‰Šú‰»
-        if( p_wk->is_self == TRUE )
-        {
-          VEC_Set( &p_wk->status.scale, 0x900, 0x900, 0x900 );
-        }
-        else
-        {
-          VEC_Set( &p_wk->status.scale, 0x500, 0x500, 0x500 );
-        }
+        VEC_Set( &p_wk->status.scale, 0, 0, 0 );
 
         CTVT_GAME_BalloonTexTrans( p_wk->p_game_wk, p_wk->unit_idx, p_wk->cnt );
       }
     }
+
+    // ƒ^ƒbƒ`‚µ‚½Žž‚É’èŠú“I‚É—h‚ç‚·—h‚ê(Šg‘å‚ÌŽž‚Æ“¯‚¶ˆ—)
+    else if( p_wk->ang_flg == TRUE )
+    {
+      fx16    sin;
+      fx16    cos;
+
+      switch( p_wk->ang_state ){
+      case ANG_STATE_RIGHT:    // ‰E‚É—h‚ê‚é
+        p_wk->ang += ANGLE_ADD;
+        if( p_wk->ang >= ANGLE_MAX )
+        {
+          p_wk->ang_state = ANG_STATE_LEFT;
+        }
+        break;
+      case ANG_STATE_LEFT:     // ¶‚É—h‚ê‚é
+        p_wk->ang -= ANGLE_ADD;
+        if( p_wk->ang <= (-ANGLE_MAX) )
+        {
+          p_wk->ang_state = ANG_STATE_RIGHT2;
+        }
+        break;
+      case ANG_STATE_RIGHT2:   // ‰E‚É—h‚ê‚é(’†‰›‚É–ß‚éˆ×)
+        p_wk->ang += ANGLE_ADD;
+        if( p_wk->ang >= 0 )
+        {
+          p_wk->ang = 0;
+          p_wk->ang_state = ANG_STATE_RIGHT;
+          p_wk->ang_flg = FALSE;
+        }
+        break;
+      }
+
+      sin = FX_SinIdx( (u16)p_wk->ang );
+      cos = FX_CosIdx( (u16)p_wk->ang );
+      MTX_Identity33( &p_wk->status.rotate );
+      MTX_RotZ33( &p_wk->status.rotate, sin, cos );
+    }
   }
 
+
+  // •—‘D•â[
   if( p_wk->interval > 0 )
   {
+    // Šg‘å‚µ‚È‚ª‚çoŒ»
+    VecFx32 scale_tmp;
+    fx32    add_tmp;
+
+    if( p_wk->is_self == TRUE )
+    {
+      add_tmp = SCALE_SELF / 60;
+    }
+    else
+    {
+      add_tmp = SCALE_OTHER / 60;
+    }
+    VEC_Set( &scale_tmp, add_tmp, add_tmp, add_tmp );
+    VEC_Add( &p_wk->status.scale, &scale_tmp, &p_wk->status.scale );
+
+
+
     p_wk->interval--;
+
+    // ƒCƒ“ƒ^[ƒoƒ‹‚ª‚È‚­‚È‚Á‚½‚çŠg‘å—¦‚ð³‹K‚É–ß‚·
+    if( p_wk->interval == 0 )
+    {
+      // Šg‘å—¦‰Šú‰»
+      if( p_wk->is_self == TRUE )
+      {
+        VEC_Set( &p_wk->status.scale, SCALE_SELF, SCALE_SELF, SCALE_SELF );
+      }
+      else
+      {
+        VEC_Set( &p_wk->status.scale, SCALE_OTHER, SCALE_OTHER, SCALE_OTHER );
+      }
+    }
   }
 }
 
@@ -462,18 +588,13 @@ void CTVT_BALLOON2_Draw( BALLOON2_WORK *p_wk )
   NNSG3dResMdl*   mdl;
   u16   head_obj_idx;
 
-  // oŒ»‘Ò‚¿‚È‚ç•\Ž¦‚µ‚È‚¢
-  if( p_wk->interval > 0 )
-  {
-    return;
-  }
 
   // •`‰æ
   // ƒGƒtƒFƒNƒg‚æ‚è•—‘D‚ªŽè‘O
   if( p_wk->visible == TRUE )
   {
     // ƒGƒtƒFƒNƒgƒAƒjƒ[ƒVƒ‡ƒ“•`‰æ&XV
-    if( p_wk->anm_flg == TRUE )
+    if( p_wk->anm_flg == TRUE && p_wk->scale_flg == FALSE )
     {
       int  tmp_frm;
       GFL_G3D_OBJSTATUS tmp_status;
@@ -524,26 +645,81 @@ void CTVT_BALLOON2_Draw( BALLOON2_WORK *p_wk )
  *	@brief  •—‘D‘å‚«‚­‚È‚éor”j—ô
  *
  *	@param	BALLOON2_WORK *p_wk ƒ[ƒN
+ *
+ *	@return TRUE‚Å”j—ô
  */
 //-----------------------------------------------------------------------------
-void CTVT_BALLOON2_Burst( BALLOON2_WORK *p_wk )
+BOOL CTVT_BALLOON2_Burst( BALLOON2_WORK *p_wk )
 {
+  BOOL  ret;
 
   // •—‘D‚Ìó‘Ô‚É‚æ‚Á‚Äˆ—•ªŠò
   // ƒtƒ‰ƒOON
-  switch( p_wk->type ){
-  case BALLOON_NORMAL:    // •’Ê
+  switch( p_wk->stage ){
+  case 0:    // ‰Šú’iŠK
+  case 1:    // ‘æ‚Q’iŠK
+  case 2:    // ‘æ‚R’iŠK
     p_wk->scale_flg = TRUE;
+    p_wk->ang_flg = TRUE;
+
+    // ‘å‚«‚³‚Ì’iŠK‚ð‚P’iŠKã‚°‚é
+    p_wk->stage++;
+    ret = FALSE;    // ‘å‚«‚­‚È‚é
     break;
   
-  case BALLOON_BONUS:     // ÎŠç
-    p_wk->scale_flg = TRUE;
-    break;
-
-  case BALLOON_HIT:       // ‹Á‚«Šç
-    p_wk->scale_flg = TRUE;
+  case 3:    // ”j—ô
     p_wk->anm_flg = TRUE;
+    p_wk->stage = 0;
+    ret = TRUE;     // ”j—ô
     break;
+  }
+
+  return ret;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  •—‘D‚ªƒ^ƒbƒ`‚Å‚«‚éó‘Ô(=•â[’†‚Å‚Í‚È‚¢)‚©Žæ“¾
+ *
+ *	@param	BALLOON2_WORK *p_wk 
+ *
+ *	@return TRUE‚Åƒ^ƒbƒ`‚Å‚«‚éó‘Ô
+ */
+//-----------------------------------------------------------------------------
+BOOL CTVT_BALLOON2_GetActive( BALLOON2_WORK *p_wk )
+{
+  if( p_wk->interval > 0 )
+  {
+    ICHI_Printf("•â[’†\n");
+    // •â[’†‚È‚Ì‚Åƒ^ƒbƒ`‚Å‚«‚È‚¢
+    return FALSE;
+  }
+  return TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  •—‘D‚ð—h‚ç‚·  ƒ^ƒbƒ`‚µ‚½Žž‚Ì‰‰o
+ *
+ *	@param	BALLON2_WORK *p_wk 
+ */
+//-----------------------------------------------------------------------------
+void CTVT_BALLOON2_SetSwing( BALLOON2_WORK *p_wk )
+{
+  // ‚·‚Å‚É—h‚ê‚Ä‚¢‚È‚¢
+  // Šg‘å‚µ‚Ä‚¢‚È‚¢
+  // ƒAƒ‹ƒtƒ@ˆ—‚µ‚Ä‚¢‚È‚¢
+  // ”j—ô‚Ì’iŠK‚Å‚Í‚È‚¢
+  // •â[’†‚Å‚È‚¢
+  // ‚Æ‚«‚É—h‚ç‚·
+  if( p_wk->ang_flg == FALSE &&
+      p_wk->scale_flg == FALSE && 
+      p_wk->alpha_flg == FALSE && 
+      p_wk->stage < 3 &&
+      p_wk->interval == 0 )
+  {
+    p_wk->ang_flg = TRUE;
   }
 }
 

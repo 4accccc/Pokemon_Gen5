@@ -81,6 +81,7 @@ typedef enum {
 
   // ミニゲーム2つ目
   CCGDT_TOUCH,      // タッチ範囲をタッチした
+  CCGDT_TOUCH_EX,   // タッチ範囲をタッチした ピンポイントタッチ
   CCGDT_BURST2,     // 風船が大きくなるor破裂
   
 } CTVT_COMM_GAME_DATA_TYPE;
@@ -242,10 +243,11 @@ extern void CTVT_GAME_CommScoreSet( CTVT_GAME_WORK *p_wk, const CTVT_GAME_SEND_S
  *
  *	@param	CTVT_COMM_WORK *commWork  通信ワーク
  *	@param	*p_wk                     ゲームワーク
+ *	@param  pinpoint                  TRUEでピンポイントタッチ
  *	@param	netID                     ネットID
  */
 //-----------------------------------------------------------------------------
-extern void CTVT_GAME_CommDataSet_Touch( CTVT_COMM_WORK *commWork, CTVT_GAME_WORK *p_wk,  int netID );
+extern void CTVT_GAME_CommDataSet_Touch( CTVT_COMM_WORK *commWork, CTVT_GAME_WORK *p_wk, BOOL pinpoint, int netID );
 
 //----------------------------------------------------------------------------
 /**

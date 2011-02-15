@@ -2217,7 +2217,15 @@ static void CTVT_COMM_PostGameData( const int netID, const int size , const void
     // 親のみ更新、処理する
     if( selfId == 0 )
     {
-      CTVT_GAME_CommDataSet_Touch( commWork, gameWork, netID );
+      CTVT_GAME_CommDataSet_Touch( commWork, gameWork, FALSE, netID );
+    }
+    break;
+
+  case CCGDT_TOUCH_EX:      // タッチ範囲をタッチした ピンポイントタッチ
+    // 親のみ更新、処理する
+    if( selfId == 0 )
+    {
+      CTVT_GAME_CommDataSet_Touch( commWork, gameWork, TRUE, netID );
     }
     break;
 

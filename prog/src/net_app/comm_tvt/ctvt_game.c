@@ -51,7 +51,7 @@ static GFL_STD_RandContext gRandContext = {0};
 //===============================
 // カメラ撮影をスキップ
 #ifdef PM_DEBUG
-//#define CAMERA_SKIP       // コメントにするとSKIPしない
+#define CAMERA_SKIP       // コメントにするとSKIPしない
 #endif
 //===============================
 
@@ -82,6 +82,18 @@ static GFL_STD_RandContext gRandContext = {0};
 #define PLATE_OFFSET_X_CROWN  (-78)   // 王冠までの距離
 
 #define PLATE_S_OFFSET_X_P    (-16)
+
+// ２つ目ミニゲーム
+#define TOUCH_X     (128)     // ボタンのタッチ中心X座標
+#define TOUCH_Y     (96)     // ボタンのタッチ中心Y座標
+#define TOUCH_R     (20)     // ボタン半径
+#define TOUCH_EX_R  (5)     // ピンポイントタッチ範囲
+
+#define TOUCH_CNT_1 (20)    // 初期段階のタッチポイント
+#define TOUCH_CNT_2 (40)    // 第2段階のタッチポイント
+#define TOUCH_CNT_3 (60)    // 第3段階のタッチポイント
+
+#define SWING_INTERVAL  (45) // 風船の揺れのインターバル
 
 //======================================================================
 //	enum
@@ -316,6 +328,7 @@ struct _CTVT_GAME_WORK
   // 今変えると変更点が多すぎるのでここに2つ目のものも書く
   BALLOON2_WORK *p_balloon2[CTVT_MEMBER_NUM];
   u8            touch_cnt[CTVT_MEMBER_NUM];   // 4人分のタッチ計測
+  u8            swing_interval;               // 風船揺れのインターバル
 
   // メッセージ系
   GFL_BMPWIN    *msgWinMain;        // 下画面
@@ -418,6 +431,9 @@ struct _CTVT_GAME_WORK
   fx32  debug_v;    // 風船:速さ変更
   u16   debug_wait; // 風船:個数変更(出現タイミング)
   u16   debug_b_cnt[4]; // どれだけ風船がでたか数える
+
+  u8    debug_touch_r;        // タッチ半径
+  u8    debug_touch_ex_r;    // タッチ半径
 #endif
 };
 
@@ -1411,25 +1427,59 @@ void CTVT_GAME_CommScoreSet( CTVT_GAME_WORK *p_wk, const CTVT_GAME_SEND_SCORE *s
  *
  *	@param	CTVT_COMM_WORK *commWork  通信ワーク
  *	@param	*p_wk                     ゲームワーク
+ *	@param  pinpoint                  TRUEでピンポイントタッチ
  *	@param	netID                     ネットID
  */
 //-----------------------------------------------------------------------------
-void CTVT_GAME_CommDataSet_Touch( CTVT_COMM_WORK *commWork, CTVT_GAME_WORK *p_wk,  int netID )
+void CTVT_GAME_CommDataSet_Touch( CTVT_COMM_WORK *commWork, CTVT_GAME_WORK *p_wk, BOOL pinpoint, int netID )
 {
   BOOL send = FALSE;
 
   GF_ASSERT( netID < CTVT_MEMBER_NUM );
 
   // タッチ数を計測しておく
-  p_wk->touch_cnt[ netID ]++;
-
-  if( p_wk->touch_cnt[ netID ] == 15
-      || p_wk->touch_cnt[ netID ] == 10
-      || p_wk->touch_cnt[ netID ] == 5 )
   {
-    ICHI_Printf("NetID %d touchCNT %d \n", netID, p_wk->touch_cnt[netID]);
-    p_wk->touch_cnt[ netID ] %= 15;
-    send = TRUE;
+    // タッチ数加算
+    p_wk->touch_cnt[ netID ] += 1;
+
+    // タッチ数判定
+    if( p_wk->touch_cnt[ netID ] == TOUCH_CNT_1
+        || p_wk->touch_cnt[ netID ] == TOUCH_CNT_2
+        || p_wk->touch_cnt[ netID ] == TOUCH_CNT_3 )
+    {
+      ICHI_Printf("NetID %d touchCNT %d \n", netID, p_wk->touch_cnt[netID]);
+      send = TRUE;
+    }
+
+    if( pinpoint == TRUE )
+    {
+      p_wk->touch_cnt[ netID ] += 1;
+
+      // タッチ数判定
+      if( p_wk->touch_cnt[ netID ] == TOUCH_CNT_1
+          || p_wk->touch_cnt[ netID ] == TOUCH_CNT_2
+          || p_wk->touch_cnt[ netID ] == TOUCH_CNT_3 )
+      {
+        ICHI_Printf("NetID %d touchCNT %d \n", netID, p_wk->touch_cnt[netID]);
+        send = TRUE;
+      }
+      ICHI_Printf("ピンポイントタッチ\n");
+    }
+
+
+    // 破裂の判定
+    {
+      // 順位によって追加タッチポイント
+      const u8 add_cnt_tbl[] = {9,6,4,2};
+      const u8 touch_cnt_max = TOUCH_CNT_3 + add_cnt_tbl[p_wk->p_plate[netID]->rank];
+
+      if( p_wk->touch_cnt[ netID ] >= touch_cnt_max )
+      {
+        ICHI_Printf("NetID %d rank %d \n", netID, p_wk->p_plate[netID]->rank);
+        p_wk->touch_cnt[ netID ] = 0;
+        send = TRUE;
+      }
+    }
   }
 
   // 通信データ送信
@@ -1451,6 +1501,7 @@ void CTVT_GAME_CommDataSet_Touch( CTVT_COMM_WORK *commWork, CTVT_GAME_WORK *p_wk
 //-----------------------------------------------------------------------------
 void CTVT_GAME_CommBalloonBurst( CTVT_GAME_WORK *p_wk, u8 netIdBit )
 {
+  const u8 selfId = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
   u8  i;
 
   for( i=0; i<CTVT_MEMBER_NUM; i++ )
@@ -1458,8 +1509,24 @@ void CTVT_GAME_CommBalloonBurst( CTVT_GAME_WORK *p_wk, u8 netIdBit )
     // 処理する風船(=netID)をチェック
     if( netIdBit & 1<<i )
     {
+      BOOL ret;
       // 風船大きくor破裂
-      CTVT_BALLOON2_Burst( p_wk->p_balloon2[i] );
+      ret = CTVT_BALLOON2_Burst( p_wk->p_balloon2[i] );
+
+      // 破裂したなら得点加算
+      if( ret == TRUE )
+      {
+        p_wk->score[ i ] += 2;
+      }
+
+      // 自分だけ音を鳴らす
+      if( selfId == i )
+      {
+        // SE再生
+      }
+
+      // プレートの得点更新
+      GAME_PLATE_SetPoint( p_wk, i, p_wk->score[ i ] );
     }
   }
 }
@@ -2764,6 +2831,7 @@ static void game_update_seq_init_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
 
   // 初期化
   GFL_STD_MemFill( gameWork->touch_cnt, 0, sizeof(u8)*CTVT_MEMBER_NUM );
+  gameWork->swing_interval = 0;
 
   // サウンド
   {
@@ -2781,6 +2849,11 @@ static void game_update_seq_init_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
       GF_ASSERT(ret);
     }
   }
+
+#ifdef PM_DEBUG
+  gameWork->debug_touch_r = TOUCH_R;
+  gameWork->debug_touch_ex_r = TOUCH_EX_R;
+#endif
 
   ICHI_Printf("ゲーム2初期化完了\n");
 }
@@ -3174,6 +3247,21 @@ static BOOL game_update_seq_main_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
   const u8 selfId = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
 
 #ifdef PM_DEBUG
+  // Rボタン押しながらでデバッグ
+  if(GFL_UI_KEY_GetCont()&PAD_BUTTON_R)
+  {
+    // タッチ範囲
+    if(GFL_UI_KEY_GetTrg()&PAD_KEY_UP)
+    {
+      gameWork->debug_touch_r += 1;    // 半径特定用
+      OS_Printf("debug_touch_r %d \n", gameWork->debug_touch_r );
+    }
+    if(GFL_UI_KEY_GetTrg()&PAD_KEY_DOWN)
+    {
+      gameWork->debug_touch_r -= 1;    // 半径特定用
+      OS_Printf("debug_touch_r %d \n", gameWork->debug_touch_r );
+    }
+  }
   // 制限時間早める処理
   // デバッグ 制限時間早める
   if( selfId == 0 && GFL_UI_KEY_GetCont()&PAD_BUTTON_L)
@@ -3185,18 +3273,55 @@ static BOOL game_update_seq_main_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
 
 
 
-  // タッチを送信する
+  // 風船がアクティブの時のみタッチ判定
+  if( CTVT_BALLOON2_GetActive( gameWork->p_balloon2[selfId] ) == TRUE )
   {
-    u32 tpx, tpy;
-    const BOOL isTrg = GFL_UI_TP_GetPointTrg( &tpx,&tpy );
-
-    if( isTrg == TRUE )
+    static GFL_UI_TP_HITTBL button_tbl[3] =
     {
-      // 通信データ送信
-      CTVT_GAME_SEND_DATA data ={0};
-      CTVT_COMM_SendGameReq( commWork, data, CCGDT_TOUCH );
+      {GFL_UI_TP_USE_CIRCLE, TOUCH_X, TOUCH_Y, TOUCH_EX_R }, // ピンポイント範囲
+      {GFL_UI_TP_USE_CIRCLE, TOUCH_X, TOUCH_Y, TOUCH_R },    // タッチ範囲
+      {GFL_UI_TP_HIT_END,0,0,0}
+    };
+    int retTrg;
+
+    button_tbl[0].circle.r = gameWork->debug_touch_ex_r;
+    button_tbl[1].circle.r = gameWork->debug_touch_r;
+
+
+    retTrg = GFL_UI_TP_HitTrg( button_tbl );
+    if( retTrg != GFL_UI_TP_HIT_NONE )
+    {
+      CTVT_GAME_SEND_DATA data = {0};
+      // 
+      if( retTrg == 0 )
+      {
+        // ピンポイントタッチ
+        CTVT_COMM_SendGameReq( commWork, data, CCGDT_TOUCH_EX );
+      }
+      else
+      {
+        // 通信データ送信
+        CTVT_GAME_SEND_DATA data ={0};
+        CTVT_COMM_SendGameReq( commWork, data, CCGDT_TOUCH );
+      }
+
+      // 風船を揺らす
+      // 送信しない時も追加条件に加えたほうがいい？
+      if( gameWork->swing_interval == 0 )
+      {
+        gameWork->swing_interval = SWING_INTERVAL;
+
+        CTVT_BALLOON2_SetSwing( gameWork->p_balloon2[selfId] );
+      }
     }
   }
+ 
+  // インターバル
+  if( gameWork->swing_interval > 0 )
+  {
+    gameWork->swing_interval--;
+  }
+
 
   // 受信していない場合
   // TRUEで受信していると、frameの値は更新されている
@@ -3767,18 +3892,35 @@ static BOOL game_update_seq_score( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork
     break;
   case SUB_SEQ_HIDE_ANIME:   // 隠すプレートアニメ
 
-    GFL_CLACT_WK_SetDrawEnable( gameWork->clwkOmeNiji, TRUE );
-
-    GFL_CLACT_WK_SetDrawEnable( gameWork->clwkOmeHide[0], TRUE );
-    GFL_CLACT_WK_SetDrawEnable( gameWork->clwkOmeHide[1], TRUE );
-    GFL_CLACT_WK_SetAutoAnmFlag( gameWork->clwkOmeHide[0], TRUE );
-    GFL_CLACT_WK_SetAutoAnmFlag( gameWork->clwkOmeHide[1], TRUE );
-    GFL_CLACT_WK_ResetAnm( gameWork->clwkOmeHide[0] );
-    GFL_CLACT_WK_ResetAnm( gameWork->clwkOmeHide[1] );
-
+    
     // 順位によって演出が違う
     if( gameWork->p_plate[selfId]->rank == 1 )
     {
+      GFL_CLACT_WK_SetDrawEnable( gameWork->clwkOmeNiji, TRUE );
+
+      // その他１位の時に表示しておくもの
+      // 雲・星
+      GFL_CLACT_WK_SetDrawEnable( gameWork->clwkOmeCloud[0], TRUE );
+      GFL_CLACT_WK_SetDrawEnable( gameWork->clwkOmeCloud[1], TRUE );
+      GFL_CLACT_WK_SetAutoAnmFlag( gameWork->clwkOmeCloud[0], TRUE );
+      GFL_CLACT_WK_SetAutoAnmFlag( gameWork->clwkOmeCloud[1], TRUE );
+      GFL_CLACT_WK_ResetAnm( gameWork->clwkOmeCloud[0] );
+      GFL_CLACT_WK_ResetAnm( gameWork->clwkOmeCloud[1] );
+
+      // 隠しプレート
+      GFL_CLACT_WK_SetDrawEnable( gameWork->clwkOmeHide[0], TRUE );
+      GFL_CLACT_WK_SetDrawEnable( gameWork->clwkOmeHide[1], TRUE );
+      GFL_CLACT_WK_SetAutoAnmFlag( gameWork->clwkOmeHide[0], TRUE );
+      GFL_CLACT_WK_SetAutoAnmFlag( gameWork->clwkOmeHide[1], TRUE );
+      GFL_CLACT_WK_ResetAnm( gameWork->clwkOmeHide[0] );
+      GFL_CLACT_WK_ResetAnm( gameWork->clwkOmeHide[1] );
+
+      // 周りの星
+      GFL_CLACT_WK_SetDrawEnable( gameWork->clwkOmeStar, TRUE );
+      GFL_CLACT_WK_SetAutoAnmFlag( gameWork->clwkOmeStar, TRUE );
+      GFL_CLACT_WK_ResetAnm( gameWork->clwkOmeStar );
+
+
       gameWork->sub_seq = SUB_SEQ_HIDE_ANIME_WAIT1;
     }
     else if( gameWork->p_plate[selfId]->rank == 2 ) 
@@ -3803,14 +3945,6 @@ static BOOL game_update_seq_score( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork
       GFL_CLACT_WK_SetDrawEnable( gameWork->clwkOmeHide[0], FALSE );
       GFL_CLACT_WK_SetDrawEnable( gameWork->clwkOmeHide[1], FALSE );
 
-      // その他表示
-      GFL_CLACT_WK_SetDrawEnable( gameWork->clwkOmeCloud[0], TRUE );
-      GFL_CLACT_WK_SetDrawEnable( gameWork->clwkOmeCloud[1], TRUE );
-      GFL_CLACT_WK_SetAutoAnmFlag( gameWork->clwkOmeCloud[0], TRUE );
-      GFL_CLACT_WK_SetAutoAnmFlag( gameWork->clwkOmeCloud[1], TRUE );
-      GFL_CLACT_WK_ResetAnm( gameWork->clwkOmeCloud[0] );
-      GFL_CLACT_WK_ResetAnm( gameWork->clwkOmeCloud[1] );
-
       // おめでとうのアニメ
       GFL_CLACT_WK_SetDrawEnable( gameWork->clwkOmeFont, TRUE );
       GFL_CLACT_WK_SetAutoAnmFlag( gameWork->clwkOmeFont, TRUE );
@@ -3822,20 +3956,7 @@ static BOOL game_update_seq_score( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork
     break;
 
   case SUB_SEQ_HIDE_ANIME_WAIT2: // 隠すプレートアニメ待ち 2位用
-    if( GFL_CLACT_WK_CheckAnmActive( gameWork->clwkOmeHide[0] ) == FALSE )
     {
-      // プレートは消す
-      GFL_CLACT_WK_SetDrawEnable( gameWork->clwkOmeHide[0], FALSE );
-      GFL_CLACT_WK_SetDrawEnable( gameWork->clwkOmeHide[1], FALSE );
-
-      // その他表示
-      GFL_CLACT_WK_SetDrawEnable( gameWork->clwkOmeCloud[0], TRUE );
-      GFL_CLACT_WK_SetDrawEnable( gameWork->clwkOmeCloud[1], TRUE );
-      GFL_CLACT_WK_SetAutoAnmFlag( gameWork->clwkOmeCloud[0], TRUE );
-      GFL_CLACT_WK_SetAutoAnmFlag( gameWork->clwkOmeCloud[1], TRUE );
-      GFL_CLACT_WK_ResetAnm( gameWork->clwkOmeCloud[0] );
-      GFL_CLACT_WK_ResetAnm( gameWork->clwkOmeCloud[1] );
-
       // 「おしい2nd」
       GFL_CLACT_WK_SetDrawEnable( gameWork->clwkRank, TRUE );
       GFL_CLACT_WK_SetAutoAnmFlag( gameWork->clwkRank, TRUE );
@@ -3847,20 +3968,7 @@ static BOOL game_update_seq_score( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork
     break;
 
   case SUB_SEQ_HIDE_ANIME_WAIT3: // 隠すプレートアニメ待ち 3，4位用
-    if( GFL_CLACT_WK_CheckAnmActive( gameWork->clwkOmeHide[0] ) == FALSE )
     {
-      // プレートは消す
-      GFL_CLACT_WK_SetDrawEnable( gameWork->clwkOmeHide[0], FALSE );
-      GFL_CLACT_WK_SetDrawEnable( gameWork->clwkOmeHide[1], FALSE );
-
-      // その他表示
-      GFL_CLACT_WK_SetDrawEnable( gameWork->clwkOmeCloud[0], TRUE );
-      GFL_CLACT_WK_SetDrawEnable( gameWork->clwkOmeCloud[1], TRUE );
-      GFL_CLACT_WK_SetAutoAnmFlag( gameWork->clwkOmeCloud[0], TRUE );
-      GFL_CLACT_WK_SetAutoAnmFlag( gameWork->clwkOmeCloud[1], TRUE );
-      GFL_CLACT_WK_ResetAnm( gameWork->clwkOmeCloud[0] );
-      GFL_CLACT_WK_ResetAnm( gameWork->clwkOmeCloud[1] );
-
       // 「ざんねん xxx ...」
       GFL_CLACT_WK_SetDrawEnable( gameWork->clwkRank, TRUE );
       GFL_CLACT_WK_SetAutoAnmFlag( gameWork->clwkRank, TRUE );
@@ -3879,10 +3987,7 @@ static BOOL game_update_seq_score( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork
     if( GFL_CLACT_WK_CheckAnmActive( gameWork->clwkOmeFont ) == FALSE )
     {
       // その他表示
-      GFL_CLACT_WK_SetDrawEnable( gameWork->clwkOmeStar, TRUE );
-      GFL_CLACT_WK_SetAutoAnmFlag( gameWork->clwkOmeStar, TRUE );
-      GFL_CLACT_WK_ResetAnm( gameWork->clwkOmeStar );
-
+      
       GFL_CLACT_WK_SetDrawEnable( gameWork->clwkOmeFont, FALSE );
 
       // おめでとう 単文字表示

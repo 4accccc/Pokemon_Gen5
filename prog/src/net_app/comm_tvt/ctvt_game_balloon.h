@@ -93,7 +93,8 @@ typedef struct {
   GFL_G3D_UTIL      *parent_g3dUtil;  // G3D_OBJ取得用
   u16               unit_idx;         // モデル指定用
   GFL_G3D_OBJSTATUS status;           // OBJ情報
-  BALLOON_TYPE      type;             // 種類 (0～2)
+  BALLOON_TYPE      type;             // TEX種類 (0～2)
+  u8                stage;            // 大きさ段階
   BOOL              is_self;          // 自分の風船か
   u8                cnt;              // 何個目の風船か(0～3)
 
@@ -113,6 +114,9 @@ typedef struct {
 
   //========================
   // 風船の動きに関するもの
+  s16               ang;              // ゆれる動き用
+  u8                ang_state;        // ゆれる状態
+  BOOL              ang_flg;          // ゆれるフラグ
 
 } BALLOON2_WORK;
 
@@ -236,9 +240,31 @@ extern void CTVT_BALLOON2_Draw( BALLOON2_WORK *p_wk );
  *	@brief  風船大きくなるor破裂
  *
  *	@param	BALLOON2_WORK *p_wk ワーク
+ *
+ *	@return TRUEで破裂
  */
 //-----------------------------------------------------------------------------
-extern void CTVT_BALLOON2_Burst( BALLOON2_WORK *p_wk );
+extern BOOL CTVT_BALLOON2_Burst( BALLOON2_WORK *p_wk );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  風船がタッチできる状態(=補充中ではない)か取得
+ *
+ *	@param	BALLOON2_WORK *p_wk 
+ *
+ *	@return TRUEでタッチできる状態
+ */
+//-----------------------------------------------------------------------------
+extern BOOL CTVT_BALLOON2_GetActive( BALLOON2_WORK *p_wk );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  風船を揺らす  タッチした時の演出
+ *
+ *	@param	BALLON2_WORK *p_wk 
+ */
+//-----------------------------------------------------------------------------
+extern void CTVT_BALLOON2_SetSwing( BALLOON2_WORK *p_wk );
 
 //----------------------------------------------------------------------------
 /**
