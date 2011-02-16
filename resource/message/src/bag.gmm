@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2011-02-15T18:14:27"/>
+	<create user="shimoyamada" host="W00184" date="2011-02-16T14:42:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1210" top="419" right="1915" bottom="1047" maximized="no" rayout="Vertical2">
+	<dialog left="1105" top="368" right="1810" bottom="996" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="551" top="230" right="1024" bottom="628" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -1545,6 +1545,48 @@ common_scr.gmmの変更も忘れないでください
 [1:12:バッグのポケット名:0]に　もどしました！</language>
 		<language name="JPN_KANJI">[1:09:どうぐ名:1]を
 [1:12:バッグのポケット名:0]に　戻しました！</language>
+	</row>
+
+	<row id="mes_bag_126" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ffff00,,#ff8080,#ffff00,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>swan追加
+ソート確認メッセージ</comment>
+		<language name="JPN">どの　ならびに　かえますか？</language>
+		<language name="JPN_KANJI">どの　ならびに　かえますか？</language>
+	</row>
+
+	<row id="mes_bag_127" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ffff00,,#ff8080,#ffff00,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>swan追加
+並び替え項目名</comment>
+		<language name="JPN">しゅるいじゅん</language>
+		<language name="JPN_KANJI">しゅるいじゅん</language>
+	</row>
+
+	<row id="mes_bag_128" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ffff00,,#ff8080,#ffff00,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>swan追加
+並び替え項目名</comment>
+		<language name="JPN">なまえじゅん</language>
+		<language name="JPN_KANJI">なまえじゅん</language>
+	</row>
+
+	<row id="mes_bag_129" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ffff00,,#ff8080,#ffff00,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>swan追加
+並び替え項目名</comment>
+		<language name="JPN">おおいじゅん</language>
+		<language name="JPN_KANJI">おおいじゅん</language>
+	</row>
+
+	<row id="mes_bag_130" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ffff00,,#ff8080,#ffff00,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>swan追加
+並び替え項目名</comment>
+		<language name="JPN">すくないじゅん</language>
+		<language name="JPN_KANJI">すくないじゅん</language>
+	</row>
+
+	<row id="mes_bag_131" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ffff00,,#ff8080,#ffff00,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>swan追加
+並び替え項目名</comment>
+		<language name="JPN">ばんごうじゅん</language>
+		<language name="JPN_KANJI">ばんごうじゅん</language>
 	</row>
 
 	<flowchart-group-list>
