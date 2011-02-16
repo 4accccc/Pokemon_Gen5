@@ -69,5 +69,11 @@
 "texset/indoor069.nsbtx"
 "texset/indoor070.nsbtx"
 "texset/indoor071.nsbtx"
+"texset/indoor072.nsbtx"
+"texset/indoor073.nsbtx"
+"texset/indoor074.nsbtx"
+"texset/indoor075.nsbtx"
+"texset/indoor076.nsbtx"
+"texset/indoor077.nsbtx"
 
 

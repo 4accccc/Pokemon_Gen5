@@ -69,7 +69,13 @@ DEP_TEXSET_INDOOR =	\
 	texset/indoor068.nsbtx	\
 	texset/indoor069.nsbtx	\
 	texset/indoor070.nsbtx	\
-	texset/indoor071.nsbtx
+	texset/indoor071.nsbtx	\
+	texset/indoor072.nsbtx	\
+	texset/indoor073.nsbtx	\
+	texset/indoor074.nsbtx	\
+	texset/indoor075.nsbtx	\
+	texset/indoor076.nsbtx	\
+	texset/indoor077.nsbtx
 
 DEP_TEXSET_IMD_INDOOR001 = \
 	$(SRCDIR)/pc01.imd \
@@ -3301,4 +3307,262 @@ DEP_TEXSET_IMD_INDOOR071 = \
 
 texset/indoor071.imd: $(DEP_TEXSET_IMD_INDOOR071) texset/tmp/indoor071.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/indoor071.list
+
+DEP_TEXSET_IMD_INDOOR072 = \
+	$(SRCDIR)/pc01.imd \
+	$(SRCDIR)/mat01.imd \
+	$(SRCDIR)/tv01.imd \
+	$(SRCDIR)/stair_u01.imd \
+	$(SRCDIR)/stair_d01.imd \
+	$(SRCDIR)/table01.imd \
+	$(SRCDIR)/chair01.imd \
+	$(SRCDIR)/shelf01.imd \
+	$(SRCDIR)/shelf02.imd \
+	$(SRCDIR)/shelf04.imd \
+	$(SRCDIR)/shelf05.imd \
+	$(SRCDIR)/bed01.imd \
+	$(SRCDIR)/sink01.imd \
+	$(SRCDIR)/ref01.imd \
+	$(SRCDIR)/plant01.imd \
+	$(SRCDIR)/dust01.imd \
+	$(SRCDIR)/poster01.imd \
+	$(SRCDIR)/win01.imd \
+	$(SRCDIR)/pcdesk01.imd \
+	$(SRCDIR)/desk01.imd \
+	$(SRCDIR)/vase01.imd \
+	$(SRCDIR)/cashier01.imd \
+	$(SRCDIR)/drock01.imd \
+	$(SRCDIR)/drock02.imd \
+	$(SRCDIR)/desk02.imd \
+	$(SRCDIR)/art01.imd \
+	$(SRCDIR)/object02.imd \
+	$(SRCDIR)/d0stair_u01.imd \
+	$(SRCDIR)/d0stair_d01.imd \
+	$(SRCDIR)/in_vender01.imd \
+	$(SRCDIR)/box01.imd \
+	$(SRCDIR)/box02.imd \
+	$(SRCDIR)/chushion01.imd \
+	$(SRCDIR)/chushion02.imd \
+	$(SRCDIR)/warp01.imd \
+	$(SRCDIR)/warp02.imd \
+	$(SRCDIR)/warp03.imd \
+	$(SRCDIR)/shelf06.imd
+
+texset/indoor072.imd: $(DEP_TEXSET_IMD_INDOOR072) texset/tmp/indoor072.list
+	$(TEXMAG) -q -n -o $@ -S texset/tmp/indoor072.list
+
+DEP_TEXSET_IMD_INDOOR073 = \
+	$(SRCDIR)/pc01.imd \
+	$(SRCDIR)/mat01.imd \
+	$(SRCDIR)/tv01.imd \
+	$(SRCDIR)/stair_u01.imd \
+	$(SRCDIR)/stair_d01.imd \
+	$(SRCDIR)/table01.imd \
+	$(SRCDIR)/chair01.imd \
+	$(SRCDIR)/shelf01.imd \
+	$(SRCDIR)/shelf02.imd \
+	$(SRCDIR)/shelf04.imd \
+	$(SRCDIR)/shelf05.imd \
+	$(SRCDIR)/bed01.imd \
+	$(SRCDIR)/sink01.imd \
+	$(SRCDIR)/ref01.imd \
+	$(SRCDIR)/plant01.imd \
+	$(SRCDIR)/dust01.imd \
+	$(SRCDIR)/poster01.imd \
+	$(SRCDIR)/win01.imd \
+	$(SRCDIR)/pcdesk01.imd \
+	$(SRCDIR)/desk01.imd \
+	$(SRCDIR)/vase01.imd \
+	$(SRCDIR)/cashier01.imd \
+	$(SRCDIR)/drock01.imd \
+	$(SRCDIR)/drock02.imd \
+	$(SRCDIR)/desk02.imd \
+	$(SRCDIR)/art01.imd \
+	$(SRCDIR)/object02.imd \
+	$(SRCDIR)/d0stair_u01.imd \
+	$(SRCDIR)/d0stair_d01.imd \
+	$(SRCDIR)/in_vender01.imd \
+	$(SRCDIR)/box01.imd \
+	$(SRCDIR)/box02.imd \
+	$(SRCDIR)/chushion01.imd \
+	$(SRCDIR)/chushion02.imd \
+	$(SRCDIR)/warp01.imd \
+	$(SRCDIR)/warp02.imd \
+	$(SRCDIR)/warp03.imd \
+	$(SRCDIR)/shelf06.imd
+
+texset/indoor073.imd: $(DEP_TEXSET_IMD_INDOOR073) texset/tmp/indoor073.list
+	$(TEXMAG) -q -n -o $@ -S texset/tmp/indoor073.list
+
+DEP_TEXSET_IMD_INDOOR074 = \
+	$(SRCDIR)/pc01.imd \
+	$(SRCDIR)/mat01.imd \
+	$(SRCDIR)/tv01.imd \
+	$(SRCDIR)/stair_u01.imd \
+	$(SRCDIR)/stair_d01.imd \
+	$(SRCDIR)/table01.imd \
+	$(SRCDIR)/chair01.imd \
+	$(SRCDIR)/shelf01.imd \
+	$(SRCDIR)/shelf02.imd \
+	$(SRCDIR)/shelf04.imd \
+	$(SRCDIR)/shelf05.imd \
+	$(SRCDIR)/bed01.imd \
+	$(SRCDIR)/sink01.imd \
+	$(SRCDIR)/ref01.imd \
+	$(SRCDIR)/plant01.imd \
+	$(SRCDIR)/dust01.imd \
+	$(SRCDIR)/poster01.imd \
+	$(SRCDIR)/win01.imd \
+	$(SRCDIR)/pcdesk01.imd \
+	$(SRCDIR)/desk01.imd \
+	$(SRCDIR)/vase01.imd \
+	$(SRCDIR)/cashier01.imd \
+	$(SRCDIR)/drock01.imd \
+	$(SRCDIR)/drock02.imd \
+	$(SRCDIR)/desk02.imd \
+	$(SRCDIR)/art01.imd \
+	$(SRCDIR)/object02.imd \
+	$(SRCDIR)/d0stair_u01.imd \
+	$(SRCDIR)/d0stair_d01.imd \
+	$(SRCDIR)/in_vender01.imd \
+	$(SRCDIR)/box01.imd \
+	$(SRCDIR)/box02.imd \
+	$(SRCDIR)/chushion01.imd \
+	$(SRCDIR)/chushion02.imd \
+	$(SRCDIR)/warp01.imd \
+	$(SRCDIR)/warp02.imd \
+	$(SRCDIR)/warp03.imd \
+	$(SRCDIR)/shelf06.imd
+
+texset/indoor074.imd: $(DEP_TEXSET_IMD_INDOOR074) texset/tmp/indoor074.list
+	$(TEXMAG) -q -n -o $@ -S texset/tmp/indoor074.list
+
+DEP_TEXSET_IMD_INDOOR075 = \
+	$(SRCDIR)/pc01.imd \
+	$(SRCDIR)/mat01.imd \
+	$(SRCDIR)/tv01.imd \
+	$(SRCDIR)/stair_u01.imd \
+	$(SRCDIR)/stair_d01.imd \
+	$(SRCDIR)/table01.imd \
+	$(SRCDIR)/chair01.imd \
+	$(SRCDIR)/shelf01.imd \
+	$(SRCDIR)/shelf02.imd \
+	$(SRCDIR)/shelf04.imd \
+	$(SRCDIR)/shelf05.imd \
+	$(SRCDIR)/bed01.imd \
+	$(SRCDIR)/sink01.imd \
+	$(SRCDIR)/ref01.imd \
+	$(SRCDIR)/plant01.imd \
+	$(SRCDIR)/dust01.imd \
+	$(SRCDIR)/poster01.imd \
+	$(SRCDIR)/win01.imd \
+	$(SRCDIR)/pcdesk01.imd \
+	$(SRCDIR)/desk01.imd \
+	$(SRCDIR)/vase01.imd \
+	$(SRCDIR)/cashier01.imd \
+	$(SRCDIR)/drock01.imd \
+	$(SRCDIR)/drock02.imd \
+	$(SRCDIR)/desk02.imd \
+	$(SRCDIR)/art01.imd \
+	$(SRCDIR)/object02.imd \
+	$(SRCDIR)/d0stair_u01.imd \
+	$(SRCDIR)/d0stair_d01.imd \
+	$(SRCDIR)/in_vender01.imd \
+	$(SRCDIR)/box01.imd \
+	$(SRCDIR)/box02.imd \
+	$(SRCDIR)/chushion01.imd \
+	$(SRCDIR)/chushion02.imd \
+	$(SRCDIR)/warp01.imd \
+	$(SRCDIR)/warp02.imd \
+	$(SRCDIR)/warp03.imd \
+	$(SRCDIR)/shelf06.imd
+
+texset/indoor075.imd: $(DEP_TEXSET_IMD_INDOOR075) texset/tmp/indoor075.list
+	$(TEXMAG) -q -n -o $@ -S texset/tmp/indoor075.list
+
+DEP_TEXSET_IMD_INDOOR076 = \
+	$(SRCDIR)/pc01.imd \
+	$(SRCDIR)/mat01.imd \
+	$(SRCDIR)/tv01.imd \
+	$(SRCDIR)/stair_u01.imd \
+	$(SRCDIR)/stair_d01.imd \
+	$(SRCDIR)/table01.imd \
+	$(SRCDIR)/chair01.imd \
+	$(SRCDIR)/shelf01.imd \
+	$(SRCDIR)/shelf02.imd \
+	$(SRCDIR)/shelf04.imd \
+	$(SRCDIR)/shelf05.imd \
+	$(SRCDIR)/bed01.imd \
+	$(SRCDIR)/sink01.imd \
+	$(SRCDIR)/ref01.imd \
+	$(SRCDIR)/plant01.imd \
+	$(SRCDIR)/dust01.imd \
+	$(SRCDIR)/poster01.imd \
+	$(SRCDIR)/win01.imd \
+	$(SRCDIR)/pcdesk01.imd \
+	$(SRCDIR)/desk01.imd \
+	$(SRCDIR)/vase01.imd \
+	$(SRCDIR)/cashier01.imd \
+	$(SRCDIR)/drock01.imd \
+	$(SRCDIR)/drock02.imd \
+	$(SRCDIR)/desk02.imd \
+	$(SRCDIR)/art01.imd \
+	$(SRCDIR)/object02.imd \
+	$(SRCDIR)/d0stair_u01.imd \
+	$(SRCDIR)/d0stair_d01.imd \
+	$(SRCDIR)/in_vender01.imd \
+	$(SRCDIR)/box01.imd \
+	$(SRCDIR)/box02.imd \
+	$(SRCDIR)/chushion01.imd \
+	$(SRCDIR)/chushion02.imd \
+	$(SRCDIR)/warp01.imd \
+	$(SRCDIR)/warp02.imd \
+	$(SRCDIR)/warp03.imd \
+	$(SRCDIR)/shelf06.imd
+
+texset/indoor076.imd: $(DEP_TEXSET_IMD_INDOOR076) texset/tmp/indoor076.list
+	$(TEXMAG) -q -n -o $@ -S texset/tmp/indoor076.list
+
+DEP_TEXSET_IMD_INDOOR077 = \
+	$(SRCDIR)/pc01.imd \
+	$(SRCDIR)/mat01.imd \
+	$(SRCDIR)/tv01.imd \
+	$(SRCDIR)/stair_u01.imd \
+	$(SRCDIR)/stair_d01.imd \
+	$(SRCDIR)/table01.imd \
+	$(SRCDIR)/chair01.imd \
+	$(SRCDIR)/shelf01.imd \
+	$(SRCDIR)/shelf02.imd \
+	$(SRCDIR)/shelf04.imd \
+	$(SRCDIR)/shelf05.imd \
+	$(SRCDIR)/bed01.imd \
+	$(SRCDIR)/sink01.imd \
+	$(SRCDIR)/ref01.imd \
+	$(SRCDIR)/plant01.imd \
+	$(SRCDIR)/dust01.imd \
+	$(SRCDIR)/poster01.imd \
+	$(SRCDIR)/win01.imd \
+	$(SRCDIR)/pcdesk01.imd \
+	$(SRCDIR)/desk01.imd \
+	$(SRCDIR)/vase01.imd \
+	$(SRCDIR)/cashier01.imd \
+	$(SRCDIR)/drock01.imd \
+	$(SRCDIR)/drock02.imd \
+	$(SRCDIR)/desk02.imd \
+	$(SRCDIR)/art01.imd \
+	$(SRCDIR)/object02.imd \
+	$(SRCDIR)/d0stair_u01.imd \
+	$(SRCDIR)/d0stair_d01.imd \
+	$(SRCDIR)/in_vender01.imd \
+	$(SRCDIR)/box01.imd \
+	$(SRCDIR)/box02.imd \
+	$(SRCDIR)/chushion01.imd \
+	$(SRCDIR)/chushion02.imd \
+	$(SRCDIR)/warp01.imd \
+	$(SRCDIR)/warp02.imd \
+	$(SRCDIR)/warp03.imd \
+	$(SRCDIR)/shelf06.imd
+
+texset/indoor077.imd: $(DEP_TEXSET_IMD_INDOOR077) texset/tmp/indoor077.list
+	$(TEXMAG) -q -n -o $@ -S texset/tmp/indoor077.list
 
