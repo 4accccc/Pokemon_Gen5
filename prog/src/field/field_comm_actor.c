@@ -423,7 +423,7 @@ void MMDL_MoveCommActor_Move( MMDL *mmdl )
       {
         u16 code = MMDL_GetOBJCode( mmdl );
           
-        if( code == HERO || code == HEROINE )
+        if( code == SWHERO || code == SWHEROINE )
         {
           fx32 val,diff = 0;
             

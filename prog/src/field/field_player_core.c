@@ -92,7 +92,7 @@ typedef int (*REQPROC)(FIELD_PLAYER_CORE *);
 static const MMDL_HEADER data_MMdlHeader =
 {
 	MMDL_ID_PLAYER,	///<識別ID
-	HERO,	///<表示するOBJコード
+	SWHERO,	///<表示するOBJコード
 	MV_DMY,	///<動作コード
 	0,	///<イベントタイプ
 	0,	///<イベントフラグ
@@ -937,13 +937,13 @@ static void fldplayer_ChangeOBJCode(
   
   //現在がHERO,HEROINE、もしくは変更がHERO,HEROINEであれば
   //１回の切り替えのみ
-  if( code == HERO || code == HEROINE ||
-      now_code == HERO || now_code == HEROINE )
+  if( code == SWHERO || code == SWHEROINE ||
+      now_code == SWHERO || now_code == SWHEROINE )
   {
     MMDL_BLACTCONT_ChangeOBJCodeWithDummy( mmdl, code );
     MMDLSYS_ForceWaitVBlankProc( mmdlsys );
   }
-  else //HERO,HEROINEを介さなくてはならない他の切り替え
+  else //SWHERO,SWHEROINEを介さなくてはならない他の切り替え
   {
     int sex = FIELD_PLAYER_CORE_GetSex( player_core );
     u16 hero_code = FIELD_PLAYER_GetMoveFormToOBJCode(
@@ -1013,7 +1013,7 @@ static BOOL fldplayer_CheckOBJCodeHero( FIELD_PLAYER_CORE *player_core )
   MMDL *mmdl = FIELD_PLAYER_CORE_GetMMdl( player_core );
   u16 code = MMDL_GetOBJCode( mmdl );
 
-  if( code == HERO || code == HEROINE ){
+  if( code == SWHERO || code == SWHEROINE ){
     return( TRUE );
   }
   return( FALSE );

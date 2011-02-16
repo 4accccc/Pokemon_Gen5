@@ -36,7 +36,7 @@
 static MMDL_HEADER data_MMdlHeader =
 {
 	MMDL_ID_PLAYER,	///<識別ID
-	HERO,	///<表示するOBJコード
+	SWHERO,	///<表示するOBJコード
 	MV_RAIL_DMY,	///<動作コード
 	0,	///<イベントタイプ
 	0,	///<イベントフラグ

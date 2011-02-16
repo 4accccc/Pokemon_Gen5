@@ -634,7 +634,7 @@ static void mapCtrlHybrid_ChangeBaseSystem( FIELDMAP_WORK* p_fieldmap, FIELDMAP_
     static MMDL_HEADER data_MMdlHeader =
     {
       MMDL_ID_PLAYER,	///<識別ID
-      HERO,	///<表示するOBJコード
+      SWHERO,	///<表示するOBJコード
       MV_DMY,	///<動作コード
       0,	///<イベントタイプ
       0,	///<イベントフラグ
