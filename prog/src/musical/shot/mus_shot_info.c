@@ -520,6 +520,9 @@ static void MUS_SHOT_INFO_InitMessage( MUS_SHOT_INFO_WORK *infoWork )
 //--------------------------------------------------------------------------
 static void MUS_SHOT_INFO_ExitMessage( MUS_SHOT_INFO_WORK *infoWork )
 {
+#ifdef BUGFIX_AF_SYSTEM128_20110216
+  PRINTSYS_QUE_Clear( infoWork->printQue );
+#endif
   PRINTSYS_QUE_Delete( infoWork->printQue );
   if( infoWork->timeIcon != NULL )
   {

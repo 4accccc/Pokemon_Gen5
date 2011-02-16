@@ -467,6 +467,15 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
   //ショーパート
   //------------------------------
   case MES_INIT_ACTING:
+    //WBローカライズ180対応
+#ifdef BUGFIX_AF_SYSTEM180_20110216
+    if( evWork->isNetErr == TRUE )
+    {
+      //フィールド開くため
+      evWork->state = MES_ERROR_INIT_OPEN_FIELD;
+    }
+    else
+#endif //BUGFIX_AF_SYSTEM180_20110216
     {
       MUSICAL_EVENT_InitActing( evWork );
       MUS_TPrintf("InitAct[%8x][%8x][%8x]\n",evWork->gsys,&MusicalStage_ProcData,evWork->actInitWork );

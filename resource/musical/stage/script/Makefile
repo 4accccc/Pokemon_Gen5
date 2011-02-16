@@ -29,11 +29,12 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 .SUFFIXES: .esf .s .bin
 
 .esf.s:
-	ruby ../../eescmk.rb c:/home/pokemon_wb/prog/src/musical/stage/script/musical_script_command.h $*.esf c:/home/pokemon_wb/
+	ruby ../../eescmk.rb $(PROJECT_PROGDIR)/src/musical/stage/script/musical_script_command.h $*.esf c:/home/swan/
 
 .s.bin:
-	/cygdrive/c/Program\ Files/Freescale/CW\ for\ NINTENDO\ DSi\ V1.1/ARM_Tools/Command_Line_Tools/mwasmarm.exe $< -o $*.o
-	/cygdrive/c/Program\ Files/Freescale/CW\ for\ NINTENDO\ DSi\ V1.1/ARM_Tools/Command_Line_Tools/mwldarm.exe -dis -o $*.elf $*.o
+#うまく認識しないので直打ちです
+	/cygdrive/c/Program\ Files/Freescale/CW\ for\ NINTENDO\ DSi\ V1.2/ARM_Tools/Command_Line_Tools/mwasmarm.exe $< -o $*.o
+	/cygdrive/c/Program\ Files/Freescale/CW\ for\ NINTENDO\ DSi\ V1.2/ARM_Tools/Command_Line_Tools/mwldarm.exe -dis -o $*.elf $*.o
 	../../../../tools/elf2bin $*.elf
 	$(COPY) $*.bin ../
 endif
