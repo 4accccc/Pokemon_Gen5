@@ -159,6 +159,12 @@ typedef enum
   MPSS_SAVE_SECOND_SAVE_LAST,
   MPSS_SAVE_WAIT_LAST_SAVE,
   MPSS_SAVE_WAIT_FINISH_SAVE_SYNC,
+
+#ifdef BUGFIX_AF_SYSTEM277_20110216
+  MPSS_SAVE_PARENT_SAVE_WAIT,
+  MPSS_SAVE_PARENT_SAVE,
+  MPSS_SAVE_PARENT_PARMIT_CHILD,
+#endif
   
 }MB_PARENT_SUB_STATE;
 
@@ -2190,6 +2196,50 @@ static void MB_PARENT_SaveMain( MB_PARENT_WORK *work )
     }
     break;
 
+#ifdef BUGFIX_AF_SYSTEM277_20110216
+  //最初の予定では最終セーブフラグを送る前にバックアップの正当性を
+  //チェックする予定でしたが、チェックが難しそうなので、
+  //親機のセーブが完了してから子機をセーブするようにする
+  case MPSS_SAVE_WAIT_FIRST_SYNC:
+    if( MB_COMM_GetIsFinishChildFirstSave( work->commWork ) == TRUE )
+    {
+      work->saveWaitCnt = GFUser_GetPublicRand(20)+10;
+      work->subState = MPSS_SAVE_PARENT_SAVE_WAIT;
+    }
+    break;
+  case MPSS_SAVE_PARENT_SAVE_WAIT:
+    {
+      work->saveWaitCnt--;
+      if( work->saveWaitCnt == 0 )
+      {
+        work->subState = MPSS_SAVE_PARENT_SAVE;
+      }
+    }
+    break;
+
+  case MPSS_SAVE_PARENT_SAVE:
+    {
+      const SAVE_RESULT ret = GAMEDATA_SaveAsyncMain( work->initWork->gameData );
+      if( ret == SAVE_RESULT_OK )
+      {
+        work->subState = MPSS_SAVE_PARENT_PARMIT_CHILD;
+        MB_TPrintf( "MB_Parent Finish Second!\n" );
+      }
+    }
+    break;
+
+  case MPSS_SAVE_PARENT_PARMIT_CHILD:
+    {
+      //親機は以降特にセーブはしない
+      if( MB_COMM_Send_Flag( work->commWork , MCFT_PERMIT_FIRST_SAVE , 0 ) == TRUE )
+      {
+        work->subState = MPSS_SAVE_WAIT_SECOND_SYNC;
+        //親機は以降特にセーブはしない
+      }
+    }
+
+
+#else //BUGFIX_AF_SYSTEM277_20110216
   case MPSS_SAVE_WAIT_FIRST_SYNC:
     if( MB_COMM_GetIsFinishChildFirstSave( work->commWork ) == TRUE )
     {
@@ -2225,7 +2275,7 @@ static void MB_PARENT_SaveMain( MB_PARENT_WORK *work )
     }
     
     break;
-
+#endif //BUGFIX_AF_SYSTEM277_20110216
   case MPSS_SAVE_WAIT_SECOND_SYNC:
     if( MB_COMM_GetIsFinishChildSecondSave( work->commWork ) == TRUE )
     {
