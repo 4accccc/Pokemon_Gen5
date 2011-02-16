@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ichiraku_katsuhiko" host="W00241" date="2011-02-05T19:35:29"/>
+	<create user="ichiraku_katsuhiko" host="W00271" date="2011-02-16T15:54:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -317,13 +317,13 @@
 		</language>
 	</columns>
 
-	<dialog left="96" top="169" right="800" bottom="797" maximized="no" rayout="Vertical2">
+	<dialog left="183" top="91" right="887" bottom="719" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="788" top="346" right="1261" bottom="744" visible="yes"/>
-		<band id="0" index="0" style="0000" width="529"/>
+		<tag-palette left="788" top="346" right="1261" bottom="755" visible="no"/>
+		<band id="0" index="0" style="0000" width="521"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="696"/>
-		<band id="3" index="3" style="0000" width="696"/>
+		<band id="2" index="2" style="0000" width="688"/>
+		<band id="3" index="3" style="0000" width="688"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -706,10 +706,10 @@ Ariizumi 100506</comment>
 
 	<row id="COMM_TVT_GAME_15">
 		<comment>ふうせんわり！　説明画面</comment>
-		<language name="JPN">○○○いろの　ふうせんを　タッチして
+		<language name="JPN">[1:1C:簡易会話単語:0]いろの　ふうせんを　タッチして
 たくさん　ふうせんを　わろう！
 ほかのいろを　わると　げんてんだぞ！</language>
-		<language name="JPN_KANJI">○○○色の　風船を　タッチして
+		<language name="JPN_KANJI">[1:1C:簡易会話単語:0]色の　風船を　タッチして
 沢山　風船を　割ろう！
 他の色を　割ると　減点だぞ！</language>
 	</row>
@@ -765,6 +765,30 @@ ichiraku 110106</comment>
 ichiraku 110129</comment>
 		<language name="JPN">[2:02:３桁:0]</language>
 		<language name="JPN_KANJI">[2:02:３桁:0]</language>
+	</row>
+
+	<row id="COMM_TVT_GAME_24">
+		<comment>風船色</comment>
+		<language name="JPN">あか</language>
+		<language name="JPN_KANJI">赤</language>
+	</row>
+
+	<row id="COMM_TVT_GAME_25">
+		<comment>風船色</comment>
+		<language name="JPN">あお</language>
+		<language name="JPN_KANJI">青</language>
+	</row>
+
+	<row id="COMM_TVT_GAME_26">
+		<comment>風船色</comment>
+		<language name="JPN">き</language>
+		<language name="JPN_KANJI">黄</language>
+	</row>
+
+	<row id="COMM_TVT_GAME_27">
+		<comment>風船色</comment>
+		<language name="JPN">みどり</language>
+		<language name="JPN_KANJI">緑</language>
 	</row>
 
 	<flowchart-group-list>

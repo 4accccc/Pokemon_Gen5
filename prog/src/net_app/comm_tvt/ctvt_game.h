@@ -31,7 +31,7 @@
 
 // パレット
 #define CTVT_GAME_PAL_BG_M_BG       (0) // 5本
-#define CTVT_GAME_PAL_BG_M_TASKMENU (13) // 1本
+#define CTVT_GAME_PAL_BG_M_TASKMENU (12) // 1本
 #define CTVT_GAME_PAL_BG_M_WINFRAME (14) // 1本
 #define CTVT_GAME_PAL_BG_M_FONT     (15) // 1本
 

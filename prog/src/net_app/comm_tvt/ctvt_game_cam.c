@@ -2277,7 +2277,8 @@ static void SEQFUNC_TWL_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
     }
     break;
   case SEQ_END:
-    SEQ_SetNext( p_seqwk, SEQFUNC_TWL_Wait );
+    PS_Print( &p_wk->ps, &p_wk->msgwnd, SEQFUNC_TWL_Wait, COMM_TVT_GAME_14, p_wk->heapID );
+    SEQ_SetNext( p_seqwk, SEQFUNC_PrintStream );
     break;
   }
 
