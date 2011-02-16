@@ -255,6 +255,7 @@ static void SendBeacon_Update(GAMEBEACON_SEND_MANAGER *send)
     if(send->life > CrossCommData[send->info.action.action_no].life){
       send->life = 0;
       send->info.action.action_no = GAMEBEACON_ACTION_SEARCH;
+      send->info.version_bit = GAMEBEACON_RECV_VERSION_FULL; //全バージョン指定に戻す
 
       GAMEBEACON_Set_ResortData( GameBeaconSys );
     }
@@ -703,7 +704,7 @@ static void SendBeacon_Init(GAMEBEACON_SEND_MANAGER *send, GAMEDATA * gamedata)
   
   OS_GetOwnerInfo(&owner_info);
   
-  info->version_bit = 0xffff; //全バージョン指定
+  info->version_bit = GAMEBEACON_RECV_VERSION_FULL; //全バージョン指定
   info->zone_id = PLAYERWORK_getZoneID(GAMEDATA_GetMyPlayerWork(gamedata));
   if(ZONEDATA_IsUnionRoom(info->zone_id) == TRUE || ZONEDATA_IsColosseum(info->zone_id) == TRUE){
     const LOCATION *loc = GAMEDATA_GetSpecialLocation(gamedata);
@@ -828,6 +829,8 @@ void GAMEBEACON_SUB_SendBeaconSetCommon(GAMEBEACON_SEND_MANAGER *send)
 
   send->info.thanks_recv_count = MISC_CrossComm_GetThanksRecvCount(misc);
   send->info.suretigai_count = MISC_CrossComm_GetSuretigaiCount(misc);
+  
+  send->info.version_bit = GAMEBEACON_RECV_VERSION_FULL;  //基本は全バージョン受け取り可
 
   send->info.send_counter++;
   send->life = 0;
@@ -1087,8 +1090,8 @@ void GAMEBEACON_Set_PokemonGet(u16 monsno)
 void GAMEBEACON_Set_WildPokemonGet(u16 monsno)
 {
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_POKE_GET) == FALSE){ return; };
-  BEACONINFO_Set_WildPokemonGet(&GameBeaconSys->send.info, monsno);
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  BEACONINFO_Set_WildPokemonGet(&GameBeaconSys->send.info, monsno);
 }
 
 //==================================================================
@@ -1116,8 +1119,8 @@ void BEACONINFO_Set_WildPokemonGet(GAMEBEACON_INFO *info, u16 monsno)
 void GAMEBEACON_Set_SpecialPokemonGet(u16 monsno)
 {
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_SP_POKE_GET) == FALSE){ return; };
-  BEACONINFO_Set_SpecialPokemonGet(&GameBeaconSys->send.info, monsno);
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  BEACONINFO_Set_SpecialPokemonGet(&GameBeaconSys->send.info, monsno);
 }
 
 //==================================================================
@@ -1146,8 +1149,8 @@ void BEACONINFO_Set_SpecialPokemonGet(GAMEBEACON_INFO *info, u16 monsno)
 void GAMEBEACON_Set_PokemonLevelUp(const STRBUF *nickname)
 {
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_POKE_LVUP) == FALSE){ return; };
-  BEACONINFO_Set_PokemonLevelUp(&GameBeaconSys->send.info, nickname);
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  BEACONINFO_Set_PokemonLevelUp(&GameBeaconSys->send.info, nickname);
 }
 
 //==================================================================
@@ -1176,8 +1179,8 @@ void BEACONINFO_Set_PokemonLevelUp(GAMEBEACON_INFO *info, const STRBUF *nickname
 void GAMEBEACON_Set_PokemonEvolution(u16 monsno, const STRBUF *nickname)
 {
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_POKE_EVOLUTION) == FALSE){ return; };
-  BEACONINFO_Set_PokemonEvolution(&GameBeaconSys->send.info, monsno, nickname);
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  BEACONINFO_Set_PokemonEvolution(&GameBeaconSys->send.info, monsno, nickname);
 }
 
 //==================================================================
@@ -1207,8 +1210,8 @@ void BEACONINFO_Set_PokemonEvolution(GAMEBEACON_INFO *info, u16 monsno, const ST
 void GAMEBEACON_Set_PlayTime(u32 hour)
 {
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_PLAYTIME) == FALSE){ return; };
-  BEACONINFO_Set_PlayTime(&GameBeaconSys->send.info, hour);
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  BEACONINFO_Set_PlayTime(&GameBeaconSys->send.info, hour);
 }
 
 //==================================================================
@@ -1238,8 +1241,8 @@ void BEACONINFO_Set_PlayTime(GAMEBEACON_INFO *info, u32 hour)
 void GAMEBEACON_Set_DistributionPoke(u16 monsno)
 {
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_DISTRIBUTION_POKE) == FALSE){ return; };
-  BEACONINFO_Set_DistributionPoke(&GameBeaconSys->send.info, monsno);
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  BEACONINFO_Set_DistributionPoke(&GameBeaconSys->send.info, monsno);
 }
 
 //==================================================================
@@ -1268,8 +1271,8 @@ void BEACONINFO_Set_DistributionPoke(GAMEBEACON_INFO *info, u16 monsno)
 void GAMEBEACON_Set_DistributionItem(u16 item)
 {
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_DISTRIBUTION_ITEM) == FALSE){ return; };
-  BEACONINFO_Set_DistributionItem(&GameBeaconSys->send.info, item);
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  BEACONINFO_Set_DistributionItem(&GameBeaconSys->send.info, item);
 }
 
 //==================================================================
@@ -1296,8 +1299,8 @@ void BEACONINFO_Set_DistributionItem(GAMEBEACON_INFO *info, u16 item)
 void GAMEBEACON_Set_DistributionEtc(void)
 {
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_DISTRIBUTION_ETC) == FALSE){ return; };
-  BEACONINFO_Set_DistributionEtc(&GameBeaconSys->send.info);
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  BEACONINFO_Set_DistributionEtc(&GameBeaconSys->send.info);
 }
 
 //==================================================================
@@ -1323,8 +1326,8 @@ void BEACONINFO_Set_DistributionEtc(GAMEBEACON_INFO *info)
 void GAMEBEACON_Set_DistributionGPower(GPOWER_ID g_power_id)
 {
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_DISTRIBUTION_GPOWER) == FALSE){ return; };
-  BEACONINFO_Set_DistributionGPower(&GameBeaconSys->send.info, g_power_id);
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  BEACONINFO_Set_DistributionGPower(&GameBeaconSys->send.info, g_power_id);
 }
 
 //==================================================================
@@ -1354,8 +1357,8 @@ void BEACONINFO_Set_DistributionGPower(GAMEBEACON_INFO *info, GPOWER_ID g_power_
 void GAMEBEACON_Set_CriticalHit(const STRBUF *nickname)
 {
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_CRITICAL_HIT) == FALSE){ return; };
-  BEACONINFO_Set_CriticalHit(&GameBeaconSys->send.info, nickname);
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  BEACONINFO_Set_CriticalHit(&GameBeaconSys->send.info, nickname);
 }
 
 //==================================================================
@@ -1384,8 +1387,8 @@ void BEACONINFO_Set_CriticalHit(GAMEBEACON_INFO *info, const STRBUF *nickname)
 void GAMEBEACON_Set_CriticalDamage(const STRBUF *nickname)
 {
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_CRITICAL_DAMAGE) == FALSE){ return; };
-  BEACONINFO_Set_CriticalDamage(&GameBeaconSys->send.info, nickname);
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  BEACONINFO_Set_CriticalDamage(&GameBeaconSys->send.info, nickname);
 }
 
 //==================================================================
@@ -1414,8 +1417,8 @@ void BEACONINFO_Set_CriticalDamage(GAMEBEACON_INFO *info, const STRBUF *nickname
 void GAMEBEACON_Set_UseItem(u16 item_no)
 {
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_USE_ITEM) == FALSE){ return; };
-  BEACONINFO_Set_UseItem(&GameBeaconSys->send.info, item_no);
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  BEACONINFO_Set_UseItem(&GameBeaconSys->send.info, item_no);
 }
 
 //==================================================================
@@ -1580,8 +1583,8 @@ void GAMEBEACON_Set_Details_IntroductionPms(const PMS_DATA *pms)
 void GAMEBEACON_Set_FestMission( FEST_MISSION* mission )
 {
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_FEST_MISSION) == FALSE){ return; };
-  BEACONINFO_Set_FestMission(&GameBeaconSys->send.info, mission);
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  BEACONINFO_Set_FestMission(&GameBeaconSys->send.info, mission);
 }
 
 //==================================================================

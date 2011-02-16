@@ -75,8 +75,8 @@ void GAMEBEACON_Set_BattlePokeVictory(u16 monsno)
 void GAMEBEACON_Set_BattleWildPokeStart(u16 monsno)
 {
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_BATTLE_WILD_POKE_START) == FALSE){ return; };
-  BEACONINFO_Set_BattleWildPokeStart(&GameBeaconSys->send.info, monsno);
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  BEACONINFO_Set_BattleWildPokeStart(&GameBeaconSys->send.info, monsno);
 }
 
 //==================================================================
@@ -102,8 +102,8 @@ void BEACONINFO_Set_BattleWildPokeStart(GAMEBEACON_INFO *info, u16 monsno)
 void GAMEBEACON_Set_BattleWildPokeVictory(u16 monsno)
 {
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_BATTLE_WILD_POKE_VICTORY) == FALSE){ return; };
-  BEACONINFO_Set_BattleWildPokeVictory(&GameBeaconSys->send.info, monsno);
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  BEACONINFO_Set_BattleWildPokeVictory(&GameBeaconSys->send.info, monsno);
 }
 
 //==================================================================
@@ -129,8 +129,8 @@ void BEACONINFO_Set_BattleWildPokeVictory(GAMEBEACON_INFO *info, u16 monsno)
 void GAMEBEACON_Set_BattleSpPokeStart(u16 monsno)
 {
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_BATTLE_SP_POKE_START) == FALSE){ return; };
-  BEACONINFO_Set_BattleSpPokeStart(&GameBeaconSys->send.info, monsno);
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  BEACONINFO_Set_BattleSpPokeStart(&GameBeaconSys->send.info, monsno);
 }
 
 //==================================================================
@@ -156,8 +156,8 @@ void BEACONINFO_Set_BattleSpPokeStart(GAMEBEACON_INFO *info, u16 monsno)
 void GAMEBEACON_Set_BattleSpPokeVictory(u16 monsno)
 {
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_BATTLE_SP_POKE_VICTORY) == FALSE){ return; };
-  BEACONINFO_Set_BattleSpPokeVictory(&GameBeaconSys->send.info, monsno);
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  BEACONINFO_Set_BattleSpPokeVictory(&GameBeaconSys->send.info, monsno);
 }
 
 //==================================================================
@@ -183,8 +183,8 @@ void BEACONINFO_Set_BattleSpPokeVictory(GAMEBEACON_INFO *info, u16 monsno)
 void GAMEBEACON_Set_BattleTrainerStart(u16 tr_no)
 {
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_BATTLE_TRAINER_START) == FALSE){ return; };
-  BEACONINFO_Set_BattleTrainerStart(&GameBeaconSys->send.info, tr_no);
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  BEACONINFO_Set_BattleTrainerStart(&GameBeaconSys->send.info, tr_no);
 }
 
 //==================================================================
@@ -197,6 +197,7 @@ void BEACONINFO_Set_BattleTrainerStart(GAMEBEACON_INFO *info, u16 tr_no)
 {
   info->action.action_no = GAMEBEACON_ACTION_BATTLE_TRAINER_START;
   info->action.tr_no = tr_no;
+  info->version_bit = GAMEBEACON_RECV_VERSION_SWAN; //ƒXƒƒ“ˆÈ~‚¾‚¯
 
   BEACONINFO_Set_Details_BattleTrainer(info, tr_no);
 }
@@ -210,8 +211,8 @@ void BEACONINFO_Set_BattleTrainerStart(GAMEBEACON_INFO *info, u16 tr_no)
 void GAMEBEACON_Set_BattleTrainerVictory(u16 tr_no)
 {
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_BATTLE_TRAINER_VICTORY) == FALSE){ return; };
-  BEACONINFO_Set_BattleTrainerVictory(&GameBeaconSys->send.info, tr_no);
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  BEACONINFO_Set_BattleTrainerVictory(&GameBeaconSys->send.info, tr_no);
 }
 
 //==================================================================
@@ -224,6 +225,7 @@ void BEACONINFO_Set_BattleTrainerVictory(GAMEBEACON_INFO *info, u16 tr_no)
 {
   info->action.action_no = GAMEBEACON_ACTION_BATTLE_TRAINER_VICTORY;
   info->action.tr_no = tr_no;
+  info->version_bit = GAMEBEACON_RECV_VERSION_SWAN; //ƒXƒƒ“ˆÈ~‚¾‚¯
 
   BEACONINFO_Set_Details_Walk(info);
 }
@@ -237,8 +239,8 @@ void BEACONINFO_Set_BattleTrainerVictory(GAMEBEACON_INFO *info, u16 tr_no)
 void GAMEBEACON_Set_BattleLeaderStart(u16 tr_no)
 {
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_BATTLE_LEADER_START) == FALSE){ return; };
-  BEACONINFO_Set_BattleLeaderStart(&GameBeaconSys->send.info, tr_no);
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  BEACONINFO_Set_BattleLeaderStart(&GameBeaconSys->send.info, tr_no);
 }
 
 //==================================================================
@@ -251,6 +253,7 @@ void BEACONINFO_Set_BattleLeaderStart(GAMEBEACON_INFO *info, u16 tr_no)
 {
   info->action.action_no = GAMEBEACON_ACTION_BATTLE_LEADER_START;
   info->action.tr_no = tr_no;
+  info->version_bit = GAMEBEACON_RECV_VERSION_SWAN; //ƒXƒƒ“ˆÈ~‚¾‚¯
 
   BEACONINFO_Set_Details_BattleLeader(info, tr_no);
 }
@@ -264,8 +267,8 @@ void BEACONINFO_Set_BattleLeaderStart(GAMEBEACON_INFO *info, u16 tr_no)
 void GAMEBEACON_Set_BattleLeaderVictory(u16 tr_no)
 {
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_BATTLE_LEADER_VICTORY) == FALSE){ return; };
-  BEACONINFO_Set_BattleLeaderVictory(&GameBeaconSys->send.info, tr_no);
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  BEACONINFO_Set_BattleLeaderVictory(&GameBeaconSys->send.info, tr_no);
 }
 
 //==================================================================
@@ -278,6 +281,7 @@ void BEACONINFO_Set_BattleLeaderVictory(GAMEBEACON_INFO *info, u16 tr_no)
 {
   info->action.action_no = GAMEBEACON_ACTION_BATTLE_LEADER_VICTORY;
   info->action.tr_no = tr_no;
+  info->version_bit = GAMEBEACON_RECV_VERSION_SWAN; //ƒXƒƒ“ˆÈ~‚¾‚¯
 
   BEACONINFO_Set_Details_Walk(info);
 }
@@ -291,8 +295,8 @@ void BEACONINFO_Set_BattleLeaderVictory(GAMEBEACON_INFO *info, u16 tr_no)
 void GAMEBEACON_Set_BattleSpTrainerStart(u16 tr_no)
 {
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_BATTLE_SP_TRAINER_START) == FALSE){ return; };
-  BEACONINFO_Set_BattleSpTrainerStart(&GameBeaconSys->send.info, tr_no);
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  BEACONINFO_Set_BattleSpTrainerStart(&GameBeaconSys->send.info, tr_no);
 }
 
 //==================================================================
@@ -305,6 +309,7 @@ void BEACONINFO_Set_BattleSpTrainerStart(GAMEBEACON_INFO *info, u16 tr_no)
 {
   info->action.action_no = GAMEBEACON_ACTION_BATTLE_SP_TRAINER_START;
   info->action.tr_no = tr_no;
+  info->version_bit = GAMEBEACON_RECV_VERSION_SWAN; //ƒXƒƒ“ˆÈ~‚¾‚¯
 
   BEACONINFO_Set_Details_BattleSpTrainer(info, tr_no);
 }
@@ -318,8 +323,8 @@ void BEACONINFO_Set_BattleSpTrainerStart(GAMEBEACON_INFO *info, u16 tr_no)
 void GAMEBEACON_Set_BattleSpTrainerVictory(u16 tr_no)
 {
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_BATTLE_SP_TRAINER_VICTORY) == FALSE){ return; };
-  BEACONINFO_Set_BattleSpTrainerVictory(&GameBeaconSys->send.info, tr_no);
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  BEACONINFO_Set_BattleSpTrainerVictory(&GameBeaconSys->send.info, tr_no);
 }
 
 //==================================================================
@@ -332,6 +337,7 @@ void BEACONINFO_Set_BattleSpTrainerVictory(GAMEBEACON_INFO *info, u16 tr_no)
 {
   info->action.action_no = GAMEBEACON_ACTION_BATTLE_SP_TRAINER_VICTORY;
   info->action.tr_no = tr_no;
+  info->version_bit = GAMEBEACON_RECV_VERSION_SWAN; //ƒXƒƒ“ˆÈ~‚¾‚¯
 
   BEACONINFO_Set_Details_Walk(info);
 }
@@ -345,8 +351,8 @@ void BEACONINFO_Set_BattleSpTrainerVictory(GAMEBEACON_INFO *info, u16 tr_no)
 void GAMEBEACON_Set_BattleChampionStart(u16 tr_no)
 {
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_BATTLE_CHAMPION_START) == FALSE){ return; };
-  BEACONINFO_Set_BattleChampionStart(&GameBeaconSys->send.info, tr_no);
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  BEACONINFO_Set_BattleChampionStart(&GameBeaconSys->send.info, tr_no);
 }
 
 //==================================================================
@@ -359,6 +365,7 @@ void BEACONINFO_Set_BattleChampionStart(GAMEBEACON_INFO *info, u16 tr_no)
 {
   info->action.action_no = GAMEBEACON_ACTION_BATTLE_CHAMPION_START;
   info->action.tr_no = tr_no;
+  info->version_bit = GAMEBEACON_RECV_VERSION_SWAN; //ƒXƒƒ“ˆÈ~‚¾‚¯
 
   BEACONINFO_Set_Details_BattleSpTrainer(info, tr_no);
 }
@@ -372,8 +379,8 @@ void BEACONINFO_Set_BattleChampionStart(GAMEBEACON_INFO *info, u16 tr_no)
 void GAMEBEACON_Set_BattleChampionVictory(u16 tr_no)
 {
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_BATTLE_CHAMPION_VICTORY) == FALSE){ return; };
-  BEACONINFO_Set_BattleChampionVictory(&GameBeaconSys->send.info, tr_no);
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  BEACONINFO_Set_BattleChampionVictory(&GameBeaconSys->send.info, tr_no);
 }
 
 //==================================================================
@@ -386,6 +393,7 @@ void BEACONINFO_Set_BattleChampionVictory(GAMEBEACON_INFO *info, u16 tr_no)
 {
   info->action.action_no = GAMEBEACON_ACTION_BATTLE_CHAMPION_VICTORY;
   info->action.tr_no = tr_no;
+  info->version_bit = GAMEBEACON_RECV_VERSION_SWAN; //ƒXƒƒ“ˆÈ~‚¾‚¯
 
   BEACONINFO_Set_Details_Walk(info);
 }
@@ -400,8 +408,8 @@ void BEACONINFO_Set_BattleChampionVictory(GAMEBEACON_INFO *info, u16 tr_no)
 void GAMEBEACON_Set_GPower(GPOWER_ID g_power_id)
 {
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_GPOWER) == FALSE){ return; };
-  BEACONINFO_Set_GPower(&GameBeaconSys->send.info, g_power_id);
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  BEACONINFO_Set_GPower(&GameBeaconSys->send.info, g_power_id);
 }
 
 //==================================================================
@@ -429,8 +437,8 @@ void BEACONINFO_Set_GPower(GAMEBEACON_INFO *info, GPOWER_ID g_power_id)
 void GAMEBEACON_Set_SpItemGet(u16 item)
 {
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_SP_ITEM_GET) == FALSE){ return; };
-  BEACONINFO_Set_SpItemGet(&GameBeaconSys->send.info, item);
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  BEACONINFO_Set_SpItemGet(&GameBeaconSys->send.info, item);
 }
 
 //==================================================================
@@ -455,8 +463,8 @@ void BEACONINFO_Set_SpItemGet(GAMEBEACON_INFO *info, u16 item)
 void GAMEBEACON_Set_ZukanComplete(void)
 {
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_ZUKAN_COMPLETE) == FALSE){ return; };
-  BEACONINFO_Set_ZukanComplete(&GameBeaconSys->send.info);
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  BEACONINFO_Set_ZukanComplete(&GameBeaconSys->send.info);
 }
 
 //==================================================================
@@ -484,8 +492,8 @@ void GAMEBEACON_Set_ThankyouOver(u32 thankyou_count)
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_THANKYOU_OVER) == FALSE){ return; };
   for(i = 0; i < NELEMS(regu_count); i++){
     if(thankyou_count == regu_count[i]){
-      BEACONINFO_Set_ThankyouOver(&GameBeaconSys->send.info, thankyou_count);
       GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+      BEACONINFO_Set_ThankyouOver(&GameBeaconSys->send.info, thankyou_count);
       return;
     }
   }
@@ -513,8 +521,8 @@ void BEACONINFO_Set_ThankyouOver(GAMEBEACON_INFO *info, u32 thankyou_count)
 void GAMEBEACON_Set_UnionIn(void)
 {
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_UNION_IN) == FALSE){ return; };
-  BEACONINFO_Set_UnionIn(&GameBeaconSys->send.info);
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  BEACONINFO_Set_UnionIn(&GameBeaconSys->send.info);
 }
 
 //==================================================================
@@ -536,8 +544,8 @@ void BEACONINFO_Set_UnionIn(GAMEBEACON_INFO *info)
 void GAMEBEACON_Set_Escape(void)
 {
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_ESCAPE) == FALSE){ return; };
-  BEACONINFO_Set_Escape(&GameBeaconSys->send.info);
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  BEACONINFO_Set_Escape(&GameBeaconSys->send.info);
 }
 
 //==================================================================
@@ -562,8 +570,8 @@ void BEACONINFO_Set_Escape(GAMEBEACON_INFO *info)
 void GAMEBEACON_Set_HPLittle(const STRBUF *nickname)
 {
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_HP_LITTLE) == FALSE){ return; };
-  BEACONINFO_Set_HPLittle(&GameBeaconSys->send.info, nickname);
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  BEACONINFO_Set_HPLittle(&GameBeaconSys->send.info, nickname);
 }
 
 //==================================================================
@@ -592,8 +600,8 @@ void BEACONINFO_Set_HPLittle(GAMEBEACON_INFO *info, const STRBUF *nickname)
 void GAMEBEACON_Set_PPLittle(const STRBUF *nickname)
 {
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_PP_LITTLE) == FALSE){ return; };
-  BEACONINFO_Set_PPLittle(&GameBeaconSys->send.info, nickname);
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  BEACONINFO_Set_PPLittle(&GameBeaconSys->send.info, nickname);
 }
 
 //==================================================================
@@ -622,8 +630,8 @@ void BEACONINFO_Set_PPLittle(GAMEBEACON_INFO *info, const STRBUF *nickname)
 void GAMEBEACON_Set_Dying(const STRBUF *nickname)
 {
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_DYING) == FALSE){ return; };
-  BEACONINFO_Set_Dying(&GameBeaconSys->send.info, nickname);
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  BEACONINFO_Set_Dying(&GameBeaconSys->send.info, nickname);
 }
 
 //==================================================================
@@ -652,8 +660,8 @@ void BEACONINFO_Set_Dying(GAMEBEACON_INFO *info, const STRBUF *nickname)
 void GAMEBEACON_Set_StateIsAbnormal(const STRBUF *nickname)
 {
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_STATE_IS_ABNORMAL) == FALSE){ return; };
-  BEACONINFO_Set_StateIsAbnormal(&GameBeaconSys->send.info, nickname);
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  BEACONINFO_Set_StateIsAbnormal(&GameBeaconSys->send.info, nickname);
 }
 
 //==================================================================
@@ -682,8 +690,8 @@ void BEACONINFO_Set_StateIsAbnormal(GAMEBEACON_INFO *info, const STRBUF *nicknam
 void GAMEBEACON_Set_FieldSkill(u16 wazano)
 {
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_FIELD_SKILL) == FALSE){ return; };
-  BEACONINFO_Set_FieldSkill(&GameBeaconSys->send.info, wazano);
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  BEACONINFO_Set_FieldSkill(&GameBeaconSys->send.info, wazano);
 }
 
 //==================================================================
@@ -709,8 +717,8 @@ void BEACONINFO_Set_FieldSkill(GAMEBEACON_INFO *info, u16 wazano)
 void GAMEBEACON_Set_SodateyaEgg( void )
 {
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_SODATEYA_EGG) == FALSE){ return; };
-  BEACONINFO_Set_SodateyaEgg(&GameBeaconSys->send.info);
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  BEACONINFO_Set_SodateyaEgg(&GameBeaconSys->send.info);
 }
 
 //==================================================================
@@ -736,8 +744,8 @@ void BEACONINFO_Set_SodateyaEgg(GAMEBEACON_INFO *info)
 void GAMEBEACON_Set_EggHatch( u16 monsno )
 {
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_EGG_HATCH) == FALSE){ return; };
-  BEACONINFO_Set_EggHatch(&GameBeaconSys->send.info, monsno );
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  BEACONINFO_Set_EggHatch(&GameBeaconSys->send.info, monsno );
 }
 
 //==================================================================
@@ -764,8 +772,8 @@ void BEACONINFO_Set_EggHatch(GAMEBEACON_INFO *info, u16 monsno )
 void GAMEBEACON_Set_Shoping(void)
 {
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_SHOPING) == FALSE){ return; };
-  BEACONINFO_Set_Shoping(&GameBeaconSys->send.info);
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  BEACONINFO_Set_Shoping(&GameBeaconSys->send.info);
 }
 
 //==================================================================
@@ -788,8 +796,8 @@ void BEACONINFO_Set_Shoping(GAMEBEACON_INFO *info)
 void GAMEBEACON_Set_Subway(void)
 {
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_SUBWAY) == FALSE){ return; };
-  BEACONINFO_Set_Subway(&GameBeaconSys->send.info);
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  BEACONINFO_Set_Subway(&GameBeaconSys->send.info);
 }
 
 //==================================================================
@@ -814,8 +822,8 @@ void BEACONINFO_Set_Subway(GAMEBEACON_INFO *info)
 void GAMEBEACON_Set_SubwayStraightVictories(u32 victory_count)
 {
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_SUBWAY_STRAIGHT_VICTORIES) == FALSE){ return; };
-  BEACONINFO_Set_SubwayStraightVictories(&GameBeaconSys->send.info, victory_count);
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  BEACONINFO_Set_SubwayStraightVictories(&GameBeaconSys->send.info, victory_count);
 }
 
 //==================================================================
@@ -845,8 +853,8 @@ void BEACONINFO_Set_SubwayStraightVictories(GAMEBEACON_INFO *info, u32 victory_c
 void GAMEBEACON_Set_SubwayTrophyGet( void )
 {
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_SUBWAY_TROPHY_GET) == FALSE){ return; };
-  BEACONINFO_Set_SubwayTrophyGet(&GameBeaconSys->send.info);
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  BEACONINFO_Set_SubwayTrophyGet(&GameBeaconSys->send.info);
 }
 
 //==================================================================
@@ -872,8 +880,8 @@ void BEACONINFO_Set_SubwayTrophyGet( GAMEBEACON_INFO *info )
 void GAMEBEACON_Set_TrialHouse(void)
 {
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_TRIALHOUSE) == FALSE){ return; };
-  BEACONINFO_Set_TrialHouse(&GameBeaconSys->send.info);
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  BEACONINFO_Set_TrialHouse(&GameBeaconSys->send.info);
 }
 
 //==================================================================
@@ -898,8 +906,8 @@ void BEACONINFO_Set_TrialHouse(GAMEBEACON_INFO *info)
 void GAMEBEACON_Set_TrialHouseRank(u8 rank)
 {
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_TRIALHOUSE_RANK) == FALSE){ return; };
-  BEACONINFO_Set_TrialHouseRank(&GameBeaconSys->send.info, rank);
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  BEACONINFO_Set_TrialHouseRank(&GameBeaconSys->send.info, rank);
 }
 
 //==================================================================
@@ -926,8 +934,8 @@ void BEACONINFO_Set_TrialHouseRank(GAMEBEACON_INFO *info, u8 rank)
 void GAMEBEACON_Set_FerrisWheel(void)
 {
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_FERRIS_WHEEL) == FALSE){ return; };
-  BEACONINFO_Set_FerrisWheel(&GameBeaconSys->send.info);
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  BEACONINFO_Set_FerrisWheel(&GameBeaconSys->send.info);
 }
 
 //==================================================================
@@ -950,8 +958,8 @@ void BEACONINFO_Set_FerrisWheel(GAMEBEACON_INFO *info)
 void GAMEBEACON_Set_PokeShifter(void)
 {
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_POKESHIFTER) == FALSE){ return; };
-  BEACONINFO_Set_PokeShifter(&GameBeaconSys->send.info);
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  BEACONINFO_Set_PokeShifter(&GameBeaconSys->send.info);
 }
 
 //==================================================================
@@ -976,8 +984,8 @@ void BEACONINFO_Set_PokeShifter(GAMEBEACON_INFO *info)
 void GAMEBEACON_Set_Musical(const STRBUF *nickname)
 {
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_MUSICAL) == FALSE){ return; };
-  BEACONINFO_Set_Musical(&GameBeaconSys->send.info, nickname);
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  BEACONINFO_Set_Musical(&GameBeaconSys->send.info, nickname);
 }
 
 //==================================================================
@@ -1006,8 +1014,8 @@ void BEACONINFO_Set_Musical(GAMEBEACON_INFO *info, const STRBUF *nickname)
 void GAMEBEACON_Set_OtherGPowerUse(GPOWER_ID gpower_id)
 {
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_OTHER_GPOWER_USE) == FALSE){ return; };
-  BEACONINFO_Set_OtherGPowerUse(&GameBeaconSys->send.info, gpower_id);
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  BEACONINFO_Set_OtherGPowerUse(&GameBeaconSys->send.info, gpower_id);
 }
 
 //==================================================================
@@ -1037,8 +1045,8 @@ void BEACONINFO_Set_OtherGPowerUse(GAMEBEACON_INFO *info, GPOWER_ID gpower_id)
 void GAMEBEACON_Set_Thankyou(GAMEDATA *gamedata, u32 target_trainer_id)
 {
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_THANKYOU) == FALSE){ return; };
-  BEACONINFO_Set_Thankyou(&GameBeaconSys->send.info, gamedata, target_trainer_id);
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  BEACONINFO_Set_Thankyou(&GameBeaconSys->send.info, gamedata, target_trainer_id);
 }
 
 //==================================================================
@@ -1072,8 +1080,8 @@ void BEACONINFO_Set_Thankyou(GAMEBEACON_INFO *info, GAMEDATA *gamedata, u32 targ
 void GAMEBEACON_Set_FreeWord( const STRBUF *free_word )
 {
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_FREEWORD) == FALSE){ return; };
-  BEACONINFO_Set_FreeWord(&GameBeaconSys->send.info, free_word);
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  BEACONINFO_Set_FreeWord(&GameBeaconSys->send.info, free_word);
 }
 
 //==================================================================

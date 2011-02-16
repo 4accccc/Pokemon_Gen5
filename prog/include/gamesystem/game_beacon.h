@@ -25,6 +25,10 @@
 #define GAMEBEACON_INFO_TBL_MAX   (30)
 #define GAMEBEACON_INFO_TBL_END   (GAMEBEACON_INFO_TBL_MAX-1)
 
+///受け取り可能バージョン定義
+#define GAMEBEACON_RECV_VERSION_FULL  (0xFFFF)  //全バージョン受け取り可
+#define GAMEBEACON_RECV_VERSION_SWAN  (0xFFFC)  //スワン以降の全バージョン受け取り可(BW受け取り不可)
+
 ///詳細No
 typedef enum{
   GAMEBEACON_DETAILS_NO_BATTLE_WILD_POKE,       ///<野生ポケモンと対戦中

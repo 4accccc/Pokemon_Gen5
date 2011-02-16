@@ -1340,6 +1340,10 @@ static BOOL errchk_action_default(const GAMEBEACON_INFO* info )
 //エラーチェック トレーナー対戦タイプ
 static BOOL errchk_action_trainer_battle(const GAMEBEACON_INFO* info )
 {
+  //TrNoの互換が無いのでBWからのトレーナービーコンはエラー扱いにする
+  if( info->pm_version == VERSION_WHITE || info->pm_version == VERSION_BLACK ){
+    return TRUE;
+  }
   if( info->action.tr_no == TRID_NULL || info->action.tr_no >= TRID_MAX ){
     GF_ASSERT_MSG(0,"%d\n",info->action.tr_no );
     return TRUE;
