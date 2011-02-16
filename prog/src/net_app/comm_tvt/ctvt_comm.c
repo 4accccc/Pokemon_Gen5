@@ -2271,10 +2271,16 @@ void CTVT_COMM_Init_ReturnGame( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
   for( i=0;i<CTVT_MEMBER_NUM;i++ )
   {
     CTVT_COMM_ClearMemberState( work , commWork , &commWork->member[i] );
+    /*
+    commWork->member[i].isSelf    = FALSE;
+    commWork->member[i].isEnable  = FALSE;
+    commWork->member[i].bufferNo  = 0xFF;
+    commWork->member[i].bufferNo  = 0xFF;
+    */
   }
 
-  commWork->PhotobufUseBit = 0;
-  commWork->reqCheckBit = 0;
+  //commWork->PhotobufUseBit = 0;
+  //commWork->reqCheckBit = 0;
   commWork->isSendWait = FALSE;
 
   commWork->isCommWave = FALSE;
@@ -2298,6 +2304,9 @@ void CTVT_COMM_Init_ReturnGame( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
   commWork->canSendWaveBuf = TRUE;
   commWork->reqPermitSendWaveBuf = FALSE;
   commWork->tempTalkMember = CTVT_COMM_INVALID_MEMBER;
+
+  // メンバーデータ更新
+  CTVT_COMM_RefureshCommState( work , commWork );
 }
 
 //----------------------------------------------------------------------------

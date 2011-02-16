@@ -58,7 +58,8 @@ enum {
 	NARC_tvt_balloon_balloon1_nsbtp = 44,
 	NARC_tvt_balloon_balloon2_nsbtp = 45,
 	NARC_tvt_balloon_balloon3_nsbtp = 46,
-	NARC_tvt_balloon_balloon4_nsbtp = 47
+	NARC_tvt_balloon_balloon4_nsbtp = 47,
+	NARC_tvt_balloon_effect2_nsbma = 48
 };
 
 /* NARC_TVT_BALLOON_NAIX_ */

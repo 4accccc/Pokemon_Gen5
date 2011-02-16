@@ -308,8 +308,9 @@ BALLOON2_WORK* CTVT_BALLOON2_Create( CTVT_GAME_WORK *gameWork, u16 unit_idx, BOO
   p_wk->stage   = 0;
   p_wk->cnt     = 0;
   p_wk->interval= 0;
-  p_wk->anm_frm = 0;
   p_wk->anm_flg = FALSE;
+  p_wk->effect_ica = FALSE;
+  p_wk->effect_ima = FALSE;
   p_wk->alpha   = 31;
   p_wk->alpha_flg = FALSE;
   p_wk->ang     = 0;
@@ -596,23 +597,26 @@ void CTVT_BALLOON2_Draw( BALLOON2_WORK *p_wk )
     // エフェクトアニメーション描画&更新
     if( p_wk->anm_flg == TRUE && p_wk->scale_flg == FALSE )
     {
-      int  tmp_frm;
       GFL_G3D_OBJSTATUS tmp_status;
 
       head_obj_idx = GFL_G3D_UTIL_GetUnitObjIdx( p_wk->parent_g3dUtil, CTVT_UNIT_IDX_EFFECT );
       obj = GFL_G3D_UTIL_GetObjHandle( p_wk->parent_g3dUtil, head_obj_idx );
 
-      // 手動でアニメフレーム数設定
-      GFL_G3D_OBJECT_SetAnimeFrame( obj, 0, (int*)&p_wk->anm_frm );
-      p_wk->anm_frm += FX32_ONE;
-      GFL_G3D_OBJECT_GetAnimeFrameMax( obj, 0, &tmp_frm );
-      ICHI_Printf("エフェクトアニメ中\n");
+      if( p_wk->effect_ica == TRUE )
+      {
+        // 1ループ再生でFALSEになる
+        p_wk->effect_ica = GFL_G3D_OBJECT_LoopAnimeFrame( obj, 0, FX32_ONE );
+      }
+      if( p_wk->effect_ima == TRUE )
+      {
+        // 1ループ再生でFALSEになる
+        p_wk->effect_ima = GFL_G3D_OBJECT_LoopAnimeFrame( obj, 1, FX32_ONE );
+      }
 
-      if( p_wk->anm_frm >= tmp_frm )
+      if( p_wk->effect_ima == FALSE && p_wk->effect_ica == FALSE )
       {
         ICHI_Printf("エフェクトアニメ終了\n");
         // アニメOFF
-        p_wk->anm_frm = 0;
         p_wk->anm_flg = FALSE;
         p_wk->alpha_flg = TRUE;
       }
@@ -668,7 +672,11 @@ BOOL CTVT_BALLOON2_Burst( BALLOON2_WORK *p_wk )
     break;
   
   case 3:    // 破裂
+    // エフェクトフラグ
     p_wk->anm_flg = TRUE;
+    // アニメ再生フラグ
+    p_wk->effect_ica = TRUE;
+    p_wk->effect_ima = TRUE;
     p_wk->stage = 0;
     ret = TRUE;     // 破裂
     break;
