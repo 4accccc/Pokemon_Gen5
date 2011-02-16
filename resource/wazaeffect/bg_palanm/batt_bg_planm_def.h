@@ -27,7 +27,9 @@
 #define	BG_551_AOIHONOO_P_NCLR		(23)
 #define	BG_553_FREEZE_VOLT_P_DAT	(24)
 #define	BG_553_FREEZE_VOLT_P_NCLR	(25)
-#define	TEST_PALANM_DAT				(26)
-#define	TEST_PALANM_NCLR			(27)
+#define	BG_554_COLD_FLARE_P_DAT		(26)
+#define	BG_554_COLD_FLARE_P_NCLR	(27)
+#define	TEST_PALANM_DAT				(28)
+#define	TEST_PALANM_NCLR			(29)
 
 #endif
