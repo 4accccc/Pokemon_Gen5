@@ -3,10 +3,9 @@
  *	GAME FREAK inc.
  *
  *	@file		snd_strm.h
- *	@brief		サウンド	ストリーミング再生
- *	@author		tomoya takahashi  -> Toru=Nagihashi
- *	@data		2008.12.02  -> 20101104
- *	@note   神王蟲プロジェクトで使用していたソースを移植
+ *	@brief	サウンド	ストリーミング再生
+ *	@author Toru=Nagihashi
+ *	@data		20101104
  *
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]

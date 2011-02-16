@@ -270,6 +270,7 @@ static void releaseOAMcontrol(OAM_CONTROL* COam);
 
 static void MainFunc(TITLE_WORK* tw);
 static void VintrFunc(GFL_TCB *tcb, void *work);
+
 //--------------------------------------------------------------
 /**
  * @brief   タイトル画面初期化
@@ -305,6 +306,7 @@ GFL_PROC_RESULT TitleProcInit( GFL_PROC * proc, int * seq, void * pwk, void * my
 
   SND_STRM_Init( HEAPID_TITLE_DEMO );
   SND_STRM_Load( STRM_TITLE );
+
   return GFL_PROC_RES_FINISH;
 }
 
@@ -469,6 +471,7 @@ static void _vcount_func(void)
 GFL_PROC_RESULT TitleProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
   TITLE_WORK* tw = mywk;
+  u8 test_buff;
 
   SND_STRM_Main();
 
@@ -497,7 +500,6 @@ GFL_PROC_RESULT TitleProcMain( GFL_PROC * proc, int * seq, void * pwk, void * my
     SND_STRM_Play( STRM_TITLE );
 
     tw->bef_vcnt  = OS_GetVBlankCount();
-
     break;
 
   case SEQ_FADEIN:
@@ -506,6 +508,7 @@ GFL_PROC_RESULT TitleProcMain( GFL_PROC * proc, int * seq, void * pwk, void * my
     break;
 
   case SEQ_MAIN:
+
     MainFunc(tw);
     // キーチェック
     _key_check(tw);
@@ -586,6 +589,7 @@ GFL_PROC_RESULT TitleProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * myw
 {
   TITLE_WORK * tw = mywk;
   u32 mode;
+
 
   mode = tw->mode;
   SND_STRM_Exit();
@@ -1166,8 +1170,8 @@ static void setupG3Dcontrol(G3D_CONTROL* CG3d, HEAPID heapID)
                   fovySin, fovyCos, defaultCameraAspect, near, far, scale_w, heapID );
   }
   // カメラicaデータをロード
-  CG3d->icaAnime = ICA_ANIME_CreateStreamingAlloc(
-      heapID, ARCID_DEMO3D_GRA, CAMERA_DATA_BIN_NAME, 10 );
+  CG3d->icaAnime = ICA_ANIME_CreateAlloc(
+      heapID, ARCID_DEMO3D_GRA, CAMERA_DATA_BIN_NAME );
 
 
   //ライトセット

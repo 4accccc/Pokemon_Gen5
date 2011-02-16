@@ -3,9 +3,9 @@
  *	GAME FREAK inc.
  *
  *	@file		snd_strm.c
- *	@brief		サウンド	ストリーミング再生
- *	@author		Toru=Nagihashi
- *	@data		20101104  -> 20101130
+ *	@brief	サウンド	ストリーミング再生
+ *	@author	Toru=Nagihashi
+ *	@data		20101130
  *	@note   神王蟲プロジェクトで使用していたソースを移植したが、
  *	        StrmをSndArcStrmに変更したため、ほぼ書き直し
  *
@@ -27,7 +27,7 @@
 //-------------------------------------
 ///	ストリームスレッドのプライオリティ
 //=====================================
-#define STREAM_THREAD_PRIO 10
+#define STREAM_THREAD_PRIO 17
 
 //-----------------------------------------------------------------------------
 /**
@@ -106,7 +106,7 @@ void SND_STRM_Main( void )
 {
 	GF_ASSERT( sp_STRM_WORK );
 	
-  NNS_SndMain();
+  //NNS_SndMain();  //->PMSND_Mainで呼んでいる
 }
 
 //----------------------------------------------------------------------------
