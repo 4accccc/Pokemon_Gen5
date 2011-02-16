@@ -35,6 +35,8 @@
 #include "app/app_taskmenu.h"
 #include "app/app_keycursor.h"  // APP_KEYCURSOR_WORK
 
+#include "bag_item.h"
+
 // SE再定義
 enum
 { 
@@ -54,6 +56,7 @@ enum
   SE_BAG_SLIDE_IN     = SEQ_SE_SYS_90,   ///< 開始時のバッグスライドイン
   SE_BAG_MESSAGE      = SEQ_SE_MESSAGE,  ///< メッセージ送り
   SE_BAG_BAG_GRA      = SEQ_SE_SYS_99,   ///< バッグの絵をタッチしたとき
+  SE_BAG_REPOSITORY   = SEQ_SE_SYS_08,   ///< 保管に入れる音
 };
 
 #define MSG_SKIP_BTN (PAD_BUTTON_A|PAD_BUTTON_B)	// メッセージ送りボタン
@@ -140,6 +143,22 @@ enum
   BAR_ICON_ANM_CHECKBOX_OFF  = 20,
   BAR_ICON_ANM_MAX,
 };
+
+// リストのマーク一覧(アニメーションシーケンスの並びと一致)
+enum
+{
+  LIST_MARK_CHECK_BOX_ON,
+  LIST_MARK_CHECK_BOX_OFF,
+  LIST_MARK_CHECK_BOX_LOCK,
+  LIST_MARK_BALL,
+  LIST_MARK_MAIL,
+  LIST_MARK_EQUIP,
+  LIST_MARK_WAZA,
+  LIST_MARK_HIDEN,
+  LIST_MARK_NONE,
+  LIST_MARK_MAX,
+};
+
 
 //--------------------------------------------------------------
 /// 数値入力モード
@@ -293,6 +312,8 @@ struct _FIELD_ITEMMENU_PARAM {
   StateFunc * chgState;
   int key_repeat_speed;
   int key_repeat_wait;
+
+  BAGITEM_WORK  bag_item;
 };
 
 #define _OBJPLT_SUB_POKE_TYPE (4) //サブ画面技タイプアイコンパレット位置
@@ -433,6 +454,7 @@ extern int ITEMMENU_GetItemIndex(FIELD_ITEMMENU_WORK* pWork);
 extern int ITEMMENU_GetItemPocketNumber(FIELD_ITEMMENU_WORK* pWork);
 extern ITEM_ST* ITEMMENU_GetItem(FIELD_ITEMMENU_WORK* pWork,int no);
 extern void ITEMMENU_WordsetItemName( FIELD_ITEMMENU_WORK* pWork, u32 bufID, u32 itemID );
+extern void ITEMMENU_WordsetPocketName( FIELD_ITEMMENU_WORK* pWork, u32 bufID, u32 pocketID );
 
 extern void ITEMDISP_InitPocketCell( FIELD_ITEMMENU_WORK* pWork );
 extern void ITEMDISP_ChangePocketCell( FIELD_ITEMMENU_WORK* pWork,int pocketno );

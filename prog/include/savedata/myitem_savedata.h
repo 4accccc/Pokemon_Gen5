@@ -85,6 +85,11 @@ extern BOOL MYITEM_CheckItemPocket( MYITEM_PTR myitem, u32 pocket );
 extern u32 MYITEM_GetItemPocketNumber( MYITEM_PTR myitem, u32 pocket );
 extern ITEM_ST * MYITEM_PosItemGet( MYITEM_PTR myitem, u16 pocket, u16 pos );
 extern void MYITEM_BattlePocketItemMake( MYITEM_PTR myitem, ITEM_ST * make[], HEAPID heap );
+extern BOOL MYITEM_GetRepositoryFlag( MYITEM_PTR myitem, u16 item_no );
+extern  void MYITEM_SetRepositoryFlag( MYITEM_PTR myitem, u16 item_no , BOOL set );
+extern ITEM_ST * MYITEM_IdItemGet( MYITEM_PTR myitem ,u16 pocket ,u16 item_no );
+extern u32 MYITEM_GetPocketID( MYITEM_PTR myitem, u16 item_no );
+
 //extern u32 MYITEM_CnvButtonItemGet( const MYITEM_PTR myitem, int index );
 //extern void MYITEM_CnvButtonItemSet( MYITEM_PTR myitem, int index, u32 item );
 
@@ -92,6 +97,7 @@ extern void MYITEM_BattlePocketItemMake( MYITEM_PTR myitem, ITEM_ST * make[], HE
 //  ITEMLISTëÄçÏÇÃÇΩÇﬂÇÃä÷êî
 //----------------------------------------------------------
 extern u32 MYITEM_GetItemThisPocketNumber( ITEM_ST * item,int max );
+extern u32 MYITEM_GetItemThisPocketNumberNoRepository( MYITEM_PTR myitem ,u32 pocket );
 
 
 //----------------------------------------------------------

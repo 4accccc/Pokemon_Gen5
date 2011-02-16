@@ -138,6 +138,8 @@ static void _itemSellYesnoInit( FIELD_ITEMMENU_WORK* pWork );
 static void _itemSellYesnoInput( FIELD_ITEMMENU_WORK* pWork );
 static void _itemSellEndMsgWait( FIELD_ITEMMENU_WORK* pWork );
 static void _itemSellExit( FIELD_ITEMMENU_WORK* pWork );
+static void _itemRepositoryInOutInit(FIELD_ITEMMENU_WORK* pWork);
+static void _itemRepositoryInOutWait(FIELD_ITEMMENU_WORK* pWork);
 static void ITEM_Sub( FIELD_ITEMMENU_WORK* pWork, int sub_num );
 static void InputNum_Start( FIELD_ITEMMENU_WORK* pWork, BAG_INPUT_MODE mode );
 static void InputNum_Exit( FIELD_ITEMMENU_WORK* pWork );
@@ -323,7 +325,7 @@ ITEM_ST* ITEMMENU_GetItem(FIELD_ITEMMENU_WORK* pWork, int no)
     item = &pWork->ScrollItem[no];
   }
   else{
-    item = MYITEM_PosItemGet( pWork->pMyItem, pWork->pocketno, no );
+    item = BAGITEM_PosItemGet( &pWork->bag_item, pWork->pocketno, no );
   }
   return item;
 }
@@ -379,7 +381,6 @@ int ITEMMENU_GetItemPocketNumber(FIELD_ITEMMENU_WORK* pWork)
 
   if(pWork->moveMode){
     length = MYITEM_GetItemThisPocketNumber(pWork->ScrollItem, BAG_MYITEM_MAX);
-
   }
   else{
     length = MYITEM_GetItemPocketNumber( pWork->pMyItem, pWork->pocketno);
@@ -405,6 +406,21 @@ void ITEMMENU_WordsetItemName( FIELD_ITEMMENU_WORK* pWork, u32 bufID, u32 itemID
   WORDSET_RegisterItemName( pWork->WordSet, bufID, itemID );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ポケット名をレジスト
+ *
+ *	@param	pWork
+ *	@param	bufID
+ *	@param	pocketID:
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void ITEMMENU_WordsetPocketName( FIELD_ITEMMENU_WORK* pWork, u32 bufID, u32 pocketID )
+{
+  WORDSET_RegisterItemPocketName( pWork->WordSet, bufID, pocketID );
+}
 
 //-----------------------------------------------------------------------------
 /**
@@ -1579,6 +1595,12 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
     case BAG_MENU_SUTERU:   
       _CHANGE_STATE(pWork,_itemTrash);
       break;
+    // ----------しまう---------------
+    // ----------もどす---------------
+    case BAG_MENU_SHIMAU:   
+    case BAG_MENU_MODOSU:   
+      _CHANGE_STATE( pWork, _itemRepositoryInOutInit );
+      break;
     // ----------とうろく------------
     // ----------かいじょ------------
     case BAG_MENU_TOUROKU:  
@@ -1813,7 +1835,7 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
     return;
   // ソート
   }else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START ){
-    if( pWork->pocketno != BAG_POKE_WAZA && pWork->pocketno != BAG_POKE_NUTS &&
+    if( pWork->pocketno != BAG_POKE_WAZA && pWork->pocketno != BAG_POKE_REPOSITORY && pWork->pocketno != BAG_POKE_NUTS &&
         ITEMMENU_GetItemPocketNumber( pWork ) > 1 ){
       SORT_Button( pWork );
       KTST_SetDraw( pWork, TRUE );
@@ -1839,7 +1861,7 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
   // 並び替え
   else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
   {
-    if( pWork->pocketno != BAG_POKE_WAZA && pWork->pocketno != BAG_POKE_NUTS &&
+    if( pWork->pocketno != BAG_POKE_WAZA && pWork->pocketno != BAG_POKE_REPOSITORY && pWork->pocketno != BAG_POKE_NUTS &&
         ITEMMENU_GetItemPocketNumber( pWork ) > 1 ){
       GFL_STD_MemClear( pWork->ScrollItem, sizeof( pWork->ScrollItem ) );
       MYITEM_ITEM_STCopy( pWork->pMyItem, pWork->ScrollItem, pWork->pocketno, TRUE );  //取得
@@ -2492,7 +2514,11 @@ static void ITEM_Sub( FIELD_ITEMMENU_WORK* pWork, int sub_num )
   // アイテムがなくなった場合
   if( MYITEM_GetItemNum( pWork->pMyItem, pWork->ret_item, pWork->heapID ) == 0 )
   {
+    int now_pos = ITEMMENU_GetItemIndex( pWork );         // 現在のカーソル位置のアイテム
     int length = ITEMMENU_GetItemPocketNumber( pWork) + 1;  // 捨てる前の数と比べないとダメなので＋１
+
+    // 選択中のアイテムを保管データからも取り除く
+    BAGITEM_PosItemDelete( &pWork->bag_item , now_pos);
 
     // スクロールバーが無効なら
     if( length < ITEMMENU_SCROLLBAR_ENABLE_NUM )
@@ -2690,6 +2716,89 @@ static BOOL InputNum_Main( FIELD_ITEMMENU_WORK* pWork )
   }
 
   return ret;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アイテム保管メッセージ表示
+ *
+ *	@param	pWork
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void _itemRepositoryInOutInit(FIELD_ITEMMENU_WORK* pWork)
+{
+  BOOL is_in = MYITEM_GetRepositoryFlag( pWork->pMyItem ,pWork->ret_item);
+  u32 pocket_id = MYITEM_GetPocketID( pWork->pMyItem , pWork->ret_item );
+  if( is_in == FALSE )
+  {
+    // しまう
+    GFL_MSG_GetString( pWork->MsgManager, mes_bag_124, pWork->pStrBuf );
+    ITEMMENU_WordsetItemName( pWork, 1,  pWork->ret_item );
+    ITEMMENU_WordsetPocketName( pWork, 0, BAG_POKE_REPOSITORY );
+    MYITEM_SetRepositoryFlag( pWork->pMyItem , pWork->ret_item , TRUE );
+    BAGITEM_AddRepositoryItem( &pWork->bag_item , pWork->ret_item , pocket_id );
+  }
+  else
+  {
+    // もどす
+    GFL_MSG_GetString( pWork->MsgManager, mes_bag_125, pWork->pStrBuf );
+    ITEMMENU_WordsetItemName( pWork, 1,  pWork->ret_item );
+    ITEMMENU_WordsetPocketName( pWork, 0, pocket_id );
+    BAGITEM_PosItemDelete( &pWork->bag_item , ITEMMENU_GetItemIndex( pWork ));
+    MYITEM_SetRepositoryFlag( pWork->pMyItem , pWork->ret_item , FALSE );
+  }
+  WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
+  ITEMDISP_ItemInfoWindowDispEx( pWork, FALSE );
+  
+  // 使う音
+  PMSND_PlaySE( SE_BAG_REPOSITORY );
+
+  ITEMDISP_ChangeRetButtonActive( pWork, FALSE );   // 戻るボタンを無効に
+
+   
+  // カーソル位置を修正
+  {
+    int now_pos = ITEMMENU_GetItemIndex( pWork );         // 現在のカーソル位置のアイテム
+    int length = ITEMMENU_GetItemPocketNumber( pWork) + 1;  // 捨てる前の数と比べないとダメなので＋１
+
+    // スクロールバーが無効なら
+    if( length < ITEMMENU_SCROLLBAR_ENABLE_NUM )
+    {
+      // カーソルが指す座標を下げる
+      pWork->curpos = MATH_IMax( 0, pWork->curpos-1 );
+    }
+    else
+    {
+      pWork->oamlistpos = MATH_IMax( pWork->oamlistpos-1 , -1 );
+    }
+  }
+
+  _CHANGE_STATE( pWork, _itemRepositoryInOutWait );
+}
+
+static void _itemRepositoryInOutWait(FIELD_ITEMMENU_WORK* pWork)
+{
+  if( GFL_UI_KEY_GetTrg() & MSG_SKIP_BTN ){
+    KTST_SetDraw( pWork, TRUE );
+  }else if( GFL_UI_TP_GetTrg() ){
+    KTST_SetDraw( pWork, FALSE );
+  }else{
+    return;
+  }
+
+  // 再描画
+  GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
+  pWork->oamlistpos_old = 0xffff;
+  _windowRewrite(pWork);
+  pWork->bCursorChange = 1;
+  ITEMDISP_ScrollCursorChangePos( pWork );
+  ITEMDISP_ListPlateClear( pWork );
+  GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkScroll, TRUE );
+  ITEMDISP_ChangeActive( pWork, TRUE );
+  ITEMDISP_ChangeRetButtonActive( pWork, TRUE );   // 戻るボタンを使える状態に
+  ChangeStateItemKindSelectItemMenu( pWork );
 }
 
 //-----------------------------------------------------------------------------
@@ -3072,7 +3181,8 @@ static BOOL SHORTCUT_SetEventItem( FIELD_ITEMMENU_WORK* pWork, int pos )
   // 表示上の位置から実体の位置へ座標変換
   pos += pWork->oamlistpos + 1;
 
-  if(pWork->pocketno == BAG_POKE_EVENT){
+  // 大切なものと、保管の場合のみチェック
+  if((pWork->pocketno == BAG_POKE_EVENT)||(pWork->pocketno == BAG_POKE_REPOSITORY)){
     if( ITEMMENU_GetItemPocketNumber(pWork) <= pos ){
       return FALSE;
     }else{
@@ -3405,6 +3515,17 @@ static void ItemMenuMake( FIELD_ITEMMENU_WORK * pWork, u8* tbl )
     }
   }
 
+  // しまう
+  // もどす
+  if( pocket != BAG_POKE_REPOSITORY )
+  {
+    tbl[BAG_MENU_KEEP] = BAG_MENU_SHIMAU;
+  }
+  else
+  {
+    tbl[BAG_MENU_KEEP] = BAG_MENU_MODOSU;
+  }
+
   // やめる
   tbl[BAG_MENU_CANCEL] = BAG_MENU_YAMERU;
 
@@ -3448,6 +3569,8 @@ static void _itemUseWindowRewrite(FIELD_ITEMMENU_WORK* pWork)
     msg_bag_019,   ///< かいじょ
     msg_bag_004,   ///< もたせる
     msg_bag_006,   ///< けってい
+    mes_bag_120,   ///< しまう
+    mes_bag_121,   ///< もどす
     msg_bag_009,   ///< やめる
     mes_shop_103,  ///< うる
     msg_bag_001,   ///< つかう
@@ -3570,7 +3693,7 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
   // ソートボタン
   }else if(BUTTONID_SORT == bttnid){
     // 技マシン・木の実は処理なし
-    if( pWork->pocketno != BAG_POKE_WAZA && pWork->pocketno != BAG_POKE_NUTS &&
+    if( pWork->pocketno != BAG_POKE_WAZA && pWork->pocketno != BAG_POKE_REPOSITORY && pWork->pocketno != BAG_POKE_NUTS &&
         ITEMMENU_GetItemPocketNumber( pWork ) > 1 ){
       SORT_Button( pWork );
       KTST_SetDraw( pWork, FALSE );
@@ -3781,6 +3904,9 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
   // アイテム破損データを修復
   MYITEM_CheckSafety( pWork->pMyItem );
 
+  // バッグ用アイテム初期化
+  BAGITEM_InitData( &pWork->bag_item , pParam->p_myitem ,pWork->heapID );
+
   HOSAKA_Printf("bag mode =%d \n", pWork->mode );
 
 // 保坂のみデバッグ押しながら起動でショップから起動したことにする
@@ -3972,6 +4098,9 @@ static GFL_PROC_RESULT FieldItemMenuProc_End( GFL_PROC * proc, int * seq, void *
 
   // GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0);
   GFL_TCB_DeleteTask( pWork->g3dVintr );
+
+  // バッグアイテムの開放
+  BAGITEM_DeleteData( &pWork->bag_item );
 
   MYITEM_FieldBagPocketSet(pWork->pBagCursor, pWork->pocketno);
   MYITEM_FieldBagCursorSet(pWork->pBagCursor, pWork->pocketno, pWork->curpos, pWork->oamlistpos+1 );

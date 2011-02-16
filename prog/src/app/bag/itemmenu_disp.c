@@ -704,13 +704,13 @@ void ITEMDISP_ItemInfoVanishSet( FIELD_ITEMMENU_WORK* pWork, BOOL on_off )
 	{
 		ITEM_ST * item;
 		u16	waza;
-		item = ITEMMENU_GetItem( pWork, ITEMMENU_GetItemIndex(pWork) );
-		waza = ITEM_GetWazaNo( item->id );
-		if( waza != WAZANO_NULL ){
-			GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaKind[WAZADATA_GetDamageType(waza)], on_off );
-			GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaType[WAZADATA_GetType(waza)], on_off );
-		}
-	}
+    item = ITEMMENU_GetItem( pWork, ITEMMENU_GetItemIndex(pWork) );
+    waza = ITEM_GetWazaNo( item->id );
+    if( waza != WAZANO_NULL ){
+      GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaKind[WAZADATA_GetDamageType(waza)], on_off );
+      GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaType[WAZADATA_GetType(waza)], on_off );
+    }
+  }
 }
 
 //------------------------------------------------------------------------------
@@ -1477,7 +1477,7 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
 	for( i=0; i<ITEM_LIST_NUM; i++ ){
     ITEM_ST * item;
 
-    pWork->nListEnable[i] = 0;
+    pWork->nListEnable[i] = LIST_MARK_MAX;
 
 		if( pWork->oamlistpos+i < 0 ){ continue; }
 
@@ -1530,127 +1530,51 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
       PRINTSYS_PrintColor( pWork->listBmp[i], 0, 0, pWork->pExpStrBuf, pWork->fontHandle, color );
 //			PrintStr( pWork, &pWork->listBmp[i], pWork->pExpStrBuf, 0, 0, color );
 
+      // くすりポケットは非表示
+      if( pWork->pocketno == BAG_POKE_DRUG ){
+				pWork->nListEnable[i] = LIST_MARK_NONE;
+      }
+      // きのみポケットも非表示
+      else if( pWork->pocketno == BAG_POKE_NUTS ){
+				pWork->nListEnable[i] = LIST_MARK_NONE;
+      }
 			// ボール
-			if( type == ITEMTYPE_BALL	){
-				pWork->nListEnable[i] = 4;
+      else if( type == ITEMTYPE_BALL	){
+				pWork->nListEnable[i] = LIST_MARK_BALL;
 			// メール
 			}else if( type == ITEMTYPE_MAIL ){
-				pWork->nListEnable[i] = 5;
+				pWork->nListEnable[i] = LIST_MARK_MAIL;
 			// 装備
 			}else if( type == ITEMTYPE_EQUIP ){
-				pWork->nListEnable[i] = 6;
+				pWork->nListEnable[i] = LIST_MARK_EQUIP;
 			// 秘伝マシン
 			}else if( ITEM_GetHidenMashineNo( item->id ) != 0xff ){
-				pWork->nListEnable[i] = 8;
+				pWork->nListEnable[i] = LIST_MARK_HIDEN;
 			// 技マシン
 			}else if( ITEM_GetWazaMashineNo( item->id ) != 0xff ){
-				pWork->nListEnable[i] = 7;
-			// 登録できない
-			}else if( ITEM_GetBufParam( itemdata, ITEM_PRM_CNV ) == 0 ){
-				pWork->nListEnable[i] = 3;
-			// 登録されていない
-			}else if( ITEMMENU_CheckCnvButtonItem(pWork,item->id) == FALSE ){
-				pWork->nListEnable[i] = 2;
-			// その他
-			}else{
-				pWork->nListEnable[i] = 1;
-			}
+				pWork->nListEnable[i] = LIST_MARK_WAZA;
+      // 登録できる
+      }else if( ITEM_GetBufParam( itemdata, ITEM_PRM_CNV ) != 0 ){
+        if( ITEMMENU_CheckCnvButtonItem(pWork,item->id) == TRUE )
+        {
+          pWork->nListEnable[i] = LIST_MARK_CHECK_BOX_ON;
+        }else{
+          pWork->nListEnable[i] = LIST_MARK_CHECK_BOX_OFF;
+        }
+      }
+      else
+      // 登録できない
+      {
+        pWork->nListEnable[i] = LIST_MARK_NONE;
+      }
+
       GFL_HEAP_FreeMemory( itemdata );
     }
   }
-	GFL_ARC_CloseDataHandle( ah );
+  GFL_ARC_CloseDataHandle( ah );
 
 	pWork->bCellChange = 1;
 }
-
-/*
-void ITEMDISP_CellMessageScroll( FIELD_ITEMMENU_WORK * wk, int mv )
-{
-	GFL_BMP_DATA * bmp;
-	ITEM_ST * item;
-	u16	ap, wp;
-	u32	i;
-      void * itemdata;
-			s32	type;
-
-	if( mv < 0 ){
-		ap = 0;
-		wp = ITEM_LIST_NUM-1;
-
-		bmp = wk->listBmp[wp];
-
-		for( i=ITEM_LIST_NUM-1; i>0; i-- ){
-			wk->listBmp[i] = wk->listBmp[i-1];
-			wk->nListEnable[i] = wk->nListEnable[i-1];
-		}
-
-		wk->listBmp[ap] = bmp;
-		wk->nListEnable[ap] = 0;
-
-	}else{
-		ap = ITEM_LIST_NUM-1;
-		wp = 0;
-
-		bmp = wk->listBmp[wp];
-
-		for( i=0; i<ITEM_LIST_NUM-1; i++ ){
-			wk->listBmp[i] = wk->listBmp[i+1];
-			wk->nListEnable[i] = wk->nListEnable[i+1];
-		}
-
-		wk->listBmp[ap] = bmp;
-		wk->nListEnable[ap] = 0;
-	}
-
-
-	item = ITEMMENU_GetItem( wk, wk->oamlistpos+ap );
-  itemdata = ITEM_GetItemArcData( item->id, ITEM_GET_DATA, wk->heapID );
-	type = ITEM_GetBufParam( itemdata, ITEM_PRM_ITEM_TYPE );
-
-	if( !( item == NULL || item->id == ITEM_DUMMY_DATA ) ){
-//		wk->listBmp[ap] = 
-//					color = PRINTSYS_LSB_Make(2,1,13);
-		GFL_BMP_Clear(wk->listBmp[ap], 13 );
-		GFL_MSG_GetString( wk->MsgManager, MSG_ITEM_STR001, wk->pStrBuf );
-    ITEMMENU_WordsetItemName( wk, 0, item->id );
-		WORDSET_ExpandStr( wk->WordSet, wk->pExpStrBuf, wk->pStrBuf  );
-		PRINTSYS_PrintColor( wk->listBmp[ap], 0, 0, wk->pExpStrBuf, wk->fontHandle, PRINTSYS_LSB_Make(2,1,13) );
-
-
-			// ボール
-			if( type == ITEMTYPE_BALL	){
-				wk->nListEnable[ap] = 4;
-			// メール
-			}else if( type == ITEMTYPE_MAIL ){
-				wk->nListEnable[ap] = 5;
-			// 装備
-			}else if( type == ITEMTYPE_EQUIP ){
-				wk->nListEnable[ap] = 6;
-			// 秘伝マシン
-			}else if( ITEM_GetHidenMashineNo( item->id ) != 0xff ){
-				wk->nListEnable[ap] = 8;
-			// 技マシン
-			}else if( ITEM_GetWazaMashineNo( item->id ) != 0xff ){
-				wk->nListEnable[ap] = 7;
-			// 登録できない
-			}else if( ITEM_GetBufParam( itemdata, ITEM_PRM_CNV ) == 0 ){
-				wk->nListEnable[ap] = 3;
-			// 登録されていない
-			}else if( ITEMMENU_CheckCnvButtonItem(wk,item->id) == FALSE ){
-				wk->nListEnable[ap] = 2;
-			// その他
-			}else{
-				wk->nListEnable[ap] = 1;
-			}
-      GFL_HEAP_FreeMemory( itemdata );
-
-
-	}
-}
-*/
-
-
-
 
 //-----------------------------------------------------------------------------
 /**
@@ -1733,40 +1657,28 @@ void ITEMDISP_CellVramTrans( FIELD_ITEMMENU_WORK* pWork )
     dest_adrs += (8*32);
     GX_LoadOBJ( &charbuff[12*32], dest_adrs, (32*8) );
 #endif
-
-    if( pWork->nListEnable[i] != 0 ){
-      //「たいせつなもの」ポケット
-      if( pWork->pocketno == BAG_POKE_EVENT ){
-				if( ITEMMENU_CheckShortCutSetMode( pWork ) == TRUE && pWork->nListEnable[i] != 3 ){
-					GFL_CLACT_WK_SetAnmSeq( pWork->listMarkCell[i], pWork->nListEnable[i]-1 );
-	        GFL_CLACT_WK_SetDrawEnable( pWork->listMarkCell[i], TRUE );
-				}else{
-	        GFL_CLACT_WK_SetDrawEnable( pWork->listMarkCell[i], FALSE );
-				}
-			//「どうぐ」ポケット
-			}else if( pWork->pocketno == BAG_POKE_NORMAL && pWork->nListEnable[i] >= 4 ){
-        GFL_CLACT_WK_SetAnmSeq( pWork->listMarkCell[i], pWork->nListEnable[i]-1 );
+    
+    // リストバー・マークの表示切替
+    if( pWork->nListEnable[i] != LIST_MARK_MAX )
+    {
+      if( pWork->nListEnable[i] != LIST_MARK_NONE )
+      {
+        GFL_CLACT_WK_SetAnmSeq( pWork->listMarkCell[i], pWork->nListEnable[i] );
         GFL_CLACT_WK_SetDrawEnable( pWork->listMarkCell[i], TRUE );
-			//「わざマシン」ポケット
-			}else if( pWork->pocketno == BAG_POKE_WAZA && pWork->nListEnable[i] >= 7 ){
-        GFL_CLACT_WK_SetAnmSeq( pWork->listMarkCell[i], pWork->nListEnable[i]-1 );
-        GFL_CLACT_WK_SetDrawEnable( pWork->listMarkCell[i], TRUE );
-			}else{
+      }
+      else
+      {
         GFL_CLACT_WK_SetDrawEnable( pWork->listMarkCell[i], FALSE );
       }
-      GFL_CLACT_WK_SetDrawEnable( pWork->listCell[i], TRUE );
-		}else{
+      GFL_CLACT_WK_SetDrawEnable( pWork->listCell[i] , TRUE );
+    }
+    else
+    {
       GFL_CLACT_WK_SetDrawEnable( pWork->listMarkCell[i] , FALSE );
       GFL_CLACT_WK_SetDrawEnable( pWork->listCell[i] , FALSE );
     }
   }
 }
-
-//      GX_LoadOBJ(&charbuff[ 0*32], dest_adrs + (11)*32, (32*5));
-//     GX_LoadOBJ(&charbuff[12*32], dest_adrs + (19)*32, (32*5));
-//      GX_LoadOBJ(&charbuff[ 5*32], dest_adrs + (40)*32, (32*7));
-//      GX_LoadOBJ(&charbuff[17*32], dest_adrs + (48)*32, (32*7));
-
 
 //------------------------------------------------------------------------------
 /**

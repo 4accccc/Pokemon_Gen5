@@ -23,6 +23,8 @@ enum {
   BAG_MENU_KAIZYO,      ///< かいじょ
   BAG_MENU_MOTASERU,    ///< もたせる
   BAG_MENU_KETTEI,      ///< けってい
+  BAG_MENU_SHIMAU,      ///< しまう
+  BAG_MENU_MODOSU,      ///< もどす
   BAG_MENU_YAMERU,      ///< やめる
   BAG_MENU_URU,         ///< うる
 
@@ -34,6 +36,7 @@ enum{
   BAG_MENU_USE=0,     // つかう・みる・おりる
   BAG_MENU_GIVE,      // もたせる
   BAG_MENU_SUB,       // すてる・とうろく・かいじょ
+  BAG_MENU_KEEP,      // しまう・もどす
   BAG_MENU_CANCEL,
   BAG_MENUTBL_MAX,
 };

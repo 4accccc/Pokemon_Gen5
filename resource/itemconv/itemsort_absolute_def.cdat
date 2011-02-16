@@ -12,6 +12,7 @@
 
 // 添字:item_id 
 static const u16 ItemSortByAbsolute[] = {
+  0,  // ダミーデータ
   627,  // マスターボール
   626,  // ハイパーボール
   625,  // スーパーボール

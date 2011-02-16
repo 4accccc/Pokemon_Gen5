@@ -45,6 +45,7 @@ header = <<EOS
 
 // 添字:item_id 
 static const u16 ItemSortByAbsolute[] = {
+  0,  // ダミーデータ
 EOS
 sort1_file << header
 
@@ -63,6 +64,7 @@ header = <<EOS
 
 // 添字:item_id 
 static const u16 ItemSortByJp[] = {
+  0,  // ダミーデータ
 EOS
 sort2_file << header
 

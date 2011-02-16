@@ -1128,7 +1128,8 @@ SRCS_OVERLAY_LEADER_BOARD = app/leader_board/leader_board.c
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> GROUP_OVERLAY_UNION_INTRUDE
 SRCS_OVERLAY_BAG = app/bag/itemmenu.c \
-                   app/bag/itemmenu_disp.c
+                   app/bag/itemmenu_disp.c\
+                   app/bag/bag_item.c
 
 # ƒ‚ƒmƒŠƒX‰æ–Ê
 #===> SRCS_OVERLAY_DEV_WIFI
