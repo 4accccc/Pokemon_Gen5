@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohtani_mayo" host="W00238" date="2011-02-09T20:06:57" source="livecaster_test_003.mb"/>
+	<create user="ohtani_mayo" host="W00238" date="2011-02-16T15:31:35" source="livecaster_test_003.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ohtani_mayo" host="W00238" date="2011-02-09T20:06:57" source="livecaster_test_003.mb"/>
+<original_create user="ohtani_mayo" host="W00238" date="2011-02-16T15:31:35" source="livecaster_test_003.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -803,7 +803,7 @@
 			<primitive_array size="10">
 				<primitive index="0" type="quad_strip" vertex_size="14">
 					<mtx idx="0"/>
-					<tex st="-7.937500 8.062500"/>
+					<tex st="-8.437500 0.625000"/>
 					<clr rgb="31 30 18"/>
 					<pos_xyz xyz="-1.272217 1.333252 0.000000"/>
 					<clr rgb="30 27 3"/>
@@ -1134,9 +1134,9 @@
 		volume_max="1.647949 2.001709 1.129150"
 		volume_r="2.252441"
 	>
-		<display index="0" material="0" polygon="0" priority="0"/>
-		<display index="1" material="0" polygon="2" priority="0"/>
-		<display index="2" material="1" polygon="1" priority="0"/>
+		<display index="0" material="0" polygon="2" priority="0"/>
+		<display index="1" material="1" polygon="1" priority="0"/>
+		<display index="2" material="2" polygon="0" priority="0"/>
 		<display index="3" material="2" polygon="3" priority="0"/>
 	</node>
 </node_array>

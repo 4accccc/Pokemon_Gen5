@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohtani_mayo" host="W00238" date="2011-02-15T20:07:05" source="test_effect.mb"/>
+	<create user="ohtani_mayo" host="W00238" date="2011-02-16T11:37:08" source="test_effect.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ohtani_mayo" host="W00238" date="2011-02-15T20:07:05" source="test_effect.mb"/>
+<original_create user="ohtani_mayo" host="W00238" date="2011-02-16T11:37:08" source="test_effect.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="3" xyz="-0.212646 6.231934 7.693115" whd="0.177979 0.128662 0.000000"/>
+<box_test pos_scale="3" xyz="-0.212646 4.136963 7.693115" whd="0.177979 0.128662 0.000000"/>
 
 <tex_image_array size="1">
 	<tex_image index="0" name="effect2"
@@ -352,32 +352,32 @@
 			<primitive_array size="2">
 				<primitive index="0" type="quad_strip" vertex_size="6">
 					<mtx idx="0"/>
-					<tex st="63.812500 53.562500"/>
+					<tex st="63.812500 63.562500"/>
 					<clr rgb="31 31 31"/>
 					<pos_xyz xyz="0.000000 -3.221680 0.000000"/>
-					<tex st="1.625000 53.562500"/>
+					<tex st="1.625000 63.562500"/>
 					<pos_xy xy="4.451904 -3.221680"/>
 					<tex st="63.812500 0.125000"/>
 					<pos_xy xy="0.000000 0.000000"/>
 					<tex st="1.625000 0.125000"/>
 					<pos_xy xy="4.451904 0.000000"/>
-					<tex st="63.812500 53.562500"/>
+					<tex st="63.812500 63.562500"/>
 					<pos_xy xy="0.000000 3.221680"/>
-					<tex st="1.625000 53.562500"/>
+					<tex st="1.625000 63.562500"/>
 					<pos_xy xy="4.451904 3.221680"/>
 				</primitive>
 				<primitive index="1" type="quad_strip" vertex_size="6">
-					<tex st="63.812500 53.562500"/>
+					<tex st="63.812500 63.562500"/>
 					<pos_xy xy="0.000000 3.221680"/>
-					<tex st="1.625000 53.562500"/>
+					<tex st="1.625000 63.562500"/>
 					<pos_xy xy="-4.451904 3.221680"/>
 					<tex st="63.812500 0.125000"/>
 					<pos_xy xy="0.000000 0.000000"/>
 					<tex st="1.625000 0.125000"/>
 					<pos_xy xy="-4.451904 0.000000"/>
-					<tex st="63.812500 53.562500"/>
+					<tex st="63.812500 63.562500"/>
 					<pos_xy xy="0.000000 -3.221680"/>
-					<tex st="1.625000 53.562500"/>
+					<tex st="1.625000 63.562500"/>
 					<pos_xy xy="-4.451904 -3.221680"/>
 				</primitive>
 			</primitive_array>
@@ -395,7 +395,7 @@
 		billboard="off"
 		scale="0.010010 0.010010 0.010010"
 		rotate="0.000000 0.000000 0.000000"
-		translate="-0.987305 50.370850 61.546631"
+		translate="-0.987305 33.611572 61.546631"
 		visibility="on"
 		display_size="1"
 		vertex_size="12" polygon_size="4"
