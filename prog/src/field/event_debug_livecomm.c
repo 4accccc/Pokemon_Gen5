@@ -991,6 +991,10 @@ static void sub_BeaconInfoSet( DMENU_LIVE_COMM* wk, TR_PATTERN pat )
   info->language = fake[FAKE_LANG];
   //color
   info->favorite_color_index = fake[FAKE_COLOR];
+  //rank
+  if( fake[FAKE_COLOR] < 6 ){
+    info->research_team_rank = fake[FAKE_COLOR];
+  }
 }
 
 //===================================================================================
