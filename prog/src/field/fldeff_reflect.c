@@ -401,6 +401,9 @@ static void reflectTask_UpdateBlAct( u16 actID, void *wk )
   }
   
   ret = GFL_BBDACT_GetDrawEnable( bbdactsys, m_actID );
+  if( ret && MMDL_CheckStatusBitReflectOff(work->head.mmdl) ){
+    ret = FALSE;
+  }
   GFL_BBDACT_SetDrawEnable( bbdactsys, actID, ret );
   GFL_BBDACT_SetAnimeEnable( bbdactsys, actID, FALSE );
   

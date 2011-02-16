@@ -80,7 +80,8 @@ typedef struct _FISHING_WORK{
 
   u8      dir;
   u8      enc_type;
-  u16     enc_error;
+  u8      enc_error;
+  u8      reflect_off;
   u32     time;
   u32     count;
   BATTLE_SETUP_PARAM* bsp;
@@ -187,6 +188,20 @@ GMEVENT * EVENT_FieldFishing( FIELDMAP_WORK* fieldmap, GAMESYS_WORK* gsys )
   wk->pos.gy = SIZE_GRID_FX32(wk->target_pos.y);
   wk->pos.gz = SIZE_GRID_FX32(wk->target_pos.z);
 
+  //一歩後ろのアトリビュートを取得
+  {
+    FLDMAPPER_GRIDINFODATA gridData;
+    VecFx32 b_pos = wk->player_pos;
+
+    MMDL_TOOL_AddDirVector( DIR_DOWN, &b_pos, GRID_FX32 );
+    if( FLDMAPPER_GetGridData( FIELDMAP_GetFieldG3Dmapper( fieldmap ), &b_pos, &gridData) == FALSE){
+      wk->reflect_off = TRUE; 
+    }else{
+      MAPATTR_FLAG flag = MAPATTR_GetAttrFlag( gridData.attr );
+      wk->reflect_off = !(flag & MAPATTR_FLAGBIT_REFLECT);
+    }
+  }
+
   //エフェクトエンカウントチェック
   if( EFFECT_ENC_CheckEffectPos( wk->fld_enc, &wk->pos )){
     wk->enc_type = ENC_TYPE_EFFECT;
@@ -221,6 +236,7 @@ static GMEVENT_RESULT FieldFishingEvent(GMEVENT * event, int * seq, void *work)
   case SEQ_CHANGE_HERO: //add 100705
     if( FIELD_PLAYER_UpdateRequest(wk->fplayer) == TRUE ){
       MMDL_SetDrawStatus( wk->player_mmdl, DRAW_STA_FISH_START );
+      MMDL_SetStatusBitReflectOff( wk->player_mmdl,wk->reflect_off );
       PMSND_PlaySE( SEQ_SE_FLD_19 );
       (*seq)++;
     }
@@ -300,6 +316,7 @@ static GMEVENT_RESULT FieldFishingEvent(GMEVENT * event, int * seq, void *work)
     (*seq) = SEQ_END_RESET_HERO;
   case SEQ_END_RESET_HERO: //add 100705
     if( FIELD_PLAYER_UpdateRequest(wk->fplayer) == TRUE ){
+      MMDL_SetStatusBitReflectOff( wk->player_mmdl, FALSE );
 		  return GMEVENT_RES_FINISH;
     }
     break;

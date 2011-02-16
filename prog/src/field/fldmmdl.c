@@ -3249,6 +3249,37 @@ void MMDL_SetStatusBitVanish( MMDL * mmdl, BOOL flag )
     MMDL_OffStatusBit( mmdl, MMDL_STABIT_VANISH );
   }
 }
+//--------------------------------------------------------------
+/**
+ * MMDL 映りこみ非表示フラグをチェック
+ * @param  mmdl  MMDL *
+ * @retval  BOOL TRUE=非表示　FALSE=表示
+ */
+//--------------------------------------------------------------
+BOOL MMDL_CheckStatusBitReflectOff( const MMDL * mmdl )
+{
+  if( MMDL_CheckStatusBit(mmdl,MMDL_STABIT_REFLECT_OFF) ){
+    return( TRUE );
+  }
+  return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * MMDL 映りこみ非表示フラグを設定
+ * @param  mmdl  MMDL *
+ * @param  flag  TRUE=非表示　FALSE=表示
+ * @retval  nothing
+ */
+//--------------------------------------------------------------
+void MMDL_SetStatusBitReflectOff( MMDL * mmdl, BOOL flag )
+{
+  if( flag == TRUE ){
+    MMDL_OnStatusBit( mmdl, MMDL_STABIT_REFLECT_OFF );
+  }else{
+    MMDL_OffStatusBit( mmdl, MMDL_STABIT_REFLECT_OFF );
+  }
+}
 
 //--------------------------------------------------------------
 /**

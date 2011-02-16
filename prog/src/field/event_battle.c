@@ -183,6 +183,7 @@ typedef struct {
   BATTLE_SETUP_PARAM * bp;
   u8  sub_event_f;
   u8  n_poke_id;
+  u8  fishing_f;
   ENCOUNT_TYPE EncType;
 }WILD_BATTLE_EVENT_WORK;
 
@@ -228,6 +229,14 @@ static GMEVENT_RESULT wildBattleEvent( GMEVENT * event, int *seq, void *wk )
       if( btl_result == BTL_RESULT_CAPTURE && wbew->n_poke_id != ENC_N_POKE_NONE){
         ENC_SV_PTR enc_save = EncDataSave_GetSaveDataPtr( GAMEDATA_GetSaveControlWork(gamedata) );
         EncDataSave_SetNPokeCaptureFlag( enc_save, wbew->n_poke_id );
+      }
+      //釣り時の映りこみOffフラグをリセット
+      if( wbew->fishing_f ){
+        MMDLSYS* mmdlsys = GAMEDATA_GetMMdlSys( gamedata );
+        MMDL* mmdl = MMDLSYS_SearchMMdlPlayer(mmdlsys);
+        if( MMDL_CheckStatusBitReflectOff(mmdl)){
+          MMDL_SetStatusBitReflectOff( mmdl, FALSE );
+        }
       }
       //このイベント自体がサブイベントの場合、何もせずに戻る
       if ( wbew->sub_event_f == TRUE )
@@ -295,6 +304,7 @@ GMEVENT * EVENT_WildPokeBattleEx( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, B
   wbew->sub_event_f = sub_event_f;
   wbew->EncType = enc_type;
   wbew->n_poke_id = n_poke_id;
+  wbew->fishing_f = BATTLE_PARAM_CheckBtlStatusFlag( bp, BTL_STATUS_FLAG_FISHING );
 
 #ifdef PM_DEBUG
   debug_FieldDebugFlagSet( bp );

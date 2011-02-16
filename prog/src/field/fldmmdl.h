@@ -208,6 +208,7 @@ typedef enum
 	MMDL_STABIT_ALIES=(1<<11),///<エイリアスである
 	MMDL_STABIT_ATTR_OFFS_OFF=(1<<12),///<アトリビュートオフセット設定OFF
 	MMDL_STABIT_RAIL_MOVE = (1<<13),///<レール動作
+  MMDL_STABIT_REFLECT_OFF=(1<<14),///<映り込みを描画しない
 }MMDL_STABIT;
 
 //MMDL_STABIT_HEIGHT_EXPAND=(1<<13),///<拡張高さに反応する
@@ -954,6 +955,8 @@ extern void MMDL_OffMoveBitCompletedDrawInit( MMDL * mmdl );
 extern BOOL MMDL_CheckMoveBitCompletedDrawInit(const MMDL * mmdl);
 extern BOOL MMDL_CheckStatusBitVanish( const MMDL * mmdl );
 extern void MMDL_SetStatusBitVanish( MMDL * mmdl, BOOL flag );
+extern BOOL MMDL_CheckStatusBitReflectOff( const MMDL * mmdl );
+extern void MMDL_SetStatusBitReflectOff( MMDL * mmdl, BOOL flag );
 extern void MMDL_SetStatusBitFellowHit( MMDL * mmdl, BOOL flag );
 extern void MMDL_SetMoveBitMove( MMDL * mmdl, int flag );
 extern BOOL MMDL_CheckStatusBitTalk( MMDL * mmdl );
