@@ -35,7 +35,7 @@
 #define SCALE_MAX_OTHER   ( 0x180 )     // •—‘D‚ÌŠg‘å—¦MAX
 
 // ’Êí—h‚ê
-#define ANGLE_ADD         ( 0x120 )     // •—‘D‚ª—h‚ê‚éŽž‚ÌŠp“x‰ÁŽZ’l
+#define ANGLE_ADD         ( 0x50 )     // •—‘D‚ª—h‚ê‚éŽž‚ÌŠp“x‰ÁŽZ’l
 #define ANGLE_MAX         ( 0x400 )     // •—‘D‚ª—h‚ê‚éŽž‚ÌŠp“xMAX
 // Šg‘åŽž‚Ì—h‚ê
 #define SCALE_ANGLE_ADD   ( 0x100 )     // •—‘D‚ª—h‚ê‚éŽž‚ÌŠp“x‰ÁŽZ’l
@@ -434,7 +434,7 @@ void CTVT_BALLOON2_Update( BALLOON2_WORK *p_wk )
           }
           break;
         case ANG_STATE_RIGHT2:   // ‰E‚É—h‚ê‚é(’†‰›‚É–ß‚éˆ×)
-          p_wk->ang += SCALE_ANGLE_ADD;
+          p_wk->ang += SCALE_ANGLE_ADD/2;
           if( p_wk->ang >= 0 )
           {
             p_wk->ang = 0;
@@ -506,7 +506,7 @@ void CTVT_BALLOON2_Update( BALLOON2_WORK *p_wk )
 
       switch( p_wk->ang_state ){
       case ANG_STATE_RIGHT:    // ‰E‚É—h‚ê‚é
-        p_wk->ang += ANGLE_ADD;
+        p_wk->ang += ANGLE_ADD*2;
         if( p_wk->ang >= ANGLE_MAX )
         {
           p_wk->ang_state = ANG_STATE_LEFT;
@@ -520,7 +520,7 @@ void CTVT_BALLOON2_Update( BALLOON2_WORK *p_wk )
         }
         break;
       case ANG_STATE_RIGHT2:   // ‰E‚É—h‚ê‚é(’†‰›‚É–ß‚éˆ×)
-        p_wk->ang += ANGLE_ADD;
+        p_wk->ang += ANGLE_ADD-0x10;
         if( p_wk->ang >= 0 )
         {
           p_wk->ang = 0;

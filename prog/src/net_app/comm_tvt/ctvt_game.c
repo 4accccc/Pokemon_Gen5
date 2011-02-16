@@ -88,7 +88,7 @@ static GFL_STD_RandContext gRandContext = {0};
 #define TOUCH_CNT_2 (40)    // 第2段階のタッチポイント
 #define TOUCH_CNT_3 (60)    // 第3段階のタッチポイント
 
-#define SWING_INTERVAL  (45) // 風船の揺れのインターバル
+#define SWING_INTERVAL  (80) // 風船の揺れのインターバル
 
 //======================================================================
 //	enum
@@ -188,21 +188,22 @@ typedef enum {
   CGOAM_RAINBOW2,     // 虹 夜
   CGOAM_STAR1,        // 星 昼
   CGOAM_STAR2,        // 星 夜
-
-  // 2つ目のゲーム
-  CGOAM_POMP1,        // ポンプ1
-  CGOAM_POMP2,        // ポンプ2  ダミー
-  CGOAM_POMP3,        // ポンプ3
   CGOAM_STAR1_2,      // おめでとう 星
   CGOAM_STAR2_2,      // おめでとう 星
   CGOAM_OME_PLATE_2,  // おめでとう 隠しプレート
-  CGOAM_BUTTON_STAY,  // タッチするところ 通常
-  CGOAM_BUTTON_TOUCH, // タッチするところ タッチ時
   CGOAM_RANK1,        // 「1st」
   CGOAM_RANK2,        // 「おしい2nd」
   CGOAM_RANK3,        // 「ざんねん3rd」
   CGOAM_RANK4,        // 「ざんねん4th」
   CGOAM_DOT,          // 「・・・」
+
+  // 2つ目のゲーム
+  CGOAM_POMP_BASE,    // ポンプ土台
+  CGOAM_POMP_HANDLE,  // ポンプ取っ手
+  CGOAM_BUTTON_STAY,  // タッチするところ 通常
+  CGOAM_BUTTON_TOUCH, // タッチするところ タッチ時
+  CGOAM_BUTTON_LAST_STAY,  // タッチするところ 通常
+  CGOAM_BUTTON_LAST_TOUCH, // タッチするところ タッチ時
 } CTVT_GAME_OBJ_ANM_MAIN;
 
 // PLATE task seq
@@ -327,6 +328,7 @@ struct _CTVT_GAME_WORK
   // 今変えると変更点が多すぎるのでここに2つ目のものも書く
   BALLOON2_WORK *p_balloon2[CTVT_MEMBER_NUM];
   u8            touch_cnt[CTVT_MEMBER_NUM];   // 4人分のタッチ計測
+  u8            level_cnt[CTVT_MEMBER_NUM];   // 4人分のタッチ段階
   u8            swing_interval;               // 風船揺れのインターバル
 
   // メッセージ系
@@ -1435,6 +1437,12 @@ void CTVT_GAME_CommScoreSet( CTVT_GAME_WORK *p_wk, const CTVT_GAME_SEND_SCORE *s
 //-----------------------------------------------------------------------------
 void CTVT_GAME_CommDataSet_Touch( CTVT_COMM_WORK *commWork, CTVT_GAME_WORK *p_wk, BOOL pinpoint, int netID )
 {
+  static const u8 touch_tbl[3] = 
+  {
+    TOUCH_CNT_1,
+    TOUCH_CNT_2,
+    TOUCH_CNT_3,
+  };
   BOOL send = FALSE;
 
   GF_ASSERT( netID < CTVT_MEMBER_NUM );
@@ -1443,33 +1451,27 @@ void CTVT_GAME_CommDataSet_Touch( CTVT_COMM_WORK *commWork, CTVT_GAME_WORK *p_wk
   {
     // タッチ数加算
     p_wk->touch_cnt[ netID ] += 1;
-
-    // タッチ数判定
-    if( p_wk->touch_cnt[ netID ] == TOUCH_CNT_1
-        || p_wk->touch_cnt[ netID ] == TOUCH_CNT_2
-        || p_wk->touch_cnt[ netID ] == TOUCH_CNT_3 )
-    {
-      ICHI_Printf("NetID %d touchCNT %d \n", netID, p_wk->touch_cnt[netID]);
-      send = TRUE;
-    }
-
     if( pinpoint == TRUE )
     {
       p_wk->touch_cnt[ netID ] += 1;
-
-      // タッチ数判定
-      if( p_wk->touch_cnt[ netID ] == TOUCH_CNT_1
-          || p_wk->touch_cnt[ netID ] == TOUCH_CNT_2
-          || p_wk->touch_cnt[ netID ] == TOUCH_CNT_3 )
-      {
-        ICHI_Printf("NetID %d touchCNT %d \n", netID, p_wk->touch_cnt[netID]);
-        send = TRUE;
-      }
-      ICHI_Printf("ピンポイントタッチ\n");
     }
 
+    // タッチ数判定
+    {
+      u8 tbl_idx = p_wk->level_cnt[ netID ];
+
+      if( tbl_idx < 3 )
+      {
+        if( p_wk->touch_cnt[ netID ] >= touch_tbl[ tbl_idx ] )
+        {
+          p_wk->level_cnt[netID]++;   // タッチ段階上げる
+          send = TRUE;
+        }
+      }
+    }
 
     // 破裂の判定
+    if( send == FALSE )
     {
       // 順位によって追加タッチポイント
       const u8 add_cnt_tbl[] = {9,6,4,2};
@@ -1479,6 +1481,7 @@ void CTVT_GAME_CommDataSet_Touch( CTVT_COMM_WORK *commWork, CTVT_GAME_WORK *p_wk
       {
         ICHI_Printf("NetID %d rank %d \n", netID, p_wk->p_plate[netID]->rank);
         p_wk->touch_cnt[ netID ] = 0;
+        p_wk->level_cnt[ netID ] = 0;
         send = TRUE;
       }
     }
@@ -2723,7 +2726,7 @@ static void game_update_seq_init_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
   {
     // 下画面
     GFL_ARC_UTIL_TransVramPalette( ARCID_TVT_BALLOON, NARC_tvt_balloon_tv_explain_bg2_NCLR, 
-        PALTYPE_MAIN_BG, CTVT_GAME_PAL_BG_M_BG*32, 32*7, heapID );
+        PALTYPE_MAIN_BG, CTVT_GAME_PAL_BG_M_BG*32, 32*8, heapID );
     GFL_ARC_UTIL_TransVramBgCharacter( ARCID_TVT_BALLOON, NARC_tvt_balloon_tv_explain_bg2_NCGR,
         CTVT_GAME_FRAME_M_BG, 0, 0, FALSE, heapID );
     GFL_ARC_UTIL_TransVramScreen( ARCID_TVT_BALLOON, NARC_tvt_balloon_tv_explain_bg2_NSCR, 
@@ -2814,7 +2817,7 @@ static void game_update_seq_init_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
     cellInitData.pos_y = 96;
     cellInitData.softpri = 2;
     cellInitData.bgpri = 1;
-    cellInitData.anmseq = CGOAM_POMP1;
+    cellInitData.anmseq = CGOAM_POMP_BASE;
     gameWork->clwkPompBase = GFL_CLACT_WK_Create( gameWork->cellUnit,
         gameWork->cellResIdx[CGOR_LOWER_PLT],
         gameWork->cellResIdx[CGOR_LOWER_NCG],
@@ -2827,13 +2830,14 @@ static void game_update_seq_init_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
     cellInitData.pos_y = 96;
     cellInitData.softpri = 3;
     cellInitData.bgpri = 1;
-    cellInitData.anmseq = CGOAM_POMP3;
+    cellInitData.anmseq = CGOAM_POMP_HANDLE;
     gameWork->clwkPompHandle = GFL_CLACT_WK_Create( gameWork->cellUnit,
         gameWork->cellResIdx[CGOR_LOWER_PLT],
         gameWork->cellResIdx[CGOR_LOWER_NCG],
         gameWork->cellResIdx[CGOR_LOWER_ANM],
         &cellInitData ,CLSYS_DEFREND_MAIN, heapID );
     GFL_CLACT_WK_SetDrawEnable( gameWork->clwkPompHandle, FALSE );
+    GFL_CLACT_WK_SetAutoAnmFlag( gameWork->clwkPompHandle, TRUE );
   }
   
 
@@ -2894,6 +2898,7 @@ static void game_update_seq_init_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
 
   // 初期化
   GFL_STD_MemFill( gameWork->touch_cnt, 0, sizeof(u8)*CTVT_MEMBER_NUM );
+  GFL_STD_MemFill( gameWork->level_cnt, 0, sizeof(u8)*CTVT_MEMBER_NUM );
   gameWork->swing_interval = 0;
 
   // サウンド
@@ -3058,15 +3063,15 @@ static void game_update_seq_title_end_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK
   }
   // タッチボタン表示
   GFL_CLACT_WK_SetDrawEnable( gameWork->clwkTouch, TRUE );
+  GFL_CLACT_WK_SetAutoAnmFlag( gameWork->clwkTouch, TRUE );
   // 空気入れ表示
   GFL_CLACT_WK_SetDrawEnable( gameWork->clwkPompBase, TRUE );
   GFL_CLACT_WK_SetDrawEnable( gameWork->clwkPompHandle, TRUE );
-  GFL_CLACT_WK_SetAutoAnmFlag( gameWork->clwkPompHandle, TRUE );
 
   // BGロード
   // した画面
   GFL_ARC_UTIL_TransVramPalette( ARCID_TVT_BALLOON, NARC_tvt_balloon_tv_game_bg_l2_NCLR , 
-      PALTYPE_MAIN_BG, CTVT_GAME_PAL_BG_M_BG*32, 32*3, gameWork->heapId );
+      PALTYPE_MAIN_BG, CTVT_GAME_PAL_BG_M_BG*32, 32*4, gameWork->heapId );
   GFL_ARC_UTIL_TransVramBgCharacter( ARCID_TVT_BALLOON, NARC_tvt_balloon_tv_game_bg_l2_NCGR,
       CTVT_GAME_FRAME_M_BG, 0, 0, FALSE, gameWork->heapId );
   GFL_ARC_UTIL_TransVramScreen( ARCID_TVT_BALLOON, NARC_tvt_balloon_tv_game_bg_l2_NSCR, 
@@ -3312,6 +3317,8 @@ static BOOL game_update_seq_main_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
 {
   CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
   const u8 selfId = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
+  u16   anmseq_stay;
+  u16   anmseq_touch;
   u8 i;
 
 #ifdef PM_DEBUG
@@ -3352,6 +3359,27 @@ static BOOL game_update_seq_main_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
 #endif
 
 
+  // 残り時間でタッチボタンを変更
+  if( gameWork->timeLimit <= 20 )
+  {
+    anmseq_stay   = CGOAM_BUTTON_LAST_STAY;
+    anmseq_touch  = CGOAM_BUTTON_LAST_TOUCH;
+
+    // 変わってない時は変更する
+    if( GFL_CLACT_WK_GetAnmSeq( gameWork->clwkTouch ) == CGOAM_BUTTON_STAY )
+    {
+      GFL_CLACT_WK_SetAnmSeq( gameWork->clwkTouch, CGOAM_BUTTON_LAST_STAY );
+    }
+    if( GFL_CLACT_WK_GetAnmSeq( gameWork->clwkTouch ) == CGOAM_BUTTON_TOUCH )
+    {
+      GFL_CLACT_WK_SetAnmSeq( gameWork->clwkTouch, CGOAM_BUTTON_LAST_TOUCH );
+    }
+  }
+  else
+  {
+    anmseq_stay   = CGOAM_BUTTON_STAY;
+    anmseq_touch  = CGOAM_BUTTON_TOUCH;
+  }
 
   // 風船がアクティブの時のみタッチ判定
   if( CTVT_BALLOON2_GetActive( gameWork->p_balloon2[selfId] ) == TRUE )
@@ -3417,6 +3445,27 @@ static BOOL game_update_seq_main_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
           }
         }
       }
+
+      // タッチボタンのアニメーションを
+      // タッチ中のアニメシーケンスに変更
+      if( GFL_CLACT_WK_GetAnmSeq( gameWork->clwkTouch ) != anmseq_touch )
+      {
+        GFL_CLACT_WK_SetAnmSeq( gameWork->clwkTouch, anmseq_touch );
+      }
+      if( GFL_CLACT_WK_CheckAnmActive(gameWork->clwkTouch) == FALSE )
+      {
+        GFL_CLACT_WK_ResetAnm( gameWork->clwkTouch );
+      }
+    }
+  }
+
+  // タッチしていない時にタッチボタンを戻す
+  if( GFL_CLACT_WK_GetAnmSeq( gameWork->clwkTouch ) != anmseq_stay )
+  {
+    if( GFL_CLACT_WK_CheckAnmActive(gameWork->clwkTouch) == FALSE )
+    {
+      GFL_CLACT_WK_SetAnmSeq( gameWork->clwkTouch, anmseq_stay );
+      GFL_CLACT_WK_SetAutoAnmFlag( gameWork->clwkTouch, TRUE );
     }
   }
  
