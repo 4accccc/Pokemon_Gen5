@@ -3,7 +3,7 @@
  *
  *	@file		resonance_resort_data.c
  *	@brief  レゾナンスリゾートのデータ
- *	@author		Toru=Nagihashi
+ *	@author	Toru=Nagihashi
  *	@data		2011.02.07
  *
  */
@@ -577,11 +577,10 @@ struct _RESORT_BEACON_DATA
 //=====================================
 struct _RESORT_PROXY_DATA
 {
-  RESORT_BASIC1_DATA  basic1;
-  RESORT_BASIC2_DATA  basic2;
-  u8                  extend[RESORT_EXTEND_DATA_SIZE];
-  RESORT_EXTEND_TYPE  extend_type;
+  u32 dummy;
 };
+
+SDK_COMPILER_ASSERT(sizeof(RESORT_PROXY_DATA)==RESORT_PROXY_DATA_SIZE);
 
 //=============================================================================
 /**
@@ -946,6 +945,137 @@ BOOL RESORT_BEACON_DATA_IsValid( const RESORT_BEACON_DATA *cp_wk )
  *    RESORT_PROXY_DATAの関数
  */
 //=============================================================================
+void RESORT_PROXY_DATA_InitInstance( RESORT_PROXY_DATA *p_wk )
+{
+}
+
+BOOL RESORT_PROXY_DATA_IsEmpty( const RESORT_PROXY_DATA *cp_wk )
+{
+  return TRUE;
+}
+//=============================================================================
+/**
+ *	リゾート用代理人バッファ（セーブデータのみ存在）
+*/
+//=============================================================================
+//-------------------------------------
+///	受信バッファ
+//=====================================
+struct _RESORT_PROXY_BUFF
+{
+  u32         max;
+  RESORT_PROXY_DATA data[0];
+};
+
+SDK_COMPILER_ASSERT( sizeof(RESORT_PROXY_BUFF) == RESORT_PROXY_BUFF_HEADER_SIZE );
+
+//-------------------------------------
+///	private
+//=====================================
+static RESORT_PROXY_DATA * Resort_Proxy_Buff_GetEmptyData( RESORT_PROXY_BUFF *p_wk );
+
+//-------------------------------------
+///	外部公開
+//=====================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レゾナンスリゾート  すでに生成した者に対しての初期化
+ *
+ *	@param	RESORT_PROXY_BUFF *p_wk  ワーク
+ *	@param	num   バッファ数
+ */
+//-----------------------------------------------------------------------------
+void RESORT_PROXY_BUFF_InitInstance( RESORT_PROXY_BUFF *p_wk, u32 num )
+{
+  GFL_STD_MemClear( p_wk, sizeof(RESORT_PROXY_BUFF) );
+
+  p_wk->max = num;
+  {
+    int i;
+    for( i = 0; i < p_wk->max; i++ )
+    {
+      RESORT_PROXY_DATA *p_data  = &p_wk->data[i];
+      RESORT_PROXY_DATA_InitInstance( p_data );
+    }
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レゾナンスリゾートのデータ受信バッファ  データ取得
+ *
+ *	@param	RESORT_PROXY_BUFF *p_wk  ワーク
+ *	@param	index   インデックス
+ *
+ *	@return データ取得
+ */
+//-----------------------------------------------------------------------------
+RESORT_PROXY_DATA * RESORT_PROXY_BUFF_GetData( RESORT_PROXY_BUFF *p_wk, u32 index )
+{
+  GF_ASSERT( index < p_wk->max );
+  return &p_wk->data[ index ];
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  受信バッファクリア
+ *
+ *	@param	RESORT_PROXY_BUFF *p_wk  ワーク
+ *	@param	index                   インデックス
+ */
+//-----------------------------------------------------------------------------
+void RESORT_PROXY_BUFF_Clear( RESORT_PROXY_BUFF *p_wk, u32 index )
+{
+  GF_ASSERT( index < p_wk->max );
+  RESORT_PROXY_DATA_InitInstance( &p_wk->data[ index ] );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  データ受信バッファにビーコン差込
+ *
+ *	@param	RESORT_PROXY_BUFF *p_wk  ワーク
+ *	@param	RESORT_PROXY_DATA *cp_proxy   代理人データ
+ *
+ *	@retval TRUEビーコン挿し込みした  FALSEしていない
+ */
+//-----------------------------------------------------------------------------
+BOOL RESORT_PROXY_BUFF_Add( RESORT_PROXY_BUFF *p_wk, const RESORT_PROXY_DATA *cp_proxy )
+{
+  RESORT_PROXY_DATA *p_data;
+
+  //空のデータがあったら入れる
+  p_data  = Resort_Proxy_Buff_GetEmptyData( p_wk );
+  if( p_data )
+  {
+    *p_data = *cp_proxy;
+    RESORT_Printf( "空のデータに入れた！\n" );
+    return TRUE;
+  }
+
+  RESORT_Printf( "代理人データを受け取ったが、バッファがいっぱい！\n" );
+  return FALSE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  空のデータを取得
+ *
+ *	@param	RESORT_PROXY_BUFF *p_wk  ワーク
+ *
+ *	@return あいているデータ  NULLならばあいていない
+ */
+//-----------------------------------------------------------------------------
+static RESORT_PROXY_DATA * Resort_Proxy_Buff_GetEmptyData( RESORT_PROXY_BUFF *p_wk )
+{
+  int i;
+  for( i = 0; i < p_wk->max; i++ )
+  {
+    RESORT_PROXY_DATA  *p_data = &p_wk->data[i];
+    if( RESORT_PROXY_DATA_IsEmpty( p_data ) )
+    {
+      return p_data;
+    }
+  }
+
+  return NULL;
+}
 
 //=============================================================================
 /**
@@ -955,20 +1085,20 @@ BOOL RESORT_BEACON_DATA_IsValid( const RESORT_BEACON_DATA *cp_wk )
 //-------------------------------------
 ///	受信バッファ
 //=====================================
-struct _RESORT_DATA_BUFF
+struct _RESORT_RECV_BUFF
 {
   u32         max;
   BOOL        is_lock;
   RESORT_RECV_DATA data[0];
 };
 
-SDK_COMPILER_ASSERT( sizeof(RESORT_DATA_BUFF) == RESORT_DATA_BUFF_HEADER_SIZE );
+SDK_COMPILER_ASSERT( sizeof(RESORT_RECV_BUFF) == RESORT_RECV_BUFF_HEADER_SIZE );
 
 //-------------------------------------
 ///	private
 //=====================================
-static RESORT_RECV_DATA * Resort_Data_Buff_GetEmptyData( RESORT_DATA_BUFF *p_wk );
-static RESORT_RECV_DATA * Resort_Data_Buff_GetSameOwnerData( RESORT_DATA_BUFF *p_wk, const RESORT_BASIC1_DATA *cp_owner );
+static RESORT_RECV_DATA * Resort_Recv_Buff_GetEmptyData( RESORT_RECV_BUFF *p_wk );
+static RESORT_RECV_DATA * Resort_Recv_Buff_GetSameOwnerData( RESORT_RECV_BUFF *p_wk, const RESORT_BASIC1_DATA *cp_owner );
 
 //-------------------------------------
 ///	外部公開
@@ -983,11 +1113,11 @@ static RESORT_RECV_DATA * Resort_Data_Buff_GetSameOwnerData( RESORT_DATA_BUFF *p
  *	@return データバッファ
  */
 //-----------------------------------------------------------------------------
-RESORT_DATA_BUFF * RESORT_DATA_BUFF_Init( HEAPID heapID, u32 num )
+RESORT_RECV_BUFF * RESORT_RECV_BUFF_Init( HEAPID heapID, u32 num )
 {
-  RESORT_DATA_BUFF *p_wk  = GFL_HEAP_AllocClearMemory( heapID, RESORT_DATA_BUFF_SIZE( num ) );
+  RESORT_RECV_BUFF *p_wk  = GFL_HEAP_AllocClearMemory( heapID, RESORT_RECV_BUFF_SIZE( num ) );
 
-  RESORT_DATA_BUFF_InitInstance( p_wk, num );
+  RESORT_RECV_BUFF_InitInstance( p_wk, num );
 
   return p_wk;
 }
@@ -995,10 +1125,10 @@ RESORT_DATA_BUFF * RESORT_DATA_BUFF_Init( HEAPID heapID, u32 num )
 /**
  *	@brief  レゾナンスリゾートのデータ受信バッファ  破棄
  *
- *	@param	RESORT_DATA_BUFF *p_wk ワーク
+ *	@param	RESORT_RECV_BUFF *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
-void RESORT_DATA_BUFF_Exit( RESORT_DATA_BUFF *p_wk )
+void RESORT_RECV_BUFF_Exit( RESORT_RECV_BUFF *p_wk )
 {
   GFL_HEAP_FreeMemory( p_wk );
 }
@@ -1006,13 +1136,13 @@ void RESORT_DATA_BUFF_Exit( RESORT_DATA_BUFF *p_wk )
 /**
  *	@brief  レゾナンスリゾート  すでに生成した者に対しての初期化
  *
- *	@param	RESORT_DATA_BUFF *p_wk  ワーク
+ *	@param	RESORT_RECV_BUFF *p_wk  ワーク
  *	@param	num   バッファ数
  */
 //-----------------------------------------------------------------------------
-void RESORT_DATA_BUFF_InitInstance( RESORT_DATA_BUFF *p_wk, u32 num )
+void RESORT_RECV_BUFF_InitInstance( RESORT_RECV_BUFF *p_wk, u32 num )
 {
-  GFL_STD_MemClear( p_wk, sizeof(RESORT_DATA_BUFF) );
+  GFL_STD_MemClear( p_wk, sizeof(RESORT_RECV_BUFF) );
 
   p_wk->max = num;
   {
@@ -1028,10 +1158,10 @@ void RESORT_DATA_BUFF_InitInstance( RESORT_DATA_BUFF *p_wk, u32 num )
 /**
  *	@brief  受信バッファへの追加アクセスをロック
  *
- *	@param	RESORT_DATA_BUFF *p_wk ワーク
+ *	@param	RESORT_RECV_BUFF *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
-void RESORT_DATA_BUFF_Lock( RESORT_DATA_BUFF *p_wk )
+void RESORT_RECV_BUFF_Lock( RESORT_RECV_BUFF *p_wk )
 {
   p_wk->is_lock = TRUE;
 }
@@ -1039,10 +1169,10 @@ void RESORT_DATA_BUFF_Lock( RESORT_DATA_BUFF *p_wk )
 /**
  *	@brief  受信バッファへの追加アクセスロックを解除
  *
- *	@param	RESORT_DATA_BUFF *p_wk ワーク
+ *	@param	RESORT_RECV_BUFF *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
-void RESORT_DATA_BUFF_UnLock( RESORT_DATA_BUFF *p_wk )
+void RESORT_RECV_BUFF_UnLock( RESORT_RECV_BUFF *p_wk )
 {
   p_wk->is_lock = FALSE;
 }
@@ -1051,13 +1181,13 @@ void RESORT_DATA_BUFF_UnLock( RESORT_DATA_BUFF *p_wk )
 /**
  *	@brief  レゾナンスリゾートのデータ受信バッファ  データ取得
  *
- *	@param	RESORT_DATA_BUFF *p_wk  ワーク
+ *	@param	RESORT_RECV_BUFF *p_wk  ワーク
  *	@param	index   インデックス
  *
  *	@return データ取得
  */
 //-----------------------------------------------------------------------------
-RESORT_RECV_DATA * RESORT_DATA_BUFF_GetData( RESORT_DATA_BUFF *p_wk, u32 index )
+RESORT_RECV_DATA * RESORT_RECV_BUFF_GetData( RESORT_RECV_BUFF *p_wk, u32 index )
 {
   GF_ASSERT( index < p_wk->max );
   return &p_wk->data[ index ];
@@ -1066,11 +1196,11 @@ RESORT_RECV_DATA * RESORT_DATA_BUFF_GetData( RESORT_DATA_BUFF *p_wk, u32 index )
 /**
  *	@brief  受信バッファクリア
  *
- *	@param	RESORT_DATA_BUFF *p_wk  ワーク
+ *	@param	RESORT_RECV_BUFF *p_wk  ワーク
  *	@param	index                   インデックス
  */
 //-----------------------------------------------------------------------------
-void RESORT_DATA_BUFF_Clear( RESORT_DATA_BUFF *p_wk, u32 index )
+void RESORT_RECV_BUFF_Clear( RESORT_RECV_BUFF *p_wk, u32 index )
 {
   GF_ASSERT( index < p_wk->max );
   RESORT_RECV_DATA_InitInstance( &p_wk->data[ index ] );
@@ -1079,13 +1209,13 @@ void RESORT_DATA_BUFF_Clear( RESORT_DATA_BUFF *p_wk, u32 index )
 /**
  *	@brief  データ受信バッファにビーコン差込
  *
- *	@param	RESORT_DATA_BUFF *p_wk  ワーク
+ *	@param	RESORT_RECV_BUFF *p_wk  ワーク
  *	@param	RESORT_BEACON_DATA *cp_beacon   ビーコンデータ
  *
  *	@retval TRUEビーコン挿し込みした  FALSEしていない
  */
 //-----------------------------------------------------------------------------
-BOOL RESORT_DATA_BUFF_AddBeacon( RESORT_DATA_BUFF *p_wk, const RESORT_BEACON_DATA *cp_beacon )
+BOOL RESORT_RECV_BUFF_AddBeacon( RESORT_RECV_BUFF *p_wk, const RESORT_BEACON_DATA *cp_beacon )
 {
   RESORT_RECV_DATA *p_data;
 
@@ -1097,7 +1227,7 @@ BOOL RESORT_DATA_BUFF_AddBeacon( RESORT_DATA_BUFF *p_wk, const RESORT_BEACON_DAT
   }
 
   //同じ所有者のものがあったら優先的に入れる
-  p_data  = Resort_Data_Buff_GetSameOwnerData( p_wk, &cp_beacon->basic1 );
+  p_data  = Resort_Recv_Buff_GetSameOwnerData( p_wk, &cp_beacon->basic1 );
   if( p_data )
   {
     RESORT_RECV_DATA_MergeBeacon( p_data, cp_beacon );
@@ -1106,7 +1236,7 @@ BOOL RESORT_DATA_BUFF_AddBeacon( RESORT_DATA_BUFF *p_wk, const RESORT_BEACON_DAT
   }
 
   //空のデータがあったら入れる
-  p_data  = Resort_Data_Buff_GetEmptyData( p_wk );
+  p_data  = Resort_Recv_Buff_GetEmptyData( p_wk );
   if( p_data )
   {
     RESORT_RECV_DATA_MergeBeacon( p_data, cp_beacon );
@@ -1125,13 +1255,13 @@ BOOL RESORT_DATA_BUFF_AddBeacon( RESORT_DATA_BUFF *p_wk, const RESORT_BEACON_DAT
 /**
  *	@brief  データ受信バッファにビーコン差込
  *
- *	@param	RESORT_DATA_BUFF *p_wk  ワーク
+ *	@param	RESORT_RECV_BUFF *p_wk  ワーク
  *	@param	RESORT_RECV_DATA *cp_recv 受信したデータ
  *
  *	@retval TRUEビーコン挿し込みした  FALSEしていない*
  */
 //-----------------------------------------------------------------------------
-BOOL RESORT_DATA_BUFF_AddRecv( RESORT_DATA_BUFF *p_wk, const RESORT_RECV_DATA *cp_recv )
+BOOL RESORT_RECV_BUFF_AddRecv( RESORT_RECV_BUFF *p_wk, const RESORT_RECV_DATA *cp_recv )
 {
   RESORT_RECV_DATA *p_data;
 
@@ -1143,7 +1273,7 @@ BOOL RESORT_DATA_BUFF_AddRecv( RESORT_DATA_BUFF *p_wk, const RESORT_RECV_DATA *c
   }
 
   //同じ所有者のものがあったら優先的に入れる
-  p_data  = Resort_Data_Buff_GetSameOwnerData( p_wk, &cp_recv->basic1 );
+  p_data  = Resort_Recv_Buff_GetSameOwnerData( p_wk, &cp_recv->basic1 );
   if( p_data )
   {
     RESORT_RECV_DATA_MergeRecv( p_data, cp_recv );
@@ -1152,7 +1282,7 @@ BOOL RESORT_DATA_BUFF_AddRecv( RESORT_DATA_BUFF *p_wk, const RESORT_RECV_DATA *c
   }
 
   //空のデータがあったら入れる
-  p_data  = Resort_Data_Buff_GetEmptyData( p_wk );
+  p_data  = Resort_Recv_Buff_GetEmptyData( p_wk );
   if( p_data )
   {
     RESORT_RECV_DATA_MergeRecv( p_data, cp_recv );
@@ -1171,12 +1301,12 @@ BOOL RESORT_DATA_BUFF_AddRecv( RESORT_DATA_BUFF *p_wk, const RESORT_RECV_DATA *c
 /**
  *	@brief  空のデータを取得
  *
- *	@param	RESORT_DATA_BUFF *p_wk  ワーク
+ *	@param	RESORT_RECV_BUFF *p_wk  ワーク
  *
  *	@return あいているデータ  NULLならばあいていない
  */
 //-----------------------------------------------------------------------------
-static RESORT_RECV_DATA * Resort_Data_Buff_GetEmptyData( RESORT_DATA_BUFF *p_wk )
+static RESORT_RECV_DATA * Resort_Recv_Buff_GetEmptyData( RESORT_RECV_BUFF *p_wk )
 {
   int i;
   for( i = 0; i < p_wk->max; i++ )
@@ -1194,13 +1324,13 @@ static RESORT_RECV_DATA * Resort_Data_Buff_GetEmptyData( RESORT_DATA_BUFF *p_wk 
 /**
  *	@brief  同じ所有者のデータを取得
  *
- *	@param	RESORT_DATA_BUFF *p_wk        ワーク
+ *	@param	RESORT_RECV_BUFF *p_wk        ワーク
  *	@param	RESORT_BASIC1_DATA *cp_owner  比べる基本データ１
  *
  *	@return 同じ所有者のデータ  NULLならば同じ所有者のデータがない
  */
 //-----------------------------------------------------------------------------
-static RESORT_RECV_DATA * Resort_Data_Buff_GetSameOwnerData( RESORT_DATA_BUFF *p_wk, const RESORT_BASIC1_DATA *cp_owner )
+static RESORT_RECV_DATA * Resort_Recv_Buff_GetSameOwnerData( RESORT_RECV_BUFF *p_wk, const RESORT_BASIC1_DATA *cp_owner )
 {
   int i;
   for( i = 0; i < p_wk->max; i++ )
@@ -1213,4 +1343,314 @@ static RESORT_RECV_DATA * Resort_Data_Buff_GetSameOwnerData( RESORT_DATA_BUFF *p
   }
 
   return NULL;
+}
+
+//=============================================================================
+/**
+ *  住民データ
+ */
+//=============================================================================
+//-------------------------------------
+///	住民データ
+//=====================================
+struct _RESORT_RESIDENT_DATA
+{
+  RESORT_BASIC1_DATA  basic1;
+  RESORT_BASIC2_DATA  basic2;
+  RESORT_EXTEND1_DATA extend1;
+  RESORT_EXTEND2_DATA extend2;
+  RESORT_EXTEND3_DATA extend3;
+  RESORT_EXTEND4_DATA extend4;
+  RESORT_EXTEND5_DATA extend5;
+  RESORT_EXTEND6_DATA extend6;
+  RESORT_EXTEND7_DATA extend7;
+  RESORT_EXTEND8_DATA extend8;
+  u32                 extend_flag;
+  //TODO 
+};
+
+//-------------------------------------
+///	外部公開
+//=====================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  住民データを作成
+ *
+ *	@param	HEAPID heapID ヒープID
+ *
+ *	@return　住民データ
+ */
+//-----------------------------------------------------------------------------
+RESORT_RESIDENT_DATA * RESORT_RESIDENT_DATA_Init( HEAPID heapID )
+{
+  RESORT_RESIDENT_DATA *p_wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(RESORT_RESIDENT_DATA) );
+  RESORT_RESIDENT_DATA_InitInstance( p_wk );
+  return p_wk;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  住民データ破棄
+ *
+ *	@param	RESORT_RESIDENT_DATA *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void RESORT_RESIDENT_DATA_Exit( RESORT_RESIDENT_DATA *p_wk )
+{
+  GFL_HEAP_FreeMemory( p_wk );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  住民データを初期化
+ *
+ *	@param	RESORT_RESIDENT_DATA *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void RESORT_RESIDENT_DATA_InitInstance( RESORT_RESIDENT_DATA *p_wk )
+{
+  GFL_STD_MemClear( p_wk, sizeof(RESORT_RESIDENT_DATA ) );
+}
+
+//=============================================================================
+/**
+ *  特殊NPCデータ
+ */
+//=============================================================================
+//-------------------------------------
+///	特殊NPCデータ
+//=====================================
+struct _RESORT_VISITOR_DATA
+{
+  int dummy;
+};
+
+//-------------------------------------
+///	外部公開
+//=====================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  滞在者ワーク作成
+ *
+ *	@param	HEAPID heapID ヒープID
+ *
+ *	@return 滞在者ワーク
+ */
+//-----------------------------------------------------------------------------
+RESORT_VISITOR_DATA * RESORT_VISITOR_DATA_Init( HEAPID heapID )
+{
+  RESORT_VISITOR_DATA *p_wk = GFL_HEAP_AllocClearMemory(heapID, sizeof(RESORT_VISITOR_DATA) );
+  RESORT_VISITOR_DATA_InitInstance(p_wk);
+  return p_wk;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  滞在者ワーク破棄
+ *
+ *	@param	RESORT_VISITOR_DATA *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void RESORT_VISITOR_DATA_Exit( RESORT_VISITOR_DATA *p_wk )
+{
+  GFL_HEAP_FreeMemory(p_wk);
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  滞在者ワーク初期化
+ *
+ *	@param	RESORT_VISITOR_DATA *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void RESORT_VISITOR_DATA_InitInstance( RESORT_VISITOR_DATA *p_wk )
+{
+  GFL_STD_MemClear( p_wk, sizeof(RESORT_VISITOR_DATA) );
+}
+
+//=============================================================================
+/**
+ *  秘書データ
+ */
+//=============================================================================
+//-------------------------------------
+///	秘書データ
+//=====================================
+struct _RESORT_SECRETARY_DATA 
+{
+  int dummy;
+};
+
+//-------------------------------------
+///	外部公開
+//=====================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  秘書ワーク初期化
+ *
+ *	@param	HEAPID heapID ヒープID
+ *
+ *	@return　秘書ワーク
+ */
+//-----------------------------------------------------------------------------
+RESORT_SECRETARY_DATA * RESORT_SECRETARY_DATA_Init( HEAPID heapID )
+{
+  RESORT_SECRETARY_DATA *p_wk = GFL_HEAP_AllocClearMemory(heapID,sizeof(RESORT_SECRETARY_DATA));
+  RESORT_SECRETARY_DATA_InitInstance(p_wk);
+  return p_wk;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  秘書ワーク破棄
+ *
+ *	@param	RESORT_SECRETARY_DATA *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void RESORT_SECRETARY_DATA_Exit( RESORT_SECRETARY_DATA *p_wk )
+{
+  GFL_HEAP_FreeMemory(p_wk);
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  秘書ワーク初期化
+ *
+ *	@param	RESORT_SECRETARY_DATA *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void RESORT_SECRETARY_DATA_InitInstance( RESORT_SECRETARY_DATA *p_wk )
+{
+  GFL_STD_MemClear(p_wk,sizeof(RESORT_SECRETARY_DATA));
+}
+
+//=============================================================================
+/**
+ *  施設データ
+ */
+//=============================================================================
+//-------------------------------------
+///	施設データ
+//=====================================
+struct _RESORT_INSTITUTION_DATA 
+{
+  int dummy;
+};
+
+//-------------------------------------
+///	外部公開
+//=====================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  施設データ初期化
+ *
+ *	@param	HEAPID heapID ヒープID
+ *
+ *	@return 施設データ
+ */
+//-----------------------------------------------------------------------------
+RESORT_INSTITUTION_DATA * RESORT_INSTITUTION_DATA_Init( HEAPID heapID )
+{
+  RESORT_INSTITUTION_DATA *p_wk = GFL_HEAP_AllocClearMemory(heapID,sizeof(RESORT_INSTITUTION_DATA));
+  RESORT_INSTITUTION_DATA_InitInstance(p_wk);
+  return p_wk;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  施設データ破棄
+ *
+ *	@param	RESORT_INSTITUTION_DATA *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void RESORT_INSTITUTION_DATA_Exit( RESORT_INSTITUTION_DATA *p_wk )
+{
+  GFL_HEAP_FreeMemory(p_wk);
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  施設データ初期化
+ *
+ *	@param	RESORT_INSTITUTION_DATA *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void RESORT_INSTITUTION_DATA_InitInstance( RESORT_INSTITUTION_DATA *p_wk )
+{
+  GFL_STD_MemClear(p_wk,sizeof(RESORT_INSTITUTION_DATA));
+}
+
+
+//=============================================================================
+/**
+ *	リゾート街データ
+*/
+//=============================================================================
+//-------------------------------------
+///	定数
+//=====================================
+#define RESORT_CITY_DATA_SIZE (1)
+
+//-------------------------------------
+///	街データ
+//=====================================
+struct _RESORT_CITY_DATA
+{
+  RESORT_RESIDENT_DATA    resident[RESORT_RESIDENT_DATA_NUM];
+  RESORT_VISITOR_DATA     visitor[RESORT_VISITOR_DATA_NUM];
+  RESORT_SECRETARY_DATA   secretary[RESORT_SECRETARY_DATA_NUM];
+  RESORT_INSTITUTION_DATA institution[RESORT_INSTITUTION_DATA_NUM];
+};
+
+//SDK_COMPILER_ASSERT(sizeof(RESORT_CITY_DATA) == RESORT_CITY_DATA_SIZE );
+
+//-------------------------------------
+///	外部公開
+//=====================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  街データ作成
+ *
+ *	@param	HEAPID heapID ヒープID
+ *
+ *	@return 街データ
+ */
+//-----------------------------------------------------------------------------
+RESORT_CITY_DATA * RESORT_CITY_DATA_Init( HEAPID heapID )
+{
+  RESORT_CITY_DATA *p_wk = GFL_HEAP_AllocClearMemory(heapID,sizeof(RESORT_CITY_DATA) );
+  RESORT_CITY_DATA_InitInstance(p_wk);
+  return p_wk;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  街データ破棄
+ *
+ *	@param	RESORT_CITY_DATA *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void RESORT_CITY_DATA_Exit( RESORT_CITY_DATA *p_wk )
+{
+  GFL_HEAP_FreeMemory(p_wk);
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  街データ初期化
+ *
+ *	@param	RESORT_CITY_DATA *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void RESORT_CITY_DATA_InitInstance( RESORT_CITY_DATA *p_wk )
+{
+  int i;
+  GFL_STD_MemClear(p_wk,sizeof(RESORT_CITY_DATA));
+
+  for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
+  {
+    RESORT_RESIDENT_DATA_InitInstance(&p_wk->resident[i] );
+  }
+  for( i = 0; i < RESORT_VISITOR_DATA_NUM; i++ )
+  {
+    RESORT_VISITOR_DATA_InitInstance(&p_wk->visitor[i]);
+  }
+  for( i = 0; i < RESORT_SECRETARY_DATA_NUM; i++ )
+  {
+    RESORT_SECRETARY_DATA_InitInstance(&p_wk->secretary[i]);
+  }
+  for( i = 0; i < RESORT_INSTITUTION_DATA_NUM; i++ )
+  {
+    RESORT_INSTITUTION_DATA_InitInstance(&p_wk->institution[i] );
+  }
 }

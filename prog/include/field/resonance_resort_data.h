@@ -13,7 +13,7 @@
 #include "gamesystem/game_beacon.h"
 //=============================================================================
 /**
- *	リゾート用データ
+ *	リゾート用受信データ
  *    
  *    １…リゾート用全受信データ
  *          全てのデータが入ったもの
@@ -62,6 +62,9 @@ typedef enum
 //リゾート用全受信データの全サイズ
 #define RESORT_RECV_DATA_SIZE     (RESORT_BASIC1_DATA_SIZE+RESORT_BASIC2_DATA_SIZE+RESORT_EXTEND_DATA_SIZE*RESORT_EXTEND_TYPE_MAX+4)
 
+//リゾート用代理データの全サイズ
+#define RESORT_PROXY_DATA_SIZE    (4)
+
 //-------------------------------------
 ///	１…リゾート用全受信データ
 //=====================================
@@ -104,39 +107,174 @@ extern BOOL RESORT_BEACON_DATA_IsValid( const RESORT_BEACON_DATA *cp_wk );
 //-------------------------------------
 ///	２…リゾート用代理データの外部公開
 //=====================================
+extern void RESORT_PROXY_DATA_InitInstance( RESORT_PROXY_DATA *p_wk );
+extern BOOL RESORT_PROXY_DATA_IsEmpty( const RESORT_PROXY_DATA *cp_wk );
 
 //=============================================================================
 /**
- *	リゾート用データ受信バッファ（セーブデータにも存在）
+ *	リゾート代理データバッファ（セーブデータしか存在しない）
 */
 //=============================================================================
 //-------------------------------------
 ///	定数
 //=====================================
 //受信バッファクラスのヘッダーサイズ
-#define RESORT_DATA_BUFF_HEADER_SIZE (8)
+#define RESORT_PROXY_BUFF_HEADER_SIZE (4)
 
 //受信バッファクラスの全サイズ
-#define RESORT_DATA_BUFF_SIZE( num )  (RESORT_DATA_BUFF_HEADER_SIZE+(RESORT_RECV_DATA_SIZE*num))
+#define RESORT_PROXY_BUFF_SIZE( num )  (RESORT_PROXY_BUFF_HEADER_SIZE+(RESORT_PROXY_DATA_SIZE*num))
 
 //-------------------------------------
 ///	受信バッファ
 //=====================================
-typedef struct _RESORT_DATA_BUFF RESORT_DATA_BUFF;
+typedef struct _RESORT_PROXY_BUFF RESORT_PROXY_BUFF;
 
 //-------------------------------------
 ///	外部公開
 //=====================================
-extern RESORT_DATA_BUFF * RESORT_DATA_BUFF_Init( HEAPID heapID, u32 num );
-extern void RESORT_DATA_BUFF_Exit( RESORT_DATA_BUFF *p_wk );
+extern void RESORT_PROXY_BUFF_InitInstance( RESORT_PROXY_BUFF *p_wk, u32 num );
 
-extern void RESORT_DATA_BUFF_InitInstance( RESORT_DATA_BUFF *p_wk, u32 num );
+extern RESORT_PROXY_DATA * RESORT_PROXY_BUFF_GetData( RESORT_PROXY_BUFF *p_wk, u32 index );
+extern void RESORT_PROXY_BUFF_Clear( RESORT_PROXY_BUFF *p_wk, u32 index );
 
-extern void RESORT_DATA_BUFF_Lock( RESORT_DATA_BUFF *p_wk );
-extern void RESORT_DATA_BUFF_UnLock( RESORT_DATA_BUFF *p_wk );
+extern BOOL RESORT_PROXY_BUFF_Add( RESORT_PROXY_BUFF *p_wk, const RESORT_PROXY_DATA *cp_proxy );
 
-extern RESORT_RECV_DATA * RESORT_DATA_BUFF_GetData( RESORT_DATA_BUFF *p_wk, u32 index );
-extern void RESORT_DATA_BUFF_Clear( RESORT_DATA_BUFF *p_wk, u32 index );
 
-extern BOOL RESORT_DATA_BUFF_AddBeacon( RESORT_DATA_BUFF *p_wk, const RESORT_BEACON_DATA *cp_beacon );
-extern BOOL RESORT_DATA_BUFF_AddRecv( RESORT_DATA_BUFF *p_wk, const RESORT_RECV_DATA *cp_recv );
+
+//=============================================================================
+/**
+ *	リゾート受信データバッファ（セーブデータにも存在）
+*/
+//=============================================================================
+//-------------------------------------
+///	定数
+//=====================================
+//受信バッファクラスのヘッダーサイズ
+#define RESORT_RECV_BUFF_HEADER_SIZE (8)
+
+//受信バッファクラスの全サイズ
+#define RESORT_RECV_BUFF_SIZE( num )  (RESORT_RECV_BUFF_HEADER_SIZE+(RESORT_RECV_DATA_SIZE*num))
+
+//-------------------------------------
+///	受信バッファ
+//=====================================
+typedef struct _RESORT_RECV_BUFF RESORT_RECV_BUFF;
+
+//-------------------------------------
+///	外部公開
+//=====================================
+extern RESORT_RECV_BUFF * RESORT_RECV_BUFF_Init( HEAPID heapID, u32 num );
+extern void RESORT_RECV_BUFF_Exit( RESORT_RECV_BUFF *p_wk );
+
+extern void RESORT_RECV_BUFF_InitInstance( RESORT_RECV_BUFF *p_wk, u32 num );
+
+extern void RESORT_RECV_BUFF_Lock( RESORT_RECV_BUFF *p_wk );
+extern void RESORT_RECV_BUFF_UnLock( RESORT_RECV_BUFF *p_wk );
+
+extern RESORT_RECV_DATA * RESORT_RECV_BUFF_GetData( RESORT_RECV_BUFF *p_wk, u32 index );
+extern void RESORT_RECV_BUFF_Clear( RESORT_RECV_BUFF *p_wk, u32 index );
+
+extern BOOL RESORT_RECV_BUFF_AddBeacon( RESORT_RECV_BUFF *p_wk, const RESORT_BEACON_DATA *cp_beacon );
+extern BOOL RESORT_RECV_BUFF_AddRecv( RESORT_RECV_BUFF *p_wk, const RESORT_RECV_DATA *cp_recv );
+
+
+//=============================================================================
+/**
+ *  住民データ
+ */
+//=============================================================================
+//-------------------------------------
+///	住民データ
+//=====================================
+typedef struct _RESORT_RESIDENT_DATA RESORT_RESIDENT_DATA;
+
+//-------------------------------------
+///	外部公開
+//=====================================
+extern RESORT_RESIDENT_DATA * RESORT_RESIDENT_DATA_Init( HEAPID heapID );
+extern void RESORT_RESIDENT_DATA_Exit( RESORT_RESIDENT_DATA *p_wk );
+extern void RESORT_RESIDENT_DATA_InitInstance( RESORT_RESIDENT_DATA *p_wk );
+
+//=============================================================================
+/**
+ *  滞在者データ
+ */
+//=============================================================================
+//-------------------------------------
+///	滞在者データ
+//=====================================
+typedef struct _RESORT_VISITOR_DATA RESORT_VISITOR_DATA;
+
+//-------------------------------------
+///	外部公開
+//=====================================
+extern RESORT_VISITOR_DATA * RESORT_VISITOR_DATA_Init( HEAPID heapID );
+extern void RESORT_VISITOR_DATA_Exit( RESORT_VISITOR_DATA *p_wk );
+extern void RESORT_VISITOR_DATA_InitInstance( RESORT_VISITOR_DATA *p_wk );
+
+//=============================================================================
+/**
+ *  秘書データ
+ */
+//=============================================================================
+//-------------------------------------
+///	秘書データ
+//=====================================
+typedef struct _RESORT_SECRETARY_DATA RESORT_SECRETARY_DATA;
+
+//-------------------------------------
+///	外部公開
+//=====================================
+extern RESORT_SECRETARY_DATA * RESORT_SECRETARY_DATA_Init( HEAPID heapID );
+extern void RESORT_SECRETARY_DATA_Exit( RESORT_SECRETARY_DATA *p_wk );
+extern void RESORT_SECRETARY_DATA_InitInstance( RESORT_SECRETARY_DATA *p_wk );
+
+//=============================================================================
+/**
+ *  施設データ
+ */
+//=============================================================================
+//-------------------------------------
+///	施設データ
+//=====================================
+typedef struct _RESORT_INSTITUTION_DATA RESORT_INSTITUTION_DATA;
+
+//-------------------------------------
+///	外部公開
+//=====================================
+extern RESORT_INSTITUTION_DATA * RESORT_INSTITUTION_DATA_Init( HEAPID heapID );
+extern void RESORT_INSTITUTION_DATA_Exit( RESORT_INSTITUTION_DATA *p_wk );
+extern void RESORT_INSTITUTION_DATA_InitInstance( RESORT_INSTITUTION_DATA *p_wk );
+
+
+//=============================================================================
+/**
+ *	リゾート街データ
+*/
+//=============================================================================
+//-------------------------------------
+///	定数
+//=====================================
+//住人データ数
+#define RESORT_RESIDENT_DATA_NUM  (8)
+//滞在者データ数
+#define RESORT_VISITOR_DATA_NUM     (6)
+//秘書データ数
+#define RESORT_SECRETARY_DATA_NUM   (5)
+//施設データ数
+#define RESORT_INSTITUTION_DATA_NUM (8)
+
+//街データ総サイズ
+#define RESORT_CITY_DATA_SIZE       (1)
+
+//-------------------------------------
+///	街データ
+//=====================================
+typedef struct _RESORT_CITY_DATA RESORT_CITY_DATA;
+
+//-------------------------------------
+///	外部公開
+//=====================================
+extern RESORT_CITY_DATA * RESORT_CITY_DATA_Init( HEAPID heapID );
+extern void RESORT_CITY_DATA_Exit( RESORT_CITY_DATA *p_wk );
+extern void RESORT_CITY_DATA_InitInstance( RESORT_CITY_DATA *p_wk );

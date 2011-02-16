@@ -21,7 +21,8 @@
  *					レゾナンスリゾート用セーブデータ
 */
 //=============================================================================
-#define RESONANCE_RESORT_SV_DATA_BUFF_NUM (8)
+#define RESONANCE_RESORT_SV_RECV_BUFF_NUM   (8)
+#define RESONANCE_RESORT_SV_PROXY_BUFF_NUM  (8)
 
 //-------------------------------------
 ///	セーブデータ
@@ -35,4 +36,7 @@ extern u32  RESONANCE_RESORT_SV_GetWorkSize(void);
 extern void RESONANCE_RESORT_SV_Init( void *p_wk_adrs );
 extern RESONANCE_RESORT_SV *RESONANCE_RESORT_SV_GetWork( SAVE_CONTROL_WORK *p_sv );
 
-extern RESORT_DATA_BUFF * RESONANCE_RESORT_SV_GetDataBuff( RESONANCE_RESORT_SV *p_wk );
+extern RESORT_RECV_BUFF * RESONANCE_RESORT_SV_GetDataBuff( RESONANCE_RESORT_SV *p_wk );
+extern RESORT_PROXY_BUFF * RESONANCE_RESORT_SV_GetProxyBuff( RESONANCE_RESORT_SV *p_wk );
+extern RESORT_CITY_DATA * RESONANCE_RESORT_SV_GetCityData( RESONANCE_RESORT_SV *p_wk );
+

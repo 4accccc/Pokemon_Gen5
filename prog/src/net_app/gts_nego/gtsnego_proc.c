@@ -367,7 +367,7 @@ static void _recvResort(const int netID, const int size, const void* pData, void
   EVENT_GTSNEGO_WORK* pEv=pWork->dbw;
   SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork(pEv->gamedata);
   RESONANCE_RESORT_SV *p_resort_sv  = RESONANCE_RESORT_SV_GetWork( p_sv );
-  RESORT_DATA_BUFF *p_buff  = RESONANCE_RESORT_SV_GetDataBuff( p_resort_sv );
+  RESORT_RECV_BUFF *p_buff  = RESONANCE_RESORT_SV_GetDataBuff( p_resort_sv );
 
   if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
     return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
@@ -377,7 +377,7 @@ static void _recvResort(const int netID, const int size, const void* pData, void
   }
 
   OS_Printf( "リゾート受信コールバック！netID=%d size=%d \n", netID, size );
-  RESORT_DATA_BUFF_AddRecv( p_buff, pData );
+  RESORT_RECV_BUFF_AddRecv( p_buff, pData );
 }
 //------------------------------------------------------------------------------
 /**

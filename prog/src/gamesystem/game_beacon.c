@@ -787,20 +787,20 @@ static void BeaconInfo_SetResortData( GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_
   {
     SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( bsys->gamedata );
     RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( p_sv );
-    RESORT_DATA_BUFF *p_buff  =  RESONANCE_RESORT_SV_GetDataBuff( p_resort );
+    RESORT_RECV_BUFF *p_buff  =  RESONANCE_RESORT_SV_GetDataBuff( p_resort );
 
     //ビーコン情報取得
     RESORT_BEACON_DATA *p_beacon  = RESORT_BEACON_DATA_Init( GFL_HEAP_LOWID(GFL_HEAPID_APP) );
     RESORT_BEACON_DATA_SetBeaconInfo( p_beacon, info );
 
     //ビーコン追加
-    if( RESORT_DATA_BUFF_AddBeacon( p_buff, p_beacon ) == FALSE )
+    if( RESORT_RECV_BUFF_AddBeacon( p_buff, p_beacon ) == FALSE )
     {
       //セーブデータに入らなかったら、拡張バッファがあるか調べて入れる
       if( GameBeaconSys->p_resort_buff )
       {
         NAGI_Printf( "セーブデータに入らなかったので拡張領域にいれるよ！\n" );
-        RESORT_DATA_BUFF_AddBeacon( GameBeaconSys->p_resort_buff, p_beacon );
+        RESORT_RECV_BUFF_AddBeacon( GameBeaconSys->p_resort_buff, p_beacon );
       }
     }
 
@@ -1609,7 +1609,7 @@ void GAMEBEACON_Set_ResortDataEnable( BOOL is_enable )
  *  レゾナンスリゾートは通常はセーブデータへデータを設定するが、
  *  特定の場所では特定のメモリ上にも確保する
  *
- * @param   void *p_buff RESORT_DATA_BUFFのポインタ 使用しない場合はNULL
+ * @param   void *p_buff RESORT_RECV_BUFFのポインタ 使用しない場合はNULL
  */
 //==================================================================
 void GAMEBEACON_Set_ResortRecvBuffer( void *p_buff )
