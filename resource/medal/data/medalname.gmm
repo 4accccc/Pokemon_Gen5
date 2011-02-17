@@ -409,273 +409,273 @@
 	</row>
 
 	<row id="MDL_NAME_FIELD_001">
-		<language name="JPN" width="216">ホームシック</language>
-		<language name="JPN_KANJI" width="216">ホームシック</language>
+		<language name="JPN" width="216">ポケセンファン</language>
+		<language name="JPN_KANJI" width="216">ポケセンファン</language>
 	</row>
 
 	<row id="MDL_NAME_FIELD_002">
-		<language name="JPN" width="216">ポケセンフリーク</language>
-		<language name="JPN_KANJI" width="216">ポケセンフリーク</language>
-	</row>
-
-	<row id="MDL_NAME_FIELD_003">
 		<language name="JPN" width="216">ちまちまレポーター</language>
 		<language name="JPN_KANJI" width="216">ちまちまレポーター</language>
 	</row>
 
-	<row id="MDL_NAME_FIELD_004">
+	<row id="MDL_NAME_FIELD_003">
 		<language name="JPN" width="216">せかせかレポーター</language>
 		<language name="JPN_KANJI" width="216">せかせかレポーター</language>
 	</row>
 
-	<row id="MDL_NAME_FIELD_005">
+	<row id="MDL_NAME_FIELD_004">
 		<language name="JPN" width="216">すらすらレポーター</language>
 		<language name="JPN_KANJI" width="216">すらすらレポーター</language>
 	</row>
 
-	<row id="MDL_NAME_FIELD_006">
+	<row id="MDL_NAME_FIELD_005">
 		<language name="JPN" width="216">きせきのペンさき</language>
 		<language name="JPN_KANJI" width="216">きせきのペンさき</language>
 	</row>
 
-	<row id="MDL_NAME_FIELD_007">
+	<row id="MDL_NAME_FIELD_006">
 		<language name="JPN" width="216">ライトウォーカー</language>
 		<language name="JPN_KANJI" width="216">ライトウォーカー</language>
 	</row>
 
-	<row id="MDL_NAME_FIELD_008">
+	<row id="MDL_NAME_FIELD_007">
 		<language name="JPN" width="216">ミドルウォーカー</language>
 		<language name="JPN_KANJI" width="216">ミドルウォーカー</language>
 	</row>
 
-	<row id="MDL_NAME_FIELD_009">
+	<row id="MDL_NAME_FIELD_008">
 		<language name="JPN" width="216">ヘビーウォーカー</language>
 		<language name="JPN_KANJI" width="216">ヘビーウォーカー</language>
 	</row>
 
-	<row id="MDL_NAME_FIELD_010">
+	<row id="MDL_NAME_FIELD_009">
 		<language name="JPN" width="216">めいよのあしあと</language>
 		<language name="JPN_KANJI" width="216">めいよのあしあと</language>
 	</row>
 
-	<row id="MDL_NAME_FIELD_011">
+	<row id="MDL_NAME_FIELD_010">
 		<language name="JPN" width="216">タマゴビギナー</language>
 		<language name="JPN_KANJI" width="216">タマゴビギナー</language>
 	</row>
 
-	<row id="MDL_NAME_FIELD_012">
+	<row id="MDL_NAME_FIELD_011">
 		<language name="JPN" width="216">タマゴブリーダー</language>
 		<language name="JPN_KANJI" width="216">タマゴブリーダー</language>
 	</row>
 
-	<row id="MDL_NAME_FIELD_013">
+	<row id="MDL_NAME_FIELD_012">
 		<language name="JPN" width="216">タマゴアスリート</language>
 		<language name="JPN_KANJI" width="216">タマゴアスリート</language>
 	</row>
 
-	<row id="MDL_NAME_FIELD_014">
+	<row id="MDL_NAME_FIELD_013">
 		<language name="JPN" width="216">せいめいのしんぴ</language>
 		<language name="JPN_KANJI" width="216">せいめいのしんぴ</language>
 	</row>
 
-	<row id="MDL_NAME_FIELD_015">
+	<row id="MDL_NAME_FIELD_014">
 		<language name="JPN" width="216">ビギナーライダー</language>
 		<language name="JPN_KANJI" width="216">ビギナーライダー</language>
 	</row>
 
-	<row id="MDL_NAME_FIELD_016">
+	<row id="MDL_NAME_FIELD_015">
 		<language name="JPN" width="216">イージーライダー</language>
 		<language name="JPN_KANJI" width="216">イージーライダー</language>
 	</row>
 
-	<row id="MDL_NAME_FIELD_017">
+	<row id="MDL_NAME_FIELD_016">
 		<language name="JPN" width="216">ハードライダー</language>
 		<language name="JPN_KANJI" width="216">ハードライダー</language>
 	</row>
 
-	<row id="MDL_NAME_FIELD_018">
+	<row id="MDL_NAME_FIELD_017">
 		<language name="JPN" width="216">はしるでんせつ</language>
 		<language name="JPN_KANJI" width="216">はしるでんせつ</language>
 	</row>
 
-	<row id="MDL_NAME_FIELD_019">
+	<row id="MDL_NAME_FIELD_018">
 		<language name="JPN" width="216">ボロのつりびと</language>
 		<language name="JPN_KANJI" width="216">ボロのつりびと</language>
 	</row>
 
-	<row id="MDL_NAME_FIELD_020">
+	<row id="MDL_NAME_FIELD_019">
 		<language name="JPN" width="216">いいつりびと</language>
 		<language name="JPN_KANJI" width="216">いいつりびと</language>
 	</row>
 
-	<row id="MDL_NAME_FIELD_021">
+	<row id="MDL_NAME_FIELD_020">
 		<language name="JPN" width="216">すごいつりびと</language>
 		<language name="JPN_KANJI" width="216">すごいつりびと</language>
 	</row>
 
-	<row id="MDL_NAME_FIELD_022">
+	<row id="MDL_NAME_FIELD_021">
 		<language name="JPN" width="216">いれぐいフィッシャー</language>
 		<language name="JPN_KANJI" width="216">いれぐいフィッシャー</language>
 	</row>
 
-	<row id="MDL_NAME_FIELD_023">
+	<row id="MDL_NAME_FIELD_022">
 		<language name="JPN" width="216">バードハンター</language>
 		<language name="JPN_KANJI" width="216">バードハンター</language>
 	</row>
 
-	<row id="MDL_NAME_FIELD_024">
+	<row id="MDL_NAME_FIELD_023">
 		<language name="JPN" width="216">むしとりめいじん</language>
 		<language name="JPN_KANJI" width="216">むしとりめいじん</language>
 	</row>
 
-	<row id="MDL_NAME_FIELD_025">
-		<language name="JPN" width="216">いしマニア</language>
-		<language name="JPN_KANJI" width="216">いしマニア</language>
+	<row id="MDL_NAME_FIELD_024">
+		<language name="JPN" width="216">こうぶつマニア</language>
+		<language name="JPN_KANJI" width="216">こうぶつマニア</language>
 	</row>
 
-	<row id="MDL_NAME_FIELD_026">
+	<row id="MDL_NAME_FIELD_025">
 		<language name="JPN" width="216">ゴーストキャプチャー</language>
 		<language name="JPN_KANJI" width="216">ゴーストキャプチャー</language>
 	</row>
 
-	<row id="MDL_NAME_FIELD_027">
+	<row id="MDL_NAME_FIELD_026">
 		<language name="JPN" width="216">わざマシニスト</language>
 		<language name="JPN_KANJI" width="216">わざマシニスト</language>
 	</row>
 
-	<row id="MDL_NAME_FIELD_028">
+	<row id="MDL_NAME_FIELD_027">
 		<language name="JPN" width="216">わざマシンナリー</language>
 		<language name="JPN_KANJI" width="216">わざマシンナリー</language>
 	</row>
 
-	<row id="MDL_NAME_FIELD_029">
+	<row id="MDL_NAME_FIELD_028">
 		<language name="JPN" width="216">わざまじん</language>
 		<language name="JPN_KANJI" width="216">わざまじん</language>
 	</row>
 
-	<row id="MDL_NAME_FIELD_030">
+	<row id="MDL_NAME_FIELD_029">
 		<language name="JPN" width="216">ディスクコレクター</language>
 		<language name="JPN_KANJI" width="216">ディスクコレクター</language>
 	</row>
 
-	<row id="MDL_NAME_FIELD_031">
+	<row id="MDL_NAME_FIELD_030">
 		<language name="JPN" width="216">エボルブホープ</language>
 		<language name="JPN_KANJI" width="216">エボルブホープ</language>
 	</row>
 
-	<row id="MDL_NAME_FIELD_032">
+	<row id="MDL_NAME_FIELD_031">
 		<language name="JPN" width="216">エボルブテクニシャン</language>
 		<language name="JPN_KANJI" width="216">エボルブテクニシャン</language>
 	</row>
 
-	<row id="MDL_NAME_FIELD_033">
+	<row id="MDL_NAME_FIELD_032">
 		<language name="JPN" width="216">エボルブエキスパート</language>
 		<language name="JPN_KANJI" width="216">エボルブエキスパート</language>
 	</row>
 
-	<row id="MDL_NAME_FIELD_034">
+	<row id="MDL_NAME_FIELD_033">
 		<language name="JPN" width="216">あるくしんかろん</language>
 		<language name="JPN_KANJI" width="216">あるくしんかろん</language>
 	</row>
 
-	<row id="MDL_NAME_FIELD_035">
+	<row id="MDL_NAME_FIELD_034">
 		<language name="JPN" width="216">めんきょかいでん</language>
 		<language name="JPN_KANJI" width="216">めんきょかいでん</language>
 	</row>
 
-	<row id="MDL_NAME_FIELD_036">
+	<row id="MDL_NAME_FIELD_035">
 		<language name="JPN" width="216">エースパイロット</language>
 		<language name="JPN_KANJI" width="216">エースパイロット</language>
 	</row>
 
-	<row id="MDL_NAME_FIELD_037">
+	<row id="MDL_NAME_FIELD_036">
 		<language name="JPN" width="216">ウェーブライダー</language>
 		<language name="JPN_KANJI" width="216">ウェーブライダー</language>
 	</row>
 
-	<row id="MDL_NAME_FIELD_038">
+	<row id="MDL_NAME_FIELD_037">
 		<language name="JPN" width="216">ハッスルマッスル</language>
 		<language name="JPN_KANJI" width="216">ハッスルマッスル</language>
 	</row>
 
-	<row id="MDL_NAME_FIELD_039">
+	<row id="MDL_NAME_FIELD_038">
 		<language name="JPN" width="216">とうりゅうもん</language>
 		<language name="JPN_KANJI" width="216">とうりゅうもん</language>
 	</row>
 
-	<row id="MDL_NAME_FIELD_040">
+	<row id="MDL_NAME_FIELD_039">
 		<language name="JPN" width="216">すもぐりめいじん</language>
 		<language name="JPN_KANJI" width="216">すもぐりめいじん</language>
 	</row>
 
-	<row id="MDL_NAME_FIELD_041">
+	<row id="MDL_NAME_FIELD_040">
 		<language name="JPN" width="216">アンダーグラウンダー</language>
 		<language name="JPN_KANJI" width="216">アンダーグラウンダー</language>
 	</row>
 
-	<row id="MDL_NAME_FIELD_042">
+	<row id="MDL_NAME_FIELD_041">
 		<language name="JPN" width="216">ライトスタッフ</language>
 		<language name="JPN_KANJI" width="216">ライトスタッフ</language>
 	</row>
 
-	<row id="MDL_NAME_FIELD_043">
+	<row id="MDL_NAME_FIELD_042">
 		<language name="JPN" width="216">スイートタクティクス</language>
 		<language name="JPN_KANJI" width="216">スイートタクティクス</language>
 	</row>
 
-	<row id="MDL_NAME_FIELD_044">
+	<row id="MDL_NAME_FIELD_043">
 		<language name="JPN" width="216">ガサいれのたつじん</language>
 		<language name="JPN_KANJI" width="216">ガサいれのたつじん</language>
 	</row>
 
-	<row id="MDL_NAME_FIELD_045">
+	<row id="MDL_NAME_FIELD_044">
 		<language name="JPN" width="216">おじゃましマスター</language>
 		<language name="JPN_KANJI" width="216">おじゃましマスター</language>
 	</row>
 
-	<row id="MDL_NAME_FIELD_046">
+	<row id="MDL_NAME_FIELD_045">
 		<language name="JPN" width="216">おとしものハンター</language>
 		<language name="JPN_KANJI" width="216">おとしものハンター</language>
 	</row>
 
-	<row id="MDL_NAME_FIELD_047">
+	<row id="MDL_NAME_FIELD_046">
 		<language name="JPN" width="216">ゴッドファーザー</language>
 		<language name="JPN_KANJI" width="216">ゴッドファーザー</language>
 	</row>
 
-	<row id="MDL_NAME_FIELD_048">
+	<row id="MDL_NAME_FIELD_047">
 		<language name="JPN" width="216">たいこのロマンチスト</language>
 		<language name="JPN_KANJI" width="216">たいこのロマンチスト</language>
 	</row>
 
+	<row id="MDL_NAME_FIELD_048">
+		<language name="JPN" width="216">ワンデーキャプチャー</language>
+		<language name="JPN_KANJI" width="216">ワンデーキャプチャー</language>
+	</row>
+
 	<row id="MDL_NAME_FIELD_049">
-		<language name="JPN" width="216">じてんしゃダミー</language>
-		<language name="JPN_KANJI" width="216">じてんしゃダミー</language>
+		<language name="JPN" width="216">テレビっこ</language>
+		<language name="JPN_KANJI" width="216">テレビっこ</language>
 	</row>
 
 	<row id="MDL_NAME_FIELD_050">
-		<language name="JPN" width="216">じてんしゃダミー</language>
-		<language name="JPN_KANJI" width="216">じてんしゃダミー</language>
+		<language name="JPN" width="216">じょうれんカスタマー</language>
+		<language name="JPN_KANJI" width="216">じょうれんカスタマー</language>
 	</row>
 
 	<row id="MDL_NAME_FIELD_051">
-		<language name="JPN" width="216">じてんしゃダミー</language>
-		<language name="JPN_KANJI" width="216">じてんしゃダミー</language>
+		<language name="JPN" width="216">ぜいたくカスタマー</language>
+		<language name="JPN_KANJI" width="216">ぜいたくカスタマー</language>
 	</row>
 
 	<row id="MDL_NAME_FIELD_052">
-		<language name="JPN" width="216">じてんしゃダミー</language>
-		<language name="JPN_KANJI" width="216">じてんしゃダミー</language>
+		<language name="JPN" width="216">かいものじょうず</language>
+		<language name="JPN_KANJI" width="216">かいものじょうず</language>
 	</row>
 
 	<row id="MDL_NAME_FIELD_053">
-		<language name="JPN" width="216">じてんしゃダミー</language>
-		<language name="JPN_KANJI" width="216">じてんしゃダミー</language>
+		<language name="JPN" width="216">そだてやマニア</language>
+		<language name="JPN_KANJI" width="216">そだてやマニア</language>
 	</row>
 
 	<row id="MDL_NAME_FIELD_054">
-		<language name="JPN" width="216">じてんしゃダミー</language>
-		<language name="JPN_KANJI" width="216">じてんしゃダミー</language>
+		<language name="JPN" width="216">ファンオブヒーロー</language>
+		<language name="JPN_KANJI" width="216">ファンオブヒーロー</language>
 	</row>
 
 	<row id="MDL_NAME_FIELD_055">
@@ -814,38 +814,38 @@
 	</row>
 
 	<row id="MDL_NAME_BATTLE_020">
+		<language name="JPN" width="216">けんていファン</language>
+		<language name="JPN_KANJI" width="216">けんていファン</language>
+	</row>
+
+	<row id="MDL_NAME_BATTLE_021">
 		<language name="JPN" width="216">けんていマニア</language>
 		<language name="JPN_KANJI" width="216">けんていマニア</language>
 	</row>
 
-	<row id="MDL_NAME_BATTLE_021">
+	<row id="MDL_NAME_BATTLE_022">
 		<language name="JPN" width="216">トライアルマスター</language>
 		<language name="JPN_KANJI" width="216">トライアルマスター</language>
 	</row>
 
-	<row id="MDL_NAME_BATTLE_022">
-		<language name="JPN" width="216">せんとうダミー</language>
-		<language name="JPN_KANJI" width="216">せんとうダミー</language>
-	</row>
-
 	<row id="MDL_NAME_BATTLE_023">
-		<language name="JPN" width="216">せんとうダミー</language>
-		<language name="JPN_KANJI" width="216">せんとうダミー</language>
+		<language name="JPN" width="216">ＢＰミリオネア</language>
+		<language name="JPN_KANJI" width="216">ＢＰミリオネア</language>
 	</row>
 
 	<row id="MDL_NAME_BATTLE_024">
-		<language name="JPN" width="216">せんとうダミー</language>
-		<language name="JPN_KANJI" width="216">せんとうダミー</language>
+		<language name="JPN" width="216">ＥＸＰミリオネア</language>
+		<language name="JPN_KANJI" width="216">ＥＸＰミリオネア</language>
 	</row>
 
 	<row id="MDL_NAME_BATTLE_025">
-		<language name="JPN" width="216">せんとうダミー</language>
-		<language name="JPN_KANJI" width="216">せんとうダミー</language>
+		<language name="JPN" width="216">ハンターチャンス</language>
+		<language name="JPN_KANJI" width="216">ハンターチャンス</language>
 	</row>
 
 	<row id="MDL_NAME_BATTLE_026">
-		<language name="JPN" width="216">せんとうダミー</language>
-		<language name="JPN_KANJI" width="216">せんとうダミー</language>
+		<language name="JPN" width="216">バトルリピーター</language>
+		<language name="JPN_KANJI" width="216">バトルリピーター</language>
 	</row>
 
 	<row id="MDL_NAME_BATTLE_027">
@@ -894,138 +894,138 @@
 	</row>
 
 	<row id="MDL_NAME_BATTLE_036">
-		<language name="JPN" width="216">せんとうダミー</language>
-		<language name="JPN_KANJI" width="216">せんとうダミー</language>
+		<language name="JPN" width="216">せんとうダミー３</language>
+		<language name="JPN_KANJI" width="216">せんとうダミー３</language>
 	</row>
 
 	<row id="MDL_NAME_BATTLE_037">
-		<language name="JPN" width="216">せんとうダミー</language>
-		<language name="JPN_KANJI" width="216">せんとうダミー</language>
+		<language name="JPN" width="216">せんとうダミー３</language>
+		<language name="JPN_KANJI" width="216">せんとうダミー３</language>
 	</row>
 
 	<row id="MDL_NAME_BATTLE_038">
-		<language name="JPN" width="216">せんとうダミー</language>
-		<language name="JPN_KANJI" width="216">せんとうダミー</language>
+		<language name="JPN" width="216">せんとうダミー３</language>
+		<language name="JPN_KANJI" width="216">せんとうダミー３</language>
 	</row>
 
 	<row id="MDL_NAME_BATTLE_039">
-		<language name="JPN" width="216">せんとうダミー</language>
-		<language name="JPN_KANJI" width="216">せんとうダミー</language>
+		<language name="JPN" width="216">せんとうダミー３</language>
+		<language name="JPN_KANJI" width="216">せんとうダミー３</language>
 	</row>
 
 	<row id="MDL_NAME_BATTLE_040">
-		<language name="JPN" width="216">せんとうダミー</language>
-		<language name="JPN_KANJI" width="216">せんとうダミー</language>
+		<language name="JPN" width="216">せんとうダミー３</language>
+		<language name="JPN_KANJI" width="216">せんとうダミー３</language>
 	</row>
 
 	<row id="MDL_NAME_BATTLE_041">
-		<language name="JPN" width="216">せんとうダミー</language>
-		<language name="JPN_KANJI" width="216">せんとうダミー</language>
+		<language name="JPN" width="216">せんとうダミー３</language>
+		<language name="JPN_KANJI" width="216">せんとうダミー３</language>
 	</row>
 
 	<row id="MDL_NAME_BATTLE_042">
-		<language name="JPN" width="216">せんとうダミー</language>
-		<language name="JPN_KANJI" width="216">せんとうダミー</language>
+		<language name="JPN" width="216">せんとうダミー３</language>
+		<language name="JPN_KANJI" width="216">せんとうダミー３</language>
 	</row>
 
 	<row id="MDL_NAME_BATTLE_043">
-		<language name="JPN" width="216">せんとうダミー</language>
-		<language name="JPN_KANJI" width="216">せんとうダミー</language>
+		<language name="JPN" width="216">せんとうダミー３</language>
+		<language name="JPN_KANJI" width="216">せんとうダミー３</language>
 	</row>
 
 	<row id="MDL_NAME_BATTLE_044">
-		<language name="JPN" width="216">せんとうダミー</language>
-		<language name="JPN_KANJI" width="216">せんとうダミー</language>
+		<language name="JPN" width="216">せんとうダミー３</language>
+		<language name="JPN_KANJI" width="216">せんとうダミー３</language>
 	</row>
 
 	<row id="MDL_NAME_BATTLE_045">
-		<language name="JPN" width="216">せんとうダミー</language>
-		<language name="JPN_KANJI" width="216">せんとうダミー</language>
+		<language name="JPN" width="216">せんとうダミー３</language>
+		<language name="JPN_KANJI" width="216">せんとうダミー３</language>
 	</row>
 
 	<row id="MDL_NAME_BATTLE_046">
-		<language name="JPN" width="216">せんとうダミー</language>
-		<language name="JPN_KANJI" width="216">せんとうダミー</language>
+		<language name="JPN" width="216">せんとうダミー５</language>
+		<language name="JPN_KANJI" width="216">せんとうダミー５</language>
 	</row>
 
 	<row id="MDL_NAME_BATTLE_047">
-		<language name="JPN" width="216">せんとうダミー</language>
-		<language name="JPN_KANJI" width="216">せんとうダミー</language>
+		<language name="JPN" width="216">せんとうダミー５</language>
+		<language name="JPN_KANJI" width="216">せんとうダミー５</language>
 	</row>
 
 	<row id="MDL_NAME_BATTLE_048">
-		<language name="JPN" width="216">せんとうダミー</language>
-		<language name="JPN_KANJI" width="216">せんとうダミー</language>
+		<language name="JPN" width="216">せんとうダミー５</language>
+		<language name="JPN_KANJI" width="216">せんとうダミー５</language>
 	</row>
 
 	<row id="MDL_NAME_BATTLE_049">
-		<language name="JPN" width="216">せんとうダミー</language>
-		<language name="JPN_KANJI" width="216">せんとうダミー</language>
+		<language name="JPN" width="216">せんとうダミー５</language>
+		<language name="JPN_KANJI" width="216">せんとうダミー５</language>
 	</row>
 
 	<row id="MDL_NAME_BATTLE_050">
-		<language name="JPN" width="216">せんとうダミー</language>
-		<language name="JPN_KANJI" width="216">せんとうダミー</language>
+		<language name="JPN" width="216">せんとうダミー５</language>
+		<language name="JPN_KANJI" width="216">せんとうダミー５</language>
 	</row>
 
 	<row id="MDL_NAME_BATTLE_051">
-		<language name="JPN" width="216">せんとうダミー</language>
-		<language name="JPN_KANJI" width="216">せんとうダミー</language>
+		<language name="JPN" width="216">せんとうダミー５</language>
+		<language name="JPN_KANJI" width="216">せんとうダミー５</language>
 	</row>
 
 	<row id="MDL_NAME_BATTLE_052">
-		<language name="JPN" width="216">せんとうダミー</language>
-		<language name="JPN_KANJI" width="216">せんとうダミー</language>
+		<language name="JPN" width="216">せんとうダミー５</language>
+		<language name="JPN_KANJI" width="216">せんとうダミー５</language>
 	</row>
 
 	<row id="MDL_NAME_BATTLE_053">
-		<language name="JPN" width="216">せんとうダミー</language>
-		<language name="JPN_KANJI" width="216">せんとうダミー</language>
+		<language name="JPN" width="216">せんとうダミー５</language>
+		<language name="JPN_KANJI" width="216">せんとうダミー５</language>
 	</row>
 
 	<row id="MDL_NAME_BATTLE_054">
-		<language name="JPN" width="216">せんとうダミー</language>
-		<language name="JPN_KANJI" width="216">せんとうダミー</language>
+		<language name="JPN" width="216">せんとうダミー５</language>
+		<language name="JPN_KANJI" width="216">せんとうダミー５</language>
 	</row>
 
 	<row id="MDL_NAME_BATTLE_055">
-		<language name="JPN" width="216">せんとうダミー</language>
-		<language name="JPN_KANJI" width="216">せんとうダミー</language>
+		<language name="JPN" width="216">せんとうダミー５</language>
+		<language name="JPN_KANJI" width="216">せんとうダミー５</language>
 	</row>
 
 	<row id="MDL_NAME_BATTLE_056">
-		<language name="JPN" width="216">せんとうダミー</language>
-		<language name="JPN_KANJI" width="216">せんとうダミー</language>
+		<language name="JPN" width="216">せんとうダミー８</language>
+		<language name="JPN_KANJI" width="216">せんとうダミー８</language>
 	</row>
 
 	<row id="MDL_NAME_BATTLE_057">
-		<language name="JPN" width="216">せんとうダミー</language>
-		<language name="JPN_KANJI" width="216">せんとうダミー</language>
+		<language name="JPN" width="216">せんとうダミー８</language>
+		<language name="JPN_KANJI" width="216">せんとうダミー８</language>
 	</row>
 
 	<row id="MDL_NAME_BATTLE_058">
-		<language name="JPN" width="216">せんとうダミー</language>
-		<language name="JPN_KANJI" width="216">せんとうダミー</language>
+		<language name="JPN" width="216">せんとうダミー８</language>
+		<language name="JPN_KANJI" width="216">せんとうダミー８</language>
 	</row>
 
 	<row id="MDL_NAME_BATTLE_059">
-		<language name="JPN" width="216">せんとうダミー</language>
-		<language name="JPN_KANJI" width="216">せんとうダミー</language>
+		<language name="JPN" width="216">せんとうダミー８</language>
+		<language name="JPN_KANJI" width="216">せんとうダミー８</language>
 	</row>
 
 	<row id="MDL_NAME_BATTLE_060">
-		<language name="JPN" width="216">せんとうダミー</language>
-		<language name="JPN_KANJI" width="216">せんとうダミー</language>
+		<language name="JPN" width="216">せんとうダミー８</language>
+		<language name="JPN_KANJI" width="216">せんとうダミー８</language>
 	</row>
 
 	<row id="MDL_NAME_BATTLE_061">
-		<language name="JPN" width="216">せんとうダミー</language>
-		<language name="JPN_KANJI" width="216">せんとうダミー</language>
+		<language name="JPN" width="216">せんとうダミー８</language>
+		<language name="JPN_KANJI" width="216">せんとうダミー８</language>
 	</row>
 
 	<row id="MDL_NAME_BATTLE_062">
-		<language name="JPN" width="216">バトルエキスパート</language>
-		<language name="JPN_KANJI" width="216">バトルエキスパート</language>
+		<language name="JPN" width="216">バトルジェネラル</language>
+		<language name="JPN_KANJI" width="216">バトルジェネラル</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_001">
@@ -1069,63 +1069,63 @@
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_009">
+		<language name="JPN" width="216">ステージのもうしご</language>
+		<language name="JPN_KANJI" width="216">ステージのもうしご</language>
+	</row>
+
+	<row id="MDL_NAME_APPLICATION_010">
 		<language name="JPN" width="216">かけだしスター</language>
 		<language name="JPN_KANJI" width="216">かけだしスター</language>
 	</row>
 
-	<row id="MDL_NAME_APPLICATION_010">
+	<row id="MDL_NAME_APPLICATION_011">
 		<language name="JPN" width="216">ちゅうけんスター</language>
 		<language name="JPN_KANJI" width="216">ちゅうけんスター</language>
 	</row>
 
-	<row id="MDL_NAME_APPLICATION_011">
+	<row id="MDL_NAME_APPLICATION_012">
 		<language name="JPN" width="216">ベテランスター</language>
 		<language name="JPN_KANJI" width="216">ベテランスター</language>
 	</row>
 
-	<row id="MDL_NAME_APPLICATION_012">
+	<row id="MDL_NAME_APPLICATION_013">
 		<language name="JPN" width="216">ミュージカルプリマ</language>
 		<language name="JPN_KANJI" width="216">ミュージカルプリマ</language>
 	</row>
 
-	<row id="MDL_NAME_APPLICATION_013">
-		<language name="JPN" width="216">じんみゃくエントリー</language>
-		<language name="JPN_KANJI" width="216">じんみゃくエントリー</language>
-	</row>
-
 	<row id="MDL_NAME_APPLICATION_014">
-		<language name="JPN" width="216">じんみゃくブロード</language>
-		<language name="JPN_KANJI" width="216">じんみゃくブロード</language>
+		<language name="JPN" width="216">ともだちエントリー</language>
+		<language name="JPN_KANJI" width="216">ともだちエントリー</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_015">
-		<language name="JPN" width="216">じんみゃくワイド</language>
-		<language name="JPN_KANJI" width="216">じんみゃくワイド</language>
+		<language name="JPN" width="216">ともだちブロード</language>
+		<language name="JPN_KANJI" width="216">ともだちブロード</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_016">
+		<language name="JPN" width="216">ともだちワイド</language>
+		<language name="JPN_KANJI" width="216">ともだちワイド</language>
+	</row>
+
+	<row id="MDL_NAME_APPLICATION_017">
 		<language name="JPN" width="216">ワールドコネクション</language>
 		<language name="JPN_KANJI" width="216">ワールドコネクション</language>
 	</row>
 
-	<row id="MDL_NAME_APPLICATION_017">
-		<language name="JPN" width="216">メールかいたダミー</language>
-		<language name="JPN_KANJI" width="216">メールかいたダミー</language>
-	</row>
-
 	<row id="MDL_NAME_APPLICATION_018">
-		<language name="JPN" width="216">メールかいたダミー</language>
-		<language name="JPN_KANJI" width="216">メールかいたダミー</language>
+		<language name="JPN" width="216">シフターマスター</language>
+		<language name="JPN_KANJI" width="216">シフターマスター</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_019">
-		<language name="JPN" width="216">メールかいたダミー</language>
-		<language name="JPN_KANJI" width="216">メールかいたダミー</language>
+		<language name="JPN" width="216">ローリングタマゴ</language>
+		<language name="JPN_KANJI" width="216">ローリングタマゴ</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_020">
-		<language name="JPN" width="216">メールかいたダミー</language>
-		<language name="JPN_KANJI" width="216">メールかいたダミー</language>
+		<language name="JPN" width="216">フィーリングマスター</language>
+		<language name="JPN_KANJI" width="216">フィーリングマスター</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_021">
@@ -1179,158 +1179,158 @@
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_031">
-		<language name="JPN" width="216">メールかいたダミー</language>
-		<language name="JPN_KANJI" width="216">メールかいたダミー</language>
+		<language name="JPN" width="216">メールかいたダミー２</language>
+		<language name="JPN_KANJI" width="216">メールかいたダミー２</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_032">
-		<language name="JPN" width="216">メールかいたダミー</language>
-		<language name="JPN_KANJI" width="216">メールかいたダミー</language>
+		<language name="JPN" width="216">メールかいたダミー２</language>
+		<language name="JPN_KANJI" width="216">メールかいたダミー２</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_033">
-		<language name="JPN" width="216">メールかいたダミー</language>
-		<language name="JPN_KANJI" width="216">メールかいたダミー</language>
+		<language name="JPN" width="216">メールかいたダミー２</language>
+		<language name="JPN_KANJI" width="216">メールかいたダミー２</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_034">
-		<language name="JPN" width="216">メールかいたダミー</language>
-		<language name="JPN_KANJI" width="216">メールかいたダミー</language>
+		<language name="JPN" width="216">メールかいたダミー２</language>
+		<language name="JPN_KANJI" width="216">メールかいたダミー２</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_035">
-		<language name="JPN" width="216">メールかいたダミー</language>
-		<language name="JPN_KANJI" width="216">メールかいたダミー</language>
+		<language name="JPN" width="216">メールかいたダミー２</language>
+		<language name="JPN_KANJI" width="216">メールかいたダミー２</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_036">
-		<language name="JPN" width="216">メールかいたダミー</language>
-		<language name="JPN_KANJI" width="216">メールかいたダミー</language>
+		<language name="JPN" width="216">メールかいたダミー２</language>
+		<language name="JPN_KANJI" width="216">メールかいたダミー２</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_037">
-		<language name="JPN" width="216">メールかいたダミー</language>
-		<language name="JPN_KANJI" width="216">メールかいたダミー</language>
+		<language name="JPN" width="216">メールかいたダミー２</language>
+		<language name="JPN_KANJI" width="216">メールかいたダミー２</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_038">
-		<language name="JPN" width="216">メールかいたダミー</language>
-		<language name="JPN_KANJI" width="216">メールかいたダミー</language>
+		<language name="JPN" width="216">メールかいたダミー２</language>
+		<language name="JPN_KANJI" width="216">メールかいたダミー２</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_039">
-		<language name="JPN" width="216">メールかいたダミー</language>
-		<language name="JPN_KANJI" width="216">メールかいたダミー</language>
+		<language name="JPN" width="216">メールかいたダミー２</language>
+		<language name="JPN_KANJI" width="216">メールかいたダミー２</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_040">
-		<language name="JPN" width="216">メールかいたダミー</language>
-		<language name="JPN_KANJI" width="216">メールかいたダミー</language>
+		<language name="JPN" width="216">メールかいたダミー２</language>
+		<language name="JPN_KANJI" width="216">メールかいたダミー２</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_041">
-		<language name="JPN" width="216">メールかいたダミー</language>
-		<language name="JPN_KANJI" width="216">メールかいたダミー</language>
+		<language name="JPN" width="216">メールかいたダミー３</language>
+		<language name="JPN_KANJI" width="216">メールかいたダミー３</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_042">
-		<language name="JPN" width="216">メールかいたダミー</language>
-		<language name="JPN_KANJI" width="216">メールかいたダミー</language>
+		<language name="JPN" width="216">メールかいたダミー３</language>
+		<language name="JPN_KANJI" width="216">メールかいたダミー３</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_043">
-		<language name="JPN" width="216">メールかいたダミー</language>
-		<language name="JPN_KANJI" width="216">メールかいたダミー</language>
+		<language name="JPN" width="216">メールかいたダミー３</language>
+		<language name="JPN_KANJI" width="216">メールかいたダミー３</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_044">
-		<language name="JPN" width="216">メールかいたダミー</language>
-		<language name="JPN_KANJI" width="216">メールかいたダミー</language>
+		<language name="JPN" width="216">メールかいたダミー３</language>
+		<language name="JPN_KANJI" width="216">メールかいたダミー３</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_045">
-		<language name="JPN" width="216">メールかいたダミー</language>
-		<language name="JPN_KANJI" width="216">メールかいたダミー</language>
+		<language name="JPN" width="216">メールかいたダミー３</language>
+		<language name="JPN_KANJI" width="216">メールかいたダミー３</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_046">
-		<language name="JPN" width="216">メールかいたダミー</language>
-		<language name="JPN_KANJI" width="216">メールかいたダミー</language>
+		<language name="JPN" width="216">メールかいたダミー３</language>
+		<language name="JPN_KANJI" width="216">メールかいたダミー３</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_047">
-		<language name="JPN" width="216">メールかいたダミー</language>
-		<language name="JPN_KANJI" width="216">メールかいたダミー</language>
+		<language name="JPN" width="216">メールかいたダミー３</language>
+		<language name="JPN_KANJI" width="216">メールかいたダミー３</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_048">
-		<language name="JPN" width="216">メールかいたダミー</language>
-		<language name="JPN_KANJI" width="216">メールかいたダミー</language>
+		<language name="JPN" width="216">メールかいたダミー３</language>
+		<language name="JPN_KANJI" width="216">メールかいたダミー３</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_049">
-		<language name="JPN" width="216">メールかいたダミー</language>
-		<language name="JPN_KANJI" width="216">メールかいたダミー</language>
+		<language name="JPN" width="216">メールかいたダミー３</language>
+		<language name="JPN_KANJI" width="216">メールかいたダミー３</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_050">
-		<language name="JPN" width="216">メールかいたダミー</language>
-		<language name="JPN_KANJI" width="216">メールかいたダミー</language>
+		<language name="JPN" width="216">メールかいたダミー３</language>
+		<language name="JPN_KANJI" width="216">メールかいたダミー３</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_051">
-		<language name="JPN" width="216">メールかいたダミー</language>
-		<language name="JPN_KANJI" width="216">メールかいたダミー</language>
+		<language name="JPN" width="216">メールかいたダミー４</language>
+		<language name="JPN_KANJI" width="216">メールかいたダミー４</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_052">
-		<language name="JPN" width="216">メールかいたダミー</language>
-		<language name="JPN_KANJI" width="216">メールかいたダミー</language>
+		<language name="JPN" width="216">メールかいたダミー４</language>
+		<language name="JPN_KANJI" width="216">メールかいたダミー４</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_053">
-		<language name="JPN" width="216">メールかいたダミー</language>
-		<language name="JPN_KANJI" width="216">メールかいたダミー</language>
+		<language name="JPN" width="216">メールかいたダミー４</language>
+		<language name="JPN_KANJI" width="216">メールかいたダミー４</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_054">
-		<language name="JPN" width="216">メールかいたダミー</language>
-		<language name="JPN_KANJI" width="216">メールかいたダミー</language>
+		<language name="JPN" width="216">メールかいたダミー４</language>
+		<language name="JPN_KANJI" width="216">メールかいたダミー４</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_055">
-		<language name="JPN" width="216">メールかいたダミー</language>
-		<language name="JPN_KANJI" width="216">メールかいたダミー</language>
+		<language name="JPN" width="216">メールかいたダミー４</language>
+		<language name="JPN_KANJI" width="216">メールかいたダミー４</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_056">
-		<language name="JPN" width="216">メールかいたダミー</language>
-		<language name="JPN_KANJI" width="216">メールかいたダミー</language>
+		<language name="JPN" width="216">メールかいたダミー４</language>
+		<language name="JPN_KANJI" width="216">メールかいたダミー４</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_057">
-		<language name="JPN" width="216">メールかいたダミー</language>
-		<language name="JPN_KANJI" width="216">メールかいたダミー</language>
+		<language name="JPN" width="216">メールかいたダミー４</language>
+		<language name="JPN_KANJI" width="216">メールかいたダミー４</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_058">
-		<language name="JPN" width="216">メールかいたダミー</language>
-		<language name="JPN_KANJI" width="216">メールかいたダミー</language>
+		<language name="JPN" width="216">メールかいたダミー４</language>
+		<language name="JPN_KANJI" width="216">メールかいたダミー４</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_059">
-		<language name="JPN" width="216">メールかいたダミー</language>
-		<language name="JPN_KANJI" width="216">メールかいたダミー</language>
+		<language name="JPN" width="216">メールかいたダミー４</language>
+		<language name="JPN_KANJI" width="216">メールかいたダミー４</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_060">
-		<language name="JPN" width="216">メールかいたダミー</language>
-		<language name="JPN_KANJI" width="216">メールかいたダミー</language>
+		<language name="JPN" width="216">メールかいたダミー４</language>
+		<language name="JPN_KANJI" width="216">メールかいたダミー４</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_061">
-		<language name="JPN" width="216">メールかいたダミー</language>
-		<language name="JPN_KANJI" width="216">メールかいたダミー</language>
+		<language name="JPN" width="216">メールかいたダミー４</language>
+		<language name="JPN_KANJI" width="216">メールかいたダミー４</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_062">
@@ -1469,183 +1469,183 @@
 	</row>
 
 	<row id="MDL_NAME_MISSION_027">
-		<language name="JPN" width="216">じてんしゃダミー１０</language>
-		<language name="JPN_KANJI" width="216">じてんしゃダミー１０</language>
+		<language name="JPN" width="216">じてんしゃダミー１５</language>
+		<language name="JPN_KANJI" width="216">じてんしゃダミー１５</language>
 	</row>
 
 	<row id="MDL_NAME_MISSION_028">
-		<language name="JPN" width="216">じてんしゃダミー１０</language>
-		<language name="JPN_KANJI" width="216">じてんしゃダミー１０</language>
+		<language name="JPN" width="216">じてんしゃダミー１５</language>
+		<language name="JPN_KANJI" width="216">じてんしゃダミー１５</language>
 	</row>
 
 	<row id="MDL_NAME_MISSION_029">
-		<language name="JPN" width="216">じてんしゃダミー１０</language>
-		<language name="JPN_KANJI" width="216">じてんしゃダミー１０</language>
+		<language name="JPN" width="216">じてんしゃダミー１５</language>
+		<language name="JPN_KANJI" width="216">じてんしゃダミー１５</language>
 	</row>
 
 	<row id="MDL_NAME_MISSION_030">
-		<language name="JPN" width="216">じてんしゃダミー１０</language>
-		<language name="JPN_KANJI" width="216">じてんしゃダミー１０</language>
+		<language name="JPN" width="216">じてんしゃダミー１５</language>
+		<language name="JPN_KANJI" width="216">じてんしゃダミー１５</language>
 	</row>
 
 	<row id="MDL_NAME_MISSION_031">
-		<language name="JPN" width="216">じてんしゃダミー１０</language>
-		<language name="JPN_KANJI" width="216">じてんしゃダミー１０</language>
+		<language name="JPN" width="216">じてんしゃダミー１５</language>
+		<language name="JPN_KANJI" width="216">じてんしゃダミー１５</language>
 	</row>
 
 	<row id="MDL_NAME_MISSION_032">
-		<language name="JPN" width="216">じてんしゃダミー１０</language>
-		<language name="JPN_KANJI" width="216">じてんしゃダミー１０</language>
+		<language name="JPN" width="216">じてんしゃダミー１５</language>
+		<language name="JPN_KANJI" width="216">じてんしゃダミー１５</language>
 	</row>
 
 	<row id="MDL_NAME_MISSION_033">
-		<language name="JPN" width="216">じてんしゃダミー１０</language>
-		<language name="JPN_KANJI" width="216">じてんしゃダミー１０</language>
+		<language name="JPN" width="216">じてんしゃダミー１５</language>
+		<language name="JPN_KANJI" width="216">じてんしゃダミー１５</language>
 	</row>
 
 	<row id="MDL_NAME_MISSION_034">
-		<language name="JPN" width="216">じてんしゃダミー１０</language>
-		<language name="JPN_KANJI" width="216">じてんしゃダミー１０</language>
+		<language name="JPN" width="216">じてんしゃダミー１５</language>
+		<language name="JPN_KANJI" width="216">じてんしゃダミー１５</language>
 	</row>
 
 	<row id="MDL_NAME_MISSION_035">
-		<language name="JPN" width="216">じてんしゃダミー１０</language>
-		<language name="JPN_KANJI" width="216">じてんしゃダミー１０</language>
+		<language name="JPN" width="216">じてんしゃダミー１５</language>
+		<language name="JPN_KANJI" width="216">じてんしゃダミー１５</language>
 	</row>
 
 	<row id="MDL_NAME_MISSION_036">
-		<language name="JPN" width="216">じてんしゃダミー１０</language>
-		<language name="JPN_KANJI" width="216">じてんしゃダミー１０</language>
+		<language name="JPN" width="216">じてんしゃダミー１５</language>
+		<language name="JPN_KANJI" width="216">じてんしゃダミー１５</language>
 	</row>
 
 	<row id="MDL_NAME_MISSION_037">
-		<language name="JPN" width="216">じてんしゃダミー１０</language>
-		<language name="JPN_KANJI" width="216">じてんしゃダミー１０</language>
+		<language name="JPN" width="216">じてんしゃダミー１５</language>
+		<language name="JPN_KANJI" width="216">じてんしゃダミー１５</language>
 	</row>
 
 	<row id="MDL_NAME_MISSION_038">
-		<language name="JPN" width="216">じてんしゃダミー１０</language>
-		<language name="JPN_KANJI" width="216">じてんしゃダミー１０</language>
+		<language name="JPN" width="216">じてんしゃダミー２０</language>
+		<language name="JPN_KANJI" width="216">じてんしゃダミー２０</language>
 	</row>
 
 	<row id="MDL_NAME_MISSION_039">
-		<language name="JPN" width="216">じてんしゃダミー１０</language>
-		<language name="JPN_KANJI" width="216">じてんしゃダミー１０</language>
+		<language name="JPN" width="216">じてんしゃダミー２０</language>
+		<language name="JPN_KANJI" width="216">じてんしゃダミー２０</language>
 	</row>
 
 	<row id="MDL_NAME_MISSION_040">
-		<language name="JPN" width="216">じてんしゃダミー１０</language>
-		<language name="JPN_KANJI" width="216">じてんしゃダミー１０</language>
+		<language name="JPN" width="216">じてんしゃダミー２０</language>
+		<language name="JPN_KANJI" width="216">じてんしゃダミー２０</language>
 	</row>
 
 	<row id="MDL_NAME_MISSION_041">
-		<language name="JPN" width="216">じてんしゃダミー１０</language>
-		<language name="JPN_KANJI" width="216">じてんしゃダミー１０</language>
+		<language name="JPN" width="216">じてんしゃダミー２０</language>
+		<language name="JPN_KANJI" width="216">じてんしゃダミー２０</language>
 	</row>
 
 	<row id="MDL_NAME_MISSION_042">
-		<language name="JPN" width="216">じてんしゃダミー１０</language>
-		<language name="JPN_KANJI" width="216">じてんしゃダミー１０</language>
+		<language name="JPN" width="216">じてんしゃダミー２０</language>
+		<language name="JPN_KANJI" width="216">じてんしゃダミー２０</language>
 	</row>
 
 	<row id="MDL_NAME_MISSION_043">
-		<language name="JPN" width="216">じてんしゃダミー１０</language>
-		<language name="JPN_KANJI" width="216">じてんしゃダミー１０</language>
+		<language name="JPN" width="216">じてんしゃダミー２０</language>
+		<language name="JPN_KANJI" width="216">じてんしゃダミー２０</language>
 	</row>
 
 	<row id="MDL_NAME_MISSION_044">
-		<language name="JPN" width="216">じてんしゃダミー１０</language>
-		<language name="JPN_KANJI" width="216">じてんしゃダミー１０</language>
+		<language name="JPN" width="216">じてんしゃダミー２０</language>
+		<language name="JPN_KANJI" width="216">じてんしゃダミー２０</language>
 	</row>
 
 	<row id="MDL_NAME_MISSION_045">
-		<language name="JPN" width="216">じてんしゃダミー１０</language>
-		<language name="JPN_KANJI" width="216">じてんしゃダミー１０</language>
+		<language name="JPN" width="216">じてんしゃダミー２０</language>
+		<language name="JPN_KANJI" width="216">じてんしゃダミー２０</language>
 	</row>
 
 	<row id="MDL_NAME_MISSION_046">
-		<language name="JPN" width="216">じてんしゃダミー１０</language>
-		<language name="JPN_KANJI" width="216">じてんしゃダミー１０</language>
+		<language name="JPN" width="216">じてんしゃダミー２０</language>
+		<language name="JPN_KANJI" width="216">じてんしゃダミー２０</language>
 	</row>
 
 	<row id="MDL_NAME_MISSION_047">
-		<language name="JPN" width="216">じてんしゃダミー１０</language>
-		<language name="JPN_KANJI" width="216">じてんしゃダミー１０</language>
+		<language name="JPN" width="216">じてんしゃダミー２０</language>
+		<language name="JPN_KANJI" width="216">じてんしゃダミー２０</language>
 	</row>
 
 	<row id="MDL_NAME_MISSION_048">
-		<language name="JPN" width="216">じてんしゃダミー１０</language>
-		<language name="JPN_KANJI" width="216">じてんしゃダミー１０</language>
+		<language name="JPN" width="216">じてんしゃダミー２５</language>
+		<language name="JPN_KANJI" width="216">じてんしゃダミー２５</language>
 	</row>
 
 	<row id="MDL_NAME_MISSION_049">
-		<language name="JPN" width="216">じてんしゃダミー１０</language>
-		<language name="JPN_KANJI" width="216">じてんしゃダミー１０</language>
+		<language name="JPN" width="216">じてんしゃダミー２５</language>
+		<language name="JPN_KANJI" width="216">じてんしゃダミー２５</language>
 	</row>
 
 	<row id="MDL_NAME_MISSION_050">
-		<language name="JPN" width="216">じてんしゃダミー１０</language>
-		<language name="JPN_KANJI" width="216">じてんしゃダミー１０</language>
+		<language name="JPN" width="216">じてんしゃダミー２５</language>
+		<language name="JPN_KANJI" width="216">じてんしゃダミー２５</language>
 	</row>
 
 	<row id="MDL_NAME_MISSION_051">
-		<language name="JPN" width="216">じてんしゃダミー１０</language>
-		<language name="JPN_KANJI" width="216">じてんしゃダミー１０</language>
+		<language name="JPN" width="216">じてんしゃダミー２５</language>
+		<language name="JPN_KANJI" width="216">じてんしゃダミー２５</language>
 	</row>
 
 	<row id="MDL_NAME_MISSION_052">
-		<language name="JPN" width="216">じてんしゃダミー１０</language>
-		<language name="JPN_KANJI" width="216">じてんしゃダミー１０</language>
+		<language name="JPN" width="216">じてんしゃダミー２５</language>
+		<language name="JPN_KANJI" width="216">じてんしゃダミー２５</language>
 	</row>
 
 	<row id="MDL_NAME_MISSION_053">
-		<language name="JPN" width="216">じてんしゃダミー１０</language>
-		<language name="JPN_KANJI" width="216">じてんしゃダミー１０</language>
+		<language name="JPN" width="216">じてんしゃダミー２５</language>
+		<language name="JPN_KANJI" width="216">じてんしゃダミー２５</language>
 	</row>
 
 	<row id="MDL_NAME_MISSION_054">
-		<language name="JPN" width="216">じてんしゃダミー１０</language>
-		<language name="JPN_KANJI" width="216">じてんしゃダミー１０</language>
+		<language name="JPN" width="216">じてんしゃダミー２５</language>
+		<language name="JPN_KANJI" width="216">じてんしゃダミー２５</language>
 	</row>
 
 	<row id="MDL_NAME_MISSION_055">
-		<language name="JPN" width="216">じてんしゃダミー１０</language>
-		<language name="JPN_KANJI" width="216">じてんしゃダミー１０</language>
+		<language name="JPN" width="216">じてんしゃダミー２５</language>
+		<language name="JPN_KANJI" width="216">じてんしゃダミー２５</language>
 	</row>
 
 	<row id="MDL_NAME_MISSION_056">
-		<language name="JPN" width="216">じてんしゃダミー１０</language>
-		<language name="JPN_KANJI" width="216">じてんしゃダミー１０</language>
+		<language name="JPN" width="216">じてんしゃダミー２５</language>
+		<language name="JPN_KANJI" width="216">じてんしゃダミー２５</language>
 	</row>
 
 	<row id="MDL_NAME_MISSION_057">
-		<language name="JPN" width="216">じてんしゃダミー１０</language>
-		<language name="JPN_KANJI" width="216">じてんしゃダミー１０</language>
+		<language name="JPN" width="216">じてんしゃダミー２５</language>
+		<language name="JPN_KANJI" width="216">じてんしゃダミー２５</language>
 	</row>
 
 	<row id="MDL_NAME_MISSION_058">
-		<language name="JPN" width="216">じてんしゃダミー１０</language>
-		<language name="JPN_KANJI" width="216">じてんしゃダミー１０</language>
+		<language name="JPN" width="216">じてんしゃダミー２５</language>
+		<language name="JPN_KANJI" width="216">じてんしゃダミー２５</language>
 	</row>
 
 	<row id="MDL_NAME_MISSION_059">
-		<language name="JPN" width="216">じてんしゃダミー１０</language>
-		<language name="JPN_KANJI" width="216">じてんしゃダミー１０</language>
+		<language name="JPN" width="216">じてんしゃダミー２５</language>
+		<language name="JPN_KANJI" width="216">じてんしゃダミー２５</language>
 	</row>
 
 	<row id="MDL_NAME_MISSION_060">
-		<language name="JPN" width="216">じてんしゃダミー１０</language>
-		<language name="JPN_KANJI" width="216">じてんしゃダミー１０</language>
+		<language name="JPN" width="216">じてんしゃダミー２５</language>
+		<language name="JPN_KANJI" width="216">じてんしゃダミー２５</language>
 	</row>
 
 	<row id="MDL_NAME_MISSION_061">
-		<language name="JPN" width="216">じてんしゃダミー１０</language>
-		<language name="JPN_KANJI" width="216">じてんしゃダミー１０</language>
+		<language name="JPN" width="216">じてんしゃダミー２５</language>
+		<language name="JPN_KANJI" width="216">じてんしゃダミー２５</language>
 	</row>
 
 	<row id="MDL_NAME_MISSION_062">
-		<language name="JPN" width="216">ミッションコンプリート</language>
-		<language name="JPN_KANJI" width="216">ミッションコンプリート</language>
+		<language name="JPN" width="216">チャレンジジーニアス</language>
+		<language name="JPN_KANJI" width="216">チャレンジジーニアス</language>
 	</row>
 
 	<row id="MDL_NAME_SPECIAL_002">
@@ -1654,23 +1654,23 @@
 	</row>
 
 	<row id="MDL_NAME_SPECIAL_003">
-		<language name="JPN" width="216">カッパーメダリスト</language>
-		<language name="JPN_KANJI" width="216">カッパーメダリスト</language>
+		<language name="JPN" width="216">ルーキーメダリスト</language>
+		<language name="JPN_KANJI" width="216">ルーキーメダリスト</language>
 	</row>
 
 	<row id="MDL_NAME_SPECIAL_004">
-		<language name="JPN" width="216">シルバーメダリスト</language>
-		<language name="JPN_KANJI" width="216">シルバーメダリスト</language>
+		<language name="JPN" width="216">エリートメダリスト</language>
+		<language name="JPN_KANJI" width="216">エリートメダリスト</language>
 	</row>
 
 	<row id="MDL_NAME_SPECIAL_005">
-		<language name="JPN" width="216">ゴールドメダリスト</language>
-		<language name="JPN_KANJI" width="216">ゴールドメダリスト</language>
+		<language name="JPN" width="216">マスターメダリスト</language>
+		<language name="JPN_KANJI" width="216">マスターメダリスト</language>
 	</row>
 
 	<row id="MDL_NAME_SPECIAL_006">
-		<language name="JPN" width="216">シルエットメダリスト</language>
-		<language name="JPN_KANJI" width="216">シルエットメダリスト</language>
+		<language name="JPN" width="216">レジェンドメダリスト</language>
+		<language name="JPN_KANJI" width="216">レジェンドメダリスト</language>
 	</row>
 
 	<row id="MDL_NAME_SPECIAL_007">
