@@ -23,6 +23,7 @@ include $(PROJECT_RSCDIR)/macro_define
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
 #------------------------------------------------------------------------------
 TARGETDIR	= $(PROJECT_ARCDIR)../src/field
+TARGETDIR_H	= $(PROJECT_ARCDIR)../include/field
 
 #リソース
 ENC_SRC = encount_data_ex.xls
@@ -49,12 +50,12 @@ XLS2CSV = ruby $(PROJECT_ROOT)/tools/exceltool/xls2xml/tab_out_sheet.rb -c
 #	ルール定義
 #
 #----------------------------------------------------------------------------
-do-build: $(TARGETDIR)/$(ENC_DAT) $(TARGETDIR)/$(ENC_H)
+do-build: $(TARGETDIR)/$(ENC_DAT) $(TARGETDIR_H)/$(ENC_H)
 
 $(TARGETDIR)/$(ENC_DAT): $(ENC_DAT)
 	$(COPY) $(ENC_DAT) $(TARGETDIR)
-$(TARGETDIR)/$(ENC_H): $(ENC_H)
-	$(COPY) $(ENC_H) $(TARGETDIR)
+$(TARGETDIR_H)/$(ENC_H): $(ENC_H)
+	$(COPY) $(ENC_H) $(TARGETDIR_H)
 
 ifeq ($(CONVERTUSER),true)	#コンバート対象者のみ、バイナリ生成
 
@@ -70,7 +71,7 @@ endif
 #----------------------------------------------------------------------------
 #----------------------------------------------------------------------------
 clean:
-	@-rm $(TARGETDIR)/$(ENC_DAT) $(TARGETDIR)/$(ENC_H)
+	@-rm $(TARGETDIR)/$(ENC_DAT) $(TARGETDIR_H)/$(ENC_H) $(TARGETDIR)/$(ENC_H)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、バイナリ生成
 	@-rm $(ENC_DAT) $(ENC_H) $(ENC_CSV)
 endif

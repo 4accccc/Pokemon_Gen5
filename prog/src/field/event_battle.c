@@ -60,7 +60,7 @@
 #include "amprotect.h"
 
 #include "savedata/encount_sv.h"
-#include "encount_data_ex_def.h"
+#include "field/encount_data_ex_def.h"
 
 FS_EXTERN_OVERLAY(amprotect);
 

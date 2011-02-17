@@ -8,7 +8,7 @@
 #ifndef __H_ENCOUNT_DATA_H__
 #define __H_ENCOUNT_DATA_H__
 
-#include "encount_data_ex_def.h"  //Ｎポケモン用定義
+#include "field/encount_data_ex_def.h"  //Ｎポケモン用定義
 
 #define ENC_DATA_INVALID_ID (0xFFFF)  ///<無効エンカウトデータID
 
