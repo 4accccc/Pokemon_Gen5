@@ -28,8 +28,21 @@ _EVENT_DATA ev_pos_c03gym0101_gate_3b
 _EVENT_DATA ev_c03gym0101_trainer_gate_3b
 _EVENT_DATA ev_c03gym0101_sunglasses_01  //サングラス
 _EVENT_DATA ev_bg_c03gym0101_statue_01  //石像
+_EVENT_DATA ev_init_c03gym0101  //ゾーン読み込み時
 _EVENT_DATA_END
 
+/************************************************************/
+/*					FIELD_INIT_LABEL						*/
+/************************************************************/
+INIT_EVENT_START	ev_init_c03gym0101
+  //繭は破れて勝負に勝っていない
+  IF FLAG_ON(FE_C03GYM0101_COCCON_02) && $WK_SCENE_C03GYM0101_GATE_3B == 0 THEN
+    _OBJ_POS_CHANGE( C03R0101_TRAINER_GATE_3B, 25, 20, 17, DIR_LEFT )
+  //繭は破れて勝負に勝った
+  ELSIF FLAG_ON(FE_C03GYM0101_COCCON_02) && $WK_SCENE_C03GYM0101_GATE_3B == 1 THEN
+    _OBJ_POS_CHANGE( C03R0101_TRAINER_GATE_3B, 27, 20, 16, DIR_DOWN )
+  ENDIF
+INIT_EVENT_END
 //==============================================================
 ///プログラム呼び出し
 //==============================================================
