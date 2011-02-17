@@ -1,0 +1,18 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: resonance_resort_data.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_RESONANCE_RESORT_DATA_NAIX_
+#define NARC_RESONANCE_RESORT_DATA_NAIX_
+
+enum {
+	NARC_resonance_resort_data_resort_people_dat = 0
+};
+
+/* NARC_RESONANCE_RESORT_DATA_NAIX_ */
+#endif
