@@ -2,6 +2,7 @@
 #ifndef ZONE_C16_EVD_H
 #define ZONE_C16_EVD_H
 
+#define DOOR_ID_C16_C16R0101_EXIT01       0
 
 #endif //ZONE_C16_EVD_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c16.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
