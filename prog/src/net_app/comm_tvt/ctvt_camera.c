@@ -129,7 +129,7 @@ CTVT_CAMERA_WORK* CTVT_CAMERA_Init( COMM_TVT_WORK *work , const HEAPID heapId )
   
   camWork->isUpdateBit = 0;
   camWork->waitAllConut = 0;
-  camWork->isWaitAllRefresh = FALSE;
+  camWork->isWaitAllRefresh = TRUE;
   camWork->allClearCnt = 192;
   camWork->isRefreshClear = FALSE;
   camWork->isRefreshClearName = FALSE;
@@ -990,8 +990,8 @@ void CTVT_CAMERA_Init_RetrunGame( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWor
   camWork->waitAllConut = 0;
   camWork->isWaitAllRefresh = FALSE;
   camWork->allClearCnt = 192;
-  camWork->isRefreshClear = FALSE;
-  camWork->isRefreshClearName = FALSE;
+  camWork->isRefreshClear = TRUE;
+  camWork->isRefreshClearName = TRUE;
   camWork->isDispDouble = FALSE;
   camWork->isWaitWindow = FALSE;
   

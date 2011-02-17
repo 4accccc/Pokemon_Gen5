@@ -2280,7 +2280,7 @@ void CTVT_COMM_Init_ReturnGame( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
   }
 
   commWork->connectNum = 1;   // d—v
-  //commWork->PhotobufUseBit = 0;
+  commWork->PhotobufUseBit = 0;
   //commWork->reqCheckBit = 0;
   commWork->isSendWait = FALSE;
 

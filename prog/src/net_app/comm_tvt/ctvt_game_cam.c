@@ -16,6 +16,7 @@
 #include "system/main.h"	//HEAPID
 #include "system/gfl_use.h"
 #include "gamesystem/msgspeed.h"
+#include "sound/pm_sndsys.h"
 
 // archive
 #include "arc_def.h"
@@ -187,6 +188,7 @@ typedef struct {
   void  *scr_buf;   // 0x18000 -> 256x192x2
   BOOL  is_update;  // カメラキャプチャが更新されたか
   u8    cnt;        // 撮影枚数 3枚
+  u16   frame;      // カウントダウン用
   CAMERA_SYSTEM_WORK  *p_cam_sys;
 } CAMERA_WORK;
 
@@ -1145,6 +1147,7 @@ static void CAM_Init( CAMERA_WORK *p_wk, CAMERA_SYSTEM_WORK *p_cam_sys, HEAPID h
   p_wk->scr_buf = GFL_NET_Align32Alloc( heapID, CTVT_BUFFER_SCR_SIZE );
   p_wk->is_update = FALSE;
   p_wk->cnt       = 0;
+  p_wk->frame     = 0;
   p_wk->p_cam_sys = p_cam_sys;
 }
 
@@ -1456,6 +1459,9 @@ static void ROU_WaitSet( ROULETTE_WORK *p_wk, const u16 wait )
 {
   p_wk->wait = wait;
   p_wk->move_frame = TRUE;
+
+  // SE再生
+  PMSND_PlaySystemSE( SEQ_SE_SELECT4 );    // ルーレット移動SE
 }
 
 //----------------------------------------------------------------------------
@@ -2198,10 +2204,22 @@ static void SEQFUNC_TWL_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
     GFL_CLACT_WK_SetDrawEnable( OBJ_GetClwk( &p_wk->obj, CLWKID_COUNT ), TRUE );
     GFL_CLACT_WK_ResetAnm( OBJ_GetClwk( &p_wk->obj, CLWKID_COUNT ) );
     *p_seq = SEQ_CAPTURE;
+    PMSND_PlaySystemSE( SEQ_SE_SELECT4 );    // 数字SE
     break;
   case SEQ_CAPTURE:     // 写真撮影
+    
+    // 1秒ごとにSEを鳴らす
+    p_wk->camera.frame++;
+    if( !( p_wk->camera.frame % 60 ) && p_wk->camera.frame <= 180 )
+    {
+      PMSND_PlaySystemSE( SEQ_SE_SELECT4 );    // 数字SE
+    }
+
+    // カウントダウンアニメーション
     if( GFL_CLACT_WK_CheckAnmActive( OBJ_GetClwk( &p_wk->obj, CLWKID_COUNT ) ) == FALSE )
     {
+      p_wk->camera.frame = 0;
+
       // キャプチャストップ
       CAM_CaptureStop( &p_wk->camera );
 
@@ -2212,10 +2230,8 @@ static void SEQFUNC_TWL_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
       WIPE_SYS_Start( WIPE_PATTERN_S, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, 
           WIPE_FADE_WHITE, WIPE_DEF_DIV, 2, p_wk->heapID );
 
-#ifndef DEBUG_ONLY_FOR_ichiraku_katsuhiko
       // シャッター音再生
       CAM_PlayShutterSe( &p_wk->camera );
-#endif
 
       *p_seq = SEQ_SE_WAIT;
     }
@@ -2563,6 +2579,9 @@ static void SEQFUNC_NITRO_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
         p_wk->roulette.frame_cnt = 0;
         p_wk->roulette.wait = 0;
         *p_seq = SEQ_FLASH;
+        
+        // SE再生
+        PMSND_PlaySystemSE( SEQ_SE_DECIDE3 );    // 
       }
     }
     break;

@@ -51,7 +51,7 @@ static GFL_STD_RandContext gRandContext = {0};
 //===============================
 // カメラ撮影をスキップ
 #ifdef PM_DEBUG
-#define CAMERA_SKIP       // コメントにするとSKIPしない
+//#define CAMERA_SKIP       // コメントにするとSKIPしない
 #endif
 //===============================
 
@@ -204,6 +204,7 @@ typedef enum {
   CGOAM_BUTTON_TOUCH, // タッチするところ タッチ時
   CGOAM_BUTTON_LAST_STAY,  // タッチするところ 通常
   CGOAM_BUTTON_LAST_TOUCH, // タッチするところ タッチ時
+  CGOAM_POMP_HANDLE_LAST,  // ポンプ取っ手 残り時間20秒板
 } CTVT_GAME_OBJ_ANM_MAIN;
 
 // PLATE task seq
@@ -1449,12 +1450,21 @@ void CTVT_GAME_CommDataSet_Touch( CTVT_COMM_WORK *commWork, CTVT_GAME_WORK *p_wk
 
   // タッチ数を計測しておく
   {
-    // タッチ数加算
-    p_wk->touch_cnt[ netID ] += 1;
+    u8  add = 1;
+
+    // 加算ポイント計算
     if( pinpoint == TRUE )
     {
-      p_wk->touch_cnt[ netID ] += 1;
+      add = 2;
     }
+    // 残り時間20秒以下でポイント倍
+    if( p_wk->timeLimit <= 20 )
+    {
+      add *= 2;
+    }
+
+    // タッチ数加算
+    p_wk->touch_cnt[ netID ] += add;
 
     // タッチ数判定
     {
@@ -1462,27 +1472,27 @@ void CTVT_GAME_CommDataSet_Touch( CTVT_COMM_WORK *commWork, CTVT_GAME_WORK *p_wk
 
       if( tbl_idx < 3 )
       {
-        if( p_wk->touch_cnt[ netID ] >= touch_tbl[ tbl_idx ] )
+        if( p_wk->touch_cnt[ netID ] >= touch_tbl[ tbl_idx ] &&
+            CTVT_BALLOON2_IsEffect( p_wk->p_balloon2[netID] ) == FALSE )
         {
           p_wk->level_cnt[netID]++;   // タッチ段階上げる
           send = TRUE;
         }
       }
-    }
-
-    // 破裂の判定
-    if( send == FALSE )
-    {
-      // 順位によって追加タッチポイント
-      const u8 add_cnt_tbl[] = {9,6,4,2};
-      const u8 touch_cnt_max = TOUCH_CNT_3 + add_cnt_tbl[p_wk->p_plate[netID]->rank];
-
-      if( p_wk->touch_cnt[ netID ] >= touch_cnt_max )
+      // 破裂の判定
+      else
       {
-        ICHI_Printf("NetID %d rank %d \n", netID, p_wk->p_plate[netID]->rank);
-        p_wk->touch_cnt[ netID ] = 0;
-        p_wk->level_cnt[ netID ] = 0;
-        send = TRUE;
+        // 順位によって追加タッチポイント
+        const u8 add_cnt_tbl[] = {9,6,4,2};
+        const u8 touch_cnt_max = TOUCH_CNT_3 + add_cnt_tbl[p_wk->p_plate[netID]->rank];
+
+        if( p_wk->touch_cnt[ netID ] >= touch_cnt_max &&
+            CTVT_BALLOON2_IsEffect( p_wk->p_balloon2[netID] ) == FALSE )
+        {
+          p_wk->touch_cnt[ netID ] = 0;
+          p_wk->level_cnt[ netID ] = 0;
+          send = TRUE;
+        }
       }
     }
   }
@@ -1594,6 +1604,9 @@ static void CTVT_GAME_Init( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
 
   // 3D面のプライオリティ
   GFL_BG_SetPriority( CTVT_GAME_FRAME_M_3D, 2 ); 
+
+  // 通信アイコン
+  GFL_NET_ReloadIconTopOrBottom( TRUE , heapID );
 }
 
 //----------------------------------------------------------------------------
@@ -2642,6 +2655,7 @@ static void game_update_seq_init_part1( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
       PRINTSYS_PrintQueColor( printQue, GFL_BMPWIN_GetBmp( gameWork->msgWinTitle ), 
           0, 0, str, fontHandle,CTVT_FONT_COLOR_BLACK );
       GFL_STR_DeleteBuffer( str );
+      WORDSET_Delete( wordSet );
       GFL_BMPWIN_TransVramCharacter( gameWork->msgWinTitle );
       GFL_BMPWIN_MakeScreen( gameWork->msgWinTitle );
       BmpWinFrame_Write( gameWork->msgWinTitle, WINDOW_TRANS_ON_V, 
@@ -3384,10 +3398,15 @@ static BOOL game_update_seq_main_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
   // 風船がアクティブの時のみタッチ判定
   if( CTVT_BALLOON2_GetActive( gameWork->p_balloon2[selfId] ) == TRUE )
   {
-    static GFL_UI_TP_HITTBL button_tbl[3] =
+    static GFL_UI_TP_HITTBL button_tbl[5] =
     {
-      {152, 167, 32, 56 }, // ピンポイント範囲
-      {128, 192, 0, 80 },    // タッチ範囲
+      // 左
+      {160, 176, 8, 24 }, // ピンポイント範囲
+      {142, 192, 0, 47 }, // タッチ範囲
+
+      // 右
+      {160, 176, 224, 240 }, // ピンポイント範囲
+      {142, 192, 208, 255 }, // タッチ範囲
       {GFL_UI_TP_HIT_END,0,0,0}
     };
     int retTrg;
@@ -3399,6 +3418,8 @@ static BOOL game_update_seq_main_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
     button_tbl[0].rect.right += gameWork->debug_touch_ex_r;
     button_tbl[1].rect.top -= gameWork->debug_touch_r;
     button_tbl[1].rect.right += gameWork->debug_touch_r;
+    button_tbl[1].rect.left -= gameWork->debug_touch_r;
+    button_tbl[1].rect.right += gameWork->debug_touch_r;
 #endif
 
     retTrg = GFL_UI_TP_HitTrg( button_tbl );
@@ -3406,7 +3427,7 @@ static BOOL game_update_seq_main_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
     {
       CTVT_GAME_SEND_DATA data = {0};
       // 
-      if( retTrg == 0 )
+      if( retTrg == 0 || retTrg == 2 )
       {
         // ピンポイントタッチ
         // 通信データ送信
@@ -3415,6 +3436,7 @@ static BOOL game_update_seq_main_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
         PMSND_PlaySystemSE( SEQ_SE_LCG_07 );
       }
       else
+      if( retTrg == 1 || retTrg == 3 )
       {
         // 通信データ送信
         CTVT_COMM_SendGameReq( commWork, data, CCGDT_TOUCH );
@@ -3560,6 +3582,8 @@ static BOOL game_update_seq_main_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
     // 元々のテンポをratio/256倍する
     PMSND_SetStatusBGM( 285, 85, PMSND_NOEFFECT );
     //PMSND_SetStatusBGM( 285, PMSND_NOEFFECT, PMSND_NOEFFECT );
+    // 取っ手変更
+    GFL_CLACT_WK_SetAnmSeq( gameWork->clwkPompHandle, CGOAM_POMP_HANDLE_LAST );
   }
   
   // プレート更新

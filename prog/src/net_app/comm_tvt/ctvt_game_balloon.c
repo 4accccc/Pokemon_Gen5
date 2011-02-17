@@ -626,7 +626,7 @@ void CTVT_BALLOON2_Draw( BALLOON2_WORK *p_wk )
         VEC_COPY( &tmp_status.scale, &p_wk->status.scale );
         MTX_Identity33( &tmp_status.rotate );
         VEC_COPY( &tmp_status.trans, &p_wk->status.trans );
-        tmp_status.trans.z -= 0x1000;
+        //tmp_status.trans.z -= 0x1000;
       }
       GFL_G3D_DRAW_DrawObject( obj, &tmp_status );
     }
@@ -681,6 +681,7 @@ BOOL CTVT_BALLOON2_Burst( BALLOON2_WORK *p_wk )
     ret = TRUE;     // 破裂
     break;
   }
+  ICHI_Printf("風船BURST stage %d \n", p_wk->stage);
 
   return ret;
 }
@@ -699,7 +700,6 @@ BOOL CTVT_BALLOON2_GetActive( BALLOON2_WORK *p_wk )
 {
   if( p_wk->interval > 0 )
   {
-    ICHI_Printf("補充中\n");
     // 補充中なのでタッチできない
     return FALSE;
   }
@@ -729,6 +729,29 @@ void CTVT_BALLOON2_SetSwing( BALLOON2_WORK *p_wk )
   {
     p_wk->ang_flg = TRUE;
   }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  風船が何らかのエフェクト中か
+ *
+ *	@param	BALLON2_WORK *p_wk 
+ *
+ *	@return TRUEでエフェクト中
+ */
+//-----------------------------------------------------------------------------
+extern BOOL CTVT_BALLOON2_IsEffect( BALLOON2_WORK *p_wk )
+{
+  if( p_wk->ang_flg == TRUE ||
+      p_wk->scale_flg == TRUE || 
+      p_wk->alpha_flg == TRUE || 
+      p_wk->effect_ica == TRUE ||
+      p_wk->effect_ima == TRUE ||
+      p_wk->interval != 0 )
+  {
+    return TRUE;
+  }
+  return FALSE;
 }
 
 //----------------------------------------------------------------------------
