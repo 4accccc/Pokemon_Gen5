@@ -420,8 +420,12 @@ static const BOOL MB_MOVIE_Main( MB_MOVIE_WORK *work )
     if( work->cardType == CARD_TYPE_INVALID )
     {
       //ROMˆá‚¤I
+
+#ifndef BUGFIX_AF_SYSTEM277_20110217
       MB_MSG_MessageDisp( work->msgWork , MSG_MB_MOVIE_02 , work->initData->msgSpeed );
       MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
+#endif
+
       MB_COMM_SetChildState( work->commWork , MCCS_END_GAME_ERROR );
       work->state = MCS_WAIT_NEXT_GAME_ERROR_MSG;
     }
@@ -497,8 +501,10 @@ static const BOOL MB_MOVIE_Main( MB_MOVIE_WORK *work )
         break;
       }
       //“Ç‚Ýž‚ÝŽ¸”s
+#ifndef BUGFIX_AF_SYSTEM277_20110217
       MB_MSG_MessageDisp( work->msgWork , MSG_MB_MOVIE_06 , work->initData->msgSpeed );
       MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
+#endif
       work->state = MCS_WAIT_NEXT_GAME_ERROR_MSG;
     }
     break;

@@ -178,7 +178,9 @@ void MB_MSG_MessageTerm( MB_MSG_WORK *msgWork )
   if( msgWork->talkWinSys != NULL )
   {
     TALKMSGWIN_SystemDelete( msgWork->talkWinSys );
+#ifndef MULTI_BOOT_MAKE  //’ÊíŽžˆ— 
     GFL_OVERLAY_Unload( FS_OVERLAY_ID( fieldmap ) );
+#endif
   }
 #endif
   if( msgWork->yesNoWork != NULL )
