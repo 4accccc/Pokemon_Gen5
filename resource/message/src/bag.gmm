@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2011-02-16T14:42:59"/>
+	<create user="shimoyamada" host="W00184" date="2011-02-18T19:17:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1587,6 +1587,25 @@ common_scr.gmmの変更も忘れないでください
 並び替え項目名</comment>
 		<language name="JPN">ばんごうじゅん</language>
 		<language name="JPN_KANJI">ばんごうじゅん</language>
+	</row>
+
+	<row id="mes_bag_132" back-color="#ff8080,,,,,,#ff8080,#ffff00,,#ff8080,#ffff00,,#ff8080,,,#ff8080,,">
+		<comment>swan追加
+保管ポケットのソート
+1：種類数</comment>
+		<language name="JPN">ほかんに　あるものが
+[2:02:３桁:1]しゅるい　みつかりました！</language>
+		<language name="JPN_KANJI">ほかんに　あるものが
+[2:02:３桁:1]しゅるい　みつかりました！</language>
+	</row>
+
+	<row id="mes_bag_133" back-color="#ff8080,,,,,,#ff8080,#ffff00,,#ff8080,#ffff00,,#ff8080,,,#ff8080,,">
+		<comment>swan追加
+ソートメッセージ</comment>
+		<language name="JPN">ばんごうじゅんに
+もちものを　せいり　しました！</language>
+		<language name="JPN_KANJI">番号順に
+持ち物を　整理しました！</language>
 	</row>
 
 	<flowchart-group-list>
