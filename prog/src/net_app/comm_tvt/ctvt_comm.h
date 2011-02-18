@@ -158,6 +158,8 @@ extern void CTVT_COMM_SendGameReq( CTVT_COMM_WORK *commWork, CTVT_GAME_SEND_DATA
 extern void CTVT_COMM_SendGameReq_Score( CTVT_COMM_WORK *commWork, CTVT_GAME_SEND_SCORE score );
 
 
+// 会話からゲームに行く時の処理
+extern void CTVT_COMM_Exit_GoGame( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork );
 // ゲームから会話に戻る時専用の初期化
 extern void CTVT_COMM_Init_ReturnGame( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork );
 

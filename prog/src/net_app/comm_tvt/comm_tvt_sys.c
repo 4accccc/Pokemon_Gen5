@@ -160,7 +160,7 @@ static const GFL_DISP_VRAM vramBank = {
 //------------------------------------------------------------------
 #ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
 
-#define DEBUG_MAIN_TIME_AVERAGE (1) // 時間AVERAGE　表示 １：ON　０：OFF
+#define DEBUG_MAIN_TIME_AVERAGE (0) // 時間AVERAGE　表示 １：ON　０：OFF
 
 static OSTick DEBUG_DEBUG_MAIN_TIME_AVERAGE_Start;    // 1フレーム開始
 static OSTick DEBUG_DEBUG_MAIN_TIME_AVERAGE_End;    // 1フレーム開始
@@ -442,6 +442,9 @@ static void COMM_TVT_Term_ForGame1( COMM_TVT_WORK *work )
   GFL_NET_LDATA_ExitSystem();
   COMM_TVT_ReleaseResource( work );
   COMM_TVT_TermGraphic( work );
+
+  // ゲームに行くときの通信処理
+  CTVT_COMM_Exit_GoGame( work, work->commWork );
 
   // カメラは初期化には関係ないが、キャプチャをとめないと
   // コールバック関数が処理されてしまう
@@ -1226,6 +1229,11 @@ APP_TASKMENU_RES* COMM_TVT_GetTaskMenuRes( COMM_TVT_WORK *work )
 u8 COMM_TVT_GetMode( const COMM_TVT_WORK *work )
 {
   return work->mode;
+}
+
+u8 COMM_TVT_GetNextMode( const COMM_TVT_WORK *work )
+{
+  return work->nextMode;
 }
 
 

@@ -216,6 +216,7 @@ static void*  CTVT_COMM_GetBeaconData(void* pWork);
 static int CTVT_COMM_GetBeaconSize(void *pWork);
 static BOOL CTVT_COMM_BeacomCompare(GameServiceID GameServiceID1, GameServiceID GameServiceID2, void* pWork);
 static BOOL CTVT_COMM_ConnectCheckCallBack(WMStartParentCallback *cbWork, void* pWork);
+static BOOL CTVT_COMM_ConnectCheckCallBack_Game(WMStartParentCallback *cbWork, void* pWork);
 
 static void CTVT_COMM_RefureshCommState( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork );
 
@@ -826,6 +827,15 @@ static BOOL CTVT_COMM_ConnectCheckCallBack(WMStartParentCallback *cbWork, void* 
     return TRUE;
   }
   return CTVT_COMM_CheckCallingAddress( &commWork->beacon , cbWork->macAddress );
+}
+
+//--------------------------------------------------------------
+// 接続時チェックコールバック ゲーム中
+// 子機の接続はなし
+//--------------------------------------------------------------
+static BOOL CTVT_COMM_ConnectCheckCallBack_Game(WMStartParentCallback *cbWork, void* pWork)
+{
+  return FALSE;
 }
 
 //--------------------------------------------------------------
@@ -1859,7 +1869,7 @@ static void CTVT_COMM_UpdateGameComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *comm
   const u8 selfId = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
   BOOL  isSendGameData = FALSE;
   
-#if 0   // いらないかも
+#if 1   // いらないかも
   // 接続人数の更新
   {
     const u8 connectNum = GFL_NET_GetConnectNum();
@@ -1867,7 +1877,6 @@ static void CTVT_COMM_UpdateGameComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *comm
     {
       u8 i;
       u8 connectNum = 0;
-      BOOL isUpdateState = FALSE;
       const u8 selfIdx = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
       const HEAPID heapId = COMM_TVT_GetHeapId( work );
 
@@ -1893,13 +1902,15 @@ static void CTVT_COMM_UpdateGameComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *comm
 
       COMM_TVT_SetConnectNum( work , connectNum );
       commWork->connectNum = connectNum;
-      commWork->beacon.connectNum = connectNum;
+      //↓ビーコンの接続人数は更新してはいけない
+      //　乱入禁止に使っているから
+      //commWork->beacon.connectNum = connectNum;
     }
   }
 #endif
 
   // ゲーム中の乱入がないように、接続人数をMAXにしておく
-  commWork->beacon.connectNum = CTVT_MEMBER_NUM;
+  //commWork->beacon.connectNum = CTVT_MEMBER_NUM;
 
   // ゲームがメインかどうか？
   // （メインでフレーム数を増やしているから0以上だとメイン状態）
@@ -2206,7 +2217,7 @@ static void CTVT_COMM_PostGameData( const int netID, const int size , const void
     break;
   case CCGDT_TP:    // TP座標
     // 誰のデータでも受信するが、親のみ更新する
-    if( selfId == 0 )
+    if( selfId == 0 && CTVT_GAME_IsMain( gameWork ) == TRUE )
     {
       CTVT_GAME_CommDataSet_TP( commWork, gameWork, p_recv, netID );
     }
@@ -2260,6 +2271,11 @@ void CTVT_COMM_SendGameReq_Score( CTVT_COMM_WORK *commWork, CTVT_GAME_SEND_SCORE
   commWork->sendGameScore = score;
 }
 
+// 会話からゲームに行く時の処理
+void CTVT_COMM_Exit_GoGame( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
+{
+  WH_SetJudgeAcceptFunc( CTVT_COMM_ConnectCheckCallBack_Game );
+}
 
 //----------------------------------------------------------------------------
 /**
@@ -2309,6 +2325,10 @@ void CTVT_COMM_Init_ReturnGame( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork )
   commWork->canSendWaveBuf = TRUE;
   commWork->reqPermitSendWaveBuf = FALSE;
   commWork->tempTalkMember = CTVT_COMM_INVALID_MEMBER;
+
+
+  // 子機の接続を有りにする
+  WH_SetJudgeAcceptFunc( CTVT_COMM_ConnectCheckCallBack );
 
   // メンバーデータ更新
   CTVT_COMM_RefureshCommState( work , commWork );

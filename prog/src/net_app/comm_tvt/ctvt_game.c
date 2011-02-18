@@ -575,7 +575,7 @@ static void TaskFuncScorePlate( GFL_TCB* p_tcb, void* p_work );
 //------------------------------------------------------------------
 #ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
 
-#define DEBUG_MAIN_TIME_AVERAGE (0) // 時間AVERAGE　表示 １：ON　０：OFF
+#define DEBUG_MAIN_TIME_AVERAGE (1) // 時間AVERAGE　表示 １：ON　０：OFF
 #define DEBUG_AVERAGE_MAX (10)
 
 static OSTick DEBUG_DEBUG_MAIN_TIME_AVERAGE_Start[DEBUG_AVERAGE_MAX];    // 1フレーム開始
@@ -755,6 +755,38 @@ void CTVT_GAME_TermMode( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
       for( j=0; j<CAPTURE_NUM; j++ )
       {
         GFL_HEAP_FreeMemory( gameWork->cam_member[i].p_cap_buf[j] );
+      }
+    }
+  }
+
+  // エラー落ちの解放
+  if( COMM_TVT_GetNextMode( work ) == CTM_ERROR )
+  {
+    // 状態別解放
+    switch( gameWork->state ){
+    case CGS_CAMERA_MAIN:   // カメラメイン
+    case CGS_CAMERA_EXIT:   // カメラフェードアウト中
+      CTVT_GAME_CAM_Exit( gameWork->p_cam_wk );
+      break;
+    case CGS_GAME_MAIN:     // ゲーム中
+      {
+        const CTVT_GAME_ID game_id =  CTVT_GAME_GetGameID( gameWork );
+
+        // 共通解放
+        game_update_seq_exit_common( work, gameWork );
+
+        // ゲーム別解放
+        switch( game_id ){
+        case CGI_BALLOON1:
+          game_update_seq_exit_part1( work, gameWork );
+          break;
+        case CGI_BALLOON2:
+          game_update_seq_exit_part2( work, gameWork );
+          break;
+        }
+
+        // ゲーム大本の解放
+        CTVT_GAME_Exit( work, gameWork );
       }
     }
   }
@@ -3039,9 +3071,8 @@ static void game_update_seq_title_end_part1( COMM_TVT_WORK *work, CTVT_GAME_WORK
   u8 i;
   for( i=0; i<3; i++ )
   {
-    // タイトル 削除
-    //GFL_CLACT_WK_SetDrawEnable( gameWork->clwkTitle[i], FALSE );
-    GFL_CLACT_WK_Remove( gameWork->clwkTitle[i] );
+    // タイトル 非表示
+    GFL_CLACT_WK_SetDrawEnable( gameWork->clwkTitle[i], FALSE );
   }
 
   for( i=0; i<2; i++ )
@@ -3075,8 +3106,8 @@ static void game_update_seq_title_end_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK
   u8 i;
   for( i=0; i<4; i++ )
   {
-    // タイトル 削除
-    GFL_CLACT_WK_Remove( gameWork->clwkTitle[i] );
+    // タイトル 非表示
+    GFL_CLACT_WK_SetDrawEnable( gameWork->clwkTitle[i], FALSE );
   }
   // タッチボタン表示
   GFL_CLACT_WK_SetDrawEnable( gameWork->clwkTouch, TRUE );
@@ -3262,28 +3293,25 @@ static BOOL game_update_seq_main_part1( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
   else if( gameWork->timeLimit == 0 )
   {
     ICHI_Printf("TimeLimit が0 \n");
-    // 終了だけど風船の数を一定にするまで出現させる
-    if( gameWork->balloon_tbl_cnt == 0 )
+
+    // 終了時に親ならスコア送信
+    if( selfId == 0 )
     {
-      // 終了時に親ならスコア送信
-      if( selfId == 0 )
+      CTVT_GAME_SEND_SCORE score;
+      u8  i;
+
+      ICHI_Printf("-----送信スコア-------------\n");
+      for(i=0; i<CTVT_MEMBER_NUM; i++ )
       {
-        CTVT_GAME_SEND_SCORE score;
-        u8  i;
-
-        ICHI_Printf("-----送信スコア-------------\n");
-        for(i=0; i<CTVT_MEMBER_NUM; i++ )
-        {
-          score.score[i] = gameWork->score[i];
-          ICHI_Printf("%d -> %d\n",i, score.score[i]);
-        }
-
-        CTVT_COMM_SendGameReq_Score( commWork, score );
+        score.score[i] = gameWork->score[i];
+        ICHI_Printf("%d -> %d\n",i, score.score[i]);
       }
 
-      ICHI_Printf("ゲームメイン終了!\n");
-      return TRUE; // 終了
+      CTVT_COMM_SendGameReq_Score( commWork, score );
     }
+
+    ICHI_Printf("ゲームメイン終了!\n");
+    return TRUE; // 終了
   }
 
   // プレート移動
@@ -3641,8 +3669,8 @@ static void game_update_seq_score_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
 
   // ゲーム中のOBJは結果発表では使わないので破棄する
   {
-    GFL_CLACT_WK_Remove( gameWork->clwkTime );  // タイムゲージ
-    GFL_CLACT_WK_Remove( gameWork->clwkLast );  // ラストスパート
+    GFL_CLACT_WK_SetDrawEnable( gameWork->clwkTime, FALSE );  // タイムゲージ
+    GFL_CLACT_WK_SetDrawEnable( gameWork->clwkLast, FALSE );  // ラストスパート
     // タイムバーのBMPWIN破棄
     GFL_BMPWIN_ClearTransWindow( gameWork->bmpWinTime );
     GFL_BMPWIN_Delete( gameWork->bmpWinTime );
@@ -3652,15 +3680,15 @@ static void game_update_seq_score_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
     {
       for( i=0; i<2; i++ )
       {
-        GFL_CLACT_WK_Remove( gameWork->clwkCloud_M[i] ); // 下画面の雲
+        GFL_CLACT_WK_SetDrawEnable( gameWork->clwkCloud_M[1], FALSE );
       }
     }
     // ゲーム2だけ破棄するもの
     else if( game_id == CGI_BALLOON2 )
     {
-      GFL_CLACT_WK_Remove( gameWork->clwkTouch ); // タッチするボタン
-      GFL_CLACT_WK_Remove( gameWork->clwkPompBase ); // 空気入れ
-      GFL_CLACT_WK_Remove( gameWork->clwkPompHandle ); // 空気入れ
+      GFL_CLACT_WK_SetDrawEnable( gameWork->clwkTouch, FALSE );   // タッチするボタン
+      GFL_CLACT_WK_SetDrawEnable( gameWork->clwkPompBase, FALSE );   // 空気入れ
+      GFL_CLACT_WK_SetDrawEnable( gameWork->clwkPompHandle, FALSE );   // 空気入れ
 
       // 風船破棄
       for( i=0; i<CTVT_MEMBER_NUM; i++ )
@@ -4314,22 +4342,51 @@ static void game_update_seq_exit_common( COMM_TVT_WORK *work, CTVT_GAME_WORK *ga
   }
 
   // OBJ破棄 
-  GFL_CLACT_WK_Remove( gameWork->clwkKekka );
-  GFL_CLACT_WK_Remove( gameWork->clwkOmeFont );
-  GFL_CLACT_WK_Remove( gameWork->clwkOmeNiji );
-  GFL_CLACT_WK_Remove( gameWork->clwkRank );
-  GFL_CLACT_WK_Remove( gameWork->clwkDot );
+  for( i=0; i<3; i++ )
+  {
+    if( gameWork->clwkTitle[i] )
+    {
+      GFL_CLACT_WK_Remove( gameWork->clwkTitle[i] );
+    }
+  }
+  for( i=0; i<2; i++ )
+  {
+    if( gameWork->clwkCloud_M[i] )
+    {
+      GFL_CLACT_WK_Remove( gameWork->clwkCloud_M[i] ); // 下画面の雲
+    }
+  }
+  if(gameWork->clwkTime){GFL_CLACT_WK_Remove( gameWork->clwkTime );}  // タイムゲージ
+  if(gameWork->clwkLast){GFL_CLACT_WK_Remove( gameWork->clwkLast );}  // ラストスパート
+  if(gameWork->clwkTouch){GFL_CLACT_WK_Remove( gameWork->clwkTouch );} // タッチするボタン
+  if(gameWork->clwkPompBase){GFL_CLACT_WK_Remove( gameWork->clwkPompBase );} // 空気入れ
+  if(gameWork->clwkPompHandle){GFL_CLACT_WK_Remove( gameWork->clwkPompHandle );} // 空気入れ
+  if(gameWork->clwkPenAnm){GFL_CLACT_WK_Remove( gameWork->clwkPenAnm );}  // ペンアニメ
+  if(gameWork->clwkKekka){GFL_CLACT_WK_Remove( gameWork->clwkKekka );}
+  if(gameWork->clwkOmeFont){GFL_CLACT_WK_Remove( gameWork->clwkOmeFont );}
+  if(gameWork->clwkOmeNiji){GFL_CLACT_WK_Remove( gameWork->clwkOmeNiji );}
+  if(gameWork->clwkRank){GFL_CLACT_WK_Remove( gameWork->clwkRank );}
+  if(gameWork->clwkDot){GFL_CLACT_WK_Remove( gameWork->clwkDot );}
   for( i=0; i<6; i++ )
   {
-    GFL_CLACT_WK_Remove( gameWork->clwkOmeText[i] );
+    if( gameWork->clwkOmeText[i] )
+    {
+      GFL_CLACT_WK_Remove( gameWork->clwkOmeText[i] );
+    }
   }
   for( i=0; i<2; i++ )
   {
-    GFL_CLACT_WK_Remove( gameWork->clwkOmeHide[i] );
+    if( gameWork->clwkOmeHide[i] )
+    {
+      GFL_CLACT_WK_Remove( gameWork->clwkOmeHide[i] );
+    }
   }
   for( i=0; i<2; i++ )
   {
-    GFL_CLACT_WK_Remove( gameWork->clwkOmeCloud[i] );
+    if( gameWork->clwkOmeCloud[i] )
+    {
+      GFL_CLACT_WK_Remove( gameWork->clwkOmeCloud[i] );
+    }
   }
 
   // 画面を暗いのから戻す
@@ -4355,7 +4412,6 @@ static void game_update_seq_exit_part1( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
   {
     CTVT_BALLOON_Destroy( &gameWork->balloon_wk[i] );
   }
-
 }
 
 //----------------------------------------------------------------------------
@@ -4372,7 +4428,10 @@ static void game_update_seq_exit_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
   u8  i;
 
   // BGパレットアニメのパレットデータ破棄
-  GFL_HEAP_FreeMemory( gameWork->p_plt_buff );
+  if( gameWork->p_plt_buff )
+  {
+    GFL_HEAP_FreeMemory( gameWork->p_plt_buff );
+  }
 }
 
 //--------------------------------------------------------------
