@@ -1898,6 +1898,9 @@ static void CTVT_COMM_UpdateGameComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *comm
   }
 #endif
 
+  // ゲーム中の乱入がないように、接続人数をMAXにしておく
+  commWork->beacon.connectNum = CTVT_MEMBER_NUM;
+
   // ゲームがメインかどうか？
   // （メインでフレーム数を増やしているから0以上だとメイン状態）
   if( selfId == 0 && CTVT_GAME_IsMain( gameWork ) == TRUE )
@@ -2110,10 +2113,10 @@ void CTVT_COMM_SendGameReq( CTVT_COMM_WORK *commWork, CTVT_GAME_SEND_DATA data, 
   commWork->reqSendGameData = TRUE;
 
   // ゲーム2の場合はNetIDの送り方がビットで送る
-  if( data_type == CCGDT_BURST2 )
-  {
-    data.burst_netID |= commWork->sendGameData.burst_netID;
-  }
+  //if( data_type == CCGDT_BURST2 )
+  //{
+  //  data.burst_netID |= commWork->sendGameData.burst_netID;
+  //}
 
   // ゲームデータ更新
   commWork->sendGameData = data;
@@ -2213,6 +2216,7 @@ static void CTVT_COMM_PostGameData( const int netID, const int size , const void
     CTVT_GAME_BalloonDestroy( gameWork, p_recv->burst_idx, p_recv->burst_netID );
     break;
 
+    // ミニゲーム2つ目
   case CCGDT_TOUCH:      // タッチ範囲をタッチした
     // 親のみ更新、処理する
     if( selfId == 0 )

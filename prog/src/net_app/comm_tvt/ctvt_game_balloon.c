@@ -27,12 +27,16 @@
 #define SCALE_MAX   ( 0x310 )     // 風船の拡大率MAX
 
 // ゲーム2
-#define SCALE_SELF        ( 0x900 )     // 自分の風船の拡大値
-#define SCALE_OTHER       ( 0x500 )     // 相手の風船の拡大値
-#define SCALE_ADD_SELF    ( 0x75 )      // 1フレームの拡大率加算値
-#define SCALE_MAX_SELF    ( 0x750 )     // 風船の拡大率MAX
-#define SCALE_ADD_OTHER   ( 0x27 )      // 1フレームの拡大率加算値
-#define SCALE_MAX_OTHER   ( 0x180 )     // 風船の拡大率MAX
+#define SCALE_SELF          ( 0x900 )     // 自分の風船の拡大値
+#define SCALE_OTHER         ( 0x500 )     // 相手の風船の拡大値
+#define SCALE_ADD_SELF      ( 0x75 )      // 1フレームの拡大率加算値
+#define SCALE_ADD_MAX_SELF  ( 0x750 )     // 風船の拡大率MAX
+#define SCALE_ADD_OTHER     ( 0x27 )      // 1フレームの拡大率加算値
+#define SCALE_ADD_MAX_OTHER ( 0x180 )     // 風船の拡大率MAX
+
+// 最大に大きくなったときの拡大率
+#define SCALE_MAX_SELF    ( SCALE_SELF + SCALE_ADD_MAX_SELF*2 )
+#define SCALE_MAX_OTHER    ( SCALE_OTHER + SCALE_ADD_MAX_OTHER*2 )
 
 // 通常揺れ
 #define ANGLE_ADD         ( 0x50 )     // 風船が揺れる時の角度加算値
@@ -329,7 +333,7 @@ BALLOON2_WORK* CTVT_BALLOON2_Create( CTVT_GAME_WORK *gameWork, u16 unit_idx, BOO
 
     // 自分の風船と相手の風船で拡大率を変える
     p_wk->scale_add = SCALE_ADD_SELF;
-    p_wk->scale_max = SCALE_MAX_SELF;
+    p_wk->scale_max = SCALE_ADD_MAX_SELF;
   }
   // それ以外は接続人数によって変わる
   else
@@ -358,7 +362,7 @@ BALLOON2_WORK* CTVT_BALLOON2_Create( CTVT_GAME_WORK *gameWork, u16 unit_idx, BOO
 
     // 自分の風船と相手の風船で拡大率を変える
     p_wk->scale_add = SCALE_ADD_OTHER;
-    p_wk->scale_max = SCALE_MAX_OTHER;
+    p_wk->scale_max = SCALE_ADD_MAX_OTHER;
   }
 
   return p_wk;
@@ -476,6 +480,22 @@ void CTVT_BALLOON2_Update( BALLOON2_WORK *p_wk )
     // 徐々に透明にする
     else if( p_wk->alpha_flg == TRUE )
     {
+      // 拡大しながら破裂
+      VecFx32 scale_tmp;
+      fx32    add_tmp;
+
+      if( p_wk->is_self == TRUE )
+      {
+        add_tmp = SCALE_SELF / 10;
+      }
+      else
+      {
+        add_tmp = SCALE_OTHER / 10;
+      }
+      VEC_Set( &scale_tmp, add_tmp, add_tmp, add_tmp );
+      VEC_Add( &p_wk->status.scale, &scale_tmp, &p_wk->status.scale );
+
+      // 徐々に透明
       p_wk->alpha -= 2;
       if( p_wk->alpha <= 0 )
       {
@@ -618,12 +638,20 @@ void CTVT_BALLOON2_Draw( BALLOON2_WORK *p_wk )
         ICHI_Printf("エフェクトアニメ終了\n");
         // アニメOFF
         p_wk->anm_flg = FALSE;
-        p_wk->alpha_flg = TRUE;
       }
 
       // Z軸を風船より奥にする
       {
-        VEC_COPY( &tmp_status.scale, &p_wk->status.scale );
+        // scaleは風船と一緒にしない
+        if( p_wk->is_self == TRUE )
+        {
+          VEC_Set( &tmp_status.scale, SCALE_MAX_SELF, SCALE_MAX_SELF, SCALE_MAX_SELF );
+        }
+        else
+        {
+          VEC_Set( &tmp_status.scale, SCALE_MAX_OTHER, SCALE_MAX_OTHER, SCALE_MAX_OTHER );
+        }
+
         MTX_Identity33( &tmp_status.rotate );
         VEC_COPY( &tmp_status.trans, &p_wk->status.trans );
         //tmp_status.trans.z -= 0x1000;
@@ -674,6 +702,7 @@ BOOL CTVT_BALLOON2_Burst( BALLOON2_WORK *p_wk )
   case 3:    // 破裂
     // エフェクトフラグ
     p_wk->anm_flg = TRUE;
+    p_wk->alpha_flg = TRUE;
     // アニメ再生フラグ
     p_wk->effect_ica = TRUE;
     p_wk->effect_ima = TRUE;
@@ -681,7 +710,6 @@ BOOL CTVT_BALLOON2_Burst( BALLOON2_WORK *p_wk )
     ret = TRUE;     // 破裂
     break;
   }
-  ICHI_Printf("風船BURST stage %d \n", p_wk->stage);
 
   return ret;
 }
@@ -929,6 +957,12 @@ void CTVT_BALLOON_S_Draw( BALLOON_S_WORK *p_wk )
 
     // 風船の描画
     head_obj_idx = GFL_G3D_UTIL_GetUnitObjIdx( p_wk->parent_g3dUtil, p_wk->unit_idx );
+    // エフェクト中(=破裂)の時、テクスチャかえる
+    if( p_wk->effect == TRUE )
+    {
+      head_obj_idx += 1;
+    }
+
     obj = GFL_G3D_UTIL_GetObjHandle( p_wk->parent_g3dUtil, head_obj_idx );
     mdl = NNS_G3dRenderObjGetResMdl
       (GFL_G3D_RENDER_GetRenderObj(GFL_G3D_OBJECT_GetG3Drnd(obj)) );

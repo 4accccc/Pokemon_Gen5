@@ -469,7 +469,8 @@ BOOL CTVT_GAME_CAM_Main( CTVT_GAME_CAM_WORK *p_wk )
   COMM_Main( &p_wk->comm, p_wk->p_param->member );
 
   // 描画
-  CTVT_GAME_CAM_GRAPHIC_2D_Draw( p_wk->p_grh );
+  // 1つ上のレイヤー　CTVT_GAME_Mainで行っている
+  //CTVT_GAME_CAM_GRAPHIC_2D_Draw( p_wk->p_grh );
 
   // プリント
   PRINTSYS_QUE_Main( p_wk->p_que );
@@ -2230,8 +2231,10 @@ static void SEQFUNC_TWL_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
       WIPE_SYS_Start( WIPE_PATTERN_S, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, 
           WIPE_FADE_WHITE, WIPE_DEF_DIV, 2, p_wk->heapID );
 
+#ifndef DEBUG_ONLY_FOR_ichiraku_katsuhiko
       // シャッター音再生
       CAM_PlayShutterSe( &p_wk->camera );
+#endif
 
       *p_seq = SEQ_SE_WAIT;
     }
