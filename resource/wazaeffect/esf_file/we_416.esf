@@ -1,8 +1,13 @@
 EFFSEQ
-$0003
+$0008
 C:\home\swan\resource\particle\wazaeffect\w_416.spa
 C:\home\swan\resource\wazaeffect\graphic\bg_025_firework.NSCR
 C:\home\swan\resource\wazaeffect\graphic\bg_025_firework_p.NSCR
+C:\home\swan\resource\wazaeffect\graphic\bg_416_gigaimpact.NSCR
+C:\home\swan\resource\wazaeffect\bg_palanm\bg_416_gigaimpact_p.dat
+C:\home\swan\resource\wazaeffect\bg_palanm\bg_416_gigaimpact_p.dat
+C:\home\swan\resource\wazaeffect\bg_palanm\bg_416_gigaimpact_p.dat
+C:\home\swan\resource\wazaeffect\graphic\bg_416_gigaimpact.NSCR
 #001
 %00
 カメラ移動	追従	防御側	12	0	8
@@ -30,13 +35,14 @@ SE再生	SEQ_SE_W295_02	SE2	防御側	60:0:120	0:0:0
 パーティクル再生	w_416	W_416_416_RING	防御側	方向無し	2:0:0	1:1:1	1
 ポケモンアニメ	防御側	アニメストップ
 タイマーによるウエイト	40
-BGのロード	bg_025_firework_p
+BGのロード	bg_416_gigaimpact
 BGのパレットフェード	お盆＋フィールド	0	13	0	0:0:0
 BGのスクロール	往復	0	4	1	1	20
 BGの表示/非表示	フィールド	非表示
 BGの表示/非表示	お盆	非表示
 BGの表示/非表示	エフェクト	表示
 タイマーによるウエイト	10
+BGのパレットアニメ	bg_416_gigaimpact_p	1
 ポケモン拡縮	防御側	往復	-0.2	0.2	2	1	4
 エフェクト終了待ち	すべて
 BGの表示/非表示	フィールド	表示
