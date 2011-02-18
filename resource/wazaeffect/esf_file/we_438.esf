@@ -1,15 +1,17 @@
 EFFSEQ
-$0002
+$0005
 C:\home\swan\resource\particle\wazaeffect\w_438.spa
 C:\home\swan\resource\wazaeffect\graphic\bg_438_bashishi.NSCR
+C:\home\swan\resource\wazaeffect\graphic\bg_438_powerwhip.NSCR
+C:\home\swan\resource\wazaeffect\bg_palanm\bg_438_powerwhip_p.dat
+C:\home\swan\resource\wazaeffect\bg_palanm\bg_438_powerwhip_p.dat
 #001
 %00
-BGのロード	bg_438_bashishi
+BGのロード	bg_438_powerwhip
 BGの表示/非表示	エフェクト	表示
 BGのパレットフェード	すべて	0	13	2	0:0:0
 カメラ移動	追従	防御側	16	0	8
 エフェクト終了待ち	すべて
-BGのスクロール	往復	8	0	2	0	16
 BGのパレットフェード	エフェクト面	13	0	0	0:0:0
 BGの表示/非表示	お盆	非表示
 BGの表示/非表示	フィールド	非表示
@@ -26,6 +28,7 @@ SE再生	SEQ_SE_W001_01	SE2	防御側	35:0:60	0:0:0
 SE再生	SEQ_SE_W001_01	SE2	防御側	50:0:20	0:0:0
 SE再生	SEQ_SE_W001_01	SE2	防御側	65:0:5	0:0:0
 制御モード変更	逐次
+BGのパレットアニメ	bg_438_powerwhip_p	1
 パーティクルデータロード	w_438
 パーティクル再生	w_438	W_438_438_POW_HIT_MARK	防御側	方向無し	2:0:0	1:1:1	1
 パーティクル再生	w_438	W_438_438_POW_LINE1	防御側	方向無し	2:0:0	1:1:1	1
