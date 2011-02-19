@@ -1167,7 +1167,19 @@ static int _playerDirectNoregParent( WIFIP2PMATCH_WORK *wk, int seq )
     EndMessageWindowOff(wk);
 
     _CheckRegulation_Temoti(wk->pRegulation, wk->pGameData, &fail_bit );
+
+#ifdef BUGFIX_AF_SYSTEM259_20110219
+    if((wk->state == WIFIP2PMATCH_STATE_TALK) || (wk->state == WIFIP2PMATCH_STATE_MACHINE)){
+      _Menu_RegulationSetup(wk, fail_bit, wk->pParentWork->battleBoard.shooterSelect , REGWIN_TYPE_NG_TEMOTI);
+    }
+    else{
+      _Menu_RegulationSetup(wk, fail_bit, wk->pParentWork->shooter , REGWIN_TYPE_NG_TEMOTI);
+    }
+#else  //BUGFIX_AF_SYSTEM259_20110219
     _Menu_RegulationSetup(wk, fail_bit, wk->pParentWork->shooter , REGWIN_TYPE_NG_TEMOTI);
+#endif //BUGFIX_AF_SYSTEM259_20110219
+    
+      
 
     _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_NOREG_PARENT1);
   }
