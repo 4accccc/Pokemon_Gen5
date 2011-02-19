@@ -438,6 +438,9 @@ static GMEVENT_RESULT EVENT_WiFiClubMain(GMEVENT * event, int *  seq, void * wor
     (*seq) = aNextMatchKindTbl[ep2p->pMatchParam->seq].kind;
     if(ep2p->pMatchParam->seq == WIFI_GAME_ERROR){
        ep2p->login.mode = WIFILOGIN_MODE_ERROR;
+#ifdef BUGFIX_AF_SYSTEM325_20110219
+        _errEndVol(ep2p);
+#endif
     }
     ep2p->bSingle = aNextMatchKindTbl[ep2p->pMatchParam->seq].bSingle;
     GFL_OVERLAY_Unload(FS_OVERLAY_ID(ui_common));
