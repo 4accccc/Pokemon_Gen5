@@ -257,6 +257,7 @@ struct _FIELD_ITEMMENU_PARAM {
   PRINT_UTIL	winItemName;
   PRINT_UTIL	winItemNum;
   PRINT_UTIL	winItemReport;
+  PRINT_UTIL	winPockeName;
 //  PRINT_UTIL	menuWin[5];
   PRINT_UTIL	winNumFrame;
   PRINT_UTIL	winGoldCap;
@@ -288,6 +289,8 @@ struct _FIELD_ITEMMENU_PARAM {
   int menuNum;          //サブメニューの項目数
   int subListCursor;  //サブメニューのカーソル位置
   int submenuList[BAG_MENUTBL_MAX];  //サブメニューの項目
+  int sort_submenuList[BAG_SORT_MENUTBL_MAX];  //サブメニューの項目
+  int rep_submenuList[BAG_REPSORT_MENU_STRTBL_MAX];
   u32 bgchar;
 //  BOOL bChange;   ///< CELL更新フラグ
 	u16	bCellChange;		///< CELL更新フラグ
@@ -299,9 +302,6 @@ struct _FIELD_ITEMMENU_PARAM {
   int ret_code2;
   int ret_item;       ///< 選んだアイテム
   
-//  BOOL sort_mode;     ///< ソートモード
-
-
   BLINKPALANM_WORK * blwk;
   PALETTE_FADE_PTR  pfd;
   BOOL  active;       ///< アクティブ/パッシブ
@@ -314,6 +314,8 @@ struct _FIELD_ITEMMENU_PARAM {
   int key_repeat_wait;
 
   BAGITEM_WORK  bag_item;
+  s32           sort_mode;
+  s32           repository_sort_mode;
 };
 
 #define _OBJPLT_SUB_POKE_TYPE (4) //サブ画面技タイプアイコンパレット位置
@@ -380,6 +382,7 @@ struct _FIELD_ITEMMENU_PARAM {
 #define _SELL_GOLD_DISP_SIZEX (11)
 #define _SELL_GOLD_DISP_SIZEY (2)
 
+// ポケット名
 #define _POCKETNAME_DISP_INITX (3)
 #define _POCKETNAME_DISP_INITY (21)
 #define _POCKETNAME_DISP_SIZEX (12)
@@ -459,6 +462,8 @@ extern void ITEMMENU_WordsetPocketName( FIELD_ITEMMENU_WORK* pWork, u32 bufID, u
 extern void ITEMDISP_InitPocketCell( FIELD_ITEMMENU_WORK* pWork );
 extern void ITEMDISP_ChangePocketCell( FIELD_ITEMMENU_WORK* pWork,int pocketno );
 extern void ITEMDISP_MenuWinDisp(  FIELD_ITEMMENU_WORK *work , int *menustr,int num );
+extern void ITEMDISP_SortMenuWinDisp(  FIELD_ITEMMENU_WORK *pWork , int *menustr,int num );
+extern void ITEMDISP_RepositorySortMenuWinDisp(  FIELD_ITEMMENU_WORK *pWork, u8 num );
 extern void ITEMDISP_ListPlateClear( FIELD_ITEMMENU_WORK* pWork );
 extern void ITEMDISP_ListPlateSelectChange( FIELD_ITEMMENU_WORK* pWork , int selectNo);
 extern void ITEMDISP_ItemInfoWindowChange(FIELD_ITEMMENU_WORK *pWork,int pocketno  );
@@ -494,3 +499,5 @@ extern void ITEMDISP_ChangeMoveModeButton( FIELD_ITEMMENU_WORK * wk, BOOL flg );
 extern BOOL ITEMDISP_InitBagMode( FIELD_ITEMMENU_WORK * wk );
 extern void ITEMDISP_PrintUtilTrans( FIELD_ITEMMENU_WORK * wk );
 extern BOOL ITEMMENU_CheckShortCutSetMode( FIELD_ITEMMENU_WORK* pWork );
+extern int GetRepositoryMenuCount( FIELD_ITEMMENU_WORK * pWork );
+

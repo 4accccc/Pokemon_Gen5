@@ -100,6 +100,11 @@ enum
 #define ITEMWIN_FRAME (GFL_BG_FRAME1_S)
 #define ITEMREPORT_FRAME (GFL_BG_FRAME2_S)
 
+#define _UP_POCKENAME_INITX (10)
+#define _UP_POCKENAME_INITY (1)
+#define _UP_POCKENAME_SIZEX (12)
+#define _UP_POCKENAME_SIZEY (2)
+
 #define _UP_ITEMNAME_INITX (7)
 #define _UP_ITEMNAME_INITY (5)
 #define _UP_ITEMNAME_SIZEX (18)
@@ -742,6 +747,7 @@ void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
 
 	ITEMDISP_ItemInfoVanishSet( pWork, TRUE );
 
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(pWork->winPockeName.win), 0 );
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(pWork->winItemName.win), 0 );
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(pWork->winItemNum.win), 0 );
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(pWork->winItemReport.win), 0 );
@@ -794,13 +800,35 @@ void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
 		GFL_BMPWIN_TransVramCharacter( pWork->winItemNum.win );
 	}
 
+  // ポケット名の表示(保管ポケットのときのみ)
+  if( pWork->pocketno == BAG_POKE_REPOSITORY )
+  {
+    u32 dot;
+    u32 pocket_id;
+    pocket_id = MYITEM_GetPocketID( pWork->pMyItem , item->id );
+    ITEMMENU_WordsetPocketName( pWork, 0, pocket_id );
+    GFL_MSG_GetString( pWork->MsgManager, mes_bag_114, pWork->pStrBuf );
+    WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf );
+
+    //センタリング
+    dot =PRINTSYS_GetStrWidth(pWork->pExpStrBuf, pWork->fontHandle, 0);
+    dot = (_UP_POCKENAME_SIZEX*8 - dot )/2;
+    PrintStr( pWork, &pWork->winPockeName, pWork->pExpStrBuf, dot, 0 , PRINTSYS_LSB_Make(15,14,0) );
+  }
+  else
+  {
+    GFL_BMPWIN_ClearScreen(pWork->winPockeName.win);
+		GFL_BMPWIN_TransVramCharacter( pWork->winPockeName.win );
+  }
+
   // アイテムの説明文
 //  GFL_MSG_GetString(  pWork->MsgManagerItemInfo, item->id, pWork->pStrBuf );
 	ITEM_GetInfo( pWork->pStrBuf, item->id, pWork->heapID );
 //  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winItemReport), 0, 4, pWork->pStrBuf, pWork->fontHandle);
 	PrintStr( pWork, &pWork->winItemReport, pWork->pStrBuf, 0, 4, PRINTSYS_LSB_Make(15,14,0) );
 
-	PrintScreenTrans( &pWork->winItemName );
+  PrintScreenTrans( &pWork->winPockeName );
+  PrintScreenTrans( &pWork->winItemName );
 	PrintScreenTrans( &pWork->winItemNum );
 	PrintScreenTrans( &pWork->winItemReport );
 
@@ -965,6 +993,7 @@ void ITEMDISP_upMessageDelete(FIELD_ITEMMENU_WORK* pWork)
 
 //  GFL_BG_LoadScreenV_Req(ITEMREPORT_FRAME);
 
+  GFL_BMPWIN_Delete(pWork->winPockeName.win);
   GFL_BMPWIN_Delete(pWork->winItemName.win);
   GFL_BMPWIN_Delete(pWork->winItemReport.win);
   GFL_BMPWIN_Delete(pWork->winItemNum.win);
@@ -1068,6 +1097,13 @@ void ITEMDISP_upMessageCreate(FIELD_ITEMMENU_WORK* pWork)
     _UP_ITEMREPORT_SIZEX, _UP_ITEMREPORT_SIZEY,
     _SUBBUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_B );
 
+  pWork->winPockeName.win = GFL_BMPWIN_Create(
+    ITEMREPORT_FRAME,
+    _UP_POCKENAME_INITX, _UP_POCKENAME_INITY,
+    _UP_POCKENAME_SIZEX, _UP_POCKENAME_SIZEY,
+    _SUBBUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_B );
+
+  GFL_BMPWIN_MakeScreen( pWork->winPockeName.win );
   GFL_BMPWIN_MakeScreen( pWork->winItemName.win );
   GFL_BMPWIN_MakeScreen( pWork->winItemNum.win );
   GFL_BMPWIN_MakeScreen( pWork->winItemReport.win );
@@ -1771,8 +1807,8 @@ static void ITEMDISP_InitTaskBar( FIELD_ITEMMENU_WORK* pWork )
 
     // 検索ボタン
     {
-      cellInitData.pos_x = 0;
-      cellInitData.pos_y = 0;
+      cellInitData.pos_x = 18 * 8 + 2;
+      cellInitData.pos_y = 21 * 8;
       cellInitData.anmseq = 0;
 
       pWork->clwkBarIcon[BAR_ICON_SEARCH] = GFL_CLACT_WK_Create( pWork->cellUnit ,
@@ -1971,6 +2007,103 @@ void ITEMDISP_MenuWinDisp(  FIELD_ITEMMENU_WORK *pWork , int *menustr,int num )
   }
 
 	ITEMDISP_ChangeActive( pWork, FALSE );
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   リストプレートの絵を使ってリストを作成(ソートメニュー用)
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+void ITEMDISP_SortMenuWinDisp(  FIELD_ITEMMENU_WORK *pWork , int *menustr,int num )
+{
+  int i;
+  APP_TASKMENU_INITWORK appinit;
+
+  appinit.heapId = pWork->heapID;
+  appinit.itemNum =  num;
+  appinit.itemWork =  &pWork->appitem[0];
+
+  appinit.posType = ATPT_RIGHT_DOWN;
+  appinit.charPosX = 32;
+  appinit.charPosY = 24;
+  appinit.w        = APP_TASKMENU_PLATE_WIDTH;
+  appinit.h        = APP_TASKMENU_PLATE_HEIGHT;
+
+  for(i=0;i<num;i++){
+    pWork->appitem[i].str = GFL_STR_CreateBuffer(100, pWork->heapID);
+    GFL_MSG_GetString(pWork->MsgManager, menustr[i], pWork->appitem[i].str);
+    pWork->appitem[i].msgColor = PRINTSYS_LSB_Make( 0xe,0xf,0);
+    pWork->appitem[i].type = APP_TASKMENU_WIN_TYPE_NORMAL;
+  }
+  pWork->appitem[i-1].type = APP_TASKMENU_WIN_TYPE_RETURN;
+  pWork->pAppTask = APP_TASKMENU_OpenMenu(&appinit,pWork->pAppTaskRes);
+  for(i=0;i<num;i++){
+    GFL_STR_DeleteBuffer(pWork->appitem[i].str);
+  }
+
+	ITEMDISP_ChangeActive( pWork, FALSE );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief   リストプレートの絵を使ってリストを作成(保管ソートメニュー用)
+ *
+ *	@param	*pWork
+ *	@param	*p_tbl メニューテーブル
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void ITEMDISP_RepositorySortMenuWinDisp(  FIELD_ITEMMENU_WORK *pWork, u8 num )
+{
+  int i;
+  APP_TASKMENU_INITWORK appinit;
+
+  appinit.heapId = pWork->heapID;
+  appinit.itemNum =  num;
+  appinit.itemWork =  &pWork->appitem[0];
+
+  appinit.posType = ATPT_RIGHT_DOWN;
+  appinit.charPosX = 32;
+  appinit.charPosY = 24;
+  appinit.w        = APP_TASKMENU_PLATE_WIDTH;
+  appinit.h        = APP_TASKMENU_PLATE_HEIGHT;
+
+  for(i=0;i<num;i++){
+    int menu_id = pWork->rep_submenuList[i];
+
+    ONOUE_Printf("id=%d\n",menu_id);
+    if( menu_id == BAG_REPSORT_MENU_STR_FULL)
+    {
+      pWork->appitem[i].str = GFL_STR_CreateBuffer(100, pWork->heapID);
+      GFL_MSG_GetString(pWork->MsgManager, mes_bag_119, pWork->appitem[i].str);
+      pWork->appitem[i].msgColor = PRINTSYS_LSB_Make( 0xe,0xf,0);
+      pWork->appitem[i].type = APP_TASKMENU_WIN_TYPE_NORMAL;
+    }
+    else if(menu_id == BAG_REPSORT_MENU_STR_CANCEL)
+    {
+      pWork->appitem[i].str = GFL_STR_CreateBuffer(100, pWork->heapID);
+      GFL_MSG_GetString(pWork->MsgManager, msg_bag_009, pWork->appitem[i].str);
+      pWork->appitem[i].msgColor = PRINTSYS_LSB_Make( 0xe,0xf,0);
+      pWork->appitem[i].type = APP_TASKMENU_WIN_TYPE_RETURN;
+    }
+    else
+    {
+      pWork->appitem[i].str = GFL_STR_CreateBuffer(100, pWork->heapID);
+      GFL_MSG_GetString(pWork->MsgManager, mes_bag_114, pWork->pStrBuf);
+      WORDSET_RegisterItemPocketName( pWork->WordSet, 0, menu_id );
+      WORDSET_ExpandStr( pWork->WordSet, pWork->appitem[i].str, pWork->pStrBuf );
+      pWork->appitem[i].msgColor = PRINTSYS_LSB_Make( 0xe,0xf,0);
+      pWork->appitem[i].type = APP_TASKMENU_WIN_TYPE_NORMAL;
+    }
+  }
+  pWork->pAppTask = APP_TASKMENU_OpenMenu(&appinit,pWork->pAppTaskRes);
+  for(i=0;i<num;i++){
+    GFL_STR_DeleteBuffer(pWork->appitem[i].str);
+  }
+
+  ITEMDISP_ChangeActive( pWork, FALSE );
 }
 
 //------------------------------------------------------------------------------
@@ -2279,7 +2412,6 @@ void ITEMDISP_ItemInfoMessageMake( FIELD_ITEMMENU_WORK *pWork,int id )
  * @retval  none
  */
 //------------------------------------------------------------------------------
-
 BOOL ITEMDISP_MessageEndCheck(FIELD_ITEMMENU_WORK* pWork)
 {
   if(pWork->pStream)
@@ -2759,6 +2891,7 @@ void ITEMDISP_ChangeActive( FIELD_ITEMMENU_WORK * wk, BOOL flg )
 
     // ソートボタン
 		GFL_CLACT_WK_SetAnmSeq( wk->clwkSort, 4 );
+		GFL_CLACT_WK_SetAnmSeq( wk->clwkBarIcon[BAR_ICON_SEARCH], 2 );
     // バーアイコン各種
     GFL_CLACT_WK_SetAnmSeq( wk->clwkBarIcon[BAR_ICON_LEFT], BAR_ICON_ANM_LEFT_OFF );
     GFL_CLACT_WK_SetAnmSeq( wk->clwkBarIcon[BAR_ICON_RIGHT], BAR_ICON_ANM_RIGHT_OFF );
@@ -2782,13 +2915,28 @@ void ITEMDISP_ChangeRetButtonActive( FIELD_ITEMMENU_WORK * wk, BOOL flg )
 
 void ITEMDISP_ChangeSortButton( FIELD_ITEMMENU_WORK * wk )
 {
-	// 技マシン・木の実はソート不可能
-	if( wk->pocketno == BAG_POKE_WAZA || wk->pocketno == BAG_POKE_NUTS ||
-			ITEMMENU_GetItemPocketNumber( wk ) <= 1 ){
-		GFL_CLACT_WK_SetAnmSeq( wk->clwkSort, 4 );
-	}else{
-		GFL_CLACT_WK_SetAnmSeq( wk->clwkSort, 0 );
-	}
+	// 保管以外は通常ソートボタンを使用
+	if( wk->pocketno != BAG_POKE_REPOSITORY )
+  {
+    GFL_CLACT_WK_SetDrawEnable( wk->clwkSort, TRUE );
+    GFL_CLACT_WK_SetDrawEnable( wk->clwkBarIcon[BAR_ICON_SEARCH], FALSE );
+    if( ITEMMENU_GetItemPocketNumber( wk ) <= 1 ){
+      GFL_CLACT_WK_SetAnmSeq( wk->clwkSort, 4 );
+    }else{
+      GFL_CLACT_WK_SetAnmSeq( wk->clwkSort, 0 );
+    }
+  }
+  else
+  {
+    GFL_CLACT_WK_SetDrawEnable( wk->clwkBarIcon[BAR_ICON_SEARCH], TRUE );
+    GFL_CLACT_WK_SetDrawEnable( wk->clwkSort, FALSE );
+    if( GetRepositoryMenuCount( wk ) > 2 )
+    {
+      GFL_CLACT_WK_SetAnmSeq( wk->clwkBarIcon[BAR_ICON_SEARCH], 0 );
+    }else{
+      GFL_CLACT_WK_SetAnmSeq( wk->clwkBarIcon[BAR_ICON_SEARCH], 2 );
+    }
+  }
 }
 
 void ITEMDISP_ChangeMoveModeButton( FIELD_ITEMMENU_WORK * wk, BOOL flg )
@@ -2810,6 +2958,7 @@ void ITEMDISP_ChangeMoveModeButton( FIELD_ITEMMENU_WORK * wk, BOOL flg )
 	}else{
     // ソートボタン
 		GFL_CLACT_WK_SetAnmSeq( wk->clwkSort, 4 );
+		GFL_CLACT_WK_SetAnmSeq( wk->clwkBarIcon[BAR_ICON_SEARCH], 2 );
     // バーアイコン各種
     GFL_CLACT_WK_SetAnmSeq( wk->clwkBarIcon[BAR_ICON_LEFT], BAR_ICON_ANM_LEFT_OFF );
     GFL_CLACT_WK_SetAnmSeq( wk->clwkBarIcon[BAR_ICON_RIGHT], BAR_ICON_ANM_RIGHT_OFF );
@@ -2857,6 +3006,7 @@ void ITEMDISP_PrintUtilTrans( FIELD_ITEMMENU_WORK * wk )
 	PRINTSYS_QUE_Main( wk->SysMsgQue );
 
 	PRINT_UTIL_Trans( &wk->winWaza, wk->SysMsgQue );
+	PRINT_UTIL_Trans( &wk->winPockeName, wk->SysMsgQue );
 	PRINT_UTIL_Trans( &wk->winItemName, wk->SysMsgQue );
 	PRINT_UTIL_Trans( &wk->winItemNum, wk->SysMsgQue );
 	PRINT_UTIL_Trans( &wk->winItemReport, wk->SysMsgQue );

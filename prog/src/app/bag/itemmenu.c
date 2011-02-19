@@ -145,7 +145,12 @@ static void InputNum_Start( FIELD_ITEMMENU_WORK* pWork, BAG_INPUT_MODE mode );
 static void InputNum_Exit( FIELD_ITEMMENU_WORK* pWork );
 static BOOL InputNum_Main( FIELD_ITEMMENU_WORK* pWork );
 //static void InputNum_ButtonState( FIELD_ITEMMENU_WORK* pWork, BOOL on_off );
+static void SORT_Data( FIELD_ITEMMENU_WORK* p_wk , s32 sort_mode );
+static void SORT_Repository_Data( FIELD_ITEMMENU_WORK* p_wk , s32 sort_mode );
 static void SORT_Type( FIELD_ITEMMENU_WORK* pWork );
+static void SORT_Name( FIELD_ITEMMENU_WORK* pWork );
+static void SORT_Num( FIELD_ITEMMENU_WORK* pWork );
+static void SORT_Count( FIELD_ITEMMENU_WORK* pWork , BOOL is_max_top);
 //static void SORT_ABC( FIELD_ITEMMENU_WORK* pWork );
 static u16 SORT_GetABCPrio( u16 item_no );
 static void SORT_Button( FIELD_ITEMMENU_WORK* pWork );
@@ -184,10 +189,19 @@ static void _itemTrashCancel( FIELD_ITEMMENU_WORK * wk );
 static void _itemSellInputCancel( FIELD_ITEMMENU_WORK * wk );
 static void InitPaletteAnime( FIELD_ITEMMENU_WORK * wk );
 static void ExitPaletteAnime( FIELD_ITEMMENU_WORK * wk );
-static void _sortMessageSet( FIELD_ITEMMENU_WORK * wk );
+static void _sortEndMessageSet( FIELD_ITEMMENU_WORK * pWork );
 static void _sortMessageWait( FIELD_ITEMMENU_WORK * wk );
+static void _itemSortInit( FIELD_ITEMMENU_WORK* pWork );
+static void _itemSortSelectWait(FIELD_ITEMMENU_WORK* pWork);
+static void ItemSortMenuMake( FIELD_ITEMMENU_WORK * pWork );
+static void ItemSortTableMake( FIELD_ITEMMENU_WORK * pWork, u8* tbl );
 static BOOL CheckEventItemUse( FIELD_ITEMMENU_WORK * wk, u8 pocket );
 static void _itemPocketChange( FIELD_ITEMMENU_WORK * wk );
+static void _itemRepositorySortInit( FIELD_ITEMMENU_WORK* pWork );
+static void _itemRepositorySortSelectWait(FIELD_ITEMMENU_WORK* pWork);
+static void ItemSortRepositoryMenuMake( FIELD_ITEMMENU_WORK * pWork );
+static void ItemSortRepositoryTableMake( FIELD_ITEMMENU_WORK * pWork, u8* tbl );
+static void _RepositorySortEndMessageSet( FIELD_ITEMMENU_WORK * pWork );
 
 
 //------------------------------------------------------------------------------
@@ -383,7 +397,7 @@ int ITEMMENU_GetItemPocketNumber(FIELD_ITEMMENU_WORK* pWork)
     length = MYITEM_GetItemThisPocketNumber(pWork->ScrollItem, BAG_MYITEM_MAX);
   }
   else{
-    length = MYITEM_GetItemPocketNumber( pWork->pMyItem, pWork->pocketno);
+    length = BAGITEM_GetItemPocketNumber( &pWork->bag_item, pWork->pocketno);
   }
   return length;
 }
@@ -1532,6 +1546,7 @@ static int _hit_item( u16 item )
 static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
 {
   BOOL bClear=FALSE;
+  u32 pocket_id;
 
   if(!ITEMDISP_MessageEndCheck(pWork)){
     return;
@@ -1544,12 +1559,13 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
     switch(pWork->ret_code2){
      // ------------つかう--------------
     case BAG_MENU_TSUKAU:  
+      pocket_id = MYITEM_GetPocketID( pWork->pMyItem , pWork->ret_item );
       ITEMDISP_ChangeRetButtonActive( pWork, FALSE );   // 戻るボタンをパッシブへ
 
-      if( pWork->pocketno != BAG_POKE_EVENT){     //大切なもの以外はビーコンを飛ばす
+      if( pocket_id != BAG_POKE_EVENT){     //大切なもの以外はビーコンを飛ばす
         GAMEBEACON_Set_UseItem( pWork->ret_item );
       }
-      if((pWork->pocketno==BAG_POKE_WAZA)){       //技マシン
+      if((pocket_id==BAG_POKE_WAZA)){       //技マシン
         _CHANGE_STATE(pWork,_itemTecniqueUseInit);
       }else if(1==ITEM_GetParam( pWork->ret_item, ITEM_PRM_EVOLUTION, pWork->heapID )){
         pWork->ret_code = BAG_NEXTPROC_EVOLUTION; //進化アイテム
@@ -1821,7 +1837,7 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
   // 登録
   }else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
     if( ITEMMENU_CheckShortCutSetMode( pWork ) == TRUE ){
-      if( pWork->pocketno == BAG_POKE_EVENT ){
+      if( (pWork->pocketno == BAG_POKE_EVENT) || (pWork->pocketno == BAG_POKE_REPOSITORY) ){
         SHORTCUT_SetEventItem( pWork, pWork->curpos );
         _windowRewrite(pWork);
       }else{
@@ -1835,14 +1851,31 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
     return;
   // ソート
   }else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START ){
-    if( pWork->pocketno != BAG_POKE_WAZA && pWork->pocketno != BAG_POKE_REPOSITORY && pWork->pocketno != BAG_POKE_NUTS &&
-        ITEMMENU_GetItemPocketNumber( pWork ) > 1 ){
-      SORT_Button( pWork );
-      KTST_SetDraw( pWork, TRUE );
-      pWork->oamlistpos_old = 0xffff;
-      _windowRewrite(pWork);
-      _CHANGE_STATE( pWork, _sortMessageSet );
-      return;
+    if( pWork->pocketno != BAG_POKE_REPOSITORY )
+    {
+      if( ITEMMENU_GetItemPocketNumber( pWork ) > 1 )
+      {
+        SORT_Button( pWork );
+        KTST_SetDraw( pWork, TRUE );
+        ITEMDISP_ChangeRetButtonActive( pWork, FALSE );
+        pWork->oamlistpos_old = 0xffff;
+        _windowRewrite(pWork);
+        _CHANGE_STATE( pWork, _itemSortInit );
+        return;
+      }
+    }
+    else
+    {
+      if(GetRepositoryMenuCount( pWork ) > 2)
+      {
+        SORT_Button( pWork );
+        KTST_SetDraw( pWork, TRUE );
+        ITEMDISP_ChangeRetButtonActive( pWork, FALSE );
+        pWork->oamlistpos_old = 0xffff;
+        _windowRewrite(pWork);
+        _CHANGE_STATE( pWork, _itemRepositorySortInit );
+        return;
+      }
     }
   }
 
@@ -1861,7 +1894,7 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
   // 並び替え
   else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
   {
-    if( pWork->pocketno != BAG_POKE_WAZA && pWork->pocketno != BAG_POKE_REPOSITORY && pWork->pocketno != BAG_POKE_NUTS &&
+    if( pWork->pocketno != BAG_POKE_REPOSITORY &&
         ITEMMENU_GetItemPocketNumber( pWork ) > 1 ){
       GFL_STD_MemClear( pWork->ScrollItem, sizeof( pWork->ScrollItem ) );
       MYITEM_ITEM_STCopy( pWork->pMyItem, pWork->ScrollItem, pWork->pocketno, TRUE );  //取得
@@ -1902,6 +1935,32 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
     SetPageButtonAnime( pWork, oldpocket, BAR_ICON_LEFT, _itemPocketChange );
     return;
   }
+
+#ifdef PM_DEBUG
+  if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_DEBUG )
+  {
+    int item_id;
+    for( item_id = 0; item_id <= ITEM_DATA_MAX ; item_id++ )
+    {
+      BOOL is_in = MYITEM_GetRepositoryFlag( pWork->pMyItem ,item_id);
+      if( is_in == FALSE )
+      {
+        // しまう
+        u32 pocket_id = MYITEM_GetPocketID( pWork->pMyItem , item_id );
+        if( pocket_id != BAG_POKE_MAX )
+        {
+          MYITEM_SetRepositoryFlag( pWork->pMyItem , item_id , TRUE );
+          BAGITEM_AddRepositoryItem( &pWork->bag_item ,item_id , pocket_id );
+        }
+      }
+    }
+    pWork->oamlistpos_old = 0xffff;
+    _windowRewrite(pWork);
+    pWork->bCursorChange = 1;
+    ITEMDISP_ScrollCursorChangePos( pWork );
+  }
+#endif
+
 }
 
 //=============================================================================
@@ -2928,16 +2987,69 @@ static void SORT_Type( FIELD_ITEMMENU_WORK* pWork )
   item = GFL_HEAP_AllocMemory( pWork->heapID, sizeof(ITEM_ST)*BAG_MYITEM_MAX );
 
   // 取得
-  MYITEM_ITEM_STCopy( pWork->pMyItem, item, pWork->pocketno, TRUE );
-  length = ITEMMENU_GetItemPocketNumber( pWork );
+  MYITEM_ITEM_STFullCopy( pWork->pMyItem, item, pWork->pocketno, TRUE );
+  length = MYITEM_GetItemThisPocketNumberNoRepository(pWork->pMyItem, pWork->pocketno , TRUE); // 保管に登録されているアイテムも並び替える
 
   // ソート用データ生成
   // カテゴリ << 28 + ソート番号 << 16 + アイテム番号
   ah = ITEM_OpenItemDataArcHandle( pWork->heapID );
   for( i=0; i<length; i++ ){
-//    void * dat = ITEM_GetItemArcData( item[i].id, ITEM_GET_DATA, pWork->heapID );
     void * dat = ITEM_GetItemDataArcHandle( ah, item[i].id, pWork->heapID );
     sort[i].type = (ITEM_GetBufParam(dat,ITEM_PRM_ITEM_TYPE)<<28) + (ITEM_GetBufParam(dat,ITEM_PRM_SORT_NUMBER)<<16) + item[i].id;
+    sort[i].st   = item[i];
+    GFL_HEAP_FreeMemory( dat );
+    ONOUE_Printf("%u:%u\n",item[i].id,sort[i].type);
+  }
+  GFL_ARC_CloseDataHandle( ah );
+
+  MATH_QSort( (void*)sort, length, sizeof(ITEM_SORTDATA_TYPE), QSort_Type, NULL );
+
+  // セーブ用データに整形
+  for( i=0; i<length; i++ ){
+    item[i] = sort[i].st;
+    ONOUE_Printf("ID:%u\n",item[i].id);
+  }
+
+  // 保存
+  MYITEM_ITEM_STFullCopy( pWork->pMyItem, item, pWork->pocketno, FALSE );
+
+  // メモリ解放
+  GFL_HEAP_FreeMemory( item );
+  GFL_HEAP_FreeMemory( sort );
+}
+
+#include "itemsort_jp_def.cdat"
+//----------------------------------------------------------------------------
+/**
+ *	@brief  名前順ソート
+ *
+ *	@param	pWork 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void SORT_Name( FIELD_ITEMMENU_WORK* pWork )
+{
+  int i;
+  int length;
+  ITEM_SORTDATA_TYPE * sort;
+  ITEM_ST * item;
+  ARCHANDLE * ah;
+
+  // メモリ確保
+  sort = GFL_HEAP_AllocMemory( pWork->heapID, sizeof(ITEM_SORTDATA_TYPE)*BAG_MYITEM_MAX );
+  item = GFL_HEAP_AllocMemory( pWork->heapID, sizeof(ITEM_ST)*BAG_MYITEM_MAX );
+
+  // 取得
+  MYITEM_ITEM_STFullCopy( pWork->pMyItem, item, pWork->pocketno, TRUE );
+  length = MYITEM_GetItemThisPocketNumberNoRepository(pWork->pMyItem, pWork->pocketno , TRUE); // 保管に登録されているアイテムも並び替える
+
+  // ソート用データ生成
+  ah = ITEM_OpenItemDataArcHandle( pWork->heapID );
+  for( i=0; i<length; i++ ){
+    // カテゴリ << 28 + ソート番号 << 16 + アイテム番号
+    void * dat = ITEM_GetItemDataArcHandle( ah, item[i].id, pWork->heapID );
+    sort[i].type = (ITEM_GetBufParam(dat,ITEM_PRM_ITEM_TYPE)<<28) + (ItemSortByJp[item[i].id] << 16 ) + item[i].id;
     sort[i].st   = item[i];
     GFL_HEAP_FreeMemory( dat );
   }
@@ -2951,7 +3063,128 @@ static void SORT_Type( FIELD_ITEMMENU_WORK* pWork )
   }
 
   // 保存
-  MYITEM_ITEM_STCopy( pWork->pMyItem, item, pWork->pocketno, FALSE );
+  MYITEM_ITEM_STFullCopy( pWork->pMyItem, item, pWork->pocketno, FALSE );
+
+  // メモリ解放
+  GFL_HEAP_FreeMemory( item );
+  GFL_HEAP_FreeMemory( sort );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  技マシン番号順ソート
+ *
+ *	@param	pWork 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void SORT_Num( FIELD_ITEMMENU_WORK* pWork )
+{
+  int i;
+  int length;
+  ITEM_SORTDATA_TYPE * sort;
+  ITEM_ST * item;
+
+  // 技マシンポケット以外では使えない
+  if( pWork->pocketno != BAG_POKE_WAZA )
+  {
+    GF_ASSERT( 0 );
+    return;
+  }
+
+  // メモリ確保
+  sort = GFL_HEAP_AllocMemory( pWork->heapID, sizeof(ITEM_SORTDATA_TYPE)*BAG_MYITEM_MAX );
+  item = GFL_HEAP_AllocMemory( pWork->heapID, sizeof(ITEM_ST)*BAG_MYITEM_MAX );
+
+  // 取得
+  MYITEM_ITEM_STFullCopy( pWork->pMyItem, item, pWork->pocketno, TRUE );
+  length = MYITEM_GetItemThisPocketNumberNoRepository(pWork->pMyItem, pWork->pocketno , TRUE); // 保管に登録されているアイテムも並び替える
+
+  // ソート用データ生成
+  for( i=0; i<length; i++ ){
+    sort[i].type = ITEM_GetWazaMashineNo( item[i].id );
+    sort[i].st   = item[i];
+  }
+
+  MATH_QSort( (void*)sort, length, sizeof(ITEM_SORTDATA_TYPE), QSort_Type, NULL );
+
+  // セーブ用データに整形
+  for( i=0; i<length; i++ ){
+    item[i] = sort[i].st;
+  }
+
+  // 保存
+  MYITEM_ITEM_STFullCopy( pWork->pMyItem, item, pWork->pocketno, FALSE );
+
+  // メモリ解放
+  GFL_HEAP_FreeMemory( item );
+  GFL_HEAP_FreeMemory( sort );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アイテムの所持数順で並び替える
+ *
+ *	@param	pWork       バッグワーク
+ *	@param	is_max_top  TRUE=多い順
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void SORT_Count( FIELD_ITEMMENU_WORK* pWork , BOOL is_max_top)
+{
+  int i;
+  int length;
+  ITEM_SORTDATA_TYPE * sort;
+  ITEM_ST * item;
+  ARCHANDLE * ah;
+
+  // メモリ確保
+  sort = GFL_HEAP_AllocMemory( pWork->heapID, sizeof(ITEM_SORTDATA_TYPE)*BAG_MYITEM_MAX );
+  item = GFL_HEAP_AllocMemory( pWork->heapID, sizeof(ITEM_ST)*BAG_MYITEM_MAX );
+
+  // 取得
+  MYITEM_ITEM_STFullCopy( pWork->pMyItem, item, pWork->pocketno, TRUE );
+  length = MYITEM_GetItemThisPocketNumberNoRepository(pWork->pMyItem, pWork->pocketno , TRUE); // 保管に登録されているアイテムも並び替える
+
+  // ソート用データ生成
+  ah = ITEM_OpenItemDataArcHandle( pWork->heapID );
+
+  for( i=0; i<length; i++ ){
+    void * dat = ITEM_GetItemDataArcHandle( ah, item[i].id, pWork->heapID );
+    u64 count = MYITEM_GetItemNumFromSave( pWork->pMyItem, item[i].id );
+    
+    // 逆順のときはソート番号を逆順に入れておく
+    if( is_max_top == TRUE )
+    {
+      sort[i].type = ((ITEM_MAX_NORMAL-count)<<40) + (ITEM_GetBufParam(dat,ITEM_PRM_ITEM_TYPE)<<28) + (ITEM_GetBufParam(dat,ITEM_PRM_SORT_NUMBER)<<16) + item[i].id;
+    }
+    else
+    {
+      sort[i].type = (count<<40) + (ITEM_GetBufParam(dat,ITEM_PRM_ITEM_TYPE)<<28) + (ITEM_GetBufParam(dat,ITEM_PRM_SORT_NUMBER)<<16) + item[i].id;
+    }
+    sort[i].st    = item[i];
+    GFL_HEAP_FreeMemory( dat );
+  }
+  GFL_ARC_CloseDataHandle( ah );
+
+  if( is_max_top == TRUE )
+  {
+    MATH_QSort( (void*)sort, length, sizeof(ITEM_SORTDATA_TYPE), QSort_Type, NULL );
+  }
+  else
+  {
+    MATH_QSort( (void*)sort, length, sizeof(ITEM_SORTDATA_TYPE), QSort_Type, NULL );
+  }    
+
+  // セーブ用データに整形
+  for( i=0; i<length; i++ ){
+    item[i] = sort[i].st;
+  }
+
+  // 保存
+  MYITEM_ITEM_STFullCopy( pWork->pMyItem, item, pWork->pocketno, FALSE );
 
   // メモリ解放
   GFL_HEAP_FreeMemory( item );
@@ -3045,36 +3278,78 @@ static u16 SORT_GetABCPrio( u16 item_no )
 //-----------------------------------------------------------------------------
 static void SORT_Button( FIELD_ITEMMENU_WORK* pWork )
 {
-  PMSND_PlaySE( SE_BAG_SORT );
-  GFL_CLACT_WK_SetAnmSeq( pWork->clwkSort, 2 );
-
-
-/*
-  if( pWork->sort_mode == 0 ){
-    SORT_ABC( pWork );
-  }else if( pWork->sort_mode == 1 ){
-    SORT_Type( pWork );
-  }
-*/
-
-/*
-  // 大切なものはABCソートのみ
-  if( pWork->pocketno != BAG_POKE_EVENT )
+  PMSND_PlaySE( SE_BAG_DECIDE );
+  if( pWork->pocketno != BAG_POKE_REPOSITORY )
   {
-    // モードチェンジ
-    pWork->sort_mode ^= 1;
+    GFL_CLACT_WK_SetAnmSeq( pWork->clwkSort, 2 );
   }
-*/
-
-
+  else
+  {
+    GFL_CLACT_WK_SetAnmSeq( pWork->clwkBarIcon[BAR_ICON_SEARCH] , 1 );
+  }
 }
 
-static void SORT_Main( FIELD_ITEMMENU_WORK* pWork )
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アイテムデータをソートする
+ *
+ *	@param	pWork     バッグワークポインタ
+ *	@param	sort_mode ソートモード
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void SORT_Data( FIELD_ITEMMENU_WORK* p_wk , s32 sort_mode )
 {
-  SORT_Type( pWork );
-  // 再描画
-  pWork->oamlistpos_old = 0xffff;
-  _windowRewrite( pWork );
+  p_wk->sort_mode = sort_mode;
+
+  // タイプごとのソート
+  switch( p_wk->sort_mode )
+  {
+  case SORT_MODE_TYPE:
+    SORT_Type( p_wk );
+    break;
+  case SORT_MODE_NUM:
+    SORT_Num( p_wk );
+    break;
+  case SORT_MODE_NAME:
+    SORT_Name( p_wk );
+    break;
+  case SORT_MODE_BIG_TOP:
+    SORT_Count( p_wk , TRUE);
+    break;
+  case SORT_MODE_SMALL_TOP:
+    SORT_Count( p_wk , FALSE);
+    break;
+  default:
+    GF_ASSERT(0);
+    break;
+  }
+
+  p_wk->oamlistpos_old = 0xffff;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  保管データをソートする（表示並び順の操作）
+ *
+ *	@param	pWork     バッグワークポインタ
+ *	@param	sort_mode ソートモード
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void SORT_Repository_Data( FIELD_ITEMMENU_WORK* p_wk , s32 sort_mode )
+{
+  p_wk->repository_sort_mode = sort_mode;
+
+  // 保管ポケット内のならびをソート
+  BAGITEM_SortRepositoryItem( &p_wk->bag_item , p_wk->repository_sort_mode );
+
+  // カーソルは一番上に表示
+  p_wk->curpos = 0;
+  p_wk->oamlistpos = -1;
+  p_wk->oamlistpos_old = 0xffff;
 }
 
 //-----------------------------------------------------------------------------
@@ -3091,6 +3366,12 @@ static void SORT_ModeReset( FIELD_ITEMMENU_WORK* pWork )
 //  pWork->sort_mode = 0;
 
   HOSAKA_Printf("pocketno:%d\n", pWork->pocketno);
+
+  // 保管ポケットのソート状態初期化
+  if( pWork->pocketno == BAG_POKE_REPOSITORY )
+  {
+    SORT_Repository_Data( pWork , REPOSITORY_SORTTYPE_FULL );
+  }
 
   ITEMDISP_ChangeSortButton( pWork );
 }
@@ -3575,7 +3856,7 @@ static void _itemUseWindowRewrite(FIELD_ITEMMENU_WORK* pWork)
     mes_shop_103,  ///< うる
     msg_bag_001,   ///< つかう
   };
-  u8  tbl[BAG_MENUTBL_MAX] = { 255, 255, 255, 255 };
+  u8  tbl[BAG_MENUTBL_MAX] = { 255, 255, 255, 255 , 255 };
     
   int stringbuff[BAG_MENUTBL_MAX];
   int i, j;
@@ -3692,16 +3973,33 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
     return;
   // ソートボタン
   }else if(BUTTONID_SORT == bttnid){
-    // 技マシン・木の実は処理なし
-    if( pWork->pocketno != BAG_POKE_WAZA && pWork->pocketno != BAG_POKE_REPOSITORY && pWork->pocketno != BAG_POKE_NUTS &&
-        ITEMMENU_GetItemPocketNumber( pWork ) > 1 ){
-      SORT_Button( pWork );
-      KTST_SetDraw( pWork, FALSE );
-      pWork->oamlistpos_old = 0xffff;
-      _windowRewrite(pWork);
-      _CHANGE_STATE( pWork, _sortMessageSet );
+    if( pWork->pocketno != BAG_POKE_REPOSITORY )
+    {
+      if( ITEMMENU_GetItemPocketNumber( pWork ) > 1 )
+      {
+        SORT_Button( pWork );
+        KTST_SetDraw( pWork, FALSE );
+        ITEMDISP_ChangeRetButtonActive( pWork, FALSE );
+        pWork->oamlistpos_old = 0xffff;
+        _windowRewrite(pWork);
+        _CHANGE_STATE( pWork, _itemSortInit );
+        return;
+      }
     }
-  // Ｙ登録ボタン
+    else
+    {
+      if(GetRepositoryMenuCount( pWork ) > 2)
+      {
+        SORT_Button( pWork );
+        KTST_SetDraw( pWork, FALSE );
+        ITEMDISP_ChangeRetButtonActive( pWork, FALSE );
+        pWork->oamlistpos_old = 0xffff;
+        _windowRewrite(pWork);
+        _CHANGE_STATE( pWork, _itemRepositorySortInit );
+        return;
+      }
+    }
+    // Ｙ登録ボタン
   }else if(BUTTONID_CHECKBOX == bttnid){
     if( ITEMMENU_CheckShortCutSetMode( pWork ) == TRUE ){
       SHORTCUT_SetPocket( pWork );
@@ -3709,7 +4007,7 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
       pWork->oamlistpos_old = 0xffff;
       _windowRewrite(pWork);
     }
-  // 終了ボタン
+    // 終了ボタン
   }else if(BUTTONID_EXIT == bttnid){
     if( pWork->mode != BAG_MODE_POKELIST ){
       pWork->ret_code = BAG_NEXTPROC_EXIT;
@@ -3928,7 +4226,7 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
 
     for( i=0; i<BAG_POKE_MAX; i++ ){
       MYITEM_FieldBagCursorGet( pWork->pBagCursor, i, &cur, &scr );
-      max = MYITEM_GetItemPocketNumber( pWork->pMyItem, i );
+      max = BAGITEM_GetItemPocketNumber( &pWork->bag_item, i );
       while( 1 ){
         if( cur == 0 && scr == 0 ){
           break;
@@ -4011,6 +4309,7 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
 
 //  PMSND_PlaySE( SE_BAG_SLIDE_IN );
   _CHANGE_STATE(pWork, _startQueWaitState);
+
   return GFL_PROC_RES_FINISH;
 }
 
@@ -4422,25 +4721,570 @@ static void ExitPaletteAnime( FIELD_ITEMMENU_WORK * wk )
   PaletteFadeFree( wk->pfd );
 }
 
-//--------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------
 /**
- * @brief   ソートメッセージ表示
+ *	@brief  ソートメニューの表示
+ *
+ *	@param	pWork 
+ *
+ *	@retval
  */
-//--------------------------------------------------------------------------------------------
-static void _sortMessageSet( FIELD_ITEMMENU_WORK * wk )
+//-----------------------------------------------------------------------------
+static void _itemSortInit( FIELD_ITEMMENU_WORK* pWork )
 {
-  if( GFL_CLACT_WK_CheckAnmActive( wk->clwkSort ) == FALSE ){
-    GFL_CLACT_WK_SetAnmSeq( wk->clwkSort, 0 );
-    SORT_Main( wk );
-    GFL_CLACT_WK_SetAutoAnmFlag( wk->clwkScroll, FALSE );
-    GFL_MSG_GetString( wk->MsgManager, mes_bag_113, wk->pExpStrBuf );
-    ITEMDISP_ItemInfoWindowDispEx( wk, FALSE );
-    ITEMDISP_ChangeRetButtonActive( wk, FALSE );
-    ITEMDISP_ChangeActive( wk, FALSE );
-    _CHANGE_STATE( wk, _sortMessageWait );
+  if( GFL_CLACT_WK_CheckAnmActive( pWork->clwkSort ) == FALSE ){
+    // 表示設定切り替え
+    GFL_CLACT_WK_SetAnmSeq( pWork->clwkSort, 0 );
+    GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkScroll, FALSE );
+    GFL_MSG_GetString( pWork->MsgManager, mes_bag_126, pWork->pExpStrBuf );
+    ITEMDISP_ItemInfoWindowDispEx( pWork, FALSE );
+    ITEMDISP_ChangeActive( pWork, FALSE );
+    ItemSortMenuMake( pWork );
+    
+    // 選択待ちシーケンスへ移動
+    _CHANGE_STATE( pWork, _itemSortSelectWait );
   }
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ソートメニュー作成
+ *
+ *	@param	*pWork  バッグアプリワークポインタ
+ *	@param	tbl     メニューテーブル
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void ItemSortMenuMake( FIELD_ITEMMENU_WORK * pWork )
+{
+  int strtbl[]= {
+    mes_bag_127,   ///< しゅるいじゅん
+    mes_bag_131,   ///< 番号順
+    mes_bag_128,   ///< あいうえおじゅん
+    mes_bag_129,   ///< おおいじゅん
+    mes_bag_130,   ///< すくないじゅん
+    msg_bag_009,   ///< やめる
+  };
+  u8  tbl[BAG_SORT_MENUTBL_MAX] = { 255, 255, 255, 255 , 255 };
+
+  int stringbuff[BAG_SORT_MENUTBL_MAX];
+  int i, j;
+
+  ItemSortTableMake( pWork, tbl );
+
+  for( i=0,j=0; i<BAG_MENUTBL_MAX; i++ ){
+    if( tbl[i] == 255 ){ continue; }
+    pWork->sort_submenuList[j] = tbl[i];
+    stringbuff[j] = strtbl[tbl[i]];
+    j++;
+  }
+
+  ITEMDISP_SortMenuWinDisp( pWork, stringbuff, j );
+
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アイテムソートメニューテーブル作成
+ *
+ *	@param	* pWork バッグアイテムワーク
+ *	@param	tbl 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void ItemSortTableMake( FIELD_ITEMMENU_WORK * pWork, u8* tbl )
+{
+  // しゅるいorばんごう
+  if( (pWork->pocketno == BAG_POKE_NORMAL) ||
+      (pWork->pocketno == BAG_POKE_DRUG) ||
+      (pWork->pocketno == BAG_POKE_NUTS) ||
+      (pWork->pocketno == BAG_POKE_EVENT) )
+  {
+    // しゅるいじゅん
+    tbl[BAG_SORT_MENU_TYPE_NUM] = BAG_SORTMENU_STR_TYPE;
+  }
+  else
+  {
+    // ばんごうじゅん
+    tbl[BAG_SORT_MENU_TYPE_NUM] = BAG_SORTMENU_STR_NUM;
+  }
+
+  // 多い順・少ない順(必ず同時に存在)
+  if( (pWork->pocketno == BAG_POKE_NORMAL) ||
+      (pWork->pocketno == BAG_POKE_DRUG) ||
+      (pWork->pocketno == BAG_POKE_NUTS) )
+  {
+    tbl[BAG_SORT_MENU_BIG_TOP] = BAG_SORTMENU_STR_BIG_TOP;
+    tbl[BAG_SORT_MENU_SMALL_TOP] = BAG_SORTMENU_STR_SMALL_TOP;
+  }
+
+  // あいうえおじゅん（全ポケットに存在）
+  tbl[BAG_SORT_MENU_NAME] = BAG_SORTMENU_STR_NAME;
+
+  // キャンセル
+  tbl[ BAG_SORT_MENU_CANCEL ] = BAG_SORTMENU_STR_CANCEL;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アイテムのソート順の選択待ち
+ *
+ *	@param	pWork
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void _itemSortSelectWait(FIELD_ITEMMENU_WORK* pWork)
+{
+  BOOL bClear=FALSE;
+
+  // メッセージ終了チェック
+  if(!ITEMDISP_MessageEndCheck(pWork)){
+    return;
+  }
+  if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
+    int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
+    pWork->ret_code2 = pWork->sort_submenuList[selectno];
+    switch(pWork->ret_code2){
+    // ----------しゅるいじゅん------------
+    case BAG_SORTMENU_STR_TYPE:
+      PMSND_PlaySE( SE_BAG_SORT );
+      SORT_Data( pWork , SORT_MODE_TYPE );
+      _CHANGE_STATE( pWork, _sortEndMessageSet );
+      bClear = TRUE;
+      break;
+    // ----------番号順------------
+    case BAG_SORTMENU_STR_NUM:
+      PMSND_PlaySE( SE_BAG_SORT );
+      SORT_Data( pWork , SORT_MODE_NUM );
+      _CHANGE_STATE( pWork, _sortEndMessageSet );
+      bClear = TRUE;
+      break;
+    // ----------あいうえおじゅん------------
+    case BAG_SORTMENU_STR_NAME:
+      PMSND_PlaySE( SE_BAG_SORT );
+      SORT_Data( pWork , SORT_MODE_NAME );
+      _CHANGE_STATE( pWork, _sortEndMessageSet );
+      bClear = TRUE;
+      break;
+    // ----------おおいじゅん------------
+    case BAG_SORTMENU_STR_BIG_TOP:
+      PMSND_PlaySE( SE_BAG_SORT );
+      SORT_Data( pWork , SORT_MODE_BIG_TOP );
+      _CHANGE_STATE( pWork, _sortEndMessageSet );
+      bClear = TRUE;
+      break;
+    // ----------すくないじゅん------------
+    case BAG_SORTMENU_STR_SMALL_TOP:
+      PMSND_PlaySE( SE_BAG_SORT );
+      SORT_Data( pWork , SORT_MODE_SMALL_TOP );
+      _CHANGE_STATE( pWork, _sortEndMessageSet );
+      bClear = TRUE;
+      break;
+    // ----------やめる------------
+    case BAG_SORTMENU_STR_CANCEL:
+      // タッチ状態で抜けたのならクリア
+      if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ) {
+        ITEMDISP_upMessageClean( pWork ); // クリア
+      }
+      // タッチ遷移なら非表示に
+      KTST_SetDraw( pWork, (GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY) );
+      ITEMDISP_ChangeActive( pWork, TRUE );
+      GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkScroll, TRUE );
+      ChangeStateItemKindSelectItemMenu( pWork );
+      bClear = TRUE;
+      break;
+    default:
+      GF_ASSERT(0);
+      break;
+    }
+  }
+
+  // 選択終了だったらメニュー面の消去
+  if(bClear){
+    ITEMDISP_ListPlateClear( pWork );
+    APP_TASKMENU_CloseMenu(pWork->pAppTask);
+    pWork->pAppTask=NULL;
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ソート終了メッセージを表示
+ *
+ *	@param	* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void _sortEndMessageSet( FIELD_ITEMMENU_WORK * pWork )
+{
+
+  // ソート後メッセージをセット
+  switch( pWork->sort_mode )
+  {
+  case SORT_MODE_TYPE:
+    GFL_MSG_GetString( pWork->MsgManager, mes_bag_115, pWork->pExpStrBuf );
+    break;
+  case SORT_MODE_NUM:
+    GFL_MSG_GetString( pWork->MsgManager, mes_bag_133, pWork->pExpStrBuf );
+    break;
+  case SORT_MODE_NAME:
+    GFL_MSG_GetString( pWork->MsgManager, mes_bag_116, pWork->pExpStrBuf );
+    break;
+  case SORT_MODE_BIG_TOP:
+    GFL_MSG_GetString( pWork->MsgManager, mes_bag_117, pWork->pExpStrBuf );
+    break;
+  case SORT_MODE_SMALL_TOP:
+    GFL_MSG_GetString( pWork->MsgManager, mes_bag_118, pWork->pExpStrBuf );
+    break;
+  default:
+    GFL_MSG_GetString( pWork->MsgManager, mes_bag_126, pWork->pExpStrBuf );
+    break;
+  }
+
+  ITEMDISP_ItemInfoWindowDispEx( pWork, FALSE );
+  _CHANGE_STATE( pWork, _sortMessageWait );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ソート終了メッセージを表示(保管用)
+ *
+ *	@param	* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void _RepositorySortEndMessageSet( FIELD_ITEMMENU_WORK * pWork )
+{
+  int coutn;
+
+  // ソート後メッセージをセット
+  switch( pWork->repository_sort_mode )
+  {
+  case REPOSITORY_SORTTYPE_FULL:
+    GFL_MSG_GetString( pWork->MsgManager, mes_bag_132, pWork->pStrBuf );
+    coutn = ITEMMENU_GetItemPocketNumber(pWork);
+    WORDSET_RegisterNumber(pWork->WordSet, 1, coutn ,3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+    WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
+    break;
+  case REPOSITORY_SORTTYPE_NORMAL:
+    GFL_MSG_GetString( pWork->MsgManager, mes_bag_123, pWork->pStrBuf );
+    coutn = ITEMMENU_GetItemPocketNumber(pWork);
+    WORDSET_RegisterNumber(pWork->WordSet, 1, coutn ,3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+    ITEMMENU_WordsetPocketName( pWork, 0, BAG_POKE_NORMAL );
+    WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
+
+    break;
+  case REPOSITORY_SORTTYPE_DRUG:
+    GFL_MSG_GetString( pWork->MsgManager, mes_bag_123, pWork->pStrBuf );
+    coutn = ITEMMENU_GetItemPocketNumber(pWork);
+    WORDSET_RegisterNumber(pWork->WordSet, 1, coutn ,3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+    ITEMMENU_WordsetPocketName( pWork, 0, BAG_POKE_DRUG );
+    WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
+    break;
+  case REPOSITORY_SORTTYPE_WAZA:
+    GFL_MSG_GetString( pWork->MsgManager, mes_bag_123, pWork->pStrBuf );
+    coutn = ITEMMENU_GetItemPocketNumber(pWork);
+    WORDSET_RegisterNumber(pWork->WordSet, 1, coutn ,3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+    ITEMMENU_WordsetPocketName( pWork, 0, BAG_POKE_WAZA );
+    WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
+    break;
+  case REPOSITORY_SORTTYPE_NUTS:
+    GFL_MSG_GetString( pWork->MsgManager, mes_bag_123, pWork->pStrBuf );
+    coutn = ITEMMENU_GetItemPocketNumber(pWork);
+    WORDSET_RegisterNumber(pWork->WordSet, 1, coutn ,3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+    ITEMMENU_WordsetPocketName( pWork, 0, BAG_POKE_NUTS );
+    WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
+    break;
+  case REPOSITORY_SORTTYPE_EVENT:
+    GFL_MSG_GetString( pWork->MsgManager, mes_bag_123, pWork->pStrBuf );
+    coutn = ITEMMENU_GetItemPocketNumber(pWork);
+    WORDSET_RegisterNumber(pWork->WordSet, 1, coutn ,3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+    ITEMMENU_WordsetPocketName( pWork, 0, BAG_REPSORT_MENU_STR_EVENT );
+    WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
+    break;
+  default:
+    GFL_MSG_GetString( pWork->MsgManager, mes_bag_126, pWork->pExpStrBuf );
+    break;
+  }
+
+  ITEMDISP_ItemInfoWindowDispEx( pWork, FALSE );
+  _CHANGE_STATE( pWork, _sortMessageWait );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ほかん用ソートメニューの表示
+ *
+ *	@param	pWork 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void _itemRepositorySortInit( FIELD_ITEMMENU_WORK* pWork )
+{
+  if( GFL_CLACT_WK_CheckAnmActive( pWork->clwkBarIcon[BAR_ICON_SEARCH] ) == FALSE ){
+    // 表示設定切り替え
+    GFL_CLACT_WK_SetAnmSeq( pWork->clwkBarIcon[BAR_ICON_SEARCH], 2 );
+    GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkScroll, FALSE );
+    GFL_MSG_GetString( pWork->MsgManager, mes_bag_122, pWork->pExpStrBuf );
+    ITEMDISP_ItemInfoWindowDispEx( pWork, FALSE );
+    ITEMDISP_ChangeActive( pWork, FALSE );
+    ItemSortRepositoryMenuMake( pWork );
+    
+    // 選択待ちシーケンスへ移動
+    _CHANGE_STATE( pWork, _itemRepositorySortSelectWait );
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  保管用ソートメニュー作成
+ *
+ *	@param	*pWork  バッグアプリワークポインタ
+ *	@param	tbl     メニューテーブル
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void ItemSortRepositoryMenuMake( FIELD_ITEMMENU_WORK * pWork )
+{
+  int i, j;
+  u8  tbl[BAG_REPSORT_MENUTBL_MAX] = { 255, 255, 255, 255 , 255, 255 , 255 };
+
+  ItemSortRepositoryTableMake( pWork, tbl );
+  
+  for( i=0,j=0; i<BAG_REPSORT_MENUTBL_MAX; i++ ){
+    if( tbl[i] == 255 ){ continue; }
+    pWork->rep_submenuList[j] = tbl[i];
+    j++;
+  }
+
+  // なにもありませんウィンドウを削除
+  GFL_BMPWIN_ClearTransWindow( pWork->winPocketNone.win );
+
+  ITEMDISP_RepositorySortMenuWinDisp( pWork, j );
+
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  保管用ソートメニューテーブル作成
+ *
+ *	@param	* pWork
+ *	@param	tbl 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void ItemSortRepositoryTableMake( FIELD_ITEMMENU_WORK * pWork, u8* tbl )
+{
+  // ぜんぶ
+  if( pWork->repository_sort_mode != REPOSITORY_SORTTYPE_FULL )
+  {
+    tbl[ BAG_REPSORT_MENU_FULL ] = BAG_REPSORT_MENU_STR_FULL;
+  }
+
+  // どうぐ
+  if( pWork->repository_sort_mode != REPOSITORY_SORTTYPE_NORMAL )
+  {
+    if( CountRepositoryItem( &pWork->bag_item , BAG_POKE_NORMAL ) > 0 )
+    {
+      tbl[ BAG_REPSORT_MENU_NORMAL ] = BAG_REPSORT_MENU_STR_NORMAL;
+    }
+  }
+  // くすり
+  if( pWork->repository_sort_mode != REPOSITORY_SORTTYPE_DRUG )
+  {
+    if( CountRepositoryItem( &pWork->bag_item , BAG_POKE_DRUG ) > 0 )
+    {
+      tbl[ BAG_REPSORT_MENU_DRUG ] = BAG_REPSORT_MENU_STR_DRUG;
+    }
+  }
+  // わざ
+  if( pWork->repository_sort_mode != REPOSITORY_SORTTYPE_WAZA )
+  {
+    if( CountRepositoryItem( &pWork->bag_item , BAG_POKE_WAZA ) > 0 )
+    {
+      tbl[ BAG_REPSORT_MENU_WAZA ] = BAG_REPSORT_MENU_STR_WAZA;
+    }
+  }
+  // きのみ
+  if( pWork->repository_sort_mode != REPOSITORY_SORTTYPE_NUTS )
+  {
+    if( CountRepositoryItem( &pWork->bag_item , BAG_POKE_NUTS ) > 0 )
+    {
+      tbl[ BAG_REPSORT_MENU_NUTS ] = BAG_REPSORT_MENU_STR_NUTS;
+    }
+  }
+  // たいせつなもの
+  if( pWork->repository_sort_mode != REPOSITORY_SORTTYPE_EVENT )
+  {
+    if( CountRepositoryItem( &pWork->bag_item , BAG_POKE_EVENT ) > 0 )
+    {
+      tbl[ BAG_REPSORT_MENU_EVENT ] = BAG_REPSORT_MENU_STR_EVENT;
+    }
+  }
+
+  // キャンセル
+  tbl[ BAG_REPSORT_MENU_CANCEL ] = BAG_REPSORT_MENU_STR_CANCEL;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  保管ソートメニューボタンで開くメニュー数
+ *
+ *	@param	* pWork 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+int GetRepositoryMenuCount( FIELD_ITEMMENU_WORK * pWork )
+{
+  int count = 1; // キャンセルは必ず開くので１スタート
+  // ぜんぶ
+  if( pWork->repository_sort_mode != REPOSITORY_SORTTYPE_FULL )
+  {
+    count++;
+  }
+
+  // どうぐ
+  if( pWork->repository_sort_mode != REPOSITORY_SORTTYPE_NORMAL )
+  {
+    if( CountRepositoryItem( &pWork->bag_item , BAG_POKE_NORMAL ) > 0 )
+    {
+      count++;
+    }
+  }
+  // くすり
+  if( pWork->repository_sort_mode != REPOSITORY_SORTTYPE_DRUG )
+  {
+    if( CountRepositoryItem( &pWork->bag_item , BAG_POKE_DRUG ) > 0 )
+    {
+      count++;
+    }
+  }
+  // わざ
+  if( pWork->repository_sort_mode != REPOSITORY_SORTTYPE_WAZA )
+  {
+    if( CountRepositoryItem( &pWork->bag_item , BAG_POKE_WAZA ) > 0 )
+    {
+      count++;
+    }
+  }
+  // きのみ
+  if( pWork->repository_sort_mode != REPOSITORY_SORTTYPE_NUTS )
+  {
+    if( CountRepositoryItem( &pWork->bag_item , BAG_POKE_NUTS ) > 0 )
+    {
+      count++;
+    }
+  }
+  // たいせつなもの
+  if( pWork->repository_sort_mode != REPOSITORY_SORTTYPE_EVENT )
+  {
+    if( CountRepositoryItem( &pWork->bag_item , BAG_POKE_EVENT ) > 0 )
+    {
+      count++;
+    }
+  }
+
+  return count;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アイテムのソート順の選択待ち
+ *
+ *	@param	pWork
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void _itemRepositorySortSelectWait(FIELD_ITEMMENU_WORK* pWork)
+{
+  BOOL bClear=FALSE;
+
+  // メッセージ終了チェック
+  if(!ITEMDISP_MessageEndCheck(pWork)){
+    return;
+  }
+  if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
+    int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
+    pWork->ret_code2 = pWork->rep_submenuList[selectno];
+    switch(pWork->ret_code2){
+    // ----------ぜんぶ------------
+    case BAG_REPSORT_MENU_STR_FULL:
+      PMSND_PlaySE( SE_BAG_SORT );
+      SORT_Repository_Data( pWork , REPOSITORY_SORTTYPE_FULL );
+      _CHANGE_STATE( pWork, _RepositorySortEndMessageSet );
+      bClear = TRUE;
+      break;
+    // ----------どうぐ------------
+    case BAG_REPSORT_MENU_STR_NORMAL:
+      PMSND_PlaySE( SE_BAG_SORT );
+      SORT_Repository_Data( pWork , REPOSITORY_SORTTYPE_NORMAL );
+      _CHANGE_STATE( pWork, _RepositorySortEndMessageSet );
+      bClear = TRUE;
+      break;
+    // ----------かいふく------------
+    case BAG_REPSORT_MENU_STR_DRUG:
+      PMSND_PlaySE( SE_BAG_SORT );
+      SORT_Repository_Data( pWork , REPOSITORY_SORTTYPE_DRUG );
+      _CHANGE_STATE( pWork, _RepositorySortEndMessageSet );
+      bClear = TRUE;
+      break;
+    // ----------わざましん------------
+    case BAG_REPSORT_MENU_STR_WAZA:
+      PMSND_PlaySE( SE_BAG_SORT );
+      SORT_Repository_Data( pWork , REPOSITORY_SORTTYPE_WAZA );
+      _CHANGE_STATE( pWork, _RepositorySortEndMessageSet );
+      bClear = TRUE;
+      break;
+    // ----------きのみ------------
+    case BAG_REPSORT_MENU_STR_NUTS:
+      PMSND_PlaySE( SE_BAG_SORT );
+      SORT_Repository_Data( pWork , REPOSITORY_SORTTYPE_NUTS );
+      _CHANGE_STATE( pWork, _RepositorySortEndMessageSet );
+      bClear = TRUE;
+      break;
+    // ----------たいせつなもの------------
+    case BAG_REPSORT_MENU_STR_EVENT:
+      PMSND_PlaySE( SE_BAG_SORT );
+      SORT_Repository_Data( pWork , REPOSITORY_SORTTYPE_EVENT );
+      _CHANGE_STATE( pWork, _RepositorySortEndMessageSet );
+      bClear = TRUE;
+      break;
+    // ----------やめる------------
+    case BAG_REPSORT_MENU_STR_CANCEL:
+      // タッチ状態で抜けたのならクリア
+      if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ) {
+        ITEMDISP_upMessageClean( pWork ); // クリア
+      }
+      // タッチ遷移なら非表示に
+      KTST_SetDraw( pWork, (GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY) );
+      ITEMDISP_ChangeActive( pWork, TRUE );
+      GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkScroll, TRUE );
+      ChangeStateItemKindSelectItemMenu( pWork );
+      bClear = TRUE;
+      break;
+    default:
+      GF_ASSERT(0);
+      break;
+    }
+  }
+
+  // 選択終了だったらメニュー面の消去
+  if(bClear){
+    ITEMDISP_ListPlateClear( pWork );
+    APP_TASKMENU_CloseMenu(pWork->pAppTask);
+    pWork->pAppTask=NULL;
+  }
+}
 //--------------------------------------------------------------------------------------------
 /**
  * @brief   ソートメッセージウェイト
@@ -4457,11 +5301,11 @@ static void _sortMessageWait( FIELD_ITEMMENU_WORK * wk )
   }
 
   wk->oamlistpos_old = 0xffff;
+  ITEMDISP_ScrollCursorChangePos( wk );
   _windowRewrite( wk );
   ITEMDISP_ListPlateClear( wk );
   GFL_CLACT_WK_SetAutoAnmFlag( wk->clwkScroll, TRUE );
   ITEMDISP_ChangeActive( wk, TRUE );
-//  _CHANGE_STATE( wk, _itemKindSelectMenu );
   ChangeStateItemKindSelectItemMenu( wk );
 }
 

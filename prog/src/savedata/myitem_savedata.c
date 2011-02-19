@@ -55,6 +55,8 @@ static u32 MyPocketDataGet( MYITEM_PTR myitem, s32 pocket, ITEM_ST ** item, u32 
 static void bottomInsert( ITEM_ST * item, const u32 max );
 static u32 GetRepositoryNum( MYITEM_PTR myitem );
 static BOOL SearchInPocket( MYITEM_PTR myitem, u16 item_no, u16 pocket );
+static void SortRepository(MYITEM_PTR myitem, ITEM_ST *item, u32 max );
+static void ChengeItem( ITEM_ST * p1, ITEM_ST * p2 );
 
 
 
@@ -115,7 +117,7 @@ void MYITEM_Copy(const MYITEM_PTR from, MYITEM_PTR to)
 
 //------------------------------------------------------------------
 /**
- * @brief	MYITEMのITEM_STのコピー
+ * @brief	MYITEMのITEM_STのコピー(保管されているものはコピーされない)
  * @param	myitem	  MYITEMのポインタ
  * @param	itemst		アイテムリストの先頭ポインタ
  * @param	pocket		ポケット番号
@@ -123,6 +125,62 @@ void MYITEM_Copy(const MYITEM_PTR from, MYITEM_PTR to)
  */
 //------------------------------------------------------------------
 void MYITEM_ITEM_STCopy(MYITEM_PTR myitem, ITEM_ST* itemst, int pocket, BOOL bMyGet)
+{
+  int i = 0;
+  ITEM_ST* MyItemSt;
+  u32 max;
+
+  MyPocketDataGet(myitem, pocket, &MyItemSt, &max);
+
+  // 保管に登録されているものは後ろにつめる
+  SortRepository( myitem , MyItemSt , max );
+
+  if(bMyGet)
+  {
+    for( i = 0; i < max ; i++ )
+    {
+      BOOL is_in = MYITEM_GetRepositoryFlag( myitem , MyItemSt[i].id );
+      if( is_in == FALSE )
+      {
+        GFL_STD_MemCopy(&MyItemSt[i], &itemst[i], sizeof(ITEM_ST) );
+      }
+      else
+      {
+        itemst[i].id = ITEM_DUMMY_DATA;
+        itemst[i].no = 0;
+      }
+    }
+  }
+  else
+  {
+    for( i = 0; i < max ; i++ )
+    {
+      // ダミーデータは書き込まない
+      if( itemst[i].id != ITEM_DUMMY_DATA )
+      {
+        BOOL is_in = MYITEM_GetRepositoryFlag( myitem , itemst[i].id );
+        if( is_in == FALSE )
+        {
+          GFL_STD_MemCopy(&itemst[i],&MyItemSt[i],sizeof(ITEM_ST) );
+        }
+      }
+    }
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  	MYITEMのITEM_STのコピー(完全コピー)
+ *
+ *  @param	myitem	  MYITEMのポインタ
+ *  @param	itemst		アイテムリストの先頭ポインタ
+ *  @param	pocket		ポケット番号
+ *  @param	bMyGet		myitemからデータがほしい場合TRUE  myitemに格納する場合FALSE
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void MYITEM_ITEM_STFullCopy(MYITEM_PTR myitem, ITEM_ST* itemst, int pocket, BOOL bMyGet)
 {
   ITEM_ST* MyItemSt;
   u32 max;
@@ -139,6 +197,33 @@ void MYITEM_ITEM_STCopy(MYITEM_PTR myitem, ITEM_ST* itemst, int pocket, BOOL bMy
   }
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  保管に登録されているアイテムを後ろにつめる
+ *
+ *	@param	myitem
+ *	@param	* item
+ *	@param	max 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void SortRepository(MYITEM_PTR myitem, ITEM_ST *item, u32 max )
+{
+  u32	i, j;
+
+  for( i=0; i<max-1; i++ ){
+    for( j=i+1; j<max; j++ ){
+      BOOL is_in = MYITEM_GetRepositoryFlag( myitem , item[i].id );
+      if( item[j].id != ITEM_DUMMY_DATA )
+      {
+        if( is_in == TRUE ){
+          ChengeItem( &item[i], &item[j] );
+        }
+      }
+    }
+  }
+}
 
 //------------------------------------------------------------------
 /**
@@ -334,17 +419,20 @@ BOOL MYITEM_AddItem( MYITEM_PTR myitem, u16 item_no, u16 num, HEAPID heap )
 	add->id = item_no;
 	add->no += num;
 
-	{
-		u32	pocket;
-		u32	max;
-		pocket = MyItemDataGet( myitem, item_no, &add, &max, heap );
-		// 木の実
-		if( pocket == BAG_POKE_NUTS ){
-			MYITEM_SortNumber( add, max );
-		// 技マシン
-		}else if( pocket == BAG_POKE_WAZA ){
-			MYITEM_SortWazaMachine( add, max );
-		}
+  ONOUE_Printf("ID:%u=%u個\n",add->id,add->no);
+
+
+//	{
+//		u32	pocket;
+//		u32	max;
+//		pocket = MyItemDataGet( myitem, item_no, &add, &max, heap );
+//		// 木の実
+//		if( pocket == BAG_POKE_NUTS ){
+//			MYITEM_SortNumber( add, max );
+//		// 技マシン
+//		}else if( pocket == BAG_POKE_WAZA ){
+//			MYITEM_SortWazaMachine( add, max );
+//		}
 /*
 		// 木の実
 		if( pocket == BAG_POKE_NUTS || pocket == BAG_POKE_WAZA ){
@@ -360,7 +448,7 @@ BOOL MYITEM_AddItem( MYITEM_PTR myitem, u16 item_no, u16 num, HEAPID heap )
 //      num = MYITEM_GetItemThisPocketNumber(item, num);
 //      bottomInsert( item,  num );
 //    }
-	}
+//	}
 	return TRUE;
 }
 
@@ -716,11 +804,12 @@ u32 MYITEM_GetItemThisPocketNumber( ITEM_ST * item,int max )
  *
  *  @param	myitem		ポケット構造体へのポインタ
  *	@param	pocket    ポケット番号
+ *	@param	is_count_repository TRUE = 保管ポケットに入っているものも数える
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-u32 MYITEM_GetItemThisPocketNumberNoRepository( MYITEM_PTR myitem ,u32 pocket )
+u32 MYITEM_GetItemThisPocketNumberNoRepository( MYITEM_PTR myitem ,u32 pocket , BOOL is_count_repository )
 {
 	u32	num=0;
 	u32	i;
@@ -734,10 +823,17 @@ u32 MYITEM_GetItemThisPocketNumberNoRepository( MYITEM_PTR myitem ,u32 pocket )
 		{
 			if( item[i].id != ITEM_DUMMY_DATA )
       {
-        BOOL is_in = MYITEM_GetRepositoryFlag( myitem , item[i].id );
-        if( is_in == FALSE )
+        if( is_count_repository == FALSE )
         {
-          num++;
+          BOOL is_in = MYITEM_GetRepositoryFlag( myitem , item[i].id );
+          if( is_in == FALSE )
+          {
+            num++;
+          }
+        }
+        else
+        {
+            num++;
         }
 			}
 		}
@@ -762,7 +858,7 @@ u32 MYITEM_GetItemPocketNumber( MYITEM_PTR myitem, u32 pocket )
 
   if( pocket != BAG_POKE_REPOSITORY )
   {
-    count = MYITEM_GetItemThisPocketNumberNoRepository(myitem,pocket);
+    count = MYITEM_GetItemThisPocketNumberNoRepository(myitem,pocket , FALSE);
   }
   else
   {
@@ -818,6 +914,36 @@ u16 MYITEM_GetItemNum( MYITEM_PTR myitem, u16 item_no, HEAPID heap )
 		return 0;
 	}
 	return sub->no;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  手持ちの個数をチェック（アーカイブを開かない）
+ *
+ *	@param	myitem  手持ちアイテム構造体へのポインタ
+ *	@param	item_no アイテム番号
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+u16 MYITEM_GetItemNumFromSave( MYITEM_PTR myitem, u16 item_no )
+{
+  s32 pocket = MYITEM_GetPocketID( myitem, item_no );
+
+  if( pocket != BAG_POKE_MAX )
+  {
+    ITEM_ST * item;
+    item = MYITEM_IdItemGet( myitem ,pocket ,item_no );
+    if( item == NULL )
+    {
+      return 0;
+    }
+    return item->no;
+  }
+  else
+  {
+    return 0;
+  }
 }
 
 //------------------------------------------------------------------
@@ -886,6 +1012,48 @@ static void bottomInsert( ITEM_ST * item, const u32 num )
     }
   }
   GFL_STD_MemCopy(&bottom, &item[0], sizeof(ITEM_ST));
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  特定のアイテムIDのアイテムを一番下に移動する
+ *
+ *	@param	myitem
+ *	@param	item_no 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void MYITEM_MoveBottom( MYITEM_PTR myitem, u16 item_no )
+{
+  int i;
+  s32 pocket = MYITEM_GetPocketID( myitem, item_no );
+
+  if( pocket != BAG_POKE_MAX )
+  {
+    ITEM_ST * item;
+    ITEM_ST * move_st;
+    u32	max;
+    move_st = MYITEM_IdItemGet( myitem ,pocket ,item_no );
+    if( move_st == NULL )
+    {
+      return;
+    }
+
+    MyPocketDataGet( myitem, pocket, &item, &max );
+    for( i = 0; i < max ; i++ )
+    {
+      if( item[i].id == ITEM_DUMMY_DATA )
+      {
+        item[i] = *move_st;
+        move_st->id = 0;
+        move_st->no = 0;
+        break;
+      }
+    }
+
+    MYITEM_SortSpace( item, max );
+  }
 }
 
 //------------------------------------------------------------------
@@ -1080,7 +1248,6 @@ ITEM_ST * MYITEM_IdItemGet( MYITEM_PTR myitem ,u16 pocket ,u16 item_no )
 		}
 	}
 
-  // 持っていないアイテムが保管に登録されている
   return NULL;
 }
 

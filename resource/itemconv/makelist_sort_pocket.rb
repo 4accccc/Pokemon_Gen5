@@ -35,7 +35,7 @@ header = <<EOS
 /**
  *
  *	@file		itemsort_absolute_def.cdat
- *	@brief  全アイテム統一並び順(あいうえお)
+ *	@brief  全アイテム統一並び順(ほかんポケット専用)
  *	@author	Masayuki Onoue
  *	@date		2011.02.09
  *  
@@ -54,7 +54,7 @@ header = <<EOS
 /**
  *
  *	@file		itemsort_jp_def.cdat
- *	@brief  分類別あいうえお順データ
+ *	@brief  あいうえお順データ
  *	@author	Masayuki Onoue
  *	@date		2011.02.09
  *  
@@ -75,11 +75,14 @@ in_file.each do |line|
     # アイテム名を見て使用しないアイテムを決める
     unless line[0].include?("？？？") then
       unless line[1] == nil then
-        sort1_file.puts "  "+line[2].to_s+",  // " + line[0]
+        sort1_file.puts "  "+line[1].to_s+",  // " + line[0]
       end
       unless line[2] == nil then
-        sort2_file.puts "  "+line[1].to_s+",  // " + line[0]
+        sort2_file.puts "  "+line[2].to_s+",  // " + line[0]
       end
+    else
+      sort1_file.puts "  0,  // " + line[0]
+      sort2_file.puts "  0,  // " + line[0]
     end
   end
 end

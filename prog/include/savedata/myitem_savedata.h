@@ -65,6 +65,7 @@ extern int MYITEM_GetWorkSize(void);
 extern MYITEM_PTR MYITEM_AllocWork(HEAPID heapID);
 extern void MYITEM_Copy(const MYITEM_PTR from, MYITEM_PTR to);
 extern void MYITEM_ITEM_STCopy(MYITEM_PTR myitem, ITEM_ST* itemst, int pocket, BOOL bMyGet);
+extern void MYITEM_ITEM_STFullCopy(MYITEM_PTR myitem, ITEM_ST* itemst, int pocket, BOOL bMyGet);
 
 //----------------------------------------------------------
 //  MYITEMëÄçÏÇÃÇΩÇﬂÇÃä÷êî
@@ -77,6 +78,7 @@ extern BOOL MYITEM_SubItemDirect( ITEM_ST * myitem, u32 max, u16 item_no, u16 nu
 extern BOOL MYITEM_CheckItem( MYITEM_PTR myitem, u16 item_no, u16 num, HEAPID heap );
 extern u16 MYITEM_GetItemNum( MYITEM_PTR myitem, u16 item_no, HEAPID heap );
 extern u16 MYITEM_GetItemNumDirect( ITEM_ST * myitem, u32 max, u16 item_no, HEAPID heap );
+extern u16 MYITEM_GetItemNumFromSave( MYITEM_PTR myitem, u16 item_no );
 extern void MYITEM_SortSpace( ITEM_ST * item, const u32 max );
 extern void MYITEM_SortNumber( ITEM_ST * item, const u32 max );
 extern void MYITEM_SortWazaMachine( ITEM_ST * item, const u32 max );
@@ -97,7 +99,7 @@ extern u32 MYITEM_GetPocketID( MYITEM_PTR myitem, u16 item_no );
 //  ITEMLISTëÄçÏÇÃÇΩÇﬂÇÃä÷êî
 //----------------------------------------------------------
 extern u32 MYITEM_GetItemThisPocketNumber( ITEM_ST * item,int max );
-extern u32 MYITEM_GetItemThisPocketNumberNoRepository( MYITEM_PTR myitem ,u32 pocket );
+extern u32 MYITEM_GetItemThisPocketNumberNoRepository( MYITEM_PTR myitem ,u32 pocket , BOOL is_count_repository );
 
 
 //----------------------------------------------------------
@@ -129,6 +131,7 @@ extern void MYITEM_BattleBagCursorSet( BAG_CURSOR * wk, s16 * pos, s16 * scr );
 extern void MYITEM_BattleBagLastItemSet( BAG_CURSOR * wk, u16 item, u16 page );
 //extern void MYITEM_BattleBagPocketPagePosSet( BAG_CURSOR * wk, u16 pocket );
 extern void MYITEM_BattleBagCursorPosInit( BAG_CURSOR * wk );
+extern void MYITEM_MoveBottom( MYITEM_PTR myitem, u16 item_no );
 
 
 #ifdef CREATE_INDEX
