@@ -1561,9 +1561,20 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
     case BAG_MENU_TSUKAU:  
       pocket_id = MYITEM_GetPocketID( pWork->pMyItem , pWork->ret_item );
       ITEMDISP_ChangeRetButtonActive( pWork, FALSE );   // 戻るボタンをパッシブへ
-
-      if( pocket_id != BAG_POKE_EVENT){     //大切なもの以外はビーコンを飛ばす
-        GAMEBEACON_Set_UseItem( pWork->ret_item );
+      
+      if( pocket_id != BAG_POKE_REPOSITORY ){
+        if( pocket_id != BAG_POKE_EVENT )
+        {
+          GAMEBEACON_Set_UseItem( pWork->ret_item );
+        }
+      }
+      else
+      {
+        // たいせつなものはビーコンを送らない
+        if( ITEM_GetParam( pWork->ret_item, ITEM_PRM_EVENT, pWork->heapID ) == 0 )
+        {
+          GAMEBEACON_Set_UseItem( pWork->ret_item );
+        }
       }
       if((pocket_id==BAG_POKE_WAZA)){       //技マシン
         _CHANGE_STATE(pWork,_itemTecniqueUseInit);
@@ -3756,7 +3767,8 @@ static void ItemMenuMake( FIELD_ITEMMENU_WORK * pWork, u8* tbl )
   }
 
   itemdata = ITEM_GetItemArcData( item->id, ITEM_GET_DATA, pWork->heapID );
-  pocket   = pWork->pocketno;
+  //pocket   = pWork->pocketno;
+  pocket   = ITEM_GetBufParam( itemdata,  ITEM_PRM_POCKET ) ;
 
 #if 0
   for(i=0;i<BAG_MENUTBL_MAX;i++){

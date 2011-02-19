@@ -71,7 +71,6 @@ static s32 QSort_Num( void * elem1, void * elem2 )
 //-----------------------------------------------------------------------------
 void BAGITEM_InitData(BAGITEM_WORK* p_wk,MYITEM_PTR p_myitem , HEAPID heapID)
 {
-  int i;
   int item_id;
   int count;
   u32 data_size;
@@ -82,9 +81,8 @@ void BAGITEM_InitData(BAGITEM_WORK* p_wk,MYITEM_PTR p_myitem , HEAPID heapID)
   p_wk->p_myitem  = p_myitem;
 
   // 保管ポケットデータから保管済みのアイテムID一覧を作成する
-  for( i = 0; i <= ITEM_DATA_MAX ; i++ )
+  for( item_id = 0; item_id <= ITEM_DATA_MAX ; item_id++ )
   {
-    item_id = ItemSortByAbsolute[i];
     is_in = MYITEM_GetRepositoryFlag( p_wk->p_myitem ,item_id);
 
     if( is_in )
@@ -116,6 +114,7 @@ void BAGITEM_InitData(BAGITEM_WORK* p_wk,MYITEM_PTR p_myitem , HEAPID heapID)
   p_wk->dummy.id = 0;
   p_wk->dummy.no = 0;
 
+  BAGITEM_SortRepositoryItem( p_wk , REPOSITORY_SORTTYPE_FULL );
 }
 
 //----------------------------------------------------------------------------
