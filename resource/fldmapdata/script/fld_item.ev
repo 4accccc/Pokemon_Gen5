@@ -2575,9 +2575,8 @@ ev_itemget_flditem_true:
   _PLAYER_NAME( 0 )
   _ITEM_NAME( 1, SCWK_TEMP0 )
   
-  //ポケットナンバーをSCWK_ANSWERに代入
-  _GET_POCKET_ID( SCWK_TEMP0, SCWK_ANSWER )
-  _POCKET_NAME( 2, SCWK_ANSWER )
+  //アイテムナンバーを代入
+  _POCKET_NAME( 2, SCWK_TEMP0 )
   
   //○○ポケットにしまった
   _SYSWIN_MSG( msg_item_get_pocket_nowait, POS_DOWN )

@@ -192,9 +192,25 @@ VMCMD_RESULT EvCmdPocketName(VMHANDLE * core, void *wk )
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
 	WORDSET* wordset		= SCRIPT_GetWordSet( sc );
 	u8 idx					= VMGetU8(core);
-	u16 pocket				= SCRCMD_GetVMWorkValue( core, work );
+	//u16 pocket				= SCRCMD_GetVMWorkValue( core, work );
+	u16 item_id				= SCRCMD_GetVMWorkValue( core, work );
+  HEAPID heapID = SCRCMD_WORK_GetHeapID( work );
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+  MYITEM_PTR myitem = GAMEDATA_GetMyItem( gdata );
+  BOOL is_in = MYITEM_GetRepositoryFlag( myitem, item_id );
+  u16 pocket;
+
+  if( is_in == TRUE )
+  {
+    pocket = (u16)BAG_POKE_REPOSITORY;
+  }
+  else
+  {
+    pocket = (u16)ITEM_GetParam( item_id, ITEM_PRM_POCKET, heapID );
+  }
 
   WORDSET_RegisterItemPocketName( wordset, idx, pocket );		//アイコンなし
+
 	//WORDSET_RegisterItemPocketWithIcon( *wordset, idx, pocket );	//アイコンあり
 
 	return VMCMD_RESULT_CONTINUE;

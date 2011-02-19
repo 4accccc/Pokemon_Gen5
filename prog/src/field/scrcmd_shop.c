@@ -2043,13 +2043,25 @@ static BOOL printBuyMsgCallBack( u32 param )
 //----------------------------------------------------------------------------------
 static void ShopPrintMsg( SHOP_BUY_APP_WORK *wk, int strId, u16 itemno )
 {
+  u16 pocket;
+  BOOL is_in = MYITEM_GetRepositoryFlag( wk->myitem, itemno );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->win[SHOP_BUY_BMPWIN_TALKMSG]), 15 );
   BmpWinFrame_Write( wk->win[SHOP_BUY_BMPWIN_TALKMSG], WINDOW_TRANS_ON, 
                      MENU_WINDOW_CHARA_OFFSET, MENU_WINDOW_PAL_OFFSET );
 
   WORDSET_RegisterItemName( wk->wordSet, 0, itemno );
-  WORDSET_RegisterItemPocketName( wk->wordSet, 1, 
-                                    ITEM_GetParam( itemno, ITEM_PRM_POCKET, wk->heapId ) );
+
+
+  if( is_in == TRUE )
+  {
+    pocket = (u16)BAG_POKE_REPOSITORY;
+  }
+  else
+  {
+    pocket = (u16)ITEM_GetParam( itemno, ITEM_PRM_POCKET, wk->heapId );
+  }
+
+  WORDSET_RegisterItemPocketName( wk->wordSet, 1, pocket);
   {
     STRBUF *str    = GFL_MSG_CreateString( wk->shopMsgData, strId );
     WORDSET_ExpandStr( wk->wordSet, wk->expandBuf, str );
