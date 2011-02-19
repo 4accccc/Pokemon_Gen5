@@ -11,7 +11,7 @@
 
 #include "bag_item.h"
 #include "item/item.h"
-#include "itemsort_absolute_def.cdat"
+#include "../../../../resource/itemconv/itemsort_absolute_def.cdat"
 
 //=============================================================================
 /**

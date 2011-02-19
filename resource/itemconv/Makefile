@@ -72,8 +72,6 @@ $(targetname).narc: wb_item.xls
 	itemconv.bat $(PROJECT_PROGDIR) $(PROJECT_ROOT)
 	$(NAIXCUT) $(targetname).naix
 endif
-	$(COPY) itemsort_absolute_def.cdat $(PROJECT_PROGDIR)src/app/bag
-	$(COPY) itemsort_jp_def.cdat $(PROJECT_PROGDIR)src/app/bag
 
 do-build:	subdir $(TARGETDIR)/$(targetname2).narc
 

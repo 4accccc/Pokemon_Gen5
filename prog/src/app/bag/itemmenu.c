@@ -3018,7 +3018,7 @@ static void SORT_Type( FIELD_ITEMMENU_WORK* pWork )
   GFL_HEAP_FreeMemory( sort );
 }
 
-#include "itemsort_jp_def.cdat"
+#include "../../../../resource/itemconv/itemsort_jp_def.cdat"
 //----------------------------------------------------------------------------
 /**
  *	@brief  名前順ソート
