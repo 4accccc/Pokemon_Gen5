@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-17T20:01:53"/>
+	<create user="matsumiya" host="W00224" date="2011-02-20T15:14:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,7 +229,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="152"/>
+		<id position="0" width="173"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1300" top="233" right="2005" bottom="857" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,7 +292,119 @@
 	</lock>
 
 
-	<row id="msg_r07r0105_leader6_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r07r0105_champion_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♂
+・ポケモン入手前（1回目）
+・posを踏むとアデクが鐘を鳴らす
+　その後振り向き会話スタート
+
+・はい/いいえの選択肢表示
+・はい→champion_05
+・はい選択、手持ち一杯→champion_03
+・いいえ→champion_04</comment>
+		<attribute name="キャラ指定">CHAMPION
+アデク</attribute>
+		<language name="JPN" width="256">アデク『……[1:00:トレーナー名:0]か▼
+・ここに居た理由
+・ポケモンとのきずな
+・認めこれを託すとするか
+これは　ポケモンの　タマゴ</language>
+		<language name="JPN_KANJI" width="256">……ポケモントレーナーか▼
+……　……　……
+……　……　……▼
+その　ひとみの　輝き……
+ポケモンへの　優しさを　感じる！▼
+決めた！　古代の城で　発見した
+宝物を　きみに　たくそう！▼
+この　ポケモンの　タマゴを
+受け取り　育ててみないか？</language>
+	</row>
+
+	<row id="msg_r07r0105_champion_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂
+・ポケモン入手前（２回目）
+・はい/いいえの選択肢表示
+・はい→champion_05
+・はい選択、手持ち一杯→champion_03
+・いいえ→champion_04</comment>
+		<attribute name="キャラ指定">CHAMPION
+アデク</attribute>
+		<language name="JPN" width="256">この　こだいのしろで　みつかった
+ポケモンの　タマゴを▽
+うけとり　そだててみないか？</language>
+		<language name="JPN_KANJI" width="256">この　古代の城で　発見した
+ポケモンの　タマゴを▽
+受け取り　育ててみないか？</language>
+	</row>
+
+	<row id="msg_r07r0105_champion_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂
+・はい選択、手持ち一杯</comment>
+		<attribute name="キャラ指定">CHAMPION
+アデク</attribute>
+		<language name="JPN" width="256">うむ……▼
+って　きもちは　うれしいが
+ポケモンが　いっぱいで▽
+タマゴを　うけとれないようだね</language>
+		<language name="JPN_KANJI" width="256">うむ……▼
+って　気持ちは　うれしいが
+ポケモンが　一杯で▽
+タマゴを　受け取れないようだね</language>
+	</row>
+
+	<row id="msg_r07r0105_champion_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂
+・いいえ選択
+・このメッセージ表示後は、champion_02から</comment>
+		<attribute name="キャラ指定">CHAMPION
+アデク</attribute>
+		<language name="JPN" width="256">……ふむ
+それも　きみの　じゆうだ！</language>
+		<language name="JPN_KANJI" width="256">……ふむ
+それも　きみの　自由だ！</language>
+	</row>
+
+	<row id="msg_r07r0105_champion_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♂
+・はい選択
+・ポケモン入手処理
+　No643「メラルバ」のタマゴ</comment>
+		<attribute name="キャラ指定">CHAMPION
+アデク</attribute>
+		<language name="JPN" width="256">わしの～
+だいじに　してくれよ▼</language>
+		<language name="JPN_KANJI" width="256">うむ……
+よろしく　頼んだぜ▼</language>
+	</row>
+
+	<row id="msg_r07r0105_champion_06" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♂
+・ポケモン入手後、自動で表示</comment>
+		<attribute name="キャラ指定">CHAMPION
+アデク</attribute>
+		<language name="JPN" width="256">ポケモンの　タマゴはな
+げんきな　ポケモンと▽
+いっしょに　するのが　だいじだぞ！▼
+つまり　タマゴを　つれあるくことで
+なかから　ポケモンが　でてくるのだ！</language>
+		<language name="JPN_KANJI" width="256">ポケモンの　タマゴだが
+元気な　ポケモンと▽
+一緒に　しておく……▼
+つまり　連れ歩くことで
+中から　ポケモンが　でてくるんだ</language>
+	</row>
+
+	<row id="msg_r07r0105_egg_get_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>・0＝主人公名
+・1=ポケモン名</comment>
+		<attribute name="キャラ指定">システム</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]は
+タマゴを　もらった！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
+タマゴを　もらった！</language>
+	</row>
+
+	<row id="msg_r07r0105_leader6_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・GRIDX=16、GRIDZ=13、上向き</comment>
 		<attribute name="キャラ指定">c06ジムリーダー
@@ -315,7 +427,7 @@
 元気になって　飛んでいったの！▼</language>
 	</row>
 
-	<row id="msg_r07r0105_leader6_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r07r0105_leader6_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・GRIDX=198、GRIDZ=13、上向きで
 　メッセージ表示</comment>
@@ -331,7 +443,7 @@
 遠くでも　みえちゃうのよ！▼</language>
 	</row>
 
-	<row id="msg_r07r0105_leader6_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r07r0105_leader6_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・初期位置にもどり
 　上向きでメッセージ表示</comment>
@@ -351,7 +463,7 @@
 音色に　反映される……▼</language>
 	</row>
 
-	<row id="msg_r07r0105_leader6_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r07r0105_leader6_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・leader6_03表示後に再度会話したとき</comment>
 		<attribute name="キャラ指定">c06ジムリーダー
@@ -360,7 +472,7 @@
 		<language name="JPN_KANJI" width="256">フウロ『遠慮しないで　いいのよ</language>
 	</row>
 
-	<row id="msg_r07r0105_leader6_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r07r0105_leader6_05" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・主人公性別＝♂
 ・鐘のSE再生終了時に自動で表示
@@ -377,7 +489,7 @@
 そんな　音色……▼</language>
 	</row>
 
-	<row id="msg_r07r0105_leader6_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r07r0105_leader6_06" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・主人公性別＝♀
 ・鐘のSE再生終了時に自動で表示
@@ -394,7 +506,7 @@
 そんな　音色……▼</language>
 	</row>
 
-	<row id="msg_r07r0105_leader6_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r07r0105_leader6_07" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・メッセージ表示後、歩いて退場
 ・画面外に消えると、主人公、操作可能
@@ -472,7 +584,7 @@
 		<language name="JPN_KANJI" width="256">鐘を　そのままに　しておいた……</language>
 	</row>
 
-	<row id="msg_r07r0105_champion_end_01">
+	<row id="msg_r07r0105_champion_end_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・pos起動
 ・鐘のアニメ再生後に
@@ -484,7 +596,7 @@
 		<language name="JPN_KANJI" width="256">アデク『……▼</language>
 	</row>
 
-	<row id="msg_r07r0105_champion_end_02">
+	<row id="msg_r07r0105_champion_end_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・右向きでメッセージ表示
 ・続けてchampion_end_03</comment>
@@ -504,7 +616,7 @@
 ときおり　鐘を　鳴らしに　くるのだ▼</language>
 	</row>
 
-	<row id="msg_r07r0105_champion_end_03">
+	<row id="msg_r07r0105_champion_end_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・下向き、アデクの芝居後に
 　メッセージ表示
@@ -523,7 +635,7 @@
 強さの　意味も　知らずにな▼</language>
 	</row>
 
-	<row id="msg_r07r0105_champion_end_04">
+	<row id="msg_r07r0105_champion_end_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてchampion_end_05</comment>
 		<attribute name="キャラ指定">CHAMPION
@@ -544,7 +656,7 @@
 永遠普遍の　ものではない　と▼</language>
 	</row>
 
-	<row id="msg_r07r0105_champion_end_05">
+	<row id="msg_r07r0105_champion_end_05" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けて
 　champion_end_06　か
@@ -573,7 +685,7 @@
 そして　おまえたちに　会えた！▼</language>
 	</row>
 
-	<row id="msg_r07r0105_champion_end_06">
+	<row id="msg_r07r0105_champion_end_06" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・すでに殿堂入りしている
 ・メッセージ表示後、退場
@@ -591,7 +703,7 @@
 多くの　人と　会えよ！▼</language>
 	</row>
 
-	<row id="msg_r07r0105_champion_end_07">
+	<row id="msg_r07r0105_champion_end_07" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・まだ殿堂入りしていない
 ・メッセージ表示後、退場
