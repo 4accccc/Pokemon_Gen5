@@ -117,6 +117,7 @@ void CTVT_BALLOON_Destroy( BALLOON_WORK*  p_wk )
   {
     //ICHI_Printf("風船破棄 %d\n", p_wk->tcb);
     GFL_TCB_DeleteTask( p_wk->tcb );
+    p_wk->tcb = NULL;
   }
 
   // タスクは必ずNULL
@@ -181,29 +182,21 @@ void CTVT_BALLOON_Update( BALLOON_WORK*  p_wk )
         VEC_Add( &p_wk->status.trans, &p_wk->vec, &p_wk->status.trans );
       }
     }
-    //GFL_CALC3D_VEC_MulScalar( &p_wk->vec, mul, &p_wk->status.trans );
+    else
+    {
+      // -だと進んでるので、前のフレームに戻す
+      CTVT_GAME_CommFrameSet( p_wk->p_game_wk, p_wk->save_frame );
+    }
   }
 
   // 画面外判定
+  // 3D画面外判定　(曖昧)
+  if( p_wk->status.trans.y > FX32_CONST(240)
+      || p_wk->status.trans.x > FX32_CONST(220)
+      || p_wk->status.trans.x < FX32_CONST(-220))
   {
-    int x, y;   // スクリーン座標
-    int ret;    // 戻り値 0ならビューポート内
-
-    // ワールド座標からスクリーン座標を求める
-    ret = NNS_G3dWorldPosToScrPos( &p_wk->status.trans, &x, &y );
-
-    // 画面外 両端のみ
-    if( ( x<-64 || x>320 ) && ret == 0  )
-    {
-      CTVT_BALLOON_Destroy( p_wk );
-      return;
-    }
-    // 3D画面外判定　(曖昧)
-    if( p_wk->status.trans.y > FX32_CONST(240) )
-    {
-      CTVT_BALLOON_Destroy( p_wk );
-      return;
-    }
+    CTVT_BALLOON_Destroy( p_wk );
+    return;
   }
 }
 
@@ -311,7 +304,7 @@ BALLOON2_WORK* CTVT_BALLOON2_Create( CTVT_GAME_WORK *gameWork, u16 unit_idx, BOO
   p_wk->type    = BALLOON_NORMAL;
   p_wk->stage   = 0;
   p_wk->cnt     = 0;
-  p_wk->interval= 0;
+  p_wk->interval= 60;   // 初期値を入れると拡大しながら出現
   p_wk->anm_flg = FALSE;
   p_wk->effect_ica = FALSE;
   p_wk->effect_ima = FALSE;
@@ -325,7 +318,7 @@ BALLOON2_WORK* CTVT_BALLOON2_Create( CTVT_GAME_WORK *gameWork, u16 unit_idx, BOO
   // 自分は真ん中に置く
   if( unit_idx == selfId )
   {
-    VEC_Set( &p_wk->status.scale, SCALE_SELF, SCALE_SELF, SCALE_SELF );
+    //VEC_Set( &p_wk->status.scale, SCALE_SELF, SCALE_SELF, SCALE_SELF );
     MTX_Identity33( &p_wk->status.rotate );
     VEC_Set( &p_wk->status.trans, 0, FX32_CONST(-60), 0 );
 
@@ -354,7 +347,7 @@ BALLOON2_WORK* CTVT_BALLOON2_Create( CTVT_GAME_WORK *gameWork, u16 unit_idx, BOO
       idx++;
     }
     
-    VEC_Set( &p_wk->status.scale, SCALE_OTHER, SCALE_OTHER, SCALE_OTHER );
+    //VEC_Set( &p_wk->status.scale, SCALE_OTHER, SCALE_OTHER, SCALE_OTHER );
     MTX_Identity33( &p_wk->status.rotate );
     VEC_COPY( &p_wk->status.trans, &c_pos[ idx ] );
 
@@ -364,6 +357,8 @@ BALLOON2_WORK* CTVT_BALLOON2_Create( CTVT_GAME_WORK *gameWork, u16 unit_idx, BOO
     p_wk->scale_add = SCALE_ADD_OTHER;
     p_wk->scale_max = SCALE_ADD_MAX_OTHER;
   }
+
+  VEC_Set( &p_wk->status.scale, 0, 0, 0 );
 
   return p_wk;
 }
@@ -381,9 +376,14 @@ void CTVT_BALLOON2_Delete( BALLOON2_WORK *p_wk )
   if( p_wk->tcb != NULL )
   {
     GFL_TCB_DeleteTask( p_wk->tcb );
+    p_wk->tcb = NULL;
   }
 
-  GFL_HEAP_FreeMemory( p_wk );
+  if( p_wk != NULL )
+  {
+    GFL_HEAP_FreeMemory( p_wk );
+    p_wk = NULL;
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -844,9 +844,13 @@ void CTVT_BALLOON_S_Delete( BALLOON_S_WORK *p_wk )
   if( p_wk->tcb != NULL )
   {
     GFL_TCB_DeleteTask( p_wk->tcb );
+    p_wk->tcb = NULL;
   }
 
-  GFL_HEAP_FreeMemory( p_wk );
+  if( p_wk != NULL )
+  {
+    GFL_HEAP_FreeMemory( p_wk );
+  }
 }
 
 //----------------------------------------------------------------------------
