@@ -1635,6 +1635,12 @@ c16_def.h: c16.ev
 c16r0101_def.h: c16r0101.ev
 	$(EV_DEF) c16r0101.ev $(SCR_OFFS_ID_H)
 
+d31r1101_def.h: d31r1101.ev
+	$(EV_DEF) d31r1101.ev $(SCR_OFFS_ID_H)
+
+d31r1201_def.h: d31r1201.ev
+	$(EV_DEF) d31r1201.ev $(SCR_OFFS_ID_H)
+
 ifeq ($(PM_DEBUG),yes)
 debug_scr_def.h: debug_scr.ev
 	$(EV_DEF) debug_scr.ev $(SCR_OFFS_ID_H)

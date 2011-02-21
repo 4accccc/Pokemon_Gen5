@@ -498,6 +498,8 @@
 #define ZONE_ID_C12GYM0201       (494)
 #define ZONE_ID_C16              (495)
 #define ZONE_ID_C16R0101         (496)
-#define ZONE_ID_MAX	(497)
+#define ZONE_ID_D31R1101         (497)
+#define ZONE_ID_D31R1201         (498)
+#define ZONE_ID_MAX	(499)
 #endif // __ZONE_ID_H__
 
