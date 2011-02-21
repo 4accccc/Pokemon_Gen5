@@ -91,140 +91,191 @@ static const FLOOR_RECT DATA_FloorRect[] = {
 ///=================================================================
 //ゲート座標パラメータ
 ///=================================================================
+#define GATE_F1_PY  (0)
+#define GATE_F2_PY  (10)
+#define GATE_F3_PY  (20)
+
+#define GATE_1A_PX  (16)
+#define GATE_1A_PY  (GATE_F1_PY)
+#define GATE_1A_PZ  (11)
+
+#define GATE_1B_PX  (26)
+#define GATE_1B_PY  (GATE_F1_PY)
+#define GATE_1B_PZ  (4)
+
+#define GATE_1C_PX  (8)
+#define GATE_1C_PY  (GATE_F1_PY)
+#define GATE_1C_PZ  (4)
+
+#define GATE_2A_PX  (16)
+#define GATE_2A_PY  (GATE_F2_PY)
+#define GATE_2A_PZ  (11)
+
+#define GATE_2B_PX  (3)
+#define GATE_2B_PY  (GATE_F2_PY)
+#define GATE_2B_PZ  (3)
+
+#define GATE_2C_PX  (28)
+#define GATE_2C_PY  (GATE_F2_PY)
+#define GATE_2C_PZ  (3)
+
+#define GATE_3A_PX  (20)
+#define GATE_3A_PY  (GATE_F3_PY)
+#define GATE_3A_PZ  (5)
+
+#define GATE_3B_PX  (25)
+#define GATE_3B_PY  (GATE_F3_PY)
+#define GATE_3B_PZ  (15)
+
+#define GATE_3C_PX  (11)
+#define GATE_3C_PY  (GATE_F3_PY)
+#define GATE_3C_PZ  (3)
+
+#define GATE_3D_PX  (4)
+#define GATE_3D_PY  (GATE_F3_PY)
+#define GATE_3D_PZ  (14)
+
+#define GATE_4A_PX  (15)
+#define GATE_4A_PY  (GATE_F1_PY)
+#define GATE_4A_PZ  (20)
+
+#define GATE_4B_PX  (9)
+#define GATE_4B_PY  (GATE_F1_PY)
+#define GATE_4B_PZ  (13)
 
 ///////////////////////////////////////
 //0
-#define GATE_1A_2A_PX (16)
-#define GATE_1A_2A_PY (0)
-#define GATE_1A_2A_PZ (13)
 #define GATE_1A_2A_IN_DIR (DIR_UP)
 #define GATE_1A_2A_OUT_DIR (DIR_DOWN)
 //1
-#define GATE_2A_1A_PX (16)
-#define GATE_2A_1A_PY (10)
-#define GATE_2A_1A_PZ (13)
 #define GATE_2A_1A_IN_DIR (DIR_UP)
 #define GATE_2A_1A_OUT_DIR (DIR_DOWN)
 
 ///////////////////////////////////////
 //2
-#define GATE_1A_2B_PX (GATE_1A_2A_PX+2)
-#define GATE_1A_2B_PY (GATE_1A_2A_PY)
-#define GATE_1A_2B_PZ (GATE_1A_2A_PZ-2)
 #define GATE_1A_2B_IN_DIR (DIR_LEFT)
 #define GATE_1A_2B_OUT_DIR (DIR_DOWN)
 //3
-#define GATE_2B_1A_PX (3)
-#define GATE_2B_1A_PY (10)
-#define GATE_2B_1A_PZ (5)
 #define GATE_2B_1A_IN_DIR (DIR_UP)
 #define GATE_2B_1A_OUT_DIR (DIR_RIGHT)
 
 ///////////////////////////////////////
 //4
-#define GATE_1B_3B_PX (26)
-#define GATE_1B_3B_PY (0)
-#define GATE_1B_3B_PZ (6)
 #define GATE_1B_3B_IN_DIR (DIR_UP)
 #define GATE_1B_3B_OUT_DIR (DIR_DOWN)
 //5
-#define GATE_3B_1B_PX (25)
-#define GATE_3B_1B_PY (20)
-#define GATE_3B_1B_PZ (17)
 #define GATE_3B_1B_IN_DIR (DIR_UP)
 #define GATE_3B_1B_OUT_DIR (DIR_DOWN)
 
 ///////////////////////////////////////
 //6
-#define GATE_1B_3C_PX (GATE_1B_3B_PX+2)
-#define GATE_1B_3C_PY (GATE_1B_3B_PY)
-#define GATE_1B_3C_PZ (GATE_1B_3B_PZ-2)
 #define GATE_1B_3C_IN_DIR (DIR_LEFT)
 #define GATE_1B_3C_OUT_DIR (DIR_DOWN)
 //7
-#define GATE_3C_1B_PX (11)
-#define GATE_3C_1B_PY (20)
-#define GATE_3C_1B_PZ (5)
 #define GATE_3C_1B_IN_DIR (DIR_UP)
 #define GATE_3C_1B_OUT_DIR (DIR_RIGHT)
 
 ///////////////////////////////////////
 //8
-#define GATE_1C_4B_PX (8)
-#define GATE_1C_4B_PY (0)
-#define GATE_1C_4B_PZ (6)
 #define GATE_1C_4B_IN_DIR (DIR_UP)
 #define GATE_1C_4B_OUT_DIR (DIR_UP)
 //9 4B_1C
-#define GATE_4B_1C_PX (9)
-#define GATE_4B_1C_PY (0)
-#define GATE_4B_1C_PZ (13)
 
 ///////////////////////////////////////
 //10
-#define GATE_2C_3A_PX (28)
-#define GATE_2C_3A_PY (10)
-#define GATE_2C_3A_PZ (5)
 #define GATE_2C_3A_IN_DIR (DIR_UP)
 #define GATE_2C_3A_OUT_DIR (DIR_DOWN)
 //11
-#define GATE_3A_2C_PX (20)
-#define GATE_3A_2C_PY (20)
-#define GATE_3A_2C_PZ (7)
 #define GATE_3A_2C_IN_DIR (DIR_UP)
 #define GATE_3A_2C_OUT_DIR (DIR_DOWN)
 
 ///////////////////////////////////////
 //12
-#define GATE_3C_3D_PX (13)
-#define GATE_3C_3D_PY (20)
-#define GATE_3C_3D_PZ (3)
 #define GATE_3C_3D_IN_DIR (DIR_LEFT)
 #define GATE_3C_3D_OUT_DIR (DIR_LEFT)
 //13
-#define GATE_3D_3C_PX (2)
-#define GATE_3D_3C_PY (20)
-#define GATE_3D_3C_PZ (14)
 #define GATE_3D_3C_IN_DIR (DIR_RIGHT)
 #define GATE_3D_3C_OUT_DIR (DIR_RIGHT)
 
 ///////////////////////////////////////
 //14
-#define GATE_3D_4A_PX (4)
-#define GATE_3D_4A_PY (20)
-#define GATE_3D_4A_PZ (16)
 #define GATE_3D_4A_IN_DIR (DIR_UP)
 #define GATE_3D_4A_OUT_DIR (DIR_UP)
 //15 4A_3D
-#define GATE_4A_3D_PX (15)
-#define GATE_4A_3D_PY (0)
-#define GATE_4A_3D_PZ (20)
 
 static const GATE_PARAM DATA_GateParam[] = {
   //0
-  { NARC_gym_insect_null_1a_2a_bin, GATE_1A_2A_IN_DIR, GATE_1A_2A_OUT_DIR, MAP_NORMAL, FALSE, 0, { GATE_1A_2A_PX, GATE_1A_2A_PY, GATE_1A_2A_PZ } },
-  { NARC_gym_insect_null_1a_2a_bin, GATE_2A_1A_IN_DIR, GATE_2A_1A_OUT_DIR, MAP_NORMAL, TRUE,  0, { GATE_2A_1A_PX, GATE_2A_1A_PY, GATE_2A_1A_PZ } },
+  { NARC_gym_insect_null_1a_2a_bin, GATE_1A_2A_IN_DIR, GATE_1A_2A_OUT_DIR, MAP_NORMAL, FALSE, 0,
+    { GATE_1A_PX, GATE_1A_PY, GATE_1A_PZ },
+    { GATE_2A_PX, GATE_2A_PY, GATE_2A_PZ },
+  },
+  { NARC_gym_insect_null_1a_2a_bin, GATE_2A_1A_IN_DIR, GATE_2A_1A_OUT_DIR, MAP_NORMAL, TRUE,  0,
+    { GATE_2A_PX, GATE_2A_PY, GATE_2A_PZ },
+    { GATE_1A_PX, GATE_1A_PY, GATE_1A_PZ },
+  },
   //2
-  { NARC_gym_insect_null_1a_2b_bin, GATE_1A_2B_IN_DIR, GATE_1A_2B_OUT_DIR, MAP_NORMAL, FALSE, 0, { GATE_1A_2B_PX, GATE_1A_2B_PY, GATE_1A_2B_PZ } },
-  { NARC_gym_insect_null_1a_2b_bin, GATE_2B_1A_IN_DIR, GATE_2B_1A_OUT_DIR, MAP_NORMAL, TRUE, 0,  { GATE_2B_1A_PX, GATE_2B_1A_PY, GATE_2B_1A_PZ } },
+  { NARC_gym_insect_null_1a_2b_bin, GATE_1A_2B_IN_DIR, GATE_1A_2B_OUT_DIR, MAP_NORMAL, FALSE, 0,
+    { GATE_1A_PX, GATE_1A_PY, GATE_1A_PZ },
+    { GATE_2B_PX, GATE_2B_PY, GATE_2B_PZ },
+  },
+  { NARC_gym_insect_null_1a_2b_bin, GATE_2B_1A_IN_DIR, GATE_2B_1A_OUT_DIR, MAP_NORMAL, TRUE, 0,
+    { GATE_2B_PX, GATE_2B_PY, GATE_2B_PZ },
+    { GATE_1A_PX, GATE_1A_PY, GATE_1A_PZ },
+  },
   //4
-  { NARC_gym_insect_null_1b_3b_bin, GATE_1B_3B_IN_DIR, GATE_1B_3B_OUT_DIR, MAP_NORMAL, FALSE, 0, { GATE_1B_3B_PX, GATE_1B_3B_PY, GATE_1B_3B_PZ } },
-  { NARC_gym_insect_null_1b_3b_bin, GATE_3B_1B_IN_DIR, GATE_3B_1B_OUT_DIR, MAP_NORMAL, TRUE, 0,  { GATE_3B_1B_PX, GATE_3B_1B_PY, GATE_3B_1B_PZ } },
+  { NARC_gym_insect_null_1b_3b_bin, GATE_1B_3B_IN_DIR, GATE_1B_3B_OUT_DIR, MAP_NORMAL, FALSE, 0,
+    { GATE_1B_PX, GATE_1B_PY, GATE_1B_PZ },
+    { GATE_3B_PX, GATE_3B_PY, GATE_3B_PZ },
+  },
+  { NARC_gym_insect_null_1b_3b_bin, GATE_3B_1B_IN_DIR, GATE_3B_1B_OUT_DIR, MAP_NORMAL, TRUE, 0,
+    { GATE_3B_PX, GATE_3B_PY, GATE_3B_PZ },
+    { GATE_1B_PX, GATE_1B_PY, GATE_1B_PZ },
+  },
   //6
-  { NARC_gym_insect_null_1b_3c_bin, GATE_1B_3C_IN_DIR, GATE_1B_3C_OUT_DIR, MAP_NORMAL, FALSE, 0, { GATE_1B_3C_PX, GATE_1B_3C_PY, GATE_1B_3C_PZ } },
-  { NARC_gym_insect_null_1b_3c_bin, GATE_3C_1B_IN_DIR, GATE_3C_1B_OUT_DIR, MAP_NORMAL, TRUE, 0,  { GATE_3C_1B_PX, GATE_3C_1B_PY, GATE_3C_1B_PZ } },
+  { NARC_gym_insect_null_1b_3c_bin, GATE_1B_3C_IN_DIR, GATE_1B_3C_OUT_DIR, MAP_NORMAL, FALSE, 0,
+    { GATE_1B_PX, GATE_1B_PY, GATE_1B_PZ },
+    { GATE_3C_PX, GATE_3C_PY, GATE_3C_PZ },
+  },
+  { NARC_gym_insect_null_1b_3c_bin, GATE_3C_1B_IN_DIR, GATE_3C_1B_OUT_DIR, MAP_NORMAL, TRUE, 0,
+    { GATE_3C_PX, GATE_3C_PY, GATE_3C_PZ },
+    { GATE_1B_PX, GATE_1B_PY, GATE_1B_PZ },
+  },
   //8
-  { NARC_gym_insect_null_1c_4b_bin, GATE_1C_4B_IN_DIR, GATE_1C_4B_OUT_DIR, MAP_NORMAL, FALSE, 1, { GATE_1C_4B_PX, GATE_1C_4B_PY, GATE_1C_4B_PZ } },
-  { NARC_gym_insect_null_1c_4b_bin, DIR_NOT, DIR_NOT, MAP_LEADER, TRUE, 0,  { GATE_4B_1C_PX, GATE_4B_1C_PY, GATE_4B_1C_PZ } },
+  { NARC_gym_insect_null_1c_4b_bin, GATE_1C_4B_IN_DIR, GATE_1C_4B_OUT_DIR, MAP_NORMAL, FALSE, 1,
+    { GATE_1C_PX, GATE_1C_PY, GATE_1C_PZ },
+    { 0, 0, 0 },
+  },
+  { NARC_gym_insect_null_1c_4b_bin, DIR_NOT, DIR_NOT, MAP_LEADER, TRUE, 0,
+    { GATE_4B_PX, GATE_4B_PY, GATE_4B_PZ },
+    { GATE_1C_PX, GATE_1C_PY, GATE_1C_PZ },
+  },
   //10
-  { NARC_gym_insect_null_2c_3a_bin, GATE_2C_3A_IN_DIR, GATE_2C_3A_OUT_DIR, MAP_NORMAL, FALSE, 0, { GATE_2C_3A_PX, GATE_2C_3A_PY, GATE_2C_3A_PZ } },
-  { NARC_gym_insect_null_2c_3a_bin, GATE_3A_2C_IN_DIR, GATE_3A_2C_OUT_DIR, MAP_NORMAL, TRUE, 0,  { GATE_3A_2C_PX, GATE_3A_2C_PY, GATE_3A_2C_PZ } },
+  { NARC_gym_insect_null_2c_3a_bin, GATE_2C_3A_IN_DIR, GATE_2C_3A_OUT_DIR, MAP_NORMAL, FALSE, 0,
+    { GATE_2C_PX, GATE_2C_PY, GATE_2C_PZ },
+    { GATE_3A_PX, GATE_3A_PY, GATE_3A_PZ },
+  },
+  { NARC_gym_insect_null_2c_3a_bin, GATE_3A_2C_IN_DIR, GATE_3A_2C_OUT_DIR, MAP_NORMAL, TRUE, 0,
+    { GATE_3A_PX, GATE_3A_PY, GATE_3A_PZ },
+    { GATE_2C_PX, GATE_2C_PY, GATE_2C_PZ },
+  },
   //12
-  { NARC_gym_insect_null_3c_3d_bin, GATE_3C_3D_IN_DIR, GATE_3C_3D_OUT_DIR, MAP_NORMAL, FALSE, 0, { GATE_3C_3D_PX, GATE_3C_3D_PY, GATE_3C_3D_PZ } },
-  { NARC_gym_insect_null_3c_3d_bin, GATE_3D_3C_IN_DIR, GATE_3D_3C_OUT_DIR, MAP_NORMAL, TRUE, 0, { GATE_3D_3C_PX, GATE_3D_3C_PY, GATE_3D_3C_PZ } },
+  { NARC_gym_insect_null_3c_3d_bin, GATE_3C_3D_IN_DIR, GATE_3C_3D_OUT_DIR, MAP_NORMAL, FALSE, 0,
+    { GATE_3C_PX, GATE_3C_PY, GATE_3C_PZ },
+    { GATE_3D_PX, GATE_3D_PY, GATE_3D_PZ },
+  },
+  { NARC_gym_insect_null_3c_3d_bin, GATE_3D_3C_IN_DIR, GATE_3D_3C_OUT_DIR, MAP_NORMAL, TRUE, 0,
+    { GATE_3D_PX, GATE_3D_PY, GATE_3D_PZ },
+    { GATE_3C_PX, GATE_3C_PY, GATE_3C_PZ },
+  },
   //14
-  { NARC_gym_insect_null_3d_4a_bin, GATE_3D_4A_IN_DIR, GATE_3D_4A_OUT_DIR, MAP_NORMAL, FALSE, 1, { GATE_3D_4A_PX, GATE_3D_4A_PY, GATE_3D_4A_PZ } },
-  { NARC_gym_insect_null_3d_4a_bin, DIR_NOT, DIR_NOT, MAP_LEADER, TRUE, 1, { GATE_4A_3D_PX, GATE_4A_3D_PY, GATE_4A_3D_PZ } },
+  { NARC_gym_insect_null_3d_4a_bin, GATE_3D_4A_IN_DIR, GATE_3D_4A_OUT_DIR, MAP_NORMAL, FALSE, 1,
+    { GATE_3D_PX, GATE_3D_PY, GATE_3D_PZ },
+    { 0, 0, 0 },
+  },
+  { NARC_gym_insect_null_3d_4a_bin, DIR_NOT, DIR_NOT, MAP_LEADER, TRUE, 1,
+    { GATE_4A_PX, GATE_4A_PY, GATE_4A_PZ },
+    { GATE_3D_PX, GATE_3D_PY, GATE_3D_PZ },
+  },
 };
 
 #define GATE_PARAM_NUM  (NELEMS(DATA_GateParam))
@@ -234,12 +285,12 @@ static const GATE_PARAM DATA_GateParam[] = {
 ///=================================================================
 #define GYM_INSECT_UNIT_IDX (0)
 
-#define OBJ_COCCON_1C_GX (8)
-#define OBJ_COCCON_1C_GY (0)
-#define OBJ_COCCON_1C_GZ (4)
-#define OBJ_COCCON_3B_GX (GATE_3B_1B_PX)
-#define OBJ_COCCON_3B_GY (GATE_3B_1B_PY)
-#define OBJ_COCCON_3B_GZ (GATE_3B_1B_PZ-2)
+#define OBJ_COCCON_1C_GX (GATE_1C_PX)
+#define OBJ_COCCON_1C_GY (GATE_1C_PY)
+#define OBJ_COCCON_1C_GZ (GATE_1C_PZ)
+#define OBJ_COCCON_3B_GX (GATE_3B_PX)
+#define OBJ_COCCON_3B_GY (GATE_3B_PY)
+#define OBJ_COCCON_3B_GZ (GATE_3B_PZ)
 
 static const POINT DATA_ObjCocconPosTbl[] = {
  { OBJ_COCCON_1C_GX, OBJ_COCCON_1C_GY, OBJ_COCCON_1C_GZ },

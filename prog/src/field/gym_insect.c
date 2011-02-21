@@ -82,7 +82,8 @@ typedef struct GATE_PARAM_tag{
   u8  map_id:1;
   u8  reverse:1;
   u8  scr_ofs:6;
-  POINT point;
+  POINT ip;
+  POINT op;
 }GATE_PARAM;
 
 //ジム内部中の一時ワーク
@@ -264,9 +265,10 @@ GMEVENT *GYM_INSECT_CreateGateInEvent(GAMESYS_WORK *gsys)
 
     dir = MMDL_GetDirDisp( wk->p_mmdl );
     
-    MMDL_GetGridPos( wk->p_mmdl, &pos );
-    f_pos = pos;
-    MMDL_TOOL_AddDirGrid( dir, &f_pos.gx, &f_pos.gz, 1);
+    MMDL_GetGridPos( wk->p_mmdl, &f_pos );
+    MMDL_TOOL_AddDirGrid( dir, &f_pos.gx, &f_pos.gz, 1);  //1歩前
+    pos = f_pos;
+    MMDL_TOOL_AddDirGrid( dir, &pos.gx, &pos.gz, 1);  //2歩前
 
     for(id = 0;id < GATE_PARAM_NUM;id++){
       const GATE_PARAM* gp = &DATA_GateParam[id];
@@ -277,18 +279,18 @@ GMEVENT *GYM_INSECT_CreateGateInEvent(GAMESYS_WORK *gsys)
       if( id == GATE_ID_1C_4B && !EVENTWORK_CheckEventFlag( wk->ev_work, FE_C03GYM0101_COCCON_01 )){
         continue;
       }
-      if( gp->in_dir != DIR_NOT ){
+      if( gp->map_id == MAP_NORMAL ){
         if( gp->in_dir != dir ||
-            gp->point.x != pos.gx ||
-            gp->point.y != pos.gy ||
-            gp->point.z != pos.gz){
+            gp->ip.x != pos.gx ||
+            gp->ip.y != pos.gy ||
+            gp->ip.z != pos.gz){
           continue;
         }
         break;
-      }else{
-       if(  gp->point.x != f_pos.gx ||
-            gp->point.y != f_pos.gy ||
-            gp->point.z != f_pos.gz){
+      }else{  //MAP_LEADER
+       if(  gp->ip.x != f_pos.gx ||
+            gp->ip.y != f_pos.gy ||
+            gp->ip.z != f_pos.gz){
           continue;
         }
         break;
@@ -533,6 +535,13 @@ static void gatemv_IcaAnmSet( GYM_INSECT_TMP* wk, EVWORK_GATE_MOVE* evwk )
 }
 static void gatemv_IcaAnmFree( GYM_INSECT_TMP* wk, EVWORK_GATE_MOVE* evwk )
 {
+  if( (evwk->gate_prm->op.x+evwk->gate_prm->op.y+evwk->gate_prm->op.z) != 0){
+    VecFx32 vec;
+    //自機座標セット
+    MMDL_TOOL_GetCenterGridPos( evwk->gate_prm->op.x, evwk->gate_prm->op.z, &vec );
+    vec.y = GRID_SIZE_FX32( evwk->gate_prm->op.y );
+    FIELD_PLAYER_SetPos( wk->f_player, &vec );
+  }
   PMSND_StopSE();
   FLD_EXP_OBJ_SetVanish( wk->exp_obj, GYM_INSECT_UNIT_IDX, OBJ_SPHERE, TRUE );
   ICA_ANIME_Delete( evwk->ica_anm );
@@ -774,15 +783,15 @@ static void deb_Move( GYM_INSECT_TMP* wk, FIELDMAP_WORK* fieldWork )
       FIELD_PLAYER_GetPos( wk->f_player, &pos );
       if (GFL_UI_KEY_GetCont() & PAD_BUTTON_START){
         if (GFL_UI_KEY_GetCont() & PAD_BUTTON_B){
-          pos.y -=  10*FIELD_CONST_GRID_FX32_SIZE;
-        }else{
-          pos.y +=  10*FIELD_CONST_GRID_FX32_SIZE;
-        }
-      }else{
-        if (GFL_UI_KEY_GetCont() & PAD_BUTTON_B){
           pos.y -=  FIELD_CONST_GRID_FX32_SIZE;
         }else{
           pos.y +=  FIELD_CONST_GRID_FX32_SIZE;
+        }
+      }else{
+        if (GFL_UI_KEY_GetCont() & PAD_BUTTON_B){
+          pos.y -=  10*FIELD_CONST_GRID_FX32_SIZE;
+        }else{
+          pos.y +=  10*FIELD_CONST_GRID_FX32_SIZE;
         }
       }
       FIELD_PLAYER_SetPos( wk->f_player, &pos );
