@@ -2921,6 +2921,9 @@ static GFL_PROC_RESULT IrcBattleMatchProcInit( GFL_PROC * proc, int * seq, void 
     IRC_BATTLE_MATCH *pWork = GFL_PROC_AllocWork( proc, sizeof( IRC_BATTLE_MATCH ), HEAPID_IRCBATTLE );
     GFL_STD_MemClear(pWork, sizeof(IRC_BATTLE_MATCH));
     pWork->pBattleWork = pwk;
+#ifdef BUGFIX_AF_SYSTEM200_20110221
+    pWork->pBattleWork->isErr = FALSE;
+#endif //BUGFIX_AF_SYSTEM200_20110221
     pWork->heapID = HEAPID_IRCBATTLE;
     pWork->selectType =  pWork->pBattleWork->selectType; //EVENT_IrcBattleGetType((EVENT_IRCBATTLE_WORK*) pwk);
 
@@ -2978,6 +2981,9 @@ static GFL_PROC_RESULT IrcBattleMatchProcMain( GFL_PROC * proc, int * seq, void 
   if(NET_ERR_CHECK_NONE != NetErr_App_CheckError()){
     NetErr_App_ReqErrorDisp();
     pWork->pBattleWork->selectType = EVENTIRCBTL_ENTRYMODE_EXIT;
+#ifdef BUGFIX_AF_SYSTEM200_20110221
+    pWork->pBattleWork->isErr = TRUE;
+#endif //BUGFIX_AF_SYSTEM200_20110221
     retCode = GFL_PROC_RES_FINISH;
     WIPE_SetBrightness(WIPE_DISP_MAIN,WIPE_FADE_BLACK);
     WIPE_SetBrightness(WIPE_DISP_SUB,WIPE_FADE_BLACK);

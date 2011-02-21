@@ -380,8 +380,9 @@ ev_musical_recept_comm_core:
           IF $SCWK_ANSWER == TRUE THEN //接続成功
             $isLoop2 = FALSE
           ENDIF
-
-          _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_CALL_ERROR, 0, 0, SCWK_ANSWER )
+          
+          //BUGFIX_AF_SYSTEM200_20110221
+          _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_CALL_ERROR_RECEPT, 0, 0, SCWK_ANSWER )
           IF $SCWK_ANSWER == TRUE THEN //通信エラー発生
             _CALL ev_musical_exit_comm_common
             _RET
@@ -503,15 +504,17 @@ _RET
 /*            共通終了処理               */
 /*************************************************************/
 ev_musical_exit_common:
-  _MUSICAL_TOOLS( MUSICAL_TOOL_EXIT, 0,0,0 )
-  _REBOOT_BEACON_SEARCH()
-
-  _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_CALL_ERROR, 0, 0, SCWK_ANSWER )
+  //BUGFIX_AF_SYSTEM200_20110221
+  _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_CALL_ERROR_RECEPT, 0, 0, SCWK_ANSWER )
   IF $SCWK_ANSWER == FALSE THEN //通信エラー発生してない
     _BALLOONWIN_OBJMSG_POS( msg_musical_test_03, SCWK_TARGET_OBJID, POS_DOWN )
     _LAST_KEYWAIT()
     _BALLOONWIN_CLOSE()
   ENDIF
+
+  _MUSICAL_TOOLS( MUSICAL_TOOL_EXIT, 0,0,0 )
+  _REBOOT_BEACON_SEARCH()
+
 _RET
 
 /*************************************************************/

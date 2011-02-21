@@ -111,6 +111,8 @@
 #define MUSICAL_TOOL_COMM_CHECK_ERROR (19) //エラーチェック
 #define MUSICAL_TOOL_IS_COMM (20) //通信か？
 #define MUSICAL_TOOL_COMM_CALL_ERROR (21) //エラーチェック＆呼び出し
+//BUGFIX_AF_SYSTEM200_20110221
+#define MUSICAL_TOOL_COMM_CALL_ERROR_RECEPT (22) //エラーチェック＆呼び出し(受付処理内容)
 
 #define MUSICAL_TOOL_PRINT (100) //デバッグ出力
 

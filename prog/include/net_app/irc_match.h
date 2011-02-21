@@ -44,6 +44,9 @@ typedef struct {
   u8 MultiNo[4];
   int selectType;             ///< EVENTIRCBTL_IBMODE_ENTRYの事 必須
   GFLNetInitializeStruct *netInitWork;  //ネット初期化構造体：ミュージカル用
+#ifdef BUGFIX_AF_SYSTEM200_20110221
+  BOOL isErr;
+#endif //BUGFIX_AF_SYSTEM200_20110221
 } IRC_MATCH_WORK;
 
 

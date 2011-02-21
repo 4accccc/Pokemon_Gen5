@@ -963,6 +963,9 @@ VMCMD_RESULT EvCmdMusicalTools( VMHANDLE *core, void *wk )
       musScriptWork->scriptRet = ret_wk;
       musScriptWork->irEntryWork.gamedata = gdata;
       musScriptWork->irEntryWork.netInitWork = MUS_COMM_GetNetInitStruct();
+#ifdef BUGFIX_AF_SYSTEM200_20110221
+      musScriptWork->irEntryWork.isErr = FALSE;
+#endif //BUGFIX_AF_SYSTEM200_20110221
       if( val1 == 0 )
       {
         musScriptWork->irEntryWork.selectType = EVENTIRCBTL_ENTRYMODE_MUSICAL_LEADER;
@@ -1004,13 +1007,24 @@ VMCMD_RESULT EvCmdMusicalTools( VMHANDLE *core, void *wk )
     break;
 
   case MUSICAL_TOOL_COMM_CALL_ERROR:
+#ifdef BUGFIX_AF_SYSTEM200_20110221
+  case MUSICAL_TOOL_COMM_CALL_ERROR_RECEPT: //musScriptWork‚ð“Ç‚Ýž‚Þ‚½‚ß•Ê’è‹`ì¬
+#endif
     if( NetErr_App_CheckError() != NET_ERR_CHECK_NONE )
     {
       GAMESYSTEM_SetFieldCommErrorReq( gsys , TRUE );
       //NetErr_App_ReqErrorDisp();
       *ret_wk = TRUE;
     }
-    else
+#ifdef BUGFIX_AF_SYSTEM200_20110221
+    else 
+    if( musScriptWork != NULL && 
+        musScriptWork->irEntryWork.isErr == TRUE )
+    {
+      *ret_wk = TRUE;
+    }
+#endif //BUGFIX_AF_SYSTEM200_20110221
+   else
     {
       *ret_wk = FALSE;
     }

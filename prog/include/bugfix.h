@@ -1419,3 +1419,28 @@ BGMならびにSEが再生されません。"
 #define BUGFIX_AF_SYSTEM325_20110219
 
 
+/*  SYSTEM200 【ミュージカルの赤外線通信の挙動について。】
+ *  
+ *  バグ内容：
+ *    ミュージカルの赤外線通信を行った際、親機・子機がマッチングし強度アイコンがワイヤレス通信に切り替わった瞬間に親機の接続を切ると、子機側にて通信エラーが表示されますが、エラーテキストを送ると
+ *    『赤外線通信　および
+ *    　ＤＳワイヤレス通信を　開始しますか？』
+ *    が表示され、再度赤外線通信を開始することが出来ますが仕様でしょうか。
+ *    
+ *
+ *  原因：
+ *    エラー処理がワイヤレスの場合スクリプト内で行われていたのに、赤外線は別のprocで処理していたため、
+ *    ミュージカル側でエラーを拾えなかった。
+ *    irc_matchでエラーをフラグとして取得するように修正
+ *
+ *  修正リビジョン：45874
+ *  修正ファイル  ：net_app/irc_match/ircbattlematch.c
+ *                  field/scrcmd_musical.c
+ *                  resource/fldmapdata/script/musical_scr.ev
+ *                  resource/fldmapdata/script/musical_src_local.h
+ *                  net_app/irc_match.h
+ *
+ *
+ */
+#define BUGFIX_AF_SYSTEM200_20110221
+
