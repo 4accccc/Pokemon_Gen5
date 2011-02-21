@@ -1,0 +1,45 @@
+//======================================================================
+/**
+ *	@file		scrcmd_resort_table.cdat
+ *	@brief  レゾナンスリゾート用スクリプトコマンドテーブル
+ *	@author	Toru=Nagihashi
+ *	@data		2011.02.21
+ *
+ */
+//======================================================================
+//======================================================================
+//  命令シンボル宣言
+//======================================================================
+
+  //スクリプトコマンドテーブル開始
+  INIT_OVERLAY_CMD( resort )
+
+  //バトルサブウェイ関連
+  DEF_CMD( EvCmdResortTalkStart, EV_SEQ_RESORT_TALK_START )
+  DEF_CMD( EvCmdResortTalkEnd, EV_SEQ_RESORT_TALK_END )
+  DEF_CMD( EvCmdResortGetData, EV_SEQ_RESORT_GET_DATA )
+  DEF_CMD( EvCmdResortGetMsgID, EV_SEQ_RESORT_GET_MSGID )
+  DEF_CMD( EvCmdResortAction, EV_SEQ_RESORT_ACTION )
+  DEF_CMD( EvCmdResortJobChange, EV_SEQ_RESORT_JOB_CHANGE )
+  DEF_CMD( EvCmdResortKeepPeople, EV_SEQ_RESORT_KEEP_PEOPLE)
+  DEF_CMD( EvCmdResortSetWord, EV_SEQ_RESORT_SET_WORD)
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  
+  END_CMD
+  //スクリプトコマンドテーブル終了
