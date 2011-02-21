@@ -3,7 +3,7 @@
 # @file  uniq_script.list
 # @bfief 非マップ依存のスクリプトリスト
 # @author  tamada GAMEFREAK inc.
-# @date  2011 02/02 (Wed) 13:46
+# @date  2011 02/21 (Mon) 20:26
 #
 #  このファイルはコンバータにより自動生成されています
 #
@@ -57,7 +57,9 @@ UNIQ_SCRIPTFILES = \
 	tamagetake_scr.ev \
 	tv_scr.ev \
 	pair_scr.ev \
-	medal_scr.ev 
+	medal_scr.ev \
+	wbt_lobby.ev \
+	wbt_hall.ev 
 
 #イベントデータで指定され直接呼ばれるスクリプトファイル
 UNIQ_TOP_EVENT_SCRFILES = \
@@ -99,7 +101,9 @@ UNIQ_TOP_EVENT_SCRFILES = \
 	tamagetake_scr.ev \
 	tv_scr.ev \
 	pair_scr.ev \
-	medal_scr.ev 
+	medal_scr.ev \
+	wbt_lobby.ev \
+	wbt_hall.ev 
 
 #プログラムやスクリプトから呼ばれるスクリプトファイル
 UNIQ_SUB_EVENT_SCRFILES = \

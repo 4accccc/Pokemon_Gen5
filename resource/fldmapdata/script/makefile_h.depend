@@ -144,6 +144,12 @@ pair_scr_def.h: pair_scr.ev
 medal_scr_def.h: medal_scr.ev
 	$(EV_DEF) medal_scr.ev $(SCR_OFFS_ID_H)
 
+wbt_lobby_def.h: wbt_lobby.ev
+	$(EV_DEF) wbt_lobby.ev $(SCR_OFFS_ID_H)
+
+wbt_hall_def.h: wbt_hall.ev
+	$(EV_DEF) wbt_hall.ev $(SCR_OFFS_ID_H)
+
 bc10_def.h: bc10.ev
 	$(EV_DEF) bc10.ev $(SCR_OFFS_ID_H)
 
