@@ -10,7 +10,9 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 //system
 #include <gflib.h>
+#include "net_app/union/union_beacon_tool.h"
 
+//mine
 #include "resort_map.h"
 
 //outer
@@ -29,7 +31,7 @@
 typedef struct
 {
   void (*SetupMmdHeader)( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder );
-  u32 (*GetData)( const RESORT_PEOPLE *cp_wk, RESORT_PEOPLE_PARAM param );
+  u32 (*GetData)( const RESORT_PEOPLE *cp_wk, RESORT_PEOPLE_PARAM param, void *p_ret_adrs );
   void (*SetData)( RESORT_PEOPLE *p_wk, RESORT_PEOPLE_PARAM param, u32 data );
 } RESORT_PEOPLE_FUNCTION;
 
@@ -66,32 +68,32 @@ typedef struct
 //=====================================
 //住民
 static void Resident_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder );
-static u32 Resident_GetData( const RESORT_PEOPLE *cp_wk, RESORT_PEOPLE_PARAM param );
+static u32 Resident_GetData( const RESORT_PEOPLE *cp_wk, RESORT_PEOPLE_PARAM param, void *p_ret_adrs );
 static void Resident_SetData( RESORT_PEOPLE *p_wk, RESORT_PEOPLE_PARAM param, u32 data );
 
 //代理人
 static void Proxy_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder );
-static u32 Proxy_GetData( const RESORT_PEOPLE *cp_wk, RESORT_PEOPLE_PARAM param );
+static u32 Proxy_GetData( const RESORT_PEOPLE *cp_wk, RESORT_PEOPLE_PARAM param, void *p_ret_adrs );
 static void Proxy_SetData( RESORT_PEOPLE *p_wk, RESORT_PEOPLE_PARAM param, u32 data );
 
 //観光客
 static void Tourist_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder );
-static u32 Tourist_GetData( const RESORT_PEOPLE *cp_wk, RESORT_PEOPLE_PARAM param );
+static u32 Tourist_GetData( const RESORT_PEOPLE *cp_wk, RESORT_PEOPLE_PARAM param, void *p_ret_adrs );
 static void Tourist_SetData( RESORT_PEOPLE *p_wk, RESORT_PEOPLE_PARAM param, u32 data );
 
 //滞在者
 static void Visitor_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder );
-static u32 Visitor_GetData( const RESORT_PEOPLE *cp_wk, RESORT_PEOPLE_PARAM param );
+static u32 Visitor_GetData( const RESORT_PEOPLE *cp_wk, RESORT_PEOPLE_PARAM param, void *p_ret_adrs );
 static void Visitor_SetData( RESORT_PEOPLE *p_wk, RESORT_PEOPLE_PARAM param, u32 data );
 
 //秘書
 static void Secretary_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder );
-static u32 Secretary_GetData( const RESORT_PEOPLE *cp_wk, RESORT_PEOPLE_PARAM param );
+static u32 Secretary_GetData( const RESORT_PEOPLE *cp_wk, RESORT_PEOPLE_PARAM param, void *p_ret_adrs );
 static void Secretary_SetData( RESORT_PEOPLE *p_wk, RESORT_PEOPLE_PARAM param, u32 data );
 
 //NPC
 static void Npc_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder );
-static u32 Npc_GetData( const RESORT_PEOPLE *cp_wk, RESORT_PEOPLE_PARAM param );
+static u32 Npc_GetData( const RESORT_PEOPLE *cp_wk, RESORT_PEOPLE_PARAM param, void *p_ret_adrs );
 static void Npc_SetData( RESORT_PEOPLE *p_wk, RESORT_PEOPLE_PARAM param, u32 data );
 
 //行動関数
@@ -341,13 +343,14 @@ void RESORT_PEOPLE_SetData( RESORT_PEOPLE *p_wk, RESORT_PEOPLE_PARAM param, u32 
  *
  *	@param	const RESORT_PEOPLE *cp_wk ワーク
  *	@param	param   引数
+ *	@param  p_ret_adrs バッファ
  *
  *	@return　データ
  */
 //-----------------------------------------------------------------------------
-u32 RESORT_PEOPLE_GetData( const RESORT_PEOPLE *cp_wk, RESORT_PEOPLE_PARAM param )
+u32 RESORT_PEOPLE_GetData( const RESORT_PEOPLE *cp_wk, RESORT_PEOPLE_PARAM param, void *p_ret_adrs )
 {
-  return cp_wk->cp_function->GetData( cp_wk, param );
+  return cp_wk->cp_function->GetData( cp_wk, param, p_ret_adrs );
 }
 //----------------------------------------------------------------------------
 /**
@@ -400,7 +403,7 @@ static void Resident_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder 
  *	@brief  人物データ設定・取得
  */
 //-----------------------------------------------------------------------------
-static u32 Resident_GetData( const RESORT_PEOPLE *cp_wk, RESORT_PEOPLE_PARAM param )
+static u32 Resident_GetData( const RESORT_PEOPLE *cp_wk, RESORT_PEOPLE_PARAM param, void *p_ret_adrs )
 {
   const RESORT_RESIDENT_DATA *cp_data = cp_wk->p_data_adrs;
   return 0;//TODO
@@ -431,7 +434,7 @@ static void Proxy_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder )
  *	@brief  人物データ取得・設定
  */
 //-----------------------------------------------------------------------------
-static u32 Proxy_GetData( const RESORT_PEOPLE *cp_wk, RESORT_PEOPLE_PARAM param )
+static u32 Proxy_GetData( const RESORT_PEOPLE *cp_wk, RESORT_PEOPLE_PARAM param, void *p_ret_adrs )
 {
   return 0; //TODO
 }
@@ -453,7 +456,8 @@ static void Proxy_SetData( RESORT_PEOPLE *p_wk, RESORT_PEOPLE_PARAM param, u32 d
 static void Tourist_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder )
 {
   RESORT_RECV_DATA *p_data = p_wk->p_data_adrs;
-  p_hedder->obj_code = GIRL2; //TODO
+  u8 trainer_view = RESORT_RECV_DATA_GetData( p_data, RESORT_RECV_DATA_PARAM_TRAINERVIEW, NULL );
+  p_hedder->obj_code = UnionView_GetObjCode( trainer_view );
   p_hedder->move_code = MV_DOWN; //TODO
   p_hedder->event_id = RESORT_BINARY_PEOPLE_DATA_GetScrID( p_wk->cp_binary );
 }
@@ -462,17 +466,24 @@ static void Tourist_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder )
  *	@brief  人物データ取得・設定
  */
 //-----------------------------------------------------------------------------
-static u32 Tourist_GetData( const RESORT_PEOPLE *cp_wk, RESORT_PEOPLE_PARAM param )
+static u32 Tourist_GetData( const RESORT_PEOPLE *cp_wk, RESORT_PEOPLE_PARAM param, void *p_ret_adrs )
 {
   const RESORT_RECV_DATA *cp_data = cp_wk->p_data_adrs;
   switch( param )
   {
   case RESORT_PEOPLE_PARAM_PEOPLEID:
-    return RESORT_RECV_DATA_GetData( cp_data, RESORT_RECV_DATA_PARAM_PEOPLE_ID );
+    return RESORT_RECV_DATA_GetData( cp_data, RESORT_RECV_DATA_PARAM_PEOPLE_ID, NULL );
   case RESORT_PEOPLE_PARAM_PLACEID:
-    return RESORT_RECV_DATA_GetData( cp_data, RESORT_RECV_DATA_PARAM_PLACE_ID );
+    return RESORT_RECV_DATA_GetData( cp_data, RESORT_RECV_DATA_PARAM_PLACE_ID, NULL );
   case RESORT_PEOPLE_PARAM_LOCK:
-    return RESORT_RECV_DATA_GetData( cp_data , RESORT_RECV_DATA_PARAM_LOCK );
+    return RESORT_RECV_DATA_GetData( cp_data , RESORT_RECV_DATA_PARAM_LOCK, NULL );
+  case RESORT_PEOPLE_PARAM_SEX:
+    return RESORT_RECV_DATA_GetData( cp_data , RESORT_RECV_DATA_PARAM_SEX, NULL );
+  case RESORT_PEOPLE_PARAM_TRAINERVIEW:
+    return RESORT_RECV_DATA_GetData( cp_data , RESORT_RECV_DATA_PARAM_TRAINERVIEW, NULL );
+  case RESORT_PEOPLE_PARAM_NAME:
+    RESORT_RECV_DATA_GetData( cp_data , RESORT_RECV_DATA_PARAM_NAME, p_ret_adrs );
+    return 0;
   default:
     GF_ASSERT(0);
     return 0;
@@ -519,7 +530,7 @@ static void Visitor_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder )
  *	@brief  人物データ取得・設定
  */
 //-----------------------------------------------------------------------------
-static u32 Visitor_GetData( const RESORT_PEOPLE *cp_wk, RESORT_PEOPLE_PARAM param )
+static u32 Visitor_GetData( const RESORT_PEOPLE *cp_wk, RESORT_PEOPLE_PARAM param, void *p_ret_adrs )
 {
   return 0;//TODO
 }
@@ -550,7 +561,7 @@ static void Secretary_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder
  *	@brief  人物データ取得・設定
  */
 //-----------------------------------------------------------------------------
-static u32 Secretary_GetData( const RESORT_PEOPLE *cp_wk, RESORT_PEOPLE_PARAM param )
+static u32 Secretary_GetData( const RESORT_PEOPLE *cp_wk, RESORT_PEOPLE_PARAM param, void *p_ret_adrs )
 {
   return 0; //TODO
 }
@@ -579,7 +590,7 @@ static void Npc_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder )
  *	@brief  人物データ取得・設定
  */
 //-----------------------------------------------------------------------------
-static u32 Npc_GetData( const RESORT_PEOPLE *cp_wk, RESORT_PEOPLE_PARAM param )
+static u32 Npc_GetData( const RESORT_PEOPLE *cp_wk, RESORT_PEOPLE_PARAM param, void *p_ret_adrs )
 {
   return 0; //TODO
 }
@@ -787,8 +798,8 @@ void RESORT_PEOPLE_SYS_AddAll( RESORT_PEOPLE_SYS *p_wk )
     for( i = 0; i < RESORT_RECV_BUFF_GetMax( p_wk->param.p_recv_sv_buff ); i++ )
     {
       RESORT_RECV_DATA *p_recv = RESORT_RECV_BUFF_GetData( p_wk->param.p_recv_sv_buff, i );
-      u32 peopleID = RESORT_RECV_DATA_GetData( p_recv, RESORT_RECV_DATA_PARAM_PEOPLE_ID );
-      u32 placeID = RESORT_RECV_DATA_GetData( p_recv, RESORT_RECV_DATA_PARAM_PLACE_ID );
+      u32 peopleID = RESORT_RECV_DATA_GetData( p_recv, RESORT_RECV_DATA_PARAM_PEOPLE_ID, NULL );
+      u32 placeID = RESORT_RECV_DATA_GetData( p_recv, RESORT_RECV_DATA_PARAM_PLACE_ID, NULL );
       if( !RESORT_RECV_DATA_IsEmpty(p_recv) && (RESORT_MAP_PlaceIDToZoneID(placeID) == p_wk->param.zoneID) )
       {
         RESORT_PEOPLE_SYS_ADD_PARAM param;

@@ -27,6 +27,7 @@
 #include "scrcmd_palpark_table.h"
 #include "scrcmd_seatemple_table.h"
 #include "scrcmd_wbt_table.h"
+#include "scrcmd_resort_table.h"
 
 //-------------------------------------
 ///	デバッグ
@@ -45,6 +46,7 @@ FS_EXTERN_OVERLAY( scrcmd_fourkings );
 FS_EXTERN_OVERLAY( scrcmd_palpark );
 FS_EXTERN_OVERLAY( scrcmd_seatemple );
 FS_EXTERN_OVERLAY( scrcmd_wbt );
+FS_EXTERN_OVERLAY( scrcmd_resort );
 
 //=============================================================================
 /**
@@ -128,6 +130,15 @@ static const ZONEID UseZoneIDTbl_wbt[] =
   ZONE_ID_D05R0201,
 };
 
+//-------------------------------------
+///	レゾナンスリゾート
+//=====================================
+static const ZONEID UseZoneIDTbl_resort[] = 
+{
+  ZONE_ID_C16,
+  ZONE_ID_C16R0101,
+};
+
 //=============================================================================
 /**
  *					管理テーブル
@@ -197,6 +208,13 @@ static const struct
     UseZoneIDTbl_wbt,
     NELEMS(UseZoneIDTbl_wbt),
     FS_OVERLAY_ID( scrcmd_wbt ),
+  },
+  //RESONANCE_RESORT
+  {
+    ScriptCmdTbl_resort,
+    UseZoneIDTbl_resort,
+    NELEMS(UseZoneIDTbl_resort),
+    FS_OVERLAY_ID( scrcmd_resort ),
   },
 };
 //=============================================================================

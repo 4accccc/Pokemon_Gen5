@@ -74,6 +74,9 @@ typedef enum
   RESORT_RECV_DATA_PARAM_PLACE_ID,
   RESORT_RECV_DATA_PARAM_LOCK,
   RESORT_RECV_DATA_PARAM_UPDATE,
+  RESORT_RECV_DATA_PARAM_SEX,
+  RESORT_RECV_DATA_PARAM_TRAINERVIEW,
+  RESORT_RECV_DATA_PARAM_NAME,          //p_ret_adrs‚©‚çŽæ“¾
 } RESORT_RECV_DATA_PARAM;
 
 //-------------------------------------
@@ -120,7 +123,7 @@ extern void RESORT_RECV_DATA_MergeBeacon( RESORT_RECV_DATA *p_wk, const RESORT_B
 extern void RESORT_RECV_DATA_MergeRecv( RESORT_RECV_DATA *p_wk, const RESORT_RECV_DATA *cp_recv );
 extern BOOL RESORT_RECV_DATA_IsValid( const RESORT_RECV_DATA *cp_wk );
 
-extern u32 RESORT_RECV_DATA_GetData( const RESORT_RECV_DATA *cp_wk, RESORT_RECV_DATA_PARAM param );
+extern u32 RESORT_RECV_DATA_GetData( const RESORT_RECV_DATA *cp_wk, RESORT_RECV_DATA_PARAM param, void *p_ret_adrs );
 extern void RESORT_RECV_DATA_SetData( RESORT_RECV_DATA *p_wk, RESORT_RECV_DATA_PARAM param, u32 data );
 
 //-------------------------------------

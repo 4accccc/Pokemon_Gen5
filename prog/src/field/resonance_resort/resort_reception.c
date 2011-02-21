@@ -330,9 +330,9 @@ static void Reception_Buff_UpdateRecv( RECEPTION_BUFF *p_wk )
     RESORT_RECV_DATA *p_recv = RESORT_RECV_BUFF_GetData( p_wk->p_sv_buff, i );
 
     if( !RESORT_RECV_DATA_IsEmpty( p_recv ) 
-        && ( RESORT_RECV_DATA_GetData(p_recv,RESORT_RECV_DATA_PARAM_UPDATE) != RESORT_RECV_DATA_UPDATE_NONE ) )
+        && ( RESORT_RECV_DATA_GetData(p_recv,RESORT_RECV_DATA_PARAM_UPDATE, NULL) != RESORT_RECV_DATA_UPDATE_NONE ) )
     {
-      RESORT_RECV_DATA_UPDATE update = RESORT_RECV_DATA_GetData(p_recv,RESORT_RECV_DATA_PARAM_UPDATE );
+      RESORT_RECV_DATA_UPDATE update = RESORT_RECV_DATA_GetData(p_recv,RESORT_RECV_DATA_PARAM_UPDATE, NULL );
       RESORT_RECV_DATA_SetData(p_recv,RESORT_RECV_DATA_PARAM_UPDATE, RESORT_RECV_DATA_UPDATE_NONE );
 
       p_wk->param.UpdateRecvCallback( p_wk->param.p_wk_adrs, p_recv, update );
@@ -345,9 +345,9 @@ static void Reception_Buff_UpdateRecv( RECEPTION_BUFF *p_wk )
     RESORT_RECV_DATA *p_recv = RESORT_RECV_BUFF_GetData( p_wk->p_recep_buff, i );
 
     if( !RESORT_RECV_DATA_IsEmpty( p_recv ) 
-        && ( RESORT_RECV_DATA_GetData(p_recv,RESORT_RECV_DATA_PARAM_UPDATE) != RESORT_RECV_DATA_UPDATE_NONE ) )
+        && ( RESORT_RECV_DATA_GetData(p_recv,RESORT_RECV_DATA_PARAM_UPDATE, NULL) != RESORT_RECV_DATA_UPDATE_NONE ) )
     {
-      RESORT_RECV_DATA_UPDATE update = RESORT_RECV_DATA_GetData(p_recv,RESORT_RECV_DATA_PARAM_UPDATE );
+      RESORT_RECV_DATA_UPDATE update = RESORT_RECV_DATA_GetData(p_recv,RESORT_RECV_DATA_PARAM_UPDATE, NULL );
       RESORT_RECV_DATA_SetData(p_recv,RESORT_RECV_DATA_PARAM_UPDATE, RESORT_RECV_DATA_UPDATE_NONE );
 
       p_wk->param.UpdateRecvCallback( p_wk->param.p_wk_adrs, p_recv, update );
@@ -395,7 +395,7 @@ static void Reception_Buff_UpdateProxy( RECEPTION_BUFF *p_wk )
 //動作上限数
 #define RECEPTION_PEOPLE_MAX (16)
 //更新間隔
-#define RECEPTION_PEOPLE_UPDATE_INTERVAL (5*60)
+#define RECEPTION_PEOPLE_UPDATE_INTERVAL (0)
 
 //-------------------------------------
 ///	人物が動作するときのワーク

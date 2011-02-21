@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-07-15T19:04:53"/>
+	<create user="nagihashi_toru" host="W00268" date="2011-02-21T17:10:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,8 +271,8 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
-		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
 	</dialog>
@@ -292,11 +292,87 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="c16r0101_tourist_greet_00">
+		<comment>旅行者挨拶文</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]『こんにちは！
+ここは　いいまち　だね▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『こんにちは！
+ここは　いい街　だね！▼</language>
+	</row>
+
+	<row id="c16r0101_tourist_appeal_00">
+		<comment>旅行者アピール文</comment>
+		<language name="JPN" width="256">ぼくは　ニートに　なりたいな！▼</language>
+		<language name="JPN_KANJI" width="256">ぼくは　ニートに　なりたいな！▼</language>
+	</row>
+
+	<row id="c16r0101_tourist_joy_00">
+		<comment>旅行者施設喜び</comment>
+		<language name="JPN" width="256">ありがとう！
+ぼく　がんばるよ！</language>
+		<language name="JPN_KANJI" width="256">ありがとう！
+ぼく　頑張るよ！</language>
+	</row>
+
+	<row id="c16r0101_tourist_bye_00">
+		<comment>旅行者さよなら</comment>
+		<language name="JPN" width="256">また　あいましょう！</language>
+		<language name="JPN_KANJI" width="256">また　会いましょう！</language>
+	</row>
+
+	<row id="c16r0101_tourist_wait_00">
+		<comment>旅行者待ち</comment>
+		<language name="JPN" width="256">はい　まってます</language>
+		<language name="JPN_KANJI" width="256">はい　待ってます</language>
+	</row>
+
+	<row id="c16r0101_tourist_place_00">
+		<comment>旅行者行きたい場所</comment>
+		<language name="JPN" width="256">ショッピングしたいんですよね</language>
+		<language name="JPN_KANJI" width="256">ショッピングしたいんですよね</language>
+	</row>
+
+	<row id="c16r0101_sys_select_00" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#c0c0c0,,#80ff80,#c0c0c0,,,#c0c0c0,,">
+		<comment>選択質問文</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さんが　ほうもん　してきました
+どうしますか？</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんが　訪問　してきました
+どうしますか？</language>
+	</row>
+
+	<row id="c16r0101_sys_select_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">しょうたいする</language>
+		<language name="JPN_KANJI" width="256">招待する</language>
+	</row>
+
+	<row id="c16r0101_sys_select_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">スカウトする</language>
+		<language name="JPN_KANJI" width="256">スカウトする</language>
+	</row>
+
+	<row id="c16r0101_sys_select_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">おすすめスポットを　おしえる</language>
+		<language name="JPN_KANJI" width="256">おすすめスポットを　教える</language>
+	</row>
+
+	<row id="c16r0101_sys_select_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">さいきん　どう？</language>
+		<language name="JPN_KANJI" width="256">最近　どう？</language>
+	</row>
+
+	<row id="c16r0101_sys_select_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">アピールを　きく</language>
+		<language name="JPN_KANJI" width="256">アピールを　きく</language>
+	</row>
+
+	<row id="c16r0101_sys_select_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">しばらく　まってて</language>
+		<language name="JPN_KANJI" width="256">しばらく　まってて</language>
+	</row>
+
+	<row id="c16r0101_sys_select_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,,,#80ff80,,,,,,">
+		<language name="JPN" width="256">さようなら</language>
+		<language name="JPN_KANJI" width="256">さようなら</language>
 	</row>
 
 	<flowchart-group-list>

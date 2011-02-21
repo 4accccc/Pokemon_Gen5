@@ -24,6 +24,7 @@
   .include "../../../prog/src/field/scrcmd_palpark_table.cdat"
   .include "../../../prog/src/field/scrcmd_seatemple_table.cdat"
   .include "../../../prog/src/field/scrcmd_wbt_table.cdat"
+  .include "../../../prog/src/field/scrcmd_resort_table.cdat"
 
 //======================================================================
 // イベントデータ関連
@@ -12186,7 +12187,134 @@
     .endm
 
 //======================================================================
+//
+//  レゾナンスリゾート関連
+//
 //======================================================================
+//--------------------------------------------------------------
+/**
+ * @brief リゾート用　OBJ話しかけ開始処理
+ */
+//--------------------------------------------------------------
+#define _RESORT_TALK_START() \
+    _ASM_RESORT_TALK_START
 
+  .macro _ASM_RESORT_TALK_START
+  .short EV_SEQ_RESORT_TALK_START
+  .endm
 
+//--------------------------------------------------------------
+/**
+ * @brief リゾート用　OBJ話しかけ終了処理
+ */
+//--------------------------------------------------------------
+#define _RESORT_TALK_END() \
+    _ASM_RESORT_TALK_END
 
+  .macro _ASM_RESORT_TALK_END
+  .short EV_SEQ_RESORT_TALK_END
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief リゾート用　データ取得処理
+ * @param[in]  param なんのデータを取得するか「下記値を設定」
+ *　RESORT_GET_PARAM_FRONT_OBJID　… 話しかけているOBJID
+ * 
+ * @param[out] ret_wk 取得したデータ
+ *
+ */
+//--------------------------------------------------------------
+#define _RESORT_GET_DATA( param, ret_wk ) \
+    _ASM_RESORT_GET_DATA param, ret_wk
+
+  .macro _ASM_RESORT_GET_DATA param, ret_wk
+  .short EV_SEQ_RESORT_GET_DATA
+  .short  \param
+  .short  \ret_wk
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief リゾート用　メッセージ番号取得処理
+ * @param[in]  param 何番のメッセージIDか（話しかけたOBJによってエクセルに登録したものがでる）
+ * 
+ * @param[out] ret_wk 取得したメッセージID
+ *
+ */
+//--------------------------------------------------------------
+#define _RESORT_GET_MSGID( param, ret_wk ) \
+    _ASM_RESORT_GET_MSGID param, ret_wk
+
+  .macro _ASM_RESORT_GET_MSGID param, ret_wk
+  .short EV_SEQ_RESORT_GET_MSGID
+  .short  \param
+  .short  \ret_wk
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief リゾート用　行動設定
+ * @param[in]  param 何の行動をするか「下記値を設定」
+ *  RESORT_ACTION_LEAVE…上へあがっていなくなる
+ *
+ */
+//--------------------------------------------------------------
+#define _RESORT_ACTION( param ) \
+    _ASM_RESORT_ACTION param
+
+  .macro _ASM_RESORT_ACTION param
+  .short EV_SEQ_RESORT_ACTION
+  .short  \param
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief リゾート用　転職
+ * @param[in]  param 何に転職するか「下記値を設定」
+ *  RESORT_JOBCHANGE_SECETARY…秘書へ転職
+ */
+//--------------------------------------------------------------
+#define _RESORT_JOB_CHANGE( param ) \
+    _ASM_RESORT_JOB_CHANGE param
+
+  .macro _ASM_RESORT_JOB_CHANGE param
+  .short EV_SEQ_RESORT_JOB_CHANGE
+  .short  \param
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief リゾート用　データを更新させない　迎賓館でのみ使用可能
+ * @param[in]  param 何に転職するか「下記値を設定」
+ *  RESORT_JOBCHANGE_SECETARY…秘書へ転職
+ */
+//--------------------------------------------------------------
+#define _RESORT_KEEP_WAIT() \
+    _ASM_RESORT_KEEP_WAIT
+
+  .macro _ASM_RESORT_KEEP_WAIT
+  .short EV_SEQ_RESORT_KEEP_PEOPLE
+  .short  \param
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief リゾート用　文字バッファへ登録
+ * @param[in]  param 何を登録するか「下記値を設定」
+ *  RESORT_WORD_PEOPLE…話しかけ中の人物名
+ *
+ * @param[in]  idx 何番の箇所へ登録するか
+ */
+//--------------------------------------------------------------
+#define _RESORT_SET_WORD( param, idx ) \
+    _ASM_RESORT_SET_WORD param, idx
+
+  .macro _ASM_RESORT_SET_WORD param, idx
+  .short EV_SEQ_RESORT_SET_WORD
+  .short  \param
+  .short  \idx
+  .endm
+
+//======================================================================
+//======================================================================

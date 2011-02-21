@@ -190,7 +190,14 @@ PEOPLE_COL_SCRID         = 3         #列：SCRID
 PEOPLE_COL_MSGID_START   = 4         #列：MSGID開始
 PEOPLE_COL_MSGID_END     = 6         #列：MSGID終了
 PEOPLE_COL_END           = 7         #列最後
-def convertPeople( csv, data, hashNumber )
+def convertPeople( csv, data, hashNumber, gmm, script )
+
+  #データの作成
+  msgdata = HeaderDataArray.new
+  msgdata.load( gmm )
+
+  scdata = HeaderDataArray.new
+  scdata.load( script )  
 
   for row in DEFINE_ROW_START...csv.row_length
 
@@ -204,16 +211,23 @@ def convertPeople( csv, data, hashNumber )
     data.write_u16( hashNumber[person] )
     data.write_u16( hashNumber[kind] )
     data.write_u16( hashNumber[seikaku] )
-    #data.write_u16( scrid )
+
     #SCRIDから値への変換
-    data.write_u16( 0 )
+    begin
+      data.write_u16( scdata.search( "#{scrid}", "スクリプト" ) )
+    rescue HeaderSearchError
+      exit(1)
+    end
 
     for i in PEOPLE_COL_MSGID_START...PEOPLE_COL_MSGID_END+1
       msg   = csv.get( row, i )
 
-      #data.write_u16( msg )
       #MSGTAGから値への変換
-      data.write_u16( 0 )
+      begin
+        data.write_u16( msgdata.search( "#{msg}", "gmm" ) )
+      rescue HeaderSearchError
+        exit(1)
+      end
     end
   end
 end
@@ -380,7 +394,7 @@ begin
   hashNumber = Hash.new()
   #コンバート
   convertDefine( defineCsv, header, hashNumber )
-  convertPeople( dataCsv, data, hashNumber )
+  convertPeople( dataCsv, data, hashNumber, ARGV[2], ARGV[3] )
 
   #date書き込み
   data.genelate( "#{ARGV[4]}.dat" )

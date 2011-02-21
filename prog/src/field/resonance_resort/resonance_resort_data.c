@@ -31,6 +31,18 @@
 
 #define RESORT_VALID_ASSERT(...) GF_ASSERT_MSG_LIGHT( 0, __VA_ARGS__ );
 
+static inline RESORT_GET_TrainerView( u8 view, u8 sex ) 
+{
+  if( sex == PM_MALE )
+  {
+    return view;
+  }
+  else
+  {
+    return view + UNION_VIEW_INDEX_WOMAN_START;
+  }
+}
+
 //=============================================================================
 /**
  *	リゾート用基本、拡張データ
@@ -694,7 +706,7 @@ BOOL RESORT_RECV_DATA_IsSameOwnerBeacon( const RESORT_RECV_DATA *cp_wk, const RE
 void RESORT_RECV_DATA_MergeBeacon( RESORT_RECV_DATA *p_wk, const RESORT_BEACON_DATA *cp_beacon )
 {
   //ロック
-  if( RESORT_RECV_DATA_GetData(p_wk,RESORT_RECV_DATA_PARAM_LOCK) )
+  if( RESORT_RECV_DATA_GetData(p_wk,RESORT_RECV_DATA_PARAM_LOCK,NULL) )
   {
     return;
   }
@@ -767,7 +779,7 @@ void RESORT_RECV_DATA_MergeBeacon( RESORT_RECV_DATA *p_wk, const RESORT_BEACON_D
 void RESORT_RECV_DATA_MergeRecv( RESORT_RECV_DATA *p_wk, const RESORT_RECV_DATA *cp_recv )
 {
   //ロック
-  if( RESORT_RECV_DATA_GetData(p_wk,RESORT_RECV_DATA_PARAM_LOCK) )
+  if( RESORT_RECV_DATA_GetData(p_wk,RESORT_RECV_DATA_PARAM_LOCK,NULL) )
   {
     return;
   }
@@ -836,11 +848,12 @@ BOOL RESORT_RECV_DATA_IsValid( const RESORT_RECV_DATA *cp_wk )
  *
  *	@param	const RESORT_RECV_DATA *cp_wk ワーク
  *	@param	param 引数
+ *	@param  p_ret_adrs 取得バッファ
  *
  *	@return   受信データのデータ取得
  */
 //-----------------------------------------------------------------------------
-u32 RESORT_RECV_DATA_GetData( const RESORT_RECV_DATA *cp_wk, RESORT_RECV_DATA_PARAM param )
+u32 RESORT_RECV_DATA_GetData( const RESORT_RECV_DATA *cp_wk, RESORT_RECV_DATA_PARAM param, void *p_ret_adrs )
 {
   switch( param )
   {
@@ -852,6 +865,14 @@ u32 RESORT_RECV_DATA_GetData( const RESORT_RECV_DATA *cp_wk, RESORT_RECV_DATA_PA
     return cp_wk->lock;
   case RESORT_RECV_DATA_PARAM_UPDATE:
     return cp_wk->update;
+  case RESORT_RECV_DATA_PARAM_SEX:
+    return cp_wk->basic1.sex;
+  case RESORT_RECV_DATA_PARAM_TRAINERVIEW:
+    return RESORT_GET_TrainerView( cp_wk->basic1.trainer_view, cp_wk->basic1.sex );
+  case RESORT_RECV_DATA_PARAM_NAME:
+    GFL_STD_MemCopy( cp_wk->basic1.name, p_ret_adrs, sizeof(STRCODE)*PERSON_NAME_SIZE);
+    *(((STRCODE*)p_ret_adrs)+PERSON_NAME_SIZE) = GFL_STR_GetEOMCode();
+    return 0;
   default:
     GF_ASSERT(0);
     return 0;

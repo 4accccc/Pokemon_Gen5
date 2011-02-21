@@ -128,7 +128,7 @@ VMCMD_RESULT EvCmdResortGetData( VMHANDLE *p_core, void *p_wk_adrs )
   {
   case RESORT_GET_PARAM_FRONT_OBJID:
     {
-      u16 peopleID = RESORT_PEOPLE_GetData( p_people, RESORT_PEOPLE_PARAM_PEOPLEID );
+      u16 peopleID = RESORT_PEOPLE_GetData( p_people, RESORT_PEOPLE_PARAM_PEOPLEID, NULL );
       *p_ret_wk = RESORT_PEOPLE_PEOPLEID_TO_MMDLID( peopleID );
     }
     break;
@@ -261,5 +261,62 @@ VMCMD_RESULT EvCmdResortKeepPeople( VMHANDLE *p_core, void *p_wk_adrs )
   }
 
   GF_ASSERT( p_people != NULL );
+  return VMCMD_RESULT_CONTINUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  単語登録
+ *
+ *	@param	VMHANDLE *p_core 仮想マシンハンドル
+ *	@param	*p_wk_adrs       スクリプトコマンドワーク
+ *
+ *	@return 終了コード
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdResortSetWord( VMHANDLE *p_core, void *p_wk_adrs )
+{
+  SCRCMD_WORK *p_wk = p_wk_adrs;
+  SCRIPT_WORK *p_script = SCRCMD_WORK_GetScriptWork( p_wk );
+
+  GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
+  FIELDMAP_WORK *p_field = GAMESYSTEM_GetFieldMapWork(p_gamesys);
+
+  WORDSET *p_wordset    = SCRIPT_GetWordSet( p_script );
+  const u16 heapID = FIELDMAP_GetHeapID( p_field );
+  u16 param = VMGetU16(p_core);
+  u16 idx = VMGetU16(p_core);
+  
+  RESORT_PEOPLE* p_people = NULL;
+
+  if(GMK_TMP_CheckAssignID( p_field, RESORT_RECEPTION_ASSIGN_ID ) )
+  {
+    p_people = RESORT_RECEPTION_GetFrontPeople( p_field );
+  }
+  else if( 1 )
+  {
+    //TODO
+  }
+
+  switch( param )
+  {
+  case RESORT_WORD_PEOPLE:
+    GF_ASSERT( p_people != NULL );
+    {
+      STRCODE name[PERSON_NAME_SIZE+EOM_SIZE];
+      STRBUF *p_str = GFL_STR_CreateBuffer( PERSON_NAME_SIZE+EOM_SIZE, GFL_HEAP_LOWID(heapID) );
+      u32 sex = RESORT_PEOPLE_GetData( p_people, RESORT_PEOPLE_PARAM_SEX, NULL );
+      RESORT_PEOPLE_GetData( p_people, RESORT_PEOPLE_PARAM_NAME, name );
+      GFL_STR_SetStringCode( p_str, name );
+    
+      WORDSET_RegisterWord( p_wordset, idx, p_str, sex, TRUE, PM_LANG );
+
+      GFL_STR_DeleteBuffer(p_str);
+
+    }
+    break;
+  default:
+    GF_ASSERT(0);
+  }
+
   return VMCMD_RESULT_CONTINUE;
 }

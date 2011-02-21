@@ -893,6 +893,12 @@ SRCS_OVERLAY_SCRCMD_SEATEMPLE  =  field/scrcmd_seatemple.c \
 SRCS_OVERLAY_SCRCMD_WBT  =  field/scrcmd_wbt.c \
                             field/scrcmd_wbt_table.c
 
+# スクリプトコマンド並列化　レゾナンスリゾート
+#===> GROUP_OVERLAY_DEBUGMENU
+#GROUP_OVERLAY_SCRCMD
+SRCS_OVERLAY_SCRCMD_RESORT =  field/resonance_resort/scrcmd_resort.c \
+                              field/scrcmd_resort_table.c
+
 # ユニオンルームでのミニゲーム制御	OVERLAY_FIELDMAPと並列の位置に配置
 #===> GROUP_OVERLAY_UNION_INTRUDE
 SRCS_OVERLAY_UNION_APP = net_app/union/union_app.c
@@ -1109,8 +1115,7 @@ SRCS_OVERLAY_RESONANCE_RESORT_GIMMICK = field/resonance_resort/resort_field.c \
                                         field/resonance_resort/resort_reception.c \
                                         field/resonance_resort/resort_people.c \
                                         field/resonance_resort/resort_binary.c \
-                                        field/resonance_resort/resort_map.c \
-                                        field/resonance_resort/scrcmd_resort.c
+                                        field/resonance_resort/resort_map.c
 
 
 # マッパーサンプル

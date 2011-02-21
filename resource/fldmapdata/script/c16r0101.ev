@@ -11,6 +11,7 @@
   .include  "scr_seq_def.h"
   .include  "msg_c16r0101.h"
   //.include  "c16r0101.h"
+  .include  "../../../prog/src/field/resonance_resort/scrcmd_resort_def.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -20,6 +21,7 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_c16r0101
+_EVENT_DATA    ev_c16r0101_tourist
 _EVENT_DATA_END
 
 
@@ -36,3 +38,23 @@ ev_c16r0101:
   //とりあえず最初のラベルだけ生成している
   _END
 
+/**************************************************************/
+/*            観光客用スクリプト                              */
+/**************************************************************/
+EVENT_START ev_c16r0101_tourist
+	_TALK_OBJ_START()
+  _RESORT_TALK_START()
+
+  DEFINE_LOCAL LWK_OBJID
+  _RESORT_GET_DATA( RESORT_GET_PARAM_FRONT_OBJID, LWK_OBJID )
+
+  _RESORT_SET_WORD( RESORT_WORD_PEOPLE, 0 )
+
+	DEFINE_LOCAL LWK_MSGID
+  _RESORT_GET_MSGID( 0, LWK_MSGID )
+
+	_BALLOONWIN_OBJMSG( LWK_MSGID, LWK_OBJID )
+	_BALLOONWIN_CLOSE()
+
+  _RESORT_TALK_END()
+EVENT_END

@@ -19,8 +19,8 @@ targetpeopleh	= resort_people_def
 #依存するファイル名
 #------------------------------------------------------------------------------
 xlsname			= resonance_resort_data
-msgfile 		= ..\..\..\prog\include\msg\msg_tvt_call.h #TODO
-scriptfile	= ..\..\fldmapdata\zonetable\zone_id.h #TODO
+msgfile 		= ..\..\..\prog\include\msg\script/msg_c16r0101.h #TODO
+scriptfile	= ..\..\fldmapdata\script\c16r0101_def.h #TODO
 
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
@@ -69,6 +69,7 @@ $(targetall).narc $(targetall).naix: $(targetpeople).dat
 $(targetpeople).dat $(targetpeopleh).h: $(xlsname).xls $(msgfile) $(scriptfile)
 	$(XLSCONV) -o $(targetpeople)_data.csv -p 1 -s csv $(xlsname).xls
 	$(XLSCONV) -o $(targetpeople)_define.csv -p 2 -s csv $(xlsname).xls
+	rm -f *.dat
 	ruby $(PEOPLECONV) $(targetpeople)_data.csv $(targetpeople)_define.csv $(msgfile) $(scriptfile) $(targetpeople) $(targetpeopleh)
 endif
 
