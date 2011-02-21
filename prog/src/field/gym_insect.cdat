@@ -32,7 +32,7 @@ static const u8 DATA_FogTable[] = {
 #define FLOOR_HRECT02_SZ (4)
 
 #define FLOOR_HRECT03_PX (19)
-#define FLOOR_HRECT03_PZ (2)
+#define FLOOR_HRECT03_PZ (3)
 #define FLOOR_HRECT03_SX (3)
 #define FLOOR_HRECT03_SZ (4)
 
