@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-07-13T12:05:45"/>
+	<create user="matsumiya" host="W00224" date="2011-02-21T22:57:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1309" top="191" right="2014" bottom="819" maximized="no" rayout="Vertical2">
+	<dialog left="1297" top="360" right="2002" bottom="988" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -336,7 +336,7 @@
 	</lock>
 
 
-	<row id="msg_skillteach_dragon_01b">
+	<row id="msg_skillteach_dragon_01b" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀：ドラゴン技教え
 ・はい／いいえの選択肢表示
 　はいを選択
@@ -362,7 +362,7 @@
 わざを　おぼえさせてあげる？</language>
 	</row>
 
-	<row id="msg_skillteach_dragon_02b">
+	<row id="msg_skillteach_dragon_02b" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀：ドラゴン技教え
 ・いいえを選択</comment>
 		<attribute name="キャラ指定">ジムリーダー
@@ -373,7 +373,7 @@
 きがむいたら　またきてね！！</language>
 	</row>
 
-	<row id="msg_skillteach_dragon_03b">
+	<row id="msg_skillteach_dragon_03b" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀：ドラゴン技教え
 ・はいを選択
 　覚えられるポケモンがいるが
@@ -395,7 +395,7 @@
 おぼえさせるのは　むずかしいな</language>
 	</row>
 
-	<row id="msg_skillteach_dragon_04b">
+	<row id="msg_skillteach_dragon_04b" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀：ドラゴン技教え
 ・はいを選択
 　だが覚えられるポケモンがいない</comment>
@@ -411,7 +411,7 @@
 ポケモンは　いないみたい……</language>
 	</row>
 
-	<row id="msg_skillteach_dragon_05b">
+	<row id="msg_skillteach_dragon_05b" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀：ドラゴン技教え
 ・はいを選択
 　覚えられるポケモンがいる
@@ -424,7 +424,7 @@
 わざを　おぼえさせるの？▼</language>
 	</row>
 
-	<row id="msg_skillteach_dragon_06b">
+	<row id="msg_skillteach_dragon_06b" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀：ドラゴン技教え
 ・ポケモン選択後
 　おぼえられない</comment>
@@ -438,7 +438,7 @@
 この　わざ　おぼえられないよ……</language>
 	</row>
 
-	<row id="msg_skillteach_dragon_07b">
+	<row id="msg_skillteach_dragon_07b" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀：ドラゴン技教え
 ・ポケモン選択時にタマゴ選択</comment>
 		<attribute name="キャラ指定">ジムリーダー
@@ -459,7 +459,7 @@
 ちょっと　ムリみたい……</language>
 	</row>
 
-	<row id="msg_skillteach_dragon_08b">
+	<row id="msg_skillteach_dragon_08b" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀：ドラゴン技教え
 ・ポケモン選択後、すでに習得済み
 ・0＝技名</comment>
@@ -473,7 +473,7 @@
 [1:07:わざ名:0]を　おぼえているよ？</language>
 	</row>
 
-	<row id="msg_skillteach_dragon_09b">
+	<row id="msg_skillteach_dragon_09b" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀：ドラゴン技教え
 ・msg_skillteach_system_06表示後
 　フィールドにもどると、このメッセージ表示
