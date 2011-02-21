@@ -1,0 +1,31 @@
+//======================================================================
+/**
+ * @file  scrcmd_wbt_table.cdat
+ * @brief WBTスクリプトコマンド定義
+ * @date  2011.02.21
+ * @author  tamada
+ *
+ */
+//======================================================================
+//======================================================================
+//  命令シンボル宣言
+//======================================================================
+
+  //スクリプトコマンドテーブル開始
+  INIT_OVERLAY_CMD( wbt )
+
+  //海底神殿関連
+  DEF_CMD( EvCmdWBTShowTornamentList, EV_SEQ_WBT_SHOW_TOURLIST )
+  DEF_CMD( EvCmdWBTCheckBattleRule,   EV_SEQ_WBT_CHECK_BATTLE_RULE )
+  DEF_CMD( EvCmdWBTSetBattleRule,     EV_SEQ_WBT_SET_BATTLE_RULE )
+  DEF_CMD( EvCmdWBTGetBattleRule,     EV_SEQ_WBT_GET_BATTLE_RULE )
+  DEF_CMD( EvCmdWBTSetTournamentType, EV_SEQ_WBT_SET_TOURNAMENT_TYPE )
+  DEF_CMD( EvCmdWBTGetTournamentType, EV_SEQ_WBT_GET_TOURNAMENT_TYPE )
+  DEF_CMD( EvCmdWBTGetDownLoadCount,  EV_SEQ_WBT_GET_DL_COUNT )
+  DEF_CMD( EvCmdWBTGetDownLoadName,   EV_SEQ_WBT_GET_DL_NAME )
+  DEF_CMD( EvCmdWBTSelectDLData,      EV_SEQ_WBT_SELECT_DL_DATA )
+  DEF_CMD( EvCmdWBTSetDLNumber,       EV_SEQ_WBT_SET_DL_NUMBER )
+  DEF_CMD( EvCmdWBTGetDLNumber,       EV_SEQ_WBT_SET_DL_NUMBER )
+  
+  END_CMD
+  //スクリプトコマンドテーブル終了

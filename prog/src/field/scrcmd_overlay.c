@@ -26,6 +26,7 @@
 #include "scrcmd_fourkings_table.h"
 #include "scrcmd_palpark_table.h"
 #include "scrcmd_seatemple_table.h"
+#include "scrcmd_wbt_table.h"
 
 //-------------------------------------
 ///	デバッグ
@@ -43,6 +44,7 @@ FS_EXTERN_OVERLAY( scrcmd_pl_boat );
 FS_EXTERN_OVERLAY( scrcmd_fourkings );
 FS_EXTERN_OVERLAY( scrcmd_palpark );
 FS_EXTERN_OVERLAY( scrcmd_seatemple );
+FS_EXTERN_OVERLAY( scrcmd_wbt );
 
 //=============================================================================
 /**
@@ -120,6 +122,12 @@ static const ZONEID UseZoneIDTbl_seatemple[]  =
   ZONE_ID_D20R0501,
 };
 
+static const ZONEID UseZoneIDTbl_wbt[] = 
+{
+  ZONE_ID_D05R0101,
+  ZONE_ID_D05R0201,
+};
+
 //=============================================================================
 /**
  *					管理テーブル
@@ -183,6 +191,12 @@ static const struct
     UseZoneIDTbl_seatemple,
     NELEMS(UseZoneIDTbl_seatemple),
     FS_OVERLAY_ID( scrcmd_seatemple ),
+  },
+  {
+    ScriptCmdTbl_wbt,
+    UseZoneIDTbl_wbt,
+    NELEMS(UseZoneIDTbl_wbt),
+    FS_OVERLAY_ID( scrcmd_wbt ),
   },
 };
 //=============================================================================

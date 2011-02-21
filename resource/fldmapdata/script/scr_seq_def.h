@@ -23,6 +23,7 @@
   .include "../../../prog/src/field/scrcmd_fourkings_table.cdat"
   .include "../../../prog/src/field/scrcmd_palpark_table.cdat"
   .include "../../../prog/src/field/scrcmd_seatemple_table.cdat"
+  .include "../../../prog/src/field/scrcmd_wbt_table.cdat"
 
 //======================================================================
 // イベントデータ関連
@@ -12015,5 +12016,166 @@
     .short  \ret_wk
     .short  \obj_id
     .endm
+
+
+//======================================================================
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * @brief 
+ * @param
+ */
+//--------------------------------------------------------------
+#define _WBT_LIST_CALL( num ) \
+    _ASM_WBT_LIST_CALL num
+
+    .macro _ASM_WBT_LIST_CALL num
+    .short  EV_SEQ_WBT_SHOW_TOURLIST
+    .short  \num
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief 
+ * @param
+ */
+//--------------------------------------------------------------
+#define _WBT_CHECK_BATTLE_RULE( ret_wk )  \
+    _ASM_WBT_CHECK_BATTLE_RULE ret_wk  
+
+    .macro _ASM_WBT_CHECK_BATTLE_RULE ret_wk  
+    .short  EV_SEQ_WBT_CHECK_BATTLE_RULE
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief 
+ * @param[in]  rule
+ */
+//--------------------------------------------------------------
+#define _WBT_SET_BATTLE_RULE( rule )   \
+    _ASM_WBT_SET_BATTLE_RULE rule   
+
+    .macro _ASM_WBT_SET_BATTLE_RULE rule   
+    .short  EV_SEQ_WBT_SET_BATTLE_RULE
+    .short  \rule
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief 
+ * @param[out]  ret_wk
+ */
+//--------------------------------------------------------------
+#define _WBT_GET_BATTLE_RULE( ret_wk )   \
+    _ASM_WBT_GET_BATTLE_RULE ret_wk   
+
+    .macro _ASM_WBT_GET_BATTLE_RULE ret_wk   
+    .short  EV_SEQ_WBT_GET_BATTLE_RULE
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief 
+ * @param[in]  type
+ */
+//--------------------------------------------------------------
+#define _WBT_SET_TOURNAMENT_TYPE( type )  \
+    _ASM_WBT_SET_TOURNAMENT_TYPE type   
+
+    .macro _ASM_WBT_SET_TOURNAMENT_TYPE type   
+    .short  EV_SEQ_WBT_SET_TOURNAMENT_TYPE
+    .short  \type
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief 
+ * @param[out]  ret_wk
+ */
+//--------------------------------------------------------------
+#define _WBT_GET_TOURNAMENT_TYPE( ret_wk )   \
+    _ASM_WBT_GET_TOURNAMENT_TYPE ret_wk   
+
+    .macro _ASM_WBT_GET_TOURNAMENT_TYPE ret_wk   
+    .short  EV_SEQ_WBT_GET_TOURNAMENT_TYPE
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief 
+ * @param[out]  ret_wk
+ */
+//--------------------------------------------------------------
+#define _WBT_GET_DL_COUNT( ret_wk )    \
+    _ASM_WBT_GET_DL_COUNT ret_wk    
+
+    .macro _ASM_WBT_GET_DL_COUNT ret_wk    
+    .short  EV_SEQ_WBT_GET_DL_COUNT
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief 
+ * @param[out]  ret_wk
+ */
+//--------------------------------------------------------------
+#define _WBT_SET_DL_NAME( idx, num ) \
+    _ASM_WBT_SET_DL_NAME idx, num     
+
+    .macro _ASM_WBT_SET_DL_NAME idx, num     
+    .short  EV_SEQ_WBT_GET_DL_NAME
+    .byte  \idx
+    .short  \num
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief 
+ * @param[out]  ret_wk
+ */
+//--------------------------------------------------------------
+#define _WBT_SELECT_DL_DATA( ret_wk )  \
+    _ASM_WBT_SELECT_DL_DATA ret_wk
+
+    .macro _ASM_WBT_SELECT_DL_DATA ret_wk
+    .short  EV_SEQ_WBT_SELECT_DL_DATA
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief 
+ * @param[in]  type
+ */
+//--------------------------------------------------------------
+#define _WBT_SET_DL_NUMBER( type )  \
+    _ASM_WBT_SET_DL_NUMBER type   
+
+    .macro _ASM_WBT_SET_DL_NUMBER type   
+    .short  EV_SEQ_WBT_SET_DL_NUMBER
+    .short  \type
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief 
+ * @param[out]  ret_wk
+ */
+//--------------------------------------------------------------
+#define _WBT_GET_DL_NUMBER( ret_wk )   \
+    _ASM_WBT_GET_DL_NUMBER ret_wk   
+
+    .macro _ASM_WBT_GET_DL_NUMBER ret_wk   
+    .short  EV_SEQ_WBT_GET_DL_NUMBER
+    .short  \ret_wk
+    .endm
+
+//======================================================================
+//======================================================================
+
 
 
