@@ -40,6 +40,8 @@
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdWBTShowTornamentList( VMHANDLE * core, void * wk )
 {
+  u16 list_type = SCRCMD_GetVMWorkValue( core, wk );
+  //仮：ここでトーナメント表を表示
   return VMCMD_RESULT_SUSPEND;
 }
 
@@ -64,6 +66,8 @@ VMCMD_RESULT EvCmdWBTCheckBattleRule( VMHANDLE * core, void * wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdWBTSetBattleRule( VMHANDLE * core, void * wk )
 {
+  u16 rule = SCRCMD_GetVMWorkValue( core, wk );
+  //仮
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -75,6 +79,7 @@ VMCMD_RESULT EvCmdWBTSetBattleRule( VMHANDLE * core, void * wk )
 VMCMD_RESULT EvCmdWBTGetBattleRule( VMHANDLE * core, void * wk )
 {
   u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
+  *ret_wk = SCR_WBT_RULE_SINGLE;  //仮
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -85,6 +90,8 @@ VMCMD_RESULT EvCmdWBTGetBattleRule( VMHANDLE * core, void * wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdWBTSetTournamentType( VMHANDLE * core, void * wk )
 {
+  u16 type = SCRCMD_GetVMWorkValue( core, wk );
+  //仮
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -96,6 +103,7 @@ VMCMD_RESULT EvCmdWBTSetTournamentType( VMHANDLE * core, void * wk )
 VMCMD_RESULT EvCmdWBTGetTournamentType( VMHANDLE * core, void * wk )
 {
   u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
+  *ret_wk = SCR_WBT_TYPE_ALL; //仮
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -142,7 +150,8 @@ VMCMD_RESULT EvCmdWBTGetDownLoadName( VMHANDLE * core, void * wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdWBTSelectDLData( VMHANDLE * core, void * wk )
 {
-  return VMCMD_RESULT_CONTINUE;
+  //仮：ここで別画面アプリ呼び出し
+  return VMCMD_RESULT_SUSPEND;
 }
 
 //--------------------------------------------------------------
@@ -152,6 +161,8 @@ VMCMD_RESULT EvCmdWBTSelectDLData( VMHANDLE * core, void * wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdWBTSetDLNumber( VMHANDLE * core, void * wk )
 {
+  u16 number = SCRCMD_GetVMWorkValue( core, wk );
+  //仮：numberをWBT_SYSTEMにセット
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -163,6 +174,7 @@ VMCMD_RESULT EvCmdWBTSetDLNumber( VMHANDLE * core, void * wk )
 VMCMD_RESULT EvCmdWBTGetDLNumber( VMHANDLE * core, void * wk )
 {
   u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
+  *ret_wk = 0;  //仮
   return VMCMD_RESULT_CONTINUE;
 }
 

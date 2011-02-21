@@ -613,5 +613,21 @@
 #define SCR_MEDALRANK_BW              (4)   // メダルランクホワイト or ブラック（最高ランク）
 
 
+//--------------------------------------------------------------
+//  scrcmd_wbt.c
+//  WBT関連定義
+//--------------------------------------------------------------
+#define SCR_WBT_TYPE_ALL              (0) ///<オールトーナメント
+#define SCR_WBT_TYPE_CHAMPION         (1) ///<チャンピオントーナメント
+#define SCR_WBT_TYPE_POKETYPE         (2) ///<タイプトーナメント
+#define SCR_WBT_TYPE_DOWNLOAD         (3) ///<ダウンロードトーナメント
 
+#define SCR_WBT_RULE_SINGLE           (0) ///<シングルバトル
+#define SCR_WBT_RULE_DOUBLE           (1) ///<ダブルバトル
+#define SCR_WBT_RULE_TRIPLE           (2) ///<トリプルバトル
+#define SCR_WBT_RULE_LOTATION         (3) ///<ローテーション
+
+#define SCR_WBT_LIST_1ST_START        (0) ///<受付での組み合わせ
+#define SCR_WBT_LIST_1ST_RESULT       (1) ///<1回戦結果
+#define SCR_WBT_LIST_2ND_RESULT       (2) ///<2回戦結果
 
