@@ -3767,7 +3767,6 @@ static void ItemMenuMake( FIELD_ITEMMENU_WORK * pWork, u8* tbl )
   }
 
   itemdata = ITEM_GetItemArcData( item->id, ITEM_GET_DATA, pWork->heapID );
-  //pocket   = pWork->pocketno;
   pocket   = ITEM_GetBufParam( itemdata,  ITEM_PRM_POCKET ) ;
 
 #if 0
@@ -3810,7 +3809,8 @@ static void ItemMenuMake( FIELD_ITEMMENU_WORK * pWork, u8* tbl )
 
   // しまう
   // もどす
-  if( pocket != BAG_POKE_REPOSITORY )
+  // (現在のポケット番号と比較)
+  if( pWork->pocketno != BAG_POKE_REPOSITORY )
   {
     tbl[BAG_MENU_KEEP] = BAG_MENU_SHIMAU;
   }
