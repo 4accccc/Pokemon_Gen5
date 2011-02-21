@@ -3536,6 +3536,21 @@ void GMK_TMP_WK_FreeWork
   tmpWork->AssignID = GMK_TMP_NO_ASSIGN_ID;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief アサインIDをチェック
+ *
+ *	@param	const u32 inAssignID 
+ *
+ *	@return TRUEならば同じ　FALSEならば違う
+ */
+//-----------------------------------------------------------------------------
+BOOL GMK_TMP_CheckAssignID( FIELDMAP_WORK *fieldWork, const u32 inAssignID )
+{
+  GMK_TMP_WORK *tmpWork = &fieldWork->GmkTmpWork;
+  return tmpWork->AssignID == inAssignID;
+}
+
 
 //==================================================================
 /**

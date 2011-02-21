@@ -18,6 +18,5 @@ extern void *GMK_TMP_WK_AllocWork
 extern void GMK_TMP_WK_FreeWork
       (FIELDMAP_WORK *fieldWork, const u32 inAssignID);
 extern void *GMK_TMP_WK_GetWork(FIELDMAP_WORK *fieldWork, const u32 inAssignID);
-
-
+extern BOOL GMK_TMP_CheckAssignID( FIELDMAP_WORK *fieldWork, const u32 inAssignID );
 

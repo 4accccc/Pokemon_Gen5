@@ -1130,6 +1130,14 @@ static void _modeCheckStart32(IRC_BATTLE_MATCH* pWork)
     int num = GFL_NET_GetConnectNum();
     int i;
     BOOL is_swan  = TRUE;
+
+    //ミュージカルでは行わない(MP通信なのでMP通信用シーケンスを行わないといけないので)
+    if( pWork->selectType == EVENTIRCBTL_ENTRYMODE_MUSICAL_LEADER
+      || pWork->selectType == EVENTIRCBTL_ENTRYMODE_MUSICAL )
+    {
+      is_swan = FALSE;
+    }
+
     for( i = 0; i < num; i ++ )
     {
       MYSTATUS* myst  = GAMEDATA_GetMyStatusPlayer(pWork->pBattleWork->gamedata, i);

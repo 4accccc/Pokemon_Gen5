@@ -26,6 +26,7 @@ struct _RESONANCE_RESORT_SV
 {
   u8  recv_buff[RESORT_RECV_BUFF_SIZE( RESONANCE_RESORT_SV_RECV_BUFF_NUM )];
   u8  proxy_buff[RESORT_PROXY_BUFF_SIZE( RESONANCE_RESORT_SV_PROXY_BUFF_NUM )];
+  u8  people_all_data[RESORT_PEOPLE_ALL_DATA_SIZE];
   u8  city_data[RESORT_CITY_DATA_SIZE];
 };
 
@@ -105,6 +106,19 @@ RESORT_RECV_BUFF * RESONANCE_RESORT_SV_GetDataBuff( RESONANCE_RESORT_SV *p_wk )
 RESORT_PROXY_BUFF * RESONANCE_RESORT_SV_GetProxyBuff( RESONANCE_RESORT_SV *p_wk )
 {
   return (RESORT_PROXY_BUFF *)p_wk->proxy_buff;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief　人物全データ取得
+ *
+ *	@param	RESONANCE_RESORT_SV *p_wk   ワーク
+ *
+ *	@return 人物全データ取得
+ */
+//-----------------------------------------------------------------------------
+RESORT_PEOPLE_ALL_DATA * RESONANCE_RESORT_SV_GetPeopleAllData( RESONANCE_RESORT_SV *p_wk )
+{
+  return (RESORT_PEOPLE_ALL_DATA *)p_wk->people_all_data;
 }
 //----------------------------------------------------------------------------
 /**

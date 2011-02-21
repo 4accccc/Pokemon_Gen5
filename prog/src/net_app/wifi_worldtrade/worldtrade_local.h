@@ -53,9 +53,9 @@
 //#define DEBUG_SAVE_NONE					//デバッグ用にセーブしないで進みます
 
 
-#ifdef DEBUG_ONLY_FOR_toru_nagihashi	//担当者が変わったら変えてください
+#ifdef DEBUG_ONLY_FOR_nagihashi_toru	//担当者が変わったら変えてください
 #define DEBUG_AUTHER_ONLY				//現在ONになっているとadapter以外で行っていないところをワーニングで知らせます
-#endif //DEBUG_ONLY_FOR_toru_nagihashi
+#endif //DEBUG_ONLY_FOR_nagihashi_toru
 
 //アルセウスイベントチェック
 //#define ARUCEUSU_EVENT_CHECK

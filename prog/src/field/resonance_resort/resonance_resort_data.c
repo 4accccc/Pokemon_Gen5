@@ -557,7 +557,12 @@ struct _RESORT_RECV_DATA
   RESORT_EXTEND6_DATA extend6;
   RESORT_EXTEND7_DATA extend7;
   RESORT_EXTEND8_DATA extend8;
-  u32                 extend_flag;
+  u32                 extend_flag:8;
+  u32                 lock      :1;
+  u32                 update    :2; //RESORT_RECV_DATA_UPDATEの値
+  u32                 peopleID  :10;
+  u32                 placeID   :10;
+  u32                 dummy     :1;
 };
 SDK_COMPILER_ASSERT( sizeof(RESORT_RECV_DATA) == RESORT_RECV_DATA_SIZE );
 
@@ -676,6 +681,8 @@ BOOL RESORT_RECV_DATA_IsSameOwnerBeacon( const RESORT_RECV_DATA *cp_wk, const RE
 {
   return RESORT_BASIC1_DATA_IsSameOwner( &cp_wk->basic1, &cp_beacon->basic1 );
 }
+
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  ビーコンをマージ
@@ -686,6 +693,11 @@ BOOL RESORT_RECV_DATA_IsSameOwnerBeacon( const RESORT_RECV_DATA *cp_wk, const RE
 //-----------------------------------------------------------------------------
 void RESORT_RECV_DATA_MergeBeacon( RESORT_RECV_DATA *p_wk, const RESORT_BEACON_DATA *cp_beacon )
 {
+  //ロック
+  if( RESORT_RECV_DATA_GetData(p_wk,RESORT_RECV_DATA_PARAM_LOCK) )
+  {
+    return;
+  }
   //不正対策
   if( !RESORT_BEACON_DATA_IsValid( cp_beacon ) )
   {
@@ -694,6 +706,8 @@ void RESORT_RECV_DATA_MergeBeacon( RESORT_RECV_DATA *p_wk, const RESORT_BEACON_D
 
   if( RESORT_RECV_DATA_IsEmpty( p_wk ) )
   {
+    RESORT_RECV_DATA_InitInstance( p_wk );
+
     //空だったら、全部いれる
     p_wk->basic1  = cp_beacon->basic1;
 
@@ -708,6 +722,8 @@ void RESORT_RECV_DATA_MergeBeacon( RESORT_RECV_DATA *p_wk, const RESORT_BEACON_D
       //拡張マージフラグ
       p_wk->extend_flag |=  1<<cp_beacon->extend_type;
     }
+
+    RESORT_RECV_DATA_SetData(p_wk,RESORT_RECV_DATA_PARAM_UPDATE,RESORT_RECV_DATA_UPDATE_FIRST);
 
     if( p_wk->extend_flag == 0xFF )
     {
@@ -736,6 +752,8 @@ void RESORT_RECV_DATA_MergeBeacon( RESORT_RECV_DATA *p_wk, const RESORT_BEACON_D
     {
       RESORT_Printf( "!!!すべてマージ完了\n!!!" );
     }
+
+    RESORT_RECV_DATA_SetData(p_wk,RESORT_RECV_DATA_PARAM_UPDATE,RESORT_RECV_DATA_UPDATE_MERGE);
   }
 }
 //----------------------------------------------------------------------------
@@ -748,6 +766,12 @@ void RESORT_RECV_DATA_MergeBeacon( RESORT_RECV_DATA *p_wk, const RESORT_BEACON_D
 //-----------------------------------------------------------------------------
 void RESORT_RECV_DATA_MergeRecv( RESORT_RECV_DATA *p_wk, const RESORT_RECV_DATA *cp_recv )
 {
+  //ロック
+  if( RESORT_RECV_DATA_GetData(p_wk,RESORT_RECV_DATA_PARAM_LOCK) )
+  {
+    return;
+  }
+
   //不正対策
   if( !RESORT_RECV_DATA_IsValid( cp_recv ) )
   {
@@ -757,11 +781,15 @@ void RESORT_RECV_DATA_MergeRecv( RESORT_RECV_DATA *p_wk, const RESORT_RECV_DATA 
   if( RESORT_RECV_DATA_IsEmpty( p_wk ) )
   {
     GFL_STD_MemCopy( cp_recv, p_wk, sizeof(RESORT_RECV_DATA) );
+
+    RESORT_RECV_DATA_SetData(p_wk,RESORT_RECV_DATA_PARAM_UPDATE,RESORT_RECV_DATA_UPDATE_FIRST);
   }
   else
   {
     //TODO
     //マージ処理
+
+    RESORT_RECV_DATA_SetData(p_wk,RESORT_RECV_DATA_PARAM_UPDATE,RESORT_RECV_DATA_UPDATE_MERGE);
   }
 }
 //----------------------------------------------------------------------------
@@ -801,6 +829,62 @@ BOOL RESORT_RECV_DATA_IsValid( const RESORT_RECV_DATA *cp_wk )
   }
 
   return TRUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  受信データの内部データ取得
+ *
+ *	@param	const RESORT_RECV_DATA *cp_wk ワーク
+ *	@param	param 引数
+ *
+ *	@return   受信データのデータ取得
+ */
+//-----------------------------------------------------------------------------
+u32 RESORT_RECV_DATA_GetData( const RESORT_RECV_DATA *cp_wk, RESORT_RECV_DATA_PARAM param )
+{
+  switch( param )
+  {
+  case RESORT_RECV_DATA_PARAM_PEOPLE_ID:
+    return cp_wk->peopleID;
+  case RESORT_RECV_DATA_PARAM_PLACE_ID:
+    return cp_wk->placeID;
+  case RESORT_RECV_DATA_PARAM_LOCK:
+    return cp_wk->lock;
+  case RESORT_RECV_DATA_PARAM_UPDATE:
+    return cp_wk->update;
+  default:
+    GF_ASSERT(0);
+    return 0;
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  受信データの内部データ設定
+ *
+ *	@param	RESORT_RECV_DATA *p_wk ワーク
+ *	@param	param 引数
+ *	@param	data  受信データに設定する値
+ */
+//-----------------------------------------------------------------------------
+void RESORT_RECV_DATA_SetData( RESORT_RECV_DATA *p_wk, RESORT_RECV_DATA_PARAM param, u32 data )
+{
+  switch( param )
+  {
+  case RESORT_RECV_DATA_PARAM_PEOPLE_ID:
+    p_wk->peopleID  = data;
+    break;
+  case RESORT_RECV_DATA_PARAM_PLACE_ID:
+    p_wk->placeID   = data;
+    break;
+  case RESORT_RECV_DATA_PARAM_LOCK:
+    p_wk->lock      = data;
+    break;
+  case RESORT_RECV_DATA_PARAM_UPDATE:
+    p_wk->update    = data;
+    break;
+  default:
+    GF_ASSERT(0);
+  }
 }
 
 //=============================================================================
@@ -1001,21 +1085,6 @@ void RESORT_PROXY_BUFF_InitInstance( RESORT_PROXY_BUFF *p_wk, u32 num )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  レゾナンスリゾートのデータ受信バッファ  データ取得
- *
- *	@param	RESORT_PROXY_BUFF *p_wk  ワーク
- *	@param	index   インデックス
- *
- *	@return データ取得
- */
-//-----------------------------------------------------------------------------
-RESORT_PROXY_DATA * RESORT_PROXY_BUFF_GetData( RESORT_PROXY_BUFF *p_wk, u32 index )
-{
-  GF_ASSERT( index < p_wk->max );
-  return &p_wk->data[ index ];
-}
-//----------------------------------------------------------------------------
-/**
  *	@brief  受信バッファクリア
  *
  *	@param	RESORT_PROXY_BUFF *p_wk  ワーク
@@ -1052,6 +1121,34 @@ BOOL RESORT_PROXY_BUFF_Add( RESORT_PROXY_BUFF *p_wk, const RESORT_PROXY_DATA *cp
 
   RESORT_Printf( "代理人データを受け取ったが、バッファがいっぱい！\n" );
   return FALSE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バッファの最大数取得
+ *
+ *	@param	const RESORT_PROXY_BUFF *cp_wk ワーク
+ *
+ *	@return バッファの最大数取得
+ */
+//-----------------------------------------------------------------------------
+u32 RESORT_PROXY_BUFF_GetMax( const RESORT_PROXY_BUFF *cp_wk )
+{
+  return cp_wk->max;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バッファから代理人データ取得
+ *
+ *	@param	RESORT_PROXY_BUFF *p_wk ワーク
+ *	@param	index   インデックス
+ *
+ *	@return 代理人データ
+ */
+//-----------------------------------------------------------------------------
+RESORT_PROXY_DATA * RESORT_PROXY_BUFF_GetData( RESORT_PROXY_BUFF *p_wk, u32 index )
+{
+  GF_ASSERT( index < RESORT_PROXY_BUFF_GetMax(p_wk ) );
+  return &p_wk->data[index];
 }
 //----------------------------------------------------------------------------
 /**
@@ -1175,6 +1272,19 @@ void RESORT_RECV_BUFF_Lock( RESORT_RECV_BUFF *p_wk )
 void RESORT_RECV_BUFF_UnLock( RESORT_RECV_BUFF *p_wk )
 {
   p_wk->is_lock = FALSE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バッファの数を取得
+ *
+ *	@param	const RESORT_RECV_BUFF *cp_wk   ワーク
+ *
+ *	@return バッファ最大値
+ */
+//-----------------------------------------------------------------------------
+u32 RESORT_RECV_BUFF_GetMax( const RESORT_RECV_BUFF *cp_wk )
+{
+  return cp_wk->max;
 }
 
 //----------------------------------------------------------------------------
@@ -1350,66 +1460,6 @@ static RESORT_RECV_DATA * Resort_Recv_Buff_GetSameOwnerData( RESORT_RECV_BUFF *p
  *  住民データ
  */
 //=============================================================================
-//-------------------------------------
-///	住民データ
-//=====================================
-struct _RESORT_RESIDENT_DATA
-{
-  RESORT_BASIC1_DATA  basic1;
-  RESORT_BASIC2_DATA  basic2;
-  RESORT_EXTEND1_DATA extend1;
-  RESORT_EXTEND2_DATA extend2;
-  RESORT_EXTEND3_DATA extend3;
-  RESORT_EXTEND4_DATA extend4;
-  RESORT_EXTEND5_DATA extend5;
-  RESORT_EXTEND6_DATA extend6;
-  RESORT_EXTEND7_DATA extend7;
-  RESORT_EXTEND8_DATA extend8;
-  u32                 extend_flag;
-  //TODO 
-};
-
-//-------------------------------------
-///	外部公開
-//=====================================
-//----------------------------------------------------------------------------
-/**
- *	@brief  住民データを作成
- *
- *	@param	HEAPID heapID ヒープID
- *
- *	@return　住民データ
- */
-//-----------------------------------------------------------------------------
-RESORT_RESIDENT_DATA * RESORT_RESIDENT_DATA_Init( HEAPID heapID )
-{
-  RESORT_RESIDENT_DATA *p_wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(RESORT_RESIDENT_DATA) );
-  RESORT_RESIDENT_DATA_InitInstance( p_wk );
-  return p_wk;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  住民データ破棄
- *
- *	@param	RESORT_RESIDENT_DATA *p_wk ワーク
- */
-//-----------------------------------------------------------------------------
-void RESORT_RESIDENT_DATA_Exit( RESORT_RESIDENT_DATA *p_wk )
-{
-  GFL_HEAP_FreeMemory( p_wk );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  住民データを初期化
- *
- *	@param	RESORT_RESIDENT_DATA *p_wk ワーク
- */
-//-----------------------------------------------------------------------------
-void RESORT_RESIDENT_DATA_InitInstance( RESORT_RESIDENT_DATA *p_wk )
-{
-  GFL_STD_MemClear( p_wk, sizeof(RESORT_RESIDENT_DATA ) );
-}
-
 //=============================================================================
 /**
  *  特殊NPCデータ
@@ -1572,6 +1622,127 @@ void RESORT_INSTITUTION_DATA_InitInstance( RESORT_INSTITUTION_DATA *p_wk )
   GFL_STD_MemClear(p_wk,sizeof(RESORT_INSTITUTION_DATA));
 }
 
+//=============================================================================
+/**
+ *	リゾート人物全データ
+*/
+//=============================================================================
+//-------------------------------------
+///	定数
+//=====================================
+#define RESORT_PEOPLE_ALL_DATA_SIZE (1)
+
+//-------------------------------------
+///	街データ
+//=====================================
+struct _RESORT_PEOPLE_ALL_DATA
+{
+  RESORT_RESIDENT_DATA    resident[RESORT_RESIDENT_DATA_NUM];
+  RESORT_VISITOR_DATA     visitor[RESORT_VISITOR_DATA_NUM];
+  RESORT_SECRETARY_DATA   secretary[RESORT_SECRETARY_DATA_NUM];
+};
+
+//SDK_COMPILER_ASSERT(sizeof(RESORT_PEOPLE_ALL_DATA) == RESORT_PEOPLE_ALL_DATA_SIZE );
+
+//-------------------------------------
+///	外部公開
+//=====================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  街データ作成
+ *
+ *	@param	HEAPID heapID ヒープID
+ *
+ *	@return 街データ
+ */
+//-----------------------------------------------------------------------------
+RESORT_PEOPLE_ALL_DATA * RESORT_PEOPLE_ALL_DATA_Init( HEAPID heapID )
+{
+  RESORT_PEOPLE_ALL_DATA *p_wk = GFL_HEAP_AllocClearMemory(heapID,sizeof(RESORT_PEOPLE_ALL_DATA) );
+  RESORT_PEOPLE_ALL_DATA_InitInstance(p_wk);
+  return p_wk;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  街データ破棄
+ *
+ *	@param	RESORT_PEOPLE_ALL_DATA *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void RESORT_PEOPLE_ALL_DATA_Exit( RESORT_PEOPLE_ALL_DATA *p_wk )
+{
+  GFL_HEAP_FreeMemory(p_wk);
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  街データ初期化
+ *
+ *	@param	RESORT_PEOPLE_ALL_DATA *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void RESORT_PEOPLE_ALL_DATA_InitInstance( RESORT_PEOPLE_ALL_DATA *p_wk )
+{
+  int i;
+  GFL_STD_MemClear(p_wk,sizeof(RESORT_PEOPLE_ALL_DATA));
+
+  for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
+  {
+    RESORT_RESIDENT_DATA_InitInstance(&p_wk->resident[i] );
+  }
+  for( i = 0; i < RESORT_VISITOR_DATA_NUM; i++ )
+  {
+    RESORT_VISITOR_DATA_InitInstance(&p_wk->visitor[i]);
+  }
+  for( i = 0; i < RESORT_SECRETARY_DATA_NUM; i++ )
+  {
+    RESORT_SECRETARY_DATA_InitInstance(&p_wk->secretary[i]);
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  住民データ取得
+ *
+ *	@param	RESORT_PEOPLE_ALL_DATA *p_wk  ワーク
+ *	@param	index   インデックス
+ *
+ *	@return 住民データ取得
+ */
+//-----------------------------------------------------------------------------
+RESORT_RESIDENT_DATA * RESORT_PEOPLE_ALL_DATA_GetResident( RESORT_PEOPLE_ALL_DATA *p_wk, u32 index )
+{
+  GF_ASSERT( index < RESORT_RESIDENT_DATA_NUM );
+  return &p_wk->resident[ index ];
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  滞在者データ取得
+ *
+ *	@param	RESORT_PEOPLE_ALL_DATA *p_wk  ワーク
+ *	@param	index   インデックス
+ *
+ *	@return　滞在者データ
+ */
+//-----------------------------------------------------------------------------
+RESORT_VISITOR_DATA * RESORT_PEOPLE_ALL_DATA_GetVisitor( RESORT_PEOPLE_ALL_DATA *p_wk, u32 index )
+{
+  GF_ASSERT( index < RESORT_VISITOR_DATA_NUM );
+  return &p_wk->visitor[ index ];
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  秘書データ取得
+ *
+ *	@param	RESORT_PEOPLE_ALL_DATA *p_wk  ワーク
+ *	@param	index   インデックス
+ *
+ *	@return　秘書データ取得
+ */
+//-----------------------------------------------------------------------------
+RESORT_SECRETARY_DATA * RESORT_PEOPLE_ALL_DATA_GetSecretary( RESORT_PEOPLE_ALL_DATA *p_wk, u32 index )
+{
+  GF_ASSERT( index < RESORT_SECRETARY_DATA_NUM );
+  return &p_wk->secretary[ index ];
+}
 
 //=============================================================================
 /**
@@ -1588,9 +1759,6 @@ void RESORT_INSTITUTION_DATA_InitInstance( RESORT_INSTITUTION_DATA *p_wk )
 //=====================================
 struct _RESORT_CITY_DATA
 {
-  RESORT_RESIDENT_DATA    resident[RESORT_RESIDENT_DATA_NUM];
-  RESORT_VISITOR_DATA     visitor[RESORT_VISITOR_DATA_NUM];
-  RESORT_SECRETARY_DATA   secretary[RESORT_SECRETARY_DATA_NUM];
   RESORT_INSTITUTION_DATA institution[RESORT_INSTITUTION_DATA_NUM];
 };
 
@@ -1637,18 +1805,6 @@ void RESORT_CITY_DATA_InitInstance( RESORT_CITY_DATA *p_wk )
   int i;
   GFL_STD_MemClear(p_wk,sizeof(RESORT_CITY_DATA));
 
-  for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
-  {
-    RESORT_RESIDENT_DATA_InitInstance(&p_wk->resident[i] );
-  }
-  for( i = 0; i < RESORT_VISITOR_DATA_NUM; i++ )
-  {
-    RESORT_VISITOR_DATA_InitInstance(&p_wk->visitor[i]);
-  }
-  for( i = 0; i < RESORT_SECRETARY_DATA_NUM; i++ )
-  {
-    RESORT_SECRETARY_DATA_InitInstance(&p_wk->secretary[i]);
-  }
   for( i = 0; i < RESORT_INSTITUTION_DATA_NUM; i++ )
   {
     RESORT_INSTITUTION_DATA_InitInstance(&p_wk->institution[i] );

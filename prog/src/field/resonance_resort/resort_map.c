@@ -1,0 +1,101 @@
+//[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
+/**
+ *
+ *	@file		resort_map.c
+ *	@brief  レゾナンスリゾートのマップ処理
+ *	@author	Toru=Nagihashi
+ *	@data		2011.02.21
+ *
+ */
+//]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+#include <gflib.h>
+#include "resort_map.h"
+//=============================================================================
+/**
+ *					マップデータ
+*/
+//=============================================================================
+//-------------------------------------
+///場所とゾーンID　//TODO
+//=====================================
+static const ZONEID sc_placeIDToZoneID[RESORT_PLACEID_MAX] =
+{
+  0,                        //RESORT_PLACEID_NONE,             //無効値
+  ZONE_ID_C16,              //RESORT_PLACEID_FIELD,             //フィールド
+  ZONE_ID_C16R0101,         //RESORT_PLACEID_RECEPTION,         //迎賓館
+  ZONE_ID_C16,              //RESORT_PLACEID_CONDOMINIUM_00,    //コンドミニアム
+  ZONE_ID_C16,              //RESORT_PLACEID_CONDOMINIUM_01,    //コンドミニアム
+  ZONE_ID_C16,              //RESORT_PLACEID_CONDOMINIUM_02,    //コンドミニアム
+  ZONE_ID_C16,              //RESORT_PLACEID_CONDOMINIUM_03,    //コンドミニアム
+  ZONE_ID_C16,              //RESORT_PLACEID_CONDOMINIUM_04,    //コンドミニアム
+  ZONE_ID_C16,              //RESORT_PLACEID_CONDOMINIUM_05,    //コンドミニアム
+  ZONE_ID_C16,              //RESORT_PLACEID_INSTITUTION_00,    //施設
+  ZONE_ID_C16,              //RESORT_PLACEID_INSTITUTION_01,    //施設
+  ZONE_ID_C16,              //RESORT_PLACEID_INSTITUTION_02,    //施設
+  ZONE_ID_C16,              //RESORT_PLACEID_INSTITUTION_03,    //施設
+  ZONE_ID_C16,              //RESORT_PLACEID_INSTITUTION_04,    //施設
+  ZONE_ID_C16,              //RESORT_PLACEID_INSTITUTION_05,    //施設
+  ZONE_ID_C16,              //RESORT_PLACEID_INSTITUTION_06,    //施設
+  ZONE_ID_C16,              //RESORT_PLACEID_INSTITUTION_07,    //施設
+};
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  場所IDからゾーンIDへ変換
+ *
+ *	@param	RESORT_PLACEID placeID  場所ID
+ *
+ *	@return ゾーンID
+ */
+//-----------------------------------------------------------------------------
+ZONEID RESORT_MAP_PlaceIDToZoneID( RESORT_PLACEID placeID )
+{
+  return sc_placeIDToZoneID[ placeID ];
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief　ゾーンIDから場所IDへの変換
+ *
+ *	@param	ZONEID zoneID 　ゾーンID
+ *
+ *	@return 場所ID
+ */
+//-----------------------------------------------------------------------------
+RESORT_PLACEID RESORT_MAP_ZoneIDToPlaceID( ZONEID zoneID )
+{
+  int i;
+  for( i = 0; i < RESORT_PLACEID_MAX; i++ )
+  {
+    if( sc_placeIDToZoneID[i] == zoneID )
+    {
+      return i;
+    }
+  }
+  GF_ASSERT(0);
+  return 0;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief 場所による、インデックスごとの座標を取得
+ *
+ *	@param	RESORT_PLACEID placeID 場所ID
+ *	@param  u16 index インデックス（主にpeopleID）
+ *	@param	*p_x　Xグリッド座標
+ *	@param	*p_z  Zグリッド座標
+ */
+//-----------------------------------------------------------------------------
+void RESORT_MAP_GetPlaceGridPosByIndex( RESORT_PLACEID placeID, u16 index, u16 *p_x, u16 *p_z )
+{
+  switch( placeID )
+  {
+  case RESORT_PLACEID_RECEPTION:
+    *p_x  = 2 + (index%5)*2;
+    *p_z  = 3 + (index/5)*2;
+    break;
+    //TODO
+  default:
+    GF_ASSERT(0);
+  }
+}

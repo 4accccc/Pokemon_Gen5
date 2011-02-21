@@ -2,7 +2,7 @@
 /**
  * @file  worldtrade.c
  * @brief ¢ŠEŒðŠ·ƒƒCƒ“ˆ—
- * @author  Akito Mori -> toru_nagihashi WB‚ÖˆÚA
+ * @author  Akito Mori -> nagihashi_toru WB‚ÖˆÚA
  * @date  06.04.16  -> 09.08.04
  */
 //============================================================================================

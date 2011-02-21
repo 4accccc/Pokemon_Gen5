@@ -9,80 +9,74 @@
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #pragma once
+#include "resort_people_def.h"
+#include "resort_binary.h"
+#include "field/resonance_resort_data.h"
+#include "../fldmmdl.h"
+#include "../field_player.h"
 
 //=============================================================================
 /**
  *				人物ワーク
+ *				  人物個別操作、または人物情報設定や読み取り
 */
 //=============================================================================
 //-------------------------------------
-///	人物の性格
+///	行動
 //=====================================
 typedef enum
 {
-  RESORT_PEOPLE_SEIKAKU_TODO,
-  RESORT_PEOPLE_SEIKAKU_MAX,
-}RESORT_PEOPLE_SEIKAKU;
+  RESORT_PEOPLE_ACTION_WARPDOWN,  //下にワープ
+  RESORT_PEOPLE_ACTION_WARPUP,    //上にワープ
+  RESORT_PEOPLE_ACTION_MAX,
+}RESORT_PEOPLE_ACTION;
 
 //-------------------------------------
-///	人物のタイプ
+///	人物データアクセス引数
 //=====================================
 typedef enum
 {
-  RESORT_PEOPLE_TYPE_RESIDENT,  //住民
-  RESORT_PEOPLE_TYPE_PROXY,     //代理人
-  RESORT_PEOPLE_TYPE_TOURIST,   //観光客
-  RESORT_PEOPLE_TYPE_VISTOR,    //滞在者
-  RESORT_PEOPLE_TYPE_SECRETARY, //秘書
-  RESORT_PEOPLE_TYPE_NPC,       //NPC
-
-  RESORT_PEOPLE_TYPE_MAX,
-}RESORT_PEOPLE_TYPE;
-
-//-------------------------------------
-///	人物の種類
-//=====================================
-typedef enum
-{
-  RESORT_PEOPLE_KIND_START = 0,
-
-  //住民の種類
-  RESORT_RESIDENT_KIND_00 = RESORT_PEOPLE_KIND_START,
-  RESORT_RESIDENT_KIND_MAX,
-
-  //代理人の種類
-  RESORT_PROXY_KIND_00 = RESORT_PEOPLE_KIND_START,
-  RESORT_PROXY_KIND_MAX,
-
-  //観光客の種類
-  RESORT_TOURIST_KIND_00 = RESORT_PEOPLE_KIND_START,
-  RESORT_TOURIST_KIND_MAX,
-
-  //滞在者の種類
-  RESORT_VISITOR_KIND_00 = RESORT_PEOPLE_KIND_START,
-  RESORT_VISITOR_KIND_MAX,
-
-  //秘書の種類
-  RESORT_SECRETARY_KIND_00 = RESORT_PEOPLE_KIND_START,
-  RESORT_SECRETARY_KIND_MAX,
-
-  //NPCの種類
-  RESORT_NPC_KIND_00 = RESORT_PEOPLE_KIND_START,
-  RESORT_NPC_KIND_MAX,
-
-} RESORT_PEOPLE_KIND;
-
+  RESORT_PEOPLE_PARAM_PEOPLEID,
+  RESORT_PEOPLE_PARAM_PLACEID,
+  RESORT_PEOPLE_PARAM_LOCK,
+}RESORT_PEOPLE_PARAM;
 
 //-------------------------------------
 ///	人物ワーク
 //=====================================
 typedef struct _RESORT_PEOPLE RESORT_PEOPLE;
 
+//-------------------------------------
+///	PUBLIC
+//=====================================
+//行動
+extern void RESORT_PEOPLE_ActionReq( RESORT_PEOPLE *p_wk, RESORT_PEOPLE_ACTION action );
+extern BOOL RESORT_PEOPLE_IsActionEnd( const RESORT_PEOPLE *cp_wk );
+
+//設定
+extern void RESORT_PEOPLE_SetVisible( RESORT_PEOPLE *p_wk, BOOL is_visible );
+extern void RESORT_PEOPLE_SetData( RESORT_PEOPLE *p_wk, RESORT_PEOPLE_PARAM param, u32 data );
+extern u32 RESORT_PEOPLE_GetData( const RESORT_PEOPLE *cp_wk, RESORT_PEOPLE_PARAM param );
+extern u32 RESORT_PEOPLE_GetMsgID( const RESORT_PEOPLE *cp_wk, u32 index );
+extern MMDL * RESORT_PEOPLE_GetMmdl( const RESORT_PEOPLE *cp_wk );
+
 //=============================================================================
 /**
  *					人物管理ワーク
+ *					  人物ワークの作成、破棄、一括処理
 */
 //=============================================================================
+//-------------------------------------
+///	定数
+//=====================================
+//人物管理ワークでMMDLに登録するIDの開始値
+//ただし、0ofsは無効値としているので、
+//実質129～
+#define RESORT_PEOPLE_MMDLID_OFS (128)
+//peopleIDは場所内インデックス
+#define RESORT_PEOPLE_MMDLID_TO_PEOPLEID(x) (x-RESORT_PEOPLE_MMDLID_OFS)
+#define RESORT_PEOPLE_PEOPLEID_TO_MMDLID(x) (x+RESORT_PEOPLE_MMDLID_OFS)
+
 //-------------------------------------
 ///	人物管理ワーク
 //=====================================
@@ -93,15 +87,49 @@ typedef struct _RESORT_PEOPLE_SYS RESORT_PEOPLE_SYS;
 //=====================================
 typedef struct
 {
-  MMDLSYS *p_mmdlsys;           //動作モデルシステム
-  RESORT_CITY_DATA *p_city_data;//街用データ
+  MMDLSYS *p_mmdlsys;                 //動作モデルシステム
+  RESORT_PEOPLE_ALL_DATA *p_people_all_data;//全人物用データ
+  RESORT_RECV_BUFF *p_recv_sv_buff;   //セーブ上にある観光客バッファ
+  RESORT_RECV_BUFF *p_recv_recep_buff;//迎賓館のみにある観光客バッファ
+  RESORT_PROXY_BUFF *p_proxy_buff;    //代理人バッファ
+  u32 max;                            //動作上限数
+  ZONEID zoneID;                      //人物管理システムが動くゾーンID
 } RESORT_PEOPLE_SYS_PARAM;
 
 //-------------------------------------
 ///	PUBLIC
 //=====================================
+//システム作成、破棄、メイン
 extern RESORT_PEOPLE_SYS * RESORT_PEOPLE_SYS_Init( const RESORT_PEOPLE_SYS_PARAM *cp_param, HEAPID heapID );
 extern void RESORT_PEOPLE_SYS_Exit( RESORT_PEOPLE_SYS *p_wk );
-extern void RESORT_PEOPLE_SYS_Main( RESORT_PEOPLE_SYS *p_wk );
+extern void RESORT_PEOPLE_SYS_Main( RESORT_PEOPLE_SYS *p_wk,FIELD_PLAYER *p_player );
 
-extern const RESORT_PEOPLE * RESORT_PEOPLE_SYS_GetPeopleByMmdl( const RESORT_PEOPLE_SYS *cp_wk, const MMDL* cp_mmdl );
+//人物を一人登録
+typedef struct
+{
+  RESORT_PEOPLE_TYPE people_type;
+  void *p_data_adrs;  //以下のunionとして使う
+#if 0
+  union
+  {
+    RESORT_SECRETARY_DATA *p_secretary;
+    RESORT_VISITOR_DATA   *p_visitor;
+    RESORT_RESIDENT_DATA  *p_resident;
+    RESORT_PROXY_DATA     *p_proxy;
+    RESORT_RECV_DATA      *p_tourist;
+    void *p_npc;
+  };
+#endif
+  ZONEID zoneID;
+}RESORT_PEOPLE_SYS_ADD_PARAM;
+extern RESORT_PEOPLE * RESORT_PEOPLE_SYS_AddNew( RESORT_PEOPLE_SYS *p_wk, const RESORT_PEOPLE_SYS_ADD_PARAM *cp_param );
+//人物を一括登録
+extern void RESORT_PEOPLE_SYS_AddAll( RESORT_PEOPLE_SYS *p_wk );
+//人物を一人破棄
+extern void RESORT_PEOPLE_SYS_Remove( RESORT_PEOPLE_SYS *p_wk, RESORT_PEOPLE *p_people );
+//人物を一括破棄
+extern void RESORT_PEOPLE_SYS_RemoveAll( RESORT_PEOPLE_SYS *p_wk );
+
+//人物を取得
+extern RESORT_PEOPLE * RESORT_PEOPLE_SYS_GetPeopleByMmdl( RESORT_PEOPLE_SYS *p_wk, const MMDL* cp_mmdl );
+extern RESORT_PEOPLE * RESORT_PEOPLE_SYS_GetPeopleByData( RESORT_PEOPLE_SYS *p_wk, const void *cp_data_adrs );

@@ -131,9 +131,9 @@ def convertDefine( csv, header, hashNumber )
   header.write( "//データ定義\n" )
   header.write( "//人物\n" )
   hashPersonStr.each{ |k,v|
-    header.write( "#define RESORT_PERSON_TYPE_#{v} (#{hashNumber[k]}) //#{k}\n" )
+    header.write( "#define RESORT_PEOPLE_TYPE_#{v} (#{hashNumber[k]}) //#{k}\n" )
   }
-  header.write( "#define RESORT_PERSON_TYPE_MAX (#{hashPersonStr.size}) //最大\n" )
+  header.write( "#define RESORT_PEOPLE_TYPE_MAX (#{hashPersonStr.size}) //最大\n" )
 
   header.write( "//住民\n" )
   hashResidentStr.each{ |k,v|
@@ -203,11 +203,12 @@ def convertPeople( csv, data, hashNumber )
     #データ書き込み
     data.write_u16( hashNumber[person] )
     data.write_u16( hashNumber[kind] )
+    data.write_u16( hashNumber[seikaku] )
     #data.write_u16( scrid )
     #SCRIDから値への変換
     data.write_u16( 0 )
 
-    for i in PEOPLE_COL_MSGID_START...PEOPLE_COL_MSGID_END
+    for i in PEOPLE_COL_MSGID_START...PEOPLE_COL_MSGID_END+1
       msg   = csv.get( row, i )
 
       #data.write_u16( msg )

@@ -36,6 +36,7 @@
 #include "field_gimmick_d12.h"
 #include "legend_gmk.h"
 #include "field_gimmick_t01.h"
+#include "resonance_resort/resort_reception.h"
 
 FS_EXTERN_OVERLAY(field_gym_insect);
 FS_EXTERN_OVERLAY(field_gym_elec);
@@ -61,6 +62,7 @@ FS_EXTERN_OVERLAY(field_gimmick_d06);
 FS_EXTERN_OVERLAY(field_gimmick_bsubway);
 FS_EXTERN_OVERLAY(legend_gimmick);
 FS_EXTERN_OVERLAY(field_gimmick_t01);
+FS_EXTERN_OVERLAY(resonance_resort_gimmick);
 
 const static FSOverlayID FldGimmickOverlay[FLD_GIMMICK_MAX] = {
 	NULL,					//0:ñ≥Çµ
@@ -118,6 +120,7 @@ const static FSOverlayID FldGimmickOverlay[FLD_GIMMICK_MAX] = {
   FS_OVERLAY_ID(field_gimmick_d12), //D12
   FS_OVERLAY_ID(legend_gimmick), //N01R0502
   FS_OVERLAY_ID(field_gimmick_t01),  // T01 and R01 and T02
+  FS_OVERLAY_ID(resonance_resort_gimmick),  //ÉäÉ]Å[Ég
 };
 
 const static FLD_GMK_SETUP_FUNC FldGimmickSetupFunc[FLD_GIMMICK_MAX] = {
@@ -176,6 +179,7 @@ const static FLD_GMK_SETUP_FUNC FldGimmickSetupFunc[FLD_GIMMICK_MAX] = {
   D12_GIMMICK_Setup,    //D12
   LEGEND_GMK_Setup,     //N01R0502
   T01_GIMMICK_Setup,    //T01 and R01 and T02
+  RESORT_RECEPTION_Setup, //ÉäÉ]Å[Égå}ïoäŸ
 };
 
 const static FLD_GMK_END_FUNC FldGimmickEndFunc[FLD_GIMMICK_MAX] = {
@@ -234,6 +238,7 @@ const static FLD_GMK_END_FUNC FldGimmickEndFunc[FLD_GIMMICK_MAX] = {
   D12_GIMMICK_End,    //D12
   LEGEND_GMK_End,     //N01R0502
   T01_GIMMICK_End,    //T01 and R01 and T02
+  RESORT_RECEPTION_End, //ÉäÉ]Å[Égå}ïoäŸ
 };
 
 const static FLD_GMK_MOVE_FUNC FldGimmickMoveFunc[FLD_GIMMICK_MAX] = {
@@ -292,6 +297,7 @@ const static FLD_GMK_MOVE_FUNC FldGimmickMoveFunc[FLD_GIMMICK_MAX] = {
   D12_GIMMICK_Move,    //D12
   LEGEND_GMK_Move,     //N01R0502
   T01_GIMMICK_Move,    //T01 and R01 and T02
+  RESORT_RECEPTION_Move, //ÉäÉ]Å[Égå}ïoäŸ
 };
 
 //---------------------------------------------------------------------------

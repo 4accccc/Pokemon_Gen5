@@ -42,7 +42,7 @@ typedef enum {
 #define DEFINED_AUTHOR_ID (AUTHOR_NAKAHIRO)
 #elif defined DEBUG_ONLY_FOR_genya_hosaka
 #define DEFINED_AUTHOR_ID (AUTHOR_HOSAKA)
-#elif defined DEBUG_ONLY_FOR_toru_nagihashi
+#elif defined DEBUG_ONLY_FOR_nagihashi_toru
 #define DEFINED_AUTHOR_ID (AUTHOR_NAGI)
 #elif defined DEBUG_ONLY_FOR_watanabe
 #define DEFINED_AUTHOR_ID (AUTHOR_WATANABE)

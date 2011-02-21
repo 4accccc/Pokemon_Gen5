@@ -6,6 +6,7 @@
  *	@author	Toru=Nagihashi
  *	@date		2011.02.07
  *
+ *
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #pragma once
@@ -49,7 +50,6 @@ typedef enum
   RESORT_EXTEND_TYPE_MAX,
   RESORT_EXTEND_TYPE_NULL = RESORT_EXTEND_TYPE_MAX,
 }RESORT_EXTEND_TYPE;
-
 //-------------------------------------
 ///	定数
 //=====================================
@@ -64,6 +64,32 @@ typedef enum
 
 //リゾート用代理データの全サイズ
 #define RESORT_PROXY_DATA_SIZE    (4)
+
+//-------------------------------------
+///	リゾート用受信データの取得引数
+//=====================================
+typedef enum 
+{
+  RESORT_RECV_DATA_PARAM_PEOPLE_ID,
+  RESORT_RECV_DATA_PARAM_PLACE_ID,
+  RESORT_RECV_DATA_PARAM_LOCK,
+  RESORT_RECV_DATA_PARAM_UPDATE,
+} RESORT_RECV_DATA_PARAM;
+
+//-------------------------------------
+///	リゾート用受信データの更新フラグ
+//    ここを増やしたら、RESORT_RECV_DATAのupdateのbitを増やすこと
+//=====================================
+typedef enum
+{
+  RESORT_RECV_DATA_UPDATE_NONE,
+  RESORT_RECV_DATA_UPDATE_FIRST,  //初期アップデート
+  RESORT_RECV_DATA_UPDATE_REPLACE,//置き換え（初期アップデート）
+  RESORT_RECV_DATA_UPDATE_MERGE,  //マージした
+
+  RESORT_RECV_DATA_UPDATE_MAX,
+} RESORT_RECV_DATA_UPDATE;
+
 
 //-------------------------------------
 ///	１…リゾート用全受信データ
@@ -93,6 +119,9 @@ extern BOOL RESORT_RECV_DATA_IsSameOwnerBeacon( const RESORT_RECV_DATA *cp_wk, c
 extern void RESORT_RECV_DATA_MergeBeacon( RESORT_RECV_DATA *p_wk, const RESORT_BEACON_DATA *cp_beacon );
 extern void RESORT_RECV_DATA_MergeRecv( RESORT_RECV_DATA *p_wk, const RESORT_RECV_DATA *cp_recv );
 extern BOOL RESORT_RECV_DATA_IsValid( const RESORT_RECV_DATA *cp_wk );
+
+extern u32 RESORT_RECV_DATA_GetData( const RESORT_RECV_DATA *cp_wk, RESORT_RECV_DATA_PARAM param );
+extern void RESORT_RECV_DATA_SetData( RESORT_RECV_DATA *p_wk, RESORT_RECV_DATA_PARAM param, u32 data );
 
 //-------------------------------------
 ///	２…リゾート用ビーコンパックデータの外部公開
@@ -134,11 +163,11 @@ typedef struct _RESORT_PROXY_BUFF RESORT_PROXY_BUFF;
 //=====================================
 extern void RESORT_PROXY_BUFF_InitInstance( RESORT_PROXY_BUFF *p_wk, u32 num );
 
-extern RESORT_PROXY_DATA * RESORT_PROXY_BUFF_GetData( RESORT_PROXY_BUFF *p_wk, u32 index );
 extern void RESORT_PROXY_BUFF_Clear( RESORT_PROXY_BUFF *p_wk, u32 index );
 
 extern BOOL RESORT_PROXY_BUFF_Add( RESORT_PROXY_BUFF *p_wk, const RESORT_PROXY_DATA *cp_proxy );
-
+extern u32 RESORT_PROXY_BUFF_GetMax( const RESORT_PROXY_BUFF *cp_wk );
+extern RESORT_PROXY_DATA * RESORT_PROXY_BUFF_GetData( RESORT_PROXY_BUFF *p_wk, u32 index );
 
 
 //=============================================================================
@@ -170,6 +199,7 @@ extern void RESORT_RECV_BUFF_InitInstance( RESORT_RECV_BUFF *p_wk, u32 num );
 
 extern void RESORT_RECV_BUFF_Lock( RESORT_RECV_BUFF *p_wk );
 extern void RESORT_RECV_BUFF_UnLock( RESORT_RECV_BUFF *p_wk );
+extern u32 RESORT_RECV_BUFF_GetMax( const RESORT_RECV_BUFF *cp_wk );
 
 extern RESORT_RECV_DATA * RESORT_RECV_BUFF_GetData( RESORT_RECV_BUFF *p_wk, u32 index );
 extern void RESORT_RECV_BUFF_Clear( RESORT_RECV_BUFF *p_wk, u32 index );
@@ -183,17 +213,22 @@ extern BOOL RESORT_RECV_BUFF_AddRecv( RESORT_RECV_BUFF *p_wk, const RESORT_RECV_
  *  住民データ
  */
 //=============================================================================
+
 //-------------------------------------
 ///	住民データ
+//    (住民データと受信データは同じ)
 //=====================================
-typedef struct _RESORT_RESIDENT_DATA RESORT_RESIDENT_DATA;
+typedef RESORT_RECV_DATA RESORT_RESIDENT_DATA;
 
 //-------------------------------------
 ///	外部公開
 //=====================================
-extern RESORT_RESIDENT_DATA * RESORT_RESIDENT_DATA_Init( HEAPID heapID );
-extern void RESORT_RESIDENT_DATA_Exit( RESORT_RESIDENT_DATA *p_wk );
-extern void RESORT_RESIDENT_DATA_InitInstance( RESORT_RESIDENT_DATA *p_wk );
+#define RESORT_RESIDENT_DATA_Init( x ) RESORT_RECV_DATA_Init( x )
+#define RESORT_RESIDENT_DATA_Exit( x ) RESORT_RECV_DATA_Exit( x )
+#define RESORT_RESIDENT_DATA_InitInstance( x ) RESORT_RECV_DATA_InitInstance( x )
+
+#define RESORT_RESIDENT_DATA_GetData( x, y ) RESORT_RECV_DATA_GetData( x, y )
+#define RESORT_RESIDENT_DATA_SetData( x, y, z )  RESORT_RECV_DATA_SetData( x, y, z )
 
 //=============================================================================
 /**
@@ -246,6 +281,38 @@ extern RESORT_INSTITUTION_DATA * RESORT_INSTITUTION_DATA_Init( HEAPID heapID );
 extern void RESORT_INSTITUTION_DATA_Exit( RESORT_INSTITUTION_DATA *p_wk );
 extern void RESORT_INSTITUTION_DATA_InitInstance( RESORT_INSTITUTION_DATA *p_wk );
 
+//=============================================================================
+/**
+ *	リゾート人物全データ
+*/
+//=============================================================================
+//-------------------------------------
+///	定数
+//=====================================
+//住人データ数
+#define RESORT_RESIDENT_DATA_NUM    (8)
+//滞在者データ数
+#define RESORT_VISITOR_DATA_NUM     (6)
+//秘書データ数
+#define RESORT_SECRETARY_DATA_NUM   (5)
+
+//人物データ総サイズ
+#define RESORT_PEOPLE_ALL_DATA_SIZE       (1)
+
+//-------------------------------------
+///	街データ
+//=====================================
+typedef struct _RESORT_PEOPLE_ALL_DATA RESORT_PEOPLE_ALL_DATA;
+
+//-------------------------------------
+///	外部公開
+//=====================================
+extern RESORT_PEOPLE_ALL_DATA * RESORT_PEOPLE_ALL_DATA_Init( HEAPID heapID );
+extern void RESORT_PEOPLE_ALL_DATA_Exit( RESORT_PEOPLE_ALL_DATA *p_wk );
+extern void RESORT_PEOPLE_ALL_DATA_InitInstance( RESORT_PEOPLE_ALL_DATA *p_wk );
+extern RESORT_RESIDENT_DATA * RESORT_PEOPLE_ALL_DATA_GetResident( RESORT_PEOPLE_ALL_DATA *p_wk, u32 index );
+extern RESORT_VISITOR_DATA * RESORT_PEOPLE_ALL_DATA_GetVisitor( RESORT_PEOPLE_ALL_DATA *p_wk, u32 index );
+extern RESORT_SECRETARY_DATA * RESORT_PEOPLE_ALL_DATA_GetSecretary( RESORT_PEOPLE_ALL_DATA *p_wk, u32 index ); 
 
 //=============================================================================
 /**
@@ -255,12 +322,6 @@ extern void RESORT_INSTITUTION_DATA_InitInstance( RESORT_INSTITUTION_DATA *p_wk 
 //-------------------------------------
 ///	定数
 //=====================================
-//住人データ数
-#define RESORT_RESIDENT_DATA_NUM  (8)
-//滞在者データ数
-#define RESORT_VISITOR_DATA_NUM     (6)
-//秘書データ数
-#define RESORT_SECRETARY_DATA_NUM   (5)
 //施設データ数
 #define RESORT_INSTITUTION_DATA_NUM (8)
 

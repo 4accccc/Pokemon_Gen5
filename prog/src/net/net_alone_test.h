@@ -45,7 +45,7 @@
 #define _DEBUG_ALONETEST (12)
 #elif DEBUG_ONLY_FOR_genya_hosaka
 #define _DEBUG_ALONETEST (13)
-#elif DEBUG_ONLY_FOR_toru_nagihashi
+#elif DEBUG_ONLY_FOR_nagihashi_toru
 #define _DEBUG_ALONETEST (14)
 #elif DEBUG_ONLY_FOR_mori
 #define _DEBUG_ALONETEST (15)
