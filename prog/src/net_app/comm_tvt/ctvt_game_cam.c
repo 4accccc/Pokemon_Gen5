@@ -201,6 +201,7 @@ typedef struct {
   u16   wait;         // 1回フレームが移動しての待ち時間
   BOOL  move_frame;   // フレーム移動フラグ
   u16   frame_cnt;    // 経過フレーム
+  u8    flash_wait;   // フラッシュ
 } ROULETTE_WORK;
 
 
@@ -437,6 +438,13 @@ GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
   PS_Init( &p_wk->ps, heapID );
   COMM_Init( &p_wk->comm, p_param->member, p_param->isTwl, heapID );
 
+  // TWLのみ
+  if( p_wk->p_param->isTwl )
+  {
+    // カメラモジュール作成
+    CAM_Init( &p_wk->camera, p_wk->p_param->p_cam_sys, p_wk->heapID );
+  }
+
   // VBlnak
   // 本来はグラフィックの中にあるが、
   // カメラキャプチャを転送する必要があるため外にだした
@@ -497,6 +505,12 @@ void CTVT_GAME_CAM_Exit( CTVT_GAME_CAM_WORK *p_wk )
   GFL_TCB_DeleteTask( p_wk->vBlankTcb );
 
   // モジュール破棄
+  if( p_wk->p_param->isTwl )
+  {
+    // カメラモジュール破棄
+    CAM_Exit( &p_wk->camera );
+  }
+
   COMM_Exit( &p_wk->comm, p_wk->p_param->isTwl );
   PS_Exit( &p_wk->ps );
   MGSWND_Exit( &p_wk->msgwnd );
@@ -1517,7 +1531,7 @@ static void COMM_Init( COMM_WORK *p_wk, CTVT_GAME_CAM_MEMBER_WORK member[], BOOL
     const u8 selfId = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
     for( i=0; i<connectNum; i++ )
     {
-      u8  netID = member[mem_cnt].netID;
+      u8  netID = i;
 
       if( selfId == netID )
       {
@@ -1532,10 +1546,10 @@ static void COMM_Init( COMM_WORK *p_wk, CTVT_GAME_CAM_MEMBER_WORK member[], BOOL
         GFL_NET_LDATA_CreatePostBuffer_SetAddres( CAPTURE_SIZE, netID, heapID, member[mem_cnt].p_cap_buf[0] );
         p_wk->cap_buf_bit |= 1<<netID;
 
-        ICHI_Printf("バッファ設定 i %d netID %d mem %d adrs %x \n", i, netID, mem_cnt, member[mem_cnt].p_cap_buf[0] );
+        ICHI_Printf("バッファ設定 i %d netID %d mem %d adrs %x \n", i, netID, mem_cnt, member[mem_cnt].p_cap_buf[mem_cnt] );
 
-        mem_cnt++;
       }
+      mem_cnt++;
 
       // 送信するNetIDBitをたてる
       p_wk->cap_send_bit |= 1<<netID;
@@ -1611,7 +1625,7 @@ static void COMM_Main( COMM_WORK *p_wk, CTVT_GAME_CAM_MEMBER_WORK member[] )
     {
       u8    i;
       u8    mem_cnt = 0;
-      BOOL  ret = TRUE;   // 次シーケンスへいってよいか判定用
+      u8    ret_bit = 0;
       const u8 connectNum = GFL_NET_GetConnectNum();
       const u8 selfId = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
 
@@ -1621,14 +1635,14 @@ static void COMM_Main( COMM_WORK *p_wk, CTVT_GAME_CAM_MEMBER_WORK member[] )
         // 送信してくるNetIDのみチェック
         if( p_wk->cap_buf_bit & (1<<i) )
         {
-          //ICHI_Printf("NetID %d Check \n", i);
+          // 受け取った枚数目ならスキップ
           if( p_wk->cap_cnt_base != p_wk->cap_cnt[mem_cnt] )
           {
             // 既に受信した
-            break;
+            ret_bit |= 1<<i;
           }
-
-          if( GFL_NET_LDATA_IsFinishPost(i) == TRUE )
+          // 受信チェック
+          else if( GFL_NET_LDATA_IsFinishPost(i) == TRUE )
           {
             // 次の受信のためにバッファを設定し直す
             void *p_tmp;
@@ -1648,10 +1662,6 @@ static void COMM_Main( COMM_WORK *p_wk, CTVT_GAME_CAM_MEMBER_WORK member[] )
 
             ICHI_Printf("NetId %d から%d枚受信完了 ", i, p_wk->cap_cnt[mem_cnt] );
           }
-          else
-          {
-            ret = FALSE;
-          }
         }
         // メンバーカウント
         if( selfId != i )
@@ -1661,7 +1671,7 @@ static void COMM_Main( COMM_WORK *p_wk, CTVT_GAME_CAM_MEMBER_WORK member[] )
       }
 
       // 全員分の受信が完了した
-      if( ret == TRUE )
+      if( ret_bit == p_wk->cap_buf_bit )
       {
         p_wk->seq = SEQ_SYNC;
         ICHI_Printf("全員分受信完了\n");
@@ -2122,9 +2132,6 @@ static void SEQFUNC_TWL_Init( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 {
   CTVT_GAME_CAM_WORK *p_wk = p_param;
 
-  // カメラモジュール作成
-  CAM_Init( &p_wk->camera, p_wk->p_param->p_cam_sys, p_wk->heapID );
-
   // TWL時のみ表示するもの
   GFL_CLACT_WK_SetDrawEnable( OBJ_GetClwk( &p_wk->obj, CLWKID_FRAME_S ), TRUE );
   
@@ -2327,9 +2334,6 @@ static void SEQFUNC_TWL_Wait( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
   //// StopCaptureは停止音待ち
   //if( CAMERA_SYS_IsStopCapture( p_wk->p_param->p_cam_sys ) == TRUE )
   {
-    // カメラモジュール破棄
-    CAM_Exit( &p_wk->camera );
-
     SEQ_SetNext( p_seqwk, SEQFUNC_SYNC_End );
   }
 }
@@ -2578,9 +2582,12 @@ static void SEQFUNC_NITRO_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
       }
       else
       {
+        ICHI_Printf("rou.select %d param.select %d move_frame %d \n", p_wk->roulette.select, p_wk->p_param->select_chara, ROU_GetStopFlg( &p_wk->roulette ));
+        p_wk->roulette.move_frame = FALSE;
+
         // 点滅に使用するため初期化
         p_wk->roulette.frame_cnt = 0;
-        p_wk->roulette.wait = 0;
+        p_wk->roulette.flash_wait = 0;
         *p_seq = SEQ_FLASH;
         
         // SE再生
@@ -2594,9 +2601,9 @@ static void SEQFUNC_NITRO_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
       if( !(p_wk->roulette.frame_cnt%6) )
       {
         u8  clwkID = CLWKID_CHARA_TOP + p_wk->roulette.select;
-        p_wk->roulette.wait ^= 1;
+        p_wk->roulette.flash_wait ^= 1;
 
-        GFL_CLACT_WK_SetPlttOffs( OBJ_GetClwk( &p_wk->obj, clwkID ), p_wk->roulette.wait, CLWK_PLTTOFFS_MODE_PLTT_TOP );
+        GFL_CLACT_WK_SetPlttOffs( OBJ_GetClwk( &p_wk->obj, clwkID ), p_wk->roulette.flash_wait, CLWK_PLTTOFFS_MODE_PLTT_TOP );
       }
       p_wk->roulette.frame_cnt++;
       if( p_wk->roulette.frame_cnt > 80 )
