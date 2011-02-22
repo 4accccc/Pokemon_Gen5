@@ -84,7 +84,8 @@ typedef enum{
 
 #define ACT_RENDER_ID (0)
 
-#define SCORE_UP_VIEW_TIME  (30)
+#define SCORE_UP_VIEW_TIME  (60)
+#define TIME_BONUS_VIEW_TIME  (60)
 
 #include "field_fmission_info_def.h"
 
@@ -134,6 +135,10 @@ typedef struct _TASKWK_SCOREUP{
   FIELD_FMISSION_INFO* sys_wk;
 }TASKWK_SCOREUP;
 
+typedef struct _TASKWK_TBONUS{
+  FIELD_FMISSION_INFO* sys_wk;
+}TASKWK_TBONUS;
+
 static void _sub_ActorSysCreate( FIELD_FMISSION_INFO* wk, ARCHANDLE *handle );
 static void _sub_ActorSysDelete( FIELD_FMISSION_INFO* wk );
 static GFL_CLWK* _sub_ObjAdd( FIELD_FMISSION_INFO* wk, s16 x,s16 y,u8 anm, u8 spri );
@@ -147,6 +152,7 @@ static void panel_ScoreUpdate( FIELD_FMISSION_INFO* wk, int score, u8 act_idx );
 static void panel_ScrollInit( FIELD_FMISSION_INFO* wk );
 static void taskAdd_PanelScroll( FIELD_FMISSION_INFO* wk, u8 act_idx, u8 act_num, s16 ofs );
 static void taskAddCheck_ScoreUp( FIELD_FMISSION_INFO* wk );
+static void taskAddCheck_TimeBonus( FIELD_FMISSION_INFO* wk );
 
 //====================================================================================
 // ■作成・破棄
@@ -234,6 +240,7 @@ void FIELD_FMISSION_INFO_Process( FIELD_FMISSION_INFO* wk )
       panel_Hide( wk );
     }else{
       taskAddCheck_ScoreUp( wk );
+      taskAddCheck_TimeBonus( wk );
     }
   }else if( !wk->visible_f && !event_f ){
     panel_ScrollInit( wk );
@@ -504,6 +511,7 @@ static void panel_ScrollInit( FIELD_FMISSION_INFO* wk )
   taskAdd_PanelScroll( wk, ACT_TIME_START, ACT_TIME_NUM, -AP_TIMEP_SY);
   
   taskAddCheck_ScoreUp( wk );
+  taskAddCheck_TimeBonus( wk );
 
   //描画状態セット
   panel_TimeUpdate( wk, TRUE );
@@ -559,6 +567,7 @@ static void tcb_PanelScroll( GFL_TCBL *tcb , void* tcb_wk)
 
   if( !wk->visible_f ){
     GFL_TCBL_Delete(tcb);
+    return;
   }
 
   if( twk->frame-- > 0){
@@ -623,6 +632,57 @@ static void tcb_ScoreUp( GFL_TCBL *tcb , void* tcb_wk)
   GFL_CLACT_WK_SetDrawEnable( wk->pAct[ACT_SCORE_KIRA], FALSE );
 
   wk->t_scoreup_f = FALSE;
+  GFL_TCBL_Delete(tcb);
+}
+
+
+//--------------------------------------------------------------
+/**
+ *	@brief	タイムボーナス表示タスク追加
+ */
+//--------------------------------------------------------------
+static void tcb_TimeBonus( GFL_TCBL *tcb , void* tcb_wk);
+
+static void taskAddCheck_TimeBonus( FIELD_FMISSION_INFO* wk )
+{
+  GFL_TCBL* tcb;
+  TASKWK_TBONUS* twk;
+  u16 bonus = LINK_FESTIVAL_FInfoTimeBonusGet( wk->fest_sys );
+
+  if( !bonus ){
+    return; //更新の必要無し
+  }
+  wk->time_bonus_ct = TIME_BONUS_VIEW_TIME;
+  LINK_FESTIVAL_FInfoTimeBonusReset( wk->fest_sys );
+
+  if( wk->t_tbonus_f ){
+    return; //すでにタスクがあるので、時間更新だけ
+  }
+  wk->t_tbonus_f = TRUE;
+
+  tcb = GFL_TCBL_Create( wk->tcbsys, tcb_TimeBonus, sizeof(TASKWK_TBONUS), 0 );
+  twk = GFL_TCBL_GetWork(tcb);
+
+  MI_CpuClear8( twk, sizeof( TASKWK_TBONUS ));
+  twk->sys_wk = wk;
+  
+  GFL_CLACT_WK_SetDrawEnable( wk->pAct[ACT_TIME_BONUS], TRUE );
+  GFL_CLACT_WK_SetDrawEnable( wk->pAct[ACT_TIME_KIRA], TRUE );
+}
+
+static void tcb_TimeBonus( GFL_TCBL *tcb , void* tcb_wk)
+{
+  TASKWK_TBONUS* twk = (TASKWK_TBONUS*)tcb_wk;
+  FIELD_FMISSION_INFO* wk = twk->sys_wk;
+
+  if( wk->time_bonus_ct ){
+    --wk->time_bonus_ct;
+    return;
+  }
+  GFL_CLACT_WK_SetDrawEnable( wk->pAct[ACT_TIME_BONUS], FALSE );
+  GFL_CLACT_WK_SetDrawEnable( wk->pAct[ACT_TIME_KIRA], FALSE );
+
+  wk->t_tbonus_f = FALSE;
   GFL_TCBL_Delete(tcb);
 }
 

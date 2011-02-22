@@ -170,10 +170,11 @@ BOOL FEST_MISSION_IsEntry( const FEST_MISSION* fmwk )
  * @brief ミッション　スコアインクリメント
  */
 //---------------------------------------------------------
-BOOL FEST_MISSION_ScoreCalc( FEST_MISSION* fmwk, u16 param, u16 inc )
+BOOL FEST_MISSION_ScoreCalc( FEST_MISSION* fmwk, u16 param, u16 inc, u32* out_bonus )
 {
   u32 bonus = 0;
-
+  
+  *out_bonus = 0;
   if( FEST_MISSION_IsLive( fmwk ) == FALSE ){
     return FALSE;
   }
@@ -187,8 +188,10 @@ BOOL FEST_MISSION_ScoreCalc( FEST_MISSION* fmwk, u16 param, u16 inc )
   }
   bonus = score_CalcTimeBonus( fmwk );
   if( fmwk->life + bonus > FMISSION_LIFE_MAX ){
+    *out_bonus = FMISSION_LIFE_MAX-fmwk->life;
     fmwk->life = FMISSION_LIFE_MAX;
   }else{
+    *out_bonus = bonus;
     fmwk->life += bonus;
   }
   OS_FPrintf(OSPRINT_LINKFEST_PAGE,"ミッション type=%d key=%08x スコア加算 %d ボーナス %d ノルマ %d\n",fmwk->type, fmwk->key, fmwk->my_score, bonus/60, fmwk->target );

@@ -136,6 +136,26 @@ void LINK_FESTIVAL_FInfoScoreInc( LINK_FESTIVAL* wk )
 
 //---------------------------------------------------------
 /*
+ *  @brief  リンクフェスティバル フィールドで表示するタイムボーナス値を取得
+ */
+//---------------------------------------------------------
+u16 LINK_FESTIVAL_FInfoTimeBonusGet( LINK_FESTIVAL* wk )
+{
+  return wk->finfo_bonus;
+}
+
+//---------------------------------------------------------
+/*
+ *  @brief  リンクフェスティバル フィールドで現在表示するタイムボーナス値をリセット
+ */
+//---------------------------------------------------------
+void LINK_FESTIVAL_FInfoTimeBonusReset( LINK_FESTIVAL* wk )
+{
+  wk->finfo_bonus = 0;
+}
+
+//---------------------------------------------------------
+/*
  * @brief リンクフェスティバル　ログ解析してスコアとミッション成功・失敗を判定
  *
  * @param u32* スコアを取得するu32のワークポインタ
@@ -172,16 +192,30 @@ BOOL LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, u32* score )
 BOOL LINK_FESTIVAL_MissionScoreCalc( GAMESYS_WORK* gsys, u16 param, u16 inc )
 {
   LINK_FESTIVAL* wk;
+  BOOL score_inc = FALSE;
 
   if( gsys == NULL ){
     GF_ASSERT(0);
     return FALSE;
   }
   wk = GAMESYSTEM_GetLinkFestivalWork( gsys );
-  if( wk != NULL ){
-    return FEST_MISSION_ScoreCalc( &wk->mission, param, inc );
+  if( wk == NULL ){
+    return FALSE;
   }
-  return FALSE;
+  {
+    u32 time_bonus = 0;
+    score_inc =  FEST_MISSION_ScoreCalc( &wk->mission, param, inc, &time_bonus );
+    if( !score_inc || !time_bonus ){
+      return score_inc;  
+    }
+    if( (time_bonus/60) == 0 ){
+      time_bonus = 1; //最低1
+    }else{
+      time_bonus /= 60;
+    }
+    wk->finfo_bonus += time_bonus;
+  }
+  return score_inc;
 }
 
 //---------------------------------------------------------
@@ -363,6 +397,7 @@ static void log_ClearAll( LINK_FESTIVAL* wk )
   wk->log_idx = 0;
   wk->beacon_timer = 0; 
   wk->finfo_score = 0;
+  wk->finfo_bonus = 0;
 }
 
 //---------------------------------------------------------

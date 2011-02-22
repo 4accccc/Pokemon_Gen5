@@ -25,15 +25,6 @@ typedef struct _FEST_MISSION FEST_MISSION;
 //---------------------------------------------------------
 extern void FEST_MISSION_Clear( FEST_MISSION* fmwk );
 
-#if 0
-//---------------------------------------------------------
-/*
- * @brief ミッションパラメータセット
- */
-//---------------------------------------------------------
-extern void FEST_MISSION_ParamSet( FEST_MISSION* fmwk, FEST_MISSION_ID id, u16 item, u16 item_num, u16 target, u16 param, u32 time );
-#endif
-
 //---------------------------------------------------------
 /*
  * @brief ミッション開始処理
@@ -89,7 +80,7 @@ extern BOOL FEST_MISSION_IsEntry( const FEST_MISSION* fmwk );
  * @brief ミッション　スコアインクリメント
  */
 //---------------------------------------------------------
-extern BOOL FEST_MISSION_ScoreCalc( FEST_MISSION* fmwk, u16 param, u16 inc );
+extern BOOL FEST_MISSION_ScoreCalc( FEST_MISSION* fmwk, u16 param, u16 inc, u32* out_bonus );
 
 //=================================================
 //以下デバッグルーチン

@@ -25,5 +25,6 @@ struct _LINK_FESTIVAL{
   LINKFEST_LOG  last;  //最後のミッションログ
 
   u16 finfo_score;  //フィールドで表示しているスコア
+  u16 finfo_bonus;  //フィールドで表示しているタイムボーナス
 };
 
