@@ -23,5 +23,7 @@ struct _LINK_FESTIVAL{
   u16 log_idx;
   LINKFEST_LOG  log[LINKFEST_LOG_MAX];
   LINKFEST_LOG  last;  //最後のミッションログ
+
+  u16 finfo_score;  //フィールドで表示しているスコア
 };
 

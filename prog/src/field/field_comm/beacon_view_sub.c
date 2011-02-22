@@ -1549,7 +1549,7 @@ static void tcb_WinFMissionEntryCheck( GFL_TCBL *tcb , void* tcb_wk)
     }
     return;
   case 4: //使うイベント待ち
-    if( bvp->ctrl.mission.id != FEST_MISSION_NULL ) {
+    if( bvp->ctrl.mission.type != FMISSION_TYPE_NULL ) {
       //途中キャンセルされていたら、選択しなおし
       FEST_MISSION_Clear( &bvp->ctrl.mission );
       twk->seq = 3;

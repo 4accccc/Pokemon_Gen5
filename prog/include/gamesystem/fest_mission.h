@@ -12,18 +12,11 @@
 
 #define OSPRINT_LINKFEST_PAGE (2) //OS_FPrintf出力ページ指定
 
-
 #define BUFLEN_FMISSION_TITLE (15*2+EOM_SIZE) //15文字*2+EOM
 #define BUFLEN_FMISSION_EXP   (18*3*2+EOM_SIZE) //(18文字*3行)*2+EOM
 
-typedef struct{
-  u8  time;
-  u8  reward;
-  u16 target;  //達成目標
-  u16 param;
-}FEST_MISSION_PARAM;
-
-#include "fest_mission_local.h"
+///外部参照用
+typedef struct _FEST_MISSION FEST_MISSION;
 
 //---------------------------------------------------------
 /*
@@ -32,12 +25,14 @@ typedef struct{
 //---------------------------------------------------------
 extern void FEST_MISSION_Clear( FEST_MISSION* fmwk );
 
+#if 0
 //---------------------------------------------------------
 /*
  * @brief ミッションパラメータセット
  */
 //---------------------------------------------------------
-extern void FEST_MISSION_ParamSet( FEST_MISSION* fmwk, FEST_MISSION_ID id, u16 reward_item, u16 reward_num, u16 target, u16 param, u32 time );
+extern void FEST_MISSION_ParamSet( FEST_MISSION* fmwk, FEST_MISSION_ID id, u16 item, u16 item_num, u16 target, u16 param, u32 time );
+#endif
 
 //---------------------------------------------------------
 /*
@@ -68,7 +63,7 @@ extern void FEST_MISSION_Update( FEST_MISSION* fmwk );
  * @retval  FALSE  ミッション中でないorミッション継続中
  */
 //---------------------------------------------------------
-extern BOOL FEST_MISSION_IsEnd( FEST_MISSION* fmwk );
+extern BOOL FEST_MISSION_IsEnd( const FEST_MISSION* fmwk );
 
 //---------------------------------------------------------
 /*
@@ -78,7 +73,7 @@ extern BOOL FEST_MISSION_IsEnd( FEST_MISSION* fmwk );
  * @retval  FALSE  ミッション中でないorミッションのライフ切れ
  */
 //---------------------------------------------------------
-extern BOOL FEST_MISSION_IsLive( FEST_MISSION* fmwk );
+extern BOOL FEST_MISSION_IsLive( const FEST_MISSION* fmwk );
 
 /*
  * @brief ミッションに参加しているか？
@@ -87,21 +82,14 @@ extern BOOL FEST_MISSION_IsLive( FEST_MISSION* fmwk );
  * @retval  FALSE  ミッション中でない
  */
 //---------------------------------------------------------
-extern BOOL FEST_MISSION_IsEntry( FEST_MISSION* fmwk );
+extern BOOL FEST_MISSION_IsEntry( const FEST_MISSION* fmwk );
 
 //---------------------------------------------------------
 /*
  * @brief ミッション　スコアインクリメント
  */
 //---------------------------------------------------------
-extern void FEST_MISSION_ScoreCalc( FEST_MISSION* fmwk, FMISSION_TYPE_ID type, u32 param, u32 value );
-
-//---------------------------------------------------------
-/*
- * @brief ミッションパラメータ取得
- */
-//---------------------------------------------------------
-extern void FEST_MISSION_ParamDataGet( FEST_MISSION_ID id, FEST_MISSION* dest );
+extern BOOL FEST_MISSION_ScoreCalc( FEST_MISSION* fmwk, u16 param, u16 inc );
 
 //=================================================
 //以下デバッグルーチン

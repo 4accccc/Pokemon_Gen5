@@ -477,7 +477,7 @@ static void _sub_SystemSetup(BEACON_VIEW_PTR wk)
 	wk->mm_status = GFL_MSG_Create(
 		GFL_MSG_LOAD_FAST, ARCID_MESSAGE, NARC_message_beacon_status_dat, wk->heap_sID );
 	wk->mm_fmission = GFL_MSG_Create(
-		GFL_MSG_LOAD_FAST, ARCID_SCRIPT_MESSAGE, NARC_script_message_festmission_event_dat, wk->heap_sID );
+		GFL_MSG_LOAD_FAST, ARCID_MESSAGE, NARC_message_fest_mission_dat, wk->heap_sID );
 
   wk->str_tmp = GFL_STR_CreateBuffer( BUFLEN_TMP_MSG, wk->heap_sID );
   wk->str_expand = GFL_STR_CreateBuffer( BUFLEN_TMP_MSG, wk->heap_sID );

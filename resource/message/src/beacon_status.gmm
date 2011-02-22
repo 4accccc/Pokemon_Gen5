@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2010-12-22T16:08:21"/>
+	<create user="iwasawa" host="W00270" date="2011-02-21T20:05:57"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -260,7 +260,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="97" right="1991" bottom="717" maximized="no" rayout="Vertical2">
+	<dialog left="115" top="362" right="820" bottom="982" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="220" right="1280" bottom="844" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -405,6 +405,11 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さん　から　フェスミッションを
 受信しました。
 ミッションに　参加しますか？</language>
+	</row>
+
+	<row id="msg_sys_fmission_reward">
+		<language name="JPN" width="256">ほうしゅう　[BD:03:Ｘ右寄せ:8][1:09:どうぐ名:3][2:03:４桁:4]こ</language>
+		<language name="JPN_KANJI" width="256">ほうしゅう　[BD:03:Ｘ右寄せ:0][1:09:どうぐ名:3][2:03:４桁:4]こ</language>
 	</row>
 
 	<row id="msg_sys_fmission_score01">
@@ -910,6 +915,39 @@ msg_sys_gpower_use00～02が
 	</row>
 
 	<row id="msg_beacon_051" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>FEST_MISSION</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さんの　フェスミッションを
+じゅしん　しました</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんの　フェスミッションを
+受信しました</language>
+	</row>
+
+	<row id="msg_beacon_052" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>FMISSION_WILDPOKE_WIN</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さんの　フェスミッションを
+じゅしん　しました</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんの　フェスミッションを
+受信しました</language>
+	</row>
+
+	<row id="msg_beacon_053" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>FMISSION_WILDPOKE_GET</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さんの　フェスミッションを
+じゅしん　しました</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんの　フェスミッションを
+受信しました</language>
+	</row>
+
+	<row id="msg_beacon_054" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>FMISSION_EVENT_CLEAR</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さんの　フェスミッションを
+じゅしん　しました</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんの　フェスミッションを
+受信しました</language>
+	</row>
+
+	<row id="msg_beacon_055" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>FMISSION_ITEM_GET</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]さんの　フェスミッションを
 じゅしん　しました</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんの　フェスミッションを

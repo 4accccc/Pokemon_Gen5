@@ -8,16 +8,22 @@
 
 #pragma once
 
+#if 0
 typedef enum{
  FEST_MISSION_NULL,
  FEST_MISSION_WILDBTL_WIN,
  FEST_MISSION_ID_MAX,
  FEST_MISSION_ID_END = FEST_MISSION_ID_MAX-1,
 }FEST_MISSION_ID;
+#endif
 
 typedef enum{
-  FMISSION_TYPE_WILDBTL_WIN,
+  FMISSION_TYPE_NULL,
+  FMISSION_TYPE_POKE_SEARCH,
+  FMISSION_TYPE_EVENT,
+  FMISSION_TYPE_ITEM,
   FMISSION_TYPE_MAX,
+  FMISSION_TYPE_END = FMISSION_TYPE_MAX-1,
 }FMISSION_TYPE_ID;
 
 typedef enum{
@@ -27,15 +33,34 @@ typedef enum{
  FMISSION_WSET_MAX,
 }FMISSION_WSET;
 
-typedef struct{
-  u8  id;     ///<ミッションID
-  u8  time;   ///<ミッション制限時間(分)
-  u16 reward_item; ///<報酬のアイテム
-  u16 reward_num; ///<報酬の数
-  u16 target; ///<達成目標
-  u16 param;  ///<汎用パラメータ
-  u16 my_score; ///<スコア
-  u32 key;  ///<マジックキー
-  u32 life; ///<ミッションの寿命(frame)
-}FEST_MISSION;
+///ミッション終了条件タイプ
+typedef enum{
+  FMISSION_ENDTYPE_TIME,  ///<時間終了まで継続
+  FMISSION_ENDTYPE_CLEAR, ///<目標達成時点で終了
+}FMISSION_ENDTYPE;
+
+///typedef宣言はfest_mission.h内
+struct _FEST_MISSION{
+  u16 type:4;     ///<ミッションタイプ
+  u16 time:12;    ///<ミッション制限時間(秒)
+  u16 param;      ///<汎用パラメータ
+  
+  u32 target:10;    ///<達成目標
+  u32 item:10;      ///<報酬のアイテムNo 
+  u32 item_num:8;   ///<報酬数の基礎値
+  u32 calc_type:3;  ///<報酬計算式タイプ
+  u32 end_type:1;   ///<終了条件タイプ
+  
+  u32 bonus:4;      ///<スコアボーナス
+  u32 life:18;      ///<ミッション寿命(frame)
+  u32 my_score:10;  ///<スコア
+
+  u32 key;          ///<マジックキー
+
+  u16 act_no;       ///<アクションNo
+  u16 act_prm;      ///<アクションパラメータ
+};
+
+#define FMISSION_SCORE_MAX  (999) //ミッションスコア最大値
+#define FMISSION_LIFE_MAX   (0x3FFFF) //ミッションライフMax
 

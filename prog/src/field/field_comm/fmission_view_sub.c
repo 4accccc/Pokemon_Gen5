@@ -310,11 +310,12 @@ static BOOL effReq_PopupMsg( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info, BOOL new
  */
 static void draw_MissionInfo( BEACON_VIEW_PTR wk )
 {
-  FEST_MISSION_WordsetParamAll( wk->wordset, wk->fmwk );
-  BVCPrint_GetMsgToBufEx( wk, msg_fmission_exp00+wk->fmwk->id, wk->mm_fmission );
+  FEST_MISSION_GetExpStr( wk->wordset, wk->mm_fmission, wk->str_expand, wk->fmwk, wk->heapID );
   BVCPrintReq_BmpwinPrint( wk, &wk->win[WIN_FMISSION], wk->str_expand, 0, 0, FCOL_LOGNUM_BASE, FCOL_LOGNUM, NULL );
   
-  BVCPrint_GetMsgToBufEx( wk, msg_fmission_reward, wk->mm_fmission );
+  FEST_MISSION_WordsetParamAll( wk->wordset, wk->fmwk );
+
+  BVCPrint_GetMsgToBuf( wk, msg_sys_fmission_reward );
   BVCPrintReq_BmpwinPrintEx( wk, &wk->win[WIN_FMISSION], wk->str_expand, 0, 32, FCOL_LOGNUM_BASE, FCOL_LOGNUM, NULL, FALSE );
 
   BVCPrint_GetMsgToBuf( wk, msg_sys_fmission_score01 );

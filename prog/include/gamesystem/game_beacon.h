@@ -98,10 +98,18 @@ typedef enum{
   GAMEBEACON_ACTION_DISTRIBUTION_GPOWER,      ///<Gパワー配布                           50
  
   //スワンで追加されたビーコン
-  GAMEBEACON_ACTION_FEST_MISSION,             ///<フェスタミッション受信                51
+  GAMEBEACON_ACTION_FEST_MISSION,                 ///<フェスミッション受信                  51
+  GAMEBEACON_ACTION_FMISSION_WILDPOKE_KNOCK_OUT,  ///<フェスミッション 野生ポケモン倒した   52
+  GAMEBEACON_ACTION_FMISSION_WILDPOKE_GET,        ///<フェスミッション 野生ポケモン捕まえた 53
+  GAMEBEACON_ACTION_FMISSION_EVENT_CLEAR,         ///<フェスミッション 指定イベントクリア 　54
+  GAMEBEACON_ACTION_FMISSION_ITEM_GET,            ///<フェスミッション 指定アイテム発見　 　55
+
   GAMEBEACON_ACTION_MAX,
 }GAMEBEACON_ACTION;
 
+#define GAMEBEACON_ACTION_FEST_BEACON_START ( GAMEBEACON_ACTION_FEST_MISSION )
+#define GAMEBEACON_ACTION_FEST_BEACON_END   ( GAMEBEACON_ACTION_FMISSION_ITEM_GET )
+#define GAMEBEACON_ACTION_FEST_BEACON_NUM   ( (GAMEBEACON_FEST_BEACON_END-GAMEBEACON_ACTION_FEST_BEACON_START)+1)
 
 //==============================================================================
 //  型定義
@@ -155,6 +163,8 @@ extern void GAMEBEACON_Set_BattleChampionStart(u16 tr_no);
 extern void GAMEBEACON_Set_BattleChampionVictory(u16 tr_no);
 extern void GAMEBEACON_Set_PokemonGet(u16 monsno);
 extern void GAMEBEACON_Set_WildPokemonGet(u16 monsno);
+extern void GAMEBEACON_Set_FMissionWildPokemonGet(u16 monsno);
+extern void GAMEBEACON_Set_FMissionWildPokemonKnockOut(u16 monsno);
 extern void GAMEBEACON_Set_SpecialPokemonGet(u16 monsno);
 extern void GAMEBEACON_Set_PokemonLevelUp(const STRBUF *nickname);
 extern void GAMEBEACON_Set_PokemonEvolution(u16 monsno, const STRBUF *nickname);

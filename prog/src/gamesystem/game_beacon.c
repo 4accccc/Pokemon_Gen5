@@ -389,7 +389,7 @@ static void BeaconInfo_SetFestMissionLog(GAMEBEACON_SYSTEM *bsys, const GAMEBEAC
   }
   fest_sys = GAMESYSTEM_GetLinkFestivalWork( bsys->gsys );
   LINKFEST_LOG_PARAM_Clear( &log );
-  log.id = info->action.fmission.id;
+  log.type = info->action.fmission.type;
   log.key = info->action.fmission.key;
   log.prm.score.tr_id = info->trainer_id;
   log.prm.score.value = info->action.fmission.my_score;
@@ -839,6 +839,24 @@ void GAMEBEACON_SUB_SendBeaconSetCommon(GAMEBEACON_SEND_MANAGER *send)
 
 //--------------------------------------------------------------
 /**
+ * フェスビーコン送信をセットした時の共通処理
+ *
+ * @param   send		
+ * @param   info		
+ */
+//--------------------------------------------------------------
+void GAMEBEACON_SUB_SendBeaconSetFMission( GAMEBEACON_INFO *info, u16 action, u16 param )
+{
+  LINK_FESTIVAL* link_fes = GAMESYSTEM_GetLinkFestivalWork( GameBeaconSys->gsys );
+  info->action.action_no = action;
+  info->action.fmission = *LINK_FESTIVAL_GetMissionWork( link_fes );
+  info->action.fmission.param = param;
+
+  info->version_bit = GAMEBEACON_RECV_VERSION_SWAN;  //スワン以降のみ
+}
+
+//--------------------------------------------------------------
+/**
  * アクション番号のプライオリティチェック
  *
  * @param   action_no		
@@ -1073,6 +1091,11 @@ void GAMEBEACON_SendDataUpdate_SelfIntroduction(void)
 //==================================================================
 void GAMEBEACON_Set_PokemonGet(u16 monsno)
 {
+  if( LINK_FESTIVAL_MissionScoreCalc( GameBeaconSys->gsys, monsno, 1 )){
+    GAMEBEACON_Set_FMissionWildPokemonGet(monsno);
+    return;
+  }
+
   if( GAMEBEACON_SUB_PokeBeaconTypeIsSpecial( monsno )){
     GAMEBEACON_Set_SpecialPokemonGet(monsno);
   }else{
@@ -1109,6 +1132,7 @@ void BEACONINFO_Set_WildPokemonGet(GAMEBEACON_INFO *info, u16 monsno)
   BEACONINFO_Set_Details_Walk(info);
 }
 
+
 //==================================================================
 /**
  * 送信ビーコンセット：特別なポケモン捕獲
@@ -1138,6 +1162,66 @@ void BEACONINFO_Set_SpecialPokemonGet(GAMEBEACON_INFO *info, u16 monsno)
   BEACONINFO_Set_Details_Walk(info);
 }
 
+//==================================================================
+/**
+ * 送信ビーコンセット：フェスミッション野生ポケモン捕獲
+ *
+ * @param   monsno    ポケモン番号
+ */
+//==================================================================
+void GAMEBEACON_Set_FMissionWildPokemonGet(u16 monsno)
+{
+  if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_FMISSION_WILDPOKE_GET) == FALSE){ return; };
+  GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+
+  BEACONINFO_Set_FMissionWildPokemonGet(&GameBeaconSys->send.info, monsno);
+}
+
+//==================================================================
+/**
+ * ビーコンセット：フェスミッションポケモン捕獲
+ *
+ * @param   monsno    ポケモン番号
+ */
+//==================================================================
+void BEACONINFO_Set_FMissionWildPokemonGet(GAMEBEACON_INFO *info, u16 monsno)
+{
+  GAMEBEACON_SUB_SendBeaconSetFMission( info, GAMEBEACON_ACTION_FMISSION_WILDPOKE_GET, monsno );
+  
+  BEACONINFO_Set_Details_Walk(info);
+}
+
+//==================================================================
+/**
+ * 送信ビーコンセット：フェスミッション野生ポケモン倒した
+ *
+ * @param   monsno    ポケモン番号
+ */
+//==================================================================
+void GAMEBEACON_Set_FMissionWildPokemonKnockOut(u16 monsno)
+{
+  if( LINK_FESTIVAL_MissionScoreCalc( GameBeaconSys->gsys, monsno, 1 ) == FALSE){
+    return;
+  }
+  if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_FMISSION_WILDPOKE_KNOCK_OUT) == FALSE){ return; };
+  GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+
+  BEACONINFO_Set_FMissionWildPokemonKnockOut(&GameBeaconSys->send.info, monsno);
+}
+
+//==================================================================
+/**
+ * ビーコンセット：フェスミッションポケモン倒した
+ *
+ * @param   monsno    ポケモン番号
+ */
+//==================================================================
+void BEACONINFO_Set_FMissionWildPokemonKnockOut(GAMEBEACON_INFO *info, u16 monsno)
+{
+  GAMEBEACON_SUB_SendBeaconSetFMission( info, GAMEBEACON_ACTION_FMISSION_WILDPOKE_KNOCK_OUT, monsno );
+  
+  BEACONINFO_Set_Details_Walk(info);
+}
 
 //==================================================================
 /**

@@ -31,8 +31,8 @@ typedef struct _FMISSION_DATA_TYPE{
 }FMISSION_DATA_TYPE;
 
 static const FMISSION_DATA_TYPE DATA_FMissionDataType[] = {
-  { FMISSION_TYPE_WILDBTL_WIN, FMISSION_WSET_MONSNAME },
-  { FMISSION_TYPE_WILDBTL_WIN, FMISSION_WSET_MONSNAME },
+  { FMISSION_TYPE_POKE_SEARCH, FMISSION_WSET_MONSNAME },
+  { FMISSION_TYPE_POKE_SEARCH, FMISSION_WSET_MONSNAME },
 };
 
 static void wset_MissionParam( WORDSET* wset, u8 bufID, FMISSION_WSET type, int value );
@@ -46,9 +46,9 @@ void FEST_MISSION_WordsetParamAll( WORDSET* wset, FEST_MISSION* fmwk )
 {
   WORDSET_RegisterNumber( wset, 0, fmwk->time, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
   WORDSET_RegisterNumber( wset, 1, fmwk->target, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-  wset_MissionParam( wset, 2, DATA_FMissionDataType[fmwk->id].param_wset,fmwk->param);
-  WORDSET_RegisterItemName( wset, 3, fmwk->reward_item );
-  WORDSET_RegisterNumber( wset, 4, fmwk->reward_num, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+  wset_MissionParam( wset, 2, DATA_FMissionDataType[fmwk->type].param_wset,fmwk->param);
+  WORDSET_RegisterItemName( wset, 3, fmwk->item );
+  WORDSET_RegisterNumber( wset, 4, fmwk->item_num, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
   WORDSET_RegisterNumber( wset, 5, fmwk->life/(60*60), 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
   WORDSET_RegisterNumber( wset, 6, (fmwk->life/60)%60, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
 }
@@ -63,9 +63,9 @@ void FEST_MISSION_WordsetParamAll( WORDSET* wset, FEST_MISSION* fmwk )
 void FEST_MISSION_GetTitleStr( WORDSET* wset, GFL_MSGDATA* man, STRBUF* str, const FEST_MISSION* fmwk, HEAPID heapID )
 {
   STRBUF* tmp = GFL_STR_CreateBuffer( BUFLEN_FMISSION_TITLE, GFL_HEAP_LOWID(heapID) );
-  GFL_MSG_GetString( man, msg_fmission_title00+fmwk->id, tmp );
+  GFL_MSG_GetString( man, msg_fmission_title00+fmwk->type, tmp );
 
-  wset_MissionParam( wset, 0, DATA_FMissionDataType[fmwk->id].param_wset, fmwk->param ); 
+  wset_MissionParam( wset, 0, DATA_FMissionDataType[fmwk->type].param_wset, fmwk->param ); 
   WORDSET_ExpandStr( wset, str, tmp );
 
   GFL_STR_DeleteBuffer( tmp );
@@ -81,15 +81,15 @@ void FEST_MISSION_GetTitleStr( WORDSET* wset, GFL_MSGDATA* man, STRBUF* str, con
 void FEST_MISSION_GetExpStr( WORDSET* wset, GFL_MSGDATA* man, STRBUF* str, const FEST_MISSION* fmwk, HEAPID heapID )
 {
   STRBUF* tmp = GFL_STR_CreateBuffer( BUFLEN_FMISSION_EXP, GFL_HEAP_LOWID(heapID) );
-  GFL_MSG_GetString( man, msg_fmission_exp00+fmwk->id, tmp );
+  GFL_MSG_GetString( man, msg_fmission_exp00+fmwk->type, tmp );
 
   //時間
-  WORDSET_RegisterNumber( wset, 0, fmwk->time, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+  WORDSET_RegisterNumber( wset, 0, fmwk->time, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
   //目標
   WORDSET_RegisterNumber( wset, 1, fmwk->target, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
 
   //パラメータ
-  wset_MissionParam( wset, 2, DATA_FMissionDataType[fmwk->id].param_wset, fmwk->param ); 
+  wset_MissionParam( wset, 2, DATA_FMissionDataType[fmwk->type].param_wset, fmwk->param ); 
   WORDSET_ExpandStr( wset, str, tmp );
 
   GFL_STR_DeleteBuffer( tmp );

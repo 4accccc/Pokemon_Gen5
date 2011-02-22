@@ -434,7 +434,7 @@ static GMEVENT_RESULT event_FestMissionRetireMain(GMEVENT * event, int *  seq, v
 //-----------------------------------------------------------------
 static void sub_FMissionParamWordExpand( FMISSION_EVWORK* wk )
 {
-//  IWASAWA_Printf("GPower %d Life = %d\n",g_power,time);
+  IWASAWA_Printf("Mission %d Time = %d\n",wk->mission.time);
   FEST_MISSION_WordsetParamAll( wk->wset, &wk->mission );
   WORDSET_RegisterNumber( wk->wset, 7, wk->res_score, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
 }

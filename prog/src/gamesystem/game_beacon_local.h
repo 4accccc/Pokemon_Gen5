@@ -70,6 +70,16 @@ extern void GAMEBEACON_SUB_SendBeaconSetCommon(GAMEBEACON_SEND_MANAGER *send);
 
 //--------------------------------------------------------------
 /**
+ * フェスビーコン送信をセットした時の共通処理
+ *
+ * @param   send		
+ * @param   info		
+ */
+//--------------------------------------------------------------
+extern void GAMEBEACON_SUB_SendBeaconSetFMission( GAMEBEACON_INFO *info, u16 action, u16 param );
+
+//--------------------------------------------------------------
+/**
  * アクション番号のプライオリティチェック
  *
  * @param   action_no		
@@ -113,6 +123,8 @@ void BEACONINFO_Set_BattleSpTrainerVictory(GAMEBEACON_INFO *info, u16 tr_no);
 void BEACONINFO_Set_BattleChampionStart(GAMEBEACON_INFO *info, u16 tr_no);
 void BEACONINFO_Set_BattleChampionVictory(GAMEBEACON_INFO *info, u16 tr_no);
 void BEACONINFO_Set_WildPokemonGet(GAMEBEACON_INFO *info, u16 monsno);
+void BEACONINFO_Set_FMissionWildPokemonGet(GAMEBEACON_INFO *info, u16 monsno);
+void BEACONINFO_Set_FMissionWildPokemonKnockOut(GAMEBEACON_INFO *info, u16 monsno);
 void BEACONINFO_Set_SpecialPokemonGet(GAMEBEACON_INFO *info, u16 monsno);
 void BEACONINFO_Set_PokemonLevelUp(GAMEBEACON_INFO *info, const STRBUF *nickname);
 void BEACONINFO_Set_PokemonEvolution(GAMEBEACON_INFO *info, u16 monsno, const STRBUF *nickname);

@@ -948,6 +948,8 @@ static void taskAdd_PageScroll( BEACON_DETAIL_WORK* wk, u8 dir, int* task_ct )
   //Ÿ‚É•\¦‚³‚ê‚éƒEƒBƒ“ƒhƒE‚ğ•`‚­
   GAMEBEACON_InfoTblRing_GetBeacon( wk->infoLog, wk->tmpInfo, &wk->tmpTime, wk->list[twk->next]);
   draw_BeaconWindow( wk, wk->tmpInfo, wk->tmpTime, wk->flip_sw^1 );
+  //‚¢‚Á‚½‚ñ‰B‚µ‚Ä‚¨‚­
+  draw_BeaconWindowVisibleSet( wk, wk->flip_sw^1, FALSE );
 
   twk->bdw = wk;
   twk->task_ct = task_ct;

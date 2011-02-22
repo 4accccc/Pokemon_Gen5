@@ -487,7 +487,8 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         field/pair_sys.c \
         field/scrcmd_pair.c \
         field/scrcmd_person.c \
-        gamesystem/fest_mission_nw.c
+        gamesystem/fest_mission_nw.c \
+        gamesystem/fest_mission_data.c
 
 
 #侵入システムでほぼ常駐に置かなければいけないもの(ユニオンの常駐物と並列化)

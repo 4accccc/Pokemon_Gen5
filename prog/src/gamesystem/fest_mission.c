@@ -23,9 +23,18 @@
 
 SDK_COMPILER_ASSERT( sizeof(FEST_MISSION) <= 20); //フェスミッション構造体型サイズはmax20byteまで
 
-static const FEST_MISSION_PARAM  DATA_FestMissionParam[] = {
-  { 0, 0, 0, 0, }, //0
-  { 3, 3, 10, 0, }, //0
+typedef BOOL (*MISSION_SCORE_CALC_FUNC)( const FEST_MISSION* fmwk, u16 param );
+
+static u32 score_CalcTimeBonus( FEST_MISSION* fmwk );
+static BOOL score_CalcWildBtlWin( const FEST_MISSION* fmwk, u16 param );
+static BOOL score_CalcEvent( const FEST_MISSION* fmwk, u16 param );
+
+
+static const MISSION_SCORE_CALC_FUNC DATA_ScoreCalcFuncTbl[] = {
+  NULL,
+  score_CalcWildBtlWin,
+  score_CalcEvent,
+  NULL,
 };
 
 //---------------------------------------------------------
@@ -37,30 +46,31 @@ void FEST_MISSION_Clear( FEST_MISSION* fmwk )
 {
   MI_CpuClear8( fmwk, sizeof(FEST_MISSION));
 
-  fmwk->id = FEST_MISSION_NULL;
+  fmwk->type = FMISSION_TYPE_NULL;
 }
 
+#if 0
 //---------------------------------------------------------
 /*
  * @brief ミッションパラメータセット
  */
 //---------------------------------------------------------
-void FEST_MISSION_ParamSet( FEST_MISSION* fmwk, FEST_MISSION_ID id, u16 reward_item, u16 reward_num, u16 target, u16 param, u32 time )
+void FEST_MISSION_ParamSet( FEST_MISSION* fmwk, FEST_MISSION_ID type, u16 item, u16 item_num, u16 target, u16 param, u32 time )
 {
   FEST_MISSION_Clear( fmwk );
-  fmwk->id = id;
+  fmwk->type = type;
   fmwk->key = GFUser_GetPublicRand(GFL_STD_RAND_MAX);  //32bitランダムキー生成
   fmwk->time = time;
   fmwk->target = target;
   fmwk->param = param;
-  fmwk->reward_item = reward_item;
-  fmwk->reward_num = reward_num;
-  fmwk->life = fmwk->time*60*60;
+  fmwk->item = item;
+  fmwk->item_num = item_num;
+  fmwk->life = fmwk->time*60;
   
-  OS_FPrintf(OSPRINT_LINKFEST_PAGE,"フェスミッション パラメータセット id=%d, key = %08x, target=%d, param=%d, time=%dmin\n",
-    id, fmwk->key, target, param, time);
+  OS_FPrintf(OSPRINT_LINKFEST_PAGE,"フェスミッション パラメータセット type=%d, key = %08x, target=%d, param=%d, time=%dsec\n",
+    type, fmwk->key, target, param, time);
 }
-
+#endif
 
 //---------------------------------------------------------
 /*
@@ -71,9 +81,11 @@ void FEST_MISSION_Start( FEST_MISSION* fmwk, const FEST_MISSION* src )
 {
   FEST_MISSION_Clear( fmwk );
   *fmwk = *src;
+  
+  fmwk->key = GFUser_GetPublicRand(GFL_STD_RAND_MAX);  //32bitランダムキー生成
 
-  OS_FPrintf(OSPRINT_LINKFEST_PAGE,"フェスミッション スタート id=%d, key = %08x, target=%d, param=%d, time=%d min life=%d sec\n",
-    fmwk->id, fmwk->key, fmwk->target, fmwk->param, fmwk->time, fmwk->life/60);
+  OS_FPrintf(OSPRINT_LINKFEST_PAGE,"フェスミッション スタート type=%d, key = %08x, target=%d, param=%d, time=%d min life=%d sec\n",
+    fmwk->type, fmwk->key, fmwk->target, fmwk->param, fmwk->time, fmwk->life/60);
 }
 
 //---------------------------------------------------------
@@ -94,13 +106,13 @@ void FEST_MISSION_End( FEST_MISSION* fmwk )
 //---------------------------------------------------------
 void FEST_MISSION_Update( FEST_MISSION* fmwk )
 {
-  if( fmwk->id == FEST_MISSION_NULL ){
+  if( fmwk->type == FMISSION_TYPE_NULL ){
     return;
   }
   if( fmwk->life ){
     --fmwk->life;
     if( fmwk->life == 0 ){
-      OS_FPrintf(OSPRINT_LINKFEST_PAGE,"フェスミッション %d key = %08x 時間切れ\n", fmwk->id, fmwk->key );
+      OS_FPrintf(OSPRINT_LINKFEST_PAGE,"フェスミッション %d key = %08x 時間切れ\n", fmwk->type, fmwk->key );
     }
   }
 }
@@ -113,9 +125,9 @@ void FEST_MISSION_Update( FEST_MISSION* fmwk )
  * @retval  FALSE  ミッション中でないorミッション継続中
  */
 //---------------------------------------------------------
-BOOL FEST_MISSION_IsEnd( FEST_MISSION* fmwk )
+BOOL FEST_MISSION_IsEnd( const FEST_MISSION* fmwk )
 {
-  if( fmwk->id == FEST_MISSION_NULL ){
+  if( fmwk->type == FMISSION_TYPE_NULL ){
     return FALSE;
   }
   if( fmwk->life == 0){
@@ -132,9 +144,9 @@ BOOL FEST_MISSION_IsEnd( FEST_MISSION* fmwk )
  * @retval  FALSE  ミッション中でないorミッションのライフ切れ
  */
 //---------------------------------------------------------
-BOOL FEST_MISSION_IsLive( FEST_MISSION* fmwk )
+BOOL FEST_MISSION_IsLive( const FEST_MISSION* fmwk )
 {
-  if( fmwk->id == FEST_MISSION_NULL || fmwk->life <= 0 ){
+  if( fmwk->type == FMISSION_TYPE_NULL || fmwk->life <= 0 ){
     return FALSE;
   }
   return TRUE;
@@ -148,9 +160,9 @@ BOOL FEST_MISSION_IsLive( FEST_MISSION* fmwk )
  * @retval  FALSE  ミッション中でない
  */
 //---------------------------------------------------------
-BOOL FEST_MISSION_IsEntry( FEST_MISSION* fmwk )
+BOOL FEST_MISSION_IsEntry( const FEST_MISSION* fmwk )
 {
-  return fmwk->id != FEST_MISSION_NULL;
+  return fmwk->type != FMISSION_TYPE_NULL;
 }
 
 //---------------------------------------------------------
@@ -158,27 +170,65 @@ BOOL FEST_MISSION_IsEntry( FEST_MISSION* fmwk )
  * @brief ミッション　スコアインクリメント
  */
 //---------------------------------------------------------
-void FEST_MISSION_ScoreCalc( FEST_MISSION* fmwk, FMISSION_TYPE_ID type, u32 param, u32 value )
+BOOL FEST_MISSION_ScoreCalc( FEST_MISSION* fmwk, u16 param, u16 inc )
 {
+  u32 bonus = 0;
+
   if( FEST_MISSION_IsLive( fmwk ) == FALSE ){
-    return;
+    return FALSE;
   }
-  if( type == FMISSION_TYPE_WILDBTL_WIN ){
-    if( fmwk->param == 0 || fmwk->param == param){
-      fmwk->my_score += value;
-    }
-    OS_FPrintf(OSPRINT_LINKFEST_PAGE,"ミッション id=%d key=%08x スコア加算 %d ノルマ %d\n",fmwk->id, fmwk->key, fmwk->my_score, fmwk->target );
+  if( !DATA_ScoreCalcFuncTbl[ fmwk->type ](fmwk,param) ){
+    return FALSE;
   }
+  if( (fmwk->my_score + inc ) > FMISSION_SCORE_MAX ){
+    fmwk->my_score = FMISSION_SCORE_MAX;
+  }else{
+    fmwk->my_score += inc;
+  }
+  bonus = score_CalcTimeBonus( fmwk );
+  if( fmwk->life + bonus > FMISSION_LIFE_MAX ){
+    fmwk->life = FMISSION_LIFE_MAX;
+  }else{
+    fmwk->life += bonus;
+  }
+  OS_FPrintf(OSPRINT_LINKFEST_PAGE,"ミッション type=%d key=%08x スコア加算 %d ボーナス %d ノルマ %d\n",fmwk->type, fmwk->key, fmwk->my_score, bonus/60, fmwk->target );
+  return TRUE;
+}
+
+//========================================================================
+/*
+  サブルーチン
+*/
+//========================================================================
+
+//---------------------------------------------------------
+/*
+ * @brief スコアボーナス計算
+ */
+//---------------------------------------------------------
+static u32 score_CalcTimeBonus( FEST_MISSION* fmwk )
+{
+  return (fmwk->bonus * 10 * 60);
 }
 
 //---------------------------------------------------------
 /*
- * @brief ミッションパラメータ取得
+ * @brief スコア計算 野生ポケモンバトル 
  */
 //---------------------------------------------------------
-void FEST_MISSION_ParamDataGet( FEST_MISSION_ID id, FEST_MISSION* dest )
+static BOOL score_CalcWildBtlWin( const FEST_MISSION* fmwk, u16 param )
 {
-  MI_CpuCopy8( &DATA_FestMissionParam[id], dest, sizeof(FEST_MISSION_PARAM));
+  return ( fmwk->param == 0 || fmwk->param == param );
+}
+
+//---------------------------------------------------------
+/*
+ * @brief スコア計算 イベントクリア 
+ */
+//---------------------------------------------------------
+static BOOL score_CalcEvent( const FEST_MISSION* fmwk, u16 param )
+{
+  return ( fmwk->param == param );
 }
 
 //=================================================
@@ -192,11 +242,11 @@ void FEST_MISSION_ParamDataGet( FEST_MISSION_ID id, FEST_MISSION* dest )
 //---------------------------------------------------------
 void FEST_MISSION_DEBUG_KillMission( FEST_MISSION* fmwk )
 {
-  if( fmwk->id == FEST_MISSION_NULL ){
+  if( fmwk->type == FMISSION_TYPE_NULL ){
     return;
   }
   fmwk->life = 0;
-  OS_FPrintf(OSPRINT_LINKFEST_PAGE,"フェスミッション %d key = %08x 寿命強制破棄\n", fmwk->id, fmwk->key );
+  OS_FPrintf(OSPRINT_LINKFEST_PAGE,"フェスミッション %d key = %08x 寿命強制破棄\n", fmwk->type, fmwk->key );
 }
 
 #endif  //PM_DEBUG

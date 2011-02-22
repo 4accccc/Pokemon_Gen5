@@ -48,6 +48,7 @@
 #include "savedata/playtime.h"
 
 #include "gamesystem/link_festival.h"
+#include "gamesystem/fest_mission_data.h"
 #include "gamesystem/game_beacon.h"
 #include "gamesystem/game_beacon_types.h"
 #include "gamesystem/game_beacon_local.h" //許可なく他でinclude禁止
@@ -120,8 +121,8 @@ typedef enum{
   FAKE_TIME,
   FAKE_TARGET,
   FAKE_PARAM,
-  FAKE_REWARD,
-  FAKE_REWARD_NUM,
+  FAKE_ITEM,
+  FAKE_ITEM_NUM,
   FAKE_DATA_MAX,
 }FAKE_DATA_ID;
 
@@ -334,7 +335,7 @@ static const DEBUG_MENU_INITIALIZER DebugLinkFestFromFieldMenuData = {
 /*
  *
  */
-static const D_MISSION_PARAM DATA_DebugMissionParam[FEST_MISSION_ID_MAX] = {
+static const D_MISSION_PARAM DATA_DebugMissionParam[FMISSION_TYPE_MAX] = {
   { 0 },
   { MISSION_PSET_MONSNO_ZERO },
 };
@@ -354,7 +355,7 @@ static const  D_MISSION_PRM_SET DATA_DebugMissionParamSet[MISSION_PSET_MAX] = {
  { 0, GPOWER_ID_CAPTURE_MAX, BPRM_WSET_GPOWER }, //MISSION_PSET_GPOWER,      Gパワー名
  { 0, 65535, BPRM_WSET_NONE }, //MISSION_PSET_ID,     プレイヤーID
  { -1, -1, BPRM_WSET_NONE }, //MISSION_PSET_FREEWORD,    フリーワード8文字
- { 1, FEST_MISSION_ID_END, BPRM_WSET_NONE }, //MISSION_PSET_MISSION_ID,    
+ { 1, FMISSION_TYPE_END, BPRM_WSET_NONE }, //MISSION_PSET_MISSION_TYP,    
  { 1, 65535, BPRM_WSET_NONE }, //MISSION_PSET_MISSION_PRM,    
  { 0, MONSNO_END, BPRM_WSET_MONSNAME }, //MISSION_PSET_MONSNO_ZERO,    ポケモン種族名
 };
@@ -364,8 +365,8 @@ static const D_FAKE_PRM_SET DATA_FakeParamSet[] = {
   { BPRM_WSET_NONE, 5, 0, 0xFFFF,}, //FAKE_TIME,
   { BPRM_WSET_NONE, 5, 0, 0xFFFF,}, //FAKE_TARGET,
   { BPRM_WSET_NONE, 5, 0, 0xFFFF,}, //FAKE_PARAM,
-  { BPRM_WSET_ITEMNAME, 5, 1, ITEM_DATA_MAX}, //FAKE_REWARD,
-  { BPRM_WSET_NONE, 5, 0, 0xFFFF,}, //FAKE_REWARD_NUM,
+  { BPRM_WSET_ITEMNAME, 5, 1, ITEM_DATA_MAX}, //FAKE_ITEM,
+  { BPRM_WSET_NONE, 5, 0, 0xFFFF,}, //FAKE_ITEM_NUM,
   { BPRM_WSET_TRNAME_EX, 3, 0, TRID_MAX-1,}, //FAKE_NAME,
   { BPRM_WSET_ZONE, 3, 0, ZONE_ID_MAX-1,}, //FAKE_ZONE,
   { BPRM_WSET_SEX, 1, PM_MALE, PM_FEMALE,}, //FAKE_SEX,
@@ -548,8 +549,8 @@ static void dmenu_WorkInit( DMENU_LINK_FEST* wk )
     fake[FAKE_TIME] = 3;
     fake[FAKE_TARGET] = 10;
     fake[FAKE_PARAM] = 0;
-    fake[FAKE_REWARD] = ITEM_DERUDAMA;
-    fake[FAKE_REWARD_NUM] = 3;
+    fake[FAKE_ITEM] = ITEM_DERUDAMA;
+    fake[FAKE_ITEM_NUM] = 3;
 
     MI_CpuCopy8( fake, &(wk->fake_prm[TR_PAT_FAKE][0]),sizeof(int)*FAKE_DATA_MAX);
    
@@ -706,7 +707,7 @@ static GMEVENT_RESULT event_LinkFestFromFieldMain( GMEVENT * event, int *seq, vo
           GMEVENT* mission_ev;
           FEST_MISSION mission;
 
-          FEST_MISSION_ParamSet( &mission, FEST_MISSION_WILDBTL_WIN, ITEM_DERUDAMA, 3, 10, MONSNO_TABUNNE, 3);
+          FMISSION_DATA_GetMissionParam( NULL, FMISSION_ID_POKE_SEARCH_TABUNNE, &mission );
 
           mission_ev = GMEVENT_CreateOverlayEventCall( wk->gsys,
             FS_OVERLAY_ID( event_fmission ), EVENT_FestMissionStart, &mission );
@@ -1448,7 +1449,7 @@ static GMEVENT_RESULT event_MissionReqMain( GMEVENT * event, int *seq, void * wo
         break;
       case 1:
         GMEVENT_CallEvent( event, event_CreateEventNumInputRetWork( wk, 0, 
-            1, FEST_MISSION_ID_END,
+            1, FMISSION_TYPE_END,
             &evwk->action, BPRM_WSET_ACTION ));
         break;
       case 2:
@@ -1560,7 +1561,14 @@ static void mreq_MissionStart( DMENU_LINK_FEST* wk, EVWK_MISSION_REQ* evwk, u8 d
   if( evwk->m_prm_set->max >= 0 ){
     value = wk->mission_prm[ evwk->m_prm->prm_type ];
   }
-  FEST_MISSION_ParamSet( &mission, evwk->action, fake[FAKE_REWARD], fake[FAKE_REWARD_NUM], fake[FAKE_TARGET], fake[FAKE_PARAM], fake[FAKE_TIME] );
+  FMISSION_DATA_GetMissionParam( NULL, FMISSION_ID_POKE_SEARCH_TABUNNE, &mission );
+  mission.type = evwk->action;
+  mission.item = fake[FAKE_ITEM];
+  mission.item_num = fake[FAKE_ITEM_NUM];
+  mission.target = fake[FAKE_TARGET];
+  mission.param = fake[FAKE_PARAM];
+  mission.time = fake[FAKE_TIME];
+//  FEST_MISSION_ParamSet( &mission, evwk->action, fake[FAKE_ITEM], fake[FAKE_ITEM_NUM], fake[FAKE_TARGET], fake[FAKE_PARAM], fake[FAKE_TIME] );
 
   mission_ev = GMEVENT_CreateOverlayEventCall( wk->gsys,
     FS_OVERLAY_ID( event_fmission ), EVENT_FestMissionStart, &mission );

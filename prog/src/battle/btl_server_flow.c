@@ -16,6 +16,7 @@
 #include "item\itemtype_def.h"
 #include "poke_tool\shinka_check.h"
 #include "gamesystem\g_power.h"
+#include "gamesystem\game_beacon.h"
 
 #include "btl_event.h"
 #include "btl_server_cmd.h"
@@ -10269,6 +10270,10 @@ static BOOL scproc_GetExp( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* deadPoke )
     BTL_PARTY* party = BTL_POKECON_GetPartyData( wk->pokeCon, BTL_MAIN_GetPlayerClientID(wk->mainModule) );
 
     BTL_SVFSUB_CalcExp( wk, party, deadPoke, wk->calcExpWork );
+
+    if( BTL_MAIN_GetCompetitor( wk->mainModule ) == BTL_COMPETITOR_WILD){
+      GAMEBEACON_Set_FMissionWildPokemonKnockOut( BPP_GetMonsNo( deadPoke ));
+    }
     return getexp_make_cmd( wk, party, wk->calcExpWork );
   }
   return FALSE;

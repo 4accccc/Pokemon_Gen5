@@ -11,6 +11,7 @@
 #include "gamesystem/game_beacon.h"
 #include "savedata/questionnaire_save.h"
 #include "gamesystem/fest_mission.h"
+#include "gamesystem/fest_mission_local.h"
 
 //==============================================================================
 //  ’è”’è‹`

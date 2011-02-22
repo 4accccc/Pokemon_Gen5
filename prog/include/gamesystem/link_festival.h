@@ -28,7 +28,7 @@ typedef struct _LINKFEST_LOG{
     }score;
 
     struct{ //受信ミッションログ
-      u8  id;
+      u8  type;
       u16 param;
       u32 key;
     }mission;
@@ -37,7 +37,7 @@ typedef struct _LINKFEST_LOG{
 
 //フェスタログ受け渡し構造体
 typedef struct _LINKFEST_LOG_PARAM{
-  u8  id;
+  u8  type;
   u32 key;
   LINKFEST_LOG prm;
 }LINKFEST_LOG_PARAM;
@@ -89,6 +89,20 @@ extern void LINK_FESTIVAL_MissionEnd( LINK_FESTIVAL* wk );
 
 //---------------------------------------------------------
 /*
+ *  @brief  リンクフェスティバル フィールドで現在表示しているスコアを取得
+ */
+//---------------------------------------------------------
+extern u16 LINK_FESTIVAL_FInfoScoreGet( LINK_FESTIVAL* wk );
+
+//---------------------------------------------------------
+/*
+ *  @brief  リンクフェスティバル フィールドで現在表示しているスコアをインクリメント
+ */
+//---------------------------------------------------------
+extern void LINK_FESTIVAL_FInfoScoreInc( LINK_FESTIVAL* wk );
+
+//---------------------------------------------------------
+/*
  * @brief リンクフェスティバル　ログ解析してスコアとミッション成功・失敗を判定
  *
  * @param u32* スコアを取得するu32のワークポインタ
@@ -103,7 +117,7 @@ extern BOOL LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, u32* score );
  * @brief リンクフェスティバル スコア加算
  */
 //---------------------------------------------------------
-extern void LINK_FESTIVAL_MissionScoreCalc( GAMESYS_WORK* gsys, FMISSION_TYPE_ID type, u32 param, u32 value );
+extern BOOL LINK_FESTIVAL_MissionScoreCalc( GAMESYS_WORK* gsys, u16 param, u16 inc );
 
 //---------------------------------------------------------
 /*
