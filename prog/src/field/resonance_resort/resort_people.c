@@ -426,7 +426,9 @@ static void Resident_SetData( RESORT_PEOPLE *p_wk, RESORT_PEOPLE_PARAM param, u3
 static void Proxy_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder )
 {
   RESORT_PROXY_DATA *p_data =p_wk->p_data_adrs;
-  p_hedder->obj_code = GIRL2; //TODO
+  //u8 trainer_view = RESORT_RECV_DATA_GetData( p_data, RESORT_RECV_DATA_PARAM_TRAINERVIEW, NULL );
+  p_hedder->obj_code = GIRL2;//UnionView_GetObjCode( trainer_view );
+  p_hedder->move_code = MV_DOWN; //TODO
   p_hedder->event_id = RESORT_BINARY_PEOPLE_DATA_GetScrID( p_wk->cp_binary );
 }
 //----------------------------------------------------------------------------
@@ -436,10 +438,56 @@ static void Proxy_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder )
 //-----------------------------------------------------------------------------
 static u32 Proxy_GetData( const RESORT_PEOPLE *cp_wk, RESORT_PEOPLE_PARAM param, void *p_ret_adrs )
 {
-  return 0; //TODO
+  const RESORT_PROXY_DATA *cp_data = cp_wk->p_data_adrs;
+  switch( param )
+  {
+  case RESORT_PEOPLE_PARAM_PEOPLEID:
+    return RESORT_PROXY_DATA_GetData( cp_data, RESORT_PROXY_DATA_PARAM_PEOPLEID );
+  case RESORT_PEOPLE_PARAM_PLACEID:
+    return RESORT_PROXY_DATA_GetData( cp_data, RESORT_PROXY_DATA_PARAM_PLACEID );
+  case RESORT_PEOPLE_PARAM_SEX:
+    return 1;//TODO
+  case RESORT_PEOPLE_PARAM_TRAINERVIEW:
+    return 9;//TODO;
+  case RESORT_PEOPLE_PARAM_NAME:
+    {
+      //TODO
+      static const STRCODE sc_strcode[PERSON_NAME_SIZE+EOM_SIZE] =
+      {
+        L'‚¾',
+        L'‚¢',
+        L'‚è',
+        L'‚É',
+        L'‚ñ',
+        0xffff
+      };
+      GFL_STD_MemCopy( sc_strcode, p_ret_adrs, sizeof(u16)*(PERSON_NAME_SIZE+EOM_SIZE) );
+    }
+    return 0;
+  case RESORT_PEOPLE_PARAM_LOCK:
+    return 0;
+  default:
+    GF_ASSERT(0);
+    return 0;
+  }
 }
 static void Proxy_SetData( RESORT_PEOPLE *p_wk, RESORT_PEOPLE_PARAM param, u32 data )
 {
+ RESORT_PROXY_DATA *p_data = p_wk->p_data_adrs;
+  switch( param )
+  {
+  case RESORT_PEOPLE_PARAM_PEOPLEID:
+    RESORT_PROXY_DATA_SetData( p_data, RESORT_PROXY_DATA_PARAM_PEOPLEID, data );
+    break;
+  case RESORT_PEOPLE_PARAM_PLACEID:
+    RESORT_PROXY_DATA_SetData( p_data, RESORT_PROXY_DATA_PARAM_PLACEID, data );
+    break;
+  case RESORT_PEOPLE_PARAM_LOCK:
+    /* ‚È‚É‚à‚µ‚È‚¢ */
+    break;
+  default:
+    GF_ASSERT(0);
+  }
 }
 
 //-------------------------------------

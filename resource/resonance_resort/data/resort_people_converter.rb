@@ -78,7 +78,9 @@ DEFINE_COL_VISITOR_TYPE  = 8         #列：滞在者フラグ
 DEFINE_COL_SECRETARY_TYPE = 10       #列：秘書タイプ
 DEFINE_COL_NPC_TYPE      = 12        #列：NPCタイプ
 DEFINE_COL_PERSONALITY   = 14        #列：性格
-DEFINE_COL_END           = 16        #列最後
+DEFINE_COL_VIEW          = 16        #列：見た目
+DEFINE_COL_SEX           = 18        #列：性別
+DEFINE_COL_END           = 20        #列最後
 def convertDefine( csv, header, hashNumber )
 
   hashPersonStr     = Hash.new()
@@ -186,10 +188,12 @@ PEOPLE_COL_START         = 0         #列開始位置
 PEOPLE_COL_PERSON_TYPE   = PEOPLE_COL_START #列：人物タイプ
 PEOPLE_COL_KIND          = 1         #列：種類
 PEOPLE_COL_PERSONALITY   = 2         #列：性格
-PEOPLE_COL_SCRID         = 3         #列：SCRID
-PEOPLE_COL_MSGID_START   = 4         #列：MSGID開始
-PEOPLE_COL_MSGID_END     = 6         #列：MSGID終了
-PEOPLE_COL_END           = 7         #列最後
+PEOPLE_COL_VIEW          = 3         #列：見た目
+PEOPLE_COL_SEX           = 4         #列：性別
+PEOPLE_COL_SCRID         = 5         #列：SCRID
+PEOPLE_COL_MSGID_START   = 6         #列：MSGID開始
+PEOPLE_COL_MSGID_END     = 11        #列：MSGID終了
+PEOPLE_COL_END           = 12        #列最後
 def convertPeople( csv, data, hashNumber, gmm, script )
 
   #データの作成
@@ -205,12 +209,16 @@ def convertPeople( csv, data, hashNumber, gmm, script )
     person  = csv.get( row, PEOPLE_COL_PERSON_TYPE )
     kind    = csv.get( row, PEOPLE_COL_KIND )
     seikaku = csv.get( row, PEOPLE_COL_PERSONALITY )
+    view    = csv.get( row, PEOPLE_COL_VIEW );
+    sex     = csv.get( row, PEOPLE_COL_SEX );
     scrid   = csv.get( row, PEOPLE_COL_SCRID )
 
     #データ書き込み
     data.write_u16( hashNumber[person] )
     data.write_u16( hashNumber[kind] )
     data.write_u16( hashNumber[seikaku] )
+    data.write_u16( hashNumber[view] )
+    data.write_u16( hashNumber[sex] )
 
     #SCRIDから値への変換
     begin
@@ -221,6 +229,10 @@ def convertPeople( csv, data, hashNumber, gmm, script )
 
     for i in PEOPLE_COL_MSGID_START...PEOPLE_COL_MSGID_END+1
       msg   = csv.get( row, i )
+      if msg == nil
+        data.write_u16(0);
+        next;
+      end
 
       #MSGTAGから値への変換
       begin

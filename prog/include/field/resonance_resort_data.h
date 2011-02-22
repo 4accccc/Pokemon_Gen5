@@ -12,6 +12,7 @@
 #pragma once
 #include "gamesystem/gamedata_def.h"
 #include "gamesystem/game_beacon.h"
+#include "src/field/resonance_resort/resort_people_def.h"
 //=============================================================================
 /**
  *	リゾート用受信データ
@@ -58,12 +59,22 @@ typedef enum
 //リゾート用の基本データ２のサイズ
 #define RESORT_BASIC2_DATA_SIZE   (4)
 //リゾート用の拡張データ１つあたりのサイズ
-#define RESORT_EXTEND_DATA_SIZE   (20)
+#define RESORT_EXTEND_DATA_SIZE   (16)
+#define RESORT_EXTEND1_DATA_SIZE   (16)
+#define RESORT_EXTEND2_DATA_SIZE   (16)
+#define RESORT_EXTEND3_DATA_SIZE   (16)
+#define RESORT_EXTEND4_DATA_SIZE   (16)
+#define RESORT_EXTEND5_DATA_SIZE   (16)
+#define RESORT_EXTEND6_DATA_SIZE   (16)
+#define RESORT_EXTEND7_DATA_SIZE   (16)
+#define RESORT_EXTEND8_DATA_SIZE   (16)
+
+
 //リゾート用全受信データの全サイズ
-#define RESORT_RECV_DATA_SIZE     (RESORT_BASIC1_DATA_SIZE+RESORT_BASIC2_DATA_SIZE+RESORT_EXTEND_DATA_SIZE*RESORT_EXTEND_TYPE_MAX+4)
+#define RESORT_RECV_DATA_SIZE     (RESORT_BASIC1_DATA_SIZE+RESORT_BASIC2_DATA_SIZE+RESORT_EXTEND_DATA_SIZE*RESORT_EXTEND_TYPE_MAX+28)
 
 //リゾート用代理データの全サイズ
-#define RESORT_PROXY_DATA_SIZE    (4)
+#define RESORT_PROXY_DATA_SIZE    (8)
 
 //-------------------------------------
 ///	リゾート用受信データの取得引数
@@ -126,6 +137,10 @@ extern BOOL RESORT_RECV_DATA_IsValid( const RESORT_RECV_DATA *cp_wk );
 extern u32 RESORT_RECV_DATA_GetData( const RESORT_RECV_DATA *cp_wk, RESORT_RECV_DATA_PARAM param, void *p_ret_adrs );
 extern void RESORT_RECV_DATA_SetData( RESORT_RECV_DATA *p_wk, RESORT_RECV_DATA_PARAM param, u32 data );
 
+#ifdef PM_DEBUG
+extern void RESORT_RECV_DATA_SetDebugData( RESORT_RECV_DATA *p_wk, const GAMEDATA *cp_gamedata );
+#endif
+
 //-------------------------------------
 ///	２…リゾート用ビーコンパックデータの外部公開
 //=====================================
@@ -139,8 +154,20 @@ extern BOOL RESORT_BEACON_DATA_IsValid( const RESORT_BEACON_DATA *cp_wk );
 //-------------------------------------
 ///	２…リゾート用代理データの外部公開
 //=====================================
+extern RESORT_PROXY_DATA *RESORT_PROXY_DATA_Init( HEAPID heapID );
+extern void RESORT_PROXY_DATA_Exit( RESORT_PROXY_DATA *p_wk );
 extern void RESORT_PROXY_DATA_InitInstance( RESORT_PROXY_DATA *p_wk );
 extern BOOL RESORT_PROXY_DATA_IsEmpty( const RESORT_PROXY_DATA *cp_wk );
+
+extern void RESORT_PROXY_DATA_SetCommData( RESORT_PROXY_DATA *p_wk, u16 type );
+
+typedef enum
+{
+  RESORT_PROXY_DATA_PARAM_PEOPLEID,
+  RESORT_PROXY_DATA_PARAM_PLACEID,
+}RESORT_PROXY_DATA_PARAM;
+extern u16 RESORT_PROXY_DATA_GetData( const RESORT_PROXY_DATA *cp_wk, RESORT_PROXY_DATA_PARAM param );
+extern void RESORT_PROXY_DATA_SetData( RESORT_PROXY_DATA *p_wk, RESORT_PROXY_DATA_PARAM param, u32 data );
 
 //=============================================================================
 /**
@@ -238,6 +265,7 @@ typedef RESORT_RECV_DATA RESORT_RESIDENT_DATA;
  *  滞在者データ
  */
 //=============================================================================
+#define RESORT_VISITOR_DATA_SIZE  (RESORT_BASIC1_DATA_SIZE+RESORT_BASIC2_DATA_SIZE+RESORT_EXTEND4_DATA_SIZE+4)
 //-------------------------------------
 ///	滞在者データ
 //=====================================
@@ -255,6 +283,8 @@ extern void RESORT_VISITOR_DATA_InitInstance( RESORT_VISITOR_DATA *p_wk );
  *  秘書データ
  */
 //=============================================================================
+#define RESORT_SECRETARY_DATA_SIZE  (RESORT_BASIC1_DATA_SIZE+RESORT_BASIC2_DATA_SIZE+4)
+
 //-------------------------------------
 ///	秘書データ
 //=====================================
@@ -272,6 +302,9 @@ extern void RESORT_SECRETARY_DATA_InitInstance( RESORT_SECRETARY_DATA *p_wk );
  *  施設データ
  */
 //=============================================================================
+//施設ワークサイズ
+#define RESORT_INSTITUTION_DATA_SIZE  (12)
+
 //-------------------------------------
 ///	施設データ
 //=====================================
@@ -300,7 +333,7 @@ extern void RESORT_INSTITUTION_DATA_InitInstance( RESORT_INSTITUTION_DATA *p_wk 
 #define RESORT_SECRETARY_DATA_NUM   (5)
 
 //人物データ総サイズ
-#define RESORT_PEOPLE_ALL_DATA_SIZE       (1)
+#define RESORT_PEOPLE_ALL_DATA_SIZE       (RESORT_RECV_DATA_SIZE*RESORT_RESIDENT_DATA_NUM+RESORT_VISITOR_DATA_SIZE*RESORT_VISITOR_DATA_NUM+RESORT_SECRETARY_DATA_SIZE*RESORT_SECRETARY_DATA_NUM)
 
 //-------------------------------------
 ///	街データ
@@ -325,11 +358,23 @@ extern RESORT_SECRETARY_DATA * RESORT_PEOPLE_ALL_DATA_GetSecretary( RESORT_PEOPL
 //-------------------------------------
 ///	定数
 //=====================================
+//文字列数    EOMなし
+#if PM_LANG == LANG_JAPAN
+#define RESORT_CITY_NAME_LEN  (10)
+#define RESORT_MY_NAME_LEN    (10)
+#else
+#define RESORT_CITY_NAME_LEN  (20)
+#define RESORT_MY_NAME_LEN    (20)
+#endif
+
+
 //施設データ数
 #define RESORT_INSTITUTION_DATA_NUM (8)
 
 //街データ総サイズ
-#define RESORT_CITY_DATA_SIZE       (1)
+#define RESORT_CITY_DATA_SIZE       (372+RESORT_INSTITUTION_DATA_SIZE*RESORT_INSTITUTION_DATA_NUM)
+
+//
 
 //-------------------------------------
 ///	街データ

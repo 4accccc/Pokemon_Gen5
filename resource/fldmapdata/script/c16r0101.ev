@@ -12,6 +12,7 @@
   .include  "msg_c16r0101.h"
   //.include  "c16r0101.h"
   .include  "../../../prog/src/field/resonance_resort/scrcmd_resort_def.h"
+  .include  "c16r0101_define.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -22,8 +23,13 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_c16r0101
 _EVENT_DATA    ev_c16r0101_tourist
+_EVENT_DATA    ev_c16r0101_proxy
 _EVENT_DATA_END
 
+
+DEFINE_LOCAL  LWK_MENU_RET
+DEFINE_LOCAL  LWK_MENU_LOOP
+DEFINE_LOCAL LWK_OBJID
 
 /**************************************************************/
 /*            ZONE_CHANGE_LABEL                               */
@@ -45,16 +51,225 @@ EVENT_START ev_c16r0101_tourist
 	_TALK_OBJ_START()
   _RESORT_TALK_START()
 
-  DEFINE_LOCAL LWK_OBJID
   _RESORT_GET_DATA( RESORT_GET_PARAM_FRONT_OBJID, LWK_OBJID )
 
   _RESORT_SET_WORD( RESORT_WORD_PEOPLE, 0 )
 
-	DEFINE_LOCAL LWK_MSGID
-  _RESORT_GET_MSGID( 0, LWK_MSGID )
+  //挨拶文
+	DEFINE_LOCAL LWK_GREET_MSGID
+  _RESORT_GET_MSGID( 0, LWK_GREET_MSGID )
+	_BALLOONWIN_OBJMSG( LWK_GREET_MSGID, LWK_OBJID )
+	_BALLOONWIN_CLOSE()
 
-	_BALLOONWIN_OBJMSG( LWK_MSGID, LWK_OBJID )
+  //以下メニュー表示はLWK_MENU_LOOPがFALSEになるまで続く
+  $LWK_MENU_LOOP = TRUE
+  WHILE $LWK_MENU_LOOP == TRUE
+    //メニュー表示
+    _CALL sub_tourist_main_menu
+
+    //分岐
+    SWITCH $LWK_MENU_RET
+    CASE SEQ_INVITATION THEN   //招待
+      _CALL sub_tourist_invitation
+    CASE SEQ_SCOUT THEN        //スカウト
+      _CALL sub_tourist_scout
+    CASE SEQ_BYE THEN          //さようなら
+      _CALL sub_tourist_bye
+    CASE SEQ_DOING THEN        //最近どうしてる？
+      _CALL sub_tourist_doing
+    CASE SEQ_SPOT THEN         //おすすめスポット
+      _CALL sub_tourist_spot
+    CASE SEQ_APPEAL THEN       //アピールを聞く
+      _CALL sub_tourist_appeal
+    CASE SEQ_WAIT THEN         //ちょっと待ってて
+      _CALL sub_tourist_wait
+    DEFAULT
+      $LWK_MENU_LOOP = FALSE //念のため無限ループを避ける
+    ENDSWITCH
+  ENDWHILE
+
+  _RESORT_TALK_END()
+EVENT_END
+
+//==============================================================
+//サブルーチン：メニュー表示
+//==============================================================
+sub_tourist_main_menu:
+{
+  //どうしますか？
+	_SYSWIN_MSG( c16r0101_sys_select_00, POS_DOWN )
+
+	_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, LWK_MENU_RET )
+
+	_BMPMENU_MAKE_LIST( c16r0101_sys_select_01, SEQ_INVITATION )	//招待
+	_BMPMENU_MAKE_LIST( c16r0101_sys_select_02, SEQ_SCOUT )	      //スカウト
+	_BMPMENU_MAKE_LIST( c16r0101_sys_select_07, SEQ_BYE )	        //さようなら
+	_BMPMENU_MAKE_LIST( c16r0101_sys_select_04, SEQ_DOING )	      //さいきんどう？
+
+  //スポットは施設がなかったら出さない
+	_BMPMENU_MAKE_LIST( c16r0101_sys_select_03, SEQ_SPOT )	      //スポット
+	_BMPMENU_MAKE_LIST( c16r0101_sys_select_05, SEQ_APPEAL )	    //アピール
+	_BMPMENU_MAKE_LIST( c16r0101_sys_select_06, SEQ_WAIT )	      //まってて
+
+	//メニュー表示
+	_BMPMENU_START()
+
+  //どうしますか？を閉じる
+  _SYSWIN_CLOSE()
+
+  IF $LWK_MENU_RET == EV_WIN_B_CANCEL THEN
+    $LWK_MENU_RET = SEQ_BYE
+  ENDIF
+}
+_RET
+
+
+//==============================================================
+//サブルーチン：招待
+//==============================================================
+sub_tourist_invitation:
+{
+  //喜び文を表示
+	DEFINE_LOCAL LWK_JOY_MSGID
+  _RESORT_GET_MSGID( 3, LWK_JOY_MSGID )
+	_BALLOONWIN_OBJMSG( LWK_JOY_MSGID, LWK_OBJID )
+	_BALLOONWIN_CLOSE()
+
+  //転職  //TODO
+  _RESORT_JOB_CHANGE( 0 )
+
+  //施設生成
+
+  //特殊NPC出現チェック
+}
+_RET
+
+//==============================================================
+//サブルーチン：スカウト
+//==============================================================
+sub_tourist_scout:
+{
+  //秘書入れ替えチェック
+
+  //誰と入れ替えるか選択
+
+  //秘書更新
+
+  //施設生成？
+
+  //特殊NPC出現チェック
+
+  //選択肢終了
+  $LWK_MENU_LOOP = FALSE
+}
+_RET
+
+//==============================================================
+//サブルーチン：さようなら
+//==============================================================
+sub_tourist_bye:
+{
+  //さよなら文を表示
+	DEFINE_LOCAL LWK_BYE_MSGID
+  _RESORT_GET_MSGID( 1, LWK_BYE_MSGID )
+	_BALLOONWIN_OBJMSG( LWK_BYE_MSGID, LWK_OBJID )
+	_BALLOONWIN_CLOSE()
+
+  //飛んで去っていく
+  _RESORT_ACTION( RESORT_ACTION_LEAVE )
+
+  //転職  //TODO
+  _RESORT_JOB_CHANGE( 0 )
+
+  //選択肢終了
+  $LWK_MENU_LOOP = FALSE
+}
+_RET
+
+//==============================================================
+//サブルーチン：最近どう？
+//==============================================================
+sub_tourist_doing:
+{
+  //最近のMSG文を表示 //TODO 最近MSG取得
+	DEFINE_LOCAL LWK_DO_MSGID
+  _RESORT_GET_MSGID( 2, LWK_DO_MSGID )
+	_BALLOONWIN_OBJMSG( LWK_DO_MSGID, LWK_OBJID )
+	_BALLOONWIN_CLOSE()
+}
+_RET
+
+//==============================================================
+//サブルーチン：スポット
+//==============================================================
+sub_tourist_spot:
+{
+  //スポット文を表示
+	DEFINE_LOCAL LWK_SPOT_MSGID
+  _RESORT_GET_MSGID( 5, LWK_SPOT_MSGID )
+	_BALLOONWIN_OBJMSG( LWK_SPOT_MSGID, LWK_OBJID )
+	_BALLOONWIN_CLOSE()
+
+  //施設選択
+
+  //暗転してメッセージ（暗転中にOBJ転職し消す）
+
+
+  //選択肢終了
+  $LWK_MENU_LOOP = FALSE
+}
+_RET
+
+//==============================================================
+//サブルーチン：アピール
+//==============================================================
+sub_tourist_appeal:
+{
+  //アピール文を表示
+	DEFINE_LOCAL LWK_APPEAL_MSGID
+  _RESORT_GET_MSGID( 2, LWK_APPEAL_MSGID )
+	_BALLOONWIN_OBJMSG( LWK_APPEAL_MSGID, LWK_OBJID )
+	_BALLOONWIN_CLOSE()
+}
+_RET
+
+//==============================================================
+//サブルーチン：まってて
+//==============================================================
+sub_tourist_wait:
+{
+  //待つを表示
+	DEFINE_LOCAL LWK_WAIT_MSGID
+  _RESORT_GET_MSGID( 4, LWK_WAIT_MSGID )
+	_BALLOONWIN_OBJMSG( LWK_WAIT_MSGID, LWK_OBJID )
+	_BALLOONWIN_CLOSE()
+
+  //待つ処理
+  _RESORT_KEEP_WAIT()
+
+  //選択肢終了
+  $LWK_MENU_LOOP = FALSE
+}
+_RET
+
+
+/**************************************************************/
+/*            代理人用スクリプト                              */
+/**************************************************************/
+EVENT_START ev_c16r0101_proxy
+	_TALK_OBJ_START()
+  _RESORT_TALK_START()
+
+  _RESORT_GET_DATA( RESORT_GET_PARAM_FRONT_OBJID, LWK_OBJID )
+
+  _RESORT_SET_WORD( RESORT_WORD_PEOPLE, 0 )
+
+  //挨拶文
+	DEFINE_LOCAL LWK_GREET_MSGID2
+  _RESORT_GET_MSGID( 0, LWK_GREET_MSGID2 )
+	_BALLOONWIN_OBJMSG( LWK_GREET_MSGID2, LWK_OBJID )
 	_BALLOONWIN_CLOSE()
 
   _RESORT_TALK_END()
+
 EVENT_END

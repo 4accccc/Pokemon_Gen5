@@ -13,6 +13,7 @@
 #include "gamesystem/game_data.h"
 #include "savedata/questionnaire_save.h"
 #include "net_app/union/union_beacon_tool.h"
+#include "system/gfl_use.h"
 
 //外部公開
 #include "field/resonance_resort_data.h"
@@ -211,7 +212,14 @@ static void RESORT_BASIC1_DATA_PrintDebug( const RESORT_BASIC1_DATA *cp_wk )
 //=====================================
 typedef struct
 {
-  int dummy;  //TODO
+  u8  continue_data :1;
+  u8  personality   :5;
+  u8  pad           :2;
+  u8  quest1        :4;
+  u8  quest2        :4;
+  u8  quest3        :4;
+  u8  quest4        :4;
+  u8  baseID;
               //WBから受け取ったときは中身がからなので何らかの認識をすること
 }RESORT_BASIC2_DATA;
 
@@ -229,18 +237,7 @@ static void RESORT_BASIC2_DATA_SetMyData( RESORT_BASIC2_DATA *p_wk, const GAMEDA
 {
   GFL_STD_MemClear( p_wk, sizeof(RESORT_BASIC2_DATA) );
 }
-//----------------------------------------------------------------------------
-/**
- *	@brief  基本データ2にビーコンからのデータを設定
- *
- *	@param	RESORT_BASIC2_DATA *p_wk  ワーク
- *	@param	GAMEBEACON_INFO   ビーコン
- */
-//-----------------------------------------------------------------------------
-static void RESORT_BASIC2_DATA_SetBeaconInfo( RESORT_BASIC2_DATA *p_wk, const GAMEBEACON_INFO *cp_beacon_info )
-{
-  GFL_STD_MemClear( p_wk, sizeof(RESORT_BASIC2_DATA) );
-}
+
 
 //----------------------------------------------------------------------------
 /**
@@ -261,9 +258,12 @@ static BOOL RESORT_BASIC2_DATA_IsValid( const RESORT_BASIC2_DATA *cp_wk )
 //=====================================
 typedef struct
 {
-  u8  dummy[20];
+  u8  medalID;
+  u8  medal_num;        
+  u8  medal_custom[14];
+
 } RESORT_EXTEND1_DATA;
-SDK_COMPILER_ASSERT( sizeof(RESORT_EXTEND1_DATA) == RESORT_EXTEND_DATA_SIZE );
+SDK_COMPILER_ASSERT( sizeof(RESORT_EXTEND1_DATA) == RESORT_EXTEND1_DATA_SIZE );
 
 //----------------------------------------------------------------------------
 /**
@@ -276,13 +276,6 @@ SDK_COMPILER_ASSERT( sizeof(RESORT_EXTEND1_DATA) == RESORT_EXTEND_DATA_SIZE );
 static void RESORT_EXTEND1_DATA_SetMyData( RESORT_EXTEND1_DATA *p_wk, const GAMEDATA *cp_gamedata )
 {
   GFL_STD_MemClear( p_wk, sizeof(RESORT_EXTEND1_DATA) );
-  {
-    int i;
-    for( i = 0; i < 20; i++ )
-    {
-      p_wk->dummy[i]  = i;
-    }
-  }
 }
 
 //----------------------------------------------------------------------------
@@ -302,9 +295,9 @@ static BOOL RESORT_EXTEND1_DATA_IsValid( const RESORT_EXTEND1_DATA *cp_wk )
 //=====================================
 typedef struct
 {
-  u8  dummy[20];
+  u32 rank_data[4]; //１～４
 } RESORT_EXTEND2_DATA;
-SDK_COMPILER_ASSERT( sizeof(RESORT_EXTEND2_DATA) == RESORT_EXTEND_DATA_SIZE );
+SDK_COMPILER_ASSERT( sizeof(RESORT_EXTEND2_DATA) == RESORT_EXTEND2_DATA_SIZE );
 
 //----------------------------------------------------------------------------
 /**
@@ -332,13 +325,10 @@ static BOOL RESORT_EXTEND2_DATA_IsValid( const RESORT_EXTEND2_DATA *cp_wk )
 }
 
 //-------------------------------------
-///	拡張データ3
+///	拡張データ3 
 //=====================================
-typedef struct
-{
-  u8  dummy[20];
-} RESORT_EXTEND3_DATA;
-SDK_COMPILER_ASSERT( sizeof(RESORT_EXTEND3_DATA) == RESORT_EXTEND_DATA_SIZE );
+typedef RESORT_EXTEND2_DATA RESORT_EXTEND3_DATA;  //２と３は同じ構造体（ただし中身が違う）
+SDK_COMPILER_ASSERT( sizeof(RESORT_EXTEND3_DATA) == RESORT_EXTEND3_DATA_SIZE );
 //----------------------------------------------------------------------------
 /**
  *	@brief  拡張データ3に自分のデータを設定
@@ -367,9 +357,9 @@ static BOOL RESORT_EXTEND3_DATA_IsValid( const RESORT_EXTEND3_DATA *cp_wk )
 //=====================================
 typedef struct
 {
-  u8  dummy[20];
+  u8  gossip[16];
 } RESORT_EXTEND4_DATA;
-SDK_COMPILER_ASSERT( sizeof(RESORT_EXTEND4_DATA) == RESORT_EXTEND_DATA_SIZE );
+SDK_COMPILER_ASSERT( sizeof(RESORT_EXTEND4_DATA) == RESORT_EXTEND4_DATA_SIZE );
 //----------------------------------------------------------------------------
 /**
  *	@brief  拡張データ4に自分のデータを設定
@@ -398,9 +388,16 @@ static BOOL RESORT_EXTEND4_DATA_IsValid( const RESORT_EXTEND4_DATA *cp_wk )
 //=====================================
 typedef struct
 {
-  u8  dummy[20];
+  u16 monsno;
+  u8  form  :5;
+  u8  sex   :2;
+  u8  rare  :1;
+  u8  tokusei;
+  u16 waza[4];
+  u16 item;
+  u16 pad;
 } RESORT_EXTEND5_DATA;
-SDK_COMPILER_ASSERT( sizeof(RESORT_EXTEND5_DATA) == RESORT_EXTEND_DATA_SIZE );
+SDK_COMPILER_ASSERT( sizeof(RESORT_EXTEND5_DATA) == RESORT_EXTEND5_DATA_SIZE );
 //----------------------------------------------------------------------------
 /**
  *	@brief  拡張データ5に自分のデータを設定
@@ -427,11 +424,8 @@ static BOOL RESORT_EXTEND5_DATA_IsValid( const RESORT_EXTEND5_DATA *cp_wk )
 //-------------------------------------
 ///	拡張データ6
 //=====================================
-typedef struct
-{
-  u8  dummy[20];
-} RESORT_EXTEND6_DATA;
-SDK_COMPILER_ASSERT( sizeof(RESORT_EXTEND6_DATA) == RESORT_EXTEND_DATA_SIZE );
+typedef RESORT_EXTEND5_DATA RESORT_EXTEND6_DATA;
+SDK_COMPILER_ASSERT( sizeof(RESORT_EXTEND6_DATA) == RESORT_EXTEND6_DATA_SIZE );
 //----------------------------------------------------------------------------
 /**
  *	@brief  拡張データ6に自分のデータを設定
@@ -458,11 +452,8 @@ static BOOL RESORT_EXTEND6_DATA_IsValid( const RESORT_EXTEND6_DATA *cp_wk )
 //-------------------------------------
 ///	拡張データ7
 //=====================================
-typedef struct
-{
-  u8  dummy[20];
-} RESORT_EXTEND7_DATA;
-SDK_COMPILER_ASSERT( sizeof(RESORT_EXTEND7_DATA) == RESORT_EXTEND_DATA_SIZE );
+typedef RESORT_EXTEND5_DATA RESORT_EXTEND7_DATA;
+SDK_COMPILER_ASSERT( sizeof(RESORT_EXTEND7_DATA) == RESORT_EXTEND7_DATA_SIZE );
 //----------------------------------------------------------------------------
 /**
  *	@brief  拡張データ7に自分のデータを設定
@@ -491,9 +482,9 @@ static BOOL RESORT_EXTEND7_DATA_IsValid( const RESORT_EXTEND7_DATA *cp_wk )
 //=====================================
 typedef struct
 {
-  u8  dummy[20];
+  u8  record[16];
 } RESORT_EXTEND8_DATA;
-SDK_COMPILER_ASSERT( sizeof(RESORT_EXTEND8_DATA) == RESORT_EXTEND_DATA_SIZE );
+SDK_COMPILER_ASSERT( sizeof(RESORT_EXTEND8_DATA) == RESORT_EXTEND8_DATA_SIZE );
 
 //----------------------------------------------------------------------------
 /**
@@ -569,7 +560,25 @@ struct _RESORT_RECV_DATA
   RESORT_EXTEND6_DATA extend6;
   RESORT_EXTEND7_DATA extend7;
   RESORT_EXTEND8_DATA extend8;
-  u32                 extend_flag:8;
+  u16                 presentID;
+  u8                  precent_num;
+  u8                  year;         //4
+  u8                  month;
+  u8                  day;
+  u8                  hour;
+  u8                  minute;       //8
+  u8                  netID;
+  u8                  merge     :1;
+  u8                  pad       :6;
+  u8                  keep_flag :1;
+  u8                  lv;
+  u8                  institutionID;//12
+  u16                 exp;
+  u8                  ev_work1;
+  u8                  ev_work2; //16
+  u32                 ev_bit; //20
+  u32                 kosei;  //TODO　個性？  //24
+  u32                 extend_flag:8;  //28
   u32                 lock      :1;
   u32                 update    :2; //RESORT_RECV_DATA_UPDATEの値
   u32                 peopleID  :10;
@@ -594,7 +603,12 @@ struct _RESORT_BEACON_DATA
 //=====================================
 struct _RESORT_PROXY_DATA
 {
-  u32 dummy;
+  u8    type;
+  u8    present_num;
+  u8    placeID;
+  u8    peopleID;
+  u16   presentID;
+  u16   dummy;
 };
 
 SDK_COMPILER_ASSERT(sizeof(RESORT_PROXY_DATA)==RESORT_PROXY_DATA_SIZE);
@@ -907,6 +921,77 @@ void RESORT_RECV_DATA_SetData( RESORT_RECV_DATA *p_wk, RESORT_RECV_DATA_PARAM pa
     GF_ASSERT(0);
   }
 }
+#ifdef PM_DEBUG
+//----------------------------------------------------------------------------
+/**
+ *	@brief  デバッグ用データを作成
+ *
+ *	@param	RESORT_RECV_DATA *p_wk  ワーク
+ *	@param	GAMEDATA *cp_gamedata   ゲームデータ
+ */
+//-----------------------------------------------------------------------------
+void RESORT_RECV_DATA_SetDebugData( RESORT_RECV_DATA *p_wk, const GAMEDATA *cp_gamedata )
+{
+  //自分のデータをいれた後、トレーナーIDと名前を変える
+  RESORT_RECV_DATA_SetMyData( p_wk, cp_gamedata );
+
+  p_wk->basic1.trainerID = GFUser_GetPublicRand(0xFFFF);
+
+  {
+    static const struct
+    {
+      STRCODE *p_str;
+      u32 len;
+    } sc_name[] = 
+    {
+      {
+        L"いちろう",
+        4,
+      },
+      {
+        L"じろう",
+        3,
+      },
+      {
+        L"さぶろう",
+        4,
+      },
+      {
+        L"しろう",
+        3,
+      },
+      {
+        L"ごろう",
+        3,
+      },
+      {
+        L"ろくろう",
+        4,
+      },
+      {
+        L"ななろう",
+        4,
+      },
+      {
+        L"はちろう",
+        4,
+      },
+      {
+        L"くろう",
+        3,
+      },
+      {
+        L"たろう",
+        3,
+      }
+    };
+
+    u8 idx = GFUser_GetPublicRand(NELEMS(sc_name));
+    GFL_STD_MemCopy( sc_name[idx].p_str, p_wk->basic1.name, sizeof(STRCODE)*sc_name[idx].len );
+    p_wk->basic1.name[sc_name[idx].len] = GFL_STR_GetEOMCode();
+  }
+}
+#endif
 
 //=============================================================================
 /**
@@ -996,8 +1081,16 @@ void RESORT_BEACON_DATA_SetBeaconInfo( RESORT_BEACON_DATA *p_wk, const GAMEBEACO
   if( cp_beacon_info->pm_version == VERSION_W2 || cp_beacon_info->pm_version == VERSION_B2 )
   {
     //W2B2ならば拡張データあり
-    RESORT_BASIC2_DATA_SetBeaconInfo( &p_wk->basic2, cp_beacon_info );
-    GFL_STD_MemCopy( cp_beacon_info->action.extend_buff, p_wk->extend, RESORT_EXTEND_DATA_SIZE );
+    //拡張データの先頭はBASIC2
+    {
+      const void *cp_basic2_adrs = cp_beacon_info->action.extend_buff;
+      GFL_STD_MemCopy( cp_basic2_adrs, &p_wk->basic2, RESORT_BASIC2_DATA_SIZE );
+    }
+    //後ろがEXTEND
+    {
+      const void *cp_extend_adrs = (const u8 *)cp_beacon_info->action.extend_buff + RESORT_BASIC2_DATA_SIZE;
+      GFL_STD_MemCopy( cp_extend_adrs, p_wk->extend, RESORT_EXTEND_DATA_SIZE );
+    }
     p_wk->extend_type = cp_beacon_info->action.resort_extend_type;
   }
   else
@@ -1050,13 +1143,115 @@ BOOL RESORT_BEACON_DATA_IsValid( const RESORT_BEACON_DATA *cp_wk )
  *    RESORT_PROXY_DATAの関数
  */
 //=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  代理人データの作成
+ *
+ *	@param	HEAPID heapID   ヒープID
+ *
+ *	@return 代理人でーた
+ */
+//-----------------------------------------------------------------------------
+RESORT_PROXY_DATA *RESORT_PROXY_DATA_Init( HEAPID heapID )
+{
+  RESORT_PROXY_DATA *p_wk = GFL_HEAP_AllocClearMemory(heapID,sizeof(RESORT_PROXY_DATA));
+  RESORT_PROXY_DATA_InitInstance( p_wk );
+  return p_wk;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  代理人データの破棄
+ *
+ *	@param	RESORT_PROXY_DATA *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void RESORT_PROXY_DATA_Exit( RESORT_PROXY_DATA *p_wk )
+{
+  GFL_HEAP_FreeMemory(p_wk);
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  代理人データの初期化
+ *
+ *	@param	RESORT_PROXY_DATA *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
 void RESORT_PROXY_DATA_InitInstance( RESORT_PROXY_DATA *p_wk )
 {
+  GFL_STD_MemClear(p_wk, sizeof(RESORT_PROXY_DATA) );
+  p_wk->type  = RESORT_PROXY_TYPE_MAX;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  代理人データが空かチェック
+ *
+ *	@param	const RESORT_PROXY_DATA *cp_wk ワーク
+ *
+ *	@return TRUEならば空  FALSEならば存在
+ */
+//-----------------------------------------------------------------------------
 BOOL RESORT_PROXY_DATA_IsEmpty( const RESORT_PROXY_DATA *cp_wk )
 {
-  return TRUE;
+  return cp_wk->type == RESORT_PROXY_TYPE_MAX;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  代理人データを設定
+ *
+ *	@param	RESORT_PROXY_DATA *p_wk ワーク
+ *	@param	type  代理人タイプ  RESORT_PROXY_TYPE_xxxx
+ */
+//-----------------------------------------------------------------------------
+void RESORT_PROXY_DATA_SetCommData( RESORT_PROXY_DATA *p_wk, u16 type )
+{
+  p_wk->type = type;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  代理人データを取得
+ *
+ *	@param	const RESORT_PROXY_DATA *cp_wk  ワーク
+ *	@param	param   取得するもの
+ *
+ *	@return データ
+ */
+//-----------------------------------------------------------------------------
+u16 RESORT_PROXY_DATA_GetData( const RESORT_PROXY_DATA *cp_wk, RESORT_PROXY_DATA_PARAM param )
+{
+  switch( param )
+  {
+  case RESORT_PROXY_DATA_PARAM_PEOPLEID:
+    return cp_wk->peopleID;
+  case RESORT_PROXY_DATA_PARAM_PLACEID:
+    return cp_wk->placeID;
+  default:
+    GF_ASSERT(0);
+    return 0;
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief 代理人データへデータ設定
+ *
+ *	@param	RESORT_PROXY_DATA *p_wk ワーク
+ *	@param	param                   引数
+ *	@param	data                    データ
+ */
+//-----------------------------------------------------------------------------
+void RESORT_PROXY_DATA_SetData( RESORT_PROXY_DATA *p_wk, RESORT_PROXY_DATA_PARAM param, u32 data )
+{
+  switch( param )
+  {
+  case RESORT_PROXY_DATA_PARAM_PEOPLEID:
+    p_wk->peopleID = data;
+    break;
+  case RESORT_PROXY_DATA_PARAM_PLACEID:
+    p_wk->placeID   = data;
+    break;
+  default:
+    GF_ASSERT(0);
+  }
 }
 //=============================================================================
 /**
@@ -1491,8 +1686,14 @@ static RESORT_RECV_DATA * Resort_Recv_Buff_GetSameOwnerData( RESORT_RECV_BUFF *p
 //=====================================
 struct _RESORT_VISITOR_DATA
 {
-  int dummy;
+  RESORT_BASIC1_DATA basic1;
+  RESORT_BASIC2_DATA basic2;
+  RESORT_EXTEND4_DATA extend4;
+  u8    placeID;
+  u8    peopleID;
+  u8    dummy[2];
 };
+SDK_COMPILER_ASSERT( sizeof(RESORT_VISITOR_DATA) == RESORT_VISITOR_DATA_SIZE );
 
 //-------------------------------------
 ///	外部公開
@@ -1545,8 +1746,13 @@ void RESORT_VISITOR_DATA_InitInstance( RESORT_VISITOR_DATA *p_wk )
 //=====================================
 struct _RESORT_SECRETARY_DATA 
 {
-  int dummy;
+  RESORT_BASIC1_DATA basic1;
+  RESORT_BASIC2_DATA basic2;
+  u8    placeID;
+  u8    peopleID;
+  u8    dummy[2];
 };
+SDK_COMPILER_ASSERT( sizeof(RESORT_SECRETARY_DATA) == RESORT_SECRETARY_DATA_SIZE );
 
 //-------------------------------------
 ///	外部公開
@@ -1599,8 +1805,14 @@ void RESORT_SECRETARY_DATA_InitInstance( RESORT_SECRETARY_DATA *p_wk )
 //=====================================
 struct _RESORT_INSTITUTION_DATA 
 {
-  int dummy;
+  u8  institutionID;
+  u8  lv;
+  u16 pad;
+  u32 ev_bit;
+  u32 work;
 };
+
+SDK_COMPILER_ASSERT( sizeof(RESORT_INSTITUTION_DATA) == RESORT_INSTITUTION_DATA_SIZE );
 
 //-------------------------------------
 ///	外部公開
@@ -1651,7 +1863,6 @@ void RESORT_INSTITUTION_DATA_InitInstance( RESORT_INSTITUTION_DATA *p_wk )
 //-------------------------------------
 ///	定数
 //=====================================
-#define RESORT_PEOPLE_ALL_DATA_SIZE (1)
 
 //-------------------------------------
 ///	街データ
@@ -1663,7 +1874,7 @@ struct _RESORT_PEOPLE_ALL_DATA
   RESORT_SECRETARY_DATA   secretary[RESORT_SECRETARY_DATA_NUM];
 };
 
-//SDK_COMPILER_ASSERT(sizeof(RESORT_PEOPLE_ALL_DATA) == RESORT_PEOPLE_ALL_DATA_SIZE );
+SDK_COMPILER_ASSERT(sizeof(RESORT_PEOPLE_ALL_DATA) == RESORT_PEOPLE_ALL_DATA_SIZE );
 
 //-------------------------------------
 ///	外部公開
@@ -1773,17 +1984,37 @@ RESORT_SECRETARY_DATA * RESORT_PEOPLE_ALL_DATA_GetSecretary( RESORT_PEOPLE_ALL_D
 //-------------------------------------
 ///	定数
 //=====================================
-#define RESORT_CITY_DATA_SIZE (1)
+#define RESORT_CITY_NAME_BUFF_MAX  (20)
+#define RESORT_MY_NAME_BUFF_MAX  (20)
 
 //-------------------------------------
 ///	街データ
 //=====================================
 struct _RESORT_CITY_DATA
 {
+  STRCODE city_name[RESORT_CITY_NAME_BUFF_MAX+EOM_SIZE];
+  STRCODE my_name[RESORT_MY_NAME_BUFF_MAX*EOM_SIZE];  //84
+  u16     lv; 
+  u16     state;  //92
+  u32     trainerID[32];  //128 220
+  u8      encount[32];  //32 252
+  u8      decoration[32]; //32 284
+  u8      ev_flag[32];  //32 316
+  u16     arrangement[16];  //32 348
+  u32     talk_cnt;     //7*4=28 376
+  u32     build_cnt;
+  u32     quest_clear_cnt;
+  u32     todo1;  //TODO
+  u32     todo2;  //TODO
+  u32     todo3;  //TODO
+  u8      secret_present_type;  
+  u8      secret_present_num;
+  u8      secret_present_flag;
+  u8      pad;
   RESORT_INSTITUTION_DATA institution[RESORT_INSTITUTION_DATA_NUM];
 };
 
-//SDK_COMPILER_ASSERT(sizeof(RESORT_CITY_DATA) == RESORT_CITY_DATA_SIZE );
+SDK_COMPILER_ASSERT(sizeof(RESORT_CITY_DATA) == RESORT_CITY_DATA_SIZE );
 
 //-------------------------------------
 ///	外部公開

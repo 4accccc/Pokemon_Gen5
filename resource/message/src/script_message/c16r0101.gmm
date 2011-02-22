@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nagihashi_toru" host="W00268" date="2011-02-21T17:10:45"/>
+	<create user="nagihashi_toru" host="W00268" date="2011-02-22T18:56:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,6 +292,12 @@
 	</lock>
 
 
+	<row id="none">
+		<comment>何もなし</comment>
+		<language name="JPN" width="256"></language>
+		<language name="JPN_KANJI" width="256"></language>
+	</row>
+
 	<row id="c16r0101_tourist_greet_00">
 		<comment>旅行者挨拶文</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『こんにちは！
@@ -330,6 +336,22 @@
 		<comment>旅行者行きたい場所</comment>
 		<language name="JPN" width="256">ショッピングしたいんですよね</language>
 		<language name="JPN_KANJI" width="256">ショッピングしたいんですよね</language>
+	</row>
+
+	<row id="c16r0101_proxy_greet_gts">
+		<comment>代理人GTS</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]『こんにちは！
+GTSで　あったよね！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『こんにちは！
+GTSで　会ったよね！</language>
+	</row>
+
+	<row id="c16r0101_proxy_greet_mystery">
+		<comment>代理人不思議</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]『こんにちは！
+ふしぎな　おくりものから　きたよ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『こんにちは！
+不思議な　贈り物から　きたよ！</language>
 	</row>
 
 	<row id="c16r0101_sys_select_00" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#c0c0c0,,#80ff80,#c0c0c0,,,#c0c0c0,,">
@@ -373,6 +395,40 @@
 	<row id="c16r0101_sys_select_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">さようなら</language>
 		<language name="JPN_KANJI" width="256">さようなら</language>
+	</row>
+
+	<row id="c16r0101_sys_00" back-color="#80ff80,,,,,,,#80ff80,,,,,,,,,,,">
+		<language name="JPN" width="256">ジュエリーショップ
+『ジュエル　スワン』が　できました！▼</language>
+		<language name="JPN_KANJI" width="256">ジュエリーショップ
+『ジュエル　スワン』が　できました！▼</language>
+	</row>
+
+	<row id="c16r0101_sys_01" back-color="#80ff80,,,,,,,#80ff80,,,,,,,,,,,">
+		<language name="JPN" width="256">ポケモンこうかんを　したい　ひとが
+コンドミニアムに　あらわれました▼</language>
+		<language name="JPN_KANJI" width="256">ポケモン交換を　したい　人が
+コンドミニアムに　あらわれました▼</language>
+	</row>
+
+	<row id="c16r0101_sys_02" back-color="#80ff80,,,,,,,#80ff80,,,,,,,,,,,">
+		<language name="JPN" width="256">だれと　いれかえますか？</language>
+		<language name="JPN_KANJI" width="256">誰と　いれかえますか？</language>
+	</row>
+
+	<row id="c16r0101_sys_03" back-color="#80ff80,,,,,,,#80ff80,,,,,,,,,,,">
+		<language name="JPN" width="256">ジュエリースワンに
+[1:00:トレーナー名:0]が　やってきた！▼
+[1:00:トレーナー名:0]は　ジュエリースワンに
+まんぞくした！▼
+ジュエリースワンの　みりょくが
+あがった！▼</language>
+		<language name="JPN_KANJI" width="256">ジュエリースワンに
+[1:00:トレーナー名:0]が　やってきた！▼
+[1:00:トレーナー名:0]は　ジュエリースワンに
+満足した！▼
+ジュエリースワンの　魅力が
+あがった！▼</language>
 	</row>
 
 	<flowchart-group-list>

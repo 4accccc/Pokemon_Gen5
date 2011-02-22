@@ -47,6 +47,7 @@
 #include "event_debug_linkfest.h"
 #include "event_debug_beacon.h"
 #include "event_debug_menu_intrude.h"   // for DEBUG_EVENT_FLDMENU_Intrude
+#include "event_debug_menu_resort.h"
 
 //外部公開
 #include "event_debug_menu_ov_net.h"
@@ -418,4 +419,17 @@ BOOL debugMenu_WriteWifiNote( DEBUG_MENU_EVENT_WORK *wk )
   DEBUG_EntryWifiNote( wk->gmSys );
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(debug_menu_wifinote) );
   return FALSE;
+}
+//--------------------------------------------------------------
+/**
+ * デバッグメニュー　レゾナンスリゾート
+ */
+//--------------------------------------------------------------
+BOOL debugMenu_Resort( DEBUG_MENU_EVENT_WORK * wk )
+{
+  GMEVENT *event = GMEVENT_CreateOverlayEventCall( wk->gmSys,
+      FS_OVERLAY_ID( debug_resort ), DEBUG_EVENT_DebugMenu_Resort, wk );
+
+  GMEVENT_ChangeEvent( wk->gmEvent, event );
+  return TRUE;
 }

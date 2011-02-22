@@ -173,6 +173,8 @@ static const DEBUG_MENU_LIST DATA_DebugMenuList[] =
   //{ DEBUG_FIELD_MISSION_RESET, debugMenu_MissionReset, FS_OVERLAY_ID(debugmenu_net) },  //ミッションリスト再作成
   { DEBUG_FIELD_INTRUDE,    debugMenu_Intrude, FS_OVERLAY_ID(debugmenu_net) },      //ハイリンク
   { DEBUG_FIELD_WIFINOTE_01,  debugMenu_WriteWifiNote, FS_OVERLAY_ID(debugmenu_net) },  //友達手帳書き込み
+  { DEBUG_FIELD_RESORT, debugMenu_Resort, FS_OVERLAY_ID(debugmenu_net) }, //レゾナンスリゾート
+
   //event_debug_menu_ov_app.c
   { DEBUG_FIELD_TITLE_04, (void*)BMPMENULIST_LABEL, GFL_OVERLAY_BLANK_ID },       //○アプリ
   { DEBUG_FIELD_STR44, debugMenuCallProc_UITemplate, FS_OVERLAY_ID(debugmenu_app) },        //UIテンプレート

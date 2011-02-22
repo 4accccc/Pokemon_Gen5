@@ -1703,6 +1703,23 @@ void GAMEBEACON_Set_ResortRecvBuffer( void *p_buff )
     GameBeaconSys->p_resort_buff  = p_buff;
   }
 }
+#ifdef PM_DEBUG
+//----------------------------------------------------------------------------
+/**
+ *	@brief　デバッグ用ビーコンバッファ取得
+ *
+ *	@return ビーコンバッファ取得
+ */
+//-----------------------------------------------------------------------------
+void * GAMEBEACON_DEBUG_GetResortRecvBuffer( void )
+{
+  if( GameBeaconSys )
+  {
+    return GameBeaconSys->p_resort_buff;
+  }
+  return NULL;
+}
+#endif
 
 //==================================================================
 /**

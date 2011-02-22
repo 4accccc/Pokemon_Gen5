@@ -59,11 +59,13 @@ u32  RESONANCE_RESORT_SV_GetWorkSize(void)
 //-----------------------------------------------------------------------------
 void RESONANCE_RESORT_SV_Init( void *p_wk_adrs )
 {
-  GFL_STD_MemClear( p_wk_adrs, RESONANCE_RESORT_SV_GetWorkSize() );
+  GFL_STD_MemClear( p_wk_adrs, sizeof(RESONANCE_RESORT_SV) );
 
   RESORT_RECV_BUFF_InitInstance( RESONANCE_RESORT_SV_GetDataBuff(p_wk_adrs), RESONANCE_RESORT_SV_RECV_BUFF_NUM );
 
   RESORT_PROXY_BUFF_InitInstance( RESONANCE_RESORT_SV_GetProxyBuff(p_wk_adrs), RESONANCE_RESORT_SV_PROXY_BUFF_NUM );
+
+  RESORT_PEOPLE_ALL_DATA_InitInstance( RESONANCE_RESORT_SV_GetPeopleAllData(p_wk_adrs) );
 
   RESORT_CITY_DATA_InitInstance( RESONANCE_RESORT_SV_GetCityData(p_wk_adrs) );
 

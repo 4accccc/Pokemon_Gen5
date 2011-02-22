@@ -207,6 +207,9 @@ extern void GAMEBEACON_Set_FreeWord(const STRBUF *free_word);
 extern void GAMEBEACON_Set_FestMission( FEST_MISSION* mission );
 extern void GAMEBEACON_Set_ResortDataEnable( BOOL is_enable );
 extern void GAMEBEACON_Set_ResortRecvBuffer( void *p_buff );
+#ifdef PM_DEBUG
+extern void * GAMEBEACON_DEBUG_GetResortRecvBuffer( void );
+#endif //PM_DEBUG
 
 
 //=====詳細パラメータセット

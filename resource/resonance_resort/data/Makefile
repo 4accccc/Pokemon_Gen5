@@ -66,7 +66,7 @@ $(targetall).narc $(targetall).naix: $(targetpeople).dat
 	$(NAIXCUT) $(targetall).naix
 
 #人物データコンバート
-$(targetpeople).dat $(targetpeopleh).h: $(xlsname).xls $(msgfile) $(scriptfile)
+$(targetpeople).dat $(targetpeopleh).h: $(xlsname).xls $(msgfile) $(scriptfile) $(PEOPLECONV)
 	$(XLSCONV) -o $(targetpeople)_data.csv -p 1 -s csv $(xlsname).xls
 	$(XLSCONV) -o $(targetpeople)_define.csv -p 2 -s csv $(xlsname).xls
 	rm -f *.dat

@@ -593,17 +593,28 @@ static void Reception_People_UpdateRecvCallback( void *p_wk_adrs, RESORT_RECV_DA
 static void Reception_People_UpdateProxyCallback( void *p_wk_adrs, RESORT_PROXY_DATA *p_proxy )
 {
   RECEPTION_PEOPLE *p_wk = p_wk_adrs;
-
   RESORT_PEOPLE *p_people;
-  RESORT_PEOPLE_SYS_ADD_PARAM param;
-  GFL_STD_MemClear(&param,sizeof(RESORT_PEOPLE_SYS_ADD_PARAM));
-  param.people_type = RESORT_PEOPLE_TYPE_PROXY;
-  param.p_data_adrs = p_proxy;
-  param.zoneID      = ZONE_ID_RESORT_RECEPTION;
-  p_people = RESORT_PEOPLE_SYS_AddNew( p_wk->p_people_sys, &param );
 
-  //人物作成したら、上から落下してくるタスクを登録
-  Reception_People_CreateEnterTask( p_wk->p_tcblsys, p_people );
+  //受信したデータ番地をもっている人がいるか検索
+  p_people = RESORT_PEOPLE_SYS_GetPeopleByData( p_wk->p_people_sys, p_proxy );
+
+  if( p_people )
+  {
+    //代理人は置き換えが存在しないはず
+    GF_ASSERT(0);
+  }
+  else
+  {
+    RESORT_PEOPLE_SYS_ADD_PARAM param;
+    GFL_STD_MemClear(&param,sizeof(RESORT_PEOPLE_SYS_ADD_PARAM));
+    param.people_type = RESORT_PEOPLE_TYPE_PROXY;
+    param.p_data_adrs = p_proxy;
+    param.zoneID      = ZONE_ID_RESORT_RECEPTION;
+    p_people = RESORT_PEOPLE_SYS_AddNew( p_wk->p_people_sys, &param );
+
+    //人物作成したら、上から落下してくるタスクを登録
+    Reception_People_CreateEnterTask( p_wk->p_tcblsys, p_people );
+  }
 }
 
 //----------------------------------------------------------------------------
