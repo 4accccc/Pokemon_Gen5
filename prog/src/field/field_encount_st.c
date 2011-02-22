@@ -48,8 +48,8 @@ ENCOUNT_WORK * ENCOUNT_WORK_Create( HEAPID heapID )
    #ifdef DEBUG_ONLY_FOR_iwasawa
     wp->effect_encount.deb_interval = 1;
     wp->effect_encount.deb_prob = 100;
-    wp->effect_encount.deb_ofsx = 1;
-    wp->effect_encount.deb_ofsz = 1;
+    wp->effect_encount.deb_ofsx = 0;
+    wp->effect_encount.deb_ofsz = 0;
     wp->effect_encount.deb_prob_fix = 1;
 //    DEBUG_FLG_FlgOn( DEBUG_FLG_DisableEncount );
 
