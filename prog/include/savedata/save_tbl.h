@@ -15,22 +15,23 @@
 //---------------------------------------------------------------------------
 /// セーブに使用しているセクタ数
 //---------------------------------------------------------------------------
-#define SAVE_PAGE_MAX   (36)
+#define SAVE_PAGE_MAX   (38)
 
-#define SAVE_SECTOR_SIZE  (0x1000)
+#define SAVE_SECTOR_SIZE        (0x1000)
+#define EXTRA_SAVE_SECTOR_SIZE  ( 0x100 )
 
 //以下はデバッグツール用のセーブ領域です
 #define DEBUG_FIGHT_SAVE  (126*SAVE_SECTOR_SIZE)    //デバッグファイト用セーブ領域
 #define DEBUG_SURETIGAI_SAVE  (125*SAVE_SECTOR_SIZE)  //すれ違い通信用セーブ領域
 
 ///EXTRA領域で戦闘録画が使用するセーブサイズ
-#define SAVESIZE_EXTRA_BATTLE_REC   (SAVE_SECTOR_SIZE * 2)
+#define SAVESIZE_EXTRA_BATTLE_REC     (EXTRA_SAVE_SECTOR_SIZE * 26 ) // (SAVE_SECTOR_SIZE * 2)
 ///EXTRA領域でCGEAR画像が使用するセーブサイズ
-#define SAVESIZE_EXTRA_CGEAR_PICTURE   (SAVE_SECTOR_SIZE * 3)
+#define SAVESIZE_EXTRA_CGEAR_PICTURE  (EXTRA_SAVE_SECTOR_SIZE * 40 ) // (SAVE_SECTOR_SIZE * 3)
 ///EXTRA領域でバトル検定が使用するセーブサイズ
-#define SAVESIZE_EXTRA_BATTLE_EXAMINATION   (SAVE_SECTOR_SIZE * 1)
+#define SAVESIZE_EXTRA_BATTLE_EXAMINATION   (EXTRA_SAVE_SECTOR_SIZE * 8 ) // (SAVE_SECTOR_SIZE * 1)
 ///EXTRA領域でストリーミングが使用するセーブサイズ
-#define SAVESIZE_EXTRA_STREAMING    (SAVE_SECTOR_SIZE * 32)  //128Kbyte
+#define SAVESIZE_EXTRA_STREAMING    (EXTRA_SAVE_SECTOR_SIZE * 512 ) //(SAVE_SECTOR_SIZE * 32)  //128Kbyte
 ///EXTRA領域で図鑑壁紙が使用するセーブサイズ
 #define SAVESIZE_EXTRA_ZUKAN_WALLPAPER    (0x6800)  //(0x7000)  //CGX6000 + PLTT1000
 ///EXTRA領域で殿堂入りが使用するセーブサイズ
@@ -50,9 +51,9 @@
 #define SAVESIZE_NORMAL   (SAVE_SECTOR_SIZE * SECTOR_MAX)
 
 ///ミラーリング領域で使用するセーブ開始アドレス
-#define MIRROR_SAVE_ADDRESS   (0x24000)
+#define MIRROR_SAVE_ADDRESS   (SAVESIZE_NORMAL) //(0x24000)
 ///外部セーブが使用するセーブ開始アドレス
-#define EXTRA_SAVE_START_ADDRESS    (0x48000)
+#define EXTRA_SAVE_START_ADDRESS    (SAVESIZE_NORMAL*2) //(0x48000)
 
 ///外部セーブ：メモリマッピング
 enum{
@@ -158,6 +159,7 @@ enum{
   GMDATA_ID_GAMECLEAR_POKE,   // ゲームクリアてもちポケモンデータ
   GMDATA_ID_TRPOKE_AFTER,     // 交換ポケモンのその後
   GMDATA_ID_ETC,              // 未分類ワークその２
+  GMDATA_ID_RESORT,           // レゾナンスリゾート
   GMDATA_ID_MAX,
 };
 

@@ -11,6 +11,9 @@
 //ライブラリ
 #include <gflib.h>
 
+//セーブ
+#include "savedata/save_tbl.h"
+
 //外部公開
 #include "savedata/resonance_resort_sv.h"
 
@@ -30,9 +33,7 @@ struct _RESONANCE_RESORT_SV
   u8  city_data[RESORT_CITY_DATA_SIZE];
 };
 
-
-//TODO
-static RESONANCE_RESORT_SV  s_sv  = {RESONANCE_RESORT_SV_RECV_BUFF_NUM,0,};
+SDK_COMPILER_ASSERT( sizeof(RESONANCE_RESORT_SV) < 5800 );
 
 //-------------------------------------
 ///	外部公開
@@ -46,7 +47,8 @@ static RESONANCE_RESORT_SV  s_sv  = {RESONANCE_RESORT_SV_RECV_BUFF_NUM,0,};
 //-----------------------------------------------------------------------------
 u32  RESONANCE_RESORT_SV_GetWorkSize(void)
 {
-  return sizeof(RESONANCE_RESORT_SV);
+  //TODO 仕様書によると5800バイト
+  return 5800;//sizeof(RESONANCE_RESORT_SV);
 }
 //----------------------------------------------------------------------------
 /**
@@ -59,12 +61,11 @@ void RESONANCE_RESORT_SV_Init( void *p_wk_adrs )
 {
   GFL_STD_MemClear( p_wk_adrs, RESONANCE_RESORT_SV_GetWorkSize() );
 
-  //TODO
-  RESORT_RECV_BUFF_InitInstance( RESONANCE_RESORT_SV_GetDataBuff(&s_sv), RESONANCE_RESORT_SV_RECV_BUFF_NUM );
+  RESORT_RECV_BUFF_InitInstance( RESONANCE_RESORT_SV_GetDataBuff(p_wk_adrs), RESONANCE_RESORT_SV_RECV_BUFF_NUM );
 
-  RESORT_PROXY_BUFF_InitInstance( RESONANCE_RESORT_SV_GetProxyBuff(&s_sv), RESONANCE_RESORT_SV_PROXY_BUFF_NUM );
+  RESORT_PROXY_BUFF_InitInstance( RESONANCE_RESORT_SV_GetProxyBuff(p_wk_adrs), RESONANCE_RESORT_SV_PROXY_BUFF_NUM );
 
-  RESORT_CITY_DATA_InitInstance( RESONANCE_RESORT_SV_GetCityData(&s_sv) );
+  RESORT_CITY_DATA_InitInstance( RESONANCE_RESORT_SV_GetCityData(p_wk_adrs) );
 
 }
 //----------------------------------------------------------------------------
@@ -78,7 +79,7 @@ void RESONANCE_RESORT_SV_Init( void *p_wk_adrs )
 //-----------------------------------------------------------------------------
 RESONANCE_RESORT_SV *RESONANCE_RESORT_SV_GetWork( SAVE_CONTROL_WORK *p_sv )
 {
-  return &s_sv;
+  return SaveControl_DataPtrGet( p_sv , GMDATA_ID_RESORT );
 }
 
 //----------------------------------------------------------------------------
