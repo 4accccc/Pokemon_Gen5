@@ -76,3 +76,40 @@ extern BOOL RESORT_DATA_MANAGER_ResidentToVistor( RESORT_DATA_MANAGER *p_wk, RES
 extern BOOL RESORT_DATA_MANAGER_IsPlaceEmpty( const RESORT_DATA_MANAGER *cp_wk, RESORT_PLACEID placeID, u32 peopleID );
 extern void RESORT_DATA_MANAGER_GetPlaceData( const RESORT_DATA_MANAGER *cp_wk, RESORT_PLACEID placeID, u32 peopleID, RESORT_DATA_MANAGER_TYPE *p_type, u16 *p_data_idx );
 extern u32 RESORT_DATA_MANAGER_SearchPlaceEmptyPeopleID( const RESORT_DATA_MANAGER *cp_wk, RESORT_PLACEID placeID );
+
+
+//=============================================================================
+/**
+ *					データ抽象型
+*/
+//=============================================================================
+//-------------------------------------
+///	データ抽象型
+//=====================================
+typedef enum
+{
+  RESORT_DATA_TYPE_RESIDENT,
+  RESORT_DATA_TYPE_PROXY,
+  RESORT_DATA_TYPE_RECV,
+  RESORT_DATA_TYPE_VISITOR,
+  RESORT_DATA_TYPE_SECRETARY,
+  RESORT_DATA_TYPE_MAX,
+}RESORT_DATA_TYPE;
+
+//-------------------------------------
+///	データ抽象型
+//=====================================
+typedef struct _RESORT_ABSTRUCT_DATA RESORT_ABSTRUCT_DATA;
+
+extern RESORT_ABSTRUCT_DATA * RESORT_ABSTRUCT_DATA_Init( HEAPID heapID, void *p_data_adrs, RESORT_DATA_TYPE type );
+extern void RESORT_ABSTRUCT_DATA_Exit( RESORT_ABSTRUCT_DATA *p_wk );
+
+extern void RESORT_ABSTRUCT_DATA_Setup( RESORT_ABSTRUCT_DATA *p_wk, void *p_data_adrs, RESORT_DATA_TYPE type );
+extern void RESORT_ABSTRUCT_DATA_InitInstance( RESORT_ABSTRUCT_DATA *p_wk );
+extern BOOL RESORT_ABSTRUCT_DATA_IsEmpty( const RESORT_ABSTRUCT_DATA *cp_wk );
+extern u32 RESORT_ABSTRUCT_DATA_GetData( const RESORT_ABSTRUCT_DATA *cp_wk, int param, void *p_ret_adrs );
+extern void RESORT_ABSTRUCT_DATA_SetData( RESORT_ABSTRUCT_DATA *p_wk, int param, u32 data );
+extern void * RESORT_ABSTRUCT_DATA_GetDataAdrs( RESORT_ABSTRUCT_DATA *p_wk );
+
+extern RESORT_DATA_TYPE PeopleTypeToResortDataType( u32 people_type );
+

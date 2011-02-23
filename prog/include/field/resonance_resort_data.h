@@ -78,19 +78,19 @@ typedef enum
 
 #define RESORT_PEOPLE_ID_NULL (0xFFFF)
 //-------------------------------------
-///	リゾート用受信データの取得引数
+///	リゾート用データの取得引数
 //=====================================
 typedef enum 
 {
-  RESORT_RECV_DATA_PARAM_PEOPLE_ID,
-  RESORT_RECV_DATA_PARAM_PLACE_ID,
-  RESORT_RECV_DATA_PARAM_LOCK,
-  RESORT_RECV_DATA_PARAM_UPDATE,
-  RESORT_RECV_DATA_PARAM_SEX,
-  RESORT_RECV_DATA_PARAM_TRAINERVIEW,
-  RESORT_RECV_DATA_PARAM_NAME,          //p_ret_adrsから取得
-  RESORT_RECV_DATA_PARAM_KEEP,
-} RESORT_RECV_DATA_PARAM;
+  RESORT_DATA_PARAM_PEOPLE_ID,
+  RESORT_DATA_PARAM_PLACE_ID,
+  RESORT_DATA_PARAM_LOCK,
+  RESORT_DATA_PARAM_UPDATE,
+  RESORT_DATA_PARAM_SEX,
+  RESORT_DATA_PARAM_TRAINERVIEW,
+  RESORT_DATA_PARAM_NAME,          //p_ret_adrsから取得
+  RESORT_DATA_PARAM_KEEP,
+} RESORT_DATA_PARAM;
 
 //-------------------------------------
 ///	リゾート用受信データの更新フラグ
@@ -136,8 +136,8 @@ extern void RESORT_RECV_DATA_MergeBeacon( RESORT_RECV_DATA *p_wk, const RESORT_B
 extern void RESORT_RECV_DATA_MergeRecv( RESORT_RECV_DATA *p_wk, const RESORT_RECV_DATA *cp_recv );
 extern BOOL RESORT_RECV_DATA_IsValid( const RESORT_RECV_DATA *cp_wk );
 
-extern u32 RESORT_RECV_DATA_GetData( const RESORT_RECV_DATA *cp_wk, RESORT_RECV_DATA_PARAM param, void *p_ret_adrs );
-extern void RESORT_RECV_DATA_SetData( RESORT_RECV_DATA *p_wk, RESORT_RECV_DATA_PARAM param, u32 data );
+extern u32 RESORT_RECV_DATA_GetData( const RESORT_RECV_DATA *cp_wk, RESORT_DATA_PARAM param, void *p_ret_adrs );
+extern void RESORT_RECV_DATA_SetData( RESORT_RECV_DATA *p_wk, RESORT_DATA_PARAM param, u32 data );
 
 #ifdef PM_DEBUG
 extern void RESORT_RECV_DATA_SetDebugData( RESORT_RECV_DATA *p_wk, const GAMEDATA *cp_gamedata );
@@ -163,13 +163,8 @@ extern BOOL RESORT_PROXY_DATA_IsEmpty( const RESORT_PROXY_DATA *cp_wk );
 
 extern void RESORT_PROXY_DATA_SetCommData( RESORT_PROXY_DATA *p_wk, u16 type );
 
-typedef enum
-{
-  RESORT_PROXY_DATA_PARAM_PEOPLEID,
-  RESORT_PROXY_DATA_PARAM_PLACEID,
-}RESORT_PROXY_DATA_PARAM;
-extern u16 RESORT_PROXY_DATA_GetData( const RESORT_PROXY_DATA *cp_wk, RESORT_PROXY_DATA_PARAM param );
-extern void RESORT_PROXY_DATA_SetData( RESORT_PROXY_DATA *p_wk, RESORT_PROXY_DATA_PARAM param, u32 data );
+extern u32 RESORT_PROXY_DATA_GetData( const RESORT_PROXY_DATA *cp_wk, RESORT_DATA_PARAM param, void *p_ret_adrs );
+extern void RESORT_PROXY_DATA_SetData( RESORT_PROXY_DATA *p_wk, RESORT_DATA_PARAM param, u32 data );
 
 //=============================================================================
 /**
@@ -286,17 +281,8 @@ extern BOOL RESORT_VISITOR_DATA_IsEmpty( const RESORT_VISITOR_DATA *cp_wk );
 extern void RESORT_VISITOR_DATA_SetRecv( RESORT_VISITOR_DATA *p_wk, const RESORT_RECV_DATA *cp_recv, u16 peopleID, u16 placeID );
 extern void RESORT_VISITOR_DATA_SetResident( RESORT_VISITOR_DATA *p_wk, const RESORT_RESIDENT_DATA *cp_resident, u16 peopleID, u16 placeID );
 
-typedef enum
-{
-  RESORT_VISITOR_DATA_PARAM_PEOPLE_ID,
-  RESORT_VISITOR_DATA_PARAM_PLACE_ID,
-  RESORT_VISITOR_DATA_PARAM_NAME,
-  RESORT_VISITOR_DATA_PARAM_SEX,
-  RESORT_VISITOR_DATA_PARAM_TRAINERVIEW,
-}RESORT_VISITOR_DATA_PARAM;
-
-extern u32 RESORT_VISITOR_DATA_GetData( const RESORT_VISITOR_DATA *cp_wk, RESORT_VISITOR_DATA_PARAM param, void *p_ret_adrs );
-extern void RESORT_VISITOR_DATA_SetData( RESORT_VISITOR_DATA *p_wk, RESORT_VISITOR_DATA_PARAM param, u32 data );
+extern u32 RESORT_VISITOR_DATA_GetData( const RESORT_VISITOR_DATA *cp_wk, RESORT_DATA_PARAM param, void *p_ret_adrs );
+extern void RESORT_VISITOR_DATA_SetData( RESORT_VISITOR_DATA *p_wk, RESORT_DATA_PARAM param, u32 data );
 
 //=============================================================================
 /**
@@ -319,16 +305,8 @@ extern void RESORT_SECRETARY_DATA_InitInstance( RESORT_SECRETARY_DATA *p_wk );
 
 extern BOOL RESORT_SECRETARY_DATA_IsEmpty( const RESORT_SECRETARY_DATA *cp_wk );
 
-typedef enum
-{
-  RESORT_SECRETARY_DATA_PARAM_PEOPLE_ID,
-  RESORT_SECRETARY_DATA_PARAM_PLACE_ID,
-  RESORT_SECRETARY_DATA_PARAM_NAME,
-  RESORT_SECRETARY_DATA_PARAM_SEX,
-  RESORT_SECRETARY_DATA_PARAM_TRAINERVIEW,
-}RESORT_SECRETARY_DATA_PARAM;
-extern u32 RESORT_SECRETARY_DATA_GetData( const RESORT_SECRETARY_DATA *cp_wk, RESORT_SECRETARY_DATA_PARAM param, void *p_ret_adrs );
-extern void RESORT_SECRETARY_DATA_SetData( RESORT_SECRETARY_DATA *p_wk, RESORT_SECRETARY_DATA_PARAM param, u32 data );
+extern u32 RESORT_SECRETARY_DATA_GetData( const RESORT_SECRETARY_DATA *cp_wk, RESORT_DATA_PARAM param, void *p_ret_adrs );
+extern void RESORT_SECRETARY_DATA_SetData( RESORT_SECRETARY_DATA *p_wk, RESORT_DATA_PARAM param, u32 data );
 extern void RESORT_SECRETARY_DATA_SetRecv( RESORT_SECRETARY_DATA *p_wk, const RESORT_RECV_DATA *cp_recv, u16 peopleID, u16 placeID );
 
 //=============================================================================

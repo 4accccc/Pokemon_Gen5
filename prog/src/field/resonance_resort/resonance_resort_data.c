@@ -748,7 +748,7 @@ BOOL RESORT_RECV_DATA_IsSameOwnerBeacon( const RESORT_RECV_DATA *cp_wk, const RE
 void RESORT_RECV_DATA_MergeBeacon( RESORT_RECV_DATA *p_wk, const RESORT_BEACON_DATA *cp_beacon )
 {
   //ロック
-  if( RESORT_RECV_DATA_GetData(p_wk,RESORT_RECV_DATA_PARAM_LOCK,NULL) )
+  if( RESORT_RECV_DATA_GetData(p_wk,RESORT_DATA_PARAM_LOCK,NULL) )
   {
     return;
   }
@@ -777,7 +777,7 @@ void RESORT_RECV_DATA_MergeBeacon( RESORT_RECV_DATA *p_wk, const RESORT_BEACON_D
       p_wk->extend_flag |=  1<<cp_beacon->extend_type;
     }
 
-    RESORT_RECV_DATA_SetData(p_wk,RESORT_RECV_DATA_PARAM_UPDATE,RESORT_RECV_DATA_UPDATE_FIRST);
+    RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_UPDATE,RESORT_RECV_DATA_UPDATE_FIRST);
 
     if( p_wk->extend_flag == 0xFF )
     {
@@ -807,7 +807,7 @@ void RESORT_RECV_DATA_MergeBeacon( RESORT_RECV_DATA *p_wk, const RESORT_BEACON_D
       RESORT_Printf( "!!!すべてマージ完了\n!!!" );
     }
 
-    RESORT_RECV_DATA_SetData(p_wk,RESORT_RECV_DATA_PARAM_UPDATE,RESORT_RECV_DATA_UPDATE_MERGE);
+    RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_UPDATE,RESORT_RECV_DATA_UPDATE_MERGE);
   }
 }
 //----------------------------------------------------------------------------
@@ -821,7 +821,7 @@ void RESORT_RECV_DATA_MergeBeacon( RESORT_RECV_DATA *p_wk, const RESORT_BEACON_D
 void RESORT_RECV_DATA_MergeRecv( RESORT_RECV_DATA *p_wk, const RESORT_RECV_DATA *cp_recv )
 {
   //ロック
-  if( RESORT_RECV_DATA_GetData(p_wk,RESORT_RECV_DATA_PARAM_LOCK,NULL) )
+  if( RESORT_RECV_DATA_GetData(p_wk,RESORT_DATA_PARAM_LOCK,NULL) )
   {
     return;
   }
@@ -836,14 +836,14 @@ void RESORT_RECV_DATA_MergeRecv( RESORT_RECV_DATA *p_wk, const RESORT_RECV_DATA 
   {
     GFL_STD_MemCopy( cp_recv, p_wk, sizeof(RESORT_RECV_DATA) );
 
-    RESORT_RECV_DATA_SetData(p_wk,RESORT_RECV_DATA_PARAM_UPDATE,RESORT_RECV_DATA_UPDATE_FIRST);
+    RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_UPDATE,RESORT_RECV_DATA_UPDATE_FIRST);
   }
   else
   {
     //TODO
     //マージ処理
 
-    RESORT_RECV_DATA_SetData(p_wk,RESORT_RECV_DATA_PARAM_UPDATE,RESORT_RECV_DATA_UPDATE_MERGE);
+    RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_UPDATE,RESORT_RECV_DATA_UPDATE_MERGE);
   }
 }
 //----------------------------------------------------------------------------
@@ -895,23 +895,23 @@ BOOL RESORT_RECV_DATA_IsValid( const RESORT_RECV_DATA *cp_wk )
  *	@return   受信データのデータ取得
  */
 //-----------------------------------------------------------------------------
-u32 RESORT_RECV_DATA_GetData( const RESORT_RECV_DATA *cp_wk, RESORT_RECV_DATA_PARAM param, void *p_ret_adrs )
+u32 RESORT_RECV_DATA_GetData( const RESORT_RECV_DATA *cp_wk, RESORT_DATA_PARAM param, void *p_ret_adrs )
 {
   switch( param )
   {
-  case RESORT_RECV_DATA_PARAM_PEOPLE_ID:
+  case RESORT_DATA_PARAM_PEOPLE_ID:
     return cp_wk->peopleID;
-  case RESORT_RECV_DATA_PARAM_PLACE_ID:
+  case RESORT_DATA_PARAM_PLACE_ID:
     return cp_wk->placeID;
-  case RESORT_RECV_DATA_PARAM_LOCK:
+  case RESORT_DATA_PARAM_LOCK:
     return cp_wk->lock;
-  case RESORT_RECV_DATA_PARAM_UPDATE:
+  case RESORT_DATA_PARAM_UPDATE:
     return cp_wk->update;
-  case RESORT_RECV_DATA_PARAM_SEX:
+  case RESORT_DATA_PARAM_SEX:
     return cp_wk->basic1.sex;
-  case RESORT_RECV_DATA_PARAM_TRAINERVIEW:
+  case RESORT_DATA_PARAM_TRAINERVIEW:
     return RESORT_GET_TrainerView( cp_wk->basic1.trainer_view, cp_wk->basic1.sex );
-  case RESORT_RECV_DATA_PARAM_NAME:
+  case RESORT_DATA_PARAM_NAME:
     RESORT_BASIC1_DATA_GetName(&cp_wk->basic1, p_ret_adrs );
     return 0;
   default:
@@ -928,23 +928,23 @@ u32 RESORT_RECV_DATA_GetData( const RESORT_RECV_DATA *cp_wk, RESORT_RECV_DATA_PA
  *	@param	data  受信データに設定する値
  */
 //-----------------------------------------------------------------------------
-void RESORT_RECV_DATA_SetData( RESORT_RECV_DATA *p_wk, RESORT_RECV_DATA_PARAM param, u32 data )
+void RESORT_RECV_DATA_SetData( RESORT_RECV_DATA *p_wk, RESORT_DATA_PARAM param, u32 data )
 {
   switch( param )
   {
-  case RESORT_RECV_DATA_PARAM_PEOPLE_ID:
+  case RESORT_DATA_PARAM_PEOPLE_ID:
     p_wk->peopleID  = data;
     break;
-  case RESORT_RECV_DATA_PARAM_PLACE_ID:
+  case RESORT_DATA_PARAM_PLACE_ID:
     p_wk->placeID   = data;
     break;
-  case RESORT_RECV_DATA_PARAM_LOCK:
+  case RESORT_DATA_PARAM_LOCK:
     p_wk->lock      = data;
     break;
-  case RESORT_RECV_DATA_PARAM_UPDATE:
+  case RESORT_DATA_PARAM_UPDATE:
     p_wk->update    = data;
     break;
-  case RESORT_RECV_DATA_PARAM_KEEP:
+  case RESORT_DATA_PARAM_KEEP:
     p_wk->keep_flag = data;
     break;
   default:
@@ -1247,14 +1247,33 @@ void RESORT_PROXY_DATA_SetCommData( RESORT_PROXY_DATA *p_wk, u16 type )
  *	@return データ
  */
 //-----------------------------------------------------------------------------
-u16 RESORT_PROXY_DATA_GetData( const RESORT_PROXY_DATA *cp_wk, RESORT_PROXY_DATA_PARAM param )
+u32 RESORT_PROXY_DATA_GetData( const RESORT_PROXY_DATA *cp_wk, RESORT_DATA_PARAM param, void *p_ret_adrs )
 {
   switch( param )
   {
-  case RESORT_PROXY_DATA_PARAM_PEOPLEID:
+  case RESORT_DATA_PARAM_PEOPLE_ID:
     return cp_wk->peopleID;
-  case RESORT_PROXY_DATA_PARAM_PLACEID:
-    return cp_wk->placeID;
+  case RESORT_DATA_PARAM_PLACE_ID:
+    return cp_wk->placeID; 
+  case RESORT_DATA_PARAM_SEX:
+    return 1;
+  case RESORT_DATA_PARAM_TRAINERVIEW:
+    return 9;
+  case RESORT_DATA_PARAM_NAME:
+    {
+      //TODO
+      static const STRCODE sc_strcode[PERSON_NAME_SIZE+EOM_SIZE] =
+      {
+        L'だ',
+        L'い',
+        L'り',
+        L'に',
+        L'ん',
+        0xffff
+      };
+      GFL_STD_MemCopy( sc_strcode, p_ret_adrs, sizeof(u16)*(PERSON_NAME_SIZE+EOM_SIZE) );
+    }
+    return 0;
   default:
     GF_ASSERT(0);
     return 0;
@@ -1269,15 +1288,18 @@ u16 RESORT_PROXY_DATA_GetData( const RESORT_PROXY_DATA *cp_wk, RESORT_PROXY_DATA
  *	@param	data                    データ
  */
 //-----------------------------------------------------------------------------
-void RESORT_PROXY_DATA_SetData( RESORT_PROXY_DATA *p_wk, RESORT_PROXY_DATA_PARAM param, u32 data )
+void RESORT_PROXY_DATA_SetData( RESORT_PROXY_DATA *p_wk, RESORT_DATA_PARAM param, u32 data )
 {
   switch( param )
   {
-  case RESORT_PROXY_DATA_PARAM_PEOPLEID:
+  case RESORT_DATA_PARAM_PEOPLE_ID:
     p_wk->peopleID = data;
     break;
-  case RESORT_PROXY_DATA_PARAM_PLACEID:
+  case RESORT_DATA_PARAM_PLACE_ID:
     p_wk->placeID   = data;
+    break;
+  case RESORT_DATA_PARAM_LOCK:
+    //なにもしない
     break;
   default:
     GF_ASSERT(0);
@@ -1841,20 +1863,20 @@ void RESORT_VISITOR_DATA_SetResident( RESORT_VISITOR_DATA *p_wk, const RESORT_RE
  *	@return　データ
  */
 //-----------------------------------------------------------------------------
-u32 RESORT_VISITOR_DATA_GetData( const RESORT_VISITOR_DATA *cp_wk, RESORT_VISITOR_DATA_PARAM param, void *p_ret_adrs )
+u32 RESORT_VISITOR_DATA_GetData( const RESORT_VISITOR_DATA *cp_wk, RESORT_DATA_PARAM param, void *p_ret_adrs )
 {
   switch( param )
   {
-  case RESORT_VISITOR_DATA_PARAM_PEOPLE_ID:
+  case RESORT_DATA_PARAM_PEOPLE_ID:
     return cp_wk->peopleID;
-  case RESORT_VISITOR_DATA_PARAM_PLACE_ID:
+  case RESORT_DATA_PARAM_PLACE_ID:
     return cp_wk->placeID;
-  case RESORT_VISITOR_DATA_PARAM_NAME:
+  case RESORT_DATA_PARAM_NAME:
     RESORT_BASIC1_DATA_GetName(&cp_wk->basic1, p_ret_adrs );
     return 0;
-  case RESORT_VISITOR_DATA_PARAM_SEX: 
+  case RESORT_DATA_PARAM_SEX: 
     return cp_wk->basic1.sex;
-  case RESORT_VISITOR_DATA_PARAM_TRAINERVIEW:
+  case RESORT_DATA_PARAM_TRAINERVIEW:
     return RESORT_GET_TrainerView( cp_wk->basic1.trainer_view, cp_wk->basic1.sex );
   default:
     GF_ASSERT(0);
@@ -1871,15 +1893,18 @@ u32 RESORT_VISITOR_DATA_GetData( const RESORT_VISITOR_DATA *cp_wk, RESORT_VISITO
  *	@param   data   設定するデータ
  */
 //-----------------------------------------------------------------------------
-void RESORT_VISITOR_DATA_SetData( RESORT_VISITOR_DATA *p_wk, RESORT_VISITOR_DATA_PARAM param, u32 data )
+void RESORT_VISITOR_DATA_SetData( RESORT_VISITOR_DATA *p_wk, RESORT_DATA_PARAM param, u32 data )
 {
   switch( param )
   {
-  case RESORT_VISITOR_DATA_PARAM_PEOPLE_ID:
+  case RESORT_DATA_PARAM_PEOPLE_ID:
     p_wk->peopleID  = data;
     break;
-  case RESORT_VISITOR_DATA_PARAM_PLACE_ID:
+  case RESORT_DATA_PARAM_PLACE_ID:
     p_wk->placeID   = data;
+    break;
+  case RESORT_DATA_PARAM_LOCK:
+    //なにもしない
     break;
   default:
     GF_ASSERT(0);
@@ -1967,20 +1992,20 @@ BOOL RESORT_SECRETARY_DATA_IsEmpty( const RESORT_SECRETARY_DATA *cp_wk )
  *	@return データ
  */
 //-----------------------------------------------------------------------------
-u32 RESORT_SECRETARY_DATA_GetData( const RESORT_SECRETARY_DATA *cp_wk, RESORT_SECRETARY_DATA_PARAM param, void *p_ret_adrs )
+u32 RESORT_SECRETARY_DATA_GetData( const RESORT_SECRETARY_DATA *cp_wk, RESORT_DATA_PARAM param, void *p_ret_adrs )
 {
   switch( param )
   {
-  case RESORT_SECRETARY_DATA_PARAM_PEOPLE_ID:
+  case RESORT_DATA_PARAM_PEOPLE_ID:
     return cp_wk->peopleID;
-  case RESORT_SECRETARY_DATA_PARAM_PLACE_ID:
+  case RESORT_DATA_PARAM_PLACE_ID:
     return cp_wk->placeID;
-  case RESORT_SECRETARY_DATA_PARAM_NAME:
+  case RESORT_DATA_PARAM_NAME:
     RESORT_BASIC1_DATA_GetName(&cp_wk->basic1, p_ret_adrs );
     return 0;
-  case RESORT_SECRETARY_DATA_PARAM_SEX: 
+  case RESORT_DATA_PARAM_SEX: 
     return cp_wk->basic1.sex;
-  case RESORT_SECRETARY_DATA_PARAM_TRAINERVIEW:
+  case RESORT_DATA_PARAM_TRAINERVIEW:
     return RESORT_GET_TrainerView( cp_wk->basic1.trainer_view, cp_wk->basic1.sex );
   default:
     GF_ASSERT(0);
@@ -1996,15 +2021,18 @@ u32 RESORT_SECRETARY_DATA_GetData( const RESORT_SECRETARY_DATA *cp_wk, RESORT_SE
  *	@param	data  データ
  */
 //-----------------------------------------------------------------------------
-void RESORT_SECRETARY_DATA_SetData( RESORT_SECRETARY_DATA *p_wk, RESORT_SECRETARY_DATA_PARAM param, u32 data )
+void RESORT_SECRETARY_DATA_SetData( RESORT_SECRETARY_DATA *p_wk, RESORT_DATA_PARAM param, u32 data )
 {
   switch( param )
   {
-  case RESORT_SECRETARY_DATA_PARAM_PEOPLE_ID:
+  case RESORT_DATA_PARAM_PEOPLE_ID:
     p_wk->peopleID = data;
     break;
-  case RESORT_SECRETARY_DATA_PARAM_PLACE_ID:
+  case RESORT_DATA_PARAM_PLACE_ID:
     p_wk->placeID = data;
+    break;
+  case RESORT_DATA_PARAM_LOCK:
+    //なにもしない
     break;
   default:
     GF_ASSERT(0);

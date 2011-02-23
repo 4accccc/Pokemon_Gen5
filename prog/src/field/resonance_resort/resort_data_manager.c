@@ -68,6 +68,7 @@ void RESORT_DATA_MANAGER_Exit( RESORT_DATA_MANAGER *p_wk )
 {
   GFL_HEAP_FreeMemory( p_wk );
 }
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  配置情報設定
@@ -95,7 +96,7 @@ void RESORT_DATA_MANAGER_Update( RESORT_DATA_MANAGER *p_wk )
   //配置情報検索
   //各バッファからデータを取得してどこにいるか調べる
   //全人物データにあるものは必ずpeopleIDとplaceIDがあるが、
-  //バッファにあるものはないものがある
+  //バッファのはないものがある
   
   //住人
   for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
@@ -103,8 +104,8 @@ void RESORT_DATA_MANAGER_Update( RESORT_DATA_MANAGER *p_wk )
     RESORT_RESIDENT_DATA *p_data = RESORT_PEOPLE_ALL_DATA_GetResident( cp_param->p_all_people, i );
     if( !RESORT_RESIDENT_DATA_IsEmpty(p_data ) )
     {
-      u16 peopleID = RESORT_RESIDENT_DATA_GetData( p_data, RESORT_RECV_DATA_PARAM_PEOPLE_ID, NULL );
-      RESORT_PLACEID placeID = RESORT_RESIDENT_DATA_GetData( p_data, RESORT_RECV_DATA_PARAM_PLACE_ID, NULL );
+      u16 peopleID = RESORT_RESIDENT_DATA_GetData( p_data, RESORT_DATA_PARAM_PEOPLE_ID, NULL );
+      RESORT_PLACEID placeID = RESORT_RESIDENT_DATA_GetData( p_data, RESORT_DATA_PARAM_PLACE_ID, NULL );
 
       GF_ASSERT(p_wk->info[ placeID ].people_type[peopleID] == RESORT_DATA_MANAGER_TYPE_NULL );
       GF_ASSERT( RESORT_PLACEID_START <= placeID  && placeID < RESORT_PLACEID_MAX );
@@ -119,8 +120,8 @@ void RESORT_DATA_MANAGER_Update( RESORT_DATA_MANAGER *p_wk )
     RESORT_VISITOR_DATA *p_data = RESORT_PEOPLE_ALL_DATA_GetVisitor( cp_param->p_all_people, i );
     if( !RESORT_VISITOR_DATA_IsEmpty(p_data ) )
     {
-      u16 peopleID = RESORT_VISITOR_DATA_GetData( p_data, RESORT_VISITOR_DATA_PARAM_PEOPLE_ID, NULL );
-      RESORT_PLACEID placeID = RESORT_VISITOR_DATA_GetData( p_data, RESORT_VISITOR_DATA_PARAM_PLACE_ID, NULL );
+      u16 peopleID = RESORT_VISITOR_DATA_GetData( p_data, RESORT_DATA_PARAM_PEOPLE_ID, NULL );
+      RESORT_PLACEID placeID = RESORT_VISITOR_DATA_GetData( p_data, RESORT_DATA_PARAM_PLACE_ID, NULL );
 
       GF_ASSERT(p_wk->info[ placeID ].people_type[peopleID] == RESORT_DATA_MANAGER_TYPE_NULL );
       GF_ASSERT( RESORT_PLACEID_START <= placeID  && placeID < RESORT_PLACEID_MAX );
@@ -135,8 +136,8 @@ void RESORT_DATA_MANAGER_Update( RESORT_DATA_MANAGER *p_wk )
     RESORT_SECRETARY_DATA *p_data = RESORT_PEOPLE_ALL_DATA_GetSecretary( cp_param->p_all_people, i );
     if( !RESORT_SECRETARY_DATA_IsEmpty( p_data ) )
     {
-      u16 peopleID = RESORT_SECRETARY_DATA_GetData(p_data, RESORT_SECRETARY_DATA_PARAM_PEOPLE_ID, NULL );
-      RESORT_PLACEID placeID = RESORT_SECRETARY_DATA_GetData(p_data,RESORT_SECRETARY_DATA_PARAM_PLACE_ID, NULL );
+      u16 peopleID = RESORT_SECRETARY_DATA_GetData(p_data, RESORT_DATA_PARAM_PEOPLE_ID, NULL );
+      RESORT_PLACEID placeID = RESORT_SECRETARY_DATA_GetData(p_data,RESORT_DATA_PARAM_PLACE_ID, NULL );
 
       GF_ASSERT(p_wk->info[ placeID ].people_type[peopleID] == RESORT_DATA_MANAGER_TYPE_NULL );
       GF_ASSERT( RESORT_PLACEID_START <= placeID  && placeID < RESORT_PLACEID_MAX );
@@ -153,8 +154,8 @@ void RESORT_DATA_MANAGER_Update( RESORT_DATA_MANAGER *p_wk )
       RESORT_RECV_DATA *p_data = RESORT_RECV_BUFF_GetData(cp_param->p_recv_sv_buff, i );
       if( !RESORT_RECV_DATA_IsEmpty(p_data ) )
       {
-        u16 peopleID = RESORT_RECV_DATA_GetData( p_data, RESORT_RECV_DATA_PARAM_PEOPLE_ID, NULL );
-        RESORT_PLACEID placeID = RESORT_RECV_DATA_GetData( p_data, RESORT_RECV_DATA_PARAM_PLACE_ID, NULL );
+        u16 peopleID = RESORT_RECV_DATA_GetData( p_data, RESORT_DATA_PARAM_PEOPLE_ID, NULL );
+        RESORT_PLACEID placeID = RESORT_RECV_DATA_GetData( p_data, RESORT_DATA_PARAM_PLACE_ID, NULL );
 
         if( RESORT_PLACEID_START <= placeID  && placeID < RESORT_PLACEID_MAX )
         {
@@ -175,8 +176,8 @@ void RESORT_DATA_MANAGER_Update( RESORT_DATA_MANAGER *p_wk )
       RESORT_RECV_DATA *p_data = RESORT_RECV_BUFF_GetData(cp_param->p_recv_tmp_buff, i );
       if( !RESORT_RECV_DATA_IsEmpty(p_data ) )
       {
-        u16 peopleID = RESORT_RECV_DATA_GetData( p_data, RESORT_RECV_DATA_PARAM_PEOPLE_ID, NULL );
-        RESORT_PLACEID placeID = RESORT_RECV_DATA_GetData( p_data, RESORT_RECV_DATA_PARAM_PLACE_ID, NULL );
+        u16 peopleID = RESORT_RECV_DATA_GetData( p_data, RESORT_DATA_PARAM_PEOPLE_ID, NULL );
+        RESORT_PLACEID placeID = RESORT_RECV_DATA_GetData( p_data, RESORT_DATA_PARAM_PLACE_ID, NULL );
 
         if( RESORT_PLACEID_START <= placeID  && placeID < RESORT_PLACEID_MAX )
         {
@@ -195,8 +196,8 @@ void RESORT_DATA_MANAGER_Update( RESORT_DATA_MANAGER *p_wk )
       RESORT_PROXY_DATA *p_data = RESORT_PROXY_BUFF_GetData( cp_param->p_proxy_buff, i );
       if( !RESORT_PROXY_DATA_IsEmpty(p_data ) )
       {
-        u16 peopleID = RESORT_PROXY_DATA_GetData(p_data,RESORT_PROXY_DATA_PARAM_PEOPLEID );
-        RESORT_PLACEID placeID = RESORT_PROXY_DATA_GetData(p_data,RESORT_PROXY_DATA_PARAM_PLACEID );
+        u16 peopleID = RESORT_PROXY_DATA_GetData(p_data,RESORT_DATA_PARAM_PEOPLE_ID, NULL );
+        RESORT_PLACEID placeID = RESORT_PROXY_DATA_GetData(p_data,RESORT_DATA_PARAM_PLACE_ID, NULL );
 if( RESORT_PLACEID_START <= placeID  && placeID < RESORT_PLACEID_MAX )
         {
           GF_ASSERT(p_wk->info[ placeID ].people_type[peopleID] == RESORT_DATA_MANAGER_TYPE_NULL );
@@ -435,4 +436,254 @@ u32 RESORT_DATA_MANAGER_SearchPlaceEmptyPeopleID( const RESORT_DATA_MANAGER *cp_
   }
 
   return RESORT_PEOPLE_ID_NULL;
+}
+
+//=============================================================================
+/**
+ *					データ抽象型
+*/
+//=============================================================================
+//-------------------------------------
+///	関数型（ポインタを書き換えるため）
+//=====================================
+typedef void *(*InitFunction)( HEAPID heapID );
+typedef void (*ExitFunction)( void* );
+typedef void (*InitInstanceFunction)( void* );
+typedef BOOL (*IsEmptyFunction)( const void* );
+typedef u32 (*GetDataFunction)( const void*, int, void* );
+typedef void (*SetDataFunction)( void*, int, u32 );
+
+//-------------------------------------
+///	関数抽象ワーク
+//=====================================
+typedef struct
+{
+  InitFunction Init;
+  ExitFunction Exit;
+  InitInstanceFunction InitInstance;
+  IsEmptyFunction IsEmpty;
+  GetDataFunction GetData;
+  SetDataFunction SetData;
+} RESORT_ABSTRUCT_DATA_FUNCTION;
+//-------------------------------------
+///	メインワーク
+//=====================================
+struct _RESORT_ABSTRUCT_DATA
+{
+  void *p_data_adrs;
+  const RESORT_ABSTRUCT_DATA_FUNCTION *cp_func;
+  BOOL is_create;
+};
+
+//-------------------------------------
+//各データ操作関数
+//=====================================
+static const RESORT_ABSTRUCT_DATA_FUNCTION sc_abstruct_function[RESORT_DATA_TYPE_MAX]  =
+{
+  //RESORT_DATA_TYPE_RESIDENT
+  {
+    (InitFunction)RESORT_RECV_DATA_Init,
+    (ExitFunction)RESORT_RECV_DATA_Exit,
+    (InitInstanceFunction)RESORT_RECV_DATA_InitInstance,
+    (IsEmptyFunction)RESORT_RECV_DATA_IsEmpty,
+    (GetDataFunction)RESORT_RECV_DATA_GetData,
+    (SetDataFunction)RESORT_RECV_DATA_SetData,
+  },
+  //RESORT_DATA_TYPE_PROXY
+  {
+    (InitFunction)RESORT_PROXY_DATA_Init,
+    (ExitFunction)RESORT_PROXY_DATA_Exit,
+    (InitInstanceFunction)RESORT_PROXY_DATA_InitInstance,
+    (IsEmptyFunction)RESORT_PROXY_DATA_IsEmpty,
+    (GetDataFunction)RESORT_PROXY_DATA_GetData,
+    (SetDataFunction)RESORT_PROXY_DATA_SetData,
+  },
+  //RESORT_DATA_TYPE_RECV
+  {
+    (InitFunction)RESORT_RECV_DATA_Init,
+    (ExitFunction)RESORT_RECV_DATA_Exit,
+    (InitInstanceFunction)RESORT_RECV_DATA_InitInstance,
+    (IsEmptyFunction)RESORT_RECV_DATA_IsEmpty,
+    (GetDataFunction)RESORT_RECV_DATA_GetData,
+    (SetDataFunction)RESORT_RECV_DATA_SetData,
+  },
+  //RESORT_DATA_TYPE_VISITOR
+  {
+    (InitFunction)RESORT_VISITOR_DATA_Init,
+    (ExitFunction)RESORT_VISITOR_DATA_Exit,
+    (InitInstanceFunction)RESORT_VISITOR_DATA_InitInstance,
+    (IsEmptyFunction)RESORT_VISITOR_DATA_IsEmpty,
+    (GetDataFunction)RESORT_VISITOR_DATA_GetData,
+    (SetDataFunction)RESORT_VISITOR_DATA_SetData,
+  },
+  //RESORT_DATA_TYPE_SECRETARY
+  {
+    (InitFunction)RESORT_SECRETARY_DATA_Init,
+    (ExitFunction)RESORT_SECRETARY_DATA_Exit,
+    (InitInstanceFunction)RESORT_SECRETARY_DATA_InitInstance,
+    (IsEmptyFunction)RESORT_SECRETARY_DATA_IsEmpty,
+    (GetDataFunction)RESORT_SECRETARY_DATA_GetData,
+    (SetDataFunction)RESORT_SECRETARY_DATA_SetData,
+  },
+};
+
+//-------------------------------------
+///	PUBLIC
+//=====================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  データ抽象操作  初期化
+ *
+ *	@param	HEAPID heapID   ヒープID
+ *	@param	*p_data_adrs    データワーク NULLを指定すると内部でデータを作る
+ *	@param	type            タイプ
+ *
+ *	@return　データ抽象操作
+ */
+//-----------------------------------------------------------------------------
+RESORT_ABSTRUCT_DATA * RESORT_ABSTRUCT_DATA_Init( HEAPID heapID, void *p_data_adrs, RESORT_DATA_TYPE type )
+{
+  RESORT_ABSTRUCT_DATA *p_wk = GFL_HEAP_AllocClearMemory(heapID,sizeof(RESORT_ABSTRUCT_DATA) );
+
+  RESORT_ABSTRUCT_DATA_Setup( p_wk, p_data_adrs, type );
+
+  if( p_data_adrs == NULL )
+  {
+    p_wk->p_data_adrs = p_wk->cp_func->Init( heapID );
+    p_wk->is_create = TRUE;
+  }
+
+  return p_wk;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  データ抽象操作  破棄
+ *
+ *	@param	RESORT_ABSTRUCT_DATA *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void RESORT_ABSTRUCT_DATA_Exit( RESORT_ABSTRUCT_DATA *p_wk )
+{
+  if( p_wk->is_create )
+  {
+    p_wk->is_create = FALSE;
+    p_wk->cp_func->Exit( p_wk->p_data_adrs );
+  }
+
+  GFL_HEAP_FreeMemory( p_wk );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  一度初期化したものを再セットアップ
+ *
+ *	@param	RESORT_ABSTRUCT_DATA *p_wk　ワーク
+ *	@param	*p_data_adrs    データワーク
+ *	@param	type            タイプ
+ */
+//-----------------------------------------------------------------------------
+void RESORT_ABSTRUCT_DATA_Setup( RESORT_ABSTRUCT_DATA *p_wk, void *p_data_adrs, RESORT_DATA_TYPE type )
+{
+  GF_ASSERT( p_data_adrs != NULL );
+  GF_ASSERT( p_wk->is_create == FALSE );
+  GF_ASSERT( type < RESORT_DATA_TYPE_MAX );
+  p_wk->cp_func   = &sc_abstruct_function[ type ];
+
+  if( p_data_adrs )
+  {
+    p_wk->p_data_adrs = p_data_adrs;
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  初期化
+ *
+ *	@param	RESORT_ABSTRUCT_DATA *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void RESORT_ABSTRUCT_DATA_InitInstance( RESORT_ABSTRUCT_DATA *p_wk )
+{
+  p_wk->cp_func->InitInstance( p_wk->p_data_adrs );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  空かどうかチェック
+ *
+ *	@param	const RESORT_ABSTRUCT_DATA *cp_wk   ワーク
+ *
+ *	@return TRUEならば空  FALSEで存在
+ */
+//-----------------------------------------------------------------------------
+BOOL RESORT_ABSTRUCT_DATA_IsEmpty( const RESORT_ABSTRUCT_DATA *cp_wk )
+{
+  return cp_wk->cp_func->IsEmpty( cp_wk->p_data_adrs );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  データを取得
+ *
+ *	@param	const RESORT_ABSTRUCT_DATA *cp_wk ワーク
+ *	@param	param 何を取得するか
+ *	@param	*p_ret_adrs   受け取りバッファ
+ *
+ *	@return データ
+ */
+//-----------------------------------------------------------------------------
+u32 RESORT_ABSTRUCT_DATA_GetData( const RESORT_ABSTRUCT_DATA *cp_wk, int param, void *p_ret_adrs )
+{
+  return cp_wk->cp_func->GetData( cp_wk->p_data_adrs, param, p_ret_adrs );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  データを設定
+ *
+ *	@param	RESORT_ABSTRUCT_DATA *p_wk  ワーク
+ *	@param	param 何を設定するか
+ *	@param	data  データ
+ */
+//-----------------------------------------------------------------------------
+void RESORT_ABSTRUCT_DATA_SetData( RESORT_ABSTRUCT_DATA *p_wk, int param, u32 data )
+{
+  p_wk->cp_func->SetData( p_wk->p_data_adrs, param, data );
+}
+//----------------------------------------------------------------------------
+/** 
+ *	@brief  生データを取得
+ *
+ *	@param	RESORT_ABSTRUCT_DATA *p_wk  ワーク
+ *
+ *	@return 生データ
+ */
+//-----------------------------------------------------------------------------
+void * RESORT_ABSTRUCT_DATA_GetDataAdrs( RESORT_ABSTRUCT_DATA *p_wk )
+{
+  return p_wk->p_data_adrs;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  人物タイプからデータタイプへの変換
+ *
+ *	@param	u32 people_type 人物タイプ
+ */
+//-----------------------------------------------------------------------------
+RESORT_DATA_TYPE PeopleTypeToResortDataType( u32 people_type )
+{
+  switch( people_type )
+  {
+  case RESORT_PEOPLE_TYPE_TOURIST:
+    return RESORT_DATA_TYPE_RECV;
+  case RESORT_PEOPLE_TYPE_PROXY:
+    return RESORT_DATA_TYPE_PROXY;
+  case RESORT_PEOPLE_TYPE_SECRETARY:
+    return RESORT_DATA_TYPE_SECRETARY;
+  case RESORT_PEOPLE_TYPE_RESIDENT:
+    return RESORT_DATA_TYPE_RESIDENT;
+  case RESORT_PEOPLE_TYPE_VISITOR:
+    return RESORT_DATA_TYPE_VISITOR;
+  default:
+    GF_ASSERT(0);
+    return 0;
+  }
 }

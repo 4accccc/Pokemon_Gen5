@@ -33,21 +33,6 @@ typedef enum
 }RESORT_PEOPLE_ACTION;
 
 //-------------------------------------
-///	人物データアクセス引数
-//    人物のタイプによって書き込み不可、読み取り不可の場合がある
-//=====================================
-typedef enum
-{
-  RESORT_PEOPLE_PARAM_PEOPLEID,
-  RESORT_PEOPLE_PARAM_PLACEID,
-  RESORT_PEOPLE_PARAM_LOCK,
-  RESORT_PEOPLE_PARAM_SEX,
-  RESORT_PEOPLE_PARAM_TRAINERVIEW,
-  RESORT_PEOPLE_PARAM_NAME,
-  RESORT_PEOPLE_PARAM_KEEP,
-}RESORT_PEOPLE_PARAM;
-
-//-------------------------------------
 ///	人物ワーク
 //=====================================
 typedef struct _RESORT_PEOPLE RESORT_PEOPLE;
@@ -61,8 +46,8 @@ extern BOOL RESORT_PEOPLE_IsActionEnd( const RESORT_PEOPLE *cp_wk );
 
 //設定
 extern void RESORT_PEOPLE_SetVisible( RESORT_PEOPLE *p_wk, BOOL is_visible );
-extern void RESORT_PEOPLE_SetData( RESORT_PEOPLE *p_wk, RESORT_PEOPLE_PARAM param, u32 data );
-extern u32 RESORT_PEOPLE_GetData( const RESORT_PEOPLE *cp_wk, RESORT_PEOPLE_PARAM param, void *p_ret_adrs );
+extern void RESORT_PEOPLE_SetData( RESORT_PEOPLE *p_wk, RESORT_DATA_PARAM param, u32 data );
+extern u32 RESORT_PEOPLE_GetData( const RESORT_PEOPLE *cp_wk, RESORT_DATA_PARAM param, void *p_ret_adrs );
 extern u32 RESORT_PEOPLE_GetMsgID( const RESORT_PEOPLE *cp_wk, u32 index );
 extern MMDL * RESORT_PEOPLE_GetMmdl( const RESORT_PEOPLE *cp_wk );
 extern void * RESORT_PEOPLE_GetDataAdrs( RESORT_PEOPLE *p_wk );

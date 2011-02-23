@@ -64,7 +64,7 @@ VMCMD_RESULT EvCmdResortTalkStart( VMHANDLE *p_core, void *p_wk_adrs )
 
 
   //話し中のOBJはマージをロック
-  RESORT_PEOPLE_SetData( p_people, RESORT_PEOPLE_PARAM_LOCK, TRUE );
+  RESORT_PEOPLE_SetData( p_people, RESORT_DATA_PARAM_LOCK, TRUE );
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -102,7 +102,7 @@ VMCMD_RESULT EvCmdResortTalkEnd( VMHANDLE *p_core, void *p_wk_adrs )
   if( p_people )
   {
     //話し中のOBJのマージロック解除
-    RESORT_PEOPLE_SetData( p_people, RESORT_PEOPLE_PARAM_LOCK, FALSE );
+    RESORT_PEOPLE_SetData( p_people, RESORT_DATA_PARAM_LOCK, FALSE );
   }
   else
   {
@@ -148,7 +148,7 @@ VMCMD_RESULT EvCmdResortGetData( VMHANDLE *p_core, void *p_wk_adrs )
   {
   case RESORT_GET_PARAM_FRONT_OBJID:
     {
-      u16 peopleID = RESORT_PEOPLE_GetData( p_people, RESORT_PEOPLE_PARAM_PEOPLEID, NULL );
+      u16 peopleID = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_PEOPLE_ID, NULL );
       *p_ret_wk = RESORT_PEOPLE_PEOPLEID_TO_MMDLID( peopleID );
     }
     break;
@@ -302,7 +302,7 @@ VMCMD_RESULT EvCmdResortKeepPeople( VMHANDLE *p_core, void *p_wk_adrs )
   if(GMK_TMP_CheckAssignID( p_field, RESORT_RECEPTION_ASSIGN_ID ) )
   {
     RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_field, p_people_sys );
-    RESORT_PEOPLE_SetData( p_people, RESORT_PEOPLE_PARAM_KEEP, TRUE );
+    RESORT_PEOPLE_SetData( p_people, RESORT_DATA_PARAM_KEEP, TRUE );
   }
   else
   {
@@ -360,8 +360,8 @@ VMCMD_RESULT EvCmdResortSetWord( VMHANDLE *p_core, void *p_wk_adrs )
     {
       STRCODE name[PERSON_NAME_SIZE+EOM_SIZE];
       STRBUF *p_str = GFL_STR_CreateBuffer( PERSON_NAME_SIZE+EOM_SIZE, GFL_HEAP_LOWID(heapID) );
-      u32 sex = RESORT_PEOPLE_GetData( p_people, RESORT_PEOPLE_PARAM_SEX, NULL );
-      RESORT_PEOPLE_GetData( p_people, RESORT_PEOPLE_PARAM_NAME, name );
+      u32 sex = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_SEX, NULL );
+      RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_NAME, name );
       GFL_STR_SetStringCode( p_str, name );
     
       WORDSET_RegisterWord( p_wordset, idx, p_str, sex, TRUE, PM_LANG );

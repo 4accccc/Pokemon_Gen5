@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nagihashi_toru" host="W00268" date="2011-02-23T18:34:36"/>
+	<create user="nagihashi_toru" host="W00268" date="2011-02-23T22:25:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -301,9 +301,9 @@
 	<row id="resort_tourist_greet_00">
 		<comment>旅行者挨拶文</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『こんにちは！
-ここは　いいまち　だね▼</language>
+ここは　いいまち　だね</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『こんにちは！
-ここは　いい街　だね！▼</language>
+ここは　いい街　だね！</language>
 	</row>
 
 	<row id="resort_tourist_appeal_00">

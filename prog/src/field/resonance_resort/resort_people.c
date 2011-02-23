@@ -32,9 +32,6 @@
 typedef struct
 {
   void (*SetupMmdHeader)( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder );
-  u32 (*GetData)( const RESORT_PEOPLE *cp_wk, RESORT_PEOPLE_PARAM param, void *p_ret_adrs );
-  void (*SetData)( RESORT_PEOPLE *p_wk, RESORT_PEOPLE_PARAM param, u32 data );
-  void (*Clear)(RESORT_PEOPLE *p_wk );
 } RESORT_PEOPLE_FUNCTION;
 
 //-------------------------------------
@@ -44,7 +41,7 @@ struct _RESORT_PEOPLE
 {
   u16 peopleID;
   MMDLSYS * p_mmdlsys;
-  void *p_data_adrs;
+  RESORT_ABSTRUCT_DATA *p_abstruct_data;
   const RESORT_BINARY_PEOPLE_DATA *cp_binary;
   const RESORT_PEOPLE_FUNCTION *cp_function;
   BOOL (*Action)( RESORT_PEOPLE *p_wk, u32 *p_seq, FIELD_PLAYER *p_player );
@@ -70,39 +67,21 @@ typedef struct
 //=====================================
 //住民
 static void Resident_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder );
-static u32 Resident_GetData( const RESORT_PEOPLE *cp_wk, RESORT_PEOPLE_PARAM param, void *p_ret_adrs );
-static void Resident_SetData( RESORT_PEOPLE *p_wk, RESORT_PEOPLE_PARAM param, u32 data );
-static void Resident_Clear( RESORT_PEOPLE *p_wk );
 
 //代理人
 static void Proxy_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder );
-static u32 Proxy_GetData( const RESORT_PEOPLE *cp_wk, RESORT_PEOPLE_PARAM param, void *p_ret_adrs );
-static void Proxy_SetData( RESORT_PEOPLE *p_wk, RESORT_PEOPLE_PARAM param, u32 data );
-static void Proxy_Clear( RESORT_PEOPLE *p_wk );
 
 //観光客
 static void Tourist_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder );
-static u32 Tourist_GetData( const RESORT_PEOPLE *cp_wk, RESORT_PEOPLE_PARAM param, void *p_ret_adrs );
-static void Tourist_SetData( RESORT_PEOPLE *p_wk, RESORT_PEOPLE_PARAM param, u32 data );
-static void Tourist_Clear( RESORT_PEOPLE *p_wk );
 
 //滞在者
 static void Visitor_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder );
-static u32 Visitor_GetData( const RESORT_PEOPLE *cp_wk, RESORT_PEOPLE_PARAM param, void *p_ret_adrs );
-static void Visitor_SetData( RESORT_PEOPLE *p_wk, RESORT_PEOPLE_PARAM param, u32 data );
-static void Visitor_Clear( RESORT_PEOPLE *p_wk );
 
 //秘書
 static void Secretary_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder );
-static u32 Secretary_GetData( const RESORT_PEOPLE *cp_wk, RESORT_PEOPLE_PARAM param, void *p_ret_adrs );
-static void Secretary_SetData( RESORT_PEOPLE *p_wk, RESORT_PEOPLE_PARAM param, u32 data );
-static void Secretary_Clear( RESORT_PEOPLE *p_wk );
 
 //NPC
 static void Npc_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder );
-static u32 Npc_GetData( const RESORT_PEOPLE *cp_wk, RESORT_PEOPLE_PARAM param, void *p_ret_adrs );
-static void Npc_SetData( RESORT_PEOPLE *p_wk, RESORT_PEOPLE_PARAM param, u32 data );
-static void Npc_Clear( RESORT_PEOPLE *p_wk );
 
 //行動関数
 static BOOL Action_WarpDown( RESORT_PEOPLE *p_wk, u32 *p_seq, FIELD_PLAYER *p_player );
@@ -116,44 +95,26 @@ static const RESORT_PEOPLE_FUNCTION sc_people_function[RESORT_PEOPLE_TYPE_MAX]  
   //RESORT_PEOPLE_TYPE_RESIDENT
   {
     Resident_SetupMmdHeader,
-    Resident_GetData,
-    Resident_SetData,
-    Resident_Clear,
   },
   //RESORT_PEOPLE_TYPE_PROXY
   {
     Proxy_SetupMmdHeader,
-    Proxy_GetData,
-    Proxy_SetData,
-    Proxy_Clear,
   },
   //RESORT_PEOPLE_TYPE_TOURIST
   {
     Tourist_SetupMmdHeader,
-    Tourist_GetData,
-    Tourist_SetData,
-    Tourist_Clear,
   },
   //RESORT_PEOPLE_TYPE_VISITOR
   {
     Visitor_SetupMmdHeader,
-    Visitor_GetData,
-    Visitor_SetData,
-    Visitor_Clear,
   },
   //RESORT_PEOPLE_TYPE_SECRETARY
   {
     Secretary_SetupMmdHeader,
-    Secretary_GetData,
-    Secretary_SetData,
-    Secretary_Clear,
   },
   //RESORT_PEOPLE_TYPE_NPC
   {
     Npc_SetupMmdHeader,
-    Npc_GetData,
-    Npc_SetData,
-    Npc_Clear,
   },
 };
 
@@ -194,7 +155,7 @@ static RESORT_PEOPLE * RESORT_PEOPLE_Init( HEAPID heapID, const RESORT_PEOPLE_IN
   RESORT_PEOPLE *p_wk = GFL_HEAP_AllocClearMemory(heapID, sizeof(RESORT_PEOPLE));
   p_wk->peopleID    = cp_param->peopleID;
   p_wk->p_mmdlsys   = cp_param->p_mmdlsys;
-  p_wk->p_data_adrs = cp_param->p_data_adrs;
+  p_wk->p_abstruct_data = RESORT_ABSTRUCT_DATA_Init( heapID, cp_param->p_data_adrs, PeopleTypeToResortDataType( cp_param->people_type ) );
   p_wk->cp_binary   = RESORT_BINARY_SearchData( cp_param->cp_binary, cp_param->people_type, 0 );//TODO kind
   p_wk->cp_function = &sc_people_function[ cp_param->people_type ];
 
@@ -215,8 +176,8 @@ static RESORT_PEOPLE * RESORT_PEOPLE_Init( HEAPID heapID, const RESORT_PEOPLE_IN
       MMDLSYS_AddMMdl( cp_param->p_mmdlsys, &header, cp_param->zoneID );
 
       //作成した場合は、データとMMDLをひもづけるため、データにPEOPLEIDとPLACEIDを設定
-      RESORT_PEOPLE_SetData( p_wk, RESORT_PEOPLE_PARAM_PEOPLEID, cp_param->peopleID );
-      RESORT_PEOPLE_SetData( p_wk, RESORT_PEOPLE_PARAM_PLACEID, placeID );
+      RESORT_PEOPLE_SetData( p_wk, RESORT_DATA_PARAM_PEOPLE_ID, cp_param->peopleID );
+      RESORT_PEOPLE_SetData( p_wk, RESORT_DATA_PARAM_PLACE_ID, placeID );
     }
   }
 
@@ -232,6 +193,7 @@ static RESORT_PEOPLE * RESORT_PEOPLE_Init( HEAPID heapID, const RESORT_PEOPLE_IN
 //-----------------------------------------------------------------------------
 static void RESORT_PEOPLE_Exit( RESORT_PEOPLE *p_wk )
 {
+  RESORT_ABSTRUCT_DATA_Exit( p_wk->p_abstruct_data );
   GFL_HEAP_FreeMemory( p_wk );
 }
 
@@ -280,7 +242,7 @@ static BOOL RESORT_PEOPLE_IsCompMmdl( const RESORT_PEOPLE *cp_wk, const MMDL *cp
 //-----------------------------------------------------------------------------
 void * RESORT_PEOPLE_GetDataAdrs( RESORT_PEOPLE *p_wk )
 {
-  return p_wk->p_data_adrs;
+  return RESORT_ABSTRUCT_DATA_GetDataAdrs( p_wk->p_abstruct_data );
 }
 
 //----------------------------------------------------------------------------
@@ -295,7 +257,7 @@ void * RESORT_PEOPLE_GetDataAdrs( RESORT_PEOPLE *p_wk )
 //-----------------------------------------------------------------------------
 static BOOL RESORT_PEOPLE_IsCompData( const RESORT_PEOPLE *cp_wk, const void *cp_data_adrs )
 {
-  return cp_wk->p_data_adrs == cp_data_adrs;
+  return RESORT_ABSTRUCT_DATA_GetDataAdrs( cp_wk->p_abstruct_data ) == cp_data_adrs;
 }
 //----------------------------------------------------------------------------
 /**
@@ -306,7 +268,7 @@ static BOOL RESORT_PEOPLE_IsCompData( const RESORT_PEOPLE *cp_wk, const void *cp
 //-----------------------------------------------------------------------------
 static void RESORT_PEOPLE_ClearData( RESORT_PEOPLE *p_wk )
 {
-  p_wk->cp_function->Clear( p_wk );
+  RESORT_ABSTRUCT_DATA_InitInstance( p_wk->p_abstruct_data );
 }
 
 //-------------------------------------
@@ -371,9 +333,9 @@ void RESORT_PEOPLE_SetVisible( RESORT_PEOPLE *p_wk, BOOL is_visible )
  *	@param	data  設定するデータ
  */
 //-----------------------------------------------------------------------------
-void RESORT_PEOPLE_SetData( RESORT_PEOPLE *p_wk, RESORT_PEOPLE_PARAM param, u32 data )
+void RESORT_PEOPLE_SetData( RESORT_PEOPLE *p_wk, RESORT_DATA_PARAM param, u32 data )
 {
-  p_wk->cp_function->SetData( p_wk, param, data );
+  RESORT_ABSTRUCT_DATA_SetData( p_wk->p_abstruct_data, param, data );
 }
 //----------------------------------------------------------------------------
 /**
@@ -386,9 +348,9 @@ void RESORT_PEOPLE_SetData( RESORT_PEOPLE *p_wk, RESORT_PEOPLE_PARAM param, u32 
  *	@return　データ
  */
 //-----------------------------------------------------------------------------
-u32 RESORT_PEOPLE_GetData( const RESORT_PEOPLE *cp_wk, RESORT_PEOPLE_PARAM param, void *p_ret_adrs )
+u32 RESORT_PEOPLE_GetData( const RESORT_PEOPLE *cp_wk, RESORT_DATA_PARAM param, void *p_ret_adrs )
 {
-  return cp_wk->cp_function->GetData( cp_wk, param, p_ret_adrs );
+  return RESORT_ABSTRUCT_DATA_GetData( cp_wk->p_abstruct_data, param, p_ret_adrs );
 }
 //----------------------------------------------------------------------------
 /**
@@ -431,69 +393,9 @@ MMDL * RESORT_PEOPLE_GetMmdl( const RESORT_PEOPLE *cp_wk )
 //-----------------------------------------------------------------------------
 static void Resident_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder )
 {
-  RESORT_RESIDENT_DATA *p_data =p_wk->p_data_adrs;
-  u8 trainer_view = RESORT_RESIDENT_DATA_GetData( p_data, RESORT_RECV_DATA_PARAM_TRAINERVIEW, NULL );
+  u8 trainer_view = RESORT_ABSTRUCT_DATA_GetData( p_wk->p_abstruct_data, RESORT_DATA_PARAM_TRAINERVIEW, NULL );
   p_hedder->obj_code = UnionView_GetObjCode( trainer_view );
   p_hedder->event_id = RESORT_BINARY_PEOPLE_DATA_GetScrID( p_wk->cp_binary );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  人物データ設定・取得
- */
-//-----------------------------------------------------------------------------
-static u32 Resident_GetData( const RESORT_PEOPLE *cp_wk, RESORT_PEOPLE_PARAM param, void *p_ret_adrs )
-{
-  const RESORT_RESIDENT_DATA *cp_data = cp_wk->p_data_adrs;
-  switch( param )
-  {
-  case RESORT_PEOPLE_PARAM_PEOPLEID:
-    return RESORT_RESIDENT_DATA_GetData( cp_data, RESORT_RECV_DATA_PARAM_PEOPLE_ID, NULL );
-  case RESORT_PEOPLE_PARAM_PLACEID:
-    return RESORT_RESIDENT_DATA_GetData( cp_data, RESORT_RECV_DATA_PARAM_PLACE_ID, NULL );
-  case RESORT_PEOPLE_PARAM_LOCK:
-    return RESORT_RESIDENT_DATA_GetData( cp_data , RESORT_RECV_DATA_PARAM_LOCK, NULL );
-  case RESORT_PEOPLE_PARAM_SEX:
-    return RESORT_RESIDENT_DATA_GetData( cp_data , RESORT_RECV_DATA_PARAM_SEX, NULL );
-  case RESORT_PEOPLE_PARAM_TRAINERVIEW:
-    return RESORT_RESIDENT_DATA_GetData( cp_data , RESORT_RECV_DATA_PARAM_TRAINERVIEW, NULL );
-  case RESORT_PEOPLE_PARAM_NAME:
-    RESORT_RESIDENT_DATA_GetData( cp_data , RESORT_RECV_DATA_PARAM_NAME, p_ret_adrs );
-    return 0;
-  default:
-    GF_ASSERT(0);
-    return 0;
-  }
-}
-static void Resident_SetData( RESORT_PEOPLE *p_wk, RESORT_PEOPLE_PARAM param, u32 data )
-{
-  RESORT_RESIDENT_DATA *p_data = p_wk->p_data_adrs;
-  switch( param )
-  {
-  case RESORT_PEOPLE_PARAM_PEOPLEID:
-    RESORT_RESIDENT_DATA_SetData( p_data, RESORT_RECV_DATA_PARAM_PEOPLE_ID, data );
-    break;
-  case RESORT_PEOPLE_PARAM_PLACEID:
-    RESORT_RESIDENT_DATA_SetData( p_data, RESORT_RECV_DATA_PARAM_PLACE_ID, data );
-    break;
-  case RESORT_PEOPLE_PARAM_LOCK:
-    RESORT_RESIDENT_DATA_SetData( p_data , RESORT_RECV_DATA_PARAM_LOCK, data );
-    break;
-  case RESORT_PEOPLE_PARAM_KEEP:
-    RESORT_RESIDENT_DATA_SetData( p_data , RESORT_RECV_DATA_PARAM_LOCK, data );
-    break;
-  default:
-    GF_ASSERT(0);
-  }
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  データクリア
- */
-//-----------------------------------------------------------------------------
-static void Resident_Clear( RESORT_PEOPLE *p_wk )
-{
-  RESORT_RESIDENT_DATA *p_data = p_wk->p_data_adrs;
-  RESORT_RESIDENT_DATA_InitInstance( p_data );
 }
 
 //-------------------------------------
@@ -509,82 +411,10 @@ static void Resident_Clear( RESORT_PEOPLE *p_wk )
 //-----------------------------------------------------------------------------
 static void Proxy_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder )
 {
-  RESORT_PROXY_DATA *p_data =p_wk->p_data_adrs;
-  //u8 trainer_view = RESORT_RECV_DATA_GetData( p_data, RESORT_RECV_DATA_PARAM_TRAINERVIEW, NULL );
+  //u8 trainer_view = RESORT_ABSTRUCT_DATA_GetData( p_wk->p_abstruct_data, RESORT_DATA_PARAM_TRAINERVIEW, NULL );
   p_hedder->obj_code = GIRL2;//UnionView_GetObjCode( trainer_view );
   p_hedder->move_code = MV_DOWN; //TODO
   p_hedder->event_id = RESORT_BINARY_PEOPLE_DATA_GetScrID( p_wk->cp_binary );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  人物データ取得・設定
- */
-//-----------------------------------------------------------------------------
-static u32 Proxy_GetData( const RESORT_PEOPLE *cp_wk, RESORT_PEOPLE_PARAM param, void *p_ret_adrs )
-{
-  const RESORT_PROXY_DATA *cp_data = cp_wk->p_data_adrs;
-  switch( param )
-  {
-  case RESORT_PEOPLE_PARAM_PEOPLEID:
-    return RESORT_PROXY_DATA_GetData( cp_data, RESORT_PROXY_DATA_PARAM_PEOPLEID );
-  case RESORT_PEOPLE_PARAM_PLACEID:
-    return RESORT_PROXY_DATA_GetData( cp_data, RESORT_PROXY_DATA_PARAM_PLACEID );
-  case RESORT_PEOPLE_PARAM_SEX:
-    return 1;//TODO
-  case RESORT_PEOPLE_PARAM_TRAINERVIEW:
-    return 9;//TODO;
-  case RESORT_PEOPLE_PARAM_NAME:
-    {
-      //TODO
-      static const STRCODE sc_strcode[PERSON_NAME_SIZE+EOM_SIZE] =
-      {
-        L'だ',
-        L'い',
-        L'り',
-        L'に',
-        L'ん',
-        0xffff
-      };
-      GFL_STD_MemCopy( sc_strcode, p_ret_adrs, sizeof(u16)*(PERSON_NAME_SIZE+EOM_SIZE) );
-    }
-    return 0;
-  case RESORT_PEOPLE_PARAM_LOCK:
-    return 0;
-  default:
-    GF_ASSERT(0);
-    return 0;
-  }
-}
-static void Proxy_SetData( RESORT_PEOPLE *p_wk, RESORT_PEOPLE_PARAM param, u32 data )
-{
- RESORT_PROXY_DATA *p_data = p_wk->p_data_adrs;
-  switch( param )
-  {
-  case RESORT_PEOPLE_PARAM_PEOPLEID:
-    RESORT_PROXY_DATA_SetData( p_data, RESORT_PROXY_DATA_PARAM_PEOPLEID, data );
-    break;
-  case RESORT_PEOPLE_PARAM_PLACEID:
-    RESORT_PROXY_DATA_SetData( p_data, RESORT_PROXY_DATA_PARAM_PLACEID, data );
-    break;
-  case RESORT_PEOPLE_PARAM_LOCK:
-    /* なにもしない */
-    break;
-  case RESORT_PEOPLE_PARAM_KEEP:
-    /* なにもしない */
-    break;
-  default:
-    GF_ASSERT(0);
-  }
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  データクリア
- */
-//-----------------------------------------------------------------------------
-static void Proxy_Clear( RESORT_PEOPLE *p_wk )
-{
-  RESORT_PROXY_DATA *p_data = p_wk->p_data_adrs;
-  RESORT_PROXY_DATA_InitInstance( p_data );
 }
 
 //-------------------------------------
@@ -600,72 +430,11 @@ static void Proxy_Clear( RESORT_PEOPLE *p_wk )
 //-----------------------------------------------------------------------------
 static void Tourist_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder )
 {
-  RESORT_RECV_DATA *p_data = p_wk->p_data_adrs;
-  u8 trainer_view = RESORT_RECV_DATA_GetData( p_data, RESORT_RECV_DATA_PARAM_TRAINERVIEW, NULL );
+  u8 trainer_view = RESORT_ABSTRUCT_DATA_GetData( p_wk->p_abstruct_data, RESORT_DATA_PARAM_TRAINERVIEW, NULL );
   p_hedder->obj_code = UnionView_GetObjCode( trainer_view );
   p_hedder->move_code = MV_DOWN; //TODO
   p_hedder->event_id = RESORT_BINARY_PEOPLE_DATA_GetScrID( p_wk->cp_binary );
 }
-//----------------------------------------------------------------------------
-/**
- *	@brief  人物データ取得・設定
- */
-//-----------------------------------------------------------------------------
-static u32 Tourist_GetData( const RESORT_PEOPLE *cp_wk, RESORT_PEOPLE_PARAM param, void *p_ret_adrs )
-{
-  const RESORT_RECV_DATA *cp_data = cp_wk->p_data_adrs;
-  switch( param )
-  {
-  case RESORT_PEOPLE_PARAM_PEOPLEID:
-    return RESORT_RECV_DATA_GetData( cp_data, RESORT_RECV_DATA_PARAM_PEOPLE_ID, NULL );
-  case RESORT_PEOPLE_PARAM_PLACEID:
-    return RESORT_RECV_DATA_GetData( cp_data, RESORT_RECV_DATA_PARAM_PLACE_ID, NULL );
-  case RESORT_PEOPLE_PARAM_LOCK:
-    return RESORT_RECV_DATA_GetData( cp_data , RESORT_RECV_DATA_PARAM_LOCK, NULL );
-  case RESORT_PEOPLE_PARAM_SEX:
-    return RESORT_RECV_DATA_GetData( cp_data , RESORT_RECV_DATA_PARAM_SEX, NULL );
-  case RESORT_PEOPLE_PARAM_TRAINERVIEW:
-    return RESORT_RECV_DATA_GetData( cp_data , RESORT_RECV_DATA_PARAM_TRAINERVIEW, NULL );
-  case RESORT_PEOPLE_PARAM_NAME:
-    RESORT_RECV_DATA_GetData( cp_data , RESORT_RECV_DATA_PARAM_NAME, p_ret_adrs );
-    return 0;
-  default:
-    GF_ASSERT(0);
-    return 0;
-  }
-}
-static void Tourist_SetData( RESORT_PEOPLE *p_wk, RESORT_PEOPLE_PARAM param, u32 data )
-{
-  RESORT_RECV_DATA *p_data = p_wk->p_data_adrs;
-  switch( param )
-  {
-  case RESORT_PEOPLE_PARAM_PEOPLEID:
-    RESORT_RECV_DATA_SetData( p_data, RESORT_RECV_DATA_PARAM_PEOPLE_ID, data );
-    break;
-  case RESORT_PEOPLE_PARAM_PLACEID:
-    RESORT_RECV_DATA_SetData( p_data, RESORT_RECV_DATA_PARAM_PLACE_ID, data );
-    break;
-  case RESORT_PEOPLE_PARAM_LOCK:
-    RESORT_RECV_DATA_SetData( p_data , RESORT_RECV_DATA_PARAM_LOCK, data );
-    break;
-  case RESORT_PEOPLE_PARAM_KEEP:
-    RESORT_RECV_DATA_SetData( p_data , RESORT_RECV_DATA_PARAM_LOCK, data );
-    break;
-  default:
-    GF_ASSERT(0);
-  }
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  データクリア
- */
-//-----------------------------------------------------------------------------
-static void Tourist_Clear( RESORT_PEOPLE *p_wk )
-{
-  RESORT_RECV_DATA *p_data = p_wk->p_data_adrs;
-  RESORT_RECV_DATA_InitInstance( p_data );
-}
-
 //-------------------------------------
 ///滞在者
 //=====================================
@@ -679,60 +448,10 @@ static void Tourist_Clear( RESORT_PEOPLE *p_wk )
 //-----------------------------------------------------------------------------
 static void Visitor_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder )
 {
-  RESORT_VISITOR_DATA *p_data = p_wk->p_data_adrs;
-  p_hedder->obj_code = WOMAN1; //TODO
+  u8 trainer_view = RESORT_ABSTRUCT_DATA_GetData( p_wk->p_abstruct_data, RESORT_DATA_PARAM_TRAINERVIEW, NULL );
+  p_hedder->obj_code = UnionView_GetObjCode( trainer_view );
+  p_hedder->move_code = MV_DOWN; //TODO
   p_hedder->event_id = RESORT_BINARY_PEOPLE_DATA_GetScrID( p_wk->cp_binary );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  人物データ取得・設定
- */
-//-----------------------------------------------------------------------------
-static u32 Visitor_GetData( const RESORT_PEOPLE *cp_wk, RESORT_PEOPLE_PARAM param, void *p_ret_adrs )
-{
-  const RESORT_VISITOR_DATA *cp_data = cp_wk->p_data_adrs;
-  switch( param )
-  {
-  case RESORT_PEOPLE_PARAM_PEOPLEID:
-    return RESORT_VISITOR_DATA_GetData( cp_data, RESORT_VISITOR_DATA_PARAM_PEOPLE_ID, NULL );
-  case RESORT_PEOPLE_PARAM_PLACEID:
-    return RESORT_VISITOR_DATA_GetData( cp_data, RESORT_VISITOR_DATA_PARAM_PLACE_ID, NULL );
-  case RESORT_PEOPLE_PARAM_SEX:
-    return RESORT_VISITOR_DATA_GetData( cp_data, RESORT_VISITOR_DATA_PARAM_SEX, NULL );
-  case RESORT_PEOPLE_PARAM_TRAINERVIEW:
-    return RESORT_VISITOR_DATA_GetData( cp_data, RESORT_VISITOR_DATA_PARAM_TRAINERVIEW, NULL );
-  case RESORT_PEOPLE_PARAM_NAME:
-    RESORT_VISITOR_DATA_GetData( cp_data, RESORT_VISITOR_DATA_PARAM_NAME, p_ret_adrs );
-    return 0;
-  default:
-    GF_ASSERT(0);
-    return 0;//TODO
-  }
-}
-static void Visitor_SetData( RESORT_PEOPLE *p_wk, RESORT_PEOPLE_PARAM param, u32 data )
-{
-  RESORT_VISITOR_DATA *p_data = p_wk->p_data_adrs;
-  switch( param )
-  {
-  case RESORT_PEOPLE_PARAM_PEOPLEID:
-    RESORT_VISITOR_DATA_SetData( p_data, RESORT_VISITOR_DATA_PARAM_PEOPLE_ID, data );
-    break;
-  case RESORT_PEOPLE_PARAM_PLACEID:
-    RESORT_VISITOR_DATA_SetData( p_data, RESORT_VISITOR_DATA_PARAM_PLACE_ID, data );
-    break;
-  default:
-    GF_ASSERT(0);
-  }
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  データクリア
- */
-//-----------------------------------------------------------------------------
-static void Visitor_Clear( RESORT_PEOPLE *p_wk )
-{
-  RESORT_VISITOR_DATA * p_data = p_wk->p_data_adrs;
-  RESORT_VISITOR_DATA_InitInstance( p_data );
 }
 
 //-------------------------------------
@@ -749,60 +468,9 @@ static void Visitor_Clear( RESORT_PEOPLE *p_wk )
 //-----------------------------------------------------------------------------
 static void Secretary_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder )
 {
-  RESORT_SECRETARY_DATA *p_data = p_wk->p_data_adrs;
+  //u8 trainer_view = RESORT_ABSTRUCT_DATA_GetData( p_wk->p_abstruct_data, RESORT_DATA_PARAM_TRAINERVIEW, NULL );
   p_hedder->obj_code = GIRL2; //TODO
   p_hedder->event_id = RESORT_BINARY_PEOPLE_DATA_GetScrID( p_wk->cp_binary  );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  人物データ取得・設定
- */
-//-----------------------------------------------------------------------------
-static u32 Secretary_GetData( const RESORT_PEOPLE *cp_wk, RESORT_PEOPLE_PARAM param, void *p_ret_adrs )
-{
-  const RESORT_SECRETARY_DATA *cp_data = cp_wk->p_data_adrs;
-  switch( param )
-  {
-  case RESORT_PEOPLE_PARAM_PEOPLEID:
-    return RESORT_SECRETARY_DATA_GetData( cp_data, RESORT_SECRETARY_DATA_PARAM_PEOPLE_ID, NULL );
-  case RESORT_PEOPLE_PARAM_PLACEID:
-    return RESORT_SECRETARY_DATA_GetData( cp_data, RESORT_SECRETARY_DATA_PARAM_PLACE_ID, NULL );
-  case RESORT_PEOPLE_PARAM_NAME:
-    RESORT_SECRETARY_DATA_GetData( cp_data, RESORT_SECRETARY_DATA_PARAM_NAME, NULL );
-    return 0;
-  case RESORT_PEOPLE_PARAM_SEX:
-    return RESORT_SECRETARY_DATA_GetData( cp_data, RESORT_SECRETARY_DATA_PARAM_SEX, NULL );
-  case RESORT_PEOPLE_PARAM_TRAINERVIEW:
-    return RESORT_SECRETARY_DATA_GetData( cp_data, RESORT_SECRETARY_DATA_PARAM_TRAINERVIEW, NULL );
-  default:
-    GF_ASSERT(0);
-    return 0; //TODO
-  }
-}
-static void Secretary_SetData( RESORT_PEOPLE *p_wk, RESORT_PEOPLE_PARAM param, u32 data )
-{
-  RESORT_SECRETARY_DATA *p_data = p_wk->p_data_adrs;
-  switch( param )
-  {
-  case RESORT_PEOPLE_PARAM_PEOPLEID:
-    RESORT_SECRETARY_DATA_SetData( p_data, RESORT_SECRETARY_DATA_PARAM_PEOPLE_ID, data );
-    break;
-  case RESORT_PEOPLE_PARAM_PLACEID:
-    RESORT_SECRETARY_DATA_SetData( p_data, RESORT_SECRETARY_DATA_PARAM_PLACE_ID, data );
-    break;
-  default:
-    GF_ASSERT(0);
-  }
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  データクリア
- */
-//-----------------------------------------------------------------------------
-static void Secretary_Clear( RESORT_PEOPLE *p_wk )
-{
-  RESORT_SECRETARY_DATA *p_data = p_wk->p_data_adrs;
-  RESORT_SECRETARY_DATA_InitInstance( p_data );
 }
 
 //-------------------------------------
@@ -820,26 +488,6 @@ static void Npc_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder )
 {
   p_hedder->obj_code = GIRL2; //TODO
   p_hedder->event_id = RESORT_BINARY_PEOPLE_DATA_GetScrID( p_wk->cp_binary );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  人物データ取得・設定
- */
-//-----------------------------------------------------------------------------
-static u32 Npc_GetData( const RESORT_PEOPLE *cp_wk, RESORT_PEOPLE_PARAM param, void *p_ret_adrs )
-{
-  return 0; //TODO
-}
-static void Npc_SetData( RESORT_PEOPLE *p_wk, RESORT_PEOPLE_PARAM param, u32 data )
-{
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  データクリア
- */
-//-----------------------------------------------------------------------------
-static void Npc_Clear( RESORT_PEOPLE *p_wk )
-{
 }
 //-------------------------------------
 ///ACTION
