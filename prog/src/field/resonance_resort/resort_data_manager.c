@@ -53,7 +53,8 @@ struct _RESORT_DATA_MANAGER
 extern RESORT_DATA_MANAGER * RESORT_DATA_MANAGER_Init( const RESORT_DATA_MANAGER_INIT_PARAM *cp_param, HEAPID heapID )
 {
   RESORT_DATA_MANAGER * p_wk = GFL_HEAP_AllocClearMemory(heapID, sizeof(RESORT_DATA_MANAGER) );
-  RESORT_DATA_MANAGER_Setup( p_wk, cp_param );
+  p_wk->param = *cp_param;
+  RESORT_DATA_MANAGER_Update( p_wk );
   return p_wk;
 }
 //----------------------------------------------------------------------------
@@ -72,14 +73,13 @@ void RESORT_DATA_MANAGER_Exit( RESORT_DATA_MANAGER *p_wk )
  *	@brief  配置情報設定
  *
  *	@param	RESORT_DATA_MANAGER *p_wk ワーク
- *	@param	RESORT_DATA_MANAGER_INIT_PARAM *cp_param 初期化酵素いたい
  */
 //-----------------------------------------------------------------------------
-void RESORT_DATA_MANAGER_Setup( RESORT_DATA_MANAGER *p_wk, const RESORT_DATA_MANAGER_INIT_PARAM *cp_param )
+void RESORT_DATA_MANAGER_Update( RESORT_DATA_MANAGER *p_wk )
 {
+  const RESORT_DATA_MANAGER_INIT_PARAM *cp_param = &p_wk->param;
   int i, j;
 
-  p_wk->param = *cp_param;
 
   //クリア
   for( i = 0; i < RESORT_PLACEID_MAX; i++ )
@@ -100,7 +100,7 @@ void RESORT_DATA_MANAGER_Setup( RESORT_DATA_MANAGER *p_wk, const RESORT_DATA_MAN
   //住人
   for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
   {
-    RESORT_RESIDENT_DATA *p_data = RESORT_PEOPLE_ALL_DATA_GetResident( cp_param->p_all, i );
+    RESORT_RESIDENT_DATA *p_data = RESORT_PEOPLE_ALL_DATA_GetResident( cp_param->p_all_people, i );
     if( !RESORT_RESIDENT_DATA_IsEmpty(p_data ) )
     {
       u16 peopleID = RESORT_RESIDENT_DATA_GetData( p_data, RESORT_RECV_DATA_PARAM_PEOPLE_ID, NULL );
@@ -116,7 +116,7 @@ void RESORT_DATA_MANAGER_Setup( RESORT_DATA_MANAGER *p_wk, const RESORT_DATA_MAN
   //滞在者
   for( i = 0; i < RESORT_VISITOR_DATA_NUM; i++ )
   {
-    RESORT_VISITOR_DATA *p_data = RESORT_PEOPLE_ALL_DATA_GetVisitor( cp_param->p_all, i );
+    RESORT_VISITOR_DATA *p_data = RESORT_PEOPLE_ALL_DATA_GetVisitor( cp_param->p_all_people, i );
     if( !RESORT_VISITOR_DATA_IsEmpty(p_data ) )
     {
       u16 peopleID = RESORT_VISITOR_DATA_GetData( p_data, RESORT_VISITOR_DATA_PARAM_PEOPLE_ID, NULL );
@@ -132,7 +132,7 @@ void RESORT_DATA_MANAGER_Setup( RESORT_DATA_MANAGER *p_wk, const RESORT_DATA_MAN
   //秘書
   for( i = 0; i < RESORT_SECRETARY_DATA_NUM; i++ )
   {
-    RESORT_SECRETARY_DATA *p_data = RESORT_PEOPLE_ALL_DATA_GetSecretary( cp_param->p_all, i );
+    RESORT_SECRETARY_DATA *p_data = RESORT_PEOPLE_ALL_DATA_GetSecretary( cp_param->p_all_people, i );
     if( !RESORT_SECRETARY_DATA_IsEmpty( p_data ) )
     {
       u16 peopleID = RESORT_SECRETARY_DATA_GetData(p_data, RESORT_SECRETARY_DATA_PARAM_PEOPLE_ID, NULL );
@@ -242,6 +242,8 @@ void RESORT_DATA_MANAGER_GetPlaceData( const RESORT_DATA_MANAGER *cp_wk, RESORT_
   GF_ASSERT( peopleID<RESORT_DATA_MANAGER_MAX);
   GF_ASSERT( RESORT_PLACEID_START <= placeID  && placeID < RESORT_PLACEID_MAX );
  
+  GF_ASSERT_MSG( !RESORT_DATA_MANAGER_IsPlaceEmpty( cp_wk, placeID, peopleID ), "空のデータをとってはいけない\n" );
+
   *p_type       = cp_wk->info[ placeID ].people_type[ peopleID ];
   *p_data_idx   = cp_wk->info[ placeID ].people_index[ peopleID ];
 }
@@ -262,11 +264,11 @@ void *RESORT_DATA_MANAGER_GetDataAdrs( const RESORT_DATA_MANAGER *cp_wk, RESORT_
   switch( type )
   {
   case RESORT_DATA_MANAGER_TYPE_RESIDENT:
-    return RESORT_PEOPLE_ALL_DATA_GetResident( cp_wk->param.p_all, data_index );
+    return RESORT_PEOPLE_ALL_DATA_GetResident( cp_wk->param.p_all_people, data_index );
   case RESORT_DATA_MANAGER_TYPE_VISITOR:
-    return RESORT_PEOPLE_ALL_DATA_GetVisitor( cp_wk->param.p_all, data_index );
+    return RESORT_PEOPLE_ALL_DATA_GetVisitor( cp_wk->param.p_all_people, data_index );
   case RESORT_DATA_MANAGER_TYPE_SECRETARY:
-    return RESORT_PEOPLE_ALL_DATA_GetSecretary( cp_wk->param.p_all, data_index );
+    return RESORT_PEOPLE_ALL_DATA_GetSecretary( cp_wk->param.p_all_people, data_index );
   case RESORT_DATA_MANAGER_TYPE_RECV_SV_BUFF:
     if( cp_wk->param.p_recv_sv_buff )
     {
@@ -321,6 +323,95 @@ u32 RESORT_DATA_MANAGER_GetPeopleType( RESORT_DATA_MANAGER_TYPE type )
     return NULL;
   }
 }
+
+BOOL RESORT_DATA_MANAGER_RecvToResident( RESORT_DATA_MANAGER *p_wk, RESORT_RECV_DATA *p_src )
+{
+  RESORT_PLACEID placeID  = RESORT_PLACEID_FIELD; //TODO
+  //場所の空きを検索
+  u16 peopleID = RESORT_DATA_MANAGER_SearchPlaceEmptyPeopleID( p_wk, placeID );
+
+  //バッファの空きを検索
+  RESORT_RESIDENT_DATA *p_dst = RESORT_PEOPLE_ALL_DATA_SearchEmptyResident( p_wk->param.p_all_people );
+
+  if( peopleID == RESORT_PEOPLE_ID_NULL
+      || p_dst == NULL )
+  {
+    return FALSE;
+  }
+  else
+  {
+  
+    RESORT_RESIDENT_DATA_SetRecv( p_dst, p_src, peopleID, placeID );
+    return TRUE;
+  }
+}
+BOOL RESORT_DATA_MANAGER_RecvToVistor( RESORT_DATA_MANAGER *p_wk, RESORT_RECV_DATA *p_src )
+{
+  RESORT_PLACEID placeID  = RESORT_PLACEID_FIELD; //TODO
+  //場所の空きを検索
+  u16 peopleID = RESORT_DATA_MANAGER_SearchPlaceEmptyPeopleID( p_wk, placeID );
+
+  //バッファの空きを検索
+  RESORT_VISITOR_DATA *p_dst = RESORT_PEOPLE_ALL_DATA_SearchEmptyVistor( p_wk->param.p_all_people );
+
+  if( peopleID == RESORT_PEOPLE_ID_NULL
+      || p_dst == NULL )
+  {
+    return FALSE;
+  }
+  else
+  {
+  
+    RESORT_VISITOR_DATA_SetRecv( p_dst, p_src, peopleID, placeID );
+    return TRUE;
+  }
+}
+BOOL RESORT_DATA_MANAGER_RecvToSecretary( RESORT_DATA_MANAGER *p_wk, RESORT_RECV_DATA *p_src )
+{
+  RESORT_PLACEID placeID  = RESORT_PLACEID_FIELD; //TODO
+  //場所の空きを検索
+  u16 peopleID = RESORT_DATA_MANAGER_SearchPlaceEmptyPeopleID( p_wk, placeID );
+
+  //バッファの空きを検索
+  RESORT_SECRETARY_DATA *p_dst = RESORT_PEOPLE_ALL_DATA_SearchEmptySecretary( p_wk->param.p_all_people );
+
+  if( peopleID == RESORT_PEOPLE_ID_NULL
+      || p_dst == NULL )
+  {
+    return FALSE;
+  }
+  else
+  {
+    RESORT_SECRETARY_DATA_SetRecv( p_dst, p_src, peopleID, placeID );
+    //更新
+    RESORT_DATA_MANAGER_Update( p_wk );
+    return TRUE;
+  }
+}
+BOOL RESORT_DATA_MANAGER_ResidentToVistor( RESORT_DATA_MANAGER *p_wk, RESORT_RESIDENT_DATA *p_src )
+{
+  RESORT_PLACEID placeID  = RESORT_PLACEID_FIELD; //TODO
+  //場所の空きを検索
+  u16 peopleID = RESORT_DATA_MANAGER_SearchPlaceEmptyPeopleID( p_wk, placeID );
+
+  //バッファの空きを検索
+  RESORT_VISITOR_DATA *p_dst = RESORT_PEOPLE_ALL_DATA_SearchEmptyVistor( p_wk->param.p_all_people );
+
+  if( peopleID == RESORT_PEOPLE_ID_NULL
+      || p_dst == NULL )
+  {
+    return FALSE;
+  }
+  else
+  {
+    RESORT_VISITOR_DATA_SetRecv( p_dst, p_src, peopleID, placeID );
+
+    //更新
+    RESORT_DATA_MANAGER_Update( p_wk );
+    return TRUE;
+  }
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief 開いている場所の領域を探す

@@ -14,6 +14,7 @@
 #include "field/resonance_resort_data.h"
 #include "../fldmmdl.h"
 #include "../field_player.h"
+#include "resort_data_manager.h"
 
 //=============================================================================
 /**
@@ -64,6 +65,7 @@ extern void RESORT_PEOPLE_SetData( RESORT_PEOPLE *p_wk, RESORT_PEOPLE_PARAM para
 extern u32 RESORT_PEOPLE_GetData( const RESORT_PEOPLE *cp_wk, RESORT_PEOPLE_PARAM param, void *p_ret_adrs );
 extern u32 RESORT_PEOPLE_GetMsgID( const RESORT_PEOPLE *cp_wk, u32 index );
 extern MMDL * RESORT_PEOPLE_GetMmdl( const RESORT_PEOPLE *cp_wk );
+extern void * RESORT_PEOPLE_GetDataAdrs( RESORT_PEOPLE *p_wk );
 
 //=============================================================================
 /**
@@ -93,10 +95,7 @@ typedef struct _RESORT_PEOPLE_SYS RESORT_PEOPLE_SYS;
 typedef struct
 {
   MMDLSYS *p_mmdlsys;                 //動作モデルシステム
-  RESORT_PEOPLE_ALL_DATA *p_people_all_data;//全人物用データ
-  RESORT_RECV_BUFF *p_recv_sv_buff;   //セーブ上にある観光客バッファ
-  RESORT_RECV_BUFF *p_recv_recep_buff;//迎賓館のみにある観光客バッファ
-  RESORT_PROXY_BUFF *p_proxy_buff;    //代理人バッファ
+  RESORT_DATA_MANAGER *p_data_manager;//データマネージャー
   u32 max;                            //動作上限数
   ZONEID zoneID;                      //人物管理システムが動くゾーンID
 } RESORT_PEOPLE_SYS_PARAM;
@@ -130,10 +129,12 @@ typedef struct
 extern RESORT_PEOPLE * RESORT_PEOPLE_SYS_AddNew( RESORT_PEOPLE_SYS *p_wk, const RESORT_PEOPLE_SYS_ADD_PARAM *cp_param );
 //人物を一括登録
 extern void RESORT_PEOPLE_SYS_AddAll( RESORT_PEOPLE_SYS *p_wk );
-//人物を一人破棄
+//人物ワークのメモリを開放する
 extern void RESORT_PEOPLE_SYS_Remove( RESORT_PEOPLE_SYS *p_wk, RESORT_PEOPLE *p_people );
-//人物を一括破棄
 extern void RESORT_PEOPLE_SYS_RemoveAll( RESORT_PEOPLE_SYS *p_wk );
+
+//人物を完全に消す
+extern void RESORT_PEOPLE_Delete( RESORT_PEOPLE_SYS *p_wk, RESORT_PEOPLE *p_people );
 
 //人物を取得
 extern RESORT_PEOPLE * RESORT_PEOPLE_SYS_GetPeopleByMmdl( RESORT_PEOPLE_SYS *p_wk, const MMDL* cp_mmdl );

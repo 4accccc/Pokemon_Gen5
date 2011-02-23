@@ -94,6 +94,10 @@ void RESORT_MAP_GetPlaceGridPosByIndex( RESORT_PLACEID placeID, u16 index, u16 *
     *p_x  = 2 + (index%5)*2;
     *p_z  = 3 + (index/5)*2;
     break;
+  case RESORT_PLACEID_FIELD:
+    *p_x  = 2 + (index%5)*3;
+    *p_z  = 3 + (index/5)*3;
+    break;
     //TODO
   default:
     GF_ASSERT(0);

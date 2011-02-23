@@ -16,6 +16,7 @@
  *					定数宣言
 */
 //=============================================================================
+#define RESORT_FIELD_ASSIGN_ID  (1)
 
 //=============================================================================
 /**
@@ -32,3 +33,7 @@
 extern void RESORT_FIELD_Setup( FIELDMAP_WORK *p_fieldmap );
 extern void RESORT_FIELD_End( FIELDMAP_WORK *p_fieldmap );
 extern void RESORT_FIELD_Move( FIELDMAP_WORK *p_fieldmap );
+
+//スクリプトコマンドに使用
+extern RESORT_PEOPLE_SYS * RESORT_FIELD_GetPeopleSys( FIELDMAP_WORK *p_fieldmap );
+extern RESORT_DATA_MANAGER * RESORT_FIELD_GetDataManager( FIELDMAP_WORK *p_fieldmap );

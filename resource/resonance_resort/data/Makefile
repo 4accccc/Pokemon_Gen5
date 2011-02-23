@@ -19,8 +19,8 @@ targetpeopleh	= resort_people_def
 #依存するファイル名
 #------------------------------------------------------------------------------
 xlsname			= resonance_resort_data
-msgfile 		= ..\..\..\prog\include\msg\script/msg_c16r0101.h #TODO
-scriptfile	= ..\..\fldmapdata\script\c16r0101_def.h #TODO
+msgfile 		= ..\..\..\prog\include\msg\script/msg_resort_scr.h #TODO
+scriptfile	= ..\..\fldmapdata\script\resort_scr_def.h #TODO
 
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）

@@ -26,10 +26,8 @@
 //SE
 #include "sound/pm_sndsys.h"
 
-//save
-#include "savedata/resonance_resort_sv.h"
-
 //resort
+#include "savedata/resonance_resort_sv.h"
 #include "field/resonance_resort_data.h"
 #include "resort_people.h"
 #include "scrcmd_resort_def.h"
@@ -88,6 +86,7 @@ static RECEPTION_PEOPLE * RECEPTION_PEOPLE_Init( HEAPID heapID, FIELDMAP_WORK *p
 static void RECEPTION_PEOPLE_Exit( RECEPTION_PEOPLE *p_wk );
 static void RECEPTION_PEOPLE_Main( RECEPTION_PEOPLE *p_wk, FIELD_PLAYER *p_player );
 static RESORT_PEOPLE_SYS * RECEPTION_PEOPLE_GetPeopleSys( RECEPTION_PEOPLE *p_wk );
+static RESORT_DATA_MANAGER * RECEPTION_PEOPLE_GetDataManager( RECEPTION_PEOPLE *p_wk );
 static void RECEPTION_PEOPLE_Action( RECEPTION_PEOPLE *p_wk, RESORT_PEOPLE *p_people, u16 param );
 //=============================================================================
 /**
@@ -173,22 +172,8 @@ void RESORT_RECEPTION_Move( FIELDMAP_WORK *p_fieldmap )
 void RESORT_RECEPTION_Action( FIELDMAP_WORK *p_fieldmap, u16 param )
 {
   RESORT_RECEPTION_WORK *p_wk = GMK_TMP_WK_GetWork(p_fieldmap, RESORT_RECEPTION_ASSIGN_ID);
-  RESORT_PEOPLE *p_people = RESORT_RECEPTION_GetFrontPeople( p_fieldmap );
-  RECEPTION_PEOPLE_Action( p_wk->p_people_sys, p_people, param );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  目の前の人物を取得
- *
- *	@param	FIELDMAP_WORK *p_fieldmap フィールドマップ
- *
- *	@return 人物
- */
-//-----------------------------------------------------------------------------
-RESORT_PEOPLE * RESORT_RECEPTION_GetFrontPeople( FIELDMAP_WORK *p_fieldmap )
-{
-  RESORT_RECEPTION_WORK *p_wk = GMK_TMP_WK_GetWork(p_fieldmap, RESORT_RECEPTION_ASSIGN_ID);
   RESORT_PEOPLE_SYS *p_people_sys = RECEPTION_PEOPLE_GetPeopleSys( p_wk->p_people_sys );
+  RESORT_PEOPLE *p_people = NULL;
 
   s16 gx, gy, gz;
   FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( p_fieldmap );
@@ -201,7 +186,37 @@ RESORT_PEOPLE * RESORT_RECEPTION_GetFrontPeople( FIELDMAP_WORK *p_fieldmap )
   // 目の前にいる人物を検索
   p_frontmmdl = MMDLSYS_SearchGridPos( cp_mmdlsys, gx, gz, FALSE );
 
-  return RESORT_PEOPLE_SYS_GetPeopleByMmdl( p_people_sys, p_frontmmdl );
+  p_people = RESORT_PEOPLE_SYS_GetPeopleByMmdl( p_people_sys, p_frontmmdl );
+
+  RECEPTION_PEOPLE_Action( p_wk->p_people_sys, p_people, param );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  目の前の人物を取得
+ *
+ *	@param	FIELDMAP_WORK *p_fieldmap フィールドマップ
+ *
+ *	@return 人物
+ */
+//-----------------------------------------------------------------------------
+RESORT_PEOPLE_SYS * RESORT_RECEPTION_GetPeopleSys( FIELDMAP_WORK *p_fieldmap )
+{
+  RESORT_RECEPTION_WORK *p_wk = GMK_TMP_WK_GetWork(p_fieldmap, RESORT_RECEPTION_ASSIGN_ID);
+  return RECEPTION_PEOPLE_GetPeopleSys( p_wk->p_people_sys );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  データマネージャーを取得
+ *
+ *	@param	FIELDMAP_WORK *p_fieldmap   フィールドマップ
+ *
+ *	@return データマネージャーを取得
+ */
+//-----------------------------------------------------------------------------
+RESORT_DATA_MANAGER * RESORT_RECEPTION_GetDataManager( FIELDMAP_WORK *p_fieldmap )
+{
+  RESORT_RECEPTION_WORK *p_wk = GMK_TMP_WK_GetWork(p_fieldmap, RESORT_RECEPTION_ASSIGN_ID);
+  return RECEPTION_PEOPLE_GetDataManager( p_wk->p_people_sys );
 }
 
 //=============================================================================
@@ -393,7 +408,7 @@ static void Reception_Buff_UpdateProxy( RECEPTION_BUFF *p_wk )
 ///	定数
 //=====================================
 //動作上限数
-#define RECEPTION_PEOPLE_MAX (16)
+#define RECEPTION_PEOPLE_MAX (24)
 //更新間隔
 #define RECEPTION_PEOPLE_UPDATE_INTERVAL (0)
 
@@ -421,6 +436,7 @@ struct _RECEPTION_PEOPLE
   RESORT_PEOPLE_SYS *p_people_sys;
   RECEPTION_BUFF    *p_buff;
   GFL_TCBLSYS       *p_tcblsys;
+  RESORT_DATA_MANAGER *p_data_manager;
 } ;
 
 //-------------------------------------
@@ -462,18 +478,28 @@ static RECEPTION_PEOPLE * RECEPTION_PEOPLE_Init( HEAPID heapID, FIELDMAP_WORK *p
     p_wk->p_buff = RECEPTION_BUFF_Init( heapID, &param );
   }
 
-  //人物システム
+  //データマネージャー
   {
     SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_gamedata );
     RESONANCE_RESORT_SV *p_resort_sv = RESONANCE_RESORT_SV_GetWork( p_sv );
 
+    RESORT_DATA_MANAGER_INIT_PARAM param;
+    GFL_STD_MemClear( &param, sizeof(RESORT_DATA_MANAGER_INIT_PARAM) );
+    param.p_all_people    = RESONANCE_RESORT_SV_GetPeopleAllData(p_resort_sv);
+    param.p_recv_sv_buff  = RECEPTION_BUFF_GetRecvSvBuff( p_wk->p_buff );
+    param.p_recv_tmp_buff = RECEPTION_BUFF_GetRecvTmpBuff( p_wk->p_buff );
+    param.p_proxy_buff    = RECEPTION_BUFF_GetProxyBuff( p_wk->p_buff );
+    
+    p_wk->p_data_manager = RESORT_DATA_MANAGER_Init( &param, heapID );
+  }
+
+  //人物システム
+  {
+
     RESORT_PEOPLE_SYS_PARAM param;
     GFL_STD_MemClear( &param, sizeof(RESORT_PEOPLE_SYS_PARAM) );
     param.p_mmdlsys = GAMEDATA_GetMMdlSys(p_gamedata);
-    param.p_people_all_data = RESONANCE_RESORT_SV_GetPeopleAllData(p_resort_sv);
-    param.p_recv_sv_buff    = RECEPTION_BUFF_GetRecvSvBuff( p_wk->p_buff );
-    param.p_recv_recep_buff = RECEPTION_BUFF_GetRecvTmpBuff( p_wk->p_buff );
-    param.p_proxy_buff       = RECEPTION_BUFF_GetProxyBuff( p_wk->p_buff );
+    param.p_data_manager = p_wk->p_data_manager;
     param.max = RECEPTION_PEOPLE_MAX;
     param.zoneID = ZONE_ID_RESORT_RECEPTION;
     p_wk->p_people_sys = RESORT_PEOPLE_SYS_Init( &param, heapID );
@@ -492,6 +518,7 @@ static RECEPTION_PEOPLE * RECEPTION_PEOPLE_Init( HEAPID heapID, FIELDMAP_WORK *p
 static void RECEPTION_PEOPLE_Exit( RECEPTION_PEOPLE *p_wk )
 {
   RESORT_PEOPLE_SYS_Exit( p_wk->p_people_sys );
+  RESORT_DATA_MANAGER_Exit( p_wk->p_data_manager );
   RECEPTION_BUFF_Exit( p_wk->p_buff );
   GFL_TCBL_DeleteAll( p_wk->p_tcblsys );
   GFL_TCBL_Exit( p_wk->p_tcblsys );
@@ -522,6 +549,19 @@ static void RECEPTION_PEOPLE_Main( RECEPTION_PEOPLE *p_wk, FIELD_PLAYER *p_playe
 static RESORT_PEOPLE_SYS * RECEPTION_PEOPLE_GetPeopleSys( RECEPTION_PEOPLE *p_wk )
 {
   return p_wk->p_people_sys;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  データマネージャーを取得
+ *
+ *	@param	RECEPTION_PEOPLE *p_wk  ワーク
+ *
+ *	@return データマネージャー
+ */
+//-----------------------------------------------------------------------------
+static RESORT_DATA_MANAGER * RECEPTION_PEOPLE_GetDataManager( RECEPTION_PEOPLE *p_wk )
+{
+  return p_wk->p_data_manager;
 }
 //----------------------------------------------------------------------------
 /**

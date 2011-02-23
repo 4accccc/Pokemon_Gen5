@@ -203,7 +203,7 @@ def convertPeople( csv, data, hashNumber, gmm, script )
   scdata = HeaderDataArray.new
   scdata.load( script )  
 
-  for row in DEFINE_ROW_START...csv.row_length
+  for row in DEFINE_ROW_START...csv.row_length-1
 
     #データ取得
     person  = csv.get( row, PEOPLE_COL_PERSON_TYPE )
@@ -222,7 +222,7 @@ def convertPeople( csv, data, hashNumber, gmm, script )
 
     #SCRIDから値への変換
     begin
-      data.write_u16( scdata.search( "#{scrid}", "スクリプト" ) )
+      data.write_u16( scdata.search( "#{scrid}", "#{row}行のスクリプト" ) )
     rescue HeaderSearchError
       exit(1)
     end
@@ -236,7 +236,7 @@ def convertPeople( csv, data, hashNumber, gmm, script )
 
       #MSGTAGから値への変換
       begin
-        data.write_u16( msgdata.search( "#{msg}", "gmm" ) )
+        data.write_u16( msgdata.search( "#{msg}", "#{row}行のgmm" ) )
       rescue HeaderSearchError
         exit(1)
       end

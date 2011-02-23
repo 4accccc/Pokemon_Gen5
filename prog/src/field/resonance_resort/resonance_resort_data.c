@@ -199,6 +199,20 @@ static BOOL RESORT_BASIC1_DATA_IsEmpty( const RESORT_BASIC1_DATA *cp_data )
   return cp_data->version == 0 || cp_data->name[0]  == 0;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief 名前をEOM付きで取得
+ *
+ *	@param	const RESORT_BASIC1_DATA *cp_data ワーク
+ *	@param	*p_str  受け取りバッファ
+ */
+//-----------------------------------------------------------------------------
+static void RESORT_BASIC1_DATA_GetName( const RESORT_BASIC1_DATA *cp_data, STRCODE *p_str )
+{
+  GFL_STD_MemCopy( cp_data->name, p_str, sizeof(STRCODE)*PERSON_NAME_SIZE);
+  *((p_str)+PERSON_NAME_SIZE) = GFL_STR_GetEOMCode();
+}
+
 #ifdef PM_DEBUG
 //----------------------------------------------------------------------------
 /**
@@ -898,8 +912,7 @@ u32 RESORT_RECV_DATA_GetData( const RESORT_RECV_DATA *cp_wk, RESORT_RECV_DATA_PA
   case RESORT_RECV_DATA_PARAM_TRAINERVIEW:
     return RESORT_GET_TrainerView( cp_wk->basic1.trainer_view, cp_wk->basic1.sex );
   case RESORT_RECV_DATA_PARAM_NAME:
-    GFL_STD_MemCopy( cp_wk->basic1.name, p_ret_adrs, sizeof(STRCODE)*PERSON_NAME_SIZE);
-    *(((STRCODE*)p_ret_adrs)+PERSON_NAME_SIZE) = GFL_STR_GetEOMCode();
+    RESORT_BASIC1_DATA_GetName(&cp_wk->basic1, p_ret_adrs );
     return 0;
   default:
     GF_ASSERT(0);
@@ -1792,9 +1805,29 @@ BOOL RESORT_VISITOR_DATA_IsEmpty( const RESORT_VISITOR_DATA *cp_wk )
 //-----------------------------------------------------------------------------
 void RESORT_VISITOR_DATA_SetRecv( RESORT_VISITOR_DATA *p_wk, const RESORT_RECV_DATA *cp_recv, u16 peopleID, u16 placeID )
 {
+  //TODO
   p_wk->basic1    = cp_recv->basic1;
   p_wk->basic2    = cp_recv->basic2;
   p_wk->extend4   = cp_recv->extend4;
+  p_wk->peopleID  = peopleID;
+  p_wk->placeID   = placeID;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  住民データから滞在者ワークを設定
+ *
+ *	@param	RESORT_VISITOR_DATA *p_wk ワーク
+ *	@param	RESORT_RESIDENT_DATA *cp_resident 住民データ
+ *	@param	peopleID  ID
+ *	@param	placeID   場所ID
+ */
+//-----------------------------------------------------------------------------
+void RESORT_VISITOR_DATA_SetResident( RESORT_VISITOR_DATA *p_wk, const RESORT_RESIDENT_DATA *cp_resident, u16 peopleID, u16 placeID )
+{
+  //TODO
+  p_wk->basic1    = cp_resident->basic1;
+  p_wk->basic2    = cp_resident->basic2;
+  p_wk->extend4   = cp_resident->extend4;
   p_wk->peopleID  = peopleID;
   p_wk->placeID   = placeID;
 }
@@ -1816,6 +1849,13 @@ u32 RESORT_VISITOR_DATA_GetData( const RESORT_VISITOR_DATA *cp_wk, RESORT_VISITO
     return cp_wk->peopleID;
   case RESORT_VISITOR_DATA_PARAM_PLACE_ID:
     return cp_wk->placeID;
+  case RESORT_VISITOR_DATA_PARAM_NAME:
+    RESORT_BASIC1_DATA_GetName(&cp_wk->basic1, p_ret_adrs );
+    return 0;
+  case RESORT_VISITOR_DATA_PARAM_SEX: 
+    return cp_wk->basic1.sex;
+  case RESORT_VISITOR_DATA_PARAM_TRAINERVIEW:
+    return RESORT_GET_TrainerView( cp_wk->basic1.trainer_view, cp_wk->basic1.sex );
   default:
     GF_ASSERT(0);
     return 0;
@@ -1935,6 +1975,13 @@ u32 RESORT_SECRETARY_DATA_GetData( const RESORT_SECRETARY_DATA *cp_wk, RESORT_SE
     return cp_wk->peopleID;
   case RESORT_SECRETARY_DATA_PARAM_PLACE_ID:
     return cp_wk->placeID;
+  case RESORT_SECRETARY_DATA_PARAM_NAME:
+    RESORT_BASIC1_DATA_GetName(&cp_wk->basic1, p_ret_adrs );
+    return 0;
+  case RESORT_SECRETARY_DATA_PARAM_SEX: 
+    return cp_wk->basic1.sex;
+  case RESORT_SECRETARY_DATA_PARAM_TRAINERVIEW:
+    return RESORT_GET_TrainerView( cp_wk->basic1.trainer_view, cp_wk->basic1.sex );
   default:
     GF_ASSERT(0);
     return 0;
@@ -1962,6 +2009,24 @@ void RESORT_SECRETARY_DATA_SetData( RESORT_SECRETARY_DATA *p_wk, RESORT_SECRETAR
   default:
     GF_ASSERT(0);
   }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief 受信データからデータを設定
+ *
+ *	@param	RESORT_SECRETARY_DATA *p_wk ワーク
+ *	@param	RESORT_RECV_DATA *cp_recv   受信データ
+ *	@param	peopleID  人物ID
+ *	@param	placeID   場所
+ */
+//-----------------------------------------------------------------------------
+void RESORT_SECRETARY_DATA_SetRecv( RESORT_SECRETARY_DATA *p_wk, const RESORT_RECV_DATA *cp_recv, u16 peopleID, u16 placeID )
+{
+  //TODO
+  p_wk->basic1    = cp_recv->basic1;
+  p_wk->basic2    = cp_recv->basic2;
+  p_wk->peopleID  = peopleID;
+  p_wk->placeID   = placeID;
 }
 
 //=============================================================================
@@ -2115,6 +2180,28 @@ RESORT_RESIDENT_DATA * RESORT_PEOPLE_ALL_DATA_GetResident( RESORT_PEOPLE_ALL_DAT
 }
 //----------------------------------------------------------------------------
 /**
+ *	@brief  空きの住民データを取得
+ *
+ *	@param	RESORT_PEOPLE_ALL_DATA *p_wk  ワーク
+ *
+ *	@return 空の住民データ  NULLならば空がない
+ */
+//-----------------------------------------------------------------------------
+RESORT_RESIDENT_DATA * RESORT_PEOPLE_ALL_DATA_SearchEmptyResident( RESORT_PEOPLE_ALL_DATA *p_wk )
+{
+  int i;
+  for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
+  {
+    RESORT_RESIDENT_DATA *p_resident=  RESORT_PEOPLE_ALL_DATA_GetResident( p_wk, i );
+    if( RESORT_RESIDENT_DATA_IsEmpty(p_resident) )
+    {
+      return p_resident;
+    }
+  }
+  return NULL;
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief  滞在者データ取得
  *
  *	@param	RESORT_PEOPLE_ALL_DATA *p_wk  ワーク
@@ -2130,6 +2217,28 @@ RESORT_VISITOR_DATA * RESORT_PEOPLE_ALL_DATA_GetVisitor( RESORT_PEOPLE_ALL_DATA 
 }
 //----------------------------------------------------------------------------
 /**
+ *	@brief  空きの滞在者データを取得
+ *
+ *	@param	RESORT_PEOPLE_ALL_DATA *p_wk  ワーク
+ *
+ *	@return 空きの滞在者データ  NULLならば空きがない
+ */
+//-----------------------------------------------------------------------------
+RESORT_VISITOR_DATA * RESORT_PEOPLE_ALL_DATA_SearchEmptyVistor( RESORT_PEOPLE_ALL_DATA *p_wk )
+{
+  int i;
+  for( i = 0; i < RESORT_VISITOR_DATA_NUM; i++ )
+  {
+    RESORT_VISITOR_DATA *p_visitor = RESORT_PEOPLE_ALL_DATA_GetVisitor( p_wk, i );
+    if( RESORT_VISITOR_DATA_IsEmpty(p_visitor) )
+    {
+      return p_visitor;
+    }
+  }
+  return NULL;
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief  秘書データ取得
  *
  *	@param	RESORT_PEOPLE_ALL_DATA *p_wk  ワーク
@@ -2142,6 +2251,29 @@ RESORT_SECRETARY_DATA * RESORT_PEOPLE_ALL_DATA_GetSecretary( RESORT_PEOPLE_ALL_D
 {
   GF_ASSERT( index < RESORT_SECRETARY_DATA_NUM );
   return &p_wk->secretary[ index ];
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  空きの秘書データ取得
+ *
+ *	@param	RESORT_PEOPLE_ALL_DATA *p_wk  ワーク
+ *
+ *	@return 空きの秘書データ  NULLならば空きがいない
+ */
+//-----------------------------------------------------------------------------
+RESORT_SECRETARY_DATA * RESORT_PEOPLE_ALL_DATA_SearchEmptySecretary( RESORT_PEOPLE_ALL_DATA *p_wk )
+{
+  int i;
+  for( i = 0; i < RESORT_SECRETARY_DATA_NUM; i++ )
+  {
+    RESORT_SECRETARY_DATA *p_secretary = RESORT_PEOPLE_ALL_DATA_GetSecretary( p_wk, i );
+    if( RESORT_SECRETARY_DATA_IsEmpty(p_secretary) )
+    {
+      return p_secretary;
+    }
+  }
+  return NULL;
 }
 
 //=============================================================================

@@ -47,7 +47,7 @@ typedef struct _RESORT_DATA_MANAGER RESORT_DATA_MANAGER;
 //=====================================
 typedef struct
 {
-  RESORT_PEOPLE_ALL_DATA *p_all;
+  RESORT_PEOPLE_ALL_DATA *p_all_people;
   RESORT_RECV_BUFF    *p_recv_sv_buff;
   RESORT_RECV_BUFF    *p_recv_tmp_buff;
   RESORT_PROXY_BUFF   *p_proxy_buff;
@@ -58,11 +58,19 @@ typedef struct
 //=====================================
 extern RESORT_DATA_MANAGER * RESORT_DATA_MANAGER_Init( const RESORT_DATA_MANAGER_INIT_PARAM *cp_param, HEAPID heapID );
 extern void RESORT_DATA_MANAGER_Exit( RESORT_DATA_MANAGER *p_wk );
-extern void RESORT_DATA_MANAGER_Setup( RESORT_DATA_MANAGER *p_wk, const RESORT_DATA_MANAGER_INIT_PARAM *cp_param );
+
+//データの作成、破棄、移動をしたらSetupを呼ぶこと
+extern void RESORT_DATA_MANAGER_Update( RESORT_DATA_MANAGER *p_wk );
 
 //各データの抽象
 extern void *RESORT_DATA_MANAGER_GetDataAdrs( const RESORT_DATA_MANAGER *cp_wk, RESORT_DATA_MANAGER_TYPE type, u32 data_index );
 extern u32 RESORT_DATA_MANAGER_GetPeopleType( RESORT_DATA_MANAGER_TYPE type );
+
+//データ変換処理
+extern BOOL RESORT_DATA_MANAGER_RecvToResident( RESORT_DATA_MANAGER *p_wk, RESORT_RECV_DATA *p_src );
+extern BOOL RESORT_DATA_MANAGER_RecvToVistor( RESORT_DATA_MANAGER *p_wk, RESORT_RECV_DATA *p_src );
+extern BOOL RESORT_DATA_MANAGER_RecvToSecretary( RESORT_DATA_MANAGER *p_wk, RESORT_RECV_DATA *p_src );
+extern BOOL RESORT_DATA_MANAGER_ResidentToVistor( RESORT_DATA_MANAGER *p_wk, RESORT_RESIDENT_DATA *p_src );
 
 //人物の位置情報
 extern BOOL RESORT_DATA_MANAGER_IsPlaceEmpty( const RESORT_DATA_MANAGER *cp_wk, RESORT_PLACEID placeID, u32 peopleID );

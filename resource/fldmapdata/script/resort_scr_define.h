@@ -1,8 +1,8 @@
 //[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
 /**
  *
- *	@file		c16r0101_define.h
- *	@brief  c16r0101_define用定義
+ *	@file		resort_scr_define.h
+ *	@brief  resort_scr用定義
  *	@author	Toru=Nagihashi
  *	@date		2011.02.22
  *

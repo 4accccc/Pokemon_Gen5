@@ -18,9 +18,12 @@
 
 //mine
 #include "resort_reception.h"
+#include "resort_field.h"
 
 //outer
 #include "scrcmd_resort.h"
+
+static RESORT_PEOPLE * Resort_Scrcmd_GetFrontPeople( FIELDMAP_WORK *p_fieldmap, RESORT_PEOPLE_SYS *p_people_sys );
 
 //=============================================================================
 /**
@@ -43,15 +46,19 @@ VMCMD_RESULT EvCmdResortTalkStart( VMHANDLE *p_core, void *p_wk_adrs )
   GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
   FIELDMAP_WORK *p_field = GAMESYSTEM_GetFieldMapWork(p_gamesys);
   RESORT_PEOPLE* p_people = NULL;
+  RESORT_PEOPLE_SYS *p_people_sys = NULL;
 
   if(GMK_TMP_CheckAssignID( p_field, RESORT_RECEPTION_ASSIGN_ID ) )
   {
-    p_people = RESORT_RECEPTION_GetFrontPeople( p_field );
+    p_people_sys = RESORT_RECEPTION_GetPeopleSys( p_field );
   }
-  else if( 1 )
+  else if( GMK_TMP_CheckAssignID( p_field, RESORT_FIELD_ASSIGN_ID ) )
   {
-    //TODO
+    p_people_sys = RESORT_FIELD_GetPeopleSys( p_field );
   }
+  GF_ASSERT( p_people_sys != NULL );
+
+  p_people = Resort_Scrcmd_GetFrontPeople( p_field, p_people_sys );
 
   GF_ASSERT( p_people != NULL );
 
@@ -77,21 +84,30 @@ VMCMD_RESULT EvCmdResortTalkEnd( VMHANDLE *p_core, void *p_wk_adrs )
   GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
   FIELDMAP_WORK *p_field = GAMESYSTEM_GetFieldMapWork(p_gamesys);
   RESORT_PEOPLE* p_people = NULL;
+  RESORT_PEOPLE_SYS *p_people_sys = NULL;
 
   if(GMK_TMP_CheckAssignID( p_field, RESORT_RECEPTION_ASSIGN_ID ) )
   {
-    p_people = RESORT_RECEPTION_GetFrontPeople( p_field );
+    p_people_sys = RESORT_RECEPTION_GetPeopleSys( p_field );
   }
-  else if( 1 )
+  else if( GMK_TMP_CheckAssignID( p_field, RESORT_FIELD_ASSIGN_ID ) )
   {
-    //TODO
+    p_people_sys = RESORT_FIELD_GetPeopleSys( p_field );
   }
+  GF_ASSERT( p_people_sys != NULL );
 
-  GF_ASSERT( p_people != NULL );
+  p_people = Resort_Scrcmd_GetFrontPeople( p_field, p_people_sys );
 
 
-  //話し中のOBJのマージロック解除
-  RESORT_PEOPLE_SetData( p_people, RESORT_PEOPLE_PARAM_LOCK, FALSE );
+  if( p_people )
+  {
+    //話し中のOBJのマージロック解除
+    RESORT_PEOPLE_SetData( p_people, RESORT_PEOPLE_PARAM_LOCK, FALSE );
+  }
+  else
+  {
+    OS_TPrintf( "人物がいなかった！！消したと推測\n" );
+  }
   return VMCMD_RESULT_CONTINUE;
 }
 //----------------------------------------------------------------------------
@@ -112,15 +128,19 @@ VMCMD_RESULT EvCmdResortGetData( VMHANDLE *p_core, void *p_wk_adrs )
   u16 param     = VMGetU16( p_core );
   u16 *p_ret_wk	= SCRCMD_GetVMWork( p_core, p_wk );
   RESORT_PEOPLE* p_people = NULL;
+  RESORT_PEOPLE_SYS *p_people_sys = NULL;
 
   if(GMK_TMP_CheckAssignID( p_field, RESORT_RECEPTION_ASSIGN_ID ) )
   {
-    p_people = RESORT_RECEPTION_GetFrontPeople( p_field );
+    p_people_sys = RESORT_RECEPTION_GetPeopleSys( p_field );
   }
-  else if( 1 )
+  else if( GMK_TMP_CheckAssignID( p_field, RESORT_FIELD_ASSIGN_ID ) )
   {
-    //TODO
+    p_people_sys = RESORT_FIELD_GetPeopleSys( p_field );
   }
+  GF_ASSERT( p_people_sys != NULL );
+
+  p_people = Resort_Scrcmd_GetFrontPeople( p_field, p_people_sys );
 
   GF_ASSERT( p_people != NULL );
 
@@ -157,15 +177,19 @@ extern VMCMD_RESULT EvCmdResortGetMsgID( VMHANDLE *p_core, void *p_wk_adrs )
   u16 param     = VMGetU16( p_core );
   u16 *p_ret_wk	= SCRCMD_GetVMWork( p_core, p_wk );
   RESORT_PEOPLE* p_people = NULL;
+  RESORT_PEOPLE_SYS *p_people_sys = NULL;
 
   if(GMK_TMP_CheckAssignID( p_field, RESORT_RECEPTION_ASSIGN_ID ) )
   {
-    p_people = RESORT_RECEPTION_GetFrontPeople( p_field );
+    p_people_sys = RESORT_RECEPTION_GetPeopleSys( p_field );
   }
-  else if( 1 )
+  else if( GMK_TMP_CheckAssignID( p_field, RESORT_FIELD_ASSIGN_ID ) )
   {
-    //TODO
+    p_people_sys = RESORT_FIELD_GetPeopleSys( p_field );
   }
+  GF_ASSERT( p_people_sys != NULL );
+
+  p_people = Resort_Scrcmd_GetFrontPeople( p_field, p_people_sys );
 
   GF_ASSERT( p_people != NULL );
 
@@ -220,21 +244,41 @@ VMCMD_RESULT EvCmdResortJobChange( VMHANDLE *p_core, void *p_wk_adrs )
   GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
   FIELDMAP_WORK *p_field = GAMESYSTEM_GetFieldMapWork(p_gamesys);
   u16 param  = VMGetU16( p_core );
+  u32 peopleID;
   RESORT_PEOPLE* p_people = NULL;
+  RESORT_PEOPLE_SYS *p_people_sys = NULL;
+  RESORT_DATA_MANAGER *p_data_manager = NULL;
 
   if(GMK_TMP_CheckAssignID( p_field, RESORT_RECEPTION_ASSIGN_ID ) )
   {
-    p_people = RESORT_RECEPTION_GetFrontPeople( p_field );
+    p_people_sys = RESORT_RECEPTION_GetPeopleSys( p_field );
+    p_data_manager = RESORT_RECEPTION_GetDataManager( p_field );
   }
-  else if( 1 )
+  else if( GMK_TMP_CheckAssignID( p_field, RESORT_FIELD_ASSIGN_ID ) )
   {
-    //TODO
+    p_people_sys = RESORT_FIELD_GetPeopleSys( p_field );
+    p_data_manager = RESORT_FIELD_GetDataManager( p_field );
   }
+  GF_ASSERT( p_people_sys != NULL );
+  GF_ASSERT( p_data_manager != NULL );
 
+  p_people = Resort_Scrcmd_GetFrontPeople( p_field, p_people_sys );
   GF_ASSERT( p_people != NULL );
 
-
-
+  switch( param )
+  {
+  case RESORT_JOBCHANGE_RESIDENT:
+    RESORT_DATA_MANAGER_RecvToResident( p_data_manager, RESORT_PEOPLE_GetDataAdrs(p_people) );
+    break;
+  case RESORT_JOBCHANGE_SECETARY:
+    RESORT_DATA_MANAGER_RecvToSecretary( p_data_manager, RESORT_PEOPLE_GetDataAdrs(p_people) );
+    break;
+  case RESORT_JOBCHANGE_VISITOR:
+    RESORT_DATA_MANAGER_RecvToVistor( p_data_manager, RESORT_PEOPLE_GetDataAdrs(p_people) );
+    break;
+  default:
+    GF_ASSERT(0);
+  }
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -253,12 +297,11 @@ VMCMD_RESULT EvCmdResortKeepPeople( VMHANDLE *p_core, void *p_wk_adrs )
   SCRCMD_WORK *p_wk = p_wk_adrs;
   GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
   FIELDMAP_WORK *p_field = GAMESYSTEM_GetFieldMapWork(p_gamesys);
-  RESORT_PEOPLE* p_people = NULL;
+  RESORT_PEOPLE_SYS *p_people_sys = RESORT_RECEPTION_GetPeopleSys( p_field );
 
   if(GMK_TMP_CheckAssignID( p_field, RESORT_RECEPTION_ASSIGN_ID ) )
   {
-    p_people = RESORT_RECEPTION_GetFrontPeople( p_field );
-
+    RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_field, p_people_sys );
     RESORT_PEOPLE_SetData( p_people, RESORT_PEOPLE_PARAM_KEEP, TRUE );
   }
   else
@@ -292,15 +335,23 @@ VMCMD_RESULT EvCmdResortSetWord( VMHANDLE *p_core, void *p_wk_adrs )
   u16 idx = VMGetU16(p_core);
   
   RESORT_PEOPLE* p_people = NULL;
+  RESORT_PEOPLE_SYS *p_people_sys = NULL;
 
   if(GMK_TMP_CheckAssignID( p_field, RESORT_RECEPTION_ASSIGN_ID ) )
   {
-    p_people = RESORT_RECEPTION_GetFrontPeople( p_field );
+    p_people_sys = RESORT_RECEPTION_GetPeopleSys( p_field );
   }
-  else if( 1 )
+  else if( GMK_TMP_CheckAssignID( p_field, RESORT_FIELD_ASSIGN_ID ) )
   {
-    //TODO
+    p_people_sys = RESORT_FIELD_GetPeopleSys( p_field );
   }
+  GF_ASSERT( p_people_sys != NULL );
+
+  p_people = Resort_Scrcmd_GetFrontPeople( p_field, p_people_sys );
+
+  GF_ASSERT( p_people != NULL );
+
+
 
   switch( param )
   {
@@ -324,4 +375,68 @@ VMCMD_RESULT EvCmdResortSetWord( VMHANDLE *p_core, void *p_wk_adrs )
   }
 
   return VMCMD_RESULT_CONTINUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  人物を消す
+ *
+ *	@param	VMHANDLE *p_core 仮想マシンハンドル
+ *	@param	*p_wk_adrs       スクリプトコマンドワーク
+ *
+ *	@return 終了コード
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdResortDeletePeple( VMHANDLE *p_core, void *p_wk_adrs )
+{
+  SCRCMD_WORK *p_wk = p_wk_adrs;
+  SCRIPT_WORK *p_script = SCRCMD_WORK_GetScriptWork( p_wk );
+  GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
+  FIELDMAP_WORK *p_field = GAMESYSTEM_GetFieldMapWork(p_gamesys);
+  
+  RESORT_PEOPLE* p_people = NULL;
+  RESORT_PEOPLE_SYS *p_people_sys = NULL;
+
+  if(GMK_TMP_CheckAssignID( p_field, RESORT_RECEPTION_ASSIGN_ID ) )
+  {
+    p_people_sys = RESORT_RECEPTION_GetPeopleSys( p_field );
+  }
+  else if( GMK_TMP_CheckAssignID( p_field, RESORT_FIELD_ASSIGN_ID ) )
+  {
+    p_people_sys = RESORT_FIELD_GetPeopleSys( p_field );
+  }
+  GF_ASSERT( p_people_sys != NULL );
+
+  p_people = Resort_Scrcmd_GetFrontPeople( p_field, p_people_sys );
+
+  GF_ASSERT( p_people != NULL );
+
+  RESORT_PEOPLE_Delete( p_people_sys, p_people );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  目の前の人物を取得
+ *
+ *	@param	FIELDMAP_WORK *p_fieldmap フィールド
+ *	@param	*p_people_sys             人物システム
+ *
+ *	@return 目の前の人物を取得
+ */
+//-----------------------------------------------------------------------------
+static RESORT_PEOPLE * Resort_Scrcmd_GetFrontPeople( FIELDMAP_WORK *p_fieldmap, RESORT_PEOPLE_SYS *p_people_sys )
+{
+  s16 gx, gy, gz;
+  FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( p_fieldmap );
+  const MMDLSYS * cp_mmdlsys = FIELDMAP_GetMMdlSys( p_fieldmap );
+  MMDL* p_frontmmdl;
+
+  // 目の前のグリッド取得
+  FIELD_PLAYER_GetFrontGridPos( p_player, &gx, &gy, &gz );
+
+  // 目の前にいる人物を検索
+  p_frontmmdl = MMDLSYS_SearchGridPos( cp_mmdlsys, gx, gz, FALSE );
+
+  return RESORT_PEOPLE_SYS_GetPeopleByMmdl( p_people_sys, p_frontmmdl );
 }
