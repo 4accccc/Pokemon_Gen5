@@ -41,16 +41,6 @@ void MEDALDATASYS_InitMedalData( MY_MEDALDATA* p_my_medal , GAMEDATA* p_gamedata
   {
     p_my_medal->medal_cnt = MEDALBOX_GetMedalCount( p_medal_box ,TRUE);
 
-#ifdef PM_DEBUG
-    // ƒƒ_ƒ‹Žæ“¾”‚ª0‚ÅŒÄ‚Î‚ê‚é‚±‚Æ‚Í–³‚¢
-    if( p_my_medal->medal_cnt <= 0 )
-    {
-      p_my_medal->medal_cnt = 1;
-    }
-#endif
-
-    GF_ASSERT_MSG( p_my_medal->medal_cnt > 0 ,"ƒƒ_ƒ‹Žæ“¾”‚ª0ˆÈ‰º‚Å‚·B");
-
     p_my_medal->p_medal_st	= GFL_HEAP_AllocMemory( heapID, sizeof(MY_MEDAL_ST) * p_my_medal->medal_cnt );
     GFL_STD_MemClear( p_my_medal->p_medal_st , sizeof(MY_MEDAL_ST) * p_my_medal->medal_cnt );
     GF_ASSERT( p_my_medal->p_medal_st );

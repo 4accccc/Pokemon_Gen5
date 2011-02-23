@@ -160,6 +160,7 @@ enum{
   GMDATA_ID_TRPOKE_AFTER,     // 交換ポケモンのその後
   GMDATA_ID_ETC,              // 未分類ワークその２
   GMDATA_ID_RESORT,           // レゾナンスリゾート
+  GMDATA_ID_MEDALBOX,         // メダルボックス
   GMDATA_ID_MAX,
 };
 

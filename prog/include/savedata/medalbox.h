@@ -81,6 +81,12 @@ extern u16 MEDALBOX_GetMedalCount( const MEDALBOX *p_mdlbox , BOOL is_hint_count
 extern u16 MEDALBOX_GetMedalBoxMax( const MEDALBOX *p_mdlbox );
 
 
+// セーブデータの初期化
+extern void MEDALBOX_Init(MEDALBOX *p_mdlbox);
+
+// セーブデータのサイズを取得
+extern int MEDALBOX_GetWorkSize(void);
+ 
 // セーブデータのポインタを返す
 extern MEDALBOX* SaveData_GetMedalBox( SAVE_CONTROL_WORK *p_sv );
 

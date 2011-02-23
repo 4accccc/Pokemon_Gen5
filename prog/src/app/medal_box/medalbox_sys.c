@@ -909,6 +909,19 @@ static GFL_PROC_RESULT MEDALBOXSYS_ProcInit( GFL_PROC * p_proc, int * seq , void
 	//オーバーレイ読み込み
 	GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common) );
 
+  // 0個判定
+  {
+    MEDALBOXSYS_PARAM *p_tmp_param = p_param_adrs;
+    SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_tmp_param->p_gamedata );
+    MEDALBOX* p_medal_box = SaveData_GetMedalBox( p_sv );
+
+    // メダルの数が0個のときは終了する
+    if( MEDALBOX_GetMedalCount( p_medal_box ,TRUE) <= 0 )
+    {
+      return GFL_PROC_RES_FINISH;
+    }
+  }
+
 	//ヒープ作成
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, heapID , MEDALBOXSYS_HEAP_SIZE );
 
@@ -984,17 +997,31 @@ static GFL_PROC_RESULT MEDALBOXSYS_ProcMain( GFL_PROC * p_proc, int * seq , void
   MEDALBOXSYS_WORK *p_wk = p_wk_adrs;
   GFL_PROC_RESULT  proc_ret = GFL_PROC_RES_FINISH;
 
-#ifdef PM_DEBUG
-  const int trg = GFL_UI_KEY_GetTrg();
-  
-  // デバッグ関数
-  DBEG_MDLSYS_DebugMain( p_wk );
-  
-//  if( trg & PAD_BUTTON_START )
-//  {
-//    return GFL_PROC_RES_FINISH;
-//  }
+  // 0個判定
+  {
+    MEDALBOXSYS_PARAM *p_tmp_param = p_param_adrs;
+    SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_tmp_param->p_gamedata );
+    MEDALBOX* p_medal_box = SaveData_GetMedalBox( p_sv );
 
+    // メダルの数が0個のときは終了する
+    if( MEDALBOX_GetMedalCount( p_medal_box ,TRUE) <= 0 )
+    {
+      return GFL_PROC_RES_FINISH;
+    }
+  }
+
+#ifdef PM_DEBUG
+  {
+    const int trg = GFL_UI_KEY_GetTrg();
+
+    // デバッグ関数
+    DBEG_MDLSYS_DebugMain( p_wk );
+
+    //  if( trg & PAD_BUTTON_START )
+    //  {
+    //    return GFL_PROC_RES_FINISH;
+    //  }
+  }
 #endif
 
   switch( p_wk->now_seq )
@@ -1108,7 +1135,22 @@ static GFL_PROC_RESULT MEDALBOXSYS_ProcMain( GFL_PROC * p_proc, int * seq , void
 static GFL_PROC_RESULT MEDALBOXSYS_ProcTerm( GFL_PROC * p_proc, int * seq , void *p_param_adrs, void *p_wk_adrs )
 {
   MEDALBOXSYS_WORK *p_wk = p_wk_adrs;
-  
+
+  // 0個判定
+  {
+    MEDALBOXSYS_PARAM *p_tmp_param = p_param_adrs;
+    SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_tmp_param->p_gamedata );
+    MEDALBOX* p_medal_box = SaveData_GetMedalBox( p_sv );
+
+    // メダルの数が0個のときは終了する
+    if( MEDALBOX_GetMedalCount( p_medal_box ,TRUE) <= 0 )
+    {
+      //オーバーレイ破棄
+      GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common));
+      return GFL_PROC_RES_FINISH;
+    }
+  }
+
   MEDALDATASYS_SaveMedalData( &p_wk->medal_data , p_wk->p_param->p_gamedata , p_wk->heapID );
 
   // 点滅アニメ終了

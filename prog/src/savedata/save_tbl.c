@@ -59,6 +59,7 @@
 #include "savedata/dendou_save.h"
 #include "savedata/etc_save.h"
 #include "savedata/resonance_resort_sv.h"
+#include "savedata/medalbox.h"
 
 
 //--------------------------------------------------------------
@@ -414,6 +415,11 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
     GMDATA_ID_RESORT,
     (FUNC_GET_SIZE)RESONANCE_RESORT_SV_GetWorkSize,
     (FUNC_INIT_WORK)RESONANCE_RESORT_SV_Init,
+  },
+  { //メダルボックス
+    GMDATA_ID_MEDALBOX,
+    (FUNC_GET_SIZE)MEDALBOX_GetWorkSize,
+    (FUNC_INIT_WORK)MEDALBOX_Init,
   },
 };
 

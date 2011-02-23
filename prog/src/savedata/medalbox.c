@@ -10,6 +10,7 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
 #include "savedata/medalbox.h"
+#include "savedata/save_tbl.h"
 
 //=============================================================================
 /**
@@ -112,6 +113,34 @@ static void SetMedalState( MEDAL_ST* p_medal_st , u8 state )
  *					公開関数
 */
 //=============================================================================
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  初期化
+ *
+ *	@param	*p_mdlbox
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void MEDALBOX_Init(MEDALBOX *p_mdlbox)
+{
+  GFL_STD_MemFill(p_mdlbox, 0, sizeof(MEDALBOX));
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  メダルボックス初期化
+ *
+ *	@param	none
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+int MEDALBOX_GetWorkSize(void)
+{
+  return sizeof(MEDALBOX);
+}
 
 //----------------------------------------------------------------------------
 /**
@@ -441,9 +470,7 @@ u16 MEDALBOX_GetMedalCount( const MEDALBOX *p_mdlbox , BOOL is_hint_count )
 //-----------------------------------------------------------------------------
 MEDALBOX* SaveData_GetMedalBox( SAVE_CONTROL_WORK * p_sv )
 {
-  static MEDALBOX tentative_medal_box_save;
-  tentative_medal_box_save.medal[8].medal_state = MEDAL_STATE_TITLE_GET;
-  return &tentative_medal_box_save;
+	return SaveControl_DataPtrGet(p_sv, GMDATA_ID_MEDALBOX);
 }
 
 
