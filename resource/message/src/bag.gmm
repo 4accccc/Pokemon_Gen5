@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2011-02-18T19:17:10"/>
+	<create user="onoue_masayuki" host="W00272" date="2011-02-22T22:57:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,13 +305,13 @@
 		</language>
 	</columns>
 
-	<dialog left="1105" top="368" right="1810" bottom="996" maximized="no" rayout="Vertical2">
+	<dialog left="1747" top="198" right="2565" bottom="839" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
-		<tag-palette left="551" top="230" right="1024" bottom="628" visible="yes"/>
-		<band id="0" index="0" style="0000" width="530"/>
+		<tag-palette left="551" top="230" right="1024" bottom="639" visible="yes"/>
+		<band id="0" index="0" style="0000" width="635"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="697"/>
-		<band id="3" index="3" style="0000" width="697"/>
+		<band id="2" index="2" style="0000" width="802"/>
+		<band id="3" index="3" style="0000" width="802"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -1589,7 +1589,7 @@ common_scr.gmmの変更も忘れないでください
 		<language name="JPN_KANJI">ばんごうじゅん</language>
 	</row>
 
-	<row id="mes_bag_132" back-color="#ff8080,,,,,,#ff8080,#ffff00,,#ff8080,#ffff00,,#ff8080,,,#ff8080,,">
+	<row id="mes_bag_132" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ffff00,,#ff8080,#ffff00,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>swan追加
 保管ポケットのソート
 1：種類数</comment>
@@ -1599,13 +1599,20 @@ common_scr.gmmの変更も忘れないでください
 [2:02:３桁:1]しゅるい　みつかりました！</language>
 	</row>
 
-	<row id="mes_bag_133" back-color="#ff8080,,,,,,#ff8080,#ffff00,,#ff8080,#ffff00,,#ff8080,,,#ff8080,,">
+	<row id="mes_bag_133" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ffff00,,#ff8080,#ffff00,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>swan追加
 ソートメッセージ</comment>
 		<language name="JPN">ばんごうじゅんに
 もちものを　せいり　しました！</language>
 		<language name="JPN_KANJI">番号順に
 持ち物を　整理しました！</language>
+	</row>
+
+	<row id="mes_bag_134" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ffff00,,#ff8080,#ffff00,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>swan追加
+検索ができるがデータが無いとき</comment>
+		<language name="JPN">みつかりません</language>
+		<language name="JPN_KANJI">みつかりません</language>
 	</row>
 
 	<flowchart-group-list>

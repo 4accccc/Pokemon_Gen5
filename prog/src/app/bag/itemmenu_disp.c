@@ -1035,7 +1035,18 @@ static void _bmpwinPocketNoneMake(FIELD_ITEMMENU_WORK* pWork )
 {
   GF_ASSERT( pWork->pStrBuf );
 
-  GFL_MSG_GetString(  pWork->MsgManager, msg_bag_item_none, pWork->pStrBuf );
+  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->winPocketNone.win), 0 );
+
+  // フィルタがかかっているかどうかを判断して何も無いメッセージを表示
+  if( GetRepositoryMenuCount( pWork ) > 2 )
+  {
+    GFL_MSG_GetString(  pWork->MsgManager, mes_bag_134, pWork->pStrBuf );
+  }
+  else
+  {
+    GFL_MSG_GetString(  pWork->MsgManager, msg_bag_item_none, pWork->pStrBuf );
+  }
+
 /*
   GFL_FONTSYS_SetColor( 0xf, 0xe, 0 ); // カラー指定
   PRINTSYS_Print( GFL_BMPWIN_GetBmp( pWork->winPocketNone),
@@ -1496,6 +1507,11 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
   {
     // 「なにもありません」表示
 //    GFL_BMPWIN_MakeTransWindow( pWork->winPocketNone );
+
+    // キャラクタを作っておく
+    _bmpwinPocketNoneMake( pWork );
+    GFL_BMPWIN_ClearScreen( pWork->winPocketNone.win );
+
 		PrintScreenTrans( &pWork->winPocketNone );
 //		return;
   }
