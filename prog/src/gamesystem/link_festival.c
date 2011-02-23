@@ -90,11 +90,11 @@ FEST_MISSION* LINK_FESTIVAL_GetMissionWork( LINK_FESTIVAL* wk )
  * @brief リンクフェスティバル ミッションスタート
  */
 //---------------------------------------------------------
-void LINK_FESTIVAL_MissionStart( LINK_FESTIVAL* wk, const FEST_MISSION* mission )
+void LINK_FESTIVAL_MissionStart( LINK_FESTIVAL* wk, const FEST_MISSION* mission, BOOL succeed_f )
 {
   log_ClearAll( wk );
 
-  FEST_MISSION_Start( &wk->mission, mission );
+  FEST_MISSION_Start( &wk->mission, mission, succeed_f );
 
   //最後のミッションを覚えておく
   log_LastMissionLogStore( wk, mission );

@@ -30,7 +30,7 @@ extern void FEST_MISSION_Clear( FEST_MISSION* fmwk );
  * @brief ミッション開始処理
  */
 //---------------------------------------------------------
-extern void FEST_MISSION_Start( FEST_MISSION* fmwk, const FEST_MISSION* src );
+extern void FEST_MISSION_Start( FEST_MISSION* fmwk, const FEST_MISSION* src, BOOL succeed_f );
 
 //---------------------------------------------------------
 /*

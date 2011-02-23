@@ -705,12 +705,14 @@ static GMEVENT_RESULT event_LinkFestFromFieldMain( GMEVENT * event, int *seq, vo
       case MENU_MISSION_START:
         {
           GMEVENT* mission_ev;
-          FEST_MISSION mission;
+          FMISSION_START_PARAM param;
 
-          FMISSION_DATA_GetMissionParam( NULL, FMISSION_ID_POKE_SEARCH_TABUNNE, &mission );
+          MI_CpuClear8(&param,sizeof(FMISSION_START_PARAM));
+          FMISSION_DATA_GetMissionParam( NULL, FMISSION_ID_POKE_SEARCH_TABUNNE, &param.mission );
+          param.succeed_f = FALSE;
 
           mission_ev = GMEVENT_CreateOverlayEventCall( wk->gsys,
-            FS_OVERLAY_ID( event_fmission ), EVENT_FestMissionStart, &mission );
+            FS_OVERLAY_ID( event_fmission ), EVENT_FestMissionStart, &param );
           
           GMEVENT_ChangeEvent(event, mission_ev);
         }
@@ -1555,23 +1557,25 @@ static void mreq_MissionStart( DMENU_LINK_FEST* wk, EVWK_MISSION_REQ* evwk, u8 d
   int value = -1;
   int* fake = &wk->fake_prm[evwk->type][0]; 
   GMEVENT* mission_ev;
-  FEST_MISSION mission;
+  FMISSION_START_PARAM param;
 
   OS_Printf("type=%d\n",evwk->type);
   if( evwk->m_prm_set->max >= 0 ){
     value = wk->mission_prm[ evwk->m_prm->prm_type ];
   }
-  FMISSION_DATA_GetMissionParam( NULL, FMISSION_ID_POKE_SEARCH_TABUNNE, &mission );
-  mission.type = evwk->action;
-  mission.item = fake[FAKE_ITEM];
-  mission.item_num = fake[FAKE_ITEM_NUM];
-  mission.target = fake[FAKE_TARGET];
-  mission.param = fake[FAKE_PARAM];
-  mission.time = fake[FAKE_TIME];
-//  FEST_MISSION_ParamSet( &mission, evwk->action, fake[FAKE_ITEM], fake[FAKE_ITEM_NUM], fake[FAKE_TARGET], fake[FAKE_PARAM], fake[FAKE_TIME] );
+  MI_CpuClear8(&param,sizeof(FMISSION_START_PARAM));
+  FMISSION_DATA_GetMissionParam( NULL, FMISSION_ID_POKE_SEARCH_TABUNNE, &param.mission );
+  param.mission.type = evwk->action;
+  param.mission.item = fake[FAKE_ITEM];
+  param.mission.item_num = fake[FAKE_ITEM_NUM];
+  param.mission.target = fake[FAKE_TARGET];
+  param.mission.param = fake[FAKE_PARAM];
+  param.mission.time = fake[FAKE_TIME];
+
+  param.succeed_f = FALSE;
 
   mission_ev = GMEVENT_CreateOverlayEventCall( wk->gsys,
-    FS_OVERLAY_ID( event_fmission ), EVENT_FestMissionStart, &mission );
+    FS_OVERLAY_ID( event_fmission ), EVENT_FestMissionStart, &param );
           
   GMEVENT_ChangeEvent(parent, mission_ev);
 }

@@ -16,13 +16,18 @@ typedef struct _FMISSION_EFFECT_PARAM{
   BOOL      mine_f;
 }FMISSION_EFFECT_PARAM;
 
+typedef struct _FMISSION_START_PARAM{
+  FEST_MISSION mission;
+  BOOL  succeed_f;
+}FMISSION_START_PARAM;
+
 FS_EXTERN_OVERLAY( event_fmission );
 
 /*
  *  @brief  フェスタミッション発動イベント
  *  @param  work  FEST_MISSION*
  */
-extern GMEVENT* EVENT_FestMissionStart(GAMESYS_WORK * gsys, void* work );
+extern GMEVENT* EVENT_FestMissionStart( GAMESYS_WORK * gsys, void* work );
 
 /*
  *  @brief  フェスタミッション効果終了イベント

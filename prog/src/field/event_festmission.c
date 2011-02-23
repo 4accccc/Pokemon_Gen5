@@ -65,6 +65,7 @@ typedef struct _MSGPRINT_EVWORK{
 
 typedef struct _FMISSION_EVWORK{
   u8  ct;
+  u8  succeed_f;
   HEAPID  heapID;
   HEAPID  tmpHeapID;
   GAMESYS_WORK* gsys;
@@ -112,7 +113,7 @@ GMEVENT* EVENT_FestMissionStart( GAMESYS_WORK * gsys, void* work )
 {
   GMEVENT* event;
   FMISSION_EVWORK* wk;
-  const FEST_MISSION* fmwk = (FEST_MISSION*)work;
+  FMISSION_START_PARAM* param = (FMISSION_START_PARAM*)work;
   FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
 
   event = GMEVENT_Create(gsys, NULL, event_FestMissionStartMain, sizeof(FMISSION_EVWORK));
@@ -121,7 +122,8 @@ GMEVENT* EVENT_FestMissionStart( GAMESYS_WORK * gsys, void* work )
   sub_InitFMissionWork( wk, gsys, fieldmap );
 
   //ミッションパラメータ取得
-  wk->mission = *fmwk; 
+  wk->mission = param->mission; 
+  wk->succeed_f = param->succeed_f;
 
   return event;
 }
@@ -303,7 +305,7 @@ static GMEVENT_RESULT event_FestMissionStartMain(GMEVENT * event, int *  seq, vo
     }
     break;
   case 3:
-    LINK_FESTIVAL_MissionStart( wk->fest_sys, (const FEST_MISSION*)&wk->mission );
+    LINK_FESTIVAL_MissionStart( wk->fest_sys, (const FEST_MISSION*)&wk->mission, wk->succeed_f );
 
     FLDSYSWIN_ClearWindow( wk->win );
     FLDSYSWIN_Delete( wk->win );

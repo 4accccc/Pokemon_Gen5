@@ -77,12 +77,14 @@ void FEST_MISSION_ParamSet( FEST_MISSION* fmwk, FEST_MISSION_ID type, u16 item, 
  * @brief ミッション開始処理
  */
 //---------------------------------------------------------
-void FEST_MISSION_Start( FEST_MISSION* fmwk, const FEST_MISSION* src )
+void FEST_MISSION_Start( FEST_MISSION* fmwk, const FEST_MISSION* src, BOOL succeed_f )
 {
   FEST_MISSION_Clear( fmwk );
   *fmwk = *src;
-  
-  fmwk->key = GFUser_GetPublicRand(GFL_STD_RAND_MAX);  //32bitランダムキー生成
+ 
+  if( !succeed_f ){ //継承ミッションでなければキー生成
+    fmwk->key = GFUser_GetPublicRand(GFL_STD_RAND_MAX);  //32bitランダムキー生成
+  }
 
   OS_FPrintf(OSPRINT_LINKFEST_PAGE,"フェスミッション スタート type=%d, key = %08x, target=%d, param=%d, time=%d min life=%d sec\n",
     fmwk->type, fmwk->key, fmwk->target, fmwk->param, fmwk->time, fmwk->life/60);

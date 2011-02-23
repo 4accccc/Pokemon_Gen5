@@ -78,7 +78,7 @@ extern FEST_MISSION* LINK_FESTIVAL_GetMissionWork( LINK_FESTIVAL* wk );
  * @brief リンクフェスティバル ミッションスタート
  */
 //---------------------------------------------------------
-extern void LINK_FESTIVAL_MissionStart( LINK_FESTIVAL* wk, const FEST_MISSION* mission );
+extern void LINK_FESTIVAL_MissionStart( LINK_FESTIVAL* wk, const FEST_MISSION* mission, BOOL succeed_f );
 
 //---------------------------------------------------------
 /*

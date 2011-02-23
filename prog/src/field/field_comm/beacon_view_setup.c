@@ -212,8 +212,14 @@ GMEVENT* BVSEvent_CheckCommon( BEACON_VIEW_PTR wk, BOOL bEvReqOK )
   
   case EV_FMISSION_START:
     {
+      FMISSION_START_PARAM  param;
+
+      MI_CpuClear8(&param,sizeof(FMISSION_START_PARAM));
+      param.mission = wk->ctrl.mission;
+      param.succeed_f = TRUE;
+
       call_event = GMEVENT_CreateOverlayEventCall( wk->gsys,
-          FS_OVERLAY_ID( event_fmission ), EVENT_FestMissionStart, &wk->ctrl.mission );
+          FS_OVERLAY_ID( event_fmission ), EVENT_FestMissionStart, &param );
     }
     event = BVSEvent_EventStart( wk, call_event, EVWAIT_TMENU_ANM, (int)(wk->tmenu[TMENU_YN_YES].work) );
     FEST_MISSION_Clear( &wk->ctrl.mission );
