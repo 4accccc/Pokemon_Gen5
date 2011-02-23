@@ -232,6 +232,10 @@ VMCMD_RESULT EvCmdResortJobChange( VMHANDLE *p_core, void *p_wk_adrs )
   }
 
   GF_ASSERT( p_people != NULL );
+
+
+
+
   return VMCMD_RESULT_CONTINUE;
 }
 //----------------------------------------------------------------------------
@@ -254,13 +258,14 @@ VMCMD_RESULT EvCmdResortKeepPeople( VMHANDLE *p_core, void *p_wk_adrs )
   if(GMK_TMP_CheckAssignID( p_field, RESORT_RECEPTION_ASSIGN_ID ) )
   {
     p_people = RESORT_RECEPTION_GetFrontPeople( p_field );
+
+    RESORT_PEOPLE_SetData( p_people, RESORT_PEOPLE_PARAM_KEEP, TRUE );
   }
-  else if( 1 )
+  else
   {
-    //TODO
+    GF_ASSERT(0);
   }
 
-  GF_ASSERT( p_people != NULL );
   return VMCMD_RESULT_CONTINUE;
 }
 //----------------------------------------------------------------------------

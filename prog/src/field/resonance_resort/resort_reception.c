@@ -600,8 +600,8 @@ static void Reception_People_UpdateProxyCallback( void *p_wk_adrs, RESORT_PROXY_
 
   if( p_people )
   {
-    //代理人は置き換えが存在しないはず
-    GF_ASSERT(0);
+    //ここに来た場合、一旦代理人を生成して、
+    //セーブや復帰に来た場合なので、MMDLが残っているため作成しない
   }
   else
   {

@@ -76,6 +76,7 @@ typedef enum
 //リゾート用代理データの全サイズ
 #define RESORT_PROXY_DATA_SIZE    (8)
 
+#define RESORT_PEOPLE_ID_NULL (0xFFFF)
 //-------------------------------------
 ///	リゾート用受信データの取得引数
 //=====================================
@@ -88,6 +89,7 @@ typedef enum
   RESORT_RECV_DATA_PARAM_SEX,
   RESORT_RECV_DATA_PARAM_TRAINERVIEW,
   RESORT_RECV_DATA_PARAM_NAME,          //p_ret_adrsから取得
+  RESORT_RECV_DATA_PARAM_KEEP,
 } RESORT_RECV_DATA_PARAM;
 
 //-------------------------------------
@@ -256,9 +258,11 @@ typedef RESORT_RECV_DATA RESORT_RESIDENT_DATA;
 #define RESORT_RESIDENT_DATA_Init( x ) RESORT_RECV_DATA_Init( x )
 #define RESORT_RESIDENT_DATA_Exit( x ) RESORT_RECV_DATA_Exit( x )
 #define RESORT_RESIDENT_DATA_InitInstance( x ) RESORT_RECV_DATA_InitInstance( x )
-
-#define RESORT_RESIDENT_DATA_GetData( x, y ) RESORT_RECV_DATA_GetData( x, y )
+#define RESORT_RESIDENT_DATA_IsEmpty( x ) RESORT_RECV_DATA_IsEmpty( x )
+#define RESORT_RESIDENT_DATA_GetData( x, y, z ) RESORT_RECV_DATA_GetData( x, y, z )
 #define RESORT_RESIDENT_DATA_SetData( x, y, z )  RESORT_RECV_DATA_SetData( x, y, z )
+
+extern void RESORT_RESIDENT_DATA_SetRecv( RESORT_RESIDENT_DATA *p_wk, const RESORT_RECV_DATA *cp_recv, u16 peopleID, u16 placeID );
 
 //=============================================================================
 /**
@@ -278,6 +282,18 @@ extern RESORT_VISITOR_DATA * RESORT_VISITOR_DATA_Init( HEAPID heapID );
 extern void RESORT_VISITOR_DATA_Exit( RESORT_VISITOR_DATA *p_wk );
 extern void RESORT_VISITOR_DATA_InitInstance( RESORT_VISITOR_DATA *p_wk );
 
+extern BOOL RESORT_VISITOR_DATA_IsEmpty( const RESORT_VISITOR_DATA *cp_wk );
+extern void RESORT_VISITOR_DATA_SetRecv( RESORT_VISITOR_DATA *p_wk, const RESORT_RECV_DATA *cp_recv, u16 peopleID, u16 placeID );
+
+typedef enum
+{
+  RESORT_VISITOR_DATA_PARAM_PEOPLE_ID,
+  RESORT_VISITOR_DATA_PARAM_PLACE_ID,
+}RESORT_VISITOR_DATA_PARAM;
+
+extern u32 RESORT_VISITOR_DATA_GetData( const RESORT_VISITOR_DATA *cp_wk, RESORT_VISITOR_DATA_PARAM param, void *p_ret_adrs );
+extern void RESORT_VISITOR_DATA_SetData( RESORT_VISITOR_DATA *p_wk, RESORT_VISITOR_DATA_PARAM param, u32 data );
+
 //=============================================================================
 /**
  *  秘書データ
@@ -296,6 +312,16 @@ typedef struct _RESORT_SECRETARY_DATA RESORT_SECRETARY_DATA;
 extern RESORT_SECRETARY_DATA * RESORT_SECRETARY_DATA_Init( HEAPID heapID );
 extern void RESORT_SECRETARY_DATA_Exit( RESORT_SECRETARY_DATA *p_wk );
 extern void RESORT_SECRETARY_DATA_InitInstance( RESORT_SECRETARY_DATA *p_wk );
+
+extern BOOL RESORT_SECRETARY_DATA_IsEmpty( const RESORT_SECRETARY_DATA *cp_wk );
+
+typedef enum
+{
+  RESORT_SECRETARY_DATA_PARAM_PEOPLE_ID,
+  RESORT_SECRETARY_DATA_PARAM_PLACE_ID,
+}RESORT_SECRETARY_DATA_PARAM;
+extern u32 RESORT_SECRETARY_DATA_GetData( const RESORT_SECRETARY_DATA *cp_wk, RESORT_SECRETARY_DATA_PARAM param, void *p_ret_adrs );
+extern void RESORT_SECRETARY_DATA_SetData( RESORT_SECRETARY_DATA *p_wk, RESORT_SECRETARY_DATA_PARAM param, u32 data );
 
 //=============================================================================
 /**
@@ -348,7 +374,8 @@ extern void RESORT_PEOPLE_ALL_DATA_Exit( RESORT_PEOPLE_ALL_DATA *p_wk );
 extern void RESORT_PEOPLE_ALL_DATA_InitInstance( RESORT_PEOPLE_ALL_DATA *p_wk );
 extern RESORT_RESIDENT_DATA * RESORT_PEOPLE_ALL_DATA_GetResident( RESORT_PEOPLE_ALL_DATA *p_wk, u32 index );
 extern RESORT_VISITOR_DATA * RESORT_PEOPLE_ALL_DATA_GetVisitor( RESORT_PEOPLE_ALL_DATA *p_wk, u32 index );
-extern RESORT_SECRETARY_DATA * RESORT_PEOPLE_ALL_DATA_GetSecretary( RESORT_PEOPLE_ALL_DATA *p_wk, u32 index ); 
+extern RESORT_SECRETARY_DATA * RESORT_PEOPLE_ALL_DATA_GetSecretary( RESORT_PEOPLE_ALL_DATA *p_wk, u32 index );
+
 
 //=============================================================================
 /**
@@ -387,3 +414,5 @@ typedef struct _RESORT_CITY_DATA RESORT_CITY_DATA;
 extern RESORT_CITY_DATA * RESORT_CITY_DATA_Init( HEAPID heapID );
 extern void RESORT_CITY_DATA_Exit( RESORT_CITY_DATA *p_wk );
 extern void RESORT_CITY_DATA_InitInstance( RESORT_CITY_DATA *p_wk );
+
+

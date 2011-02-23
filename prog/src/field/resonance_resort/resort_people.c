@@ -14,6 +14,7 @@
 
 //mine
 #include "resort_map.h"
+#include "resort_data_manager.h"
 
 //outer
 #include "resort_people.h"
@@ -485,6 +486,9 @@ static void Proxy_SetData( RESORT_PEOPLE *p_wk, RESORT_PEOPLE_PARAM param, u32 d
   case RESORT_PEOPLE_PARAM_LOCK:
     /* なにもしない */
     break;
+  case RESORT_PEOPLE_PARAM_KEEP:
+    /* なにもしない */
+    break;
   default:
     GF_ASSERT(0);
   }
@@ -549,6 +553,9 @@ static void Tourist_SetData( RESORT_PEOPLE *p_wk, RESORT_PEOPLE_PARAM param, u32
     RESORT_RECV_DATA_SetData( p_data, RESORT_RECV_DATA_PARAM_PLACE_ID, data );
     break;
   case RESORT_PEOPLE_PARAM_LOCK:
+    RESORT_RECV_DATA_SetData( p_data , RESORT_RECV_DATA_PARAM_LOCK, data );
+    break;
+  case RESORT_PEOPLE_PARAM_KEEP:
     RESORT_RECV_DATA_SetData( p_data , RESORT_RECV_DATA_PARAM_LOCK, data );
     break;
   default:
@@ -838,29 +845,46 @@ void RESORT_PEOPLE_SYS_Main( RESORT_PEOPLE_SYS *p_wk,FIELD_PLAYER *p_player )
 //-----------------------------------------------------------------------------
 void RESORT_PEOPLE_SYS_AddAll( RESORT_PEOPLE_SYS *p_wk )
 {
-  int i;
+  RESORT_PLACEID placeID;
+  int peopleID;
 
-  //セーブの観光客復帰
-  if( p_wk->param.p_recv_sv_buff )
+  RESORT_DATA_MANAGER_INIT_PARAM param;
+  RESORT_DATA_MANAGER *p_info;
+  
+  param.p_all = p_wk->param.p_people_all_data;
+  param.p_recv_sv_buff = p_wk->param.p_recv_sv_buff;
+  param.p_recv_tmp_buff = p_wk->param.p_recv_recep_buff;
+  param.p_proxy_buff = p_wk->param.p_proxy_buff;
+  p_info =  RESORT_DATA_MANAGER_Init( &param, GFL_HEAP_LOWID(p_wk->heapID) );
+
+  //場所情報から存在しているデータのみ人物登録する
+  for( placeID = RESORT_PLACEID_START; placeID < RESORT_PLACEID_MAX; placeID++ )
   {
-    for( i = 0; i < RESORT_RECV_BUFF_GetMax( p_wk->param.p_recv_sv_buff ); i++ )
+    for( peopleID = 0; peopleID < RESORT_DATA_MANAGER_MAX; peopleID++ )
     {
-      RESORT_RECV_DATA *p_recv = RESORT_RECV_BUFF_GetData( p_wk->param.p_recv_sv_buff, i );
-      u32 peopleID = RESORT_RECV_DATA_GetData( p_recv, RESORT_RECV_DATA_PARAM_PEOPLE_ID, NULL );
-      u32 placeID = RESORT_RECV_DATA_GetData( p_recv, RESORT_RECV_DATA_PARAM_PLACE_ID, NULL );
-      if( !RESORT_RECV_DATA_IsEmpty(p_recv) && (RESORT_MAP_PlaceIDToZoneID(placeID) == p_wk->param.zoneID) )
+      if( !RESORT_DATA_MANAGER_IsPlaceEmpty( p_info, placeID, peopleID ) )
       {
-        RESORT_PEOPLE_SYS_ADD_PARAM param;
-        GFL_STD_MemClear( &param, sizeof(RESORT_PEOPLE_SYS_ADD_PARAM) );
-        param.people_type = RESORT_PEOPLE_TYPE_TOURIST;
-        param.p_data_adrs = p_recv;
-        param.zoneID      = p_wk->param.zoneID;
-        RESORT_PEOPLE_SYS_Add( p_wk, &param, peopleID );
+        void *p_data_adrs;
+        RESORT_DATA_MANAGER_TYPE type;
+        u16 data_idx;
+
+        RESORT_DATA_MANAGER_GetPlaceData( p_info, placeID, peopleID, &type, &data_idx );
+        p_data_adrs = RESORT_DATA_MANAGER_GetDataAdrs( p_info, type, data_idx );
+
+        {
+          RESORT_PEOPLE_SYS_ADD_PARAM param;
+          GFL_STD_MemClear( &param, sizeof(RESORT_PEOPLE_SYS_ADD_PARAM) );
+          param.people_type = RESORT_DATA_MANAGER_GetPeopleType( type );
+          param.p_data_adrs = p_data_adrs;
+          param.zoneID      = p_wk->param.zoneID;
+          RESORT_PEOPLE_SYS_Add( p_wk, &param, peopleID );
+        }
       }
     }
   }
 
-  //TODO
+  RESORT_DATA_MANAGER_Exit( p_info );
+
 }
 
 //----------------------------------------------------------------------------

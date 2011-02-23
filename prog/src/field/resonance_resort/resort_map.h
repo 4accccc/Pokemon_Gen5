@@ -19,7 +19,8 @@
 typedef enum
 {
   RESORT_PLACEID_NONE,             //無効値
-  RESORT_PLACEID_FIELD,             //フィールド
+  RESORT_PLACEID_START,             //開始
+  RESORT_PLACEID_FIELD  = RESORT_PLACEID_START,   //フィールド
   RESORT_PLACEID_RECEPTION,         //迎賓館
   RESORT_PLACEID_CONDOMINIUM_00,    //コンドミニアム
   RESORT_PLACEID_CONDOMINIUM_01,    //コンドミニアム

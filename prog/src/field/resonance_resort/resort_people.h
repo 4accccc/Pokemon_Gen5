@@ -33,6 +33,7 @@ typedef enum
 
 //-------------------------------------
 ///	人物データアクセス引数
+//    人物のタイプによって書き込み不可、読み取り不可の場合がある
 //=====================================
 typedef enum
 {
@@ -42,6 +43,7 @@ typedef enum
   RESORT_PEOPLE_PARAM_SEX,
   RESORT_PEOPLE_PARAM_TRAINERVIEW,
   RESORT_PEOPLE_PARAM_NAME,
+  RESORT_PEOPLE_PARAM_KEEP,
 }RESORT_PEOPLE_PARAM;
 
 //-------------------------------------

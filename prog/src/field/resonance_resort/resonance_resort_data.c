@@ -185,6 +185,20 @@ static BOOL RESORT_BASIC1_DATA_IsSameOwner( const RESORT_BASIC1_DATA *cp_a, cons
   return is_trainerID && is_name && is_sex;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  空かチェック
+ *
+ *	@param	const RESORT_BASIC1_DATA *cp_data データ
+ *
+ *	@return TRUEで空  FALSEで存在
+ */
+//-----------------------------------------------------------------------------
+static BOOL RESORT_BASIC1_DATA_IsEmpty( const RESORT_BASIC1_DATA *cp_data )
+{
+  return cp_data->version == 0 || cp_data->name[0]  == 0;
+}
+
 #ifdef PM_DEBUG
 //----------------------------------------------------------------------------
 /**
@@ -581,9 +595,9 @@ struct _RESORT_RECV_DATA
   u32                 extend_flag:8;  //28
   u32                 lock      :1;
   u32                 update    :2; //RESORT_RECV_DATA_UPDATEの値
-  u32                 peopleID  :10;
-  u32                 placeID   :10;
-  u32                 dummy     :1;
+  u32                 peopleID  :8;
+  u32                 placeID   :8;
+  u32                 type     :5;  //自分がなんのタイプRESORT_RESIDENT_TYPE_xxx
 };
 SDK_COMPILER_ASSERT( sizeof(RESORT_RECV_DATA) == RESORT_RECV_DATA_SIZE );
 
@@ -916,6 +930,9 @@ void RESORT_RECV_DATA_SetData( RESORT_RECV_DATA *p_wk, RESORT_RECV_DATA_PARAM pa
     break;
   case RESORT_RECV_DATA_PARAM_UPDATE:
     p_wk->update    = data;
+    break;
+  case RESORT_RECV_DATA_PARAM_KEEP:
+    p_wk->keep_flag = data;
     break;
   default:
     GF_ASSERT(0);
@@ -1676,6 +1693,22 @@ static RESORT_RECV_DATA * Resort_Recv_Buff_GetSameOwnerData( RESORT_RECV_BUFF *p
  *  住民データ
  */
 //=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  受信データを住民データに設定
+ *
+ *	@param	RESORT_RESIDENT_DATA *p_wk  ワーク
+ *	@param	RESORT_RECV_DATA *cp_recv  受信データ
+ */
+//-----------------------------------------------------------------------------
+void RESORT_RESIDENT_DATA_SetRecv( RESORT_RESIDENT_DATA *p_wk, const RESORT_RECV_DATA *cp_recv, u16 peopleID, u16 placeID )
+{
+  //TODO このあたりで変換するかも
+  *p_wk   = *cp_recv;
+  p_wk->peopleID = peopleID;
+  p_wk->placeID   = placeID;
+}
+
 //=============================================================================
 /**
  *  特殊NPCデータ
@@ -1736,6 +1769,82 @@ void RESORT_VISITOR_DATA_InitInstance( RESORT_VISITOR_DATA *p_wk )
   GFL_STD_MemClear( p_wk, sizeof(RESORT_VISITOR_DATA) );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  滞在者ワークが空かチェック
+ *
+ *	@param	const RESORT_VISITOR_DATA *cp_wk  ワーク
+ *
+ *	@return TRUEで空  FALSEで存在
+ */
+//-----------------------------------------------------------------------------
+BOOL RESORT_VISITOR_DATA_IsEmpty( const RESORT_VISITOR_DATA *cp_wk )
+{
+  return RESORT_BASIC1_DATA_IsEmpty( &cp_wk->basic1 );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief　受信データから滞在者ワークを設定
+ *
+ *	@param	RESORT_VISITOR_DATA *p_wk   ワーク
+ *	@param	RESORT_RECV_DATA *cp_recv   受信でーた
+ */
+//-----------------------------------------------------------------------------
+void RESORT_VISITOR_DATA_SetRecv( RESORT_VISITOR_DATA *p_wk, const RESORT_RECV_DATA *cp_recv, u16 peopleID, u16 placeID )
+{
+  p_wk->basic1    = cp_recv->basic1;
+  p_wk->basic2    = cp_recv->basic2;
+  p_wk->extend4   = cp_recv->extend4;
+  p_wk->peopleID  = peopleID;
+  p_wk->placeID   = placeID;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  データ取得
+ *
+ *	@param	const RESORT_VISITOR_DATA *cp_wk  ワーク
+ *	@param	なんのデータを取得するか
+ *
+ *	@return　データ
+ */
+//-----------------------------------------------------------------------------
+u32 RESORT_VISITOR_DATA_GetData( const RESORT_VISITOR_DATA *cp_wk, RESORT_VISITOR_DATA_PARAM param, void *p_ret_adrs )
+{
+  switch( param )
+  {
+  case RESORT_VISITOR_DATA_PARAM_PEOPLE_ID:
+    return cp_wk->peopleID;
+  case RESORT_VISITOR_DATA_PARAM_PLACE_ID:
+    return cp_wk->placeID;
+  default:
+    GF_ASSERT(0);
+    return 0;
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  データ設定
+ *
+ *	@param	RESORT_VISITOR_DATA *cp_wk  ワーク
+ *	@param	param   なんのデータを設定するか
+ *	@param   data   設定するデータ
+ */
+//-----------------------------------------------------------------------------
+void RESORT_VISITOR_DATA_SetData( RESORT_VISITOR_DATA *p_wk, RESORT_VISITOR_DATA_PARAM param, u32 data )
+{
+  switch( param )
+  {
+  case RESORT_VISITOR_DATA_PARAM_PEOPLE_ID:
+    p_wk->peopleID  = data;
+    break;
+  case RESORT_VISITOR_DATA_PARAM_PLACE_ID:
+    p_wk->placeID   = data;
+    break;
+  default:
+    GF_ASSERT(0);
+  }
+}
 //=============================================================================
 /**
  *  秘書データ
@@ -1793,6 +1902,66 @@ void RESORT_SECRETARY_DATA_Exit( RESORT_SECRETARY_DATA *p_wk )
 void RESORT_SECRETARY_DATA_InitInstance( RESORT_SECRETARY_DATA *p_wk )
 {
   GFL_STD_MemClear(p_wk,sizeof(RESORT_SECRETARY_DATA));
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  秘書ワーク空チェック
+ *
+ *	@param	const RESORT_SECRETARY_DATA *cp_wk  ワーク
+ *
+ *	@return TRUEで空  FALSEで存在
+ */
+//-----------------------------------------------------------------------------
+BOOL RESORT_SECRETARY_DATA_IsEmpty( const RESORT_SECRETARY_DATA *cp_wk )
+{
+  return RESORT_BASIC1_DATA_IsEmpty( &cp_wk->basic1 );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  データを取得
+ *
+ *	@param	const RESORT_SECRETARY_DATA *cp_wk ワーク
+ *	@param	param 引数
+ *	@param	*p_ret_adrs   受け取りワーク
+ *
+ *	@return データ
+ */
+//-----------------------------------------------------------------------------
+u32 RESORT_SECRETARY_DATA_GetData( const RESORT_SECRETARY_DATA *cp_wk, RESORT_SECRETARY_DATA_PARAM param, void *p_ret_adrs )
+{
+  switch( param )
+  {
+  case RESORT_SECRETARY_DATA_PARAM_PEOPLE_ID:
+    return cp_wk->peopleID;
+  case RESORT_SECRETARY_DATA_PARAM_PLACE_ID:
+    return cp_wk->placeID;
+  default:
+    GF_ASSERT(0);
+    return 0;
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief　データを設定
+ *
+ *	@param	RESORT_SECRETARY_DATA *p_wk
+ *	@param	param　引数
+ *	@param	data  データ
+ */
+//-----------------------------------------------------------------------------
+void RESORT_SECRETARY_DATA_SetData( RESORT_SECRETARY_DATA *p_wk, RESORT_SECRETARY_DATA_PARAM param, u32 data )
+{
+  switch( param )
+  {
+  case RESORT_SECRETARY_DATA_PARAM_PEOPLE_ID:
+    p_wk->peopleID = data;
+    break;
+  case RESORT_SECRETARY_DATA_PARAM_PLACE_ID:
+    p_wk->placeID = data;
+    break;
+  default:
+    GF_ASSERT(0);
+  }
 }
 
 //=============================================================================
@@ -1854,7 +2023,6 @@ void RESORT_INSTITUTION_DATA_InitInstance( RESORT_INSTITUTION_DATA *p_wk )
 {
   GFL_STD_MemClear(p_wk,sizeof(RESORT_INSTITUTION_DATA));
 }
-
 //=============================================================================
 /**
  *	リゾート人物全データ
@@ -1865,7 +2033,7 @@ void RESORT_INSTITUTION_DATA_InitInstance( RESORT_INSTITUTION_DATA *p_wk )
 //=====================================
 
 //-------------------------------------
-///	街データ
+///	人物データ
 //=====================================
 struct _RESORT_PEOPLE_ALL_DATA
 {
