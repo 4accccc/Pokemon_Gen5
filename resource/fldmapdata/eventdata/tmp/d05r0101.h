@@ -10,6 +10,7 @@
 #ifndef ZONE_D05R0101_EVC_H
 #define ZONE_D05R0101_EVC_H
 
+#define D05R0101_INFOMATIONW_01            0
 
 #endif //ZONE_D05R0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d05r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

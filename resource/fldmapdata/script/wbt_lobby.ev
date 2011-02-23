@@ -16,20 +16,992 @@
 //----------------------------------------------------------------------
 //               スクリプトテーブル
 //----------------------------------------------------------------------
-_EVENT_DATA   ev_wbt_lobby_01
+_EVENT_DATA		ev_wbt_reception
 _EVENT_DATA_END
 
 
 /********************************************************************/
-/*						FIELD_INIT_LABEL                                      */
+/*						FIELD_INIT_LABEL                            */
 /********************************************************************/
 
 /********************************************************************/
-/*						FIELD_RECOVER_LABEL                                   */
+/*						FIELD_RECOVER_LABEL                         */
 /********************************************************************/
 
+/**************************************************************/
+/*		ＷＢＴ・受付スクリプト								  */
+/**************************************************************/
+//FH_01		初会話フラグ
+//FH_02		チャンピオントーナメント参加フラグ	タイムフラグ
 
-/********************************************************************/
-/********************************************************************/
-EVENT_START ev_wbt_lobby_01
+EVENT_START	ev_wbt_reception
+_TALK_OBJ_START()
+
+	DEFINE_LOCAL	LWK_MENU
+	DEFINE_LOCAL	LWK_MENU_WHILE
+	DEFINE_LOCAL	LWK_RULE
+	DEFINE_LOCAL	LWK_POKECOUNT
+	DEFINE_LOCAL	LWK_SHORT		//不足カウントを格納
+	DEFINE_LOCAL	LWK_CHK_RULE
+	DEFINE_LOCAL	LWK_TOURNAMENT_TYPE
+	DEFINE_LOCAL	LWK_DL_COUNT
+
+	//初会話の場合
+	IF FLAG_OFF( FH_01 ) THEN
+		
+		//あら　はじめて　ですね！
+		_BALLOONWIN_TALKOBJ_MSG( msg_wbt_info_01 )
+	
+		//========================================/
+		
+		//初会話フラグをたてる
+		_FLAG_SET( FH_01 )
+		
+		//========================================/
+	
+	ENDIF
+	
+	//ようこそ　ワールドバトルトーナメントへ！
+	_BALLOONWIN_TALKOBJ_MSG( msg_wbt_info_02 )
+
+	//BMPMENU表示
+	_BMPMENU_INIT_RIGHT( MENU_X1,MENU_Y1,0,1,LWK_MENU )
+
+	_BMPMENU_MAKE_LIST( msg_wbt_menu_yes, 0 )		//参加する
+	_BMPMENU_MAKE_LIST( msg_wbt_menu_explain, 1 )	//説明をきく
+	_BMPMENU_MAKE_LIST( msg_wbt_menu_no, 2 )		//やめる
+
+	//メニュー表示
+	_BMPMENU_START()
+		
+	//選択結果で分岐
+	SWITCH $LWK_MENU
+	CASE 0 THEN		//参加する場合
+	
+		_CALL ev_entry
+	
+	CASE 1 THEN		//説明をきく場合
+			
+		_CALL ev_explain
+		
+	DEFAULT			//やめる場合
+		
+		//またの御利用をおまちしております
+		_BALLOONWIN_TALKOBJ_MSG( msg_wbt_info_09 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+		
+	ENDSWITCH
+	
 EVENT_END
+
+/**************************************************************/
+/*		トーナメントの参加受付								  */
+/**************************************************************/
+ev_entry:
+
+//どのトーナメントに参加しますか？
+_BALLOONWIN_TALKOBJ_MSG( msg_wbt_info_10 )
+
+//BMPMENU表示
+_BMPMENU_INIT_RIGHT( MENU_X1,MENU_Y1,0,1,LWK_MENU )
+
+_BMPMENU_MAKE_LIST( msg_wbt_menu_all, 0 )		//オールトーナメント
+_BMPMENU_MAKE_LIST( msg_wbt_menu_type, 1 )		//タイプトーナメント
+_BMPMENU_MAKE_LIST( msg_wbt_menu_champ, 2 )		//チャンピオントーナメント
+_BMPMENU_MAKE_LIST( msg_wbt_menu_dl, 3 )		//ダウンロードトーナメント
+_BMPMENU_MAKE_LIST( msg_wbt_menu_back, 4 )		//もどる
+
+//メニュー表示
+_BMPMENU_START()
+
+//選択結果で分岐
+SWITCH $LWK_MENU
+CASE 0 THEN		//オールトーナメントの場合
+	
+	//トーナメントセット
+	_WBT_SET_TOURNAMENT_TYPE( SCR_WBT_TYPE_ALL )
+	
+	_CALL ev_all
+
+CASE 1 THEN		//タイプトーナメントの場合
+
+	//トーナメントセット
+	_WBT_SET_TOURNAMENT_TYPE( SCR_WBT_TYPE_POKETYPE )
+
+	_CALL ev_type
+	
+CASE 2 THEN		//チャンピオントーナメントの場合
+
+	//トーナメントセット
+	_WBT_SET_TOURNAMENT_TYPE( SCR_WBT_TYPE_CHAMPION )
+
+	_CALL ev_champ
+	
+CASE 3 THEN		//ダウンロードトーナメントの場合
+
+	//トーナメントセット
+	_WBT_SET_TOURNAMENT_TYPE( SCR_WBT_TYPE_DOWNLOAD )
+
+	_CALL ev_dl
+	
+DEFAULT			//もどるの場合
+
+	_MSGWIN_CLOSE()
+
+	_CALL ev_explain_back
+
+ENDSWITCH
+
+_RET
+
+/**************************************************************/
+/*		バトルルールの決定									  */
+/**************************************************************/
+ev_rule:
+
+//どのバトルルールで参加しますか？
+_BALLOONWIN_TALKOBJ_MSG( msg_wbt_info_13 )
+
+//BMPMENU表示
+_BMPMENU_INIT_RIGHT( MENU_X1,MENU_Y1,0,1,LWK_MENU )
+
+_BMPMENU_MAKE_LIST( msg_wbt_menu_rule_single, 0 )	//シングルバトル
+_BMPMENU_MAKE_LIST( msg_wbt_menu_rule_double, 1 )	//ダブルバトル
+_BMPMENU_MAKE_LIST( msg_wbt_menu_rule_triple, 2 )	//トリプルバトル
+_BMPMENU_MAKE_LIST( msg_wbt_menu_rule_rotation, 3 )	//ローテーションバトル
+_BMPMENU_MAKE_LIST( msg_wbt_menu_back, 4 )			//もどる
+
+//メニュー表示
+_BMPMENU_START()
+
+//選択結果で分岐
+SWITCH $LWK_MENU
+	CASE 0 THEN		//シングルバトル
+	
+		//バトルセット
+		_WBT_SET_BATTLE_RULE( SCR_WBT_RULE_SINGLE )
+	
+		//手持ちが足りているかチェック
+		_CALL ev_regist
+	
+	CASE 1 THEN		//ダブルバトル
+
+		//バトルセット
+		_WBT_SET_BATTLE_RULE( SCR_WBT_RULE_DOUBLE )
+		
+		//手持ちが足りているかチェック
+		_CALL ev_regist
+
+	CASE 2 THEN		//トリプルバトル
+
+		//バトルセット
+		_WBT_SET_BATTLE_RULE( SCR_WBT_RULE_TRIPLE )
+		
+		//手持ちが足りているかチェック
+		_CALL ev_regist
+
+	CASE 3 THEN		//ローテーションバトル
+	
+		//バトルセット
+		_WBT_SET_BATTLE_RULE( SCR_WBT_RULE_LOTATION )
+		
+		//手持ちが足りているかチェック
+		_CALL ev_regist
+	
+	DEFAULT			//もどる
+	
+		//トーナメントの種類を取得
+		_WBT_GET_TOURNAMENT_TYPE( LWK_TOURNAMENT_TYPE )
+	
+		SWITCH $LWK_TOURNAMENT_TYPE
+			CASE SCR_WBT_TYPE_ALL THEN		//オールトーナメントの場合
+				_MSGWIN_CLOSE()
+				_CALL ev_tournament_back
+			CASE SCR_WBT_TYPE_POKETYPE THEN	//タイプトーナメントの場合
+				_MSGWIN_CLOSE()
+				_CALL ev_type_back
+			CASE SCR_WBT_TYPE_CHAMPION THEN	//チャンピオントーナメントの場合
+				_MSGWIN_CLOSE()
+				_CALL ev_tournament_back
+			CASE SCR_WBT_TYPE_DOWNLOAD THEN	//ダウンロードトーナメントの場合
+				_MSGWIN_CLOSE()
+				_CALL ev_dl_back
+		ENDSWITCH
+
+ENDSWITCH
+
+_RET
+
+/**************************************************************/
+/*		手持ちが足りているかチェック処理					  */
+/**************************************************************/
+ev_regist:
+
+//手持ちが足りない場合の処理
+_WBT_GET_BATTLE_RULE( LWK_RULE )
+
+//戦える手持ちの数をカウント
+_GET_PARTY_POKE_COUNT( LWK_POKECOUNT, POKECOUNT_MODE_NOT_EGG  )
+
+SWITCH $LWK_RULE
+CASE SCR_WBT_RULE_SINGLE THEN		//シングルバトル	３匹以上から参加可能
+	
+	//手持ちポケモンが３匹以上の場合
+	IF $LWK_POKECOUNT >= 3 THEN
+		
+		//手持ち匹数が足りている
+		_CALL ev_registok
+	
+	//手持ちポケモンが足りない場合
+	ELSE
+		
+		SWITCH $LWK_POKECOUNT
+		CASE 1 THEN		//１匹しか手持ちにいない場合
+				
+			$LWK_SHORT = 2	//LWK_SHORTに２を定義
+			
+		CASE 2 THEN		//２匹しか手持ちにいない場合
+			
+			$LWK_SHORT = 1	//LWK_SHORTに１を定義
+		
+		ENDSWITCH
+	
+		//ポケモン不足数を格納
+		_NUMBER( 0,LWK_SHORT,1 )
+
+		//トーナメントの参加には●匹必要です
+		_BALLOONWIN_TALKOBJ_MSG( msg_wbt_info_16 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+		
+	ENDIF
+	
+CASE SCR_WBT_RULE_DOUBLE THEN		//ダブルバトル	４匹以上から参加可能
+
+	//手持ちポケモンが４匹以上の場合
+	IF $LWK_POKECOUNT >= 4 THEN
+		
+		//手持ち匹数が足りている
+		_CALL ev_registok
+	
+	//手持ちポケモンが足りない場合
+	ELSE
+		
+		SWITCH $LWK_POKECOUNT
+		CASE 1 THEN		//１匹しか手持ちにいない場合
+			
+			$LWK_SHORT = 3	//LWK_SHORTに３を定義
+		
+		CASE 2 THEN		//２匹しか手持ちにいない場合
+		
+			$LWK_SHORT = 2	//LWK_SHORTに２を定義
+
+		CASE 3 THEN		//３匹しか手持ちにいない場合
+
+			$LWK_SHORT = 1	//LWK_SHORTに１を定義
+		
+		ENDSWITCH
+
+		//ポケモン不足数を格納
+		_NUMBER( 0,LWK_SHORT,1 )
+		
+		//トーナメントの参加には●匹必要です
+		_BALLOONWIN_TALKOBJ_MSG( msg_wbt_info_16 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+		
+	ENDIF
+
+CASE SCR_WBT_RULE_TRIPLE THEN		//トリプルバトル	５匹以上から参加可能
+
+	//手持ちポケモンが５匹以上の場合
+	IF $LWK_POKECOUNT >= 5 THEN
+		
+		//手持ち匹数が足りている
+		_CALL ev_registok
+		
+	//手持ちポケモンが足りない場合
+	ELSE
+		
+		SWITCH $LWK_POKECOUNT
+		CASE 1 THEN		//１匹しか手持ちにいない場合
+				
+			$LWK_SHORT = 4	//LWK_SHORTに４を定義
+		
+		CASE 2 THEN		//２匹しか手持ちにいない場合
+		
+			$LWK_SHORT = 3	//LWK_SHORTに３を定義
+
+		CASE 3 THEN		//３匹しか手持ちにいない場合
+			
+			$LWK_SHORT = 2	//LWK_SHORTに２を定義
+
+		CASE 4 THEN		//４匹しか手持ちにいない場合
+			
+			$LWK_SHORT = 1	//LWK_SHORTに１を定義
+
+		ENDSWITCH
+
+		//ポケモン不足数を格納
+		_NUMBER( 0,LWK_SHORT,1 )
+
+		//トーナメントの参加には●匹必要です
+		_BALLOONWIN_TALKOBJ_MSG( msg_wbt_info_16 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+		
+	ENDIF
+
+CASE SCR_WBT_RULE_LOTATION THEN		//ローテーションバトル	６匹から参加可能
+
+	//手持ちポケモンが６匹の場合
+	IF $LWK_POKECOUNT == 6 THEN
+		
+		//手持ち匹数が足りている
+		_CALL ev_registok
+		
+	//手持ちポケモンが足りない場合
+	ELSE
+		
+		SWITCH $LWK_POKECOUNT
+		CASE 1 THEN		//１匹しか手持ちにいない場合
+			
+			$LWK_SHORT = 5	//LWK_SHORTに５を定義
+		
+		CASE 2 THEN		//２匹しか手持ちにいない場合
+		
+			$LWK_SHORT = 4	//LWK_SHORTに４を定義
+
+		CASE 3 THEN		//３匹しか手持ちにいない場合
+			
+			$LWK_SHORT = 3	//LWK_SHORTに３を定義
+
+		CASE 4 THEN		//４匹しか手持ちにいない場合
+			
+			$LWK_SHORT = 2	//LWK_SHORTに２を定義
+
+		CASE 5 THEN		//５匹しか手持ちにいない場合
+			
+			$LWK_SHORT = 1	//LWK_SHORTに１を定義
+
+		ENDSWITCH
+
+		//ポケモン不足数を格納
+		_NUMBER( 0,LWK_SHORT,1 )
+		
+		//トーナメントの参加には●匹必要です
+		_BALLOONWIN_TALKOBJ_MSG( msg_wbt_info_16 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+		
+	ENDIF
+
+ENDSWITCH
+
+_RET
+
+/**************************************************************/
+/*		手持ちに問題がなかった場合							  */
+/**************************************************************/
+ev_registok:
+
+//トーナメントに参加するポケモンを選択してください
+_BALLOONWIN_TALKOBJ_MSG( msg_wbt_info_15 )
+_MSGWIN_CLOSE()
+
+//ポケモン選択画面表示　　　　　　　　　　　　　　　　　　　　　　　　
+
+//ルールと適用しているかチェック　致命的エラーが出たのでコメントアウト
+//_WBT_CHECK_BATTLE_RULE( LWK_CHK_RULE )
+
+//問題なしの場合
+IF $LWK_CHK_RULE == TRUE THEN
+
+	//参加受付が終わりました！
+	_BALLOONWIN_TALKOBJ_MSG( msg_wbt_info_17 )
+	_MSGWIN_CLOSE()
+	
+	//トーナメントリスト表示
+	_WBT_LIST_CALL( 0 )
+	
+	//それでは第一回戦を開始します！
+	_BALLOONWIN_TALKOBJ_MSG( msg_wbt_info_18 )
+	_MSGWIN_CLOSE()
+	
+	//誘導アニメ
+	
+	
+	//リザーブスクリプト－会場－
+	
+	
+	//会場へマップ移動
+	
+
+//問題ありの場合
+ELSE
+
+	//参加するポケモンに問題があるようです
+	_BALLOONWIN_TALKOBJ_MSG( msg_wbt_info_error1 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
+ENDIF
+
+_RET
+
+/**************************************************************/
+/*		トーナメントの説明									  */
+/**************************************************************/
+ev_explain:
+
+//どのトーナメントについて説明をいたしましょうか？
+_BALLOONWIN_TALKOBJ_MSG( msg_wbt_info_03 )
+
+//説明を受けた場合のみ繰り返す
+$LWK_MENU_WHILE = 0
+WHILE $LWK_MENU_WHILE != 1
+
+//BMPMENU表示
+_BMPMENU_INIT_RIGHT( MENU_X1,MENU_Y1,0,1,LWK_MENU )
+
+_BMPMENU_MAKE_LIST( msg_wbt_menu_explain_all, 0 )	//オールトーナメントについて
+_BMPMENU_MAKE_LIST( msg_wbt_menu_explain_type, 1 )	//タイプトーナメントについて
+_BMPMENU_MAKE_LIST( msg_wbt_menu_explain_champ, 2 )	//チャンピオントーナメントについて
+_BMPMENU_MAKE_LIST( msg_wbt_menu_explain_dl, 3 )	//ダウンロードトーナメントについて
+_BMPMENU_MAKE_LIST( msg_wbt_menu_explain_rule, 4 )	//バトルルールについて
+_BMPMENU_MAKE_LIST( msg_wbt_menu_back, 5 )			//もどる
+
+//メニュー表示
+_BMPMENU_START()
+
+	//選択結果で分岐
+	SWITCH $LWK_MENU
+	CASE 0 THEN		//オールトーナメントについて
+	
+		//オールトーナメントは！
+		_BALLOONWIN_TALKOBJ_MSG( msg_wbt_info_04 )
+		
+		//どのトーナメントについて説明をいたしましょうか？
+		_BALLOONWIN_TALKOBJ_MSG( msg_wbt_info_03 )
+
+	CASE 1 THEN		//タイプトーナメントについて
+
+		//タイプトーナメントは！
+		_BALLOONWIN_TALKOBJ_MSG( msg_wbt_info_05 )
+
+		//どのトーナメントについて説明をいたしましょうか？
+		_BALLOONWIN_TALKOBJ_MSG( msg_wbt_info_03 )
+
+	CASE 2 THEN		//チャンピオントーナメントについて
+
+		//チャンピオントーナメントは！
+		_BALLOONWIN_TALKOBJ_MSG( msg_wbt_info_06 )
+
+		//どのトーナメントについて説明をいたしましょうか？
+		_BALLOONWIN_TALKOBJ_MSG( msg_wbt_info_03 )
+
+	CASE 3 THEN		//ダウンロードトーナメントについて
+
+		//ダウンロードトーナメントは！
+		_BALLOONWIN_TALKOBJ_MSG( msg_wbt_info_07 )
+
+		//どのトーナメントについて説明をいたしましょうか？
+		_BALLOONWIN_TALKOBJ_MSG( msg_wbt_info_03 )
+
+	CASE 4 THEN		//バトルルールについて
+
+		//バトルルールは！
+		_BALLOONWIN_TALKOBJ_MSG( msg_wbt_info_08 )
+
+		//どのトーナメントについて説明をいたしましょうか？
+		_BALLOONWIN_TALKOBJ_MSG( msg_wbt_info_03 )
+
+	DEFAULT			//もどる・Bボタン
+
+		$LWK_MENU_WHILE = 1
+
+		_MSGWIN_CLOSE()
+		
+		_CALL ev_explain_back
+
+	ENDSWITCH
+
+ENDWHILE
+
+_RET
+
+/**************************************************************/
+/*		オールトーナメントの参加							  */
+/**************************************************************/
+ev_all:
+
+_CALL ev_rule
+
+_RET
+
+/**************************************************************/
+/*		タイプトーナメントの参加							  */
+/**************************************************************/
+ev_type:
+
+//どのタイプのトーナメントに参加しますか？
+_BALLOONWIN_TALKOBJ_MSG( msg_wbt_info_12 )
+
+//BMPMENU表示
+_BMPMENU_INIT_RIGHT( MENU_X1,MENU_Y1,0,1,LWK_MENU )
+
+_BMPMENU_MAKE_LIST( msg_wbt_menu_normal, 0 )	//ノーマル
+_BMPMENU_MAKE_LIST( msg_wbt_menu_honoo, 1 )		//ほのお
+_BMPMENU_MAKE_LIST( msg_wbt_menu_mizu, 2 )		//みず
+_BMPMENU_MAKE_LIST( msg_wbt_menu_kusa, 3 )		//くさ
+_BMPMENU_MAKE_LIST( msg_wbt_menu_denki, 4 )		//でんき
+_BMPMENU_MAKE_LIST( msg_wbt_menu_koori, 5 )		//こおり
+_BMPMENU_MAKE_LIST( msg_wbt_menu_kakutou, 6 )	//かくとう
+_BMPMENU_MAKE_LIST( msg_wbt_menu_doku, 7 )		//どく
+_BMPMENU_MAKE_LIST( msg_wbt_menu_zimen, 8 )		//じめん
+_BMPMENU_MAKE_LIST( msg_wbt_menu_hikou, 9 )		//ひこう
+_BMPMENU_MAKE_LIST( msg_wbt_menu_esper, 10 )	//エスパー
+_BMPMENU_MAKE_LIST( msg_wbt_menu_musi, 11 )		//むし
+_BMPMENU_MAKE_LIST( msg_wbt_menu_iwa, 12 )		//いわ
+_BMPMENU_MAKE_LIST( msg_wbt_menu_gorst, 13 )	//ゴースト
+_BMPMENU_MAKE_LIST( msg_wbt_menu_dragon, 14 )	//ドラゴン
+_BMPMENU_MAKE_LIST( msg_wbt_menu_aku, 15 )		//あく
+_BMPMENU_MAKE_LIST( msg_wbt_menu_hagane, 16 )	//はがね
+_BMPMENU_MAKE_LIST( msg_wbt_menu_back, 17 )		//もどる
+
+//メニュー表示
+_BMPMENU_START()
+
+//選択結果で分岐
+SWITCH $LWK_MENU
+	CASE 0 THEN		//ノーマル
+
+		_CALL ev_rule
+
+	CASE 1 THEN		//ほのお
+
+		_CALL ev_rule
+
+	CASE 2 THEN		//みず
+
+		_CALL ev_rule
+
+	CASE 3 THEN		//くさ
+
+		_CALL ev_rule
+
+	CASE 4 THEN		//でんき
+
+		_CALL ev_rule
+
+	CASE 5 THEN		//こおり
+
+		_CALL ev_rule
+
+	CASE 6 THEN		//かくとう
+
+		_CALL ev_rule
+
+	CASE 7 THEN		//どく
+
+		_CALL ev_rule
+
+	CASE 8 THEN		//じめん
+
+		_CALL ev_rule
+
+	CASE 9 THEN		//ひこう
+
+		_CALL ev_rule
+
+	CASE 10 THEN	//エスパー
+
+		_CALL ev_rule
+
+	CASE 11 THEN	//むし
+
+		_CALL ev_rule
+
+	CASE 12 THEN	//いわ
+
+		_CALL ev_rule
+
+	CASE 13 THEN	//ゴースト
+
+		_CALL ev_rule
+
+	CASE 14 THEN	//ドラゴン
+
+		_CALL ev_rule
+
+	CASE 15 THEN	//あく
+
+		_CALL ev_rule
+
+	CASE 16 THEN	//はがね
+
+		_CALL ev_rule
+
+	DEFAULT			//もどる
+		
+		_MSGWIN_CLOSE()
+		
+		_CALL ev_tournament_back
+
+ENDSWITCH
+
+_RET
+
+/**************************************************************/
+/*		チャンピオントーナメントの参加						  */
+/**************************************************************/
+ev_champ:
+
+//チャンピオントーナメントに参加済みの場合
+IF FLAG_ON( FH_02 ) THEN	
+	
+	//本日のチャンピオントーナメントは終了しています。
+	_BALLOONWIN_TALKOBJ_MSG( msg_wbt_info_11 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
+//まだ参加していない場合
+ELSE
+
+	_CALL ev_rule
+
+ENDIF
+
+_RET
+
+/**************************************************************/
+/*		ダウンロードトーナメントの参加						  */
+/**************************************************************/
+ev_dl:
+
+//ダウンロードトーナメント数を取得する
+_WBT_GET_DL_COUNT( LWK_DL_COUNT )
+
+//１つもダウンロードしていない場合
+IF $LWK_DL_COUNT == 0 THEN
+
+	//お客様が参加できるトーナメントがないみたいです
+	_BALLOONWIN_TALKOBJ_MSG( msg_wbt_info_14_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
+//１つ以上ダウンロードしている場合
+ELSE
+
+	//参加できるトーナメントはこちらになります
+	_BALLOONWIN_TALKOBJ_MSG( msg_wbt_info_14 )
+
+	//BMPMENU表示
+	_BMPMENU_INIT_RIGHT( MENU_X1,MENU_Y1,0,1,LWK_MENU )
+
+	SWITCH $LWK_DL_COUNT
+		CASE 1 THEN		//ダウンロード数が１の場合
+			//ダウンロードデータの名前をセット
+			_WBT_SET_DL_NAME( 1, 1 )
+			_BMPMENU_MAKE_LIST( msg_wbt_menu_dl01, 1 )	//ダウンロードトーナメント１
+		CASE 2 THEN		//ダウンロード数が２の場合
+			//ダウンロードデータの名前をセット
+			_WBT_SET_DL_NAME( 1, 1 )
+			_WBT_SET_DL_NAME( 2, 2 )
+			_BMPMENU_MAKE_LIST( msg_wbt_menu_dl01, 1 )	//ダウンロードトーナメント１
+			_BMPMENU_MAKE_LIST( msg_wbt_menu_dl02, 2 )	//ダウンロードトーナメント２
+		CASE 3 THEN		//ダウンロード数が３の場合
+			//ダウンロードデータの名前をセット
+			_WBT_SET_DL_NAME( 1, 1 )
+			_WBT_SET_DL_NAME( 2, 2 )
+			_WBT_SET_DL_NAME( 3, 3 )
+			_BMPMENU_MAKE_LIST( msg_wbt_menu_dl01, 1 )	//ダウンロードトーナメント１
+			_BMPMENU_MAKE_LIST( msg_wbt_menu_dl02, 2 )	//ダウンロードトーナメント２
+			_BMPMENU_MAKE_LIST( msg_wbt_menu_dl03, 3 )	//ダウンロードトーナメント３
+	ENDSWITCH
+
+	_BMPMENU_MAKE_LIST( msg_wbt_menu_back, 0 )	//もどる
+
+	//メニュー表示
+	_BMPMENU_START()
+
+	SWITCH $LWK_MENU
+		CASE 1 THEN		//ダウンロードトーナメント１を選択
+		
+			_WBT_SELECT_DL_DATA( LWK_MENU )
+		
+			_CALL ev_regist
+		
+		CASE 2 THEN		//ダウンロードトーナメント２を選択
+		
+			_WBT_SELECT_DL_DATA( LWK_MENU )
+		
+			_CALL ev_regist
+		
+		CASE 3 THEN		//ダウンロードトーナメント３を選択
+
+			_WBT_SELECT_DL_DATA( LWK_MENU )
+
+			_CALL ev_regist
+
+		DEFAULT			//もどるを選択
+		
+			_MSGWIN_CLOSE()
+		
+			_CALL ev_tournament_back
+		
+	ENDSWITCH
+
+ENDIF
+
+_RET
+
+/**************************************************************/
+/*		もどるボタン用ショートカット						  */
+/**************************************************************/
+ev_tournament_back:
+
+//BMPMENU表示
+_BMPMENU_INIT_RIGHT( MENU_X1,MENU_Y1,0,1,LWK_MENU )
+
+_BMPMENU_MAKE_LIST( msg_wbt_menu_all, 0 )		//オールトーナメント
+_BMPMENU_MAKE_LIST( msg_wbt_menu_type, 1 )		//タイプトーナメント
+_BMPMENU_MAKE_LIST( msg_wbt_menu_champ, 2 )		//チャンピオントーナメント
+_BMPMENU_MAKE_LIST( msg_wbt_menu_dl, 3 )		//ダウンロードトーナメント
+_BMPMENU_MAKE_LIST( msg_wbt_menu_back, 4 )		//もどる
+
+//メニュー表示
+_BMPMENU_START()
+
+//選択結果で分岐
+SWITCH $LWK_MENU
+CASE 0 THEN		//オールトーナメントの場合
+	
+	//トーナメントセット
+	_WBT_SET_TOURNAMENT_TYPE( SCR_WBT_TYPE_ALL )
+	
+	_CALL ev_all
+
+CASE 1 THEN		//タイプトーナメントの場合
+
+	//トーナメントセット
+	_WBT_SET_TOURNAMENT_TYPE( SCR_WBT_TYPE_POKETYPE )
+
+	_CALL ev_type
+	
+CASE 2 THEN		//チャンピオントーナメントの場合
+
+	//トーナメントセット
+	_WBT_SET_TOURNAMENT_TYPE( SCR_WBT_TYPE_CHAMPION )
+
+	_CALL ev_champ
+	
+CASE 3 THEN		//ダウンロードトーナメントの場合
+
+	//トーナメントセット
+	_WBT_SET_TOURNAMENT_TYPE( SCR_WBT_TYPE_DOWNLOAD )
+
+	_CALL ev_dl
+	
+DEFAULT			//もどるの場合
+
+	_CALL ev_explain_back
+
+ENDSWITCH
+
+_RET
+
+ev_explain_back:
+
+//BMPMENU表示
+_BMPMENU_INIT_RIGHT( MENU_X1,MENU_Y1,0,1,LWK_MENU )
+
+_BMPMENU_MAKE_LIST( msg_wbt_menu_yes, 0 )		//参加する
+_BMPMENU_MAKE_LIST( msg_wbt_menu_explain, 1 )	//説明をきく
+_BMPMENU_MAKE_LIST( msg_wbt_menu_back, 2 )		//もどる
+
+//メニュー表示
+_BMPMENU_START()
+		
+//選択結果で分岐
+SWITCH $LWK_MENU
+CASE 0 THEN		//参加する場合
+	
+	_CALL ev_entry
+
+CASE 1 THEN		//説明をきく場合
+			
+	_CALL ev_explain
+	
+DEFAULT			//やめる場合
+		
+	//またの御利用をおまちしております
+	_BALLOONWIN_TALKOBJ_MSG( msg_wbt_info_09 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+		
+ENDSWITCH
+
+_RET
+
+ev_type_back:
+//BMPMENU表示
+_BMPMENU_INIT_RIGHT( MENU_X1,MENU_Y1,0,1,LWK_MENU )
+
+_BMPMENU_MAKE_LIST( msg_wbt_menu_normal, 0 )	//ノーマル
+_BMPMENU_MAKE_LIST( msg_wbt_menu_honoo, 1 )		//ほのお
+_BMPMENU_MAKE_LIST( msg_wbt_menu_mizu, 2 )		//みず
+_BMPMENU_MAKE_LIST( msg_wbt_menu_kusa, 3 )		//くさ
+_BMPMENU_MAKE_LIST( msg_wbt_menu_denki, 4 )		//でんき
+_BMPMENU_MAKE_LIST( msg_wbt_menu_koori, 5 )		//こおり
+_BMPMENU_MAKE_LIST( msg_wbt_menu_kakutou, 6 )	//かくとう
+_BMPMENU_MAKE_LIST( msg_wbt_menu_doku, 7 )		//どく
+_BMPMENU_MAKE_LIST( msg_wbt_menu_zimen, 8 )		//じめん
+_BMPMENU_MAKE_LIST( msg_wbt_menu_hikou, 9 )		//ひこう
+_BMPMENU_MAKE_LIST( msg_wbt_menu_esper, 10 )	//エスパー
+_BMPMENU_MAKE_LIST( msg_wbt_menu_musi, 11 )		//むし
+_BMPMENU_MAKE_LIST( msg_wbt_menu_iwa, 12 )		//いわ
+_BMPMENU_MAKE_LIST( msg_wbt_menu_gorst, 13 )	//ゴースト
+_BMPMENU_MAKE_LIST( msg_wbt_menu_dragon, 14 )	//ドラゴン
+_BMPMENU_MAKE_LIST( msg_wbt_menu_aku, 15 )		//あく
+_BMPMENU_MAKE_LIST( msg_wbt_menu_hagane, 16 )	//はがね
+_BMPMENU_MAKE_LIST( msg_wbt_menu_back, 17 )		//もどる
+
+//メニュー表示
+_BMPMENU_START()
+
+//選択結果で分岐
+SWITCH $LWK_MENU
+	CASE 0 THEN		//ノーマル
+
+		_CALL ev_rule
+
+	CASE 1 THEN		//ほのお
+
+		_CALL ev_rule
+
+	CASE 2 THEN		//みず
+
+		_CALL ev_rule
+
+	CASE 3 THEN		//くさ
+
+		_CALL ev_rule
+
+	CASE 4 THEN		//でんき
+
+		_CALL ev_rule
+
+	CASE 5 THEN		//こおり
+
+		_CALL ev_rule
+
+	CASE 6 THEN		//かくとう
+
+		_CALL ev_rule
+
+	CASE 7 THEN		//どく
+
+		_CALL ev_rule
+
+	CASE 8 THEN		//じめん
+
+		_CALL ev_rule
+
+	CASE 9 THEN		//ひこう
+
+		_CALL ev_rule
+
+	CASE 10 THEN	//エスパー
+
+		_CALL ev_rule
+
+	CASE 11 THEN	//むし
+
+		_CALL ev_rule
+
+	CASE 12 THEN	//いわ
+
+		_CALL ev_rule
+
+	CASE 13 THEN	//ゴースト
+
+		_CALL ev_rule
+
+	CASE 14 THEN	//ドラゴン
+
+		_CALL ev_rule
+
+	CASE 15 THEN	//あく
+
+		_CALL ev_rule
+
+	CASE 16 THEN	//はがね
+
+		_CALL ev_rule
+
+	DEFAULT			//もどる
+	
+		_CALL ev_tournament_back
+
+ENDSWITCH
+
+_RET
+
+ev_dl_back:
+
+//BMPMENU表示
+_BMPMENU_INIT_RIGHT( MENU_X1,MENU_Y1,0,1,LWK_MENU )
+
+SWITCH $LWK_DL_COUNT
+	CASE 1 THEN		//ダウンロード数が１の場合
+		//ダウンロードデータの名前をセット
+		_WBT_SET_DL_NAME( 1, 1 )
+		_BMPMENU_MAKE_LIST( msg_wbt_menu_dl01, 1 )	//ダウンロードトーナメント１
+	CASE 2 THEN		//ダウンロード数が２の場合
+		//ダウンロードデータの名前をセット
+		_WBT_SET_DL_NAME( 1, 1 )
+		_WBT_SET_DL_NAME( 2, 2 )
+		_BMPMENU_MAKE_LIST( msg_wbt_menu_dl01, 1 )	//ダウンロードトーナメント１
+		_BMPMENU_MAKE_LIST( msg_wbt_menu_dl02, 2 )	//ダウンロードトーナメント２
+	CASE 3 THEN		//ダウンロード数が３の場合
+		//ダウンロードデータの名前をセット
+		_WBT_SET_DL_NAME( 1, 1 )
+		_WBT_SET_DL_NAME( 2, 2 )
+		_WBT_SET_DL_NAME( 3, 3 )
+		_BMPMENU_MAKE_LIST( msg_wbt_menu_dl01, 1 )	//ダウンロードトーナメント１
+		_BMPMENU_MAKE_LIST( msg_wbt_menu_dl02, 2 )	//ダウンロードトーナメント２
+		_BMPMENU_MAKE_LIST( msg_wbt_menu_dl03, 3 )	//ダウンロードトーナメント３
+ENDSWITCH
+
+_BMPMENU_MAKE_LIST( msg_wbt_menu_back, 0 )	//もどる
+
+//メニュー表示
+_BMPMENU_START()
+
+SWITCH $LWK_MENU
+	CASE 1 THEN		//ダウンロードトーナメント１を選択
+	
+		//_WBT_SELECT_DL_DATA( LWK_MENU )
+	
+		_CALL ev_regist
+	
+	CASE 2 THEN		//ダウンロードトーナメント２を選択
+	
+		//_WBT_SELECT_DL_DATA( LWK_MENU )
+	
+		_CALL ev_regist
+	
+	CASE 3 THEN		//ダウンロードトーナメント３を選択
+
+		//_WBT_SELECT_DL_DATA( LWK_MENU )
+		_CALL ev_regist
+
+	DEFAULT			//もどるを選択
+	
+		_CALL ev_tournament_back
+	
+ENDSWITCH
+
+_RET
