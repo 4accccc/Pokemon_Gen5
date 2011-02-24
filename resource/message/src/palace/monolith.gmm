@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-06-22T17:21:12"/>
+	<create user="iwasawa" host="W00270" date="2011-02-23T17:35:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -365,14 +365,14 @@
 		</language>
 	</columns>
 
-	<dialog left="667" top="454" right="1372" bottom="1079" maximized="no" rayout="Vertical2">
+	<dialog left="196" top="326" right="809" bottom="896" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="1221" top="9" right="1694" bottom="633" visible="yes"/>
-		<band id="0" index="0" style="0000" width="530"/>
+		<tag-palette left="807" top="9" right="1280" bottom="633" visible="yes"/>
+		<band id="0" index="0" style="0000" width="605"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="697"/>
-		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<band id="2" index="2" style="0000" width="438"/>
+		<band id="3" index="3" style="0000" width="605"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -423,6 +423,24 @@
 おこなわれています</language>
 		<language name="JPN_KANJI" width="256">すでに　ミッションが
 行なわれています</language>
+	</row>
+
+	<row id="msg_mono_title_005" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<comment>タイトルメニュー項目</comment>
+		<language name="JPN" width="256">フェスミッションを　うける</language>
+		<language name="JPN_KANJI" width="256">フェスミッションを　受ける</language>
+	</row>
+
+	<row id="msg_mono_title_006" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<comment>タイトルメニュー項目</comment>
+		<language name="JPN" width="256">デルパワーを　うけとる</language>
+		<language name="JPN_KANJI" width="256">デルパワーを　受け取る</language>
+	</row>
+
+	<row id="msg_mono_title_007" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<comment>タイトルメニュー項目</comment>
+		<language name="JPN" width="256">じょうたいを　みる</language>
+		<language name="JPN_KANJI" width="256">状態を　見る</language>
 	</row>
 
 	<row id="msg_mono_st_000" back-color="#ffff80,,,,,,,,,,,,,,,,,">
@@ -696,6 +714,42 @@
 
 今のＬｖ
 ◇ブラックＬｖ：[2:02:３桁:2]　　　◆ホワイトＬｖ：[2:02:３桁:1]</language>
+	</row>
+
+	<row id="msg_mono_fmission_000" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<comment>フェスミッション選択画面</comment>
+		<language name="JPN" width="256">チャレンジできる　フェスミッション</language>
+		<language name="JPN_KANJI" width="256">チャレンジできる　フェスミッション</language>
+	</row>
+
+	<row id="msg_mono_fmission_001" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<comment>フェスミッション選択画面</comment>
+		<language name="JPN" width="256">チャレンジする　フェスミッションを
+えらんでください</language>
+		<language name="JPN_KANJI" width="256">チャレンジする　フェスミッションを
+選んでください</language>
+	</row>
+
+	<row id="msg_mono_fmission_002" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<comment>フェスミッション選択画面</comment>
+		<language name="JPN" width="256">ミッションかいし</language>
+		<language name="JPN_KANJI" width="256">ミッション開始</language>
+	</row>
+
+	<row id="msg_mono_fmission_003" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<comment>フェスミッション選択画面</comment>
+		<language name="JPN" width="256">このフェスミッション　を
+かいし　しますか？</language>
+		<language name="JPN_KANJI" width="256">このフェスミッション　を
+開始しますか？</language>
+	</row>
+
+	<row id="msg_mono_fmission_004" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<comment>フェスミッション選択画面</comment>
+		<language name="JPN" width="256">フェスミッション　を
+かいし　します</language>
+		<language name="JPN_KANJI" width="256">フェスミッション　を
+開始します</language>
 	</row>
 
 	<flowchart-group-list>

@@ -25,6 +25,7 @@
 #include "intrude_mission.h"
 #include "net/net_whpipe.h"
 #include "gamesystem/game_beacon_accessor.h"
+#include "gamesystem/link_festival.h"
 #include "intrude_work.h"
 #include "field/zonedata.h"
 #include "field/fieldmap_call.h"  //FIELDMAP_IsReady
@@ -545,10 +546,13 @@ BOOL  IntrudeComm_TermCommSystemWait( int *seq, void *pwk, void *pWork )
       NetErr_ErrWorkInit();
       exit_ok = TRUE;
     }
-    else{ //裏フィールドにいる場合はパレスへ戻ってから解放
-      if(ZONEDATA_IsPalace( PLAYERWORK_getZoneID(GAMEDATA_GetMyPlayerWork(gamedata)) ) == TRUE
-          && GAMESYSTEM_CheckFieldMapWork(invalid_parent->gsys) == TRUE
-          && FIELDMAP_IsReady(GAMESYSTEM_GetFieldMapWork(invalid_parent->gsys)) == TRUE){
+    else{ //裏フィールドにいる場合はフェスミッション中もしくはパレスへ戻ってから解放
+      if( LINK_FESTIVAL_IsMissionEntry( GAMESYSTEM_GetLinkFestivalWork(invalid_parent->gsys) )
+          ||
+          (ZONEDATA_IsPalace( PLAYERWORK_getZoneID(GAMEDATA_GetMyPlayerWork(gamedata)) ) == TRUE &&
+           GAMESYSTEM_CheckFieldMapWork(invalid_parent->gsys) == TRUE &&
+           FIELDMAP_IsReady(GAMESYSTEM_GetFieldMapWork(invalid_parent->gsys)) == TRUE)
+        ){
         exit_ok = TRUE;
       }
     }

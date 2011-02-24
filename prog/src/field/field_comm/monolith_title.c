@@ -31,6 +31,7 @@ enum{
   TITLE_PANEL_MISSION,
   TITLE_PANEL_POWER,
   TITLE_PANEL_STATUS,
+  TITLE_PANEL_FMISSION,
   
   TITLE_PANEL_MAX,
   TITLE_PANEL_CANCEL = TITLE_PANEL_MAX,
@@ -100,8 +101,11 @@ const GFL_PROC_DATA MonolithAppProc_Down_Title = {
 //--------------------------------------------------------------
 ///ƒpƒlƒ‹YÀ•W
 enum{
-  TITLE_PANEL_Y_POWER_NOMISSION = 8*7 + 4,
-  TITLE_PANEL_Y_STATUS_NOMISSION = 8*14 + 4,
+//  TITLE_PANEL_Y_POWER_NOMISSION = 8*7 + 4,
+//  TITLE_PANEL_Y_STATUS_NOMISSION = 8*14 + 4,
+  TITLE_PANEL_Y_FMISSION_NOMISSION = 8*5 + 4,
+  TITLE_PANEL_Y_POWER_NOMISSION = 8*10 + 4,
+  TITLE_PANEL_Y_STATUS_NOMISSION = 8*15 + 4,
 
   TITLE_PANEL_Y_MISSION = 8*5 + 4,
   TITLE_PANEL_Y_POWER = 8*10 + 4,
@@ -113,7 +117,7 @@ enum{
 
 ///ƒpƒlƒ‹‚Ì”
 static const u32 TitlePanelMax[] = {  // 0:ƒ~ƒbƒVƒ‡ƒ“‚È‚µ@1:ƒ~ƒbƒVƒ‡ƒ“‚ ‚è@2:‰ƒ~ƒbƒVƒ‡ƒ“
-  2,
+  3,
   3,
   2,
 };
@@ -121,8 +125,14 @@ static const u32 TitlePanelMax[] = {  // 0:ƒ~ƒbƒVƒ‡ƒ“‚È‚µ@1:ƒ~ƒbƒVƒ‡ƒ“‚ ‚è@2:
 ///ƒpƒlƒ‹YÀ•Wƒe[ƒuƒ‹
 static const u32 TitlePanelTblY[][3] = {
   {
+#if 0
     TITLE_PANEL_Y_POWER_NOMISSION,
     TITLE_PANEL_Y_STATUS_NOMISSION,
+#else
+  TITLE_PANEL_Y_FMISSION_NOMISSION,
+  TITLE_PANEL_Y_POWER_NOMISSION,
+  TITLE_PANEL_Y_STATUS_NOMISSION,
+#endif
   },
   {
     TITLE_PANEL_Y_MISSION,
@@ -137,6 +147,7 @@ static const u32 TitlePanelTblY[][3] = {
 
 static const u32 TitlePanelSelectIndex[][4] = {
   {
+    TITLE_PANEL_FMISSION,
     TITLE_PANEL_POWER,
     TITLE_PANEL_STATUS,
     TITLE_PANEL_CANCEL,
@@ -157,6 +168,7 @@ static const u32 TitlePanelSelectIndex[][4] = {
 ///ƒpƒlƒ‹ƒ^ƒbƒ`ƒf[ƒ^   ¦TitlePanelSelectIndex‚Æ•À‚Ñ‚ð“¯‚¶‚É‚µ‚Ä‚¨‚­‚±‚ÆI
 static const GFL_UI_TP_HITTBL TitlePanelRect[][5] = {
   {
+#if 0
     {//TITLE_PANEL_Y_POWER
       TITLE_PANEL_Y_POWER_NOMISSION - PANEL_CHARSIZE_Y/2*8,
       TITLE_PANEL_Y_POWER_NOMISSION + PANEL_CHARSIZE_Y/2*8,
@@ -169,6 +181,26 @@ static const GFL_UI_TP_HITTBL TitlePanelRect[][5] = {
       PANEL_POS_X - PANEL_SMALL_CHARSIZE_X/2*8,
       PANEL_POS_X + PANEL_SMALL_CHARSIZE_X/2*8,
     },
+#else
+    {//TITLE_PANEL_Y_MISSION
+      TITLE_PANEL_Y_MISSION - PANEL_CHARSIZE_Y/2*8,
+      TITLE_PANEL_Y_MISSION + PANEL_CHARSIZE_Y/2*8,
+      PANEL_POS_X - PANEL_SMALL_CHARSIZE_X/2*8,
+      PANEL_POS_X + PANEL_SMALL_CHARSIZE_X/2*8,
+    },
+    {//TITLE_PANEL_Y_POWER
+      TITLE_PANEL_Y_POWER - PANEL_CHARSIZE_Y/2*8,
+      TITLE_PANEL_Y_POWER + PANEL_CHARSIZE_Y/2*8,
+      PANEL_POS_X - PANEL_SMALL_CHARSIZE_X/2*8,
+      PANEL_POS_X + PANEL_SMALL_CHARSIZE_X/2*8,
+    },
+    {//TITLE_PANEL_Y_STATUS
+      TITLE_PANEL_Y_STATUS - PANEL_CHARSIZE_Y/2*8,
+      TITLE_PANEL_Y_STATUS + PANEL_CHARSIZE_Y/2*8,
+      PANEL_POS_X - PANEL_SMALL_CHARSIZE_X/2*8,
+      PANEL_POS_X + PANEL_SMALL_CHARSIZE_X/2*8,
+    },
+#endif
     {//ƒLƒƒƒ“ƒZƒ‹ƒAƒCƒRƒ“
       CANCEL_POS_Y - CANCEL_TOUCH_RANGE_HALF,
       CANCEL_POS_Y + CANCEL_TOUCH_RANGE_HALF,
@@ -483,7 +515,7 @@ static void _Title_PanelCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_TITLE_WORK *
       MonolithTool_PanelOBJ_Create(appwk->setup, &mtw->panel[i], 
         COMMON_RESOURCE_INDEX_DOWN, PANEL_SIZE_SMALL, 
         PANEL_POS_X, TitlePanelTblY[mtw->title_mode][i], 
-        msg_mono_title_002 + i, NULL);
+        msg_mono_title_005 + i, NULL);
     }
     else if(mtw->title_mode == TITLE_MODE_NOPOWER){
       u32 msg_id = i == 0 ? msg_mono_title_001 : msg_mono_title_003;

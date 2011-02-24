@@ -80,95 +80,166 @@ EVENT_END
 /*  モノリス                                              */
 /**************************************************************/
 EVENT_START ev_palace01_monolith
-  _GET_PALACE_AREA_OFFSET( SCWK_ANSWER )
-  IF ($SCWK_ANSWER == 0) && FLAG_OFF( SYS_FLAG_PALACE_MISSION_CLEAR ) THEN
-    //まだミッションをクリアしていないので「他人のパレスへ行け！」を表示
-    _TALK_START_SE_PLAY()
-
-  	//パレスじじい：主人公を見る
-  	_OBJ_ANIME( PALACE01_OLDMAN1_01, anm_stay_dir_r )
-  	_OBJ_ANIME_WAIT()
-  	
-  	//主人公：じじいを見る
-  	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_l )
-  	_OBJ_ANIME_WAIT()
-  	
-  	//「まず他人のパレスへ行け」
-  	_BALLOONWIN_OBJMSG( plc_help_01, PALACE01_OLDMAN1_01 )
-  	_LAST_KEYWAIT()
-  	_MSGWIN_CLOSE()
-
-  ELSE  //通常のモノリス処理
-  
-    //ミッション選択候補リストを要求(fieldmapオーバーレイに配置の為、フェードアウト中は回避)
-    _INTRUDE_MISSION_CHOICE_LIST_REQ( SCWK_ANSWER )
-    IF $SCWK_ANSWER == TRUE THEN
-    
-      _MAP_FADE_BLACK_OUT()
-      _MAP_FADE_END_CHECK()
-      _FIELD_CLOSE()
-
-      _CALL_MONOLITH_PROC()
-
-      _FIELD_OPEN()
-      _MAP_FADE_BLACK_IN()
-      _MAP_FADE_END_CHECK()
-      
-      //モノリス画面を抜けた時にミッションエントリーしていたならば、待機イベント呼び出し
-      _GET_MISSION_ENTRY( SCWK_ANSWER )
-    	IF $SCWK_ANSWER == TRUE THEN
-      	//初めて受注したミッションならチュートリアルメッセージ表示
-      	IF FLAG_OFF( SYS_FLAG_PALACE_MISSION_START ) THEN
-        	_FLAG_SET( SYS_FLAG_PALACE_MISSION_START )
-        	
-      	  _CALL sub_get_area_oldman_objid
-
-        	//パレスじじい：主人公を見る
-        	_OBJ_ANIME( area_oldman_objid, anm_stay_dir_r )
-        	_OBJ_ANIME_WAIT()
-        	
-        	//主人公：じじいを見る
-        	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_l )
-        	_OBJ_ANIME_WAIT()
-        	
-        	//「ミッションを開始したな！ワープが出来るぞ！」
-        	_BALLOONWIN_OBJMSG( plc_help_02, area_oldman_objid )
-        	_LAST_KEYWAIT()
-        	_MSGWIN_CLOSE()
-
-      	ENDIF
-      	
-    	  //ミッション開始待ち
-    	  _MISSION_START_WAIT_EVENT()
-    	ELSIF FLAG_OFF( SYS_FLAG_PALACE_DPOWER ) THEN
-    	  _CHECK_EQP_GPOWER( SCWK_ANSWER )
-    	  IF $SCWK_ANSWER == TRUE THEN
-    	    
-    	    _FLAG_SET( SYS_FLAG_PALACE_DPOWER )
-
-      	  _CALL sub_get_area_oldman_objid
-    	    
-        	//パレスじじい：主人公を見て
-        	_OBJ_ANIME( area_oldman_objid, anm_stay_dir_r )
-        	_OBJ_ANIME_WAIT()
-
-        	//主人公：じじいを見る
-        	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_l )
-        	_OBJ_ANIME_WAIT()
-        	
-        	//「それはすれ違いで使えるのだ！」
-        	_BALLOONWIN_OBJMSG( plc_help_05, area_oldman_objid )
-        	_LAST_KEYWAIT()
-        	_MSGWIN_CLOSE()
-
-    	  ENDIF
-      ENDIF
-    ENDIF
-  ENDIF
-  
+  _CALL sub_monolith_main
 EVENT_END
 
+//--------------------------------------------------------------
+///モノリス　メイン
+//--------------------------------------------------------------
+sub_monolith_main:
+{
+  _GET_PALACE_AREA_OFFSET( SCWK_ANSWER )
 
+  IF ($SCWK_ANSWER == 0) && FLAG_OFF( SYS_FLAG_PALACE_MISSION_CLEAR ) THEN
+    //まだチュートリアルミッションをクリアしていないので「他人のパレスへ行け！」を表示
+    _CALL sub_monolith_tutorial_first
+    _RET 
+  ENDIF
+  
+  //↓通常のモノリス処理
+  
+  //ミッション選択候補リストを要求(fieldmapオーバーレイに配置の為、フェードアウト中は回避)
+  _INTRUDE_MISSION_CHOICE_LIST_REQ( SCWK_ANSWER )
+  IF $SCWK_ANSWER == FALSE THEN
+    _RET
+  ENDIF
+  
+  //モノリス呼び出し
+  _MAP_FADE_BLACK_OUT()
+  _MAP_FADE_END_CHECK()
+  _FIELD_CLOSE()
+
+  _CALL_MONOLITH_PROC()
+
+  _FIELD_OPEN()
+  _MAP_FADE_BLACK_IN()
+  _MAP_FADE_END_CHECK()
+      
+  //モノリス画面を抜けた時にミッションエントリーしていたならば、待機イベント呼び出し
+  _GET_MISSION_ENTRY( SCWK_ANSWER )
+  
+  SWITCH $SCWK_ANSWER
+  CASE SCR_PALACE_MISSION_ENTRY_NORMAL THEN
+    //通常パレスミッション
+    _CALL sub_monolith_normal_mission_entry
+    _RET
+  CASE SCR_PALACE_MISSION_ENTRY_FEST THEN
+    //フェスミッション
+    _CALL sub_monolith_fest_mission_entry
+    _RET
+  ENDSWITCH
+
+  //Gパワーチュートリアルチェック
+  _CALL sub_monolith_tutorial_first_gpower
+}
+_RET
+
+//--------------------------------------------------------------
+///モノリス　チュートリアル
+//--------------------------------------------------------------
+sub_monolith_tutorial_first:
+{
+  //まだミッションをクリアしていないので「他人のパレスへ行け！」を表示
+  _TALK_START_SE_PLAY()
+
+  //パレスじじい：主人公を見る
+  _OBJ_ANIME( PALACE01_OLDMAN1_01, anm_stay_dir_r )
+  _OBJ_ANIME_WAIT()
+  	
+  //主人公：じじいを見る
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_l )
+  _OBJ_ANIME_WAIT()
+  	
+  //「まず他人のパレスへ行け」
+  _BALLOONWIN_OBJMSG( plc_help_01, PALACE01_OLDMAN1_01 )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+}
+_RET
+
+//--------------------------------------------------------------
+///モノリス　1stチュートリアルミッション受領後
+//--------------------------------------------------------------
+sub_monolith_normal_mission_entry_first:
+{
+  _FLAG_SET( SYS_FLAG_PALACE_MISSION_START )
+        	
+  _CALL sub_get_area_oldman_objid
+
+  //パレスじじい：主人公を見る
+  _OBJ_ANIME( area_oldman_objid, anm_stay_dir_r )
+  _OBJ_ANIME_WAIT()
+        	
+  //主人公：じじいを見る
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_l )
+  _OBJ_ANIME_WAIT()
+        	
+  //「ミッションを開始したな！ワープが出来るぞ！」
+  _BALLOONWIN_OBJMSG( plc_help_02, area_oldman_objid )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+}
+_RET
+
+//--------------------------------------------------------------
+///モノリス　ハイリンクミッション受領後
+//--------------------------------------------------------------
+sub_monolith_normal_mission_entry:
+{
+  //初めて受注したミッションならチュートリアルメッセージ表示
+  IF FLAG_OFF( SYS_FLAG_PALACE_MISSION_START ) THEN
+    _CALL sub_monolith_normal_mission_entry_first
+  ENDIF
+  //ミッション開始待ち
+  _MISSION_START_WAIT_EVENT()
+}
+_RET
+
+//--------------------------------------------------------------
+///モノリス　フェスミッション受領後
+//--------------------------------------------------------------
+sub_monolith_fest_mission_entry:
+{
+  _SYSWIN_MSG( plc_fmission_entry, POS_DOWN )
+  _TIME_WAIT( 30*6 )
+  _SYSWIN_CLOSE()
+
+  //表フィールドに遷移
+  _INTRUDE_MAP_CHANGE_FMISSION_START()
+}
+_RET
+
+
+//--------------------------------------------------------------
+///モノリス　デルパワー初回取得時
+//--------------------------------------------------------------
+sub_monolith_tutorial_first_gpower:
+{
+  IF FLAG_ON( SYS_FLAG_PALACE_DPOWER ) THEN
+    _RET  //デルパワーチュートリアルは済んでいる
+  ENDIF
+  
+  _CHECK_EQP_GPOWER( SCWK_ANSWER )
+  IF $SCWK_ANSWER == TRUE THEN
+    _FLAG_SET( SYS_FLAG_PALACE_DPOWER )
+
+    _CALL sub_get_area_oldman_objid
+    	    
+    //パレスじじい：主人公を見て
+    _OBJ_ANIME( area_oldman_objid, anm_stay_dir_r )
+    _OBJ_ANIME_WAIT()
+
+    //主人公：じじいを見る
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_l )
+    _OBJ_ANIME_WAIT()
+        	
+    //「それはすれ違いで使えるのだ！」
+    _BALLOONWIN_OBJMSG( plc_help_05, area_oldman_objid )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+  ENDIF
+}
+_RET
 
 /**************************************************************/
 /*  初回誘導イベント [100314斉藤マ]                           */

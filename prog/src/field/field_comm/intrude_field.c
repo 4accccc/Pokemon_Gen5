@@ -117,6 +117,7 @@ typedef struct{
 //==============================================================================
 static GMEVENT * EVENT_ChangeMapPosCommEnd(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, INTRUDE_COMM_SYS_PTR intcomm );
 static GMEVENT_RESULT EVENT_MapChangeCommEnd(GMEVENT * event, int *seq, void*work);
+static GMEVENT_RESULT EVENT_MapChangeFMissionStart(GMEVENT * event, int *seq, void*work);
 static GMEVENT * EVENT_ChildCommEnd(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, INTRUDE_COMM_SYS_PTR intcomm);
 static GMEVENT_RESULT EventChildCommEnd(GMEVENT * event, int *seq, void*work);
 static void _PalaceMapCommBootCheck(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, GAME_COMM_SYS_PTR game_comm, FIELD_PLAYER *pcActor);
@@ -987,6 +988,97 @@ static GMEVENT_RESULT EVENT_MapChangeCommEnd(GMEVENT * event, int *seq, void*wor
   }
 	return GMEVENT_RES_CONTINUE;
 }
+
+//==================================================================
+/**
+ * フェスミッション開始時の表フィールドへのマップ移動
+ *
+ * @param   gsys		
+ * @param   fieldmap		
+ * @param   zone_id		
+ * @param   pos		
+ * @param   dir		
+ *
+ * @retval  GMEVENT *		
+ */
+//==================================================================
+GMEVENT * EVENT_IntrudeChangeMapFMissionStart(GAMESYS_WORK * gsys)
+{
+  EVENT_SIOEND_WARP *dsw;
+	GMEVENT * event;
+
+	event = GMEVENT_Create(gsys, NULL, EVENT_MapChangeFMissionStart, sizeof(EVENT_SIOEND_WARP));
+	dsw = GMEVENT_GetEventWork(event);
+	GFL_STD_MemClear(dsw, sizeof(EVENT_SIOEND_WARP));
+	
+	return event;
+}
+
+static GMEVENT_RESULT EVENT_MapChangeFMissionStart(GMEVENT * event, int *seq, void*work)
+{
+	EVENT_SIOEND_WARP * dsw = work;
+	GAMESYS_WORK  * gsys = GMEVENT_GetGameSysWork(event);
+  FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
+	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
+  enum{
+  	SEQ_INIT,
+    SEQ_DISGUISE_INIT,
+    SEQ_DISGUISE_MAIN,
+  	SEQ_MAP_WARP,
+    SEQ_FINISH,
+  };
+	
+	switch (*seq) {
+	case SEQ_INIT:
+    MMDLSYS_PauseMoveProc( FIELDMAP_GetMMdlSys( fieldmap ) );
+    
+    if(GameCommSys_BootCheck(game_comm) != GAME_COMM_NO_INVASION){//INVASIONじゃない場合はFIELD_BEACONの場合があるのでINVASIONじゃないかどうかでチェック
+      GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
+      int i;
+      PLAYER_WORK *plwork;
+      VecFx32 pos = {0,0,0};
+        
+      for(i = 0; i < FIELD_COMM_MEMBER_MAX; i++){
+        plwork = GAMEDATA_GetPlayerWork( gamedata , i );
+        PLAYERWORK_setPosition(plwork, &pos);
+      }
+    }
+    (*seq)++;
+    break;
+  case SEQ_DISGUISE_INIT:  //変装をしていれば元に戻す
+    {
+      FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+      
+      if(FIELDMAP_IsReady(fieldWork) == TRUE){
+        FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
+        
+        if(FIELD_PLAYER_CheckIllegalOBJCode( fld_player ) == FALSE){
+          IntrudeEvent_Sub_DisguiseEffectSetup(&dsw->iedw, gsys, fieldWork, DISGUISE_NO_NULL, 0,0);
+          (*seq)++;
+        }
+        else{
+          *seq = SEQ_MAP_WARP;
+        }
+      }
+    }
+    break;
+  case SEQ_DISGUISE_MAIN:
+    if(IntrudeEvent_Sub_DisguiseEffectMain(&dsw->iedw, NULL) == TRUE){
+      (*seq)++;
+    }
+    break;
+
+	case SEQ_MAP_WARP:
+  	GMEVENT_CallEvent( event, EVENT_ChangeMapFromPalace(gsys) );
+    (*seq)++;
+    break;
+	case SEQ_FINISH:
+ 	  MMDLSYS_ClearPauseMoveProc(FIELDMAP_GetMMdlSys(fieldmap));
+ 	  return GMEVENT_RES_FINISH;
+  }
+	return GMEVENT_RES_CONTINUE;
+}
+
 
 //--------------------------------------------------------------
 /**

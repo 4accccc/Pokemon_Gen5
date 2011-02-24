@@ -35,6 +35,8 @@
 #include "field\field_comm\intrude_work.h"
 #include "field/field_comm/intrude_mission_field.h"
 
+#include "gamesystem/link_festival.h"
+
 #include "message.naix"
 #include "msg/msg_invasion.h"
 #include "msg/msg_mission_msg.h"
@@ -322,14 +324,18 @@ VMCMD_RESULT EvCmdGetMissionEntry( VMHANDLE *core, void *wk )
 	u16 *ret_wk		= SCRCMD_GetVMWork( core, work );
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
   GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
+  LINK_FESTIVAL* fest_sys = GAMESYSTEM_GetLinkFestivalWork(gsys);
   INTRUDE_COMM_SYS_PTR intcomm;
   
   intcomm = Intrude_Check_CommConnect(game_comm);
   if(intcomm != NULL && intcomm->mission_start_event_ended == FALSE && MISSION_GetMissionEntry(&intcomm->mission) == TRUE){
-    *ret_wk = TRUE;
+    *ret_wk = SCR_PALACE_MISSION_ENTRY_NORMAL;
+  }
+  else if( FEST_MISSION_IsEntry( LINK_FESTIVAL_GetMissionWork(fest_sys))){
+    *ret_wk = SCR_PALACE_MISSION_ENTRY_FEST;
   }
   else{
-    *ret_wk = FALSE;
+    *ret_wk = SCR_PALACE_MISSION_ENTRY_NONE;
   }
   return VMCMD_RESULT_CONTINUE;
 }
@@ -632,3 +638,25 @@ VMCMD_RESULT EvCmdIntrudeCheckEqpGPower( VMHANDLE *core, void *wk )
   }
   return VMCMD_RESULT_CONTINUE;
 }
+
+//==================================================================
+/**
+ * フェスミッション開始時に表フィールドにマップチェンジさせる
+ *
+ * @param   core		
+ * @param   wk		
+ *
+ * @retval  VMCMD_RESULT		
+ */
+//==================================================================
+VMCMD_RESULT EvCmdIntrudeMapChangeFMissionStart( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*  work = (SCRCMD_WORK*)wk;
+  SCRIPT_WORK*   scw = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  SCRIPT_CallEvent( scw, EVENT_IntrudeChangeMapFMissionStart(gsys) );
+
+  return VMCMD_RESULT_SUSPEND;
+}
+

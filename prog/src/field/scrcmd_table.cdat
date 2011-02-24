@@ -956,6 +956,27 @@
   DEF_CMD( EvCmdGetMedalOyajiObjID, EV_SEQ_GET_MEDALOYAJI_OBJID )
   NO_CMD()
 
+  //ハイリンクフェス関連
+  DEF_CMD( EvCmdIntrudeMapChangeFMissionStart, EV_SEQ_INTRUDE_MAPCHG_FMISSION_START )
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
   END_CMD
   //スクリプトコマンドテーブル終了
 

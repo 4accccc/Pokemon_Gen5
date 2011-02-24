@@ -14,6 +14,8 @@
 //==============================================================================
 ///リンクフェスティバル　管理領域
 struct _LINK_FESTIVAL{
+  GAMESYS_WORK* gsys;
+
   FEST_MISSION  mission;  //現ミッションデータ
 
   u32 beacon_wait;  ///frame

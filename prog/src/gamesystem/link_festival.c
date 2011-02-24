@@ -49,6 +49,7 @@ LINK_FESTIVAL* LINK_FESTIVAL_Create( HEAPID heapID, GAMESYS_WORK* gsys )
   log_ClearAll( wk );
 
   wk->beacon_wait = 10*60;
+  wk->gsys = gsys;
   return wk;
 }
 
@@ -70,9 +71,21 @@ void LINK_FESTIVAL_Delete( LINK_FESTIVAL* wk )
 //---------------------------------------------------------
 void LINK_FESTIVAL_Update( LINK_FESTIVAL* wk )
 {
-  FEST_MISSION_Update( &wk->mission );
+  if(GAMEDATA_GetIntrudeReverseArea( GAMESYSTEM_GetGameData(wk->gsys)) == FALSE){  //表フィールドにいる間だけ更新
+    FEST_MISSION_Update( &wk->mission );
+  }
 
   lnkfes_BeaconSend( wk );
+}
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル ミッション参加中か？
+ */
+//---------------------------------------------------------
+BOOL LINK_FESTIVAL_IsMissionEntry( LINK_FESTIVAL* wk )
+{
+  return FEST_MISSION_IsEntry( &wk->mission);
 }
 
 //---------------------------------------------------------

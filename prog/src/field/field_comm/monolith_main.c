@@ -113,6 +113,10 @@ static const struct{
     &MonolithAppProc_Up_PalaceMap,
     &MonolithAppProc_Down_Status,
   },
+  {//MONOLITH_MENU_FMISSION
+    &MonolithAppProc_Up_PalaceMap,
+    &MonolithAppProc_Down_FMissionSelect,
+  },
 };
 
 ///モノリスメインPROCデータ

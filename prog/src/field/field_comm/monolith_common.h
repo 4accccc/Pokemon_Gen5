@@ -29,6 +29,7 @@ typedef enum{
   MONOLITH_MENU_MISSION,    ///<ミッションを受ける
   MONOLITH_MENU_STATUS,     ///<状態を見る
   MONOLITH_MENU_POWER,      ///<不思議なパワーをもらう
+  MONOLITH_MENU_FMISSION,   ///<フェスミッションを受ける
   
   MONOLITH_MENU_END,        ///<モノリス画面終了
 }MONOLITH_MENU;
@@ -212,3 +213,4 @@ extern const GFL_PROC_DATA MonolithAppProc_Up_MissionExplain;
 extern const GFL_PROC_DATA MonolithAppProc_Down_Status;
 extern const GFL_PROC_DATA MonolithAppProc_Down_PowerSelect;
 extern const GFL_PROC_DATA MonolithAppProc_Up_PowerExplain;
+extern const GFL_PROC_DATA MonolithAppProc_Down_FMissionSelect;

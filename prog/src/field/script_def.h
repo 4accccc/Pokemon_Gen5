@@ -631,3 +631,13 @@
 #define SCR_WBT_LIST_1ST_RESULT       (1) ///<1回戦結果
 #define SCR_WBT_LIST_2ND_RESULT       (2) ///<2回戦結果
 
+//--------------------------------------------------------------
+//  scrcmd_intrude_field.c
+//  ハイリンク関連定義
+//--------------------------------------------------------------
+
+//ツリーメニュー呼出し後にミッションにエントリーしているかチェック
+#define SCR_PALACE_MISSION_ENTRY_NONE     (0) ///<ミッションにエントリーしていない
+#define SCR_PALACE_MISSION_ENTRY_NORMAL   (1) ///<ハイリンクミッションにエントリーしている
+#define SCR_PALACE_MISSION_ENTRY_FEST     (2) ///<フェスミッションにエントリーしている
+
