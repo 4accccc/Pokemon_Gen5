@@ -682,11 +682,10 @@ void RESORT_PEOPLE_SYS_Main( RESORT_PEOPLE_SYS *p_wk,FIELD_PLAYER *p_player )
 //-----------------------------------------------------------------------------
 void RESORT_PEOPLE_SYS_AddAll( RESORT_PEOPLE_SYS *p_wk )
 {
-  RESORT_PLACEID placeID;
+  RESORT_PLACEID placeID  = RESORT_MAP_ZoneIDToPlaceID( p_wk->param.zoneID );
   int peopleID;
 
   //場所情報から存在しているデータのみ人物登録する
-  for( placeID = RESORT_PLACEID_START; placeID < RESORT_PLACEID_MAX; placeID++ )
   {
     for( peopleID = 0; peopleID < RESORT_DATA_MANAGER_MAX; peopleID++ )
     {
@@ -737,11 +736,12 @@ static RESORT_PEOPLE * RESORT_PEOPLE_SYS_Add( RESORT_PEOPLE_SYS *p_wk, const RES
     init_param.cp_binary    = p_wk->p_binary;
     init_param.p_mmdlsys    = p_wk->param.p_mmdlsys;
 
+    NAGI_Printf( "Add=%d\n",peopleID );
     p_wk->p_people[i] = RESORT_PEOPLE_Init( p_wk->heapID, &init_param );
     return p_wk->p_people[i];
   }
 
-  GF_ASSERT(0);
+  GF_ASSERT_MSG(0,"peopleID=%d\n", peopleID);
   return NULL;
 }
 
@@ -764,6 +764,7 @@ RESORT_PEOPLE * RESORT_PEOPLE_SYS_AddNew( RESORT_PEOPLE_SYS *p_wk, const RESORT_
     if( p_wk->p_people[i] == NULL )
     {
       RESORT_MAP_ZoneIDToPlaceID( cp_param->zoneID );
+      NAGI_Printf( "AddNew=%d\n", i );
       return RESORT_PEOPLE_SYS_Add( p_wk, cp_param,  i );
     }
   }
