@@ -22,3 +22,5 @@ doskey chf=cd %PROJECT_ROOT:/=\%resource\fldmapdata\$*
 
 doskey mcs=%PROJECT_ROOT:/=\%lib\TwlSystem\tools\mcsserver\mcsserv.exe
 doskey mcspv=%PROJECT_ROOT:/=\%tools\pmviewer\pmViewer2_twl.exe
+
+cmd /TAB:ON
