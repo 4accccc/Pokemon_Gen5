@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-02-16T21:11:57"/>
+	<create user="matsumiya" host="W00224" date="2011-02-24T20:24:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1280" top="141" right="1985" bottom="769" maximized="no" rayout="Vertical2">
+	<dialog left="1298" top="172" right="2003" bottom="800" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -291,6 +291,106 @@
 		<operation add_message="no" header_setting="no" tag_setting="no" output_setting="no" display="no" sort="no" flowchart_window="no"/>
 	</lock>
 
+
+	<row id="msg_r19_white_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂：捕獲デモ</comment>
+		<attribute name="キャラ指定">友達♀
+ベル</attribute>
+		<language name="JPN" width="256">アララギ『それでは
+せつめいを　はじめますね！[BE:01:ページ切り替え（クリア）]
+ポケモンと　であうことで
+ポケモンずかんの　ページが[BE:00:ページ切り替え（行送り）]
+じどうてきに　うまっていきます！[BE:01:ページ切り替え（クリア）]
+そして！　ポケモンを　つかまえることで
+さらに　くわしい　じょうほうが[BE:00:ページ切り替え（行送り）]
+えられるように　なっているの！[BE:01:ページ切り替え（クリア）]
+ということで　わたしが　じっさいに
+ポケモンを　つかまえてみせまーす！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アララギ『それでは
+説明を　始めますね！[BE:01:ページ切り替え（クリア）]
+ポケモンと　出会うことで
+ポケモン図鑑の　ページが[BE:00:ページ切り替え（行送り）]
+自動的に　うまっていきます！[BE:01:ページ切り替え（クリア）]
+そして！　ポケモンを　捕まえることで
+さらに　詳しい　情報が[BE:00:ページ切り替え（行送り）]
+得られるように　なっているの！[BE:01:ページ切り替え（クリア）]
+ということで　わたしが　実際に
+ポケモンを　捕まえてみせまーす！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r19_white_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・捕獲デモ後、フィールドに復帰すると
+　このメッセージ表示
+・アイテム入手処理
+　No004「モンスターボール」×5</comment>
+		<attribute name="キャラ指定">友達♀
+ベル</attribute>
+		<language name="JPN" width="256">アララギ『いまの　みてくれた？[BE:01:ページ切り替え（クリア）]
+ポイントを　かいせつすると
+まず　ポケモンの[BE:00:ページ切り替え（行送り）]
+たいりょくを　へらすこと！[BE:01:ページ切り替え（クリア）]
+げんきな　ポケモンは
+つかまえにくいのよね[BE:01:ページ切り替え（クリア）]
+できれば　じぶんの　ポケモンの　わざで
+つかまえたい　ポケモンを[BE:00:ページ切り替え（行送り）]
+ねむらせたり　まひさせると　いいわ！[BE:01:ページ切り替え（クリア）]
+それでは　きみたちに
+モンスターボールも　プレゼント！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アララギ『今の　見てくれた？[BE:01:ページ切り替え（クリア）]
+ポイントを　解説すると
+まず　ポケモンの[BE:00:ページ切り替え（行送り）]
+体力を　減らすこと！[BE:01:ページ切り替え（クリア）]
+元気な　ポケモンは
+捕まえにくいのよね[BE:01:ページ切り替え（クリア）]
+できれば　自分の　ポケモンの　技で
+捕まえたい　ポケモンを[BE:00:ページ切り替え（行送り）]
+ねむらせたり　まひさせると　いいわ！[BE:01:ページ切り替え（クリア）]
+それでは　きみたちに
+モンスターボールも　プレゼント！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r19_white_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・T02方面に移動、画面外に消えると
+　msg_r01_black_01
+・博士はt02に出現</comment>
+		<attribute name="キャラ指定">友達♀
+ベル</attribute>
+		<language name="JPN" width="256">アララギ『その　モンスターボールは
+ポケモンを　つかまえたり[BE:01:ページ切り替え（クリア）]
+つかまえた　ポケモンを
+つれて　はこぶための　どうぐなの！[BE:01:ページ切り替え（クリア）]
+では　わたしは　このさき
+カラクサタウンで　まってまーす！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アララギ『その　モンスターボールは
+ポケモンを　捕まえたり[BE:01:ページ切り替え（クリア）]
+捕まえた　ポケモンを
+連れて　運ぶための　道具なの！[BE:01:ページ切り替え（クリア）]
+では　わたしは　この先
+カラクサタウンで　待ってまーす！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_r19_white_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<attribute name="キャラ指定">友達♀
+ベル</attribute>
+		<language name="JPN" width="256"></language>
+		<language name="JPN_KANJI" width="256"></language>
+	</row>
+
+	<row id="msg_r19_white_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<attribute name="キャラ指定">友達♀
+ベル</attribute>
+		<language name="JPN" width="256"></language>
+		<language name="JPN_KANJI" width="256"></language>
+	</row>
+
+	<row id="msg_r19_white_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<attribute name="キャラ指定">友達♀
+ベル</attribute>
+		<language name="JPN" width="256"></language>
+		<language name="JPN_KANJI" width="256"></language>
+	</row>
 
 	<row id="msg_r19_champion_01">
 		<comment>♂
