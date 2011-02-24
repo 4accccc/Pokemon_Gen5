@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-07-15T19:04:53"/>
+	<create user="matsumiya" host="W00224" date="2011-02-24T20:00:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,9 +235,9 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="222"/>
 		<erase position="-1" width="100"/>
-		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
+		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="132">
 		</attribute>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="274"/>
@@ -292,11 +292,143 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
+	<row id="msg_c12r0101_swmama_01">
+		<comment>♀</comment>
+		<attribute name="キャラ指定">主人公ママ</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_c12r0101_swmama_02">
+		<comment>♀</comment>
+		<attribute name="キャラ指定">主人公ママ</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_c12r0101_swmama_03">
+		<comment>♀</comment>
+		<attribute name="キャラ指定">主人公ママ</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_c12r0101_swmama_04">
+		<comment>♀</comment>
+		<attribute name="キャラ指定">主人公ママ</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_c12r0101_swmama_05">
+		<comment>♀</comment>
+		<attribute name="キャラ指定">主人公ママ</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_c12r0101_game_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>BGメッセージ</comment>
+		<attribute name="キャラ指定">WII</attribute>
+		<language name="JPN" width="256">ウィーが　ある！
+リモコンがたの　コントローラ　だ！</language>
+		<language name="JPN_KANJI" width="256">ウィーが　ある！
+リモコン型の　コントローラ　だ！</language>
+	</row>
+
+	<row id="msg_c12r0101_tv_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>BGメッセージ</comment>
+		<attribute name="キャラ指定">TV</attribute>
+		<language name="JPN" width="256">パパが　かった
+うすがたテレビ　だ！</language>
+		<language name="JPN_KANJI" width="256">パパが　買った
+薄型テレビ　だ！</language>
+	</row>
+
+	<row id="msg_c12r0101_bed_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>BGメッセージ</comment>
+		<attribute name="キャラ指定">ベッド</attribute>
+		<language name="JPN" width="256">ベッドが　ある……！▼
+ママが　せんたくしてくれた
+シーツが　いい　かおり！</language>
+		<language name="JPN_KANJI" width="256">ベッドが　ある……！▼
+ママが　洗濯してくれた
+シーツが　いい　香り！</language>
+	</row>
+
+	<row id="msg_c12r0101_pc_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>ＢＧメッセージ
+・プラチナと同じメッセージ
+・0＝主人公名</comment>
+		<attribute name="キャラ指定">パソコン</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]は
+パソコンを　チェックした！▼
+ポケモン　きそちしき▼
+この　せかいでは　ポケモンと
+ひとが　いっしょに　くらしています▼
+ポケモンを　たたかわせる　ひとを
+ポケモントレーナーと　いいます</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
+パソコンを　チェックした！▼
+ポケモン　基礎知識▼
+この世界では　ポケモンと
+人が　一緒に　暮らしています▼
+ポケモンを　戦わせる人を
+ポケモントレーナーと　いいます</language>
+	</row>
+
+	<row id="msg_c12r0101_award1_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<comment>BGメッセージ
+・続けて表彰状アプリ呼び出し</comment>
+		<attribute name="キャラ指定">地方図鑑の表彰状</attribute>
+		<language name="JPN" width="256">イッシュずかん　かんせいの
+ひょうしょうじょう　だ！▼</language>
+		<language name="JPN_KANJI" width="256">イッシュ図鑑　完成の　表彰状だ！▼</language>
+	</row>
+
+	<row id="msg_c12r0101_award2_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<comment>BGメッセージ
+・続けて表彰状アプリ呼び出し</comment>
+		<attribute name="キャラ指定">全国図鑑の表彰状</attribute>
+		<language name="JPN" width="256">ぜんこくずかん　かんせいの
+ひょうしょうじょう　だ！▼</language>
+		<language name="JPN_KANJI" width="256">全国図鑑　完成の　表彰状だ！▼</language>
+	</row>
+
+	<row id="msg_c12r0101_trophy1_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<comment>BGメッセージ</comment>
+		<attribute name="キャラ指定">バトルサブウェイのトロフィ
+・シングル</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+シングル　マスターに　しょうりした▽
+あかしの　トロフィーだ！</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+シングル　マスターに　勝利した▽
+証の　トロフィーだ！</language>
+	</row>
+
+	<row id="msg_c12r0101_trophy2_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<comment>BGメッセージ</comment>
+		<attribute name="キャラ指定">バトルサブウェイのトロフィ
+・ダブル</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+ダブル　マスターに　しょうりした▽
+あかしの　トロフィーだ！</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+ダブル　マスターに　勝利した▽
+証の　トロフィーだ！</language>
+	</row>
+
+	<row id="msg_c12r0101_trophy3_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<comment>BGメッセージ</comment>
+		<attribute name="キャラ指定">バトルサブウェイのトロフィ
+・マルチ</attribute>
+		<language name="JPN" width="256">バトルサブウェイの
+マルチ　マスターを　しょうりした▽
+あかしの　トロフィーだ！</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイの
+マルチ　マスターを　勝利した▽
+証の　トロフィーだ！</language>
 	</row>
 
 	<flowchart-group-list>
