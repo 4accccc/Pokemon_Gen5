@@ -3158,8 +3158,10 @@ static void MAPCHG_setupMapTools( GAMESYS_WORK * gsys, u16 zone_id )
     
     {// 進入かライブチャットかダウジングはそのまま その他の画面は切り替え
       u8 mode = GAMEDATA_GetSubScreenMode(gamedata);
-      if((mode != FIELD_SUBSCREEN_INTRUDE) && (mode != FIELD_SUBSCREEN_BEACON_VIEW)
-         && (mode != FIELD_SUBSCREEN_DOWSING)){
+      if( (mode != FIELD_SUBSCREEN_INTRUDE) &&
+          (mode != FIELD_SUBSCREEN_BEACON_VIEW) &&
+          (mode != FIELD_SUBSCREEN_FMISSION_VIEW) &&
+          (mode != FIELD_SUBSCREEN_DOWSING)){
         GAMEDATA_SetSubScreenMode(gamedata, FIELD_SUBSCREEN_NORMAL);
       }
     }
