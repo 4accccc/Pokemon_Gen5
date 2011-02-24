@@ -126,6 +126,7 @@ static void SetMedalState( MEDAL_ST* p_medal_st , u8 state )
 void MEDALBOX_Init(MEDALBOX *p_mdlbox)
 {
   GFL_STD_MemFill(p_mdlbox, 0, sizeof(MEDALBOX));
+  p_mdlbox->push_medal = MDLID_MAX;
 }
 
 //----------------------------------------------------------------------------
