@@ -253,7 +253,7 @@ static GMEVENT_RESULT FMenuMsgWinEvent( GMEVENT *event, int *seq, void *wk );
 */
 
 static GMEVENT * createFMenuReportEvent(
-  GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, u32 heapID, FLDMSGBG *msgBG, RETURNFUNC_RESULT * result );
+  GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, u32 heapID, FLDMSGBG *msgBG, FIELD_SUBSCREEN_MODE subscreen_mode, RETURNFUNC_RESULT * result );
 static GMEVENT_RESULT FMenuReportEvent( GMEVENT *event, int *seq, void *wk );
 
 
@@ -1876,7 +1876,7 @@ static void FMenuEvent_Report( PROCLINK_WORK* wk, u32 param )
 { 
   GMEVENT * subevent = createFMenuReportEvent(
                         wk->param->gsys, wk->param->field_wk, wk->heapID,
-                        FIELDMAP_GetFldMsgBG(wk->param->field_wk ), &wk->result );
+                        FIELDMAP_GetFldMsgBG(wk->param->field_wk ), wk->param->subscreen_mode, &wk->result );
   GMEVENT_CallEvent(wk->event, subevent);
 
 //  wk->result  = RETURNFUNC_RESULT_RETURN;
@@ -2560,7 +2560,7 @@ static GMEVENT_RESULT FMenuMsgWinEvent( GMEVENT *event, int *seq, void *wk )
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 static GMEVENT * createFMenuReportEvent(
-  GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, u32 heapID, FLDMSGBG *msgBG, RETURNFUNC_RESULT * result )
+  GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, u32 heapID, FLDMSGBG *msgBG,  FIELD_SUBSCREEN_MODE subscreen_mode, RETURNFUNC_RESULT * result )
 {
   GMEVENT * msgEvent;
   FMENU_REPORT_EVENT_WORK * work;
@@ -2574,6 +2574,7 @@ static GMEVENT * createFMenuReportEvent(
   work->gsys = gsys;
   work->fieldWork = fieldWork;
   work->sv = GAMEDATA_GetSaveControlWork( GAMESYSTEM_GetGameData(work->gsys) );
+  work->subscreen_mode = subscreen_mode;
 
   work->resultAddr = result;
 

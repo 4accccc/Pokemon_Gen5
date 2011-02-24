@@ -420,7 +420,12 @@ int REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq )
 
   case REPORT_SEQ_SAVE_COMP:              // セーブ実行
     ReleaseLocalWork( wk );
-    FIELD_SUBSCREEN_Change( FIELDMAP_GetFieldSubscreenWork(wk->fieldWork), FIELD_SUBSCREEN_NORMAL );
+    if( wk->subscreen_mode == FIELD_SUBSCREEN_FMISSION_VIEW ||
+        wk->subscreen_mode == FIELD_SUBSCREEN_BEACON_VIEW ){
+      FIELD_SUBSCREEN_Change( FIELDMAP_GetFieldSubscreenWork(wk->fieldWork), wk->subscreen_mode );
+    }else{
+      FIELD_SUBSCREEN_Change( FIELDMAP_GetFieldSubscreenWork(wk->fieldWork), FIELD_SUBSCREEN_NORMAL );
+    }
     *seq = REPORT_SEQ_SAVE_COMP_END;
     break;
 

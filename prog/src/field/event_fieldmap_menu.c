@@ -150,6 +150,7 @@ GMEVENT * EVENT_FieldMapMenu(
     mwk->return_subscreen_mode = 
       FIELD_SUBSCREEN_CGearCheck( FIELDMAP_GetFieldSubscreenWork(mwk->fieldWork), FIELD_SUBSCREEN_NORMAL );
   }
+  mwk->link.subscreen_mode = mwk->return_subscreen_mode;  //レポート画面呼び出し等に引き継ぐために覚えておく
 
   // Xボタンで開始しているが、タッチ開始時のようにカーソルは出さない
   GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );

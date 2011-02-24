@@ -28,6 +28,7 @@ typedef struct {
   FLDMSGBG * msgBG;
   HEAPID	heapID;
 	void * resultAddr;
+  FIELD_SUBSCREEN_MODE  subscreen_mode;
 
 	REPORT_EVENT_LOCAL * local;		// ローカルワーク（内部で作成されます）
 

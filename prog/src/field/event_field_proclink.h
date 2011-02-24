@@ -13,6 +13,7 @@
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/game_event.h"
 #include "field/fieldmap_proc.h"
+#include "field/field_subscreen.h"
 #include "item/itempocket_def.h"  //バッグのページ指定のデファイン
 #include "/app/p_status.h"    //ステータスのページ指定のデファイン
 
@@ -91,6 +92,7 @@ struct _EVENT_PROCLINK_PARAM
   GAMESYS_WORK              *gsys;      //[in ]ゲームシステム
   FIELDMAP_WORK             *field_wk;  //[in ]フィールドワーク
   GMEVENT                   *event;     //[in ]親イベント
+  FIELD_SUBSCREEN_MODE      subscreen_mode; //[in]メニュー呼び出し時点でのサブスクリーンモード
 
   //呼ぶプロック
   EVENT_PROCLINK_CALL_TYPE  call;       //[in ]最初に呼ばれるPROC
