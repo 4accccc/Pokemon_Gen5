@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-01-29T17:56:19"/>
+	<create user="matsumiya" host="W00224" date="2011-02-24T21:18:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1305" top="202" right="2010" bottom="830" maximized="no" rayout="Vertical2">
+	<dialog left="1296" top="159" right="2001" bottom="787" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -540,7 +540,7 @@ jugglimg_11</attribute>
 [1:00:トレーナー名:0]</language>
 	</row>
 
-	<row id="msg_c03gym0101_statue_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c03gym0101_statue_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>BGメッセージ
 ・c04でのプラズマ団イベント発生時
 ※SWANでは削除予定</comment>
