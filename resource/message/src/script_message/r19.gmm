@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-02-24T20:24:22"/>
+	<create user="matsumiya" host="W00224" date="2011-02-24T20:44:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1298" top="172" right="2003" bottom="800" maximized="no" rayout="Vertical2">
+	<dialog left="1280" top="197" right="1985" bottom="825" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -294,8 +294,7 @@
 
 	<row id="msg_r19_white_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂：捕獲デモ</comment>
-		<attribute name="キャラ指定">友達♀
-ベル</attribute>
+		<attribute name="キャラ指定">ベル</attribute>
 		<language name="JPN" width="256">アララギ『それでは
 せつめいを　はじめますね！[BE:01:ページ切り替え（クリア）]
 ポケモンと　であうことで
@@ -324,8 +323,7 @@
 　このメッセージ表示
 ・アイテム入手処理
 　No004「モンスターボール」×5</comment>
-		<attribute name="キャラ指定">友達♀
-ベル</attribute>
+		<attribute name="キャラ指定">ベル</attribute>
 		<language name="JPN" width="256">アララギ『いまの　みてくれた？[BE:01:ページ切り替え（クリア）]
 ポイントを　かいせつすると
 まず　ポケモンの[BE:00:ページ切り替え（行送り）]
@@ -355,8 +353,7 @@
 ・T02方面に移動、画面外に消えると
 　msg_r01_black_01
 ・博士はt02に出現</comment>
-		<attribute name="キャラ指定">友達♀
-ベル</attribute>
+		<attribute name="キャラ指定">ベル</attribute>
 		<language name="JPN" width="256">アララギ『その　モンスターボールは
 ポケモンを　つかまえたり[BE:01:ページ切り替え（クリア）]
 つかまえた　ポケモンを
@@ -372,22 +369,19 @@
 	</row>
 
 	<row id="msg_r19_white_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<attribute name="キャラ指定">友達♀
-ベル</attribute>
+		<attribute name="キャラ指定">ベル</attribute>
 		<language name="JPN" width="256"></language>
 		<language name="JPN_KANJI" width="256"></language>
 	</row>
 
 	<row id="msg_r19_white_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<attribute name="キャラ指定">友達♀
-ベル</attribute>
+		<attribute name="キャラ指定">ベル</attribute>
 		<language name="JPN" width="256"></language>
 		<language name="JPN_KANJI" width="256"></language>
 	</row>
 
 	<row id="msg_r19_white_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<attribute name="キャラ指定">友達♀
-ベル</attribute>
+		<attribute name="キャラ指定">ベル</attribute>
 		<language name="JPN" width="256"></language>
 		<language name="JPN_KANJI" width="256"></language>
 	</row>
