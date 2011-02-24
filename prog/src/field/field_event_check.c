@@ -72,7 +72,7 @@
 #include "field_gimmick.h"   //for FLDGMK_GimmickCodeCheck
 #include "field_gimmick_def.h"  //for FLD_GIMMICK_GYM_Å`
 #include "gym_elec.h"     //for GYM_ELEC_CreateMoveEvt
-#include "gym_fly.h"     //for GYM_FLY_CreateShotEvt
+#include "gym_fly.h"     //for GYM_FLY_CheckEvent
 #include "gym_insect.h"     //for GYM_INSECT_CreateGateInEvent
 #include "field_gimmick_d06.h"
 
@@ -346,6 +346,14 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
     if (event != NULL) return event;
   }
 
+  // îÚçsÉWÉÄéûä‘äƒéã
+  {
+    if( FLDGMK_GimmickCodeCheck(fieldWork,FLD_GIMMICK_GYM_FLY) )
+    {
+      event = GYM_FLY_CheckEvent(gsys);
+      if( event != NULL ){ return event; }
+    }
+  }
 
 
   SET_CHECK("ev_check:trainer eye");
