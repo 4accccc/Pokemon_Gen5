@@ -47,3 +47,12 @@ extern GMEVENT* EVENT_FestMissionCheck( GAMESYS_WORK * gsys, void* work );
  */
 extern GMEVENT* EVENT_FestMissionRetire( GAMESYS_WORK * gsys, void* work );
 
+//----------------------------------------------------------------------
+/*
+ *  @brief  フェスタミッション強制終了イベント
+ *
+ *  @param  work  FEST_MISSION*
+ */
+//----------------------------------------------------------------------
+extern GMEVENT* EVENT_FestMissionRetireForce( GAMESYS_WORK * gsys, void* work );
+

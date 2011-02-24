@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00270" date="2011-02-21T19:46:20"/>
+	<create user="iwasawa" host="W00270" date="2011-02-24T18:35:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,9 +312,17 @@
 	<row id="msg_fmission_retire">
 		<comment>フェスミッションリタイア時メッセージ</comment>
 		<language name="JPN" width="256">フェスミッションを
-リタイアしました</language>
+リタイアしました▼</language>
 		<language name="JPN_KANJI" width="256">フェスミッションを
-リタイアしました</language>
+リタイアしました▼</language>
+	</row>
+
+	<row id="msg_fmission_retire_force">
+		<comment>フェスミッション強制終了時メッセージ</comment>
+		<language name="JPN" width="256">つうしんが　せつだん　されたので
+フェスミッションを　しゅうりょう　します▼</language>
+		<language name="JPN_KANJI" width="256">通信が　切断されたので
+フェスミッションを　終了します▼</language>
 	</row>
 
 	<row id="msg_fmission_start_title">

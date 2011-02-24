@@ -2112,10 +2112,16 @@ static GMEVENT* CheckFestMissionEnd( GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldWor
   LINK_FESTIVAL* fest_sys = GAMESYSTEM_GetLinkFestivalWork( gsys );
   FEST_MISSION* mission = LINK_FESTIVAL_GetMissionWork( fest_sys );
 
-  if( FEST_MISSION_IsEnd( mission ) == FALSE ){
+  if( FEST_MISSION_IsEntry( mission ) == FALSE ){
     return NULL;
   }
-  return GMEVENT_CreateOverlayEventCall( gsys, FS_OVERLAY_ID( event_fmission ), EVENT_FestMissionEnd, fieldWork );
+  if( GAMESYSTEM_GetAlwaysNetFlag( gsys )  == FALSE ){
+    return GMEVENT_CreateOverlayEventCall( gsys, FS_OVERLAY_ID( event_fmission ), EVENT_FestMissionRetireForce, fieldWork );
+  }
+  if( FEST_MISSION_IsEnd( mission ) ){
+    return GMEVENT_CreateOverlayEventCall( gsys, FS_OVERLAY_ID( event_fmission ), EVENT_FestMissionEnd, fieldWork );
+  }
+  return NULL;
 }
 
 //======================================================================

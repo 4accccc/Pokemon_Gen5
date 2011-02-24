@@ -88,6 +88,7 @@ typedef struct _FMISSION_EVWORK{
 
   BOOL  result;
   u32   res_score;
+  int   param;
 
   STRBUF* s_buf;
   STRBUF* s_tmp;
@@ -104,11 +105,13 @@ static void sub_FMissionStartParamDraw( FMISSION_EVWORK* wk );
 static void sub_FMissionEndParamDraw( FMISSION_EVWORK* wk );
 static void sub_FMissionCheckParamDraw( FMISSION_EVWORK* wk );
 
+//----------------------------------------------------------------------
 /*
  *  @brief  フェスタミッション発動イベント
  *
  *  @param  work  FEST_MISSION*
  */
+//----------------------------------------------------------------------
 GMEVENT* EVENT_FestMissionStart( GAMESYS_WORK * gsys, void* work )
 {
   GMEVENT* event;
@@ -128,11 +131,13 @@ GMEVENT* EVENT_FestMissionStart( GAMESYS_WORK * gsys, void* work )
   return event;
 }
 
+//----------------------------------------------------------------------
 /*
  *  @brief  フェスタミッション終了イベント
  *
  *  @param  work  FIELDMAP_WORK*
  */
+//----------------------------------------------------------------------
 GMEVENT* EVENT_FestMissionEnd( GAMESYS_WORK * gsys, void* work )
 {
   GMEVENT* event;
@@ -154,11 +159,13 @@ GMEVENT* EVENT_FestMissionEnd( GAMESYS_WORK * gsys, void* work )
   return event;
 }
 
+//----------------------------------------------------------------------
 /*
  *  @brief  フェスタミッション内容確認イベント
  *
  *  @param  work  FEST_MISSION*
  */
+//----------------------------------------------------------------------
 GMEVENT* EVENT_FestMissionCheck( GAMESYS_WORK * gsys, void* work )
 {
   GMEVENT* event;
@@ -177,11 +184,14 @@ GMEVENT* EVENT_FestMissionCheck( GAMESYS_WORK * gsys, void* work )
   return event;
 }
 
+
+//----------------------------------------------------------------------
 /*
  *  @brief  フェスタミッションリタイアイベント
  *
  *  @param  work  FEST_MISSION*
  */
+//----------------------------------------------------------------------
 GMEVENT* EVENT_FestMissionRetire( GAMESYS_WORK * gsys, void* work )
 {
   GMEVENT* event;
@@ -193,9 +203,37 @@ GMEVENT* EVENT_FestMissionRetire( GAMESYS_WORK * gsys, void* work )
   wk = GMEVENT_GetEventWork(event);
 
   sub_InitFMissionWork( wk, gsys, fieldmap );
+  wk->param = 0;
   return event;
 }
 
+//----------------------------------------------------------------------
+/*
+ *  @brief  フェスタミッション強制終了イベント
+ *
+ *  @param  work  FEST_MISSION*
+ */
+//----------------------------------------------------------------------
+GMEVENT* EVENT_FestMissionRetireForce( GAMESYS_WORK * gsys, void* work )
+{
+  GMEVENT* event;
+  FMISSION_EVWORK* wk;
+  const FEST_MISSION* fmwk = (FEST_MISSION*)work;
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+
+  event = GMEVENT_Create(gsys, NULL, event_FestMissionRetireMain, sizeof(FMISSION_EVWORK));
+  wk = GMEVENT_GetEventWork(event);
+
+  sub_InitFMissionWork( wk, gsys, fieldmap );
+  wk->param = 1;
+  return event;
+}
+
+//----------------------------------------------------------------------
+/*
+ *  @brief  イベントワーク　共通初期化
+ */
+//----------------------------------------------------------------------
 static void sub_InitFMissionWork( FMISSION_EVWORK* wk, GAMESYS_WORK * gsys, FIELDMAP_WORK* fieldmap )
 {
   wk->heapID = HEAPID_FIELDMAP;
@@ -206,7 +244,7 @@ static void sub_InitFMissionWork( FMISSION_EVWORK* wk, GAMESYS_WORK * gsys, FIEL
   wk->gdata = GAMESYSTEM_GetGameData(gsys);
   wk->fmb = FIELDMAP_GetFldMsgBG( wk->fieldmap );
   wk->mmdl_sys = FIELDMAP_GetMMdlSys( wk->fieldmap );
-
+  
   wk->fest_sys = GAMESYSTEM_GetLinkFestivalWork( gsys );
 
   wk->p_data = GPOWER_PowerData_LoadAlloc( wk->heapID );
@@ -223,6 +261,11 @@ static void sub_InitFMissionWork( FMISSION_EVWORK* wk, GAMESYS_WORK * gsys, FIEL
   MMDLSYS_PauseMoveProc( wk->mmdl_sys );
 }
 
+//----------------------------------------------------------------------
+/*
+ *  @brief  イベントワーク　共通開放
+ */
+//----------------------------------------------------------------------
 static void sub_ReleaseFMissionWork( FMISSION_EVWORK* wk )
 {
   GFL_STR_DeleteBuffer( wk->s_tmp );
@@ -411,14 +454,19 @@ static GMEVENT_RESULT event_FestMissionRetireMain(GMEVENT * event, int *  seq, v
 
   switch (*seq) {
   case 0:
-    evcall_MsgPrint( evwk->gsys, event, evwk->fmb, evwk->msgData, msg_fmission_retire );
+    evcall_MsgPrint( evwk->gsys, event, evwk->fmb, evwk->msgData, msg_fmission_retire+evwk->param );
     (*seq)++;
     break;
   case 1:
-    LINK_FESTIVAL_MissionEnd( evwk->fest_sys );
     {
-      GMEVENT* call_ev = EVENT_ChangeSubScreen( evwk->gsys, evwk->fieldmap, FIELD_SUBSCREEN_NORMAL );
-      GMEVENT_CallEvent( event, call_ev );
+      FIELD_SUBSCREEN_MODE screen_mode = FIELD_SUBSCREEN_GetMode( FIELDMAP_GetFieldSubscreenWork( evwk->fieldmap ) );
+
+      LINK_FESTIVAL_MissionEnd( evwk->fest_sys );
+
+      if( screen_mode == FIELD_SUBSCREEN_FMISSION_VIEW ){
+        GMEVENT* call_ev = EVENT_ChangeSubScreen( evwk->gsys, evwk->fieldmap, FIELD_SUBSCREEN_NORMAL );
+        GMEVENT_CallEvent( event, call_ev );
+      }
     }
     (*seq)++;
     break;
