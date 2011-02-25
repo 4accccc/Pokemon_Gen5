@@ -62,6 +62,7 @@ extern void GAMEBEACON_InfoTbl_Clear( GAMEBEACON_INFO_TBL* infoTbl );
 //  アクセサ
 //--------------------------------------------------------------
 extern BOOL GAMEBEACON_Check_NPC(const GAMEBEACON_INFO *info);
+extern BOOL GAMEBEACON_Check_FestMission(const GAMEBEACON_INFO *info);
 extern BOOL GAMEBEACON_Check_Error(const GAMEBEACON_INFO *info);
 extern void GAMEBEACON_Get_PlayerNameToBuf(const GAMEBEACON_INFO *info, STRBUF* strbuf);
 extern int GAMEBEACON_Get_PmVersion(const GAMEBEACON_INFO *info);

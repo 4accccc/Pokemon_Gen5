@@ -546,6 +546,22 @@ BOOL GAMEBEACON_Check_NPC(const GAMEBEACON_INFO *info)
 
 //==================================================================
 /**
+ * フェスミッションビーコンかどうかチェック 
+ * @param   info	ビーコン情報へのポインタ
+ * @retval  TRUE  NPCデータ(=詳細情報なし)
+ */
+//==================================================================
+BOOL GAMEBEACON_Check_FestMission(const GAMEBEACON_INFO *info)
+{
+  if( info->action.action_no < GAMEBEACON_ACTION_FEST_MISSION ||
+      info->action.action_no > GAMEBEACON_ACTION_FMISSION_ITEM_GET ){
+    return FALSE;
+  }
+  return TRUE;
+}
+
+//==================================================================
+/**
  * プレイヤー名をSTRBUFに取得する
  * @param   info		ビーコン情報へのポインタ
  * @retval  const STRCODE *		プレイヤー名へのポインタ
