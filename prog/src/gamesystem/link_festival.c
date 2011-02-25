@@ -71,8 +71,12 @@ void LINK_FESTIVAL_Delete( LINK_FESTIVAL* wk )
 //---------------------------------------------------------
 void LINK_FESTIVAL_Update( LINK_FESTIVAL* wk )
 {
-  if(GAMEDATA_GetIntrudeReverseArea( GAMESYSTEM_GetGameData(wk->gsys)) == FALSE){  //表フィールドにいる間だけ更新
+  if( wk->live_f && 
+      GAMEDATA_GetIntrudeReverseArea( GAMESYSTEM_GetGameData(wk->gsys)) == FALSE ){  //表フィールドにいる間だけ更新
     FEST_MISSION_Update( &wk->mission );
+  }
+  if( wk->ready_timer ){
+    --wk->ready_timer;
   }
 
   lnkfes_BeaconSend( wk );
@@ -101,6 +105,9 @@ FEST_MISSION* LINK_FESTIVAL_GetMissionWork( LINK_FESTIVAL* wk )
 //---------------------------------------------------------
 /*
  * @brief リンクフェスティバル ミッションスタート
+ *
+ * この関数を呼んだ時点でビーコン送信は開始されるが、
+ * アップデートは無効のまま(時間カウントが始まらない)ので注意！
  */
 //---------------------------------------------------------
 void LINK_FESTIVAL_MissionStart( LINK_FESTIVAL* wk, const FEST_MISSION* mission, BOOL succeed_f )
@@ -108,9 +115,20 @@ void LINK_FESTIVAL_MissionStart( LINK_FESTIVAL* wk, const FEST_MISSION* mission,
   log_ClearAll( wk );
 
   FEST_MISSION_Start( &wk->mission, mission, succeed_f );
+  wk->live_f = FALSE;
 
   //最後のミッションを覚えておく
   log_LastMissionLogStore( wk, mission );
+}
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル ミッションアップデート　有効無効設定
+ */
+//---------------------------------------------------------
+void LINK_FESTIVAL_MissionLiveStatusSet( LINK_FESTIVAL* wk, BOOL live_f )
+{
+  wk->live_f = live_f;
 }
 
 //---------------------------------------------------------
@@ -124,6 +142,32 @@ void LINK_FESTIVAL_MissionEnd( LINK_FESTIVAL* wk )
 
   log_ClearAll( wk );
 }
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル ミッションReadyタイマーセット
+ */
+//---------------------------------------------------------
+void LINK_FESTIVAL_MissionReadyTimerSet( LINK_FESTIVAL* wk )
+{
+  wk->ready_timer = 60*4;  //4sec
+}
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル ミッションReadyタイマーゲット
+ *
+ * @return  カウンター値(秒)
+ */
+//---------------------------------------------------------
+int LINK_FESTIVAL_MissionReadyTimerGet( LINK_FESTIVAL* wk )
+{
+  if( wk->ready_timer ){
+    return LINKFEST_FRAME2SEC(wk->ready_timer);
+  }
+  return wk->ready_timer;
+}
+
 
 //---------------------------------------------------------
 /*
@@ -411,6 +455,8 @@ static void log_ClearAll( LINK_FESTIVAL* wk )
   wk->beacon_timer = 0; 
   wk->finfo_score = 0;
   wk->finfo_bonus = 0;
+
+  wk->ready_timer = 0;
 }
 
 //---------------------------------------------------------

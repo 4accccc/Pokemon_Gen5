@@ -16,7 +16,9 @@
 struct _LINK_FESTIVAL{
   GAMESYS_WORK* gsys;
 
-  FEST_MISSION  mission;  //現ミッションデータ
+  FEST_MISSION  mission;      //現ミッションデータ
+  u8            live_f;       //ミッションアップデートの有効無効フラグ
+  u16           ready_timer;  //ミッション開始前タイマー
 
   u32 beacon_wait;  ///frame
   u32 beacon_timer; //frame

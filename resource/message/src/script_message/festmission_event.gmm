@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00270" date="2011-02-24T18:35:36"/>
+	<create user="iwasawa" host="W00270" date="2011-02-25T13:15:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -290,8 +290,10 @@
 
 	<row id="msg_fmission_start">
 		<comment>ミッション開始時プレメッセージ</comment>
-		<language name="JPN" width="256">フェスタミッションを　かいし　します[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">フェスタミッションを　開始します[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">ミッションを　かいしします
+しばらく　おまちください……</language>
+		<language name="JPN_KANJI" width="256">ミッションを　開始します
+しばらく　お待ちください……</language>
 	</row>
 
 	<row id="msg_fmission_end">

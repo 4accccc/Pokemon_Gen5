@@ -354,7 +354,8 @@ typedef struct{
 ///侵入下画面制御ワーク
 typedef struct _INTRUDE_SUBDISP{
   GAMESYS_WORK *gsys;
-  
+  LINK_FESTIVAL*  fest_sys;
+
   u32 index_cgr;
   u32 index_pltt;
   u32 index_pltt_font;
@@ -575,6 +576,7 @@ INTRUDE_SUBDISP_PTR INTRUDE_SUBDISP_Init(GAMESYS_WORK *gsys)
   
   intsub = GFL_HEAP_AllocClearMemory(HEAPID_FIELD_SUBSCREEN, sizeof(INTRUDE_SUBDISP));
   intsub->gsys = gsys;
+  intsub->fest_sys = GAMESYSTEM_GetLinkFestivalWork(gsys);
   intsub->now_bg_pal = 0xff;  //初回に必ず更新がかかるように0xff
   
   intsub->player_pal_tblno = PALACE_TOWN_DATA_NULL;
@@ -1994,8 +1996,6 @@ static void _IntSub_ActorUpdate_LvNum(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INFO *a
     }
   }
   
-  my_occupy = GAMEDATA_GetMyOccupyInfo(gamedata);
-//  level = my_occupy->intrude_level;
   level = intsub->comm.m_timer;
   if(intsub->print_time != -1 && intsub->print_time != level && level <= 5
       && intsub->comm.m_status == MISSION_STATUS_EXE){
@@ -2676,6 +2676,10 @@ static void _IntSub_CommParamUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS
     GFL_STD_MemClear(&intsub->comm, sizeof(INTRUDE_COMM_PARAM));
   #endif
     intsub->add_player_count = 1; //自分
+  
+    if( LINK_FESTIVAL_IsMissionEntry( intsub->fest_sys )){
+      comm->m_timer = LINK_FESTIVAL_MissionReadyTimerGet( intsub->fest_sys );
+    } 
   }
   else{
     const MISSION_DATA *md;
@@ -2846,6 +2850,8 @@ static BOOL _TimeNum_CheckEnable(INTRUDE_SUBDISP_PTR intsub)
     case MISSION_STATUS_RESULT:    //結果が届いている or 結果表示中
       return TRUE;
     }
+    //フェスミッションエントリー中
+    return LINK_FESTIVAL_IsMissionEntry( intsub->fest_sys );
   }
   return FALSE;
 }

@@ -44,13 +44,15 @@ static void wset_MissionParam( WORDSET* wset, u8 bufID, FMISSION_WSET type, int 
 //---------------------------------------------------------
 void FEST_MISSION_WordsetParamAll( WORDSET* wset, FEST_MISSION* fmwk )
 {
+  int sec = LINKFEST_FRAME2SEC(fmwk->life);
+
   WORDSET_RegisterNumber( wset, 0, fmwk->time, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
   WORDSET_RegisterNumber( wset, 1, fmwk->target, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
   wset_MissionParam( wset, 2, DATA_FMissionDataType[fmwk->type].param_wset,fmwk->param);
   WORDSET_RegisterItemName( wset, 3, fmwk->item );
   WORDSET_RegisterNumber( wset, 4, fmwk->item_num, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-  WORDSET_RegisterNumber( wset, 5, fmwk->life/(60*60), 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-  WORDSET_RegisterNumber( wset, 6, (fmwk->life/60)%60, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+  WORDSET_RegisterNumber( wset, 5, sec/60, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+  WORDSET_RegisterNumber( wset, 6, sec%60, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
 }
 
 //---------------------------------------------------------

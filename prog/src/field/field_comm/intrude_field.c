@@ -31,6 +31,9 @@
 #include "field/intrude_secret_item.h"
 #include "field/event_mission_secretitem_ex.h"
 
+#include "gamesystem/link_festival.h"
+#include "field/event_festmission.h"
+
 #include "message.naix"
 #include "msg/msg_invasion.h"
 #include "fieldmap/map_matrix.naix"  //MATRIX_ID
@@ -1020,8 +1023,10 @@ static GMEVENT_RESULT EVENT_MapChangeFMissionStart(GMEVENT * event, int *seq, vo
 	GAMESYS_WORK  * gsys = GMEVENT_GetGameSysWork(event);
   FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
 	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
+	LINK_FESTIVAL* fest_sys = GAMESYSTEM_GetLinkFestivalWork(gsys);
   enum{
   	SEQ_INIT,
+    SEQ_PLAYER_POS_RESET,
     SEQ_DISGUISE_INIT,
     SEQ_DISGUISE_MAIN,
   	SEQ_MAP_WARP,
@@ -1031,7 +1036,23 @@ static GMEVENT_RESULT EVENT_MapChangeFMissionStart(GMEVENT * event, int *seq, vo
 	switch (*seq) {
 	case SEQ_INIT:
     MMDLSYS_PauseMoveProc( FIELDMAP_GetMMdlSys( fieldmap ) );
-    
+   
+    {
+      GMEVENT* mission_ev;
+      FMISSION_START_PARAM param;
+
+      MI_CpuClear8(&param,sizeof(FMISSION_START_PARAM));
+      param.mission = *(LINK_FESTIVAL_GetMissionWork( fest_sys ));
+      param.succeed_f = FALSE;
+
+      mission_ev = GMEVENT_CreateOverlayEventCall( gsys,
+        FS_OVERLAY_ID( event_fmission ), EVENT_FestMissionStart, &param );
+          
+      GMEVENT_CallEvent(event, mission_ev);
+    }
+    (*seq)++;
+    break;
+  case SEQ_PLAYER_POS_RESET:
     if(GameCommSys_BootCheck(game_comm) != GAME_COMM_NO_INVASION){//INVASIONじゃない場合はFIELD_BEACONの場合があるのでINVASIONじゃないかどうかでチェック
       GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
       int i;

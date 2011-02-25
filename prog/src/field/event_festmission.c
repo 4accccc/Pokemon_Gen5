@@ -8,6 +8,7 @@
 //============================================================================================
 #include <gflib.h>
 #include "system/main.h"      //GFL_HEAPID_APP参照
+#include "system/time_icon.h"
 #include "net/network_define.h"
 
 #include "gamesystem/gamesystem.h"
@@ -44,10 +45,15 @@
 #define BUFLEN_TMP_MSG  (BUFLEN_FMISSION_EXP)
 
 #define SYSMSG_WIN_SX   (19)
-#define SYSWIN_PX       (4)
+#define SYSWIN_PX       (1)
 #define SYSWIN_PY       (1)
-#define SYSWIN_SX       (24)
-#define SYSWIN_SY       (22)
+#define SYSWIN_SX       (30)
+#define SYSWIN_SY       (16)
+
+#define SMSG_WIN_PX     (1)
+#define SMSG_WIN_PY     (20)
+#define SMSG_WIN_SX     (28)
+#define SMSG_WIN_SY     (4)
 
 #define CWIN_STR_OX01  (0)
 #define CWIN_STR_OX02  (8)
@@ -74,6 +80,7 @@ typedef struct _FMISSION_EVWORK{
 
   FLDMSGBG* fmb;
   FLDSYSWIN* win;
+  FLDSYSWIN* msg_win;
   FLDMENUFUNC* fmenu;
   MMDLSYS * mmdl_sys;
   FLDSYSWIN_STREAM* winStream;
@@ -82,6 +89,7 @@ typedef struct _FMISSION_EVWORK{
   GFL_MSGDATA* msgFmis;
   WORDSET* wset;
   POWER_CONV_DATA* p_data;
+  TIMEICON_WORK* timeIcon;
 
   LINK_FESTIVAL* fest_sys;
   FEST_MISSION mission;
@@ -333,33 +341,43 @@ static GMEVENT_RESULT event_FestMissionStartMain(GMEVENT * event, int *  seq, vo
 
   switch (*seq) {
   case 0:
-    evcall_MsgPrint( wk->gsys, event, wk->fmb, wk->msgData, msg_fmission_start );
-    (*seq)++;
-    break;
-  case 1:
+    LINK_FESTIVAL_MissionStart( wk->fest_sys, (const FEST_MISSION*)&wk->mission, wk->succeed_f );
+
     wk->win = FLDSYSWIN_AddEx( wk->fmb, wk->msgData, SYSWIN_PX, SYSWIN_PY, SYSWIN_SX, SYSWIN_SY );
     FLDSYSWIN_ClearWindow( wk->win );
     sub_FMissionStartParamDraw( wk );
+#if 0 
+    wk->winStream = FLDSYSWIN_STREAM_Add( wk->fmb, wk->msgData, SYSMSG_WIN_SX );
+    GFL_MSG_GetString( wk->msgData, msg_fmission_start, wk->s_buf );
+    FLDSYSWIN_STREAM_AllPrintStrBuf( wk->winStream, 0, 0, wk->s_buf );
+    wk->timeIcon = TIMEICON_Create( GFUser_VIntr_GetTCBSYS(),
+      FLDSYSWIN_STREAM_GetBmpWin( wk->winStream ), 15, TIMEICON_DEFAULT_WAIT, GFL_HEAP_LOWID(wk->heapID) );
+#endif
+    wk->ct = 30*2;  //2sec
+    
     (*seq)++;
     break;
-  case 2:
-    if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B)){
+  case 1:
+    if( (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) ) ||
+        (--wk->ct == 0)){
       (*seq)++;
     }
     break;
-  case 3:
-    LINK_FESTIVAL_MissionStart( wk->fest_sys, (const FEST_MISSION*)&wk->mission, wk->succeed_f );
-
+  case 2:
     FLDSYSWIN_ClearWindow( wk->win );
     FLDSYSWIN_Delete( wk->win );
-
+#if 0
+    TIMEICON_Exit( wk->timeIcon );
+    FLDSYSWIN_STREAM_Delete( wk->winStream );
+#endif    
     {
       GMEVENT* call_ev = EVENT_ChangeSubScreen( wk->gsys, wk->fieldmap, FIELD_SUBSCREEN_FMISSION_VIEW );
       GMEVENT_CallEvent( event, call_ev );
     }
     (*seq)++;
     break;
-  default:
+  case 3:
+    LINK_FESTIVAL_MissionLiveStatusSet( wk->fest_sys, TRUE );
     sub_ReleaseFMissionWork( wk );
     return GMEVENT_RES_FINISH;
   }
@@ -507,6 +525,8 @@ static void sub_FMissionParamDraw( FMISSION_EVWORK* wk, STRBUF* str, u8 px, u8 l
 //-----------------------------------------------------------------
 static void sub_FMissionStartParamDraw( FMISSION_EVWORK* wk )
 {
+  int sec = LINKFEST_FRAME2SEC(wk->mission.life);
+
   //パラメータ
   FEST_MISSION_GetExpStr( wk->wset, wk->msgFmis, wk->s_buf, &wk->mission, wk->heapID );
   sub_FMissionParamDraw( wk, wk->s_buf, CWIN_STR_OX01, 2 );
@@ -519,15 +539,15 @@ static void sub_FMissionStartParamDraw( FMISSION_EVWORK* wk )
   FLDSYSWIN_PrintStrBuf( wk->win, CWIN_STR_OX01, CWIN_STR_OY*0, wk->s_buf );
 
   //残り時間
-  if( (wk->mission.life / (60*60)) == 0 ){
+  if( (sec / 60) == 0 ){
     GFL_MSG_GetString( wk->msgData, msg_fmission_life02, wk->s_buf );
   }else{
     GFL_MSG_GetString( wk->msgData, msg_fmission_life01, wk->s_buf );
   }
-  sub_FMissionParamDraw( wk, wk->s_buf, CWIN_STR_OX02, 5 );
+  sub_FMissionParamDraw( wk, wk->s_buf, CWIN_STR_OX02, 6 );
   //報酬
   GFL_MSG_GetString( wk->msgData, msg_fmission_reward, wk->s_buf );
-  sub_FMissionParamDraw( wk, wk->s_buf, CWIN_STR_OX02, 6 );
+  sub_FMissionParamDraw( wk, wk->s_buf, CWIN_STR_OX02, 7 );
 }
 
 //-----------------------------------------------------------------

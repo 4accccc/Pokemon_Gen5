@@ -696,7 +696,7 @@ DOWSING_WORK*    DOWSING_Init(
     EVENTWORK*           event_wk;
     SAVE_CONTROL_WORK*   sv_wk;
     INTRUDE_SAVE_WORK*   intrude_wk;
-
+    
     gs_wk       = FIELDMAP_GetGameSysWork( work->fieldmap_wk );
     gamedata    = GAMESYSTEM_GetGameData( gs_wk );
     event_wk    = GAMEDATA_GetEventWork( gamedata );

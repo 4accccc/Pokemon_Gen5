@@ -17,6 +17,8 @@
 #define LINKFEST_LOG_MAX  (100) //フェスタミッションログMax
 #define LINKFEST_LOG_END  (LINKFEST_LOG_MAX-1) //フェスタミッションログEndIndex
 
+#define LINKFEST_FRAME2SEC(frame) ((frame/60)+((frame%60)!=0))
+
 typedef struct _LINK_FESTIVAL LINK_FESTIVAL;
 
 //フェスタログデータ構造体
@@ -83,9 +85,19 @@ extern FEST_MISSION* LINK_FESTIVAL_GetMissionWork( LINK_FESTIVAL* wk );
 //---------------------------------------------------------
 /*
  * @brief リンクフェスティバル ミッションスタート
+ *
+ * この関数を呼んだ時点でビーコン送信は開始されるが、
+ * アップデートは無効のまま(時間カウントが始まらない)ので注意！
  */
 //---------------------------------------------------------
 extern void LINK_FESTIVAL_MissionStart( LINK_FESTIVAL* wk, const FEST_MISSION* mission, BOOL succeed_f );
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル ミッションアップデート　有効無効設定
+ */
+//---------------------------------------------------------
+extern void LINK_FESTIVAL_MissionLiveStatusSet( LINK_FESTIVAL* wk, BOOL live_f );
 
 //---------------------------------------------------------
 /*
@@ -93,6 +105,23 @@ extern void LINK_FESTIVAL_MissionStart( LINK_FESTIVAL* wk, const FEST_MISSION* m
  */
 //---------------------------------------------------------
 extern void LINK_FESTIVAL_MissionEnd( LINK_FESTIVAL* wk );
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル ミッションReadyカウンターセット
+ */
+//---------------------------------------------------------
+extern void LINK_FESTIVAL_MissionReadyTimerSet( LINK_FESTIVAL* wk );
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル ミッションReadyカウンターゲット
+ *
+ * @return  カウンター値(秒)
+ */
+//---------------------------------------------------------
+extern int LINK_FESTIVAL_MissionReadyTimerGet( LINK_FESTIVAL* wk );
+
 
 //---------------------------------------------------------
 /*

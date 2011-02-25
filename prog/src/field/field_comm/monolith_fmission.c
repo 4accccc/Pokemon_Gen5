@@ -638,7 +638,7 @@ static GFL_PROC_RESULT MonolithFMissionSelectProc_Main( GFL_PROC * proc, int * s
         FMISSION_DATA_GetMissionParam( mfw->fmd_man, FMISSION_ID_POKE_SEARCH_TABUNNE, &mission);
         LINK_FESTIVAL_MissionStart( mfw->fest_sys, &mission, FALSE );
 
-        GAMEDATA_SetSubScreenMode(GAMESYSTEM_GetGameData(appwk->parent->gsys), FIELD_SUBSCREEN_FMISSION_VIEW );
+//        GAMEDATA_SetSubScreenMode(GAMESYSTEM_GetGameData(appwk->parent->gsys), FIELD_SUBSCREEN_FMISSION_VIEW );
 
         if( comm_no == GAME_COMM_NO_FIELD_BEACON_SEARCH ){
           *seq = SEQ_FINISH;
@@ -668,6 +668,7 @@ static GFL_PROC_RESULT MonolithFMissionSelectProc_Main( GFL_PROC * proc, int * s
     break;
   case SEQ_FINISH:
     if( mfw->order_end ){
+      LINK_FESTIVAL_MissionReadyTimerSet( mfw->fest_sys );
       appwk->next_menu_index = MONOLITH_MENU_END;
     }else{
       appwk->next_menu_index = MONOLITH_MENU_TITLE;
