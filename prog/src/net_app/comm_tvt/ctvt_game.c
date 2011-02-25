@@ -3578,9 +3578,6 @@ static BOOL game_update_seq_main_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
     // 元々のテンポをratio/256倍する
     PMSND_SetStatusBGM( 285, 85, PMSND_NOEFFECT );
     //PMSND_SetStatusBGM( 285, PMSND_NOEFFECT, PMSND_NOEFFECT );
-    // 取っ手変更
-    GFL_CLACT_WK_SetAnmSeq( gameWork->clwkPompHandle, CGOAM_POMP_HANDLE_LAST );
-    GFL_CLACT_WK_StopAnm( gameWork->clwkPompHandle );
   }
   
   // プレート更新
