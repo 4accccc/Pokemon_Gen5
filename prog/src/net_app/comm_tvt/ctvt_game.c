@@ -3108,7 +3108,7 @@ static void game_update_seq_title_end_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK
   // BGƒ[ƒh
   // ‚µ‚½‰æ–Ê
   GFL_ARC_UTIL_TransVramPalette( ARCID_TVT_BALLOON, NARC_tvt_balloon_tv_game_bg_l2_NCLR , 
-      PALTYPE_MAIN_BG, CTVT_GAME_PAL_BG_M_BG*32, 32*6, gameWork->heapId );
+      PALTYPE_MAIN_BG, CTVT_GAME_PAL_BG_M_BG*32, 32*7, gameWork->heapId );
   GFL_ARC_UTIL_TransVramBgCharacter( ARCID_TVT_BALLOON, NARC_tvt_balloon_tv_game_bg_l2_NCGR,
       CTVT_GAME_FRAME_M_BG, 0, 0, FALSE, gameWork->heapId );
   GFL_ARC_UTIL_TransVramScreen( ARCID_TVT_BALLOON, NARC_tvt_balloon_tv_game_bg_l2_NSCR, 
