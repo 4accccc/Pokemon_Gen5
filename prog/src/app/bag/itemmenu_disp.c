@@ -1038,7 +1038,7 @@ static void _bmpwinPocketNoneMake(FIELD_ITEMMENU_WORK* pWork )
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->winPocketNone.win), 0 );
 
   // フィルタがかかっているかどうかを判断して何も無いメッセージを表示
-  if( GetRepositoryMenuCount( pWork ) > 2 )
+  if( (GetRepositoryMenuCount( pWork ) > 2) && (pWork->pocketno == BAG_POKE_REPOSITORY) )
   {
     GFL_MSG_GetString(  pWork->MsgManager, mes_bag_134, pWork->pStrBuf );
   }
