@@ -64,7 +64,8 @@ SAVEDATASRC =   savedata/save_tbl.c \
 				savedata/medalbox.c \
         field/fldmmdl_save.c \
         savedata/person_state.c \
-        savedata/resonance_resort_sv.c
+        savedata/resonance_resort_sv.c \
+				savedata/infinity_dungeon_save.c
 
 
 #’ÊM‚Ìí’“

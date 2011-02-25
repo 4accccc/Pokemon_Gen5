@@ -60,6 +60,7 @@
 #include "savedata/etc_save.h"
 #include "savedata/resonance_resort_sv.h"
 #include "savedata/medalbox.h"
+#include "savedata/infinity_dungeon_save.h"
 
 
 //--------------------------------------------------------------
@@ -420,6 +421,11 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
     GMDATA_ID_MEDALBOX,
     (FUNC_GET_SIZE)MEDALBOX_GetWorkSize,
     (FUNC_INIT_WORK)MEDALBOX_Init,
+  },
+  { //メダルボックス
+    GMDATA_ID_INFINITYDUNGEON,
+    (FUNC_GET_SIZE)INFINITYDUNGEON_SAVE_GetWorkSize,
+    (FUNC_INIT_WORK)INFINITYDUNGEON_SAVE_Init,
   },
 };
 
