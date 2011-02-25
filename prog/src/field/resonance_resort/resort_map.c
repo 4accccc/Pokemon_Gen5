@@ -57,12 +57,14 @@ ZONEID RESORT_MAP_PlaceIDToZoneID( RESORT_PLACEID placeID )
 //----------------------------------------------------------------------------
 /**
  *	@brief　ゾーンIDから場所IDへの変換
+ *	          この関数はZONEIDに重複がないときにしか扱えないので禁止
  *
  *	@param	ZONEID zoneID 　ゾーンID
  *
  *	@return 場所ID
  */
 //-----------------------------------------------------------------------------
+/*
 RESORT_PLACEID RESORT_MAP_ZoneIDToPlaceID( ZONEID zoneID )
 {
   int i;
@@ -76,6 +78,7 @@ RESORT_PLACEID RESORT_MAP_ZoneIDToPlaceID( ZONEID zoneID )
   GF_ASSERT(0);
   return 0;
 }
+*/
 //----------------------------------------------------------------------------
 /**
  *	@brief 場所による、インデックスごとの座標を取得

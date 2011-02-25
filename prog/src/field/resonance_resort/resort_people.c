@@ -56,7 +56,7 @@ typedef struct
   RESORT_PEOPLE_TYPE people_type;
   void *p_data_adrs;
   u16 peopleID;
-  ZONEID zoneID;
+  RESORT_PLACEID placeID;
   MMDLSYS * p_mmdlsys;
   const RESORT_BINARY_PEOPLE *cp_binary;
   FIELD_PLAYER *p_player;       //プレイヤー
@@ -163,21 +163,20 @@ static RESORT_PEOPLE * RESORT_PEOPLE_Init( HEAPID heapID, const RESORT_PEOPLE_IN
     MMDL *p_mmdl = RESORT_PEOPLE_GetMmdl( p_wk );
     if( p_mmdl == NULL )
     {
-      RESORT_PLACEID placeID = RESORT_MAP_ZoneIDToPlaceID( cp_param->zoneID );
       u16 grid_x, grid_z;
       MMDL_HEADER header = sc_default_header;
 
       header.id = RESORT_PEOPLE_PEOPLEID_TO_MMDLID(cp_param->peopleID);
       p_wk->cp_function->SetupMmdHeader( p_wk, &header );
 
-      RESORT_MAP_GetPlaceGridPosByIndex( placeID, cp_param->peopleID, &grid_x, &grid_z );
+      RESORT_MAP_GetPlaceGridPosByIndex( cp_param->placeID, cp_param->peopleID, &grid_x, &grid_z );
 
       MMDLHEADER_SetGridPos( &header, grid_x, grid_z, 0 );
-      MMDLSYS_AddMMdl( cp_param->p_mmdlsys, &header, cp_param->zoneID );
+      MMDLSYS_AddMMdl( cp_param->p_mmdlsys, &header, RESORT_MAP_PlaceIDToZoneID(cp_param->placeID) );
 
       //作成した場合は、データとMMDLをひもづけるため、データにPEOPLEIDとPLACEIDを設定
       RESORT_PEOPLE_SetData( p_wk, RESORT_DATA_PARAM_PEOPLE_ID, cp_param->peopleID );
-      RESORT_PEOPLE_SetData( p_wk, RESORT_DATA_PARAM_PLACE_ID, placeID );
+      RESORT_PEOPLE_SetData( p_wk, RESORT_DATA_PARAM_PLACE_ID, cp_param->placeID );
     }
   }
 
@@ -682,30 +681,28 @@ void RESORT_PEOPLE_SYS_Main( RESORT_PEOPLE_SYS *p_wk,FIELD_PLAYER *p_player )
 //-----------------------------------------------------------------------------
 void RESORT_PEOPLE_SYS_AddAll( RESORT_PEOPLE_SYS *p_wk )
 {
-  RESORT_PLACEID placeID  = RESORT_MAP_ZoneIDToPlaceID( p_wk->param.zoneID );
+  RESORT_PLACEID placeID = p_wk->param.placeID;
   int peopleID;
 
   //場所情報から存在しているデータのみ人物登録する
+  for( peopleID = 0; peopleID < RESORT_DATA_MANAGER_MAX; peopleID++ )
   {
-    for( peopleID = 0; peopleID < RESORT_DATA_MANAGER_MAX; peopleID++ )
+    if( !RESORT_DATA_MANAGER_IsPlaceEmpty( p_wk->param.p_data_manager, placeID, peopleID ) )
     {
-      if( !RESORT_DATA_MANAGER_IsPlaceEmpty( p_wk->param.p_data_manager, placeID, peopleID ) )
+      void *p_data_adrs;
+      RESORT_DATA_MANAGER_TYPE type;
+      u16 data_idx;
+
+      RESORT_DATA_MANAGER_GetPlaceData( p_wk->param.p_data_manager, placeID, peopleID, &type, &data_idx );
+      p_data_adrs = RESORT_DATA_MANAGER_GetDataAdrs( p_wk->param.p_data_manager, type, data_idx );
+
       {
-        void *p_data_adrs;
-        RESORT_DATA_MANAGER_TYPE type;
-        u16 data_idx;
-
-        RESORT_DATA_MANAGER_GetPlaceData( p_wk->param.p_data_manager, placeID, peopleID, &type, &data_idx );
-        p_data_adrs = RESORT_DATA_MANAGER_GetDataAdrs( p_wk->param.p_data_manager, type, data_idx );
-
-        {
-          RESORT_PEOPLE_SYS_ADD_PARAM param;
-          GFL_STD_MemClear( &param, sizeof(RESORT_PEOPLE_SYS_ADD_PARAM) );
-          param.people_type = RESORT_DATA_MANAGER_GetPeopleType( type );
-          param.p_data_adrs = p_data_adrs;
-          param.zoneID      = p_wk->param.zoneID;
-          RESORT_PEOPLE_SYS_Add( p_wk, &param, peopleID );
-        }
+        RESORT_PEOPLE_SYS_ADD_PARAM param;
+        GFL_STD_MemClear( &param, sizeof(RESORT_PEOPLE_SYS_ADD_PARAM) );
+        param.people_type = RESORT_DATA_MANAGER_GetPeopleType( type );
+        param.p_data_adrs = p_data_adrs;
+        param.placeID     = p_wk->param.placeID;
+        RESORT_PEOPLE_SYS_Add( p_wk, &param, peopleID );
       }
     }
   }
@@ -732,7 +729,7 @@ static RESORT_PEOPLE * RESORT_PEOPLE_SYS_Add( RESORT_PEOPLE_SYS *p_wk, const RES
     init_param.people_type  = cp_param->people_type;
     init_param.p_data_adrs  = cp_param->p_data_adrs;
     init_param.peopleID     = peopleID;
-    init_param.zoneID       = cp_param->zoneID;
+    init_param.placeID      = cp_param->placeID;
     init_param.cp_binary    = p_wk->p_binary;
     init_param.p_mmdlsys    = p_wk->param.p_mmdlsys;
 
@@ -763,7 +760,6 @@ RESORT_PEOPLE * RESORT_PEOPLE_SYS_AddNew( RESORT_PEOPLE_SYS *p_wk, const RESORT_
     //開いているところを検索して追加
     if( p_wk->p_people[i] == NULL )
     {
-      RESORT_MAP_ZoneIDToPlaceID( cp_param->zoneID );
       NAGI_Printf( "AddNew=%d\n", i );
       return RESORT_PEOPLE_SYS_Add( p_wk, cp_param,  i );
     }

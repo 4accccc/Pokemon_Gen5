@@ -40,7 +40,6 @@
  *					定数宣言
 */
 //=============================================================================
-#define ZONE_ID_RESORT_RECEPTION    (ZONE_ID_C16R0101)
 
 //=============================================================================
 /**
@@ -489,6 +488,7 @@ static RECEPTION_PEOPLE * RECEPTION_PEOPLE_Init( HEAPID heapID, FIELDMAP_WORK *p
     param.p_recv_sv_buff  = RECEPTION_BUFF_GetRecvSvBuff( p_wk->p_buff );
     param.p_recv_tmp_buff = RECEPTION_BUFF_GetRecvTmpBuff( p_wk->p_buff );
     param.p_proxy_buff    = RECEPTION_BUFF_GetProxyBuff( p_wk->p_buff );
+    param.p_city_data     = RESONANCE_RESORT_SV_GetCityData( p_resort_sv );
     
     p_wk->p_data_manager = RESORT_DATA_MANAGER_Init( &param, heapID );
   }
@@ -501,7 +501,7 @@ static RECEPTION_PEOPLE * RECEPTION_PEOPLE_Init( HEAPID heapID, FIELDMAP_WORK *p
     param.p_mmdlsys = GAMEDATA_GetMMdlSys(p_gamedata);
     param.p_data_manager = p_wk->p_data_manager;
     param.max = RECEPTION_PEOPLE_MAX;
-    param.zoneID = ZONE_ID_RESORT_RECEPTION;
+    param.placeID = RESORT_PLACEID_RECEPTION;
     p_wk->p_people_sys = RESORT_PEOPLE_SYS_Init( &param, heapID );
   }
 
@@ -613,7 +613,7 @@ static void Reception_People_UpdateRecvCallback( void *p_wk_adrs, RESORT_RECV_DA
 
     param.people_type = RESORT_PEOPLE_TYPE_TOURIST;
     param.p_data_adrs = p_recv;
-    param.zoneID      = ZONE_ID_RESORT_RECEPTION;
+    param.placeID      = RESORT_PLACEID_RECEPTION;
 
     p_people = RESORT_PEOPLE_SYS_AddNew( p_wk->p_people_sys, &param );
     RESORT_PEOPLE_SetVisible( p_people, FALSE );
@@ -649,7 +649,7 @@ static void Reception_People_UpdateProxyCallback( void *p_wk_adrs, RESORT_PROXY_
     GFL_STD_MemClear(&param,sizeof(RESORT_PEOPLE_SYS_ADD_PARAM));
     param.people_type = RESORT_PEOPLE_TYPE_PROXY;
     param.p_data_adrs = p_proxy;
-    param.zoneID      = ZONE_ID_RESORT_RECEPTION;
+    param.placeID      = RESORT_PLACEID_RECEPTION;
     p_people = RESORT_PEOPLE_SYS_AddNew( p_wk->p_people_sys, &param );
 
     //人物作成したら、上から落下してくるタスクを登録

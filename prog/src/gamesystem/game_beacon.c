@@ -788,19 +788,25 @@ static void BeaconInfo_SetResortData( GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_
     SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( bsys->gamedata );
     RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( p_sv );
     RESORT_RECV_BUFF *p_buff  =  RESONANCE_RESORT_SV_GetDataBuff( p_resort );
+    RESORT_PEOPLE_ALL_DATA *p_all_people = RESONANCE_RESORT_SV_GetPeopleAllData( p_resort );
 
     //ビーコン情報取得
     RESORT_BEACON_DATA *p_beacon  = RESORT_BEACON_DATA_Init( GFL_HEAP_LOWID(GFL_HEAPID_APP) );
+
     RESORT_BEACON_DATA_SetBeaconInfo( p_beacon, info );
 
-    //ビーコン追加
-    if( RESORT_RECV_BUFF_AddBeacon( p_buff, p_beacon ) == FALSE )
+    //マージチェック
+    if( !RESORT_PEOPLE_ALL_DATA_AddBeacon( p_all_people, p_beacon ) )
     {
-      //セーブデータに入らなかったら、拡張バッファがあるか調べて入れる
-      if( GameBeaconSys->p_resort_buff )
+      //ビーコン追加
+      if( RESORT_RECV_BUFF_AddBeacon( p_buff, p_beacon ) == FALSE )
       {
-        NAGI_Printf( "セーブデータに入らなかったので拡張領域にいれるよ！\n" );
-        RESORT_RECV_BUFF_AddBeacon( GameBeaconSys->p_resort_buff, p_beacon );
+        //セーブデータに入らなかったら、拡張バッファがあるか調べて入れる
+        if( GameBeaconSys->p_resort_buff )
+        {
+          NAGI_Printf( "セーブデータに入らなかったので拡張領域にいれるよ！\n" );
+          RESORT_RECV_BUFF_AddBeacon( GameBeaconSys->p_resort_buff, p_beacon );
+        }
       }
     }
 

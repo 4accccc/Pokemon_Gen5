@@ -23,6 +23,13 @@
 _EVENT_DATA    ev_resort
 _EVENT_DATA    ev_resort_tourist
 _EVENT_DATA    ev_resort_proxy
+_EVENT_DATA    ev_resort_resident
+_EVENT_DATA    ev_resort_visitor
+_EVENT_DATA    ev_resort_secretary_work
+_EVENT_DATA    ev_resort_secretary_space
+_EVENT_DATA    ev_resort_secretary_move
+_EVENT_DATA    ev_resort_secretary_center
+_EVENT_DATA    ev_resort_secretary_pc
 _EVENT_DATA_END
 
 
@@ -69,19 +76,19 @@ EVENT_START ev_resort_tourist
 
     //分岐
     SWITCH $LWK_MENU_RET
-    CASE SEQ_INVITATION THEN   //招待
+    CASE SEQ_TOURIST_INVITATION THEN   //招待
       _CALL sub_tourist_invitation
-    CASE SEQ_SCOUT THEN        //スカウト
+    CASE SEQ_TOURIST_SCOUT THEN        //スカウト
       _CALL sub_tourist_scout
-    CASE SEQ_BYE THEN          //さようなら
+    CASE SEQ_TOURIST_BYE THEN          //さようなら
       _CALL sub_tourist_bye
-    CASE SEQ_DOING THEN        //最近どうしてる？
+    CASE SEQ_TOURIST_DOING THEN        //最近どうしてる？
       _CALL sub_tourist_doing
-    CASE SEQ_SPOT THEN         //おすすめスポット
+    CASE SEQ_TOURIST_SPOT THEN         //おすすめスポット
       _CALL sub_tourist_spot
-    CASE SEQ_APPEAL THEN       //アピールを聞く
+    CASE SEQ_TOURIST_APPEAL THEN       //アピールを聞く
       _CALL sub_tourist_appeal
-    CASE SEQ_WAIT THEN         //ちょっと待ってて
+    CASE SEQ_TOURIST_WAIT THEN         //ちょっと待ってて
       _CALL sub_tourist_wait
     DEFAULT
       $LWK_MENU_LOOP = FALSE //念のため無限ループを避ける
@@ -92,7 +99,7 @@ EVENT_START ev_resort_tourist
 EVENT_END
 
 //==============================================================
-//サブルーチン：メニュー表示
+//サブルーチン：旅行者メニュー表示
 //==============================================================
 sub_tourist_main_menu:
 {
@@ -101,15 +108,15 @@ sub_tourist_main_menu:
 
 	_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, LWK_MENU_RET )
 
-	_BMPMENU_MAKE_LIST( resort_sys_select_01, SEQ_INVITATION )	//招待
-	_BMPMENU_MAKE_LIST( resort_sys_select_02, SEQ_SCOUT )	      //スカウト
-	_BMPMENU_MAKE_LIST( resort_sys_select_07, SEQ_BYE )	        //さようなら
-	_BMPMENU_MAKE_LIST( resort_sys_select_04, SEQ_DOING )	      //さいきんどう？
+	_BMPMENU_MAKE_LIST( resort_sys_select_01, SEQ_TOURIST_INVITATION )	//招待
+	_BMPMENU_MAKE_LIST( resort_sys_select_02, SEQ_TOURIST_SCOUT )	      //スカウト
+	_BMPMENU_MAKE_LIST( resort_sys_select_07, SEQ_TOURIST_BYE )	        //さようなら
+	_BMPMENU_MAKE_LIST( resort_sys_select_04, SEQ_TOURIST_DOING )	      //さいきんどう？
 
   //スポットは施設がなかったら出さない
-	_BMPMENU_MAKE_LIST( resort_sys_select_03, SEQ_SPOT )	      //スポット
-	_BMPMENU_MAKE_LIST( resort_sys_select_05, SEQ_APPEAL )	    //アピール
-	_BMPMENU_MAKE_LIST( resort_sys_select_06, SEQ_WAIT )	      //まってて
+	_BMPMENU_MAKE_LIST( resort_sys_select_03, SEQ_TOURIST_SPOT )	      //スポット
+	_BMPMENU_MAKE_LIST( resort_sys_select_05, SEQ_TOURIST_APPEAL )	    //アピール
+	_BMPMENU_MAKE_LIST( resort_sys_select_06, SEQ_TOURIST_WAIT )	      //まってて
 
 	//メニュー表示
 	_BMPMENU_START()
@@ -118,14 +125,14 @@ sub_tourist_main_menu:
   _SYSWIN_CLOSE()
 
   IF $LWK_MENU_RET == EV_WIN_B_CANCEL THEN
-    $LWK_MENU_RET = SEQ_WAIT
+    $LWK_MENU_RET = SEQ_TOURIST_WAIT
   ENDIF
 }
 _RET
 
 
 //==============================================================
-//サブルーチン：招待
+//サブルーチン：旅行者招待
 //==============================================================
 sub_tourist_invitation:
 {
@@ -143,7 +150,7 @@ sub_tourist_invitation:
   _TIME_WAIT( 30 )
 
   //秘書に転職 TODO
-  _RESORT_JOB_CHANGE( RESORT_JOBCHANGE_RESIDENT )
+  _RESORT_JOB_CHANGE( RESORT_JOBCHANGE_RESIDENT_AUTO )
 
   //転職したのでこの人は消える
   _RESORT_DELETE_PEOPLE()
@@ -158,7 +165,7 @@ sub_tourist_invitation:
 _RET
 
 //==============================================================
-//サブルーチン：スカウト
+//サブルーチン：旅行者スカウト
 //==============================================================
 sub_tourist_scout:
 {
@@ -189,7 +196,7 @@ sub_tourist_scout:
 _RET
 
 //==============================================================
-//サブルーチン：さようなら
+//サブルーチン：旅行者さようなら
 //==============================================================
 sub_tourist_bye:
 {
@@ -218,7 +225,7 @@ sub_tourist_bye:
 _RET
 
 //==============================================================
-//サブルーチン：最近どう？
+//サブルーチン：旅行者最近どう？
 //==============================================================
 sub_tourist_doing:
 {
@@ -232,7 +239,7 @@ sub_tourist_doing:
 _RET
 
 //==============================================================
-//サブルーチン：スポット
+//サブルーチン：旅行者スポット
 //==============================================================
 sub_tourist_spot:
 {
@@ -254,7 +261,7 @@ sub_tourist_spot:
 _RET
 
 //==============================================================
-//サブルーチン：アピール
+//サブルーチン：旅行者アピール
 //==============================================================
 sub_tourist_appeal:
 {
@@ -268,7 +275,7 @@ sub_tourist_appeal:
 _RET
 
 //==============================================================
-//サブルーチン：まってて
+//サブルーチン：旅行者まってて
 //==============================================================
 sub_tourist_wait:
 {
@@ -317,4 +324,349 @@ EVENT_START ev_resort_proxy
 
   _RESORT_TALK_END()
 
+EVENT_END
+
+/**************************************************************/
+/*            住人用スクリプト                              */
+/**************************************************************/
+EVENT_START    ev_resort_resident
+	_TALK_OBJ_START()
+  _RESORT_TALK_START()
+  
+  _RESORT_GET_DATA( RESORT_GET_PARAM_FRONT_OBJID, LWK_OBJID )
+
+  //マージチェック
+  /*IF TRUE THEN
+    //マージ処理
+    _CALL sub_resident_merge
+  ELSE
+    //施設処理
+    _CALL sub_resident_institution
+  ENDIF
+  */
+
+  _RESORT_TALK_END()
+EVENT_END
+
+//==============================================================
+//サブルーチン：住民施設処理
+//==============================================================
+sub_resident_merge:
+{
+}
+_RET
+
+//==============================================================
+//サブルーチン：住民施設処理
+//==============================================================
+sub_resident_institution:
+{
+  //挨拶
+
+  //お店の名前表示
+
+  //以下メニュー表示はLWK_MENU_LOOPがFALSEになるまで続く
+  $LWK_MENU_LOOP = TRUE
+  WHILE $LWK_MENU_LOOP == TRUE
+    //メニュー表示
+    _CALL sub_resident_main_menu
+
+    //分岐
+    SWITCH $LWK_MENU_RET
+    CASE SEQ_RESIDENT_INSTITUTION THEN  //施設
+      //_CALL sub_tourist_invitation
+    CASE SEQ_RESIDENT_DOING THEN        //最近どう？
+      //_CALL sub_tourist_scout
+    CASE SEQ_RESIDENT_TROUBLE THEN      //困ってない？
+      //_CALL sub_tourist_bye
+    CASE SEQ_RESIDENT_BYE THEN          //またね
+      //_CALL sub_tourist_doing
+    DEFAULT
+      $LWK_MENU_LOOP = FALSE //念のため無限ループを避ける
+    ENDSWITCH
+  ENDWHILE
+}
+_RET
+
+//==============================================================
+//サブルーチン：住民メニュー表示
+//==============================================================
+sub_resident_main_menu:
+{
+  //どうしますか？
+	_SYSWIN_MSG( resort_sys_select_00, POS_DOWN )
+
+	_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, LWK_MENU_RET )
+
+	_BMPMENU_MAKE_LIST( resort_sys_select_01, SEQ_RESIDENT_INSTITUTION )	//施設
+	_BMPMENU_MAKE_LIST( resort_sys_select_02, SEQ_RESIDENT_DOING )	      //最近どう？
+	_BMPMENU_MAKE_LIST( resort_sys_select_07, SEQ_RESIDENT_TROUBLE )	    //困ってない？
+	_BMPMENU_MAKE_LIST( resort_sys_select_04, SEQ_RESIDENT_BYE )	        //またね
+
+	//メニュー表示
+	_BMPMENU_START()
+
+  //どうしますか？を閉じる
+  _SYSWIN_CLOSE()
+
+  IF $LWK_MENU_RET == EV_WIN_B_CANCEL THEN
+    $LWK_MENU_RET = SEQ_RESIDENT_BYE
+  ENDIF
+}
+_RET
+
+/**************************************************************/
+/*            滞在者用スクリプト                              */
+/**************************************************************/
+EVENT_START    ev_resort_visitor
+	_TALK_OBJ_START()
+  _RESORT_TALK_START()
+  
+  _RESORT_GET_DATA( RESORT_GET_PARAM_FRONT_OBJID, LWK_OBJID )
+
+  //挨拶文
+	DEFINE_LOCAL LWK_GREET_MSGID3
+  _RESORT_GET_MSGID( 0, LWK_GREET_MSGID3 )
+	_BALLOONWIN_OBJMSG( LWK_GREET_MSGID3, LWK_OBJID )
+	_LAST_KEYWAIT()
+	_BALLOONWIN_CLOSE()
+
+  //イベントチェック
+ // IF TRUE THEN
+
+	  //以下メニュー表示はLWK_MENU_LOOPがFALSEになるまで続く
+	  $LWK_MENU_LOOP = TRUE
+	  WHILE $LWK_MENU_LOOP == TRUE
+	    //メニュー表示
+	    _CALL sub_visitor_main_menu
+	
+	    //分岐
+	    SWITCH $LWK_MENU_RET
+	    CASE SEQ_VISITOR_SPOT THEN          //スポット
+	      //_CALL sub_tourist_invitation
+	    CASE SEQ_VISITOR_DOING THEN        //最近どう？
+	      //_CALL sub_tourist_scout
+	    CASE SEQ_VISITOR_BYE THEN          //またね
+	      //_CALL sub_tourist_doing
+	    DEFAULT
+	      $LWK_MENU_LOOP = FALSE //念のため無限ループを避ける
+	    ENDSWITCH
+	  ENDWHILE
+
+ // ENDIF
+
+  _RESORT_TALK_END()
+EVENT_END
+
+//==============================================================
+//サブルーチン：滞在者メニュー表示
+//==============================================================
+sub_visitor_main_menu:
+{
+  //どうしますか？
+	_SYSWIN_MSG( resort_sys_select_00, POS_DOWN )
+
+	_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, LWK_MENU_RET )
+
+	_BMPMENU_MAKE_LIST( resort_sys_select_01, SEQ_VISITOR_SPOT )	    //おすすめスポット
+	_BMPMENU_MAKE_LIST( resort_sys_select_02, SEQ_VISITOR_DOING )	    //最近どう？
+	_BMPMENU_MAKE_LIST( resort_sys_select_04, SEQ_VISITOR_BYE )	      //またね
+
+	//メニュー表示
+	_BMPMENU_START()
+
+  //どうしますか？を閉じる
+  _SYSWIN_CLOSE()
+
+  IF $LWK_MENU_RET == EV_WIN_B_CANCEL THEN
+    $LWK_MENU_RET = SEQ_VISITOR_BYE
+  ENDIF
+}
+_RET
+
+/**************************************************************/
+/*            秘書  執務用スクリプト                          */
+/**************************************************************/
+EVENT_START    ev_resort_secretary_work
+	_TALK_OBJ_START()
+  _RESORT_TALK_START()
+  
+  _RESORT_GET_DATA( RESORT_GET_PARAM_FRONT_OBJID, LWK_OBJID )
+
+  //挨拶文
+	DEFINE_LOCAL LWK_GREET_MSGID4
+  _RESORT_GET_MSGID( 0, LWK_GREET_MSGID4 )
+	_BALLOONWIN_OBJMSG( LWK_GREET_MSGID4, LWK_OBJID )
+	_LAST_KEYWAIT()
+	_BALLOONWIN_CLOSE()
+
+  //以下メニュー表示はLWK_MENU_LOOPがFALSEになるまで続く
+  $LWK_MENU_LOOP = TRUE
+  WHILE $LWK_MENU_LOOP == TRUE
+    //メニュー表示
+    _CALL sub_secretary_work_main_menu
+
+    //分岐
+    SWITCH $LWK_MENU_RET
+    CASE SEQ_SECRETARY_WORK_GOSSIP THEN       //噂
+      //_CALL sub_tourist_invitation
+    CASE SEQ_SECRETARY_WORK_CONSTRUCTION THEN //工事
+      //_CALL sub_tourist_scout
+    CASE SEQ_SECRETARY_WORK_HELP THEN         //おしえて
+      //_CALL sub_tourist_bye
+    CASE SEQ_SECRETARY_WORK_BYE THEN          //またね
+      //_CALL sub_tourist_doing
+    DEFAULT
+      $LWK_MENU_LOOP = FALSE //念のため無限ループを避ける
+    ENDSWITCH
+  ENDWHILE
+
+
+  _RESORT_TALK_END()
+EVENT_END
+
+//==============================================================
+//サブルーチン：秘書　執務メニュー表示
+//==============================================================
+sub_secretary_work_main_menu:
+{
+  //どうしますか？
+	_SYSWIN_MSG( resort_sys_select_00, POS_DOWN )
+
+	_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, LWK_MENU_RET )
+
+	_BMPMENU_MAKE_LIST( resort_sys_select_01, SEQ_SECRETARY_WORK_GOSSIP )	    //うわさ
+  _BMPMENU_MAKE_LIST( resort_sys_select_02, SEQ_SECRETARY_WORK_CONSTRUCTION )	//工事
+  _BMPMENU_MAKE_LIST( resort_sys_select_03, SEQ_SECRETARY_WORK_HELP )	//教えて
+  _BMPMENU_MAKE_LIST( resort_sys_select_04, SEQ_SECRETARY_WORK_BYE )	//またね
+
+	//メニュー表示
+	_BMPMENU_START()
+
+  //どうしますか？を閉じる
+  _SYSWIN_CLOSE()
+
+  IF $LWK_MENU_RET == EV_WIN_B_CANCEL THEN
+    $LWK_MENU_RET = SEQ_SECRETARY_WORK_BYE
+  ENDIF
+}
+_RET
+
+/**************************************************************/
+/*            秘書  広場用スクリプト                          */
+/**************************************************************/
+EVENT_START    ev_resort_secretary_space
+	_TALK_OBJ_START()
+  _RESORT_TALK_START()
+  
+  _RESORT_GET_DATA( RESORT_GET_PARAM_FRONT_OBJID, LWK_OBJID )
+
+  //挨拶文
+	DEFINE_LOCAL LWK_GREET_MSGID5
+  _RESORT_GET_MSGID( 0, LWK_GREET_MSGID5 )
+	_BALLOONWIN_OBJMSG( LWK_GREET_MSGID5, LWK_OBJID )
+	_LAST_KEYWAIT()
+	_BALLOONWIN_CLOSE()
+
+  //以下メニュー表示はLWK_MENU_LOOPがFALSEになるまで続く
+  $LWK_MENU_LOOP = TRUE
+  WHILE $LWK_MENU_LOOP == TRUE
+    //メニュー表示
+    _CALL sub_secretary_space_main_menu
+
+    //分岐
+    SWITCH $LWK_MENU_RET
+    CASE SEQ_SECRETARY_SPACE_SEARCH THEN    //検索
+      //_CALL sub_tourist_invitation
+    CASE SEQ_SECRETARY_SPACE_HELP THEN      //おしえて！
+      //_CALL sub_tourist_scout
+    CASE SEQ_SECRETARY_SPACE_BYE THEN       //またね
+      //_CALL sub_tourist_doing
+    DEFAULT
+      $LWK_MENU_LOOP = FALSE //念のため無限ループを避ける
+    ENDSWITCH
+  ENDWHILE
+
+  _RESORT_TALK_END()
+EVENT_END
+
+//==============================================================
+//サブルーチン：秘書　執務メニュー表示
+//==============================================================
+sub_secretary_space_main_menu:
+{
+  //どうしますか？
+	_SYSWIN_MSG( resort_sys_select_00, POS_DOWN )
+
+	_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, LWK_MENU_RET )
+
+	_BMPMENU_MAKE_LIST( resort_sys_select_01, SEQ_SECRETARY_SPACE_SEARCH )	//検索
+  _BMPMENU_MAKE_LIST( resort_sys_select_02, SEQ_SECRETARY_SPACE_HELP )	//おしえて！
+  _BMPMENU_MAKE_LIST( resort_sys_select_03, SEQ_SECRETARY_SPACE_BYE )	  //またね
+
+	//メニュー表示
+	_BMPMENU_START()
+
+  //どうしますか？を閉じる
+  _SYSWIN_CLOSE()
+
+  IF $LWK_MENU_RET == EV_WIN_B_CANCEL THEN
+    $LWK_MENU_RET = SEQ_SECRETARY_SPACE_BYE
+  ENDIF
+}
+_RET
+
+/**************************************************************/
+/*            秘書　移動用スクリプト                          */
+/**************************************************************/
+EVENT_START    ev_resort_secretary_move
+	_TALK_OBJ_START()
+  _RESORT_TALK_START()
+  
+  _RESORT_GET_DATA( RESORT_GET_PARAM_FRONT_OBJID, LWK_OBJID )
+
+  //挨拶文
+	DEFINE_LOCAL LWK_GREET_MSGID6
+  _RESORT_GET_MSGID( 0, LWK_GREET_MSGID6 )
+	_BALLOONWIN_OBJMSG( LWK_GREET_MSGID6, LWK_OBJID )
+	_LAST_KEYWAIT()
+	_BALLOONWIN_CLOSE()
+
+  _RESORT_TALK_END()
+EVENT_END
+/**************************************************************/
+/*            秘書　ポケセン用スクリプト                      */
+/**************************************************************/
+EVENT_START    ev_resort_secretary_center
+	_TALK_OBJ_START()
+  _RESORT_TALK_START()
+  
+  _RESORT_GET_DATA( RESORT_GET_PARAM_FRONT_OBJID, LWK_OBJID )
+
+  //挨拶文
+	DEFINE_LOCAL LWK_GREET_MSGID7
+  _RESORT_GET_MSGID( 0, LWK_GREET_MSGID7 )
+	_BALLOONWIN_OBJMSG( LWK_GREET_MSGID7, LWK_OBJID )
+	_LAST_KEYWAIT()
+	_BALLOONWIN_CLOSE()
+
+  _RESORT_TALK_END()
+EVENT_END
+/**************************************************************/
+/*            秘書  パソコン用スクリプト                      */
+/**************************************************************/
+EVENT_START    ev_resort_secretary_pc
+	_TALK_OBJ_START()
+  _RESORT_TALK_START()
+  
+  _RESORT_GET_DATA( RESORT_GET_PARAM_FRONT_OBJID, LWK_OBJID )
+
+  //挨拶文
+	DEFINE_LOCAL LWK_GREET_MSGID8
+  _RESORT_GET_MSGID( 0, LWK_GREET_MSGID8 )
+	_BALLOONWIN_OBJMSG( LWK_GREET_MSGID8, LWK_OBJID )
+	_LAST_KEYWAIT()
+	_BALLOONWIN_CLOSE()
+
+  _RESORT_TALK_END()
 EVENT_END

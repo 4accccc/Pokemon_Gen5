@@ -51,6 +51,7 @@ typedef struct
   RESORT_RECV_BUFF    *p_recv_sv_buff;
   RESORT_RECV_BUFF    *p_recv_tmp_buff;
   RESORT_PROXY_BUFF   *p_proxy_buff;
+  RESORT_CITY_DATA    *p_city_data;
 } RESORT_DATA_MANAGER_INIT_PARAM;
 
 //-------------------------------------
@@ -59,23 +60,38 @@ typedef struct
 extern RESORT_DATA_MANAGER * RESORT_DATA_MANAGER_Init( const RESORT_DATA_MANAGER_INIT_PARAM *cp_param, HEAPID heapID );
 extern void RESORT_DATA_MANAGER_Exit( RESORT_DATA_MANAGER *p_wk );
 
-//データの作成、破棄、移動をしたらSetupを呼ぶこと
+//データの作成、破棄、移動をしたらUpdateを呼ぶこと
 extern void RESORT_DATA_MANAGER_Update( RESORT_DATA_MANAGER *p_wk );
 
 //各データの抽象
 extern void *RESORT_DATA_MANAGER_GetDataAdrs( const RESORT_DATA_MANAGER *cp_wk, RESORT_DATA_MANAGER_TYPE type, u32 data_index );
 extern u32 RESORT_DATA_MANAGER_GetPeopleType( RESORT_DATA_MANAGER_TYPE type );
 
+//お店がチェック
+extern BOOL RESORT_DATA_MANAGER_IsEmptyInstitution( const RESORT_DATA_MANAGER *cp_wk );
+
 //データ変換処理
-extern BOOL RESORT_DATA_MANAGER_RecvToResident( RESORT_DATA_MANAGER *p_wk, RESORT_RECV_DATA *p_src );
-extern BOOL RESORT_DATA_MANAGER_RecvToVistor( RESORT_DATA_MANAGER *p_wk, RESORT_RECV_DATA *p_src );
-extern BOOL RESORT_DATA_MANAGER_RecvToSecretary( RESORT_DATA_MANAGER *p_wk, RESORT_RECV_DATA *p_src );
-extern BOOL RESORT_DATA_MANAGER_ResidentToVistor( RESORT_DATA_MANAGER *p_wk, RESORT_RESIDENT_DATA *p_src );
+extern BOOL RESORT_DATA_MANAGER_IsRecvToResident( const RESORT_DATA_MANAGER *cp_wk, const RESORT_RECV_DATA *cp_src );
+extern void RESORT_DATA_MANAGER_RecvToResident( RESORT_DATA_MANAGER *p_wk, RESORT_RECV_DATA *p_src, u16 type );
+extern BOOL RESORT_DATA_MANAGER_IsRecvToVisitor( const RESORT_DATA_MANAGER *cp_wk, const RESORT_RECV_DATA *cp_src );
+extern void RESORT_DATA_MANAGER_RecvToVisitor( RESORT_DATA_MANAGER *p_wk, RESORT_RECV_DATA *p_src );
+extern BOOL RESORT_DATA_MANAGER_IsRecvToSecretary( const RESORT_DATA_MANAGER *cp_wk, const RESORT_RECV_DATA *cp_src );
+extern void RESORT_DATA_MANAGER_RecvToSecretary( RESORT_DATA_MANAGER *p_wk, RESORT_RECV_DATA *p_src );
+extern BOOL RESORT_DATA_MANAGER_IsResidentToVisitor( const RESORT_DATA_MANAGER *cp_wk, const RESORT_RESIDENT_DATA *cp_src );
+extern void RESORT_DATA_MANAGER_ResidentToVisitor( RESORT_DATA_MANAGER *p_wk, RESORT_RESIDENT_DATA *p_src );
 
 //人物の位置情報
 extern BOOL RESORT_DATA_MANAGER_IsPlaceEmpty( const RESORT_DATA_MANAGER *cp_wk, RESORT_PLACEID placeID, u32 peopleID );
 extern void RESORT_DATA_MANAGER_GetPlaceData( const RESORT_DATA_MANAGER *cp_wk, RESORT_PLACEID placeID, u32 peopleID, RESORT_DATA_MANAGER_TYPE *p_type, u16 *p_data_idx );
 extern u32 RESORT_DATA_MANAGER_SearchPlaceEmptyPeopleID( const RESORT_DATA_MANAGER *cp_wk, RESORT_PLACEID placeID );
+
+//検索
+extern RESORT_INSTITUTION_DATA * RESORT_DATA_MANAGER_SearchEmptyInstitution( const RESORT_DATA_MANAGER *cp_wk );
+
+//何かをキーにして検索
+extern RESORT_RESIDENT_DATA * RESORT_DATA_MANAGER_SearchResident( const RESORT_DATA_MANAGER *cp_wk, RESORT_PLACEID placeID, u16 peopleID );
+extern RESORT_INSTITUTION_DATA * RESORT_DATA_MANAGER_GetInstitutionByResident( const RESORT_DATA_MANAGER *cp_wk, const RESORT_RESIDENT_DATA *cp_data );
+extern RESORT_RESIDENT_DATA * RESORT_DATA_MANAGER_SearchResidentByInstitution( const RESORT_DATA_MANAGER *cp_wk, const RESORT_INSTITUTION_DATA *cp_data, u32 peopleID );
 
 
 //=============================================================================

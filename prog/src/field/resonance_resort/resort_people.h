@@ -82,7 +82,7 @@ typedef struct
   MMDLSYS *p_mmdlsys;                 //動作モデルシステム
   RESORT_DATA_MANAGER *p_data_manager;//データマネージャー
   u32 max;                            //動作上限数
-  ZONEID zoneID;                      //人物管理システムが動くゾーンID
+  RESORT_PLACEID placeID;                      //人物管理システムが動く場所
 } RESORT_PEOPLE_SYS_PARAM;
 
 //-------------------------------------
@@ -97,19 +97,8 @@ extern void RESORT_PEOPLE_SYS_Main( RESORT_PEOPLE_SYS *p_wk,FIELD_PLAYER *p_play
 typedef struct
 {
   RESORT_PEOPLE_TYPE people_type;
-  void *p_data_adrs;  //以下のunionとして使う
-#if 0
-  union
-  {
-    RESORT_SECRETARY_DATA *p_secretary;
-    RESORT_VISITOR_DATA   *p_visitor;
-    RESORT_RESIDENT_DATA  *p_resident;
-    RESORT_PROXY_DATA     *p_proxy;
-    RESORT_RECV_DATA      *p_tourist;
-    void *p_npc;
-  };
-#endif
-  ZONEID zoneID;
+  void *p_data_adrs;
+  RESORT_PLACEID placeID;
 }RESORT_PEOPLE_SYS_ADD_PARAM;
 extern RESORT_PEOPLE * RESORT_PEOPLE_SYS_AddNew( RESORT_PEOPLE_SYS *p_wk, const RESORT_PEOPLE_SYS_ADD_PARAM *cp_param );
 //人物を一括登録

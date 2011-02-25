@@ -267,14 +267,36 @@ VMCMD_RESULT EvCmdResortJobChange( VMHANDLE *p_core, void *p_wk_adrs )
 
   switch( param )
   {
-  case RESORT_JOBCHANGE_RESIDENT:
-    RESORT_DATA_MANAGER_RecvToResident( p_data_manager, RESORT_PEOPLE_GetDataAdrs(p_people) );
+  case RESORT_JOBCHANGE_RESIDENT_AUTO:
+    {
+      u32 type = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_WANT_JOB, NULL );
+      RESORT_DATA_MANAGER_RecvToResident( p_data_manager, RESORT_PEOPLE_GetDataAdrs(p_people), type );
+    }
     break;
+
+  case RESORT_JOBCHANGE_RESIDENT_LOT:
+  case RESORT_JOBCHANGE_RESIDENT_PARLOR:
+  case RESORT_JOBCHANGE_RESIDENT_BREEDER:
+  case RESORT_JOBCHANGE_RESIDENT_MARKET:
+  case RESORT_JOBCHANGE_RESIDENT_FLORIST:
+  case RESORT_JOBCHANGE_RESIDENT_EXRCICE:
+  case RESORT_JOBCHANGE_RESIDENT_NURSERY:
+  case RESORT_JOBCHANGE_RESIDENT_JEWELLEY:
+  case RESORT_JOBCHANGE_RESIDENT_ANTIQUE:
+  case RESORT_JOBCHANGE_RESIDENT_CAFE:
+  case RESORT_JOBCHANGE_RESIDENT_GYM:
+  case RESORT_JOBCHANGE_RESIDENT_HOUSE:
+    {
+      u32 type = param-1;
+      RESORT_DATA_MANAGER_RecvToResident( p_data_manager, RESORT_PEOPLE_GetDataAdrs(p_people), type );
+    }
+    break;
+
   case RESORT_JOBCHANGE_SECETARY:
     RESORT_DATA_MANAGER_RecvToSecretary( p_data_manager, RESORT_PEOPLE_GetDataAdrs(p_people) );
     break;
   case RESORT_JOBCHANGE_VISITOR:
-    RESORT_DATA_MANAGER_RecvToVistor( p_data_manager, RESORT_PEOPLE_GetDataAdrs(p_people) );
+    RESORT_DATA_MANAGER_RecvToVisitor( p_data_manager, RESORT_PEOPLE_GetDataAdrs(p_people) );
     break;
   default:
     GF_ASSERT(0);
@@ -411,6 +433,74 @@ VMCMD_RESULT EvCmdResortDeletePeple( VMHANDLE *p_core, void *p_wk_adrs )
   GF_ASSERT( p_people != NULL );
 
   RESORT_PEOPLE_Delete( p_people_sys, p_people );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  転職できるかチェック
+ *
+ *	@param	VMHANDLE *p_core 仮想マシンハンドル
+ *	@param	*p_wk_adrs       スクリプトコマンドワーク
+ *
+ *	@return 終了コード
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdResortIsJobChange( VMHANDLE *p_core, void *p_wk_adrs )
+{
+  SCRCMD_WORK *p_wk = p_wk_adrs;
+  GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
+  FIELDMAP_WORK *p_field = GAMESYSTEM_GetFieldMapWork(p_gamesys);
+  u16 param  = VMGetU16( p_core );
+  u16 *p_ret_wk	= SCRCMD_GetVMWork( p_core, p_wk );
+  u32 peopleID;
+  RESORT_PEOPLE* p_people = NULL;
+  RESORT_PEOPLE_SYS *p_people_sys = NULL;
+  RESORT_DATA_MANAGER *p_data_manager = NULL;
+
+  if(GMK_TMP_CheckAssignID( p_field, RESORT_RECEPTION_ASSIGN_ID ) )
+  {
+    p_people_sys = RESORT_RECEPTION_GetPeopleSys( p_field );
+    p_data_manager = RESORT_RECEPTION_GetDataManager( p_field );
+  }
+  else if( GMK_TMP_CheckAssignID( p_field, RESORT_FIELD_ASSIGN_ID ) )
+  {
+    p_people_sys = RESORT_FIELD_GetPeopleSys( p_field );
+    p_data_manager = RESORT_FIELD_GetDataManager( p_field );
+  }
+  GF_ASSERT( p_people_sys != NULL );
+  GF_ASSERT( p_data_manager != NULL );
+
+  p_people = Resort_Scrcmd_GetFrontPeople( p_field, p_people_sys );
+  GF_ASSERT( p_people != NULL );
+
+  switch( param )
+  {
+  case RESORT_JOBCHANGE_RESIDENT_AUTO:
+  case RESORT_JOBCHANGE_RESIDENT_LOT:
+  case RESORT_JOBCHANGE_RESIDENT_PARLOR:
+  case RESORT_JOBCHANGE_RESIDENT_BREEDER:
+  case RESORT_JOBCHANGE_RESIDENT_MARKET:
+  case RESORT_JOBCHANGE_RESIDENT_FLORIST:
+  case RESORT_JOBCHANGE_RESIDENT_EXRCICE:
+  case RESORT_JOBCHANGE_RESIDENT_NURSERY:
+  case RESORT_JOBCHANGE_RESIDENT_JEWELLEY:
+  case RESORT_JOBCHANGE_RESIDENT_ANTIQUE:
+  case RESORT_JOBCHANGE_RESIDENT_CAFE:
+  case RESORT_JOBCHANGE_RESIDENT_GYM:
+  case RESORT_JOBCHANGE_RESIDENT_HOUSE:
+    *p_ret_wk = RESORT_DATA_MANAGER_IsRecvToResident( p_data_manager, RESORT_PEOPLE_GetDataAdrs(p_people) );
+    break;
+
+  case RESORT_JOBCHANGE_SECETARY:
+    *p_ret_wk = RESORT_DATA_MANAGER_IsRecvToSecretary( p_data_manager, RESORT_PEOPLE_GetDataAdrs(p_people) );
+    break;
+  case RESORT_JOBCHANGE_VISITOR:
+    *p_ret_wk = RESORT_DATA_MANAGER_IsRecvToVisitor( p_data_manager, RESORT_PEOPLE_GetDataAdrs(p_people) );
+    break;
+  default:
+    GF_ASSERT(0);
+  }
 
   return VMCMD_RESULT_CONTINUE;
 }

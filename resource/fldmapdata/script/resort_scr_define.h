@@ -8,10 +8,47 @@
  *
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
-#define SEQ_INVITATION  (0)
-#define SEQ_SCOUT       (1)
-#define SEQ_BYE         (2)
-#define SEQ_DOING       (3)
-#define SEQ_SPOT        (4)
-#define SEQ_APPEAL      (5)
-#define SEQ_WAIT        (6)
+//ó∑çsé“ÇÃï™äÚ
+#define SEQ_TOURIST_INVITATION  (0)
+#define SEQ_TOURIST_SCOUT       (1)
+#define SEQ_TOURIST_BYE         (2)
+#define SEQ_TOURIST_DOING       (3)
+#define SEQ_TOURIST_SPOT        (4)
+#define SEQ_TOURIST_APPEAL      (5)
+#define SEQ_TOURIST_WAIT        (6)
+
+//èZñØÇÃï™äÚ
+#define SEQ_RESIDENT_INSTITUTION  (0)
+#define SEQ_RESIDENT_DOING        (1)
+#define SEQ_RESIDENT_TROUBLE      (2)
+#define SEQ_RESIDENT_BYE          (3)
+
+//ëÿç›é“ÇÃï™äÚ
+#define SEQ_VISITOR_SPOT    (0)
+#define SEQ_VISITOR_DOING   (1)
+#define SEQ_VISITOR_BYE     (2)
+
+//îÈèëÇÃï™äÚ
+#define SEQ_SECRETARY_WORK_GOSSIP       (0)
+#define SEQ_SECRETARY_WORK_CONSTRUCTION (1)
+#define SEQ_SECRETARY_WORK_HELP         (2)
+#define SEQ_SECRETARY_WORK_BYE          (3)
+
+#define SEQ_SECRETARY_SPACE_SEARCH       (0)
+#define SEQ_SECRETARY_SPACE_HELP         (1)
+#define SEQ_SECRETARY_SPACE_BYE          (2)
+
+#define SEQ_SECRETARY_MOVE_RESORT       (0)
+#define SEQ_SECRETARY_MOVE_EASH         (1)
+#define SEQ_SECRETARY_MOVE_POS_SPACE   (0)
+#define SEQ_SECRETARY_MOVE_POS_GATE    (1)
+#define SEQ_SECRETARY_MOVE_POS_WEST    (2)
+#define SEQ_SECRETARY_MOVE_POS_EAST    (3)
+
+#define SEQ_SECRETARY_PC_BOX      (0)
+#define SEQ_SECRETARY_PC_BTLBOX   (1)
+#define SEQ_SECRETARY_PC_ITEM     (2)
+#define SEQ_SECRETARY_PC_RECORD   (3)
+#define SEQ_SECRETARY_PC_MAILBOX  (4)
+#define SEQ_SECRETARY_PC_HELP     (5)
+#define SEQ_SECRETARY_PC_CANCEL   (6)
