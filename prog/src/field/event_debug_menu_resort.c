@@ -25,6 +25,8 @@
 #include "item/itemsym.h"
 #include "event_debug_menu_resort.h"
 #include "savedata/resonance_resort_sv.h"
+#include "event_mapchange.h"
+#include "arc/fieldmap/zone_id.h"
 
 //--------------------------------------------------------------
 /// proto
@@ -35,16 +37,18 @@ static BOOL debugMenuCallProc_SetProxy( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_ClearRecvBuff( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_ClearProxyBuff( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_AllRecv( DEBUG_MENU_EVENT_WORK *p_wk );
-static BOOL debugMenuCallProc_AllProx( DEBUG_MENU_EVENT_WORK *p_wk );
+static BOOL debugMenuCallProc_AllProxy( DEBUG_MENU_EVENT_WORK *p_wk );
+static BOOL debugMenuCallProc_ChangeMap( DEBUG_MENU_EVENT_WORK *p_wk );
 
 static const DEBUG_MENU_LIST DATA_SubMenuList[] =
 {
+  { DEBUG_FIELD_RESORT_07, debugMenuCallProc_ChangeMap, GFL_OVERLAY_BLANK_ID },
   { DEBUG_FIELD_RESORT_01, debugMenuCallProc_SetRecv, GFL_OVERLAY_BLANK_ID },
   { DEBUG_FIELD_RESORT_02, debugMenuCallProc_SetProxy, GFL_OVERLAY_BLANK_ID },
   { DEBUG_FIELD_RESORT_03, debugMenuCallProc_ClearRecvBuff, GFL_OVERLAY_BLANK_ID},
   { DEBUG_FIELD_RESORT_04, debugMenuCallProc_ClearProxyBuff, GFL_OVERLAY_BLANK_ID},
   { DEBUG_FIELD_RESORT_05, debugMenuCallProc_AllRecv, GFL_OVERLAY_BLANK_ID},
-  { DEBUG_FIELD_RESORT_06, debugMenuCallProc_AllProx, GFL_OVERLAY_BLANK_ID},
+  { DEBUG_FIELD_RESORT_06, debugMenuCallProc_AllProxy, GFL_OVERLAY_BLANK_ID},
 };
 
 static const DEBUG_MENU_INITIALIZER DebugSubMenuData = {
@@ -78,6 +82,7 @@ GMEVENT * DEBUG_EVENT_DebugMenu_Resort( GAMESYS_WORK *gsys, void *wk )
   GFL_STD_MemClear( work, sizeof(DEBUG_MENU_EVENT_WORK) );
 
   *work  = *debug_work;
+
   work->gmEvent = event;
   work->call_proc = NULL;
 
@@ -210,7 +215,7 @@ static BOOL debugMenuCallProc_AllRecv( DEBUG_MENU_EVENT_WORK *p_wk )
   RESORT_RECV_DATA_Exit( p_recv );
   return FALSE;
 }
-static BOOL debugMenuCallProc_AllProx( DEBUG_MENU_EVENT_WORK *p_wk )
+static BOOL debugMenuCallProc_AllProxy( DEBUG_MENU_EVENT_WORK *p_wk )
 {
   SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(p_wk->gdata);
   RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( pSave );
@@ -227,4 +232,11 @@ static BOOL debugMenuCallProc_AllProx( DEBUG_MENU_EVENT_WORK *p_wk )
   }
   RESORT_PROXY_DATA_Exit( p_proxy );
   return FALSE;
+}
+static BOOL debugMenuCallProc_ChangeMap( DEBUG_MENU_EVENT_WORK *p_wk )
+{
+  GMEVENT* event = DEBUG_EVENT_QuickChangeMapDefaultPos( p_wk->gmSys,
+                                                p_wk->fieldWork, ZONE_ID_C16 );
+  GMEVENT_ChangeEvent( p_wk->gmEvent, event );
+  return TRUE;
 }

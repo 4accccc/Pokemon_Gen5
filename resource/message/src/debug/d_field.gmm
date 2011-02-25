@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nagihashi_toru" host="W00268" date="2011-02-23T22:18:51"/>
+	<create user="nagihashi_toru" host="W00268" date="2011-02-25T16:18:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -375,7 +375,7 @@
 		</language>
 	</columns>
 
-	<dialog left="-1027" top="130" right="-322" bottom="758" maximized="no" rayout="Vertical2">
+	<dialog left="-1210" top="185" right="-505" bottom="805" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="752" top="215" right="1280" bottom="737" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -2310,6 +2310,11 @@ LR→補完&quot;</language>
 	<row id="DEBUG_FIELD_RESORT_06">
 		<language name="JPN" width="240">代理人フル</language>
 		<language name="JPN_KANJI" width="240">代理人フル</language>
+	</row>
+
+	<row id="DEBUG_FIELD_RESORT_07">
+		<language name="JPN" width="240">リゾートへジャンプ</language>
+		<language name="JPN_KANJI" width="240">リゾートへジャンプ</language>
 	</row>
 
 	<flowchart-group-list>
