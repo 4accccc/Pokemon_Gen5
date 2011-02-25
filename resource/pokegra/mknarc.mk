@@ -106,12 +106,15 @@ ncl: $(notdir $(NCLFILE:.ncl=.NCLR))
 $(NARCNAME): $(notdir $(NCGFILE:.ncg=.NCGR)) $(notdir $(NMCFILE:.nmc=.NMCR)) $(notdir $(NMCFILE:.nmc=.NCEC)) $(notdir $(NCGCFILE:.ncg=.NCBR)) $(notdir $(NCLFILE:.ncl=.NCLR)) $(SCRFILE) $(OTHERFILE) $(OTHERPLTTFILE)
 	nnsarc -c -l -n -i $(NARCNAME) -S $(SCRFILE) -S $(OTHERFILE) -S $(OTHERPLTTFILE)
 	$(NAIXCUT) $(NAIXNAME)
-
+#
+# デバッグドキュメント提出用の書類を生成する。
+# スワンではアニメ設定を変える予定が無いのでいったんストップ by mori 2023/02/25
+#
 $(NONSTOPANMFILE): $(NARCNAME)
 	ruby ..\..\tools\pokegra\nonstop_list_mk.rb pokegra_wb_nonstop.lst
-ifeq ($(USERNAME),yoshida)
-	$(COPY)	$(NONSTOPANMFILE) $(NONSTOPANMDIR)
-endif
+#ifeq ($(USERNAME),yoshida)
+#	$(COPY)	$(NONSTOPANMFILE) $(NONSTOPANMDIR)
+#endif
 
 endif
 
