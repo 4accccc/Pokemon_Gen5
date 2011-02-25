@@ -3732,7 +3732,7 @@ static void game_update_seq_score_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
     GFL_CLACT_WK_SetDrawEnable( gameWork->clwkKekka, TRUE );
 
     // âBÇµÉvÉåÅ[Ég
-    cellInitData.softpri= 0;
+    cellInitData.softpri= 1;
     cellInitData.bgpri  = 3;
     for( i=0; i<2; i++ )
     {
@@ -3752,7 +3752,7 @@ static void game_update_seq_score_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
       GFL_CLACT_WK_SetDrawEnable( gameWork->clwkOmeHide[i], FALSE );
     }
     // ì¯
-    cellInitData.softpri= 1;
+    cellInitData.softpri= 2;
     cellInitData.bgpri  = 3;
     cellInitData.anmseq = CGOAM_RAINBOW1 + game_id;
     gameWork->clwkOmeNiji = GFL_CLACT_WK_Create( gameWork->cellUnit,
@@ -3762,8 +3762,8 @@ static void game_update_seq_score_init( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
         &cellInitData ,CLSYS_DEFREND_MAIN, heapID );
     GFL_CLACT_WK_SetDrawEnable( gameWork->clwkOmeNiji, FALSE );
     // êØ
-    cellInitData.softpri= 8;
-    cellInitData.bgpri  = 1;
+    cellInitData.softpri= 0;
+    cellInitData.bgpri  = 3;
     cellInitData.anmseq = CGOAM_STAR1 + game_id;
     gameWork->clwkOmeStar = GFL_CLACT_WK_Create( gameWork->cellUnit,
         gameWork->cellResIdx[CGOR_LOWER_PLT],
