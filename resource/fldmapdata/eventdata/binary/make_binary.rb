@@ -11,5 +11,5 @@
 
 require '../eventdata.rb'
 
-make_binary( ARGV[0], ARGV[1,64] )
+make_binary( ARGV[0], ARGV[1,128] )
 
