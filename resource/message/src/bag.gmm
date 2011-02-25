@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2011-02-23T12:52:16"/>
+	<create user="shimoyamada" host="W00184" date="2011-02-25T17:27:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1030" top="368" right="1735" bottom="996" maximized="no" rayout="Vertical2">
+	<dialog left="1077" top="400" right="1782" bottom="1028" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="551" top="230" right="1024" bottom="639" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -1509,9 +1509,9 @@ common_scr.gmmの変更も忘れないでください
 	<row id="mes_bag_122" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ffff00,,#ff8080,#ffff00,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>swan追加
 保管用の絞込みメッセージ</comment>
-		<language name="JPN">さがしたい　もちものの　ポケットを
+		<language name="JPN">さがしたい　しゅるいを
 えらんで　ください</language>
-		<language name="JPN_KANJI">探したい　持ち物　ポケットを
+		<language name="JPN_KANJI">探したい　種類を
 選んでください</language>
 	</row>
 
@@ -1519,9 +1519,9 @@ common_scr.gmmの変更も忘れないでください
 		<comment>swan追加
 絞込み完了メッセージ
 0：ポケット名</comment>
-		<language name="JPN">「[1:12:バッグのポケット名:0]」に　いれる　もちものが
+		<language name="JPN">[1:12:バッグのポケット名:0]に　いれる　もちものが
 [2:02:３桁:1]しゅるい　みつかりました！</language>
-		<language name="JPN_KANJI">「[1:12:バッグのポケット名:0]」の　入れる　持ち物が
+		<language name="JPN_KANJI">[1:12:バッグのポケット名:0]の　入れる　持ち物が
 [2:02:３桁:1]種類　みつかりました！</language>
 	</row>
 
@@ -1531,9 +1531,9 @@ common_scr.gmmの変更も忘れないでください
 0：ポケット名
 1：道具名</comment>
 		<language name="JPN">[1:09:どうぐ名:1]を
-「[1:12:バッグのポケット名:0]」に　いどう　しました！</language>
+[1:12:バッグのポケット名:0]に　いどう　しました！</language>
 		<language name="JPN_KANJI">[1:09:どうぐ名:1]を
-「[1:12:バッグのポケット名:0]」に　移動しました！</language>
+[1:12:バッグのポケット名:0]に　移動しました！</language>
 	</row>
 
 	<row id="mes_bag_125" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ffff00,,#ff8080,#ffff00,#ff8080,#ff8080,,,#ff8080,,">
@@ -1542,9 +1542,9 @@ common_scr.gmmの変更も忘れないでください
 0：ポケット名
 1：道具名</comment>
 		<language name="JPN">[1:09:どうぐ名:1]を
-「[1:12:バッグのポケット名:0]」に　もどしました！</language>
+[1:12:バッグのポケット名:0]に　もどしました！</language>
 		<language name="JPN_KANJI">[1:09:どうぐ名:1]を
-「[1:12:バッグのポケット名:0]」に　もどしました！</language>
+[1:12:バッグのポケット名:0]に　もどしました！</language>
 	</row>
 
 	<row id="mes_bag_126" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ffff00,,#ff8080,#ffff00,#ff8080,#ff8080,,,#ff8080,,">
