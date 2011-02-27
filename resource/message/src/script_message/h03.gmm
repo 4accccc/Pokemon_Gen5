@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="murakami_naoto" host="W00228" date="2010-09-07T12:48:44"/>
+	<create user="matsumiya" host="W00224" date="2011-02-27T17:20:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_h03_ninja_01" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="msg_h03_ninja_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・このイベントが終わるまで
 　暴走族イベントは発生しない
@@ -300,7 +300,9 @@
 　GRIDZ=50を踏むと
 　ダークトリニティ３人出現しメッセージ表示
 ・表示後、主人公を誘導する
-・続けてninja_02</comment>
+・続けてninja_02
+
+※SWANでは削除</comment>
 		<attribute name="キャラ指定">ＮＩＮＪＡ
 ダークトリニティ</attribute>
 		<language name="JPN" width="256">……　……　……▼
@@ -309,7 +311,7 @@
 ……　……　来い▼</language>
 	</row>
 
-	<row id="msg_h03_ninja_02" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="msg_h03_ninja_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・GRIDX=15、GRIDZ=42まで誘導
 ・ダークトリニティ３人はゲーチスの
