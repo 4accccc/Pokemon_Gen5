@@ -1226,8 +1226,7 @@ BOOL GAMEBEACON_Get_Action_FestMission(const GAMEBEACON_INFO *info, FEST_MISSION
 {
   int i;
 
-  switch(info->action.action_no){
-  case GAMEBEACON_ACTION_FEST_MISSION:
+  if( GAMEBEACON_Check_FestMission(info)){
     FEST_MISSION_Clear(fmwk);
     *fmwk = info->action.fmission;
     return TRUE;

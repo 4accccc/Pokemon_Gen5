@@ -280,6 +280,9 @@ static BOOL effReq_PopupMsg( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info, BOOL new
     BVCEffReq_PopupMsgSys( wk, msg_beacon_001 );
     return TRUE;
   }
+  if( GAMEBEACON_Check_FestMission( info ) ){
+    return FALSE;
+  }
   switch( action ){
   case GAMEBEACON_ACTION_SEARCH:
     return FALSE; //新着でないサーチはポップアップ出さない
@@ -289,9 +292,6 @@ static BOOL effReq_PopupMsg( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info, BOOL new
 
   case GAMEBEACON_ACTION_DISTRIBUTION_GPOWER:
     return BVCEffReq_PopupMsgGPower( wk, info, TRUE );
-
-  case GAMEBEACON_ACTION_FEST_MISSION:
-    return FALSE;
 
   case GAMEBEACON_ACTION_THANKYOU:
     //御礼を受けた回数インクリメント

@@ -109,9 +109,11 @@ extern void LINK_FESTIVAL_MissionEnd( LINK_FESTIVAL* wk );
 //---------------------------------------------------------
 /*
  * @brief リンクフェスティバル ミッションReadyカウンターセット
+ *
+ * @param カウントダウンタイム(秒)
  */
 //---------------------------------------------------------
-extern void LINK_FESTIVAL_MissionReadyTimerSet( LINK_FESTIVAL* wk );
+extern void LINK_FESTIVAL_MissionReadyTimerSet( LINK_FESTIVAL* wk, u32 timer );
 
 //---------------------------------------------------------
 /*

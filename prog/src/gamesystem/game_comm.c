@@ -929,3 +929,16 @@ void GameCommInfo_MessageEntry_MissionFail(GAME_COMM_SYS_PTR gcsp)
     GAMEDATA_GetIntrudeMyID(gcsp->gamedata), msg_invasion_info_003);
 }
 
+//==================================================================
+/**
+ * インフォメーションメッセージ登録：フェスミッション開始待ちメッセージ
+ *
+ * @param   gcsp		
+ */
+//==================================================================
+void GameCommInfo_MessageEntry_FMissionStartWait(GAME_COMM_SYS_PTR gcsp)
+{
+  int my_id = GAMEDATA_GetIntrudeMyID(gcsp->gamedata);
+  GameCommInfo_SetQue(gcsp, my_id, my_id, msg_invasion_info_026);
+}
+

@@ -149,6 +149,7 @@ extern void GameCommInfo_MessageEntry_PalaceConnect(GAME_COMM_SYS_PTR gcsp, int 
 extern void GameCommInfo_MessageEntry_Leave(GAME_COMM_SYS_PTR gcsp, int player_netid);
 extern void GameCommInfo_MessageEntry_MissionSuccess(GAME_COMM_SYS_PTR gcsp);
 extern void GameCommInfo_MessageEntry_MissionFail(GAME_COMM_SYS_PTR gcsp);
+extern void GameCommInfo_MessageEntry_FMissionStartWait(GAME_COMM_SYS_PTR gcsp);
 
 
 #endif  //__ASM_NO_DEF_

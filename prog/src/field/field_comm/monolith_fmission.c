@@ -152,7 +152,8 @@ typedef struct{
   GAME_COMM_SYS_PTR gcsp;
 
   u32 alloc_menubar_pos;
-  
+  int wait;
+
   PANEL_ACTOR panel;
   GFL_CLWK *act_arrow_up;       ///<ã–îˆó
   GFL_CLWK *act_arrow_down;     ///<‰º–îˆó
@@ -400,12 +401,7 @@ static GFL_PROC_RESULT MonolithFMissionSelectProc_Main( GFL_PROC * proc, int * s
     SEQ_YESNO_STREAM_WAIT,
     SEQ_YESNO_SELECT_WAIT,
     SEQ_DECIDE_STREAM,
-    SEQ_DECIDE_SEND,
     SEQ_DECIDE_STREAM_WAIT,
-    SEQ_DECIDE_ME_FADEOUT_WAIT,
-    SEQ_DECIDE_ME_PLAY,
-    SEQ_DECIDE_ME_PLAY_WAIT,
-    SEQ_DECIDE_ME_FADEIN_WAIT,
     SEQ_DECIDE_STREAM_KEY_WAIT,
     SEQ_TP_RELEASE_WAIT,
     SEQ_FINISH_WAIT,
@@ -550,62 +546,28 @@ static GFL_PROC_RESULT MonolithFMissionSelectProc_Main( GFL_PROC * proc, int * s
         appwk->setup->wordset, 0, mfw->use_gpower_id[mfw->decide_cursor_pos] );
       _Set_MsgStreamExpand(mfw, appwk->setup, msg_mono_fmission_004);
       mfw->order_end = TRUE;
-      *seq = SEQ_DECIDE_SEND;
-    }
-    break;
-  case SEQ_DECIDE_SEND:
-    if(intcomm != NULL){
-      if(IntrudeSend_GPowerEquip(appwk->parent->palace_area) == TRUE){
-        *seq = SEQ_DECIDE_STREAM_WAIT;
-      }
-    }
-    else{
-      *seq = SEQ_DECIDE_STREAM_WAIT;
+      (*seq)++;
     }
     break;
   case SEQ_DECIDE_STREAM_WAIT:
     if(_Wait_MsgStream(appwk->setup, mfw) == TRUE){
-      PMSND_FadeOutBGM (PMSND_FADE_FAST);
+      mfw->wait = 60;
       (*seq)++;
-    }
-    break;
-  case SEQ_DECIDE_ME_FADEOUT_WAIT:
-    if(PMSND_CheckFadeOnBGM() == FALSE){
-      PMSND_PauseBGM(TRUE);
-      PMSND_PushBGM();
-      (*seq)++;
-    }
-    break;
-  case SEQ_DECIDE_ME_PLAY:
-    PMSND_PlayBGM( MONOLITH_ME_GPOWER_EQP );
-    (*seq)++;
-    break;
-  case SEQ_DECIDE_ME_PLAY_WAIT:
-    if( PMSND_CheckPlayBGM() == FALSE ){
-      PMSND_PopBGM();
-      PMSND_PauseBGM(FALSE);
-      PMSND_FadeInBGM (PMSND_FADE_FAST);
-      (*seq)++;
-    }
-    break;
-  case SEQ_DECIDE_ME_FADEIN_WAIT:
-    if(PMSND_CheckFadeOnBGM() == FALSE){
-      *seq = SEQ_DECIDE_STREAM_KEY_WAIT;
     }
     break;
   case SEQ_DECIDE_STREAM_KEY_WAIT:
-    if(GFL_UI_TP_GetTrg() || (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE | PAD_BUTTON_CANCEL))){
+    if( mfw->wait ){
+      --mfw->wait;
+    }
+    if( mfw->wait == 0 ||
+        GFL_UI_TP_GetTrg() ||
+        (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE | PAD_BUTTON_CANCEL)))
+    {
+      PMSND_PlaySE(MONOLITH_SE_MSG);
       _Clear_MsgStream(mfw);
       {
-        GAMEDATA *gamedata = GAMESYSTEM_GetGameData(appwk->parent->gsys);
-        INTRUDE_SAVE_WORK *intsave = SaveData_GetIntrude(GAMEDATA_GetSaveControlWork(gamedata));
-        ISC_SAVE_SetGPowerID(intsave, mfw->use_gpower_id[mfw->decide_cursor_pos]);
-      }
-      {
         GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(appwk->parent->gsys);
-        GameCommInfo_MessageEntry_GetPower(game_comm, 
-          GAMEDATA_GetIntrudeMyID(GAMESYSTEM_GetGameData(appwk->parent->gsys)), 
-          appwk->parent->palace_area);
+        GameCommInfo_MessageEntry_FMissionStartWait(game_comm);
       }
       //appwk->common->power_eqp_update = TRUE; ‚à‚¤‘Þo‚·‚é‚Ì‚ÅXV‚µ‚È‚¢
       mfw->decide_cursor_pos = _CURSOR_POS_NONE;
@@ -668,7 +630,6 @@ static GFL_PROC_RESULT MonolithFMissionSelectProc_Main( GFL_PROC * proc, int * s
     break;
   case SEQ_FINISH:
     if( mfw->order_end ){
-      LINK_FESTIVAL_MissionReadyTimerSet( mfw->fest_sys );
       appwk->next_menu_index = MONOLITH_MENU_END;
     }else{
       appwk->next_menu_index = MONOLITH_MENU_TITLE;

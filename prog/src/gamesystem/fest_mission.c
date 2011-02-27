@@ -84,6 +84,8 @@ void FEST_MISSION_Start( FEST_MISSION* fmwk, const FEST_MISSION* src, BOOL succe
  
   if( !succeed_f ){ //継承ミッションでなければキー生成
     fmwk->key = GFUser_GetPublicRand(GFL_STD_RAND_MAX);  //32bitランダムキー生成
+  }else{
+    fmwk->my_score = 0; //継承ミッションの場合、スコアクリア
   }
 
   OS_FPrintf(OSPRINT_LINKFEST_PAGE,"フェスミッション スタート type=%d, key = %08x, target=%d, param=%d, time=%d min life=%d sec\n",

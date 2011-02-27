@@ -146,11 +146,13 @@ void LINK_FESTIVAL_MissionEnd( LINK_FESTIVAL* wk )
 //---------------------------------------------------------
 /*
  * @brief リンクフェスティバル ミッションReadyタイマーセット
+ *
+ * @param カウントダウンタイム(秒)
  */
 //---------------------------------------------------------
-void LINK_FESTIVAL_MissionReadyTimerSet( LINK_FESTIVAL* wk )
+void LINK_FESTIVAL_MissionReadyTimerSet( LINK_FESTIVAL* wk, u32 timer )
 {
-  wk->ready_timer = 60*4;  //4sec
+  wk->ready_timer = timer*60;  //sec2frame
 }
 
 //---------------------------------------------------------

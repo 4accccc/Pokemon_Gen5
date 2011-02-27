@@ -353,13 +353,12 @@ static GMEVENT_RESULT event_FestMissionStartMain(GMEVENT * event, int *  seq, vo
     wk->timeIcon = TIMEICON_Create( GFUser_VIntr_GetTCBSYS(),
       FLDSYSWIN_STREAM_GetBmpWin( wk->winStream ), 15, TIMEICON_DEFAULT_WAIT, GFL_HEAP_LOWID(wk->heapID) );
 #endif
-    wk->ct = 30*2;  //2sec
-    
+    GMEVENT_CallEvent(event, EVENT_FSND_PushPlayJingleBGM( wk->gsys, SEQ_ME_MISSION_START ));
     (*seq)++;
     break;
   case 1:
-    if( (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) ) ||
-        (--wk->ct == 0)){
+    if( PMSND_CheckPlayBGM() == FALSE ){
+      GMEVENT_CallEvent(event, EVENT_FSND_PopBGM( wk->gsys, FSND_FADE_NONE, FSND_FADE_FAST));
       (*seq)++;
     }
     break;

@@ -597,8 +597,11 @@ static void taskAddCheck_ScoreUp( FIELD_FMISSION_INFO* wk )
 {
   GFL_TCBL* tcb;
   TASKWK_SCOREUP* twk;
- 
-  if( LINK_FESTIVAL_FInfoScoreGet( wk->fest_sys ) >= wk->fmwk->my_score ){
+  u32 now_score;
+
+  LINK_FESTIVAL_GetMissionResult( wk->fest_sys, &now_score );
+
+  if( LINK_FESTIVAL_FInfoScoreGet( wk->fest_sys ) >= now_score ){
     return; //更新の必要無し
   }
   wk->score_up_ct = SCORE_UP_VIEW_TIME;
