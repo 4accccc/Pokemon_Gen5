@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakamura_akira" host="W00161" date="2011-02-17T11:45:58"/>
+	<create user="matsumiya" host="W00224" date="2011-02-27T18:12:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -317,14 +317,14 @@
 		</language>
 	</columns>
 
-	<dialog left="303" top="117" right="1007" bottom="745" maximized="no" rayout="Vertical2">
+	<dialog left="1657" top="213" right="2361" bottom="841" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="788" top="346" right="1261" bottom="755" visible="no"/>
 		<band id="0" index="0" style="0000" width="529"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="696"/>
 		<band id="3" index="3" style="0000" width="696"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -580,9 +580,9 @@ Ariizumi100224</comment>
 		<language name="JPN_KANJI">ペアレンタルコントロールの
 設定により　写真データの
 送受信が　制限されています
-画像を　出したいときは
-本体設定で　制限を
-解除してください</language>
+画像を　だしたいときは
+本体設定で
+制限を　解除してください</language>
 	</row>
 
 	<row id="COMM_TVT_SYS_11">
@@ -615,7 +615,7 @@ Ariizumi 100506</comment>
 		<language name="JPN">『[1:1C:簡易会話単語:0]』が
 ちゅうし　されました</language>
 		<language name="JPN_KANJI">『[1:1C:簡易会話単語:0]』が
-中止　されました</language>
+中止されました</language>
 	</row>
 
 	<row id="COMM_TVT_GAME_04">
@@ -635,7 +635,7 @@ Ariizumi 100506</comment>
 ゲームを　ちゅうし　します</language>
 		<language name="JPN_KANJI">『[1:1C:簡易会話単語:0]』の
 参加を　断りました
-ゲームを　中止　します</language>
+ゲームを　中止します</language>
 	</row>
 
 	<row id="COMM_TVT_GAME_06">
@@ -710,7 +710,7 @@ Ariizumi 100506</comment>
 たくさん　ふうせんを　わろう！
 ほかのいろを　わると　げんてんだぞ！</language>
 		<language name="JPN_KANJI">[1:1C:簡易会話単語:0]色の　風船を　タッチして
-沢山　風船を　割ろう！
+たくさん　風船を　割ろう！
 他の色を　割ると　減点だぞ！</language>
 	</row>
 
@@ -721,7 +721,7 @@ Ariizumi 100506</comment>
 たくさん　はれつさせよう！</language>
 		<language name="JPN_KANJI">タッチパネルを　何度も　タッチ！
 風船に　空気を入れて
-沢山　破裂させよう！</language>
+たくさん　破裂させよう！</language>
 	</row>
 
 	<row id="COMM_TVT_GAME_17">
