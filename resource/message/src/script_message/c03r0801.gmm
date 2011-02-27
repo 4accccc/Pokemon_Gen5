@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-06-25T17:01:02"/>
+	<create user="matsumiya" host="W00224" date="2011-02-27T15:17:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,21 +292,21 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_mapscript_dummy" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>未使用</comment>
 		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_bg_c03r0801_lock_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_bg_c03r0801_lock_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>未使用</comment>
 		<attribute name="キャラ指定">ドア</attribute>
 		<language name="JPN" width="256">カギが　かかっていて　あかない</language>
 		<language name="JPN_KANJI" width="256">カギが　かかっていて　開かない</language>
 	</row>
 
-	<row id="msg_c03r0801_crew_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_c03r0801_crew_01">
 		<comment>リタイア受付
 全抜き時はex_2へ</comment>
 		<attribute name="キャラ指定">INFORMATIONM</attribute>
@@ -322,7 +322,7 @@
 船から　降りますか？</language>
 	</row>
 
-	<row id="msg_c03r0801_crew_01a" back-color="#800000,,,#800000,,#800000,#800000,,,,,,#800000,,,,,,">
+	<row id="msg_c03r0801_crew_01a">
 		<comment>リタイア受付
 全抜き時はex_2へ</comment>
 		<attribute name="キャラ指定">INFORMATIONM</attribute>
@@ -336,7 +336,7 @@
 船から　降りますか？</language>
 	</row>
 
-	<row id="msg_c03r0801_crew_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c03r0801_crew_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>トレーナーヒント１
 ・右部、左部で何人いるか？
 
@@ -357,7 +357,7 @@ msg_c03r0801_hint_02</comment>
 おじさんの　ヒントを　聞くかい？</language>
 	</row>
 
-	<row id="msg_c03r0801_crew_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c03r0801_crew_03">
 		<comment>長話客の説明</comment>
 		<attribute name="キャラ指定">INFORMATIONM</attribute>
 		<language name="JPN" width="256">きてきが　なるまで
@@ -369,7 +369,7 @@ msg_c03r0801_hint_02</comment>
 そんな　お客さんも　船室には　いるよ</language>
 	</row>
 
-	<row id="msg_c03r0801_crew_04" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c03r0801_crew_04">
 		<comment>甲板部の説明</comment>
 		<attribute name="キャラ指定">INFORMATIONM</attribute>
 		<language name="JPN" width="256">このさきは　ロイヤルイッシュごう
@@ -378,7 +378,7 @@ msg_c03r0801_hint_02</comment>
 自慢の　展望フロアに　なります</language>
 	</row>
 
-	<row id="msg_c03r0801_crew_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c03r0801_crew_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>トレーナーヒント２
 ・ダブルルームに何人いるか？
 
@@ -392,7 +392,7 @@ msg_c03r0801_hint_02</comment>
 １人しか　いない　みたいだよ</language>
 	</row>
 
-	<row id="msg_c03r0801_crew_06" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c03r0801_crew_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>トレーナーヒント２
 ・ダブルルームに何人いるか？
 [1桁:1]の所に任意の数字が
@@ -406,7 +406,7 @@ msg_c03r0801_hint_02</comment>
 [2:00:１桁:2]人　いる　みたいだよ</language>
 	</row>
 
-	<row id="msg_c03r0801_vistor_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c03r0801_vistor_01">
 		<comment>移動を妨害
 ・固定会話</comment>
 		<attribute name="キャラ指定">GIRL1（現在仮）</attribute>
@@ -416,7 +416,7 @@ msg_c03r0801_hint_02</comment>
 そんな不思議な　ことが　できてしまう！</language>
 	</row>
 
-	<row id="msg_c03r0801_vistor_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c03r0801_vistor_02">
 		<comment>移動を妨害
 ・固定会話</comment>
 		<attribute name="キャラ指定">GIRL1（現在仮）</attribute>
@@ -428,7 +428,7 @@ msg_c03r0801_hint_02</comment>
 どっちが　いいか　迷ってるんだ</language>
 	</row>
 
-	<row id="msg_c03r0801_vistor_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c03r0801_vistor_03">
 		<comment>移動を妨害
 ・固定会話</comment>
 		<attribute name="キャラ指定">GIRL1（現在仮）</attribute>
@@ -440,7 +440,7 @@ msg_c03r0801_hint_02</comment>
 なかなか　難しいね！</language>
 	</row>
 
-	<row id="msg_c03r0801_vistor_04" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c03r0801_vistor_04">
 		<comment>移動を妨害
 ・固定会話</comment>
 		<attribute name="キャラ指定">GIRL1（現在仮）</attribute>
@@ -452,7 +452,7 @@ msg_c03r0801_hint_02</comment>
 最高だね　この船は！</language>
 	</row>
 
-	<row id="msg_c03r0801_vistor_05" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c03r0801_vistor_05">
 		<comment>移動を妨害
 ・固定会話</comment>
 		<attribute name="キャラ指定">GIRL1（現在仮）</attribute>
@@ -462,7 +462,7 @@ msg_c03r0801_hint_02</comment>
 迷っているんだ！</language>
 	</row>
 
-	<row id="msg_c03r0801_businessman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c03r0801_businessman_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>お客さん
 ・短い話</comment>
 		<attribute name="キャラ指定">BUSINESSMAN
@@ -473,7 +473,7 @@ msg_c03r0801_hint_02</comment>
 ここは　何もかも　ダイナミックだな</language>
 	</row>
 
-	<row id="msg_c03r0801_businessman_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c03r0801_businessman_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>お客さん
 ・長い話前</comment>
 		<attribute name="キャラ指定">BUSINESSMAN</attribute>
@@ -501,7 +501,7 @@ msg_c03r0801_hint_02</comment>
 ……　……　……　なんだよなぁ！▼</language>
 	</row>
 
-	<row id="msg_c03r0801_businessman_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c03r0801_businessman_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>お客さん
 ・長い話後</comment>
 		<attribute name="キャラ指定">BUSINESSMAN
@@ -516,7 +516,7 @@ msg_c03r0801_hint_02</comment>
 面白かったよ　ありがとう！</language>
 	</row>
 
-	<row id="msg_c03r0801_businessman_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c03r0801_businessman_04" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>トレーナー前</comment>
 		<attribute name="キャラ指定">BUSINESSMAN</attribute>
 		<language name="JPN" width="256">しごとの　あいまに　ひとしょうぶ！
@@ -525,7 +525,7 @@ msg_c03r0801_hint_02</comment>
 これが　また　格別　なんだ▼</language>
 	</row>
 
-	<row id="msg_c03r0801_businessman_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c03r0801_businessman_05" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>トレーナー後</comment>
 		<attribute name="キャラ指定">BUSINESSMAN</attribute>
 		<language name="JPN" width="256">しごとの　あいまに
@@ -534,7 +534,7 @@ msg_c03r0801_hint_02</comment>
 いい　勝負が　できたよ</language>
 	</row>
 
-	<row id="msg_c03r0801_trainerm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03r0801_trainerm_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>お客さん
 ・短い話</comment>
 		<attribute name="キャラ指定">TRAINERM
@@ -547,7 +547,7 @@ msg_c03r0801_hint_02</comment>
 ワクワクが　とまらないね！</language>
 	</row>
 
-	<row id="msg_c03r0801_trainerm_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03r0801_trainerm_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>お客さん
 ・短い話２</comment>
 		<attribute name="キャラ指定">TRAINERM</attribute>
@@ -557,7 +557,7 @@ msg_c03r0801_hint_02</comment>
 足を　伸ばして　休憩中さ</language>
 	</row>
 
-	<row id="msg_c03r0801_trainerm_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03r0801_trainerm_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>トレーナー前</comment>
 		<attribute name="キャラ指定">TRAINERM
 </attribute>
@@ -571,7 +571,7 @@ msg_c03r0801_hint_02</comment>
 ポケモン勝負　楽しませてね！▼</language>
 	</row>
 
-	<row id="msg_c03r0801_trainerm_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03r0801_trainerm_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>トレーナー後</comment>
 		<attribute name="キャラ指定">TRAINERM</attribute>
 		<language name="JPN" width="256">ふねに　ゆられて　ポケモンしょうぶ！▼
@@ -584,7 +584,7 @@ msg_c03r0801_hint_02</comment>
 ぼくは　シアワセー　です！</language>
 	</row>
 
-	<row id="msg_c03r0801_trainerw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
+	<row id="msg_c03r0801_trainerw_01" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
 		<comment>お客さん
 ・短い話</comment>
 		<attribute name="キャラ指定">TRAINERW
@@ -601,7 +601,7 @@ msg_c03r0801_hint_02</comment>
 カントーから　来たの！</language>
 	</row>
 
-	<row id="msg_c03r0801_trainerw_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
+	<row id="msg_c03r0801_trainerw_02" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
 		<comment>お客さん
 ・短い話２</comment>
 		<attribute name="キャラ指定">TRAINERW</attribute>
@@ -611,7 +611,7 @@ msg_c03r0801_hint_02</comment>
 すごい　景色が　みれるのよ！</language>
 	</row>
 
-	<row id="msg_c03r0801_trainerw_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
+	<row id="msg_c03r0801_trainerw_03" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
 		<comment>トレーナー前</comment>
 		<attribute name="キャラ指定">TRAINERW
 </attribute>
@@ -623,7 +623,7 @@ msg_c03r0801_hint_02</comment>
 ワクワク　するわね！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c03r0801_trainerw_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
+	<row id="msg_c03r0801_trainerw_04" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
 		<comment>トレーナー後</comment>
 		<attribute name="キャラ指定">TRAINERW</attribute>
 		<language name="JPN" width="256">まけちゃったー……
@@ -632,7 +632,7 @@ msg_c03r0801_hint_02</comment>
 景色でも　みにいこうかなー</language>
 	</row>
 
-	<row id="msg_c03r0801_boy2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c03r0801_boy2_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>お客さん
 ・短い話</comment>
 		<attribute name="キャラ指定">BOY2</attribute>
@@ -648,7 +648,7 @@ msg_c03r0801_hint_02</comment>
 うーん……　とにかく　すごいんだ！</language>
 	</row>
 
-	<row id="msg_c03r0801_boy2_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c03r0801_boy2_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>お客さん
 ・短い話２</comment>
 		<attribute name="キャラ指定">BOY2</attribute>
@@ -660,7 +660,7 @@ msg_c03r0801_hint_02</comment>
 手持ちの　ポケモンが　いないよー！！</language>
 	</row>
 
-	<row id="msg_c03r0801_boy2_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c03r0801_boy2_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>トレーナー前</comment>
 		<attribute name="キャラ指定">BOY2
 </attribute>
@@ -672,7 +672,7 @@ msg_c03r0801_hint_02</comment>
 おいらが　華麗に　みせてやるよ！▼</language>
 	</row>
 
-	<row id="msg_c03r0801_boy2_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c03r0801_boy2_04" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>トレーナー後</comment>
 		<attribute name="キャラ指定">BOY2</attribute>
 		<language name="JPN" width="256">アッチャー！　まけちゃったー！
@@ -681,7 +681,7 @@ msg_c03r0801_hint_02</comment>
 きみには　脱パン　だ！</language>
 	</row>
 
-	<row id="msg_c03r0801_girl2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
+	<row id="msg_c03r0801_girl2_01" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
 		<comment>お客さん
 ・短い話</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
@@ -693,7 +693,7 @@ msg_c03r0801_hint_02</comment>
 この船が　だいすき！</language>
 	</row>
 
-	<row id="msg_c03r0801_girl2_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
+	<row id="msg_c03r0801_girl2_02" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
 		<comment>お客さん
 ・長い話前</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
@@ -719,7 +719,7 @@ msg_c03r0801_hint_02</comment>
 ……　……　……　なんだって！▼</language>
 	</row>
 
-	<row id="msg_c03r0801_girl2_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
+	<row id="msg_c03r0801_girl2_03" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
 		<comment>お客さん
 ・長い話後</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
@@ -733,7 +733,7 @@ msg_c03r0801_hint_02</comment>
 でも　楽しかった　ありがと！</language>
 	</row>
 
-	<row id="msg_c03r0801_girl2_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
+	<row id="msg_c03r0801_girl2_04" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
 		<comment>トレーナー前</comment>
 		<attribute name="キャラ指定">GIRL2
 </attribute>
@@ -745,7 +745,7 @@ msg_c03r0801_hint_02</comment>
 珍しい　ポケモン　みせてあげる！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c03r0801_girl2_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
+	<row id="msg_c03r0801_girl2_05" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
 		<comment>トレーナー後</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">めずらしかった？
@@ -758,7 +758,7 @@ msg_c03r0801_hint_02</comment>
 わたしの　お気に入りなの！</language>
 	</row>
 
-	<row id="msg_c03r0801_boy4_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c03r0801_boy4_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>お客さん
 ・短い話</comment>
 		<attribute name="キャラ指定">BOY4</attribute>
@@ -770,7 +770,7 @@ msg_c03r0801_hint_02</comment>
 グレートに　お似合いだろ？</language>
 	</row>
 
-	<row id="msg_c03r0801_boy4_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c03r0801_boy4_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>お客さん
 ・短い話２</comment>
 		<attribute name="キャラ指定">BOY4</attribute>
@@ -782,7 +782,7 @@ msg_c03r0801_hint_02</comment>
 ５回　鳴ったら　終わりかー……</language>
 	</row>
 
-	<row id="msg_c03r0801_boy4_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c03r0801_boy4_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>トレーナー前</comment>
 		<attribute name="キャラ指定">BOY4
 </attribute>
@@ -794,7 +794,7 @@ msg_c03r0801_hint_02</comment>
 みせて　あげるよ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c03r0801_boy4_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c03r0801_boy4_04" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>トレーナー後</comment>
 		<attribute name="キャラ指定">BOY4</attribute>
 		<language name="JPN" width="256">まけても　きひんを　わすれない
@@ -805,7 +805,7 @@ msg_c03r0801_hint_02</comment>
 おぼっちゃま　なのさ</language>
 	</row>
 
-	<row id="msg_c03r0801_girl4_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
+	<row id="msg_c03r0801_girl4_01" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
 		<comment>お客さん
 ・短い話</comment>
 		<attribute name="キャラ指定">GIRL4</attribute>
@@ -817,7 +817,7 @@ msg_c03r0801_hint_02</comment>
 大変　美味　でしたわ！</language>
 	</row>
 
-	<row id="msg_c03r0801_girl4_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
+	<row id="msg_c03r0801_girl4_02" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
 		<comment>お客さん
 ・短い話２</comment>
 		<attribute name="キャラ指定">GIRL4</attribute>
@@ -831,7 +831,7 @@ msg_c03r0801_hint_02</comment>
 わたくし　お気に入り　ですの</language>
 	</row>
 
-	<row id="msg_c03r0801_girl4_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
+	<row id="msg_c03r0801_girl4_03" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
 		<comment>トレーナー前</comment>
 		<attribute name="キャラ指定">GIRL4
 </attribute>
@@ -843,7 +843,7 @@ msg_c03r0801_hint_02</comment>
 演出　しますわ！▼</language>
 	</row>
 
-	<row id="msg_c03r0801_girl4_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
+	<row id="msg_c03r0801_girl4_04" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
 		<comment>トレーナー後</comment>
 		<attribute name="キャラ指定">GIRL4</attribute>
 		<language name="JPN" width="256">ロイヤルな　ポケモンしょうぶに
@@ -852,7 +852,7 @@ msg_c03r0801_hint_02</comment>
 わたくし　よって　しまいましたわ……</language>
 	</row>
 
-	<row id="msg_c03r0801_gentleman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c03r0801_gentleman_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>お客さん
 ・短い話</comment>
 		<attribute name="キャラ指定">GENTLEMAN</attribute>
@@ -866,7 +866,7 @@ msg_c03r0801_hint_02</comment>
 海の　向こうの　トレーナー</language>
 	</row>
 
-	<row id="msg_c03r0801_gentleman_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c03r0801_gentleman_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>お客さん
 ・長い話前</comment>
 		<attribute name="キャラ指定">GENTLEMAN</attribute>
@@ -890,7 +890,7 @@ msg_c03r0801_hint_02</comment>
 ……　……　……　なのだよ！▼</language>
 	</row>
 
-	<row id="msg_c03r0801_gentleman_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c03r0801_gentleman_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>お客さん
 ・長い話後</comment>
 		<attribute name="キャラ指定">GENTLEMAN</attribute>
@@ -902,7 +902,7 @@ msg_c03r0801_hint_02</comment>
 楽しかったよ　ありがとう！</language>
 	</row>
 
-	<row id="msg_c03r0801_gentleman_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c03r0801_gentleman_04" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>トレーナー前</comment>
 		<attribute name="キャラ指定">GENTLEMAN
 </attribute>
@@ -914,7 +914,7 @@ msg_c03r0801_hint_02</comment>
 どれ　レッツ　チークダンス！▼</language>
 	</row>
 
-	<row id="msg_c03r0801_gentleman_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c03r0801_gentleman_05" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>トレーナー後</comment>
 		<attribute name="キャラ指定">GENTLEMAN</attribute>
 		<language name="JPN" width="256">にて　さんて　うえをいく
@@ -923,7 +923,7 @@ msg_c03r0801_hint_02</comment>
 やはり　若さには　勝てませんな！</language>
 	</row>
 
-	<row id="msg_c03r0801_lady_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
+	<row id="msg_c03r0801_lady_01" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
 		<comment>お客さん
 ・短い話</comment>
 		<attribute name="キャラ指定">LADY</attribute>
@@ -935,7 +935,7 @@ msg_c03r0801_hint_02</comment>
 船員さん　なら　知ってそうよ？</language>
 	</row>
 
-	<row id="msg_c03r0801_lady_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
+	<row id="msg_c03r0801_lady_02" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
 		<comment>お客さん
 ・長い話前</comment>
 		<attribute name="キャラ指定">LADY</attribute>
@@ -957,7 +957,7 @@ msg_c03r0801_hint_02</comment>
 ……　……　……　というわけなの▼</language>
 	</row>
 
-	<row id="msg_c03r0801_lady_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
+	<row id="msg_c03r0801_lady_03" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
 		<comment>お客さん
 ・長い話後</comment>
 		<attribute name="キャラ指定">LADY</attribute>
@@ -969,7 +969,7 @@ msg_c03r0801_hint_02</comment>
 ついつい　話しこんじゃった！</language>
 	</row>
 
-	<row id="msg_c03r0801_lady_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
+	<row id="msg_c03r0801_lady_04" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
 		<comment>トレーナー前</comment>
 		<attribute name="キャラ指定">LADY
 </attribute>
@@ -979,7 +979,7 @@ msg_c03r0801_hint_02</comment>
 ポケモン勝負　しちゃおうかしら[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c03r0801_lady_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
+	<row id="msg_c03r0801_lady_05" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
 		<comment>トレーナー後</comment>
 		<attribute name="キャラ指定">LADY</attribute>
 		<language name="JPN" width="256">かわいいだけ　じゃなく
@@ -988,7 +988,7 @@ msg_c03r0801_hint_02</comment>
 ポケモン勝負も　つよいのね！</language>
 	</row>
 
-	<row id="msg_c03r0801_man3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c03r0801_man3_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>お客さん
 ・短い話</comment>
 		<attribute name="キャラ指定">MAN3</attribute>
@@ -998,7 +998,7 @@ msg_c03r0801_hint_02</comment>
 汽笛の　音って　力強いな！</language>
 	</row>
 
-	<row id="msg_c03r0801_man3_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c03r0801_man3_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>お客さん
 ・長い話前</comment>
 		<attribute name="キャラ指定">MAN3</attribute>
@@ -1024,7 +1024,7 @@ msg_c03r0801_hint_02</comment>
 ……　……　……　というわけさ▼</language>
 	</row>
 
-	<row id="msg_c03r0801_man3_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c03r0801_man3_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>お客さん
 ・長い話後</comment>
 		<attribute name="キャラ指定">MAN3</attribute>
@@ -1036,7 +1036,7 @@ msg_c03r0801_hint_02</comment>
 すごく　楽しかった　ありがとう！</language>
 	</row>
 
-	<row id="msg_c03r0801_maid_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
+	<row id="msg_c03r0801_maid_01" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
 		<comment>トレーナー前</comment>
 		<attribute name="キャラ指定">MAID</attribute>
 		<language name="JPN" width="256">わたしより　つよいひとを　さがし▼
@@ -1053,7 +1053,7 @@ msg_c03r0801_hint_02</comment>
 いざ　じんじょうに　勝負です！▼</language>
 	</row>
 
-	<row id="msg_c03r0801_maid_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
+	<row id="msg_c03r0801_maid_02" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
 		<comment>トレーナー後</comment>
 		<attribute name="キャラ指定">MAID</attribute>
 		<language name="JPN" width="256">せかいを　わたりあるいた
@@ -1066,21 +1066,21 @@ msg_c03r0801_hint_02</comment>
 わたし　気づきました！</language>
 	</row>
 
-	<row id="msg_c03r0801_babygirl2_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_c03r0801_babygirl2_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>未使用</comment>
 		<attribute name="キャラ指定">BABYGIRL1</attribute>
 		<language name="JPN" width="256">トレーナー　です２</language>
 		<language name="JPN_KANJI" width="256">トレーナー　です２</language>
 	</row>
 
-	<row id="msg_c03r0801_babygirl2_02" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_c03r0801_babygirl2_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>未使用</comment>
 		<attribute name="キャラ指定">BABYGIRL1</attribute>
 		<language name="JPN" width="256">しょうぶが　おわりました２</language>
 		<language name="JPN_KANJI" width="256">勝負が　終わりました２</language>
 	</row>
 
-	<row id="msg_c03r0801_hint_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c03r0801_hint_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>トレーナーヒント１
 
 はいの場合</comment>
@@ -1119,7 +1119,7 @@ msg_c03r0801_hint_02</comment>
 船の　右側には……　いないね</language>
 	</row>
 
-	<row id="msg_c03r0801_hint_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c03r0801_hint_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>トレーナーヒント１
 
 いいえの場合</comment>
@@ -1130,7 +1130,7 @@ msg_c03r0801_hint_02</comment>
 おじさんが　いつでも　ヒント　出すよ</language>
 	</row>
 
-	<row id="msg_c03r0801_hint_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c03r0801_hint_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>トレーナーヒント１
 
 再度話しかけた場合</comment>
@@ -1141,7 +1141,7 @@ msg_c03r0801_hint_02</comment>
 聞きたい　かい？</language>
 	</row>
 
-	<row id="msg_c03r0801_retire_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_c03r0801_retire_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>リタイア用・</comment>
 		<attribute name="キャラ指定">INFORMATIONM</attribute>
 		<language name="JPN" width="256">かしこまりました
@@ -1150,7 +1150,7 @@ msg_c03r0801_hint_02</comment>
 そのまま　お待ち　くださいませ▼</language>
 	</row>
 
-	<row id="msg_c03r0801_retire_02" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_c03r0801_retire_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>リタイア用・</comment>
 		<attribute name="キャラ指定">INFORMATIONM</attribute>
 		<language name="JPN" width="256">かしこまりました
@@ -1159,7 +1159,7 @@ msg_c03r0801_hint_02</comment>
 引き続き　お楽しみ　くださいませ</language>
 	</row>
 
-	<row id="msg_c03r0801_sys_01" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="msg_c03r0801_sys_01">
 		<comment>全てのトレーナーを倒した際に
 表示されます</comment>
 		<attribute name="キャラ指定">システムメッセージ</attribute>
@@ -1169,7 +1169,7 @@ msg_c03r0801_hint_02</comment>
 トレーナー全員に　勝利した！</language>
 	</row>
 
-	<row id="msg_c03r0801_ex_01" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_c03r0801_ex_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>案内後の受付員のセリフ</comment>
 		<attribute name="キャラ指定">INFORMATIONM</attribute>
 		<language name="JPN" width="256">ロイヤルイッシュごうの
@@ -1184,7 +1184,7 @@ msg_c03r0801_hint_02</comment>
 ごゆっくり　お楽しみ　くださいませ▼</language>
 	</row>
 
-	<row id="msg_c03r0801_ex_02" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_c03r0801_ex_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>リタイヤ員
 全抜き時のセリフ</comment>
 		<attribute name="キャラ指定">INFORMATIONM</attribute>
@@ -1204,7 +1204,7 @@ msg_c03r0801_hint_02</comment>
 船から　お降りに　なられますか？</language>
 	</row>
 
-	<row id="msg_c03r0801_sys_02" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,,,#c0c0c0,#c0c0c0,,,,,">
+	<row id="msg_c03r0801_sys_02">
 		<comment>全てのトレーナーを倒した際に
 表示されます</comment>
 		<attribute name="キャラ指定">システムメッセージ</attribute>
