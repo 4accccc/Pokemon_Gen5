@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-15T15:37:01"/>
+	<create user="matsumiya" host="W00224" date="2011-02-27T15:20:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1512" top="219" right="2217" bottom="847" maximized="no" rayout="Vertical2">
+	<dialog left="1296" top="159" right="2001" bottom="787" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,13 +292,15 @@
 	</lock>
 
 
-	<row id="msg_c03r1001_woman3_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03r1001_woman3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・はい/いいえの選択肢
 　はい　→woman3_03
 　いいえ→woman3_02
 ・0＝先頭のポケモン
-※ポケモン選択できたほうがうれしいか？</comment>
+※ポケモン選択できたほうがうれしいか？
+
+※SWANでc03r1101に移動</comment>
 		<attribute name="キャラ指定">WOMAN3</attribute>
 		<language name="JPN" width="256">こんにちは！▼
 よろしければ　あなたの　ポケモンに
@@ -308,7 +310,7 @@
 マッサージ　しましょうか？</language>
 	</row>
 
-	<row id="msg_c03r1001_woman3_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03r1001_woman3_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・いいえ選択時</comment>
 		<attribute name="キャラ指定">WOMAN3</attribute>
@@ -318,7 +320,7 @@
 また　来てくださいね</language>
 	</row>
 
-	<row id="msg_c03r1001_woman3_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03r1001_woman3_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・はい選択時
 ・woman3_04表示後、画面暗転＋SE
@@ -333,7 +335,7 @@
 それでは　はじめますね▼</language>
 	</row>
 
-	<row id="msg_c03r1001_woman3_04" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03r1001_woman3_04" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・タマゴ選択時</comment>
 		<attribute name="キャラ指定">WOMAN3</attribute>
@@ -343,7 +345,7 @@
 まだ　ちょっと　はやいかも</language>
 	</row>
 
-	<row id="msg_c03r1001_woman3_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03r1001_woman3_05" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・終了時
 ・先頭のポケモンのなつき度＋３０のとき</comment>
@@ -356,7 +358,7 @@
 あなたに　とても　なついたみたい！</language>
 	</row>
 
-	<row id="msg_c03r1001_woman3_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03r1001_woman3_06" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・終了時
 ・先頭のポケモンのなつき度　＋１０のとき</comment>
@@ -369,7 +371,7 @@
 あなたに　なついたみたいね！</language>
 	</row>
 
-	<row id="msg_c03r1001_woman3_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03r1001_woman3_07" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・終了時
 ・先頭のポケモンのなつき度　＋　５のとき</comment>
@@ -382,7 +384,7 @@
 あなたに　少し　なついたみたいね！</language>
 	</row>
 
-	<row id="msg_c03r1001_woman3_08" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03r1001_woman3_08" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・マッサージ後、日付が変わるまで</comment>
 		<attribute name="キャラ指定">WOMAN3</attribute>
