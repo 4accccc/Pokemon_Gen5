@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-09T18:35:18"/>
+	<create user="matsumiya" host="W00224" date="2011-02-27T16:23:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1296" top="159" right="2001" bottom="785" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,7 +292,29 @@
 	</lock>
 
 
-	<row id="msg_d06_stopper_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_d06_poke4_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>ポケモン・コバルオン
+・初期位置（GRIDX=7 GRIDZ=4）
+・pos？・？を踏むとメッセージ表示
+・続けて動作モデル、アニメで画面上に消えていく
+　続けてpoke4_02</comment>
+		<attribute name="キャラ指定">ポケモン
+コバルオン</attribute>
+		<language name="JPN" width="256">こふおおおおーっ！▼</language>
+		<language name="JPN_KANJI" width="256">こふおおおおーっ！▼</language>
+	</row>
+
+	<row id="msg_d06_poke4_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>ポケモン・コバルオン
+・メッセージ表示後、主人公操作可能に</comment>
+		<attribute name="キャラ指定">メッセージ</attribute>
+		<language name="JPN" width="256">ポケモンは　かけぬけると
+どこかへ　きえてしまった……</language>
+		<language name="JPN_KANJI" width="256">ポケモンは　駆け抜けると
+どこかへ　消えてしまった……</language>
+	</row>
+
+	<row id="msg_d06_stopper_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・c05ジムクリア前</comment>
 		<attribute name="キャラ指定">デンチュラの巣</attribute>
 		<language name="JPN" width="256">ポケモンの　すの　ようなもので
@@ -301,7 +323,7 @@
 ふさがれていて　中に　入れない</language>
 	</row>
 
-	<row id="msg_d06_leader_01">
+	<row id="msg_d06_leader_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・c05ジムクリア後に巣を調べるとメッセージだけ表示
 ・メッセージ後、主人公！マーク表示して
@@ -313,7 +335,7 @@
 		<language name="JPN_KANJI" width="256">ヤーコン『待たせたな[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d06_leader_02">
+	<row id="msg_d06_leader_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・メッセージ表示後
 　ポケモン「ミネズミ」の動作モデル出現
@@ -334,7 +356,7 @@
 なんとかするのも　ジムリーダーよ▼</language>
 	</row>
 
-	<row id="msg_d06_leader_03">
+	<row id="msg_d06_leader_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・ポケモンが巣に向かい技を出したような演出
 ・巣を削除する処理
@@ -347,7 +369,7 @@
 ワルビルっ！！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d06_leader_04">
+	<row id="msg_d06_leader_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・主人公と向き合ってアイテム入手処理
 　No405「じならし」
@@ -366,7 +388,7 @@
 覚えさせても　いいぞ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d06_leader_05">
+	<row id="msg_d06_leader_05" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてleader_06</comment>
 		<attribute name="キャラ指定">LEADER5
@@ -387,7 +409,7 @@
 その　弱点を　カバーできるだろ▼</language>
 	</row>
 
-	<row id="msg_d06_leader_06">
+	<row id="msg_d06_leader_06" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・表示後、道をくだりc05方面へ移動
 　画面外に消えると、主人公操作可能に</comment>
