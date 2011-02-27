@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-21T15:35:39"/>
+	<create user="matsumiya" host="W00224" date="2011-02-27T15:19:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,7 +229,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="152"/>
+		<id position="0" width="184"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1296" top="159" right="2001" bottom="787" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,7 +292,222 @@
 	</lock>
 
 
-	<row id="msg_c03r1101_sage1_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c03r1101_infomationw_01">
+		<comment>♀
+・GRIDX=3、GRIDZ=3
+・SWANで追加</comment>
+		<attribute name="キャラ指定">INFOMATIONW
+受付</attribute>
+		<language name="JPN" width="256">フィーリングチェックで　もらえる
+ハートスイーツ……　いいですよね！</language>
+		<language name="JPN_KANJI" width="256">フィーリングチェックで　もらえる
+ハートスイーツ……　いいですよね！</language>
+	</row>
+
+	<row id="msg_c03r1101_middlewoman2_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・フィーリングチェックのデータがない</comment>
+		<attribute name="キャラ指定">MIDDLEWOMAN2</attribute>
+		<language name="JPN" width="256">わたしは　フィーリングうらないし▼
+よのなか　Ｃギアを　つかって
+フィーリングチェックを　している▽
+ヒトが　おおいんですってね</language>
+		<language name="JPN_KANJI" width="256">わたしは　フィーリング占い師▼
+世の中　Ｃ－ＧＥＡＲを　使って
+フィーリングチェックを　している▽
+ヒトが　多いんですってね</language>
+	</row>
+
+	<row id="msg_c03r1101_middlewoman2_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・フィーリングチェックのデータがある
+・はい/いいえの選択肢
+　はい→middlewoman2_03
+　いいえ→middlewoman2_04
+・データが1つしかないとき
+　→middlewoman2_05</comment>
+		<attribute name="キャラ指定">MIDDLEWOMAN2</attribute>
+		<language name="JPN" width="256">わたしは　フィーリングうらないし▼
+フィーリングチェックの　せいせきから
+あなたの　きょうの　ラッキーマンを▽
+ずばっと　あてちゃうわ！▽
+どう　あなた　うらなってみる？</language>
+		<language name="JPN_KANJI" width="256">わたしは　フィーリング占い師▼
+フィーリングチェックの　成績から
+あなたの　今日の　ラッキーマンを▽
+ずばっと　当てちゃうわ！▽
+どう　あなた　占ってみる？</language>
+	</row>
+
+	<row id="msg_c03r1101_middlewoman2_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・はい選択時
+・0＝フィーリングチェックをしたトレーナー名</comment>
+		<attribute name="キャラ指定">MIDDLEWOMAN2</attribute>
+		<language name="JPN" width="256">きょうの　あなたが　とんでもなく
+ハッピーに　すごせる　ヒトは……▼
+ずばり　[1:00:トレーナー名:0]　ね！</language>
+		<language name="JPN_KANJI" width="256">今日の　あなたが　とんでもなく
+ハッピーに　すごせる　ヒトは……▼
+ずばり　[1:00:トレーナー名:0]　ね！</language>
+	</row>
+
+	<row id="msg_c03r1101_middlewoman2_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・いいえ選択時</comment>
+		<attribute name="キャラ指定">MIDDLEWOMAN2</attribute>
+		<language name="JPN" width="256">あら　えんりょ　しなくていいのよ
+タダで　うらなってあげるのに</language>
+		<language name="JPN_KANJI" width="256">あら　遠慮しなくていいのよ
+タダで　占ってあげるのに</language>
+	</row>
+
+	<row id="msg_c03r1101_middlewoman2_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・データが1つしかないとき
+・0＝フィーリングチェックをしたトレーナー名</comment>
+		<attribute name="キャラ指定">MIDDLEWOMAN2</attribute>
+		<language name="JPN" width="256">きょうの　あなたが　とんでもなく
+ハッピーに　すごせる　ヒトは……▼
+あら　[1:00:トレーナー名:0]さん　としか
+フィーリングチェックを　していないのね▼
+いろんな　ヒトと
+フィーリングチェックを　すると　いいわ！</language>
+		<language name="JPN_KANJI" width="256">今日の　あなたが　とんでもなく
+ハッピーに　すごせる　ヒトは……▼
+あら　[1:00:トレーナー名:0]さん　としか
+フィーリングチェックを　していないのね▼
+いろんな　ヒトと
+フィーリングチェックを　すると　いいわ！</language>
+	</row>
+
+	<row id="msg_c03r1001_woman3_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・はい/いいえの選択肢
+　はい　→woman3_03
+　いいえ→woman3_02
+・0＝先頭のポケモン
+※ポケモン選択できたほうがうれしいか？</comment>
+		<attribute name="キャラ指定">WOMAN3</attribute>
+		<language name="JPN" width="256">こんにちは！▼
+よろしければ　あなたの　ポケモンに
+マッサージ　しましょうか？</language>
+		<language name="JPN_KANJI" width="256">こんにちは！▼
+よろしければ　あなたの　ポケモンに
+マッサージ　しましょうか？</language>
+	</row>
+
+	<row id="msg_c03r1001_woman3_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・いいえ選択時</comment>
+		<attribute name="キャラ指定">WOMAN3</attribute>
+		<language name="JPN" width="256">きがむいたら
+また　きてくださいね</language>
+		<language name="JPN_KANJI" width="256">気が向いたら
+また　来てくださいね</language>
+	</row>
+
+	<row id="msg_c03r1001_woman3_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・はい選択時
+・woman3_04表示後、画面暗転＋SE
+・暗転終了
+　→　５％でなつき度＋３０
+　→２５％でなつき度＋１０
+　→７０％でなつき度＋　５</comment>
+		<attribute name="キャラ指定">WOMAN3</attribute>
+		<language name="JPN" width="256">はーい！
+それでは　はじめますね▼</language>
+		<language name="JPN_KANJI" width="256">はーい！
+それでは　はじめますね▼</language>
+	</row>
+
+	<row id="msg_c03r1001_woman3_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・タマゴ選択時</comment>
+		<attribute name="キャラ指定">WOMAN3</attribute>
+		<language name="JPN" width="256">タマゴに　マッサージね……
+まだ　ちょっと　はやいかも</language>
+		<language name="JPN_KANJI" width="256">タマゴに　マッサージね……
+まだ　ちょっと　はやいかも</language>
+	</row>
+
+	<row id="msg_c03r1001_woman3_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・終了時
+・先頭のポケモンのなつき度＋３０のとき</comment>
+		<attribute name="キャラ指定">WOMAN3</attribute>
+		<language name="JPN" width="256">はい　おつかれさま！！▼
+いまの　マッサージで
+あなたに　とても　なついたみたい！</language>
+		<language name="JPN_KANJI" width="256">はい　おつかれさま！！▼
+今の　マッサージで
+あなたに　とても　なついたみたい！</language>
+	</row>
+
+	<row id="msg_c03r1001_woman3_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・終了時
+・先頭のポケモンのなつき度　＋１０のとき</comment>
+		<attribute name="キャラ指定">WOMAN3</attribute>
+		<language name="JPN" width="256">はい　おつかれさまでした！▼
+いまの　マッサージで
+あなたに　なついたみたいね！</language>
+		<language name="JPN_KANJI" width="256">はい　おつかれさまでした！▼
+今の　マッサージで
+あなたに　なついたみたいね！</language>
+	</row>
+
+	<row id="msg_c03r1001_woman3_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・終了時
+・先頭のポケモンのなつき度　＋　５のとき</comment>
+		<attribute name="キャラ指定">WOMAN3</attribute>
+		<language name="JPN" width="256">はい　おつかれさまでした！▼
+いまの　マッサージで
+あなたに　すこし　なついたみたいね！</language>
+		<language name="JPN_KANJI" width="256">はい　おつかれさまでした！▼
+今の　マッサージで
+あなたに　少し　なついたみたいね！</language>
+	</row>
+
+	<row id="msg_c03r1001_woman3_08" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・マッサージ後、日付が変わるまで</comment>
+		<attribute name="キャラ指定">WOMAN3</attribute>
+		<language name="JPN" width="256">ごめんなさい！　さっきの
+マッサージで　あたし　クタクタ……▽
+また　あした　きてみてね！</language>
+		<language name="JPN_KANJI" width="256">ごめんなさい！　さっきの
+マッサージで　あたし　クタクタ……▽
+また　明日　来てみてね！</language>
+	</row>
+
+	<row id="msg_c03r0501_mountain_01">
+		<comment>♂
+・ここに姓名判断師も配置
+・姓名判断師のテキストは
+　namechange.gmm</comment>
+		<attribute name="キャラ指定">MOUNTAIN</attribute>
+		<language name="JPN" width="256">ひとから　もらった
+ポケモンの　なまえは　かえられない▼
+なんたって　なまえを　つけた　ひとの
+おもいが　こめられているからな！</language>
+		<language name="JPN_KANJI" width="256">人から　もらった
+ポケモンの　名前は　かえられない▼
+なんたって　名前を　つけた　人の
+想いが　こめられているからな！</language>
+	</row>
+
+	<row id="msg_c03r0501_poke_01">
+		<comment>ポケモン</comment>
+		<attribute name="キャラ指定">POKE
+・未定</attribute>
+		<language name="JPN" width="256">にねんぶり『ばびょーん！</language>
+		<language name="JPN_KANJI" width="256">にねんぶり『ばびょーん！</language>
+	</row>
+
+	<row id="msg_c03r1101_sage1_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・室内にはゲーチス、七賢人×２
 　したっぱ♂×２、したっぱ♀×１
@@ -308,7 +523,7 @@
 ジムリーダーの　アーティさん▼</language>
 	</row>
 
-	<row id="msg_c03r1101_leader3_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c03r1101_leader3_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・左右を見てから
 ・続けてsage3_01</comment>
@@ -322,7 +537,7 @@
 欲しくなると　盗っちゃう　人たち？▼</language>
 	</row>
 
-	<row id="msg_c03r1101_sage3_01">
+	<row id="msg_c03r1101_sage3_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・ゲーチスのほうを向いて
 　（ゲーチスは下向きのまま）
@@ -338,7 +553,7 @@
 意外に　早く　ばれましたな▼</language>
 	</row>
 
-	<row id="msg_c03r1101_sage1_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c03r1101_sage1_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けて
 　WHITEならleader8w_01w
@@ -359,7 +574,7 @@
 伝説は　ご存じ　ですか？▼</language>
 	</row>
 
-	<row id="msg_c03r1101_leader8w_01w">
+	<row id="msg_c03r1101_leader8w_01w" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・WHITEver
 ・続けてsage1_03w</comment>
@@ -371,7 +586,7 @@
 しろい　ドラゴンポケモン　でしょ！▼</language>
 	</row>
 
-	<row id="msg_c03r1101_leader8w_01b">
+	<row id="msg_c03r1101_leader8w_01b" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・BLACKver
 ・続けてsage1_03b</comment>
@@ -383,7 +598,7 @@
 くろい　ドラゴンポケモン　でしょ！▼</language>
 	</row>
 
-	<row id="msg_c03r1101_sage1_03w" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c03r1101_sage1_03w" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・WHITEver
 ・左右に歩いてからメッセージ（演説時のイメージ）
@@ -416,7 +631,7 @@
 イッシュを　造りあげたのです▼</language>
 	</row>
 
-	<row id="msg_c03r1101_sage1_03b" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c03r1101_sage1_03b" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・BLACKver
 ・左右に歩いてからメッセージ（演説時のイメージ）
@@ -449,7 +664,7 @@
 イッシュを　造りあげたのです▼</language>
 	</row>
 
-	<row id="msg_c03r1101_sage1_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c03r1101_sage1_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・芝居後にメッセージ表示
 ・続けてleader3_02</comment>
@@ -469,7 +684,7 @@
 世界に　できるのです！▼</language>
 	</row>
 
-	<row id="msg_c03r1101_leader3_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c03r1101_leader3_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてsage3_02</comment>
 		<attribute name="キャラ指定">ジムリーダー
@@ -488,7 +703,7 @@
 わからないことも　あるんだよねえ</language>
 	</row>
 
-	<row id="msg_c03r1101_sage3_02">
+	<row id="msg_c03r1101_sage3_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・サブウインドウで表示
 ・続けてsage6_01</comment>
@@ -497,7 +712,7 @@
 		<language name="JPN_KANJI" width="256">はて</language>
 	</row>
 
-	<row id="msg_c03r1101_sage6_01">
+	<row id="msg_c03r1101_sage6_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・サブウインドウで表示
 ・続けてleader3_03</comment>
@@ -506,7 +721,7 @@
 		<language name="JPN_KANJI" width="256">なにを？</language>
 	</row>
 
-	<row id="msg_c03r1101_leader3_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c03r1101_leader3_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてleader3_04</comment>
 		<attribute name="キャラ指定">ジムリーダー
@@ -525,7 +740,7 @@
 勝負をしたり　交換したり　ね▼</language>
 	</row>
 
-	<row id="msg_c03r1101_leader3_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c03r1101_leader3_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・一歩前に出てメッセージ表示
 ・続けてsage1_05</comment>
@@ -553,7 +768,7 @@
 結びつきを　強めるんじゃないの？▼</language>
 	</row>
 
-	<row id="msg_c03r1101_sage1_05" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c03r1101_sage1_05" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてsage1_06</comment>
 		<attribute name="キャラ指定">七賢人
@@ -580,7 +795,7 @@
 意見に　免じ　ひきあげましょう▼</language>
 	</row>
 
-	<row id="msg_c03r1101_sage1_06" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c03r1101_sage1_06" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・したっぱの手前にムンナ出現
 　ムンナ、ベルの元に駆け寄る感じで移動
@@ -593,7 +808,7 @@
 ポケモンは　返してやろう▼</language>
 	</row>
 
-	<row id="msg_c03r1101_white_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03r1101_white_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・ムンナがベルのそばに来て消えるとメッセージ表示
 ・続けてleader8w_02</comment>
@@ -605,7 +820,7 @@
 ムンちゃん！　おかえり！！▼</language>
 	</row>
 
-	<row id="msg_c03r1101_leader8w_02">
+	<row id="msg_c03r1101_leader8w_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・その場ジャンプ後にサポートを見て
 　メッセージ表示
@@ -620,7 +835,7 @@
 とっちゃった　わるもの　なんだよ！？▼</language>
 	</row>
 
-	<row id="msg_c03r1101_white_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03r1101_white_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・続けてsage1_07</comment>
 		<attribute name="キャラ指定">友達♀
@@ -631,7 +846,7 @@
 ムンナが　無事で　うれしくて▼</language>
 	</row>
 
-	<row id="msg_c03r1101_sage1_07" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c03r1101_sage1_07" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・メッセージ後、画面暗転
 　プラズマ団を削除
@@ -654,7 +869,7 @@
 では　ごきげんよう……▼</language>
 	</row>
 
-	<row id="msg_c03r1101_leader8w_03">
+	<row id="msg_c03r1101_leader8w_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・飛び跳ねてから？
 ・続けてleader3_05</comment>
@@ -666,7 +881,7 @@
 みのがしちゃったの！？▼</language>
 	</row>
 
-	<row id="msg_c03r1101_leader3_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c03r1101_leader3_05" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてwhite_03</comment>
 		<attribute name="キャラ指定">ジムリーダー
@@ -681,7 +896,7 @@
 ボクたちは　どうすれば　いいのさ？▼</language>
 	</row>
 
-	<row id="msg_c03r1101_white_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c03r1101_white_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・続けてleader8w_04</comment>
 		<attribute name="キャラ指定">友達♀
@@ -698,7 +913,7 @@
 こうやって　また　会えたんだもん！▼</language>
 	</row>
 
-	<row id="msg_c03r1101_leader8w_04">
+	<row id="msg_c03r1101_leader8w_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・続けてleader3_06</comment>
 		<attribute name="キャラ指定">ジムリーダー
@@ -709,7 +924,7 @@
 だったら　いいんだけど……▼</language>
 	</row>
 
-	<row id="msg_c03r1101_leader3_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c03r1101_leader3_06" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてwhite_03</comment>
 		<attribute name="キャラ指定">ジムリーダー
@@ -720,7 +935,7 @@
 これから　どうするのさ？▼</language>
 	</row>
 
-	<row id="msg_c03r1101_white_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03r1101_white_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・続けてleader8w_05</comment>
 		<attribute name="キャラ指定">友達♀
@@ -731,7 +946,7 @@
 いろいろ　みて　まわりたいけど……▼</language>
 	</row>
 
-	<row id="msg_c03r1101_leader8w_05">
+	<row id="msg_c03r1101_leader8w_05" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・！マーク表示後
 ・続けてwhite_05</comment>
@@ -745,7 +960,7 @@
 ボディーガード　つづけるから！！▼</language>
 	</row>
 
-	<row id="msg_c03r1101_white_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03r1101_white_05" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・続けてleader3_07</comment>
 		<attribute name="キャラ指定">友達♀
@@ -754,7 +969,7 @@
 		<language name="JPN_KANJI" width="256">ベル『アイリスちゃん……▼</language>
 	</row>
 
-	<row id="msg_c03r1101_leader3_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c03r1101_leader3_07" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けて
 　leader8w_06か
@@ -775,7 +990,7 @@
 助け合い！　助け合い！！▼</language>
 	</row>
 
-	<row id="msg_c03r1101_leader8w_06">
+	<row id="msg_c03r1101_leader8w_06" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・主人公に隣接してメッセージ表示
 ・表示後にアイテム入手処理
@@ -790,7 +1005,7 @@
 これ　あげる！▼</language>
 	</row>
 
-	<row id="msg_c03r1101_leader8w_07">
+	<row id="msg_c03r1101_leader8w_07" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・主人公に隣接してメッセージ表示
 ・表示後にアイテム入手処理
@@ -805,7 +1020,7 @@
 これ　あげる！▼</language>
 	</row>
 
-	<row id="msg_c03r1101_leader8w_08">
+	<row id="msg_c03r1101_leader8w_08" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・ベルを押すようにして画面外に移動
 ・続けてwhite_06</comment>
@@ -815,7 +1030,7 @@
 		<language name="JPN_KANJI" width="256">アイリス『じゃーねー！！▼</language>
 	</row>
 
-	<row id="msg_c03r1101_white_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03r1101_white_06" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・サブウインドウで表示
 ・続けてwhite_07</comment>
@@ -825,7 +1040,7 @@
 		<language name="JPN_KANJI" width="256">ちょっ</language>
 	</row>
 
-	<row id="msg_c03r1101_white_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03r1101_white_07" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・サブウインドウで表示
 ・画面外に消えた後に続けて
@@ -837,7 +1052,7 @@
 		<language name="JPN_KANJI" width="256">ちょっとお</language>
 	</row>
 
-	<row id="msg_c03r1101_leader3_08" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c03r1101_leader3_08" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・主人公性別：♂
 ・メッセージ表示後、退場
@@ -851,7 +1066,7 @@
 ボクは　ジムで　待ってるよ▼</language>
 	</row>
 
-	<row id="msg_c03r1101_leader3_09" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c03r1101_leader3_09" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・主人公性別：♂
 ・メッセージ表示後、退場
