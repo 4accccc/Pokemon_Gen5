@@ -26,6 +26,7 @@ _EVENT_DATA   ev_item_event_hideitem
 _EVENT_DATA   ev_item_event_intrude_secret
 _EVENT_DATA   ev_item_event_prog_call
 _EVENT_DATA   ev_item_event_field_keywait
+_EVENT_DATA   ev_item_event_fmission_clear
 _EVENT_DATA_END //終了
 
 
@@ -635,6 +636,59 @@ EVENT_START ev_item_event_intrude_secret
   ENDIF
   _SYSWIN_CLOSE()
   $SCWK_ANSWER = $i_get
+}
+EVENT_END
+
+//====================================================================
+//    フェスミッション：クリア報酬取得処理
+//
+//    IN: SCWK_PARAM0    アイテムナンバー
+//    IN: SCWK_PARAM1    入手可能アイテム数
+//====================================================================
+EVENT_START ev_item_event_fmission_clear
+{
+  DEFINE_LOCAL  i_item
+  DEFINE_LOCAL  i_get
+  DEFINE_LOCAL  i_num
+  DEFINE_LOCAL  i_dif
+  DEFINE_LOCAL  i_not_illegal_code
+
+  $i_item = $SCWK_PARAM0
+  $i_get = $SCWK_PARAM1
+
+  IF $i_get == 0 THEN
+    //入手失敗システムメッセージ
+    _SYSWIN_MSG(	msg_fmission_clear_item_get_fail , POS_DEFAULT )
+  ELSE
+    //  隠しアイテムなど取得時のME→ポーズ→MSG→ポーズ終了→キーウェイト
+	  _ME_PLAY(	SEQ_ME_ITEM )
+    _TIME_WAIT( ITEM_GET_FORM_TIMING )
+    //自機の表示コードが自機専用のものかどうか
+    _CHECK_PLAYER_ILLEGAL_OBJCODE( i_not_illegal_code )
+
+    IF $i_not_illegal_code == TRUE THEN
+      _CALL sub_item_get_player_form_anime_set
+    ENDIF
+    
+    //入手成功システムメッセージ
+    _PLAYER_NAME( 0 )
+    _ITEM_NAME( 1, i_item )
+    _NUMBER( 2, i_get, 3 )
+    _SYSWIN_MSG( msg_fmission_clear_item_get , POS_DEFAULT )
+
+    _ME_WAIT()
+    
+    IF $i_not_illegal_code == TRUE THEN
+      _OBJ_ANIME_WAIT()
+      _CALL sub_item_get_player_form_return
+    ENDIF
+    
+    //アイテム追加
+    _ADD_ITEM( i_item, i_get, SCWK_ANSWER )
+    _BEACON_SET_REQ_ITEM_GET( i_item ) 
+  ENDIF
+  _LAST_KEYWAIT()
+  _SYSWIN_CLOSE()
 }
 EVENT_END
 

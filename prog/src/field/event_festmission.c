@@ -37,7 +37,7 @@
 #include "message.naix"
 #include "msg/script/msg_festmission_event.h"
 
-#include "../../../resource/fldmapdata/script/gpower_scr_def.h" //SCRID_～
+#include "../../../resource/fldmapdata/script/item_get_scr_def.h" //SCRID_～
 
 ///////////////////////////////////////////////////////
 //リテラル
@@ -416,6 +416,29 @@ static GMEVENT_RESULT event_FestMissionEndMain(GMEVENT * event, int *  seq, void
     {
       GMEVENT* call_ev = EVENT_ChangeSubScreen( wk->gsys, wk->fieldmap, FIELD_SUBSCREEN_NORMAL );
       GMEVENT_CallEvent( event, call_ev );
+    }
+    if( wk->result ){ //クリアしていればアイテム入手イベントコール
+      (*seq)++;
+    }else{
+      (*seq) = 0xFF;  //終了
+    }
+    break;
+  case 4:
+    { //クリアしていればアイテム入手イベントコール
+      s16 num;
+      MYITEM_PTR item_sv = GAMEDATA_GetMyItem( wk->gdata );
+      u32 max = MYITEM_GetItemMax( wk->mission.item );
+      u16 now = MYITEM_GetItemNum( item_sv, wk->mission.item, GFL_HEAP_LOWID(wk->heapID) );
+      GMEVENT* sc_event = SCRIPT_SetEventScript( wk->gsys, SCRID_ITEM_EVENT_FMISSION_CLEAR, NULL, HEAPID_FIELDMAP );
+
+      SCRIPT_WORK* sc = SCRIPT_GetScriptWorkFromEvent( sc_event );
+
+      num = max-now;
+      if( num >= wk->mission.item_num ){
+        num = wk->mission.item_num;  
+      }
+      SCRIPT_SetScriptWorkParam( sc, wk->mission.item, num, 0, 0 );
+      GMEVENT_CallEvent( event, sc_event );
     }
     (*seq)++;
     break;

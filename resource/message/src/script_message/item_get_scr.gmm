@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-11T12:32:20"/>
+	<create user="iwasawa" host="W00270" date="2011-02-27T20:40:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="251" top="338" right="956" bottom="958" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -315,7 +315,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -495,6 +495,32 @@
 バッグが　一杯だ！▼
 [1:00:トレーナー名:0]は
 隠された　道具を　あきらめた</language>
+	</row>
+
+	<row id="msg_fmission_clear_item_get">
+		<comment>アイテムゲット時……フェスミッションクリア
+・0＝主人公名
+・1＝道具名
+・2＝入手道具数</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]は
+[FF:00:色:2][1:09:どうぐ名:1][FF:00:色:0]を　[2:02:３桁:2]こ▽
+てにいれた！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
+[FF:00:色:2][1:09:どうぐ名:1][FF:00:色:0]を　[2:02:３桁:2]個▽
+手にいれた！</language>
+	</row>
+
+	<row id="msg_fmission_clear_item_get_fail">
+		<comment>アイテムゲット時……フェスミッションクリア
+・0＝主人公名
+・1＝道具名
+・2＝入手道具数</comment>
+		<language name="JPN" width="256">ざんねん！　[1:09:どうぐ名:1]を
+これいじょう　もてない！▽
+[1:09:どうぐ名:1]を　あきらめた</language>
+		<language name="JPN_KANJI" width="256">残念！　[1:09:どうぐ名:1]を
+これ以上　持てない！▽
+[1:09:どうぐ名:1]を　あきらめた</language>
 	</row>
 
 	<flowchart-group-list>
