@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-02-27T17:49:55"/>
+	<create user="matsumiya" host="W00224" date="2011-02-27T17:53:07"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -341,6 +341,7 @@
 		<comment>♀
 ・先頭のポケモンのなつき度で
 　メッセージが分岐
+・0＝先頭のポケモン（タマゴ/ひんし除く）
 ※SWANで仕様変更</comment>
 		<attribute name="キャラ指定">WOMAN1</attribute>
 		<language name="JPN" width="256">だいすきな　ポケモンなら
@@ -349,7 +350,8 @@
 あなたと　[1:01:ポケモン種族名:0]は……▼</language>
 		<language name="JPN_KANJI" width="256">大好きな　ポケモンなら
 姿かたちが　変わったとしても▽
-心は　通じ合った　ままよね</language>
+心は　通じ合った　ままよね▼
+あなたと　[1:01:ポケモン種族名:0]は……▼</language>
 	</row>
 
 	<row id="msg_c04r1001_woman1_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
