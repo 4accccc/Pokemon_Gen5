@@ -473,6 +473,7 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         field/event_league_front01.c \
         field/event_league_front02.c \
         field/event_bsubway.c \
+        field/event_wbt.c \
         field/scrcmd_d12_gmk.c \
         field/field_gimmick_d12_st.c \
         field/fldmmdl.c \
@@ -893,7 +894,8 @@ SRCS_OVERLAY_SCRCMD_SEATEMPLE  =  field/scrcmd_seatemple.c \
 #===> GROUP_OVERLAY_DEBUGMENU
 #GROUP_OVERLAY_SCRCMD
 SRCS_OVERLAY_SCRCMD_WBT  =  field/scrcmd_wbt.c \
-                            field/scrcmd_wbt_table.c
+                            field/scrcmd_wbt_table.c \
+                            field/wbt_system.c
 
 # スクリプトコマンド並列化　レゾナンスリゾート
 #===> GROUP_OVERLAY_DEBUGMENU

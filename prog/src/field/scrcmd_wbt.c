@@ -29,7 +29,38 @@
 #include "field/eventdata_system.h"
 #include "field/eventdata_sxy.h"
 
+#include "wbt.h"
+#include "event_wbt.h"
+
 #include "scrcmd_wbt.h"
+
+#include "system/main.h"
+
+//======================================================================
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTSystemStart( VMHANDLE * core, void * wk )
+{
+  //仮：
+  WBTSYS * sys = WBTSYS_Create( HEAPID_PROC );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTSystemEnd( VMHANDLE * core, void * wk )
+{
+  //仮：
+  WBTSYS_Delete( NULL );
+  return VMCMD_RESULT_CONTINUE;
+}
 
 //======================================================================
 //======================================================================
@@ -176,5 +207,60 @@ VMCMD_RESULT EvCmdWBTGetDLNumber( VMHANDLE * core, void * wk )
   u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
   *ret_wk = 0;  //仮
   return VMCMD_RESULT_CONTINUE;
+}
+
+//======================================================================
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTTrainerMsg( VMHANDLE * core, void * wk )
+{
+  u16 type = SCRCMD_GetVMWorkValue( core, wk );
+  u16 obj_id = SCRCMD_GetVMWorkValue( core, wk );
+  //仮：トレーナーに合わせたメッセージを表示する
+  return VMCMD_RESULT_SUSPEND;
+}
+//--------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTTrainerBattle( VMHANDLE * core, void * wk )
+{
+  u16 num = SCRCMD_GetVMWorkValue( core, wk );
+  //仮：ここからトレーナーバトルイベントを呼び出す
+  return VMCMD_RESULT_SUSPEND;
+}
+//--------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTAnnounce( VMHANDLE * core, void * wk )
+{
+  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
+  //仮：前口上メッセージを表示する
+  return VMCMD_RESULT_SUSPEND;
+}
+//--------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTSelectPokemon( VMHANDLE * core, void * wk )
+{
+  SCRCMD_WORK*    work = wk;
+  SCRIPT_WORK*      sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRIPT_GetGameSysWork( sc );
+  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
+
+  u8 buf = TRUE;
+  //仮：ここからポケモン選択イベントを呼び出す
+  SCRIPT_CallEvent( sc, WBT_EVENT_SetSelectPokeList( NULL, gsys, buf ) );
+
+  return VMCMD_RESULT_SUSPEND;
 }
 

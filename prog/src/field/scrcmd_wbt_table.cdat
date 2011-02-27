@@ -14,7 +14,9 @@
   //スクリプトコマンドテーブル開始
   INIT_OVERLAY_CMD( wbt )
 
-  //海底神殿関連
+  //WBT関連
+  DEF_CMD( EvCmdWBTSystemStart,       EV_SEQ_WBT_SYSTEM_START )
+  DEF_CMD( EvCmdWBTSystemEnd,         EV_SEQ_WBT_SYSTEM_END )
   DEF_CMD( EvCmdWBTShowTornamentList, EV_SEQ_WBT_SHOW_TOURLIST )
   DEF_CMD( EvCmdWBTCheckBattleRule,   EV_SEQ_WBT_CHECK_BATTLE_RULE )
   DEF_CMD( EvCmdWBTSetBattleRule,     EV_SEQ_WBT_SET_BATTLE_RULE )
@@ -26,6 +28,10 @@
   DEF_CMD( EvCmdWBTSelectDLData,      EV_SEQ_WBT_SELECT_DL_DATA )
   DEF_CMD( EvCmdWBTSetDLNumber,       EV_SEQ_WBT_SET_DL_NUMBER )
   DEF_CMD( EvCmdWBTGetDLNumber,       EV_SEQ_WBT_SET_DL_NUMBER )
+  DEF_CMD( EvCmdWBTSelectPokemon,     EV_SEQ_WBT_SELECT_POKEMON )
+  DEF_CMD( EvCmdWBTTrainerMsg,        EV_SEQ_WBT_TRAINER_MSG )
+  DEF_CMD( EvCmdWBTTrainerBattle,     EV_SEQ_WBT_TRAINER_BATTLE )
+  DEF_CMD( EvCmdWBTAnnounce,          EV_SEQ_WBT_ANNOUNCE )
   
   END_CMD
   //スクリプトコマンドテーブル終了

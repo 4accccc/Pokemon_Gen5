@@ -12052,6 +12052,31 @@
 //======================================================================
 //--------------------------------------------------------------
 /**
+ * @brief WBT:システム開始
+ */
+//--------------------------------------------------------------
+#define _WBT_SYSTEM_START() \
+    _ASM_WBT_SYSTEM_START
+
+    .macro  _ASM_WBT_SYSTEM_START
+    .short  EV_SEQ_WBT_SYSTEM_START
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief WBT:システム終了
+ */
+//--------------------------------------------------------------
+#define _WBT_SYSTEM_END() \
+    _ASM_WBT_SYSTEM_END
+
+    .macro  _ASM_WBT_SYSTEM_END
+    .short  EV_SEQ_WBT_SYSTEM_END
+    .endm
+
+
+//--------------------------------------------------------------
+/**
  * @brief   WBT:トーナメントリスト表示
  * @param[in] num   トーナメント状態指定  ※script_def.hのSCR_WBT_LIST_～を参照
  */
@@ -12209,6 +12234,64 @@
     .macro _ASM_WBT_GET_DL_NUMBER ret_wk   
     .short  EV_SEQ_WBT_GET_DL_NUMBER
     .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief WBT:  ポケモン選択
+ * @param[out]  ret_wk  選択結果
+ */
+//--------------------------------------------------------------
+#define _WBT_SELECT_POKEMON( ret_wk ) \
+    _ASM_WBT_SELECT_POKEMON ret_wk
+
+    .macro _ASM_WBT_SELECT_POKEMON ret_wk
+    .short  EV_SEQ_WBT_SELECT_POKEMON
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief WBT:トレーナーメッセージ表示
+ * @param[in]  msg_type  選択結果
+ * @param[in]  obj_id    吹き出しをつけるOBJのID
+ */
+//--------------------------------------------------------------
+#define _WBT_TRAINER_MSG( msg_type, obj_id ) \
+    _ASM_WBT_TRAINER_MSG msg_type, obj_id
+
+    .macro _ASM_WBT_TRAINER_MSG msg_type, obj_id
+    .short  EV_SEQ_WBT_TRAINER_MSG
+    .short  \msg_type
+    .short  \obj_id
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief WBT:トレーナーバトル
+ * @param[in] num   トーナメント状態指定  ※script_def.hのSCR_WBT_LIST_～を参照
+ */
+//--------------------------------------------------------------
+#define _WBT_TRAINER_BATTLE( num ) \
+    _ASM_WBT_TRAINER_BATTLE num
+
+    .macro _ASM_WBT_TRAINER_BATTLE num
+    .short  EV_SEQ_WBT_TRAINER_BATTLE
+    .short  \num
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief WBT:前口上の表示
+ * @param[in] num   用途未定
+ */
+//--------------------------------------------------------------
+#define _WBT_ANNOUNCE( num ) \
+    _ASM_WBT_ANNOUNCE num
+
+    .macro _ASM_WBT_ANNOUNCE num
+    .short  EV_SEQ_WBT_ANNOUNCE
+    .short  \num
     .endm
 
 //======================================================================

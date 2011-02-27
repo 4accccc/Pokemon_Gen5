@@ -621,11 +621,13 @@
 #define SCR_WBT_TYPE_CHAMPION         (1) ///<チャンピオントーナメント
 #define SCR_WBT_TYPE_POKETYPE         (2) ///<タイプトーナメント
 #define SCR_WBT_TYPE_DOWNLOAD         (3) ///<ダウンロードトーナメント
+#define SCR_WBT_TYPE_NULL             (4) ///<トーナメント未選択
 
 #define SCR_WBT_RULE_SINGLE           (0) ///<シングルバトル
 #define SCR_WBT_RULE_DOUBLE           (1) ///<ダブルバトル
 #define SCR_WBT_RULE_TRIPLE           (2) ///<トリプルバトル
 #define SCR_WBT_RULE_LOTATION         (3) ///<ローテーション
+#define SCR_WBT_RULE_NULL             (4) ///<ルールなし
 
 #define SCR_WBT_LIST_1ST_START        (0) ///<受付での組み合わせ
 #define SCR_WBT_LIST_1ST_RESULT       (1) ///<1回戦結果
