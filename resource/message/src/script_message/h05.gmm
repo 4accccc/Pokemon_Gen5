@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-09-16T18:06:06"/>
+	<create user="matsumiya" host="W00224" date="2011-02-27T17:17:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,10 +292,12 @@
 	</lock>
 
 
-	<row id="msg_h05_ninja1_01" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="msg_h05_ninja1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・posを踏むと3人出現
-・続けてninja2_01</comment>
+・続けてninja2_01
+
+※SWANで削除</comment>
 		<attribute name="キャラ指定">ダークトリニティ
 その１</attribute>
 		<language name="JPN" width="256">……　……　……▼
@@ -304,7 +306,7 @@
 ……　……　おまえか▼</language>
 	</row>
 
-	<row id="msg_h05_ninja2_01" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="msg_h05_ninja2_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてninja3_01</comment>
 		<attribute name="キャラ指定">ダークトリニティ
@@ -317,7 +319,7 @@
 単身　どこかに　行かれた▼</language>
 	</row>
 
-	<row id="msg_h05_ninja3_01" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="msg_h05_ninja3_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてninja1_02</comment>
 		<attribute name="キャラ指定">ダークトリニティ
@@ -334,7 +336,7 @@
 命じられた　今も……▼</language>
 	</row>
 
-	<row id="msg_h05_ninja1_02" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="msg_h05_ninja1_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・主人公に隣接して
 ・アイテム入手処理
@@ -348,7 +350,7 @@
 ゲーチスさまが　そういわれたのだ……▼</language>
 	</row>
 
-	<row id="msg_h05_ninja2_02" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="msg_h05_ninja2_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・主人公に隣接して
 ・アイテム入手処理
@@ -360,7 +362,7 @@
 		<language name="JPN_KANJI" width="256">わたしからは　これを……▼</language>
 	</row>
 
-	<row id="msg_h05_ninja3_02" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="msg_h05_ninja3_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・主人公に隣接して
 ・アイテム入手処理
@@ -372,7 +374,7 @@
 		<language name="JPN_KANJI" width="256">そして　これも……▼</language>
 	</row>
 
-	<row id="msg_h05_ninja1_03" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="msg_h05_ninja1_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてninja2_03</comment>
 		<attribute name="キャラ指定">ダークトリニティ
@@ -393,7 +395,7 @@
 ……おまえを　利用するのか？▼</language>
 	</row>
 
-	<row id="msg_h05_ninja2_03" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="msg_h05_ninja2_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてninja3_03</comment>
 		<attribute name="キャラ指定">ダークトリニティ
@@ -410,7 +412,7 @@
 野望は　決して　とどまらない！▼</language>
 	</row>
 
-	<row id="msg_h05_ninja3_03" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="msg_h05_ninja3_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・メッセージ表示後、ダークトリニティの
 　動作モデルを消去する</comment>
@@ -743,14 +745,16 @@
 返品は　お断り　だからな</language>
 	</row>
 
-	<row id="msg_h05_oldwoman1_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_h05_oldwoman1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・この動作モデルはGRIDX=146、GRIDZ=36、下向き
 ・GRIDX=149、GRIDZ=36、下向きにGIRL2配置
 　GIRL2に隣接すると消える
 ・このときこの動作モデルも
 　女の子の方を向いて！マーク
-・女の子が消える前</comment>
+・女の子が消える前
+
+※SWANではこの動作モデルが消える</comment>
 		<language name="JPN" width="256">はあ……
 ぜっけい　だすなあ……</language>
 		<language name="JPN_KANJI" width="256">はあ……
