@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-18T17:23:20"/>
+	<create user="matsumiya" host="W00224" date="2011-02-27T17:00:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1297" top="184" right="2002" bottom="812" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_r18r0101_00_01">
+	<row id="msg_r18r0101_00_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・ポケモン入手前（1回目）
 ・はい/いいえの選択肢表示
@@ -320,7 +320,7 @@
 受け取り　育ててみないか？</language>
 	</row>
 
-	<row id="msg_r18r0101_00_02">
+	<row id="msg_r18r0101_00_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・ポケモン入手前（２回目）
 ・はい/いいえの選択肢表示
@@ -336,7 +336,7 @@
 受け取り　育ててみないか？</language>
 	</row>
 
-	<row id="msg_r18r0101_00_03">
+	<row id="msg_r18r0101_00_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・はい選択、手持ち一杯</comment>
 		<attribute name="キャラ指定">RANGERM</attribute>
@@ -350,7 +350,7 @@
 タマゴを　受け取れないようだね</language>
 	</row>
 
-	<row id="msg_r18r0101_00_04">
+	<row id="msg_r18r0101_00_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・いいえ選択
 ・このメッセージ表示後は、r18r0101_00_02から</comment>
@@ -361,7 +361,7 @@
 それも　きみの　自由だ！</language>
 	</row>
 
-	<row id="msg_r18r0101_00_05">
+	<row id="msg_r18r0101_00_05" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・はい選択
 ・ポケモン入手処理
@@ -373,7 +373,7 @@
 よろしく　頼んだぜ▼</language>
 	</row>
 
-	<row id="msg_r18r0101_00_06">
+	<row id="msg_r18r0101_00_06" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・ポケモン入手後、自動で表示</comment>
 		<attribute name="キャラ指定">RANGERM</attribute>
@@ -389,7 +389,7 @@
 中から　ポケモンが　でてくるんだ</language>
 	</row>
 
-	<row id="msg_r18r0101_00_07">
+	<row id="msg_r18r0101_00_07" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・0＝主人公名
 ・1=ポケモン名</comment>
 		<attribute name="キャラ指定">システム</attribute>
