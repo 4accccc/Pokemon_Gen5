@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsushima" host="W00181" date="2010-07-02T17:39:06"/>
+	<create user="matsumiya" host="W00224" date="2011-02-27T14:59:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="424" top="200" right="1129" bottom="820" maximized="no" rayout="Vertical2">
+	<dialog left="1563" top="230" right="2268" bottom="850" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="2021" top="437" right="2494" bottom="835" visible="yes"/>
+		<tag-palette left="807" top="437" right="1280" bottom="835" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -297,8 +297,10 @@
 
 ・ポジション（GRIDX = 4/GRIDZ = 6）</comment>
 		<attribute name="キャラ指定">BOY1</attribute>
-		<language name="JPN" width="256">…　…　…　…</language>
-		<language name="JPN_KANJI" width="256">…　…　…　…</language>
+		<language name="JPN" width="256">……　……　……
+……　……　……</language>
+		<language name="JPN_KANJI" width="256">……　……　……
+……　……　……</language>
 	</row>
 
 	<row id="msg_c03r0401_girl1_01_1" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -518,8 +520,8 @@ msg_c03r0401_girl1_04</comment>
 →続けてmsg_c03r0401_narrator_04
 ※未使用データ（2010.06.18）</comment>
 		<attribute name="キャラ指定">ゾロア</attribute>
-		<language name="JPN" width="256">…………きゅぅん？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">…………きゅぅん？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">……　……　きゅぅん？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">……　……　きゅぅん？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c03r0401_narrator_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
