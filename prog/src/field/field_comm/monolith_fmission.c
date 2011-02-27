@@ -16,6 +16,7 @@
 #include "intrude_mission.h"
 #include "intrude_comm_command.h"
 #include "msg/msg_monolith.h"
+#include "msg/msg_fest_mission.h"
 #include "monolith.naix"
 #include "system/bmp_winframe.h"
 #include "gamesystem/msgspeed.h"
@@ -29,6 +30,7 @@
 #include "field/monolith_tool_notwifi.h"
 
 #include "gamesystem/link_festival.h"
+#include "gamesystem/fest_mission_nw.h"
 #include "gamesystem/fest_mission_data.h"
 #include "field/field_subscreen.h"
 
@@ -158,7 +160,7 @@ typedef struct{
   GFL_CLWK *act_arrow_up;       ///<上矢印
   GFL_CLWK *act_arrow_down;     ///<下矢印
   
-  GFL_MSGDATA *mm_power;        ///<パワー名gmm
+  GFL_MSGDATA *mm_fmission;     ///<フェスミッション名gmm
   GFL_BMP_DATA *bmp_power_name[GPOWER_ID_MAX + _DUMMY_PANEL_NUM];
   GPOWER_ID use_gpower_id[GPOWER_ID_MAX + _DUMMY_PANEL_NUM];      ///<bmp_power_nameに対応したGPOWER_IDが入っている
   MONO_USE_POWER use_power[GPOWER_ID_MAX + _DUMMY_PANEL_NUM];         ///<use_gpower_idの習得状況
@@ -232,7 +234,7 @@ static void _Clear_MsgStream(MONOLITH_FMSELECT_WORK *mfw);
 static void _Setup_ScreenClear(MONOLITH_FMSELECT_WORK *mfw);
 static void _Setup_PowerNameBMPCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WORK *mfw, MONOLITH_SETUP *setup);
 static void _Setup_PowerNameBMPDelete(MONOLITH_FMSELECT_WORK *mfw);
-static BOOL _PowerNameBMPDraw(MONOLITH_FMSELECT_WORK *mfw, MONOLITH_SETUP *setup);
+static BOOL _MissionNameBMPDraw(MONOLITH_FMSELECT_WORK *mfw, MONOLITH_SETUP *setup);
 static BOOL _ScrollSpeedUpdate(MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WORK *mfw);
 static void _ScrollBeforeUpdate(MONOLITH_FMSELECT_WORK *mfw);
 static BOOL _SetCursorPos(MONOLITH_FMSELECT_WORK *mfw, s32 cursor_pos, _SET_CURSOR_MODE mode);
@@ -335,7 +337,7 @@ static GFL_PROC_RESULT MonolithFMissionSelectProc_Init(GFL_PROC * proc, int * se
     (*seq)++;
     break;
   case 1:
-    if(_PowerNameBMPDraw(mfw, appwk->setup) == TRUE){
+    if(_MissionNameBMPDraw(mfw, appwk->setup) == TRUE){
       OS_TPrintf("NameDraw end\n");
       //名前描画
       _ScrollPos_NameOamReflection(mfw);
@@ -542,8 +544,10 @@ static GFL_PROC_RESULT MonolithFMissionSelectProc_Main( GFL_PROC * proc, int * s
   case SEQ_DECIDE_STREAM:
     if(MonolithTool_PanelColor_GetMode(appwk, FADE_SUB_BG) != PANEL_COLORMODE_FLASH
         && MonolithTool_PanelColor_GetMode(appwk, FADE_SUB_OBJ) != PANEL_COLORMODE_FLASH){
+#if 0
       WORDSET_RegisterGPowerName( 
         appwk->setup->wordset, 0, mfw->use_gpower_id[mfw->decide_cursor_pos] );
+#endif
       _Set_MsgStreamExpand(mfw, appwk->setup, msg_mono_fmission_004);
       mfw->order_end = TRUE;
       (*seq)++;
@@ -712,8 +716,8 @@ static void _Setup_DataSetting( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WO
 
   mfw->fmd_man = FMISSION_DATA_Init( HEAPID_MONOLITH );
 
-  mfw->mm_power = GFL_MSG_Create(
-    GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_power_dat, HEAPID_MONOLITH);
+  mfw->mm_fmission = GFL_MSG_Create(
+    GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_fest_mission_dat, HEAPID_MONOLITH);
 }
 
 //--------------------------------------------------------------
@@ -724,7 +728,7 @@ static void _Setup_DataSetting( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WO
 static void _Setup_DataExit( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WORK *mfw )
 {
   FMISSION_DATA_Release( mfw->fmd_man );
-  GFL_MSG_Delete(mfw->mm_power);
+  GFL_MSG_Delete(mfw->mm_fmission);
 }
 
 
@@ -1088,10 +1092,12 @@ static void _Setup_PowerNameBMPDelete(MONOLITH_FMSELECT_WORK *mfw)
  * TRUEが返るまで毎フレーム呼び続けてください
  */
 //--------------------------------------------------------------
-static BOOL _PowerNameBMPDraw(MONOLITH_FMSELECT_WORK *mfw, MONOLITH_SETUP *setup)
+static BOOL _MissionNameBMPDraw(MONOLITH_FMSELECT_WORK *mfw, MONOLITH_SETUP *setup)
 {
   int i, count = 0;
   STRBUF *str;
+  FEST_MISSION  mission;
+
   static const PRINTSYS_LSB print_color[] = {
     PRINTSYS_MACRO_LSB(0xf, 2, 0),
     PRINTSYS_MACRO_LSB(2, 1, 0),
@@ -1101,7 +1107,11 @@ static BOOL _PowerNameBMPDraw(MONOLITH_FMSELECT_WORK *mfw, MONOLITH_SETUP *setup
   for(i = mfw->power_list_write_num; i < mfw->power_list_num; i++){
     if(i >= _DUMMY_PANEL_UP_NUM && i < mfw->power_list_num - _DUMMY_PANEL_DOWN_NUM){
       GF_ASSERT(mfw->use_power[i] < NELEMS(print_color));
-      GFL_MSG_GetString(mfw->mm_power, mfw->use_gpower_id[i], str);
+     
+      FMISSION_DATA_GetMissionParam( mfw->fmd_man, 0, &mission );
+      FEST_MISSION_GetTitleStr( setup->wordset, mfw->mm_fmission, str, &mission, GFL_HEAP_LOWID(HEAPID_MONOLITH) );
+
+//      GFL_MSG_GetString(mfw->mm_fmission, /*mfw->use_gpower_id[i]*/, str);
       PRINTSYS_PrintColor( mfw->bmp_power_name[i], 0, 0, str, 
         setup->font_handle, print_color[mfw->use_power[i]] );
     }
