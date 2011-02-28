@@ -39,6 +39,10 @@ static const FMISSION_ARCDATA DATA_MissionArcData[] = {
     FMISSION_TYPE_POKE_SEARCH, 5*60, MONSNO_TABUNNE,
     3, ITEM_DERUDAMA, 100, 0, FMISSION_ENDTYPE_CLEAR, 6
   },
+  { //タブンネを探せミッション
+    FMISSION_TYPE_POKE_SEARCH, 5*60, MONSNO_TABUNNE,
+    10, ITEM_DERUDAMA, 100, 0, FMISSION_ENDTYPE_CLEAR, 6
+  },
 };
 
 //------------------------------------------------------------

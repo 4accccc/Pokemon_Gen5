@@ -154,14 +154,34 @@ extern void LINK_FESTIVAL_FInfoTimeBonusReset( LINK_FESTIVAL* wk );
 
 //---------------------------------------------------------
 /*
+ * @brief リンクフェスティバル　現在のスコア
+ *
+ * @retval  現在のスコア
+ */
+//---------------------------------------------------------
+extern u32 LINK_FESTIVAL_GetNowScore( LINK_FESTIVAL* wk );
+
+//---------------------------------------------------------
+/*
  * @brief リンクフェスティバル　ログ解析してスコアとミッション成功・失敗を判定
  *
  * @param u32* スコアを取得するu32のワークポインタ
+ * @param u32* 取得するアイテム数を返すu32のワークポインタ
  * @retval  TRUE    ミッション成功
  * @retval  FALSE   ミッション失敗
  */
 //---------------------------------------------------------
-extern BOOL LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, u32* score );
+extern BOOL LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, u32* score, u32* item_num );
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル　ミッションの終了条件を満たしているか？
+ *
+ * @retval  TRUE    ミッション終了待ち状態
+ * @retval  FALSE   ミッション中
+ */
+//---------------------------------------------------------
+extern BOOL LINK_FESTIVAL_IsMissionEnd( LINK_FESTIVAL* wk );
 
 //---------------------------------------------------------
 /*

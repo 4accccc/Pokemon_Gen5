@@ -96,6 +96,7 @@ typedef struct _FMISSION_EVWORK{
 
   BOOL  result;
   u32   res_score;
+  u32   res_item_num;
   int   param;
 
   STRBUF* s_buf;
@@ -162,7 +163,7 @@ GMEVENT* EVENT_FestMissionEnd( GAMESYS_WORK * gsys, void* work )
     FEST_MISSION* fmwk = LINK_FESTIVAL_GetMissionWork( wk->fest_sys );
     wk->mission = *fmwk;
 
-    wk->result = LINK_FESTIVAL_GetMissionResult( wk->fest_sys, &wk->res_score );
+    wk->result = LINK_FESTIVAL_GetMissionResult( wk->fest_sys, &wk->res_score, &wk->res_item_num );
   }
   return event;
 }
@@ -394,17 +395,28 @@ static GMEVENT_RESULT event_FestMissionEndMain(GMEVENT * event, int *  seq, void
 
   switch (*seq) {
   case 0:
-    evcall_MsgPrint( wk->gsys, event, wk->fmb, wk->msgData, msg_fmission_end );
+    if( wk->result && wk->mission.life > 0 ){ //クリアでミッション終了した場合
+      evcall_MsgPrint( wk->gsys, event, wk->fmb, wk->msgData, msg_fmission_end_clear );
+    }else{  //タイムアップの場合
+      evcall_MsgPrint( wk->gsys, event, wk->fmb, wk->msgData, msg_fmission_end_timeup );
+    }
     (*seq)++;
     break;
   case 1:
     wk->win = FLDSYSWIN_AddEx( wk->fmb, wk->msgData, SYSWIN_PX, SYSWIN_PY, SYSWIN_SX, SYSWIN_SY );
     FLDSYSWIN_ClearWindow( wk->win );
     sub_FMissionEndParamDraw( wk );
+
+    if( wk->result ){
+      GMEVENT_CallEvent(event, EVENT_FSND_PushPlayJingleBGM( wk->gsys, SEQ_ME_MISSION_CLEAR ));
+    }else{
+      GMEVENT_CallEvent(event, EVENT_FSND_PushPlayJingleBGM( wk->gsys, SEQ_ME_MISSION_FAILED ));
+    }
     (*seq)++;
     break;
   case 2:
-    if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B)){
+    if( PMSND_CheckPlayBGM() == FALSE ){
+      GMEVENT_CallEvent(event, EVENT_FSND_PopBGM( wk->gsys, FSND_FADE_NONE, FSND_FADE_FAST));
       (*seq)++;
     }
     break;
@@ -434,8 +446,8 @@ static GMEVENT_RESULT event_FestMissionEndMain(GMEVENT * event, int *  seq, void
       SCRIPT_WORK* sc = SCRIPT_GetScriptWorkFromEvent( sc_event );
 
       num = max-now;
-      if( num >= wk->mission.item_num ){
-        num = wk->mission.item_num;  
+      if( num >= wk->res_item_num ){
+        num = wk->res_item_num;  
       }
       SCRIPT_SetScriptWorkParam( sc, wk->mission.item, num, 0, 0 );
       GMEVENT_CallEvent( event, sc_event );

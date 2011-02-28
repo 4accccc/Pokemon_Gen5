@@ -65,7 +65,7 @@ static void draw_RestTime( BEACON_VIEW_PTR wk, int* task_ct );
 void FMissionView_InitialDraw( BEACON_VIEW_PTR wk )
 {
   wk->ctrl.fm_my_score = wk->fmwk->my_score;
-  LINK_FESTIVAL_GetMissionResult( wk->fest_sys, &(wk->ctrl.fm_score) );
+  wk->ctrl.fm_score = LINK_FESTIVAL_GetNowScore( wk->fest_sys );
   wk->ctrl.fm_sec = wk->fmwk->life/60;
   wk->ctrl.fm_entry = LINK_FESTIVAL_GetMissionEntryNum( wk->fest_sys );
 
@@ -184,7 +184,7 @@ void FMissionView_ViewUpdate( BEACON_VIEW_PTR wk )
     draw_EntryNum( wk, &wk->eff_task_ct );
   }
   
-  LINK_FESTIVAL_GetMissionResult( wk->fest_sys, &score );
+  score = LINK_FESTIVAL_GetNowScore( wk->fest_sys );
   if( score != wk->ctrl.fm_score ){
     wk->ctrl.fm_my_score = wk->fmwk->my_score;
     wk->ctrl.fm_score = score;

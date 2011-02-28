@@ -215,32 +215,70 @@ void LINK_FESTIVAL_FInfoTimeBonusReset( LINK_FESTIVAL* wk )
 
 //---------------------------------------------------------
 /*
+ * @brief リンクフェスティバル　現在のスコア
+ *
+ * @retval  現在のスコア
+ */
+//---------------------------------------------------------
+u32 LINK_FESTIVAL_GetNowScore( LINK_FESTIVAL* wk )
+{
+  int i;
+  u32 score = 0;
+
+  if( FEST_MISSION_IsEntry(&wk->mission) == FALSE){
+    return 0;
+  }
+  for(i = 0;i < wk->log_num;i++){
+    score += wk->log[i].score.value;
+  }
+  return (score+wk->mission.my_score);
+}
+
+//---------------------------------------------------------
+/*
  * @brief リンクフェスティバル　ログ解析してスコアとミッション成功・失敗を判定
  *
  * @param u32* スコアを取得するu32のワークポインタ
+ * @param u32* 取得するアイテム数を返すu32のワークポインタ
  * @retval  TRUE    ミッション成功
  * @retval  FALSE   ミッション失敗
  */
 //---------------------------------------------------------
-BOOL LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, u32* score )
+BOOL LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, u32* score, u32* item_num )
 {
-  int i;
-
   *score = 0;
+  *item_num = 0;
   if( FEST_MISSION_IsEntry(&wk->mission) == FALSE){
     return FALSE;
   }
-  for(i = 0;i < wk->log_num;i++){
-    *score += wk->log[i].score.value;
-  }
-  *score += wk->mission.my_score;
+  *score = LINK_FESTIVAL_GetNowScore( wk );
 
   if( *score >= wk->mission.target){
 //    OS_FPrintf( OSPRINT_LINKFEST_PAGE,"ミッションノルマ達成 %d/%d\n",*score,wk->mission.target );
+    *item_num = wk->mission.item_num;
     return TRUE;
   }
 //  OS_FPrintf( OSPRINT_LINKFEST_PAGE,"ミッションノルマ未達成 %d/%d\n",*score,wk->mission.target );
   return FALSE;
+}
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル　ミッションの終了条件を満たしているか？
+ *
+ * @retval  TRUE    ミッション終了待ち状態
+ * @retval  FALSE   ミッション中
+ */
+//---------------------------------------------------------
+BOOL LINK_FESTIVAL_IsMissionEnd( LINK_FESTIVAL* wk )
+{
+  u32 score,item_num;
+  BOOL ret = LINK_FESTIVAL_GetMissionResult( wk, &score, &item_num );
+
+  if(ret){
+    return TRUE;
+  }
+  return FEST_MISSION_IsEnd(&wk->mission);
 }
 
 //---------------------------------------------------------

@@ -2118,15 +2118,15 @@ static GMEVENT* CheckGPowerEffectEnd( GAMESYS_WORK* gsys )
 static GMEVENT* CheckFestMissionEnd( GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldWork )
 {
   LINK_FESTIVAL* fest_sys = GAMESYSTEM_GetLinkFestivalWork( gsys );
-  FEST_MISSION* mission = LINK_FESTIVAL_GetMissionWork( fest_sys );
+  FEST_MISSION* fmwk = LINK_FESTIVAL_GetMissionWork( fest_sys );
 
-  if( FEST_MISSION_IsEntry( mission ) == FALSE ){
+  if( FEST_MISSION_IsEntry( fmwk ) == FALSE ){
     return NULL;
   }
-  if( GAMESYSTEM_GetAlwaysNetFlag( gsys )  == FALSE ){
+  if( GAMESYSTEM_GetAlwaysNetFlag( gsys )  == FALSE ){  //常駐通信切断
     return GMEVENT_CreateOverlayEventCall( gsys, FS_OVERLAY_ID( event_fmission ), EVENT_FestMissionRetireForce, fieldWork );
   }
-  if( FEST_MISSION_IsEnd( mission ) ){
+  if( LINK_FESTIVAL_IsMissionEnd( fest_sys ) ){  //タイムアップorクリア
     return GMEVENT_CreateOverlayEventCall( gsys, FS_OVERLAY_ID( event_fmission ), EVENT_FestMissionEnd, fieldWork );
   }
   return NULL;

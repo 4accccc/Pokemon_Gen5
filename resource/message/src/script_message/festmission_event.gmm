@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00270" date="2011-02-25T13:15:24"/>
+	<create user="iwasawa" host="W00270" date="2011-02-28T12:31:40"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -267,7 +267,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -296,18 +296,23 @@
 しばらく　お待ちください……</language>
 	</row>
 
-	<row id="msg_fmission_end">
-		<language name="JPN" width="256">フェスタミッションの　しゅうりょう
+	<row id="msg_fmission_end_timeup">
+		<language name="JPN" width="256">フェスミッションの　しゅうりょう
 じかんに　なりました[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">フェスタミッションの　終了時間に
+		<language name="JPN_KANJI" width="256">フェスミッションの　終了時間に
 なりました[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_fmission_end_clear">
+		<language name="JPN" width="256">ミッションを　クリアしました[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ミッションを　クリアしました[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_fmission_check">
 		<comment>ミッション内容確認時プレメッセージ</comment>
-		<language name="JPN" width="256">フェスタミッションの　ないようを
+		<language name="JPN" width="256">フェスミッションの　ないようを
 かくにん　します[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">フェスタミッションの　内容を
+		<language name="JPN_KANJI" width="256">フェスミッションの　内容を
 確認します[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -333,18 +338,18 @@
 
 0：プレイヤー名
 1：デルパワー名</comment>
-		<language name="JPN" width="256">[BD:02:Ｘセンタリング]フェスタミッション　かいし</language>
-		<language name="JPN_KANJI" width="256">[BD:02:Ｘセンタリング]フェスタミッション開始</language>
+		<language name="JPN" width="256">[BD:02:Ｘセンタリング]フェスミッション　かいし</language>
+		<language name="JPN_KANJI" width="256">[BD:02:Ｘセンタリング]フェスミッション開始</language>
 	</row>
 
 	<row id="msg_fmission_end_title">
-		<language name="JPN" width="256">[BD:02:Ｘセンタリング]フェスタミッション　しゅうりょう</language>
-		<language name="JPN_KANJI" width="256">[BD:02:Ｘセンタリング]フェスタミッション終了</language>
+		<language name="JPN" width="256">[BD:02:Ｘセンタリング]フェスミッション　しゅうりょう</language>
+		<language name="JPN_KANJI" width="256">[BD:02:Ｘセンタリング]フェスミッション終了</language>
 	</row>
 
 	<row id="msg_fmission_check_title">
-		<language name="JPN" width="256">[BD:02:Ｘセンタリング]フェスタミッション　ないよう</language>
-		<language name="JPN_KANJI" width="256">[BD:02:Ｘセンタリング]フェスタミッション内容</language>
+		<language name="JPN" width="256">[BD:02:Ｘセンタリング]フェスミッション　ないよう</language>
+		<language name="JPN_KANJI" width="256">[BD:02:Ｘセンタリング]フェスミッション内容</language>
 	</row>
 
 	<row id="msg_fmission_failed">

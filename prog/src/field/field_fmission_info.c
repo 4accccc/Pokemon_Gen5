@@ -599,7 +599,7 @@ static void taskAddCheck_ScoreUp( FIELD_FMISSION_INFO* wk )
   TASKWK_SCOREUP* twk;
   u32 now_score;
 
-  LINK_FESTIVAL_GetMissionResult( wk->fest_sys, &now_score );
+  now_score = LINK_FESTIVAL_GetNowScore( wk->fest_sys );
 
   if( LINK_FESTIVAL_FInfoScoreGet( wk->fest_sys ) >= now_score ){
     return; //更新の必要無し
