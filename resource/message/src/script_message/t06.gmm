@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-02-21T22:46:57"/>
+	<create user="matsumiya" host="W00224" date="2011-02-28T21:40:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="207"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1297" top="360" right="2002" bottom="988" maximized="no" rayout="Vertical2">
+	<dialog left="1293" top="114" right="1998" bottom="742" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,39 +292,59 @@
 	</lock>
 
 
-	<row id="msg_t06_00_01">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_t06_champion_01">
+		<comment>♂
+・街を入ってすぐのposを踏むと起動</comment>
+		<attribute name="キャラ指定">アデク
+・BWチャンピオン</attribute>
+		<language name="JPN" width="256">アデク『こっちだ！▼</language>
+		<language name="JPN_KANJI" width="256">アデク『こっちだ！▼</language>
 	</row>
 
 	<row id="msg_t06_00_02">
-		<comment>？？？</comment>
+		<comment>♂
+・ポケセンの前で停止
+・主人公と向き合ってメッセージ表示
+・はい/いいえの選択肢表示
+・はい→
+・いいえ→</comment>
 		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">ポケモンセンターだが
+ポケモンを　かいふく　させるか？</language>
+		<language name="JPN_KANJI" width="256">ポケモンセンターだが
+ポケモンを　かいふく　させるか？</language>
 	</row>
 
 	<row id="msg_t06_00_03">
-		<comment>？？？</comment>
+		<comment>♂
+・はい選択</comment>
 		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">はい</language>
+		<language name="JPN_KANJI" width="256">はい</language>
 	</row>
 
 	<row id="msg_t06_00_04">
-		<comment>？？？</comment>
+		<comment>♂
+・いいえ選択</comment>
 		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">いいえ
+では　こっちだ！▼</language>
+		<language name="JPN_KANJI" width="256">いいえ
+では　こっちだ！▼</language>
 	</row>
 
 	<row id="msg_t06_00_05">
-		<comment>？？？</comment>
+		<comment>♂
+・アデクの家近く</comment>
 		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">あちらの　ちょっと……▼
+いや　かなり　ボロい　こやが
+わしの　いえだ！▽
+あとで　よってくれ！▼</language>
+		<language name="JPN_KANJI" width="256">あちらの　ちょっと……▼
+いや　かなり　ボロい　こやが
+わしの　いえだ！▽
+あとで　よってくれ！▼</language>
 	</row>
 
 	<row id="msg_t06_sign_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
