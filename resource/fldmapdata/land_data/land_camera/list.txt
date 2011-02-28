@@ -288,8 +288,6 @@
 "mugen10.bin"
 "mugen11.bin"
 "mugen12.bin"
-"medal01.bin"
-"labo04.bin"
 "DUN1101.bin"
 "DUN1102.bin"
 "DUN1103.bin"
