@@ -229,7 +229,9 @@ DEP_TEXSET_IMD_INDOOR004 = \
 	$(SRCDIR)/stair_u01.imd \
 	$(SRCDIR)/stair_d01.imd \
 	$(SRCDIR)/table01.imd \
+	$(SRCDIR)/table02.imd \
 	$(SRCDIR)/chair01.imd \
+	$(SRCDIR)/chair02.imd \
 	$(SRCDIR)/shelf01.imd \
 	$(SRCDIR)/shelf02.imd \
 	$(SRCDIR)/shelf04.imd \
@@ -243,8 +245,10 @@ DEP_TEXSET_IMD_INDOOR004 = \
 	$(SRCDIR)/machine_l01.imd \
 	$(SRCDIR)/machine_l02.imd \
 	$(SRCDIR)/win01.imd \
+	$(SRCDIR)/win02.imd \
 	$(SRCDIR)/win03.imd \
 	$(SRCDIR)/pcdesk01.imd \
+	$(SRCDIR)/pcdesk02.imd \
 	$(SRCDIR)/desk01.imd \
 	$(SRCDIR)/vase01.imd \
 	$(SRCDIR)/cashier01.imd \
@@ -255,6 +259,8 @@ DEP_TEXSET_IMD_INDOOR004 = \
 	$(SRCDIR)/art02.imd \
 	$(SRCDIR)/object02.imd \
 	$(SRCDIR)/object03.imd \
+	$(SRCDIR)/machine01.imd \
+	$(SRCDIR)/machine02.imd \
 	$(SRCDIR)/d0stair_u01.imd \
 	$(SRCDIR)/d0stair_d01.imd \
 	$(SRCDIR)/in_vender01.imd \
@@ -265,7 +271,8 @@ DEP_TEXSET_IMD_INDOOR004 = \
 	$(SRCDIR)/warp01.imd \
 	$(SRCDIR)/warp02.imd \
 	$(SRCDIR)/warp03.imd \
-	$(SRCDIR)/shelf06.imd
+	$(SRCDIR)/shelf06.imd \
+	$(SRCDIR)/elevator01.imd
 
 texset/indoor004.imd: $(DEP_TEXSET_IMD_INDOOR004) texset/tmp/indoor004.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/indoor004.list
@@ -2637,7 +2644,9 @@ DEP_TEXSET_IMD_INDOOR057 = \
 	$(SRCDIR)/stair_u01.imd \
 	$(SRCDIR)/stair_d01.imd \
 	$(SRCDIR)/table01.imd \
+	$(SRCDIR)/table02.imd \
 	$(SRCDIR)/chair01.imd \
+	$(SRCDIR)/chair02.imd \
 	$(SRCDIR)/shelf01.imd \
 	$(SRCDIR)/shelf02.imd \
 	$(SRCDIR)/shelf04.imd \
@@ -2649,7 +2658,9 @@ DEP_TEXSET_IMD_INDOOR057 = \
 	$(SRCDIR)/dust01.imd \
 	$(SRCDIR)/poster01.imd \
 	$(SRCDIR)/win01.imd \
+	$(SRCDIR)/win02.imd \
 	$(SRCDIR)/pcdesk01.imd \
+	$(SRCDIR)/pcdesk02.imd \
 	$(SRCDIR)/desk01.imd \
 	$(SRCDIR)/vase01.imd \
 	$(SRCDIR)/cashier01.imd \
@@ -2658,6 +2669,8 @@ DEP_TEXSET_IMD_INDOOR057 = \
 	$(SRCDIR)/desk02.imd \
 	$(SRCDIR)/art01.imd \
 	$(SRCDIR)/object02.imd \
+	$(SRCDIR)/machine01.imd \
+	$(SRCDIR)/machine02.imd \
 	$(SRCDIR)/d0stair_u01.imd \
 	$(SRCDIR)/d0stair_d01.imd \
 	$(SRCDIR)/in_vender01.imd \
@@ -2668,7 +2681,8 @@ DEP_TEXSET_IMD_INDOOR057 = \
 	$(SRCDIR)/warp01.imd \
 	$(SRCDIR)/warp02.imd \
 	$(SRCDIR)/warp03.imd \
-	$(SRCDIR)/shelf06.imd
+	$(SRCDIR)/shelf06.imd \
+	$(SRCDIR)/elevator01.imd
 
 texset/indoor057.imd: $(DEP_TEXSET_IMD_INDOOR057) texset/tmp/indoor057.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/indoor057.list

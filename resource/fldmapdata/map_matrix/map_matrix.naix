@@ -300,7 +300,9 @@ enum {
 	NARC_map_matrix_mugen09_mat_bin = 286,
 	NARC_map_matrix_mugen10_mat_bin = 287,
 	NARC_map_matrix_mugen11_mat_bin = 288,
-	NARC_map_matrix_mugen12_mat_bin = 289
+	NARC_map_matrix_mugen12_mat_bin = 289,
+	NARC_map_matrix_medal01_mat_bin = 290,
+	NARC_map_matrix_labo04_mat_bin = 291
 };
 
 /* NARC_MAP_MATRIX_NAIX_ */
