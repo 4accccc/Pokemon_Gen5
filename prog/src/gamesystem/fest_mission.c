@@ -150,7 +150,8 @@ BOOL FEST_MISSION_IsEnd( const FEST_MISSION* fmwk )
 //---------------------------------------------------------
 BOOL FEST_MISSION_IsLive( const FEST_MISSION* fmwk )
 {
-  if( fmwk->type == FMISSION_TYPE_NULL || fmwk->life <= 0 ){
+//  if( fmwk->type == FMISSION_TYPE_NULL || fmwk->life <= 0 ){
+  if( fmwk->type == FMISSION_TYPE_NULL ){
     return FALSE;
   }
   return TRUE;
