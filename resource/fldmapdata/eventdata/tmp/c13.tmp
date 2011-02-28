@@ -1,5 +1,5 @@
 #../data/c13.mev
-../tmp/c13.bin:../data/c13.mev ../../script/sp_c13.bin $(UNIQ_SCRIPTHEADER) ../tmp/c13.h 
+../tmp/c13.bin:../data/c13.mev ../../script/sp_c13.bin $(UNIQ_SCRIPTHEADER) ../tmp/c13.h ../../zonetable/zone_id.h ../tmp/r20r0101.h ../../../../prog/include/field/field_dir.h ../../../../prog/include/field/eventdata_type.h 
 	@echo ../data/c13.mev
-	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/c13.h 
+	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/c13.h ../../zonetable/zone_id.h ../tmp/r20r0101.h ../../../../prog/include/field/field_dir.h ../../../../prog/include/field/eventdata_type.h 
 

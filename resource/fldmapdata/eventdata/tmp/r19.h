@@ -2,6 +2,7 @@
 #ifndef ZONE_R19_EVD_H
 #define ZONE_R19_EVD_H
 
+#define DOOR_ID_R19_R19R0101_EXIT01       0
 
 #endif //ZONE_R19_EVD_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r19.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
