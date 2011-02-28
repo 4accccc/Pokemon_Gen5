@@ -2,7 +2,7 @@
 #------------------------------------------------------------------------------
 #※コンバート作業が必要なユーザーの名前を記述する
 #------------------------------------------------------------------------------
-USERS	=	ohmori ohkubo_tomohiko
+USERS	=	ichiraku_katsuhiko
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
@@ -79,24 +79,23 @@ $(TARGETDIR)/$(targetname).narc:  $(targetname).narc
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
 #.SUFFIXES:	.nsbmd .imd
 #imdデータからの生成ルール
-%.nsbmd:	data/cannon/%.imd
+%.nsbmd:	data/%.imd
 #	@echo $<をコンバート
 	@g3dcvtr $<
 
-%.nsbca:	data/cannon/%.ica
+%.nsbca:	data/%.ica
 #	@echo $<をコンバート
 	@g3dcvtr $<
 
-%.nsbma:	data/cannon/%.ima
+%.nsbma:	data/%.ima
 #	@echo $<をコンバート
 	@g3dcvtr $<
-
-%.bin:	data/null/%.ica
-	@ruby $(ICA_CNV) -t $< $@
 
 # コピー先のnarcが古い場合実行する
 $(targetname).narc: $(DATA_LIST)
 	@nnsarc -i -cl -l -n $(targetname).narc -S $(ARCLIST) > arc_result.txt
+	@echo naixカット
+	$(NAIXCUT) $(targetname).naix
 #	@-rm -f *.nsb*
 #	@-rm -f *.bin
 

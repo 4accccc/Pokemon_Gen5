@@ -1,0 +1,208 @@
+//[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
+/**
+ *
+ *	@file		gym_fly.cdat
+ *	@brief  飛行ジムデータ
+ *	@author		Katsuhiko=Ichiraku
+ *	@date		2011.02.25
+ *
+ */
+//]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+#pragma once
+
+//=============================================================================
+/**
+ *      RESOURCE
+ */
+//=============================================================================
+// リソースの並び順
+enum {
+  RESID_WINDMETER_MDL = 0,
+  RESID_WINDMETER_ANM1_ICA,
+};
+
+// OBJインデックス
+enum {
+  OBJ_WINDMETER_1 = 0,  // 
+  OBJ_WINDMETER_2 = 0,  // 
+  OBJ_WINDMETER_3 = 0,  // 
+  OBJ_WINDMETER_4 = 0,  // 
+  OBJ_WINDMETER_5 = 0,  // 
+  OBJ_WINDMETER_6 = 0,  // 
+  OBJ_WINDMETER_7 = 0,  // 
+  OBJ_WINDMETER_8 = 0,  // 
+  OBJ_WINDMETER_9 = 0,  // 
+  OBJ_WINDMETER_10 = 0,  // 
+  OBJ_WINDMETER_11 = 0,  // 
+  OBJ_WINDMETER_12 = 0,  // 
+  OBJ_WINDMETER_13 = 0,  // 
+  OBJ_WINDMETER_14 = 0,  // 
+  OBJ_WINDMETER_15 = 0,  // 
+  OBJ_WINDMETER_16 = 0,  // 
+  OBJ_WINDMETER_17 = 0,  // 
+};
+
+// RES
+static const GFL_G3D_UTIL_RES res_3d_table[] =
+{
+  { ARCID_GYM_FLY, NARC_gym_fly_cannon_01_00_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
+
+  { ARCID_GYM_FLY, NARC_gym_fly_cannon_01_00_nsbca, GFL_G3D_UTIL_RESARC }, // ICA
+};
+
+// ANIME
+static const GFL_G3D_UTIL_ANM anm_3d_table[] =
+{
+  { RESID_WINDMETER_ANM1_ICA, 0 }, // nsbca
+};
+
+// OBJ
+static const GFL_G3D_UTIL_OBJ obj_3d_table[] = 
+{
+  // 風力計1
+  {
+    RESID_WINDMETER_MDL,      // モデルリソースID
+    0,      // モデルデータID(リソース内部INDEX)
+    RESID_WINDMETER_MDL,      // テクスチャリソースID
+    anm_3d_table,   // アニメテーブル(複数指定のため)
+    NELEMS(anm_3d_table),      // アニメリソース数
+  },
+  // 風力計2
+  {
+    RESID_WINDMETER_MDL,      // モデルリソースID
+    0,      // モデルデータID(リソース内部INDEX)
+    RESID_WINDMETER_MDL,      // テクスチャリソースID
+    anm_3d_table,   // アニメテーブル(複数指定のため)
+    NELEMS(anm_3d_table),      // アニメリソース数
+  },
+  // 風力計3
+  {
+    RESID_WINDMETER_MDL,      // モデルリソースID
+    0,      // モデルデータID(リソース内部INDEX)
+    RESID_WINDMETER_MDL,      // テクスチャリソースID
+    anm_3d_table,   // アニメテーブル(複数指定のため)
+    NELEMS(anm_3d_table),      // アニメリソース数
+  },
+  // 風力計4
+  {
+    RESID_WINDMETER_MDL,      // モデルリソースID
+    0,      // モデルデータID(リソース内部INDEX)
+    RESID_WINDMETER_MDL,      // テクスチャリソースID
+    anm_3d_table,   // アニメテーブル(複数指定のため)
+    NELEMS(anm_3d_table),      // アニメリソース数
+  },
+  // 風力計5
+  {
+    RESID_WINDMETER_MDL,      // モデルリソースID
+    0,      // モデルデータID(リソース内部INDEX)
+    RESID_WINDMETER_MDL,      // テクスチャリソースID
+    anm_3d_table,   // アニメテーブル(複数指定のため)
+    NELEMS(anm_3d_table),      // アニメリソース数
+  },
+  // 風力計6
+  {
+    RESID_WINDMETER_MDL,      // モデルリソースID
+    0,      // モデルデータID(リソース内部INDEX)
+    RESID_WINDMETER_MDL,      // テクスチャリソースID
+    anm_3d_table,   // アニメテーブル(複数指定のため)
+    NELEMS(anm_3d_table),      // アニメリソース数
+  },
+  // 風力計7
+  {
+    RESID_WINDMETER_MDL,      // モデルリソースID
+    0,      // モデルデータID(リソース内部INDEX)
+    RESID_WINDMETER_MDL,      // テクスチャリソースID
+    anm_3d_table,   // アニメテーブル(複数指定のため)
+    NELEMS(anm_3d_table),      // アニメリソース数
+  },
+  // 風力計8
+  {
+    RESID_WINDMETER_MDL,      // モデルリソースID
+    0,      // モデルデータID(リソース内部INDEX)
+    RESID_WINDMETER_MDL,      // テクスチャリソースID
+    anm_3d_table,   // アニメテーブル(複数指定のため)
+    NELEMS(anm_3d_table),      // アニメリソース数
+  },
+  // 風力計9
+  {
+    RESID_WINDMETER_MDL,      // モデルリソースID
+    0,      // モデルデータID(リソース内部INDEX)
+    RESID_WINDMETER_MDL,      // テクスチャリソースID
+    anm_3d_table,   // アニメテーブル(複数指定のため)
+    NELEMS(anm_3d_table),      // アニメリソース数
+  },
+  // 風力計10
+  {
+    RESID_WINDMETER_MDL,      // モデルリソースID
+    0,      // モデルデータID(リソース内部INDEX)
+    RESID_WINDMETER_MDL,      // テクスチャリソースID
+    anm_3d_table,   // アニメテーブル(複数指定のため)
+    NELEMS(anm_3d_table),      // アニメリソース数
+  },
+  // 風力計11
+  {
+    RESID_WINDMETER_MDL,      // モデルリソースID
+    0,      // モデルデータID(リソース内部INDEX)
+    RESID_WINDMETER_MDL,      // テクスチャリソースID
+    anm_3d_table,   // アニメテーブル(複数指定のため)
+    NELEMS(anm_3d_table),      // アニメリソース数
+  },
+  // 風力計12
+  {
+    RESID_WINDMETER_MDL,      // モデルリソースID
+    0,      // モデルデータID(リソース内部INDEX)
+    RESID_WINDMETER_MDL,      // テクスチャリソースID
+    anm_3d_table,   // アニメテーブル(複数指定のため)
+    NELEMS(anm_3d_table),      // アニメリソース数
+  },
+  // 風力計13
+  {
+    RESID_WINDMETER_MDL,      // モデルリソースID
+    0,      // モデルデータID(リソース内部INDEX)
+    RESID_WINDMETER_MDL,      // テクスチャリソースID
+    anm_3d_table,   // アニメテーブル(複数指定のため)
+    NELEMS(anm_3d_table),      // アニメリソース数
+  },
+  // 風力計14
+  {
+    RESID_WINDMETER_MDL,      // モデルリソースID
+    0,      // モデルデータID(リソース内部INDEX)
+    RESID_WINDMETER_MDL,      // テクスチャリソースID
+    anm_3d_table,   // アニメテーブル(複数指定のため)
+    NELEMS(anm_3d_table),      // アニメリソース数
+  },
+  // 風力計15
+  {
+    RESID_WINDMETER_MDL,      // モデルリソースID
+    0,      // モデルデータID(リソース内部INDEX)
+    RESID_WINDMETER_MDL,      // テクスチャリソースID
+    anm_3d_table,   // アニメテーブル(複数指定のため)
+    NELEMS(anm_3d_table),      // アニメリソース数
+  },
+  // 風力計16
+  {
+    RESID_WINDMETER_MDL,      // モデルリソースID
+    0,      // モデルデータID(リソース内部INDEX)
+    RESID_WINDMETER_MDL,      // テクスチャリソースID
+    anm_3d_table,   // アニメテーブル(複数指定のため)
+    NELEMS(anm_3d_table),      // アニメリソース数
+  },
+  // 風力計17
+  {
+    RESID_WINDMETER_MDL,      // モデルリソースID
+    0,      // モデルデータID(リソース内部INDEX)
+    RESID_WINDMETER_MDL,      // テクスチャリソースID
+    anm_3d_table,   // アニメテーブル(複数指定のため)
+    NELEMS(anm_3d_table),      // アニメリソース数
+  },
+};
+
+
+// セットアップデータ
+static const GFL_G3D_UTIL_SETUP g3Dutil_Setup = {
+  res_3d_table,				//リソーステーブル
+	NELEMS(res_3d_table),		//リソース数
+	obj_3d_table,				//オブジェクト設定テーブル
+	NELEMS(obj_3d_table),		//オブジェクト数
+};
+
