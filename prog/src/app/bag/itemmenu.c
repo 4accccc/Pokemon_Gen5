@@ -2917,7 +2917,7 @@ static void InputNum_ButtonState( FIELD_ITEMMENU_WORK* pWork, BOOL on_off )
 //==============================================================
 typedef struct {
   ITEM_ST st;
-  u32 type;
+  u64 type;
 } ITEM_SORTDATA_TYPE;
 
 //-----------------------------------------------------------------------------
