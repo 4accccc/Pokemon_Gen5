@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-02-24T20:44:12"/>
+	<create user="matsumiya" host="W00224" date="2011-02-28T16:52:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1280" top="197" right="1985" bottom="825" maximized="no" rayout="Vertical2">
+	<dialog left="1288" top="177" right="1993" bottom="805" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_r19_white_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r19_white_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂：捕獲デモ</comment>
 		<attribute name="キャラ指定">ベル</attribute>
 		<language name="JPN" width="256">アララギ『それでは
@@ -317,7 +317,7 @@
 ポケモンを　捕まえてみせまーす！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r19_white_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r19_white_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・捕獲デモ後、フィールドに復帰すると
 　このメッセージ表示
@@ -348,7 +348,7 @@
 モンスターボールも　プレゼント！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r19_white_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r19_white_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・T02方面に移動、画面外に消えると
 　msg_r01_black_01
@@ -368,25 +368,25 @@
 カラクサタウンで　待ってまーす！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r19_white_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r19_white_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<attribute name="キャラ指定">ベル</attribute>
 		<language name="JPN" width="256"></language>
 		<language name="JPN_KANJI" width="256"></language>
 	</row>
 
-	<row id="msg_r19_white_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r19_white_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<attribute name="キャラ指定">ベル</attribute>
 		<language name="JPN" width="256"></language>
 		<language name="JPN_KANJI" width="256"></language>
 	</row>
 
-	<row id="msg_r19_white_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r19_white_06" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<attribute name="キャラ指定">ベル</attribute>
 		<language name="JPN" width="256"></language>
 		<language name="JPN_KANJI" width="256"></language>
 	</row>
 
-	<row id="msg_r19_champion_01">
+	<row id="msg_r19_champion_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・仮メッセージ
 ・posを踏むとメッセージ表示
@@ -398,7 +398,7 @@
 		<language name="JPN_KANJI" width="256">？？？『そこの　トレーナー！！▼</language>
 	</row>
 
-	<row id="msg_r19_champion_02">
+	<row id="msg_r19_champion_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・メッセージ表示後、飛び降りる演出
 　続けて</comment>
@@ -408,7 +408,7 @@
 		<language name="JPN_KANJI" width="256">？？？『そこの　トレーナー！！▼</language>
 	</row>
 
-	<row id="msg_r19_champion_03">
+	<row id="msg_r19_champion_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・メッセージ表示後
 　アデクはt06：サンギタウンへ移動する
@@ -419,7 +419,7 @@
 		<language name="JPN_KANJI" width="256">？？？『そこの　トレーナー！！▼</language>
 	</row>
 
-	<row id="msg_r19_boy2a_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_r19_boy2a_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・仮メッセージ
 ・はい/いいえ</comment>
@@ -432,7 +432,7 @@
 みててくれない？</language>
 	</row>
 
-	<row id="msg_r19_boy2a_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_r19_boy2a_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・仮メッセージ
 ・はい選択時アニメ前
@@ -442,7 +442,7 @@
 		<language name="JPN_KANJI" width="256">よし！　待ってて！！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r19_boy2a_02a" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_r19_boy2a_02a" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・仮メッセージ
 ・下向きになってメッセージ表示
@@ -452,7 +452,7 @@
 		<language name="JPN_KANJI" width="256">よぉっ！！</language>
 	</row>
 
-	<row id="msg_r19_boy2a_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_r19_boy2a_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・仮メッセージ
 ・はい選択時アニメ後
@@ -466,7 +466,7 @@
 近道できて　すごいでしょ！</language>
 	</row>
 
-	<row id="msg_r19_boy2a_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_r19_boy2a_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・仮メッセージ
 ・いいえ選択時</comment>
@@ -475,7 +475,7 @@
 		<language name="JPN_KANJI" width="256">遠慮しなくて　いいのにさ！</language>
 	</row>
 
-	<row id="msg_r19_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_r19_sign1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">看板：道路</attribute>
@@ -483,7 +483,7 @@
 		<language name="JPN_KANJI" width="256">１９番道路</language>
 	</row>
 
-	<row id="msg_r19_sign2_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_r19_sign2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">看板：お得な掲示板</attribute>
