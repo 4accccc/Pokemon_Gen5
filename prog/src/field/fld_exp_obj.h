@@ -33,11 +33,15 @@ extern void FLD_EXP_OBJ_SetVanish
           (FLD_EXP_OBJ_CNT_PTR ptr, const u16 inUnitIdx, const u16 inObjIdx, const BOOL inVanish);
 extern GFL_G3D_OBJ *FLD_EXP_OBJ_GetUnitObj
           (FLD_EXP_OBJ_CNT_PTR ptr, const u16 inUnitIdx, const u16 inObjIdx);
+extern void FLD_EXP_OBJ_SetUnitAddFrame(FLD_EXP_OBJ_CNT_PTR ptr, const u16 inUnitIdx, const fx32 count);
 extern void FLD_EXP_OBJ_Draw( FLD_EXP_OBJ_CNT_PTR ptr );
 extern void FLD_EXP_OBJ_PlayAnime( FLD_EXP_OBJ_CNT_PTR ptr );
 
 extern EXP_OBJ_ANM_CNT_PTR FLD_EXP_OBJ_GetAnmCnt(
     FLD_EXP_OBJ_CNT_PTR ptr, const u16 inUnitIdx, const u16 inObjIdx, const u16 inAnmIdx);
+
+extern void FLD_EXP_OBJ_ChgAddFrame( EXP_OBJ_ANM_CNT_PTR ptr, const fx32 inAddFrame );
+extern fx32 FLD_EXP_OBJ_GetAddFrame(EXP_OBJ_ANM_CNT_PTR ptr);
 extern void FLD_EXP_OBJ_ChgAnmStopFlg(EXP_OBJ_ANM_CNT_PTR ptr, const u8 inStop);
 extern u8 FLD_EXP_OBJ_GetAnmStopFlg(EXP_OBJ_ANM_CNT_PTR ptr);
 

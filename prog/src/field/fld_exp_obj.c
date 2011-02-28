@@ -337,6 +337,38 @@ GFL_G3D_OBJ *FLD_EXP_OBJ_GetUnitObj(FLD_EXP_OBJ_CNT_PTR ptr,
 
 //--------------------------------------------------------------------------------------------
 /**
+ *  ユニットOBJアニメ増加値設定
+ *
+ * @param   ptr               モジュールポインタ
+ * @param   inUnitIdx         ユニットインデックス
+ * @param   count             増加分（FX32_ONEで１フレーム進める）
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void FLD_EXP_OBJ_SetUnitAddFrame(FLD_EXP_OBJ_CNT_PTR ptr, const u16 inUnitIdx, const fx32 count)
+{
+  u8 i,j;
+  //ユニット数分ループ
+  if (ptr->Unit[inUnitIdx].Valid == TRUE){
+    u16 obj_count = GFL_G3D_UTIL_GetUnitObjCount( ptr->ObjUtil, ptr->Unit[inUnitIdx].UtilUnitIdx );
+    for (i=0;i<obj_count;i++){
+      GFL_G3D_OBJ *pObj = FLD_EXP_OBJ_GetUnitObj(ptr, inUnitIdx, i);
+      int anm_num = ptr->Unit[inUnitIdx].AnmList[i].AnmNum;
+      for (j=0;j<anm_num;j++){
+        EXP_OBJ_ANM_CNT_PTR anm = &ptr->Unit[inUnitIdx].AnmList[i].AnmCnt[j];
+        if ( !anm->Valid ){
+          continue;
+        }
+        // アニメフレーム増加数設定
+        FLD_EXP_OBJ_ChgAddFrame( anm, count );
+      }
+    }
+  }
+}
+
+//--------------------------------------------------------------------------------------------
+/**
  *  ユニット描画
  *
  * @param   ptr               モジュールポインタ
@@ -442,6 +474,14 @@ EXP_OBJ_ANM_CNT_PTR FLD_EXP_OBJ_GetAnmCnt(
   return &anm_cnt[inAnmIdx];
 }
 
+void FLD_EXP_OBJ_ChgAddFrame( EXP_OBJ_ANM_CNT_PTR ptr, const fx32 inAddFrame )
+{
+  ptr->AddFrm = inAddFrame;
+}
+fx32 FLD_EXP_OBJ_GetAddFrame(EXP_OBJ_ANM_CNT_PTR ptr)
+{
+  return ptr->AddFrm;
+}
 void FLD_EXP_OBJ_ChgAnmStopFlg(EXP_OBJ_ANM_CNT_PTR ptr, const u8 inStop)
 {
   ptr->Stop = inStop;
