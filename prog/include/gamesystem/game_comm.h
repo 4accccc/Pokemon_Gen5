@@ -136,6 +136,7 @@ extern void GameCommSys_SetLastStatus(GAME_COMM_SYS_PTR gcsp, GAME_COMM_LAST_STA
 extern void GameCommSys_ClearLastStatus(GAME_COMM_SYS_PTR gcsp);
 extern GAME_COMM_LAST_STATUS GameCommSys_GetLastStatus(GAME_COMM_SYS_PTR gcsp);
 extern void GameCommSys_SetPalaceNotConnectFlag(GAME_COMM_SYS_PTR gcsp, BOOL not_connect);
+extern void GameCommSys_SetPalaceNotConnectFlagForFMission(GAME_COMM_SYS_PTR gcsp, BOOL not_connect);
 extern BOOL GameCommSys_GetPalaceNotConnectFlag(GAME_COMM_SYS_PTR gcsp);
 extern void GameCommStatus_SetPlayerStatus(GAME_COMM_SYS_PTR gcsp, int comm_net_id, ZONEID zone_id, u8 invasion_netid, int pm_version, BOOL first_status);
 extern u8 GameCommStatus_GetPlayerStatus_InvasionNetID(GAME_COMM_SYS_PTR gcsp, int comm_net_id);

@@ -13,6 +13,7 @@
 #include "field/gpower_id.h"
 #include "gamesystem/g_power.h"
 #include "gamesystem/gamesystem.h"
+#include "gamesystem/game_comm.h"
 #include "waza_tool/wazano_def.h"
 #include "arc_def.h"
 #include "power.naix"
@@ -117,6 +118,9 @@ void LINK_FESTIVAL_MissionStart( LINK_FESTIVAL* wk, const FEST_MISSION* mission,
   FEST_MISSION_Start( &wk->mission, mission, succeed_f );
   wk->live_f = FALSE;
 
+  //ハイリンク接続禁止フラグOn
+  GameCommSys_SetPalaceNotConnectFlagForFMission(GAMESYSTEM_GetGameCommSysPtr(wk->gsys), TRUE );
+
   //最後のミッションを覚えておく
   log_LastMissionLogStore( wk, mission );
 }
@@ -139,6 +143,9 @@ void LINK_FESTIVAL_MissionLiveStatusSet( LINK_FESTIVAL* wk, BOOL live_f )
 void LINK_FESTIVAL_MissionEnd( LINK_FESTIVAL* wk )
 {
   FEST_MISSION_End( &wk->mission );
+  
+  //ハイリンク接続禁止フラグOff
+  GameCommSys_SetPalaceNotConnectFlagForFMission(GAMESYSTEM_GetGameCommSysPtr(wk->gsys), FALSE );
 
   log_ClearAll( wk );
 }

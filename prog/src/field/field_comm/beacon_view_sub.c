@@ -1460,6 +1460,10 @@ static BOOL effReq_PopupMsgFMission( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info )
   if( LINK_FESTIVAL_IsEgnoreMission( wk->fest_sys, (const FEST_MISSION*)&mission )){
     return FALSE;
   }
+  //ハイリンクに侵入されていたらスルー
+  if( GameCommSys_BootCheck( wk->game_comm ) != GAME_COMM_NO_FIELD_BEACON_SEARCH ){
+    return FALSE;
+  }
   GAMEBEACON_InfoWordset( info, wk->wordset, wk->tmpHeapID );
   WORDSET_ExpandStr( wk->wordset, wk->str_expand, wk->str_tmp );
   taskAdd_WinFMission( wk, &mission, &wk->eff_task_ct);

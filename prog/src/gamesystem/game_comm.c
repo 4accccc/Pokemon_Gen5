@@ -99,7 +99,9 @@ typedef struct _GAME_COMM_SYS{
   u8 exit_reserve:1;                    ///<終了予約
   u8 exit_pileup:1;                     ///<TRUE:多重に終了リクエストがかかっている
   u8 palace_not_connect:1;              ///<TRUE:パレスに接続しない
-  u8          :5;
+  u8 palace_not_connect_for_fmission:1; ///<TRUE:フェスミッション中につきパレスに接続しない
+                                        ////(palace_not_connectに干渉せずにOn/Offしたいため別フラグにした 11.2.28 iwasawa)
+  u8          :4;
   GAME_COMM_NO game_comm_no;
   GAME_COMM_NO last_comm_no;            ///<最後に実行していたGAME_COMM_NO
   GAME_COMM_LAST_STATUS last_status;    ///<最後に実行していたGAME_COMM_NOの終了状態
@@ -613,11 +615,28 @@ static void GameCommSub_SeqSet(GAME_COMM_SUB_WORK *sub_work, u8 seq)
  * @param   gcsp		
  * @param   not_connect		TRUE:パレスに接続しないようにする
  * @param   not_connect		FALSE:パレスに接続してOK
+ *
+ * @com このフラグがOffでも palace_not_connect_for_fmissionがOnなら接続されないので注意！
  */
 //==================================================================
 void GameCommSys_SetPalaceNotConnectFlag(GAME_COMM_SYS_PTR gcsp, BOOL not_connect)
 {
   gcsp->palace_not_connect = not_connect;
+}
+//==================================================================
+/**
+ * パレス接続に対して不許可フラグをセットする(フェスミッション用)
+ *
+ * @param   gcsp		
+ * @param   not_connect		TRUE:パレスに接続しないようにする
+ * @param   not_connect		FALSE:パレスに接続してOK
+ *
+ * @com このフラグがOffでも palace_not_connectがOnなら接続されないので注意！
+ */
+//==================================================================
+void GameCommSys_SetPalaceNotConnectFlagForFMission(GAME_COMM_SYS_PTR gcsp, BOOL not_connect)
+{
+  gcsp->palace_not_connect_for_fmission = not_connect;
 }
 
 //==================================================================
@@ -632,7 +651,7 @@ void GameCommSys_SetPalaceNotConnectFlag(GAME_COMM_SYS_PTR gcsp, BOOL not_connec
 //==================================================================
 BOOL GameCommSys_GetPalaceNotConnectFlag(GAME_COMM_SYS_PTR gcsp)
 {
-  return gcsp->palace_not_connect;
+  return ( gcsp->palace_not_connect || gcsp->palace_not_connect_for_fmission );
 }
 
 //==============================================================================
