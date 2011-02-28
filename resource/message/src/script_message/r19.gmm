@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-02-28T16:52:58"/>
+	<create user="matsumiya" host="W00224" date="2011-02-28T18:23:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -424,10 +424,10 @@
 ・仮メッセージ
 ・はい/いいえ</comment>
 		<attribute name="キャラ指定">少年</attribute>
-		<language name="JPN" width="256">ねーねー[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ねーねー▼
 いまから　すごいことするから
 みててくれない？</language>
-		<language name="JPN_KANJI" width="256">ねーねー[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">ねーねー▼
 いまから　すごいことするから
 みててくれない？</language>
 	</row>
@@ -438,8 +438,8 @@
 ・はい選択時アニメ前
 ・続けてboy2a_02a</comment>
 		<attribute name="キャラ指定">少年</attribute>
-		<language name="JPN" width="256">よし！　まってて！！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">よし！　待ってて！！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">よし！　まってて！！▼</language>
+		<language name="JPN_KANJI" width="256">よし！　待ってて！！▼</language>
 	</row>
 
 	<row id="msg_r19_boy2a_02a" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -458,10 +458,10 @@
 ・はい選択時アニメ後
 ・以降、このメッセージ繰り返し</comment>
 		<attribute name="キャラ指定">少年</attribute>
-		<language name="JPN" width="256">ねっ！　みてくれた！？[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ねっ！　みてくれた！？▼
 だんさを　とびおりると
 ちかみち　できて　すごいでしょ！</language>
-		<language name="JPN_KANJI" width="256">ねっ！　みてくれた！？[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">ねっ！　みてくれた！？▼
 段差を　飛び降りると
 近道できて　すごいでしょ！</language>
 	</row>
