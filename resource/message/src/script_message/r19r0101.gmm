@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-02-07T16:14:26"/>
+	<create user="matsumiya" host="W00224" date="2011-02-28T17:55:48"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,9 +263,9 @@
 		</language>
 	</columns>
 
-	<dialog left="1448" top="212" right="2153" bottom="832" maximized="no" rayout="Vertical2">
+	<dialog left="1288" top="177" right="1993" bottom="805" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
@@ -292,28 +292,42 @@
 	</lock>
 
 
-	<row id="msg_r19r0101_infomationw_01">
+	<row id="msg_r19r0101_infomationw_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・
+・posを踏むと
+・続けて
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">INFORMATIONW
 受付嬢</attribute>
-		<language name="JPN" width="256">こんにちは　トレーナーさん▼
-ここは　たびびとの　ための　ゲート！
-でんこうけいじばんを　よろしくね！</language>
-		<language name="JPN_KANJI" width="256">こんにちは　トレーナーさん▼
-ここは　旅人の　ための　ゲート！
-電光掲示板を　よろしくね！</language>
+		<language name="JPN" width="256">あれ？　[1:00:トレーナー名:0]▼</language>
+		<language name="JPN_KANJI" width="256">あれ？　[1:00:トレーナー名:0]▼</language>
 	</row>
 
-	<row id="msg_r19r0101_infomationw_02">
+	<row id="msg_r19r0101_infomationw_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・
+・</comment>
+		<attribute name="キャラ指定">INFORMATIONW
+受付嬢</attribute>
+		<language name="JPN" width="256">ポケモンと　いっしょ　なんだ！▼
+わたし……
+じぶんのことの　ように　うれしいよ</language>
+		<language name="JPN_KANJI" width="256">ポケモンと　一緒なんだ！▼
+わたし……
+じぶんのことの　ように　うれしいよ</language>
+	</row>
+
+	<row id="msg_r19r0101_infomationw_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・２回目以降
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">INFORMATIONW
 受付嬢</attribute>
-		<language name="JPN" width="256">かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">こんにちは　[1:00:トレーナー名:0]▼
+ここは　たびびとの　ための　ゲート！
+でんこうけいじばんを　よろしくね！</language>
+		<language name="JPN_KANJI" width="256">こんにちは　[1:00:トレーナー名:0]▼
+ここは　旅人の　ための　ゲート！
+電光掲示板を　よろしくね！</language>
 	</row>
 
 	<row id="msg_r19r0101_man1_01">
@@ -330,10 +344,10 @@
 		<attribute name="キャラ指定">MAN1</attribute>
 		<language name="JPN" width="256">おぼえているかい？▼
 ポケモンと　ともに　このゲートを
-はじめて　とおっていった　あのひを</language>
+はじめて　とおった　あのひを</language>
 		<language name="JPN_KANJI" width="256">おぼえているかい？▼
 ポケモンと　ともに　このゲートを
-はじめて　通っていった　あの日を</language>
+はじめて　通った　あの日を</language>
 	</row>
 
 	<flowchart-group-list>
