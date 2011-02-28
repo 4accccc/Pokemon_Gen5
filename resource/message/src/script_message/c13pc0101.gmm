@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-07-15T19:04:53"/>
+	<create user="matsumiya" host="W00224" date="2011-02-28T22:44:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,11 +292,26 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
+	<row id="msg_c13pc0101_01_01">
 		<comment>？？？</comment>
 		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_c13pc0101_02_01">
+		<comment>♂
+・仮メッセージ
+　c01pc0101から移植</comment>
+		<attribute name="キャラ指定">？？？</attribute>
+		<language name="JPN" width="256">ボク　はじめて　しったけど▼
+ジムバッジを　たくさん　もってるほど
+ショップで　かえる▽
+どうぐの　しゅるいも　ふえるんだって！</language>
+		<language name="JPN_KANJI" width="256">ボク　はじめて　知ったけど▼
+ジムバッジを　たくさん　持ってるほど
+ショップで　買える▽
+道具の　種類も　増えるんだって！</language>
 	</row>
 
 	<flowchart-group-list>
