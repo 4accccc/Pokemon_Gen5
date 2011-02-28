@@ -85,6 +85,8 @@ static  const VecFx32 stage_pos_table[]={
 //============================================================================================
 static  void  BTLV_STAGE_CalcPaletteFade( BTLV_STAGE_WORK* bsw );
 
+
+
 //============================================================================================
 /**
  *  システム初期化
@@ -113,15 +115,18 @@ BTLV_STAGE_WORK *BTLV_STAGE_Init( BtlRule rule, int index, u8 season, HEAPID hea
   }
   else if( bbtst[ index ].file[ BATT_BG_TBL_FILE_NSBMD ][ season*2 ] != BATT_BG_TBL_NO_FILE )
   { 
-//      bsw->stage_resource_mine  = GFL_G3D_CreateResourceArc( ARCID_BATTGRA, NARC_battgra_wb_batt_stage06_f_NSBMD);
-//      bsw->stage_resource_enemy = GFL_G3D_CreateResourceArc( ARCID_BATTGRA, NARC_battgra_wb_batt_stage06_d_NSBMD);
+    // 季節に対応している場合はその季節から読み込む
     bsw->stage_resource_mine  = GFL_G3D_CreateResourceArc( ARCID_BATTGRA, bbtst[ index ].file[ BATT_BG_TBL_FILE_NSBMD ][ season*2 ] );
     bsw->stage_resource_enemy = GFL_G3D_CreateResourceArc( ARCID_BATTGRA, bbtst[ index ].file[ BATT_BG_TBL_FILE_NSBMD ][ season*2+1 ] );
   }
   else
   { 
+    // デフォルトの春で読み込む
     bsw->stage_resource_mine = GFL_G3D_CreateResourceArc( ARCID_BATTGRA,  bbtst[ index ].file[ BATT_BG_TBL_FILE_NSBMD ][ 0 ] );
     bsw->stage_resource_enemy = GFL_G3D_CreateResourceArc( ARCID_BATTGRA, bbtst[ index ].file[ BATT_BG_TBL_FILE_NSBMD ][ 1 ] );
+
+    // 季節を春限定に設定
+    season = 0;
   }
   
   // パレットフェードにお盆のパレットを抽出して登録
@@ -134,12 +139,15 @@ BTLV_STAGE_WORK *BTLV_STAGE_Init( BtlRule rule, int index, u8 season, HEAPID hea
 
     for( i = BATT_BG_TBL_FILE_NSBCA ; i < BATT_BG_TBL_FILE_NSBMA + 1 ; i++ )
     { 
+      OS_Printf("i=%d, resource_id=%d \n", i, bbtst[ index ].file[ i ][ season*2 ]);
       if( bbtst[ index ].file[ i ][ season*2 ] != BATT_BG_TBL_NO_FILE )
       { 
         bsw->anm_count++;
       }
     }
   }
+
+  OS_Printf("animecount=%d\n", bsw->anm_count);
 
   //RENDER生成
   bsw->stage_render[ BTLV_STAGE_MINE ]  = GFL_G3D_RENDER_Create( bsw->stage_resource_mine,  0, bsw->stage_resource_mine );
@@ -184,6 +192,7 @@ BTLV_STAGE_WORK *BTLV_STAGE_Init( BtlRule rule, int index, u8 season, HEAPID hea
 
     for( i = BATT_BG_TBL_FILE_NSBCA ; i < BATT_BG_TBL_FILE_NSBMA + 1 ; i++ )
     { 
+      OS_Printf("i=%d, resouce_id=~%d,\n", i,bbtst[ index ].file[ i ][ season*2 ]);
       if( bbtst[ index ].file[ i ][ season*2 ] != BATT_BG_TBL_NO_FILE )
       { 
         bsw->stage_anm_resource[ cnt ] = GFL_G3D_CreateResourceArc( ARCID_BATTGRA, bbtst[ index ].file[ i ][ season*2 ] );
