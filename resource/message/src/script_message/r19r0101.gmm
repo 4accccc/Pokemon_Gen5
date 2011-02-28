@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-02-28T17:55:48"/>
+	<create user="matsumiya" host="W00224" date="2011-02-28T18:19:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="188"/>
+		<comment position="4" width="327"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -294,8 +294,8 @@
 
 	<row id="msg_r19r0101_infomationw_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・posを踏むと
-・続けて
+・posを踏むと～
+・続けてinfomationw_02
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">INFORMATIONW
 受付嬢</attribute>
@@ -305,7 +305,8 @@
 
 	<row id="msg_r19r0101_infomationw_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・</comment>
+・メッセージ表示後からは
+　infomationw_03</comment>
 		<attribute name="キャラ指定">INFORMATIONW
 受付嬢</attribute>
 		<language name="JPN" width="256">ポケモンと　いっしょ　なんだ！▼
@@ -332,15 +333,33 @@
 
 	<row id="msg_r19r0101_man1_01">
 		<comment>♂
-・クリア前</comment>
+・クリア前
+・会話時は電光掲示版をみたまま
+・続けてman1_02</comment>
 		<attribute name="キャラ指定">MAN1</attribute>
-		<language name="JPN" width="256">かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">へえ……
+なるほど　なるほどな！▼</language>
+		<language name="JPN_KANJI" width="256">へえ……
+なるほど　なるほどな！▼</language>
 	</row>
 
 	<row id="msg_r19r0101_man1_02">
 		<comment>♂
-・クリア後（暫定）</comment>
+・クリア前
+・主人公をむいて
+　マップをでるまでこのメッセージ繰り返し</comment>
+		<attribute name="キャラ指定">MAN1</attribute>
+		<language name="JPN" width="256">でんこうけいじばん　には
+ニュースや　まちに　かんする▽
+じょうほうが　ながれるんだよ</language>
+		<language name="JPN_KANJI" width="256">電光掲示板には
+ニュースや　街に　関する▽
+情報が　流れるんだよ</language>
+	</row>
+
+	<row id="msg_r19r0101_man1_03">
+		<comment>♂
+・クリア後</comment>
 		<attribute name="キャラ指定">MAN1</attribute>
 		<language name="JPN" width="256">おぼえているかい？▼
 ポケモンと　ともに　このゲートを
