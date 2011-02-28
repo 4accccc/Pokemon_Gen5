@@ -3045,7 +3045,6 @@ static void SORT_Name( FIELD_ITEMMENU_WORK* pWork )
   int length;
   ITEM_SORTDATA_TYPE * sort;
   ITEM_ST * item;
-  ARCHANDLE * ah;
 
   // メモリ確保
   sort = GFL_HEAP_AllocMemory( pWork->heapID, sizeof(ITEM_SORTDATA_TYPE)*BAG_MYITEM_MAX );
@@ -3056,15 +3055,11 @@ static void SORT_Name( FIELD_ITEMMENU_WORK* pWork )
   length = MYITEM_GetItemThisPocketNumberNoRepository(pWork->pMyItem, pWork->pocketno , TRUE); // 保管に登録されているアイテムも並び替える
 
   // ソート用データ生成
-  ah = ITEM_OpenItemDataArcHandle( pWork->heapID );
   for( i=0; i<length; i++ ){
-    // カテゴリ << 28 + ソート番号 << 16 + アイテム番号
-    void * dat = ITEM_GetItemDataArcHandle( ah, item[i].id, pWork->heapID );
-    sort[i].type = (ITEM_GetBufParam(dat,ITEM_PRM_ITEM_TYPE)<<28) + (ItemSortByJp[item[i].id] << 16 ) + item[i].id;
+    // ソート番号 << 16 + アイテム番号
+    sort[i].type = (ItemSortByJp[item[i].id] << 16 ) + item[i].id;
     sort[i].st   = item[i];
-    GFL_HEAP_FreeMemory( dat );
   }
-  GFL_ARC_CloseDataHandle( ah );
 
   MATH_QSort( (void*)sort, length, sizeof(ITEM_SORTDATA_TYPE), QSort_Type, NULL );
 
