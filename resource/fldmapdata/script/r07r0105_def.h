@@ -5,5 +5,6 @@
 #define _R07R0105_DEF_H_
 
 //スクリプトデータID定義
+#define SCRID_BG_R07R0105_BELL (1)
 
 #endif //_R07R0105_DEF_H_

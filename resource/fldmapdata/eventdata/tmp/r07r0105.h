@@ -15,5 +15,6 @@
 #ifndef ZONE_R07R0105_EVB_H
 #define ZONE_R07R0105_EVB_H
 
+#define BG_R07R0105_BELL                  0
 
 #endif //ZONE_R07R0105_EVB_H

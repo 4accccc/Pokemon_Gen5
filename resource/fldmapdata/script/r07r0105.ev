@@ -19,4 +19,56 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA    ev_bg_r07r0105_bell
 _EVENT_DATA_END
+
+/**************************************************************/
+/* タワーオブヘブン鐘                                         */
+/**************************************************************/
+EVENT_START   ev_bg_r07r0105_bell
+{
+	//プレイヤーネームを格納
+	_PLAYER_NAME(0)
+	
+	//鐘を鳴らしますか？
+	_TALK_START_SE_PLAY()
+	_PLAINWIN_MSG_DOWN( msg_r07r0105_chime_01)
+
+	//はい・いいえ質問
+	_YES_NO_WIN( SCWK_ANSWER )
+	
+	IF $SCWK_ANSWER == 0 THEN
+    //BGMを押さえる
+    _BGM_VOLUME_DOWN( 64 , BGM_FADE_SHORT )
+    _SE_PLAY( SEQ_SE_FLD_151 )
+
+		//トレーナーは鐘を鳴らした
+    _PLAINWIN_MSG_DOWN ( msg_r07r0105_chime_02  )
+	
+    DEFINE_LOCAL	BM_ANIME_ID1
+		
+    //鐘のアニメを作成
+    _BMODEL_ANIME_CREATE( BM_ANIME_ID1, SCR_BMID_EVENT, 16, 7 )
+    _BMODEL_ANIME_SET( BM_ANIME_ID1, 0 )
+    _BMODEL_ANIME_WAIT ( BM_ANIME_ID1 )
+    
+    //鐘アニメ破棄
+    _BMODEL_ANIME_DELETE( BM_ANIME_ID1 )
+
+    _SE_WAIT()
+
+		//BGMを戻す
+    _BGM_VOLUME_RECOVER( BGM_FADE_MIDDLE )
+
+    //鳴り響いた
+    _PLAINWIN_MSG_DOWN ( msg_r07r0105_chime_03  )
+    _LAST_KEYWAIT()
+    _PLAINWIN_CLOSE()
+	ELSE
+    _PLAINWIN_MSG_DOWN ( msg_r07r0105_chime_04  )
+    _LAST_KEYWAIT()
+    _PLAINWIN_CLOSE() 
+  ENDIF
+}
+EVENT_END
+
