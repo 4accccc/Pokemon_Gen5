@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-02-16T21:34:13"/>
+	<create user="matsumiya" host="W00224" date="2011-03-01T16:09:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1655" top="305" right="2360" bottom="925" maximized="no" rayout="Vertical2">
+	<dialog left="1322" top="148" right="2027" bottom="776" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_c13gym0201_leader_01">
+	<row id="msg_c13gym0101_leader_01">
 		<comment>♀
 ・戦闘前メッセージ</comment>
 		<attribute name="キャラ指定">ホミカ</attribute>
@@ -304,7 +304,7 @@
 		<language name="JPN_KANJI" width="256">仮メッセージ▼</language>
 	</row>
 
-	<row id="msg_c13gym0201_leader_02">
+	<row id="msg_c13gym0101_leader_02">
 		<comment>♀
 ・戦闘後メッセージ</comment>
 		<attribute name="キャラ指定">ホミカ</attribute>
@@ -317,7 +317,7 @@
 		<language name="JPN_KANJI" width="256">仮メッセージ▼</language>
 	</row>
 
-	<row id="msg_c13gym0201_leader_03">
+	<row id="msg_c13gym0101_leader_03">
 		<comment>ファンファーレ＋バッジ入手処理</comment>
 		<attribute name="キャラ指定">ホミカ</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は　ホミカから
@@ -326,7 +326,7 @@
 トシキックバッジを　もらった！▼</language>
 	</row>
 
-	<row id="msg_c13gym0201_leader_04">
+	<row id="msg_c13gym0101_leader_04">
 		<comment>♀
 ・アイテム入手処理
 　No???「（調整中）」</comment>
@@ -341,7 +341,7 @@
 		<language name="JPN_KANJI" width="256">仮メッセージ▼</language>
 	</row>
 
-	<row id="msg_c13gym0201_leader_05">
+	<row id="msg_c13gym0101_leader_05">
 		<comment>♀
 ・アイテム入手処理後</comment>
 		<attribute name="キャラ指定">ホミカ</attribute>
@@ -353,7 +353,7 @@
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_c13gym0201_leader_06">
+	<row id="msg_c13gym0101_leader_06">
 		<comment>♀
 ・leader_05表示後</comment>
 		<attribute name="キャラ指定">ホミカ</attribute>
@@ -368,6 +368,75 @@
 ポケモンと　くらす　せかいは
 ほんと ふしぎで　みちているんだー</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_c13gym0101_glasses_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・ジムバッジ取得前＋アイテム入手前
+・ジムに入ると
+　主人公に隣接してメッセージ表示
+・No030「おいしいみず」入手</comment>
+		<attribute name="キャラ指定">DANPEI
+ダンペイ</attribute>
+		<language name="JPN" width="256">どうも！　じぶんは
+ポケモンジムに　ちょうせんする▽
+トレーナーを　ガイドする▽
+ガイドーと　いいます▼
+ジムに　ちょうせん
+ありがとう　ございます▽
+きねんに　これを　さしあげますよ！▼</language>
+		<language name="JPN_KANJI" width="256">どうも！　自分は
+ポケモンジムに　挑戦する▽
+トレーナーを　ガイドする▽
+ガイドーと　いいます▼
+ジムに　挑戦
+ありがとう　ございます▽
+記念に　これを　さしあげますよ▼</language>
+	</row>
+
+	<row id="msg_c13gym0101_glasses_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・ジムバッジ取得前＋アイテム入手後
+・ジムバッジ取得まで繰り返し</comment>
+		<attribute name="キャラ指定">DANPEI
+ダンペイ</attribute>
+		<language name="JPN" width="256">ポケモンしょうぶの　きほんは
+タイプの　あいしょう　なんですよね[BE:01:ページ切り替え（クリア）]
+あいてのポケモンに　たいして
+ゆうりなタイプの　ポケモン[BE:00:ページ切り替え（行送り）]
+ゆうりなタイプの　わざをえらべば[BE:00:ページ切り替え（行送り）]
+しょうりは　めのまえ　っすよね▼
+ということで　この　ジムは
+カーテンに　かかれた▽
+ポケモンの　タイプに　たいして▼
+あいしょうの　いい　ポケモンの
+タイプの　スイッチを　ふめば▽
+さきに　すすめるっす！！</language>
+		<language name="JPN_KANJI" width="256">ポケモン勝負の　基本は
+タイプの　相性　なんですよね[BE:01:ページ切り替え（クリア）]
+相手のポケモンに　対して
+有利なタイプの　ポケモン[BE:00:ページ切り替え（行送り）]
+有利なタイプの　技を　選べば[BE:00:ページ切り替え（行送り）]
+勝利は　目前っすよね▼
+ということで　この　ジムは
+カーテンに　かかれた▽
+ポケモンの　タイプに　対して▼
+相性のいい　ポケモンの　タイプの
+スイッチを　踏めば▽
+先に　進めるっす！！</language>
+	</row>
+
+	<row id="msg_c13gym0101_glasses_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・ジムバッジ取得後</comment>
+		<attribute name="キャラ指定">DANPEI
+ダンペイ</attribute>
+		<language name="JPN" width="256">ジムバッジを　てにいれた
+その　すばらしい　しゅんかんを[BE:00:ページ切り替え（行送り）]
+いつまでも　おぼえていてほしいっすね</language>
+		<language name="JPN_KANJI" width="256">ジムバッジを　手に入れた
+その　素晴らしい　瞬間を[BE:00:ページ切り替え（行送り）]
+いつまでも　覚えていてほしいっすね</language>
 	</row>
 
 	<flowchart-group-list>
