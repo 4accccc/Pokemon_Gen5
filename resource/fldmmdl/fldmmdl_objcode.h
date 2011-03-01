@@ -256,7 +256,7 @@
 #define SWFISHHEROINE (0xf8) //248(248,total 248) スワン主人公女つり
 #define SWBELL (0xf9) //249(249,total 249) ベル
 #define SWBOSS (0xfa) //250(250,total 250) アクロマ
-#define SWMAMA (0xfb) //251(251,total 251) ママ
+#define SWMAMA (0xfb) //251(251,total 251) スワンママ
 #define OBJCODEEND_BBD (0xfc) //252(total 252) ビルボードコード終端
 #define OBJCODECOUNT_BBD (0xfc) //252 ビルボードコード数
 
