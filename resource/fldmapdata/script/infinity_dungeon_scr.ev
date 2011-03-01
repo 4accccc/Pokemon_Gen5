@@ -1,0 +1,65 @@
+//[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
+/**
+ *
+ *	@file		infinity_dungeon_scr.ev
+ *	@brief  無限ダンジョン用スクリプト
+ *	@author	Masayuki Onoue
+ *	@date		2011.02.24
+ *
+ */
+//]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+
+	.text
+
+  .include	"scr_seq_def.h"
+  .include "../../../prog/src/field/infinity_dungeon_warp_dir.h"
+
+//--------------------------------------------------------------------
+//		スクリプトテーブル
+//--------------------------------------------------------------------
+_EVENT_DATA		ev_init_infinity_dungeon
+_EVENT_DATA		ev_infinity_dungeon_warp_up
+_EVENT_DATA		ev_infinity_dungeon_warp_down
+_EVENT_DATA		ev_infinity_dungeon_warp_left
+_EVENT_DATA		ev_infinity_dungeon_warp_right
+_EVENT_DATA_END
+
+
+//----------------------------------------------------------------------------
+//	無限ダンジョン初期化
+//-----------------------------------------------------------------------------
+INIT_EVENT_START  ev_init_infinity_dungeon
+  _INFINITY_DUNGEON_START()
+INIT_EVENT_END
+
+//----------------------------------------------------------------------------
+//	無限ダンジョン内ワープ(上)
+//-----------------------------------------------------------------------------
+INIT_EVENT_START  ev_infinity_dungeon_warp_up
+  _INFINITY_DUNGEON_WARP(WARP_DIR_UP)
+INIT_EVENT_END
+
+//----------------------------------------------------------------------------
+//	無限ダンジョン内ワープ(下)
+//-----------------------------------------------------------------------------
+INIT_EVENT_START  ev_infinity_dungeon_warp_down
+  _INFINITY_DUNGEON_WARP(WARP_DIR_DOWN)
+INIT_EVENT_END
+
+//----------------------------------------------------------------------------
+//	無限ダンジョン内ワープ(左)
+//-----------------------------------------------------------------------------
+INIT_EVENT_START  ev_infinity_dungeon_warp_left
+  _INFINITY_DUNGEON_WARP(WARP_DIR_LEFT)
+INIT_EVENT_END
+
+//----------------------------------------------------------------------------
+//	無限ダンジョン内ワープ(右)
+//-----------------------------------------------------------------------------
+INIT_EVENT_START  ev_infinity_dungeon_warp_right
+  _INFINITY_DUNGEON_WARP(WARP_DIR_RIGHT)
+INIT_EVENT_END
+
+
+
+

@@ -28,6 +28,7 @@
 #include "scrcmd_seatemple_table.h"
 #include "scrcmd_wbt_table.h"
 #include "scrcmd_resort_table.h"
+#include "scrcmd_infinity_dungeon_table.h"
 
 //-------------------------------------
 ///	デバッグ
@@ -47,6 +48,7 @@ FS_EXTERN_OVERLAY( scrcmd_palpark );
 FS_EXTERN_OVERLAY( scrcmd_seatemple );
 FS_EXTERN_OVERLAY( scrcmd_wbt );
 FS_EXTERN_OVERLAY( scrcmd_resort );
+FS_EXTERN_OVERLAY( scrcmd_infinity_dungeon );
 
 //=============================================================================
 /**
@@ -139,6 +141,25 @@ static const ZONEID UseZoneIDTbl_resort[] =
   ZONE_ID_C16R0101,
 };
 
+//-------------------------------------
+///	無限ダンジョン
+//=====================================
+static const ZONEID UseZoneIDTbl_infinitydungeon[] = 
+{
+  ZONE_ID_D31R0101,
+  ZONE_ID_D31R0201,
+  ZONE_ID_D31R0301,
+  ZONE_ID_D31R0401,
+  ZONE_ID_D31R0501,
+  ZONE_ID_D31R0601,
+  ZONE_ID_D31R0701,
+  ZONE_ID_D31R0801,
+  ZONE_ID_D31R0901,
+  ZONE_ID_D31R1001,
+  ZONE_ID_D31R1101,
+  ZONE_ID_D31R1201,
+};
+
 //=============================================================================
 /**
  *					管理テーブル
@@ -215,6 +236,13 @@ static const struct
     UseZoneIDTbl_resort,
     NELEMS(UseZoneIDTbl_resort),
     FS_OVERLAY_ID( scrcmd_resort ),
+  },
+  //INFINITY_DUNGEON
+  {
+    ScriptCmdTbl_infinity_dungeon,
+    UseZoneIDTbl_infinitydungeon,
+    NELEMS(UseZoneIDTbl_infinitydungeon),
+    FS_OVERLAY_ID( scrcmd_infinity_dungeon ),
   },
 };
 //=============================================================================

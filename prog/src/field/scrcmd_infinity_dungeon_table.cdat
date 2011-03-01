@@ -1,0 +1,23 @@
+//======================================================================
+/**
+ *  @file   scrcmd_infinity_dungeon_table.cdat
+ *  @brief  無限ダンジョンスクリプトコマンド定義
+ *	@author	Masayuki Onoue
+ *	@data		2011.02.24
+ *
+ */
+//======================================================================
+//======================================================================
+//  命令シンボル宣言
+//======================================================================
+
+  //スクリプトコマンドテーブル開始
+  INIT_OVERLAY_CMD( infinity_dungeon )
+
+  //無限ダンジョン
+  DEF_CMD( EvCmdInfinityDungeonStart, EV_SEQ_INFINITY_DUNGEON_START )
+  DEF_CMD( EvCmdInfinityDungeonWarp, EV_SEQ_INFINITY_DUNGEON_WARP )
+  
+  END_CMD
+  //スクリプトコマンドテーブル終了
+

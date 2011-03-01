@@ -1,5 +1,5 @@
 #event data
-#save date:2011/02/25 12:40:35
+#save date:2011/02/26 15:41:53
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d31r0101.wms
 #SECTION START:OBJ_EVENT
@@ -29,7 +29,24 @@ C:\home\swan\resource\fldmapdata\eventdata\data\d31r0101.wms
 #hold event type:
 1
 #hold event number:
+1
+#event number: 0
+#Pos Event Label
+POSID_MOVE_UP
+#Pos Script Name
+SCRID_INFINITY_DUNGEON_WARP_UP
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_OTHER_SYMMAP_POS
+#Event Trigger Work Value
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-104 0 152
+#size
+1 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT

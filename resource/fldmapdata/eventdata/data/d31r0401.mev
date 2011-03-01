@@ -1,5 +1,5 @@
 #event data
-#save date:2011/02/25 12:37:19
+#save date:2011/02/28 21:37:01
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d31r0401.wms
 #SECTION START:OBJ_EVENT
@@ -29,7 +29,75 @@ C:\home\swan\resource\fldmapdata\eventdata\data\d31r0401.wms
 #hold event type:
 1
 #hold event number:
+4
+#event number: 0
+#Pos Event Label
+POSID_MOVE_LEFT
+#Pos Script Name
+SCRID_INFINITY_DUNGEON_WARP_LEFT
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_OTHER_SYMMAP_POS
+#Event Trigger Work Value
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-248 0 136
+#size
+1 1
+#event number: 1
+#Pos Event Label
+POSID_MOVE_UP
+#Pos Script Name
+SCRID_INFINITY_DUNGEON_WARP_UP
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_OTHER_SYMMAP_POS
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-152 0 232
+#size
+1 1
+#event number: 2
+#Pos Event Label
+POSID_MOVE_RIGHT
+#Pos Script Name
+SCRID_INFINITY_DUNGEON_WARP_RIGHT
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_OTHER_SYMMAP_POS
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-56 0 136
+#size
+1 1
+#event number: 3
+#Pos Event Label
+POSID_MOVE_DOWN
+#Pos Script Name
+SCRID_INFINITY_DUNGEON_WARP_DOWN
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_OTHER_SYMMAP_POS
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-152 0 40
+#size
+1 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT

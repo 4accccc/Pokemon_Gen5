@@ -25,6 +25,7 @@
   .include "../../../prog/src/field/scrcmd_seatemple_table.cdat"
   .include "../../../prog/src/field/scrcmd_wbt_table.cdat"
   .include "../../../prog/src/field/scrcmd_resort_table.cdat"
+  .include "../../../prog/src/field/scrcmd_infinity_dungeon_table.cdat"
 
 //======================================================================
 // イベントデータ関連
@@ -12432,6 +12433,33 @@
   .macro _ASM_RESORT_DELETE_PEOPLE
   .short EV_SEQ_RESORT_DELETE_PEOPLE
   .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief 無限ダンジョン初期化
+ */
+//--------------------------------------------------------------
+#define _INFINITY_DUNGEON_START() \
+    _ASM_INFINITY_DUNGEON_START
+
+  .macro _ASM_INFINITY_DUNGEON_START
+  .short EV_SEQ_INFINITY_DUNGEON_START
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _INFINITY_DUNGEON_WARP
+ * @brief 無限ダンジョン：出入口処理
+ * @param dir   進行方向
+ */
+//--------------------------------------------------------------
+#define _INFINITY_DUNGEON_WARP( dir ) \
+    _ASM_INFINITY_DUNGEON_WARP dir
+
+    .macro  _ASM_INFINITY_DUNGEON_WARP dir
+    .short  EV_SEQ_INFINITY_DUNGEON_WARP
+    .short  \dir
+    .endm
 
 //======================================================================
 //======================================================================
