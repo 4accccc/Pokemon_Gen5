@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-02-10T12:55:37"/>
+	<create user="matsumiya" host="W00224" date="2011-03-01T15:32:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1297" top="186" right="2002" bottom="814" maximized="no" rayout="Vertical2">
+	<dialog left="1322" top="148" right="2027" bottom="776" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -653,10 +653,13 @@
 あっ！　というまに　できるってよ！</language>
 	</row>
 
-	<row id="msg_t01_woman2_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_t01_woman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・はい/いいえの選択肢表示
-　はいだと文字モード切替</comment>
+　はいだと文字モード切替
+・以下、海外版
+ポケモンと　たびを　することで
+ひとって　かわるものかしら？</comment>
 		<attribute name="キャラ指定">WOMAN2
 女性</attribute>
 		<language name="JPN" width="256">あなたは　ひらがな　よりも
@@ -665,18 +668,28 @@
 ひらがなのほうが　好きなのかしら？</language>
 	</row>
 
-	<row id="msg_t01_woman2_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_t01_woman2_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
-・はい選択時</comment>
+・はい選択時
+・以下、海外版
+そうよね！　たびをして　いろいろ
+かんがえて　ひとは　かわるわね！</comment>
+		<attribute name="キャラ指定">WOMAN2
+女性</attribute>
 		<language name="JPN" width="256">では
 話し方を　変えてみるわね</language>
 		<language name="JPN_KANJI" width="256">では
 はなしかたを　かえてみるわね</language>
 	</row>
 
-	<row id="msg_t01_woman2_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_t01_woman2_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
-・いいえ選択時</comment>
+・いいえ選択時
+・以下、海外版
+そうよね！　ふかいことは　かんがえず
+たびそのものを　たのしめば　いいの！</comment>
+		<attribute name="キャラ指定">WOMAN2
+女性</attribute>
 		<language name="JPN" width="256">そうよね！　ひらがなには
 ひらがなの　あじわいが　あるわね</language>
 		<language name="JPN_KANJI" width="256">なるほど……
