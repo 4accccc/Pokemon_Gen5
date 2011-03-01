@@ -51,11 +51,16 @@ ICA_CNV = ../../../../tools/ica/ica_converter.rb
 DEF_MAKE = ../def_write.rb
 XLS_CNV = ../../../../tools/exceltool/xls2xml/tab_out.rb
 
+XLSDIRECT = ruby $(PROJECT_ROOT)tools/exceltool/xls2xml/tab_out_direct.rb
+DATAFILE = map_array.xls
+DATATXT = $(DATAFILE:.xls=.csv)
+OUTPUT = map_array.cdat
+
 .PHONY:	do-build clean
 
 
 
-do-build: $(TARGETDIR)/$(targetname).narc $(DEF_HEADER)
+do-build: $(TARGETDIR)/$(targetname).narc $(DEF_HEADER) $(OUTPUT)
 
 clean:
 	@rm -f $(TARGETDIR)/$(targetname).narc
@@ -66,6 +71,8 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
 	@rm -f *.nsb*
 	@rm -f *.bin
 	@rm -f $(DEF_HEADER)
+	@rm -f $(OUTPUT)
+	@rm -f *.csv
 endif
 
 
@@ -102,4 +109,9 @@ $(targetname).narc: $(DATA_LIST)
 $(DEF_HEADER): def_make.xls
 	ruby $(XLS_CNV) -c def_make.xls > def_make.csv
 	ruby $(DEF_MAKE) def_make.csv $(DEF_HEADER)
+
+$(OUTPUT): $(DATAFILE)
+	$(XLSDIRECT) $(DATAFILE) -c > $(DATATXT)
+	@ruby map_array_conv.rb $(DATATXT)
+
 endif
