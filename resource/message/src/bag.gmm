@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2011-02-25T17:27:47"/>
+	<create user="shimoyamada" host="W00184" date="2011-03-01T11:32:48"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1077" top="400" right="1782" bottom="1028" maximized="no" rayout="Vertical2">
+	<dialog left="1156" top="358" right="1861" bottom="986" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="551" top="230" right="1024" bottom="639" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -1489,7 +1489,7 @@ common_scr.gmmの変更も忘れないでください
 		<comment>swan追加
 保管用の項目名</comment>
 		<language name="JPN">ぜんぶ</language>
-		<language name="JPN_KANJI">全部</language>
+		<language name="JPN_KANJI">ぜんぶ</language>
 	</row>
 
 	<row id="mes_bag_120" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ffff00,,#ff8080,#ffff00,#ff8080,#ff8080,,,#ff8080,,">
@@ -1551,42 +1551,42 @@ common_scr.gmmの変更も忘れないでください
 		<comment>swan追加
 ソート確認メッセージ</comment>
 		<language name="JPN">どの　ならびに　かえますか？</language>
-		<language name="JPN_KANJI">どの　並びに　かえますか？</language>
+		<language name="JPN_KANJI">どの　ならびに　かえますか？</language>
 	</row>
 
 	<row id="mes_bag_127" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ffff00,,#ff8080,#ffff00,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>swan追加
 並び替え項目名</comment>
 		<language name="JPN">しゅるいじゅん</language>
-		<language name="JPN_KANJI">種類順</language>
+		<language name="JPN_KANJI">しゅるいじゅん</language>
 	</row>
 
 	<row id="mes_bag_128" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ffff00,,#ff8080,#ffff00,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>swan追加
 並び替え項目名</comment>
 		<language name="JPN">なまえじゅん</language>
-		<language name="JPN_KANJI">名前順</language>
+		<language name="JPN_KANJI">なまえじゅん</language>
 	</row>
 
 	<row id="mes_bag_129" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ffff00,,#ff8080,#ffff00,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>swan追加
 並び替え項目名</comment>
 		<language name="JPN">おおいじゅん</language>
-		<language name="JPN_KANJI">多い順</language>
+		<language name="JPN_KANJI">おおいじゅん</language>
 	</row>
 
 	<row id="mes_bag_130" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ffff00,,#ff8080,#ffff00,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>swan追加
 並び替え項目名</comment>
 		<language name="JPN">すくないじゅん</language>
-		<language name="JPN_KANJI">少ない順</language>
+		<language name="JPN_KANJI">すくないじゅん</language>
 	</row>
 
 	<row id="mes_bag_131" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ffff00,,#ff8080,#ffff00,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>swan追加
 並び替え項目名</comment>
 		<language name="JPN">ばんごうじゅん</language>
-		<language name="JPN_KANJI">番号順</language>
+		<language name="JPN_KANJI">ばんごうじゅん</language>
 	</row>
 
 	<row id="mes_bag_132" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ffff00,,#ff8080,#ffff00,#ff8080,#ff8080,,,#ff8080,,">
