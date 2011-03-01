@@ -2118,6 +2118,17 @@ BTLV_INPUT_SCRTYPE  BTLV_INPUT_GetScrType( BTLV_INPUT_WORK* biw )
 //============================================================================================
 static  void  BTLV_INPUT_LoadResource( BTLV_INPUT_WORK* biw )
 {
+  u32 pltt;
+  
+  // バージョン毎に違うBGのパレットを適用する
+  if(GET_VERSION()==VERSION_B2){
+    pltt = NARC_battgra_wb_battle_b_bg_NCLR;
+  }else{
+    pltt = NARC_battgra_wb_battle_w_bg_NCLR;
+  }
+  
+
+  // リソース転送
   GFL_ARCHDL_UTIL_TransVramBgCharacter( biw->handle, NARC_battgra_wb_battle_w_bg_NCGR,
                                         GFL_BG_FRAME0_S, 0, 0, FALSE, biw->heapID );
 
@@ -2125,8 +2136,7 @@ static  void  BTLV_INPUT_LoadResource( BTLV_INPUT_WORK* biw )
                                         GFL_BG_FRAME3_S, 0, 0x8000, FALSE, biw->heapID );
   GFL_ARCHDL_UTIL_TransVramScreen( biw->handle, NARC_battgra_wb_battle_w_bg3_NSCR,
                                    GFL_BG_FRAME3_S, 0, 0, FALSE, biw->heapID );
-  PaletteWorkSet_ArcHandle( biw->pfd, biw->handle, NARC_battgra_wb_battle_w_bg_NCLR,
-                            biw->heapID, FADE_SUB_BG, 0x1e0, 0 );
+  PaletteWorkSet_ArcHandle( biw->pfd, biw->handle, pltt, biw->heapID, FADE_SUB_BG, 0x1e0, 0 );
 
   //バッグボタンパレットを退避しておく
   if( biw->main_loop_tcb_flag == TRUE )

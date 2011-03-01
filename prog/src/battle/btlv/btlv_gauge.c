@@ -341,7 +341,7 @@ BTLV_GAUGE_WORK*  BTLV_GAUGE_Init( GFL_FONT* fontHandle, HEAPID heapID )
 
     for( i = 0 ; i < BTLV_GAUGE_MAX ; i++ )
     { 
-      bgw->plttID[ i ] = GFL_CLGRP_PLTT_Register( bgw->handle, NARC_battgra_wb_gauge_NCLR,
+      bgw->plttID[ i ] = GFL_CLGRP_PLTT_Register( bgw->handle, BTLV_GAUGE_GetPlttFileId(),
                                                   CLSYS_DRAW_MAIN, BTLV_OBJ_PLTT_HP_GAUGE + 0x20 * i, bgw->heapID );
       PaletteWorkSet_VramCopy( BTLV_EFFECT_GetPfd(), FADE_MAIN_OBJ,
                                GFL_CLGRP_PLTT_GetAddr( bgw->plttID[ i ], CLSYS_DRAW_MAIN ) / 2, 0x20 * 1 );
@@ -745,6 +745,36 @@ void  BTLV_GAUGE_AddPP( BTLV_GAUGE_WORK *bgw, const ZUKAN_SAVEDATA* zs, const PO
   gauge_init_view( bgw, type, pos, pp );
 }
 
+
+//=============================================================================================
+/**
+ * @brief	WBバージョン違いでゲージOBJのパレットIDを切り替える
+ *
+ * @param   none		
+ *
+ * @retval  u32		
+ */
+//=============================================================================================
+u32 BTLV_GAUGE_GetPlttFileId( void )
+{
+  if(GET_VERSION()==VERSION_B2){
+    OS_Printf("Bのパレットを転送\n");
+    return NARC_battgra_wb_gauge_b_NCLR;
+  }
+  
+  OS_Printf("Wのパレットを転送\n");
+  return NARC_battgra_wb_gauge_NCLR;
+}
+
+static u32 BTLV_GAUGE_GetDarkPlttFieldId(void)
+{
+  if(GET_VERSION()==VERSION_B2){
+    return NARC_battgra_wb_gauge_b_dark_NCLR;
+  }
+  
+  return NARC_battgra_wb_gauge_dark_NCLR;
+}
+
 static  void  gauge_load_resource( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_TYPE type, BtlvMcssPos pos )
 { 
   u32 arcdatid_char;
@@ -772,7 +802,7 @@ static  void  gauge_load_resource( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_TYPE type, B
   if( type == BTLV_GAUGE_TYPE_ROTATE )
   {
     int       pltt_id = ( pos < BTLV_MCSS_POS_A ) ? pos : pos - BTLV_MCSS_POS_A;
-    ARCDATID  pltt = ( pos < BTLV_MCSS_POS_C ) ? NARC_battgra_wb_gauge_NCLR : NARC_battgra_wb_gauge_dark_NCLR;
+    ARCDATID  pltt = ( pos < BTLV_MCSS_POS_C ) ? BTLV_GAUGE_GetPlttFileId() : BTLV_GAUGE_GetDarkPlttFieldId();
 
     GFL_CLGRP_PLTT_Release( bgw->plttID[ pltt_id ] );
 

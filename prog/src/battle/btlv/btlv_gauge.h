@@ -66,4 +66,5 @@ extern  void              BTLV_GAUGE_SetPinchBGMNoCheck( BTLV_GAUGE_WORK* bgw, B
 extern  BOOL              BTLV_GAUGE_GetGaugeStatus( BTLV_GAUGE_WORK* bgw, BtlvMcssPos pos, int* color, int* sick_anm );
 extern  void              BTLV_GAUGE_SwitchGaugeMode( BTLV_GAUGE_WORK* bgw );
 extern  void              BTLV_GAUGE_SetMovePosFlag( BTLV_GAUGE_WORK* bgw, BtlvMcssPos pos );
+extern   u32              BTLV_GAUGE_GetPlttFileId( void );
 
