@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-01T16:47:09"/>
+	<create user="matsumiya" host="W00224" date="2011-03-01T16:56:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -328,9 +328,7 @@
 	<row id="msg_r20_sppoke1_01">
 		<comment>ポケモン
 ・やぶれたせかいイベント終了後に出現
-・会話するとメッセージ表示後、戦闘に
-
-・プラチナで出現条件変更</comment>
+・会話するとメッセージ表示後、戦闘に</comment>
 		<attribute name="キャラ指定">ポケモン
 ユクシー</attribute>
 		<language name="JPN" width="256">きょううん！▼</language>
@@ -354,9 +352,7 @@
 		<comment>ポケモン
 ・やぶれたせかいイベント終了後に出現
 ・会話するとメッセージ表示
-　画面外に消えるとsppoke2_02表示
-
-・プラチナで出現条件変更</comment>
+　画面外に消えるとsppoke2_02表示</comment>
 		<attribute name="キャラ指定">ポケモン
 エムリット</attribute>
 		<language name="JPN" width="256">きゃううん▼</language>
@@ -377,9 +373,7 @@
 	<row id="msg_r20_sppoke3_01">
 		<comment>ポケモン
 ・やぶれたせかいイベント終了後に出現
-　会話するとメッセージ表示後、戦闘に
-
-・プラチナで出現条件変更</comment>
+　会話するとメッセージ表示後、戦闘に</comment>
 		<attribute name="キャラ指定">ポケモン
 アグノム</attribute>
 		<language name="JPN" width="256">きゅううん▼</language>
