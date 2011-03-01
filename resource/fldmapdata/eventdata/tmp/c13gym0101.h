@@ -2,6 +2,7 @@
 #ifndef ZONE_C13GYM0101_EVD_H
 #define ZONE_C13GYM0101_EVD_H
 
+#define DOOR_ID_C12GYM0101_C12_EXIT01     0
 
 #endif //ZONE_C13GYM0101_EVD_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c13gym0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

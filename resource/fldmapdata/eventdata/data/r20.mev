@@ -1,5 +1,5 @@
 #event data
-#save date:2011/02/28 17:32:12
+#save date:2011/02/28 18:06:03
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\r20.wms
 #SECTION START:OBJ_EVENT
@@ -48,13 +48,13 @@ ZONE_ID_R20R0101
 #Next Door ID Name
 DOOR_ID_R20R0101_R20_EXIT02
 #Door Direction
-EXIT_DIR_RIGHT
+EXIT_DIR_LEFT
 #Door Type
 EXIT_TYPE_WALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-664 32 72
+664 0 88
 #size
 1 3
 #Map Event List Data End

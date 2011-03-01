@@ -2,8 +2,8 @@
 #ifndef ZONE_R19R0101_EVD_H
 #define ZONE_R19R0101_EVD_H
 
-#define DOOR_ID_R19R0101_C12_EXIT02       0
-#define DOOR_ID_R19R0101_R19_EXIT02       1
+#define DOOR_ID_R19R0101_C12_EXIT01       0
+#define DOOR_ID_R19R0101_R19_EXIT01       1
 
 #endif //ZONE_R19R0101_EVD_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r19r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
