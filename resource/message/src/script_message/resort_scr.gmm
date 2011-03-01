@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nagihashi_toru" host="W00268" date="2011-02-23T22:25:52"/>
+	<create user="nagihashi_toru" host="W00268" date="2011-03-01T12:37:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -67,6 +67,11 @@
 			<tag entry="11" japanese="ボックス名" english="ボックス名" view="EP" width="96" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 			</tag>
+			<tag entry="12" japanese="ポケモンニックネーム（正体）" english="ポケモンニックネーム（正体）" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">バトル用。イリュージョンの影響を受けないニックネーム取得。</comment>
+				<comment language="english">バトル用。イリュージョンの影響を受けないニックネーム取得。</comment>
+			</tag>
 			<tag entry="13" japanese="ステータス名" english="ステータス名" view="EP" width="74" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 				<comment language="japanese">たいりょく、こうげきりょく、ぼうぎょりょく、とくこう、とくぼう、すばやさ、かいひりつ、めいちゅう</comment>
@@ -77,6 +82,14 @@
 				<comment language="japanese">「たんぱんこぞう」「エリートトレーナー」など</comment>
 				<comment language="english">「たんぱんこぞう」「エリートトレーナー」など</comment>
 			</tag>
+			<tag entry="15" japanese="趣味（調査レーダー）" english="趣味（調査レーダー）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="16" japanese="Gパワー名称" english="Gパワー名称" view="EP" width="156" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">Gパワーの名称です</comment>
+				<comment language="english">Gパワーの名称です</comment>
+			</tag>
 			<tag entry="17" japanese="特殊状態名" english="特殊状態名" view="EP" width="48" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 				<comment language="japanese">ポケモンの特殊状態です。</comment>
@@ -86,6 +99,9 @@
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 				<comment language="japanese">バッグのポケットの名前。「ポケット」の部分も含む。</comment>
 				<comment language="english">バッグのポケットの名前。「ポケット」の部分も含む。</comment>
+			</tag>
+			<tag entry="19" japanese="アンケート回答" english="アンケート回答" view="EP" width="108" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 			</tag>
 			<tag entry="26" japanese="カップ名" english="カップ名" view="EP" width="72" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
@@ -108,19 +124,17 @@
 				<comment language="japanese">ぼうけんノートなどで使う</comment>
 				<comment language="english">ぼうけんノートなどで使う</comment>
 			</tag>
-			<tag entry="34" japanese="コンテスト名称" english="コンテスト名称" view="EP" width="120" line="1">
+			<tag entry="34" japanese="ミュージカル演目名" english="ミュージカル演目名" view="EP" width="234" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
-				<comment language="japanese">コンテストのジャンル
-「○○○○○コンテスト」</comment>
-				<comment language="english">コンテストのジャンル
-「○○○○○コンテスト」</comment>
+				<comment language="japanese">ミュージカルの演目名</comment>
+				<comment language="english">ミュージカルの演目名</comment>
 			</tag>
-			<tag entry="35" japanese="コンテストランク" english="コンテストランク" view="EP" width="84" line="1">
+			<tag entry="35" japanese="ミュージカルコンディション" english="ミュージカルコンディション" view="EP" width="65" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
-				<comment language="japanese">○○○○ランク
-「ランク」も含む</comment>
-				<comment language="english">○○○○ランク
-「ランク」も含む</comment>
+				<comment language="japanese">ミュージカルのコンディション
+クール・キュート・エレガント・ユニーク</comment>
+				<comment language="english">ミュージカルのコンディション
+クール・キュート・エレガント・ユニーク</comment>
 			</tag>
 			<tag entry="36" japanese="国名" english="国名" view="EP" width="216" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
@@ -137,9 +151,100 @@
 				<comment language="japanese">リボンの名前</comment>
 				<comment language="english">リボンの名前</comment>
 			</tag>
+			<tag entry="40" japanese="広場ミニゲーム" english="広場ミニゲーム" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場のミニゲーム名</comment>
+				<comment language="english">WiFi広場のミニゲーム名</comment>
+			</tag>
+			<tag entry="41" japanese="広場イベント名" english="広場イベント名" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場イベント名</comment>
+				<comment language="english">WiFi広場イベント名</comment>
+			</tag>
+			<tag entry="42" japanese="広場アイテム名" english="広場アイテム名" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場のアイテム名</comment>
+				<comment language="english">WiFi広場のアイテム名</comment>
+			</tag>
+			<tag entry="43" japanese="日本の挨拶" english="日本の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">日本の挨拶</comment>
+				<comment language="english">日本の挨拶</comment>
+			</tag>
+			<tag entry="44" japanese="英語の挨拶" english="英語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">英語の挨拶</comment>
+				<comment language="english">英語の挨拶</comment>
+			</tag>
+			<tag entry="45" japanese="フランス語の挨拶" english="フランス語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">フランス語の挨拶</comment>
+				<comment language="english">フランス語の挨拶</comment>
+			</tag>
+			<tag entry="46" japanese="ドイツ語の挨拶" english="ドイツ語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ドイツ語の挨拶</comment>
+				<comment language="english">ドイツ語の挨拶</comment>
+			</tag>
+			<tag entry="47" japanese="イタリア語の挨拶" english="イタリア語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">イタリア語の挨拶</comment>
+				<comment language="english">イタリア語の挨拶</comment>
+			</tag>
+			<tag entry="48" japanese="スペイン語の挨拶" english="スペイン語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">スペイン語の挨拶</comment>
+				<comment language="english">スペイン語の挨拶</comment>
+			</tag>
+			<tag entry="49" japanese="ミュージカルグッズ部位" english="ミュージカルグッズ部位" view="EP" width="39" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="50" japanese="PDW家具名" english="PDW家具名" view="EP" width="192" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="51" japanese="ミュージカル客層" english="ミュージカル客層" view="EP" width="78" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">おとこのひと、女の子等</comment>
+				<comment language="english">おとこのひと、女の子等</comment>
+			</tag>
+			<tag entry="52" japanese="DS本体名" english="DS本体名" view="EP" width="130" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">DS本体のユーザー名</comment>
+				<comment language="english">DS本体のユーザー名</comment>
+			</tag>
+			<tag entry="53" japanese="メダル名" english="メダル名" view="EP" width="130" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">様々なことをするともらえる称号をあらわすメダルの名前</comment>
+				<comment language="english">様々なことをするともらえる称号をあらわすメダルの名前</comment>
+			</tag>
+			<tag entry="54" japanese="メダリストランク名" english="メダリストランク名" view="EP" width="65" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">メダルを集めると上昇するメダルボックスのランク名</comment>
+				<comment language="english">メダルを集めると上昇するメダルボックスのランク名</comment>
+			</tag>
+			<tag entry="55" japanese="リゾートフリーワード" english="リゾートフリーワード" view="EP" width="104" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">リゾートで使用する自由入力の挨拶文です。</comment>
+				<comment language="english">リゾートで使用する自由入力の挨拶文です。</comment>
+			</tag>
+			<tag entry="56" japanese="リゾート店名" english="リゾート店名" view="EP" width="169" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">リゾートで使用する店の名前です。</comment>
+				<comment language="english">リゾートで使用する店の名前です。</comment>
+			</tag>
+			<tag entry="57" japanese="リゾート街名" english="リゾート街名" view="EP" width="130" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">リゾートで使用する自由入力の街名です。</comment>
+				<comment language="english">リゾートで使用する自由入力の街名です。</comment>
+			</tag>
+			<tag entry="58" japanese="リゾート市長名" english="リゾート市長名" view="EP" width="130" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">リゾートで使用する自由入力の市長名です。</comment>
+				<comment language="english">リゾートで使用する自由入力の市長名です。</comment>
+			</tag>
 		</group>
 
-		<group entry="2" japanese="ポケモンＷＢ（数値）" english="ポケモンＷＢ（数値）">
+		<group entry="2" japanese="ポケモンＷＢ（数値）" english="ポケモンＷＢ（数値）" color="#c0c0c0">
 			<tag entry="00" japanese="１桁" english="１桁" view="EP" width="8" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 			</tag>
@@ -168,9 +273,15 @@
 			<tag entry="07" japanese="８桁" english="８桁" view="EP" width="64" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 			</tag>
+			<tag entry="08" japanese="９桁" english="９桁" view="EP" width="72" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="09" japanese="10桁" english="10桁" view="EP" width="80" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
 		</group>
 
-		<group entry="189" japanese="汎用コントロール" english="汎用コントロール">
+		<group entry="189" japanese="汎用コントロール" english="汎用コントロール" color="#c0c0c0">
 			<tag entry="00" japanese="カラー変更" english="カラー変更" view="EP" length="0" line="1">
 				<parameter number="0" japanese="文字色番号" english="文字色番号" type="int8"/>
 				<parameter number="1" japanese="影色番号" english="影色番号" type="int8"/>
@@ -189,9 +300,23 @@
 				<comment language="english">当該行の文字列を
 ウィンドウ内で右寄せします。</comment>
 			</tag>
+			<tag entry="04" japanese="X加算" english="X加算" view="EP" length="0" line="1">
+				<parameter number="0" japanese="加算値" english="加算値" type="int8"/>
+				<comment language="japanese">描画X座標を加算します。
+使用は許可制です。</comment>
+				<comment language="english">描画X座標を加算します。
+使用は許可制です。</comment>
+			</tag>
+			<tag entry="05" japanese="X指定" english="X指定" view="EP" length="0" line="1">
+				<parameter number="0" japanese="Ｘ座標" english="Ｘ座標" type="int16"/>
+				<comment language="japanese">描画Ｘ座標を指定値に変更。
+使用は許可制です。</comment>
+				<comment language="english">描画Ｘ座標を指定値に変更。
+使用は許可制です。</comment>
+			</tag>
 		</group>
 
-		<group entry="190" japanese="動的コントロール" english="Word">
+		<group entry="190" japanese="動的コントロール" english="Word" color="#c0c0c0">
 			<tag entry="00" japanese="ページ切り替え（行送り）" english="ページ切り替え（行送り）" view="EP" length="0" line="1"/>
 			<tag entry="01" japanese="ページ切り替え（クリア）" english="ページ切り替え（クリア）" view="EP" length="0" line="1"/>
 			<tag entry="02" japanese="ウェイト変更（単発）" english="ウェイト変更（単発）" view="EP" length="0" line="1">
@@ -209,11 +334,21 @@
 			</tag>
 			<tag entry="07" japanese="コールバック引数リセット" english="コールバック引数リセット" view="EP" length="0" line="1"/>
 			<tag entry="08" japanese="描画領域クリア" english="描画領域クリア" view="EP" length="0" line="1"/>
+			<tag entry="09" japanese="速度コントロール" english="速度コントロール" view="EP" length="0" line="1">
+				<parameter number="0" japanese="モード" english="モード" type="int8"/>
+				<comment language="japanese">ユーザConfig設定に応じて
+相対的に速い（遅い）速度になるように、ウェイトフレーム値などを操作します。</comment>
+				<comment language="english">ユーザConfig設定に応じて
+相対的に速い（遅い）速度になるように、ウェイトフレーム値などを操作します。</comment>
+			</tag>
 		</group>
 
 		<group entry="254" japanese="文字列展開" english="Word">
 		</group>
 
+		<set japanese="RESET" english="RESET" value="BE:09:速度コントロール:0"/>
+		<set japanese="FAST" english="FAST" value="BE:09:速度コントロール:1"/>
+		<set japanese="SLOW" english="SLOW" value="BE:09:速度コントロール:2"/>
 		<set japanese="500%" english="500%" value="FF:01:サイズ:500"/>
 		<set japanese="400%" english="400%" value="FF:01:サイズ:400"/>
 		<set japanese="300%" english="300%" value="FF:01:サイズ:300"/>
@@ -263,7 +398,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="521" top="341" right="1226" bottom="961" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -429,6 +564,263 @@ GTSで　会ったよね！</language>
 満足した！▼
 ジュエリースワンの　魅力が
 あがった！▼</language>
+	</row>
+
+	<row id="resort_sys_04" back-color="#80ff80,,,,,,,#80ff80,,,,,,,,,,,">
+		<language name="JPN" width="256"></language>
+		<language name="JPN_KANJI" width="256"></language>
+	</row>
+
+	<row id="resort_shop_00" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="256">ポケモンくじ</language>
+		<language name="JPN_KANJI" width="256">ポケモンくじ</language>
+	</row>
+
+	<row id="resort_shop_01" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="256">びようしつ</language>
+		<language name="JPN_KANJI" width="256">美容室</language>
+	</row>
+
+	<row id="resort_shop_02" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="256">育て屋</language>
+		<language name="JPN_KANJI" width="256">育て屋</language>
+	</row>
+
+	<row id="resort_shop_03" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="256">マーケット</language>
+		<language name="JPN_KANJI" width="256">マーケット</language>
+	</row>
+
+	<row id="resort_shop_04" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="256">はなや</language>
+		<language name="JPN_KANJI" width="256">花屋</language>
+	</row>
+
+	<row id="resort_shop_05" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="256">どうじょう</language>
+		<language name="JPN_KANJI" width="256">道場</language>
+	</row>
+
+	<row id="resort_shop_06" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="256">ほいくじょ</language>
+		<language name="JPN_KANJI" width="256">保育所</language>
+	</row>
+
+	<row id="resort_shop_07" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="256">ほうせきてん</language>
+		<language name="JPN_KANJI" width="256">宝石店</language>
+	</row>
+
+	<row id="resort_shop_08" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="256">ふるどうぐや</language>
+		<language name="JPN_KANJI" width="256">古道具屋</language>
+	</row>
+
+	<row id="resort_shop_09" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="256">レストラン</language>
+		<language name="JPN_KANJI" width="256">レストラン</language>
+	</row>
+
+	<row id="resort_shop_10" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="256">ジムもどき</language>
+		<language name="JPN_KANJI" width="256">ジムもどき</language>
+	</row>
+
+	<row id="resort_shop_11" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="256">みんか</language>
+		<language name="JPN_KANJI" width="256">民家</language>
+	</row>
+
+	<row id="resort_shoplabel_00" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<attribute name="キャラ指定">ポケモンくじ</attribute>
+		<language name="JPN" width="256">くじをする</language>
+		<language name="JPN_KANJI" width="256">くじをする</language>
+	</row>
+
+	<row id="resort_shoplabel_01" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<attribute name="キャラ指定">美容室</attribute>
+		<language name="JPN" width="256">カットする</language>
+		<language name="JPN_KANJI" width="256">カットする</language>
+	</row>
+
+	<row id="resort_shoplabel_02" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<attribute name="キャラ指定">育て屋</attribute>
+		<language name="JPN" width="256">そだててもらう</language>
+		<language name="JPN_KANJI" width="256">育ててもらう</language>
+	</row>
+
+	<row id="resort_shoplabel_03" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<attribute name="キャラ指定">マーケット</attribute>
+		<language name="JPN" width="256">かう</language>
+		<language name="JPN_KANJI" width="256">買う</language>
+	</row>
+
+	<row id="resort_shoplabel_04" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<attribute name="キャラ指定">花屋</attribute>
+		<language name="JPN" width="256">かう</language>
+		<language name="JPN_KANJI" width="256">買う</language>
+	</row>
+
+	<row id="resort_shoplabel_05" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<attribute name="キャラ指定">道場</attribute>
+		<language name="JPN" width="256">きたえる</language>
+		<language name="JPN_KANJI" width="256">鍛える</language>
+	</row>
+
+	<row id="resort_shoplabel_06" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<attribute name="キャラ指定">保育所</attribute>
+		<language name="JPN" width="256">あたためる</language>
+		<language name="JPN_KANJI" width="256">温める</language>
+	</row>
+
+	<row id="resort_shoplabel_07" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<attribute name="キャラ指定">宝石店</attribute>
+		<language name="JPN" width="256">かう</language>
+		<language name="JPN_KANJI" width="256">買う</language>
+	</row>
+
+	<row id="resort_shoplabel_08" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<attribute name="キャラ指定">古道具屋</attribute>
+		<language name="JPN" width="256">かう</language>
+		<language name="JPN_KANJI" width="256">買う</language>
+	</row>
+
+	<row id="resort_shoplabel_09" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<attribute name="キャラ指定">レストラン</attribute>
+		<language name="JPN" width="256">たべる</language>
+		<language name="JPN_KANJI" width="256">食べる</language>
+	</row>
+
+	<row id="resort_shoplabel_10" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<attribute name="キャラ指定">ジムもどき</attribute>
+		<language name="JPN" width="256">ちょうせんする</language>
+		<language name="JPN_KANJI" width="256">挑戦する</language>
+	</row>
+
+	<row id="resort_shoplabel_11" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<attribute name="キャラ指定">民家</attribute>
+		<language name="JPN" width="256">はなしをする</language>
+		<language name="JPN_KANJI" width="256">話をする</language>
+	</row>
+
+	<row id="resort_shopinfo_00" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<attribute name="キャラ指定">ポケモンくじ</attribute>
+		<language name="JPN" width="256">あたるもはっけ　あたらぬもはっけ
+『[1:38:リゾート店名:0]』へようこそ！▽
+ごりようですか？</language>
+		<language name="JPN_KANJI" width="256">当たるもはっけ　当たらぬもはっけ
+『[1:38:リゾート店名:0]』へようこそ！▽
+ご利用ですか？</language>
+	</row>
+
+	<row id="resort_shopinfo_01" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<attribute name="キャラ指定">美容室</attribute>
+		<language name="JPN" width="256">あなたのポケモンを　よりうつくしく！
+『[1:38:リゾート店名:0]』へようこそ！▽
+ごりようですか？</language>
+		<language name="JPN_KANJI" width="256">あなたのポケモンを　よりうつくしく！
+『[1:38:リゾート店名:0]』へようこそ！▽
+ご利用ですか？</language>
+	</row>
+
+	<row id="resort_shopinfo_02" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<attribute name="キャラ指定">育て屋</attribute>
+		<language name="JPN" width="256">あなたの　ポケモン　きたえます
+『[1:38:リゾート店名:0]』へようこそ！▽
+ごりようですか？</language>
+		<language name="JPN_KANJI" width="256">あなたの　ポケモン　鍛えます
+『[1:38:リゾート店名:0]』へようこそ！▽
+ご利用ですか？</language>
+	</row>
+
+	<row id="resort_shopinfo_03" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<attribute name="キャラ指定">マーケット</attribute>
+		<language name="JPN" width="256">ほしいものが　なんでも　そろう
+『[1:38:リゾート店名:0]』へようこそ！▽
+ごりようですか？</language>
+		<language name="JPN_KANJI" width="256">欲しいものが　なんでも　そろう
+『[1:38:リゾート店名:0]』へようこそ！▽
+ご利用ですか？</language>
+	</row>
+
+	<row id="resort_shopinfo_04" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<attribute name="キャラ指定">花屋</attribute>
+		<language name="JPN" width="256">しぜんの　めぐみの　きのみはんばい
+『[1:38:リゾート店名:0]』へようこそ！▽
+ごりようですか？</language>
+		<language name="JPN_KANJI" width="256">自然の　恵みの　きのみ販売
+『[1:38:リゾート店名:0]』へようこそ！▽
+ご利用ですか？</language>
+	</row>
+
+	<row id="resort_shopinfo_05" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<attribute name="キャラ指定">道場</attribute>
+		<language name="JPN" width="256">ポケモンとなら　どこでも　がんばります
+『[1:38:リゾート店名:0]』へようこそ！▽
+ごりようですか？</language>
+		<language name="JPN_KANJI" width="256">ポケモンとなら　どこでも 頑張ります
+『[1:38:リゾート店名:0]』へようこそ！▽
+ご利用ですか？</language>
+	</row>
+
+	<row id="resort_shopinfo_06" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<attribute name="キャラ指定">保育所</attribute>
+		<language name="JPN" width="256">あいじょう　いっぱい　タマゴあずかり
+『[1:38:リゾート店名:0]』へようこそ！▽
+ごりようですか？</language>
+		<language name="JPN_KANJI" width="256">愛情　いっぱい　タマゴ預かり
+『[1:38:リゾート店名:0]』へようこそ！▽
+ご利用ですか？</language>
+	</row>
+
+	<row id="resort_shopinfo_07" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<attribute name="キャラ指定">宝石店</attribute>
+		<language name="JPN" width="256">いっしゅんの　かがやきを　えいえんに
+『[1:38:リゾート店名:0]』へようこそ！▽
+ごりようですか？</language>
+		<language name="JPN_KANJI" width="256">一瞬の　輝きを　永遠に
+『[1:38:リゾート店名:0]』へようこそ！▽
+ご利用ですか？</language>
+	</row>
+
+	<row id="resort_shopinfo_08" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<attribute name="キャラ指定">古道具屋</attribute>
+		<language name="JPN" width="256">ひとそれぞれの　ほりだしもの
+『[1:38:リゾート店名:0]』へようこそ！▽
+ごりようですか？</language>
+		<language name="JPN_KANJI" width="256">人それぞれの　掘り出し物
+『[1:38:リゾート店名:0]』へようこそ！▽
+ご利用ですか？</language>
+	</row>
+
+	<row id="resort_shopinfo_09" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<attribute name="キャラ指定">レストラン</attribute>
+		<language name="JPN" width="256">みつぼしの　あじを　ていきょうします
+『[1:38:リゾート店名:0]』へようこそ！▽
+ごりようですか？</language>
+		<language name="JPN_KANJI" width="256">三ツ星の　味を　提供します
+『[1:38:リゾート店名:0]』へようこそ！▽
+ご利用ですか？</language>
+	</row>
+
+	<row id="resort_shopinfo_10" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<attribute name="キャラ指定">ジムもどき</attribute>
+		<language name="JPN" width="256">ポケモンと　トレーナーの　きずなを　たしかめる
+『[1:38:リゾート店名:0]』へようこそ！▽
+ごりようですか？</language>
+		<language name="JPN_KANJI" width="256">ポケモンと　トレーナーの　絆を　確かめる
+『[1:38:リゾート店名:0]』へようこそ！▽
+ご利用ですか？</language>
+	</row>
+
+	<row id="resort_shopinfo_11" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<attribute name="キャラ指定">民家</attribute>
+		<language name="JPN" width="256">とくに　おみせは　やっていません
+『[1:38:リゾート店名:0]』です▽
+どうしましたか？</language>
+		<language name="JPN_KANJI" width="256">とくに　お店は　やっていません
+『[1:38:リゾート店名:0]』です▽
+どうしましたか？</language>
 	</row>
 
 	<flowchart-group-list>
