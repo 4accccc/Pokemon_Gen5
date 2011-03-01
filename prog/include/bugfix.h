@@ -1444,3 +1444,22 @@ BGMならびにSEが再生されません。"
  */
 #define BUGFIX_AF_SYSTEM200_20110221
 
+
+
+/*
+SYSTEM330
+セーブの際、バックアップへの書き込みに失敗するととまる不具合修正
+
+原因
+gflib/src/backup/flash_access.c : (241)
+GFL_FLASH_SAVEASYNC_Main 関数から PMSVLD_SaveError 関数が
+呼び出される場合です。GFL_FLASH_SAVEASYNC_Main で CARD_UnlockBackup
+したロックIDを PMSVLD_SaveError でさらに CARD_UnlockBackup しており、
+OS_Panic します。
+gflibのみ修正              修正担当：大野
+  
+*/
+
+#define BUGFIX_AF_SYSTEM330_20110301
+
+
