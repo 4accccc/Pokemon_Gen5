@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-07-15T19:04:53"/>
+	<create user="matsumiya" host="W00224" date="2011-03-01T16:47:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="260"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -297,6 +297,106 @@
 		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_r20_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>BGメッセージ
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">看板：道路</attribute>
+		<language name="JPN" width="256">１９ばんどうろ</language>
+		<language name="JPN_KANJI" width="256">１９番道路</language>
+	</row>
+
+	<row id="msg_r20_sign2_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>BGメッセージ
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">看板：お得な掲示板</attribute>
+		<language name="JPN" width="256">おとくな　けいじばん！[BE:01:ページ切り替え（クリア）]
+
+せっかくの　であいです
+いろんな　ひとと　おはなししましょう！[BE:01:ページ切り替え（クリア）]
+きっと　みんなが　やくだつことを
+おしえてくれる　はずです！</language>
+		<language name="JPN_KANJI" width="256">お得な　掲示板！[BE:01:ページ切り替え（クリア）]
+
+せっかくの　出会いです
+いろんな　人と　お話しましょう！[BE:01:ページ切り替え（クリア）]
+きっと　みんなが　役立つことを
+教えてくれる　はずです！</language>
+	</row>
+
+	<row id="msg_r20_sppoke1_01">
+		<comment>ポケモン
+・やぶれたせかいイベント終了後に出現
+・会話するとメッセージ表示後、戦闘に
+
+・プラチナで出現条件変更</comment>
+		<attribute name="キャラ指定">ポケモン
+ユクシー</attribute>
+		<language name="JPN" width="256">きょううん！▼</language>
+		<language name="JPN_KANJI" width="256">きょううん！▼</language>
+	</row>
+
+	<row id="msg_r20_sppoke1_02">
+		<comment>ポケモン
+・戦闘で倒した場合、フィールドに戻ってこのメッセージ
+・負けるか、逃げるかしても
+　チャンピオンに勝てば、動作モデルを再度セットする</comment>
+		<attribute name="キャラ指定">ポケモン
+ユクシー</attribute>
+		<language name="JPN" width="256">ユクシーは　どうくつの
+おくふかくに　もぐっていった……</language>
+		<language name="JPN_KANJI" width="256">ユクシーは　どうくつの
+おくふかくに　もぐっていった……</language>
+	</row>
+
+	<row id="msg_r20_sppoke2_01">
+		<comment>ポケモン
+・やぶれたせかいイベント終了後に出現
+・会話するとメッセージ表示
+　画面外に消えるとsppoke2_02表示
+
+・プラチナで出現条件変更</comment>
+		<attribute name="キャラ指定">ポケモン
+エムリット</attribute>
+		<language name="JPN" width="256">きゃううん▼</language>
+		<language name="JPN_KANJI" width="256">きゃううん▼</language>
+	</row>
+
+	<row id="msg_r20_sppoke2_02">
+		<comment>ポケモン
+・移動ポケモンになる</comment>
+		<attribute name="キャラ指定">ポケモン
+エムリット</attribute>
+		<language name="JPN" width="256">エムリットは
+どこかに　とびさっていった……▼</language>
+		<language name="JPN_KANJI" width="256">エムリットは
+どこかに　とびさっていった……▼</language>
+	</row>
+
+	<row id="msg_r20_sppoke3_01">
+		<comment>ポケモン
+・やぶれたせかいイベント終了後に出現
+　会話するとメッセージ表示後、戦闘に
+
+・プラチナで出現条件変更</comment>
+		<attribute name="キャラ指定">ポケモン
+アグノム</attribute>
+		<language name="JPN" width="256">きゅううん▼</language>
+		<language name="JPN_KANJI" width="256">きゅううん▼</language>
+	</row>
+
+	<row id="msg_r20_sppoke3_02">
+		<comment>ポケモン
+・戦闘で倒した場合、フィールドに戻ってこのメッセージ
+・負けるか、逃げるかしても
+　チャンピオンに勝てば、動作モデルを再度セットする</comment>
+		<attribute name="キャラ指定">ポケモン
+アグノム</attribute>
+		<language name="JPN" width="256">アグノムは　どうくつの
+おくふかくに　もぐっていった……</language>
+		<language name="JPN_KANJI" width="256">アグノムは　どうくつの
+おくふかくに　もぐっていった……</language>
 	</row>
 
 	<flowchart-group-list>
