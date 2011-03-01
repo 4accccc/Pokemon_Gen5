@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-01T16:10:55"/>
+	<create user="matsumiya" host="W00224" date="2011-03-01T21:40:17"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -293,7 +293,7 @@
 
 
 	<row id="msg_c13r0101_01_01">
-		<comment>？？？</comment>
+		<comment>民家１</comment>
 		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
