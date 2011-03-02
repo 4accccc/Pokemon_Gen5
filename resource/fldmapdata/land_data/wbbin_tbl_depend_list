@@ -1350,6 +1350,42 @@ $(DIR_WBTMP)/resort01_00_00.tbl: $(DIR_RES)/resort01_00_00.bin
 	@echo create_bintbl resort01_00_00
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/resort01_00_00.bin
 
+$(DIR_WBTMP)/white12_16.tbl: $(DIR_RES)/white12_16.bin
+	@echo create_bintbl white12_16
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/white12_16.bin
+
+$(DIR_WBTMP)/white13_16.tbl: $(DIR_RES)/white13_16.bin
+	@echo create_bintbl white13_16
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/white13_16.bin
+
+$(DIR_WBTMP)/white13_15.tbl: $(DIR_RES)/white13_15.bin
+	@echo create_bintbl white13_15
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/white13_15.bin
+
+$(DIR_WBTMP)/white12_17.tbl: $(DIR_RES)/white12_17.bin
+	@echo create_bintbl white12_17
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/white12_17.bin
+
+$(DIR_WBTMP)/white13_17.tbl: $(DIR_RES)/white13_17.bin
+	@echo create_bintbl white13_17
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/white13_17.bin
+
+$(DIR_WBTMP)/white13_18.tbl: $(DIR_RES)/white13_18.bin
+	@echo create_bintbl white13_18
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/white13_18.bin
+
+$(DIR_WBTMP)/white12_18.tbl: $(DIR_RES)/white12_18.bin
+	@echo create_bintbl white12_18
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/white12_18.bin
+
+$(DIR_WBTMP)/c03_m00_00.tbl: $(DIR_RES)/c03_m00_00.bin
+	@echo create_bintbl c03_m00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/c03_m00_00.bin
+
+$(DIR_WBTMP)/c03_n00_00.tbl: $(DIR_RES)/c03_n00_00.bin
+	@echo create_bintbl c03_n00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/c03_n00_00.bin
+
 $(DIR_WBTMP)/m_dun0101_00_00.tbl: $(DIR_RES)/m_dun0101_00_00.bin
 	@echo create_bintbl m_dun0101_00_00
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun0101_00_00.bin
@@ -2317,6 +2353,322 @@ $(DIR_WBTMP)/m_dun3201_00_01.tbl: $(DIR_RES)/m_dun3201_00_01.bin
 $(DIR_WBTMP)/m_dun3202_00_00.tbl: $(DIR_RES)/m_dun3202_00_00.bin
 	@echo create_bintbl m_dun3202_00_00
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun3202_00_00.bin
+
+$(DIR_WBTMP)/m_dun1101_00_00.tbl: $(DIR_RES)/m_dun1101_00_00.bin
+	@echo create_bintbl m_dun1101_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun1101_00_00.bin
+
+$(DIR_WBTMP)/m_dun1101_01_00.tbl: $(DIR_RES)/m_dun1101_01_00.bin
+	@echo create_bintbl m_dun1101_01_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun1101_01_00.bin
+
+$(DIR_WBTMP)/m_dun1101_02_00.tbl: $(DIR_RES)/m_dun1101_02_00.bin
+	@echo create_bintbl m_dun1101_02_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun1101_02_00.bin
+
+$(DIR_WBTMP)/m_dun1101_00_01.tbl: $(DIR_RES)/m_dun1101_00_01.bin
+	@echo create_bintbl m_dun1101_00_01
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun1101_00_01.bin
+
+$(DIR_WBTMP)/m_dun1101_01_01.tbl: $(DIR_RES)/m_dun1101_01_01.bin
+	@echo create_bintbl m_dun1101_01_01
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun1101_01_01.bin
+
+$(DIR_WBTMP)/m_dun1101_02_01.tbl: $(DIR_RES)/m_dun1101_02_01.bin
+	@echo create_bintbl m_dun1101_02_01
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun1101_02_01.bin
+
+$(DIR_WBTMP)/m_dun1101_00_02.tbl: $(DIR_RES)/m_dun1101_00_02.bin
+	@echo create_bintbl m_dun1101_00_02
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun1101_00_02.bin
+
+$(DIR_WBTMP)/m_dun1101_01_02.tbl: $(DIR_RES)/m_dun1101_01_02.bin
+	@echo create_bintbl m_dun1101_01_02
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun1101_01_02.bin
+
+$(DIR_WBTMP)/m_dun1101_02_02.tbl: $(DIR_RES)/m_dun1101_02_02.bin
+	@echo create_bintbl m_dun1101_02_02
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun1101_02_02.bin
+
+$(DIR_WBTMP)/m_dun1102_00_00.tbl: $(DIR_RES)/m_dun1102_00_00.bin
+	@echo create_bintbl m_dun1102_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun1102_00_00.bin
+
+$(DIR_WBTMP)/m_dun1102_01_00.tbl: $(DIR_RES)/m_dun1102_01_00.bin
+	@echo create_bintbl m_dun1102_01_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun1102_01_00.bin
+
+$(DIR_WBTMP)/m_dun1102_02_00.tbl: $(DIR_RES)/m_dun1102_02_00.bin
+	@echo create_bintbl m_dun1102_02_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun1102_02_00.bin
+
+$(DIR_WBTMP)/m_dun1102_00_01.tbl: $(DIR_RES)/m_dun1102_00_01.bin
+	@echo create_bintbl m_dun1102_00_01
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun1102_00_01.bin
+
+$(DIR_WBTMP)/m_dun1102_01_01.tbl: $(DIR_RES)/m_dun1102_01_01.bin
+	@echo create_bintbl m_dun1102_01_01
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun1102_01_01.bin
+
+$(DIR_WBTMP)/m_dun1102_02_01.tbl: $(DIR_RES)/m_dun1102_02_01.bin
+	@echo create_bintbl m_dun1102_02_01
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun1102_02_01.bin
+
+$(DIR_WBTMP)/m_dun1102_00_02.tbl: $(DIR_RES)/m_dun1102_00_02.bin
+	@echo create_bintbl m_dun1102_00_02
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun1102_00_02.bin
+
+$(DIR_WBTMP)/m_dun1102_01_02.tbl: $(DIR_RES)/m_dun1102_01_02.bin
+	@echo create_bintbl m_dun1102_01_02
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun1102_01_02.bin
+
+$(DIR_WBTMP)/m_dun1102_02_02.tbl: $(DIR_RES)/m_dun1102_02_02.bin
+	@echo create_bintbl m_dun1102_02_02
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun1102_02_02.bin
+
+$(DIR_WBTMP)/m_dun1103_00_00.tbl: $(DIR_RES)/m_dun1103_00_00.bin
+	@echo create_bintbl m_dun1103_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun1103_00_00.bin
+
+$(DIR_WBTMP)/m_dun1104_00_00.tbl: $(DIR_RES)/m_dun1104_00_00.bin
+	@echo create_bintbl m_dun1104_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun1104_00_00.bin
+
+$(DIR_WBTMP)/m_dun2801_00_00.tbl: $(DIR_RES)/m_dun2801_00_00.bin
+	@echo create_bintbl m_dun2801_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2801_00_00.bin
+
+$(DIR_WBTMP)/m_dun2801_00_01.tbl: $(DIR_RES)/m_dun2801_00_01.bin
+	@echo create_bintbl m_dun2801_00_01
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2801_00_01.bin
+
+$(DIR_WBTMP)/m_dun2801_01_01.tbl: $(DIR_RES)/m_dun2801_01_01.bin
+	@echo create_bintbl m_dun2801_01_01
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2801_01_01.bin
+
+$(DIR_WBTMP)/m_dun2802_00_00.tbl: $(DIR_RES)/m_dun2802_00_00.bin
+	@echo create_bintbl m_dun2802_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2802_00_00.bin
+
+$(DIR_WBTMP)/m_dun2802_01_00.tbl: $(DIR_RES)/m_dun2802_01_00.bin
+	@echo create_bintbl m_dun2802_01_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2802_01_00.bin
+
+$(DIR_WBTMP)/m_dun2802_01_01.tbl: $(DIR_RES)/m_dun2802_01_01.bin
+	@echo create_bintbl m_dun2802_01_01
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2802_01_01.bin
+
+$(DIR_WBTMP)/m_dun2802_02_01.tbl: $(DIR_RES)/m_dun2802_02_01.bin
+	@echo create_bintbl m_dun2802_02_01
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2802_02_01.bin
+
+$(DIR_WBTMP)/m_dun2802_03_01.tbl: $(DIR_RES)/m_dun2802_03_01.bin
+	@echo create_bintbl m_dun2802_03_01
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2802_03_01.bin
+
+$(DIR_WBTMP)/m_dun2802_03_02.tbl: $(DIR_RES)/m_dun2802_03_02.bin
+	@echo create_bintbl m_dun2802_03_02
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2802_03_02.bin
+
+$(DIR_WBTMP)/m_dun2401_00_00.tbl: $(DIR_RES)/m_dun2401_00_00.bin
+	@echo create_bintbl m_dun2401_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2401_00_00.bin
+
+$(DIR_WBTMP)/m_dun2401_01_00.tbl: $(DIR_RES)/m_dun2401_01_00.bin
+	@echo create_bintbl m_dun2401_01_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2401_01_00.bin
+
+$(DIR_WBTMP)/m_dun2402_00_00.tbl: $(DIR_RES)/m_dun2402_00_00.bin
+	@echo create_bintbl m_dun2402_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2402_00_00.bin
+
+$(DIR_WBTMP)/m_dun2402_01_00.tbl: $(DIR_RES)/m_dun2402_01_00.bin
+	@echo create_bintbl m_dun2402_01_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2402_01_00.bin
+
+$(DIR_WBTMP)/m_dun2402_00_01.tbl: $(DIR_RES)/m_dun2402_00_01.bin
+	@echo create_bintbl m_dun2402_00_01
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2402_00_01.bin
+
+$(DIR_WBTMP)/m_dun2402_01_01.tbl: $(DIR_RES)/m_dun2402_01_01.bin
+	@echo create_bintbl m_dun2402_01_01
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2402_01_01.bin
+
+$(DIR_WBTMP)/m_dun2403_00_00.tbl: $(DIR_RES)/m_dun2403_00_00.bin
+	@echo create_bintbl m_dun2403_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2403_00_00.bin
+
+$(DIR_WBTMP)/m_dun2403_01_00.tbl: $(DIR_RES)/m_dun2403_01_00.bin
+	@echo create_bintbl m_dun2403_01_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2403_01_00.bin
+
+$(DIR_WBTMP)/m_dun2403_02_00.tbl: $(DIR_RES)/m_dun2403_02_00.bin
+	@echo create_bintbl m_dun2403_02_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2403_02_00.bin
+
+$(DIR_WBTMP)/m_dun2403_00_01.tbl: $(DIR_RES)/m_dun2403_00_01.bin
+	@echo create_bintbl m_dun2403_00_01
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2403_00_01.bin
+
+$(DIR_WBTMP)/m_dun2403_01_01.tbl: $(DIR_RES)/m_dun2403_01_01.bin
+	@echo create_bintbl m_dun2403_01_01
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2403_01_01.bin
+
+$(DIR_WBTMP)/m_dun2403_02_01.tbl: $(DIR_RES)/m_dun2403_02_01.bin
+	@echo create_bintbl m_dun2403_02_01
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2403_02_01.bin
+
+$(DIR_WBTMP)/m_dun2404_00_00.tbl: $(DIR_RES)/m_dun2404_00_00.bin
+	@echo create_bintbl m_dun2404_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2404_00_00.bin
+
+$(DIR_WBTMP)/m_dun2405_00_00.tbl: $(DIR_RES)/m_dun2405_00_00.bin
+	@echo create_bintbl m_dun2405_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2405_00_00.bin
+
+$(DIR_WBTMP)/m_dun2405_01_00.tbl: $(DIR_RES)/m_dun2405_01_00.bin
+	@echo create_bintbl m_dun2405_01_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2405_01_00.bin
+
+$(DIR_WBTMP)/m_dun2501_00_00.tbl: $(DIR_RES)/m_dun2501_00_00.bin
+	@echo create_bintbl m_dun2501_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2501_00_00.bin
+
+$(DIR_WBTMP)/m_dun2501_01_00.tbl: $(DIR_RES)/m_dun2501_01_00.bin
+	@echo create_bintbl m_dun2501_01_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2501_01_00.bin
+
+$(DIR_WBTMP)/m_dun2502_00_00.tbl: $(DIR_RES)/m_dun2502_00_00.bin
+	@echo create_bintbl m_dun2502_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2502_00_00.bin
+
+$(DIR_WBTMP)/m_dun2503_00_00.tbl: $(DIR_RES)/m_dun2503_00_00.bin
+	@echo create_bintbl m_dun2503_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2503_00_00.bin
+
+$(DIR_WBTMP)/m_dun2504_00_00.tbl: $(DIR_RES)/m_dun2504_00_00.bin
+	@echo create_bintbl m_dun2504_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2504_00_00.bin
+
+$(DIR_WBTMP)/m_dun2505_00_00.tbl: $(DIR_RES)/m_dun2505_00_00.bin
+	@echo create_bintbl m_dun2505_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2505_00_00.bin
+
+$(DIR_WBTMP)/m_dun2506_00_00.tbl: $(DIR_RES)/m_dun2506_00_00.bin
+	@echo create_bintbl m_dun2506_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2506_00_00.bin
+
+$(DIR_WBTMP)/m_dun2506_01_00.tbl: $(DIR_RES)/m_dun2506_01_00.bin
+	@echo create_bintbl m_dun2506_01_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2506_01_00.bin
+
+$(DIR_WBTMP)/m_dun2701_00_00.tbl: $(DIR_RES)/m_dun2701_00_00.bin
+	@echo create_bintbl m_dun2701_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2701_00_00.bin
+
+$(DIR_WBTMP)/m_dun2701_01_00.tbl: $(DIR_RES)/m_dun2701_01_00.bin
+	@echo create_bintbl m_dun2701_01_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2701_01_00.bin
+
+$(DIR_WBTMP)/m_dun2701_00_01.tbl: $(DIR_RES)/m_dun2701_00_01.bin
+	@echo create_bintbl m_dun2701_00_01
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2701_00_01.bin
+
+$(DIR_WBTMP)/m_dun2701_01_01.tbl: $(DIR_RES)/m_dun2701_01_01.bin
+	@echo create_bintbl m_dun2701_01_01
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2701_01_01.bin
+
+$(DIR_WBTMP)/m_dun2702_00_00.tbl: $(DIR_RES)/m_dun2702_00_00.bin
+	@echo create_bintbl m_dun2702_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2702_00_00.bin
+
+$(DIR_WBTMP)/m_dun2702_00_01.tbl: $(DIR_RES)/m_dun2702_00_01.bin
+	@echo create_bintbl m_dun2702_00_01
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2702_00_01.bin
+
+$(DIR_WBTMP)/m_dun2703_00_00.tbl: $(DIR_RES)/m_dun2703_00_00.bin
+	@echo create_bintbl m_dun2703_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2703_00_00.bin
+
+$(DIR_WBTMP)/m_dun2703_00_01.tbl: $(DIR_RES)/m_dun2703_00_01.bin
+	@echo create_bintbl m_dun2703_00_01
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2703_00_01.bin
+
+$(DIR_WBTMP)/m_dun2704_00_00.tbl: $(DIR_RES)/m_dun2704_00_00.bin
+	@echo create_bintbl m_dun2704_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2704_00_00.bin
+
+$(DIR_WBTMP)/m_dun2705_00_00.tbl: $(DIR_RES)/m_dun2705_00_00.bin
+	@echo create_bintbl m_dun2705_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2705_00_00.bin
+
+$(DIR_WBTMP)/m_dun2706_00_00.tbl: $(DIR_RES)/m_dun2706_00_00.bin
+	@echo create_bintbl m_dun2706_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2706_00_00.bin
+
+$(DIR_WBTMP)/m_dun2707_00_00.tbl: $(DIR_RES)/m_dun2707_00_00.bin
+	@echo create_bintbl m_dun2707_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2707_00_00.bin
+
+$(DIR_WBTMP)/m_dun2707_00_01.tbl: $(DIR_RES)/m_dun2707_00_01.bin
+	@echo create_bintbl m_dun2707_00_01
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2707_00_01.bin
+
+$(DIR_WBTMP)/m_dun2707_01_00.tbl: $(DIR_RES)/m_dun2707_01_00.bin
+	@echo create_bintbl m_dun2707_01_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2707_01_00.bin
+
+$(DIR_WBTMP)/m_dun2707_01_01.tbl: $(DIR_RES)/m_dun2707_01_01.bin
+	@echo create_bintbl m_dun2707_01_01
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2707_01_01.bin
+
+$(DIR_WBTMP)/m_dun2707_01_01.tbl: $(DIR_RES)/m_dun2707_01_01.bin
+	@echo create_bintbl m_dun2707_01_01
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2707_01_01.bin
+
+$(DIR_WBTMP)/m_dun2901_00_00.tbl: $(DIR_RES)/m_dun2901_00_00.bin
+	@echo create_bintbl m_dun2901_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2901_00_00.bin
+
+$(DIR_WBTMP)/m_dun2901_01_00.tbl: $(DIR_RES)/m_dun2901_01_00.bin
+	@echo create_bintbl m_dun2901_01_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2901_01_00.bin
+
+$(DIR_WBTMP)/m_dun2901_01_01.tbl: $(DIR_RES)/m_dun2901_01_01.bin
+	@echo create_bintbl m_dun2901_01_01
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2901_01_01.bin
+
+$(DIR_WBTMP)/m_dun2902_00_00.tbl: $(DIR_RES)/m_dun2902_00_00.bin
+	@echo create_bintbl m_dun2902_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2902_00_00.bin
+
+$(DIR_WBTMP)/m_dun2902_00_01.tbl: $(DIR_RES)/m_dun2902_00_01.bin
+	@echo create_bintbl m_dun2902_00_01
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2902_00_01.bin
+
+$(DIR_WBTMP)/m_dun2902_00_02.tbl: $(DIR_RES)/m_dun2902_00_02.bin
+	@echo create_bintbl m_dun2902_00_02
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2902_00_02.bin
+
+$(DIR_WBTMP)/m_dun2902_00_03.tbl: $(DIR_RES)/m_dun2902_00_03.bin
+	@echo create_bintbl m_dun2902_00_03
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2902_00_03.bin
+
+$(DIR_WBTMP)/m_dun2903_00_00.tbl: $(DIR_RES)/m_dun2903_00_00.bin
+	@echo create_bintbl m_dun2903_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2903_00_00.bin
+
+$(DIR_WBTMP)/m_dun2903_00_01.tbl: $(DIR_RES)/m_dun2903_00_01.bin
+	@echo create_bintbl m_dun2903_00_01
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2903_00_01.bin
+
+$(DIR_WBTMP)/m_dun3301_00_00.tbl: $(DIR_RES)/m_dun3301_00_00.bin
+	@echo create_bintbl m_dun3301_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun3301_00_00.bin
+
+$(DIR_WBTMP)/m_dun0706_00_00.tbl: $(DIR_RES)/m_dun0706_00_00.bin
+	@echo create_bintbl m_dun0706_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun0706_00_00.bin
 
 $(DIR_WBTMP)/m_ruin01_00_00.tbl: $(DIR_RES)/m_ruin01_00_00.bin
 	@echo create_bintbl m_ruin01_00_00
