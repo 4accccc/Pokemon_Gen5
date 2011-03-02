@@ -3,7 +3,7 @@
 <ita version="1.6.0">
 
 <head>
-	<create user="matsuzaki_tsubasa" host="W00193" date="2011-02-25T12:20:59" source="no_20.mb"/>
+	<create user="matsuzaki_tsubasa" host="W00193" date="2011-03-02T19:47:18" source="no_38.mb"/>
 	<title>Texture SRT Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -11,12 +11,12 @@
 <body>
 
 <tex_srt_info
-	frame_size="150"
+	frame_size="30"
 	tool_start_frame="1"
-	tool_end_frame="150"
+	tool_end_frame="30"
 	interpolation="frame"
 	tex_matrix_mode="maya"
-	compress_material="on" material_size="7 7"
+	compress_material="on" material_size="8 8"
 	frame_step_mode="1"
 	tolerance_tex_scale="0.100000"
 	tolerance_tex_rotate="0.100000"
@@ -31,32 +31,37 @@
 	0.000000
 </tex_rotate_data>
 
-<tex_translate_data size="151">
-	0.040039 0.080078 0.120117 0.159912 0.199951 0.239990 0.280029 0.320068 0.360107 0.399902
-	0.439941 0.479980 0.520020 0.560059 0.600098 0.639893 0.679932 0.719971 0.760010 0.800049
-	0.840088 0.879883 0.919922 0.959961 1.000000 1.040039 1.080078 1.120117 1.159912 1.199951
-	1.239990 1.280029 1.320068 1.360107 1.399902 1.439941 1.479980 1.520020 1.560059 1.600098
-	1.639893 1.679932 1.719971 1.760010 1.800049 1.840088 1.879883 1.919922 1.959961 2.000000
-	2.040039 2.080078 2.120117 2.159912 2.199951 2.239990 2.280029 2.320068 2.360107 2.399902
-	2.439941 2.479980 2.520020 2.560059 2.600098 2.639893 2.679932 2.719971 2.760010 2.800049
-	2.840088 2.879883 2.919922 2.959961 3.000000 3.040039 3.080078 3.120117 3.159912 3.199951
-	3.239990 3.280029 3.320068 3.360107 3.399902 3.439941 3.479980 3.520020 3.560059 3.600098
-	3.639893 3.679932 3.719971 3.760010 3.800049 3.840088 3.879883 3.919922 3.959961 4.000000
-	4.040039 4.080078 4.120117 4.159912 4.199951 4.239990 4.280029 4.320068 4.360107 4.399902
-	4.439941 4.479980 4.520020 4.560059 4.600098 4.639893 4.679932 4.719971 4.760010 4.800049
-	4.840088 4.879883 4.919922 4.959961 5.000000 5.040039 5.080078 5.120117 5.159912 5.199951
-	5.239990 5.280029 5.320068 5.360107 5.399902 5.439941 5.479980 5.520020 5.560059 5.600098
-	5.639893 5.679932 5.719971 5.760010 5.800049 5.840088 5.879883 5.919922 5.959961 6.000000
-	0.000000
+<tex_translate_data size="62">
+	0.033447 0.066650 0.100098 0.133301 0.166748 0.199951 0.233398 0.266602 0.300049 0.333252
+	0.366699 0.399902 0.433350 0.466553 0.500000 0.533447 0.566650 0.600098 0.633301 0.666748
+	0.699951 0.733398 0.766602 0.800049 0.833252 0.866699 0.899902 0.933350 0.966553 1.000000
+	0.000000 0.006104 0.016113 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000
+	0.018066 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000
+	0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000
+	0.000000 0.003174
 </tex_translate_data>
 
-<tex_srt_anm_array size="1">
-	<tex_srt_anm index="0" material_name="c">
+<tex_srt_anm_array size="3">
+	<tex_srt_anm index="0" material_name="c04_gym_c">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
-		<tex_translate_s frame_step="1" data_size="150" data_head="0"/>
-		<tex_translate_t frame_step="1" data_size="1" data_head="150"/>
+		<tex_translate_s frame_step="1" data_size="30" data_head="0"/>
+		<tex_translate_t frame_step="1" data_size="1" data_head="30"/>
+	</tex_srt_anm>
+	<tex_srt_anm index="1" material_name="c04_gym_d">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="30" data_head="31"/>
+		<tex_translate_t frame_step="1" data_size="1" data_head="61"/>
+	</tex_srt_anm>
+	<tex_srt_anm index="2" material_name="c04_gym_f">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="1" data_head="30"/>
+		<tex_translate_t frame_step="1" data_size="1" data_head="30"/>
 	</tex_srt_anm>
 </tex_srt_anm_array>
 
