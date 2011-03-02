@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-02T13:12:57"/>
+	<create user="matsumiya" host="W00224" date="2011-03-02T16:47:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1338" top="202" right="2043" bottom="822" maximized="no" rayout="Vertical2">
+	<dialog left="1297" top="228" right="2002" bottom="856" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -323,6 +323,47 @@
 
 	<row id="msg_c12gym0201_swleader1_05">
 		<comment>？？？</comment>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_c12gym0201_01_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>？？？</comment>
+		<attribute name="キャラ指定">トレーナー１</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_c12gym0201_02_01">
+		<comment>？？？</comment>
+		<attribute name="キャラ指定">トレーナー２</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_c12gym0201_glasses_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・</comment>
+		<attribute name="キャラ指定">DANPEI
+ダンペイ</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_c12gym0201_glasses_02" back-color="#80ffff,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・</comment>
+		<attribute name="キャラ指定">DANPEI
+ダンペイ</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_c12gym0201_glasses_03" back-color="#80ffff,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・</comment>
+		<attribute name="キャラ指定">DANPEI
+ダンペイ</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
