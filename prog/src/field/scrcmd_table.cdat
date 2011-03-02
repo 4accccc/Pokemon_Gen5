@@ -959,7 +959,7 @@
   //ハイリンクフェス関連
   DEF_CMD( EvCmdIntrudeMapChangeFMissionStart, EV_SEQ_INTRUDE_MAPCHG_FMISSION_START )
   DEF_CMD( EvCmdFMissionCountDown, EV_SEQ_FMISSION_COUNT_DOWN )
-  NO_CMD()
+  DEF_CMD( EvCmdFMissionEventClearCheck, EV_SEQ_FMISSION_EVENT_CLEAR_CHECK )
   NO_CMD()
 
   NO_CMD()

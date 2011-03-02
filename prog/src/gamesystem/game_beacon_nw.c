@@ -1148,6 +1148,40 @@ void BEACONINFO_Set_SuretigaiCount(GAMEBEACON_INFO *info, u32 count)
   info->suretigai_count = count;
 }
 
+//==================================================================
+/**
+ * 送信ビーコンセット：フェスミッション　規定イベントクリア
+ *
+ * @param   gamedata		
+ * @param   free_word   一言メッセージ
+ */
+//==================================================================
+void GAMEBEACON_Set_FMissionEventClear( u16 ev_id )
+{
+  if( LINK_FESTIVAL_MissionScoreCalc( GameBeaconSys->gsys, ev_id, 1 ) == FALSE ){
+    return;
+  }
+  if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_FMISSION_EVENT_CLEAR) == FALSE){ return; };
+  
+  GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  BEACONINFO_Set_FMissionEventClear(&GameBeaconSys->send.info, ev_id );
+}
+
+//==================================================================
+/**
+ * ビーコンセット：一言メッセージ
+ *
+ * @param   gamedata		
+ * @param   free_word   一言メッセージ
+ */
+//==================================================================
+void BEACONINFO_Set_FMissionEventClear(GAMEBEACON_INFO *info, u16 ev_id )
+{
+  GAMEBEACON_SUB_SendBeaconSetFMission( info, GAMEBEACON_ACTION_FMISSION_EVENT_CLEAR, ev_id );
+
+  BEACONINFO_Set_Details_Walk(info);
+}
+
 //==============================================================================
 //  詳細パラメータ
 //==============================================================================

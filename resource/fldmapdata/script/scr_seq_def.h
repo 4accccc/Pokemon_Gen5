@@ -9051,30 +9051,6 @@
   .short  \ret_wk
   .endm
 
-//--------------------------------------------------------------
-/**
- * 侵入コマンド　フェスミッション開始時表フィールド復帰
- */
-//--------------------------------------------------------------
-#define _INTRUDE_MAP_CHANGE_FMISSION_START() _ASM_INTRUDE_MAP_CHANGE_FMISSION_START
-
-  .macro  _ASM_INTRUDE_MAP_CHANGE_FMISSION_START
-  .short  EV_SEQ_INTRUDE_MAPCHG_FMISSION_START
-  .endm
-
-//--------------------------------------------------------------
-/**
- * 侵入コマンド　フェスミッション開始時カウントダウン
- *
- * @param sec カウントダウン時間(秒)
- */
-//--------------------------------------------------------------
-#define _FMISSION_COUNT_DOWN(sec) _ASM_FMISSION_COUNT_DOWN sec
-
-  .macro  _ASM_FMISSION_COUNT_DOWN  sec
-  .short  EV_SEQ_FMISSION_COUNT_DOWN
-  .short  \sec    
-  .endm
 
 //--------------------------------------------------------------
 /**
@@ -9143,6 +9119,45 @@
 
   .macro  _ASM_MISSION_START_WAIT_EVENT
   .short  EV_SEQ_MISSION_START_WAIT_EVENT
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * 侵入コマンド　フェスミッション開始時表フィールド復帰
+ */
+//--------------------------------------------------------------
+#define _INTRUDE_MAP_CHANGE_FMISSION_START() _ASM_INTRUDE_MAP_CHANGE_FMISSION_START
+
+  .macro  _ASM_INTRUDE_MAP_CHANGE_FMISSION_START
+  .short  EV_SEQ_INTRUDE_MAPCHG_FMISSION_START
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * 侵入コマンド　フェスミッション開始時カウントダウン
+ *
+ * @param sec カウントダウン時間(秒)
+ */
+//--------------------------------------------------------------
+#define _FMISSION_COUNT_DOWN(sec) _ASM_FMISSION_COUNT_DOWN sec
+
+  .macro  _ASM_FMISSION_COUNT_DOWN  sec
+  .short  EV_SEQ_FMISSION_COUNT_DOWN
+  .short  \sec    
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * フェスミッション系コマンド　フェスミッション規定イベントクリアチェック
+ *
+ * @param ev_id フェスミッションイベントID
+ */
+//--------------------------------------------------------------
+#define _FMISSION_EVENT_CLEAR_CHECK(ev_id) _ASM_FMISSION_EVENT_CLEAR_CHECK ev_id
+
+  .macro  _ASM_FMISSION_EVENT_CLEAR_CHECK  ev_id
+  .short  EV_SEQ_FMISSION_EVENT_CLEAR_CHECK
+  .short  \ev_id    
   .endm
 
 //--------------------------------------------------------------

@@ -803,6 +803,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/scrcmd_zoroa.c \
         field/scrcmd_leg_gmk.c \
         field/scrcmd_medal.c \
+        field/scrcmd_fmission.c \
         field/event_game_manual.c \
         field/fld_vreq.c \
     		field/field_palace_sys.c \

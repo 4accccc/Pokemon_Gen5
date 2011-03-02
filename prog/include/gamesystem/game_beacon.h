@@ -163,8 +163,6 @@ extern void GAMEBEACON_Set_BattleChampionStart(u16 tr_no);
 extern void GAMEBEACON_Set_BattleChampionVictory(u16 tr_no);
 extern void GAMEBEACON_Set_PokemonGet(u16 monsno);
 extern void GAMEBEACON_Set_WildPokemonGet(u16 monsno);
-extern void GAMEBEACON_Set_FMissionWildPokemonGet(u16 monsno);
-extern void GAMEBEACON_Set_FMissionWildPokemonKnockOut(u16 monsno);
 extern void GAMEBEACON_Set_SpecialPokemonGet(u16 monsno);
 extern void GAMEBEACON_Set_PokemonLevelUp(const STRBUF *nickname);
 extern void GAMEBEACON_Set_PokemonEvolution(u16 monsno, const STRBUF *nickname);
@@ -205,6 +203,10 @@ extern void GAMEBEACON_Set_Thankyou(GAMEDATA *gamedata, u32 target_trainer_id);
 extern void GAMEBEACON_Set_FreeWord(const STRBUF *free_word);
 
 extern void GAMEBEACON_Set_FestMission( FEST_MISSION* mission );
+extern void GAMEBEACON_Set_FMissionWildPokemonGet(u16 monsno);
+extern void GAMEBEACON_Set_FMissionWildPokemonKnockOut(u16 monsno);
+extern void GAMEBEACON_Set_FMissionEventClear( u16 ev_id );
+
 extern void GAMEBEACON_Set_ResortDataEnable( BOOL is_enable );
 extern void GAMEBEACON_Set_ResortRecvBuffer( void *p_buff );
 #ifdef PM_DEBUG
