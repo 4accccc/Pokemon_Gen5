@@ -34,9 +34,25 @@
 */
 //=============================================================================
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  無限ダンジョン内復帰処理
+ *
+ *	@param	*core
+ *	@param	*wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
 VMCMD_RESULT EvCmdInfinityDungeonStart( VMHANDLE *core, void *wk )
 {
-  OS_Printf("初期化\n");
+  SCRCMD_WORK   *p_wk     = wk;
+  GAMESYS_WORK  *p_gsys   = SCRCMD_WORK_GetGameSysWork( p_wk );
+  SCRIPT_WORK   *p_scr_wk = SCRCMD_WORK_GetScriptWork( p_wk );
+
+  // マップの復帰イベント
+  INFINITY_DUNGEON_Recovery( p_scr_wk ,p_gsys );
+
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -57,7 +73,7 @@ VMCMD_RESULT EvCmdInfinityDungeonWarp( VMHANDLE *core, void *wk )
   u16           warp_dir  = SCRCMD_GetVMWorkValue( core, p_wk );
   SCRIPT_WORK   *p_scr_wk = SCRCMD_WORK_GetScriptWork( p_wk );
 
-  /// 次のマップへワープ
+  // 次のマップへワープ
   INFINITY_DUNGEON_WarpNextMap( p_scr_wk ,p_gsys ,warp_dir );
 
   return VMCMD_RESULT_CONTINUE;

@@ -11,10 +11,12 @@
 
   .include  "scr_seq_def.h"
   .include  "d31r0601_def.h"
+  .include  "infinity_dungeon_scr_def.h"
 
 //--------------------------------------------------------------
 //              特殊スクリプト
 //--------------------------------------------------------------
+_FIELD_RECOVER_LABEL SCRID_INIT_INFINITY_DUNGEON
 _SP_EVENT_DATA_END
 
 

@@ -10,6 +10,7 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
 #include <gflib.h>
+#include "fldmmdl.h"
 #include "infinity_dungeon.h"
 #include "system/gfl_use.h"
 #include "scrcmd_work.h"
@@ -162,6 +163,86 @@ static const GRID_DATA sc_white_warp_pos_table[ROOM_TYPE_MAX][WARP_DIR_MAX] = {
 };
 
 //-------------------------------------
+// 配置モデル配置位置(ブラック)
+//=====================================
+static const GRID_DATA sc_black_bmodel_pos_table[ROOM_TYPE_MAX][WARP_DIR_MAX] = {
+  // エレベーター部屋
+  {
+    { 6 , 0 , 1}, // 上
+    { 6 , 0 , 13}, // 下
+    { 0 , 0 , 7}, // 左
+    { 12 , 0 , 7}, // 右
+  },
+  // ボス部屋
+  {
+    { 6 , 0 , 14},// 上
+    { 6 , 0 , 14},// 下
+    { 6 , 0 , 14},// 左
+    { 6 , 0 , 14},// 右
+  },
+  // 特殊部屋１
+  {
+    { 6 , 0 , 1}, // 上
+    { 6 , 0 , 13}, // 下
+    { 0 , 0 , 7}, // 左
+    { 12 , 0 , 7}, // 右
+  },
+  // 特殊部屋２
+  {
+    { 6 , 0 , 1}, // 上
+    { 6 , 0 , 13}, // 下
+    { 0 , 0 , 7}, // 左
+    { 12 , 0 , 7}, // 右
+  },
+  // 通常部屋
+  {
+    { 6 , 0 , 1}, // 上
+    { 6 , 0 , 13}, // 下
+    { 0 , 0 , 7}, // 左
+    { 12 , 0 , 7}, // 右
+  },
+};
+//-------------------------------------
+// 配置モデル配置位置(ホワイト)
+//=====================================
+static const GRID_DATA sc_white_bmodel_pos_table[ROOM_TYPE_MAX][WARP_DIR_MAX] = {
+  // エレベーター部屋
+  {
+    { 8 , 0 , 1}, // 上
+    { 8 , 0 , 17}, // 下
+    { 0 , 0 , 9}, // 左
+    { 16 , 0 , 9}, // 右
+  },
+  // ボス部屋
+  {
+    { 8 , 0 , 18}, // 上
+    { 8 , 0 , 18}, // 下
+    { 8 , 0 , 18}, // 左
+    { 8 , 0 , 18}, // 右
+  },
+  // 特殊部屋１
+  {
+    { 8 , 0 , 1}, // 上
+    { 8 , 0 , 17}, // 下
+    { 0 , 0 , 9}, // 左
+    { 16 , 0 , 9}, // 右
+  },
+  // 特殊部屋２
+  {
+    { 8 , 0 , 1}, // 上
+    { 8 , 0 , 17}, // 下
+    { 0 , 0 , 9}, // 左
+    { 16 , 0 , 9}, // 右
+  },
+  // 通常部屋
+  {
+    { 8 , 0 , 1}, // 上
+    { 8 , 0 , 17}, // 下
+    { 0 , 0 , 9}, // 左
+    { 16 , 0 , 9}, // 右
+  },
+};
+//-------------------------------------
 ///	イベントチェンジ用ワーク
 //=====================================
 typedef struct {
@@ -188,13 +269,38 @@ typedef struct {
 }FLOOR_DATA;
 
 //-------------------------------------
+///	マップ復帰用ワーク
+//=====================================
+typedef struct {
+  GAMESYS_WORK          *p_gsys;
+  GAMEDATA              *p_gdata;
+  FIELDMAP_WORK         *p_field_work;
+  INFINITYDUNGEON_SAVE  *p_save;
+  FLDMAPPER             *p_g3d_mapper;
+  FIELD_BMODEL_MAN      *p_bmodel_man;
+  MMDLSYS               *p_mmdlsys;
+
+  // マップデータ
+  FLOOR_DATA            floor_data[FLOOR_MAX];
+  const u16             *p_zone_data;
+
+  // フロア
+  s32 now_room;
+  s32 now_floor;
+
+}MAP_INIT_EVENT_WORK;
+
+//-------------------------------------
 ///	イベントチェンジ用ワーク
 //=====================================
 typedef struct {
   GAMESYS_WORK          *p_gsys;
   GAMEDATA              *p_gdata;
-  FIELDMAP_WORK         *p_fieldWork;
+  FIELDMAP_WORK         *p_field_work;
   INFINITYDUNGEON_SAVE  *p_save;
+  FLDMAPPER             *p_g3d_mapper;
+  FIELD_BMODEL_MAN      *p_bmodel_man;
+  MMDLSYS               *p_mmdlsys;
 
   // マップデータ
   FLOOR_DATA            floor_data[FLOOR_MAX];
@@ -219,7 +325,7 @@ typedef struct {
 */
 //=============================================================================
 static GMEVENT_RESULT MapWarpEvent( GMEVENT *event, int *seq, void *wk );
-static void InitWorkData( GMEVENT *event, MAP_CHAGE_EVENT_WORK *p_wk );
+static void InitWorkData( MAP_CHAGE_EVENT_WORK *p_wk ,GAMESYS_WORK *p_gsys);
 static void SetNextZoneData( MAP_CHAGE_EVENT_WORK *p_wk);
 static void SetGridPos( VecFx32 *vec ,s32 x ,s32 y ,s32 z );
 static void SetNextZoneID( MAP_CHAGE_EVENT_WORK *p_wk );
@@ -228,8 +334,13 @@ static u32  GetDungeonColor( MAP_CHAGE_EVENT_WORK *p_wk );
 static const u16* GetZoneIdTable( MAP_CHAGE_EVENT_WORK *p_wk );
 static void SetDungeonData( MAP_CHAGE_EVENT_WORK *p_wk );
 static const GRID_DATA* GetWarpPosTable( MAP_CHAGE_EVENT_WORK *p_wk ,int room_type ,int warp_dir  );
-static void SetBUildModel( MAP_CHAGE_EVENT_WORK *p_wk);
-
+static void SetBUildModel( MAP_CHAGE_EVENT_WORK *p_wk , ROOM_DATA* p_room_data);
+static ROOM_DATA* GetNextRoomData( MAP_CHAGE_EVENT_WORK *p_wk );
+static ROOM_DATA* GetNowRoomData( MAP_CHAGE_EVENT_WORK *p_wk );
+static const GRID_DATA* GetBmodelPos( MAP_CHAGE_EVENT_WORK *p_wk ,int room_type ,int warp_dir  );
+static void AddDummyObj( MAP_CHAGE_EVENT_WORK *p_wk , const GRID_DATA *p_grid_data);
+static void SetDummyObj( MAP_CHAGE_EVENT_WORK *p_wk , ROOM_DATA* p_room_data);
+static u16 GetFieldDir( u16 warp_dir );
 
 //----------------------------------------------------------------------------
 /**
@@ -256,23 +367,25 @@ void INFINITY_DUNGEON_WarpNextMap( SCRIPT_WORK *p_scr_work, GAMESYS_WORK *p_gsys
 /**
  *	@brief  イベントデータから必要データを取得する
  *
- *	@param	*event
  *	@param	*p_wk 
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void InitWorkData( GMEVENT *event, MAP_CHAGE_EVENT_WORK *p_wk )
+static void InitWorkData( MAP_CHAGE_EVENT_WORK *p_wk ,GAMESYS_WORK *p_gsys)
 {
   SAVE_CONTROL_WORK* p_save_data;
-  p_wk->p_gsys = GMEVENT_GetGameSysWork( event );
-  p_wk->p_fieldWork = GAMESYSTEM_GetFieldMapWork( p_wk->p_gsys );
-  p_wk->p_gdata = GAMESYSTEM_GetGameData( p_wk->p_gsys );
-  p_save_data = GAMEDATA_GetSaveControlWork( p_wk->p_gdata );
-  p_wk->p_save = SaveData_GetINFINITYDUNGEON( p_save_data );
-  p_wk->p_zone_data  = GetZoneIdTable( p_wk );
-  p_wk->now_room    = INFINITYDUNGEON_SAVE_GetRoomID( p_wk->p_save );
-  p_wk->now_floor   = INFINITYDUNGEON_SAVE_GetFloorID( p_wk->p_save );
+  p_wk->p_gsys        = p_gsys;
+  p_wk->p_field_work  = GAMESYSTEM_GetFieldMapWork( p_wk->p_gsys );
+  p_wk->p_gdata       = GAMESYSTEM_GetGameData( p_wk->p_gsys );
+  p_save_data         = GAMEDATA_GetSaveControlWork( p_wk->p_gdata );
+  p_wk->p_save        = SaveData_GetINFINITYDUNGEON( p_save_data );
+  p_wk->p_zone_data   = GetZoneIdTable( p_wk );
+  p_wk->now_room      = INFINITYDUNGEON_SAVE_GetRoomID( p_wk->p_save );
+  p_wk->now_floor     = INFINITYDUNGEON_SAVE_GetFloorID( p_wk->p_save );
+  p_wk->p_g3d_mapper  = FIELDMAP_GetFieldG3Dmapper( p_wk->p_field_work );
+  p_wk->p_bmodel_man  = FLDMAPPER_GetBuildModelManager( p_wk->p_g3d_mapper );
+  p_wk->p_mmdlsys     = FIELDMAP_GetMMdlSys( p_wk->p_field_work );
 }
 
 //----------------------------------------------------------------------------
@@ -289,21 +402,23 @@ static void InitWorkData( GMEVENT *event, MAP_CHAGE_EVENT_WORK *p_wk )
 static GMEVENT_RESULT MapWarpEvent( GMEVENT *event, int *seq, void *wk )
 {
   MAP_CHAGE_EVENT_WORK *p_wk = wk;
+  ROOM_DATA *p_next_room;
 
   switch( *seq )
   {
   case 0:
     {
       // データ取得
-      InitWorkData( event, p_wk);
+      GAMESYS_WORK *p_gsys  = GMEVENT_GetGameSysWork( event );
+      InitWorkData( p_wk ,p_gsys );
 
       // ダンジョンデータの生成
       SetDungeonData( p_wk );
 
       // フェードアウト
       PMSND_PlaySE( SEQ_SE_KAIDAN );
-      MMDLSYS_PauseMoveProc( FIELDMAP_GetMMdlSys( p_wk->p_fieldWork ) );
-      GMEVENT_CallEvent( event, EVENT_FieldFadeOut_PlayerDir( p_wk->p_gsys, p_wk->p_fieldWork ) );
+      MMDLSYS_PauseMoveProc( FIELDMAP_GetMMdlSys( p_wk->p_field_work ) );
+      GMEVENT_CallEvent( event, EVENT_FieldFadeOut_PlayerDir( p_wk->p_gsys, p_wk->p_field_work ) );
       (*seq)++;
       break;
     }
@@ -313,27 +428,36 @@ static GMEVENT_RESULT MapWarpEvent( GMEVENT *event, int *seq, void *wk )
       NEXT_MAP_DATA *p_next_map_data = &p_wk->next_map_data;
       SetNextZoneData( p_wk );
       GMEVENT_CallEvent(event,
-          EVENT_ChangeMapPosNoFade(p_wk->p_gsys, p_wk->p_fieldWork, p_next_map_data->zone_id, &p_next_map_data->warp_pos, DIR_UP));
+          EVENT_ChangeMapPosNoFade(p_wk->p_gsys, p_wk->p_field_work, p_next_map_data->zone_id, &p_next_map_data->warp_pos,GetFieldDir( p_wk->warp_dir ) ));
       (*seq)++;
       break;
     }
   case 2:
     {
       // フェードイン
-      MMDLSYS * mmdlsys = FIELDMAP_GetMMdlSys( p_wk->p_fieldWork );
+      MMDLSYS * mmdlsys = FIELDMAP_GetMMdlSys( p_wk->p_field_work );
       if ( MMDL_BLACTCONT_IsThereReserve( mmdlsys ) == TRUE )
       {
-        SetBUildModel(p_wk);
         break;
       }
-      GMEVENT_CallEvent( event, EVENT_FieldFadeIn_PlayerDir( p_wk->p_gsys, p_wk->p_fieldWork ) );
+
+      // 次の部屋データを取得する
+      p_next_room = GetNextRoomData( p_wk );
+
+      // 配置モデルを配置
+      SetBUildModel(p_wk,p_next_room);
+      
+      // 封鎖用OBJ配置
+      SetDummyObj(p_wk,p_next_room);
+
+      GMEVENT_CallEvent( event, EVENT_FieldFadeIn_PlayerDir( p_wk->p_gsys, p_wk->p_field_work ) );
       (*seq)++;
       break;
     }
   case 3:
     {
       // 動作モデル移動開始
-      MMDLSYS_ClearPauseMoveProc(FIELDMAP_GetMMdlSys(p_wk->p_fieldWork));
+      MMDLSYS_ClearPauseMoveProc(FIELDMAP_GetMMdlSys(p_wk->p_field_work));
 
       ONOUE_Printf("ワープ完了\n");
       return GMEVENT_RES_FINISH;
@@ -363,6 +487,33 @@ static void SetNextZoneData( MAP_CHAGE_EVENT_WORK *p_wk)
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  次ルームデータ取得
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static ROOM_DATA* GetNextRoomData( MAP_CHAGE_EVENT_WORK *p_wk )
+{
+  return &p_wk->floor_data[ p_wk->now_floor ].room_data[p_wk->next_room];
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  移動前ルームデータ取得
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static ROOM_DATA* GetNowRoomData( MAP_CHAGE_EVENT_WORK *p_wk )
+{
+  return &p_wk->floor_data[ p_wk->now_floor ].room_data[p_wk->now_room];
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief  ワープ後のゾーンIDを取得
  *
  *	@param	*p_wk 
@@ -372,7 +523,8 @@ static void SetNextZoneData( MAP_CHAGE_EVENT_WORK *p_wk)
 //-----------------------------------------------------------------------------
 static void SetNextZoneID( MAP_CHAGE_EVENT_WORK *p_wk )
 {
-  NEXT_MAP_DATA *p_next_map_data = &p_wk->next_map_data;
+  NEXT_MAP_DATA *p_next_map_data  = &p_wk->next_map_data;
+  ROOM_DATA     *p_next_room_data;
   u16 warp_dir    = p_wk->warp_dir;
   u32 room_type;
   p_wk->next_room   = p_wk->now_room;
@@ -410,8 +562,11 @@ static void SetNextZoneID( MAP_CHAGE_EVENT_WORK *p_wk )
     p_wk->next_room = p_wk->now_room;
   }
 
+  // 次の部屋データを取得する
+  p_next_room_data = GetNextRoomData( p_wk );
+
   // ループタイプに合わせたゾーンを設定する
-  room_type = p_wk->floor_data[ p_wk->now_floor ].room_data[p_wk->next_room].room_type;
+  room_type = p_next_room_data->room_type;
   p_next_map_data->zone_id = p_wk->p_zone_data[ room_type ];
   INFINITYDUNGEON_SAVE_SetRoomID( p_wk->p_save , p_wk->next_room );
 
@@ -433,13 +588,14 @@ static void SetNextPos( MAP_CHAGE_EVENT_WORK *p_wk )
 {
   NEXT_MAP_DATA *p_next_map_data = &p_wk->next_map_data;
   const GRID_DATA   *p_pos;
-  u32           room_type;
+  ROOM_DATA         *p_room_data;
+  u32               room_type;
   
   // 部屋タイプの取得
-  room_type = p_wk->floor_data[ p_wk->now_floor ].room_data[p_wk->now_room].room_type;
+  p_room_data = GetNowRoomData( p_wk );
+  room_type = p_room_data->room_type;
 
   p_pos = GetWarpPosTable( p_wk ,room_type ,p_wk->warp_dir  );
-
 
   SetGridPos( &p_next_map_data->warp_pos ,p_pos->x , p_pos->y , p_pos->z);
 }
@@ -525,6 +681,29 @@ static const GRID_DATA* GetWarpPosTable( MAP_CHAGE_EVENT_WORK *p_wk ,int room_ty
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  現在のバージョンに対応した配置モデル配置位置取得
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static const GRID_DATA* GetBmodelPos( MAP_CHAGE_EVENT_WORK *p_wk ,int room_type ,int warp_dir  )
+{
+  u32 version = GetDungeonColor( p_wk );
+
+  if( version == VERSION_B2 )
+  {
+    return &sc_black_bmodel_pos_table[room_type][warp_dir];
+  }
+  else
+  {
+    return &sc_white_bmodel_pos_table[room_type][warp_dir];
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  ダンジョンデータをセットする
  *
  *	@param	*p_wk 
@@ -534,32 +713,20 @@ static const GRID_DATA* GetWarpPosTable( MAP_CHAGE_EVENT_WORK *p_wk ,int room_ty
 //-----------------------------------------------------------------------------
 static void SetDungeonData( MAP_CHAGE_EVENT_WORK *p_wk )
 {
-  // ダミーデータを入れる
-  p_wk->floor_data[0].room_data[0].room_type = ROOM_TYPE_DEFAULT;
-  p_wk->floor_data[0].room_data[1].room_type = ROOM_TYPE_DEFAULT;
-  p_wk->floor_data[0].room_data[2].room_type = ROOM_TYPE_DEFAULT;
-  p_wk->floor_data[0].room_data[3].room_type = ROOM_TYPE_DEFAULT;
-  p_wk->floor_data[0].room_data[4].room_type = ROOM_TYPE_DEFAULT;
-  p_wk->floor_data[0].room_data[5].room_type = ROOM_TYPE_DEFAULT;
-  p_wk->floor_data[0].room_data[6].room_type = ROOM_TYPE_DEFAULT;
-  p_wk->floor_data[0].room_data[7].room_type = ROOM_TYPE_DEFAULT;
-  p_wk->floor_data[0].room_data[8].room_type = ROOM_TYPE_DEFAULT;
-  p_wk->floor_data[0].room_data[9].room_type = ROOM_TYPE_DEFAULT;
-  p_wk->floor_data[0].room_data[10].room_type = ROOM_TYPE_DEFAULT;
-  p_wk->floor_data[0].room_data[11].room_type = ROOM_TYPE_DEFAULT;
-  p_wk->floor_data[0].room_data[12].room_type = ROOM_TYPE_DEFAULT;
-  p_wk->floor_data[0].room_data[13].room_type = ROOM_TYPE_DEFAULT;
-  p_wk->floor_data[0].room_data[14].room_type = ROOM_TYPE_DEFAULT;
-  p_wk->floor_data[0].room_data[15].room_type = ROOM_TYPE_DEFAULT;
-  p_wk->floor_data[0].room_data[16].room_type = ROOM_TYPE_DEFAULT;
-  p_wk->floor_data[0].room_data[17].room_type = ROOM_TYPE_DEFAULT;
-  p_wk->floor_data[0].room_data[18].room_type = ROOM_TYPE_DEFAULT;
-  p_wk->floor_data[0].room_data[19].room_type = ROOM_TYPE_DEFAULT;
-  p_wk->floor_data[0].room_data[20].room_type = ROOM_TYPE_DEFAULT;
-  p_wk->floor_data[0].room_data[21].room_type = ROOM_TYPE_DEFAULT;
-  p_wk->floor_data[0].room_data[22].room_type = ROOM_TYPE_DEFAULT;
-  p_wk->floor_data[0].room_data[23].room_type = ROOM_TYPE_DEFAULT;
-  p_wk->floor_data[0].room_data[24].room_type = ROOM_TYPE_DEFAULT;
+  int i,j;
+
+  // 適当なデータで初期化
+  for( i = 0; i<FLOOR_MAX; i++ )
+  {
+    for( j = 0; j<ROOM_MAX; j++ )
+    {
+      p_wk->floor_data[i].room_data[j].room_type = ROOM_TYPE_DEFAULT;
+      p_wk->floor_data[i].room_data[j].can_up_move    = TRUE;
+      p_wk->floor_data[i].room_data[j].can_down_move  = TRUE;
+      p_wk->floor_data[i].room_data[j].can_left_move  = TRUE;
+      p_wk->floor_data[i].room_data[j].can_right_move = TRUE;
+    }
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -571,17 +738,166 @@ static void SetDungeonData( MAP_CHAGE_EVENT_WORK *p_wk )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void SetBUildModel( MAP_CHAGE_EVENT_WORK *p_wk)
+static void SetBUildModel( MAP_CHAGE_EVENT_WORK *p_wk , ROOM_DATA* p_room_data)
 {
-//  // 配置モデルテスト
-//  BMODEL_ID bmodel_id = NARC_output_buildmodel_indoor_mball01_nsbmd;
-//  FLDMAPPER*   g3d_mapper = FIELDMAP_GetFieldG3Dmapper( p_wk->p_fieldWork );
-//  FIELD_BMODEL_MAN* bmMan  = FLDMAPPER_GetBuildModelManager( g3d_mapper );
-//  GFL_G3D_OBJSTATUS status;
-//  VecFx32 pos;
-//  VEC_Set( &status.scale, FX32_ONE, FX32_ONE, FX32_ONE );
-//  GFL_CALC3D_MTX_CreateRot( 0, 0, 0, &status.rotate );
-//  SetGridPos(&status.trans,6,0,8);
-//  FIELD_BMODEL_Create_Direct( bmMan, bmodel_id, &status );
+  BMODEL_ID bmodel_id = NARC_output_buildmodel_indoor_mball01_nsbmd;
+  GFL_G3D_OBJSTATUS status;
+
+  // 上
+  if( !p_room_data->can_up_move )
+  {
+    const GRID_DATA *p_grid_data = GetBmodelPos( p_wk ,p_room_data->room_type ,WARP_DIR_UP );
+    VEC_Set( &status.scale, FX32_ONE, FX32_ONE, FX32_ONE );
+    GFL_CALC3D_MTX_CreateRot( 0, 0, 0, &status.rotate );
+    SetGridPos(&status.trans,p_grid_data->x,p_grid_data->y,p_grid_data->z);
+    FIELD_BMODEL_Create_Direct( p_wk->p_bmodel_man, bmodel_id, &status );
+  }
+
+  // 下
+  if( !p_room_data->can_down_move )
+  {
+    const GRID_DATA *p_grid_data = GetBmodelPos( p_wk ,p_room_data->room_type ,WARP_DIR_DOWN );
+    VEC_Set( &status.scale, FX32_ONE, FX32_ONE, FX32_ONE );
+    GFL_CALC3D_MTX_CreateRot( 0, 0, 0, &status.rotate );
+    SetGridPos(&status.trans,p_grid_data->x,p_grid_data->y,p_grid_data->z);
+    FIELD_BMODEL_Create_Direct( p_wk->p_bmodel_man, bmodel_id, &status );
+  }
+
+  // 左
+  if( !p_room_data->can_left_move )
+  {
+    const GRID_DATA *p_grid_data = GetBmodelPos( p_wk ,p_room_data->room_type ,WARP_DIR_LEFT );
+    VEC_Set( &status.scale, FX32_ONE, FX32_ONE, FX32_ONE );
+    GFL_CALC3D_MTX_CreateRot( 0, 0, 0, &status.rotate );
+    SetGridPos(&status.trans,p_grid_data->x,p_grid_data->y,p_grid_data->z);
+    FIELD_BMODEL_Create_Direct( p_wk->p_bmodel_man, bmodel_id, &status );
+  }
+
+  // 右
+  if( !p_room_data->can_right_move )
+  {
+    const GRID_DATA *p_grid_data = GetBmodelPos( p_wk ,p_room_data->room_type ,WARP_DIR_RIGHT );
+    VEC_Set( &status.scale, FX32_ONE, FX32_ONE, FX32_ONE );
+    GFL_CALC3D_MTX_CreateRot( 0, 0, 0, &status.rotate );
+    SetGridPos(&status.trans,p_grid_data->x,p_grid_data->y,p_grid_data->z);
+    FIELD_BMODEL_Create_Direct( p_wk->p_bmodel_man, bmodel_id, &status );
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ダミーオブジェクトを追加する
+ *
+ *	@param	*p_wk 
+ *	@param	p_room_data
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void SetDummyObj( MAP_CHAGE_EVENT_WORK *p_wk , ROOM_DATA* p_room_data)
+{
+    // 上
+  if( !p_room_data->can_up_move )
+  {
+    // ダミーオブジェクトで封鎖
+    const GRID_DATA *p_grid_data = GetBmodelPos( p_wk ,p_room_data->room_type ,WARP_DIR_UP );
+    AddDummyObj( p_wk , p_grid_data );
+  }
+
+  // 下
+  if( !p_room_data->can_down_move )
+  {
+    // ダミーオブジェクトで封鎖
+    const GRID_DATA *p_grid_data = GetBmodelPos( p_wk ,p_room_data->room_type ,WARP_DIR_DOWN );
+    AddDummyObj( p_wk , p_grid_data );
+  }
+
+  // 左
+  if( !p_room_data->can_left_move )
+  {
+    // ダミーオブジェクトで封鎖
+    const GRID_DATA *p_grid_data = GetBmodelPos( p_wk ,p_room_data->room_type ,WARP_DIR_LEFT );
+    AddDummyObj( p_wk , p_grid_data );
+  }
+
+  // 右
+  if( !p_room_data->can_right_move )
+  {
+    // ダミーオブジェクトで封鎖
+    const GRID_DATA *p_grid_data = GetBmodelPos( p_wk ,p_room_data->room_type ,WARP_DIR_RIGHT );
+    AddDummyObj( p_wk , p_grid_data );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ダミーオブジェクトの追加
+ *
+ *	@param	*p_wk 
+ *	@param	x 
+ *	@param	y
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void AddDummyObj( MAP_CHAGE_EVENT_WORK *p_wk , const GRID_DATA *p_grid_data)
+{
+  NEXT_MAP_DATA *p_next_map_data = &p_wk->next_map_data;
+  MMDLSYS_AddMMdlParam( p_wk->p_mmdlsys, p_grid_data->x, p_grid_data->z, DIR_UP,
+      MMDL_ID_EVENTOBJ_00, NONDRAW, MV_DMY, p_next_map_data->zone_id );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  無限ダンジョン内復帰処理
+ *
+ *	@param	*p_scr_work
+ *	@param	*p_gsys 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void INFINITY_DUNGEON_Recovery( SCRIPT_WORK *p_scr_work, GAMESYS_WORK *p_gsys )
+{
+  MAP_CHAGE_EVENT_WORK  wk;
+  ROOM_DATA             *p_room_data;
+  
+  // ワーク初期化
+  InitWorkData( &wk ,p_gsys );
+
+  // ダンジョンデータの生成
+  SetDungeonData( &wk );
+
+  // 配置モデルを配置
+  p_room_data = GetNowRoomData( &wk );
+  SetBUildModel(&wk,p_room_data);
+
+  OS_Printf("初期化\n");
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フィールド指定用方向定義に変換する
+ *
+ *	@param	
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static u16 GetFieldDir( u16 warp_dir )
+{
+  // 変換
+  switch( warp_dir )
+  {
+  case WARP_DIR_UP:
+    return DIR_UP;
+  case WARP_DIR_DOWN:
+    return DIR_DOWN;
+  case WARP_DIR_LEFT:
+    return DIR_LEFT;
+  case WARP_DIR_RIGHT:
+    return DIR_RIGHT;
+  default:
+    return WARP_DIR_DOWN;
+  }
 }
 
