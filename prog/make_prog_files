@@ -1192,6 +1192,7 @@ SRCS_OVERLAY_TOWNMAP = app/townmap/townmap.c \
 SRCS_OVERLAY_MEDALBOX = app/medal_box/medalbox_sys.c \
                         app/medal_box/medalbox_data_sys.c
 
+
 # エンカウントエフェクト
 #===> GROUP_OVERLAY_GIMMICK
 SRCS_OVERLAY_ENCEFF_CI = field/enceff_ci.c
@@ -2204,7 +2205,9 @@ SRCS_OVERLAY_NAMEIN	= app/name_input/namein.c \
 											app/name_input/namein_data.c \
                       system/gra_tool.c \
                       system/nsbtx_to_clwk.c \
-											system/prof_word.c
+											system/prof_word.c \
+                      app/wbt_list/wbt_list.c \
+                      app/wbt_list/wbt_list_graphic.c
 
 #進化デモ
 #===> SRCS_OVERLAY_WIFINOTE
