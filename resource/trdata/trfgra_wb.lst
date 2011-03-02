@@ -100,3 +100,11 @@ trwb_dpchampion,PTL_SEX_FEMALE
 trwb_boss,PTL_SEX_MALE
 trwb_bchamp2,PTL_SEX_MALE
 trwb_leader1,PTL_SEX_MALE
+trwb_scientistm,PTL_SEX_MALE
+trwb_mount,PTL_SEX_MALE
+trwb_espm,PTL_SEX_MALE
+trwb_espw,PTL_SEX_FEMALE
+trwb_veteranm,PTL_SEX_MALE
+trwb_veteranw,PTL_SEX_FEMALE
+trwb_elitem,PTL_SEX_MALE
+trwb_elitew,PTL_SEX_FEMALE

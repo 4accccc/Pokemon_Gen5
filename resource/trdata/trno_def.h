@@ -638,7 +638,19 @@
 #define	TRID_JUGGLING_11   ( 625 ) 
 #define	TRID_JUGGLING_12   ( 626 ) 
 #define	TRID_JUGGLING_13   ( 627 ) 
-#define TRID_MAX  ( 628 )
+#define	TRID_PILOT_04   ( 628 ) 
+#define	TRID_SCIENTISTM_1_01   ( 629 ) 
+#define	TRID_MOUNT_1_01   ( 630 ) 
+#define	TRID_ESPM_1_01   ( 631 ) 
+#define	TRID_ESPW_1_01   ( 632 ) 
+#define	TRID_VETERANM_2_01   ( 633 ) 
+#define	TRID_VETERANW_2_01   ( 634 ) 
+#define	TRID_ELITEM_1_01   ( 635 ) 
+#define	TRID_ELITEW_1_01   ( 636 ) 
+#define	TRID_PILOT_05   ( 637 ) 
+#define	TRID_PILOT_06   ( 638 ) 
+#define	TRID_PILOT_07   ( 639 ) 
+#define TRID_MAX  ( 640 )
 
 #ifndef __ASM_NO_DEF_  //Ç±ÇÍà»ç~ÇÕÉAÉZÉìÉuÉâÇ≈ÇÕñ≥éã
 typedef  int TrainerID;

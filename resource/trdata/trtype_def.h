@@ -114,6 +114,14 @@
 #define	TRTYPE_BOSS_2    ( 101 )    //プラズマだん（BOSS_2）
 #define	TRTYPE_BCHAMP2    ( 102 )    //サブウェイマスター2
 #define	TRTYPE_LEADER1    ( 103 )    //ジムリーダー1
-#define	TRTYPE_HERO_S	    ( 104 )
-#define	TRTYPE_HEROINE_S	( 105 )
-#define	TRTYPE_MAX	( 106 )
+#define	TRTYPE_SCIENTISTM_1    ( 104 )    //ポケモントレーナー（SCIENTISTM_1）
+#define	TRTYPE_MOUNT_1    ( 105 )    //ポケモントレーナー（MOUNT_1）
+#define	TRTYPE_ESPM_1    ( 106 )    //ポケモントレーナー（ESPM_1）
+#define	TRTYPE_ESPW_1    ( 107 )    //ポケモントレーナー（ESPW_1）
+#define	TRTYPE_VETERANM_2    ( 108 )    //ポケモントレーナー（VETERANM_2）
+#define	TRTYPE_VETERANW_2    ( 109 )    //ポケモントレーナー（VETERANW_2）
+#define	TRTYPE_ELITEM_1    ( 110 )    //ポケモントレーナー（ELITEM_1）
+#define	TRTYPE_ELITEW_1    ( 111 )    //ポケモントレーナー（ELITEW_1）
+#define	TRTYPE_HERO_S	    ( 112 )
+#define	TRTYPE_HEROINE_S	( 113 )
+#define	TRTYPE_MAX	( 114 )

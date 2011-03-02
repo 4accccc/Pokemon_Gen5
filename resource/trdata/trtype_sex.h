@@ -115,6 +115,14 @@ static	const	u8	TrTypeSexTable[]={
 	PTL_SEX_MALE,		//プラズマだん（BOSS_2）
 	PTL_SEX_MALE,		//サブウェイマスター2
 	PTL_SEX_MALE,		//ジムリーダー1
+	PTL_SEX_MALE,		//ポケモントレーナー（SCIENTISTM_1）
+	PTL_SEX_MALE,		//ポケモントレーナー（MOUNT_1）
+	PTL_SEX_MALE,		//ポケモントレーナー（ESPM_1）
+	PTL_SEX_FEMALE,		//ポケモントレーナー（ESPW_1）
+	PTL_SEX_MALE,		//ポケモントレーナー（VETERANM_2）
+	PTL_SEX_FEMALE,		//ポケモントレーナー（VETERANW_2）
+	PTL_SEX_MALE,		//ポケモントレーナー（ELITEM_1）
+	PTL_SEX_FEMALE,		//ポケモントレーナー（ELITEW_1）
 	PTL_SEX_MALE,		//男主人公（シューター）
 	PTL_SEX_FEMALE,	//女主人公（シューター）
 };

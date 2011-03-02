@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2011-02-02T01:09:20"/>
+	<create user="nagihashi_toru" host="W00268" date="2011-03-01T12:07:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -221,6 +221,26 @@
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 				<comment language="japanese">メダルを集めると上昇するメダルボックスのランク名</comment>
 				<comment language="english">メダルを集めると上昇するメダルボックスのランク名</comment>
+			</tag>
+			<tag entry="55" japanese="リゾートフリーワード" english="リゾートフリーワード" view="EP" width="104" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">リゾートで使用する自由入力の挨拶文です。</comment>
+				<comment language="english">リゾートで使用する自由入力の挨拶文です。</comment>
+			</tag>
+			<tag entry="56" japanese="リゾート店名" english="リゾート店名" view="EP" width="169" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">リゾートで使用する店の名前です。</comment>
+				<comment language="english">リゾートで使用する店の名前です。</comment>
+			</tag>
+			<tag entry="57" japanese="リゾート街名" english="リゾート街名" view="EP" width="130" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">リゾートで使用する自由入力の街名です。</comment>
+				<comment language="english">リゾートで使用する自由入力の街名です。</comment>
+			</tag>
+			<tag entry="58" japanese="リゾート市長名" english="リゾート市長名" view="EP" width="130" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">リゾートで使用する自由入力の市長名です。</comment>
+				<comment language="english">リゾートで使用する自由入力の市長名です。</comment>
 			</tag>
 		</group>
 
@@ -3541,6 +3561,66 @@
 	<row id="juggling_13">
 		<language name="JPN" width="216">アキオ</language>
 		<language name="JPN_KANJI" width="216">アキオ</language>
+	</row>
+
+	<row id="pilot_04">
+		<language name="JPN" width="216">カケル</language>
+		<language name="JPN_KANJI" width="216">カケル</language>
+	</row>
+
+	<row id="scientistm_1_01">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="mount_1_01">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="espm_1_01">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="espw_1_01">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="veteranm_2_01">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="veteranw_2_01">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="elitem_1_01">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="elitew_1_01">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="pilot_05">
+		<language name="JPN" width="216">カナード</language>
+		<language name="JPN_KANJI" width="216">カナード</language>
+	</row>
+
+	<row id="pilot_06">
+		<language name="JPN" width="216">ツバサ</language>
+		<language name="JPN_KANJI" width="216">ツバサ</language>
+	</row>
+
+	<row id="pilot_07">
+		<language name="JPN" width="216">エルロン</language>
+		<language name="JPN_KANJI" width="216">エルロン</language>
 	</row>
 
 	<flowchart-group-list>
