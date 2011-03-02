@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2011-02-14T01:28:49"/>
+	<create user="tamada" host="W00253" date="2011-03-02T23:07:17"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -344,7 +344,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="117"/>
+		<id position="0" width="147"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
@@ -416,6 +416,11 @@
 	<row id="DEBUG_STR_WBT_03">
 		<language name="JPN" width="256">バックアップ読み込み</language>
 		<language name="JPN_KANJI" width="256">バックアップ読み込み</language>
+	</row>
+
+	<row id="DEBUG_STR_WBT_04">
+		<language name="JPN" width="256">トーナメント表</language>
+		<language name="JPN_KANJI" width="256">トーナメント表</language>
 	</row>
 
 	<flowchart-group-list>

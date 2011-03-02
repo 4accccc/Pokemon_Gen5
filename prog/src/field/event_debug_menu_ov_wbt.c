@@ -43,6 +43,8 @@
 
 #include "wbt_dl.h"
 
+#include "app/wbt_list.h"
+
 //=============================================================================
 /**
  *					定数宣言
@@ -56,10 +58,10 @@
 //=============================================================================
 
 static GMEVENT_RESULT debugMenuWBTEvent( GMEVENT *event, int *seq, void *wk );
-static void debugCommand_printf( DEBUG_MENU_EVENT_WORK *p_wk );
 //=============================================================================
 //=============================================================================
-typedef struct {
+typedef struct DEBUG_WBT_WORK DEBUG_WBT_WORK;
+struct DEBUG_WBT_WORK{
   int seq_no;
   HEAPID heapID;
   GAMESYS_WORK *gmSys;
@@ -67,8 +69,11 @@ typedef struct {
   FIELDMAP_WORK *fieldWork;
   FLDMENUFUNC *menuFunc;
   //ZUKAN_SAVEDATA * sv;
-}DEBUG_WBT_WORK;
+  BOOL (*call_func)( DEBUG_WBT_WORK * );
+};
 
+static BOOL debugMenuCallProc_WBTList( DEBUG_WBT_WORK *p_wk );
+static BOOL debugCommand_printf( DEBUG_WBT_WORK *p_wk );
 //=============================================================================
 /**
  *					外部公開
@@ -104,6 +109,7 @@ static const DEBUG_MENU_LIST WBTMenuList[] =
   { DEBUG_STR_WBT_01, (void*)DEBUG_STR_WBT_01, GFL_OVERLAY_BLANK_ID },  // データ構造チェック
   { DEBUG_STR_WBT_02, (void*)DEBUG_STR_WBT_02, GFL_OVERLAY_BLANK_ID },  // デバッグ出力
   { DEBUG_STR_WBT_03, (void*)DEBUG_STR_WBT_03, GFL_OVERLAY_BLANK_ID },   // バックアップ読み込み
+  { DEBUG_STR_WBT_04, (void*)DEBUG_STR_WBT_04, GFL_OVERLAY_BLANK_ID },   // トーナメント表アプリ
 };
 
 static const DEBUG_MENU_INITIALIZER DebugMenuWBTImitializer = {
@@ -162,6 +168,7 @@ static GMEVENT_RESULT debugMenuWBTEvent( GMEVENT *event, int *seq, void *wk )
   switch( *seq ){
   case 0:
     work->menuFunc = DEBUGFLDMENU_Init( work->fieldWork, work->heapID, &DebugMenuWBTImitializer );
+    work->call_func = NULL;
     (*seq)++;
     break;
 
@@ -187,12 +194,23 @@ static GMEVENT_RESULT debugMenuWBTEvent( GMEVENT *event, int *seq, void *wk )
     case DEBUG_STR_WBT_03:
       (*seq)++;
       break;
+
+    case DEBUG_STR_WBT_04:
+      work->call_func = debugMenuCallProc_WBTList;
+      (*seq)++;
+      break;
     }
     break;
 
   case 2:
     FLDMENUFUNC_DeleteMenu( work->menuFunc );
-    return GMEVENT_RES_FINISH;
+    if (work->call_func != NULL
+        && work->call_func( work ) == TRUE )
+    {
+      return GMEVENT_RES_CONTINUE;
+    } else {
+      return GMEVENT_RES_FINISH;
+    }
   }
 
   return GMEVENT_RES_CONTINUE;
@@ -203,7 +221,7 @@ static GMEVENT_RESULT debugMenuWBTEvent( GMEVENT *event, int *seq, void *wk )
  * WBTデバッグ出力
  */
 //--------------------------------------------------------------
-static void debugCommand_printf( DEBUG_MENU_EVENT_WORK *p_wk )
+static BOOL debugCommand_printf( DEBUG_WBT_WORK *p_wk )
 {
   OS_Printf("size of WBT DL Regulation = \n");
   OS_Printf("%5d(0x%4x)\n", sizeof(WBT_DL_RULE), sizeof(WBT_DL_RULE) );
@@ -213,8 +231,91 @@ static void debugCommand_printf( DEBUG_MENU_EVENT_WORK *p_wk )
   OS_Printf("%5d(0x%4x)\n", sizeof(WBT_DL_CHARACTER), sizeof(WBT_DL_CHARACTER) );
   OS_Printf("size of WBT DL DATA = \n");
   OS_Printf("%5d(0x%4x)\n", sizeof(WBT_DL_DATA), sizeof(WBT_DL_DATA) );
+  return FALSE;
 }
 
+//======================================================================
+//  デバッグメニュー UIテンプレートへ
+//======================================================================
+//  nsbtx_to_clwkを使いたいので名前入力と同じところにおいてみた
+FS_EXTERN_OVERLAY(namein);
+//-------------------------------------
+/// デバッグUIテンプレート用ワーク
+//=====================================
+typedef struct
+{
+  GAMESYS_WORK        *p_gamesys;
+  GMEVENT             *p_event;
+  FIELDMAP_WORK       *p_field;
+  WBTLIST_PARAM       param;
+} DEBUG_WBTLIST_EVENT_WORK;
+static GMEVENT_RESULT debugMenuWBTList( GMEVENT *p_event, int *p_seq, void *p_wk_adrs );
+//----------------------------------------------------------------------------
+/**
+ *  @brief  UIテンプレート接続
+ *
+ *  @param  DEBUG_WBT_WORK *p_wk   ワーク
+ *
+ *  @return 終了コード
+ */
+//-----------------------------------------------------------------------------
+static BOOL debugMenuCallProc_WBTList( DEBUG_WBT_WORK *p_wk )
+{
+  GAMESYS_WORK  *p_gamesys  = p_wk->gmSys;
+  GMEVENT       *p_event    = p_wk->gmEvent;
+  FIELDMAP_WORK *p_field    = p_wk->fieldWork;
+  DEBUG_WBTLIST_EVENT_WORK *p_param;
+
+  //イヴェント
+  GMEVENT_Change( p_event, debugMenuWBTList, sizeof(DEBUG_WBTLIST_EVENT_WORK) );
+  p_param = GMEVENT_GetEventWork( p_event );
+  GFL_STD_MemClear( p_param, sizeof(DEBUG_WBTLIST_EVENT_WORK) );
+
+  p_param->p_gamesys  = p_gamesys;
+  p_param->param.gamesys  = p_gamesys;
+  p_param->p_event    = p_event;
+  p_param->p_field    = p_field;
+
+  OS_Printf( "WBT List Start\n" );
+
+  return TRUE;
+
+}
+//----------------------------------------------------------------------------
+/**
+ *  @brief  デバッグ用イベント
+ *
+ *  @param  GMEVENT *event  GMEVENT
+ *  @param  *seq            シーケンス
+ *  @param  *work           ワーク
+ *
+ *  @return 終了コード
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT_RESULT debugMenuWBTList( GMEVENT *p_event, int *p_seq, void *p_wk_adrs )
+{
+  enum
+  {
+    SEQ_CALL_PROC,
+    SEQ_EXIT,
+  };
+
+  DEBUG_WBTLIST_EVENT_WORK *p_wk = p_wk_adrs;
+
+  switch(*p_seq )
+  {
+  case SEQ_CALL_PROC:
+    GMEVENT_CallEvent( p_event, EVENT_FieldSubProc( p_wk->p_gamesys, p_wk->p_field,
+          FS_OVERLAY_ID(namein), &WBTListProcData, &p_wk->param ) );
+    *p_seq  = SEQ_EXIT;
+    break;
+
+  case SEQ_EXIT:
+    return GMEVENT_RES_FINISH;
+  }
+
+  return GMEVENT_RES_CONTINUE ;
+}
 #if 0
 //--------------------------------------------------------------
 /**
