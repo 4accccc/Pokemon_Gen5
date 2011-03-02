@@ -221,6 +221,31 @@ FMMDL_RESLIST_NCGIMD = \
 	swbell.imd \
 	swboss.imd \
 	swmama.imd \
+	rgleader1.imd \
+	rgleader2.imd \
+	rgleader3.imd \
+	rgleader4.imd \
+	rgleader5.imd \
+	rgleader6.imd \
+	rgleader7.imd \
+	gsleader1.imd \
+	gsleader2.imd \
+	gsleader3.imd \
+	gsleader4.imd \
+	gsleader5.imd \
+	gsleader6.imd \
+	gsleader7.imd \
+	gsleader8.imd \
+	gsleader9.imd \
+	rsleader1.imd \
+	rsleader2.imd \
+	rsleader3.imd \
+	rsleader4.imd \
+	rsleader5.imd \
+	rsleader6.imd \
+	rsleader7.imd \
+	rsleader8.imd \
+	eleader1.imd \
 	tsure_001.imd \
 	tsure_002.imd \
 	tsure_003.imd \
