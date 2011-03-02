@@ -1,0 +1,18 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: wbt_tournament.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_WBT_TOURNAMENT_NAIX_
+#define NARC_WBT_TOURNAMENT_NAIX_
+
+enum {
+
+};
+
+/* NARC_WBT_TOURNAMENT_NAIX_ */
+#endif
