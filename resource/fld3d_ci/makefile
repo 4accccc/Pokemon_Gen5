@@ -111,11 +111,13 @@ $(ARC_TARGET): $(CSV_DATA)
 $(targetname).narc: $(ARC_TARGET) $(ARC_TARGET_DATA) $(FLD_CI_LIST)
 	@echo __NAKE TARGET1
 	nnsarc -cl -l -n -i $(NARCNAME) -S $(FLD_CI_LIST) > arc_rsult.txt
+	$(NAIXCUT) $(targetname).naix
 
 $(targetname2).narc: $(CSV_DATA) $(FLD_CI_LIST)
 	@echo __NAKE TARGET2
 	ruby setupdat.rb $(CSV_DATA) $(FLD_CI_LIST)
 	nnsarc -cl -l -n -i $(NARCNAME2) -S ci_list > arc_rsult2.txt
+	$(NAIXCUT) $(targetname2).naix
 
 $(HEADER_FILE): $(CSV_DATA)
 	ruby make_header.rb $(CSV_DATA) $(HEADER_FILE)
