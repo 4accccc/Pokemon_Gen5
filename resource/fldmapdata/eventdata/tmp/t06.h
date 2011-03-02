@@ -2,6 +2,10 @@
 #ifndef ZONE_T06_EVD_H
 #define ZONE_T06_EVD_H
 
+#define DOOR_ID_T06_T06PC0101_EXIT01      0
+#define DOOR_ID_T06_T06R0201_EXIT01       1
+#define DOOR_ID_T06_T06R0301_EXIT01       2
+#define DOOR_ID_T06_T06R0101_EXIT01       3
 
 #endif //ZONE_T06_EVD_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/t06.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
