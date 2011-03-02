@@ -1127,7 +1127,7 @@ u32 RESORT_RECV_DATA_GetData( const RESORT_RECV_DATA *cp_wk, RESORT_DATA_PARAM p
   case RESORT_DATA_PARAM_WANT_JOB:
     return cp_wk->basic1.trainerID % RESORT_RESIDENT_TYPE_MAX; //TODO
   case RESORT_DATA_PARAM_PRESENT_ID:
-    return cp_wk->basic1.trainerID % 500; //TODO;
+    return 10; //TODO;
   case RESORT_DATA_PARAM_PRESENT_NUM:
     return 1; //TODO
   case RESORT_DATA_PARAM_EVENT_FLAG:
@@ -1507,7 +1507,7 @@ u32 RESORT_PROXY_DATA_GetData( const RESORT_PROXY_DATA *cp_wk, RESORT_DATA_PARAM
     }
     return 0;
   case RESORT_DATA_PARAM_PRESENT_ID:
-    return 1; //TODO;
+    return 10; //TODO;
   case RESORT_DATA_PARAM_PRESENT_NUM:
     return 1; //TODO
   default:
