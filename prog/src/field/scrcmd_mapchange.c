@@ -386,7 +386,39 @@ VMCMD_RESULT EvCmdRailMapChangeNoFade( VMHANDLE *core, void *wk )
 
   return VMCMD_RESULT_SUSPEND;
 }
+//--------------------------------------------------------------
+/**
+ * マップ遷移（デフォルト位置）
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdMapChangeDefaultPos( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK * gsys = SCRIPT_GetGameSysWork( sc );
+  FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
 
+  LOCATION location;
+
+  u16 zone_id = VMGetU16(core); //2byte read  ZONE指定
+  u16 dir = VMGetU16(core);     //2byte read  方向
+  
+  {
+    GMEVENT * mapchange_event;
+    GMEVENT * parent_event;
+
+    LOCATION_SetDefaultPos( &location, zone_id );
+    
+    parent_event = GAMESYSTEM_GetEvent( gsys ); //現在のイベント
+    mapchange_event = EVENT_ChangeMapPos( 
+        gsys, fieldmap, zone_id, &location.location_pos.pos, dir, FALSE );
+    GMEVENT_CallEvent( parent_event, mapchange_event );
+  }
+
+  return VMCMD_RESULT_SUSPEND;
+}
 
 
 //======================================================================

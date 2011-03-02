@@ -977,6 +977,19 @@
   NO_CMD()
   NO_CMD()
 
+  //呼び出し関連（SWAN追加版）
+  DEF_CMD( EvCmdCallTownMap, EV_SEQ_CALL_SORAWOTOBU )
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
+  //マップ遷移（SWAN追加版）
+  DEF_CMD( EvCmdMapChangeDefaultPos, EV_SEQ_MAP_CHANGE_DEFAULT_POS )
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
   END_CMD
   //スクリプトコマンドテーブル終了
 

@@ -29,6 +29,8 @@ typedef enum
 {
   RESORT_PEOPLE_ACTION_WARPDOWN,  //下にワープ
   RESORT_PEOPLE_ACTION_WARPUP,    //上にワープ
+  RESORT_PEOPLE_ACTION_JUMP_START,  //ジャンプ開始
+  RESORT_PEOPLE_ACTION_JUMP_END,    //ジャンプ終了
   RESORT_PEOPLE_ACTION_MAX,
 }RESORT_PEOPLE_ACTION;
 
@@ -36,6 +38,13 @@ typedef enum
 ///	人物ワーク
 //=====================================
 typedef struct _RESORT_PEOPLE RESORT_PEOPLE;
+//-------------------------------------
+///	
+//=====================================
+typedef enum 
+{
+  RESORT_PEOPLE_DATA_PARAM_TYPE, //人物の種類 旅行者とか
+} RESORT_PEOPLE_DATA_PARAM;
 
 //-------------------------------------
 ///	PUBLIC
@@ -48,6 +57,7 @@ extern BOOL RESORT_PEOPLE_IsActionEnd( const RESORT_PEOPLE *cp_wk );
 extern void RESORT_PEOPLE_SetVisible( RESORT_PEOPLE *p_wk, BOOL is_visible );
 extern void RESORT_PEOPLE_SetData( RESORT_PEOPLE *p_wk, RESORT_DATA_PARAM param, u32 data );
 extern u32 RESORT_PEOPLE_GetData( const RESORT_PEOPLE *cp_wk, RESORT_DATA_PARAM param, void *p_ret_adrs );
+extern u32 RESORT_PEOPLE_GetPeopleData( const RESORT_PEOPLE *cp_wk, RESORT_PEOPLE_DATA_PARAM param );
 extern u32 RESORT_PEOPLE_GetMsgID( const RESORT_PEOPLE *cp_wk, u32 index );
 extern MMDL * RESORT_PEOPLE_GetMmdl( const RESORT_PEOPLE *cp_wk );
 extern void * RESORT_PEOPLE_GetDataAdrs( RESORT_PEOPLE *p_wk );
@@ -93,6 +103,8 @@ extern RESORT_PEOPLE_SYS * RESORT_PEOPLE_SYS_Init( const RESORT_PEOPLE_SYS_PARAM
 extern void RESORT_PEOPLE_SYS_Exit( RESORT_PEOPLE_SYS *p_wk );
 extern void RESORT_PEOPLE_SYS_Main( RESORT_PEOPLE_SYS *p_wk,FIELD_PLAYER *p_player );
 
+extern u32 RESORT_PEOPLE_SYS_GetPeopleMax( const RESORT_PEOPLE_SYS *cp_wk );
+
 //人物を一人登録
 typedef struct
 {
@@ -113,3 +125,4 @@ extern void RESORT_PEOPLE_Delete( RESORT_PEOPLE_SYS *p_wk, RESORT_PEOPLE *p_peop
 //人物を取得
 extern RESORT_PEOPLE * RESORT_PEOPLE_SYS_GetPeopleByMmdl( RESORT_PEOPLE_SYS *p_wk, const MMDL* cp_mmdl );
 extern RESORT_PEOPLE * RESORT_PEOPLE_SYS_GetPeopleByData( RESORT_PEOPLE_SYS *p_wk, const void *cp_data_adrs );
+extern RESORT_PEOPLE * RESORT_PEOPLE_SYS_GetPeopleByIndex( RESORT_PEOPLE_SYS *p_wk, u32 idx );

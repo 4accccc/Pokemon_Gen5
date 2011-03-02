@@ -85,13 +85,8 @@ extern BOOL RESORT_DATA_MANAGER_IsPlaceEmpty( const RESORT_DATA_MANAGER *cp_wk, 
 extern void RESORT_DATA_MANAGER_GetPlaceData( const RESORT_DATA_MANAGER *cp_wk, RESORT_PLACEID placeID, u32 peopleID, RESORT_DATA_MANAGER_TYPE *p_type, u16 *p_data_idx );
 extern u32 RESORT_DATA_MANAGER_SearchPlaceEmptyPeopleID( const RESORT_DATA_MANAGER *cp_wk, RESORT_PLACEID placeID );
 
-//åüçı
-extern RESORT_INSTITUTION_DATA * RESORT_DATA_MANAGER_SearchEmptyInstitution( const RESORT_DATA_MANAGER *cp_wk );
-
 //âΩÇ©ÇÉLÅ[Ç…ÇµÇƒåüçı
 extern RESORT_RESIDENT_DATA * RESORT_DATA_MANAGER_SearchResident( const RESORT_DATA_MANAGER *cp_wk, RESORT_PLACEID placeID, u16 peopleID );
-extern RESORT_INSTITUTION_DATA * RESORT_DATA_MANAGER_GetInstitutionByResident( const RESORT_DATA_MANAGER *cp_wk, const RESORT_RESIDENT_DATA *cp_data );
-extern RESORT_RESIDENT_DATA * RESORT_DATA_MANAGER_SearchResidentByInstitution( const RESORT_DATA_MANAGER *cp_wk, const RESORT_INSTITUTION_DATA *cp_data, u32 peopleID );
 
 
 //=============================================================================

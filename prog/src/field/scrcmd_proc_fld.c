@@ -51,6 +51,8 @@
 #include "app/dendou_pc.h"
 #include "app/local_tvt_sys.h"  //LocalTvt_ProcData etc.
 
+#include "app/townmap.h"
+
 static void callback_BoxProc( void* work );
 static void CallBackFunc_byHelloMsgIn( void* wk );
 static void CallBackFunc_FreeMemory( void* p_wk_adrs );
@@ -406,6 +408,85 @@ VMCMD_RESULT EvCmdCallTVTSecret( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_SUSPEND;
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief タウンマップコールバックへのワーク
+ */
+//--------------------------------------------------------------
+typedef struct 
+{
+  u16*                 ret_select;    // タウンマップで選択したか
+  u16*                 ret_zone_id;   // 選択したゾーンID
+  TOWNMAP_PARAM* param;     // タウンマップへの引数パラメータ
+} TOWNMAP_CALLBACK_WORK; 
+
+//--------------------------------------------------------------
+/**
+ * @brief タウンマッププロセス終了後に呼ばれるコールバック関数
+ */
+//--------------------------------------------------------------
+static void callback_TownMapProc( void* work )
+{
+  TOWNMAP_CALLBACK_WORK* wk = work;
+
+  if( wk->param->select == TOWNMAP_SELECT_SKY )
+  {
+    *wk->ret_select  = TRUE;
+    *wk->ret_zone_id = wk->param->zoneID;
+  }
+  else
+  {
+    *wk->ret_select = FALSE;
+  }
+
+  // 後始末
+  GFL_HEAP_FreeMemory( wk->param );
+} 
+
+FS_EXTERN_OVERLAY( townmap );
+//--------------------------------------------------------------
+/**
+ * @brief   タウンマップコールイベント呼び出し
+ * @param   core    仮想マシン制御構造体へのポインタ
+ * @retval  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdCallTownMap( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*         work          = (SCRCMD_WORK*)wk;
+  SCRIPT_WORK*         script        = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK*        gsys          = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA*            gdata         = GAMESYSTEM_GetGameData( gsys );
+  FIELDMAP_WORK*       fieldmap      = GAMESYSTEM_GetFieldMapWork( gsys );
+  PLAYER_WORK *        player       = GAMEDATA_GetMyPlayerWork( gdata );
+  u16*                 ret_select   = SCRCMD_GetVMWork( core, work );
+  u16*                 ret_zone_id  = SCRCMD_GetVMWork( core, work );
+  TOWNMAP_PARAM* param     = NULL;
+  TOWNMAP_CALLBACK_WORK*   callback_work = NULL;
+  GMEVENT*             event         = NULL;
+  
+  // ボックスのプロセスパラメータを作成
+  param            = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(TOWNMAP_PARAM) );
+  param->mode   = TOWNMAP_MODE_SKY;
+  param->p_gamesys = gsys;
+  param->zoneID      = PLAYERWORK_getZoneID(player);
+  param->escapeID    = GAMEDATA_GetEscapeLocation( gdata )->zone_id;
+  
+  // コールバックのパラメータを作成
+  callback_work = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(TOWNMAP_CALLBACK_WORK) );
+  callback_work->ret_select     = ret_select;
+  callback_work->ret_zone_id    = ret_zone_id;
+  callback_work->param = param;
+
+  // イベントを生成
+  event = EVENT_FieldSubProcNoFade_Callback( gsys, fieldmap, 
+      FS_OVERLAY_ID(townmap), &TownMap_ProcData, param, // 呼び出すプロセスを指定
+      callback_TownMapProc, callback_work );  // コールバック関数と, その引数を指定
+
+  SCRIPT_CallEvent( script, event );
+
+  return VMCMD_RESULT_SUSPEND;
+}
 
 //----------------------------------------------------------------------------
 /**

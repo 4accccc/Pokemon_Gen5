@@ -58,3 +58,6 @@ extern VMCMD_RESULT EvCmdCallDendouProc( VMHANDLE *core, void *wk );
 
 // ゲーム内マニュアルの呼び出し
 extern VMCMD_RESULT EvCmdCallGameManual( VMHANDLE *core, void *wk );
+
+//空をとぶの呼び出し
+extern VMCMD_RESULT EvCmdCallTownMap( VMHANDLE *core, void *wk );

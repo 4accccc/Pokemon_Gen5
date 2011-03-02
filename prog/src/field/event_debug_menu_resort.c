@@ -195,6 +195,7 @@ static BOOL debugMenuCallProc_AllRecv( DEBUG_MENU_EVENT_WORK *p_wk )
   SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(p_wk->gdata);
   RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( pSave );
   RESORT_RECV_BUFF *p_recv_buff = RESONANCE_RESORT_SV_GetDataBuff( p_resort );
+  RESORT_RECV_BUFF *p_recv_tmp_buff = NULL;
 
   RESORT_RECV_DATA *p_recv = RESORT_RECV_DATA_Init( GFL_HEAP_LOWID(p_wk->heapID) );
   while( TRUE )
@@ -202,10 +203,14 @@ static BOOL debugMenuCallProc_AllRecv( DEBUG_MENU_EVENT_WORK *p_wk )
     RESORT_RECV_DATA_SetDebugData( p_recv, p_wk->gdata );
     if( !RESORT_RECV_BUFF_AddRecv( p_recv_buff, p_recv ) )
     {
-      p_recv_buff = GAMEBEACON_DEBUG_GetResortRecvBuffer();
-      if( p_recv_buff )
+      p_recv_tmp_buff = GAMEBEACON_DEBUG_GetResortRecvBuffer();
+      if( !p_recv_tmp_buff )
       {
-        if( !RESORT_RECV_BUFF_AddRecv( p_recv_buff, p_recv ) )
+        break;
+      }
+      else 
+      { 
+        if( !RESORT_RECV_BUFF_AddRecv( p_recv_tmp_buff, p_recv ) )
         {
           break;
         }

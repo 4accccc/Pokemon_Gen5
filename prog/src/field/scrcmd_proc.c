@@ -576,5 +576,3 @@ VMCMD_RESULT EvCmdCallPsel( VMHANDLE *core, void *wk )
   // *evwk == 2  Ç›Ç∏É^ÉCÉv
   return VMCMD_RESULT_SUSPEND;
 }
-
-

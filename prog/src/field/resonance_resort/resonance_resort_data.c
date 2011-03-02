@@ -14,6 +14,9 @@
 #include "savedata/questionnaire_save.h"
 #include "net_app/union/union_beacon_tool.h"
 #include "system/gfl_use.h"
+#include "print/str_tool.h"
+
+#include "field/resonance_resort/resort_map.h"
 
 //外部公開
 #include "field/resonance_resort_data.h"
@@ -41,6 +44,123 @@ static inline RESORT_GET_TrainerView( u8 view, u8 sex )
   else
   {
     return view + UNION_VIEW_INDEX_WOMAN_START;
+  }
+}
+
+
+//=============================================================================
+/**
+ *  施設データ
+ */
+//=============================================================================
+//-------------------------------------
+///	施設データ
+//=====================================
+struct _RESORT_INSTITUTION_DATA 
+{
+  u8  institutionID;
+  u8  lv;
+  u16 pad;
+  u32 ev_bit;
+  u32 work;
+};
+
+SDK_COMPILER_ASSERT( sizeof(RESORT_INSTITUTION_DATA) == RESORT_INSTITUTION_DATA_SIZE );
+
+//-------------------------------------
+///	外部公開
+//=====================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  施設データ初期化
+ *
+ *	@param	HEAPID heapID ヒープID
+ *
+ *	@return 施設データ
+ */
+//-----------------------------------------------------------------------------
+RESORT_INSTITUTION_DATA * RESORT_INSTITUTION_DATA_Init( HEAPID heapID )
+{
+  RESORT_INSTITUTION_DATA *p_wk = GFL_HEAP_AllocClearMemory(heapID,sizeof(RESORT_INSTITUTION_DATA));
+  RESORT_INSTITUTION_DATA_InitInstance(p_wk);
+  return p_wk;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  施設データ破棄
+ *
+ *	@param	RESORT_INSTITUTION_DATA *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void RESORT_INSTITUTION_DATA_Exit( RESORT_INSTITUTION_DATA *p_wk )
+{
+  GFL_HEAP_FreeMemory(p_wk);
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  施設データ初期化
+ *
+ *	@param	RESORT_INSTITUTION_DATA *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void RESORT_INSTITUTION_DATA_InitInstance( RESORT_INSTITUTION_DATA *p_wk )
+{
+  GFL_STD_MemClear(p_wk,sizeof(RESORT_INSTITUTION_DATA));
+  p_wk->institutionID = RESORT_RESIDENT_TYPE_MAX;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  空かどうかチェック
+ *
+ *	@param	const RESORT_INSTITUTION_DATA *cp_wk  ワーク
+ *
+ *	@return TRUE空  FALSE空ではない
+ */
+//-----------------------------------------------------------------------------
+BOOL RESORT_INSTITUTION_DATA_IsEmpty( const RESORT_INSTITUTION_DATA *cp_wk )
+{
+  return cp_wk->institutionID == RESORT_RESIDENT_TYPE_MAX;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  内部データ取得
+ *
+ *	@param	const RESORT_INSTITUTION_DATA *cp_wk  ワーク
+ *	@param	param   取得するデータ
+ *
+ *	@return　データ
+ */
+//-----------------------------------------------------------------------------
+u32 RESORT_INSTITUTION_DATA_GetData( const RESORT_INSTITUTION_DATA *cp_wk, RESORT_INSTITUTION_DATA_PARAM param )
+{
+  switch( param )
+  {
+  case RESORT_INSTITUTION_DATA_PARAM_ID:
+    return cp_wk->institutionID;
+  default:
+    GF_ASSERT(0);
+    return 0;
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief　内部データ設定
+ *
+ *	@param	RESORT_INSTITUTION_DATA *p_wk ワーク
+ *	@param	param 設定するデータ
+ *	@param	datga 値
+ */
+//-----------------------------------------------------------------------------
+void RESORT_INSTITUTION_DATA_SetData( RESORT_INSTITUTION_DATA *p_wk, RESORT_INSTITUTION_DATA_PARAM param, u32 data )
+{
+  switch( param )
+  {
+  case RESORT_INSTITUTION_DATA_PARAM_ID:
+    p_wk->institutionID   = data;
+    break;
+  default:
+    GF_ASSERT(0);
   }
 }
 
@@ -554,6 +674,52 @@ static BOOL RESORT_EXTEND8_DATA_IsValid( const RESORT_EXTEND8_DATA *cp_wk )
 }
 
 //-------------------------------------
+///	拡張データ9
+//=====================================
+typedef struct
+{
+  STRCODE  phrase[RESORT_PHRASE_LEN]; //EOMなし
+} RESORT_EXTEND9_DATA;
+SDK_COMPILER_ASSERT( sizeof(RESORT_EXTEND9_DATA) == RESORT_EXTEND9_DATA_SIZE );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  拡張データ9に自分のデータを設定
+ *
+ *	@param	RESORT_BASIC9_DATA *p_wk  ワーク
+ *	@param	GAMEDATA *cp_gamedata     ゲームデータ
+ */
+//-----------------------------------------------------------------------------
+static void RESORT_EXTEND9_DATA_SetMyData( RESORT_EXTEND9_DATA *p_wk, const GAMEDATA *cp_gamedata )
+{
+  GFL_STD_MemClear( p_wk, sizeof(RESORT_EXTEND9_DATA) );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  拡張データ9の正当性チェック
+ *
+ *	@param	RESORT_EXTEND7_DATA *p_wk  ワーク
+ */
+//-----------------------------------------------------------------------------
+static BOOL RESORT_EXTEND9_DATA_IsValid( const RESORT_EXTEND9_DATA *cp_wk )
+{
+  return TRUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief 口癖をEOM付きで取得
+ *
+ *	@param	const RESORT_BASIC1_DATA *cp_data ワーク
+ *	@param	*p_str  受け取りバッファ
+ */
+//-----------------------------------------------------------------------------
+static void RESORT_EXTEND9_DATA_GetPhrase( const RESORT_EXTEND9_DATA *cp_data, STRCODE *p_str )
+{
+  GFL_STD_MemCopy( cp_data->phrase, p_str, sizeof(STRCODE)*RESORT_PHRASE_LEN);
+  *((p_str)+RESORT_PHRASE_LEN) = GFL_STR_GetEOMCode();
+}
+
+//-------------------------------------
 ///	拡張データ関数
 //=====================================
 typedef void (*RESORT_EXTEND_DATA_SetMyData)( void *p_wk_adrs, const GAMEDATA *cp_gamedata );
@@ -567,6 +733,7 @@ static const RESORT_EXTEND_DATA_SetMyData sc_ResortExtendData_SetMyData[RESORT_E
   (RESORT_EXTEND_DATA_SetMyData)RESORT_EXTEND6_DATA_SetMyData,
   (RESORT_EXTEND_DATA_SetMyData)RESORT_EXTEND7_DATA_SetMyData,
   (RESORT_EXTEND_DATA_SetMyData)RESORT_EXTEND8_DATA_SetMyData,
+  (RESORT_EXTEND_DATA_SetMyData)RESORT_EXTEND9_DATA_SetMyData,
 };
 
 typedef BOOL (*RESORT_EXTEND_DATA_IsValid)( const void *cp_wk_adrs );
@@ -581,6 +748,7 @@ static const RESORT_EXTEND_DATA_IsValid sc_ResortExtendData_IsValid[RESORT_EXTEN
   (RESORT_EXTEND_DATA_IsValid)RESORT_EXTEND6_DATA_IsValid,
   (RESORT_EXTEND_DATA_IsValid)RESORT_EXTEND7_DATA_IsValid,
   (RESORT_EXTEND_DATA_IsValid)RESORT_EXTEND8_DATA_IsValid,
+  (RESORT_EXTEND_DATA_IsValid)RESORT_EXTEND9_DATA_IsValid,
 };
 
 //=============================================================================
@@ -603,6 +771,7 @@ struct _RESORT_RECV_DATA
   RESORT_EXTEND6_DATA extend6;
   RESORT_EXTEND7_DATA extend7;
   RESORT_EXTEND8_DATA extend8;
+  RESORT_EXTEND9_DATA extend9;
   u16                 presentID;
   u8                  precent_num;
   u8                  year;         //4
@@ -614,16 +783,19 @@ struct _RESORT_RECV_DATA
   u8                  merge     :1;
   u8                  pad       :6;
   u8                  keep_flag :1;
+  u16                 exp;          //12
+  RESORT_INSTITUTION_DATA institution;
+#if 0
   u8                  lv;
   u8                  institutionID;//12
-  u16                 exp;
   u8                  ev_work1;
   u8                  ev_work2; //16
   u32                 ev_bit; //20
-  u32                 kosei;  //TODO　個性？  //24
-  u32                 extend_flag:8;  //28
+#endif
+  u32                 kosei;  //TODO　個性？  //16
+  u32                 extend_flag:8;  //20
   u32                 lock      :1;
-  u32                 update    :2; //RESORT_RECV_DATA_UPDATEの値
+  u32                 update    :2; //RESORT_RECV_DATA_UPDATEの値 
   u32                 peopleID  :8;
   u32                 placeID   :8;
   u32                 type     :5;  //自分がなんのタイプRESORT_RESIDENT_TYPE_xxx
@@ -722,6 +894,8 @@ void RESORT_RECV_DATA_SetMyData( RESORT_RECV_DATA *p_wk, const GAMEDATA *cp_game
 void RESORT_RECV_DATA_InitInstance( RESORT_RECV_DATA *p_wk )
 {
   GFL_STD_MemClear( p_wk, sizeof(RESORT_RECV_DATA) );
+
+  RESORT_INSTITUTION_DATA_InitInstance( &p_wk->institution );
 }
 //----------------------------------------------------------------------------
 /**
@@ -937,7 +1111,26 @@ u32 RESORT_RECV_DATA_GetData( const RESORT_RECV_DATA *cp_wk, RESORT_DATA_PARAM p
     RESORT_BASIC1_DATA_GetIntroduction( &cp_wk->basic1, p_ret_adrs );
     return 0;
   case RESORT_DATA_PARAM_WANT_JOB:
-    return GFUser_GetPublicRand(RESORT_RESIDENT_TYPE_MAX); //TODO
+    return cp_wk->basic1.trainerID % RESORT_RESIDENT_TYPE_MAX; //TODO
+  case RESORT_DATA_PARAM_PRESENT_ID:
+    return cp_wk->basic1.trainerID % 500; //TODO;
+  case RESORT_DATA_PARAM_PRESENT_NUM:
+    return 1; //TODO
+  case RESORT_DATA_PARAM_EVENT_FLAG:
+    return 0; //TODO
+  case RESORT_DATA_PARAM_PHRASE:
+    //もしパックがなかったら通常の挨拶文
+    if( cp_wk->extend_flag & RESORT_EXTEND_TYPE_09 )
+    {
+      RESORT_EXTEND9_DATA_GetPhrase( &cp_wk->extend9, p_ret_adrs );
+    }
+    else
+    {
+      RESORT_BASIC1_DATA_GetIntroduction( &cp_wk->basic1, p_ret_adrs );
+    }
+    return 0;
+  case RESORT_DATA_PARAM_TYPE:
+    return cp_wk->type;
   default:
     GF_ASSERT(0);
     return 0;
@@ -1298,6 +1491,10 @@ u32 RESORT_PROXY_DATA_GetData( const RESORT_PROXY_DATA *cp_wk, RESORT_DATA_PARAM
       GFL_STD_MemCopy( sc_strcode, p_ret_adrs, sizeof(u16)*(PERSON_NAME_SIZE+EOM_SIZE) );
     }
     return 0;
+  case RESORT_DATA_PARAM_PRESENT_ID:
+    return 1; //TODO;
+  case RESORT_DATA_PARAM_PRESENT_NUM:
+    return 1; //TODO
   default:
     GF_ASSERT(0);
     return 0;
@@ -1770,14 +1967,27 @@ void RESORT_RESIDENT_DATA_SetRecv( RESORT_RESIDENT_DATA *p_wk, const RESORT_RECV
   p_wk->placeID   = placeID;
   p_wk->type      = type;
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  受信データから施設データを取得
+ *
+ *	@param	RESORT_RESIDENT_DATA *p_wk  ワーク
+ *
+ *	@return 施設データを取得
+ */
+//-----------------------------------------------------------------------------
+RESORT_INSTITUTION_DATA * RESORT_RESIDENT_DATA_GetInstitution( RESORT_RESIDENT_DATA *p_wk )
+{
+  return &p_wk->institution;
+}
 
 //=============================================================================
 /**
- *  特殊NPCデータ
+ *  滞在者
  */
 //=============================================================================
 //-------------------------------------
-///	特殊NPCデータ
+///	滞在者
 //=====================================
 struct _RESORT_VISITOR_DATA
 {
@@ -1786,7 +1996,10 @@ struct _RESORT_VISITOR_DATA
   RESORT_EXTEND4_DATA extend4;
   u8    placeID;
   u8    peopleID;
-  u8    dummy[2];
+  u8    dataID;
+  u8    event_flag;
+  u8    type;
+  u8    dummy[3];
 };
 SDK_COMPILER_ASSERT( sizeof(RESORT_VISITOR_DATA) == RESORT_VISITOR_DATA_SIZE );
 
@@ -1852,7 +2065,7 @@ BOOL RESORT_VISITOR_DATA_IsEmpty( const RESORT_VISITOR_DATA *cp_wk )
  *	@param	RESORT_RECV_DATA *cp_recv   受信でーた
  */
 //-----------------------------------------------------------------------------
-void RESORT_VISITOR_DATA_SetRecv( RESORT_VISITOR_DATA *p_wk, const RESORT_RECV_DATA *cp_recv, u16 peopleID, u16 placeID )
+void RESORT_VISITOR_DATA_SetRecv( RESORT_VISITOR_DATA *p_wk, const RESORT_RECV_DATA *cp_recv, u16 peopleID, u16 placeID, u16 type )
 {
   //TODO
   p_wk->basic1    = cp_recv->basic1;
@@ -1860,6 +2073,7 @@ void RESORT_VISITOR_DATA_SetRecv( RESORT_VISITOR_DATA *p_wk, const RESORT_RECV_D
   p_wk->extend4   = cp_recv->extend4;
   p_wk->peopleID  = peopleID;
   p_wk->placeID   = placeID;
+  p_wk->type      = type;
 }
 //----------------------------------------------------------------------------
 /**
@@ -1908,6 +2122,12 @@ u32 RESORT_VISITOR_DATA_GetData( const RESORT_VISITOR_DATA *cp_wk, RESORT_DATA_P
     return cp_wk->basic1.sex;
   case RESORT_DATA_PARAM_TRAINERVIEW:
     return RESORT_GET_TrainerView( cp_wk->basic1.trainer_view, cp_wk->basic1.sex );
+  case RESORT_DATA_PARAM_WANT_JOB:
+    return cp_wk->basic1.trainerID % RESORT_RESIDENT_TYPE_MAX; //TODO
+  case RESORT_DATA_PARAM_EVENT_FLAG:
+    return cp_wk->event_flag;
+  case RESORT_DATA_PARAM_TYPE:
+    return cp_wk->type;
   default:
     GF_ASSERT(0);
     return 0;
@@ -1954,7 +2174,8 @@ struct _RESORT_SECRETARY_DATA
   RESORT_BASIC2_DATA basic2;
   u8    placeID;
   u8    peopleID;
-  u8    dummy[2];
+  u8    type;
+  u8    dummy;
 };
 SDK_COMPILER_ASSERT( sizeof(RESORT_SECRETARY_DATA) == RESORT_SECRETARY_DATA_SIZE );
 
@@ -2039,7 +2260,13 @@ u32 RESORT_SECRETARY_DATA_GetData( const RESORT_SECRETARY_DATA *cp_wk, RESORT_DA
   case RESORT_DATA_PARAM_SEX: 
     return cp_wk->basic1.sex;
   case RESORT_DATA_PARAM_TRAINERVIEW:
-    return RESORT_GET_TrainerView( cp_wk->basic1.trainer_view, cp_wk->basic1.sex );
+    return RESORT_GET_TrainerView( cp_wk->basic1.trainer_view, cp_wk->basic1.sex ); 
+  case RESORT_DATA_PARAM_PRESENT_ID:
+    return cp_wk->basic1.trainerID % 500; //TODO;
+  case RESORT_DATA_PARAM_PRESENT_NUM:
+    return 1; //TODO
+  case RESORT_DATA_PARAM_TYPE:
+    return cp_wk->type;
   default:
     GF_ASSERT(0);
     return 0;
@@ -2089,123 +2316,9 @@ void RESORT_SECRETARY_DATA_SetRecv( RESORT_SECRETARY_DATA *p_wk, const RESORT_RE
   p_wk->basic2    = cp_recv->basic2;
   p_wk->peopleID  = peopleID;
   p_wk->placeID   = placeID;
+  p_wk->type      = type;
 }
 
-//=============================================================================
-/**
- *  施設データ
- */
-//=============================================================================
-//-------------------------------------
-///	施設データ
-//=====================================
-struct _RESORT_INSTITUTION_DATA 
-{
-  u8  institutionID;
-  u8  lv;
-  u16 pad;
-  u32 ev_bit;
-  u32 work;
-};
-
-SDK_COMPILER_ASSERT( sizeof(RESORT_INSTITUTION_DATA) == RESORT_INSTITUTION_DATA_SIZE );
-
-//-------------------------------------
-///	外部公開
-//=====================================
-//----------------------------------------------------------------------------
-/**
- *	@brief  施設データ初期化
- *
- *	@param	HEAPID heapID ヒープID
- *
- *	@return 施設データ
- */
-//-----------------------------------------------------------------------------
-RESORT_INSTITUTION_DATA * RESORT_INSTITUTION_DATA_Init( HEAPID heapID )
-{
-  RESORT_INSTITUTION_DATA *p_wk = GFL_HEAP_AllocClearMemory(heapID,sizeof(RESORT_INSTITUTION_DATA));
-  RESORT_INSTITUTION_DATA_InitInstance(p_wk);
-  return p_wk;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  施設データ破棄
- *
- *	@param	RESORT_INSTITUTION_DATA *p_wk ワーク
- */
-//-----------------------------------------------------------------------------
-void RESORT_INSTITUTION_DATA_Exit( RESORT_INSTITUTION_DATA *p_wk )
-{
-  GFL_HEAP_FreeMemory(p_wk);
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  施設データ初期化
- *
- *	@param	RESORT_INSTITUTION_DATA *p_wk ワーク
- */
-//-----------------------------------------------------------------------------
-void RESORT_INSTITUTION_DATA_InitInstance( RESORT_INSTITUTION_DATA *p_wk )
-{
-  GFL_STD_MemClear(p_wk,sizeof(RESORT_INSTITUTION_DATA));
-  p_wk->institutionID = RESORT_RESIDENT_TYPE_MAX;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  空かどうかチェック
- *
- *	@param	const RESORT_INSTITUTION_DATA *cp_wk  ワーク
- *
- *	@return TRUE空  FALSE空ではない
- */
-//-----------------------------------------------------------------------------
-BOOL RESORT_INSTITUTION_DATA_IsEmpty( const RESORT_INSTITUTION_DATA *cp_wk )
-{
-  return cp_wk->institutionID == RESORT_RESIDENT_TYPE_MAX;
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  内部データ取得
- *
- *	@param	const RESORT_INSTITUTION_DATA *cp_wk  ワーク
- *	@param	param   取得するデータ
- *
- *	@return　データ
- */
-//-----------------------------------------------------------------------------
-u32 RESORT_INSTITUTION_DATA_GetData( const RESORT_INSTITUTION_DATA *cp_wk, RESORT_INSTITUTION_DATA_PARAM param )
-{
-  switch( param )
-  {
-  case RESORT_INSTITUTION_DATA_PARAM_ID:
-    return cp_wk->institutionID;
-  default:
-    GF_ASSERT(0);
-    return 0;
-  }
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief　内部データ設定
- *
- *	@param	RESORT_INSTITUTION_DATA *p_wk ワーク
- *	@param	param 設定するデータ
- *	@param	datga 値
- */
-//-----------------------------------------------------------------------------
-void RESORT_INSTITUTION_DATA_SetData( RESORT_INSTITUTION_DATA *p_wk, RESORT_INSTITUTION_DATA_PARAM param, u32 data )
-{
-  switch( param )
-  {
-  case RESORT_INSTITUTION_DATA_PARAM_ID:
-    p_wk->institutionID   = data;
-    break;
-  default:
-    GF_ASSERT(0);
-  }
-}
 //=============================================================================
 /**
  *	リゾート人物全データ
@@ -2320,6 +2433,29 @@ RESORT_RESIDENT_DATA * RESORT_PEOPLE_ALL_DATA_SearchEmptyResident( RESORT_PEOPLE
 }
 //----------------------------------------------------------------------------
 /**
+ *	@brief  住民数を取得
+ *
+ *	@param	const RESORT_PEOPLE_ALL_DATA *p_wk  ワーク
+ *
+ *	@return 住民数
+ */
+//-----------------------------------------------------------------------------
+u32 RESORT_PEOPLE_ALL_DATA_GetResidentCount( const RESORT_PEOPLE_ALL_DATA *p_wk )
+{
+  int i;
+  int cnt = 0;
+  for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
+  {
+    RESORT_RESIDENT_DATA *p_resident=  RESORT_PEOPLE_ALL_DATA_GetResident( (RESORT_PEOPLE_ALL_DATA *)p_wk, i );
+    if( RESORT_RESIDENT_DATA_IsEmpty(p_resident) )
+    {
+      cnt++;
+    }
+  }
+  return cnt;
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief  滞在者データ取得
  *
  *	@param	RESORT_PEOPLE_ALL_DATA *p_wk  ワーク
@@ -2393,6 +2529,50 @@ RESORT_SECRETARY_DATA * RESORT_PEOPLE_ALL_DATA_SearchEmptySecretary( RESORT_PEOP
   }
   return NULL;
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  開いている施設の場所IDを取得
+ *
+ *	@param	const RESORT_PEOPLE_ALL_DATA *cp_wk  ワーク
+ *
+ *	@return 施設の場所ID  開いてない場合RESORT_PLACEID_NONE
+ */
+//-----------------------------------------------------------------------------
+u32 RESORT_PEOPLE_ALL_DATA_SearchEmptyInstitutionPlaceID( const RESORT_PEOPLE_ALL_DATA *cp_wk )
+{
+  int i;
+  for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
+  {
+    RESORT_RESIDENT_DATA *p_resident=  RESORT_PEOPLE_ALL_DATA_GetResident( (RESORT_PEOPLE_ALL_DATA *)cp_wk, i );
+    if( RESORT_RESIDENT_DATA_IsEmpty(p_resident) )
+    {
+      return RESORT_PLACEID_INSTITUTION_00+i;
+    }
+  }
+  return RESORT_PLACEID_NONE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  開いているコンドミニアムの場所IDを取得(滞在者インデックス＝コンドミニアムインデックス)
+ *
+ *	@param	const RESORT_PEOPLE_ALL_DATA *cp_wk  ワーク
+ *
+ *	@return コンドミニアムの場所ID  開いてない場合RESORT_PLACEID_NONE
+ */
+//-----------------------------------------------------------------------------
+u32 RESORT_PEOPLE_ALL_DATA_SearchEmptyCondominiumPlaceID( const RESORT_PEOPLE_ALL_DATA *cp_wk )
+{
+  int i;
+  for( i = 0; i < RESORT_VISITOR_DATA_NUM; i++ )
+  {
+    RESORT_VISITOR_DATA *p_visitor = RESORT_PEOPLE_ALL_DATA_GetVisitor( (RESORT_PEOPLE_ALL_DATA *)cp_wk, i );
+    if( RESORT_VISITOR_DATA_IsEmpty(p_visitor) )
+    {
+      return RESORT_PLACEID_CONDOMINIUM_00+i;
+    }
+  }
+  return RESORT_PLACEID_NONE;
+}
 
 //----------------------------------------------------------------------------
 /**
@@ -2443,7 +2623,7 @@ BOOL RESORT_PEOPLE_ALL_DATA_AddBeacon( RESORT_PEOPLE_ALL_DATA *p_wk, const RESOR
 struct _RESORT_CITY_DATA
 {
   STRCODE city_name[RESORT_CITY_NAME_BUFF_MAX+EOM_SIZE];
-  STRCODE my_name[RESORT_MY_NAME_BUFF_MAX*EOM_SIZE];  //84
+  STRCODE my_name[RESORT_MY_NAME_BUFF_MAX+EOM_SIZE];  //84
   u16     lv; 
   u16     state;  //92
   u32     trainerID[32];  //128 220
@@ -2461,9 +2641,7 @@ struct _RESORT_CITY_DATA
   u8      secret_present_num;
   u8      secret_present_flag;
   u8      pad;
-  RESORT_INSTITUTION_DATA institution[RESORT_INSTITUTION_DATA_NUM];
 };
-
 SDK_COMPILER_ASSERT(sizeof(RESORT_CITY_DATA) == RESORT_CITY_DATA_SIZE );
 
 //-------------------------------------
@@ -2506,51 +2684,74 @@ void RESORT_CITY_DATA_InitInstance( RESORT_CITY_DATA *p_wk )
 {
   int i;
   GFL_STD_MemClear(p_wk,sizeof(RESORT_CITY_DATA));
+  p_wk->city_name[0] = GFL_STR_GetEOMCode();
+  p_wk->my_name[0]  = GFL_STR_GetEOMCode();
 
-  for( i = 0; i < RESORT_INSTITUTION_DATA_NUM; i++ )
-  {
-    RESORT_INSTITUTION_DATA_InitInstance(&p_wk->institution[i] );
-  }
+#ifdef PM_DEBUG
+  p_wk->city_name[0]  = L'レ';
+  p_wk->city_name[1]  = L'ゾ';
+  p_wk->city_name[2]  = L'ナ';
+  p_wk->city_name[3]  = L'ン';
+  p_wk->city_name[4]  = L'ス';
+  p_wk->city_name[5]  = L'リ';
+  p_wk->city_name[6]  = L'ゾ';
+  p_wk->city_name[7]  = L'ー';
+  p_wk->city_name[8]  = L'ト';
+  p_wk->city_name[9]  = GFL_STR_GetEOMCode();
+
+  p_wk->my_name[0]  = L'し';
+  p_wk->my_name[1]  = L'ち';
+  p_wk->my_name[2]  = L'ょ';
+  p_wk->my_name[3]  = L'う';
+  p_wk->my_name[4]  = GFL_STR_GetEOMCode();
+#endif
 }
-
 //----------------------------------------------------------------------------
 /**
- *	@brief  施設データ取得
+ *	@brief  データ取得
  *
- *	@param	RESORT_CITY_DATA *p_wk　ワーク
- *	@param	index   インデックス  0~RESORT_INSTITUTION_DATA_NUM
+ *	@param	const RESORT_CITY_DATA *cp_wk  街データ
+ *	@param	param                   引数
+ *	@param	*p_ret_adrs             取得バッファ
  *
- *	@return 施設データ
+ *	@return データ
  */
 //-----------------------------------------------------------------------------
-RESORT_INSTITUTION_DATA * RESORT_CITY_DATA_GetInstitution( RESORT_CITY_DATA *p_wk, u32 index )
+u32 RESORT_CITY_DATA_GetData( const RESORT_CITY_DATA *cp_wk, RESORT_CITY_DATA_PARAM param, void *p_ret_adrs )
 {
-  GF_ASSERT(index< RESORT_INSTITUTION_DATA_NUM);
-  return &p_wk->institution[index];
+  switch( param )
+  {
+  case RESORT_CITY_DATA_PARAM_CITY_NAME: //p_ret_adrs
+    STRTOOL_Copy( cp_wk->city_name, p_ret_adrs, RESORT_CITY_NAME_BUFF_MAX+EOM_SIZE );
+    return 0;
+  case RESORT_CITY_DATA_PARAM_AUTHER_NAME: //p_ret_adrs
+    STRTOOL_Copy( cp_wk->my_name, p_ret_adrs, RESORT_MY_NAME_BUFF_MAX+EOM_SIZE );
+    return 0;
+  default:
+    GF_ASSERT(0);
+    return 0;
+  }
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  施設インデックスを取得
+ *	@brief  データ取得
  *
- *	@param	const RESORT_CITY_DATA *cp_wk  ワーク
- *	@param	RESORT_INSTITUTION_DATA *cp_institution   データ
- *
- *	@return インデックス
+ *	@param	RESORT_CITY_DATA *p_wk  街データ
+ *	@param	param                   引数
+ *	@param	data                    値orアドレス
  */
 //-----------------------------------------------------------------------------
-u16 RESORT_CITY_DATA_GetInstitutionIndex( const RESORT_CITY_DATA *cp_wk, const RESORT_INSTITUTION_DATA *cp_institution )
+void RESORT_CITY_DATA_SetData( RESORT_CITY_DATA *p_wk, RESORT_CITY_DATA_PARAM param, u32 data )
 {
-  int i;
-  for( i = 0; i < RESORT_INSTITUTION_DATA_NUM; i++ )
+  switch( param )
   {
-    const RESORT_INSTITUTION_DATA *p_institution = &cp_wk->institution[i];
-    if( cp_institution == p_institution )
-    {
-      return i;
-    }
+  case RESORT_CITY_DATA_PARAM_CITY_NAME: //p_ret_adrs
+    STRTOOL_Copy( (const STRCODE*)data, p_wk->city_name, RESORT_CITY_NAME_BUFF_MAX+EOM_SIZE );
+    break;
+  case RESORT_CITY_DATA_PARAM_AUTHER_NAME: //p_ret_adrs
+    STRTOOL_Copy( (const STRCODE*)data, p_wk->my_name, RESORT_MY_NAME_BUFF_MAX+EOM_SIZE );
+    break;
+  default:
+    GF_ASSERT(0);
   }
-
-  //存在しないならば、それはどこのデータ？
-  GF_ASSERT(0);
-  return 0;
 }

@@ -6676,6 +6676,22 @@
 
 //--------------------------------------------------------------
 /**
+ * マップ遷移コマンド デフォルト位置
+ * @param zone_id   移動先ゾーンID指定
+ * @param dir       移動後の向き
+ */
+//--------------------------------------------------------------
+#define _MAP_CHANGE_DEFAULT_POS( zone_id, dir )  \
+    _ASM_MAP_CHANGE_DEFAULT_POS zone_id, dir
+
+  .macro  _ASM_MAP_CHANGE_DEFAULT_POS zone_id, dir
+  .short  EV_SEQ_MAP_CHANGE_DEFAULT_POS
+  .short  \zone_id
+  .short  \dir
+  .endm
+
+//--------------------------------------------------------------
+/**
  * @def _PLACE_NAME_DISPLAY
  * @brief 地名を表示する
  */
@@ -7873,6 +7889,28 @@
   .macro  _ASM_CALL_FIRST_POKE_SELECT ret_wk
   .short  EV_SEQ_CALL_FIRST_POKE_SELECT
   .short  \ret_wk
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _CALL_SORAWOTOBU
+ * @brief   空をとぶアプリを呼び出し
+ *
+ * @param[out]  TRUEで空をとぶ場所を選択　FALSEで未選択
+ * @param[out]  ret_wk  空をとぶで選択したゾーンID
+ *
+ * 図鑑呼び出しID
+ *  地方図鑑 SCR_ZUKAN_AWARD_CHIHOU
+ *  全国図鑑 SCR_ZUKAN_AWARD_ZENKOKU
+ */
+//--------------------------------------------------------------
+#define _CALL_SORAWOTOBU( ret_select, ret_zone_id ) \
+    _ASM_CALL_SORAWOTOBU ret_select, ret_zone_id
+
+  .macro  _ASM_CALL_SORAWOTOBU ret_select, ret_zone_id
+  .short  EV_SEQ_CALL_SORAWOTOBU
+  .short  \ret_select
+  .short  \ret_zone_id
   .endm
 
 //======================================================================
@@ -12363,22 +12401,6 @@
 
 //--------------------------------------------------------------
 /**
- * @brief リゾート用　行動設定
- * @param[in]  param 何の行動をするか「下記値を設定」
- *  RESORT_ACTION_LEAVE…上へあがっていなくなる
- *
- */
-//--------------------------------------------------------------
-#define _RESORT_ACTION( param ) \
-    _ASM_RESORT_ACTION param
-
-  .macro _ASM_RESORT_ACTION param
-  .short EV_SEQ_RESORT_ACTION
-  .short  \param
-  .endm
-
-//--------------------------------------------------------------
-/**
  * @brief リゾート用　転職
  * @param[in]  param 何に転職するか「下記値を設定」
  *  RESORT_JOBCHANGE_SECETARY…秘書へ転職
@@ -12432,6 +12454,99 @@
 
   .macro _ASM_RESORT_DELETE_PEOPLE
   .short EV_SEQ_RESORT_DELETE_PEOPLE
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief リゾート用　滞在者が入るかチェック
+ * @param[out]  flag TRUEで入った　FALSEで入っていない
+ * @param[out]  msgID flagがTRUEの場合、誰が入ったか
+ */
+//--------------------------------------------------------------
+#define _RESORT_CHECK_VISITOR( flag, msgID ) \
+      _ASM_RESORT_CHECK_VISITOR flag, msgID
+
+  .macro _ASM_RESORT_CHECK_VISITOR flag, msgID
+  .short EV_SEQ_RESORT_CHECK_VISITOR
+  .short \flag
+  .short \msgID
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief リゾート用　転職拡張版
+ * @param[in]  param  転職するもの
+ * @param[in]  id     いなくなる人
+ */
+//--------------------------------------------------------------
+#define _RESORT_JOB_CHANGE_EX( param, id ) \
+      _ASM_RESORT_JOB_CHANGE_EX param, id
+
+  .macro _ASM_RESORT_JOB_CHANGE_EX param, id
+  .short EV_SEQ_RESORT_JOB_CHANGE_EX
+  .short \param
+  .short \id
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief リゾート用　汎用リストでの選択処理
+ * @param[in]   mode リストモード
+ *              //TODOあとで説明追加
+ * @param[in]   param モードに渡す引数（どのアイテムリストか、とか）
+ * @param[out]  どれを選んだか
+ */
+//--------------------------------------------------------------
+#define _RESORT_CALL_LIST( mode, param, ret ) \
+    _ASM_RESORT_CALL_LIST mode, param, ret
+
+  .macro _ASM_RESORT_CALL_LIST mode, param, ret
+  .short EV_SEQ_RESORT_CALL_LIST
+  .short \mode
+  .short \param
+  .short \ret
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief リゾート用　マージフラグをOFF
+ */
+//--------------------------------------------------------------
+#define _RESORT_MERGE_OFF( ) \
+    _ASM_RESORT_MERGE_OFF
+
+  .macro _ASM_RESORT_MERGE_OFF
+  .short EV_SEQ_RESORT_MERGE_OFF
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief リゾート用　新規施設の入り口を取得
+ * @param[out]  x       Xグリッド座標
+ * @param[out]  y       Yグリッド座標
+ */
+//--------------------------------------------------------------
+#define _RESORT_NEW_INSTATITUTION_ENTRANCE( x, y ) \
+    _ASM_RESORT_NEW_INSTATITUTION_ENTRANCE x, y
+
+  .macro _ASM_RESORT_NEW_INSTATITUTION_ENTRANCE x, y
+  .short EV_SEQ_RESORT_NEW_INSTATITUTION_ENTRANCE
+  .short \x
+  .short \y
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief リゾート用　迎賓館でタイプをジャンプさせる（迎賓館専用）
+ * @param[in]   param どのタイプをサーチしたいか
+ */
+//--------------------------------------------------------------
+#define _RESORT_SEARCH_RECEPTION( param ) \
+    _ASM_RESORT_SEARCH_RECEPTION param
+
+  .macro _ASM_RESORT_SEARCH_RECEPTION param
+  .short EV_SEQ_RESORT_SEARCH_RECEPTION
+  .short \param
   .endm
 
 //--------------------------------------------------------------

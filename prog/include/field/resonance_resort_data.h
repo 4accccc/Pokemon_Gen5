@@ -13,6 +13,36 @@
 #include "gamesystem/gamedata_def.h"
 #include "gamesystem/game_beacon.h"
 #include "src/field/resonance_resort/resort_people_def.h"
+
+
+//=============================================================================
+/**
+ *  施設データ
+ */
+//=============================================================================
+//施設ワークサイズ
+#define RESORT_INSTITUTION_DATA_SIZE  (12)
+
+//-------------------------------------
+///	施設データ
+//=====================================
+typedef struct _RESORT_INSTITUTION_DATA RESORT_INSTITUTION_DATA;
+
+//-------------------------------------
+///	外部公開
+//=====================================
+extern RESORT_INSTITUTION_DATA * RESORT_INSTITUTION_DATA_Init( HEAPID heapID );
+extern void RESORT_INSTITUTION_DATA_Exit( RESORT_INSTITUTION_DATA *p_wk );
+extern void RESORT_INSTITUTION_DATA_InitInstance( RESORT_INSTITUTION_DATA *p_wk );
+extern BOOL RESORT_INSTITUTION_DATA_IsEmpty( const RESORT_INSTITUTION_DATA *cp_wk );
+
+typedef enum
+{
+  RESORT_INSTITUTION_DATA_PARAM_ID,
+}RESORT_INSTITUTION_DATA_PARAM;
+extern u32 RESORT_INSTITUTION_DATA_GetData( const RESORT_INSTITUTION_DATA *cp_wk, RESORT_INSTITUTION_DATA_PARAM param );
+extern void RESORT_INSTITUTION_DATA_SetData( RESORT_INSTITUTION_DATA *p_wk, RESORT_INSTITUTION_DATA_PARAM param, u32 datga );
+
 //=============================================================================
 /**
  *	リゾート用受信データ
@@ -48,6 +78,7 @@ typedef enum
   RESORT_EXTEND_TYPE_06,
   RESORT_EXTEND_TYPE_07,
   RESORT_EXTEND_TYPE_08,
+  RESORT_EXTEND_TYPE_09,
   RESORT_EXTEND_TYPE_MAX,
   RESORT_EXTEND_TYPE_NULL = RESORT_EXTEND_TYPE_MAX,
 }RESORT_EXTEND_TYPE;
@@ -68,15 +99,20 @@ typedef enum
 #define RESORT_EXTEND6_DATA_SIZE   (16)
 #define RESORT_EXTEND7_DATA_SIZE   (16)
 #define RESORT_EXTEND8_DATA_SIZE   (16)
+#define RESORT_EXTEND9_DATA_SIZE   (16)
 
+//口癖の文字数
+#define RESORT_PHRASE_LEN         (8)
 
 //リゾート用全受信データの全サイズ
-#define RESORT_RECV_DATA_SIZE     (RESORT_BASIC1_DATA_SIZE+RESORT_BASIC2_DATA_SIZE+RESORT_EXTEND_DATA_SIZE*RESORT_EXTEND_TYPE_MAX+28)
+#define RESORT_RECV_DATA_SIZE     (RESORT_BASIC1_DATA_SIZE+RESORT_BASIC2_DATA_SIZE+RESORT_EXTEND_DATA_SIZE*RESORT_EXTEND_TYPE_MAX+RESORT_INSTITUTION_DATA_SIZE+20)
 
 //リゾート用代理データの全サイズ
 #define RESORT_PROXY_DATA_SIZE    (8)
 
 #define RESORT_PEOPLE_ID_NULL (0xFFFF)
+
+#define RESORT_PEOPLE_PRECENT_ID_BP (1000)
 //-------------------------------------
 ///	リゾート用データの取得引数
 //=====================================
@@ -96,6 +132,11 @@ typedef enum
   RESORT_DATA_PARAM_UPDATE,
   RESORT_DATA_PARAM_KEEP,
   RESORT_DATA_PARAM_WANT_JOB,
+  RESORT_DATA_PARAM_PRESENT_ID,
+  RESORT_DATA_PARAM_PRESENT_NUM,
+  RESORT_DATA_PARAM_EVENT_FLAG,
+  RESORT_DATA_PARAM_PHRASE, //p_ret_adrsから取得
+  RESORT_DATA_PARAM_TYPE,
 } RESORT_DATA_PARAM;
 
 //-------------------------------------
@@ -266,13 +307,14 @@ typedef RESORT_RECV_DATA RESORT_RESIDENT_DATA;
 #define RESORT_RESIDENT_DATA_MergeBeacon(x,y) RESORT_RECV_DATA_MergeBeacon(x,y)
 
 extern void RESORT_RESIDENT_DATA_SetRecv( RESORT_RESIDENT_DATA *p_wk, const RESORT_RECV_DATA *cp_recv, u16 peopleID, u16 placeID, u16 type );
+extern RESORT_INSTITUTION_DATA * RESORT_RESIDENT_DATA_GetInstitution( RESORT_RESIDENT_DATA *p_wk );
 
 //=============================================================================
 /**
  *  滞在者データ
  */
 //=============================================================================
-#define RESORT_VISITOR_DATA_SIZE  (RESORT_BASIC1_DATA_SIZE+RESORT_BASIC2_DATA_SIZE+RESORT_EXTEND4_DATA_SIZE+4)
+#define RESORT_VISITOR_DATA_SIZE  (RESORT_BASIC1_DATA_SIZE+RESORT_BASIC2_DATA_SIZE+RESORT_EXTEND4_DATA_SIZE+8)
 //-------------------------------------
 ///	滞在者データ
 //=====================================
@@ -286,7 +328,7 @@ extern void RESORT_VISITOR_DATA_Exit( RESORT_VISITOR_DATA *p_wk );
 extern void RESORT_VISITOR_DATA_InitInstance( RESORT_VISITOR_DATA *p_wk );
 
 extern BOOL RESORT_VISITOR_DATA_IsEmpty( const RESORT_VISITOR_DATA *cp_wk );
-extern void RESORT_VISITOR_DATA_SetRecv( RESORT_VISITOR_DATA *p_wk, const RESORT_RECV_DATA *cp_recv, u16 peopleID, u16 placeID );
+extern void RESORT_VISITOR_DATA_SetRecv( RESORT_VISITOR_DATA *p_wk, const RESORT_RECV_DATA *cp_recv, u16 peopleID, u16 placeID, u16 type );
 extern void RESORT_VISITOR_DATA_SetResident( RESORT_VISITOR_DATA *p_wk, const RESORT_RESIDENT_DATA *cp_resident, u16 peopleID, u16 placeID );
 
 extern u32 RESORT_VISITOR_DATA_GetData( const RESORT_VISITOR_DATA *cp_wk, RESORT_DATA_PARAM param, void *p_ret_adrs );
@@ -319,33 +361,6 @@ extern void RESORT_SECRETARY_DATA_SetRecv( RESORT_SECRETARY_DATA *p_wk, const RE
 
 //=============================================================================
 /**
- *  施設データ
- */
-//=============================================================================
-//施設ワークサイズ
-#define RESORT_INSTITUTION_DATA_SIZE  (12)
-
-//-------------------------------------
-///	施設データ
-//=====================================
-typedef struct _RESORT_INSTITUTION_DATA RESORT_INSTITUTION_DATA;
-
-//-------------------------------------
-///	外部公開
-//=====================================
-extern RESORT_INSTITUTION_DATA * RESORT_INSTITUTION_DATA_Init( HEAPID heapID );
-extern void RESORT_INSTITUTION_DATA_Exit( RESORT_INSTITUTION_DATA *p_wk );
-extern void RESORT_INSTITUTION_DATA_InitInstance( RESORT_INSTITUTION_DATA *p_wk );
-extern BOOL RESORT_INSTITUTION_DATA_IsEmpty( const RESORT_INSTITUTION_DATA *cp_wk );
-
-typedef enum
-{
-  RESORT_INSTITUTION_DATA_PARAM_ID,
-}RESORT_INSTITUTION_DATA_PARAM;
-extern u32 RESORT_INSTITUTION_DATA_GetData( const RESORT_INSTITUTION_DATA *cp_wk, RESORT_INSTITUTION_DATA_PARAM param );
-extern void RESORT_INSTITUTION_DATA_SetData( RESORT_INSTITUTION_DATA *p_wk, RESORT_INSTITUTION_DATA_PARAM param, u32 datga );
-//=============================================================================
-/**
  *	リゾート人物全データ
 */
 //=============================================================================
@@ -375,10 +390,13 @@ extern void RESORT_PEOPLE_ALL_DATA_Exit( RESORT_PEOPLE_ALL_DATA *p_wk );
 extern void RESORT_PEOPLE_ALL_DATA_InitInstance( RESORT_PEOPLE_ALL_DATA *p_wk );
 extern RESORT_RESIDENT_DATA * RESORT_PEOPLE_ALL_DATA_GetResident( RESORT_PEOPLE_ALL_DATA *p_wk, u32 index );
 extern RESORT_RESIDENT_DATA * RESORT_PEOPLE_ALL_DATA_SearchEmptyResident( RESORT_PEOPLE_ALL_DATA *p_wk );
+extern u32 RESORT_PEOPLE_ALL_DATA_GetResidentCount( const RESORT_PEOPLE_ALL_DATA *p_wk );
 extern RESORT_VISITOR_DATA * RESORT_PEOPLE_ALL_DATA_GetVisitor( RESORT_PEOPLE_ALL_DATA *p_wk, u32 index );
 extern RESORT_VISITOR_DATA * RESORT_PEOPLE_ALL_DATA_SearchEmptyVisitor( RESORT_PEOPLE_ALL_DATA *p_wk );
 extern RESORT_SECRETARY_DATA * RESORT_PEOPLE_ALL_DATA_GetSecretary( RESORT_PEOPLE_ALL_DATA *p_wk, u32 index );
 extern RESORT_SECRETARY_DATA * RESORT_PEOPLE_ALL_DATA_SearchEmptySecretary( RESORT_PEOPLE_ALL_DATA *p_wk );
+extern u32 RESORT_PEOPLE_ALL_DATA_SearchEmptyInstitutionPlaceID( const RESORT_PEOPLE_ALL_DATA *cp_wk );
+extern u32 RESORT_PEOPLE_ALL_DATA_SearchEmptyCondominiumPlaceID( const RESORT_PEOPLE_ALL_DATA *cp_wk );
 
 extern BOOL RESORT_PEOPLE_ALL_DATA_AddBeacon( RESORT_PEOPLE_ALL_DATA *p_wk, const RESORT_BEACON_DATA *cp_beacon );
 
@@ -392,22 +410,25 @@ extern BOOL RESORT_PEOPLE_ALL_DATA_AddBeacon( RESORT_PEOPLE_ALL_DATA *p_wk, cons
 ///	定数
 //=====================================
 //文字列数    EOMなし
-#if PM_LANG == LANG_JAPAN
 #define RESORT_CITY_NAME_LEN  (10)
 #define RESORT_MY_NAME_LEN    (10)
-#else
-#define RESORT_CITY_NAME_LEN  (20)
-#define RESORT_MY_NAME_LEN    (20)
-#endif
 
 
 //施設データ数
 #define RESORT_INSTITUTION_DATA_NUM (8)
 
 //街データ総サイズ
-#define RESORT_CITY_DATA_SIZE       (372+RESORT_INSTITUTION_DATA_SIZE*RESORT_INSTITUTION_DATA_NUM)
+#define RESORT_CITY_DATA_SIZE       (372)
 
-//
+//-------------------------------------
+///	引数
+//=====================================
+typedef enum
+{
+  RESORT_CITY_DATA_PARAM_CITY_NAME, //p_ret_adrs
+  RESORT_CITY_DATA_PARAM_AUTHER_NAME, //p_ret_adrs
+  RESORT_CITY_DATA_PARAM_MAX
+}RESORT_CITY_DATA_PARAM;
 
 //-------------------------------------
 ///	街データ
@@ -420,5 +441,6 @@ typedef struct _RESORT_CITY_DATA RESORT_CITY_DATA;
 extern RESORT_CITY_DATA * RESORT_CITY_DATA_Init( HEAPID heapID );
 extern void RESORT_CITY_DATA_Exit( RESORT_CITY_DATA *p_wk );
 extern void RESORT_CITY_DATA_InitInstance( RESORT_CITY_DATA *p_wk );
-extern RESORT_INSTITUTION_DATA * RESORT_CITY_DATA_GetInstitution( RESORT_CITY_DATA *p_wk, u32 index );
-extern u16 RESORT_CITY_DATA_GetInstitutionIndex( const RESORT_CITY_DATA *cp_wk, const RESORT_INSTITUTION_DATA *cp_institution );
+
+extern u32 RESORT_CITY_DATA_GetData( const RESORT_CITY_DATA *cp_wk, RESORT_CITY_DATA_PARAM param, void *p_ret_adrs );
+extern void RESORT_CITY_DATA_SetData( RESORT_CITY_DATA *p_wk, RESORT_CITY_DATA_PARAM param, u32 data );

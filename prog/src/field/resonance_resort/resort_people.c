@@ -39,6 +39,7 @@ typedef struct
 //=====================================
 struct _RESORT_PEOPLE
 {
+  RESORT_PEOPLE_TYPE people_type;
   u16 peopleID;
   MMDLSYS * p_mmdlsys;
   RESORT_ABSTRUCT_DATA *p_abstruct_data;
@@ -86,7 +87,8 @@ static void Npc_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder );
 //行動関数
 static BOOL Action_WarpDown( RESORT_PEOPLE *p_wk, u32 *p_seq, FIELD_PLAYER *p_player );
 static BOOL Action_WarpUp( RESORT_PEOPLE *p_wk, u32 *p_seq, FIELD_PLAYER *p_player );
-
+static BOOL Action_JumpStart( RESORT_PEOPLE *p_wk, u32 *p_seq, FIELD_PLAYER *p_player );
+static BOOL Action_JumpEnd( RESORT_PEOPLE *p_wk, u32 *p_seq, FIELD_PLAYER *p_player );
 //-------------------------------------
 ///	抽象動作
 //=====================================
@@ -156,7 +158,12 @@ static RESORT_PEOPLE * RESORT_PEOPLE_Init( HEAPID heapID, const RESORT_PEOPLE_IN
   p_wk->peopleID    = cp_param->peopleID;
   p_wk->p_mmdlsys   = cp_param->p_mmdlsys;
   p_wk->p_abstruct_data = RESORT_ABSTRUCT_DATA_Init( heapID, cp_param->p_data_adrs, PeopleTypeToResortDataType( cp_param->people_type ) );
-  p_wk->cp_binary   = RESORT_BINARY_SearchData( cp_param->cp_binary, cp_param->people_type, 0 );//TODO kind
+
+  {
+    u16 kind = RESORT_ABSTRUCT_DATA_GetData( p_wk->p_abstruct_data, RESORT_DATA_PARAM_TYPE, NULL );
+    p_wk->cp_binary   = RESORT_BINARY_SearchData( cp_param->cp_binary, cp_param->people_type, kind );
+  }
+  p_wk->people_type = cp_param->people_type;
   p_wk->cp_function = &sc_people_function[ cp_param->people_type ];
 
   {
@@ -293,6 +300,12 @@ void RESORT_PEOPLE_ActionReq( RESORT_PEOPLE *p_wk, RESORT_PEOPLE_ACTION action )
   case RESORT_PEOPLE_ACTION_WARPUP:    //上にワープ
     p_wk->Action = Action_WarpUp;
     break;
+  case RESORT_PEOPLE_ACTION_JUMP_START: //ジャンプ開始
+    p_wk->Action = Action_JumpStart;
+    break;
+  case RESORT_PEOPLE_ACTION_JUMP_END: //ジャンプ終了
+    p_wk->Action = Action_JumpEnd;
+    break;
   default:
     GF_ASSERT(0);
   }
@@ -350,6 +363,27 @@ void RESORT_PEOPLE_SetData( RESORT_PEOPLE *p_wk, RESORT_DATA_PARAM param, u32 da
 u32 RESORT_PEOPLE_GetData( const RESORT_PEOPLE *cp_wk, RESORT_DATA_PARAM param, void *p_ret_adrs )
 {
   return RESORT_ABSTRUCT_DATA_GetData( cp_wk->p_abstruct_data, param, p_ret_adrs );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  人物のデータを取得
+ *
+ *	@param	const RESORT_PEOPLE *cp_wk  ワーク
+ *	@param	param   引数
+ *
+ *	@return データ
+ */
+//-----------------------------------------------------------------------------
+u32 RESORT_PEOPLE_GetPeopleData( const RESORT_PEOPLE *cp_wk, RESORT_PEOPLE_DATA_PARAM param )
+{
+  switch( param )
+  {
+  case RESORT_PEOPLE_DATA_PARAM_TYPE:
+    return cp_wk->people_type;
+  default:
+    GF_ASSERT(0);
+    return 0;
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -590,6 +624,71 @@ static BOOL Action_WarpUp( RESORT_PEOPLE *p_wk, u32 *p_seq, FIELD_PLAYER *p_play
   return FALSE;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ジャンプ開始
+ *
+ *	@param	RESORT_PEOPLE *p_wk　ワーク
+ *	@param	*p_seq シーケンス
+ *
+ *	@return TRUEで行動終了　FALSEで続行
+ */
+//-----------------------------------------------------------------------------
+static BOOL Action_JumpStart( RESORT_PEOPLE *p_wk, u32 *p_seq, FIELD_PLAYER *p_player )
+{
+  enum
+  {
+    SEQ_START,
+    SEQ_WAIT,
+  };
+  MMDL *p_mmdl = RESORT_PEOPLE_GetMmdl( p_wk );
+
+  switch( *p_seq )
+  {
+  case SEQ_START:
+    if(MMDL_CheckPossibleAcmd(p_mmdl))
+    {
+      MMDL_SetAcmd(p_mmdl, AC_STAY_JUMP_D_16F);
+      (*p_seq)++;
+    }
+    break;
+  case SEQ_WAIT:
+    if(MMDL_CheckEndAcmd(p_mmdl) == TRUE)
+    {
+      MMDL_EndAcmd(p_mmdl);
+      (*p_seq) = SEQ_START; //ジャンプし続ける
+    }
+    break;
+  default:
+    GF_ASSERT(0);
+  }
+
+  return FALSE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ジャンプ終了
+ *
+ *	@param	RESORT_PEOPLE *p_wk　ワーク
+ *	@param	*p_seq シーケンス
+ *
+ *	@return TRUEで行動終了　FALSEで続行
+ */
+//-----------------------------------------------------------------------------
+static BOOL Action_JumpEnd( RESORT_PEOPLE *p_wk, u32 *p_seq, FIELD_PLAYER *p_player )
+{
+  MMDL *p_mmdl = RESORT_PEOPLE_GetMmdl( p_wk );
+
+  if(MMDL_CheckEndAcmd(p_mmdl))
+  {
+    MMDL_EndAcmd(p_mmdl);
+    return TRUE;
+  }
+  else
+  {
+    return FALSE;
+  }
+}
 //=============================================================================
 /**
  *					人物管理ワーク
@@ -670,6 +769,20 @@ void RESORT_PEOPLE_SYS_Main( RESORT_PEOPLE_SYS *p_wk,FIELD_PLAYER *p_player )
       RESORT_PEOPLE_Main( p_people, p_player );
     }
   }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  人物管理ワーク  人物数取得
+ *
+ *	@param	const RESORT_PEOPLE_SYS *cp_wk  ワーク
+ *
+ *	@return 最大値
+ */
+//-----------------------------------------------------------------------------
+u32 RESORT_PEOPLE_SYS_GetPeopleMax( const RESORT_PEOPLE_SYS *cp_wk )
+{
+  return cp_wk->param.max;
 }
 
 //----------------------------------------------------------------------------
@@ -887,4 +1000,19 @@ RESORT_PEOPLE * RESORT_PEOPLE_SYS_GetPeopleByData( RESORT_PEOPLE_SYS *p_wk, cons
     }
   }
   return NULL;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  人物を取得  インデックス版
+ *
+ *	@param	RESORT_PEOPLE_SYS *p_wk ワーク
+ *	@param	u32 idx　インデックス
+ *
+ *	@return 人物
+ */
+//-----------------------------------------------------------------------------
+RESORT_PEOPLE * RESORT_PEOPLE_SYS_GetPeopleByIndex( RESORT_PEOPLE_SYS *p_wk, u32 idx )
+{
+  GF_ASSERT( idx < p_wk->param.max );
+  return p_wk->p_people[idx];
 }
