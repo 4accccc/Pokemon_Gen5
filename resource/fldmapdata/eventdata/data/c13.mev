@@ -1,5 +1,5 @@
 #event data
-#save date:2011/02/28 18:05:15
+#save date:2011/03/02 14:41:39
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c13.wms
 #SECTION START:OBJ_EVENT
@@ -39,7 +39,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\c13.wms
 #hold event type:
 1
 #hold event number:
-1
+6
 #event number: 0
 #Door Event Label
 DOOR_ID_C13_R20R0101_EXIT01
@@ -54,8 +54,93 @@ EXIT_TYPE_WALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--232 0 104
+-232 0 88
 #size
 1 3
+#event number: 1
+#Door Event Label
+DOOR_ID_C13_C13PC0101_EXIT01
+#Next Zone ID Name
+ZONE_ID_C13PC0101
+#Next Door ID Name
+DOOR_ID_C13PC0101_C13_EXIT01
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+40 0 120
+#size
+1 1
+#event number: 2
+#Door Event Label
+DOOR_ID_C13_C13R0101_EXIT01
+#Next Zone ID Name
+ZONE_ID_C13R0101
+#Next Door ID Name
+DOOR_ID_C13R0101_C13_EXIT01
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+264 0 120
+#size
+1 1
+#event number: 3
+#Door Event Label
+DOOR_ID_C13_C13R0201_EXIT01
+#Next Zone ID Name
+ZONE_ID_C13R0201
+#Next Door ID Name
+DOOR_ID_C13R0201_C13_EXIT01
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-120 0 -200
+#size
+1 1
+#event number: 4
+#Door Event Label
+DOOR_ID_C13_C13R0301_EXIT01
+#Next Zone ID Name
+ZONE_ID_C13R0301
+#Next Door ID Name
+DOOR_ID_C13R0301_C13_EXIT01
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+280 0 -200
+#size
+1 1
+#event number: 5
+#Door Event Label
+DOOR_ID_C13_C13R0401_EXIT01
+#Next Zone ID Name
+ZONE_ID_C13R0401
+#Next Door ID Name
+DOOR_ID_C13R0401_C13_EXIT01
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+552 0 -200
+#size
+1 1
 #Map Event List Data End
 #SECTION End:DOOR_EVENT
