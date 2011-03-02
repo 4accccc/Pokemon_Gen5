@@ -1,5 +1,4 @@
 #------------------------------------------------------------------------------
-#  通信アイコンnarcを作るmakefile  
 #  コピーしてtargetnameを書き換えれば汎用的に使えます
 #  2008.08.19
 #------------------------------------------------------------------------------
@@ -12,7 +11,7 @@ USERS	= tsuruta_saya tamada
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
 #------------------------------------------------------------------------------
-targetname = wbt_tournament
+targetname = wbt_list_gra
 
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
@@ -30,21 +29,33 @@ include	$(PROJECT_RSCDIR)\macro_define
 # 自動でリソースを集める
 lsources:=$(wildcard *.ncl)
 gsources:=$(wildcard *.ncg)
+csources:=$(wildcard *.nsc)
+esources:=$(wildcard *.nce)
 
 # リソースが吐き出すファイルを自動でつくる
 lobjects = $(subst .ncl,.NCLR,$(lsources))
 gobjects = $(subst .ncg,.NCGR,$(gsources))
+cobjects = $(subst .nsc,.NSCR,$(csources))
+eobjects = $(subst .nce,.NCER,$(esources))
+aobjects = $(subst .nce,.NANR,$(esources))
 
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # サフィックスルールを定義することで 依存関係を自動で判断してくれる
-.SUFFIXES: .NCLR .ncl .NCGR .ncg
+.SUFFIXES: .NCLR .ncl .NCGR .ncg .NSCR .nsc .NCER .nce
 
 .ncl.NCLR:
-	g2dcvtr $<
+	g2dcvtr $< -pcm
 
 .ncg.NCGR:
 	g2dcvtr $< -bg
+
+.nsc.NSCR:
+	g2dcvtr $<
+
+.nce.NCER:
+	g2dcvtr $< -br
+
 endif
 
 .PHONY:	do-build clean subdir
@@ -65,7 +76,7 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(lobjects) $(gobjects)
+$(targetname).narc: $(lobjects) $(gobjects) $(eobjects) $(cobjects) $(aobjects)
 	nnsarc -r -l -n -i $(targetname) $^
 	$(NAIXCUT) $(targetname).naix
 endif
@@ -77,6 +88,9 @@ endif
 clean:
 	@$(MAKE_SUBDIR)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
+	rm -f *.NANR
+	rm -f *.NCER
+	rm -f *.NSCR
 	rm -f *.NCGR
 	rm -f *.NCLR
 	rm -f *.narc

@@ -2,7 +2,7 @@
 include $(PROJECT_RSCDIR)\macro_define
 
 
-#SUBDIRS	= wbt_tournament
+SUBDIRS	= wbt_list
 
 					
 

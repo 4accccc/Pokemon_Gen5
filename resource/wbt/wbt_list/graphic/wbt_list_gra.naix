@@ -1,18 +1,20 @@
 /*****************************************************************************
 	Archive file index definition.
-	File: wbt_tournament.naix
+	File: wbt_list_gra.naix
 
 	This file was created by NINTENDO TWL-System Archiver.
 
 
  *****************************************************************************/
 
-#ifndef NARC_WBT_TOURNAMENT_NAIX_
-#define NARC_WBT_TOURNAMENT_NAIX_
+#ifndef NARC_WBT_LIST_GRA_NAIX_
+#define NARC_WBT_LIST_GRA_NAIX_
 
 enum {
-
+	NARC_wbt_list_gra_wbt_list_bg_NCLR = 0,
+	NARC_wbt_list_gra_wbt_list_bg_NCGR = 1,
+	NARC_wbt_list_gra_wbt_list_bg_NSCR = 2
 };
 
-/* NARC_WBT_TOURNAMENT_NAIX_ */
+/* NARC_WBT_LIST_GRA_NAIX_ */
 #endif

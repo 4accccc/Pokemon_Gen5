@@ -175,7 +175,8 @@ SUBDIRS	=	wmi \
 			pokeform \
 			assert_err \
 			field_goout_effect \
-			resonance_resort
+			resonance_resort \
+			wbt
 
 
 include $(RESOURCE_MACRO)
