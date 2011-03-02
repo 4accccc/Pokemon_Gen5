@@ -461,11 +461,11 @@ VMCMD_RESULT EvCmdResortSetWord( VMHANDLE *p_core, void *p_wk_adrs )
     break;
   case RESORT_WORD_FREE_GREET:
     {
-      STRCODE phrase[GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN+EOM_SIZE];
+      STRCODE greet[GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN+EOM_SIZE];
       STRBUF *p_str = GFL_STR_CreateBuffer( GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN+EOM_SIZE, GFL_HEAP_LOWID(heapID) );
       u32 sex = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_SEX, NULL );
-      RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_PHRASE, phrase );
-      GFL_STR_SetStringCode( p_str, phrase );
+      RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_INTRODUCTION, greet );
+      GFL_STR_SetStringCode( p_str, greet );
     
       WORDSET_RegisterWord( p_wordset, idx, p_str, sex, TRUE, PM_LANG );
 
@@ -479,8 +479,6 @@ VMCMD_RESULT EvCmdResortSetWord( VMHANDLE *p_core, void *p_wk_adrs )
       STRBUF *p_str = GFL_STR_CreateBuffer( RESORT_MY_NAME_LEN+EOM_SIZE, GFL_HEAP_LOWID(heapID) );
       MYSTATUS *p_mystatus = GAMEDATA_GetMyStatus( GAMESYSTEM_GetGameData(p_gamesys) );
       u32 sex = MyStatus_GetMySex(p_mystatus);
-      RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_PHRASE, name );
-
       RESORT_CITY_DATA_GetData( p_city_data, RESORT_CITY_DATA_PARAM_AUTHER_NAME, name );
 
       GFL_STR_SetStringCode( p_str, name );
@@ -518,9 +516,8 @@ VMCMD_RESULT EvCmdResortSetWord( VMHANDLE *p_core, void *p_wk_adrs )
       //TODOÅ@í êMÇÇ∑ÇÈèÍçáÅAÇ±ÇÍÇÕëäéËÇÃåƒÇ—ñºÇ…Ç»ÇÈÇÕÇ∏
       STRCODE city[RESORT_CITY_NAME_LEN+EOM_SIZE];
       STRBUF *p_str = GFL_STR_CreateBuffer( RESORT_CITY_NAME_LEN+EOM_SIZE, GFL_HEAP_LOWID(heapID) );
-      RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_PHRASE, city );
 
-      RESORT_CITY_DATA_GetData( p_city_data, RESORT_CITY_DATA_PARAM_AUTHER_NAME, city );
+      RESORT_CITY_DATA_GetData( p_city_data, RESORT_CITY_DATA_PARAM_CITY_NAME, city );
       GFL_STR_SetStringCode( p_str, city );
       WORDSET_RegisterWord( p_wordset, idx, p_str, PM_NEUTRAL, TRUE, PM_LANG );
 

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nagihashi_toru" host="W00268" date="2011-03-02T10:26:48"/>
+	<create user="nagihashi_toru" host="W00268" date="2011-03-02T16:09:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -606,6 +606,17 @@ GTSで　会ったよね！</language>
 [1:3A:リゾート市長名:0]</language>
 		<language name="JPN_KANJI" width="256">かしこまりました
 [1:3A:リゾート市長名:0]</language>
+	</row>
+
+	<row id="resort_sys_name_00" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#c0c0c0,,#ffff80,#c0c0c0,,,#c0c0c0,,">
+		<comment>選択質問文</comment>
+		<language name="JPN" width="256">レゾナンスリゾート</language>
+		<language name="JPN_KANJI" width="256">レゾナンスリゾート</language>
+	</row>
+
+	<row id="resort_sys_name_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#c0c0c0,,#ffff80,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="256">しちょう</language>
+		<language name="JPN_KANJI" width="256">しちょう</language>
 	</row>
 
 	<row id="resort_sys_select_00" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#c0c0c0,,#80ff80,#c0c0c0,,,#c0c0c0,,">

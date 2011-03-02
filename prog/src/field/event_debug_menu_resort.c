@@ -39,6 +39,7 @@ static BOOL debugMenuCallProc_ClearProxyBuff( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_AllRecv( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_AllProxy( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_ChangeMap( DEBUG_MENU_EVENT_WORK *p_wk );
+static BOOL debugMenuCallProc_AllSecretary( DEBUG_MENU_EVENT_WORK *p_wk );
 
 static const DEBUG_MENU_LIST DATA_SubMenuList[] =
 {
@@ -49,6 +50,7 @@ static const DEBUG_MENU_LIST DATA_SubMenuList[] =
   { DEBUG_FIELD_RESORT_04, debugMenuCallProc_ClearProxyBuff, GFL_OVERLAY_BLANK_ID},
   { DEBUG_FIELD_RESORT_05, debugMenuCallProc_AllRecv, GFL_OVERLAY_BLANK_ID},
   { DEBUG_FIELD_RESORT_06, debugMenuCallProc_AllProxy, GFL_OVERLAY_BLANK_ID},
+  { DEBUG_FIELD_RESORT_08, debugMenuCallProc_AllSecretary, GFL_OVERLAY_BLANK_ID},
 };
 
 static const DEBUG_MENU_INITIALIZER DebugSubMenuData = {
@@ -244,4 +246,26 @@ static BOOL debugMenuCallProc_ChangeMap( DEBUG_MENU_EVENT_WORK *p_wk )
                                                 p_wk->fieldWork, ZONE_ID_C16 );
   GMEVENT_ChangeEvent( p_wk->gmEvent, event );
   return TRUE;
+}
+static BOOL debugMenuCallProc_AllSecretary( DEBUG_MENU_EVENT_WORK *p_wk )
+{
+  SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(p_wk->gdata);
+  RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( pSave );
+  RESORT_PEOPLE_ALL_DATA *p_all_people = RESONANCE_RESORT_SV_GetPeopleAllData( p_resort );
+  int i;
+
+  RESORT_RECV_DATA *p_recv = RESORT_RECV_DATA_Init( GFL_HEAP_LOWID(p_wk->heapID) );
+  RESORT_RECV_DATA_SetDebugData( p_recv, p_wk->gdata );
+
+  for( i = 0; i < RESORT_SECRETARY_DATA_NUM; i++ )
+  {
+    RESORT_SECRETARY_DATA *p_dst = RESORT_PEOPLE_ALL_DATA_GetSecretary( p_all_people, i );
+    if( RESORT_SECRETARY_DATA_IsEmpty( p_dst ) )
+    {
+      RESORT_SECRETARY_DATA_SetRecv( p_dst, p_recv, i, 1, i );
+    }
+  }
+
+  RESORT_RECV_DATA_Exit( p_recv );
+  return FALSE;
 }

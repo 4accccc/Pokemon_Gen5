@@ -15,7 +15,15 @@
 #include "net_app/union/union_beacon_tool.h"
 #include "system/gfl_use.h"
 #include "print/str_tool.h"
+#include "savedata/misc.h"
+#include "system/main.h"
 
+//arc
+#include "arc/arc_def.h"
+#include "arc/script_message.naix"
+#include "msg/script/msg_resort_scr.h"
+
+//mine 
 #include "field/resonance_resort/resort_map.h"
 
 //外部公開
@@ -219,6 +227,12 @@ static void RESORT_BASIC1_DATA_SetMyData( RESORT_BASIC1_DATA *p_wk, const GAMEDA
     {
       p_wk->trainer_view = MyStatus_GetTrainerView(p_mystatus) - UNION_VIEW_INDEX_WOMAN_START;
     }
+  }
+
+  {
+    MISC *p_misc = SaveData_GetMisc( GAMEDATA_GetSaveControlWork((GAMEDATA*)cp_gamedata) );
+    const STRCODE *cp_src = MISC_CrossComm_GetSelfIntroduction(p_misc);
+    GFL_STD_MemCopy( cp_src, p_wk->introduction, sizeof(STRCODE)*GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN );
   }
 
   //アンケート
@@ -1236,6 +1250,7 @@ void RESORT_RECV_DATA_SetDebugData( RESORT_RECV_DATA *p_wk, const GAMEDATA *cp_g
     u8 idx = GFUser_GetPublicRand(NELEMS(sc_name));
     GFL_STD_MemCopy( sc_name[idx].p_str, p_wk->basic1.name, sizeof(STRCODE)*sc_name[idx].len );
     p_wk->basic1.name[sc_name[idx].len] = GFL_STR_GetEOMCode();
+
   }
 }
 #endif
@@ -2262,7 +2277,7 @@ u32 RESORT_SECRETARY_DATA_GetData( const RESORT_SECRETARY_DATA *cp_wk, RESORT_DA
   case RESORT_DATA_PARAM_TRAINERVIEW:
     return RESORT_GET_TrainerView( cp_wk->basic1.trainer_view, cp_wk->basic1.sex ); 
   case RESORT_DATA_PARAM_PRESENT_ID:
-    return cp_wk->basic1.trainerID % 500; //TODO;
+    return 10; //TODO;
   case RESORT_DATA_PARAM_PRESENT_NUM:
     return 1; //TODO
   case RESORT_DATA_PARAM_TYPE:
@@ -2687,24 +2702,19 @@ void RESORT_CITY_DATA_InitInstance( RESORT_CITY_DATA *p_wk )
   p_wk->city_name[0] = GFL_STR_GetEOMCode();
   p_wk->my_name[0]  = GFL_STR_GetEOMCode();
 
-#ifdef PM_DEBUG
-  p_wk->city_name[0]  = L'レ';
-  p_wk->city_name[1]  = L'ゾ';
-  p_wk->city_name[2]  = L'ナ';
-  p_wk->city_name[3]  = L'ン';
-  p_wk->city_name[4]  = L'ス';
-  p_wk->city_name[5]  = L'リ';
-  p_wk->city_name[6]  = L'ゾ';
-  p_wk->city_name[7]  = L'ー';
-  p_wk->city_name[8]  = L'ト';
-  p_wk->city_name[9]  = GFL_STR_GetEOMCode();
+  {
+    GFL_MSGDATA *p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_resort_scr_dat, GFL_HEAP_LOWID(HEAPID_SAVE) );
+    STRBUF *p_strbuf = GFL_MSG_CreateString( p_msg, resort_sys_name_00 );
+    GFL_STR_GetStringCode( p_strbuf, p_wk->city_name, RESORT_CITY_NAME_BUFF_MAX+EOM_SIZE );
+    GFL_STR_DeleteBuffer( p_strbuf );
 
-  p_wk->my_name[0]  = L'し';
-  p_wk->my_name[1]  = L'ち';
-  p_wk->my_name[2]  = L'ょ';
-  p_wk->my_name[3]  = L'う';
-  p_wk->my_name[4]  = GFL_STR_GetEOMCode();
-#endif
+
+    p_strbuf = GFL_MSG_CreateString( p_msg, resort_sys_name_01 );
+    GFL_STR_GetStringCode( p_strbuf, p_wk->my_name, RESORT_MY_NAME_BUFF_MAX+EOM_SIZE );
+    GFL_STR_DeleteBuffer( p_strbuf );
+
+    GFL_MSG_Delete( p_msg );
+  }
 }
 //----------------------------------------------------------------------------
 /**
