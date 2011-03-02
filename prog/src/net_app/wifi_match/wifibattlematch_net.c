@@ -42,10 +42,9 @@
 #include "bugfix.h"
 
 //  デバッグ用にタイミングを知らせるためSEを鳴らすので
-#ifdef PM_DEBUG
+//BUGFIX_AF_BTS7759_20100914の対処としてpm_sndsysを使用するためifdefを外しました
 #include "sound/pm_sndsys.h"
 #include "wifibattlematch_snd.h"
-#endif
 
 //=============================================================================
 /**
