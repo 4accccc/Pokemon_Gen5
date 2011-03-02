@@ -52,17 +52,21 @@
 #define GYM_FLY_UNIT_IDX (0)
 #define GYM_FLY_TMP_ASSIGN_ID  (1)
 
-#define WINDMETER_NUM_MAX   (17)            // 風力計の数
+#define FAN_NUM_MAX             (3)         // ファンの数
+
+#define WINDMETER_NUM_MAX       (17)        // 風力計の数
 #define WINDMETER_SPEED_LOW     (FX32_ONE)  // 低速のアニメ速度
-#define WINDMETER_SPEED_MIDDLE  (0x2000)    // 中速のアニメ速度
-#define WINDMETER_SPEED_HIGH    (0x4000)    // 高速のアニメ速度
-#define WINDMETER_SPEED_ADD     (0x200)     // アニメ加算
+#define WINDMETER_SPEED_MIDDLE  (0x3000)    // 中速のアニメ速度
+#define WINDMETER_SPEED_HIGH    (0x9000)    // 高速のアニメ速度
+#define WINDMETER_SPEED_ADD     (0x300)     // アニメ加算
 
 // map_array.cdatの配列の要素
-#define MAP_ARRAY_
+#define MAP_ARRAY_ROW           (50)        // マップの縦MAX
+#define MAP_ARRAY_COL           (23)        // マップの横MAX
 enum{
   MAP_ARRAY_BLOW = 0,     // 吹き飛べる
   MAP_ARRAY_STOP,         // 吹き飛べない
+  MAP_ARRAY_TIMECOUNT_START,  // 時間計測開始
 };
 
 //-------------------------------------
@@ -84,6 +88,8 @@ typedef struct GYM_FLY_TMP_tag
 {
   HEAPID  heapID;     // ヒープID
 
+  BOOL    time_start;     // 時間計測開始フラグ
+
   u16     time;           // 時間計測用
   u8      state;          // 風速状態   WINDMETER_STATE_XXX
   fx32    anm_speed;      // アニメーション再生の現速度
@@ -98,9 +104,11 @@ typedef struct GYM_FLY_TMP_tag
 //=====================================
 typedef struct {
   GAMESYS_WORK    *gsys;        // ゲームシステム
-  FIELDMAP_WORK   *p_fieldmap;   // フィールドマップ
+  FIELDMAP_WORK   *p_fieldmap;  // フィールドマップ
   FIELD_PLAYER    *player;      // 自機
   MMDL            *mmdl;        // 自機の動作モデル
+
+  u16             time;         // 時間計測用
 } BLOW_EVENT_WORK;
 
 
@@ -115,12 +123,12 @@ typedef struct {
 */
 //=============================================================================
 // WINDMETER 風力計
-static void WINDMETER_Main( GYM_FLY_TMP *p_wk );
 static WINDMETER_STATE WINDMETER_GetState( const u16 c_time ); 
 static void WINDMETER_ChangeState( FIELDMAP_WORK *p_fieldmap, const WINDMETER_STATE state );
 // 吹き飛ばしイベント
 static GMEVENT* WINDMETER_BLOW_CreateEvent( GMEVENT* parent, GAMESYS_WORK* gsys );
 static GMEVENT_RESULT BlowEvent( GMEVENT* event, int* seq, void* wk );
+static GMEVENT_RESULT BlowEventSafe( GMEVENT* event, int* seq, void* wk );
 
 // EXPOBJ
 static void EXPOBJ_ObjSet( GYM_FLY_TMP *p_wk );
@@ -136,6 +144,7 @@ static void DEBUGMENU_Exit( void );
 
 static int debug_windmeter_time1 = WINDMETER_MIDDLE_TIME;   // 低速から中速に変わるまでの時間
 static int debug_windmeter_time2 = WINDMETER_HIGH_TIME;   // 中速から高速に変わるまでの時間
+static u16 debug_blow_event_time_max = BLOW_EVENT_TIME;   // 吹き飛ばしイベントの最低経過時間
 #endif // GYM_FLY_DEBUG_MENU
 
 //=============================================================================
@@ -157,9 +166,11 @@ void GYM_FLY_Setup(FIELDMAP_WORK *p_fieldmap)
       FIELDMAP_GetHeapID(p_fieldmap), sizeof(GYM_FLY_TMP));
 
   p_wk->heapID    = HEAPID_FIELDMAP;
+  p_wk->time_start= FALSE;
   p_wk->time      = 0;
   p_wk->state     = WINDMETER_STATE_LOW;
   p_wk->anm_speed = FX32_ONE;
+  p_wk->anm_speed_max = FX32_ONE;
   p_wk->exp_obj   = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
 
   // EXPOBJセット
@@ -203,9 +214,6 @@ void GYM_FLY_Move(FIELDMAP_WORK *p_fieldmap)
 {
   GYM_FLY_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, GYM_FLY_TMP_ASSIGN_ID );
 
-  // 風力計メイン
-  WINDMETER_Main( p_wk );
-
   // EXPOBJアニメメイン
   EXPOBJ_ObjMain( p_wk );
 }
@@ -228,6 +236,20 @@ GMEVENT * GYM_FLY_CheckEvent( GAMESYS_WORK *p_gamesys )
   GMEVENT *event;
 
   if( p_wk == NULL ){ return NULL; }
+
+  // 指定位置に来ていないなら時間開始しない
+  if( p_wk->time_start == FALSE )
+  {
+    s16 gx, gy, gz;
+    FIELD_PLAYER_GetGridPos( cp_player, &gx, &gy, &gz );
+
+    // 配列から自機座標のデータを取得
+    if( map_array[gz][gx] == MAP_ARRAY_TIMECOUNT_START )
+    {
+      p_wk->time_start = TRUE;
+    }
+    return NULL;
+  }
 
   // 時間経過
   p_wk->time++;
@@ -259,17 +281,6 @@ GMEVENT * GYM_FLY_CheckEvent( GAMESYS_WORK *p_gamesys )
  *      static関数
  */
 //=============================================================================
-//----------------------------------------------------------------------------
-/**
- *	@brief  風力計のメイン
- *
- *	@param	GYM_FLY_TMP *p_wk 
- */
-//-----------------------------------------------------------------------------
-static void WINDMETER_Main( GYM_FLY_TMP *p_wk )
-{
-  
-}
 
 //----------------------------------------------------------------------------
 /**
@@ -358,15 +369,30 @@ static GMEVENT* WINDMETER_BLOW_CreateEvent( GMEVENT* parent, GAMESYS_WORK* gsys 
 
   player = FIELDMAP_GetFieldPlayer( p_fieldmap );
 
-  // 生成
-  event = GMEVENT_Create( gsys, parent, BlowEvent, sizeof(BLOW_EVENT_WORK) );
+  // イベント生成
+  // 安全地帯にいるかどうかでイベント関数を変更
+  {
+    s16 gx, gy, gz;
+    FIELD_PLAYER_GetGridPos( player, &gx, &gy, &gz );
+
+    // 配列から自機座標のデータを取得
+    if( map_array[gz][gx] == MAP_ARRAY_STOP )
+    {
+      event = GMEVENT_Create( gsys, parent, BlowEventSafe, sizeof(BLOW_EVENT_WORK) );
+    }
+    else
+    {
+      event = GMEVENT_Create( gsys, parent, BlowEvent, sizeof(BLOW_EVENT_WORK) );
+    }
+  }
 
   // 初期化
   work = GMEVENT_GetEventWork( event );
-  work->gsys              = gsys;
-  work->p_fieldmap        = p_fieldmap;
-  work->player            = player;
-  work->mmdl              = FIELD_PLAYER_GetMMdl( player );
+  work->gsys        = gsys;
+  work->p_fieldmap  = p_fieldmap;
+  work->player      = player;
+  work->mmdl        = FIELD_PLAYER_GetMMdl( player );
+  work->time        = 0;
 
   return event;
 }
@@ -384,11 +410,13 @@ static GMEVENT* WINDMETER_BLOW_CreateEvent( GMEVENT* parent, GAMESYS_WORK* gsys 
 static GMEVENT_RESULT BlowEvent( GMEVENT* event, int* seq, void* wk )
 {
   BLOW_EVENT_WORK *p_wk = (BLOW_EVENT_WORK*)wk;
+  GYM_FLY_TMP     *p_gym_wk = GMK_TMP_WK_GetWork( p_wk->p_fieldmap, GYM_FLY_TMP_ASSIGN_ID);
 
   // 処理シーケンス
   enum{
     SEQ_WAIT,   // グリッド調度待ち
-    SEQ_START,   // イベント開始 
+    SEQ_STAY_WALK,// その場で足踏み
+    SEQ_START,  // イベント開始 
     SEQ_MAIN,   // メイン処理
     SEQ_EXIT,   // イベント終了
   };
@@ -402,9 +430,26 @@ static GMEVENT_RESULT BlowEvent( GMEVENT* event, int* seq, void* wk )
       // ！マーク
       MMDL_SetAcmd( p_wk->mmdl, AC_MARK_GYOE ); 
 
+      // SE ゴー
+
+      *seq = SEQ_STAY_WALK;
+    }
+    break;
+
+  // その場で足踏み
+  case SEQ_STAY_WALK:
+    if( MMDL_CheckEndAcmd(p_wk->mmdl) )
+    {
+      u16 dir = FIELD_PLAYER_GetDir( p_wk->player );
+      dir %= 4;
+      MMDL_SetAcmd( p_wk->mmdl, (AC_STAY_WALK_U_4F + dir) );
+
+      // SE ヒュー
+
       *seq = SEQ_START;
     }
     break;
+
   // イベント開始
   case SEQ_START:
     if( MMDL_CheckEndAcmd(p_wk->mmdl) )
@@ -417,20 +462,23 @@ static GMEVENT_RESULT BlowEvent( GMEVENT* event, int* seq, void* wk )
         s16 gx, gy, gz;
         FIELD_PLAYER_GetGridPos( player, &gx, &gy, &gz );
 
-        while( move_distance < 50 ){
+        while( gz<MAP_ARRAY_ROW )
+        {
           ICHI_Printf("自機GRID座標 x:%d z:%d ", gx, gz);
           ICHI_Printf("map_array %d \n", map_array[gz][gx] );
 
-          // 一歩後ろへ
+          // 1グリッド下
           gz += 1;
 
           // 配列から自機座標のデータを取得
           if( map_array[gz][gx] == MAP_ARRAY_STOP )
           {
+            // 壁ならストップ
             break;
           }
-          // 吹っ飛べるので距離を増やす
-          move_distance++;
+
+          // 移動距離加算
+          move_distance += 1;
         }
       }
 
@@ -458,6 +506,22 @@ static GMEVENT_RESULT BlowEvent( GMEVENT* event, int* seq, void* wk )
         MMDL_OnStatusBit( mmdl, MMDL_STABIT_HEIGHT_GET_OFF );
       }
 
+      // 吸い込みエフェクト
+      {
+        // 位置
+        GFL_G3D_OBJSTATUS* status = FLD_EXP_OBJ_GetUnitObjStatus( p_gym_wk->exp_obj, GYM_FLY_UNIT_IDX, EFFECT_WIND_JIKI );
+        MMDL_GetVectorPos( p_wk->mmdl, &status->trans );
+
+        // 表示
+        FLD_EXP_OBJ_SetVanish( p_gym_wk->exp_obj, GYM_FLY_UNIT_IDX, EFFECT_WIND_JIKI, FALSE );
+        // アニメ
+        {
+          EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_gym_wk->exp_obj, GYM_FLY_UNIT_IDX, EFFECT_WIND_JIKI, 0 );
+          FLD_EXP_OBJ_SetObjAnmFrm( p_gym_wk->exp_obj, GYM_FLY_UNIT_IDX, EFFECT_WIND_JIKI, 0, 0 );
+          FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE ); //アニメ開始
+        }
+      }
+
       *seq = SEQ_MAIN;
     }
     break;
@@ -465,6 +529,8 @@ static GMEVENT_RESULT BlowEvent( GMEVENT* event, int* seq, void* wk )
   // メイン処理
   case SEQ_MAIN:
     {
+      BOOL  ret = FALSE;
+
       // 自機の向きを変える
       {
         int key = GFL_UI_KEY_GetCont();
@@ -487,14 +553,52 @@ static GMEVENT_RESULT BlowEvent( GMEVENT* event, int* seq, void* wk )
         FIELD_TASK_MAN* taskMan;
         taskMan = FIELDMAP_GetTaskManager( p_wk->p_fieldmap );
         if( FIELD_TASK_MAN_IsAllTaskEnd(taskMan) ) {
-          *seq = SEQ_EXIT;
+          ret = TRUE;
         }
+      }
+
+      // 時間計測
+      // 一定時間は吹き飛ばしイベントを続ける
+      {
+#ifdef GYM_FLY_DEBUG_MENU
+        const u16 blow_event_time_max = debug_blow_event_time_max;
+#else
+        const u16 blow_event_time_max = BLOW_EVENT_TIME;
+#endif
+
+        if( p_wk->time < blow_event_time_max )
+        {
+          p_wk->time++;
+
+          // 移動は終わったがまだイベントは継続させる
+          if( ret == TRUE )
+          {
+            ret = FALSE;
+          }
+        }
+      }
+
+      // 吸い込みエフェクト
+      {
+        // 位置
+        GFL_G3D_OBJSTATUS* status = FLD_EXP_OBJ_GetUnitObjStatus( p_gym_wk->exp_obj, GYM_FLY_UNIT_IDX, EFFECT_WIND_JIKI );
+        MMDL_GetVectorPos( p_wk->mmdl, &status->trans );
+      }
+
+      // 次シーケンス移行チェック
+      if( ret == TRUE )
+      {
+        *seq = SEQ_EXIT;
       }
     }
     break;
 
   // イベント終了
   case SEQ_EXIT:
+    // 吸い込みエフェクトOFF
+    FLD_EXP_OBJ_SetVanish( p_gym_wk->exp_obj, GYM_FLY_UNIT_IDX, EFFECT_WIND_JIKI, TRUE );
+    FLD_EXP_OBJ_ChgAnmStopFlg( FLD_EXP_OBJ_GetAnmCnt( p_gym_wk->exp_obj, GYM_FLY_UNIT_IDX, EFFECT_WIND_JIKI, 0), TRUE );
+
     // 高さ取得禁止ステータスビットをOFFに戻す
     {
       FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( p_wk->p_fieldmap );
@@ -507,6 +611,102 @@ static GMEVENT_RESULT BlowEvent( GMEVENT* event, int* seq, void* wk )
   return GMEVENT_RES_CONTINUE;
 }
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief 吹き飛ばしイベント関数
+ *	       安全地帯にいる場合
+ *
+ *	@param	GMEVENT* event
+ *	@param	seq
+ *	@param	wk 
+ */
+//----------------------------------------------------------------------------
+static GMEVENT_RESULT BlowEventSafe( GMEVENT* event, int* seq, void* wk )
+{
+  BLOW_EVENT_WORK *p_wk = (BLOW_EVENT_WORK*)wk;
+  GYM_FLY_TMP     *p_gym_wk = GMK_TMP_WK_GetWork( p_wk->p_fieldmap, GYM_FLY_TMP_ASSIGN_ID);
+
+  // 処理シーケンス
+  enum{
+    SEQ_WAIT,   // グリッド調度待ち
+    SEQ_START,   // イベント開始 
+    SEQ_MAIN,   // メイン処理
+    SEQ_EXIT,   // イベント終了
+  };
+
+  switch( *seq )
+  {
+  // グリッド調度待ち
+  case SEQ_WAIT:
+    if( MMDL_CheckEndAcmd(p_wk->mmdl) )
+    {
+      // ！マーク
+      MMDL_SetAcmd( p_wk->mmdl, AC_MARK_GYOE ); 
+
+      *seq = SEQ_START;
+    }
+    break;
+  // イベント開始
+  case SEQ_START:
+    if( MMDL_CheckEndAcmd(p_wk->mmdl) )
+    {
+      // 波乗りのOBJコードに強制的に変更する
+      int sex = FIELD_PLAYER_GetSex( p_wk->player );
+      u16 code = FIELD_PLAYER_GetDrawFormToOBJCode( sex, PLAYER_DRAW_FORM_SAVEHERO );
+
+      if( MMDL_GetOBJCode( p_wk->mmdl ) != code ){
+        FIELD_PLAYER_ChangeOBJCode( p_wk->player, code );
+      }
+
+      *seq = SEQ_MAIN;
+    }
+    break;
+
+  // メイン処理
+  case SEQ_MAIN:
+    {
+      BOOL  ret = FALSE;
+
+      // 時間計測
+      // 一定時間は吹き飛ばしイベントを続ける
+      {
+#ifdef GYM_FLY_DEBUG_MENU
+        const u16 blow_event_time_max = debug_blow_event_time_max;
+#else
+        const u16 blow_event_time_max = BLOW_EVENT_TIME;
+#endif
+
+        p_wk->time++;
+        if( p_wk->time >= blow_event_time_max )
+        {
+          ret = TRUE;
+        }
+      }
+
+      // 次シーケンス移行チェック
+      if( ret == TRUE )
+      {
+        *seq = SEQ_EXIT;
+      }
+    }
+    break;
+
+  // イベント終了
+  case SEQ_EXIT:
+    {
+      // OBJコードを通常に戻す
+      int sex = FIELD_PLAYER_GetSex( p_wk->player );
+      u16 code = FIELD_PLAYER_GetDrawFormToOBJCode( sex, PLAYER_DRAW_FORM_NORMAL );
+
+      if( MMDL_GetOBJCode( p_wk->mmdl ) != code ){
+        FIELD_PLAYER_ChangeOBJCode( p_wk->player, code );
+      }
+    }
+    return GMEVENT_RES_FINISH;
+  }
+  return GMEVENT_RES_CONTINUE;
+}
 
 //=============================================================================
 /**
@@ -528,6 +728,39 @@ static void EXPOBJ_ObjSet( GYM_FLY_TMP *p_wk )
   //必要なリソースの用意
   FLD_EXP_OBJ_AddUnitByHandle( p_wk->exp_obj, &g3Dutil_Setup, GYM_FLY_UNIT_IDX);
 
+  //=====================================
+  ///	ファンの設定
+  //
+  for( i=0; i<FAN_NUM_MAX; i++ )
+  {
+    // 座標セット
+    VecFx32 pos[ WINDMETER_NUM_MAX ] = {
+      { FAN1_GX,  FAN1_GY,  FAN1_GZ },
+      { FAN2_GX,  FAN2_GY,  FAN2_GZ },
+      { FAN3_GX,  FAN3_GY,  FAN3_GZ },
+    };
+
+    u16   obj_idx = OBJ_FAN1 + i;    // OBJインデックス
+    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( p_wk->exp_obj, GYM_FLY_UNIT_IDX, obj_idx );
+
+    status->trans.x = FX32_CONST( pos[i].x * FIELD_CONST_GRID_SIZE );
+    status->trans.y = FX32_CONST( pos[i].y * FIELD_CONST_GRID_SIZE );
+    status->trans.z = FX32_CONST( pos[i].z * FIELD_CONST_GRID_SIZE );
+    // カリングする
+    FLD_EXP_OBJ_SetCulling( p_wk->exp_obj, GYM_FLY_UNIT_IDX, obj_idx, TRUE );
+    FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GYM_FLY_UNIT_IDX, obj_idx, FALSE );
+    // アニメ再生
+    {
+      EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, GYM_FLY_UNIT_IDX, obj_idx, 0 );
+      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, GYM_FLY_UNIT_IDX, obj_idx, 0, TRUE );
+      FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, TRUE );   // ループ再生設定
+      FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE );  // アニメ再生
+    }
+  }
+
+  //=====================================
+  ///	風力計の設定
+  //
   for( i=0; i<WINDMETER_NUM_MAX; i++ )
   {
     // 座標セット
@@ -566,6 +799,25 @@ static void EXPOBJ_ObjSet( GYM_FLY_TMP *p_wk )
       FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, GYM_FLY_UNIT_IDX, obj_idx, 0, TRUE );
       FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, TRUE );   // ループ再生設定
       FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE );  // アニメ再生
+    }
+  }
+
+  //=====================================
+  ///	吸い込みの設定
+  //
+  {
+    u16   obj_idx = EFFECT_WIND_JIKI;    // OBJインデックス
+    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( p_wk->exp_obj, GYM_FLY_UNIT_IDX, obj_idx );
+
+    // カリングする
+    FLD_EXP_OBJ_SetCulling( p_wk->exp_obj, GYM_FLY_UNIT_IDX, obj_idx, TRUE );
+    FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GYM_FLY_UNIT_IDX, obj_idx, TRUE );  // 非表示
+    // アニメ再生
+    {
+      EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, GYM_FLY_UNIT_IDX, obj_idx, 0 );
+      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, GYM_FLY_UNIT_IDX, obj_idx, 0, TRUE );
+      FLD_EXP_OBJ_SetObjAnmFrm( p_wk->exp_obj, GYM_FLY_UNIT_IDX, obj_idx, 0, 0);
+      FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, TRUE );   // ループ再生設定
     }
   }
 }
@@ -611,6 +863,8 @@ static void EXPOBJ_ObjMain( GYM_FLY_TMP *p_wk )
 
     // アニメスピード変更
     FLD_EXP_OBJ_SetUnitAddFrame( p_wk->exp_obj, GYM_FLY_UNIT_IDX, p_wk->anm_speed );
+    // 吸い込みアニメだけアニメ速度一定
+    FLD_EXP_OBJ_ChgAddFrame( FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, GYM_FLY_UNIT_IDX, EFFECT_WIND_JIKI, 0 ), FX32_ONE );
   }
 
   // アニメーション再生
@@ -629,7 +883,6 @@ static void EXPOBJ_ObjMain( GYM_FLY_TMP *p_wk )
 //=====================================
 #define DEBUGMENU_GYM_FLY (2)
 
-
 //-------------------------------------
 ///	static
 //=====================================
@@ -640,6 +893,8 @@ static void DebugWin_Update_ChangeTime1( void *userWork, DEBUGWIN_ITEM *item );
 static void DebugWin_Draw_ChangeTime1( void *userWork, DEBUGWIN_ITEM *item );
 static void DebugWin_Update_ChangeTime2( void *userWork, DEBUGWIN_ITEM *item );
 static void DebugWin_Draw_ChangeTime2( void *userWork, DEBUGWIN_ITEM *item );
+static void DebugWin_Update_ChangeBlowTime( void *userWork, DEBUGWIN_ITEM *item );
+static void DebugWin_Draw_ChangeBlowTime( void *userWork, DEBUGWIN_ITEM *item );
 
 //----------------------------------------------------------------------------
 /**
@@ -664,6 +919,11 @@ static void DEBUGMENU_Init( void *p_wk, FIELDMAP_WORK *p_fieldmap, HEAPID heapID
                               heapID );
   DEBUGWIN_AddItemToGroupEx(  DebugWin_Update_ChangeTime2,
                               DebugWin_Draw_ChangeTime2,
+                              p_fieldmap,
+                              DEBUGMENU_GYM_FLY,
+                              heapID );
+  DEBUGWIN_AddItemToGroupEx(  DebugWin_Update_ChangeBlowTime,
+                              DebugWin_Draw_ChangeBlowTime,
                               p_fieldmap,
                               DEBUGMENU_GYM_FLY,
                               heapID );
@@ -794,5 +1054,37 @@ static void DebugWin_Draw_ChangeTime2( void *userWork, DEBUGWIN_ITEM *item )
   DEBUGWIN_ITEM_SetNameV( item, "ちゅうそくじかん[%d]", debug_windmeter_time2 );
 }
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  吹き飛ばしイベントの継続時間  更新
+ *
+ *	@param	*userWork ワーク
+ *	@param	*item     アイテム
+ */
+//-----------------------------------------------------------------------------
+static void DebugWin_Update_ChangeBlowTime( void *userWork, DEBUGWIN_ITEM *item )
+{
+  int value = debug_blow_event_time_max;
+
+  if( DebugWin_ChangeData( &value, 0, 600 ) )
+  {
+    // 更新あり
+    debug_blow_event_time_max = value;
+    DEBUGWIN_RefreshScreen();
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  吹き飛ばしイベントの継続時間  描画
+ *
+ *	@param	*userWork ワーク
+ *	@param	*item     アイテム
+ */
+//-----------------------------------------------------------------------------
+static void DebugWin_Draw_ChangeBlowTime( void *userWork, DEBUGWIN_ITEM *item )
+{
+  DEBUGWIN_ITEM_SetNameV( item, "ふきとばしじかん[%d]", debug_blow_event_time_max );
+}
 
 #endif // GYM_FLY_DEBUG_MENU

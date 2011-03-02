@@ -17,48 +17,96 @@
 //=============================================================================
 // リソースの並び順
 enum {
-  RESID_WINDMETER_MDL = 0,
-  RESID_WINDMETER_ANM1_ICA,
+  RESID_FAN_MDL = 0,        // 大きいファン
+  RESID_FAN_ANM_ICA,        // 大きいファン
+  RESID_WINDMETER_MDL,      // 風力計
+  RESID_WINDMETER_ANM1_ICA, // 風力計
+  RESID_WIND_JIKI_MDL,         // 吸い込み
+  RESID_WIND_JIKI_ANM_ITA,     // 吸い込み
 };
 
 // OBJインデックス
 enum {
-  OBJ_WINDMETER_1 = 0,  // 
-  OBJ_WINDMETER_2 = 0,  // 
-  OBJ_WINDMETER_3 = 0,  // 
-  OBJ_WINDMETER_4 = 0,  // 
-  OBJ_WINDMETER_5 = 0,  // 
-  OBJ_WINDMETER_6 = 0,  // 
-  OBJ_WINDMETER_7 = 0,  // 
-  OBJ_WINDMETER_8 = 0,  // 
-  OBJ_WINDMETER_9 = 0,  // 
-  OBJ_WINDMETER_10 = 0,  // 
-  OBJ_WINDMETER_11 = 0,  // 
-  OBJ_WINDMETER_12 = 0,  // 
-  OBJ_WINDMETER_13 = 0,  // 
-  OBJ_WINDMETER_14 = 0,  // 
-  OBJ_WINDMETER_15 = 0,  // 
-  OBJ_WINDMETER_16 = 0,  // 
-  OBJ_WINDMETER_17 = 0,  // 
+  OBJ_FAN1 = 0,
+  OBJ_FAN2,
+  OBJ_FAN3,
+  OBJ_WINDMETER_1,  // 
+  OBJ_WINDMETER_2,  // 
+  OBJ_WINDMETER_3,  // 
+  OBJ_WINDMETER_4,  // 
+  OBJ_WINDMETER_5,  // 
+  OBJ_WINDMETER_6,  // 
+  OBJ_WINDMETER_7,  // 
+  OBJ_WINDMETER_8,  // 
+  OBJ_WINDMETER_9,  // 
+  OBJ_WINDMETER_10,  // 
+  OBJ_WINDMETER_11,  // 
+  OBJ_WINDMETER_12,  // 
+  OBJ_WINDMETER_13,  // 
+  OBJ_WINDMETER_14,  // 
+  OBJ_WINDMETER_15,  // 
+  OBJ_WINDMETER_16,  // 
+  OBJ_WINDMETER_17,  // 
+  EFFECT_WIND_JIKI,
 };
 
 // RES
 static const GFL_G3D_UTIL_RES res_3d_table[] =
 {
-  { ARCID_GYM_FLY, NARC_gym_fly_cannon_01_00_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
-
-  { ARCID_GYM_FLY, NARC_gym_fly_cannon_01_00_nsbca, GFL_G3D_UTIL_RESARC }, // ICA
+  // ファン
+  { ARCID_GYM_FLY, NARC_gym_fly_fan_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
+  { ARCID_GYM_FLY, NARC_gym_fly_fan_nsbca, GFL_G3D_UTIL_RESARC }, // ICA
+  // 風力計
+  { ARCID_GYM_FLY, NARC_gym_fly_fuusoku_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
+  { ARCID_GYM_FLY, NARC_gym_fly_fuusoku_nsbca, GFL_G3D_UTIL_RESARC }, // ICA
+  // 吸い込み
+  { ARCID_GYM_FLY, NARC_gym_fly_wind_jiki_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
+  { ARCID_GYM_FLY, NARC_gym_fly_wind_jiki_nsbta, GFL_G3D_UTIL_RESARC }, // ITA
 };
 
-// ANIME
+// ANIME  風力計
 static const GFL_G3D_UTIL_ANM anm_3d_table[] =
 {
   { RESID_WINDMETER_ANM1_ICA, 0 }, // nsbca
+};
+// ANIME ファン
+static const GFL_G3D_UTIL_ANM anm_3d_table_fan[] =
+{
+  { RESID_FAN_ANM_ICA, 0 }, // nsbca
+};
+// ANIME 吸い込み
+static const GFL_G3D_UTIL_ANM anm_3d_table_wind_jiki[] =
+{
+  { RESID_WIND_JIKI_ANM_ITA, 0 }, // nsbta
 };
 
 // OBJ
 static const GFL_G3D_UTIL_OBJ obj_3d_table[] = 
 {
+  // ファン1
+  {
+    RESID_FAN_MDL,      // モデルリソースID
+    0,      // モデルデータID(リソース内部INDEX)
+    RESID_FAN_MDL,      // テクスチャリソースID
+    anm_3d_table_fan,   // アニメテーブル(複数指定のため)
+    NELEMS(anm_3d_table_fan),      // アニメリソース数
+  },
+  // ファン2
+  {
+    RESID_FAN_MDL,      // モデルリソースID
+    0,      // モデルデータID(リソース内部INDEX)
+    RESID_FAN_MDL,      // テクスチャリソースID
+    anm_3d_table_fan,   // アニメテーブル(複数指定のため)
+    NELEMS(anm_3d_table_fan),      // アニメリソース数
+  },
+  // ファン3
+  {
+    RESID_FAN_MDL,      // モデルリソースID
+    0,      // モデルデータID(リソース内部INDEX)
+    RESID_FAN_MDL,      // テクスチャリソースID
+    anm_3d_table_fan,   // アニメテーブル(複数指定のため)
+    NELEMS(anm_3d_table_fan),      // アニメリソース数
+  },
   // 風力計1
   {
     RESID_WINDMETER_MDL,      // モデルリソースID
@@ -194,6 +242,14 @@ static const GFL_G3D_UTIL_OBJ obj_3d_table[] =
     RESID_WINDMETER_MDL,      // テクスチャリソースID
     anm_3d_table,   // アニメテーブル(複数指定のため)
     NELEMS(anm_3d_table),      // アニメリソース数
+  },
+  // 吸い込み
+  {
+    RESID_WIND_JIKI_MDL,      // モデルリソースID
+    0,      // モデルデータID(リソース内部INDEX)
+    RESID_WIND_JIKI_MDL,      // テクスチャリソースID
+    anm_3d_table_wind_jiki,   // アニメテーブル(複数指定のため)
+    NELEMS(anm_3d_table_wind_jiki),      // アニメリソース数
   },
 };
 

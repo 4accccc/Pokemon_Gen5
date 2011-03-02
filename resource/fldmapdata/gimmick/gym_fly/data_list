@@ -1,4 +1,8 @@
 DATA_LIST = \
-     cannon_01_00.nsbmd \
-		 cannon_01_00.nsbca \
+     fan.nsbmd \
+		 fan.nsbca \
+     fuusoku.nsbmd \
+		 fuusoku.nsbca \
+     wind_jiki.nsbmd \
+		 wind_jiki.nsbta \
 

@@ -11,8 +11,12 @@
 #define NARC_GYM_FLY_NAIX_
 
 enum {
-	NARC_gym_fly_cannon_01_00_nsbmd = 0,
-	NARC_gym_fly_cannon_01_00_nsbca = 1
+	NARC_gym_fly_fan_nsbmd = 0,
+	NARC_gym_fly_fan_nsbca = 1,
+	NARC_gym_fly_fuusoku_nsbmd = 2,
+	NARC_gym_fly_fuusoku_nsbca = 3,
+	NARC_gym_fly_wind_jiki_nsbmd = 4,
+	NARC_gym_fly_wind_jiki_nsbta = 5
 };
 
 /* NARC_GYM_FLY_NAIX_ */
