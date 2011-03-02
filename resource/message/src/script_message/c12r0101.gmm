@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-02T22:36:15"/>
+	<create user="matsumiya" host="W00224" date="2011-03-02T22:41:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,13 +229,13 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="152"/>
+		<id position="0" width="185"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="222"/>
+		<comment position="4" width="252"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="132">
 		</attribute>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1442" top="275" right="2147" bottom="895" maximized="no" rayout="Vertical2">
+	<dialog left="1297" top="279" right="2002" bottom="907" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -330,6 +330,131 @@
 		<attribute name="キャラ指定">主人公ママ</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_c12r0101_swmama_06">
+		<comment>♀</comment>
+		<attribute name="キャラ指定">主人公ママ</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_c12r0101_swmama_07">
+		<comment>♀</comment>
+		<attribute name="キャラ指定">主人公ママ</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_c12r0101_swmama_08">
+		<comment>♀</comment>
+		<attribute name="キャラ指定">主人公ママ</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_c12r0101_swmama_cure_01">
+		<comment>♀：回復処理
+・メッセージ表示後、
+　画面暗転して回復処理
+・回復処理後ランダム（20％）で
+　cure_02～06表示
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">主人公ママ</attribute>
+		<language name="JPN" width="256">ママ『[1:00:トレーナー名:0]
+ポケモンは　げんき　なの？[BE:01:ページ切り替え（クリア）]
+ちょっと　やすんでいきなさいな[BE:01:ページ切り替え（クリア）]
+いい　トレーナーは
+ポケモンに　むりさせないのよ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ママ『[1:00:トレーナー名:0]
+ポケモンは　元気なの？[BE:01:ページ切り替え（クリア）]
+ちょっと　休んでいきなさいな[BE:01:ページ切り替え（クリア）]
+いい　トレーナーは
+ポケモンに　無理させないのよ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c12r0101_swmama_cure_02">
+		<comment>♀
+・回復処理後ランダム（20％）で
+　cure_02～06e表示
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">主人公ママ</attribute>
+		<language name="JPN" width="256">ママ『うん　ばっちり！▼
+[1:00:トレーナー名:0]も　ポケモンも
+げんき　ハツラツって　かんじ！▼
+さあ　たびを　つづけなさいな</language>
+		<language name="JPN_KANJI" width="256">ママ『うん　ばっちり！▼
+[1:00:トレーナー名:0]も　ポケモンも
+元気ハツラツって　感じ！▼
+さあ　旅を　続けなさいな</language>
+	</row>
+
+	<row id="msg_c12r0101_swmama_cure_03">
+		<comment>♀
+・回復処理後ランダム（20％）で
+　cure_02～06e表示
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">主人公ママ</attribute>
+		<language name="JPN" width="256">ママ『[1:00:トレーナー名:0]
+ポケモンには　やさしくしてる？▼
+あなたの　ために　ポケモンは
+がんばって　くれるんだもん！▼
+あなたも　ポケモンに
+やさしくするのが　ふつうでしょ？</language>
+		<language name="JPN_KANJI" width="256">ママ『[1:00:トレーナー名:0]
+ポケモンには　優しくしてる？▼
+あなたの　ために　ポケモンは
+がんばって　くれるんだもん！▼
+あなたも　ポケモンを
+気遣ってあげるのが　普通でしょ？</language>
+	</row>
+
+	<row id="msg_c12r0101_swmama_cure_04">
+		<comment>♀
+・回復処理後ランダム（20％）で
+　cure_02～06e表示
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">主人公ママ</attribute>
+		<language name="JPN" width="256">ママ『そういえば……▼
+パパも　あなたと　おなじように
+ポケモンと　たびを　していたのよね▼
+たびさきで　ママと　であって……</language>
+		<language name="JPN_KANJI" width="256">ママ『そういえば……▼
+パパも　あなたと　おなじように
+ポケモンと　旅を　していたのよね▼
+旅先で　ママと　出会って……</language>
+	</row>
+
+	<row id="msg_c12r0101_swmama_cure_05">
+		<comment>♀
+・回復処理後ランダム（20％）で
+　cure_02～06e表示
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">主人公ママ</attribute>
+		<language name="JPN" width="256">ママ『どう？　ポケモンは
+たくさん　つかまえているの？▽
+はかせの　おねがい　なんでしょ</language>
+		<language name="JPN_KANJI" width="256">ママ『どう？　ポケモンは
+たくさん　捕まえているの？▽
+博士の　お願い　なんでしょ</language>
+	</row>
+
+	<row id="msg_c12r0101_swmama_cure_06">
+		<comment>♀
+・回復処理後ランダム（20％）で
+　cure_02～06e表示
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">主人公ママ</attribute>
+		<language name="JPN" width="256">ママ『チェレンくんも　ベルちゃんも
+たびをして　なにを　みつけるのかな▼
+じぶんの　したいこと……
+それが　じぶんで　わかるようになれば▽
+ステキな　たびに　なると　おもうな</language>
+		<language name="JPN_KANJI" width="256">ママ『チェレンくんも　ベルちゃんも
+旅をして　なにを　みつけるのかな▼
+自分の　したいこと……
+それが　自分で　わかるようになれば▽
+ステキな　旅に　なると　思うな</language>
 	</row>
 
 	<row id="msg_c12r0101_game_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
