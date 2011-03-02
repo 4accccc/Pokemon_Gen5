@@ -99,13 +99,17 @@ G_ANM_LIST	=	$(subst $(DQ),,$(ARC_ANM_LIST_FILENAME))
 #	make do-build ルール
 #------------------------------------------------------------------------------
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、バイナリ生成
-do-build:	area_map_tex.d  subdir $(TARGETDIR)/$(TARGET)
+do-build:	area_map_tex.d subdir
+	$(MAKE) -j 3 target
+
 else
 do-build:	subdir $(TARGETDIR)/$(TARGET)
 endif
 
 subdir:
 	$(MAKE_SUBDIR)
+
+target:$(TARGETDIR)/$(TARGET)
 
 $(TARGETDIR)/$(TARGET):	$(TARGET)
 	$(COPY) $(TARGET) $(TARGETDIR)

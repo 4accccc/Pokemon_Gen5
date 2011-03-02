@@ -74,7 +74,10 @@ NSBTXFILES = $(wildcard $(subst $(DQ),,$(NSBTXFILESDIR))/*.nsbtx)
 #	ÉãÅ[ÉãíËã`
 #
 #----------------------------------------------------------------------------
-do-build: $(TARGETDIR)/$(NARCNAME)
+do-build: 
+	$(MAKE) -j 3 target
+
+target:$(TARGETDIR)/$(NARCNAME)
 
 $(TARGETDIR)/$(NARCNAME): $(NARCNAME)
 	$(COPY) $(NARCNAME) $(TARGETDIR)
