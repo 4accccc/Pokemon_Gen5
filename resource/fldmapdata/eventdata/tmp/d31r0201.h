@@ -8,6 +8,7 @@
 #ifndef ZONE_D31R0201_EVC_H
 #define ZONE_D31R0201_EVC_H
 
+#define OBJ_INFORMATION                    0
 
 #endif //ZONE_D31R0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d31r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

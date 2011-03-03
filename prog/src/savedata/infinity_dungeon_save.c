@@ -11,6 +11,7 @@
 
 #include <gflib.h>
 #include "savedata/save_control.h"	        //SAVE_CONTROL_WORK参照のため
+#include "field/infinity_dungeon_def.h"
 #include "savedata/infinity_dungeon_save.h"
 #include "savedata/save_tbl.h"
 
@@ -142,7 +143,7 @@ u8 INFINITYDUNGEON_SAVE_GetMementoFlag( const INFINITYDUNGEON_SAVE *p_save )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  無限ダンジョン性静養乱数の種を取得
+ *	@brief  無限ダンジョン生成用乱数の種を取得
  *
  *	@param	*p_save 
  *
@@ -304,7 +305,7 @@ void INFINITYDUNGEON_SAVE_SetMementoFlag( INFINITYDUNGEON_SAVE *p_save ,u8 memen
  *	@retval
  */
 //-----------------------------------------------------------------------------
-void INFINITYDUNGEON_SAVE_SetRandomSeed( INFINITYDUNGEON_SAVE *p_save ,u8 rand_seed)
+void INFINITYDUNGEON_SAVE_SetRandomSeed( INFINITYDUNGEON_SAVE *p_save ,u32 rand_seed)
 {
   p_save->rand_seed = rand_seed;
 }

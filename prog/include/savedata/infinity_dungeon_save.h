@@ -16,8 +16,6 @@
 //
 //=============================================================================
 
-#define INFINITYDUNGEON_FLOOR_MAX (10)  // フロアの最大数
-
 //=============================================================================
 //  typedef
 //=============================================================================
@@ -55,7 +53,7 @@ extern void INFINITYDUNGEON_SAVE_AddExMissionCount( INFINITYDUNGEON_SAVE *p_save
 extern void INFINITYDUNGEON_SAVE_SetMementoFlag( INFINITYDUNGEON_SAVE *p_save ,u8 memento_status);
 
 // MAP情報（設定系）
-extern void INFINITYDUNGEON_SAVE_SetRandomSeed( INFINITYDUNGEON_SAVE *p_save ,u8 rand_seed);
+extern void INFINITYDUNGEON_SAVE_SetRandomSeed( INFINITYDUNGEON_SAVE *p_save ,u32 rand_seed);
 extern void INFINITYDUNGEON_SAVE_SetTrainerFlag( INFINITYDUNGEON_SAVE *p_save ,int floor_id ,int trainer_id , BOOL status);
 extern void INFINITYDUNGEON_SAVE_SetMapStatus( INFINITYDUNGEON_SAVE *p_save ,u8 map_status);
 extern void INFINITYDUNGEON_SAVE_SetFloorID( INFINITYDUNGEON_SAVE *p_save ,u8 floor_id);

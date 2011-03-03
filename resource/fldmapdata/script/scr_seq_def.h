@@ -12698,5 +12698,52 @@
     .short  \dir
     .endm
 
+//--------------------------------------------------------------
+/**
+ * @def _INFINITY_DUNGEON_GET_DUNGEON_STATUS
+ * @brief 無限ダンジョンの状態を取得
+ * @param ret_wk    状態を受け取るワーク
+ *
+ */
+//--------------------------------------------------------------
+#define _INFINITY_DUNGEON_GET_DUNGEON_STATUS( ret_wk ) \
+    _ASM_INFINITY_DUNGEON_GET_DUNGEON_STATUS ret_wk
+
+    .macro  _ASM_INFINITY_DUNGEON_GET_DUNGEON_STATUS ret_wk
+    .short  EV_SEQ_INFINITY_DUNGEON_GET_DUNGEON_STATUS
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _INFINITY_DUNGEON_SET_NOW_FLOOR_NO
+ * @brief 無限ダンジョンの現在のフロアを設定
+ * @param ret_wk    状態を受け取るワーク
+ *
+ */
+//--------------------------------------------------------------
+#define _INFINITY_DUNGEON_SET_NOW_FLOOR_NO( floor_id ) \
+    _ASM_INFINITY_DUNGEON_SET_NOW_FLOOR_NO floor_id
+
+    .macro  _ASM_INFINITY_DUNGEON_SET_NOW_FLOOR_NO floor_id
+    .short  EV_SEQ_INFINITY_DUNGEON_SET_FLOOR_NO
+    .short  \floor_id
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _INFINITY_DUNGEON_INIT_SEED
+ * @brief 無限ダンジョン生成用シードを初期化する
+ * @param ret_wk    状態を受け取るワーク
+ *
+ */
+//--------------------------------------------------------------
+#define _INFINITY_DUNGEON_INIT_SEED() \
+    _ASM_INFINITY_DUNGEON_INIT_RAND_SEED
+
+    .macro  _ASM_INFINITY_DUNGEON_INIT_RAND_SEED ret_wk
+    .short  EV_SEQ_INFINITY_DUNGEON_INIT_SEED
+    .endm
+
 //======================================================================
 //======================================================================

@@ -17,6 +17,9 @@
   //無限ダンジョン
   DEF_CMD( EvCmdInfinityDungeonStart, EV_SEQ_INFINITY_DUNGEON_START )
   DEF_CMD( EvCmdInfinityDungeonWarp, EV_SEQ_INFINITY_DUNGEON_WARP )
+  DEF_CMD( EvCmdInfinityDungeonGetStatus, EV_SEQ_INFINITY_DUNGEON_GET_DUNGEON_STATUS )
+  DEF_CMD( EvCmdInfinityDungeonResetSeed, EV_SEQ_INFINITY_DUNGEON_INIT_SEED )
+  DEF_CMD( EvCmdInfinityDungeonSetFloorNo, EV_SEQ_INFINITY_DUNGEON_SET_FLOOR_NO )
   
   END_CMD
   //スクリプトコマンドテーブル終了

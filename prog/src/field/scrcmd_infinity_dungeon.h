@@ -19,4 +19,7 @@
 //=============================================================================
 extern VMCMD_RESULT EvCmdInfinityDungeonStart( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdInfinityDungeonWarp( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdInfinityDungeonGetStatus( VMHANDLE *p_core, void *p_wk_adrs );
+extern VMCMD_RESULT EvCmdInfinityDungeonResetSeed( VMHANDLE *p_core, void *p_wk_adrs );
+extern VMCMD_RESULT EvCmdInfinityDungeonSetFloorNo( VMHANDLE *p_core, void *p_wk_adrs );
 

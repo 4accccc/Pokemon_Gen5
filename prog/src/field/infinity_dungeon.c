@@ -21,6 +21,7 @@
 #include "infinity_dungeon_warp_dir.h"
 #include "savedata/infinity_dungeon_save.h"
 #include "../../../resource/fldmapdata/build_model/output/buildmodel_indoor.naix"
+#include "field/infinity_dungeon_def.h"
 
 //=============================================================================
 /**
