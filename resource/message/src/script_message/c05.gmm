@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-25T17:29:34"/>
+	<create user="matsumiya" host="W00224" date="2011-03-03T17:25:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1294" top="205" right="1999" bottom="833" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -1076,10 +1076,12 @@
 チャレンジこそが　人生なんだぜ</language>
 	</row>
 
-	<row id="msg_c05_badrider_08w" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c05_badrider_08w" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・WHITEver
-・トレーナー戦闘後、フィールド復帰時で自動表示</comment>
+・トレーナー戦闘後、フィールド復帰時で自動表示
+
+※SWANでメッセージ変更</comment>
 		<attribute name="キャラクター">BADRIDER</attribute>
 		<language name="JPN" width="256">……ふっ　ざまあねえな
 おしえるつもりが　おそわるとはな▼
@@ -1088,7 +1090,7 @@
 じぶんの　ポケモンへの　りかいがなきゃ
 トリプルバトルは　かてないからな▼
 もっと　トリプルバトルが　したけりゃ
-ソウリュウシティに　いきな……</language>
+ワールドバトルトーナメントが　いいぜ！</language>
 		<language name="JPN_KANJI" width="256">……ふっ　ざまあねえな
 教えるつもりが　教わるとはな▼
 それにしても　おまえには
@@ -1096,7 +1098,7 @@
 じぶんの　ポケモンへの　理解がなきゃ
 トリプルバトルは　勝てないからな▼
 もっと　トリプルバトルが　したけりゃ
-ソウリュウシティに　行きな……</language>
+ワールドバトルトーナメントが　いいぜ！</language>
 	</row>
 
 	<row id="msg_c05_badrider_09w" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -1245,10 +1247,12 @@
 チャレンジこそが　人生なんだぜ</language>
 	</row>
 
-	<row id="msg_c05_badrider_08b" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
+	<row id="msg_c05_badrider_08b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
 		<comment>♂
 ・BLACKver
-・トレーナー戦闘後、フィールド復帰時で自動表示</comment>
+・トレーナー戦闘後、フィールド復帰時で自動表示
+
+※SWANでメッセージ変更</comment>
 		<attribute name="キャラクター">BADRIDER</attribute>
 		<language name="JPN" width="256">……ふっ　ざまあねえな
 おしえるつもりが　おそわるとはな▼
@@ -1257,7 +1261,7 @@
 じぶんの　ポケモンへの　りかいがなきゃ
 ローテーションバトルは　かてないからな▼
 ローテーションバトルが　したけりゃ
-ソウリュウシティに　いきな……</language>
+ワールドバトルトーナメントが　いいぜ！</language>
 		<language name="JPN_KANJI" width="256">……ふっ　ざまあねえな
 教えるつもりが　教わるとはな▼
 それにしても　おまえには
@@ -1265,7 +1269,7 @@
 じぶんの　ポケモンへの　理解がなきゃ
 ローテーションバトルは　勝てないからな▼
 ローテーションバトルが　したけりゃ
-ソウリュウシティに　行きな……</language>
+ワールドバトルトーナメントが　いいぜ！</language>
 	</row>
 
 	<row id="msg_c05_badrider_09b" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
