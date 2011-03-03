@@ -55,9 +55,9 @@
 #define FAN_NUM_MAX             (3)         // ファンの数
 
 #define WINDMETER_NUM_MAX       (17)        // 風力計の数
-#define WINDMETER_SPEED_LOW     (FX32_ONE)  // 低速のアニメ速度
-#define WINDMETER_SPEED_MIDDLE  (0x3000)    // 中速のアニメ速度
-#define WINDMETER_SPEED_HIGH    (0x9000)    // 高速のアニメ速度
+#define WINDMETER_SPEED_LOW     (0x2000)  // 低速のアニメ速度
+#define WINDMETER_SPEED_MIDDLE  (0x5000)    // 中速のアニメ速度
+#define WINDMETER_SPEED_HIGH    (0xb000)    // 高速のアニメ速度
 #define WINDMETER_SPEED_ADD     (0x300)     // アニメ加算
 
 // map_array.cdatの配列の要素
@@ -96,6 +96,7 @@ typedef struct GYM_FLY_TMP_tag
   fx32    anm_speed_max;  // アニメーション再生の目標速度
 
   FLD_EXP_OBJ_CNT_PTR exp_obj;  // 拡張3Dモデルコントローラ
+  FIELD_PLAYER        *player;      // 自機
 
 }GYM_FLY_TMP;
 
@@ -169,9 +170,10 @@ void GYM_FLY_Setup(FIELDMAP_WORK *p_fieldmap)
   p_wk->time_start= FALSE;
   p_wk->time      = 0;
   p_wk->state     = WINDMETER_STATE_LOW;
-  p_wk->anm_speed = FX32_ONE;
-  p_wk->anm_speed_max = FX32_ONE;
+  p_wk->anm_speed = WINDMETER_SPEED_LOW;
+  p_wk->anm_speed_max = WINDMETER_SPEED_LOW;
   p_wk->exp_obj   = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
+  p_wk->player    = FIELDMAP_GetFieldPlayer( p_fieldmap );
 
   // EXPOBJセット
   EXPOBJ_ObjSet( p_wk );
@@ -376,7 +378,7 @@ static GMEVENT* WINDMETER_BLOW_CreateEvent( GMEVENT* parent, GAMESYS_WORK* gsys 
     FIELD_PLAYER_GetGridPos( player, &gx, &gy, &gz );
 
     // 配列から自機座標のデータを取得
-    if( map_array[gz][gx] == MAP_ARRAY_STOP )
+    if( map_array[gz][gx] != MAP_ARRAY_BLOW )
     {
       event = GMEVENT_Create( gsys, parent, BlowEventSafe, sizeof(BLOW_EVENT_WORK) );
     }
@@ -471,9 +473,9 @@ static GMEVENT_RESULT BlowEvent( GMEVENT* event, int* seq, void* wk )
           gz += 1;
 
           // 配列から自機座標のデータを取得
-          if( map_array[gz][gx] == MAP_ARRAY_STOP )
+          if( map_array[gz][gx] != MAP_ARRAY_BLOW )
           {
-            // 壁ならストップ
+            // 吹き飛べないならストップ
             break;
           }
 
@@ -506,7 +508,7 @@ static GMEVENT_RESULT BlowEvent( GMEVENT* event, int* seq, void* wk )
         MMDL_OnStatusBit( mmdl, MMDL_STABIT_HEIGHT_GET_OFF );
       }
 
-      // 吸い込みエフェクト
+      // 風エフェクト(自機)エフェクト
       {
         // 位置
         GFL_G3D_OBJSTATUS* status = FLD_EXP_OBJ_GetUnitObjStatus( p_gym_wk->exp_obj, GYM_FLY_UNIT_IDX, EFFECT_WIND_JIKI );
@@ -578,7 +580,7 @@ static GMEVENT_RESULT BlowEvent( GMEVENT* event, int* seq, void* wk )
         }
       }
 
-      // 吸い込みエフェクト
+      // 風エフェクト(自機)エフェクト
       {
         // 位置
         GFL_G3D_OBJSTATUS* status = FLD_EXP_OBJ_GetUnitObjStatus( p_gym_wk->exp_obj, GYM_FLY_UNIT_IDX, EFFECT_WIND_JIKI );
@@ -595,7 +597,7 @@ static GMEVENT_RESULT BlowEvent( GMEVENT* event, int* seq, void* wk )
 
   // イベント終了
   case SEQ_EXIT:
-    // 吸い込みエフェクトOFF
+    // 風エフェクト(自機)エフェクトOFF
     FLD_EXP_OBJ_SetVanish( p_gym_wk->exp_obj, GYM_FLY_UNIT_IDX, EFFECT_WIND_JIKI, TRUE );
     FLD_EXP_OBJ_ChgAnmStopFlg( FLD_EXP_OBJ_GetAnmCnt( p_gym_wk->exp_obj, GYM_FLY_UNIT_IDX, EFFECT_WIND_JIKI, 0), TRUE );
 
@@ -803,7 +805,7 @@ static void EXPOBJ_ObjSet( GYM_FLY_TMP *p_wk )
   }
 
   //=====================================
-  ///	吸い込みの設定
+  ///	風エフェクト(自機)の設定
   //
   {
     u16   obj_idx = EFFECT_WIND_JIKI;    // OBJインデックス
@@ -818,6 +820,25 @@ static void EXPOBJ_ObjSet( GYM_FLY_TMP *p_wk )
       FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, GYM_FLY_UNIT_IDX, obj_idx, 0, TRUE );
       FLD_EXP_OBJ_SetObjAnmFrm( p_wk->exp_obj, GYM_FLY_UNIT_IDX, obj_idx, 0, 0);
       FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, TRUE );   // ループ再生設定
+    }
+  }
+
+  //=====================================
+  ///	風エフェクト(マップ)の設定
+  //
+  {
+    u16   obj_idx = EFFECT_WIND_MAP;    // OBJインデックス
+    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( p_wk->exp_obj, GYM_FLY_UNIT_IDX, obj_idx );
+
+    // カリングする
+    FLD_EXP_OBJ_SetCulling( p_wk->exp_obj, GYM_FLY_UNIT_IDX, obj_idx, TRUE );
+    FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GYM_FLY_UNIT_IDX, obj_idx, FALSE );  // 表示
+    // アニメ再生
+    {
+      EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, GYM_FLY_UNIT_IDX, obj_idx, 0 );
+      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, GYM_FLY_UNIT_IDX, obj_idx, 0, TRUE );
+      FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, TRUE );   // ループ再生設定
+      FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE );  // アニメ再生
     }
   }
 }
@@ -863,8 +884,16 @@ static void EXPOBJ_ObjMain( GYM_FLY_TMP *p_wk )
 
     // アニメスピード変更
     FLD_EXP_OBJ_SetUnitAddFrame( p_wk->exp_obj, GYM_FLY_UNIT_IDX, p_wk->anm_speed );
-    // 吸い込みアニメだけアニメ速度一定
+    // 風エフェクト(自機)アニメだけアニメ速度一定
     FLD_EXP_OBJ_ChgAddFrame( FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, GYM_FLY_UNIT_IDX, EFFECT_WIND_JIKI, 0 ), FX32_ONE );
+  }
+
+  // 風エフェクト(マップ)
+  {
+    // 位置
+    GFL_G3D_OBJSTATUS* status = FLD_EXP_OBJ_GetUnitObjStatus( p_wk->exp_obj, GYM_FLY_UNIT_IDX, EFFECT_WIND_MAP );
+    MMDL *mmdl = FIELD_PLAYER_GetMMdl( p_wk->player );
+    MMDL_GetVectorPos( mmdl, &status->trans );
   }
 
   // アニメーション再生
