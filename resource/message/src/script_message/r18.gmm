@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-02-27T17:05:37"/>
+	<create user="matsumiya" host="W00224" date="2011-03-03T17:51:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1297" top="184" right="2002" bottom="812" maximized="no" rayout="Vertical2">
+	<dialog left="1294" top="205" right="1999" bottom="833" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -313,7 +313,7 @@
 どこかに　去っていった……</language>
 	</row>
 
-	<row id="msg_r18_sage6_end_01">
+	<row id="msg_r18_sage6_end_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・GRIDX=616、GRIDZ=53
 ・続けてsage6_end_01a</comment>
@@ -326,7 +326,7 @@
 潮の　においがする　場所……▼</language>
 	</row>
 
-	<row id="msg_r18_sage6_end_01a">
+	<row id="msg_r18_sage6_end_01a" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてsage6_end_01b</comment>
 		<attribute name="キャラ指定">七賢人その６</attribute>
@@ -344,7 +344,7 @@
 望みを　理解なされていた▼</language>
 	</row>
 
-	<row id="msg_r18_sage6_end_01b">
+	<row id="msg_r18_sage6_end_01b" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてsage6_end_01c</comment>
 		<attribute name="キャラ指定">七賢人その６</attribute>
@@ -368,7 +368,7 @@
 未成育だったのだろう……▼</language>
 	</row>
 
-	<row id="msg_r18_sage6_end_01c">
+	<row id="msg_r18_sage6_end_01c" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・アイテム入手処理
 　No359「かげぶんしん」</comment>
@@ -389,7 +389,7 @@
 おまえが　うまく　使うとよい▼</language>
 	</row>
 
-	<row id="msg_r18_sage6_end_02">
+	<row id="msg_r18_sage6_end_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・アイテム入手後自動で表示
 ・続けてicpo_end_01</comment>
@@ -408,7 +408,7 @@
 向き合ってほしいと　強く　望む▼</language>
 	</row>
 
-	<row id="msg_r18_icpo_end_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r18_icpo_end_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・隣接してメッセージ
 ・続けてsage6_end_03</comment>
@@ -424,7 +424,7 @@
 いろいろ　教えてもらおう！▼</language>
 	</row>
 
-	<row id="msg_r18_sage6_end_03">
+	<row id="msg_r18_sage6_end_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けて七賢人
 　6人と会っていない→icpo_end_02
@@ -436,7 +436,7 @@
 おまえの　望みと　あらば▼</language>
 	</row>
 
-	<row id="msg_r18_icpo_end_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r18_icpo_end_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・メッセージ表示後
 　画面暗転して七賢人とハンサムを削除</comment>
@@ -458,7 +458,7 @@
 では　また　会おう！▼</language>
 	</row>
 
-	<row id="msg_r18_icpo_end_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r18_icpo_end_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・6人の七賢人とであったとき
 ・メッセージ歩湯事後
