@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-06-18T17:30:25"/>
+	<create user="matsumiya" host="W00224" date="2011-03-03T16:00:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1535" top="176" right="2240" bottom="804" maximized="no" rayout="Vertical2">
+	<dialog left="1294" top="205" right="1999" bottom="833" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -319,7 +319,7 @@
 ポケモンが　飛びだしてきたのに！</language>
 	</row>
 
-	<row id="msg_c02r0701_girl1_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02r0701_girl1_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・choice0
 　choice1
@@ -335,7 +335,7 @@
 どっちが　好き？</language>
 	</row>
 
-	<row id="msg_c02r0701_girl1_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02r0701_girl1_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・choice3
 　choice4
@@ -354,7 +354,7 @@
 どっちが　気になる？</language>
 	</row>
 
-	<row id="msg_c02r0701_girl1_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02r0701_girl1_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・続けて選択肢に応じてメッセージ分岐</comment>
 		<attribute name="キャラ指定">GIRL1</attribute>
@@ -362,7 +362,7 @@
 		<language name="JPN_KANJI" width="256">へぇ　そうなんだぁ！▼</language>
 	</row>
 
-	<row id="msg_c02r0701_girl1_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02r0701_girl1_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・どちらかの質問で
 　choice2（どちらでもない）を選択した場合</comment>
@@ -373,7 +373,7 @@
 常識人　だね！</language>
 	</row>
 
-	<row id="msg_c02r0701_girl1_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02r0701_girl1_05" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・そと＆みんながしってる時の性格</comment>
 		<attribute name="キャラ指定">GIRL1</attribute>
@@ -383,7 +383,7 @@
 活発　なんだね！</language>
 	</row>
 
-	<row id="msg_c02r0701_girl1_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02r0701_girl1_06" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・そと＆だれもしらない時の性格</comment>
 		<attribute name="キャラ指定">GIRL1</attribute>
@@ -393,7 +393,7 @@
 好奇心が　強いんだね！</language>
 	</row>
 
-	<row id="msg_c02r0701_girl1_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02r0701_girl1_07" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・なか＆みんながしってる時の性格</comment>
 		<attribute name="キャラ指定">GIRL1</attribute>
@@ -403,7 +403,7 @@
 おっとり　しているんだね！</language>
 	</row>
 
-	<row id="msg_c02r0701_girl1_08" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02r0701_girl1_08" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・なか＆だれもしらない時の性格</comment>
 		<attribute name="キャラ指定">GIRL1</attribute>
@@ -413,31 +413,31 @@
 マニアック　なんだね！</language>
 	</row>
 
-	<row id="msg_c02r0701_choice0" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c02r0701_choice0" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<attribute name="キャラ指定">選択肢</attribute>
 		<language name="JPN" width="256">いえのそと</language>
 		<language name="JPN_KANJI" width="256">家の外</language>
 	</row>
 
-	<row id="msg_c02r0701_choice1" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c02r0701_choice1" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<attribute name="キャラ指定">選択肢</attribute>
 		<language name="JPN" width="256">いえのなか</language>
 		<language name="JPN_KANJI" width="256">家の中</language>
 	</row>
 
-	<row id="msg_c02r0701_choice2" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c02r0701_choice2" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<attribute name="キャラ指定">選択肢</attribute>
 		<language name="JPN" width="256">どちらでもない</language>
 		<language name="JPN_KANJI" width="256">どちらでもない</language>
 	</row>
 
-	<row id="msg_c02r0701_choice3" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c02r0701_choice3" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<attribute name="キャラ指定">選択肢</attribute>
 		<language name="JPN" width="256">みんなが　しってること</language>
 		<language name="JPN_KANJI" width="256">みんなが知ってること</language>
 	</row>
 
-	<row id="msg_c02r0701_choice4" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c02r0701_choice4" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<attribute name="キャラ指定">選択肢</attribute>
 		<language name="JPN" width="256">だれも　しらないこと</language>
 		<language name="JPN_KANJI" width="256">だれも知らないこと</language>
