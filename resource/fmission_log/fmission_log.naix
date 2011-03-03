@@ -1,0 +1,26 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: fmission_log.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_FMISSION_LOG_NAIX_
+#define NARC_FMISSION_LOG_NAIX_
+
+enum {
+	NARC_fmission_log_fmission_obj_nclr = 0,
+	NARC_fmission_log_fmission_obj_lz_ncgr = 1,
+	NARC_fmission_log_fmission_obj_ncer = 2,
+	NARC_fmission_log_fmission_obj_nanr = 3,
+	NARC_fmission_log_fmission_bg_nclr = 4,
+	NARC_fmission_log_fmission_bg_lz_ncgr = 5,
+	NARC_fmission_log_fmission_bg01_lz_nscr = 6,
+	NARC_fmission_log_fmission_bg02_lz_nscr = 7,
+	NARC_fmission_log_fmission_bg03_lz_nscr = 8
+};
+
+/* NARC_FMISSION_LOG_NAIX_ */
+#endif
