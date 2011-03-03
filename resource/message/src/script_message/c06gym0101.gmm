@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-02-24T21:18:55"/>
+	<create user="matsumiya" host="W00224" date="2011-03-03T23:05:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1296" top="159" right="2001" bottom="787" maximized="no" rayout="Vertical2">
+	<dialog left="1291" top="133" right="1996" bottom="761" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -436,63 +436,73 @@
 修行に　行っても　いいかも</language>
 	</row>
 
-	<row id="msg_c06gym0101_glasses_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c06gym0101_glasses_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・ジムバッジ取得前＋アイテム入手前
-・No030「おいしいみず」入手</comment>
+・No030「おいしいみず」入手
+
+・SWANでメッセージ変更</comment>
 		<attribute name="キャラ指定">DANPEI
 ダンペイ</attribute>
-		<language name="JPN" width="256">この　おいしいみず
-うけとって　くださいっすよ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">この　おいしいみず
-受け取って　くださいっすよ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">いてて……▼
+ああ　もうしわけないっすね！▼
+おわびに　この　おいしいみず
+うけとって　くださいっすよ▼</language>
+		<language name="JPN_KANJI" width="256">いてて……▼
+ああ　申し訳ないっすね！▼
+おわびに　この　おいしいみず
+受け取って　くださいっすよ▼</language>
 	</row>
 
-	<row id="msg_c06gym0101_glasses_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c06gym0101_glasses_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・ジムバッジ取得前＋アイテム入手後
-・ジムバッジ取得まで繰り返し</comment>
+・ジムバッジ取得まで繰り返し
+
+・SWANでメッセージ変更</comment>
 		<attribute name="キャラ指定">DANPEI
 ダンペイ</attribute>
-		<language name="JPN" width="256">ここだけの　はなし……[BE:01:ページ切り替え（クリア）]
-ひこうタイプって
-いわ　でんき　こおりと　いがいに[BE:00:ページ切り替え（行送り）]
-じゃくてんが　おおいんすよ！[BE:01:ページ切り替え（クリア）]
-なので　そういった　ポケモンや
-わざを　つかいこなせば[BE:00:ページ切り替え（行送り）]
-しょうりは　もくぜん！　ですよね[BE:01:ページ切り替え（クリア）]
-ちなみに　この　ジムは
-たいほうに　のりこんでいって[BE:00:ページ切り替え（行送り）]
-すすんで　いくんすよ[BE:01:ページ切り替え（クリア）]
-たいほうは　うえ・した・みぎ・ひだり
-どこからでも　のりこめるっす！</language>
-		<language name="JPN_KANJI" width="256">ここだけの　話……[BE:01:ページ切り替え（クリア）]
-ひこうタイプって
-いわ　でんき　こおりと　意外に[BE:00:ページ切り替え（行送り）]
-弱点が　多いんすよ！[BE:01:ページ切り替え（クリア）]
-なので　そういった　ポケモンや
-技を　使いこなせば[BE:00:ページ切り替え（行送り）]
-勝利は　目前！　ですよね[BE:01:ページ切り替え（クリア）]
-ちなみに　この　ジムは
-大砲に　乗り込んでいって[BE:00:ページ切り替え（行送り）]
-進んで　いくんすよ[BE:01:ページ切り替え（クリア）]
-大砲は　どの方向からでも
-乗り込めるっすよ！</language>
+		<language name="JPN" width="256">かぜの　トンネル！
+それが　この　ジムなんすよね！▼
+おくにある　プロペラが
+いきおいよく　まわりだすと▼
+さっきの　だれかさん　みたいに
+ふきとばされるっすよ！▼
+かぜが　くる！　と　おもったら
+くぼんだ　スペースに　いどうして▽　
+やりすごして　くださいっす！▼
+ちなみに　ひこうタイプって
+いわ　でんき　こおりと　いがいに▽
+じゃくてんが　おおいんすよ！</language>
+		<language name="JPN_KANJI" width="256">風の　トンネル！
+それが　この　ジムなんすよね！▼
+奥にある　プロペラが
+勢いよく　回りだすと▼
+さっきの　だれかさん　みたいに
+ふきとばされるっすよ！▼
+風が　来る！　と　思ったら
+くぼんだ　スペースに　移動して▽　
+やりすごして　くださいっす！▼
+ちなみに　ひこうタイプって
+いわ　でんき　こおりと　意外に▽
+弱点が　多いんすよ！</language>
 	</row>
 
-	<row id="msg_c06gym0101_glasses_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c06gym0101_glasses_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
-・ジムバッジ取得後</comment>
+・ジムバッジ取得後
+
+・SWANでメッセージ変更</comment>
 		<attribute name="キャラ指定">DANPEI
 ダンペイ</attribute>
-		<language name="JPN" width="256">いやー！　たいほうで　ふっとぶ
-あなたの　すがた……[BE:00:ページ切り替え（行送り）]
-みていて　さいこう　だったっす！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">わざと　ふきとばされるのも
+ポケモンの　わざを　くらったようで▽
+なんだか　たのしいんすよね！▼
 ああ！　ジムリーダーに　しょうり
 おめでとうございます！！</language>
-		<language name="JPN_KANJI" width="256">いやー！　大砲で　吹っ飛ぶ
-あなたの　姿……[BE:00:ページ切り替え（行送り）]
-みていて　最高　だったっす！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">わざと　ふきとばされるのも
+ポケモンの　わざを　くらったようで▽
+なんだか　楽しいんすよね！▼
 ああ！　ジムリーダーに　勝利
 おめでとう　ございます！！</language>
 	</row>
