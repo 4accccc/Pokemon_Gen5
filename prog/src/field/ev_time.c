@@ -42,6 +42,7 @@
 #include "sheimi_normalform.h"
 
 #include "savedata/irc_compatible_savedata.h"
+#include "savedata/resonance_resort_sv.h"
 
 //============================================================================================
 //============================================================================================
@@ -332,6 +333,15 @@ static void UpdateDayEvent(GAMEDATA * gdata, s32 diff_days)
   }
 
   if(!is_penalty){  //ペナルティタイムでないときだけ処理する
+
+
+    {
+      RESONANCE_RESORT_SV *p_resort_sv = RESONANCE_RESORT_SV_GetWork(save); 
+      RESORT_CITY_DATA *p_city  = RESONANCE_RESORT_SV_GetCityData(p_resort_sv);
+      RESORT_PEOPLE_ALL_DATA *p_all_people  = RESONANCE_RESORT_SV_GetPeopleAllData(p_resort_sv);
+      RESORT_CITY_DATA_UpdateDay( p_city );
+      RESORT_PEOPLE_ALL_DATA_UpdateDay( p_all_people );
+    }
   }
 }
 

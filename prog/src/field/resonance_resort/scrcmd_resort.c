@@ -30,6 +30,7 @@
 #include "scrcmd_resort.h"
 
 static RESORT_PEOPLE * Resort_Scrcmd_GetFrontPeople( FIELDMAP_WORK *p_fieldmap, RESORT_PEOPLE_SYS *p_people_sys );
+static s32 PrmExp_Up( s32 exp, s32 other, s32 up );
 
 //=============================================================================
 /**
@@ -188,6 +189,12 @@ VMCMD_RESULT EvCmdResortGetData( VMHANDLE *p_core, void *p_wk_adrs )
   case RESORT_GET_PARAM_IS_EVENT:
     *p_ret_wk = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_EVENT_FLAG, NULL );
     break;
+  case RESORT_GET_PARAM_TYPE:
+    *p_ret_wk = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_TYPE, NULL );
+    break;
+  case RESORT_GET_PARAM_DAY_FLAG:
+    *p_ret_wk = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_DAY_FLAG, NULL );
+    break;
   default:
     GF_ASSERT(0);
   }
@@ -247,7 +254,7 @@ extern VMCMD_RESULT EvCmdResortGetMsgID( VMHANDLE *p_core, void *p_wk_adrs )
     break;
   case RESORT_MSGID_SHOP_INFO:
     {
-      u32 data = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_WANT_JOB, NULL );
+      u32 data = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_TYPE, NULL );
       *p_ret_wk = data + resort_shopinfo_00;  //TODO 性別対応する？
     }
     break;
@@ -526,7 +533,7 @@ VMCMD_RESULT EvCmdResortSetWord( VMHANDLE *p_core, void *p_wk_adrs )
     break;
   case RESORT_WORD_SHOP_LABEL:
     {
-      u32 data = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_WANT_JOB, NULL );
+      u32 data = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_TYPE, NULL );
       GFL_MSGDATA* p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_resort_scr_dat, GFL_HEAP_LOWID(heapID) );
       STRBUF *p_str = GFL_MSG_CreateString( p_msg, resort_shoplabel_00+data );
 
@@ -861,6 +868,285 @@ VMCMD_RESULT EvCmdResortSearchReception( VMHANDLE *p_core, void *p_wk_adrs )
 
   return VMCMD_RESULT_CONTINUE;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  IDからくじ抽選
+ *
+ *	@param	VMHANDLE *p_core 仮想マシンハンドル
+ *	@param	*p_wk_adrs       スクリプトコマンドワーク
+ *
+ *	@return 終了コード
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdResortLot( VMHANDLE *p_core, void *p_wk_adrs )
+{
+  SCRCMD_WORK *p_wk = p_wk_adrs;
+  SCRIPT_WORK *p_script = SCRCMD_WORK_GetScriptWork( p_wk );
+  GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
+  FIELDMAP_WORK *p_field = GAMESYSTEM_GetFieldMapWork(p_gamesys);
+  
+  u16 param = VMGetU16(p_core);
+  u16 *p_ret_wk	= SCRCMD_GetVMWork( p_core, p_wk );
+
+  RESORT_PEOPLE_SYS *p_people_sys = NULL;
+
+  if(GMK_TMP_CheckAssignID( p_field, RESORT_RECEPTION_ASSIGN_ID ) )
+  {
+    p_people_sys = RESORT_RECEPTION_GetPeopleSys( p_field );
+  }
+  else if( GMK_TMP_CheckAssignID( p_field, RESORT_FIELD_ASSIGN_ID ) )
+  {
+    p_people_sys = RESORT_FIELD_GetPeopleSys( p_field );
+  }
+  GF_ASSERT( p_people_sys != NULL );
+
+  *p_ret_wk = GFUser_GetPublicRand( 11 );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  なつきどを上げる
+ *
+ *	@param	VMHANDLE *p_core 仮想マシンハンドル
+ *	@param	*p_wk_adrs       スクリプトコマンドワーク
+ *
+ *	@return 終了コード
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdResortAddKindly( VMHANDLE *p_core, void *p_wk_adrs )
+{
+  SCRCMD_WORK *p_wk = p_wk_adrs;
+  SCRIPT_WORK *p_script = SCRCMD_WORK_GetScriptWork( p_wk );
+  GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
+  FIELDMAP_WORK *p_field = GAMESYSTEM_GetFieldMapWork(p_gamesys);
+  
+  u16 param     = SCRCMD_GetVMWorkValue(p_core, p_wk );
+  u16 *p_ret_wk	= SCRCMD_GetVMWork( p_core, p_wk );
+
+  RESORT_PEOPLE_SYS *p_people_sys = NULL;
+  POKEPARTY *p_party = GAMEDATA_GetMyPokemon( GAMESYSTEM_GetGameData(p_gamesys) );
+  POKEMON_PARAM *p_pp   = PokeParty_GetMemberPointer( p_party, param );
+
+  if(GMK_TMP_CheckAssignID( p_field, RESORT_RECEPTION_ASSIGN_ID ) )
+  {
+    p_people_sys = RESORT_RECEPTION_GetPeopleSys( p_field );
+  }
+  else if( GMK_TMP_CheckAssignID( p_field, RESORT_FIELD_ASSIGN_ID ) )
+  {
+    p_people_sys = RESORT_FIELD_GetPeopleSys( p_field );
+  }
+  GF_ASSERT( p_people_sys != NULL );
+
+  if( PP_Get( p_pp, ID_PARA_friend, NULL ) == PTL_FRIEND_MAX )
+  {
+    *p_ret_wk = FALSE;
+  }
+  else
+  {
+    PP_Add( p_pp, ID_PARA_friend, 10 ); //TODO いくつあがるのか
+    *p_ret_wk = TRUE;
+  }
+
+  return VMCMD_RESULT_CONTINUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  LVを上げる
+ *
+ *	@param	VMHANDLE *p_core 仮想マシンハンドル
+ *	@param	*p_wk_adrs       スクリプトコマンドワーク
+ *
+ *	@return 終了コード
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdResortAddLv( VMHANDLE *p_core, void *p_wk_adrs )
+{
+  SCRCMD_WORK *p_wk = p_wk_adrs;
+  SCRIPT_WORK *p_script = SCRCMD_WORK_GetScriptWork( p_wk );
+  GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
+  FIELDMAP_WORK *p_field = GAMESYSTEM_GetFieldMapWork(p_gamesys);
+  
+  u16 param     = SCRCMD_GetVMWorkValue(p_core, p_wk );
+  u16 *p_ret_wk	= SCRCMD_GetVMWork( p_core, p_wk );
+
+  RESORT_PEOPLE_SYS *p_people_sys = NULL;
+  POKEPARTY *p_party = GAMEDATA_GetMyPokemon( GAMESYSTEM_GetGameData(p_gamesys) );
+  POKEMON_PARAM *p_pp   = PokeParty_GetMemberPointer( p_party, param );
+
+  if(GMK_TMP_CheckAssignID( p_field, RESORT_RECEPTION_ASSIGN_ID ) )
+  {
+    p_people_sys = RESORT_RECEPTION_GetPeopleSys( p_field );
+  }
+  else if( GMK_TMP_CheckAssignID( p_field, RESORT_FIELD_ASSIGN_ID ) )
+  {
+    p_people_sys = RESORT_FIELD_GetPeopleSys( p_field );
+  }
+  GF_ASSERT( p_people_sys != NULL );
+
+  if( PP_Get( p_pp, ID_PARA_level, NULL ) < 100 )
+  {
+    const u32 lv = PP_Get( p_pp, ID_PARA_level, NULL );
+
+    const u32 nextLevelExp = POKETOOL_GetMinExp(
+        PP_Get( p_pp, ID_PARA_monsno, NULL ),
+        PP_Get( p_pp, ID_PARA_form_no, NULL ),
+        lv+1); //TODO いくつあがるか
+
+    PP_Put( p_pp, ID_PARA_exp, nextLevelExp );
+    PP_Renew(p_pp);
+
+    *p_ret_wk = TRUE;
+  }
+  else
+  {
+    *p_ret_wk = FALSE;
+  }
+
+  return VMCMD_RESULT_CONTINUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  努力値を増加させる
+ *
+ *	@param	VMHANDLE *p_core 仮想マシンハンドル
+ *	@param	*p_wk_adrs       スクリプトコマンドワーク
+ *
+ *	@return 終了コード
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdResortAddEffort( VMHANDLE *p_core, void *p_wk_adrs )
+{
+  SCRCMD_WORK *p_wk = p_wk_adrs;
+  SCRIPT_WORK *p_script = SCRCMD_WORK_GetScriptWork( p_wk );
+  GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
+  FIELDMAP_WORK *p_field = GAMESYSTEM_GetFieldMapWork(p_gamesys);
+  
+  u16 idx   = SCRCMD_GetVMWorkValue(p_core, p_wk );
+  u16 effort = VMGetU16(p_core);
+  u16 *p_ret_wk	= SCRCMD_GetVMWork( p_core, p_wk );
+
+  RESORT_PEOPLE_SYS *p_people_sys = NULL;
+  POKEPARTY *p_party = GAMEDATA_GetMyPokemon( GAMESYSTEM_GetGameData(p_gamesys) );
+  POKEMON_PARAM *p_pp = PokeParty_GetMemberPointer( p_party, idx );
+
+  if(GMK_TMP_CheckAssignID( p_field, RESORT_RECEPTION_ASSIGN_ID ) )
+  {
+    p_people_sys = RESORT_RECEPTION_GetPeopleSys( p_field );
+  }
+  else if( GMK_TMP_CheckAssignID( p_field, RESORT_FIELD_ASSIGN_ID ) )
+  {
+    p_people_sys = RESORT_FIELD_GetPeopleSys( p_field );
+  }
+  GF_ASSERT( p_people_sys != NULL );
+
+  {
+    int i;
+    u16 value;
+    u16 all = 0;
+
+    for( i = 0; i < 6; i++ )
+    {
+      all += PP_Get( p_pp, ID_PARA_hp_exp + i, NULL );
+      if( i == effort )
+      {
+        value = PP_Get( p_pp, ID_PARA_hp_exp + i, NULL );
+      }
+    }
+    
+    value = PrmExp_Up( value, all, 10 );
+    if( value != -1 )
+    {
+      PP_Put( p_pp, ID_PARA_hp_exp + effort, value );
+      PP_Renew( p_pp );
+      *p_ret_wk = TRUE;
+    }
+    else
+    {
+      *p_ret_wk = FALSE;
+    }
+  }
+
+  return VMCMD_RESULT_CONTINUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  タマゴを孵化する(孵化歩数を０にする)
+ *
+ *	@param	VMHANDLE *p_core 仮想マシンハンドル
+ *	@param	*p_wk_adrs       スクリプトコマンドワーク
+ *
+ *	@return 終了コード
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdResortHatch( VMHANDLE *p_core, void *p_wk_adrs )
+{
+  SCRCMD_WORK *p_wk = p_wk_adrs;
+  SCRIPT_WORK *p_script = SCRCMD_WORK_GetScriptWork( p_wk );
+  GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
+  FIELDMAP_WORK *p_field = GAMESYSTEM_GetFieldMapWork(p_gamesys);
+  
+  u16 idx   = SCRCMD_GetVMWorkValue(p_core, p_wk );
+
+  RESORT_PEOPLE_SYS *p_people_sys = NULL;
+  POKEPARTY *p_party = GAMEDATA_GetMyPokemon( GAMESYSTEM_GetGameData(p_gamesys) );
+  POKEMON_PARAM *p_pp = PokeParty_GetMemberPointer( p_party, idx );
+
+  if(GMK_TMP_CheckAssignID( p_field, RESORT_RECEPTION_ASSIGN_ID ) )
+  {
+    p_people_sys = RESORT_RECEPTION_GetPeopleSys( p_field );
+  }
+  else if( GMK_TMP_CheckAssignID( p_field, RESORT_FIELD_ASSIGN_ID ) )
+  {
+    p_people_sys = RESORT_FIELD_GetPeopleSys( p_field );
+  }
+  GF_ASSERT( p_people_sys != NULL );
+
+  GF_ASSERT( PP_Get( p_pp, ID_PARA_tamago_flag, NULL ) == TRUE );
+  PP_Put( p_pp, ID_PARA_friend, 0 );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  タマゴを孵化する(孵化歩数を０にする)
+ *
+ *	@param	VMHANDLE *p_core 仮想マシンハンドル
+ *	@param	*p_wk_adrs       スクリプトコマンドワーク
+ *
+ *	@return 終了コード
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdResortSetDayFlag( VMHANDLE *p_core, void *p_wk_adrs )
+{
+  SCRCMD_WORK *p_wk = p_wk_adrs;
+  SCRIPT_WORK *p_script = SCRCMD_WORK_GetScriptWork( p_wk );
+  GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
+  FIELDMAP_WORK *p_field = GAMESYSTEM_GetFieldMapWork(p_gamesys);
+  RESORT_PEOPLE_SYS *p_people_sys = NULL;
+  RESORT_PEOPLE* p_people = NULL;
+
+  if(GMK_TMP_CheckAssignID( p_field, RESORT_RECEPTION_ASSIGN_ID ) )
+  {
+    p_people_sys = RESORT_RECEPTION_GetPeopleSys( p_field );
+  }
+  else if( GMK_TMP_CheckAssignID( p_field, RESORT_FIELD_ASSIGN_ID ) )
+  {
+    p_people_sys = RESORT_FIELD_GetPeopleSys( p_field );
+  }
+  GF_ASSERT( p_people_sys != NULL );
+
+  p_people = Resort_Scrcmd_GetFrontPeople( p_field, p_people_sys );
+
+  GF_ASSERT( p_people != NULL );
+
+  RESORT_PEOPLE_SetData( p_people, RESORT_DATA_PARAM_DAY_FLAG, TRUE );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  目の前の人物を取得
@@ -885,4 +1171,51 @@ static RESORT_PEOPLE * Resort_Scrcmd_GetFrontPeople( FIELDMAP_WORK *p_fieldmap, 
   p_frontmmdl = MMDLSYS_SearchGridPos( cp_mmdlsys, gx, gz, FALSE );
 
   return RESORT_PEOPLE_SYS_GetPeopleByMmdl( p_people_sys, p_frontmmdl );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * 努力値Up計算
+ *
+ * @param exp   現在の努力値
+ * @param other その他の努力値の合計
+ * @param up    アップする値
+ * @param limit 限界制御
+ *
+ * @retval  "-1 = アップしない"
+ * @retval  "0 != 計算結果（セットする努力値）"
+ */
+//--------------------------------------------------------------------------------------------
+static s32 PrmExp_Up( s32 exp, s32 other, s32 up )
+{
+  enum
+  {
+    PRMEXP_ONE_MAX  = 255,
+    PRMEXP_MAX      = 510,
+
+    ITEM_PRMEXP_MAX = 100, //アップする努力値の最大
+  };
+
+  if( exp == 0 && up < 0 ){
+    return -1;
+  }
+  if( exp == PRMEXP_ONE_MAX && up > 0 ){
+    return -1;
+  }
+  /*
+  if( exp >= ITEM_PRMEXP_MAX && up > 0 ){
+    return -1;
+  }*/
+  if( (exp+other) >= PRMEXP_MAX && up > 0 ){
+    return -1;
+  }
+
+  exp += up;
+  if( exp < 0 ){
+    exp = 0;
+  }
+  if( (exp+other) > PRMEXP_MAX ){
+    exp = PRMEXP_MAX - other;
+  }
+  return exp;
 }

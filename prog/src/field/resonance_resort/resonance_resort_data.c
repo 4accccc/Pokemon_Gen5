@@ -795,7 +795,8 @@ struct _RESORT_RECV_DATA
   u8                  minute;       //8
   u8                  netID;
   u8                  merge     :1;
-  u8                  pad       :6;
+  u8                  pad       :5;
+  u8                  day_flag  :1;
   u8                  keep_flag :1;
   u16                 exp;          //12
   RESORT_INSTITUTION_DATA institution;
@@ -1145,6 +1146,8 @@ u32 RESORT_RECV_DATA_GetData( const RESORT_RECV_DATA *cp_wk, RESORT_DATA_PARAM p
     return 0;
   case RESORT_DATA_PARAM_TYPE:
     return cp_wk->type;
+  case RESORT_DATA_PARAM_DAY_FLAG:
+    return cp_wk->day_flag;
   default:
     GF_ASSERT(0);
     return 0;
@@ -1177,6 +1180,9 @@ void RESORT_RECV_DATA_SetData( RESORT_RECV_DATA *p_wk, RESORT_DATA_PARAM param, 
     break;
   case RESORT_DATA_PARAM_KEEP:
     p_wk->keep_flag = data;
+    break;
+  case RESORT_DATA_PARAM_DAY_FLAG:
+    p_wk->day_flag = data;
     break;
   default:
     GF_ASSERT(0);
@@ -2014,7 +2020,8 @@ struct _RESORT_VISITOR_DATA
   u8    dataID;
   u8    event_flag;
   u8    type;
-  u8    dummy[3];
+  u8    day_flag;
+  u8    dummy[2];
 };
 SDK_COMPILER_ASSERT( sizeof(RESORT_VISITOR_DATA) == RESORT_VISITOR_DATA_SIZE );
 
@@ -2143,6 +2150,8 @@ u32 RESORT_VISITOR_DATA_GetData( const RESORT_VISITOR_DATA *cp_wk, RESORT_DATA_P
     return cp_wk->event_flag;
   case RESORT_DATA_PARAM_TYPE:
     return cp_wk->type;
+  case RESORT_DATA_PARAM_DAY_FLAG:
+    return cp_wk->day_flag;
   default:
     GF_ASSERT(0);
     return 0;
@@ -2170,6 +2179,9 @@ void RESORT_VISITOR_DATA_SetData( RESORT_VISITOR_DATA *p_wk, RESORT_DATA_PARAM p
     break;
   case RESORT_DATA_PARAM_LOCK:
     //なにもしない
+    break;
+  case RESORT_DATA_PARAM_DAY_FLAG:
+    p_wk->day_flag  = data;
     break;
   default:
     GF_ASSERT(0);
@@ -2621,6 +2633,35 @@ BOOL RESORT_PEOPLE_ALL_DATA_AddBeacon( RESORT_PEOPLE_ALL_DATA *p_wk, const RESOR
   return FALSE;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  一日一回更新
+ *
+ *	@param	RESORT_PEOPLE_ALL_DATA *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void RESORT_PEOPLE_ALL_DATA_UpdateDay( RESORT_PEOPLE_ALL_DATA *p_wk )
+{
+  int i;
+  //一日一回フラグを消去
+  for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
+  {
+    RESORT_RESIDENT_DATA *p_resident =  RESORT_PEOPLE_ALL_DATA_GetResident( p_wk, i );
+    if( !RESORT_RESIDENT_DATA_IsEmpty(p_resident ) )
+    {
+      RESORT_RESIDENT_DATA_SetData(p_resident,RESORT_DATA_PARAM_DAY_FLAG, FALSE );
+    }
+  }
+  for( i = 0; i < RESORT_VISITOR_DATA_NUM; i++ )
+  {
+    RESORT_VISITOR_DATA *p_visitor =  RESORT_PEOPLE_ALL_DATA_GetVisitor( p_wk, i );
+    if( !RESORT_VISITOR_DATA_IsEmpty(p_visitor) )
+    {
+      RESORT_VISITOR_DATA_SetData(p_visitor,RESORT_DATA_PARAM_DAY_FLAG, FALSE );
+    }
+  }
+}
+
 //=============================================================================
 /**
  *	リゾート街データ
@@ -2764,4 +2805,16 @@ void RESORT_CITY_DATA_SetData( RESORT_CITY_DATA *p_wk, RESORT_CITY_DATA_PARAM pa
   default:
     GF_ASSERT(0);
   }
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  一日一回更新
+ *
+ *	@param	RESORT_CITY_DATA *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void RESORT_CITY_DATA_UpdateDay( RESORT_CITY_DATA *p_wk )
+{
 }

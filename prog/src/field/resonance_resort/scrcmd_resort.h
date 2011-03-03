@@ -34,34 +34,9 @@ extern VMCMD_RESULT EvCmdResortMergeOff( VMHANDLE *p_core, void *p_wk_adrs );
 extern VMCMD_RESULT EvCmdResortNewInstatitutionEntrance( VMHANDLE *p_core, void *p_wk_adrs );
 extern VMCMD_RESULT EvCmdResortSearchReception( VMHANDLE *p_core, void *p_wk_adrs );
 
-
-
-
-
-
-
-//施設生成メッセージ  何ができたか
-//特殊NPCメッセージ   何をしたい人がどこにできたか
-//入れ替え用
-//最近MSG …  優先度を持っているプライオリティ高い順
-//行きたい場所メッセージ
-//施設選択
-//対応チェック
-
-//○お店用
-//１日１回IDくじ抽選
-//  →LV　リストが増える
-//なつきどアップ
-//  →LV　なつきど　度合い？
-//１日数回レベルを上げる
-//  →レベルを上げる段階数が増える
-//ダース販売
-//  →
-//きのみ販売
-//努力値をくれる
-//タマゴ孵化してくれる
-//宝石販売
-//掘り出し物販売
-//戦える
-//道具をくれる  くれる道具
-//卵をくれる    くれる卵
+extern VMCMD_RESULT EvCmdResortLot( VMHANDLE *p_core, void *p_wk_adrs );
+extern VMCMD_RESULT EvCmdResortAddKindly( VMHANDLE *p_core, void *p_wk_adrs );
+extern VMCMD_RESULT EvCmdResortAddLv( VMHANDLE *p_core, void *p_wk_adrs );
+extern VMCMD_RESULT EvCmdResortAddEffort( VMHANDLE *p_core, void *p_wk_adrs );
+extern VMCMD_RESULT EvCmdResortHatch( VMHANDLE *p_core, void *p_wk_adrs );
+extern VMCMD_RESULT EvCmdResortSetDayFlag( VMHANDLE *p_core, void *p_wk_adrs );

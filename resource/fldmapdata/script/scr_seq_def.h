@@ -12566,6 +12566,113 @@
 
 //--------------------------------------------------------------
 /**
+ * @brief リゾート用　くじをひく
+ * @param[in]   cnt 何回目か
+ * @param[out]  ret_wk 　下記
+ *      RESORT_LOT_FAILURE　…外れ
+ *      1~10                …１等～１０等
+ */
+//--------------------------------------------------------------
+#define _RESORT_LOT( cnt, ret_wk ) \
+      _ASM_RESORT_LOT cnt, ret_wk
+
+  .macro _ASM_RESORT_LOT cnt, ret_wk
+  .short EV_SEQ_RESORT_LOT
+  .short \cnt
+  .short \ret_wk
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief リゾート用　なつきどをあげる
+ * @param[in]   idx   パーティ内で何番目のポケモンか
+ * @param[out]  ret_wk 　下記
+ *      TRUE    …あげた
+ *      FALSE　 …なつきどが最大
+ */
+//--------------------------------------------------------------
+#define _RESORT_ADD_KINDLY( idx, ret_wk ) \
+      _ASM_RESORT_ADD_KINDLY idx, ret_wk
+
+  .macro _ASM_RESORT_ADD_KINDLY idx, ret_wk
+  .short EV_SEQ_RESORT_ADD_KINDLY
+  .short \idx
+  .short \ret_wk
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief リゾート用　LVをあげる
+ * @param[in]   idx   パーティ内で何番目のポケモンか
+ * @param[out]  ret_wk 　下記
+ *      TRUE    …あげた
+ *      FALSE　 …レベルが最大
+ */
+//--------------------------------------------------------------
+#define _RESORT_ADD_LV( idx, ret_wk ) \
+      _ASM_RESORT_ADD_LV idx, ret_wk
+
+  .macro _ASM_RESORT_ADD_LV idx, ret_wk
+  .short EV_SEQ_RESORT_ADD_LV
+  .short \idx
+  .short \ret_wk
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief リゾート用　１日フラグをON
+ */
+//--------------------------------------------------------------
+#define _RESORT_SET_DAY_FLAG() \
+      _ASM_RESORT_SET_DAY_FLAG
+
+  .macro _ASM_RESORT_SET_DAY_FLAG
+  .short EV_SEQ_RESORT_SET_DAY_FLAG
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief リゾート用　努力値をあげる
+ * @param[in]   idx   パーティ内で何番目のポケモンか
+ * @param[in]   effort どの努力値をあげるか
+ *        RESORT_ADD_EFFORT_HP    HP
+ *        RESORT_ADD_EFFORT_POW   こうげき
+ *        RESORT_ADD_EFFORT_DEF   ぼうぎょ
+ *        RESORT_ADD_EFFORT_AGI   すばやさ
+ *        RESORT_ADD_EFFORT_SPEPOW  とくこう
+ *        RESORT_ADD_EFFORT_SPEDEF  とくぼう
+ *
+ * @param[out]  ret_wk 　下記
+ *      TRUE    …あげた
+ *      FALSE　 …レベルが最大
+ */
+//--------------------------------------------------------------
+#define _RESORT_ADD_EFFORT( idx, effort, ret_wk ) \
+      _ASM_RESORT_ADD_EFFORT idx, effort, ret_wk
+
+  .macro _ASM_RESORT_ADD_EFFORT idx, effort, ret_wk
+  .short EV_SEQ_RESORT_ADD_EFFORT
+  .short \idx
+  .short \effort
+  .short \ret_wk
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief リゾート用　タマゴ孵化歩数を０にする
+ * @param[in]   idx   パーティ内で何番目のポケモンか
+ */
+//--------------------------------------------------------------
+#define _RESORT_HATCH( idx ) \
+      _ASM_RESORT_HATCH idx
+
+  .macro _ASM_RESORT_HATCH idx
+  .short EV_SEQ_RESORT_HATCH
+  .short \idx
+  .endm
+
+//--------------------------------------------------------------
+/**
  * @brief 無限ダンジョン初期化
  */
 //--------------------------------------------------------------

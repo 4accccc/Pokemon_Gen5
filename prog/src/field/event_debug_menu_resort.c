@@ -40,6 +40,9 @@ static BOOL debugMenuCallProc_AllRecv( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_AllProxy( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_ChangeMap( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_AllSecretary( DEBUG_MENU_EVENT_WORK *p_wk );
+static BOOL debugMenuCallProc_AllResident( DEBUG_MENU_EVENT_WORK *p_wk );
+static BOOL debugMenuCallProc_AllClear( DEBUG_MENU_EVENT_WORK *p_wk );
+static BOOL debugMenuCallProc_UpdateDay( DEBUG_MENU_EVENT_WORK *p_wk );
 
 static const DEBUG_MENU_LIST DATA_SubMenuList[] =
 {
@@ -51,6 +54,9 @@ static const DEBUG_MENU_LIST DATA_SubMenuList[] =
   { DEBUG_FIELD_RESORT_05, debugMenuCallProc_AllRecv, GFL_OVERLAY_BLANK_ID},
   { DEBUG_FIELD_RESORT_06, debugMenuCallProc_AllProxy, GFL_OVERLAY_BLANK_ID},
   { DEBUG_FIELD_RESORT_08, debugMenuCallProc_AllSecretary, GFL_OVERLAY_BLANK_ID},
+  { DEBUG_FIELD_RESORT_09, debugMenuCallProc_AllResident, GFL_OVERLAY_BLANK_ID},
+  { DEBUG_FIELD_RESORT_10, debugMenuCallProc_AllClear, GFL_OVERLAY_BLANK_ID},
+  { DEBUG_FIELD_RESORT_11, debugMenuCallProc_UpdateDay, GFL_OVERLAY_BLANK_ID},
 };
 
 static const DEBUG_MENU_INITIALIZER DebugSubMenuData = {
@@ -267,5 +273,69 @@ static BOOL debugMenuCallProc_AllSecretary( DEBUG_MENU_EVENT_WORK *p_wk )
   }
 
   RESORT_RECV_DATA_Exit( p_recv );
+  return FALSE;
+}
+static BOOL debugMenuCallProc_AllResident( DEBUG_MENU_EVENT_WORK *p_wk )
+{
+  SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(p_wk->gdata);
+  RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( pSave );
+  RESORT_PEOPLE_ALL_DATA *p_all_people = RESONANCE_RESORT_SV_GetPeopleAllData( p_resort );
+  int i;
+
+  RESORT_RECV_DATA *p_recv = RESORT_RECV_DATA_Init( GFL_HEAP_LOWID(p_wk->heapID) );
+  RESORT_RECV_DATA_SetDebugData( p_recv, p_wk->gdata );
+
+  for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
+  {
+    RESORT_RESIDENT_DATA *p_dst = RESORT_PEOPLE_ALL_DATA_GetResident( p_all_people, i );
+    if( RESORT_RESIDENT_DATA_IsEmpty( p_dst ) )
+    {
+      RESORT_RESIDENT_DATA_SetRecv( p_dst, p_recv, i, 1, i );
+    }
+  }
+
+  RESORT_RECV_DATA_Exit( p_recv );
+  return FALSE;
+}
+static BOOL debugMenuCallProc_AllClear( DEBUG_MENU_EVENT_WORK *p_wk )
+{
+  SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(p_wk->gdata);
+  RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( pSave );
+
+  //バッファクリア
+  {
+    RESORT_RECV_BUFF *p_recv_buff = RESONANCE_RESORT_SV_GetDataBuff( p_resort );
+    RESORT_RECV_BUFF_InitInstance( p_recv_buff, RESONANCE_RESORT_SV_RECV_BUFF_NUM );
+  }
+  {
+    RESORT_PROXY_BUFF *p_proxy_buff = RESONANCE_RESORT_SV_GetProxyBuff( p_resort );
+    RESORT_PROXY_BUFF_InitInstance( p_proxy_buff, RESONANCE_RESORT_SV_PROXY_BUFF_NUM );
+  }
+  //街データクリア
+  {
+    RESORT_CITY_DATA *p_city = RESONANCE_RESORT_SV_GetCityData( p_resort );
+    RESORT_CITY_DATA_InitInstance( p_city );
+  }
+  //人物データクリア
+  {
+    RESORT_PEOPLE_ALL_DATA *p_all_people = RESONANCE_RESORT_SV_GetPeopleAllData( p_resort );
+    RESORT_PEOPLE_ALL_DATA_InitInstance( p_all_people );
+  }
+  return FALSE;
+}
+static BOOL debugMenuCallProc_UpdateDay( DEBUG_MENU_EVENT_WORK *p_wk )
+{
+  SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(p_wk->gdata);
+  RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( pSave );
+  //街データ
+  {
+    RESORT_CITY_DATA *p_city = RESONANCE_RESORT_SV_GetCityData( p_resort );
+    RESORT_CITY_DATA_UpdateDay( p_city );
+  }
+  //人物データ
+  {
+    RESORT_PEOPLE_ALL_DATA *p_all_people = RESONANCE_RESORT_SV_GetPeopleAllData( p_resort );
+    RESORT_PEOPLE_ALL_DATA_UpdateDay( p_all_people );
+  }
   return FALSE;
 }

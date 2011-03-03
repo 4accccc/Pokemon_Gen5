@@ -24,6 +24,8 @@
 #define RESORT_GET_PARAM_PRESENT_IS_ITEM    (5)
 #define RESORT_GET_PARAM_IS_INSTITUTION_EMPTY   (6)
 #define RESORT_GET_PARAM_IS_EVENT           (7)
+#define RESORT_GET_PARAM_TYPE               (8)
+#define RESORT_GET_PARAM_DAY_FLAG           (9)
 //_RESORT_JOB_CHANGE—p
 #define RESORT_JOBCHANGE_RESIDENT_AUTO      (0)
 #define RESORT_JOBCHANGE_RESIDENT_LOT       (1)
@@ -102,7 +104,17 @@
 #define RESORT_SECRETARY_GREET_MSGID          (0)
 #define RESORT_SECRETARY_BYE_MSGID            (1)
 
-
 //_RESORT_SEARCH_RECEPTION—p
 #define RESORT_SEARCH_PROXY_GTS               (0)
 #define RESORT_SEARCH_PROXY_MYSTERY           (0)
+
+//_RESORT_LOT—p
+#define RESORT_LOT_FAILURE                    (0)
+
+//_RESORT_ADD_EFFORT
+#define RESORT_ADD_EFFORT_HP                  (0)
+#define RESORT_ADD_EFFORT_POW                 (1)
+#define RESORT_ADD_EFFORT_DEF                 (2)
+#define RESORT_ADD_EFFORT_AGI                 (3)
+#define RESORT_ADD_EFFORT_SPEPOW              (4)
+#define RESORT_ADD_EFFORT_SPEDEF              (5)

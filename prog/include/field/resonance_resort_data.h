@@ -137,6 +137,7 @@ typedef enum
   RESORT_DATA_PARAM_EVENT_FLAG,
   RESORT_DATA_PARAM_PHRASE, //p_ret_adrs‚©‚çŽæ“¾
   RESORT_DATA_PARAM_TYPE,
+  RESORT_DATA_PARAM_DAY_FLAG,
 } RESORT_DATA_PARAM;
 
 //-------------------------------------
@@ -400,6 +401,7 @@ extern u32 RESORT_PEOPLE_ALL_DATA_SearchEmptyCondominiumPlaceID( const RESORT_PE
 
 extern BOOL RESORT_PEOPLE_ALL_DATA_AddBeacon( RESORT_PEOPLE_ALL_DATA *p_wk, const RESORT_BEACON_DATA *cp_beacon );
 
+extern void RESORT_PEOPLE_ALL_DATA_UpdateDay( RESORT_PEOPLE_ALL_DATA *p_wk );
 
 //=============================================================================
 /**
@@ -444,3 +446,5 @@ extern void RESORT_CITY_DATA_InitInstance( RESORT_CITY_DATA *p_wk );
 
 extern u32 RESORT_CITY_DATA_GetData( const RESORT_CITY_DATA *cp_wk, RESORT_CITY_DATA_PARAM param, void *p_ret_adrs );
 extern void RESORT_CITY_DATA_SetData( RESORT_CITY_DATA *p_wk, RESORT_CITY_DATA_PARAM param, u32 data );
+
+extern void RESORT_CITY_DATA_UpdateDay( RESORT_CITY_DATA *p_wk );

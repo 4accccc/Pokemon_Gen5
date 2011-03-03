@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nagihashi_toru" host="W00268" date="2011-03-02T15:05:56"/>
+	<create user="nagihashi_toru" host="W00268" date="2011-03-03T11:37:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -2320,6 +2320,21 @@ LR→補完&quot;</language>
 	<row id="DEBUG_FIELD_RESORT_08">
 		<language name="JPN" width="240">秘書フル</language>
 		<language name="JPN_KANJI" width="240">秘書フル</language>
+	</row>
+
+	<row id="DEBUG_FIELD_RESORT_09">
+		<language name="JPN" width="240">住民フル</language>
+		<language name="JPN_KANJI" width="240">住民フル</language>
+	</row>
+
+	<row id="DEBUG_FIELD_RESORT_10">
+		<language name="JPN" width="240">全データ初期化</language>
+		<language name="JPN_KANJI" width="240">全データ初期化</language>
+	</row>
+
+	<row id="DEBUG_FIELD_RESORT_11">
+		<language name="JPN" width="240">一日フラグ更新</language>
+		<language name="JPN_KANJI" width="240">一日フラグ更新</language>
 	</row>
 
 	<flowchart-group-list>
