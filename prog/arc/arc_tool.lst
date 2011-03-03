@@ -313,3 +313,4 @@
   ARCID_TVT_CAMERA "tvt_camera.narc" #ライブキャスターミニゲーム カメラ撮影
   ARCID_FMISSION_GRA "fmission_gra.narc" #フェスタミッション関連グラフィックアーカイブ
   ARCID_RESONANCE_RESORT_DATA "resonance_resort_data.narc" #レゾナンスリゾートデータ
+  ARCID_WBTLIST_GRA   "wbt_list_gra.narc"   #WBTトーナメント表アプリグラフィック
