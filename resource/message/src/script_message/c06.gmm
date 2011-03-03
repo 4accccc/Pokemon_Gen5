@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-18T18:00:19"/>
+	<create user="matsumiya" host="W00224" date="2011-03-03T17:35:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -364,7 +364,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1294" top="205" right="1999" bottom="833" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -393,7 +393,7 @@
 	</lock>
 
 
-	<row id="msg_c06_hakase1_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c06_hakase1_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・pos（GRIDX=100~104、GRIDZ=301）で発動
 ・画面左上方向から
@@ -410,7 +410,7 @@
 [1:00:トレーナー名:0]だろ！！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c06_hakase1_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c06_hakase1_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・画面下向きでメッセージ表示
 ・ポケモン「ギアル」を
@@ -431,7 +431,7 @@
 [2:02:３桁:0]匹　か！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c06_hakase1_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c06_hakase1_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてhakase1_05</comment>
 		<attribute name="キャラクター">HAKASE1
@@ -456,7 +456,7 @@
 だが　たいした　ポケモン図鑑　だ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c06_hakase1_05" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c06_hakase1_05" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてhakase1_06</comment>
 		<attribute name="キャラクター">HAKASE1
@@ -485,7 +485,7 @@
 なんとも　うれしい　かぎりだよ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c06_hakase1_06" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c06_hakase1_06" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・ポケモン図鑑に
 　フォルムチェンジ確認機能追加
@@ -501,7 +501,7 @@
 パワーアップ！　だね▼</language>
 	</row>
 
-	<row id="msg_c06_hakase1_06a" back-color="#80ffff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c06_hakase1_06a" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>システムメッセージ
 ・ME再生
 ・続けてhakase1_07</comment>
@@ -511,7 +511,7 @@
 パワーアップ　した！</language>
 	</row>
 
-	<row id="msg_c06_hakase1_07" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c06_hakase1_07" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてleader6_01</comment>
 		<attribute name="キャラクター">HAKASE1
@@ -531,7 +531,7 @@
 追加しておいたからね▼</language>
 	</row>
 
-	<row id="msg_c06_leader6_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c06_leader6_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・続けてhakase1_08</comment>
 		<attribute name="キャラクター">c06ジムリーダー
@@ -542,7 +542,7 @@
 そちらの　トレーナーさんは？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c06_hakase1_08" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c06_hakase1_08" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・フウロのほうを向いてメッセージ表示
 ・男女性別関係なくこの台詞
@@ -565,7 +565,7 @@
 イッシュを　旅しているのだ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c06_leader6_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c06_leader6_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・続けてhakase1_09</comment>
 		<attribute name="キャラクター">c06ジムリーダー
@@ -578,7 +578,7 @@
 わあ！　とっても　楽しみ！！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c06_hakase1_09" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c06_hakase1_09" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・主人公を向いてメッセージ表示
 ・続けてhakase1_10</comment>
@@ -594,7 +594,7 @@
 ぶっとんで　おるからな！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c06_hakase1_10" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c06_hakase1_10" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・フウロの方を向いてメッセージ表示
 ・続けてleader6_03</comment>
@@ -606,7 +606,7 @@
 また　なにかあったら　頼むぞ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c06_leader6_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c06_leader6_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてhakase1_11</comment>
 		<attribute name="キャラクター">c06ジムリーダー
@@ -625,7 +625,7 @@
 シンオウとか　軽く　いっちゃって！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c06_hakase1_11" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c06_hakase1_11" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・メッセージ表示後、画面右方面に移動
 ・画面外に消えると
@@ -648,7 +648,7 @@
 また　会おうぞ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c06_leader6_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c06_leader6_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・画面右を向いてメッセージ表示
 ・続けてleader6_05かleader6_06</comment>
@@ -664,7 +664,7 @@
 いまだに　信じられない[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c06_leader6_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c06_leader6_05" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・主人公性別＝♂
 ・主人公に隣接してメッセージ
@@ -687,7 +687,7 @@
 やるべきことが　あるの▼</language>
 	</row>
 
-	<row id="msg_c06_leader6_06" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c06_leader6_06" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・主人公性別＝♀
 ・主人公に隣接してメッセージ
@@ -710,7 +710,7 @@
 やるべきことが　あるの▼</language>
 	</row>
 
-	<row id="msg_c06_leader6_07" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c06_leader6_07" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・上向きでメッセージ表示</comment>
 		<attribute name="キャラクター">c06ジムリーダー
@@ -725,7 +725,7 @@
 なにか　みえたのね▼</language>
 	</row>
 
-	<row id="msg_c06_leader6_08" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c06_leader6_08" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・主人公と向き合ってメッセージ表示
 ・表示後、r07方面に歩いて移動
@@ -748,7 +748,7 @@
 よければ　アナタも　来てね▼</language>
 	</row>
 
-	<row id="msg_c06_stop_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c06_stop_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・ジムストッパー
 ・r07r0105で鐘を鳴らすと削除</comment>
@@ -765,7 +765,7 @@
 タワーオブヘブン　っすか？</language>
 	</row>
 
-	<row id="msg_c06_boss_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c06_boss_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・c06ジムバッジ取得後に出現
 　ジムから出ると、メッセージ表示
@@ -797,7 +797,7 @@
 絶対に　ウソを　つかない[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_c06_boss_02" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c06_boss_02" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・一歩前進して
 ・0＝先頭のポケモン名（ひん死、タマゴのぞく）
@@ -812,7 +812,7 @@
 どんな　トレーナーか　教えてよ？[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_c06_boss_03" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c06_boss_03" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてboss_04
 ・1＝主人公名前</comment>
@@ -831,7 +831,7 @@
 旅を　している……　と[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_c06_boss_04" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c06_boss_04" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてboss_05
 ・0＝先頭のポケモン名（ひん死、タマゴのぞく）
@@ -857,7 +857,7 @@
 行く末を　見守ることが　できるのに[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_c06_boss_05" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c06_boss_05" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてboss_06</comment>
 		<attribute name="キャラクター">N</attribute>
@@ -871,7 +871,7 @@
 ダークストーン……[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_c06_boss_06" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c06_boss_06" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてboss_07
 ・最終行19文字</comment>
@@ -896,7 +896,7 @@
 世界に　認めさせ　従わせる……[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_c06_boss_07" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c06_boss_07" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてboss_08</comment>
 		<attribute name="キャラクター">N</attribute>
@@ -922,7 +922,7 @@
 小さな　存在じゃ　ないんだよ！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_c06_boss_08" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c06_boss_08" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・下向き＋首振りアニメ後にメッセージ表示
 ・表示後、画面右に移動
