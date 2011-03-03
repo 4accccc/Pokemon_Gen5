@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-31T14:46:17"/>
+	<create user="matsumiya" host="W00224" date="2011-03-03T12:28:56"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1294" top="205" right="1999" bottom="833" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,10 +292,12 @@
 	</lock>
 
 
-	<row id="msg_c01r0101_inventor_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c01r0101_inventor_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・c01ジムバッジ取得後に出現
-・メッセージ表示後、階段の前まで移動</comment>
+・メッセージ表示後、階段の前まで移動
+
+・削除予定</comment>
 		<attribute name="キャラ指定">ASSISTANTW
 発明家</attribute>
 		<language name="JPN" width="256">マコモ『アナタたち　イッシュちほうの
@@ -308,12 +310,14 @@
 階段は　こっちよ！▼</language>
 	</row>
 
-	<row id="msg_c01r0101_inventor_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c01r0101_inventor_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・階段の前で主人公のほうを向いて
 　メッセージ表示
 ・表示後、階段を上る
-　動作モデルが消えると、主人公操作可能に</comment>
+　動作モデルが消えると、主人公操作可能に
+
+・削除予定</comment>
 		<attribute name="キャラ指定">ASSISTANTW
 発明家</attribute>
 		<language name="JPN" width="256">マコモ『アタシの　へや
@@ -350,10 +354,12 @@
 不思議な　生き物　よね……</language>
 	</row>
 
-	<row id="msg_c01r0101_boy3_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c01r0101_boy3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・c01ジムバッジ取得まで
-　階段前に配置、２Fへのストッパー</comment>
+　階段前に配置、２Fへのストッパー
+
+・メッセージ変更予定</comment>
 		<attribute name="キャラ指定">BOY3
 少年（聡明）</attribute>
 		<language name="JPN" width="256">うえは　ダメダメ！！
@@ -366,9 +372,11 @@
 すっげー　顔して　いってたもん！</language>
 	</row>
 
-	<row id="msg_c01r0101_boy3_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c01r0101_boy3_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・c01ジムバッジ取得後、座標移動</comment>
+・c01ジムバッジ取得後、座標移動
+
+・メッセージ変更予定</comment>
 		<attribute name="キャラ指定">BOY3
 少年（聡明）</attribute>
 		<language name="JPN" width="256">うえの　マコモねえちゃん
