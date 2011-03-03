@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-17T18:25:21"/>
+	<create user="matsumiya" host="W00224" date="2011-03-03T20:29:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1294" top="205" right="1999" bottom="833" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_r08_white_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r08_white_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・下記ストッパーが削除されるとイベント起動条件ON
 ・pos起動（GRIDX=240、GRIDZ=175~185）
@@ -303,7 +303,7 @@
 		<language name="JPN_KANJI" width="256">ベル『[1:00:トレーナー名:0]！！▼</language>
 	</row>
 
-	<row id="msg_r08_white_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r08_white_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・主人公に隣接してメッセージ表示
 ・続けてトレーナー戦闘に</comment>
@@ -335,7 +335,7 @@
 というわけで　勝負して▼</language>
 	</row>
 
-	<row id="msg_r08_white_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r08_white_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・戦闘後、フィールド復帰時に自動で表示
 ・アイテム入手処理
@@ -354,7 +354,7 @@
 感動したから　これ　あげるね▼</language>
 	</row>
 
-	<row id="msg_r08_white_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r08_white_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・メッセージ表示後
 　下を向き、帽子の芝居をして
@@ -390,7 +390,7 @@
 真実とか　理想だと　おもう……▼</language>
 	</row>
 
-	<row id="msg_r08_white_05" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_r08_white_05" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・その後画面左へ移動
 　画面外に消えると主人公、操作可能に
@@ -421,7 +421,7 @@
 バイバーイ！！▼</language>
 	</row>
 
-	<row id="msg_r08_stop1_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_r08_stop1_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・ストッパー
 ・GRIDX=243、GRIDZ=179、下向き
@@ -436,7 +436,7 @@
 仲間が　活動中らしいな</language>
 	</row>
 
-	<row id="msg_r08_stop1_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_r08_stop1_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・ストッパー
 ・リュウラセンの塔イベント後からc02でストーン入手まで
@@ -451,7 +451,7 @@
 仲間が　活動中らしいな</language>
 	</row>
 
-	<row id="msg_r08_stop2_01" back-color="#80ffff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_r08_stop2_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・ストッパー
 ・GRIDX=243、GRIDZ=180、上向き
@@ -466,7 +466,7 @@
 仲間が　活動中らしいぞ</language>
 	</row>
 
-	<row id="msg_r08_stop2_02" back-color="#80ffff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_r08_stop2_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・ストッパー
 ・リュウラセンの塔イベント後からc02でストーン入手まで
