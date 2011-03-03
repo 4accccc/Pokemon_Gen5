@@ -15,10 +15,12 @@ enum {
 	NARC_gym_fly_fan_nsbca = 1,
 	NARC_gym_fly_fuusoku_nsbmd = 2,
 	NARC_gym_fly_fuusoku_nsbca = 3,
-	NARC_gym_fly_wind_jiki_nsbmd = 4,
-	NARC_gym_fly_wind_jiki_nsbta = 5,
-	NARC_gym_fly_wind_map_nsbmd = 6,
-	NARC_gym_fly_wind_map_nsbta = 7
+	NARC_gym_fly_box_nsbmd = 4,
+	NARC_gym_fly_box_nsbca = 5,
+	NARC_gym_fly_wind_jiki_nsbmd = 6,
+	NARC_gym_fly_wind_jiki_nsbta = 7,
+	NARC_gym_fly_wind_map_nsbmd = 8,
+	NARC_gym_fly_wind_map_nsbta = 9
 };
 
 /* NARC_GYM_FLY_NAIX_ */

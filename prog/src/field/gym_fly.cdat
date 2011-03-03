@@ -21,6 +21,8 @@ enum {
   RESID_FAN_ANM_ICA,        // 大きいファン
   RESID_WINDMETER_MDL,      // 風力計
   RESID_WINDMETER_ANM1_ICA, // 風力計
+  RESID_BOX_MDL,            // 木製の箱
+  RESID_BOX_ANM_ICA,        // 木製の箱
   RESID_WIND_JIKI_MDL,      // 風エフェクト(自機)
   RESID_WIND_JIKI_ANM_ITA,  // 風エフェクト(自機)
   RESID_WIND_MAP_MDL,       // 風エフェクト(マップ)
@@ -49,6 +51,8 @@ enum {
   OBJ_WINDMETER_15,  // 
   OBJ_WINDMETER_16,  // 
   OBJ_WINDMETER_17,  // 
+  OBJ_BOX_1,
+  OBJ_BOX_2,
   EFFECT_WIND_JIKI,
   EFFECT_WIND_MAP,
 };
@@ -62,6 +66,9 @@ static const GFL_G3D_UTIL_RES res_3d_table[] =
   // 風力計
   { ARCID_GYM_FLY, NARC_gym_fly_fuusoku_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
   { ARCID_GYM_FLY, NARC_gym_fly_fuusoku_nsbca, GFL_G3D_UTIL_RESARC }, // ICA
+  // 箱
+  { ARCID_GYM_FLY, NARC_gym_fly_box_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
+  { ARCID_GYM_FLY, NARC_gym_fly_box_nsbca, GFL_G3D_UTIL_RESARC }, // ICA
   // 風エフェクト(自機)
   { ARCID_GYM_FLY, NARC_gym_fly_wind_jiki_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
   { ARCID_GYM_FLY, NARC_gym_fly_wind_jiki_nsbta, GFL_G3D_UTIL_RESARC }, // ITA
@@ -79,6 +86,11 @@ static const GFL_G3D_UTIL_ANM anm_3d_table[] =
 static const GFL_G3D_UTIL_ANM anm_3d_table_fan[] =
 {
   { RESID_FAN_ANM_ICA, 0 }, // nsbca
+};
+// ANIME 箱
+static const GFL_G3D_UTIL_ANM anm_3d_table_box[] =
+{
+  { RESID_BOX_ANM_ICA, 0 }, // nsbca
 };
 // ANIME 風エフェクト(自機)
 static const GFL_G3D_UTIL_ANM anm_3d_table_wind_jiki[] =
@@ -253,6 +265,22 @@ static const GFL_G3D_UTIL_OBJ obj_3d_table[] =
     RESID_WINDMETER_MDL,      // テクスチャリソースID
     anm_3d_table,   // アニメテーブル(複数指定のため)
     NELEMS(anm_3d_table),      // アニメリソース数
+  },
+  // 箱1
+  {
+    RESID_BOX_MDL,      // モデルリソースID
+    0,      // モデルデータID(リソース内部INDEX)
+    RESID_BOX_MDL,      // テクスチャリソースID
+    anm_3d_table_box,   // アニメテーブル(複数指定のため)
+    NELEMS(anm_3d_table_box),      // アニメリソース数
+  },
+  // 箱2
+  {
+    RESID_BOX_MDL,      // モデルリソースID
+    0,      // モデルデータID(リソース内部INDEX)
+    RESID_BOX_MDL,      // テクスチャリソースID
+    anm_3d_table_box,   // アニメテーブル(複数指定のため)
+    NELEMS(anm_3d_table_box),      // アニメリソース数
   },
   // 風エフェクト(自機)
   {

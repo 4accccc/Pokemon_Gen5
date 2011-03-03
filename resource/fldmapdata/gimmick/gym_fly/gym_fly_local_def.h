@@ -8,15 +8,15 @@
 //======================================================================
 
 //ファンのグリッド位置座標
-#define FAN1_GX (5)
+#define FAN1_GX (0)
 #define FAN1_GY (0)
-#define FAN1_GZ (0)
-#define FAN2_GX (15)
+#define FAN1_GZ (-3)
+#define FAN2_GX (11)
 #define FAN2_GY (0)
-#define FAN2_GZ (0)
-#define FAN3_GX (25)
+#define FAN2_GZ (-3)
+#define FAN3_GX (22)
 #define FAN3_GY (0)
-#define FAN3_GZ (0)
+#define FAN3_GZ (-3)
 //風力計のグリッド位置座標
 //マップの左上から数えての連番です。
 #define WINDMETER1_GX (10)
@@ -70,6 +70,13 @@
 #define WINDMETER17_GX (13)
 #define WINDMETER17_GY (0)
 #define WINDMETER17_GZ (42)
+//箱のグリッド位置座標
+#define BOX1_GX (11)
+#define BOX1_GY (0)
+#define BOX1_GZ (25)
+#define BOX2_GX (11)
+#define BOX2_GY (0)
+#define BOX2_GZ (36)
 //風力変化時間
 //中速に変わる時間
 #define WINDMETER_MIDDLE_TIME (2*30)	//2秒

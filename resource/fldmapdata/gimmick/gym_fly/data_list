@@ -3,6 +3,8 @@ DATA_LIST = \
 		 fan.nsbca \
      fuusoku.nsbmd \
 		 fuusoku.nsbca \
+     box.nsbmd \
+		 box.nsbca \
      wind_jiki.nsbmd \
 		 wind_jiki.nsbta \
      wind_map.nsbmd \

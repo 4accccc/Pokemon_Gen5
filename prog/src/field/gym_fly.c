@@ -53,12 +53,18 @@
 #define GYM_FLY_TMP_ASSIGN_ID  (1)
 
 #define FAN_NUM_MAX             (3)         // ファンの数
+#define FAN_SPEED_LOW           (0x1000)    // 低速のアニメ速度
+#define FAN_SPEED_MIDDLE        (0x2000)    // 低速のアニメ速度
+#define FAN_SPEED_HIGH          (0x4000)    // 低速のアニメ速度
+#define FAN_SPEED_ADD           (0x260)     // アニメ加算値
 
 #define WINDMETER_NUM_MAX       (17)        // 風力計の数
-#define WINDMETER_SPEED_LOW     (0x2000)  // 低速のアニメ速度
-#define WINDMETER_SPEED_MIDDLE  (0x5000)    // 中速のアニメ速度
-#define WINDMETER_SPEED_HIGH    (0xb000)    // 高速のアニメ速度
+#define WINDMETER_SPEED_LOW     (0x2000)    // 低速のアニメ速度
+#define WINDMETER_SPEED_MIDDLE  (0x4000)    // 中速のアニメ速度
+#define WINDMETER_SPEED_HIGH    (0xa000)    // 高速のアニメ速度
 #define WINDMETER_SPEED_ADD     (0x300)     // アニメ加算
+
+#define BOX_NUM_MAX             (2)         // 貨物箱の数
 
 // map_array.cdatの配列の要素
 #define MAP_ARRAY_ROW           (50)        // マップの縦MAX
@@ -73,30 +79,52 @@ enum{
 ///	風力計状態
 //=====================================
 typedef enum {
-  WINDMETER_STATE_LOW,     // 低速
-  WINDMETER_STATE_MIDDLE,  // 中速
-  WINDMETER_STATE_HIGH,    // 高速
-}WINDMETER_STATE;
+  WIND_STATE_LOW,     // 低速
+  WIND_STATE_MIDDLE,  // 中速
+  WIND_STATE_HIGH,    // 高速
+}WIND_STATE;
 
 //=============================================================================
 /**
  *					構造体宣言
 */
 //=============================================================================
+//-------------------------------------
+///	ファン
+//=====================================
+typedef struct {
+  fx32    anm_speed;      // アニメーション再生の速度
+  fx32    anm_speed_max;  // アニメーション再生の目標速度
+
+  FLD_EXP_OBJ_CNT_PTR parent_exp_obj;  // 拡張3Dモデルコントローラ
+} FAN_WORK;
+
+//-------------------------------------
+///	風力計
+//=====================================
+typedef struct {
+  fx32    anm_speed;      // アニメーション再生の速度
+  fx32    anm_speed_max;  // アニメーション再生の目標速度
+
+  FLD_EXP_OBJ_CNT_PTR parent_exp_obj;  // 拡張3Dモデルコントローラ
+} WINDMETER_WORK;
+
+
 //ジム内部中の一時ワーク
 typedef struct GYM_FLY_TMP_tag
 {
   HEAPID  heapID;     // ヒープID
 
-  BOOL    time_start;     // 時間計測開始フラグ
+  u8      state;          // 風速状態   WIND_STATE_XXX
 
+  BOOL    time_start;     // 時間計測開始フラグ
   u16     time;           // 時間計測用
-  u8      state;          // 風速状態   WINDMETER_STATE_XXX
-  fx32    anm_speed;      // アニメーション再生の現速度
-  fx32    anm_speed_max;  // アニメーション再生の目標速度
+
+  FAN_WORK            fan_wk;
+  WINDMETER_WORK      windmeter_wk;
 
   FLD_EXP_OBJ_CNT_PTR exp_obj;  // 拡張3Dモデルコントローラ
-  FIELD_PLAYER        *player;      // 自機
+  FIELD_PLAYER        *player;  // 自機
 
 }GYM_FLY_TMP;
 
@@ -123,11 +151,11 @@ typedef struct {
  *					static関数宣言
 */
 //=============================================================================
-// WINDMETER 風力計
-static WINDMETER_STATE WINDMETER_GetState( const u16 c_time ); 
-static void WINDMETER_ChangeState( FIELDMAP_WORK *p_fieldmap, const WINDMETER_STATE state );
+// 状態
+static WIND_STATE WIND_GetState( const u16 c_time ); 
+static void WIND_ChangeState( FIELDMAP_WORK *p_fieldmap, const WIND_STATE state );
 // 吹き飛ばしイベント
-static GMEVENT* WINDMETER_BLOW_CreateEvent( GMEVENT* parent, GAMESYS_WORK* gsys );
+static GMEVENT* WIND_BLOW_CreateEvent( GMEVENT* parent, GAMESYS_WORK* gsys );
 static GMEVENT_RESULT BlowEvent( GMEVENT* event, int* seq, void* wk );
 static GMEVENT_RESULT BlowEventSafe( GMEVENT* event, int* seq, void* wk );
 
@@ -135,6 +163,12 @@ static GMEVENT_RESULT BlowEventSafe( GMEVENT* event, int* seq, void* wk );
 static void EXPOBJ_ObjSet( GYM_FLY_TMP *p_wk );
 static void EXPOBJ_ObjDell( GYM_FLY_TMP *p_wk );
 static void EXPOBJ_ObjMain( GYM_FLY_TMP *p_wk );
+
+// FAN
+static void FAN_Update( FAN_WORK *p_wk );
+
+// WINDMETER
+static void WINDMETER_Update( WINDMETER_WORK *p_wk );
 
 #ifdef GYM_FLY_DEBUG_MENU
 //-------------------------------------
@@ -169,12 +203,23 @@ void GYM_FLY_Setup(FIELDMAP_WORK *p_fieldmap)
   p_wk->heapID    = HEAPID_FIELDMAP;
   p_wk->time_start= FALSE;
   p_wk->time      = 0;
-  p_wk->state     = WINDMETER_STATE_LOW;
-  p_wk->anm_speed = WINDMETER_SPEED_LOW;
-  p_wk->anm_speed_max = WINDMETER_SPEED_LOW;
+  p_wk->state     = WIND_STATE_LOW;
   p_wk->exp_obj   = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
   p_wk->player    = FIELDMAP_GetFieldPlayer( p_fieldmap );
 
+  // ファン
+  p_wk->fan_wk.anm_speed = FAN_SPEED_LOW;
+  p_wk->fan_wk.anm_speed_max = FAN_SPEED_LOW;
+  p_wk->fan_wk.parent_exp_obj = p_wk->exp_obj;
+
+  // 風力計
+  p_wk->windmeter_wk.anm_speed = WINDMETER_SPEED_LOW;
+  p_wk->windmeter_wk.anm_speed_max = WINDMETER_SPEED_LOW;
+  p_wk->windmeter_wk.parent_exp_obj = p_wk->exp_obj;
+  
+  p_wk->fan_wk.anm_speed = WINDMETER_SPEED_LOW;
+  p_wk->fan_wk.anm_speed_max = WINDMETER_SPEED_LOW;
+  p_wk->fan_wk.parent_exp_obj = p_wk->exp_obj;
   // EXPOBJセット
   EXPOBJ_ObjSet( p_wk );
 
@@ -255,21 +300,20 @@ GMEVENT * GYM_FLY_CheckEvent( GAMESYS_WORK *p_gamesys )
 
   // 時間経過
   p_wk->time++;
-  ICHI_Printf("*");
   
   {
     // 時間監視
-    WINDMETER_STATE tmp_state = WINDMETER_GetState( p_wk->time );
+    WIND_STATE tmp_state = WIND_GetState( p_wk->time );
 
     // 風力計の状態が変更したら
     if( p_wk->state != tmp_state )
     {
-      WINDMETER_ChangeState( p_fieldmap, tmp_state );
+      WIND_ChangeState( p_fieldmap, tmp_state );
 
       // 高速の時のみ吹き飛ばしイベント作成
-      if( p_wk->state == WINDMETER_STATE_HIGH )
+      if( p_wk->state == WIND_STATE_HIGH )
       {
-        event = WINDMETER_BLOW_CreateEvent( NULL, p_gamesys );
+        event = WIND_BLOW_CreateEvent( NULL, p_gamesys );
         return event;
       }
     }
@@ -290,10 +334,10 @@ GMEVENT * GYM_FLY_CheckEvent( GAMESYS_WORK *p_gamesys )
  *
  *	@param	const u16 c_time 
  *
- *	@return その時間の風力計状態 WINDMETER_STATE_XXX
+ *	@return その時間の風力計状態 WIND_STATE_XXX
  */
 //-----------------------------------------------------------------------------
-static WINDMETER_STATE WINDMETER_GetState( const u16 c_time )
+static WIND_STATE WIND_GetState( const u16 c_time )
 {
   u16 windmeter_time1;    // 低速から中速の時間
   u16 windmeter_time2;    // 中速から高速の時間
@@ -308,27 +352,27 @@ static WINDMETER_STATE WINDMETER_GetState( const u16 c_time )
 
   if( c_time >= windmeter_time2 )
   {
-    return WINDMETER_STATE_HIGH;
+    return WIND_STATE_HIGH;
   }
   else if( c_time >= windmeter_time1 )
   {
-    return WINDMETER_STATE_MIDDLE;
+    return WIND_STATE_MIDDLE;
   }
   else
   {
-    return WINDMETER_STATE_LOW;
+    return WIND_STATE_LOW;
   }
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  風力計の状態変更
+ *	@brief  風の状態変更
  *
  *	@param	FIELDMAP_WORK *p_fieldmap    フィールドワークポインタ
- *	@param	WINDMETER_STATE state      変更後の状態
+ *	@param	WIND_STATE state      変更後の状態
  */
 //-----------------------------------------------------------------------------
-static void WINDMETER_ChangeState( FIELDMAP_WORK *p_fieldmap, const WINDMETER_STATE state )
+static void WIND_ChangeState( FIELDMAP_WORK *p_fieldmap, const WIND_STATE state )
 {
   GYM_FLY_TMP *p_wk = GMK_TMP_WK_GetWork(p_fieldmap, GYM_FLY_TMP_ASSIGN_ID);
 
@@ -336,17 +380,20 @@ static void WINDMETER_ChangeState( FIELDMAP_WORK *p_fieldmap, const WINDMETER_ST
   
   // 状態別初期化
   switch( p_wk->state ){
-  case WINDMETER_STATE_LOW:
-    p_wk->anm_speed_max = WINDMETER_SPEED_LOW;
+  case WIND_STATE_LOW:
+    p_wk->fan_wk.anm_speed_max = FAN_SPEED_LOW;
+    p_wk->windmeter_wk.anm_speed_max = WINDMETER_SPEED_LOW;
     ICHI_Printf("風力計状態：低速\n");
     break;
-  case WINDMETER_STATE_MIDDLE:
-    p_wk->anm_speed_max = WINDMETER_SPEED_MIDDLE;
+  case WIND_STATE_MIDDLE:
+    p_wk->fan_wk.anm_speed_max = FAN_SPEED_MIDDLE;
+    p_wk->windmeter_wk.anm_speed_max = WINDMETER_SPEED_MIDDLE;
     ICHI_Printf("風力計状態：中速\n");
     break;
-  case WINDMETER_STATE_HIGH:
+  case WIND_STATE_HIGH:
     p_wk->time = 0;
-    p_wk->anm_speed_max = WINDMETER_SPEED_HIGH;
+    p_wk->fan_wk.anm_speed_max = FAN_SPEED_HIGH;
+    p_wk->windmeter_wk.anm_speed_max = WINDMETER_SPEED_HIGH;
     ICHI_Printf("風力計状態：高速\n");
     break;
   }
@@ -362,7 +409,7 @@ static void WINDMETER_ChangeState( FIELDMAP_WORK *p_fieldmap, const WINDMETER_ST
  *	@return イベント
  */
 //-----------------------------------------------------------------------------
-static GMEVENT* WINDMETER_BLOW_CreateEvent( GMEVENT* parent, GAMESYS_WORK* gsys )
+static GMEVENT* WIND_BLOW_CreateEvent( GMEVENT* parent, GAMESYS_WORK* gsys )
 {
   GMEVENT*          event;
   BLOW_EVENT_WORK*  work;
@@ -419,6 +466,8 @@ static GMEVENT_RESULT BlowEvent( GMEVENT* event, int* seq, void* wk )
     SEQ_WAIT,   // グリッド調度待ち
     SEQ_STAY_WALK,// その場で足踏み
     SEQ_START,  // イベント開始 
+    SEQ_STOP,   // 壁にぶつかった
+    SEQ_SE_WAIT,// SE再生待ち
     SEQ_MAIN,   // メイン処理
     SEQ_EXIT,   // イベント終了
   };
@@ -460,9 +509,8 @@ static GMEVENT_RESULT BlowEvent( GMEVENT* event, int* seq, void* wk )
       // 足元チェック
       // エクセル表のデータを自機のグリッド座標を使って参照する
       {
-        FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( p_wk->p_fieldmap );
         s16 gx, gy, gz;
-        FIELD_PLAYER_GetGridPos( player, &gx, &gy, &gz );
+        FIELD_PLAYER_GetGridPos( p_wk->player, &gx, &gy, &gz );
 
         while( gz<MAP_ARRAY_ROW )
         {
@@ -490,8 +538,7 @@ static GMEVENT_RESULT BlowEvent( GMEVENT* event, int* seq, void* wk )
         FIELD_TASK_MAN* taskMan;
         VecFx32 down_pos;
         {
-          FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( p_wk->p_fieldmap );
-          FIELD_PLAYER_GetPos( player, &down_pos );
+          FIELD_PLAYER_GetPos( p_wk->player, &down_pos );
           down_pos.z += GRID_TO_FX32(move_distance);
         }
         move = FIELD_TASK_TransPlayer( p_wk->p_fieldmap, move_distance*4, &down_pos );
@@ -502,10 +549,7 @@ static GMEVENT_RESULT BlowEvent( GMEVENT* event, int* seq, void* wk )
       // 高さを変更したくないので
       // 高さ取得禁止ステータスビットをONにする
       {
-        FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( p_wk->p_fieldmap );
-        FIELD_PLAYER_CORE* core = FIELD_PLAYER_GetCoreWk( player );
-        MMDL* mmdl = FIELD_PLAYER_CORE_GetMMdl( core );
-        MMDL_OnStatusBit( mmdl, MMDL_STABIT_HEIGHT_GET_OFF );
+        MMDL_OnStatusBit( p_wk->mmdl, MMDL_STABIT_HEIGHT_GET_OFF );
       }
 
       // 風エフェクト(自機)エフェクト
@@ -531,53 +575,14 @@ static GMEVENT_RESULT BlowEvent( GMEVENT* event, int* seq, void* wk )
   // メイン処理
   case SEQ_MAIN:
     {
-      BOOL  ret = FALSE;
 
       // 自機の向きを変える
+      if( MMDL_CheckEndAcmd(p_wk->mmdl) )
       {
-        int key = GFL_UI_KEY_GetCont();
-        if( key & PAD_KEY_UP )   { MMDL_SetAcmd( p_wk->mmdl, AC_STAY_WALK_U_4F ); }
-        else if( key & PAD_KEY_DOWN ) { MMDL_SetAcmd( p_wk->mmdl, AC_STAY_WALK_D_4F ); }
-        else if( key & PAD_KEY_LEFT ) { MMDL_SetAcmd( p_wk->mmdl, AC_STAY_WALK_L_4F ); }
-        else if( key & PAD_KEY_RIGHT ){ MMDL_SetAcmd( p_wk->mmdl, AC_STAY_WALK_R_4F ); }
-        else
-        {
-          // キー入力がない場合は主人公の向きにその場歩き
-          FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( p_wk->p_fieldmap );
-          u16 dir = FIELD_PLAYER_GetDir( player );
-          dir %= 4;
-          MMDL_SetAcmd( p_wk->mmdl, (AC_STAY_WALK_U_4F + dir) );
-        }
-      }
-
-      // タスク終了チェック
-      {
-        FIELD_TASK_MAN* taskMan;
-        taskMan = FIELDMAP_GetTaskManager( p_wk->p_fieldmap );
-        if( FIELD_TASK_MAN_IsAllTaskEnd(taskMan) ) {
-          ret = TRUE;
-        }
-      }
-
-      // 時間計測
-      // 一定時間は吹き飛ばしイベントを続ける
-      {
-#ifdef GYM_FLY_DEBUG_MENU
-        const u16 blow_event_time_max = debug_blow_event_time_max;
-#else
-        const u16 blow_event_time_max = BLOW_EVENT_TIME;
-#endif
-
-        if( p_wk->time < blow_event_time_max )
-        {
-          p_wk->time++;
-
-          // 移動は終わったがまだイベントは継続させる
-          if( ret == TRUE )
-          {
-            ret = FALSE;
-          }
-        }
+        u16 dir = FIELD_PLAYER_GetDir( p_wk->player );
+        dir++;
+        dir %= 4;
+        MMDL_SetAcmd( p_wk->mmdl, (AC_DIR_U + dir) );
       }
 
       // 風エフェクト(自機)エフェクト
@@ -587,11 +592,34 @@ static GMEVENT_RESULT BlowEvent( GMEVENT* event, int* seq, void* wk )
         MMDL_GetVectorPos( p_wk->mmdl, &status->trans );
       }
 
-      // 次シーケンス移行チェック
-      if( ret == TRUE )
+      // タスク終了チェック
       {
-        *seq = SEQ_EXIT;
+        FIELD_TASK_MAN* taskMan;
+        taskMan = FIELDMAP_GetTaskManager( p_wk->p_fieldmap );
+        if( FIELD_TASK_MAN_IsAllTaskEnd(taskMan) ) {
+          // 次シーケンス移行
+          *seq = SEQ_STOP;
+        }
       }
+    }
+    break;
+
+  // 壁にぶつかった
+  case SEQ_STOP:
+    {
+      // 上を向く
+      MMDL_SetAcmd( p_wk->mmdl, AC_DIR_U );
+
+      // SE びたーん
+
+      *seq = SEQ_SE_WAIT;
+    }
+    break;
+
+  // SE再生待ち
+  case SEQ_SE_WAIT:
+    {
+      *seq = SEQ_EXIT;
     }
     break;
 
@@ -603,10 +631,7 @@ static GMEVENT_RESULT BlowEvent( GMEVENT* event, int* seq, void* wk )
 
     // 高さ取得禁止ステータスビットをOFFに戻す
     {
-      FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( p_wk->p_fieldmap );
-      FIELD_PLAYER_CORE* core = FIELD_PLAYER_GetCoreWk( player );
-      MMDL* mmdl = FIELD_PLAYER_CORE_GetMMdl( core );
-      MMDL_OffStatusBit( mmdl, MMDL_STABIT_HEIGHT_GET_OFF );
+      MMDL_OffStatusBit( p_wk->mmdl, MMDL_STABIT_HEIGHT_GET_OFF );
     }
     return GMEVENT_RES_FINISH;
   }
@@ -805,6 +830,35 @@ static void EXPOBJ_ObjSet( GYM_FLY_TMP *p_wk )
   }
 
   //=====================================
+  ///	箱の設定
+  //
+  for( i=0; i<BOX_NUM_MAX; i++ )
+  {
+    // 座標セット
+    VecFx32 pos[ WINDMETER_NUM_MAX ] = {
+      { BOX1_GX,  BOX1_GY,  BOX1_GZ },
+      { BOX2_GX,  BOX2_GY,  BOX2_GZ },
+    };
+
+    u16   obj_idx = OBJ_BOX_1 + i;    // OBJインデックス
+    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( p_wk->exp_obj, GYM_FLY_UNIT_IDX, obj_idx );
+
+    status->trans.x = FX32_CONST( pos[i].x * FIELD_CONST_GRID_SIZE );
+    status->trans.y = FX32_CONST( pos[i].y * FIELD_CONST_GRID_SIZE );
+    status->trans.z = FX32_CONST( pos[i].z * FIELD_CONST_GRID_SIZE );
+    // カリングする
+    FLD_EXP_OBJ_SetCulling( p_wk->exp_obj, GYM_FLY_UNIT_IDX, obj_idx, TRUE );
+    FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GYM_FLY_UNIT_IDX, obj_idx, FALSE );
+    // アニメ再生
+    {
+      EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, GYM_FLY_UNIT_IDX, obj_idx, 0 );
+      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, GYM_FLY_UNIT_IDX, obj_idx, 0, TRUE );
+      FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, FALSE );   // ループ再生設定
+      FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, TRUE );    // アニメ停止
+    }
+  }
+
+  //=====================================
   ///	風エフェクト(自機)の設定
   //
   {
@@ -862,6 +916,77 @@ static void EXPOBJ_ObjDell( GYM_FLY_TMP *p_wk )
 //-----------------------------------------------------------------------------
 static void EXPOBJ_ObjMain( GYM_FLY_TMP *p_wk )
 {
+
+  // 風エフェクト(マップ)
+  {
+    // 位置
+    GFL_G3D_OBJSTATUS* status = FLD_EXP_OBJ_GetUnitObjStatus( p_wk->exp_obj, GYM_FLY_UNIT_IDX, EFFECT_WIND_MAP );
+    MMDL *mmdl = FIELD_PLAYER_GetMMdl( p_wk->player );
+    MMDL_GetVectorPos( mmdl, &status->trans );
+  }
+
+  // ファン
+  FAN_Update( &p_wk->fan_wk );
+
+  // 風力計
+  WINDMETER_Update( &p_wk->windmeter_wk );
+
+  // アニメーション再生
+  FLD_EXP_OBJ_PlayAnime( p_wk->exp_obj );
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ファンの更新
+ *
+ *	@param	FAN_WORK *p_wk ワーク 
+ */
+//-----------------------------------------------------------------------------
+static void FAN_Update( FAN_WORK *p_wk )
+{
+  u8 i;
+  // アニメスピード計算
+  if( p_wk->anm_speed != p_wk->anm_speed_max )
+  {
+    if( p_wk->anm_speed < p_wk->anm_speed_max )
+    {
+      p_wk->anm_speed += FAN_SPEED_ADD;
+      if( p_wk->anm_speed > p_wk->anm_speed_max )
+      {
+        p_wk->anm_speed = p_wk->anm_speed_max;
+      }
+    }
+    else
+    {
+      p_wk->anm_speed -= FAN_SPEED_ADD;
+      if( p_wk->anm_speed < p_wk->anm_speed_max )
+      {
+        p_wk->anm_speed = p_wk->anm_speed_max;
+      }
+    }
+
+    // ファンのOBJすべてのアニメを変更
+    for( i=0; i<FAN_NUM_MAX; i++ )
+    {
+      u16   obj_idx = OBJ_FAN1 + i;    // OBJインデックス
+      EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->parent_exp_obj, GYM_FLY_UNIT_IDX, obj_idx, 0 );
+      // アニメスピード変更
+      FLD_EXP_OBJ_ChgAddFrame( exp_anm, p_wk->anm_speed );
+    }
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  風力計の更新
+ *
+ *	@param	WINDMETER_WORK *p_wk  ワーク
+ */
+//-----------------------------------------------------------------------------
+static void WINDMETER_Update( WINDMETER_WORK *p_wk )
+{
+  u8 i;
   // アニメスピード計算
   if( p_wk->anm_speed != p_wk->anm_speed_max )
   {
@@ -882,22 +1007,15 @@ static void EXPOBJ_ObjMain( GYM_FLY_TMP *p_wk )
       }
     }
 
-    // アニメスピード変更
-    FLD_EXP_OBJ_SetUnitAddFrame( p_wk->exp_obj, GYM_FLY_UNIT_IDX, p_wk->anm_speed );
-    // 風エフェクト(自機)アニメだけアニメ速度一定
-    FLD_EXP_OBJ_ChgAddFrame( FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, GYM_FLY_UNIT_IDX, EFFECT_WIND_JIKI, 0 ), FX32_ONE );
+    // ファンのOBJすべてのアニメを変更
+    for( i=0; i<WINDMETER_NUM_MAX; i++ )
+    {
+      u16   obj_idx = OBJ_WINDMETER_1 + i;    // OBJインデックス
+      EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->parent_exp_obj, GYM_FLY_UNIT_IDX, obj_idx, 0 );
+      // アニメスピード変更
+      FLD_EXP_OBJ_ChgAddFrame( exp_anm, p_wk->anm_speed );
+    }
   }
-
-  // 風エフェクト(マップ)
-  {
-    // 位置
-    GFL_G3D_OBJSTATUS* status = FLD_EXP_OBJ_GetUnitObjStatus( p_wk->exp_obj, GYM_FLY_UNIT_IDX, EFFECT_WIND_MAP );
-    MMDL *mmdl = FIELD_PLAYER_GetMMdl( p_wk->player );
-    MMDL_GetVectorPos( mmdl, &status->trans );
-  }
-
-  // アニメーション再生
-  FLD_EXP_OBJ_PlayAnime( p_wk->exp_obj );
 }
 
 
