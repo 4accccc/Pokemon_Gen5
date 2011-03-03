@@ -8,6 +8,9 @@
 #ifndef ZONE_C03R1102_EVC_H
 #define ZONE_C03R1102_EVC_H
 
+#define C03R1102_PEOPLE_02                 0
+#define C03R1102_PEOPLE_01                 1
+#define C03R1102_PEOPLE_03                 2
 
 #endif //ZONE_C03R1102_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c03r1102.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

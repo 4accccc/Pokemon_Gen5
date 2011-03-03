@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-22T15:39:26"/>
+	<create user="mizuguchi_mai" host="W00226" date="2011-03-03T20:42:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="37" top="167" right="742" bottom="795" maximized="no" rayout="Vertical2">
+	<dialog left="237" top="45" right="942" bottom="673" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="241" top="40" right="714" bottom="438" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,10 +292,253 @@
 	</lock>
 
 
-	<row id="msg_c03r1102_mountain_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>未使用</comment>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
+	<row id="msg_mdloyj_titleget_sys" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,#00ffff,,,#00ffff,,#00ffff,#00ffff,,,#00ffff,,">
+		<comment>・0=主人公名
+・1=メダル名</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]は
+メダル[FF:00:色:2]「[FF:00:色:1]」[FF:00:色:0]を[BE:00:ページ切り替え（行送り）]
+てにいれた！▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
+メダル[FF:00:色:2]「[FF:00:色:1]」[FF:00:色:0]を[BE:00:ページ切り替え（行送り）][FF:00:色:2]
+[FF:00:色:0]手に入れた！▼</language>
+	</row>
+
+	<row id="msg_mdloyj_prizegoal_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>メダル事務局・ゴールイン表彰イベント</comment>
+		<language name="JPN" width="256">こっちきてー▼</language>
+		<language name="JPN_KANJI" width="256">こっちきてー▼</language>
+	</row>
+
+	<row id="msg_mdloyj_prizegoal_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>メダル事務局・ゴールイン表彰イベント</comment>
+		<language name="JPN" width="256">ひょうしょうしき　はじめるよ▼</language>
+		<language name="JPN_KANJI" width="256">ひょうしょうしき　はじめるよ▼</language>
+	</row>
+
+	<row id="msg_mdloyj_prizegoal_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>メダル事務局・ゴールイン表彰イベント</comment>
+		<language name="JPN" width="256">ゆうしゅうな　せいせきを
+おさめ…▼</language>
+		<language name="JPN_KANJI" width="256">ゆうしゅうな　せいせきを
+おさめ…▼</language>
+	</row>
+
+	<row id="msg_mdloyj_prizegoal_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>メダル事務局・ゴールイン表彰イベント</comment>
+		<language name="JPN" width="256">…その　きねんとして
+これを　さしあげます！▼</language>
+		<language name="JPN_KANJI" width="256">…その　きねんとして
+これを　さしあげます！▼</language>
+	</row>
+
+	<row id="msg_mdloyj_prizegoal_end" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>メダル事務局・ゴールイン表彰イベント</comment>
+		<language name="JPN" width="256">メダルラリーは　まだまだ
+おわりでは　ありません▼
+これからも　がんばって！</language>
+		<language name="JPN_KANJI" width="256">メダルラリーは　まだまだ
+おわりでは　ありません▼
+これからも　がんばって！</language>
+	</row>
+
+	<row id="msg_mdloyj_prizegoal_sub_01" back-color="#ff8000,,,#ff8000,,#ff8000,#ff8000,#ff8000,,,#ff8000,,#ff8000,#ff8000,,,#ff8000,,">
+		<comment>メダル事務局・ゴールイン表彰イベント</comment>
+		<language name="JPN" width="256">すごい</language>
+		<language name="JPN_KANJI" width="256">すごい</language>
+	</row>
+
+	<row id="msg_mdloyj_prizegoal_sub_02" back-color="#ff8000,,,#ff8000,,#ff8000,#ff8000,#ff8000,,,#ff8000,,#ff8000,#ff8000,,,#ff8000,,">
+		<comment>メダル事務局・ゴールイン表彰イベント</comment>
+		<language name="JPN" width="256">さすが</language>
+		<language name="JPN_KANJI" width="256">さすが</language>
+	</row>
+
+	<row id="msg_mdloyj_prizegoal_sub_03" back-color="#ff8000,,,#ff8000,,#ff8000,#ff8000,#ff8000,,,#ff8000,,#ff8000,#ff8000,,,#ff8000,,">
+		<comment>メダル事務局・ゴールイン表彰イベント</comment>
+		<language name="JPN" width="256">すてき</language>
+		<language name="JPN_KANJI" width="256">すてき</language>
+	</row>
+
+	<row id="msg_mdloyj_prizecomp_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+		<comment>メダル事務局・フルコンプリート表彰イベント</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さーん！▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さーん！▼</language>
+	</row>
+
+	<row id="msg_mdloyj_prizecomp_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+		<comment>メダル事務局・フルコンプリート表彰イベント</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さん！
+いらっしゃいませ！▼
+ひょうしょうしきを
+はじめましょう！▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さん！
+いらっしゃいませ！▼
+ひょうしょうしきを
+はじめましょう！▼</language>
+	</row>
+
+	<row id="msg_mdloyj_prizecomp_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+		<comment>メダル事務局・フルコンプリート表彰イベント</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さん
+あなたは　すべての　メダルを▼
+パーフェクトに　コレクトし……▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さん
+あなたは　すべての　メダルを▼
+パーフェクトに　コレクトし……▼</language>
+	</row>
+
+	<row id="msg_mdloyj_prizecomp_04" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+		<comment>メダル事務局・フルコンプリート表彰イベント</comment>
+		<language name="JPN" width="256">そのきねん　として
+これを　さしあげます！▼</language>
+		<language name="JPN_KANJI" width="256">そのきねん　として
+これを　さしあげます！▼</language>
+	</row>
+
+	<row id="msg_mdloyj_prizecomp_end" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+		<comment>メダル事務局・フルコンプリート表彰イベント</comment>
+		<language name="JPN" width="256">よっ！
+キングオブメダリスト！</language>
+		<language name="JPN_KANJI" width="256">よっ！
+キングオブメダリスト！</language>
+	</row>
+
+	<row id="msg_mdloyj_prizecomp_sub_01" back-color="#ff8000,,,#ff8000,,#ff8000,#ff8000,#ff8000,,,#ff8000,,#ff8000,#ff8000,,,#ff8000,,">
+		<comment>メダル事務局・フルコンプリート表彰イベント</comment>
+		<language name="JPN" width="256">さいこう</language>
+		<language name="JPN_KANJI" width="256">さいこう</language>
+	</row>
+
+	<row id="msg_mdloyj_prizecomp_sub_02" back-color="#ff8000,,,#ff8000,,#ff8000,#ff8000,#ff8000,,,#ff8000,,#ff8000,#ff8000,,,#ff8000,,">
+		<comment>メダル事務局・フルコンプリート表彰イベント</comment>
+		<language name="JPN" width="256">かんぺき</language>
+		<language name="JPN_KANJI" width="256">かんぺき</language>
+	</row>
+
+	<row id="msg_mdloyj_prizecomp_sub_03" back-color="#ff8000,,,#ff8000,,#ff8000,#ff8000,#ff8000,,,#ff8000,,#ff8000,#ff8000,,,#ff8000,,">
+		<comment>メダル事務局・フルコンプリート表彰イベント</comment>
+		<language name="JPN" width="256">ほれる</language>
+		<language name="JPN_KANJI" width="256">ほれる</language>
+	</row>
+
+	<row id="msg_mdlnpc_rank_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>メダル事務局・NPC話しかけ</comment>
+		<language name="JPN" width="256">ブロンズ</language>
+		<language name="JPN_KANJI" width="256">ブロンズ</language>
+	</row>
+
+	<row id="msg_mdlnpc_rank_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>メダル事務局・NPC話しかけ</comment>
+		<language name="JPN" width="256">シルバー</language>
+		<language name="JPN_KANJI" width="256">シルバー</language>
+	</row>
+
+	<row id="msg_mdlnpc_rank_03" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>メダル事務局・NPC話しかけ</comment>
+		<language name="JPN" width="256">ゴールド</language>
+		<language name="JPN_KANJI" width="256">ゴールド</language>
+	</row>
+
+	<row id="msg_mdlnpc_rank_04" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>メダル事務局・NPC話しかけ</comment>
+		<language name="JPN" width="256">ブラックホワイト</language>
+		<language name="JPN_KANJI" width="256">ブラックホワイト</language>
+	</row>
+
+	<row id="msg_mdlnpc_rank_05" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>メダル事務局・NPC話しかけ</comment>
+		<language name="JPN" width="256">ランクなし</language>
+		<language name="JPN_KANJI" width="256">ランクなし</language>
+	</row>
+
+	<row id="msg_mdlnpc_help_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>メダル事務局・NPC話しかけ</comment>
+		<language name="JPN" width="256">しつもんある？</language>
+		<language name="JPN_KANJI" width="256">しつもんある？</language>
+	</row>
+
+	<row id="msg_mdlnpc_help_02_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>メダル事務局・NPC話しかけ</comment>
+		<language name="JPN" width="256">メダルラリー</language>
+		<language name="JPN_KANJI" width="256">メダルラリー</language>
+	</row>
+
+	<row id="msg_mdlnpc_help_02_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>メダル事務局・NPC話しかけ</comment>
+		<language name="JPN" width="256">メダル</language>
+		<language name="JPN_KANJI" width="256">メダル</language>
+	</row>
+
+	<row id="msg_mdlnpc_help_02_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>メダル事務局・NPC話しかけ</comment>
+		<language name="JPN" width="256">ヒントメダル</language>
+		<language name="JPN_KANJI" width="256">ヒントメダル</language>
+	</row>
+
+	<row id="msg_mdlnpc_help_02_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>メダル事務局・NPC話しかけ</comment>
+		<language name="JPN" width="256">メダルボックス</language>
+		<language name="JPN_KANJI" width="256">メダルボックス</language>
+	</row>
+
+	<row id="msg_mdlnpc_help_02_05" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>メダル事務局・NPC話しかけ</comment>
+		<language name="JPN" width="256">イチオシとうろく</language>
+		<language name="JPN_KANJI" width="256">イチオシとうろく</language>
+	</row>
+
+	<row id="msg_mdlnpc_help_02_06" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>メダル事務局・NPC話しかけ</comment>
+		<language name="JPN" width="256">なんでもないです</language>
+		<language name="JPN_KANJI" width="256">なんでもないです</language>
+	</row>
+
+	<row id="msg_mdlnpc_help_win01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>メダル事務局・NPC話しかけ</comment>
+		<language name="JPN" width="256">メダルラリーとは▼</language>
+		<language name="JPN_KANJI" width="256">メダルラリーとは▼</language>
+	</row>
+
+	<row id="msg_mdlnpc_help_win02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>メダル事務局・NPC話しかけ</comment>
+		<language name="JPN" width="256">メダルとは▼</language>
+		<language name="JPN_KANJI" width="256">メダルとは▼</language>
+	</row>
+
+	<row id="msg_mdlnpc_help_win03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>メダル事務局・NPC話しかけ</comment>
+		<language name="JPN" width="256">ヒントメダルとは▼</language>
+		<language name="JPN_KANJI" width="256">ヒントメダルとは▼</language>
+	</row>
+
+	<row id="msg_mdlnpc_help_win04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>メダル事務局・NPC話しかけ</comment>
+		<language name="JPN" width="256">メダルボックスとは▼</language>
+		<language name="JPN_KANJI" width="256">メダルボックスとは▼</language>
+	</row>
+
+	<row id="msg_mdlnpc_help_win05" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>メダル事務局・NPC話しかけ</comment>
+		<language name="JPN" width="256">イチオシとうろくとは▼</language>
+		<language name="JPN_KANJI" width="256">イチオシとうろくとは▼</language>
+	</row>
+
+	<row id="msg_mdlnpc_fan_01" back-color="#008080,,,#008080,,#008080,#008080,#008080,,,#008080,,#008080,#008080,,,#008080,,">
+		<comment>メダル事務局・NPC話しかけ</comment>
+		<language name="JPN" width="256">コンプリート</language>
+		<language name="JPN_KANJI" width="256">コンプリート</language>
+	</row>
+
+	<row id="msg_mdlnpc_fan_02" back-color="#008080,,,#008080,,#008080,#008080,#008080,,,#008080,,#008080,#008080,,,#008080,,">
+		<comment>メダル事務局・NPC話しかけ</comment>
+		<language name="JPN" width="256">ゴールイン</language>
+		<language name="JPN_KANJI" width="256">ゴールイン</language>
+	</row>
+
+	<row id="msg_mdlnpc_fan_03" back-color="#008080,,,#008080,,#008080,#008080,#008080,,,#008080,,#008080,#008080,,,#008080,,">
+		<comment>メダル事務局・NPC話しかけ</comment>
+		<language name="JPN" width="256">まだまだ</language>
+		<language name="JPN_KANJI" width="256">まだまだ</language>
 	</row>
 
 	<flowchart-group-list>

@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_c03r1102.h"
-  //.include  "c03r1102.h"
+  .include  "c03r1102.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,5 +19,398 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-
+_EVENT_DATA    ev_scene_c03r1102_commendation_01
+_EVENT_DATA    ev_scene_c03r1102_commendation_02
+_EVENT_DATA    ev_c03r1102_people_01
+_EVENT_DATA    ev_c03r1102_people_02
+_EVENT_DATA    ev_c03r1102_people_03
 _EVENT_DATA_END
+
+/**************************************************************/
+/*  メダル表彰イベント */
+/**************************************************************/
+EVENT_START   ev_scene_c03r1102_commendation_01
+{
+  //「！」
+  _PLAYER_NAME( 0 )
+  _OBJ_ANIME( C03R1102_PEOPLE_01 , anm_people01_gyoe )
+  _TIME_WAIT(12)
+  _OBJ_ANIME( C03R1102_PEOPLE_02 , anm_dir_u )
+  _OBJ_ANIME( C03R1102_PEOPLE_03 , anm_dir_u )
+  _OBJ_ANIME_WAIT()
+  
+  //PEOPLE01：こっちこっち
+  _BALLOONWIN_OBJMSG_POS( msg_mdloyj_prizegoal_01 , C03R1102_PEOPLE_01, POS_UP )
+  _BALLOONWIN_CLOSE()
+  
+  //主人公下へ
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_player_walk_to_peaple01 )
+  _OBJ_ANIME_WAIT()
+  
+  //エレベータ到着音
+  _SE_PLAY( SEQ_SE_FLD_87 )
+  _SE_WAIT()
+  
+  //ドア開ける
+  DEFINE_LOCAL	DOOR_ANIME_ID
+  _BMODEL_ANIME_CREATE( DOOR_ANIME_ID, SCR_BMID_DOOR, 7, 1 )
+  _BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_OPEN )
+  _BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
+  
+  //SUNGLASSES配置
+  _OBJ_ADD_EX( 7, 1, DIR_DOWN, MMDL_ID_EVENTOBJ_00, SUNGLASSES, MV_DMY )
+  
+  //会長来る
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00 , anm_oldman_comming )
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_u )
+  _OBJ_ANIME_WAIT()
+
+  //ドア閉じる
+  _BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_CLOSE )
+  _BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
+  _BMODEL_ANIME_DELETE( DOOR_ANIME_ID )
+  
+  //SUNGLASSES：はじめましょう
+  _BALLOONWIN_OBJMSG_POS( msg_mdloyj_prizegoal_02 , MMDL_ID_EVENTOBJ_00, POS_UP )
+  _BALLOONWIN_CLOSE()
+  
+  //会長・主人公移動
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00 , anm_oldman_goto_desk )
+  _TIME_WAIT(32)
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_player_goto_desk )
+  _TIME_WAIT(40)
+  _OBJ_ANIME( C03R1102_PEOPLE_01 , anm_staystep_d )
+  _TIME_WAIT(48)
+  _OBJ_ANIME( C03R1102_PEOPLE_02 , anm_staystep_d )
+  _OBJ_ANIME( C03R1102_PEOPLE_03 , anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+  
+  //SUNGLASSES：ゆうしゅうな せいせきを おさめ…
+  _PLAYER_NAME( 0 )
+  _BALLOONWIN_OBJMSG_POS( msg_mdloyj_prizegoal_03 , MMDL_ID_EVENTOBJ_00, POS_DOWN )
+  
+  //【仮】歓声があがる（ウィンドウ位置が仮）
+  _SUBWIN_MSG( msg_mdloyj_prizegoal_sub_01 , 3 , 5 , 1 ) 
+  _TIME_WAIT( 10 )
+  _SUBWIN_MSG( msg_mdloyj_prizegoal_sub_02 , 19 , 8 , 2 )
+  _TIME_WAIT( 10 )
+  _SUBWIN_MSG( msg_mdloyj_prizegoal_sub_03 , 2 , 15 , 3 )
+  _TIME_WAIT( 30 )
+  _SUBWIN_CLOSE( 1 )
+  _TIME_WAIT( 5 )
+  _SUBWIN_CLOSE( 2 )
+  _TIME_WAIT( 5 )
+  _SUBWIN_CLOSE( 3 )
+  
+   //SUNGLASSES：きねんに さしあげます
+  _PLAYER_NAME( 0 )
+  _BALLOONWIN_OBJMSG_POS( msg_mdloyj_prizegoal_04 , MMDL_ID_EVENTOBJ_00, POS_DOWN )
+  _MSGWIN_CLOSE()
+  
+  //システムメッセージ：手に入れた
+  _PLAYER_NAME( 0 )
+  _SYSWIN_MSG( msg_mdloyj_titleget_sys , POS_DOWN )
+  _SYSWIN_CLOSE()
+  
+  //【仮】カットイン（コマンドがまだない）
+  
+  //SUNGLASSES：これからもがんばって
+  _PLAYER_NAME( 0 )
+  _BALLOONWIN_OBJMSG_POS( msg_mdloyj_prizegoal_end , MMDL_ID_EVENTOBJ_00, POS_DOWN )
+  _MSGWIN_CLOSE()
+  
+  //================================================//
+
+  //ゴールイン終了
+  $WK_SCENE_MEDAL_EVENT = 3
+  
+	//================================================//
+}
+EVENT_END
+
+/**************************************************************/
+/*  メダル表彰イベント（コンプリート） */
+/**************************************************************/
+EVENT_START   ev_scene_c03r1102_commendation_02
+ {
+  //「！」
+  _OBJ_ANIME( C03R1102_PEOPLE_01 , anm_people01_gyoe )
+  _TIME_WAIT(12)
+  _OBJ_ANIME( C03R1102_PEOPLE_02 , anm_dir_u )
+  _OBJ_ANIME( C03R1102_PEOPLE_03 , anm_dir_u )
+  _OBJ_ANIME_WAIT()
+  
+  //PEOPLE01：こっちこっち
+  _PLAYER_NAME( 0 )
+  _BALLOONWIN_OBJMSG_POS( msg_mdloyj_prizecomp_01 , C03R1102_PEOPLE_01, POS_UP )
+  _BALLOONWIN_CLOSE()
+  
+  //主人公下へ
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_player_walk_to_peaple01 )
+  _OBJ_ANIME_WAIT()
+  
+  //エレベータ到着音
+  _SE_PLAY( SEQ_SE_FLD_87 )
+  _SE_WAIT()
+  
+  //ドア開ける
+  DEFINE_LOCAL	DOOR_ANIME_ID
+  _BMODEL_ANIME_CREATE( DOOR_ANIME_ID, SCR_BMID_DOOR, 7, 1 )
+  _BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_OPEN )
+  _BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
+  
+  //SUNGLASSES配置
+  _OBJ_ADD_EX( 7, 1, DIR_DOWN, MMDL_ID_EVENTOBJ_00, SUNGLASSES, MV_DMY )
+  
+  //会長来る
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00 , anm_oldman_comming )
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_u )
+  _OBJ_ANIME_WAIT()
+
+  //ドア閉じる
+  _BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_CLOSE )
+  _BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
+  _BMODEL_ANIME_DELETE( DOOR_ANIME_ID )
+  
+  //SUNGLASSES：はじめましょう
+  _BALLOONWIN_OBJMSG_POS( msg_mdloyj_prizecomp_02 , MMDL_ID_EVENTOBJ_00, POS_UP )
+  _BALLOONWIN_CLOSE()
+  
+  //会長・主人公移動
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00 , anm_oldman_goto_desk )
+  _TIME_WAIT(32)
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_player_goto_desk )
+  _TIME_WAIT(40)
+  _OBJ_ANIME( C03R1102_PEOPLE_01 , anm_staystep_d )
+  _TIME_WAIT(48)
+  _OBJ_ANIME( C03R1102_PEOPLE_02 , anm_staystep_d )
+  _OBJ_ANIME( C03R1102_PEOPLE_03 , anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+  
+  //SUNGLASSES：ゆうしゅうな せいせきを おさめ…
+  _PLAYER_NAME( 0 )
+  _BALLOONWIN_OBJMSG_POS( msg_mdloyj_prizecomp_03 , MMDL_ID_EVENTOBJ_00, POS_DOWN )
+  
+  //【仮】歓声があがる（ウィンドウ位置が仮）
+  _SUBWIN_MSG( msg_mdloyj_prizecomp_sub_01 , 3 , 5 , 1 ) 
+  _TIME_WAIT( 10 )
+  _SUBWIN_MSG( msg_mdloyj_prizecomp_sub_02 , 19 , 8 , 2 )
+  _TIME_WAIT( 10 )
+  _SUBWIN_MSG( msg_mdloyj_prizecomp_sub_03 , 2 , 15 , 3 )
+  _TIME_WAIT( 30 )
+  _SUBWIN_CLOSE( 1 )
+  _TIME_WAIT( 5 )
+  _SUBWIN_CLOSE( 2 )
+  _TIME_WAIT( 5 )
+  _SUBWIN_CLOSE( 3 )
+  
+   //SUNGLASSES：きねんに さしあげます
+  _PLAYER_NAME( 0 )
+  _BALLOONWIN_OBJMSG_POS( msg_mdloyj_prizecomp_04 , MMDL_ID_EVENTOBJ_00, POS_DOWN )
+  _MSGWIN_CLOSE()
+  
+  //システムメッセージ：手に入れた
+  _PLAYER_NAME( 0 )
+  _SYSWIN_MSG( msg_mdloyj_titleget_sys , POS_DOWN )
+  _SYSWIN_CLOSE()
+  
+  //【仮】カットイン（コマンドがまだない）
+  
+  //SUNGLASSES：これからもがんばって
+  _PLAYER_NAME( 0 )
+  _BALLOONWIN_OBJMSG_POS( msg_mdloyj_prizecomp_end , MMDL_ID_EVENTOBJ_00, POS_DOWN )
+  _MSGWIN_CLOSE()
+  
+  //================================================//
+
+  //ゴールイン終了
+  $WK_SCENE_MEDAL_EVENT = 5
+  
+	//================================================//
+}
+EVENT_END
+
+//--------------------------------------------------------------------
+//	PEOPLE01「！」表示して上を向く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_people01_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	PLAYER、PEOPLE01の方へ歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_walk_to_peaple01
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	OLDMAN01登場
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_oldman_comming
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	OLDMAN01デスクへ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_oldman_goto_desk
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WALK_D_8F,9
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	PLAYERデスクへ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_goto_desk
+	_ANIME_DATA	AC_WALK_L_8F,3
+	_ANIME_DATA	AC_WALK_D_8F,6
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+/**************************************************************/
+/*  C03 PEOPLE01の会話（男）                      */
+/**************************************************************/
+EVENT_START   ev_c03r1102_people_01
+{ 
+
+  _TALK_OBJ_START()
+  
+  //メダルランクチェック
+  DEFINE_LOCAL	LWK_NEDAL_RANK
+  _GET_MEDAL_COUNT( SCR_MEDALCOUNT_RANK, LWK_NEDAL_RANK )
+  SWITCH $LWK_NEDAL_RANK
+  CASE SCR_MEDALRANK_COPPER THEN
+     //銅
+    _BALLOONWIN_OBJMSG_POS( msg_mdlnpc_rank_01 , C03R1102_PEOPLE_01, POS_DEFAULT )
+  CASE SCR_MEDALRANK_SILVER THEN
+    //銀
+    _BALLOONWIN_OBJMSG_POS( msg_mdlnpc_rank_02 , C03R1102_PEOPLE_01, POS_DEFAULT )
+  CASE SCR_MEDALRANK_GOLD THEN
+    //金
+    _BALLOONWIN_OBJMSG_POS( msg_mdlnpc_rank_03 , C03R1102_PEOPLE_01, POS_DEFAULT )
+  CASE SCR_MEDALRANK_BW THEN
+    //白黒
+    _BALLOONWIN_OBJMSG_POS( msg_mdlnpc_rank_04 , C03R1102_PEOPLE_01, POS_DEFAULT )
+  //デフォルト
+  DEFAULT
+    _BALLOONWIN_OBJMSG_POS( msg_mdlnpc_rank_05 , C03R1102_PEOPLE_01, POS_DEFAULT )
+  ENDSWITCH
+
+}
+EVENT_END
+
+/**************************************************************/
+/*  C03 PEOPLE01の会話（女）                      */
+/**************************************************************/
+EVENT_START   ev_c03r1102_people_02
+{
+  _TALK_OBJ_START()
+  
+    DEFINE_LOCAL	LWK_SELECT
+    DEFINE_LOCAL	LWK_REPEAT
+		WHILE $LWK_REPEAT != 1
+
+			_BALLOONWIN_OBJMSG_POS( msg_mdlnpc_help_01 , C03R1102_PEOPLE_02, POS_DEFAULT )
+
+			//メニュー開く
+			_BMPMENU_INIT_RIGHT(MENU_X1, MENU_Y1, 0, 1, LWK_SELECT )
+	
+			_BMPMENU_MAKE_LIST( msg_mdlnpc_help_02_01, 0 )	//メダルラリー
+			_BMPMENU_MAKE_LIST( msg_mdlnpc_help_02_02, 1 )	//メダル
+			_BMPMENU_MAKE_LIST( msg_mdlnpc_help_02_03, 2 )	//ヒントメダル
+			_BMPMENU_MAKE_LIST( msg_mdlnpc_help_02_04, 3 )	//メダルボックス
+			_BMPMENU_MAKE_LIST( msg_mdlnpc_help_02_05, 4 )	//イチオシとうろく
+			_BMPMENU_MAKE_LIST( msg_mdlnpc_help_02_06, 5 )	//なんでもないです
+	
+			//メニュー表示
+			_BMPMENU_START()
+
+			SWITCH $LWK_SELECT
+			CASE 0 THEN
+				_BALLOONWIN_OBJMSG_POS( msg_mdlnpc_help_win01 , C03R1102_PEOPLE_02, POS_DEFAULT )
+			CASE 1 THEN
+				_BALLOONWIN_OBJMSG_POS( msg_mdlnpc_help_win02 , C03R1102_PEOPLE_02, POS_DEFAULT )
+			CASE 2 THEN
+				_BALLOONWIN_OBJMSG_POS( msg_mdlnpc_help_win03 , C03R1102_PEOPLE_02, POS_DEFAULT )
+			CASE 3 THEN
+				_BALLOONWIN_OBJMSG_POS( msg_mdlnpc_help_win04 , C03R1102_PEOPLE_02, POS_DEFAULT )
+			CASE 4 THEN
+				_BALLOONWIN_OBJMSG_POS( msg_mdlnpc_help_win05 , C03R1102_PEOPLE_02, POS_DEFAULT )
+			DEFAULT
+				_LAST_KEYWAIT()
+				_MSGWIN_CLOSE()
+				//========================================/
+				//繰り返し脱出
+				$LWK_REPEAT = 1
+				//========================================/
+			ENDSWITCH
+			
+		ENDWHILE
+}
+EVENT_END
+
+/**************************************************************/
+/*  C03 PEOPLE01の会話（ミドル）                      */
+/**************************************************************/
+EVENT_START   ev_c03r1102_people_03
+
+  //メダル授与状態で分岐
+  
+  //未授与
+  IF $WK_SCENE_MEDAL_EVENT <= 1 THEN
+    _EASY_BALLOONWIN_TALKOBJ_MSG(msg_mdlnpc_fan_03)
+  //ゴールイン
+  ELSIF $WK_SCENE_MEDAL_EVENT >= 3 THEN
+    _EASY_BALLOONWIN_TALKOBJ_MSG(msg_mdlnpc_fan_02)
+  //フルコンプリート
+  ELSIF $WK_SCENE_MEDAL_EVENT >= 4 THEN
+    _EASY_BALLOONWIN_TALKOBJ_MSG(msg_mdlnpc_fan_01)
+  ENDIF
+  
+EVENT_END
+
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staystep_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0

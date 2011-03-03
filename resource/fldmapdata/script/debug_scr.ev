@@ -299,7 +299,7 @@ EVENT_START   ev_debug_mizuguchi
 		_BMPMENU_MAKE_LIST( msg_debug_mizu_03, 2 )	//ツチノカミ演劇起動
 		_BMPMENU_MAKE_LIST( msg_debug_mizu_04, 3 )	//R01イベント初期化
 		_BMPMENU_MAKE_LIST( msg_debug_mizu_05, 4 )	//D07R0401イベント初期化
-		_BMPMENU_MAKE_LIST( msg_debug_mizu_07, 5 )	//C03R0301イベント初期化
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_06, 5 )	//C03R0301イベント初期化
 		_BMPMENU_MAKE_LIST( msg_debug_mizu_07, 6 )	//C08初期化
 		//メニュー表示
 		_BMPMENU_START()
@@ -318,6 +318,10 @@ EVENT_START   ev_debug_mizuguchi
 		ELSIF $SCWK_TEMP2 == 5 THEN
 				$WK_SCENE_C04GYM0101_SHOWEND = 1
 		ELSIF $SCWK_TEMP2 == 6 THEN
+		    $WK_SCENE_MEDAL_EVENT = 2
+		ELSIF $SCWK_TEMP2 == 7 THEN
+		    $WK_SCENE_MEDAL_EVENT = 4
+		ELSE
 			//C04R0101でんきジム実験
 			$WK_SCENE_C04GYM0101_SHOWEND = 1
 			//D05
