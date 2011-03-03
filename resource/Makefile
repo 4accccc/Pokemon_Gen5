@@ -140,6 +140,7 @@ SUBDIRS	=	wmi \
 			oekaki \
 			beacon_status \
 			fmission \
+			fmission_log \
 			tr_ai \
 			enceff_imd \
 			pl_boat \
