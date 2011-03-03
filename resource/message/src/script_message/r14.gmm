@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-22T22:17:04"/>
+	<create user="matsumiya" host="W00224" date="2011-03-03T18:47:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1294" top="205" right="1999" bottom="833" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="681" top="123" right="1154" bottom="521" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_r14_sage2_end_01" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,,">
+	<row id="msg_r14_sage2_end_01" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・GRIDX=714、GRIDZ=343
 ・続けて条件に応じて分岐</comment>
@@ -304,7 +304,7 @@
 強き　ポケモントレーナーよ▼</language>
 	</row>
 
-	<row id="msg_r14_sage2_end_01a" text-color="#0000ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_r14_sage2_end_01a" text-color="#0000ff,,,,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・WHITE＋パッケージポケモン捕獲していない
 ・続けてsage2_end_01e</comment>
@@ -316,7 +316,7 @@
 心を　通い合わせているか？▼</language>
 	</row>
 
-	<row id="msg_r14_sage2_end_01b" text-color="#0000ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_r14_sage2_end_01b" text-color="#0000ff,,,,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・WHITE＋パッケージポケモン捕獲している
 ・続けてsage2_end_01e</comment>
@@ -328,7 +328,7 @@
 レシラムを　トモダチと　せぬのか？▼</language>
 	</row>
 
-	<row id="msg_r14_sage2_end_01c" text-color="#0000ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_r14_sage2_end_01c" text-color="#0000ff,,,,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・BLACK＋パッケージポケモン捕獲していない
 ・続けてsage2_end_01e</comment>
@@ -340,7 +340,7 @@
 心を　通い合わせているか？▼</language>
 	</row>
 
-	<row id="msg_r14_sage2_end_01d" text-color="#0000ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_r14_sage2_end_01d" text-color="#0000ff,,,,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・BLACK＋パッケージポケモン捕獲している
 ・続けてsage2_end_01e</comment>
@@ -352,7 +352,7 @@
 ゼクロムを　トモダチと　せぬのか？▼</language>
 	</row>
 
-	<row id="msg_r14_sage2_end_01e" text-color="#0000ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_r14_sage2_end_01e" text-color="#0000ff,,,,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・アイテム入手処理
 　No335「ビルドアップ」</comment>
@@ -381,7 +381,7 @@
 そのために　これを▼</language>
 	</row>
 
-	<row id="msg_r14_sage2_end_02" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,,">
+	<row id="msg_r14_sage2_end_02" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・アイテム入手後自動で表示
 ・続けてicpo_end_01</comment>
@@ -407,7 +407,7 @@
 おのずと　世界は　変わるのだからな▼</language>
 	</row>
 
-	<row id="msg_r14_icpo_end_01" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r14_icpo_end_01" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・隣接してメッセージ
 ・続けてsage2_end_03</comment>
@@ -423,7 +423,7 @@
 いろいろ　教えてもらおう！▼</language>
 	</row>
 
-	<row id="msg_r14_sage2_end_03" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,,">
+	<row id="msg_r14_sage2_end_03" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けて七賢人
 　6人と会っていない→icpo_end_02
@@ -440,7 +440,7 @@
 そなたたちが　どうするか　たのしみだ▼</language>
 	</row>
 
-	<row id="msg_r14_icpo_end_02" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r14_icpo_end_02" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・メッセージ表示後
 　画面暗転して七賢人とハンサムを削除</comment>
@@ -462,7 +462,7 @@
 では　また　会おう！▼</language>
 	</row>
 
-	<row id="msg_r14_icpo_end_03" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r14_icpo_end_03" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・6人の七賢人とであったとき
 ・メッセージ歩湯事後
