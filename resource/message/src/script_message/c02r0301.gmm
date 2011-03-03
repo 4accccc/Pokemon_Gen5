@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-02-27T17:52:46"/>
+	<create user="matsumiya" host="W00224" date="2011-03-03T15:57:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1297" top="184" right="2002" bottom="812" maximized="no" rayout="Vertical2">
+	<dialog left="1294" top="205" right="1999" bottom="833" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -435,10 +435,12 @@
 ポケモンが　いてくれて　よかったよ！</language>
 	</row>
 
-	<row id="msg_c02r0301_girl1_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c02r0301_girl1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀：なつき度チェック
 ・なつき度をチェックして対応したメッセージに続く
-・0＝先頭のポケモン（タマゴ/ひんし除く）</comment>
+・0＝先頭のポケモン（タマゴ/ひんし除く）
+
+・内容変更予定</comment>
 		<attribute name="キャラ指定">女の子</attribute>
 		<language name="JPN" width="256">まあ　すてきな　トレーナーさん
 どんな　ポケモンと　いっしょなの？▼
@@ -448,9 +450,11 @@
 あら　あなたの　[1:01:ポケモン種族名:0]……▼</language>
 	</row>
 
-	<row id="msg_c02r0301_girl1_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c02r0301_girl1_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀：なつき度チェック
-・なつき度120～255</comment>
+・なつき度120～255
+
+・内容変更予定</comment>
 		<attribute name="キャラ指定">女の子</attribute>
 		<language name="JPN" width="256">あなたに　なついているのね
 いっしょにいると　しあわせ　なんだ</language>
@@ -458,9 +462,11 @@
 一緒にいると　しあわせ　なんだ</language>
 	</row>
 
-	<row id="msg_c02r0301_girl1_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c02r0301_girl1_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀：なつき度チェック
-・なつき度70～119</comment>
+・なつき度70～119
+
+・内容変更予定</comment>
 		<attribute name="キャラ指定">女の子</attribute>
 		<language name="JPN" width="256">ちょっぴり　なついている……
 そんな　かんじかしら</language>
@@ -468,9 +474,11 @@
 そんな　感じかしら</language>
 	</row>
 
-	<row id="msg_c02r0301_girl1_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c02r0301_girl1_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀：なつき度チェック
-・なつき度0～69</comment>
+・なつき度0～69
+
+・内容変更予定</comment>
 		<attribute name="キャラ指定">女の子</attribute>
 		<language name="JPN" width="256">うーん……
 まだまだ　これからって　かんじね</language>
