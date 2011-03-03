@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-07T17:53:02"/>
+	<create user="matsumiya" host="W00224" date="2011-03-03T17:07:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1294" top="205" right="1999" bottom="833" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -622,21 +622,23 @@
 もう　ボロボロだよ……</language>
 	</row>
 
-	<row id="msg_d03r0101_sunglasses_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d03r0101_sunglasses_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・GRIDX=75、GRIDZ=48に配置
 ・アイテム入手処理
-　No237「やわらかいすな」入手処理</comment>
+　No237「やわらかいすな」入手処理
+
+・SWANでメッセージ変更</comment>
 		<attribute name="キャラ指定">SUNGLASSES
 サングラス</attribute>
 		<language name="JPN" width="256">わざわざ　はなしかけてきた
-ひとは　きみが　はじめて！▼
-かんどう　した！
-これ　あげます！▼</language>
+ひとは　きみが　ふたりめ！▼
+かんどう　しました！
+これを　あげます！▼</language>
 		<language name="JPN_KANJI" width="256">わざわざ　話しかけてきた
-人は　君が　はじめて！▼
-感動した！
-これ　あげましょう！▼</language>
+人は　君が　２人目！▼
+感動しました！
+これを　あげましょう！▼</language>
 	</row>
 
 	<row id="msg_d03r0101_sunglasses_02" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
