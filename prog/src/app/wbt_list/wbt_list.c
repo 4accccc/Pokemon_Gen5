@@ -80,17 +80,18 @@
 
 //@TODO BG読み込み とりあえずマイクテストのリソース
 #include "message.naix"
-#include "mictest.naix"	// アーカイブ
+#include "wbt_list_gra.naix"
+//#include "mictest.naix"	// アーカイブ
 #include "msg/msg_mictest.h"  // GMM
 #include "townmap_gra.naix"		// タッチバーカスタムボタン用サンプルにタウンマップリソース
 
 //=============================================================================
 // 下記defineをコメントアウトすると、機能を取り除けます
 //=============================================================================
-#define UI_TEMPLATE_INFOWIN
-#define UI_TEMPLATE_TOUCHBAR
+//#define UI_TEMPLATE_INFOWIN
+//#define UI_TEMPLATE_TOUCHBAR
 //#define UI_TEMPLATE_MCSS
-#define UI_TEMPLATE_TASKMENU
+//#define UI_TEMPLATE_TASKMENU
 //#define UI_TEMPLATE_TYPEICON      // 分類、技アイコン
 //#define UI_TEMPLATE_ITEM_ICON     // どうぐアイコン
 //#define UI_TEMPLATE_POKE_ICON     // ポケアイコン(ポケアイコン用アイテムアイコン込み)
@@ -141,14 +142,20 @@ enum
 	PLTID_OBJ_TOUCHBAR_M	= 0, // 3本使用
 	PLTID_OBJ_TYPEICON_M	= 3, // 3本使用
   PLTID_OBJ_OAM_MAPMODEL_M = 6, // 1本使用
+  /*
   PLTID_OBJ_POKEICON_M = 7,     // 3本使用
   PLTID_OBJ_POKEITEM_M = 10,    // 1本使用
   PLTID_OBJ_ITEMICON_M = 11,
   PLTID_OBJ_POKE_M = 12,
   PLTID_OBJ_BALLICON_M = 13, // 1本使用
 	PLTID_OBJ_TOWNMAP_M	= 14,		
+  */
 	//サブOBJ
   PLTID_OBJ_PMS_DRAW = 0, // 5本使用
+};
+
+enum {
+  WBT_TRAINER_MAX = 8,
 };
 
 //=============================================================================
@@ -232,8 +239,9 @@ typedef struct
 
 #ifdef UI_TEMPLATE_OAM_MAPMODEL
   // OAMマップモデル
+  u8 clwk_oam_mmdl_count;
   UI_EASY_CLWK_RES      clres_oam_mmdl;
-  GFL_CLWK                  *clwk_oam_mmdl;
+  GFL_CLWK                  *clwk_oam_mmdl[ WBT_TRAINER_MAX ];
 #endif //UI_TEMPLATE_OAM_MAPMODEL
 
 #ifdef UI_TEMPLATE_POKE2D
@@ -438,7 +446,7 @@ static GFL_PROC_RESULT WBTListProc_Init( GFL_PROC *proc, int *seq, void *pwk, vo
   wk->heapID = HEAPID_UI_DEBUG;
 	
 	//描画設定初期化
-	wk->graphic	= WBTLIST_GRAPHIC_Init( GX_DISP_SELECT_SUB_MAIN, wk->heapID );
+	wk->graphic	= WBTLIST_GRAPHIC_Init( GX_DISP_SELECT_MAIN_SUB, wk->heapID );
 
 	//フォント作成
 	wk->font			= GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
@@ -727,18 +735,18 @@ static void WBTList_BG_LoadResource( WBTLIST_BG_WORK* wk, HEAPID heapID )
   //@TODO 複数枚ロードできるようにして切り離す？
   enum
   {
-    RES_ARC = ARCID_MICTEST_GRA,
+    RES_ARC = ARCID_WBTLIST_GRA,
 
     RES_PAL_S_SIZE = 0x20,
     RES_PAL_M_SIZE = 0x20,
 
-    RES_PAL_S_ID = NARC_mictest_back_bg_up_NCLR,
-    RES_CHR_S_ID = NARC_mictest_back_bg_up_NCGR,
-    RES_SCR_S_ID = NARC_mictest_back_bg_up_NSCR,
+    RES_PAL_S_ID = NARC_wbt_list_gra_wbt_list_bg_d_NCLR,
+    RES_CHR_S_ID = NARC_wbt_list_gra_wbt_list_bg_d_NCGR,
+    RES_SCR_S_ID = NARC_wbt_list_gra_wbt_list_bg_d_NSCR,
 
-    RES_PAL_M_ID = NARC_mictest_back_bg_down_NCLR,
-    RES_CHR_M_ID = NARC_mictest_back_bg_down_NCGR,
-    RES_SCR_M_ID = NARC_mictest_back_bg_down_NSCR,
+    RES_PAL_M_ID = NARC_wbt_list_gra_wbt_list_bg_u_NCLR,
+    RES_CHR_M_ID = NARC_wbt_list_gra_wbt_list_bg_u_NCGR,
+    RES_SCR_M_ID = NARC_wbt_list_gra_wbt_list_bg_u_NSCR,
 
   };
 
@@ -1372,6 +1380,26 @@ static void UITemplate_POKE_ICON_DeleteCLWK( WBTLIST_MAIN_WORK* wk )
  */
 //=============================================================================
 
+enum {
+  WBT_TROBJ_BASE_X = 16,
+  WBT_TROBJ_BASE_Y = 32,
+};
+typedef struct {
+  u8 x, y;
+  u8 id;
+  u8 ptn_ofs;
+}TRAINER_OBJ_DATA;
+static const TRAINER_OBJ_DATA TrainerObjData[WBT_TRAINER_MAX] = {
+  { WBT_TROBJ_BASE_X +  0, WBT_TROBJ_BASE_Y +  0, NARC_fldmmdl_mdlres_hero_nsbtx, 3 },
+  { WBT_TROBJ_BASE_X +  0, WBT_TROBJ_BASE_Y + 32, NARC_fldmmdl_mdlres_rivel_nsbtx, 3 },
+  { WBT_TROBJ_BASE_X +  0, WBT_TROBJ_BASE_Y + 64, NARC_fldmmdl_mdlres_support_nsbtx, 3 },
+  { WBT_TROBJ_BASE_X +  0, WBT_TROBJ_BASE_Y + 96, NARC_fldmmdl_mdlres_veteranm_nsbtx, 3 },
+
+  { WBT_TROBJ_BASE_X +128, WBT_TROBJ_BASE_Y +  0, NARC_fldmmdl_mdlres_leader4_nsbtx, 3 },
+  { WBT_TROBJ_BASE_X +128, WBT_TROBJ_BASE_Y + 32, NARC_fldmmdl_mdlres_trainerw_nsbtx, 3 },
+  { WBT_TROBJ_BASE_X +128, WBT_TROBJ_BASE_Y + 64, NARC_fldmmdl_mdlres_trainerm_nsbtx, 3 },
+  { WBT_TROBJ_BASE_X +128, WBT_TROBJ_BASE_Y + 96, NARC_fldmmdl_mdlres_leader3_nsbtx, 3 },
+};
 //-----------------------------------------------------------------------------
 /**
  *	@brief  OAMマップモデル 作成 (人物OBJ特化仕様)
@@ -1387,31 +1415,41 @@ static void UITemplate_POKE_ICON_DeleteCLWK( WBTLIST_MAIN_WORK* wk )
 //-----------------------------------------------------------------------------
 static void WBTList_OAM_MAPMODEL_CreateCLWK( WBTLIST_MAIN_WORK *wk, u16 tex_idx, u8 ptn_ofs, GFL_CLUNIT *unit, HEAPID heapID )
 {	
+  u32 i;
   UI_EASY_CLWK_RES_PARAM prm;
+  const TRAINER_OBJ_DATA * trset;
 
-  prm.draw_type = CLSYS_DRAW_MAIN;
-  prm.comp_flg  = UI_EASY_CLWK_RES_COMP_NONE;
-  prm.arc_id    = APP_COMMON_GetArcId();
-  prm.pltt_id   = APP_COMMON_GetNull4x4PltArcIdx();
-  prm.ncg_id    = APP_COMMON_GetNull4x4CharArcIdx();
-  prm.cell_id   = APP_COMMON_GetNull4x4CellArcIdx( APP_COMMON_MAPPING_128K );
-  prm.anm_id    = APP_COMMON_GetNull4x4AnimeArcIdx( APP_COMMON_MAPPING_128K );
-  prm.pltt_line = PLTID_OBJ_OAM_MAPMODEL_M;
-  prm.pltt_src_ofs  = 0;
-  prm.pltt_src_num = 1;
-
-  // リソース読み込み
-  UI_EASY_CLWK_LoadResource( &wk->clres_oam_mmdl, &prm, unit, heapID );
-  // CLWK生成
-  wk->clwk_oam_mmdl = UI_EASY_CLWK_CreateCLWK( &wk->clres_oam_mmdl, unit, 80, 32, 0, heapID );
-
-  // テクスチャを転送
+  for( i = 0; i < WBT_TRAINER_MAX; i ++ )
   {
-    // 人物は基本 4 x 4
-    int sx = NSBTX_DEF_SX;
-    int sy = NSBTX_DEF_SY;
 
-    CLWK_TransNSBTX( wk->clwk_oam_mmdl, ARCID_MMDL_RES, tex_idx, ptn_ofs, sx, sy, 0, prm.draw_type, heapID );
+    prm.draw_type = CLSYS_DRAW_MAIN;
+    prm.comp_flg  = UI_EASY_CLWK_RES_COMP_NONE;
+    prm.arc_id    = APP_COMMON_GetArcId();
+    prm.pltt_id   = APP_COMMON_GetNull4x4PltArcIdx();
+    prm.ncg_id    = APP_COMMON_GetNull4x4CharArcIdx();
+    prm.cell_id   = APP_COMMON_GetNull4x4CellArcIdx( APP_COMMON_MAPPING_128K );
+    prm.anm_id    = APP_COMMON_GetNull4x4AnimeArcIdx( APP_COMMON_MAPPING_128K );
+    prm.pltt_line = PLTID_OBJ_OAM_MAPMODEL_M + i;
+    prm.pltt_src_ofs  = 0;
+    prm.pltt_src_num = 1;
+
+    trset = &TrainerObjData[ i ];
+    // リソース読み込み
+    UI_EASY_CLWK_LoadResource( &wk->clres_oam_mmdl, &prm, unit, heapID );
+    // CLWK生成
+    wk->clwk_oam_mmdl[i]
+      = UI_EASY_CLWK_CreateCLWK( &wk->clres_oam_mmdl, unit, trset->x, trset->y, 0, heapID );
+
+    // テクスチャを転送
+    {
+      // 人物は基本 4 x 4
+      int sx = NSBTX_DEF_SX;
+      int sy = NSBTX_DEF_SY;
+
+      CLWK_TransNSBTX( wk->clwk_oam_mmdl[i],
+          ARCID_MMDL_RES, trset->id, trset->ptn_ofs, sx, sy, 0, prm.draw_type, heapID );
+    }
+    wk->clwk_oam_mmdl_count ++;
   }
 }
 
@@ -1426,8 +1464,13 @@ static void WBTList_OAM_MAPMODEL_CreateCLWK( WBTLIST_MAIN_WORK *wk, u16 tex_idx,
 //-----------------------------------------------------------------------------
 static void WBTList_OAM_MAPMODEL_DeleteCLWK( WBTLIST_MAIN_WORK* wk )
 {
-	//CLWK破棄
-	GFL_CLACT_WK_Remove( wk->clwk_oam_mmdl );
+  u32 i;
+
+  //CLWK破棄
+  for ( i = 0; i < wk->clwk_oam_mmdl_count; i ++ )
+  {
+    GFL_CLACT_WK_Remove( wk->clwk_oam_mmdl[i] );
+  }
   //リソース開放
   UI_EASY_CLWK_UnLoadResource( &wk->clres_oam_mmdl );
 }
@@ -1819,4 +1862,82 @@ static void UITemplate_PMSDRAW_Proc( WBTLIST_MAIN_WORK* wk )
 }
 
 #endif // UI_TEMPLATE_PMSDRAW
+
+//=============================================================================
+//=============================================================================
+//-----------------------------------------------------------------------------
+//  fldmmdlのOBJCODE_PARAMから正面絵の位置を引っ張る
+//  OBJCODE_PARAM::draw_proc_noから描画関数がわかるので、それにあわせて
+//  アニメパターンの何番目が正面絵かを判定する
+/*
+#====================================
+# 切り取りデータを取得する
+def GetClipData( data , bbd_code_pos )
+  retdata = { "x"=>0 , "y"=>0 , "Width"=>0 , "Height"=>0 }
+
+  # 切り抜きデータ定義
+  # 左下が0,0であることに注意
+  pos_data = {
+    "PROC_NON"            =>[0,0],
+    "PROC_BLACT"          =>[8*12,8*28],
+    "PROC_BLACT_ALANM4"   =>[8*12,8*28],
+    "PROC_BLACT_ALANM16"  =>[8*12,8*28],
+    "PROC_BLACT_ALANM32"  =>[8*12,8*28],
+    "PROC_BLACT_ONELOOP"  =>[8*12,8*28], 
+    "PROC_HERO"           =>[32*3,8*28],
+    "PROC_CYCLEHERO"      =>[32*5,8*24],
+    "PROC_SWIMHERO"       =>[8*4,8*28],
+    "PROC_HERO_ITEMGET"   =>[8*4,8*28],
+    "PROC_HERO_PCAZUKE"   =>[0,8*28],
+    "PROC_ACT0"           =>[8*12,8*28],
+    "PROC_POKE"           =>[0,0],          # ポケモンは違うシート
+    "PROC_POKE_FLY"       =>[0,0],          # ポケモンは違うシート
+    "PROC_MODEL"          =>[0,0],          # ポリゴンモデルは別シート
+    "PROC_FISHINGHERO"    =>[8*24,8*16],
+    "PROC_YUREHERO"       =>[8*16,8*28],
+    "PROC_SHIN_MU"        =>[0,8*56],
+    "PROC_SPIDER"         =>[0,8*28],
+    "PROC_MELODYER"       =>[0,8*28],
+    "PROC_ACT0_NON_PAUSE" =>[8*12,8*28],
+  }
+
+  # アニメIDから場所が決まるパターン(幅×下記の値が使用される)
+  anm_id_pos = {
+    "ANMID_FLIP"    =>2,
+    "ANMID_ONECELL" =>0,
+  }
+
+  # 幅の取得
+  if data[RBDEF_NUM_BBD_MDLSIZE] =~ /MDLSIZE_([0-9]+)x([0-9]+)/ then
+    retdata["Width"] = $1.to_i
+    retdata["Height"]= $2.to_i
+  end
+
+  # 場所の取得
+  proc_data = data[RBDEF_NUM_BBD_DRAWPROC]
+  if pos_data.key?(proc_data) then
+    retdata["x"] = pos_data[proc_data][0].to_i
+    retdata["y"]= pos_data[proc_data][1].to_i
+  end
+
+  # フリップパターンの設定
+  amd_id = data[RBDEF_NUM_BBD_ANMID]
+  if anm_id_pos.key?(amd_id) then
+    retdata["x"] = retdata["Width"].to_i*anm_id_pos[amd_id].to_i
+  end
+
+  # 表示コードでの設定
+  bbd_code = data[RBDEF_NUM_BBD_CODE]
+  if bbd_code_pos.key?(bbd_code) then
+    retdata["x"] = bbd_code_pos[bbd_code][0]
+    retdata["y"] = bbd_code_pos[bbd_code][1]
+  end
+
+  return retdata
+*/
+//-----------------------------------------------------------------------------
+
+
+
+
 

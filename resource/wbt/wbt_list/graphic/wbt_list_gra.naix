@@ -11,9 +11,12 @@
 #define NARC_WBT_LIST_GRA_NAIX_
 
 enum {
-	NARC_wbt_list_gra_wbt_list_bg_NCLR = 0,
-	NARC_wbt_list_gra_wbt_list_bg_NCGR = 1,
-	NARC_wbt_list_gra_wbt_list_bg_NSCR = 2
+	NARC_wbt_list_gra_wbt_list_bg_d_NCLR = 0,
+	NARC_wbt_list_gra_wbt_list_bg_u_NCLR = 1,
+	NARC_wbt_list_gra_wbt_list_bg_d_NCGR = 2,
+	NARC_wbt_list_gra_wbt_list_bg_u_NCGR = 3,
+	NARC_wbt_list_gra_wbt_list_bg_d_NSCR = 4,
+	NARC_wbt_list_gra_wbt_list_bg_u_NSCR = 5
 };
 
 /* NARC_WBT_LIST_GRA_NAIX_ */
