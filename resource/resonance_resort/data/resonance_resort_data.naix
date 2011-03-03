@@ -11,7 +11,9 @@
 #define NARC_RESONANCE_RESORT_DATA_NAIX_
 
 enum {
-	NARC_resonance_resort_data_resort_people_dat = 0
+	NARC_resonance_resort_data_resort_people_dat = 0,
+	NARC_resonance_resort_data_resort_shop_dat = 1,
+	NARC_resonance_resort_data_resort_service_dat = 2
 };
 
 /* NARC_RESONANCE_RESORT_DATA_NAIX_ */

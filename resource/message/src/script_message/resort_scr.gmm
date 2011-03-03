@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nagihashi_toru" host="W00268" date="2011-03-02T20:33:50"/>
+	<create user="nagihashi_toru" host="W00268" date="2011-03-03T19:51:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -398,7 +398,7 @@
 		</language>
 	</columns>
 
-	<dialog left="-1274" top="97" right="-569" bottom="717" maximized="no" rayout="Vertical2">
+	<dialog left="369" top="340" right="1074" bottom="960" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="0" top="521" right="472" bottom="919" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -1307,6 +1307,81 @@ GTSで　会ったよね！</language>
 	<row id="resort_nursery_03" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
 		<language name="JPN" width="256">きょうは　もう　みせじまいです</language>
 		<language name="JPN_KANJI" width="256">今日は　もう　店じまいです</language>
+	</row>
+
+	<row id="resort_service_00" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="256">ブラッシング</language>
+		<language name="JPN_KANJI" width="256">ブラッシング</language>
+	</row>
+
+	<row id="resort_service_01" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="256">シャンプー</language>
+		<language name="JPN_KANJI" width="256">シャンプー</language>
+	</row>
+
+	<row id="resort_service_02" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="256">メイク</language>
+		<language name="JPN_KANJI" width="256">メイク</language>
+	</row>
+
+	<row id="resort_service_03" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="256">たきしゅぎょう</language>
+		<language name="JPN_KANJI" width="256">滝修行</language>
+	</row>
+
+	<row id="resort_service_04" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="256">あたためる</language>
+		<language name="JPN_KANJI" width="256">温める</language>
+	</row>
+
+	<row id="resort_service_05" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="256">HPを　きたえる</language>
+		<language name="JPN_KANJI" width="256">HPを　鍛える</language>
+	</row>
+
+	<row id="resort_service_06" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="256">こうげきを　きたえる</language>
+		<language name="JPN_KANJI" width="256">こうげきを　鍛える</language>
+	</row>
+
+	<row id="resort_service_07" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="256">ぼうぎょを　きたえる</language>
+		<language name="JPN_KANJI" width="256">ぼうぎょを　鍛える</language>
+	</row>
+
+	<row id="resort_service_08" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="256">とくこうを　きたえる</language>
+		<language name="JPN_KANJI" width="256">とくこうを　鍛える</language>
+	</row>
+
+	<row id="resort_service_09" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="256">とくぼうを　きたえる</language>
+		<language name="JPN_KANJI" width="256">とくぼうを　鍛える</language>
+	</row>
+
+	<row id="resort_service_10" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="256">すばやさを　きたえる</language>
+		<language name="JPN_KANJI" width="256">すばやさを　鍛える</language>
+	</row>
+
+	<row id="resort_service_11" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="256">モンスターボール×１６</language>
+		<language name="JPN_KANJI" width="256">モンスターボール×１６</language>
+	</row>
+
+	<row id="resort_service_12" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="256">オボンのみ</language>
+		<language name="JPN_KANJI" width="256">オボンのみ</language>
+	</row>
+
+	<row id="resort_service_13" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="256">しんじゅ</language>
+		<language name="JPN_KANJI" width="256">しんじゅ</language>
+	</row>
+
+	<row id="resort_service_14" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="256">ビリビリするたま</language>
+		<language name="JPN_KANJI" width="256">ビリビリするたま</language>
 	</row>
 
 	<row id="resort_history_00" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">

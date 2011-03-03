@@ -1,9 +1,9 @@
 //============================================================================================
 /**
  * @file resort_people_def.h
- * @brief resort_peopleを使用するための定義情報です
+ * @brief #レゾナンスリゾートバイナリの定義情報です
  * @author Toru=Nagihashi
- * @note resort_people_converter.rbから自動生成されています。
+ * @note conv_tool.rbから自動生成されています。
 */
 //============================================================================================
 #pragma once
@@ -53,3 +53,15 @@
 //性格
 #define RESORT_PERSONALITY_TYPE_TODO4 (0) //仮4
 #define RESORT_PERSONALITY_TYPE_MAX (1) //最大
+//サービス
+#define RESORT_SERVICE_TYPE_EFFORT_SPEDEF (7) //努力値特防
+#define RESORT_SERVICE_TYPE_EFFORT_SPEPOW (6) //努力値特攻
+#define RESORT_SERVICE_TYPE_EFFORT_AGI (8) //努力値素早
+#define RESORT_SERVICE_TYPE_FRIEND (1) //なつき
+#define RESORT_SERVICE_TYPE_EFFORT_DEF (5) //努力値防
+#define RESORT_SERVICE_TYPE_EFFORT_POW (4) //努力値攻
+#define RESORT_SERVICE_TYPE_EFFORT_HP (3) //努力値HP
+#define RESORT_SERVICE_TYPE_HATCH (9) //孵化
+#define RESORT_SERVICE_TYPE_LV (2) //LV
+#define RESORT_SERVICE_TYPE_ITEM (0) //道具
+#define RESORT_SERVICE_TYPE_MAX (10) //最大

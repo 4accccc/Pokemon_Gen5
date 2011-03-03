@@ -155,3 +155,174 @@ const RESORT_BINARY_PEOPLE_DATA * RESORT_BINARY_SearchData( const RESORT_BINARY_
   GF_ASSERT(0);
   return NULL;
 }
+
+//=============================================================================
+/**
+ *					レゾナンスリゾートお店バイナリデータ
+*/
+//=============================================================================
+//-------------------------------------
+///	お店バイナリデータワーク
+//=====================================
+struct _RESORT_BINARY_SHOP
+{
+  u32 service_size;
+  RESORT_BINARY_SERVICE_DATA  *p_service;
+
+  u32 shop_size;
+  RESORT_BINARY_SHOP_DATA *p_shop;
+};
+
+//-------------------------------------
+///	お店のデータ
+//=====================================
+typedef enum 
+{
+  RESORT_BINARY_SHOP_PARAM_SHOP,
+  RESORT_BINARY_SHOP_PARAM_TYPE,
+  RESORT_BINARY_SHOP_PARAM_LV,
+  RESORT_BINARY_SHOP_PARAM_NAME,
+  RESORT_BINARY_SHOP_PARAM_LIST_01,
+  RESORT_BINARY_SHOP_PARAM_LIST_02,
+  RESORT_BINARY_SHOP_PARAM_LIST_03,
+  RESORT_BINARY_SHOP_PARAM_LIST_04,
+  RESORT_BINARY_SHOP_PARAM_LIST_05,
+  RESORT_BINARY_SHOP_PARAM_LIST_06,
+  RESORT_BINARY_SHOP_PARAM_MAX,
+} RESORT_BINARY_SHOP_PARAM;
+
+//-------------------------------------
+///	お店バイナリデータ 各お店分のワーク
+//=====================================
+struct _RESORT_BINARY_SHOP_DATA
+{
+  u16 param[RESORT_BINARY_SHOP_PARAM_MAX];
+};
+
+//-------------------------------------
+///	サービスバイナリデータ サービス情報のワーク
+//=====================================
+struct _RESORT_BINARY_SERVICE_DATA
+{
+  u16 param[RESORT_BINARY_SERVICE_PARAM_MAX];
+};
+
+
+//-------------------------------------
+/// PUBLIC	
+//=====================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  お店バイナリ読み込み
+ *
+ *	@param	HEAPID heapID   ヒープID
+ *
+ *	@return お店バイナリデータ
+ */
+//-----------------------------------------------------------------------------
+RESORT_BINARY_SHOP * RESORT_BINARY_SHOP_Init( HEAPID heapID )
+{
+  RESORT_BINARY_SHOP *p_wk = GFL_HEAP_AllocClearMemory(heapID,sizeof(RESORT_BINARY_SHOP) );
+
+  p_wk->p_service = GFL_ARC_UTIL_LoadEx(ARCID_RESONANCE_RESORT_DATA, NARC_resonance_resort_data_resort_service_dat, FALSE, heapID, &p_wk->service_size );
+
+
+  p_wk->p_shop = GFL_ARC_UTIL_LoadEx(ARCID_RESONANCE_RESORT_DATA, NARC_resonance_resort_data_resort_shop_dat, FALSE, heapID, &p_wk->shop_size );
+
+  return p_wk;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  お店バイナリ開放
+ *
+ *	@param	RESORT_BINARY_SHOP *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void RESORT_BINARY_SHOP_Exit( RESORT_BINARY_SHOP *p_wk )
+{
+  GFL_HEAP_FreeMemory(p_wk->p_shop);
+  GFL_HEAP_FreeMemory(p_wk->p_service);
+  GFL_HEAP_FreeMemory(p_wk);
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief　お店バイナリから個別の店情報を取得
+ *
+ *	@param	const RESORT_BINARY_SHOP *cp_wk ワーク
+ *	@param	shop  お店
+ *	@param	type  タイプ
+ *	@param	lv    レベル
+ *
+ *	@return　個別の店情報
+ */
+//-----------------------------------------------------------------------------
+const RESORT_BINARY_SHOP_DATA * RESORT_BINARY_SHOP_SearchData( const RESORT_BINARY_SHOP *cp_wk, u16 shop, u16 type, u16 lv )
+{
+  int i;
+  for( i = 0; i < (cp_wk->shop_size / sizeof(RESORT_BINARY_SHOP_DATA)); i++ )
+  {
+    const RESORT_BINARY_SHOP_DATA* cp_shop = &cp_wk->p_shop[i];
+    if( cp_shop->param[ RESORT_BINARY_SHOP_PARAM_SHOP ] == shop
+      &&  cp_shop->param[ RESORT_BINARY_SHOP_PARAM_TYPE ] == type
+      &&  cp_shop->param[ RESORT_BINARY_SHOP_PARAM_LV ] == lv )
+    {
+      return cp_shop;
+    }
+  }
+
+  GF_ASSERT(0);
+
+  return NULL;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief　個別の店情報からお店名を取得
+ *
+ *	@param	const RESORT_BINARY_SHOP_DATA *cp_wk 　ワーク
+ *
+ *	@return お店名タグ
+ */
+//-----------------------------------------------------------------------------
+u16 RESORT_BINARY_SHOP_DATA_GetName( const RESORT_BINARY_SHOP_DATA *cp_wk )
+{
+  return cp_wk->param[ RESORT_BINARY_SHOP_PARAM_NAME ];
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief　個別の店情報からサービス情報を取得
+ *
+ *	@param	const RESORT_BINARY_SHOP *cp_wk  ワーク
+ *	@param	const RESORT_BINARY_SHOP_DATA *cp_shop  お店情報
+ *	@param	list  何番のサービスか
+ *
+ *	@return サービス情報
+ */
+//-----------------------------------------------------------------------------
+extern const RESORT_BINARY_SERVICE_DATA * RESORT_BINARY_SHOP_DATA_GetList( const RESORT_BINARY_SHOP *cp_wk, const RESORT_BINARY_SHOP_DATA *cp_shop, u16 list )
+{
+  u16 service_tag = cp_shop->param[RESORT_BINARY_SHOP_PARAM_LIST_01+list];
+  
+  if( service_tag < cp_wk->service_size / sizeof(RESORT_BINARY_SERVICE_DATA) )
+  {
+    return &cp_wk->p_service[ service_tag ];
+  }
+  else
+  {
+    return NULL;
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  サービス情報からデータ取得
+ *
+ *	@param	const RESORT_BINARY_SERVICE_DATA *p_wk  ワーク
+ *	@param	param   取得する種類
+ *
+ *	@return　データ
+ */
+//-----------------------------------------------------------------------------
+u16 RESORT_BINARY_SERVICE_DATA_GetData( const RESORT_BINARY_SERVICE_DATA *cp_wk, RESORT_BINARY_SERVICE_PARAM param )
+{
+  GF_ASSERT( param < RESORT_BINARY_SERVICE_PARAM_MAX );
+  return cp_wk->param[ param ];
+}

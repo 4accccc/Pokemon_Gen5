@@ -902,6 +902,7 @@ SRCS_OVERLAY_SCRCMD_WBT  =  field/scrcmd_wbt.c \
 #===> GROUP_OVERLAY_DEBUGMENU
 #GROUP_OVERLAY_SCRCMD
 SRCS_OVERLAY_SCRCMD_RESORT =  field/resonance_resort/scrcmd_resort.c \
+                              field/resonance_resort/scrcmd_resort_shop.c \
                               field/scrcmd_resort_table.c
 
 # スクリプトコマンド並列化  無限ダンジョン

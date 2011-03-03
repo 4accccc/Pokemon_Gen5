@@ -13,7 +13,11 @@ USERS	= nagihashi_toru shimoyamada
 #------------------------------------------------------------------------------
 targetall			= resonance_resort_data
 targetpeople	= resort_people
+targetdefine	= resort_define
 targetpeopleh	= resort_people_def
+targetshop 		= resort_shop
+targetservice = resort_service
+definehash		= resort_define_hash
 
 #------------------------------------------------------------------------------
 #依存するファイル名
@@ -32,7 +36,9 @@ TARGETDIR_PROG = ..\..\..\prog\src/field/resonance_resort/
 #TOOLS
 #------------------------------------------------------------------------------
 XLSCONV 	= $(PROJECT_ROOT)tools/exceltool/ExcelSeetConv.exe
+DEFINECONV = resort_define_converter.rb
 PEOPLECONV = resort_people_converter.rb
+SHOPCONV 		= resort_shop_converter.rb
 
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
@@ -61,16 +67,20 @@ $(TARGETDIR_PROG)/$(targetpeopleh).h:	$(targetpeopleh).h
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetall).narc $(targetall).naix: $(targetpeople).dat
+$(targetall).narc $(targetall).naix: $(targetpeople).dat $(targetshop).dat $(targetservice).dat
 	nnsarc -r -l -n -i $(targetall) $^
 	$(NAIXCUT) $(targetall).naix
 
-#人物データコンバート
-$(targetpeople).dat $(targetpeopleh).h: $(xlsname).xls $(msgfile) $(scriptfile) $(PEOPLECONV)
-	$(XLSCONV) -o $(targetpeople)_data.csv -p 1 -s csv $(xlsname).xls
-	$(XLSCONV) -o $(targetpeople)_define.csv -p 2 -s csv $(xlsname).xls
+#データコンバート
+$(targetpeople).dat $(targetshop).dat $(targetservice).dat $(targetpeopleh).h: $(xlsname).xls $(msgfile) $(scriptfile) $(PEOPLECONV) $(DEFINECONV)
+	$(XLSCONV) -o $(targetpeople).csv -p 1 -s csv $(xlsname).xls
+	$(XLSCONV) -o $(targetshop).csv -p 2 -s csv $(xlsname).xls
+	$(XLSCONV) -o $(targetservice).csv -p 3 -s csv $(xlsname).xls
+	$(XLSCONV) -o $(targetdefine).csv -p 4 -s csv $(xlsname).xls
 	rm -f *.dat
-	ruby $(PEOPLECONV) $(targetpeople)_data.csv $(targetpeople)_define.csv $(msgfile) $(scriptfile) $(targetpeople) $(targetpeopleh)
+	ruby $(DEFINECONV) $(targetdefine).csv $(definehash) $(targetpeopleh)
+	ruby $(PEOPLECONV) $(targetpeople).csv $(msgfile) $(scriptfile) $(targetpeople)
+	ruby $(SHOPCONV) $(targetshop).csv $(targetservice).csv $(msgfile) $(targetshop) $(targetservice)
 endif
 
 #------------------------------------------------------------------------------
@@ -87,8 +97,6 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f *.naix
 	rm -f $(targetall).narc
 	rm -f $(targetall).naix
-	rm -f $(targetpeople)_data.csv
-	rm -f $(targetpeople)_define.csv
 endif
 	rm -f $(TARGETDIR_ARC)/$(targetall).narc
 	rm -f $(TARGETDIR_ARC)/$(targetall).naix

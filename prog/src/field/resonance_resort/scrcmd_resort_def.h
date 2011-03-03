@@ -55,11 +55,19 @@
 #define RESORT_WORD_SHOP_LABEL        (2) //「売る」とか
 
 //_RESORT_CALL_LIST用
-#define RESORT_CALL_LIST_MODE_ITEM            (0)
-#define RESORT_CALL_LIST_MODE_SECRETARY_ADD   (0)
-#define RESORT_CALL_LIST_MODE_INSTITUTION     (1)
-#define RESORT_CALL_LIST_MODE_SERVICE         (3)
-#define RESORT_CALL_LIST_MODE_SWAP            (3)
+#define RESORT_LIST_TYPE_ITEM            (0)
+#define RESORT_LIST_TYPE_SERVICE         (1)
+#define RESORT_LIST_TYPE_SELECT          (2)
+#define RESORT_LIST_TYPE_SORT            (3)
+
+  //RESORT_LIST_TYPE_SELECT
+#define RESORT_LIST_SELECT_SECRETARY_ADD      (0)
+#define RESORT_LIST_SELECT_SECRETARY_DEL      (1)
+#define RESORT_LIST_SELECT_INSTATITUTION_DEL  (2)
+
+  //RESORT_LIST_TYPE_SORT
+#define RESORT_LIST_SORT_SECRETARY      (0)
+#define RESORT_LIST_SORT_INSTATITUTION  (1)
 
 //_RESORT_GET_MSGID用
   //エクセルのMSG
@@ -118,3 +126,4 @@
 #define RESORT_ADD_EFFORT_AGI                 (3)
 #define RESORT_ADD_EFFORT_SPEPOW              (4)
 #define RESORT_ADD_EFFORT_SPEDEF              (5)
+
