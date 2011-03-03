@@ -192,14 +192,14 @@ static const FLOOR_RECT DATA_FloorRect[] = {
 ///////////////////////////////////////
 //12
 #define GATE_3C_3D_IN_DIR (DIR_LEFT)
-#define GATE_3C_3D_OUT_DIR (DIR_LEFT)
+#define GATE_3C_3D_OUT_DIR (DIR_DOWN)
 //13
-#define GATE_3D_3C_IN_DIR (DIR_RIGHT)
+#define GATE_3D_3C_IN_DIR (DIR_UP)
 #define GATE_3D_3C_OUT_DIR (DIR_RIGHT)
 
 ///////////////////////////////////////
 //14
-#define GATE_3D_4A_IN_DIR (DIR_UP)
+#define GATE_3D_4A_IN_DIR (DIR_RIGHT)
 #define GATE_3D_4A_OUT_DIR (DIR_UP)
 //15 4A_3D
 

@@ -459,6 +459,7 @@ static GMEVENT_RESULT event_GateInLeaderMain( GMEVENT * event, int *seq, void *w
       break;
     }
     gatemv_IcaAnmFree( wk, evwk );
+    MMDL_SetLightAttr( FIELD_PLAYER_GetMMdl( wk->f_player ), TRUE );  //強制移動直後はライトアトリビュート切り替えが働かないので手動でOn
     (*seq)++;
     break;
   case 3:

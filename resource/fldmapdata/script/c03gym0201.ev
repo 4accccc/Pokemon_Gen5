@@ -47,7 +47,7 @@ EVENT_START prog_c03gym0201_gate_in_4b
   _CALL sub_gatein_anm
   
   //1F‚ÉˆÚ“®
-  _MAP_CHANGE_NO_FADE( ZONE_ID_C03GYM0101, 8, 0, 4, DIR_DOWN )
+  _MAP_CHANGE_NO_FADE( ZONE_ID_C03GYM0101, 8, 0, 4, DIR_LEFT )
 EVENT_END
 
 sub_gatein_anm:

@@ -147,7 +147,7 @@ EVENT_START ev_prog_c03gym0101_gate_out_1c
 	  _FLAG_SET( FE_C03GYM0101_COCCON_01 )
   ENDIF
 
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gateout_map_change )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gateout_map_change_1c )
   _SE_PLAY( SEQ_SE_GYM_M03 ) //îÚÇ—èoÇ∑âπ
   _OBJ_ANIME_WAIT()
 }
@@ -155,7 +155,7 @@ EVENT_END
 
 EVENT_START ev_prog_c03gym0101_gate_out_3d
 {
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gateout_map_change )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gateout_map_change_3d )
   _SE_PLAY( SEQ_SE_GYM_M03 ) //îÚÇ—èoÇ∑âπ
   _OBJ_ANIME_WAIT()
 }
@@ -224,9 +224,14 @@ _ANIME_LABEL anm_player_gateout_4x
   _ANIME_DATA AC_JUMP_U_1G_8F,1
   _ANIME_DATA ACMD_END,0
 
-_ANIME_LABEL  anm_player_gateout_map_change
+_ANIME_LABEL  anm_player_gateout_map_change_1c
   _ANIME_DATA AC_VANISH_OFF,1
   _ANIME_DATA AC_JUMP_D_2G_16F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_player_gateout_map_change_3d
+  _ANIME_DATA AC_VANISH_OFF,1
+  _ANIME_DATA AC_JUMP_L_2G_16F,1
   _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------
