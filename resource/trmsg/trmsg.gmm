@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2010-06-19T14:36:14"/>
+	<create user="nagihashi_toru" host="W00268" date="2011-03-01T12:07:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -212,6 +212,36 @@
 				<comment language="japanese">DS本体のユーザー名</comment>
 				<comment language="english">DS本体のユーザー名</comment>
 			</tag>
+			<tag entry="53" japanese="メダル名" english="メダル名" view="EP" width="130" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">様々なことをするともらえる称号をあらわすメダルの名前</comment>
+				<comment language="english">様々なことをするともらえる称号をあらわすメダルの名前</comment>
+			</tag>
+			<tag entry="54" japanese="メダリストランク名" english="メダリストランク名" view="EP" width="65" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">メダルを集めると上昇するメダルボックスのランク名</comment>
+				<comment language="english">メダルを集めると上昇するメダルボックスのランク名</comment>
+			</tag>
+			<tag entry="55" japanese="リゾートフリーワード" english="リゾートフリーワード" view="EP" width="104" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">リゾートで使用する自由入力の挨拶文です。</comment>
+				<comment language="english">リゾートで使用する自由入力の挨拶文です。</comment>
+			</tag>
+			<tag entry="56" japanese="リゾート店名" english="リゾート店名" view="EP" width="169" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">リゾートで使用する店の名前です。</comment>
+				<comment language="english">リゾートで使用する店の名前です。</comment>
+			</tag>
+			<tag entry="57" japanese="リゾート街名" english="リゾート街名" view="EP" width="130" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">リゾートで使用する自由入力の街名です。</comment>
+				<comment language="english">リゾートで使用する自由入力の街名です。</comment>
+			</tag>
+			<tag entry="58" japanese="リゾート市長名" english="リゾート市長名" view="EP" width="130" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">リゾートで使用する自由入力の市長名です。</comment>
+				<comment language="english">リゾートで使用する自由入力の市長名です。</comment>
+			</tag>
 		</group>
 
 		<group entry="2" japanese="ポケモンＷＢ（数値）" english="ポケモンＷＢ（数値）" color="#c0c0c0">
@@ -365,13 +395,13 @@
 		</language>
 	</columns>
 
-	<dialog left="1701" top="181" right="2280" bottom="809" maximized="no" rayout="Vertical2">
+	<dialog left="6" top="97" right="711" bottom="717" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="0" style="0000" width="571"/>
+		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="404"/>
-		<band id="3" index="3" style="0000" width="591"/>
+		<band id="2" index="2" style="0000" width="697"/>
+		<band id="3" index="3" style="0000" width="697"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -14914,6 +14944,121 @@ può accadere ancora di tutto!</language>
 ひょっとして　おわり！？</language>
 		<language name="JPN_KANJI" width="216">ぬうん……！？
 ひょっとして　終わり！？</language>
+	</row>
+
+	<row id="TRID_PILOT_04_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">まずは　ひとあんしん……▼
+さてと　いきなりで　もうしわけないが
+さっそく　ポケモンしょうぶ！▼</language>
+		<language name="JPN_KANJI" width="216">まずは　一安心……▼
+さてと　いきなりで　申し訳ないが
+さっそく　ポケモン勝負！▼</language>
+	</row>
+
+	<row id="TRID_PILOT_04_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ</language>
+	</row>
+
+	<row id="TRID_PILOT_04_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">わたしから　アドバイスだよ▼
+ココみたいに　かべに　かこまれ
+くぼんでいる　ところに　いれば▽
+かぜに　とばされないだろう</language>
+		<language name="JPN_KANJI" width="216">わたしから　アドバイスだよ▼
+ココみたいに　壁に　囲まれ
+くぼんでいる　ところに　いれば▽
+風に　飛ばされないだろう</language>
+	</row>
+
+	<row id="TRID_PILOT_05_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">つよい　かぜにも　まけない
+じまんの　ポケモンだぜ！▼</language>
+		<language name="JPN_KANJI" width="216">強風にも　負けない
+自慢の　ポケモンだぜ！▼</language>
+	</row>
+
+	<row id="TRID_PILOT_05_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ</language>
+	</row>
+
+	<row id="TRID_PILOT_05_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">そらをとぶ　ポケモンと
+いっしょに　おおぞらを　まうため▽
+パイロットに　なったんだ</language>
+		<language name="JPN_KANJI" width="216">そらをとぶ　ポケモンと
+一緒に　大空を　舞うため▽
+パイロットに　なったんだ</language>
+	</row>
+
+	<row id="TRID_PILOT_06_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">いそがば　まわれ！▼
+そうしないと　ジムの　しかけが
+きみの　ゆくてを　はばんじゃうぜ▼</language>
+		<language name="JPN_KANJI" width="216">急がば　回れ！▼
+そうしないと　ジムの　仕掛けが
+きみの　行く手を　はばんじゃうぜ▼</language>
+	</row>
+
+	<row id="TRID_PILOT_06_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ</language>
+	</row>
+
+	<row id="TRID_PILOT_06_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">まわりにある　ふうりょくけいの
+かいてんが　はやくなってきたら▽
+むりせず　どこかに　かくれることだね</language>
+		<language name="JPN_KANJI" width="216">周囲にある　風力計の
+回転が　速くなってきたら▽
+無理せず　どこかに　かくれることだね</language>
+	</row>
+
+	<row id="TRID_PILOT_07_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">わたしに　かてれば
+つぎは　ジムリーダー……▼
+そうおもうのは　ゆだんたいてき！
+まだまだ　きを　ぬくなよ！▼</language>
+		<language name="JPN_KANJI" width="216">わたしに　勝てれば
+次は　ジムリーダー……▼
+そう思っているなら　油断大敵
+まだまだ　気を抜くなよ！▼</language>
+	</row>
+
+	<row id="TRID_PILOT_07_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">かりメッセージ</language>
+		<language name="JPN_KANJI" width="216">仮メッセージ</language>
+	</row>
+
+	<row id="TRID_PILOT_07_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">ひこうきの　そうじゅうは
+ちゃくりくが　いちばん　むずかしい▽
+さいごまで　ゆだん　するなよ</language>
+		<language name="JPN_KANJI" width="216">飛行機の　操縦は
+着陸が　一番　難しい……▽
+最後まで　気を抜くんじゃないぜ</language>
+	</row>
+
+	<row id="TRID_LEADER6_02_TRMSG_FIGHT_FIRST_DAMAGE">
+		<language name="JPN" width="216">アナタが　どんな　トレーナーか
+ちょっと　ドキドキするわね</language>
+		<language name="JPN_KANJI" width="216">アナタが　どんな　トレーナーか
+ちょっと　ドキドキするわね</language>
+	</row>
+
+	<row id="TRID_LEADER6_02_TRMSG_FIGHT_POKE_LAST">
+		<language name="JPN" width="216">さいごの　ポケモンだけど……
+ぜったいに　あきらめないから！</language>
+		<language name="JPN_KANJI" width="216">最後の　ポケモンだけど……
+絶対に　あきらめないから！</language>
+	</row>
+
+	<row id="TRID_LEADER6_02_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">アナタと　たたかえて　アタシ
+つよくなれたから……　ありがとうね</language>
+		<language name="JPN_KANJI" width="216">アナタと　戦えて　アタシ
+強くなれたから……　ありがとうね</language>
 	</row>
 
 	<flowchart-group-list>
