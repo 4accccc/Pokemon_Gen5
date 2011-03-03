@@ -39,7 +39,7 @@ else
 ifeq	($(USERNAME),none)
 	$(MAKE) -j 6 -f $(MAKE_MAIN)
 else
-	$(MAKE) -j 3 -f $(MAKE_MAIN)
+	$(MAKE) -j $(NUMBER_OF_PROCESSORS) -f $(MAKE_MAIN)
 endif
 endif
 
