@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-02-27T16:47:29"/>
+	<create user="matsumiya" host="W00224" date="2011-03-04T12:46:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1297" top="184" right="2002" bottom="812" maximized="no" rayout="Vertical2">
+	<dialog left="1294" top="205" right="1999" bottom="833" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_c08gym0101_leader_01w" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c08gym0101_leader_01w" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・WHITEver
 　戦闘前メッセージ</comment>
@@ -312,7 +312,7 @@
 もう　はじめちゃうね！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c08gym0101_leader_02w" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c08gym0101_leader_02w" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・WHITEver
 　戦闘後メッセージ</comment>
@@ -334,7 +334,7 @@
 すっごく　うれしー！！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c08gym0101_leader_03w" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c08gym0101_leader_03w" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・WHITEver
 　ファンファーレ＋バッジ入手処理</comment>
@@ -346,7 +346,7 @@
 レジェンドバッジを　もらった！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c08gym0101_leader_04w" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c08gym0101_leader_04w" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・WHITEver
 　アイテム入手処理
@@ -367,7 +367,7 @@
 この　わざマシンも　あげるー！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c08gym0101_leader_05w" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c08gym0101_leader_05w" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・WHITEver
 　アイテム入手処理後
@@ -385,7 +385,7 @@
 ボールに　もどしちゃうんだよ！▼</language>
 	</row>
 
-	<row id="msg_c08gym0101_leader_06w" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c08gym0101_leader_06w" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・WHITEver
 　クリアまで繰り返し</comment>
@@ -413,7 +413,7 @@
 ぬけたところに　あるんだよ！</language>
 	</row>
 
-	<row id="msg_c08gym0101_leader_06w0002" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,,,,,,,,">
+	<row id="msg_c08gym0101_leader_06w0002" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・WHITEver
 ・主人公性別：♂
@@ -434,7 +434,7 @@
 であえて　すっごい　よかった！！</language>
 	</row>
 
-	<row id="msg_c08gym0101_leader_06w0003" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c08gym0101_leader_06w0003" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・WHITEver
 ・主人公性別：♀
@@ -736,7 +736,7 @@
 おめでとう　ございます！！</language>
 	</row>
 
-	<row id="msg_c02gym0101_statue_w_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c02gym0101_statue_w_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>BGメッセージ：ホワイトver
 ・ジムバッジ取得前</comment>
 		<attribute name="キャラ指定">ポケモン像</attribute>
@@ -748,7 +748,7 @@
 認定　トレーナー！</language>
 	</row>
 
-	<row id="msg_c02gym0101_statue_w_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c02gym0101_statue_w_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>BGメッセージ：ホワイトver
 ・ジムバッジ取得後</comment>
 		<attribute name="キャラ指定">ポケモン像</attribute>
@@ -762,7 +762,7 @@
 [1:00:トレーナー名:0]</language>
 	</row>
 
-	<row id="msg_c02gym0101_statue_w_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c02gym0101_statue_w_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>BGメッセージ：ホワイトver
 ・r10でのライバル、サポートイベント後</comment>
 		<attribute name="キャラ指定">ポケモン像</attribute>
