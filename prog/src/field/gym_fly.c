@@ -60,11 +60,14 @@
 
 #define WINDMETER_NUM_MAX       (17)        // 風力計の数
 #define WINDMETER_SPEED_LOW     (0x2000)    // 低速のアニメ速度
-#define WINDMETER_SPEED_MIDDLE  (0x4000)    // 中速のアニメ速度
-#define WINDMETER_SPEED_HIGH    (0xa000)    // 高速のアニメ速度
+#define WINDMETER_SPEED_MIDDLE  (0x5000)    // 中速のアニメ速度
+#define WINDMETER_SPEED_HIGH    (0xb000)    // 高速のアニメ速度
 #define WINDMETER_SPEED_ADD     (0x300)     // アニメ加算
 
 #define BOX_NUM_MAX             (2)         // 貨物箱の数
+
+// 吹き飛ばしイベント用
+#define STAY_WALK_NUM           (4)         // 何歩足踏みするか
 
 // map_array.cdatの配列の要素
 #define MAP_ARRAY_ROW           (50)        // マップの縦MAX
@@ -138,6 +141,8 @@ typedef struct {
   MMDL            *mmdl;        // 自機の動作モデル
 
   u16             time;         // 時間計測用
+  u8              stay_walk_cnt;// 足踏みカウント
+  BOOL            is_wall;      // 後ろがすぐ壁か？
 } BLOW_EVENT_WORK;
 
 
@@ -415,13 +420,13 @@ static GMEVENT* WIND_BLOW_CreateEvent( GMEVENT* parent, GAMESYS_WORK* gsys )
   BLOW_EVENT_WORK*  work;
   FIELD_PLAYER*     player;
   FIELDMAP_WORK     *p_fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  s16 gx, gy, gz;   // プレイヤーグリッド位置座標
 
   player = FIELDMAP_GetFieldPlayer( p_fieldmap );
 
   // イベント生成
-  // 安全地帯にいるかどうかでイベント関数を変更
+  // 場所によってイベント関数を変更
   {
-    s16 gx, gy, gz;
     FIELD_PLAYER_GetGridPos( player, &gx, &gy, &gz );
 
     // 配列から自機座標のデータを取得
@@ -442,6 +447,11 @@ static GMEVENT* WIND_BLOW_CreateEvent( GMEVENT* parent, GAMESYS_WORK* gsys )
   work->player      = player;
   work->mmdl        = FIELD_PLAYER_GetMMdl( player );
   work->time        = 0;
+  work->stay_walk_cnt = 0;
+
+  // 自機の1グリッド下が壁かチェック
+  if( map_array[gz+1][gx] == MAP_ARRAY_STOP ){ work->is_wall = TRUE; }
+  else                                       { work->is_wall = FALSE; }
 
   return event;
 }
@@ -472,8 +482,7 @@ static GMEVENT_RESULT BlowEvent( GMEVENT* event, int* seq, void* wk )
     SEQ_EXIT,   // イベント終了
   };
 
-  switch( *seq )
-  {
+  switch( *seq ){
   // グリッド調度待ち
   case SEQ_WAIT:
     if( MMDL_CheckEndAcmd(p_wk->mmdl) )
@@ -494,10 +503,14 @@ static GMEVENT_RESULT BlowEvent( GMEVENT* event, int* seq, void* wk )
       u16 dir = FIELD_PLAYER_GetDir( p_wk->player );
       dir %= 4;
       MMDL_SetAcmd( p_wk->mmdl, (AC_STAY_WALK_U_4F + dir) );
+      p_wk->stay_walk_cnt += 1;
 
-      // SE ヒュー
+      if( p_wk->stay_walk_cnt >= STAY_WALK_NUM )
+      {
+        // SE ヒュー
 
-      *seq = SEQ_START;
+        *seq = SEQ_START;
+      }
     }
     break;
 
@@ -541,7 +554,7 @@ static GMEVENT_RESULT BlowEvent( GMEVENT* event, int* seq, void* wk )
           FIELD_PLAYER_GetPos( p_wk->player, &down_pos );
           down_pos.z += GRID_TO_FX32(move_distance);
         }
-        move = FIELD_TASK_TransPlayer( p_wk->p_fieldmap, move_distance*4, &down_pos );
+        move = FIELD_TASK_TransPlayer( p_wk->p_fieldmap, move_distance*3, &down_pos );
         taskMan = FIELDMAP_GetTaskManager( p_wk->p_fieldmap );
         FIELD_TASK_MAN_AddTask( taskMan, move, NULL );
       }
@@ -575,6 +588,7 @@ static GMEVENT_RESULT BlowEvent( GMEVENT* event, int* seq, void* wk )
   // メイン処理
   case SEQ_MAIN:
     {
+      BOOL  ret = FALSE;
 
       // 自機の向きを変える
       if( MMDL_CheckEndAcmd(p_wk->mmdl) )
@@ -597,9 +611,30 @@ static GMEVENT_RESULT BlowEvent( GMEVENT* event, int* seq, void* wk )
         FIELD_TASK_MAN* taskMan;
         taskMan = FIELDMAP_GetTaskManager( p_wk->p_fieldmap );
         if( FIELD_TASK_MAN_IsAllTaskEnd(taskMan) ) {
-          // 次シーケンス移行
-          *seq = SEQ_STOP;
+          ret = TRUE;
         }
+      }
+
+      // 時間計測
+      // 一定時間は吹き飛ばしイベントを続ける
+      {
+#ifdef GYM_FLY_DEBUG_MENU
+        const u16 blow_event_time_max = debug_blow_event_time_max;
+#else
+        const u16 blow_event_time_max = BLOW_EVENT_TIME;
+#endif
+
+        if( p_wk->time < blow_event_time_max )
+        {
+          // 一定時間経っていないならまたイベント続ける
+          ret = FALSE;
+        }
+      }
+
+      // 次シーケンス移行チェック
+      if( ret == TRUE )
+      {
+        *seq = SEQ_EXIT;
       }
     }
     break;
@@ -610,9 +645,18 @@ static GMEVENT_RESULT BlowEvent( GMEVENT* event, int* seq, void* wk )
       // 上を向く
       MMDL_SetAcmd( p_wk->mmdl, AC_DIR_U );
 
-      // SE びたーん
+      // 移動しなかった場合は
+      // SEを再生しない
+      if( p_wk->is_wall == FALSE )
+      {
+        // SE びたーん
 
-      *seq = SEQ_SE_WAIT;
+        *seq = SEQ_SE_WAIT;
+      }
+      else
+      {
+        *seq = SEQ_EXIT;
+      }
     }
     break;
 
@@ -635,6 +679,10 @@ static GMEVENT_RESULT BlowEvent( GMEVENT* event, int* seq, void* wk )
     }
     return GMEVENT_RES_FINISH;
   }
+
+  // このイベントの時間カウント
+  p_wk->time++;
+
   return GMEVENT_RES_CONTINUE;
 }
 
@@ -662,8 +710,7 @@ static GMEVENT_RESULT BlowEventSafe( GMEVENT* event, int* seq, void* wk )
     SEQ_EXIT,   // イベント終了
   };
 
-  switch( *seq )
-  {
+  switch( *seq ){
   // グリッド調度待ち
   case SEQ_WAIT:
     if( MMDL_CheckEndAcmd(p_wk->mmdl) )
@@ -704,7 +751,6 @@ static GMEVENT_RESULT BlowEventSafe( GMEVENT* event, int* seq, void* wk )
         const u16 blow_event_time_max = BLOW_EVENT_TIME;
 #endif
 
-        p_wk->time++;
         if( p_wk->time >= blow_event_time_max )
         {
           ret = TRUE;
@@ -732,6 +778,10 @@ static GMEVENT_RESULT BlowEventSafe( GMEVENT* event, int* seq, void* wk )
     }
     return GMEVENT_RES_FINISH;
   }
+
+  // このイベントの時間カウント
+  p_wk->time++;
+
   return GMEVENT_RES_CONTINUE;
 }
 
