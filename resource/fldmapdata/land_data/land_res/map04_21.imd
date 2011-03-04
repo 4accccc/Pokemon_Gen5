@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino_hiroki" host="W00252" date="2011-03-03T21:18:13" source="autumn00_00_all_016.mb"/>
+	<create user="fuchino_hiroki" host="W00252" date="2011-03-04T21:24:23" source="autumn00_00_all_018.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="fuchino_hiroki" host="W00252" date="2011-03-03T21:18:13" source="autumn00_00_all_016.mb"/>
+<original_create user="fuchino_hiroki" host="W00252" date="2011-03-04T21:24:23" source="autumn00_00_all_018.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -1848,7 +1848,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="20" name="ki02ax3"
+	<material index="20" name="ki02ax1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="both"
 		alpha="31"
@@ -1872,7 +1872,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="21" name="ki02bx3"
+	<material index="21" name="ki02bx1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1920,7 +1920,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="23" name="ki02c3"
+	<material index="23" name="ki02c1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1944,7 +1944,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="24" name="ki02dx3"
+	<material index="24" name="ki02dx1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -4842,10 +4842,10 @@
 					<pos_xy xy="3.875000 0.437500"/>
 					<tex st="-48.000000 16.000000"/>
 					<nrm xyz="0.000000 0.000000 0.998047"/>
-					<pos_xy xy="3.875000 -0.750000"/>
+					<pos_xy xy="3.750000 -0.750000"/>
 					<tex st="-32.000000 8.000000"/>
 					<nrm xyz="0.480469 0.621094 0.621094"/>
-					<pos_s xyz="3.750000 0.437500 -2.625000"/>
+					<pos_yz yz="0.437500 -2.625000"/>
 					<tex st="-36.000000 4.000000"/>
 					<nrm xyz="0.386719 0.601563 0.699219"/>
 					<pos_yz yz="0.375000 -2.593750"/>
