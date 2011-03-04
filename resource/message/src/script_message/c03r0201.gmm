@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="murakami_naoto" host="W00228" date="2010-09-07T12:51:49"/>
+	<create user="matsumiya" host="W00224" date="2011-03-04T21:13:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -303,8 +303,10 @@
 作品を　展示しております</language>
 	</row>
 
-	<row id="msg_c03r0201_lady_01">
-		<comment>♀</comment>
+	<row id="msg_c03r0201_lady_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+
+※SWANでメッセージ調整予定</comment>
 		<attribute name="キャラ指定">LADY</attribute>
 		<language name="JPN" width="256">アーティさんの　えを　みたいなら
 ポケモンジムに　いくと　いいわね！</language>
