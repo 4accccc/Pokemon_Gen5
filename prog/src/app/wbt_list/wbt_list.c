@@ -74,6 +74,8 @@
 //アーカイブ
 #include "arc_def.h"
 
+#include "system/wipe.h"
+
 //外部公開
 #include "app/wbt_list.h"
 
@@ -552,9 +554,8 @@ static GFL_PROC_RESULT WBTListProc_Init( GFL_PROC *proc, int *seq, void *pwk, vo
   UITemplate_PMSDRAW_Init( wk );
 #endif //UI_TEMPLATE_PMSDRAW
 
-	//@todo	フェードシーケンスがないので
-	GX_SetMasterBrightness(0);
-	GXS_SetMasterBrightness(0);
+  WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN,
+      WIPE_FADE_BLACK, WIPE_DEF_DIV, WIPE_DEF_SYNC, wk->heapID );
 
   return GFL_PROC_RES_FINISH;
 }
@@ -673,10 +674,31 @@ static GFL_PROC_RESULT WBTListProc_Main( GFL_PROC *proc, int *seq, void *pwk, vo
 { 
 	WBTLIST_MAIN_WORK* wk = mywk;
 
-  // デバッグボタンでアプリ終了
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DEBUG )
+  switch ( *seq )
   {
-    return GFL_PROC_RES_FINISH;
+  case 0:
+    if (WIPE_SYS_EndCheck())
+    {
+      (*seq) ++;
+    }
+    break;
+  case 1:
+    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
+    {
+      (*seq) ++;
+    }
+    break;
+  case 2:
+    WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT,
+        WIPE_FADE_BLACK, WIPE_DEF_DIV, WIPE_DEF_SYNC, wk->heapID );
+    (*seq) ++;
+    break;
+  case 3:
+    if (WIPE_SYS_EndCheck())
+    {
+      return GFL_PROC_RES_FINISH;
+    }
+    break;
   }
 
 #ifdef UI_TEMPLATE_TOUCHBAR
