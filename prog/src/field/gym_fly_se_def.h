@@ -8,10 +8,10 @@
 //======================================================================
 #pragma once
 
-#define GYM_FLY_SE_OPEN  (SEQ_SE_FLD_39)  //大砲ドア開く
-#define GYM_FLY_SE_CLOSE  (SEQ_SE_FLD_40)    //大砲ドア閉まる
-#define GYM_FLY_SE_FIRE  (SEQ_SE_FLD_37)     //大砲撃つ
-#define GYM_FLY_SE_STAND  (SEQ_SE_FLD_38)     //自機着地
-#define GYM_FLY_SE_WALL_HIT  (SEQ_SE_FLD_48)     //壁ヒット
-#define GYM_FLY_SE_CAN_MOVE  (SEQ_SE_FLD_47)     //大砲傾く
+#define GYM_FLY_SE_BLOW       (SEQ_SE_FLD_162)     // 自機吹き飛ばされ音
+#define GYM_FLY_SE_WALL_HIT   (SEQ_SE_FLD_48)     // 自機壁ヒット音
+#define GYM_FLY_SE_BOX_BREAK  (SEQ_SE_FLD_37)     // 自機箱破壊音
+
+// 環境音
+#define GYM_FLY_SE_WIND  (SEQ_SE_FLD_84)     // 風
 

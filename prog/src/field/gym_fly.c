@@ -128,6 +128,7 @@ typedef struct GYM_FLY_TMP_tag
 
   FLD_EXP_OBJ_CNT_PTR exp_obj;  // Šg’£3Dƒ‚ƒfƒ‹ƒRƒ“ƒgƒ[ƒ‰
   FIELD_PLAYER        *player;  // Ž©‹@
+	FIELD_SOUND         *p_sound; // ƒTƒEƒ“ƒhî•ñ
 
 }GYM_FLY_TMP;
 
@@ -201,6 +202,9 @@ static u16 debug_blow_event_time_max = BLOW_EVENT_TIME;   // ‚«”ò‚Î‚µƒCƒxƒ“ƒg‚
 //--------------------------------------------------------------
 void GYM_FLY_Setup(FIELDMAP_WORK *p_fieldmap)
 {
+  GAMESYS_WORK* p_gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
+  GAMEDATA* p_gdata = GAMESYSTEM_GetGameData( p_gsys );
+
   //”Ä—pƒ[ƒNŠm•Û
   GYM_FLY_TMP *p_wk = GMK_TMP_WK_AllocWork(p_fieldmap, GYM_FLY_TMP_ASSIGN_ID,
       FIELDMAP_GetHeapID(p_fieldmap), sizeof(GYM_FLY_TMP));
@@ -211,6 +215,7 @@ void GYM_FLY_Setup(FIELDMAP_WORK *p_fieldmap)
   p_wk->state     = WIND_STATE_LOW;
   p_wk->exp_obj   = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
   p_wk->player    = FIELDMAP_GetFieldPlayer( p_fieldmap );
+  p_wk->p_sound   = GAMEDATA_GetFieldSound( p_gdata );
 
   // ƒtƒ@ƒ“
   p_wk->fan_wk.anm_speed = FAN_SPEED_LOW;
@@ -227,6 +232,9 @@ void GYM_FLY_Setup(FIELDMAP_WORK *p_fieldmap)
   p_wk->fan_wk.parent_exp_obj = p_wk->exp_obj;
   // EXPOBJƒZƒbƒg
   EXPOBJ_ObjSet( p_wk );
+
+  // ŠÂ‹«‰¹
+  FSND_PlayEnvSE( p_wk->p_sound, GYM_FLY_SE_WIND );
 
 #ifdef GYM_FLY_DEBUG_MENU
   DEBUGMENU_Init( p_wk, p_fieldmap, p_wk->heapID );
@@ -247,6 +255,9 @@ void GYM_FLY_End(FIELDMAP_WORK *p_fieldmap)
 #ifdef GYM_FLY_DEBUG_MENU
   DEBUGMENU_Exit();
 #endif // GYM_FLY_DEBUG_MENU
+
+  // ŠÂ‹«‰¹’âŽ~
+  FSND_StopEnvSE( p_wk->p_sound, GYM_FLY_SE_WIND );
 
   // EXPOBJ”jŠü
   EXPOBJ_ObjDell( p_wk );
@@ -402,6 +413,16 @@ static void WIND_ChangeState( FIELDMAP_WORK *p_fieldmap, const WIND_STATE state 
     ICHI_Printf("•——ÍŒvó‘ÔF‚‘¬\n");
     break;
   }
+
+  // ŠÂ‹«‰¹‚ÌƒXƒe[ƒ^ƒX•ÏX
+  {
+    SEPLAYER_ID player_ID = PMSND_GetSE_DefaultPlayerID( GYM_FLY_SE_WIND );
+    int pitch = p_wk->state * 192;   // 64‚Í”¼‰¹
+    int tempo = p_wk->state;
+    u32 volume= 64 + p_wk->state * 20;
+    PMSND_SetStatusSE_byPlayerID( player_ID, tempo, pitch, PMSND_NOEFFECT);
+    PMSND_PlayerSetVolume( player_ID, volume );
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -490,8 +511,6 @@ static GMEVENT_RESULT BlowEvent( GMEVENT* event, int* seq, void* wk )
       // Iƒ}[ƒN
       MMDL_SetAcmd( p_wk->mmdl, AC_MARK_GYOE ); 
 
-      // SE ƒS[
-
       *seq = SEQ_STAY_WALK;
     }
     break;
@@ -507,8 +526,6 @@ static GMEVENT_RESULT BlowEvent( GMEVENT* event, int* seq, void* wk )
 
       if( p_wk->stay_walk_cnt >= STAY_WALK_NUM )
       {
-        // SE ƒqƒ…[
-
         *seq = SEQ_START;
       }
     }
@@ -581,6 +598,9 @@ static GMEVENT_RESULT BlowEvent( GMEVENT* event, int* seq, void* wk )
         }
       }
 
+      // SE ƒqƒ…[
+      PMSND_PlaySE( GYM_FLY_SE_BLOW );
+
       *seq = SEQ_MAIN;
     }
     break;
@@ -588,8 +608,6 @@ static GMEVENT_RESULT BlowEvent( GMEVENT* event, int* seq, void* wk )
   // ƒƒCƒ“ˆ—
   case SEQ_MAIN:
     {
-      BOOL  ret = FALSE;
-
       // Ž©‹@‚ÌŒü‚«‚ð•Ï‚¦‚é
       if( MMDL_CheckEndAcmd(p_wk->mmdl) )
       {
@@ -606,13 +624,52 @@ static GMEVENT_RESULT BlowEvent( GMEVENT* event, int* seq, void* wk )
         MMDL_GetVectorPos( p_wk->mmdl, &status->trans );
       }
 
+      // SE
+      {
+        SEPLAYER_ID player_ID = PMSND_GetSE_DefaultPlayerID( GYM_FLY_SE_BLOW );
+        if( PMSND_CheckPlaySE_byPlayerID( player_ID ) == FALSE )
+        {
+          // SE ƒqƒ…[
+          PMSND_PlaySE( GYM_FLY_SE_BLOW );
+        }
+      }
+
       // ƒ^ƒXƒNI—¹ƒ`ƒFƒbƒN
       {
         FIELD_TASK_MAN* taskMan;
         taskMan = FIELDMAP_GetTaskManager( p_wk->p_fieldmap );
         if( FIELD_TASK_MAN_IsAllTaskEnd(taskMan) ) {
-          ret = TRUE;
+
+          // SE ’âŽ~
+          {
+            SEPLAYER_ID player_ID = PMSND_GetSE_DefaultPlayerID( GYM_FLY_SE_BLOW );
+            PMSND_StopSE_byPlayerID( player_ID );
+          }
+          // SE ‚Ñ‚½[‚ñ
+          PMSND_PlaySE( GYM_FLY_SE_WALL_HIT );
+
+          // •—ƒGƒtƒFƒNƒg(Ž©‹@)ƒGƒtƒFƒNƒgOFF
+          FLD_EXP_OBJ_SetVanish( p_gym_wk->exp_obj, GYM_FLY_UNIT_IDX, EFFECT_WIND_JIKI, TRUE );
+          FLD_EXP_OBJ_ChgAnmStopFlg( FLD_EXP_OBJ_GetAnmCnt( p_gym_wk->exp_obj, GYM_FLY_UNIT_IDX, EFFECT_WIND_JIKI, 0), TRUE );
+
+          *seq = SEQ_STOP;
         }
+      }
+    }
+    break;
+
+  // •Ç‚É‚Ô‚Â‚©‚Á‚½
+  case SEQ_STOP:
+    {
+      BOOL ret = FALSE;
+
+      // Ž©‹@‚ÌŒü‚«‚ð•Ï‚¦‚é
+      if( MMDL_CheckEndAcmd(p_wk->mmdl) )
+      {
+        u16 dir = FIELD_PLAYER_GetDir( p_wk->player );
+        dir++;
+        dir %= 4;
+        MMDL_SetAcmd( p_wk->mmdl, (AC_DIR_U + dir) );
       }
 
       // ŽžŠÔŒv‘ª
@@ -624,38 +681,24 @@ static GMEVENT_RESULT BlowEvent( GMEVENT* event, int* seq, void* wk )
         const u16 blow_event_time_max = BLOW_EVENT_TIME;
 #endif
 
-        if( p_wk->time < blow_event_time_max )
+        if( p_wk->time >= blow_event_time_max )
         {
-          // ˆê’èŽžŠÔŒo‚Á‚Ä‚¢‚È‚¢‚È‚ç‚Ü‚½ƒCƒxƒ“ƒg‘±‚¯‚é
-          ret = FALSE;
+          ret = TRUE;
         }
       }
 
-      // ŽŸƒV[ƒPƒ“ƒXˆÚsƒ`ƒFƒbƒN
       if( ret == TRUE )
       {
-        *seq = SEQ_EXIT;
-      }
-    }
-    break;
-
-  // •Ç‚É‚Ô‚Â‚©‚Á‚½
-  case SEQ_STOP:
-    {
-      // ã‚ðŒü‚­
-      MMDL_SetAcmd( p_wk->mmdl, AC_DIR_U );
-
-      // ˆÚ“®‚µ‚È‚©‚Á‚½ê‡‚Í
-      // SE‚ðÄ¶‚µ‚È‚¢
-      if( p_wk->is_wall == FALSE )
-      {
-        // SE ‚Ñ‚½[‚ñ
-
-        *seq = SEQ_SE_WAIT;
-      }
-      else
-      {
-        *seq = SEQ_EXIT;
+        // ˆÚ“®‚µ‚È‚©‚Á‚½ê‡‚Í
+        // SE‚ðÄ¶‚µ‚È‚¢
+        if( p_wk->is_wall == FALSE )
+        {
+          *seq = SEQ_SE_WAIT;
+        }
+        else
+        {
+          *seq = SEQ_EXIT;
+        }
       }
     }
     break;
@@ -663,20 +706,25 @@ static GMEVENT_RESULT BlowEvent( GMEVENT* event, int* seq, void* wk )
   // SEÄ¶‘Ò‚¿
   case SEQ_SE_WAIT:
     {
-      *seq = SEQ_EXIT;
+      SEPLAYER_ID player_ID = PMSND_GetSE_DefaultPlayerID( GYM_FLY_SE_WALL_HIT );
+      if( PMSND_CheckPlaySE_byPlayerID( player_ID ) == FALSE )
+      {
+        *seq = SEQ_EXIT;
+      }
     }
     break;
 
   // ƒCƒxƒ“ƒgI—¹
   case SEQ_EXIT:
-    // •—ƒGƒtƒFƒNƒg(Ž©‹@)ƒGƒtƒFƒNƒgOFF
-    FLD_EXP_OBJ_SetVanish( p_gym_wk->exp_obj, GYM_FLY_UNIT_IDX, EFFECT_WIND_JIKI, TRUE );
-    FLD_EXP_OBJ_ChgAnmStopFlg( FLD_EXP_OBJ_GetAnmCnt( p_gym_wk->exp_obj, GYM_FLY_UNIT_IDX, EFFECT_WIND_JIKI, 0), TRUE );
 
     // ‚‚³Žæ“¾‹ÖŽ~ƒXƒe[ƒ^ƒXƒrƒbƒg‚ðOFF‚É–ß‚·
     {
       MMDL_OffStatusBit( p_wk->mmdl, MMDL_STABIT_HEIGHT_GET_OFF );
     }
+
+    // ã‚ðŒü‚­
+    MMDL_SetAcmd( p_wk->mmdl, AC_DIR_U );
+
     return GMEVENT_RES_FINISH;
   }
 
