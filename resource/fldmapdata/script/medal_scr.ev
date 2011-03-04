@@ -139,9 +139,16 @@ sub_medaloyaji_intro:
   _CALL sub_medaloyaji_gettitle
 
   _BALLOONWIN_TALKOBJ_MSG( msg_mdloyj_intro_04 )
+  _BALLOONWIN_CLOSE()
   //ヒントメダルをもらう
   _UPDATE_MEDAL_INFO( SCR_MEDALUPDATE_INIT )
-
+  //ヒントメダルをもらった！
+  _GET_MEDAL_COUNT( SCR_MEDALCOUNT_HINT_ACHIEVE, LWK_MEDAL_COUNT  )
+  _PLAYER_NAME( 0 )
+  _MEDAL_NAME( 1, LWK_MEDAL_COUNT )
+  _SYSWIN_MSG( msg_mdloyj_hintget_sys, POS_DEFAULT )
+  _SYSWIN_CLOSE()
+  //
   _BALLOONWIN_TALKOBJ_MSG( msg_mdloyj_intro_05 )
   _LAST_KEYWAIT()
   _BALLOONWIN_CLOSE()
@@ -270,6 +277,12 @@ sub_medaloyaji_hint_check:
 
   //ヒントメダル取得処理
   _UPDATE_MEDAL_INFO( SCR_MEDALUPDATE_HINT )
+  //ヒントメダルをもらった！
+  _GET_MEDAL_COUNT( SCR_MEDALCOUNT_HINT_ACHIEVE, LWK_MEDAL_COUNT  )
+  _PLAYER_NAME( 0 )
+  _MEDAL_NAME( 1, LWK_MEDAL_COUNT )
+  _SYSWIN_MSG( msg_mdloyj_hintget_sys, POS_DEFAULT )
+  _SYSWIN_CLOSE()
   
   //まだ取得していないヒントがある？
   _GET_MEDAL_COUNT( SCR_MEDALCOUNT_HINT_REST, SCWK_ANSWER  )
@@ -380,13 +393,16 @@ sub_medaloyaji_goodbye:
 
 
 sub_medaloyaji_gettitle:
-  //_CALL_FLD3D_CUTIN( ... )
+  //【仮】_CALL_FLD3D_CUTIN( ... )
   _GET_MEDAL( LWK_MEDAL_ID, TRUE )
   _PLAYER_NAME( 0 )
   _MEDAL_NAME( 1, LWK_MEDAL_ID )
   _SYSWIN_MSG( msg_mdloyj_titleget_sys, POS_DEFAULT )
-  _ME_PLAY(	SEQ_ME_ITEM ) //仮
-  _ME_WAIT()
+  //【仮】音が仮
+  _SE_PLAY(	SEQ_SE_FLD_56 ) 
+  _SE_WAIT()
+  _SE_PLAY(	SEQ_SE_SYS_89 ) 
+  _SE_WAIT()
   _AB_KEYWAIT_MARK()
   _SYSWIN_CLOSE()
   _RET
