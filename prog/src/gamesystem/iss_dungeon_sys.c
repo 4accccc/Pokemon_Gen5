@@ -34,6 +34,7 @@
 #define REVERB_VOLUME      (63)		  // ボリューム
 #define REVERB_STOP_FRAME  (0)		  // 停止までのフレーム数
 
+#define ASSERT_REPLACE( calc ){ GF_ASSERT_MSG((calc),"") }
 
 //=========================================================================================
 // ■BGMパラメータ
@@ -58,8 +59,8 @@ typedef struct {
 //------------------------------------------------------------------------------------------
 static void SetBGMParam( const BGM_PARAM* param, u8 season )
 {
-  GF_ASSERT( param );
-  GF_ASSERT( season < PMSEASON_TOTAL );
+  ASSERT_REPLACE( param );
+  ASSERT_REPLACE( season < PMSEASON_TOTAL );
 
   // テンポ
 	PMSND_SetStatusBGM( param->tempo[season], PMSND_NOEFFECT, 0 ); 
@@ -487,7 +488,7 @@ static void StopSystem( ISS_DUNGEON_SYS* sys )
 static void UpdateBGMParam( ISS_DUNGEON_SYS* sys, u16 zone_id )
 {
 	// 起動していない
-  GF_ASSERT( sys->boot_flag );
+  ASSERT_REPLACE( sys->boot_flag );
 
   // 新ゾーンIDのBGMパラメータを検索
   sys->pActiveParam = GetBGMParam( sys->paramset, zone_id );

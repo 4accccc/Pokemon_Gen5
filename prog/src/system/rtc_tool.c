@@ -12,6 +12,7 @@
 
 #include "timezone.cdat"
 
+#define ASSERT_REPLACE( calc ){ GF_ASSERT_MSG((calc),"") }
 
 //============================================================================================
 //
@@ -42,8 +43,8 @@ int PM_RTC_GetTimeZone(int season)
 //--------------------------------------------------------------
 int PM_RTC_ConvertHourToTimeZone(int season, int hour)
 {
-  GF_ASSERT( season < PMSEASON_TOTAL );
-	GF_ASSERT(0 <= hour && hour < 24);
+  ASSERT_REPLACE( season < PMSEASON_TOTAL );
+	ASSERT_REPLACE(0 <= hour && hour < 24);
 	return sc_SEASON_TIMEZONE[season][hour];
 }
 
@@ -59,8 +60,8 @@ int PM_RTC_ConvertHourToTimeZone(int season, int hour)
 //-----------------------------------------------------------------------------
 int PM_RTC_GetTimeZoneChangeHour( int season, TIMEZONE timezone )
 {
-  GF_ASSERT( season < PMSEASON_TOTAL );
-  GF_ASSERT( timezone < TIMEZONE_MAX );
+  ASSERT_REPLACE( season < PMSEASON_TOTAL );
+  ASSERT_REPLACE( timezone < TIMEZONE_MAX );
 
   return sc_SEASON_TIMEZONE_CHANGE[ season ][ timezone ];
 }
@@ -82,8 +83,8 @@ int PM_RTC_GetTimeZoneChangeMargin( int season, TIMEZONE timezone )
   int time_second;
   int sub_second;
   
-  GF_ASSERT( season < PMSEASON_TOTAL );
-  GF_ASSERT( timezone < TIMEZONE_MAX );
+  ASSERT_REPLACE( season < PMSEASON_TOTAL );
+  ASSERT_REPLACE( timezone < TIMEZONE_MAX );
   
   GFL_RTC_GetTime( &time );
 
@@ -147,7 +148,7 @@ s64 GFL_RTC_GetPassTime(s64 start_sec, s64 end_sec)
 	RTCDate date = { 99, 12, 31, 0};
 	RTCTime time = { 23, 59, 59 };
 	s64 MaxSec = RTC_ConvertDateTimeToSecond(&date, &time);
-	GF_ASSERT(MaxSec == RTC_MAX_SECOND);
+	ASSERT_REPLACE(MaxSec == RTC_MAX_SECOND);
 
 	if (start_sec < end_sec) {
 		return end_sec - start_sec;

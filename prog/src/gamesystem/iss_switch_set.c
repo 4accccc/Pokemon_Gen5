@@ -23,6 +23,7 @@
 static u8 Debug_switchSetNum = 0;
 #endif
 
+#define ASSERT_REPLACE( calc ){ GF_ASSERT_MSG((calc),"") }
 
 //===============================================================================
 // ■定数
@@ -105,7 +106,7 @@ ISS_SWITCH_SET* ISS_SWITCH_SET_Create( HEAPID heapID )
 //-------------------------------------------------------------------------------
 void ISS_SWITCH_SET_Delete( ISS_SWITCH_SET* set )
 {
-  GF_ASSERT( set );
+  ASSERT_REPLACE( set );
 
   DeleteSwitches( set ); // スイッチを破棄
   DeleteSwitchSet( set ); // スイッチセットを破棄
@@ -122,7 +123,7 @@ void ISS_SWITCH_SET_Delete( ISS_SWITCH_SET* set )
 //-------------------------------------------------------------------------------
 void ISS_SWITCH_SET_Load( ISS_SWITCH_SET* set, ARCDATID datID, HEAPID heapID )
 {
-  GF_ASSERT( set );
+  ASSERT_REPLACE( set );
 
   LoadSwitchData( set, datID, heapID );
 
@@ -140,7 +141,7 @@ void ISS_SWITCH_SET_Load( ISS_SWITCH_SET* set, ARCDATID datID, HEAPID heapID )
 //-------------------------------------------------------------------------------
 void ISS_SWITCH_SET_Main( ISS_SWITCH_SET* set )
 {
-  GF_ASSERT( set );
+  ASSERT_REPLACE( set );
 
   SwitchSetMain( set );
 }
@@ -155,7 +156,7 @@ void ISS_SWITCH_SET_Main( ISS_SWITCH_SET* set )
 //-------------------------------------------------------------------------------
 void ISS_SWITCH_SET_SwitchOn( ISS_SWITCH_SET* set, SWITCH_INDEX swIdx )
 {
-  GF_ASSERT( set );
+  ASSERT_REPLACE( set );
 
   SwitchOn( set, swIdx );
 }
@@ -172,9 +173,9 @@ void ISS_SWITCH_SET_SwitchOnForce( ISS_SWITCH_SET* set, SWITCH_INDEX idx )
 {
   ISS_SWITCH* sw;
 
-  GF_ASSERT( set );
-  GF_ASSERT( idx != SWITCH_00 );
-  GF_ASSERT( idx <= SWITCH_MAX );
+  ASSERT_REPLACE( set );
+  ASSERT_REPLACE( idx != SWITCH_00 );
+  ASSERT_REPLACE( idx <= SWITCH_MAX );
 
   sw = GetSwitch( set, idx );
   ISS_SWITCH_ForceOn( sw );
@@ -190,7 +191,7 @@ void ISS_SWITCH_SET_SwitchOnForce( ISS_SWITCH_SET* set, SWITCH_INDEX idx )
 //-------------------------------------------------------------------------------
 void ISS_SWITCH_SET_SwitchOff( ISS_SWITCH_SET* set, SWITCH_INDEX swIdx )
 {
-  GF_ASSERT( set );
+  ASSERT_REPLACE( set );
 
   SwitchOff( set, swIdx );
 }
@@ -206,9 +207,9 @@ void ISS_SWITCH_SET_SwitchOffForce( ISS_SWITCH_SET* set, SWITCH_INDEX idx )
 {
   ISS_SWITCH* sw;
 
-  GF_ASSERT( set );
-  GF_ASSERT( idx != SWITCH_00 );
-  GF_ASSERT( idx <= SWITCH_MAX );
+  ASSERT_REPLACE( set );
+  ASSERT_REPLACE( idx != SWITCH_00 );
+  ASSERT_REPLACE( idx <= SWITCH_MAX );
 
   sw = GetSwitch( set, idx );
   ISS_SWITCH_ForceOff( sw );
@@ -222,7 +223,7 @@ void ISS_SWITCH_SET_SwitchOffForce( ISS_SWITCH_SET* set, SWITCH_INDEX idx )
 //-------------------------------------------------------------------------------
 void ISS_SWITCH_SET_ResetSwitch( ISS_SWITCH_SET* set )
 {
-  GF_ASSERT( set );
+  ASSERT_REPLACE( set );
 
   ResetSwitch( set );
 }
@@ -238,7 +239,7 @@ void ISS_SWITCH_SET_ResetSwitch( ISS_SWITCH_SET* set )
 //-------------------------------------------------------------------------------
 u32 ISS_SWITCH_SET_GetSoundIdx( const ISS_SWITCH_SET* set )
 {
-  GF_ASSERT( set );
+  ASSERT_REPLACE( set );
 
   return GetSoundIdx( set );
 }
@@ -256,7 +257,7 @@ u32 ISS_SWITCH_SET_GetSoundIdx( const ISS_SWITCH_SET* set )
 //-------------------------------------------------------------------------------
 BOOL ISS_SWITCH_SET_IsValidAt( const ISS_SWITCH_SET* set, u16 zoneID )
 { 
-  GF_ASSERT( set );
+  ASSERT_REPLACE( set );
 
   return CheckValidZone( set, zoneID );
 }
@@ -273,7 +274,7 @@ BOOL ISS_SWITCH_SET_IsValidAt( const ISS_SWITCH_SET* set, u16 zoneID )
 //-------------------------------------------------------------------------------
 BOOL ISS_SWITCH_SET_CheckSwitchOn( const ISS_SWITCH_SET* set, SWITCH_INDEX idx )
 {
-  GF_ASSERT( set );
+  ASSERT_REPLACE( set );
 
   return CheckSwitchOn( set, idx );
 }
@@ -287,7 +288,7 @@ BOOL ISS_SWITCH_SET_CheckSwitchOn( const ISS_SWITCH_SET* set, SWITCH_INDEX idx )
 //-------------------------------------------------------------------------------
 void ISS_SWITCH_SET_SetBGMVolume( const ISS_SWITCH_SET* set )
 {
-  GF_ASSERT( set );
+  ASSERT_REPLACE( set );
 
   SetBGMVolume( set );
 }
@@ -383,7 +384,7 @@ static void CreateSwitches( ISS_SWITCH_SET* set, HEAPID heapID )
 
   for( i=0; i<SWITCH_NUM; i++ )
   {
-    GF_ASSERT( set->IssSwitch[i] == NULL );
+    ASSERT_REPLACE( set->IssSwitch[i] == NULL );
 
     set->IssSwitch[i] = ISS_SWITCH_Create( heapID );
   }
@@ -513,8 +514,8 @@ static void SwitchOn( ISS_SWITCH_SET* set, SWITCH_INDEX swIdx )
 {
   ISS_SWITCH* sw;
 
-  GF_ASSERT( swIdx != SWITCH_00 );
-  GF_ASSERT( swIdx <= SWITCH_MAX );
+  ASSERT_REPLACE( swIdx != SWITCH_00 );
+  ASSERT_REPLACE( swIdx <= SWITCH_MAX );
 
   sw = GetSwitch( set, swIdx );
   ISS_SWITCH_On( sw );
@@ -532,8 +533,8 @@ static void SwitchOff( ISS_SWITCH_SET* set, SWITCH_INDEX swIdx )
 {
   ISS_SWITCH* sw;
 
-  GF_ASSERT( swIdx != SWITCH_00 );
-  GF_ASSERT( swIdx <= SWITCH_MAX );
+  ASSERT_REPLACE( swIdx != SWITCH_00 );
+  ASSERT_REPLACE( swIdx <= SWITCH_MAX );
 
   sw = GetSwitch( set, swIdx );
   ISS_SWITCH_Off( sw );
@@ -603,8 +604,8 @@ static u8 GetValidZoneNum( const ISS_SWITCH_SET* set )
 //-------------------------------------------------------------------------------
 static u16 GetValidZoneID( const ISS_SWITCH_SET* set, int idx )
 {
-  GF_ASSERT( 0 <= idx );
-  GF_ASSERT( idx < GetValidZoneNum(set) );
+  ASSERT_REPLACE( 0 <= idx );
+  ASSERT_REPLACE( idx < GetValidZoneNum(set) );
 
   return set->validZone[ idx ];
 }
@@ -649,7 +650,7 @@ static BOOL CheckSwitchOn( const ISS_SWITCH_SET* set, SWITCH_INDEX idx )
 {
   ISS_SWITCH* sw;
 
-  GF_ASSERT( idx <= SWITCH_MAX );
+  ASSERT_REPLACE( idx <= SWITCH_MAX );
 
   sw = GetSwitch( set, idx );
   return ISS_SWITCH_IsOn( sw );
@@ -667,7 +668,7 @@ static BOOL CheckSwitchOn( const ISS_SWITCH_SET* set, SWITCH_INDEX idx )
 //-------------------------------------------------------------------------------
 static ISS_SWITCH* GetSwitch( const ISS_SWITCH_SET* set, SWITCH_INDEX switchIdx )
 {
-  GF_ASSERT( switchIdx <= SWITCH_MAX );
+  ASSERT_REPLACE( switchIdx <= SWITCH_MAX );
 
   return set->IssSwitch[ switchIdx ];
 }

@@ -23,6 +23,7 @@
 #define FADE_OUT_SPEED (8)	  // フェード アウト速度
 #define TRACKBIT ((1<<(9-1))|(1<<(10-1))) // 操作トラック(9,10)
 
+#define ASSERT_REPLACE( calc ){ GF_ASSERT_MSG((calc),"") }
 
 //================================================================================
 // ■非公開関数
@@ -300,9 +301,9 @@ static void VolumeDown( ISS_ROAD_SYS* system )
 //--------------------------------------------------------------------------------
 static void ChangeTrackVolume( const ISS_ROAD_SYS* system )
 {
-  GF_ASSERT( system->boot );                             // 起動してない
-  GF_ASSERT( MIN_VOLUME <= system->targetTrackVolume );  // 音量がおかしい
-  GF_ASSERT( system->targetTrackVolume <= MAX_VOLUME );  // 音量がおかしい
+  ASSERT_REPLACE( system->boot );                             // 起動してない
+  ASSERT_REPLACE( MIN_VOLUME <= system->targetTrackVolume );  // 音量がおかしい
+  ASSERT_REPLACE( system->targetTrackVolume <= MAX_VOLUME );  // 音量がおかしい
 
   // ボリューム更新
   PMSND_ChangeBGMVolume( TRACKBIT, system->targetTrackVolume );

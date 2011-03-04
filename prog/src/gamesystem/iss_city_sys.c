@@ -42,6 +42,7 @@ typedef enum {
   SYSTEM_STATE_FADEOUT, // フェードアウト
 } SYSTEM_STATE;
 
+#define ASSERT_REPLACE( calc ){ GF_ASSERT_MSG((calc),"") }
 
 //=================================================================================
 // ■街ISSシステム構造体
@@ -248,8 +249,8 @@ void ISS_CITY_SYS_ZoneChange( ISS_CITY_SYS* system, u16 nextZoneID )
 //---------------------------------------------------------------------------------
 static void InitializeSystem( ISS_CITY_SYS* system, HEAPID heapID, PLAYER_WORK* player )
 {
-  GF_ASSERT( system );
-  GF_ASSERT( player );
+  ASSERT_REPLACE( system );
+  ASSERT_REPLACE( player );
 
 	system->player        = player;
   system->bootFlag      = FALSE;
@@ -275,7 +276,7 @@ static void InitializeSystem( ISS_CITY_SYS* system, HEAPID heapID, PLAYER_WORK* 
 //---------------------------------------------------------------------------------
 static void SetupSystem( ISS_CITY_SYS* system, HEAPID heapID )
 {
-  GF_ASSERT( system );
+  ASSERT_REPLACE( system );
 
 #ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_DEST, "--- ISS-C: setup system\n" );
@@ -297,7 +298,7 @@ static void SetupSystem( ISS_CITY_SYS* system, HEAPID heapID )
 //---------------------------------------------------------------------------------
 static void CleanUpSystem( ISS_CITY_SYS* system )
 {
-  GF_ASSERT( system );
+  ASSERT_REPLACE( system );
 
 #ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_DEST, "--- ISS-C: clean up system\n" );
@@ -323,7 +324,7 @@ static void LoadUnitData( ISS_CITY_SYS* system, HEAPID heapID )
   int dataNum;
   int datID;
 
-  GF_ASSERT( system->unit == NULL );
+  ASSERT_REPLACE( system->unit == NULL );
 
   // ユニット数を取得
   dataNum = GFL_ARC_GetDataFileCnt( ARCID_ISS_CITY );
@@ -355,8 +356,8 @@ static void UnloadUnitData( ISS_CITY_SYS* system )
   int unitIdx;
   int unitNum;
 
-  GF_ASSERT( system );
-  GF_ASSERT( system->unit );
+  ASSERT_REPLACE( system );
+  ASSERT_REPLACE( system->unit );
 
   unitNum = system->unitNum;
 
@@ -384,7 +385,7 @@ static void UnloadUnitData( ISS_CITY_SYS* system )
 //---------------------------------------------------------------------------------
 static SYSTEM_STATE GetSystemState( const ISS_CITY_SYS* system )
 {
-  GF_ASSERT( system );
+  ASSERT_REPLACE( system );
   return system->state;
 }
 
@@ -398,7 +399,7 @@ static SYSTEM_STATE GetSystemState( const ISS_CITY_SYS* system )
 //---------------------------------------------------------------------------------
 static void SetSystemState( ISS_CITY_SYS* system, SYSTEM_STATE state )
 {
-  GF_ASSERT( system );
+  ASSERT_REPLACE( system );
 
   // 状態を更新
   system->state = state;
@@ -409,7 +410,7 @@ static void SetSystemState( ISS_CITY_SYS* system, SYSTEM_STATE state )
   case SYSTEM_STATE_WAIT:    OS_TFPrintf( PRINT_DEST, "WAIT" );    break;
   case SYSTEM_STATE_FADEIN:  OS_TFPrintf( PRINT_DEST, "FADEIN" );  break;
   case SYSTEM_STATE_FADEOUT: OS_TFPrintf( PRINT_DEST, "FADEOUT" ); break;
-  default: GF_ASSERT(0);
+  default: ASSERT_REPLACE(0);
   }
   OS_TFPrintf( PRINT_DEST, "\n" );
 #endif
@@ -528,8 +529,8 @@ static void ZoneChange( ISS_CITY_SYS* system, u16 nextZoneID )
 //---------------------------------------------------------------------------------
 static u16 GetCurrentZoneID( const ISS_CITY_SYS* system )
 {
-  GF_ASSERT( system );
-  GF_ASSERT( system->player );
+  ASSERT_REPLACE( system );
+  ASSERT_REPLACE( system->player );
 
   return PLAYERWORK_getZoneID( system->player );
 }
@@ -558,13 +559,13 @@ static BOOL CheckSystemBoot( const ISS_CITY_SYS* system )
 //---------------------------------------------------------------------------------
 static void SystemMain( ISS_CITY_SYS* system )
 {
-  GF_ASSERT( system );
+  ASSERT_REPLACE( system );
 
   switch( GetSystemState(system) ) {
   case SYSTEM_STATE_WAIT:    SystemMain_WAIT( system );    break;
   case SYSTEM_STATE_FADEIN:  SystemMain_FADEIN( system );  break;
   case SYSTEM_STATE_FADEOUT: SystemMain_FADEOUT( system ); break;
-  default: GF_ASSERT(0);
+  default: ASSERT_REPLACE(0);
   } 
 }
 
@@ -577,8 +578,8 @@ static void SystemMain( ISS_CITY_SYS* system )
 //---------------------------------------------------------------------------------
 static void SystemMain_WAIT( ISS_CITY_SYS* system )
 {
-  GF_ASSERT( system );
-  GF_ASSERT( GetSystemState(system) == SYSTEM_STATE_WAIT ); 
+  ASSERT_REPLACE( system );
+  ASSERT_REPLACE( GetSystemState(system) == SYSTEM_STATE_WAIT ); 
 
   // トラックボリュームを更新
   if( UpdateTrackVolume( system ) ) {
@@ -598,8 +599,8 @@ static void SystemMain_FADEIN( ISS_CITY_SYS* system )
   BOOL sysVolChanged;
   BOOL trkVolChanged;
 
-  GF_ASSERT( system );
-  GF_ASSERT( GetSystemState(system) == SYSTEM_STATE_FADEIN );
+  ASSERT_REPLACE( system );
+  ASSERT_REPLACE( GetSystemState(system) == SYSTEM_STATE_FADEIN );
 
   // 上位ボリューム・トラックボリュームを更新
   sysVolChanged = SystemVolumeUp( system );
@@ -628,8 +629,8 @@ static void SystemMain_FADEOUT( ISS_CITY_SYS* system )
   BOOL sysVolChanged;
   BOOL trkVolChanged;
 
-  GF_ASSERT( system );
-  GF_ASSERT( GetSystemState(system) == SYSTEM_STATE_FADEOUT );
+  ASSERT_REPLACE( system );
+  ASSERT_REPLACE( GetSystemState(system) == SYSTEM_STATE_FADEOUT );
 
   // 上位ボリューム・トラックボリュームを更新
   sysVolChanged = SystemVolumeDown( system );
@@ -733,7 +734,7 @@ static BOOL ChangeUnit( ISS_CITY_SYS* system, u16 zoneID )
   int oldUnitIdx;
   int newUnitIdx;
 
-  GF_ASSERT( system );
+  ASSERT_REPLACE( system );
 
   oldUnitIdx = GetCurrentUnitIndex(system);
   newUnitIdx = SearchUnit( system, zoneID );
@@ -767,9 +768,9 @@ static u8 SearchUnit( const ISS_CITY_SYS* system, u16 zoneID )
 	int unitIdx;
   int unitNum;
 
-  GF_ASSERT( system );
-  GF_ASSERT( system->unit );
-  GF_ASSERT( 0 < system->unitNum );
+  ASSERT_REPLACE( system );
+  ASSERT_REPLACE( system->unit );
+  ASSERT_REPLACE( 0 < system->unitNum );
 
   unitNum = system->unitNum;
 
@@ -826,7 +827,7 @@ static BOOL CheckUnitChange( const ISS_CITY_SYS* system, u16 zoneID )
 //---------------------------------------------------------------------------------
 static int GetSystemVolume( const ISS_CITY_SYS* system )
 { 
-  GF_ASSERT( system );
+  ASSERT_REPLACE( system );
 
   return system->systemVolume;
 }
@@ -845,7 +846,7 @@ static BOOL SystemVolumeUp( ISS_CITY_SYS* system )
 {
   int nextVolume;
 
-  GF_ASSERT( system );
+  ASSERT_REPLACE( system );
 
   // ボリュームを計算
   nextVolume = GetSystemVolume(system) + SYSTEM_VOLUME_FADEIN_SPEED;
@@ -880,7 +881,7 @@ static BOOL SystemVolumeDown( ISS_CITY_SYS* system )
 {
   int nextVolume;
 
-  GF_ASSERT( system );
+  ASSERT_REPLACE( system );
 
   // ボリュームを計算
   nextVolume = GetSystemVolume(system) - SYSTEM_VOLUME_FADEOUT_SPEED;
@@ -911,9 +912,9 @@ static BOOL SystemVolumeDown( ISS_CITY_SYS* system )
 //---------------------------------------------------------------------------------
 static void SetSystemVolume( ISS_CITY_SYS* system, int volume )
 {
-  GF_ASSERT( system );
-  GF_ASSERT( MIN_SYSTEM_VOLUME <= volume );
-  GF_ASSERT( volume <= MAX_SYSTEM_VOLUME );
+  ASSERT_REPLACE( system );
+  ASSERT_REPLACE( MIN_SYSTEM_VOLUME <= volume );
+  ASSERT_REPLACE( volume <= MAX_SYSTEM_VOLUME );
 
   system->systemVolume = volume;
 }
@@ -929,7 +930,7 @@ static void SetSystemVolume( ISS_CITY_SYS* system, int volume )
 //---------------------------------------------------------------------------------
 static int GetTrackVolume( const ISS_CITY_SYS* system )
 {
-  GF_ASSERT( system );
+  ASSERT_REPLACE( system );
 
   return system->trackVolume;
 }
@@ -950,8 +951,8 @@ static BOOL UpdateTrackVolume( ISS_CITY_SYS* system )
   const VecFx32* playerPos;
   const ISS_C_UNIT* unit;
 
-  GF_ASSERT( system );
-  GF_ASSERT( CheckSystemBoot(system) );
+  ASSERT_REPLACE( system );
+  ASSERT_REPLACE( CheckSystemBoot(system) );
 
   // ユニットが配置されていない
   if( CheckUnitExistNow(system) == FALSE ) { return FALSE; }
@@ -986,9 +987,9 @@ static int CalcTrackVolume( ISS_CITY_SYS* system )
   const VecFx32* playerPos;
   const ISS_C_UNIT* unit;
 
-  GF_ASSERT( system );
-  GF_ASSERT( system->player );
-  GF_ASSERT( CheckUnitExistNow(system) == TRUE );
+  ASSERT_REPLACE( system );
+  ASSERT_REPLACE( system->player );
+  ASSERT_REPLACE( CheckUnitExistNow(system) == TRUE );
 
   // ユニットと自機の位置からボリュームを算出
   unit      = GetCurrentUnit( system );
@@ -1008,9 +1009,9 @@ static int CalcTrackVolume( ISS_CITY_SYS* system )
 //---------------------------------------------------------------------------------
 static void SetTrackVolume( ISS_CITY_SYS* system, int volume )
 {
-  GF_ASSERT( system );
-  GF_ASSERT( MIN_TRACK_VOLUME <= volume );
-  GF_ASSERT( volume <= MAX_TRACK_VOLUME );
+  ASSERT_REPLACE( system );
+  ASSERT_REPLACE( MIN_TRACK_VOLUME <= volume );
+  ASSERT_REPLACE( volume <= MAX_TRACK_VOLUME );
 
   system->trackVolume = volume;
 }
@@ -1052,7 +1053,7 @@ static int CalcEffectiveTrackVolume( const ISS_CITY_SYS* system )
   int systemVolume;
   int volume;
 
-  GF_ASSERT( system );
+  ASSERT_REPLACE( system );
 
   // ボリューム実効値を算出
   trackVolume  = GetTrackVolume(system);
@@ -1060,12 +1061,12 @@ static int CalcEffectiveTrackVolume( const ISS_CITY_SYS* system )
   volume       = trackVolume * systemVolume / MAX_SYSTEM_VOLUME;
 
   // ボリュームの値域チェック
-  GF_ASSERT( MIN_TRACK_VOLUME <= trackVolume );
-  GF_ASSERT( MIN_SYSTEM_VOLUME <= systemVolume );
-  GF_ASSERT( 0 <= volume );
-  GF_ASSERT( trackVolume <= MAX_TRACK_VOLUME );
-  GF_ASSERT( systemVolume <= MAX_SYSTEM_VOLUME );
-  GF_ASSERT( volume <= 127 );
+  ASSERT_REPLACE( MIN_TRACK_VOLUME <= trackVolume );
+  ASSERT_REPLACE( MIN_SYSTEM_VOLUME <= systemVolume );
+  ASSERT_REPLACE( 0 <= volume );
+  ASSERT_REPLACE( trackVolume <= MAX_TRACK_VOLUME );
+  ASSERT_REPLACE( systemVolume <= MAX_SYSTEM_VOLUME );
+  ASSERT_REPLACE( volume <= 127 );
 
   return volume;
 }

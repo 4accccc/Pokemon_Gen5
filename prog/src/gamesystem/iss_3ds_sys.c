@@ -44,6 +44,7 @@
 #define MIN_UNIT_PAN      (-128) // ユニットのパンの最小値
 #define MAX_UNIT_PAN       (127) // ユニットのパンの最大値
 
+#define ASSERT_REPLACE( calc ){ GF_ASSERT_MSG((calc),"") }
 
 //===============================================================================
 // ■1つの音源を扱う構造体 ( ユニット )
@@ -365,7 +366,7 @@ static void LoadSystemData( ISS_3DS_SYS* system )
   u8 dataNum;
   u32 datID;
 
-  GF_ASSERT( system->systemData == NULL );
+  ASSERT_REPLACE( system->systemData == NULL );
 
   heapID  = system->heapID;
   handle  = GFL_ARC_OpenDataHandle( ARCID_ISS_BRIDGE, GetHeapLowID(heapID) );
@@ -392,7 +393,7 @@ static void LoadSystemData( ISS_3DS_SYS* system )
 //-------------------------------------------------------------------------------
 static void UnloadSystemData( ISS_3DS_SYS* system )
 {
-  GF_ASSERT( system->systemData );
+  ASSERT_REPLACE( system->systemData );
 
   // 破棄 / 初期化
   GFL_HEAP_FreeMemory( system->systemData );
@@ -436,7 +437,7 @@ static u8 SearchSystemData( const ISS_3DS_SYS* system, u32 soundIdx )
 
   // データが読み込まれていない
   if( system->systemData == NULL ) {
-    GF_ASSERT(0);
+    ASSERT_REPLACE(0);
     return CURRENT_DATA_NONE;
   }
 
@@ -728,8 +729,8 @@ static int CalcUnitVolume( const ISS_3DS_UNIT* unit, const VecFx32* observerPos 
 {
   int volume;
 
-  GF_ASSERT( unit );
-  GF_ASSERT( unit->active );
+  ASSERT_REPLACE( unit );
+  ASSERT_REPLACE( unit->active );
 
   // ボリュームを計算
   {
@@ -770,12 +771,12 @@ static void UnitVolumeUp( ISS_3DS_SYS* system, ISS3DS_UNIT_INDEX unit_idx, int m
 	int volume;
 
 	// インデックスエラー
-	GF_ASSERT( unit_idx < ISS3DS_UNIT_NUM );
+	ASSERT_REPLACE( unit_idx < ISS3DS_UNIT_NUM );
 	
 	volume = system->unitVolume[ unit_idx ];
 
 	// 不正呼び出し
-	GF_ASSERT( volume < max_volume )
+	ASSERT_REPLACE( volume < max_volume )
 
 	// ボリュームUP
 	volume += UNIT_VOLUME_FADE_SPEED;
@@ -802,12 +803,12 @@ static void UnitVolumeDown( ISS_3DS_SYS* system, ISS3DS_UNIT_INDEX unit_idx, int
 	int volume;
 
 	// インデックスエラー
-	GF_ASSERT( unit_idx < ISS3DS_UNIT_NUM );
+	ASSERT_REPLACE( unit_idx < ISS3DS_UNIT_NUM );
 	
 	volume = system->unitVolume[ unit_idx ];
 
 	// 不正呼び出し
-	GF_ASSERT( min_volume < volume )
+	ASSERT_REPLACE( min_volume < volume )
 
 	// ボリュームDOWN
 	volume -= UNIT_VOLUME_FADE_SPEED;
@@ -832,8 +833,8 @@ static void ApplyUnitVolumeForBGM( const ISS_3DS_SYS* system, ISS3DS_UNIT_INDEX 
 {
 	int volume;
 
-	GF_ASSERT( unit_idx < ISS3DS_UNIT_NUM ); // インデックスエラー
-  GF_ASSERT( system->unit[ unit_idx ].active ); // ユニットが有効でない
+	ASSERT_REPLACE( unit_idx < ISS3DS_UNIT_NUM ); // インデックスエラー
+  ASSERT_REPLACE( system->unit[ unit_idx ].active ); // ユニットが有効でない
 
   volume = AdjustByMasterVolume( system, system->unitVolume[ unit_idx ] );
   PMSND_ChangeBGMVolume( system->unit[ unit_idx ].trackBit, volume );
@@ -854,8 +855,8 @@ static int CalcUnitPan( const ISS_3DS_UNIT* unit, const VecFx32* observerPos, co
 {
   int pan;
 
-  GF_ASSERT( unit );
-  GF_ASSERT( unit->active );
+  ASSERT_REPLACE( unit );
+  ASSERT_REPLACE( unit->active );
 
   // パンを計算
   {
@@ -916,12 +917,12 @@ static void UnitPanMoveToLeft( ISS_3DS_SYS* system, ISS3DS_UNIT_INDEX unit_idx, 
 	int pan;
 
 	// インデックスエラー
-	GF_ASSERT( unit_idx < ISS3DS_UNIT_NUM );
+	ASSERT_REPLACE( unit_idx < ISS3DS_UNIT_NUM );
 	
 	pan = system->unitPan[ unit_idx ];
 
 	// 不正呼び出し
-	GF_ASSERT( limit_pan < pan )
+	ASSERT_REPLACE( limit_pan < pan )
 
 	// パンを変化
 	pan -= UNIT_PAN_MOVE_SPEED;
@@ -948,12 +949,12 @@ static void UnitPanMoveToRight( ISS_3DS_SYS* system, ISS3DS_UNIT_INDEX unit_idx,
 	int pan;
 
 	// インデックスエラー
-	GF_ASSERT( unit_idx < ISS3DS_UNIT_NUM );
+	ASSERT_REPLACE( unit_idx < ISS3DS_UNIT_NUM );
 	
 	pan = system->unitPan[ unit_idx ];
 
 	// 不正呼び出し
-	GF_ASSERT( pan < limit_pan )
+	ASSERT_REPLACE( pan < limit_pan )
 
 	// パンを変化
 	pan += UNIT_PAN_MOVE_SPEED;
@@ -979,12 +980,12 @@ static void ApplyUnitPanForBGM( const ISS_3DS_SYS* system, ISS3DS_UNIT_INDEX uni
   const ISS_3DS_UNIT* unit;
 
 	// インデックスエラー
-	GF_ASSERT( unit_idx < ISS3DS_UNIT_NUM );
+	ASSERT_REPLACE( unit_idx < ISS3DS_UNIT_NUM );
 
   unit = &( system->unit[ unit_idx ] );
 
   // ユニットが有効でない
-  GF_ASSERT( unit->active );
+  ASSERT_REPLACE( unit->active );
 
   // パンを設定
   PMSND_SetStatusBGM_EX( unit->trackBit, 256, 0, system->unitPan[ unit_idx ] );
@@ -1043,7 +1044,7 @@ static u8 AdjustByMasterVolume( const ISS_3DS_SYS* system, u8 volume )
   v = system->practicalMasterVolume * volume;
   v = v / MAX_VOLUME;
 
-  GF_ASSERT( v <= MAX_VOLUME );
+  ASSERT_REPLACE( v <= MAX_VOLUME );
 
   return v;
 }

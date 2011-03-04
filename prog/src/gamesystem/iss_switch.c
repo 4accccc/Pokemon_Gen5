@@ -22,6 +22,7 @@
 static u8 Debug_switchNum = 0;
 #endif
 
+#define ASSERT_REPLACE( calc ){ GF_ASSERT_MSG((calc),"") }
 
 //===============================================================================
 // ■定数
@@ -117,7 +118,7 @@ ISS_SWITCH* ISS_SWITCH_Create( HEAPID heapID )
 //-------------------------------------------------------------------------------
 void ISS_SWITCH_Delete( ISS_SWITCH* sw )
 {
-  GF_ASSERT( sw );
+  ASSERT_REPLACE( sw );
 
   DeleteSwitch( sw );
 }
@@ -133,7 +134,7 @@ void ISS_SWITCH_Delete( ISS_SWITCH* sw )
 //-------------------------------------------------------------------------------
 void ISS_SWITCH_SetSwitchParam( ISS_SWITCH* sw, u16 fadeFrame, u16 trackBit )
 {
-  GF_ASSERT( sw );
+  ASSERT_REPLACE( sw );
 
   SetSwitchParam( sw, fadeFrame, trackBit );
 }
@@ -149,7 +150,7 @@ void ISS_SWITCH_SetSwitchParam( ISS_SWITCH* sw, u16 fadeFrame, u16 trackBit )
 //-------------------------------------------------------------------------------
 BOOL ISS_SWITCH_IsFade( const ISS_SWITCH* sw )
 {
-  GF_ASSERT( sw );
+  ASSERT_REPLACE( sw );
 
   return CheckSwitchFade( sw );
 }
@@ -166,7 +167,7 @@ BOOL ISS_SWITCH_IsFade( const ISS_SWITCH* sw )
 //-------------------------------------------------------------------------------
 BOOL ISS_SWITCH_IsOn( const ISS_SWITCH* sw )
 {
-  GF_ASSERT( sw );
+  ASSERT_REPLACE( sw );
 
   return CheckSwitchOn( sw );
 }
@@ -180,7 +181,7 @@ BOOL ISS_SWITCH_IsOn( const ISS_SWITCH* sw )
 //-------------------------------------------------------------------------------
 void ISS_SWITCH_On( ISS_SWITCH* sw )
 {
-  GF_ASSERT( sw );
+  ASSERT_REPLACE( sw );
 
   SwitchOn( sw );
 }
@@ -194,7 +195,7 @@ void ISS_SWITCH_On( ISS_SWITCH* sw )
 //-------------------------------------------------------------------------------
 void ISS_SWITCH_Off( ISS_SWITCH* sw )
 {
-  GF_ASSERT( sw );
+  ASSERT_REPLACE( sw );
 
   SwitchOff( sw );
 }
@@ -208,7 +209,7 @@ void ISS_SWITCH_Off( ISS_SWITCH* sw )
 //-------------------------------------------------------------------------------
 void ISS_SWITCH_ForceOn( ISS_SWITCH* sw )
 {
-  GF_ASSERT( sw );
+  ASSERT_REPLACE( sw );
 
   SwitchOnDirect( sw );
 }
@@ -222,7 +223,7 @@ void ISS_SWITCH_ForceOn( ISS_SWITCH* sw )
 //-------------------------------------------------------------------------------
 void ISS_SWITCH_ForceOff( ISS_SWITCH* sw )
 {
-  GF_ASSERT( sw );
+  ASSERT_REPLACE( sw );
 
   SwitchOffDirect( sw );
 }
@@ -236,7 +237,7 @@ void ISS_SWITCH_ForceOff( ISS_SWITCH* sw )
 //-------------------------------------------------------------------------------
 void ISS_SWITCH_Main( ISS_SWITCH* sw )
 {
-  GF_ASSERT( sw );
+  ASSERT_REPLACE( sw );
 
   SwitchMain( sw );
 }
@@ -251,7 +252,7 @@ void ISS_SWITCH_Main( ISS_SWITCH* sw )
 //-------------------------------------------------------------------------------
 void ISS_SWITCH_SetBGMVolume( const ISS_SWITCH* sw, int priorVolume )
 {
-  GF_ASSERT( sw );
+  ASSERT_REPLACE( sw );
 
   SetBGMVolume( sw, priorVolume );
 }
@@ -392,7 +393,7 @@ static void SwitchMain( ISS_SWITCH* sw )
   case SWITCH_STATE_OFF:     SwitchMain_OFF( sw );     break;
   case SWITCH_STATE_FADEIN:  SwitchMain_FADEIN( sw );  break;
   case SWITCH_STATE_FADEOUT: SwitchMain_FADEOUT( sw ); break;
-  default: GF_ASSERT(0);
+  default: ASSERT_REPLACE(0);
   }
 } 
 
@@ -590,8 +591,8 @@ static int GetVolume( const ISS_SWITCH* sw )
     GF_ASSERT(0);
   }
 
-  GF_ASSERT( MIN_VOLUME <= volume );
-  GF_ASSERT( volume <= MAX_VOLUME );
+  ASSERT_REPLACE( MIN_VOLUME <= volume );
+  ASSERT_REPLACE( volume <= MAX_VOLUME );
   return volume;
 }
 
@@ -610,8 +611,8 @@ static void SetBGMVolume( const ISS_SWITCH* sw, int priorVolume )
   // 上位ボリュームを考慮した値を算出
   volume = GetVolume(sw) * priorVolume / MAX_VOLUME;
 
-  GF_ASSERT( MIN_VOLUME <= volume );
-  GF_ASSERT( volume <= MAX_VOLUME );
+  ASSERT_REPLACE( MIN_VOLUME <= volume );
+  ASSERT_REPLACE( volume <= MAX_VOLUME );
 
   // BGMに反映
   PMSND_ChangeBGMVolume( sw->trackBit, volume );

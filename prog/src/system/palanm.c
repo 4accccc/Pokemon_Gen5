@@ -24,6 +24,7 @@
 #define NORMAL_COLOR_NUM  ( 16 )    // 通常パレットのカラー数
 #define EXTRA_COLOR_NUM   ( 256 )   // 拡張パレットのカラー数
 
+#define ASSERT_REPLACE( calc ){ GF_ASSERT_MSG((calc),"") }
 
 //==============================================================================
 //  構造体定義
@@ -219,13 +220,13 @@ void PaletteWorkSetEx_Arc(PALETTE_FADE_PTR pfd, u32 fileIdx, u32 dataIdx, HEAPID
   void *arc_data;
 
   arc_data = GFL_ARC_UTIL_LoadPalette(fileIdx, dataIdx, &pal_data, GFL_HEAP_LOWID(heap));
-  GF_ASSERT(arc_data != NULL);
+  ASSERT_REPLACE(arc_data != NULL);
 
   if(trans_size == 0){
     trans_size = pal_data->szByte;
   }
 
-  GF_ASSERT(pos * sizeof(pos) + trans_size <= pfd->dat[req].siz);
+  ASSERT_REPLACE(pos * sizeof(pos) + trans_size <= pfd->dat[req].siz);
   PaletteWorkSet(pfd, &(((u16*)(pal_data->pRawData))[read_pos]), req, pos, trans_size);
 
   GFL_HEAP_FreeMemory(arc_data);
@@ -271,13 +272,13 @@ void PaletteWorkSetEx_ArcHandle(PALETTE_FADE_PTR pfd, ARCHANDLE* handle, ARCDATI
   void *arc_data;
 
   arc_data = GFL_ARCHDL_UTIL_LoadPalette( handle, dataIdx, &pal_data, GFL_HEAP_LOWID(heap) );
-  GF_ASSERT(arc_data != NULL);
+  ASSERT_REPLACE(arc_data != NULL);
 
   if(trans_size == 0){
     trans_size = pal_data->szByte;
   }
 
-  GF_ASSERT(pos * sizeof(pos) + trans_size <= pfd->dat[req].siz);
+  ASSERT_REPLACE(pos * sizeof(pos) + trans_size <= pfd->dat[req].siz);
   PaletteWorkSet(pfd, &(((u16*)(pal_data->pRawData))[read_pos]), req, pos, trans_size);
 
   GFL_HEAP_FreeMemory(arc_data);
@@ -318,7 +319,7 @@ void PaletteWorkSet_VramCopy(PALETTE_FADE_PTR pfd, FADEREQ req, u16 pos, u32 tra
 {
   u16 *pltt_vram;
 
-  GF_ASSERT(pos * sizeof(pos) + trans_size <= pfd->dat[req].siz);
+  ASSERT_REPLACE(pos * sizeof(pos) + trans_size <= pfd->dat[req].siz);
 
   switch(req){
   case FADE_MAIN_BG:
@@ -334,7 +335,7 @@ void PaletteWorkSet_VramCopy(PALETTE_FADE_PTR pfd, FADEREQ req, u16 pos, u32 tra
     pltt_vram = (u16 *)HW_DB_OBJ_PLTT;
     break;
   default:
-    GF_ASSERT(0 && "未対応のリクエストです");
+    GF_ASSERT(0);	//未対応のリクエストです
     return;
   }
 
@@ -355,7 +356,7 @@ void PaletteWorkSet_VramCopy(PALETTE_FADE_PTR pfd, FADEREQ req, u16 pos, u32 tra
 //--------------------------------------------------------------
 void PaletteWorkSet_VramCopyEx(PALETTE_FADE_PTR pfd, FADEREQ req, u32 trans_size, u16 pos)
 {
-  GF_ASSERT(0 && "現在未作成です");
+  GF_ASSERT(0);	//現在未作成です
 }
 
 //--------------------------------------------------------------
@@ -377,7 +378,7 @@ void PaletteWorkSetEx_ArcWork(u32 fileIdx, u32 dataIdx, HEAPID heap, u32 trans_s
   void *arc_data;
 
   arc_data = GFL_ARC_UTIL_LoadPalette(fileIdx, dataIdx, &pal_data, heap);
-  GF_ASSERT(arc_data != NULL);
+  ASSERT_REPLACE(arc_data != NULL);
 
   if(trans_size == 0){
     trans_size = pal_data->szByte;
@@ -1146,7 +1147,7 @@ void PaletteAreaClear( u16 bit, HEAPID heap )
 void PaletteWork_Clear(PALETTE_FADE_PTR pfd, FADEREQ req, FADEBUF select,
   u16 clear_code, u16 start, u16 end)
 {
-  GF_ASSERT(end * sizeof(u16) <= pfd->dat[req].siz);
+  ASSERT_REPLACE(end * sizeof(u16) <= pfd->dat[req].siz);
 
   if(select == FADEBUF_SRC || select == FADEBUF_ALL){
     MI_CpuFill16(&pfd->dat[req].def_wk[start], clear_code, (end - start) * 2);
@@ -1177,7 +1178,7 @@ u16 PaletteWork_ColorGet(PALETTE_FADE_PTR pfd, FADEREQ req, FADEBUF select, u16 
     return pfd->dat[req].trans_wk[color_pos];
   }
 
-  GF_ASSERT(0 && "バッファ指定が間違っています\n");
+  GF_ASSERT(0);	//バッファ指定が間違っています
   return 0;
 }
 
@@ -1235,7 +1236,7 @@ void SoftFade(const u16 *src, u16 *dest, u16 col_num, u8 evy, u16 next_rgb)
 void SoftFadePfd(PALETTE_FADE_PTR pfd, FADEREQ req, u16 start_pos, u16 col_num,
   u8 evy, u16 next_rgb)
 {
-  GF_ASSERT(pfd->dat[req].def_wk != NULL && pfd->dat[req].trans_wk != NULL);
+  ASSERT_REPLACE(pfd->dat[req].def_wk != NULL && pfd->dat[req].trans_wk != NULL);
 
   SoftFade(&pfd->dat[req].def_wk[start_pos], &pfd->dat[req].trans_wk[start_pos],
     col_num, evy, next_rgb);
@@ -1280,7 +1281,7 @@ void ColorConceChangePfd(PALETTE_FADE_PTR pfd, FADEREQ req, u16 fade_bit, u8 evy
 {
   int offset = 0;
 
-  GF_ASSERT(pfd->dat[req].def_wk != NULL && pfd->dat[req].trans_wk != NULL);
+  ASSERT_REPLACE(pfd->dat[req].def_wk != NULL && pfd->dat[req].trans_wk != NULL);
 
   while(fade_bit){
     if(fade_bit & 1){
@@ -1449,7 +1450,7 @@ void PokeColorChange(PALETTE_FADE_PTR pfd, u32 fileIdx, u32 dataIdx, HEAPID heap
   void *arc_data;
 
   arc_data = GFL_ARC_UTIL_LoadPalette(fileIdx, dataIdx, &pal_data, heap);
-  GF_ASSERT(arc_data != NULL);
+  ASSERT_REPLACE(arc_data != NULL);
 
   if(trans_size == 0){
     trans_size = pal_data->szByte;

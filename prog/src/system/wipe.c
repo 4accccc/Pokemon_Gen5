@@ -32,8 +32,7 @@
 #include "system/wipe_def.h"
 #include "system/wipe_sub.h"
 
-
-
+#define ASSERT_REPLACE( calc ){ GF_ASSERT_MSG((calc),"") }
 
 //-------------------------------------
 //	
@@ -247,11 +246,11 @@ void WIPE_SYS_Start(int pattern, int wipe_m, int wipe_s, u16 color, int division
 	u16 set_color;
 	
 	//"division ‚O–³Œø‚Å‚·"
-	GF_ASSERT(division);
+	ASSERT_REPLACE(division);
 	//"piece_sync ‚O–³Œø‚Å‚·"
-	GF_ASSERT(piece_sync);
+	ASSERT_REPLACE(piece_sync);
 	// “®ì’†‚È‚ç‚Æ‚ß‚é
-	GF_ASSERT( WipeSysWork.move_flg == FALSE );
+	ASSERT_REPLACE( WipeSysWork.move_flg == FALSE );
 
   // •K—vƒVƒ“ƒN”‚ÉƒtƒF[ƒhŒW”‚ð”½‰f
   piece_sync /= GFL_FADE_GetFadeSpeed();
@@ -929,15 +928,15 @@ static void scchg_HBlankFunc(GFL_TCB *tcb, void * work)
 void WIPE_HBlankInit(WIPE_HBLANK* p_wipehb, void* work, pHBFunc func, int disp)
 {
 	u8	result=TRUE;
-	GF_ASSERT((p_wipehb->flg[disp] == 0));
-	GF_ASSERT( p_wipehb->func[disp] != NULL );	// NULL‚¾‚Æ‚¨‚©‚µ‚¢
+	ASSERT_REPLACE((p_wipehb->flg[disp] == 0));
+	ASSERT_REPLACE( p_wipehb->func[disp] != NULL );	// NULL‚¾‚Æ‚¨‚©‚µ‚¢
 
 	if((p_wipehb->flg[0] == 0) &&
 		(p_wipehb->flg[1] == 0)){
 		WipeSysWork.HBtcb = GFUser_HIntr_CreateTCB(scchg_HBlankFunc, p_wipehb, 0);
 		//result = sys_HBlankIntrSet(scchg_HBlankFunc, p_wipehb);		// ŠÖ”Ý’è
 	}
-	GF_ASSERT(result == TRUE);
+	ASSERT_REPLACE(result == TRUE);
 
 	
 	p_wipehb->work[disp] = work;

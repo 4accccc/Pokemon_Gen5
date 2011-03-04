@@ -45,6 +45,8 @@
 
 #define PMS_MESSAGE_BUF_SIZE (256)  //メッセージバッファの作成に使うサイズ
 
+#define ASSERT_REPLACE( calc ){ GF_ASSERT_MSG((calc),"") }
+
 //--------------------------------------------------------------
 /**
  *
@@ -204,7 +206,7 @@ void PMSDAT_SetupDefaultBattleMessage( PMS_DATA* pms, PMS_BATTLE_TYPE msgType )
     }
   };
 
-  GF_ASSERT(msgType<NELEMS(sentenceDataTbl));
+  ASSERT_REPLACE(msgType<NELEMS(sentenceDataTbl));
 
   if( msgType < NELEMS(sentenceDataTbl) )
   {
@@ -438,8 +440,8 @@ static u32 get_include_word_max( u32 sentence_type, u32 sentence_id , const HEAP
   const STRCODE* cp;
   u32 cnt;
 
-  GF_ASSERT( sentence_type < PMS_TYPE_MAX );
-  GF_ASSERT( sentence_id < PMSDAT_GetSentenceIdMax( sentence_type ) );
+  ASSERT_REPLACE( sentence_type < PMS_TYPE_MAX );
+  ASSERT_REPLACE( sentence_id < PMSDAT_GetSentenceIdMax( sentence_type ) );
 
   msgman = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, SentenceDatID[sentence_type], heapID );
   buf = GFL_MSG_CreateString(msgman,sentence_id);
@@ -481,7 +483,7 @@ static u32 get_include_word_max( u32 sentence_type, u32 sentence_id , const HEAP
 //------------------------------------------------------------------
 PMS_WORD  PMSDAT_GetWordNumber( const PMS_DATA* pms, int pos )
 {
-  GF_ASSERT( pos < PMS_WORD_MAX );
+  ASSERT_REPLACE( pos < PMS_WORD_MAX );
 
   if( pms->word[ pos ] == PMS_WORD_NULL )
   {
@@ -503,7 +505,7 @@ PMS_WORD  PMSDAT_GetWordNumber( const PMS_DATA* pms, int pos )
 //-----------------------------------------------------------------------------
 PMS_WORD PMSDAT_GetWordNumberDirect( const PMS_DATA* pms, int pos )
 {
-  GF_ASSERT( pos < PMS_WORD_MAX );
+  ASSERT_REPLACE( pos < PMS_WORD_MAX );
   return pms->word[ pos ];
 }
 
@@ -645,7 +647,7 @@ u32 PMSDAT_GetSentenceIdMax( u32 sentence_type )
 
 void PMSDAT_SetSentence( PMS_DATA* pms, u32 sentence_type, u32 sentence_id )
 {
-  GF_ASSERT( sentence_type < PMS_TYPE_MAX );
+  ASSERT_REPLACE( sentence_type < PMS_TYPE_MAX );
 
   pms->sentence_type = sentence_type;
   pms->sentence_id = sentence_id;
@@ -664,7 +666,7 @@ void PMSDAT_SetSentence( PMS_DATA* pms, u32 sentence_type, u32 sentence_id )
 //-----------------------------------------------------------------------------
 void PMSDAT_SetWord( PMS_DATA* pms, u32 pos, PMS_WORD word )
 {
-  GF_ASSERT( pos < PMS_WORD_MAX );
+  ASSERT_REPLACE( pos < PMS_WORD_MAX );
   if( pos >= PMS_WORD_MAX ) return;  // GF_ASSERT_HEAVYの代わり20100713
   pms->word[pos] = word;
 }
@@ -682,7 +684,7 @@ void PMSDAT_SetWord( PMS_DATA* pms, u32 pos, PMS_WORD word )
 //-----------------------------------------------------------------------------
 void PMSDAT_SetDeco( PMS_DATA* pms, u32 pos, PMS_DECO_ID deco_id )
 {
-  GF_ASSERT( pos < PMS_WORD_MAX );
+  ASSERT_REPLACE( pos < PMS_WORD_MAX );
   if( pos >= PMS_WORD_MAX ) return;  // GF_ASSERT_HEAVYの代わり20100713
 
   // デコメIDをセット

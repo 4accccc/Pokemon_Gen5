@@ -22,6 +22,7 @@
  *                定数定義
  */
 //=============================================================================
+#define ASSERT_REPLACE( calc ){ GF_ASSERT_MSG((calc),"") }
 
 //=============================================================================
 /**
@@ -123,7 +124,7 @@ PMS_DRAW_WORK* PMS_DRAW_Init( GFL_CLUNIT* clunit, CLSYS_DRAW_TYPE vram_type, PRI
   PMS_DRAW_WORK* wk;
 
   // 両画面はサポート対象外
-  GF_ASSERT( vram_type != CLSYS_DRAW_MAX );
+  ASSERT_REPLACE( vram_type != CLSYS_DRAW_MAX );
 
   // ヒープ生成
   wk = GFL_HEAP_AllocClearMemory( heap_id, sizeof(PMS_DRAW_WORK) );
@@ -249,8 +250,8 @@ void PMS_DRAW_PrintOffset( PMS_DRAW_WORK* wk, GFL_BMPWIN* win, PMS_DATA* pms, u8
 { 
   PMS_DRAW_UNIT* unit;
 
-  GF_ASSERT( wk && win && pms );
-  GF_ASSERT( id < wk->unit_num );
+  ASSERT_REPLACE( wk && win && pms );
+  ASSERT_REPLACE( id < wk->unit_num );
 
 //  HOSAKA_Printf("*** print id=%d ***\n", id);
 
@@ -289,8 +290,8 @@ void PMS_DRAW_Clear( PMS_DRAW_WORK* wk, u8 id, BOOL is_trans )
 { 
   PMS_DRAW_UNIT* unit;
 
-  GF_ASSERT( wk );
-  GF_ASSERT( id < wk->unit_num );
+  ASSERT_REPLACE( wk );
+  ASSERT_REPLACE( id < wk->unit_num );
   
   _unit_clear( &wk->unit[id], is_trans );
 }
@@ -310,8 +311,8 @@ void PMS_DRAW_VisibleSet( PMS_DRAW_WORK* wk, u8 id, BOOL is_visible )
 { 
   PMS_DRAW_UNIT* unit;
 
-  GF_ASSERT( wk );
-  GF_ASSERT( id < wk->unit_num );
+  ASSERT_REPLACE( wk );
+  ASSERT_REPLACE( id < wk->unit_num );
   
   _unit_visible_set( &wk->unit[id], is_visible );
 }
@@ -328,8 +329,8 @@ void PMS_DRAW_VisibleSet( PMS_DRAW_WORK* wk, u8 id, BOOL is_visible )
 //-----------------------------------------------------------------------------
 BOOL PMS_DRAW_IsPrinting( PMS_DRAW_WORK* wk, u8 id )
 {
-  GF_ASSERT( wk );
-  GF_ASSERT( id < wk->unit_num );
+  ASSERT_REPLACE( wk );
+  ASSERT_REPLACE( id < wk->unit_num );
 
   return wk->unit[id].b_useflag;
 }
@@ -402,9 +403,9 @@ void PMS_DRAW_Copy( PMS_DRAW_WORK* wk, u8 id_src, u8 id_dst )
   PMS_DRAW_UNIT* dst;
   GFL_POINT pos_ofs;
   
-  GF_ASSERT( wk );
-  GF_ASSERT( id_src < wk->unit_num );
-  GF_ASSERT( id_dst < wk->unit_num );
+  ASSERT_REPLACE( wk );
+  ASSERT_REPLACE( id_src < wk->unit_num );
+  ASSERT_REPLACE( id_dst < wk->unit_num );
 
   src = &wk->unit[id_src];
   dst = &wk->unit[id_dst];
@@ -465,7 +466,7 @@ void PMS_DRAW_Copy( PMS_DRAW_WORK* wk, u8 id_src, u8 id_dst )
 //-----------------------------------------------------------------------------
 void PMS_DRAW_SetNullColorPallet( PMS_DRAW_WORK* wk, u8 pltt_pos )
 {
-  GF_ASSERT( wk );
+  ASSERT_REPLACE( wk );
 
   wk->null_color = pltt_pos;
 }
@@ -482,7 +483,7 @@ void PMS_DRAW_SetNullColorPallet( PMS_DRAW_WORK* wk, u8 pltt_pos )
 //-----------------------------------------------------------------------------
 void PMS_DRAW_SetPrintColor( PMS_DRAW_WORK* wk, PRINTSYS_LSB color )
 {
-  GF_ASSERT( wk );
+  ASSERT_REPLACE( wk );
 
   wk->print_color = color;
 }
@@ -499,7 +500,7 @@ void PMS_DRAW_SetPrintColor( PMS_DRAW_WORK* wk, PRINTSYS_LSB color )
 //-----------------------------------------------------------------------------
 void PMS_DRAW_SetCLWKAutoScrollFlag( PMS_DRAW_WORK* wk, BOOL is_clwk_auto_scroll )
 {
-  GF_ASSERT( wk );
+  ASSERT_REPLACE( wk );
 
   wk->is_clwk_auto_scroll = is_clwk_auto_scroll;
 }
@@ -736,7 +737,7 @@ static void _obj_set_deco( GFL_CLWK* act, GFL_BMPWIN* win, u8 width, u8 line, PM
   GFL_POINT pos;
   GFL_CLACTPOS actpos;
 
-  GF_ASSERT( deco_id > PMS_DECOID_NULL && deco_id < PMS_DECOID_MAX );
+  ASSERT_REPLACE( deco_id > PMS_DECOID_NULL && deco_id < PMS_DECOID_MAX );
 
   _get_write_pos( win, width, line, offset, &pos );
 
@@ -1001,7 +1002,7 @@ static void _unit_print( PMS_DRAW_UNIT* unit, PRINT_QUE* print_que, GFL_FONT* fo
 //-----------------------------------------------------------------------------
 static void _unit_clear( PMS_DRAW_UNIT* unit, BOOL is_trans )
 {
-  GF_ASSERT( unit->b_useflag == TRUE );
+  ASSERT_REPLACE( unit->b_useflag == TRUE );
 
   // キャラをクリア
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(unit->print_util.win), 0 );
@@ -1041,7 +1042,7 @@ static void _unit_clear( PMS_DRAW_UNIT* unit, BOOL is_trans )
 //-----------------------------------------------------------------------------
 static void _unit_visible_set( PMS_DRAW_UNIT* unit, BOOL is_visible )
 {
-  GF_ASSERT( unit->b_useflag == TRUE );
+  ASSERT_REPLACE( unit->b_useflag == TRUE );
 
   unit->b_visible = is_visible;
 
@@ -1077,7 +1078,7 @@ static void _unit_visible_set( PMS_DRAW_UNIT* unit, BOOL is_visible )
 //-----------------------------------------------------------------------------
 static CLSYS_DRAW_TYPE BGFrameToVramType( u8 frame )
 {
-  GF_ASSERT( frame <= GFL_BG_FRAME3_S );
+  ASSERT_REPLACE( frame <= GFL_BG_FRAME3_S );
 
   if( frame >= GFL_BG_FRAME0_S )
   {

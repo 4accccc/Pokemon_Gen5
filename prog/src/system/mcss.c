@@ -103,6 +103,8 @@ MCSS_WORK*		MCSS_AddDebug( MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32
 static	void	MCSS_LoadResourceDebug( MCSS_SYS_WORK *mcss_sys, int count, const MCSS_ADD_DEBUG_WORK *madw );
 #endif
 
+#define ASSERT_REPLACE( calc ){ GF_ASSERT_MSG((calc),"") }
+
 //--------------------------------------------------------------------------
 /**
  * @brief システム初期化
@@ -146,7 +148,7 @@ MCSS_SYS_WORK*	MCSS_Init( int max, HEAPID heapID )
 		tlw->pal_ofs = MCSS_PAL_ADRS + 0x100;
 		tlw->pBufPltt = GFL_ARC_UTIL_LoadPalette( ARCID_BATTGRA, NARC_battgra_wb_shadow_NCLR, &tlw->pPlttData,
                                               GFL_HEAP_LOWID( heapID ) );
-		GF_ASSERT( tlw->pBufPltt != NULL);
+		ASSERT_REPLACE( tlw->pBufPltt != NULL);
 
     mcss_sys->tcb_load_shadow = GFUser_VIntr_CreateTCB( TCB_LoadResource, tlw, 0 );
 	}
@@ -231,7 +233,7 @@ void	MCSS_Main( MCSS_SYS_WORK *mcss_sys )
 //--------------------------------------------------------------------------
 void	MCSS_OpenHandle( MCSS_SYS_WORK *mcss_sys, ARCID arcID )
 { 
-  GF_ASSERT( mcss_sys->handle == NULL );
+  ASSERT_REPLACE( mcss_sys->handle == NULL );
   if( mcss_sys->handle == NULL )
   { 
     mcss_sys->arcID   = arcID;
@@ -937,7 +939,7 @@ MCSS_WORK*	MCSS_Add( MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	pos_z
 		}
 	}
 	//登録MAX値をオーバー
-	GF_ASSERT( count < mcss_sys->mcss_max );
+	ASSERT_REPLACE( count < mcss_sys->mcss_max );
 
 	return mcss_sys->mcss[ count ];
 }
@@ -1478,7 +1480,7 @@ u8  MCSS_GetStopCellAnms( MCSS_WORK *mcss )
 //--------------------------------------------------------------------------
 u8  MCSS_GetStopNode( MCSS_WORK *mcss, u8 index )
 {
-  GF_ASSERT( index < mcss->mcss_ncen->stop_cellanms );
+  ASSERT_REPLACE( index < mcss->mcss_ncen->stop_cellanms );
   
 	return mcss->mcss_ncen->stop_node[ index ];
 }
@@ -1603,7 +1605,7 @@ void	MCSS_SetTraverseMCNodesCallBack( MCSS_WORK *mcss, u32 param, NNSG2dMCTraver
 //--------------------------------------------------------------------------
 void	MCSS_SetPaletteFade( MCSS_WORK *mcss, u8 start_evy, u8 end_evy, s8 wait, u32 rgb )
 {	
-	GF_ASSERT( mcss );
+	ASSERT_REPLACE( mcss );
 
 	mcss->pal_fade_flag				= 1;
 	mcss->pal_fade_start_evy	= start_evy;
@@ -1771,7 +1773,7 @@ void	MCSS_SetAnimeIndex( MCSS_WORK* mcss, int index )
 
 	// 再生するシーケンスを取得
 	pSequence = NNS_G2dGetAnimSequenceByIdx( mcss->mcss_nmar, index );
-	GF_ASSERT( pSequence != NULL );
+	ASSERT_REPLACE( pSequence != NULL );
 
 	// マルチセルアニメーションを構築
 	if( mcss->mcss_mcanim_buf )
@@ -2079,17 +2081,17 @@ static	void	MCSS_LoadResource( MCSS_SYS_WORK *mcss_sys, int count, const MCSS_AD
 	// セルデータ、セルアニメーション、マルチセルデータ、
 	// マルチセルアニメーションをロード。
 	mcss->mcss_ncer_buf = GFL_ARC_UTIL_LoadCellBank(		maw->arcID, maw->ncer, FALSE, &mcss->mcss_ncer, heapID );
-	GF_ASSERT( mcss->mcss_ncer_buf != NULL );
+	ASSERT_REPLACE( mcss->mcss_ncer_buf != NULL );
 #ifdef	POKEGRA_LZ
 	mcss->mcss_nanr_buf = GFL_ARC_UTIL_LoadAnimeBank(		maw->arcID, maw->nanr, TRUE, &mcss->mcss_nanr, heapID );
 #else	// POKEGRA_LZ
 	mcss->mcss_nanr_buf = GFL_ARC_UTIL_LoadAnimeBank(		maw->arcID, maw->nanr, FALSE, &mcss->mcss_nanr, heapID );
 #endif	// POKEGRA_LZ
-	GF_ASSERT( mcss->mcss_nanr_buf != NULL );
+	ASSERT_REPLACE( mcss->mcss_nanr_buf != NULL );
 	mcss->mcss_nmcr_buf = GFL_ARC_UTIL_LoadMultiCellBank(	maw->arcID, maw->nmcr, FALSE, &mcss->mcss_nmcr, heapID );
-	GF_ASSERT( mcss->mcss_nmcr_buf != NULL );
+	ASSERT_REPLACE( mcss->mcss_nmcr_buf != NULL );
 	mcss->mcss_nmar_buf = GFL_ARC_UTIL_LoadMultiAnimeBank(	maw->arcID, maw->nmar, FALSE, &mcss->mcss_nmar, heapID );
-	GF_ASSERT( mcss->mcss_nmar_buf != NULL );
+	ASSERT_REPLACE( mcss->mcss_nmar_buf != NULL );
 
 	//
 	// マルチセルアニメーションの実体を初期化します
@@ -2126,13 +2128,13 @@ static	void	MCSS_LoadResource( MCSS_SYS_WORK *mcss_sys, int count, const MCSS_AD
 			tlw->pBufChar = GFL_ARC_UTIL_LoadBGCharacter( maw->arcID, maw->ncbr, FALSE, &tlw->pCharData,
                                                     GFL_HEAP_LOWID( mcss->heapID ) );
 #endif	// POKEGRA_LZ
-			GF_ASSERT( tlw->pBufChar != NULL);
+			ASSERT_REPLACE( tlw->pBufChar != NULL);
 		}
 
 		// load palette data
 		{
 			tlw->pBufPltt = GFL_ARC_UTIL_LoadPalette( maw->arcID, maw->nclr, &tlw->pPlttData, GFL_HEAP_LOWID( mcss->heapID ) );
-			GF_ASSERT( tlw->pBufPltt != NULL);
+			ASSERT_REPLACE( tlw->pBufPltt != NULL);
 			mcss->base_pltt_data = GFL_HEAP_AllocMemory( heapID, tlw->pPlttData->szByte );
 			mcss->fade_pltt_data = GFL_HEAP_AllocMemory( heapID, tlw->pPlttData->szByte );
 			mcss->pltt_data_size = tlw->pPlttData->szByte;
@@ -2186,17 +2188,17 @@ static	void	MCSS_LoadResourceByHandle( MCSS_SYS_WORK *mcss_sys, int count, const
 	// セルデータ、セルアニメーション、マルチセルデータ、
 	// マルチセルアニメーションをロード。
 	mcss->mcss_ncer_buf = GFL_ARCHDL_UTIL_LoadCellBank( handle, maw->ncer, FALSE, &mcss->mcss_ncer, mcss->heapID );
-	GF_ASSERT( mcss->mcss_ncer_buf != NULL );
+	ASSERT_REPLACE( mcss->mcss_ncer_buf != NULL );
 #ifdef	POKEGRA_LZ
 	mcss->mcss_nanr_buf = GFL_ARCHDL_UTIL_LoadAnimeBank( handle, maw->nanr, TRUE, &mcss->mcss_nanr, mcss->heapID );
 #else	// POKEGRA_LZ
 	mcss->mcss_nanr_buf = GFL_ARCHDL_UTIL_LoadAnimeBank( handle, maw->nanr, FALSE, &mcss->mcss_nanr, mcss->heapID );
 #endif	// POKEGRA_LZ
-	GF_ASSERT( mcss->mcss_nanr_buf != NULL );
+	ASSERT_REPLACE( mcss->mcss_nanr_buf != NULL );
 	mcss->mcss_nmcr_buf = GFL_ARCHDL_UTIL_LoadMultiCellBank( handle, maw->nmcr, FALSE, &mcss->mcss_nmcr, mcss->heapID );
-	GF_ASSERT( mcss->mcss_nmcr_buf != NULL );
+	ASSERT_REPLACE( mcss->mcss_nmcr_buf != NULL );
 	mcss->mcss_nmar_buf = GFL_ARCHDL_UTIL_LoadMultiAnimeBank( handle, maw->nmar, FALSE, &mcss->mcss_nmar, mcss->heapID );
-	GF_ASSERT( mcss->mcss_nmar_buf != NULL );
+	ASSERT_REPLACE( mcss->mcss_nmar_buf != NULL );
 
 	//
 	// マルチセルアニメーションの実体を初期化します
@@ -2233,13 +2235,13 @@ static	void	MCSS_LoadResourceByHandle( MCSS_SYS_WORK *mcss_sys, int count, const
 			tlw->pBufChar = GFL_ARCHDL_UTIL_LoadBGCharacter( handle, maw->ncbr, FALSE, &tlw->pCharData,
                                                        GFL_HEAP_LOWID( mcss->heapID ) );
 #endif	// POKEGRA_LZ
-			GF_ASSERT( tlw->pBufChar != NULL);
+			ASSERT_REPLACE( tlw->pBufChar != NULL);
 		}
 
 		// load palette data
 		{
 			tlw->pBufPltt = GFL_ARCHDL_UTIL_LoadPalette( handle, maw->nclr, &tlw->pPlttData, GFL_HEAP_LOWID( mcss->heapID ) );
-			GF_ASSERT( tlw->pBufPltt != NULL);
+			ASSERT_REPLACE( tlw->pBufPltt != NULL);
 			mcss->base_pltt_data = GFL_HEAP_AllocMemory( mcss->heapID, tlw->pPlttData->szByte );
 			mcss->fade_pltt_data = GFL_HEAP_AllocMemory( mcss->heapID, tlw->pPlttData->szByte );
 			mcss->pltt_data_size = tlw->pPlttData->szByte;
@@ -2539,14 +2541,14 @@ static	void	MCSS_CalcPaletteFade( MCSS_SYS_WORK* mcss_sys, MCSS_WORK *mcss )
 //--------------------------------------------------------------------------
 static  void  MCSS_FreeResource( MCSS_WORK* mcss )
 { 
-	GF_ASSERT( mcss->mcss_ncer_buf   != NULL );
-	GF_ASSERT( mcss->mcss_nanr_buf   != NULL );
-	GF_ASSERT( mcss->mcss_nmcr_buf   != NULL );
-	GF_ASSERT( mcss->mcss_nmar_buf   != NULL );
-	GF_ASSERT( mcss->mcss_mcanim_buf != NULL );
-	GF_ASSERT( mcss->mcss_ncec       != NULL );
-	GF_ASSERT( mcss->base_pltt_data  != NULL );
-	GF_ASSERT( mcss->fade_pltt_data  != NULL );
+	ASSERT_REPLACE( mcss->mcss_ncer_buf   != NULL );
+	ASSERT_REPLACE( mcss->mcss_nanr_buf   != NULL );
+	ASSERT_REPLACE( mcss->mcss_nmcr_buf   != NULL );
+	ASSERT_REPLACE( mcss->mcss_nmar_buf   != NULL );
+	ASSERT_REPLACE( mcss->mcss_mcanim_buf != NULL );
+	ASSERT_REPLACE( mcss->mcss_ncec       != NULL );
+	ASSERT_REPLACE( mcss->base_pltt_data  != NULL );
+	ASSERT_REPLACE( mcss->fade_pltt_data  != NULL );
 
 	GFL_HEAP_FreeMemory( mcss->mcss_ncer_buf );
 	GFL_HEAP_FreeMemory( mcss->mcss_nanr_buf );
@@ -2810,10 +2812,10 @@ static	void MTX_MultVec44( const VecFx32 *cp_src, const MtxFx44 *cp_m, VecFx32 *
   fx32 z = cp_src->z;
 	fx32 w = FX32_ONE;
 
-	GF_ASSERT( cp_src );
-	GF_ASSERT( cp_m );
-	GF_ASSERT( p_dst );
-	GF_ASSERT( p_w );
+	ASSERT_REPLACE( cp_src );
+	ASSERT_REPLACE( cp_m );
+	ASSERT_REPLACE( p_dst );
+	ASSERT_REPLACE( p_w );
 
   p_dst->x = (fx32)(((fx64)x * cp_m->_00 + (fx64)y * cp_m->_10 + (fx64)z * cp_m->_20) >> FX32_SHIFT);
   p_dst->x += cp_m->_30;	//	W=1なので足すだけ
@@ -2901,7 +2903,7 @@ MCSS_WORK*	MCSS_AddDebug( MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	
 		}
 	}
 	//登録MAX値をオーバー
-	GF_ASSERT( count < mcss_sys->mcss_max );
+	ASSERT_REPLACE( count < mcss_sys->mcss_max );
 
 	return mcss_sys->mcss[ count ];
 }
@@ -2925,19 +2927,19 @@ static	void	MCSS_LoadResourceDebug( MCSS_SYS_WORK *mcss_sys, int count, const MC
 	// マルチセルアニメーションをロード。
 	NNS_G2dGetUnpackedCellBank( madw->ncer, &mcss->mcss_ncer );
 	mcss->mcss_ncer_buf = madw->ncer;
-	GF_ASSERT( mcss->mcss_ncer_buf != NULL );
+	ASSERT_REPLACE( mcss->mcss_ncer_buf != NULL );
 
 	NNS_G2dGetUnpackedAnimBank( madw->nanr, &mcss->mcss_nanr );
 	mcss->mcss_nanr_buf = madw->nanr;
-	GF_ASSERT( mcss->mcss_nanr_buf != NULL );
+	ASSERT_REPLACE( mcss->mcss_nanr_buf != NULL );
 
 	NNS_G2dGetUnpackedMultiCellBank( madw->nmcr, &mcss->mcss_nmcr );
 	mcss->mcss_nmcr_buf =  madw->nmcr;
-	GF_ASSERT( mcss->mcss_nmcr_buf != NULL );
+	ASSERT_REPLACE( mcss->mcss_nmcr_buf != NULL );
 
 	NNS_G2dGetUnpackedMCAnimBank( madw->nmar, &mcss->mcss_nmar );
 	mcss->mcss_nmar_buf = madw->nmar;
-	GF_ASSERT( mcss->mcss_nmar_buf != NULL );
+	ASSERT_REPLACE( mcss->mcss_nmar_buf != NULL );
 
 	//
 	// マルチセルアニメーションの実体を初期化します
@@ -2968,14 +2970,14 @@ static	void	MCSS_LoadResourceDebug( MCSS_SYS_WORK *mcss_sys, int count, const MC
 		{
 			NNS_G2dGetUnpackedBGCharacterData( madw->ncbr, &tlw->pCharData );
 			tlw->pBufChar = madw->ncbr;
-			GF_ASSERT( tlw->pBufChar != NULL);
+			ASSERT_REPLACE( tlw->pBufChar != NULL);
     }
 
 		// load palette data
 		{
 			NNS_G2dGetUnpackedPaletteData( madw->nclr, &tlw->pPlttData );
 			tlw->pBufPltt = madw->nclr;
-			GF_ASSERT( tlw->pBufPltt != NULL);
+			ASSERT_REPLACE( tlw->pBufPltt != NULL);
 			mcss->base_pltt_data = GFL_HEAP_AllocMemory( mcss->heapID, tlw->pPlttData->szByte );
 			mcss->fade_pltt_data = GFL_HEAP_AllocMemory( mcss->heapID, tlw->pPlttData->szByte );
 			mcss->pltt_data_size = tlw->pPlttData->szByte;
