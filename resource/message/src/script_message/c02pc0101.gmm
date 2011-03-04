@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-05T16:17:47"/>
+	<create user="matsumiya" host="W00224" date="2011-03-04T19:33:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1307" top="109" right="2012" bottom="737" maximized="no" rayout="Vertical2">
+	<dialog left="1294" top="205" right="1999" bottom="833" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,8 +292,10 @@
 	</lock>
 
 
-	<row id="msg_c02pc0101_girl2_01">
-		<comment>♀</comment>
+	<row id="msg_c02pc0101_girl2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+
+※SWANでメッセージ修正</comment>
 		<attribute name="キャラ指定">GIRL2
 少女２活発</attribute>
 		<language name="JPN" width="256">ねえねえ　トレーナーさん
@@ -312,22 +314,28 @@
 なんだか　優しい　ポケモンよね！</language>
 	</row>
 
-	<row id="msg_c02pc0101_backpackerm_01">
-		<comment>♂</comment>
+	<row id="msg_c02pc0101_backpackerm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+
+※SWANでメッセージ修正</comment>
 		<attribute name="キャラ指定">BACKPACKERM
 バックパッカー♂</attribute>
 		<language name="JPN" width="256">はくぶつかんに　ある　ホネは
 ネジやまで　みつかった　そうだね▼
 で　ヤーコンという　じんぶつが
-はくぶつかんに　きぞうしたらしい</language>
+はくぶつかんに　きぞうしたらしい▼
+・ネジ山のカセキについても語る</language>
 		<language name="JPN_KANJI" width="256">シッポウ博物館に　ある　ホネは
 ネジ山で　みつかったそうだね▼
 で　ヤーコンという　人物が
-博物館に　寄贈したらしい</language>
+博物館に　寄贈したらしい▼
+・ネジ山のカセキについても語る</language>
 	</row>
 
-	<row id="msg_c02pc0101_boy1_01">
-		<comment>♂</comment>
+	<row id="msg_c02pc0101_boy1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+
+※SWANでメッセージ修正</comment>
 		<attribute name="キャラ指定">BOY1</attribute>
 		<language name="JPN" width="256">ポケモンセンターの　パソコンで
 「ヘルプをみる」を　えらぶと▽
