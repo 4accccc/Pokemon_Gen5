@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="morimoto" host="W00220" date="2010-08-06T17:16:52"/>
+	<create user="matsumiya" host="W00224" date="2011-03-04T15:58:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="1700" top="191" right="2115" bottom="819" maximized="no" rayout="Vertical2">
+	<dialog left="1294" top="205" right="1999" bottom="833" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="200" right="1280" bottom="598" visible="no"/>
-		<band id="0" index="1" style="0000" width="445"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="240"/>
-		<band id="3" index="4" style="0000" width="407"/>
-		<band id="4" index="0" style="0000" width="591"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<band id="3" index="4" style="0000" width="455"/>
+		<band id="4" index="0" style="0000" width="697"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -792,7 +792,7 @@
 		<language name="JPN" width="256">レポートを　かいて
 いったん　ちゅうだん　しますか？</language>
 		<language name="JPN_KANJI" width="256">レポートを　書いて
-いったん　中断　しますか？</language>
+いったん　中断しますか？</language>
 	</row>
 
 	<row id="msg_bsw_scr_32">
@@ -1002,8 +1002,9 @@
 また　お越しください▼</language>
 	</row>
 
-	<row id="msg_bsw_scr_57">
-		<comment>マルチ　パートナー男</comment>
+	<row id="msg_bsw_scr_57" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>マルチ　パートナー男
+※SWANでメッセージ変更予定</comment>
 		<language name="JPN" width="256">こんにちは！　ぼく　トウヤ！[BE:01:ページ切り替え（クリア）]
 きみ　マルチトレインに
 ちょうせんするの　はじめて　でしょ？[BE:01:ページ切り替え（クリア）]
@@ -1016,8 +1017,9 @@
 パートナーが　必要なんだ▼</language>
 	</row>
 
-	<row id="msg_bsw_scr_58" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
-		<comment>マルチ　パートナー女</comment>
+	<row id="msg_bsw_scr_58" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>マルチ　パートナー女
+※SWANでメッセージ変更予定</comment>
 		<language name="JPN" width="256">こんにちは！　わたし　トウコ！[BE:01:ページ切り替え（クリア）]
 あなた　マルチトレインに
 ちょうせんするの　はじめて　でしょ？[BE:01:ページ切り替え（クリア）]
@@ -1032,7 +1034,8 @@
 
 	<row id="msg_bsw_scr_59" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>マルチ　パートナー男
-・0＝主人公名前</comment>
+・0＝主人公名前
+※SWANでメッセージ変更予定</comment>
 		<language name="JPN" width="256">こんにちは！　[1:00:トレーナー名:0]ちゃん！
 また　あったね！▼</language>
 		<language name="JPN_KANJI" width="256">こんにちは！　[1:00:トレーナー名:0]ちゃん！
@@ -1041,15 +1044,17 @@
 
 	<row id="msg_bsw_scr_60" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>マルチ　パートナー女
-・0＝主人公名前</comment>
+・0＝主人公名前
+※SWANでメッセージ変更予定</comment>
 		<language name="JPN" width="256">こんにちは！　[1:00:トレーナー名:0]くん！
 また　あったわね！▼</language>
 		<language name="JPN_KANJI" width="256">こんにちは！　[1:00:トレーナー名:0]くん！
 また　会ったわね！▼</language>
 	</row>
 
-	<row id="msg_bsw_scr_61">
-		<comment>マルチ　パートナー男</comment>
+	<row id="msg_bsw_scr_61" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>マルチ　パートナー男
+※SWANでメッセージ変更予定</comment>
 		<language name="JPN" width="256">もしかして　きょうは　ひとり？？[BE:01:ページ切り替え（クリア）]
 だったら　ぼくと　パートナーを
 くもうよ！　うん　うん　それがいい[BE:01:ページ切り替え（クリア）]
@@ -1062,8 +1067,9 @@
 参加させればいい？</language>
 	</row>
 
-	<row id="msg_bsw_scr_62">
-		<comment>マルチ　パートナー女</comment>
+	<row id="msg_bsw_scr_62" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>マルチ　パートナー女
+※SWANでメッセージ変更予定</comment>
 		<language name="JPN" width="256">もしかして　きょうは　ひとり？？[BE:01:ページ切り替え（クリア）]
 だったら　わたしと　パートナーを
 くもうよ！　うん　うん　それがいいわ[BE:01:ページ切り替え（クリア）]
@@ -1094,64 +1100,72 @@
 		<language name="JPN_KANJI" width="256">バランス重視</language>
 	</row>
 
-	<row id="msg_bsw_scr_66" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
-		<comment>マルチ　パートナー男</comment>
+	<row id="msg_bsw_scr_66" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>マルチ　パートナー男
+※SWANでメッセージ変更予定</comment>
 		<language name="JPN" width="256">わかった　こうげきじゅうし　だね！
 じゃ　はじめよう！▼</language>
 		<language name="JPN_KANJI" width="256">わかった　攻撃重視だね！
 じゃ　はじめよう！▼</language>
 	</row>
 
-	<row id="msg_bsw_scr_67" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
-		<comment>マルチ　パートナー男</comment>
+	<row id="msg_bsw_scr_67" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>マルチ　パートナー男
+※SWANでメッセージ変更予定</comment>
 		<language name="JPN" width="256">わかった　ぼうぎょじゅうし　だね！
 じゃ　はじめよう！▼</language>
 		<language name="JPN_KANJI" width="256">わかった　防御重視だね！
 じゃ　はじめよう！▼</language>
 	</row>
 
-	<row id="msg_bsw_scr_68" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
-		<comment>マルチ　パートナー男</comment>
+	<row id="msg_bsw_scr_68" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>マルチ　パートナー男
+※SWANでメッセージ変更予定</comment>
 		<language name="JPN" width="256">わかった　バランスじゅうし　だね！
 じゃ　はじめよう！▼</language>
 		<language name="JPN_KANJI" width="256">わかった　バランス重視だね！
 じゃ　はじめよう！▼</language>
 	</row>
 
-	<row id="msg_bsw_scr_69" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
-		<comment>マルチ　パートナー女</comment>
+	<row id="msg_bsw_scr_69" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>マルチ　パートナー女
+※SWANでメッセージ変更予定</comment>
 		<language name="JPN" width="256">わかったわ　こうげきじゅうし　ね！
 じゃ　はじめましょ！▼</language>
 		<language name="JPN_KANJI" width="256">わかったわ　攻撃重視ね！
 じゃ　はじめましょ！▼</language>
 	</row>
 
-	<row id="msg_bsw_scr_70" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
-		<comment>マルチ　パートナー女</comment>
+	<row id="msg_bsw_scr_70" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>マルチ　パートナー女
+※SWANでメッセージ変更予定</comment>
 		<language name="JPN" width="256">わかったわ　ぼうぎょじゅうし　ね！
 じゃ　はじめましょ！▼</language>
 		<language name="JPN_KANJI" width="256">わかったわ　防御重視ね！
 じゃ　はじめましょ！▼</language>
 	</row>
 
-	<row id="msg_bsw_scr_71" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
-		<comment>マルチ　パートナー女</comment>
+	<row id="msg_bsw_scr_71" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>マルチ　パートナー女
+※SWANでメッセージ変更予定</comment>
 		<language name="JPN" width="256">わかったわ　バランスじゅうし　ね！
 じゃ　はじめましょ！▼</language>
 		<language name="JPN_KANJI" width="256">わかったわ　バランス重視ね！
 じゃ　はじめましょ！▼</language>
 	</row>
 
-	<row id="msg_bsw_scr_72">
-		<comment>マルチ　パートナー男</comment>
+	<row id="msg_bsw_scr_72" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>マルチ　パートナー男
+※SWANでメッセージ変更予定</comment>
 		<language name="JPN" width="256">えー　ぼくと　くむき　ないの？[BE:01:ページ切り替え（クリア）]
 さよなら……▼</language>
 		<language name="JPN_KANJI" width="256">えー　ぼくと　組む気ないの？[BE:01:ページ切り替え（クリア）]
 さよなら……▼</language>
 	</row>
 
-	<row id="msg_bsw_scr_73">
-		<comment>マルチ　パートナー女</comment>
+	<row id="msg_bsw_scr_73" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>マルチ　パートナー女
+※SWANでメッセージ変更予定</comment>
 		<language name="JPN" width="256">えー　わたしと　くむき　ないの？[BE:01:ページ切り替え（クリア）]
 さよなら……▼</language>
 		<language name="JPN_KANJI" width="256">えー　わたしと　組む気ないの？[BE:01:ページ切り替え（クリア）]
@@ -1395,7 +1409,7 @@
 	<row id="msg_bsw_ttown_01">
 		<comment>♂
 トレインタウン受付
-・「はい／いいえ」表示</comment>
+・はい/いいえ表示</comment>
 		<language name="JPN" width="256">カナワタウンいき　でんしゃに
 じょうしゃ　しますか？</language>
 		<language name="JPN_KANJI" width="256">カナワタウン行き　電車に
