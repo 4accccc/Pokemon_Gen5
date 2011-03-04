@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-17T15:56:00"/>
+	<create user="matsumiya" host="W00224" date="2011-03-04T19:47:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1294" top="205" right="1999" bottom="833" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -293,15 +293,17 @@
 
 
 	<row id="msg_c02r0501_woman2_01">
-		<comment>♀</comment>
+		<comment>♀
+
+※SWANでメッセージ修正</comment>
 		<attribute name="キャラ指定">WOMAN2
 女性（金髪）</attribute>
-		<language name="JPN" width="256">この　そうこは　２ねんまえ　まで
-アーティさんが　つかっていたんです！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">この　そうこは　４ねんまえ　まで
+アーティさんが　つかっていたんです！▼
 アーティさん　えが　かけなくなると
 この　シッポウに　もどってくるのよ！</language>
-		<language name="JPN_KANJI" width="256">この倉庫は　２年前まで
-アーティさんが　使っていたんです！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">この倉庫は　４年前まで
+アーティさんが　使っていたんです！▼
 アーティさん　創作に　行き詰まると
 この街に　戻ってくるそうですよ！</language>
 	</row>
@@ -311,10 +313,10 @@
 		<attribute name="キャラ指定">MAN2
 青年（金髪）</attribute>
 		<language name="JPN" width="256">アーティストで　ありながら
-ヒウンの　ジムリーダーでも　ある[BE:00:ページ切り替え（行送り）]
+ヒウンの　ジムリーダーでも　ある▽
 アーティさんは　おれらの　あこがれ！</language>
 		<language name="JPN_KANJI" width="256">アーティストで　ありながら
-ヒウンの　ジムリーダーも　兼ねる[BE:00:ページ切り替え（行送り）]
+ヒウンの　ジムリーダーも　兼ねる▽
 アーティさんは　おれらの　あこがれ！</language>
 	</row>
 

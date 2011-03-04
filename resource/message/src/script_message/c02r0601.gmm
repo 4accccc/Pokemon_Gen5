@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-14T15:12:07"/>
+	<create user="matsumiya" host="W00224" date="2011-03-04T19:50:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1294" top="205" right="1999" bottom="833" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -294,7 +294,7 @@
 
 	<row id="msg_c02r0601_waitress_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・水曜日以外</comment>
+・水曜日と土曜日以外</comment>
 		<attribute name="キャラ指定">WAITRESS
 ウエートレス</attribute>
 		<language name="JPN" width="256">いなかの　ちょっと　オシャレな
@@ -327,8 +327,8 @@
 
 	<row id="msg_c02r0601_waitress_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・水曜日
-　モーモーミルク入手後</comment>
+・水曜日と土曜日
+　アイテム入手後</comment>
 		<attribute name="キャラ指定">WAITRESS
 ウエートレス</attribute>
 		<language name="JPN" width="256">とうてん　じまんの
@@ -337,14 +337,40 @@
 味を　お試しください！</language>
 	</row>
 
-	<row id="msg_c02r0601_woman3_01">
-		<comment>♀</comment>
+	<row id="msg_c02r0601_waitress_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♀
+・土曜日
+・メッセージ表示後
+　アイテム入手処理
+　No032「サイコソーダ」
+
+※SWANで処理追加</comment>
+		<attribute name="キャラ指定">WAITRESS
+ウエートレス</attribute>
+		<language name="JPN" width="256">いなかの　ちょっと　おしゃれな
+カフェ　ソーコへ　ようこそ！！▼
+どようびは　サービスデー！
+こちらの　ミックスオレを　どうぞ！▼
+とうてん　じまんの
+あじを　おためし　ください！▼</language>
+		<language name="JPN_KANJI" width="256">いなかの　ちょっと　おしゃれな
+カフェ　ソーコへ　ようこそ！！▼
+土曜日は　サービスデー！
+こちらの　ミックスオレを　どうぞ！▼
+当店自慢の
+味を　お試しください！▼</language>
+	</row>
+
+	<row id="msg_c02r0601_woman3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+
+※SWANでメッセージ変更</comment>
 		<attribute name="キャラ指定">WOMAN3
 エプロン姉さん</attribute>
 		<language name="JPN" width="256">このカフェは　まいしゅう
-すいようびが　サービスデー！</language>
+すいようび　どようびが　サービスデー！</language>
 		<language name="JPN_KANJI" width="256">このカフェは　毎週
-水曜日が　サービスデー！</language>
+水曜日　土曜日が　サービスデー！</language>
 	</row>
 
 	<row id="msg_c02r0601_middleman2_01">
@@ -359,8 +385,10 @@
 田舎の　店でも　いいじゃないか</language>
 	</row>
 
-	<row id="msg_c02r0601_bigman_01">
-		<comment>♂</comment>
+	<row id="msg_c02r0601_bigman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+
+※SWANでメッセージ変更予定</comment>
 		<attribute name="キャラ指定">BIGMAN
 太った兄さん</attribute>
 		<language name="JPN" width="256">バトルボックスって　しってる？▼
@@ -371,8 +399,10 @@
 使える　便利な　機能らしいよ</language>
 	</row>
 
-	<row id="msg_c02r0601_man2_01">
-		<comment>♂</comment>
+	<row id="msg_c02r0601_man2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+
+※SWANでメッセージ変更予定</comment>
 		<attribute name="キャラ指定">MAN2
 金髪
 </attribute>
@@ -398,9 +428,11 @@
 最高の　ティーが　できるわけだよ</language>
 	</row>
 
-	<row id="msg_c02r0601_trainaerm_01">
+	<row id="msg_c02r0601_trainaerm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・ミラクルシューター説明</comment>
+・ミラクルシューター説明
+
+※SWANでメッセージ変更予定</comment>
 		<attribute name="キャラ指定">TRAINERM</attribute>
 		<language name="JPN" width="256">ともだちと　つうしん　しながら
 ポケモンしょうぶを　するときはさ▼
@@ -412,9 +444,11 @@
 道具が　使えるように　なるよね！</language>
 	</row>
 
-	<row id="msg_c02r0601_trainaerw_01">
+	<row id="msg_c02r0601_trainaerw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・ミラクルシューター説明</comment>
+・ミラクルシューター説明
+
+※SWANでメッセージ変更予定</comment>
 		<attribute name="キャラ指定">TRAINERW</attribute>
 		<language name="JPN" width="256">そうそう　しってる！▼
 ミラクルシューターが　あると
