@@ -699,8 +699,6 @@ static  void  EffectViewerSequence( EFFECT_VIEWER_WORK *evw )
       evw->draw_req = DRAW_REQ_WAZA_NO;
       evw->seq_no = SEQ_EFFECT_VIEW;
 
-      // パレットフェードのクリア ichiraku
-      PaletteAreaClear( PF_BIT_MAIN_ALL, evw->heapID );
     }
     EffectViewerRead( evw );
     break;
@@ -713,6 +711,9 @@ static  void  EffectViewerSequence( EFFECT_VIEWER_WORK *evw )
   case SEQ_EFFECT_WAIT:
     if( BTLV_EFFECT_CheckExecute() == FALSE )
     {
+      // パレットフェードのクリア ichiraku
+      PaletteAreaClear( PF_BIT_MAIN_ALL, evw->heapID );
+
       evw->seq_no = evw->ret_seq_no;
     }
     break;
