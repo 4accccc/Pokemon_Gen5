@@ -698,6 +698,9 @@ static  void  EffectViewerSequence( EFFECT_VIEWER_WORK *evw )
       evw->turn_count = 0;
       evw->draw_req = DRAW_REQ_WAZA_NO;
       evw->seq_no = SEQ_EFFECT_VIEW;
+
+      // パレットフェードのクリア ichiraku
+      PaletteAreaClear( PF_BIT_MAIN_ALL, evw->heapID );
     }
     EffectViewerRead( evw );
     break;
