@@ -3539,8 +3539,8 @@
 	</row>
 
 	<row id="leader1_02">
-		<language name="JPN" width="216">ノーマル</language>
-		<language name="JPN_KANJI" width="216">ノーマル</language>
+		<language name="JPN" width="216">チェレン</language>
+		<language name="JPN_KANJI" width="216">チェレン</language>
 	</row>
 
 	<row id="juggling_10">
@@ -3621,6 +3621,21 @@
 	<row id="pilot_07">
 		<language name="JPN" width="216">エルロン</language>
 		<language name="JPN_KANJI" width="216">エルロン</language>
+	</row>
+
+	<row id="swleader4_01">
+		<language name="JPN" width="216">カミツレ</language>
+		<language name="JPN_KANJI" width="216">カミツレ</language>
+	</row>
+
+	<row id="swleader3_01">
+		<language name="JPN" width="216">アーティ</language>
+		<language name="JPN_KANJI" width="216">アーティ</language>
+	</row>
+
+	<row id="swleader6_01">
+		<language name="JPN" width="216">フウロ</language>
+		<language name="JPN_KANJI" width="216">フウロ</language>
 	</row>
 
 	<flowchart-group-list>

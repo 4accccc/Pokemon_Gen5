@@ -1,6 +1,6 @@
 //======================================================================
 // trainer.ev
-// ../../../prog/include/tr_tool/trno_def.hを元にコンバートしています
+// ../../trdata/trno_def.hを元にコンバートしています
 //  ●コンバート実行
 //    trainer(.bat)
 //  ●更新されるファイル
@@ -655,6 +655,9 @@ _EVENT_DATA ev_TRID_ELITEW_1_01
 _EVENT_DATA ev_TRID_PILOT_05
 _EVENT_DATA ev_TRID_PILOT_06
 _EVENT_DATA ev_TRID_PILOT_07
+_EVENT_DATA ev_TRID_SWLEADER4_01
+_EVENT_DATA ev_TRID_SWLEADER3_01
+_EVENT_DATA ev_TRID_SWLEADER6_01
 _EVENT_DATA ev_TRID_MAX
 _EVENT_DATA ev_trainer_talk_battle
 _EVENT_DATA ev_trainer_move_battle
@@ -1300,10 +1303,13 @@ ev_TRID_ELITEW_1_01:
 ev_TRID_PILOT_05:
 ev_TRID_PILOT_06:
 ev_TRID_PILOT_07:
+ev_TRID_SWLEADER4_01:
+ev_TRID_SWLEADER3_01:
+ev_TRID_SWLEADER6_01:
 ev_TRID_MAX:
 
 //----------------------------------------------------------------------
-// scr_trainer/trainer_base.ev
+// ./scr_trainer/trainer_base.ev
 //----------------------------------------------------------------------
 
   DEFINE_LOCAL  LWK_TRAINERID

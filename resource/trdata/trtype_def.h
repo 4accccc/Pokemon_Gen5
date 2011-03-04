@@ -30,10 +30,10 @@
 #define	TRTYPE_BREEDERM    ( 17 )    //ポケモンブリーダー♂
 #define	TRTYPE_BREEDERW    ( 18 )    //ポケモンブリーダー♀
 #define	TRTYPE_LEADER2    ( 19 )    //ジムリーダー2
-#define	TRTYPE_LEADER3    ( 20 )    //ジムリーダー3
-#define	TRTYPE_LEADER4    ( 21 )    //ジムリーダー4
+#define	TRTYPE_LEADER3    ( 20 )    //ジムリーダー33
+#define	TRTYPE_LEADER4    ( 21 )    //ジムリーダー44
 #define	TRTYPE_LEADER5    ( 22 )    //ジムリーダー5
-#define	TRTYPE_LEADER6    ( 23 )    //ジムリーダー6
+#define	TRTYPE_LEADER6    ( 23 )    //ジムリーダー66
 #define	TRTYPE_RANGERM    ( 24 )    //ポケモンレンジャー♂
 #define	TRTYPE_RANGERW    ( 25 )    //ポケモンレンジャー♀
 #define	TRTYPE_WORKER2    ( 26 )    //さぎょういん2
@@ -122,6 +122,9 @@
 #define	TRTYPE_VETERANW_2    ( 109 )    //ポケモントレーナー（VETERANW_2）
 #define	TRTYPE_ELITEM_1    ( 110 )    //ポケモントレーナー（ELITEM_1）
 #define	TRTYPE_ELITEW_1    ( 111 )    //ポケモントレーナー（ELITEW_1）
-#define	TRTYPE_HERO_S	    ( 112 )
-#define	TRTYPE_HEROINE_S	( 113 )
-#define	TRTYPE_MAX	( 114 )
+#define	TRTYPE_SWLEADER4    ( 112 )    //ジムリーダー44
+#define	TRTYPE_SWLEADER3    ( 113 )    //ジムリーダー33
+#define	TRTYPE_SWLEADER6    ( 114 )    //ジムリーダー66
+#define	TRTYPE_HERO_S	    ( 115 )
+#define	TRTYPE_HEROINE_S	( 116 )
+#define	TRTYPE_MAX	( 117 )

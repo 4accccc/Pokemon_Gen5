@@ -108,3 +108,6 @@ trwb_veteranm,PTL_SEX_MALE
 trwb_veteranw,PTL_SEX_FEMALE
 trwb_elitem,PTL_SEX_MALE
 trwb_elitew,PTL_SEX_FEMALE
+trwb_swleader4,PTL_SEX_FEMALE
+trwb_swleader3,PTL_SEX_MALE
+trwb_swleader6,PTL_SEX_FEMALE
