@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-09-16T11:39:46"/>
+	<create user="matsumiya" host="W00224" date="2011-03-04T19:04:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1301" top="155" right="2006" bottom="783" maximized="no" rayout="Vertical2">
+	<dialog left="1294" top="205" right="1999" bottom="833" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="439" right="1280" bottom="837" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,7 +292,48 @@
 	</lock>
 
 
-	<row id="msg_c01r0102_inventor_01">
+	<row id="msg_c01r0102_man3_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♂
+・SWANで新規追加</comment>
+		<attribute name="キャラ指定">MAN3</attribute>
+		<language name="JPN" width="256">かりメッセージ
+・夢の跡地について</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ
+・夢の跡地について</language>
+	</row>
+
+	<row id="msg_c01r0102_woman3_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♀
+・SWANで新規追加</comment>
+		<attribute name="キャラ指定">WOMAN3</attribute>
+		<language name="JPN" width="256">かりメッセージ
+・マコモ姉妹について</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ
+・マコモ姉妹について</language>
+	</row>
+
+	<row id="msg_c01r0102_babygirl1_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♀
+・SWANで新規追加</comment>
+		<attribute name="キャラ指定">babygirl1_01</attribute>
+		<language name="JPN" width="256">かりメッセージ
+・Ｃギアのバージョンアップについて</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ
+・Ｃギアのバージョンアップについて</language>
+	</row>
+
+	<row id="msg_c01r0102_poke_01" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
+		<comment>ポケモン
+・あわせて鳴き声SE</comment>
+		<attribute name="キャラ指定">POKE00
+･未定</attribute>
+		<language name="JPN" width="256">かりメッセージ
+・なきごえ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ
+・鳴き声</language>
+	</row>
+
+	<row id="msg_c01r0102_inventor_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ■d01r0101イベント前
 ・上向きで待機
@@ -319,7 +360,7 @@
 てだすけを　頼まれたんだ▼</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_03">
+	<row id="msg_c01r0102_inventor_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ■d01r0101イベント前
 ・アイテム入手処理
@@ -352,7 +393,7 @@
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_04">
+	<row id="msg_c01r0102_inventor_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ■d01r0101イベント前
 ・続けてinventor_05</comment>
@@ -381,7 +422,7 @@
 忘れるのが　大変だけどね▼</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_05">
+	<row id="msg_c01r0102_inventor_05" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ■d01r0101イベント前</comment>
 		<attribute name="キャラ指定">ASSISTANTW</attribute>
@@ -409,7 +450,7 @@
 集めることが　できるようになるの！</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_06">
+	<row id="msg_c01r0102_inventor_06" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ■d01r0101イベント前
 ・inventor_05表示後
@@ -438,7 +479,7 @@
 お願いします！　お願いします！</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_07">
+	<row id="msg_c01r0102_inventor_07" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ■d01r0101イベント後
 ・メッセージ前にその場で2度ジャンプ
@@ -471,7 +512,7 @@
 通信に　関係する　デバイスよ▼</language>
 	</row>
 
-	<row id="msg_c01r0102_cgear_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c01r0102_cgear_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>システムメッセージ
 ＭＥ再生</comment>
 		<attribute name="キャラ指定">システム</attribute>
@@ -481,7 +522,7 @@
 [FF:00:色:2]Ｃ－ＧＥＡＲ[FF:00:色:0]を　手に入れた！</language>
 	</row>
 
-	<row id="msg_c01r0102_cgear_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c01r0102_cgear_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>システムメッセージ
 ・はい/いいえの選択肢表示
 ・はい→Ｃギアをアクティブで起動
@@ -493,7 +534,7 @@
 通信を　始めますか？</language>
 	</row>
 
-	<row id="msg_c01r0102_cgear_03" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c01r0102_cgear_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>選択肢
 ・はい／いいえを特殊な位置に表示するため
 　選択肢メニューとして作成している</comment>
@@ -502,7 +543,7 @@
 		<language name="JPN_KANJI" width="256">はい</language>
 	</row>
 
-	<row id="msg_c01r0102_cgear_04" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c01r0102_cgear_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>選択肢
 ・はい／いいえを特殊な位置に表示するため
 　選択肢メニューとして作成している</comment>
@@ -511,7 +552,7 @@
 		<language name="JPN_KANJI" width="256">いいえ</language>
 	</row>
 
-	<row id="msg_c01r0102_cgear_05" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c01r0102_cgear_05" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>システムメッセージ
 ・いいえを選択したときの再確認</comment>
 		<attribute name="キャラ指定">システム</attribute>
@@ -521,7 +562,7 @@
 制限されますが　よろしいですか？</language>
 	</row>
 
-	<row id="msg_c01r0102_cgear_06" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c01r0102_cgear_06" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>システムメッセージ
 ・『はい』を選択したが
 　本体設定で無線通信をOFFにしているとき
@@ -540,7 +581,7 @@
 ＯＮにしてください　（５０６９９）▼</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_08">
+	<row id="msg_c01r0102_inventor_08" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ■d01r0101イベント後
 ・主人公に近づいてメッセージ表示
@@ -559,7 +600,7 @@
 Ｃ－ＧＥＡＲの　説明が　読めるわ▼</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_08_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c01r0102_inventor_08_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ■d01r0101イベント後
 ・主人公に近づいてメッセージ表示
@@ -582,7 +623,7 @@
 Ｃ－ＧＥＡＲの　説明が　読めます▼</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_09" text-color=",,,#000000,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_inventor_09" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ■d01r0101イベント後
 ・画面下を向いてメッセージ表示
@@ -600,7 +641,7 @@
 もうちょっと　つきあってくれる？</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_10" text-color=",,,#000000,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_inventor_10" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ■d01r0101イベント後
 ・いいえ選択
@@ -616,7 +657,7 @@
 ものすごいことが　できるんだもの！！▼</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_11" text-color=",,,#000000,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_inventor_11" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ■d01r0101イベント後
 ・はい選択
@@ -636,7 +677,7 @@
 レポートを　集められるの！！▼</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_12" text-color=",,,#000000,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_inventor_12" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ■d01r0101イベント後
 ・メッセージ前にその場で2度ジャンプ</comment>
@@ -677,7 +718,7 @@
 よければ　チェックしてね！▼</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_13" text-color=",,,#000000,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_inventor_13" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ■d01r0101イベント後
 ・以降、繰り返し表示
@@ -699,7 +740,7 @@
 よければ　チェックしてね！</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_14" text-color=",,,#000000,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_inventor_14" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ■d01r0101イベント後
 ・以降、繰り返し表示
@@ -731,7 +772,7 @@
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c01r0102_girl3_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c01r0102_girl3_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・会話後、パソコンメニューの
 　「だれかのパソコン」が
@@ -757,7 +798,7 @@
 バトルボックス　ご存じ　ですか？</language>
 	</row>
 
-	<row id="msg_c01r0102_girl3_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c01r0102_girl3_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・はい選択時</comment>
 		<attribute name="キャラ指定">ＧＩＲＬ3
@@ -772,7 +813,7 @@
 ポケモンを　登録しておけるの！</language>
 	</row>
 
-	<row id="msg_c01r0102_girl3_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c01r0102_girl3_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・いいえ選択時</comment>
 		<attribute name="キャラ指定">ＧＩＲＬ3
@@ -787,7 +828,7 @@
 ポケモンを　登録しておけるの！</language>
 	</row>
 
-	<row id="msg_c01r0102_girl3_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c01r0102_girl3_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・girl3_01表示後から
 　inventor_06表示まで繰り返し</comment>
@@ -803,7 +844,7 @@
 ポケモンを　登録できるから！</language>
 	</row>
 
-	<row id="msg_c01r0102_girl3_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c01r0102_girl3_05" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・Cギア入手後
 　！マーク表示後、主人公に隣接
@@ -823,7 +864,7 @@
 遠慮せずに　もらってください▼</language>
 	</row>
 
-	<row id="msg_c01r0102_girl3_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c01r0102_girl3_06" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・girl3_05表示後</comment>
 		<attribute name="キャラ指定">ＧＩＲＬ3
@@ -858,7 +899,7 @@
 ばっちり　登録できます！▼</language>
 	</row>
 
-	<row id="msg_c01r0102_girl3_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c01r0102_girl3_07" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・girl3_06表示後以降に話しかけ</comment>
 		<attribute name="キャラ指定">ＧＩＲＬ3
@@ -867,7 +908,7 @@
 		<language name="JPN_KANJI" width="256">ショウロ『なにか　ききたいことある？</language>
 	</row>
 
-	<row id="msg_c01r0102_girl3_08" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c01r0102_girl3_08" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・バトルボックス選択時</comment>
 		<attribute name="キャラ指定">ＧＩＲＬ3
@@ -890,7 +931,7 @@
 選ぶことが　できるの！</language>
 	</row>
 
-	<row id="msg_c01r0102_girl3_09" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c01r0102_girl3_09" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・ともだちてちょう選択時</comment>
 		<attribute name="キャラ指定">ＧＩＲＬ3
@@ -913,7 +954,7 @@
 ばっちり　登録できます！</language>
 	</row>
 
-	<row id="msg_c01r0102_girl3_10" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c01r0102_girl3_10" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・やめる選択時</comment>
 		<attribute name="キャラ指定">ＧＩＲＬ3
@@ -924,7 +965,7 @@
 どんどん　ボックスを　つかってね！</language>
 	</row>
 
-	<row id="msg_c01r0102_select_01" back-color="#ffff80,,,#ffff80,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_select_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>選択肢
 ・選択後→girl3_08</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
@@ -932,7 +973,7 @@
 		<language name="JPN_KANJI" width="256">バトルボックス</language>
 	</row>
 
-	<row id="msg_c01r0102_select_02" back-color="#ffff80,,,#ffff80,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_select_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>選択肢
 ・選択後→girl3_09</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
@@ -940,7 +981,7 @@
 		<language name="JPN_KANJI" width="256">ともだちてちょう</language>
 	</row>
 
-	<row id="msg_c01r0102_select_03" back-color="#ffff80,,,#ffff80,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_select_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>選択肢
 ・選択後→girl3_10</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
@@ -948,7 +989,7 @@
 		<language name="JPN_KANJI" width="256">やめる</language>
 	</row>
 
-	<row id="msg_c01r0102_girl3_11" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_girl3_11" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・会話後、パソコンメニューの
 　「だれかのパソコン」が
@@ -974,7 +1015,7 @@
 バトルボックス　ご存じ　ですか？</language>
 	</row>
 
-	<row id="msg_c01r0101_books_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c01r0101_books_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>本棚その１
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">本棚その１</attribute>
@@ -986,7 +1027,7 @@
 画面の　？を　タッチ！</language>
 	</row>
 
-	<row id="msg_c01r0101_books2_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c01r0101_books2_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>本棚その２
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">本棚その２</attribute>
@@ -1008,7 +1049,7 @@
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c01r0102_pc_00" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c01r0102_pc_00" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>Cギア入手前</comment>
 		<attribute name="キャラ指定">パソコン</attribute>
 		<language name="JPN" width="256">パソコンの　モニタには
@@ -1017,21 +1058,21 @@
 なにも　映っていない……</language>
 	</row>
 
-	<row id="msg_c01r0102_pc_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c01r0102_pc_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>Cギア入手後から表示</comment>
 		<attribute name="キャラ指定">パソコン</attribute>
 		<language name="JPN" width="256">マコモの　メモ▼</language>
 		<language name="JPN_KANJI" width="256">マコモの　メモ▼</language>
 	</row>
 
-	<row id="msg_c01r0102_pc_02" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c01r0102_pc_02" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>選択肢表示</comment>
 		<attribute name="キャラ指定">パソコン</attribute>
 		<language name="JPN" width="256">どの　こうもくを　よみますか？</language>
 		<language name="JPN_KANJI" width="256">どの　項目を　読みますか？</language>
 	</row>
 
-	<row id="msg_c01r0102_pc_select_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_pc_select_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>選択肢
 ・選ぶとpc_03</comment>
 		<attribute name="キャラ指定">パソコン</attribute>
@@ -1039,7 +1080,7 @@
 		<language name="JPN_KANJI" width="256">ゲームシンク</language>
 	</row>
 
-	<row id="msg_c01r0102_pc_select_02" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_pc_select_02" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>選択肢
 ・選ぶとpc_04</comment>
 		<attribute name="キャラ指定">パソコン</attribute>
@@ -1047,7 +1088,7 @@
 		<language name="JPN_KANJI" width="256">ポケモンの夢</language>
 	</row>
 
-	<row id="msg_c01r0102_pc_select_03" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_pc_select_03" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>選択肢
 ・選ぶとウインドウが閉じる</comment>
 		<attribute name="キャラ指定">パソコン</attribute>
@@ -1055,7 +1096,7 @@
 		<language name="JPN_KANJI" width="256">やめる</language>
 	</row>
 
-	<row id="msg_c01r0102_pc_03" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c01r0102_pc_03" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>解説文
 ・続けてpc_02表示</comment>
 		<attribute name="キャラ指定">パソコン</attribute>
@@ -1091,7 +1132,7 @@
 次第に　増えていく　予定▼</language>
 	</row>
 
-	<row id="msg_c01r0102_pc_04" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c01r0102_pc_04" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>解説文
 ・続けてpc_02表示</comment>
 		<attribute name="キャラ指定">パソコン</attribute>
