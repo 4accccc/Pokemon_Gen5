@@ -1402,25 +1402,20 @@ static void UITemplate_POKE_ICON_DeleteCLWK( WBTLIST_MAIN_WORK* wk )
  */
 //=============================================================================
 
-enum {
-  WBT_TROBJ_BASE_X = 16,
-  WBT_TROBJ_BASE_Y = 32,
-};
 typedef struct {
-  u8 x, y;
   u8 id;
   u8 ptn_ofs;
 }TRAINER_OBJ_DATA;
 static const TRAINER_OBJ_DATA TrainerObjData[WBT_TRAINER_MAX] = {
-  { WBT_TROBJ_BASE_X +  0, WBT_TROBJ_BASE_Y +  0, NARC_fldmmdl_mdlres_hero_nsbtx, 3 },
-  { WBT_TROBJ_BASE_X +  0, WBT_TROBJ_BASE_Y + 32, NARC_fldmmdl_mdlres_rivel_nsbtx, 3 },
-  { WBT_TROBJ_BASE_X +  0, WBT_TROBJ_BASE_Y + 64, NARC_fldmmdl_mdlres_support_nsbtx, 3 },
-  { WBT_TROBJ_BASE_X +  0, WBT_TROBJ_BASE_Y + 96, NARC_fldmmdl_mdlres_veteranm_nsbtx, 2 },
+  { NARC_fldmmdl_mdlres_hero_nsbtx, 3 },
+  { NARC_fldmmdl_mdlres_rivel_nsbtx, 3 },
+  { NARC_fldmmdl_mdlres_support_nsbtx, 3 },
+  { NARC_fldmmdl_mdlres_veteranm_nsbtx, 2 },
 
-  { WBT_TROBJ_BASE_X +128, WBT_TROBJ_BASE_Y +  0, NARC_fldmmdl_mdlres_leader4_nsbtx, 3 },
-  { WBT_TROBJ_BASE_X +128, WBT_TROBJ_BASE_Y + 32, NARC_fldmmdl_mdlres_trainerw_nsbtx, 2 },
-  { WBT_TROBJ_BASE_X +128, WBT_TROBJ_BASE_Y + 64, NARC_fldmmdl_mdlres_trainerm_nsbtx, 2 },
-  { WBT_TROBJ_BASE_X +128, WBT_TROBJ_BASE_Y + 96, NARC_fldmmdl_mdlres_leader3_nsbtx, 3 },
+  { NARC_fldmmdl_mdlres_leader4_nsbtx, 3 },
+  { NARC_fldmmdl_mdlres_trainerw_nsbtx, 2 },
+  { NARC_fldmmdl_mdlres_trainerm_nsbtx, 2 },
+  { NARC_fldmmdl_mdlres_leader3_nsbtx, 3 },
 };
 //-----------------------------------------------------------------------------
 /**
@@ -1440,6 +1435,8 @@ static void WBTList_OAM_MAPMODEL_CreateCLWK( WBTLIST_MAIN_WORK *wk, u16 tex_idx,
   u32 i;
   UI_EASY_CLWK_RES_PARAM prm;
   const TRAINER_OBJ_DATA * trset;
+  u8 * pos_tbl = GFL_ARC_LoadDataAlloc(
+      ARCID_WBTLIST_GRA, NARC_wbt_list_gra_trainer_obj_pos_tblbin, wk->heapID );
 
   for( i = 0; i < WBT_TRAINER_MAX; i ++ )
   {
@@ -1460,7 +1457,8 @@ static void WBTList_OAM_MAPMODEL_CreateCLWK( WBTLIST_MAIN_WORK *wk, u16 tex_idx,
     UI_EASY_CLWK_LoadResource( &wk->clres_oam_mmdl, &prm, unit, heapID );
     // CLWK生成
     wk->clwk_oam_mmdl[i]
-      = UI_EASY_CLWK_CreateCLWK( &wk->clres_oam_mmdl, unit, trset->x, trset->y, 0, heapID );
+      = UI_EASY_CLWK_CreateCLWK( &wk->clres_oam_mmdl, unit,
+          pos_tbl[i*2+0], pos_tbl[i*2+1], 0, heapID );
 
     // テクスチャを転送
     {
@@ -1473,6 +1471,7 @@ static void WBTList_OAM_MAPMODEL_CreateCLWK( WBTLIST_MAIN_WORK *wk, u16 tex_idx,
     }
     wk->clwk_oam_mmdl_count ++;
   }
+  GFL_HEAP_FreeMemory( pos_tbl );
 }
 
 //-----------------------------------------------------------------------------

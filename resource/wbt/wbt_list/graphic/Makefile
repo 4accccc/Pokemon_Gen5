@@ -31,6 +31,7 @@ lsources:=$(wildcard *.ncl)
 gsources:=$(wildcard *.ncg)
 csources:=$(wildcard *.nsc)
 esources:=$(wildcard *.nce)
+xlsources:=$(wildcard *.xls)
 
 # リソースが吐き出すファイルを自動でつくる
 lobjects = $(subst .ncl,.NCLR,$(lsources))
@@ -38,11 +39,13 @@ gobjects = $(subst .ncg,.NCGR,$(gsources))
 cobjects = $(subst .nsc,.NSCR,$(csources))
 eobjects = $(subst .nce,.NCER,$(esources))
 aobjects = $(subst .nce,.NANR,$(esources))
+xlsobjs = $(subst .xls,.tblbin,$(xlsources))
 
+XLS2TAB		= ruby $(PROJECT_ROOT)/tools/exceltool/xls2xml/tab_out_sheet.rb -c
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # サフィックスルールを定義することで 依存関係を自動で判断してくれる
-.SUFFIXES: .NCLR .ncl .NCGR .ncg .NSCR .nsc .NCER .nce
+.SUFFIXES: .NCLR .ncl .NCGR .ncg .NSCR .nsc .NCER .nce .xls .tblbin
 
 .ncl.NCLR:
 	g2dcvtr $< -pcm
@@ -56,6 +59,10 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 .nce.NCER:
 	g2dcvtr $< -br
 
+.xls.tblbin:
+	$(XLS2TAB) $< > $*.csv
+	ruby csv2table.rb $*.csv $*.tblbin
+	rm $*.csv
 endif
 
 .PHONY:	do-build clean subdir
@@ -76,7 +83,7 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(lobjects) $(gobjects) $(eobjects) $(cobjects) $(aobjects)
+$(targetname).narc: $(lobjects) $(gobjects) $(eobjects) $(cobjects) $(aobjects) $(xlsobjs)
 	nnsarc -r -l -n -i $(targetname) $^
 	$(NAIXCUT) $(targetname).naix
 endif
@@ -95,6 +102,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f *.NCLR
 	rm -f *.narc
 	rm -f *.naix
+	rm -f *.tblbin
 	rm -f $(targetname).narc
 	rm -f $(targetname).naix
 endif
