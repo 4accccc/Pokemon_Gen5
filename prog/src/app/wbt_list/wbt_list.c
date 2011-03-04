@@ -84,8 +84,8 @@
 #include "message.naix"
 #include "wbt_list_gra.naix"
 //#include "mictest.naix"	// アーカイブ
-#include "msg/msg_mictest.h"  // GMM
-#include "townmap_gra.naix"		// タッチバーカスタムボタン用サンプルにタウンマップリソース
+//#include "msg/msg_mictest.h"  // GMM
+//#include "townmap_gra.naix"		// タッチバーカスタムボタン用サンプルにタウンマップリソース
 
 //=============================================================================
 // 下記defineをコメントアウトすると、機能を取り除けます
@@ -1415,11 +1415,11 @@ static const TRAINER_OBJ_DATA TrainerObjData[WBT_TRAINER_MAX] = {
   { WBT_TROBJ_BASE_X +  0, WBT_TROBJ_BASE_Y +  0, NARC_fldmmdl_mdlres_hero_nsbtx, 3 },
   { WBT_TROBJ_BASE_X +  0, WBT_TROBJ_BASE_Y + 32, NARC_fldmmdl_mdlres_rivel_nsbtx, 3 },
   { WBT_TROBJ_BASE_X +  0, WBT_TROBJ_BASE_Y + 64, NARC_fldmmdl_mdlres_support_nsbtx, 3 },
-  { WBT_TROBJ_BASE_X +  0, WBT_TROBJ_BASE_Y + 96, NARC_fldmmdl_mdlres_veteranm_nsbtx, 3 },
+  { WBT_TROBJ_BASE_X +  0, WBT_TROBJ_BASE_Y + 96, NARC_fldmmdl_mdlres_veteranm_nsbtx, 2 },
 
   { WBT_TROBJ_BASE_X +128, WBT_TROBJ_BASE_Y +  0, NARC_fldmmdl_mdlres_leader4_nsbtx, 3 },
-  { WBT_TROBJ_BASE_X +128, WBT_TROBJ_BASE_Y + 32, NARC_fldmmdl_mdlres_trainerw_nsbtx, 3 },
-  { WBT_TROBJ_BASE_X +128, WBT_TROBJ_BASE_Y + 64, NARC_fldmmdl_mdlres_trainerm_nsbtx, 3 },
+  { WBT_TROBJ_BASE_X +128, WBT_TROBJ_BASE_Y + 32, NARC_fldmmdl_mdlres_trainerw_nsbtx, 2 },
+  { WBT_TROBJ_BASE_X +128, WBT_TROBJ_BASE_Y + 64, NARC_fldmmdl_mdlres_trainerm_nsbtx, 2 },
   { WBT_TROBJ_BASE_X +128, WBT_TROBJ_BASE_Y + 96, NARC_fldmmdl_mdlres_leader3_nsbtx, 3 },
 };
 //-----------------------------------------------------------------------------
