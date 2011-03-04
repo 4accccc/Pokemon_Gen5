@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-22T18:22:38"/>
+	<create user="matsumiya" host="W00224" date="2011-03-04T15:13:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1294" top="205" right="1999" bottom="833" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,9 +292,10 @@
 	</lock>
 
 
-	<row id="msg_r08r0701_infomationw_01w">
+	<row id="msg_r08r0701_infomationw_01w" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
-・WHITEver</comment>
+・WHITEver
+※SWANでメッセージ変更予定</comment>
 		<attribute name="キャラ指定">INFORMATIONW
 受付嬢</attribute>
 		<language name="JPN" width="256">ソウリュウシティに　いらした
@@ -307,9 +308,10 @@
 トレーナーさん　またいらしてね！</language>
 	</row>
 
-	<row id="msg_r08r0701_infomationw_02b">
+	<row id="msg_r08r0701_infomationw_02b" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
-・BLACKver</comment>
+・BLACKver
+※SWANでメッセージ変更予定</comment>
 		<attribute name="キャラ指定">INFORMATIONW
 受付嬢</attribute>
 		<language name="JPN" width="256">ソウリュウシティに　いらした
@@ -322,10 +324,11 @@
 トレーナーさん　またいらしてね！</language>
 	</row>
 
-	<row id="msg_r08r0701_policeman_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r08r0701_policeman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・ストッパー処理
-・会話</comment>
+・会話
+※クリア前</comment>
 		<attribute name="キャラ指定">POLICEMAN</attribute>
 		<language name="JPN" width="256">このさき　ちょいと　ありまして
 いまは　つうこうきんし　なんですよ</language>
@@ -333,10 +336,11 @@
 今は　通行禁止なんですよ</language>
 	</row>
 
-	<row id="msg_r08r0701_policeman_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r08r0701_policeman_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・ストッパー処理
-・pos</comment>
+・pos
+※クリア後</comment>
 		<attribute name="キャラ指定">POLICEMAN</attribute>
 		<language name="JPN" width="256">このさき　ちょいと　ありまして
 いまは　つうこうきんし　なんですよ[BE:01:ページ切り替え（クリア）]</language>
