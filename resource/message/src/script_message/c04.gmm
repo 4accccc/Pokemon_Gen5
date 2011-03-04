@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-02-27T15:49:33"/>
+	<create user="matsumiya" host="W00224" date="2011-03-04T22:54:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1296" top="159" right="2001" bottom="787" maximized="no" rayout="Vertical2">
+	<dialog left="1294" top="205" right="1999" bottom="833" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_c04_hakaim1_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04_hakaim1_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・pos（GRIDX=427~433、GRIDZ=476）を踏むとメッセージ表示
 ・続けてhakaim2_01</comment>
@@ -307,7 +307,7 @@
 プラズマ団　だからさ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c04_hakaim2_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04_hakaim2_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてoldman_01</comment>
 		<attribute name="キャラ指定">プラズマ団したっぱ♂</attribute>
@@ -323,7 +323,7 @@
 それを　オレらに　よこせよ！▼</language>
 	</row>
 
-	<row id="msg_c04_oldman_01">
+	<row id="msg_c04_oldman_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・メッセージ表示後、左右を振り向いてから
 　頭上に！マーク表示
@@ -334,7 +334,7 @@
 		<language name="JPN_KANJI" width="256">じいさん『なんという　ムチャを！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c04_oldman_02">
+	<row id="msg_c04_oldman_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてhakaim1_02</comment>
 		<attribute name="キャラ指定">OLDMAN
@@ -345,7 +345,7 @@
 助けておくれ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c04_hakaim1_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04_hakaim1_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・メッセージ表示後、戦闘に
 ・ただしすごく弱くてOK（ポケセンに行く前なので）</comment>
@@ -356,7 +356,7 @@
 オマエの　ポケモンを　奪うぜ！▼</language>
 	</row>
 
-	<row id="msg_c04_hakaim1_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04_hakaim1_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・戦闘後、フィールドに復帰してこのメッセージ表示
 ・続けてhakaim2_02</comment>
@@ -365,7 +365,7 @@
 		<language name="JPN_KANJI" width="256">プラズマ団『！！▼</language>
 	</row>
 
-	<row id="msg_c04_hakaim2_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04_hakaim2_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・表示後、画面上（できれば右寄り）に移動
 ・画面外に消えるとoldman_03</comment>
@@ -378,7 +378,7 @@
 遊園地で　やり過ごそう！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c04_oldman_03">
+	<row id="msg_c04_oldman_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・メッセージ表示後
 　アイテム入手処理
@@ -401,7 +401,7 @@
 結局　乗らずじまい　でな▼</language>
 	</row>
 
-	<row id="msg_c04_oldman_04">
+	<row id="msg_c04_oldman_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・アイテム入手後、自動で表示
 ・表示後、4番道路側に移動
@@ -423,7 +423,7 @@
 エライめに　あったもんじゃ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c04_white_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04_white_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・主人公性別：♂
 ・ゲートをでたところでメッセージ表示
@@ -435,7 +435,7 @@
 		<language name="JPN_KANJI" width="256">ベル『おうい！　[1:00:トレーナー名:0]！▼</language>
 	</row>
 
-	<row id="msg_c04_white_01a" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c04_white_01a" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・主人公性別：♀
 ・ゲートをでたところでメッセージ表示
@@ -447,7 +447,7 @@
 		<language name="JPN_KANJI" width="256">ベル『ねえねえ！　[1:00:トレーナー名:0]！▼</language>
 	</row>
 
-	<row id="msg_c04_white_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04_white_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・表示後、その場で一回転アニメ
 ・続けてwhite_04</comment>
@@ -467,7 +467,7 @@
 それに　バトルサブウェイ！▼</language>
 	</row>
 
-	<row id="msg_c04_white_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04_white_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・表示後、画面上に移動
 ・画面外に消えると、主人公操作可能に</comment>
@@ -479,7 +479,7 @@
 行くつもりなの！　じゃあねえ！！▼</language>
 	</row>
 
-	<row id="msg_c04_white_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04_white_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・主人公性別：♂
 ・グッズケースを持たずに
@@ -493,7 +493,7 @@
 		<language name="JPN_KANJI" width="256">ベル『おうい！　[1:00:トレーナー名:0]！▼</language>
 	</row>
 
-	<row id="msg_c04_white_04a" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c04_white_04a" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・主人公性別：♀
 ・グッズケースを持たずに
@@ -507,7 +507,7 @@
 		<language name="JPN_KANJI" width="256">ベル『ねえねえ！　[1:00:トレーナー名:0]！▼</language>
 	</row>
 
-	<row id="msg_c04_white_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04_white_05" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・メッセージ表示後、連れ歩き状態で
 　ミュージカルホールに
@@ -528,7 +528,7 @@
 こっちこっちー！▼</language>
 	</row>
 
-	<row id="msg_c04_white_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04_white_06" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・ミュージカルホールの前に到達時に
 　このメッセージ表示
@@ -541,7 +541,7 @@
 じゃあ　入ろうっ！▼</language>
 	</row>
 
-	<row id="msg_c04_white_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04_white_07" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・msg_c04_white_04イベント発生させずに
 　ミュージカルホールの前に到達したときは
@@ -558,7 +558,7 @@
 じゃあ　一緒に　入ろうっ！▼</language>
 	</row>
 
-	<row id="msg_c04_white_08" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04_white_08" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・GRIDX=433、GRIDZ=436に配置
 ・主人公がミュージカルからでると
@@ -572,7 +572,7 @@
 どうしたの　こんなところで？▼</language>
 	</row>
 
-	<row id="msg_c04_middleman1_01">
+	<row id="msg_c04_middleman1_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・GRIDX=433、GRIDZ=438に配置
 ・続けてwhite_09</comment>
@@ -590,7 +590,7 @@
 もう　充分じゃないか▼</language>
 	</row>
 
-	<row id="msg_c04_white_09" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04_white_09" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・続けてmiddleman1_02
 ・0＝主人公名前</comment>
@@ -604,7 +604,7 @@
 一緒に　旅するんだもん！▼</language>
 	</row>
 
-	<row id="msg_c04_middleman1_02">
+	<row id="msg_c04_middleman1_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてwhite_10</comment>
 		<attribute name="キャラ指定">男性
@@ -615,7 +615,7 @@
 他所は他所　うちはうち　だよ▼</language>
 	</row>
 
-	<row id="msg_c04_white_10" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04_white_10" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・続けてleader_01</comment>
 		<attribute name="キャラ指定">友達♀
@@ -628,7 +628,7 @@
 パパは　パパ　だもん！▼</language>
 	</row>
 
-	<row id="msg_c04_leader_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c04_leader_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・まずメッセージのみ
 　その後所定位置
@@ -642,7 +642,7 @@
 旅を　続けなさいな▼</language>
 	</row>
 
-	<row id="msg_c04_middleman1_03">
+	<row id="msg_c04_middleman1_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・主人公たちの頭上に「？」表示
 ・続けてleader_02</comment>
@@ -654,7 +654,7 @@
 どなたです？　親子の　話に▼</language>
 	</row>
 
-	<row id="msg_c04_leader_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c04_leader_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・サポート父親と向き合って
 ・表示後、サポートの隣に移動
@@ -669,7 +669,7 @@
 モデルを　しています▼</language>
 	</row>
 
-	<row id="msg_c04_leader_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c04_leader_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・サポート父親を見ながらメッセージ表示
 ・続けてmiddleman1_04</comment>
@@ -687,7 +687,7 @@
 ときには　傷つくことも　あるかも▼</language>
 	</row>
 
-	<row id="msg_c04_middleman1_04">
+	<row id="msg_c04_middleman1_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてleader_03</comment>
 		<attribute name="キャラ指定">男性
@@ -700,7 +700,7 @@
 わたしは　それが　心配で……▼</language>
 	</row>
 
-	<row id="msg_c04_leader_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c04_leader_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・続けてwhite_11</comment>
 		<attribute name="キャラ指定">LEADER4
@@ -729,7 +729,7 @@
 すてきな　ポケモン……▼</language>
 	</row>
 
-	<row id="msg_c04_white_11" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04_white_11" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 （一歩前に出て）
 ・続けてmiddleman1_05</comment>
@@ -755,7 +755,7 @@
 強くなったんだよ！　だから！▼</language>
 	</row>
 
-	<row id="msg_c04_middleman1_05">
+	<row id="msg_c04_middleman1_05" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・画面下を向いてメッセージ表示
 ・続けてmiddleman1_06</comment>
@@ -781,7 +781,7 @@
 わたしの　ほうが　子供っぽい▼</language>
 	</row>
 
-	<row id="msg_c04_middleman1_06">
+	<row id="msg_c04_middleman1_06" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてmiddleman1_07</comment>
 		<attribute name="キャラ指定">男性
@@ -802,7 +802,7 @@
 楽しいものであるよう　祈るさ▼</language>
 	</row>
 
-	<row id="msg_c04_middleman1_07">
+	<row id="msg_c04_middleman1_07" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・画面上を向いてメッセージ表示
 ・表示後、画面下に移動
@@ -816,7 +816,7 @@
 ベルを　よろしく　頼むね▼</language>
 	</row>
 
-	<row id="msg_c04_white_12" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04_white_12" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 （一歩前に出て）
 ・続けてleader_05</comment>
@@ -830,7 +830,7 @@
 ちゃんと　家に　帰るから！▼</language>
 	</row>
 
-	<row id="msg_c04_leader_05" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c04_leader_05" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 （位置調整が必要かも）
 ・画面下を向いたままメッセージ
@@ -847,7 +847,7 @@
 親って　大変なのね▼</language>
 	</row>
 
-	<row id="msg_c04_leader_06" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c04_leader_06" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・メッセージ分岐
 　c04ジムバッジ入手前→leader_07
@@ -862,7 +862,7 @@
 みえたから　声を　かけちゃった▼</language>
 	</row>
 
-	<row id="msg_c04_leader_07" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c04_leader_07" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・c04ジムバッジ入手前
 ・表示後、画面下に移動する
@@ -879,7 +879,7 @@
 教えて　あげるから▼</language>
 	</row>
 
-	<row id="msg_c04_leader_08" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c04_leader_08" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・c04ジムバッジ入手後
 ・表示後、r05方面に移動する
@@ -893,7 +893,7 @@
 ５番道路で　待っているから▼</language>
 	</row>
 
-	<row id="msg_c04_white_13" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04_white_13" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・表示後、画面下に移動
 　画面外に消えると主人公操作可能に
