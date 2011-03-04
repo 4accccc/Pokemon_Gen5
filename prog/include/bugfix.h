@@ -1485,3 +1485,21 @@ resource/wifi_earth/wifi_earth.narc
 の更新を行いました。
 ソースコード修正は無いため、bugfix.hとnarcのみセットでコミットします。
 */
+
+/*
+  NOBTS3
+  s8 以上で受けるべき、MSGSPEED_GetWait()の戻り値をu8で受けているために
+  ローカライズ版でメッセージスピードがマイナス値を取った場合に
+  描画速度が異様にゆっくりになってしまうバグの修正
+
+  MSGSPEED_GetWait()を呼び出しているものの、実際には取得した戻り値を
+  参照していないソースもあり、その場合はコメントを入れるのみに留めてある
+
+  スワンで該当するアプリに手をいれる場合に実修正を行う予定
+  検索キーは "<localize>"
+  src/app/mail/mailview.c 実修正アリ
+  src/app/trainercard/trcard_sys.h  コメントのみ
+  src/app/wifi_node/wifi_note.c コメントのみ
+  src/net_app/wificlub/wifi_p2pmatch_message.c コメントのみ
+ */
+

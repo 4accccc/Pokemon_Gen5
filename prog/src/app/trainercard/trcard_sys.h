@@ -199,6 +199,7 @@ typedef struct TR_CARD_WORK_tag
   PRINT_QUE     *printQue;
   PRINT_STREAM  *printHandle;
   u8  win_type;  ///<ウィンドウタイプ
+  // <localize> [潜在バグ] msg_spdは負の値も取り得るので、s8である必要がある。現状変数が未使用なので修正しない。
   u8  msg_spd;   ///<メッセージスピード
   u8  scrl_ct;   ///<背景スクロールカウンタ
   u32 tp_x;

@@ -123,7 +123,9 @@ struct _MAIL_VIEW_DATA{
 
   int canm_f;   ///< アニメフックフラグ
   u8  msgIdx;
-  u8  msg_spd;
+  // <localize> [潜在バグ] 日韓バージョン以外で、メッセージスピードを「はやい」に設定した場合に
+  //            メッセージ描画が異常に遅くなるバグの修正
+  s8  msg_spd;
   u8  line;     ///< 選択ライン
   u8  side;     ///< サイド選択
   u8  colEvy;   ///< フェード度合い

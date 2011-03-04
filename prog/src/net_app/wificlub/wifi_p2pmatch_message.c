@@ -274,6 +274,7 @@ static BOOL WifiP2PMatchMessageEndCheck(WIFIP2PMATCH_WORK* wk)
 
 static void WifiP2PMatchMessagePrintS( WIFIP2PMATCH_WORK *wk, int msgno, BOOL bSystem, BOOL bStream )
 {
+  // <localize> [潜在バグ] speed は負の値も取り得るので、s8である必要がある。現状変数が未使用なので修正しない。
   // 文字列取得
   u8 speed = MSGSPEED_GetWait();
 

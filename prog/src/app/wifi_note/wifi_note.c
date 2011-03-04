@@ -1172,6 +1172,7 @@ typedef struct {
   u8 reqsubseq;   // 次のステータスの開始サブシーケンス
   s8 select_listidx;  // 選択したリストインデックス
 
+  // <localize> [潜在バグ] msg_spdは負の値も取り得るので、s8である必要がある。現状変数が未使用なので修正しない。
   u8  msg_spd;
   u8  win_type;
   u8  lr_key_enable;
