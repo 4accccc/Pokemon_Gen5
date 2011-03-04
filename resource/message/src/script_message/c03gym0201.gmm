@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-01-29T17:56:51"/>
+	<create user="matsumiya" host="W00224" date="2011-03-04T19:54:15"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,9 +292,11 @@
 	</lock>
 
 
-	<row id="msg_c03gym0201_leader_01">
+	<row id="msg_c03gym0201_leader_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
-・戦闘前メッセージ</comment>
+・戦闘前メッセージ
+
+※SWANでメッセージ変更予定</comment>
 		<attribute name="キャラ指定">LEADER3
 アーティ</attribute>
 		<language name="JPN" width="256">さっきは　ありがとー！▼
@@ -309,9 +311,11 @@
 早速だけど　勝負だね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c03gym0201_leader_02">
+	<row id="msg_c03gym0201_leader_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
-・戦闘後メッセージ</comment>
+・戦闘後メッセージ
+
+※SWANでメッセージ変更予定</comment>
 		<attribute name="キャラ指定">LEADER3</attribute>
 		<language name="JPN" width="256">あうう
 まけちゃったよ……[BE:01:ページ切り替え（クリア）]
@@ -327,7 +331,7 @@
 ボクに　勝ったから　あげる！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c03gym0201_leader_03">
+	<row id="msg_c03gym0201_leader_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>ファンファーレ＋バッジ入手処理</comment>
 		<attribute name="キャラ指定">LEADER3</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は　アーティから
@@ -336,10 +340,12 @@
 ビートルバッジを　もらった！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c03gym0201_leader_04">
+	<row id="msg_c03gym0201_leader_04" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・アイテム入手処理
-　No403「むしのていこう」</comment>
+　No403「むしのていこう」
+
+※SWANでメッセージ変更予定</comment>
 		<attribute name="キャラ指定">LEADER3</attribute>
 		<language name="JPN" width="256">ビートルバッジ
 かっこいいでしょ！[BE:01:ページ切り替え（クリア）]
@@ -357,9 +363,11 @@
 これも　あげるよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c03gym0201_leader_05">
+	<row id="msg_c03gym0201_leader_05" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
-・アイテム入手処理後</comment>
+・アイテム入手処理後
+
+※SWANでメッセージ変更予定</comment>
 		<attribute name="キャラ指定">LEADER3</attribute>
 		<language name="JPN" width="256">「むしのていこう」は
 ダメージを　あたえた　あいての▽
@@ -373,9 +381,11 @@
 大事だったり　するからさ</language>
 	</row>
 
-	<row id="msg_c03gym0201_leader_06">
+	<row id="msg_c03gym0201_leader_06" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
-・leader_05表示後</comment>
+・leader_05表示後
+
+※SWANでメッセージ変更予定</comment>
 		<attribute name="キャラ指定">LEADER3</attribute>
 		<language name="JPN" width="256">きみは　たびに　でてから
 どれだけの　はっけんを　した？▼
@@ -399,9 +409,11 @@
 ほんと 不思議で　満ちているんだー</language>
 	</row>
 
-	<row id="msg_c03gym0201_leader_end_01">
+	<row id="msg_c03gym0201_leader_end_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
-・クリア後</comment>
+・クリア後
+
+※SWANでメッセージ変更予定</comment>
 		<attribute name="キャラ指定">LEADER3</attribute>
 		<language name="JPN" width="256">アーティ『やあ▼
 さいきんは　ポケモンを　そだて……
