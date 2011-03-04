@@ -10,9 +10,10 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #pragma once
 
-#define WARP_DIR_UP     (0)
-#define WARP_DIR_DOWN   (1)
-#define WARP_DIR_LEFT   (2)
-#define WARP_DIR_RIGHT  (3)
-#define WARP_DIR_MAX    (4)
+#define WARP_DIR_UP       (0)
+#define WARP_DIR_DOWN     (1)
+#define WARP_DIR_LEFT     (2)
+#define WARP_DIR_RIGHT    (3)
+#define WARP_INFORMATION  (4)
+#define WARP_DIR_MAX      (5)
 

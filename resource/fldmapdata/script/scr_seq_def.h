@@ -12758,18 +12758,18 @@
 
 //--------------------------------------------------------------
 /**
- * @def _INFINITY_DUNGEON_SET_NOW_FLOOR_NO
- * @brief 無限ダンジョンの現在のフロアを設定
+ * @def _INFINITY_DUNGEON_GET_NOW_FLOOR_NO
+ * @brief 無限ダンジョンの現在のフロアを取得
  * @param ret_wk    状態を受け取るワーク
  *
  */
 //--------------------------------------------------------------
-#define _INFINITY_DUNGEON_SET_NOW_FLOOR_NO( floor_id ) \
-    _ASM_INFINITY_DUNGEON_SET_NOW_FLOOR_NO floor_id
+#define _INFINITY_DUNGEON_GET_NOW_FLOOR_NO( ret_wk ) \
+    _ASM_INFINITY_DUNGEON_GET_NOW_FLOOR_NO ret_wk
 
-    .macro  _ASM_INFINITY_DUNGEON_SET_NOW_FLOOR_NO floor_id
-    .short  EV_SEQ_INFINITY_DUNGEON_SET_FLOOR_NO
-    .short  \floor_id
+    .macro  _ASM_INFINITY_DUNGEON_GET_NOW_FLOOR_NO ret_wk
+    .short  EV_SEQ_INFINITY_DUNGEON_GET_FLOOR_NO
+    .short  \ret_wk
     .endm
 
 //--------------------------------------------------------------
@@ -12785,6 +12785,37 @@
 
     .macro  _ASM_INFINITY_DUNGEON_INIT_RAND_SEED ret_wk
     .short  EV_SEQ_INFINITY_DUNGEON_INIT_SEED
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _INFINITY_DUNGEON_MOVE_FLOOR
+ * @brief 無限ダンジョン：出入口処理
+ * @param dir   進行方向
+ */
+//--------------------------------------------------------------
+#define _INFINITY_DUNGEON_MOVE_FLOOR( floor_no ) \
+    _ASM_INFINITY_DUNGEON_MOVE_FLOOR floor_no
+
+    .macro  _ASM_INFINITY_DUNGEON_MOVE_FLOOR floor_no
+    .short  EV_SEQ_INFINITY_DUNGEON_MOVE_FLOOR
+    .short  \floor_no
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _INFINITY_DUNGEON_GET_NOW_AREA_NO
+ * @brief 無限ダンジョンの現在のエリアを取得
+ * @param ret_wk    状態を受け取るワーク
+ *
+ */
+//--------------------------------------------------------------
+#define _INFINITY_DUNGEON_GET_NOW_AREA_NO( ret_wk ) \
+    _ASM_INFINITY_DUNGEON_GET_NOW_AREA_NO ret_wk
+
+    .macro  _ASM_INFINITY_DUNGEON_GET_NOW_AREA_NO ret_wk
+    .short  EV_SEQ_INFINITY_DUNGEON_GET_AREA_NO
+    .short  \ret_wk
     .endm
 
 //======================================================================

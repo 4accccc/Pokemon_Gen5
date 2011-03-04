@@ -402,3 +402,17 @@ void INFINITYDUNGEON_SAVE_SetPartnerID( INFINITYDUNGEON_SAVE *p_save ,u8 partner
   p_save->partner_id = partner_id;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  Œ»Ý‚ÌƒGƒŠƒAID‚ðŽæ“¾‚·‚é
+ *
+ *	@param	*p_save 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+u8 INFINITYDUNGEON_SAVE_GetAreaID( const INFINITYDUNGEON_SAVE *p_save )
+{
+  return p_save->floor_id/INFINITYDUNGEON_FLOOR_MAX;
+}
+

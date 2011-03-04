@@ -82,6 +82,29 @@ VMCMD_RESULT EvCmdInfinityDungeonWarp( VMHANDLE *core, void *wk )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  ダンジョン内のフロア移動
+ *
+ *	@param	*core
+ *	@param	*wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdInfinityDungeonFloorMove( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK   *p_wk     = wk;
+  GAMESYS_WORK  *p_gsys   = SCRCMD_WORK_GetGameSysWork( p_wk );
+  int           floor_no  = SCRCMD_GetVMWorkValue( core, p_wk );
+  SCRIPT_WORK   *p_scr_wk = SCRCMD_WORK_GetScriptWork( p_wk );
+
+  // 次のマップへワープ
+  INFINITY_DUNGEON_WarpNextFloor( p_scr_wk ,p_gsys ,floor_no );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  ダンジョンのステータス取得
  *
  *	@param	*core
@@ -100,8 +123,7 @@ VMCMD_RESULT EvCmdInfinityDungeonGetStatus( VMHANDLE *p_core, void *p_wk_adrs )
   u16 *p_ret_wk	= SCRCMD_GetVMWork( p_core, p_wk );
   
   p_save = SaveData_GetINFINITYDUNGEON( p_save_data );
-  //*p_ret_wk = INFINITYDUNGEON_SAVE_GetDungeonStatu( p_save );
-  *p_ret_wk = 3;
+  *p_ret_wk = INFINITYDUNGEON_SAVE_GetDungeonStatu( p_save );
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -132,7 +154,7 @@ VMCMD_RESULT EvCmdInfinityDungeonResetSeed( VMHANDLE *p_core, void *p_wk_adrs )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  無限ダンジョン生成用シードをランダム初期化
+ *	@brief  現在のフロア番号を取得する
  *
  *	@param	*p_core
  *	@param	*p_wk_adrs 
@@ -140,21 +162,43 @@ VMCMD_RESULT EvCmdInfinityDungeonResetSeed( VMHANDLE *p_core, void *p_wk_adrs )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-VMCMD_RESULT EvCmdInfinityDungeonSetFloorNo( VMHANDLE *p_core, void *p_wk_adrs )
+VMCMD_RESULT EvCmdInfinityDungeonGetFloorNo( VMHANDLE *p_core, void *p_wk_adrs )
 {
   INFINITYDUNGEON_SAVE  *p_save;
   SCRCMD_WORK *p_wk = p_wk_adrs;
   GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
   GAMEDATA *p_gamedata = GAMESYSTEM_GetGameData(p_gamesys);
   SAVE_CONTROL_WORK *p_save_data = GAMEDATA_GetSaveControlWork(p_gamedata);
-  u16 floor_id  = SCRCMD_GetVMWorkValue( p_core, p_wk );
+  u16 *p_ret_wk	= SCRCMD_GetVMWork( p_core, p_wk );
   p_save = SaveData_GetINFINITYDUNGEON( p_save_data );
 
-  // フロアIDを設定する
-  INFINITYDUNGEON_SAVE_SetFloorID( p_save , floor_id);
+  // フロアIDを取得する
+  *p_ret_wk = INFINITYDUNGEON_SAVE_GetFloorID( p_save );
 
-  // フロアID
-  ONOUE_Printf("フロア番号%u\n",floor_id);
+  return VMCMD_RESULT_CONTINUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  現在のエリアIDを取得する
+ *
+ *	@param	*p_core
+ *	@param	*p_wk_adrs 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdInfinityDungeonGetAreaNo( VMHANDLE *p_core, void *p_wk_adrs )
+{
+  INFINITYDUNGEON_SAVE  *p_save;
+  SCRCMD_WORK *p_wk = p_wk_adrs;
+  GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
+  GAMEDATA *p_gamedata = GAMESYSTEM_GetGameData(p_gamesys);
+  SAVE_CONTROL_WORK *p_save_data = GAMEDATA_GetSaveControlWork(p_gamedata);
+  u16 *p_ret_wk	= SCRCMD_GetVMWork( p_core, p_wk );
+  p_save = SaveData_GetINFINITYDUNGEON( p_save_data );
+
+  // エリアIDを取得する
+  *p_ret_wk = INFINITYDUNGEON_SAVE_GetAreaID( p_save );
 
   return VMCMD_RESULT_CONTINUE;
 }

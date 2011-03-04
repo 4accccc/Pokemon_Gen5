@@ -23,7 +23,8 @@ SUBDIRS	=	gym_denki \
 					zoroa \
 					legend \
 					r04d03 \
-					t01
+					t01 \
+					infinity
 
 .PHONY:	do-build clean
 

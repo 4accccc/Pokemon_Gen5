@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="onoue_masayuki" host="W00272" date="2011-03-02T19:43:45"/>
+	<create user="onoue_masayuki" host="W00272" date="2011-03-04T17:17:56"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="538"/>
 		<band id="3" index="4" style="0000" width="157"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -347,54 +347,9 @@
 おまして　おります</language>
 	</row>
 
-	<row id="msg_info_area1">
-		<language name="JPN" width="256">エリア1</language>
-		<language name="JPN_KANJI" width="256">エリア1</language>
-	</row>
-
-	<row id="msg_info_area2">
-		<language name="JPN" width="256">エリア2</language>
-		<language name="JPN_KANJI" width="256">エリア2</language>
-	</row>
-
-	<row id="msg_info_area3">
-		<language name="JPN" width="256">エリア3</language>
-		<language name="JPN_KANJI" width="256">エリア3</language>
-	</row>
-
-	<row id="msg_info_area4">
-		<language name="JPN" width="256">エリア4</language>
-		<language name="JPN_KANJI" width="256">エリア4</language>
-	</row>
-
-	<row id="msg_info_area5">
-		<language name="JPN" width="256">エリア5</language>
-		<language name="JPN_KANJI" width="256">エリア5</language>
-	</row>
-
-	<row id="msg_info_area6">
-		<language name="JPN" width="256">エリア6</language>
-		<language name="JPN_KANJI" width="256">エリア6</language>
-	</row>
-
-	<row id="msg_info_area7">
-		<language name="JPN" width="256">エリア7</language>
-		<language name="JPN_KANJI" width="256">エリア7</language>
-	</row>
-
-	<row id="msg_info_area8">
-		<language name="JPN" width="256">エリア8</language>
-		<language name="JPN_KANJI" width="256">エリア8</language>
-	</row>
-
-	<row id="msg_info_area9">
-		<language name="JPN" width="256">エリア9</language>
-		<language name="JPN_KANJI" width="256">エリア9</language>
-	</row>
-
-	<row id="msg_info_area10">
-		<language name="JPN" width="256">エリア10</language>
-		<language name="JPN_KANJI" width="256">エリア10</language>
+	<row id="msg_info_area">
+		<language name="JPN" width="256">エリア[2:01:２桁:0]</language>
+		<language name="JPN_KANJI" width="256">エリア[2:01:２桁:0]</language>
 	</row>
 
 	<row id="msg_info_help">
@@ -404,6 +359,26 @@
 		<language name="JPN_KANJI" width="256">この　しせつは　トレーナーの　
 みなさまに　たんれんの　ばしょとして　
 ていきょうされている　しせつです</language>
+	</row>
+
+	<row id="msg_elevator_01">
+		<language name="JPN" width="256">なんかい？</language>
+		<language name="JPN_KANJI" width="256">なんかい？</language>
+	</row>
+
+	<row id="msg_elevator_02">
+		<language name="JPN" width="256">[2:01:２桁:0]かい</language>
+		<language name="JPN_KANJI" width="256">[2:01:２桁:0]かい</language>
+	</row>
+
+	<row id="msg_elevator_03">
+		<language name="JPN" width="256">かえる</language>
+		<language name="JPN_KANJI" width="256">かえる</language>
+	</row>
+
+	<row id="msg_elevator_04">
+		<language name="JPN" width="256">やめる</language>
+		<language name="JPN_KANJI" width="256">やめる</language>
 	</row>
 
 	<flowchart-group-list>

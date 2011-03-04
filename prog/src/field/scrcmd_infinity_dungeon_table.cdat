@@ -19,7 +19,9 @@
   DEF_CMD( EvCmdInfinityDungeonWarp, EV_SEQ_INFINITY_DUNGEON_WARP )
   DEF_CMD( EvCmdInfinityDungeonGetStatus, EV_SEQ_INFINITY_DUNGEON_GET_DUNGEON_STATUS )
   DEF_CMD( EvCmdInfinityDungeonResetSeed, EV_SEQ_INFINITY_DUNGEON_INIT_SEED )
-  DEF_CMD( EvCmdInfinityDungeonSetFloorNo, EV_SEQ_INFINITY_DUNGEON_SET_FLOOR_NO )
+  DEF_CMD( EvCmdInfinityDungeonGetFloorNo, EV_SEQ_INFINITY_DUNGEON_GET_FLOOR_NO )
+  DEF_CMD( EvCmdInfinityDungeonFloorMove, EV_SEQ_INFINITY_DUNGEON_MOVE_FLOOR )
+  DEF_CMD( EvCmdInfinityDungeonGetAreaNo, EV_SEQ_INFINITY_DUNGEON_GET_AREA_NO )
   
   END_CMD
   //スクリプトコマンドテーブル終了

@@ -15,6 +15,7 @@
   .include  "../../../prog/src/field/infinity_dungeon_warp_dir.h"
   .include  "../../../prog/src/field/infinity_dungeon_def.h"
   .include  "msg_infinity_dungeon_scr.h"
+  .include  "infinity_dungeon_scr_def.h"
   .include  "d31r0101.h"
   .include  "d31r0201.h"
 
@@ -27,6 +28,9 @@ _EVENT_DATA		ev_infinity_dungeon_warp_down
 _EVENT_DATA		ev_infinity_dungeon_warp_left
 _EVENT_DATA		ev_infinity_dungeon_warp_right
 _EVENT_DATA		ev_infinity_dungeon_information
+_EVENT_DATA   ev_infinity_dungeon_elevator
+_EVENT_DATA   ev_infinity_dungeon_comeback
+_EVENT_DATA   ev_infinity_dungeon_out_elevator
 _EVENT_DATA_END
 
 
@@ -66,6 +70,83 @@ INIT_EVENT_START  ev_infinity_dungeon_warp_right
 INIT_EVENT_END
 
 //----------------------------------------------------------------------------
+//	エレベータ移動
+//-----------------------------------------------------------------------------
+INIT_EVENT_START  ev_infinity_dungeon_elevator
+  DEFINE_LOCAL select_floor
+  DEFINE_LOCAL index 
+  DEFINE_LOCAL floor_num
+  DEFINE_LOCAL end_floor
+  DEFINE_LOCAL now_floor
+  DEFINE_LOCAL now_area
+  DEFINE_LOCAL draw_floor_no
+
+  // 案内メッセージ
+  _SYSWIN_MSG( msg_elevator_01, POS_DOWN )
+  _LAST_KEYWAIT()
+ 
+  // フロアIDを取得する
+  _INFINITY_DUNGEON_GET_NOW_FLOOR_NO( now_floor )
+
+  // エリアIDを取得する
+  _INFINITY_DUNGEON_GET_NOW_AREA_NO(now_area)
+ 
+  // 階数選択メニュー
+  $floor_num = $now_area
+  $floor_num *= 10
+  $end_floor = $floor_num
+  $end_floor += INFINITYDUNGEON_FLOOR_MAX
+  $index = 0
+
+  _DEBUG_PRINT_WK(floor_num)
+  _DEBUG_PRINT_WK(end_floor)
+ 
+  // リスト作成
+	_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, select_floor )
+  WHILE $floor_num != $end_floor
+    IF $now_floor != $floor_num THEN
+      // メニューに回数表示を追加
+      $draw_floor_no = $floor_num
+      $draw_floor_no += 1
+	    _NUMBER( 0 ,  draw_floor_no , 2 )
+      _BMPMENU_MAKE_LIST( msg_elevator_02, floor_num )
+    ENDIF
+    // カウンタをインクリメント
+    $floor_num += 1
+    $index += 1
+  ENDWHILE
+  // かえる
+  _BMPMENU_MAKE_LIST( msg_elevator_03, 0xf0 )
+
+  // やめる
+  _BMPMENU_MAKE_LIST( msg_elevator_04, 0xff )
+
+  _BMPMENU_START()
+
+  // メッセージを非表示に
+  _SYSWIN_CLOSE()
+ 
+  // 選択後処理
+  IF ($select_floor != EV_WIN_B_CANCEL)&&($select_floor != 0xff) THEN
+    IF $select_floor != 0xf0 THEN
+      // 選択フロア
+      _DEBUG_PRINT_WK(select_floor)
+
+      // エレベータから出る
+      _RESERVE_SCRIPT( SCRID_INFINITY_DUNGEON_OUT_ELEVATOR )
+
+      // 選択フロアまで移動
+      _INFINITY_DUNGEON_MOVE_FLOOR( select_floor )
+    ELSE
+      // かえるしょり
+      _INFINITY_DUNGEON_WARP(WARP_INFORMATION)
+      _RESERVE_SCRIPT( SCRID_INFINITY_DUNGEON_COMEBACK )
+    ENDIF
+  ENDIF
+
+INIT_EVENT_END
+
+//----------------------------------------------------------------------------
 //	受付
 //-----------------------------------------------------------------------------
 INIT_EVENT_START  ev_infinity_dungeon_information
@@ -90,7 +171,6 @@ INIT_EVENT_END
 dungeon_information:
  DEFINE_LOCAL list_ret
  DEFINE_LOCAL rom_version
- DEFINE_LOCAL select_menu
 
   // 初期化
   $SCWK_ANSWER = 0
@@ -109,7 +189,7 @@ dungeon_information:
   _BMPMENU_MAKE_LIST( msg_info_menu_02, 1 )  //ちょうせんする
   _BMPMENU_MAKE_LIST( msg_info_menu_03, 2 )  //やめる
   _BMPMENU_START()
-     
+
   IF $list_ret != EV_WIN_B_CANCEL THEN
     SWITCH $list_ret
      CASE 0 THEN
@@ -145,60 +225,39 @@ _RET
 //-----------------------------------------------------------------------------
 select_area:
   DEFINE_LOCAL area_menu 
+  DEFINE_LOCAL list_num
+  DEFINE_LOCAL list_count
   DEFINE_LOCAL menu_num
   DEFINE_LOCAL start_room
   
-  // リスト作成
+  // ダンジョンの状態を取得
   _INFINITY_DUNGEON_GET_DUNGEON_STATUS( menu_num )
-
+ 
   // エリア選択メニュー
   _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, area_menu )
-	
-  IF $menu_num != EV_WIN_B_CANCEL THEN
-    // エリア
-    IF $menu_num >= 1 THEN
-      _BMPMENU_MAKE_LIST( msg_info_area1, 0 )
-      $start_room = INFINITY_DUNGEON_AREA_START_ROOM_1
-    ENDIF
-    IF $menu_num >= 2 THEN
-      _BMPMENU_MAKE_LIST( msg_info_area2, 1 )
-      $start_room = INFINITY_DUNGEON_AREA_START_ROOM_2
-    ENDIF
-    IF $menu_num >= 3 THEN
-      _BMPMENU_MAKE_LIST( msg_info_area3, 2 )
-      $start_room = INFINITY_DUNGEON_AREA_START_ROOM_3
-    ENDIF
-    IF $menu_num >= 4 THEN
-      _BMPMENU_MAKE_LIST( msg_info_area4, 3 )
-      $start_room = INFINITY_DUNGEON_AREA_START_ROOM_4
-    ENDIF
-    IF $menu_num >= 5 THEN
-      _BMPMENU_MAKE_LIST( msg_info_area5, 4 )
-      $start_room = INFINITY_DUNGEON_AREA_START_ROOM_5
-    ENDIF
-    IF $menu_num >= 6 THEN
-      _BMPMENU_MAKE_LIST( msg_info_area6, 5 )
-      $start_room = INFINITY_DUNGEON_AREA_START_ROOM_6
-    ENDIF
-    IF $menu_num >= 7 THEN
-      _BMPMENU_MAKE_LIST( msg_info_area7, 6 )
-      $start_room = INFINITY_DUNGEON_AREA_START_ROOM_7
-    ENDIF
-    IF $menu_num >= 8 THEN
-      _BMPMENU_MAKE_LIST( msg_info_area8, 7 )
-      $start_room = INFINITY_DUNGEON_AREA_START_ROOM_8
-    ENDIF
-    IF $menu_num >= 9 THEN
-      _BMPMENU_MAKE_LIST( msg_info_area9, 8 )
-      $start_room = INFINITY_DUNGEON_AREA_START_ROOM_9
-    ENDIF
-    IF $menu_num >= 10 THEN
-      _BMPMENU_MAKE_LIST( msg_info_area10, 9 )
-      $start_room = INFINITY_DUNGEON_AREA_START_ROOM_10
-    ENDIF
+      
+  // メニューを呼び出し
+  $list_count = 0
+  WHILE $list_count <= $menu_num
+    // エリア番号を登録
+    $start_room  = $list_count
+    $start_room *= 10
+    $list_num =  $list_count
+    $list_num += 1
+	  _NUMBER( 0 , list_num , 2 )
+    _BMPMENU_MAKE_LIST( msg_info_area, start_room )
+    $list_count += 1
+    _DEBUG_PRINT_WK(floor_num)
+  ENDWHILE
 
-    // メニュー開始
-    _BMPMENU_START()
+  // やめる
+  _BMPMENU_MAKE_LIST( msg_elevator_04, 0xff )
+
+  // メニュー開始
+  _BMPMENU_START()
+
+  // キャンセル判定
+  IF ($area_menu != EV_WIN_B_CANCEL)&&($area_menu != 0xff) THEN
 
     // 確認
     _BALLOONWIN_OBJMSG_POS( msg_info_002 , SCWK_TARGET_OBJID, POS_DL )
@@ -220,9 +279,13 @@ select_area:
       
       // 無限ダンジョン生成シードを設定
       _INFINITY_DUNGEON_INIT_SEED()
+ 
+      // エレベータから出る
+      _RESERVE_SCRIPT( SCRID_INFINITY_DUNGEON_OUT_ELEVATOR )
 
-      // フロアIDを設定する
-      _INFINITY_DUNGEON_SET_NOW_FLOOR_NO( start_room )
+      // スタートフロアまで移動
+      _INFINITY_DUNGEON_MOVE_FLOOR( area_menu )
+     
     ELSE
       // やめる
       _BALLOONWIN_OBJMSG_POS( msg_info_cancel , SCWK_TARGET_OBJID, POS_DL )
@@ -235,9 +298,38 @@ select_area:
     _LAST_KEYWAIT()
     _BALLOONWIN_CLOSE()
   ENDIF
-
 _RET
 
+//----------------------------------------------------------------------------
+//	帰還
+//-----------------------------------------------------------------------------
+INIT_EVENT_START  ev_infinity_dungeon_comeback
+
+  // 道をあける
+  _OBJ_ANIME( OBJ_INFORMATION, anm_move_make_room_l )
+	_OBJ_ANIME_WAIT()
+  
+  // 主人公をエレベータまで移動
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_elev_out_reception )
+  _OBJ_ANIME_WAIT()
+  
+  // みちをふさぐ
+  _OBJ_ANIME( OBJ_INFORMATION, anm_move_default_l )
+  _OBJ_ANIME_WAIT()
+
+INIT_EVENT_END
+
+
+//----------------------------------------------------------------------------
+//	エレベータから降りる
+//-----------------------------------------------------------------------------
+INIT_EVENT_START  ev_infinity_dungeon_out_elevator
+
+  // 主人公をエレベータまで移動
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_elev_out )
+  _OBJ_ANIME_WAIT()
+
+INIT_EVENT_END
 
 //--------------------------------------------------------------------
 // 受付がみちをあける
@@ -249,11 +341,37 @@ _ANIME_LABEL	anm_move_make_room_l
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
+// 受付がみちをふさぐ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_move_default_l
+  _ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+  _ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
 // エレベータまで移動(主人公)
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_move_elev_in
 	_ANIME_DATA	AC_WALK_U_8F,3
   _ANIME_DATA	AC_WALK_L_8F,2
 	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 受付まで移動(主人公)
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_move_elev_out_reception
+	_ANIME_DATA	AC_WALK_D_8F,3
+  _ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_WALK_D_8F,3
+  _ANIME_DATA AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 受付まで移動(主人公)
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_move_elev_out
+  _ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 

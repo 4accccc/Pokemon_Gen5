@@ -1,5 +1,5 @@
 #../data/d31r0401.mev
-../tmp/d31r0401.bin:../data/d31r0401.mev ../../script/sp_d31r0401.bin $(UNIQ_SCRIPTHEADER) ../tmp/d31r0401.h ../../flagwork/work_define.h ../../../../prog/include/field/eventdata_type.h ../../script/D31R0401_def.h 
+../tmp/d31r0401.bin:../data/d31r0401.mev ../../script/sp_d31r0401.bin $(UNIQ_SCRIPTHEADER) ../tmp/d31r0401.h ../../../../prog/include/field/eventdata_type.h ../../script/D31R0401_def.h ../../flagwork/work_define.h 
 	@echo ../data/d31r0401.mev
-	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/d31r0401.h ../../flagwork/work_define.h ../../../../prog/include/field/eventdata_type.h ../../script/D31R0401_def.h 
+	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/d31r0401.h ../../../../prog/include/field/eventdata_type.h ../../script/D31R0401_def.h ../../flagwork/work_define.h 
 

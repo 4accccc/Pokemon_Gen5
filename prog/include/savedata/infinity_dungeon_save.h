@@ -45,6 +45,7 @@ extern u8 INFINITYDUNGEON_SAVE_GetPartnerID( const INFINITYDUNGEON_SAVE *p_save 
 extern u8 INFINITYDUNGEON_SAVE_GetFloorID( const INFINITYDUNGEON_SAVE *p_save );
 extern u8 INFINITYDUNGEON_SAVE_GetRoomID( const INFINITYDUNGEON_SAVE *p_save );
 extern u8 INFINITYDUNGEON_SAVE_GetPartnerID( const INFINITYDUNGEON_SAVE *p_save );
+extern u8 INFINITYDUNGEON_SAVE_GetAreaID( const INFINITYDUNGEON_SAVE *p_save );
 
 // ダンジョン情報（設定系）
 extern void INFINITYDUNGEON_SAVE_SetDungeonStatus( INFINITYDUNGEON_SAVE *p_save ,u8 dungeon_status);

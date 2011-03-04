@@ -315,3 +315,5 @@
   ARCID_RESONANCE_RESORT_DATA "resonance_resort_data.narc" #レゾナンスリゾートデータ
   ARCID_WBTLIST_GRA   "wbt_list_gra.narc"   #WBTトーナメント表アプリグラフィック
   ARCID_FMISSION_LOG   "fmission_log.narc"   #フェスミッションログ画面グラフィック
+  ARCID_INFINITY_DUNGEON_GIMMICK_DATA   "fieldmap/infinity_dungeon_gmk.narc"   #無限ダンジョンギミックデータ
+  
