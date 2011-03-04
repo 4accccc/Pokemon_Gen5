@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-02T15:08:07"/>
+	<create user="matsumiya" host="W00224" date="2011-03-04T19:08:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="194"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1294" top="205" right="1999" bottom="833" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,8 +292,10 @@
 	</lock>
 
 
-	<row id="msg_c01r0202_gentleman_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
-		<comment>♂</comment>
+	<row id="msg_c01r0202_gentleman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+
+※SWANでメッセージ変更予定</comment>
 		<attribute name="キャラ指定">GENTLEMAN
 紳士</attribute>
 		<language name="JPN" width="256">きみの　ポケモンは
@@ -306,8 +308,10 @@
 愛着　わいちゃうよね</language>
 	</row>
 
-	<row id="msg_c01r0202_dancer_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
-		<comment>♂</comment>
+	<row id="msg_c01r0202_dancer_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+
+※SWANでメッセージ変更予定</comment>
 		<attribute name="キャラ指定">MAN1</attribute>
 		<language name="JPN" width="256">オレさ　がいこくに　いってさ
 ポケモンしょうぶ　してきたんだぜ！</language>
@@ -315,8 +319,10 @@
 ポケモン勝負　してきたんだぜ！</language>
 	</row>
 
-	<row id="msg_c01r0202_woman3_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
-		<comment>♀</comment>
+	<row id="msg_c01r0202_woman3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+
+※SWANでメッセージ変更予定</comment>
 		<attribute name="キャラ指定">WOMAN3
 エプロン</attribute>
 		<language name="JPN" width="256">たびの　トレーナーさん▼

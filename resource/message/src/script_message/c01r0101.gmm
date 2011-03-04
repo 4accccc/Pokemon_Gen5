@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-03T12:28:56"/>
+	<create user="matsumiya" host="W00224" date="2011-03-04T19:07:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -359,7 +359,7 @@
 ・c01ジムバッジ取得まで
 　階段前に配置、２Fへのストッパー
 
-・メッセージ変更予定</comment>
+・SWANでメッセージ変更予定</comment>
 		<attribute name="キャラ指定">BOY3
 少年（聡明）</attribute>
 		<language name="JPN" width="256">うえは　ダメダメ！！
@@ -376,7 +376,7 @@
 		<comment>♂
 ・c01ジムバッジ取得後、座標移動
 
-・メッセージ変更予定</comment>
+・SWANでメッセージ変更予定</comment>
 		<attribute name="キャラ指定">BOY3
 少年（聡明）</attribute>
 		<language name="JPN" width="256">うえの　マコモねえちゃん

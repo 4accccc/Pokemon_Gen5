@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-03T12:34:11"/>
+	<create user="matsumiya" host="W00224" date="2011-03-04T19:08:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -297,7 +297,7 @@
 ・アイテム入手前
 　No003「スーパーボール」入手処理
 
-・内容、メッセージ変更予定</comment>
+※SWANで内容、メッセージ変更予定</comment>
 		<attribute name="キャラ指定">BIGMAN
 太った青年</attribute>
 		<language name="JPN" width="256">おっ！　トレーナー！
@@ -314,7 +314,7 @@
 		<comment>♀
 ・アイテム入手後
 
-・メッセージ変更予定</comment>
+※SWANでメッセージ変更予定</comment>
 		<attribute name="キャラ指定">BIGMAN
 太った青年</attribute>
 		<language name="JPN" width="256">ボールは　いくら　あっても
@@ -329,8 +329,10 @@
 ポケモンは　捕まえやすいね！</language>
 	</row>
 
-	<row id="msg_c01r0201_oldman1_01">
-		<comment>♂</comment>
+	<row id="msg_c01r0201_oldman1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+
+※SWANでメッセージ変更予定</comment>
 		<attribute name="キャラ指定">OLDMAN1
 おじいさん</attribute>
 		<language name="JPN" width="256">ばあさんとの　であいは
@@ -341,8 +343,10 @@
 何度　挑んでも　勝てなかったな</language>
 	</row>
 
-	<row id="msg_c01r0201_oldwoman1_01">
-		<comment>♀</comment>
+	<row id="msg_c01r0201_oldwoman1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+
+※SWANでメッセージ変更予定</comment>
 		<attribute name="キャラ指定">OLDWOMAN1
 おばあさん</attribute>
 		<language name="JPN" width="256">そういう　いみ　では
