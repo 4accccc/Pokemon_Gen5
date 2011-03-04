@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-17T11:46:32"/>
+	<create user="matsumiya" host="W00224" date="2011-03-04T15:25:33"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1294" top="205" right="1999" bottom="833" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -359,7 +359,7 @@
 	</lock>
 
 
-	<row id="msg_c09r0501_boss_01w" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c09r0501_boss_01w" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・このマップに入るとカメラがＮを中心に移動
 ・WHITEver
@@ -375,7 +375,7 @@
 トモダチ　レシラムの　おかげだ！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_c09r0501_boss_01b" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c09r0501_boss_01b" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・BLACKver
 ・続けてboss_02</comment>
@@ -390,7 +390,7 @@
 トモダチ　ゼクロムの　おかげだ！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_c09r0501_boss_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c09r0501_boss_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてチャンピオンに隣接してから
 　boss_03
@@ -422,7 +422,7 @@
 キライじゃ　ないけど[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_c09r0501_boss_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c09r0501_boss_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてchampion_01</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
@@ -438,7 +438,7 @@
 ポケモンを　解き放て　と！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_c09r0501_champion_01">
+	<row id="msg_c09r0501_champion_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・！マーク表示後、メッセージ
 ・続けてboss_04</comment>
@@ -452,7 +452,7 @@
 それだけは　しないでくれっ！！▼</language>
 	</row>
 
-	<row id="msg_c09r0501_boss_04" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c09r0501_boss_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・メッセージ表示後、主人公をみて！マーク表示
 ・続けてboss_05</comment>
@@ -469,7 +469,7 @@
 もう　なにも　いわないでほしい[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_c09r0501_boss_05" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c09r0501_boss_05" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・主人公に隣接してメッセージ
 ・WHITEならboss_06w
@@ -479,7 +479,7 @@
 		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]……待っていたよ[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_c09r0501_boss_06w" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c09r0501_boss_06w" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてboss_07</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
@@ -493,7 +493,7 @@
 レシラムに　反応しているね[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_c09r0501_boss_06b" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c09r0501_boss_06b" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてboss_07</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
@@ -507,7 +507,7 @@
 ゼクロムに　反応しているね[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_c09r0501_boss_07" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c09r0501_boss_07" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてboss_07a</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
@@ -519,7 +519,7 @@
 相応しいのは　ここ　ではない！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_c09r0501_boss_07a" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c09r0501_boss_07a" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・Nの芝居（片手を挙げる）
 　メッセージ表示
@@ -534,7 +534,7 @@
 このポケモンリーグを　囲め！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_c09r0501_boss_08" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c09r0501_boss_08" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・画面復帰時、主人公を中心にしたカメラに戻す
 ・画面上（＝城）を見ながらメッセージ表示
@@ -552,7 +552,7 @@
 下々に　とどろかせる[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_c09r0501_boss_09" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c09r0501_boss_09" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・メッセージ表示後、Ｎ、城のほうに移動
 ・画面外に消えると
@@ -579,7 +579,7 @@
 それで　決まる！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_c09r0501_black_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c09r0501_black_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・チャンピオンの隣の来るとメッセージ表示
 ・続けてchampion_02</comment>
@@ -591,7 +591,7 @@
 ……チャンピオンらしく　ないよ▼</language>
 	</row>
 
-	<row id="msg_c09r0501_champion_02">
+	<row id="msg_c09r0501_champion_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてblack_02</comment>
 		<attribute name="キャラ指定">CHAMPION
@@ -600,7 +600,7 @@
 		<language name="JPN_KANJI" width="256">アデク『……よく　ここまで▼</language>
 	</row>
 
-	<row id="msg_c09r0501_black_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c09r0501_black_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてchampion_03</comment>
 		<attribute name="キャラ指定">友達♂
@@ -613,7 +613,7 @@
 なかなか　タフでしたけど▼</language>
 	</row>
 
-	<row id="msg_c09r0501_champion_03">
+	<row id="msg_c09r0501_champion_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてblack_03</comment>
 		<attribute name="キャラ指定">CHAMPION
@@ -622,7 +622,7 @@
 		<language name="JPN_KANJI" width="256">アデク『……やるでは　ないか▼</language>
 	</row>
 
-	<row id="msg_c09r0501_black_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c09r0501_black_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてblack_03a</comment>
 		<attribute name="キャラ指定">友達♂
@@ -633,7 +633,7 @@
 わかったから　強くなれたんです▼</language>
 	</row>
 
-	<row id="msg_c09r0501_black_03a" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c09r0501_black_03a" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・主人公を見てメッセージ表示
 ・続けてchampion_04</comment>
@@ -653,7 +653,7 @@
 学び　強くなれたってこと　を▼</language>
 	</row>
 
-	<row id="msg_c09r0501_black_04" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c09r0501_black_04" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・クリアまで繰り返し
 ・面倒だけど
@@ -666,7 +666,7 @@
 面倒は　ぼくが　みておくから</language>
 	</row>
 
-	<row id="msg_c09r0501_champion_04" text-color=",,,#000000,,,,,,,,,,,,,,,">
+	<row id="msg_c09r0501_champion_04" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・クリアまで繰り返し
 ・面倒だけど
@@ -706,7 +706,7 @@
 それを　教えてやってくれい▼</language>
 	</row>
 
-	<row id="msg_c09r0501_champion_04a">
+	<row id="msg_c09r0501_champion_04a" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・クリアまで繰り返し
 ・面倒だけど

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-15T22:46:59"/>
+	<create user="matsumiya" host="W00224" date="2011-03-04T15:25:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1426" top="235" right="2131" bottom="855" maximized="no" rayout="Vertical2">
+	<dialog left="1294" top="205" right="1999" bottom="833" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,12 +292,15 @@
 	</lock>
 
 
-	<row id="msg_c09r0601_champion_01">
+	<row id="msg_c09r0601_champion_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・初回
 ・続けて、主人公のほうを向いて
 　主人公♂→champion_02
-　主人公♀→champion_03</comment>
+　主人公♀→champion_03
+
+※SWANでは動作モデルをアイリスに
+　あわせてメッセージ変更予定</comment>
 		<attribute name="キャラ指定">CHAMPION
 アデク</attribute>
 		<language name="JPN" width="256">アデク『……ここが
@@ -314,12 +317,15 @@
 歴史に　残すための　場所▼</language>
 	</row>
 
-	<row id="msg_c09r0601_champion_02">
+	<row id="msg_c09r0601_champion_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・2回目以降
 ・続けて、主人公のほうを向いて
 　主人公♂→champion_02
-　主人公♀→champion_03</comment>
+　主人公♀→champion_03
+
+※SWANでは動作モデルをアイリスに
+　あわせてメッセージ変更予定</comment>
 		<attribute name="キャラ指定">CHAMPION
 アデク</attribute>
 		<language name="JPN" width="256">アデク『……なんど　きても
@@ -330,10 +336,13 @@
 身が　引き締まるな▼</language>
 	</row>
 
-	<row id="msg_c09r0601_champion_03">
+	<row id="msg_c09r0601_champion_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・続けてchampion_05
-・0＝主人公名</comment>
+・0＝主人公名
+
+※SWANでは動作モデルをアイリスに
+　あわせてメッセージ変更予定</comment>
 		<attribute name="キャラ指定">CHAMPION
 アデク</attribute>
 		<language name="JPN" width="256">さてと
@@ -342,10 +351,13 @@
 [1:03:ポケモンタイプ:0]くん▼</language>
 	</row>
 
-	<row id="msg_c09r0601_champion_04">
+	<row id="msg_c09r0601_champion_04" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・続けてchampion_05
-・0＝主人公名</comment>
+・0＝主人公名
+
+※SWANでは動作モデルをアイリスに
+　あわせてメッセージ変更予定</comment>
 		<attribute name="キャラ指定">CHAMPION
 アデク</attribute>
 		<language name="JPN" width="256">さてと
@@ -354,10 +366,13 @@
 [1:03:ポケモンタイプ:0]さん▼</language>
 	</row>
 
-	<row id="msg_c09r0601_champion_05">
+	<row id="msg_c09r0601_champion_05" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・メッセージ後、殿堂入りの演出
-・そしてスタッフロールへ</comment>
+・そしてスタッフロールへ
+
+※SWANでは動作モデルをアイリスに
+　あわせてメッセージ変更予定</comment>
 		<attribute name="キャラ指定">CHAMPION
 アデク</attribute>
 		<language name="JPN" width="256">この　でんどういりの　へやに
