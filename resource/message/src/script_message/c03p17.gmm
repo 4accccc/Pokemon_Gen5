@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-25T10:58:30"/>
+	<create user="matsumiya" host="W00224" date="2011-03-04T21:09:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1407" top="79" right="2112" bottom="707" maximized="no" rayout="Vertical2">
+	<dialog left="1294" top="205" right="1999" bottom="833" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -430,20 +430,19 @@
 		<language name="JPN_KANJI" width="256">ヒヤップ　なんだね？</language>
 	</row>
 
-	<row id="msg_c03p17_assistantm_09" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03p17_assistantm_09" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・アイテム入手前
 ・選択肢表示
-　Bボタン→終了</comment>
+　Bボタン→終了
+※SWANでメッセージ調整</comment>
 		<attribute name="キャラ指定">ASSISTANTM</attribute>
 		<language name="JPN" width="256">じゃあ　きみなら
 ヤナップ　バオップ　ヒヤップ　の▽
-どの　ポケモンを▽
-しんか　させてみたい？</language>
+どの　ポケモンを　しんか　させたい？</language>
 		<language name="JPN_KANJI" width="256">じゃあ　きみなら
 ヤナップ　バオップ　ヒヤップ　の▽
-どの　ポケモンを▽
-進化させて　みたい？</language>
+どの　ポケモンを　進化させたい？</language>
 	</row>
 
 	<row id="msg_c03p17_assistantm_10" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
