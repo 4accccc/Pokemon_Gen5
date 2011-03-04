@@ -36,6 +36,7 @@
 
 #include "system/main.h"
 
+#include "app/wbt_list.h"
 //======================================================================
 //======================================================================
 //--------------------------------------------------------------
@@ -46,7 +47,8 @@
 VMCMD_RESULT EvCmdWBTSystemStart( VMHANDLE * core, void * wk )
 {
   //仮：
-  WBTSYS * sys = WBTSYS_Create( HEAPID_PROC );
+  WBTSYS * wbtsys = WBTSYS_Create( HEAPID_PROC );
+  //GAMEDATA_SetWBTSys( gamedata, wbtsys );
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -57,13 +59,18 @@ VMCMD_RESULT EvCmdWBTSystemStart( VMHANDLE * core, void * wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdWBTSystemEnd( VMHANDLE * core, void * wk )
 {
+  WBTSYS * wbtsys = NULL;
   //仮：
-  WBTSYS_Delete( NULL );
+  // wbtsys = GAMEDATA_GetWBTSys( gamedata );
+  // GF_ASSERT( wbtsys != NULL );
+  WBTSYS_Delete( wbtsys );
+  //GAMEDATA_SetWBTSys( gamedata, NULL );
   return VMCMD_RESULT_CONTINUE;
 }
 
 //======================================================================
 //======================================================================
+FS_EXTERN_OVERLAY(namein);
 //--------------------------------------------------------------
 /**
  * @brief スクリプトコマンド：トーナメントリストの表示
@@ -73,6 +80,24 @@ VMCMD_RESULT EvCmdWBTShowTornamentList( VMHANDLE * core, void * wk )
 {
   u16 list_type = SCRCMD_GetVMWorkValue( core, wk );
   //仮：ここでトーナメント表を表示
+  SCRCMD_WORK*    work = wk;
+  SCRIPT_WORK*      sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK  *gsys = SCRIPT_GetGameSysWork( sc );
+  FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  HEAPID heapID = SCRCMD_WORK_GetHeapID( work );
+
+  GMEVENT * next_event;
+  WBTLIST_PARAM * p_param;
+
+  p_param = GFL_HEAP_AllocClearMemory( heapID, sizeof(WBTLIST_PARAM) );
+  p_param->gamesys  = gsys;
+
+  next_event = EVENT_FieldSubProcNoFade_Callback(
+      gsys, fieldmap, FS_OVERLAY_ID(namein), &WBTListProcData, p_param,
+      NULL, p_param );
+  SCRIPT_CallEvent( sc, next_event );
+  OS_Printf( "WBT List Start\n" );
+
   return VMCMD_RESULT_SUSPEND;
 }
 
@@ -209,6 +234,25 @@ VMCMD_RESULT EvCmdWBTGetDLNumber( VMHANDLE * core, void * wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTSelectPokemon( VMHANDLE * core, void * wk )
+{
+  SCRCMD_WORK*    work = wk;
+  SCRIPT_WORK*      sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRIPT_GetGameSysWork( sc );
+  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
+
+  u8 buf = TRUE;
+  //仮：ここからポケモン選択イベントを呼び出す
+  SCRIPT_CallEvent( sc, WBT_EVENT_SetSelectPokeList( NULL, gsys, buf ) );
+
+  return VMCMD_RESULT_SUSPEND;
+}
+
 //======================================================================
 //======================================================================
 //--------------------------------------------------------------
@@ -246,21 +290,31 @@ VMCMD_RESULT EvCmdWBTAnnounce( VMHANDLE * core, void * wk )
   return VMCMD_RESULT_SUSPEND;
 }
 //--------------------------------------------------------------
-/**
- * @brief スクリプトコマンド：
- */
 //--------------------------------------------------------------
-VMCMD_RESULT EvCmdWBTSelectPokemon( VMHANDLE * core, void * wk )
+VMCMD_RESULT EvCmdWBTSetTournamentName( VMHANDLE * core, void * wk )
 {
-  SCRCMD_WORK*    work = wk;
-  SCRIPT_WORK*      sc = SCRCMD_WORK_GetScriptWork( work );
-  GAMESYS_WORK *gsys = SCRIPT_GetGameSysWork( sc );
-  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
-
-  u8 buf = TRUE;
-  //仮：ここからポケモン選択イベントを呼び出す
-  SCRIPT_CallEvent( sc, WBT_EVENT_SetSelectPokeList( NULL, gsys, buf ) );
-
-  return VMCMD_RESULT_SUSPEND;
+  u8 idx = VMGetU8(core);
+  return VMCMD_RESULT_CONTINUE;
 }
 
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTSetEnemyName( VMHANDLE * core, void * wk )
+{
+  u8 idx = VMGetU8(core);
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTGetVictoryCount( VMHANDLE * core, void * wk )
+{
+  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
+
+  //仮
+  *ret_wk = 1;
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//======================================================================
+//======================================================================

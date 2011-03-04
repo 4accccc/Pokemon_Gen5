@@ -12156,6 +12156,7 @@
 
     .macro _ASM_WBT_CHECK_BATTLE_RULE ret_wk  
     .short  EV_SEQ_WBT_CHECK_BATTLE_RULE
+    .short  \ret_wk
     .endm
 
 //--------------------------------------------------------------
@@ -12346,6 +12347,47 @@
     .macro _ASM_WBT_ANNOUNCE num
     .short  EV_SEQ_WBT_ANNOUNCE
     .short  \num
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief WBT:トーナメント名のセット
+ * @param[in] idx セットするタグナンバー
+ */
+//--------------------------------------------------------------
+#define _WBT_SET_TOURNAMENT_NAME( idx ) \
+    _ASM_WBT_SET_TOURNAMENT_NAME idx
+
+    .macro _ASM_WBT_SET_TOURNAMENT_NAME idx
+    .short  EV_SEQ_WBT_SET_TOURNAMENT_NAME
+    .byte   \idx
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief WBT:対戦者名のセット
+ * @param[in] idx セットするタグナンバー
+ */
+//--------------------------------------------------------------
+#define _WBT_SET_ENEMY_NAME( idx ) \
+    _ASM_WBT_SET_ENEMY_NAME idx
+    .macro _ASM_WBT_SET_ENEMY_NAME idx
+    .short  EV_SEQ_WBT_SET_ENEMY_NAME
+    .byte   \idx
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief WBT:優勝回数の取得
+ * @param[out]  ret_wk
+ */
+//--------------------------------------------------------------
+#define _WBT_GET_VICTORY_COUNT( ret_wk ) \
+    _ASM_WBT_GET_VICTORY_COUNT ret_wk
+
+    .macro  _ASM_WBT_GET_VICTORY_COUNT ret_wk
+    .short  EV_SEQ_WBT_GET_VICTORY_COUNT
+    .short  \ret_wk
     .endm
 
 //======================================================================

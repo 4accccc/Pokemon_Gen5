@@ -32,6 +32,9 @@
   DEF_CMD( EvCmdWBTTrainerMsg,        EV_SEQ_WBT_TRAINER_MSG )
   DEF_CMD( EvCmdWBTTrainerBattle,     EV_SEQ_WBT_TRAINER_BATTLE )
   DEF_CMD( EvCmdWBTAnnounce,          EV_SEQ_WBT_ANNOUNCE )
+  DEF_CMD( EvCmdWBTSetTournamentName, EV_SEQ_WBT_SET_TOURNAMENT_NAME )
+  DEF_CMD( EvCmdWBTSetEnemyName,      EV_SEQ_WBT_SET_ENEMY_NAME )
+  DEF_CMD( EvCmdWBTGetVictoryCount,   EV_SEQ_WBT_GET_VICTORY_COUNT )
   
   END_CMD
   //スクリプトコマンドテーブル終了
