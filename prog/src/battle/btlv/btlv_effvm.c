@@ -8506,6 +8506,11 @@ void  BTLV_EFFVM_StartDebug( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, co
       GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
       0, 0 );
 
+  // パレットフェードの初期化 ichiraku
+  {
+    BTLV_EFFECT_SetPaletteFade( BTLEFF_PAL_FADE_ALL, 0, 0, 0, 0 );
+  }
+
   bevw->execute_effect_type = type;
 
   //BGMのマスターボリュームを下げる
