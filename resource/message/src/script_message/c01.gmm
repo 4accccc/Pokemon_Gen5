@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-03T12:24:41"/>
+	<create user="matsumiya" host="W00224" date="2011-03-04T18:40:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_c01_inventor_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c01_inventor_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・ジムバッジ取得後
 　pos（ジムの前）でイベント開始
@@ -319,7 +319,7 @@
 　ここから削除
 ・代わりにleader1_01登場
 
-・削除予定</comment>
+※SWANではストッパー処理を削除予定</comment>
 		<attribute name="キャラ指定">DANPEI
 ダンペイ</attribute>
 		<language name="JPN" width="256">ジムリーダーですか？▼
@@ -338,7 +338,7 @@
 このジムの　隣の　隣っす</language>
 	</row>
 
-	<row id="msg_c01_leader1_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c01_leader1_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・？マーク表示後にメッセージ表示
 ・表示後、ジム方面に移動
@@ -373,7 +373,7 @@
 それでは　中で　待っていますね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c01_leader1_01a" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c01_leader1_01a" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・d01r0101でポケモンをもらっていないとき</comment>
 		<attribute name="キャラ指定">LEADER1
@@ -408,12 +408,14 @@
 では　失礼しますね▼</language>
 	</row>
 
-	<row id="msg_c01_stop_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c01_stop_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・r03側ストッパー
 ・C01ジムバッジ入手前
 　メッセージ表示後
-　主人公、一歩もどされる</comment>
+　主人公、一歩もどされる
+
+※SWANではストッパー処理を削除予定</comment>
 		<attribute name="キャラ指定">OLDMAN</attribute>
 		<language name="JPN" width="256">おぬし　ジムバッジの　１つも
 もっておらぬ　ようじゃが[BE:01:ページ切り替え（クリア）]
