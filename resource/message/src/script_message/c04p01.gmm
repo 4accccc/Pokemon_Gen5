@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-22T17:45:42"/>
+	<create user="matsumiya" host="W00224" date="2011-03-04T22:58:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1294" top="205" right="1999" bottom="833" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -359,7 +359,7 @@
 	</lock>
 
 
-	<row id="msg_c04p01_boss_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c04p01_boss_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・最初からGRIDX=23、GRIDZ=13）下向きで待機
 ・pos（GRIDX=20.GRIDZ=12^16）を踏むと
@@ -378,7 +378,7 @@
 ついてきたまえ[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_c04p01_boss_02" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c04p01_boss_02" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・観覧車前に到達して
 　辺りを見回す動きの後にメッセージ表示
@@ -402,7 +402,7 @@
 美しい　数式の　集まり……[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_c04p01_hakaim1_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04p01_hakaim1_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・観覧車から降りるとプラズマ団が近づいてきて
 　メッセージ表示
@@ -412,7 +412,7 @@
 		<language name="JPN_KANJI" width="256">プラズマ団『Ｎさま！▼</language>
 	</row>
 
-	<row id="msg_c04p01_hakaim2_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04p01_hakaim2_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてboss_03
 ・戦闘後には削除済みで</comment>
@@ -421,7 +421,7 @@
 		<language name="JPN_KANJI" width="256">プラズマ団『ご無事ですか！▼</language>
 	</row>
 
-	<row id="msg_c04p01_boss_03" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c04p01_boss_03" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・プラズマ団のほうは向かない(気にしていない）
 ・はい/いいえの選択
@@ -445,7 +445,7 @@
 ボクの　考え　理解できるかい？[BE:09:速度コントロール:0]</language>
 	</row>
 
-	<row id="msg_c04p01_boss_04" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c04p01_boss_04" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・はい選択時
 ・トレーナー戦闘に</comment>
@@ -466,7 +466,7 @@
 相手してもらうよ[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_c04p01_boss_05" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c04p01_boss_05" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・いいえ選択時
 ・トレーナー戦闘に</comment>
@@ -487,7 +487,7 @@
 相手してもらうよ[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_c04p01_boss_06" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c04p01_boss_06" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・戦闘後、フィールドに復帰すると
 　このメッセージ表示
@@ -504,7 +504,7 @@
 そのために……！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_c04p01_boss_07" back-color="#8080ff,,,#8080ff,,,,,,,,,,,,,,,">
+	<row id="msg_c04p01_boss_07" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・カットイン
 ・続けてboss_08</comment>
@@ -533,7 +533,7 @@
 そこで　ボクを　とめてみせるんだ▼</language>
 	</row>
 
-	<row id="msg_c04p01_boss_08" back-color="#8080ff,,,#8080ff,,,,,,,,,,,,,,,">
+	<row id="msg_c04p01_boss_08" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・フィールドに戻り、メッセージ表示後
 　画面左に退場していく
