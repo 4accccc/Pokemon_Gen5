@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-10T17:08:17"/>
+	<create user="matsumiya" host="W00224" date="2011-03-05T16:15:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="187"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -292,8 +292,10 @@
 	</lock>
 
 
-	<row id="msg_d10r0201_poke10_01">
-		<comment>キュレムの鳴き声</comment>
+	<row id="msg_d10r0201_poke10_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>キュレムの鳴き声
+
+※SWANでは新規イベント</comment>
 		<attribute name="キャラ指定">POKE10</attribute>
 		<language name="JPN" width="256">ヒュラララ！</language>
 		<language name="JPN_KANJI" width="256">ヒュラララ！</language>
