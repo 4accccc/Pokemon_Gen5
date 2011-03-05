@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-22T15:38:16"/>
+	<create user="matsumiya" host="W00224" date="2011-03-05T16:04:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1295" top="201" right="2000" bottom="829" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_d08r0601_leader7_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d08r0601_leader7_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・pos（GRIDX=21、GRIDZ=14~16）起動
 　ハチク、上向きのまま、メッセージ表示
@@ -313,7 +313,7 @@
 だから　きみが　行け！▼</language>
 	</row>
 
-	<row id="msg_d08r0601_leader7_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d08r0601_leader7_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・leader7_01表示後、繰り返し
 ・話しかけても振り向かない</comment>
@@ -325,7 +325,7 @@
 だが　一刻を　争うぞ！</language>
 	</row>
 
-	<row id="msg_d08r0601_black_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d08r0601_black_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・pos（GRIDX=20、GRIDZ=14~16）起動
 　チェレン、左向きのまま、メッセージ表示
@@ -341,7 +341,7 @@
 まったく　メンドーだな▼</language>
 	</row>
 
-	<row id="msg_d08r0601_black_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d08r0601_black_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・black_01表示後、繰り返し
 ・話しかけても振り向かない</comment>
@@ -358,7 +358,7 @@
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_d08r0601_hakaim1_01">
+	<row id="msg_d08r0601_hakaim1_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・c07ジムバッジ取得で出現
 ・d08r0901イベント終了で削除
@@ -370,7 +370,7 @@
 ジムリーダーの　実力か！</language>
 	</row>
 
-	<row id="msg_d08r0601_hakaiw1_01">
+	<row id="msg_d08r0601_hakaiw1_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・c07ジムバッジ取得で出現
 ・d08r0901イベント終了で削除
@@ -382,7 +382,7 @@
 七賢人さまと　同じ……？</language>
 	</row>
 
-	<row id="msg_d08r0601_hakaim3_01">
+	<row id="msg_d08r0601_hakaim3_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・c07ジムバッジ取得で出現
 ・d08r0901イベント終了で削除
@@ -394,7 +394,7 @@
 だれにも　ジャマは　させない！</language>
 	</row>
 
-	<row id="msg_d08r0601_hakaim2_01">
+	<row id="msg_d08r0601_hakaim2_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・c07ジムバッジ取得で出現
 ・d08r0901イベント終了で削除
@@ -408,7 +408,7 @@
 どうして　妨害する！</language>
 	</row>
 
-	<row id="msg_d08r0601_hakaiw1_02">
+	<row id="msg_d08r0601_hakaiw1_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・c07ジムバッジ取得で出現
 ・d08r0901イベント終了で削除
@@ -420,7 +420,7 @@
 こどもの　くせに！！</language>
 	</row>
 
-	<row id="msg_d08r0601_hakaim4_01">
+	<row id="msg_d08r0601_hakaim4_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・c07ジムバッジ取得で出現
 ・d08r0901イベント終了で削除
@@ -432,7 +432,7 @@
 ジムリーダーに　負けたんだよ</language>
 	</row>
 
-	<row id="msg_d08r0601_hakaiw1_03">
+	<row id="msg_d08r0601_hakaiw1_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・c07ジムバッジ取得で出現
 ・d08r0901イベント終了で削除

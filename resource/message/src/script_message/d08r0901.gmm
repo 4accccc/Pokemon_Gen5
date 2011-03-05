@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-31T14:34:22"/>
+	<create user="matsumiya" host="W00224" date="2011-03-05T16:04:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1295" top="201" right="2000" bottom="829" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -359,7 +359,7 @@
 	</lock>
 
 
-	<row id="msg_d08r0901_boss_01w" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_d08r0901_boss_01w" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂：WHITEver
 ・NはGRIDX=16、GRIDZ=12に配置
 ・pos（GRIDX=16、GRIDZ=18）起動
@@ -383,7 +383,7 @@
 ポケモンの　美しい　姿は！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_d08r0901_boss_01b" back-color="#8080ff,,,,,#8080ff,,,,,,,,,,,,,">
+	<row id="msg_d08r0901_boss_01b" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂：BLACKver
 ・</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
@@ -399,7 +399,7 @@
 ポケモンの　力強い　姿は！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_d08r0901_boss_02w" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_d08r0901_boss_02w" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂：WHITEver
 ・画面上（ポケモン）を見ながらメッセージ
 ・続けてboss_03w</comment>
@@ -422,7 +422,7 @@
 ようやく　実現する[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_d08r0901_boss_02b" back-color="#8080ff,,,,,#8080ff,,,,,,,,,,,,,">
+	<row id="msg_d08r0901_boss_02b" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂：BLACKver
 ・</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
@@ -444,7 +444,7 @@
 ようやく　実現する[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_d08r0901_boss_03w" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_d08r0901_boss_03w" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂：WHITEver
 ・N、下向きに
 ・このメッセージ表示前に
@@ -467,7 +467,7 @@
 ボクたちを　阻止できる！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_d08r0901_boss_03b" back-color="#8080ff,,,,,#8080ff,,,,,,,,,,,,,">
+	<row id="msg_d08r0901_boss_03b" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂：BLACKver
 ・</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
@@ -487,7 +487,7 @@
 ボクたちを　阻止できる！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_d08r0901_boss_04w" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_d08r0901_boss_04w" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂：WHITEver
 ・メッセージ表示後、N、3歩上に移動
 ・移動すると画面右から左へシンが横切る
@@ -526,7 +526,7 @@
 キミを　待っている[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_d08r0901_boss_04b" back-color="#8080ff,,,,,#8080ff,,,,,,,,,,,,,">
+	<row id="msg_d08r0901_boss_04b" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂：BLACKver
 ・</comment>
 		<language name="JPN" width="256">[BE:09:速度コントロール:1]さて　どうする？▼
@@ -561,7 +561,7 @@
 キミを　待っている[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_d08r0901_black_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d08r0901_black_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・主人公の2歩下に走ってきてメッセージ
 　このときジムリーダーも来る
@@ -574,7 +574,7 @@
 いま　飛び去ったのって……▼</language>
 	</row>
 
-	<row id="msg_d08r0901_leader7_01">
+	<row id="msg_d08r0901_leader7_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてblack_02</comment>
 		<attribute name="キャラ指定">LEADER7
@@ -583,7 +583,7 @@
 		<language name="JPN_KANJI" width="256">ハチク『なんたること！▼</language>
 	</row>
 
-	<row id="msg_d08r0901_black_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d08r0901_black_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてleader7_02</comment>
 		<attribute name="キャラ指定">友達♂
@@ -608,7 +608,7 @@
 伝説の　ポケモンを　探せって！？▼</language>
 	</row>
 
-	<row id="msg_d08r0901_leader7_02">
+	<row id="msg_d08r0901_leader7_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・メッセージ表示後、画面暗転し
 　d08：リュウラセンの塔（外）へ切り替え</comment>

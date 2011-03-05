@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-29T20:11:06"/>
+	<create user="matsumiya" host="W00224" date="2011-03-05T16:03:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1295" top="201" right="2000" bottom="829" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_d08_hakase1_01w" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,,">
+	<row id="msg_d08_hakase1_01w" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・WHITEver
 ・c07ジムバッジ取得まで繰り返し表示</comment>
@@ -320,7 +320,7 @@
 待っていた……　そう　伝わっておる</language>
 	</row>
 
-	<row id="msg_d08_hakase1_01b" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,,">
+	<row id="msg_d08_hakase1_01b" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・BLACKver
 ・c07ジムバッジ取得まで繰り返し表示</comment>
@@ -348,7 +348,7 @@
 待っていた……　そう　伝わっておる</language>
 	</row>
 
-	<row id="msg_d08_white_00_00" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d08_white_00_00" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・c07ジムバッジ取得後からd08r0901イベント終了まで
 ・posで発動、まずこのメッセージ表示
@@ -360,7 +360,7 @@
 		<language name="JPN_KANJI" width="256">ベル『ねえねえ　[1:00:トレーナー名:0]！▼</language>
 	</row>
 
-	<row id="msg_d08_hakase1_00_02" text-color="#000000,,,,,,,,,,,,,,,,,,">
+	<row id="msg_d08_hakase1_00_02" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてwhite_00_01
 ・0＝主人公の名前</comment>
@@ -378,7 +378,7 @@
 託したのは　娘なんだよ▼</language>
 	</row>
 
-	<row id="msg_d08_white_00_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d08_white_00_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・続けてhakase1_00_03</comment>
 		<attribute name="キャラ指定">友達♀
@@ -395,7 +395,7 @@
 すっごく　感謝しています！▼</language>
 	</row>
 
-	<row id="msg_d08_hakase1_00_03" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,,">
+	<row id="msg_d08_hakase1_00_03" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてwhite_00_02
 ・0＝主人公の名前</comment>
@@ -429,7 +429,7 @@
 追いかけて　いったが……▼</language>
 	</row>
 
-	<row id="msg_d08_white_00_02" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d08_white_00_02" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・続けてバージョンで
 　hakase1_00_04w　か
@@ -442,7 +442,7 @@
 リュウラセンの塔って　なんですか？▼</language>
 	</row>
 
-	<row id="msg_d08_hakase1_00_04w" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,,">
+	<row id="msg_d08_hakase1_00_04w" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・WHITEver
 ・別方向を向いて
@@ -473,7 +473,7 @@
 待っていた……　そう　伝わっておる▼</language>
 	</row>
 
-	<row id="msg_d08_hakase1_00_04b" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,,">
+	<row id="msg_d08_hakase1_00_04b" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・BLACKver
 ・別方向を向いて
@@ -504,7 +504,7 @@
 待っていた……　そう　伝わっておる▼</language>
 	</row>
 
-	<row id="msg_d08_hakase1_00_05" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,,">
+	<row id="msg_d08_hakase1_00_05" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてwhite_00_03</comment>
 		<attribute name="キャラ指定">HAKASE1
@@ -521,7 +521,7 @@
 あまり　感心できんが……▼</language>
 	</row>
 
-	<row id="msg_d08_white_00_03" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d08_white_00_03" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・続けてhakase1_00_06
 ・0＝主人公の名前</comment>
@@ -549,7 +549,7 @@
 いいなあ……　なんて▼</language>
 	</row>
 
-	<row id="msg_d08_hakase1_00_06" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,,">
+	<row id="msg_d08_hakase1_00_06" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてhakase1_00_06
 ・0＝主人公の名前</comment>
@@ -577,7 +577,7 @@
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_d08_hakase1_00_09" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,,">
+	<row id="msg_d08_hakase1_00_09" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・アイテム入手処理
 　No054「もりのヨウカン」</comment>
@@ -589,7 +589,7 @@
 気休めには　なるだろう▼</language>
 	</row>
 
-	<row id="msg_d08_hakase1_00_10" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,,">
+	<row id="msg_d08_hakase1_00_10" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・アイテム入手後、自動で表示</comment>
 		<attribute name="キャラ指定">HAKASE1
@@ -600,7 +600,7 @@
 プラズマ団め　なにを　目論む……？▼</language>
 	</row>
 
-	<row id="msg_d08_hakase1_00_11">
+	<row id="msg_d08_hakase1_00_11" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・hakase1_00_10以降、
 　d08r0910イベント後まで繰り返し</comment>
@@ -612,7 +612,7 @@
 プラズマ団め　なにを　目論む……？</language>
 	</row>
 
-	<row id="msg_d08_white_00_04" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d08_white_00_04" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・はい選択後、d08r0910イベント後まで繰り返し
 ・0＝主人公の名前</comment>
@@ -690,7 +690,7 @@
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_d08_hakase1_06" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d08_hakase1_06" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂：d08r0701イベント後
 ・d08r0701イベント後、画面暗転でここに切り替えすると
 　このメッセージ表示
@@ -707,7 +707,7 @@
 現代に　よみがえる　とはな……▼</language>
 	</row>
 
-	<row id="msg_d08_black_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d08_black_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂：d08r0701イベント後
 ・続けてmsg_d08_white_05
 ・0＝主人公名前</comment>
@@ -729,7 +729,7 @@
 探せと　いって　飛び去った……▼</language>
 	</row>
 
-	<row id="msg_d08_white_05">
+	<row id="msg_d08_white_05" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀：d08r0701イベント後
 ・続けてmsg_d08_champion_01</comment>
 		<attribute name="キャラ指定">友達♀
@@ -742,7 +742,7 @@
 ２匹も　いるんですかあ？▼</language>
 	</row>
 
-	<row id="msg_d08_champion_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d08_champion_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂：d08r0701イベント後
 ・メッセージ表示後、全員、
 　！マーク表示し、画面下を向く
@@ -753,7 +753,7 @@
 		<language name="JPN_KANJI" width="256">？？？『ああ　そうなのだ！▼</language>
 	</row>
 
-	<row id="msg_d08_hakase1_07" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d08_hakase1_07" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂：d08r0701イベント後
 ・チャンピオンが所定のposに到達すると
 　メッセージ表示
@@ -774,7 +774,7 @@
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_d08_champion_02w" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d08_champion_02w" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂：d08r0701イベント後
 ・WHITEver
 ・続けてmsg_d08_hakase1_08w</comment>
@@ -810,7 +810,7 @@
 そんな世界に……▼</language>
 	</row>
 
-	<row id="msg_d08_champion_02b" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d08_champion_02b" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂：d08r0701イベント後
 ・BLACKver
 ・続けてmsg_d08_hakase1_08b</comment>
@@ -846,7 +846,7 @@
 そんな世界に……▼</language>
 	</row>
 
-	<row id="msg_d08_hakase1_08w" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d08_hakase1_08w" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂：d08r0701イベント後
 ・WHITEver
 ・続けてmsg_d08_champion_03w</comment>
@@ -864,7 +864,7 @@
 探すよう　いっていたらしい▼</language>
 	</row>
 
-	<row id="msg_d08_hakase1_08b" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d08_hakase1_08b" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂：d08r0701イベント後
 ・BLACKver
 ・続けてmsg_d08_champion_03b</comment>
@@ -882,7 +882,7 @@
 探すよう　いっていたらしい▼</language>
 	</row>
 
-	<row id="msg_d08_champion_03w" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d08_champion_03w" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂：d08r0701イベント後
 ・WHITEver
 ・続けてmsg_d08_white_06</comment>
@@ -904,7 +904,7 @@
 もう１匹を　待つと　いうのか？▼</language>
 	</row>
 
-	<row id="msg_d08_champion_03b" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d08_champion_03b" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂：d08r0701イベント後
 ・BLACKver
 ・続けてmsg_d08_white_06</comment>
@@ -926,7 +926,7 @@
 もう１匹を　待つと　いうのか？▼</language>
 	</row>
 
-	<row id="msg_d08_white_06">
+	<row id="msg_d08_white_06" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀：d08r0701イベント後
 ・続けてmsg_d08_champion_04</comment>
 		<attribute name="キャラ指定">友達♀
@@ -941,7 +941,7 @@
 あぶないんじゃあ……？▼</language>
 	</row>
 
-	<row id="msg_d08_champion_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d08_champion_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂：d08r0701イベント後
 ・続けてmsg_d08_hakase1_09
 ・0＝主人公名前</comment>
@@ -980,7 +980,7 @@
 [1:00:トレーナー名:0]たち　行くぞ！▼</language>
 	</row>
 
-	<row id="msg_d08_hakase1_09" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d08_hakase1_09" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂：d08r0701イベント後
 ・msg_d08_leader7_01</comment>
 		<attribute name="キャラ指定">HAKASE1
@@ -995,7 +995,7 @@
 なにか　わかると　いいのだが……▼</language>
 	</row>
 
-	<row id="msg_d08_leader7_01">
+	<row id="msg_d08_leader7_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂：d08r0701イベント後
 ・メッセージ後
 　博士とジムリーダー、塔内へ
@@ -1010,7 +1010,7 @@
 わたしが　お供いたします▼</language>
 	</row>
 
-	<row id="msg_d08_black_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d08_black_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂：d08r0701イベント後
 ・メッセージ後チャンピオンとライバル、画面下へ
 　このときライバルが先導するアニメ
@@ -1036,7 +1036,7 @@
 はやく　行きましょう！▼</language>
 	</row>
 
-	<row id="msg_d08_white_07">
+	<row id="msg_d08_white_07" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂：d08r0701イベント後
 ・主人公に近づいてからメッセージ表示
 ・0＝主人公名前</comment>
@@ -1062,7 +1062,7 @@
 そこが　古代の城　だって……</language>
 	</row>
 
-	<row id="msg_d08_white_08">
+	<row id="msg_d08_white_08" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀：
 ・msg_d08_white_08表示後から繰り返し
 ・d04r0601イベント終了で動作モデルを削除
