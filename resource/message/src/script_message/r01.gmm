@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-28T17:43:25"/>
+	<create user="matsumiya" host="W00224" date="2011-03-05T17:21:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1284" top="199" right="1989" bottom="827" maximized="no" rayout="Vertical2">
+	<dialog left="1295" top="201" right="2000" bottom="829" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="788" top="101" right="1261" bottom="499" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -310,7 +310,7 @@
 さ　博士が　待ってる▼</language>
 	</row>
 
-	<row id="msg_r01_black_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r01_black_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・オート移動で捕獲デモの所定位置に到達したとき
 ・画面上（博士）をみながらメッセージ表示
@@ -324,7 +324,7 @@
 お待たせ　しました[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r01_hakase2_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r01_hakase2_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂：捕獲デモ</comment>
 		<attribute name="キャラ指定">HAKASE2
 アララギ博士娘</attribute>
@@ -350,7 +350,7 @@
 ポケモンを　捕まえてみせまーす！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r01_hakase2_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r01_hakase2_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・捕獲デモ後、フィールドに復帰すると
 　このメッセージ表示
@@ -390,7 +390,7 @@
 [FF:00:色:2]モンスターボール[FF:00:色:0]を　てにいれた！</language>
 	</row>
 
-	<row id="msg_r01_hakase2_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r01_hakase2_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・T02方面に移動、画面外に消えると
 　msg_r01_black_01
@@ -411,7 +411,7 @@
 カラクサタウンで　待ってまーす！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r01_black_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r01_black_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・画面上（博士）をみながらメッセージ表示
 　ついで主人公を向き合いながら
@@ -424,7 +424,7 @@
 飛びだしてくるのは　草むら　さ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r01_black_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r01_black_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてwhite_01</comment>
 		<attribute name="キャラ指定">友達♂
@@ -435,7 +435,7 @@
 カラクサタウンに　向かうよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r01_white_01">
+	<row id="msg_r01_white_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・メッセージ表示後
 　「！」マーク表示
@@ -450,7 +450,7 @@
 モンスターボールも　買えないし[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r01_white_02">
+	<row id="msg_r01_white_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・続けてblack_04</comment>
 		<attribute name="キャラ指定">友達♀
@@ -467,7 +467,7 @@
 思いついたんだけど[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r01_black_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r01_black_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてwhite_03</comment>
 		<attribute name="キャラ指定">友達♂
@@ -478,7 +478,7 @@
 博士も　待っているだろうし[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r01_white_03">
+	<row id="msg_r01_white_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・続けてblack_05</comment>
 		<attribute name="キャラ指定">友達♀
@@ -501,7 +501,7 @@
 人が　勝ち　ね！▼</language>
 	</row>
 
-	<row id="msg_r01_black_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r01_black_05" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてwhite_06</comment>
 		<attribute name="キャラ指定">友達♂
@@ -524,7 +524,7 @@
 自宅で　よろしく[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r01_white_04">
+	<row id="msg_r01_white_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・メッセージ表示後、友達♂と♀画面上に移動する
 ・友達♂と友達♀、T02側に出現
@@ -541,7 +541,7 @@
 一番に　決まってるもん！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r01_black_10" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r01_black_10" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・white_06表示後
 　T02側に出現
@@ -558,7 +558,7 @@
 ポケモンは　２匹さ</language>
 	</row>
 
-	<row id="msg_r01_white_10" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_r01_white_10" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・msg_r01_white_06表示後
 　T02側に出現
@@ -579,7 +579,7 @@
 ポケモンを　連れているか　くらべる？</language>
 	</row>
 
-	<row id="msg_r01_white_11">
+	<row id="msg_r01_white_11" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・いいえ選択時</comment>
 		<attribute name="キャラ指定">友達♀
@@ -590,7 +590,7 @@
 じゃあ　ここで　待ってるね▼</language>
 	</row>
 
-	<row id="msg_r01_white_12" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_r01_white_12" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・はい選択＆手持ち3匹以上
 ・0＝手持ちのポケモン数</comment>
@@ -606,7 +606,7 @@
 なんだか　ときめいちゃうよね！▼</language>
 	</row>
 
-	<row id="msg_r01_white_13" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_r01_white_13" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・はい選択＆手持ち2匹
 ・0＝プレイヤー名</comment>
@@ -624,7 +624,7 @@
 あたしたち　みんな　おそろいだね▼</language>
 	</row>
 
-	<row id="msg_r01_white_14" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_r01_white_14" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・はい選択＆手持ち1匹以下
 ・0＝主人公が最初に選んだポケモン</comment>
@@ -640,7 +640,7 @@
 [1:01:ポケモン種族名:0]が　さみしくないかなあ？▼</language>
 	</row>
 
-	<row id="msg_r01_black_11" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r01_black_11" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・表示後、ライブキャスターのコール音再生</comment>
 		<attribute name="キャラ指定">友達♂
@@ -669,7 +669,7 @@
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_r01_tvt_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r01_tvt_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・着信MEの再生と同時に表示
 　続けてblack_11aへ</comment>
 		<attribute name="キャラ指定">システム
@@ -678,7 +678,7 @@
 		<language name="JPN_KANJI" width="256">ライブキャスターが　鳴っている</language>
 	</row>
 
-	<row id="msg_r01_tvt_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r01_tvt_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・続けて
 　tvt.gmmのmsg_transceiver_r01_01呼び出し
 ・0＝主人公名前</comment>
@@ -690,7 +690,7 @@
 ライブキャスターを　つなげた[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r01_black_12" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r01_black_12" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・メッセージ表示後、ライバルｔ02へ
 　主人公、操作可能</comment>
@@ -702,11 +702,13 @@
 じゃ　先に　行くよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r01_girl1_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_r01_girl1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・一度も会話していないとき
 ・アイテム入手処理
-　No017「キズぐすり」</comment>
+　No017「キズぐすり」
+
+※SWANではメッセージ修正</comment>
 		<attribute name="キャラ指定">少女</attribute>
 		<language name="JPN" width="256">あなたの　ポケモンさん
 たいりょくは　ばっちり　かしら？[BE:01:ページ切り替え（クリア）]
@@ -724,9 +726,11 @@
 回復ポケットに　いれておいてね！▼</language>
 	</row>
 
-	<row id="msg_r01_girl1_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_r01_girl1_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
-・会話後「キズぐすり」入手後</comment>
+・会話後「キズぐすり」入手後
+
+※SWANではメッセージ修正</comment>
 		<attribute name="キャラ指定">少女</attribute>
 		<language name="JPN" width="256">ポケモンさんの　たいりょくが　へると
 たたかう　げんきが　なくなっちゃうから[BE:01:ページ切り替え（クリア）]
@@ -738,8 +742,10 @@
 ポケモンさんを　休ませてね</language>
 	</row>
 
-	<row id="msg_r01_man1_01">
-		<comment>♂</comment>
+	<row id="msg_r01_man1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+
+※SWANではメッセージ修正</comment>
 		<attribute name="キャラ指定">青年</attribute>
 		<language name="JPN" width="256">やせいの　ポケモンは
 くさむらに　ひそんでいる……[BE:01:ページ切り替え（クリア）]
@@ -769,8 +775,10 @@
 		<language name="JPN_KANJI" width="256">１番道路</language>
 	</row>
 
-	<row id="msg_r01_sign3_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>BGメッセージ</comment>
+	<row id="msg_r01_sign3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>BGメッセージ
+
+※SWANではメッセージ修正</comment>
 		<attribute name="キャラ指定">看板：お得な掲示板</attribute>
 		<language name="JPN" width="256">おとくな　けいじばん！[BE:01:ページ切り替え（クリア）]
 
