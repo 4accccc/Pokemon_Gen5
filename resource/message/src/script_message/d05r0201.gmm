@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-25T12:15:41"/>
+	<create user="matsumiya" host="W00224" date="2011-03-05T15:09:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1307" top="265" right="2012" bottom="893" maximized="no" rayout="Vertical2">
+	<dialog left="1311" top="175" right="2016" bottom="803" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -336,7 +336,7 @@
 	</lock>
 
 
-	<row id="msg_d05r0201_sage2_01">
+	<row id="msg_d05r0201_sage2_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてblack_06
 ・ちなみにプラズマ団員は８人配置</comment>
@@ -350,7 +350,7 @@
 寒くて　かなわんぞ……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d05r0201_black_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d05r0201_black_06" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてsage2_02</comment>
 		<attribute name="キャラ指定">友達♂
@@ -365,7 +365,7 @@
 外まで　案内するよ？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d05r0201_sage2_02">
+	<row id="msg_d05r0201_sage2_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてhakaim_01</comment>
 		<attribute name="キャラ指定">SAGE7
@@ -382,7 +382,7 @@
 おまえたち　こやつらを　けちらせ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d05r0201_hakaim_01">
+	<row id="msg_d05r0201_hakaim_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・プラズマ団したっぱアニメで移動
 ・続けて_black_07</comment>
@@ -395,7 +395,7 @@
 というわけで　オレたちが　相手だ！▼</language>
 	</row>
 
-	<row id="msg_d05r0201_black_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d05r0201_black_07" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・メッセージ表示後、主人公、操作可能</comment>
 		<attribute name="キャラ指定">友達♂
@@ -406,7 +406,7 @@
 半分ずつ　片付けよう！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d05r0201_black_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d05r0201_black_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・black_07表示後
 　所定のプラズマ団を４人倒すまで</comment>
@@ -418,7 +418,7 @@
 そっちの　プラズマ団を　頼む！</language>
 	</row>
 
-	<row id="msg_d05r0201_hakaim1_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d05r0201_hakaim1_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・メッセージ表示後、トレーナー戦闘に</comment>
 		<attribute name="キャラ指定">ＨＡＫＡＩＭ
@@ -429,7 +429,7 @@
 結構　強い　プラズマ団！▼</language>
 	</row>
 
-	<row id="msg_d05r0201_hakaim1_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d05r0201_hakaim1_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・戦闘後</comment>
 		<attribute name="キャラ指定">ＨＡＫＡＩＭ
@@ -440,7 +440,7 @@
 震えていたら　勝てるわけ……</language>
 	</row>
 
-	<row id="msg_d05r0201_hakaim1_03" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_d05r0201_hakaim1_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・戦闘後
 　4人目の場合</comment>
@@ -452,7 +452,7 @@
 震えていたら　勝てるわけ……▼</language>
 	</row>
 
-	<row id="msg_d05r0201_hakaim2_01">
+	<row id="msg_d05r0201_hakaim2_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・メッセージ表示後、トレーナー戦闘に</comment>
 		<attribute name="キャラ指定">ＨＡＫＡＩW
@@ -463,7 +463,7 @@
 かなり　強ーい　プラズマ団！▼</language>
 	</row>
 
-	<row id="msg_d05r0201_hakaim2_02">
+	<row id="msg_d05r0201_hakaim2_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・戦闘後</comment>
 		<attribute name="キャラ指定">ＨＡＫＡＩW
@@ -482,7 +482,7 @@
 とらえられていたのよ……</language>
 	</row>
 
-	<row id="msg_d05r0201_hakaim2_03">
+	<row id="msg_d05r0201_hakaim2_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・戦闘後
 　4人目の場合</comment>
@@ -502,7 +502,7 @@
 とらえられていたのよ……▼</language>
 	</row>
 
-	<row id="msg_d05r0201_hakaim3_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d05r0201_hakaim3_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・メッセージ表示後、トレーナー戦闘に</comment>
 		<attribute name="キャラ指定">ＨＡＫＡＩＭ
@@ -513,7 +513,7 @@
 なかなか　強い　プラズマ団！▼</language>
 	</row>
 
-	<row id="msg_d05r0201_hakaim3_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d05r0201_hakaim3_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・戦闘後</comment>
 		<attribute name="キャラ指定">ＨＡＫＡＩＭ
@@ -530,7 +530,7 @@
 そうに　違いない！</language>
 	</row>
 
-	<row id="msg_d05r0201_hakaim3_03" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_d05r0201_hakaim3_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・戦闘後
 　4人目の場合</comment>
@@ -548,7 +548,7 @@
 そうに　違いない！▼</language>
 	</row>
 
-	<row id="msg_d05r0201_hakaiw1_01">
+	<row id="msg_d05r0201_hakaiw1_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・メッセージ表示後、トレーナー戦闘に</comment>
 		<attribute name="キャラ指定">ＨＡＫＡＩＭ
@@ -559,7 +559,7 @@
 それなりに　強い　プラズマ団！▼</language>
 	</row>
 
-	<row id="msg_d05r0201_hakaiw1_02">
+	<row id="msg_d05r0201_hakaiw1_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・戦闘後</comment>
 		<attribute name="キャラ指定">ＨＡＫＡＩＭ
@@ -570,7 +570,7 @@
 なんだか　眠くなってきた</language>
 	</row>
 
-	<row id="msg_d05r0201_hakaiw1_03">
+	<row id="msg_d05r0201_hakaiw1_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・戦闘後
 　4人目の場合</comment>
@@ -582,7 +582,7 @@
 なんだか　眠くなってきた▼</language>
 	</row>
 
-	<row id="msg_d05r0201_hakaim4_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d05r0201_hakaim4_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・トレーナーじゃないプラズマ団
 ・４人倒すまで繰り返し</comment>
@@ -594,7 +594,7 @@
 オマエの　相手は　向こうだ……</language>
 	</row>
 
-	<row id="msg_d05r0201_hakaim5_01">
+	<row id="msg_d05r0201_hakaim5_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・トレーナーじゃないプラズマ団
 ・４人倒すまで繰り返し</comment>
@@ -608,7 +608,7 @@
 逃げこむとは……　情けない</language>
 	</row>
 
-	<row id="msg_d05r0201_hakaim6_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d05r0201_hakaim6_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・トレーナーじゃないプラズマ団
 ・４人倒すまで繰り返し</comment>
@@ -620,7 +620,7 @@
 こんな　トレーナーに　負けるのか！？</language>
 	</row>
 
-	<row id="msg_d05r0201_hakaiw2_01">
+	<row id="msg_d05r0201_hakaiw2_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・トレーナーじゃないプラズマ団
 ・４人倒すまで繰り返し</comment>
@@ -632,7 +632,7 @@
 女性は　寒いところは　ダメなのに</language>
 	</row>
 
-	<row id="msg_d05r0201_leader5_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d05r0201_leader5_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・プラズマ団したっぱ４人に勝利すると出現
 　所定の位置に移動してメッセージ表示
@@ -647,7 +647,7 @@
 身を潜めて　いたとはな！▼</language>
 	</row>
 
-	<row id="msg_d05r0201_leader5_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d05r0201_leader5_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・作業員のほうを向いてメッセージ表示</comment>
 		<attribute name="キャラ指定">ジムリーダー
@@ -658,7 +658,7 @@
 ポケモンドロボウを　つれていけ！▼</language>
 	</row>
 
-	<row id="msg_d05r0201_workman_01" back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,,,,,,,,">
+	<row id="msg_d05r0201_workman_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてworkman_02</comment>
 		<attribute name="キャラ指定">WORKMAN</attribute>
@@ -666,7 +666,7 @@
 		<language name="JPN_KANJI" width="256">さぎょういん『ラジャー！！▼</language>
 	</row>
 
-	<row id="msg_d05r0201_workman_02" back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,,,,,,,,">
+	<row id="msg_d05r0201_workman_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・サブウィンで表示
 ・続けてhakaim_02</comment>
@@ -675,7 +675,7 @@
 		<language name="JPN_KANJI" width="256">ホラよ</language>
 	</row>
 
-	<row id="msg_d05r0201_hakaim_02">
+	<row id="msg_d05r0201_hakaim_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・サブウィンで表示
 ・続けてhakaim_03</comment>
@@ -685,7 +685,7 @@
 		<language name="JPN_KANJI" width="256">ひー</language>
 	</row>
 
-	<row id="msg_d05r0201_hakaim_03">
+	<row id="msg_d05r0201_hakaim_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・サブウィンで表示
 ・表示後、七賢人、したっぱ、作業員
@@ -697,7 +697,7 @@
 		<language name="JPN_KANJI" width="256">ふえー</language>
 	</row>
 
-	<row id="msg_d05r0201_leader5_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d05r0201_leader5_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・メッセージ後、退場
 ・続けてblack_08</comment>
@@ -715,7 +715,7 @@
 挑戦しに　来い！▼</language>
 	</row>
 
-	<row id="msg_d05r0201_black_08" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d05r0201_black_08" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・主人公と向き合ってメッセージ表示
 ・表示後、画面外に退場
@@ -745,7 +745,7 @@
 寒いから　外に　でるよ▼</language>
 	</row>
 
-	<row id="msg_d05r0201_sage1_end_01" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,,">
+	<row id="msg_d05r0201_sage1_end_01" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・GRIDX=4、GRIDZ=9
 ・続けてsage1_end_01a</comment>
@@ -761,7 +761,7 @@
 すこし　語ってやると　するか▼</language>
 	</row>
 
-	<row id="msg_d05r0201_sage1_end_01a" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,,">
+	<row id="msg_d05r0201_sage1_end_01a" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてsage1_end_01b
 ※寒いのでウロウロしながら</comment>
@@ -781,7 +781,7 @@
 生きているとの　感覚を　得られぬ▼</language>
 	</row>
 
-	<row id="msg_d05r0201_sage1_end_01b" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,,">
+	<row id="msg_d05r0201_sage1_end_01b" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてsage1_end_01c
 ※寒いのでウロウロしながら</comment>
@@ -804,7 +804,7 @@
 そんなことは　どうでもいい▼</language>
 	</row>
 
-	<row id="msg_d05r0201_sage1_end_01c" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,,">
+	<row id="msg_d05r0201_sage1_end_01c" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてsage1_end_01d
 ※寒いのでウロウロしながら</comment>
@@ -816,7 +816,7 @@
 苦しいが　生きておる▼</language>
 	</row>
 
-	<row id="msg_d05r0201_sage1_end_01d" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,,">
+	<row id="msg_d05r0201_sage1_end_01d" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・アイテム入手処理
 　No328「つめとぎ」
@@ -845,7 +845,7 @@
 コレを　くれてやろう▼</language>
 	</row>
 
-	<row id="msg_d05r0201_sage1_end_02" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,,">
+	<row id="msg_d05r0201_sage1_end_02" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・アイテム入手後自動で表示
 ・続けてicpo_end_01</comment>
@@ -863,7 +863,7 @@
 存在を　めざせるのかもな……▼</language>
 	</row>
 
-	<row id="msg_d05r0201_icpo_end_01" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d05r0201_icpo_end_01" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・隣接してメッセージ
 ・続けてsage1_end_03</comment>
@@ -879,7 +879,7 @@
 いろいろ　教えてもらおう！▼</language>
 	</row>
 
-	<row id="msg_d05r0201_sage1_end_03" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,,">
+	<row id="msg_d05r0201_sage1_end_03" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けて七賢人
 　6人と会っていない→icpo_end_02
@@ -898,7 +898,7 @@
 だから　連れてゆけ▼</language>
 	</row>
 
-	<row id="msg_d05r0201_icpo_end_02" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d05r0201_icpo_end_02" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・メッセージ表示後
 　画面暗転して七賢人とハンサムを削除</comment>
@@ -920,7 +920,7 @@
 では　また　会おう！▼</language>
 	</row>
 
-	<row id="msg_d05r0201_icpo_end_03" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d05r0201_icpo_end_03" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・6人の七賢人とであったとき
 ・メッセージ表示後
