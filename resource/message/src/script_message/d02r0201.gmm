@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-03T17:00:28"/>
+	<create user="matsumiya" host="W00224" date="2011-03-05T14:59:17"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -251,7 +251,7 @@
 			<line position="-1" width="100"/>
 		</language>
 		<language japanese="JPN_KANJI" english="JPN_KANJI">
-			<message position="3" width="199"/>
+			<message position="3" width="240"/>
 			<font default=" 0:large" position="6" width="106">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1294" top="205" right="1999" bottom="833" maximized="no" rayout="Vertical2">
+	<dialog left="1311" top="175" right="2016" bottom="803" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -316,8 +316,10 @@
 走り去ってしまった…</language>
 	</row>
 
-	<row id="msg_d02r0201_rangerm_01" text-color="#000000,,,,,,,#000000,,,#000000,,,#000000,,,#000000,,">
-		<comment>♂</comment>
+	<row id="msg_d02r0201_rangerm_01" text-color="#000000,,,#ff0000,,,,#000000,,,#000000,,,#000000,,,#000000,,">
+		<comment>♂
+
+※SWANで新規作成</comment>
 		<attribute name="キャラ指定">RANGERM
 ポケモンレンジャー♂</attribute>
 		<language name="JPN" width="256">かりメッセージ

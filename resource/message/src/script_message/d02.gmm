@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-03T16:53:48"/>
+	<create user="matsumiya" host="W00224" date="2011-03-05T14:58:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1294" top="205" right="1999" bottom="833" maximized="no" rayout="Vertical2">
+	<dialog left="1311" top="175" right="2016" bottom="803" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -305,7 +305,7 @@
 道か　迷路か　どっちかしら？</language>
 	</row>
 
-	<row id="msg_d02_leader3_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d02_leader3_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・盗難イベント中
 　c02でのmsg_c02_leader3_03か
@@ -337,9 +337,11 @@ C03ジムリーダー</attribute>
 よければ　これを　使ってみて！▼</language>
 	</row>
 
-	<row id="msg_d02_fighterw_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d02_fighterw_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
-・アイテム入手後</comment>
+・アイテム入手後
+
+※SWANではメッセージ変更予定</comment>
 		<attribute name="キャラ指定">FIGHTERW</attribute>
 		<language name="JPN" width="256">いわくだきは　ときどき
 あいての　ぼうぎょを　さげる　わざ▼
@@ -358,7 +360,7 @@ C03ジムリーダー</attribute>
 ・手持ちリストに格闘ポケモンがいるとき
 ・はい/いいえの選択肢
 
-・壊せなくする</comment>
+※SWANでは壊せなくする</comment>
 		<attribute name="キャラ指定">特殊な岩</attribute>
 		<language name="JPN" width="256">ためしのいわが　ある……[BE:01:ページ切り替え（クリア）]
 [1:02:ポケモンニックネーム:0]に
