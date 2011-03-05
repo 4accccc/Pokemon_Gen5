@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2010-06-19T14:38:51"/>
+	<create user="matsumiya" host="W00224" date="2011-03-05T17:02:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -368,7 +368,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1580" top="199" right="2285" bottom="827" maximized="no" rayout="Vertical2">
+	<dialog left="1295" top="201" right="2000" bottom="829" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -376,7 +376,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -409,16 +409,16 @@
 でも　今は　ダメなの……
 いいデザインが　思いつかなくて……▼
 夢に　見るくらいの　ステキな
-家具　を　考えてるんだけど……</language>
+家具を　考えてるんだけど……</language>
 	</row>
 
 	<row id="pdw_furniture_menu_02">
-		<language name="JPN" width="401">シタン『んん……
-まだ　あたらしい　デザインの▽
+		<language name="JPN" width="401">シタン『んん……▼
+まだ　あたらしい　デザインの
 かぐを　おもいつかないの▼
 また　きてくれない？</language>
-		<language name="JPN_KANJI">シタン『んん……
-まだ　新しい　デザインの▽
+		<language name="JPN_KANJI">シタン『んん……▼
+まだ　新しい　デザインの
 家具を　思いつかないの▼
 また　来てくれない？</language>
 	</row>
@@ -441,14 +441,14 @@
 ・メッセージ表示後
 　カタログメニューが開く</comment>
 		<attribute name="キャラ指定">WOMANB</attribute>
-		<language name="JPN">シタン『あたらしい　かぐデザイン　を
-かんがえたの　じしんさくよ！▼
-この　なかで　どれが　いちばん　ゆめに
-でてくるくらい　ステキだと　おもう？</language>
-		<language name="JPN_KANJI">シタン『新しい　家具デザイン　を
-考えたの　自信作よ！▼
-この中で　どれが　一番　夢に
-でてくるくらい　ステキだと　思う？</language>
+		<language name="JPN">シタン『あたらしい　デザインの
+かぐを　かんがえたの！　じしんさくよ▼
+このなかで　ゆめに　でてくるくらい
+いちばん　ステキなのは　どれかな？</language>
+		<language name="JPN_KANJI">シタン『新しい　デザインの
+家具を　考えたの！　自信作よ▼
+この中で　夢に　でてくるくらい
+一番　ステキなのは　どれかな？</language>
 	</row>
 
 	<row id="pdw_furniture_menu_05">
@@ -459,12 +459,12 @@
 		<attribute name="キャラ指定">WOMANB</attribute>
 		<language name="JPN">それで　ゆめにみるような
 かぐデザイン　を　かんがえたの▼
-この　なかで　どれが　いちばん　ゆめに
-でてくるくらい　ステキだと　おもう？</language>
+このなかで　ゆめに　でてくるくらい
+いちばん　ステキなのは　どれかな？</language>
 		<language name="JPN_KANJI">それで　夢に見るような
 家具デザイン　を　考えたの▼
-この中で　どれが　一番　夢に
-でてくるくらい　ステキだと　思う？</language>
+この中で　夢に　でてくるくらい
+一番　ステキなのは　どれかな？</language>
 	</row>
 
 	<row id="pdw_furniture_menu_05_02">
@@ -475,12 +475,12 @@
 		<attribute name="キャラ指定">WOMANB</attribute>
 		<language name="JPN">シタン『あら　ワタシの　ゆめの
 かぐデザインに　つきあってくれるの？▼
-この　なかで　どれが　いちばん　ゆめに
-でてくるくらい　ステキだと　おもう？</language>
+このなかで　ゆめに　でてくるくらい
+いちばん　ステキなのは　どれかな？</language>
 		<language name="JPN_KANJI">シタン『あら　ワタシの　夢の
 家具デザインに　つきあってくれるの？▼
-この中で　どれが　一番　夢に
-でてくるくらい　ステキだと　思う？</language>
+この中で　夢に　でてくるくらい
+一番　ステキなのは　どれかな？</language>
 	</row>
 
 	<row id="pdw_furniture_menu_06">
@@ -518,7 +518,7 @@
 ひらめいたとき　つきあってね！</language>
 	</row>
 
-	<row id="pdw_furniture_menu_08_01" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
+	<row id="pdw_furniture_menu_08_01">
 		<comment>♀：PDW用の家具入手
 ・はい/いいえ
 ・はい→furniture_menu_08
