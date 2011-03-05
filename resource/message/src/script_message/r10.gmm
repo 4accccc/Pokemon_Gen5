@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-07-05T17:40:08"/>
+	<create user="matsumiya" host="W00224" date="2011-03-05T18:08:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1309" top="191" right="2014" bottom="819" maximized="no" rayout="Vertical2">
+	<dialog left="1295" top="201" right="2000" bottom="829" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_r10_black_00">
+	<row id="msg_r10_black_00" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・全てのジムバッジ取得後に
 　pos（GRIDX=489~493、GRIDZ=113）を踏むとイベント発動
@@ -307,7 +307,7 @@
 [1:00:トレーナー名:0]！▼</language>
 	</row>
 
-	<row id="msg_r10_black_01">
+	<row id="msg_r10_black_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・ライバル、主人公に隣接してメッセージ表示
 ・はい/いいえの選択肢表示
@@ -323,7 +323,7 @@
 ポケモンリーグに　向かうんだね？</language>
 	</row>
 
-	<row id="msg_r10_black_02">
+	<row id="msg_r10_black_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・はい選択時
 ・続けてトレーナー戦闘に</comment>
@@ -347,7 +347,7 @@
 きみが　どれだけ　強いかを！▼</language>
 	</row>
 
-	<row id="msg_r10_black_03">
+	<row id="msg_r10_black_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・いいえ選択時
 ・続けてトレーナー戦闘に</comment>
@@ -367,7 +367,7 @@
 きみが　どれだけ　強いかを！▼</language>
 	</row>
 
-	<row id="msg_r10_black_04">
+	<row id="msg_r10_black_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・戦闘後、フィールドに復帰して自動で表示
 ・続けてwhite_01</comment>
@@ -383,7 +383,7 @@
 元気に　してあげないとね▼</language>
 	</row>
 
-	<row id="msg_r10_black_04a">
+	<row id="msg_r10_black_04a" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・システムウインドウ
 ・回復処理
@@ -398,7 +398,7 @@
 回復してくれた！</language>
 	</row>
 
-	<row id="msg_r10_black_04b">
+	<row id="msg_r10_black_04b" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてwhite_01</comment>
 		<attribute name="キャラ指定">友達♂
@@ -413,7 +413,7 @@
 なにか　助けてあげら……▼</language>
 	</row>
 
-	<row id="msg_r10_white_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r10_white_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・アイテム入手処理
 　No029「げんきのかたまり」×２
@@ -429,7 +429,7 @@
 あたしからは　これ！▼</language>
 	</row>
 
-	<row id="msg_r10_white_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r10_white_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・アイテム入手後に自動で表示
 ・続けてblack_05
@@ -442,7 +442,7 @@
 みんな　ばらばらで▼</language>
 	</row>
 
-	<row id="msg_r10_black_05">
+	<row id="msg_r10_black_05" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてwhite_03</comment>
 		<attribute name="キャラ指定">友達♂
@@ -453,7 +453,7 @@
 こんなときに　きみは……▼</language>
 	</row>
 
-	<row id="msg_r10_white_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r10_white_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・続けてblack_06</comment>
 		<attribute name="キャラ指定">友達♀
@@ -488,7 +488,7 @@
 って　なんか　うれしくなったの▼</language>
 	</row>
 
-	<row id="msg_r10_black_06">
+	<row id="msg_r10_black_06" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・サポートを向いて
 ・続けてwhite_06</comment>
@@ -504,7 +504,7 @@
 できることを　すれば　いいんだよね▼</language>
 	</row>
 
-	<row id="msg_r10_white_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r10_white_06" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・続けてblack_07
 ・0＝主人公名前</comment>
@@ -522,7 +522,7 @@
 ゴメンナサイ▼</language>
 	</row>
 
-	<row id="msg_r10_black_07">
+	<row id="msg_r10_black_07" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・主人公を向いて
 ・出現した方向に戻る（ダッシュ?）
@@ -560,7 +560,7 @@
 だから　無理するな▼</language>
 	</row>
 
-	<row id="msg_r10_white_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r10_white_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・ライバルの去ったほうをみながら（主人公も）
 ・続けてwhite_05
@@ -571,7 +571,7 @@
 		<language name="JPN_KANJI" width="256">ベル『行っちゃった！▼</language>
 	</row>
 
-	<row id="msg_r10_white_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r10_white_05" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・メッセージ表示後、サポートも出現してきた方向に去る
 ・画面外に消えると主人公、操作可能に
@@ -598,7 +598,7 @@
 お互い　がんばろうね！！▼</language>
 	</row>
 
-	<row id="msg_r10_veteranm_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r10_veteranm_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・GRIDX=442、GRIDZ=110、右向き
 ・アイテム入手処理
@@ -615,7 +615,7 @@
 オレは　これを　くれてやるのだ▼</language>
 	</row>
 
-	<row id="msg_r10_veteranm_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r10_veteranm_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・アイテム入手後</comment>
 		<attribute name="キャラ指定">VETERANM</attribute>
@@ -633,7 +633,7 @@
 ヒトモシに　使ったぞ</language>
 	</row>
 
-	<row id="msg_r10_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_r10_sign1_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>看板分類：タウンマップ
 ・現状、ないけれど仮で</comment>
 		<attribute name="キャラ指定">看板：道路</attribute>
@@ -641,7 +641,7 @@
 		<language name="JPN_KANJI" width="256">１０番道路</language>
 	</row>
 
-	<row id="msg_r10_sign2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_r10_sign2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>バッジチェックゲート</comment>
 		<attribute name="キャラ指定">看板</attribute>
 		<language name="JPN" width="256">バッジチェックゲート
