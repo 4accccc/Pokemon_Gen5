@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-02T17:20:59"/>
+	<create user="matsumiya" host="W00224" date="2011-03-05T19:03:17"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1297" top="228" right="2002" bottom="856" maximized="no" rayout="Vertical2">
+	<dialog left="1295" top="201" right="2000" bottom="829" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -394,40 +394,6 @@
 今なら　赤外線で
 あんなことや　こんなことが▽
 あっ！　というまに　できるってよ！</language>
-	</row>
-
-	<row id="msg_c12_woman2_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
-		<comment>♂
-・はい/いいえの選択肢表示
-　はいだと文字モード切替</comment>
-		<attribute name="キャラ指定">WOMAN2
-女性</attribute>
-		<language name="JPN" width="256">あなたは　ひらがな　よりも
-かんじの　ほうが　すきなのかしら？</language>
-		<language name="JPN_KANJI" width="256">あなたは　漢字よりも
-ひらがなのほうが　好きなのかしら？</language>
-	</row>
-
-	<row id="msg_c12_woman2_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
-		<comment>♂
-・はい選択時</comment>
-		<attribute name="キャラ指定">WOMAN2
-女性</attribute>
-		<language name="JPN" width="256">では
-話し方を　変えてみるわね</language>
-		<language name="JPN_KANJI" width="256">では
-はなしかたを　かえてみるわね</language>
-	</row>
-
-	<row id="msg_c12_woman2_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
-		<comment>♂
-・いいえ選択時</comment>
-		<attribute name="キャラ指定">WOMAN2
-女性</attribute>
-		<language name="JPN" width="256">そうよね！　ひらがなには
-ひらがなの　あじわいが　あるわね</language>
-		<language name="JPN_KANJI" width="256">なるほど……
-あなたは　漢字が　好きなのね</language>
 	</row>
 
 	<row id="msg_c12_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
