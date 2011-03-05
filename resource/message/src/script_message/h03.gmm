@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-02-27T17:20:11"/>
+	<create user="matsumiya" host="W00224" date="2011-03-05T16:33:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -327,7 +327,7 @@
 ゲーチスさま　連れてきました▼</language>
 	</row>
 
-	<row id="msg_h03_sage1_01w" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_h03_sage1_01w" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・WHITEver
 ・GRIDX=15、GRIDZ=40で待機
@@ -344,7 +344,7 @@
 申しあげて　おきましょうか▼</language>
 	</row>
 
-	<row id="msg_h03_sage1_01b" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_h03_sage1_01b" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・BLACKver
 ・続けてsage1_02</comment>
@@ -360,7 +360,7 @@
 申しあげて　おきましょうか▼</language>
 	</row>
 
-	<row id="msg_h03_sage1_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_h03_sage1_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・右へ２歩移動、下向きでメッセージ表示
 ・続けてsage1_03</comment>
@@ -382,7 +382,7 @@
 確かめたい……　とのことです▼</language>
 	</row>
 
-	<row id="msg_h03_sage1_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_h03_sage1_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・左へ４歩移動、下向きでメッセージ表示
 ・続けてsage1_04</comment>
@@ -402,7 +402,7 @@
 本当に　純粋な　お方です▼</language>
 	</row>
 
-	<row id="msg_h03_sage1_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_h03_sage1_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・右へ２歩移動、下向きでメッセージ表示
 ・続けてsage1_05</comment>
@@ -428,7 +428,7 @@
 ポケモンを　使えばいいのです！▼</language>
 	</row>
 
-	<row id="msg_h03_sage1_05" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_h03_sage1_05" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・一度右を向いてから
 　下を向いてメッセージ表示
@@ -473,7 +473,7 @@
 そんな世界に　変わるのですよ▼</language>
 	</row>
 
-	<row id="msg_h03_sage1_06" back-color="#80ffff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_h03_sage1_06" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・メッセージ表示後、r09方面に移動
 ・画面外に消えると

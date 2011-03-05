@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="murakami_naoto" host="W00228" date="2010-09-07T12:24:11"/>
+	<create user="matsumiya" host="W00224" date="2011-03-05T16:36:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1280" top="174" right="1985" bottom="802" maximized="no" rayout="Vertical2">
+	<dialog left="1295" top="201" right="2000" bottom="829" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -654,7 +654,7 @@
 きらい　かい？</language>
 	</row>
 
-	<row id="msg_h04_waitress_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_h04_waitress_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・対戦前メッセージ
 ・対戦がまだで♀主人公の場合→waitress_02へ
 ・対戦がまだで♂主人公の場合→waitress_03へ
@@ -669,7 +669,7 @@
 ありがとう　ございまーす！▼</language>
 	</row>
 
-	<row id="msg_h04_waitress_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_h04_waitress_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・♀主人公の場合
 対戦後メッセージ
 ・「いいえ」→waitress_04
@@ -687,7 +687,7 @@
 働いてくれない？</language>
 	</row>
 
-	<row id="msg_h04_waitress_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_h04_waitress_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・♂主人公の場合
 対戦後メッセージ
 ・「いいえ」→waitress_04
@@ -704,7 +704,7 @@
 働いてくれない？</language>
 	</row>
 
-	<row id="msg_h04_waitress_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_h04_waitress_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>繰り返しメッセージ
 ・「いいえ」→waitress_05
 ・「はい」→waitress_06</comment>
@@ -716,7 +716,7 @@
 やっぱり　働いてくれない？</language>
 	</row>
 
-	<row id="msg_h04_waitress_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_h04_waitress_05" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・「いいえ」選択時
 以降話しかけ時→waitress_04</comment>
 		<attribute name="キャラ指定">BAKER
@@ -727,7 +727,7 @@
 残念だけど　仕方ないわね！</language>
 	</row>
 
-	<row id="msg_h04_waitress_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_h04_waitress_06" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・「はい」選択時
 
 ・「はい」「いいえ」選択表示
@@ -743,7 +743,7 @@
 仕事の　内容は　わかる？</language>
 	</row>
 
-	<row id="msg_h04_waitress_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_h04_waitress_07" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・ルール説明1
 →waitress_08</comment>
 		<attribute name="キャラ指定">BAKER
@@ -762,7 +762,7 @@
 サンドイッチを　作ってくるから▼</language>
 	</row>
 
-	<row id="msg_h04_waitress_08" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_h04_waitress_08" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・ルール説明2
 →waitress_09
 </comment>
@@ -776,7 +776,7 @@
 間違えて　運ばないようにね▼</language>
 	</row>
 
-	<row id="msg_h04_waitress_09" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_h04_waitress_09" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・ルール説明3 
 注文を全員から取っている→waitress_10
 注文を全員から取っていない→waitress_13</comment>
@@ -788,7 +788,7 @@
 期待してるわよ！▼</language>
 	</row>
 
-	<row id="msg_h04_waitress_09a" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_h04_waitress_09a" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・ルール説明3 
 注文を全員から取っている→waitress_10
 注文を全員から取っていない→waitress_13</comment>
@@ -800,7 +800,7 @@
 期待してるわよ！</language>
 	</row>
 
-	<row id="msg_h04_waitress_10" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_h04_waitress_10" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・タグに数字をセット
 ・オーダーを全て取ってきた場合
 サンドイッチのトッピングをbmpで入力
@@ -814,7 +814,7 @@
 サンドイッチの　トッピングは？</language>
 	</row>
 
-	<row id="msg_h04_waitress_11" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_h04_waitress_11" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・カートの中に入って、料理を作ってくるアニメ
 ・→waitress_12</comment>
 		<attribute name="キャラ指定">BAKER
@@ -825,7 +825,7 @@
 じゃあ　つくるから　待っていてね▼</language>
 	</row>
 
-	<row id="msg_h04_waitress_12" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_h04_waitress_12" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・お客さんに全て届けることが成功していたら
 →waitress_14
 ・お客さんに全て届けることが失敗していたら
@@ -838,7 +838,7 @@
 間違わずに　運んでね</language>
 	</row>
 
-	<row id="msg_h04_waitress_13" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_h04_waitress_13" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・オーダーを全て取っていない場合
 ・オーダーを取ってくるように促す</comment>
 		<attribute name="キャラ指定">BAKER
@@ -851,7 +851,7 @@
 全員から　聞いてね！</language>
 	</row>
 
-	<row id="msg_h04_waitress_14" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_h04_waitress_14" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・イベントを成功させた場合
 →waitress_16</comment>
 		<attribute name="キャラ指定">BAKER
@@ -866,7 +866,7 @@
 満足しているみたい▼</language>
 	</row>
 
-	<row id="msg_h04_waitress_15" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_h04_waitress_15" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・イベントを失敗した場合
 →waitress_17</comment>
 		<attribute name="キャラ指定">BAKER
@@ -881,7 +881,7 @@
 でも　すぐに慣れると　思うわ▼</language>
 	</row>
 
-	<row id="msg_h04_waitress_16 " back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_h04_waitress_16 " back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・アイテムをくれるときのメッセージ
 ・アイテム追加処理
 　No157「ラムのみ」
@@ -894,7 +894,7 @@
 すごく　頑張っていたわね！▼</language>
 	</row>
 
-	<row id="msg_h04_waitress_17" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_h04_waitress_17" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・イベントクリア後メッセージ　
 ・日をまたぐまで、このメッセージ繰り返し</comment>
 		<attribute name="キャラ指定">BAKER
@@ -905,7 +905,7 @@
 明日　また来てくれると　うれしいな</language>
 	</row>
 
-	<row id="msg_h04_waitress_18" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_h04_waitress_18" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・イベント中にPOSを踏んでやめた場合
 ・イベント自体は失敗した状態で終わる
 ・以降、waitress_17繰り返し</comment>
@@ -917,7 +917,7 @@
 忙しくないから　大丈夫よ</language>
 	</row>
 
-	<row id="msg_h04_waitress_19" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_h04_waitress_19" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・♀主人公の場合
 ・イベント場所から離れた場所にあるPOSを踏んだとき
 イベント主のウェイトレスから呼びかけ
@@ -933,7 +933,7 @@
 ウエートレスの　仕事を　やめるの？</language>
 	</row>
 
-	<row id="msg_h04_waitress_20" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_h04_waitress_20" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・♂主人公の場合
 ・イベント場所から離れた場所にあるPOSを踏んだとき
 イベント主のウェイトレスから呼びかけ
@@ -949,7 +949,7 @@
 ウエーターの　仕事を　やめるの？</language>
 	</row>
 
-	<row id="msg_h04_man1_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_h04_man1_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・注文するときのメッセージ
 ・タグにきのみをセット</comment>
 		<attribute name="キャラ指定">MAN1
@@ -960,7 +960,7 @@
 [1:09:どうぐ名:0]の　トッピングを　ください！</language>
 	</row>
 
-	<row id="msg_h04_man1_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_h04_man1_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・注文をした後のメッセージ
 ・サブイベント中以外の繰り返しメッセージ</comment>
 		<attribute name="キャラ指定">MAN1
@@ -971,7 +971,7 @@
 本当に　いい　お店だよ！</language>
 	</row>
 
-	<row id="msg_h04_man1_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_h04_man1_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・注文と受け取ったサンドイッチが合っているときのメッセージ
 </comment>
 		<attribute name="キャラ指定">MAN1
@@ -982,7 +982,7 @@
 僕の　ポケモンも　喜んでいるよ</language>
 	</row>
 
-	<row id="msg_h04_man1_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_h04_man1_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・注文と受け取ったサンドイッチが違うときのメッセージ
 </comment>
 		<attribute name="キャラ指定">MAN1
@@ -995,7 +995,7 @@
 なんだか　味が　違うような……？</language>
 	</row>
 
-	<row id="msg_h04_man3_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_h04_man3_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・注文するときのメッセージ
 ・タグにきのみをセット</comment>
 		<attribute name="キャラ指定">MAN3
@@ -1006,7 +1006,7 @@
 [1:09:どうぐ名:0]大盛りに　しようかなっ！</language>
 	</row>
 
-	<row id="msg_h04_man3_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_h04_man3_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・注文をした後のメッセージ
 ・サブイベント中以外の繰り返しメッセージ</comment>
 		<attribute name="キャラ指定">MAN3
@@ -1017,7 +1017,7 @@
 僕に　似て　たくさん　食べるんだ</language>
 	</row>
 
-	<row id="msg_h04_man3_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_h04_man3_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・注文と受け取ったサンドイッチが合っているときのメッセージ
 </comment>
 		<attribute name="キャラ指定">MAN3
@@ -1028,7 +1028,7 @@
 この瞬間が　一番　好き！</language>
 	</row>
 
-	<row id="msg_h04_man3_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_h04_man3_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・注文と受け取ったサンドイッチが違うときのメッセージ
 </comment>
 		<attribute name="キャラ指定">MAN3
@@ -1039,7 +1039,7 @@
 でも　これを　頼んでないような？</language>
 	</row>
 
-	<row id="msg_h04_woman1_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_h04_woman1_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・注文するときのメッセージ
 ・タグにきのみをセット</comment>
 		<attribute name="キャラ指定">WOMAN1
@@ -1050,7 +1050,7 @@
 [1:09:どうぐ名:0]を　お願いできる？</language>
 	</row>
 
-	<row id="msg_h04_woman1_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_h04_woman1_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・注文をした後のメッセージ
 ・サブイベント中以外の繰り返しメッセージ</comment>
 		<attribute name="キャラ指定">WOMAN1
@@ -1061,7 +1061,7 @@
 料理人の　腕の　見せ所ね</language>
 	</row>
 
-	<row id="msg_h04_woman1_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_h04_woman1_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・注文と受け取ったサンドイッチが合っているときのメッセージ
 </comment>
 		<attribute name="キャラ指定">WOMAN1
@@ -1074,7 +1074,7 @@
 この　レベルに　であえるなんて</language>
 	</row>
 
-	<row id="msg_h04_woman1_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_h04_woman1_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・注文と受け取ったサンドイッチが違うときのメッセージ
 </comment>
 		<attribute name="キャラ指定">WOMAN1
@@ -1087,7 +1087,7 @@
 オーダーと　ちがうわよ</language>
 	</row>
 
-	<row id="msg_h04_girl2_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_h04_girl2_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・注文するときのメッセージ
 ・タグにきのみをセット</comment>
 		<attribute name="キャラ指定">GIRL2
@@ -1098,7 +1098,7 @@
 [1:09:どうぐ名:0]の気分！　お願いね！</language>
 	</row>
 
-	<row id="msg_h04_girl2_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_h04_girl2_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・注文をした後のメッセージ
 ・サブイベント中以外の繰り返しメッセージ</comment>
 		<attribute name="キャラ指定">GIRL2
@@ -1109,7 +1109,7 @@
 食べられるなんて　幸せだよー</language>
 	</row>
 
-	<row id="msg_h04_girl2_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_h04_girl2_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・注文と受け取ったサンドイッチが合っているときのメッセージ
 </comment>
 		<attribute name="キャラ指定">GIRL2
@@ -1120,7 +1120,7 @@
 しあわせー</language>
 	</row>
 
-	<row id="msg_h04_girl2_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_h04_girl2_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・注文と受け取ったサンドイッチが違うときのメッセージ
 </comment>
 		<attribute name="キャラ指定">GIRL2
@@ -1131,7 +1131,7 @@
 なにか　味が　違うの</language>
 	</row>
 
-	<row id="msg_h04_pokemon_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_h04_pokemon_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・チラーミィの鳴き声を再生
 ・鳴き声仮</comment>
 		<attribute name="キャラ指定">POKE19
@@ -1140,7 +1140,7 @@
 		<language name="JPN_KANJI" width="256">みゅぅみゅぃーん</language>
 	</row>
 
-	<row id="msg_h04_pokemon_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_h04_pokemon_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・ミネズミの鳴き声を再生
 ・鳴き声仮</comment>
 		<attribute name="キャラ指定">POKE17
@@ -1149,7 +1149,7 @@
 		<language name="JPN_KANJI" width="256">ボフンッボフウー</language>
 	</row>
 
-	<row id="msg_h04_pokemon_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_h04_pokemon_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・ピカチュウの鳴き声を再生
 ・鳴き声仮</comment>
 		<attribute name="キャラ指定">POKE
@@ -1158,7 +1158,7 @@
 		<language name="JPN_KANJI" width="256">ぴがー</language>
 	</row>
 
-	<row id="msg_h04_pokemon_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_h04_pokemon_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・ワルビルの鳴き声を再生
 ・鳴き声仮</comment>
 		<attribute name="キャラ指定">POKE20
@@ -1167,7 +1167,7 @@
 		<language name="JPN_KANJI" width="256">じゃあごぉおおお</language>
 	</row>
 
-	<row id="msg_h04_topping_01" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
+	<row id="msg_h04_topping_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・トッピングの内容①
 ・ビットマップで表示</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
@@ -1175,7 +1175,7 @@
 		<language name="JPN_KANJI" width="256">クラボのみ</language>
 	</row>
 
-	<row id="msg_h04_topping_02" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
+	<row id="msg_h04_topping_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・トッピングの内容②
 ・ビットマップで表示</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
@@ -1183,7 +1183,7 @@
 		<language name="JPN_KANJI" width="256">キーのみ</language>
 	</row>
 
-	<row id="msg_h04_topping_03" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
+	<row id="msg_h04_topping_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・トッピングの内容③
 ・ビットマップで表示</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
@@ -1191,7 +1191,7 @@
 		<language name="JPN_KANJI" width="256">モモンのみ</language>
 	</row>
 
-	<row id="msg_h04_topping_04" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
+	<row id="msg_h04_topping_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・トッピングの内容④
 ・ビットマップで表示</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
@@ -1199,7 +1199,7 @@
 		<language name="JPN_KANJI" width="256">カゴのみ</language>
 	</row>
 
-	<row id="msg_h04_system_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_h04_system_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・ウェイトレスにサンドイッチを渡された状態で客に話しかけたとき
 ・タグに道具名をセット
 ・プレーンウィンで表示</comment>
@@ -1217,8 +1217,10 @@
 		<language name="JPN_KANJI" width="256">ここは　ビレッジブリッジ</language>
 	</row>
 
-	<row id="msg_h04_sign_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>・看板用メッセージ</comment>
+	<row id="msg_h04_sign_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>・看板用メッセージ
+
+※SWANで看板を残すか検討</comment>
 		<attribute name="キャラ指定">施設看板</attribute>
 		<language name="JPN" width="256">ビレッジブリッジ
 めいぶつ　ビレッジサンド</language>
