@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-03T17:51:04"/>
+	<create user="matsumiya" host="W00224" date="2011-03-05T18:33:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1294" top="205" right="1999" bottom="833" maximized="no" rayout="Vertical2">
+	<dialog left="1295" top="201" right="2000" bottom="829" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,19 +292,21 @@
 	</lock>
 
 
-	<row id="msg_r18_poke_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r18_poke_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>ポケモン
-・posを踏むとメッセージ表示</comment>
+・posを踏むとメッセージ表示
+※SWANで新規作成</comment>
 		<attribute name="キャラ指定">ポケモン
 クレセリア</attribute>
 		<language name="JPN" width="256">ムーーーン！</language>
 		<language name="JPN_KANJI" width="256">ムーーーン！</language>
 	</row>
 
-	<row id="msg_r18_poke_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r18_poke_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>ポケモン
 ・メッセージ表示後、クレセリア、どこかに去る
-・移動ポケモンになる</comment>
+・移動ポケモンになる
+※SWANで新規作成</comment>
 		<attribute name="キャラ指定">ポケモン
 クレセリア</attribute>
 		<language name="JPN" width="256">ポケモンは
