@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-02T17:34:54"/>
+	<create user="matsumiya" host="W00224" date="2011-03-05T17:23:40"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1295" top="201" right="2000" bottom="829" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,17 +292,19 @@
 	</lock>
 
 
-	<row id="msg_r01r0101_infomationw_01">
-		<comment>♀</comment>
+	<row id="msg_r01r0101_infomationw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+
+※SWANではメッセージ変更</comment>
 		<attribute name="キャラ指定">INFOMATIONW</attribute>
-		<language name="JPN" width="256">このさき　めぼしいものが　なくて
-でんこうけいじばん　も▽
-まっくろ　なんです▼
-ちょっと　しんせん　じゃないですか？</language>
-		<language name="JPN_KANJI" width="256">この先　めぼしいものが　なくて
-電光掲示板も▽
-真っ黒　なんです▼
-ちょっと　新鮮じゃないですか？</language>
+		<language name="JPN" width="256">あたし　さいきん　ここの
+たんとうに　なったのですけれど▼
+あの　でんこうけいじばん　って
+いつから　まっくろ　なんでしょう？</language>
+		<language name="JPN_KANJI" width="256">あたし　最近　ここの
+担当に　なったのですけれど▼
+あの　電光掲示板って
+いつから　真っ黒　なんでしょう？</language>
 	</row>
 
 	<row id="msg_r01r0101_backpackerw_01">
