@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-19T16:39:37"/>
+	<create user="matsumiya" host="W00224" date="2011-03-05T14:31:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="170"/>
+		<comment position="4" width="187"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="127">
 		</attribute>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1496" top="229" right="2201" bottom="849" maximized="no" rayout="Vertical2">
+	<dialog left="1311" top="175" right="2016" bottom="803" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,9 +292,11 @@
 	</lock>
 
 
-	<row id="msg_c08r0102_veteranw_01">
+	<row id="msg_c08r0102_veteranw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
-・クリア前</comment>
+・クリア前
+
+※SWANではメッセージ変更予定</comment>
 		<attribute name="キャラ指定">VETERANW</attribute>
 		<language name="JPN" width="256">あたくし　アイリスさまの
 コーチを　しております▼
@@ -324,7 +326,7 @@
 特攻が　がくっと　さがります</language>
 	</row>
 
-	<row id="msg_c08r0102_veteranw_02b">
+	<row id="msg_c08r0102_veteranw_02b" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・クリア後＋BLACKver</comment>
 		<attribute name="キャラ指定">VETERANW</attribute>

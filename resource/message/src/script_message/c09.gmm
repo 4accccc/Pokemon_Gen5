@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-04T15:20:57"/>
+	<create user="matsumiya" host="W00224" date="2011-03-05T14:37:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -240,7 +240,7 @@
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
 		<language japanese="JPN" english="JPN">
-			<message position="2" width="274"/>
+			<message position="2" width="220"/>
 			<font default=" 0:large" position="5" width="109">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
@@ -251,7 +251,7 @@
 			<line position="-1" width="100"/>
 		</language>
 		<language japanese="JPN_KANJI" english="JPN_KANJI">
-			<message position="3" width="259"/>
+			<message position="3" width="209"/>
 			<font default=" 0:large" position="6" width="106">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1294" top="205" right="1999" bottom="833" maximized="no" rayout="Vertical2">
+	<dialog left="1311" top="175" right="2016" bottom="803" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,14 +292,15 @@
 	</lock>
 
 
-	<row id="msg_c09_veteranm1_01">
+	<row id="msg_c09_veteranm1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・GRIDX=31～33、GRIDZ=48
 ・初めて挑戦するときPOSイベント
 ・はい/いいえ表示
 ・はい→veteranm1_03
 　いいえ→veteranm1_04
-</comment>
+
+※SWANでメッセージ調整</comment>
 		<attribute name="キャラ指定">VETERANM</attribute>
 		<language name="JPN" width="256">ポケモンリーグは
 じゅんすいに　つよさのみを▽
@@ -309,12 +310,12 @@
 してんのうと
 チャンピオンに　かつだけである！▼
 ４にんいる　してんのうは
-だれからでも　ちょうせん　できるし[BE:01:ページ切り替え（クリア）]
+だれからでも　ちょうせん　できるし▼
 してんのう　ぜんいんに　かてば
-チャンピオンに　ちょうせん　できる！[BE:01:ページ切り替え（クリア）]
-ただし！　ただしである
-いちど　ちょうせんを　はじめたなら[BE:00:ページ切り替え（行送り）]
-かちぬくか[BE:00:ページ切り替え（行送り）]
+チャンピオンに　ちょうせん　できる！▼
+ただし！　ただしである▼
+ポケモンリーグに　いどむなら
+ぜんいんに　かちぬくか▽
 まけるまで　でられないぞ！</language>
 		<language name="JPN_KANJI" width="256">ポケモンリーグは
 純粋に　強さのみを▽
@@ -324,29 +325,31 @@
 四天王と
 チャンピオンに　勝つだけである！▼
 ４人いる　四天王は
-だれからでも　挑戦できるし[BE:01:ページ切り替え（クリア）]
+だれからでも　挑戦できるし▼
 四天王全員に　勝てば
-チャンピオンに　挑戦できる！[BE:01:ページ切り替え（クリア）]
-ただし！　ただしである
-一度　挑戦を　はじめたなら[BE:00:ページ切り替え（行送り）]
-勝ち抜くか[BE:00:ページ切り替え（行送り）]
+チャンピオンに　挑戦できる！▼
+ただし！　ただしである▼
+ポケモンリーグに　挑むなら
+全員に　勝ち抜くか▽
 敗北するまで　でられないぞ！</language>
 	</row>
 
-	<row id="msg_c09_veteranm1_02">
+	<row id="msg_c09_veteranm1_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・GRIDX=31～33、GRIDZ=48
 ・初めて挑戦するときPOSイベント
 ・一度いいえで断った後
 ・はい/いいえ表示
 ・はい→veteranm1_03
-　いいえ→veteranm1_04</comment>
+　いいえ→veteranm1_04
+
+※SWANでメッセージ調整</comment>
 		<attribute name="キャラ指定">VETERANM</attribute>
-		<language name="JPN" width="256">いちど　ちょうせんを　はじめたなら
-かちぬくか[BE:00:ページ切り替え（行送り）]
+		<language name="JPN" width="256">ポケモンリーグに　いどむなら
+ぜんいんに　かちぬくか▽
 まけるまで　でられないぞ！</language>
-		<language name="JPN_KANJI" width="256">一度　挑戦を　はじめたなら
-勝ち抜くか[BE:00:ページ切り替え（行送り）]
+		<language name="JPN_KANJI" width="256">ポケモンリーグに　挑むなら
+全員に　勝ち抜くか▽
 敗北するまで　でられないぞ！</language>
 	</row>
 
@@ -372,8 +375,11 @@
 できるかぎりの　用意を　するのだ！▼</language>
 	</row>
 
-	<row id="msg_c09_veteranm1_05">
-		<comment>♂話しかけ</comment>
+	<row id="msg_c09_veteranm1_05" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・話しかけ
+
+※SWANでメッセージ調整</comment>
 		<attribute name="キャラ指定">VETERANM</attribute>
 		<language name="JPN" width="256">ポケモンリーグは
 じゅんすいに　つよさのみを▽
@@ -383,12 +389,12 @@
 してんのうと
 チャンピオンに　かつだけである！▼
 ４にんいる　してんのうは
-だれからでも　ちょうせん　できるし[BE:01:ページ切り替え（クリア）]
+だれからでも　ちょうせん　できるし▼
 してんのう　ぜんいんに　かてば
-チャンピオンに　ちょうせん　できる！[BE:01:ページ切り替え（クリア）]
-ただし！　ただしである
-いちど　ちょうせんを　はじめたなら[BE:00:ページ切り替え（行送り）]
-かちぬくか[BE:00:ページ切り替え（行送り）]
+チャンピオンに　ちょうせん　できる！▼
+ただし！　ただしである▼
+ポケモンリーグに　いどむなら
+ぜんいんに　かちぬくか▽
 まけるまで　でられないぞ！</language>
 		<language name="JPN_KANJI" width="256">ポケモンリーグは
 純粋に　強さのみを▽
@@ -398,12 +404,12 @@
 四天王と
 チャンピオンに　勝つだけである！▼
 ４人いる　四天王は
-だれからでも　挑戦できるし[BE:01:ページ切り替え（クリア）]
+だれからでも　挑戦できるし▼
 四天王全員に　勝てば
-チャンピオンに　挑戦できる！[BE:01:ページ切り替え（クリア）]
-ただし！　ただしである
-一度　挑戦を　はじめたなら[BE:00:ページ切り替え（行送り）]
-勝ち抜くか[BE:00:ページ切り替え（行送り）]
+チャンピオンに　挑戦できる！▼
+ただし！　ただしである▼
+ポケモンリーグに　挑むなら
+全員に　勝ち抜くか▽
 敗北するまで　でられないぞ！</language>
 	</row>
 
@@ -416,23 +422,25 @@
 ・続けてveteranm2_02</comment>
 		<attribute name="キャラ指定">VETERANM</attribute>
 		<language name="JPN" width="256">ポケモンリーグは
-すべての　トレーナーに　とって[BE:00:ページ切り替え（行送り）]
-さいだいの　なんかん！[BE:01:ページ切り替え（クリア）]</language>
+すべての　トレーナーに　とって▽
+さいだいの　なんかん！▼</language>
 		<language name="JPN_KANJI" width="256">ポケモンリーグは
-全ての　トレーナーに　とって[BE:00:ページ切り替え（行送り）]
-最大の　難関！[BE:01:ページ切り替え（クリア）]</language>
+全ての　トレーナーに　とって▽
+最大の　難関！▼</language>
 	</row>
 
 	<row id="msg_c09_veteranm2_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・このとき画面左を向く</comment>
 		<attribute name="キャラ指定">VETERANM</attribute>
-		<language name="JPN" width="256">こちらで　じゅんびを　しておくがいい[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">こちらで　にゅうねんに
+じゅんびを　しておくがいい▼
 いちどでも　まけると
-さいしょから　やりなおし　だからな！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">こちらで　準備を　しておくがいい[BE:01:ページ切り替え（クリア）]
+さいしょから　やりなおし　だからな！▼</language>
+		<language name="JPN_KANJI" width="256">こちらで　入念に
+準備を　しておくがいい▼
 一度でも　負けると
-最初から　やりなおし　だからな！[BE:01:ページ切り替え（クリア）]</language>
+最初から　やりなおし　だからな！▼</language>
 	</row>
 
 	<row id="msg_c09_veteranm1_stop" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
@@ -443,7 +451,7 @@
 		<language name="JPN" width="256">いま　ポケモンリーグに
 はいることは　まかりならん！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">今　ポケモンリーグに
-入ることは　まかりならん！[BE:01:ページ切り替え（クリア）]</language>
+入ることは　まかりならん！▼</language>
 	</row>
 
 	<flowchart-group-list>
