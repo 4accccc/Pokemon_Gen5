@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-04T12:34:15"/>
+	<create user="matsumiya" host="W00224" date="2011-03-05T14:13:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1294" top="205" right="1999" bottom="833" maximized="no" rayout="Vertical2">
+	<dialog left="1311" top="175" right="2016" bottom="803" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -747,9 +747,11 @@
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c07_girl2_01w" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c07_girl2_01w" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
-・WHITEver</comment>
+・WHITEver
+
+※SWANでメッセージ変更予定</comment>
 		<attribute name="キャラクター">GIRL2
 少女（活発）</attribute>
 		<language name="JPN" width="256">でんせつの　ポケモン　レシラムは
@@ -771,9 +773,11 @@
 そう　いわれているのよ</language>
 	</row>
 
-	<row id="msg_c07_girl2_01b" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c07_girl2_01b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
-・BALCKver</comment>
+・BALCKver
+
+※SWANでメッセージ変更予定</comment>
 		<attribute name="キャラクター">GIRL2
 少女（活発）</attribute>
 		<language name="JPN" width="256">でんせつの　ポケモン　ゼクロムは
@@ -809,9 +813,11 @@
 人に　何を伝えるのでしょう</language>
 	</row>
 
-	<row id="msg_c07_man3_01w" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c07_man3_01w" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
-・WHITEver</comment>
+・WHITEver
+
+※SWANでメッセージ変更予定</comment>
 		<attribute name="キャラクター">MAN3</attribute>
 		<language name="JPN" width="256">でんせつの　ポケモンは
 しんじつを　もとめる　えいゆうを▽
@@ -830,9 +836,11 @@
 小さいときに　きいたことが　あるよ</language>
 	</row>
 
-	<row id="msg_c07_man3_01b" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c07_man3_01b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
-・BALCKver</comment>
+・BALCKver
+
+※SWANでメッセージ変更予定</comment>
 		<attribute name="キャラクター">MAN3</attribute>
 		<language name="JPN" width="256">でんせつの　ポケモンは
 りそうを　もとめる　えいゆうを▽
@@ -851,8 +859,10 @@
 小さいときに　きいたことが　あるよ</language>
 	</row>
 
-	<row id="msg_c07_fighterm_01">
-		<comment>♂</comment>
+	<row id="msg_c07_fighterm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+
+※SWANでメッセージ変更予定</comment>
 		<attribute name="キャラクター">FIGHTERM
 格闘家</attribute>
 		<language name="JPN" width="256">ジムリーダー　ハチクさまの

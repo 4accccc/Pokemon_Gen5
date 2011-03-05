@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-17T20:06:59"/>
+	<create user="matsumiya" host="W00224" date="2011-03-05T14:27:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1311" top="175" right="2016" bottom="803" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -326,8 +326,9 @@
 しあわせ　ファミリー　ばんざーい！</language>
 	</row>
 
-	<row id="msg_c07r0301_boy3_01">
-		<comment>♂</comment>
+	<row id="msg_c07r0301_boy3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+※SWANではここから引越し予定</comment>
 		<attribute name="キャラ指定">BOY3</attribute>
 		<language name="JPN" width="256">とうちゃん　むかし　がいこくで
 かっこいい　しごとを　してたんだ！</language>
