@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-06-03T15:24:49"/>
+	<create user="matsumiya" host="W00224" date="2011-03-05T16:23:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -273,7 +273,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -347,7 +347,7 @@ WMKRMO</language>
 		<language name="JPN" width="256">ここから　おりれそうだ！▼
 したの　かいに　もどりますか？</language>
 		<language name="JPN_KANJI" width="256">ここから　降りれそうだ！▼
-下の　階に　戻りますか？</language>
+下の階に　戻りますか？</language>
 	</row>
 
 	<flowchart-group-list>
