@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-01-26T18:46:15"/>
+	<create user="matsumiya" host="W00224" date="2011-03-05T17:37:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1562" top="131" right="2267" bottom="759" maximized="no" rayout="Vertical2">
+	<dialog left="1295" top="201" right="2000" bottom="829" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="445"/>
@@ -388,7 +388,7 @@
 ねっ　ほしいでしょ？　買うでしょ？</language>
 	</row>
 
-	<row id="msg_r05_black_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r05_black_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・ｃ04付近にpos設定
 　踏むとゲートから出現し
@@ -406,7 +406,7 @@
 というか　勝たせてもらうよ▼</language>
 	</row>
 
-	<row id="msg_r05_black_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r05_black_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・戦闘後メッセージ
 ・続いてカミツレ、画面右から登場し
@@ -419,7 +419,7 @@
 どうして　きみに　勝てない？▼</language>
 	</row>
 
-	<row id="msg_r05_leader_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_r05_leader_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・続けてleader_02</comment>
 		<attribute name="キャラ指定">LEADER4
@@ -436,7 +436,7 @@
 高めあうのって▼</language>
 	</row>
 
-	<row id="msg_r05_leader_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_r05_leader_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・画面左を向いてメッセージ表示
 ・表示後、画面左へ移動</comment>
@@ -446,7 +446,7 @@
 		<language name="JPN_KANJI" width="256">さ　行きましょう▼</language>
 	</row>
 
-	<row id="msg_r05_champion_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r05_champion_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・GRIDX=360、GRIDZ=435~439
 　チャンピオン、下を向いて（初期配置：左向き）
@@ -458,7 +458,7 @@
 カミツレでは　ないか！▼</language>
 	</row>
 
-	<row id="msg_r05_champion_01_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r05_champion_01_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・カミツレの前に移動してメッセージ表示
 ・続けてblack_03</comment>
@@ -469,7 +469,7 @@
 人生は　楽しまねばな！▼</language>
 	</row>
 
-	<row id="msg_r05_black_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r05_black_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・カミツレを見ながら
 ・続けて</comment>
@@ -479,7 +479,7 @@
 		<language name="JPN_KANJI" width="256">チェレン『……この人は？▼</language>
 	</row>
 
-	<row id="msg_r05_leader_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_r05_leader_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・ライバルと向き合って
 ・続けてblack_04</comment>
@@ -491,7 +491,7 @@
 イッシュ地方の　チャンピオンよ▼</language>
 	</row>
 
-	<row id="msg_r05_black_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r05_black_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・表示後、チャンピオンに駆け寄る
 　遅れてカミツレ、主人公も移動
@@ -506,7 +506,7 @@
 こんなところで　遊んでいるのです？▼</language>
 	</row>
 
-	<row id="msg_r05_champion_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r05_champion_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてblack_05</comment>
 		<attribute name="キャラ指定">チャンピオン</attribute>
@@ -530,7 +530,7 @@
 イッシュの　隅々まで　知ってるぞ▼</language>
 	</row>
 
-	<row id="msg_r05_black_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r05_black_05" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてchampion_03</comment>
 		<attribute name="キャラ指定">友達♂
@@ -547,7 +547,7 @@
 チャンピオン　ですけど▼</language>
 	</row>
 
-	<row id="msg_r05_champion_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r05_champion_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてblack_06</comment>
 		<attribute name="キャラ指定">チャンピオン</attribute>
@@ -561,7 +561,7 @@
 どうする　つもりかね？▼</language>
 	</row>
 
-	<row id="msg_r05_black_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r05_black_06" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・「？」マーク表示してからメッセージ
 ・続けてchampion_04</comment>
@@ -577,7 +577,7 @@
 それが　チャンピオン　ですよね▼</language>
 	</row>
 
-	<row id="msg_r05_champion_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r05_champion_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてchampion_05</comment>
 		<attribute name="キャラ指定">チャンピオン</attribute>
@@ -593,7 +593,7 @@
 否定している　わけではない▼</language>
 	</row>
 
-	<row id="msg_r05_champion_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r05_champion_05" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けて
 　上を向いて</comment>
@@ -616,7 +616,7 @@
 ポケモン勝負を　してみないか？▼</language>
 	</row>
 
-	<row id="msg_r05_champion_05_01" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_r05_champion_05_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・メッセージ表示後
 　男の子、女の子、移動
@@ -628,7 +628,7 @@
 ちょっと　おいで▼</language>
 	</row>
 
-	<row id="msg_r05_black_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r05_black_07" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・表示後、イベントバトルへ
 ・0＝主人公名前</comment>
@@ -640,7 +640,7 @@
 じゃ　そのまえに……▼</language>
 	</row>
 
-	<row id="msg_r05_black_07_01" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_r05_black_07_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・主人公と向き合って
 ・主人公ポケモン、ＨＰ・ＰＰ全回復の処理
@@ -656,7 +656,7 @@
 回復してくれた！</language>
 	</row>
 
-	<row id="msg_r05_black_07_02" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_r05_black_07_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・上を向いてメッセージ表示
 ・表示後、イベントバトルへ</comment>
@@ -666,7 +666,7 @@
 		<language name="JPN_KANJI" width="256">チェレン『では　いきますよ▼</language>
 	</row>
 
-	<row id="msg_r05_champion_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r05_champion_06" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・戦闘後、フィールドに復帰すると
 　このメッセージ表示
@@ -680,7 +680,7 @@
 ポケモンも　うれしそうだったし▼</language>
 	</row>
 
-	<row id="msg_r05_champion_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r05_champion_07" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてleader_04</comment>
 		<attribute name="キャラ指定">チャンピオン</attribute>
@@ -708,7 +708,7 @@
 そういうものだと　思ってくれい！▼</language>
 	</row>
 
-	<row id="msg_r05_champion_08" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r05_champion_08" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・イベントバトル後
 ・c05ジムバッジ取得で削除</comment>
@@ -723,7 +723,7 @@
 一緒に　いるのは　すばらしいな！</language>
 	</row>
 
-	<row id="msg_r05_boy3_01">
+	<row id="msg_r05_boy3_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・イベントバトル後
 ・c05ジムバッジ取得で削除</comment>
@@ -734,7 +734,7 @@
 それにね　ポケモンに　優しいよ！</language>
 	</row>
 
-	<row id="msg_r05_girl2_01">
+	<row id="msg_r05_girl2_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・イベントバトル後
 ・c05ジムバッジ取得で削除</comment>
@@ -749,7 +749,7 @@
 おじいちゃんが　教えてくれたの</language>
 	</row>
 
-	<row id="msg_r05_leader_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_r05_leader_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・メッセージ表示後、画面左に移動
 ・続けてblack_09</comment>
@@ -761,7 +761,7 @@
 ホドモエの跳ね橋は　もうすぐよ▼</language>
 	</row>
 
-	<row id="msg_r05_black_08" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r05_black_08" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・カミツレが画面外に消えるとメッセージ表示
 ・表示後、画面左に移動し
@@ -774,7 +774,7 @@
 それ以外の　答えは　ないよ▼</language>
 	</row>
 
-	<row id="msg_r05_black_10" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r05_black_10" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・GRIDX=338、GRIDZ=431~435到達したとき
 　表示後、主人公が所定の位置に移動
@@ -785,7 +785,7 @@
 		<language name="JPN_KANJI" width="256">チェレン『こっち▼</language>
 	</row>
 
-	<row id="msg_r05_leader_05" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_r05_leader_05" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・メッセージ表示後、左に2歩移動
 ・続けてライブキャスターのSEを鳴らし
@@ -796,7 +796,7 @@
 		<language name="JPN_KANJI" width="256">カミツレ『さてと　連絡▼</language>
 	</row>
 
-	<row id="msg_r05_leader_06" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_r05_leader_06" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・カミツレ、上を向いた状態でメッセージ表示後
 　主人公たちのほうを向いてleader_07</comment>
@@ -816,7 +816,7 @@
 よろしく▼</language>
 	</row>
 
-	<row id="msg_r05_leader_07" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_r05_leader_07" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・主人公に隣接して
 　メッセージ表示すると、h02橋の降りるデモ開始
@@ -827,7 +827,7 @@
 		<language name="JPN_KANJI" width="256">さ　みてて！▼</language>
 	</row>
 
-	<row id="msg_r05_leader_08" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_r05_leader_08" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・デモ終了後、フィールド画面に戻るとメッセージ表示
 ・表示後、画面右に移動する
@@ -846,7 +846,7 @@
 あなたたち　がんばって▼</language>
 	</row>
 
-	<row id="msg_r05_black_09" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r05_black_09" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・メッセージ表示後、画面左に
 ・画面外に消えると、主人公操作可能に</comment>
@@ -997,7 +997,7 @@ musician_01</attribute>
 きっと　サイコーだぜ！</language>
 	</row>
 
-	<row id="msg_r05_black_end_01" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r05_black_end_01" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・GRIDX=359、GRIDZ=439、下向き
 ・話しかけでイベント開始
@@ -1015,7 +1015,7 @@ musician_01</attribute>
 ここで　アデクさんと　出会った▼</language>
 	</row>
 
-	<row id="msg_r05_black_end_02" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r05_black_end_02" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・主人公と向き合ってメッセージ表示
 ・続けてblack_end_03</comment>
@@ -1031,7 +1031,7 @@ musician_01</attribute>
 いろんな　ものが　みえてきたよ▼</language>
 	</row>
 
-	<row id="msg_r05_black_end_03" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r05_black_end_03" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・下を向いて
 ・続けてblack_end_04</comment>
@@ -1049,7 +1049,7 @@ musician_01</attribute>
 なにかを　守る　強さ……▼</language>
 	</row>
 
-	<row id="msg_r05_black_end_04" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r05_black_end_04" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・主人公と向き合って
 ・若干間をおいてから
@@ -1070,7 +1070,7 @@ musician_01</attribute>
 みることが　できたら　いいのにな▼</language>
 	</row>
 
-	<row id="msg_r05_black_end_05" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r05_black_end_05" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・メッセージ表示後、h02方面へ移動
 ・画面外に消えると主人公、操作可能に

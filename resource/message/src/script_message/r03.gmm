@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-31T18:16:54"/>
+	<create user="matsumiya" host="W00224" date="2011-03-05T17:33:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1295" top="201" right="2000" bottom="829" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -363,7 +363,7 @@
 かつの　むずかしいんだね</language>
 	</row>
 
-	<row id="msg_r03_black_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r03_black_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・pos（GRIDX=718、GRIDZ=561~565）で発動
 　c01側から登場
@@ -380,7 +380,7 @@
 どちらが　強いか　確かめるよ▼</language>
 	</row>
 
-	<row id="msg_r03_black_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r03_black_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・戦闘後メッセージ
 ・続けてhakaim_01</comment>
@@ -392,7 +392,7 @@
 そういう　戦い方ね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r03_hakaim_01">
+	<row id="msg_r03_hakaim_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・会話ウインドウを出したまま
 　プラズマ団したっぱ♂×２、画面を右から左に移動
@@ -402,7 +402,7 @@
 		<language name="JPN_KANJI" width="256">？？？『どけ　どけーッ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r03_black_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r03_black_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けて画面右を向いてblack_04</comment>
 		<attribute name="キャラ指定">友達♂
@@ -411,7 +411,7 @@
 		<language name="JPN_KANJI" width="256">チェレン『なんだよ　いまの……？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r03_black_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r03_black_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・メッセージ表示後
 　サポートと送れて女の子が到着
@@ -424,7 +424,7 @@
 どうして　走ってるの？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r03_white_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r03_white_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・続けてblack_05</comment>
 		<attribute name="キャラ指定">友達♀
@@ -435,7 +435,7 @@
 今の連中　どっちに　向かった？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r03_black_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r03_black_05" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・画面左を向いてメッセージ表示
 ・続けてblack_06</comment>
@@ -445,7 +445,7 @@
 		<language name="JPN_KANJI" width="256">チェレン『あっち　だけど……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r03_black_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r03_black_06" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・画面右を向いてメッセージ表示
 ・続けてwhite_03</comment>
@@ -455,7 +455,7 @@
 		<language name="JPN_KANJI" width="256">だから　どうして　走ってるのさ？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r03_white_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r03_white_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・画面左を向いたままメッセージ表示
 ・続けてbabygirl1_01
@@ -468,7 +468,7 @@
 なんて　速い　逃げ足　なの！！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r03_babygirl1_01">
+	<row id="msg_r03_babygirl1_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・サポートのほうを向いてメッセージ表示
 ・続けてwhite_03</comment>
@@ -480,7 +480,7 @@
 ……あたしの　ポケモン？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r03_white_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r03_white_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・女の子の方を向いてメッセージ表示
 ・続けてblack_07</comment>
@@ -492,7 +492,7 @@
 大丈夫だから　泣かないで！！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r03_black_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r03_black_07" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・サポートのほうを向いてメッセージ表示
 ・続けてwhite_04</comment>
@@ -504,7 +504,7 @@
 だから　どうして　走ってたんだ？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r03_white_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r03_white_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・ライバルのほうを向いてメッセージ表示
 ・続けてblack_08</comment>
@@ -518,7 +518,7 @@
 ポケモンを　とられちゃったのよ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r03_black_08" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r03_black_08" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・メッセージ表示後、主人公向き
 ・続けてblack_08_01</comment>
@@ -530,7 +530,7 @@
 はやく　いいなよ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r03_black_08_01" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_r03_black_08_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・メッセージ表示後、画面左へ倍速移動
 ・画面外に消えると、主人公操作可能に
@@ -547,7 +547,7 @@
 その　女の子の　そばにいてよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r03_white_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r03_white_05" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・ストッパー状態
 　直接話しかけたとき
@@ -562,7 +562,7 @@
 ポケモンを　取り返してあげて！</language>
 	</row>
 
-	<row id="msg_r03_white_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r03_white_06" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・ストッパー状態
 　pos（GRIDX=715~717、GRIDZ=565）を踏んだとき
@@ -577,7 +577,7 @@
 ポケモンを　取り返してあげて！▼</language>
 	</row>
 
-	<row id="msg_r03_babygirl1_02">
+	<row id="msg_r03_babygirl1_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・black_08表示後
 ・r03r0301のイベントクリアまで繰り返し</comment>
@@ -589,7 +589,7 @@
 ひとの　ポケモン　とるの……？</language>
 	</row>
 
-	<row id="msg_r03_black_08a" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r03_black_08a" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・GRIDX=680、GRIDZ=554
 ・話しかけたとき
@@ -611,7 +611,7 @@
 準備は　万端だよね？</language>
 	</row>
 
-	<row id="msg_r03_black_08b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r03_black_08b" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・はい選択時
 ・メッセージ表示後、ライバル洞窟の中に入る</comment>
@@ -621,7 +621,7 @@
 		<language name="JPN_KANJI" width="256">……じゃ　行くよ▼</language>
 	</row>
 
-	<row id="msg_r03_black_08c" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r03_black_08c" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・いいえ選択（話しかけの場合）</comment>
 		<attribute name="キャラ指定">友達♂
@@ -638,7 +638,7 @@
 早く　準備してきなよ</language>
 	</row>
 
-	<row id="msg_r03_black_08d" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
+	<row id="msg_r03_black_08d" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・いいえ選択時（posで起動時）
 ・メッセージ表示後に主人公をを
@@ -657,7 +657,7 @@
 早く　準備してきなよ▼</language>
 	</row>
 
-	<row id="msg_r03_black_08e" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r03_black_08e" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・一度、いいえ選択後
 ・処理はblack_08aと同じ</comment>
@@ -671,7 +671,7 @@
 準備は　万端だよね？</language>
 	</row>
 
-	<row id="msg_r03_white_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r03_white_07" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・pos（GRIDX=000、GRIDZ=000~000）で発動
 　主人公に隣接してこのメッセージ表示
@@ -694,7 +694,7 @@
 友達で　よかった！！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r03_babygirl1_03">
+	<row id="msg_r03_babygirl1_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・主人公性別：♂
 ・アイテム入手処理
@@ -710,7 +710,7 @@
 おれいに　これを　あげるね！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r03_babygirl1_04">
+	<row id="msg_r03_babygirl1_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・主人公性別：♀
 ・アイテム入手処理
@@ -726,7 +726,7 @@
 おれいに　これを　あげるね！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r03_white_08" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r03_white_08" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・メッセージ表示後、サポートと女の子
 　横並びの状態でc01方面へ移動
@@ -750,7 +750,7 @@
 [1:00:トレーナー名:0]　バイバーイ！！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r03_black_09" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r03_black_09" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・pos（GRIDX=720、GRIDZ=581~583）で発動
 　主人公に隣接してこのメッセージ表示
@@ -761,7 +761,7 @@
 		<language name="JPN_KANJI" width="256">チェレン『[1:00:トレーナー名:0]　ストップ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r03_black_10" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r03_black_10" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・草むらを向いてこのメッセージ表示</comment>
 		<attribute name="キャラ指定">友達♂
@@ -774,7 +774,7 @@
 ２匹同時に　飛びだしてくる▼</language>
 	</row>
 
-	<row id="msg_r03_black_11" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r03_black_11" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・再度主人公と向き合いメッセージ表示
 ・表示後、道をくだりc02方面へ移動
@@ -880,7 +880,10 @@
 		<language name="JPN_KANJI" width="256">３番道路</language>
 	</row>
 
-	<row id="msg_r03_sign3_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_r03_sign3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>看板
+
+※SWANではメッセージ変更予定</comment>
 		<attribute name="キャラ指定">看板：お得な掲示板</attribute>
 		<language name="JPN" width="256">おとくな　けいじばん！[BE:01:ページ切り替え（クリア）]
 

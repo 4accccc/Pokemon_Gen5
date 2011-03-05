@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsushima" host="W00181" date="2010-06-30T17:54:45"/>
+	<create user="matsumiya" host="W00224" date="2011-03-05T17:50:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="233"/>
+		<comment position="4" width="285"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="81">
 		</attribute>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1352" top="115" right="2057" bottom="735" maximized="no" rayout="Vertical2">
+	<dialog left="1295" top="201" right="2000" bottom="829" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_r06r0203_legend1_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_r06r0203_legend1_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>●コバルオン初期位置（GRIDX=7 GRIDZ=4）
 
 ・話し掛けたとき
@@ -302,7 +302,7 @@
 		<language name="JPN_KANJI" width="256">こふおおおおーっ！</language>
 	</row>
 
-	<row id="msg_r06r0203_legend1_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_r06r0203_legend1_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・戦闘後
 ・ポケモンを倒した場合のメッセージ
 ・初回時（続けてじいさんが出てくる）
@@ -315,7 +315,7 @@
 洞穴の　どこかへ　消えてしまった…▼</language>
 	</row>
 
-	<row id="msg_r06r0203_legend1_03" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_r06r0203_legend1_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・戦闘後
 ・ポケモンを倒した場合のメッセージ
 ・２回目以降（メッセージ表示後にイベント終了）
