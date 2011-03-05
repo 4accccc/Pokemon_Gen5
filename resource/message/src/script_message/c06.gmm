@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-03T17:35:14"/>
+	<create user="matsumiya" host="W00224" date="2011-03-05T13:52:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1071,12 +1071,15 @@
 たからもの　みつけたんだ！！▼</language>
 	</row>
 
-	<row id="msg_c06_babygirl_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c06_babygirl_01" text-color=",,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・続けて
 　主人公♂→boy2_02
-　主人公♀→boy2_03</comment>
-		<attribute name="キャラクター">BABYGIRL</attribute>
+　主人公♀→boy2_03
+※SWANでメッセージ変更
+※動作モデルを変更</comment>
+		<attribute name="キャラクター">BABYGIRL
+→GIRL2</attribute>
 		<language name="JPN" width="256">みつけたあ！！▼</language>
 		<language name="JPN_KANJI" width="256">みつけたあ！！▼</language>
 	</row>
@@ -1125,10 +1128,13 @@
 フウロ姉ちゃんから　もらうから！▼</language>
 	</row>
 
-	<row id="msg_c06_babygirl_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c06_babygirl_02" text-color=",,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・続けてboy2_04</comment>
-		<attribute name="キャラクター">BABYGIRL</attribute>
+・続けてboy2_04
+※SWANでメッセージ変更
+※動作モデルを変更</comment>
+		<attribute name="キャラクター">BABYGIRL
+→GIRL2</attribute>
 		<language name="JPN" width="256">つかって　いーよー！！▼</language>
 		<language name="JPN_KANJI" width="256">つかって　いーよー！！▼</language>
 	</row>
