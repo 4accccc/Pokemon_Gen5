@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00170" date="2011-01-25T17:09:44"/>
+	<create user="matsumiya" host="W00224" date="2011-03-05T17:13:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="-1230" top="161" right="-525" bottom="789" maximized="no" rayout="Vertical2">
+	<dialog left="1295" top="201" right="2000" bottom="829" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="562" right="1280" bottom="960" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -592,7 +592,7 @@
 部屋に　入りますか？</language>
 	</row>
 
-	<row id="msg_pc_union_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_pc_union_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>ユニオンルームの説明
 ・はい/いいえの選択
 　はい　→msg_union_03
