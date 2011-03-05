@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-03T17:46:16"/>
+	<create user="matsumiya" host="W00224" date="2011-03-05T16:10:15"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="236"/>
+		<comment position="4" width="272"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1294" top="205" right="1999" bottom="833" maximized="no" rayout="Vertical2">
+	<dialog left="1295" top="201" right="2000" bottom="829" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,11 +292,13 @@
 	</lock>
 
 
-	<row id="msg_d09r1501_legend2_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_d09r1501_legend2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>●テラキオン初期位置（GRIDX=5 GRIDZ=4）
 
 ・話し掛けたとき
-・戦闘開始前</comment>
+・戦闘開始前
+
+※SWANではマップ自体削除</comment>
 		<attribute name="キャラ指定">伝説ポルトス</attribute>
 		<language name="JPN" width="256">ぐるるおおーっ！</language>
 		<language name="JPN_KANJI" width="256">ぐるるおおーっ！</language>

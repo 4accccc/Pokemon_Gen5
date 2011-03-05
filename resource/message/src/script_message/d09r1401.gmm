@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-25T12:44:12"/>
+	<create user="matsumiya" host="W00224" date="2011-03-05T16:10:38"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,12 +292,14 @@
 	</lock>
 
 
-	<row id="msg_d09r1401_black_end_01" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d09r1401_black_end_01" text-color="#0000ff,,,#ff0000,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・初回
 ・GRIDX=9、GRIDZ=3、下向き
 ・芝居後、メッセージ表示
-・続けてbigfour3_end_01</comment>
+・続けてbigfour3_end_01
+
+※SWANではマップ自体削除</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
 		<language name="JPN" width="256">チェレン『……[1:00:トレーナー名:0]▼
@@ -312,7 +314,7 @@
 きらいな　部分ばかり　目につくよ▼</language>
 	</row>
 
-	<row id="msg_d09r1401_bigfour3_end_01" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d09r1401_bigfour3_end_01" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・メッセージ表示後
 　レンブ登場し、所定の位置へ
@@ -327,7 +329,7 @@
 自分からは　逃げられない▼</language>
 	</row>
 
-	<row id="msg_d09r1401_black_end_02" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d09r1401_black_end_02" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けて</comment>
 		<attribute name="キャラ指定">友達♂
@@ -336,7 +338,7 @@
 		<language name="JPN_KANJI" width="256">チェレン『……レンブさん？▼</language>
 	</row>
 
-	<row id="msg_d09r1401_bigfour3_end_02" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d09r1401_bigfour3_end_02" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けて</comment>
 		<attribute name="キャラ指定">四天王
@@ -361,7 +363,7 @@
 そして　自分を　みるんだ！▼</language>
 	</row>
 
-	<row id="msg_d09r1401_black_end_03" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d09r1401_black_end_03" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けて</comment>
 		<attribute name="キャラ指定">友達♂
@@ -372,7 +374,7 @@
 アデクさんの　受け売りですか？▼</language>
 	</row>
 
-	<row id="msg_d09r1401_bigfour3_end_03" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d09r1401_bigfour3_end_03" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・画面下に移動
 ・画面外に消えるとblack_end_04</comment>
@@ -398,7 +400,7 @@
 きみたちの　挑戦　待っているよ▼</language>
 	</row>
 
-	<row id="msg_d09r1401_black_end_04" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d09r1401_black_end_04" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・メッセージ後、トレーナー戦闘に
 ・0＝主人公名前</comment>
@@ -412,7 +414,7 @@
 ポケモン勝負　受けてもらうよ！▼</language>
 	</row>
 
-	<row id="msg_d09r1401_black_end_05" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d09r1401_black_end_05" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・トレーナー戦闘後
 ・日が変わるまで繰り返し</comment>
@@ -440,7 +442,7 @@
 大事な　ポケモンたちが</language>
 	</row>
 
-	<row id="msg_d09r1401_black_end_06" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d09r1401_black_end_06" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・２回目以降
 ・メッセージ後、トレーナー戦闘に</comment>
@@ -458,7 +460,7 @@
 ポケモン勝負　受けてもらうよ！▼</language>
 	</row>
 
-	<row id="msg_d09r1401_black_end_07" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d09r1401_black_end_07" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・トレーナー戦闘後
 ・日が変わるまで繰り返し</comment>
