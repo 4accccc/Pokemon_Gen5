@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-03T17:07:22"/>
+	<create user="matsumiya" host="W00224" date="2011-03-05T15:03:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1294" top="205" right="1999" bottom="833" maximized="no" rayout="Vertical2">
+	<dialog left="1311" top="175" right="2016" bottom="803" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Source" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -449,7 +449,7 @@
 襲いかかってきた！▼</language>
 	</row>
 
-	<row id="msg_d03r0101_rival_00" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d03r0101_rival_00" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂：d08イベント後
 ・GRIDX=61、GRIDZ=30を踏むとイベント開始
 　画面下からチェレン登場
@@ -462,7 +462,7 @@
 		<language name="JPN_KANJI" width="256">チェレン『ストップ　[1:00:トレーナー名:0]！▼</language>
 	</row>
 
-	<row id="msg_d03r0101_rival_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d03r0101_rival_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂：d08イベント後
 ・続けてrival_02
 ・0＝主人公名前</comment>
@@ -482,7 +482,7 @@
 到着するなんて▼</language>
 	</row>
 
-	<row id="msg_d03r0101_rival_02" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d03r0101_rival_02" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂：d08イベント後
 ・画面下向きでメッセージ表示
 ・続けてrival_02a</comment>
@@ -498,7 +498,7 @@
 ぼくの　ポケモンたちの　おかげだね▼</language>
 	</row>
 
-	<row id="msg_d03r0101_rival_02a" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d03r0101_rival_02a" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂：d08イベント後
 ・画面上向きでメッセージ表示
 ・d04r0601イベント発動まで待機</comment>
@@ -510,7 +510,7 @@
 ぼくたちも　急ごう</language>
 	</row>
 
-	<row id="msg_d03r0101_rival_03" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d03r0101_rival_03" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂：d04r0601のイベント後
 ・画面暗転から復帰後メッセージ自動で表示</comment>
 		<attribute name="キャラ指定">友達♂
@@ -521,7 +521,7 @@
 だけど　絶対に　許せない！▼</language>
 	</row>
 
-	<row id="msg_d03r0101_champion_01" back-color="#ffff80,,,#ffff80,,,,,,,,,,,,,,,">
+	<row id="msg_d03r0101_champion_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂：d04r0601のイベント後
 ・メッセージ表示後
 　ライブキャスター受信音</comment>
@@ -545,7 +545,7 @@
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_d03r0101_tvt_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_d03r0101_tvt_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・コール音再生と同時に表示
 ・コール音終了後に、msg_d03r0101_tvt_02へ</comment>
 		<attribute name="キャラ指定">システム
@@ -554,7 +554,7 @@
 		<language name="JPN_KANJI" width="256">ライブキャスターが　鳴っている</language>
 	</row>
 
-	<row id="msg_d03r0101_tvt_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_d03r0101_tvt_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・メッセージ表示後、ライブキャスター画面へ</comment>
 		<attribute name="キャラ指定">システム
 ライブキャスター</attribute>
@@ -564,7 +564,7 @@
 ライブキャスターを　つなげた[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d03r0101_champion_02" back-color="#ffff80,,,#ffff80,,,,,,,,,,,,,,,">
+	<row id="msg_d03r0101_champion_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂：d04r0601のイベント後
 ・ライブキャスター画面から復帰後
 　このメッセージ表示
@@ -587,7 +587,7 @@
 では　先に　参るぞ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d03r0101_rival_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d03r0101_rival_05" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂：d04r0601のイベント後
 ・c02でダークストーン（ライトストーン）入手で
 　ここから削除</comment>
@@ -632,12 +632,12 @@
 		<attribute name="キャラ指定">SUNGLASSES
 サングラス</attribute>
 		<language name="JPN" width="256">わざわざ　はなしかけてきた
-ひとは　きみが　ふたりめ！▼
-かんどう　しました！
-これを　あげます！▼</language>
+ひとは　きみで　ふたりめ！▼
+ものすごく　かんどう　しました！
+これを　あげましょう！▼</language>
 		<language name="JPN_KANJI" width="256">わざわざ　話しかけてきた
-人は　君が　２人目！▼
-感動しました！
+人は　君で　２人目！▼
+ものすごく　感動しました！
 これを　あげましょう！▼</language>
 	</row>
 
@@ -656,10 +656,12 @@
 威力が　増すんだよね！</language>
 	</row>
 
-	<row id="msg_d03r0101_sunglasses_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d03r0101_sunglasses_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・d04r0101に入ってからは
-　このメッセージ</comment>
+　このメッセージ
+
+※SWANではメッセージ内容、処理変更予定</comment>
 		<attribute name="キャラ指定">SUNGLASSES
 サングラス</attribute>
 		<language name="JPN" width="256">きこえた　はなしに　よると▼

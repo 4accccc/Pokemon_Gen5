@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-24T21:27:24"/>
+	<create user="matsumiya" host="W00224" date="2011-03-05T15:07:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1437" top="135" right="2142" bottom="763" maximized="no" rayout="Vertical2">
+	<dialog left="1311" top="175" right="2016" bottom="803" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_d04r2201_sage4_end_01" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,,">
+	<row id="msg_d04r2201_sage4_end_01" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・GRIDX=6、GRIDZ=2、上向き
 ・続けてsage4_end_02</comment>
@@ -315,7 +315,7 @@
 いかれたと　いうではないか……▼</language>
 	</row>
 
-	<row id="msg_d04r2201_sage4_end_02" text-color="#0000ff,,,#000000,,#000000,,,,,,,,,,,,,">
+	<row id="msg_d04r2201_sage4_end_02" text-color="#0000ff,,,#000000,,#000000,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・何かアニメ
 ・続けてsage4_end_03</comment>
@@ -336,7 +336,7 @@
 もう　夢は　みれぬな▼</language>
 	</row>
 
-	<row id="msg_d04r2201_sage4_end_03" text-color="#0000ff,,,#000000,,#000000,,,,,,,,,,,,,">
+	<row id="msg_d04r2201_sage4_end_03" text-color="#0000ff,,,#000000,,#000000,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・アイテム入手処理
 　No331「めいそう」</comment>
@@ -349,7 +349,7 @@
 わたしには　使う　あてもない▼</language>
 	</row>
 
-	<row id="msg_d04r2201_sage4_end_04" text-color="#0000ff,,,#000000,,#000000,,,,,,,,,,,,,">
+	<row id="msg_d04r2201_sage4_end_04" text-color="#0000ff,,,#000000,,#000000,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・アイテム入手後自動で表示
 ・続けてicpo_end_01</comment>
@@ -368,7 +368,7 @@
 なにも　残せなかった……▼</language>
 	</row>
 
-	<row id="msg_d04r2201_icpo_end_01" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d04r2201_icpo_end_01" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・隣接してメッセージ
 ・続けてsage4_end_03</comment>
@@ -384,7 +384,7 @@
 いろいろ　教えてもらおう！▼</language>
 	</row>
 
-	<row id="msg_d04r2201_sage4_end_05" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,,">
+	<row id="msg_d04r2201_sage4_end_05" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けて七賢人
 　6人と会っていない→icpo_end_02
@@ -402,7 +402,7 @@
 定かでは　ないのだ……▼</language>
 	</row>
 
-	<row id="msg_d04r2201_icpo_end_02" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d04r2201_icpo_end_02" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・メッセージ表示後
 　画面暗転して七賢人とハンサムを削除</comment>
@@ -424,7 +424,7 @@
 では　また　会おう！▼</language>
 	</row>
 
-	<row id="msg_d04r2201_icpo_end_03" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d04r2201_icpo_end_03" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・6人の七賢人とであったとき
 ・メッセージ表示後

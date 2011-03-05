@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-22T15:07:14"/>
+	<create user="matsumiya" host="W00224" date="2011-03-05T15:04:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1311" top="175" right="2016" bottom="803" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_d04r0501_hakaim8_01">
+	<row id="msg_d04r0501_hakaim8_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・GRIDX=13、GRIDZ=19、下向き
 ・トレーナーIDはhakaim1_08</comment>
@@ -308,7 +308,7 @@ hakaim1_08</attribute>
 さっぱりだよ！　チクショウ！</language>
 	</row>
 
-	<row id="msg_d04r0501_hakaiw3_01">
+	<row id="msg_d04r0501_hakaiw3_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・GRIDX=12、GRIDZ=19、下向き
 ・トレーナーIDはhakaiw1_03</comment>

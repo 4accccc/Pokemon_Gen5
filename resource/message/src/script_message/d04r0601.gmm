@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-07-09T15:14:36"/>
+	<create user="matsumiya" host="W00224" date="2011-03-05T15:04:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1311" top="175" right="2016" bottom="803" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_d04r0601_rival_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d04r0601_rival_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・このマップに来るとイベント起動
 ・ライバルが落ちてくるので主人公が1歩動く
@@ -304,7 +304,7 @@
 		<language name="JPN_KANJI" width="256">チェレン『……やっと　追いついた▼</language>
 	</row>
 
-	<row id="msg_d04r0601_champion_00">
+	<row id="msg_d04r0601_champion_00" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・メッセージ表示後
 　主人公先導で、ライバルと所定位置まで移動
@@ -321,7 +321,7 @@
 わしの　そばに　来るんだ▼</language>
 	</row>
 
-	<row id="msg_d04r0601_sage1_01w" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d04r0601_sage1_01w" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・WHITEver
 ・続けてsage1_02</comment>
@@ -341,7 +341,7 @@
 ダークストーンは　ないようです▼</language>
 	</row>
 
-	<row id="msg_d04r0601_sage1_01b" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d04r0601_sage1_01b" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・BLACKver
 ・続けてsage1_02</comment>
@@ -361,7 +361,7 @@
 ライトストーンは　ないようです▼</language>
 	</row>
 
-	<row id="msg_d04r0601_sage1_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d04r0601_sage1_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・このときゲーチス、一歩前に出る
 ・続けてchampion_01
@@ -396,7 +396,7 @@
 奪い　逃がし　解き放ちましょう！▼</language>
 	</row>
 
-	<row id="msg_d04r0601_champion_01">
+	<row id="msg_d04r0601_champion_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてsage1_03</comment>
 		<attribute name="キャラ指定">CHAMPION
@@ -415,7 +415,7 @@
 ポケモンの　解放なのか？▼</language>
 	</row>
 
-	<row id="msg_d04r0601_sage1_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d04r0601_sage1_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けて
 　sage1_03wか
@@ -450,7 +450,7 @@
 今の　世界を　守りたいと？▼</language>
 	</row>
 
-	<row id="msg_d04r0601_sage1_03w" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d04r0601_sage1_03w" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・WHITEver
 ・動作モデルの芝居を挿入
@@ -485,7 +485,7 @@
 すでに　用意して　いるのですよ▼</language>
 	</row>
 
-	<row id="msg_d04r0601_sage1_03b" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d04r0601_sage1_03b" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・BLACKver
 ・動作モデルの芝居を挿入
@@ -520,7 +520,7 @@
 すでに　用意して　いるのですよ▼</language>
 	</row>
 
-	<row id="msg_d04r0601_champion_02">
+	<row id="msg_d04r0601_champion_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてsage1_04</comment>
 		<attribute name="キャラ指定">CHAMPION
@@ -537,7 +537,7 @@
 ポケモンの　ためにも！▼</language>
 	</row>
 
-	<row id="msg_d04r0601_sage1_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d04r0601_sage1_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてchampion_02a</comment>
 		<attribute name="キャラ指定">七賢人ゲーチス</attribute>
@@ -551,7 +551,7 @@
 判断なさって　おるのですよ▼</language>
 	</row>
 
-	<row id="msg_d04r0601_champion_02a">
+	<row id="msg_d04r0601_champion_02a" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてsage1_04a</comment>
 		<attribute name="キャラ指定">チャンピオン
@@ -564,7 +564,7 @@
 わしも　バカに　されたものだな▼</language>
 	</row>
 
-	<row id="msg_d04r0601_sage1_04a" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d04r0601_sage1_04a" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・メッセージ表示後、移動
 ・主人公とチャンピオンの間を割って立ち去る
@@ -592,7 +592,7 @@
 では　ごきげんよう▼</language>
 	</row>
 
-	<row id="msg_d04r0601_rival_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d04r0601_rival_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・このとき残った動作モデル、下向き
 　（ゲーチスの移動に追従する）
@@ -605,7 +605,7 @@
 これから　どうするのですか？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d04r0601_champion_03w">
+	<row id="msg_d04r0601_champion_03w" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・WHITEver
 ・続けてrival_03</comment>
@@ -627,7 +627,7 @@
 どうすれば　いいものか？▼</language>
 	</row>
 
-	<row id="msg_d04r0601_champion_03b">
+	<row id="msg_d04r0601_champion_03b" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・BLACKver
 ・続けてrival_03</comment>
@@ -649,7 +649,7 @@
 どうすれば　いいものか？▼</language>
 	</row>
 
-	<row id="msg_d04r0601_rival_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d04r0601_rival_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けてchampion_04</comment>
 		<attribute name="キャラ指定">友達♂
@@ -660,7 +660,7 @@
 とにかく　外に　でませんか[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d04r0601_champion_04">
+	<row id="msg_d04r0601_champion_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・メッセージ表示後、画面暗転
 ・d03r0101に続く</comment>
