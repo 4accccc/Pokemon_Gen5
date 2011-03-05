@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-07-02T22:23:01"/>
+	<create user="matsumiya" host="W00224" date="2011-03-05T16:50:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,13 +312,13 @@
 		</language>
 	</columns>
 
-	<dialog left="416" top="165" right="1121" bottom="793" maximized="no" rayout="Vertical2">
+	<dialog left="1578" top="201" right="2282" bottom="829" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="682" top="69" right="1155" bottom="467" visible="no"/>
-		<band id="0" index="0" style="0000" width="530"/>
+		<band id="0" index="0" style="0000" width="529"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="697"/>
-		<band id="3" index="3" style="0000" width="697"/>
+		<band id="2" index="2" style="0000" width="696"/>
+		<band id="3" index="3" style="0000" width="696"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -350,9 +350,9 @@
 あそぶけど　それで　いいかな？</language>
 		<language name="JPN_KANJI" width="256">ヘイ　ファンタスティック　トレーナー！
 世紀の　大実験　するかい！▼
-ポケシフターを　あそぶには
+ポケシフターを　遊ぶには
 ＤＳは　２つ　必要だよ！▼
-もう１つの　ＤＳを　つかって
+もう１つの　ＤＳを　使って
 遊ぶけど　それで　いいかな？</language>
 	</row>
 
@@ -378,11 +378,11 @@ BOXに6匹以上の空きがない</comment>
 BOXに6匹以上の空きがある</comment>
 		<language name="JPN" width="256">オーケイ！▼
 いちど　つれてきた　ポケモンは
-もう　もとの　ばしょには　もどれないよ！▼
+もう　もとの　ばしょには　もどれないよ！▽
 それでも　いいね？</language>
 		<language name="JPN_KANJI" width="256">オーケイ！▼
 一度　連れてきた　ポケモンは
-もう　元の　場所には　戻れないよ！▼
+もう　元の　場所には　戻れないよ！▽
 それでも　いいね？</language>
 	</row>
 
