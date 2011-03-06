@@ -1667,9 +1667,7 @@ static void BPL_BgExit(void)
 //--------------------------------------------------------------------------------------------
 static void BPL_BgGraphicSet( BPLIST_WORK * wk )
 {
-  ARCHANDLE* hdl;
-
-  hdl  = GFL_ARC_OpenDataHandle( ARCID_B_PLIST_GRA,  GFL_HEAP_LOWID(wk->dat->heap) );
+  ARCHANDLE* hdl = GFL_ARC_OpenDataHandle( ARCID_B_PLIST_GRA,  GFL_HEAP_LOWID(wk->dat->heap) );
 
   GFL_ARCHDL_UTIL_TransVramBgCharacter(
     hdl, NARC_b_plist_gra_b_plist_lz_NCGR, GFL_BG_FRAME3_S, 0, 0, TRUE, wk->dat->heap );
@@ -1688,10 +1686,20 @@ static void BPL_BgGraphicSet( BPLIST_WORK * wk )
     GFL_HEAP_FreeMemory( buf );
   }
 
-  PaletteWorkSet_Arc(
-    wk->pfd, ARCID_B_PLIST_GRA, NARC_b_plist_gra_b_plist_NCLR,
-    wk->dat->heap, FADE_SUB_BG, 0x20*15, 0 );
+  // バージョンによってパレットを切り替える（vs_multi_list.cにも存在）
+  {
+    u32 pltt;
+    if(GET_VERSION()==VERSION_B2){
+      pltt = NARC_b_plist_gra_b_plist_b_NCLR;
+      OS_Printf("b_plist Bを転送\n");
+    }else{
+      pltt = NARC_b_plist_gra_b_plist_NCLR;
+      OS_Printf("b_plist Wを転送\n");
+    }
+    PaletteWorkSet_Arc( wk->pfd, ARCID_B_PLIST_GRA, pltt, wk->dat->heap, 
+                        FADE_SUB_BG, 0x20*15, 0 );
 
+  }
   GFL_ARC_CloseDataHandle( hdl );
 
   {

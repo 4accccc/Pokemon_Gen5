@@ -1240,10 +1240,19 @@ static void BBAG_BgExit(void)
 //--------------------------------------------------------------------------------------------
 static void BBAG_BgGraphicSet( BBAG_WORK * wk )
 {
-  ARCHANDLE * hdl;
+  ARCHANDLE * hdl = GFL_ARC_OpenDataHandle( ARCID_B_BAG_GRA, GFL_HEAP_LOWID(wk->dat->heap) );
+  u32 pltt;
 
-  hdl = GFL_ARC_OpenDataHandle( ARCID_B_BAG_GRA, GFL_HEAP_LOWID(wk->dat->heap) );
+  // バージョンによってパレットを切り替える（b_bag_main.cにも存在）
+  if(GET_VERSION()==VERSION_B2){
+    pltt = NARC_b_bag_gra_b_bag_bg_b_NCLR;
+    OS_Printf("b_bag Bを転送\n");
+  }else{
+    pltt = NARC_b_bag_gra_b_bag_bg_NCLR;
+    OS_Printf("b_bag Wを転送\n");
+  }
 
+  // リソース転送
   GFL_ARCHDL_UTIL_TransVramBgCharacter(
     hdl, NARC_b_bag_gra_b_bag_bg_lz_NCGR,
     GFL_BG_FRAME2_S, 0, 0, TRUE, wk->dat->heap );
@@ -1256,9 +1265,7 @@ static void BBAG_BgGraphicSet( BBAG_WORK * wk )
     hdl, NARC_b_bag_gra_b_bag_base_lz_NSCR,
     GFL_BG_FRAME3_S, 0, 0, TRUE, wk->dat->heap );
 
-  PaletteWorkSet_ArcHandle(
-      wk->pfd, hdl, NARC_b_bag_gra_b_bag_bg_NCLR,
-      wk->dat->heap, FADE_SUB_BG, 0x20*7, 0 );
+  PaletteWorkSet_ArcHandle( wk->pfd, hdl, pltt, wk->dat->heap, FADE_SUB_BG, 0x20*7, 0 );
 
   GFL_ARC_CloseDataHandle( hdl );
 

@@ -819,13 +819,23 @@ static void ExitBg(void)
 static void LoadBgGraphic( VSMLIST_WORK * wk )
 {
   ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_B_PLIST_GRA, HEAPID_VS_MULTI_LIST_L );
+  u32 pltt;
+
+  // バージョンによってパレットを切り替える（b_plist_main.cにも存在）
+  if(GET_VERSION()==VERSION_B2){
+    pltt = NARC_b_plist_gra_b_plist_b_NCLR;
+    OS_Printf("b_plist Bを転送\n");
+  }else{
+    pltt = NARC_b_plist_gra_b_plist_NCLR;
+    OS_Printf("b_plist Wを転送\n");
+  }
 
   GFL_ARCHDL_UTIL_TransVramBgCharacter(
     ah, NARC_b_plist_gra_b_plist_lz_NCGR, GFL_BG_FRAME2_M, 0, 0, TRUE, HEAPID_VS_MULTI_LIST_L );
 	GFL_ARCHDL_UTIL_TransVramScreen(
 		ah, NARC_b_plist_gra_poke_sel_u_lz_NSCR, GFL_BG_FRAME2_M, 0, 0, TRUE, HEAPID_VS_MULTI_LIST_L );
 	GFL_ARCHDL_UTIL_TransVramPalette(
-		ah, NARC_b_plist_gra_b_plist_NCLR, PALTYPE_MAIN_BG, 0, 0, HEAPID_VS_MULTI_LIST_L );
+		ah, pltt, PALTYPE_MAIN_BG, 0, 0, HEAPID_VS_MULTI_LIST_L );
 
 	GFL_ARCHDL_UTIL_TransVramScreen(
 		ah, NARC_b_plist_gra_b_plist_anm_lz_NSCR, GFL_BG_FRAME1_M, 0, 32*32*2, TRUE, HEAPID_VS_MULTI_LIST_L );

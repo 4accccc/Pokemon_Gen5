@@ -1,5 +1,6 @@
 "b_bag_bg_lz.NCGR"
 "b_bag_bg.NCLR"
+"b_bag_bg_b.NCLR"
 "b_bag_base_lz.NSCR"
 "b_bag_button_lz.NSCR"
 
