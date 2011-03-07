@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-05T18:35:28"/>
+	<create user="matsumiya" host="W00224" date="2011-03-07T19:08:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1477" top="255" right="2182" bottom="875" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,19 +292,45 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>？？？</comment>
+	<row id="msg_r20_stop_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・c12ジムバッジ入手までストッパー処理
+・話しかけ</comment>
+		<attribute name="キャラ指定">？？？</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_r20_stop_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・c12ジムバッジ入手までストッパー処理
+・pos</comment>
+		<attribute name="キャラ指定">？？？</attribute>
+		<language name="JPN" width="256">テストメッセージ▼</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ▼</language>
+	</row>
+
+	<row id="msg_r20_stop_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・c12ジムバッジ入手後</comment>
+		<attribute name="キャラ指定">？？？</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_r20_01_01">
+		<comment>♀
+・</comment>
 		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_r20_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>BGメッセージ
-・仮メッセージ</comment>
+		<comment>BGメッセージ</comment>
 		<attribute name="キャラ指定">看板：道路</attribute>
-		<language name="JPN" width="256">１９ばんどうろ</language>
-		<language name="JPN_KANJI" width="256">１９番道路</language>
+		<language name="JPN" width="256">２０ばんどうろ</language>
+		<language name="JPN_KANJI" width="256">２０番道路</language>
 	</row>
 
 	<row id="msg_r20_sign2_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -327,8 +353,7 @@
 
 	<row id="msg_r20_sppoke1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>ポケモン
-・やぶれたせかいイベント終了後に出現
-・会話するとメッセージ表示後、戦闘に</comment>
+・クリア終了後に出現</comment>
 		<attribute name="キャラ指定">ポケモン
 ユクシー</attribute>
 		<language name="JPN" width="256">きょううん！▼</language>
@@ -350,9 +375,7 @@
 
 	<row id="msg_r20_sppoke2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>ポケモン
-・やぶれたせかいイベント終了後に出現
-・会話するとメッセージ表示
-　画面外に消えるとsppoke2_02表示</comment>
+・クリア終了後に出現</comment>
 		<attribute name="キャラ指定">ポケモン
 エムリット</attribute>
 		<language name="JPN" width="256">きゃううん▼</language>
@@ -372,8 +395,7 @@
 
 	<row id="msg_r20_sppoke3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>ポケモン
-・やぶれたせかいイベント終了後に出現
-　会話するとメッセージ表示後、戦闘に</comment>
+・クリア終了後に出現</comment>
 		<attribute name="キャラ指定">ポケモン
 アグノム</attribute>
 		<language name="JPN" width="256">きゅううん▼</language>
