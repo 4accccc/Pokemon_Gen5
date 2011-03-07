@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-02T16:02:13"/>
+	<create user="matsumiya" host="W00224" date="2011-03-07T20:35:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1297" top="228" right="2002" bottom="856" maximized="no" rayout="Vertical2">
+	<dialog left="1296" top="209" right="2001" bottom="837" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -297,8 +297,12 @@
 ・c13r0401：船舶所でホミカと会話前
 ・ジムへのストッパー</comment>
 		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">……なかには　だれもいない▼
+はいりたいなら
+ジムリーダーでも　さがしてきな</language>
+		<language name="JPN_KANJI" width="256">……なかには　だれもいない▼
+はいりたいなら
+ジムリーダーでも　さがしてきな</language>
 	</row>
 
 	<row id="msg_c13_stop_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -306,8 +310,21 @@
 ・c13r0401：船舶所でホミカと会話前
 ・ジムへのストッパー解除</comment>
 		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">……ん？
+ジムリーダーなら　いるぞ</language>
+		<language name="JPN_KANJI" width="256">……ん？
+ジムリーダーなら　いるぞ</language>
+	</row>
+
+	<row id="msg_c13_stop_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・c13r0401：船舶所でホミカと会話前
+・ジムクリア後</comment>
+		<attribute name="キャラ指定">？？？</attribute>
+		<language name="JPN" width="256">バンドが　リハーサルしてる
+はいってもいいが　あいてされないぞ</language>
+		<language name="JPN_KANJI" width="256">バンドが　リハーサルしてる
+はいってもいいが　あいてされないぞ</language>
 	</row>
 
 	<row id="msg_c13_swleader2_01">
@@ -325,7 +342,11 @@
 		<comment>♂
 ・</comment>
 		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">ジムリーダー　ホミカについて</language>
+		<language name="JPN" width="256">ジムリーダー　ホミカについて
+・ライブハウス「？？？」に
+・え？　だって　かのじょ
+　ジムリーダーだけど　どうじに
+　バンドも　やってるし</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
@@ -333,7 +354,7 @@
 		<comment>♂
 ・</comment>
 		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">ヒウンシティについて</language>
+		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
@@ -365,7 +386,7 @@
 		<comment>♀
 ・</comment>
 		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN" width="256">ヒウンシティについて</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
