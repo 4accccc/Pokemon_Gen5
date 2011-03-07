@@ -143,7 +143,7 @@ sub_medaloyaji_intro:
   //ヒントメダルをもらう
   _UPDATE_MEDAL_INFO( SCR_MEDALUPDATE_INIT )
   //ヒントメダルをもらった！
-  _GET_MEDAL_COUNT( SCR_MEDALCOUNT_HINT_ACHIEVE, LWK_MEDAL_COUNT  )
+  _GET_MEDAL_COUNT( SCR_MEDALCOUNT_HINT_GET, LWK_MEDAL_COUNT  )
   _PLAYER_NAME( 0 )
   _MEDAL_NAME( 1, LWK_MEDAL_COUNT )
   _SYSWIN_MSG( msg_mdloyj_hintget_sys, POS_DEFAULT )
@@ -168,7 +168,7 @@ EVENT_START ev_medal_oyaji_pc
 
   CASE MEDALEV_SEQ_1ST_PRIZE_OK THEN
     //事務局で表彰式（最初）
-    _PLACE_NAME( 0, ZONE_ID_C01 )  //とりあえず。不要になる予定
+    _PLACE_NAME( 0, ZONE_ID_C03 )  //とりあえず。不要になる予定
     _BALLOONWIN_TALKOBJ_MSG( msg_mdloyj_end_03 )
     _LAST_KEYWAIT()
     _BALLOONWIN_CLOSE()
@@ -278,7 +278,7 @@ sub_medaloyaji_hint_check:
   //ヒントメダル取得処理
   _UPDATE_MEDAL_INFO( SCR_MEDALUPDATE_HINT )
   //ヒントメダルをもらった！
-  _GET_MEDAL_COUNT( SCR_MEDALCOUNT_HINT_ACHIEVE, LWK_MEDAL_COUNT  )
+  _GET_MEDAL_COUNT( SCR_MEDALCOUNT_HINT_GET, LWK_MEDAL_COUNT  )
   _PLAYER_NAME( 0 )
   _MEDAL_NAME( 1, LWK_MEDAL_COUNT )
   _SYSWIN_MSG( msg_mdloyj_hintget_sys, POS_DEFAULT )
@@ -394,16 +394,20 @@ sub_medaloyaji_goodbye:
 
 sub_medaloyaji_gettitle:
   //【仮】_CALL_FLD3D_CUTIN( ... )
+  //SE再生
+  _SE_PLAY(	SEQ_SE_FLD_56 ) 
+  _SE_WAIT()
+  _SE_PLAY(	SEQ_SE_SYS_89 ) 
+  _SE_WAIT()
+  
+  //システムウィンドウ表示
   _GET_MEDAL( LWK_MEDAL_ID, TRUE )
   _PLAYER_NAME( 0 )
   _MEDAL_NAME( 1, LWK_MEDAL_ID )
   _SYSWIN_MSG( msg_mdloyj_titleget_sys, POS_DEFAULT )
   //【仮】音が仮
-  _SE_PLAY(	SEQ_SE_FLD_56 ) 
-  _SE_WAIT()
-  _SE_PLAY(	SEQ_SE_SYS_89 ) 
-  _SE_WAIT()
-  _AB_KEYWAIT_MARK()
+ 
+  _LAST_KEYWAIT()
   _SYSWIN_CLOSE()
   _RET
 
