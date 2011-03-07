@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-05T19:03:17"/>
+	<create user="matsumiya" host="W00224" date="2011-03-07T22:18:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1295" top="201" right="2000" bottom="829" maximized="no" rayout="Vertical2">
+	<dialog left="1296" top="209" right="2001" bottom="837" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -294,33 +294,39 @@
 
 	<row id="msg_c12_swrival_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・最初家をでたとき
-・メッセージのみ表示</comment>
+・posを踏んだとき
+　画面？から登場してメッセージ表示
+・表示後、主人公に隣接して</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]▼</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_c12_swrival_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・隣接してメッセージ表示（画面左から）
-・表示後から連れ歩き開始</comment>
+・</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN" width="256">なにしてんの？▼
+……　……　……
+……　……　……▼
+ポケモンずかん　ね</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_c12_swrival_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・</comment>
+・表示後から連れ歩き開始</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN" width="256">・その　ベル　ってひとだっけ
+　さがすの　てつだうよ
+・ポケモンずかんの　はなし
+　オレも　ききたいからさ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_c12_swrival_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・</comment>
+・振り向き会話その１</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
@@ -328,10 +334,121 @@
 
 	<row id="msg_c12_swrival_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・</comment>
+・振り向き会話その１</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_c12_swrival_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・振り向き会話その１</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_c12_swrival_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・禁止メッセージその１
+　民家A</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">テストメッセージ
+・人の家には居ないだろ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_c12_swrival_08" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・禁止メッセージその１
+　民家B</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">テストメッセージ
+・人の家には居ないだろ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_c12_swrival_09" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・禁止メッセージその１
+　ポケモンセンター</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">テストメッセージ
+・中を見る？</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_c12_swrival_10" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・禁止メッセージその１
+　トレーナーズスクール</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">テストメッセージ
+・中を見る？</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_c12_swrival_11" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・禁止メッセージその１
+　１９番道路ゲート</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">テストメッセージ
+・この街にいるんだろ？
+　道路に出たら行き違いじゃん
+・そもそもお前ポケモン持ってないし</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_c12_swmama_01">
+		<comment>♀
+・ポケセンでのチュートリアル後</comment>
+		<attribute name="キャラ指定">スワン主人公ママ</attribute>
+		<language name="JPN" width="256">ママ『
+・ランニングシューズ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ
+・高台について</language>
+	</row>
+
+	<row id="msg_c12_swmama_02">
+		<language name="JPN" width="256">[1:00:トレーナー名:0]は
+[FF:00:色:2]ランニングシューズ[FF:00:色:0]を　もらった！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
+[FF:00:色:2]ランニングシューズ[FF:00:色:0]を　もらった！</language>
+	</row>
+
+	<row id="msg_c12_swmama_03">
+		<language name="JPN" width="256">ランニングシューズを　はいていれば
+どこにいくのも　あっ　というま！[BE:01:ページ切り替え（クリア）]
+では　とりあつかい　せつめいしょを
+よむから　きいてなさいね[BE:01:ページ切り替え（クリア）]
+「ランニングシューズは
+ Ｂボタンを　おすことで　いままでより[BE:00:ページ切り替え（行送り）]
+ はやく　はしれるように　なります！[BE:01:ページ切り替え（クリア）]
+ ランニングシューズを　はいて
+ おもいっきり　はしりまくろう！」[BE:01:ページ切り替え（クリア）]
+ですって[BE:01:ページ切り替え（クリア）]
+かったまま　しまっておいたのを
+かたづけを　していて　みつけたの▽
+……たまには　かたづけも　するものね▼</language>
+		<language name="JPN_KANJI" width="256">ランニングシューズを　履いていれば
+どこに行くのも　あっ　というま！[BE:01:ページ切り替え（クリア）]
+では　取り扱い説明書を
+読むから　聞いてなさいね[BE:01:ページ切り替え（クリア）]
+「ランニングシューズは
+ Ｂボタンを　押すことで　今までより[BE:00:ページ切り替え（行送り）]
+ 速く　走れるように　なります！[BE:01:ページ切り替え（クリア）]
+ ランニングシューズを　履いて
+ おもいっきり　走りまくろう！」[BE:01:ページ切り替え（クリア）]
+ですって[BE:01:ページ切り替え（クリア）]
+……買ったまま　しまっておいたのを
+かたづけを　していて　みつけたの▼
+……たまには　かたづけも　するものね▼</language>
+	</row>
+
+	<row id="msg_c12_swmama_04">
+		<language name="JPN" width="256"></language>
+		<language name="JPN_KANJI" width="256"></language>
 	</row>
 
 	<row id="msg_c12_01_01">
