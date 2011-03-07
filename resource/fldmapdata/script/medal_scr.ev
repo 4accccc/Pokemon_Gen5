@@ -145,7 +145,7 @@ sub_medaloyaji_intro:
   //ヒントメダルをもらった！
   _GET_MEDAL_COUNT( SCR_MEDALCOUNT_HINT_GET, LWK_MEDAL_COUNT  )
   _PLAYER_NAME( 0 )
-  _MEDAL_NAME( 1, LWK_MEDAL_COUNT )
+  _NUMBER( 1 , LWK_MEDAL_COUNT , 3 )
   _SYSWIN_MSG( msg_mdloyj_hintget_sys, POS_DEFAULT )
   _SYSWIN_CLOSE()
   //
@@ -193,7 +193,7 @@ EVENT_START ev_medal_oyaji_pc
       $WK_SCENE_MEDAL_EVENT = MEDALEV_SEQ_1ST_PRIZE_OK
 
       _PLAYER_NAME( 0 )
-      _PLACE_NAME( 1, ZONE_ID_C01 )  //とりあえず。不要になる予定
+      _PLACE_NAME( 1, ZONE_ID_C03 )  //とりあえず。不要になる予定
       _BALLOONWIN_TALKOBJ_MSG( msg_mdloyj_goal_01 )
     ELSE
       _CALL sub_medaloyaji_goodbye
@@ -280,7 +280,7 @@ sub_medaloyaji_hint_check:
   //ヒントメダルをもらった！
   _GET_MEDAL_COUNT( SCR_MEDALCOUNT_HINT_GET, LWK_MEDAL_COUNT  )
   _PLAYER_NAME( 0 )
-  _MEDAL_NAME( 1, LWK_MEDAL_COUNT )
+  _NUMBER( 1 , LWK_MEDAL_COUNT , 3 )
   _SYSWIN_MSG( msg_mdloyj_hintget_sys, POS_DEFAULT )
   _SYSWIN_CLOSE()
   
