@@ -12,6 +12,7 @@
 #include <gflib.h>
 //スクリプトコマンド
 #include "resonance_resort/scrcmd_resort.h"
+#include "resonance_resort/scrcmd_resort_shop.h"
 //外部参照
 #include "scrcmd_resort_table.h"
 

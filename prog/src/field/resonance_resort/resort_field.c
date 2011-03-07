@@ -54,6 +54,7 @@ typedef struct
 {
   RESORT_PEOPLE_SYS *p_people_sys;
   RESORT_DATA_MANAGER *p_data_manager;
+  RESORT_BINARY_SHOP *p_binary_shop;
 } RESORT_FIELD_WORK;
 
 //=============================================================================
@@ -108,6 +109,10 @@ void RESORT_FIELD_Setup( FIELDMAP_WORK *p_fieldmap )
     p_wk->p_people_sys = RESORT_PEOPLE_SYS_Init( &param, heapID );
   }
 
+  //お店情報
+  {
+    p_wk->p_binary_shop = RESORT_BINARY_SHOP_Init( heapID );
+  }
 
   NAGI_Printf( "レゾナンスsetup\n" );
 }
@@ -122,6 +127,7 @@ void RESORT_FIELD_End( FIELDMAP_WORK *p_fieldmap )
 {
   RESORT_FIELD_WORK *p_wk = GMK_TMP_WK_GetWork(p_fieldmap, RESORT_FIELD_ASSIGN_ID);
 
+  RESORT_BINARY_SHOP_Exit( p_wk->p_binary_shop );
   RESORT_PEOPLE_SYS_Exit( p_wk->p_people_sys );
   RESORT_DATA_MANAGER_Exit( p_wk->p_data_manager );
 
@@ -169,4 +175,18 @@ RESORT_DATA_MANAGER * RESORT_FIELD_GetDataManager( FIELDMAP_WORK *p_fieldmap )
 {
   RESORT_FIELD_WORK *p_wk = GMK_TMP_WK_GetWork(p_fieldmap, RESORT_FIELD_ASSIGN_ID);
   return p_wk->p_data_manager;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ショップデータを取得
+ *
+ *	@param	FIELDMAP_WORK *p_fieldmap   フィールドマップ
+ *
+ *	@return ショップデータ
+ */
+//-----------------------------------------------------------------------------
+RESORT_BINARY_SHOP * RESORT_FIELD_GetBinaryShop( FIELDMAP_WORK *p_fieldmap )
+{
+  RESORT_FIELD_WORK *p_wk = GMK_TMP_WK_GetWork(p_fieldmap, RESORT_FIELD_ASSIGN_ID);
+  return p_wk->p_binary_shop;
 }

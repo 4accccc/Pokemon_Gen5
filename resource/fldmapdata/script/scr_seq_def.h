@@ -12548,20 +12548,27 @@
 //--------------------------------------------------------------
 /**
  * @brief リゾート用　汎用リストでの選択処理
- * @param[in]   mode リストモード
- *              //TODOあとで説明追加
+ * @param[in]   mode リストモード …以下の値
+ *              RESORT_LIST_TYPE_BUY      …アイテムやサービスを購入
+ *              RESORT_LIST_TYPE_SELECT 　…選択
+ *              RESORT_LIST_TYPE_SORT     …入れ替え
+ *
  * @param[in]   param モードに渡す引数（どのアイテムリストか、とか）
- * @param[out]  どれを選んだか
+ * @param[out]  選んだサービスタイプ
+ * @param[out]  選んだサービスインデックス
+ * @param[out]  値段
  */
 //--------------------------------------------------------------
-#define _RESORT_CALL_LIST( mode, param, ret ) \
-    _ASM_RESORT_CALL_LIST mode, param, ret
+#define _RESORT_CALL_LIST( idx, param, ret_service_type, ret_service_idx, ret_price ) \
+    _ASM_RESORT_CALL_LIST idx, param, ret_service_type, ret_service_idx, ret_price
 
-  .macro _ASM_RESORT_CALL_LIST mode, param, ret
+  .macro _ASM_RESORT_CALL_LIST idx, param, ret_service_type, ret_service_idx, ret_price
   .short EV_SEQ_RESORT_CALL_LIST
-  .short \mode
+  .short \idx
   .short \param
-  .short \ret
+  .short \ret_service_type
+  .short \ret_service_idx
+  .short \ret_price
   .endm
 
 //--------------------------------------------------------------
@@ -12628,17 +12635,19 @@
 /**
  * @brief リゾート用　なつきどをあげる
  * @param[in]   idx   パーティ内で何番目のポケモンか
+ * @param[in]   value いくつなつきどをあげるか
  * @param[out]  ret_wk 　下記
  *      TRUE    …あげた
  *      FALSE　 …なつきどが最大
  */
 //--------------------------------------------------------------
-#define _RESORT_ADD_KINDLY( idx, ret_wk ) \
-      _ASM_RESORT_ADD_KINDLY idx, ret_wk
+#define _RESORT_ADD_KINDLY( idx, value, ret_wk ) \
+      _ASM_RESORT_ADD_KINDLY idx, value, ret_wk
 
-  .macro _ASM_RESORT_ADD_KINDLY idx, ret_wk
+  .macro _ASM_RESORT_ADD_KINDLY idx, value, ret_wk
   .short EV_SEQ_RESORT_ADD_KINDLY
   .short \idx
+  .short \value
   .short \ret_wk
   .endm
 

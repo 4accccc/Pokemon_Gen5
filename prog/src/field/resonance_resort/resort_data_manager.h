@@ -10,8 +10,9 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #pragma once
 #include "field/resonance_resort_data.h"
-#include "src/field/resonance_resort/resort_map.h"
-#include "src/field/resonance_resort/resort_people_def.h"
+#include "resort_map.h"
+#include "resort_people_def.h"
+#include "resort_binary.h"
 //=============================================================================
 /**
  *					データマネージャー
@@ -88,6 +89,8 @@ extern u32 RESORT_DATA_MANAGER_SearchPlaceEmptyPeopleID( const RESORT_DATA_MANAG
 //何かをキーにして検索
 extern RESORT_RESIDENT_DATA * RESORT_DATA_MANAGER_SearchResident( const RESORT_DATA_MANAGER *cp_wk, RESORT_PLACEID placeID, u16 peopleID );
 
+//作成
+extern STRBUF * RESORT_DATA_MANAGER_CreateShopName( const RESORT_BINARY_SHOP_DATA *cp_wk, const RESORT_RESIDENT_DATA *cp_data, HEAPID heapID );
 
 //=============================================================================
 /**

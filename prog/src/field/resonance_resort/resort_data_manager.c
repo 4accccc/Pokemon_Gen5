@@ -11,6 +11,9 @@
 //ライブラリ
 #include <gflib.h>
 #include "gamesystem/game_data.h"
+#include "arc/arc_def.h"
+#include "arc/script_message.naix"
+
 #include "resort_data_manager.h"
 //=============================================================================
 /**
@@ -680,6 +683,42 @@ RESORT_RESIDENT_DATA * RESORT_DATA_MANAGER_SearchResident( const RESORT_DATA_MAN
   }
 
   return NULL;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  お店名を取得
+ *
+ *	@param	const RESORT_BINARY_SHOP_DATA *cp_wk  ROM内データ
+ *	@param	RESORT_RESIDENT_DATA *cp_data メモリデータ
+ *	@param	heapID ヒープID
+ *
+ *	@return お店名
+ */
+//-----------------------------------------------------------------------------
+STRBUF * RESORT_DATA_MANAGER_CreateShopName( const RESORT_BINARY_SHOP_DATA *cp_wk, const RESORT_RESIDENT_DATA *cp_data, HEAPID heapID )
+{
+  STRCODE name[PERSON_NAME_SIZE+EOM_SIZE];
+  WORDSET *p_wordset = WORDSET_Create( GFL_HEAP_LOWID(heapID) );
+
+  GFL_MSGDATA *p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_resort_scr_dat, GFL_HEAP_LOWID(heapID) );
+  u16 shop_name = RESORT_BINARY_SHOP_DATA_GetName( cp_wk );
+  STRBUF *p_tmp = GFL_MSG_CreateString( p_msg, shop_name );
+  STRBUF *p_name_str = GFL_STR_CreateBuffer( PERSON_NAME_SIZE+EOM_SIZE, GFL_HEAP_LOWID(heapID) );
+  STRBUF *p_str = GFL_STR_CreateBuffer( 64, heapID );
+  u32 sex = RESORT_RESIDENT_DATA_GetData( cp_data, RESORT_DATA_PARAM_SEX, NULL );
+  RESORT_RESIDENT_DATA_GetData( cp_data, RESORT_DATA_PARAM_NAME, name );
+  GFL_STR_SetStringCode(p_name_str, name );
+
+  WORDSET_RegisterWord( p_wordset, 0, p_name_str, sex, TRUE, PM_LANG );
+  WORDSET_ExpandStr( p_wordset, p_str, p_tmp );
+
+  GFL_STR_DeleteBuffer( p_name_str );
+  GFL_STR_DeleteBuffer( p_tmp );
+  GFL_MSG_Delete( p_msg );
+  WORDSET_Delete( p_wordset );
+
+  return p_str;
 }
 //=============================================================================
 /**

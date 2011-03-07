@@ -55,15 +55,17 @@
 #define RESORT_WORD_SHOP_LABEL        (2) //ÅuîÑÇÈÅvÇ∆Ç©
 
 //_RESORT_CALL_LISTóp
-#define RESORT_LIST_TYPE_ITEM            (0)
-#define RESORT_LIST_TYPE_SERVICE         (1)
-#define RESORT_LIST_TYPE_SELECT          (2)
-#define RESORT_LIST_TYPE_SORT            (3)
+#define RESORT_LIST_TYPE_BUY            (0)
+#define RESORT_LIST_TYPE_SELECT         (1)
+#define RESORT_LIST_TYPE_SORT           (2)
+
+#define RESORT_LIST_CANCEL              (0xFF)
 
   //RESORT_LIST_TYPE_SELECT
 #define RESORT_LIST_SELECT_SECRETARY_ADD      (0)
 #define RESORT_LIST_SELECT_SECRETARY_DEL      (1)
-#define RESORT_LIST_SELECT_INSTATITUTION_DEL  (2)
+#define RESORT_LIST_SELECT_INSTATITUTION      (2)
+#define RESORT_LIST_SELECT_INSTATITUTION_DEL  (3)
 
   //RESORT_LIST_TYPE_SORT
 #define RESORT_LIST_SORT_SECRETARY      (0)

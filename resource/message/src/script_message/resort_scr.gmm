@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nagihashi_toru" host="W00268" date="2011-03-03T19:51:26"/>
+	<create user="nagihashi_toru" host="W00268" date="2011-03-04T12:28:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1365,23 +1365,112 @@ GTSで　会ったよね！</language>
 	</row>
 
 	<row id="resort_service_11" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
-		<language name="JPN" width="256">モンスターボール×１６</language>
-		<language name="JPN_KANJI" width="256">モンスターボール×１６</language>
+		<language name="JPN" width="256">ボールつめあわせ</language>
+		<language name="JPN_KANJI" width="256">ボールつめあわせ</language>
 	</row>
 
 	<row id="resort_service_12" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
-		<language name="JPN" width="256">オボンのみ</language>
-		<language name="JPN_KANJI" width="256">オボンのみ</language>
+		<language name="JPN" width="256">モンスターボールが　１２こ
+はいった　おとくな　セット</language>
+		<language name="JPN_KANJI" width="256">モンスターボールが　１２こ
+入った　お得な　セット</language>
 	</row>
 
 	<row id="resort_service_13" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
-		<language name="JPN" width="256">しんじゅ</language>
-		<language name="JPN_KANJI" width="256">しんじゅ</language>
+		<language name="JPN" width="256">ビリビリするたま</language>
+		<language name="JPN_KANJI" width="256">ビリビリするたま</language>
 	</row>
 
 	<row id="resort_service_14" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
-		<language name="JPN" width="256">ビリビリするたま</language>
-		<language name="JPN_KANJI" width="256">ビリビリするたま</language>
+		<language name="JPN" width="256">さわると　ちょっぴり　しびれる
+ふしぎな たま</language>
+		<language name="JPN_KANJI" width="256">触ると　ちょっぴり　しびれる
+不思議な たま</language>
+	</row>
+
+	<row id="resort_service_15" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="256">ポケモンの　けなみや　はだを
+おていれして　なつきどを
+ちょっぴり　あげます</language>
+		<language name="JPN_KANJI" width="256">ポケモンの　けなみや　はだを
+おていれして　なつきどを
+ちょっぴり　あげます</language>
+	</row>
+
+	<row id="resort_service_16" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="256">ポケモンの　けなみや　はだを
+あらって　きれいに　します
+なつきどが　あがります</language>
+		<language name="JPN_KANJI" width="256">ポケモンの　けなみや　はだを
+あらって　きれいに　します
+なつきどが　あがります</language>
+	</row>
+
+	<row id="resort_service_17" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="256">ポケモンの　かおや　はだに
+メイクを　します
+なつきどが　おおきく　あがります</language>
+		<language name="JPN_KANJI" width="256">ポケモンの　かおや　はだに
+メイクを　します
+なつきどが　おおきく　あがります</language>
+	</row>
+
+	<row id="resort_service_18" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="256">ポケモンへ　たきに　うたれる
+しゅぎょうを　させます
+レベルが　あがります</language>
+		<language name="JPN_KANJI" width="256">ポケモンへ　たきに　うたれる
+しゅぎょうを　させます
+レベルが　あがります</language>
+	</row>
+
+	<row id="resort_service_19" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="256">タマゴを　だいじに　あたためて
+ふか　させます</language>
+		<language name="JPN_KANJI" width="256">タマゴを　だいじに　あたためて
+ふか　させます</language>
+	</row>
+
+	<row id="resort_service_20" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="256">ポケモンの　HPを　きたえて
+こころもち　つよくします</language>
+		<language name="JPN_KANJI" width="256">ポケモンの　HPを　きたえて
+こころもち　つよくします</language>
+	</row>
+
+	<row id="resort_service_21" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="256">ポケモンの　こうげきを　きたえて
+こころもち　つよくします</language>
+		<language name="JPN_KANJI" width="256">ポケモンの　こうげきを　きたえて
+こころもち　つよくします</language>
+	</row>
+
+	<row id="resort_service_22" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="256">ポケモンの　ぼうぎょを　きたえて
+こころもち　つよくします</language>
+		<language name="JPN_KANJI" width="256">ポケモンの　ぼうぎょを　きたえて
+こころもち　つよくします</language>
+	</row>
+
+	<row id="resort_service_23" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="256">ポケモンの　とくこうを　きたえて
+こころもち　つよくします</language>
+		<language name="JPN_KANJI" width="256">ポケモンの　とくこうを　きたえて
+こころもち　つよくします</language>
+	</row>
+
+	<row id="resort_service_24" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="256">ポケモンの　とくぼうを　きたえて
+こころもち　つよくします</language>
+		<language name="JPN_KANJI" width="256">ポケモンの　とくぼうを　きたえて
+こころもち　つよくします</language>
+	</row>
+
+	<row id="resort_service_25" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="256">ポケモンの　すばやさを　きたえて
+こころもち　つよくします</language>
+		<language name="JPN_KANJI" width="256">ポケモンの　すばやさを　きたえて
+こころもち　つよくします</language>
 	</row>
 
 	<row id="resort_history_00" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">

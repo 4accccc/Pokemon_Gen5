@@ -146,6 +146,8 @@ u32 RESORT_INSTITUTION_DATA_GetData( const RESORT_INSTITUTION_DATA *cp_wk, RESOR
   {
   case RESORT_INSTITUTION_DATA_PARAM_ID:
     return cp_wk->institutionID;
+  case RESORT_INSTITUTION_DATA_PARAM_LV:
+    return cp_wk->lv;
   default:
     GF_ASSERT(0);
     return 0;
@@ -167,10 +169,51 @@ void RESORT_INSTITUTION_DATA_SetData( RESORT_INSTITUTION_DATA *p_wk, RESORT_INST
   case RESORT_INSTITUTION_DATA_PARAM_ID:
     p_wk->institutionID   = data;
     break;
+  case RESORT_INSTITUTION_DATA_PARAM_LV:
+    p_wk->lv   = data;
+    break;
   default:
     GF_ASSERT(0);
   }
 }
+
+SDK_COMPILER_ASSERT( RESORT_INSTITUTION_DATA_BIT_MAX < 32 );
+//----------------------------------------------------------------------------
+/**
+ *	@brief  イベント用ビットを取得
+ *
+ *	@param	const RESORT_INSTITUTION_DATA *cp_wk  ワーク
+ *	@param	bit   イベントビット番号
+ *
+ *	@return TRUEならばON  FASEならばOFF
+ */
+//-----------------------------------------------------------------------------
+BOOL RESORT_INSTITUTION_DATA_IsBit( const RESORT_INSTITUTION_DATA *cp_wk, RESORT_INSTITUTION_DATA_BIT bit )
+{
+  return (cp_wk->ev_bit & (1<<bit)) != 0;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  イベント用ビットを取得
+ *
+ *	@param	const RESORT_INSTITUTION_DATA *cp_wk  ワーク
+ *	@param	bit   イベントビット番号
+ *	@param  enable TRUEでON　FALSEでOFF
+ *
+ */
+//-----------------------------------------------------------------------------
+void RESORT_INSTITUTION_DATA_SetBit( RESORT_INSTITUTION_DATA *p_wk, RESORT_INSTITUTION_DATA_BIT bit, BOOL enable )
+{
+  if( enable )
+  {
+    p_wk->ev_bit |= (1<<bit);
+  }
+  else
+  {
+    p_wk->ev_bit &= ~(1<<bit);
+  }
+}
+
 
 //=============================================================================
 /**
@@ -2474,7 +2517,7 @@ u32 RESORT_PEOPLE_ALL_DATA_GetResidentCount( const RESORT_PEOPLE_ALL_DATA *p_wk 
   for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
   {
     RESORT_RESIDENT_DATA *p_resident=  RESORT_PEOPLE_ALL_DATA_GetResident( (RESORT_PEOPLE_ALL_DATA *)p_wk, i );
-    if( RESORT_RESIDENT_DATA_IsEmpty(p_resident) )
+    if( !RESORT_RESIDENT_DATA_IsEmpty(p_resident) )
     {
       cnt++;
     }
@@ -2532,6 +2575,29 @@ RESORT_SECRETARY_DATA * RESORT_PEOPLE_ALL_DATA_GetSecretary( RESORT_PEOPLE_ALL_D
 {
   GF_ASSERT( index < RESORT_SECRETARY_DATA_NUM );
   return &p_wk->secretary[ index ];
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  秘書の数を取得
+ *
+ *	@param	const RESORT_PEOPLE_ALL_DATA *cp_wk ワーク
+ *
+ *	@return 秘書の数
+ */
+//-----------------------------------------------------------------------------
+u32 RESORT_PEOPLE_ALL_DATA_GetSecretaryMax( const RESORT_PEOPLE_ALL_DATA *cp_wk )
+{
+  int i;
+  int cnt = 0;
+  for( i = 0; i < RESORT_SECRETARY_DATA_NUM; i++ )
+  {
+    RESORT_SECRETARY_DATA *p_secretary = RESORT_PEOPLE_ALL_DATA_GetSecretary( (RESORT_PEOPLE_ALL_DATA *)cp_wk, i );
+    if( !RESORT_SECRETARY_DATA_IsEmpty(p_secretary) )
+    {
+      cnt++;
+    }
+  }
+  return cnt;
 }
 
 //----------------------------------------------------------------------------
@@ -2642,14 +2708,20 @@ BOOL RESORT_PEOPLE_ALL_DATA_AddBeacon( RESORT_PEOPLE_ALL_DATA *p_wk, const RESOR
 //-----------------------------------------------------------------------------
 void RESORT_PEOPLE_ALL_DATA_UpdateDay( RESORT_PEOPLE_ALL_DATA *p_wk )
 {
-  int i;
+  int i, j;
   //一日一回フラグを消去
   for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
   {
     RESORT_RESIDENT_DATA *p_resident =  RESORT_PEOPLE_ALL_DATA_GetResident( p_wk, i );
     if( !RESORT_RESIDENT_DATA_IsEmpty(p_resident ) )
     {
+      RESORT_INSTITUTION_DATA *p_institution = RESORT_RESIDENT_DATA_GetInstitution( p_resident );
       RESORT_RESIDENT_DATA_SetData(p_resident,RESORT_DATA_PARAM_DAY_FLAG, FALSE );
+
+      for( j = RESORT_INSTITUTION_DATA_BIT_SHOP_START; j < RESORT_INSTITUTION_DATA_BIT_SHOP_END; j++ )
+      {
+        RESORT_INSTITUTION_DATA_SetBit( p_institution, j, FALSE );
+      }
     }
   }
   for( i = 0; i < RESORT_VISITOR_DATA_NUM; i++ )

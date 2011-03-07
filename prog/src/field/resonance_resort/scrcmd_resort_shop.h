@@ -10,24 +10,15 @@
 //////////////////////////////////////////////////////////////////////
 #pragma once
 
-
-typedef struct {
-  u16 id;       // どうぐID
-  u32 price;    // 値段 or BPポイント
-}RESORT_SHOP_ITEM;
-
-// 一度に並べることができる商品数
-#define RESORT_SHOP_ITEM_MAX   ( 40 )
-
 //--------------------------------------------------------------------
 /**
- * @brief 通常ショップ呼び出し 
+ *	@brief  汎用リスト
  *
- * @param core 仮想マシン制御構造体へのポインタ
- * @param wk   SCRCMD_WORKへのポインタ
+ *	@param	VMHANDLE *p_core 仮想マシンハンドル
+ *	@param	*p_wk_adrs       スクリプトコマンドワーク
  *
- * @retval VMCMD_RESULT
+ *	@return 終了コード
  */
 //--------------------------------------------------------------------
-VMCMD_RESULT EvCmdCallResortShop( VMHANDLE* core, void* wk );
+extern VMCMD_RESULT EvCmdResortCallList( VMHANDLE *core, void *wk );
 

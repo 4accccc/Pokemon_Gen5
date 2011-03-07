@@ -501,8 +501,8 @@ static void Visitor_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder )
 //-----------------------------------------------------------------------------
 static void Secretary_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder )
 {
-  //u8 trainer_view = RESORT_ABSTRUCT_DATA_GetData( p_wk->p_abstruct_data, RESORT_DATA_PARAM_TRAINERVIEW, NULL );
-  p_hedder->obj_code = GIRL2; //TODO
+  u8 trainer_view = RESORT_ABSTRUCT_DATA_GetData( p_wk->p_abstruct_data, RESORT_DATA_PARAM_TRAINERVIEW, NULL );
+  p_hedder->obj_code = UnionView_GetObjCode( trainer_view );
   p_hedder->event_id = RESORT_BINARY_PEOPLE_DATA_GetScrID( p_wk->cp_binary  );
 }
 

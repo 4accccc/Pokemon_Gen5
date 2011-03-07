@@ -37,3 +37,4 @@ extern void RESORT_FIELD_Move( FIELDMAP_WORK *p_fieldmap );
 //スクリプトコマンドに使用
 extern RESORT_PEOPLE_SYS * RESORT_FIELD_GetPeopleSys( FIELDMAP_WORK *p_fieldmap );
 extern RESORT_DATA_MANAGER * RESORT_FIELD_GetDataManager( FIELDMAP_WORK *p_fieldmap );
+extern RESORT_BINARY_SHOP * RESORT_FIELD_GetBinaryShop( FIELDMAP_WORK *p_fieldmap );

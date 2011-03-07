@@ -18,6 +18,11 @@
 //outer
 #include "resort_binary.h"
 
+
+#ifdef PM_DEBUG
+#define DEBUG_DATA_PRINT
+#endif //PM_DEBUG
+
 //=============================================================================
 /**
  *					レゾナンスリゾート人物バイナリデータ
@@ -81,6 +86,28 @@ RESORT_BINARY_PEOPLE * RESORT_BINARY_PEOPLE_Init( HEAPID heapID )
   RESORT_BINARY_PEOPLE *p_wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(RESORT_BINARY_PEOPLE) );
 
   p_wk->p_data = GFL_ARC_UTIL_LoadEx(ARCID_RESONANCE_RESORT_DATA, NARC_resonance_resort_data_resort_people_dat, FALSE, heapID, &p_wk->size );
+
+#ifdef DEBUG_DATA_PRINT
+  {
+    int i;
+    for( i = 0; i < (p_wk->size / sizeof(RESORT_BINARY_PEOPLE_DATA)); i++ )
+    {
+      const RESORT_BINARY_PEOPLE_DATA* cp_data = &p_wk->p_data[i];
+      OS_Printf( "type%d\n", cp_data->param[ RESORT_BINARY_PEOPLE_PARAM_PEOPLE_TYPE ] );
+      OS_Printf( "kind%d\n", cp_data->param[ RESORT_BINARY_PEOPLE_PARAM_KIND        ] );
+      OS_Printf( "pers%d\n", cp_data->param[ RESORT_BINARY_PEOPLE_PARAM_PERSONALITY ] );
+      OS_Printf( "view%d\n", cp_data->param[ RESORT_BINARY_PEOPLE_PARAM_VIEW        ] );
+      OS_Printf( "sex %d\n", cp_data->param[ RESORT_BINARY_PEOPLE_PARAM_SEX         ] );
+      OS_Printf( "scri%d\n", cp_data->param[ RESORT_BINARY_PEOPLE_PARAM_SCRID       ] );
+      OS_Printf( "msg0%d\n", cp_data->param[ RESORT_BINARY_PEOPLE_PARAM_MSGID_00    ] );
+      OS_Printf( "msg1%d\n", cp_data->param[ RESORT_BINARY_PEOPLE_PARAM_MSGID_01    ] );
+      OS_Printf( "msg2%d\n", cp_data->param[ RESORT_BINARY_PEOPLE_PARAM_MSGID_02    ] );
+      OS_Printf( "msg3%d\n", cp_data->param[ RESORT_BINARY_PEOPLE_PARAM_MSGID_03    ] );
+      OS_Printf( "msg4%d\n", cp_data->param[ RESORT_BINARY_PEOPLE_PARAM_MSGID_04    ] );
+      OS_Printf( "msg5%d\n", cp_data->param[ RESORT_BINARY_PEOPLE_PARAM_MSGID_05    ] );
+    }
+  }
+#endif //DEBUG_DATA_PRINT
 
   return p_wk;
 }
@@ -152,7 +179,7 @@ const RESORT_BINARY_PEOPLE_DATA * RESORT_BINARY_SearchData( const RESORT_BINARY_
     }
   }
 
-  GF_ASSERT(0);
+  GF_ASSERT_MSG(0, "people_type%d kind%d\n", people_type, kind);
   return NULL;
 }
 
@@ -270,7 +297,7 @@ const RESORT_BINARY_SHOP_DATA * RESORT_BINARY_SHOP_SearchData( const RESORT_BINA
     }
   }
 
-  GF_ASSERT(0);
+  GF_ASSERT_MSG(0, "shop%d type%d lv%d\n", shop, type, lv);
 
   return NULL;
 }
@@ -287,6 +314,7 @@ u16 RESORT_BINARY_SHOP_DATA_GetName( const RESORT_BINARY_SHOP_DATA *cp_wk )
 {
   return cp_wk->param[ RESORT_BINARY_SHOP_PARAM_NAME ];
 }
+
 //----------------------------------------------------------------------------
 /**
  *	@brief　個別の店情報からサービス情報を取得
@@ -313,6 +341,30 @@ extern const RESORT_BINARY_SERVICE_DATA * RESORT_BINARY_SHOP_DATA_GetList( const
 }
 //----------------------------------------------------------------------------
 /**
+ *	@brief  サービスの個数を取得
+ *
+ *	@param	const RESORT_BINARY_SHOP *cp_wk   ワーク
+ *	@param	RESORT_BINARY_SHOP_DATA *cp_shop  店データ
+ *
+ *	@return サービスの個数
+ */
+//-----------------------------------------------------------------------------
+const u32 RESORT_BINARY_SHOP_DATA_GetListMax( const RESORT_BINARY_SHOP *cp_wk, const RESORT_BINARY_SHOP_DATA *cp_shop )
+{
+  int i;
+  for( i = 0; i < RESORT_BINARY_SHOP_LIST_MAX; i++ )
+  {
+    const RESORT_BINARY_SERVICE_DATA *cp_data = RESORT_BINARY_SHOP_DATA_GetList( cp_wk, cp_shop, i );
+    if( cp_data == NULL )
+    {
+      break;
+    }
+  }
+
+  return i;
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief  サービス情報からデータ取得
  *
  *	@param	const RESORT_BINARY_SERVICE_DATA *p_wk  ワーク
@@ -326,3 +378,4 @@ u16 RESORT_BINARY_SERVICE_DATA_GetData( const RESORT_BINARY_SERVICE_DATA *cp_wk,
   GF_ASSERT( param < RESORT_BINARY_SERVICE_PARAM_MAX );
   return cp_wk->param[ param ];
 }
+

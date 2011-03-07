@@ -1,4 +1,4 @@
-#!/usr/bin/ruby
+#! ruby -Ks
 #[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
 #
 #
@@ -65,11 +65,13 @@ end
 SERVICE_ROW_START       = 1         #行開始位置
 SERVICE_COL_START       = 0         #列開始位置
 SERVICE_COL_TAG         = SERVICE_COL_START     #列:タグ
-SERVICE_COL_NAME        = 1         #列：サービス名
-SERVICE_COL_MONEY       = 2         #列：値段
-SERVICE_COL_KIND        = 3         #列：サービス種類
-SERVICE_COL_PARAM_1     = 4         #列：サービス種類ごとの効果１
-SERVICE_COL_PARAM_2     = 5         #列：サービス種類ごとの効果２
+SERVICE_COL_NAME_FLAG   = 1         #列：名前フラグ
+SERVICE_COL_NAME        = 2         #列：サービス名
+SERVICE_COL_INFO        = 3         #列：サービス説明
+SERVICE_COL_MONEY       = 4         #列：値段
+SERVICE_COL_KIND        = 5         #列：サービス種類
+SERVICE_COL_PARAM_1     = 6         #列：サービス種類ごとの効果１
+SERVICE_COL_PARAM_2     = 7         #列：サービス種類ごとの効果２
 def  convertService( csv, data, h_define, h_item, gmm, h_service )
   
   #データの作成
@@ -80,7 +82,9 @@ def  convertService( csv, data, h_define, h_item, gmm, h_service )
     
     #データ取得
     tag     = csv.get( row, SERVICE_COL_TAG )
+    name_flg= csv.get( row, SERVICE_COL_NAME_FLAG )
     name    = csv.get( row, SERVICE_COL_NAME )
+    info    = csv.get( row, SERVICE_COL_INFO )
     money   = csv.get( row, SERVICE_COL_MONEY )
     kind    = csv.get( row, SERVICE_COL_KIND );
     param1  = csv.get( row, SERVICE_COL_PARAM_1 );
@@ -90,14 +94,34 @@ def  convertService( csv, data, h_define, h_item, gmm, h_service )
     h_service.store( tag, row-SERVICE_ROW_START )
 
     #データ書き込み    
+    data.write_u16( name_flg )
     #MSGTAGから値への変換
-    begin
-      data.write_u16( msgdata.search( "#{name}", "#{row}行のgmm" ) )
-    rescue HeaderSearchError
-      exit(1)
+    if name == nil 
+      data.write_u16( 0 )
+      if name_flg == 1
+        puts "名前フラグがONなのにサービス名が入っていません"
+        exit(1)
+      end
+    else
+      begin
+        data.write_u16( msgdata.search( "#{name}", "#{row}行のgmm" ) )
+      rescue HeaderSearchError
+        exit(1)
+      end
     end
-
-
+    if info == nil
+      data.write_u16( 0 )
+      if name_flg == 1
+        puts "名前フラグがONなのにサービス情報が入っていません"
+        exit(1)
+      end
+    else
+      begin
+        data.write_u16( msgdata.search( "#{info}", "#{row}行のgmm" ) )
+      rescue HeaderSearchError
+        exit(1)
+      end
+    end
     data.write_u16( money )
     data.write_u16( h_define[kind] )
 
@@ -107,6 +131,10 @@ def  convertService( csv, data, h_define, h_item, gmm, h_service )
     else
       data.write_u16( param1 )
       data.write_u16( 0 )
+      if name_flg == 0
+        puts "名前フラグOFFは道具だけです"
+        exit(1)
+      end
     end
 
   end
@@ -161,6 +189,10 @@ def convertShop( csv, data, h_define, gmm, h_service )
       if list == nil
         data.write_u16(0xFF);
       else
+        if h_service[list] == nil
+          puts "#{list}がサービスに登録されていません"
+          exit(1)
+        end
         data.write_u16( h_service[list] )
       end
     end
