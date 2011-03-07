@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-07T14:45:08"/>
+	<create user="matsumiya" host="W00224" date="2011-03-07T15:33:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -684,9 +684,9 @@
 		<comment>・0=主人公名
 ・1=メダル名</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は
-[FF:00:色:2]「[1:35:メダル名:1]」[FF:00:色:0]を　てにいれた！</language>
+[FF:00:色:2]「[1:35:メダル名:1]」[FF:00:色:0]を　てにいれた！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
-[FF:00:色:2]「[1:35:メダル名:1]」[FF:00:色:0]を　手に入れた！</language>
+[FF:00:色:2]「[1:35:メダル名:1]」[FF:00:色:0]を　手に入れた！▼</language>
 	</row>
 
 	<row id="msg_mdloyj_prize_1st" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
