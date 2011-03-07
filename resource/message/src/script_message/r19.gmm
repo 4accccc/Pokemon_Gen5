@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-02-28T22:36:17"/>
+	<create user="matsumiya" host="W00224" date="2011-03-07T21:49:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,9 +263,9 @@
 		</language>
 	</columns>
 
-	<dialog left="1304" top="184" right="2009" bottom="812" maximized="no" rayout="Vertical2">
+	<dialog left="1296" top="209" right="2001" bottom="835" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
@@ -293,102 +293,121 @@
 
 
 	<row id="msg_r19_white_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂：捕獲デモ</comment>
+		<comment>♀
+・r19のposを踏むと
+　画面下からベル登場</comment>
 		<attribute name="キャラ指定">ベル</attribute>
-		<language name="JPN" width="256">アララギ『それでは
-せつめいを　はじめますね！[BE:01:ページ切り替え（クリア）]
-ポケモンと　であうことで
-ポケモンずかんの　ページが[BE:00:ページ切り替え（行送り）]
-じどうてきに　うまっていきます！[BE:01:ページ切り替え（クリア）]
-そして！　ポケモンを　つかまえることで
-さらに　くわしい　じょうほうが[BE:00:ページ切り替え（行送り）]
-えられるように　なっているの！[BE:01:ページ切り替え（クリア）]
-ということで　わたしが　じっさいに
-ポケモンを　つかまえてみせまーす！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">アララギ『それでは
-説明を　始めますね！[BE:01:ページ切り替え（クリア）]
-ポケモンと　出会うことで
-ポケモン図鑑の　ページが[BE:00:ページ切り替え（行送り）]
-自動的に　うまっていきます！[BE:01:ページ切り替え（クリア）]
-そして！　ポケモンを　捕まえることで
-さらに　詳しい　情報が[BE:00:ページ切り替え（行送り）]
-得られるように　なっているの！[BE:01:ページ切り替え（クリア）]
-ということで　わたしが　実際に
-ポケモンを　捕まえてみせまーす！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">ベル『おうい！</language>
+		<language name="JPN_KANJI" width="256">ベル『おうい！</language>
 	</row>
 
-	<row id="msg_r19_white_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r19_white_02" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♀
+・r19のposを踏むと
+　画面下からベル登場</comment>
+		<attribute name="キャラ指定">ベル</attribute>
+		<language name="JPN" width="256">ベル『ねえねえ！</language>
+		<language name="JPN_KANJI" width="256">ベル『ねえねえ！</language>
+	</row>
+
+	<row id="msg_r19_white_02_01" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♀
+・所定の位置にセットしてwhite_02表示</comment>
+		<attribute name="キャラ指定">ベル</attribute>
+		<language name="JPN" width="256">ベル『・待たせてゴメン
+・遅れた理由＝主人公ママのおしゃべり▼</language>
+		<language name="JPN_KANJI" width="256">ベル『・待たせてゴメン
+・遅れた理由＝主人公ママのおしゃべり▼</language>
+	</row>
+
+	<row id="msg_r19_white_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂：捕獲デモ</comment>
+		<attribute name="キャラ指定">ベル</attribute>
+		<language name="JPN" width="256">はーい！　それでは
+せつめいを　はじめまーす！▼
+ポケモンずかんの　ページはね
+ポケモンと　であうことで▽
+じどうてきに　うまっていくの！▼
+そして　ポケモンを　つかまえたら
+さらに　くわしい　じょうほうが▽
+ついか　されるように　なっているの！▼
+ということで　わたしが　じっさいに
+ポケモンを　つかまえるね！▼</language>
+		<language name="JPN_KANJI" width="256">はーい！　それでは
+せつめいを　はじめまーす！▼
+ポケモンずかんの　ページはね
+ポケモンと　であうことで▽
+じどうてきに　うまっていくの！▼
+そして　ポケモンを　つかまえたら
+さらに　くわしい　じょうほうが▽
+ついか　されるように　なっているの！▼
+ということで　わたしが　じっさいに
+ポケモンを　つかまえるね！▼</language>
+	</row>
+
+	<row id="msg_r19_white_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・捕獲デモ後、フィールドに復帰すると
 　このメッセージ表示
 ・アイテム入手処理
 　No004「モンスターボール」×5</comment>
 		<attribute name="キャラ指定">ベル</attribute>
-		<language name="JPN" width="256">アララギ『いまの　みてくれた？[BE:01:ページ切り替え（クリア）]
-ポイントを　かいせつすると
-まず　ポケモンの[BE:00:ページ切り替え（行送り）]
-たいりょくを　へらすこと！[BE:01:ページ切り替え（クリア）]
-げんきな　ポケモンは
-つかまえにくいのよね[BE:01:ページ切り替え（クリア）]
-できれば　じぶんの　ポケモンの　わざで
-つかまえたい　ポケモンを[BE:00:ページ切り替え（行送り）]
-ねむらせたり　まひさせると　いいわ！[BE:01:ページ切り替え（クリア）]
-それでは　きみたちに
-モンスターボールも　プレゼント！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">アララギ『今の　見てくれた？[BE:01:ページ切り替え（クリア）]
-ポイントを　解説すると
-まず　ポケモンの[BE:00:ページ切り替え（行送り）]
-体力を　減らすこと！[BE:01:ページ切り替え（クリア）]
-元気な　ポケモンは
-捕まえにくいのよね[BE:01:ページ切り替え（クリア）]
-できれば　自分の　ポケモンの　技で
-捕まえたい　ポケモンを[BE:00:ページ切り替え（行送り）]
-ねむらせたり　まひさせると　いいわ！[BE:01:ページ切り替え（クリア）]
-それでは　きみたちに
-モンスターボールも　プレゼント！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">ベル『よかったあ！
+ポケモン　つかまったよお▼
+あっ　あのね
+いまの　ポイントを▽
+せつめい　するね▼
+まず　げんきな　ポケモンは
+つかまえにくいの！　おぼえておいて▼
+だから　ポケモンの　たいりょくを
+へらしたほうが　いいんだよね▼
+つかまえたい　ポケモンを
+じぶんの　ポケモンの　わざで▽
+ねむらせたり　まひさせると▽
+さらに　つかまえやすくなるよ！▼
+それでは　あなたに
+モンスターボールを　プレゼント！▼</language>
+		<language name="JPN_KANJI" width="256">ベル『よかったあ！
+ポケモン　つかまったよお▼
+あっ　あのね
+いまの　ポイントを▽
+せつめい　するね▼
+まず　げんきな　ポケモンは
+つかまえにくいの！　おぼえておいて▼
+だから　ポケモンの　たいりょくを
+へらしたほうが　いいんだよね▼
+つかまえたい　ポケモンを
+じぶんの　ポケモンの　わざで▽
+ねむらせたり　まひさせると▽
+さらに　つかまえやすくなるよ！▼
+それでは　あなたに
+モンスターボールを　プレゼント！▼</language>
 	</row>
 
-	<row id="msg_r19_white_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r19_white_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・T02方面に移動、画面外に消えると
 　msg_r01_black_01
 ・博士はt02に出現</comment>
 		<attribute name="キャラ指定">ベル</attribute>
-		<language name="JPN" width="256">アララギ『その　モンスターボールは
-ポケモンを　つかまえたり[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ベル『モンスターボールはね
+ポケモンを　つかまえたり▼
 つかまえた　ポケモンを
-つれて　はこぶための　どうぐなの！[BE:01:ページ切り替え（クリア）]
-では　わたしは　このさき
-カラクサタウンで　まってまーす！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">アララギ『その　モンスターボールは
-ポケモンを　捕まえたり[BE:01:ページ切り替え（クリア）]
-捕まえた　ポケモンを
-連れて　運ぶための　道具なの！[BE:01:ページ切り替え（クリア）]
-では　わたしは　この先
-カラクサタウンで　待ってまーす！[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_r19_white_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<attribute name="キャラ指定">ベル</attribute>
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-
-	<row id="msg_r19_white_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<attribute name="キャラ指定">ベル</attribute>
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-
-	<row id="msg_r19_white_06" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<attribute name="キャラ指定">ベル</attribute>
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
+つれて　はこぶための　どうぐ！▼
+えーっと！　あたしは
+ヒオウギタウンに　もどるけれど▽
+おたがい　がんばろうね！！▼</language>
+		<language name="JPN_KANJI" width="256">ベル『モンスターボールはね
+ポケモンを　つかまえたり▼
+つかまえた　ポケモンを
+つれて　はこぶための　どうぐ！▼
+えーっと！　あたしは
+ヒオウギタウンに　もどるけれど▽
+おたがい　がんばろうね！！▼</language>
 	</row>
 
 	<row id="msg_r19_champion_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
-・仮メッセージ
 ・posを踏むとメッセージ表示
 　表示後、カメラがアデク中心に移動
 　続けて</comment>
@@ -404,10 +423,8 @@
 　続けて</comment>
 		<attribute name="キャラ指定">アデク
 ・BWチャンピオン</attribute>
-		<language name="JPN" width="256">おお！　なかなか　すばらしい
-ポケモンと　いっしょでは　ないか！▼</language>
-		<language name="JPN_KANJI" width="256">おお！　なかなか　すばらしい
-ポケモンと　いっしょでは　ないか！▼</language>
+		<language name="JPN" width="256">みたことのないかおだな▼</language>
+		<language name="JPN_KANJI" width="256">みたことのないかおだな▼</language>
 	</row>
 
 	<row id="msg_r19_champion_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
@@ -417,10 +434,16 @@
 　画面外に移動すると操作可能に</comment>
 		<attribute name="キャラ指定">アデク
 ・BWチャンピオン</attribute>
-		<language name="JPN" width="256">だが　まだまだ（しょしんしゃ）
-よし！　ついてこい！▼</language>
-		<language name="JPN_KANJI" width="256">だが　まだまだ（しょしんしゃ）
-よし！　ついてこい！▼</language>
+		<language name="JPN" width="256">おお！　なかなか　すばらしい
+[1:01:ポケモン種族名:0]と　いっしょでは　ないか！▼
+だが　まだまだ（しょしんしゃ）
+ふむう！　きたえてやるから▽
+わしに　ついてこい！▼</language>
+		<language name="JPN_KANJI" width="256">おお！　なかなか　すばらしい
+[1:01:ポケモン種族名:0]と　いっしょでは　ないか！▼
+だが　まだまだ（しょしんしゃ）
+ふむう！　きたえてやるから▽
+わしに　ついてこい！▼</language>
 	</row>
 
 	<row id="msg_r19_boy2a_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -490,17 +513,25 @@
 	<row id="msg_r19_sign2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・仮メッセージ</comment>
+		<attribute name="キャラ指定">看板：道路</attribute>
+		<language name="JPN" width="256">１９ばんどうろ</language>
+		<language name="JPN_KANJI" width="256">１９番道路</language>
+	</row>
+
+	<row id="msg_r19_sign3_01" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<comment>BGメッセージ
+・仮メッセージ</comment>
 		<attribute name="キャラ指定">看板：お得な掲示板</attribute>
-		<language name="JPN" width="256">おとくな　けいじばん！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">おとくな　けいじばん！▼
 
 せっかくの　であいです
-いろんな　ひとと　おはなししましょう！[BE:01:ページ切り替え（クリア）]
+いろんな　ひとと　おはなししましょう！▼
 きっと　みんなが　やくだつことを
 おしえてくれる　はずです！</language>
-		<language name="JPN_KANJI" width="256">お得な　掲示板！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">お得な　掲示板！▼
 
 せっかくの　出会いです
-いろんな　人と　お話しましょう！[BE:01:ページ切り替え（クリア）]
+いろんな　人と　お話しましょう！▼
 きっと　みんなが　役立つことを
 教えてくれる　はずです！</language>
 	</row>
