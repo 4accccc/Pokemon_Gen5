@@ -129,6 +129,7 @@ typedef struct GYM_FLY_TMP_tag
   FLD_EXP_OBJ_CNT_PTR exp_obj;  // 拡張3Dモデルコントローラ
   FIELD_PLAYER        *player;  // 自機
 	FIELD_SOUND         *p_sound; // サウンド情報
+  GYM_FLY_SV_WORK     *p_sv_wk; // セーブワーク
 
 }GYM_FLY_TMP;
 
@@ -176,6 +177,13 @@ static void FAN_Update( FAN_WORK *p_wk );
 // WINDMETER
 static void WINDMETER_Update( WINDMETER_WORK *p_wk );
 
+//-------------------------------------
+///	セーブ情報
+//=====================================
+// GYM_FLY_SV_WORK
+static void SAVE_SetTimeFlg( GYM_FLY_SV_WORK *p_wk, BOOL flag );
+static BOOL SAVE_GetTimeFlg( const GYM_FLY_SV_WORK *cp_wk );
+
 #ifdef GYM_FLY_DEBUG_MENU
 //-------------------------------------
 /// デバッグメニュー	
@@ -210,12 +218,12 @@ void GYM_FLY_Setup(FIELDMAP_WORK *p_fieldmap)
       FIELDMAP_GetHeapID(p_fieldmap), sizeof(GYM_FLY_TMP));
 
   p_wk->heapID    = HEAPID_FIELDMAP;
-  p_wk->time_start= FALSE;
   p_wk->time      = 0;
   p_wk->state     = WIND_STATE_LOW;
   p_wk->exp_obj   = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
   p_wk->player    = FIELDMAP_GetFieldPlayer( p_fieldmap );
   p_wk->p_sound   = GAMEDATA_GetFieldSound( p_gdata );
+  p_wk->p_sv_wk   = GIMMICKWORK_Get( GAMEDATA_GetGimmickWork( p_gdata ), FLD_GIMMICK_GYM_FLY );
 
   // ファン
   p_wk->fan_wk.anm_speed = FAN_SPEED_LOW;
@@ -235,6 +243,9 @@ void GYM_FLY_Setup(FIELDMAP_WORK *p_fieldmap)
 
   // 環境音
   FSND_PlayEnvSE( p_wk->p_sound, GYM_FLY_SE_WIND );
+
+  // セーブから取得
+  p_wk->time_start = SAVE_GetTimeFlg( p_wk->p_sv_wk );
 
 #ifdef GYM_FLY_DEBUG_MENU
   DEBUGMENU_Init( p_wk, p_fieldmap, p_wk->heapID );
@@ -276,6 +287,9 @@ void GYM_FLY_End(FIELDMAP_WORK *p_fieldmap)
 void GYM_FLY_Move(FIELDMAP_WORK *p_fieldmap)
 {
   GYM_FLY_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, GYM_FLY_TMP_ASSIGN_ID );
+
+  // セーブに設定
+  SAVE_SetTimeFlg( p_wk->p_sv_wk, p_wk->time_start );
 
   // EXPOBJアニメメイン
   EXPOBJ_ObjMain( p_wk );
@@ -1116,6 +1130,36 @@ static void WINDMETER_Update( WINDMETER_WORK *p_wk )
   }
 }
 
+//=============================================================================
+/**
+ *    セーブ情報
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  タイム計測フラグを設定
+ *
+ *	@param	*p_wk 飛行ジムセーブワーク
+ *	@param	flag  フラグ
+ */
+//-----------------------------------------------------------------------------
+static void SAVE_SetTimeFlg( GYM_FLY_SV_WORK *p_wk, BOOL flag )
+{
+  p_wk->time_flag = flag;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  タイム計測フラグを取得
+ *
+ *	@param	*cp_wk 飛行ジムセーブワーク
+ *
+ *	@return flag  フラグ
+ */
+//-----------------------------------------------------------------------------
+static BOOL SAVE_GetTimeFlg( const GYM_FLY_SV_WORK *cp_wk )
+{
+  return cp_wk->time_flag;
+}
 
 #ifdef GYM_FLY_DEBUG_MENU
 //=============================================================================

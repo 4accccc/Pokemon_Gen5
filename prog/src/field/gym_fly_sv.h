@@ -10,6 +10,6 @@
 //飛行ジムセーブワーク
 typedef struct GYM_FLY_SV_WORK_tag
 {
-  u32 dummy;
+  BOOL time_flag;
 }GYM_FLY_SV_WORK;
 
