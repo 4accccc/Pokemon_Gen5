@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-07T18:45:10"/>
+	<create user="matsumiya" host="W00224" date="2011-03-07T20:17:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -294,15 +294,8 @@
 
 	<row id="msg_t06r0101_champion_01">
 		<comment>♂
-・条件を満たす前
-・イベント戦闘前</comment>
-		<attribute name="キャラ指定">アデク
-・BWチャンピオン</attribute>
-		<language name="JPN" width="256">アデク『・牧場の件は？</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
-	</row>
-
-	<row id="msg_t06r0101_champion_02">
+・条件を満たす前は不在
+・イベント戦闘</comment>
 		<attribute name="キャラ指定">アデク
 ・BWチャンピオン</attribute>
 		<language name="JPN" width="256">アデク『おお！　きたか！
@@ -312,33 +305,68 @@
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_t06r0101_champion_03">
+	<row id="msg_t06r0101_champion_02">
+		<comment>♂
+・はい選択時
+・主人公のポケモンのHP/MPチェック
+　
+　</comment>
 		<attribute name="キャラ指定">アデク
 ・BWチャンピオン</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_t06r0101_champion_03">
+		<attribute name="キャラ指定">アデク
+・BWチャンピオン</attribute>
+		<language name="JPN" width="256">回復
+・ポケセン誘導</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_t06r0101_champion_04">
 		<attribute name="キャラ指定">アデク
 ・BWチャンピオン</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN" width="256">テストメッセージ
+・では一人目</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_t06r0101_champion_05">
 		<attribute name="キャラ指定">アデク
 ・BWチャンピオン</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN" width="256">テストメッセージ
+・回復処理</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
+	<row id="msg_t06r0101_champion_06">
+		<language name="JPN" width="256">テストメッセージ
+・では二人目</language>
+		<language name="JPN_KANJI" width="256"></language>
+	</row>
+
+	<row id="msg_t06r0101_champion_07">
+		<language name="JPN" width="256"></language>
+		<language name="JPN_KANJI" width="256"></language>
+	</row>
+
+	<row id="msg_t06r0101_champion_08">
+		<language name="JPN" width="256"></language>
+		<language name="JPN_KANJI" width="256"></language>
+	</row>
+
 	<row id="msg_t06r0101_01_01">
+		<comment>♂
+・塾帰り</comment>
 		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_t06r0101_02_01">
+		<comment>♀
+・塾帰り</comment>
 		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
