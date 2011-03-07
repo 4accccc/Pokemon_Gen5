@@ -19,6 +19,7 @@
 #define D05R0101_GIRL2_01                  6
 #define D05R0101_BACKPACKERM_01            7
 #define D05R0101_POLICEMAN_01              8
+#define D05R0101_POLICEMAN_02              9
 
 #endif //ZONE_D05R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d05r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
