@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-07T15:33:14"/>
+	<create user="matsumiya" host="W00224" date="2011-03-07T17:12:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -502,11 +502,9 @@
 ・0=主人公名</comment>
 		<attribute name="キャラ指定">メダルおやじ</attribute>
 		<language name="JPN" width="256">えーと……　わたしから　おわたしする
-ヒントメダルは　もう　ありませんね[BE:01:ページ切り替え（クリア）]
-</language>
+ヒントメダルは　もう　ありませんね[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">えーと……　わたしから　お渡しする
-ヒントメダルは　もう　ありませんね[BE:01:ページ切り替え（クリア）]
-</language>
+ヒントメダルは　もう　ありませんね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_mdloyj_hintget_02_01" back-color="#808080,,,#808080,,#808080,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
@@ -684,9 +682,11 @@
 		<comment>・0=主人公名
 ・1=メダル名</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は
-[FF:00:色:2]「[1:35:メダル名:1]」[FF:00:色:0]を　てにいれた！▼</language>
+メダル　[FF:00:色:2]「[1:35:メダル名:1]」[FF:00:色:0]を▽
+てにいれた！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
-[FF:00:色:2]「[1:35:メダル名:1]」[FF:00:色:0]を　手に入れた！▼</language>
+メダル　[FF:00:色:2]「[1:35:メダル名:1]」[FF:00:色:0]を▽
+手に入れた！▼</language>
 	</row>
 
 	<row id="msg_mdloyj_prize_1st" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
