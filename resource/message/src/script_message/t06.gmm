@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-05T19:08:49"/>
+	<create user="matsumiya" host="W00224" date="2011-03-07T19:52:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1295" top="201" right="2000" bottom="829" maximized="no" rayout="Vertical2">
+	<dialog left="1296" top="209" right="2001" bottom="837" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -294,61 +294,69 @@
 
 	<row id="msg_t06_champion_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・街を入ってすぐのposを踏むと起動</comment>
+・ポケセンに行くか確認</comment>
 		<attribute name="キャラ指定">アデク
 ・BWチャンピオン</attribute>
-		<language name="JPN" width="256">アデク『こっちだ！▼</language>
-		<language name="JPN_KANJI" width="256">アデク『こっちだ！▼</language>
+		<language name="JPN" width="256">かりメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_t06_champion_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・ポケセンの前で停止
-・主人公と向き合ってメッセージ表示
-・はい/いいえの選択肢表示
-　はい→
-　いいえ→</comment>
+・はい</comment>
 		<attribute name="キャラ指定">アデク
 ・BWチャンピオン</attribute>
-		<language name="JPN" width="256">ポケモンセンターだが
-ポケモンを　かいふく　させるか？</language>
-		<language name="JPN_KANJI" width="256">ポケモンセンターだが
-ポケモンを　かいふく　させるか？</language>
+		<language name="JPN" width="256">かりメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_t06_champion_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・はい選択</comment>
+・いいえ</comment>
 		<attribute name="キャラ指定">アデク
 ・BWチャンピオン</attribute>
-		<language name="JPN" width="256">はい</language>
-		<language name="JPN_KANJI" width="256">はい</language>
+		<language name="JPN" width="256">かりメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_t06_champion_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・いいえ選択</comment>
+・牧場への誘導</comment>
 		<attribute name="キャラ指定">アデク
 ・BWチャンピオン</attribute>
-		<language name="JPN" width="256">いいえ
-では　こっちだ！▼</language>
-		<language name="JPN_KANJI" width="256">いいえ
-では　こっちだ！▼</language>
+		<language name="JPN" width="256">アデク『すまぬ▼
+なんでも　ぼくじょうで～
+ちょいと　ついてきてくれ▼</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_t06_champion_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・アデクの家近く</comment>
+・牧場イベントクリア後
+・？？？に配置
+・メッセージ表示後、アデクは
+　t06r0101内へ入る</comment>
 		<attribute name="キャラ指定">アデク
 ・BWチャンピオン</attribute>
-		<language name="JPN" width="256">あちらの　ちょっと……▼
-いや　かなり　ボロい　こやが
-わしの　いえだ！▽
-あとで　よってくれ！▼</language>
-		<language name="JPN_KANJI" width="256">あちらの　ちょっと……▼
-いや　かなり　ボロい　こやが
-わしの　いえだ！▽
-あとで　よってくれ！▼</language>
+		<language name="JPN" width="256">アデク『おう！　こっちだ！
+・わしの　でしたちが　まっておる▼</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_t06_stop_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>？
+・話しかけ</comment>
+		<attribute name="キャラ指定">？？？</attribute>
+		<language name="JPN" width="256">アデク寺子屋クリアまでのストッパー</language>
+		<language name="JPN_KANJI" width="256">アデク寺子屋クリアまでのストッパー</language>
+	</row>
+
+	<row id="msg_t06_stop_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>？
+・pos起動時</comment>
+		<attribute name="キャラ指定">？？？</attribute>
+		<language name="JPN" width="256">アデク寺子屋クリアまでのストッパー▼</language>
+		<language name="JPN_KANJI" width="256">アデク寺子屋クリアまでのストッパー▼</language>
 	</row>
 
 	<row id="msg_t06_01_01">
