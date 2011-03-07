@@ -107,6 +107,7 @@ enum{
   SHOP_OBJ_ARROW_DOWN,
   SHOP_OBJ_ARROW_UPDOWN,
   SHOP_OBJ_ITEM,
+  SHOP_OBJ_CURSOR_RED,
   SHOP_OBJ_MAX,
 };
 
@@ -190,11 +191,19 @@ typedef struct _SHOP_BUY_APP_WORK{
 
   void (*List_Init)( GAMESYS_WORK *gsys, struct _SHOP_BUY_APP_WORK *wk, int type, int id );
   void (*List_Exit)( GAMESYS_WORK *gsys, struct _SHOP_BUY_APP_WORK *wk, int type, int id );
+  BMPMENULIST_CURSOR_CALLBACK call_back;
+  BMPMENULIST_PRINT_CALLBACK icon;
 
   u16 msg_start;
   u16 msg_select;
   u16 msg_decide;
-  u16 dummy22;
+  u8 insert_idx;
+  u8 now_idx;
+
+  BOOL is_sort;
+  u16 insert_list;
+  u16 insert_cursor;
+  BOOL is_change;
 
 } SHOP_BUY_APP_WORK;
 
@@ -224,6 +233,7 @@ static void exit_work( SHOP_BUY_APP_WORK *wk );
 static void shop_item_set( SHOP_BUY_APP_WORK *wk, int type, int id );
 static void shop_secretary_set( SHOP_BUY_APP_WORK *wk, int type, int id );
 static void shop_institution_set( SHOP_BUY_APP_WORK *wk, int type, int id );
+static void shop_sort_set( SHOP_BUY_APP_WORK *wk, int type, int id );
 static void shop_item_release( SHOP_BUY_APP_WORK *wk );
 static void bg_trans( SHOP_BUY_APP_WORK *wk );
 static void bg_clear( SHOP_BUY_APP_WORK *wk );
@@ -247,26 +257,31 @@ static void ShopPrintMsgItem( SHOP_BUY_APP_WORK *wk, int strId, u16 itemno );
 static void ShopPrintMsg( SHOP_BUY_APP_WORK *wk, int strId );
 static void ShopDecideMsg( SHOP_BUY_APP_WORK *wk, int strId, const RESORT_SHOP_ITEM  *cp_select );
 static void submenu_screen_clear( int type );
+static void item_shop_main( SHOP_BUY_APP_WORK *wk );
+static void select_shop_main( SHOP_BUY_APP_WORK *wk );
+static void sort_shop_main( SHOP_BUY_APP_WORK *wk );
 static  int shop_buy_printwait( SHOP_BUY_APP_WORK *wk );
 static void string_alloc( SHOP_BUY_APP_WORK *wk );  
 
 static RESORT_PEOPLE * Resort_Scrcmd_GetFrontPeople( FIELDMAP_WORK *p_fieldmap );
 static RESORT_BINARY_SHOP * Resort_Scrcmd_GetBinaryShop( FIELDMAP_WORK *p_fieldmap );
 
+static void ItemList_move_callback( BMPMENULIST_WORK * wk, u32 param, u8 mode);
+static void SelectPoeple_move_callback( BMPMENULIST_WORK * wk, u32 param, u8 mode);
+static void SortPoeple_move_callback( BMPMENULIST_WORK * wk, u32 param, u8 mode);
+static void SortPoeple_Cursor_SetPos( SHOP_BUY_APP_WORK *wk );
+
 //アイテム・サービスリストの場合
 static void ItemList_Init( GAMESYS_WORK *gsys, struct _SHOP_BUY_APP_WORK *wk, int type, int id );
 static void ItemList_Exit( GAMESYS_WORK *gsys, struct _SHOP_BUY_APP_WORK *wk, int type, int id );
-static void ItemList_move_callback( BMPMENULIST_WORK * wk, u32 param, u8 mode);
 
 //秘書リストの場合
 static void SecretaryList_Init( GAMESYS_WORK *gsys, struct _SHOP_BUY_APP_WORK *wk, int type, int id );
 static void SecretaryList_Exit( GAMESYS_WORK *gsys, struct _SHOP_BUY_APP_WORK *wk, int type, int id );
-static void SecretaryList_move_callback( BMPMENULIST_WORK * wk, u32 param, u8 mode);
 
 //施設リストの場合
 static void InstitutionList_Init( GAMESYS_WORK *gsys, struct _SHOP_BUY_APP_WORK *wk, int type, int id );
 static void InstitutionList_Exit( GAMESYS_WORK *gsys, struct _SHOP_BUY_APP_WORK *wk, int type, int id );
-static void InstitutionList_move_callback( BMPMENULIST_WORK * wk, u32 param, u8 mode);
 
 //--------------------------------------------------------------------
 /**
@@ -338,6 +353,8 @@ VMCMD_RESULT EvCmdResortCallList( VMHANDLE *core, void *wk )
     sbw->wk.ShopCallFunc  = ShopCallFunc_Buy;
     sbw->wk.List_Init = ItemList_Init;
     sbw->wk.List_Exit = ItemList_Exit;
+    sbw->wk.call_back = ItemList_move_callback;
+    sbw->wk.icon = line_callback_rest;
     break;
   case RESORT_LIST_TYPE_SELECT:    //選択
     sbw->shopType = shop_type;
@@ -352,24 +369,32 @@ VMCMD_RESULT EvCmdResortCallList( VMHANDLE *core, void *wk )
       sbw->wk.List_Exit = SecretaryList_Exit;
       sbw->wk.msg_select  = mes_shop_09_09;
       sbw->wk.msg_decide  = mes_shop_09_10;
+      sbw->wk.call_back = SelectPoeple_move_callback;
+      sbw->wk.icon = NULL;
       break;
     case RESORT_LIST_SELECT_SECRETARY_DEL:
       sbw->wk.List_Init = SecretaryList_Init;
       sbw->wk.List_Exit = SecretaryList_Exit;
       sbw->wk.msg_select  = mes_shop_09_06;
       sbw->wk.msg_decide  = mes_shop_09_07;
+      sbw->wk.call_back = SelectPoeple_move_callback;
+      sbw->wk.icon = NULL;
       break;
     case RESORT_LIST_SELECT_INSTATITUTION:
       sbw->wk.List_Init = InstitutionList_Init;
       sbw->wk.List_Exit = InstitutionList_Exit;
       sbw->wk.msg_select  = mes_shop_09_12;
       sbw->wk.msg_decide  = mes_shop_09_13;
+      sbw->wk.call_back = SelectPoeple_move_callback;
+      sbw->wk.icon = NULL;
       break;
     case RESORT_LIST_SELECT_INSTATITUTION_DEL:
       sbw->wk.List_Init = InstitutionList_Init;
       sbw->wk.List_Exit = InstitutionList_Exit;
       sbw->wk.msg_select  = mes_shop_09_15;
       sbw->wk.msg_decide  = mes_shop_09_16;
+      sbw->wk.call_back = SelectPoeple_move_callback;
+      sbw->wk.icon = NULL;
       break;
     }
     break;
@@ -382,10 +407,20 @@ VMCMD_RESULT EvCmdResortCallList( VMHANDLE *core, void *wk )
     case RESORT_LIST_SORT_SECRETARY:
       sbw->wk.List_Init = SecretaryList_Init;
       sbw->wk.List_Exit = SecretaryList_Exit;
+      sbw->wk.msg_start   = mes_shop_09_17;
+      sbw->wk.msg_select  = mes_shop_09_18;
+      sbw->wk.msg_decide  = mes_shop_09_19;
+      sbw->wk.call_back = SortPoeple_move_callback;
+      sbw->wk.icon = NULL;
       break;
     case RESORT_LIST_SORT_INSTATITUTION:
       sbw->wk.List_Init = InstitutionList_Init;
       sbw->wk.List_Exit = InstitutionList_Exit;
+      sbw->wk.msg_start   = mes_shop_09_17;
+      sbw->wk.msg_select  = mes_shop_09_18;
+      sbw->wk.msg_decide  = mes_shop_09_19;
+      sbw->wk.call_back = SortPoeple_move_callback;
+      sbw->wk.icon = NULL;
       break;
     }
     break;
@@ -625,6 +660,21 @@ enum{
   SHOPSELECT_SEQ_END,
 };
 
+
+enum{
+  SHOPSORT_SEQ_INIT=0,
+  SHOPSORT_SEQ_INITWAIT,
+  SHOPSORT_SEQ_MAIN,
+  SHOPSORT_SEQ_SELECT,
+  SHOPSORT_SEQ_BACK,
+  SHOPSORT_SEQ_RESET,
+  SHOPSORT_SEQ_ONLY1_YESNO,
+  SHOPSORT_SEQ_YESNO,
+  SHOPSORT_SEQ_SELECT_YESNO_WAIT,
+  SHOPSORT_SEQ_MSG_WAIT,
+  SHOPSORT_SEQ_END,
+};
+
 // テキストカラー定義
 #define WHITE_TEXT_W_COL  (PRINTSYS_LSB_Make( 15,  2, 15))
 #define BLACK_TEXT_W_COL  (PRINTSYS_LSB_Make(  1,  2, 15))
@@ -826,6 +876,74 @@ static void select_shop_main( SHOP_BUY_APP_WORK *wk )
       ShopDecideMsg(wk,  wk->msg_select, wk->cp_select );
       wk->seq  = SHOPSELECT_SEQ_MSG_WAIT;
       wk->next = SHOPSELECT_SEQ_ONLY1_YESNO;
+    }
+  }
+
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief   インサート処理
+ *
+ * @param   wk    SHOP_BUY_APP_WORK
+ *
+ * @retval  none
+ */
+//----------------------------------------------------------------------------------
+static void sort_shop_main( SHOP_BUY_APP_WORK *wk )
+{
+  u32 ret;
+  // printQueに処理が残っている場合はメインを通さない
+  if(PRINTSYS_QUE_IsFinished( wk->printQue )==FALSE){
+    return;
+  }
+
+  // BMPの転送待ちの場合があるので、BmpwinOnのタイミングをズラした
+  if(wk->FirstTrans==0){
+    GFL_BMPWIN_MakeTransWindow( wk->win[SHOP_BUY_BMPWIN_LIST] );
+    wk->FirstTrans++;
+  }
+
+  // リスト処理メイン
+  ret = BmpMenuList_Main( wk->menuList );
+  if(ret!=BMPMENULIST_NULL)
+  {
+    if(ret==BMPMENULIST_CANCEL)
+    {
+      if( wk->is_sort == FALSE )
+      {
+        wk->cp_select = NULL;
+        wk->seq = SHOPSORT_SEQ_END;
+      }
+      else
+      {
+        wk->is_sort = FALSE;
+        GFL_CLACT_WK_SetDrawEnable( wk->ClactWork[SHOP_OBJ_CURSOR_RED], FALSE );
+      }
+    }
+    else 
+    {
+      if( wk->is_sort )
+      {
+        wk->now_idx = ret;
+        if( wk->now_idx != wk->insert_idx )
+        {
+          //ソート処理
+          wk->is_change = TRUE;
+          ShopDecideMsg(wk,  wk->msg_select, wk->cp_select );
+          wk->seq  = SHOPSORT_SEQ_MSG_WAIT;
+          wk->next = SHOPSORT_SEQ_ONLY1_YESNO;
+        }
+      }
+      else
+      {
+        wk->insert_idx = ret;
+        wk->is_sort = TRUE;
+        wk->cp_select = &wk->lineup[ret];
+        BmpMenuList_PosGet( wk->menuList, &wk->insert_list, &wk->insert_cursor );
+        SortPoeple_Cursor_SetPos( wk );
+        GFL_CLACT_WK_SetDrawEnable( wk->ClactWork[SHOP_OBJ_CURSOR_RED], TRUE );
+      }
     }
   }
 
@@ -1140,6 +1258,125 @@ static BOOL ShopCallFunc_Select( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int 
 }
 static BOOL ShopCallFunc_Sort( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int type, int id )
 {
+  u32 ret;
+  
+  switch( wk->seq ){
+  case SHOPSORT_SEQ_INIT:  // 初期化
+    shop_call_init(gsys, wk, type, id);
+    bg_trans( wk );     // BG転送
+    GFL_BG_FillScreen( GFL_BG_FRAME2_M, 0, 0, 0, 11, 17, GFL_BG_SCRWRT_PALNL );
+    GFL_BG_LoadScreenReq( GFL_BG_FRAME2_M );
+    wk->List_Init( gsys, wk, type, id );
+    wk->seq++;
+    break;
+  
+  case SHOPSORT_SEQ_INITWAIT:
+   if(PRINTSYS_QUE_IsFinished( wk->printQue )==FALSE){
+     break;
+    }
+    // BMPの転送待ちの場合があるので、BmpwinOnのタイミングをズラした
+    if(wk->FirstTrans==0){
+      GFL_BMPWIN_MakeTransWindow( wk->win[SHOP_BUY_BMPWIN_LIST] );
+      wk->FirstTrans++;
+    }
+
+    ShopPrintMsg( wk, wk->msg_start ); 
+    wk->seq  = SHOPSORT_SEQ_MSG_WAIT;
+    wk->next = SHOPSORT_SEQ_BACK;
+    break;
+
+  case SHOPSORT_SEQ_MAIN:
+    sort_shop_main(wk);
+    break;
+  case SHOPSORT_SEQ_BACK:    // 戻る
+    submenu_screen_clear( SCREEN_SUBMENU_AND_INFOWIN );
+    GFL_BMPWIN_MakeScreen( wk->win[SHOP_BUY_BMPWIN_LIST] );
+    GFL_BMPWIN_MakeScreen( wk->win[SHOP_BUY_BMPWIN_ITEMINFO] );
+    GFL_BG_LoadScreenV_Req( GFL_BG_FRAME1_M );
+    GFL_CLACT_WK_SetDrawEnable( wk->ClactWork[SHOP_OBJ_ARROW_UPDOWN], FALSE );
+    BmpMenuList_Rewrite( wk->menuList );
+    wk->seq = SHOPSORT_SEQ_MAIN;
+    break;
+  case SHOPSORT_SEQ_RESET: //リスト作り直し
+    shop_sort_set( wk, type, id );
+    wk->is_sort = FALSE;
+    GFL_CLACT_WK_SetDrawEnable( wk->ClactWork[SHOP_OBJ_CURSOR_RED], FALSE );
+    bmpwin_list_exit(wk);
+    bmpwin_list_init( wk, wk->call_back, wk->icon );
+    GFL_BMPWIN_MakeScreen( wk->win[SHOP_BUY_BMPWIN_LIST] );
+    GFL_BG_LoadScreenV_Req( GFL_BG_FRAME1_M );
+
+    wk->seq = SHOPSORT_SEQ_BACK;
+    break;
+  case SHOPSORT_SEQ_ONLY1_YESNO:
+    submenu_screen_clear( SCREEN_SUBMENU_ONLY );
+    GFL_BMPWIN_MakeScreen( wk->win[SHOP_BUY_BMPWIN_LIST] );
+    GFL_CLACT_WK_SetDrawEnable( wk->ClactWork[SHOP_OBJ_ARROW_UPDOWN], FALSE );
+    wk->yesnoWork = BmpMenu_YesNoSelectInit(  &yesno_data, 1, MENU_WINDOW_PAL_OFFSET, 0, wk->heapId );
+    wk->seq = SHOPSORT_SEQ_SELECT_YESNO_WAIT;
+
+    break;
+
+  case SHOPSORT_SEQ_YESNO:
+    submenu_screen_clear( SCREEN_SUBMENU_ONLY );
+    GFL_BMPWIN_MakeScreen( wk->win[SHOP_BUY_BMPWIN_LIST] );
+    GFL_CLACT_WK_SetDrawEnable( wk->ClactWork[SHOP_OBJ_ARROW_UPDOWN], FALSE );
+    wk->yesnoWork = BmpMenu_YesNoSelectInit(  &yesno_data, 1, MENU_WINDOW_PAL_OFFSET, 0, wk->heapId );
+    wk->seq = SHOPSORT_SEQ_SELECT_YESNO_WAIT;
+    break;
+  case SHOPSORT_SEQ_SELECT_YESNO_WAIT:
+    ret = BmpMenu_YesNoSelectMain( wk->yesnoWork );
+    if(ret!=BMPMENU_NULL){
+      if(ret==0){
+        wk->seq = SHOPSORT_SEQ_RESET;
+      }else if(ret==BMPMENU_CANCEL){
+        wk->seq = SHOPSORT_SEQ_BACK;
+      }
+    }
+    break;
+  // メッセージ表示待ち
+  case SHOPSORT_SEQ_MSG_WAIT:    
+    wk->seq = shop_buy_printwait( wk );
+    break;
+
+  case SHOPSORT_SEQ_END:
+
+    //終了時に選んだ物を取得
+    if( wk->cp_select )
+    {
+      *wk->ret_service_type = wk->cp_select->serviceID;
+      *wk->ret_service_idx = wk->cp_select->id;
+      *wk->ret_price = wk->cp_select->price;
+    }
+    else
+    {
+      *wk->ret_service_type = RESORT_LIST_CANCEL;
+      *wk->ret_service_idx = 0;
+      *wk->ret_price = 0;
+    }
+
+
+    bmpwin_list_exit(wk);   // BMPLIST解放
+    obj_del( wk );          // OBJ削除
+    bmpwin_exit( wk );      // BMPWIN解放
+    bg_clear(wk);           // BG消去
+    
+    // 品揃えデータ削除
+    shop_item_release( wk);
+
+    // ワーク解放
+    exit_work(wk);
+    return TRUE;
+    break;
+  }
+
+  PRINTSYS_QUE_Main( wk->printQue );
+  PRINT_UTIL_Trans( &wk->printUtil, wk->printQue );
+
+  GFL_TCBL_Main( wk->pMsgTcblSys ); // フィールド描画は１／３０なのでアプリと合わせるために２回呼ぶ
+  GFL_TCBL_Main( wk->pMsgTcblSys );
+  
+  // 継続
   return FALSE;
 }
 
@@ -1369,6 +1606,33 @@ static void shop_institution_set( SHOP_BUY_APP_WORK *wk, int type, int id )
                                     BMPMENULIST_CANCEL, 
                                     wk->heapId );
 }
+static void shop_sort_set( SHOP_BUY_APP_WORK *wk, int type, int id )
+{
+  int i;
+  RESORT_SHOP_ITEM temp;
+  
+  temp = wk->lineup[ wk->insert_idx ];
+  wk->lineup[ wk->insert_idx ]  = wk->lineup[ wk->now_idx ];
+  wk->lineup[ wk->now_idx ] = temp;
+  wk->cp_select = NULL;
+
+  BmpMenuWork_ListDelete( wk->list );
+  wk->list = BmpMenuWork_ListCreate( wk->lineup_num+1, wk->heapId );
+
+  for(i=0;i<wk->lineup_num;i++)
+  {
+    //リストに加える
+    BmpMenuWork_ListAddString( &wk->list[i], wk->lineup[i].p_name,
+        i,                // 商品テーブルのインデックス
+        wk->heapId );
+  }
+
+  // 「やめる」登録
+  BmpMenuWork_ListAddArchiveString( &wk->list[i], wk->shopMsgData, 
+                                    mes_shop_02_06, 
+                                    BMPMENULIST_CANCEL, 
+                                    wk->heapId );
+}
 
 //----------------------------------------------------------------------------------
 /**
@@ -1554,6 +1818,7 @@ static const GFL_CLWK_DATA shop_obj_param[]={
   { 224, 128, 2, 0, 0 },// 上下カーソル
   {  22, 172, 0, 0, 1 },// どうぐアイコン
   {  18, 168, 0, 0, 1 },// 人物アイコン 
+  {  18, 168, 1, 0, 1 },// カーソル赤
   // ｘ,ｙ座標,アニメーションシーケンス,ソフト優先順位  0>0xff, BG優先順位
 };
 
@@ -1572,7 +1837,7 @@ static void shop_resource_load( SHOP_BUY_APP_WORK *wk )
   // パレット
   wk->clact_res[0][ SHOP_OBJ_RES_PLTT ] = GFL_CLGRP_PLTT_RegisterEx( 
         handle, NARC_shop_gra_shop_obj_NCLR, CLSYS_DRAW_MAIN, 
-        0, 0, 1, wk->heapId );
+        0, 0, 2, wk->heapId );
 
   // キャラ( 矢印 )
   wk->clact_res[0][ SHOP_OBJ_RES_CHAR ] = GFL_CLGRP_CGR_Register( 
@@ -1604,7 +1869,7 @@ static void itemicon_resource_load( SHOP_BUY_APP_WORK *wk )
   // パレット
   wk->clact_res[2][ SHOP_OBJ_RES_PLTT ] = GFL_CLGRP_PLTT_RegisterEx( 
         wk->iconHandle, ITEM_GetIndex( 1, ITEM_GET_ICON_PAL ), CLSYS_DRAW_MAIN, 
-        32, 0, 1, wk->heapId );
+        0x20*2, 0, 1, wk->heapId );
 
   // キャラ
   wk->clact_res[2][ SHOP_OBJ_RES_CHAR ] = GFL_CLGRP_CGR_Register( 
@@ -1666,7 +1931,7 @@ static void people_resource_change( SHOP_BUY_APP_WORK *wk, u16 trainer_view )
     //PLTTには転送元を変えられるReplaceがないので、SDKレベルで転送する
     cp_plt_adrs = (const u16*)pltt->pRawData + sc_wifi_unionobj_plt[ trainer_view ]*16;
     DC_FlushRange( cp_plt_adrs, 32 );
-    GX_LoadOBJPltt( cp_plt_adrs, 32, 32 );
+    GX_LoadOBJPltt( cp_plt_adrs, 0x20*2, 32 );
 
     GFL_CLGRP_CGR_Replace( wk->clact_res[2][ SHOP_OBJ_RES_CHAR ], chara );
 
@@ -1728,6 +1993,14 @@ static void obj_set( SHOP_BUY_APP_WORK *wk, const GFL_CLWK_DATA *cp_item_adta )
       cp_item_adta, CLSYS_DEFREND_MAIN, wk->heapId );
   GFL_CLACT_WK_SetPlttOffs( wk->ClactWork[SHOP_OBJ_ITEM], 0, CLWK_PLTTOFFS_MODE_PLTT_TOP);
 
+  // カーソル(赤)
+  wk->ClactWork[SHOP_OBJ_CURSOR_RED] = GFL_CLACT_WK_Create( wk->ClactUnit, 
+      wk->clact_res[0][ SHOP_OBJ_RES_CHAR ], 
+      wk->clact_res[0][ SHOP_OBJ_RES_PLTT ], 
+      wk->clact_res[0][ SHOP_OBJ_RES_CELL ], 
+      &shop_obj_param[6], CLSYS_DEFREND_MAIN, wk->heapId );
+  GFL_CLACT_WK_SetDrawEnable( wk->ClactWork[SHOP_OBJ_CURSOR_RED], FALSE );
+
   // 矢印は非表示
   GFL_CLACT_WK_SetDrawEnable( wk->ClactWork[SHOP_OBJ_ARROW_UP],   FALSE );
   GFL_CLACT_WK_SetDrawEnable( wk->ClactWork[SHOP_OBJ_ARROW_DOWN], FALSE );
@@ -1776,7 +2049,7 @@ static void obj_load_people( SHOP_BUY_APP_WORK *wk )
     // パレット
     wk->clact_res[2][ SHOP_OBJ_RES_PLTT ] = GFL_CLGRP_PLTT_RegisterEx( 
         wk->iconHandle, NARC_wifi_unionobj_wifi_union_obj_NCLR, CLSYS_DRAW_MAIN, 
-        32, sc_wifi_unionobj_plt[ 0 ], 1, wk->heapId );
+        0x20*2, sc_wifi_unionobj_plt[ 0 ], 1, wk->heapId );
 
     // キャラ
     wk->clact_res[2][ SHOP_OBJ_RES_CHAR ] = GFL_CLGRP_CGR_Register( 
@@ -2421,7 +2694,7 @@ static void ItemList_Init( GAMESYS_WORK *gsys, struct _SHOP_BUY_APP_WORK *wk, in
   shop_item_set( wk, type, id );
 
   //アイテム読み込みコールバックを設定
-  bmpwin_list_init( wk, ItemList_move_callback, line_callback_rest );
+  bmpwin_list_init( wk, wk->call_back, wk->icon );
 }
 static void ItemList_Exit( GAMESYS_WORK *gsys, struct _SHOP_BUY_APP_WORK *wk, int type, int id )
 {
@@ -2473,36 +2746,10 @@ static void SecretaryList_Init( GAMESYS_WORK *gsys, struct _SHOP_BUY_APP_WORK *w
   shop_secretary_set( wk, type, id );
 
   //アイテム読み込みコールバックを設定
-  bmpwin_list_init( wk, SecretaryList_move_callback, NULL );
+  bmpwin_list_init( wk, wk->call_back, wk->icon );
 }
 static void SecretaryList_Exit( GAMESYS_WORK *gsys, struct _SHOP_BUY_APP_WORK *wk, int type, int id )
 {
-}
-static void SecretaryList_move_callback( BMPMENULIST_WORK * wk, u32 param, u8 mode)
-{
-  SHOP_BUY_APP_WORK *sbw = BmpMenuList_GetWorkPtr( wk );
-  GFL_CLACTPOS clpos;
-  u16 list, cursor;
-  
-  // カーソル位置取得
-  BmpMenuList_PosGet( wk, &list, &cursor );
-
-  clpos.x = shop_obj_param[0].pos_x; 
-  clpos.y = shop_obj_param[0].pos_y+16*cursor;
-
-  GFL_CLACT_WK_SetPos( sbw->ClactWork[SHOP_OBJ_CURSOR], &clpos, CLSYS_DEFREND_MAIN );
-  
-  // 秘書説明書き換え
-  if (param < RESORT_SHOP_ITEM_MAX)
-  {
-    print_iteminfo( sbw, sbw->lineup[param].p_info );
-    people_resource_change( sbw, sbw->lineup[param].param1 );
-  }
-  else
-  {
-    print_iteminfo( sbw, NULL );
-    people_resource_change( sbw, RESORT_SHOP_ITEMID_NONE );
-  }
 }
 
 //施設リストの場合
@@ -2515,7 +2762,7 @@ static void InstitutionList_Init( GAMESYS_WORK *gsys, struct _SHOP_BUY_APP_WORK 
   shop_institution_set( wk, type, id );
 
   //アイテム読み込みコールバックを設定
-  bmpwin_list_init( wk, InstitutionList_move_callback, NULL );
+  bmpwin_list_init( wk, wk->call_back, wk->icon );
 }
 static void InstitutionList_Exit( GAMESYS_WORK *gsys, struct _SHOP_BUY_APP_WORK *wk, int type, int id )
 {
@@ -2529,7 +2776,7 @@ static void InstitutionList_Exit( GAMESYS_WORK *gsys, struct _SHOP_BUY_APP_WORK 
  * @param   mode    
  */
 //----------------------------------------------------------------------------------
-static void InstitutionList_move_callback( BMPMENULIST_WORK * wk, u32 param, u8 mode)
+static void SelectPoeple_move_callback( BMPMENULIST_WORK * wk, u32 param, u8 mode)
 {
   SHOP_BUY_APP_WORK *sbw = BmpMenuList_GetWorkPtr( wk );
   GFL_CLACTPOS clpos;
@@ -2554,4 +2801,62 @@ static void InstitutionList_move_callback( BMPMENULIST_WORK * wk, u32 param, u8 
     print_iteminfo( sbw, NULL );
     people_resource_change( sbw, RESORT_SHOP_ITEMID_NONE );
   }
+}
+static void SortPoeple_move_callback( BMPMENULIST_WORK * wk, u32 param, u8 mode)
+{
+  SHOP_BUY_APP_WORK *sbw = BmpMenuList_GetWorkPtr( wk );
+  GFL_CLACTPOS clpos;
+  u16 list, cursor;
+  
+  // カーソル位置取得
+  BmpMenuList_PosGet( wk, &list, &cursor );
+
+  clpos.x = shop_obj_param[0].pos_x; 
+  clpos.y = shop_obj_param[0].pos_y+16*cursor;
+
+  GFL_CLACT_WK_SetPos( sbw->ClactWork[SHOP_OBJ_CURSOR], &clpos, CLSYS_DEFREND_MAIN );
+  
+  // 説明書き換え
+  if (param < RESORT_SHOP_ITEM_MAX)
+  {
+    print_iteminfo( sbw, sbw->lineup[param].p_info );
+    people_resource_change( sbw, sbw->lineup[param].param1 );
+  }
+  else
+  {
+    print_iteminfo( sbw, NULL );
+    people_resource_change( sbw, RESORT_SHOP_ITEMID_NONE );
+  }
+
+
+  if( sbw->is_sort )
+  {
+    GF_ASSERT( sbw->cp_select != NULL );
+
+    SortPoeple_Cursor_SetPos( sbw );
+    GFL_CLACT_WK_SetDrawEnable( sbw->ClactWork[SHOP_OBJ_CURSOR_RED], TRUE );
+  }
+  else
+  {
+    GFL_CLACT_WK_SetDrawEnable( sbw->ClactWork[SHOP_OBJ_CURSOR_RED], FALSE );
+  }
+}
+
+static void SortPoeple_Cursor_SetPos( SHOP_BUY_APP_WORK *wk )
+{
+  GFL_CLACTPOS clpos;
+  u16 list, cursor;
+  s32 insert_y;
+  
+  // カーソル位置取得
+  BmpMenuList_PosGet( wk->menuList, &list, &cursor );
+  
+  insert_y= (wk->insert_cursor + wk->insert_list - list) 
+        * BmpListParamGet( wk->menuList, BMPMENULIST_ID_LINE_YBLK );
+
+  clpos.x = shop_obj_param[0].pos_x; 
+  clpos.y = shop_obj_param[0].pos_y+insert_y;
+  //以前選択したものの位置
+  GFL_CLACT_WK_SetPos( wk->ClactWork[SHOP_OBJ_CURSOR_RED], &clpos, CLSYS_DEFREND_MAIN );
+
 }

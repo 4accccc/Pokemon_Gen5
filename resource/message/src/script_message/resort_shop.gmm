@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nagihashi_toru" host="W00268" date="2011-03-07T17:30:38"/>
+	<create user="nagihashi_toru" host="W00268" date="2011-03-07T19:35:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -655,6 +655,27 @@
 コンドミニアムへ　いどう　しました▼</language>
 		<language name="JPN_KANJI" width="256">[1:38:リゾート店名:0]　は
 コンドミニアムへ　移動　しました▼</language>
+	</row>
+
+	<row id="mes_shop_09_17">
+		<language name="JPN" width="256">ならびかえる　ばしょを
+えらんでください▼</language>
+		<language name="JPN_KANJI" width="256">並びかえる　場所を
+選んでください▼</language>
+	</row>
+
+	<row id="mes_shop_09_18">
+		<language name="JPN" width="256">[1:00:トレーナー名:0]と
+[1:00:トレーナー名:1]を▽
+ならびかえても　よいですか？</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]と
+[1:00:トレーナー名:1]を▽
+並びかえても　よいですか？</language>
+	</row>
+
+	<row id="mes_shop_09_19">
+		<language name="JPN" width="256">ならびかえました！▼</language>
+		<language name="JPN_KANJI" width="256">並びかえました！▼</language>
 	</row>
 
 	<flowchart-group-list>
