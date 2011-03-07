@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-07T19:23:55"/>
+	<create user="matsumiya" host="W00224" date="2011-03-07T21:00:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -294,34 +294,13 @@
 
 	<row id="msg_d22_01_01">
 		<comment>♂
-・牧場イベント</comment>
+・牧場</comment>
 		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_d22_01_02">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
-	</row>
-
-	<row id="msg_d22_01_03">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
-	</row>
-
-	<row id="msg_d22_01_04">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
-	</row>
-
-	<row id="msg_d22_01_05">
+	<row id="msg_d22_02_01">
 		<comment>？？？</comment>
 		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
