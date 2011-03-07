@@ -78,7 +78,7 @@
 	sdim filename, 512
 
 	OVERLAY_NAME_SIZE = 40
-	IMG_WIDTH         = 7000
+	IMG_WIDTH         = 8000
 	IMG_HEIGHT        = 1400
 
 	screen 2,IMG_WIDTH,IMG_HEIGHT,2,,,1024,900
@@ -431,7 +431,7 @@
 ;	DIV_RATE = 2040704	; mainが入る
 
 ;	DIV_RATE  = 3040704	; プログラムの最後まではいる
-	DIV_NUM   = 250		; 棒グラフを画面内で何分割して描画するか
+	DIV_NUM   = 300		; 棒グラフを画面内で何分割して描画するか
 	BAR_WIDTH = (gWidth/DIV_NUM)
 
 	sizemax=0
