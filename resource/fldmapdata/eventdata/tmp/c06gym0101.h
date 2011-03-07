@@ -9,6 +9,11 @@
 #ifndef ZONE_C06GYM0101_EVC_H
 #define ZONE_C06GYM0101_EVC_H
 
+#define C06GYM0101_PILOT_01                0
+#define C06GYM0101_PILOT_02                1
+#define C06GYM0101_PILOT_03                2
+#define C06GYM0101_LEADER6_01              3
+#define C06GYM0101_PILOT_04                4
 
 #endif //ZONE_C06GYM0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c06gym0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
