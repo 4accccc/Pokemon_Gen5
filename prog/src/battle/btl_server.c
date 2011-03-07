@@ -1364,7 +1364,10 @@ static void print_que_info( BTL_SERVER_CMD_QUE* que, const char* caption )
           u32 j, exArgCnt = 0;
           switch( cmd ){
           case SC_ACT_WAZA_DMG_PLURAL:  exArgCnt = args[0]; break;
+
+          #ifndef BUGFIX_AF_GFBTS2028_101007
           case SC_ACT_WEATHER_DMG:      exArgCnt = args[1]; break;
+          #endif
           }
           if( exArgCnt )
           {

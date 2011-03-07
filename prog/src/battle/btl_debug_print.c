@@ -513,7 +513,12 @@ const char* BTL_DEBUGPRINT_GetServerCmdName( int cmd )
   case SC_ACT_MEMBER_OUT_MSG:  return "SC_ACT_MEMBER_OUT_MSG";    ///< 【ポケモン退場メッセージ】[ ClientID, pokeID ]
   case SC_ACT_MEMBER_OUT:  return "SC_ACT_MEMBER_OUT";        ///< 【ポケモン退場】[ ClientID, memberIdx ]
   case SC_ACT_MEMBER_IN:  return "SC_ACT_MEMBER_IN";         ///< 【ポケモンイン】[ ClientID, posIdx, memberIdx ]
+
+#ifdef BUGFIX_AF_GFBTS2028_101007
+  case SC_OP_SET_DORYOKU:  return "SC_OP_SET_DORYOKU";       ///< 努力値加算
+#else
   case SC_ACT_WEATHER_DMG:  return "SC_ACT_WEATHER_DMG";       ///< 天候による一斉ダメージ処理[ weather, pokeCnt ]
+#endif
   case SC_ACTOP_WEATHER_START:  return "SC_ACTOP_WEATHER_START";   ///< 天候変化
   case SC_ACTOP_WEATHER_END:  return "SC_ACTOP_WEATHER_END";       ///< ターンチェックで天候終了
   case SC_ACT_SIMPLE_HP:  return "SC_ACT_SIMPLE_HP";         ///< シンプルなHPゲージ増減処理
