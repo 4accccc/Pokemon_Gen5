@@ -11,7 +11,6 @@
 
 FS_EXTERN_OVERLAY(beacon_view_common);
 FS_EXTERN_OVERLAY(beacon_view);
-FS_EXTERN_OVERLAY(fmission_view);
 
 //==============================================================================
 //  Œ^’è‹`
@@ -27,12 +26,6 @@ extern void BEACON_VIEW_Exit(BEACON_VIEW_PTR view);
 extern void BEACON_VIEW_Update(BEACON_VIEW_PTR view, BOOL bActive);
 extern void BEACON_VIEW_Draw(BEACON_VIEW_PTR view);
 extern GMEVENT* BEACON_VIEW_EventCheck(BEACON_VIEW_PTR wk, BOOL bEvReqOK );
-
-extern BEACON_VIEW_PTR FMISSION_VIEW_Init(GAMESYS_WORK *gsys, FIELD_SUBSCREEN_WORK *subscreen);
-extern void FMISSION_VIEW_Exit(BEACON_VIEW_PTR view);
-extern void FMISSION_VIEW_Update(BEACON_VIEW_PTR view, BOOL bActive);
-extern void FMISSION_VIEW_Draw(BEACON_VIEW_PTR view);
-extern GMEVENT* FMISSION_VIEW_EventCheck(BEACON_VIEW_PTR wk, BOOL bEvReqOK );
 
 #ifdef PM_DEBUG
 extern void DEBUG_BEACON_VIEW_SuretigaiCountSet( BEACON_VIEW_PTR wk, int value );

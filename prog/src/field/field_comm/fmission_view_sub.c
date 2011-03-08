@@ -17,15 +17,15 @@
 #include "app_menu_common.naix"
 #include "arc_def.h"
 #include "font/font.naix"
-#include "field/beacon_view.h"
+#include "field/fmission_view.h"
 #include "print\printsys.h"
 #include "message.naix"
 
 #include "field/research_team_def.h"
 #include "beacon_status.naix"
 #include "wifi_unionobj.naix"
-#include "beacon_view_local.h"
-#include "beacon_view_common.h"
+#include "fmission_view_local.h"
+//#include "beacon_view_common.h"
 #include "fmission_view_sub.h"
 
 #include "gamesystem/fest_mission_nw.h"
@@ -49,20 +49,20 @@ typedef struct _MENU_BAR_DATA{
   u16 menu;
 }MENU_BAR_DATA;
 
-static int touchin_CheckMenu( BEACON_VIEW_PTR wk, POINT* tp );
-static BOOL effReq_PopupMsg( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info, BOOL new_f );
+static int touchin_CheckMenu( FMISSION_VIEW_PTR wk, POINT* tp );
+static BOOL effReq_PopupMsg( FMISSION_VIEW_PTR wk, GAMEBEACON_INFO* info, BOOL new_f );
 
-static void draw_MissionInfo( BEACON_VIEW_PTR wk );
-static void draw_MissionNowScore( BEACON_VIEW_PTR wk );
-static void draw_EntryNum( BEACON_VIEW_PTR wk, int* task_ct );
-static void draw_RestTime( BEACON_VIEW_PTR wk, int* task_ct );
+static void draw_MissionInfo( FMISSION_VIEW_PTR wk );
+static void draw_MissionNowScore( FMISSION_VIEW_PTR wk );
+static void draw_EntryNum( FMISSION_VIEW_PTR wk, int* task_ct );
+static void draw_RestTime( FMISSION_VIEW_PTR wk, int* task_ct );
 
 //////////////////////////////////////////////////////////////////
 
 /*
  *  @brief  初期描画
  */
-void FMissionView_InitialDraw( BEACON_VIEW_PTR wk )
+void FMissionView_InitialDraw( FMISSION_VIEW_PTR wk )
 {
   wk->ctrl.fm_my_score = wk->fmwk->my_score;
   wk->ctrl.fm_score = LINK_FESTIVAL_GetNowScore( wk->fest_sys );
@@ -71,27 +71,31 @@ void FMissionView_InitialDraw( BEACON_VIEW_PTR wk )
 
   PaletteTrans_AutoSet( wk->pfd, TRUE );
 
+#if 0
   //矢印と御礼メニューの見た目セット
   if( wk->my_data.power == GPOWER_ID_NULL ){
     BVCAct_AnmStart( wk->pAct[ACT_POWER], ACTANM_POWER_OFF );
   }
+#endif
   GFL_NET_ReloadIconTopOrBottom( FALSE, wk->tmpHeapID );
 
+#if 0
   //ミッション情報表示
   draw_MissionInfo( wk );
   draw_EntryNum( wk, &wk->eff_task_ct );
   draw_MissionNowScore( wk );
   draw_RestTime( wk, &wk->eff_task_ct );
+#endif
 }
 
 /*
  *  @brief  メインループ内での入力チェック
  */
-int FMissionView_CheckInput( BEACON_VIEW_PTR wk )
+int FMissionView_CheckInput( FMISSION_VIEW_PTR wk )
 {
   int ret;
   POINT tp;
-
+#if 0
   if( !GFL_UI_TP_GetPointTrg( (u32*)&tp.x, (u32*)&tp.y )){
     return SEQ_MAIN;
   }
@@ -111,18 +115,20 @@ int FMissionView_CheckInput( BEACON_VIEW_PTR wk )
     }
     return SEQ_MAIN;
   }
+#endif
   return SEQ_MAIN;
 }
 
 /*
  *  @brief  スタックからログを一件取り出し
  */
-BOOL FMissionView_CheckStack( BEACON_VIEW_PTR wk )
+BOOL FMissionView_CheckStack( FMISSION_VIEW_PTR wk )
 {
   BOOL new_f = FALSE, popup_f = FALSE;
   int ofs,idx,old_max;
   PANEL_WORK* pp;
 
+#if 0
   //スタックに積まれた情報をチェック
 #ifdef PM_DEBUG
   if(DEBUG_BEACON_STATUS_GetStackCheckThrowFlag(wk->b_status) ){
@@ -157,19 +163,21 @@ BOOL FMissionView_CheckStack( BEACON_VIEW_PTR wk )
       wk->ctrl.view_max = wk->ctrl.max;
     }
   }
+#endif
   return TRUE;
 }
 
 /**
  *  @brief  描画状態アップデート
  */
-void FMissionView_ViewUpdate( BEACON_VIEW_PTR wk )
+void FMissionView_ViewUpdate( FMISSION_VIEW_PTR wk )
 {
   u32 sec;
   u32 entry;
   u32 my_score;
   u32 score;
 
+#if 0
   wk->init_f = TRUE;
  
   sec = wk->fmwk->life/60;
@@ -190,7 +198,7 @@ void FMissionView_ViewUpdate( BEACON_VIEW_PTR wk )
     wk->ctrl.fm_score = score;
     draw_MissionNowScore( wk );
   }
-
+#endif
   wk->init_f = FALSE;
 }
 
@@ -209,8 +217,10 @@ void FMissionView_ViewUpdate( BEACON_VIEW_PTR wk )
 /*
  *  @brief  サブシーケンス　Newログエントリーメイン
  */
-BOOL FMissionView_SubSeqLogEntry( BEACON_VIEW_PTR wk )
+BOOL FMissionView_SubSeqLogEntry( FMISSION_VIEW_PTR wk )
 {
+  return TRUE;
+#if 0
   switch( wk->sub_seq ){
   case 0:
     {
@@ -231,14 +241,16 @@ BOOL FMissionView_SubSeqLogEntry( BEACON_VIEW_PTR wk )
     }
     break;
   }
+#endif
   return FALSE;
 }
 
 /*
  *  @brief  メニューバーあたり判定
  */
-static int touchin_CheckMenu( BEACON_VIEW_PTR wk, POINT* tp )
+static int touchin_CheckMenu( FMISSION_VIEW_PTR wk, POINT* tp )
 {
+#if 0
   int i, ret;
   GFL_UI_TP_HITTBL tbl[2];
   static MENU_BAR_DATA const dat[3] = {
@@ -265,16 +277,19 @@ static int touchin_CheckMenu( BEACON_VIEW_PTR wk, POINT* tp )
       return dat[i].menu;
     }
   }
+#endif
   return GFL_UI_TP_HIT_NONE;
 }
 
 /*
  *  @brief  すれ違いログ　ポップアップリクエスト
  */
-static BOOL effReq_PopupMsg( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info, BOOL new_f )
+static BOOL effReq_PopupMsg( FMISSION_VIEW_PTR wk, GAMEBEACON_INFO* info, BOOL new_f )
 {
   GAMEBEACON_ACTION action = GAMEBEACON_Get_Action_ActionNo( info );
+  return FALSE;
 
+#if 0
   if( new_f ){
     GAMEBEACON_InfoWordset( info, wk->wordset, wk->tmpHeapID );
     BVCEffReq_PopupMsgSys( wk, msg_beacon_001 );
@@ -303,13 +318,15 @@ static BOOL effReq_PopupMsg( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info, BOOL new
     break;
   }
   return TRUE;
+#endif
 }
 
 /*
  *  @brief  ミッション概要表示
  */
-static void draw_MissionInfo( BEACON_VIEW_PTR wk )
+static void draw_MissionInfo( FMISSION_VIEW_PTR wk )
 {
+#if 0
   FEST_MISSION_GetExpStr( wk->wordset, wk->mm_fmission, wk->str_expand, wk->fmwk, wk->heapID );
   BVCPrintReq_BmpwinPrint( wk, &wk->win[WIN_FMISSION], wk->str_expand, 0, 0, FCOL_LOGNUM_BASE, FCOL_LOGNUM, NULL );
   
@@ -325,13 +342,15 @@ static void draw_MissionInfo( BEACON_VIEW_PTR wk )
   
   BVCPrint_GetMsgToBuf( wk, msg_sys_fmission_time );
   BVCPrintReq_BmpwinPrintEx( wk, &wk->win[WIN_FMTIME], wk->str_expand, 0, 0, FCOL_LOGNUM_BASE, FCOL_LOGNUM, NULL, TRUE );
+#endif
 }
 
 /*
  *  @brief  ミッションスコア表示
  */
-static void draw_MissionNowScore( BEACON_VIEW_PTR wk )
+static void draw_MissionNowScore( FMISSION_VIEW_PTR wk )
 {
+#if 0
   GFL_BMP_Fill( wk->win[WIN_FMSCORE].bmp, MY_SCORE_NUM_PX, 0, SCORE_NUM_SX, SCORE_NUM_SY, FCOL_LOGNUM_BASE );
   GFL_BMP_Fill( wk->win[WIN_FMSCORE].bmp, TOTAL_SCORE_NUM_PX, 0, SCORE_NUM_SX, SCORE_NUM_SY, FCOL_LOGNUM_BASE );
 
@@ -342,24 +361,28 @@ static void draw_MissionNowScore( BEACON_VIEW_PTR wk )
   WORDSET_RegisterNumber( wk->wordset, 0, wk->ctrl.fm_score, 5, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
   BVCPrint_GetMsgToBuf( wk, msg_sys_fmission_score_num );
   BVCPrintReq_BmpwinPrintEx( wk, &wk->win[WIN_FMSCORE], wk->str_expand, TOTAL_SCORE_NUM_PX, 0, FCOL_LOGNUM_BASE, FCOL_LOGNUM, &wk->eff_task_ct, FALSE );
+#endif
 }
 
 /*
  *  @brief  参加人数表示
  */
-static void draw_EntryNum( BEACON_VIEW_PTR wk, int* task_ct )
+static void draw_EntryNum( FMISSION_VIEW_PTR wk, int* task_ct )
 {
+#if 0
   WORDSET_RegisterNumber( wk->wordset, 0, wk->ctrl.fm_entry, 3, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
 
   BVCPrint_GetMsgToBuf( wk, msg_sys_lognum );
   BVCPrintReq_BmpwinPrint( wk, &wk->win[WIN_LOGNUM], wk->str_expand, 0, 0, FCOL_LOGNUM_BASE, FCOL_LOGNUM, task_ct );
+#endif
 }
 
 /*
  *  @brief 残り時間表示 
  */
-static void draw_RestTime( BEACON_VIEW_PTR wk, int* task_ct )
+static void draw_RestTime( FMISSION_VIEW_PTR wk, int* task_ct )
 {
+#if 0
   int min = wk->ctrl.fm_sec/60;
   int sec = wk->ctrl.fm_sec%60;
 
@@ -369,5 +392,6 @@ static void draw_RestTime( BEACON_VIEW_PTR wk, int* task_ct )
   GFL_BMP_Fill( wk->win[WIN_FMTIME].bmp, TIME_NUM_PX, 0, TIME_NUM_SX, TIME_NUM_SY, FCOL_LOGNUM_BASE );
   BVCPrint_GetMsgToBuf( wk, msg_sys_fmission_time_num );
   BVCPrintReq_BmpwinPrintEx( wk, &wk->win[WIN_FMTIME], wk->str_expand, TIME_NUM_PX, 0, FCOL_LOGNUM_BASE, FCOL_LOGNUM, task_ct, FALSE );
+#endif
 }
 

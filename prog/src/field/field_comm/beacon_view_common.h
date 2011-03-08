@@ -7,6 +7,50 @@
 
 #pragma once
 
+#define ACT_RENDER_ID (0)
+
+//OBJリソース参照コード
+enum{
+ OBJ_RES_PLTT,
+ OBJ_RES_CGR,
+ OBJ_RES_CELLANIM,
+ OBJ_RES_MAX,
+};
+
+//スクロール方向定義
+typedef enum{
+  SCROLL_UP,
+  SCROLL_DOWN,
+  SCROLL_RIGHT,
+}SCROLL_DIR;
+
+//タスクメニューID
+enum{
+ TMENU_ID_YESNO,
+ TMENU_ID_CHECK,
+};
+enum{
+ TMENU_YN_CHECK,
+ TMENU_YN_YES,
+ TMENU_YN_NO,
+ TMENU_YN_MAX,
+};
+enum{
+ TMENU_CHECK_CALL,
+ TMENU_CHECK_CLOSE,
+ TMENU_CHECK_MAX,
+};
+
+///ポップアップスクロール
+#define POPUP_HEIGHT  (8*8)
+#define POPUP_DIFF    (16)
+#define POPUP_COUNT   (POPUP_HEIGHT/POPUP_DIFF)
+#define POPUP_WAIT    (30*3)
+
+///プリントキューの1syncの処理リミット設定値
+#define PRINT_QUE_LIMMIT_DEFAULT (500)
+#define PRINT_QUE_LIMMIT_UP      (2000)
+
 typedef struct _POINT{
   int x,y;
 }POINT;
@@ -14,6 +58,69 @@ typedef struct _POINT{
 typedef struct _TRIANGLE{
   POINT p[3];
 }TRIANGLE;
+
+//オブジェリソース管理
+typedef struct _OBJ_RES{
+  u32   num;
+  u32*  tbl;
+}OBJ_RES;
+
+typedef struct _OBJ_RES_SRC{
+  u16 num;
+  u16 srcID;
+}OBJ_RES_SRC;
+
+//オブジェリソース管理構造体
+typedef struct _OBJ_RES_TBL{
+  OBJ_RES res[OBJ_RES_MAX];
+}OBJ_RES_TBL;
+
+//キャラクターリソース
+typedef struct _RES2D_CHAR{
+  NNSG2dCharacterData* p_char;
+  void* buf;
+}RES2D_CHAR;
+
+//パレットリソース
+typedef struct _RES2D_PLTT{
+  NNSG2dPaletteData* p_pltt;
+  u16* dat;
+  void* buf;
+}RES2D_PLTT;
+
+// Bmpウィンドウ
+typedef struct{
+  GFL_BMPWIN*   win;
+  GFL_BMP_DATA* bmp;
+  
+  GFL_FONT *fontHandle;
+  PRINT_QUE *printQue;
+  GFL_TCBLSYS*  pTcbSys;
+
+  PRINT_UTIL  putil;
+  u8          frm;
+}BMP_WIN;
+
+// OAMフォントワーク
+typedef struct {
+	BMPOAM_ACT_PTR oam;
+	GFL_BMP_DATA * bmp;
+}FONT_OAM;
+
+//TaskMenuワーク
+typedef struct {
+  APP_TASKMENU_WIN_WORK *work;
+  APP_TASKMENU_ITEMWORK item;
+}TMENU_ITEM;
+
+//タスクメニュー管理ワーク
+typedef struct _BVC_TMENU_WORK{
+  HEAPID  heapID;
+  APP_TASKMENU_RES* menuRes;
+ 
+  TMENU_ITEM tmenu[TMENU_YN_MAX];
+  TMENU_ITEM tmenu_check[TMENU_CHECK_MAX];
+}BVC_TMENU_WORK;
 
 /*
  *  @brief  三角形あたり判定
@@ -41,100 +148,73 @@ extern void BVCAct_SetPosition( GFL_CLWK* act, s16 x, s16 y );
 extern void BVCAct_AnmStart( GFL_CLWK* act, u8 anm_no );
 
 /*
- *  @brief  特殊ポップアップ起動チェック 
- */
-extern BOOL BVC_CheckSpecialPopup( BEACON_VIEW_PTR wk );
-
-/*
- *  @brief  アクティブ・パッシブ切替
- */
-extern void BVC_SetViewPassive( BEACON_VIEW_PTR wk, BOOL passive_f );
-
-/*
  *  @brief  プリントキュー　処理スピードアップリクエスト
  *
  *  処理分割数を減らし、処理負荷を上げる代わりに、
  *  プリント処理終了までのスピードをアップする
  */
-extern void BVC_PrintQueLimmitUpSet( BEACON_VIEW_PTR wk, BOOL flag );
-
-/*
- *  @brief  メニューバーアニメセット
- */
-extern void BVC_MenuBarViewSet( BEACON_VIEW_PTR wk, MENU_ID id, MENU_STATE state );
-
-/*
- *  @brief  メニューバーアニメウェイト
- */
-extern BOOL BVC_MenuBarCheckAnm( BEACON_VIEW_PTR wk, MENU_ID id );
-
-/*
- *  @brief  メニューバーあたり判定
- */
-extern int BVCTouchIn_CheckMenu( BEACON_VIEW_PTR wk, POINT* tp );
-
-/*
- *  @brief  サブシーケンス　GPower使用メイン
- */
-extern BOOL BVCSubSeq_GPower( BEACON_VIEW_PTR wk );
-
+extern void BVC_PrintQueLimmitUpSet( PRINT_QUE *printQue, BOOL flag );
 
 //========================================================================
 //選択メニュー処理系
 //========================================================================
+//---------------------------------------------------------------
+/*
+ *  @brief  TaskMenu リソース初期化
+ */
+//---------------------------------------------------------------
+extern BVC_TMENU_WORK* BVCTMenu_Init( u8 frame, u8 plt, GFL_FONT *fontHandle, PRINT_QUE *printQue, HEAPID heapID );
+
+//---------------------------------------------------------------
+/*
+ *  @brief  TaskMenu リソース開放
+ */
+//---------------------------------------------------------------
+extern void BVCTMenu_Release( BVC_TMENU_WORK* wk );
+
+//---------------------------------------------------------------
 /*
  *  @brief  TaskMenu YesNo生成
  */
-extern void BVCTMenu_Create( BEACON_VIEW_PTR wk, u8 menu_idx );
+//---------------------------------------------------------------
+extern void BVCTMenu_Create( BVC_TMENU_WORK* wk, u8 menu_idx );
+
+//---------------------------------------------------------------
+/*
+ *  @brief  TaskMenu ウィンドウワークを取得する
+ */
+//---------------------------------------------------------------
+extern APP_TASKMENU_WIN_WORK* BVCTMenu_GetWinWork( BVC_TMENU_WORK* wk, u8 menu_idx, u8 id );
 
 /*
  *  @brief  TaskMenu アップデート
  */
-extern int BVCTMenu_Update( BEACON_VIEW_PTR wk,u8 menu_idx );
+extern int BVCTMenu_Update( BVC_TMENU_WORK* wk,u8 menu_idx );
 
 /*
  *  @brief  TaskMenu 終了アニメ待ち
  */
-extern BOOL BVCTMenu_YnEndWait( BEACON_VIEW_PTR wk, u8 select );
+extern BOOL BVCTMenu_YnEndWait( BVC_TMENU_WORK* wk, u8 select );
 
 /*
  *  @brief  TaskMenu 終了
  */
-extern void BVCTMenu_YnEnd( BEACON_VIEW_PTR wk );
+extern void BVCTMenu_YnEnd( BVC_TMENU_WORK* wk );
 
 /*
  *  @brief  TaskMenu Gパワー確認ダイアログ終了アニメ待ち
  */
-extern BOOL BVCTMenu_CheckEndWait( BEACON_VIEW_PTR wk, u8 select );
+extern BOOL BVCTMenu_CheckEndWait( BVC_TMENU_WORK* wk, u8 select );
 
 /*
  *  @brief  TaskMenu 終了
  */
-extern void BVCTMenu_CheckEnd( BEACON_VIEW_PTR wk );
+extern void BVCTMenu_CheckEnd( BVC_TMENU_WORK* wk );
 
   
 //========================================================================
 //文字列処理系
 //========================================================================
-/*
- *  @brief  文字列整形
- *
- *  指定メッセージを wk->str_expandにつめる
- */
-extern void BVCPrint_GetMsgToBufEx( BEACON_VIEW_PTR wk, u8 msg_id, const GFL_MSGDATA* handle );
-
-/*
- *  @brief  文字列整形
- *
- *  指定メッセージを wk->str_expandにつめる
- */
-extern void BVCPrint_GetMsgToBuf( BEACON_VIEW_PTR wk, u8 msg_id );
-
-/*
- *  @brief  ポップアップウィンドウ文字列描画
- */
-extern void BVCPrint_PopupWindow( BEACON_VIEW_PTR wk, STRBUF* str, int* task_ct );
-
 //------------------------------------------------------------
 /*
  *  @brief  ポップアップ　タイムウェイトチェック
@@ -151,53 +231,19 @@ extern BOOL BVCPrint_PopupWindowTimeWaitCheck( u8* p_wait );
 //------------------------------------------------------------
 extern u32 BVCPrint_GetBeaconMsgID(const GAMEBEACON_INFO *info);
 
-/*
- *  @brief  メニューウィンドウ表示
- */
-extern void BVCDraw_MenuWindow( BEACON_VIEW_PTR wk, u8 msg_id, int* task_ct );
-
-/*
- *  @brief  メニューウィンドウ表示クリア
- */
-extern void BVCDraw_ClearMenuWindow( BEACON_VIEW_PTR wk );
-
-/*
- *  @brief  メニューアクター Viewセット
- */
-extern void BVCDraw_MenuIconVisibleSet( BEACON_VIEW_PTR wk, BOOL visible_f );
-
-
-
 /////////////////////////////////////////////////////////////////////
 /*
  *  @brief  BMPウィンドウメッセージ表示キュー処理 
  */
 /////////////////////////////////////////////////////////////////////
-extern void BVCPrintReq_BmpwinPrintEx( BEACON_VIEW_PTR wk, BMP_WIN* win, STRBUF* str, u8 x, u8 y, u8 clear, PRINTSYS_LSB color, int* task_ct, BOOL clear_f );
-extern void BVCPrintReq_BmpwinPrint( BEACON_VIEW_PTR wk, BMP_WIN* win, STRBUF* str, u8 x, u8 y, u8 clear, PRINTSYS_LSB color, int* task_ct );
+extern void BVCPrintReq_BmpwinPrintEx( BMP_WIN* win, STRBUF* str, u8 x, u8 y, u8 clear, PRINTSYS_LSB color, int* task_ct, BOOL direct_f, BOOL clear_f );
+extern void BVCPrintReq_BmpwinPrint( BMP_WIN* win, STRBUF* str, u8 x, u8 y, u8 clear, PRINTSYS_LSB color, int* task_ct, BOOL direct_f );
 
 /////////////////////////////////////////////////////////////////////
 /*
  *  @brief  メッセージウィンドウ アップダウン 
  */
 /////////////////////////////////////////////////////////////////////
-extern void BVCTaskAdd_MsgUpdown( BEACON_VIEW_PTR wk, u8 dir, int* task_ct );
-
-/////////////////////////////////////////////////////////////////////
-/*
- *  @brief  メッセージウィンドウ ポップアップ 
- */
-/////////////////////////////////////////////////////////////////////
-extern void BVCEffReq_PopupMsgFromInfo( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info );
-extern void BVCEffReq_PopupMsgSys( BEACON_VIEW_PTR wk, u8 msg_id );
-
-/////////////////////////////////////////////////////////////////////
-/*
- *  @brief  メッセージウィンドウ Gパワー使用確認 
- */
-/////////////////////////////////////////////////////////////////////
-extern BOOL BVCEffReq_PopupMsgGPower( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info, BOOL haifu_f );
-extern void BVCEffReq_PopupMsgGPowerMine( BEACON_VIEW_PTR wk );
-extern void BVCEffReq_PopupMsgGPowerSpecial( BEACON_VIEW_PTR wk, GPOWER_ID sp_gpower_id );
+extern void BVCTaskAdd_MsgUpdown(   GFL_TCBLSYS*  pTcbSys, u8 frame, u8 dir, int* task_ct );
 
 

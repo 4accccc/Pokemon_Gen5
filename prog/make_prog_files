@@ -963,15 +963,24 @@ SRCS_OVERLAY_NO_GEAR = field/c_gear/no_gear.c
 #GROUP_OVERLAY_SUBSCREEN
 SRCS_OVERLAY_UNION_SUBDISP = net_app/union/union_subdisp.c
 
-#BeaconView
+#BeaconViewCommon
 #===> GROUP_OVERLAY_FIELD_WEATHER
 #GROUP_OVERLAY_SUBSCREEN
-SRCS_OVERLAY_BEACON_VIEW = field/field_comm/beacon_view_common.c \
-        field/field_comm/beacon_view_setup.c \
+SRCS_OVERLAY_BEACON_VIEW_COMMON = field/field_comm/beacon_view_common.c
+
+#BeaconView
+#===> SRCS_OVERLAY_BEACON_VIEW_COMMON
+#GROUP_OVERLAY_SUBSCREEN
+SRCS_OVERLAY_BEACON_VIEW = field/field_comm/beacon_view_setup.c \
         field/field_comm/beacon_view.c \
-        field/field_comm/beacon_view_sub.c \
-        field/field_comm/fmission_view.c \
-        field/field_comm/fmission_view_sub.c
+        field/field_comm/beacon_view_sub.c
+
+#FMissionView
+#===> SRCS_OVERLAY_BEACON_VIEW_COMMON
+#GROUP_OVERLAY_SUBSCREEN
+SRCS_OVERLAY_FMISSION_VIEW = field/field_comm/fmission_view.c \
+        field/field_comm/fmission_view_sub.c \
+        field/field_comm/fmission_view_setup.c
 
 #Dowsing
 #===> GROUP_OVERLAY_FIELD_WEATHER

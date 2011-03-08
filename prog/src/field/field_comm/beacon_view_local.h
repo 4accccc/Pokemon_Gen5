@@ -32,6 +32,7 @@
 #include "sound/swan_sound_data.sadl"
 
 #include "beacon_view_def.h"
+#include "beacon_view_common.h"
 
 typedef enum{
   VIEW_MODE_NORMAL,
@@ -41,55 +42,6 @@ typedef enum{
 //==============================================================================
 //  構造体定義
 //==============================================================================
-
-//オブジェリソース管理
-typedef struct _OBJ_RES{
-  u32   num;
-  u32*  tbl;
-}OBJ_RES;
-
-typedef struct _OBJ_RES_SRC{
-  u16 num;
-  u16 srcID;
-}OBJ_RES_SRC;
-
-//オブジェリソース管理構造体
-typedef struct _OBJ_RES_TBL{
-  OBJ_RES res[OBJ_RES_MAX];
-}OBJ_RES_TBL;
-
-//キャラクターリソース
-typedef struct _RES2D_CHAR{
-  NNSG2dCharacterData* p_char;
-  void* buf;
-}RES2D_CHAR;
-
-//パレットリソース
-typedef struct _RES2D_PLTT{
-  NNSG2dPaletteData* p_pltt;
-  u16* dat;
-  void* buf;
-}RES2D_PLTT;
-
-// Bmpウィンドウ
-typedef struct{
-  GFL_BMPWIN*   win;
-  GFL_BMP_DATA* bmp;
-  PRINT_UTIL  putil;
-  u8          frm;
-}BMP_WIN;
-
-// OAMフォントワーク
-typedef struct {
-	BMPOAM_ACT_PTR oam;
-	GFL_BMP_DATA * bmp;
-}FONT_OAM;
-
-//TaskMenuワーク
-typedef struct {
-  APP_TASKMENU_WIN_WORK *work;
-  APP_TASKMENU_ITEMWORK item;
-}TMENU_ITEM;
 
 //パネル管理構造体
 typedef struct _PANEL_WORK{
@@ -224,8 +176,7 @@ typedef struct _BEACON_VIEW{
   PRINT_QUE *printQue;
   APP_TASKMENU_RES* menuRes;
   APP_KEYCURSOR_WORK* key_cursor;
-  TMENU_ITEM tmenu[TMENU_YN_MAX];
-  TMENU_ITEM tmenu_check[TMENU_CHECK_MAX];
+  BVC_TMENU_WORK* tmenu;
 
   WORDSET *wordset;
   GFL_MSGDATA *mm_status;

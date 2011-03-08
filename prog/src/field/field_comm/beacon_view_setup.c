@@ -82,7 +82,7 @@ static void act_PanelObjDel( BEACON_VIEW_PTR wk, u8 idx );
 /*
  *  @brief　一番最初のワーク初期化
  */
-BEACON_VIEW* BVS_InitWork( GAMESYS_WORK* gsys, FIELD_SUBSCREEN_WORK* subscreen, BEACON_VIEW_MODE mode )
+BEACON_VIEW* BVS_InitWork( GAMESYS_WORK* gsys, FIELD_SUBSCREEN_WORK* subscreen )
 {
   BEACON_VIEW* wk;
   
@@ -101,7 +101,7 @@ BEACON_VIEW* BVS_InitWork( GAMESYS_WORK* gsys, FIELD_SUBSCREEN_WORK* subscreen, 
 
   wk->arc_handle = GFL_ARC_OpenDataHandle(ARCID_BEACON_STATUS, wk->heap_sID);
 
-  wk->mode = mode;
+  wk->mode = 0; //mode;
 
   _sub_DataSetup(wk);
   _sub_SystemSetup(wk);
@@ -190,18 +190,18 @@ GMEVENT* BVSEvent_CheckCommon( BEACON_VIEW_PTR wk, BOOL bEvReqOK )
       call_event = GMEVENT_CreateOverlayEventCall( wk->gsys,
           FS_OVERLAY_ID( event_gpower ), EVENT_GPowerEffectStart, &param );
     }
-    event = BVSEvent_EventStart( wk, call_event, EVWAIT_TMENU_ANM, (int)(wk->tmenu[TMENU_YN_YES].work) );
+    event = BVSEvent_EventStart( wk, call_event, EVWAIT_TMENU_ANM, (int)(BVCTMenu_GetWinWork( wk->tmenu, TMENU_ID_YESNO, TMENU_YN_YES )) );
     wk->ctrl.g_power = GPOWER_ID_NULL;
     break;
   case EV_GPOWER_CHECK_TMENU_YN:
     call_event = GMEVENT_CreateOverlayEventCall( wk->gsys,
         FS_OVERLAY_ID( event_gpower), EVENT_GPowerEnableListCheck, wk->fieldWork );
-    event = BVSEvent_EventStart( wk, call_event, EVWAIT_TMENU_ANM, (int)(wk->tmenu[TMENU_YN_CHECK].work) );
+    event = BVSEvent_EventStart( wk, call_event, EVWAIT_TMENU_ANM, (int)(BVCTMenu_GetWinWork( wk->tmenu, TMENU_ID_YESNO, TMENU_YN_CHECK )) );
     break;
   case EV_GPOWER_CHECK_TMENU_CHK:
     call_event = GMEVENT_CreateOverlayEventCall( wk->gsys,
         FS_OVERLAY_ID( event_gpower), EVENT_GPowerEnableListCheck, wk->fieldWork );
-    event = BVSEvent_EventStart( wk, call_event, EVWAIT_TMENU_ANM, (int)(wk->tmenu_check[TMENU_CHECK_CALL].work) );
+    event = BVSEvent_EventStart( wk, call_event, EVWAIT_TMENU_ANM, (int)(BVCTMenu_GetWinWork( wk->tmenu, TMENU_ID_CHECK, TMENU_CHECK_CALL )) );
     wk->gpower_check_req = FALSE;
     break;
   case EV_CALL_TALKMSG_INPUT:
@@ -221,14 +221,14 @@ GMEVENT* BVSEvent_CheckCommon( BEACON_VIEW_PTR wk, BOOL bEvReqOK )
       call_event = GMEVENT_CreateOverlayEventCall( wk->gsys,
           FS_OVERLAY_ID( event_fmission ), EVENT_FestMissionStart, &param );
     }
-    event = BVSEvent_EventStart( wk, call_event, EVWAIT_TMENU_ANM, (int)(wk->tmenu[TMENU_YN_YES].work) );
+    event = BVSEvent_EventStart( wk, call_event, EVWAIT_TMENU_ANM, (int)(BVCTMenu_GetWinWork( wk->tmenu, TMENU_ID_YESNO, TMENU_YN_YES )) );
     FEST_MISSION_Clear( &wk->ctrl.mission );
     break;
   
   case EV_FMISSION_CHECK:
     call_event = GMEVENT_CreateOverlayEventCall( wk->gsys,
         FS_OVERLAY_ID( event_fmission), EVENT_FestMissionCheck, &wk->ctrl.mission );
-    event = BVSEvent_EventStart( wk, call_event, EVWAIT_TMENU_ANM, (int)(wk->tmenu[TMENU_YN_CHECK].work) );
+    event = BVSEvent_EventStart( wk, call_event, EVWAIT_TMENU_ANM, (int)(BVCTMenu_GetWinWork( wk->tmenu, TMENU_ID_YESNO, TMENU_YN_CHECK )) );
     break;
 
 #ifdef PM_DEBUG
@@ -307,11 +307,11 @@ static BOOL evsub_WaitTypeMenuAnime( BEACON_VIEW_PTR wk, EVWK_EVENT_START* ev_wk
 {
   switch( ev_wk->sub_seq ){
   case 0:
-    BVC_MenuBarViewSet( wk, ev_wk->param, MENU_ST_ANM );
+    BeaconView_MenuBarViewSet( wk, ev_wk->param, MENU_ST_ANM );
     ev_wk->sub_seq++;
     return FALSE;
   case 1:
-    if( BVC_MenuBarCheckAnm( wk, ev_wk->param )){
+    if( BeaconView_MenuBarCheckAnm( wk, ev_wk->param )){
       return FALSE;
     }
     break;
@@ -628,25 +628,9 @@ static void _sub_BGUnload(BEACON_VIEW_PTR wk )
 //--------------------------------------------------------------
 static void _sub_TMenuInit( BEACON_VIEW_PTR wk )
 {
-  int i;
-
   wk->key_cursor = APP_KEYCURSOR_Create( FCOL_POPUP_BASE, FALSE, TRUE, wk->heap_sID );
 
-  wk->menuRes = APP_TASKMENU_RES_Create( FRM_MENUMSG, BG_PAL_TASKMENU, wk->fontHandle, wk->printQue, wk->heap_sID );
-
-  //アイテム初期化
-  for( i = 0;i < TMENU_YN_MAX;i++){
-    wk->tmenu[i].item.str      = GFL_MSG_CreateString( wk->mm_status, msg_sys_tmenu_yesno_01+i ); //メニューに表示する文字列
-    wk->tmenu[i].item.msgColor = APP_TASKMENU_ITEM_MSGCOLOR;   //文字色。デフォルトでよいならばAPP_TASKMENU_ITEM_MSGCOLOR
-    wk->tmenu[i].item.type     = APP_TASKMENU_WIN_TYPE_NORMAL; //戻るマークの表示
-    wk->tmenu[i].work = NULL;
-  }
-  for( i = 0;i < TMENU_CHECK_MAX;i++){
-    wk->tmenu_check[i].item.str      = GFL_MSG_CreateString( wk->mm_status, msg_sys_tmenu_check_01+i ); //メニューに表示する文字列
-    wk->tmenu_check[i].item.msgColor = APP_TASKMENU_ITEM_MSGCOLOR;   //文字色。デフォルトでよいならばAPP_TASKMENU_ITEM_MSGCOLOR
-    wk->tmenu_check[i].item.type     = APP_TASKMENU_WIN_TYPE_NORMAL; //戻るマークの表示
-    wk->tmenu_check[i].work = NULL;
-  }
+  wk->tmenu = BVCTMenu_Init( FRM_MENUMSG, BG_PAL_TASKMENU, wk->fontHandle, wk->printQue, wk->heap_sID );
 }
 
 //--------------------------------------------------------------
@@ -658,21 +642,7 @@ static void _sub_TMenuInit( BEACON_VIEW_PTR wk )
 //--------------------------------------------------------------
 static void _sub_TMenuRelease( BEACON_VIEW_PTR wk )
 {
-  int i;
-  for( i = 0;i < TMENU_CHECK_MAX; i++){
-    if( wk->tmenu_check[i].work != NULL ){
-      APP_TASKMENU_WIN_Delete( wk->tmenu_check[i].work );
-    }
-    GFL_STR_DeleteBuffer( wk->tmenu_check[i].item.str );
-  }
-  for( i = 0;i < TMENU_YN_MAX; i++){
-    if( wk->tmenu[i].work != NULL ){
-      APP_TASKMENU_WIN_Delete( wk->tmenu[i].work );
-    }
-    GFL_STR_DeleteBuffer( wk->tmenu[i].item.str );
-  }
-  APP_TASKMENU_RES_Delete( wk->menuRes );
-
+  BVCTMenu_Release( wk->tmenu );
   APP_KEYCURSOR_Delete( wk->key_cursor );
 }
 
@@ -836,8 +806,12 @@ static void _sub_ActorDelete( BEACON_VIEW_PTR wk )
 /*
  *  @brief  BmpWin個別追加
  */
-static void bmpwin_Add( BMP_WIN* win, u8 frm, u8 pal, u8 px, u8 py, u8 sx, u8 sy )
+static void bmpwin_Add( BEACON_VIEW_PTR wk, BMP_WIN* win, u8 frm, u8 pal, u8 px, u8 py, u8 sx, u8 sy )
 {
+  win->fontHandle = wk->fontHandle;
+  win->printQue = wk->printQue;
+  win->pTcbSys = wk->pTcbSys;
+
   win->win = GFL_BMPWIN_Create( frm, px, py, sx, sy, pal, GFL_BMP_CHRAREA_GET_B );
   win->bmp = GFL_BMPWIN_GetBmp( win->win );
   PRINT_UTIL_Setup( &win->putil, win->win );
@@ -853,22 +827,13 @@ static void bmpwin_Add( BMP_WIN* win, u8 frm, u8 pal, u8 px, u8 py, u8 sx, u8 sy
 //--------------------------------------------------------------
 static void _sub_BmpWinCreate(BEACON_VIEW_PTR wk)
 {
-  bmpwin_Add( &wk->win[WIN_POPUP],
+  bmpwin_Add( wk, &wk->win[WIN_POPUP],
       BMP_POPUP_FRM, BMP_POPUP_PAL, BMP_POPUP_PX, BMP_POPUP_PY,BMP_POPUP_SX, BMP_POPUP_SY );
-  bmpwin_Add( &wk->win[WIN_LOGNUM],
+  bmpwin_Add( wk, &wk->win[WIN_LOGNUM],
       BMP_LOGNUM_FRM, BMP_LOGNUM_PAL, BMP_LOGNUM_PX, BMP_LOGNUM_PY,BMP_LOGNUM_SX, BMP_LOGNUM_SY );
  
-  if( wk->mode == VIEW_MODE_NORMAL ){
-    bmpwin_Add( &wk->win[WIN_MENU],
+  bmpwin_Add( wk, &wk->win[WIN_MENU],
       BMP_MENU_FRM, BMP_MENU_PAL, BMP_MENU_PX, BMP_MENU_PY,BMP_MENU_SX, BMP_MENU_SY );
-  }else{
-    bmpwin_Add( &wk->win[WIN_FMISSION],
-        BMP_FMISSION_FRM, BMP_FMISSION_PAL, BMP_FMISSION_PX, BMP_FMISSION_PY,BMP_FMISSION_SX, BMP_FMISSION_SY );
-    bmpwin_Add( &wk->win[WIN_FMSCORE],
-        BMP_FMSCORE_FRM, BMP_FMSCORE_PAL, BMP_FMSCORE_PX, BMP_FMSCORE_PY,BMP_FMSCORE_SX, BMP_FMSCORE_SY );
-   bmpwin_Add( &wk->win[WIN_FMTIME],
-        BMP_FMTIME_FRM, BMP_FMTIME_PAL, BMP_FMTIME_PX, BMP_FMTIME_PY,BMP_FMTIME_SX, BMP_FMTIME_SY );
-  }
 }
 
 //--------------------------------------------------------------

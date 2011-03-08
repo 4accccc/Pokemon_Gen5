@@ -133,10 +133,6 @@ typedef enum{
 
 #define PANEL_DATA_BLANK (0xFF)
 
-///プリントキューの1syncの処理リミット設定値
-#define PRINT_QUE_LIMMIT_DEFAULT (500)
-#define PRINT_QUE_LIMMIT_UP      (2000)
-
 ///ポップアップメッセージバッファ長
 #define BUFLEN_POPUP_MSG  (18*6*2+EOM_SIZE)
 #define BUFLEN_TMP_MSG    (BUFLEN_POPUP_MSG)
@@ -247,24 +243,11 @@ enum{
  WIN_MAX,
 };
 
-//スクロール方向定義
-typedef enum{
-  SCROLL_UP,
-  SCROLL_DOWN,
-  SCROLL_RIGHT,
-}SCROLL_DIR;
-
 ///パネルスクロールフレーム
 #define PANEL_SCROLL_FRAME (8)
 
 ///アイコンポップタイム
 #define ICON_POP_TIME (30*3)
-
-///ポップアップスクロール
-#define POPUP_HEIGHT  (8*8)
-#define POPUP_DIFF    (16)
-#define POPUP_COUNT   (POPUP_HEIGHT/POPUP_DIFF)
-#define POPUP_WAIT    (30*3)
 
 //Gパワーポップアップタイプ
 enum{
@@ -274,42 +257,8 @@ enum{
  GPOWER_USE_MAX,
 };
 
-//タスクメニュー数
-enum{
- TMENU_YN_CHECK,
- TMENU_YN_YES,
- TMENU_YN_NO,
- TMENU_YN_MAX,
-};
-enum{
- TMENU_CHECK_CALL,
- TMENU_CHECK_CLOSE,
- TMENU_CHECK_MAX,
-};
-#define TMENU_PY (21)
-#define TMENU_W  (8)
-#define TMENU_H  (APP_TASKMENU_PLATE_HEIGHT)
-
-#define TMENU_YN_PX (8)
-#define TMENU_CHECK_PX (16)
-
-enum{
- TMENU_ID_YESNO,
- TMENU_ID_CHECK,
-};
-
 ////////////////////////////////////////////////////
 //アクター関連定義
-
-#define ACT_RENDER_ID (0)
-
-//OBJリソース参照コード
-enum{
- OBJ_RES_PLTT,
- OBJ_RES_CGR,
- OBJ_RES_CELLANIM,
- OBJ_RES_MAX,
-};
 
 #define UNION_CHAR_MAX      (16)  ///<ユニオンキャラクターmax
 #define BEACON_VIEW_OBJ_MAX (64) ///<画面内に表示するOBJの登録max数

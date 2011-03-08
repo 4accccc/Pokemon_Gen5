@@ -30,6 +30,7 @@
 #include "net_app/union/union_subdisp.h"
 #include "field/intrude_subdisp.h"
 #include "field/beacon_view.h"
+#include "field/fmission_view.h"
 #include "field/zonedata.h"
 #include "net_app/union/union_main.h"
 
@@ -79,6 +80,7 @@ struct _FIELD_SUBSCREEN_WORK {
     UNION_SUBDISP_PTR unisubWork;
     INTRUDE_SUBDISP_PTR intsubWork;
     BEACON_VIEW_PTR beaconViewWork;
+    FMISSION_VIEW_PTR fmissionViewWork;
     DOWSING_WORK* dowsingWork;
     GFL_CAMADJUST * gflCamAdjust;
     GFL_SNDVIEWER * gflSndViewer;
@@ -1323,6 +1325,7 @@ static GMEVENT* evcheck_intrude_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL bEv
 static void init_beacon_view_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode)
 {
   // Overlay
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(beacon_view_common) );
   GFL_OVERLAY_Load( FS_OVERLAY_ID(beacon_view) );
   pWork->beaconViewWork = BEACON_VIEW_Init(FIELDMAP_GetGameSysWork(pWork->fieldmap), pWork);
 }
@@ -1338,6 +1341,7 @@ static void exit_beacon_view_subscreen( FIELD_SUBSCREEN_WORK* pWork )
 
   // Overlay
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(beacon_view) );
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(beacon_view_common) );
 }
 
 //----------------------------------------------------------------------------
@@ -1382,8 +1386,9 @@ static GMEVENT* evcheck_beacon_view_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL
 static void init_fmission_view_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode)
 {
   // Overlay
-  GFL_OVERLAY_Load( FS_OVERLAY_ID(beacon_view) );
-  pWork->beaconViewWork = FMISSION_VIEW_Init(FIELDMAP_GetGameSysWork(pWork->fieldmap), pWork);
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(beacon_view_common) );
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(fmission_view) );
+  pWork->fmissionViewWork = FMISSION_VIEW_Init(FIELDMAP_GetGameSysWork(pWork->fieldmap), pWork);
 }
 
 //----------------------------------------------------------------------------
@@ -1393,10 +1398,11 @@ static void init_fmission_view_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUB
 //-----------------------------------------------------------------------------
 static void exit_fmission_view_subscreen( FIELD_SUBSCREEN_WORK* pWork )
 {
-  FMISSION_VIEW_Exit(pWork->beaconViewWork);
+  FMISSION_VIEW_Exit(pWork->fmissionViewWork);
 
   // Overlay
-  GFL_OVERLAY_Unload( FS_OVERLAY_ID(beacon_view) );
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(fmission_view) );
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(beacon_view_common) );
 }
 
 //----------------------------------------------------------------------------
@@ -1406,7 +1412,7 @@ static void exit_fmission_view_subscreen( FIELD_SUBSCREEN_WORK* pWork )
 //-----------------------------------------------------------------------------
 static void update_fmission_view_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
 {
-  FMISSION_VIEW_Update(pWork->beaconViewWork, bActive);
+  FMISSION_VIEW_Update(pWork->fmissionViewWork, bActive);
 }
 
 //----------------------------------------------------------------------------
@@ -1416,7 +1422,7 @@ static void update_fmission_view_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bAc
 //-----------------------------------------------------------------------------
 static void draw_fmission_view_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
 {
-  FMISSION_VIEW_Draw(pWork->beaconViewWork);
+  FMISSION_VIEW_Draw(pWork->fmissionViewWork);
 }
 
 //----------------------------------------------------------------------------
@@ -1426,7 +1432,7 @@ static void draw_fmission_view_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActi
 //-----------------------------------------------------------------------------
 static GMEVENT* evcheck_fmission_view_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL bEvReqOK )
 {
-  return FMISSION_VIEW_EventCheck(pWork->beaconViewWork, bEvReqOK );
+  return FMISSION_VIEW_EventCheck(pWork->fmissionViewWork, bEvReqOK );
 }
 
 //=============================================================================

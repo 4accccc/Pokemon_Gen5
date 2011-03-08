@@ -50,6 +50,8 @@ static int seq_ListScrollRepeat( BEACON_VIEW_PTR wk );
 static int seq_GPowerUse( BEACON_VIEW_PTR wk );
 static int seq_ThankYou( BEACON_VIEW_PTR wk );
 
+static void sub_SetViewPassive( BEACON_VIEW_PTR wk, BOOL passive_f );
+
 static void debug_InputCheck(BEACON_VIEW_PTR view);
 
 //==============================================================================
@@ -98,7 +100,7 @@ BEACON_VIEW_PTR BEACON_VIEW_Init(GAMESYS_WORK *gsys, FIELD_SUBSCREEN_WORK *subsc
 {
   BEACON_VIEW* wk;
   
-  wk = BVS_InitWork(gsys,subscreen, VIEW_MODE_NORMAL );
+  wk = BVS_InitWork( gsys,subscreen );
 
   //初期描画
   wk->init_f = TRUE;
@@ -106,7 +108,7 @@ BEACON_VIEW_PTR BEACON_VIEW_Init(GAMESYS_WORK *gsys, FIELD_SUBSCREEN_WORK *subsc
   wk->init_f = FALSE;
   
   wk->active = FALSE;  //無効値で初期化
-  BVC_SetViewPassive( wk, TRUE );
+  sub_SetViewPassive( wk, TRUE );
 
 #ifdef PM_DEBUG
   //スルーフラグが立っている状態で初期化された場合、最初の一回のアップデートのみする
@@ -146,7 +148,7 @@ void BEACON_VIEW_Update(BEACON_VIEW_PTR wk, BOOL bActive )
   if( wk->active != bActive ){
     if( (wk->event_reserve_f && !bActive) == FALSE ){ //イベント移行アニメ待ち中はパッシブにしない
       wk->active = bActive;
-      BVC_SetViewPassive( wk, !bActive );
+      sub_SetViewPassive( wk, !bActive );
     }
   }
   if( wk->event_id != EV_NONE ){
@@ -256,7 +258,7 @@ static int seq_Main( BEACON_VIEW_PTR wk )
   int ret;
  
   //特殊ポップアップ起動チェック
-  if( BVC_CheckSpecialPopup( wk ) ){
+  if( BeaconView_CheckSpecialPopup( wk ) ){
     wk->io_interval = 30*3; //インターバルを設定
     return SEQ_VIEW_UPDATE;
   }
@@ -310,7 +312,7 @@ static int seq_ViewUpdate( BEACON_VIEW_PTR wk )
   if( wk->eff_task_ct ){
     return SEQ_VIEW_UPDATE;
   }
-  BVC_MenuBarViewSet( wk, MENU_ALL, MENU_ST_ON );
+  BeaconView_MenuBarViewSet( wk, MENU_ALL, MENU_ST_ON );
   BeaconView_UpDownViewSet( wk );
   return SEQ_MAIN;
 }
@@ -339,10 +341,10 @@ static int seq_ListScrollRepeat( BEACON_VIEW_PTR wk )
     wk->scr_repeat_ct = 0;
     wk->scr_repeat_f = FALSE;
     if( wk->scr_repeat_ret_seq == SEQ_MAIN ){
-      BVC_MenuBarViewSet( wk, MENU_ALL, MENU_ST_ON );
+      BeaconView_MenuBarViewSet( wk, MENU_ALL, MENU_ST_ON );
     }
     BeaconView_UpDownViewSet( wk );
-    BVC_PrintQueLimmitUpSet( wk, FALSE );
+    BVC_PrintQueLimmitUpSet( wk->printQue, FALSE );
     return wk->scr_repeat_ret_seq;
   }
 
@@ -358,7 +360,7 @@ static int seq_ListScrollRepeat( BEACON_VIEW_PTR wk )
  */
 static int seq_GPowerUse( BEACON_VIEW_PTR wk )
 {
-  if( !BVCSubSeq_GPower( wk )){
+  if( !BeaconView_SubSeqGPower( wk )){
     return SEQ_GPOWER_USE;
   }
   wk->sub_seq = 0;
@@ -371,6 +373,22 @@ static int seq_GPowerUse( BEACON_VIEW_PTR wk )
 static int seq_ThankYou( BEACON_VIEW_PTR wk )
 {
   return BeaconView_SubSeqThanks( wk );
+}
+
+/*
+ *  @brief  アクティブ・パッシブ切替
+ */
+static void sub_SetViewPassive( BEACON_VIEW_PTR wk, BOOL passive_f )
+{
+  if(passive_f){
+    SoftFadePfd( wk->pfd, FADE_SUB_BG, 0, 16*BG_PALANM_AREA, 6, 0x0000);
+    SoftFadePfd( wk->pfd, FADE_SUB_OBJ, 0, 16*ACT_PAL_WMI, 6, 0x0000);
+    FLD_VREQ_G2S_SetBlendAlpha( wk->fld_vreq, ALPHA_1ST_PASSIVE, ALPHA_2ND, ALPHA_EV1_PASSIVE, ALPHA_EV2_PASSIVE);
+  }else{
+    SoftFadePfd( wk->pfd, FADE_SUB_BG, 0, 16*BG_PALANM_AREA, 0, 0x0000);
+    SoftFadePfd( wk->pfd, FADE_SUB_OBJ, 0, 16*ACT_PAL_WMI, 0, 0x0000);
+    FLD_VREQ_G2S_SetBlendAlpha( wk->fld_vreq, ALPHA_1ST_NORMAL, ALPHA_2ND, ALPHA_EV1_NORMAL, ALPHA_EV2_NORMAL);
+  }
 }
 
 #ifdef PM_DEBUG

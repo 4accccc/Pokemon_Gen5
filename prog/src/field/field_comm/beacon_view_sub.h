@@ -33,6 +33,11 @@ extern int BeaconView_CheckInputThanks( BEACON_VIEW_PTR wk );
 extern BOOL BeaconView_CheckCommEvent( BEACON_VIEW_PTR wk );
 
 /*
+ *  @brief  特殊ポップアップ起動チェック 
+ */
+extern BOOL BeaconView_CheckSpecialPopup( BEACON_VIEW_PTR wk );
+
+/*
  *  @brief  特殊Gパワー発動ポップアップ起動チェック 
  */
 extern BOOL BeaconView_CheckSpecialGPower( BEACON_VIEW_PTR wk );
@@ -56,6 +61,20 @@ extern void BeaconView_ListScrollRepeatReq( BEACON_VIEW_PTR wk );
  */
 extern BOOL BeaconView_SubSeqLogEntry( BEACON_VIEW_PTR wk );
 
+/*
+ *  @brief  サブシーケンス　GPower使用メイン
+ */
+extern BOOL BeaconView_SubSeqGPower( BEACON_VIEW_PTR wk );
+
+/*
+ *  @brief  メニューバーアニメセット
+ */
+extern void BeaconView_MenuBarViewSet( BEACON_VIEW_PTR wk, MENU_ID id, MENU_STATE state );
+
+/*
+ *  @brief  メニューバーアニメウェイト
+ */
+extern BOOL BeaconView_MenuBarCheckAnm( BEACON_VIEW_PTR wk, MENU_ID id );
 
 /*
  *  @brief  サブシーケンス　御礼メイン

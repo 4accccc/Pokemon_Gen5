@@ -19,7 +19,7 @@ typedef enum{
 /*
  *  @brief　一番最初のワーク初期化
  */
-extern BEACON_VIEW* BVS_InitWork( GAMESYS_WORK* gsys, FIELD_SUBSCREEN_WORK* subscreen, BEACON_VIEW_MODE mode );
+extern BEACON_VIEW* BVS_InitWork( GAMESYS_WORK* gsys, FIELD_SUBSCREEN_WORK* subscreen );
 
 /*
  *  @brief  一番最後のワーク解放
