@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-08T21:52:08"/>
+	<create user="matsumiya" host="W00224" date="2011-03-08T21:57:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -336,8 +336,10 @@
 		<comment>♂
 ・</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">テストメッセージ
+・おい　あの人</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ
+・おい　あの人</language>
 	</row>
 
 	<row id="msg_c12p01_ball1_fire_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -450,8 +452,19 @@
 		<comment>♂
 ・</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">テストメッセージ
+・そいつが　おまえの
+　はじめての　パートナーか
+・大切に　しろよ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ
+・そいつが　おまえの
+　はじめての　パートナーか
+・大切に　しろよ</language>
+	</row>
+
+	<row id="msg_c12p01_swrival_03" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">勝負</language>
+		<language name="JPN_KANJI" width="256"></language>
 	</row>
 
 	<row id="msg_c12p01_sign_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
