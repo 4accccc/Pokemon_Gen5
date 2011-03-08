@@ -12743,6 +12743,22 @@
 
 //--------------------------------------------------------------
 /**
+ * @brief リゾート用　おすすめスポットを教える
+ * @param[in]   idx     施設インデックス
+ * @param[out]  msgid   表示メッセージ
+ */
+//--------------------------------------------------------------
+#define _RESORT_SET_SPOT( idx, ret_msgid ) \
+      _ASM_RESORT_SET_SPOT idx, ret_msgid
+
+  .macro _ASM_RESORT_SET_SPOT idx, ret_msgid
+  .short EV_SEQ_RESORT_SET_SPOT
+  .short \idx
+  .short \ret_msgid
+  .endm
+
+//--------------------------------------------------------------
+/**
  * @brief 無限ダンジョン初期化
  */
 //--------------------------------------------------------------

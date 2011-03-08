@@ -332,24 +332,10 @@ VMCMD_RESULT EvCmdResortCallList( VMHANDLE *core, void *wk )
   sbw->wk.ret_service_param = ret_service_param;
   sbw->wk.ret_service_idx = ret_service_idx;
   sbw->wk.ret_price = ret_price;
+  sbw->wk.p_shop    = Resort_Scrcmd_GetBinaryShop( fieldmap );
 
   {
-    RESORT_PEOPLE *p_people = Resort_Scrcmd_GetFrontPeople( fieldmap );
-    u16 shop = 0;
-    u16 type = 0; //TODO
-    u16 lv = 0;
-    
-    GF_ASSERT( RESORT_PEOPLE_GetPeopleData( p_people, RESORT_PEOPLE_DATA_PARAM_TYPE ) == RESORT_PEOPLE_TYPE_RESIDENT );
-    sbw->wk.p_institution = RESORT_RESIDENT_DATA_GetInstitution( RESORT_PEOPLE_GetDataAdrs( p_people) );
 
-    shop = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_TYPE, NULL );
-    lv = RESORT_INSTITUTION_DATA_GetData( sbw->wk.p_institution, RESORT_INSTITUTION_DATA_PARAM_LV );
-
-    sbw->wk.p_shop    = Resort_Scrcmd_GetBinaryShop( fieldmap );
-    sbw->wk.cp_shop_data = RESORT_BINARY_SHOP_SearchData( sbw->wk.p_shop, shop, type, lv );
-  }
-
-  {
     RESONANCE_RESORT_SV *p_resort_sv = RESONANCE_RESORT_SV_GetWork( GAMEDATA_GetSaveControlWork( gamedata) );
     sbw->wk.p_all_people = RESONANCE_RESORT_SV_GetPeopleAllData( p_resort_sv );
   }
@@ -368,6 +354,24 @@ VMCMD_RESULT EvCmdResortCallList( VMHANDLE *core, void *wk )
     sbw->wk.List_Exit = ItemList_Exit;
     sbw->wk.call_back = ItemList_move_callback;
     sbw->wk.icon = line_callback_rest;
+
+
+    //Ž©•ª‚Ì‚¨“Xƒf[ƒ^‚ðŽæ“¾
+    {
+      RESORT_PEOPLE *p_people = Resort_Scrcmd_GetFrontPeople( fieldmap );
+      u16 shop = 0;
+      u16 type = 0; //TODO
+      u16 lv = 0;
+
+      GF_ASSERT( RESORT_PEOPLE_GetPeopleData( p_people, RESORT_PEOPLE_DATA_PARAM_TYPE ) == RESORT_PEOPLE_TYPE_RESIDENT );
+
+      sbw->wk.p_institution = RESORT_RESIDENT_DATA_GetInstitution( RESORT_PEOPLE_GetDataAdrs( p_people) );
+
+      shop = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_TYPE, NULL );
+      lv = RESORT_INSTITUTION_DATA_GetData( sbw->wk.p_institution, RESORT_INSTITUTION_DATA_PARAM_LV );
+      sbw->wk.cp_shop_data = RESORT_BINARY_SHOP_SearchData( sbw->wk.p_shop, shop, type, lv );
+    }
+
     break;
   case RESORT_LIST_TYPE_SELECT:    //‘I‘ð
     sbw->shopType = shop_type;
@@ -788,7 +792,14 @@ static void can_player_buy_item( SHOP_BUY_APP_WORK *wk )
   //”„‚èØ‚ê‚Å‚·
   if( RESORT_INSTITUTION_DATA_IsBit(wk->p_institution, wk->cp_select->id) == TRUE )
   {
-    ShopPrintMsg( wk, mes_shop_02_07_04 );
+    if(wk->cp_select->serviceID == RESORT_SERVICE_TYPE_ITEM )
+    {
+      ShopPrintMsg( wk, mes_shop_02_07_04 );
+    }
+    else
+    {
+      ShopPrintMsg( wk, mes_shop_02_07_06 );
+    }
     wk->seq  = SHOPBUY_SEQ_MSG_WAIT;
     wk->next = SHOPBUY_SEQ_BACK;
   }
@@ -1552,7 +1563,7 @@ static void shop_secretary_set( SHOP_BUY_APP_WORK *wk, int type, int id )
   wk->lineup_num = num;
   
   // u‚â‚ß‚év“o˜^
-  BmpMenuWork_ListAddArchiveString( &wk->list[i], wk->shopMsgData, 
+  BmpMenuWork_ListAddArchiveString( &wk->list[cnt], wk->shopMsgData, 
                                     mes_shop_02_06, 
                                     BMPMENULIST_CANCEL, 
                                     wk->heapId );
@@ -1633,7 +1644,7 @@ static void shop_institution_set( SHOP_BUY_APP_WORK *wk, int type, int id )
   wk->lineup_num = num;
   
   // u‚â‚ß‚év“o˜^
-  BmpMenuWork_ListAddArchiveString( &wk->list[i], wk->shopMsgData, 
+  BmpMenuWork_ListAddArchiveString( &wk->list[cnt], wk->shopMsgData, 
                                     mes_shop_02_06, 
                                     BMPMENULIST_CANCEL, 
                                     wk->heapId );
@@ -2796,8 +2807,7 @@ static RESORT_BINARY_SHOP * Resort_Scrcmd_GetBinaryShop( FIELDMAP_WORK *p_fieldm
   }
   else
   {
-    GF_ASSERT(0);
-    return NULL;
+    return RESORT_RECEPTION_GetBinaryShop( p_fieldmap );
   }
 }
 

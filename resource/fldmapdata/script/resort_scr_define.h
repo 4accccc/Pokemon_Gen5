@@ -11,11 +11,12 @@
 //ó∑çsé“ÇÃï™äÚ
 #define SEQ_TOURIST_INVITATION  (0)
 #define SEQ_TOURIST_SCOUT       (1)
-#define SEQ_TOURIST_BYE         (2)
+#define SEQ_TOURIST_FAREWELL    (2)
 #define SEQ_TOURIST_DOING       (3)
 #define SEQ_TOURIST_SPOT        (4)
 #define SEQ_TOURIST_APPEAL      (5)
 #define SEQ_TOURIST_WAIT        (6)
+#define SEQ_TOURIST_BYE         (7)
 
 //èZñØÇÃï™äÚ
 #define SEQ_RESIDENT_INSTITUTION  (0)

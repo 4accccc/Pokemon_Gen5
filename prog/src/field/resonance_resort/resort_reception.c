@@ -98,6 +98,7 @@ static void RECEPTION_PEOPLE_Action( RECEPTION_PEOPLE *p_wk, RESORT_PEOPLE *p_pe
 typedef struct
 {
   RECEPTION_PEOPLE *p_people_sys;
+  RESORT_BINARY_SHOP *p_binary_shop;
 } RESORT_RECEPTION_WORK;
 
 //-------------------------------------
@@ -126,6 +127,11 @@ void RESORT_RECEPTION_Setup( FIELDMAP_WORK *p_fieldmap )
   {
     p_wk->p_people_sys = RECEPTION_PEOPLE_Init( heapID, p_fieldmap );
   }
+
+  //お店情報
+  {
+    p_wk->p_binary_shop = RESORT_BINARY_SHOP_Init( heapID );
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -137,6 +143,8 @@ void RESORT_RECEPTION_Setup( FIELDMAP_WORK *p_fieldmap )
 void RESORT_RECEPTION_End( FIELDMAP_WORK *p_fieldmap )
 {
   RESORT_RECEPTION_WORK *p_wk = GMK_TMP_WK_GetWork(p_fieldmap, RESORT_RECEPTION_ASSIGN_ID);
+
+  RESORT_BINARY_SHOP_Exit( p_wk->p_binary_shop );
   RECEPTION_PEOPLE_Exit( p_wk->p_people_sys );
 
   //汎用ワーク解放
@@ -216,6 +224,20 @@ RESORT_DATA_MANAGER * RESORT_RECEPTION_GetDataManager( FIELDMAP_WORK *p_fieldmap
 {
   RESORT_RECEPTION_WORK *p_wk = GMK_TMP_WK_GetWork(p_fieldmap, RESORT_RECEPTION_ASSIGN_ID);
   return RECEPTION_PEOPLE_GetDataManager( p_wk->p_people_sys );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ショップバイナリデータを取得
+ *
+ *	@param	FIELDMAP_WORK *p_fieldmap   フィールドマップ
+ *
+ *	@return ショップバイナリデータ
+ */
+//-----------------------------------------------------------------------------
+RESORT_BINARY_SHOP * RESORT_RECEPTION_GetBinaryShop( FIELDMAP_WORK *p_fieldmap )
+{
+  RESORT_RECEPTION_WORK *p_wk = GMK_TMP_WK_GetWork(p_fieldmap, RESORT_RECEPTION_ASSIGN_ID);
+  return p_wk->p_binary_shop;
 }
 
 //=============================================================================

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nagihashi_toru" host="W00268" date="2011-03-07T19:35:20"/>
+	<create user="nagihashi_toru" host="W00268" date="2011-03-08T19:55:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -503,6 +503,13 @@
 [2:06:７桁:2]円に　なりますが？</language>
 		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]　ですね
 [2:06:７桁:2]円に　なりますが？</language>
+	</row>
+
+	<row id="mes_shop_02_07_06">
+		<language name="JPN" width="256">しゅうりょうです
+また　あす　おねがいします▼</language>
+		<language name="JPN_KANJI" width="256">終了です
+また　明日　おねがいします▼</language>
 	</row>
 
 	<row id="mes_shop_04_01">

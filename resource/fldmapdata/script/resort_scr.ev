@@ -76,13 +76,11 @@ EVENT_START ev_resort_tourist
   //挨拶文
   _RESORT_GET_MSGID( RESORT_TOURIST_GREET_MSGID, LWK_MSGID )
 	_BALLOONWIN_OBJMSG( LWK_MSGID, LWK_OBJID )
-	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 
   //アイテム取得イベント
   _RESORT_GET_MSGID( RESORT_TOURIST_ITEM_MSGID, LWK_MSGID )
 	_BALLOONWIN_OBJMSG( LWK_MSGID, LWK_OBJID )
-	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 
   //もしアイテムならば
@@ -103,7 +101,6 @@ EVENT_START ev_resort_tourist
   //アピール文
   _RESORT_GET_MSGID( RESORT_MSGID_APPEAL, LWK_MSGID )
 	_BALLOONWIN_OBJMSG( LWK_MSGID, LWK_OBJID )
-	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 
   //以下メニュー表示はLWK_MENU_LOOPがFALSEになるまで続く
@@ -118,8 +115,8 @@ EVENT_START ev_resort_tourist
       _CALL sub_tourist_invitation
     CASE SEQ_TOURIST_SCOUT THEN        //スカウト
       _CALL sub_tourist_scout
-    CASE SEQ_TOURIST_BYE THEN          //さようなら
-      _CALL sub_tourist_bye
+    CASE SEQ_TOURIST_FAREWELL THEN     //さようなら
+      _CALL sub_tourist_farewell
     CASE SEQ_TOURIST_DOING THEN        //最近どうしてる？
       _CALL sub_tourist_doing
     CASE SEQ_TOURIST_SPOT THEN         //おすすめスポット
@@ -128,6 +125,8 @@ EVENT_START ev_resort_tourist
       _CALL sub_tourist_appeal
     CASE SEQ_TOURIST_WAIT THEN         //ちょっと待ってて
       _CALL sub_tourist_wait
+    CASE SEQ_TOURIST_BYE THEN          //またね
+      _CALL sub_tourist_bye
     DEFAULT
       $LWK_MENU_LOOP = FALSE //念のため無限ループを避ける
     ENDSWITCH
@@ -155,19 +154,21 @@ sub_tourist_main_menu:
   //スカウトは秘書がいっぱいでないとでない
   _RESORT_GET_DATA( RESORT_GET_PARAM_IS_SECREARY_FULL, LWK_IS_SECRETARY_FULL )
   IF $LWK_IS_SECRETARY_FULL == TRUE THEN
-	  _BMPMENU_MAKE_LIST( resort_sys_select_02, SEQ_TOURIST_SCOUT )	      //スカウト
+	  _BMPMENU_MAKE_LIST( resort_sys_select_02, SEQ_TOURIST_SCOUT )	    //スカウト
   ENDIF
 
-	_BMPMENU_MAKE_LIST( resort_sys_select_07, SEQ_TOURIST_BYE )	        //さようなら
+	_BMPMENU_MAKE_LIST( resort_sys_select_07, SEQ_TOURIST_FAREWELL )	        //さようなら
 	_BMPMENU_MAKE_LIST( resort_sys_select_04, SEQ_TOURIST_DOING )	      //さいきんどう？
+
   //スポットは施設がないとでない
   _RESORT_GET_DATA( RESORT_GET_PARAM_IS_INSTITUTION_EMPTY, LWK_IS_INSTITUTION_EMPTY )
-  IF $LWK_IS_INSTITUTION_EMPTY == TRUE THEN
-	  _BMPMENU_MAKE_LIST( resort_sys_select_03, SEQ_TOURIST_SPOT )	      //スポット
+  IF $LWK_IS_INSTITUTION_EMPTY == FALSE THEN
+	  _BMPMENU_MAKE_LIST( resort_sys_select_03, SEQ_TOURIST_SPOT )	    //スポット
   ENDIF
 
 	_BMPMENU_MAKE_LIST( resort_sys_select_05, SEQ_TOURIST_APPEAL )	    //アピール
 	_BMPMENU_MAKE_LIST( resort_sys_select_06, SEQ_TOURIST_WAIT )	      //まってて
+	_BMPMENU_MAKE_LIST( resort_sys_select_10, SEQ_TOURIST_BYE )	        //またね
 
 	//メニュー表示
 	_BMPMENU_START()
@@ -176,7 +177,7 @@ sub_tourist_main_menu:
   _SYSWIN_CLOSE()
 
   IF $LWK_MENU_RET == EV_WIN_B_CANCEL THEN
-    $LWK_MENU_RET = SEQ_TOURIST_WAIT
+    $LWK_MENU_RET = SEQ_TOURIST_BYE
   ENDIF
 }
 _RET
@@ -192,7 +193,6 @@ sub_tourist_invitation:
   //喜び文を表示
   _RESORT_GET_MSGID( RESORT_TOURIST_JOY_MSGID, LWK_MSGID )
 	_BALLOONWIN_OBJMSG( LWK_MSGID, LWK_OBJID )
-	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 
   //飛んで去っていく
@@ -277,14 +277,13 @@ _RET
 //==============================================================
 //サブルーチン：旅行者さようなら
 //==============================================================
-sub_tourist_bye:
+sub_tourist_farewell:
 {
   //さよなら文を表示
   _RESORT_GET_MSGID( RESORT_TOURIST_BYE_MSGID, LWK_MSGID )
 
   _RESORT_SET_WORD( RESORT_WORD_FREE_PHRASE, 0 )
 	_BALLOONWIN_OBJMSG( LWK_MSGID, LWK_OBJID )
-	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 
   //飛んで去っていく
@@ -312,7 +311,6 @@ sub_tourist_doing:
   //最近のMSG文を表示
   _RESORT_GET_MSGID( RESORT_MSGID_RECENT, LWK_MSGID )
 	_BALLOONWIN_OBJMSG( LWK_MSGID, LWK_OBJID )
-	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 }
 _RET
@@ -326,20 +324,25 @@ sub_tourist_spot:
   //スポット文を表示
   _RESORT_GET_MSGID( RESORT_MSGID_WHERETOGO, LWK_MSGID )
 	_BALLOONWIN_OBJMSG( LWK_MSGID, LWK_OBJID )
-	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 
-  //施設選択 //TODO
+  //施設選択
   _RESORT_CALL_LIST( RESORT_LIST_TYPE_SELECT, RESORT_LIST_SELECT_INSTATITUTION, LWK_LIST_RET_TYPE, LWK_LIST_RET_PARAM,LWK_LIST_RET_IDX, LWK_LIST_RET_PRICE )
 
-  //暗転してメッセージ（暗転中にOBJ転職し消す）
-  //TODO 
-  _OBJ_WARP_OUT( LWK_OBJID )
-  _TIME_WAIT( 30 )
-  _RESORT_DELETE_PEOPLE()
+  IF $LWK_LIST_RET_TYPE == RESORT_LIST_CANCEL THEN
+  ELSE
+    _OBJ_WARP_OUT( LWK_OBJID )
+    _TIME_WAIT( 30 )
 
-  //選択肢終了
-  $LWK_MENU_LOOP = FALSE
+    _RESORT_SET_SPOT( LWK_LIST_RET_IDX, LWK_MSGID )
+    _RESORT_DELETE_PEOPLE()
+
+    _SYSWIN_MSG( LWK_MSGID, POS_DOWN )
+    _SYSWIN_CLOSE()
+
+    //選択肢終了
+    $LWK_MENU_LOOP = FALSE
+  ENDIF
 }
 _RET
 
@@ -352,7 +355,6 @@ sub_tourist_appeal:
   //アピール文を表示
   _RESORT_GET_MSGID( RESORT_MSGID_APPEAL, LWK_MSGID )
 	_BALLOONWIN_OBJMSG( LWK_MSGID, LWK_OBJID )
-	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 }
 _RET
@@ -366,11 +368,28 @@ sub_tourist_wait:
   //待つを表示
   _RESORT_GET_MSGID( RESORT_TOURIST_WAIT_MSGID, LWK_MSGID )
 	_BALLOONWIN_OBJMSG( LWK_MSGID, LWK_OBJID )
-	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 
   //待つ処理
   _RESORT_KEEP_WAIT()
+
+  //選択肢終了
+  $LWK_MENU_LOOP = FALSE
+}
+_RET
+
+//==============================================================
+//サブルーチン：旅行者またね
+//==============================================================
+sub_tourist_bye:
+{
+  //さよなら文を表示
+  _RESORT_GET_MSGID( RESORT_TOURIST_BYE_MSGID, LWK_MSGID )
+
+  _RESORT_SET_WORD( RESORT_WORD_FREE_PHRASE, 0 )
+	_BALLOONWIN_OBJMSG( LWK_MSGID, LWK_OBJID )
+	_LAST_KEYWAIT()
+	_BALLOONWIN_CLOSE()
 
   //選択肢終了
   $LWK_MENU_LOOP = FALSE
@@ -397,13 +416,11 @@ EVENT_START ev_resort_proxy
   //挨拶文
   _RESORT_GET_MSGID( RESORT_PROXY_GREET_MSGID, LWK_MSGID )
 	_BALLOONWIN_OBJMSG( LWK_MSGID, LWK_OBJID )
-	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 
   //アイテム取得イベント
   _RESORT_GET_MSGID( RESORT_PROXY_ITEM_MSGID, LWK_MSGID )
 	_BALLOONWIN_OBJMSG( LWK_MSGID, LWK_OBJID )
-	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 
   _RESORT_GET_DATA( RESORT_GET_PARAM_PRESENT_IS_ITEM, LWK_PRESENT_IS_ITEM )
@@ -545,7 +562,6 @@ sub_resident_institution:
   _RESORT_SET_WORD( RESORT_WORD_FREE_NAME, 1 )
 
 	_BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DL )
-	_LAST_KEYWAIT()
 
   //以下メニュー表示はLWK_MENU_LOOPがFALSEになるまで続く
   $LWK_MENU_LOOP = TRUE
@@ -589,14 +605,12 @@ sub_resident_institution:
     CASE SEQ_RESIDENT_DOING THEN        //最近どう？
       _RESORT_GET_MSGID( RESORT_MSGID_RECENT, LWK_MSGID )
 	    _BALLOONWIN_OBJMSG( LWK_MSGID, LWK_OBJID )
-	    _LAST_KEYWAIT()
 	    _BALLOONWIN_CLOSE()
 
     CASE SEQ_RESIDENT_TROUBLE THEN      //困ってない？
       //TODO あとでクエスト処理をいれる
       _RESORT_GET_MSGID( RESORT_RESIDENT_BYE_MSGID, LWK_MSGID )
 	    _BALLOONWIN_OBJMSG( LWK_MSGID, LWK_OBJID )
-	    _LAST_KEYWAIT()
 	    _BALLOONWIN_CLOSE()
 
     CASE SEQ_RESIDENT_BYE THEN          //またね
@@ -1009,7 +1023,6 @@ EVENT_START    ev_resort_visitor
   _RESORT_SET_WORD( RESORT_WORD_FREE_NAME, 1 )
   _RESORT_GET_MSGID( RESORT_VISITOR_GREET_MSGID, LWK_MSGID )
 	_BALLOONWIN_OBJMSG( LWK_MSGID, LWK_OBJID )
-	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 
   //イベントをしていなければ、行う
@@ -1022,7 +1035,6 @@ EVENT_START    ev_resort_visitor
   //どこにいきたいか文
   _RESORT_GET_MSGID( RESORT_MSGID_WHERETOGO, LWK_MSGID )
 	_BALLOONWIN_OBJMSG( LWK_MSGID, LWK_OBJID )
-	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 
   //以下メニュー表示はLWK_MENU_LOOPがFALSEになるまで続く
@@ -1039,7 +1051,6 @@ EVENT_START    ev_resort_visitor
     CASE SEQ_VISITOR_DOING THEN        //最近どう？
       _RESORT_GET_MSGID( RESORT_MSGID_RECENT, LWK_MSGID )
 	    _BALLOONWIN_OBJMSG( LWK_MSGID, LWK_OBJID )
-	    _LAST_KEYWAIT()
 	    _BALLOONWIN_CLOSE()
       $LWK_MENU_LOOP = FALSE
 
@@ -1102,7 +1113,6 @@ EVENT_START    ev_resort_secretary_work
   _RESORT_SET_WORD( RESORT_WORD_FREE_GREET, 1 )
   _RESORT_SET_WORD( RESORT_WORD_FREE_NAME, 2 )
 	_BALLOONWIN_OBJMSG( LWK_MSGID, LWK_OBJID )
-	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 
   //以下メニュー表示はLWK_MENU_LOOPがFALSEになるまで続く
@@ -1116,7 +1126,6 @@ EVENT_START    ev_resort_secretary_work
     CASE SEQ_SECRETARY_WORK_GOSSIP THEN       //噂
       _RESORT_GET_MSGID( RESORT_MSGID_GOSSIP, LWK_MSGID )
 	    _BALLOONWIN_OBJMSG( LWK_MSGID, LWK_OBJID )
-	    _LAST_KEYWAIT()
 	    _BALLOONWIN_CLOSE()
       $LWK_MENU_LOOP = FALSE
 
@@ -1188,7 +1197,6 @@ EVENT_START    ev_resort_secretary_space
   _RESORT_SET_WORD( RESORT_WORD_FREE_GREET, 1 )
   _RESORT_SET_WORD( RESORT_WORD_FREE_NAME, 2 )
 	_BALLOONWIN_OBJMSG( LWK_MSGID, LWK_OBJID )
-	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 
   //以下メニュー表示はLWK_MENU_LOOPがFALSEになるまで続く
@@ -1265,7 +1273,6 @@ EVENT_START    ev_resort_secretary_move
   _RESORT_SET_WORD( RESORT_WORD_FREE_GREET, 1 )
   _RESORT_SET_WORD( RESORT_WORD_FREE_NAME, 2 )
 	_BALLOONWIN_OBJMSG( LWK_MSGID, LWK_OBJID )
-	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 
   //どうしますか？
@@ -1401,7 +1408,6 @@ EVENT_START    ev_resort_secretary_center
   _RESORT_SET_WORD( RESORT_WORD_FREE_GREET, 1 )
   _RESORT_SET_WORD( RESORT_WORD_FREE_NAME, 2 )
 	_BALLOONWIN_OBJMSG( LWK_MSGID, LWK_OBJID )
-	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 
 	//暗転して手持ちポケモンを回復
@@ -1446,7 +1452,6 @@ EVENT_START    ev_resort_secretary_pc
       _RESORT_GET_MSGID( RESORT_SECRETARY_BYE_MSGID, LWK_MSGID )
       _RESORT_SET_WORD( RESORT_WORD_FREE_NAME, 0 )
   	  _BALLOONWIN_OBJMSG( LWK_MSGID, LWK_OBJID )
-  	  _LAST_KEYWAIT()
   	  _BALLOONWIN_CLOSE()
       $LWK_MENU_LOOP = FALSE
 
