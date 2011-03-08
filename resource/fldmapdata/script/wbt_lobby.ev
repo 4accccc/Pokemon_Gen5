@@ -48,6 +48,7 @@ DEFINE_LOCAL  LWK_WBT_SELECT_DL
 DEFINE_LOCAL	LWK_MENU
 DEFINE_LOCAL	LWK_MENU_WHILE
 DEFINE_LOCAL	LWK_RULE
+DEFINE_LOCAL  LWK_REG
 DEFINE_LOCAL	LWK_POKECOUNT
 DEFINE_LOCAL	LWK_SHORT		//不足カウントを格納
 DEFINE_LOCAL	LWK_CHK_RULE
@@ -70,9 +71,12 @@ _TALK_OBJ_START()
 	
 	ENDIF
 	
+  //WBT制御システム開始：終了するときは必ず対で_WBT_SYSTEM_END()をよぶこと！
+  _WBT_SYSTEM_START()
+
   $LWK_WBT_LOBBY_SEQ = WBT_LOBBY_SEQ_FIRST_MENU
 
-  WHILE $LWK_WBT_LOBBY_SEQ != WBT_LOBBY_SEQ_END
+  WHILE $LWK_WBT_LOBBY_SEQ != WBT_LOBBY_SEQ_END && $LWK_WBT_LOBBY_SEQ != WBT_LOBBY_SEQ_HALL
 
     SWITCH $LWK_WBT_LOBBY_SEQ
     CASE WBT_LOBBY_SEQ_FIRST_MENU THEN
@@ -152,8 +156,10 @@ _TALK_OBJ_START()
     //バトルルール選択
       $LWK_RULE = SCR_WBT_RULE_NULL
       _CALL ev_select_rule
-      IF $LWK_RULE != SCR_WBT_RULE_NULL THEN
+      IF $LWK_MENU != SCR_WBT_RULE_NULL THEN
         //ルール選択→ポケモンのチェック＆選択へ
+        $LWK_RULE = $LWK_MENU
+        _WBT_SET_BATTLE_RULE( LWK_RULE )
         $LWK_WBT_LOBBY_SEQ = WBT_LOBBY_SEQ_SELECT_POKE
       ELSE
         //ルール未選択→適宜前のシーケンスに戻る
@@ -175,11 +181,15 @@ _TALK_OBJ_START()
       $LWK_CHK_RULE = FALSE
       _CALL ev_regist_check
       IF $LWK_CHK_RULE == FALSE THEN
-        $LWK_WBT_LOBBY_SEQ = WBT_LOBBY_SEQ_SELECT_RULE
+        $LWK_WBT_LOBBY_SEQ = WBT_LOBBY_SEQ_END
       ELSE
         $LWK_CHK_RULE = FALSE
         _CALL ev_registok
-        $LWK_WBT_LOBBY_SEQ = WBT_LOBBY_SEQ_SELECT_RULE
+        IF $LWK_CHK_RULE == TRUE THEN
+          $LWK_WBT_LOBBY_SEQ = WBT_LOBBY_SEQ_HALL
+        ELSE
+          $LWK_WBT_LOBBY_SEQ = WBT_LOBBY_SEQ_SELECT_TOURNAMENT
+        ENDIF
       ENDIF
 
     DEFAULT
@@ -189,12 +199,17 @@ _TALK_OBJ_START()
 
   ENDWHILE
 
-	IF $LWK_RULE == 0 THEN
+	IF $LWK_WBT_LOBBY_SEQ == WBT_LOBBY_SEQ_END THEN
     //やめる場合
 		//またの御利用をおまちしております
 		_BALLOONWIN_TALKOBJ_MSG( msg_wbt_info_09 )
 		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
+
+    _WBT_SYSTEM_END() //_WBT_SYSTEM_STARTと対
+  ELSE
+    //仮・本当はこのまま会場イベントへつながるはず
+    _WBT_SYSTEM_END() //_WBT_SYSTEM_STARTと対
   ENDIF
 	
 EVENT_END
@@ -268,13 +283,11 @@ _BMPMENU_INIT_RIGHT( MENU_X1,MENU_Y1,0,1,LWK_MENU )
 _BMPMENU_MAKE_LIST( msg_wbt_menu_rule_single, SCR_WBT_RULE_SINGLE )	//シングルバトル
 _BMPMENU_MAKE_LIST( msg_wbt_menu_rule_double, SCR_WBT_RULE_DOUBLE )	//ダブルバトル
 _BMPMENU_MAKE_LIST( msg_wbt_menu_rule_triple, SCR_WBT_RULE_TRIPLE )	//トリプルバトル
-_BMPMENU_MAKE_LIST( msg_wbt_menu_rule_rotation, SCR_WBT_RULE_LOTATION )	//ローテーションバトル
-_BMPMENU_MAKE_LIST( msg_wbt_menu_back, 4 )			//もどる
+_BMPMENU_MAKE_LIST( msg_wbt_menu_rule_rotation, SCR_WBT_RULE_ROTATION )	//ローテーションバトル
+_BMPMENU_MAKE_LIST( msg_wbt_menu_back, SCR_WBT_RULE_NULL )			//もどる
 
 //メニュー表示
 _BMPMENU_START()
-
-$LWK_RULE = $LWK_MENU
 
 _RET
 
@@ -285,6 +298,15 @@ ev_regist_check:
 
 //手持ちが足りない場合の処理
 _WBT_GET_BATTLE_RULE( LWK_RULE )
+
+$LWK_REG = REG_LV50_SINGLE  //仮
+_BTL_UTIL_PARTY_SELECT_CALL( LWK_REG, SCWK_ANSWER )
+IF $SCWK_ANSWER == SCR_BTL_PARTY_SELECT_CANCEL THEN
+  _RET
+ELSIF $SCWK_ANSWER == SCR_BTL_PARTY_SELECT_NG THEN
+  _BTL_UTIL_PARTY_REGULATION_NG_MSG_CALL( LWK_REG )
+  _RET
+ENDIF
 
 //戦える手持ちの数をカウント
 _GET_PARTY_POKE_COUNT( LWK_POKECOUNT, POKECOUNT_MODE_NOT_EGG  )
@@ -398,7 +420,7 @@ CASE SCR_WBT_RULE_TRIPLE THEN		//トリプルバトル	５匹以上から参加可能
 		
 	ENDIF
 
-CASE SCR_WBT_RULE_LOTATION THEN		//ローテーションバトル	６匹から参加可能
+CASE SCR_WBT_RULE_ROTATION THEN		//ローテーションバトル	６匹から参加可能
 
 	//手持ちポケモンが６匹の場合
 	IF $LWK_POKECOUNT == 6 THEN
@@ -456,9 +478,10 @@ _BALLOONWIN_TALKOBJ_MSG( msg_wbt_info_15 )
 _MSGWIN_CLOSE()
 
 //ポケモン選択画面表示　　　　　　　　　　　　　　　　　　　　　　　　
+//  _WBT_SELECT_POKEMON( SCWK_ANSWER )
 
-//ルールと適用しているかチェック　致命的エラーが出たのでコメントアウト
-//_WBT_CHECK_BATTLE_RULE( LWK_CHK_RULE )
+//ルールと適用しているかチェック　
+_WBT_CHECK_BATTLE_RULE( LWK_CHK_RULE )
 
 //問題なしの場合
 IF $LWK_CHK_RULE == TRUE THEN
@@ -467,9 +490,15 @@ IF $LWK_CHK_RULE == TRUE THEN
 	_BALLOONWIN_TALKOBJ_MSG( msg_wbt_info_17 )
 	_MSGWIN_CLOSE()
 	
+  _MAP_FADE_BLACK_OUT()
+  _DISP_FADE_END_CHECK()
+
 	//トーナメントリスト表示
 	_WBT_LIST_CALL( 0 )
 	
+  _MAP_FADE_BLACK_IN()
+  _DISP_FADE_END_CHECK()
+
 	//それでは第一回戦を開始します！
 	_BALLOONWIN_TALKOBJ_MSG( msg_wbt_info_18 )
 	_MSGWIN_CLOSE()

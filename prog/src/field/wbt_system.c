@@ -9,7 +9,9 @@
 
 #include <gflib.h>
 
-#include "wbt.h"
+#include "wbt_system.h"
+
+#include "poke_tool/regulation_def.h"
 
 //============================================================================================
 //============================================================================================
@@ -19,6 +21,7 @@
  */
 //------------------------------------------------------------------
 struct _WBT_SYSTEM {
+  HEAPID heapID;
   ///トーナメントの種類
   WBTTYPE type;
   ///バトルルール（シングル、ダブル、トリプル、ローテーション）
@@ -137,7 +140,8 @@ struct _TAG_BSUBWAY_SCRWORK
 //------------------------------------------------------------------
 WBTSYS * WBTSYS_Create( HEAPID heapID )
 {
-  WBTSYS * wbtsys = GFL_HEAP_AllocMemory( heapID, sizeof(WBTSYS) );
+  WBTSYS * wbtsys = GFL_HEAP_AllocClearMemory( heapID, sizeof(WBTSYS) );
+  wbtsys->heapID = heapID;
   return wbtsys;
 }
 
@@ -147,4 +151,72 @@ void WBTSYS_Delete( WBTSYS * wbtsys )
 {
   GFL_HEAP_FreeMemory( wbtsys );
 }
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void WBTSYS_SetType( WBTSYS * wbtsys, WBTTYPE type )
+{
+  wbtsys->type = type;
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+WBTTYPE WBTSYS_GetType( const WBTSYS * wbtsys )
+{
+  return wbtsys->type;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void WBTSYS_SetSelectDLData( WBTSYS * wbtsys, u8 no )
+{
+  GF_ASSERT( no <= WBT_DOWNLOAD_NUMBER );
+  wbtsys->select_dl_data = no;
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+u8 WBTSYS_GetSelectDLData( const WBTSYS * wbtsys )
+{
+  return wbtsys->select_dl_data;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void WBTSYS_SetRule( WBTSYS * wbtsys, WBTRULE rule )
+{
+  wbtsys->rule = rule;
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+WBTRULE WBTSYS_GetRule( const WBTSYS * wbtsys )
+{
+  return wbtsys->rule;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+const REGULATION * WBTSYS_GetRegulation( WBTSYS * wbtsys )
+{
+  const REGULATION * reg;
+  int reg_type;
+  switch ( wbtsys->rule )
+  {
+  case WBTRULE_SINGLE:
+    reg_type = REG_LV50_SINGLE;
+    break;
+  case WBTRULE_DOUBLE:
+    reg_type = REG_LV50_DOUBLE;
+    break;
+  case WBTRULE_TRIPLE:
+    reg_type = REG_LV50_TRIPLE;
+    break;
+  case WBTRULE_ROTATION:
+    reg_type = REG_LV50_ROTATION;
+    break;
+  default:
+    GF_ASSERT( 0 );
+  }
+  reg = PokeRegulation_LoadDataAlloc( reg_type, wbtsys->heapID );
+  return reg;
+}
+
 

@@ -1,6 +1,6 @@
 //============================================================================================
 /**
- * @file  wbt.h
+ * @file  wbt_system.h
  * @brief
  * @author  tamada GAME FREAK inc.
  * @date  2011.02.13
@@ -10,14 +10,22 @@
 //============================================================================================
 #pragma once
 
+#include "field/wbt.h"
+
 #include "battle/battle.h"
+
+#include "poke_tool/poke_regulation.h"  //REGULATION
 
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
+//------------------------------------------------------------------
+
+//------------------------------------------------------------------
 ///トーナメントの種類
 //------------------------------------------------------------------
 typedef enum {
+  WBTTYPE_NULL,
   WBTTYPE_ALL,
   WBTTYPE_CHAMPION,
   WBTTYPE_POKETYPE,
@@ -25,10 +33,11 @@ typedef enum {
 }WBTTYPE;
 
 typedef enum {
+  WBTRULE_NULL,
   WBTRULE_SINGLE,
   WBTRULE_DOUBLE,
   WBTRULE_TRIPLE,
-  WBTRULE_LOTATION,
+  WBTRULE_ROTATION,
 }WBTRULE;
 
 //------------------------------------------------------------------
@@ -41,15 +50,22 @@ typedef enum {
 }WBT_ALLTOURNAMENT_LEVEL;
 
 //------------------------------------------------------------------
-/**
- * @brief WBT中に保持する進行データの不完全型
- */
 //------------------------------------------------------------------
-typedef struct _WBT_SYSTEM WBTSYS;
-
-
+enum {
+  WBT_DOWNLOAD_NUMBER = 3,
+};
+//============================================================================================
+//============================================================================================
 extern WBTSYS * WBTSYS_Create( HEAPID heapID );
 extern void WBTSYS_Delete( WBTSYS * wbtsys );
+
+extern void WBTSYS_SetType( WBTSYS * wbtsys, WBTTYPE type );
+extern WBTTYPE WBTSYS_GetType( const WBTSYS * wbtsys );
+extern void WBTSYS_SetRule( WBTSYS * wbtsys, WBTRULE rule );
+extern WBTRULE WBTSYS_GetRule( const WBTSYS * wbtsys );
+extern const REGULATION * WBTSYS_GetRegulation( WBTSYS * wbtsys );
+extern void WBTSYS_SetSelectDLData( WBTSYS * wbtsys, u8 no );
+extern u8 WBTSYS_GetSelectDLData( const WBTSYS * wbtsys );
 
 //============================================================================================
 //============================================================================================

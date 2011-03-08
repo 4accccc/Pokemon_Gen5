@@ -10,7 +10,7 @@
 //============================================================================================
 #pragma once
 
-#include "wbt.h"
+#include "wbt_system.h"
 
 #include "battle/battle.h"
 #include "poke_tool/poketype_def.h" //POKETYPE_MAX

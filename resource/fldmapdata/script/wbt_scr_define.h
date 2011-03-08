@@ -16,5 +16,6 @@
 #define   WBT_LOBBY_SEQ_SELECT_DL         5
 #define   WBT_LOBBY_SEQ_SELECT_RULE       6
 #define   WBT_LOBBY_SEQ_SELECT_POKE       7
+#define   WBT_LOBBY_SEQ_HALL              8
 
 
