@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2011-02-25T20:41:19"/>
+	<create user="suginaka_katsunori" host="W00227" date="2011-03-08T21:34:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -380,7 +380,7 @@
 
 	<dialog left="6" top="97" right="711" bottom="717" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="548"/>
@@ -411,27 +411,27 @@
 		<attribute name="キャラ指定">アナウンス
 シッポなしメッセージ</attribute>
 		<language name="JPN" width="256">だい１かいせん
-[1:00:トレーナー名:0]　VS　[1:00:トレーナー名:1]</language>
+[1:00:トレーナー名:0]　VS　[1:00:トレーナー名:1]▼</language>
 		<language name="JPN_KANJI" width="256">第１回戦
-[1:00:トレーナー名:0]　VS　[1:00:トレーナー名:1]</language>
+[1:00:トレーナー名:0]　VS　[1:00:トレーナー名:1]▼</language>
 	</row>
 
 	<row id="msg_wbt_announce_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<attribute name="キャラ指定">アナウンス
 シッポなしメッセージ</attribute>
 		<language name="JPN" width="256">だい２かいせん
-[1:00:トレーナー名:0]　VS　[1:00:トレーナー名:1]</language>
+[1:00:トレーナー名:0]　VS　[1:00:トレーナー名:1]▼</language>
 		<language name="JPN_KANJI" width="256">第２回戦
-[1:00:トレーナー名:0]　VS　[1:00:トレーナー名:1]</language>
+[1:00:トレーナー名:0]　VS　[1:00:トレーナー名:1]▼</language>
 	</row>
 
 	<row id="msg_wbt_announce_03" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<attribute name="キャラ指定">アナウンス
 シッポなしメッセージ</attribute>
 		<language name="JPN" width="256">けっしょうせん
-[1:00:トレーナー名:0]　VS　[1:00:トレーナー名:1]</language>
+[1:00:トレーナー名:0]　VS　[1:00:トレーナー名:1]▼</language>
 		<language name="JPN_KANJI" width="256">決勝戦
-[1:00:トレーナー名:0]　VS　[1:00:トレーナー名:1]</language>
+[1:00:トレーナー名:0]　VS　[1:00:トレーナー名:1]▼</language>
 	</row>
 
 	<row id="msg_wbt_announce_04" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
@@ -439,10 +439,19 @@
 シッポなしメッセージ</attribute>
 		<language name="JPN" width="256">●●●●●●●●●●トーナメント
 けっしょうせん！▽
-たいせんしゃ　にゅうじょう！</language>
+たいせんしゃ　にゅうじょう！▼</language>
 		<language name="JPN_KANJI" width="256">●●●●●●●●●●トーナメント
 決勝戦！▽
-対戦者　入場！</language>
+対戦者　入場！▼</language>
+	</row>
+
+	<row id="msg_wbt_announce_05" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<attribute name="キャラ指定">アナウンス
+シッポなしメッセージ</attribute>
+		<language name="JPN" width="256">ゆうしょうは……！
+[1:00:トレーナー名:0]だー！！▼</language>
+		<language name="JPN_KANJI" width="256">優勝は……！
+[1:00:トレーナー名:0]だー！！▼</language>
 	</row>
 
 	<row id="TEST_STR_03">
@@ -494,9 +503,14 @@ JPN_KANJI　の列を消すこともできます。
 です。</language>
 	</row>
 
-	<row id="TEST_STR_08">
-		<language name="JPN" width="256">よろしくおねがいします。</language>
-		<language name="JPN_KANJI" width="256">よろしくお願いします。</language>
+	<row id="msg_test">
+		<language name="JPN" width="256">仮メッセージ▼</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ▼</language>
+	</row>
+
+	<row id="msg_test_yell">
+		<language name="JPN" width="256">仮メッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<flowchart-group-list>
