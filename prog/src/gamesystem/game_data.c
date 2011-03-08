@@ -61,6 +61,7 @@
 #include "savedata/bsubway_savedata.h"
 #include "savedata/tradepoke_after_save.h"
 #include "savedata/medalbox.h"  // MDLID_MAX
+#include "field/wbt.h"  //WBTSYS
 
 //============================================================================================
 //============================================================================================
@@ -138,6 +139,7 @@ struct _GAMEDATA{
   UNSV_WORK UnsvWork;      //国連ワーク
   TRIAL_HOUSE_WORK_PTR  TrialHouseWorkPtr;    //トライアルハウスワーク
   MUSICAL_SCRIPT_WORK *musicalScrWork;  //ミュージカルスクリプト用ワーク
+  WBTSYS * wbtsys;                    ///<WBT用システムワーク
 
   PLAYTIME* playtime; // プレイ時間
   
@@ -289,6 +291,9 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
 
   //ミュージカル用スクリプトワーク NULL初期化
   gd->musicalScrWork = NULL;
+
+  //WBT用システムワーク初期化
+  gd->wbtsys = NULL;
 
   //スクリプトオーバーレイ初期化
   gd->scriptCommandOverlayID  = 0;
@@ -2005,6 +2010,17 @@ DREAMWORLD_SAVEDATA* GAMEDATA_GetDreamWorkdSaveWork(GAMEDATA * gamedata)
   return DREAMWORLD_SV_GetDreamWorldSaveData( gamedata->sv_control_ptr );
 }
 
+//----------------------------------------------------------
+/**
+ * @brief   WBTのシステムワーク格納位置のポインタを取得
+ * @param   gamedata      GAMEDATAへのポインタ
+ * @return  WBTSYS **     WBTのシステムワークのポインタ格納位置へのポインタ
+ */
+//----------------------------------------------------------
+WBTSYS ** GAMEDATA_GetWBTSysPointer( GAMEDATA * gamedata )
+{
+  return &gamedata->wbtsys;
+}
 
 //==================================================================
 /**

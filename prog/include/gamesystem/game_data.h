@@ -52,6 +52,7 @@
 
 #include "field/trial_house_ptr.h"
 #include "savedata/trainercard_data.h"
+#include "field/wbt.h"      //WBTSYS
 
 //============================================================================================
 //============================================================================================
@@ -966,3 +967,12 @@ extern void GAMEDATA_SetMedalBoxTopMedalID( GAMEDATA *gamedata, u8 medal_id );
  */
 //-----------------------------------------------------------------------------
 extern u8 GAMEDATA_GetMedalBoxTopMedalID( GAMEDATA *gamedata );
+
+//----------------------------------------------------------
+/**
+ * @brief   WBTのシステムワーク格納位置のポインタを取得
+ * @param   gamedata      GAMEDATAへのポインタ
+ * @return  WBTSYS **     WBTのシステムワークのポインタ格納位置へのポインタ
+ */
+//----------------------------------------------------------
+extern WBTSYS ** GAMEDATA_GetWBTSysPointer( GAMEDATA * gamedata );
