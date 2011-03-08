@@ -5,6 +5,7 @@ DATA_LIST = \
 		 fuusoku.nsbca \
      box.nsbmd \
 		 box.nsbca \
+		 box.nsbma \
      wind_jiki.nsbmd \
 		 wind_jiki.nsbta \
      wind_map.nsbmd \

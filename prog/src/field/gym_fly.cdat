@@ -23,6 +23,7 @@ enum {
   RESID_WINDMETER_ANM1_ICA, // 風力計
   RESID_BOX_MDL,            // 木製の箱
   RESID_BOX_ANM_ICA,        // 木製の箱
+  RESID_BOX_ANM_IMA,        // 木製の箱
   RESID_WIND_JIKI_MDL,      // 風エフェクト(自機)
   RESID_WIND_JIKI_ANM_ITA,  // 風エフェクト(自機)
   RESID_WIND_MAP_MDL,       // 風エフェクト(マップ)
@@ -69,6 +70,7 @@ static const GFL_G3D_UTIL_RES res_3d_table[] =
   // 箱
   { ARCID_GYM_FLY, NARC_gym_fly_box_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
   { ARCID_GYM_FLY, NARC_gym_fly_box_nsbca, GFL_G3D_UTIL_RESARC }, // ICA
+  { ARCID_GYM_FLY, NARC_gym_fly_box_nsbma, GFL_G3D_UTIL_RESARC }, // IMA
   // 風エフェクト(自機)
   { ARCID_GYM_FLY, NARC_gym_fly_wind_jiki_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
   { ARCID_GYM_FLY, NARC_gym_fly_wind_jiki_nsbta, GFL_G3D_UTIL_RESARC }, // ITA
@@ -91,6 +93,7 @@ static const GFL_G3D_UTIL_ANM anm_3d_table_fan[] =
 static const GFL_G3D_UTIL_ANM anm_3d_table_box[] =
 {
   { RESID_BOX_ANM_ICA, 0 }, // nsbca
+  { RESID_BOX_ANM_IMA, 0 }, // nsbma
 };
 // ANIME 風エフェクト(自機)
 static const GFL_G3D_UTIL_ANM anm_3d_table_wind_jiki[] =
