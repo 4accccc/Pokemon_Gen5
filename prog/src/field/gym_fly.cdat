@@ -26,8 +26,12 @@ enum {
   RESID_BOX_ANM_IMA,        // 木製の箱
   RESID_WIND_JIKI_MDL,      // 風エフェクト(自機)
   RESID_WIND_JIKI_ANM_ITA,  // 風エフェクト(自機)
-  RESID_WIND_MAP_MDL,       // 風エフェクト(マップ)
-  RESID_WIND_MAP_ANM_ITA,   // 風エフェクト(マップ)
+  RESID_WIND_1_MDL,       // 風エフェクト(マップ)
+  RESID_WIND_1_ANM_ITA,   // 風エフェクト(マップ)
+  RESID_WIND_2_MDL,       // 風エフェクト(マップ)
+  RESID_WIND_2_ANM_ITA,   // 風エフェクト(マップ)
+  RESID_WIND_3_MDL,       // 風エフェクト(マップ)
+  RESID_WIND_3_ANM_ITA,   // 風エフェクト(マップ)
 };
 
 // OBJインデックス
@@ -55,7 +59,9 @@ enum {
   OBJ_BOX_1,
   OBJ_BOX_2,
   EFFECT_WIND_JIKI,
-  EFFECT_WIND_MAP,
+  EFFECT_WIND_1,
+  EFFECT_WIND_2,
+  EFFECT_WIND_3,
 };
 
 // RES
@@ -75,8 +81,12 @@ static const GFL_G3D_UTIL_RES res_3d_table[] =
   { ARCID_GYM_FLY, NARC_gym_fly_wind_jiki_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
   { ARCID_GYM_FLY, NARC_gym_fly_wind_jiki_nsbta, GFL_G3D_UTIL_RESARC }, // ITA
   // 風エフェクト(マップ)
-  { ARCID_GYM_FLY, NARC_gym_fly_wind_map_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
-  { ARCID_GYM_FLY, NARC_gym_fly_wind_map_nsbta, GFL_G3D_UTIL_RESARC }, // ITA
+  { ARCID_GYM_FLY, NARC_gym_fly_wind_01_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
+  { ARCID_GYM_FLY, NARC_gym_fly_wind_01_nsbta, GFL_G3D_UTIL_RESARC }, // ITA
+  { ARCID_GYM_FLY, NARC_gym_fly_wind_02_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
+  { ARCID_GYM_FLY, NARC_gym_fly_wind_02_nsbta, GFL_G3D_UTIL_RESARC }, // ITA
+  { ARCID_GYM_FLY, NARC_gym_fly_wind_03_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
+  { ARCID_GYM_FLY, NARC_gym_fly_wind_03_nsbta, GFL_G3D_UTIL_RESARC }, // ITA
 };
 
 // ANIME  風力計
@@ -101,9 +111,17 @@ static const GFL_G3D_UTIL_ANM anm_3d_table_wind_jiki[] =
   { RESID_WIND_JIKI_ANM_ITA, 0 }, // nsbta
 };
 // ANIME 風エフェクト(マップ)
-static const GFL_G3D_UTIL_ANM anm_3d_table_wind_map[] =
+static const GFL_G3D_UTIL_ANM anm_3d_table_wind_1[] =
 {
-  { RESID_WIND_MAP_ANM_ITA, 0 }, // nsbta
+  { RESID_WIND_1_ANM_ITA, 0 }, // nsbta
+};
+static const GFL_G3D_UTIL_ANM anm_3d_table_wind_2[] =
+{
+  { RESID_WIND_2_ANM_ITA, 0 }, // nsbta
+};
+static const GFL_G3D_UTIL_ANM anm_3d_table_wind_3[] =
+{
+  { RESID_WIND_3_ANM_ITA, 0 }, // nsbta
 };
 
 // OBJ
@@ -293,13 +311,29 @@ static const GFL_G3D_UTIL_OBJ obj_3d_table[] =
     anm_3d_table_wind_jiki,   // アニメテーブル(複数指定のため)
     NELEMS(anm_3d_table_wind_jiki),      // アニメリソース数
   },
-  // 風エフェクト(マップ)
+  // 風エフェクト1(マップ)
   {
-    RESID_WIND_MAP_MDL,      // モデルリソースID
+    RESID_WIND_1_MDL,      // モデルリソースID
     0,      // モデルデータID(リソース内部INDEX)
-    RESID_WIND_MAP_MDL,      // テクスチャリソースID
-    anm_3d_table_wind_map,   // アニメテーブル(複数指定のため)
-    NELEMS(anm_3d_table_wind_map),      // アニメリソース数
+    RESID_WIND_1_MDL,      // テクスチャリソースID
+    anm_3d_table_wind_1,   // アニメテーブル(複数指定のため)
+    NELEMS(anm_3d_table_wind_1),      // アニメリソース数
+  },
+  // 風エフェクト2(マップ)
+  {
+    RESID_WIND_2_MDL,      // モデルリソースID
+    0,      // モデルデータID(リソース内部INDEX)
+    RESID_WIND_2_MDL,      // テクスチャリソースID
+    anm_3d_table_wind_2,   // アニメテーブル(複数指定のため)
+    NELEMS(anm_3d_table_wind_2),      // アニメリソース数
+  },
+  // 風エフェクト3(マップ)
+  {
+    RESID_WIND_3_MDL,      // モデルリソースID
+    0,      // モデルデータID(リソース内部INDEX)
+    RESID_WIND_3_MDL,      // テクスチャリソースID
+    anm_3d_table_wind_3,   // アニメテーブル(複数指定のため)
+    NELEMS(anm_3d_table_wind_3),      // アニメリソース数
   },
 };
 

@@ -8,6 +8,10 @@ DATA_LIST = \
 		 box.nsbma \
      wind_jiki.nsbmd \
 		 wind_jiki.nsbta \
-     wind_map.nsbmd \
-		 wind_map.nsbta \
+     wind_01.nsbmd \
+		 wind_01.nsbta \
+     wind_02.nsbmd \
+		 wind_02.nsbta \
+     wind_03.nsbmd \
+		 wind_03.nsbta \
 
