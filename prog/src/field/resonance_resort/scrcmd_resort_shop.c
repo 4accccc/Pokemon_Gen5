@@ -359,17 +359,11 @@ VMCMD_RESULT EvCmdResortCallList( VMHANDLE *core, void *wk )
     //自分のお店データを取得
     {
       RESORT_PEOPLE *p_people = Resort_Scrcmd_GetFrontPeople( fieldmap );
-      u16 shop = 0;
-      u16 type = 0; //TODO
-      u16 lv = 0;
 
       GF_ASSERT( RESORT_PEOPLE_GetPeopleData( p_people, RESORT_PEOPLE_DATA_PARAM_TYPE ) == RESORT_PEOPLE_TYPE_RESIDENT );
 
       sbw->wk.p_institution = RESORT_RESIDENT_DATA_GetInstitution( RESORT_PEOPLE_GetDataAdrs( p_people) );
-
-      shop = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_TYPE, NULL );
-      lv = RESORT_INSTITUTION_DATA_GetData( sbw->wk.p_institution, RESORT_INSTITUTION_DATA_PARAM_LV );
-      sbw->wk.cp_shop_data = RESORT_BINARY_SHOP_SearchData( sbw->wk.p_shop, shop, type, lv );
+      sbw->wk.cp_shop_data = RESORT_BINARY_SHOP_SearchDataByData( sbw->wk.p_shop, RESORT_PEOPLE_GetDataAdrs(p_people) );
     }
 
     break;
@@ -1596,12 +1590,7 @@ static void shop_institution_set( SHOP_BUY_APP_WORK *wk, int type, int id )
 
       {
         u16 shop = RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_TYPE, NULL );
-
-        const RESORT_INSTITUTION_DATA * cp_institution = RESORT_RESIDENT_DATA_GetInstitution( p_resident );
-        u16 lv = RESORT_INSTITUTION_DATA_GetData( cp_institution, RESORT_INSTITUTION_DATA_PARAM_LV );
-        u16 type = 0; //TODO
-        const RESORT_BINARY_SHOP_DATA *cp_shop_data = RESORT_BINARY_SHOP_SearchData( wk->p_shop, shop, type, lv );
-        STRBUF *p_shopname = RESORT_DATA_MANAGER_CreateShopName( cp_shop_data, p_resident, wk->heapId );
+        STRBUF *p_shopname = RESORT_DATA_MANAGER_CreateShopName( wk->p_shop, p_resident, wk->heapId );
 
         GFL_MSGDATA* p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_resort_scr_dat, GFL_HEAP_LOWID(wk->heapId) );
         STRBUF *p_shopinfo = GFL_MSG_CreateString( p_msg, resort_shop_genre_00+shop );
@@ -1718,35 +1707,30 @@ static void InstitutionList_Change( SHOP_BUY_APP_WORK *wk, int type, int id )
   {
     RESORT_RESIDENT_DATA *p_resident = wk->lineup[i].p_data_adrs;
 
-        u16 shop = RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_TYPE, NULL );
+    u16 shop = RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_TYPE, NULL );
+    STRBUF *p_shopname = RESORT_DATA_MANAGER_CreateShopName( wk->p_shop, p_resident, wk->heapId );
 
-        const RESORT_INSTITUTION_DATA * cp_institution = RESORT_RESIDENT_DATA_GetInstitution( p_resident );
-        u16 lv = RESORT_INSTITUTION_DATA_GetData( cp_institution, RESORT_INSTITUTION_DATA_PARAM_LV );
-        u16 type = 0; //TODO
-        const RESORT_BINARY_SHOP_DATA *cp_shop_data = RESORT_BINARY_SHOP_SearchData( wk->p_shop, shop, type, lv );
-        STRBUF *p_shopname = RESORT_DATA_MANAGER_CreateShopName( cp_shop_data, p_resident, wk->heapId );
+    GFL_MSGDATA* p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_resort_scr_dat, GFL_HEAP_LOWID(wk->heapId) );
+    STRBUF *p_shopinfo = GFL_MSG_CreateString( p_msg, resort_shop_genre_00+shop );
 
-        GFL_MSGDATA* p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_resort_scr_dat, GFL_HEAP_LOWID(wk->heapId) );
-        STRBUF *p_shopinfo = GFL_MSG_CreateString( p_msg, resort_shop_genre_00+shop );
+    STRBUF *p_name_tmp = GFL_MSG_CreateString( wk->shopMsgData, mes_shop_09_02 );
+    STRBUF *p_info_tmp = GFL_MSG_CreateString( wk->shopMsgData, mes_shop_09_04 );
+    u8 sex = RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_SEX, NULL );
 
-        STRBUF *p_name_tmp = GFL_MSG_CreateString( wk->shopMsgData, mes_shop_09_02 );
-        STRBUF *p_info_tmp = GFL_MSG_CreateString( wk->shopMsgData, mes_shop_09_04 );
-        u8 sex = RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_SEX, NULL );
+    WORDSET_RegisterNumber( wk->wordSet, 1, i+1, 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterWord( wk->wordSet, 0, p_shopname, sex, TRUE, PM_LANG );
 
-        WORDSET_RegisterNumber( wk->wordSet, 1, i+1, 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-        WORDSET_RegisterWord( wk->wordSet, 0, p_shopname, sex, TRUE, PM_LANG );
-
-        WORDSET_ExpandStr( wk->wordSet, wk->lineup[i].p_name, p_name_tmp );
+    WORDSET_ExpandStr( wk->wordSet, wk->lineup[i].p_name, p_name_tmp );
 
 
-        WORDSET_RegisterWord( wk->wordSet, 1, p_shopinfo, PM_NEUTRAL, TRUE, PM_LANG );
-        WORDSET_ExpandStr( wk->wordSet, wk->lineup[i].p_info, p_info_tmp );
+    WORDSET_RegisterWord( wk->wordSet, 1, p_shopinfo, PM_NEUTRAL, TRUE, PM_LANG );
+    WORDSET_ExpandStr( wk->wordSet, wk->lineup[i].p_info, p_info_tmp );
 
-        GFL_STR_DeleteBuffer( p_info_tmp );
-        GFL_STR_DeleteBuffer( p_name_tmp );
-        GFL_STR_DeleteBuffer( p_shopinfo );
-        GFL_MSG_Delete( p_msg );
-        GFL_STR_DeleteBuffer( p_shopname );
+    GFL_STR_DeleteBuffer( p_info_tmp );
+    GFL_STR_DeleteBuffer( p_name_tmp );
+    GFL_STR_DeleteBuffer( p_shopinfo );
+    GFL_MSG_Delete( p_msg );
+    GFL_STR_DeleteBuffer( p_shopname );
 
 
     //リストに加える

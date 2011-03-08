@@ -312,12 +312,7 @@ VMCMD_RESULT EvCmdResortKeepPeople( VMHANDLE *p_core, void *p_wk_adrs )
 static void Resort_Scrcmd_SetWord_ShopName( WORDSET *p_wordset, u16 bufID, RESORT_PEOPLE_ALL_DATA *p_all_people, RESORT_BINARY_SHOP *p_shop, u16 resident_idx, HEAPID heapID )
 {
   RESORT_RESIDENT_DATA *p_resident = RESORT_PEOPLE_ALL_DATA_GetResident( p_all_people, resident_idx );
-  RESORT_INSTITUTION_DATA *p_institution =  RESORT_RESIDENT_DATA_GetInstitution( p_resident );
-  u16 shop = RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_TYPE, NULL );
-  u16 type = 0; //TODO
-  u16 lv = RESORT_INSTITUTION_DATA_GetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_LV );
-  const RESORT_BINARY_SHOP_DATA *cp_shop_data = RESORT_BINARY_SHOP_SearchData( p_shop, shop, type, lv );
-  STRBUF *p_str = RESORT_DATA_MANAGER_CreateShopName( cp_shop_data, p_resident, heapID );
+  STRBUF *p_str = RESORT_DATA_MANAGER_CreateShopName( p_shop, p_resident, heapID );
 
   u32 sex = RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_SEX, NULL );
 
@@ -377,13 +372,7 @@ VMCMD_RESULT EvCmdResortSetWord( VMHANDLE *p_core, void *p_wk_adrs )
   case RESORT_WORD_SHOP:
     {
       void *p_data_adrs = RESORT_PEOPLE_GetDataAdrs( p_people );
-      RESORT_INSTITUTION_DATA *p_institution =  RESORT_RESIDENT_DATA_GetInstitution( p_data_adrs );
-      u16 shop = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_TYPE, NULL );
-      u16 type = 0; //TODO
-      u16 lv = RESORT_INSTITUTION_DATA_GetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_LV );
-      const RESORT_BINARY_SHOP_DATA *cp_shop_data = RESORT_BINARY_SHOP_SearchData( p_shop, shop, type, lv );
-      STRBUF *p_str = RESORT_DATA_MANAGER_CreateShopName( cp_shop_data, p_data_adrs, heapID );
-
+      STRBUF *p_str = RESORT_DATA_MANAGER_CreateShopName( p_shop, p_data_adrs, heapID );
       u32 sex = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_SEX, NULL );
 
       PEOPLE_TYPE_ASSERT2( p_people, RESORT_PEOPLE_TYPE_RESIDENT, RESORT_PEOPLE_TYPE_TOURIST );

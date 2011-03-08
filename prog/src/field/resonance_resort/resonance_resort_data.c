@@ -1300,7 +1300,7 @@ void RESORT_RECV_DATA_SetDebugData( RESORT_RECV_DATA *p_wk, const GAMEDATA *cp_g
     GFL_STD_MemCopy( sc_name[idx].p_str, p_wk->basic1.name, sizeof(STRCODE)*sc_name[idx].len );
     p_wk->basic1.name[sc_name[idx].len] = GFL_STR_GetEOMCode();
 
-    p_wk->basic1.trainer_view = GFUser_GetPublicRand(8) + p_wk->basic1.sex * 8;
+    p_wk->basic1.trainer_view = GFUser_GetPublicRand(8);
 
   }
 }

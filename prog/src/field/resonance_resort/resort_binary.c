@@ -303,6 +303,26 @@ const RESORT_BINARY_SHOP_DATA * RESORT_BINARY_SHOP_SearchData( const RESORT_BINA
 }
 //----------------------------------------------------------------------------
 /**
+ *	@brief　お店バイナリから個別の店情報を取得（RESIDENT版）
+ *
+ *	@param	const RESORT_BINARY_SHOP *cp_wk ワーク
+ *	@param	*p_data 住民データ
+ *
+ *	@return 個別の店情報
+ */
+//-----------------------------------------------------------------------------
+const RESORT_BINARY_SHOP_DATA * RESORT_BINARY_SHOP_SearchDataByData( const RESORT_BINARY_SHOP *cp_wk, RESORT_RESIDENT_DATA *p_data )
+{
+
+  RESORT_INSTITUTION_DATA *p_institution =  RESORT_RESIDENT_DATA_GetInstitution( p_data );
+  u16 shop = RESORT_RESIDENT_DATA_GetData( p_data, RESORT_DATA_PARAM_TYPE, NULL );
+  u16 type = 0; //TODO
+  u16 lv = RESORT_INSTITUTION_DATA_GetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_LV );
+  return RESORT_BINARY_SHOP_SearchData( cp_wk, shop, type, lv );
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief　個別の店情報からお店名を取得
  *
  *	@param	const RESORT_BINARY_SHOP_DATA *cp_wk 　ワーク

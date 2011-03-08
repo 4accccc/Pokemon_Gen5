@@ -10,6 +10,7 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #pragma once
 
+#include "field/resonance_resort_data.h"
 //=============================================================================
 /**
  *					レゾナンスリゾート人物バイナリデータ
@@ -85,6 +86,7 @@ extern void RESORT_BINARY_SHOP_Exit( RESORT_BINARY_SHOP *p_wk );
 
 
 extern const RESORT_BINARY_SHOP_DATA * RESORT_BINARY_SHOP_SearchData( const RESORT_BINARY_SHOP *cp_wk, u16 shop, u16 type, u16 lv );
+extern const RESORT_BINARY_SHOP_DATA * RESORT_BINARY_SHOP_SearchDataByData( const RESORT_BINARY_SHOP *cp_wk, RESORT_RESIDENT_DATA *p_data );
 
 //バイナリからデータ取得
 extern u16 RESORT_BINARY_SHOP_DATA_GetName( const RESORT_BINARY_SHOP_DATA *cp_wk );

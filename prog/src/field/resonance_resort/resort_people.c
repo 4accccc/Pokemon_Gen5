@@ -250,6 +250,22 @@ void * RESORT_PEOPLE_GetDataAdrs( RESORT_PEOPLE *p_wk )
 {
   return RESORT_ABSTRUCT_DATA_GetDataAdrs( p_wk->p_abstruct_data );
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief 施設データを取得
+ *
+ *	@param	RESORT_PEOPLE *p_wk   ワーク
+ *
+ *	@return 施設データ
+ */
+//-----------------------------------------------------------------------------
+RESORT_INSTITUTION_DATA * RESORT_PEOPLE_GetInstitution( RESORT_PEOPLE *p_wk )
+{
+  RESORT_RESIDENT_DATA *p_resident = RESORT_ABSTRUCT_DATA_GetDataAdrs( p_wk->p_abstruct_data );
+
+  GF_ASSERT( p_wk->people_type == RESORT_PEOPLE_TYPE_RESIDENT );
+  return RESORT_RESIDENT_DATA_GetInstitution( p_resident );
+}
 
 //----------------------------------------------------------------------------
 /**

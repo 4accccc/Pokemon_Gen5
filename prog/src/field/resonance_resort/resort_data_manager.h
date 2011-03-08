@@ -90,7 +90,7 @@ extern u32 RESORT_DATA_MANAGER_SearchPlaceEmptyPeopleID( const RESORT_DATA_MANAG
 extern RESORT_RESIDENT_DATA * RESORT_DATA_MANAGER_SearchResident( const RESORT_DATA_MANAGER *cp_wk, RESORT_PLACEID placeID, u16 peopleID );
 
 //çÏê¨
-extern STRBUF * RESORT_DATA_MANAGER_CreateShopName( const RESORT_BINARY_SHOP_DATA *cp_wk, const RESORT_RESIDENT_DATA *cp_data, HEAPID heapID );
+extern STRBUF * RESORT_DATA_MANAGER_CreateShopName( const RESORT_BINARY_SHOP *cp_wk, const RESORT_RESIDENT_DATA *cp_data, HEAPID heapID );
 
 //=============================================================================
 /**
