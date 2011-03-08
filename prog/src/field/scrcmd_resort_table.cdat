@@ -36,7 +36,7 @@
   DEF_CMD( EvCmdResortAddEffort, EV_SEQ_RESORT_ADD_EFFORT )
   DEF_CMD( EvCmdResortHatch, EV_SEQ_RESORT_HATCH )
   DEF_CMD( EvCmdResortSetDayFlag, EV_SEQ_RESORT_SET_DAY_FLAG)
-  NO_CMD()
+  DEF_CMD( EvCmdResortEndService, EV_SEQ_RESORT_END_SERVICE )
   NO_CMD()
   NO_CMD()
   NO_CMD()

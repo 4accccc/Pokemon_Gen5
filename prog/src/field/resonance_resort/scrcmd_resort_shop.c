@@ -186,6 +186,7 @@ typedef struct _SHOP_BUY_APP_WORK{
   RESORT_PEOPLE_ALL_DATA  *p_all_people;
 
   u16*  ret_service_type;
+  u16*  ret_service_param;
   u16*  ret_service_idx;
   u16*  ret_price;
 
@@ -308,6 +309,7 @@ VMCMD_RESULT EvCmdResortCallList( VMHANDLE *core, void *wk )
   u16            shop_type  = SCRCMD_GetVMWorkValue( core, work );
   u16            shop_param  = SCRCMD_GetVMWorkValue( core, work );
   u16*           ret_service_type   = SCRCMD_GetVMWork( core, work );
+  u16*           ret_service_param = SCRCMD_GetVMWork( core, work );
   u16*           ret_service_idx = SCRCMD_GetVMWork( core, work );
   u16*           ret_price        = SCRCMD_GetVMWork( core, work );
   GAMESYS_WORK*  gsys     = SCRCMD_WORK_GetGameSysWork( work );
@@ -327,6 +329,7 @@ VMCMD_RESULT EvCmdResortCallList( VMHANDLE *core, void *wk )
   sbw->wk.myitem    = GAMEDATA_GetMyItem( gamedata );
   sbw->wk.record    = GAMEDATA_GetRecordPtr( gamedata );
   sbw->wk.ret_service_type = ret_service_type;
+  sbw->wk.ret_service_param = ret_service_param;
   sbw->wk.ret_service_idx = ret_service_idx;
   sbw->wk.ret_price = ret_price;
 
@@ -1131,12 +1134,14 @@ static BOOL ShopCallFunc_Buy( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int typ
     if( wk->cp_select )
     {
       *wk->ret_service_type = wk->cp_select->serviceID;
+      *wk->ret_service_param   = wk->cp_select->param1;
       *wk->ret_service_idx = wk->cp_select->id;
       *wk->ret_price = wk->cp_select->price;
     }
     else
     {
       *wk->ret_service_type = RESORT_LIST_CANCEL;
+      *wk->ret_service_param   = 0;
       *wk->ret_service_idx = 0;
       *wk->ret_price = 0;
     }
@@ -1240,12 +1245,14 @@ static BOOL ShopCallFunc_Select( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int 
     if( wk->cp_select )
     {
       *wk->ret_service_type = wk->cp_select->serviceID;
+      *wk->ret_service_param   = 0;
       *wk->ret_service_idx = wk->cp_select->id;
       *wk->ret_price = wk->cp_select->price;
     }
     else
     {
       *wk->ret_service_type = RESORT_LIST_CANCEL;
+      *wk->ret_service_param   = 0;
       *wk->ret_service_idx = 0;
       *wk->ret_price = 0;
     }
@@ -1365,12 +1372,14 @@ static BOOL ShopCallFunc_Sort( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int ty
     if( wk->cp_select )
     {
       *wk->ret_service_type = wk->cp_select->serviceID;
+      *wk->ret_service_param   = 0;
       *wk->ret_service_idx = wk->cp_select->id;
       *wk->ret_price = wk->cp_select->price;
     }
     else
     {
       *wk->ret_service_type = RESORT_LIST_CANCEL;
+      *wk->ret_service_param   = 0;
       *wk->ret_service_idx = 0;
       *wk->ret_price = 0;
     }

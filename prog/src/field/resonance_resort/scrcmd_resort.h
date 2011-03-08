@@ -41,3 +41,4 @@ extern VMCMD_RESULT EvCmdResortHatch( VMHANDLE *p_core, void *p_wk_adrs );
 extern VMCMD_RESULT EvCmdResortSetDayFlag( VMHANDLE *p_core, void *p_wk_adrs );
 extern VMCMD_RESULT EvCmdResortGetInstitutionData( VMHANDLE *p_core, void *p_wk_adrs );
 extern VMCMD_RESULT EvCmdResortSetInstitutionData( VMHANDLE *p_core, void *p_wk_adrs );
+extern VMCMD_RESULT EvCmdResortEndService( VMHANDLE *p_core, void *p_wk_adrs );

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nagihashi_toru" host="W00268" date="2011-03-04T12:28:43"/>
+	<create user="nagihashi_toru" host="W00268" date="2011-03-08T17:03:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -850,8 +850,25 @@ GTSで　会ったよね！</language>
 	</row>
 
 	<row id="resort_sys_07" back-color="#80ff80,,,,,,,#80ff80,,,,,,,,,,,">
-		<language name="JPN" width="256">[1:38:リゾート店名:0]に　てんしょくした！</language>
-		<language name="JPN_KANJI" width="256">[1:38:リゾート店名:0]に　転職した！</language>
+		<language name="JPN" width="256">[1:38:リゾート店名:0]に　てんしょくした！▼</language>
+		<language name="JPN_KANJI" width="256">[1:38:リゾート店名:0]に　転職した！▼</language>
+	</row>
+
+	<row id="resort_sys_08" back-color="#80ff80,,,,,,,#80ff80,,,,,,,,,,,">
+		<language name="JPN" width="256"></language>
+		<language name="JPN_KANJI" width="256"></language>
+	</row>
+
+	<row id="resort_sys_09" back-color="#80ff80,,,,,,,#80ff80,,,,,,,,,,,">
+		<language name="JPN" width="256">[1:00:トレーナー名:0]は　
+[2:05:６桁:1]えん　しはらった！▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　
+[2:05:６桁:1]円　しはらった！▼</language>
+	</row>
+
+	<row id="resort_sys_10" back-color="#80ff80,,,,,,,#80ff80,,,,,,,,,,,">
+		<language name="JPN" width="256">それでは　おだいを　いただきますね▼</language>
+		<language name="JPN_KANJI" width="256">それでは　お代を　いただきますね▼</language>
 	</row>
 
 	<row id="resort_shop_genre_00" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
@@ -1180,133 +1197,133 @@ GTSで　会ったよね！</language>
 
 	<row id="resort_lot_00" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
 		<attribute name="キャラ指定">くじびき</attribute>
-		<language name="JPN" width="256">ざんねんですが　はずれました……</language>
-		<language name="JPN_KANJI" width="256">残念ですが　外れました……</language>
+		<language name="JPN" width="256">ざんねんですが　はずれました……▼</language>
+		<language name="JPN_KANJI" width="256">残念ですが　外れました……▼</language>
 	</row>
 
 	<row id="resort_lot_01" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
 		<language name="JPN" width="256">[2:01:２桁:0]とうが　あたりました！
-しょうひんは　こちらです！</language>
+しょうひんは　こちらです！▼</language>
 		<language name="JPN_KANJI" width="256">[2:01:２桁:0]等が　当たりました！
-賞品は　こちらです！</language>
+賞品は　こちらです！▼</language>
 	</row>
 
 	<row id="resort_lot_02" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
 		<language name="JPN" width="256">ほんじつの　くじは　
-しゅうりょうです</language>
+しゅうりょうです▼</language>
 		<language name="JPN_KANJI" width="256">本日の　くじは　
-終了です</language>
+終了です▼</language>
 	</row>
 
 	<row id="resort_parlor_00" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
 		<attribute name="キャラ指定">美容室</attribute>
-		<language name="JPN" width="256">どの　ポケモンを　きれいに　しますか？</language>
-		<language name="JPN_KANJI" width="256">どの　ポケモンを　きれいに　しますか？</language>
+		<language name="JPN" width="256">どの　ポケモンを　きれいに　しますか？▼</language>
+		<language name="JPN_KANJI" width="256">どの　ポケモンを　きれいに　しますか？▼</language>
 	</row>
 
 	<row id="resort_parlor_01" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
-		<language name="JPN" width="256">タマゴは　だめです！</language>
-		<language name="JPN_KANJI" width="256">タマゴは　だめです！</language>
+		<language name="JPN" width="256">タマゴは　だめです！▼</language>
+		<language name="JPN_KANJI" width="256">タマゴは　だめです！▼</language>
 	</row>
 
 	<row id="resort_parlor_02" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
 		<language name="JPN" width="256">このこ　もう　すごく　
-なついてるみたい！</language>
+なついてるみたい！▼</language>
 		<language name="JPN_KANJI" width="256">このこ　もう　すごく
-なついてるみたい！</language>
+なついてるみたい！▼</language>
 	</row>
 
 	<row id="resort_parlor_03" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
 		<language name="JPN" width="256">はい！
-これで　このこも　ごきげんね！</language>
+これで　このこも　ごきげんね！▼</language>
 		<language name="JPN_KANJI" width="256">はい！
-これで　この子も　ご機嫌ね！</language>
+これで　この子も　ご機嫌ね！▼</language>
 	</row>
 
 	<row id="resort_parlor_04" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
-		<language name="JPN" width="256">きょうは　もう　みせじまいです</language>
-		<language name="JPN_KANJI" width="256">今日は　もう　店じまいです</language>
+		<language name="JPN" width="256">きょうは　もう　みせじまいです▼</language>
+		<language name="JPN_KANJI" width="256">今日は　もう　店じまいです▼</language>
 	</row>
 
 	<row id="resort_breeder_00" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
 		<attribute name="キャラ指定">育て屋</attribute>
-		<language name="JPN" width="256">どの　ポケモンを　そだてますか？</language>
-		<language name="JPN_KANJI" width="256">どの　ポケモンを　育てますか？</language>
+		<language name="JPN" width="256">どの　ポケモンを　そだてますか？▼</language>
+		<language name="JPN_KANJI" width="256">どの　ポケモンを　育てますか？▼</language>
 	</row>
 
 	<row id="resort_breeder_01" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
-		<language name="JPN" width="256">タマゴは　だめです！</language>
-		<language name="JPN_KANJI" width="256">タマゴは　だめです！</language>
+		<language name="JPN" width="256">タマゴは　だめです！▼</language>
+		<language name="JPN_KANJI" width="256">タマゴは　だめです！▼</language>
 	</row>
 
 	<row id="resort_breeder_02" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
 		<language name="JPN" width="256">このこ　もう　すごく　
-つよい　みたい！</language>
+つよい　みたい！▼</language>
 		<language name="JPN_KANJI" width="256">このこ　もう　すごく　
-つよい　みたい！</language>
+つよい　みたい！▼</language>
 	</row>
 
 	<row id="resort_breeder_03" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
 		<language name="JPN" width="256">はい！
-これで　このこも　つよくなった！</language>
+これで　このこも　つよくなった！▼</language>
 		<language name="JPN_KANJI" width="256">はい！
-これで　このこも　つよくなった！</language>
+これで　このこも　つよくなった！▼</language>
 	</row>
 
 	<row id="resort_breeder_04" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
-		<language name="JPN" width="256">きょうは　もう　みせじまいです</language>
-		<language name="JPN_KANJI" width="256">今日は　もう　店じまいです</language>
+		<language name="JPN" width="256">きょうは　もう　みせじまいです▼</language>
+		<language name="JPN_KANJI" width="256">今日は　もう　店じまいです▼</language>
 	</row>
 
 	<row id="resort_exercice_00" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
-		<language name="JPN" width="256">どの　ポケモンを　きたえますか？</language>
-		<language name="JPN_KANJI" width="256">どの　ポケモンを　鍛えますか？</language>
+		<language name="JPN" width="256">どの　ポケモンを　きたえますか？▼</language>
+		<language name="JPN_KANJI" width="256">どの　ポケモンを　鍛えますか？▼</language>
 	</row>
 
 	<row id="resort_exercice_01" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
-		<language name="JPN" width="256">タマゴは　だめです！</language>
-		<language name="JPN_KANJI" width="256">タマゴは　だめです！</language>
+		<language name="JPN" width="256">タマゴは　だめです！▼</language>
+		<language name="JPN_KANJI" width="256">タマゴは　だめです！▼</language>
 	</row>
 
 	<row id="resort_exercice_02" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
 		<language name="JPN" width="256">このこ　もう　すごく　
-つよい　みたい！</language>
+つよい　みたい！▼</language>
 		<language name="JPN_KANJI" width="256">このこ　もう　すごく　
-つよい　みたい！</language>
+つよい　みたい！▼</language>
 	</row>
 
 	<row id="resort_exercice_03" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
 		<language name="JPN" width="256">はい！
-これで　このこも　つよくなった！</language>
+これで　このこも　つよくなった！▼</language>
 		<language name="JPN_KANJI" width="256">はい！
-これで　このこも　つよくなった！</language>
+これで　このこも　つよくなった！▼</language>
 	</row>
 
 	<row id="resort_exercice_04" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
-		<language name="JPN" width="256">きょうは　もう　みせじまいです</language>
-		<language name="JPN_KANJI" width="256">今日は　もう　店じまいです</language>
+		<language name="JPN" width="256">きょうは　もう　みせじまいです▼</language>
+		<language name="JPN_KANJI" width="256">今日は　もう　店じまいです▼</language>
 	</row>
 
 	<row id="resort_nursery_00" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
-		<language name="JPN" width="256">どの　タマゴを　ふかさせますか？</language>
-		<language name="JPN_KANJI" width="256">どの　タマゴを　ふかさせますか？</language>
+		<language name="JPN" width="256">どの　タマゴを　ふかさせますか？▼</language>
+		<language name="JPN_KANJI" width="256">どの　タマゴを　ふかさせますか？▼</language>
 	</row>
 
 	<row id="resort_nursery_01" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
-		<language name="JPN" width="256">タマゴじゃないですよ！</language>
-		<language name="JPN_KANJI" width="256">タマゴじゃないですよ！</language>
+		<language name="JPN" width="256">タマゴじゃないですよ！▼</language>
+		<language name="JPN_KANJI" width="256">タマゴじゃないですよ！▼</language>
 	</row>
 
 	<row id="resort_nursery_02" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
 		<language name="JPN" width="256">はい！
-ぶじ　うまれました！</language>
+ぶじ　うまれました！▼</language>
 		<language name="JPN_KANJI" width="256">はい！
-ぶじ　うまれました！</language>
+ぶじ　うまれました！▼</language>
 	</row>
 
 	<row id="resort_nursery_03" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
-		<language name="JPN" width="256">きょうは　もう　みせじまいです</language>
-		<language name="JPN_KANJI" width="256">今日は　もう　店じまいです</language>
+		<language name="JPN" width="256">きょうは　もう　みせじまいです▼</language>
+		<language name="JPN_KANJI" width="256">今日は　もう　店じまいです▼</language>
 	</row>
 
 	<row id="resort_service_00" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
@@ -1476,161 +1493,161 @@ GTSで　会ったよね！</language>
 	<row id="resort_history_00" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<attribute name="キャラ指定">履歴</attribute>
 		<language name="JPN" width="256">さいきん　まちレベルを
-さいだいまで　あげたんだ！</language>
+さいだいまで　あげたんだ！▼</language>
 		<language name="JPN_KANJI" width="256">最近　街レベルを　
-最大まで　あげたんだ！</language>
+最大まで　あげたんだ！▼</language>
 	</row>
 
 	<row id="resort_appeal_00" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
 		<attribute name="キャラ指定">アピール　ポケモンくじ</attribute>
-		<language name="JPN" width="256">くじびきやに　なりたいな！</language>
-		<language name="JPN_KANJI" width="256">くじびきやに　なりたいな！</language>
+		<language name="JPN" width="256">くじびきやに　なりたいな！▼</language>
+		<language name="JPN_KANJI" width="256">くじびきやに　なりたいな！▼</language>
 	</row>
 
 	<row id="resort_appeal_01" back-color="#ff0000,,,,,,,#ff0000,,,#ff0000,,,#ff0000,,,#ff0000,,">
 		<attribute name="キャラ指定">美容室</attribute>
-		<language name="JPN" width="256">びようしつを　やりたいな！</language>
-		<language name="JPN_KANJI" width="256">びようしつを　やりたいな！</language>
+		<language name="JPN" width="256">びようしつを　やりたいな！▼</language>
+		<language name="JPN_KANJI" width="256">びようしつを　やりたいな！▼</language>
 	</row>
 
 	<row id="resort_appeal_02" back-color="#ff0000,,,,,,,#ff0000,,,#ff0000,,,#ff0000,,,#ff0000,,">
 		<attribute name="キャラ指定">育て屋</attribute>
-		<language name="JPN" width="256">そだてやを　やりたいな！</language>
-		<language name="JPN_KANJI" width="256">そだてやを　やりたいな！</language>
+		<language name="JPN" width="256">そだてやを　やりたいな！▼</language>
+		<language name="JPN_KANJI" width="256">そだてやを　やりたいな！▼</language>
 	</row>
 
 	<row id="resort_appeal_03" back-color="#ff0000,,,,,,,#ff0000,,,#ff0000,,,#ff0000,,,#ff0000,,">
 		<attribute name="キャラ指定">マーケット</attribute>
-		<language name="JPN" width="256">マーケットを　やりたいな！</language>
-		<language name="JPN_KANJI" width="256">マーケットを　やりたいな！</language>
+		<language name="JPN" width="256">マーケットを　やりたいな！▼</language>
+		<language name="JPN_KANJI" width="256">マーケットを　やりたいな！▼</language>
 	</row>
 
 	<row id="resort_appeal_04" back-color="#ff0000,,,,,,,#ff0000,,,#ff0000,,,#ff0000,,,#ff0000,,">
 		<attribute name="キャラ指定">花屋</attribute>
-		<language name="JPN" width="256">はなやを　やりたいな！</language>
-		<language name="JPN_KANJI" width="256">はなやを　やりたいな！</language>
+		<language name="JPN" width="256">はなやを　やりたいな！▼</language>
+		<language name="JPN_KANJI" width="256">はなやを　やりたいな！▼</language>
 	</row>
 
 	<row id="resort_appeal_05" back-color="#ff0000,,,,,,,#ff0000,,,#ff0000,,,#ff0000,,,#ff0000,,">
 		<attribute name="キャラ指定">道場</attribute>
-		<language name="JPN" width="256">どうじょうを　やりたいな！</language>
-		<language name="JPN_KANJI" width="256">どうじょうを　やりたいな！</language>
+		<language name="JPN" width="256">どうじょうを　やりたいな！▼</language>
+		<language name="JPN_KANJI" width="256">どうじょうを　やりたいな！▼</language>
 	</row>
 
 	<row id="resort_appeal_06" back-color="#ff0000,,,,,,,#ff0000,,,#ff0000,,,#ff0000,,,#ff0000,,">
 		<attribute name="キャラ指定">保育所</attribute>
-		<language name="JPN" width="256">ほいくじょを　やりたいな！</language>
-		<language name="JPN_KANJI" width="256">ほいくじょを　やりたいな！</language>
+		<language name="JPN" width="256">ほいくじょを　やりたいな！▼</language>
+		<language name="JPN_KANJI" width="256">ほいくじょを　やりたいな！▼</language>
 	</row>
 
 	<row id="resort_appeal_07" back-color="#ff0000,,,,,,,#ff0000,,,#ff0000,,,#ff0000,,,#ff0000,,">
 		<attribute name="キャラ指定">宝石店</attribute>
-		<language name="JPN" width="256">ほうせきてんを　やりたいな！</language>
-		<language name="JPN_KANJI" width="256">ほうせきてんを　やりたいな！</language>
+		<language name="JPN" width="256">ほうせきてんを　やりたいな！▼</language>
+		<language name="JPN_KANJI" width="256">ほうせきてんを　やりたいな！▼</language>
 	</row>
 
 	<row id="resort_appeal_08" back-color="#ff0000,,,,,,,#ff0000,,,#ff0000,,,#ff0000,,,#ff0000,,">
 		<attribute name="キャラ指定">古道具屋</attribute>
-		<language name="JPN" width="256">ふるどうぐやを　やりたいな！</language>
-		<language name="JPN_KANJI" width="256">ふるどうぐやを　やりたいな！</language>
+		<language name="JPN" width="256">ふるどうぐやを　やりたいな！▼</language>
+		<language name="JPN_KANJI" width="256">ふるどうぐやを　やりたいな！▼</language>
 	</row>
 
 	<row id="resort_appeal_09" back-color="#ff0000,,,,,,,#ff0000,,,#ff0000,,,#ff0000,,,#ff0000,,">
 		<attribute name="キャラ指定">レストラン</attribute>
-		<language name="JPN" width="256">レストランを　やりたいな！</language>
-		<language name="JPN_KANJI" width="256">レストランを　やりたいな！</language>
+		<language name="JPN" width="256">レストランを　やりたいな！▼</language>
+		<language name="JPN_KANJI" width="256">レストランを　やりたいな！▼</language>
 	</row>
 
 	<row id="resort_appeal_10" back-color="#ff0000,,,,,,,#ff0000,,,#ff0000,,,#ff0000,,,#ff0000,,">
 		<attribute name="キャラ指定">ジムもどき</attribute>
-		<language name="JPN" width="256">ジムを　やりたいな！</language>
-		<language name="JPN_KANJI" width="256">ジムを　やりたいな！</language>
+		<language name="JPN" width="256">ジムを　やりたいな！▼</language>
+		<language name="JPN_KANJI" width="256">ジムを　やりたいな！▼</language>
 	</row>
 
 	<row id="resort_appeal_11" back-color="#ff0000,,,,,,,#ff0000,,,#ff0000,,,#ff0000,,,#ff0000,,">
 		<attribute name="キャラ指定">民家</attribute>
-		<language name="JPN" width="256">なにも　やりたくないんです。</language>
-		<language name="JPN_KANJI" width="256">なにも　やりたくないんです。</language>
+		<language name="JPN" width="256">なにも　やりたくないんです▼</language>
+		<language name="JPN_KANJI" width="256">なにも　やりたくないんです▼</language>
 	</row>
 
 	<row id="resort_go_00" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<attribute name="キャラ指定">行きたい場所　ポケモンくじ</attribute>
-		<language name="JPN" width="256">くじびきを　したいな</language>
-		<language name="JPN_KANJI" width="256">くじびきを　したいな</language>
+		<language name="JPN" width="256">くじびきを　したいな▼</language>
+		<language name="JPN_KANJI" width="256">くじびきを　したいな▼</language>
 	</row>
 
 	<row id="resort_go_01" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<attribute name="キャラ指定">美容室</attribute>
-		<language name="JPN" width="256">ポケモンを　きれいにしたいな</language>
-		<language name="JPN_KANJI" width="256">ポケモンを　きれいにしたいな</language>
+		<language name="JPN" width="256">ポケモンを　きれいにしたいな▼</language>
+		<language name="JPN_KANJI" width="256">ポケモンを　きれいにしたいな▼</language>
 	</row>
 
 	<row id="resort_go_02" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<attribute name="キャラ指定">育て屋</attribute>
-		<language name="JPN" width="256">ポケモンを　そだてたいな</language>
-		<language name="JPN_KANJI" width="256">ポケモンを　そだてたいな</language>
+		<language name="JPN" width="256">ポケモンを　そだてたいな▼</language>
+		<language name="JPN_KANJI" width="256">ポケモンを　そだてたいな▼</language>
 	</row>
 
 	<row id="resort_go_03" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<attribute name="キャラ指定">マーケット</attribute>
-		<language name="JPN" width="256">いろんなものが　かいたいな</language>
-		<language name="JPN_KANJI" width="256">いろんなものが　買いたいな</language>
+		<language name="JPN" width="256">いろんなものが　かいたいな▼</language>
+		<language name="JPN_KANJI" width="256">いろんなものが　買いたいな▼</language>
 	</row>
 
 	<row id="resort_go_04" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<attribute name="キャラ指定">花屋</attribute>
-		<language name="JPN" width="256">きのみを　かいたい</language>
-		<language name="JPN_KANJI" width="256">きのみを　かいたい</language>
+		<language name="JPN" width="256">きのみを　かいたい▼</language>
+		<language name="JPN_KANJI" width="256">きのみを　かいたい▼</language>
 	</row>
 
 	<row id="resort_go_05" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<attribute name="キャラ指定">道場</attribute>
-		<language name="JPN" width="256">ポケモンを　きたえたいな</language>
-		<language name="JPN_KANJI" width="256">ポケモンを　きたえたいな</language>
+		<language name="JPN" width="256">ポケモンを　きたえたいな▼</language>
+		<language name="JPN_KANJI" width="256">ポケモンを　きたえたいな▼</language>
 	</row>
 
 	<row id="resort_go_06" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<attribute name="キャラ指定">保育所</attribute>
-		<language name="JPN" width="256">タマゴを　ふかさせたいな</language>
-		<language name="JPN_KANJI" width="256">タマゴを　ふかさせたいな</language>
+		<language name="JPN" width="256">タマゴを　ふかさせたいな▼</language>
+		<language name="JPN_KANJI" width="256">タマゴを　ふかさせたいな▼</language>
 	</row>
 
 	<row id="resort_go_07" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<attribute name="キャラ指定">宝石店</attribute>
-		<language name="JPN" width="256">きらきらひかるものが　ほしい</language>
-		<language name="JPN_KANJI" width="256">きらきらひかるものが　ほしい</language>
+		<language name="JPN" width="256">きらきらひかるものが　ほしい▼</language>
+		<language name="JPN_KANJI" width="256">きらきらひかるものが　ほしい▼</language>
 	</row>
 
 	<row id="resort_go_08" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<attribute name="キャラ指定">古道具屋</attribute>
-		<language name="JPN" width="256">ほりだしものを　みつけたい</language>
-		<language name="JPN_KANJI" width="256">ほりだしものを　みつけたい</language>
+		<language name="JPN" width="256">ほりだしものを　みつけたい▼</language>
+		<language name="JPN_KANJI" width="256">ほりだしものを　みつけたい▼</language>
 	</row>
 
 	<row id="resort_go_09" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<attribute name="キャラ指定">レストラン</attribute>
-		<language name="JPN" width="256">おいしい　りょうりを　たべたいな</language>
-		<language name="JPN_KANJI" width="256">おいしい　りょうりを　たべたいな</language>
+		<language name="JPN" width="256">おいしい　りょうりを　たべたいな▼</language>
+		<language name="JPN_KANJI" width="256">おいしい　りょうりを　たべたいな▼</language>
 	</row>
 
 	<row id="resort_go_10" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<attribute name="キャラ指定">ジムもどき</attribute>
-		<language name="JPN" width="256">たたかいたい！</language>
-		<language name="JPN_KANJI" width="256">たたかいたい！</language>
+		<language name="JPN" width="256">たたかいたい！▼</language>
+		<language name="JPN_KANJI" width="256">たたかいたい！▼</language>
 	</row>
 
 	<row id="resort_go_11" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<attribute name="キャラ指定">民家</attribute>
-		<language name="JPN" width="256">なにもしたくない</language>
-		<language name="JPN_KANJI" width="256">なにもしたくない</language>
+		<language name="JPN" width="256">なにもしたくない▼</language>
+		<language name="JPN_KANJI" width="256">なにもしたくない▼</language>
 	</row>
 
 	<row id="resort_gossip_00" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
 		<attribute name="キャラ指定">秘書が話す噂</attribute>
 		<language name="JPN" width="256">さいきん　とある　ジムリーダーが
-あそびに　きてるらしいよ</language>
+あそびに　きてるらしいよ▼</language>
 		<language name="JPN_KANJI" width="256">最近　とある　ジムリーダーが
-遊びに　きてるらしいよ</language>
+遊びに　きてるらしいよ▼</language>
 	</row>
 
 	<flowchart-group-list>

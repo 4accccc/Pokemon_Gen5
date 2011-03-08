@@ -12555,19 +12555,21 @@
  *
  * @param[in]   param モードに渡す引数（どのアイテムリストか、とか）
  * @param[out]  選んだサービスタイプ
+ * @param[out]  選んだサービスの引数
  * @param[out]  選んだサービスインデックス
  * @param[out]  値段
  */
 //--------------------------------------------------------------
-#define _RESORT_CALL_LIST( idx, param, ret_service_type, ret_service_idx, ret_price ) \
-    _ASM_RESORT_CALL_LIST idx, param, ret_service_type, ret_service_idx, ret_price
+#define _RESORT_CALL_LIST( idx, param, ret_type, ret_param, ret_idx, ret_price ) \
+    _ASM_RESORT_CALL_LIST idx, param, ret_type, ret_param, ret_idx, ret_price
 
-  .macro _ASM_RESORT_CALL_LIST idx, param, ret_service_type, ret_service_idx, ret_price
+  .macro _ASM_RESORT_CALL_LIST idx, param, ret_type, ret_param, ret_idx, ret_price
   .short EV_SEQ_RESORT_CALL_LIST
   .short \idx
   .short \param
-  .short \ret_service_type
-  .short \ret_service_idx
+  .short \ret_type
+  .short \ret_param
+  .short \ret_idx
   .short \ret_price
   .endm
 
@@ -12692,19 +12694,20 @@
  *        RESORT_ADD_EFFORT_AGI   すばやさ
  *        RESORT_ADD_EFFORT_SPEPOW  とくこう
  *        RESORT_ADD_EFFORT_SPEDEF  とくぼう
- *
+ * @param[in]   value いくら努力値をあげるか
  * @param[out]  ret_wk 　下記
  *      TRUE    …あげた
  *      FALSE　 …レベルが最大
  */
 //--------------------------------------------------------------
-#define _RESORT_ADD_EFFORT( idx, effort, ret_wk ) \
-      _ASM_RESORT_ADD_EFFORT idx, effort, ret_wk
+#define _RESORT_ADD_EFFORT( idx, effort, value, ret_wk ) \
+      _ASM_RESORT_ADD_EFFORT idx, effort, value, ret_wk
 
-  .macro _ASM_RESORT_ADD_EFFORT idx, effort, ret_wk
+  .macro _ASM_RESORT_ADD_EFFORT idx, effort, value, ret_wk
   .short EV_SEQ_RESORT_ADD_EFFORT
   .short \idx
   .short \effort
+  .short \value
   .short \ret_wk
   .endm
 
@@ -12720,6 +12723,22 @@
   .macro _ASM_RESORT_HATCH idx
   .short EV_SEQ_RESORT_HATCH
   .short \idx
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief リゾート用　サービス終了（お金払う＋フラグを立てる）
+ * @param[in]   price   金額
+ * @param[in]   flag    フラグ
+ */
+//--------------------------------------------------------------
+#define _RESORT_END_SERVICE( price, flag ) \
+      _ASM_RESORT_END_SERVICE price, flag
+
+  .macro _ASM_RESORT_END_SERVICE price, flag
+  .short EV_SEQ_RESORT_END_SERVICE
+  .short \price
+  .short \flag
   .endm
 
 //--------------------------------------------------------------

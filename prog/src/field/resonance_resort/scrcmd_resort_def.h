@@ -128,4 +128,3 @@
 #define RESORT_ADD_EFFORT_AGI                 (3)
 #define RESORT_ADD_EFFORT_SPEPOW              (4)
 #define RESORT_ADD_EFFORT_SPEDEF              (5)
-

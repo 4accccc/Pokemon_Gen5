@@ -33,10 +33,16 @@ _EVENT_DATA    ev_resort_secretary_center
 _EVENT_DATA    ev_resort_secretary_pc
 _EVENT_DATA_END
 
+//DEFINE_LOCALの数が多いので、グローバルにおいて使い回しています。
 DEFINE_LOCAL  LWK_MENU_RET
 DEFINE_LOCAL  LWK_MENU_LOOP
 DEFINE_LOCAL  LWK_OBJID
 DEFINE_LOCAL  LWK_MSGID
+
+DEFINE_LOCAL LWK_LIST_RET_TYPE
+DEFINE_LOCAL LWK_LIST_RET_PARAM
+DEFINE_LOCAL LWK_LIST_RET_IDX
+DEFINE_LOCAL LWK_LIST_RET_PRICE
 
 /**************************************************************/
 /*            ZONE_CHANGE_LABEL                               */
@@ -228,15 +234,12 @@ sub_tourist_scout:
   DEFINE_LOCAL LWK_IS_SECRETARY_FULL
   DEFINE_LOCAL LWK_SELECT_ID
 	DEFINE_LOCAL LWK_IS_VISITOR
-  DEFINE_LOCAL LWK_RET_SERVICE_TYPE
-  DEFINE_LOCAL LWK_RET_SERVICE_IDX
-  DEFINE_LOCAL LWK_RET_SERVICE_PRICE
 
   //秘書入れ替えチェック
   _RESORT_GET_DATA( RESORT_GET_PARAM_IS_SECREARY_FULL, LWK_IS_SECRETARY_FULL )
   IF $LWK_IS_SECRETARY_FULL == TRUE THEN
     //誰と入れ替えるか選択 //TODO
-  _RESORT_CALL_LIST( RESORT_LIST_TYPE_BUY, 0, LWK_RET_SERVICE_TYPE, LWK_RET_SERVICE_IDX, LWK_RET_SERVICE_PRICE )
+  _RESORT_CALL_LIST( RESORT_LIST_TYPE_BUY, 0, LWK_LIST_RET_TYPE, LWK_LIST_RET_PARAM, LWK_LIST_RET_IDX, LWK_LIST_RET_PRICE )
   ENDIF
 
 
@@ -319,9 +322,6 @@ _RET
 //==============================================================
 sub_tourist_spot:
 {
-  DEFINE_LOCAL LWK_RET_SERVICE_TYPE
-  DEFINE_LOCAL LWK_RET_SERVICE_IDX
-  DEFINE_LOCAL LWK_RET_SERVICE_PRICE
 
   //スポット文を表示
   _RESORT_GET_MSGID( RESORT_MSGID_WHERETOGO, LWK_MSGID )
@@ -330,7 +330,7 @@ sub_tourist_spot:
 	_BALLOONWIN_CLOSE()
 
   //施設選択 //TODO
-  _RESORT_CALL_LIST( RESORT_LIST_TYPE_SELECT, RESORT_LIST_SELECT_INSTATITUTION, LWK_RET_SERVICE_TYPE, LWK_RET_SERVICE_IDX, LWK_RET_SERVICE_PRICE )
+  _RESORT_CALL_LIST( RESORT_LIST_TYPE_SELECT, RESORT_LIST_SELECT_INSTATITUTION, LWK_LIST_RET_TYPE, LWK_LIST_RET_PARAM,LWK_LIST_RET_IDX, LWK_LIST_RET_PRICE )
 
   //暗転してメッセージ（暗転中にOBJ転職し消す）
   //TODO 
@@ -680,53 +680,7 @@ _RET
 //==============================================================
 sub_resident_parlor:
 {
-  DEFINE_LOCAL LWK_DAY_FLAG
-  DEFINE_LOCAL LWK_RET_DECIDE
-  DEFINE_LOCAL LWK_RET_IDX
-  DEFINE_LOCAL LWK_RET_SERVICE_TYPE
-  DEFINE_LOCAL LWK_RET_SERVICE_IDX
-  DEFINE_LOCAL LWK_RET_SERVICE_PRICE
-
-  _RESORT_GET_DATA( RESORT_GET_PARAM_DAY_FLAG, LWK_DAY_FLAG )
-
-  _RESORT_CALL_LIST( RESORT_LIST_TYPE_BUY, 0, LWK_RET_SERVICE_TYPE, LWK_RET_SERVICE_IDX, LWK_RET_SERVICE_PRICE )
-  //１日１回チェック
-  //IF $LWK_DAY_FLAG == FALSE THEN
-    _BALLOONWIN_OBJMSG( resort_parlor_00, LWK_OBJID )
-	  _BALLOONWIN_CLOSE()
-    _SELECT_TEMOTI_POKE( LWK_RET_DECIDE, LWK_RET_IDX, 0 )
-
-    IF $LWK_RET_DECIDE == TRUE THEN
-      //たまごチェック
-      _CHECK_TEMOTI_EGG( LWK_RET_DECIDE, LWK_RET_IDX )
-
-      IF $LWK_RET_DECIDE == TRUE THEN 
-        //選んだものがタマゴだった
-        _BALLOONWIN_OBJMSG( resort_parlor_01, LWK_OBJID )
-      ELSE
-        _RESORT_ADD_KINDLY( LWK_RET_IDX, 10, LWK_RET_DECIDE )
-
-        IF $LWK_RET_DECIDE == TRUE THEN
-	        _BLACK_OUT()
-	        _DISP_FADE_END_CHECK()
-	        _ME_PLAY( SEQ_ME_ASA )
-	        _ME_WAIT()
-	        _BLACK_IN()
-	        _DISP_FADE_END_CHECK()
-
-          _BALLOONWIN_OBJMSG( resort_parlor_03, LWK_OBJID )
-          //あげた
-          _RESORT_SET_DAY_FLAG() 
-        ELSE
-          _BALLOONWIN_OBJMSG( resort_parlor_02, LWK_OBJID )
-        ENDIF
-      ENDIF
-    ENDIF
-  //ELSE
-    //１日１回チェック
-  //  _BALLOONWIN_OBJMSG( resort_parlor_04, LWK_OBJID )
-  //ENDIF
-	_BALLOONWIN_CLOSE()
+  _CALL sub_resident_buy_list
 }
 _RET
 //==============================================================
@@ -734,43 +688,7 @@ _RET
 //==============================================================
 sub_resident_breeder:
 {
-  DEFINE_LOCAL LWK_DAY_FLAG
-  DEFINE_LOCAL LWK_RET_DECIDE
-  DEFINE_LOCAL LWK_RET_IDX
-
-  _RESORT_GET_DATA( RESORT_GET_PARAM_DAY_FLAG, LWK_DAY_FLAG )
-
-  //１日１回チェック
-  IF $LWK_DAY_FLAG == FALSE THEN
-    _BALLOONWIN_OBJMSG( resort_breeder_00, LWK_OBJID )
-	  _BALLOONWIN_CLOSE()
-    _SELECT_TEMOTI_POKE( LWK_RET_DECIDE, LWK_RET_IDX, 0 )
-
-    IF $LWK_RET_DECIDE == TRUE THEN
-      //たまごチェック
-      _CHECK_TEMOTI_EGG( LWK_RET_DECIDE, LWK_RET_IDX )
-
-      IF $LWK_RET_DECIDE == TRUE THEN 
-        //選んだものがタマゴだった
-        _BALLOONWIN_OBJMSG( resort_breeder_01, LWK_OBJID )
-      ELSE
-        _RESORT_ADD_LV( LWK_RET_IDX, LWK_RET_DECIDE )
-
-        IF $LWK_RET_DECIDE == TRUE THEN
-
-          _BALLOONWIN_OBJMSG( resort_breeder_03, LWK_OBJID )
-          //あげた
-          _RESORT_SET_DAY_FLAG() 
-        ELSE
-          _BALLOONWIN_OBJMSG( resort_breeder_02, LWK_OBJID )
-        ENDIF
-      ENDIF
-    ENDIF
-  ELSE
-    //１日１回チェック
-    _BALLOONWIN_OBJMSG( resort_breeder_04, LWK_OBJID )
-  ENDIF
-	_BALLOONWIN_CLOSE()
+  _CALL sub_resident_buy_list
 }
 _RET
 //==============================================================
@@ -778,10 +696,7 @@ _RET
 //==============================================================
 sub_resident_market:
 {
-  DEFINE_LOCAL LWK_RET_SERVICE_TYPE
-  DEFINE_LOCAL LWK_RET_SERVICE_IDX
-  DEFINE_LOCAL LWK_RET_SERVICE_PRICE
-  _RESORT_CALL_LIST( RESORT_LIST_TYPE_BUY, 0, LWK_RET_SERVICE_TYPE, LWK_RET_SERVICE_IDX, LWK_RET_SERVICE_PRICE )
+  _CALL sub_resident_buy_list
 }
 _RET
 //==============================================================
@@ -789,10 +704,7 @@ _RET
 //==============================================================
 sub_resident_florist:
 {
-  DEFINE_LOCAL LWK_RET_SERVICE_TYPE
-  DEFINE_LOCAL LWK_RET_SERVICE_IDX
-  DEFINE_LOCAL LWK_RET_SERVICE_PRICE
-  _RESORT_CALL_LIST( RESORT_LIST_TYPE_BUY, 0, LWK_RET_SERVICE_TYPE, LWK_RET_SERVICE_IDX, LWK_RET_SERVICE_PRICE )
+  _CALL sub_resident_buy_list
 }
 _RET
 //==============================================================
@@ -800,46 +712,7 @@ _RET
 //==============================================================
 sub_resident_exercice:
 {
-  DEFINE_LOCAL LWK_DAY_FLAG
-  DEFINE_LOCAL LWK_RET_DECIDE
-  DEFINE_LOCAL LWK_RET_IDX
-
-  DEFINE_LOCAL LWK_RET
-  _RESORT_CALL_LIST( RESORT_LIST_TYPE_SORT, RESORT_LIST_SORT_SECRETARY, LWK_RET, LWK_RET, LWK_RET )
-
-  _RESORT_GET_DATA( RESORT_GET_PARAM_DAY_FLAG, LWK_DAY_FLAG )
-
-  //１日１回チェック
-  IF $LWK_DAY_FLAG == FALSE THEN
-    _BALLOONWIN_OBJMSG( resort_exercice_00, LWK_OBJID )
-	  _BALLOONWIN_CLOSE()
-    _SELECT_TEMOTI_POKE( LWK_RET_DECIDE, LWK_RET_IDX, 0 )
-
-    IF $LWK_RET_DECIDE == TRUE THEN
-      //たまごチェック
-      _CHECK_TEMOTI_EGG( LWK_RET_DECIDE, LWK_RET_IDX )
-
-      IF $LWK_RET_DECIDE == TRUE THEN 
-        //選んだものがタマゴだった
-        _BALLOONWIN_OBJMSG( resort_exercice_01, LWK_OBJID )
-      ELSE
-        //TODO  0じゃない
-        _RESORT_ADD_EFFORT( LWK_RET_IDX, 0, LWK_RET_DECIDE )
-
-        IF $LWK_RET_DECIDE == TRUE THEN
-          _BALLOONWIN_OBJMSG( resort_exercice_03, LWK_OBJID )
-          //あげた
-          _RESORT_SET_DAY_FLAG() 
-        ELSE
-          _BALLOONWIN_OBJMSG( resort_exercice_02, LWK_OBJID )
-        ENDIF
-      ENDIF
-    ENDIF
-  ELSE
-    //１日１回チェック
-    _BALLOONWIN_OBJMSG( resort_exercice_04, LWK_OBJID )
-  ENDIF
-	_BALLOONWIN_CLOSE()
+  _CALL sub_resident_buy_list
 }
 _RET
 //==============================================================
@@ -847,44 +720,7 @@ _RET
 //==============================================================
 sub_resident_nursery:
 {
-  DEFINE_LOCAL LWK_DAY_FLAG
-  DEFINE_LOCAL LWK_RET_DECIDE
-  DEFINE_LOCAL LWK_RET_IDX
-
-  _RESORT_GET_DATA( RESORT_GET_PARAM_DAY_FLAG, LWK_DAY_FLAG )
-
-  DEFINE_LOCAL LWK_RET
-  _RESORT_CALL_LIST( RESORT_LIST_TYPE_SELECT, RESORT_LIST_SELECT_INSTATITUTION, LWK_RET, LWK_RET, LWK_RET )
-
-  //１日１回チェック
-  IF $LWK_DAY_FLAG == FALSE THEN
-    _BALLOONWIN_OBJMSG( resort_nursery_00, LWK_OBJID )
-	  _BALLOONWIN_CLOSE()
-    _SELECT_TEMOTI_POKE( LWK_RET_DECIDE, LWK_RET_IDX, 0 )
-
-    IF $LWK_RET_DECIDE == TRUE THEN
-      //たまごチェック
-      _CHECK_TEMOTI_EGG( LWK_RET_DECIDE, LWK_RET_IDX )
-
-      IF $LWK_RET_DECIDE == TRUE THEN 
-        //選んだものがタマゴだった
-        //TODO  0じゃない
-        _RESORT_HATCH( LWK_RET_IDX )
-        _RESORT_SET_DAY_FLAG() 
-	      _BALLOONWIN_CLOSE()
-
-        _PARTY_POKE_EGG_BIRTH( LWK_RET_DECIDE )
-
-        _BALLOONWIN_OBJMSG( resort_nursery_02, LWK_OBJID )
-      ELSE
-        _BALLOONWIN_OBJMSG( resort_nursery_01, LWK_OBJID )
-      ENDIF
-    ENDIF
-  ELSE
-    //１日１回チェック
-    _BALLOONWIN_OBJMSG( resort_nursery_03, LWK_OBJID )
-  ENDIF
-	_BALLOONWIN_CLOSE()
+  _CALL sub_resident_buy_list
 }
 _RET
 //==============================================================
@@ -892,8 +728,7 @@ _RET
 //==============================================================
 sub_resident_jewellery:
 {
-  DEFINE_LOCAL LWK_RET
-  _RESORT_CALL_LIST( RESORT_LIST_TYPE_SELECT, RESORT_LIST_SELECT_SECRETARY_ADD, LWK_RET, LWK_RET, LWK_RET )
+  _CALL sub_resident_buy_list
 }
 _RET
 //==============================================================
@@ -901,10 +736,7 @@ _RET
 //==============================================================
 sub_resident_antique:
 {
-  DEFINE_LOCAL LWK_RET_SERVICE_TYPE
-  DEFINE_LOCAL LWK_RET_SERVICE_IDX
-  DEFINE_LOCAL LWK_RET_SERVICE_PRICE
-  _RESORT_CALL_LIST( RESORT_LIST_TYPE_BUY, 0, LWK_RET_SERVICE_TYPE, LWK_RET_SERVICE_IDX, LWK_RET_SERVICE_PRICE )
+  _CALL sub_resident_buy_list
 }
 _RET
 //==============================================================
@@ -912,10 +744,7 @@ _RET
 //==============================================================
 sub_resident_cafe:
 {
-  DEFINE_LOCAL LWK_RET_SERVICE_TYPE
-  DEFINE_LOCAL LWK_RET_SERVICE_IDX
-  DEFINE_LOCAL LWK_RET_SERVICE_PRICE
-  _RESORT_CALL_LIST( RESORT_LIST_TYPE_BUY, 0, LWK_RET_SERVICE_TYPE, LWK_RET_SERVICE_IDX, LWK_RET_SERVICE_PRICE )
+  _CALL sub_resident_buy_list
 }
 _RET
 //==============================================================
@@ -923,6 +752,7 @@ _RET
 //==============================================================
 sub_resident_gym:
 {
+  //TODO
 }
 _RET
 //==============================================================
@@ -930,6 +760,235 @@ _RET
 //==============================================================
 sub_resident_house:
 {
+  //TODO
+}
+_RET
+
+//==============================================================
+//サブルーチン：購入リスト共通処理
+//==============================================================
+sub_resident_buy_list:
+{
+  _RESORT_CALL_LIST( RESORT_LIST_TYPE_BUY, 0, LWK_LIST_RET_TYPE, LWK_LIST_RET_PARAM,LWK_LIST_RET_IDX, LWK_LIST_RET_PRICE )
+
+  SWITCH $LWK_LIST_RET_TYPE 
+  CASE RESORT_SERVICE_TYPE_EFFORT_SPEDEF THEN
+    _CALL sub_resident_service_effort
+  CASE RESORT_SERVICE_TYPE_EFFORT_SPEPOW THEN
+    _CALL sub_resident_service_effort
+  CASE RESORT_SERVICE_TYPE_EFFORT_AGI THEN
+    _CALL sub_resident_service_effort
+  CASE RESORT_SERVICE_TYPE_EFFORT_DEF THEN
+    _CALL sub_resident_service_effort
+  CASE RESORT_SERVICE_TYPE_EFFORT_POW THEN
+    _CALL sub_resident_service_effort
+  CASE RESORT_SERVICE_TYPE_EFFORT_HP THEN
+    _CALL sub_resident_service_effort
+  CASE RESORT_SERVICE_TYPE_FRIEND THEN
+    _CALL sub_resident_service_friend
+  CASE RESORT_SERVICE_TYPE_HATCH THEN
+    _CALL sub_resident_service_hatch
+  CASE RESORT_SERVICE_TYPE_LV THEN
+    _CALL sub_resident_service_lv
+  CASE RESORT_SERVICE_TYPE_ITEM THEN
+    //なにもなし
+  CASE RESORT_LIST_CANCEL THEN
+    _RESORT_GET_MSGID( RESORT_RESIDENT_BYE_MSGID, LWK_MSGID )
+    _RESORT_SET_WORD( RESORT_WORD_FREE_NAME, 0 )
+	  _BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DL )
+	  _LAST_KEYWAIT()
+	  _BALLOONWIN_CLOSE()
+  DEFAULT
+    //なにもなし
+  ENDSWITCH
+}
+_RET
+
+//==============================================================
+//サブルーチン：サービス　努力値アップ
+//==============================================================
+sub_resident_service_effort:
+{
+  DEFINE_LOCAL LWK_RET_DECIDE
+  DEFINE_LOCAL LWK_RET_IDX
+
+  _BALLOONWIN_OBJMSG_POS( resort_exercice_00, LWK_OBJID, POS_DL )
+	_BALLOONWIN_CLOSE()
+  _SELECT_TEMOTI_POKE( LWK_RET_DECIDE, LWK_RET_IDX, 0 )
+
+  IF $LWK_RET_DECIDE == TRUE THEN
+    //たまごチェック
+    _CHECK_TEMOTI_EGG( LWK_RET_DECIDE, LWK_RET_IDX )
+
+    IF $LWK_RET_DECIDE == TRUE THEN 
+      //選んだものがタマゴだった
+      _BALLOONWIN_OBJMSG_POS( resort_exercice_01, LWK_OBJID, POS_DL )
+    	_BALLOONWIN_CLOSE()
+    ELSE
+      SWITCH $LWK_LIST_RET_TYPE 
+      CASE RESORT_SERVICE_TYPE_EFFORT_SPEDEF THEN
+        _RESORT_ADD_EFFORT( LWK_RET_IDX, RESORT_ADD_EFFORT_SPEDEF, LWK_LIST_RET_PARAM, LWK_RET_DECIDE )
+      CASE RESORT_SERVICE_TYPE_EFFORT_SPEPOW THEN
+        _RESORT_ADD_EFFORT( LWK_RET_IDX, RESORT_ADD_EFFORT_SPEPOW, LWK_LIST_RET_PARAM, LWK_RET_DECIDE )
+      CASE RESORT_SERVICE_TYPE_EFFORT_AGI THEN
+        _RESORT_ADD_EFFORT( LWK_RET_IDX, RESORT_ADD_EFFORT_AGI, LWK_LIST_RET_PARAM, LWK_RET_DECIDE )
+      CASE RESORT_SERVICE_TYPE_EFFORT_DEF THEN
+        _RESORT_ADD_EFFORT( LWK_RET_IDX, RESORT_ADD_EFFORT_DEF, LWK_LIST_RET_PARAM, LWK_RET_DECIDE )
+      CASE RESORT_SERVICE_TYPE_EFFORT_POW THEN
+        _RESORT_ADD_EFFORT( LWK_RET_IDX, RESORT_ADD_EFFORT_POW, LWK_LIST_RET_PARAM, LWK_RET_DECIDE )
+      CASE RESORT_SERVICE_TYPE_EFFORT_HP THEN
+        _RESORT_ADD_EFFORT( LWK_RET_IDX, RESORT_ADD_EFFORT_HP, LWK_LIST_RET_PARAM, LWK_RET_DECIDE )
+      DEFAULT
+      ENDSWITCH
+
+      IF $LWK_RET_DECIDE == TRUE THEN
+        _BALLOONWIN_OBJMSG_POS( resort_exercice_03, LWK_OBJID, POS_DL )
+        //あげた
+        _CALL sub_resident_gold
+      ELSE
+        _BALLOONWIN_OBJMSG_POS( resort_exercice_02, LWK_OBJID, POS_DL )
+    	  _BALLOONWIN_CLOSE()
+      ENDIF
+    ENDIF
+
+  ENDIF
+}
+_RET
+
+//==============================================================
+//サブルーチン：サービス　なつきアップ
+//==============================================================
+sub_resident_service_friend:
+{
+  DEFINE_LOCAL LWK_RET_DECIDE
+  DEFINE_LOCAL LWK_RET_IDX
+
+  _BALLOONWIN_OBJMSG_POS( resort_parlor_00, LWK_OBJID, POS_DL )
+	_BALLOONWIN_CLOSE()
+  _SELECT_TEMOTI_POKE( LWK_RET_DECIDE, LWK_RET_IDX, 0 )
+
+  IF $LWK_RET_DECIDE == TRUE THEN
+    //たまごチェック
+    _CHECK_TEMOTI_EGG( LWK_RET_DECIDE, LWK_RET_IDX )
+
+    IF $LWK_RET_DECIDE == TRUE THEN 
+      //選んだものがタマゴだった
+      _BALLOONWIN_OBJMSG_POS( resort_parlor_01, LWK_OBJID, POS_DL )
+    ELSE
+      _RESORT_ADD_KINDLY( LWK_RET_IDX, LWK_LIST_RET_PARAM, LWK_RET_DECIDE )
+
+      IF $LWK_RET_DECIDE == TRUE THEN
+	      _BLACK_OUT()
+	      _DISP_FADE_END_CHECK()
+	      _ME_PLAY( SEQ_ME_ASA )
+	      _ME_WAIT()
+	      _BLACK_IN()
+	      _DISP_FADE_END_CHECK()
+
+        _BALLOONWIN_OBJMSG_POS( resort_parlor_03, LWK_OBJID, POS_DL )
+        _CALL sub_resident_gold
+      ELSE
+        _BALLOONWIN_OBJMSG_POS( resort_parlor_02, LWK_OBJID, POS_DL )
+      ENDIF
+    ENDIF
+
+	  _BALLOONWIN_CLOSE()
+  ENDIF
+}
+_RET
+
+//==============================================================
+//サブルーチン：サービス　タマゴふか
+//==============================================================
+sub_resident_service_hatch:
+{
+  DEFINE_LOCAL LWK_RET_DECIDE
+  DEFINE_LOCAL LWK_RET_IDX
+
+  _BALLOONWIN_OBJMSG_POS( resort_nursery_00, LWK_OBJID, POS_DL )
+	_BALLOONWIN_CLOSE()
+  _SELECT_TEMOTI_POKE( LWK_RET_DECIDE, LWK_RET_IDX, 0 )
+
+  IF $LWK_RET_DECIDE == TRUE THEN
+    //たまごチェック
+    _CHECK_TEMOTI_EGG( LWK_RET_DECIDE, LWK_RET_IDX )
+
+    IF $LWK_RET_DECIDE == TRUE THEN 
+      //選んだものがタマゴだった
+      _RESORT_HATCH( LWK_RET_IDX )
+
+      _PARTY_POKE_EGG_BIRTH( LWK_RET_DECIDE )
+
+      _BALLOONWIN_OBJMSG_POS( resort_nursery_02, LWK_OBJID, POS_DL )
+      _CALL sub_resident_gold
+    ELSE
+      _BALLOONWIN_OBJMSG_POS( resort_nursery_01, LWK_OBJID, POS_DL )
+    ENDIF
+
+	  _BALLOONWIN_CLOSE()
+  ENDIF
+}
+_RET
+
+//==============================================================
+//サブルーチン：サービス　LV
+//==============================================================
+sub_resident_service_lv:
+{
+  DEFINE_LOCAL LWK_RET_DECIDE
+  DEFINE_LOCAL LWK_RET_IDX
+
+  _BALLOONWIN_OBJMSG_POS( resort_breeder_00, LWK_OBJID, POS_DL )
+	_BALLOONWIN_CLOSE()
+  _SELECT_TEMOTI_POKE( LWK_RET_DECIDE, LWK_RET_IDX, 0 )
+
+  IF $LWK_RET_DECIDE == TRUE THEN
+    //たまごチェック
+    _CHECK_TEMOTI_EGG( LWK_RET_DECIDE, LWK_RET_IDX )
+
+    IF $LWK_RET_DECIDE == TRUE THEN 
+      //選んだものがタマゴだった
+      _BALLOONWIN_OBJMSG_POS( resort_breeder_01, LWK_OBJID, POS_DL )
+    ELSE
+      _RESORT_ADD_LV( LWK_RET_IDX, LWK_RET_DECIDE )
+
+      IF $LWK_RET_DECIDE == TRUE THEN
+
+        _BALLOONWIN_OBJMSG_POS( resort_breeder_03, LWK_OBJID, POS_DL )
+        //あげた
+        _CALL sub_resident_gold
+      ELSE
+        _BALLOONWIN_OBJMSG_POS( resort_breeder_02, LWK_OBJID, POS_DL )
+      ENDIF
+    ENDIF
+
+	  _BALLOONWIN_CLOSE()
+  ENDIF
+}
+_RET
+
+//==============================================================
+//サブルーチン：お金を支払う処理
+//==============================================================
+sub_resident_gold:
+{
+  _GOLD_WIN_OPEN( MENU_X1, MENU_Y1 )
+
+  _BALLOONWIN_OBJMSG_POS( resort_sys_10, LWK_OBJID, POS_DL )
+	_BALLOONWIN_CLOSE()
+
+  //お金払いとフラグたて
+  _RESORT_END_SERVICE( LWK_LIST_RET_PRICE, LWK_LIST_RET_IDX )
+  _GOLD_WIN_UPDATE() 
+
+  //お金を支払った！
+  _PLAYER_NAME(0)
+  _NUMBER( 1, LWK_LIST_RET_PRICE, 6 )
+  _SYSWIN_MSG( resort_sys_09, POS_DOWN )
+  _SYSWIN_CLOSE()
+
+
+  _GOLD_WIN_CLOSE()
 }
 _RET
 
