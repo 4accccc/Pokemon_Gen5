@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-07T22:18:10"/>
+	<create user="matsumiya" host="W00224" date="2011-03-08T21:10:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1296" top="209" right="2001" bottom="837" maximized="no" rayout="Vertical2">
+	<dialog left="1288" top="174" right="1993" bottom="802" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,36 +292,70 @@
 	</lock>
 
 
+	<row id="msg_c12_rivalsister_01" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<comment>♀
+・posを踏んだとき
+　画面？から登場してメッセージ表示
+・表示後、主人公に隣接して
+※妹と一緒</comment>
+		<attribute name="キャラ指定">ライバル妹</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さーん▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さーん▼</language>
+	</row>
+
 	<row id="msg_c12_swrival_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・posを踏んだとき
 　画面？から登場してメッセージ表示
-・表示後、主人公に隣接して</comment>
+・表示後、主人公に隣接して
+※妹と一緒
+
+・1＝ライバル名</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]▼</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『どこいくんだ？▼
+……　……　……
+……　……　……▼
+ポケモン図鑑！？▼
+その話　気になるな
+オレも　ついていくよ▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『どこいくんだ？▼
+……　……　……
+……　……　……▼
+ポケモン図鑑！？▼
+その話　気になるな
+オレも　ついていくよ▼</language>
 	</row>
 
 	<row id="msg_c12_swrival_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・</comment>
+・状況確認
+　主人公はベルを探すこと
+・妹と別れる</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">なにしてんの？▼
-……　……　……
-……　……　……▼
-ポケモンずかん　ね</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">お前は先にかえってな</language>
+		<language name="JPN_KANJI" width="256">お前は先にかえってな</language>
+	</row>
+
+	<row id="msg_c12_rivalsister_02" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<comment>♀
+・メッセージ表示後、ライバルの家方向に
+・主人公、ライバルの向き、動きを追従</comment>
+		<attribute name="キャラ指定">ライバル妹</attribute>
+		<language name="JPN" width="256">はーい！▼</language>
+		<language name="JPN_KANJI" width="256">はーい！▼</language>
 	</row>
 
 	<row id="msg_c12_swrival_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
+・向き合って
 ・表示後から連れ歩き開始</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">・その　ベル　ってひとだっけ
-　さがすの　てつだうよ
-・ポケモンずかんの　はなし
-　オレも　ききたいからさ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">ライバル名『さてと▼
+ベルって　人を　探すんだな
+どこから　探すか　決めてくれよ</language>
+		<language name="JPN_KANJI" width="256">ライバル名『さてと▼
+ベルって　人を　探すんだな
+どこから　探すか　決めてくれよ</language>
 	</row>
 
 	<row id="msg_c12_swrival_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -334,7 +368,7 @@
 
 	<row id="msg_c12_swrival_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・振り向き会話その１</comment>
+・振り向き会話その２</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
@@ -342,7 +376,7 @@
 
 	<row id="msg_c12_swrival_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・振り向き会話その１</comment>
+・振り向き会話その３</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
@@ -355,7 +389,8 @@
 		<attribute name="キャラ指定">ライバル</attribute>
 		<language name="JPN" width="256">テストメッセージ
 ・人の家には居ないだろ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ
+・人の家には居ないだろ</language>
 	</row>
 
 	<row id="msg_c12_swrival_08" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -365,7 +400,8 @@
 		<attribute name="キャラ指定">ライバル</attribute>
 		<language name="JPN" width="256">テストメッセージ
 ・人の家には居ないだろ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ
+・人の家には居ないだろ</language>
 	</row>
 
 	<row id="msg_c12_swrival_09" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -375,7 +411,8 @@
 		<attribute name="キャラ指定">ライバル</attribute>
 		<language name="JPN" width="256">テストメッセージ
 ・中を見る？</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ
+・中を見る？</language>
 	</row>
 
 	<row id="msg_c12_swrival_10" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -385,7 +422,8 @@
 		<attribute name="キャラ指定">ライバル</attribute>
 		<language name="JPN" width="256">テストメッセージ
 ・中を見る？</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ
+・中を見る？</language>
 	</row>
 
 	<row id="msg_c12_swrival_11" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -397,7 +435,10 @@
 ・この街にいるんだろ？
 　道路に出たら行き違いじゃん
 ・そもそもお前ポケモン持ってないし</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ
+・この街にいるんだろ？
+　道路に出たら行き違いじゃん
+・そもそもお前ポケモン持ってないし</language>
 	</row>
 
 	<row id="msg_c12_swmama_01">
@@ -411,6 +452,7 @@
 	</row>
 
 	<row id="msg_c12_swmama_02">
+		<attribute name="キャラ指定">スワン主人公ママ</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は
 [FF:00:色:2]ランニングシューズ[FF:00:色:0]を　もらった！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
@@ -418,6 +460,7 @@
 	</row>
 
 	<row id="msg_c12_swmama_03">
+		<attribute name="キャラ指定">スワン主人公ママ</attribute>
 		<language name="JPN" width="256">ランニングシューズを　はいていれば
 どこにいくのも　あっ　というま！[BE:01:ページ切り替え（クリア）]
 では　とりあつかい　せつめいしょを
@@ -447,8 +490,60 @@
 	</row>
 
 	<row id="msg_c12_swmama_04">
-		<language name="JPN" width="256"></language>
+		<attribute name="キャラ指定">スワン主人公ママ</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_c12_white_01a" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・ジムバッジ取得後</comment>
+		<attribute name="キャラ指定">ベル</attribute>
+		<language name="JPN" width="256">ベル『おうい！</language>
 		<language name="JPN_KANJI" width="256"></language>
+	</row>
+
+	<row id="msg_c12_white_01b" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・ジムバッジ取得後</comment>
+		<attribute name="キャラ指定">ベル</attribute>
+		<language name="JPN" width="256">ベル『ねえねえ！</language>
+		<language name="JPN_KANJI" width="256"></language>
+	</row>
+
+	<row id="msg_c12_white_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・</comment>
+		<attribute name="キャラ指定">ベル</attribute>
+		<language name="JPN" width="256">テストメッセージ
+・わざマシン「おんがえし」くれる</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_c12_white_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・</comment>
+		<attribute name="キャラ指定">ベル</attribute>
+		<language name="JPN" width="256">テストメッセージ
+・おんがえしのせつめい
+・ポケガイダンス</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_c12_white_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・</comment>
+		<attribute name="キャラ指定">ベル</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_c12_white_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・</comment>
+		<attribute name="キャラ指定">ベル</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_c12_01_01">
