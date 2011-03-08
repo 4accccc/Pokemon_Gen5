@@ -73,7 +73,7 @@
 //箱のグリッド位置座標
 #define BOX1_GX (11)
 #define BOX1_GY (0)
-#define BOX1_GZ (25)
+#define BOX1_GZ (26)
 #define BOX2_GX (11)
 #define BOX2_GY (0)
 #define BOX2_GZ (36)
