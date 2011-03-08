@@ -316,7 +316,8 @@ DEP_TEXSET_IMD_INDOOR005 = \
 	$(SRCDIR)/warp01.imd \
 	$(SRCDIR)/warp02.imd \
 	$(SRCDIR)/warp03.imd \
-	$(SRCDIR)/shelf06.imd
+	$(SRCDIR)/shelf06.imd \
+	$(SRCDIR)/mado_in5gym.imd
 
 texset/indoor005.imd: $(DEP_TEXSET_IMD_INDOOR005) texset/tmp/indoor005.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/indoor005.list
@@ -3038,16 +3039,10 @@ DEP_TEXSET_IMD_INDOOR065 = \
 	$(SRCDIR)/box02.imd \
 	$(SRCDIR)/chushion01.imd \
 	$(SRCDIR)/chushion02.imd \
-	$(SRCDIR)/c09gate_03.imd \
 	$(SRCDIR)/warp01.imd \
 	$(SRCDIR)/warp02.imd \
 	$(SRCDIR)/warp03.imd \
-	$(SRCDIR)/warp04.imd \
-	$(SRCDIR)/c09_03_cart.imd \
-	$(SRCDIR)/c09_03_obj.imd \
-	$(SRCDIR)/c09_03_light.imd \
-	$(SRCDIR)/shelf06.imd \
-	$(SRCDIR)/c09_03_light2.imd
+	$(SRCDIR)/shelf06.imd
 
 texset/indoor065.imd: $(DEP_TEXSET_IMD_INDOOR065) texset/tmp/indoor065.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/indoor065.list
@@ -3087,14 +3082,9 @@ DEP_TEXSET_IMD_INDOOR066 = \
 	$(SRCDIR)/box02.imd \
 	$(SRCDIR)/chushion01.imd \
 	$(SRCDIR)/chushion02.imd \
-	$(SRCDIR)/c09gate_04.imd \
 	$(SRCDIR)/warp01.imd \
 	$(SRCDIR)/warp02.imd \
 	$(SRCDIR)/warp03.imd \
-	$(SRCDIR)/warp04.imd \
-	$(SRCDIR)/c09_04_sta.imd \
-	$(SRCDIR)/c09_04_tengai.imd \
-	$(SRCDIR)/c09_04_obj01.imd \
 	$(SRCDIR)/shelf06.imd
 
 texset/indoor066.imd: $(DEP_TEXSET_IMD_INDOOR066) texset/tmp/indoor066.list
@@ -3107,9 +3097,12 @@ DEP_TEXSET_IMD_INDOOR067 = \
 	$(SRCDIR)/stair_u01.imd \
 	$(SRCDIR)/stair_d01.imd \
 	$(SRCDIR)/table01.imd \
+	$(SRCDIR)/table03.imd \
 	$(SRCDIR)/chair01.imd \
+	$(SRCDIR)/chair03.imd \
 	$(SRCDIR)/shelf01.imd \
 	$(SRCDIR)/shelf02.imd \
+	$(SRCDIR)/shelf03.imd \
 	$(SRCDIR)/shelf04.imd \
 	$(SRCDIR)/shelf05.imd \
 	$(SRCDIR)/bed01.imd \
@@ -3119,7 +3112,9 @@ DEP_TEXSET_IMD_INDOOR067 = \
 	$(SRCDIR)/dust01.imd \
 	$(SRCDIR)/poster01.imd \
 	$(SRCDIR)/win01.imd \
+	$(SRCDIR)/win02.imd \
 	$(SRCDIR)/pcdesk01.imd \
+	$(SRCDIR)/wii01.imd \
 	$(SRCDIR)/desk01.imd \
 	$(SRCDIR)/vase01.imd \
 	$(SRCDIR)/cashier01.imd \
@@ -3127,7 +3122,9 @@ DEP_TEXSET_IMD_INDOOR067 = \
 	$(SRCDIR)/drock02.imd \
 	$(SRCDIR)/desk02.imd \
 	$(SRCDIR)/art01.imd \
+	$(SRCDIR)/art02.imd \
 	$(SRCDIR)/object02.imd \
+	$(SRCDIR)/object03.imd \
 	$(SRCDIR)/d0stair_u01.imd \
 	$(SRCDIR)/d0stair_d01.imd \
 	$(SRCDIR)/in_vender01.imd \
@@ -3138,10 +3135,7 @@ DEP_TEXSET_IMD_INDOOR067 = \
 	$(SRCDIR)/warp01.imd \
 	$(SRCDIR)/warp02.imd \
 	$(SRCDIR)/warp03.imd \
-	$(SRCDIR)/shelf06.imd \
-	$(SRCDIR)/globe01s.imd \
-	$(SRCDIR)/elevator01.imd \
-	$(SRCDIR)/in55_globbe.imd
+	$(SRCDIR)/shelf06.imd
 
 texset/indoor067.imd: $(DEP_TEXSET_IMD_INDOOR067) texset/tmp/indoor067.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/indoor067.list
@@ -3184,9 +3178,7 @@ DEP_TEXSET_IMD_INDOOR068 = \
 	$(SRCDIR)/warp01.imd \
 	$(SRCDIR)/warp02.imd \
 	$(SRCDIR)/warp03.imd \
-	$(SRCDIR)/shelf06.imd \
-	$(SRCDIR)/cabin_door.imd \
-	$(SRCDIR)/cabin_door_r.imd
+	$(SRCDIR)/shelf06.imd
 
 texset/indoor068.imd: $(DEP_TEXSET_IMD_INDOOR068) texset/tmp/indoor068.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/indoor068.list

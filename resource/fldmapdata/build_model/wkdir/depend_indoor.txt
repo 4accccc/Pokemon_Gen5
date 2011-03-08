@@ -148,4 +148,5 @@ DEP_INDOOR	=	\
 	$(RESDIR)/m_gym03_mayu01.nsbmd \
 	$(RESDIR)/m_gym03_mayu02.nsbmd \
 	$(RESDIR)/m_gym03_mayu03.nsbmd \
+	$(RESDIR)/mado_in5gym.nsbmd \
 
