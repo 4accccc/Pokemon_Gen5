@@ -261,13 +261,13 @@ static BOOL debugMenuCallProc_AllSecretary( DEBUG_MENU_EVENT_WORK *p_wk )
   int i;
 
   RESORT_RECV_DATA *p_recv = RESORT_RECV_DATA_Init( GFL_HEAP_LOWID(p_wk->heapID) );
-  RESORT_RECV_DATA_SetDebugData( p_recv, p_wk->gdata );
 
   for( i = 0; i < RESORT_SECRETARY_DATA_NUM; i++ )
   {
     RESORT_SECRETARY_DATA *p_dst = RESORT_PEOPLE_ALL_DATA_GetSecretary( p_all_people, i );
     if( RESORT_SECRETARY_DATA_IsEmpty( p_dst ) )
     {
+      RESORT_RECV_DATA_SetDebugData( p_recv, p_wk->gdata );
       RESORT_SECRETARY_DATA_SetRecv( p_dst, p_recv, 10+i, 1, i );
     }
   }
@@ -283,13 +283,13 @@ static BOOL debugMenuCallProc_AllResident( DEBUG_MENU_EVENT_WORK *p_wk )
   int i;
 
   RESORT_RECV_DATA *p_recv = RESORT_RECV_DATA_Init( GFL_HEAP_LOWID(p_wk->heapID) );
-  RESORT_RECV_DATA_SetDebugData( p_recv, p_wk->gdata );
 
   for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
   {
     RESORT_RESIDENT_DATA *p_dst = RESORT_PEOPLE_ALL_DATA_GetResident( p_all_people, i );
     if( RESORT_RESIDENT_DATA_IsEmpty( p_dst ) )
     {
+      RESORT_RECV_DATA_SetDebugData( p_recv, p_wk->gdata );
       RESORT_RESIDENT_DATA_SetRecv( p_dst, p_recv, i, 1, i );
     }
   }

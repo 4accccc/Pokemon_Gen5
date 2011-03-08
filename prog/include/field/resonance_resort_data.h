@@ -309,6 +309,7 @@ extern BOOL RESORT_RECV_BUFF_AddRecv( RESORT_RECV_BUFF *p_wk, const RESORT_RECV_
  *  住民データ
  */
 //=============================================================================
+#define RESORT_RESIDENT_DATA_SIZE RESORT_RECV_DATA_SIZE
 
 //-------------------------------------
 ///	住民データ

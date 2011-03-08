@@ -64,6 +64,7 @@ typedef struct {
   u32 price;    // 値段
   STRBUF *p_name; //名前
   STRBUF *p_info; //情報
+  void *p_data_adrs;
 }RESORT_SHOP_ITEM;
 
 // 一度に並べることができる商品数
@@ -188,18 +189,21 @@ typedef struct _SHOP_BUY_APP_WORK{
   u16*  ret_service_idx;
   u16*  ret_price;
 
-
+  //以下、モード別処理
   void (*List_Init)( GAMESYS_WORK *gsys, struct _SHOP_BUY_APP_WORK *wk, int type, int id );
   void (*List_Exit)( GAMESYS_WORK *gsys, struct _SHOP_BUY_APP_WORK *wk, int type, int id );
+  void (*List_Change)( struct _SHOP_BUY_APP_WORK *wk, int type, int id ); //sortでしか使わない
+  void (*List_Decide)( struct _SHOP_BUY_APP_WORK *wk, int type, int id ); //sortでしか使わない
   BMPMENULIST_CURSOR_CALLBACK call_back;
   BMPMENULIST_PRINT_CALLBACK icon;
 
   u16 msg_start;
   u16 msg_select;
   u16 msg_decide;
+
+  //入れ替えにのみ使用
   u8 insert_idx;
   u8 now_idx;
-
   BOOL is_sort;
   u16 insert_list;
   u16 insert_cursor;
@@ -233,7 +237,6 @@ static void exit_work( SHOP_BUY_APP_WORK *wk );
 static void shop_item_set( SHOP_BUY_APP_WORK *wk, int type, int id );
 static void shop_secretary_set( SHOP_BUY_APP_WORK *wk, int type, int id );
 static void shop_institution_set( SHOP_BUY_APP_WORK *wk, int type, int id );
-static void shop_sort_set( SHOP_BUY_APP_WORK *wk, int type, int id );
 static void shop_item_release( SHOP_BUY_APP_WORK *wk );
 static void bg_trans( SHOP_BUY_APP_WORK *wk );
 static void bg_clear( SHOP_BUY_APP_WORK *wk );
@@ -282,6 +285,12 @@ static void SecretaryList_Exit( GAMESYS_WORK *gsys, struct _SHOP_BUY_APP_WORK *w
 //施設リストの場合
 static void InstitutionList_Init( GAMESYS_WORK *gsys, struct _SHOP_BUY_APP_WORK *wk, int type, int id );
 static void InstitutionList_Exit( GAMESYS_WORK *gsys, struct _SHOP_BUY_APP_WORK *wk, int type, int id );
+
+//入れ替え
+static void SecretaryList_Change( SHOP_BUY_APP_WORK *wk, int type, int id );
+static void InstitutionList_Change( SHOP_BUY_APP_WORK *wk, int type, int id );
+static void SecretaryList_Decide( SHOP_BUY_APP_WORK *wk, int type, int id );
+static void InstitutionList_Decide( SHOP_BUY_APP_WORK *wk, int type, int id );
 
 //--------------------------------------------------------------------
 /**
@@ -343,6 +352,7 @@ VMCMD_RESULT EvCmdResortCallList( VMHANDLE *core, void *wk )
   }
 
   // スクリプトからのパラメータで分岐
+  // ここで関数分岐等も行い、実際の処理に分岐を挟まないようにしている
   switch(shop_type){
   default:
     GF_ASSERT(0);
@@ -407,6 +417,8 @@ VMCMD_RESULT EvCmdResortCallList( VMHANDLE *core, void *wk )
     case RESORT_LIST_SORT_SECRETARY:
       sbw->wk.List_Init = SecretaryList_Init;
       sbw->wk.List_Exit = SecretaryList_Exit;
+      sbw->wk.List_Change = SecretaryList_Change;
+      sbw->wk.List_Decide = SecretaryList_Decide;
       sbw->wk.msg_start   = mes_shop_09_17;
       sbw->wk.msg_select  = mes_shop_09_18;
       sbw->wk.msg_decide  = mes_shop_09_19;
@@ -416,6 +428,8 @@ VMCMD_RESULT EvCmdResortCallList( VMHANDLE *core, void *wk )
     case RESORT_LIST_SORT_INSTATITUTION:
       sbw->wk.List_Init = InstitutionList_Init;
       sbw->wk.List_Exit = InstitutionList_Exit;
+      sbw->wk.List_Change = InstitutionList_Change;
+      sbw->wk.List_Decide = InstitutionList_Decide;
       sbw->wk.msg_start   = mes_shop_09_17;
       sbw->wk.msg_select  = mes_shop_09_18;
       sbw->wk.msg_decide  = mes_shop_09_19;
@@ -930,9 +944,13 @@ static void sort_shop_main( SHOP_BUY_APP_WORK *wk )
         {
           //ソート処理
           wk->is_change = TRUE;
+#if 0 //はいいいいえをしないことになったが仕様変更があるかもしれないので残しておく
           ShopDecideMsg(wk,  wk->msg_select, wk->cp_select );
           wk->seq  = SHOPSORT_SEQ_MSG_WAIT;
-          wk->next = SHOPSORT_SEQ_ONLY1_YESNO;
+          wk->next = SHOPSORT_SEQ_ONLY1_YESNO;  
+#else
+          wk->seq  = SHOPSORT_SEQ_RESET;
+#endif
         }
       }
       else
@@ -1298,7 +1316,7 @@ static BOOL ShopCallFunc_Sort( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int ty
     wk->seq = SHOPSORT_SEQ_MAIN;
     break;
   case SHOPSORT_SEQ_RESET: //リスト作り直し
-    shop_sort_set( wk, type, id );
+    wk->List_Change( wk, type, id );
     wk->is_sort = FALSE;
     GFL_CLACT_WK_SetDrawEnable( wk->ClactWork[SHOP_OBJ_CURSOR_RED], FALSE );
     bmpwin_list_exit(wk);
@@ -1306,7 +1324,9 @@ static BOOL ShopCallFunc_Sort( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int ty
     GFL_BMPWIN_MakeScreen( wk->win[SHOP_BUY_BMPWIN_LIST] );
     GFL_BG_LoadScreenV_Req( GFL_BG_FRAME1_M );
 
-    wk->seq = SHOPSORT_SEQ_BACK;
+    ShopPrintMsg( wk, wk->msg_decide );
+    wk->seq = SHOPSORT_SEQ_MSG_WAIT;
+    wk->next = SHOPSORT_SEQ_BACK;
     break;
   case SHOPSORT_SEQ_ONLY1_YESNO:
     submenu_screen_clear( SCREEN_SUBMENU_ONLY );
@@ -1355,6 +1375,7 @@ static BOOL ShopCallFunc_Sort( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int ty
       *wk->ret_price = 0;
     }
 
+    wk->List_Decide( wk, type, id );
 
     bmpwin_list_exit(wk);   // BMPLIST解放
     obj_del( wk );          // OBJ削除
@@ -1482,6 +1503,7 @@ static void shop_secretary_set( SHOP_BUY_APP_WORK *wk, int type, int id )
       wk->lineup[cnt].price =  0;
       wk->lineup[cnt].param1 = RESORT_SECRETARY_DATA_GetData( p_secretary, RESORT_DATA_PARAM_TRAINERVIEW, NULL );
       wk->lineup[cnt].param2 = 0;
+      wk->lineup[cnt].p_data_adrs = p_secretary;
 
       {
         STRCODE name[PERSON_NAME_SIZE + EOM_SIZE];
@@ -1550,6 +1572,7 @@ static void shop_institution_set( SHOP_BUY_APP_WORK *wk, int type, int id )
       wk->lineup[cnt].price =  0;
       wk->lineup[cnt].param1 = RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_TRAINERVIEW, NULL );
       wk->lineup[cnt].param2 = 0;
+      wk->lineup[cnt].p_data_adrs = p_resident;
 
       {
         u16 shop = RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_TYPE, NULL );
@@ -1606,7 +1629,7 @@ static void shop_institution_set( SHOP_BUY_APP_WORK *wk, int type, int id )
                                     BMPMENULIST_CANCEL, 
                                     wk->heapId );
 }
-static void shop_sort_set( SHOP_BUY_APP_WORK *wk, int type, int id )
+static void SecretaryList_Change( SHOP_BUY_APP_WORK *wk, int type, int id )
 {
   int i;
   RESORT_SHOP_ITEM temp;
@@ -1621,6 +1644,91 @@ static void shop_sort_set( SHOP_BUY_APP_WORK *wk, int type, int id )
 
   for(i=0;i<wk->lineup_num;i++)
   {
+    RESORT_SECRETARY_DATA *p_secretary = wk->lineup[i].p_data_adrs;
+
+    STRCODE name[PERSON_NAME_SIZE + EOM_SIZE];
+    STRBUF *p_name;
+    STRBUF *p_name_str;
+    STRBUF *p_info_str;
+    STRBUF *p_name_tmp = GFL_MSG_CreateString( wk->shopMsgData, mes_shop_09_01 );
+    STRBUF *p_info_tmp = GFL_MSG_CreateString( wk->shopMsgData, mes_shop_09_03 );
+    u8 sex = RESORT_SECRETARY_DATA_GetData( p_secretary, RESORT_DATA_PARAM_SEX, NULL );
+    RESORT_SECRETARY_DATA_GetData( p_secretary, RESORT_DATA_PARAM_NAME, name );
+    p_name = GFL_STR_CreateBuffer( PERSON_NAME_SIZE + EOM_SIZE, wk->heapId );
+    GFL_STR_SetStringCode( p_name ,name );
+
+    WORDSET_RegisterNumber( wk->wordSet, 1, i+1, 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterWord( wk->wordSet, 0, p_name, sex, TRUE, PM_LANG );
+
+    WORDSET_ExpandStr( wk->wordSet, wk->lineup[i].p_name, p_name_tmp );
+    WORDSET_ExpandStr( wk->wordSet, wk->lineup[i].p_info, p_info_tmp );
+
+    GFL_STR_DeleteBuffer( p_name );
+    GFL_STR_DeleteBuffer( p_info_tmp );
+    GFL_STR_DeleteBuffer( p_name_tmp );
+
+
+    //リストに加える
+    BmpMenuWork_ListAddString( &wk->list[i], wk->lineup[i].p_name,
+        i,                // 商品テーブルのインデックス
+        wk->heapId );
+  }
+
+  // 「やめる」登録
+  BmpMenuWork_ListAddArchiveString( &wk->list[i], wk->shopMsgData, 
+                                    mes_shop_02_06, 
+                                    BMPMENULIST_CANCEL, 
+                                    wk->heapId );
+}
+
+static void InstitutionList_Change( SHOP_BUY_APP_WORK *wk, int type, int id )
+{
+  int i;
+  RESORT_SHOP_ITEM temp;
+  
+  temp = wk->lineup[ wk->insert_idx ];
+  wk->lineup[ wk->insert_idx ]  = wk->lineup[ wk->now_idx ];
+  wk->lineup[ wk->now_idx ] = temp;
+  wk->cp_select = NULL;
+
+  BmpMenuWork_ListDelete( wk->list );
+  wk->list = BmpMenuWork_ListCreate( wk->lineup_num+1, wk->heapId );
+
+  for(i=0;i<wk->lineup_num;i++)
+  {
+    RESORT_RESIDENT_DATA *p_resident = wk->lineup[i].p_data_adrs;
+
+        u16 shop = RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_TYPE, NULL );
+
+        const RESORT_INSTITUTION_DATA * cp_institution = RESORT_RESIDENT_DATA_GetInstitution( p_resident );
+        u16 lv = RESORT_INSTITUTION_DATA_GetData( cp_institution, RESORT_INSTITUTION_DATA_PARAM_LV );
+        u16 type = 0; //TODO
+        const RESORT_BINARY_SHOP_DATA *cp_shop_data = RESORT_BINARY_SHOP_SearchData( wk->p_shop, shop, type, lv );
+        STRBUF *p_shopname = RESORT_DATA_MANAGER_CreateShopName( cp_shop_data, p_resident, wk->heapId );
+
+        GFL_MSGDATA* p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_resort_scr_dat, GFL_HEAP_LOWID(wk->heapId) );
+        STRBUF *p_shopinfo = GFL_MSG_CreateString( p_msg, resort_shop_genre_00+shop );
+
+        STRBUF *p_name_tmp = GFL_MSG_CreateString( wk->shopMsgData, mes_shop_09_02 );
+        STRBUF *p_info_tmp = GFL_MSG_CreateString( wk->shopMsgData, mes_shop_09_04 );
+        u8 sex = RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_SEX, NULL );
+
+        WORDSET_RegisterNumber( wk->wordSet, 1, i+1, 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+        WORDSET_RegisterWord( wk->wordSet, 0, p_shopname, sex, TRUE, PM_LANG );
+
+        WORDSET_ExpandStr( wk->wordSet, wk->lineup[i].p_name, p_name_tmp );
+
+
+        WORDSET_RegisterWord( wk->wordSet, 1, p_shopinfo, PM_NEUTRAL, TRUE, PM_LANG );
+        WORDSET_ExpandStr( wk->wordSet, wk->lineup[i].p_info, p_info_tmp );
+
+        GFL_STR_DeleteBuffer( p_info_tmp );
+        GFL_STR_DeleteBuffer( p_name_tmp );
+        GFL_STR_DeleteBuffer( p_shopinfo );
+        GFL_MSG_Delete( p_msg );
+        GFL_STR_DeleteBuffer( p_shopname );
+
+
     //リストに加える
     BmpMenuWork_ListAddString( &wk->list[i], wk->lineup[i].p_name,
         i,                // 商品テーブルのインデックス
@@ -2859,4 +2967,117 @@ static void SortPoeple_Cursor_SetPos( SHOP_BUY_APP_WORK *wk )
   //以前選択したものの位置
   GFL_CLACT_WK_SetPos( wk->ClactWork[SHOP_OBJ_CURSOR_RED], &clpos, CLSYS_DEFREND_MAIN );
 
+}
+static void SecretaryList_Decide( SHOP_BUY_APP_WORK *wk, int type, int id )
+{
+  int i;
+  int temp_num;
+  u8 temp[RESORT_SECRETARY_DATA_SIZE];
+
+  if( !wk->is_change )
+  {
+    return;
+  }
+
+#ifdef PM_DEBUG
+  OS_Printf("before\n");
+  for( i = 0; i< wk->lineup_num; i++ )
+  {
+    OS_Printf( "%d ", wk->lineup[i].id );
+  }
+  OS_Printf("\n");
+#endif 
+
+  for( i = 0; i < wk->lineup_num; i++ )
+  {
+    if( i != wk->lineup[i].id )
+    {
+      RESORT_SECRETARY_DATA *p_a = RESORT_PEOPLE_ALL_DATA_GetSecretary( wk->p_all_people, wk->lineup[i].id );
+      RESORT_PLACEID a_placeID = RESORT_SECRETARY_DATA_GetData( p_a, RESORT_DATA_PARAM_PLACE_ID, NULL );
+      u16 a_peopleID = RESORT_SECRETARY_DATA_GetData( p_a, RESORT_DATA_PARAM_PEOPLE_ID, NULL );
+      RESORT_SECRETARY_DATA *p_b = RESORT_PEOPLE_ALL_DATA_GetSecretary( wk->p_all_people, i );
+      RESORT_PLACEID b_placeID = RESORT_SECRETARY_DATA_GetData( p_b, RESORT_DATA_PARAM_PLACE_ID, NULL );
+      u16 b_peopleID = RESORT_SECRETARY_DATA_GetData( p_b, RESORT_DATA_PARAM_PEOPLE_ID, NULL );
+
+      RESORT_SECRETARY_DATA_SetData(p_a, RESORT_DATA_PARAM_PEOPLE_ID, b_peopleID );
+      RESORT_SECRETARY_DATA_SetData(p_a, RESORT_DATA_PARAM_PLACE_ID, b_placeID );
+      RESORT_SECRETARY_DATA_SetData(p_b, RESORT_DATA_PARAM_PEOPLE_ID, a_peopleID );
+      RESORT_SECRETARY_DATA_SetData(p_b, RESORT_DATA_PARAM_PLACE_ID, a_placeID );
+
+      GFL_STD_MemCopy( p_a, temp, RESORT_SECRETARY_DATA_SIZE );
+      GFL_STD_MemCopy( p_b, p_a, RESORT_SECRETARY_DATA_SIZE );
+      GFL_STD_MemCopy( temp, p_b, RESORT_SECRETARY_DATA_SIZE );
+
+
+      temp_num = wk->lineup[ wk->lineup[i].id ].id;
+      wk->lineup[ wk->lineup[i].id ].id  = wk->lineup[i].id;
+      wk->lineup[i].id  = temp_num;
+    }
+  }
+
+#ifdef PM_DEBUG
+  OS_Printf("after\n");
+  for( i = 0; i< wk->lineup_num; i++ )
+  {
+    OS_Printf( "%d ", wk->lineup[i].id );
+  }
+  OS_Printf("\n");
+#endif 
+}
+
+static void InstitutionList_Decide( SHOP_BUY_APP_WORK *wk, int type, int id )
+{
+  int i;
+  int temp_num;
+  u8 temp[RESORT_RESIDENT_DATA_SIZE];
+
+  if( !wk->is_change )
+  {
+    return;
+  }
+
+
+#ifdef PM_DEBUG
+  OS_Printf("before\n");
+  for( i = 0; i < wk->lineup_num; i++ )
+  {
+    OS_Printf( "%d ", wk->lineup[i].id );
+  }
+  OS_Printf("\n");
+#endif 
+
+  for( i = 0; i < wk->lineup_num; i++ )
+  {
+    if( i != wk->lineup[i].id )
+    {
+      RESORT_RESIDENT_DATA *p_a = RESORT_PEOPLE_ALL_DATA_GetResident( wk->p_all_people, wk->lineup[i].id );
+      RESORT_PLACEID a_placeID = RESORT_RESIDENT_DATA_GetData( p_a, RESORT_DATA_PARAM_PLACE_ID, NULL );
+      u16 a_peopleID = RESORT_RESIDENT_DATA_GetData( p_a, RESORT_DATA_PARAM_PEOPLE_ID, NULL );
+      RESORT_RESIDENT_DATA *p_b = RESORT_PEOPLE_ALL_DATA_GetResident( wk->p_all_people, i );
+      RESORT_PLACEID b_placeID = RESORT_RESIDENT_DATA_GetData( p_b, RESORT_DATA_PARAM_PLACE_ID, NULL );
+      u16 b_peopleID = RESORT_RESIDENT_DATA_GetData( p_b, RESORT_DATA_PARAM_PEOPLE_ID, NULL );
+
+      RESORT_RESIDENT_DATA_SetData(p_a, RESORT_DATA_PARAM_PEOPLE_ID, b_peopleID );
+      RESORT_RESIDENT_DATA_SetData(p_a, RESORT_DATA_PARAM_PLACE_ID, b_placeID );
+      RESORT_RESIDENT_DATA_SetData(p_b, RESORT_DATA_PARAM_PEOPLE_ID, a_peopleID );
+      RESORT_RESIDENT_DATA_SetData(p_b, RESORT_DATA_PARAM_PLACE_ID, a_placeID );
+
+      GFL_STD_MemCopy( p_a, temp, RESORT_RESIDENT_DATA_SIZE );
+      GFL_STD_MemCopy( p_b, p_a, RESORT_RESIDENT_DATA_SIZE );
+      GFL_STD_MemCopy( temp, p_b, RESORT_RESIDENT_DATA_SIZE );
+
+
+      temp_num = wk->lineup[ wk->lineup[i].id ].id;
+      wk->lineup[ wk->lineup[i].id ].id  = wk->lineup[i].id;
+      wk->lineup[i].id  = temp_num;
+    }
+  }
+#ifdef PM_DEBUG
+  OS_Printf("after\n");
+  for( i = 0; i< wk->lineup_num; i++ )
+  {
+    OS_Printf( "%d ", wk->lineup[i].id );
+  }
+  OS_Printf("\n");
+#endif 
 }
