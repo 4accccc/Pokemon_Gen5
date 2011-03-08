@@ -121,7 +121,27 @@
 extern BOOL DebugBGInitEnd;    //BG初期化監視フラグ             宣言元　fieldmap.c
 extern BOOL MapFadeReqFlg;    //マップフェードリクエストフラグ  宣言元　script.c
 
+#if defined(DEBUG_ONLY_FOR_tomoya_takahashi) | \
+    defined(DEBUG_ONLY_FOR_nakatsui) | \
+    defined(DEBUG_ONLY_FOR_takahashi) | \
+    defined(DEBUG_ONLY_FOR_hozumi_yukiko) | \
+    defined(DEBUG_ONLY_FOR_iwao_kazumasa) | \
+    defined(DEBUG_ONLY_FOR_murakami_naoto) | \
+    defined(DEBUG_ONLY_FOR_nakamura_akira) | \
+    defined(DEBUG_ONLY_FOR_suginaka_katsunori) | \
+    defined(DEBUG_ONLY_FOR_tamada) | \
+    defined(DEBUG_ONLY_FOR_mori) | \
+    defined(DEBUG_ONLY_FOR_iwasawa) | \
+    defined(DEBUG_ONLY_FOR_nagihashi_toru) | \
+    defined(DEBUG_ONLY_FOR_ichiraku_katsuhiko) | \
+    defined(DEBUG_ONLY_FOR_onoue_masayuki) | \
+    defined(DEBUG_ONLY_FOR_hudson)
+
+#define DEBUG_RAIL_EDITOR_ENABLE  
+
 #endif
+
+#endif  //PM_DEBUG
 
 
 //======================================================================
@@ -2182,7 +2202,7 @@ static GMEVENT * DEBUG_checkKeyEvent(EV_REQUEST * req, GAMESYS_WORK * gsys, FIEL
         req->heapID, ZONEDATA_GetMapRscID(req->map_id));
   }
 
-#if defined(DEBUG_ONLY_FOR_tomoya_takahashi) | defined(DEBUG_ONLY_FOR_nakatsui) | defined(DEBUG_ONLY_FOR_takahashi) | defined(DEBUG_ONLY_FOR_hozumi_yukiko) | defined(DEBUG_ONLY_FOR_iwao_kazumasa) | defined(DEBUG_ONLY_FOR_murakami_naoto) | defined(DEBUG_ONLY_FOR_nakamura_akira) | defined(DEBUG_ONLY_FOR_suginaka_katsunori) | defined(DEBUG_ONLY_FOR_nagihashi_toru)
+#ifdef DEBUG_RAIL_EDITOR_ENABLE 
   // レールエディタ起動
   if( (req->key_cont & railCont) == railCont )
   {
