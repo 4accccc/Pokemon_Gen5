@@ -274,8 +274,6 @@ sub_medaloyaji_hint_check:
   _NUMBER( 1, SCWK_ANSWER, 3 )
   _BALLOONWIN_TALKOBJ_MSG( msg_mdloyj_hintget_01 )
   _BALLOONWIN_CLOSE()
-  _SYSWIN_MSG( msg_mdloyj_hintget_sys, POS_DEFAULT )
-  _SYSWIN_CLOSE()
   
   //ÉqÉìÉgÉÅÉ_ÉãÇÇ‡ÇÁÇ¡ÇΩÅI
   _GET_MEDAL_COUNT( SCR_MEDALCOUNT_HINT_ACHIEVE, LWK_MEDAL_COUNT  )
