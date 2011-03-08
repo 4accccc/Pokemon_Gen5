@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="mizuguchi_mai" host="W00226" date="2011-03-03T19:48:21"/>
+	<create user="suginaka_katsunori" host="W00227" date="2011-03-08T20:48:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -458,18 +458,18 @@
 	</row>
 
 	<row id="msg_debug_suginaka_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<language name="JPN" width="256">Ｔ０２ゲーチス演説</language>
-		<language name="JPN_KANJI" width="256">Ｔ０２ゲーチス演説</language>
+		<language name="JPN" width="256">ＷＢＴ１回戦</language>
+		<language name="JPN_KANJI" width="256">ＷＢＴ１回戦</language>
 	</row>
 
 	<row id="msg_debug_suginaka_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<language name="JPN" width="256">Ｄ０３Ｒ０１０１イベント</language>
-		<language name="JPN_KANJI" width="256">Ｄ０３Ｒ０１０１イベント</language>
+		<language name="JPN" width="256">ＷＢＴ２回戦</language>
+		<language name="JPN_KANJI" width="256">ＷＢＴ２回戦</language>
 	</row>
 
 	<row id="msg_debug_suginaka_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<language name="JPN" width="256">Ｃ０３ライバルの案内</language>
-		<language name="JPN_KANJI" width="256">Ｃ０３ライバルの案内</language>
+		<language name="JPN" width="256">ＷＢＴ決勝戦</language>
+		<language name="JPN_KANJI" width="256">ＷＢＴ決勝戦</language>
 	</row>
 
 	<row id="msg_debug_suginaka_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
