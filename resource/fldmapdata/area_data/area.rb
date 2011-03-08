@@ -13,6 +13,7 @@
 #	2009.05.18  tamada  light/itp/itaの外部データ(*.naix)参照に対応
 #	2009.05.19  tamada  エラーになっても出力ファイルが生成されているために
 #	                    再度makeすると問題なく通ってしまう対処
+#	2011.03.08  tamada  季節以外でもエリアのグループを作成したいとのことなので連番指定に対応
 #
 #------------------------------------------------------------------------------
 
@@ -61,6 +62,7 @@ class AreaIDMaker
 		@area_names = {}
 		@before_name = ""
 		@season_count = 0
+    @continue_count = 0
 
 		@wf = File.open(filename, "w")
 		@wf.printf("//このファイルはコンバータにより生成されます\n")
@@ -110,6 +112,21 @@ class AreaIDMaker
 			putLine(area_id)
 			@season_count = 0
 			@before_name = ""
+    when "0"
+			raise DataTypeError, "#{area_id}：#{season_id}の直前がおかしい" if @season_count != 0
+			putLine(area_id)
+			putLine(area_id + "_" + season_id)
+			@season_count = 0
+      @continue_count = 0
+			@before_name = area_id
+    when "1","2","3","4","5","6","7","8","9"
+			raise DataTypeError, "#{area_id}：#{season_id}の直前がおかしい" if @season_count != 0
+			raise DataTypeError, "#{area_id}指定は#{season_id}に不要です" if area_id != ""
+      if @continue_count !=  season_id.to_i - 1
+			  raise DataTypeError, "#{area_id}：#{season_id}の直前がおかしい"
+      end
+			putLine(@before_name + "_" + season_id)
+      @continue_count += 1
 		else
 			raise DataTypeError, "季節指定に使えない'#{season_id}'が#{area_id}にありました"
 		end
@@ -186,7 +203,13 @@ begin
     bm_id = EntryVec(build_vec, column[COL_BMNAME])	#モデル
     bin_out += [bm_id].pack("S") 
 
-    tex_id = EntryVec(tex_vec,column[COL_TEXNAME])		#テクスチャセット
+    #tex_id = EntryVec(tex_vec,column[COL_TEXNAME])		#テクスチャセット
+    if tex_vec.index( column[COL_TEXNAME] ) == nil then
+      tex_vec << column[ COL_TEXNAME ]
+      tex_id = tex_vec.size - 1
+    else
+		  raise DataTypeError, "#{column[COL_TEXNAME]}が多重定義されています"
+    end
     bin_out += [tex_id].pack("S") 
 
     #地形ITAアニメファイル指定
