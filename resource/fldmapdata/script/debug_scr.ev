@@ -30,6 +30,8 @@
   .include "init_scr_def.h"
   .include "pasokon_def.h"
 
+  .include	"wbt_hall_def.h"
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -527,9 +529,9 @@ EVENT_START   ev_debug_suginaka
 		//メニュー作成
 		_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
 		//リスト追加
-		_BMPMENU_MAKE_LIST( msg_debug_suginaka_04, 0 )	//演説イベント
-		_BMPMENU_MAKE_LIST( msg_debug_suginaka_05, 1 )	//D03R0101のイベント
-		_BMPMENU_MAKE_LIST( msg_debug_suginaka_06, 2 )	//C03の誘導イベント
+		_BMPMENU_MAKE_LIST( msg_debug_suginaka_04, 0 )	//ＷＢＴ１回戦
+		_BMPMENU_MAKE_LIST( msg_debug_suginaka_05, 1 )	//ＷＢＴ２回戦
+		_BMPMENU_MAKE_LIST( msg_debug_suginaka_06, 2 )	//ＷＢＴ決勝戦
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_09, 5 )	//D02プラズマ団
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_12, 6 )	//C03のゲーチスイベント
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_07, 80 )		//ラストイベント１・はじめから
@@ -541,58 +543,31 @@ EVENT_START   ev_debug_suginaka
 		_BMPMENU_START()
 	
 		IF $SCWK_ANSWER == 0 THEN
-			//=========フラグワーク操作==========//
+			//予約スクリプト
+			_RESERVE_SCRIPT( SCRID_WBT_HALL_01 )
 	
-			//博士案内イベント終了
-			$WK_SCENE_T02PC0101 = 3
-	
-			//ライバルストッパー終了
-			$WK_SCENE_T02 = 1	
-	
-			//ライバルストッパー解除
-			_FLAG_SET( FV_T02_RIVAL )
-			_FLAG_SET( FV_T02_HAKASE )
-
-			//演説イベントフラグ開始
-			_FLAG_RESET( FV_T02_SAGE )
-			_FLAG_RESET( FV_T02_HAKAI )
-			_FLAG_RESET( FV_T02_NNN )
-			_FLAG_RESET( FV_T02_RIVAL_02 )
-			_FLAG_RESET( FV_T02_MAN )
-			_FLAG_RESET( FV_T02_SPEECH_BEFORE )
-			_FLAG_SET( FV_T02_SPEECH_AFTER )
-
-			//===================================//
-
 			//マップチェンジ
-			_MAP_CHANGE( ZONE_ID_T02, 796, 658, DIR_DOWN )
+			_MAP_CHANGE( ZONE_ID_D05R0201, 31, 15, DIR_LEFT )
 			
 			$SCWK_TEMP0 = 428
 		
 		ELSIF $SCWK_ANSWER == 1 THEN
 			
-			//========================================/
-		
-			//リゾートデザートのライバル出現
-			_FLAG_RESET( FV_D03R0101_RIVAL_01 )
+			//予約スクリプト
+			_RESERVE_SCRIPT( SCRID_DEBUG_WBT_SECOND_GAME )
 	
-			//========================================/
-			
 			//マップチェンジ
-			_MAP_CHANGE( ZONE_ID_D03R0101, 61, 32, DIR_DOWN )
+			_MAP_CHANGE( ZONE_ID_D05R0201, 31, 15, DIR_LEFT )
 			
 			$SCWK_TEMP0 = 428
 			
 		ELSIF $SCWK_ANSWER == 2 THEN
 		
-			//アーティ・ライバル削除
-			_FLAG_RESET( FV_C03_GUIDE_01 )
-		
-			//ワークの値を0
-			$WK_SCENE_C03 = 0
-
+			//予約スクリプト
+			_RESERVE_SCRIPT( SCRID_DEBUG_WBT_FINAL_GAME )
+	
 			//マップチェンジ
-			_MAP_CHANGE( ZONE_ID_H01R0201, 2, 4, DIR_LEFT )
+			_MAP_CHANGE( ZONE_ID_D05R0201, 31, 15, DIR_LEFT )
 			
 			$SCWK_TEMP0 = 428
 			
