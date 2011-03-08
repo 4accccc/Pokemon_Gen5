@@ -149,4 +149,7 @@ DEP_INDOOR	=	\
 	$(RESDIR)/m_gym03_mayu02.nsbmd \
 	$(RESDIR)/m_gym03_mayu03.nsbmd \
 	$(RESDIR)/mado_in5gym.nsbmd \
+	$(RESDIR)/mugenobj01.nsbmd \
+	$(RESDIR)/mugenobj02.nsbmd \
+	$(RESDIR)/mugenobj03.nsbmd \
 

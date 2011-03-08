@@ -148,3 +148,6 @@
 "nsbmdfiles/m_gym03_mayu02.nsbmd"
 "nsbmdfiles/m_gym03_mayu03.nsbmd"
 "nsbmdfiles/mado_in5gym.nsbmd"
+"nsbmdfiles/mugenobj01.nsbmd"
+"nsbmdfiles/mugenobj02.nsbmd"
+"nsbmdfiles/mugenobj03.nsbmd"
