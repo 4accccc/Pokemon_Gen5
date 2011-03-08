@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-18T16:04:31"/>
+	<create user="matsumiya" host="W00224" date="2011-03-08T16:34:07"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1296" top="209" right="2001" bottom="837" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -432,9 +432,11 @@
 いたる　ところに　いるの！▼</language>
 	</row>
 
-	<row id="msg_intro_04">
+	<row id="msg_intro_04" text-color=",,,#ff0000,,#ff0000,,,,,,#ff0000,,,,,," back-color=",,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>■
-・続けてmsg_intro_05</comment>
+・続けてmsg_intro_05
+
+※後ほどメッセージ内容修正</comment>
 		<language name="JPN" width="256">ふしぎな　ちからを　ひめている
 ポケモンは　すがたかたちも▽
 くらしている　ばしょも　さまざま▼
@@ -558,17 +560,17 @@
 		<language name="JPN_KANJI" width="256">いいえ</language>
 	</row>
 
-	<row id="msg_intro_06" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_intro_06" text-color="#000000,,,#ff0000,,#ff0000,,,,,,#ff0000,,,,,,">
 		<comment>■
-・続けてmsg_intro_06_01
+・続けてmsg_intro_rival_01
 </comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]と　いう　なまえ！
-すごく　ステキ　だよね！▼</language>
+とても　ステキ　よね！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]と　いう　名前！
-すごく　ステキ　だよね！▼</language>
+とても　ステキ　よね！▼</language>
 	</row>
 
-	<row id="msg_intro_06_01" text-color="#ff0000,,,#ff0000,,,,,,,,,,,,,," back-color=",,,,,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_intro_06_01" text-color="#ff0000,,,#ff0000,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>■メッセージ表示後、博士を消して友達紹介へ
 ・続けてmsg_intro_06_02</comment>
 		<language name="JPN" width="256">それでは　あなたと　いつも
@@ -579,7 +581,66 @@
 あらためて　紹介するわね▼</language>
 	</row>
 
-	<row id="msg_intro_06_02" text-color="#ff0000,,,#ff0000,,,,,,,,,,,,,," back-color=",,,,,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_intro_rival_01" text-color="#ff0000,,,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>■メッセージ表示後、博士を消して友達紹介へ
+・メッセージ表示後、ライバル表示
+・続けてmsg_intro_06_02</comment>
+		<language name="JPN" width="256">それでは　つぎは　あなたの
+おともだちに　ついて　きかせてね▼</language>
+		<language name="JPN_KANJI" width="256">それでは　次は　あなたの
+お友達に　ついて　きかせてね▼</language>
+	</row>
+
+	<row id="msg_intro_rival_02" text-color="#ff0000,,,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>■選択肢表示
+　ヒュウ（デフォルト名１）
+　（デフォルト名２）
+　（デフォルト名３）
+　じぶんできめる
+・じぶんできめる選択の場合、名前入力画面へ</comment>
+		<language name="JPN" width="256">かれの　なまえも
+おしえてくれるかな</language>
+		<language name="JPN_KANJI" width="256">かれの　名前も
+教えてくれるかな</language>
+	</row>
+
+	<row id="msg_intro_rival_name01" text-color="#ff0000,,,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,,,,,,,,,,,,,">
+		<comment>ライバル名入力確認の選択肢用</comment>
+		<language name="JPN" width="256">ヒュウ</language>
+		<language name="JPN_KANJI" width="256">ヒュウ</language>
+	</row>
+
+	<row id="msg_intro_rival_name02" text-color="#ff0000,,,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,,,,,,,,,,,,,">
+		<comment>ライバル名入力確認の選択肢用</comment>
+		<language name="JPN" width="256">デフォ１</language>
+		<language name="JPN_KANJI" width="256">デフォ１</language>
+	</row>
+
+	<row id="msg_intro_rival_name03" text-color="#ff0000,,,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,,,,,,,,,,,,,">
+		<comment>ライバル名入力確認の選択肢用</comment>
+		<language name="JPN" width="256">デフォ２</language>
+		<language name="JPN_KANJI" width="256">デフォ２</language>
+	</row>
+
+	<row id="msg_intro_rival_name04" text-color="#ff0000,,,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,,,,,,,,,,,,,">
+		<comment>ライバル名入力確認の選択肢用</comment>
+		<language name="JPN" width="256">じぶんできめる</language>
+		<language name="JPN_KANJI" width="256">じぶんできめる</language>
+	</row>
+
+	<row id="msg_intro_rival_03" text-color="#ff0000,,,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>■決定した名前の確認
+・1＝選択or入力した名前
+・選択肢の表示
+　はい　→msg_intro_06_04
+　いいえ→msg_intro_rival_02</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]　ね
+それで　あっている？▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]　ね
+それで　あっている？▼</language>
+	</row>
+
+	<row id="msg_intro_06_02" back-color="#404040,,,#404040,,#404040,,,,,,#404040,,,,,,">
 		<comment>■チェレンを表示してから、メッセージ表示
 ・続けてmsg_intro_06_03
 </comment>
@@ -591,7 +652,7 @@
 まっすぐな　男の子▼</language>
 	</row>
 
-	<row id="msg_intro_06_03" text-color="#ff0000,,,#ff0000,,,,,,,,,,,,,," back-color=",,,,,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_intro_06_03" back-color="#404040,,,#404040,,#404040,,,,,,#404040,,,,,,">
 		<comment>■ベルを表示してから、メッセージ表示
 ・続けてmsg_intro_06_04
 </comment>
@@ -603,21 +664,25 @@
 がんばりやの　女の子▼</language>
 	</row>
 
-	<row id="msg_intro_06_04" text-color="#ff0000,,,#ff0000,,,,,,,,,,,,,," back-color=",,,,,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>
+	<row id="msg_intro_06_04" text-color=",,,#ff0000,,,,,,,,,,,,,," back-color=",,,,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・0＝主人公名前
+・続けてmsg_intro_07
 ・セーブできていないときはmsg_intro_00</comment>
-		<language name="JPN" width="256">これから　あなたたち　３にんを
-みこんで　だいじな　だいじな▽
+		<language name="JPN" width="256">[1:00:トレーナー名:0]！▼
+これから　あなたを　たよりにして
+だいじな　だいじな▽
 ポケモンを　プレゼントします▼</language>
-		<language name="JPN_KANJI" width="256">これから　あなたたち　３人を
-見込んで　大事な　大事な▽
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]！▼
+これから　あなたを　頼りにして
+大事な　大事な▽
 ポケモンを　プレゼントします▼</language>
 	</row>
 
-	<row id="msg_intro_07" text-color="#ff0000,,,#ff0000,,,,,,,,,,,,,," back-color=",,,,,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>■メッセージ表示後、ゲームヘ</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]！！▼
-たびの　パートナーとなる
+	<row id="msg_intro_07" text-color=",,,#ff0000,,,,,,,,,,,,,," back-color=",,,,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>■メッセージ表示後、ゲームヘ
+
+※後ほどメッセージ内容修正</comment>
+		<language name="JPN" width="256">あなたが　たびの　パートナーとなる
 ポケモンを　えらんだ　そのときから▼
 あなただけの
 たびものがたりが　はじまります▼
@@ -635,8 +700,7 @@
 もっとも　おおきな　もくてきです▼
 それでは　いきましょう！
 ポケットモンスターの　せかいへ！▼</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]！！▼
-旅の　パートナーとなる
+		<language name="JPN_KANJI" width="256">あなたが　旅の　パートナーとなる
 ポケモンを　選んだ　その瞬間から▼
 あなただけの
 旅物語が　始まります▼
@@ -656,7 +720,7 @@
 ポケットモンスターの　世界へ！▼</language>
 	</row>
 
-	<row id="msg_intro_08" back-color="#808080,,,#808080,,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_intro_08" back-color="#404040,,,#404040,,#404040,,,,,,#404040,,,,,,">
 		<comment>■
 ・セーブ処理中
 （未使用）</comment>
@@ -666,7 +730,7 @@
 いま　いろいろ　準備してるから</language>
 	</row>
 
-	<row id="msg_intro_09" back-color="#808080,,,#808080,,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_intro_09" back-color="#404040,,,#404040,,#404040,,,,,,#404040,,,,,,">
 		<comment>■
 ・セーブ終了時
 ・続けてmsg_intro_07
