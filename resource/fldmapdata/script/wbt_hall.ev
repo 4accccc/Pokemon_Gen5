@@ -222,7 +222,7 @@ _OBJ_ANIME_WAIT()
 //_SE_WAIT()
 
 //‚P‰ñí‚Ì‘ÎíŽÒ–¼‚ðŠi”[‚·‚é
-//_WBT_SET_ENEMY_NAME( 0,1 )
+//_WBT_SET_ENEMY_NAME( 0 )
 	
 //ƒvƒŒƒCƒ„[–¼‚ðŠi”[‚·‚é
 _PLAYER_NAME( 1 )
@@ -289,12 +289,20 @@ _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_2nd_in )
 _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_enemy_2nd_in )
 
 //º‰‡•\Ž¦
-//_CALL ev_first_yell
+_CALL ev_first_yell
+
+IF $LOCALWORK14 == 1 THEN
+	_SUBWIN_CLOSE( 1 )
+ENDIF
+
+IF $LOCALWORK15 == 1 THEN
+	_SUBWIN_CLOSE( 2 )
+ENDIF
 
 _OBJ_ANIME_WAIT()
 
 //‚Q‰ñí‚Ì‘ÎíŽÒ–¼‚ðŠi”[‚·‚é
-//_WBT_SET_ENEMY_NAME( 0,2 )
+//_WBT_SET_ENEMY_NAME( 0 )
 
 //ƒvƒŒƒCƒ„[–¼‚ðŠi”[‚·‚é
 _PLAYER_NAME( 1 )
@@ -343,7 +351,7 @@ _ANIME_LABEL	anm_enemy_2nd_in
 /**************************************************************/
 ev_first_yell:
 
-//_WBT_GET_COUNT( LWK_WIN_COUNT )
+//_WBT_GET_VICTORY_COUNT( LWK_WIN_COUNT )
 
 //—DŸ‰ñ”‚ª‚PˆÈ‰º‚Ìê‡
 IF $LWK_WIN_COUNT <= 1 THEN
@@ -403,37 +411,36 @@ IF $LWK_RND <= LWK_PROBABILITY THEN
 	_GET_RND( LWK_MSG,10 )
 
 	//XÀ•WEYÀ•WEƒiƒ“ƒo[Œˆ‚ß
-	$LWK_YELL_POSX = 5
-	$LWK_YELL_POSY = 5
-	$LWK_SUBWIN_NUM = 1
+	$LWK_YELL_POSX = 1
+	$LWK_YELL_POSY = 1
 
 	SWITCH $LWK_MSG
 	CASE 0 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , LWK_SUBWIN_NUM )
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
 	CASE 1 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , LWK_SUBWIN_NUM )
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
 	CASE 2 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , LWK_SUBWIN_NUM )
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
 	CASE 3 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , LWK_SUBWIN_NUM )
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
 	CASE 4 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , LWK_SUBWIN_NUM )
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
 	CASE 5 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , LWK_SUBWIN_NUM )
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
 	CASE 6 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , LWK_SUBWIN_NUM )
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
 	CASE 7 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , LWK_SUBWIN_NUM )
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
 	CASE 8 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , LWK_SUBWIN_NUM )
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
 	CASE 9 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , LWK_SUBWIN_NUM )
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
 	ENDSWITCH
 	
 	//========================================/
 	
 	//ƒTƒuƒEƒBƒ“ƒhƒEƒ`ƒFƒbƒN
-	$LOCALWORK10 = 1
+	$LOCALWORK14 = 1
 	
 	//========================================/
 	
@@ -449,52 +456,43 @@ IF $LWK_RND <= LWK_PROBABILITY THEN
 	_GET_RND( LWK_MSG,10 )
 
 	//XÀ•WEYÀ•WEƒiƒ“ƒo[Œˆ‚ß
-	$LWK_YELL_POSX = 15
-	$LWK_YELL_POSY = 15
-	$LWK_SUBWIN_NUM = 2
+	$LWK_YELL_POSX = 20
+	$LWK_YELL_POSY = 20
 
 	SWITCH $LWK_MSG
 	CASE 0 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , LWK_SUBWIN_NUM )
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
 	CASE 1 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , LWK_SUBWIN_NUM )
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
 	CASE 2 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , LWK_SUBWIN_NUM )
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
 	CASE 3 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , LWK_SUBWIN_NUM )
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
 	CASE 4 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , LWK_SUBWIN_NUM )
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
 	CASE 5 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , LWK_SUBWIN_NUM )
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
 	CASE 6 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , LWK_SUBWIN_NUM )
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
 	CASE 7 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , LWK_SUBWIN_NUM )
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
 	CASE 8 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , LWK_SUBWIN_NUM )
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
 	CASE 9 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , LWK_SUBWIN_NUM )
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
 	ENDSWITCH
 
 	//========================================/
 	
 	//ƒTƒuƒEƒBƒ“ƒhƒEƒ`ƒFƒbƒN
-	$LOCALWORK11 = 1
+	$LOCALWORK15 = 1
 	
 	//========================================/
 
 ENDIF
 	
 //ƒ^ƒCƒ€ƒEƒFƒCƒg
-_TIME_WAIT( 30 )
-
-IF $LOCALWORK10 == 1 THEN
-	_SUBWIN_CLOSE( 1 )
-ENDIF
-
-IF $LOCALWORK11 == 1 THEN
-	_SUBWIN_CLOSE( 2 )
-ENDIF
+_TIME_WAIT( 60 )
 
 _RET
 
@@ -538,7 +536,7 @@ _CAMERA_WAIT_MOVE()
 //Š½ºSEÄ¶
 //_SE_PLAY()
 
-_DISP_FADE_END_CHECK()
+//_DISP_FADE_END_CHECK()
 
 //_SE_WAIT()
 
@@ -556,7 +554,22 @@ _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_3rd_in )
 _CAMERA_MOVE( 4056,0,970752,1499136,131103,1015808,144 )		//ˆê”ÔÅŒã‚Ìˆø”‚ÍˆÚ“®‚É‚©‚©‚éƒtƒŒ[ƒ€”
 
 //º‰‡•\Ž¦
-//_CALL ev_yell_player_final
+_CALL ev_yell_final_player
+
+
+
+IF $LOCALWORK5 == 1 THEN 
+	//ƒTƒuƒEƒBƒ“ƒNƒ[ƒY
+	_SUBWIN_CLOSE( 5 )
+ENDIF
+
+//ƒ^ƒCƒ€ƒEƒFƒCƒg
+_TIME_WAIT( 20 )
+
+IF $LOCALWORK6 == 1 THEN 
+	//ƒTƒuƒEƒBƒ“ƒNƒ[ƒY
+	_SUBWIN_CLOSE( 6 )
+ENDIF
 
 _OBJ_ANIME_WAIT()
 _CAMERA_WAIT_MOVE()
@@ -573,6 +586,7 @@ _CAMERA_MOVE( 4312,128,1101824,229376,0,1015808,30 )	//ˆê”ÔÅŒã‚Ìˆø”‚ÍˆÚ“®‚É‚©‚
 _CAMERA_WAIT_MOVE()
 
 //‘ÎíŽÒ‚Ì‘OŒûãƒƒbƒZ[ƒW•\Ž¦@‚l‚r‚f•\Ž¦ê—pƒRƒ}ƒ“ƒh
+//_WBT_ANNOUNCE( 0 )
 
 //ƒvƒŒƒCƒ„[”ñ•\Ž¦‰ðœŒã
 _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_vanish_off )
@@ -585,18 +599,32 @@ _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_enemy_3rd_in )
 _CAMERA_MOVE( 4056,0,970752,1499136,131103,1015808,144 )	//ˆê”ÔÅŒã‚Ìˆø”‚ÍˆÚ“®‚É‚©‚©‚éƒtƒŒ[ƒ€”
 
 //º‰‡•\Ž¦
-//_CALL ev_yell_enemy_final
+_CALL ev_yell_final_enemy
+
+IF $LOCALWORK11 == 1 THEN 
+	//ƒTƒuƒEƒBƒ“ƒNƒ[ƒY
+	_SUBWIN_CLOSE( 5 )
+ENDIF
+
+//ƒ^ƒCƒ€ƒEƒFƒCƒg
+_TIME_WAIT( 20 )
+
+IF $LOCALWORK12 == 1 THEN 
+	//ƒTƒuƒEƒBƒ“ƒNƒ[ƒY
+	_SUBWIN_CLOSE( 6 )
+ENDIF
 
 _OBJ_ANIME_WAIT()
+_CAMERA_WAIT_MOVE()
 
 //ŒˆŸí‚Ì‘ÎíŽÒ–¼‚ðŠi”[‚·‚é
-//_WBT_SET_ENEMY_NAME( 0,3 )
+//_WBT_SET_ENEMY_NAME( 0 )
 
 //ƒvƒŒƒCƒ„[–¼‚ðŠi”[‚·‚é
 _PLAYER_NAME( 1 )
 
 //ŒˆŸíI@ƒvƒŒƒCƒ„[‚–‚“‘ÎíŽÒI
-_PLAINWIN_MSG_UP( msg_wbt_announce_04 )
+_PLAINWIN_MSG_UP( msg_wbt_announce_03 )
 _PLAINWIN_CLOSE()
 
 //ŒˆŸí‘Îí‘OƒƒbƒZ[ƒW‚Ì•\Ž¦@‚l‚r‚f•\Ž¦ê—pƒRƒ}ƒ“ƒh
@@ -650,7 +678,7 @@ _ANIME_LABEL	anm_enemy_3rd_in
 /**************************************************************/
 ev_introductory_remarks:
 
-//_WBT_GET_COUNT( LWK_WIN_COUNT )
+//_WBT_GET_VICTORY_COUNT( LWK_WIN_COUNT )
 
 //—DŸ‰ñ”‚ª‚O‚Ìê‡
 IF $LWK_WIN_COUNT == 0 THEN
@@ -833,9 +861,9 @@ _RET
 /**************************************************************/
 /*		ŒˆŸí@ƒvƒŒƒCƒ„[—pº‰‡ƒXƒNƒŠƒvƒg					  */
 /**************************************************************/
-ev_yell_player_final:
+ev_yell_final_player:
 
-//_WBT_GET_COUNT( LWK_WIN_COUNT )
+//_WBT_GET_VICTORY_COUNT( LWK_WIN_COUNT )
 
 //—DŸ‰ñ”‚ª‚PˆÈ‰º‚Ìê‡
 IF $LWK_WIN_COUNT <= 1 THEN
@@ -892,12 +920,34 @@ _GET_RND( LWK_RND,100 )
 IF $LWK_RND <= LWK_PROBABILITY THEN
 
 	//‚PŒÂ–Ú‚ÌƒƒbƒZ[ƒW‚ÌÀ•WˆÊ’uEƒTƒuƒEƒBƒ“ƒiƒ“ƒo[’è‹`
-	$LWK_YELL_POSX = 5
-	$LWK_YELL_POSY = 5
-	$LWK_SUBWIN_NUM = 1
+	$LWK_YELL_POSX = 1
+	$LWK_YELL_POSY = 1
 
-	//ƒƒbƒZ[ƒW’Š‘Iˆ—
-	_CALL ev_yell_msg_final
+	//ƒƒbƒZ[ƒWŒˆ‚ß—”
+	_GET_RND( LWK_MSG,10 )
+
+	SWITCH $LWK_MSG
+	CASE 0 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+	CASE 1 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+	CASE 2 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+	CASE 3 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+	CASE 4 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+	CASE 5 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+	CASE 6 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+	CASE 7 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+	CASE 8 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+	CASE 9 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+	ENDSWITCH
 
 	//========================================/
 	
@@ -909,7 +959,7 @@ IF $LWK_RND <= LWK_PROBABILITY THEN
 ENDIF
 
 //ƒ^ƒCƒ€ƒEƒFƒCƒg
-_TIME_WAIT( 30 )
+_TIME_WAIT( 20 )
 
 //º‰‡Œˆ‚ß—”
 _GET_RND( LWK_RND,100 )
@@ -918,12 +968,34 @@ _GET_RND( LWK_RND,100 )
 IF $LWK_RND <= LWK_PROBABILITY THEN
 
 	//‚QŒÂ–Ú‚ÌƒƒbƒZ[ƒW‚ÌÀ•WˆÊ’uEƒTƒuƒEƒBƒ“ƒiƒ“ƒo[’è‹`
-	$LWK_YELL_POSX = 7
-	$LWK_YELL_POSY = 7
-	$LWK_SUBWIN_NUM = 2
+	$LWK_YELL_POSX = 18
+	$LWK_YELL_POSY = 18
 
-	//ƒƒbƒZ[ƒW’Š‘Iˆ—
-	_CALL ev_yell_msg_final
+	//ƒƒbƒZ[ƒWŒˆ‚ß—”
+	_GET_RND( LWK_MSG,10 )
+
+	SWITCH $LWK_MSG
+	CASE 0 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+	CASE 1 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+	CASE 2 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+	CASE 3 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+	CASE 4 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+	CASE 5 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+	CASE 6 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+	CASE 7 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+	CASE 8 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+	CASE 9 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+	ENDSWITCH
 
 	//========================================/
 	
@@ -940,7 +1012,7 @@ IF $LOCALWORK1 == 1 THEN
 ENDIF
 
 //ƒ^ƒCƒ€ƒEƒFƒCƒg
-_TIME_WAIT( 30 )
+_TIME_WAIT( 20 )
 
 //º‰‡Œˆ‚ß—”
 _GET_RND( LWK_RND,100 )
@@ -949,12 +1021,34 @@ _GET_RND( LWK_RND,100 )
 IF $LWK_RND <= LWK_PROBABILITY THEN
 
 	//‚RŒÂ–Ú‚ÌƒƒbƒZ[ƒW‚ÌÀ•WˆÊ’uEƒTƒuƒEƒBƒ“ƒiƒ“ƒo[’è‹`
-	$LWK_YELL_POSX = 9
-	$LWK_YELL_POSY = 9
-	$LWK_SUBWIN_NUM = 3
+	$LWK_YELL_POSX = 1
+	$LWK_YELL_POSY = 18
 
-	//ƒƒbƒZ[ƒW’Š‘Iˆ—
-	_CALL ev_yell_msg_final
+	//ƒƒbƒZ[ƒWŒˆ‚ß—”
+	_GET_RND( LWK_MSG,10 )
+
+	SWITCH $LWK_MSG
+	CASE 0 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+	CASE 1 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+	CASE 2 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+	CASE 3 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+	CASE 4 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+	CASE 5 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+	CASE 6 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+	CASE 7 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+	CASE 8 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+	CASE 9 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+	ENDSWITCH
 
 	//========================================/
 	
@@ -971,7 +1065,7 @@ IF $LOCALWORK2 == 1 THEN
 ENDIF
 
 //ƒ^ƒCƒ€ƒEƒFƒCƒg
-_TIME_WAIT( 30 )
+_TIME_WAIT( 20 )
 
 //º‰‡Œˆ‚ß—”
 _GET_RND( LWK_RND,100 )
@@ -980,12 +1074,34 @@ _GET_RND( LWK_RND,100 )
 IF $LWK_RND <= LWK_PROBABILITY THEN
 
 	//‚SŒÂ–Ú‚ÌƒƒbƒZ[ƒW‚ÌÀ•WˆÊ’uEƒTƒuƒEƒBƒ“ƒiƒ“ƒo[’è‹`
-	$LWK_YELL_POSX = 15
-	$LWK_YELL_POSY = 15
-	$LWK_SUBWIN_NUM = 4
+	$LWK_YELL_POSX = 18
+	$LWK_YELL_POSY = 1
 
-	//ƒƒbƒZ[ƒW’Š‘Iˆ—
-	_CALL ev_yell_msg_final
+	//ƒƒbƒZ[ƒWŒˆ‚ß—”
+	_GET_RND( LWK_MSG,10 )
+
+	SWITCH $LWK_MSG
+	CASE 0 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+	CASE 1 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+	CASE 2 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+	CASE 3 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+	CASE 4 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+	CASE 5 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+	CASE 6 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+	CASE 7 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+	CASE 8 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+	CASE 9 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+	ENDSWITCH
 
 	//========================================/
 	
@@ -1002,7 +1118,7 @@ IF $LOCALWORK3 == 1 THEN
 ENDIF
 
 //ƒ^ƒCƒ€ƒEƒFƒCƒg
-_TIME_WAIT( 30 )
+_TIME_WAIT( 20 )
 
 //º‰‡Œˆ‚ß—”
 _GET_RND( LWK_RND,100 )
@@ -1011,13 +1127,35 @@ _GET_RND( LWK_RND,100 )
 IF $LWK_RND <= LWK_PROBABILITY THEN
 
 	//‚TŒÂ–Ú‚ÌƒƒbƒZ[ƒW‚ÌÀ•WˆÊ’uEƒTƒuƒEƒBƒ“ƒiƒ“ƒo[’è‹`
-	$LWK_YELL_POSX = 9
-	$LWK_YELL_POSY = 9
-	$LWK_SUBWIN_NUM = 5
+	$LWK_YELL_POSX = 1
+	$LWK_YELL_POSY = 18
+	
+	//ƒƒbƒZ[ƒWŒˆ‚ß—”
+	_GET_RND( LWK_MSG,10 )
 
-	//ƒƒbƒZ[ƒW’Š‘Iˆ—
-	_CALL ev_yell_msg_final
-
+	SWITCH $LWK_MSG
+	CASE 0 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+	CASE 1 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+	CASE 2 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+	CASE 3 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+	CASE 4 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+	CASE 5 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+	CASE 6 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+	CASE 7 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+	CASE 8 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+	CASE 9 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+	ENDSWITCH
+	
 	//========================================/
 	
 	//ƒTƒuƒEƒBƒ“ƒhƒEƒ`ƒFƒbƒN
@@ -1033,7 +1171,7 @@ IF $LOCALWORK4 == 1 THEN
 ENDIF
 
 //ƒ^ƒCƒ€ƒEƒFƒCƒg
-_TIME_WAIT( 30 )
+_TIME_WAIT( 20 )
 
 //º‰‡Œˆ‚ß—”
 _GET_RND( LWK_RND,100 )
@@ -1042,12 +1180,34 @@ _GET_RND( LWK_RND,100 )
 IF $LWK_RND <= LWK_PROBABILITY THEN
 
 	//‚UŒÂ–Ú‚ÌƒƒbƒZ[ƒW‚ÌÀ•WˆÊ’uEƒTƒuƒEƒBƒ“ƒiƒ“ƒo[’è‹`
-	$LWK_YELL_POSX = 15
-	$LWK_YELL_POSY = 15
-	$LWK_SUBWIN_NUM = 6
+	$LWK_YELL_POSX = 19
+	$LWK_YELL_POSY = 1
 
-	//ƒƒbƒZ[ƒW’Š‘Iˆ—
-	_CALL ev_yell_msg_final
+	//ƒƒbƒZ[ƒWŒˆ‚ß—”
+	_GET_RND( LWK_MSG,10 )
+
+	SWITCH $LWK_MSG
+	CASE 0 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+	CASE 1 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+	CASE 2 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+	CASE 3 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+	CASE 4 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+	CASE 5 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+	CASE 6 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+	CASE 7 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+	CASE 8 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+	CASE 9 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+	ENDSWITCH
 
 	//========================================/
 	
@@ -1058,60 +1218,14 @@ IF $LWK_RND <= LWK_PROBABILITY THEN
 
 ENDIF
 
-IF $LOCALWORK5 == 1 THEN 
-	//ƒTƒuƒEƒBƒ“ƒNƒ[ƒY
-	_SUBWIN_CLOSE( 5 )
-ENDIF
-
-//ƒ^ƒCƒ€ƒEƒFƒCƒg
-_TIME_WAIT( 30 )
-
-IF $LOCALWORK6 == 1 THEN 
-	//ƒTƒuƒEƒBƒ“ƒNƒ[ƒY
-	_SUBWIN_CLOSE( 6 )
-ENDIF
-
-_RET
-
-/**************************************************************/
-/*		ŒˆŸí@º‰‡@ƒƒbƒZ[ƒW’Š‘Iˆ—					  */
-/**************************************************************/
-ev_yell_msg_final:
-
-//ƒƒbƒZ[ƒWŒˆ‚ß—”
-_GET_RND( LWK_MSG,10 )
-
-SWITCH $LWK_MSG
-CASE 0 THEN
-	_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , LWK_SUBWIN_NUM )
-CASE 1 THEN
-	_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , LWK_SUBWIN_NUM )
-CASE 2 THEN
-	_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , LWK_SUBWIN_NUM )
-CASE 3 THEN
-	_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , LWK_SUBWIN_NUM )
-CASE 4 THEN
-	_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , LWK_SUBWIN_NUM )
-CASE 5 THEN
-	_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , LWK_SUBWIN_NUM )
-CASE 6 THEN
-	_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , LWK_SUBWIN_NUM )
-CASE 7 THEN
-	_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , LWK_SUBWIN_NUM )
-CASE 8 THEN
-	_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , LWK_SUBWIN_NUM )
-CASE 9 THEN
-	_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , LWK_SUBWIN_NUM )
-ENDSWITCH
-
 _RET
 
 /**************************************************************/
 /*		ŒˆŸí@‘ÎíŽÒ—pº‰‡ƒXƒNƒŠƒvƒg						  */
 /**************************************************************/
-ev_yell_enemy_final:
+ev_yell_final_enemy:
 
-//_WBT_GET_COUNT( LWK_WIN_COUNT )
+//_WBT_GET_VICTORY_COUNT( LWK_WIN_COUNT )
 
 //—DŸ‰ñ”‚ª‚PˆÈ‰º‚Ìê‡
 IF $LWK_WIN_COUNT <= 1 THEN
@@ -1168,15 +1282,37 @@ _GET_RND( LWK_RND,100 )
 IF $LWK_RND <= LWK_PROBABILITY THEN
 
 	//‚PŒÂ–Ú‚ÌƒƒbƒZ[ƒW‚ÌÀ•WˆÊ’uEƒTƒuƒEƒBƒ“ƒiƒ“ƒo[’è‹`
-	$LWK_YELL_POSX = 5
-	$LWK_YELL_POSY = 5
-	$LWK_SUBWIN_NUM = 1
+	$LWK_YELL_POSX = 1
+	$LWK_YELL_POSY = 1
+	
+	//ƒƒbƒZ[ƒWŒˆ‚ß—”
+	_GET_RND( LWK_MSG,10 )
 
-	//ƒƒbƒZ[ƒW’Š‘Iˆ—
-	_CALL ev_yell_msg_final_enemy
+	SWITCH $LWK_MSG
+	CASE 0 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+	CASE 1 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+	CASE 2 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+	CASE 3 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+	CASE 4 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+	CASE 5 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+	CASE 6 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+	CASE 7 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+	CASE 8 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+	CASE 9 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+	ENDSWITCH
 
 	//ƒ^ƒCƒ€ƒEƒFƒCƒg
-	_TIME_WAIT( 30 )
+	_TIME_WAIT( 20 )
 
 	//========================================/
 	
@@ -1194,12 +1330,34 @@ _GET_RND( LWK_RND,100 )
 IF $LWK_RND <= LWK_PROBABILITY THEN
 
 	//‚QŒÂ–Ú‚ÌƒƒbƒZ[ƒW‚ÌÀ•WˆÊ’uEƒTƒuƒEƒBƒ“ƒiƒ“ƒo[’è‹`
-	$LWK_YELL_POSX = 7
-	$LWK_YELL_POSY = 7
-	$LWK_SUBWIN_NUM = 2
+	$LWK_YELL_POSX = 18
+	$LWK_YELL_POSY = 18
 
-	//ƒƒbƒZ[ƒW’Š‘Iˆ—
-	_CALL ev_yell_msg_final_enemy
+	//ƒƒbƒZ[ƒWŒˆ‚ß—”
+	_GET_RND( LWK_MSG,10 )
+
+	SWITCH $LWK_MSG
+	CASE 0 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+	CASE 1 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+	CASE 2 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+	CASE 3 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+	CASE 4 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+	CASE 5 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+	CASE 6 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+	CASE 7 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+	CASE 8 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+	CASE 9 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+	ENDSWITCH
 
 	//========================================/
 	
@@ -1216,7 +1374,7 @@ IF $LOCALWORK7 == 1 THEN
 ENDIF
 
 //ƒ^ƒCƒ€ƒEƒFƒCƒg
-_TIME_WAIT( 30 )
+_TIME_WAIT( 20 )
 
 //º‰‡Œˆ‚ß—”
 _GET_RND( LWK_RND,100 )
@@ -1225,12 +1383,34 @@ _GET_RND( LWK_RND,100 )
 IF $LWK_RND <= LWK_PROBABILITY THEN
 
 	//‚RŒÂ–Ú‚ÌƒƒbƒZ[ƒW‚ÌÀ•WˆÊ’uEƒTƒuƒEƒBƒ“ƒiƒ“ƒo[’è‹`
-	$LWK_YELL_POSX = 9
-	$LWK_YELL_POSY = 9
-	$LWK_SUBWIN_NUM = 3
+	$LWK_YELL_POSX = 18
+	$LWK_YELL_POSY = 1
+	
+	//ƒƒbƒZ[ƒWŒˆ‚ß—”
+	_GET_RND( LWK_MSG,10 )
 
-	//ƒƒbƒZ[ƒW’Š‘Iˆ—
-	_CALL ev_yell_msg_final_enemy
+	SWITCH $LWK_MSG
+	CASE 0 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+	CASE 1 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+	CASE 2 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+	CASE 3 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+	CASE 4 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+	CASE 5 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+	CASE 6 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+	CASE 7 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+	CASE 8 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+	CASE 9 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+	ENDSWITCH
 
 	//========================================/
 	
@@ -1247,7 +1427,7 @@ IF $LOCALWORK8 == 1 THEN
 ENDIF
 
 //ƒ^ƒCƒ€ƒEƒFƒCƒg
-_TIME_WAIT( 30 )
+_TIME_WAIT( 20 )
 
 //º‰‡Œˆ‚ß—”
 _GET_RND( LWK_RND,100 )
@@ -1256,13 +1436,35 @@ _GET_RND( LWK_RND,100 )
 IF $LWK_RND <= LWK_PROBABILITY THEN
 
 	//‚SŒÂ–Ú‚ÌƒƒbƒZ[ƒW‚ÌÀ•WˆÊ’uEƒTƒuƒEƒBƒ“ƒiƒ“ƒo[’è‹`
-	$LWK_YELL_POSX = 12
-	$LWK_YELL_POSY = 12
-	$LWK_SUBWIN_NUM = 4
+	$LWK_YELL_POSX = 1
+	$LWK_YELL_POSY = 18
+	
+	//ƒƒbƒZ[ƒWŒˆ‚ß—”
+	_GET_RND( LWK_MSG,10 )
 
-	//ƒƒbƒZ[ƒW’Š‘Iˆ—
-	_CALL ev_yell_msg_final_enemy
-
+	SWITCH $LWK_MSG
+	CASE 0 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+	CASE 1 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+	CASE 2 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+	CASE 3 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+	CASE 4 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+	CASE 5 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+	CASE 6 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+	CASE 7 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+	CASE 8 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+	CASE 9 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+	ENDSWITCH
+	
 	//========================================/
 	
 	//ƒTƒuƒEƒBƒ“ƒhƒEƒ`ƒFƒbƒN
@@ -1277,7 +1479,7 @@ IF $LOCALWORK9 == 1 THEN
 	_SUBWIN_CLOSE( 3 )
 ENDIF
 //ƒ^ƒCƒ€ƒEƒFƒCƒg
-_TIME_WAIT( 30 )
+_TIME_WAIT( 20 )
 
 //º‰‡Œˆ‚ß—”
 _GET_RND( LWK_RND,100 )
@@ -1286,12 +1488,34 @@ _GET_RND( LWK_RND,100 )
 IF $LWK_RND <= LWK_PROBABILITY THEN
 
 	//‚TŒÂ–Ú‚ÌƒƒbƒZ[ƒW‚ÌÀ•WˆÊ’uEƒTƒuƒEƒBƒ“ƒiƒ“ƒo[’è‹`
-	$LWK_YELL_POSX = 15
-	$LWK_YELL_POSY = 15
-	$LWK_SUBWIN_NUM = 5
+	$LWK_YELL_POSX = 19
+	$LWK_YELL_POSY = 5
 
-	//ƒƒbƒZ[ƒW’Š‘Iˆ—
-	_CALL ev_yell_msg_final_enemy
+	//ƒƒbƒZ[ƒWŒˆ‚ß—”
+	_GET_RND( LWK_MSG,10 )
+
+	SWITCH $LWK_MSG
+	CASE 0 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+	CASE 1 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+	CASE 2 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+	CASE 3 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+	CASE 4 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+	CASE 5 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+	CASE 6 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+	CASE 7 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+	CASE 8 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+	CASE 9 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+	ENDSWITCH
 
 	//========================================/
 	
@@ -1308,7 +1532,7 @@ IF $LOCALWORK10 == 1 THEN
 ENDIF
 
 //ƒ^ƒCƒ€ƒEƒFƒCƒg
-_TIME_WAIT( 30 )
+_TIME_WAIT( 20 )
 
 //º‰‡Œˆ‚ß—”
 _GET_RND( LWK_RND,100 )
@@ -1317,12 +1541,34 @@ _GET_RND( LWK_RND,100 )
 IF $LWK_RND <= LWK_PROBABILITY THEN
 
 	//‚UŒÂ–Ú‚ÌƒƒbƒZ[ƒW‚ÌÀ•WˆÊ’uEƒTƒuƒEƒBƒ“ƒiƒ“ƒo[’è‹`
-	$LWK_YELL_POSX = 18
-	$LWK_YELL_POSY = 18
-	$LWK_SUBWIN_NUM = 6
+	$LWK_YELL_POSX = 1
+	$LWK_YELL_POSY = 19
 
-	//ƒƒbƒZ[ƒW’Š‘Iˆ—
-	_CALL ev_yell_msg_final_enemy
+	//ƒƒbƒZ[ƒWŒˆ‚ß—”
+	_GET_RND( LWK_MSG,10 )
+
+	SWITCH $LWK_MSG
+	CASE 0 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+	CASE 1 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+	CASE 2 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+	CASE 3 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+	CASE 4 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+	CASE 5 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+	CASE 6 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+	CASE 7 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+	CASE 8 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+	CASE 9 THEN
+		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+	ENDSWITCH
 
 	//========================================/
 	
@@ -1332,51 +1578,5 @@ IF $LWK_RND <= LWK_PROBABILITY THEN
 	//========================================/
 
 ENDIF
-
-IF $LOCALWORK11 == 1 THEN 
-	//ƒTƒuƒEƒBƒ“ƒNƒ[ƒY
-	_SUBWIN_CLOSE( 5 )
-ENDIF
-
-//ƒ^ƒCƒ€ƒEƒFƒCƒg
-_TIME_WAIT( 30 )
-
-IF $LOCALWORK12 == 1 THEN 
-	//ƒTƒuƒEƒBƒ“ƒNƒ[ƒY
-	_SUBWIN_CLOSE( 6 )
-ENDIF
-
-_RET
-
-/**************************************************************/
-/*		ŒˆŸí@º‰‡@ƒƒbƒZ[ƒW’Š‘Iˆ—					  */
-/**************************************************************/
-ev_yell_msg_final_enemy:
-
-//ƒƒbƒZ[ƒWŒˆ‚ß—”
-_GET_RND( LWK_MSG,10 )
-
-SWITCH $LWK_MSG
-CASE 0 THEN
-	_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , LWK_SUBWIN_NUM )
-CASE 1 THEN
-	_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , LWK_SUBWIN_NUM )
-CASE 2 THEN
-	_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , LWK_SUBWIN_NUM )
-CASE 3 THEN
-	_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , LWK_SUBWIN_NUM )
-CASE 4 THEN
-	_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , LWK_SUBWIN_NUM )
-CASE 5 THEN
-	_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , LWK_SUBWIN_NUM )
-CASE 6 THEN
-	_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , LWK_SUBWIN_NUM )
-CASE 7 THEN
-	_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , LWK_SUBWIN_NUM )
-CASE 8 THEN
-	_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , LWK_SUBWIN_NUM )
-CASE 9 THEN
-	_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , LWK_SUBWIN_NUM )
-ENDSWITCH
 
 _RET
