@@ -196,6 +196,9 @@ static GMEVENT_RESULT BlowEventSafe( GMEVENT* event, int* seq, void* wk );
 static GMEVENT* SHORTCUT_CreateEvent( GMEVENT* parent, GAMESYS_WORK* gsys );
 static GMEVENT_RESULT ShortcutEvent( GMEVENT* event, int* seq, void* wk );
 
+// 吹き飛びの移動距離算出
+static const u8 BLOW_EVENT_GetMoveDistance( FIELDMAP_WORK *p_fieldmap, s16 gx, s16 gz );
+
 // EXPOBJ
 static void EXPOBJ_ObjSet( GYM_FLY_TMP *p_wk );
 static void EXPOBJ_ObjDell( GYM_FLY_TMP *p_wk );
@@ -710,25 +713,9 @@ static GMEVENT_RESULT BlowEvent( GMEVENT* event, int* seq, void* wk )
       {
         s16 gx, gy, gz;
         FIELD_PLAYER_GetGridPos( p_wk->player, &gx, &gy, &gz );
-
-        while( gz<MAP_ARRAY_ROW )
-        {
-          ICHI_Printf("自機GRID座標 x:%d z:%d ", gx, gz);
-          ICHI_Printf("map_array %d \n", map_array[gz][gx] );
-
-          // 1グリッド下
-          gz += 1;
-
-          // 配列から自機座標のデータを取得
-          if( map_array[gz][gx] != MAP_ARRAY_BLOW )
-          {
-            // 吹き飛べないならストップ
-            break;
-          }
-
-          // 移動距離加算
-          move_distance += 1;
-        }
+        
+        // 吹き飛び距離計算
+        move_distance = BLOW_EVENT_GetMoveDistance( p_wk->p_fieldmap, gx, gz );
       }
 
       // 移動タスク登録
@@ -1210,15 +1197,27 @@ static GMEVENT_RESULT ShortcutEvent( GMEVENT* event, int* seq, void* wk )
         if( gz == BOX1_GZ )
         {
           EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_gym_wk->exp_obj, GYM_FLY_UNIT_IDX, OBJ_BOX_1, 0 );
-          FLD_EXP_OBJ_SetObjAnmFrm( p_gym_wk->exp_obj, GYM_FLY_UNIT_IDX, OBJ_BOX_1, 0, 0 );
-          FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE ); //アニメ開始
+          if( FLD_EXP_OBJ_GetAnmStopFlg( exp_anm ) == TRUE )
+          {
+            FLD_EXP_OBJ_SetObjAnmFrm( p_gym_wk->exp_obj, GYM_FLY_UNIT_IDX, OBJ_BOX_1, 0, 0 );
+            FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE ); //アニメ開始
+
+            // SE 箱破壊
+            PMSND_PlaySE( GYM_FLY_SE_BOX_BREAK );
+          }
         }
 
         if( gz == BOX2_GZ )
         {
           EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_gym_wk->exp_obj, GYM_FLY_UNIT_IDX, OBJ_BOX_2, 0 );
-          FLD_EXP_OBJ_SetObjAnmFrm( p_gym_wk->exp_obj, GYM_FLY_UNIT_IDX, OBJ_BOX_2, 0, 0 );
-          FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE ); //アニメ開始
+          if( FLD_EXP_OBJ_GetAnmStopFlg( exp_anm ) == TRUE )
+          {
+            FLD_EXP_OBJ_SetObjAnmFrm( p_gym_wk->exp_obj, GYM_FLY_UNIT_IDX, OBJ_BOX_2, 0, 0 );
+            FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE ); //アニメ開始
+
+            // SE 箱破壊
+            PMSND_PlaySE( GYM_FLY_SE_BOX_BREAK );
+          }
         }
       }
 
@@ -1271,6 +1270,61 @@ static GMEVENT_RESULT ShortcutEvent( GMEVENT* event, int* seq, void* wk )
   }
 
   return GMEVENT_RES_CONTINUE;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  吹き飛ばしの距離を計算
+ *
+ *	@param	FIELDMAP_WORK *p_fieldmap
+ *	@param	s16 gx    自機グリッドX座標
+ *	@param	s16 gz    自機グリッドZ座標
+ *
+ *	@return u8  移動距離(グリッド)
+ */
+//-----------------------------------------------------------------------------
+static const u8 BLOW_EVENT_GetMoveDistance( FIELDMAP_WORK *p_fieldmap, s16 gx, s16 gz )
+{
+  u8 move_distance = 0;
+
+  while( gz<MAP_ARRAY_ROW )
+  {
+    ICHI_Printf("自機GRID座標 x:%d z:%d ", gx, gz);
+    ICHI_Printf("map_array %d \n", map_array[gz][gx] );
+
+    // 1グリッド下
+    gz += 1;
+
+    // 配列から自機座標のデータを取得
+    if( map_array[gz][gx] != MAP_ARRAY_BLOW )
+    {
+      // 吹き飛べないならストップ
+      break;
+    }
+
+    // NPCいるかチェック
+    {
+      MMDL *p_mmdl;
+      // 動作モデルを検索
+      p_mmdl = MMDLSYS_SearchGridPos(
+          FIELDMAP_GetMMdlSys( p_fieldmap ),
+          gx,
+          gz,
+          TRUE );
+
+      // 動作モデルを発見
+      if( p_mmdl )
+      {
+        break;
+      }
+    }
+
+    // 移動距離加算
+    move_distance += 1;
+  }
+
+  return move_distance;
 }
 
 //=============================================================================
