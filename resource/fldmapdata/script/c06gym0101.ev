@@ -150,7 +150,7 @@ EVENT_START	ev_c06gym0101_danpei_01
 		_TALK_OBJ_START()
 		
 		//バッジフラグ取得
-		_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_03 )
+		_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_06 )
 
 		//バッジフラグで分岐
 		IF $SCWK_TEMP0 == 0 THEN
@@ -178,7 +178,7 @@ EVENT_START	ev_c06gym0101_danpei_01
 		ELSE
 			//バッジ入手後の処理
 
-			//さすがっすよ！
+			//わざと　ふきとばされるのも
 			_BALLOONWIN_TALKOBJ_MSG( msg_c06gym0101_glasses_03 )
 			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
