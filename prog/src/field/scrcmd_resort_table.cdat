@@ -38,7 +38,7 @@
   DEF_CMD( EvCmdResortSetDayFlag, EV_SEQ_RESORT_SET_DAY_FLAG)
   DEF_CMD( EvCmdResortEndService, EV_SEQ_RESORT_END_SERVICE )
   DEF_CMD( EvCmdResortSetSpot, EV_SEQ_RESORT_SET_SPOT )
-  NO_CMD()
+  DEF_CMD( EvCmdResortSetSpot, EV_SEQ_RESORT_SET_SPOT )
   NO_CMD()
   
   END_CMD

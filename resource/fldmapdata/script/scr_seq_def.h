@@ -12504,13 +12504,25 @@
 //--------------------------------------------------------------
 /**
  * @brief リゾート用  人物を完全消去
+ * @param[in]  type 何を消去するか
+ *      RESORT_DELTE_PEOPLE_MINE    …自分（話しかけている相手）
+ *      RESORT_PEOPLE_TYPE_TOURIST　…旅行者
+ *      RESORT_PEOPLE_TYPE_PROXY    …代理人
+ *      RESORT_PEOPLE_TYPE_SECRETARY…秘書
+ *      RESORT_PEOPLE_TYPE_RESIDENT …住民
+ *      RESORT_PEOPLE_TYPE_VISITOR  …滞在者
+ *
+ *
+ * @param[in]  idx 何番目のデータか（RESORT_DELTE_PEOPLE_MINEならみない）
  */
 //--------------------------------------------------------------
-#define _RESORT_DELETE_PEOPLE() \
-    _ASM_RESORT_DELETE_PEOPLE
+#define _RESORT_DELETE_PEOPLE( type, idx ) \
+    _ASM_RESORT_DELETE_PEOPLE type, idx
 
-  .macro _ASM_RESORT_DELETE_PEOPLE
+  .macro _ASM_RESORT_DELETE_PEOPLE type, idx
   .short EV_SEQ_RESORT_DELETE_PEOPLE
+  .short  \type
+  .short  \idx
   .endm
 
 //--------------------------------------------------------------

@@ -361,6 +361,7 @@ static BOOL Resort_Data_Manager_CheckConvert( const RESORT_DATA_MANAGER *cp_wk, 
     break;
   case RESORT_DATA_MANAGER_CHECKCONVERT_DST_SECRETARY:
     *pp_dst = RESORT_PEOPLE_ALL_DATA_SearchEmptySecretary( cp_wk->param.p_all_people );
+    break;
   case RESORT_DATA_MANAGER_CHECKCONVERT_DST_RESIDENT:
     *pp_dst = RESORT_PEOPLE_ALL_DATA_SearchEmptyResident( cp_wk->param.p_all_people );
     break;

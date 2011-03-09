@@ -26,6 +26,8 @@
 #define RESORT_GET_PARAM_IS_EVENT           (7)
 #define RESORT_GET_PARAM_TYPE               (8)
 #define RESORT_GET_PARAM_DAY_FLAG           (9)
+#define RESORT_GET_PARAM_IS_INSTITUTION_FULL   (10)
+
 //_RESORT_JOB_CHANGE—p
 #define RESORT_JOBCHANGE_RESIDENT_AUTO      (0)
 #define RESORT_JOBCHANGE_RESIDENT_LOT       (1)
@@ -128,3 +130,6 @@
 #define RESORT_ADD_EFFORT_AGI                 (3)
 #define RESORT_ADD_EFFORT_SPEPOW              (4)
 #define RESORT_ADD_EFFORT_SPEDEF              (5)
+
+//_RESORT_DELETE_PEOPLE—p
+#define RESORT_DELTE_PEOPLE_MINE              (0xFF)

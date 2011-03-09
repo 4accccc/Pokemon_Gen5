@@ -160,6 +160,9 @@ VMCMD_RESULT EvCmdResortGetData( VMHANDLE *p_core, void *p_wk_adrs )
   case RESORT_GET_PARAM_DAY_FLAG:
     *p_ret_wk = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_DAY_FLAG, NULL );
     break;
+  case RESORT_GET_PARAM_IS_INSTITUTION_FULL:
+    *p_ret_wk = (RESORT_PEOPLE_ALL_DATA_GetResidentCount( p_all_people ) == RESORT_RESIDENT_DATA_NUM);
+    break;
   default:
     GF_ASSERT(0);
   }
@@ -481,9 +484,47 @@ VMCMD_RESULT EvCmdResortDeletePeple( VMHANDLE *p_core, void *p_wk_adrs )
   FIELDMAP_WORK *p_field = GAMESYSTEM_GetFieldMapWork(p_gamesys);
   
   RESORT_PEOPLE_SYS *p_people_sys = Resort_Scrcmd_GetPeopleSys( p_field );
-  RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_field, p_people_sys );
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( GAMESYSTEM_GetGameData(p_gamesys) );
+  RESONANCE_RESORT_SV *p_resort_sv = RESONANCE_RESORT_SV_GetWork( p_sv );
+  RESORT_PEOPLE_ALL_DATA *p_all_people = RESONANCE_RESORT_SV_GetPeopleAllData( p_resort_sv );
+  RESORT_DATA_MANAGER *p_data_manager = Resort_Scrcmd_GetDataManager( p_field );
+  u16 type    = SCRCMD_GetVMWorkValue(p_core, p_wk );
+  u16 idx     = SCRCMD_GetVMWorkValue(p_core, p_wk );
 
-  RESORT_PEOPLE_Delete( p_people_sys, p_people );
+  switch( type )
+  {
+  case RESORT_DELTE_PEOPLE_MINE:
+    {
+      RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_field, p_people_sys );
+      RESORT_PEOPLE_Delete( p_people_sys, p_people );
+    }
+    break;
+  case RESORT_PEOPLE_TYPE_TOURIST:
+    GF_ASSERT(0);
+    break;
+  case RESORT_PEOPLE_TYPE_PROXY:
+    GF_ASSERT(0);
+    break;
+  case RESORT_PEOPLE_TYPE_SECRETARY:
+    {
+      RESORT_SECRETARY_DATA *p_secretary = RESORT_PEOPLE_ALL_DATA_GetSecretary( p_all_people, idx );
+      RESORT_SECRETARY_DATA_InitInstance(p_secretary);
+    }
+    break;
+  case RESORT_PEOPLE_TYPE_RESIDENT:
+    {
+      RESORT_RESIDENT_DATA *p_resident = RESORT_PEOPLE_ALL_DATA_GetResident( p_all_people, idx );
+      RESORT_RESIDENT_DATA_InitInstance( p_resident );
+    }
+    break;
+  case RESORT_PEOPLE_TYPE_VISITOR:
+    GF_ASSERT(0);
+    break;
+  default:
+    GF_ASSERT(0);
+  }
+
+  RESORT_DATA_MANAGER_Update( p_data_manager );
 
   return VMCMD_RESULT_CONTINUE;
 }
