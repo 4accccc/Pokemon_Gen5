@@ -36,6 +36,7 @@
 #include "gym_insect.h"
 #include "gym_ground.h"
 #include "gym_ground_ent.h"
+#include "gym_fly.h"
 #include "gym_ice.h"
 #include "gym_dragon.h"
 
@@ -260,6 +261,34 @@ VMCMD_RESULT EvCmdGymGround_( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_SUSPEND;
 }
 #endif
+
+//--飛行--
+//--------------------------------------------------------------
+/**
+ * @brief   飛行ジムギミック 吹き飛ばしイベント
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @return  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGymFly_Blow( VMHANDLE * core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork( gsys );
+  GMEVENT *call_event;
+
+  call_event = GYM_FLY_BlowEvent( gsys );
+
+  if (call_event == NULL){
+    GF_ASSERT(0);
+    return VMCMD_RESULT_SUSPEND;
+  }
+
+  SCRIPT_CallEvent( sc, call_event );
+  //イベントコールするので、一度制御を返す
+  return VMCMD_RESULT_SUSPEND;
+}
 
 //--氷--
 #if 0

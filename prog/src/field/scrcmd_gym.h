@@ -36,6 +36,9 @@ extern VMCMD_RESULT EvCmdGymInsect_VacuumAnm( VMHANDLE * core, void *wk );
 //ínñ 
 //extern VMCMD_RESULT EvCmdGymGround_( VMHANDLE *core, void *wk );
 
+//îÚçs
+extern VMCMD_RESULT EvCmdGymFly_Blow( VMHANDLE * core, void *wk );
+
 //ïX
 //extern VMCMD_RESULT EvCmdGymIce_( VMHANDLE *core, void *wk );
 

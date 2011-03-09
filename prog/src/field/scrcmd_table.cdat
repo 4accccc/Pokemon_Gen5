@@ -990,6 +990,10 @@
   NO_CMD()
   NO_CMD()
   NO_CMD()
+
+  // 飛行ジム
+  DEF_CMD( EvCmdGymFly_Blow, EV_SEQ_GYM_FLY_BLOW )
+
   END_CMD
   //スクリプトコマンドテーブル終了
 

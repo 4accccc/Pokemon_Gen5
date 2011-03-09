@@ -61,8 +61,8 @@
 
 #define FAN_SPEED_LOW           (0x1000)    // 低速のアニメ速度
 #define FAN_SPEED_MIDDLE        (0x2000)    // 中速のアニメ速度
-#define FAN_SPEED_HIGH          (0x4000)    // 高速のアニメ速度
-#define FAN_SPEED_SUPER         (0x7000)    // 超高速のアニメ速度(ショートカット用)
+#define FAN_SPEED_HIGH          (0x3000)    // 高速のアニメ速度
+#define FAN_SPEED_SUPER         (0x4000)    // 超高速のアニメ速度(ショートカット用)
 #define FAN_SPEED_ADD           (0x260)     // アニメ加算値
 
 #define WINDMETER_NUM_MAX       (17)        // 風力計の数
@@ -96,6 +96,17 @@ typedef enum {
   WIND_STATE_HIGH,    // 高速
   WIND_STATE_SUPER,   // 超高速
 }WIND_STATE;
+
+//-------------------------------------
+/// 吹き飛ばしのHIT種類	
+//=====================================
+typedef enum {
+  BLOW_HIT_WALL,      // 壁にぶつかる
+  BLOW_HIT_NPC,       // NPCにぶつかる
+
+  BLOW_HIT_MAX,
+} BLOW_HIT_TYPE;
+
 
 //=============================================================================
 /**
@@ -156,6 +167,7 @@ typedef struct {
   FIELD_PLAYER    *player;      // 自機
   MMDL            *mmdl;        // 自機の動作モデル
 
+  BLOW_HIT_TYPE   hit_type;     // 衝突種類   BLOW_HIT_XXX
   u16             time;         // 時間計測用
   u8              stay_walk_cnt;// 足踏みカウント
   BOOL            is_wall;      // 後ろがすぐ壁か？
@@ -196,7 +208,7 @@ static GMEVENT* SHORTCUT_CreateEvent( GMEVENT* parent, GAMESYS_WORK* gsys );
 static GMEVENT_RESULT ShortcutEvent( GMEVENT* event, int* seq, void* wk );
 
 // 吹き飛びの移動距離算出
-static const u8 BLOW_EVENT_GetMoveDistance( FIELDMAP_WORK *p_fieldmap, s16 gx, s16 gz );
+static const u8 BLOW_EVENT_GetMoveDistance( FIELDMAP_WORK *p_fieldmap, BLOW_HIT_TYPE *p_hit_type, s16 gx, s16 gz );
 
 // EXPOBJ
 static void EXPOBJ_ObjSet( GYM_FLY_TMP *p_wk );
@@ -444,6 +456,27 @@ GMEVENT * GYM_FLY_CheckEvent( GAMESYS_WORK *p_gamesys )
   return NULL;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  吹き飛ばしイベント
+ *	        スクリプトコマンド用
+ *
+ *	@param	GAMESYS_WORK *p_gamesys 
+ *
+ *	@return イベント
+ */
+//-----------------------------------------------------------------------------
+GMEVENT * GYM_FLY_BlowEvent( GAMESYS_WORK *p_gamesys )
+{
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( p_gamesys );
+  GYM_FLY_TMP *p_wk = GMK_TMP_WK_GetWork(p_fieldmap, GYM_FLY_TMP_ASSIGN_ID);
+  const FIELD_PLAYER *cp_player  = FIELDMAP_GetFieldPlayer( p_fieldmap );
+  GMEVENT *event;
+
+  event = WIND_BLOW_CreateEvent( NULL, p_gamesys );
+  return event;
+}
+
 //=============================================================================
 /**
  *      static関数
@@ -641,12 +674,21 @@ static GMEVENT* WIND_BLOW_CreateEvent( GMEVENT* parent, GAMESYS_WORK* gsys )
   work->p_fieldmap  = p_fieldmap;
   work->player      = player;
   work->mmdl        = FIELD_PLAYER_GetMMdl( player );
+  work->hit_type    = BLOW_HIT_MAX;
   work->time        = 0;
   work->stay_walk_cnt = 0;
 
-  // 自機の1グリッド下が壁かチェック
-  if( map_array[gz+1][gx] == MAP_ARRAY_STOP ){ work->is_wall = TRUE; }
-  else                                       { work->is_wall = FALSE; }
+  // 自機の1グリッド下が壁・NPCかチェック
+  if( map_array[gz+1][gx] == MAP_ARRAY_STOP ||
+      MMDLSYS_SearchGridPos( FIELDMAP_GetMMdlSys( p_fieldmap ), gx, gz+1, TRUE ) )
+  {
+    work->is_wall = TRUE;
+  }
+  else
+  {
+    work->is_wall = FALSE;
+  }
+
 
   return event;
 }
@@ -717,7 +759,9 @@ static GMEVENT_RESULT BlowEvent( GMEVENT* event, int* seq, void* wk )
         FIELD_PLAYER_GetGridPos( p_wk->player, &gx, &gy, &gz );
         
         // 吹き飛び距離計算
-        move_distance = BLOW_EVENT_GetMoveDistance( p_wk->p_fieldmap, gx, gz );
+        move_distance = BLOW_EVENT_GetMoveDistance( p_wk->p_fieldmap, &p_wk->hit_type, gx, gz );
+
+        GF_ASSERT( p_wk->hit_type<BLOW_HIT_MAX );
       }
 
       // 移動タスク登録
@@ -804,10 +848,21 @@ static GMEVENT_RESULT BlowEvent( GMEVENT* event, int* seq, void* wk )
             PMSND_StopSE_byPlayerID( player_ID );
           }
 
+          // ぶつかる時のSE
           if( p_wk->is_wall == FALSE )
           {
-            // SE びたーん
-            PMSND_PlaySE( GYM_FLY_SE_WALL_HIT );
+            switch( p_wk->hit_type ){
+            case BLOW_HIT_WALL:      // 壁にぶつかる
+              // SE びたーん
+              PMSND_PlaySE( GYM_FLY_SE_WALL_HIT );
+              break;
+            case BLOW_HIT_NPC:       // NPCにぶつかる
+              // SE ぶう
+              PMSND_PlaySE( GYM_FLY_SE_NPC_HIT );
+              break;
+            default:
+              GF_ASSERT(0);
+            }
           }
 
           // 風エフェクト(自機)エフェクトOFF
@@ -869,6 +924,11 @@ static GMEVENT_RESULT BlowEvent( GMEVENT* event, int* seq, void* wk )
   case SEQ_SE_WAIT:
     {
       SEPLAYER_ID player_ID = PMSND_GetSE_DefaultPlayerID( GYM_FLY_SE_WALL_HIT );
+      if( PMSND_CheckPlaySE_byPlayerID( player_ID ) == FALSE )
+      {
+        *seq = SEQ_EXIT;
+      }
+      player_ID = PMSND_GetSE_DefaultPlayerID( GYM_FLY_SE_NPC_HIT );
       if( PMSND_CheckPlaySE_byPlayerID( player_ID ) == FALSE )
       {
         *seq = SEQ_EXIT;
@@ -1282,14 +1342,16 @@ static GMEVENT_RESULT ShortcutEvent( GMEVENT* event, int* seq, void* wk )
  *	@param	FIELDMAP_WORK *p_fieldmap
  *	@param	s16 gx    自機グリッドX座標
  *	@param	s16 gz    自機グリッドZ座標
+ *	@param  p_hit_type
  *
  *	@return u8  移動距離(グリッド)
  */
 //-----------------------------------------------------------------------------
-static const u8 BLOW_EVENT_GetMoveDistance( FIELDMAP_WORK *p_fieldmap, s16 gx, s16 gz )
+static const u8 BLOW_EVENT_GetMoveDistance( FIELDMAP_WORK *p_fieldmap, BLOW_HIT_TYPE *p_hit_type, s16 gx, s16 gz )
 {
   u8 move_distance = 0;
 
+  // 吹き飛び距離計算
   while( gz<MAP_ARRAY_ROW )
   {
     ICHI_Printf("自機GRID座標 x:%d z:%d ", gx, gz);
@@ -1302,6 +1364,7 @@ static const u8 BLOW_EVENT_GetMoveDistance( FIELDMAP_WORK *p_fieldmap, s16 gx, s
     if( map_array[gz][gx] != MAP_ARRAY_BLOW )
     {
       // 吹き飛べないならストップ
+      *p_hit_type = BLOW_HIT_WALL;
       break;
     }
 
@@ -1318,6 +1381,7 @@ static const u8 BLOW_EVENT_GetMoveDistance( FIELDMAP_WORK *p_fieldmap, s16 gx, s
       // 動作モデルを発見
       if( p_mmdl )
       {
+        *p_hit_type = BLOW_HIT_NPC;
         break;
       }
     }

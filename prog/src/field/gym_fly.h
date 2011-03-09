@@ -34,3 +34,6 @@ extern void GYM_FLY_Move(FIELDMAP_WORK *fieldWork);
 // 時間監視
 extern GMEVENT * GYM_FLY_CheckEvent( GAMESYS_WORK *p_gamesys );
 
+// スクリプトコマンドで呼ばれる関数
+extern GMEVENT * GYM_FLY_BlowEvent( GAMESYS_WORK *p_gamesys );
+
