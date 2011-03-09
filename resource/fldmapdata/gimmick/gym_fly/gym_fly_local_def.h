@@ -73,8 +73,8 @@
 #define BOX2_GZ (36)
 //•——Í•Ï‰»ŽžŠÔ
 //’†‘¬‚É•Ï‚í‚éŽžŠÔ
-#define WINDMETER_MIDDLE_TIME (4*30)	//4•b
+#define WINDMETER_MIDDLE_TIME (3*30)	//3•b
 //‚‘¬‚É•Ï‚í‚éŽžŠÔ
-#define WINDMETER_HIGH_TIME (6*30)	//6•b
+#define WINDMETER_HIGH_TIME (5*30)	//5•b
 //‚«”ò‚Î‚µƒCƒxƒ“ƒg‚ÌŒp‘±ŽžŠÔ
 #define BLOW_EVENT_TIME (4*30)	//4•b
