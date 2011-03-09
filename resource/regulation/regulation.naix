@@ -39,7 +39,11 @@ enum {
 	NARC_regulation_reguration025_bin = 25,
 	NARC_regulation_reguration026_bin = 26,
 	NARC_regulation_reguration027_bin = 27,
-	NARC_regulation_reguration028_bin = 28
+	NARC_regulation_reguration028_bin = 28,
+	NARC_regulation_reguration029_bin = 29,
+	NARC_regulation_reguration030_bin = 30,
+	NARC_regulation_reguration031_bin = 31,
+	NARC_regulation_reguration032_bin = 32
 };
 
 /* NARC_REGULATION_NAIX_ */
