@@ -141,15 +141,16 @@ sub_medaloyaji_intro:
   _BALLOONWIN_TALKOBJ_MSG( msg_mdloyj_intro_04 )
   _BALLOONWIN_CLOSE()
   
+  //ヒントメダルをもらう
+  _UPDATE_MEDAL_INFO( SCR_MEDALUPDATE_INIT )
+  
   //ヒントメダルをもらった！
-  _GET_MEDAL_COUNT( SCR_MEDALCOUNT_HINT_ACHIEVE, LWK_MEDAL_COUNT  )
+  _GET_MEDAL_COUNT( SCR_MEDALCOUNT_HINT_GET, LWK_MEDAL_COUNT  )
   _PLAYER_NAME( 0 )
   _NUMBER( 1 , LWK_MEDAL_COUNT , 3 )
   _SYSWIN_MSG( msg_mdloyj_hintget_sys, POS_DEFAULT )
   _SYSWIN_CLOSE()
   
-  //ヒントメダルをもらう
-  _UPDATE_MEDAL_INFO( SCR_MEDALUPDATE_INIT )
   //
   _BALLOONWIN_TALKOBJ_MSG( msg_mdloyj_intro_05 )
   _LAST_KEYWAIT()
