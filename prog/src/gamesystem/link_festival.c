@@ -299,7 +299,7 @@ BOOL LINK_FESTIVAL_MissionScoreCalc( GAMESYS_WORK* gsys, u16 param, u16 inc )
   BOOL score_inc = FALSE;
 
   if( gsys == NULL ){
-    GF_ASSERT(0);
+//    GF_ASSERT(0);
     return FALSE;
   }
   wk = GAMESYSTEM_GetLinkFestivalWork( gsys );
@@ -359,18 +359,18 @@ BOOL LINK_FESTIVAL_ScoreLogStore( LINK_FESTIVAL* wk, LINKFEST_LOG_PARAM* src )
 
     if( log->score.tr_id == src->prm.score.tr_id ){ //上書き
       log->score.value = src->prm.score.value;
-      OS_FPrintf(OSPRINT_LINKFEST_PAGE,"フェスミッション ログ%dを上書き tr_id=%d, score=%d\n",i, log->score.tr_id,log->score.value );
+      OS_FPrintf(OSPRINT_LINKFEST_PAGE,"FMIS log%d up tr_id=%d, score=%d\n",i, log->score.tr_id,log->score.value );
       return TRUE;
     }
   }
   if( wk->log_num >= LINKFEST_LOG_MAX ){
-    OS_FPrintf(OSPRINT_LINKFEST_PAGE,"フェスミッション ログバッファがいっぱいです\n");
+    OS_FPrintf(OSPRINT_LINKFEST_PAGE,"FMIS BufFull\n");
     return FALSE; //もう入らない
   }
   //新規
   log = &wk->log[wk->log_num];
   (*log).score = src->prm.score;
-  OS_FPrintf(OSPRINT_LINKFEST_PAGE,"フェスミッション 新規ログ%d tr_id=%d, score=%d\n",wk->log_num, log->score.tr_id,log->score.value );
+  OS_FPrintf(OSPRINT_LINKFEST_PAGE,"FMIS nLog%d tr_id=%d, score=%d\n",wk->log_num, log->score.tr_id,log->score.value );
   ++wk->log_num;
   return TRUE;
 }
@@ -397,7 +397,7 @@ void LINK_FESTIVAL_EgnoreLogStore( LINK_FESTIVAL* wk, const FEST_MISSION* fmwk )
   //新規
   log = &wk->log[wk->log_idx];
   log_mission_LogStore( log, fmwk );
-  OS_FPrintf(OSPRINT_LINKFEST_PAGE,"フェスミッション 新規無視ログ%d num=%d, id=%d, key=%08x, param=%d\n",
+  OS_FPrintf(OSPRINT_LINKFEST_PAGE,"FMIS nLogEgnore%d num=%d, id=%d, key=%08x, param=%d\n",
     wk->log_idx, wk->log_num, fmwk->type, fmwk->key, fmwk->param );
 
   wk->log_idx = (wk->log_idx + 1)%LINKFEST_LOG_MAX;
@@ -423,19 +423,19 @@ BOOL LINK_FESTIVAL_IsEgnoreMission( LINK_FESTIVAL* wk, const FEST_MISSION* fmwk 
   if( wk->last.mission.type != FMISSION_TYPE_NULL &&
       log_mission_IsSame( &wk->last, fmwk ))
   {
-    OS_FPrintf(OSPRINT_LINKFEST_PAGE,"フェスミッション 最後のミッションと同一なので無視 type=%d, key=%08x, param=%d\n",
+    OS_FPrintf(OSPRINT_LINKFEST_PAGE,"FMIS Egnore1 type=%d, key=%08x, param=%d\n",
       fmwk->type, fmwk->key, fmwk->param );
     return TRUE;
   }
   //無視ログ登録されているか？
   if( log_CheckEgnoreLog( wk, fmwk )){
-    OS_FPrintf(OSPRINT_LINKFEST_PAGE,"フェスミッション 無視ログ登録されているので無視 type=%d, key=%08x, param=%d\n",
+    OS_FPrintf(OSPRINT_LINKFEST_PAGE,"FMIS Egnore2 type=%d, key=%08x, param=%d\n",
       fmwk->type, fmwk->key, fmwk->param );
     return TRUE;
   }
   //残り時間が一定以上か？
   if( fmwk->life/60 < 30 ){
-    OS_FPrintf(OSPRINT_LINKFEST_PAGE,"フェスミッション 残り時間が30秒未満なので無視 type=%d, key=%08x, param=%d life=%dsec\n",
+    OS_FPrintf(OSPRINT_LINKFEST_PAGE,"FMIS Egnore3 type=%d, key=%08x, param=%d life=%dsec\n",
       fmwk->type, fmwk->key, fmwk->param, fmwk->life/60 );
     return TRUE;
   }
