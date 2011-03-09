@@ -14,11 +14,14 @@
 #define C06GYM0101_PILOT_03                2
 #define C06GYM0101_LEADER6_01              3
 #define C06GYM0101_PILOT_04                4
+#define C06GYM0101_DANPEI_01               5
 
 #endif //ZONE_C06GYM0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c06gym0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
 #ifndef ZONE_C06GYM0101_EVB_H
 #define ZONE_C06GYM0101_EVB_H
 
+#define BGID_C06GYM0101_STATUE_02         0
+#define BGID_C06GYM0101_STATUE_01         1
 
 #endif //ZONE_C06GYM0101_EVB_H

@@ -21,6 +21,8 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA   c06gym0101_leader6_01
+_EVENT_DATA   ev_c06gym0101_danpei_01
+_EVENT_DATA   ev_bg_c06gym0101_statue
 _EVENT_DATA_END
 
 
@@ -138,7 +140,96 @@ ev_leader6_btl:
 	_FLAG_SET( SYS_FLAG_ELBOARD_C06GYMWIN )
 
 	//================================================//
+EVENT_END
 
+/************************************************************/
+/*				サングラスのスクリプトイベント				*/
+/************************************************************/
+EVENT_START	ev_c06gym0101_danpei_01
+
+		_TALK_OBJ_START()
+		
+		//バッジフラグ取得
+		_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_03 )
+
+		//バッジフラグで分岐
+		IF $SCWK_TEMP0 == 0 THEN
+		//バッジ入手前の処理
+
+			//アイテム入手フラグで分岐
+			IF FLAG_OFF( FE_C06GYM_ITEM ) THEN
+				//アイテム未入手なら、おいしいみず入手イベント
+				_BALLOONWIN_TALKOBJ_MSG( msg_c06gym0101_glasses_01 )
+				_BALLOONWIN_CLOSE()
+				_ITEM_EVENT_KEYWAIT( ITEM_OISIIMIZU, 1 )
+				_BALLOONWIN_TALKOBJ_MSG( msg_c06gym0101_glasses_02 )
+				_LAST_KEYWAIT()
+				_BALLOONWIN_CLOSE()
+
+				_FLAG_SET( FE_C06GYM_ITEM )			//アイテム入手フラグをセット
+
+			ELSE
+				//入手済みならメッセージのみ
+				_BALLOONWIN_TALKOBJ_MSG( msg_c06gym0101_glasses_02 )
+				_LAST_KEYWAIT()
+				_BALLOONWIN_CLOSE()
+			ENDIF
+
+		ELSE
+			//バッジ入手後の処理
+
+			//さすがっすよ！
+			_BALLOONWIN_TALKOBJ_MSG( msg_c06gym0101_glasses_03 )
+			_LAST_KEYWAIT()
+			_BALLOONWIN_CLOSE()
+
+		ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*     			像		      					              */
+/**************************************************************/
+EVENT_START	ev_bg_c06gym0101_statue
+
+	_TALK_START_SE_PLAY()
 	
+	DEFINE_LOCAL	LWK_BADGE
+	
+	//ジムバッジを持っているのかを判定
+	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_06 )
+	
+	//ジムバッジを取得していない場合
+	IF $SCWK_TEMP0 == 0 THEN
+		_PLAYER_NAME( 0 )
+		_PLAINWIN_MSG_DOWN( msg_c06gym0101_statue_01 )
+	
+	//ジムバッジを取得している場合【仮】
+	ELSE
+	
+		//ジムバッジを持っているのかを判定【仮】
+		_GET_BADGE_FLAG( LWK_BADGE, BADGE_ID_07 )
+		
+		//D07でライバルと戦っている場合【仮】
+		IF $WK_SCENE_D07_RIVAL_01 == 2 THEN
+		
+			_PLAYER_NAME( 0 )
+			_PLAINWIN_MSG_DOWN( msg_c06gym0101_statue_03 )
+			
+		//まだ戦っていない場合【仮】
+		ELSE
+		
+			_PLAYER_NAME( 0 )
+			_PLAINWIN_MSG_DOWN( msg_c06gym0101_statue_02 )
+		
+		ENDIF
+		
+	ENDIF
+	
+	_LAST_KEYWAIT()	
+	_PLAINWIN_CLOSE()
+
+EVENT_END
+
 _RET
 
