@@ -217,6 +217,8 @@ static BOOL WINDMETER_CheckAnmSpeed( const WINDMETER_WORK *cp_wk );
 // GYM_FLY_SV_WORK
 static void SAVE_SetTimeFlg( GYM_FLY_SV_WORK *p_wk, BOOL flag );
 static BOOL SAVE_GetTimeFlg( const GYM_FLY_SV_WORK *cp_wk );
+static void SAVE_SetTime( GYM_FLY_SV_WORK *p_wk, const u16 time );
+static u16  SAVE_GetTime( const GYM_FLY_SV_WORK *cp_wk );
 
 #ifdef GYM_FLY_DEBUG_MENU
 //-------------------------------------
@@ -252,7 +254,6 @@ void GYM_FLY_Setup(FIELDMAP_WORK *p_fieldmap)
       FIELDMAP_GetHeapID(p_fieldmap), sizeof(GYM_FLY_TMP));
 
   p_wk->heapID    = HEAPID_FIELDMAP;
-  p_wk->time      = 0;
   p_wk->alpha[0]  = 0;
   p_wk->alpha[1]  = 0;
   p_wk->alpha_flag[0] = FALSE;
@@ -282,6 +283,7 @@ void GYM_FLY_Setup(FIELDMAP_WORK *p_fieldmap)
 
   // セーブから取得
   p_wk->time_start = SAVE_GetTimeFlg( p_wk->p_sv_wk );
+  p_wk->time       = SAVE_GetTime( p_wk->p_sv_wk );
 
 #ifdef GYM_FLY_DEBUG_MENU
   DEBUGMENU_Init( p_wk, p_fieldmap, p_wk->heapID );
@@ -305,6 +307,7 @@ void GYM_FLY_End(FIELDMAP_WORK *p_fieldmap)
 
   // セーブに設定
   SAVE_SetTimeFlg( p_wk->p_sv_wk, p_wk->time_start );
+  SAVE_SetTime( p_wk->p_sv_wk, p_wk->time );
 
   // 環境音停止
   FSND_StopEnvSE( p_wk->p_sound, GYM_FLY_SE_WIND );
@@ -1679,6 +1682,32 @@ static void SAVE_SetTimeFlg( GYM_FLY_SV_WORK *p_wk, BOOL flag )
 static BOOL SAVE_GetTimeFlg( const GYM_FLY_SV_WORK *cp_wk )
 {
   return cp_wk->time_flag;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  タイム計測値を設定
+ *
+ *	@param	*p_wk 飛行ジムセーブワーク
+ *	@param	time  タイム
+ */
+//-----------------------------------------------------------------------------
+static void SAVE_SetTime( GYM_FLY_SV_WORK *p_wk, const u16 time )
+{
+  p_wk->time = time;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  タイム計測値を取得
+ *
+ *	@param	*cp_wk 飛行ジムセーブワーク
+ *
+ *	@return time  タイム
+ */
+//-----------------------------------------------------------------------------
+static u16  SAVE_GetTime( const GYM_FLY_SV_WORK *cp_wk )
+{
+  return cp_wk->time;
 }
 
 #ifdef GYM_FLY_DEBUG_MENU
