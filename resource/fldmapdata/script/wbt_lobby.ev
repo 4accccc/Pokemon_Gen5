@@ -49,8 +49,6 @@ DEFINE_LOCAL	LWK_MENU
 DEFINE_LOCAL	LWK_MENU_WHILE
 DEFINE_LOCAL	LWK_RULE
 DEFINE_LOCAL  LWK_REG
-DEFINE_LOCAL	LWK_POKECOUNT
-DEFINE_LOCAL	LWK_SHORT		//不足カウントを格納
 DEFINE_LOCAL	LWK_CHK_RULE
 DEFINE_LOCAL	LWK_DL_COUNT
 
@@ -60,7 +58,7 @@ _TALK_OBJ_START()
 	IF FLAG_OFF( FH_01 ) THEN
 		
 		//あら　はじめて　ですね！
-		_BALLOONWIN_TALKOBJ_MSG( msg_wbt_info_01 )
+		_BALLOONWIN_OBJMSG_POS( msg_wbt_info_01, SCWK_TARGET_OBJID, POS_DL )
 	
 		//========================================/
 		
@@ -81,7 +79,7 @@ _TALK_OBJ_START()
     SWITCH $LWK_WBT_LOBBY_SEQ
     CASE WBT_LOBBY_SEQ_FIRST_MENU THEN
       //ようこそ　ワールドバトルトーナメントへ！
-      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_info_02 )
+      _BALLOONWIN_OBJMSG_POS( msg_wbt_info_02, SCWK_TARGET_OBJID, POS_DL )
 
       _CALL ev_first_menu
 
@@ -110,7 +108,7 @@ _TALK_OBJ_START()
         //チャンピオントーナメントに参加済みの場合
         IF FLAG_ON( FH_02 ) THEN	
           //本日のチャンピオントーナメントは終了しています。
-          _BALLOONWIN_TALKOBJ_MSG( msg_wbt_info_11 )
+          _BALLOONWIN_OBJMSG_POS( msg_wbt_info_11, SCWK_TARGET_OBJID, POS_DL )
           _LAST_KEYWAIT()
           _MSGWIN_CLOSE()
           $LWK_WBT_LOBBY_SEQ = WBT_LOBBY_SEQ_SELECT_TOURNAMENT
@@ -202,7 +200,7 @@ _TALK_OBJ_START()
 	IF $LWK_WBT_LOBBY_SEQ == WBT_LOBBY_SEQ_END THEN
     //やめる場合
 		//またの御利用をおまちしております
-		_BALLOONWIN_TALKOBJ_MSG( msg_wbt_info_09 )
+		_BALLOONWIN_OBJMSG_POS( msg_wbt_info_09, SCWK_TARGET_OBJID, POS_DL )
 		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
 
@@ -253,7 +251,7 @@ ev_first_menu:
 ev_select_tournament:
 
 //どのトーナメントに参加しますか？
-_BALLOONWIN_TALKOBJ_MSG( msg_wbt_info_10 )
+_BALLOONWIN_OBJMSG_POS( msg_wbt_info_10, SCWK_TARGET_OBJID, POS_DL )
 
 //BMPMENU表示
 _BMPMENU_INIT_RIGHT( MENU_X1,MENU_Y1,0,1,LWK_MENU )
@@ -267,6 +265,9 @@ _BMPMENU_MAKE_LIST( msg_wbt_menu_back, SCR_WBT_TYPE_NULL )		//もどる
 //メニュー表示
 _BMPMENU_START()
 
+IF $LWK_MENU == EV_WIN_B_CANCEL THEN
+  $LWK_MENU = SCR_WBT_TYPE_NULL
+ENDIF
 _RET
 
 /**************************************************************/
@@ -275,7 +276,7 @@ _RET
 ev_select_rule:
 
 //どのバトルルールで参加しますか？
-_BALLOONWIN_TALKOBJ_MSG( msg_wbt_info_13 )
+_BALLOONWIN_OBJMSG_POS( msg_wbt_info_13, SCWK_TARGET_OBJID, POS_DL )
 
 //BMPMENU表示
 _BMPMENU_INIT_RIGHT( MENU_X1,MENU_Y1,0,1,LWK_MENU )
@@ -289,6 +290,9 @@ _BMPMENU_MAKE_LIST( msg_wbt_menu_back, SCR_WBT_RULE_NULL )			//もどる
 //メニュー表示
 _BMPMENU_START()
 
+IF $LWK_MENU == EV_WIN_B_CANCEL THEN
+  $LWK_MENU = SCR_WBT_RULE_NULL
+ENDIF
 _RET
 
 /**************************************************************/
@@ -296,175 +300,29 @@ _RET
 /**************************************************************/
 ev_regist_check:
 
-//手持ちが足りない場合の処理
-_WBT_GET_BATTLE_RULE( LWK_RULE )
+  _WBT_GET_BATTLE_RULE( LWK_RULE )
 
-$LWK_REG = REG_LV50_SINGLE  //仮
-_BTL_UTIL_PARTY_SELECT_CALL( LWK_REG, SCWK_ANSWER )
-IF $SCWK_ANSWER == SCR_BTL_PARTY_SELECT_CANCEL THEN
-  _RET
-ELSIF $SCWK_ANSWER == SCR_BTL_PARTY_SELECT_NG THEN
-  _BTL_UTIL_PARTY_REGULATION_NG_MSG_CALL( LWK_REG )
-  _RET
-ENDIF
+  SWITCH $LWK_RULE
+  CASE SCR_WBT_RULE_SINGLE THEN
+    $LWK_REG = REG_WBT_SINGLE
+  CASE SCR_WBT_RULE_DOUBLE THEN
+    $LWK_REG = REG_WBT_DOUBLE
+  CASE SCR_WBT_RULE_TRIPLE THEN
+    $LWK_REG = REG_WBT_TRIPLE
+  CASE SCR_WBT_RULE_ROTATION THEN
+    $LWK_REG = REG_WBT_ROTATION
+  ENDSWITCH
 
-//戦える手持ちの数をカウント
-_GET_PARTY_POKE_COUNT( LWK_POKECOUNT, POKECOUNT_MODE_NOT_EGG  )
+  _BTL_UTIL_PARTY_SELECT_CALL( LWK_REG, SCWK_ANSWER )
+  IF $SCWK_ANSWER == SCR_BTL_PARTY_SELECT_CANCEL THEN
+    _RET
+  ELSIF $SCWK_ANSWER == SCR_BTL_PARTY_SELECT_NG THEN
+    _MSGWIN_CLOSE()
+    _BTL_UTIL_PARTY_REGULATION_NG_MSG_CALL( LWK_REG )
+    _RET
+  ENDIF
 
-SWITCH $LWK_RULE
-CASE SCR_WBT_RULE_SINGLE THEN		//シングルバトル	３匹以上から参加可能
-	
-	//手持ちポケモンが３匹以上の場合
-	IF $LWK_POKECOUNT >= 3 THEN
-		
-		//手持ち匹数が足りている
-    $LWK_CHK_RULE = TRUE
-	
-	//手持ちポケモンが足りない場合
-	ELSE
-		
-		SWITCH $LWK_POKECOUNT
-		CASE 1 THEN		//１匹しか手持ちにいない場合
-				
-			$LWK_SHORT = 2	//LWK_SHORTに２を定義
-			
-		CASE 2 THEN		//２匹しか手持ちにいない場合
-			
-			$LWK_SHORT = 1	//LWK_SHORTに１を定義
-		
-		ENDSWITCH
-	
-		//ポケモン不足数を格納
-		_NUMBER( 0,LWK_SHORT,1 )
-
-		//トーナメントの参加には●匹必要です
-		_BALLOONWIN_TALKOBJ_MSG( msg_wbt_info_16 )
-		_LAST_KEYWAIT()
-		_MSGWIN_CLOSE()
-		
-	ENDIF
-	
-CASE SCR_WBT_RULE_DOUBLE THEN		//ダブルバトル	４匹以上から参加可能
-
-	//手持ちポケモンが４匹以上の場合
-	IF $LWK_POKECOUNT >= 4 THEN
-		
-		//手持ち匹数が足りている
-    $LWK_CHK_RULE = TRUE
-	
-	//手持ちポケモンが足りない場合
-	ELSE
-		
-		SWITCH $LWK_POKECOUNT
-		CASE 1 THEN		//１匹しか手持ちにいない場合
-			
-			$LWK_SHORT = 3	//LWK_SHORTに３を定義
-		
-		CASE 2 THEN		//２匹しか手持ちにいない場合
-		
-			$LWK_SHORT = 2	//LWK_SHORTに２を定義
-
-		CASE 3 THEN		//３匹しか手持ちにいない場合
-
-			$LWK_SHORT = 1	//LWK_SHORTに１を定義
-		
-		ENDSWITCH
-
-		//ポケモン不足数を格納
-		_NUMBER( 0,LWK_SHORT,1 )
-		
-		//トーナメントの参加には●匹必要です
-		_BALLOONWIN_TALKOBJ_MSG( msg_wbt_info_16 )
-		_LAST_KEYWAIT()
-		_MSGWIN_CLOSE()
-		
-	ENDIF
-
-CASE SCR_WBT_RULE_TRIPLE THEN		//トリプルバトル	５匹以上から参加可能
-
-	//手持ちポケモンが５匹以上の場合
-	IF $LWK_POKECOUNT >= 5 THEN
-		
-		//手持ち匹数が足りている
-    $LWK_CHK_RULE = TRUE
-		
-	//手持ちポケモンが足りない場合
-	ELSE
-		
-		SWITCH $LWK_POKECOUNT
-		CASE 1 THEN		//１匹しか手持ちにいない場合
-				
-			$LWK_SHORT = 4	//LWK_SHORTに４を定義
-		
-		CASE 2 THEN		//２匹しか手持ちにいない場合
-		
-			$LWK_SHORT = 3	//LWK_SHORTに３を定義
-
-		CASE 3 THEN		//３匹しか手持ちにいない場合
-			
-			$LWK_SHORT = 2	//LWK_SHORTに２を定義
-
-		CASE 4 THEN		//４匹しか手持ちにいない場合
-			
-			$LWK_SHORT = 1	//LWK_SHORTに１を定義
-
-		ENDSWITCH
-
-		//ポケモン不足数を格納
-		_NUMBER( 0,LWK_SHORT,1 )
-
-		//トーナメントの参加には●匹必要です
-		_BALLOONWIN_TALKOBJ_MSG( msg_wbt_info_16 )
-		_LAST_KEYWAIT()
-		_MSGWIN_CLOSE()
-		
-	ENDIF
-
-CASE SCR_WBT_RULE_ROTATION THEN		//ローテーションバトル	６匹から参加可能
-
-	//手持ちポケモンが６匹の場合
-	IF $LWK_POKECOUNT == 6 THEN
-		
-		//手持ち匹数が足りている
-    $LWK_CHK_RULE = TRUE
-		
-	//手持ちポケモンが足りない場合
-	ELSE
-		
-		SWITCH $LWK_POKECOUNT
-		CASE 1 THEN		//１匹しか手持ちにいない場合
-			
-			$LWK_SHORT = 5	//LWK_SHORTに５を定義
-		
-		CASE 2 THEN		//２匹しか手持ちにいない場合
-		
-			$LWK_SHORT = 4	//LWK_SHORTに４を定義
-
-		CASE 3 THEN		//３匹しか手持ちにいない場合
-			
-			$LWK_SHORT = 3	//LWK_SHORTに３を定義
-
-		CASE 4 THEN		//４匹しか手持ちにいない場合
-			
-			$LWK_SHORT = 2	//LWK_SHORTに２を定義
-
-		CASE 5 THEN		//５匹しか手持ちにいない場合
-			
-			$LWK_SHORT = 1	//LWK_SHORTに１を定義
-
-		ENDSWITCH
-
-		//ポケモン不足数を格納
-		_NUMBER( 0,LWK_SHORT,1 )
-		
-		//トーナメントの参加には●匹必要です
-		_BALLOONWIN_TALKOBJ_MSG( msg_wbt_info_16 )
-		_LAST_KEYWAIT()
-		_MSGWIN_CLOSE()
-		
-	ENDIF
-
-ENDSWITCH
+  $LWK_CHK_RULE = TRUE
 
 _RET
 
@@ -474,7 +332,7 @@ _RET
 ev_registok:
 
 //トーナメントに参加するポケモンを選択してください
-_BALLOONWIN_TALKOBJ_MSG( msg_wbt_info_15 )
+_BALLOONWIN_OBJMSG_POS( msg_wbt_info_15, SCWK_TARGET_OBJID, POS_DL )
 _MSGWIN_CLOSE()
 
 //ポケモン選択画面表示　　　　　　　　　　　　　　　　　　　　　　　　
@@ -487,7 +345,7 @@ _WBT_CHECK_BATTLE_RULE( LWK_CHK_RULE )
 IF $LWK_CHK_RULE == TRUE THEN
 
 	//参加受付が終わりました！
-	_BALLOONWIN_TALKOBJ_MSG( msg_wbt_info_17 )
+	_BALLOONWIN_OBJMSG_POS( msg_wbt_info_17, SCWK_TARGET_OBJID, POS_DL )
 	_MSGWIN_CLOSE()
 	
   _MAP_FADE_BLACK_OUT()
@@ -500,7 +358,7 @@ IF $LWK_CHK_RULE == TRUE THEN
   _DISP_FADE_END_CHECK()
 
 	//それでは第一回戦を開始します！
-	_BALLOONWIN_TALKOBJ_MSG( msg_wbt_info_18 )
+	_BALLOONWIN_OBJMSG_POS( msg_wbt_info_18, SCWK_TARGET_OBJID, POS_DL )
 	_MSGWIN_CLOSE()
 	
 	//誘導アニメ
@@ -516,7 +374,7 @@ IF $LWK_CHK_RULE == TRUE THEN
 ELSE
 
 	//参加するポケモンに問題があるようです
-	_BALLOONWIN_TALKOBJ_MSG( msg_wbt_info_error1 )
+	_BALLOONWIN_OBJMSG_POS( msg_wbt_info_error1, SCWK_TARGET_OBJID, POS_DL )
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 
@@ -530,7 +388,7 @@ _RET
 ev_explain:
 
 //どのトーナメントについて説明をいたしましょうか？
-_BALLOONWIN_TALKOBJ_MSG( msg_wbt_info_03 )
+_BALLOONWIN_OBJMSG_POS( msg_wbt_info_03, SCWK_TARGET_OBJID, POS_DL )
 
 //BMPMENU表示
 _BMPMENU_INIT_RIGHT( MENU_X1,MENU_Y1,0,1,LWK_MENU )
@@ -550,27 +408,27 @@ _BMPMENU_START()
 	CASE 0 THEN		//オールトーナメントについて
 	
 		//オールトーナメントは！
-		_BALLOONWIN_TALKOBJ_MSG( msg_wbt_info_04 )
+		_BALLOONWIN_OBJMSG_POS( msg_wbt_info_04, SCWK_TARGET_OBJID, POS_DL )
 		
 	CASE 1 THEN		//タイプトーナメントについて
 
 		//タイプトーナメントは！
-		_BALLOONWIN_TALKOBJ_MSG( msg_wbt_info_05 )
+		_BALLOONWIN_OBJMSG_POS( msg_wbt_info_05, SCWK_TARGET_OBJID, POS_DL )
 
 	CASE 2 THEN		//チャンピオントーナメントについて
 
 		//チャンピオントーナメントは！
-		_BALLOONWIN_TALKOBJ_MSG( msg_wbt_info_06 )
+		_BALLOONWIN_OBJMSG_POS( msg_wbt_info_06, SCWK_TARGET_OBJID, POS_DL )
 
 	CASE 3 THEN		//ダウンロードトーナメントについて
 
 		//ダウンロードトーナメントは！
-		_BALLOONWIN_TALKOBJ_MSG( msg_wbt_info_07 )
+		_BALLOONWIN_OBJMSG_POS( msg_wbt_info_07, SCWK_TARGET_OBJID, POS_DL )
 
 	CASE 4 THEN		//バトルルールについて
 
 		//バトルルールは！
-		_BALLOONWIN_TALKOBJ_MSG( msg_wbt_info_08 )
+		_BALLOONWIN_OBJMSG_POS( msg_wbt_info_08, SCWK_TARGET_OBJID, POS_DL )
 
 	DEFAULT			//もどる・Bボタン
 
@@ -586,7 +444,7 @@ _RET
 ev_select_poketype:
 
 //どのタイプのトーナメントに参加しますか？
-_BALLOONWIN_TALKOBJ_MSG( msg_wbt_info_12 )
+_BALLOONWIN_OBJMSG_POS( msg_wbt_info_12, SCWK_TARGET_OBJID, POS_DL )
 
 //BMPMENU表示
 _BMPMENU_INIT_RIGHT( MENU_X1,MENU_Y1,0,1,LWK_MENU )
@@ -616,6 +474,9 @@ _BMPMENU_START()
 //選択結果で分岐
 //$LWK_MENU
 
+IF $LWK_MENU == EV_WIN_B_CANCEL THEN
+  $LWK_MENU = POKETYPE_NULL
+ENDIF
 _RET
 
 /**************************************************************/
@@ -636,7 +497,7 @@ _WBT_GET_DL_COUNT( LWK_DL_COUNT )
 IF $LWK_DL_COUNT == 0 THEN
 
 	//お客様が参加できるトーナメントがないみたいです
-	_BALLOONWIN_TALKOBJ_MSG( msg_wbt_info_14_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_wbt_info_14_01, SCWK_TARGET_OBJID, POS_DL )
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 
@@ -644,7 +505,7 @@ IF $LWK_DL_COUNT == 0 THEN
 ELSE
 
 	//参加できるトーナメントはこちらになります
-	_BALLOONWIN_TALKOBJ_MSG( msg_wbt_info_14 )
+	_BALLOONWIN_OBJMSG_POS( msg_wbt_info_14, SCWK_TARGET_OBJID, POS_DL )
 
 	//BMPMENU表示
 	_BMPMENU_INIT_RIGHT( MENU_X1,MENU_Y1,0,1,LWK_MENU )

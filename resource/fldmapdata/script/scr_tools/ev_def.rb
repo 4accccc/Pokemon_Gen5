@@ -24,6 +24,21 @@ FNAME_TRAINER = "trainer.ev"
 #=======================================================================
 # 関数
 #=======================================================================
+def same_content?(path1, path2)
+  if File.size(path1) != File.size(path2)
+    return false
+  end
+  open(path1){|io1|
+    open(path2){|io2|
+      while true
+        data1 = io1.read(4096)
+        data2 = io2.read(4096)
+        return true if data1.nil? && data2.nil?
+        return false if data1 != data2
+      end
+    }
+  }
+end
 #-----------------------------------------------------------------------
 # 異常終了
 #-----------------------------------------------------------------------
@@ -110,7 +125,8 @@ file_ev = File.open( fname_ev, "r" )
 file_id = File.open( fname_id, "r" )
 
 fname_def_h = fname_ev.gsub( "\.ev", "_def\.h" )
-file_def_h = File.open( fname_def_h, "w" )
+fname_def_h_dummy = fname_ev.gsub( "\.ev", "_def\.h\.tmp" )
+file_def_h = File.open( fname_def_h_dummy, "w" )
 
 fname_ev_big = File::basename( fname_ev )
 fname_ev_big = fname_ev_big.gsub( "\.ev", "" )
@@ -125,7 +141,7 @@ if( start_id == RET_ERROR )
   
   if( start_id == RET_ERROR )
     printf( "can't find start_id %s \n", fname_ev_big )
-    error_end( file_ev, file_id, file_def_h, fname_def_h )
+    error_end( file_ev, file_id, file_def_h, fname_def_h_dummy )
     exit 1
   end
 end
@@ -147,7 +163,7 @@ if( fname_ev.include?(FNAME_TRAINER) )
   
   if( start_id_trainer == RET_ERROR )
     printf( "can't find start_id %s \n", SCROFFS_START_TRAINER_2VS2 )
-    error_end( file_ev, file_id, file_def_h, fname_def_h )
+    error_end( file_ev, file_id, file_def_h, fname_def_h_dummy )
     exit 1
   end
 end
@@ -165,7 +181,7 @@ while line = file_ev.gets
     
     if( id_name == nil )
       printf( "ERROR ev_def EVENT_DATA label name none\n" )
-      error_end( file_ev, file_id, file_def_h, fname_def_h )
+      error_end( file_ev, file_id, file_def_h, fname_def_h_dummy )
       exit 1
     end
     
@@ -192,5 +208,12 @@ file_id.close
 file_ev.close
 
 #なぜかunix行末コード（LF)になっている環境があるため、強制変換
-system("unix2dos -D " + fname_def_h )
+system("unix2dos -D " + fname_def_h_dummy )
+
+if FileTest.exist?( fname_def_h ) == false || same_content?( fname_def_h_dummy, fname_def_h ) == false
+  File.rename( fname_def_h_dummy, fname_def_h )
+else
+  File.delete( fname_def_h_dummy )
+  #puts "removed #{fname_def_h_dummy}"
+end
 

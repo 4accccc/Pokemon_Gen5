@@ -1653,6 +1653,33 @@ d31r1101_def.h: d31r1101.ev
 d31r1201_def.h: d31r1201.ev
 	$(EV_DEF) d31r1201.ev $(SCR_OFFS_ID_H)
 
+c03r1103_def.h: c03r1103.ev
+	$(EV_DEF) c03r1103.ev $(SCR_OFFS_ID_H)
+
+d22r0201_def.h: d22r0201.ev
+	$(EV_DEF) d22r0201.ev $(SCR_OFFS_ID_H)
+
+d11r0101_def.h: d11r0101.ev
+	$(EV_DEF) d11r0101.ev $(SCR_OFFS_ID_H)
+
+d11r0201_def.h: d11r0201.ev
+	$(EV_DEF) d11r0201.ev $(SCR_OFFS_ID_H)
+
+d11r0301_def.h: d11r0301.ev
+	$(EV_DEF) d11r0301.ev $(SCR_OFFS_ID_H)
+
+d11r0401_def.h: d11r0401.ev
+	$(EV_DEF) d11r0401.ev $(SCR_OFFS_ID_H)
+
+d11r0501_def.h: d11r0501.ev
+	$(EV_DEF) d11r0501.ev $(SCR_OFFS_ID_H)
+
+c03p18_def.h: c03p18.ev
+	$(EV_DEF) c03p18.ev $(SCR_OFFS_ID_H)
+
+c03p19_def.h: c03p19.ev
+	$(EV_DEF) c03p19.ev $(SCR_OFFS_ID_H)
+
 ifeq ($(PM_DEBUG),yes)
 debug_scr_def.h: debug_scr.ev
 	$(EV_DEF) debug_scr.ev $(SCR_OFFS_ID_H)

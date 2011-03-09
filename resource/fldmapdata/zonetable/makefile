@@ -112,14 +112,15 @@ $(TARGETDIR)/$(NARCNAME):	$(RESDIR)/$(NARCNAME)
 	$(foreach AFILE,$(RESULTS),$(COPY) $(AFILE) $(TARGETDIR) $(AND)) true
 
 
+$(DATATABTXT):	$(DATAFILE)
+	@$(XLS2TAB) $(DATAFILE) > $(DATATABTXT)
 #zonetable.xls
 #	--(EXCEL2TAB)-->	zonetable.txt
 #	--(zonetable.rb)-->	zonetable.c（＋その他）
 #	--(コンパイル＆elf2bin)-->	zonetable.bin
 #	--(nnsarc)-->	zonedata.narc/.naix
-$(RESDIR)/$(NARCNAME): $(DATAFILE) $(DEPFILES) $(MATRIXHEADER) $(PROJECT_PROGDIR)version
+$(RESDIR)/$(NARCNAME): $(DATATABTXT) $(DEPFILES) $(MATRIXHEADER) $(PROJECT_PROGDIR)version
 	@echo マップ管理表更新
-	@$(XLS2TAB) $(DATAFILE) > $(DATATABTXT)
 	@$(CONVERTER) contents $(DATATABTXT)
 	@$(MAKE) makebin				#Ｃソース→バイナリ変換して
 ifeq ($(PM_DEBUG),yes)

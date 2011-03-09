@@ -11,6 +11,8 @@
 THIS_DIRECTORY = File.dirname(__FILE__).gsub(/\\/,"/")
 WINDOWS_SVN_FLAG = if `which svn`.chomp =~ /\/cygdrive\/c\/tools\/Subversion/ then
                      true
+                   elsif `which svn`.chomp =~ /\/cygdrive\/c\/Program Files\/SlikSVN\/bin/ then
+                     true
                    else
                      false
                    end
