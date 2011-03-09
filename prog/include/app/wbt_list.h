@@ -18,6 +18,7 @@
 //	lib
 #include <gflib.h>
 
+#include "field/wbt.h"
 //system
 #include "gamesystem/gamesystem.h"
 
@@ -33,16 +34,47 @@ extern const GFL_PROC_DATA WBTListProcData;
  *								定数定義
  */
 //=============================================================================
-
 //=============================================================================
 /**
  *								構造体定義
  */
 //=============================================================================
 //-------------------------------------
+/// トーナメントの段階指定
+//-------------------------------------
+typedef enum {
+  WBTLIST_STAGE_ENTRY = 0,  ///<エントリー直後
+  WBTLIST_STAGE_1ST,        ///<1回戦終了後
+  WBTLIST_STAGE_2ND,        ///<2回戦終了後
+}WBTLIST_STAGE;
+
+//-------------------------------------
+/// トレーナーの情報
+//-------------------------------------
+typedef struct {
+  STRBUF * name;    ///<名前文字列
+  u16 mmdl_id;      ///<対応する動作モデルのID
+  u8  pattern_no;   ///<上記中の正面絵パターンナンバー
+  u8  sex;          ///<性別(PM_MALE/PM_FEMALE)
+  u8  priority;     ///<優先度(1-5)
+  u8  poketype;     ///<タイプ（include/poke_tool/poketype_def.hを参照）
+}WBTLIST_TRAINER;
+//-------------------------------------
+//-------------------------------------
+typedef struct {
+  BOOL upside_win;
+  u8 msg_type;
+}WBTLIST_RESULT;
+
+//-------------------------------------
 ///	PROCに渡す引数
 //=====================================
 typedef struct
 {	
 	GAMESYS_WORK				*gamesys;	//[in]ゲームシステム
+  WBTLIST_STAGE stage;
+  WBTLIST_TRAINER trainer[ WBT_TRAINER_NUM ];
+  WBTLIST_RESULT  first_stage[4];
+  WBTLIST_RESULT  second_stage[2];
 }WBTLIST_PARAM;
+
