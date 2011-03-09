@@ -36,9 +36,7 @@ enum {
 
 // OBJインデックス
 enum {
-  OBJ_FAN1 = 0,
-  OBJ_FAN2,
-  OBJ_FAN3,
+  OBJ_FAN = 0,
   OBJ_WINDMETER_1,  // 
   OBJ_WINDMETER_2,  // 
   OBJ_WINDMETER_3,  // 
@@ -127,23 +125,7 @@ static const GFL_G3D_UTIL_ANM anm_3d_table_wind_3[] =
 // OBJ
 static const GFL_G3D_UTIL_OBJ obj_3d_table[] = 
 {
-  // ファン1
-  {
-    RESID_FAN_MDL,      // モデルリソースID
-    0,      // モデルデータID(リソース内部INDEX)
-    RESID_FAN_MDL,      // テクスチャリソースID
-    anm_3d_table_fan,   // アニメテーブル(複数指定のため)
-    NELEMS(anm_3d_table_fan),      // アニメリソース数
-  },
-  // ファン2
-  {
-    RESID_FAN_MDL,      // モデルリソースID
-    0,      // モデルデータID(リソース内部INDEX)
-    RESID_FAN_MDL,      // テクスチャリソースID
-    anm_3d_table_fan,   // アニメテーブル(複数指定のため)
-    NELEMS(anm_3d_table_fan),      // アニメリソース数
-  },
-  // ファン3
+  // ファン
   {
     RESID_FAN_MDL,      // モデルリソースID
     0,      // モデルデータID(リソース内部INDEX)

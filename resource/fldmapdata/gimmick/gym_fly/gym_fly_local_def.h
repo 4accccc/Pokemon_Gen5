@@ -8,15 +8,9 @@
 //======================================================================
 
 //ファンのグリッド位置座標
-#define FAN1_GX (11)
-#define FAN1_GY (-3)
-#define FAN1_GZ (-18)
-#define FAN2_GX (11)
-#define FAN2_GY (-3)
-#define FAN2_GZ (-18)
-#define FAN3_GX (11)
-#define FAN3_GY (-3)
-#define FAN3_GZ (-18)
+#define FAN_GX (11)
+#define FAN_GY (-3)
+#define FAN_GZ (-9)
 //風力計のグリッド位置座標
 //マップの左上から数えての連番です。
 #define WINDMETER1_GX (10)

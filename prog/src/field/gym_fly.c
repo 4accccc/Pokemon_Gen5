@@ -59,7 +59,6 @@
 #define GYM_FLY_UNIT_IDX (0)
 #define GYM_FLY_TMP_ASSIGN_ID  (1)
 
-#define FAN_NUM_MAX             (1)         // ファンの数
 #define FAN_SPEED_LOW           (0x1000)    // 低速のアニメ速度
 #define FAN_SPEED_MIDDLE        (0x2000)    // 中速のアニメ速度
 #define FAN_SPEED_HIGH          (0x4000)    // 高速のアニメ速度
@@ -1350,21 +1349,18 @@ static void EXPOBJ_ObjSet( GYM_FLY_TMP *p_wk )
   //=====================================
   ///	ファンの設定
   //
-  for( i=0; i<FAN_NUM_MAX; i++ )
   {
     // 座標セット
-    VecFx32 pos[ FAN_NUM_MAX ] = {
-      { FAN1_GX,  FAN1_GY,  FAN1_GZ },
-      //{ FAN2_GX,  FAN2_GY,  FAN2_GZ },
-      //{ FAN3_GX,  FAN3_GY,  FAN3_GZ },
+    VecFx32 pos = {
+       FAN_GX, FAN_GY, FAN_GZ,
     };
 
-    u16   obj_idx = OBJ_FAN1 + i;    // OBJインデックス
+    u16   obj_idx = OBJ_FAN;    // OBJインデックス
     GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( p_wk->exp_obj, GYM_FLY_UNIT_IDX, obj_idx );
 
-    status->trans.x = FX32_CONST( pos[i].x * FIELD_CONST_GRID_SIZE );
-    status->trans.y = FX32_CONST( pos[i].y * FIELD_CONST_GRID_SIZE );
-    status->trans.z = FX32_CONST( pos[i].z * FIELD_CONST_GRID_SIZE );
+    status->trans.x = FX32_CONST( pos.x * FIELD_CONST_GRID_SIZE );
+    status->trans.y = FX32_CONST( pos.y * FIELD_CONST_GRID_SIZE );
+    status->trans.z = FX32_CONST( pos.z * FIELD_CONST_GRID_SIZE );
     // カリングする
     FLD_EXP_OBJ_SetCulling( p_wk->exp_obj, GYM_FLY_UNIT_IDX, obj_idx, TRUE );
     FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GYM_FLY_UNIT_IDX, obj_idx, FALSE );
@@ -1565,9 +1561,8 @@ static void FAN_Update( FAN_WORK *p_wk )
     }
 
     // ファンのOBJすべてのアニメを変更
-    for( i=0; i<FAN_NUM_MAX; i++ )
     {
-      u16   obj_idx = OBJ_FAN1 + i;    // OBJインデックス
+      u16   obj_idx = OBJ_FAN;    // OBJインデックス
       EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->parent_exp_obj, GYM_FLY_UNIT_IDX, obj_idx, 0 );
       // アニメスピード変更
       FLD_EXP_OBJ_ChgAddFrame( exp_anm, p_wk->anm_speed );
