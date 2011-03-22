@@ -2,9 +2,9 @@
 fileID:  byte(s) name
 ----------------------------------------
      0:      552 /fmission_obj.nclr
-     1:     1121 /fmission_obj_lz.ncgr
-     2:     1309 /fmission_obj.ncer
-     3:     1205 /fmission_obj.nanr
+     1:     1036 /fmission_obj_lz.ncgr
+     2:     1008 /fmission_obj.ncer
+     3:     1168 /fmission_obj.nanr
      4:      552 /fmission_bg.nclr
      5:     4517 /fmission_bg_lz.ncgr
      6:      300 /fmission_bg01_lz.nscr
