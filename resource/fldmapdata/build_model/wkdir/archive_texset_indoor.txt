@@ -75,5 +75,7 @@
 "texset/indoor075.nsbtx"
 "texset/indoor076.nsbtx"
 "texset/indoor077.nsbtx"
+"texset/indoor078.nsbtx"
+"texset/indoor079.nsbtx"
 
 
