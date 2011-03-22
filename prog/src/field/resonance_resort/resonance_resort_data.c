@@ -1539,9 +1539,9 @@ u32 RESORT_PROXY_DATA_GetData( const RESORT_PROXY_DATA *cp_wk, RESORT_DATA_PARAM
   case RESORT_DATA_PARAM_PLACE_ID:
     return cp_wk->placeID; 
   case RESORT_DATA_PARAM_SEX:
-    return 1;
+    return 1; //TODO
   case RESORT_DATA_PARAM_TRAINERVIEW:
-    return 9;
+    return 9; //TODO
   case RESORT_DATA_PARAM_NAME:
     {
       //TODO
@@ -1561,6 +1561,8 @@ u32 RESORT_PROXY_DATA_GetData( const RESORT_PROXY_DATA *cp_wk, RESORT_DATA_PARAM
     return 10; //TODO;
   case RESORT_DATA_PARAM_PRESENT_NUM:
     return 1; //TODO
+  case RESORT_DATA_PARAM_TYPE:
+    return cp_wk->type;
   default:
     GF_ASSERT(0);
     return 0;
