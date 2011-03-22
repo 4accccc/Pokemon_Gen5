@@ -1144,7 +1144,8 @@ SRCS_OVERLAY_RESONANCE_RESORT_GIMMICK = field/resonance_resort/resort_field.c \
                                         field/resonance_resort/resort_map.c \
                                         field/resonance_resort/resort_data_manager.c
 #===> GROUP_OVERLAY_GIMMICK
-SRCS_OVERLAY_DEBUG_RESORT = field/event_debug_menu_resort.c
+SRCS_OVERLAY_DEBUG_RESORT = field/event_debug_menu_resort.c \
+                            field/resonance_resort/resort_debug_input.c
 
 # マッパーサンプル
 #===> GROUP_OVERLAY_UNION_INTRUDE

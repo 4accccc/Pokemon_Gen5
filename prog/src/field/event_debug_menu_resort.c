@@ -27,6 +27,7 @@
 #include "savedata/resonance_resort_sv.h"
 #include "event_mapchange.h"
 #include "arc/fieldmap/zone_id.h"
+#include "resonance_resort/resort_debug_input.h"
 
 //--------------------------------------------------------------
 /// proto
@@ -43,6 +44,7 @@ static BOOL debugMenuCallProc_AllSecretary( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_AllResident( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_AllClear( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_UpdateDay( DEBUG_MENU_EVENT_WORK *p_wk );
+static BOOL debugMenuCallProc_CallDebugInput( DEBUG_MENU_EVENT_WORK *p_wk );
 
 static const DEBUG_MENU_LIST DATA_SubMenuList[] =
 {
@@ -57,6 +59,7 @@ static const DEBUG_MENU_LIST DATA_SubMenuList[] =
   { DEBUG_FIELD_RESORT_09, debugMenuCallProc_AllResident, GFL_OVERLAY_BLANK_ID},
   { DEBUG_FIELD_RESORT_10, debugMenuCallProc_AllClear, GFL_OVERLAY_BLANK_ID},
   { DEBUG_FIELD_RESORT_11, debugMenuCallProc_UpdateDay, GFL_OVERLAY_BLANK_ID},
+  { DEBUG_FIELD_RESORT_12, debugMenuCallProc_CallDebugInput, GFL_OVERLAY_BLANK_ID },
 };
 
 static const DEBUG_MENU_INITIALIZER DebugSubMenuData = {
@@ -68,7 +71,6 @@ static const DEBUG_MENU_INITIALIZER DebugSubMenuData = {
   NULL,
   NULL
 };
-
 //--------------------------------------------------------------
 /**
  * イベント：レゾナンスリゾート
@@ -338,4 +340,10 @@ static BOOL debugMenuCallProc_UpdateDay( DEBUG_MENU_EVENT_WORK *p_wk )
     RESORT_PEOPLE_ALL_DATA_UpdateDay( p_all_people );
   }
   return FALSE;
+}
+static BOOL debugMenuCallProc_CallDebugInput( DEBUG_MENU_EVENT_WORK *p_wk )
+{
+  GMEVENT *event = EVENT_CallDebugInputResort( p_wk->gmSys, NULL );
+  GMEVENT_ChangeEvent( p_wk->gmEvent, event );
+  return TRUE;
 }

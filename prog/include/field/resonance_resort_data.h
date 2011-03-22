@@ -105,7 +105,7 @@ typedef enum
 ///	定数
 //=====================================
 //リゾート用の基本データ１のサイズ
-#define RESORT_BASIC1_DATA_SIZE   (48)
+#define RESORT_BASIC1_DATA_SIZE   (60)
 //リゾート用の基本データ２のサイズ
 #define RESORT_BASIC2_DATA_SIZE   (4)
 //リゾート用の拡張データ１つあたりのサイズ
@@ -157,7 +157,16 @@ typedef enum
   RESORT_DATA_PARAM_PHRASE, //p_ret_adrsから取得
   RESORT_DATA_PARAM_TYPE,
   RESORT_DATA_PARAM_DAY_FLAG,
-  //RESORT_DATA_PARAM_SHOPNAME,
+
+  //基本データ
+  RESORT_DATA_PARAM_NATION,
+  RESORT_DATA_PARAM_AREA,
+  RESORT_DATA_PARAM_WORK,
+  RESORT_DATA_PARAM_HOBBY,
+  RESORT_DATA_PARAM_WND_COLOR,
+  RESORT_DATA_PARAM_PLAY_HOUR,
+  RESORT_DATA_PARAM_PLAY_MIN,
+  RESORT_DATA_PARAM_QANSWER,  //p_ret_adrsから取得
 
 } RESORT_DATA_PARAM;
 

@@ -68,7 +68,7 @@ struct _RESORT_INSTITUTION_DATA
 {
   u8  institutionID;
   u8  lv;
-  u16 pad;
+  u16 exp;
   u32 ev_bit;
   u32 work;
 };
@@ -226,15 +226,24 @@ void RESORT_INSTITUTION_DATA_SetBit( RESORT_INSTITUTION_DATA *p_wk, RESORT_INSTI
 typedef struct
 {
   STRCODE name[PERSON_NAME_SIZE];   ///<トレーナー名(!! EOM除く !!) 14
-  STRCODE introduction[GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN]; //<自己紹介(!! EOM除く !!) 16
-  u16 trainerID;                    ///<トレーナーID(下位16ビット)  2 16
-  u8  nation;                       ///<国コード      1 17
-  u8  area;                         ///<地域コード    1 18
-  u8  version;                      ///<バージョン    1 19
-  u8  language;                     ///<言語コード    1 20
-  u8  trainer_view;                 ///<見た目        1 21
-  u8  sex;                          ///<性別          1 22
-  QUESTIONNAIRE_ANSWER_WORK qanswer;  ///<アンケート  10  32
+  u16 padding3;
+  u8  nation;                       ///<国コード      1 15
+  u8  area;                         ///<地域コード    1 16
+  u8  work;                         ///<仕事          1 17
+  u8  hobby;                        ///<趣味          1 18
+  STRCODE introduction[GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN]; //<自己紹介(!! EOM除く !!) 16 34
+  u8  version;                      ///<バージョン    1 35
+  u8  language;                     ///<言語コード    1 36
+  u8  trainer_view  :4;                 ///<見た目        1 37
+  u8  sex           :1;
+  u8  padding1      :3;
+  u8  wnd_color;                    ///ウィンドウ背景色   1 38
+  u32 pass_cnt;                     //すれ違い回数        4 42
+  u16 trainerID;                    ///<トレーナーID(下位16ビット)  2 44
+  u16 padding2;                       ///< 2 46
+  QUESTIONNAIRE_ANSWER_WORK qanswer;  ///<アンケート  10  56
+  u16 play_hour     :10;  ///< プレイ時間 2 58
+  u16 play_min      :6;
 }RESORT_BASIC1_DATA;
 
 SDK_COMPILER_ASSERT( sizeof(RESORT_BASIC1_DATA) == RESORT_BASIC1_DATA_SIZE );
@@ -276,6 +285,8 @@ static void RESORT_BASIC1_DATA_SetMyData( RESORT_BASIC1_DATA *p_wk, const GAMEDA
     MISC *p_misc = SaveData_GetMisc( GAMEDATA_GetSaveControlWork((GAMEDATA*)cp_gamedata) );
     const STRCODE *cp_src = MISC_CrossComm_GetSelfIntroduction(p_misc);
     GFL_STD_MemCopy( cp_src, p_wk->introduction, sizeof(STRCODE)*GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN );
+
+    p_wk->pass_cnt  = MISC_CrossComm_GetSuretigaiCount(p_misc);
   }
 
   //アンケート
@@ -284,6 +295,20 @@ static void RESORT_BASIC1_DATA_SetMyData( RESORT_BASIC1_DATA *p_wk, const GAMEDA
     QUESTIONNAIRE_SAVE_WORK *p_ques_sv = SaveData_GetQuestionnaire(p_sv);
 
     GFL_STD_MemCopy( Questionnaire_GetAnswerWork(p_ques_sv), &p_wk->qanswer, sizeof(QUESTIONNAIRE_ANSWER_WORK) );
+  }
+
+  //プレイ時間
+  {
+    PLAYTIME *sv_playtime = GAMEDATA_GetPlayTimeWork( (GAMEDATA*)cp_gamedata );
+    p_wk->play_hour      = PLAYTIME_GetHour( sv_playtime );
+    p_wk->play_min       = PLAYTIME_GetMinute( sv_playtime );
+  }
+
+  //本体情報
+  {
+    OSOwnerInfo owner_info;
+    OS_GetOwnerInfo(&owner_info);
+    p_wk->wnd_color = owner_info.favoriteColor;
   }
 }
 //----------------------------------------------------------------------------
@@ -307,6 +332,10 @@ static void RESORT_BASIC1_DATA_SetBeaconInfo( RESORT_BASIC1_DATA *p_wk, const GA
   p_wk->area      = cp_beacon_info->area;
   p_wk->trainer_view  = cp_beacon_info->trainer_view;
   p_wk->qanswer   = cp_beacon_info->question_answer;
+  p_wk->play_hour = cp_beacon_info->play_hour;
+  p_wk->play_min  = cp_beacon_info->play_min;
+  p_wk->pass_cnt  = cp_beacon_info->suretigai_count;
+  p_wk->wnd_color = cp_beacon_info->favorite_color_index;
 }
 
 //----------------------------------------------------------------------------
@@ -434,13 +463,14 @@ typedef struct
 {
   u8  continue_data :1;
   u8  personality   :5;
-  u8  pad           :2;
+  u8  special_deliverly :1;
+  u8  padding1      :1;
   u8  quest1        :4;
   u8  quest2        :4;
   u8  quest3        :4;
   u8  quest4        :4;
-  u8  baseID;
-              //WBから受け取ったときは中身がからなので何らかの認識をすること
+  u8  padding2;
+              //TODO WBから受け取ったときは中身がからなので何らかの認識をすること
 }RESORT_BASIC2_DATA;
 
 SDK_COMPILER_ASSERT( sizeof(RESORT_BASIC2_DATA) == RESORT_BASIC2_DATA_SIZE );
@@ -831,17 +861,17 @@ struct _RESORT_RECV_DATA
   RESORT_EXTEND9_DATA extend9;
   u16                 presentID;
   u8                  precent_num;
-  u8                  year;         //4
-  u8                  month;
-  u8                  day;
-  u8                  hour;
-  u8                  minute;       //8
-  u8                  netID;
+  u8                  meet_year;         //4
+  u8                  meet_month;
+  u8                  meet_day;
+  u8                  meet_hour;
+  u8                  meet_min;       //8
+  u8                  commID;   //通信識別ID
   u8                  merge     :1;
-  u8                  pad       :5;
+  u8                  padding1  :5;
   u8                  day_flag  :1;
   u8                  keep_flag :1;
-  u16                 exp;          //12
+  u16                 padding2;
   RESORT_INSTITUTION_DATA institution;
 #if 0
   u8                  lv;
@@ -1191,6 +1221,24 @@ u32 RESORT_RECV_DATA_GetData( const RESORT_RECV_DATA *cp_wk, RESORT_DATA_PARAM p
     return cp_wk->type;
   case RESORT_DATA_PARAM_DAY_FLAG:
     return cp_wk->day_flag;
+
+  case RESORT_DATA_PARAM_NATION:
+    return cp_wk->basic1.nation;
+  case RESORT_DATA_PARAM_AREA:
+    return cp_wk->basic1.area;
+  case RESORT_DATA_PARAM_WORK:
+    return cp_wk->basic1.work;
+  case RESORT_DATA_PARAM_HOBBY:
+    return cp_wk->basic1.hobby;
+  case RESORT_DATA_PARAM_WND_COLOR:
+    return cp_wk->basic1.wnd_color;
+  case RESORT_DATA_PARAM_PLAY_HOUR:
+    return cp_wk->basic1.play_hour;
+  case RESORT_DATA_PARAM_PLAY_MIN:
+    return cp_wk->basic1.play_min;
+  case RESORT_DATA_PARAM_QANSWER:  //p_ret_adrsから取得
+    GFL_STD_MemCopy( &cp_wk->basic1.qanswer, p_ret_adrs, sizeof(QUESTIONNAIRE_ANSWER_WORK) );
+    return 0;
   default:
     GF_ASSERT(0);
     return 0;
@@ -1226,6 +1274,30 @@ void RESORT_RECV_DATA_SetData( RESORT_RECV_DATA *p_wk, RESORT_DATA_PARAM param, 
     break;
   case RESORT_DATA_PARAM_DAY_FLAG:
     p_wk->day_flag = data;
+    break;
+  case RESORT_DATA_PARAM_NATION:
+    p_wk->basic1.nation = data;
+    break;
+  case RESORT_DATA_PARAM_AREA:
+    p_wk->basic1.area = data;
+    break;
+  case RESORT_DATA_PARAM_WORK:
+    p_wk->basic1.work = data;
+    break;
+  case RESORT_DATA_PARAM_HOBBY:
+    p_wk->basic1.hobby = data;
+    break;
+  case RESORT_DATA_PARAM_WND_COLOR:
+    p_wk->basic1.wnd_color = data;
+    break;
+  case RESORT_DATA_PARAM_PLAY_HOUR:
+    p_wk->basic1.play_hour = data;
+    break;
+  case RESORT_DATA_PARAM_PLAY_MIN:
+    p_wk->basic1.play_min = data;
+    break;
+  case RESORT_DATA_PARAM_QANSWER:  //p_ret_adrsから取得
+    GFL_STD_MemCopy( (const void*)data, &p_wk->basic1.qanswer, sizeof(QUESTIONNAIRE_ANSWER_WORK) );
     break;
   default:
     GF_ASSERT(0);
