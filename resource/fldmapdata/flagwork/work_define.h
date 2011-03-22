@@ -230,6 +230,7 @@
 #define WK_SCENE_C04GYM0101_SHOWEND      16618 /* 0x40ea スワンでんきジム：ジム退場演出用ワーク */
 #define WK_SCENE_C03GYM0101_GATE_3B      16619 /* 0x40eb スワン虫ジム：3Bゲート POS制御ワーク */
 #define WK_SCENE_MEDAL_EVENT             16620 /* 0x40ec メダルおやじイベント制御ワーク */
+#define WK_SCENE_C06GYM0101_GUIDE        16621 /* 0x40ed スワン飛行ジム：ガイド POS制御ワーク */
 
 #define WK_SCENE_AREA_END                16655 /* 0x410f  */
 
