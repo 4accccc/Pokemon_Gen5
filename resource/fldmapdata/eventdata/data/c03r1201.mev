@@ -1,5 +1,5 @@
 #event data
-#save date:2010/05/10 16:05:50
+#save date:2011/03/22 16:50:08
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c03r1201.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,38 @@ C:\home\swan\resource\fldmapdata\eventdata\data\c03r1201.wms
 #hold event type:
 1
 #hold event number:
+1
+#event number: 0
+#type
+1
+#ID name
+C03R1201_ASSISTANTM1_01
+#OBJ CODE Number
+ASSISTANTM
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
 0
+#Event Script Name
+SCRID_C03R1201_ASSISTANTM1_01
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+1
+#Move Limit Z Number
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-104 0 200
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

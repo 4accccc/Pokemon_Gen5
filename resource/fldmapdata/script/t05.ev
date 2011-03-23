@@ -20,9 +20,716 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA    ev_t05_railfan_01
+_EVENT_DATA    ev_t05_pipe_01
+_EVENT_DATA    ev_zone_t05
+_EVENT_DATA    ev_init_t05
+_EVENT_DATA    ev_recover_t05
 _EVENT_DATA    ev_bg_t05_railmap_01	//路線図
 _EVENT_DATA    ev_bg_t05_board_01
+_EVENT_DATA    ev_t05_recept_01		//帰りの電車受付
+_EVENT_DATA    ev_t05_boy4_01
+_EVENT_DATA    ev_t05_boy3_01
+_EVENT_DATA    ev_t05_middlewoman2_01
+_EVENT_DATA    ev_t05_man3_01
+_EVENT_DATA    ev_t05_woman2_01
+_EVENT_DATA    ev_t05_mountman_01
+_EVENT_DATA    ev_t05_woman1_01
+_EVENT_DATA    ev_t05_oldman1_01
+_EVENT_DATA    ev_t05_railman_01
+_EVENT_DATA    ev_t05_itemtrader_01		//バックパッカー（消費アイテム）
+_EVENT_DATA    ev_t05_itemtrader_02		//ビジネスマン（ほしのかけら）
+_EVENT_DATA    ev_t05_itemtrader_03		//エリートトレーナー（モンスターボール）
 _EVENT_DATA_END
+
+
+//------------------------------注意--------------------------------//
+//																	//
+//	道具交換イベントに LOCALWORK11～13 まで使用ししています。		//
+//	マップ遷移するまで再会話メッセージを表示するのに使用。			//
+//																	//
+//------------------------------------------------------------------//
+
+
+/************************************************************/
+/*					FIELD_INIT_SCRIPT						*/
+/************************************************************/
+INIT_EVENT_START   ev_zone_t05
+	//転車台前の見物人を非表示
+	_FLAG_SET( FV_T05_RAILFAN )
+	_FLAG_SET( FV_T05_WEEKEND )
+	
+	//週末（土日）で、車両無しでなければ見物人を表示
+	IF $WK_OTHER_T05_TRAIN != T05_TRAIN_NONE THEN
+	//車両がある
+		_GET_WEEK( SCWK_ANSWER )
+		IF $SCWK_ANSWER == RTC_WEEK_SATURDAY || $SCWK_ANSWER == RTC_WEEK_SUNDAY THEN
+			_FLAG_RESET( FV_T05_RAILFAN )
+			_FLAG_RESET( FV_T05_WEEKEND )
+		ENDIF
+	ENDIF
+	
+	//レアトレイン（旧／新）がきてるなら鉄道ファンの見物人だけ表示
+	IF $WK_OTHER_T05_TRAIN == T05_TRAIN_OLD || $WK_OTHER_T05_TRAIN == T05_TRAIN_NEW THEN
+		_FLAG_RESET( FV_T05_RAILFAN )
+	ENDIF
+	
+INIT_EVENT_END
+
+
+/************************************************************/
+/*					FIELD_INIT_SCRIPT						*/
+/************************************************************/
+INIT_EVENT_START   ev_init_t05
+  IF $WK_OTHER_T05_TRAIN == 0 THEN
+    _BMODEL_CHANGE_VIEW_FLAG( SCR_BMID_EVENT, 24, 25, FALSE )
+  ELSE
+    _GET_TRAIN_MODEL_ID( WK_OTHER_T05_TRAIN, SCWK_ANSWER )
+    _BMODEL_DIRECT_CHANGE_MODEL_ID( SCR_BMID_EVENT, 24, 25, SCWK_ANSWER )
+  ENDIF
+INIT_EVENT_END
+
+
+/************************************************************/
+/*					FIELD_INIT_SCRIPT						*/
+/************************************************************/
+INIT_EVENT_START   ev_recover_t05
+  IF $WK_OTHER_T05_TRAIN == 0 THEN
+    _BMODEL_CHANGE_VIEW_FLAG( SCR_BMID_EVENT, 24, 25, FALSE )
+  ELSE
+    _GET_TRAIN_MODEL_ID( WK_OTHER_T05_TRAIN, SCWK_ANSWER )
+    _BMODEL_DIRECT_CHANGE_MODEL_ID( SCR_BMID_EVENT, 24, 25, SCWK_ANSWER )
+  ENDIF
+INIT_EVENT_END
+
+
+/************************************************************/
+/*						てっちゃん							*/
+/************************************************************/
+EVENT_START	ev_t05_railfan_01
+	_TALK_OBJ_START()
+	
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラパージ
+	
+	//車庫を眺めるカメラへ
+	_CAMERA_MOVE( 5208,0,970752,1671168,327759,2424832, 15)
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	
+	
+	IF $WK_OTHER_T05_TRAIN == T05_TRAIN_NONE && FLAG_OFF( FE_T05_RAILWAY_TALK ) THEN
+	//車両なし＆解説を聞いたことがなければ一言メッセージで終了
+
+		//残念だけど今日は電車がきてないんだ
+		_BALLOONWIN_TALKOBJ_MSG( msg_t05_railfan_01_01 )
+		_MSGWIN_CLOSE()
+
+	ELSE
+	//上記以外
+	
+		//車両の有無で分岐
+		IF $WK_OTHER_T05_TRAIN != T05_TRAIN_NONE THEN
+		//車両あり
+			_BALLOONWIN_TALKOBJ_MSG( msg_t05_railfan_01 )			//車両解説きいてく？
+		ELSE
+		//車両なしだけど解説を聞いたことがあるので、妄想トークへ
+			_BALLOONWIN_TALKOBJ_MSG( msg_t05_railfan_01_02 )		//あの電車が見えるかい！？
+		ENDIF
+		_YES_NO_WIN( SCWK_ANSWER )
+
+		IF $SCWK_ANSWER == SCR_YES THEN
+			//はい
+			
+			IF $WK_OTHER_T05_TRAIN != T05_TRAIN_NONE THEN
+			//車両あり
+				_BALLOONWIN_TALKOBJ_MSG( msg_t05_railfan_02 )
+			ELSE
+			//車両なし
+				_BALLOONWIN_TALKOBJ_MSG( msg_t05_railfan_02_01 )
+			ENDIF
+			_MSGWIN_CLOSE()
+			
+			//車両解説へ
+			_CALL	ev_rail_talk
+			
+			//========================================//
+			//解説聞いたフラグをセット
+			IF FLAG_OFF( FE_T05_RAILWAY_TALK ) THEN
+				_FLAG_SET( FE_T05_RAILWAY_TALK )
+			ENDIF
+			//========================================//
+			
+		ELSE
+			//いいえ
+			
+			IF $WK_OTHER_T05_TRAIN != T05_TRAIN_NONE THEN
+			//車両あり
+				_BALLOONWIN_TALKOBJ_MSG( msg_t05_railfan_03 )
+			ELSE
+			//車両なし
+				_BALLOONWIN_TALKOBJ_MSG( msg_t05_railfan_03_01 )
+			ENDIF
+			_MSGWIN_CLOSE()
+			
+		ENDIF
+	
+	ENDIF
+	
+	_CAMERA_DEF_MOVE(15)		//カメラ主人公位置に復帰
+	_CAMERA_WAIT_MOVE()
+	_CAMERA_BIND()		//カメラバインド
+	_CAMERA_END()		//カメラ操作終了
+	
+EVENT_END
+
+//車両解説
+ev_rail_talk:
+{
+DEFINE_LOCAL	lwk_msg_num
+	
+	_MSGWIN_SET_AUTOPRINT( TRUE )
+	
+	_BLACK_OUT_SLOW()
+	_DISP_FADE_END_CHECK()
+	
+	//カメラ切り替え１
+	_CAMERA_MOVE( 6616,60032,970752,1503232,293663,1945600, 1)
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_MOVE( 6616,3968,970752,1794048,293663,1945600, 160)
+	_BLACK_IN_SLOW()
+	_DISP_FADE_END_CHECK()
+	
+	$lwk_msg_num = msg_t05_railfan_railtalk1_00
+	$lwk_msg_num += $WK_OTHER_T05_TRAIN
+	
+	//解説その１
+	_PLAINWIN_MSG_UP( lwk_msg_num )
+	
+	//解説メッセージ表示後のウェイト（文字数によって調整する必要がある）
+	SWITCH $WK_OTHER_T05_TRAIN
+	CASE T05_TRAIN_NONE THEN
+		_TIME_WAIT( 30 )	//車両なし
+	CASE T05_TRAIN_SINGLE THEN
+		_TIME_WAIT( 25 )	//シングル
+	CASE T05_TRAIN_S_SINGLE THEN
+		_TIME_WAIT( 25 )	//Sシングル
+	CASE T05_TRAIN_DOUBLE THEN
+		_TIME_WAIT( 30 )	//ダブル		//平仮名のみ一瞬カメラが止まったのが見える（許容範囲）
+	CASE T05_TRAIN_S_DOUBLE THEN
+		_TIME_WAIT( 30 )	//Sダブル
+	CASE T05_TRAIN_MULTI THEN
+		_TIME_WAIT( 30 )	//マルチ
+	CASE T05_TRAIN_S_MULTI THEN
+		_TIME_WAIT( 30 )	//Sマルチ
+	CASE T05_TRAIN_WIFI THEN
+		_TIME_WAIT( 30 )	//Wi-Fi			//平仮名のみ一瞬カメラが止まったのが見える（許容範囲）
+	CASE T05_TRAIN_LOCAL THEN
+		_TIME_WAIT( 45 )	//カナワ行き
+	CASE T05_TRAIN_OLD THEN
+		_TIME_WAIT( 55 )	//古いレア
+	DEFAULT
+		_TIME_WAIT( 55 )	//新しいレア
+	ENDSWITCH
+	
+	_BLACK_OUT_SLOW()
+	_DISP_FADE_END_CHECK()
+	_MSGWIN_CLOSE()
+	
+	//カメラ切り替え２
+	_CAMERA_MOVE( 7000,9600,970752,1785856,293663,1943200, 1)
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_MOVE( 7000,9600,970752,1785856,293663,1220608, 180)
+	_BLACK_IN_SLOW()
+	_DISP_FADE_END_CHECK()
+	
+	$lwk_msg_num = msg_t05_railfan_railtalk2_00
+	$lwk_msg_num += $WK_OTHER_T05_TRAIN
+	
+	//解説その２
+	_PLAINWIN_MSG_UP( lwk_msg_num )
+	
+	//解説メッセージ表示後のウェイト（文字数によって調整する必要がある）
+	SWITCH $WK_OTHER_T05_TRAIN
+	CASE T05_TRAIN_NONE THEN
+		_TIME_WAIT( 30 )	//車両なし
+	CASE T05_TRAIN_SINGLE THEN
+		_TIME_WAIT( 80 )	//シングル
+	CASE T05_TRAIN_S_SINGLE THEN
+		_TIME_WAIT( 30 )	//Sシングル
+	CASE T05_TRAIN_DOUBLE THEN
+		_TIME_WAIT( 30 )	//ダブル
+	CASE T05_TRAIN_S_DOUBLE THEN
+		_TIME_WAIT( 30 )	//Sダブル
+	CASE T05_TRAIN_MULTI THEN
+		_TIME_WAIT( 30 )	//マルチ
+	CASE T05_TRAIN_S_MULTI THEN
+		_TIME_WAIT( 30 )	//Sマルチ
+	CASE T05_TRAIN_WIFI THEN
+		_TIME_WAIT( 30 )	//Wi-Fi
+	CASE T05_TRAIN_LOCAL THEN
+		_TIME_WAIT( 35 )	//カナワ行き
+	CASE T05_TRAIN_OLD THEN
+		_TIME_WAIT( 35 )	//古いレア
+	DEFAULT
+		_TIME_WAIT( 45 )	//新しいレア
+	ENDSWITCH
+	
+	_BLACK_OUT_SLOW()
+	_DISP_FADE_END_CHECK()
+	_MSGWIN_CLOSE()
+	
+	//カメラ切り替え３（戻す）
+	_CAMERA_MOVE( 5208,0,970752,1671168,327759,2424832, 1)
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_BLACK_IN_SLOW()
+	_DISP_FADE_END_CHECK()
+	
+	_MSGWIN_SET_AUTOPRINT( FALSE )
+	
+	$lwk_msg_num = msg_t05_railfan_end_00
+	$lwk_msg_num += $WK_OTHER_T05_TRAIN
+	
+	//終了メッセージ
+	_BALLOONWIN_TALKOBJ_MSG( lwk_msg_num )
+	_MSGWIN_CLOSE()
+
+}
+_RET
+
+/*没カメラ ぐるっとズーム
+	_CAMERA_MOVE( 7640,0,970752,1671168,782415,2265088, 1)
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_MOVE( 7256,55168,970752,1384448,196687,1712128, 140)
+*/
+
+/*没カメラ 車庫からどっしり
+	_CAMERA_MOVE( 7640,0,970752,1671168,782415,2265088, 1)
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_MOVE( 7256,55168,970752,1384448,196687,1712128, 140)
+*/
+
+
+
+//道具交換用ワーク
+DEFINE_LOCAL	lwk_add_item
+DEFINE_LOCAL	lwk_sub_item
+DEFINE_LOCAL	lwk_add_item_num
+DEFINE_LOCAL	lwk_sub_item_num
+DEFINE_LOCAL	lwk_trade_result
+
+/************************************************************/
+/*					バックパッカー（道具交換）				*/
+/************************************************************/
+EVENT_START	ev_t05_itemtrader_01
+	_TALK_OBJ_START()
+	
+	//交換道具をセット
+	$lwk_sub_item = ITEM_ANANUKENOHIMO
+	$lwk_sub_item_num = 2
+	$lwk_add_item = ITEM_GENKINOKAKERA
+	$lwk_add_item_num = 1
+	
+	//道具名をセット
+	_ITEM_NAME( 0, lwk_sub_item )
+	_NUMBER( 1, lwk_sub_item_num, 2 )
+	_ITEM_NAME( 2, lwk_add_item )
+	_NUMBER( 3, lwk_add_item_num, 2 )
+	
+	//初回会話分岐（マップ遷移でリセット）
+	IF $LOCALWORK11 != 111 THEN
+		//初回
+		_BALLOONWIN_TALKOBJ_MSG( msg_t05_backpackerm_01 )
+		
+		//========================================//
+		//次から再会話
+		$LOCALWORK11 = 111
+		//========================================//
+	ELSE
+		//再会話
+		_BALLOONWIN_TALKOBJ_MSG( msg_t05_backpackerm_02 )
+	ENDIF
+	//交換する？
+	_YES_NO_WIN( SCWK_ANSWER )
+	
+	IF $SCWK_ANSWER == SCR_YES THEN
+		//はい
+		
+		//交換処理へ
+		_CALL	ev_trade_item
+		
+		//道具名をセット
+		_ITEM_NAME( 0, lwk_sub_item )
+		_ITEM_NAME( 2, lwk_add_item )
+		SWITCH $lwk_trade_result
+		CASE 0 THEN
+			//道具不足で失敗
+			_BALLOONWIN_TALKOBJ_MSG( msg_t05_backpackerm_06 )
+		CASE 1 THEN
+			//道具MAXで失敗
+			_BALLOONWIN_TALKOBJ_MSG( msg_t05_backpackerm_07 )
+		DEFAULT
+			//交換成立
+			
+			//交換前メッセージ
+			_BALLOONWIN_TALKOBJ_MSG( msg_t05_backpackerm_03 )
+			_MSGWIN_CLOSE()
+			//交換成立メッセージ
+			_CALL	ev_trade_msg
+			//交換後メッセージ
+			_BALLOONWIN_TALKOBJ_MSG( msg_t05_backpackerm_05 )
+		ENDSWITCH
+		
+	ELSE
+		//いいえ
+		_BALLOONWIN_TALKOBJ_MSG( msg_t05_backpackerm_04 )
+	ENDIF
+	
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+	
+EVENT_END
+
+
+//道具交換処理（共通）
+ev_trade_item:
+	//アイテムが足りているかチェック
+	_ITEM_CHK( lwk_sub_item, lwk_sub_item_num, SCWK_ANSWER )
+	IF $SCWK_ANSWER == FALSE THEN
+		//道具不足で失敗
+		$lwk_trade_result = 0
+		_RET
+	ENDIF
+
+	//アイテムが追加できるかチェック
+	_ADD_ITEM_CHK( lwk_add_item, lwk_add_item_num, SCWK_ANSWER )
+	IF $SCWK_ANSWER == FALSE THEN
+		//道具MAXで失敗
+		$lwk_trade_result = 1
+		_RET
+	ENDIF
+
+
+	//道具を減らす
+	_SUB_ITEM( lwk_sub_item, lwk_sub_item_num, SCWK_ANSWER )
+	//道具を追加
+	_ADD_ITEM( lwk_add_item, lwk_add_item_num, SCWK_ANSWER ) 
+	//交換成立で終了
+	$lwk_trade_result = 2
+_RET
+
+//道具交換メッセージ（共通）
+ev_trade_msg:
+	//交換成立メッセージ
+	_ITEM_NAME( 0, lwk_sub_item )
+	_ITEM_NAME( 2, lwk_add_item )
+	_ME_PLAY( SEQ_ME_ITEM )
+	_SYSWIN_MSG( msg_t05_exchange_sys_01, POS_DEFAULT )
+	_ME_WAIT()
+	_AB_KEYWAIT_MARK()
+	_MSGWIN_CLOSE()
+_RET
+
+
+/************************************************************/
+/*					ビジネスマン（道具交換）				*/
+/************************************************************/
+EVENT_START	ev_t05_itemtrader_02
+	_TALK_OBJ_START()
+	
+	//交換道具をセット
+	$lwk_sub_item = ITEM_HOSINOKAKERA
+	$lwk_sub_item_num = 1
+	$lwk_add_item = ITEM_POINTOAPPU
+	$lwk_add_item_num = 1
+	
+	//道具名をセット
+	_ITEM_NAME( 0, lwk_sub_item )
+	_NUMBER( 1, lwk_sub_item_num, 2 )
+	_ITEM_NAME( 2, lwk_add_item )
+	_NUMBER( 3, lwk_add_item_num, 2 )
+	
+	//初回会話分岐（マップ遷移でリセット）
+	IF $LOCALWORK12 != 111 THEN
+		//初回
+		_BALLOONWIN_TALKOBJ_MSG( msg_t05_businessman_01 )
+		
+		//========================================//
+		//次から再会話
+		$LOCALWORK12 = 111
+		//========================================//
+	ELSE
+		//再会話
+		_BALLOONWIN_TALKOBJ_MSG( msg_t05_businessman_02 )
+	ENDIF
+	//交換する？
+	_YES_NO_WIN( SCWK_ANSWER )
+	
+	IF $SCWK_ANSWER == SCR_YES THEN
+		//はい
+		
+		//交換処理へ
+		_CALL	ev_trade_item
+		
+		//道具名をセット
+		_ITEM_NAME( 0, lwk_sub_item )
+		_ITEM_NAME( 2, lwk_add_item )
+		SWITCH $lwk_trade_result
+		CASE 0 THEN
+			//道具不足で失敗
+			_BALLOONWIN_TALKOBJ_MSG( msg_t05_businessman_06 )
+		CASE 1 THEN
+			//道具MAXで失敗
+			_BALLOONWIN_TALKOBJ_MSG( msg_t05_businessman_07 )
+		DEFAULT
+			//交換成立
+			
+			//交換前メッセージ
+			_BALLOONWIN_TALKOBJ_MSG( msg_t05_businessman_03 )
+			_MSGWIN_CLOSE()
+			//交換成立メッセージ
+			_CALL	ev_trade_msg
+			//交換後メッセージ
+			_BALLOONWIN_TALKOBJ_MSG( msg_t05_businessman_05 )
+		ENDSWITCH
+		
+	ELSE
+		//いいえ
+		_BALLOONWIN_TALKOBJ_MSG( msg_t05_businessman_04 )
+	ENDIF
+	
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+	
+EVENT_END
+
+
+/************************************************************/
+/*				エリートトレーナー（道具交換）				*/
+/************************************************************/
+EVENT_START	ev_t05_itemtrader_03
+	_TALK_OBJ_START()
+	
+	//交換道具をセット
+	$lwk_sub_item = ITEM_MONSUTAABOORU
+	$lwk_sub_item_num = 20
+	$lwk_add_item = ITEM_KAIHUKUNOKUSURI
+	$lwk_add_item_num = 1
+	
+	//道具名をセット
+	_ITEM_NAME( 0, lwk_sub_item )
+	_NUMBER( 1, lwk_sub_item_num, 2 )
+	_ITEM_NAME( 2, lwk_add_item )
+	_NUMBER( 3, lwk_add_item_num, 2 )
+	
+	//初回会話分岐（マップ遷移でリセット）
+	IF $LOCALWORK13 != 111 THEN
+		//初回
+		_BALLOONWIN_TALKOBJ_MSG( msg_t05_trainerw_01 )
+		
+		//========================================//
+		//次から再会話
+		$LOCALWORK13 = 111
+		//========================================//
+	ELSE
+		//再会話
+		_BALLOONWIN_TALKOBJ_MSG( msg_t05_trainerw_02 )
+	ENDIF
+	//交換する？
+	_YES_NO_WIN( SCWK_ANSWER )
+	
+	IF $SCWK_ANSWER == SCR_YES THEN
+		//はい
+		
+		//交換処理へ
+		_CALL	ev_trade_item
+		
+		//道具名をセット
+		_ITEM_NAME( 0, lwk_sub_item )
+		_ITEM_NAME( 2, lwk_add_item )
+		SWITCH $lwk_trade_result
+		CASE 0 THEN
+			//道具不足で失敗
+			_BALLOONWIN_TALKOBJ_MSG( msg_t05_trainerw_06 )
+		CASE 1 THEN
+			//道具MAXで失敗
+			_BALLOONWIN_TALKOBJ_MSG( msg_t05_trainerw_07 )
+		DEFAULT
+			//交換成立
+			
+			//交換前メッセージ
+			_BALLOONWIN_TALKOBJ_MSG( msg_t05_trainerw_03 )
+			_MSGWIN_CLOSE()
+			//交換成立メッセージ
+			_CALL	ev_trade_msg
+			//交換後メッセージ
+			_BALLOONWIN_TALKOBJ_MSG( msg_t05_trainerw_05 )
+		ENDSWITCH
+		
+	ELSE
+		//いいえ
+		_BALLOONWIN_TALKOBJ_MSG( msg_t05_trainerw_04 )
+	ENDIF
+	
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+	
+EVENT_END
+
+
+/************************************************************/
+/*					ISS：フルート吹き						*/
+/************************************************************/
+EVENT_START	ev_t05_pipe_01
+	_TALK_OBJ_START()
+	_PLAINWIN_MSG_DOWN( msg_t05_iss_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+EVENT_END
+
+
+/************************************************************/
+/*						少年４（ISS説明）					*/
+/************************************************************/
+EVENT_START	ev_t05_boy4_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t05_boy4_01 )
+EVENT_END
+
+
+/************************************************************/
+/*						少年３（週末のみ）					*/
+/************************************************************/
+EVENT_START	ev_t05_boy3_01
+	_TALK_OBJ_START()
+	
+	_BALLOONWIN_TALKOBJ_MSG( msg_t05_boy3_01 )
+	_MSGWIN_CLOSE()
+	
+	//電車を見る
+	_OBJ_ANIME( T05_BOY3_01, anm_staywalk_u )
+	_OBJ_ANIME_WAIT()
+
+EVENT_END
+
+
+/************************************************************/
+/*						お母さん（週末のみ）				*/
+/************************************************************/
+EVENT_START	ev_t05_middlewoman2_01
+	_TALK_OBJ_START()
+	
+	_BALLOONWIN_TALKOBJ_MSG( msg_t05_middlewoman2_01 )
+	_MSGWIN_CLOSE()
+	
+	//電車を見る
+	_OBJ_ANIME( T05_MIDDLEWOMAN2_01, anm_staywalk_l )
+	_OBJ_ANIME_WAIT()
+
+EVENT_END
+
+//--------------------------------------------------------------------
+//その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staywalk_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staywalk_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+
+/************************************************************/
+/*						男性３（週末のみ）					*/
+/************************************************************/
+EVENT_START	ev_t05_man3_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t05_man3_01 )
+EVENT_END
+
+
+/************************************************************/
+/*						女性２（週末のみ）					*/
+/************************************************************/
+EVENT_START	ev_t05_woman2_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t05_woman2_01 )
+EVENT_END
+
+
+/************************************************************/
+/*						山男（週末のみ）					*/
+/************************************************************/
+EVENT_START	ev_t05_mountman_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t05_mountman_01 )
+EVENT_END
+
+
+/************************************************************/
+/*						女性１（週末のみ）					*/
+/************************************************************/
+EVENT_START	ev_t05_woman1_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t05_woman1_01 )
+EVENT_END
+
+
+/************************************************************/
+/*							老人							*/
+/************************************************************/
+EVENT_START	ev_t05_oldman1_01
+	_TALK_OBJ_START()
+	
+	_GET_WEEK( SCWK_ANSWER )
+	IF $SCWK_ANSWER == RTC_WEEK_SATURDAY || $SCWK_ANSWER == RTC_WEEK_SUNDAY THEN
+		//週末
+
+		//車両があるかで分岐
+		IF $WK_OTHER_T05_TRAIN == T05_TRAIN_NONE THEN
+			//車両なし
+			_BALLOONWIN_TALKOBJ_MSG( msg_t05_oldman1_03 )
+		ELSE
+			//車両あり
+			_BALLOONWIN_TALKOBJ_MSG( msg_t05_oldman1_02 )
+		ENDIF
+	ELSE
+		//平日
+
+		_BALLOONWIN_TALKOBJ_MSG( msg_t05_oldman1_01 )
+	ENDIF
+	
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+	
+EVENT_END
+
+
+/************************************************************/
+/*							鉄道員							*/
+/************************************************************/
+EVENT_START	ev_t05_railman_01
+	_TALK_OBJ_START()
+	
+	//車両があるかで分岐
+	IF $WK_OTHER_T05_TRAIN == T05_TRAIN_NONE THEN
+		//車両なし
+		_BALLOONWIN_TALKOBJ_MSG( msg_t05_railman_03 )
+	
+	ELSE
+		//車両あり
+		
+		//曜日で分岐
+		_GET_WEEK( SCWK_ANSWER )
+		IF $SCWK_ANSWER == RTC_WEEK_SATURDAY || $SCWK_ANSWER == RTC_WEEK_SUNDAY THEN
+			//週末
+			_BALLOONWIN_TALKOBJ_MSG( msg_t05_railman_02 )
+		ELSE
+			//平日
+			_BALLOONWIN_TALKOBJ_MSG( msg_t05_railman_01 )
+		ENDIF
+	
+	ENDIF
+	
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+	
+EVENT_END
 
 
 /************************************************************/
@@ -45,3 +752,93 @@ EVENT_END
 EVENT_START	ev_bg_t05_board_01
 	_EASY_BGWIN_MSG( msg_t05_sign1_01, TYPE_TOWN )
 EVENT_END
+
+
+/************************************************************/
+/*							受付							*/
+/************************************************************/
+EVENT_START	ev_t05_recept_01
+	_TALK_OBJ_START()
+	
+	_BALLOONWIN_TALKOBJ_MSG( msg_t05_recept_01 )
+	_YES_NO_WIN( SCWK_ANSWER )
+	
+	IF $SCWK_ANSWER == SCR_YES THEN
+		_BALLOONWIN_TALKOBJ_MSG( msg_t05_recept_02 )
+		_MSGWIN_CLOSE()
+		
+		_PLAYER_DIR_GET( SCWK_ANSWER )
+		IF $SCWK_ANSWER == DIR_UP THEN
+			//上向き
+			_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_01u )
+			_OBJ_ANIME_WAIT()
+
+		ELSIF $SCWK_ANSWER == DIR_DOWN THEN
+			//下向き
+			_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_01d )
+			_TIME_WAIT( 24 )
+			_OBJ_ANIME( T05_RECEPT_01, anm_recept_move_01 )
+			_OBJ_ANIME_WAIT()
+
+		ELSE
+			//右向き ※左からは話しかけられない
+			_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_01r )
+			_TIME_WAIT( 8 )
+			_OBJ_ANIME( T05_RECEPT_01, anm_recept_move_01 )
+			_OBJ_ANIME_WAIT()
+
+		ENDIF
+		
+		_TIME_WAIT( 16 )
+		
+		//予約スクリプト：主人公電車から出てくるアニメ演出
+		_RESERVE_SCRIPT( SCRID_BSW_TTOWN_DEMO_TRAIN_ARRIVAL )
+		
+		_MAP_FADE_BLACK_OUT()
+		_DISP_FADE_END_CHECK()
+		
+    //SE再生
+    _TIME_WAIT( 15 )            //ちょっと待つ
+    _SE_PLAY( SEQ_SE_BDEMO_02 ) //電車発射音
+    _TIME_WAIT( 30 )            //ちょっと待つ
+    
+		_MAP_CHANGE_NO_FADE( ZONE_ID_C04R0109, 16, 0, 14, DIR_DOWN )
+		
+	ELSE
+		_BALLOONWIN_TALKOBJ_MSG( msg_t05_recept_03 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+	
+	ENDIF
+	
+EVENT_END
+
+//--------------------------------------------------------------------
+//主人公：電車の前へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_move_01u
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_move_01d
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_move_01r
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+
+//--------------------------------------------------------------------
+//受付：見送る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_recept_move_01
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+
+

@@ -5,5 +5,6 @@
 #define _T02R0302_DEF_H_
 
 //スクリプトデータID定義
+#define SCRID_T02R0302_MIDDLEMAN1_01 (1)
 
 #endif //_T02R0302_DEF_H_

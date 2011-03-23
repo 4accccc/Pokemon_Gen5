@@ -9,6 +9,7 @@
 #ifndef ZONE_C02R0601_EVC_H
 #define ZONE_C02R0601_EVC_H
 
+#define C02R0601_WAITRESS_01               0
 
 #endif //ZONE_C02R0601_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c02r0601.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

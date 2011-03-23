@@ -10,5 +10,6 @@
 #define SCRID_BG_C05_BOARD_03 (3)
 #define SCRID_BG_C05_BOARD_04 (4)
 #define SCRID_BG_C05_BOARD_05 (5)
+#define SCRID_C05_BADRIDER_01 (6)
 
 #endif //_C05_DEF_H_

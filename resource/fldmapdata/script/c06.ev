@@ -22,6 +22,7 @@
 _EVENT_DATA    ev_bg_c06_sign1_01
 _EVENT_DATA    ev_bg_c06_sign2_01
 _EVENT_DATA    ev_bg_c06_sign3_01
+_EVENT_DATA    ev_c06_monsterball_01
 _EVENT_DATA_END
 
 /**************************************************************/
@@ -50,3 +51,149 @@ EVENT_START   ev_bg_c06_sign3_01
    _EASY_BGWIN_MSG(msg_c06_gymsign_01,TYPE_POST)
 
 EVENT_END
+
+/**************************************************************/
+/*  C06 BOY2とGIRL1のつばめがえし入手イベントスクリプト           */
+/**************************************************************/
+EVENT_START   ev_c06_monsterball_01
+	_TALK_START_SE_PLAY()
+
+	//===============フラグ操作===============//
+	//つばめがえしを隠している、少年と少女を出現させる
+	_FLAG_RESET( FV_C06_GIRLBOY_01 )
+	_OBJ_ADD(C06_BOY2_01)
+	_OBJ_ADD(C06_BABYGIRL1_01)
+	//===============フラグ操作===============//
+	
+	//アイテム入手処理
+	_OBJ_DEL(C06_MONSTERBALL_01)
+ 	_ITEM_EVENT_FIELD_KEYWAIT(ITEM_WAZAMASIN40,1)
+ 	_FLAG_SET(FV_C06_MONSTERBALL)
+ 	_FLAG_SET(FE_C06_ITEMGET_1)
+  	
+  	//主人公が初年と少女に気づく
+  	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_gyoe)
+  	_OBJ_ANIME_WAIT()
+  	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_r)
+  	_OBJ_ANIME_WAIT()
+  	
+  	//少年と幼女がやってくる
+  	_OBJ_ANIME(C06_BABYGIRL1_01,anm_c06_babygirl1_01_come_01)
+   	_OBJ_ANIME(C06_BOY2_01,anm_c06_boy2_01_come_01)
+
+  	//あー！　ぼくらの
+  	_BALLOONWIN_OBJMSG_POS(msg_c06_boy2_01,C06_BOY2_01,POS_UR)
+  	_MSGWIN_CLOSE()
+  	_OBJ_ANIME_WAIT()
+  	
+  	//とったあ！！
+   	_BALLOONWIN_OBJMSG_POS(msg_c06_babygirl_01,C06_BABYGIRL1_01,POS_DR)
+  	_MSGWIN_CLOSE()
+  	  
+  	//間をつくる
+  	_TIME_WAIT(32)
+  	
+  	//なんてね
+  	_BALLOONWIN_OBJMSG_MF(msg_c06_boy2_02,msg_c06_boy2_03,C06_BOY2_01,POS_UP)
+  	_MSGWIN_CLOSE() 
+
+	//つかって　いーよー！！
+  	_BALLOONWIN_OBJMSG_POS(msg_c06_babygirl_02,C06_BABYGIRL1_01,POS_DR)
+  	_MSGWIN_CLOSE()
+
+  	//間をつくる
+  	_TIME_WAIT(16)
+  	
+	//じゃあね！　バイバイ！！
+  	_BALLOONWIN_OBJMSG_POS(msg_c06_boy2_04,C06_BOY2_01,POS_UR)
+  	_MSGWIN_CLOSE()
+
+  	//少年と幼女が帰っていく
+	_OBJ_ANIME(C06_BABYGIRL1_01,anm_c06_babygirl1_01_back_01)
+   	_OBJ_ANIME(C06_BOY2_01,anm_c06_boy2_01_back_01)
+  	_OBJ_ANIME_WAIT()
+  
+ 	//===============フラグ操作===============//
+ 	//つばめがえしを隠している、少年と少女を消す
+  	_OBJ_DEL(C06_BABYGIRL1_01)
+  	_OBJ_DEL(C06_BOY2_01)
+  	_FLAG_SET( FV_C06_GIRLBOY_01 )
+ 	//===============フラグ操作===============//
+  	
+EVENT_END
+
+//--------------------------------------------------------------------
+//c06_babygirl1_01 : やってくる                       
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_c06_babygirl1_01_come_01
+	_ANIME_DATA	AC_WALK_L_8F,7
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//c06_boy2_01 : やってくる                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_c06_boy2_01_come_01
+	_ANIME_DATA	AC_WALK_L_4F,7
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//c06_babygirl1_01 : 帰っていく                      
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_c06_babygirl1_01_back_01
+	_ANIME_DATA	AC_WALK_R_8F,7
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//c06_boy2_01 : 帰っていく                     
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_c06_boy2_01_back_01
+	_ANIME_DATA	AC_WALK_R_8F,7
+	_ANIME_DATA	ACMD_END,0
+	
+	//--------------------------------------------------------------------
+//共通：ターン右                 
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン右                 
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_r
+	_ANIME_DATA AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン左                        
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_l
+	_ANIME_DATA AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン左（速い）                        
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_l_q
+	_ANIME_DATA AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン左（遅い）                       
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_l_s
+	_ANIME_DATA AC_STAY_WALK_L_16F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//共通：ターン上                        
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_u
+	_ANIME_DATA AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+//--------------------------------------------------------------------
+//共通：ターン下                         
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_d
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0

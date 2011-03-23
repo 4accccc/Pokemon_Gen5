@@ -23,6 +23,11 @@ _EVENT_DATA    ev_bg_t01r0102_game_01
 _EVENT_DATA    ev_bg_t01r0102_tv_01
 _EVENT_DATA    ev_bg_t01r0102_pc_01
 _EVENT_DATA    ev_bg_t01r0102_bed_01
+_EVENT_DATA    ev_t01r0102_prize1_01		//表彰状（地方）
+_EVENT_DATA    ev_t01r0102_prize2_01		//表彰状（全国）
+_EVENT_DATA    ev_t01r0102_trorhy1_01		//バトルサブウェイトロフィ（シングル）
+_EVENT_DATA    ev_t01r0102_trorhy2_01		//バトルサブウェイトロフィ（ダブル）
+_EVENT_DATA    ev_t01r0102_trorhy3_01		//バトルサブウェイトロフィ（マルチ）
 _EVENT_DATA_END
 
 
@@ -91,4 +96,66 @@ EVENT_START   ev_bg_t01r0102_bed_01
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 
+EVENT_END
+
+/************************************************************/
+/*						【仮】表彰状（地方）						*/
+/************************************************************/
+EVENT_START   ev_t01r0102_prize1_01
+	_TALK_START_SE_PLAY()
+	
+	//イッシュ図鑑完成の賞状だ！
+	//_PLAINWIN_MSG_DOWN( msg_t01r0102_award1_01 )
+	//_MSGWIN_CLOSE()
+	
+	_CALL_ZUKAN_AWARD( SCR_ZUKAN_AWARD_CHIHOU, 1 )
+	
+EVENT_END
+
+
+/************************************************************/
+/*						【仮】表彰状（全国）						*/
+/************************************************************/
+EVENT_START   ev_t01r0102_prize2_01
+	_TALK_START_SE_PLAY()
+	
+	//イッシュ図鑑完成の賞状だ！
+	//_PLAINWIN_MSG_DOWN( msg_t01r0102_award2_01 )
+	//_MSGWIN_CLOSE()
+	
+	_CALL_ZUKAN_AWARD( SCR_ZUKAN_AWARD_ZENKOKU, 1 )
+	
+EVENT_END
+
+
+/************************************************************/
+/*			【仮】バトルサブウェイトロフィ（シングル）			*/
+/************************************************************/
+EVENT_START   ev_t01r0102_trorhy1_01
+	_TALK_START_SE_PLAY()
+	//_PLAINWIN_MSG_DOWN( msg_t01r0102_trophy1_01 )
+	//_LAST_KEYWAIT()
+	//_MSGWIN_CLOSE()
+EVENT_END
+
+
+/************************************************************/
+/*			【仮】バトルサブウェイトロフィ（ダブル）				*/
+/************************************************************/
+EVENT_START   ev_t01r0102_trorhy2_01
+	_TALK_START_SE_PLAY()
+	//_PLAINWIN_MSG_DOWN( msg_t01r0102_trophy2_01 )
+	//_LAST_KEYWAIT()
+	//_MSGWIN_CLOSE()
+EVENT_END
+
+
+/************************************************************/
+/*			【仮】バトルサブウェイトロフィ（マルチ）				*/
+/************************************************************/
+EVENT_START   ev_t01r0102_trorhy3_01
+	_TALK_START_SE_PLAY()
+	//_PLAINWIN_MSG_DOWN( msg_t01r0102_trophy3_01 )
+	//_LAST_KEYWAIT()
+	//_MSGWIN_CLOSE()
 EVENT_END

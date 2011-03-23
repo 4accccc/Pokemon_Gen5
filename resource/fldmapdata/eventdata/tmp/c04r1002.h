@@ -9,6 +9,7 @@
 #ifndef ZONE_C04R1002_EVC_H
 #define ZONE_C04R1002_EVC_H
 
+#define C04R1002_TRAINERM_01               0
 
 #endif //ZONE_C04R1002_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c04r1002.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

@@ -21,6 +21,8 @@ _EVENT_DATA		ev_bg_c01_sign1_01
 _EVENT_DATA		ev_bg_c01_sign2_01
 _EVENT_DATA		ev_bg_c01_sign3_01
 _EVENT_DATA		ev_bg_c01_gymsign_01
+_EVENT_DATA		ev_c01_fising_01
+_EVENT_DATA		ev_c01_badman_01
 _EVENT_DATA_END
   
 /**************************************************************/
@@ -50,4 +52,20 @@ EVENT_END
 /**************************************************************/
 EVENT_START		ev_bg_c01_gymsign_01
 	_EASY_BGWIN_MSG( msg_c01_gymsign_01, TYPE_POST )
+EVENT_END
+
+/**************************************************************/
+/*	C01 FISING	アイテム入手イベントスクリプト				  */
+/**************************************************************/
+EVENT_START		ev_c01_fising_01
+  //【仮】入手アイテムが仮
+	_EASY_TALK_ITEM_EVENT( ITEM_OOKINASINZYU, 1, FE_C01_ITEMGET_01, msg_c01_fising_01, msg_c01_fising_02, msg_c01_fising_02)
+EVENT_END
+
+/**************************************************************/
+/*	C01	BADMAN	アイテム入手イベント						  */
+/**************************************************************/
+EVENT_START		ev_c01_badman_01
+  //【仮】入手アイテムが仮
+	_EASY_TALK_ITEM_EVENT( ITEM_DAAKUBOORU, 1, FE_C01_ITEMGET_02, msg_c01_badman1_01, msg_c01_badman1_02, msg_c01_badman1_02 )
 EVENT_END

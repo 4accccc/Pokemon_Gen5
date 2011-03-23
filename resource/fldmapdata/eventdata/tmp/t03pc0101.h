@@ -16,6 +16,7 @@
 #define T03PC0101_PCWOMAN                  4
 #define T03PC0101_SHOPM1_01                5
 #define T03PC0101_SHOPM1_02                6
+#define T03PC0101_MEDALOYAJI               7
 
 #endif //ZONE_T03PC0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/t03pc0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

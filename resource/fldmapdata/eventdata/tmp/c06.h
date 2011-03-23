@@ -14,6 +14,9 @@
 #ifndef ZONE_C06_EVC_H
 #define ZONE_C06_EVC_H
 
+#define C06_MONSTERBALL_01                 0
+#define C06_BOY2_01                        1
+#define C06_BABYGIRL1_01                   2
 
 #endif //ZONE_C06_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c06.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

@@ -16,6 +16,7 @@
 #define C08PC0101_SHOPM1_01                4
 #define C08PC0101_SHOPM1_02                5
 #define C08PC0101_DELIVERY                 6
+#define C08PC0101_MEDALOYAJI               7
 
 #endif //ZONE_C08PC0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c08pc0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

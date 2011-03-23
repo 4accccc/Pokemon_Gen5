@@ -9,6 +9,8 @@
 #ifndef ZONE_C03R0901_EVC_H
 #define ZONE_C03R0901_EVC_H
 
+#define C03R0901_MUSICIAN_01               0
+#define C03R0901_WAITER_01                 1
 
 #endif //ZONE_C03R0901_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c03r0901.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

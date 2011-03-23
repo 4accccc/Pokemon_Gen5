@@ -12,6 +12,11 @@
 #ifndef ZONE_C05R0601_EVC_H
 #define ZONE_C05R0601_EVC_H
 
+#define C05R0601_MAN3_01                   0
+#define C05R0601_WAITRESS_01               1
+#define C05R0601_FLD_ITEM_01               2
+#define C05R0601_HAKAIM_01                 3
+#define C05R0601_WOMAN3_01                 4
 
 #endif //ZONE_C05R0601_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c05r0601.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

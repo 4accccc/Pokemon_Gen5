@@ -21,6 +21,7 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_c05pc0101_shop
 _EVENT_DATA		ev_c05pc0101_fix_shop
+_EVENT_DATA    ev_c05pc0101_girl1
 _EVENT_DATA_END
 
 /**************************************************************/
@@ -37,4 +38,11 @@ EVENT_END
 EVENT_START ev_c05pc0101_fix_shop
   _TALK_OBJ_START()
   _FIX_SHOP_CALL( C05_FS )
+EVENT_END
+
+/**************************************************************/
+/*  C05PC0101 GIRL1の会話用イベントスクリプト（リピートボール入手）*/
+/**************************************************************/
+EVENT_START   ev_c05pc0101_girl1
+	_EASY_TALK_ITEM_EVENT(ITEM_RIPIITOBOORU, 3, FE_C05PC0101_ITEM , msg_c05pc0101_girl1_01 , msg_c05pc0101_girl1_02 , msg_c05pc0101_girl1_02 )
 EVENT_END

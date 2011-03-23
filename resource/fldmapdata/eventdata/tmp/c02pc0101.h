@@ -16,6 +16,7 @@
 #define C02PC0101_CONNECT_02               4
 #define C02PC0101_SHOPM1_02                5
 #define C02PC0101_DELIVERY                 6
+#define C02PC0101_MEDALOYAJI               7
 
 #endif //ZONE_C02PC0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c02pc0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

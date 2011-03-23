@@ -5,5 +5,6 @@
 #define _C03R1201_DEF_H_
 
 //スクリプトデータID定義
+#define SCRID_C03R1201_ASSISTANTM1_01 (1)
 
 #endif //_C03R1201_DEF_H_

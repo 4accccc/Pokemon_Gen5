@@ -11,6 +11,7 @@
 #ifndef ZONE_R03R0101_EVC_H
 #define ZONE_R03R0101_EVC_H
 
+#define R03R0101_WOMAN3_02                 0
 
 #endif //ZONE_R03R0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r03r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

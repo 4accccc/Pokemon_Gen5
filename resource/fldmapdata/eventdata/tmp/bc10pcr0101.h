@@ -17,6 +17,7 @@
 #define BC10PC0101_SHOPM1_01               5
 #define BC10PC0101_SHOPM1_02               6
 #define BC10PC0101_BACKPACKERM_01          7
+#define BC10PC0101_MEDALOYAJI              8
 
 #endif //ZONE_BC10PCR0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/bc10pcr0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
