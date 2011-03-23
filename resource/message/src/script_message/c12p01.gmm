@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-08T21:57:35"/>
+	<create user="matsumiya" host="W00224" date="2011-03-23T15:20:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="1288" top="174" right="1993" bottom="802" maximized="no" rayout="Vertical2">
+	<dialog left="1288" top="173" right="1992" bottom="802" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
+		<band id="0" index="1" style="0000" width="529"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="542"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<band id="4" index="0" style="0000" width="696"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,54 +292,67 @@
 	</lock>
 
 
+	<row id="msg_c12p01_swrival_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・posを踏むとメッセージ表示
+・表示後、連れ歩き解除</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]『……ん？
+あそこに　だれか　いるけど▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『……ん？
+あそこに　だれか　いるけど▼</language>
+	</row>
+
+	<row id="msg_c12p01_swrival_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・ベルと会話前にposを踏んだとき
+・表示後、主人公を一歩戻す</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]『どうしたんだよ？
+あのひとかも　しれないんだろ？▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『どうしたんだよ？
+あのひとかも　しれないんだろ？▼</language>
+	</row>
+
 	<row id="msg_c12p01_white_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・</comment>
+・話しかけると
+　左右をきょろきょろしてメッセージ表示</comment>
 		<attribute name="キャラ指定">ベル</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">？？？『きれいだよねえ！▼</language>
+		<language name="JPN_KANJI" width="256">？？？『絶景だよねえ！▼</language>
 	</row>
 
 	<row id="msg_c12p01_white_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・</comment>
+・主人公と向き合って</comment>
 		<attribute name="キャラ指定">ベル</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">ねえねえ
+あなたも　そう　おもうでしょ？▼</language>
+		<language name="JPN_KANJI" width="256">ねえねえ
+あなたも　そう　思うでしょ？▼</language>
 	</row>
 
 	<row id="msg_c12p01_white_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・</comment>
 		<attribute name="キャラ指定">ベル</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
-	</row>
-
-	<row id="msg_c12p01_white_04" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
-		<comment>♀
-・</comment>
-		<attribute name="キャラ指定">ベル</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
-	</row>
-
-	<row id="msg_c12p01_white_05" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
-		<comment>♀
-・</comment>
-		<attribute name="キャラ指定">ベル</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
-	</row>
-
-	<row id="msg_c12p01_swrival_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>♂
-・</comment>
-		<attribute name="キャラ指定">ライバル</attribute>
 		<language name="JPN" width="256">テストメッセージ
-・おい　あの人</language>
+・主人公を確認
+　出会えてよかった
+　そうだ！　ポケモンだよ！</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_c12p01_white_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・表示後、画面切り替え
+・ボール選択画面へ（未発注）</comment>
+		<attribute name="キャラ指定">ベル</attribute>
+		<language name="JPN" width="256">テストメッセージ
+・ボールをみせる</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ
-・おい　あの人</language>
+・ボールをみせる</language>
 	</row>
 
 	<row id="msg_c12p01_ball1_fire_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -448,7 +461,7 @@
 [1:01:ポケモン種族名:1]を　手に入れた！</language>
 	</row>
 
-	<row id="msg_c12p01_swrival_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c12p01_swrival_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
@@ -462,7 +475,8 @@
 ・大切に　しろよ</language>
 	</row>
 
-	<row id="msg_c12p01_swrival_03" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c12p01_swrival_04" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<attribute name="キャラ指定">ライバル</attribute>
 		<language name="JPN" width="256">勝負</language>
 		<language name="JPN_KANJI" width="256"></language>
 	</row>
