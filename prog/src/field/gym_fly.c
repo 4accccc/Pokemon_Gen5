@@ -13,8 +13,11 @@
 #include "savedata/gimmickwork.h"
 #include "system/ica_anime.h"
 #include "system/main.h"    //for HEAPID_FIELDMAP
+
+// field
 #include "field/field_const.h"  //for FIELD_CONST_GRID_FX32_SIZE
 #include "field_player_core.h"  // for FIELD_PLAYER_CORE_GetMMdl
+#include "field_task.h"         // for FIELD_TASK_TransMMdl
 #include "field_task_player_trans.h" // for FIELD_TASK_TransPlayer
 
 // zone
@@ -165,7 +168,7 @@ typedef struct {
   GAMESYS_WORK    *gsys;        // ゲームシステム
   FIELDMAP_WORK   *p_fieldmap;  // フィールドマップ
   FIELD_PLAYER    *player;      // 自機
-  MMDL            *mmdl;        // 自機の動作モデル
+  MMDL            *mmdl;        // 動作モデル
 
   BLOW_HIT_TYPE   hit_type;     // 衝突種類   BLOW_HIT_XXX
   u16             time;         // 時間計測用
@@ -206,6 +209,9 @@ static GMEVENT_RESULT BlowEventSafe( GMEVENT* event, int* seq, void* wk );
 // 帰り道ショートカットイベント
 static GMEVENT* SHORTCUT_CreateEvent( GMEVENT* parent, GAMESYS_WORK* gsys );
 static GMEVENT_RESULT ShortcutEvent( GMEVENT* event, int* seq, void* wk );
+// スクリプト用吹き飛ばしイベント
+static GMEVENT* SCRIPT_BLOW_CreateEvent( GMEVENT* parent, GAMESYS_WORK* gsys, const u16 obj_id );
+static GMEVENT_RESULT ScriptBlowEvent( GMEVENT* event, int* seq, void* wk );
 
 // 吹き飛びの移動距離算出
 static const u8 BLOW_EVENT_GetMoveDistance( FIELDMAP_WORK *p_fieldmap, BLOW_HIT_TYPE *p_hit_type, s16 gx, s16 gz );
@@ -231,6 +237,22 @@ static void SAVE_SetTimeFlg( GYM_FLY_SV_WORK *p_wk, BOOL flag );
 static BOOL SAVE_GetTimeFlg( const GYM_FLY_SV_WORK *cp_wk );
 static void SAVE_SetTime( GYM_FLY_SV_WORK *p_wk, const u16 time );
 static u16  SAVE_GetTime( const GYM_FLY_SV_WORK *cp_wk );
+
+//=====================================
+// フィールドタスク関係
+//=====================================
+typedef struct
+{
+  u8                  seq;  // シーケンス
+  FIELDMAP_WORK* fieldmap;  // 動作対象フィールドマップ
+  int               frame;  // 現在のフレーム数
+  int            endFrame;  // 最終フレーム数
+  VecFx32        startPos;  // 移動開始位置
+  VecFx32          endPos;  // 最終位置
+  MMDL              *mmdl;  // 対象モデル
+
+} TASK_WORK;
+static FIELD_TASK_RETVAL  TransMMdl( void* wk );
 
 #ifdef GYM_FLY_DEBUG_MENU
 //-------------------------------------
@@ -466,15 +488,89 @@ GMEVENT * GYM_FLY_CheckEvent( GAMESYS_WORK *p_gamesys )
  *	@return イベント
  */
 //-----------------------------------------------------------------------------
-GMEVENT * GYM_FLY_BlowEvent( GAMESYS_WORK *p_gamesys )
+GMEVENT * GYM_FLY_BlowEvent( GAMESYS_WORK *p_gamesys, const u16 obj_id )
 {
   FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( p_gamesys );
   GYM_FLY_TMP *p_wk = GMK_TMP_WK_GetWork(p_fieldmap, GYM_FLY_TMP_ASSIGN_ID);
   const FIELD_PLAYER *cp_player  = FIELDMAP_GetFieldPlayer( p_fieldmap );
   GMEVENT *event;
 
-  event = WIND_BLOW_CreateEvent( NULL, p_gamesys );
+  event = SCRIPT_BLOW_CreateEvent( NULL, p_gamesys, obj_id );
   return event;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  MMDLの移動タスクを作成する
+ *
+ *  @param fieldmap 動作対象フィールドマップ
+ *	@param mmdl     モデル
+ *  @param frame    動作フレーム数
+ *  @param pos      移動先座標
+ *
+ *	@return 作成したタスク
+ *
+ *	@note   現在飛行ジムでしか使われていないので飛行ジムのオーバーレイにあります。
+ *	        他の場所でも使用する場合があれば、FIELD_MAPのオーバーレイに移した方がいい。
+ */
+//-----------------------------------------------------------------------------
+FIELD_TASK* FIELD_TASK_TransMMdl( FIELDMAP_WORK* fieldmap, MMDL *mmdl, int frame, VecFx32* pos )
+{
+  FIELD_TASK* task;
+  TASK_WORK* work;
+  HEAPID heap_id = FIELDMAP_GetHeapID( fieldmap );
+
+  // 生成
+  task = FIELD_TASK_Create( heap_id, sizeof(TASK_WORK), TransMMdl );
+  // 初期化
+  work = FIELD_TASK_GetWork( task );
+  work->seq      = 0;
+  work->fieldmap = fieldmap;
+  work->frame    = 0;
+  work->endFrame = frame;
+  VEC_Set( &work->endPos, pos->x, pos->y, pos->z );
+  work->mmdl     = mmdl;
+
+  return task;
+}
+//=============================================================================
+//  タスク処理関数
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  モデルの平行移動処理
+ */
+//-----------------------------------------------------------------------------
+static FIELD_TASK_RETVAL TransMMdl( void* wk )
+{
+  TASK_WORK*      work = (TASK_WORK*)wk;
+
+  switch( work->seq )
+  {
+  case 0:
+    MMDL_GetVectorPos( work->mmdl, &work->startPos );
+    work->seq++;
+    break;
+  case 1:
+    // 自機の座標を更新
+    work->frame++;
+    {
+      VecFx32 v0, v1, v2;
+      fx32 w1 = FX_F32_TO_FX32( (float)work->frame / (float)work->endFrame );
+      fx32 w0 = FX32_ONE - w1;
+      GFL_CALC3D_VEC_MulScalar( &work->startPos, w0, &v0 );
+      GFL_CALC3D_VEC_MulScalar( &work->endPos,   w1, &v1 );
+      VEC_Add( &v0, &v1, &v2 );
+      MMDL_SetVectorPos( work->mmdl, &v2 ); // 移動
+      MMDL_UpdateCurrentHeight( work->mmdl );   // 接地
+    }
+    if( work->endFrame <= work->frame )
+    {
+      return FIELD_TASK_RETVAL_FINISH;
+    }
+    break;
+  }
+  return FIELD_TASK_RETVAL_CONTINUE;
 }
 
 //=============================================================================
@@ -1134,7 +1230,7 @@ static GMEVENT_RESULT ShortcutEvent( GMEVENT* event, int* seq, void* wk )
   // 風力を最大に上げる
   case SEQ_WIND_SPEEDUP:
     {
-      WIND_ChangeState( p_wk->p_fieldmap, WIND_STATE_SUPER );
+      WIND_ChangeState( p_wk->p_fieldmap, WIND_STATE_HIGH );
       *seq = SEQ_WIND_SPEEDUP_WAIT;
     }
     break;
@@ -1334,6 +1430,221 @@ static GMEVENT_RESULT ShortcutEvent( GMEVENT* event, int* seq, void* wk )
   return GMEVENT_RES_CONTINUE;
 }
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スクリプト用吹き飛ばしイベント
+ *	        サングラスが吹き飛ぶ
+ *
+ *	@param	GMEVENT* parent
+ *	@param	gsys 
+ *
+ *	@return イベント
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT* SCRIPT_BLOW_CreateEvent( GMEVENT* parent, GAMESYS_WORK* gsys, const u16 obj_id )
+{
+  GMEVENT*          event;
+  BLOW_EVENT_WORK*  work;
+  FIELD_PLAYER*     player;
+  FIELDMAP_WORK     *p_fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  const MMDLSYS     *cp_mmdlsys = FIELDMAP_GetMMdlSys( p_fieldmap );
+  s16 gx, gy, gz;   // プレイヤーグリッド位置座標
+
+  player = FIELDMAP_GetFieldPlayer( p_fieldmap );
+
+  // イベント生成
+  event = GMEVENT_Create( gsys, parent, ScriptBlowEvent, sizeof(BLOW_EVENT_WORK) );
+
+  // 初期化
+  work = GMEVENT_GetEventWork( event );
+  work->gsys        = gsys;
+  work->p_fieldmap  = p_fieldmap;
+  work->player      = player;
+  work->mmdl        = MMDLSYS_SearchOBJID( cp_mmdlsys, obj_id );  // サングラス
+  work->hit_type    = BLOW_HIT_MAX;
+  work->time        = 0;
+  work->stay_walk_cnt = 0;
+
+  GF_ASSERT( work->mmdl );
+
+  return event;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スクリプト用吹き飛ばしイベント関数
+ *
+ *	@param	GMEVENT* event
+ *	@param	seq
+ *	@param	wk 
+ *
+ *	@note   処理の流れ
+ *	        風力を最大にUP→ガイドが飛ぶ→ぶつかる→自機1グリッド下がる
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT_RESULT ScriptBlowEvent( GMEVENT* event, int* seq, void* wk )
+{
+  BLOW_EVENT_WORK *p_wk = (BLOW_EVENT_WORK*)wk;
+  GYM_FLY_TMP     *p_gym_wk = GMK_TMP_WK_GetWork( p_wk->p_fieldmap, GYM_FLY_TMP_ASSIGN_ID);
+
+  // 処理シーケンス
+  enum{
+    SEQ_WIND_SPEEDUP,// 風力最大にUP
+    SEQ_WIND_SPEEDUP_WAIT,// 風力最大にUP待ち
+    SEQ_START,  // イベント開始 
+    SEQ_MAIN,   // メイン処理
+    SEQ_PLAYER_MOVE,  // 自機移動
+    SEQ_PLAYER_MOVE_WAIT,  // 自機移動待ち
+    SEQ_EXIT,   // イベント終了
+  };
+
+  switch( *seq ){
+  // 風力を最大に上げる
+  case SEQ_WIND_SPEEDUP:
+    {
+      WIND_ChangeState( p_wk->p_fieldmap, WIND_STATE_HIGH );
+      *seq = SEQ_WIND_SPEEDUP_WAIT;
+    }
+    break;
+  // 風力を最大に上げる待ち
+  case SEQ_WIND_SPEEDUP_WAIT:
+    {
+      if( FAN_CheckAnmSpeed( &p_gym_wk->fan_wk ) == TRUE
+          && WINDMETER_CheckAnmSpeed( &p_gym_wk->windmeter_wk ) == TRUE )
+      {
+        *seq = SEQ_START;
+      }
+    }
+    break;
+  // イベント開始
+  case SEQ_START:
+    if( MMDL_CheckEndAcmd(p_wk->mmdl) )
+    {
+      u8  move_distance = 10;    // 移動距離
+
+      // 移動タスク登録
+      {
+        FIELD_TASK* move;
+        FIELD_TASK_MAN* taskMan;
+        VecFx32 down_pos;
+        {
+          MMDL_GetVectorPos( p_wk->mmdl, &down_pos );
+          down_pos.z += GRID_TO_FX32(move_distance);
+        }
+        move = FIELD_TASK_TransMMdl( p_wk->p_fieldmap, p_wk->mmdl, move_distance*3, &down_pos );
+        taskMan = FIELDMAP_GetTaskManager( p_wk->p_fieldmap );
+        FIELD_TASK_MAN_AddTask( taskMan, move, NULL );
+      }
+
+      // 高さを変更したくないので
+      // 高さ取得禁止ステータスビットをONにする
+      {
+        MMDL_OnStatusBit( p_wk->mmdl, MMDL_STABIT_HEIGHT_GET_OFF );
+      }
+
+      // SE ヒュー
+      PMSND_PlaySE( GYM_FLY_SE_BLOW );
+
+      *seq = SEQ_MAIN;
+    }
+    break;
+
+  // メイン処理
+  case SEQ_MAIN:
+    {
+      // 自機の向きを変える
+      if( MMDL_CheckEndAcmd(p_wk->mmdl) )
+      {
+        u16 dir = MMDL_GetDirDisp( p_wk->mmdl );
+        dir++;
+        dir %= 4;
+        MMDL_SetAcmd( p_wk->mmdl, (AC_DIR_U + dir) );
+      }
+
+      // SE
+      {
+        SEPLAYER_ID player_ID = PMSND_GetSE_DefaultPlayerID( GYM_FLY_SE_BLOW );
+        if( PMSND_CheckPlaySE_byPlayerID( player_ID ) == FALSE )
+        {
+          // SE ヒュー
+          PMSND_PlaySE( GYM_FLY_SE_BLOW );
+        }
+      }
+
+      // タスク終了チェック
+      {
+        FIELD_TASK_MAN* taskMan;
+        taskMan = FIELDMAP_GetTaskManager( p_wk->p_fieldmap );
+        if( FIELD_TASK_MAN_IsAllTaskEnd(taskMan) ) {
+
+          // SE 停止
+          {
+            SEPLAYER_ID player_ID = PMSND_GetSE_DefaultPlayerID( GYM_FLY_SE_BLOW );
+            PMSND_StopSE_byPlayerID( player_ID );
+          }
+
+          // ぶつかる時のSE
+          // SE ぶう
+          PMSND_PlaySE( GYM_FLY_SE_NPC_HIT );
+
+          // 風力を最低に戻す
+          WIND_ChangeState( p_wk->p_fieldmap, WIND_STATE_LOW );
+
+          *seq = SEQ_PLAYER_MOVE;
+        }
+      }
+    }
+    break;
+
+  case SEQ_PLAYER_MOVE:  // 自機移動
+    // 移動タスク登録
+    {
+      FIELD_TASK* move;
+      FIELD_TASK_MAN* taskMan;
+      VecFx32 down_pos;
+      {
+        FIELD_PLAYER_GetPos( p_wk->player, &down_pos );
+        down_pos.z += GRID_TO_FX32(1);
+      }
+      move = FIELD_TASK_TransPlayer( p_wk->p_fieldmap, 2, &down_pos );
+      taskMan = FIELDMAP_GetTaskManager( p_wk->p_fieldmap );
+      FIELD_TASK_MAN_AddTask( taskMan, move, NULL );
+
+      *seq = SEQ_PLAYER_MOVE_WAIT;
+    }
+    break;
+
+  case SEQ_PLAYER_MOVE_WAIT:  // 自機移動待ち
+    // タスク終了チェック
+    {
+      FIELD_TASK_MAN* taskMan;
+      taskMan = FIELDMAP_GetTaskManager( p_wk->p_fieldmap );
+      if( FIELD_TASK_MAN_IsAllTaskEnd(taskMan) ) {
+        *seq = SEQ_EXIT;
+      }
+    }
+    break;
+
+  // イベント終了
+  case SEQ_EXIT:
+
+    // 高さ取得禁止ステータスビットをOFFに戻す
+    {
+      MMDL_OffStatusBit( p_wk->mmdl, MMDL_STABIT_HEIGHT_GET_OFF );
+    }
+
+    // モデルの座標更新
+    {
+      VecFx32 pos;
+      MMDL_GetVectorPos( p_wk->mmdl, &pos );
+      MMDL_InitPosition( p_wk->mmdl, &pos, DIR_DOWN );
+    }
+
+    return GMEVENT_RES_FINISH;
+  }
+
+  return GMEVENT_RES_CONTINUE;
+}
 
 //----------------------------------------------------------------------------
 /**

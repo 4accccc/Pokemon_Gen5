@@ -272,13 +272,17 @@ VMCMD_RESULT EvCmdGymGround_( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdGymFly_Blow( VMHANDLE * core, void *wk )
 {
+  u16 obj_id;
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork( gsys );
   GMEVENT *call_event;
 
-  call_event = GYM_FLY_BlowEvent( gsys );
+  // ƒTƒ“ƒOƒ‰ƒX‚ÌOBJID
+  obj_id  = VMGetU16( core );
+
+  call_event = GYM_FLY_BlowEvent( gsys, obj_id );
 
   if (call_event == NULL){
     GF_ASSERT(0);

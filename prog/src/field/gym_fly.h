@@ -35,5 +35,22 @@ extern void GYM_FLY_Move(FIELDMAP_WORK *fieldWork);
 extern GMEVENT * GYM_FLY_CheckEvent( GAMESYS_WORK *p_gamesys );
 
 // スクリプトコマンドで呼ばれる関数
-extern GMEVENT * GYM_FLY_BlowEvent( GAMESYS_WORK *p_gamesys );
+extern GMEVENT * GYM_FLY_BlowEvent( GAMESYS_WORK *p_gamesys, const u16 obj_id );
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  MMDLの移動タスクを作成する
+ *
+ *  @param fieldmap 動作対象フィールドマップ
+ *	@param mmdl     モデル
+ *  @param frame    動作フレーム数
+ *  @param pos      移動先座標
+ *
+ *	@return 作成したタスク
+ *
+ *	@note   現在飛行ジムでしか使われていないので飛行ジムのオーバーレイにあります。
+ *	        他の場所でも使用する場合があれば、FIELD_MAPのオーバーレイに移した方がいい。
+ */
+//-----------------------------------------------------------------------------
+extern FIELD_TASK* FIELD_TASK_TransMMdl( FIELDMAP_WORK* fieldmap, MMDL *mmdl, int frame, VecFx32* pos );

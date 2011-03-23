@@ -7027,13 +7027,15 @@
 //--------------------------------------------------------------
 /**
  * ジムコマンド　飛行ジム 吹き飛ばしイベント
+ * @param obj_id  ガイドのOBJ_ID
  */
 //--------------------------------------------------------------
-#define _GYM_FLY_BLOW() \
-    _ASM_GYM_FLY_BLOW
+#define _GYM_FLY_BLOW( obj_id ) \
+    _ASM_GYM_FLY_BLOW obj_id
 
-  .macro  _ASM_GYM_FLY_BLOW
+  .macro  _ASM_GYM_FLY_BLOW obj_id
   .short  EV_SEQ_GYM_FLY_BLOW
+  .short  \obj_id
   .endm
 
 //--------------------------------------------------------------
