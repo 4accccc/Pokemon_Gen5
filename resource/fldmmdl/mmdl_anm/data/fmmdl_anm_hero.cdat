@@ -203,7 +203,7 @@ static const GFL_BBDACT_ANM DATA_BlActHero_WalkL4F[] = {
   {  6, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
   {  8, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
   {  6, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
-  { GFL_BBDACT_ANMCOM_END,0,0,0 },
+  { GFL_BBDACT_ANMCOM_JMP,0,0, 0 },
 };
 
 //============================================
