@@ -1728,17 +1728,12 @@ static void EXPOBJ_ObjSet( GYM_FLY_TMP *p_wk )
   ///	ファンの設定
   //
   {
-    // 座標セット
-    VecFx32 pos = {
-       FAN_GX, FAN_GY, FAN_GZ,
-    };
-
     u16   obj_idx = OBJ_FAN;    // OBJインデックス
     GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( p_wk->exp_obj, GYM_FLY_UNIT_IDX, obj_idx );
 
-    status->trans.x = FX32_CONST( pos.x * FIELD_CONST_GRID_SIZE );
-    status->trans.y = FX32_CONST( pos.y * FIELD_CONST_GRID_SIZE );
-    status->trans.z = FX32_CONST( pos.z * FIELD_CONST_GRID_SIZE );
+    status->trans.x = 0;
+    status->trans.y = 0;
+    status->trans.z = 0;
     // カリングする
     FLD_EXP_OBJ_SetCulling( p_wk->exp_obj, GYM_FLY_UNIT_IDX, obj_idx, TRUE );
     FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GYM_FLY_UNIT_IDX, obj_idx, FALSE );
@@ -1851,9 +1846,9 @@ static void EXPOBJ_ObjSet( GYM_FLY_TMP *p_wk )
     u16   obj_idx = i;    // OBJインデックス
     GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( p_wk->exp_obj, GYM_FLY_UNIT_IDX, obj_idx );
 
-    status->trans.x = FX32_CONST( 11 * FIELD_CONST_GRID_SIZE );
-    status->trans.y = FX32_CONST( 4 * FIELD_CONST_GRID_SIZE );
-    status->trans.z = FX32_CONST( 24 * FIELD_CONST_GRID_SIZE );
+    status->trans.x = 0;
+    status->trans.y = 0;
+    status->trans.z = 0;
 
     // カリングする
     FLD_EXP_OBJ_SetCulling( p_wk->exp_obj, GYM_FLY_UNIT_IDX, obj_idx, FALSE );
