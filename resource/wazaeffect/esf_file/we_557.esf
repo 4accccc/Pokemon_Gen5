@@ -1,5 +1,5 @@
 EFFSEQ
-$0007
+$0008
 c:\home\swan\resource\particle\wazaeffect\w_001.spa
 C:\home\swan\resource\particle\wazaeffect\w_557.spa
 C:\home\swan\resource\wazaeffect\graphic\bg_120_smallbang.NSCR
@@ -7,6 +7,7 @@ C:\home\swan\resource\wazaeffect\graphic\bg_264_supernova2.NSCR
 C:\home\swan\resource\wazaeffect\graphic\bg_120_smallbang.NSCR
 C:\home\swan\resource\wazaeffect\graphic\bg_557_v_fire.NSCR
 C:\home\swan\resource\wazaeffect\graphic\bg_557_v_generate.NSCR
+C:\home\swan\resource\wazaeffect\bg_palanm\bg_557_v_generate_p.dat
 #001
 %00
 ポケモン影バニッシュ	すべて	バニッシュオン
@@ -45,6 +46,8 @@ BGの表示/非表示	お盆	非表示
 BGの表示/非表示	フィールド	非表示
 タイマーによるウエイト	2
 BGのパレットフェード	エフェクト面	16	0	2	0:0:0
+BGのスクロール	往復	8	0	2	0	10
+BGのパレットアニメ	bg_557_v_generate_p	10
 ポケモンアニメ	防御側	アニメストップ
 パーティクル再生	w_557	W_557_557_RING_BURN	防御側	方向無し	2:0:0	1:1:1	1
 パーティクル再生	w_557	W_557_557_RING_BURN_2	防御側	方向無し	2:0:0	1:1:1	1
@@ -54,16 +57,14 @@ BGのパレットフェード	エフェクト面	16	0	2	0:0:0
 パーティクル再生	w_557	W_557_557_HIT_FIRE	防御側	方向無し	2:0:0	1:1:1	1
 パーティクル再生	w_557	W_557_557_HIT_MARK	防御側	方向無し	2:0:0	1:1:1	1
 パーティクル再生	w_557	W_557_557_BURN_YOIN	防御側	方向無し	2:0:0	1:1:1	1
-BGのスクロール	往復	0	8	2	0	10
 ポケモン拡縮	防御側	往復	-0.2	0.2	2	0	6
 ポケモンパレットフェード	防御側	0	10	2	18:0:0
 ポケモン移動	防御側	往復	1	0	2	0	12
-エフェクト終了待ち	すべて
+タイマーによるウエイト	30
 ポケモンパレットフェード	攻撃側	10	0	2	18:0:0
 ポケモンパレットフェード	防御側	10	0	2	18:0:0
 BGのパレットフェード	エフェクト面	0	16	2	0:0:0
-エフェクト終了待ち	すべて
-タイマーによるウエイト	2
+タイマーによるウエイト	10
 BGの表示/非表示	お盆	表示
 BGの表示/非表示	フィールド	表示
 タイマーによるウエイト	2
