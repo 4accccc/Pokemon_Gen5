@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-07T21:49:36"/>
+	<create user="matsumiya" host="W00224" date="2011-03-23T19:02:15"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1296" top="209" right="2001" bottom="835" maximized="no" rayout="Vertical2">
+	<dialog left="1288" top="174" right="1993" bottom="802" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -293,7 +293,7 @@
 
 
 	<row id="msg_r19_white_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♀
+		<comment>♀：主人公＝♂
 ・r19のposを踏むと
 　画面下からベル登場</comment>
 		<attribute name="キャラ指定">ベル</attribute>
@@ -302,7 +302,7 @@
 	</row>
 
 	<row id="msg_r19_white_02" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
-		<comment>♀
+		<comment>♀：主人公＝♀
 ・r19のposを踏むと
 　画面下からベル登場</comment>
 		<attribute name="キャラ指定">ベル</attribute>
@@ -314,10 +314,12 @@
 		<comment>♀
 ・所定の位置にセットしてwhite_02表示</comment>
 		<attribute name="キャラ指定">ベル</attribute>
-		<language name="JPN" width="256">ベル『・待たせてゴメン
-・遅れた理由＝主人公ママのおしゃべり▼</language>
-		<language name="JPN_KANJI" width="256">ベル『・待たせてゴメン
-・遅れた理由＝主人公ママのおしゃべり▼</language>
+		<language name="JPN" width="256">ベル『またせて　ゴメンね▼
+きみの　ママさんって
+すっごく　おしゃべり　なんだね▼</language>
+		<language name="JPN_KANJI" width="256">ベル『またせて　ゴメンね▼
+きみの　ママさんって
+すっごく　おしゃべり　なんだね▼</language>
 	</row>
 
 	<row id="msg_r19_white_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -423,66 +425,101 @@
 　続けて</comment>
 		<attribute name="キャラ指定">アデク
 ・BWチャンピオン</attribute>
-		<language name="JPN" width="256">みたことのないかおだな▼</language>
-		<language name="JPN_KANJI" width="256">みたことのないかおだな▼</language>
+		<language name="JPN" width="256">わしは　アデク！▼
+みなに　ポケモンと　ともにあゆむ……
+その　すばらしさを　つたえておる▼</language>
+		<language name="JPN_KANJI" width="256">わしは　アデク！▼
+みなに　ポケモンと　ともにあゆむ……
+その　すばらしさを　つたえておる▼</language>
 	</row>
 
 	<row id="msg_r19_champion_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・メッセージ表示後
+　主人公の周りをうろうろ</comment>
+		<attribute name="キャラ指定">アデク
+・BWチャンピオン</attribute>
+		<language name="JPN" width="256">おまえさんは……？▼
+……　……　……
+……　……　……▼
+ふむう！　ヒオウギの
+[1:00:トレーナー名:0]と　いうのか！▼</language>
+		<language name="JPN_KANJI" width="256">おまえさんは……？▼
+……　……　……
+……　……　……▼
+ふむう！　ヒオウギの
+[1:00:トレーナー名:0]と　いうのか！▼</language>
+	</row>
+
+	<row id="msg_r19_champion_04" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・メッセージ表示後
 　アデクはt06：サンギタウンへ移動する
 　画面外に移動すると操作可能に</comment>
 		<attribute name="キャラ指定">アデク
 ・BWチャンピオン</attribute>
-		<language name="JPN" width="256">おお！　なかなか　すばらしい
-[1:01:ポケモン種族名:0]と　いっしょでは　ないか！▼
-だが　まだまだ（しょしんしゃ）
-ふむう！　きたえてやるから▽
+		<language name="JPN" width="256">おまえさんの　？？？？？
+なかなか　みごとな　ポケモンだな▼
+だが　トレーナーである
+おまえさんが　まだまだ　みじゅく……▼
+よし！　きめた！
 わしに　ついてこい！▼</language>
-		<language name="JPN_KANJI" width="256">おお！　なかなか　すばらしい
-[1:01:ポケモン種族名:0]と　いっしょでは　ないか！▼
-だが　まだまだ（しょしんしゃ）
-ふむう！　きたえてやるから▽
+		<language name="JPN_KANJI" width="256">おまえさんの　？？？？？
+なかなか　みごとな　ポケモンだな▼
+だが　トレーナーである
+おまえさんが　まだまだ　みじゅく……▼
+よし！　きめた！
 わしに　ついてこい！▼</language>
 	</row>
 
-	<row id="msg_r19_boy2a_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_r19_boy2_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
-・仮メッセージ
-・はい/いいえ</comment>
+・はい/いいえの選択肢表示
+　はい　→boy2_02
+　いいえ→boy2_03</comment>
 		<attribute name="キャラ指定">少年</attribute>
-		<language name="JPN" width="256">ねーねー▼
-いまから　すごいことするから
-みててくれない？</language>
-		<language name="JPN_KANJI" width="256">ねーねー▼
-いまから　すごいことするから
-みててくれない？</language>
+		<language name="JPN" width="256">あのさ　
+だんさジャンプって　しってる？</language>
+		<language name="JPN_KANJI" width="256">あのさ　
+段差ジャンプって　知ってる？</language>
 	</row>
 
-	<row id="msg_r19_boy2a_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_r19_boy2_02" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
-・仮メッセージ
-・はい選択時アニメ前
-・続けてboy2a_02a</comment>
+・はい選択時</comment>
 		<attribute name="キャラ指定">少年</attribute>
-		<language name="JPN" width="256">よし！　まってて！！▼</language>
-		<language name="JPN_KANJI" width="256">よし！　待ってて！！▼</language>
+		<language name="JPN" width="256">そっか……▼
+こんな　だんさなら　ジャンプして
+とびおりられるって　しってるよね</language>
+		<language name="JPN_KANJI" width="256">そっか……▼
+こんな　段差なら　ジャンプして
+飛び降りられるって　知ってるよね</language>
 	</row>
 
-	<row id="msg_r19_boy2a_02a" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_r19_boy2_02a" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
-・仮メッセージ
+・いいえ選択時</comment>
+		<attribute name="キャラ指定">少年</attribute>
+		<language name="JPN" width="256">そうなんだ……
+じゃあ　ぼくが　みほんをみせるよ！▼</language>
+		<language name="JPN_KANJI" width="256">そうなんだ……
+じゃあ　ぼくが　見本をみせるよ！▼</language>
+	</row>
+
+	<row id="msg_r19_boy2_03" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
 ・下向きになってメッセージ表示
 　続けて飛び降りアニメ</comment>
 		<attribute name="キャラ指定">少年</attribute>
-		<language name="JPN" width="256">よぉっ！！</language>
-		<language name="JPN_KANJI" width="256">よぉっ！！</language>
+		<language name="JPN" width="256">だんさの　うえから　したにむかって……▼
+ぴょーん！！▼</language>
+		<language name="JPN_KANJI" width="256">だんさの　うえから　したにむかって……▼
+ぴょーん！！▼</language>
 	</row>
 
-	<row id="msg_r19_boy2a_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_r19_boy2_04" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
-・仮メッセージ
-・はい選択時アニメ後
+・いいえ選択時アニメ後
 ・以降、このメッセージ繰り返し</comment>
 		<attribute name="キャラ指定">少年</attribute>
 		<language name="JPN" width="256">ねっ！　みてくれた！？▼
@@ -493,32 +530,21 @@
 近道できて　すごいでしょ！</language>
 	</row>
 
-	<row id="msg_r19_boy2a_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
-		<comment>♂
-・仮メッセージ
-・いいえ選択時</comment>
-		<attribute name="キャラ指定">少年</attribute>
-		<language name="JPN" width="256">えんりょ　しなくて　いいのにさ！</language>
-		<language name="JPN_KANJI" width="256">遠慮しなくて　いいのにさ！</language>
-	</row>
-
-	<row id="msg_r19_sign1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>BGメッセージ
-・仮メッセージ</comment>
+	<row id="msg_r19_sign1_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>BGメッセージ</comment>
 		<attribute name="キャラ指定">看板：道路</attribute>
 		<language name="JPN" width="256">１９ばんどうろ</language>
 		<language name="JPN_KANJI" width="256">１９番道路</language>
 	</row>
 
-	<row id="msg_r19_sign2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>BGメッセージ
-・仮メッセージ</comment>
+	<row id="msg_r19_sign2_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>BGメッセージ</comment>
 		<attribute name="キャラ指定">看板：道路</attribute>
 		<language name="JPN" width="256">１９ばんどうろ</language>
 		<language name="JPN_KANJI" width="256">１９番道路</language>
 	</row>
 
-	<row id="msg_r19_sign3_01" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_r19_sign3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>BGメッセージ
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">看板：お得な掲示板</attribute>
