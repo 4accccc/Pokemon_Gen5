@@ -25,6 +25,7 @@
 #ifndef ZONE_D07R0101_EVC_H
 #define ZONE_D07R0101_EVC_H
 
+#define D07R0101_WORKMAN1_02               0
 
 #endif //ZONE_D07R0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d07r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

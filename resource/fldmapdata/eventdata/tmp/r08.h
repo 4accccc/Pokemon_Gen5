@@ -10,6 +10,7 @@
 #ifndef ZONE_R08_EVC_H
 #define ZONE_R08_EVC_H
 
+#define R08_AMBRELLA_02                    0
 
 #endif //ZONE_R08_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r08.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

@@ -20,4 +20,205 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA		ev_d08r0901_poke_01
+_EVENT_DATA		ev_zone_d08R0901
 _EVENT_DATA_END
+
+/**************************************************************/
+/*            FIELD_INIT_LABEL                              　 */
+/**************************************************************/
+INIT_EVENT_START	ev_zone_d08R0901
+	
+	//バージョンを取得してOBJを変化させる
+	_GET_ROM_VERSION( SCWK_ANSWER )
+	IF FLAG_OFF(FV_D08R0901_PACKAGE_POKE) THEN
+	
+		IF $SCWK_ANSWER == VERSION_BLACK THEN
+			$OBJCHRWORK0 = SHIN_B
+		ELSE
+			$OBJCHRWORK0 = MU_B
+		ENDIF
+	ELSE
+	ENDIF
+	
+INIT_EVENT_END
+
+/**************************************************************/
+/* パッケージポケモン 話しかけ                                                          
+/**************************************************************/
+EVENT_START    ev_d08r0901_poke_01
+
+_TALK_START_SE_PLAY()
+{	
+  DEFINE_LOCAL	LWK_DIR
+	//自機：一歩前に戻る
+	_PLAYER_DIR_GET( LWK_DIR )
+	SWITCH $LWK_DIR
+	CASE DIR_UP THEN
+	CASE DIR_DOWN THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_last6_d )
+	CASE DIR_RIGHT THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_last6_r )
+	CASE DIR_LEFT THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_last6_l )
+	ENDSWITCH
+	_OBJ_ANIME_WAIT()
+}	
+{
+	_OBJ_ANIME(D08R0901_POKE_01, anm_legend_hoeru )
+	_OBJ_ANIME_WAIT()
+
+    DEFINE_LOCAL  LWK_BATTLE_FLAG
+	DEFINE_LOCAL  LWK_ROM
+	
+    //シン・ム専用、伝説系MSG、レア無し
+    $LWK_BATTLE_FLAG = SCR_WILD_BTL_FLAG_IMMORTAL
+    $LWK_BATTLE_FLAG |= SCR_WILD_BTL_FLAG_LEGEND
+    $LWK_BATTLE_FLAG |= SCR_WILD_BTL_FLAG_NO_RARE
+  
+	 _GET_ROM_VERSION( LWK_ROM )
+	IF $LWK_ROM == VERSION_WHITE THEN
+		_VOICE_PLAY( MONSNO_651, 0 )
+	ELSE
+		_VOICE_PLAY( MONSNO_650, 0 )
+	ENDIF
+
+    _GET_ROM_VERSION( LWK_ROM )
+		IF $LWK_ROM == VERSION_BLACK THEN
+			_GIZAPLAINWIN_MSG_POS( msg_d08r0901_poke7_01,POS_DEFAULT )
+			_VOICE_WAIT()
+			_AB_KEYWAIT_MARK()
+			_GIZAPLAINWIN_CLOSE()
+
+
+			_WILD_BTL_SET_EX( MONSNO_650, 50, LWK_BATTLE_FLAG )
+		ELSE
+			_GIZAPLAINWIN_MSG_POS( msg_d08r0901_poke8_01,POS_DEFAULT )
+			_VOICE_WAIT()
+			_AB_KEYWAIT_MARK()
+			_GIZAPLAINWIN_CLOSE()
+
+			_WILD_BTL_SET_EX( MONSNO_651, 50, LWK_BATTLE_FLAG )
+		ENDIF
+
+    _WILD_LOSE_CHECK( SCWK_ANSWER )
+    
+    IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+    
+          //========================================/
+          
+          //シンのOBJ削除
+          _OBJ_DEL( D08R0901_POKE_01 )
+          
+          //フラグセット
+          _FLAG_SET( FV_D08R0901_PACKAGE_POKE )
+          
+          //========================================/
+          
+    	//勝った場合
+      	_WILD_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+    
+    ELSE
+        //負けた場合
+        _WILD_LOSE()		//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+      
+    ENDIF
+}
+{
+	_WILD_RETRY_CHECK( SCWK_ANSWER )
+
+	SWITCH $SCWK_ANSWER
+	CASE SCR_WILD_BTL_RET_ESCAPE, SCR_WILD_BTL_RET_WIN THEN
+		//勝利した場合、あるいは逃げた場合
+		DEFINE_LOCAL	LWK_ROM
+		_GET_ROM_VERSION( LWK_ROM )
+		IF $LWK_ROM == VERSION_WHITE THEN
+			_SYSWIN_MSG( msg_d08r0901_poke8_02 , POS_DOWN )
+			_LAST_KEYWAIT()
+			_SYSWIN_CLOSE()
+		ELSE
+			_SYSWIN_MSG( msg_d08r0901_poke7_02 , POS_DOWN )
+			_LAST_KEYWAIT()
+			_SYSWIN_CLOSE()
+		ENDIF
+        
+	CASE SCR_WILD_BTL_RET_CAPTURE THEN
+	//捕まえた場合
+		//捕獲フラグをセット
+		_FLAG_SET( FE_PACKAGE_POKE_GET )
+
+	ENDSWITCH
+}
+EVENT_END
+
+//--------------------------------------------------------------------
+//		シンとム専用のアニメ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_legend_hoeru
+	_ANIME_DATA	AC_SHIN_MU_HOERU,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//		話しかけた場合の回り込み処理
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_last6_r
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_last6_l
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_last6_d
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通スクリプト：びっくりする                  
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_gyoe
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通スクリプト：上を向く                   
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_up
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通スクリプト：下を向く_むきのみ                   
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_turn_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通スクリプト：下を向く                   
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_down
+	_ANIME_DATA	AC_STAY_WALK_D_16F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通スクリプト：右を向く                  
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_right
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通スクリプト：左を向く                  
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_left
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0

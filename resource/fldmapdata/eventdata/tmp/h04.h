@@ -17,6 +17,10 @@
 #ifndef ZONE_H04_EVC_H
 #define ZONE_H04_EVC_H
 
+#define H04_LEADSINGER_01                  0
+#define H04_GRASSSOUND_01                  1
+#define H04_GUITAR_01                      2
+#define H04_VOICE_01                       3
 
 #endif //ZONE_H04_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/h04.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

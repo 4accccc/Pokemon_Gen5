@@ -23,9 +23,16 @@
 _EVENT_DATA ev_bg_r07_board_01
 _EVENT_DATA ev_bg_r07_board_02
 _EVENT_DATA ev_bg_r07_board_03
+_EVENT_DATA ev_r07_fightrew_01
 _EVENT_DATA_END
 
+/**************************************************************/
+/*  わざマシンくれる格闘家女子                          */
+/**************************************************************/
 
+EVENT_START   ev_r07_fightrew_01
+  _EASY_TALK_ITEM_EVENT(ITEM_WAZAMASIN57, 1, FE_R07_FIGHTREW_01, msg_r07_fighterw_01, msg_r07_fighterw_02, msg_r07_fighterw_02 )
+EVENT_END
 
 /**************************************************************/
 /*看板01（７番道路用）                                         */

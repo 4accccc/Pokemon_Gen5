@@ -11,15 +11,17 @@
 #ifndef ZONE_D03R0101_EVC_H
 #define ZONE_D03R0101_EVC_H
 
+#define D03R0101_SUNGLASSES_01             0
+#define D03R0101_DARUMA_01                 1
+#define D03R0101_DARUMA_02                 2
+#define D03R0101_DARUMA_03                 3
+#define D03R0101_DARUMA_04                 4
+#define D03R0101_DARUMA_05                 5
 
 #endif //ZONE_D03R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d03r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
 #ifndef ZONE_D03R0101_EVB_H
 #define ZONE_D03R0101_EVB_H
 
-#define D03R0101_HIDE_ITEM_01             0
-#define D03R0101_HIDE_ITEM_03             1
-#define D03R0101_HIDE_ITEM_02             2
-#define D03R0101_HIDE_ITEM_04             3
 
 #endif //ZONE_D03R0101_EVB_H

@@ -16,6 +16,9 @@
 #ifndef ZONE_D07R0401_EVC_H
 #define ZONE_D07R0401_EVC_H
 
+#define D07R0401_ROCK_02                   0
+#define D07R0401_ROCK_01                   1
+#define D07R0401_WORKMAN_01                2
 
 #endif //ZONE_D07R0401_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d07r0401.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

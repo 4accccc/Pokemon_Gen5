@@ -8,5 +8,6 @@
 #define SCRID_BG_R07_BOARD_01 (1)
 #define SCRID_BG_R07_BOARD_02 (2)
 #define SCRID_BG_R07_BOARD_03 (3)
+#define SCRID_R07_FIGHTREW_01 (4)
 
 #endif //_R07_DEF_H_

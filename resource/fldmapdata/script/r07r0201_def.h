@@ -5,5 +5,6 @@
 #define _R07R0201_DEF_H_
 
 //スクリプトデータID定義
+#define SCRID_R07R0201_MOUNTAIN_01 (1)
 
 #endif //_R07R0201_DEF_H_

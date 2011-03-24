@@ -10,6 +10,7 @@
 #ifndef ZONE_C08R0101_EVC_H
 #define ZONE_C08R0101_EVC_H
 
+#define C08R0101_LEADER8A_01               0
 
 #endif //ZONE_C08R0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c08r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
