@@ -17222,7 +17222,7 @@ static const ZONEDATA ZoneData[] = {
 		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
-		13,        // camera id
+		0,        // camera id
 		MC_TYPE_FIELD,  // map_chg_type
 		2,
 		TRUE,
@@ -17231,7 +17231,7 @@ static const ZONEDATA ZoneData[] = {
 		TRUE,
     TRUE,
     TRUE,
-		NARC_camera_scroll_original_C03P08_bin, // camera_area
+		MATRIX_ID_C03_M, // camera_area
 		15,   // padding > placeicon
 		0,
 		0,
@@ -17256,7 +17256,7 @@ static const ZONEDATA ZoneData[] = {
 		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     TRUE,
-		15,        // camera id
+		0,        // camera id
 		MC_TYPE_FIELD,  // map_chg_type
 		2,
 		TRUE,
@@ -17265,7 +17265,7 @@ static const ZONEDATA ZoneData[] = {
 		TRUE,
     TRUE,
     TRUE,
-		NARC_camera_scroll_original_C03P09_bin, // camera_area
+		MATRIX_ID_C03_N, // camera_area
 		15,   // padding > placeicon
 		0,
 		0,

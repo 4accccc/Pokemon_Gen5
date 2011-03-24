@@ -308,7 +308,10 @@ enum {
 	NARC_map_matrix_dun1103_mat_bin = 294,
 	NARC_map_matrix_dun1104_mat_bin = 295,
 	NARC_map_matrix_c03_m_mat_bin = 296,
-	NARC_map_matrix_c03_n_mat_bin = 297
+	NARC_map_matrix_c03_n_mat_bin = 297,
+	NARC_map_matrix_dun2801_mat_bin = 298,
+	NARC_map_matrix_dun2802_mat_bin = 299,
+	NARC_map_matrix_dun2803_mat_bin = 300
 };
 
 /* NARC_MAP_MATRIX_NAIX_ */
