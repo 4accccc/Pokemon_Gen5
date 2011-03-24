@@ -5,8 +5,6 @@
 "box.nsbmd"
 "box.nsbca"
 "box.nsbma"
-"wind_jiki.nsbmd"
-"wind_jiki.nsbta"
 "wind_01.nsbmd"
 "wind_01.nsbta"
 "wind_02.nsbmd"

@@ -880,22 +880,6 @@ static GMEVENT_RESULT BlowEvent( GMEVENT* event, int* seq, void* wk )
         MMDL_OnStatusBit( p_wk->mmdl, MMDL_STABIT_HEIGHT_GET_OFF );
       }
 
-      // 風エフェクト(自機)エフェクト
-      {
-        // 位置
-        GFL_G3D_OBJSTATUS* status = FLD_EXP_OBJ_GetUnitObjStatus( p_gym_wk->exp_obj, GYM_FLY_UNIT_IDX, EFFECT_WIND_JIKI );
-        MMDL_GetVectorPos( p_wk->mmdl, &status->trans );
-
-        // 表示
-        FLD_EXP_OBJ_SetVanish( p_gym_wk->exp_obj, GYM_FLY_UNIT_IDX, EFFECT_WIND_JIKI, FALSE );
-        // アニメ
-        {
-          EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_gym_wk->exp_obj, GYM_FLY_UNIT_IDX, EFFECT_WIND_JIKI, 0 );
-          FLD_EXP_OBJ_SetObjAnmFrm( p_gym_wk->exp_obj, GYM_FLY_UNIT_IDX, EFFECT_WIND_JIKI, 0, 0 );
-          FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE ); //アニメ開始
-        }
-      }
-
       // SE ヒュー
       PMSND_PlaySE( GYM_FLY_SE_BLOW );
 
@@ -913,13 +897,6 @@ static GMEVENT_RESULT BlowEvent( GMEVENT* event, int* seq, void* wk )
         dir++;
         dir %= 4;
         MMDL_SetAcmd( p_wk->mmdl, (AC_DIR_U + dir) );
-      }
-
-      // 風エフェクト(自機)エフェクト
-      {
-        // 位置
-        GFL_G3D_OBJSTATUS* status = FLD_EXP_OBJ_GetUnitObjStatus( p_gym_wk->exp_obj, GYM_FLY_UNIT_IDX, EFFECT_WIND_JIKI );
-        MMDL_GetVectorPos( p_wk->mmdl, &status->trans );
       }
 
       // SE
@@ -961,9 +938,6 @@ static GMEVENT_RESULT BlowEvent( GMEVENT* event, int* seq, void* wk )
             }
           }
 
-          // 風エフェクト(自機)エフェクトOFF
-          FLD_EXP_OBJ_SetVanish( p_gym_wk->exp_obj, GYM_FLY_UNIT_IDX, EFFECT_WIND_JIKI, TRUE );
-          FLD_EXP_OBJ_ChgAnmStopFlg( FLD_EXP_OBJ_GetAnmCnt( p_gym_wk->exp_obj, GYM_FLY_UNIT_IDX, EFFECT_WIND_JIKI, 0), TRUE );
 
           *seq = SEQ_STOP;
         }
@@ -1295,22 +1269,6 @@ static GMEVENT_RESULT ShortcutEvent( GMEVENT* event, int* seq, void* wk )
         MMDL_OnStatusBit( p_wk->mmdl, MMDL_STABIT_HEIGHT_GET_OFF );
       }
 
-      // 風エフェクト(自機)エフェクト
-      {
-        // 位置
-        GFL_G3D_OBJSTATUS* status = FLD_EXP_OBJ_GetUnitObjStatus( p_gym_wk->exp_obj, GYM_FLY_UNIT_IDX, EFFECT_WIND_JIKI );
-        MMDL_GetVectorPos( p_wk->mmdl, &status->trans );
-
-        // 表示
-        FLD_EXP_OBJ_SetVanish( p_gym_wk->exp_obj, GYM_FLY_UNIT_IDX, EFFECT_WIND_JIKI, FALSE );
-        // アニメ
-        {
-          EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_gym_wk->exp_obj, GYM_FLY_UNIT_IDX, EFFECT_WIND_JIKI, 0 );
-          FLD_EXP_OBJ_SetObjAnmFrm( p_gym_wk->exp_obj, GYM_FLY_UNIT_IDX, EFFECT_WIND_JIKI, 0, 0 );
-          FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE ); //アニメ開始
-        }
-      }
-
       // SE ヒュー
       PMSND_PlaySE( GYM_FLY_SE_BLOW );
 
@@ -1328,13 +1286,6 @@ static GMEVENT_RESULT ShortcutEvent( GMEVENT* event, int* seq, void* wk )
         dir++;
         dir %= 4;
         MMDL_SetAcmd( p_wk->mmdl, (AC_DIR_U + dir) );
-      }
-
-      // 風エフェクト(自機)エフェクト
-      {
-        // 位置
-        GFL_G3D_OBJSTATUS* status = FLD_EXP_OBJ_GetUnitObjStatus( p_gym_wk->exp_obj, GYM_FLY_UNIT_IDX, EFFECT_WIND_JIKI );
-        MMDL_GetVectorPos( p_wk->mmdl, &status->trans );
       }
 
       // SE
@@ -1391,9 +1342,6 @@ static GMEVENT_RESULT ShortcutEvent( GMEVENT* event, int* seq, void* wk )
             PMSND_StopSE_byPlayerID( player_ID );
           }
 
-          // 風エフェクト(自機)エフェクトOFF
-          FLD_EXP_OBJ_SetVanish( p_gym_wk->exp_obj, GYM_FLY_UNIT_IDX, EFFECT_WIND_JIKI, TRUE );
-          FLD_EXP_OBJ_ChgAnmStopFlg( FLD_EXP_OBJ_GetAnmCnt( p_gym_wk->exp_obj, GYM_FLY_UNIT_IDX, EFFECT_WIND_JIKI, 0), TRUE );
 
           // 高さ取得禁止ステータスビットをOFFに戻す
           {
@@ -1816,25 +1764,6 @@ static void EXPOBJ_ObjSet( GYM_FLY_TMP *p_wk )
       FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, GYM_FLY_UNIT_IDX, obj_idx, 0, TRUE );
       FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, FALSE );   // ループ再生設定
       FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, TRUE );    // アニメ停止
-    }
-  }
-
-  //=====================================
-  ///	風エフェクト(自機)の設定
-  //
-  {
-    u16   obj_idx = EFFECT_WIND_JIKI;    // OBJインデックス
-    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( p_wk->exp_obj, GYM_FLY_UNIT_IDX, obj_idx );
-
-    // カリングする
-    FLD_EXP_OBJ_SetCulling( p_wk->exp_obj, GYM_FLY_UNIT_IDX, obj_idx, TRUE );
-    FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GYM_FLY_UNIT_IDX, obj_idx, TRUE );  // 非表示
-    // アニメ再生
-    {
-      EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, GYM_FLY_UNIT_IDX, obj_idx, 0 );
-      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, GYM_FLY_UNIT_IDX, obj_idx, 0, TRUE );
-      FLD_EXP_OBJ_SetObjAnmFrm( p_wk->exp_obj, GYM_FLY_UNIT_IDX, obj_idx, 0, 0);
-      FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, TRUE );   // ループ再生設定
     }
   }
 

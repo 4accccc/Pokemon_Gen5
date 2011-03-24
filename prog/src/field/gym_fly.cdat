@@ -24,8 +24,6 @@ enum {
   RESID_BOX_MDL,            // 木製の箱
   RESID_BOX_ANM_ICA,        // 木製の箱
   RESID_BOX_ANM_IMA,        // 木製の箱
-  RESID_WIND_JIKI_MDL,      // 風エフェクト(自機)
-  RESID_WIND_JIKI_ANM_ITA,  // 風エフェクト(自機)
   RESID_WIND_1_MDL,       // 風エフェクト(マップ)
   RESID_WIND_1_ANM_ITA,   // 風エフェクト(マップ)
   RESID_WIND_2_MDL,       // 風エフェクト(マップ)
@@ -56,7 +54,6 @@ enum {
   OBJ_WINDMETER_17,  // 
   OBJ_BOX_1,
   OBJ_BOX_2,
-  EFFECT_WIND_JIKI,
   EFFECT_WIND_1,
   EFFECT_WIND_2,
   EFFECT_WIND_3,
@@ -75,9 +72,6 @@ static const GFL_G3D_UTIL_RES res_3d_table[] =
   { ARCID_GYM_FLY, NARC_gym_fly_box_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
   { ARCID_GYM_FLY, NARC_gym_fly_box_nsbca, GFL_G3D_UTIL_RESARC }, // ICA
   { ARCID_GYM_FLY, NARC_gym_fly_box_nsbma, GFL_G3D_UTIL_RESARC }, // IMA
-  // 風エフェクト(自機)
-  { ARCID_GYM_FLY, NARC_gym_fly_wind_jiki_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
-  { ARCID_GYM_FLY, NARC_gym_fly_wind_jiki_nsbta, GFL_G3D_UTIL_RESARC }, // ITA
   // 風エフェクト(マップ)
   { ARCID_GYM_FLY, NARC_gym_fly_wind_01_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
   { ARCID_GYM_FLY, NARC_gym_fly_wind_01_nsbta, GFL_G3D_UTIL_RESARC }, // ITA
@@ -102,11 +96,6 @@ static const GFL_G3D_UTIL_ANM anm_3d_table_box[] =
 {
   { RESID_BOX_ANM_ICA, 0 }, // nsbca
   { RESID_BOX_ANM_IMA, 0 }, // nsbma
-};
-// ANIME 風エフェクト(自機)
-static const GFL_G3D_UTIL_ANM anm_3d_table_wind_jiki[] =
-{
-  { RESID_WIND_JIKI_ANM_ITA, 0 }, // nsbta
 };
 // ANIME 風エフェクト(マップ)
 static const GFL_G3D_UTIL_ANM anm_3d_table_wind_1[] =
@@ -284,14 +273,6 @@ static const GFL_G3D_UTIL_OBJ obj_3d_table[] =
     RESID_BOX_MDL,      // テクスチャリソースID
     anm_3d_table_box,   // アニメテーブル(複数指定のため)
     NELEMS(anm_3d_table_box),      // アニメリソース数
-  },
-  // 風エフェクト(自機)
-  {
-    RESID_WIND_JIKI_MDL,      // モデルリソースID
-    0,      // モデルデータID(リソース内部INDEX)
-    RESID_WIND_JIKI_MDL,      // テクスチャリソースID
-    anm_3d_table_wind_jiki,   // アニメテーブル(複数指定のため)
-    NELEMS(anm_3d_table_wind_jiki),      // アニメリソース数
   },
   // 風エフェクト1(マップ)
   {

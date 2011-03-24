@@ -18,14 +18,12 @@ enum {
 	NARC_gym_fly_box_nsbmd = 4,
 	NARC_gym_fly_box_nsbca = 5,
 	NARC_gym_fly_box_nsbma = 6,
-	NARC_gym_fly_wind_jiki_nsbmd = 7,
-	NARC_gym_fly_wind_jiki_nsbta = 8,
-	NARC_gym_fly_wind_01_nsbmd = 9,
-	NARC_gym_fly_wind_01_nsbta = 10,
-	NARC_gym_fly_wind_02_nsbmd = 11,
-	NARC_gym_fly_wind_02_nsbta = 12,
-	NARC_gym_fly_wind_03_nsbmd = 13,
-	NARC_gym_fly_wind_03_nsbta = 14
+	NARC_gym_fly_wind_01_nsbmd = 7,
+	NARC_gym_fly_wind_01_nsbta = 8,
+	NARC_gym_fly_wind_02_nsbmd = 9,
+	NARC_gym_fly_wind_02_nsbta = 10,
+	NARC_gym_fly_wind_03_nsbmd = 11,
+	NARC_gym_fly_wind_03_nsbta = 12
 };
 
 /* NARC_GYM_FLY_NAIX_ */
