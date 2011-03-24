@@ -28,11 +28,11 @@ f_new.print  <<EOS
 //=============================================================================
 EOS
 
-f_new.print "static const int map_array[50][23] = {\n"
+f_new.print "static const int map_array[51][23] = {\n"
 
 
 # 行分ループ
-0.upto(49){ 
+0.upto(50){ 
 
   line = f_old.gets
   # 新規ファイルに書き込む

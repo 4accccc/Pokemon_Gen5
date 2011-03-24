@@ -19,6 +19,7 @@
 #include "field_player_core.h"  // for FIELD_PLAYER_CORE_GetMMdl
 #include "field_task.h"         // for FIELD_TASK_TransMMdl
 #include "field_task_player_trans.h" // for FIELD_TASK_TransPlayer
+#include "field_task_player_rot.h" // for FIELD_TASK_PlayerRotate
 
 // zone
 #include "../../../resource/fldmapdata/zonetable/zone_id.h"  // for ZONE_ID_C09P02
@@ -81,7 +82,7 @@
 #define STAY_WALK_NUM           (4)         // 何歩足踏みするか
 
 // map_array.cdatの配列の要素
-#define MAP_ARRAY_ROW           (50)        // マップの縦MAX
+#define MAP_ARRAY_ROW           (51)        // マップの縦MAX
 #define MAP_ARRAY_COL           (23)        // マップの横MAX
 enum{
   MAP_ARRAY_BLOW = 0,     // 吹き飛べる
@@ -1263,6 +1264,16 @@ static GMEVENT_RESULT ShortcutEvent( GMEVENT* event, int* seq, void* wk )
         FIELD_TASK_MAN_AddTask( taskMan, move, NULL );
       }
 
+      // 回転タスク登録
+      {
+        FIELD_TASK* rot;
+        FIELD_TASK_MAN* taskMan;
+        // +10の意味はマップチェンジのフェードアウトぎりぎりまで回転しておく為
+        rot = FIELD_TASK_PlayerRotate( p_wk->p_fieldmap, (move_distance*2+10), (move_distance*2+10)/4 );
+        taskMan = FIELDMAP_GetTaskManager( p_wk->p_fieldmap );
+        FIELD_TASK_MAN_AddTask( taskMan, rot, NULL );
+      }
+
       // 高さを変更したくないので
       // 高さ取得禁止ステータスビットをONにする
       {
@@ -1279,14 +1290,6 @@ static GMEVENT_RESULT ShortcutEvent( GMEVENT* event, int* seq, void* wk )
   // メイン処理
   case SEQ_MAIN:
     {
-      // 自機の向きを変える
-      if( MMDL_CheckEndAcmd(p_wk->mmdl) )
-      {
-        u16 dir = FIELD_PLAYER_GetDir( p_wk->player );
-        dir++;
-        dir %= 4;
-        MMDL_SetAcmd( p_wk->mmdl, (AC_DIR_U + dir) );
-      }
 
       // SE
       {
@@ -1334,7 +1337,7 @@ static GMEVENT_RESULT ShortcutEvent( GMEVENT* event, int* seq, void* wk )
       {
         FIELD_TASK_MAN* taskMan;
         taskMan = FIELDMAP_GetTaskManager( p_wk->p_fieldmap );
-        if( FIELD_TASK_MAN_IsAllTaskEnd(taskMan) ) {
+        if( FIELD_TASK_MAN_GetTaskNum(taskMan) <= 1 ) {
 
           // SE 停止
           {
