@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-08T20:48:03"/>
+	<create user="matsumiya" host="W00224" date="2011-03-24T17:46:28"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -240,7 +240,7 @@
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="132">
 		</attribute>
 		<language japanese="JPN" english="JPN">
-			<message position="2" width="274"/>
+			<message position="2" width="245"/>
 			<font default=" 0:large" position="5" width="109">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="1296" top="209" right="2000" bottom="837" maximized="no" rayout="Vertical2">
+	<dialog left="1295" top="171" right="2002" bottom="799" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="529"/>
+		<band id="0" index="1" style="0000" width="532"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="542"/>
+		<band id="2" index="3" style="0000" width="545"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="696"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<band id="4" index="0" style="0000" width="699"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -295,7 +295,7 @@
 	<row id="msg_c12r0101_swmama_01">
 		<comment>♀
 ・posイベントで室外から登場
-　入り口の上に待機（はママの顔が見えないので要検討）
+　入り口より１キャラ上で横並びになる
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">スワン主人公ママ</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]！
@@ -306,7 +306,8 @@
 
 	<row id="msg_c12r0101_swmama_02">
 		<comment>♀
-・前ふり</comment>
+・メッセージ後、その場で一回転
+・続けて</comment>
 		<attribute name="キャラ指定">スワン主人公ママ</attribute>
 		<language name="JPN" width="256">アララギ博士って　知ってるでしょ
 ポケモン研究で　有名な▼
@@ -320,42 +321,36 @@
 
 	<row id="msg_c12r0101_swmama_03">
 		<comment>♀
-・ポケモンほしい？
 ・はい/いいえ
 　はい　→
 　いいえ→</comment>
 		<attribute name="キャラ指定">スワン主人公ママ</attribute>
-		<language name="JPN" width="256">と　そのまえに
-主人公名前！▼
-あなた　ポケモントレーナーとして
-ポケモンと　ともに　歩む　覚悟ある？</language>
-		<language name="JPN_KANJI" width="256">と　そのまえに
-主人公名前！▼
-あなた　ポケモントレーナーとして
-ポケモンと　ともに　歩む　覚悟ある？</language>
+		<language name="JPN" width="256">と　そのまえに▼
+[1:00:トレーナー名:0]！　あなた
+じぶんの　ポケモン　ほしいよね？</language>
+		<language name="JPN_KANJI" width="256">と　そのまえに▼
+[1:00:トレーナー名:0]！　あなた
+じぶんの　ポケモン　ほしいよね？</language>
 	</row>
 
 	<row id="msg_c12r0101_swmama_04">
 		<comment>♀
-・再度確認
+・再確認
 ・はい/いいえ
 　はい　→
 　いいえ→</comment>
 		<attribute name="キャラ指定">スワン主人公ママ</attribute>
-		<language name="JPN" width="256">もういちど　きくけれど
-あなた　ポケモントレーナーとして
-ポケモンと　ともに　歩む　覚悟ある？</language>
-		<language name="JPN_KANJI" width="256">も……　もういちど　きくけれど
-あなた　ポケモントレーナーとして
-ポケモンと　ともに　歩む　覚悟ある？</language>
+		<language name="JPN" width="256">もういちど　きくけれど　あなた
+じぶんの　ポケモン　ほしいよね？</language>
+		<language name="JPN_KANJI" width="256">もういちど　きくけれど　あなた
+じぶんの　ポケモン　ほしいよね？</language>
 	</row>
 
 	<row id="msg_c12r0101_swmama_05">
 		<comment>♀
 ・いいえ選択時</comment>
 		<attribute name="キャラ指定">スワン主人公ママ</attribute>
-		<language name="JPN" width="256">いいえ選択
-ええー！！
+		<language name="JPN" width="256">ええー！！
 ちょっと　おどろき……！</language>
 		<language name="JPN_KANJI" width="256">ええー！！
 ちょっと　おどろき……！</language>
@@ -363,7 +358,7 @@
 
 	<row id="msg_c12r0101_swmama_06">
 		<comment>♀
-
+・はい選択
 ・メッセージ後、室内に移動
 　詳細未定</comment>
 		<attribute name="キャラ指定">スワン主人公ママ</attribute>
@@ -389,7 +384,7 @@
 		<language name="JPN" width="256">ベルについて　その２
 ・ポケモン入手まで繰り返し</language>
 		<language name="JPN_KANJI" width="256">・うちに来るはずだけど
-　遅いから探しに来て</language>
+　遅いから探してきて</language>
 	</row>
 
 	<row id="msg_c12r0101_swmama_08">
@@ -416,7 +411,7 @@
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_c12r0101_swmama_cure_01">
+	<row id="msg_c12r0101_swmama_cure_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀：回復処理
 ・メッセージ表示後、
 　画面暗転して回復処理
@@ -424,19 +419,17 @@
 　cure_02～06表示
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">スワン主人公ママ</attribute>
-		<language name="JPN" width="256">ママ『[1:00:トレーナー名:0]
-ポケモンは　げんき　なの？[BE:01:ページ切り替え（クリア）]
-ちょっと　やすんでいきなさいな[BE:01:ページ切り替え（クリア）]
-いい　トレーナーは
-ポケモンに　むりさせないのよ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ママ『[1:00:トレーナー名:0]
-ポケモンは　元気なの？[BE:01:ページ切り替え（クリア）]
-ちょっと　休んでいきなさいな[BE:01:ページ切り替え（クリア）]
-いい　トレーナーは
-ポケモンに　無理させないのよ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">ママ『ねえ
+ポケモンは　げんき？▼
+まっ　ちょっと　やすんでいきなさいよ
+がんばってばかりは　つかれるわよ▼</language>
+		<language name="JPN_KANJI" width="256">ママ『ねえ
+ポケモンは　げんき？▼
+まっ　ちょっと　やすんでいきなさいよ
+がんばってばかりは　つかれるわよ▼</language>
 	</row>
 
-	<row id="msg_c12r0101_swmama_cure_02">
+	<row id="msg_c12r0101_swmama_cure_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・回復処理後ランダム（20％）で
 　cure_02～06e表示
@@ -452,72 +445,46 @@
 さあ　旅を　続けなさいな</language>
 	</row>
 
-	<row id="msg_c12r0101_swmama_cure_03">
+	<row id="msg_c12r0101_swmama_cure_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・回復処理後ランダム（20％）で
 　cure_02～06e表示
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">スワン主人公ママ</attribute>
-		<language name="JPN" width="256">ママ『[1:00:トレーナー名:0]
-ポケモンには　やさしくしてる？▼
-あなたの　ために　ポケモンは
-がんばって　くれるんだもん！▼
-あなたも　ポケモンに
-やさしくするのが　ふつうでしょ？</language>
-		<language name="JPN_KANJI" width="256">ママ『[1:00:トレーナー名:0]
-ポケモンには　優しくしてる？▼
-あなたの　ために　ポケモンは
-がんばって　くれるんだもん！▼
-あなたも　ポケモンを
-気遣ってあげるのが　普通でしょ？</language>
+		<language name="JPN" width="256">ママ『テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">ママ『テストメッセージ</language>
 	</row>
 
-	<row id="msg_c12r0101_swmama_cure_04">
+	<row id="msg_c12r0101_swmama_cure_04" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・回復処理後ランダム（20％）で
 　cure_02～06e表示
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">スワン主人公ママ</attribute>
-		<language name="JPN" width="256">ママ『そういえば……▼
-パパも　あなたと　おなじように
-ポケモンと　たびを　していたのよね▼
-たびさきで　ママと　であって……</language>
-		<language name="JPN_KANJI" width="256">ママ『そういえば……▼
-パパも　あなたと　おなじように
-ポケモンと　旅を　していたのよね▼
-旅先で　ママと　出会って……</language>
+		<language name="JPN" width="256">ママ『テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">ママ『テストメッセージ</language>
 	</row>
 
-	<row id="msg_c12r0101_swmama_cure_05">
+	<row id="msg_c12r0101_swmama_cure_05" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・回復処理後ランダム（20％）で
 　cure_02～06e表示
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">スワン主人公ママ</attribute>
-		<language name="JPN" width="256">ママ『どう？　ポケモンは
-たくさん　つかまえているの？▽
-はかせの　おねがい　なんでしょ</language>
-		<language name="JPN_KANJI" width="256">ママ『どう？　ポケモンは
-たくさん　捕まえているの？▽
-博士の　お願い　なんでしょ</language>
+		<language name="JPN" width="256">ママ『テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">ママ『テストメッセージ</language>
 	</row>
 
-	<row id="msg_c12r0101_swmama_cure_06">
+	<row id="msg_c12r0101_swmama_cure_06" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・回復処理後ランダム（20％）で
 　cure_02～06e表示
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">スワン主人公ママ</attribute>
-		<language name="JPN" width="256">ママ『チェレンくんも　ベルちゃんも
-たびをして　なにを　みつけるのかな▼
-じぶんの　したいこと……
-それが　じぶんで　わかるようになれば▽
-ステキな　たびに　なると　おもうな</language>
-		<language name="JPN_KANJI" width="256">ママ『チェレンくんも　ベルちゃんも
-旅をして　なにを　みつけるのかな▼
-自分の　したいこと……
-それが　自分で　わかるようになれば▽
-ステキな　旅に　なると　思うな</language>
+		<language name="JPN" width="256">ママ『テストメッセージ
+・回復させる喜び
+・ポケモン受付嬢</language>
+		<language name="JPN_KANJI" width="256">ママ『テストメッセージ</language>
 	</row>
 
 	<row id="msg_c12r0101_game_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -532,21 +499,15 @@
 	<row id="msg_c12r0101_tv_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ</comment>
 		<attribute name="キャラ指定">TV</attribute>
-		<language name="JPN" width="256">パパが　かった
-うすがたテレビ　だ！</language>
-		<language name="JPN_KANJI" width="256">パパが　買った
-薄型テレビ　だ！</language>
+		<language name="JPN" width="256">うすがたテレビ</language>
+		<language name="JPN_KANJI" width="256">薄型テレビ</language>
 	</row>
 
 	<row id="msg_c12r0101_bed_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ</comment>
 		<attribute name="キャラ指定">ベッド</attribute>
-		<language name="JPN" width="256">ベッドが　ある……！▼
-ママが　せんたくしてくれた
-シーツが　いい　かおり！</language>
-		<language name="JPN_KANJI" width="256">ベッドが　ある……！▼
-ママが　洗濯してくれた
-シーツが　いい　香り！</language>
+		<language name="JPN" width="256">ベッド</language>
+		<language name="JPN_KANJI" width="256">ベッド</language>
 	</row>
 
 	<row id="msg_c12r0101_pc_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
