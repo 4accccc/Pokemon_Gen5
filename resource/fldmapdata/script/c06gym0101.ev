@@ -221,9 +221,9 @@ EVENT_START   ev_pos_c06gym0101_guide
 
     // カメラ操作とメッセージ
     _CALL move_camera_start
-    _BALLOONWIN_OBJMSG( msg_c06gym0101_glasses_02, C06GYM0101_DANPEI_01 )
+    _PLAINWIN_MSG_DOWN( msg_c06gym0101_glasses_02 )
     _LAST_KEYWAIT()
-    _BALLOONWIN_CLOSE()
+    _MSGWIN_CLOSE()
     _CALL move_camera_end
 
     //=====================================
