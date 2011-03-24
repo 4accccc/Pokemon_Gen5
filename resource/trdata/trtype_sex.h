@@ -30,10 +30,10 @@ static	const	u8	TrTypeSexTable[]={
 	PTL_SEX_FEMALE,		//ふたごちゃん
 	PTL_SEX_MALE,		//ポケモンブリーダー♂
 	PTL_SEX_FEMALE,		//ポケモンブリーダー♀
-	PTL_SEX_FEMALE,		//ジムリーダー2
+	PTL_SEX_FEMALE,		//ジムリーダー22
 	PTL_SEX_MALE,		//ジムリーダー33
 	PTL_SEX_FEMALE,		//ジムリーダー44
-	PTL_SEX_MALE,		//ジムリーダー5
+	PTL_SEX_MALE,		//ジムリーダー55
 	PTL_SEX_FEMALE,		//ジムリーダー66
 	PTL_SEX_MALE,		//ポケモンレンジャー♂
 	PTL_SEX_FEMALE,		//ポケモンレンジャー♀
@@ -65,7 +65,7 @@ static	const	u8	TrTypeSexTable[]={
 	PTL_SEX_MALE,		//カラテおう
 	PTL_SEX_MALE,		//けんきゅういん♂
 	PTL_SEX_MALE,		//サッカーせんしゅ
-	PTL_SEX_MALE,		//ジムリーダー7
+	PTL_SEX_MALE,		//ジムリーダー77
 	PTL_SEX_FEMALE,		//ジムリーダー8A
 	PTL_SEX_MALE,		//ジムリーダー8B
 	PTL_SEX_MALE,		//スキンヘッズ
@@ -114,7 +114,7 @@ static	const	u8	TrTypeSexTable[]={
 	PTL_SEX_FEMALE,		//ポケモントレーナー（DPCHAMPION）
 	PTL_SEX_MALE,		//プラズマだん（BOSS_2）
 	PTL_SEX_MALE,		//サブウェイマスター2
-	PTL_SEX_MALE,		//ジムリーダー1
+	PTL_SEX_MALE,		//ジムリーダー11
 	PTL_SEX_MALE,		//ポケモントレーナー（SCIENTISTM_1）
 	PTL_SEX_MALE,		//ポケモントレーナー（MOUNT_1）
 	PTL_SEX_MALE,		//ポケモントレーナー（ESPM_1）
@@ -126,6 +126,11 @@ static	const	u8	TrTypeSexTable[]={
 	PTL_SEX_FEMALE,		//ジムリーダー44
 	PTL_SEX_MALE,		//ジムリーダー33
 	PTL_SEX_FEMALE,		//ジムリーダー66
+	PTL_SEX_MALE,		//ジムリーダー11
+	PTL_SEX_FEMALE,		//ジムリーダー22
+	PTL_SEX_MALE,		//ジムリーダー55
+	PTL_SEX_MALE,		//ジムリーダー77
+	PTL_SEX_MALE,		//ジムリーダー8
 	PTL_SEX_MALE,		//男主人公（シューター）
 	PTL_SEX_FEMALE,	//女主人公（シューター）
 };

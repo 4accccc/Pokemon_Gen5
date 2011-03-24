@@ -998,6 +998,31 @@
 		<language name="JPN_KANJI" width="216">ジムリーダー</language>
 	</row>
 
+	<row id="MSG_TRTYPE_SWLEADER1">
+		<language name="JPN" width="216">ジムリーダー</language>
+		<language name="JPN_KANJI" width="216">ジムリーダー</language>
+	</row>
+
+	<row id="MSG_TRTYPE_SWLEADER2">
+		<language name="JPN" width="216">ジムリーダー</language>
+		<language name="JPN_KANJI" width="216">ジムリーダー</language>
+	</row>
+
+	<row id="MSG_TRTYPE_SWLEADER5">
+		<language name="JPN" width="216">ジムリーダー</language>
+		<language name="JPN_KANJI" width="216">ジムリーダー</language>
+	</row>
+
+	<row id="MSG_TRTYPE_SWLEADER7">
+		<language name="JPN" width="216">ジムリーダー</language>
+		<language name="JPN_KANJI" width="216">ジムリーダー</language>
+	</row>
+
+	<row id="MSG_TRTYPE_SWLEADER8">
+		<language name="JPN" width="216">ジムリーダー</language>
+		<language name="JPN_KANJI" width="216">ジムリーダー</language>
+	</row>
+
 	<row id="MSG_TRTYPE_HERO_S">
 		<language name="JPN" width="216">ポケモントレーナー</language>
 		<language name="JPN_KANJI" width="216">ポケモントレーナー</language>

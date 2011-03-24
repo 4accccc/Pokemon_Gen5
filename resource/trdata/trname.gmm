@@ -3638,6 +3638,31 @@
 		<language name="JPN_KANJI" width="216">フウロ</language>
 	</row>
 
+	<row id="swleader1_01">
+		<language name="JPN" width="216">チェレン</language>
+		<language name="JPN_KANJI" width="216">チェレン</language>
+	</row>
+
+	<row id="swleader2_01">
+		<language name="JPN" width="216">どく</language>
+		<language name="JPN_KANJI" width="216">どく</language>
+	</row>
+
+	<row id="swleader5_01">
+		<language name="JPN" width="216">ヤーコン</language>
+		<language name="JPN_KANJI" width="216">ヤーコン</language>
+	</row>
+
+	<row id="swleader7_01">
+		<language name="JPN" width="216">シャガ</language>
+		<language name="JPN_KANJI" width="216">シャガ</language>
+	</row>
+
+	<row id="swleader8_01">
+		<language name="JPN" width="216">みず</language>
+		<language name="JPN_KANJI" width="216">みず</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>

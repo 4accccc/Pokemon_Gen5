@@ -29,10 +29,10 @@
 #define	TRTYPE_FUTAGO    ( 16 )    //ふたごちゃん
 #define	TRTYPE_BREEDERM    ( 17 )    //ポケモンブリーダー♂
 #define	TRTYPE_BREEDERW    ( 18 )    //ポケモンブリーダー♀
-#define	TRTYPE_LEADER2    ( 19 )    //ジムリーダー2
+#define	TRTYPE_LEADER2    ( 19 )    //ジムリーダー22
 #define	TRTYPE_LEADER3    ( 20 )    //ジムリーダー33
 #define	TRTYPE_LEADER4    ( 21 )    //ジムリーダー44
-#define	TRTYPE_LEADER5    ( 22 )    //ジムリーダー5
+#define	TRTYPE_LEADER5    ( 22 )    //ジムリーダー55
 #define	TRTYPE_LEADER6    ( 23 )    //ジムリーダー66
 #define	TRTYPE_RANGERM    ( 24 )    //ポケモンレンジャー♂
 #define	TRTYPE_RANGERW    ( 25 )    //ポケモンレンジャー♀
@@ -64,7 +64,7 @@
 #define	TRTYPE_KARATE    ( 51 )    //カラテおう
 #define	TRTYPE_SCIENTISTM    ( 52 )    //けんきゅういん♂
 #define	TRTYPE_SOCCER    ( 53 )    //サッカーせんしゅ
-#define	TRTYPE_LEADER7    ( 54 )    //ジムリーダー7
+#define	TRTYPE_LEADER7    ( 54 )    //ジムリーダー77
 #define	TRTYPE_LEADER8A    ( 55 )    //ジムリーダー8A
 #define	TRTYPE_LEADER8B    ( 56 )    //ジムリーダー8B
 #define	TRTYPE_HEADS    ( 57 )    //スキンヘッズ
@@ -113,7 +113,7 @@
 #define	TRTYPE_DPCHAMPION    ( 100 )    //ポケモントレーナー（DPCHAMPION）
 #define	TRTYPE_BOSS_2    ( 101 )    //プラズマだん（BOSS_2）
 #define	TRTYPE_BCHAMP2    ( 102 )    //サブウェイマスター2
-#define	TRTYPE_LEADER1    ( 103 )    //ジムリーダー1
+#define	TRTYPE_LEADER1    ( 103 )    //ジムリーダー11
 #define	TRTYPE_SCIENTISTM_1    ( 104 )    //ポケモントレーナー（SCIENTISTM_1）
 #define	TRTYPE_MOUNT_1    ( 105 )    //ポケモントレーナー（MOUNT_1）
 #define	TRTYPE_ESPM_1    ( 106 )    //ポケモントレーナー（ESPM_1）
@@ -125,6 +125,11 @@
 #define	TRTYPE_SWLEADER4    ( 112 )    //ジムリーダー44
 #define	TRTYPE_SWLEADER3    ( 113 )    //ジムリーダー33
 #define	TRTYPE_SWLEADER6    ( 114 )    //ジムリーダー66
-#define	TRTYPE_HERO_S	    ( 115 )
-#define	TRTYPE_HEROINE_S	( 116 )
-#define	TRTYPE_MAX	( 117 )
+#define	TRTYPE_SWLEADER1    ( 115 )    //ジムリーダー11
+#define	TRTYPE_SWLEADER2    ( 116 )    //ジムリーダー22
+#define	TRTYPE_SWLEADER5    ( 117 )    //ジムリーダー55
+#define	TRTYPE_SWLEADER7    ( 118 )    //ジムリーダー77
+#define	TRTYPE_SWLEADER8    ( 119 )    //ジムリーダー8
+#define	TRTYPE_HERO_S	    ( 120 )
+#define	TRTYPE_HEROINE_S	( 121 )
+#define	TRTYPE_MAX	( 122 )

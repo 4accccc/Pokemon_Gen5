@@ -653,7 +653,12 @@
 #define	TRID_SWLEADER4_01   ( 640 ) 
 #define	TRID_SWLEADER3_01   ( 641 ) 
 #define	TRID_SWLEADER6_01   ( 642 ) 
-#define TRID_MAX  ( 643 )
+#define	TRID_SWLEADER1_01   ( 643 ) 
+#define	TRID_SWLEADER2_01   ( 644 ) 
+#define	TRID_SWLEADER5_01   ( 645 ) 
+#define	TRID_SWLEADER7_01   ( 646 ) 
+#define	TRID_SWLEADER8_01   ( 647 ) 
+#define TRID_MAX  ( 648 )
 
 #ifndef __ASM_NO_DEF_  //Ç±ÇÍà»ç~ÇÕÉAÉZÉìÉuÉâÇ≈ÇÕñ≥éã
 typedef  int TrainerID;
