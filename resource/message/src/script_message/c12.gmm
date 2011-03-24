@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-24T15:31:34"/>
+	<create user="matsumiya" host="W00224" date="2011-03-24T16:52:40"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -343,8 +343,10 @@
 ・メッセージ表示後、ライバルの家方向に
 ・主人公、ライバルの向き、動きを追従</comment>
 		<attribute name="キャラ指定">ライバル妹</attribute>
-		<language name="JPN" width="256">はーい！▼</language>
-		<language name="JPN_KANJI" width="256">はーい！▼</language>
+		<language name="JPN" width="256">はーい！
+じゃーねー　[1:00:トレーナー名:0]さん▼</language>
+		<language name="JPN_KANJI" width="256">はーい！
+じゃーねー　[1:00:トレーナー名:0]さん▼</language>
 	</row>
 
 	<row id="msg_c12_swrival_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -376,16 +378,24 @@
 		<comment>♂
 ・振り向き会話その１</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">テストメッセージその１</language>
-		<language name="JPN_KANJI" width="256">仮メッセージその１</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『それにしてもさ▼
+ポケモンを　もらえるなんて
+おまえ　すごい　ラッキーだよな</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『それにしてもさ▼
+ポケモンを　もらえるなんて
+おまえ　すごい　ラッキーだよな</language>
 	</row>
 
 	<row id="msg_c12_swrival_06" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
 		<comment>♂
 ・振り向き会話その２</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">テストメッセージその２</language>
-		<language name="JPN_KANJI" width="256">仮メッセージその２</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『で　ポケモンと
+ポケモンずかんを　たくされたら▽
+オマエも　たびに　でるのか？</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『で　ポケモンと
+ポケモンずかんを　たくされたら▽
+オマエも　たびに　でるのか？</language>
 	</row>
 
 	<row id="msg_c12_swrival_07" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
@@ -393,9 +403,9 @@
 ・振り向き会話その３
 　繰り返し</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『いいから
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『……いいから
 ベルって　ひと　さがそう</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『いいから
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『……いいから
 ベルって　人　探そう</language>
 	</row>
 
@@ -481,52 +491,61 @@
 
 	<row id="msg_c12_swmama_01">
 		<comment>♀
-・ポケセンでのチュートリアル後</comment>
+・ポケセンでのチュートリアル後
+　外にでるとイベント開始
+・ライバル妹もいる</comment>
 		<attribute name="キャラ指定">スワン主人公ママ</attribute>
-		<language name="JPN" width="256">ママ『
-・ランニングシューズ</language>
-		<language name="JPN_KANJI" width="256">ママ『
-・ランニングシューズ</language>
+		<language name="JPN" width="256">ママ『よっ！　[1:00:トレーナー名:0]
+ベルちゃんと　であえたみたいね▼
+あら？　[1:01:ポケモン種族名:2]を　えらんだのね
+フフ　なんだか　いいかんじ！▼</language>
+		<language name="JPN_KANJI" width="256">ママ『よっ！　[1:00:トレーナー名:0]
+ベルちゃんと　であえたみたいね▼
+あら？　[1:01:ポケモン種族名:2]を　えらんだのね
+フフ　なんだか　いいかんじ！▼</language>
 	</row>
 
 	<row id="msg_c12_swmama_02">
+		<comment>♀
+・！マーク表示</comment>
 		<attribute name="キャラ指定">スワン主人公ママ</attribute>
+		<language name="JPN" width="256">おっと！
+わすれるところでした▼
+ほら！　これ！　この
+ランニングシューズを　はきなさい▼</language>
+		<language name="JPN_KANJI" width="256">おっと！
+わすれるところでした▼
+ほら！　これ！　この
+ランニングシューズを　はきなさい▼</language>
+	</row>
+
+	<row id="msg_c12_swmama_03">
+		<attribute name="キャラ指定">システム</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は
 [FF:00:色:2]ランニングシューズ[FF:00:色:0]を　もらった！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
 [FF:00:色:2]ランニングシューズ[FF:00:色:0]を　もらった！</language>
 	</row>
 
-	<row id="msg_c12_swmama_03">
+	<row id="msg_c12_swmama_04">
+		<comment>♀</comment>
 		<attribute name="キャラ指定">スワン主人公ママ</attribute>
-		<language name="JPN" width="256">ランニングシューズを　はいていれば
-どこにいくのも　あっ　というま！▼
-では　とりあつかい　せつめいしょを
-よむから　きいてなさいね▼
-
+		<language name="JPN" width="256">おっ！　にあってる！　にあってる！
+じゃ　せつめいしょを　よむわね▼
 「ランニングシューズは
  Ｂボタンを　おすことで　いままでより▽
  はやく　はしれるように　なります！▼
  ランニングシューズを　はいて
  おもいっきり　はしりまくろう！」▼
 </language>
-		<language name="JPN_KANJI" width="256">ランニングシューズを　履いていれば
-どこに行くのも　あっ　というま！▼
-では　取り扱い説明書を
-読むから　聞いてなさいね▼
-
+		<language name="JPN_KANJI" width="256">おっ！　にあってる！　にあってる！
+じゃ　取扱説明書を　読むわね▼
 「ランニングシューズは
  Ｂボタンを　押すことで　今までより▽
  速く　走れるように　なります！▼
  ランニングシューズを　履いて
  おもいっきり　走りまくろう！」▼
 </language>
-	</row>
-
-	<row id="msg_c12_swmama_04">
-		<attribute name="キャラ指定">スワン主人公ママ</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_c12_rivalsister_03" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
@@ -538,19 +557,26 @@
 	</row>
 
 	<row id="msg_c12_rivalsister_04" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
-		<comment>♀
-・</comment>
-		<attribute name="キャラ指定">ライバル妹</attribute>
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
+		<attribute name="キャラ指定">システム</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]は
+[FF:00:色:2]タウンマップ[FF:00:色:0]を　もらった！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
+[FF:00:色:2]タウンマップ[FF:00:色:0]を　もらった！</language>
 	</row>
 
 	<row id="msg_c12_rivalsister_05" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・</comment>
 		<attribute name="キャラ指定">ライバル妹</attribute>
-		<language name="JPN" width="256"></language>
+		<language name="JPN" width="256">
+お兄ちゃんに渡してほしい</language>
 		<language name="JPN_KANJI" width="256"></language>
+	</row>
+
+	<row id="msg_c12_swmama_05" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<attribute name="キャラ指定">スワン主人公ママ</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_c12_white_01a" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -573,7 +599,8 @@
 		<comment>♀
 ・</comment>
 		<attribute name="キャラ指定">ベル</attribute>
-		<language name="JPN" width="256">テストメッセージ
+		<language name="JPN" width="256">どうだった？
+ジムリーダーとの　ポケモンしょうぶ▼
 ・わざマシン「おんがえし」くれる</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
@@ -608,17 +635,17 @@
 		<comment>♀
 ・チェレン到着前</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
-		<language name="JPN" width="256">おたがいの　ポケモンを
+		<language name="JPN" width="256">パートナーである　ポケモンを
 たたかわせるのが　ポケモントレーナー▼
 そのなかでも　とびっきり　つよいのが
 ジムリーダー　なんだってね！</language>
-		<language name="JPN_KANJI" width="256">おたがいの　ポケモンを
+		<language name="JPN_KANJI" width="256">パートナーである　ポケモンを
 たたかわせるのが　ポケモントレーナー▼
 そのなかでも　とびっきり　つよいのが
 ジムリーダー　なんだってね！</language>
 	</row>
 
-	<row id="msg_c12_girl2_02" back-color="#ff8080,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c12_girl2_02" back-color="#ff8080,,,,,#ff8080,,,,,,,,,,,,,">
 		<comment>♀
 ・チェレン到着後</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
@@ -644,7 +671,7 @@
 工事を　しているんだって！</language>
 	</row>
 
-	<row id="msg_c12_boy2_02" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c12_boy2_02" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
 		<comment>♂
 ・チェレン到着後</comment>
 		<attribute name="キャラ指定">BOY2</attribute>
