@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-07T20:58:50"/>
+	<create user="matsumiya" host="W00224" date="2011-03-23T19:43:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1377" top="229" right="2082" bottom="849" maximized="no" rayout="Vertical2">
+	<dialog left="1304" top="221" right="2009" bottom="849" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -315,10 +315,23 @@
 	</row>
 
 	<row id="msg_d22r0101_02_03">
-		<comment>？？？</comment>
+		<comment>ポケモン
+・ヨーテリー</comment>
 		<attribute name="キャラ指定">ポケモン</attribute>
 		<language name="JPN" width="256">・迷子のポケモン</language>
 		<language name="JPN_KANJI" width="256">・迷子のポケモン</language>
+	</row>
+
+	<row id="msg_d22r0101_02_04">
+		<comment>きずぐすりで回復
+主人トレーナ-来る
+・迷ったんですかね
+・さあね
+・あたしゃプラズマ団かと……
+・それは
+イベント終了</comment>
+		<language name="JPN" width="256"></language>
+		<language name="JPN_KANJI" width="256"></language>
 	</row>
 
 	<flowchart-group-list>
