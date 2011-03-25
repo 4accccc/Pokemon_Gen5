@@ -1,7 +1,8 @@
 EFFSEQ
-$0002
+$0003
 c:\home\swan\resource\particle\wazaeffect\w_126.spa
 C:\home\swan\resource\wazaeffect\graphic\bg_126_daimonji.NSCR
+C:\home\swan\resource\wazaeffect\bg_palanm\bg_126_daimonji_p.dat
 #001
 %00
 パーティクルデータロード	w_126
@@ -39,12 +40,13 @@ BGのロード	bg_126_daimonji
 BGの表示/非表示	フィールド	非表示
 BGの表示/非表示	お盆	非表示
 BGの表示/非表示	エフェクト	表示
+BGのパレットアニメ	bg_126_daimonji_p	3
 BGのスクロール	往復	0	8	2	0	16
-エフェクト終了待ち	すべて
+タイマーによるウエイト	60
 ポケモンパレットフェード	防御側	10	0	2	31:0:0
 BGのパレットフェード	エフェクト面	0	16	0	0:0:0
-タイマーによるウエイト	16
-BGのパレットフェード	お盆＋フィールド	16	0	0	0:0:0
+タイマーによるウエイト	10
+BGのパレットフェード	お盆＋フィールド	16	0	1	0:0:0
 ポケモンアニメ	防御側	アニメスタート
 BGの表示/非表示	フィールド	表示
 BGの表示/非表示	お盆	表示
