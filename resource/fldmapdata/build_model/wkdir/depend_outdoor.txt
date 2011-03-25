@@ -320,4 +320,31 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/c13_ship_01.nsbmd \
 	$(RESDIR)/c12_gymlight_01.nsbmd \
 	$(RESDIR)/door_c12_01.nsbmd \
+	$(RESDIR)/r4_build_03.nsbmd \
+	$(RESDIR)/r4_build_04.nsbmd \
+	$(RESDIR)/r4_ruins_01.nsbmd \
+	$(RESDIR)/r4_ruins_02.nsbmd \
+	$(RESDIR)/r4_ruins_03.nsbmd \
+	$(RESDIR)/r4_ruins_04.nsbmd \
+	$(RESDIR)/c5_rbuild_01.nsbmd \
+	$(RESDIR)/c5_rbuild_02.nsbmd \
+	$(RESDIR)/c5_rbuild_03.nsbmd \
+	$(RESDIR)/c5_wbt_01.nsbmd \
+	$(RESDIR)/c6_plan_02.nsbmd \
+	$(RESDIR)/t7_house_01.nsbmd \
+	$(RESDIR)/t7_house_02.nsbmd \
+	$(RESDIR)/d25_mhouse_01.nsbmd \
+	$(RESDIR)/h6_gate_01.nsbmd \
+	$(RESDIR)/c8_lbuildb_01.nsbmd \
+	$(RESDIR)/c8_lbuildw_01.nsbmd \
+	$(RESDIR)/c8_lbuildb_02.nsbmd \
+	$(RESDIR)/c8_lbuildw_02.nsbmd \
+	$(RESDIR)/c8_lbuildb_03.nsbmd \
+	$(RESDIR)/c8_lbuildw_03.nsbmd \
+	$(RESDIR)/c8_lbuildb_04.nsbmd \
+	$(RESDIR)/c8_lbuildw_04.nsbmd \
+	$(RESDIR)/c8_lbuildb_05.nsbmd \
+	$(RESDIR)/c8_lbuildw_05.nsbmd \
+	$(RESDIR)/c8_gym_03.nsbmd \
+	$(RESDIR)/bigicicle_01.nsbmd \
 
