@@ -3438,3 +3438,7 @@ $(DIR_WBTMP)/m_mugen12_00_00.tbl: $(DIR_RES)/m_mugen12_00_00.bin
 	@echo create_bintbl m_mugen12_00_00
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_mugen12_00_00.bin
 
+$(DIR_WBTMP)/m_remainder01_00_00.tbl: $(DIR_RES)/m_remainder01_00_00.bin
+	@echo create_bintbl m_remainder01_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_remainder01_00_00.bin
+
