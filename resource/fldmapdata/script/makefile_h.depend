@@ -1680,6 +1680,9 @@ c03p18_def.h: c03p18.ev
 c03p19_def.h: c03p19.ev
 	$(EV_DEF) c03p19.ev $(SCR_OFFS_ID_H)
 
+c13gym0102_def.h: c13gym0102.ev
+	$(EV_DEF) c13gym0102.ev $(SCR_OFFS_ID_H)
+
 ifeq ($(PM_DEBUG),yes)
 debug_scr_def.h: debug_scr.ev
 	$(EV_DEF) debug_scr.ev $(SCR_OFFS_ID_H)

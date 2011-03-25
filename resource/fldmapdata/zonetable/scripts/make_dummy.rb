@@ -10,6 +10,16 @@ require "fileutils"
 SCRMSG_PATH = "../../message/src/script_message/"
 SCRIPT_PATH = "../script/"
 
+WINDOWS_SVN_FLAG = if `which svn`.chomp =~ /\/cygdrive\/c\/tools\/Subversion/ then
+                     true
+                   elsif `which svn`.chomp =~ /\/cygdrive\/c\/Program Files\/SlikSVN\/bin/ then
+                     true
+                   elsif `which svn`.chomp =~ /\/cygdrive\/c\/tools\/subversion\/bin\/svn/ then
+                     true
+                   else
+                     false
+                   end
+
 
 ###############################################################
 ###############################################################
@@ -49,7 +59,7 @@ def makeGMMs( zone_ids )
     target = SCRMSG_PATH + id + ".gmm"
     unless FileTest.exists?(target) then
       FileUtils.cp("dummyfiles/dummy.gmm", target)
-      #system ("svn add " + target)
+      system ("svn add " + target) if WINDOWS_SVN_FLAG == true
       puts "#{id}.gmm がみつからなかったのでダミーを作成しました！"
     end
   }

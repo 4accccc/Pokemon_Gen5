@@ -13,6 +13,8 @@ WINDOWS_SVN_FLAG = if `which svn`.chomp =~ /\/cygdrive\/c\/tools\/Subversion/ th
                      true
                    elsif `which svn`.chomp =~ /\/cygdrive\/c\/Program Files\/SlikSVN\/bin/ then
                      true
+                   elsif `which svn`.chomp =~ /\/cygdrive\/c\/tools\/subversion\/bin\/svn/ then
+                     true
                    else
                      false
                    end
