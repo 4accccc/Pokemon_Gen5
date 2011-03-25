@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="matsuzaki_tsubasa" host="W00193" date="2011-03-23T11:49:18" source="untitled"/>
+	<create user="matsuzaki_tsubasa" host="W00193" date="2011-03-25T19:12:19" source="untitled"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="matsuzaki_tsubasa" host="W00193" date="2011-03-23T11:49:18" source="untitled"/>
+<original_create user="matsuzaki_tsubasa" host="W00193" date="2011-03-25T19:12:19" source="untitled"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -20,8 +20,8 @@
 	magnify="1.000000"
 	tool_start_frame="1"
 	tex_matrix_mode="maya"
-	compress_node="merge" node_size="10 10"
-	compress_material="on" material_size="9 9"
+	compress_node="merge" node_size="17 17"
+	compress_material="on" material_size="16 16"
 	output_texture="used"
 	force_full_weight="off"
 	use_primitive_strip="on"
@@ -29,7 +29,7 @@
 
 <box_test pos_scale="5" xyz="-0.250000 0.000000 -0.250000" whd="4.000000 0.000000 1.000000"/>
 
-<tex_image_array size="9">
+<tex_image_array size="16">
 	<tex_image index="0" name="gym06_ami"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette16"
@@ -38,14 +38,14 @@
 		path="C:/Documents and Settings/matsuzaki_tsubasa/My Documents/Swan/in28/map/tex/gym06_ami.tga"
 	>
 		<bitmap size="64">
-			5678 1234 4321 8765 0007 2000 0002 7000
-			0006 3000 0003 6000 0005 4000 0004 5000
-			0004 5000 0005 4000 0003 6000 0006 3000
-			0002 7000 0007 2000 4321 8765 5678 1234
-			4321 8765 5678 1234 0002 7000 0007 2000
-			0003 6000 0006 3000 0004 5000 0005 4000
-			0005 4000 0004 5000 0006 3000 0003 6000
-			0007 2000 0002 7000 5678 1234 4321 8765
+			ba91 fedc cde8 99ab 0002 e000 0007 9000
+			0003 d000 0006 a000 0004 c000 0005 b000
+			0005 b000 0004 c000 0006 a000 0003 d000
+			0007 9000 0002 e000 5678 1234 4321 8765
+			cde8 99ab ba91 fedc 0007 9000 0002 e000
+			0006 a000 0003 d000 0005 b000 0004 c000
+			0004 c000 0005 b000 0003 d000 0006 a000
+			0002 e000 0007 9000 4321 8765 5678 1234
 		</bitmap>
 	</tex_image>
 	<tex_image index="1" name="gym06_amiside"
@@ -56,53 +56,55 @@
 		path="C:/Documents and Settings/matsuzaki_tsubasa/My Documents/Swan/in28/map/tex/gym06_amiside.tga"
 	>
 		<bitmap size="16">
-			5555 5555 5555 5555 aaaa aaaa ffff ffff
-			ffff ffff aaaa aaaa 5555 5555 5555 5555
+			5555 5555 5555 5555 ffff ffff aaaa aaaa
+			aaaa aaaa ffff ffff 5555 5555 5555 5555
 		</bitmap>
 	</tex_image>
 	<tex_image index="2" name="gym06_asiba"
-		width="32" height="32" original_width="32" original_height="32"
+		width="32" height="16" original_width="32" original_height="16"
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="gym06_asiba_pl"
 		path="C:/Documents and Settings/matsuzaki_tsubasa/My Documents/Swan/in28/map/tex/gym06_asiba.tga"
 	>
-		<bitmap size="256">
-			1111 1111 1111 1111 1111 1111 1111 3321
-			1111 1111 1111 1111 1111 1111 1111 3321
-			1111 1111 1111 1111 1111 1111 1111 3321
-			1111 1111 1111 1111 1111 1111 1111 3321
-			1111 1111 1111 1111 1111 1111 1111 3321
-			1111 1111 1111 1111 1111 1111 1111 3321
-			1111 1111 1111 1111 1111 1111 1111 3321
-			1111 1111 1111 1111 1111 1111 1111 3321
-			1111 1111 1111 1111 1111 1111 1111 3321
-			1111 1111 1111 1111 1111 1111 1111 3321
-			1111 1111 1111 1111 1111 1111 1111 3321
-			1111 1111 1111 1111 1111 1111 1111 3321
-			1111 1111 1111 1111 1111 1111 1111 3321
-			1111 1111 1111 1111 1111 1111 1111 3321
-			1111 1111 1111 1111 1111 1111 1111 3321
-			1111 1111 1111 1111 1111 1111 1111 3321
-			1111 1111 1111 1111 1111 1111 1111 3321
-			1111 1111 1111 1111 1111 1111 1111 3321
-			1111 1111 1111 1111 1111 1111 1111 3321
-			1111 1111 1111 1111 1111 1111 1111 3321
-			5555 5555 5555 5555 5555 5555 5555 3355
-			5555 5555 5555 5555 5555 5555 5555 3355
-			7777 7777 7777 7777 7777 7777 7777 3377
-			bbbb bb99 bbbb 99bb bbbb bbbb bb99 33bb
-			a999 9a66 9999 66a9 999a a999 9a66 3399
-			a999 9a66 9999 66a9 999a a999 9a66 3399
-			a999 9a66 9999 66a9 999a a999 9a66 3399
-			a999 9a66 9999 66a9 999a a999 9a66 3399
-			a999 9a66 9999 66a9 999a a999 9a66 3399
-			4444 4444 4444 4444 4444 4444 4444 3344
-			5555 5555 5555 5555 5555 5555 5555 3355
-			8888 8888 8888 8888 8888 8888 8888 3388
+		<bitmap size="128">
+			3333 3333 3333 3333 3333 3333 3333 3333
+			3333 3333 3333 3333 3333 3333 3333 3333
+			2222 2222 2222 2222 2222 2222 2222 2222
+			1111 1111 1111 1111 1111 1111 1111 1111
+			5555 5555 5555 5555 5555 5555 5555 2255
+			5555 5555 5555 5555 5555 5555 5555 2255
+			7777 7777 7777 7777 7777 7777 7777 2277
+			bbbb bb99 bbbb 99bb bbbb bbbb bb99 22bb
+			a999 9a66 9999 66a9 999a a999 9a66 2299
+			a999 9a66 9999 66a9 999a a999 9a66 2299
+			a999 9a66 9999 66a9 999a a999 9a66 2299
+			a999 9a66 9999 66a9 999a a999 9a66 2299
+			a999 9a66 9999 66a9 999a a999 9a66 2299
+			4444 4444 4444 4444 4444 4444 4444 2244
+			5555 5555 5555 5555 5555 5555 5555 2255
+			8888 8888 8888 8888 8888 8888 8888 2288
 		</bitmap>
 	</tex_image>
-	<tex_image index="3" name="gym06_gym_kabe"
+	<tex_image index="3" name="gym06_asiba2"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="gym06_asiba2_pl"
+		path="C:/Documents and Settings/matsuzaki_tsubasa/My Documents/Swan/in28/map/tex/gym06_asiba2.tga"
+	>
+		<bitmap size="64">
+			6666 6666 6666 6666 6666 6666 6666 6666
+			6666 8866 6688 6666 6666 5586 6855 6666
+			6666 4458 8544 6666 8666 7445 5137 6668
+			5866 7744 1177 6685 5866 7774 1222 6685
+			5866 2774 1222 6685 5866 2734 1122 6685
+			8666 2115 5112 6668 6666 1158 8511 6666
+			6666 5586 6855 6666 6666 8866 6688 6666
+			6666 6666 6666 6666 6666 6666 6666 6666
+		</bitmap>
+	</tex_image>
+	<tex_image index="4" name="gym06_gym_kabe"
 		width="32" height="16" original_width="32" original_height="16"
 		format="palette256"
 		color0_mode="transparency"
@@ -110,93 +112,163 @@
 		path="C:/Documents and Settings/matsuzaki_tsubasa/My Documents/Swan/in28/map/tex/gym06_gym_kabe.tga"
 	>
 		<bitmap size="256">
-			1012 1010 1010 1010 1010 1010 1010 1010
-			1010 1010 1010 1010 1010 1210 0b0f 0f0b
-			080d 0808 0808 0808 0808 0808 0808 0808
-			0808 0808 0808 0808 0808 0d08 0b0f 0f0b
-			050a 0505 0505 0505 0505 0505 0505 0505
-			0505 0505 0505 0505 0505 0a05 0b0f 0f0b
+			1113 1111 1111 1111 1111 1111 1111 1111
+			1111 1111 1111 1111 1111 1013 080c 100c
+			090e 0909 0909 0909 0909 0909 0909 0909
+			0909 0909 0909 0909 0909 100e 080c 100c
+			050b 0505 0505 0505 0505 0505 0505 0505
+			0505 0505 0505 0505 0505 100b 080c 100c
 			0307 0303 0303 0303 0303 0303 0303 0303
-			0303 0303 0303 0303 0303 0703 0b0f 0f0b
+			0303 0303 0303 0303 0303 1007 080c 100c
 			0307 0303 0303 0303 0303 0303 0303 0303
-			0303 0303 0303 0303 0303 0703 0b0f 0f0b
+			0303 0303 0303 0303 0303 1007 080c 100c
 			0206 0202 0202 0202 0202 0202 0202 0202
-			0202 0202 0202 0202 0202 0602 0b0f 0f0b
+			0202 0202 0202 0202 0202 1006 080c 100c
 			0206 0202 0202 0202 0202 0202 0202 0202
-			0202 0202 0202 0202 0202 0602 0b0f 0f0b
+			0202 0202 0202 0202 0202 1006 080c 100c
 			0104 0101 0101 0101 0101 0101 0101 0101
-			0101 0101 0101 0101 0101 0401 0b0f 0f0b
+			0101 0101 0101 0101 0101 1004 080c 100c
 			0104 0101 0101 0101 0101 0101 0101 0101
-			0101 0101 0101 0101 0101 0401 0b0f 0f0b
-			0c11 0c0c 0c0c 0c0c 0c0c 0c0c 0c0c 0c0c
-			0c0c 0c0c 0c0c 0c0c 0c0c 110c 0b0f 0f0b
-			0c11 0c0c 0c0c 0c0c 0c0c 0c0c 0c0c 0c0c
-			0c0c 0c0c 0c0c 0c0c 0c0c 110c 0b0f 0f0b
-			090e 0909 0909 0909 0909 0909 0909 0909
-			0909 0909 0909 0909 0909 0e09 0b0f 0f0b
-			090e 0909 0909 0909 0909 0909 0909 0909
-			0909 0909 0909 0909 0909 0e09 0b0f 0f0b
-			090e 0909 0909 0909 0909 0909 0909 0909
-			0909 0909 0909 0909 0909 0e09 0b0f 0f0b
-			050a 0505 0505 0505 0505 0505 0505 0505
-			0505 0505 0505 0505 0505 0a05 0b0f 0f0b
-			050a 0505 0505 0505 0505 0505 0505 0505
-			0505 0505 0505 0505 0505 0a05 0b0f 0f0b
+			0101 0101 0101 0101 0101 1004 080c 100c
+			0d12 0d0d 0d0d 0d0d 0d0d 0d0d 0d0d 0d0d
+			0d0d 0d0d 0d0d 0d0d 0d0d 1012 080c 100c
+			0d12 0d0d 0d0d 0d0d 0d0d 0d0d 0d0d 0d0d
+			0d0d 0d0d 0d0d 0d0d 0d0d 1012 080c 100c
+			0a0f 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
+			0a0a 0a0a 0a0a 0a0a 0a0a 100f 080c 100c
+			0a0f 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
+			0a0a 0a0a 0a0a 0a0a 0a0a 100f 080c 100c
+			0a0f 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a
+			0a0a 0a0a 0a0a 0a0a 0a0a 100f 080c 100c
+			050b 0505 0505 0505 0505 0505 0505 0505
+			0505 0505 0505 0505 0505 100b 080c 100c
+			050b 0505 0505 0505 0505 0505 0505 0505
+			0505 0505 0505 0505 0505 100b 080c 100c
 		</bitmap>
 	</tex_image>
-	<tex_image index="4" name="gym06_gym_yuka"
+	<tex_image index="5" name="gym06_gym_kabe2"
 		width="32" height="32" original_width="32" original_height="32"
-		format="palette4"
-		color0_mode="color"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="gym06_gym_kabe2_pl"
+		path="C:/Documents and Settings/matsuzaki_tsubasa/My Documents/Swan/in28/map/tex/gym06_gym_kabe2.tga"
+	>
+		<bitmap size="256">
+			2bbb 6432 2a97 bbb2 1555 1111 1111 5551
+			2bbb 6432 2a97 bbb2 1555 1111 1111 5551
+			2bbb 6432 2a97 bbb2 cccc cccc cccc cccc
+			2bbb 6432 2a97 bbb2 cccc cccc cccc cccc
+			2bbb 6432 2a97 bbb2 dccc dddd dddd cccd
+			2bbb 6432 2a97 bbb2 dccc dddd dddd cccd
+			2bbb 6432 2a97 bbb2 dccc aaad daaa cccd
+			2bbb 6432 2a97 bbb2 dccc aaad daaa cccd
+			2bbb 6432 2a97 bbb2 dccc 8aad daa8 cccd
+			2bbb 6432 2a97 bbb2 dccc 8aad daa8 cccd
+			2bbb 6432 2a97 bbb2 dccc 8aad daa8 cccd
+			2bbb 6432 2a97 bbb2 dccc 8aad daa8 cccd
+			2bbb 6432 2a97 bbb2 dccc 8aad daa8 cccd
+			2bbb 6432 2a97 bbb2 dccc 8aad daa8 cccd
+			2bbb 6432 2a97 bbb2 dccc 8aad daa8 cccd
+			2bbb 6432 2a97 bbb2 dccc 8aad daa8 cccd
+			2bbb 6432 2a97 bbb2 dccc 8aad daa8 cccd
+			2bbb 6432 2a97 bbb2 dccc 8aad daa8 cccd
+			2bbb 6432 2a97 bbb2 dccc 8aad daa8 cccd
+			2bbb 6432 2a97 bbb2 dccc 8aad daa8 cccd
+			2bbb 6432 2a97 bbb2 dccc 8aad daa8 cccd
+			2bbb 6432 2a97 bbb2 dccc 8aad daa8 cccd
+			2bbb 6432 2a97 bbb2 dccc 8aad daa8 cccd
+			2bbb 6432 2a97 bbb2 dccc 8aad daa8 cccd
+			2bbb 6432 2a97 bbb2 dccc 8aad daa8 cccd
+			2bbb 6432 2a97 bbb2 dccc 8aad daa8 cccd
+			2bbb 6432 2a97 bbb2 dccc 8aad daa8 cccd
+			2bbb 6432 2a97 bbb2 dccc 8aad daa8 cccd
+			2bbb 6432 2a97 bbb2 dccc 8aad daa8 cccd
+			2bbb 6432 2a97 bbb2 dccc 8aad daa8 cccd
+			2bbb 6432 2a97 bbb2 dccc 8aad daa8 cccd
+			2bbb 6432 2a97 bbb2 dccc 8aad daa8 cccd
+		</bitmap>
+	</tex_image>
+	<tex_image index="6" name="gym06_gym_mark"
+		width="8" height="8" original_width="8" original_height="8"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="gym06_gym_mark_pl"
+		path="C:/Documents and Settings/matsuzaki_tsubasa/My Documents/Swan/in28/map/tex/gym06_gym_mark.tga"
+	>
+		<bitmap size="16">
+			5132 4444 5132 4444 5132 4444 5132 4444
+			5132 4444 5132 4444 5132 4444 5132 4444
+		</bitmap>
+	</tex_image>
+	<tex_image index="7" name="gym06_gym_yuka"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
 		palette_name="gym06_gym_yuka_pl"
 		path="C:/Documents and Settings/matsuzaki_tsubasa/My Documents/Swan/in28/map/tex/gym06_gym_yuka.tga"
 	>
-		<bitmap size="128">
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
+		<bitmap size="256">
+			1111 2222 4444 4444 4444 4444 2222 1111
+			1111 2222 4444 4444 4444 4444 2222 1111
+			dd11 dddd bbdd bbbb bbbb bbbb bbbb 1ddb
+			8d11 8888 8888 8888 8888 8888 8888 1888
+			8d22 8888 8888 8888 8888 8888 8888 2888
+			8d22 6666 6666 6666 6666 6666 6666 2666
+			8d22 6666 6666 6666 6666 6666 6666 2666
+			8d22 5566 5555 6935 5666 5555 9355 2666
+			8b44 7566 7777 6935 5666 7777 9357 4666
+			8b44 7566 77cc 6935 5666 7cc7 9357 4666
+			8b44 7566 77cc 6935 5666 7cc7 9357 4666
+			8b44 7566 7777 6935 5666 7777 9357 4666
+			8b44 7566 7777 6935 5666 7777 9357 4966
+			8b44 5566 5555 6935 5666 5555 9355 4966
+			8b44 3366 3333 6933 3666 3333 9333 4966
+			8b44 9966 9999 6999 9666 9999 9999 4a66
+			8b44 6666 6666 6666 6666 6666 6666 4a66
+			8b44 6666 6666 6666 6666 6666 6666 4a66
+			8b44 6666 6666 6666 6666 6666 6666 4a66
+			8b44 5566 5555 6935 5666 5555 9355 4a66
+			8b44 7566 7777 6935 5666 7777 9357 4a66
+			8b44 7566 77cc 6935 5666 7cc7 9357 4a96
+			8b44 7566 77cc 6935 5666 7cc7 9357 4a96
+			8b44 7566 7777 6935 5666 7777 9357 4a96
+			8b22 7566 7777 6935 5666 7777 9357 2a99
+			8b22 5566 5555 6935 5666 5555 9355 2aa9
+			8b22 3366 3333 6933 3666 3333 9333 2aa9
+			8b22 9966 9999 6999 9666 9999 9999 2aa9
+			8b11 6666 6666 6666 6666 6666 9999 1aa9
+			8d11 6666 6666 6666 6666 9999 aaa9 1aaa
+			8d11 6666 9666 aa99 aaaa aaaa aaaa 1aaa
+			1111 2222 4444 4444 4444 4444 2222 1111
 		</bitmap>
 	</tex_image>
-	<tex_image index="5" name="gym06_iriguti"
+	<tex_image index="8" name="gym06_iriguti"
 		width="16" height="32" original_width="16" original_height="32"
 		format="palette16"
-		color0_mode="color"
+		color0_mode="transparency"
 		palette_name="gym06_iriguti_pl"
 		path="C:/Documents and Settings/matsuzaki_tsubasa/My Documents/Swan/in28/map/tex/gym06_iriguti.tga"
 	>
 		<bitmap size="128">
-			3333 1233 5555 5555 3333 1233 6666 6666
-			3333 1233 4444 4444 3333 1233 0000 0000
-			3333 1233 4444 4444 3333 1233 5555 5555
-			3333 1233 5555 5555 3333 1233 6666 6666
-			3333 1233 4444 4444 3333 1233 0000 0000
-			3333 1233 4444 4444 3333 1233 5555 5555
-			3333 1233 5555 5555 3333 1233 6666 6666
-			3333 1233 4444 4444 3333 1233 0000 0000
-			6667 6666 4444 4444 7767 7777 5555 5555
-			7767 7777 5555 5555 6667 6666 6666 6666
-			6667 6666 4444 4444 7767 7777 0000 0000
-			7767 7777 4444 4444 6667 6666 5555 5555
-			6667 6666 5555 5555 7767 7777 6666 6666
-			7767 7777 4444 4444 6667 6666 0000 0000
-			6667 6666 4444 4444 7767 7777 5555 5555
-			7767 7777 5555 5555 6667 6666 6666 6666
+			7795 7777 8888 8888 9995 9999 7777 7777
+			5695 3445 2222 2222 5695 3445 1111 1111
+			5695 3445 2222 2222 5695 3445 aaaa aaaa
+			9995 9999 8888 8888 7795 7777 7777 7777
+			7795 7777 2222 2222 9995 9999 1111 1111
+			5695 3445 2222 2222 5695 3445 aaaa aaaa
+			5695 3445 8888 8888 5695 3445 7777 7777
+			9995 9999 2222 2222 7795 7777 1111 1111
+			7795 7777 2222 2222 9995 9999 aaaa aaaa
+			5695 3445 8888 8888 5695 3445 7777 7777
+			5695 3445 2222 2222 5695 3445 1111 1111
+			9995 9999 2222 2222 7795 7777 aaaa aaaa
+			7795 7777 8888 8888 9995 9999 7777 7777
+			5695 3445 2222 2222 5695 3445 1111 1111
+			5695 3445 2222 2222 5695 3445 aaaa aaaa
+			9995 9999 8888 8888 7795 7777 7777 7777
 		</bitmap>
 	</tex_image>
-	<tex_image index="6" name="gym06_kabe"
+	<tex_image index="9" name="gym06_kabe"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
@@ -238,7 +310,239 @@
 			4444 4444 4444 4444 4444 4444 4444 4444
 		</bitmap>
 	</tex_image>
-	<tex_image index="7" name="gym06_soto_kabe"
+	<tex_image index="10" name="gym06_p01"
+		width="64" height="32" original_width="64" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="gym06_p01_pl"
+		path="C:/Documents and Settings/matsuzaki_tsubasa/My Documents/Swan/in28/map/tex/gym06_p01.tga"
+	>
+		<bitmap size="512">
+			2222 2222 2222 2222 2222 bb22 aaaa aaaa
+			baaa baab bbbb bbbb abbb aaba aaaa aaaa
+			2222 2222 2222 2222 2222 bb22 aaaa aaaa
+			baaa baab bbbb bbbb abbb 8aba 8888 a888
+			2222 2222 2222 2222 2222 aa22 7777 7777
+			a777 977a 9999 9999 7999 8aa7 8888 a888
+			2222 2222 2222 2222 2222 aa22 7777 7777
+			a777 977a 9999 9999 7999 8aa7 1118 a881
+			2222 2222 2222 2222 2222 aa22 7777 7777
+			a777 977a 9999 9999 7999 8aa7 1118 a881
+			2222 2222 2222 2222 2222 aa22 7777 7777
+			a777 977a 9999 9999 7999 8aa7 1118 a881
+			2222 2222 2222 2222 2222 aa22 7777 7777
+			a777 977a 9999 9999 7999 8aa7 1118 a881
+			2222 2222 2222 2222 2222 aa22 7777 7777
+			a777 977a 9999 9999 7999 8aa7 1118 a881
+			2222 2222 2222 2222 2222 7722 5555 5555
+			7555 7557 7777 7777 5777 8a75 8888 a888
+			2222 2222 2222 2222 2222 7722 5555 5555
+			7555 7557 7777 7777 5777 8a75 8888 a888
+			2222 2222 2222 2222 2222 7722 5555 5555
+			7555 7557 7777 7777 5777 aa75 aaaa aaaa
+			2222 2222 2222 2222 2222 7722 5555 5555
+			7555 7557 7777 7777 5777 ba75 bbbb abbb
+			2222 2222 2222 7772 7777 7777 7777 7777
+			7777 7777 7777 7777 7777 7777 7777 7777
+			2222 2222 2222 7772 7777 7777 7777 7777
+			7777 7777 7777 7777 7777 7777 7777 7777
+			7aaa 7aaa aaaa 233a 2222 2222 2222 3322
+			2222 2222 2222 2233 2222 2222 2222 2222
+			5aaa 5aaa aaaa 233a 2222 2222 2222 3322
+			2222 2222 2222 2233 2222 2222 2222 2222
+			5aaa 5aaa aaaa 233a 2222 2222 2222 3322
+			2222 2222 2222 2233 2222 2222 2222 2222
+			5aaa 5aaa aaaa 344a 3333 3333 3333 4433
+			3333 3333 3333 3344 3333 3333 3333 3333
+			5aaa 5aaa aaaa 344a 3333 3333 3333 4433
+			3333 3333 3333 3344 3333 3333 3333 3333
+			7aaa 7aaa aaaa 455a 4444 4444 4444 5544
+			4444 4444 4444 4455 4444 4444 4444 4444
+			aaaa aaaa 44aa 4554 4444 4444 4444 5544
+			4444 4444 4444 4455 4444 4444 4444 4444
+			aaaa aaaa 44aa 4554 4444 4444 4444 5544
+			4444 4444 4444 4455 4444 4444 4444 4444
+			aaaa aaaa 44aa 5774 5555 5555 5555 7755
+			5555 5555 5555 5577 aa65 aaaa aaaa 5556
+			aaaa a858 44aa 5774 5555 5555 5555 7755
+			5555 5555 5555 5577 aa65 aaaa aaaa 5556
+			aaaa a555 44aa 5774 5555 5555 5555 7755
+			5555 5555 5555 5577 aa65 aaaa aaaa 5556
+			aaaa a858 44aa 5774 5555 5555 5555 7755
+			5555 5555 5555 5577 aa65 aaaa aaaa 5556
+			aaaa aaaa 44aa 5774 5555 5555 5555 7755
+			5555 5555 5555 5577 aa65 aaaa aaaa 5556
+			aaaa aaaa 77aa 5777 5555 5555 5555 7755
+			5555 5555 5555 5577 aa65 aaaa aaaa 5556
+			aaaa aaaa 77aa 5777 aa55 5555 5aa5 7755
+			5555 5555 5555 5577 aa65 aaaa aaaa 5556
+			5555 5555 2245 5774 5555 5555 5555 7755
+			5555 5555 5555 5577 aa65 aaaa aaaa 5556
+			5555 5555 2245 5774 5555 5555 5555 7755
+			5555 5555 5555 5577 aa65 aaaa aaaa 5556
+			5555 5555 2245 7774 7777 7777 7777 7777
+			7777 7777 7777 7777 aa67 aaaa aaaa 7777
+		</bitmap>
+	</tex_image>
+	<tex_image index="11" name="gym06_p02"
+		width="64" height="32" original_width="64" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="gym06_p02_pl"
+		path="C:/Documents and Settings/matsuzaki_tsubasa/My Documents/Swan/in28/map/tex/gym06_p02.tga"
+	>
+		<bitmap size="512">
+			cccc cccc cccc cccc cccc cccc cccc cccc
+			cccc cccc cccc cccc cccc cccc cccc cccc
+			eccc eeee eeee eeee eeef eeee eeee feee
+			eeee eeee 31ee 3333 3333 3133 cc33 cccc
+			eccc eeee eeee eeee eeef eeee eeee feee
+			eeee eeee 31ee 3333 3333 3133 cc33 cccc
+			cccc bbbb bbbb bbbb bbbd bbbb bbbb dbbb
+			bbbb bbbb 42bb 4444 4444 4244 cc44 cccc
+			cccc aaaa aaaa aaaa aaac aaaa aaaa caaa
+			aaaa aaaa 52aa 5555 5555 5255 cc55 cccc
+			cccc aaaa aaaa aaaa aaac aaaa aaaa caaa
+			aaaa aaaa 52aa 5555 5555 5255 cc55 cccc
+			cccc aaaa aaaa aaaa aaac aaaa aaaa caaa
+			aaaa aaaa 52aa 5555 5555 5255 cc55 cccc
+			cccc 9999 9999 9999 aaac aaaa aaaa caaa
+			9999 9999 6299 6666 6666 5266 cc55 cccc
+			eccc cccc cccc cccc aaaa aaaa aaaa aaaa
+			cccc cccc 22cc 2222 2222 5222 cc55 cccc
+			cccc aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa 55aa 5555 5555 5255 cc55 cccc
+			cccc aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa 55aa 5555 5555 5255 cc55 cccc
+			cccc aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa 55aa 5555 5555 5255 cc55 cccc
+			cccc aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa 55aa 5555 5555 5255 cc55 cccc
+			cccc aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa 55aa 5555 5555 5255 cc55 cccc
+			cccc aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa 55aa 5555 5555 5255 cc55 cccc
+			cccc aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa 55aa 5555 5555 5255 cc55 cccc
+			cccc aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa 55aa 5555 5555 5255 cc55 cccc
+			cccc aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa 55aa 5555 5555 5255 cc55 cccc
+			cccc aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa 55aa 5555 5555 5255 cc55 cccc
+			cccc 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 6699 6666 6666 5266 cc55 cccc
+			eccc cccc cccc cccc cccc cccc cccc cccc
+			cccc cccc 22cc 2222 2222 5222 cc55 cccc
+			cccc aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa 55aa 5555 5555 5255 cc55 cccc
+			cccc aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa 55aa 5555 5555 5255 cc55 cccc
+			cccc 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 6699 6666 6666 6266 cc66 cccc
+			accc 8888 8888 8888 8888 8888 8888 8888
+			8888 8888 7788 7777 7777 7277 cc77 cccc
+			cccc cccc cccc cccc cccc cccc cccc cccc
+			cccc cccc cccc cccc cccc cccc cccc cccc
+			cccc cccc cccc cccc cccc cccc cccc cccc
+			cccc cccc cccc cccc cccc cccc cccc cccc
+			cccc cccc cccc cccc cccc cccc cccc cccc
+			cccc cccc cccc cccc cccc cccc cccc cccc
+			cccc cccc cccc cccc cccc cccc cccc cccc
+			cccc cccc cccc cccc cccc cccc cccc cccc
+			cccc cccc cccc cccc cccc cccc cccc cccc
+			cccc cccc cccc cccc cccc cccc cccc cccc
+			cccc cccc cccc cccc cccc cccc cccc cccc
+			cccc cccc cccc cccc cccc cccc cccc cccc
+			cccc cccc cccc cccc cccc cccc cccc cccc
+			cccc cccc cccc cccc cccc cccc cccc cccc
+		</bitmap>
+	</tex_image>
+	<tex_image index="12" name="gym06_sasae"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="gym06_sasae_pl"
+		path="C:/Documents and Settings/matsuzaki_tsubasa/My Documents/Swan/in28/map/tex/gym06_sasae.tga"
+	>
+		<bitmap size="256">
+			5599 7777 5557 aa44 3399 3333 3333 3333
+			5599 7777 5557 aa44 4499 4444 4444 4444
+			5599 7777 5557 aa44 4499 6444 4666 4444
+			5599 7777 5557 aa44 4499 3644 6333 4444
+			5599 7777 5557 aa44 4499 2364 3211 4446
+			5599 7777 5557 aa44 4499 2364 3211 4446
+			5599 7777 5557 aa44 4499 2364 3222 4446
+			5599 7777 5557 aa44 4499 3644 6333 4444
+			5599 7777 5557 aa44 4499 6444 4666 4444
+			5599 7777 5557 aa44 4499 4444 4444 4444
+			5599 7777 5557 aa44 4499 4444 4444 4444
+			5599 7777 5557 aa44 4499 4444 4444 4444
+			5599 7777 5557 aa44 4499 6444 4666 4444
+			5599 7777 5557 aa44 4499 3644 6333 4444
+			5599 7777 5557 aa44 4499 2364 3211 4446
+			5599 7777 5557 aa44 4499 2364 3211 4446
+			5599 7777 5557 aa44 4499 2364 3222 4446
+			5599 7777 5557 aa44 4499 3644 6333 4444
+			5599 7777 5557 aa44 4499 6444 4666 4444
+			5599 7777 5557 aa44 4499 4444 4444 4444
+			5599 7777 5557 aa44 4499 4444 4444 4444
+			5599 7777 5557 aa44 4499 4444 4444 4444
+			5599 7777 5557 aa44 4499 6444 4666 4444
+			5599 7777 5557 aa44 4499 3644 6333 4444
+			5599 7777 5557 aa44 4499 2364 3211 4446
+			5599 7777 5557 aa44 4499 2364 3211 4446
+			5599 7777 5557 aa44 4499 2364 3222 4446
+			5599 7777 5557 aa44 4499 3644 6333 4444
+			5599 7777 5557 aa44 4499 6444 4666 4444
+			5599 7777 5557 aa44 4499 4444 4444 4444
+			5599 7777 5557 aa44 8899 8888 8888 8888
+			5599 7777 5557 aa44 8899 8888 8888 8888
+		</bitmap>
+	</tex_image>
+	<tex_image index="13" name="gym06_sasae2"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="gym06_sasae2_pl"
+		path="C:/Documents and Settings/matsuzaki_tsubasa/My Documents/Swan/in28/map/tex/gym06_sasae2.tga"
+	>
+		<bitmap size="256">
+			4444 4444 6666 6666 6666 6666 6666 6666
+			4444 4444 6666 6666 6666 6666 6666 6666
+			4444 4444 6666 6666 6666 6666 6666 5666
+			4444 4444 6666 6666 6666 6666 6666 4555
+			4444 4444 6666 6666 6666 6666 5556 4444
+			4444 4444 6666 6666 6666 5566 4445 4444
+			4444 4444 6666 6666 5666 4455 4444 4444
+			4444 4444 6666 6666 4555 5544 4455 4444
+			4444 4444 6666 5556 4444 3354 4533 4444
+			4444 4444 5666 4445 4444 1235 5321 4444
+			4444 4444 4566 4444 4444 1235 5321 4444
+			4444 4444 4566 4444 4444 2235 5322 4444
+			4444 4444 4566 4444 4444 3354 4533 4444
+			4444 4444 4566 4444 4444 5544 4455 4444
+			4444 4444 4566 5544 4455 4444 4444 5554
+			4444 4444 4566 3354 4533 4444 4444 3335
+			4444 4444 4566 1235 5321 4444 5444 1123
+			4444 4444 4566 1235 5321 4444 5444 1123
+			4444 4444 4566 2235 5322 4444 5444 2223
+			4444 4444 4566 3354 4533 4444 4444 3335
+			4444 4444 4566 5544 4455 4444 4444 5554
+			4444 4444 4566 4444 4444 4444 4444 4444
+			4444 4444 5566 5555 5555 5555 5555 5555
+			4444 4444 7777 7777 7777 7777 7777 7777
+			4444 4444 7777 7777 7777 7777 7777 7777
+			4444 4444 7777 7777 7777 7777 7777 7777
+			4444 4444 7777 7777 7777 7777 7777 7777
+			4444 4444 7777 7777 7777 7777 7777 7777
+			4444 4444 7777 7777 7777 7777 7777 7777
+			4444 4444 7777 7777 7777 7777 7777 7777
+			4444 4444 7777 7777 7777 7777 7777 7777
+			4444 4444 7777 7777 7777 7777 7777 7777
+		</bitmap>
+	</tex_image>
+	<tex_image index="14" name="gym06_soto_kabe"
 		width="64" height="32" original_width="64" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
@@ -312,7 +616,7 @@
 			3335 6631 7766 9977 3335 6631 7766 9977
 		</bitmap>
 	</tex_image>
-	<tex_image index="8" name="gym06_soto_yuka"
+	<tex_image index="15" name="gym06_soto_yuka"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
@@ -356,43 +660,71 @@
 	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size="9">
+<tex_palette_array size="16">
 	<tex_palette index="0" name="gym06_ami_pl" color_size="16">
-		0000 4210 4631 4631 4a52 4a52 4e73 5294
-		56b5 7fff 7fff 7fff 7fff 7fff 7fff 7fff
+		7fff 56b5 5294 4e73 4a52 4a52 4631 4631
+		4210 3def 39ce 39ce 35ad 35ad 35ad 318c
 	</tex_palette>
 	<tex_palette index="1" name="gym06_amiside_pl" color_size="4">
-		7fff 5ad6 6739 6f7b
+		7fff 4a52 6318 5ad6
 	</tex_palette>
-	<tex_palette index="2" name="gym06_asiba_pl" color_size="16">
-		7fff 3ad0 3317 2b5e 39ce 35ad 318c 318c
+	<tex_palette index="2" name="gym06_asiba2_pl" color_size="16">
+		7fff 226a 266b 2a8b 36ae 2a8b 2eac 2e8c
+		32ce 7fff 7fff 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="3" name="gym06_asiba_pl" color_size="16">
+		7fff 439f 2b5e 1afd 39ce 35ad 318c 318c
 		318c 2d6b 2d6b 294a 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="3" name="gym06_gym_kabe_pl" color_size="24">
+	<tex_palette index="4" name="gym06_gym_kabe2_pl" color_size="16">
+		7fff 4a52 3def 35ad 318c 318c 318c 2d6b
+		2d6b 294a 294a 2529 2529 2108 7fff 7fff
+	</tex_palette>
+	<tex_palette index="5" name="gym06_gym_kabe_pl" color_size="24">
 		7fff 6739 5ef7 56b5 56b5 4e73 4e73 4a52
-		4631 4631 4210 4210 3def 3def 39ce 39ce
-		35ad 35ad 2d6b 7fff 7fff 7fff 7fff 7fff
+		4a52 4631 4631 4210 4210 3def 3def 39ce
+		39ce 35ad 35ad 2d6b 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="4" name="gym06_gym_yuka_pl" color_size="4">
-		2954 7fff 7fff 7fff
+	<tex_palette index="6" name="gym06_gym_mark_pl" color_size="8">
+		7fff 1090 0c66 4212 7fff 294a 7fff 7fff
 	</tex_palette>
-	<tex_palette index="5" name="gym06_iriguti_pl" color_size="8">
-		0e5b 2108 2529 2d6b 2e34 3def 4210 56b5
+	<tex_palette index="7" name="gym06_gym_yuka_pl" color_size="16">
+		7fff 0c70 1093 14b4 14b5 14b6 18d8 18d7
+		18d6 1cf8 1cf9 2119 2118 2119 7fff 7fff
 	</tex_palette>
-	<tex_palette index="6" name="gym06_kabe_pl" color_size="8">
+	<tex_palette index="8" name="gym06_iriguti_pl" color_size="16">
+		7fff 0e5b 2e34 5ef7 5ad6 56b5 5294 4210
+		3def 3def 39ce 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="9" name="gym06_kabe_pl" color_size="8">
 		7fff 56b5 5294 4e73 4210 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="7" name="gym06_soto_kabe_pl" color_size="16">
+	<tex_palette index="10" name="gym06_p01_pl" color_size="16">
+		7fff 0c4d 318c 294a 2529 2108 1ce7 1ce7
+		18c6 1084 0c63 0421 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="11" name="gym06_p02_pl" color_size="16">
+		7fff 0c20 1461 1040 1c81 20a1 24c3 2905
+		2529 2108 1ce7 18c6 14a5 1084 1084 0842
+	</tex_palette>
+	<tex_palette index="12" name="gym06_sasae2_pl" color_size="8">
+		7fff 4631 3def 39ce 318c 2d6b 294a 2108
+	</tex_palette>
+	<tex_palette index="13" name="gym06_sasae_pl" color_size="16">
+		7fff 5294 4a52 4631 3def 39ce 39ce 39ce
+		318c 2d6b 294a 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="14" name="gym06_soto_kabe_pl" color_size="16">
 		7fff 4210 4210 39ce 35ad 318c 2d6b 294a
 		294a 2529 2529 2108 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="8" name="gym06_soto_yuka_pl" color_size="16">
+	<tex_palette index="15" name="gym06_soto_yuka_pl" color_size="16">
 		7fff 43bf 233f 21b0 7fff 2108 2108 1ce7
 		1ce7 18c6 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 </tex_palette_array>
 
-<material_array size="9">
+<material_array size="16">
 	<material index="0" name="gym06_ami"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
@@ -458,14 +790,14 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="2" tex_palette_idx="2"
+		tex_image_idx="2" tex_palette_idx="3"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="3" name="gym06_gym_kabe"
+	<material index="3" name="gym06_asiba2"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -482,14 +814,14 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="3" tex_palette_idx="3"
+		tex_image_idx="3" tex_palette_idx="2"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="4" name="gym06_gym_yuka"
+	<material index="4" name="gym06_gym_kabe"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -506,14 +838,14 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="4" tex_palette_idx="4"
+		tex_image_idx="4" tex_palette_idx="5"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="5" name="gym06_iriguti"
+	<material index="5" name="gym06_gym_kabe2"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -530,14 +862,14 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="5" tex_palette_idx="5"
+		tex_image_idx="5" tex_palette_idx="4"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="6" name="gym06_kabe"
+	<material index="6" name="gym06_gym_mark"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -561,7 +893,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="7" name="gym06_soto_kabe"
+	<material index="7" name="gym06_gym_yuka"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -585,7 +917,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="8" name="gym06_soto_yuka"
+	<material index="8" name="gym06_iriguti"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -609,9 +941,177 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
+	<material index="9" name="gym06_kabe"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="9" tex_palette_idx="9"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="10" name="gym06_p01"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="10" tex_palette_idx="10"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="11" name="gym06_p03"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="11" tex_palette_idx="11"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="12" name="gym06_sasae"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="12" tex_palette_idx="13"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="13" name="gym06_sasae2"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="13" tex_palette_idx="12"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="14" name="gym06_soto_kabe"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="14" tex_palette_idx="14"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="15" name="gym06_soto_yuka"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="15" tex_palette_idx="15"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
 </material_array>
 
-<matrix_array size="9">
+<matrix_array size="16">
 	<matrix index="0" mtx_weight="1" node_idx="1"/>
 	<matrix index="1" mtx_weight="1" node_idx="2"/>
 	<matrix index="2" mtx_weight="1" node_idx="3"/>
@@ -621,9 +1121,16 @@
 	<matrix index="6" mtx_weight="1" node_idx="7"/>
 	<matrix index="7" mtx_weight="1" node_idx="8"/>
 	<matrix index="8" mtx_weight="1" node_idx="9"/>
+	<matrix index="9" mtx_weight="1" node_idx="10"/>
+	<matrix index="10" mtx_weight="1" node_idx="11"/>
+	<matrix index="11" mtx_weight="1" node_idx="12"/>
+	<matrix index="12" mtx_weight="1" node_idx="13"/>
+	<matrix index="13" mtx_weight="1" node_idx="14"/>
+	<matrix index="14" mtx_weight="1" node_idx="15"/>
+	<matrix index="15" mtx_weight="1" node_idx="16"/>
 </matrix_array>
 
-<polygon_array size="9">
+<polygon_array size="16">
 	<polygon index="0" name="polygon0"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
@@ -665,12 +1172,12 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="0.000000 8.000000"/>
+					<tex st="0.000000 32.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_s xyz="-4.000000 0.000000 4.000000"/>
-					<tex st="16.000000 8.000000"/>
+					<tex st="32.000000 32.000000"/>
 					<pos_xy xy="4.000000 0.000000"/>
-					<tex st="16.000000 0.000000"/>
+					<tex st="32.000000 0.000000"/>
 					<pos_xz xz="4.000000 -4.000000"/>
 					<tex st="0.000000 0.000000"/>
 					<pos_xy xy="-4.000000 0.000000"/>
@@ -695,9 +1202,9 @@
 					<tex st="0.000000 32.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_s xyz="-4.000000 0.000000 4.000000"/>
-					<tex st="32.000000 32.000000"/>
+					<tex st="64.000000 32.000000"/>
 					<pos_xy xy="4.000000 0.000000"/>
-					<tex st="32.000000 0.000000"/>
+					<tex st="64.000000 0.000000"/>
 					<pos_xz xz="4.000000 -4.000000"/>
 					<tex st="0.000000 0.000000"/>
 					<pos_xy xy="-4.000000 0.000000"/>
@@ -719,12 +1226,12 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="0.000000 16.000000"/>
+					<tex st="0.000000 32.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_s xyz="-4.000000 0.000000 4.000000"/>
-					<tex st="32.000000 16.000000"/>
+					<tex st="64.000000 32.000000"/>
 					<pos_xy xy="4.000000 0.000000"/>
-					<tex st="32.000000 0.000000"/>
+					<tex st="64.000000 0.000000"/>
 					<pos_xz xz="4.000000 -4.000000"/>
 					<tex st="0.000000 0.000000"/>
 					<pos_xy xy="-4.000000 0.000000"/>
@@ -776,9 +1283,9 @@
 					<tex st="0.000000 32.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_s xyz="-4.000000 0.000000 4.000000"/>
-					<tex st="16.000000 32.000000"/>
+					<tex st="32.000000 32.000000"/>
 					<pos_xy xy="4.000000 0.000000"/>
-					<tex st="16.000000 0.000000"/>
+					<tex st="32.000000 0.000000"/>
 					<pos_xz xz="4.000000 -4.000000"/>
 					<tex st="0.000000 0.000000"/>
 					<pos_xy xy="-4.000000 0.000000"/>
@@ -803,9 +1310,9 @@
 					<tex st="0.000000 32.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_s xyz="-4.000000 0.000000 4.000000"/>
-					<tex st="32.000000 32.000000"/>
+					<tex st="64.000000 32.000000"/>
 					<pos_xy xy="4.000000 0.000000"/>
-					<tex st="32.000000 0.000000"/>
+					<tex st="64.000000 0.000000"/>
 					<pos_xz xz="4.000000 -4.000000"/>
 					<tex st="0.000000 0.000000"/>
 					<pos_xy xy="-4.000000 0.000000"/>
@@ -830,9 +1337,9 @@
 					<tex st="0.000000 32.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_s xyz="-4.000000 0.000000 4.000000"/>
-					<tex st="64.000000 32.000000"/>
+					<tex st="32.000000 32.000000"/>
 					<pos_xy xy="4.000000 0.000000"/>
-					<tex st="64.000000 0.000000"/>
+					<tex st="32.000000 0.000000"/>
 					<pos_xz xz="4.000000 -4.000000"/>
 					<tex st="0.000000 0.000000"/>
 					<pos_xy xy="-4.000000 0.000000"/>
@@ -854,6 +1361,114 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
+					<tex st="0.000000 8.000000"/>
+					<nrm xyz="0.000000 0.998047 0.000000"/>
+					<pos_s xyz="-4.000000 0.000000 4.000000"/>
+					<tex st="16.000000 8.000000"/>
+					<pos_xy xy="4.000000 0.000000"/>
+					<tex st="16.000000 0.000000"/>
+					<pos_xz xz="4.000000 -4.000000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="-4.000000 0.000000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="9" name="polygon9"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-4.000000 0.000000 -4.000000"
+		volume_max="4.000000 0.000000 4.000000"
+		volume_r="5.656738"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">9</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="0.000000 16.000000"/>
+					<nrm xyz="0.000000 0.998047 0.000000"/>
+					<pos_s xyz="-4.000000 0.000000 4.000000"/>
+					<tex st="32.000000 16.000000"/>
+					<pos_xy xy="4.000000 0.000000"/>
+					<tex st="32.000000 0.000000"/>
+					<pos_xz xz="4.000000 -4.000000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="-4.000000 0.000000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="10" name="polygon10"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-4.000000 0.000000 -4.000000"
+		volume_max="4.000000 0.000000 4.000000"
+		volume_r="5.656738"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">10</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="0.000000 16.000000"/>
+					<nrm xyz="0.000000 0.998047 0.000000"/>
+					<pos_s xyz="-4.000000 0.000000 4.000000"/>
+					<tex st="16.000000 16.000000"/>
+					<pos_xy xy="4.000000 0.000000"/>
+					<tex st="16.000000 0.000000"/>
+					<pos_xz xz="4.000000 -4.000000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="-4.000000 0.000000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="11" name="polygon11"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-4.000000 0.000000 -4.000000"
+		volume_max="4.000000 0.000000 4.000000"
+		volume_r="5.656738"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">11</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="0.000000 16.000000"/>
+					<nrm xyz="0.000000 0.998047 0.000000"/>
+					<pos_s xyz="-4.000000 0.000000 4.000000"/>
+					<tex st="32.000000 16.000000"/>
+					<pos_xy xy="4.000000 0.000000"/>
+					<tex st="32.000000 0.000000"/>
+					<pos_xz xz="4.000000 -4.000000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="-4.000000 0.000000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="12" name="polygon12"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-4.000000 0.000000 -4.000000"
+		volume_max="4.000000 0.000000 4.000000"
+		volume_r="5.656738"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">12</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
 					<tex st="0.000000 32.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_s xyz="-4.000000 0.000000 4.000000"/>
@@ -867,9 +1482,90 @@
 			</primitive_array>
 		</mtx_prim>
 	</polygon>
+	<polygon index="13" name="polygon13"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-4.000000 0.000000 -4.000000"
+		volume_max="4.000000 0.000000 4.000000"
+		volume_r="5.656738"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">13</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="0.000000 8.000000"/>
+					<nrm xyz="0.000000 0.998047 0.000000"/>
+					<pos_s xyz="-4.000000 0.000000 4.000000"/>
+					<tex st="8.000000 8.000000"/>
+					<pos_xy xy="4.000000 0.000000"/>
+					<tex st="8.000000 0.000000"/>
+					<pos_xz xz="4.000000 -4.000000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="-4.000000 0.000000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="14" name="polygon14"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-4.000000 0.000000 -4.000000"
+		volume_max="4.000000 0.000000 4.000000"
+		volume_r="5.656738"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">14</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="0.000000 32.000000"/>
+					<nrm xyz="0.000000 0.998047 0.000000"/>
+					<pos_s xyz="-4.000000 0.000000 4.000000"/>
+					<tex st="32.000000 32.000000"/>
+					<pos_xy xy="4.000000 0.000000"/>
+					<tex st="32.000000 0.000000"/>
+					<pos_xz xz="4.000000 -4.000000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="-4.000000 0.000000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="15" name="polygon15"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-4.000000 0.000000 -4.000000"
+		volume_max="4.000000 0.000000 4.000000"
+		volume_r="5.656738"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">15</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="0.000000 32.000000"/>
+					<nrm xyz="0.000000 0.998047 0.000000"/>
+					<pos_s xyz="-4.000000 0.000000 4.000000"/>
+					<tex st="16.000000 32.000000"/>
+					<pos_xy xy="4.000000 0.000000"/>
+					<tex st="16.000000 0.000000"/>
+					<pos_xz xz="4.000000 -4.000000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="-4.000000 0.000000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
 </polygon_array>
 
-<node_array size="10">
+<node_array size="17">
 	<node index="0" name="world_root" kind="null"
 		parent="-1"
 		child="1"
@@ -904,11 +1600,151 @@
 	>
 		<display index="0" material="0" polygon="0" priority="0"/>
 	</node>
-	<node index="2" name="pPlane2" kind="mesh"
+	<node index="2" name="pPlane10" kind="mesh"
 		parent="0"
 		child="-1"
 		brother_next="3"
 		brother_prev="1"
+		draw_mtx="on"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="16.000000 0.000000 16.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-4.000000 0.000000 -4.000000"
+		volume_max="4.000000 0.000000 4.000000"
+		volume_r="5.656738"
+	>
+		<display index="0" material="9" polygon="1" priority="0"/>
+	</node>
+	<node index="3" name="pPlane11" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="4"
+		brother_prev="2"
+		draw_mtx="on"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="32.000000 0.000000 16.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-4.000000 0.000000 -4.000000"
+		volume_max="4.000000 0.000000 4.000000"
+		volume_r="5.656738"
+	>
+		<display index="0" material="10" polygon="2" priority="0"/>
+	</node>
+	<node index="4" name="pPlane12" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="5"
+		brother_prev="3"
+		draw_mtx="on"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="48.000000 0.000000 16.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-4.000000 0.000000 -4.000000"
+		volume_max="4.000000 0.000000 4.000000"
+		volume_r="5.656738"
+	>
+		<display index="0" material="11" polygon="3" priority="0"/>
+	</node>
+	<node index="5" name="pPlane13" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="6"
+		brother_prev="4"
+		draw_mtx="on"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="64.000000 0.000000 16.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-4.000000 0.000000 -4.000000"
+		volume_max="4.000000 0.000000 4.000000"
+		volume_r="5.656738"
+	>
+		<display index="0" material="12" polygon="4" priority="0"/>
+	</node>
+	<node index="6" name="pPlane14" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="7"
+		brother_prev="5"
+		draw_mtx="on"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="80.000000 0.000000 16.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-4.000000 0.000000 -4.000000"
+		volume_max="4.000000 0.000000 4.000000"
+		volume_r="5.656738"
+	>
+		<display index="0" material="13" polygon="5" priority="0"/>
+	</node>
+	<node index="7" name="pPlane15" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="8"
+		brother_prev="6"
+		draw_mtx="on"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="96.000000 0.000000 16.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-4.000000 0.000000 -4.000000"
+		volume_max="4.000000 0.000000 4.000000"
+		volume_r="5.656738"
+	>
+		<display index="0" material="14" polygon="6" priority="0"/>
+	</node>
+	<node index="8" name="pPlane16" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="9"
+		brother_prev="7"
+		draw_mtx="on"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="112.000000 0.000000 16.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-4.000000 0.000000 -4.000000"
+		volume_max="4.000000 0.000000 4.000000"
+		volume_r="5.656738"
+	>
+		<display index="0" material="15" polygon="7" priority="0"/>
+	</node>
+	<node index="9" name="pPlane2" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="10"
+		brother_prev="8"
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
@@ -922,13 +1758,13 @@
 		volume_max="4.000000 0.000000 4.000000"
 		volume_r="5.656738"
 	>
-		<display index="0" material="1" polygon="1" priority="0"/>
+		<display index="0" material="1" polygon="8" priority="0"/>
 	</node>
-	<node index="3" name="pPlane3" kind="mesh"
+	<node index="10" name="pPlane3" kind="mesh"
 		parent="0"
 		child="-1"
-		brother_next="4"
-		brother_prev="2"
+		brother_next="11"
+		brother_prev="9"
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
@@ -942,13 +1778,13 @@
 		volume_max="4.000000 0.000000 4.000000"
 		volume_r="5.656738"
 	>
-		<display index="0" material="2" polygon="2" priority="0"/>
+		<display index="0" material="2" polygon="9" priority="0"/>
 	</node>
-	<node index="4" name="pPlane4" kind="mesh"
+	<node index="11" name="pPlane4" kind="mesh"
 		parent="0"
 		child="-1"
-		brother_next="5"
-		brother_prev="3"
+		brother_next="12"
+		brother_prev="10"
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
@@ -962,13 +1798,13 @@
 		volume_max="4.000000 0.000000 4.000000"
 		volume_r="5.656738"
 	>
-		<display index="0" material="3" polygon="3" priority="0"/>
+		<display index="0" material="3" polygon="10" priority="0"/>
 	</node>
-	<node index="5" name="pPlane5" kind="mesh"
+	<node index="12" name="pPlane5" kind="mesh"
 		parent="0"
 		child="-1"
-		brother_next="6"
-		brother_prev="4"
+		brother_next="13"
+		brother_prev="11"
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
@@ -982,13 +1818,13 @@
 		volume_max="4.000000 0.000000 4.000000"
 		volume_r="5.656738"
 	>
-		<display index="0" material="4" polygon="4" priority="0"/>
+		<display index="0" material="4" polygon="11" priority="0"/>
 	</node>
-	<node index="6" name="pPlane6" kind="mesh"
+	<node index="13" name="pPlane6" kind="mesh"
 		parent="0"
 		child="-1"
-		brother_next="7"
-		brother_prev="5"
+		brother_next="14"
+		brother_prev="12"
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
@@ -1002,13 +1838,13 @@
 		volume_max="4.000000 0.000000 4.000000"
 		volume_r="5.656738"
 	>
-		<display index="0" material="5" polygon="5" priority="0"/>
+		<display index="0" material="5" polygon="12" priority="0"/>
 	</node>
-	<node index="7" name="pPlane7" kind="mesh"
+	<node index="14" name="pPlane7" kind="mesh"
 		parent="0"
 		child="-1"
-		brother_next="8"
-		brother_prev="6"
+		brother_next="15"
+		brother_prev="13"
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
@@ -1022,13 +1858,13 @@
 		volume_max="4.000000 0.000000 4.000000"
 		volume_r="5.656738"
 	>
-		<display index="0" material="6" polygon="6" priority="0"/>
+		<display index="0" material="6" polygon="13" priority="0"/>
 	</node>
-	<node index="8" name="pPlane8" kind="mesh"
+	<node index="15" name="pPlane8" kind="mesh"
 		parent="0"
 		child="-1"
-		brother_next="9"
-		brother_prev="7"
+		brother_next="16"
+		brother_prev="14"
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
@@ -1042,13 +1878,13 @@
 		volume_max="4.000000 0.000000 4.000000"
 		volume_r="5.656738"
 	>
-		<display index="0" material="7" polygon="7" priority="0"/>
+		<display index="0" material="7" polygon="14" priority="0"/>
 	</node>
-	<node index="9" name="pPlane9" kind="mesh"
+	<node index="16" name="pPlane9" kind="mesh"
 		parent="0"
 		child="-1"
 		brother_next="-1"
-		brother_prev="8"
+		brother_prev="15"
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
@@ -1062,12 +1898,12 @@
 		volume_max="4.000000 0.000000 4.000000"
 		volume_r="5.656738"
 	>
-		<display index="0" material="8" polygon="8" priority="0"/>
+		<display index="0" material="8" polygon="15" priority="0"/>
 	</node>
 </node_array>
 
-<output_info vertex_size="36" polygon_size="9"
-	triangle_size="0" quad_size="9"/>
+<output_info vertex_size="64" polygon_size="16"
+	triangle_size="0" quad_size="16"/>
 
 </body>
 
