@@ -14,9 +14,6 @@
 #include "system/gfl_use.h"
 #include "system/main.h"
 
-// 簡易会話表示システム
-#include "system/pms_draw.h"
-
 //テクスチャをOAMに転送
 #include "system/nsbtx_to_clwk.h"
 
@@ -29,41 +26,16 @@
 
 #include "print/wordset.h"
 
-//INFOWIN
-#include "infowin/infowin.h"
-
 //描画設定
 #include "wbt_list_graphic.h"
 
 //簡易CLWK読み込み＆開放ユーティリティー
 #include "ui/ui_easy_clwk.h"
+// print
+#include "ui/print_tool.h"
 
 //マップモデルのnsbtx
 #include "fieldmap/fldmmdl_mdlres.naix"
-
-//タッチバー
-#include "ui/touchbar.h"
-
-//ポケパラ、ポケモンNO
-#include "poke_tool/poke_tool.h"
-#include "poke_tool/monsno_def.h"
-
-//ポケアイコン
-#include "pokeicon/pokeicon.h"
-
-//MCSS
-#include "system/mcss.h"
-#include "system/mcss_tool.h"
-
-//タスクメニュー
-#include "app/app_taskmenu.h"
-
-//どうぐアイコン
-#include "item/item.h"
-#include "item_icon.naix"
-
-//ポケモンBG,OBJ読みこみ
-#include "system/poke2dgra.h"
 
 //アプリ共通素材
 #include "app/app_menu_common.h"
@@ -83,24 +55,15 @@
 //@TODO BG読み込み とりあえずマイクテストのリソース
 #include "message.naix"
 #include "wbt_list_gra.naix"
-//#include "mictest.naix"	// アーカイブ
-//#include "msg/msg_mictest.h"  // GMM
-//#include "townmap_gra.naix"		// タッチバーカスタムボタン用サンプルにタウンマップリソース
 
 //=============================================================================
 // 下記defineをコメントアウトすると、機能を取り除けます
 //=============================================================================
-//#define UI_TEMPLATE_INFOWIN
-//#define UI_TEMPLATE_TOUCHBAR
-//#define UI_TEMPLATE_MCSS
-//#define UI_TEMPLATE_TASKMENU
-//#define UI_TEMPLATE_TYPEICON      // 分類、技アイコン
-//#define UI_TEMPLATE_ITEM_ICON     // どうぐアイコン
-//#define UI_TEMPLATE_POKE_ICON     // ポケアイコン(ポケアイコン用アイテムアイコン込み)
 #define UI_TEMPLATE_OAM_MAPMODEL  // マップモデルをOAMで表示    //nsbtx_to_clwkをオーバーレイに移したのでコメントアウトにしました 10/06/11 nagihashi
-//#define UI_TEMPLATE_POKE2D				// ポケモンBG,OBJ読みこみ
-//#define UI_TEMPLATE_BALL					// ボールアイコン読みこみ
-//#define UI_TEMPLATE_PMSDRAW       // 簡易会話表示
+
+// debug表示が必要なときはセット
+#define _DEBUG_LOCAL_
+//#undef  _DEBUG_LOCAL_
 
 FS_EXTERN_OVERLAY(ui_common);
 
@@ -110,54 +73,173 @@ FS_EXTERN_OVERLAY(ui_common);
  */
 //=============================================================================
 enum
-{ 
-  UI_TEMPLATE_HEAP_SIZE = 0x30000,  ///< ヒープサイズ
+{
+	UI_TEMPLATE_HEAP_SIZE = 0x30000,  ///< ヒープサイズ
 };
 
 
 //-------------------------------------
-///	フレーム
+///	フレーム(要整理)
 //=====================================
 enum
-{	
-	BG_FRAME_BAR_M	= GFL_BG_FRAME1_M,
-	BG_FRAME_POKE_M	= GFL_BG_FRAME2_M,
-	BG_FRAME_BACK_M	= GFL_BG_FRAME3_M,
-	BG_FRAME_BACK_S	= GFL_BG_FRAME2_S,
-  BG_FRAME_TEXT_S = GFL_BG_FRAME0_S, 
+{
+	BG_FRAME_BACK_M		= GFL_BG_FRAME3_M,		// 下地(BG3)
+	BG_FRAME_MIDDLE_M	= GFL_BG_FRAME2_M,		// 中間(BG2)
+	BG_FRAME_MIDDLE2_M	= GFL_BG_FRAME1_M,		// テキスト(BG1)(未使用)
+	//
+	BG_FRAME_BACK_S		= GFL_BG_FRAME2_S,		// 下地(BG2)
+	BG_FRAME_MIDDLE_S	= GFL_BG_FRAME1_S,		// 中間(BG1)
+	BG_FRAME_TEXT_S 	= GFL_BG_FRAME0_S,		// テキスト面(BG0)
 };
+
 //-------------------------------------
-///	パレット
+///	パレット(要整理)
 //=====================================
 enum
-{	
+{
 	//メインBG
 	PLTID_BG_BACK_M				= 0,
 	PLTID_BG_POKE_M				= 1,
-	PLTID_BG_TASKMENU_M		= 11,
-	PLTID_BG_TOUCHBAR_M		= 13,
-	PLTID_BG_INFOWIN_M		= 15,
+	PLTID_BG_TASKMENU_M			= 11,
+	PLTID_BG_TOUCHBAR_M			= 13,
+	PLTID_BG_INFOWIN_M			= 15,
 	//サブBG
-	PLTID_BG_BACK_S				=	0,
-
+	PLTID_BG_BACK_S				= 0,		// 下地
+	
 	//メインOBJ
-	PLTID_OBJ_TOUCHBAR_M	= 0, // 3本使用
-	PLTID_OBJ_TYPEICON_M	= 3, // 3本使用
-  PLTID_OBJ_OAM_MAPMODEL_M = 6, // 1本使用
-  /*
-  PLTID_OBJ_POKEICON_M = 7,     // 3本使用
-  PLTID_OBJ_POKEITEM_M = 10,    // 1本使用
-  PLTID_OBJ_ITEMICON_M = 11,
-  PLTID_OBJ_POKE_M = 12,
-  PLTID_OBJ_BALLICON_M = 13, // 1本使用
-	PLTID_OBJ_TOWNMAP_M	= 14,		
-  */
+	PLTID_OBJ_PANEL				= 0,		// 2本使用
+	PLTID_OBJ_OAM_MAPMODEL_M	= 6,		// 8本使用
 	//サブOBJ
-  PLTID_OBJ_PMS_DRAW = 0, // 5本使用
+	PLTID_OBJ_PMS_DRAW 			= 0,		// 5本使用
 };
 
-enum {
-  WBT_TRAINER_MAX = 8,
+enum{
+	// トレーナー人数
+	WBT_TRAINER_MAX = 8,
+};
+
+//-------------------------------------
+// 以下に追加
+//=====================================
+// モード(外部パラメータになるので、削除予定)
+enum{
+	MODE_ROUND1 = 0,		// 1回戦
+	MODE_ROUND2,			// 2回戦
+	MODE_ROUND3,			// 3回戦
+	//
+	MODE_ROUND_MAX,
+};
+
+// 段階
+enum{
+	STEP_INIT	= 0,		// 初期化
+	STEP_LV1 	= 100,
+	STEP_LV2 	= 200,
+	STEP_LV3 	= 300,
+	STEP_LV4 	= 400,
+	STEP_LV5 	= 500,
+	STEP_LV6 	= 600,
+	STEP_LV7 	= 700,
+	STEP_LV_MAX = 1000,
+	//
+	STEP_END	= 10000,
+};
+
+// タイマ(念のため、2の倍数にしておく)
+enum{
+	TIMER_PANEL,			// パネルイン/アウト
+	TIMER_GAGE,				// ゲージ伸び
+	TIMER_BOMB,				// 爆発
+	TIMER_WAIT,
+	
+	TIMER_MAX,
+};
+
+// フラグ(wk->Flag:現在未使用)
+enum{
+	FLG_PANEL_IN 		= (1<<0),	// パネルイン
+	FLG_PANEL_IN_END	= (1<<1),	// パネルイン終了
+	FLG_WAIT_END		= (1<<2),	// 待ち終了
+};
+
+//-------------------------------------
+/// リソースインデックス
+//-------------------------------------
+enum{
+	RESID_OBJ_PLT = 0,				// パレット
+	RESID_OBJ_CHR,					// キャラ
+	RESID_OBJ_CEL,					// セルアニメ
+	RESID_OBJ_MAX,
+};
+
+//-------------------------------------
+/// CLWK
+//-------------------------------------
+enum
+{
+	CLWKID_PANEL_00 = 0,			// パネル(上)
+	CLWKID_PANEL_01,				// パネル
+	CLWKID_PANEL_02,				// パネル
+	CLWKID_PANEL_03,				// パネル
+	CLWKID_PANEL_04,				// パネル
+	CLWKID_PANEL_05,				// パネル
+	CLWKID_PANEL_06,				// パネル
+	CLWKID_PANEL_07,				// パネル
+	CLWKID_PANEL_00A,				// パネル(下:移動)
+	CLWKID_PANEL_01A,				// パネル
+	CLWKID_PANEL_02A,				// パネル
+	CLWKID_PANEL_03A,				// パネル
+	CLWKID_PANEL_04A,				// パネル
+	CLWKID_PANEL_05A,				// パネル
+	CLWKID_PANEL_06A,				// パネル
+	CLWKID_PANEL_07A,				// パネル
+	CLWKID_BOMB,					// 爆発アニメ
+	//
+	CLWKID_MAX,
+};
+
+//-----------------------------------
+// 移動のパラメータ用
+//-----------------------------------
+enum{
+	MWORK_PANEL_L	= 0,			// 左移動
+	MWORK_PANEL_R,					// 右移動
+	//
+	MWORK_MAX,
+};
+
+//-----------------------------------
+// 移動の種類
+//-----------------------------------
+enum{
+	MOVE_PANEL_IN	= 0,			// パネルin
+	MOVE_PANEL_OUT,					// パネルout
+	//
+	MOVE_PANEL_MAX,
+};
+
+//-------------------
+// 移動のフラグ
+//-------------------
+enum{
+	FLG_MOVE_INIT	= (1<<0),		// 初期化
+	FLG_MOVE_END	= (1<<1),		// 終了
+};
+
+//-------------------
+// OBJのフラグ(dispflag)
+//-------------------
+enum{
+	FLG_OBJ_ANIM	= (1<<0),		// アニメあり
+	FLG_OBJ_HFLIP	= (1<<1),		// HFLIP
+	FLG_OBJ_VFLIP	= (1<<2),		// VFLIP
+};
+
+//-----------------------------------
+// キャンバス(PrintUtilの番号と対応)(要整理)
+//-----------------------------------
+enum{
+	MAX_PRINT_UTIL	= 2,			// canvasの数
 };
 
 //=============================================================================
@@ -173,112 +255,162 @@ typedef struct
 	int dummy;
 } WBTLIST_BG_WORK;
 
+//-------------------------------------
+/// OBJ管理ワーク
+//-------------------------------------
+typedef struct
+{
+	u32			res[RESID_OBJ_MAX]; 	//リソース
+	GFL_CLWK	*clwk[CLWKID_MAX];		//CLWK
+} WBTLIST_OBJ_WORK;
 
-#ifdef UI_TEMPLATE_PMSDRAW
-#define UI_TEMPLATE_PMSDRAW_NUM (3) ///< 簡易会話の個数
-#endif // UI_TEMPLATE_PMSDRAW 
+//-------------------------------------
+/// 移動用管理ワーク
+/// (どこかにあるはずなので仮作成)
+/// (後に修正:固定小数点にする?)
+//-------------------------------------
+typedef struct
+{
+	s16			sx;			// 開始
+	s16			ex;			// 終了
+	s16			rate;		// 加算値
+	s16			calcnum;	// 計算結果
+	s16			flag;		// フラグ
+	s16			pad;
+} WBTLIST_MOVE_WORK;
 
 //--------------------------------------------------------------
 ///	メインワーク
 //==============================================================
 typedef struct 
 {
-  HEAPID heapID;
-
-	WBTLIST_BG_WORK				wk_bg;
-
+	HEAPID					heapID;
+	// BG
+	WBTLIST_BG_WORK			wk_bg;
+	// OBJ
+	WBTLIST_OBJ_WORK		wk_obj;
 	//描画設定
 	WBTLIST_GRAPHIC_WORK	*graphic;
-
-#ifdef UI_TEMPLATE_TOUCHBAR
-	//タッチバー
-	TOUCHBAR_WORK							*touchbar;
-	//以下カスタムボタン使用する場合のサンプルリソース
-	u32												ncg_btn;
-	u32												ncl_btn;
-	u32												nce_btn;
-#endif //UI_TEMPLATE_TOUCHBAR
-
-#ifdef UI_TEMPLATE_MCSS
-	//MCSS
-	MCSS_SYS_WORK							*mcss_sys;
-	MCSS_WORK									*mcss_wk;
-#endif //UI_TEMPLATE_MCSS
-
 	//フォント
-	GFL_FONT									*font;
-
+	GFL_FONT				*font;
 	//プリントキュー
-	PRINT_QUE									*print_que;
-	GFL_MSGDATA								*msg;
-
-#ifdef UI_TEMPLATE_TASKMENU
-	//タスクメニュー
-	APP_TASKMENU_RES					*menu_res;
-	APP_TASKMENU_WORK					*menu;
-#endif //UI_TEMPLATE_TASKMENU
-
-#ifdef UI_TEMPLATE_TYPEICON
-	//分類、技アイコン
-  UI_EASY_CLWK_RES      clres_type_icon;
-  GFL_CLWK                  *clwk_type_icon;
-#endif //UI_TEMPLATE_TYPEICON
-
-#ifdef UI_TEMPLATE_ITEM_ICON
-  // どうぐアイコン
-  UI_EASY_CLWK_RES      clres_item_icon;
-  GFL_CLWK                  *clwk_item_icon;
-#endif //UI_TEMPLATE_ITEM_ICON
-
-#ifdef UI_TEMPLATE_POKE_ICON
-  // ポケアイコン
-  UI_EASY_CLWK_RES      clres_poke_icon;
-  GFL_CLWK                  *clwk_poke_icon;
-  // ポケアイコン用アイテムアイコン
-  UI_EASY_CLWK_RES      clres_poke_item;
-  GFL_CLWK                  *clwk_poke_item;
-#endif //UI_TEMPLATE_POKE_ICON
+	PRINT_QUE				*print_que;
+	GFL_MSGDATA				*msg;
 
 #ifdef UI_TEMPLATE_OAM_MAPMODEL
   // OAMマップモデル
-  u8 clwk_oam_mmdl_count;
-  UI_EASY_CLWK_RES      clres_oam_mmdl;
-  GFL_CLWK                  *clwk_oam_mmdl[ WBT_TRAINER_MAX ];
+  u8						clwk_oam_mmdl_count;
+  UI_EASY_CLWK_RES			clres_oam_mmdl;
+  GFL_CLWK					*clwk_oam_mmdl[ WBT_TRAINER_MAX ];
 #endif //UI_TEMPLATE_OAM_MAPMODEL
-
-#ifdef UI_TEMPLATE_POKE2D
-	u32												ncg_poke2d;
-	u32												ncl_poke2d;
-	u32												nce_poke2d;
-	GFL_CLWK									*clwk_poke2d;
-#endif //UI_TEMPLATE_POKE2D
-
-#ifdef UI_TEMPLATE_BALL
-  // ボールアイコン
-  UI_EASY_CLWK_RES      clres_ball;
-  GFL_CLWK                  *clwk_ball;
-#endif //UI_TEMPLATE_BALL
-
-#ifdef	UI_TEMPLATE_PRINT_TOOL
-	//プリントユーティリティ
-	PRINT_UTIL								print_util;
-	u32												seq;
-#endif	//UI_TEMPLATE_PRINT_TOOL
-
-#ifdef UI_TEMPLATE_PMSDRAW
-  GFL_BMPWIN*               pms_win[ UI_TEMPLATE_PMSDRAW_NUM ];
-  PMS_DRAW_WORK*            pms_draw;
-#endif //UI_TEMPLATE_PMSDRAW
-
+	
+	//---------------------
+	// 以下に追加記入
+	//---------------------
+	PRINT_UTIL				PrintUtil[MAX_PRINT_UTIL];	// 下画面文字表示用
+	
+	s32						Mode;						// モード(段階)
+	s32						Step;						// ステップ
+	s32						DispNum;					// 表示回数
+	u32						Flag;						// フラグ
+	//
+	s32						Timer[TIMER_MAX];			// タイマ
+	WBTLIST_MOVE_WORK		MoveWork[MWORK_MAX];		// 移動
 } WBTLIST_MAIN_WORK;
 
 
+//-----------------------------------------
+// OBJ用の定義
+// (GFL_CLWK_DATAにパラメータを追加しただけ)
+//------------------------------------------
+typedef struct{
+	s16				pos_x;			// 座標
+	s16				pos_y;
+	u16				anmseq;			// アニメシーケンス
+	u8				softpri;		// OBJ(プライオリティ)
+	u8				bgpri;			// BG(プライオリティ)
+	//
+	u8				visible;		// 表示/非表示
+	u8				palnum;			// パレット番号
+	u8				dispflag;		// 表示フラグ
+	u8				flag;			// 0xffの場合終了判定
+}WBTLIST_OBJ_DATA;
+
+//-----------------------------------------
+// 文字用の定義(表示領域の設定:CANVAS)
+//------------------------------------------
+typedef struct{
+	u8				bgnumber;		// BG上下(BGナンバー定義なので注意)(0xffの場合は終了判定)
+	u8				x;				// 座標
+	u8				y;
+	u8				width;			// サイズ
+	u8				height;
+	u8				palnum;			// パレット番号
+}WBTLIST_CANVAS_DATA;
+
 //=============================================================================
 /**
- *							データ定義
+ *							データ定義(要整理)
  */
 //=============================================================================
+// テーブル(2の倍数にしておく)
+// ->最終的にはなくす方向
+const s16 info_tbl[] = {
+	60,						// パネルスクロールイン
+	60,						// ゲージ伸び
+	60,						// 爆発
+	60,
+};
 
+// OBJリソース
+const s32 obj_res_tbl[] = {
+	NARC_wbt_list_gra_wbt_list_obj_u_NCLR,		// NCL
+	NARC_wbt_list_gra_wbt_list_obj_u_NCGR,		// NCG
+	NARC_wbt_list_gra_wbt_list_obj_u_NCER,		// NCE
+	NARC_wbt_list_gra_wbt_list_obj_u_NANR,		// NAR?
+};
+
+// 後日修正(ツールでの吐き出しを検討)
+// =>flipの問題を解決すること
+const WBTLIST_OBJ_DATA wbt_obj_tbl[] = {
+	{     0,  0+2, 0, 0x30, 1, 1, 0, 0, 0, },			// 0
+	{     0, 36+2, 0, 0x30, 1, 1, 0, 0, 0, },			// 1
+	{     0, 72+2, 0, 0x30, 1, 1, 0, 0, 0, },			// 2
+	{     0,108+2, 0, 0x30, 1, 1, 0, 0, 0, },			// 3
+//	{216+32+8,  0+2, 0, 0x30, 1, 1, 0, 2, 0, },			// 4
+//	{216+32+8, 36+2, 0, 0x30, 1, 1, 0, 2, 0, },			// 5
+//	{216+32+8, 72+2, 0, 0x30, 1, 1, 0, 2, 0, },			// 6
+//	{216+32+8,108+2, 0, 0x30, 1, 1, 0, 2, 0, },			// 7
+	{224,  0+2, 0, 0x30, 1, 1, 0, 0, 0, },			// 4
+	{224, 36+2, 1, 0x30, 1, 1, 0, 0, 0, },			// 5
+	{224, 72+2, 0, 0x30, 1, 1, 0, 0, 0, },			// 6
+	{224,108+2, 1, 0x30, 1, 1, 0, 0, 0, },			// 7
+	//
+	{     0-64,  0+2, 2, 0x40, 1, 1, 0, 0, 0, },			// 8
+	{     0-64, 36+2, 2, 0x40, 1, 1, 0, 0, 0, },			// 9
+	{     0-64, 72+2, 2, 0x40, 1, 1, 0, 0, 0, },			// 10
+	{     0-64,108+2, 2, 0x40, 1, 1, 0, 0, 0, },			// 11
+	{192,  0+2, 3, 0x40, 1, 1, 1, 0, 0, },			// 12
+	{192, 36+2, 3, 0x40, 1, 1, 1, 0, 0, },			// 13
+	{192, 72+2, 3, 0x40, 1, 1, 1, 0, 0, },			// 14
+	{192,108+2, 3, 0x40, 1, 1, 1, 0, 0, },			// 15
+//	{216+32+8+64,  0+2, 3, 0x40, 1, 1, 1, 2, 0, },			// 12
+//	{216+32+8+64, 36+2, 3, 0x40, 1, 1, 1, 2, 0, },			// 13
+//	{216+32+8+64, 72+2, 3, 0x40, 1, 1, 1, 2, 0, },			// 14
+//	{216+32+8+64,108+2, 3, 0x40, 1, 1, 1, 2, 0, },			// 15
+	
+	{ 64, 64, 4, 0x30, 1, 0, 2, 1, 0, },			// 16
+	//
+	{  0,  0, 0, 0,    0, 1, 0, 0, 0xff, },			// end
+};
+
+// CANVASの設定(printutilと対応)
+const WBTLIST_CANVAS_DATA wbt_canvas_tbl[] = {
+	{ GFL_BG_FRAME1_S, 4, 4, 24, 2, 2, },				// 0
+	{ GFL_BG_FRAME1_S,10,17, 11, 2, 2, },				// 1
+	//
+	{ 0xff, 0, 0, 0, 0, 0, },			// end
+};
 
 //=============================================================================
 /**
@@ -296,71 +428,6 @@ static GFL_PROC_RESULT WBTListProc_Exit( GFL_PROC *proc, int *seq, void *pwk, vo
 //=====================================
 static void WBTList_BG_LoadResource( WBTLIST_BG_WORK* wk, HEAPID heapID );
 
-#ifdef UI_TEMPLATE_INFOWIN
-//-------------------------------------
-///	INFOWIN
-//=====================================
-static void UITemplate_INFOWIN_Init( GAMESYS_WORK *gamesys, HEAPID heapID );
-static void UITemplate_INFOWIN_Exit( void );
-static void UITemplate_INFOWIN_Main( void );
-#endif //UI_TEMPLATE_INFOWIN
-
-#ifdef UI_TEMPLATE_TOUCHBAR
-//-------------------------------------
-///	タッチバー
-//=====================================
-static TOUCHBAR_WORK * UITemplate_TOUCHBAR_Init( GFL_CLUNIT *clunit, HEAPID heapID );
-static void UITemplate_TOUCHBAR_Exit( TOUCHBAR_WORK	*touchbar );
-static void UITemplate_TOUCHBAR_Main( TOUCHBAR_WORK	*touchbar );
-//以下カスタムボタン使用サンプル用
-static TOUCHBAR_WORK * UITemplate_TOUCHBAR_InitEx( WBTLIST_MAIN_WORK *wk, GFL_CLUNIT *clunit, HEAPID heapID );
-static void UITemplate_TOUCHBAR_ExitEx( WBTLIST_MAIN_WORK *wk );
-#endif //UI_TEMPLATE_TOUCHBAR
-
-#ifdef UI_TEMPLATE_MCSS
-//-------------------------------------
-///	MCSS
-//=====================================
-static MCSS_SYS_WORK * UITemplate_MCSS_Init( u16 wk_max, HEAPID heapID );
-static void UITemplate_MCSS_Exit( MCSS_SYS_WORK * mcss );
-static void UITemplate_MCSS_Draw( MCSS_SYS_WORK * mcss );
-static MCSS_WORK * UITemplate_MCSS_CreateWkPP( MCSS_SYS_WORK * mcss, POKEMON_PARAM *pp, const VecFx32 *pos );
-static void UITemplate_MCSS_DeleteWk( MCSS_SYS_WORK * mcss, MCSS_WORK *wk );
-#endif //UI_TEMPLATE_MCSS
-
-#ifdef UI_TEMPLATE_TASKMENU
-//-------------------------------------
-///	リストシステムはい、いいえ
-//=====================================
-static APP_TASKMENU_WORK * UITemplate_TASKMENU_Init( APP_TASKMENU_RES *menu_res, GFL_MSGDATA *msg, HEAPID heapID );
-static void UITemplate_TASKMENU_Exit( APP_TASKMENU_WORK *menu );
-static void UITemplate_TASKMENU_Main( APP_TASKMENU_WORK *menu );
-#endif //UI_TEMPLATE_TASKMENU
-
-#ifdef UI_TEMPLATE_TYPEICON
-//-------------------------------------
-///	分類、技アイコン
-//=====================================
-static void UITemplate_TYPEICON_CreateCLWK( WBTLIST_MAIN_WORK *wk, PokeType type, GFL_CLUNIT *unit, HEAPID heapID );
-static void UITemplate_TYPEICON_DeleteCLWK( WBTLIST_MAIN_WORK *wk );
-#endif //UI_TEMPLATE_TYPEICON
-
-#ifdef UI_TEMPLATE_ITEM_ICON
-//-------------------------------------
-///	どうぐアイコン
-//=====================================
-static void UITemplate_ITEM_ICON_CreateCLWK( WBTLIST_MAIN_WORK* wk, u16 item_id, GFL_CLUNIT* unit, HEAPID heapID );
-static void UITemplate_ITEM_ICON_DeleteCLWK( WBTLIST_MAIN_WORK* wk );
-#endif //UI_TEMPLATE_ITEM_ICON
-
-#ifdef UI_TEMPLATE_POKE_ICON
-//-------------------------------------
-///	ポケアイコン
-//=====================================
-static void UITemplate_POKE_ICON_CreateCLWK( WBTLIST_MAIN_WORK* wk, u32 mons, u32 form_no, u32 sex, BOOL egg, GFL_CLUNIT* unit, HEAPID heapID );
-static void UITemplate_POKE_ICON_DeleteCLWK( WBTLIST_MAIN_WORK* wk );
-#endif //UI_TEMPLATE_POKE_ICON
-
 #ifdef UI_TEMPLATE_OAM_MAPMODEL
 //-------------------------------------
 ///	OAMでマップモデル表示
@@ -369,36 +436,41 @@ static void WBTList_OAM_MAPMODEL_CreateCLWK( WBTLIST_MAIN_WORK *wk, u16 tex_idx,
 static void WBTList_OAM_MAPMODEL_DeleteCLWK( WBTLIST_MAIN_WORK* wk );
 #endif //UI_TEMPLATE_OAM_MAPMODEL
 
-#ifdef UI_TEMPLATE_POKE2D
 //-------------------------------------
-///	ポケモンOBJ,BG読みこみ
+///	以下に追加
 //=====================================
-static void UITemplate_POKE2D_LoadResourceBG( WBTLIST_MAIN_WORK *wk, HEAPID heapID );
-static void UITemplate_POKE2D_UnLoadResourceBG( WBTLIST_MAIN_WORK *wk );
-static void UITemplate_POKE2D_LoadResourceOBJ( WBTLIST_MAIN_WORK *wk, HEAPID heapID );
-static void UITemplate_POKE2D_UnLoadResourceOBJ( WBTLIST_MAIN_WORK *wk );
-static void UITemplate_POKE2D_CreateCLWK( WBTLIST_MAIN_WORK *wk, GFL_CLUNIT *clunit, HEAPID heapID );
-static void UITemplate_POKE2D_DeleteCLWK( WBTLIST_MAIN_WORK *wk );
-#endif //UI_TEMPLATE_POKE2D
-
-#ifdef UI_TEMPLATE_BALL
-//-------------------------------------
-///	ボールアイコン
-//=====================================
-static void UITemplate_BALLICON_CreateCLWK( WBTLIST_MAIN_WORK *wk, BALL_ID ballID, GFL_CLUNIT *unit, HEAPID heapID );
-static void UITemplate_BALLICON_DeleteCLWK( WBTLIST_MAIN_WORK* wk );
-#endif //UI_TEMPLATE_BALL
-
-
-#ifdef UI_TEMPLATE_PMSDRAW
-//-------------------------------------
-///	簡易会話表示
-//=====================================
-static void UITemplate_PMSDRAW_Init( WBTLIST_MAIN_WORK* wk );
-static void UITemplate_PMSDRAW_Exit( WBTLIST_MAIN_WORK* wk );
-static void UITemplate_PMSDRAW_Proc( WBTLIST_MAIN_WORK* wk );
-#endif // UI_TEMPLATE_PMSDRAW
-
+static void wbt_init( WBTLIST_MAIN_WORK* wk );
+static void wbt_main( WBTLIST_MAIN_WORK* wk );
+static void wbt_exit( WBTLIST_MAIN_WORK* wk );
+static BOOL wbt_wait_exit( WBTLIST_MAIN_WORK* wk );
+static void wbt_up(   WBTLIST_MAIN_WORK* wk );
+static void wbt_down( WBTLIST_MAIN_WORK* wk );
+//
+static void wbt_key_00( WBTLIST_MAIN_WORK* wk );
+//static void wbt_key_01( WBTLIST_MAIN_WORK* wk );
+//static void wbt_key_02( WBTLIST_MAIN_WORK* wk );
+static void wbt_key_all( WBTLIST_MAIN_WORK* wk );
+//
+static void wbt_init_timer( WBTLIST_MAIN_WORK* wk, const s32 tmode, const s32 timer );
+static s32  wbt_main_timer( WBTLIST_MAIN_WORK* wk, const s32 tmode );
+//
+static void wbt_init_string( WBTLIST_MAIN_WORK* wk );
+static void wbt_disp_string( WBTLIST_MAIN_WORK* wk, const s32 mode, const s32 x, const s32 y, STRBUF* strbuf );
+static void wbt_exit_string( WBTLIST_MAIN_WORK* wk );
+//
+static void wbt_init_obj( WBTLIST_MAIN_WORK* wk );
+static void wbt_exit_obj( WBTLIST_MAIN_WORK* wk );
+//
+static void wbt_init_movework( WBTLIST_MAIN_WORK* wk, const s32 wnum, const s16 sx, const s16 ex, const s16 frame );
+static s16  wbt_main_movework( WBTLIST_MAIN_WORK* wk, const s32 wnum );
+static BOOL wbt_is_movework(   WBTLIST_MAIN_WORK* wk, const s32 wnum );
+//
+static void wbt_init_move_panel( WBTLIST_MAIN_WORK* wk, const s32 mode );
+static void wbt_main_move_panel( WBTLIST_MAIN_WORK* wk );
+//
+static void wbt_disp_bomb( WBTLIST_MAIN_WORK* wk );
+//
+static void wbt_debug( WBTLIST_MAIN_WORK* wk );
 
 //=============================================================================
 /**
@@ -430,135 +502,62 @@ const GFL_PROC_DATA WBTListProcData =
 //-----------------------------------------------------------------------------
 static GFL_PROC_RESULT WBTListProc_Init( GFL_PROC *proc, int *seq, void *pwk, void *mywk )
 {
-	WBTLIST_MAIN_WORK *wk;
-	WBTLIST_PARAM *param;
-
+	WBTLIST_MAIN_WORK 	*wk;
+	WBTLIST_PARAM 		*param;
+	
 	//オーバーレイ読み込み
 	GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common));
 	
 	//引数取得
 	param	= pwk;
-
+	
 	//ヒープ作成
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_UI_DEBUG, UI_TEMPLATE_HEAP_SIZE );
-  wk = GFL_PROC_AllocWork( proc, sizeof(WBTLIST_MAIN_WORK), HEAPID_UI_DEBUG );
-  GFL_STD_MemClear( wk, sizeof(WBTLIST_MAIN_WORK) );
-
-  // 初期化
-  wk->heapID = HEAPID_UI_DEBUG;
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_UI_DEBUG, UI_TEMPLATE_HEAP_SIZE );
+	wk = GFL_PROC_AllocWork( proc, sizeof(WBTLIST_MAIN_WORK), HEAPID_UI_DEBUG );
+	GFL_STD_MemClear( wk, sizeof(WBTLIST_MAIN_WORK) );
+	
+	// 初期化
+	wk->heapID = HEAPID_UI_DEBUG;
 	
 	//描画設定初期化
 	wk->graphic	= WBTLIST_GRAPHIC_Init( GX_DISP_SELECT_MAIN_SUB, wk->heapID );
-
+	
 	//フォント作成
-	wk->font			= GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
-												GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
-
+	wk->font = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
+	
 	//メッセージ
-	wk->msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
-			NARC_message_mictest_dat, wk->heapID );
-
+	wk->msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_mictest_dat, wk->heapID );
+	
 	//PRINT_QUE作成
 	wk->print_que		= PRINTSYS_QUE_Create( wk->heapID );
-
+	
 	//BGリソース読み込み
 	WBTList_BG_LoadResource( &wk->wk_bg, wk->heapID );
-
-#ifdef UI_TEMPLATE_INFOWIN
-	//INFOWINの初期化
-	UITemplate_INFOWIN_Init( param->gamesys, wk->heapID );
-#endif //UI_TEMPLATE_INFOWIN
-
-#ifdef UI_TEMPLATE_TOUCHBAR
-	//タッチバーの初期化
-	{	
-		GFL_CLUNIT	*clunit	= WBTLIST_GRAPHIC_GetClunit( wk->graphic );
-		wk->touchbar	= UITemplate_TOUCHBAR_InitEx( wk, clunit, wk->heapID );
-	}
-#endif //UI_TEMPLATE_TOUCHBAR
-
-#ifdef UI_TEMPLATE_MCSS
-	//MCSS初期化&ワーク作成
-	wk->mcss_sys	= UITemplate_MCSS_Init( 1, wk->heapID );
-	{
-		POKEMON_PARAM	*pp;  
-		VecFx32 pos	= { 0, -FX32_ONE*10, 0	};
-
-		pp	= PP_Create( MONSNO_HUSIGIBANA, 0, 0, wk->heapID );
-		wk->mcss_wk		= UITemplate_MCSS_CreateWkPP( wk->mcss_sys, pp, &pos );
-		GFL_HEAP_FreeMemory( pp );
-	}
-#endif //UI_TEMPLATE_MCSS
-
-#ifdef UI_TEMPLATE_TASKMENU
-	//TASKMENUリソース読み込み＆初期化
-	wk->menu_res	= APP_TASKMENU_RES_Create( BG_FRAME_BAR_M, PLTID_BG_TASKMENU_M, wk->font, wk->print_que, wk->heapID );
-	wk->menu			= UITemplate_TASKMENU_Init( wk->menu_res, wk->msg, wk->heapID );
-#endif //UI_TEMPLATE_TASKMENU
-
-#ifdef UI_TEMPLATE_TYPEICON
-	//属性アイコンの読み込み
-	{	
-		GFL_CLUNIT	*clunit	= WBTLIST_GRAPHIC_GetClunit( wk->graphic );
-		UITemplate_TYPEICON_CreateCLWK( wk, POKETYPE_KUSA, clunit, wk->heapID );
-	}
-#endif //UI_TEMPLATE_TYPEICON
-
+	
 #ifdef UI_TEMPLATE_OAM_MAPMODEL
-  //OAMマップモデルの読み込み
-  {
-    // 主人公は現状 0=後ろ, 1=後ろアニメ1, 2=後ろアニメ2, 3=正面....
-    // トレーナーなどは違う可能性があるので注意。
-    u16 ptn_ofs = 3;
+	//OAMマップモデルの読み込み
+	{
+		// 主人公は現状 0=後ろ, 1=後ろアニメ1, 2=後ろアニメ2, 3=正面....
+		// トレーナーなどは違う可能性があるので注意。
+		u16 ptn_ofs = 3;
+		
 		GFL_CLUNIT	*clunit	= WBTLIST_GRAPHIC_GetClunit( wk->graphic );
-
 		WBTList_OAM_MAPMODEL_CreateCLWK( wk, NARC_fldmmdl_mdlres_hero_nsbtx, ptn_ofs, clunit, wk->heapID );
-  }
-#endif //UI_TEMPLATE_OAM_MAPMODEL
-
-#ifdef UI_TEMPLATE_POKE_ICON
-  // ポケアイコンの読み込み
-  {
-		GFL_CLUNIT	*clunit	= WBTLIST_GRAPHIC_GetClunit( wk->graphic );
-    UITemplate_POKE_ICON_CreateCLWK( wk, MONSNO_HUSIGIDANE, 0, 0, FALSE, clunit, wk->heapID );
-  }
-#endif //UI_TEMPLATE_POKE_ICON
-
-#ifdef UI_TEMPLATE_ITEM_ICON
-  // どうぐアイコンの読み込み
-  { 
-		GFL_CLUNIT	*clunit	= WBTLIST_GRAPHIC_GetClunit( wk->graphic );
-    UITemplate_ITEM_ICON_CreateCLWK( wk, ITEM_KIZUGUSURI, clunit, wk->heapID );
-  }
-#endif //UI_TEMPLATE_ITEM_ICON
-
-#ifdef UI_TEMPLATE_POKE2D
-	//ポケモンOBJ,BG読みこみ
-	UITemplate_POKE2D_LoadResourceBG( wk, wk->heapID );
-	{	
-		GFL_CLUNIT *clunit = WBTLIST_GRAPHIC_GetClunit( wk->graphic );
-		UITemplate_POKE2D_LoadResourceOBJ( wk, wk->heapID );
-		UITemplate_POKE2D_CreateCLWK( wk, clunit, wk->heapID );
 	}
-#endif //UI_TEMPLATE_POKE2D
-
-#ifdef UI_TEMPLATE_BALL
-  // ボールアイコンの読み込み
-  { 
-		GFL_CLUNIT	*clunit	= WBTLIST_GRAPHIC_GetClunit( wk->graphic );
-    UITemplate_BALLICON_CreateCLWK( wk, BALLID_MONSUTAABOORU, clunit, wk->heapID );
-  }
-#endif //UI_TEMPLATE_BALL
-
-#ifdef UI_TEMPLATE_PMSDRAW  
-  UITemplate_PMSDRAW_Init( wk );
-#endif //UI_TEMPLATE_PMSDRAW
-
-  WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN,
-      WIPE_FADE_BLACK, WIPE_DEF_DIV, WIPE_DEF_SYNC, wk->heapID );
-
-  return GFL_PROC_RES_FINISH;
+#endif //UI_TEMPLATE_OAM_MAPMODEL
+	
+	//----------------
+	// 処理を記述
+	//----------------
+	wbt_init( wk );
+	
+	// ワイプ
+	WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN,
+					WIPE_FADE_BLACK, WIPE_DEF_DIV, WIPE_DEF_SYNC, wk->heapID );
+	
+	return GFL_PROC_RES_FINISH;
 }
+
 //-----------------------------------------------------------------------------
 /**
  *	@brief  PROC 終了処理
@@ -574,66 +573,17 @@ static GFL_PROC_RESULT WBTListProc_Init( GFL_PROC *proc, int *seq, void *pwk, vo
 static GFL_PROC_RESULT WBTListProc_Exit( GFL_PROC *proc, int *seq, void *pwk, void *mywk )
 { 
 	WBTLIST_MAIN_WORK* wk = mywk;
-
-#ifdef UI_TEMPLATE_BALL
-  // どうぐアイコンの破棄
-   UITemplate_BALLICON_DeleteCLWK( wk );
-#endif //UI_TEMPLATE_BALL
-
-#ifdef UI_TEMPLATE_POKE2D
-	UITemplate_POKE2D_DeleteCLWK( wk );
-	UITemplate_POKE2D_UnLoadResourceOBJ( wk );
-	UITemplate_POKE2D_UnLoadResourceBG( wk );
-#endif //UI_TEMPLATE_POKE2D
-
-#ifdef UI_TEMPLATE_TYPEICON
-	//属性アイコンの破棄
-	UITemplate_TYPEICON_DeleteCLWK( wk );
-#endif //UI_TEMPLATE_TYPEICON
-
-#ifdef UI_TEMPLATE_ITEM_ICON
-#endif //UI_TEMPLATE_ITEM_ICON
-
-#ifdef UI_TEMPLATE_ITEM_ICON
-  //どうぐアイコンの破棄
-  UITemplate_ITEM_ICON_DeleteCLWK( wk );
-#endif //UI_TEMPLATE_ITEM_ICON
-
+	
+	//----------------
+	// 処理を記述
+	//----------------
+	wbt_exit( wk );
+	
 #ifdef UI_TEMPLATE_OAM_MAPMODEL
   //OAMマップモデルの破棄
   WBTList_OAM_MAPMODEL_DeleteCLWK( wk );
 #endif //UI_TEMPLATE_OAM_MAPMODEL
-
-#ifdef UI_TEMPLATE_POKE_ICON
-   UITemplate_POKE_ICON_DeleteCLWK( wk );
-#endif //UI_TEMPLATE_POKE_ICON
-
-#ifdef UI_TEMPLATE_TASKMENU
-	//TASKMENUシステム＆リソース破棄
-	UITemplate_TASKMENU_Exit( wk->menu );
-	APP_TASKMENU_RES_Delete( wk->menu_res );	
-#endif //UI_TEMPLATE_TASKMENU
-
-#ifdef UI_TEMPLATE_MCSS
-	//MCSS破棄
-	UITemplate_MCSS_DeleteWk( wk->mcss_sys, wk->mcss_wk );
-	UITemplate_MCSS_Exit( wk->mcss_sys );
-#endif //UI_TEMPLATE_MCSS
-
-#ifdef UI_TEMPLATE_TOUCHBAR
-	//タッチバー
-	UITemplate_TOUCHBAR_ExitEx( wk );
-#endif //UI_TEMPLATE_TOUCHBAR
-
-#ifdef UI_TEMPLATE_INFOWIN
-	//INFWIN
-	UITemplate_INFOWIN_Exit();
-#endif //UI_TEMPLATE_INFOWIN
-
-#ifdef UI_TEMPLATE_PMSDRAW
-  UITemplate_PMSDRAW_Exit( wk );
-#endif //UI_TEMPLATE_PMSDRAW
-
+	
 	//メッセージ破棄
 	GFL_MSG_Delete( wk->msg );
 
@@ -673,69 +623,60 @@ static GFL_PROC_RESULT WBTListProc_Exit( GFL_PROC *proc, int *seq, void *pwk, vo
 static GFL_PROC_RESULT WBTListProc_Main( GFL_PROC *proc, int *seq, void *pwk, void *mywk )
 { 
 	WBTLIST_MAIN_WORK* wk = mywk;
-
-  switch ( *seq )
-  {
-  case 0:
-    if (WIPE_SYS_EndCheck())
-    {
-      (*seq) ++;
-    }
-    break;
-  case 1:
-    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
-    {
-      (*seq) ++;
-    }
-    break;
-  case 2:
-    WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT,
-        WIPE_FADE_BLACK, WIPE_DEF_DIV, WIPE_DEF_SYNC, wk->heapID );
-    (*seq) ++;
-    break;
-  case 3:
-    if (WIPE_SYS_EndCheck())
-    {
-      return GFL_PROC_RES_FINISH;
-    }
-    break;
-  }
-
-#ifdef UI_TEMPLATE_TOUCHBAR
-	//タッチバーメイン処理
-	UITemplate_TOUCHBAR_Main( wk->touchbar );
-#endif //UI_TEMPLATE_TOUCHBAR
-
-#ifdef UI_TEMPLATE_INFOWIN
-	//INFWINメイン処理
-	UITemplate_INFOWIN_Main();
-#endif //UI_TEMPLATE_INFOWIN
-
-#ifdef UI_TEMPLATE_TASKMENU
-	//タスクメニューメイン処理
-	UITemplate_TASKMENU_Main( wk->menu );
-#endif //UI_TEMPLATE_TASKMENU
-
+	
+	switch ( *seq )
+	{
+		case 0:
+			if (WIPE_SYS_EndCheck())
+			{
+				(*seq) ++;
+			}
+			break;
+		case 1:
+			if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
+			{
+				(*seq) ++;
+			}
+			break;
+		case 2:
+			WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT,
+							WIPE_FADE_BLACK, WIPE_DEF_DIV, WIPE_DEF_SYNC, wk->heapID );
+			(*seq) ++;
+			break;
+		//
+		// ここで最終終了待ちをしているようだ
+		case 3:
+			if (WIPE_SYS_EndCheck())
+			{
+				// 終了待ち(いれても大丈夫?)
+				if( wbt_wait_exit( wk ) == TRUE ){
+					return GFL_PROC_RES_FINISH;
+				}
+			}
+			break;
+		default:
+			break;
+	}
+	
+	//----------------
+	// 処理を追加
+	//----------------
+	wbt_main( wk );
+	
 	//PRINT_QUE
 	PRINTSYS_QUE_Main( wk->print_que );
-
-#ifdef UI_TEMPLATE_PMSDRAW
-  UITemplate_PMSDRAW_Proc( wk );
-#endif //UI_TEMPLATE_PMSDRAW
-
+	
 	//2D描画
 	WBTLIST_GRAPHIC_2D_Draw( wk->graphic );
-
+	
 	//3D描画
 	WBTLIST_GRAPHIC_3D_StartDraw( wk->graphic );
-
-#ifdef UI_TEMPLATE_MCSS
-	UITemplate_MCSS_Draw( wk->mcss_sys );
-#endif //UI_TEMPLATE_MCSS
+	
 	WBTLIST_GRAPHIC_3D_EndDraw( wk->graphic );
-
-  return GFL_PROC_RES_CONTINUE;
+	
+	return GFL_PROC_RES_CONTINUE;
 }
+
 //=============================================================================
 /**
  *								static関数
@@ -753,647 +694,45 @@ static GFL_PROC_RESULT WBTListProc_Main( GFL_PROC *proc, int *seq, void *pwk, vo
 //-----------------------------------------------------------------------------
 static void WBTList_BG_LoadResource( WBTLIST_BG_WORK* wk, HEAPID heapID )
 {
-  //@TODO とりあえずマイクテストのリソース
-  //@TODO 複数枚ロードできるようにして切り離す？
-  enum
-  {
-    RES_ARC = ARCID_WBTLIST_GRA,
-
-    RES_PAL_S_SIZE = 0x20,
-    RES_PAL_M_SIZE = 0x20,
-
-    RES_PAL_S_ID = NARC_wbt_list_gra_wbt_list_bg_d_NCLR,
-    RES_CHR_S_ID = NARC_wbt_list_gra_wbt_list_bg_d_NCGR,
-    RES_SCR_S_ID = NARC_wbt_list_gra_wbt_list_bg_d_NSCR,
-
-    RES_PAL_M_ID = NARC_wbt_list_gra_wbt_list_bg_u_NCLR,
-    RES_CHR_M_ID = NARC_wbt_list_gra_wbt_list_bg_u_NCGR,
-    RES_SCR_M_ID = NARC_wbt_list_gra_wbt_list_bg_u_NSCR,
-
-  };
-
+	//@TODO とりあえずマイクテストのリソース
+	//@TODO 複数枚ロードできるようにして切り離す？
+	enum
+	{
+		RES_ARC = ARCID_WBTLIST_GRA,
+	
+		RES_PAL_S_SIZE = 0x20*3,
+		RES_PAL_M_SIZE = 0x20,
+		
+		RES_PAL_S_ID 	= NARC_wbt_list_gra_wbt_list_bg_d_NCLR,
+		RES_CHR_S_ID 	= NARC_wbt_list_gra_wbt_list_bg_d_NCGR,
+		RES_SCR_S01_ID 	= NARC_wbt_list_gra_wbt_list_bg_d_01_NSCR,
+		RES_SCR_S02_ID 	= NARC_wbt_list_gra_wbt_list_bg_d_02_NSCR,
+		
+		RES_PAL_M_ID	= NARC_wbt_list_gra_wbt_list_bg_u_NCLR,
+		RES_CHR_M_ID	= NARC_wbt_list_gra_wbt_list_bg_u_NCGR,
+		RES_SCR_M01_ID	= NARC_wbt_list_gra_wbt_list_bg_u_01_NSCR,
+		RES_SCR_M02_ID	= NARC_wbt_list_gra_wbt_list_bg_u_02_NSCR,
+		RES_SCR_M03_ID	= NARC_wbt_list_gra_wbt_list_bg_u_03_NSCR,
+	};
+	
 	ARCHANDLE	*handle;
-
+	
 	handle	= GFL_ARC_OpenDataHandle( RES_ARC, heapID );
-
 	// 上下画面ＢＧパレット転送
 	GFL_ARCHDL_UTIL_TransVramPalette( handle, RES_PAL_M_ID, PALTYPE_MAIN_BG, PLTID_BG_BACK_M, RES_PAL_M_SIZE, heapID );
 	GFL_ARCHDL_UTIL_TransVramPalette( handle, RES_PAL_S_ID, PALTYPE_SUB_BG,  PLTID_BG_BACK_S, RES_PAL_S_SIZE, heapID );
-	
-  //	----- SUB -----
-	GFL_ARCHDL_UTIL_TransVramBgCharacter(	handle, RES_CHR_S_ID, BG_FRAME_BACK_S, 0, 0, 0, heapID );
-	GFL_ARCHDL_UTIL_TransVramScreen(      handle, RES_SCR_S_ID,	BG_FRAME_BACK_S, 0, 0, 0, heapID );	
-
+	//	----- SUB -----
+	GFL_ARCHDL_UTIL_TransVramBgCharacter(	handle, RES_CHR_S_ID, 	BG_FRAME_BACK_S,   0, 0, 0, heapID );
+	GFL_ARCHDL_UTIL_TransVramScreen(		handle, RES_SCR_S01_ID, BG_FRAME_BACK_S,   0, 0, 0, heapID );
+	GFL_ARCHDL_UTIL_TransVramScreen(		handle, RES_SCR_S02_ID, BG_FRAME_MIDDLE_S, 0, 0, 0, heapID );
 	//	----- MAIN -----
-	GFL_ARCHDL_UTIL_TransVramBgCharacter(	handle, RES_CHR_M_ID, BG_FRAME_BACK_M, 0, 0, 0, heapID );
-	GFL_ARCHDL_UTIL_TransVramScreen(      handle, RES_SCR_M_ID, BG_FRAME_BACK_M, 0, 0, 0, heapID );		
-
+	GFL_ARCHDL_UTIL_TransVramBgCharacter(	handle, RES_CHR_M_ID, 	BG_FRAME_BACK_M, 0, 0, 0, heapID );
+	GFL_ARCHDL_UTIL_TransVramScreen(		handle, RES_SCR_M01_ID, BG_FRAME_BACK_M, 0, 0, 0, heapID );
+	GFL_ARCHDL_UTIL_TransVramScreen(		handle, RES_SCR_M02_ID, BG_FRAME_MIDDLE_M,  0, 0, 0, heapID );
+	//
 	GFL_ARC_CloseDataHandle( handle );
 }
 
-
-
-
-
-#ifdef UI_TEMPLATE_INFOWIN
-//=============================================================================
-/**
- *		INFOWIN
- */
-//=============================================================================
-//----------------------------------------------------------------------------
-/**
- *	@brief	INFOWIN初期化
- *
- *	@param	GAMESYS_WORK *gamesys	ゲームシステム
- *	@param	heapID		ヒープID
- */
-//-----------------------------------------------------------------------------
-static void UITemplate_INFOWIN_Init( GAMESYS_WORK *gamesys, HEAPID heapID )
-{	
-  GAMEDATA *gamedata;
-  
-  GF_ASSERT( gamesys );
-
-  gamedata = GAMESYSTEM_GetGameData(gamesys);
-	INFOWIN_Init( BG_FRAME_BAR_M, PLTID_BG_INFOWIN_M, gamedata, heapID );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	INFOWIN破棄
- *
- *	@param	void 
- */
-//-----------------------------------------------------------------------------
-static void UITemplate_INFOWIN_Exit( void )
-{	
-	INFOWIN_Exit();
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	INFWINメイン処理
- *
- *	@param	void 
- */
-//-----------------------------------------------------------------------------
-static void UITemplate_INFOWIN_Main( void )
-{	
-	INFOWIN_Update();
-}
-#endif //UI_TEMPLATE_INFOWIN
-
-#ifdef UI_TEMPLATE_TOUCHBAR
-//=============================================================================
-/**
- *	TOUCHBAR
- */
-//=============================================================================
-//----------------------------------------------------------------------------
-/**
- *	@brief	TOUCHBAR初期化
- *
- *	@param	GFL_CLUNIT *clunit	CLUNIT
- *	@param	heapID							ヒープID
- *
- *	@return	TOUCHBAR_WORK
- */
-//-----------------------------------------------------------------------------
-static TOUCHBAR_WORK * UITemplate_TOUCHBAR_Init( GFL_CLUNIT *clunit, HEAPID heapID )
-{	
-	//アイコンの設定
-	//数分作る
-	TOUCHBAR_ITEM_ICON touchbar_icon_tbl[]	=
-	{	
-		{	
-			TOUCHBAR_ICON_RETURN,
-			{	TOUCHBAR_ICON_X_07, TOUCHBAR_ICON_Y },
-		},
-		{	
-			TOUCHBAR_ICON_CLOSE,
-			{	TOUCHBAR_ICON_X_06, TOUCHBAR_ICON_Y },
-		},
-		{	
-			TOUCHBAR_ICON_CHECK,
-			{	TOUCHBAR_ICON_X_05, TOUCHBAR_ICON_Y_CHECK },
-		},
-	};
-
-	//設定構造体
-	//さきほどの窓情報＋リソース情報をいれる
-	TOUCHBAR_SETUP	touchbar_setup;
-	GFL_STD_MemClear( &touchbar_setup, sizeof(TOUCHBAR_SETUP) );
-
-	touchbar_setup.p_item		= touchbar_icon_tbl;				//上の窓情報
-	touchbar_setup.item_num	= NELEMS(touchbar_icon_tbl);//いくつ窓があるか
-	touchbar_setup.p_unit		= clunit;										//OBJ読み込みのためのCLUNIT
-	touchbar_setup.bar_frm	= BG_FRAME_BAR_M;						//BG読み込みのためのBG面
-	touchbar_setup.bg_plt		= PLTID_BG_TOUCHBAR_M;			//BGﾊﾟﾚｯﾄ
-	touchbar_setup.obj_plt	= PLTID_OBJ_TOUCHBAR_M;			//OBJﾊﾟﾚｯﾄ
-	touchbar_setup.mapping	= APP_COMMON_MAPPING_128K;	//マッピングモード
-
-	return TOUCHBAR_Init( &touchbar_setup, heapID );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	TOUCHBAR破棄
- *
- *	@param	TOUCHBAR_WORK	*touchbar タッチバー
- */
-//-----------------------------------------------------------------------------
-static void UITemplate_TOUCHBAR_Exit( TOUCHBAR_WORK	*touchbar )
-{	
-	TOUCHBAR_Exit( touchbar );
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	TOUCHBAR初期化	+ カスタムアイコン版
- *
- * @param  wk										ワーク
- *	@param	GFL_CLUNIT *clunit	CLUNIT
- *	@param	heapID							ヒープID
- *
- *	@return	TOUCHBAR_WORK
- */
-//-----------------------------------------------------------------------------
-static TOUCHBAR_WORK * UITemplate_TOUCHBAR_InitEx( WBTLIST_MAIN_WORK *wk, GFL_CLUNIT *clunit, HEAPID heapID )
-{	
-
-	//リソース読みこみ
-	//サンプルとしてタウンマップの拡大縮小アイコンをカスタムボタンに登録する
-	{	
-		ARCHANDLE *handle;
-		//ハンドル
-		handle	= GFL_ARC_OpenDataHandle( ARCID_TOWNMAP_GRAPHIC, heapID );
-		//リソース読みこみ
-		wk->ncg_btn	= GFL_CLGRP_CGR_Register( handle,
-					NARC_townmap_gra_tmap_obj_d_NCGR, FALSE, CLSYS_DRAW_MAIN, heapID );
-		wk->ncl_btn	= GFL_CLGRP_PLTT_RegisterEx( handle,
-				NARC_townmap_gra_tmap_bg_d_NCLR, CLSYS_DRAW_MAIN, PLTID_OBJ_TOWNMAP_M*0x20,
-				2, 2, heapID );	
-		wk->nce_btn	= GFL_CLGRP_CELLANIM_Register( handle,
-					NARC_townmap_gra_tmap_obj_d_NCER,
-				 	NARC_townmap_gra_tmap_obj_d_NANR, heapID );
-	
-		GFL_ARC_CloseDataHandle( handle ) ;
-	}
-
-	//タッチバーの設定
-	{	
-	//アイコンの設定
-	//数分作る
-	TOUCHBAR_SETUP	touchbar_setup;
-	TOUCHBAR_ITEM_ICON touchbar_icon_tbl[]	=
-	{	
-		{	
-			TOUCHBAR_ICON_RETURN,
-			{	TOUCHBAR_ICON_X_07, TOUCHBAR_ICON_Y },
-		},
-		{	
-			TOUCHBAR_ICON_CLOSE,
-			{	TOUCHBAR_ICON_X_06, TOUCHBAR_ICON_Y },
-		},
-		{	
-			TOUCHBAR_ICON_CHECK,
-			{	TOUCHBAR_ICON_X_05, TOUCHBAR_ICON_Y_CHECK }
-		},
-		{	
-			TOUCHBAR_ICON_CUTSOM1,	//カスタムボタン１を拡大縮小アイコンに,
-			{	TOUCHBAR_ICON_X_04, TOUCHBAR_ICON_Y },
-		},
-	};
-
-	//以下カスタムボタンならば入れなくてはいけない情報
-	touchbar_icon_tbl[3].cg_idx	=  wk->ncg_btn;				//キャラリソース
-	touchbar_icon_tbl[3].plt_idx	= wk->ncl_btn;				//パレットリソース
-	touchbar_icon_tbl[3].cell_idx	=	wk->nce_btn;				//セルリソース
-	touchbar_icon_tbl[3].active_anmseq	=	8;						//アクティブのときのアニメ
-	touchbar_icon_tbl[3].noactive_anmseq	=		12;						//ノンアクティブのときのアニメ
-	touchbar_icon_tbl[3].push_anmseq	=		10;						//押したときのアニメ（STOPになっていること）
-	touchbar_icon_tbl[3].key	=		PAD_BUTTON_START;		//キーで押したときに動作させたいならば、ボタン番号
-	touchbar_icon_tbl[3].se	=		0;									//押したときにSEならしたいならば、SEの番号
-
-	//設定構造体
-	//さきほどの窓情報＋リソース情報をいれる
-	GFL_STD_MemClear( &touchbar_setup, sizeof(TOUCHBAR_SETUP) );
-
-	touchbar_setup.p_item		= touchbar_icon_tbl;				//上の窓情報
-	touchbar_setup.item_num	= NELEMS(touchbar_icon_tbl);//いくつ窓があるか
-	touchbar_setup.p_unit		= clunit;										//OBJ読み込みのためのCLUNIT
-	touchbar_setup.bar_frm	= BG_FRAME_BAR_M;						//BG読み込みのためのBG面
-	touchbar_setup.bg_plt		= PLTID_BG_TOUCHBAR_M;			//BGﾊﾟﾚｯﾄ
-	touchbar_setup.obj_plt	= PLTID_OBJ_TOUCHBAR_M;			//OBJﾊﾟﾚｯﾄ
-	touchbar_setup.mapping	= APP_COMMON_MAPPING_128K;	//マッピングモード
-
-	return TOUCHBAR_Init( &touchbar_setup, heapID );
-	}
-
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	TOUCHBAR破棄	カスタムボタン版
- *
- *	@param	TOUCHBAR_WORK	*touchbar タッチバー
- */
-//-----------------------------------------------------------------------------
-static void UITemplate_TOUCHBAR_ExitEx( WBTLIST_MAIN_WORK *wk )
-{	
-	//タッチバー破棄
-	TOUCHBAR_Exit( wk->touchbar );
-
-	//リソース破棄
-	{	
-		GFL_CLGRP_PLTT_Release( wk->ncl_btn );
-		GFL_CLGRP_CGR_Release( wk->ncg_btn );
-		GFL_CLGRP_CELLANIM_Release( wk->nce_btn );
-	}
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	TOUCHBARメイン処理
- *
- *	@param	TOUCHBAR_WORK	*touchbar タッチバー
- */
-//-----------------------------------------------------------------------------
-static void UITemplate_TOUCHBAR_Main( TOUCHBAR_WORK	*touchbar )
-{	
-	TOUCHBAR_Main( touchbar );
-}
-#endif //UI_TEMPLATE_TOUCHBAR
-
-#ifdef UI_TEMPLATE_MCSS
-//=============================================================================
-/**
- *		MCSS
- */
-//=============================================================================
-//----------------------------------------------------------------------------
-/**
- *	@brief	MCSS初期化
- *
- *	@param	u16 wk_max		MCSSのワーク作成最大数
- *	@param	heapID				ヒープID
- *
- *	@return	MCSS_SYS
- */
-//-----------------------------------------------------------------------------
-static MCSS_SYS_WORK * UITemplate_MCSS_Init( u16 wk_max, HEAPID heapID )
-{	
-	MCSS_SYS_WORK *mcss;
-	mcss = MCSS_Init( wk_max , heapID );
-	MCSS_SetTextureTransAdrs( mcss, 0 );
-	MCSS_SetOrthoMode( mcss );
-	return mcss;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	MCSS破棄
- *
- *	@param	MCSS_SYS_WORK * mcss	MCSS＿SYS
- */
-//-----------------------------------------------------------------------------
-static void UITemplate_MCSS_Exit( MCSS_SYS_WORK * mcss )
-{	
-	MCSS_Exit(mcss);
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	MCSS描画
- *
- *	@param	MCSS_SYS_WORK * mcss MCSS＿SYS
- */
-//-----------------------------------------------------------------------------
-static void UITemplate_MCSS_Draw( MCSS_SYS_WORK * mcss )
-{	
-	MCSS_Main( mcss );
-	MCSS_Draw( mcss );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	MCSSワーク作成
- *
- *	@param	MCSS_SYS_WORK * mcss	MCSS_SYS
- *	@param	*ppp					ポケモンパーソナルパラメータ
- *	@param	VecFx32 *pos	位置
- *
- *	@return	MCSS_WK
- */
-//-----------------------------------------------------------------------------
-static MCSS_WORK * UITemplate_MCSS_CreateWkPP( MCSS_SYS_WORK * mcss, POKEMON_PARAM *pp, const VecFx32 *pos )
-{	
-	MCSS_WORK *poke;
-	MCSS_ADD_WORK addWork;
-
-	VecFx32 scale = {FX32_ONE*16,FX32_ONE*16,FX32_ONE};
-
-	MCSS_TOOL_MakeMAWPP( pp , &addWork , MCSS_DIR_FRONT );
-	poke = MCSS_Add( mcss, pos->x, pos->y , pos->z, &addWork );
-	MCSS_SetScale( poke , &scale );
-	return poke;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	MCSSワーク破棄
- *
- *	@param	MCSS_SYS_WORK * mcss	MCSS_SYS
- *	@param	*wk										ワーク
- *
- */
-//-----------------------------------------------------------------------------
-static void UITemplate_MCSS_DeleteWk( MCSS_SYS_WORK * mcss, MCSS_WORK *wk )
-{	
-	MCSS_SetVanishFlag( wk );
-	MCSS_Del(mcss,wk);
-}
-#endif //UI_TEMPLATE_MCSS
-
-#ifdef UI_TEMPLATE_TASKMENU
-//----------------------------------------------------------------------------
-/**
- *	@brief	TASKMENUの初期化
- *
- *	@param	menu_res	リソース
- */
-//-----------------------------------------------------------------------------
-static APP_TASKMENU_WORK * UITemplate_TASKMENU_Init( APP_TASKMENU_RES *menu_res, GFL_MSGDATA *msg, HEAPID heapID )
-{	
-	int i;
-	APP_TASKMENU_INITWORK	init;
-	APP_TASKMENU_ITEMWORK	item[3];
-	APP_TASKMENU_WORK			*menu;	
-
-	//窓の設定
-	for( i = 0; i < NELEMS(item); i++ )
-	{	
-		item[i].str	= GFL_MSG_CreateString( msg, 0 );	//文字列
-		item[i].msgColor	= APP_TASKMENU_ITEM_MSGCOLOR;	//文字色
-		item[i].type			= APP_TASKMENU_WIN_TYPE_NORMAL;	//窓の種類
-	}
-
-	//初期化
-	init.heapId		= heapID;
-	init.itemNum	= NELEMS(item);
-	init.itemWork = item;
-	init.posType	= ATPT_RIGHT_DOWN;
-	init.charPosX	= 32;
-	init.charPosY = 21;
-	init.w				= APP_TASKMENU_PLATE_WIDTH;
-	init.h				= APP_TASKMENU_PLATE_HEIGHT;
-
-	menu	= APP_TASKMENU_OpenMenu( &init, menu_res );
-
-	//文字列解放
-	for( i = 0; i < NELEMS(item); i++ )
-	{	
-		GFL_STR_DeleteBuffer( item[i].str );
-	}
-
-	return menu;
-
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	TASKMENUの破棄
- *
- *	@param	APP_TASKMENU_WORK *menu	ワーク
- */
-//-----------------------------------------------------------------------------
-static void UITemplate_TASKMENU_Exit( APP_TASKMENU_WORK *menu )
-{	
-	APP_TASKMENU_CloseMenu( menu );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	TASKMENUのメイン処理
- *
- *	@param	APP_TASKMENU_WORK *menu	ワーク
- */
-//-----------------------------------------------------------------------------
-static void UITemplate_TASKMENU_Main( APP_TASKMENU_WORK *menu )
-{	
-	APP_TASKMENU_UpdateMenu( menu );
-}
-#endif //UI_TEMPLATE_TASKMENU
-
-#ifdef UI_TEMPLATE_TYPEICON
-//=============================================================================
-/**
- *	TYPEICON
- */
-//=============================================================================
-//----------------------------------------------------------------------------
-/**
- *	@brief	属性、タイプアイコン作成
- *
- *	@param	WBTLIST_MAIN_WORK *wk ワーク
- *	@param	PokeType					タイプ
- *	@param	GFL_CLUNIT *unit	CLUNIT  ユニット
- *	@param	heapID						ヒープID
- *
- *	@return	void
- */
-//-----------------------------------------------------------------------------
-static void UITemplate_TYPEICON_CreateCLWK( WBTLIST_MAIN_WORK *wk, PokeType type, GFL_CLUNIT *unit, HEAPID heapID )
-{	
-  UI_EASY_CLWK_RES_PARAM prm;
-
-  prm.draw_type = CLSYS_DRAW_MAIN;
-  prm.comp_flg  = UI_EASY_CLWK_RES_COMP_NONE;
-  prm.arc_id    = APP_COMMON_GetArcId();
-  prm.pltt_id   = APP_COMMON_GetPokeTypePltArcIdx();
-  prm.ncg_id    = APP_COMMON_GetPokeTypeCharArcIdx(type);
-  prm.cell_id   = APP_COMMON_GetPokeTypeCellArcIdx( APP_COMMON_MAPPING_128K );
-  prm.anm_id    = APP_COMMON_GetPokeTypeAnimeArcIdx( APP_COMMON_MAPPING_128K );
-  prm.pltt_line = PLTID_OBJ_TYPEICON_M;
-  prm.pltt_src_ofs  = 0;
-  prm.pltt_src_num = 3;
-  
-  UI_EASY_CLWK_LoadResource( &wk->clres_type_icon, &prm, unit, heapID );
-
-  wk->clwk_type_icon = UI_EASY_CLWK_CreateCLWK( &wk->clres_type_icon, unit, 128, 50, 0, heapID );
-		
-  GFL_CLACT_WK_SetPlttOffs( wk->clwk_type_icon, APP_COMMON_GetPokeTypePltOffset(type),
-				CLWK_PLTTOFFS_MODE_PLTT_TOP );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	属性、タイプアイコン破棄
- *
- *	@param	WBTLIST_MAIN_WORK *wk ワーク
- *
- *	@retval none
- */
-//-----------------------------------------------------------------------------
-static void UITemplate_TYPEICON_DeleteCLWK( WBTLIST_MAIN_WORK *wk )
-{	
-	//CLWK破棄
-	GFL_CLACT_WK_Remove( wk->clwk_type_icon );
-	//リソース破棄
-  UI_EASY_CLWK_UnLoadResource( &wk->clres_type_icon );
-}
-
-#endif //UI_TEMPLATE_TYPEICON
-
-#ifdef UI_TEMPLATE_ITEM_ICON
-//=============================================================================
-/**
- *	ITEM_ICON
- */
-//=============================================================================
-
-//-----------------------------------------------------------------------------
-/**
- *	@brief  どうぐアイコン生成
- *
- *	@param	WBTLIST_MAIN_WORK *wk	ワーク
- *	@param	item_id アイテムID
- *	@param	unit    ユニット
- *	@param	heapID  ヒープID
- *
- *	@retval none
- */
-//-----------------------------------------------------------------------------
-static void UITemplate_ITEM_ICON_CreateCLWK( WBTLIST_MAIN_WORK* wk, u16 item_id, GFL_CLUNIT* unit, HEAPID heapID )
-{	
-  UI_EASY_CLWK_RES_PARAM prm;
-
-  prm.draw_type = CLSYS_DRAW_MAIN;
-  prm.comp_flg  = UI_EASY_CLWK_RES_COMP_NONE;
-  prm.arc_id    = ARCID_ITEMICON;
-  prm.pltt_id   = ITEM_GetIndex( item_id, ITEM_GET_ICON_PAL );
-  prm.ncg_id    = ITEM_GetIndex( item_id, ITEM_GET_ICON_CGX );
-  prm.cell_id   = NARC_item_icon_itemicon_NCER;
-  prm.anm_id    = NARC_item_icon_itemicon_NANR;
-  prm.pltt_line = PLTID_OBJ_ITEMICON_M;
-  prm.pltt_src_ofs  = 0;
-  prm.pltt_src_num = 1;
-  
-  UI_EASY_CLWK_LoadResource( &wk->clres_item_icon, &prm, unit, heapID );
-
-  wk->clwk_item_icon = UI_EASY_CLWK_CreateCLWK( &wk->clres_item_icon, unit, 16, 32, 0, heapID );
-}
-
-//-----------------------------------------------------------------------------
-/**
- *	@brief	どうぐアイコン破棄
- *
- *	@param	WBTLIST_MAIN_WORK *wk ワーク
- *
- *	@retval none
- */
-//-----------------------------------------------------------------------------
-static void UITemplate_ITEM_ICON_DeleteCLWK( WBTLIST_MAIN_WORK* wk )
-{
-	//CLWK破棄
-	GFL_CLACT_WK_Remove( wk->clwk_item_icon );
-  //リソース開放
-  UI_EASY_CLWK_UnLoadResource( &wk->clres_item_icon );
-}
-
-#endif //UI_TEMPLATE_ITEM_ICON
-
-
-#ifdef UI_TEMPLATE_POKE_ICON
-//=============================================================================
-/**
- *	POKE_ICON
- */
-//=============================================================================
-
-//-----------------------------------------------------------------------------
-/**
- *	@brief  ポケアイコン 生成
- *
- *	@param	WBTLIST_MAIN_WORK *wk ワーク
- *	@param	unit  ユニット
- *	@param	heapID  ヒープID  
- *
- *	@retval none
- */
-//-----------------------------------------------------------------------------
-static void UITemplate_POKE_ICON_CreateCLWK( WBTLIST_MAIN_WORK* wk, u32 mons, u32 form_no, u32 sex, BOOL egg, GFL_CLUNIT* unit, HEAPID heapID )
-{
-  // ポケアイコン本体
-  {
-    UI_EASY_CLWK_RES_PARAM prm;
-
-    prm.draw_type = CLSYS_DRAW_MAIN;
-    prm.comp_flg  = UI_EASY_CLWK_RES_COMP_NCLR;
-    prm.arc_id    = ARCID_POKEICON;
-    prm.pltt_id   = POKEICON_GetPalArcIndex();
-  //  prm.ncg_id    = POKEICON_GetCgxArcIndex(ppp);
-    prm.ncg_id    = POKEICON_GetCgxArcIndexByMonsNumber( mons, form_no, sex, egg );
-    prm.cell_id   = POKEICON_GetCellArcIndex(); 
-    prm.anm_id    = POKEICON_GetAnmArcIndex();
-    prm.pltt_line = PLTID_OBJ_POKEICON_M;
-    prm.pltt_src_ofs  = 0;
-    prm.pltt_src_num = 3;
-    
-    UI_EASY_CLWK_LoadResource( &wk->clres_poke_icon, &prm, unit, heapID );
-
-    // アニメシーケンスで指定( 0=瀕死, 1=HP最大, 2=HP緑, 3=HP黄, 4=HP赤, 5=状態異常 )
-    wk->clwk_poke_icon = UI_EASY_CLWK_CreateCLWK( &wk->clres_poke_icon, unit, 48, 32, 1, heapID );
-
-    // 上にアイテムアイコンを描画するので優先度を下げておく
-    GFL_CLACT_WK_SetSoftPri( wk->clwk_poke_icon, 1 );
-
-    // オートアニメ ON
-    GFL_CLACT_WK_SetAutoAnmFlag( wk->clwk_poke_icon, TRUE );
-
-    {
-      u8 pal_num = POKEICON_GetPalNum( mons, form_no, sex, egg );
-      GFL_CLACT_WK_SetPlttOffs( wk->clwk_poke_icon, pal_num, CLWK_PLTTOFFS_MODE_OAM_COLOR );
-    }
-  }
-
-  // ポケアイコン用アイテムアイコン
-  {
-    UI_EASY_CLWK_RES_PARAM prm;
-
-    prm.draw_type = CLSYS_DRAW_MAIN;
-    prm.comp_flg  = UI_EASY_CLWK_RES_COMP_NONE;
-    prm.arc_id    = APP_COMMON_GetArcId();
-    prm.pltt_id   = APP_COMMON_GetPokeItemIconPltArcIdx();
-    prm.ncg_id    = APP_COMMON_GetPokeItemIconCharArcIdx();
-    prm.cell_id   = APP_COMMON_GetPokeItemIconCellArcIdx( APP_COMMON_MAPPING_128K );
-    prm.anm_id    = APP_COMMON_GetPokeItemIconAnimeArcIdx( APP_COMMON_MAPPING_128K );
-    prm.pltt_line = PLTID_OBJ_POKEITEM_M;
-    prm.pltt_src_ofs  = 0;
-    prm.pltt_src_num = 1;
-    
-    UI_EASY_CLWK_LoadResource( &wk->clres_poke_item, &prm, unit, heapID );
-
-    // アニメシーケンスで指定( 0=どうぐ, 1=メール )
-    // ※位置調整はとりあえずの値です。
-    wk->clwk_poke_item = UI_EASY_CLWK_CreateCLWK( &wk->clres_poke_item, unit, 48+1*8+4, 32+4, 0, heapID );
-  }
-
-}
-
-//-----------------------------------------------------------------------------
-/**
- *	@brief  ポケアイコン 破棄
- *
- *	@param	WBTLIST_MAIN_WORK *wk ワーク
- *
- *	@retval none
- */
-//-----------------------------------------------------------------------------
-static void UITemplate_POKE_ICON_DeleteCLWK( WBTLIST_MAIN_WORK* wk )
-{ 
-	//CLWK破棄
-	GFL_CLACT_WK_Remove( wk->clwk_poke_icon );
-  //リソース開放
-  UI_EASY_CLWK_UnLoadResource( &wk->clres_poke_icon );
-	
-  //CLWK破棄
-	GFL_CLACT_WK_Remove( wk->clwk_poke_item );
-  //リソース開放
-  UI_EASY_CLWK_UnLoadResource( &wk->clres_poke_item );
-}
-
-#endif //UI_TEMPLATE_POKE_ICON
 
 #ifdef UI_TEMPLATE_OAM_MAPMODEL
 //=============================================================================
@@ -1499,466 +838,808 @@ static void WBTList_OAM_MAPMODEL_DeleteCLWK( WBTLIST_MAIN_WORK* wk )
 #endif //UI_TEMPLATE_OAM_MAPMODEL
 
 
-#ifdef UI_TEMPLATE_POKE2D
-//=============================================================================
+//-----------------------------------------------------------------------------
 /**
- *	ポケモンOBJ,BG読みこみ
- */
-//=============================================================================
-//----------------------------------------------------------------------------
-/**
- *	@brief	ポケモンBG読みこみ
+ *	@brief  処理の流れ(init)
  *
- *	@param	WBTLIST_MAIN_WORK *wk	ワーク
- *	@param	heapID										ヒープID
+ *	@param	WBTLIST_MAIN_WORK* wk 
+ *
+ *	@retval
  */
 //-----------------------------------------------------------------------------
-static void UITemplate_POKE2D_LoadResourceBG( WBTLIST_MAIN_WORK *wk, HEAPID heapID )
-{	
-
-	POKEMON_PASO_PARAM	*ppp;
+static void wbt_init( WBTLIST_MAIN_WORK* wk )
+{
+	s32		i;
+	STRBUF* strbuf;
 	
-	//PPP作成
-	ppp	= (POKEMON_PASO_PARAM	*)PP_Create( MONSNO_KAMEKKUSU, 0, 0, heapID );
-
-	//1キャラ目に空白キャラいれて
-	GFL_BG_FillCharacter( BG_FRAME_POKE_M, 0, 1,  0 );
-
-	//ポケモンの絵を転送
-	//1は↑で1キャラ作成したので。
-	POKE2DGRA_BG_TransResourcePPP( ppp, POKEGRA_DIR_FRONT, BG_FRAME_POKE_M,
-			1, PLTID_BG_POKE_M, heapID );
-
-	//スクリーンに書き込んで転送
-	POKE2DGRA_BG_WriteScreen( BG_FRAME_POKE_M, 1, PLTID_BG_POKE_M, 32/2-12/2+12, 24/2-12/2 );
-	GFL_BG_LoadScreenReq( BG_FRAME_POKE_M );
-
-	//PPP破棄
-	GFL_HEAP_FreeMemory( ppp );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	ポケモンBG破棄
- *
- *	@param	WBTLIST_MAIN_WORK *wk ワーク
- */
-//-----------------------------------------------------------------------------
-static void UITemplate_POKE2D_UnLoadResourceBG( WBTLIST_MAIN_WORK *wk )
-{		
-	GFL_BG_FillCharacterRelease( BG_FRAME_POKE_M, 1, 0 );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	リソース読みこみ
- *
- *	@param	WBTLIST_MAIN_WORK *wk	ワーク
- *	@param	heapID										ヒープID
- */
-//-----------------------------------------------------------------------------
-static void UITemplate_POKE2D_LoadResourceOBJ( WBTLIST_MAIN_WORK *wk, HEAPID heapID )
-{	
-	POKEMON_PASO_PARAM	*ppp;
-	ARCHANDLE						*handle;
-
-	//PPP作成
-	ppp	= (POKEMON_PASO_PARAM	*)PP_Create( MONSNO_RIZAADON, 0, 0, heapID );
-
-	//ハンドル
-	handle	= POKE2DGRA_OpenHandle( heapID );
-	//リソース読みこみ
-	wk->ncg_poke2d	= POKE2DGRA_OBJ_CGR_RegisterPPP( handle, ppp, POKEGRA_DIR_FRONT, CLSYS_DRAW_MAIN, heapID );
-	wk->ncl_poke2d	= POKE2DGRA_OBJ_PLTT_RegisterPPP( handle, ppp, POKEGRA_DIR_FRONT ,CLSYS_DRAW_MAIN,  PLTID_OBJ_POKE_M*0x20,  heapID );
-	wk->nce_poke2d	= POKE2DGRA_OBJ_CELLANM_RegisterPPP( ppp, POKEGRA_DIR_FRONT, APP_COMMON_MAPPING_128K, CLSYS_DRAW_MAIN, heapID );
-	GFL_ARC_CloseDataHandle( handle );
-
-	//PP破棄
-	GFL_HEAP_FreeMemory( ppp );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	リソース破棄
- *
- *	@param	WBTLIST_MAIN_WORK *wk ワーク
- *
- */
-//-----------------------------------------------------------------------------
-static void UITemplate_POKE2D_UnLoadResourceOBJ( WBTLIST_MAIN_WORK *wk )
-{	
-	//リソース破棄
-	GFL_CLGRP_PLTT_Release( wk->ncl_poke2d );
-	GFL_CLGRP_CGR_Release( wk->ncg_poke2d );
-	GFL_CLGRP_CELLANIM_Release( wk->nce_poke2d );
-
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	CLWK作成
- *
- *	@param	WBTLIST_MAIN_WORK *wk	ワーク
- *	@param	*clunit	ユニット
- *	@param	heapID	ヒープID
- */
-//-----------------------------------------------------------------------------
-static void UITemplate_POKE2D_CreateCLWK( WBTLIST_MAIN_WORK *wk, GFL_CLUNIT *clunit, HEAPID heapID )
-{	
-	GFL_CLWK_DATA	cldata;
-		GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
-		cldata.pos_x	= 38;
-		cldata.pos_y	= 80;
-		wk->clwk_poke2d	= GFL_CLACT_WK_Create( clunit, 
-				wk->ncg_poke2d,
-				wk->ncl_poke2d,
-				wk->nce_poke2d,
-				&cldata, 
-				CLSYS_DEFREND_MAIN, heapID );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	CLWK破棄
- *
- *	@param	WBTLIST_MAIN_WORK *wk ワーク
- */
-//-----------------------------------------------------------------------------
-static void UITemplate_POKE2D_DeleteCLWK( WBTLIST_MAIN_WORK *wk )
-{	
-	GFL_CLACT_WK_Remove( wk->clwk_poke2d );
-}
-#endif //UI_TEMPLATE_POKE2D
-
-#ifdef UI_TEMPLATE_BALL
-//=============================================================================
-/**
- *	ボールアイコン
- */
-//=============================================================================
-//----------------------------------------------------------------------------
-/**
- *	@brief	ボールアイコン作成
- *
- *	@param	WBTLIST_MAIN_WORK *wk	ワーク
- *	@param	ballID	ボールID 
- *	@param	*unit		CLUNIT
- *	@param	heapID	ヒープID
- */
-//-----------------------------------------------------------------------------
-static void UITemplate_BALLICON_CreateCLWK( WBTLIST_MAIN_WORK *wk, BALL_ID ballID, GFL_CLUNIT *unit, HEAPID heapID )
-{	
-  UI_EASY_CLWK_RES_PARAM prm;
-
-  prm.draw_type = CLSYS_DRAW_MAIN;
-  prm.comp_flg  = UI_EASY_CLWK_RES_COMP_NONE;
-  prm.arc_id    = APP_COMMON_GetArcId();
-  prm.pltt_id   = APP_COMMON_GetBallPltArcIdx( ballID );
-  prm.ncg_id    = APP_COMMON_GetBallCharArcIdx( ballID );
-  prm.cell_id   = APP_COMMON_GetBallCellArcIdx( ballID, APP_COMMON_MAPPING_128K );
-  prm.anm_id    = APP_COMMON_GetBallAnimeArcIdx( ballID, APP_COMMON_MAPPING_128K );
-  prm.pltt_line = PLTID_OBJ_BALLICON_M;
-  prm.pltt_src_ofs  = 0;
-  prm.pltt_src_num = 1;
-
-  // リソース読み込み
-  UI_EASY_CLWK_LoadResource( &wk->clres_ball, &prm, unit, heapID );
-  // CLWK生成
-  wk->clwk_ball = UI_EASY_CLWK_CreateCLWK( &wk->clres_ball, unit, 96, 32, 0, heapID );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	ボールアイコン破棄
- *
- *	@param	WBTLIST_MAIN_WORK* wk ワーク
- */
-//-----------------------------------------------------------------------------
-static void UITemplate_BALLICON_DeleteCLWK( WBTLIST_MAIN_WORK* wk )
-{	
-	//CLWK破棄
-	GFL_CLACT_WK_Remove( wk->clwk_ball );
-  //リソース開放
-  UI_EASY_CLWK_UnLoadResource( &wk->clres_ball );
-}
-#endif //UI_TEMPLATE_BALL
-
-#ifdef	UI_TEMPLATE_PRINT_TOOL
-//=============================================================================
-/**
- *	PRINT_TOOL
- */
-//=============================================================================
-/*
-		・「HP ??/??」を表示するサンプルです
-		・BMPWINのサイズは 20 x 2 です
-		・現在のHP = 618, 最大HP = 999 とします
-		・サンプルメインが FALSE を返すと終了です
-*/
-
-// サンプルメイン
-static BOOL PrintTool_MainFunc( WBTLIST_MAIN_WORK * wk )
-{
-	switch( wk->seq ){
-	case 0:
-		PrintTool_AddBmpWin( wk );			// BMPWIN作成
-		PrintTool_PrintHP( wk );				// ＨＰ表示
-		PrintTool_ScreenTrans( wk );		// スクリーン転送
-		wk->seq = 1;
-		break;
-
-	case 1:
-		// プリント終了待ち
-		if( PRINTSYS_QUE_IsFinished( wk->que ) == TRUE ){
-			wk->seq = 2;
-		}
-		break;
-
-	case 2:
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
-			PrintTool_DelBmpWin( wk );		// BMPWIN削除
-			return FALSE;
-		}
+	// 文字列(test)
+	strbuf = GFL_MSG_CreateString( wk->msg, 0 );
+	
+	// 初期化
+	// それほど複雑ではないので、
+	// 上、下画面をまとめて処理
+	wk->Mode = MODE_ROUND1;		// 外からのパラメータ
+	wk->Step = STEP_INIT;
+	//
+	// 表示回数
+	wk->DispNum = 1;
+	if(wk->Mode == MODE_ROUND2){
+		wk->DispNum = 4;
+	}else if(wk->Mode == MODE_ROUND3){
+		wk->DispNum = 2;
 	}
-
-	PRINT_UTIL_Trans( &wk->print_util, wk->que );
-	return TRUE;
+	wk->Flag = 0;
+	
+	for(i=0;i<TIMER_MAX;i++){
+		wk->Timer[i] = 0;
+	}
+	//
+	// 文字初期化
+	wbt_init_string( wk );
+	wbt_disp_string( wk, 0, 96, 0, strbuf );
+	wbt_disp_string( wk, 1, 44, 0, strbuf );
+	// 削除
+	GFL_STR_DeleteBuffer( strbuf );
+	
+	//
+	// OBJ初期化
+	wbt_init_obj( wk );
 }
-
-// BMPWIN作成
-static void PrintTool_AddBmpWin( WBTLIST_MAIN_WORK * wk )
-{
-	wk->print_util.win = GFL_BMPWIN_Create(
-													GFL_BG_FRAME0_M,					// ＢＧフレーム
-													1, 1,											// 表示座標
-													20, 2,										// 表示サイズ
-													15,												// パレット
-													GFL_BMP_CHRAREA_GET_B );	// キャラ取得方向
-}
-
-// BMPWIN削除
-static void PrintTool_DelBmpWin( WBTLIST_MAIN_WORK * wk )
-{
-		GFL_BMPWIN_Delete( wk->print_util.win );
-}
-
-// BMPWINスクリーン転送
-static void PrintTool_ScreenTrans( WBTLIST_MAIN_WORK * wk )
-{
-	GFL_BMPWIN_MakeScreen( wk->print_util.win );
-	GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(wk->print_util.win) );
-}
-
-// ＨＰ表示
-static void PrintTool_PrintHP( WBTLIST_MAIN_WORK * wk )
-{
-	STRBUF * strbuf;
-
-	// BMPWIN内の座標(32,0)を基準に右詰めで「ＨＰ」と表示
-	PRINTTOOL_Print(
-				&wk->print_util,				// プリントユーティル ( BMPWIN )
-				wk->que,								// プリントキュー
-				32, 0,									// 表示基準座標
-				strbuf,									// 文字列（すでに「ＨＰ」が展開されているものとする）
-				wk->font,								// フォント
-				PRINTTOOL_MODE_RIGHT );	// 右詰
-
-	// BMPWIN内の座標(100,0)を「／」の中心にしてＨＰを表示 ( hp / mhp )
-	PRINTTOOL_PrintFraction(
-				&wk->print_util,				// プリントユーティル ( BMPWIN )
-				wk->que,								// プリントキュー
-				wk->font,								// フォント
-				100, 0,									// 表示基準座標
-				618,										// hp
-				999,										// mhp
-				wk->heapID );						// ヒープＩＤ
-}
-#endif	//UI_TEMPLATE_PRINT_TOOL
-
-#ifdef UI_TEMPLATE_PMSDRAW
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  簡易会話表示 初期化処理
+ *	@brief  処理の流れ(main)
  *
  *	@param	WBTLIST_MAIN_WORK* wk 
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void UITemplate_PMSDRAW_Init( WBTLIST_MAIN_WORK* wk )
+static void wbt_main( WBTLIST_MAIN_WORK* wk )
 {
-	GFL_CLUNIT	*clunit;
-  
-  clunit = WBTLIST_GRAPHIC_GetClunit( wk->graphic );
-
-  wk->pms_draw  = PMS_DRAW_Init( clunit, CLSYS_DRAW_SUB, wk->print_que, wk->font, 
-      PLTID_OBJ_PMS_DRAW, UI_TEMPLATE_PMSDRAW_NUM ,wk->heapID );
-  
-  {
-    int i;
-    PMS_DATA pms;
-
-    // PMS表示用BMPWIN生成
-    for( i=0; i<UI_TEMPLATE_PMSDRAW_NUM; i++ )
-    {
-      wk->pms_win[i] = GFL_BMPWIN_Create(
-          BG_FRAME_TEXT_S,					// ＢＧフレーム
-          2+4*i, 0 + 6 * i,					  	// 表示座標(キャラ単位)
-          28, 4,    							  // 表示サイズ
-          15,												// パレット
-          GFL_BMP_CHRAREA_GET_B );	// キャラ取得方向
-    }
-    
-    // 1個目 通常+空欄表示
-    PMSDAT_SetDebug( &pms );
-    PMSDAT_SetWord( &pms, 1, PMS_WORD_NULL );
-    PMS_DRAW_Print( wk->pms_draw, wk->pms_win[0], &pms ,0 );
-
-    // 2個目 デコメ
-    PMSDAT_SetDeco( &pms, 1, PMS_DECOID_HERO );
-    PMS_DRAW_Print( wk->pms_draw, wk->pms_win[1], &pms ,1 );
-    
-    // 3個目 デコメ二個表示
-    PMSDAT_SetDeco( &pms, 0, PMS_DECOID_TANKS );
-    PMSDAT_SetDeco( &pms, 1, PMS_DECOID_LOVE );
-    PMS_DRAW_Print( wk->pms_draw, wk->pms_win[2], &pms ,2 );
-    
-    // 1の要素を2にコピー(移動表現などにご使用ください。)
-    PMS_DRAW_Copy( wk->pms_draw, 1, 2 );
-  }
+	// 上画面
+	wbt_up( wk );
+	// 下画面
+	wbt_down( wk );
+	//
+	// debug
+	wbt_debug( wk );
 }
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  簡易会話表示 後処理
+ *	@brief  処理の流れ(exit)
  *
  *	@param	WBTLIST_MAIN_WORK* wk 
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void UITemplate_PMSDRAW_Exit( WBTLIST_MAIN_WORK* wk )
+static void wbt_exit( WBTLIST_MAIN_WORK* wk )
 {
-  PMS_DRAW_Exit( wk->pms_draw );
-  {
-    int i;
-    for( i=0; i<UI_TEMPLATE_PMSDRAW_NUM; i++ )
-    {
-      GFL_BMPWIN_Delete( wk->pms_win[i] );
-    }
-  }
+	// それほど複雑ではないので、
+	// 上、下画面をまとめて処理
+	// 文字表示用
+	wbt_exit_string( wk );
+	//
+	// OBJ破棄
+	wbt_exit_obj( wk );
 }
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  簡易会話表示 主処理
+ *	@brief  処理の流れ(完全終了待ち)
  *
  *	@param	WBTLIST_MAIN_WORK* wk 
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void UITemplate_PMSDRAW_Proc( WBTLIST_MAIN_WORK* wk )
+static BOOL wbt_wait_exit( WBTLIST_MAIN_WORK* wk )
 {
-#if 1
-  // SELECTでクリア
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
-  {
-    int i;
-    for( i=0; i<UI_TEMPLATE_PMSDRAW_NUM; i++ )
-    {
-      PMS_DRAW_Clear( wk->pms_draw, i, TRUE );
-    }
-  }
-  // STARTでランダム挿入（二重登録するとアサート）
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START )
-  {
-    int i;
-    for( i=0; i<UI_TEMPLATE_PMSDRAW_NUM; i++ )
-    {
-      PMS_DATA pms;
-      PMSDAT_SetDebugRandom( &pms );
-      PMSDAT_SetDeco( &pms, 0, GFUser_GetPublicRand(10)+1 );
-      PMS_DRAW_Print( wk->pms_draw, wk->pms_win[i], &pms ,i );
-    }
-  }
+	// 必要であれば追加
+	return( TRUE );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  処理の流れ(main)(上画面)
+ *
+ *	@param	WBTLIST_MAIN_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void wbt_up( WBTLIST_MAIN_WORK* wk )
+{
+	// 入力
+	wbt_key_all( wk );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  処理の流れ(main)(下画面)
+ *
+ *	@param	WBTLIST_MAIN_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void wbt_down( WBTLIST_MAIN_WORK* wk )
+{
+	// 念のため用意しておく
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  キー入力処理
+ *
+ *	@param	WBTLIST_MAIN_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void wbt_key_00( WBTLIST_MAIN_WORK* wk )
+{
+	s32		step = wk->Step;
+	s32		timer;
+	
+	//-------------------------------------------------
+	// タイマの処理はしばらくはコメントアウトにしておく
+	//-------------------------------------------------
+	
+	// 処理
+	switch(wk->Step)
+	{
+		// 初期化(整列状態)
+		case STEP_INIT:
+			wk->Step = STEP_LV1;
+//			wbt_init_timer( wk, TIMER_PANEL, info_tbl[0] );
+			// 初期化
+			wbt_init_move_panel( wk, MOVE_PANEL_IN );
+			break;
+		
+		// LV1(パネルイン)
+		case STEP_LV1:
+			// 初期化
+			wbt_main_move_panel( wk );
+			// 移動終了
+			if( wbt_is_movework( wk, MWORK_PANEL_L ) == FALSE ){
+				wk->Step = STEP_LV2;
+			}
+//			timer = wbt_main_timer( wk, TIMER_PANEL );
+//			if(timer <= 0){
+//				wk->Step = STEP_LV2;
+//			}
+			break;
+		
+		
+		// LV2(メッセージ表示待ち)
+		case STEP_LV2:
+			// メッセージ待ち
+			if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP ){
+				//
+				// 1回戦 => 終了
+				if(wk->Mode == MODE_ROUND1){
+					wk->Step = STEP_END;
+				}
+				// 2、3回戦=>パネルアウト
+				else{
+					wk->Step = STEP_LV3;
+//					wbt_init_timer( wk, TIMER_PANEL, info_tbl[0] );
+					wbt_init_move_panel( wk, MOVE_PANEL_OUT );
+				}
+				wk->DispNum--;
+				if(wk->DispNum < 0){
+					wk->DispNum = 0;
+				}
+			}
+			break;
+		
+		//
+		// LV3(パネルアウト)
+		case STEP_LV3:
+			// 初期化
+			wbt_main_move_panel( wk );
+			// 移動終了
+			if( wbt_is_movework( wk, MWORK_PANEL_L ) == FALSE ){
+				wk->Step = STEP_LV4;
+				wbt_init_timer( wk, TIMER_BOMB, info_tbl[0] );
+				// 爆発アニメ
+				wbt_disp_bomb( wk );
+			}
+//			timer = wbt_main_timer( wk, TIMER_PANEL );
+//			if(timer <= 0){
+//				wk->Step = STEP_LV4;
+//				wbt_init_timer( wk, TIMER_BOMB, info_tbl[0] );
+//			}
+			break;
+		
+		//
+		// LV4(爆破)
+		case STEP_LV4:
+			timer = wbt_main_timer( wk, TIMER_BOMB );
+			if(timer <= 0){
+				// 爆破アニメ終了=>ゲージ伸び
+				wk->Step = STEP_LV5;
+				wbt_init_timer( wk, TIMER_GAGE, info_tbl[2] );
+			}
+			break;
+		
+		// LV5(ゲージ伸び)
+		case STEP_LV5:
+			timer = wbt_main_timer( wk, TIMER_GAGE );
+			if(timer <= 0){
+				// ゲージ伸び終了
+				wk->Step = STEP_LV6;
+//				wbt_init_timer( wk, TIMER_PANEL, info_tbl[1] );
+				wbt_init_move_panel( wk, MOVE_PANEL_IN );
+			}
+			break;
+		
+		// LV6(パネルイン)
+		case STEP_LV6:
+			// 初期化
+			wbt_main_move_panel( wk );
+			// 移動終了
+			if( wbt_is_movework( wk, MWORK_PANEL_L ) == FALSE ){
+				wk->Step = STEP_LV7;
+			}
+//			timer = wbt_main_timer( wk, TIMER_PANEL );
+//			if(timer <= 0){
+//				// メッセージ表示
+//				wk->Step = STEP_LV7;
+//			}
+			break;
+		
+		// LV7(メッセージ待ち)
+		case STEP_LV7:
+			// メッセージ待ち
+			if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP ){
+				//
+				wk->Step = STEP_LV3;
+				wk->DispNum--;
+				if(wk->DispNum < 0){
+					wk->DispNum = 0;
+					wk->Step = STEP_END;
+				}
+//				wbt_init_timer( wk, TIMER_PANEL, info_tbl[0] );
+				wbt_init_move_panel( wk, MOVE_PANEL_OUT );
+			}
+			break;
+		
+		// LV END
+		case STEP_END:
+			break;
+		//
+		default:
+			break;
+	}
+	//
+	// debug
+	if(step != wk->Step){
+#ifdef _DEBUG_LOCAL_
+		OS_Printf("step :%d\n",wk->Step);
+#endif
+	}
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  キー入力処理(必要になったら復活)
+ *
+ *	@param	WBTLIST_MAIN_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+#if 0
+static void wbt_key_01( WBTLIST_MAIN_WORK* wk )
+{
+}
+
+static void wbt_key_02( WBTLIST_MAIN_WORK* wk )
+{
+}
 #endif
 
-  PMS_DRAW_Main( wk->pms_draw );
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  キー入力処理まとめ
+ *
+ *	@param	WBTLIST_MAIN_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+// 関数のテーブル
+static void (*(wbt_key_ftbl[]))( WBTLIST_MAIN_WORK* ) = {
+	wbt_key_00,
+//	wbt_key_01,			// 必要になったら復活
+//	wbt_key_02,			// 必要になったら復活
+};
+
+static void wbt_key_all( WBTLIST_MAIN_WORK* wk )
+{
+//	s32		mode=wk->Mode;		// 必要になったら復活
+	s32		mode=MODE_ROUND1;
+	
+	// 念のため
+	if((mode < MODE_ROUND1)||(mode >= MODE_ROUND_MAX))
+	{
+#ifdef _DEBUG_LOCAL_
+		OS_Printf("MODE ERROR\n");
+#endif
+		return;
+	}
+	
+	// 処理
+	wbt_key_ftbl[mode](wk);
 }
 
-#endif // UI_TEMPLATE_PMSDRAW
-
-//=============================================================================
-//=============================================================================
 //-----------------------------------------------------------------------------
-//  fldmmdlのOBJCODE_PARAMから正面絵の位置を引っ張る
-//  OBJCODE_PARAM::draw_proc_noから描画関数がわかるので、それにあわせて
-//  アニメパターンの何番目が正面絵かを判定する
-/*
-#====================================
-# 切り取りデータを取得する
-def GetClipData( data , bbd_code_pos )
-  retdata = { "x"=>0 , "y"=>0 , "Width"=>0 , "Height"=>0 }
-
-  # 切り抜きデータ定義
-  # 左下が0,0であることに注意
-  pos_data = {
-    "PROC_NON"            =>[0,0],
-    "PROC_BLACT"          =>[8*12,8*28],
-    "PROC_BLACT_ALANM4"   =>[8*12,8*28],
-    "PROC_BLACT_ALANM16"  =>[8*12,8*28],
-    "PROC_BLACT_ALANM32"  =>[8*12,8*28],
-    "PROC_BLACT_ONELOOP"  =>[8*12,8*28], 
-    "PROC_HERO"           =>[32*3,8*28],
-    "PROC_CYCLEHERO"      =>[32*5,8*24],
-    "PROC_SWIMHERO"       =>[8*4,8*28],
-    "PROC_HERO_ITEMGET"   =>[8*4,8*28],
-    "PROC_HERO_PCAZUKE"   =>[0,8*28],
-    "PROC_ACT0"           =>[8*12,8*28],
-    "PROC_POKE"           =>[0,0],          # ポケモンは違うシート
-    "PROC_POKE_FLY"       =>[0,0],          # ポケモンは違うシート
-    "PROC_MODEL"          =>[0,0],          # ポリゴンモデルは別シート
-    "PROC_FISHINGHERO"    =>[8*24,8*16],
-    "PROC_YUREHERO"       =>[8*16,8*28],
-    "PROC_SHIN_MU"        =>[0,8*56],
-    "PROC_SPIDER"         =>[0,8*28],
-    "PROC_MELODYER"       =>[0,8*28],
-    "PROC_ACT0_NON_PAUSE" =>[8*12,8*28],
-  }
-
-  # アニメIDから場所が決まるパターン(幅×下記の値が使用される)
-  anm_id_pos = {
-    "ANMID_FLIP"    =>2,
-    "ANMID_ONECELL" =>0,
-  }
-
-  # 幅の取得
-  if data[RBDEF_NUM_BBD_MDLSIZE] =~ /MDLSIZE_([0-9]+)x([0-9]+)/ then
-    retdata["Width"] = $1.to_i
-    retdata["Height"]= $2.to_i
-  end
-
-  # 場所の取得
-  proc_data = data[RBDEF_NUM_BBD_DRAWPROC]
-  if pos_data.key?(proc_data) then
-    retdata["x"] = pos_data[proc_data][0].to_i
-    retdata["y"]= pos_data[proc_data][1].to_i
-  end
-
-  # フリップパターンの設定
-  amd_id = data[RBDEF_NUM_BBD_ANMID]
-  if anm_id_pos.key?(amd_id) then
-    retdata["x"] = retdata["Width"].to_i*anm_id_pos[amd_id].to_i
-  end
-
-  # 表示コードでの設定
-  bbd_code = data[RBDEF_NUM_BBD_CODE]
-  if bbd_code_pos.key?(bbd_code) then
-    retdata["x"] = bbd_code_pos[bbd_code][0]
-    retdata["y"] = bbd_code_pos[bbd_code][1]
-  end
-
-  return retdata
-*/
+/**
+ *	@brief  タイマ処理初期化
+ *
+ *	@param	WBTLIST_MAIN_WORK* wk
+ *	@param	const s32 tmode		タイマの種類
+ *	@param	const s32 timer		フレーム数
+ *
+ *	@retval 
+ */
 //-----------------------------------------------------------------------------
+static void wbt_init_timer( WBTLIST_MAIN_WORK* wk, const s32 tmode, const s32 timer )
+{
+	wk->Timer[tmode] = timer;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  タイマ処理
+ *
+ *	@param	WBTLIST_MAIN_WORK* wk
+ *	@param	const s32 mode		タイマの種類
+ *
+ *	@retval 時間
+ */
+//-----------------------------------------------------------------------------
+static s32 wbt_main_timer( WBTLIST_MAIN_WORK* wk, const s32 tmode )
+{
+	wk->Timer[tmode]--;
+	if(wk->Timer[tmode] <= 0){
+		wk->Timer[tmode] = 0;
+	}
+	return( wk->Timer[tmode] );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  文字表示準備(現在、Canvasの作成)
+ *
+ *	@param	WBTLIST_MAIN_WORK* wk
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void wbt_init_string( WBTLIST_MAIN_WORK* wk )
+{
+	s32		i;
+	const WBTLIST_CANVAS_DATA	*adr = &wbt_canvas_tbl[0];
+	
+	for(i=0;i<MAX_PRINT_UTIL;i++){
+		// 終了条件
+		if(adr->bgnumber == 0xff){
+			break;
+		}
+		// セット
+		wk->PrintUtil[i].win = GFL_BMPWIN_Create( adr->bgnumber, adr->x, adr->y, adr->width, adr->height, adr->palnum, GFL_BMP_CHRAREA_GET_B );
+		adr++;
+	}
+#if 0
+//	wk->PrintUtil[0].win = GFL_BMPWIN_Create( GFL_BG_FRAME1_S,  4, 4, 24, 2, 2, GFL_BMP_CHRAREA_GET_B );	// 上
+//	wk->PrintUtil[1].win = GFL_BMPWIN_Create( GFL_BG_FRAME1_S, 10,17, 11, 2, 2, GFL_BMP_CHRAREA_GET_B );	// 下
+#endif
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  文字表示
+ *
+ *	@param	WBTLIST_MAIN_WORK* wk
+ *	@param	const s32			Canvasの番号
+ *	@param	const s32			表示座標(x,y)
+ *	@param	STRBUF* 			表示文字列
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void wbt_disp_string( WBTLIST_MAIN_WORK* wk, const s32 mode, const s32 x, const s32 y, STRBUF* strbuf )
+{
+//	STRBUF* strbuf;
+	
+	// test
+//	strbuf = GFL_MSG_CreateString( wk->msg, 0 );
+	
+	// 表示
+	PRINTTOOL_PrintColor(
+				&wk->PrintUtil[mode],			// プリントユーティル ( BMPWIN )
+				wk->print_que,					// プリントキュー
+				x, y,							// 表示基準座標
+				strbuf,							// 文字列
+				wk->font,						// フォント
+				PRINTSYS_LSB_Make(15,14,0),		// カラー
+				PRINTTOOL_MODE_CENTER );		// 中央
+	// 削除
+//	GFL_STR_DeleteBuffer( strbuf );
+	// 転送
+	GFL_BMPWIN_MakeScreen( wk->PrintUtil[mode].win );
+	GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(wk->PrintUtil[mode].win) );
+	//
+	// 転送?
+	PRINT_UTIL_Trans( &wk->PrintUtil[mode], wk->print_que );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  文字表示終了
+ *
+ *	@param	WBTLIST_MAIN_WORK* wk
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void wbt_exit_string( WBTLIST_MAIN_WORK* wk )
+{
+	s32		i;
+	
+	for(i=0;i<MAX_PRINT_UTIL;i++){
+		GFL_BMPWIN_Delete( wk->PrintUtil[i].win );
+	}
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  OBJ初期化(後で整理)
+ *
+ *	@param	WBTLIST_MAIN_WORK* wk
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void wbt_init_obj( WBTLIST_MAIN_WORK* wk )
+{
+	//リソース読みこみ
+	ARCHANDLE*	p_handle = GFL_ARC_OpenDataHandle( ARCID_WBTLIST_GRA, wk->heapID );
+    GFL_CLUNIT*	p_clunit = WBTLIST_GRAPHIC_GetClunit( wk->graphic );
+	// セルアニメ用の処理
+	wk->wk_obj.res[ RESID_OBJ_PLT ] = GFL_CLGRP_PLTT_RegisterEx( p_handle, obj_res_tbl[0], CLSYS_DRAW_MAIN, 0, 0, 3, wk->heapID );
+	wk->wk_obj.res[ RESID_OBJ_CHR ] = GFL_CLGRP_CGR_Register(  p_handle, obj_res_tbl[1], FALSE, CLSYS_DRAW_MAIN,    wk->heapID );
+//	wk->wk_obj.res[ RESID_OBJ_PLT ] = GFL_CLGRP_PLTT_RegisterEx( p_handle, obj_res_tbl[0], CLSYS_DRAW_SUB, 0, 0, 3, wk->heapID );
+//	wk->wk_obj.res[ RESID_OBJ_CHR ] = GFL_CLGRP_CGR_Register(  p_handle, obj_res_tbl[1], FALSE, CLSYS_DRAW_SUB,    wk->heapID );
+	wk->wk_obj.res[ RESID_OBJ_CEL ] = GFL_CLGRP_CELLANIM_Register( p_handle, obj_res_tbl[2], obj_res_tbl[3], wk->heapID );
+	//
+	GFL_ARC_CloseDataHandle( p_handle );
+	//
+	// CLWK登録
+	{
+		s32 			i;
+		BOOL			bflg;
+		GFL_CLWK_DATA 	cldata;
+		CLWK_FLIP_TYPE	flip;
+		const WBTLIST_OBJ_DATA *adr = &wbt_obj_tbl[0];		// アドレスセット
+		
+		GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
+		//
+		for(i=0;i<CLWKID_MAX;i++){
+			// 終了判定
+			if(adr->flag == 0xff){
+				break;
+			}
+			cldata.pos_x 	= adr->pos_x;
+			cldata.pos_y 	= adr->pos_y;
+			cldata.anmseq 	= adr->anmseq;
+			cldata.softpri	= adr->softpri;
+			cldata.bgpri	= adr->bgpri;
+			//
+			wk->wk_obj.clwk[i] =   GFL_CLACT_WK_Create( p_clunit, 
+												wk->wk_obj.res[RESID_OBJ_CHR],
+												wk->wk_obj.res[RESID_OBJ_PLT],
+												wk->wk_obj.res[RESID_OBJ_CEL],
+												&cldata,
+												CLSYS_DEFREND_MAIN,
+//												CLSYS_DEFREND_SUB,
+												wk->heapID );
+			// パレット
+			GFL_CLACT_WK_SetPlttOffs( wk->wk_obj.clwk[i], adr->palnum, CLWK_PLTTOFFS_MODE_PLTT_TOP );
+			//-------------
+			// 表示/非表示
+			//-------------
+			bflg = FALSE;
+			if(adr->visible == 1){
+				bflg = TRUE;
+			}
+			GFL_CLACT_WK_SetDrawEnable(  wk->wk_obj.clwk[i], bflg );
+			//----------
+			// フラグ
+			//----------
+			// アニメ
+			bflg = FALSE;
+			if(adr->dispflag & FLG_OBJ_ANIM){
+				bflg = TRUE;
+			}
+			GFL_CLACT_WK_SetAutoAnmFlag( wk->wk_obj.clwk[i], bflg );
+			//
+			// Hフリップ
+			if(adr->dispflag & FLG_OBJ_HFLIP){
+				GFL_CLACT_WK_SetFlip( wk->wk_obj.clwk[i], CLWK_FLIP_H, TRUE );
+			}
+			// Vフリップ
+			if(adr->dispflag & FLG_OBJ_VFLIP){
+				GFL_CLACT_WK_SetFlip( wk->wk_obj.clwk[i], CLWK_FLIP_V, TRUE );
+			}
+			// 次のデータへ
+			adr++;
+		}
+	}
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  OBJ破棄
+ *
+ *	@param	WBTLIST_MAIN_WORK* wk
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void wbt_exit_obj( WBTLIST_MAIN_WORK* wk )
+{
+	s32		i;
+	
+	for(i=0;i<CLWKID_MAX;i++){
+		GFL_CLACT_WK_Remove( wk->wk_obj.clwk[i] );
+	}
+	//リソース破棄 
+	GFL_CLGRP_PLTT_Release( wk->wk_obj.res[RESID_OBJ_PLT] );
+	GFL_CLGRP_CGR_Release(  wk->wk_obj.res[RESID_OBJ_CHR] );
+	GFL_CLGRP_CELLANIM_Release( wk->wk_obj.res[RESID_OBJ_CEL] );
+}
 
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  移動初期化
+ *
+ *	@param	WBTLIST_MAIN_WORK* wk
+ *	@param	const s32			ワーク番号
+ *	@param	const s16			始点、終点
+ *	@param	const s16			フレーム数
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void wbt_init_movework( WBTLIST_MAIN_WORK* wk, const s32 wnum, const s16 sx, const s16 ex, const s16 frame )
+{
+	if(wnum >= MWORK_MAX){
+#ifdef _DEBUG_LOCAL_
+		OS_Printf("wnum ERROR:%d\n",wnum);
+#endif
+		return;
+	}
+	if(frame == 0){
+#ifdef _DEBUG_LOCAL_
+		OS_Printf("frame ERROR:%d\n",frame);
+#endif
+		return;
+	}
+	//
+	wk->MoveWork[wnum].sx 		= sx;
+	wk->MoveWork[wnum].ex		= ex;
+	wk->MoveWork[wnum].rate		= (ex-sx)/frame;
+	wk->MoveWork[wnum].calcnum	= sx;
+	wk->MoveWork[wnum].flag		= FLG_MOVE_INIT;
+}
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  移動処理
+ *
+ *	@param	WBTLIST_MAIN_WORK* wk
+ *	@param	const s32			ワーク番号
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static s16 wbt_main_movework( WBTLIST_MAIN_WORK* wk, const s32 wnum )
+{
+	s16		flg;
+	s16		rate=0;
+	
+	// 移動中
+	if(wk->MoveWork[wnum].flag & FLG_MOVE_INIT){
+		if(!(wk->MoveWork[wnum].flag & FLG_MOVE_END)){
+			// 移動
+			wk->MoveWork[wnum].calcnum += wk->MoveWork[wnum].rate;
+			// 終了判定
+			flg = 0;
+			if(wk->MoveWork[wnum].rate < 0){
+				flg = 1;
+			}
+			if(flg == 0){
+				// 加算
+				if(wk->MoveWork[wnum].calcnum >= wk->MoveWork[wnum].ex){
+					rate = wk->MoveWork[wnum].ex;
+					wk->MoveWork[wnum].flag |= FLG_MOVE_END;
+				}
+			}else{
+				// 減算
+				if(wk->MoveWork[wnum].calcnum <= wk->MoveWork[wnum].ex){
+					rate = wk->MoveWork[wnum].ex;
+					wk->MoveWork[wnum].flag |= FLG_MOVE_END;
+				}
+			}
+			rate = wk->MoveWork[wnum].calcnum;
+			
+		}else{
+			rate = wk->MoveWork[wnum].ex;
+		}
+	}
+	return( rate );
+}
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  移動判定
+ *
+ *	@param	WBTLIST_MAIN_WORK* wk
+ *	@param	const s32			ワーク番号
+ *
+ *	@retval BOOL 				(移動中:TRUE、停止、未使用:FALSE)
+ */
+//-----------------------------------------------------------------------------
+static BOOL wbt_is_movework( WBTLIST_MAIN_WORK* wk, const s32 wnum )
+{
+	BOOL	bflg=FALSE;
+	//
+	// 移動中
+	if(wk->MoveWork[wnum].flag & FLG_MOVE_INIT){
+		if(!(wk->MoveWork[wnum].flag & FLG_MOVE_END)){
+			bflg = TRUE;
+		}
+	}
+	return( bflg );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  パネル移動初期化(要整理)
+ *
+ *	@param	WBTLIST_MAIN_WORK* wk
+ *	@param	const s32 			(0:出る、1:引っ込む)
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void wbt_init_move_panel( WBTLIST_MAIN_WORK* wk, const s32 mode )
+{
+	s32		buf[4];
+	
+	if(mode == MOVE_PANEL_IN){	// 出る
+		buf[0] = -64;			// 左
+		buf[1] = 0;
+		buf[2] = 216;			// 右
+		buf[3] = 216-64;
+	}else{						// 引っ込む
+		buf[0] = 0;				// 左
+		buf[1] = -64;
+		buf[2] = 216-64;		// 右
+		buf[3] = 216;
+	}
+	// 左側
+	wbt_init_movework( wk, MWORK_PANEL_L, buf[0], buf[1], 64 );
+	// 右側
+	wbt_init_movework( wk, MWORK_PANEL_R, buf[2], buf[3], 64 );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  パネル移動(要整理)
+ *
+ *	@param	WBTLIST_MAIN_WORK* wk
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void wbt_main_move_panel( WBTLIST_MAIN_WORK* wk )
+{
+	s16				i;
+	s16				px;
+	GFL_CLACTPOS	pos[2];
+	// 左側
+	px = wbt_main_movework( wk, MWORK_PANEL_L );
+	for(i=0;i<4;i++){
+		// 座標の取得
+		GFL_CLACT_WK_GetPos( wk->wk_obj.clwk[CLWKID_PANEL_00A+i], &pos[0], CLSYS_DEFREND_MAIN );
+		// 座標のセット(x方向のみ修正)
+		pos[0].x = px;
+		GFL_CLACT_WK_SetPos( wk->wk_obj.clwk[CLWKID_PANEL_00A+i], &pos[0], CLSYS_DEFREND_MAIN );
+	}
+	//
+	// 右側
+	px = wbt_main_movework( wk, MWORK_PANEL_R );
+	for(i=0;i<4;i++){
+		// 座標の取得
+		GFL_CLACT_WK_GetPos( wk->wk_obj.clwk[CLWKID_PANEL_04A+i], &pos[1], CLSYS_DEFREND_MAIN );
+		// 座標のセット(x方向のみ修正)
+		pos[1].x = px;
+		GFL_CLACT_WK_SetPos( wk->wk_obj.clwk[CLWKID_PANEL_04A+i], &pos[1], CLSYS_DEFREND_MAIN );
+	}
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  爆発アニメ
+ *
+ *	@param	WBTLIST_MAIN_WORK* wk
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void wbt_disp_bomb( WBTLIST_MAIN_WORK* wk )
+{
+	// 再度アニメを再生するときは、
+	// SetAnimSeqとAutoAnmFlagをする必要があるようだ
+	u16	anum = GFL_CLACT_WK_GetAnmSeq( wk->wk_obj.clwk[CLWKID_BOMB] );
+	// 表示
+//	OS_Printf("anim seq:%d\n",anum);
+	GFL_CLACT_WK_SetAnmSeq( wk->wk_obj.clwk[CLWKID_BOMB], anum );
+	//
+	GFL_CLACT_WK_SetDrawEnable(  wk->wk_obj.clwk[CLWKID_BOMB], TRUE );
+	GFL_CLACT_WK_SetAutoAnmFlag( wk->wk_obj.clwk[CLWKID_BOMB], TRUE );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  デバッグ
+ *
+ *	@param	WBTLIST_MAIN_WORK* wk
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void wbt_debug( WBTLIST_MAIN_WORK* wk )
+{
+#ifdef _DEBUG_LOCAL_
+	// debug
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
+		wk->Step = STEP_INIT;
+		// 表示回数
+		wk->DispNum = 1;
+		if(wk->Mode == MODE_ROUND2){
+			wk->DispNum = 4;
+		}else if(wk->Mode == MODE_ROUND3){
+			wk->DispNum = 2;
+		}
+		OS_Printf("debug init \n");
+	}
+	// debug
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
+		wk->Mode++;
+		if(wk->Mode > MODE_ROUND3){
+			wk->Mode = MODE_ROUND1;
+		}
+		wk->Step = STEP_INIT;
+		// 表示回数
+		wk->DispNum = 1;
+		if(wk->Mode == MODE_ROUND2){
+			wk->DispNum = 4;
+		}else if(wk->Mode == MODE_ROUND3){
+			wk->DispNum = 2;
+		}
+//		OS_Printf("debug init2 \n");
+		OS_Printf("---- round : %d ----\n",wk->Mode);
+		OS_Printf("mode,step :%d,%d\n",wk->Mode,wk->Step);
+	}
+#endif
+}
 
