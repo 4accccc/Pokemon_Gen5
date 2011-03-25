@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nagihashi_toru" host="W00268" date="2011-03-22T17:20:18"/>
+	<create user="nagihashi_toru" host="W00268" date="2011-03-25T12:52:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -294,7 +294,7 @@
 		</language>
 	</columns>
 
-	<dialog left="-976" top="107" right="-271" bottom="735" maximized="no" rayout="Vertical2">
+	<dialog left="-1017" top="85" right="-312" bottom="705" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -359,7 +359,7 @@
 	</row>
 
 	<row id="RESORT_DATA_09">
-		<language name="JPN" width="256">受信時間</language>
+		<language name="JPN" width="256">プレイ時間</language>
 	</row>
 
 	<row id="RESORT_DATA_10">
@@ -368,6 +368,10 @@
 
 	<row id="RESORT_DATA_11">
 		<language name="JPN" width="256">月</language>
+	</row>
+
+	<row id="RESORT_DATA_11_01">
+		<language name="JPN" width="256">日</language>
 	</row>
 
 	<row id="RESORT_DATA_12">
@@ -384,6 +388,270 @@
 
 	<row id="RESORT_DATA_15">
 		<language name="JPN" width="256">あいさつ</language>
+	</row>
+
+	<row id="RESORT_DATA_16">
+		<language name="JPN" width="256">操作するデータ</language>
+	</row>
+
+	<row id="RESORT_DATA_17">
+		<language name="JPN" width="256">操作するデータ　方法を　選んでください</language>
+	</row>
+
+	<row id="RESORT_DATA_18">
+		<language name="JPN" width="256">データを新規追加</language>
+	</row>
+
+	<row id="RESORT_DATA_19">
+		<language name="JPN" width="256">データを修正</language>
+	</row>
+
+	<row id="RESORT_DATA_20">
+		<language name="JPN" width="256">すれ違い回数</language>
+	</row>
+
+	<row id="RESORT_DATA_21">
+		<language name="JPN" width="256">本体色</language>
+	</row>
+
+	<row id="RESORT_DATA_22">
+		<language name="JPN" width="256">アンケート</language>
+	</row>
+
+	<row id="RESORT_DATA_23">
+		<language name="JPN" width="256">住民レゾ常駐データ</language>
+	</row>
+
+	<row id="RESORT_DATA_24">
+		<language name="JPN" width="256">引き継ぎ</language>
+	</row>
+
+	<row id="RESORT_DATA_25">
+		<language name="JPN" width="256">性格</language>
+	</row>
+
+	<row id="RESORT_DATA_26">
+		<language name="JPN" width="256">特別配信</language>
+	</row>
+
+	<row id="RESORT_DATA_27">
+		<language name="JPN" width="256">アンケート１</language>
+	</row>
+
+	<row id="RESORT_DATA_28">
+		<language name="JPN" width="256">アンケート２</language>
+	</row>
+
+	<row id="RESORT_DATA_29">
+		<language name="JPN" width="256">アンケート３</language>
+	</row>
+
+	<row id="RESORT_DATA_30">
+		<language name="JPN" width="256">アンケート４</language>
+	</row>
+
+	<row id="RESORT_DATA_31">
+		<language name="JPN" width="256">住民生成データ</language>
+	</row>
+
+	<row id="RESORT_DATA_32">
+		<language name="JPN" width="256">プレゼントID</language>
+	</row>
+
+	<row id="RESORT_DATA_33">
+		<language name="JPN" width="256">数</language>
+	</row>
+
+	<row id="RESORT_DATA_34">
+		<language name="JPN" width="256">出会った日時</language>
+	</row>
+
+	<row id="RESORT_DATA_35">
+		<language name="JPN" width="256">通信ID</language>
+	</row>
+
+	<row id="RESORT_DATA_36">
+		<language name="JPN" width="256">マージ</language>
+	</row>
+
+	<row id="RESORT_DATA_37">
+		<language name="JPN" width="256">固定</language>
+	</row>
+
+	<row id="RESORT_DATA_38">
+		<language name="JPN" width="256">レベル</language>
+	</row>
+
+	<row id="RESORT_DATA_39">
+		<language name="JPN" width="256">経験値</language>
+	</row>
+
+	<row id="RESORT_DATA_40">
+		<language name="JPN" width="256">イベントワーク１</language>
+	</row>
+
+	<row id="RESORT_DATA_41">
+		<language name="JPN" width="256">イベントワーク２</language>
+	</row>
+
+	<row id="RESORT_DATA_42">
+		<language name="JPN" width="256">イベントbit</language>
+	</row>
+
+	<row id="RESORT_DATA_43">
+		<language name="JPN" width="256">施設ID</language>
+	</row>
+
+	<row id="RESORT_DATA_44">
+		<language name="JPN" width="256">拡張結合bit</language>
+	</row>
+
+	<row id="RESORT_DATA_45">
+		<language name="JPN" width="256">人物ID</language>
+	</row>
+
+	<row id="RESORT_DATA_46">
+		<language name="JPN" width="256">場所ID</language>
+	</row>
+
+	<row id="RESORT_DATA_47">
+		<language name="JPN" width="256">個性</language>
+	</row>
+
+	<row id="RESORT_DATA_48">
+		<language name="JPN" width="256">住民拡張１データ</language>
+	</row>
+
+	<row id="RESORT_DATA_49">
+		<language name="JPN" width="256">称号bit</language>
+	</row>
+
+	<row id="RESORT_DATA_50">
+		<language name="JPN" width="256">イチオシメダル</language>
+	</row>
+
+	<row id="RESORT_DATA_51">
+		<language name="JPN" width="256">ID</language>
+	</row>
+
+	<row id="RESORT_DATA_52">
+		<language name="JPN" width="256">メダル獲得数</language>
+	</row>
+
+	<row id="RESORT_DATA_53">
+		<language name="JPN" width="256">住民拡張２データ</language>
+	</row>
+
+	<row id="RESORT_DATA_54">
+		<language name="JPN" width="256">ランキング１</language>
+	</row>
+
+	<row id="RESORT_DATA_55">
+		<language name="JPN" width="256">ランキング２</language>
+	</row>
+
+	<row id="RESORT_DATA_56">
+		<language name="JPN" width="256">ランキング３</language>
+	</row>
+
+	<row id="RESORT_DATA_57">
+		<language name="JPN" width="256">ランキング４</language>
+	</row>
+
+	<row id="RESORT_DATA_58">
+		<language name="JPN" width="256">住民拡張３データ</language>
+	</row>
+
+	<row id="RESORT_DATA_59">
+		<language name="JPN" width="256">ランキング５</language>
+	</row>
+
+	<row id="RESORT_DATA_60">
+		<language name="JPN" width="256">ランキング６</language>
+	</row>
+
+	<row id="RESORT_DATA_61">
+		<language name="JPN" width="256">ランキング７</language>
+	</row>
+
+	<row id="RESORT_DATA_62">
+		<language name="JPN" width="256">ランキング８</language>
+	</row>
+
+	<row id="RESORT_DATA_63">
+		<language name="JPN" width="256">住民拡張４データ</language>
+	</row>
+
+	<row id="RESORT_DATA_64">
+		<language name="JPN" width="256">うわさ</language>
+	</row>
+
+	<row id="RESORT_DATA_65">
+		<language name="JPN" width="256">住民拡張５データ</language>
+	</row>
+
+	<row id="RESORT_DATA_66">
+		<language name="JPN" width="256">住民拡張６データ</language>
+	</row>
+
+	<row id="RESORT_DATA_67">
+		<language name="JPN" width="256">住民拡張７データ</language>
+	</row>
+
+	<row id="RESORT_DATA_68">
+		<language name="JPN" width="256">しゅるい</language>
+	</row>
+
+	<row id="RESORT_DATA_69">
+		<language name="JPN" width="256">とくせい</language>
+	</row>
+
+	<row id="RESORT_DATA_70">
+		<language name="JPN" width="256">フォルム</language>
+	</row>
+
+	<row id="RESORT_DATA_71">
+		<language name="JPN" width="256">性別</language>
+	</row>
+
+	<row id="RESORT_DATA_72">
+		<language name="JPN" width="256">レア</language>
+	</row>
+
+	<row id="RESORT_DATA_73">
+		<language name="JPN" width="256">わざ</language>
+	</row>
+
+	<row id="RESORT_DATA_74">
+		<language name="JPN" width="256">アイテム</language>
+	</row>
+
+	<row id="RESORT_DATA_75">
+		<language name="JPN" width="256">住民拡張８データ</language>
+	</row>
+
+	<row id="RESORT_DATA_76">
+		<language name="JPN" width="256">住民拡張９データ</language>
+	</row>
+
+	<row id="RESORT_DATA_77">
+		<language name="JPN" width="256">履歴１</language>
+	</row>
+
+	<row id="RESORT_DATA_78">
+		<language name="JPN" width="256">履歴２</language>
+	</row>
+
+	<row id="RESORT_DATA_79">
+		<language name="JPN" width="256">履歴３</language>
+	</row>
+
+	<row id="RESORT_DATA_80">
+		<language name="JPN" width="256">履歴４</language>
+	</row>
+
+	<row id="RESORT_DATA_81">
+		<language name="JPN" width="256">くちぐせ</language>
 	</row>
 
 	<row id="CASETTE_00">
@@ -482,6 +750,70 @@
 		<language name="JPN" width="256">かんこく</language>
 	</row>
 
+	<row id="OS_COLOR_00">
+		<language name="JPN" width="256">グレー</language>
+	</row>
+
+	<row id="OS_COLOR_01">
+		<language name="JPN" width="256">ブラウン</language>
+	</row>
+
+	<row id="OS_COLOR_02">
+		<language name="JPN" width="256">レッド</language>
+	</row>
+
+	<row id="OS_COLOR_03">
+		<language name="JPN" width="256">ピンク</language>
+	</row>
+
+	<row id="OS_COLOR_04">
+		<language name="JPN" width="256">オレンジ</language>
+	</row>
+
+	<row id="OS_COLOR_05">
+		<language name="JPN" width="256">イエロー</language>
+	</row>
+
+	<row id="OS_COLOR_06">
+		<language name="JPN" width="256">ライムグリーン</language>
+	</row>
+
+	<row id="OS_COLOR_07">
+		<language name="JPN" width="256">グリーン</language>
+	</row>
+
+	<row id="OS_COLOR_08">
+		<language name="JPN" width="256">ダークグリーン</language>
+	</row>
+
+	<row id="OS_COLOR_09">
+		<language name="JPN" width="256">シーグリーン</language>
+	</row>
+
+	<row id="OS_COLOR_10">
+		<language name="JPN" width="256">ターコイズ</language>
+	</row>
+
+	<row id="OS_COLOR_11">
+		<language name="JPN" width="256">ブルー</language>
+	</row>
+
+	<row id="OS_COLOR_12">
+		<language name="JPN" width="256">ダークブルー</language>
+	</row>
+
+	<row id="OS_COLOR_13">
+		<language name="JPN" width="256">パープル</language>
+	</row>
+
+	<row id="OS_COLOR_14">
+		<language name="JPN" width="256">バイオレット</language>
+	</row>
+
+	<row id="OS_COLOR_15">
+		<language name="JPN" width="256">マゼンタ</language>
+	</row>
+
 	<row id="VIEW_00">
 		<language name="JPN" width="256">たんパンこぞう♂</language>
 	</row>
@@ -556,6 +888,866 @@
 
 	<row id="SEX_02">
 		<language name="JPN" width="256">×</language>
+	</row>
+
+	<row id="PEOPLE_00">
+		<language name="JPN" width="256">住民</language>
+	</row>
+
+	<row id="ANSWER_000">
+		<language name="JPN" width="256">無回答</language>
+	</row>
+
+	<row id="ANSWER_001">
+		<language name="JPN" width="256">ブラック</language>
+	</row>
+
+	<row id="ANSWER_002">
+		<language name="JPN" width="256">ホワイト</language>
+	</row>
+
+	<row id="ANSWER_003">
+		<language name="JPN" width="256">無回答</language>
+	</row>
+
+	<row id="ANSWER_004">
+		<language name="JPN" width="256">男</language>
+	</row>
+
+	<row id="ANSWER_005">
+		<language name="JPN" width="256">女</language>
+	</row>
+
+	<row id="ANSWER_006">
+		<language name="JPN" width="256">無回答</language>
+	</row>
+
+	<row id="ANSWER_007">
+		<language name="JPN" width="256">対戦</language>
+	</row>
+
+	<row id="ANSWER_008">
+		<language name="JPN" width="256">交換</language>
+	</row>
+
+	<row id="ANSWER_009">
+		<language name="JPN" width="256">無回答</language>
+	</row>
+
+	<row id="ANSWER_010">
+		<language name="JPN" width="256">都会</language>
+	</row>
+
+	<row id="ANSWER_011">
+		<language name="JPN" width="256">田舎</language>
+	</row>
+
+	<row id="ANSWER_012">
+		<language name="JPN" width="256">無回答</language>
+	</row>
+
+	<row id="ANSWER_013">
+		<language name="JPN" width="256">頭が良い</language>
+	</row>
+
+	<row id="ANSWER_014">
+		<language name="JPN" width="256">運動できる</language>
+	</row>
+
+	<row id="ANSWER_015">
+		<language name="JPN" width="256">無回答</language>
+	</row>
+
+	<row id="ANSWER_016">
+		<language name="JPN" width="256">時間</language>
+	</row>
+
+	<row id="ANSWER_017">
+		<language name="JPN" width="256">お金</language>
+	</row>
+
+	<row id="ANSWER_018">
+		<language name="JPN" width="256">無回答</language>
+	</row>
+
+	<row id="ANSWER_019">
+		<language name="JPN" width="256">外見</language>
+	</row>
+
+	<row id="ANSWER_020">
+		<language name="JPN" width="256">中身</language>
+	</row>
+
+	<row id="ANSWER_021">
+		<language name="JPN" width="256">無回答</language>
+	</row>
+
+	<row id="ANSWER_022">
+		<language name="JPN" width="256">かっこいい</language>
+	</row>
+
+	<row id="ANSWER_023">
+		<language name="JPN" width="256">かわいい</language>
+	</row>
+
+	<row id="ANSWER_024">
+		<language name="JPN" width="256">変な</language>
+	</row>
+
+	<row id="ANSWER_025">
+		<language name="JPN" width="256">無回答</language>
+	</row>
+
+	<row id="ANSWER_026">
+		<language name="JPN" width="256">ポカブ</language>
+	</row>
+
+	<row id="ANSWER_027">
+		<language name="JPN" width="256">ミジュマル</language>
+	</row>
+
+	<row id="ANSWER_028">
+		<language name="JPN" width="256">ツタージャ</language>
+	</row>
+
+	<row id="ANSWER_029">
+		<language name="JPN" width="256">無回答</language>
+	</row>
+
+	<row id="ANSWER_030">
+		<language name="JPN" width="256">海</language>
+	</row>
+
+	<row id="ANSWER_031">
+		<language name="JPN" width="256">川</language>
+	</row>
+
+	<row id="ANSWER_032">
+		<language name="JPN" width="256">山</language>
+	</row>
+
+	<row id="ANSWER_033">
+		<language name="JPN" width="256">無回答</language>
+	</row>
+
+	<row id="ANSWER_034">
+		<language name="JPN" width="256">授業</language>
+	</row>
+
+	<row id="ANSWER_035">
+		<language name="JPN" width="256">休み時間</language>
+	</row>
+
+	<row id="ANSWER_036">
+		<language name="JPN" width="256">給食</language>
+	</row>
+
+	<row id="ANSWER_037">
+		<language name="JPN" width="256">無回答</language>
+	</row>
+
+	<row id="ANSWER_038">
+		<language name="JPN" width="256">家族</language>
+	</row>
+
+	<row id="ANSWER_039">
+		<language name="JPN" width="256">友達</language>
+	</row>
+
+	<row id="ANSWER_040">
+		<language name="JPN" width="256">自分</language>
+	</row>
+
+	<row id="ANSWER_041">
+		<language name="JPN" width="256">無回答</language>
+	</row>
+
+	<row id="ANSWER_042">
+		<language name="JPN" width="256">春</language>
+	</row>
+
+	<row id="ANSWER_043">
+		<language name="JPN" width="256">夏</language>
+	</row>
+
+	<row id="ANSWER_044">
+		<language name="JPN" width="256">秋</language>
+	</row>
+
+	<row id="ANSWER_045">
+		<language name="JPN" width="256">冬</language>
+	</row>
+
+	<row id="ANSWER_046">
+		<language name="JPN" width="256">無回答</language>
+	</row>
+
+	<row id="ANSWER_047">
+		<language name="JPN" width="256">甘い</language>
+	</row>
+
+	<row id="ANSWER_048">
+		<language name="JPN" width="256">辛い</language>
+	</row>
+
+	<row id="ANSWER_049">
+		<language name="JPN" width="256">酸っぱい</language>
+	</row>
+
+	<row id="ANSWER_050">
+		<language name="JPN" width="256">苦い</language>
+	</row>
+
+	<row id="ANSWER_051">
+		<language name="JPN" width="256">無回答</language>
+	</row>
+
+	<row id="ANSWER_052">
+		<language name="JPN" width="256">面白い</language>
+	</row>
+
+	<row id="ANSWER_053">
+		<language name="JPN" width="256">かっこいい</language>
+	</row>
+
+	<row id="ANSWER_054">
+		<language name="JPN" width="256">優しい</language>
+	</row>
+
+	<row id="ANSWER_055">
+		<language name="JPN" width="256">お金持ち</language>
+	</row>
+
+	<row id="ANSWER_056">
+		<language name="JPN" width="256">無回答</language>
+	</row>
+
+	<row id="ANSWER_057">
+		<language name="JPN" width="256">戦い</language>
+	</row>
+
+	<row id="ANSWER_058">
+		<language name="JPN" width="256">集める</language>
+	</row>
+
+	<row id="ANSWER_059">
+		<language name="JPN" width="256">お話</language>
+	</row>
+
+	<row id="ANSWER_060">
+		<language name="JPN" width="256">ポケモン</language>
+	</row>
+
+	<row id="ANSWER_061">
+		<language name="JPN" width="256">無回答</language>
+	</row>
+
+	<row id="ANSWER_062">
+		<language name="JPN" width="256">国語</language>
+	</row>
+
+	<row id="ANSWER_063">
+		<language name="JPN" width="256">算数</language>
+	</row>
+
+	<row id="ANSWER_064">
+		<language name="JPN" width="256">理科</language>
+	</row>
+
+	<row id="ANSWER_065">
+		<language name="JPN" width="256">社会</language>
+	</row>
+
+	<row id="ANSWER_066">
+		<language name="JPN" width="256">無回答</language>
+	</row>
+
+	<row id="ANSWER_067">
+		<language name="JPN" width="256">トレーナー</language>
+	</row>
+
+	<row id="ANSWER_068">
+		<language name="JPN" width="256">ポケモン博士</language>
+	</row>
+
+	<row id="ANSWER_069">
+		<language name="JPN" width="256">プラズマ団</language>
+	</row>
+
+	<row id="ANSWER_070">
+		<language name="JPN" width="256">ポケモン</language>
+	</row>
+
+	<row id="ANSWER_071">
+		<language name="JPN" width="256">無回答</language>
+	</row>
+
+	<row id="ANSWER_072">
+		<language name="JPN" width="256">外で遊ぶ</language>
+	</row>
+
+	<row id="ANSWER_073">
+		<language name="JPN" width="256">買い物</language>
+	</row>
+
+	<row id="ANSWER_074">
+		<language name="JPN" width="256">読書</language>
+	</row>
+
+	<row id="ANSWER_075">
+		<language name="JPN" width="256">ゲーム</language>
+	</row>
+
+	<row id="ANSWER_076">
+		<language name="JPN" width="256">寝てる</language>
+	</row>
+
+	<row id="ANSWER_077">
+		<language name="JPN" width="256">無回答</language>
+	</row>
+
+	<row id="ANSWER_078">
+		<language name="JPN" width="256">ポップス</language>
+	</row>
+
+	<row id="ANSWER_079">
+		<language name="JPN" width="256">ロック</language>
+	</row>
+
+	<row id="ANSWER_080">
+		<language name="JPN" width="256">ジャズ</language>
+	</row>
+
+	<row id="ANSWER_081">
+		<language name="JPN" width="256">ラップ</language>
+	</row>
+
+	<row id="ANSWER_082">
+		<language name="JPN" width="256">クラシック</language>
+	</row>
+
+	<row id="ANSWER_083">
+		<language name="JPN" width="256">無回答</language>
+	</row>
+
+	<row id="ANSWER_084">
+		<language name="JPN" width="256">ニュース</language>
+	</row>
+
+	<row id="ANSWER_085">
+		<language name="JPN" width="256">ドラマ</language>
+	</row>
+
+	<row id="ANSWER_086">
+		<language name="JPN" width="256">お笑い</language>
+	</row>
+
+	<row id="ANSWER_087">
+		<language name="JPN" width="256">スポーツ</language>
+	</row>
+
+	<row id="ANSWER_088">
+		<language name="JPN" width="256">アニメ</language>
+	</row>
+
+	<row id="ANSWER_089">
+		<language name="JPN" width="256">無回答</language>
+	</row>
+
+	<row id="ANSWER_090">
+		<language name="JPN" width="256">アクション</language>
+	</row>
+
+	<row id="ANSWER_091">
+		<language name="JPN" width="256">SF</language>
+	</row>
+
+	<row id="ANSWER_092">
+		<language name="JPN" width="256">恋愛</language>
+	</row>
+
+	<row id="ANSWER_093">
+		<language name="JPN" width="256">サスペンス</language>
+	</row>
+
+	<row id="ANSWER_094">
+		<language name="JPN" width="256">コメディ</language>
+	</row>
+
+	<row id="ANSWER_095">
+		<language name="JPN" width="256">ホラー</language>
+	</row>
+
+	<row id="ANSWER_096">
+		<language name="JPN" width="256">無回答</language>
+	</row>
+
+	<row id="ANSWER_097">
+		<language name="JPN" width="256">野球</language>
+	</row>
+
+	<row id="ANSWER_098">
+		<language name="JPN" width="256">サッカー</language>
+	</row>
+
+	<row id="ANSWER_099">
+		<language name="JPN" width="256">バスケ</language>
+	</row>
+
+	<row id="ANSWER_100">
+		<language name="JPN" width="256">アメフト</language>
+	</row>
+
+	<row id="ANSWER_101">
+		<language name="JPN" width="256">ホッケー</language>
+	</row>
+
+	<row id="ANSWER_102">
+		<language name="JPN" width="256">格闘技</language>
+	</row>
+
+	<row id="ANSWER_103">
+		<language name="JPN" width="256">無回答</language>
+	</row>
+
+	<row id="ANSWER_104">
+		<language name="JPN" width="256">赤</language>
+	</row>
+
+	<row id="ANSWER_105">
+		<language name="JPN" width="256">緑</language>
+	</row>
+
+	<row id="ANSWER_106">
+		<language name="JPN" width="256">青</language>
+	</row>
+
+	<row id="ANSWER_107">
+		<language name="JPN" width="256">黄色</language>
+	</row>
+
+	<row id="ANSWER_108">
+		<language name="JPN" width="256">白</language>
+	</row>
+
+	<row id="ANSWER_109">
+		<language name="JPN" width="256">黒</language>
+	</row>
+
+	<row id="ANSWER_110">
+		<language name="JPN" width="256">無回答</language>
+	</row>
+
+	<row id="ANSWER_111">
+		<language name="JPN" width="256">運動</language>
+	</row>
+
+	<row id="ANSWER_112">
+		<language name="JPN" width="256">読書</language>
+	</row>
+
+	<row id="ANSWER_113">
+		<language name="JPN" width="256">音楽</language>
+	</row>
+
+	<row id="ANSWER_114">
+		<language name="JPN" width="256">映画</language>
+	</row>
+
+	<row id="ANSWER_115">
+		<language name="JPN" width="256">旅行</language>
+	</row>
+
+	<row id="ANSWER_116">
+		<language name="JPN" width="256">料理</language>
+	</row>
+
+	<row id="ANSWER_117">
+		<language name="JPN" width="256">釣り</language>
+	</row>
+
+	<row id="ANSWER_118">
+		<language name="JPN" width="256">ゲーム</language>
+	</row>
+
+	<row id="ANSWER_119">
+		<language name="JPN" width="256">無回答</language>
+	</row>
+
+	<row id="ANSWER_120">
+		<language name="JPN" width="256">学生</language>
+	</row>
+
+	<row id="ANSWER_121">
+		<language name="JPN" width="256">サラリーマン</language>
+	</row>
+
+	<row id="ANSWER_122">
+		<language name="JPN" width="256">クリエーター</language>
+	</row>
+
+	<row id="ANSWER_123">
+		<language name="JPN" width="256">自営業</language>
+	</row>
+
+	<row id="ANSWER_124">
+		<language name="JPN" width="256">公務員</language>
+	</row>
+
+	<row id="ANSWER_125">
+		<language name="JPN" width="256">主婦</language>
+	</row>
+
+	<row id="ANSWER_126">
+		<language name="JPN" width="256">芸術家</language>
+	</row>
+
+	<row id="ANSWER_127">
+		<language name="JPN" width="256">フリーター</language>
+	</row>
+
+	<row id="ANSWER_128">
+		<language name="JPN" width="256">無回答</language>
+	</row>
+
+	<row id="ANSWER_129">
+		<language name="JPN" width="256">ポッド</language>
+	</row>
+
+	<row id="ANSWER_130">
+		<language name="JPN" width="256">デント</language>
+	</row>
+
+	<row id="ANSWER_131">
+		<language name="JPN" width="256">コーン</language>
+	</row>
+
+	<row id="ANSWER_132">
+		<language name="JPN" width="256">アロエ</language>
+	</row>
+
+	<row id="ANSWER_133">
+		<language name="JPN" width="256">アーティ</language>
+	</row>
+
+	<row id="ANSWER_134">
+		<language name="JPN" width="256">カミツレ</language>
+	</row>
+
+	<row id="ANSWER_135">
+		<language name="JPN" width="256">ヤーコン</language>
+	</row>
+
+	<row id="ANSWER_136">
+		<language name="JPN" width="256">フウロ</language>
+	</row>
+
+	<row id="ANSWER_137">
+		<language name="JPN" width="256">ハチク</language>
+	</row>
+
+	<row id="ANSWER_138">
+		<language name="JPN" width="256">アイリス</language>
+	</row>
+
+	<row id="ANSWER_139">
+		<language name="JPN" width="256">シャガ</language>
+	</row>
+
+	<row id="ANSWER_140">
+		<language name="JPN" width="256">無回答</language>
+	</row>
+
+	<row id="ANSWER_141">
+		<language name="JPN" width="256">ノーマル</language>
+	</row>
+
+	<row id="ANSWER_142">
+		<language name="JPN" width="256">ほのお</language>
+	</row>
+
+	<row id="ANSWER_143">
+		<language name="JPN" width="256">みず</language>
+	</row>
+
+	<row id="ANSWER_144">
+		<language name="JPN" width="256">でんき</language>
+	</row>
+
+	<row id="ANSWER_145">
+		<language name="JPN" width="256">くさ</language>
+	</row>
+
+	<row id="ANSWER_146">
+		<language name="JPN" width="256">こおり</language>
+	</row>
+
+	<row id="ANSWER_147">
+		<language name="JPN" width="256">かくとう</language>
+	</row>
+
+	<row id="ANSWER_148">
+		<language name="JPN" width="256">どく</language>
+	</row>
+
+	<row id="ANSWER_149">
+		<language name="JPN" width="256">じめん</language>
+	</row>
+
+	<row id="ANSWER_150">
+		<language name="JPN" width="256">ひこう</language>
+	</row>
+
+	<row id="ANSWER_151">
+		<language name="JPN" width="256">エスパー</language>
+	</row>
+
+	<row id="ANSWER_152">
+		<language name="JPN" width="256">むし</language>
+	</row>
+
+	<row id="ANSWER_153">
+		<language name="JPN" width="256">いわ</language>
+	</row>
+
+	<row id="ANSWER_154">
+		<language name="JPN" width="256">ゴースト</language>
+	</row>
+
+	<row id="ANSWER_155">
+		<language name="JPN" width="256">ドラゴン</language>
+	</row>
+
+	<row id="ANSWER_156">
+		<language name="JPN" width="256">あく</language>
+	</row>
+
+	<row id="ANSWER_157">
+		<language name="JPN" width="256">はがね</language>
+	</row>
+
+	<row id="ANSWER_158">
+		<language name="JPN" width="256">無回答</language>
+	</row>
+
+	<row id="ANSWER_159">
+		<language name="JPN" width="256">０ー１０時間</language>
+	</row>
+
+	<row id="ANSWER_160">
+		<language name="JPN" width="256">１０ー２０時間</language>
+	</row>
+
+	<row id="ANSWER_161">
+		<language name="JPN" width="256">２０ー３０時間</language>
+	</row>
+
+	<row id="ANSWER_162">
+		<language name="JPN" width="256">３０ー４０時間</language>
+	</row>
+
+	<row id="ANSWER_163">
+		<language name="JPN" width="256">４０ー５０時間</language>
+	</row>
+
+	<row id="ANSWER_164">
+		<language name="JPN" width="256">５０ー６０時間</language>
+	</row>
+
+	<row id="ANSWER_165">
+		<language name="JPN" width="256">６０ー７０時間</language>
+	</row>
+
+	<row id="ANSWER_166">
+		<language name="JPN" width="256">７０ー８０時間</language>
+	</row>
+
+	<row id="ANSWER_167">
+		<language name="JPN" width="256">８０ー９０時間</language>
+	</row>
+
+	<row id="ANSWER_168">
+		<language name="JPN" width="256">９０ー１００時間</language>
+	</row>
+
+	<row id="ANSWER_169">
+		<language name="JPN" width="256">１００時間ー</language>
+	</row>
+
+	<row id="YESNO_00">
+		<language name="JPN" width="256">×</language>
+	</row>
+
+	<row id="YESNO_01">
+		<language name="JPN" width="256">◯</language>
+	</row>
+
+	<row id="SEIKAKU_00">
+		<language name="JPN" width="256">がんばりや</language>
+	</row>
+
+	<row id="SEIKAKU_01">
+		<language name="JPN" width="256">さみしがり</language>
+	</row>
+
+	<row id="SEIKAKU_02">
+		<language name="JPN" width="256">ゆうかん</language>
+	</row>
+
+	<row id="SEIKAKU_03">
+		<language name="JPN" width="256">いじっぱり</language>
+	</row>
+
+	<row id="SEIKAKU_04">
+		<language name="JPN" width="256">やんちゃ</language>
+	</row>
+
+	<row id="SEIKAKU_05">
+		<language name="JPN" width="256">ずぶとい</language>
+	</row>
+
+	<row id="SEIKAKU_06">
+		<language name="JPN" width="256">すなお</language>
+	</row>
+
+	<row id="SEIKAKU_07">
+		<language name="JPN" width="256">のんき</language>
+	</row>
+
+	<row id="SEIKAKU_08">
+		<language name="JPN" width="256">わんぱく</language>
+	</row>
+
+	<row id="SEIKAKU_09">
+		<language name="JPN" width="256">のうてんき</language>
+	</row>
+
+	<row id="SEIKAKU_10">
+		<language name="JPN" width="256">おくびょう</language>
+	</row>
+
+	<row id="SEIKAKU_11">
+		<language name="JPN" width="256">せっかち</language>
+	</row>
+
+	<row id="SEIKAKU_12">
+		<language name="JPN" width="256">まじめ</language>
+	</row>
+
+	<row id="SEIKAKU_13">
+		<language name="JPN" width="256">ようき</language>
+	</row>
+
+	<row id="SEIKAKU_14">
+		<language name="JPN" width="256">むじゃき</language>
+	</row>
+
+	<row id="SEIKAKU_15">
+		<language name="JPN" width="256">ひかえめ</language>
+	</row>
+
+	<row id="SEIKAKU_16">
+		<language name="JPN" width="256">おっとり</language>
+	</row>
+
+	<row id="SEIKAKU_17">
+		<language name="JPN" width="256">れいせい</language>
+	</row>
+
+	<row id="SEIKAKU_18">
+		<language name="JPN" width="256">てれや</language>
+	</row>
+
+	<row id="SEIKAKU_19">
+		<language name="JPN" width="256">うっかり</language>
+	</row>
+
+	<row id="SEIKAKU_20">
+		<language name="JPN" width="256">おだやか</language>
+	</row>
+
+	<row id="SEIKAKU_21">
+		<language name="JPN" width="256">おとなしい</language>
+	</row>
+
+	<row id="SEIKAKU_22">
+		<language name="JPN" width="256">なまいき</language>
+	</row>
+
+	<row id="SEIKAKU_23">
+		<language name="JPN" width="256">しんちょう</language>
+	</row>
+
+	<row id="SEIKAKU_24">
+		<language name="JPN" width="256">きまぐれ</language>
+	</row>
+
+	<row id="PLACE_00">
+		<language name="JPN" width="256">なし</language>
+	</row>
+
+	<row id="PLACE_01">
+		<language name="JPN" width="256">フィールド</language>
+	</row>
+
+	<row id="PLACE_02">
+		<language name="JPN" width="256">げいひんかん</language>
+	</row>
+
+	<row id="PLACE_03">
+		<language name="JPN" width="256">コンドミニアム０</language>
+	</row>
+
+	<row id="PLACE_04">
+		<language name="JPN" width="256">コンドミニアム１</language>
+	</row>
+
+	<row id="PLACE_05">
+		<language name="JPN" width="256">コンドミニアム２</language>
+	</row>
+
+	<row id="PLACE_06">
+		<language name="JPN" width="256">コンドミニアム３</language>
+	</row>
+
+	<row id="PLACE_07">
+		<language name="JPN" width="256">コンドミニアム４</language>
+	</row>
+
+	<row id="PLACE_08">
+		<language name="JPN" width="256">コンドミニアム５</language>
+	</row>
+
+	<row id="PLACE_09">
+		<language name="JPN" width="256">しせつ０</language>
+	</row>
+
+	<row id="PLACE_10">
+		<language name="JPN" width="256">しせつ１</language>
+	</row>
+
+	<row id="PLACE_11">
+		<language name="JPN" width="256">しせつ２</language>
+	</row>
+
+	<row id="PLACE_12">
+		<language name="JPN" width="256">しせつ３</language>
+	</row>
+
+	<row id="PLACE_13">
+		<language name="JPN" width="256">しせつ４</language>
+	</row>
+
+	<row id="PLACE_14">
+		<language name="JPN" width="256">しせつ５</language>
+	</row>
+
+	<row id="PLACE_15">
+		<language name="JPN" width="256">しせつ６</language>
+	</row>
+
+	<row id="PLACE_16">
+		<language name="JPN" width="256">しせつ７</language>
 	</row>
 
 	<flowchart-group-list>

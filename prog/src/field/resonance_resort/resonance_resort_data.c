@@ -32,6 +32,10 @@
 
 #ifdef PM_DEBUG
 #define DEBUG_RESORT_PRINT_ON
+//#define DEBUG_EXTEND_SET_GET_CHECK
+#define DEBUG_PERMISSION_CHECK
+
+static BOOL s_debug_permission = FALSE;
 #endif
 
 #if defined(DEBUG_RESORT_PRINT_ON) && ( defined(DEBUG_ONLY_FOR_nagihashi_toru) || defined(DEBUG_ONLY_FOR_shimoyamada) )
@@ -40,6 +44,19 @@
 #define RESORT_Printf(...)  /* */
 #endif
 
+#ifdef DEBUG_PERMISSION_CHECK
+#define DEBUG_CHECK_PERMISSION()   GF_ASSERT(s_debug_permission)
+#else
+#define DEBUG_CHECK_PERMISSION() /* */
+#endif
+
+#ifdef DEBUG_EXTEND_SET_GET_CHECK
+#define RESORT_EXT_CHECK( x, y )  if( s_debug_permission) { \
+                                    GF_ASSERT(RESORT_RESIDENT_DATA_IsExtend( x, y ) ) \
+                                  }
+#else
+#define RESORT_EXT_CHECK( x, y )  /* */
+#endif
 
 #define RESORT_VALID_ASSERT(...) GF_ASSERT_MSG_LIGHT( 0, __VA_ARGS__ );
 
@@ -69,8 +86,8 @@ struct _RESORT_INSTITUTION_DATA
   u8  institutionID;
   u8  lv;
   u16 exp;
-  u32 ev_bit;
-  u32 work;
+  u32 bit;
+  u16 work[2];
 };
 
 SDK_COMPILER_ASSERT( sizeof(RESORT_INSTITUTION_DATA) == RESORT_INSTITUTION_DATA_SIZE );
@@ -148,6 +165,13 @@ u32 RESORT_INSTITUTION_DATA_GetData( const RESORT_INSTITUTION_DATA *cp_wk, RESOR
     return cp_wk->institutionID;
   case RESORT_INSTITUTION_DATA_PARAM_LV:
     return cp_wk->lv;
+  case RESORT_INSTITUTION_DATA_PARAM_EXP:
+    return cp_wk->exp;
+  case RESORT_INSTITUTION_DATA_PARAM_WORK_00:
+  case RESORT_INSTITUTION_DATA_PARAM_WORK_01:
+    return cp_wk->work[ param - RESORT_INSTITUTION_DATA_PARAM_WORK_00];
+  case RESORT_INSTITUTION_DATA_PARAM_BIT:
+    return cp_wk->bit;
   default:
     GF_ASSERT(0);
     return 0;
@@ -172,6 +196,16 @@ void RESORT_INSTITUTION_DATA_SetData( RESORT_INSTITUTION_DATA *p_wk, RESORT_INST
   case RESORT_INSTITUTION_DATA_PARAM_LV:
     p_wk->lv   = data;
     break;
+  case RESORT_INSTITUTION_DATA_PARAM_EXP:
+    p_wk->exp = data;
+    break;
+  case RESORT_INSTITUTION_DATA_PARAM_WORK_00:
+  case RESORT_INSTITUTION_DATA_PARAM_WORK_01:
+    p_wk->work[ param - RESORT_INSTITUTION_DATA_PARAM_WORK_00]  = data;
+    break;
+  case RESORT_INSTITUTION_DATA_PARAM_BIT:
+    p_wk->bit = data;
+    break;
   default:
     GF_ASSERT(0);
   }
@@ -190,7 +224,7 @@ SDK_COMPILER_ASSERT( RESORT_INSTITUTION_DATA_BIT_MAX < 32 );
 //-----------------------------------------------------------------------------
 BOOL RESORT_INSTITUTION_DATA_IsBit( const RESORT_INSTITUTION_DATA *cp_wk, RESORT_INSTITUTION_DATA_BIT bit )
 {
-  return (cp_wk->ev_bit & (1<<bit)) != 0;
+  return (cp_wk->bit & (1<<bit)) != 0;
 }
 //----------------------------------------------------------------------------
 /**
@@ -206,11 +240,11 @@ void RESORT_INSTITUTION_DATA_SetBit( RESORT_INSTITUTION_DATA *p_wk, RESORT_INSTI
 {
   if( enable )
   {
-    p_wk->ev_bit |= (1<<bit);
+    p_wk->bit |= (1<<bit);
   }
   else
   {
-    p_wk->ev_bit &= ~(1<<bit);
+    p_wk->bit &= ~(1<<bit);
   }
 }
 
@@ -229,8 +263,8 @@ typedef struct
   u16 padding3;
   u8  nation;                       ///<国コード      1 15
   u8  area;                         ///<地域コード    1 16
-  u8  work;                         ///<仕事          1 17
-  u8  hobby;                        ///<趣味          1 18
+  u8  dummy1;//work;                         ///<仕事          1 17 使わなくなった
+  u8  dummy2;//hobby;                        ///<趣味          1 18 使わなくなった
   STRCODE introduction[GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN]; //<自己紹介(!! EOM除く !!) 16 34
   u8  version;                      ///<バージョン    1 35
   u8  language;                     ///<言語コード    1 36
@@ -486,6 +520,18 @@ SDK_COMPILER_ASSERT( sizeof(RESORT_BASIC2_DATA) == RESORT_BASIC2_DATA_SIZE );
 static void RESORT_BASIC2_DATA_SetMyData( RESORT_BASIC2_DATA *p_wk, const GAMEDATA *cp_gamedata )
 {
   GFL_STD_MemClear( p_wk, sizeof(RESORT_BASIC2_DATA) );
+
+  p_wk->continue_data = 0; //TODO
+  p_wk->special_deliverly = 0; // TODO
+  p_wk->quest1 = 0; // TODO
+  p_wk->quest2 = 0; // TODO
+  p_wk->quest3 = 0; // TODO
+  p_wk->quest4 = 0; // TODO
+
+  {
+    TR_CARD_SV_PTR p_tr_card = TRCSave_GetSaveDataPtr(GAMEDATA_GetSaveControlWork((GAMEDATA*)cp_gamedata));
+    p_wk->personality = TRCSave_GetPersonarity( p_tr_card );
+  }
 }
 
 
@@ -508,10 +554,10 @@ static BOOL RESORT_BASIC2_DATA_IsValid( const RESORT_BASIC2_DATA *cp_wk )
 //=====================================
 typedef struct
 {
-  u8  medalID;
-  u8  medal_num;        
-  u8  medal_custom[14];
-
+  u8  medal_bit[12];
+  u8  recommend_medalID;
+  u8  medal_num;
+  RESORT_DATE recommend_date;
 } RESORT_EXTEND1_DATA;
 SDK_COMPILER_ASSERT( sizeof(RESORT_EXTEND1_DATA) == RESORT_EXTEND1_DATA_SIZE );
 
@@ -525,6 +571,9 @@ SDK_COMPILER_ASSERT( sizeof(RESORT_EXTEND1_DATA) == RESORT_EXTEND1_DATA_SIZE );
 //-----------------------------------------------------------------------------
 static void RESORT_EXTEND1_DATA_SetMyData( RESORT_EXTEND1_DATA *p_wk, const GAMEDATA *cp_gamedata )
 {
+  int i;
+  //MEDALBOX *p_mdlbox  = SaveData_GetMedalBox( GAMEDATA_GetSaveControlWork((GAMEDATA*)cp_gamedata) );
+
   GFL_STD_MemClear( p_wk, sizeof(RESORT_EXTEND1_DATA) );
 }
 
@@ -732,7 +781,9 @@ static BOOL RESORT_EXTEND7_DATA_IsValid( const RESORT_EXTEND7_DATA *cp_wk )
 //=====================================
 typedef struct
 {
-  u8  record[16];
+  u8  record[4];
+  RESORT_DATE record_date[4];
+  u8  padding[4];
 } RESORT_EXTEND8_DATA;
 SDK_COMPILER_ASSERT( sizeof(RESORT_EXTEND8_DATA) == RESORT_EXTEND8_DATA_SIZE );
 
@@ -759,7 +810,6 @@ static BOOL RESORT_EXTEND8_DATA_IsValid( const RESORT_EXTEND8_DATA *cp_wk )
 {
   return TRUE;
 }
-
 //-------------------------------------
 ///	拡張データ9
 //=====================================
@@ -860,7 +910,7 @@ struct _RESORT_RECV_DATA
   RESORT_EXTEND8_DATA extend8;
   RESORT_EXTEND9_DATA extend9;
   u16                 presentID;
-  u8                  precent_num;
+  u8                  present_num;
   u8                  meet_year;         //4
   u8                  meet_month;
   u8                  meet_day;
@@ -878,7 +928,7 @@ struct _RESORT_RECV_DATA
   u8                  institutionID;//12
   u8                  ev_work1;
   u8                  ev_work2; //16
-  u32                 ev_bit; //20
+  u32                 bit; //20
 #endif
   u32                 kosei;  //TODO　個性？  //16
   u32                 extend_flag:8;  //20
@@ -997,6 +1047,20 @@ void RESORT_RECV_DATA_InitInstance( RESORT_RECV_DATA *p_wk )
 BOOL RESORT_RECV_DATA_IsEmpty( const RESORT_RECV_DATA *cp_wk )
 {
   return cp_wk->extend_flag == 0;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  受信データ  拡張があるか調べる
+ *
+ *	@param	const RESORT_RECV_DATA *cp_wk ワーク
+ *	@param	type  調べる拡張
+ *
+ *	@return TRUEで存在  FALSEでなし
+ */
+//-----------------------------------------------------------------------------
+BOOL RESORT_RECV_DATA_IsExtend( const RESORT_RECV_DATA *cp_wk,  RESORT_EXTEND_TYPE type )
+{
+  return (cp_wk->extend_flag & 1<<type) != 0;
 }
 //----------------------------------------------------------------------------
 /**
@@ -1184,10 +1248,6 @@ u32 RESORT_RECV_DATA_GetData( const RESORT_RECV_DATA *cp_wk, RESORT_DATA_PARAM p
     return cp_wk->peopleID;
   case RESORT_DATA_PARAM_PLACE_ID:
     return cp_wk->placeID;
-  case RESORT_DATA_PARAM_LOCK:
-    return cp_wk->lock;
-  case RESORT_DATA_PARAM_UPDATE:
-    return cp_wk->update;
   case RESORT_DATA_PARAM_SEX:
     return cp_wk->basic1.sex;
   case RESORT_DATA_PARAM_TRAINERVIEW:
@@ -1200,15 +1260,11 @@ u32 RESORT_RECV_DATA_GetData( const RESORT_RECV_DATA *cp_wk, RESORT_DATA_PARAM p
     return 0;
   case RESORT_DATA_PARAM_WANT_JOB:
     return cp_wk->basic1.trainerID % RESORT_RESIDENT_TYPE_MAX; //TODO
-  case RESORT_DATA_PARAM_PRESENT_ID:
-    return 10; //TODO;
-  case RESORT_DATA_PARAM_PRESENT_NUM:
-    return 1; //TODO
   case RESORT_DATA_PARAM_EVENT_FLAG:
     return 0; //TODO
   case RESORT_DATA_PARAM_PHRASE:
     //もしパックがなかったら通常の挨拶文
-    if( cp_wk->extend_flag & RESORT_EXTEND_TYPE_09 )
+    if( cp_wk->extend_flag & 1<<RESORT_EXTEND_TYPE_09 )
     {
       RESORT_EXTEND9_DATA_GetPhrase( &cp_wk->extend9, p_ret_adrs );
     }
@@ -1217,19 +1273,10 @@ u32 RESORT_RECV_DATA_GetData( const RESORT_RECV_DATA *cp_wk, RESORT_DATA_PARAM p
       RESORT_BASIC1_DATA_GetIntroduction( &cp_wk->basic1, p_ret_adrs );
     }
     return 0;
-  case RESORT_DATA_PARAM_TYPE:
-    return cp_wk->type;
-  case RESORT_DATA_PARAM_DAY_FLAG:
-    return cp_wk->day_flag;
-
   case RESORT_DATA_PARAM_NATION:
     return cp_wk->basic1.nation;
   case RESORT_DATA_PARAM_AREA:
     return cp_wk->basic1.area;
-  case RESORT_DATA_PARAM_WORK:
-    return cp_wk->basic1.work;
-  case RESORT_DATA_PARAM_HOBBY:
-    return cp_wk->basic1.hobby;
   case RESORT_DATA_PARAM_WND_COLOR:
     return cp_wk->basic1.wnd_color;
   case RESORT_DATA_PARAM_PLAY_HOUR:
@@ -1238,6 +1285,202 @@ u32 RESORT_RECV_DATA_GetData( const RESORT_RECV_DATA *cp_wk, RESORT_DATA_PARAM p
     return cp_wk->basic1.play_min;
   case RESORT_DATA_PARAM_QANSWER:  //p_ret_adrsから取得
     GFL_STD_MemCopy( &cp_wk->basic1.qanswer, p_ret_adrs, sizeof(QUESTIONNAIRE_ANSWER_WORK) );
+    return 0;
+  case RESORT_DATA_PARAM_TRAINER_ID:
+    return cp_wk->basic1.trainerID;
+  case RESORT_DATA_PARAM_VER:
+    return cp_wk->basic1.version;
+  case RESORT_DATA_PARAM_LANG:
+    return cp_wk->basic1.language;
+  case RESORT_DATA_PARAM_PASS_CNT:
+    return cp_wk->basic1.pass_cnt;
+  case RESORT_DATA_PARAM_COLOR:
+    return cp_wk->basic1.wnd_color;
+  //準基本データ
+  case RESORT_DATA_PARAM_CONTINUE:
+    return cp_wk->basic2.continue_data;
+  case RESORT_DATA_PARAM_PERSONAL:
+    return cp_wk->basic2.personality;
+  case RESORT_DATA_PARAM_SPECIAL:
+    return cp_wk->basic2.special_deliverly;
+  case RESORT_DATA_PARAM_RESORT_QANSWER_00:
+    return cp_wk->basic2.quest1;
+  case RESORT_DATA_PARAM_RESORT_QANSWER_01:
+    return cp_wk->basic2.quest2;
+  case RESORT_DATA_PARAM_RESORT_QANSWER_02:
+    return cp_wk->basic2.quest3;
+  case RESORT_DATA_PARAM_RESORT_QANSWER_03:
+    return cp_wk->basic2.quest4;
+  //生成データ
+  case RESORT_DATA_PARAM_PRESENT_ID:
+    return cp_wk->presentID;
+  case RESORT_DATA_PARAM_PRESENT_NUM:
+    return cp_wk->present_num;
+  case RESORT_DATA_PARAM_MEET_YEAR:
+    return cp_wk->meet_year;
+  case RESORT_DATA_PARAM_MEET_MONTH:
+    return cp_wk->meet_month;
+  case RESORT_DATA_PARAM_MEET_DAY:
+    return cp_wk->meet_day;
+  case RESORT_DATA_PARAM_MEET_HOUR:
+    return cp_wk->meet_hour;
+  case RESORT_DATA_PARAM_MEET_MIN:
+    return cp_wk->meet_min;
+  case RESORT_DATA_PARAM_COMM_ID:
+    return cp_wk->commID;
+  case RESORT_DATA_PARAM_LOCK:
+    return cp_wk->lock;
+  case RESORT_DATA_PARAM_UPDATE:
+    return cp_wk->update;
+  case RESORT_DATA_PARAM_KEEP:
+    return cp_wk->keep_flag;
+  case RESORT_DATA_PARAM_DAY_FLAG:
+    return cp_wk->day_flag;
+  case RESORT_DATA_PARAM_TYPE:
+    return cp_wk->type;
+  case RESORT_DATA_PARAM_EXTEND_BIT:
+    return cp_wk->extend_flag;
+  case RESORT_DATA_PARAM_KOSEI:
+    return cp_wk->kosei;
+  //拡張データ1
+  case RESORT_DATA_PARAM_EXT1_MEDAL_BIT:  //p_ret_adrsから取得 u8*12
+    RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_01 );
+    GFL_STD_MemCopy( cp_wk->extend1.medal_bit, p_ret_adrs, sizeof(u8)*12 );
+    return 0;
+  case RESORT_DATA_PARAM_EXT1_RECOMMEND_MEDAL_ID:
+    RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_01 );
+    return cp_wk->extend1.recommend_medalID;
+  case RESORT_DATA_PARAM_EXT1_RECOMMEND_DATE:
+    RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_01 );
+    return cp_wk->extend1.recommend_date;
+  case RESORT_DATA_PARAM_EXT1_MEDAL_NUM:
+    RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_01 );
+    return cp_wk->extend1.medal_num;
+  //拡張データ2
+  case RESORT_DATA_PARAM_EXT2_RANK_00:
+  case RESORT_DATA_PARAM_EXT2_RANK_01:
+  case RESORT_DATA_PARAM_EXT2_RANK_02:
+  case RESORT_DATA_PARAM_EXT2_RANK_03:
+    RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_02 );
+    return cp_wk->extend2.rank_data[ param - RESORT_DATA_PARAM_EXT2_RANK_00 ];
+  //拡張データ3
+  case RESORT_DATA_PARAM_EXT3_RANK_04:
+  case RESORT_DATA_PARAM_EXT3_RANK_05:
+  case RESORT_DATA_PARAM_EXT3_RANK_06:
+  case RESORT_DATA_PARAM_EXT3_RANK_07:
+    RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_03 );
+    return cp_wk->extend3.rank_data[ param - RESORT_DATA_PARAM_EXT3_RANK_04 ];
+  //拡張データ4
+  case RESORT_DATA_PARAM_EXT4_GOSSIP_00:
+  case RESORT_DATA_PARAM_EXT4_GOSSIP_01:
+  case RESORT_DATA_PARAM_EXT4_GOSSIP_02:
+  case RESORT_DATA_PARAM_EXT4_GOSSIP_03:
+  case RESORT_DATA_PARAM_EXT4_GOSSIP_04:
+  case RESORT_DATA_PARAM_EXT4_GOSSIP_05:
+  case RESORT_DATA_PARAM_EXT4_GOSSIP_06:
+  case RESORT_DATA_PARAM_EXT4_GOSSIP_07:
+  case RESORT_DATA_PARAM_EXT4_GOSSIP_08:
+  case RESORT_DATA_PARAM_EXT4_GOSSIP_09:
+  case RESORT_DATA_PARAM_EXT4_GOSSIP_10:
+  case RESORT_DATA_PARAM_EXT4_GOSSIP_11:
+  case RESORT_DATA_PARAM_EXT4_GOSSIP_12:
+  case RESORT_DATA_PARAM_EXT4_GOSSIP_13:
+  case RESORT_DATA_PARAM_EXT4_GOSSIP_14:
+  case RESORT_DATA_PARAM_EXT4_GOSSIP_15:
+    RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_04 );
+    return cp_wk->extend4.gossip[ param - RESORT_DATA_PARAM_EXT4_GOSSIP_00 ];
+  //拡張データ5
+  case RESORT_DATA_PARAM_EXT5_MONSNO:
+    RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_05 );
+    return cp_wk->extend5.monsno;
+  case RESORT_DATA_PARAM_EXT5_FORM:
+    RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_05 );
+    return cp_wk->extend5.form;
+  case RESORT_DATA_PARAM_EXT5_SEX:
+    RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_05 );
+    return cp_wk->extend5.sex;
+  case RESORT_DATA_PARAM_EXT5_RARE:
+    RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_05 );
+    return cp_wk->extend5.rare;
+  case RESORT_DATA_PARAM_EXT5_TOKUSEI:
+    RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_05 );
+    return cp_wk->extend5.tokusei;
+  case RESORT_DATA_PARAM_EXT5_WAZA_00:
+  case RESORT_DATA_PARAM_EXT5_WAZA_01:
+  case RESORT_DATA_PARAM_EXT5_WAZA_02:
+  case RESORT_DATA_PARAM_EXT5_WAZA_03:
+    RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_05 );
+    return cp_wk->extend5.waza[ param - RESORT_DATA_PARAM_EXT5_WAZA_00];
+  case RESORT_DATA_PARAM_EXT5_ITEM:
+    RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_05 );
+    return cp_wk->extend5.item;
+  //拡張データ6
+  case RESORT_DATA_PARAM_EXT6_MONSNO:
+    RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_06 );
+    return cp_wk->extend6.monsno;
+  case RESORT_DATA_PARAM_EXT6_FORM:
+    RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_06 );
+    return cp_wk->extend6.form;
+  case RESORT_DATA_PARAM_EXT6_SEX:
+    RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_06 );
+    return cp_wk->extend6.sex;
+  case RESORT_DATA_PARAM_EXT6_RARE:
+    RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_06 );
+    return cp_wk->extend6.rare;
+  case RESORT_DATA_PARAM_EXT6_TOKUSEI:
+    RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_06 );
+    return cp_wk->extend6.tokusei;
+  case RESORT_DATA_PARAM_EXT6_WAZA_00:
+  case RESORT_DATA_PARAM_EXT6_WAZA_01:
+  case RESORT_DATA_PARAM_EXT6_WAZA_02:
+  case RESORT_DATA_PARAM_EXT6_WAZA_03:
+    RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_06 );
+    return cp_wk->extend6.waza[ param - RESORT_DATA_PARAM_EXT6_WAZA_00];
+  case RESORT_DATA_PARAM_EXT6_ITEM:
+    RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_06 );
+    return cp_wk->extend6.item;
+  //拡張データ7
+  case RESORT_DATA_PARAM_EXT7_MONSNO:
+    RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_07 );
+    return cp_wk->extend7.monsno;
+  case RESORT_DATA_PARAM_EXT7_FORM:
+    RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_07 );
+    return cp_wk->extend7.form;
+  case RESORT_DATA_PARAM_EXT7_SEX:
+    RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_07 );
+    return cp_wk->extend7.sex;
+  case RESORT_DATA_PARAM_EXT7_RARE:
+    RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_07 );
+    return cp_wk->extend7.rare;
+  case RESORT_DATA_PARAM_EXT7_TOKUSEI:
+    RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_07 );
+    return cp_wk->extend7.tokusei;
+  case RESORT_DATA_PARAM_EXT7_WAZA_00:
+  case RESORT_DATA_PARAM_EXT7_WAZA_01:
+  case RESORT_DATA_PARAM_EXT7_WAZA_02:
+  case RESORT_DATA_PARAM_EXT7_WAZA_03:
+    RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_07 );
+    return cp_wk->extend7.waza[ param - RESORT_DATA_PARAM_EXT7_WAZA_00 ];
+  case RESORT_DATA_PARAM_EXT7_ITEM:
+    RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_07 );
+    return cp_wk->extend7.item;
+  //拡張データ8
+  case RESORT_DATA_PARAM_EXT8_RECORD_00:
+  case RESORT_DATA_PARAM_EXT8_RECORD_01:
+  case RESORT_DATA_PARAM_EXT8_RECORD_02:
+  case RESORT_DATA_PARAM_EXT8_RECORD_03:
+    RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_08 );
+    return cp_wk->extend8.record[ param - RESORT_DATA_PARAM_EXT8_RECORD_00];
+  case RESORT_DATA_PARAM_EXT8_RECORD_DATE_00:
+  case RESORT_DATA_PARAM_EXT8_RECORD_DATE_01:
+  case RESORT_DATA_PARAM_EXT8_RECORD_DATE_02:
+  case RESORT_DATA_PARAM_EXT8_RECORD_DATE_03:
+    RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_08 );
+    return cp_wk->extend8.record_date[ param - RESORT_DATA_PARAM_EXT8_RECORD_DATE_00];
+  //拡張データ9
+  case RESORT_DATA_PARAM_EXT9_PHRASE:
+    RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_09 );
+    RESORT_EXTEND9_DATA_GetPhrase( &cp_wk->extend9, (STRCODE *)p_ret_adrs );
     return 0;
   default:
     GF_ASSERT(0);
@@ -1263,29 +1506,11 @@ void RESORT_RECV_DATA_SetData( RESORT_RECV_DATA *p_wk, RESORT_DATA_PARAM param, 
   case RESORT_DATA_PARAM_PLACE_ID:
     p_wk->placeID   = data;
     break;
-  case RESORT_DATA_PARAM_LOCK:
-    p_wk->lock      = data;
-    break;
-  case RESORT_DATA_PARAM_UPDATE:
-    p_wk->update    = data;
-    break;
-  case RESORT_DATA_PARAM_KEEP:
-    p_wk->keep_flag = data;
-    break;
-  case RESORT_DATA_PARAM_DAY_FLAG:
-    p_wk->day_flag = data;
-    break;
   case RESORT_DATA_PARAM_NATION:
     p_wk->basic1.nation = data;
     break;
   case RESORT_DATA_PARAM_AREA:
     p_wk->basic1.area = data;
-    break;
-  case RESORT_DATA_PARAM_WORK:
-    p_wk->basic1.work = data;
-    break;
-  case RESORT_DATA_PARAM_HOBBY:
-    p_wk->basic1.hobby = data;
     break;
   case RESORT_DATA_PARAM_WND_COLOR:
     p_wk->basic1.wnd_color = data;
@@ -1299,6 +1524,283 @@ void RESORT_RECV_DATA_SetData( RESORT_RECV_DATA *p_wk, RESORT_DATA_PARAM param, 
   case RESORT_DATA_PARAM_QANSWER:  //p_ret_adrsから取得
     GFL_STD_MemCopy( (const void*)data, &p_wk->basic1.qanswer, sizeof(QUESTIONNAIRE_ANSWER_WORK) );
     break;
+  case RESORT_DATA_PARAM_TRAINER_ID:
+    p_wk->basic1.trainerID = data;
+    OS_TPrintf( "デバッグ用値設定\n" );
+    break;
+  case RESORT_DATA_PARAM_VER:
+    p_wk->basic1.version = data;
+    OS_TPrintf( "デバッグ用値設定\n" );
+    break;
+  case RESORT_DATA_PARAM_LANG:
+    p_wk->basic1.language = data;
+    OS_TPrintf( "デバッグ用値設定\n" );
+    break;
+  case RESORT_DATA_PARAM_NAME:
+    GFL_STD_MemCopy( (const void*)data, p_wk->basic1.name, sizeof(STRCODE)*PERSON_NAME_SIZE );
+    OS_TPrintf( "デバッグ用値設定\n" );
+    break;
+  case RESORT_DATA_PARAM_INTRODUCTION:
+    GFL_STD_MemCopy( (const void*)data, p_wk->basic1.introduction, sizeof(STRCODE)*GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN );
+    OS_TPrintf( "デバッグ用値設定\n" );
+    break;
+  case RESORT_DATA_PARAM_TRAINERVIEW:
+    if( data > UNION_VIEW_INDEX_MAN_END )
+    {
+      data -= UNION_VIEW_INDEX_WOMAN_START;
+    }
+    p_wk->basic1.trainer_view = data;
+    OS_TPrintf( "デバッグ用値設定\n" );
+    break;
+  case RESORT_DATA_PARAM_SEX:
+    p_wk->basic1.sex = data;
+    OS_TPrintf( "デバッグ用値設定\n" );
+    break;
+  case RESORT_DATA_PARAM_PASS_CNT:
+    p_wk->basic1.pass_cnt = data;
+    break;
+  case RESORT_DATA_PARAM_COLOR:
+    p_wk->basic1.wnd_color = data;
+    break;
+
+  //準基本データ
+  case RESORT_DATA_PARAM_CONTINUE:
+    p_wk->basic2.continue_data = data;
+    break;
+  case RESORT_DATA_PARAM_PERSONAL:
+    p_wk->basic2.personality = data;
+    break;
+  case RESORT_DATA_PARAM_SPECIAL:
+    p_wk->basic2.special_deliverly = data;
+    break;
+  case RESORT_DATA_PARAM_RESORT_QANSWER_00:
+    p_wk->basic2.quest1 = data;
+    break;
+  case RESORT_DATA_PARAM_RESORT_QANSWER_01:
+    p_wk->basic2.quest2 = data;
+    break;
+  case RESORT_DATA_PARAM_RESORT_QANSWER_02:
+    p_wk->basic2.quest3 = data;
+    break;
+  case RESORT_DATA_PARAM_RESORT_QANSWER_03:
+    p_wk->basic2.quest4 = data;
+    break;
+  //生成データ
+  case RESORT_DATA_PARAM_PRESENT_ID:
+    p_wk->presentID = data;
+    break;
+  case RESORT_DATA_PARAM_PRESENT_NUM:
+    p_wk->present_num = data;
+    break;
+  case RESORT_DATA_PARAM_MEET_YEAR:
+    p_wk->meet_year = data;
+    break;
+  case RESORT_DATA_PARAM_MEET_MONTH:
+    p_wk->meet_month = data;
+    break;
+  case RESORT_DATA_PARAM_MEET_DAY:
+    p_wk->meet_day = data;
+    break;
+  case RESORT_DATA_PARAM_MEET_HOUR:
+    p_wk->meet_hour = data;
+    break;
+  case RESORT_DATA_PARAM_MEET_MIN:
+    p_wk->meet_min = data;
+    break;
+  case RESORT_DATA_PARAM_COMM_ID:
+    p_wk->commID = data;
+    break;
+  case RESORT_DATA_PARAM_LOCK:
+    p_wk->lock = data;
+    break;
+  case RESORT_DATA_PARAM_UPDATE:
+    p_wk->update = data;
+    break;
+  case RESORT_DATA_PARAM_KEEP:
+    p_wk->keep_flag = data;
+    break;
+  case RESORT_DATA_PARAM_DAY_FLAG:
+    p_wk->day_flag = data;
+    break;
+  case RESORT_DATA_PARAM_TYPE:
+    p_wk->type = data;
+    break;
+  case RESORT_DATA_PARAM_EXTEND_BIT:
+    p_wk->extend_flag = data;
+    break;
+  case RESORT_DATA_PARAM_KOSEI:
+    p_wk->kosei = data;
+    break;
+  //拡張データ1
+  case RESORT_DATA_PARAM_EXT1_MEDAL_BIT:
+    RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_01 );
+    GFL_STD_MemCopy( (const void *)data, p_wk->extend1.medal_bit, sizeof(u8)*12 );
+    break;
+  case RESORT_DATA_PARAM_EXT1_RECOMMEND_MEDAL_ID:
+    RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_01 );
+    p_wk->extend1.recommend_medalID = data;
+    break;
+  case RESORT_DATA_PARAM_EXT1_RECOMMEND_DATE:
+    RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_01 );
+    p_wk->extend1.recommend_date = data;
+    break;
+  case RESORT_DATA_PARAM_EXT1_MEDAL_NUM:
+    RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_01 );
+    p_wk->extend1.medal_num = data;
+    break;
+  //拡張データ2
+  case RESORT_DATA_PARAM_EXT2_RANK_00:
+  case RESORT_DATA_PARAM_EXT2_RANK_01:
+  case RESORT_DATA_PARAM_EXT2_RANK_02:
+  case RESORT_DATA_PARAM_EXT2_RANK_03:
+    RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_02 );
+    p_wk->extend2.rank_data[ param - RESORT_DATA_PARAM_EXT2_RANK_00 ] = data;
+    break;
+  //拡張データ3
+  case RESORT_DATA_PARAM_EXT3_RANK_04:
+  case RESORT_DATA_PARAM_EXT3_RANK_05:
+  case RESORT_DATA_PARAM_EXT3_RANK_06:
+  case RESORT_DATA_PARAM_EXT3_RANK_07:
+    RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_03 );
+    p_wk->extend3.rank_data[ param - RESORT_DATA_PARAM_EXT3_RANK_04 ] = data;
+    break;
+  //拡張データ4
+  case RESORT_DATA_PARAM_EXT4_GOSSIP_00:
+  case RESORT_DATA_PARAM_EXT4_GOSSIP_01:
+  case RESORT_DATA_PARAM_EXT4_GOSSIP_02:
+  case RESORT_DATA_PARAM_EXT4_GOSSIP_03:
+  case RESORT_DATA_PARAM_EXT4_GOSSIP_04:
+  case RESORT_DATA_PARAM_EXT4_GOSSIP_05:
+  case RESORT_DATA_PARAM_EXT4_GOSSIP_06:
+  case RESORT_DATA_PARAM_EXT4_GOSSIP_07:
+  case RESORT_DATA_PARAM_EXT4_GOSSIP_08:
+  case RESORT_DATA_PARAM_EXT4_GOSSIP_09:
+  case RESORT_DATA_PARAM_EXT4_GOSSIP_10:
+  case RESORT_DATA_PARAM_EXT4_GOSSIP_11:
+  case RESORT_DATA_PARAM_EXT4_GOSSIP_12:
+  case RESORT_DATA_PARAM_EXT4_GOSSIP_13:
+  case RESORT_DATA_PARAM_EXT4_GOSSIP_14:
+  case RESORT_DATA_PARAM_EXT4_GOSSIP_15:
+    RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_04 );
+    p_wk->extend4.gossip[ param - RESORT_DATA_PARAM_EXT4_GOSSIP_00 ] = data;
+    break;
+  //拡張データ5
+  case RESORT_DATA_PARAM_EXT5_MONSNO:
+    RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_05 );
+    p_wk->extend5.monsno = data;
+    break;
+  case RESORT_DATA_PARAM_EXT5_FORM:
+    RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_05 );
+    p_wk->extend5.form = data;
+    break;
+  case RESORT_DATA_PARAM_EXT5_SEX:
+    RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_05 );
+    p_wk->extend5.sex = data;
+    break;
+  case RESORT_DATA_PARAM_EXT5_RARE:
+    RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_05 );
+    p_wk->extend5.rare = data;
+    break;
+  case RESORT_DATA_PARAM_EXT5_TOKUSEI:
+    RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_05 );
+    p_wk->extend5.tokusei = data;
+    break;
+  case RESORT_DATA_PARAM_EXT5_WAZA_00:
+  case RESORT_DATA_PARAM_EXT5_WAZA_01:
+  case RESORT_DATA_PARAM_EXT5_WAZA_02:
+  case RESORT_DATA_PARAM_EXT5_WAZA_03:
+    RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_05 );
+    p_wk->extend5.waza[ param - RESORT_DATA_PARAM_EXT5_WAZA_00] = data;
+    break;
+  case RESORT_DATA_PARAM_EXT5_ITEM:
+    RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_05 );
+    p_wk->extend5.item = data;
+    break;
+  //拡張データ6
+  case RESORT_DATA_PARAM_EXT6_MONSNO:
+    RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_06 );
+    p_wk->extend6.monsno = data;
+    break;
+  case RESORT_DATA_PARAM_EXT6_FORM:
+    RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_06 );
+    p_wk->extend6.form = data;
+    break;
+  case RESORT_DATA_PARAM_EXT6_SEX:
+    RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_06 );
+    p_wk->extend6.sex = data;
+    break;
+  case RESORT_DATA_PARAM_EXT6_RARE:
+    RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_06 );
+    p_wk->extend6.rare = data;
+    break;
+  case RESORT_DATA_PARAM_EXT6_TOKUSEI:
+    RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_06 );
+    p_wk->extend6.tokusei = data;
+    break;
+  case RESORT_DATA_PARAM_EXT6_WAZA_00:
+  case RESORT_DATA_PARAM_EXT6_WAZA_01:
+  case RESORT_DATA_PARAM_EXT6_WAZA_02:
+  case RESORT_DATA_PARAM_EXT6_WAZA_03:
+    RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_06 );
+    p_wk->extend6.waza[ param - RESORT_DATA_PARAM_EXT6_WAZA_00] = data;
+    break;
+  case RESORT_DATA_PARAM_EXT6_ITEM:
+    RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_06 );
+    p_wk->extend6.item = data;
+    break;
+  //拡張データ7
+  case RESORT_DATA_PARAM_EXT7_MONSNO:
+    RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_07 );
+    p_wk->extend7.monsno = data;
+    break;
+  case RESORT_DATA_PARAM_EXT7_FORM:
+    RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_07 );
+    p_wk->extend7.form = data;
+    break;
+  case RESORT_DATA_PARAM_EXT7_SEX:
+    RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_07 );
+    p_wk->extend7.sex = data;
+    break;
+  case RESORT_DATA_PARAM_EXT7_RARE:
+    RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_07 );
+    p_wk->extend7.rare = data;
+    break;
+  case RESORT_DATA_PARAM_EXT7_TOKUSEI:
+    RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_07 );
+    p_wk->extend7.tokusei = data;
+    break;
+  case RESORT_DATA_PARAM_EXT7_WAZA_00:
+  case RESORT_DATA_PARAM_EXT7_WAZA_01:
+  case RESORT_DATA_PARAM_EXT7_WAZA_02:
+  case RESORT_DATA_PARAM_EXT7_WAZA_03:
+    RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_07 );
+    p_wk->extend7.waza[ param - RESORT_DATA_PARAM_EXT7_WAZA_00 ] = data;
+    break;
+  case RESORT_DATA_PARAM_EXT7_ITEM:
+    RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_07 );
+    p_wk->extend7.item = data;
+    break;
+  //拡張データ8
+  case RESORT_DATA_PARAM_EXT8_RECORD_00:
+  case RESORT_DATA_PARAM_EXT8_RECORD_01:
+  case RESORT_DATA_PARAM_EXT8_RECORD_02:
+  case RESORT_DATA_PARAM_EXT8_RECORD_03:
+    RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_08 );
+    p_wk->extend8.record[ param - RESORT_DATA_PARAM_EXT8_RECORD_00] = data;
+    break;
+  case RESORT_DATA_PARAM_EXT8_RECORD_DATE_00:
+  case RESORT_DATA_PARAM_EXT8_RECORD_DATE_01:
+  case RESORT_DATA_PARAM_EXT8_RECORD_DATE_02:
+  case RESORT_DATA_PARAM_EXT8_RECORD_DATE_03:
+    RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_08 );
+    p_wk->extend8.record_date[ param - RESORT_DATA_PARAM_EXT8_RECORD_DATE_00] = data;
+    break;
+  //拡張データ9
+  case RESORT_DATA_PARAM_EXT9_PHRASE:
+    RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_09 );
+    GFL_STD_MemCopy( (const void*)data, p_wk->extend9.phrase, sizeof(STRCODE)*RESORT_PHRASE_LEN );
+    break;
+
   default:
     GF_ASSERT(0);
   }
@@ -2966,3 +3468,22 @@ void RESORT_CITY_DATA_SetData( RESORT_CITY_DATA *p_wk, RESORT_CITY_DATA_PARAM pa
 void RESORT_CITY_DATA_UpdateDay( RESORT_CITY_DATA *p_wk )
 {
 }
+
+//=============================================================================
+/**
+ *　  デバッグ
+*/
+//=============================================================================
+#ifdef PM_DEBUG
+//----------------------------------------------------------------------------
+/**
+ *	@brief デバッグ用 外部からのアクセスを変更
+ *
+ *	@param	BOOL enable   TRUE　すべてアクセス許可する  FALSE　通常通りのアクセス
+ */
+//-----------------------------------------------------------------------------
+void DEBUG_RESORT_DATA_SetPermission( BOOL enable )
+{
+  s_debug_permission = enable;
+}
+#endif //PM_DEBUG
