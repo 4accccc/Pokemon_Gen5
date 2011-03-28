@@ -20,9 +20,11 @@
 #include "field_task.h"         // for FIELD_TASK_TransMMdl
 #include "field_task_player_trans.h" // for FIELD_TASK_TransPlayer
 #include "field_task_player_rot.h" // for FIELD_TASK_PlayerRotate
+#include "field_task_camera_rot.h" // for FIELD_TASK_CameraRot_Pitch
+#include "field_task_camera_zoom.h" // for FIELD_TASK_CameraLinearZoom
 
 // zone
-#include "../../../resource/fldmapdata/zonetable/zone_id.h"  // for ZONE_ID_C09P02
+#include "../../../resource/fldmapdata/zonetable/zone_id.h"  // for ZONE_ID_C06
 
 // event
 #include "event_mapchange.h"  // for EVENT_ChangeMapPosNoFade
@@ -80,6 +82,22 @@
 
 // 吹き飛ばしイベント用
 #define STAY_WALK_NUM           (4)         // 何歩足踏みするか
+//#define SHAKE_CAM_WIDTH         (3)         // 横揺れ幅
+//#define SHAKE_CAM_SYNC          (9)         // 1周期にかけるシンク数
+//#define SHAKE_CAM_TIME          (2)         // 揺れ回数
+//#define SHAKE_CAM_WAIT          (28)        // 待ちフレーム
+
+// 安全地帯吹き飛ばしイベント
+#define SHAKE_MMDL_WIDTH        (1)         // 横揺れ幅
+#define SHAKE_MMDL_SYNC         (6)         // 1周期にかけるシンク数
+#define SHAKE_MMDL_TIME         (2)         // ゆれ回数
+#define SHAKE_WAIT_TIME1        (20)        // 1回目のゆれ開始までの待ち
+#define SHAKE_WAIT_TIME2        (13)        // 2回目のゆれ開始までの待ち
+
+// ショートカット吹き飛ばしイベント用
+#define SHORTCUT_CAMERA_FRAME   (30)        // カメラ速度
+#define SHORTCUT_CAMERA_PITCH   (0x20d8)    // カメラ角度
+#define SHORTCUT_CAMERA_LEGTH   (0xD5 << FX32_SHIFT)  // カメラ距離
 
 // map_array.cdatの配列の要素
 #define MAP_ARRAY_ROW           (51)        // マップの縦MAX
@@ -175,6 +193,7 @@ typedef struct {
   u16             time;         // 時間計測用
   u8              stay_walk_cnt;// 足踏みカウント
   BOOL            is_wall;      // 後ろがすぐ壁か？
+  u16             save_time;    // 時間保存用(安全地帯吹き飛ばしで使用)
 } BLOW_EVENT_WORK;
 
 //-------------------------------------
@@ -242,6 +261,7 @@ static u16  SAVE_GetTime( const GYM_FLY_SV_WORK *cp_wk );
 //=====================================
 // フィールドタスク関係
 //=====================================
+// モデルの平行移動
 typedef struct
 {
   u8                  seq;  // シーケンス
@@ -255,6 +275,36 @@ typedef struct
 } TASK_WORK;
 static FIELD_TASK_RETVAL  TransMMdl( void* wk );
 
+// モデルの振動
+typedef struct
+{
+  u8                  seq;  // シーケンス
+  FIELDMAP_WORK* fieldmap;  // 動作対象フィールドマップ
+  int               frame;  // 現在のフレーム数
+  VecFx32         basePos;  // 移動開始位置
+  MMDL              *mmdl;  // 対象モデル
+
+  s16               width;  // ゆれ幅
+  u8                 time;  // 振動回数
+  u32                sync;  // 
+  u32             nowSync;  // 
+
+} MMDL_SHAKE_WORK;
+static FIELD_TASK_RETVAL  ShakeMMdl( void* wk );
+
+// カメラの振動
+typedef struct {
+  FIELDMAP_WORK*  fieldmap;
+  FIELD_CAMERA*   camera;
+
+  u8              seq;  // シーケンス
+  CAM_SHAKE_PARAM shakeParam;
+  const VecFx32   *WatchTarget;
+
+} CAM_SHAKE_WORK;
+static FIELD_TASK_RETVAL ShakeCamera( void* wk );
+
+
 #ifdef GYM_FLY_DEBUG_MENU
 //-------------------------------------
 /// デバッグメニュー	
@@ -265,6 +315,11 @@ static void DEBUGMENU_Exit( void );
 static int debug_windmeter_time1 = WINDMETER_MIDDLE_TIME;   // 低速から中速に変わるまでの時間
 static int debug_windmeter_time2 = WINDMETER_HIGH_TIME;   // 中速から高速に変わるまでの時間
 static u16 debug_blow_event_time_max = BLOW_EVENT_TIME;   // 吹き飛ばしイベントの最低経過時間
+
+static s16 debug_w = 0;
+static s16 debug_h = 2;
+static u32 debug_sync = 3;
+static u8  debug_time = 4;
 #endif // GYM_FLY_DEBUG_MENU
 
 //=============================================================================
@@ -574,6 +629,247 @@ static FIELD_TASK_RETVAL TransMMdl( void* wk )
   return FIELD_TASK_RETVAL_CONTINUE;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  MMDLの振動タスクを作成する
+ *
+ *  @param fieldmap 動作対象フィールドマップ
+ *	@param mmdl     モデル
+ *	@param w        横揺れ幅
+ *	@param sync     １周期にかけるシンク数 1以上
+ *	@param time     振動回数
+ *
+ *	@return 作成したタスク
+ *
+ *	@note   現在飛行ジムでしか使われていないので飛行ジムのオーバーレイにあります。
+ *	        他の場所でも使用する場合があれば、FIELD_MAPのオーバーレイに移した方がいい。
+ */
+//-----------------------------------------------------------------------------
+FIELD_TASK* FIELD_TASK_ShakeMMdl( FIELDMAP_WORK* fieldmap, MMDL *mmdl, s16 w, u32 sync, u8 time )
+{
+  FIELD_TASK* task;
+  MMDL_SHAKE_WORK* work;
+  HEAPID heap_id = FIELDMAP_GetHeapID( fieldmap );
+
+  // 生成
+  task = FIELD_TASK_Create( heap_id, sizeof(MMDL_SHAKE_WORK), ShakeMMdl );
+  // 初期化
+  work = FIELD_TASK_GetWork( task );
+  work->seq      = 0;
+  work->fieldmap = fieldmap;
+  work->frame    = 0;
+  work->mmdl     = mmdl;
+  MMDL_GetVectorPos( mmdl, &work->basePos );
+
+  work->width   = w;
+  work->sync    = sync;
+  work->time    = time;
+  work->nowSync = 0;
+
+  return task;
+}
+//=============================================================================
+//  タスク処理関数
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  MMDL振動処理
+ */
+//-----------------------------------------------------------------------------
+static FIELD_TASK_RETVAL ShakeMMdl( void* wk )
+{
+  MMDL_SHAKE_WORK*  work = (MMDL_SHAKE_WORK*)wk;
+  BOOL end = FALSE;
+
+  switch( work->seq ) {
+  case 0:
+    {
+      //ターゲットを動かす
+      int tmp;
+      u16 rad;
+      work->nowSync++;
+      tmp = (work->nowSync * 0x10000) / work->sync;
+      rad = tmp;
+
+      if (work->nowSync >= work->sync)
+      {
+        work->time--;
+        work->nowSync = 0;
+      }
+      if (work->time == 0)
+      {
+        work->nowSync = 0;
+        end = TRUE;
+      }
+
+      if (end)
+      {
+        VecFx32 offset;
+        VEC_Set( &offset, 0,0,0 );
+        MMDL_SetVectorDrawOffsetPos( work->mmdl, &offset );
+        //MMDL_SetVectorPos( work->mmdl, &work->basePos );
+
+        work->seq++;
+      }
+      else
+      {
+        fx32 w;
+        VecFx32 offset;
+        w = work->width * FX_SinIdx(rad);
+        offset.x = w;
+        offset.y = 0;
+        offset.z = 0;
+
+        //座標セット
+        MMDL_SetVectorDrawOffsetPos( work->mmdl, &offset );
+        //MMDL_SetVectorPos( work->mmdl, &offset );
+      }
+    }
+    break;
+  case 1:
+    return FIELD_TASK_RETVAL_FINISH;
+  }
+  return FIELD_TASK_RETVAL_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラ振動タスクを作成する
+ *
+ *	@param	fieldmap    動作対象フィールドマップ
+ *	@param  shakeParam  振動パラメータ
+ *
+ *	@return 作成したタスク
+ *
+ */
+//-----------------------------------------------------------------------------
+FIELD_TASK* FIELD_TASK_ShakeCamera( FIELDMAP_WORK* fieldmap, const CAM_SHAKE_PARAM* shakeParam )
+{
+  FIELD_TASK* task;
+  CAM_SHAKE_WORK* work;
+  HEAPID heap_id = FIELDMAP_GetHeapID( fieldmap );
+
+  // 生成
+  task = FIELD_TASK_Create( heap_id, sizeof(CAM_SHAKE_WORK), ShakeCamera );
+  // 初期化
+  work = FIELD_TASK_GetWork( task );
+  work->fieldmap = fieldmap;
+  work->camera   = FIELDMAP_GetFieldCamera( fieldmap );
+  work->seq      = 0;
+  work->shakeParam = *shakeParam;
+
+  return task;
+}
+//=============================================================================
+//  タスク処理関数
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラ振動処理
+ */
+//-----------------------------------------------------------------------------
+static FIELD_TASK_RETVAL ShakeCamera( void* wk )
+{
+  CAM_SHAKE_WORK*  work = (CAM_SHAKE_WORK*)wk;
+  CAM_SHAKE_PARAM* param = &(work->shakeParam);
+  BOOL end = FALSE;
+
+  // 開始フレーム経過まで待つ
+  if( param->WaitStartFrame > 0 )
+  {
+    param->WaitStartFrame--;
+    return FIELD_TASK_RETVAL_CONTINUE;
+  }
+
+  switch( work->seq )
+  {
+  case 0:
+    //トレース終了
+    FIELD_CAMERA_StopTraceRequest(work->camera);
+    work->seq++;
+    /* break through */
+  case 1:
+    if ( FIELD_CAMERA_CheckTrace(work->camera) )
+    {
+      break;
+    }
+    {
+      //復帰パラメータをセットする
+      FIELD_CAMERA_SetRecvCamParam(work->camera);
+
+      //カメラのターゲットを取得
+      work->WatchTarget = FIELD_CAMERA_GetWatchTarget(work->camera);
+      //バインド解除
+      FIELD_CAMERA_FreeTarget(work->camera);
+      
+      //補間移動はカメラ位置不定型のみのサポート
+      FIELD_CAMERA_ChangeMode( work->camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
+
+      work->seq++;
+    }
+    /* break through */
+  case 2:
+    {
+      //ターゲットを動かす
+      int tmp;
+      u16 rad;
+      param->NowSync++;
+      tmp = (param->NowSync * 0x10000) / param->Sync;
+      rad = tmp;
+
+      if (param->NowSync >= param->Sync)
+      {
+        param->Time--;
+        param->NowSync = 0;
+      }
+      if (param->Time == 0)
+      {
+        param->NowSync = 0;
+        end = TRUE;
+      }
+
+      if (end)
+      {
+        //カメラオフセットクリア
+        {
+          VecFx32 cam_ofs = {0,0,0};
+          FIELD_CAMERA_SetCamPosOffset( work->camera, &cam_ofs );
+        }
+        //復帰パラメータをクリアする
+        FIELD_CAMERA_ClearRecvCamParam(work->camera);
+
+        //際バインド
+        FIELD_CAMERA_BindTarget(work->camera, work->WatchTarget);
+        //トレース再開
+        FIELD_CAMERA_RestartTrace(work->camera);
+        work->seq++;
+      }
+      else
+      {
+        fx32 w, h;
+        VecFx32 target;
+        VecFx32 cam_ofs;
+        w = param->Width * FX_SinIdx(rad);
+        h = param->Height * FX_SinIdx(rad);
+        target = *work->WatchTarget;
+        target.x += w;
+        target.y += h;
+        cam_ofs.x = w;
+        cam_ofs.y = h;
+        cam_ofs.z = h;
+
+        //座標セット
+        FIELD_CAMERA_SetTargetPos( work->camera, &target );
+        //FIELD_CAMERA_SetCamPosOffset( work->camera, &cam_ofs );
+      }
+    }
+    break;
+  case 3:
+    return FIELD_TASK_RETVAL_FINISH;
+  }
+  return FIELD_TASK_RETVAL_CONTINUE;
+}
+
 //=============================================================================
 /**
  *      static関数
@@ -754,6 +1050,9 @@ static GMEVENT* WIND_BLOW_CreateEvent( GMEVENT* parent, GAMESYS_WORK* gsys )
   {
     FIELD_PLAYER_GetGridPos( player, &gx, &gy, &gz );
 
+    GF_ASSERT( gx < MAP_ARRAY_COL );
+    GF_ASSERT( gz < MAP_ARRAY_ROW );
+
     // 配列から自機座標のデータを取得
     if( map_array[gz][gx] != MAP_ARRAY_BLOW )
     {
@@ -773,11 +1072,12 @@ static GMEVENT* WIND_BLOW_CreateEvent( GMEVENT* parent, GAMESYS_WORK* gsys )
   work->mmdl        = FIELD_PLAYER_GetMMdl( player );
   work->hit_type    = BLOW_HIT_MAX;
   work->time        = 0;
+  work->save_time   = 0;
   work->stay_walk_cnt = 0;
 
   // 自機の1グリッド下が壁・NPCかチェック
   if( map_array[gz+1][gx] == MAP_ARRAY_STOP ||
-      MMDLSYS_SearchGridPos( FIELDMAP_GetMMdlSys( p_fieldmap ), gx, gz+1, TRUE ) )
+      MMDLSYS_SearchGridPos( FIELDMAP_GetMMdlSys( p_fieldmap ), gx, gz+1, FALSE ) )
   {
     work->is_wall = TRUE;
   }
@@ -808,6 +1108,7 @@ static GMEVENT_RESULT BlowEvent( GMEVENT* event, int* seq, void* wk )
   // 処理シーケンス
   enum{
     SEQ_WAIT,   // グリッド調度待ち
+    //SEQ_CAMERA, // カメラ振動
     SEQ_STAY_WALK,// その場で足踏み
     SEQ_START,  // イベント開始 
     SEQ_STOP,   // 壁にぶつかった
@@ -827,6 +1128,32 @@ static GMEVENT_RESULT BlowEvent( GMEVENT* event, int* seq, void* wk )
       *seq = SEQ_STAY_WALK;
     }
     break;
+
+#if 0
+  // カメラ振動
+  case SEQ_CAMERA:
+    {
+      // カメラ振動タスクを登録
+      {
+        FIELD_TASK* cam;
+        FIELD_TASK_MAN* taskMan;
+
+        CAM_SHAKE_PARAM shakeParam;
+        shakeParam.Width           = SHAKE_CAM_WIDTH;
+        shakeParam.Height          = 0;
+        shakeParam.Sync            = SHAKE_CAM_SYNC;
+        shakeParam.Time            = SHAKE_CAM_TIME;
+        shakeParam.NowSync         = 0;
+        shakeParam.WaitStartFrame  = SHAKE_CAM_WAIT;
+
+        cam = FIELD_TASK_ShakeCamera( p_wk->p_fieldmap, &shakeParam );
+        taskMan = FIELDMAP_GetTaskManager( p_wk->p_fieldmap );
+        FIELD_TASK_MAN_AddTask( taskMan, cam, NULL );
+      }
+      *seq = SEQ_STAY_WALK;
+    }
+    break;
+#endif
 
   // その場で足踏み
   case SEQ_STAY_WALK:
@@ -881,8 +1208,38 @@ static GMEVENT_RESULT BlowEvent( GMEVENT* event, int* seq, void* wk )
         MMDL_OnStatusBit( p_wk->mmdl, MMDL_STABIT_HEIGHT_GET_OFF );
       }
 
-      // SE ヒュー
-      PMSND_PlaySE( GYM_FLY_SE_BLOW );
+      // カメラ振動タスクを登録
+      if( p_wk->is_wall == FALSE )
+      {
+        FIELD_TASK* cam;
+        FIELD_TASK_MAN* taskMan;
+
+        CAM_SHAKE_PARAM shakeParam;
+#ifdef GYM_FLY_DEBUG_MENU
+        shakeParam.Width           = debug_w;
+        shakeParam.Height          = debug_h;
+        shakeParam.Sync            = debug_sync;
+        shakeParam.Time            = debug_time;
+#else
+        shakeParam.Width           = 0;
+        shakeParam.Height          = 2;
+        shakeParam.Sync            = 3;
+        shakeParam.Time            = 4;
+#endif
+        shakeParam.NowSync         = 0;
+        shakeParam.WaitStartFrame  = move_distance*3 - 6; // -6でぶつかる前にタスク起動
+
+        cam = FIELD_TASK_ShakeCamera( p_wk->p_fieldmap, &shakeParam );
+        taskMan = FIELDMAP_GetTaskManager( p_wk->p_fieldmap );
+        FIELD_TASK_MAN_AddTask( taskMan, cam, NULL );
+      }
+
+      // 下が壁だと再生しない
+      if( p_wk->is_wall == FALSE )
+      {
+        // SE ヒュー
+        PMSND_PlaySE( GYM_FLY_SE_BLOW );
+      }
 
       *seq = SEQ_MAIN;
     }
@@ -901,6 +1258,7 @@ static GMEVENT_RESULT BlowEvent( GMEVENT* event, int* seq, void* wk )
       }
 
       // SE
+      if( p_wk->is_wall == FALSE )
       {
         SEPLAYER_ID player_ID = PMSND_GetSE_DefaultPlayerID( GYM_FLY_SE_BLOW );
         if( PMSND_CheckPlaySE_byPlayerID( player_ID ) == FALSE )
@@ -914,9 +1272,11 @@ static GMEVENT_RESULT BlowEvent( GMEVENT* event, int* seq, void* wk )
       {
         FIELD_TASK_MAN* taskMan;
         taskMan = FIELDMAP_GetTaskManager( p_wk->p_fieldmap );
-        if( FIELD_TASK_MAN_IsAllTaskEnd(taskMan) ) {
+        // カメラ振動タスクが残っているため1以下
+        if( FIELD_TASK_MAN_GetTaskNum(taskMan) <= 1 ) {
 
           // SE 停止
+          if( p_wk->is_wall == FALSE )
           {
             SEPLAYER_ID player_ID = PMSND_GetSE_DefaultPlayerID( GYM_FLY_SE_BLOW );
             PMSND_StopSE_byPlayerID( player_ID );
@@ -938,7 +1298,6 @@ static GMEVENT_RESULT BlowEvent( GMEVENT* event, int* seq, void* wk )
               GF_ASSERT(0);
             }
           }
-
 
           *seq = SEQ_STOP;
         }
@@ -975,6 +1334,13 @@ static GMEVENT_RESULT BlowEvent( GMEVENT* event, int* seq, void* wk )
         }
       }
 
+      {
+        FIELD_TASK_MAN* taskMan;
+        taskMan = FIELDMAP_GetTaskManager( p_wk->p_fieldmap );
+        if( FIELD_TASK_MAN_IsAllTaskEnd(taskMan) == FALSE ) {
+          ret = FALSE;
+        }
+      }
       if( ret == TRUE )
       {
         // 移動しなかった場合は
@@ -1047,6 +1413,9 @@ static GMEVENT_RESULT BlowEventSafe( GMEVENT* event, int* seq, void* wk )
   enum{
     SEQ_WAIT,   // グリッド調度待ち
     SEQ_START,   // イベント開始 
+    SEQ_SHAKE_START,// 1回目のゆれ
+    SEQ_SHAKE_WAIT, // 振動待ち
+    SEQ_SHAKE_START2,// 2回目のゆれ
     SEQ_MAIN,   // メイン処理
     SEQ_EXIT,   // イベント終了
   };
@@ -1074,7 +1443,67 @@ static GMEVENT_RESULT BlowEventSafe( GMEVENT* event, int* seq, void* wk )
         FIELD_PLAYER_ChangeOBJCode( p_wk->player, code );
       }
 
-      *seq = SEQ_MAIN;
+      p_wk->save_time = p_wk->time;
+
+      *seq = SEQ_SHAKE_START;
+    }
+    break;
+
+  case SEQ_SHAKE_START:// 1回目のゆれ
+    {
+      // 指定時間待つ
+      if( (p_wk->time-p_wk->save_time) > SHAKE_WAIT_TIME1 )
+      {
+        // 振動タスク登録
+        {
+          FIELD_TASK* shake;
+          FIELD_TASK_MAN* taskMan;
+          shake = FIELD_TASK_ShakeMMdl( p_wk->p_fieldmap, p_wk->mmdl,
+              SHAKE_MMDL_WIDTH,
+              SHAKE_MMDL_SYNC,
+              SHAKE_MMDL_TIME );
+          taskMan = FIELDMAP_GetTaskManager( p_wk->p_fieldmap );
+          FIELD_TASK_MAN_AddTask( taskMan, shake, NULL );
+        }
+
+        *seq = SEQ_SHAKE_WAIT;
+      }
+    }
+    break;
+
+  // 振動待ち
+  case SEQ_SHAKE_WAIT:
+    {
+      // 次シーケンス移行チェック
+      FIELD_TASK_MAN* taskMan;
+      taskMan = FIELDMAP_GetTaskManager( p_wk->p_fieldmap );
+      if( FIELD_TASK_MAN_IsAllTaskEnd(taskMan) )
+      {
+        p_wk->save_time = p_wk->time;
+        *seq = SEQ_SHAKE_START2;
+      }
+    }
+    break;
+
+  case SEQ_SHAKE_START2:// 2回目のゆれ
+    {
+      // 指定時間待つ
+      if( (p_wk->time-p_wk->save_time) > SHAKE_WAIT_TIME2 )
+      {
+        // 振動タスク登録
+        {
+          FIELD_TASK* shake;
+          FIELD_TASK_MAN* taskMan;
+          shake = FIELD_TASK_ShakeMMdl( p_wk->p_fieldmap, p_wk->mmdl,
+              SHAKE_MMDL_WIDTH,
+              SHAKE_MMDL_SYNC,
+              SHAKE_MMDL_TIME );
+          taskMan = FIELDMAP_GetTaskManager( p_wk->p_fieldmap );
+          FIELD_TASK_MAN_AddTask( taskMan, shake, NULL );
+        }
+
+        *seq = SEQ_MAIN;
+      }
     }
     break;
 
@@ -1099,9 +1528,14 @@ static GMEVENT_RESULT BlowEventSafe( GMEVENT* event, int* seq, void* wk )
       }
 
       // 次シーケンス移行チェック
-      if( ret == TRUE )
       {
-        *seq = SEQ_EXIT;
+        FIELD_TASK_MAN* taskMan;
+        taskMan = FIELDMAP_GetTaskManager( p_wk->p_fieldmap );
+        if( FIELD_TASK_MAN_IsAllTaskEnd(taskMan)  
+            && ret == TRUE )
+        {
+          *seq = SEQ_EXIT;
+        }
       }
     }
     break;
@@ -1206,6 +1640,19 @@ static GMEVENT_RESULT ShortcutEvent( GMEVENT* event, int* seq, void* wk )
   case SEQ_WIND_SPEEDUP:
     {
       WIND_ChangeState( p_wk->p_fieldmap, WIND_STATE_HIGH );
+
+      // カメラ回転タスクを登録
+      {
+        FIELD_TASK* pitch;
+        FIELD_TASK* zoom;
+        FIELD_TASK_MAN* taskMan;
+
+        pitch = FIELD_TASK_CameraRot_Pitch( p_wk->p_fieldmap, SHORTCUT_CAMERA_FRAME, SHORTCUT_CAMERA_PITCH );
+        zoom = FIELD_TASK_CameraLinearZoom( p_wk->p_fieldmap, SHORTCUT_CAMERA_FRAME, SHORTCUT_CAMERA_LEGTH );
+        taskMan = FIELDMAP_GetTaskManager( p_wk->p_fieldmap );
+        FIELD_TASK_MAN_AddTask( taskMan, pitch, NULL );
+        FIELD_TASK_MAN_AddTask( taskMan, zoom, NULL );
+      }
       *seq = SEQ_WIND_SPEEDUP_WAIT;
     }
     break;
@@ -1218,7 +1665,7 @@ static GMEVENT_RESULT ShortcutEvent( GMEVENT* event, int* seq, void* wk )
       }
     }
     break;
-  
+   
   // その場で足踏み
   case SEQ_STAY_WALK:
     if( MMDL_CheckEndAcmd(p_wk->mmdl) )
@@ -1228,9 +1675,16 @@ static GMEVENT_RESULT ShortcutEvent( GMEVENT* event, int* seq, void* wk )
       MMDL_SetAcmd( p_wk->mmdl, (AC_STAY_WALK_U_4F + dir) );
       p_wk->stay_walk_cnt += 1;
 
-      if( p_wk->stay_walk_cnt >= STAY_WALK_NUM )
+
+      // 一定回数足踏みかつカメラ揺れ終了
       {
-        *seq = SEQ_START;
+        FIELD_TASK_MAN* taskMan;
+        taskMan = FIELDMAP_GetTaskManager( p_wk->p_fieldmap );
+        if( FIELD_TASK_MAN_IsAllTaskEnd(taskMan) 
+            && ( p_wk->stay_walk_cnt >= STAY_WALK_NUM ) )
+        {
+          *seq = SEQ_START;
+        }
       }
     }
     break;
@@ -1337,6 +1791,8 @@ static GMEVENT_RESULT ShortcutEvent( GMEVENT* event, int* seq, void* wk )
       {
         FIELD_TASK_MAN* taskMan;
         taskMan = FIELDMAP_GetTaskManager( p_wk->p_fieldmap );
+
+        // 自機回転タスクが残っているため1以下
         if( FIELD_TASK_MAN_GetTaskNum(taskMan) <= 1 ) {
 
           // SE 停止
@@ -1415,6 +1871,7 @@ static GMEVENT* SCRIPT_BLOW_CreateEvent( GMEVENT* parent, GAMESYS_WORK* gsys, co
   work->mmdl        = MMDLSYS_SearchOBJID( cp_mmdlsys, obj_id );  // サングラス
   work->hit_type    = BLOW_HIT_MAX;
   work->time        = 0;
+  work->save_time   = 0;
   work->stay_walk_cnt = 0;
 
   GF_ASSERT( work->mmdl );
@@ -2028,6 +2485,7 @@ static u16  SAVE_GetTime( const GYM_FLY_SV_WORK *cp_wk )
 //=====================================
 // キー入力でデータ変更
 static BOOL DebugWin_ChangeData( int *p_param, int min, int max );
+static BOOL DebugWin_ChangeCamData( int *p_param, int min, int max );
 // 風力変更の時間
 static void DebugWin_Update_ChangeTime1( void *userWork, DEBUGWIN_ITEM *item );
 static void DebugWin_Draw_ChangeTime1( void *userWork, DEBUGWIN_ITEM *item );
@@ -2035,6 +2493,14 @@ static void DebugWin_Update_ChangeTime2( void *userWork, DEBUGWIN_ITEM *item );
 static void DebugWin_Draw_ChangeTime2( void *userWork, DEBUGWIN_ITEM *item );
 static void DebugWin_Update_ChangeBlowTime( void *userWork, DEBUGWIN_ITEM *item );
 static void DebugWin_Draw_ChangeBlowTime( void *userWork, DEBUGWIN_ITEM *item );
+static void DebugWin_Update_ChangeWidth( void *userWork, DEBUGWIN_ITEM *item );
+static void DebugWin_Draw_ChangeWidth( void *userWork, DEBUGWIN_ITEM *item );
+static void DebugWin_Update_ChangeHeight( void *userWork, DEBUGWIN_ITEM *item );
+static void DebugWin_Draw_ChangeHeight( void *userWork, DEBUGWIN_ITEM *item );
+static void DebugWin_Update_ChangeSync( void *userWork, DEBUGWIN_ITEM *item );
+static void DebugWin_Draw_ChangeSync( void *userWork, DEBUGWIN_ITEM *item );
+static void DebugWin_Update_ChangeCamTime( void *userWork, DEBUGWIN_ITEM *item );
+static void DebugWin_Draw_ChangeCamTime( void *userWork, DEBUGWIN_ITEM *item );
 
 //----------------------------------------------------------------------------
 /**
@@ -2064,6 +2530,26 @@ static void DEBUGMENU_Init( void *p_wk, FIELDMAP_WORK *p_fieldmap, HEAPID heapID
                               heapID );
   DEBUGWIN_AddItemToGroupEx(  DebugWin_Update_ChangeBlowTime,
                               DebugWin_Draw_ChangeBlowTime,
+                              p_fieldmap,
+                              DEBUGMENU_GYM_FLY,
+                              heapID );
+  DEBUGWIN_AddItemToGroupEx(  DebugWin_Update_ChangeWidth,
+                              DebugWin_Draw_ChangeWidth,
+                              p_fieldmap,
+                              DEBUGMENU_GYM_FLY,
+                              heapID );
+  DEBUGWIN_AddItemToGroupEx(  DebugWin_Update_ChangeHeight,
+                              DebugWin_Draw_ChangeHeight,
+                              p_fieldmap,
+                              DEBUGMENU_GYM_FLY,
+                              heapID );
+  DEBUGWIN_AddItemToGroupEx(  DebugWin_Update_ChangeSync,
+                              DebugWin_Draw_ChangeSync,
+                              p_fieldmap,
+                              DEBUGMENU_GYM_FLY,
+                              heapID );
+  DEBUGWIN_AddItemToGroupEx(  DebugWin_Update_ChangeCamTime,
+                              DebugWin_Draw_ChangeCamTime,
                               p_fieldmap,
                               DEBUGMENU_GYM_FLY,
                               heapID );
@@ -2103,6 +2589,31 @@ static BOOL DebugWin_ChangeData( int *p_param, int min, int max )
   else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT )
   { 
     value = +10;
+  }
+
+  (*p_param) += value;
+  (*p_param)  = MATH_CLAMP( (*p_param), min, max );
+
+  if( value == 0 )
+  {
+    return FALSE;
+  }
+  else
+  {
+    return TRUE;
+  }
+}
+static BOOL DebugWin_ChangeCamData( int *p_param, int min, int max )
+{
+  int value = 0;
+
+  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT )
+  { 
+    value = -1;
+  }
+  else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT )
+  { 
+    value = +1;
   }
 
   (*p_param) += value;
@@ -2225,6 +2736,134 @@ static void DebugWin_Update_ChangeBlowTime( void *userWork, DEBUGWIN_ITEM *item 
 static void DebugWin_Draw_ChangeBlowTime( void *userWork, DEBUGWIN_ITEM *item )
 {
   DEBUGWIN_ITEM_SetNameV( item, "ふきとばしじかん[%d]", debug_blow_event_time_max );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラゆれの横幅 更新
+ *
+ *	@param	*userWork ワーク
+ *	@param	*item     アイテム
+ */
+//-----------------------------------------------------------------------------
+static void DebugWin_Update_ChangeWidth( void *userWork, DEBUGWIN_ITEM *item )
+{
+  int value = debug_w;
+
+  if( DebugWin_ChangeCamData( &value, 0, 600 ) )
+  {
+    // 更新あり
+    debug_w = value;
+    DEBUGWIN_RefreshScreen();
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラゆれの横幅  描画
+ *
+ *	@param	*userWork ワーク
+ *	@param	*item     アイテム
+ */
+//-----------------------------------------------------------------------------
+static void DebugWin_Draw_ChangeWidth( void *userWork, DEBUGWIN_ITEM *item )
+{
+  DEBUGWIN_ITEM_SetNameV( item, "CAMゆれ よこはば[%d]", debug_w );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラゆれの縦幅 更新
+ *
+ *	@param	*userWork ワーク
+ *	@param	*item     アイテム
+ */
+//-----------------------------------------------------------------------------
+static void DebugWin_Update_ChangeHeight( void *userWork, DEBUGWIN_ITEM *item )
+{
+  int value = debug_h;
+
+  if( DebugWin_ChangeCamData( &value, 0, 600 ) )
+  {
+    // 更新あり
+    debug_h = value;
+    DEBUGWIN_RefreshScreen();
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラゆれの縦幅  描画
+ *
+ *	@param	*userWork ワーク
+ *	@param	*item     アイテム
+ */
+//-----------------------------------------------------------------------------
+static void DebugWin_Draw_ChangeHeight( void *userWork, DEBUGWIN_ITEM *item )
+{
+  DEBUGWIN_ITEM_SetNameV( item, "CAMゆれ たてはば[%d]", debug_h );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラ1回ゆれるシンク数 更新
+ *
+ *	@param	*userWork ワーク
+ *	@param	*item     アイテム
+ */
+//-----------------------------------------------------------------------------
+static void DebugWin_Update_ChangeSync( void *userWork, DEBUGWIN_ITEM *item )
+{
+  int value = debug_sync;
+
+  if( DebugWin_ChangeCamData( &value, 0, 600 ) )
+  {
+    // 更新あり
+    debug_sync = value;
+    DEBUGWIN_RefreshScreen();
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラ1回ゆれるシンク数  描画
+ *
+ *	@param	*userWork ワーク
+ *	@param	*item     アイテム
+ */
+//-----------------------------------------------------------------------------
+static void DebugWin_Draw_ChangeSync( void *userWork, DEBUGWIN_ITEM *item )
+{
+  DEBUGWIN_ITEM_SetNameV( item, "CAM１ゆれのシンク[%d]", debug_sync );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラゆれ回数 更新
+ *
+ *	@param	*userWork ワーク
+ *	@param	*item     アイテム
+ */
+//-----------------------------------------------------------------------------
+static void DebugWin_Update_ChangeCamTime( void *userWork, DEBUGWIN_ITEM *item )
+{
+  int value = debug_time;
+
+  if( DebugWin_ChangeCamData( &value, 0, 600 ) )
+  {
+    // 更新あり
+    debug_time = value;
+    DEBUGWIN_RefreshScreen();
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラゆれの縦幅  描画
+ *
+ *	@param	*userWork ワーク
+ *	@param	*item     アイテム
+ */
+//-----------------------------------------------------------------------------
+static void DebugWin_Draw_ChangeCamTime( void *userWork, DEBUGWIN_ITEM *item )
+{
+  DEBUGWIN_ITEM_SetNameV( item, "CAMゆれのかいすう[%d]", debug_time );
 }
 
 #endif // GYM_FLY_DEBUG_MENU

@@ -21,6 +21,21 @@
  *					構造体宣言
 */
 //=============================================================================
+//-------------------------------------
+///	カメラ振動パラメータ
+//=====================================
+typedef struct {
+
+  s16 Width;              // ゆれ幅
+  s16 Height;             // ゆれ高さ
+  u8  Time;               // ゆれ回数
+
+  u32 Sync;               // 1周期するのにかかるシンク数
+  u32 NowSync;            // 現在のシンク
+
+  s16 WaitStartFrame;     // 開始まで何フレーム待つか
+
+} CAM_SHAKE_PARAM;
 
 //=============================================================================
 /**
@@ -54,3 +69,34 @@ extern GMEVENT * GYM_FLY_BlowEvent( GAMESYS_WORK *p_gamesys, const u16 obj_id );
  */
 //-----------------------------------------------------------------------------
 extern FIELD_TASK* FIELD_TASK_TransMMdl( FIELDMAP_WORK* fieldmap, MMDL *mmdl, int frame, VecFx32* pos );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  MMDLの振動タスクを作成する
+ *
+ *  @param fieldmap 動作対象フィールドマップ
+ *	@param mmdl     モデル
+ *	@param w        横揺れ幅
+ *	@param sync     １周期にかけるシンク数 1以上
+ *	@param time     振動回数
+ *
+ *	@return 作成したタスク
+ *
+ *	@note   現在飛行ジムでしか使われていないので飛行ジムのオーバーレイにあります。
+ *	        他の場所でも使用する場合があれば、FIELD_MAPのオーバーレイに移した方がいい。
+ */
+//-----------------------------------------------------------------------------
+extern FIELD_TASK* FIELD_TASK_ShakeMMdl( FIELDMAP_WORK* fieldmap, MMDL *mmdl, s16 w, u32 sync, u8 time );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラ振動タスクを作成する
+ *
+ *	@param	fieldmap    動作対象フィールドマップ
+ *	@param  shakeParam  振動パラメータ
+ *
+ *	@return 作成したタスク
+ *
+ */
+//-----------------------------------------------------------------------------
+extern FIELD_TASK* FIELD_TASK_ShakeCamera( FIELDMAP_WORK* fieldmap, const CAM_SHAKE_PARAM* shakeParam );
