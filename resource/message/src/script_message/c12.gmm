@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-28T17:48:13"/>
+	<create user="matsumiya" host="W00224" date="2011-03-28T19:04:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -298,7 +298,8 @@
 　画面？から登場してメッセージ表示
 ・表示後、主人公に隣接して
 ※妹と一緒</comment>
-		<attribute name="キャラ指定">ライバル妹</attribute>
+		<attribute name="キャラ指定">ライバル妹
+GIRL2</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]さーん▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さーん▼</language>
 	</row>
