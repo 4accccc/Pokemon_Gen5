@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-25T19:45:40"/>
+	<create user="matsumiya" host="W00224" date="2011-03-28T13:04:33"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -294,107 +294,120 @@
 
 	<row id="msg_c12pc0101_white_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・データ引継ぎ？
-・ポケセンのチュートリアル</comment>
+・データ引継ぎでイベント内容を変更するかも
+・ポケセンのチュートリアル
+　マップ移動すると自動でイベント開始</comment>
 		<attribute name="キャラ指定">ベル</attribute>
-		<language name="JPN" width="256">ベル『ここが　ポケモンセンター！
-なんとなく　おちつくよね▼
-それでは　あんない　するね！▼</language>
-		<language name="JPN_KANJI" width="256">ベル『ここが　ポケモンセンター！
-なんとなく　おちつくよね▼
-それでは　あんない　するね！▼</language>
+		<language name="JPN" width="256">ベル『では　ポケモンセンターの
+あんないを　するね！▼</language>
+		<language name="JPN_KANJI" width="256">ベル『では　ポケモンセンターの
+あんないを　するね！▼</language>
 	</row>
 
 	<row id="msg_c12pc0101_white_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・</comment>
+・受付カウンター前
+・主人公が受付嬢の前
+　ベルはその一歩左</comment>
 		<attribute name="キャラ指定">ベル</attribute>
-		<language name="JPN" width="256">ベル『ポケモンセンターは
-ポケモンの　かいふくが　できるの！▽
-しかも　タダ　なの！▼
-トレーナーの　みかた　でしょ！▼
-ほら　あなたも　ポケモンの
-かいふくを　してみると　いいよ▼</language>
-		<language name="JPN_KANJI" width="256">ベル『ポケモンセンターは
-ポケモンの　回復が　できるの！▽
-しかも　無料なの！▼
-トレーナーの　味方でしょ！▼
-ほら　あなたも　ポケモンの
-回復を　してみると　いいよ▼</language>
+		<language name="JPN" width="256">ポケモンセンターは　タダで
+ポケモンの　かいふくが　できるの！▼
+あなたの　ポケモンも　よわったら
+ここで　かいふく　させてあげてね▼</language>
+		<language name="JPN_KANJI" width="256">ポケモンセンターは　タダで
+ポケモンの　かいふくが　できるの！▼
+あとで　あなたも　ポケモンを
+かいふく　させてあげると　いいよ▼</language>
 	</row>
 
 	<row id="msg_c12pc0101_white_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・</comment>
+・パソコン側を向いて</comment>
 		<attribute name="キャラ指定">ベル</attribute>
-		<language name="JPN" width="256">つぎは　ポケモンセンターの
-パソコンについて　せつめいするね！▼</language>
-		<language name="JPN_KANJI" width="256">つぎは　ポケモンセンターの
-パソコンについて　せつめいするね！▼</language>
+		<language name="JPN" width="256">つぎは　パソコンの　せつめい！▼</language>
+		<language name="JPN_KANJI" width="256">つぎは　パソコンの　せつめい！▼</language>
 	</row>
 
 	<row id="msg_c12pc0101_white_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・</comment>
+・主人公はパソコンの前
+　ベルのその一歩左</comment>
 		<attribute name="キャラ指定">ベル</attribute>
-		<language name="JPN" width="256">ベル『これは　パソコン！
+		<language name="JPN" width="256">これが　パソコン！
 トレーナーなら　だれでも　つかえるの▼
 つれている　ポケモンを　あずけたり▼
-ぎゃくに　パソコンに
-あずけている　ポケモンを　ひきだせます！▼</language>
-		<language name="JPN_KANJI" width="256">ベル『これは　パソコン！
-トレーナーなら　だれでも　使えるの▼
-連れている　ポケモンを　預けたり▼
-逆に　パソコンに
-預けている　ポケモンを　引きだせます！▼</language>
+ぎゃくに　パソコンに　あずけている
+ポケモンを　ひきだせるんだよ！▼</language>
+		<language name="JPN_KANJI" width="256">これが　パソコン！
+トレーナーなら　だれでも　つかえるの▼
+つれている　ポケモンを　あずけたり▼
+ぎゃくに　パソコンに　あずけている
+ポケモンを　ひきだせるんだよ！▼</language>
 	</row>
 
 	<row id="msg_c12pc0101_white_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・</comment>
+・ショップ側を向いて</comment>
 		<attribute name="キャラ指定">ベル</attribute>
-		<language name="JPN" width="256">ベル『こちらは
-フレンドリィショップ！▼
-やくだつ　どうぐを　かったり▼
-いらなくなった　どうぐを
-うったり　できるの！▼
-おにいさんが　えがおで
-たいおう　してくれるわよ！▼</language>
-		<language name="JPN_KANJI" width="256">ベル『こちらは
-フレンドリィショップ！▼
-役立つ　道具を　買ったり▼
-要らなくなった　道具を
-売ったり　できるの！▼
-おにいさんが　笑顔で
-対応して　くれるわよ！▼</language>
+		<language name="JPN" width="256">つぎは　あっち！▼</language>
+		<language name="JPN_KANJI" width="256">つぎは　あっち！▼</language>
 	</row>
 
 	<row id="msg_c12pc0101_white_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・アイテム入手処理
-　No004「モンスターボール」×5</comment>
+・</comment>
 		<attribute name="キャラ指定">ベル</attribute>
-		<language name="JPN" width="256">ベル『それじゃあ　かんじんの
-モンスターボールを　プレゼント！▼</language>
-		<language name="JPN_KANJI" width="256">ベル『それじゃあ　かんじんの
-モンスターボールを　プレゼント！▼</language>
+		<language name="JPN" width="256">ここは　フレンドリィショップ！▼
+いろんな　どうぐを
+かったり　うったりできるの！▼
+ポケモンを　つかまえるときに
+つかう　モンスターボールも
+フレンドリィショップで　かえるんだよ！</language>
+		<language name="JPN_KANJI" width="256">ここは　フレンドリィショップ！▼
+いろんな　どうぐを
+かったり　うったりできるの！▼
+ポケモンを　つかまえるときに
+つかう　モンスターボールも
+フレンドリィショップで　かえるんだよ！</language>
 	</row>
 
 	<row id="msg_c12pc0101_white_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀：主人公＝♂
+・アイテム入手処理
+　No004「モンスターボール」×5</comment>
+		<attribute name="キャラ指定">ベル</attribute>
+		<language name="JPN" width="256">それでは　[1:00:トレーナー名:0]くんに
+モンスターボールを　プレゼント！▼</language>
+		<language name="JPN_KANJI" width="256">それでは　[1:00:トレーナー名:0]くんに
+モンスターボールを　プレゼント！▼</language>
+	</row>
+
+	<row id="msg_c12pc0101_white_08" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♀：主人公＝♀
+・アイテム入手処理
+　No004「モンスターボール」×5</comment>
+		<attribute name="キャラ指定">ベル</attribute>
+		<language name="JPN" width="256">それでは　[1:00:トレーナー名:0]さんに
+モンスターボールを　プレゼント！▼</language>
+		<language name="JPN_KANJI" width="256">それでは　[1:00:トレーナー名:0]さんに
+モンスターボールを　プレゼント！▼</language>
+	</row>
+
+	<row id="msg_c12pc0101_white_09" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・メッセージ表示後
 　ポケモンセンターの外に出て行く</comment>
 		<attribute name="キャラ指定">ベル</attribute>
-		<language name="JPN" width="256">ベル『つぎに　することは……▼
+		<language name="JPN" width="256">ベル『つぎは……▼
 そうだった！　そうでした！▼
 いま　あげた　モンスターボールの
-つかいかたを　せつめいするから▽
-１９ばんどうろに　いきましょ！▼</language>
-		<language name="JPN_KANJI" width="256">ベル『つぎに　することは……▼
+つかいかたを　せつめい　するね！▽
+さ　１９ばんどうろに　いきましょ！▼</language>
+		<language name="JPN_KANJI" width="256">ベル『つぎは……▼
 そうだった！　そうでした！▼
 いま　あげた　モンスターボールの
-つかいかたを　せつめいするから▽
-１９ばんどうろに　いきましょ！▼</language>
+つかいかたを　せつめい　するね！▽
+さ　１９ばんどうろに　いきましょ！▼</language>
 	</row>
 
 	<row id="msg_c12pc0101_woman1_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
