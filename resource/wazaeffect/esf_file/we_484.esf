@@ -1,7 +1,8 @@
 EFFSEQ
-$0002
+$0003
 C:\home\swan\resource\particle\wazaeffect\w_407.spa
 C:\home\swan\resource\particle\wazaeffect\w_036.spa
+C:\home\swan\resource\particle\wazaeffect\w_484.spa
 #001
 %00
 カメラ移動	追従	ZOOM_OUT（透視）	CM	0	CB
@@ -16,10 +17,10 @@ SEパン	SE2	追従	攻撃側	防御側	31	15:0:0
 エフェクト終了待ち	すべて
 カメラ移動	追従	防御側	16	0	8
 エフェクト終了待ち	すべて
-パーティクルデータロード	w_407
-パーティクル再生	w_407	W_407_407_KEMURI_BURN	防御側	方向無し	1:0:0	1:1:1	1
-パーティクルデータロード	w_036
-パーティクル再生	w_036	W_036_036_HIT_MARK	防御側	方向無し	2:0:0	1:1:1	1
+パーティクルデータロード	w_484
+パーティクル再生	w_484	W_484_484_STAR_BURN	防御側	方向無し	2:0:0	1:1:1	1
+パーティクル再生	w_484	W_484_484_KEMURI_BURN	防御側	方向無し	1:0:0	1:1:1	1
+パーティクル再生	w_484	W_484_484_HIT_MARK	防御側	方向無し	2:0:0	1:1:1	1
 カメラゆれ	縦ゆれ	0.3	0	2	0	8
 制御モード変更	継続
 SE再生	SEQ_SE_W075_04	SE1	防御側	0:0:127	0:0:0
