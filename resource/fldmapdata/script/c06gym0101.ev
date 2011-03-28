@@ -100,7 +100,7 @@ ev_leader6_btl:
 	_BALLOONWIN_CLOSE()
 
 	//トレーナー戦呼び出し
-	_TRAINER_BTL_SET( TRID_LEADER6_02, 0 )
+	_TRAINER_BTL_SET( TRID_SWLEADER6_01, 0 )
 	
 	//敗戦チェック
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
@@ -268,14 +268,14 @@ move_camera_start:
   _CAMERA_START()       // カメラ操作開始
   _CAMERA_PURGE()		    // カメラのバインドを解く
 
-  _CAMERA_MOVE( 5336,0,1036288,753664,290816,1986560,180 )
+  _CAMERA_MOVE( 4056,0,970752,753664,0,1323008,90 )
 }
 _RET
 
 move_camera_end:
 {
   _CAMERA_WAIT_MOVE()   // カメラ移動待ち
-  _CAMERA_DEF_MOVE( 40 )
+  _CAMERA_DEF_MOVE( 60 )
   _CAMERA_WAIT_MOVE()   // カメラ移動待ち
   _CAMERA_BIND()        // カメラバインド
   _CAMERA_END()         // カメラ操作終了
