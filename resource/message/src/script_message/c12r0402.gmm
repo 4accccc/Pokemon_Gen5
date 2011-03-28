@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-28T19:20:30"/>
+	<create user="matsumiya" host="W00224" date="2011-03-28T19:28:15"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,22 +292,25 @@
 	</lock>
 
 
-	<row id="msg_c12r0402_01_01">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
+	<row id="msg_c12r0402_woman1_01">
+		<comment>♀
+・</comment>
+		<attribute name="キャラ指定">woman1</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_c12r0402_02_01">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
+	<row id="msg_c12r0402_girl2_01">
+		<comment>♀
+・</comment>
+		<attribute name="キャラ指定">girl2</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_c12r0402_03_01">
-		<comment>？？？</comment>
+	<row id="msg_c12r0402_poke_01">
+		<comment>ポケモン
+・表示にあわせ鳴き声再生</comment>
 		<attribute name="キャラ指定">ポケモン</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
