@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-24T18:55:11"/>
+	<create user="matsumiya" host="W00224" date="2011-03-28T18:00:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1295" top="171" right="2000" bottom="799" maximized="no" rayout="Vertical2">
+	<dialog left="1300" top="129" right="2005" bottom="757" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -328,8 +328,8 @@
 		<language name="JPN" width="256">と　そのまえに▼
 [1:00:トレーナー名:0]！　あなた　じぶんの
 パートナーとなる　ポケモン　ほしい？</language>
-		<language name="JPN_KANJI" width="256">と　そのまえに▼
-[1:00:トレーナー名:0]！　あなた　じぶんの
+		<language name="JPN_KANJI" width="256">と　その前に▼
+[1:00:トレーナー名:0]！　あなた　自分の
 パートナーとなる　ポケモン　ほしい？</language>
 	</row>
 
@@ -342,7 +342,7 @@
 		<attribute name="キャラ指定">スワン主人公ママ</attribute>
 		<language name="JPN" width="256">もういちど　きくけれど　じぶんの
 パートナーとなる　ポケモン　ほしい？</language>
-		<language name="JPN_KANJI" width="256">もういちど　きくけれど　じぶんの
+		<language name="JPN_KANJI" width="256">もう一度　きくけれど　自分の
 パートナーとなる　ポケモン　ほしい？</language>
 	</row>
 
@@ -369,18 +369,18 @@
 こっちに　くるんだって！▼
 なまえは　ベル
 おおきな　ぼうしが　めじるしだって▼
-だけど　はじめてくる　まちで
+だけど　はじめての　まちで
 まよっているかも　しれないし▽
 あなた　さがしてあげてね！</language>
 		<language name="JPN_KANJI" width="256">よね！　よかった！▼
-あのね　アララギはかせの
-じょしゅを　している　おんなのこが▽
-こっちに　くるんだって！▼
-なまえは　ベル
-おおきな　ぼうしが　めじるしだって▼
-だけど　はじめてくる　まちで
-まよっているかも　しれないし▽
-あなた　さがしてあげてね！</language>
+あのね　アララギ博士の
+助手を　している　女の子が▽
+こっちに　来るんだって！▼
+名前は　ベル
+おおきな　帽子が　目印だって▼
+だけど　はじめての　街で
+迷っているかも　しれないし▽
+あなた　探してあげてね！</language>
 	</row>
 
 	<row id="msg_c12r0101_swmama_07">
@@ -389,14 +389,14 @@
 		<attribute name="キャラ指定">スワン主人公ママ</attribute>
 		<language name="JPN" width="256">おんなのこの　なまえは　ベル！
 おおきな　ぼうしが　めじるしだって▼
-はじめてくる　まちで
+はじめての　まちで
 まよっているかも　しれないし▽
 あなた　さがしてあげてね！</language>
-		<language name="JPN_KANJI" width="256">おんなのこの　なまえは　ベル！
-おおきな　ぼうしが　めじるしだって▼
-はじめてくる　まちで
-まよっているかも　しれないし▽
-あなた　さがしてあげてね！</language>
+		<language name="JPN_KANJI" width="256">女の子の　名前は　ベル！
+おおきな　帽子が　目印だって▼
+はじめての　街で
+迷っているかも　しれないし▽
+あなた　探してあげてね！</language>
 	</row>
 
 	<row id="msg_c12r0101_swmama_08" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
@@ -436,8 +436,8 @@
 まっ　ちょっと　やすんでいきなさいな
 がんばってばかりは　つかれるわよ▼</language>
 		<language name="JPN_KANJI" width="256">ママ『おかえり！
-ねえ　ポケモンは　げんき？▼
-まっ　ちょっと　やすんでいきなさいな
+ねえ　ポケモンは　元気？▼
+まっ　ちょっと　休んでいきなさいな
 がんばってばかりは　つかれるわよ▼</language>
 	</row>
 
@@ -511,15 +511,19 @@
 	<row id="msg_c12r0101_tv_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ</comment>
 		<attribute name="キャラ指定">TV</attribute>
-		<language name="JPN" width="256">うすがたテレビ</language>
-		<language name="JPN_KANJI" width="256">薄型テレビ</language>
+		<language name="JPN" width="256">うすがたテレビ
+・テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">薄型テレビ
+・仮メッセージ</language>
 	</row>
 
 	<row id="msg_c12r0101_bed_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ</comment>
 		<attribute name="キャラ指定">ベッド</attribute>
-		<language name="JPN" width="256">ベッド</language>
-		<language name="JPN_KANJI" width="256">ベッド</language>
+		<language name="JPN" width="256">ベッド
+・テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">ベッド
+・仮メッセージ</language>
 	</row>
 
 	<row id="msg_c12r0101_pc_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
