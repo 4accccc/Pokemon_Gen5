@@ -107,7 +107,7 @@ enum {
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 enum {
-  BMODEL_ID_MAX = 400,      ///<配置モデルの種類上限
+  BMODEL_ID_MAX = 512,      ///<配置モデルの種類上限
   BMODEL_ENTRY_MAX = 128,   ///<配置モデルの登録上限（メモリの方が先に制約条件となるはず）
 
   BMODEL_ID_NG  = BMODEL_ID_MAX,
@@ -250,7 +250,7 @@ struct _FIELD_BMODEL_MAN
 	u8 BMIDToEntryTable[BMODEL_ID_MAX];
 
   ///配置モデル登録数
-	u16 entryCount;
+	u32 entryCount;
 
 	FLD_G3D_MAP_GLOBALOBJ	g3dMapObj;						///<共通オブジェクト
 
@@ -541,6 +541,8 @@ void FIELD_BMODEL_MAN_Load(FIELD_BMODEL_MAN * man, u16 zoneid, const AREADATA * 
 
   createAllResource( man, gray_scale );
   createFullTimeObjHandle( man, &man->g3dMapObj );
+
+  OS_Printf( "heap rest = %d\n", GFL_HEAP_GetHeapFreeSize( FIELD_BMODEL_MAN_GetHeapID(man) ) );
 }
 
 //============================================================================================
