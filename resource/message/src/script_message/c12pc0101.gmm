@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-28T13:04:33"/>
+	<create user="matsumiya" host="W00224" date="2011-03-28T14:44:15"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -301,7 +301,7 @@
 		<language name="JPN" width="256">ベル『では　ポケモンセンターの
 あんないを　するね！▼</language>
 		<language name="JPN_KANJI" width="256">ベル『では　ポケモンセンターの
-あんないを　するね！▼</language>
+案内を　するね！▼</language>
 	</row>
 
 	<row id="msg_c12pc0101_white_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -315,9 +315,9 @@
 あなたの　ポケモンも　よわったら
 ここで　かいふく　させてあげてね▼</language>
 		<language name="JPN_KANJI" width="256">ポケモンセンターは　タダで
-ポケモンの　かいふくが　できるの！▼
+ポケモンの　回復が　できるの！▼
 あとで　あなたも　ポケモンを
-かいふく　させてあげると　いいよ▼</language>
+回復させてあげると　いいよ▼</language>
 	</row>
 
 	<row id="msg_c12pc0101_white_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -325,7 +325,7 @@
 ・パソコン側を向いて</comment>
 		<attribute name="キャラ指定">ベル</attribute>
 		<language name="JPN" width="256">つぎは　パソコンの　せつめい！▼</language>
-		<language name="JPN_KANJI" width="256">つぎは　パソコンの　せつめい！▼</language>
+		<language name="JPN_KANJI" width="256">次は　パソコンの　説明！▼</language>
 	</row>
 
 	<row id="msg_c12pc0101_white_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -339,10 +339,10 @@
 ぎゃくに　パソコンに　あずけている
 ポケモンを　ひきだせるんだよ！▼</language>
 		<language name="JPN_KANJI" width="256">これが　パソコン！
-トレーナーなら　だれでも　つかえるの▼
-つれている　ポケモンを　あずけたり▼
-ぎゃくに　パソコンに　あずけている
-ポケモンを　ひきだせるんだよ！▼</language>
+トレーナーなら　だれでも　使えるの▼
+連れている　ポケモンを　預けたり▼
+逆に　パソコンに　預けている
+ポケモンを　引きだせるんだよ！▼</language>
 	</row>
 
 	<row id="msg_c12pc0101_white_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -350,7 +350,7 @@
 ・ショップ側を向いて</comment>
 		<attribute name="キャラ指定">ベル</attribute>
 		<language name="JPN" width="256">つぎは　あっち！▼</language>
-		<language name="JPN_KANJI" width="256">つぎは　あっち！▼</language>
+		<language name="JPN_KANJI" width="256">次は　あっち！▼</language>
 	</row>
 
 	<row id="msg_c12pc0101_white_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -361,14 +361,14 @@
 いろんな　どうぐを
 かったり　うったりできるの！▼
 ポケモンを　つかまえるときに
-つかう　モンスターボールも
-フレンドリィショップで　かえるんだよ！</language>
+つかう　モンスターボールも▽
+フレンドリィショップで　かえるんだよ！▼</language>
 		<language name="JPN_KANJI" width="256">ここは　フレンドリィショップ！▼
-いろんな　どうぐを
-かったり　うったりできるの！▼
-ポケモンを　つかまえるときに
-つかう　モンスターボールも
-フレンドリィショップで　かえるんだよ！</language>
+いろんな　道具を
+買ったり　売ったりできるの！▼
+ポケモンを　捕まえるときに
+使う　モンスターボールも▽
+フレンドリィショップで　買えるんだよ！▼</language>
 	</row>
 
 	<row id="msg_c12pc0101_white_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -403,11 +403,11 @@
 いま　あげた　モンスターボールの
 つかいかたを　せつめい　するね！▽
 さ　１９ばんどうろに　いきましょ！▼</language>
-		<language name="JPN_KANJI" width="256">ベル『つぎは……▼
+		<language name="JPN_KANJI" width="256">ベル『次は……▼
 そうだった！　そうでした！▼
 いま　あげた　モンスターボールの
-つかいかたを　せつめい　するね！▽
-さ　１９ばんどうろに　いきましょ！▼</language>
+使い方を　説明するね！▽
+さ　１９番道路に　行きましょ！▼</language>
 	</row>
 
 	<row id="msg_c12pc0101_woman1_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
