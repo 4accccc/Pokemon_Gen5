@@ -56,7 +56,7 @@ enum
   SE_BAG_SLIDE_IN     = SEQ_SE_SYS_90,   ///< 開始時のバッグスライドイン
   SE_BAG_MESSAGE      = SEQ_SE_MESSAGE,  ///< メッセージ送り
   SE_BAG_BAG_GRA      = SEQ_SE_SYS_99,   ///< バッグの絵をタッチしたとき
-  SE_BAG_REPOSITORY   = SEQ_SE_SYS_08,   ///< 保管に入れる音
+  SE_BAG_REPOSITORY   = SEQ_SE_SYS_36,   ///< 保管に入れる音
 };
 
 #define MSG_SKIP_BTN (PAD_BUTTON_A|PAD_BUTTON_B)	// メッセージ送りボタン
