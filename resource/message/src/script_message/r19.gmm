@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-23T19:02:15"/>
+	<create user="matsumiya" host="W00224" date="2011-03-28T19:43:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1288" top="174" right="1993" bottom="802" maximized="no" rayout="Vertical2">
+	<dialog left="1299" top="178" right="2004" bottom="806" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_r19_white_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r19_white_01a" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：主人公＝♂
 ・r19のposを踏むと
 　画面下からベル登場</comment>
@@ -301,7 +301,7 @@
 		<language name="JPN_KANJI" width="256">ベル『おうい！</language>
 	</row>
 
-	<row id="msg_r19_white_02" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_r19_white_01b" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>♀：主人公＝♀
 ・r19のposを踏むと
 　画面下からベル登場</comment>
@@ -310,7 +310,7 @@
 		<language name="JPN_KANJI" width="256">ベル『ねえねえ！</language>
 	</row>
 
-	<row id="msg_r19_white_02_01" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_r19_white_02" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・所定の位置にセットしてwhite_02表示</comment>
 		<attribute name="キャラ指定">ベル</attribute>
@@ -350,9 +350,7 @@
 	<row id="msg_r19_white_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・捕獲デモ後、フィールドに復帰すると
-　このメッセージ表示
-・アイテム入手処理
-　No004「モンスターボール」×5</comment>
+　このメッセージ表示</comment>
 		<attribute name="キャラ指定">ベル</attribute>
 		<language name="JPN" width="256">ベル『よかったあ！
 ポケモン　つかまったよお▼
@@ -366,9 +364,7 @@
 つかまえたい　ポケモンを
 じぶんの　ポケモンの　わざで▽
 ねむらせたり　まひさせると▽
-さらに　つかまえやすくなるよ！▼
-それでは　あなたに
-モンスターボールを　プレゼント！▼</language>
+さらに　つかまえやすくなるよ！▼</language>
 		<language name="JPN_KANJI" width="256">ベル『よかったあ！
 ポケモン　つかまったよお▼
 あっ　あのね
@@ -381,9 +377,7 @@
 つかまえたい　ポケモンを
 じぶんの　ポケモンの　わざで▽
 ねむらせたり　まひさせると▽
-さらに　つかまえやすくなるよ！▼
-それでは　あなたに
-モンスターボールを　プレゼント！▼</language>
+さらに　つかまえやすくなるよ！▼</language>
 	</row>
 
 	<row id="msg_r19_white_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -395,14 +389,14 @@
 		<language name="JPN" width="256">ベル『モンスターボールはね
 ポケモンを　つかまえたり▼
 つかまえた　ポケモンを
-つれて　はこぶための　どうぐ！▼
+つれて　はこぶための　どうぐ　なの！▼
 えーっと！　あたしは
 ヒオウギタウンに　もどるけれど▽
 おたがい　がんばろうね！！▼</language>
 		<language name="JPN_KANJI" width="256">ベル『モンスターボールはね
 ポケモンを　つかまえたり▼
 つかまえた　ポケモンを
-つれて　はこぶための　どうぐ！▼
+つれて　はこぶための　道具なの！▼
 えーっと！　あたしは
 ヒオウギタウンに　もどるけれど▽
 おたがい　がんばろうね！！▼</language>
@@ -470,6 +464,75 @@
 おまえさんが　まだまだ　みじゅく……▼
 よし！　きめた！
 わしに　ついてこい！▼</language>
+	</row>
+
+	<row id="msg_r19_white_11a" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀：主人公＝♂
+・r19のposを踏むと
+　画面下からベル登場</comment>
+		<attribute name="キャラ指定">ベル</attribute>
+		<language name="JPN" width="256">ベル『おうい！</language>
+		<language name="JPN_KANJI" width="256">ベル『おうい！</language>
+	</row>
+
+	<row id="msg_r19_white_11b" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀：主人公＝♀
+・r19のposを踏むと
+　画面下からベル登場</comment>
+		<attribute name="キャラ指定">ベル</attribute>
+		<language name="JPN" width="256">ベル『ねえねえ！</language>
+		<language name="JPN_KANJI" width="256">ベル『ねえねえ！</language>
+	</row>
+
+	<row id="msg_r19_white_12" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・続けて</comment>
+		<attribute name="キャラ指定">ベル</attribute>
+		<language name="JPN" width="256">ごめんね！
+だいじなこと　わすれてた！▼
+はあはあ……▼
+あなたに　たくした　ポケモンずかん
+さりげなく　べんりに　なってるの！▼</language>
+		<language name="JPN_KANJI" width="256">ごめんね！
+だいじなこと　わすれてた！▼
+はあはあ……▼
+あなたに　たくした　ポケモンずかん
+さりげなく　べんりに　なってるの！▼</language>
+	</row>
+
+	<row id="msg_r19_white_13" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・続けて
+・何か効果音？（発注）</comment>
+		<attribute name="キャラ指定">ベル</attribute>
+		<language name="JPN" width="256">じゃじゃーん！！▼
+そのなも　ポケガイダンス！▼</language>
+		<language name="JPN_KANJI" width="256">じゃじゃーん！！▼
+そのなも　ポケガイダンス！▼</language>
+	</row>
+
+	<row id="msg_r19_white_14" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・続けて</comment>
+		<attribute name="キャラ指定">ベル</attribute>
+		<language name="JPN" width="256">ポケガイダンスの　せつめい！</language>
+		<language name="JPN_KANJI" width="256">ポケガイダンスの　せつめい！</language>
+	</row>
+
+	<row id="msg_r19_white_15" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・ヒオウギシティ側に退場
+　画面外に消えると操作可能
+・以降、主人公の家に出現</comment>
+		<attribute name="キャラ指定">ベル</attribute>
+		<language name="JPN" width="256">じゃあ　いっぱい　いっぱい
+ポケモンと　であってね！▼　
+あたしは　あなたのママと
+おはなしを　してまーす！！▼</language>
+		<language name="JPN_KANJI" width="256">じゃあ　いっぱい　いっぱい
+ポケモンと　であってね！▼　
+あたしは　あなたのママと
+おはなしを　してまーす！！▼</language>
 	</row>
 
 	<row id="msg_r19_boy2_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
