@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-28T19:04:29"/>
+	<create user="matsumiya" host="W00224" date="2011-03-28T19:35:57"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1300" top="129" right="2005" bottom="757" maximized="no" rayout="Vertical2">
+	<dialog left="1299" top="178" right="2004" bottom="806" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -1070,26 +1070,28 @@ GIRL2</attribute>
 		<language name="JPN" width="256">ママ『そうね！　うみを　わたるまで
 いっぽんみち　とはいえ▽
 タウンマップが　あると　べんりよね▼</language>
-		<language name="JPN_KANJI" width="256">ママ『そうね！　うみを　わたるまで
-いっぽんみち　とはいえ▽
-タウンマップが　あると　べんりよね▼</language>
+		<language name="JPN_KANJI" width="256">ママ『そうね！　海を　渡るまで
+一本道とはいえ▽
+タウンマップが　あると　便利よね▼</language>
 	</row>
 
 	<row id="msg_c12_white_19" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・メッセージ表示後、19番道路へ
-・画面外に消えると主人公、操作可能に</comment>
+・19番道路の捕獲デモ終了まで
+　繰り返し</comment>
 		<attribute name="キャラ指定">ベル</attribute>
 		<language name="JPN" width="256">ベル『……なんだか　みてる
 こっちまで　うれしくなっちゃうね！▼
-さあ！　１９ばんどうろ　よ！▼
+さあ！　つぎに　むかうのは
+１９ばんどうろ　よ！▼
 ポケモンの　つかまえかたを
-ばっちり　おしえてあげるんだから！▼</language>
+ばっちり　おしえてあげるんだから！</language>
 		<language name="JPN_KANJI" width="256">ベル『……なんだか　みてる
 こっちまで　うれしくなっちゃうね！▼
-さあ！　１９ばんどうろ　よ！▼
-ポケモンの　つかまえかたを
-ばっちり　おしえてあげるんだから！▼</language>
+さあ！　次に　向かうのは
+１９番道路　よ！▼
+ポケモンの　捕まえ方を
+ばっちり　教えてあげるんだから！</language>
 	</row>
 
 	<row id="msg_c12_swmama_06">
@@ -1102,9 +1104,9 @@ GIRL2</attribute>
 いろんな　ポケモン　いろんな　ひとを▽
 その　めで　みてらっしゃい！</language>
 		<language name="JPN_KANJI" width="256">ママ『いってらっしゃい！▼
-[1:01:ポケモン種族名:2]と　いっしょに
-いろんな　ポケモン　いろんな　ひとを▽
-その　めで　みてらっしゃい！</language>
+[1:01:ポケモン種族名:2]と　一緒に
+いろんな　ポケモン　いろんな　人を▽
+その　眼で　みてらっしゃい！</language>
 	</row>
 
 	<row id="msg_c12_white_20" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
@@ -1149,11 +1151,11 @@ GIRL2</attribute>
 じゃあ　わたしからは　これ
 わざマシン「おんがえし」よ！▼</language>
 		<language name="JPN_KANJI" width="256">どうだった？
-ジムリーダーとの　ポケモンしょうぶ▼
+ジムリーダーとの　ポケモン勝負▼
 って！　それは
 ベーシックバッジ！▼
 すごい！　あなたには
-トレーナーの　さいのうが　あるのかも▼
+トレーナーの　才能が　あるのかも▼
 じゃあ　わたしからは　これ
 わざマシン「おんがえし」よ！▼</language>
 	</row>
@@ -1166,9 +1168,9 @@ GIRL2</attribute>
 		<language name="JPN" width="256">おんがえしを　おぼえた　ポケモンは
 トレーナーに　なつくほどに▽
 わざの　いりょくが　アップするんだよ▼</language>
-		<language name="JPN_KANJI" width="256">おんがえしを　おぼえた　ポケモンは
+		<language name="JPN_KANJI" width="256">おんがえしを　覚えた　ポケモンは
 トレーナーに　なつくほどに▽
-わざの　いりょくが　アップするんだよ▼</language>
+わざの　威力が　アップするんだよ▼</language>
 	</row>
 
 	<row id="msg_c12_white_23" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -1181,8 +1183,8 @@ GIRL2</attribute>
 ジムリーダーに　なって　はじめての
 しょうぶで　きんちょう　したのかな？▼</language>
 		<language name="JPN_KANJI" width="256">それにしても　チェレンったら……▼
-ジムリーダーに　なって　はじめての
-しょうぶで　きんちょう　したのかな？▼</language>
+ジムリーダーに　なって　初めての
+勝負で　緊張したのかな？▼</language>
 	</row>
 
 	<row id="msg_c12_swleader1_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -1222,7 +1224,7 @@ GIRL2</attribute>
 		<language name="JPN" width="256">チェレン『せっかくだから
 ライブキャスターの　とうろく▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『せっかくだから
-ライブキャスターの　とうろく▼</language>
+ライブキャスターの　登録▼</language>
 	</row>
 
 	<row id="msg_c12_swleader1_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -1234,7 +1236,7 @@ GIRL2</attribute>
 		<language name="JPN" width="256">これで　きみの　ライブキャスターから
 ぼくに　れんらくが　できるね▼</language>
 		<language name="JPN_KANJI" width="256">これで　きみの　ライブキャスターから
-ぼくに　れんらくが　できるね▼</language>
+ぼくに　連絡が　できるね▼</language>
 	</row>
 
 	<row id="msg_c12_white_26" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -1258,11 +1260,11 @@ GIRL2</attribute>
 ね！　さっそく　かけてみて！▼
 あなたが　どれだけ　がんばっているか
 アララギはかせに　おしえようよ▼</language>
-		<language name="JPN_KANJI" width="256">いっしょに　アララギはかせの
-あてさきも　とうろく　したよ！▽
+		<language name="JPN_KANJI" width="256">一緒に　アララギ博士の
+あてさきも　登録したよ！▽
 ね！　さっそく　かけてみて！▼
 あなたが　どれだけ　がんばっているか
-アララギはかせに　おしえようよ▼</language>
+アララギはかせに　教えようよ▼</language>
 	</row>
 
 	<row id="msg_c12_white_28" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -1274,7 +1276,7 @@ GIRL2</attribute>
 		<language name="JPN" width="256">ベル『ね！　さっそく　かけてみてよ！
 アララギはかせの　かお　みたいの▼</language>
 		<language name="JPN_KANJI" width="256">ベル『ね！　さっそく　かけてみてよ！
-アララギはかせの　かお　みたいの▼</language>
+アララギ博士の　顔　みたいの▼</language>
 	</row>
 
 	<row id="msg_c12_white_29" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -1286,7 +1288,7 @@ GIRL2</attribute>
 		<language name="JPN" width="256">ベル『あなたの　ポケモンが　どれだけ
 なついているか　おしえてあげるね！！</language>
 		<language name="JPN_KANJI" width="256">ベル『あなたの　ポケモンが　どれだけ
-なついているか　おしえてあげるね！！</language>
+なついているか　教えてあげるね！！</language>
 	</row>
 
 	<row id="msg_c12_swleader1_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -1296,9 +1298,9 @@ GIRL2</attribute>
 　繰り返し</comment>
 		<attribute name="キャラ指定">チェレン</attribute>
 		<language name="JPN" width="256">チェレン『ぼくは　ポケモンの
-とくせいなどを　おしえるよ</language>
+とくせいなどを　おしえてあげるよ</language>
 		<language name="JPN_KANJI" width="256">チェレン『ぼくは　ポケモンの
-とくせいなどを　おしえるよ</language>
+とくせいなどを　教えてあげるよ</language>
 	</row>
 
 	<row id="msg_c12_girl2_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
