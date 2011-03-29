@@ -177,7 +177,8 @@ SUBDIRS	=	wmi \
 			assert_err \
 			field_goout_effect \
 			resonance_resort \
-			wbt
+			wbt \
+			pokewood
 
 
 include $(RESOURCE_MACRO)

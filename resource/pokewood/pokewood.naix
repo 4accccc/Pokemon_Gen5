@@ -1,0 +1,20 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: pokewood.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_POKEWOOD_NAIX_
+#define NARC_POKEWOOD_NAIX_
+
+enum {
+	NARC_pokewood_senario01_bin = 0,
+	NARC_pokewood_senario02_bin = 1,
+	NARC_pokewood_senario03_bin = 2
+};
+
+/* NARC_POKEWOOD_NAIX_ */
+#endif
