@@ -957,6 +957,8 @@ static void WIND_ChangeState( FIELDMAP_WORK *p_fieldmap, const WIND_STATE state 
       // αで透明にする
       p_wk->alpha_reset = TRUE;
     }
+    // 描画軽くするために、消していた風1を表示 11/03/29
+    FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GYM_FLY_UNIT_IDX, EFFECT_WIND_1, FALSE );  // 表示
     ICHI_Printf("風力計状態：低速\n");
     break;
   case WIND_STATE_MIDDLE:
@@ -975,6 +977,9 @@ static void WIND_ChangeState( FIELDMAP_WORK *p_fieldmap, const WIND_STATE state 
     }
 
     p_wk->time = 0;
+
+    // 描画軽くするために、風1は消す 11/03/29
+    FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GYM_FLY_UNIT_IDX, EFFECT_WIND_1, TRUE );
     ICHI_Printf("風力計状態：高速\n");
     break;
   case WIND_STATE_SUPER:
@@ -983,7 +988,7 @@ static void WIND_ChangeState( FIELDMAP_WORK *p_fieldmap, const WIND_STATE state 
       count   = 2;
       obj_idx = EFFECT_WIND_2;
     }
-    break;;
+    break;
   default:
     GF_ASSERT(0);
   }
