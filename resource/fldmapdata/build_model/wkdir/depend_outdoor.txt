@@ -347,4 +347,47 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/c8_lbuildw_05.nsbmd \
 	$(RESDIR)/c8_gym_03.nsbmd \
 	$(RESDIR)/bigicicle_01.nsbmd \
+	$(RESDIR)/c14_house_01.nsbmd \
+	$(RESDIR)/c14_house_02.nsbmd \
+	$(RESDIR)/c14_gym_01.nsbmd \
+	$(RESDIR)/rr_embassy_01.nsbmd \
+	$(RESDIR)/rr_condominium_01.nsbmd \
+	$(RESDIR)/rr_norimono_01.nsbmd \
+	$(RESDIR)/rr_akiya_01.nsbmd \
+	$(RESDIR)/rr_kuji_01.nsbmd \
+	$(RESDIR)/rr_tokoya_01.nsbmd \
+	$(RESDIR)/rr_sodateya_01.nsbmd \
+	$(RESDIR)/rr_mise_01.nsbmd \
+	$(RESDIR)/rr_hanaya_01.nsbmd \
+	$(RESDIR)/rr_doujou_01.nsbmd \
+	$(RESDIR)/rr_hoiku_01.nsbmd \
+	$(RESDIR)/rr_houseki_01.nsbmd \
+	$(RESDIR)/rr_kottou_01.nsbmd \
+	$(RESDIR)/rr_mesiya_01.nsbmd \
+	$(RESDIR)/rr_ie_01.nsbmd \
+	$(RESDIR)/rr_nisejim_01.nsbmd \
+	$(RESDIR)/rr_kuji_02.nsbmd \
+	$(RESDIR)/rr_kuji_03.nsbmd \
+	$(RESDIR)/rr_tokoya_02.nsbmd \
+	$(RESDIR)/rr_tokoya_03.nsbmd \
+	$(RESDIR)/rr_sodateya_02.nsbmd \
+	$(RESDIR)/rr_sodateya_03.nsbmd \
+	$(RESDIR)/rr_mise_02.nsbmd \
+	$(RESDIR)/rr_mise_03.nsbmd \
+	$(RESDIR)/rr_hanaya_02.nsbmd \
+	$(RESDIR)/rr_hanaya_03.nsbmd \
+	$(RESDIR)/rr_doujou_02.nsbmd \
+	$(RESDIR)/rr_doujou_03.nsbmd \
+	$(RESDIR)/rr_hoiku_02.nsbmd \
+	$(RESDIR)/rr_hoiku_03.nsbmd \
+	$(RESDIR)/rr_houseki_02.nsbmd \
+	$(RESDIR)/rr_houseki_03.nsbmd \
+	$(RESDIR)/rr_kottou_02.nsbmd \
+	$(RESDIR)/rr_kottou_03.nsbmd \
+	$(RESDIR)/rr_mesiya_02.nsbmd \
+	$(RESDIR)/rr_mesiya_03.nsbmd \
+	$(RESDIR)/rr_ie_02.nsbmd \
+	$(RESDIR)/rr_ie_03.nsbmd \
+	$(RESDIR)/rr_nisejim_02.nsbmd \
+	$(RESDIR)/rr_nisejim_03.nsbmd \
 

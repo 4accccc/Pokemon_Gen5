@@ -2288,7 +2288,10 @@ DEP_TEXSET_IMD_OUTDOOR057 = \
 	$(SRCDIR)/door_normal02.imd \
 	$(SRCDIR)/door_normal03.imd \
 	$(SRCDIR)/h6_gate_01.imd \
-	$(SRCDIR)/bigicicle_01.imd
+	$(SRCDIR)/bigicicle_01.imd \
+	$(SRCDIR)/c14_house_01.imd \
+	$(SRCDIR)/c14_house_02.imd \
+	$(SRCDIR)/c14_gym_01.imd
 
 texset/outdoor057.imd: $(DEP_TEXSET_IMD_OUTDOOR057) texset/tmp/outdoor057.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/outdoor057.list
@@ -2354,7 +2357,47 @@ DEP_TEXSET_IMD_OUTDOOR059 = \
 	$(SRCDIR)/rock_02.imd \
 	$(SRCDIR)/door_normal01.imd \
 	$(SRCDIR)/door_normal02.imd \
-	$(SRCDIR)/door_normal03.imd
+	$(SRCDIR)/door_normal03.imd \
+	$(SRCDIR)/rr_embassy_01.imd \
+	$(SRCDIR)/rr_condominium_01.imd \
+	$(SRCDIR)/rr_norimono_01.imd \
+	$(SRCDIR)/rr_akiya_01.imd \
+	$(SRCDIR)/rr_kuji_01.imd \
+	$(SRCDIR)/rr_tokoya_01.imd \
+	$(SRCDIR)/rr_sodateya_01.imd \
+	$(SRCDIR)/rr_mise_01.imd \
+	$(SRCDIR)/rr_hanaya_01.imd \
+	$(SRCDIR)/rr_doujou_01.imd \
+	$(SRCDIR)/rr_hoiku_01.imd \
+	$(SRCDIR)/rr_houseki_01.imd \
+	$(SRCDIR)/rr_kottou_01.imd \
+	$(SRCDIR)/rr_mesiya_01.imd \
+	$(SRCDIR)/rr_ie_01.imd \
+	$(SRCDIR)/rr_nisejim_01.imd \
+	$(SRCDIR)/rr_kuji_02.imd \
+	$(SRCDIR)/rr_kuji_03.imd \
+	$(SRCDIR)/rr_tokoya_02.imd \
+	$(SRCDIR)/rr_tokoya_03.imd \
+	$(SRCDIR)/rr_sodateya_02.imd \
+	$(SRCDIR)/rr_sodateya_03.imd \
+	$(SRCDIR)/rr_mise_02.imd \
+	$(SRCDIR)/rr_mise_03.imd \
+	$(SRCDIR)/rr_hanaya_02.imd \
+	$(SRCDIR)/rr_hanaya_03.imd \
+	$(SRCDIR)/rr_doujou_02.imd \
+	$(SRCDIR)/rr_doujou_03.imd \
+	$(SRCDIR)/rr_hoiku_02.imd \
+	$(SRCDIR)/rr_hoiku_03.imd \
+	$(SRCDIR)/rr_houseki_02.imd \
+	$(SRCDIR)/rr_houseki_03.imd \
+	$(SRCDIR)/rr_kottou_02.imd \
+	$(SRCDIR)/rr_kottou_03.imd \
+	$(SRCDIR)/rr_mesiya_02.imd \
+	$(SRCDIR)/rr_mesiya_03.imd \
+	$(SRCDIR)/rr_ie_02.imd \
+	$(SRCDIR)/rr_ie_03.imd \
+	$(SRCDIR)/rr_nisejim_02.imd \
+	$(SRCDIR)/rr_nisejim_03.imd
 
 texset/outdoor059.imd: $(DEP_TEXSET_IMD_OUTDOOR059) texset/tmp/outdoor059.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/outdoor059.list
