@@ -35,6 +35,7 @@
 #include "btlv/btlv_core.h"
 #include "btlv/btlv_mcss.h"
 #include "tr_ai/tr_ai.h"
+#include "pokewood/pokewood_senario.h"
 
 #include "btl_main.h"
 
@@ -172,7 +173,7 @@ struct _BTL_MAIN_MODULE {
   u8        fMoneyDblUp          : 1;
   u8        fSleepSoundFunc      : 1;
 
-
+  POKEWOOD_SENARIO *senario;
 };
 
 
@@ -262,6 +263,7 @@ static void Bspstore_RecordData( BTL_MAIN_MODULE* wk );
 static u8 CommClientRelation( u8 myClientID, u8 targetClientID );
 static void Kentei_ClearField( BATTLE_SETUP_PARAM* sp );
 static void Bspstore_KenteiData( BTL_MAIN_MODULE* wk );
+static void _print_pokewood_senario( POKEWOOD_SENARIO *senario );
 
 
 // 赤外線検出用
@@ -335,6 +337,7 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
       wk->fWazaEffectEnable = (CONFIG_GetWazaEffectMode(setup_param->configData) == WAZAEFF_MODE_ON);
       wk->fieldSimWork = BTL_FIELDSIM_CreateWork( wk->heapID );
 
+      OS_TPrintf("pokewood mode=%d\n", setup_param->PokewoodMode);
 
       PokeCon_Init( &wk->pokeconForClient, wk, FALSE );
       PokeCon_Init( &wk->pokeconForServer, wk, TRUE );
@@ -375,6 +378,15 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
 
       BTL_NET_InitSystem( setup_param->netHandle, setup_param->commNetIDBit, HEAPID_BTL_NET );
       BTL_CALC_ITEM_InitSystem( HEAPID_BTL_SYSTEM );
+
+      // ポケウッドフラグが立っている場合はシナリオデータを読み込む
+      if( setup_param->PokewoodMode ){
+//        GFL_ARC_LoadData( wk->senario, ARCID_POKEWOOD, 0);
+        wk->senario = GFL_ARC_LoadDataAlloc( ARCID_POKEWOOD, 0, HEAPID_BTL_SYSTEM);
+        OS_Printf("pokewood senario size=%d\n", sizeof(POKEWOOD_SENARIO));
+        _print_pokewood_senario( wk->senario );
+
+      }
       (*seq)++;
     }
     break;
@@ -507,6 +519,11 @@ static GFL_PROC_RESULT BTL_PROC_Quit( GFL_PROC* proc, int* seq, void* pwk, void*
       PMSND_FadeOutBGM( BTL_BGM_FADEOUT_FRAMES );
     }
     wk->subSeq = 0;
+
+    // ポケウッドフラグが立っている場合はシナリオデータを解放する
+    if(BTL_MAIN_GetPokewoodMode(wk)){
+      GFL_HEAP_FreeMemory( wk->senario );
+    }
 
     // Main側マスター輝度デフォルト以外であれば通信エラー等の可能性->フェードを開始せず即ブラックアウト
     if( (GX_GetMasterBrightness() != 0) )
@@ -3898,6 +3915,20 @@ BOOL BTL_MAIN_IsRecordPlayMode( const BTL_MAIN_MODULE* wk )
 {
   return wk->setupParam->fRecordPlay;
 }
+//=============================================================================================
+/**
+ * ポケウッドのモードを取得
+ *
+ * @param   wk
+ *
+ * @retval  int 0:ポケウッドじゃない、1:ポケウッド撮影モード、2:ポケウッド上映モード
+ */
+//=============================================================================================
+int BTL_MAIN_GetPokewoodMode( const BTL_MAIN_MODULE* wk )
+{
+  return wk->setupParam->PokewoodMode;
+}
+
 
 //=============================================================================================
 /**
@@ -6178,3 +6209,54 @@ static void Bspstore_KenteiData( BTL_MAIN_MODULE* wk )
 }
 
 
+
+static void _print_pokewood_senario( POKEWOOD_SENARIO *senario )
+{
+  int i;
+  OS_Printf("=================================================\n");
+  OS_Printf("senario_no=%d\n", senario->senario_no );
+  OS_Printf("battle_mode=%d\n", senario->battle_mode );
+  OS_Printf("reguration=%d\n", senario->reguration);  
+  OS_Printf("pokenum_limit=%d", senario->pokenum_limit);
+  OS_Printf("item_ok=%d\n", senario->item_ok);
+  OS_Printf("turn_max=%d\n", senario->turn_max);
+  
+  OS_Printf("enemy_poke:monsno=%d, sex=%d, level=%d\n", senario->enemy_poke[0].monsno,
+                                                        senario->enemy_poke[0].sex,
+                                                        senario->enemy_poke[0].level );
+  OS_Printf("select_msg=");
+  for(i=0;i<SELECT_MSG_NUM*2;i++){
+    OS_Printf("%d,", senario->select_msg[0][i]);
+  }
+  OS_Printf("\n");
+
+  OS_Printf("situation_msg=");
+  for(i=0;i<SITUATION_MSG_NUM*2;i++){
+    OS_Printf("%d,", senario->situation_msg[0][i]);
+  }
+  OS_Printf("\n");
+
+  OS_Printf("turn_msg=");
+  for(i=0;i<POKEWOOD_TALK_MSG_MAX*2;i++){
+    OS_Printf("%d,", senario->turn_msg[0][i]);
+  }
+  OS_Printf("\n");
+
+  OS_Printf("EventData:type=%d, start_turn=%d\n", senario->event[0].type, senario->event[0].start_turn);
+  OS_Printf("event_msg=");
+  for(i=0;i<EVENT_TALK_TURN_MAX*2;i++){
+    OS_Printf("%d,", senario->event[0].talk_msg[0][i]);
+  }
+  OS_Printf("\n");
+  for(i=0;i<4;i++){
+    OS_Printf(" reaction=%d:msg=%d, e_msg=%d, waza=%d, vfx=%d\n",
+                  i,
+                  senario->event[0].reaction[i].my_message,
+                  senario->event[0].reaction[i].enemy_message,
+                  senario->event[0].reaction[i].select_enemy_waza,
+                  senario->event[0].reaction[i].visual_effect);
+  }
+  
+  OS_Printf("=================================================\n");
+
+}

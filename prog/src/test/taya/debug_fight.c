@@ -98,6 +98,12 @@ typedef enum {
 
   BTLTYPE_DEMO_CAPTURE,
 
+  BTLTYPE_POKEWOOD_REC_SINGLE,
+  BTLTYPE_POKEWOOD_SHOW_SINGLE,
+  BTLTYPE_POKEWOOD_REC_DOUBLE,
+  BTLTYPE_POKEWOOD_SHOW_DOUBLE,
+
+
   BTLTYPE_MAX,
 }BtlType;
 
@@ -577,22 +583,27 @@ static const struct {
   u8  multiMode    : 3;
   u8  enemyPokeReg : 3;   // 敵ポケ規定数（0なら自由）
   u8  rule;
+  u8  pokewood; // BTL_POKEWOOD_REC か BTL_POKEWOOD_SHOW
 }BtlTypeParams[] = {
-  { 0, 1, BTL_MULTIMODE_NONE,  1, BTL_RULE_SINGLE   },   // BTLTYPE_SINGLE_WILD
-  { 0, 0, BTL_MULTIMODE_NONE,  0, BTL_RULE_SINGLE   },   // BTLTYPE_SINGLE_TRAINER
-  { 1, 0, BTL_MULTIMODE_NONE,  0, BTL_RULE_SINGLE   },   // BTLTYPE_SINGLE_COMM
-  { 0, 1, BTL_MULTIMODE_NONE,  2, BTL_RULE_DOUBLE   },   // BTLTYPE_DOUBLE_WILD
-  { 0, 0, BTL_MULTIMODE_NONE,  0, BTL_RULE_DOUBLE   },   // BTLTYPE_DOUBLE_TRAINER1,
-  { 0, 0, BTL_MULTIMODE_P_AA,  0, BTL_RULE_DOUBLE   },   // BTLTYPE_DOUBLE_TRAINER_TAG,
-  { 0, 0, BTL_MULTIMODE_PA_AA, 0, BTL_RULE_DOUBLE   },   // BTLTYPE_DOUBLE_TRAINER_MULTI,
-  { 1, 0, BTL_MULTIMODE_NONE,  0, BTL_RULE_DOUBLE   },   // BTLTYPE_DOUBLE_COMM
-  { 1, 0, BTL_MULTIMODE_PP_PP, 0, BTL_RULE_DOUBLE   },   // BTLTYPE_DOUBLE_COMM_MULTI
-  { 1, 0, BTL_MULTIMODE_PP_AA, 0, BTL_RULE_DOUBLE   },   // BTLTYPE_DOUBLE_COMM_AI_MULTI
-  { 0, 0, BTL_MULTIMODE_NONE,  0, BTL_RULE_TRIPLE   },   // BTLTYPE_TRIPLE_TRAINER
-  { 1, 0, BTL_MULTIMODE_NONE,  0, BTL_RULE_TRIPLE   },   // BTLTYPE_TRIPLE_COMM
-  { 0, 0, BTL_MULTIMODE_NONE,  3, BTL_RULE_ROTATION },   // BTLTYPE_ROTATION_TRAINER
-  { 1, 0, BTL_MULTIMODE_NONE,  0, BTL_RULE_ROTATION },   // BTLTYPE_ROTATION_COMM
-  { 0, 1, BTL_MULTIMODE_NONE,  1, BTL_RULE_SINGLE   },   // BTLTYPE_DEMO_CAPTURE
+  { 0, 1, BTL_MULTIMODE_NONE,  1, BTL_RULE_SINGLE  ,BTL_POKEWOOD_NONE },   // BTLTYPE_SINGLE_WILD
+  { 0, 0, BTL_MULTIMODE_NONE,  0, BTL_RULE_SINGLE  ,BTL_POKEWOOD_NONE },   // BTLTYPE_SINGLE_TRAINER
+  { 1, 0, BTL_MULTIMODE_NONE,  0, BTL_RULE_SINGLE  ,BTL_POKEWOOD_NONE },   // BTLTYPE_SINGLE_COMM
+  { 0, 1, BTL_MULTIMODE_NONE,  2, BTL_RULE_DOUBLE  ,BTL_POKEWOOD_NONE },   // BTLTYPE_DOUBLE_WILD
+  { 0, 0, BTL_MULTIMODE_NONE,  0, BTL_RULE_DOUBLE  ,BTL_POKEWOOD_NONE },   // BTLTYPE_DOUBLE_TRAINER1,
+  { 0, 0, BTL_MULTIMODE_P_AA,  0, BTL_RULE_DOUBLE  ,BTL_POKEWOOD_NONE },   // BTLTYPE_DOUBLE_TRAINER_TAG,
+  { 0, 0, BTL_MULTIMODE_PA_AA, 0, BTL_RULE_DOUBLE  ,BTL_POKEWOOD_NONE },   // BTLTYPE_DOUBLE_TRAINER_MULTI,
+  { 1, 0, BTL_MULTIMODE_NONE,  0, BTL_RULE_DOUBLE  ,BTL_POKEWOOD_NONE },   // BTLTYPE_DOUBLE_COMM
+  { 1, 0, BTL_MULTIMODE_PP_PP, 0, BTL_RULE_DOUBLE  ,BTL_POKEWOOD_NONE },   // BTLTYPE_DOUBLE_COMM_MULTI
+  { 1, 0, BTL_MULTIMODE_PP_AA, 0, BTL_RULE_DOUBLE  ,BTL_POKEWOOD_NONE },   // BTLTYPE_DOUBLE_COMM_AI_MULTI
+  { 0, 0, BTL_MULTIMODE_NONE,  0, BTL_RULE_TRIPLE  ,BTL_POKEWOOD_NONE },   // BTLTYPE_TRIPLE_TRAINER
+  { 1, 0, BTL_MULTIMODE_NONE,  0, BTL_RULE_TRIPLE  ,BTL_POKEWOOD_NONE },   // BTLTYPE_TRIPLE_COMM
+  { 0, 0, BTL_MULTIMODE_NONE,  3, BTL_RULE_ROTATION,BTL_POKEWOOD_NONE },   // BTLTYPE_ROTATION_TRAINER
+  { 1, 0, BTL_MULTIMODE_NONE,  0, BTL_RULE_ROTATION,BTL_POKEWOOD_NONE },   // BTLTYPE_ROTATION_COMM
+  { 0, 1, BTL_MULTIMODE_NONE,  1, BTL_RULE_SINGLE  ,BTL_POKEWOOD_NONE },   // BTLTYPE_DEMO_CAPTURE
+  { 0, 0, BTL_MULTIMODE_NONE,  1, BTL_RULE_SINGLE  ,BTL_POKEWOOD_REC  },   // BTLTYPE_POKEWOOD_REC_SINGLE
+  { 0, 0, BTL_MULTIMODE_NONE,  1, BTL_RULE_SINGLE  ,BTL_POKEWOOD_SHOW },   // BTLTYPE_POKEWOOD_SHOW_SINGLE
+  { 0, 0, BTL_MULTIMODE_NONE,  0, BTL_RULE_DOUBLE  ,BTL_POKEWOOD_REC  },   // BTLTYPE_POKEWOOD_REC_DOUBLE
+  { 0, 0, BTL_MULTIMODE_NONE,  0, BTL_RULE_DOUBLE  ,BTL_POKEWOOD_SHOW },   // BTLTYPE_POKEWOOD_SHOW_DOUBLE
 };
 
 /*--------------------------------------------------------------------------*/
@@ -736,6 +747,7 @@ static BOOL btltype_IsComm( BtlType type );
 static BOOL btltype_IsMulti( BtlType type );
 static BOOL btltype_IsWild( BtlType type );
 static BtlRule btltype_GetRule( BtlType type );
+static int btltype_GetPokewood( BtlType type );
 static void PrintItem( DEBUG_BTL_WORK* wk, u16 itemID, BOOL fSelect );
 static void printItem_Poke( DEBUG_BTL_WORK* wk, u16 itemID, STRBUF* buf );
 static void printItem_BtlType( DEBUG_BTL_WORK* wk, STRBUF* buf );
@@ -1531,6 +1543,11 @@ static BOOL btltype_IsWild( BtlType type )
 static BtlRule btltype_GetRule( BtlType type )
 {
   return BtlTypeParams[ type ].rule;
+}
+
+static int btltype_GetPokewood( BtlType type )
+{
+  return BtlTypeParams[type].pokewood;
 }
 
 //----------------------------------------------------------------------------------
@@ -2502,6 +2519,15 @@ FS_EXTERN_OVERLAY(battle);
         BTL_SETUP_SetSubwayMode( &wk->setupParam );
       }
     }
+    
+    // ポケウッド
+    {
+      int pokewoodflag = btltype_GetPokewood(wk->saveData.btlType);
+      if(pokewoodflag != BTL_POKEWOOD_NONE){
+        wk->setupParam.PokewoodMode = pokewoodflag;
+      }
+    }
+    
     BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyPlayer, BTL_CLIENT_PLAYER );
     wk->setupParam.LimitTimeGame = (wk->saveData.LimitTimeGameMinute*60) + wk->saveData.LimitTimeGameSec;
     wk->setupParam.LimitTimeCommand = wk->saveData.LimitTimeCommand;
