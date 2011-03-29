@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2011-03-08T20:48:12"/>
+	<create user="ichiraku_katsuhiko" host="W00271" date="2011-03-29T14:35:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="492" top="80" right="1197" bottom="695" maximized="no" rayout="Vertical2">
+	<dialog left="309" top="80" right="1014" bottom="695" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<tag-palette left="736" top="133" right="1209" bottom="542" visible="no"/>
+		<band id="0" index="1" style="0000" width="522"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
-		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="2" index="3" style="0000" width="530"/>
+		<band id="3" index="4" style="0000" width="157"/>
+		<band id="4" index="0" style="0000" width="689"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -825,6 +825,11 @@
 	<row id="msg_debug_ichiraku_1" back-color="#008000,,,#008000,,#008000,#008000,#008000,,,#008000,,#008000,#008000,,,#008000,,">
 		<language name="JPN" width="256">歩行自動経路</language>
 		<language name="JPN_KANJI" width="256">歩行自動経路</language>
+	</row>
+
+	<row id="msg_debug_ichiraku_2" back-color="#008000,,,#008000,,#008000,#008000,#008000,,,#008000,,#008000,#008000,,,#008000,,">
+		<language name="JPN" width="256">捕獲デモ</language>
+		<language name="JPN_KANJI" width="256">捕獲デモ</language>
 	</row>
 
 	<flowchart-group-list>
