@@ -24,7 +24,7 @@ BUILDMODEL_HEADER = "../../../prog/src/field/field_buildmodel.h"
 ANIME_INDEX_FILE  ="wkdir/buildmodel_anime.h"
 
 #îzíuÉÇÉfÉãIDÇÃè„å¿
-BUILDMODEL_ID_MAX = 350
+BUILDMODEL_ID_MAX = 512
 
 COL_FILENAME = 1
 COL_ANIME_IDX = 8
