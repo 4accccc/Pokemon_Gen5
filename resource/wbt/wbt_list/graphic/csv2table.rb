@@ -3,6 +3,7 @@ DATA_TYPE = {
   "u8" => "C",
   "u16" => "S",
   "u32" => "I",
+  "s16" => "S",
 }
 
 File.open(ARGV[0]){|file|
@@ -26,7 +27,13 @@ File.open(ARGV[0]){|file|
       type_str = DATA_TYPE[ first_line[idx] ]
       #p item
       #p type_str
-      strout += [item.to_i].pack( type_str )
+      #
+      # ÉRÉÅÉìÉgóp
+      if type_str == nil then
+        # Ç»Ç…Ç‡ÇµÇ»Ç¢
+      else
+        strout += [item.to_i].pack( type_str )
+      end
     }
     File.open(ARGV[1],"wb"){|file|
       file.write( strout)

@@ -16,6 +16,8 @@
 
 //テクスチャをOAMに転送
 #include "system/nsbtx_to_clwk.h"
+#include "system/bmp_oam.h"
+#include "system/bmp_winframe.h"
 
 //FONT
 #include "print/gf_font.h"
@@ -33,6 +35,7 @@
 #include "ui/ui_easy_clwk.h"
 // print
 #include "ui/print_tool.h"
+#include "gamesystem/msgspeed.h"
 
 //マップモデルのnsbtx
 #include "fieldmap/fldmmdl_mdlres.naix"
@@ -86,6 +89,7 @@ enum
 	BG_FRAME_BACK_M		= GFL_BG_FRAME3_M,		// 下地(BG3)
 	BG_FRAME_MIDDLE_M	= GFL_BG_FRAME2_M,		// 中間(BG2)
 	BG_FRAME_MIDDLE2_M	= GFL_BG_FRAME1_M,		// テキスト(BG1)(未使用)
+	BG_FRAME_TEXT_M		= GFL_BG_FRAME0_M,		// テキスト面(BG0)
 	//
 	BG_FRAME_BACK_S		= GFL_BG_FRAME2_S,		// 下地(BG2)
 	BG_FRAME_MIDDLE_S	= GFL_BG_FRAME1_S,		// 中間(BG1)
@@ -99,15 +103,11 @@ enum
 {
 	//メインBG
 	PLTID_BG_BACK_M				= 0,
-	PLTID_BG_POKE_M				= 1,
-	PLTID_BG_TASKMENU_M			= 11,
-	PLTID_BG_TOUCHBAR_M			= 13,
-	PLTID_BG_INFOWIN_M			= 15,
 	//サブBG
 	PLTID_BG_BACK_S				= 0,		// 下地
 	
 	//メインOBJ
-	PLTID_OBJ_PANEL				= 0,		// 2本使用
+	PLTID_OBJ_PANEL				= 0,		// 3本使用
 	PLTID_OBJ_OAM_MAPMODEL_M	= 6,		// 8本使用
 	//サブOBJ
 	PLTID_OBJ_PMS_DRAW 			= 0,		// 5本使用
@@ -194,6 +194,12 @@ enum
 	CLWKID_PANEL_06A,				// パネル
 	CLWKID_PANEL_07A,				// パネル
 	CLWKID_BOMB,					// 爆発アニメ
+	CLWKID_BAR_00,					// バー0(横)
+	CLWKID_BAR_01,					// バー1
+	CLWKID_BAR_02,					// バー2
+	CLWKID_BAR_03,					// バー3
+	CLWKID_BAR_10,					// バー10(縦)
+	CLWKID_BAR_11,					// バー11
 	//
 	CLWKID_MAX,
 };
@@ -236,10 +242,14 @@ enum{
 };
 
 //-----------------------------------
-// キャンバス(PrintUtilの番号と対応)(要整理)
+// キャンバスの数
+// (PrintUtilの番号と対応)(要整理)
 //-----------------------------------
 enum{
-	MAX_PRINT_UTIL	= 2,			// canvasの数
+	PUTIL_DOWN_0 = 0,				// 下画面の0
+	PUTIL_DOWN_1,					// 下画面の1
+	
+	PUTIL_MAX,
 };
 
 //=============================================================================
@@ -295,7 +305,8 @@ typedef struct
 	GFL_FONT				*font;
 	//プリントキュー
 	PRINT_QUE				*print_que;
-	GFL_MSGDATA				*msg;
+//	GFL_MSGDATA				*msg;
+	GFL_MSGDATA				*msg[2];					// 0:名詞、1:メッセージ(テストで使用)
 
 #ifdef UI_TEMPLATE_OAM_MAPMODEL
   // OAMマップモデル
@@ -307,33 +318,40 @@ typedef struct
 	//---------------------
 	// 以下に追加記入
 	//---------------------
-	PRINT_UTIL				PrintUtil[MAX_PRINT_UTIL];	// 下画面文字表示用
+	WBTLIST_PARAM 			*Param;						// 参照用として保存(大丈夫?)
 	
+	BMPOAM_SYS_PTR			BmpOamSys;					// BMPOAM
+	GFL_BMP_DATA			*BmpData[WBT_TRAINER_MAX];	// Bmp
+	BMPOAM_ACT_PTR			BmpOamWork[WBT_TRAINER_MAX];// Work
+	PRINT_UTIL				PrintUtil[PUTIL_MAX];		// 文字表示用
+	PRINT_UTIL				MsgPrintUtil[2];			// 文字表示用
+	PRINT_STREAM			*PrintStream;				// PrintStream
+	GFL_TCBLSYS				*MsgTcblSys;				// メッセージ用タスク
+	STRBUF					*MsgBuffer;					// メッセージ用バッファ
+	//
 	s32						Mode;						// モード(段階)
 	s32						Step;						// ステップ
 	s32						DispNum;					// 表示回数
 	u32						Flag;						// フラグ
-	//
 	s32						Timer[TIMER_MAX];			// タイマ
 	WBTLIST_MOVE_WORK		MoveWork[MWORK_MAX];		// 移動
+	//
+	s16						*EmptyBuffer;				// 座標用のバッファ(必ず破棄すること)
 } WBTLIST_MAIN_WORK;
 
 
 //-----------------------------------------
 // OBJ用の定義
-// (GFL_CLWK_DATAにパラメータを追加しただけ)
 //------------------------------------------
 typedef struct{
-	s16				pos_x;			// 座標
-	s16				pos_y;
-	u16				anmseq;			// アニメシーケンス
+	u8				anmseq;			// アニメシーケンス(0xff終了コード)
 	u8				softpri;		// OBJ(プライオリティ)
 	u8				bgpri;			// BG(プライオリティ)
-	//
 	u8				visible;		// 表示/非表示
 	u8				palnum;			// パレット番号
 	u8				dispflag;		// 表示フラグ
-	u8				flag;			// 0xffの場合終了判定
+	u8				empty_num;		// empty番号(これから座標を参照)
+	u8				pad;
 }WBTLIST_OBJ_DATA;
 
 //-----------------------------------------
@@ -370,46 +388,60 @@ const s32 obj_res_tbl[] = {
 	NARC_wbt_list_gra_wbt_list_obj_u_NANR,		// NAR?
 };
 
-// 後日修正(ツールでの吐き出しを検討)
-// =>flipの問題を解決すること
+// OBJのテーブルデータ
 const WBTLIST_OBJ_DATA wbt_obj_tbl[] = {
-	{     0,  0+2, 0, 0x30, 1, 1, 0, 0, 0, },			// 0
-	{     0, 36+2, 0, 0x30, 1, 1, 0, 0, 0, },			// 1
-	{     0, 72+2, 0, 0x30, 1, 1, 0, 0, 0, },			// 2
-	{     0,108+2, 0, 0x30, 1, 1, 0, 0, 0, },			// 3
-//	{216+32+8,  0+2, 0, 0x30, 1, 1, 0, 2, 0, },			// 4
-//	{216+32+8, 36+2, 0, 0x30, 1, 1, 0, 2, 0, },			// 5
-//	{216+32+8, 72+2, 0, 0x30, 1, 1, 0, 2, 0, },			// 6
-//	{216+32+8,108+2, 0, 0x30, 1, 1, 0, 2, 0, },			// 7
-	{224,  0+2, 0, 0x30, 1, 1, 0, 0, 0, },			// 4
-	{224, 36+2, 1, 0x30, 1, 1, 0, 0, 0, },			// 5
-	{224, 72+2, 0, 0x30, 1, 1, 0, 0, 0, },			// 6
-	{224,108+2, 1, 0x30, 1, 1, 0, 0, 0, },			// 7
-	//
-	{     0-64,  0+2, 2, 0x40, 1, 1, 0, 0, 0, },			// 8
-	{     0-64, 36+2, 2, 0x40, 1, 1, 0, 0, 0, },			// 9
-	{     0-64, 72+2, 2, 0x40, 1, 1, 0, 0, 0, },			// 10
-	{     0-64,108+2, 2, 0x40, 1, 1, 0, 0, 0, },			// 11
-	{192,  0+2, 3, 0x40, 1, 1, 1, 0, 0, },			// 12
-	{192, 36+2, 3, 0x40, 1, 1, 1, 0, 0, },			// 13
-	{192, 72+2, 3, 0x40, 1, 1, 1, 0, 0, },			// 14
-	{192,108+2, 3, 0x40, 1, 1, 1, 0, 0, },			// 15
-//	{216+32+8+64,  0+2, 3, 0x40, 1, 1, 1, 2, 0, },			// 12
-//	{216+32+8+64, 36+2, 3, 0x40, 1, 1, 1, 2, 0, },			// 13
-//	{216+32+8+64, 72+2, 3, 0x40, 1, 1, 1, 2, 0, },			// 14
-//	{216+32+8+64,108+2, 3, 0x40, 1, 1, 1, 2, 0, },			// 15
-	
-	{ 64, 64, 4, 0x30, 1, 0, 2, 1, 0, },			// 16
-	//
-	{  0,  0, 0, 0,    0, 1, 0, 0, 0xff, },			// end
+	{ 0,	0x30,	1,	1,	0,	0,	8,	0,},		// 左パネル0
+	{ 0,	0x30,	1,	1,	0,	0,	9,	0,},		// 左パネル1
+	{ 0,	0x30,	1,	1,	0,	0,	10,	0,},		// 左パネル2
+	{ 0,	0x30,	1,	1,	0,	0,	11,	0,},		// 左パネル3
+	{ 4,	0x30,	1,	1,	0,	0,	12,	0,},		// 右パネル0
+	{ 4,	0x30,	1,	1,	0,	0,	13,	0,},		// 右パネル1
+	{ 4,	0x30,	1,	1,	0,	0,	14,	0,},		// 右パネル2
+	{ 4,	0x30,	1,	1,	0,	0,	15,	0,},		// 右パネル3
+	{ 2,	0x40,	1,	1,	0,	0,	16,	0,},		// 左、移動パネル0
+	{ 2,	0x40,	1,	1,	0,	0,	17,	0,},		// 左、移動パネル1
+	{ 2,	0x40,	1,	1,	0,	0,	18,	0,},		// 左、移動パネル2
+	{ 2,	0x40,	1,	1,	0,	0,	19,	0,},		// 左、移動パネル3
+	{ 6,	0x40,	1,	1,	0,	0,	20,	0,},		// 右、移動パネル0
+	{ 6,	0x40,	1,	1,	0,	0,	21,	0,},		// 右、移動パネル1
+	{ 6,	0x40,	1,	1,	0,	0,	22,	0,},		// 右、移動パネル2
+	{ 6,	0x40,	1,	1,	0,	0,	23,	0,},		// 右、移動パネル3
+	{ 8,	0x30,	0,	0,	2,	1,	24,	0,},		// 爆弾
+	{ 9,	0x50,	1,	0,	3,	1,	32,	0,},		// ゲージ00
+	{ 9,	0x50,	1,	0,	3,	5,	35,	0,},		// ゲージ01
+	{ 9,	0x50,	1,	0,	3,	3,	36,	0,},		// ゲージ02
+	{ 9,	0x50,	1,	0,	3,	7,	39,	0,},		// ゲージ03
+	{ 11,	0x50,	1,	0,	3,	5,	41,	0,},		// ゲージ10
+	{ 11,	0x50,	1,	0,	3,	7,	43,	0,},		// ゲージ11
+
+	{ 0xff, 0, 0, 0, 0, 0, 0, 0,}, // end code
 };
 
 // CANVASの設定(printutilと対応)
 const WBTLIST_CANVAS_DATA wbt_canvas_tbl[] = {
-	{ GFL_BG_FRAME1_S, 4, 4, 24, 2, 2, },				// 0
-	{ GFL_BG_FRAME1_S,10,17, 11, 2, 2, },				// 1
+	{ GFL_BG_FRAME1_S,	4,	4,	24,	2,	2,},		// 下、up
+	{ GFL_BG_FRAME1_S,	10,	17,	11,	2,	2,},		// 下、down
+
+	{ 0xff, 0, 0, 0, 0, 0,}, // end code
+};
+
+// 座標indexとフラグとシーケンス(前、後)
+const s16 wbt_bar_anim_tbl[] = {
+	32, 0x01, 9, 10,		// 左0
+	33, 0x05, 9, 10,		// 左1
+	34, 0x01, 9, 10,		// 左2
+	35, 0x05, 9, 10,		// 左3
 	//
-	{ 0xff, 0, 0, 0, 0, 0, },			// end
+	36, 0x03, 9, 10,		// 右0
+	37, 0x07, 9, 10,		// 右1
+	38, 0x03, 9, 10,		// 右2
+	39, 0x07, 9, 10,		// 右3
+	//
+	40, 0x01,11, 12,		// 左10
+	41, 0x05,11, 12,		// 左11
+	//
+	42, 0x03,11, 12,		// 右10
+	43, 0x07,11, 12,		// 右11
 };
 
 //=============================================================================
@@ -468,7 +500,17 @@ static BOOL wbt_is_movework(   WBTLIST_MAIN_WORK* wk, const s32 wnum );
 static void wbt_init_move_panel( WBTLIST_MAIN_WORK* wk, const s32 mode );
 static void wbt_main_move_panel( WBTLIST_MAIN_WORK* wk );
 //
-static void wbt_disp_bomb( WBTLIST_MAIN_WORK* wk );
+static void wbt_disp_bomb( WBTLIST_MAIN_WORK* wk, const s32 num );
+//
+static void wbt_set_meswin( WBTLIST_MAIN_WORK* wk );
+static BOOL wbt_main_meswin( WBTLIST_MAIN_WORK* wk );
+//
+static s16 wbt_get_empty( WBTLIST_MAIN_WORK *wk, const s32 num );
+//
+static void wbt_set_gageanim( WBTLIST_MAIN_WORK *wk, const s32 wnum, const s32 mode, const s32 umode );
+static BOOL wbt_is_gageanim( WBTLIST_MAIN_WORK *wk, const s32 wnum );
+static void wbt_visible_gage( WBTLIST_MAIN_WORK *wk, const s32 wnum, const BOOL bflg );
+
 //
 static void wbt_debug( WBTLIST_MAIN_WORK* wk );
 
@@ -519,6 +561,9 @@ static GFL_PROC_RESULT WBTListProc_Init( GFL_PROC *proc, int *seq, void *pwk, vo
 	// 初期化
 	wk->heapID = HEAPID_UI_DEBUG;
 	
+	// 参照用
+	wk->Param = pwk;
+	
 	//描画設定初期化
 	wk->graphic	= WBTLIST_GRAPHIC_Init( GX_DISP_SELECT_MAIN_SUB, wk->heapID );
 	
@@ -526,10 +571,15 @@ static GFL_PROC_RESULT WBTListProc_Init( GFL_PROC *proc, int *seq, void *pwk, vo
 	wk->font = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
 	
 	//メッセージ
-	wk->msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_mictest_dat, wk->heapID );
+	wk->msg[0] = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_mictest_dat, wk->heapID );
+//	wk->msg[1] = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_wbt_tournament_dat, wk->heapID );
+	wk->msg[1] = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_mictest_dat, wk->heapID );
 	
 	//PRINT_QUE作成
-	wk->print_que		= PRINTSYS_QUE_Create( wk->heapID );
+	wk->print_que = PRINTSYS_QUE_Create( wk->heapID );
+	//
+	// 会話ウインドウ用
+	wk->MsgTcblSys = GFL_TCBL_Init( wk->heapID, wk->heapID, 32 , 32 );
 	
 	//BGリソース読み込み
 	WBTList_BG_LoadResource( &wk->wk_bg, wk->heapID );
@@ -585,14 +635,17 @@ static GFL_PROC_RESULT WBTListProc_Exit( GFL_PROC *proc, int *seq, void *pwk, vo
 #endif //UI_TEMPLATE_OAM_MAPMODEL
 	
 	//メッセージ破棄
-	GFL_MSG_Delete( wk->msg );
+	GFL_MSG_Delete( wk->msg[0] );
+	GFL_MSG_Delete( wk->msg[1] );
 
 	//PRINT_QUE
 	PRINTSYS_QUE_Delete( wk->print_que );
 
 	//FONT
 	GFL_FONT_Delete( wk->font );
-
+	// 会話ウインドウ用
+	GFL_TCBL_Exit( wk->MsgTcblSys );
+	
 	//描画設定破棄
 	WBTLIST_GRAPHIC_Exit( wk->graphic );
 
@@ -663,6 +716,9 @@ static GFL_PROC_RESULT WBTListProc_Main( GFL_PROC *proc, int *seq, void *pwk, vo
 	//----------------
 	wbt_main( wk );
 	
+	// 会話ウインドウ用
+	GFL_TCBL_Main( wk->MsgTcblSys );
+	
 	//PRINT_QUE
 	PRINTSYS_QUE_Main( wk->print_que );
 	
@@ -701,7 +757,7 @@ static void WBTList_BG_LoadResource( WBTLIST_BG_WORK* wk, HEAPID heapID )
 		RES_ARC = ARCID_WBTLIST_GRA,
 	
 		RES_PAL_S_SIZE = 0x20*3,
-		RES_PAL_M_SIZE = 0x20,
+		RES_PAL_M_SIZE = 0x20*5,
 		
 		RES_PAL_S_ID 	= NARC_wbt_list_gra_wbt_list_bg_d_NCLR,
 		RES_CHR_S_ID 	= NARC_wbt_list_gra_wbt_list_bg_d_NCGR,
@@ -731,6 +787,7 @@ static void WBTList_BG_LoadResource( WBTLIST_BG_WORK* wk, HEAPID heapID )
 	GFL_ARCHDL_UTIL_TransVramScreen(		handle, RES_SCR_M02_ID, BG_FRAME_MIDDLE_M,  0, 0, 0, heapID );
 	//
 	GFL_ARC_CloseDataHandle( handle );
+	//
 }
 
 
@@ -774,7 +831,7 @@ static void WBTList_OAM_MAPMODEL_CreateCLWK( WBTLIST_MAIN_WORK *wk, u16 tex_idx,
   u32 i;
   UI_EASY_CLWK_RES_PARAM prm;
   const TRAINER_OBJ_DATA * trset;
-  u8 * pos_tbl = GFL_ARC_LoadDataAlloc(
+  s16 * pos_tbl = GFL_ARC_LoadDataAlloc(
       ARCID_WBTLIST_GRA, NARC_wbt_list_gra_trainer_obj_pos_tblbin, wk->heapID );
 
   for( i = 0; i < WBT_TRAINER_MAX; i ++ )
@@ -809,6 +866,9 @@ static void WBTList_OAM_MAPMODEL_CreateCLWK( WBTLIST_MAIN_WORK *wk, u16 tex_idx,
           ARCID_MMDL_RES, trset->id, trset->ptn_ofs, sx, sy, 0, prm.draw_type, heapID );
     }
     wk->clwk_oam_mmdl_count ++;
+    //
+	// プライオリティをセット(要修正)
+	GFL_CLACT_WK_SetSoftPri( wk->clwk_oam_mmdl[i], 0x40 );
   }
   GFL_HEAP_FreeMemory( pos_tbl );
 }
@@ -853,7 +913,8 @@ static void wbt_init( WBTLIST_MAIN_WORK* wk )
 	STRBUF* strbuf;
 	
 	// 文字列(test)
-	strbuf = GFL_MSG_CreateString( wk->msg, 0 );
+	strbuf = GFL_MSG_CreateString( wk->msg[0], 0 );
+	wk->MsgBuffer = GFL_MSG_CreateString( wk->msg[1], 0 );
 	
 	// 初期化
 	// それほど複雑ではないので、
@@ -873,17 +934,50 @@ static void wbt_init( WBTLIST_MAIN_WORK* wk )
 	for(i=0;i<TIMER_MAX;i++){
 		wk->Timer[i] = 0;
 	}
+	// empty用バッファ取得(必ず破棄すること)
+	// キャラテーブルを借用
+	wk->EmptyBuffer = GFL_ARC_LoadDataAlloc( ARCID_WBTLIST_GRA, NARC_wbt_list_gra_trainer_obj_pos_tblbin, wk->heapID );
+	
 	//
 	// 文字初期化
 	wbt_init_string( wk );
 	wbt_disp_string( wk, 0, 96, 0, strbuf );
 	wbt_disp_string( wk, 1, 44, 0, strbuf );
 	// 削除
-	GFL_STR_DeleteBuffer( strbuf );
+//	GFL_STR_DeleteBuffer( strbuf );
 	
 	//
 	// OBJ初期化
 	wbt_init_obj( wk );
+	
+	// 転送
+	for(i=0;i<WBT_TRAINER_MAX;i++){
+	    GFL_BMP_Clear( wk->BmpData[i], 0 );
+		PRINTSYS_PrintQueColor( wk->print_que, wk->BmpData[i], 0, 0, strbuf, wk->font, PRINTSYS_LSB_Make(15,14,0) );
+		BmpOam_ActorBmpTrans( wk->BmpOamWork[i] );
+	}
+	// 削除
+//	GFL_STR_DeleteBuffer( strbuf );
+	
+	// 会話ウィンドウセット(キャラデータを転送)
+	BmpWinFrame_GraphicSet( GFL_BG_FRAME0_M, 1, 8, MENU_TYPE_SYSTEM, wk->heapID);
+	// canvasの設定
+	wk->MsgPrintUtil[0].win = GFL_BMPWIN_Create( GFL_BG_FRAME0_M, 0, 19, 32, 5, 8, GFL_BMP_CHRAREA_GET_B );
+	// 表示
+	BmpWinFrame_Write( wk->MsgPrintUtil[0].win, WINDOW_TRANS_OFF, 1, 8 );
+	//
+	// set
+//	wbt_set_meswin( wk );
+#if 1
+	// stream設定=>ここのstrbufは終わるまで削除してはいけない
+	wk->PrintStream = PRINTSYS_PrintStream(
+				wk->MsgPrintUtil[0].win, 0, 0, wk->MsgBuffer, wk->font,
+				MSGSPEED_GetWait(), wk->MsgTcblSys, 4, wk->heapID, 15 );
+	// スクリーン転送らしい
+	GFL_BMPWIN_MakeTransWindow( wk->MsgPrintUtil[0].win );
+#endif
+	// 削除
+	GFL_STR_DeleteBuffer( strbuf );
 }
 
 //-----------------------------------------------------------------------------
@@ -919,6 +1013,8 @@ static void wbt_exit( WBTLIST_MAIN_WORK* wk )
 {
 	// それほど複雑ではないので、
 	// 上、下画面をまとめて処理
+	GFL_HEAP_FreeMemory( wk->EmptyBuffer );
+	
 	// 文字表示用
 	wbt_exit_string( wk );
 	//
@@ -983,10 +1079,8 @@ static void wbt_key_00( WBTLIST_MAIN_WORK* wk )
 {
 	s32		step = wk->Step;
 	s32		timer;
-	
-	//-------------------------------------------------
-	// タイマの処理はしばらくはコメントアウトにしておく
-	//-------------------------------------------------
+	s32		i;
+	s32		buf[2];
 	
 	// 処理
 	switch(wk->Step)
@@ -994,9 +1088,19 @@ static void wbt_key_00( WBTLIST_MAIN_WORK* wk )
 		// 初期化(整列状態)
 		case STEP_INIT:
 			wk->Step = STEP_LV1;
-//			wbt_init_timer( wk, TIMER_PANEL, info_tbl[0] );
 			// 初期化
 			wbt_init_move_panel( wk, MOVE_PANEL_IN );
+			//
+			// 一度非表示
+			for(i=0;i<6;i++){
+				wbt_visible_gage( wk, i, FALSE );
+			}
+			// 3回戦は2回戦までの情報を表示
+			if(wk->Mode == MODE_ROUND3){
+				for(i=0;i<4;i++){
+					wbt_set_gageanim( wk, i, 1, 1 );
+				}
+			}
 			break;
 		
 		// LV1(パネルイン)
@@ -1007,17 +1111,13 @@ static void wbt_key_00( WBTLIST_MAIN_WORK* wk )
 			if( wbt_is_movework( wk, MWORK_PANEL_L ) == FALSE ){
 				wk->Step = STEP_LV2;
 			}
-//			timer = wbt_main_timer( wk, TIMER_PANEL );
-//			if(timer <= 0){
-//				wk->Step = STEP_LV2;
-//			}
 			break;
 		
 		
 		// LV2(メッセージ表示待ち)
 		case STEP_LV2:
 			// メッセージ待ち
-			if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP ){
+			if( wbt_main_meswin( wk ) == FALSE ){
 				//
 				// 1回戦 => 終了
 				if(wk->Mode == MODE_ROUND1){
@@ -1026,7 +1126,6 @@ static void wbt_key_00( WBTLIST_MAIN_WORK* wk )
 				// 2、3回戦=>パネルアウト
 				else{
 					wk->Step = STEP_LV3;
-//					wbt_init_timer( wk, TIMER_PANEL, info_tbl[0] );
 					wbt_init_move_panel( wk, MOVE_PANEL_OUT );
 				}
 				wk->DispNum--;
@@ -1046,13 +1145,8 @@ static void wbt_key_00( WBTLIST_MAIN_WORK* wk )
 				wk->Step = STEP_LV4;
 				wbt_init_timer( wk, TIMER_BOMB, info_tbl[0] );
 				// 爆発アニメ
-				wbt_disp_bomb( wk );
+				wbt_disp_bomb( wk, 0 );
 			}
-//			timer = wbt_main_timer( wk, TIMER_PANEL );
-//			if(timer <= 0){
-//				wk->Step = STEP_LV4;
-//				wbt_init_timer( wk, TIMER_BOMB, info_tbl[0] );
-//			}
 			break;
 		
 		//
@@ -1063,16 +1157,40 @@ static void wbt_key_00( WBTLIST_MAIN_WORK* wk )
 				// 爆破アニメ終了=>ゲージ伸び
 				wk->Step = STEP_LV5;
 				wbt_init_timer( wk, TIMER_GAGE, info_tbl[2] );
+				// ゲージ処理(test)
+				buf[0] = 0;
+				if(wk->Mode == MODE_ROUND2){
+					buf[0] = 3-wk->DispNum;
+				}else if(wk->Mode == MODE_ROUND3){
+					buf[0] = 5-wk->DispNum;
+				}
+				wbt_set_gageanim( wk, buf[0], 0, 1 );
 			}
 			break;
 		
-		// LV5(ゲージ伸び)
+		// LV5(ゲージ伸びアニメ待ち)
 		case STEP_LV5:
+			// タイマは動かしておく
+			wbt_main_timer( wk, TIMER_GAGE );
+			// ゲージ処理(test)
+			buf[0] = 0;
+			if(wk->Mode == MODE_ROUND2){
+				buf[0] = 3-wk->DispNum;
+			}else if(wk->Mode == MODE_ROUND3){
+				buf[0] = 5-wk->DispNum;
+			}
+			if( wbt_is_gageanim( wk, buf[0] ) == FALSE ){
+				// ゲージ伸び終了
+				wk->Step = STEP_LV5+10;
+				wbt_set_gageanim( wk, buf[0], 1, 1 );
+			}
+			break;
+		// ゲージ切り替え後待ち
+		case STEP_LV5+10:
 			timer = wbt_main_timer( wk, TIMER_GAGE );
 			if(timer <= 0){
 				// ゲージ伸び終了
 				wk->Step = STEP_LV6;
-//				wbt_init_timer( wk, TIMER_PANEL, info_tbl[1] );
 				wbt_init_move_panel( wk, MOVE_PANEL_IN );
 			}
 			break;
@@ -1085,17 +1203,12 @@ static void wbt_key_00( WBTLIST_MAIN_WORK* wk )
 			if( wbt_is_movework( wk, MWORK_PANEL_L ) == FALSE ){
 				wk->Step = STEP_LV7;
 			}
-//			timer = wbt_main_timer( wk, TIMER_PANEL );
-//			if(timer <= 0){
-//				// メッセージ表示
-//				wk->Step = STEP_LV7;
-//			}
 			break;
 		
 		// LV7(メッセージ待ち)
 		case STEP_LV7:
 			// メッセージ待ち
-			if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP ){
+			if( wbt_main_meswin( wk ) == FALSE ){
 				//
 				wk->Step = STEP_LV3;
 				wk->DispNum--;
@@ -1103,7 +1216,6 @@ static void wbt_key_00( WBTLIST_MAIN_WORK* wk )
 					wk->DispNum = 0;
 					wk->Step = STEP_END;
 				}
-//				wbt_init_timer( wk, TIMER_PANEL, info_tbl[0] );
 				wbt_init_move_panel( wk, MOVE_PANEL_OUT );
 			}
 			break;
@@ -1226,7 +1338,7 @@ static void wbt_init_string( WBTLIST_MAIN_WORK* wk )
 	s32		i;
 	const WBTLIST_CANVAS_DATA	*adr = &wbt_canvas_tbl[0];
 	
-	for(i=0;i<MAX_PRINT_UTIL;i++){
+	for(i=0;i<PUTIL_MAX;i++){
 		// 終了条件
 		if(adr->bgnumber == 0xff){
 			break;
@@ -1292,9 +1404,13 @@ static void wbt_exit_string( WBTLIST_MAIN_WORK* wk )
 {
 	s32		i;
 	
-	for(i=0;i<MAX_PRINT_UTIL;i++){
+	for(i=0;i<PUTIL_MAX;i++){
 		GFL_BMPWIN_Delete( wk->PrintUtil[i].win );
 	}
+	// PrintStream後処理
+	GFL_STR_DeleteBuffer( wk->MsgBuffer );
+	PRINTSYS_PrintStreamDelete( wk->PrintStream );
+	GFL_BMPWIN_Delete( wk->MsgPrintUtil[0].win );
 }
 
 //-----------------------------------------------------------------------------
@@ -1312,7 +1428,7 @@ static void wbt_init_obj( WBTLIST_MAIN_WORK* wk )
 	ARCHANDLE*	p_handle = GFL_ARC_OpenDataHandle( ARCID_WBTLIST_GRA, wk->heapID );
     GFL_CLUNIT*	p_clunit = WBTLIST_GRAPHIC_GetClunit( wk->graphic );
 	// セルアニメ用の処理
-	wk->wk_obj.res[ RESID_OBJ_PLT ] = GFL_CLGRP_PLTT_RegisterEx( p_handle, obj_res_tbl[0], CLSYS_DRAW_MAIN, 0, 0, 3, wk->heapID );
+	wk->wk_obj.res[ RESID_OBJ_PLT ] = GFL_CLGRP_PLTT_RegisterEx( p_handle, obj_res_tbl[0], CLSYS_DRAW_MAIN, 0, 0, 5, wk->heapID );
 	wk->wk_obj.res[ RESID_OBJ_CHR ] = GFL_CLGRP_CGR_Register(  p_handle, obj_res_tbl[1], FALSE, CLSYS_DRAW_MAIN,    wk->heapID );
 //	wk->wk_obj.res[ RESID_OBJ_PLT ] = GFL_CLGRP_PLTT_RegisterEx( p_handle, obj_res_tbl[0], CLSYS_DRAW_SUB, 0, 0, 3, wk->heapID );
 //	wk->wk_obj.res[ RESID_OBJ_CHR ] = GFL_CLGRP_CGR_Register(  p_handle, obj_res_tbl[1], FALSE, CLSYS_DRAW_SUB,    wk->heapID );
@@ -1322,6 +1438,8 @@ static void wbt_init_obj( WBTLIST_MAIN_WORK* wk )
 	//
 	// CLWK登録
 	{
+		s16				tmp;
+		s16				pos[2];
 		s32 			i;
 		BOOL			bflg;
 		GFL_CLWK_DATA 	cldata;
@@ -1332,11 +1450,14 @@ static void wbt_init_obj( WBTLIST_MAIN_WORK* wk )
 		//
 		for(i=0;i<CLWKID_MAX;i++){
 			// 終了判定
-			if(adr->flag == 0xff){
+			if(adr->anmseq == 0xff){
 				break;
 			}
-			cldata.pos_x 	= adr->pos_x;
-			cldata.pos_y 	= adr->pos_y;
+			tmp = adr->empty_num;
+			pos[0] = wbt_get_empty(wk, tmp*2);
+			pos[1] = wbt_get_empty(wk, tmp*2+1);
+			cldata.pos_x 	= pos[0];
+			cldata.pos_y 	= pos[1];
 			cldata.anmseq 	= adr->anmseq;
 			cldata.softpri	= adr->softpri;
 			cldata.bgpri	= adr->bgpri;
@@ -1349,8 +1470,8 @@ static void wbt_init_obj( WBTLIST_MAIN_WORK* wk )
 												CLSYS_DEFREND_MAIN,
 //												CLSYS_DEFREND_SUB,
 												wk->heapID );
-			// パレット
-			GFL_CLACT_WK_SetPlttOffs( wk->wk_obj.clwk[i], adr->palnum, CLWK_PLTTOFFS_MODE_PLTT_TOP );
+			// パレット(意図的に変更しない限り、セットしなくてもいいのかもしれない)(要検討)
+//			GFL_CLACT_WK_SetPlttOffs( wk->wk_obj.clwk[i], adr->palnum, CLWK_PLTTOFFS_MODE_PLTT_TOP );
 			//-------------
 			// 表示/非表示
 			//-------------
@@ -1381,6 +1502,43 @@ static void wbt_init_obj( WBTLIST_MAIN_WORK* wk )
 			adr++;
 		}
 	}
+	//
+	// BmpOAM初期化
+	wk->BmpOamSys = BmpOam_Init( wk->heapID, p_clunit );
+	{
+		s32					i;
+		BMPOAM_ACT_DATA		actdata;
+		
+		for(i=0;i<WBT_TRAINER_MAX;i++){
+			// 8x2の領域を取っておく
+			// (10x2)だと動かないのはなぜ??
+			wk->BmpData[i] = GFL_BMP_Create( 8, 2, GFL_BMP_16_COLOR, wk->heapID );
+//			wk->BmpData[i] = GFL_BMP_Create( 8, 4, GFL_BMP_16_COLOR, wk->heapID );
+			// 初期化
+			GFL_STD_MemClear( &actdata, sizeof(BMPOAM_ACT_DATA) );
+			actdata.bmp			= wk->BmpData[i];
+			actdata.x			= 0;
+			actdata.y			= 0;
+			actdata.pltt_index	= wk->wk_obj.res[RESID_OBJ_PLT];
+			actdata.soft_pri	= 0x38;				// 要修正
+			actdata.setSerface	= CLSYS_DRAW_MAIN;
+			actdata.draw_type	= CLSYS_DRAW_MAIN;
+			actdata.bg_pri		= 1;				// 要修正
+			actdata.pal_offset  = 0;
+			// 作成
+			wk->BmpOamWork[i]	= BmpOam_ActorAdd( wk->BmpOamSys, &actdata );
+		}
+	}
+	//
+#if 0	// test
+	{
+		s32		i;
+		// ゲージ表示(6だとハング)
+		for(i=0;i<5;i++){
+			wbt_set_gageanim( wk, i, 1, 1 );
+		}
+	}
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -1403,6 +1561,13 @@ static void wbt_exit_obj( WBTLIST_MAIN_WORK* wk )
 	GFL_CLGRP_PLTT_Release( wk->wk_obj.res[RESID_OBJ_PLT] );
 	GFL_CLGRP_CGR_Release(  wk->wk_obj.res[RESID_OBJ_CHR] );
 	GFL_CLGRP_CELLANIM_Release( wk->wk_obj.res[RESID_OBJ_CEL] );
+	//
+	// BmpOAM後処理
+	for(i=0;i<WBT_TRAINER_MAX;i++){
+		BmpOam_ActorDel( wk->BmpOamWork[i] );
+		GFL_BMP_Delete( wk->BmpData[i] );
+	}
+	BmpOam_Exit( wk->BmpOamSys );
 }
 
 
@@ -1523,22 +1688,34 @@ static BOOL wbt_is_movework( WBTLIST_MAIN_WORK* wk, const s32 wnum )
 static void wbt_init_move_panel( WBTLIST_MAIN_WORK* wk, const s32 mode )
 {
 	s32		buf[4];
+	s32		rate=60;		// 要修正
 	
 	if(mode == MOVE_PANEL_IN){	// 出る
-		buf[0] = -64;			// 左
+//		buf[0] = -64;			// 左
+//		buf[1] = 0;
+		buf[0] = -72;			// 左
 		buf[1] = 0;
-		buf[2] = 216;			// 右
-		buf[3] = 216-64;
+//		buf[2] = 216;			// 右
+//		buf[3] = 216-64;
+		buf[2] = 220;			// 右
+		buf[3] = 220-72;
 	}else{						// 引っ込む
+//		buf[0] = 0;				// 左
+//		buf[1] = -64;
 		buf[0] = 0;				// 左
-		buf[1] = -64;
-		buf[2] = 216-64;		// 右
-		buf[3] = 216;
+		buf[1] = -72;
+//		buf[2] = 216-64;		// 右
+//		buf[3] = 216;
+		buf[2] = 220-72;			// 右
+		buf[3] = 220;
 	}
+	// test
+	rate = 72;
+	
 	// 左側
-	wbt_init_movework( wk, MWORK_PANEL_L, buf[0], buf[1], 64 );
+	wbt_init_movework( wk, MWORK_PANEL_L, buf[0], buf[1], rate );
 	// 右側
-	wbt_init_movework( wk, MWORK_PANEL_R, buf[2], buf[3], 64 );
+	wbt_init_movework( wk, MWORK_PANEL_R, buf[2], buf[3], rate );
 }
 
 //-----------------------------------------------------------------------------
@@ -1563,6 +1740,9 @@ static void wbt_main_move_panel( WBTLIST_MAIN_WORK* wk )
 		// 座標のセット(x方向のみ修正)
 		pos[0].x = px;
 		GFL_CLACT_WK_SetPos( wk->wk_obj.clwk[CLWKID_PANEL_00A+i], &pos[0], CLSYS_DEFREND_MAIN );
+		//
+		// BmpOamの移動
+		BmpOam_ActorSetPos( wk->BmpOamWork[i], (pos[0].x+36), (pos[0].y+8) );
 	}
 	//
 	// 右側
@@ -1573,6 +1753,9 @@ static void wbt_main_move_panel( WBTLIST_MAIN_WORK* wk )
 		// 座標のセット(x方向のみ修正)
 		pos[1].x = px;
 		GFL_CLACT_WK_SetPos( wk->wk_obj.clwk[CLWKID_PANEL_04A+i], &pos[1], CLSYS_DEFREND_MAIN );
+		//
+		// BmpOamの移動
+		BmpOam_ActorSetPos( wk->BmpOamWork[4+i], (pos[1].x+4), (pos[1].y+8) );
 	}
 }
 
@@ -1581,21 +1764,186 @@ static void wbt_main_move_panel( WBTLIST_MAIN_WORK* wk )
  *	@brief  爆発アニメ
  *
  *	@param	WBTLIST_MAIN_WORK* wk
+ *	@param	const s32		表示場所(0-7)
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void wbt_disp_bomb( WBTLIST_MAIN_WORK* wk )
+#define BOMB_POS		( 24 )
+
+static void wbt_disp_bomb( WBTLIST_MAIN_WORK* wk, const s32 num )
 {
+	u16				anum;
+	GFL_CLACTPOS	pos;
+	
+	// 左側
+	pos.x = wbt_get_empty( wk, (BOMB_POS+num)*2 );
+	pos.y = wbt_get_empty( wk, (BOMB_POS+num)*2+1 );
+	// 座標セット
+	GFL_CLACT_WK_SetPos( wk->wk_obj.clwk[CLWKID_BOMB], &pos, CLSYS_DEFREND_MAIN );
+	
 	// 再度アニメを再生するときは、
 	// SetAnimSeqとAutoAnmFlagをする必要があるようだ
-	u16	anum = GFL_CLACT_WK_GetAnmSeq( wk->wk_obj.clwk[CLWKID_BOMB] );
+	anum = GFL_CLACT_WK_GetAnmSeq( wk->wk_obj.clwk[CLWKID_BOMB] );
 	// 表示
 //	OS_Printf("anim seq:%d\n",anum);
 	GFL_CLACT_WK_SetAnmSeq( wk->wk_obj.clwk[CLWKID_BOMB], anum );
 	//
 	GFL_CLACT_WK_SetDrawEnable(  wk->wk_obj.clwk[CLWKID_BOMB], TRUE );
 	GFL_CLACT_WK_SetAutoAnmFlag( wk->wk_obj.clwk[CLWKID_BOMB], TRUE );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  会話ウインドウ(セット)
+ *
+ *	@param	WBTLIST_MAIN_WORK* wk
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void wbt_set_meswin( WBTLIST_MAIN_WORK* wk )
+{
+	// stream設定=>ここのstrbufは終わるまで削除してはいけない
+	wk->PrintStream = PRINTSYS_PrintStream(
+				wk->MsgPrintUtil[0].win, 0, 0, wk->MsgBuffer, wk->font,
+				MSGSPEED_GetWait(), wk->MsgTcblSys, 4, wk->heapID, 15 );
+	// スクリーン転送らしい
+	GFL_BMPWIN_MakeTransWindow( wk->MsgPrintUtil[0].win );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  会話ウインドウ(処理)
+ *
+ *	@param	WBTLIST_MAIN_WORK* wk
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL wbt_main_meswin( WBTLIST_MAIN_WORK* wk )
+{
+	// 描画終了待ち
+	if( PRINTSYS_PrintStreamGetState( wk->PrintStream ) == PRINTSTREAM_STATE_DONE ){
+		if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE || GFL_UI_TP_GetTrg()){
+//			PRINTSYS_PrintStreamDelete( wk->PrintStream );
+			return( FALSE );
+		}
+	}
+	return( TRUE );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  emptyの取得
+ *
+ *	@param	WBTLIST_MAIN_WORK* wk
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static s16 wbt_get_empty( WBTLIST_MAIN_WORK *wk, const s32 num )
+{
+	s16	*adr;
+	
+	adr = wk->EmptyBuffer;
+	return( adr[num] );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  アニメの切り替え
+ *
+ *	@param	WBTLIST_MAIN_WORK* wk
+ *	@param	const s32		アニメ番号(0-3)
+ *	@param	const s32		mode(0:伸びアニメ(後アニメ)、1:伸び後アニメ)
+ *	@param	const s32		umode(0:上、1:下)
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void wbt_set_gageanim( WBTLIST_MAIN_WORK *wk, const s32 wnum, const s32 mode, const s32 umode )
+{
+	s16		buf[2];
+	s32		clwnum = CLWKID_BAR_00+wnum;
+	GFL_CLACTPOS	pos;
+	u16		anum;
+	
+	// アニメのシーケンスセット
+	anum = wbt_bar_anim_tbl[wnum*8+umode*4+2+mode];
+//	u16		anum = GFL_CLACT_WK_GetAnmSeq( wk->wk_obj.clwk[clwnum] );
+	GFL_CLACT_WK_SetAnmSeq( wk->wk_obj.clwk[clwnum], anum );
+	//
+	GFL_CLACT_WK_SetDrawEnable(  wk->wk_obj.clwk[clwnum], TRUE );
+	GFL_CLACT_WK_SetAutoAnmFlag( wk->wk_obj.clwk[clwnum], TRUE );
+	
+	// empty番号
+	buf[0] = wbt_bar_anim_tbl[wnum*8+umode*4];
+	// フリップ情報
+	buf[1] = wbt_bar_anim_tbl[wnum*8+umode*4+1];
+	
+	// Hフリップ
+	if(buf[1] & FLG_OBJ_HFLIP){
+		GFL_CLACT_WK_SetFlip( wk->wk_obj.clwk[clwnum], CLWK_FLIP_H, TRUE );
+	}else{
+		GFL_CLACT_WK_SetFlip( wk->wk_obj.clwk[clwnum], CLWK_FLIP_H, FALSE );
+	}
+	// Vフリップ
+	if(buf[1] & FLG_OBJ_VFLIP){
+		GFL_CLACT_WK_SetFlip( wk->wk_obj.clwk[clwnum], CLWK_FLIP_V, TRUE );
+	}else{
+		GFL_CLACT_WK_SetFlip( wk->wk_obj.clwk[clwnum], CLWK_FLIP_V, FALSE );
+	}
+	// 左側
+	pos.x = wbt_get_empty( wk, buf[0]*2 );
+	pos.y = wbt_get_empty( wk, buf[0]*2+1 );
+	//
+//	OS_Printf("wnum, mode, umode,clwnum:%d,%d,%d,%d\n",wnum,mode,umode,clwnum);
+//	OS_Printf("anum, buf[0], buf[1], pos.x, pos.y:%d,%d,%d,%d,%d\n",anum,buf[0],buf[1],pos.x,pos.y);
+	
+	// 座標セット
+	GFL_CLACT_WK_SetPos( wk->wk_obj.clwk[clwnum], &pos, CLSYS_DEFREND_MAIN );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  アニメの終了待ち
+ *
+ *	@param	WBTLIST_MAIN_WORK* wk
+ *	@param	const s32		アニメ番号(0-3,4,5)
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL wbt_is_gageanim( WBTLIST_MAIN_WORK *wk, const s32 wnum )
+{
+	s32		clwnum = CLWKID_BAR_00+wnum;
+	BOOL	bflg=TRUE;
+	
+	// 終了判定らしい
+	if( GFL_CLACT_WK_CheckAnmActive( wk->wk_obj.clwk[clwnum] ) == FALSE ){
+		bflg = FALSE;
+	}
+	return( bflg );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  アニメの切り替え
+ *
+ *	@param	WBTLIST_MAIN_WORK* wk
+ *	@param	const s32		アニメ番号(0-3)
+ *	@param	const BOOL		(TRUE:表示、FALSE:非表示)
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void wbt_visible_gage( WBTLIST_MAIN_WORK *wk, const s32 wnum, const BOOL bflg )
+{
+	s32		clwnum = CLWKID_BAR_00+wnum;
+	
+	// 表示/非表示
+	GFL_CLACT_WK_SetDrawEnable(  wk->wk_obj.clwk[clwnum], bflg );
 }
 
 //-----------------------------------------------------------------------------
