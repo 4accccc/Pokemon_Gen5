@@ -1503,3 +1503,17 @@ resource/wifi_earth/wifi_earth.narc
   src/net_app/wificlub/wifi_p2pmatch_message.c コメントのみ
  */
 
+/*
+ NOBTS 1
+ 捕獲チュートリアルにおいて、
+ アララギ博士がボール投げるときのメッセージ msg_cappture_demo_02 の後、
+ エフェクトの終了待ちをしていないため止まります。
+
+ 原因　ボール投げ時に BTLEFF_CAMERA_INIT のエフェクトを追加しているが、
+ 次のシーケンスでメッセージ待ちしかしていない為、仮に短いメッセージだと、
+ ボール投げエフェクト[BTLEFF_BALL_THROW]を起動できない。
+ 
+ 対処方法　エフェクト終了待ちを追加
+ 修正担当　一楽
+ */
+

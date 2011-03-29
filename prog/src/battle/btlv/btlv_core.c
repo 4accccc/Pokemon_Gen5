@@ -713,7 +713,8 @@ static BOOL CmdProc_SetupDemo( BTLV_CORE* core, int* seq, void* workBuffer )
     }
     break;
   case 16:
-    if( BTLV_WaitMsg( core ) )
+  	// <localize> エフェクト（カメラの初期化）が終わるまで待つように
+    if( BTLV_WaitMsg( core ) && !BTLV_EFFECT_CheckExecute())
     {
       BTLV_EFFECT_BallThrow( BTLV_MCSS_POS_BB, ITEM_MONSUTAABOORU, 3, TRUE, FALSE );
       (*seq)++;
