@@ -14956,19 +14956,21 @@ può accadere ancora di tutto!</language>
 	</row>
 
 	<row id="TRID_PILOT_04_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">かりメッセージ</language>
-		<language name="JPN_KANJI" width="216">仮メッセージ</language>
+		<language name="JPN" width="216">きみと　きみの　ポケモンから
+すさまじい　あつりょくを　かんじたよ！</language>
+		<language name="JPN_KANJI" width="216">きみと　きみの　ポケモンから
+凄まじい　圧力を　感じたよ！</language>
 	</row>
 
 	<row id="TRID_PILOT_04_TRMSG_FIGHT_AFTER">
 		<language name="JPN" width="216">わたしから　アドバイスだよ▼
-ココみたいに　かべに　かこまれ
-くぼんでいる　ところに　いれば▽
-かぜに　とばされないだろう</language>
+ココみたいに　かべに　かこまれて
+ゆかのいろが　ちがうところ　なら▽
+かぜに　とばされないだろう！</language>
 		<language name="JPN_KANJI" width="216">わたしから　アドバイスだよ▼
 ココみたいに　壁に　囲まれ
-くぼんでいる　ところに　いれば▽
-風に　飛ばされないだろう</language>
+床の色が　違うところ　なら▽
+風に　飛ばされないだろう！</language>
 	</row>
 
 	<row id="TRID_PILOT_05_TRMSG_FIGHT_START">
@@ -14979,8 +14981,10 @@ può accadere ancora di tutto!</language>
 	</row>
 
 	<row id="TRID_PILOT_05_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">かりメッセージ</language>
-		<language name="JPN_KANJI" width="216">仮メッセージ</language>
+		<language name="JPN" width="216">きみの　ポケモンには
+まけてしまった……！</language>
+		<language name="JPN_KANJI" width="216">きみの　ポケモンには
+負けてしまった……！</language>
 	</row>
 
 	<row id="TRID_PILOT_05_TRMSG_FIGHT_AFTER">
@@ -15002,8 +15006,10 @@ può accadere ancora di tutto!</language>
 	</row>
 
 	<row id="TRID_PILOT_06_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">かりメッセージ</language>
-		<language name="JPN_KANJI" width="216">仮メッセージ</language>
+		<language name="JPN" width="216">ゆくてを　はばめなかった……
+きみは　たいした　トレーナーだぜ！</language>
+		<language name="JPN_KANJI" width="216">行く手を　はばめなかった……
+きみは　たいした　トレーナーだぜ！</language>
 	</row>
 
 	<row id="TRID_PILOT_06_TRMSG_FIGHT_AFTER">
@@ -15012,7 +15018,7 @@ può accadere ancora di tutto!</language>
 むりせず　どこかに　かくれることだね</language>
 		<language name="JPN_KANJI" width="216">周囲にある　風力計の
 回転が　速くなってきたら▽
-無理せず　どこかに　かくれることだね</language>
+無理せず　どこかに　隠れることだね</language>
 	</row>
 
 	<row id="TRID_PILOT_07_TRMSG_FIGHT_START">
@@ -15027,8 +15033,10 @@ può accadere ancora di tutto!</language>
 	</row>
 
 	<row id="TRID_PILOT_07_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">かりメッセージ</language>
-		<language name="JPN_KANJI" width="216">仮メッセージ</language>
+		<language name="JPN" width="216">まさか！？
+ゆだんなど　していなかったのに！</language>
+		<language name="JPN_KANJI" width="216">まさか！？
+油断など　していなかったのに！</language>
 	</row>
 
 	<row id="TRID_PILOT_07_TRMSG_FIGHT_AFTER">
@@ -15059,6 +15067,174 @@ può accadere ancora di tutto!</language>
 つよくなれたから……　ありがとうね</language>
 		<language name="JPN_KANJI" width="216">アナタと　戦えて　アタシ
 強くなれたから……　ありがとうね</language>
+	</row>
+
+	<row id="TRID_SWLEADER1_01_TRMSG_FIGHT_FIRST_DAMAGE">
+		<language name="JPN" width="216">ファーストアタック
+テストメッセージ</language>
+		<language name="JPN_KANJI" width="216">最初の一撃
+仮メッセージ</language>
+	</row>
+
+	<row id="TRID_SWLEADER1_01_TRMSG_FIGHT_POKE_LAST">
+		<language name="JPN" width="216">たいりょく　はんぶん
+テストメッセージ</language>
+		<language name="JPN_KANJI" width="216">体力半分
+仮メッセージ</language>
+	</row>
+
+	<row id="TRID_SWLEADER1_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">はいぼく
+テストメッセージ</language>
+		<language name="JPN_KANJI" width="216">敗北
+テストメッセージ</language>
+	</row>
+
+	<row id="TRID_SWLEADER2_01_TRMSG_FIGHT_FIRST_DAMAGE">
+		<language name="JPN" width="216">ファーストアタック
+テストメッセージ</language>
+		<language name="JPN_KANJI" width="216">最初の一撃
+仮メッセージ</language>
+	</row>
+
+	<row id="TRID_SWLEADER2_01_TRMSG_FIGHT_POKE_LAST">
+		<language name="JPN" width="216">たいりょく　はんぶん
+テストメッセージ</language>
+		<language name="JPN_KANJI" width="216">体力半分
+仮メッセージ</language>
+	</row>
+
+	<row id="TRID_SWLEADER2_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">はいぼく
+テストメッセージ</language>
+		<language name="JPN_KANJI" width="216">敗北
+テストメッセージ</language>
+	</row>
+
+	<row id="TRID_SWLEADER3_01_TRMSG_FIGHT_FIRST_DAMAGE">
+		<language name="JPN" width="216">ファーストアタック
+テストメッセージ</language>
+		<language name="JPN_KANJI" width="216">最初の一撃
+仮メッセージ</language>
+	</row>
+
+	<row id="TRID_SWLEADER3_01_TRMSG_FIGHT_POKE_LAST">
+		<language name="JPN" width="216">たいりょく　はんぶん
+テストメッセージ</language>
+		<language name="JPN_KANJI" width="216">体力半分
+仮メッセージ</language>
+	</row>
+
+	<row id="TRID_SWLEADER3_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">はいぼく
+テストメッセージ</language>
+		<language name="JPN_KANJI" width="216">敗北
+テストメッセージ</language>
+	</row>
+
+	<row id="TRID_SWLEADER4_01_TRMSG_FIGHT_FIRST_DAMAGE">
+		<language name="JPN" width="216">ファーストアタック
+テストメッセージ</language>
+		<language name="JPN_KANJI" width="216">最初の一撃
+仮メッセージ</language>
+	</row>
+
+	<row id="TRID_SWLEADER4_01_TRMSG_FIGHT_POKE_LAST">
+		<language name="JPN" width="216">たいりょく　はんぶん
+テストメッセージ</language>
+		<language name="JPN_KANJI" width="216">体力半分
+仮メッセージ</language>
+	</row>
+
+	<row id="TRID_SWLEADER4_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">はいぼく
+テストメッセージ</language>
+		<language name="JPN_KANJI" width="216">敗北
+テストメッセージ</language>
+	</row>
+
+	<row id="TRID_SWLEADER5_01_TRMSG_FIGHT_FIRST_DAMAGE">
+		<language name="JPN" width="216">ファーストアタック
+テストメッセージ</language>
+		<language name="JPN_KANJI" width="216">最初の一撃
+仮メッセージ</language>
+	</row>
+
+	<row id="TRID_SWLEADER5_01_TRMSG_FIGHT_POKE_LAST">
+		<language name="JPN" width="216">たいりょく　はんぶん
+テストメッセージ</language>
+		<language name="JPN_KANJI" width="216">体力半分
+仮メッセージ</language>
+	</row>
+
+	<row id="TRID_SWLEADER5_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">はいぼく
+テストメッセージ</language>
+		<language name="JPN_KANJI" width="216">敗北
+テストメッセージ</language>
+	</row>
+
+	<row id="TRID_SWLEADER6_01_TRMSG_FIGHT_FIRST_DAMAGE">
+		<language name="JPN" width="216">ファーストアタック
+テストメッセージ</language>
+		<language name="JPN_KANJI" width="216">最初の一撃
+仮メッセージ</language>
+	</row>
+
+	<row id="TRID_SWLEADER6_01_TRMSG_FIGHT_POKE_LAST">
+		<language name="JPN" width="216">たいりょく　はんぶん
+テストメッセージ</language>
+		<language name="JPN_KANJI" width="216">体力半分
+仮メッセージ</language>
+	</row>
+
+	<row id="TRID_SWLEADER6_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">はいぼく
+テストメッセージ</language>
+		<language name="JPN_KANJI" width="216">敗北
+テストメッセージ</language>
+	</row>
+
+	<row id="TRID_SWLEADER7_01_TRMSG_FIGHT_FIRST_DAMAGE">
+		<language name="JPN" width="216">ファーストアタック
+テストメッセージ</language>
+		<language name="JPN_KANJI" width="216">最初の一撃
+仮メッセージ</language>
+	</row>
+
+	<row id="TRID_SWLEADER7_01_TRMSG_FIGHT_POKE_LAST">
+		<language name="JPN" width="216">たいりょく　はんぶん
+テストメッセージ</language>
+		<language name="JPN_KANJI" width="216">体力半分
+仮メッセージ</language>
+	</row>
+
+	<row id="TRID_SWLEADER7_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">はいぼく
+テストメッセージ</language>
+		<language name="JPN_KANJI" width="216">敗北
+テストメッセージ</language>
+	</row>
+
+	<row id="TRID_SWLEADER8_01_TRMSG_FIGHT_FIRST_DAMAGE">
+		<language name="JPN" width="216">ファーストアタック
+テストメッセージ</language>
+		<language name="JPN_KANJI" width="216">最初の一撃
+仮メッセージ</language>
+	</row>
+
+	<row id="TRID_SWLEADER8_01_TRMSG_FIGHT_POKE_LAST">
+		<language name="JPN" width="216">たいりょく　はんぶん
+テストメッセージ</language>
+		<language name="JPN_KANJI" width="216">体力半分
+仮メッセージ</language>
+	</row>
+
+	<row id="TRID_SWLEADER8_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">はいぼく
+テストメッセージ</language>
+		<language name="JPN_KANJI" width="216">敗北
+テストメッセージ</language>
 	</row>
 
 	<flowchart-group-list>
