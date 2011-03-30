@@ -1517,3 +1517,15 @@ resource/wifi_earth/wifi_earth.narc
  修正担当　一楽
  */
 
+/*
+ NOBTS 4
+ codeinのフォント生成時のmonoSpaceFlagがTRUEになっているため、
+ ボタンテキストのセンタリングがずれています。
+
+ 原因　monoSpaceFlagの引数がTRUEだと、文字幅を等幅で計算してしまうので、
+ 実際の文字幅と関数で取得する文字幅がことなってしまう。
+ 例）[OK]は実際には12ドットだが、関数だと24ドットになってしまっていた。
+
+ 対処方法　monoSpaceFlagの引数をFALSEに変更
+ 修正担当　一楽
+ */
