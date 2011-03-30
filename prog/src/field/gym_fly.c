@@ -65,6 +65,12 @@
 #define GYM_FLY_UNIT_IDX (0)
 #define GYM_FLY_TMP_ASSIGN_ID  (1)
 
+#define SE_PITCH_LOW            (-256)      // 低速のpitch    64*-4 -4音
+#define SE_PITCH_MIDDLE         (128)       // 中速のpitch    64*2
+#define SE_PITCH_HIGH           (256)       // 高速のpitch    64*4
+#define SE_PITCH_SUPER          (768)       // 超高速のpitch  64*12
+#define SE_PITCH_ADD            (16)
+
 #define FAN_SPEED_LOW           (0x1000)    // 低速のアニメ速度
 #define FAN_SPEED_MIDDLE        (0x2000)    // 中速のアニメ速度
 #define FAN_SPEED_HIGH          (0x3000)    // 高速のアニメ速度
@@ -155,6 +161,16 @@ typedef struct {
   FLD_EXP_OBJ_CNT_PTR parent_exp_obj;  // 拡張3Dモデルコントローラ
 } WINDMETER_WORK;
 
+//-------------------------------------
+///	音管理
+//=====================================
+typedef struct {
+  u8      seq;
+  int     pitch;        // 現pitch
+  int     pitch_max;    // pitchの目標
+  BOOL    se_change;    // 風の音2種切り替え
+} SOUND_WORK;
+
 
 //ジム内部中の一時ワーク
 typedef struct GYM_FLY_TMP_tag
@@ -172,6 +188,7 @@ typedef struct GYM_FLY_TMP_tag
 
   FAN_WORK            fan_wk;
   WINDMETER_WORK      windmeter_wk;
+  SOUND_WORK          sound;
 
   FLD_EXP_OBJ_CNT_PTR exp_obj;  // 拡張3Dモデルコントローラ
   FIELD_PLAYER        *player;  // 自機
@@ -219,6 +236,8 @@ typedef struct {
  *					static関数宣言
 */
 //=============================================================================
+// ジム初期化
+static void GYM_FLY_Init( GYM_FLY_TMP *p_wk, const u16 c_time );
 // 状態
 static WIND_STATE WIND_GetState( const u16 c_time ); 
 static void WIND_ChangeState( FIELDMAP_WORK *p_fieldmap, const WIND_STATE state );
@@ -248,6 +267,11 @@ static BOOL FAN_CheckAnmSpeed( const FAN_WORK *cp_wk );
 // WINDMETER
 static void WINDMETER_Update( WINDMETER_WORK *p_wk );
 static BOOL WINDMETER_CheckAnmSpeed( const WINDMETER_WORK *cp_wk );
+
+// SOUND
+static void SOUND_Update( SOUND_WORK *p_wk, const u16 c_time );
+static void SOUND_ChangeSE( SOUND_WORK *p_wk );
+static void SOUND_ChangePitch( SOUND_WORK *p_wk, const WIND_STATE state );
 
 //-------------------------------------
 ///	セーブ情報
@@ -356,24 +380,28 @@ void GYM_FLY_Setup(FIELDMAP_WORK *p_fieldmap)
   p_wk->p_sv_wk   = GIMMICKWORK_Get( GAMEDATA_GetGimmickWork( p_gdata ), FLD_GIMMICK_GYM_FLY );
 
   // ファン
-  p_wk->fan_wk.anm_speed = FAN_SPEED_LOW;
-  p_wk->fan_wk.anm_speed_max = FAN_SPEED_LOW;
   p_wk->fan_wk.parent_exp_obj = p_wk->exp_obj;
 
   // 風力計
-  p_wk->windmeter_wk.anm_speed = WINDMETER_SPEED_LOW;
-  p_wk->windmeter_wk.anm_speed_max = WINDMETER_SPEED_LOW;
   p_wk->windmeter_wk.parent_exp_obj = p_wk->exp_obj;
-  
-  // EXPOBJセット
-  EXPOBJ_ObjSet( p_wk );
+
+  // サウンド
+  p_wk->sound.seq = 0;
+  p_wk->sound.se_change = FALSE;
+  p_wk->sound.pitch     = SE_PITCH_LOW;
+  p_wk->sound.pitch_max = SE_PITCH_LOW;
 
   // 環境音
-  FSND_PlayEnvSE( p_wk->p_sound, GYM_FLY_SE_WIND );
+  //FSND_PlayEnvSE( p_wk->p_sound, GYM_FLY_SE_FAN );
+  PMSND_PlaySE( GYM_FLY_SE_FAN );
+  PMSND_PlaySE( GYM_FLY_SE_WIND_NORMAL );
 
   // セーブから取得
   p_wk->time_start = SAVE_GetTimeFlg( p_wk->p_sv_wk );
   p_wk->time       = SAVE_GetTime( p_wk->p_sv_wk );
+
+  // timeでワーク初期化
+  GYM_FLY_Init( p_wk, p_wk->time );
 
 #ifdef GYM_FLY_DEBUG_MENU
   DEBUGMENU_Init( p_wk, p_fieldmap, p_wk->heapID );
@@ -400,7 +428,13 @@ void GYM_FLY_End(FIELDMAP_WORK *p_fieldmap)
   SAVE_SetTime( p_wk->p_sv_wk, p_wk->time );
 
   // 環境音停止
-  FSND_StopEnvSE( p_wk->p_sound, GYM_FLY_SE_WIND );
+  //FSND_StopEnvSE( p_wk->p_sound, GYM_FLY_SE_FAN );
+  {
+    SEPLAYER_ID player_ID = PMSND_GetSE_DefaultPlayerID( GYM_FLY_SE_FAN );
+    PMSND_StopSE_byPlayerID( player_ID );
+    player_ID = PMSND_GetSE_DefaultPlayerID( GYM_FLY_SE_WIND_NORMAL );
+    PMSND_StopSE_byPlayerID( player_ID );
+  }
 
   // EXPOBJ破棄
   EXPOBJ_ObjDell( p_wk );
@@ -467,6 +501,9 @@ void GYM_FLY_Move(FIELDMAP_WORK *p_fieldmap)
 
   // EXPOBJアニメメイン
   EXPOBJ_ObjMain( p_wk );
+
+  // サウンド更新
+  SOUND_Update( &p_wk->sound, p_wk->time );
 }
 
 
@@ -878,6 +915,52 @@ static FIELD_TASK_RETVAL ShakeCamera( void* wk )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  ジムの初期化
+ *
+ *	@param	GYM_FLY_TMP *p_wk
+ *	@param	u16 c_time  経過時間
+ */
+//-----------------------------------------------------------------------------
+static void GYM_FLY_Init( GYM_FLY_TMP *p_wk, const u16 c_time )
+{
+  WIND_STATE tmp_state = WIND_GetState( c_time );
+
+  // ファンの速さ
+  const fx32 fan_speed_tbl[] = {
+    FAN_SPEED_LOW,
+    FAN_SPEED_MIDDLE,
+    FAN_SPEED_HIGH,
+    FAN_SPEED_SUPER,
+  };
+
+  // 風力計の速さ
+  const fx32 windmeter_speed_tbl[] = {
+    WINDMETER_SPEED_LOW,
+    WINDMETER_SPEED_MIDDLE,
+    WINDMETER_SPEED_HIGH,
+    WINDMETER_SPEED_SUPER,
+  };
+
+  // 状態更新
+  p_wk->state = tmp_state;
+  ICHI_Printf("初期化 %d \n", p_wk->state );
+
+  // 状態別アニメの速さ
+  p_wk->fan_wk.anm_speed     = fan_speed_tbl[ p_wk->state ];
+  p_wk->fan_wk.anm_speed_max = fan_speed_tbl[ p_wk->state ];
+  p_wk->windmeter_wk.anm_speed     = windmeter_speed_tbl[ p_wk->state ];
+  p_wk->windmeter_wk.anm_speed_max = windmeter_speed_tbl[ p_wk->state ];
+  
+  // EXPOBJセット
+  EXPOBJ_ObjSet( p_wk );
+
+  // SE ピッチ変更
+  SOUND_ChangePitch( &p_wk->sound, tmp_state );
+  p_wk->sound.pitch = p_wk->sound.pitch_max;
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  時間を見て風力計の状態を返す
  *
  *	@param	const u16 c_time 
@@ -957,6 +1040,10 @@ static void WIND_ChangeState( FIELDMAP_WORK *p_fieldmap, const WIND_STATE state 
       // αで透明にする
       p_wk->alpha_reset = TRUE;
     }
+
+    // SEチェンジ
+    SOUND_ChangeSE( &p_wk->sound );
+
     // 描画軽くするために、消していた風1を表示 11/03/29
     FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GYM_FLY_UNIT_IDX, EFFECT_WIND_1, FALSE );  // 表示
     ICHI_Printf("風力計状態：低速\n");
@@ -977,6 +1064,9 @@ static void WIND_ChangeState( FIELDMAP_WORK *p_fieldmap, const WIND_STATE state 
     }
 
     p_wk->time = 0;
+
+    // SEチェンジ
+    SOUND_ChangeSE( &p_wk->sound );
 
     // 描画軽くするために、風1は消す 11/03/29
     FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GYM_FLY_UNIT_IDX, EFFECT_WIND_1, TRUE );
@@ -1019,15 +1109,8 @@ static void WIND_ChangeState( FIELDMAP_WORK *p_fieldmap, const WIND_STATE state 
     }
   }
 
-  // 環境音のステータス変更
-  {
-    SEPLAYER_ID player_ID = PMSND_GetSE_DefaultPlayerID( GYM_FLY_SE_WIND );
-    int pitch = p_wk->state * 192;   // 64は半音
-    int tempo = p_wk->state;
-    u32 volume= 64 + p_wk->state * 20;
-    PMSND_SetStatusSE_byPlayerID( player_ID, tempo, pitch, PMSND_NOEFFECT);
-    PMSND_PlayerSetVolume( player_ID, volume );
-  }
+  // SE ピッチ変更
+  SOUND_ChangePitch( &p_wk->sound, state );
 }
 
 //----------------------------------------------------------------------------
@@ -1260,17 +1343,6 @@ static GMEVENT_RESULT BlowEvent( GMEVENT* event, int* seq, void* wk )
         dir++;
         dir %= 4;
         MMDL_SetAcmd( p_wk->mmdl, (AC_DIR_U + dir) );
-      }
-
-      // SE
-      if( p_wk->is_wall == FALSE )
-      {
-        SEPLAYER_ID player_ID = PMSND_GetSE_DefaultPlayerID( GYM_FLY_SE_BLOW );
-        if( PMSND_CheckPlaySE_byPlayerID( player_ID ) == FALSE )
-        {
-          // SE ヒュー
-          PMSND_PlaySE( GYM_FLY_SE_BLOW );
-        }
       }
 
       // タスク終了チェック
@@ -1750,16 +1822,6 @@ static GMEVENT_RESULT ShortcutEvent( GMEVENT* event, int* seq, void* wk )
   case SEQ_MAIN:
     {
 
-      // SE
-      {
-        SEPLAYER_ID player_ID = PMSND_GetSE_DefaultPlayerID( GYM_FLY_SE_BLOW );
-        if( PMSND_CheckPlaySE_byPlayerID( player_ID ) == FALSE )
-        {
-          // SE ヒュー
-          PMSND_PlaySE( GYM_FLY_SE_BLOW );
-        }
-      }
-
       // 箱衝突チェック
       {
         s16 gx, gy, gz;
@@ -1974,16 +2036,6 @@ static GMEVENT_RESULT ScriptBlowEvent( GMEVENT* event, int* seq, void* wk )
         MMDL_SetAcmd( p_wk->mmdl, (AC_DIR_U + dir) );
       }
 
-      // SE
-      {
-        SEPLAYER_ID player_ID = PMSND_GetSE_DefaultPlayerID( GYM_FLY_SE_BLOW );
-        if( PMSND_CheckPlaySE_byPlayerID( player_ID ) == FALSE )
-        {
-          // SE ヒュー
-          PMSND_PlaySE( GYM_FLY_SE_BLOW );
-        }
-      }
-
       // タスク終了チェック
       {
         FIELD_TASK_MAN* taskMan;
@@ -2156,6 +2208,7 @@ static void EXPOBJ_ObjSet( GYM_FLY_TMP *p_wk )
       FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, GYM_FLY_UNIT_IDX, obj_idx, 0, TRUE );
       FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, TRUE );   // ループ再生設定
       FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE );  // アニメ再生
+      FLD_EXP_OBJ_ChgAddFrame( exp_anm, p_wk->fan_wk.anm_speed ); // アニメSPD
     }
   }
 
@@ -2200,6 +2253,7 @@ static void EXPOBJ_ObjSet( GYM_FLY_TMP *p_wk )
       FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, GYM_FLY_UNIT_IDX, obj_idx, 0, TRUE );
       FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, TRUE );   // ループ再生設定
       FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE );  // アニメ再生
+      FLD_EXP_OBJ_ChgAddFrame( exp_anm, p_wk->windmeter_wk.anm_speed ); // アニメSPD
     }
   }
 
@@ -2248,7 +2302,9 @@ static void EXPOBJ_ObjSet( GYM_FLY_TMP *p_wk )
     FLD_EXP_OBJ_SetCulling( p_wk->exp_obj, GYM_FLY_UNIT_IDX, obj_idx, FALSE );
 
     // 低速の風のみ表示
-    if( i == EFFECT_WIND_1 )
+    // 追加で、初期化状態が中速のときは中速風も表示
+    if( i == EFFECT_WIND_1 
+        || ( i == EFFECT_WIND_2 && p_wk->state == WIND_STATE_MIDDLE ) )
     {
       FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GYM_FLY_UNIT_IDX, obj_idx, FALSE );  // 表示
     }
@@ -2415,6 +2471,160 @@ static BOOL WINDMETER_CheckAnmSpeed( const WINDMETER_WORK *cp_wk )
     return TRUE;
   }
   return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  音の更新
+ *
+ *	@param	SOUND_WORK *p_wk 
+ */
+//-----------------------------------------------------------------------------
+static void SOUND_Update( SOUND_WORK *p_wk, const u16 c_time )
+{
+  
+  enum{
+    SEQ_NORMAL_SE,    // 通常SE再生
+    SEQ_TURN_SE,      // ターンSE再生
+    SEQ_TURN_SE_WAIT, // ターンSE再生待ち
+  };
+  
+  // 徐々にPitchを上げる
+  if( p_wk->pitch != p_wk->pitch_max )
+  {
+    // pitch計算
+    if( p_wk->pitch < p_wk->pitch_max )
+    {
+      p_wk->pitch += SE_PITCH_ADD;
+      if( p_wk->pitch > p_wk->pitch_max )
+      {
+        p_wk->pitch = p_wk->pitch_max;
+      }
+    }
+    else
+    {
+      p_wk->pitch -= SE_PITCH_ADD;
+      if( p_wk->pitch < p_wk->pitch_max )
+      {
+        p_wk->pitch = p_wk->pitch_max;
+      }
+    }
+  }
+
+  switch( p_wk->seq ){
+  case SEQ_NORMAL_SE:    // 通常SE再生
+    {
+      // pitch変更
+      {
+        // 風音
+        SEPLAYER_ID player_ID = PMSND_GetSE_DefaultPlayerID( GYM_FLY_SE_WIND_NORMAL );
+        PMSND_SetStatusSE_byPlayerID( player_ID, PMSND_NOEFFECT, p_wk->pitch, PMSND_NOEFFECT);
+      }
+
+      // SEチェンジ
+      if( p_wk->se_change == TRUE )
+      {
+        p_wk->se_change = FALSE;
+        p_wk->seq = SEQ_TURN_SE;
+      }
+    }
+    break;
+
+  case SEQ_TURN_SE:      // ターンSE再生
+    PMSND_PlaySE( GYM_FLY_SE_WIND_TURN );
+    p_wk->seq = SEQ_TURN_SE_WAIT;
+    break;
+
+  case SEQ_TURN_SE_WAIT: // ターンSE再生待ち
+    {
+      if( p_wk->se_change == TRUE )
+      {
+        PMSND_PlaySE( GYM_FLY_SE_WIND_NORMAL );
+
+        p_wk->se_change = FALSE;
+        p_wk->seq = SEQ_NORMAL_SE;
+      }
+    }
+    break;
+  }
+
+  
+
+  // pitch変更
+  {
+    // 環境音
+    SEPLAYER_ID player_ID = PMSND_GetSE_DefaultPlayerID( GYM_FLY_SE_FAN );
+    PMSND_SetStatusSE_byPlayerID( player_ID, PMSND_NOEFFECT, p_wk->pitch, PMSND_NOEFFECT);
+  }
+
+
+#ifdef PM_DEBUG
+  // Rボタン押しながらでデバッグ
+  if(GFL_UI_KEY_GetCont()&PAD_BUTTON_L)
+  {
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
+    {
+      PMSND_StopSE();
+      ICHI_Printf("SE STOP!\n");
+    }
+
+    if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )
+    {
+      PMSND_PlaySE( GYM_FLY_SE_WIND_NORMAL );
+      ICHI_Printf("SE H04 Play\n");
+    }
+    if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
+    {
+      PMSND_PlaySE( GYM_FLY_SE_WIND_TURN );
+      ICHI_Printf("SE H05 Play\n");
+    }
+    if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
+    {
+      PMSND_PlaySE( GYM_FLY_SE_FAN );
+      ICHI_Printf("SE H02 Play\n");
+    }
+    if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
+    {
+      PMSND_PlaySE( GYM_FLY_SE_BLOW );
+      ICHI_Printf("SE H01 Play\n");
+    }
+  }
+#endif
+
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  音チェンジ
+ *
+ *	@param	SOUND_WORK *p_wk 
+ */
+//-----------------------------------------------------------------------------
+static void SOUND_ChangeSE( SOUND_WORK *p_wk )
+{
+  p_wk->se_change = TRUE;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ピッチ変更
+ *
+ *	@param	SOUND_WORK *p_wk
+ *	@param	WIND_STATE state 
+ */
+//-----------------------------------------------------------------------------
+static void SOUND_ChangePitch( SOUND_WORK *p_wk, const WIND_STATE state )
+{
+  const int pitch_tbl[] = {
+    SE_PITCH_LOW,
+    SE_PITCH_MIDDLE,
+    SE_PITCH_HIGH,
+    SE_PITCH_SUPER,
+  };
+
+  p_wk->pitch_max = pitch_tbl[ state ];
+
 }
 
 //=============================================================================
