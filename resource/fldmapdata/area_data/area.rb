@@ -202,8 +202,8 @@ begin
   #行読み飛ばし
 	READTHROUGH_LINES.times{|| area_tbl_file.gets }
 
-  arc_id_in  = 0
-  arc_id_out = 0
+  arc_id_in  = -1
+  arc_id_out = -1
   area_count = 0
   bin_out_total = ""
   area_tbl_file.each{|line|
@@ -214,6 +214,17 @@ begin
     id_file.putAreaName(column)
 
     inout = GetInnerOuter(column[COL_INOUT])			#INNER/OUTER
+    
+    # 連番でないときのみ進める
+    if id_file.getContinueCount() == 0 then
+      unless DUMMY_AREA_NAME.include?(column[COL_AREANAME]) then
+        if inout == 0 then
+          arc_id_in+=1
+        else
+          arc_id_out+=1
+        end
+      end
+    end
 
     #binファイル作成
     #データ書き込み
@@ -225,6 +236,12 @@ begin
     else
       arc_id = arc_id_out
     end
+
+    # ダミー値を消す（アーカイブIDは0オリジン）
+    if arc_id < 0 then
+      arc_id = 0
+    end
+
     bin_out += [arc_id].pack("S")
 
     #tex_id = EntryVec(tex_vec,column[COL_TEXNAME])		#テクスチャセット
@@ -261,16 +278,6 @@ begin
     bin_out_total += bin_out
     area_count += 1
 
-    # 連番でないときのみ進める
-    if id_file.getContinueCount() == 0 then
-      unless DUMMY_AREA_NAME.include?(column[COL_AREANAME]) then
-        if inout == 0 then
-          arc_id_in+=1
-        else
-          arc_id_out+=1
-        end
-      end
-    end
 
   }
 
