@@ -27,7 +27,7 @@
 #include "../../../resource/fldmapdata/zonetable/zone_id.h"  // for ZONE_ID_C06
 
 // event
-#include "event_mapchange.h"  // for EVENT_ChangeMapPosNoFade
+#include "event_mapchange.h"  // for EVENT_ChangeMapPos
 #include "event_fieldmap_control.h"  // for EVENT_FieldBrightOut
 
 // gimmick
@@ -1911,14 +1911,27 @@ static GMEVENT_RESULT ShortcutEvent( GMEVENT* event, int* seq, void* wk )
   case SEQ_MAP_CHANGE: // マップチェンジイベント
     // マップチェンジ
     {
-      GAMESYS_WORK* p_gsys = FIELDMAP_GetGameSysWork( p_wk->p_fieldmap );
-      GMEVENT* new_event;
-      VecFx32 pos;
-      pos.x = FX32_CONST( 78 * FIELD_CONST_GRID_SIZE );
-      pos.y = FX32_CONST( 0 * FIELD_CONST_GRID_SIZE );
-      pos.z = FX32_CONST( 269 * FIELD_CONST_GRID_SIZE );
-      new_event = EVENT_ChangeMapPos( p_gsys, p_wk->p_fieldmap, ZONE_ID_C06, &pos, DIR_DOWN, FALSE );
-      GMEVENT_ChangeEvent( event, new_event );
+      // 通常のマップチェンジを使っていたが、
+      // 外に出たときに、歩く演出がないので、
+      // 本来のドアを出たときのマップチェンジと同じものを使用した
+      {
+        GAMESYS_WORK* p_gsys = FIELDMAP_GetGameSysWork( p_wk->p_fieldmap );
+        GMEVENT* new_event;
+        EVENTDATA_SYSTEM *evdata = GAMEDATA_GetEventData( GAMESYSTEM_GetGameData(p_gsys) );
+        VecFx32 pos;
+        int     idx;
+        LOC_EXIT_OFS        exit_ofs;
+        const CONNECT_DATA  *cnct;
+
+        FIELD_PLAYER_GetPos( p_wk->player, &pos );
+        idx = EVENTDATA_SearchConnectIDByPos( evdata, &pos );
+        cnct = EVENTDATA_GetConnectByID( evdata, idx);
+        exit_ofs = CONNECTDATA_GetExitOfs( cnct, &pos);
+
+        new_event = EVENT_ChangeMapByConnect( p_gsys, p_wk->p_fieldmap, cnct, exit_ofs );
+        GMEVENT_ChangeEvent( event, new_event );
+      }
+
       ICHI_Printf("マップチェンジイベント\n");
     }
     *seq = SEQ_EXIT;
