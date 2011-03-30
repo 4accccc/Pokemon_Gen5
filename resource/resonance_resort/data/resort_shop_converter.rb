@@ -18,38 +18,43 @@ require "../../itemconv/item_hash.rb"
 # @retval true  問題なし
 # @retval false エラー
 #=====================================
+ARG_SHOP_CSV    = 0
+ARG_SERVICE_CSV = 1
+ARG_MSG_H       = 2
+ARG_BMODEL_NAIX = 3
+ARG_SHOP_OUTPUT = 4
+ARG_SERVICE_OUTPUT = 5
 def checkArgument
-  if ARGV[0] == nil
+  if ARGV[ARG_SHOP_CSV] == nil
     puts "引数1にship csvのファイル名を指定してください"
     return false
   end
-  if ARGV[1] == nil
-    puts "引数1にservice csvのファイル名を指定してください"
+  if ARGV[ARG_SERVICE_CSV] == nil
+    puts "引数２にservice csvのファイル名を指定してください"
     return false
   end
-  if ARGV[2] == nil
+  if ARGV[ARG_MSG_H] == nil
     puts "引数３にgmmラベルのヘッダファイル名を指定してください"
     return false
   end
-  if ARGV[3] == nil
+  if ARGV[ARG_BMODEL_NAIX] == nil
+    puts "引数４に配置モデルのnaixファイル名を指定してください"
+    return false
+  end
+  if ARGV[ARG_SHOP_OUTPUT] == nil
     puts "引数5にshop 出力ファイル名を指定してください"
     return false
   end
-  if ARGV[4] == nil
+  if ARGV[ARG_SERVICE_OUTPUT] == nil
     puts "引数5にservice 出力ファイル名を指定してください"
     return false
   end
-  unless FileTest.exists?(ARGV[0])
-    puts "#{ARGV[0]}が見つかりません"
-    return false
-  end
-  unless FileTest.exists?(ARGV[1])
-    puts "#{ARGV[1]}が見つかりません"
-    return false
-  end
-  unless FileTest.exists?(ARGV[2])
-    puts "#{ARGV[2]}が見つかりません"
-    return false
+
+  for i in 0...ARG_BMODEL_NAIX
+    unless FileTest.exists?(ARGV[i])
+      puts "#{ARGV[i]}が見つかりません"
+      return false
+    end
   end
   return true
 end
@@ -150,20 +155,25 @@ SHOP_COL_SHOP   = SHOP_COL_START   #列：お店種類
 SHOP_COL_TYPE          = 1         #列：種類
 SHOP_COL_LV            = 2         #列：お店レベル
 SHOP_COL_NAME          = 3         #列：お店名
-SHOP_COL_LIST1         = 4         #列：リスト１
-SHOP_COL_LIST2         = 5         #列：リスト２
-SHOP_COL_LIST3         = 6         #列：リスト３
-SHOP_COL_LIST4         = 7         #列：リスト４
-SHOP_COL_LIST5         = 8         #列：リスト５
-SHOP_COL_LIST6         = 9         #列：リスト６
+SHOP_COL_OUT_MODEL     = 4         #列：外観
+SHOP_COL_IN_3DMD       = 5         #列：内装
+SHOP_COL_LIST1         = 6         #列：リスト１
+SHOP_COL_LIST2         = 7         #列：リスト２
+SHOP_COL_LIST3         = 8         #列：リスト３
+SHOP_COL_LIST4         = 9         #列：リスト４
+SHOP_COL_LIST5         = 10         #列：リスト５
+SHOP_COL_LIST6         = 11         #列：リスト６
 SHOP_COL_LIST_START    = SHOP_COL_LIST1
 SHOP_COL_LIST_END      = SHOP_COL_LIST6
-SHOP_COL_END           = 10        #列最後
-def convertShop( csv, data, h_define, gmm, h_service )
+SHOP_COL_END           = 12        #列最後
+def convertShop( csv, data, h_define, gmm, bmodel, h_service )
 
   #データの作成
   msgdata = HeaderDataArray.new
   msgdata.load( gmm )
+
+  bmodeldata = HeaderDataArray.new
+  bmodeldata.load( bmodel )
 
   for row in SHOP_ROW_START...csv.row_length-1
 
@@ -172,6 +182,8 @@ def convertShop( csv, data, h_define, gmm, h_service )
     type    = csv.get( row, SHOP_COL_TYPE )
     lv      = csv.get( row, SHOP_COL_LV )
     name    = csv.get( row, SHOP_COL_NAME )
+    model   = csv.get( row, SHOP_COL_OUT_MODEL );
+    in3dmd  = csv.get( row, SHOP_COL_IN_3DMD );
 
     #データ書き込み
     data.write_u16( h_define[shop] )
@@ -183,6 +195,13 @@ def convertShop( csv, data, h_define, gmm, h_service )
     rescue HeaderSearchError
       exit(1)
     end
+
+    begin
+      data.write_u16( bmodeldata.search( "NARC_output_buildmodel_outdoor_#{model}_nsbmd", "#{row}行ファイル" ) )
+    rescue HeaderSearchError
+      exit(1)
+    end
+    data.write_u16( 0 ) #TODO in3dmd
 
     for i in SHOP_COL_LIST_START...SHOP_COL_LIST_END+1
       list   = csv.get( row, i )
@@ -213,10 +232,10 @@ begin
 
   #csv読込み
   shopCsv = CsvLoader.new
-  shopCsv.load( ARGV[0] )
+  shopCsv.load( ARGV[ARG_SHOP_CSV] )
 
   serviceCsv = CsvLoader.new
-  serviceCsv.load( ARGV[1] )
+  serviceCsv.load( ARGV[ARG_SERVICE_CSV] )
 
   #data作成
   serviceData = BinaryBuilder.new
@@ -225,12 +244,12 @@ begin
   #コンバート
   service_hash = Hash.new
 
-  convertService( serviceCsv, serviceData, $define_hash, $item_hash, ARGV[2], service_hash )
-  convertShop( shopCsv, shopData, $define_hash, ARGV[2], service_hash )
+  convertService( serviceCsv, serviceData, $define_hash, $item_hash, ARGV[ARG_MSG_H], service_hash )
+  convertShop( shopCsv, shopData, $define_hash, ARGV[ARG_MSG_H], ARGV[ARG_BMODEL_NAIX], service_hash )
 
   #date書き込み
-  shopData.genelate( "#{ARGV[3]}.dat" )
-  serviceData.genelate( "#{ARGV[4]}.dat" )
+  shopData.genelate( "#{ARGV[ARG_SHOP_OUTPUT]}.dat" )
+  serviceData.genelate( "#{ARGV[ARG_SERVICE_OUTPUT]}.dat" )
 
 end
 

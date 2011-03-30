@@ -18,6 +18,7 @@ targetpeopleh	= resort_people_def
 targetshop 		= resort_shop
 targetservice = resort_service
 definehash		= resort_define_hash
+targetinstitution = resort_institution
 
 #------------------------------------------------------------------------------
 #依存するファイル名
@@ -25,6 +26,8 @@ definehash		= resort_define_hash
 xlsname			= resonance_resort_data
 msgfile 		= ..\..\..\prog\include\msg\script/msg_resort_scr.h #TODO
 scriptfile	= ..\..\fldmapdata\script\resort_scr_def.h #TODO
+bmodelfile 	= ../../fldmapdata/build_model/output/buildmodel_outdoor.naix
+fieldevent	= ../../fldmapdata/eventdata/tmp/c16.h
 
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
@@ -39,6 +42,7 @@ XLSCONV 	= $(PROJECT_ROOT)tools/exceltool/ExcelSeetConv.exe
 DEFINECONV = resort_define_converter.rb
 PEOPLECONV = resort_people_converter.rb
 SHOPCONV 		= resort_shop_converter.rb
+INSTITUTIONCONV 		= resort_institution_converter.rb
 
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
@@ -67,20 +71,22 @@ $(TARGETDIR_PROG)/$(targetpeopleh).h:	$(targetpeopleh).h
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetall).narc $(targetall).naix: $(targetpeople).dat $(targetshop).dat $(targetservice).dat
+$(targetall).narc $(targetall).naix: $(targetpeople).dat $(targetshop).dat $(targetservice).dat $(targetinstitution).dat
 	nnsarc -r -l -n -i $(targetall) $^
 	$(NAIXCUT) $(targetall).naix
 
 #データコンバート
-$(targetpeople).dat $(targetshop).dat $(targetservice).dat $(targetpeopleh).h: $(xlsname).xls $(msgfile) $(scriptfile) $(PEOPLECONV) $(DEFINECONV)
+$(targetpeople).dat $(targetshop).dat $(targetservice).dat $(targetpeopleh).h $(targetinstitution).dat: $(xlsname).xls $(msgfile) $(scriptfile) $(PEOPLECONV) $(DEFINECONV) $(bmodelfile) $(fieldevent)
 	$(XLSCONV) -o $(targetpeople).csv -p 1 -s csv $(xlsname).xls
 	$(XLSCONV) -o $(targetshop).csv -p 2 -s csv $(xlsname).xls
 	$(XLSCONV) -o $(targetservice).csv -p 3 -s csv $(xlsname).xls
 	$(XLSCONV) -o $(targetdefine).csv -p 4 -s csv $(xlsname).xls
+	$(XLSCONV) -o $(targetinstitution).csv -p 5 -s csv $(xlsname).xls
 	rm -f *.dat
 	ruby $(DEFINECONV) $(targetdefine).csv $(definehash) $(targetpeopleh)
 	ruby $(PEOPLECONV) $(targetpeople).csv $(msgfile) $(scriptfile) $(targetpeople)
-	ruby $(SHOPCONV) $(targetshop).csv $(targetservice).csv $(msgfile) $(targetshop) $(targetservice)
+	ruby $(SHOPCONV) $(targetshop).csv $(targetservice).csv $(msgfile) $(bmodelfile) $(targetshop) $(targetservice)
+	ruby $(INSTITUTIONCONV) $(targetinstitution).csv $(fieldevent) $(targetinstitution)
 endif
 
 #------------------------------------------------------------------------------
