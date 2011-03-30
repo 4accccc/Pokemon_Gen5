@@ -258,6 +258,8 @@ FMMDL_RESLIST_NCGIMD = \
 	gschampion.imd \
 	rschampion.imd \
 	echampion.imd \
+	swidolm.imd \
+	swidolw.imd \
 	tsure_001.imd \
 	tsure_002.imd \
 	tsure_003.imd \

@@ -1293,6 +1293,16 @@
 	@echo convert ncg_imd echampion
 	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/echampion.ncg ./mmdl_res ./mmdl_dmy/t4x4x7.imd 4 4 7
 
+#swidolm.imd
+./mmdl_res/swidolm.imd: ./mmdl_nchara/swidolm.ncg ./mmdl_nchara/swidolm.ncl ./mmdl_dmy/t4x4x7.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_flip.csv
+	@echo convert ncg_imd swidolm
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/swidolm.ncg ./mmdl_res ./mmdl_dmy/t4x4x7.imd 4 4 7
+
+#swidolw.imd
+./mmdl_res/swidolw.imd: ./mmdl_nchara/swidolw.ncg ./mmdl_nchara/swidolw.ncl ./mmdl_dmy/t4x4x7.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_flip.csv
+	@echo convert ncg_imd swidolw
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/swidolw.ncg ./mmdl_res ./mmdl_dmy/t4x4x7.imd 4 4 7
+
 #tsure_001.imd
 ./mmdl_res/tsure_001.imd: ./mmdl_nchara/pokemon//tsure_001.ncg ./mmdl_nchara/pokemon//tsure_001.ncl ./mmdl_dmy/t4x4x8.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_poke_nonflip.csv
 	@echo convert ncg_imd tsure_001
