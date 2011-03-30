@@ -222,6 +222,12 @@ BOOL FLDMAPPER_Connect( FIELDMAP_WORK* fieldmap, FLDMAPPER* g3Dmapper, const MAP
 //--------------------------------------------------------------
 extern EHL_PTR	FLDMAPPER_GetExHegihtPtr( FLDMAPPER* g3Dmapper );
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief リゾート用データ設定
+ */
+//-----------------------------------------------------------------------------
+extern void FLDMAPPER_SetResortData( FLDMAPPER* g3Dmapper, GAMEDATA *p_gamedata );
 
 #ifdef PM_DEBUG
 //--------------------------------------------------------------

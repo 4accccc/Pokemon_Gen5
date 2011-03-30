@@ -706,7 +706,7 @@ STRBUF * RESORT_DATA_MANAGER_CreateShopName( const RESORT_BINARY_SHOP *cp_wk, co
   WORDSET *p_wordset = WORDSET_Create( GFL_HEAP_LOWID(heapID) );
 
   GFL_MSGDATA *p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_resort_scr_dat, GFL_HEAP_LOWID(heapID) );
-  u16 shop_name = RESORT_BINARY_SHOP_DATA_GetName( cp_shop );
+  u16 shop_name = RESORT_BINARY_SHOP_DATA_GetData( cp_shop, RESORT_BINARY_SHOP_PARAM_NAME );
   STRBUF *p_tmp = GFL_MSG_CreateString( p_msg, shop_name );
   STRBUF *p_name_str = GFL_STR_CreateBuffer( PERSON_NAME_SIZE+EOM_SIZE, GFL_HEAP_LOWID(heapID) );
   STRBUF *p_str = GFL_STR_CreateBuffer( 64, heapID );

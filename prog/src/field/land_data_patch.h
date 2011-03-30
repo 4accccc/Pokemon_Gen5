@@ -55,6 +55,9 @@ typedef struct _FIELD_DATA_PATCH FIELD_DATA_PATCH;
 extern FIELD_DATA_PATCH* FIELD_DATA_PATCH_Create( u32 data_id, HEAPID heapID );
 extern void FIELD_DATA_PATCH_Delete( FIELD_DATA_PATCH* p_sys );
 
+// 内部データ操作
+extern void FIELD_DATA_PATCH_WriteBuildModel( FIELD_DATA_PATCH *p_sys, BMODEL_ID bmodelID, u16 index );
+
 // アトリビュート上書き
 extern void FIELD_DATA_PATCH_OverWriteAttr( const FIELD_DATA_PATCH* cp_sys, NormalVtxFormat* p_buff, u32 grid_x, u32 grid_z );
 extern void FIELD_DATA_PATCH_OverWriteAttrEx( const FIELD_DATA_PATCH* cp_sys, NormalVtxFormat* p_buff, u32 read_grid_x, u32 read_grid_z, u32 write_grid_x, u32 write_grid_z, u32 size_grid_x, u32 size_grid_z );

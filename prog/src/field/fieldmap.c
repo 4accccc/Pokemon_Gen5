@@ -3286,13 +3286,9 @@ static void setupWfbc( GAMEDATA* gdata, FIELDMAP_WORK *fieldWork, u32 zone_id )
 //-----------------------------------------------------------------------------
 static void setupResonanceResort( GAMEDATA* gdata, FIELDMAP_WORK *fieldWork, u32 zone_id )
 {
-  FIELD_WFBC_CORE* p_core;
-  FIELD_WFBC* p_wfbc;
-  EVENTDATA_SYSTEM* p_evdata;
-  
   if( ZONEDATA_IsResonanceResort( zone_id ) )
   {
-    //FLDMAPPER_SetWfbcData( fieldWork->g3Dmapper, p_core, mapmode );
+    FLDMAPPER_SetResortData( fieldWork->g3Dmapper, fieldWork->gamedata );
   }
 }
 

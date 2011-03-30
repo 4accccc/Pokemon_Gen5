@@ -43,6 +43,7 @@
 
 #include "system/palanm.h"
 #include "field/field_comm/intrude_work.h"
+#include "savedata/resonance_resort_sv.h"
 
 #define DEBUG_SPEED_CHECK_ENABLE
 #include "debug_speed_check.h"
@@ -1712,7 +1713,22 @@ void FLDMAPPER_SetWfbcData( FLDMAPPER* g3Dmapper, FIELD_WFBC_CORE* p_core, MAPMO
   }
 }
 
-
+//----------------------------------------------------------------------------
+/**
+ *	@brief リゾート用にデータを設定する
+ *
+ *	@param	FLDMAPPER* g3Dmapper  マッパー
+ *	@param	*p_gamedata   ゲームデータ
+ */
+//-----------------------------------------------------------------------------
+void FLDMAPPER_SetResortData( FLDMAPPER* g3Dmapper, GAMEDATA *p_gamedata )
+{
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork(p_gamedata);
+  RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( p_sv );
+  const RESORT_CITY_DATA *cp_city = RESONANCE_RESORT_SV_GetCityData( p_resort );
+  const RESORT_PEOPLE_ALL_DATA *cp_people_all = RESONANCE_RESORT_SV_GetPeopleAllData( p_resort );
+  RESORT_MAPCREATE_Setup( g3Dmapper->p_resort_wk, cp_city, cp_people_all );
+}
 
 //============================================================================================
 //============================================================================================

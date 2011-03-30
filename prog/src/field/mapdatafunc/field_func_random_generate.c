@@ -111,8 +111,9 @@ BOOL FieldLoadMapData_RandomGenerate( FLD_G3D_MAP* g3Dmap, void * exWork )
 			//ヘッダー設定
 			FLD_G3D_MAP_GetLoadMemoryPointer( g3Dmap, &mem );
 			fileHeader = (WBGridMapPackHeaderSt*)mem;
-			//モデルリソース設定
-			FLD_G3D_MAP_CreateResourceMdl(g3Dmap, (void*)((u32)mem + fileHeader->nsbmdOffset));
+
+      //モデルリソース設定
+      FLD_G3D_MAP_CreateResourceMdl(g3Dmap, (void*)((u32)mem + fileHeader->nsbmdOffset));
 
 			//配置オブジェクト設定
 			if( fileHeader->positionOffset != fileHeader->endPos ){
@@ -132,6 +133,7 @@ BOOL FieldLoadMapData_RandomGenerate( FLD_G3D_MAP* g3Dmap, void * exWork )
         NormalVtxFormat* p_attr = (NormalVtxFormat*)((u32)mem + fileHeader->vertexOffset);
         int map_index = FLD_G3D_MAP_EXWORK_GetMapIndex( p_exwork );
         FIELD_WFBC* p_wfbc = FLD_G3D_MAP_EXWORK_GetWFBCWork( p_exwork );
+        RESORT_MAPCREATE *p_resort_wk = FLD_G3D_MAP_EXWORK_GetResortWork( p_exwork );
         HEAPID heapID = FLD_G3D_MAP_EXWORK_GetHeapID( p_exwork );
 
         TOMOYA_Printf( "\nmapindex %d setup start\n", map_index );
@@ -139,6 +141,7 @@ BOOL FieldLoadMapData_RandomGenerate( FLD_G3D_MAP* g3Dmap, void * exWork )
         block_x = (map_index % 2) * (FIELD_WFBC_BLOCK_SIZE_X/2);
         block_z = (map_index / 2) * (FIELD_WFBC_BLOCK_SIZE_Z/2);
 
+        buildmodel_count = RESORT_MAPCREATE_SetUpBlock( p_resort_wk, p_attr, p_bm, g3Dmap, buildmodel_count, map_index, heapID );
         for( i=0; i<(FIELD_WFBC_BLOCK_SIZE_Z/2); i++ )
         {
           for( j=0; j<(FIELD_WFBC_BLOCK_SIZE_X/2); j++ )

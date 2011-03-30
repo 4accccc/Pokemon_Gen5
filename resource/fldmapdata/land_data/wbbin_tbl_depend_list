@@ -1346,10 +1346,6 @@ $(DIR_WBTMP)/h06_a01_06.tbl: $(DIR_RES)/h06_a01_06.bin
 	@echo create_bintbl h06_a01_06
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/h06_a01_06.bin
 
-$(DIR_WBTMP)/resort01_00_00.tbl: $(DIR_RES)/resort01_00_00.bin
-	@echo create_bintbl resort01_00_00
-	@ruby wb_bin_conv.rb TBL $(DIR_RES)/resort01_00_00.bin
-
 $(DIR_WBTMP)/white12_16.tbl: $(DIR_RES)/white12_16.bin
 	@echo create_bintbl white12_16
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/white12_16.bin

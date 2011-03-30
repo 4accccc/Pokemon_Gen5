@@ -81,10 +81,10 @@ FIELD_DATA_PATCH* FIELD_DATA_PATCH_Create( u32 data_id, HEAPID heapID )
   GF_ASSERT( data_id < LAND_DATA_PATCH_MAX );
   p_wk->p_file = GFL_ARC_UTIL_Load( ARCID_LAND_DATA_PATCH, data_id, FALSE, heapID );
 
-  TOMOYA_Printf( "load_id %d\n", data_id );
+  NAGI_Printf( "load_id %d\n", data_id );
 
-  TOMOYA_Printf( "attr ofs 0x%x\n", p_wk->p_file->ofs_attr );
-  TOMOYA_Printf( "3dmd ofs 0x%x\n", p_wk->p_file->ofs_3dmd );
+  NAGI_Printf( "attr ofs 0x%x\n", p_wk->p_file->ofs_attr );
+  NAGI_Printf( "3dmd ofs 0x%x\n", p_wk->p_file->ofs_3dmd );
   
   return p_wk;
 }
@@ -100,6 +100,24 @@ void FIELD_DATA_PATCH_Delete( FIELD_DATA_PATCH* p_sys )
 {
   GFL_HEAP_FreeMemory( p_sys->p_file );
   GFL_HEAP_FreeMemory( p_sys );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  内部の配置モデルを書き換え
+ *
+ *	@param	FIELD_DATA_PATCH *p_sys システム
+ *	@param	bmodelID  ビルドモデル
+ *	@param	index     書き換え番号
+ */
+//-----------------------------------------------------------------------------
+void FIELD_DATA_PATCH_WriteBuildModel( FIELD_DATA_PATCH *p_sys, BMODEL_ID bmodelID, u16 index )
+{
+  LayoutFormat* p_3dmd = FIELD_LAND_DATA_PATCH_Get3DmdData( p_sys );
+  PositionSt* p_position = (PositionSt*)&p_3dmd->posData;
+
+  GF_ASSERT( index < p_3dmd->count );
+  p_position[ index ].resourceID   = bmodelID;
 }
 
 //----------------------------------------------------------------------------
@@ -131,7 +149,7 @@ void FIELD_DATA_PATCH_OverWriteAttr( const FIELD_DATA_PATCH* cp_sys, NormalVtxFo
   addr += sizeof(NormalVtxFormat);
   cp_read_buff = (const NormalVtxSt*)(addr); //ヘッダー分ずらす
 
-  TOMOYA_Printf( "attr height %d width %d\n", cp_attr->height, cp_attr->width );
+  NAGI_Printf( "attr height %d width %d\n", cp_attr->height, cp_attr->width );
   
   // 情報を上書き
   for( i=0; i<cp_attr->height; i++ )
@@ -185,7 +203,7 @@ void FIELD_DATA_PATCH_OverWriteAttrEx( const FIELD_DATA_PATCH* cp_sys, NormalVtx
   addr += sizeof(NormalVtxFormat);
   cp_read_buff = (const NormalVtxSt*)(addr); //ヘッダー分ずらす
 
-  TOMOYA_Printf( "attr height %d width %d\n", cp_attr->height, cp_attr->width );
+  NAGI_Printf( "attr height %d width %d\n", cp_attr->height, cp_attr->width );
   GF_ASSERT( cp_attr->height >= (read_grid_z + size_grid_z) );
   GF_ASSERT( cp_attr->width >= (read_grid_x + size_grid_x) );
 
@@ -231,9 +249,9 @@ int FIELD_LAND_DATA_PATCH_AddBuildModel( const FIELD_DATA_PATCH* cp_sys, FIELD_B
   cp_3dmd = FIELD_LAND_DATA_PATCH_Get3DmdData( cp_sys );
   cp_position = (const PositionSt*)&cp_3dmd->posData;
 
-  TOMOYA_Printf( "3dmd count %d\n", cp_3dmd->count );
+  NAGI_Printf( "3dmd count %d\n", cp_3dmd->count );
 
-  TOMOYA_Printf( "grid x=%d z=%d\n", grid_x, grid_z );
+  NAGI_Printf( "grid x=%d z=%d\n", grid_x, grid_z );
 
   // 追加登録
   for( i=0; i<cp_3dmd->count; i++ )
@@ -243,8 +261,8 @@ int FIELD_LAND_DATA_PATCH_AddBuildModel( const FIELD_DATA_PATCH* cp_sys, FIELD_B
     regist.xpos += GRID_TO_FX32( grid_x );
     regist.zpos -= GRID_TO_FX32( grid_z );
 
-    TOMOYA_Printf( "bmodel idx = %d\n", regist.resourceID );
-    TOMOYA_Printf( "regist pos x=%d z=%d\n", FX_Whole( regist.xpos ), FX_Whole( regist.zpos ) );
+    NAGI_Printf( "bmodel idx = %d\n", regist.resourceID );
+    NAGI_Printf( "regist pos x=%d z=%d\n", FX_Whole( regist.xpos ), FX_Whole( regist.zpos ) );
     FIELD_BMODEL_MAN_ResistMapObject( p_bmodel, g3Dmap, &regist, count_start + i);
   }
 

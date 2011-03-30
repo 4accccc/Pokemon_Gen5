@@ -40,4 +40,4 @@ extern void RESORT_MAPCREATE_Exit( RESORT_MAPCREATE *p_wk );
 
 extern void RESORT_MAPCREATE_Setup( RESORT_MAPCREATE *p_wk, const RESORT_CITY_DATA *cp_city, const RESORT_PEOPLE_ALL_DATA *cp_people_all );
 
-extern int RESORT_MAPCREATE_SetUpBlock( RESORT_MAPCREATE *p_wk, NormalVtxFormat* p_attr, FIELD_BMODEL_MAN* p_bm, FLD_G3D_MAP* g3Dmap, int build_count, u32 block_x, u32 block_z, HEAPID heapID );
+extern int RESORT_MAPCREATE_SetUpBlock( RESORT_MAPCREATE *p_wk, NormalVtxFormat* p_attr, FIELD_BMODEL_MAN* p_bm, FLD_G3D_MAP* g3Dmap, int build_count, int map_index, HEAPID heapID );
