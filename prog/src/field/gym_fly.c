@@ -108,11 +108,13 @@
 // map_array.cdatの配列の要素
 #define MAP_ARRAY_ROW           (51)        // マップの縦MAX
 #define MAP_ARRAY_COL           (23)        // マップの横MAX
+// map_array.xlsの数字と同じ
 enum{
   MAP_ARRAY_BLOW = 0,     // 吹き飛べる
   MAP_ARRAY_STOP,         // 吹き飛べない
   MAP_ARRAY_TIMECOUNT_START,  // 時間計測開始
   MAP_ARRAY_SHORTCUT,     // 帰り道ショートカット
+  MAP_ARRAY_TIMECOUNT_STOP,// 時間計測をしない
 };
 
 //-------------------------------------
@@ -559,6 +561,12 @@ GMEVENT * GYM_FLY_CheckEvent( GAMESYS_WORK *p_gamesys )
     {
       p_wk->time_start = TRUE;
     }
+    return NULL;
+  }
+  
+  // ジムリーダーの場所は時間計測をしない
+  if( map_array[gz][gx] == MAP_ARRAY_TIMECOUNT_STOP )
+  {
     return NULL;
   }
 
