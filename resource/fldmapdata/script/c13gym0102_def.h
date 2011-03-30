@@ -5,6 +5,6 @@
 #define _C13GYM0102_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_C13GYM0102  (1)
+#define SCRID_C13GYM0102 (1)
 
 #endif //_C13GYM0102_DEF_H_
