@@ -339,6 +339,7 @@ static void DEBUGMENU_Exit( void );
 static int debug_windmeter_time1 = WINDMETER_MIDDLE_TIME;   // 低速から中速に変わるまでの時間
 static int debug_windmeter_time2 = WINDMETER_HIGH_TIME;   // 中速から高速に変わるまでの時間
 static u16 debug_blow_event_time_max = BLOW_EVENT_TIME;   // 吹き飛ばしイベントの最低経過時間
+static u16 debug_safe_event_time_max = SAFE_EVENT_TIME;   // 安全地帯イベントの最低経過時間
 
 static s16 debug_w = 0;
 static s16 debug_h = 2;
@@ -1612,12 +1613,12 @@ static GMEVENT_RESULT BlowEventSafe( GMEVENT* event, int* seq, void* wk )
       // 一定時間は吹き飛ばしイベントを続ける
       {
 #ifdef GYM_FLY_DEBUG_MENU
-        const u16 blow_event_time_max = debug_blow_event_time_max;
+        const u16 safe_event_time_max = debug_safe_event_time_max;
 #else
-        const u16 blow_event_time_max = BLOW_EVENT_TIME;
+        const u16 safe_event_time_max = SAFE_EVENT_TIME;
 #endif
 
-        if( p_wk->time >= blow_event_time_max )
+        if( p_wk->time >= safe_event_time_max )
         {
           ret = TRUE;
         }
@@ -2727,6 +2728,8 @@ static void DebugWin_Update_ChangeTime2( void *userWork, DEBUGWIN_ITEM *item );
 static void DebugWin_Draw_ChangeTime2( void *userWork, DEBUGWIN_ITEM *item );
 static void DebugWin_Update_ChangeBlowTime( void *userWork, DEBUGWIN_ITEM *item );
 static void DebugWin_Draw_ChangeBlowTime( void *userWork, DEBUGWIN_ITEM *item );
+static void DebugWin_Update_ChangeSafeTime( void *userWork, DEBUGWIN_ITEM *item );
+static void DebugWin_Draw_ChangeSafeTime( void *userWork, DEBUGWIN_ITEM *item );
 static void DebugWin_Update_ChangeWidth( void *userWork, DEBUGWIN_ITEM *item );
 static void DebugWin_Draw_ChangeWidth( void *userWork, DEBUGWIN_ITEM *item );
 static void DebugWin_Update_ChangeHeight( void *userWork, DEBUGWIN_ITEM *item );
@@ -2764,6 +2767,11 @@ static void DEBUGMENU_Init( void *p_wk, FIELDMAP_WORK *p_fieldmap, HEAPID heapID
                               heapID );
   DEBUGWIN_AddItemToGroupEx(  DebugWin_Update_ChangeBlowTime,
                               DebugWin_Draw_ChangeBlowTime,
+                              p_fieldmap,
+                              DEBUGMENU_GYM_FLY,
+                              heapID );
+  DEBUGWIN_AddItemToGroupEx(  DebugWin_Update_ChangeSafeTime,
+                              DebugWin_Draw_ChangeSafeTime,
                               p_fieldmap,
                               DEBUGMENU_GYM_FLY,
                               heapID );
@@ -2970,6 +2978,38 @@ static void DebugWin_Update_ChangeBlowTime( void *userWork, DEBUGWIN_ITEM *item 
 static void DebugWin_Draw_ChangeBlowTime( void *userWork, DEBUGWIN_ITEM *item )
 {
   DEBUGWIN_ITEM_SetNameV( item, "ふきとばしじかん[%d]", debug_blow_event_time_max );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  安全イベントの継続時間  更新
+ *
+ *	@param	*userWork ワーク
+ *	@param	*item     アイテム
+ */
+//-----------------------------------------------------------------------------
+static void DebugWin_Update_ChangeSafeTime( void *userWork, DEBUGWIN_ITEM *item )
+{
+  int value = debug_safe_event_time_max;
+
+  if( DebugWin_ChangeData( &value, 0, 600 ) )
+  {
+    // 更新あり
+    debug_safe_event_time_max = value;
+    DEBUGWIN_RefreshScreen();
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  安全イベントの継続時間  描画
+ *
+ *	@param	*userWork ワーク
+ *	@param	*item     アイテム
+ */
+//-----------------------------------------------------------------------------
+static void DebugWin_Draw_ChangeSafeTime( void *userWork, DEBUGWIN_ITEM *item )
+{
+  DEBUGWIN_ITEM_SetNameV( item, "あんぜんじかん[%d]", debug_safe_event_time_max );
 }
 
 //----------------------------------------------------------------------------

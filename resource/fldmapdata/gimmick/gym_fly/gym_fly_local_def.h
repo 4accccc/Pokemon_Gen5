@@ -74,3 +74,5 @@
 #define WINDMETER_HIGH_TIME (5*30)	//5秒
 //吹き飛ばしイベントの継続時間
 #define BLOW_EVENT_TIME (4*30)	//4秒
+//安全地帯イベントの継続時間
+#define SAFE_EVENT_TIME (4*30)	//4秒
