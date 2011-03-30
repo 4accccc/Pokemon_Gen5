@@ -848,6 +848,20 @@ BOOL ZONEDATA_IsWfbcCalcMoodSkip(u16 zone_id)
   return isTargetZone( zone_id, zone_tbl, NELEMS( zone_tbl ));
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レゾナンスリゾートかどうか
+ *
+ *	@param	u16 zone_id   ゾーンID
+ *
+ *	@return TRUE…レゾナンスリゾート  FALSE…その他のマップ
+ */
+//-----------------------------------------------------------------------------
+BOOL ZONEDATA_IsResonanceResort( u16 zone_id )
+{
+  return zone_id == ZONE_ID_C16;
+}
+
 //------------------------------------------------------------------
 /**
  * @brief  ミュージカル待合室かどうかのチェック

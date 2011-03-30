@@ -472,6 +472,7 @@ static void zoneChangeScene( FIELDMAP_WORK *fieldWork, u32 zone_id );
 static void fldmap_ClearMapCtrlWork( FIELDMAP_WORK *fieldWork );
 static void setupCameraArea( FIELDMAP_WORK *fieldWork, u32 zone_id, HEAPID heapID );
 static void setupWfbc( GAMEDATA* gdata, FIELDMAP_WORK *fieldWork, u32 zone_id );
+static void setupResonanceResort( GAMEDATA* gdata, FIELDMAP_WORK *fieldWork, u32 zone_id );
 
 static fx32 fldmap_getProjMatZOffsValue( u16 zone_id );
 
@@ -753,6 +754,9 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
 
     // WFBC街情報を設定 影を操作するためにギミックのセットアップに位置を変更
     setupWfbc( gdata, fieldWork, fieldWork->map_id );
+
+    //レゾナンスリゾートのセットアップ
+    setupResonanceResort( gdata, fieldWork, fieldWork->map_id );
     break;
 
   case 2:
@@ -3271,6 +3275,26 @@ static void setupWfbc( GAMEDATA* gdata, FIELDMAP_WORK *fieldWork, u32 zone_id )
   }
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief　レゾナンスリゾート街生成設定（実際の作成はfield_func_random_generate.cで行う）
+ *
+ *	@param	GAMEDATA* gdata
+ *	@param	*fieldWork
+ *	@param	zone_id 
+ */
+//-----------------------------------------------------------------------------
+static void setupResonanceResort( GAMEDATA* gdata, FIELDMAP_WORK *fieldWork, u32 zone_id )
+{
+  FIELD_WFBC_CORE* p_core;
+  FIELD_WFBC* p_wfbc;
+  EVENTDATA_SYSTEM* p_evdata;
+  
+  if( ZONEDATA_IsResonanceResort( zone_id ) )
+  {
+    //FLDMAPPER_SetWfbcData( fieldWork->g3Dmapper, p_core, mapmode );
+  }
+}
 
 //----------------------------------------------------------------------------
 /**

@@ -264,6 +264,11 @@ extern BOOL ZONEDATA_IsWfbc(u16 zone_id);
 extern BOOL ZONEDATA_IsWfbcCalcMoodSkip(u16 zone_id);
 
 //------------------------------------------------------------------
+//  レゾナンスリゾートかどうかのチェック
+//------------------------------------------------------------------
+extern BOOL ZONEDATA_IsResonanceResort( u16 zone_id );
+
+//------------------------------------------------------------------
 //  ミュージカル待合室かどうかのチェック
 //------------------------------------------------------------------
 extern BOOL ZONEDATA_IsMusicalWaitingRoom(u16 zone_id);

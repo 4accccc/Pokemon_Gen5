@@ -20,7 +20,10 @@
 #include "fieldmap_resist.h"
 #include "field_g3dmap_exwork.h"
 #include "field_ground_anime.h"
+
 #include "field_wfbc.h"
+#include "resonance_resort/resort_mapcreate.h"
+
 #include "field/field_status_local.h" //FIELD_STATUS
 
 #include "system/g3d_tool.h"
@@ -109,7 +112,9 @@ typedef struct {
 struct _FLD_G3D_MAP_EXWORK{
 	FIELD_GRANM_WORK* p_granm_wk;		// 地面アニメーション
 	FIELD_BMODEL_MAN * bmodel_man;	// 
-	FIELD_WFBC * wfbcwork;	// 
+	FIELD_WFBC * wfbcwork;	//
+  RESORT_MAPCREATE *p_resort_wk;  // リゾート
+  
 	u32               mapIndex;     //マップのindex(ランダムマップで使用
   HEAPID          heapID;       // ヒープID
 };
@@ -175,6 +180,7 @@ struct _FLD_G3D_MAPPER {
   FIELD_BMODEL_MAN* bmodel_man; //配置モデルマネジャー
 	FIELD_GRANM*	granime;	// 地面アニメーションシステム
   FIELD_WFBC* wfbcwork;   // ランダムマップワーク
+  RESORT_MAPCREATE *p_resort_wk;  // リゾート
 
   EHL_PTR	ExHeightList;   //拡張高さデータ領域
 };
@@ -267,6 +273,8 @@ FLDMAPPER*	FLDMAPPER_Create( HEAPID heapID, u16 season )
   // WFBCワークの生成
   g3Dmapper->wfbcwork = FIELD_WFBC_Create( heapID );
 
+  // リゾート用ワークの生成
+  g3Dmapper->p_resort_wk = RESORT_MAPCREATE_Init( heapID );
 
   //拡張高さデータ領域確保
   g3Dmapper->ExHeightList = EXH_AllocHeightList(EX_HEIGHT_NUM, heapID);
@@ -286,6 +294,9 @@ void	FLDMAPPER_Delete( FLDMAPPER* g3Dmapper )
 	EXH_FreeHeightList(g3Dmapper->ExHeightList);
 
 	FLDMAPPER_ReleaseData( g3Dmapper );	//登録されたままの場合を想定して削除
+
+  //リゾートワークの破棄
+  RESORT_MAPCREATE_Exit( g3Dmapper->p_resort_wk );
 
   // WFBCワークの破棄
   FIELD_WFBC_Delete( g3Dmapper->wfbcwork );
@@ -1804,6 +1815,17 @@ FIELD_WFBC* FLD_G3D_MAP_EXWORK_GetWFBCWork( const FLD_G3D_MAP_EXWORK* cp_wk )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  レゾナンスリゾート情報
+ *
+ *	@param	cp_wk   ワーク
+ */
+//-----------------------------------------------------------------------------
+RESORT_MAPCREATE* FLD_G3D_MAP_EXWORK_GetResortWork( const FLD_G3D_MAP_EXWORK* cp_wk )
+{
+  return cp_wk->p_resort_wk;
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief	マップのインデックス取得
  *
  *	@param	cp_wk		ワーク
@@ -1846,6 +1868,7 @@ static void FLD_G3D_MAP_ExWork_Init( FLD_G3D_MAP_EXWORK* p_wk, FLDMAPPER* g3Dmap
 	p_wk->p_granm_wk = FIELD_GRANM_GetWork( g3Dmapper->granime, index );
   p_wk->bmodel_man = g3Dmapper->bmodel_man;
   p_wk->wfbcwork = g3Dmapper->wfbcwork;
+  p_wk->p_resort_wk = g3Dmapper->p_resort_wk;
   p_wk->mapIndex = index;
   p_wk->heapID   = heapID;
 }
