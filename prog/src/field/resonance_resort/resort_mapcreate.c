@@ -155,7 +155,7 @@ extern int RESORT_MAPCREATE_SetUpBlock( RESORT_MAPCREATE *p_wk, NormalVtxFormat*
 #endif
   if( p_wk->cp_city == NULL || p_wk->cp_people_all == NULL )
   {
-    return 0;
+    return build_count;
   }
   else
   {
