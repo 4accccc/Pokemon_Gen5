@@ -473,7 +473,28 @@ void GYM_FLY_Move(FIELDMAP_WORK *p_fieldmap)
       // 徐々に消す
       if( p_wk->alpha_reset == TRUE )
       {
-        p_wk->alpha[i] -= 2;
+        // まず強風消してから中風を消す
+        // i=0だと中風 i=1だと強風
+        if( i == 1 )
+        {
+          // 強風は無条件
+          if( p_wk->alpha[i] > 0 ){ p_wk->alpha[i] -= 2; }
+
+          if( p_wk->alpha[i] < 0 )
+          {
+            // 描画軽くするために、消していた風1を表示
+            FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GYM_FLY_UNIT_IDX, EFFECT_WIND_1, FALSE );  // 表示
+          }
+        }
+        if( i == 0 )
+        {
+          // 強風が消えてる場合のみ
+          if( p_wk->alpha[1] == 0 )
+          {
+            if( p_wk->alpha[i] > 0 ){ p_wk->alpha[i] -= 4; }
+          }
+        }
+
         if( p_wk->alpha[i] < 0 )
         {
           p_wk->alpha[i] = 0;
@@ -485,7 +506,7 @@ void GYM_FLY_Move(FIELDMAP_WORK *p_fieldmap)
             FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, TRUE ); //アニメストップ
           }
           // フラグ初期化
-          if( i == 1 ){ p_wk->alpha_reset = FALSE; }
+          if( i == 0 ){ p_wk->alpha_reset = FALSE; }
         }
       }
     }
@@ -1044,8 +1065,6 @@ static void WIND_ChangeState( FIELDMAP_WORK *p_fieldmap, const WIND_STATE state 
     // SEチェンジ
     SOUND_ChangeSE( &p_wk->sound );
 
-    // 描画軽くするために、消していた風1を表示 11/03/29
-    FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GYM_FLY_UNIT_IDX, EFFECT_WIND_1, FALSE );  // 表示
     ICHI_Printf("風力計状態：低速\n");
     break;
   case WIND_STATE_MIDDLE:
@@ -1068,7 +1087,7 @@ static void WIND_ChangeState( FIELDMAP_WORK *p_fieldmap, const WIND_STATE state 
     // SEチェンジ
     SOUND_ChangeSE( &p_wk->sound );
 
-    // 描画軽くするために、風1は消す 11/03/29
+    // 描画軽くするために、風1は消す
     FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GYM_FLY_UNIT_IDX, EFFECT_WIND_1, TRUE );
     ICHI_Printf("風力計状態：高速\n");
     break;
