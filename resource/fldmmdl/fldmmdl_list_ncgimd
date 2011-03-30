@@ -246,6 +246,18 @@ FMMDL_RESLIST_NCGIMD = \
 	rsleader7.imd \
 	rsleader8.imd \
 	eleader1.imd \
+	dpleader1.imd \
+	dpleader2.imd \
+	dpleader3.imd \
+	dpleader4.imd \
+	dpleader5.imd \
+	dpleader6.imd \
+	dpleader7.imd \
+	dpleader8.imd \
+	rgchampion.imd \
+	gschampion.imd \
+	rschampion.imd \
+	echampion.imd \
 	tsure_001.imd \
 	tsure_002.imd \
 	tsure_003.imd \
