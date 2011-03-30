@@ -163,7 +163,7 @@ static const u16 JumpZoneID_ListTbl[] = {
   ZONE_ID_PALACE02,
   ZONE_ID_D09,
   
-#if defined(DEBUG_ONLY_FOR_tsuruta_saya) | defined(DEBUG_ONLY_FOR_tamada) | defined(DEBUG_ONLY_FOR_suginaka_katsunori)
+#if defined(DEBUG_ONLY_FOR_tsuruta_saya) | defined(DEBUG_ONLY_FOR_tamada) | defined(DEBUG_ONLY_FOR_suginaka_katsunori) | defined(DEBUG_ONLY_FOR_tanaka_ryouta)
   ZONE_ID_D05R0101,
 #endif
 #if defined(DEBUG_ONLY_FOR_fuchino_hiroki) | defined(DEBUG_ONLY_FOR_ohkubo_tomohiko) | defined(DEBUG_ONLY_FOR_nakatsui) | defined(DEBUG_ONLY_FOR_tamada)

@@ -7,17 +7,18 @@
 #------------------------------------------------------------------------------
 #※コンバートを行う人のユーザーIDをここに書く
 #------------------------------------------------------------------------------
-USERS	= tamada suginaka_katsunori
+USERS	= suginaka_katsunori
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
 #------------------------------------------------------------------------------
 targetname = wbt_trlist
-
+trname_gmm = wbt_trname.gmm
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
 #------------------------------------------------------------------------------
 TARGETDIR = $(PROJECT_ARCDIR)wbt
+GMMDIR	= $(PROJECT_RSCDIR)message/src
 
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
@@ -56,9 +57,12 @@ CDAT	= wbt_trainer.dat
 
 
 LDIRT_CLEAN = $(TARGETDIR)/$(targetname).narc $(TARGETDIR)/$(targetname).naix
+
 #コンバート対象者のみ、中間ファイル削除
 ifeq	($(CONVERTUSER),true)	
 LDIRT_CLEAN += *.dat *.bin $(targetname).narc $(targetname).naix arc_result.txt
+LDIRT_CLEAN += $(GMMDIR)/$(trname_gmm)
+LDIRT_CLEAN += $(trname_gmm)
 endif
 
 
@@ -96,7 +100,7 @@ wbt_trainer.bin: $(DATATXT)
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	subdir $(TARGETDIR)/$(targetname).narc
+do-build:	subdir $(TARGETDIR)/$(targetname).narc $(GMMDIR)/$(trname_gmm)
 
 subdir:
 	@$(MAKE_SUBDIR)
@@ -106,7 +110,6 @@ $(TARGETDIR)/$(targetname).narc:  $(targetname).narc
 	@echo copying $(targetname).narc
 	@$(COPY) $(targetname).narc $(TARGETDIR)/
 	@$(COPY) $(targetname).naix $(TARGETDIR)/
-
 
 #コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
@@ -118,9 +121,14 @@ $(targetname).narc: wbt_trainer.bin
 $(DATATXT):	$(DATAFILE)
 	$(XLS2TAB) -c $(DATAFILE) > $(DATATXT)
 
+$(GMMDIR)/$(trname_gmm):	$(trname_gmm)
+	$(COPY) $(trname_gmm) $(GMMDIR)
+
+$(trname_gmm):	$(DATATXT)
+	ruby wbt_trainer.rb $(DATATXT) $(GMMDIR)/../template.gmm
+
 #wbt_trainer.dat: $(DATATXT)
 #	@ruby wbt_trainer.rb $(DATATXT) 
-
 
 endif
 

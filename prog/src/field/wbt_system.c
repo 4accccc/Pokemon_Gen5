@@ -20,6 +20,7 @@
 #include "arc/fieldmap/fldmmdl_mdlres.naix"
 
 #include "msg/msg_wbt_tournament.h"
+#include "arc/message.naix"
 
 
 #include "system/gfl_use.h" //GFUser_GetPublicRand0
@@ -232,11 +233,21 @@ const REGULATION * WBTSYS_GetRegulation( WBTSYS * wbtsys )
 
 //============================================================================================
 //============================================================================================
+#include "fldmmdl.h"
+#include "fieldmap/fldmmdl_mdlparam.naix"
+
+#include "tr_tool/trtype_def.h"
+#include "sound/pm_sndsys.h"
+#include "../../../resource/wbt/wbt_trainer/wbt_trainer.cdat"
+
 static void setupWBTLISTTrainer( WBTLIST_TRAINER * wbtlist_tr, HEAPID heapID, u8 tr_id );
+static void setupWBTLISTResultAll( WBTLIST_PARAM * wbtlist_param );
+static void getMMdlObjCodeParam( ARCHANDLE * handle, u16 mmdl_id,
+    u8 * anm_id, u16 * rsc_idx, u8 * sex );
 static u8 BTL_CALC_TypeAff( PokeType wazaType, PokeType pokeType );
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-const WBTLIST_PARAM * WBTSYS_CreateWBTListParam( HEAPID heapID, GAMESYS_WORK * gsys )
+WBTLIST_PARAM * WBTLIST_PARAM_Create( HEAPID heapID, GAMESYS_WORK * gsys )
 {
   int i;
   WBTLIST_PARAM * wbtlist_param;
@@ -261,6 +272,42 @@ const WBTLIST_PARAM * WBTSYS_CreateWBTListParam( HEAPID heapID, GAMESYS_WORK * g
   return wbtlist_param;
 }
 
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void WBTLIST_PARAM_Delete( WBTLIST_PARAM * wbtlist_param )
+{
+  int i;
+  for ( i = 0; i < WBT_TRAINER_NUM; i ++ )
+  {
+    WBTLIST_TRAINER * trdata = &wbtlist_param->trainer[i];
+    GFL_STR_DeleteBuffer( trdata->name );
+  }
+  GFL_HEAP_FreeMemory( wbtlist_param );
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void WBTLIST_PARAM_Setup_Debug( WBTLIST_PARAM * wbtlist_param, HEAPID heapID )
+{
+  int i;
+  //仮
+  for ( i = 0; i < WBT_TRAINER_NUM; i ++ )
+  {
+    static const u16 sample_trid[WBT_TRAINER_NUM] = {
+      0,//チェレン
+      53,//モブ
+      2,//アーティ
+      1,//？？
+      54,//モブ
+      3,//カミツレ
+      64,//モブ
+      18,//シロナ
+    };
+    setupWBTLISTTrainer( &wbtlist_param->trainer[i], heapID, sample_trid[i] );
+  }
+  setupWBTLISTResultAll( wbtlist_param );
+}
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -289,14 +336,35 @@ void WBTSYS_SetupWBTListParam( const WBTSYS * wbtsys, WBTLIST_PARAM * wbtlist_pa
 static void setupWBTLISTTrainer( WBTLIST_TRAINER * wbtlist_tr, HEAPID heapID, u8 tr_id )
 {
   WBT_TRDATA tr_rom_data;
+  ARCHANDLE * handle;
+
+  handle = GFL_ARC_OpenDataHandle( ARCID_MMDL_PARAM, heapID );
+
+#if 0
   GFL_ARC_LoadDataOfs( &tr_rom_data, ARCID_WBT_TRLIST, NARC_wbt_trlist_wbt_trainer_bin,
       sizeof(WBT_TRDATA) * tr_id, sizeof(WBT_TRDATA) );
+#endif
+  tr_rom_data = WBTTrainerData[ tr_id ];
+  TAMADA_Printf("TR_ROM_DATA:tr_id = %d\n", tr_id );
+  TAMADA_Printf("TR_ROM_DATA:priority = %d\n", tr_rom_data.priority );
+  TAMADA_Printf("TR_ROM_DATA:type = %d\n", tr_rom_data.type );
+  TAMADA_Printf("TR_ROM_DATA:mmdl_id = %d\n", tr_rom_data.mmdl_id );
 
-  wbtlist_tr->mmdl_id = tr_rom_data.mmdl_id;
-  wbtlist_tr->pattern_no = 3;
-  wbtlist_tr->sex = 0;
   wbtlist_tr->priority = tr_rom_data.priority;
   wbtlist_tr->poketype = tr_rom_data.type;
+
+  getMMdlObjCodeParam( handle, tr_rom_data.mmdl_id,
+      &wbtlist_tr->pattern_no, &wbtlist_tr->mmdl_id, &wbtlist_tr->sex );
+
+  GFL_ARC_CloseDataHandle( handle );
+
+  {
+    GFL_MSGDATA * man;
+    man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
+        NARC_message_wbt_trname_dat, heapID );
+    GFL_MSG_GetString( man, tr_id, wbtlist_tr->name );
+    GFL_MSG_Delete( man );
+  }
 }
 
 //------------------------------------------------------------------
@@ -350,6 +418,7 @@ static void setupWBTLISTResultAll( WBTLIST_PARAM * wbtlist_param )
 {
   int i, j;
 
+  //1回戦結果生成
   for ( i = 0; i < 4 ; i ++ )
   {
     WBTLIST_RESULT * result = &wbtlist_param->first_stage[ i ];
@@ -357,6 +426,8 @@ static void setupWBTLISTResultAll( WBTLIST_PARAM * wbtlist_param )
     WBTLIST_TRAINER * tr_b = &wbtlist_param->trainer[ i * 2 + 1 ];
     setupWBTLISTResult( result, tr_a, tr_b );
   }
+
+  //2回戦結果生成
   for ( i = 0; i < 2 ; i ++ )
   {
     WBTLIST_RESULT * result = &wbtlist_param->second_stage[i];
@@ -374,6 +445,47 @@ static void setupWBTLISTResultAll( WBTLIST_PARAM * wbtlist_param )
     }
     setupWBTLISTResult( result, tr[0], tr[1] );
   }
+}
+
+//============================================================================================
+//============================================================================================
+extern const MMDL_BBDACT_ANMTBL DATA_MMDL_BBDACT_ANM_ListTable[MMDL_BLACT_ANMTBLNO_MAX];
+//-----------------------------------------------------------------------------
+//  fldmmdlのOBJCODE_PARAMから正面絵の位置を引っ張る
+//  OBJCODE_PARAM::anm_idからアニメパターンの種類がわかるので、
+//  それぞれのアニメパターンの何番目が正面絵かを判定する
+//-----------------------------------------------------------------------------
+static u8 getFrontAnimePatternNo( anm_id )
+{
+  const MMDL_BBDACT_ANMTBL * mmdl_anm_tbl;
+  GF_ASSERT( anm_id < MMDL_BLACT_ANMTBLNO_MAX );
+  mmdl_anm_tbl = &DATA_MMDL_BBDACT_ANM_ListTable[ anm_id ];
+  GF_ASSERT( AC_DIR_D < mmdl_anm_tbl->anm_max );
+
+  return mmdl_anm_tbl->pAnmTbl[AC_DIR_D]->anmData.celIdx;
+}
+
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+static void getMMdlObjCodeParam( ARCHANDLE * handle, u16 mmdl_id,
+    u8 * anm_id, u16 * rsc_idx, u8 * sex )
+{
+  OBJCODE_PARAM objcode_param;
+  u32 size = sizeof( OBJCODE_PARAM );
+  u32 offs = OBJCODE_PARAM_TOTAL_NUMBER_SIZE + ( size * MMDL_TOOL_OBJCodeToDataNumber(mmdl_id) );
+  GFL_ARC_LoadDataOfsByHandle( handle, NARC_fldmmdl_mdlparam_fldmmdl_mdlparam_bin,
+      offs, size, &objcode_param );
+
+  TAMADA_Printf("OBJCODE_PARAM:mmdl_id = %d\n",mmdl_id );
+  TAMADA_Printf("OBJCODE_PARAM:offs = %d\n", (offs - OBJCODE_PARAM_TOTAL_NUMBER_SIZE) / size );
+  TAMADA_Printf("OBJCODE_PARAM:anm_id = %d\n",objcode_param.anm_id );
+  TAMADA_Printf("OBJCODE_PARAM:res_idx = %d\n",
+      ((OBJCODE_PARAM_BUF_BBD *)objcode_param.buf)->res_idx );
+  TAMADA_Printf("OBJCODE_PARAM:sex = %d\n",objcode_param.sex );
+
+  *anm_id = getFrontAnimePatternNo( objcode_param.anm_id );
+  *rsc_idx = ((OBJCODE_PARAM_BUF_BBD *)objcode_param.buf)->res_idx;
+  *sex = objcode_param.sex;
 }
 
 

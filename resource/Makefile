@@ -48,6 +48,7 @@ SUBDIRS	=	wmi \
             staff_roll \
 			manual \
 			medal\
+			wbt \
 			message\
 			fldmmdl \
 			encount \
@@ -177,7 +178,6 @@ SUBDIRS	=	wmi \
 			assert_err \
 			field_goout_effect \
 			resonance_resort \
-			wbt \
 			pokewood
 
 

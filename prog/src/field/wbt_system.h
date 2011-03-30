@@ -73,7 +73,10 @@ extern u8 WBTSYS_GetSelectDLData( const WBTSYS * wbtsys );
 //============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-extern const WBTLIST_PARAM * WBTSYS_CreateWBTListParam( HEAPID heapID, GAMESYS_WORK * gsys );
+extern WBTLIST_PARAM * WBTLIST_PARAM_Create( HEAPID heapID, GAMESYS_WORK * gsys );
+extern void WBTLIST_PARAM_Delete( WBTLIST_PARAM * wbtlist_param );
+
+extern void WBTLIST_PARAM_Setup_Debug( WBTLIST_PARAM * wbtlist_param, HEAPID heapID );
 
 //============================================================================================
 //============================================================================================

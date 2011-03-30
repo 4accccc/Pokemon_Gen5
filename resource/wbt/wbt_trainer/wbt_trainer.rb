@@ -4,6 +4,8 @@
 # WBTトレーナーリスト　コンバータ
 # 2011.03.08  tamada@GAMEFREAK inc.
 #
+# 引数が一つ（wbt_trainer_list.csv)の場合は.cdat用の出力、
+# 引数が二つ（twbt_trainer_list.csvとtemplate.gmm)の場合はgmmの生成
 #
 #============================================================================
 
@@ -108,6 +110,8 @@ end
 #----------------------------------------------------------------------------
 #----------------------------------------------------------------------------
 class WBT_TRDATA
+
+  attr_reader :name
 
   def initialize( column )
     @no = column[COL::NO].to_i
@@ -227,10 +231,24 @@ def put_trdata_source( trdata_list )
   return output
 end
 
+def make_trname_gmm( trdata_list, template_gmm )
+  trname_gmm = GMM::new
+  trname_gmm.open_gmm( template_gmm, "wbt_trname.gmm" )
+  trdata_list.each_with_index{|trdata, idx|
+    trname = trdata.name
+    trname_gmm.make_row_kanji( sprintf("WBT_TRNAME_%02d",idx), trname, trname )
+  }
+  trname_gmm.close_gmm
+end
 
 #----------------------------------------------------------------------------
 #----------------------------------------------------------------------------
-puts put_trdata_source( read_trdata_list( ARGV[0] ) )
+trdata_list = read_trdata_list( ARGV[0] ) 
+if ARGV.size == 1 then
+  puts put_trdata_source( trdata_list )
+elsif ARGV.size == 2 then
+  make_trname_gmm( trdata_list, ARGV[1] )
+end
 
 
 

@@ -70,8 +70,12 @@ struct DEBUG_WBT_WORK{
   FLDMENUFUNC *menuFunc;
   //ZUKAN_SAVEDATA * sv;
   BOOL (*call_func)( DEBUG_WBT_WORK * );
+  WBTLIST_STAGE stage;
 };
 
+static BOOL debugMenuCallProc_WBTList_entry( DEBUG_WBT_WORK *p_wk );
+static BOOL debugMenuCallProc_WBTList_1st( DEBUG_WBT_WORK *p_wk );
+static BOOL debugMenuCallProc_WBTList_2nd( DEBUG_WBT_WORK *p_wk );
 static BOOL debugMenuCallProc_WBTList( DEBUG_WBT_WORK *p_wk );
 static BOOL debugCommand_printf( DEBUG_WBT_WORK *p_wk );
 //=============================================================================
@@ -110,6 +114,8 @@ static const DEBUG_MENU_LIST WBTMenuList[] =
   { DEBUG_STR_WBT_02, (void*)DEBUG_STR_WBT_02, GFL_OVERLAY_BLANK_ID },  // デバッグ出力
   { DEBUG_STR_WBT_03, (void*)DEBUG_STR_WBT_03, GFL_OVERLAY_BLANK_ID },   // バックアップ読み込み
   { DEBUG_STR_WBT_04, (void*)DEBUG_STR_WBT_04, GFL_OVERLAY_BLANK_ID },   // トーナメント表アプリ
+  { DEBUG_STR_WBT_05, (void*)DEBUG_STR_WBT_05, GFL_OVERLAY_BLANK_ID },   // トーナメント表アプリ
+  { DEBUG_STR_WBT_06, (void*)DEBUG_STR_WBT_06, GFL_OVERLAY_BLANK_ID },   // トーナメント表アプリ
 };
 
 static const DEBUG_MENU_INITIALIZER DebugMenuWBTImitializer = {
@@ -138,6 +144,13 @@ BOOL debugMenuCallProc_WBT( DEBUG_MENU_EVENT_WORK *wk )
   FIELDMAP_WORK *fieldWork = wk->fieldWork;
   DEBUG_WBT_WORK *work;
 
+  u16 zone_id = FIELDMAP_GetZoneID( fieldWork );
+  if ( zone_id != ZONE_ID_D05R0101 )
+  {
+    //オーバーレイがないものを呼び出さないように使用箇所を制限
+    OS_Printf("デバッグメニューWBTはD05R0101以外では呼べません\n");
+    return FALSE;
+  }
   GMEVENT_Change( event, debugMenuWBTEvent, sizeof(DEBUG_WBT_WORK) );
 
   work = GMEVENT_GetEventWork( event );
@@ -197,6 +210,17 @@ static GMEVENT_RESULT debugMenuWBTEvent( GMEVENT *event, int *seq, void *wk )
 
     case DEBUG_STR_WBT_04:
       work->call_func = debugMenuCallProc_WBTList;
+      work->stage = WBTLIST_STAGE_ENTRY;
+      (*seq)++;
+      break;
+    case DEBUG_STR_WBT_05:
+      work->call_func = debugMenuCallProc_WBTList;
+      work->stage = WBTLIST_STAGE_1ST;
+      (*seq)++;
+      break;
+    case DEBUG_STR_WBT_06:
+      work->call_func = debugMenuCallProc_WBTList;
+      work->stage = WBTLIST_STAGE_2ND;
       (*seq)++;
       break;
     }
@@ -247,8 +271,9 @@ typedef struct
   GAMESYS_WORK        *p_gamesys;
   GMEVENT             *p_event;
   FIELDMAP_WORK       *p_field;
-  WBTLIST_PARAM       param;
+  WBTLIST_PARAM       *wbtlist_param;
 } DEBUG_WBTLIST_EVENT_WORK;
+
 static GMEVENT_RESULT debugMenuWBTList( GMEVENT *p_event, int *p_seq, void *p_wk_adrs );
 //----------------------------------------------------------------------------
 /**
@@ -272,9 +297,13 @@ static BOOL debugMenuCallProc_WBTList( DEBUG_WBT_WORK *p_wk )
   GFL_STD_MemClear( p_param, sizeof(DEBUG_WBTLIST_EVENT_WORK) );
 
   p_param->p_gamesys  = p_gamesys;
-  p_param->param.gamesys  = p_gamesys;
+  p_param->wbtlist_param = WBTLIST_PARAM_Create( HEAPID_PROC, p_gamesys );
+  WBTLIST_PARAM_Setup_Debug( p_param->wbtlist_param, HEAPID_FIELDMAP );
+  p_param->wbtlist_param->stage = p_wk->stage;
   p_param->p_event    = p_event;
   p_param->p_field    = p_field;
+
+  //WBTLIST_
 
   OS_Printf( "WBT List Start\n" );
 
@@ -306,11 +335,12 @@ static GMEVENT_RESULT debugMenuWBTList( GMEVENT *p_event, int *p_seq, void *p_wk
   {
   case SEQ_CALL_PROC:
     GMEVENT_CallEvent( p_event, EVENT_FieldSubProc( p_wk->p_gamesys, p_wk->p_field,
-          FS_OVERLAY_ID(namein), &WBTListProcData, &p_wk->param ) );
+          FS_OVERLAY_ID(namein), &WBTListProcData, p_wk->wbtlist_param ) );
     *p_seq  = SEQ_EXIT;
     break;
 
   case SEQ_EXIT:
+    WBTLIST_PARAM_Delete( p_wk->wbtlist_param );
     return GMEVENT_RES_FINISH;
   }
 
