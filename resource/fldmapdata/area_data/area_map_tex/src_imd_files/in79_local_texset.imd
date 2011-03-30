@@ -3,7 +3,7 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino_hiroki" host="W00252" date="2011-03-29T19:30:17"/>
+	<create user="fuchino_hiroki" host="W00252" date="2011-03-30T14:21:19"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
@@ -29,7 +29,7 @@
 
 <box_test pos_scale="0" xyz="-0.500000 -0.500000 -0.500000" whd="1.000000 1.000000 1.000000"/>
 
-<tex_image_array size="15">
+<tex_image_array size="19">
 	<tex_image index="0" name="in79_e"
 		width="128" height="128" original_width="128" original_height="128"
 		format="palette16"
@@ -1258,7 +1258,68 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="6" name="in79pol"
+	<tex_image index="6" name="in79light01"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette16"
+		color0_mode="color"
+		palette_name="in79light01_pl"
+		path="C:/home/swan_data3d/field/in79/chip/tex/in79light01.tga"
+	>
+		<bitmap size="64">
+			1111 0001 1000 1111 2221 0012 2100 1222
+			2221 2222 2222 1222 2221 5432 2345 1222
+			2221 5553 3555 1222 3210 5555 5555 0223
+			4200 5555 5555 0124 5200 5555 5555 0025
+			5200 5555 5555 0025 4200 5555 5555 0124
+			3210 5555 5555 0223 2221 5553 3555 1222
+			2221 5432 2345 1222 2221 2222 2222 1222
+			2221 0012 2100 1222 1111 0001 1000 1111
+		</bitmap>
+	</tex_image>
+	<tex_image index="7" name="in79light02"
+		width="16" height="16" original_width="16" original_height="16"
+		format="a3i5"
+		palette_name="in79light02_pl"
+		path="C:/home/swan_data3d/field/in79/chip/tex/in79light02.tga"
+	>
+		<bitmap size="128">
+			0505 0505 0305 0202 0222 0302 0505 0505
+			0505 0505 0203 2121 2181 0221 0503 0505
+			0505 0305 2122 4040 40c0 2140 0322 0505
+			0505 2203 4021 8484 84e4 4084 2221 0503
+			0305 2102 8440 e5c4 e5e5 84c4 2140 0302
+			0205 4021 c484 e5e5 e5e6 c4e5 4084 0221
+			0205 4021 e584 e6e5 e6e6 e5e5 4084 0221
+			2205 c081 e5e4 e6e6 e6e6 e5e6 c0e4 2281
+			0205 4021 e584 e6e5 e6e6 e5e5 4084 0221
+			0205 4021 c484 e5e5 e5e6 c4e5 4084 0221
+			0305 2102 8440 e5c4 e5e5 84c4 2140 0302
+			0505 2203 4021 8484 84e4 4084 2221 0503
+			0505 0305 2122 4040 40c0 2140 0322 0505
+			0505 0505 0203 2121 2181 0221 0503 0505
+			0505 0505 0305 0202 0222 0302 0505 0505
+			0505 0505 0505 0505 0505 0505 0505 0505
+		</bitmap>
+	</tex_image>
+	<tex_image index="8" name="in79light03"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette16"
+		color0_mode="color"
+		palette_name="in79light03_pl"
+		path="C:/home/swan_data3d/field/in79/chip/tex/in79light03.tga"
+	>
+		<bitmap size="64">
+			0001 0000 0000 0000 0012 0000 0000 0000
+			1122 0001 0000 0000 1123 0111 0000 0000
+			2234 1111 0001 0000 2235 1122 0011 0000
+			2336 2222 0111 0000 4447 2223 1112 0000
+			4558 2344 1122 0000 6668 3445 1122 0001
+			7779 4456 1222 0001 7889 4567 1223 0011
+			8889 4677 2224 0011 8899 5678 2234 0011
+			8999 5678 3334 0122 9999 8889 4567 1223
+		</bitmap>
+	</tex_image>
+	<tex_image index="9" name="in79pol"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
@@ -1300,7 +1361,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="7" name="in79ring01"
+	<tex_image index="10" name="in79ring01"
 		width="16" height="32" original_width="16" original_height="32"
 		format="palette16"
 		color0_mode="color"
@@ -1326,7 +1387,7 @@
 			2222 2222 2222 5522 3333 3333 3333 3323
 		</bitmap>
 	</tex_image>
-	<tex_image index="8" name="in79ring02"
+	<tex_image index="11" name="in79ring02"
 		width="16" height="32" original_width="16" original_height="32"
 		format="palette16"
 		color0_mode="color"
@@ -1352,7 +1413,7 @@
 			0000 0000 0000 0000 1111 1111 1111 1111
 		</bitmap>
 	</tex_image>
-	<tex_image index="9" name="in79saku01"
+	<tex_image index="12" name="in79saku01"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette16"
 		color0_mode="transparency"
@@ -1370,7 +1431,7 @@
 			1133 1111 1111 1111 0111 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="10" name="in79tou01"
+	<tex_image index="13" name="in79tou01"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette16"
 		color0_mode="transparency"
@@ -1388,7 +1449,7 @@
 			1211 1111 1111 1121 1211 1111 1111 1121
 		</bitmap>
 	</tex_image>
-	<tex_image index="11" name="in79tv01"
+	<tex_image index="14" name="in79tv01"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette16"
 		color0_mode="color"
@@ -1406,7 +1467,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="12" name="in79tv_anim1"
+	<tex_image index="15" name="in79tv_anim1"
 		width="16" height="8" original_width="16" original_height="8"
 		format="palette16"
 		color0_mode="color"
@@ -1420,7 +1481,20 @@
 			9875 ccba 16bc 4302 9875 ccba 16bc 4302
 		</bitmap>
 	</tex_image>
-	<tex_image index="13" name="in79yuka01"
+	<tex_image index="16" name="in79tv_anim2"
+		width="8" height="8" original_width="8" original_height="8"
+		format="a3i5"
+		palette_name="in79tv_anim2_pl"
+		path="C:/home/swan_data3d/field/in79/chip/tex/in79tv_anim2.tga"
+	>
+		<bitmap size="32">
+			2020 2020 2020 2020 2020 2020 2020 2020
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			2020 2020 2020 2020 2020 2020 2020 2020
+		</bitmap>
+	</tex_image>
+	<tex_image index="17" name="in79yuka01"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette4"
 		color0_mode="color"
@@ -1446,7 +1520,7 @@
 			aa54 aaaa aaaa 15aa aa54 aaaa aaaa 15aa
 		</bitmap>
 	</tex_image>
-	<tex_image index="14" name="in79yuka02"
+	<tex_image index="18" name="in79yuka02"
 		width="16" height="64" original_width="16" original_height="64"
 		format="palette16"
 		color0_mode="color"
@@ -1490,7 +1564,7 @@
 	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size="15">
+<tex_palette_array size="19">
 	<tex_palette index="0" name="in79_e_pl" color_size="8">
 		5ad6 673b 6f7b 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
@@ -1511,34 +1585,47 @@
 	<tex_palette index="5" name="in79kari_name_pl" color_size="8">
 		0000 081c 000f 7fff 4631 39ce 18c6 7fff
 	</tex_palette>
-	<tex_palette index="6" name="in79pol_pl" color_size="16">
+	<tex_palette index="6" name="in79light01_pl" color_size="8">
+		0000 14a5 2108 39ce 56b5 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="7" name="in79light02_pl" color_size="8">
+		63fa 67ff 6b9f 6f5f 7ffa 7ffd 7fff 7fff
+	</tex_palette>
+	<tex_palette index="8" name="in79light03_pl" color_size="16">
+		0000 1085 2109 316d 4a75 5f9c 63fa 7ffa
+		7ffd 7fff 7fff 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="9" name="in79pol_pl" color_size="16">
 		4717 1cc6 2d4a 41e4 14a4 26fc 1215 114e
 		3a7b 5f5f 192f 0878 7fff 4210 0000 7fff
 	</tex_palette>
-	<tex_palette index="7" name="in79ring01_pl" color_size="16">
+	<tex_palette index="10" name="in79ring01_pl" color_size="16">
 		2d6b 35ad 3def 4a52 4e73 56b5 5ef7 6318
 		6b5a 6f7b 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="8" name="in79ring02_pl" color_size="8">
+	<tex_palette index="11" name="in79ring02_pl" color_size="8">
 		35ad 3def 4a52 56b5 5ef7 6318 7fff 7fff
 	</tex_palette>
-	<tex_palette index="9" name="in79saku01_pl" color_size="8">
+	<tex_palette index="12" name="in79saku01_pl" color_size="8">
 		0000 4940 7e40 59a0 7e85 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="10" name="in79tou01_pl" color_size="8">
+	<tex_palette index="13" name="in79tou01_pl" color_size="8">
 		0000 4e73 4a52 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="11" name="in79tv01_pl" color_size="8">
+	<tex_palette index="14" name="in79tv01_pl" color_size="8">
 		5ad6 6739 6b5a 77bd 7bde 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="12" name="in79tv_anim1_pl" color_size="16">
+	<tex_palette index="15" name="in79tv_anim1_pl" color_size="16">
 		63df 63fa 67ff 6b9f 6f5f 735f 73fa 7b3e
 		7f3c 7f7b 7fba 7ffa 7ffd 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="13" name="in79yuka01_pl" color_size="4">
+	<tex_palette index="16" name="in79tv_anim2_pl" color_size="8">
+		7fff 7fff 7fff 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="17" name="in79yuka01_pl" color_size="4">
 		56b5 5ef7 6318 7fff
 	</tex_palette>
-	<tex_palette index="14" name="in79yuka02_pl" color_size="16">
+	<tex_palette index="18" name="in79yuka02_pl" color_size="16">
 		2d6b 3def 4a52 56b5 5ef7 6318 6b5a 6f7b
 		739c 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
@@ -1649,7 +1736,7 @@
 
 <ex_nns_3dme>
 	<ex_model_info scene_name="デフォルトシーン" disp_pos="0.000000 60.000000"/>
-	<ex_tex_image_array size="15">
+	<ex_tex_image_array size="19">
 		<ex_tex_image index="0" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="1" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="2" disp_pos="0.000000 0.000000"/>
@@ -1665,8 +1752,12 @@
 		<ex_tex_image index="12" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="13" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="14" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="15" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="16" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="17" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="18" disp_pos="0.000000 0.000000"/>
 	</ex_tex_image_array>
-	<ex_tex_palette_array size="15">
+	<ex_tex_palette_array size="19">
 		<ex_tex_palette index="0" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="1" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="2" disp_pos="0.000000 0.000000"/>
@@ -1682,6 +1773,10 @@
 		<ex_tex_palette index="12" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="13" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="14" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="15" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="16" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="17" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="18" disp_pos="0.000000 0.000000"/>
 	</ex_tex_palette_array>
 	<ex_material_array size="1">
 		<ex_material index="0" disp_pos="0.000000 240.000000"/>
