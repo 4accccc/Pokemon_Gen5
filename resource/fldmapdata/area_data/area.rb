@@ -14,10 +14,14 @@
 #	2009.05.19  tamada  エラーになっても出力ファイルが生成されているために
 #	                    再度makeすると問題なく通ってしまう対処
 #	2011.03.08  tamada  季節以外でもエリアのグループを作成したいとのことなので連番指定に対応
+#	2011.03.30  onoue   配置モデルアーカイブインデックスを出力するように変更した
 #
 #------------------------------------------------------------------------------
 
 load 'area_common.def'	#COL_～の定義など
+
+#ダミーエリア名
+DUMMY_AREA_NAME = ["AREA_ID_FIELD","AREA_ID_ROOM"]
 
 #NAIXReaderの読み込み
 lib_path_naixread = ENV["PROJECT_ROOT"] + "tools/naixread"
@@ -91,27 +95,32 @@ class AreaIDMaker
 			putLine(area_id + "_" + season_id)
 			@season_count += 1
 			@before_name = area_id
+      @continue_count = 0
 		when "SUMMER"
 			raise DataTypeError, "#{area_id}：#{season_id}の直前がおかしい" if @season_count != 1
 			raise DataTypeError, "#{area_id}指定は#{season_id}に不要です" if area_id != ""
 			putLine(@before_name + "_" + season_id)
 			@season_count += 1
+      @continue_count += 1
 		when "AUTUMN"
 			raise DataTypeError, "#{area_id}：#{season_id}の直前がおかしい" if @season_count != 2
 			raise DataTypeError, "#{area_id}指定は#{season_id}に不要です" if area_id != ""
 			putLine(@before_name + "_" + season_id)
 			@season_count += 1
+      @continue_count += 1
 		when "WINTER"
 			raise DataTypeError, "#{area_id}：#{season_id}の直前がおかしい" if @season_count != 3
 			raise DataTypeError, "#{area_id}指定は#{season_id}に不要です" if area_id != ""
 			putLine(@before_name + "_" + season_id)
 			@season_count = 0
 			@before_name = ""
+      @continue_count += 1
 		when "NO"
 			raise DataTypeError, "#{area_id}の直前がおかしい" if @season_count != 0
 			putLine(area_id)
 			@season_count = 0
 			@before_name = ""
+      @continue_count = 0
     when "0"
 			raise DataTypeError, "#{area_id}：#{season_id}の直前がおかしい" if @season_count != 0
 			putLine(area_id)
@@ -132,6 +141,10 @@ class AreaIDMaker
 		end
 		@area_count += 1
 	end
+
+  def getContinueCount()
+    return @continue_count
+  end
 
 end
 
@@ -189,6 +202,8 @@ begin
   #行読み飛ばし
 	READTHROUGH_LINES.times{|| area_tbl_file.gets }
 
+  arc_id_in  = 0
+  arc_id_out = 0
   area_count = 0
   bin_out_total = ""
   area_tbl_file.each{|line|
@@ -198,10 +213,19 @@ begin
     #エリアＩＤ列挙
     id_file.putAreaName(column)
 
+    inout = GetInnerOuter(column[COL_INOUT])			#INNER/OUTER
+
     #binファイル作成
     #データ書き込み
     bm_id = EntryVec(build_vec, column[COL_BMNAME])	#モデル
-    bin_out += [bm_id].pack("S") 
+    
+    # fldmmdl対応アーカイブID
+    if inout == 0 then
+      arc_id = arc_id_in
+    else
+      arc_id = arc_id_out
+    end
+    bin_out += [arc_id].pack("S")
 
     #tex_id = EntryVec(tex_vec,column[COL_TEXNAME])		#テクスチャセット
     if tex_vec.index( column[COL_TEXNAME] ) == nil then
@@ -218,7 +242,6 @@ begin
     anm_itp_id = enum_search(itp_enum, column[COL_ITP_NAME].sub(/xls$/,"itptbl"))
     bin_out +=[anm_ita_id,anm_itp_id].pack("CC")
 
-    inout = GetInnerOuter(column[COL_INOUT])			#INNER/OUTER
     bin_out += [inout].pack("C") 
 
     light_idx = enum_search( light_enum, column[COL_LIGHTTYPE] ) #ライト
@@ -231,12 +254,24 @@ begin
     bin_out += [mmdl_idx].pack("C")
 
     total_txt_file.printf("AREA:%3d BM:%2d TEX:%2d ANM:%2d IO:%d LIGHT:%d EDGE:%d MDLCOL:%d\n",
-                area_count, bm_id, tex_id, anm_ita_id, inout, light_idx, edge_idx, mmdl_idx);
+                area_count, arc_id, tex_id, anm_ita_id, inout, light_idx, edge_idx, mmdl_idx);
 
     #bin_out += '0'    #padding
     #bin_out +=  [0xaa].pack("C") * (roundup(bin_out.length, 4) - bin_out.length)
     bin_out_total += bin_out
     area_count += 1
+
+    # 連番でないときのみ進める
+    if id_file.getContinueCount() == 0 then
+      unless DUMMY_AREA_NAME.include?(column[COL_AREANAME]) then
+        if inout == 0 then
+          arc_id_in+=1
+        else
+          arc_id_out+=1
+        end
+      end
+    end
+
   }
 
   File.open(TARGET_BIN_FILENAME, "wb"){|file|
