@@ -19,20 +19,3 @@ typedef enum {
 #include "..\..\trdata\trtype_def.h"
 #include "..\..\fldmmdl\fldmmdl_objcode.h"
 
-enum {
-  RGLEADER8 = LEADER1A,
-  DPLEADER1 = LEADER1A,
-  DPLEADER2 = LEADER1A,
-  DPLEADER3 = LEADER1A,
-  DPLEADER4 = LEADER1A,
-  DPLEADER5 = LEADER1A,
-  DPLEADER6 = LEADER1A,
-  DPLEADER7 = LEADER1A,
-  DPLEADER8 = LEADER1A,
-
-  RGCHAMPION = CHAMPION,
-  GSCHAMPION = CHAMPION,
-  RSCHAMPION = CHAMPION,
-  ECHAMPION = CHAMPION,
-
-};

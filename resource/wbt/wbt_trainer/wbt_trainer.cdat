@@ -481,7 +481,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 	},
 	{ //024 ナツメ
 		13, //エスパー
-		RGLEADER6       ,// 動作モデル指定
+		RGLEADER5       ,// 動作モデル指定
 		TRTYPE_HEROINE     , //トレーナータイプ指定
 		 4, //エントリタイミング
 		TRUE , //オールトーナメント参加
@@ -501,7 +501,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 	},
 	{ //025 カツラ
 		 9, //ほのお
-		RGLEADER7       ,// 動作モデル指定
+		RGLEADER6       ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		 4, //エントリタイミング
 		TRUE , //オールトーナメント参加
@@ -521,7 +521,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 	},
 	{ //026 サカキ
 		 4, //じめん
-		RGLEADER8       ,// 動作モデル指定
+		RGLEADER7       ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		 4, //エントリタイミング
 		TRUE , //オールトーナメント参加
