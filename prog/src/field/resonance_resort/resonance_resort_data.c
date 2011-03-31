@@ -2984,6 +2984,7 @@ struct _RESORT_PEOPLE_ALL_DATA
   RESORT_RESIDENT_DATA    resident[RESORT_RESIDENT_DATA_NUM];
   RESORT_VISITOR_DATA     visitor[RESORT_VISITOR_DATA_NUM];
   RESORT_SECRETARY_DATA   secretary[RESORT_SECRETARY_DATA_NUM];
+  RESORT_RECV_DATA        owner;
 };
 
 SDK_COMPILER_ASSERT(sizeof(RESORT_PEOPLE_ALL_DATA) == RESORT_PEOPLE_ALL_DATA_SIZE );
@@ -3312,6 +3313,19 @@ void RESORT_PEOPLE_ALL_DATA_UpdateDay( RESORT_PEOPLE_ALL_DATA *p_wk )
   }
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  主人公データ
+ *
+ *	@param	RESORT_PEOPLE_ALL_DATA *p_wk ワーク
+ *
+ *	@return　主人公用データを取得
+ */
+//-----------------------------------------------------------------------------
+RESORT_RECV_DATA * RESORT_PEOPLE_ALL_DATA_GetOwnerData( RESORT_PEOPLE_ALL_DATA *p_wk )
+{
+  return &p_wk->owner;
+}
 //=============================================================================
 /**
  *	リゾート街データ
