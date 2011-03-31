@@ -2111,8 +2111,9 @@ int GFL_NET_DWC_ErrorType(int code, int type)
   switch(type){
   case DWC_ETYPE_NO_ERROR:
   case DWC_ETYPE_LIGHT:
-  case DWC_ETYPE_SHOW_ERROR:
     return 14;  //
+    // <localize> DWC_ETYPE_SHOW_ERRORの時（サービスロケータのエラー等）に、エラーコードが表示されていなかったのを修正
+  case DWC_ETYPE_SHOW_ERROR:
   case DWC_ETYPE_SHUTDOWN_FM:
   case DWC_ETYPE_SHUTDOWN_GHTTP:
   case DWC_ETYPE_SHUTDOWN_ND:

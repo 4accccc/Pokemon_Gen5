@@ -1529,3 +1529,19 @@ resource/wifi_earth/wifi_earth.narc
  対処方法　monoSpaceFlagの引数をFALSEに変更
  修正担当　一楽
  */
+
+/*
+ NOBTS 5
+ DWC_ETYPE_SHOW_ERRORの時（サービスロケータのエラー等）に、
+ エラーコードが表示されていなかったのを修正
+ 確認方法　Wi-Fiコネクションエラーシミュレータを使用して、
+「名前チェックでNG」を設定し、WIFIクラブに接続してください。
+ 修正したものはエラー番号が表示されるはずです。
+
+ 原因　switch文の分岐で、DWC_ETYPE_SHOW_ERRORの場合にメッセージが違った為
+
+ 対処方法　switch分岐でDWC_ETYPE_SHOW_ERRORの場合にエラーメッセージ変更
+ 修正担当　一楽
+ */
+
+
