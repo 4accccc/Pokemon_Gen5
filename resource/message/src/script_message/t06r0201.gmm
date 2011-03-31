@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-07T20:15:49"/>
+	<create user="matsumiya" host="W00224" date="2011-03-31T17:48:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1561" top="283" right="2266" bottom="903" maximized="no" rayout="Vertical2">
+	<dialog left="1301" top="151" right="2006" bottom="779" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,35 +292,40 @@
 	</lock>
 
 
-	<row id="msg_t06r0201_oldman1_01">
+	<row id="msg_t06r0201_oldman1_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・アイテム入手前</comment>
+・アイテム入手前
+・No017「キズぐすり」入手処理</comment>
 		<attribute name="キャラ指定">OLDMAN1</attribute>
-		<language name="JPN" width="256">・アイテム入手</language>
-		<language name="JPN_KANJI" width="256">・アイテム入手</language>
+		<language name="JPN" width="256">よう！　どうぐは　いくつあっても
+ジャマには　ならんだろ？▼</language>
+		<language name="JPN_KANJI" width="256">よう！　どうぐは　いくつあっても
+ジャマには　ならんだろ？▼</language>
 	</row>
 
-	<row id="msg_t06r0201_oldman1_02">
+	<row id="msg_t06r0201_oldman1_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・アイテム入手後</comment>
 		<attribute name="キャラ指定">OLDMAN1</attribute>
-		<language name="JPN" width="256">・情報メッセージその１
-ポケモンとの旅は
-ポケモンのケアが大事</language>
-		<language name="JPN_KANJI" width="256">・情報メッセージその１
-ポケモンとの旅は
-ポケモンのケアが大事</language>
+		<language name="JPN" width="256">ポケモンとの　たびは
+ポケモンの　ケアが　だいじ！▼
+たいりょくが　へったら
+すぐに　かいふく　してあげると　いい</language>
+		<language name="JPN_KANJI" width="256">ポケモンとの　旅は
+ポケモンの　ケアが　大事！▼
+体力が　減ったら
+すぐに　回復してあげると　いい</language>
 	</row>
 
 	<row id="msg_t06r0201_babyboy1_01">
 		<comment>♂</comment>
 		<attribute name="キャラ指定">BABYBOY1</attribute>
 		<language name="JPN" width="256">ポケモントレーナーだ！
-いいなあ！　ねーねー　あれでしょ？
+いいなあ！　ねーねー　あれでしょ？▼
 ポケモンを　たたかわせて
 つよく　そだてるんでしょ！</language>
 		<language name="JPN_KANJI" width="256">ポケモントレーナーだ！
-いいなあ！　ねーねー　あれでしょ？
+いいなあ！　ねーねー　あれでしょ？▼
 ポケモンを　たたかわせて
 つよく　そだてるんでしょ！</language>
 	</row>
