@@ -1747,6 +1747,7 @@ static GMEVENT_RESULT ShortcutEvent( GMEVENT* event, int* seq, void* wk )
 
   // 処理シーケンス
   enum{
+    SEQ_INIT,   // 初期化
     SEQ_WAIT,   // グリッド調度待ち
     SEQ_SE,     // SE再生
     SEQ_WIND_SPEEDUP,// 風力最大にUP
@@ -1759,6 +1760,20 @@ static GMEVENT_RESULT ShortcutEvent( GMEVENT* event, int* seq, void* wk )
   };
 
   switch( *seq ){
+  // 初期化
+  case SEQ_INIT:
+    {
+      EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_gym_wk->exp_obj, GYM_FLY_UNIT_IDX, EFFECT_WIND_2, 0 );
+      // アニメスピード変更
+      FLD_EXP_OBJ_ChgAddFrame( exp_anm, 0x1800 ); // x1.5
+      exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_gym_wk->exp_obj, GYM_FLY_UNIT_IDX, EFFECT_WIND_3, 0 );
+      // アニメスピード変更
+      FLD_EXP_OBJ_ChgAddFrame( exp_anm, 0x1800 ); // x1.5
+
+      *seq = SEQ_WAIT;
+    }
+    break;
+
   // グリッド調度待ち
   case SEQ_WAIT:
     if( MMDL_CheckEndAcmd(p_wk->mmdl) )
