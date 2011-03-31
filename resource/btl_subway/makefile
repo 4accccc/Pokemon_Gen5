@@ -13,8 +13,18 @@ include user.def
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
 #------------------------------------------------------------------------------
-BTL_SW_PD	= btl_subway_pd.narc
-BTL_SW_TD	= btl_subway_td.narc
+POKEMON_DATA	= btl_subway_pd.narc
+TRAINER_DATA	= btl_subway_td.narc
+
+#------------------------------------------------------------------------------
+#※認識文字列を書く（ファイル名に使用します）
+#------------------------------------------------------------------------------
+HEAD_STR = bs
+
+#------------------------------------------------------------------------------
+#※トレーナーデータ名
+#------------------------------------------------------------------------------
+TDM_FILE = bts_wb_tr.tdm
 
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
@@ -26,8 +36,8 @@ TARGETDIR	= $(PROJECT_ARCDIR)
 #------------------------------------------------------------------------------
 SUBDIRS	=
 
-PDFILES:=$(wildcard bspd_*.bin)
-PDFILES:=$(wildcard bstd_*.bin)
+PDFILES:=$(wildcard $(HEAD_STR)pd_*.bin)
+PDFILES:=$(wildcard $(HEAD_STR)td_*.bin)
 
 #共通ルールファイルのインクルード
 include $(PROJECT_RSCDIR)\macro_define
@@ -40,9 +50,9 @@ include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 #------------------------------------------------------------------------------
 #	ファイル削除ルール
 #------------------------------------------------------------------------------
-LDIRT_CLEAN = $(TARGETDIR)$(BTL_SW_PD) $(TARGETDIR)$(BTL_SW_TD)
+LDIRT_CLEAN = $(TARGETDIR)$(POKEMON_DATA) $(TARGETDIR)$(TRAINER_DATA)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-LDIRT_CLEAN += $(BTL_SW_PD) $(BTL_SW_TD) *.bin
+LDIRT_CLEAN += $(POKEMON_DATA) $(TRAINER_DATA) *.bin
 endif
 
 .PHONY:	do-build
@@ -54,25 +64,25 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 do-build: binmake narc
 
 binmake:
-	ruby bts_trainer_arr.rb ../../tools/btl_subway/trainer.txt > bts_tr_arr.rb
-	ruby ../../tools/btl_subway/btl_subway_conv.rb pd_list.txt bts_wb_tr.tdm ../../resource/message/template.gmm
+	ruby ../../tools/btl_subway/bts_trainer_arr.rb ../../tools/btl_subway/trainer.txt > ../../tools/btl_subway/bts_tr_arr.rb
+	ruby ../../tools/btl_subway/btl_subway_conv.rb pd_list.txt $(TDM_FILE) ../../resource/message/template.gmm $(HEAD_STR)
 
 narc:
-$(BTL_SW_PD): $(PDFILES)
-	nnsarc -c -l -n $(BTL_SW_PD) bspd_*.bin
+$(POKEMON_DATA): $(PDFILES)
+	nnsarc -c -l -n $(POKEMON_DATA) $(HEAD_STR)pd_*.bin
 
-$(BTL_SW_TD): $(TDFILES)
-	nnsarc -c -l -n $(BTL_SW_TD) bstd_*.bin
+$(TRAINER_DATA): $(TDFILES)
+	nnsarc -c -l -n $(TRAINER_DATA) $(HEAD_STR)td_*.bin
 
 endif
 
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	$(TARGETDIR)$(BTL_SW_PD) $(TARGETDIR)$(BTL_SW_TD)
+do-build:	$(TARGETDIR)$(POKEMON_DATA) $(TARGETDIR)$(TRAINER_DATA)
 
-$(TARGETDIR)$(BTL_SW_PD):	$(BTL_SW_PD)
-	$(COPY)	$(BTL_SW_PD) $(TARGETDIR)
+$(TARGETDIR)$(POKEMON_DATA):	$(POKEMON_DATA)
+	$(COPY)	$(POKEMON_DATA) $(TARGETDIR)
 
-$(TARGETDIR)$(BTL_SW_TD):	$(BTL_SW_TD)
-	$(COPY)	$(BTL_SW_TD) $(TARGETDIR)
+$(TARGETDIR)$(TRAINER_DATA):	$(TRAINER_DATA)
+	$(COPY)	$(TRAINER_DATA) $(TARGETDIR)

@@ -169,6 +169,7 @@ SUBDIRS	=	wmi \
 			cross_comm \
 			dendou_pc \
 			btl_subway \
+			infinity_dungeon \
 			dendou_demo \
 			fld3d_ci_effect \
 			profanity_word \

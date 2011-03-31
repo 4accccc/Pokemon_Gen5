@@ -6,8 +6,7 @@
   require File.dirname(__FILE__) + '/../hash/wazano_hash.rb'
   require File.dirname(__FILE__) + '/../hash/item_hash.rb'
   require File.dirname(__FILE__) + '/../hash/trtype_hash.rb'
-
-  require 'bts_tr_arr.rb'
+  require File.dirname(__FILE__) + '/bts_tr_arr.rb'
 
 class PD
   enum_const_set %w[
@@ -57,24 +56,28 @@ class TD
   ]
 end
 
-	if ARGV.size != 3
-		print "error: ruby btl_subway_conv.rb poke_data_list trainer_data template_gmm\n"
+	if ARGV.size != 4
+		print "error: ruby btl_subway_conv.rb poke_data_list trainer_data template_gmm head_str\n"
 		print "poke_data_list:ポケモンデータファイルリスト\n"
 		print "trainer_data:トレーナーデータファイル\n"
 		print "template_gmm:GMMファイルを生成する元になるファイル\n"
+		print "head_str:生成されるbinファイルのファイル名の先頭につける文字列"
 		exit( 1 )
 	end
 
   ARGV_PD_FILE = 0
   ARGV_TD_FILE = 1
   ARGV_GMM_FILE = 2
+  ARGV_HEAD_STR = 3
+
+  HEAD_STR = ARGV[ARGV_HEAD_STR]
 
   pd_list = []
   pd_data = []
   td_data = []
   gmm = GMM::new
-  gmm.open_gmm( ARGV[ ARGV_GMM_FILE ] , "bst_name.gmm" )
-  gmm.make_row_index_hyphen( "BST_NAME_", 0, 5, 0 )
+  gmm.open_gmm( ARGV[ ARGV_GMM_FILE ] , HEAD_STR+"t_name.gmm" )
+  gmm.make_row_index_hyphen( HEAD_STR.upcase + "T_NAME_", 0, 5, 0 )
 
   cnt = 0
   open( ARGV[ ARGV_PD_FILE ] ) {|fp_r|
@@ -110,9 +113,9 @@ end
   print "バトルサブウェイポケモン＆トレーナーデータ　生成中\n"
 
   print "ポケモンデータ生成中\n"
-  #bspd_???.bin生成
-  print "bspd_000.bin 生成中\n"
-  fp_bspd = open( "bspd_000.bin", "wb" )
+  #HEAD_STR+pd_???.bin生成
+  print HEAD_STR+"pd_000.bin 生成中\n"
+  fp_bspd = open( HEAD_STR+"pd_000.bin", "wb" )
 
   data = [ 0,0,0,0,0,0,0,0,0 ].pack( "S5 C2 S2" )
 
@@ -121,7 +124,7 @@ end
 	}
 
   fp_bspd.close
-  print "bspd_000.bin 生成終了\n"
+  print HEAD_STR + "pd_000.bin 生成終了\n"
 
   cnt = 1
   for i in 0..999
@@ -205,8 +208,8 @@ end
       exit( 1 )
     end
 
-    printf( "bspd_%03d.bin 生成中\n", cnt )
-    str = sprintf( "bspd_%03d.bin", cnt )
+    printf( HEAD_STR+"pd_%03d.bin 生成中\n", cnt )
+    str = sprintf( HEAD_STR+"pd_%03d.bin", cnt )
     fp_bspd = open( str, "wb" )
 
     data = [ monsno, waza1, waza2, waza3, waza4, exp, seikaku, item, formno ].pack( "S5 C2 S2" )
@@ -216,14 +219,14 @@ end
 	  }
 
     fp_bspd.close
-    printf( "bspd_%03d.bin 生成終了\n", cnt )
+    printf( HEAD_STR+"pd_%03d.bin 生成終了\n", cnt )
     cnt += 1
   end
 
   print "トレーナーデータ生成中\n"
-  #bstd_???.bin生成
-  print "bstd_000.bin 生成中\n"
-  fp_bstd = open( "bstd_000.bin", "wb" )
+  #HEAD_STR+td_???.bin生成
+  print HEAD_STR+"td_000.bin 生成中\n"
+  fp_bstd = open( HEAD_STR+"td_000.bin", "wb" )
 
   data = [ 0,1,0 ].pack( "S3" )
 
@@ -232,7 +235,7 @@ end
 	}
 
   fp_bstd.close
-  print "bstd_000.bin 生成終了\n"
+  print HEAD_STR+"td_000.bin 生成終了\n"
 
   cnt = 1
   td_data.size.times {|i|
@@ -250,11 +253,11 @@ end
       exit( 1 )
     end
 
-    printf( "bstd_%03d.bin 生成中\n", cnt )
-    str = sprintf( "bstd_%03d.bin", cnt )
+    printf( HEAD_STR+"td_%03d.bin 生成中\n", cnt )
+    str = sprintf( HEAD_STR+"td_%03d.bin", cnt )
     fp_bstd = open( str, "wb" )
 
-    gmm.make_row_index( "BST_NAME_", cnt, split_data[ TD::NAME ] )
+    gmm.make_row_index( HEAD_STR.upcase+"T_NAME_", cnt, split_data[ TD::NAME ] )
 
     data = [ tr_type, poke_cnt ].pack( "S2" )
 
@@ -272,7 +275,7 @@ end
     }
 
     fp_bstd.close
-    printf( "bstd_%03d.bin 生成終了\n", cnt )
+    printf( HEAD_STR+"td_%03d.bin 生成終了\n", cnt )
     cnt += 1
   }
 
