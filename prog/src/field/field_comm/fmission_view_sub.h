@@ -34,3 +34,40 @@ extern void FMissionView_ViewUpdate( FMISSION_VIEW_PTR wk );
  */
 extern BOOL FMissionView_SubSeqLogEntry( FMISSION_VIEW_PTR wk );
 
+//---------------------------------------------------
+/*
+ *  @brief  リストスクロールリクエスト
+ */
+//---------------------------------------------------
+extern void FMissionView_ListScrollRepeatReq( FMISSION_VIEW_PTR wk );
+
+//---------------------------------------------------
+/*
+ *  @brief  メニューバーアニメセット
+ */
+//---------------------------------------------------
+extern void FMissionView_MenuBarViewSet( FMISSION_VIEW_PTR wk, MENU_ID id, MENU_STATE state );
+
+//---------------------------------------------------
+/*
+ *  @brief  メニューバーアニメウェイト
+ */
+//---------------------------------------------------
+extern BOOL FMissionView_MenuBarCheckAnm( FMISSION_VIEW_PTR wk, MENU_ID id );
+
+//---------------------------------------------------
+/*
+ *  @brief  スクロールボタンアニメセット
+ */
+//---------------------------------------------------
+extern void FMissionView_UpDownAnmSet( FMISSION_VIEW_PTR wk, SCROLL_DIR dir );
+
+//---------------------------------------------------
+/*
+ *  @brief  スクロールボタン状態セット
+ */
+//---------------------------------------------------
+extern void FMissionView_UpDownViewSet( FMISSION_VIEW_PTR wk );
+
+
+

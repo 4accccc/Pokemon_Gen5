@@ -32,6 +32,8 @@
 #include "script_message.naix"
 #include "wifi_unionobj.naix"
 #include "wmi.naix"
+#include "gamesystem/fmission_log.h"
+#include "gamesystem/fmission_log_accessor.h"
 #include "fmission_view_local.h"
 #include "fmission_view_sub.h"
 
@@ -172,9 +174,9 @@ GMEVENT* FVSEvent_CheckCommon( FMISSION_VIEW_PTR wk, BOOL bEvReqOK )
   case EV_RETURN_CGEAR:
   case EV_RETURN_CGEAR_WIRELESS_TR:
 
-    BEACON_STATUS_SetViewTopOffset( wk->b_status, 0 );
+    FMISSION_LOG_TBL_SetViewTopIdx( wk->logView, 0 );
     call_event = EVENT_ChangeSubScreen( wk->gsys, wk->fieldWork, FIELD_SUBSCREEN_NORMAL);
-    event = FVSEvent_EventStart( wk, call_event, EVWAIT_MENU_ANM, MENU_RETURN );
+    event = FVSEvent_EventStart( wk, call_event, EVWAIT_MENU_ANM, MENU_RETIRE );
     break;
   case EV_CALL_DETAIL_VIEW:
     call_event = EVENT_BeaconDetail( wk->gsys, wk->fieldWork, wk->ctrl.target+wk->ctrl.view_top );
@@ -371,12 +373,13 @@ static void _sub_DataSetup(FMISSION_VIEW_PTR wk)
 
   wk->b_status = GAMEDATA_GetBeaconStatus( wk->gdata );
 
-  wk->infoLog = BEACON_STATUS_GetInfoTbl( wk->b_status );
+  wk->logStack = LINK_FESTIVAL_GetMissionLogStackTbl( wk->fest_sys );
+  wk->logView  = LINK_FESTIVAL_GetMissionLogViewTbl( wk->fest_sys );
 
-  wk->ctrl.max = GAMEBEACON_InfoTblRing_GetEntryNum( wk->infoLog );
-  wk->ctrl.view_top = BEACON_STATUS_GetViewTopOffset( wk->b_status );
+  wk->ctrl.max = FMISSION_LOG_TBL_GetEntryNum( wk->logView );
+  wk->ctrl.view_top = FMISSION_LOG_TBL_GetViewTopIdx( wk->logView );
 
-//  IWASAWA_Printf("BeaconViewSetup log_num = %d\n", wk->ctrl.max );
+  IWASAWA_Printf("FMissionViewSetup log_num = %d, top=%d\n", wk->ctrl.max, wk->ctrl.view_top );
   if( wk->ctrl.max < PANEL_VIEW_MAX ){
     wk->ctrl.view_max = wk->ctrl.max;
   }else{
@@ -384,17 +387,6 @@ static void _sub_DataSetup(FMISSION_VIEW_PTR wk)
   }
   wk->ctrl.g_power = GPOWER_ID_NULL;
 
-  //メッセージスピード取得
-  /*
-   *  アフターマスター ローカライズ版に向けてのコメント
-   *
-   *  wk->msg_spdメンバはu8だが、実際はs8以上のsigned型である必要がある。
-   *  現状、msg_spdメンバが非参照のため、修正はせずコメントを残すのみとする
-   *
-   *  by iwasawa 20100806
-   */
-  wk->msg_spd  = MSGSPEED_GetWait();
- 
   //セーブデータ取得
   save = GAMEDATA_GetSaveControlWork( wk->gdata ); 
   {
@@ -420,11 +412,10 @@ static void _sub_DataSetup(FMISSION_VIEW_PTR wk)
     wk->my_data.pm_version = PM_VERSION;
   }
   
-  //スタックワーク領域取得
-  wk->infoStack = GAMEBEACON_InfoTbl_Alloc( wk->heap_sID );
-  wk->tmpInfo = GAMEBEACON_Alloc( wk->heap_sID );
-  wk->tmpInfo2 = GAMEBEACON_Alloc( wk->heap_sID );
-  wk->newLogInfo = GAMEBEACON_Alloc( wk->heap_sID );
+  //テンポラリワーク領域取得
+  wk->tmpLog = FMISSION_LOG_AllocWork( wk->heap_sID );
+  wk->tmpLog2 = FMISSION_LOG_AllocWork( wk->heap_sID );
+  wk->newLog = FMISSION_LOG_AllocWork( wk->heap_sID );
 
   //Gパワーデータ取得
   wk->gpower_data = GPOWER_PowerData_LoadAlloc( wk->heap_sID );
@@ -439,14 +430,11 @@ static void _sub_DataSetup(FMISSION_VIEW_PTR wk)
 //--------------------------------------------------------------
 static void _sub_DataExit(FMISSION_VIEW_PTR wk)
 {
-  GAMEBEACON_Stack_PutBack( wk->infoStack );
-
   GPOWER_PowerData_Unload( wk->gpower_data );
 
-  GFL_HEAP_FreeMemory( wk->newLogInfo );
-  GFL_HEAP_FreeMemory( wk->tmpInfo2 );
-  GFL_HEAP_FreeMemory( wk->tmpInfo );
-  GFL_HEAP_FreeMemory( wk->infoStack );
+  GFL_HEAP_FreeMemory( wk->newLog );
+  GFL_HEAP_FreeMemory( wk->tmpLog2 );
+  GFL_HEAP_FreeMemory( wk->tmpLog );
 }
 
 //--------------------------------------------------------------
@@ -472,13 +460,12 @@ static void _sub_SystemSetup(FMISSION_VIEW_PTR wk)
   PRINTSYS_QUE_SetLimitTick( wk->printQue, PRINT_QUE_LIMMIT_DEFAULT );
 
   wk->fontHandle = FLDMSGBG_GetFontHandle( FIELDMAP_GetFldMsgBG(wk->fieldWork));
-
   GFL_FONTSYS_SetDefaultColor();
  
   wk->wordset = WORDSET_Create( wk->heap_sID);
 
-	wk->mm_status = GFL_MSG_Create(
-		GFL_MSG_LOAD_FAST, ARCID_MESSAGE, NARC_message_beacon_status_dat, wk->heap_sID );
+	wk->mm_sys = GFL_MSG_Create(
+		GFL_MSG_LOAD_FAST, ARCID_MESSAGE, NARC_message_fmission_log_dat, wk->heap_sID );
 	wk->mm_fmission = GFL_MSG_Create(
 		GFL_MSG_LOAD_FAST, ARCID_MESSAGE, NARC_message_fest_mission_dat, wk->heap_sID );
 
@@ -502,9 +489,9 @@ static void _sub_SystemExit(FMISSION_VIEW_PTR wk)
   GFL_STR_DeleteBuffer(wk->str_tmp);
 
   GFL_MSG_Delete(wk->mm_fmission);
-  GFL_MSG_Delete(wk->mm_status);
+  GFL_MSG_Delete(wk->mm_sys);
 	WORDSET_Delete(wk->wordset);
-  
+
   PRINTSYS_QUE_Clear( wk->printQue );
   PRINTSYS_QUE_Delete( wk->printQue );
   
@@ -678,16 +665,9 @@ static void _sub_ActorResourceLoad( FMISSION_VIEW_PTR wk, ARCHANDLE *handle)
   //再転送用のリソースをロードしておく
   PaletteWorkSet_ArcHandle( wk->pfd, handle, NARC_fmission_log_fmission_obj_nclr,
       wk->tmpHeapID, FADE_SUB_OBJ, 0x20*ACT_PAL_WMI, 0 );
-  PaletteWorkSet_Arc( wk->pfd, ARCID_WMI, NARC_wmi_wm_NCLR,
+  PaletteWorkSet_Arc( wk->pfd, ARCID_WMI, NARC_wmi_wm_NCLR, //通信アイコン
       wk->tmpHeapID, FADE_SUB_OBJ, 0x20, ACT_PAL_WMI*16 );
 
-#if 0
-  wk->resPlttPanel.buf = GFL_ARC_LoadDataAllocByHandle( handle,
-                          NARC_fmission_log_fmission_panel_nclr,
-                          wk->heap_sID );
-  NNS_G2dGetUnpackedPaletteData( wk->resPlttPanel.buf, &wk->resPlttPanel.p_pltt );
-  wk->resPlttPanel.dat = (u16*)wk->resPlttPanel.p_pltt->pRawData;
-#endif
   wk->resPlttUnion.buf = GFL_ARC_LoadDataAllocByHandle( handle_union,
                           NARC_wifi_unionobj_wifi_union_obj_NCLR,
                           wk->heap_sID );
@@ -718,7 +698,6 @@ static void _sub_ActorResourceUnload( FMISSION_VIEW_PTR wk )
   for( i = 0;i < UNION_CHAR_MAX;i++){
     GFL_HEAP_FreeMemory( wk->resCharUnion[i].buf );
   }
-//  GFL_HEAP_FreeMemory( wk->resPlttPanel.buf );
   GFL_HEAP_FreeMemory( wk->resPlttUnion.buf );
 
   obj_ObjResRelease( wk, &wk->objResUnion );
@@ -810,11 +789,8 @@ static void _sub_BmpWinCreate(FMISSION_VIEW_PTR wk)
 {
   bmpwin_Add( wk, &wk->win[WIN_POPUP],
       BMP_POPUP_FRM, BMP_POPUP_PAL, BMP_POPUP_PX, BMP_POPUP_PY,BMP_POPUP_SX, BMP_POPUP_SY );
-  bmpwin_Add( wk, &wk->win[WIN_LOGNUM],
-      BMP_LOGNUM_FRM, BMP_LOGNUM_PAL, BMP_LOGNUM_PX, BMP_LOGNUM_PY,BMP_LOGNUM_SX, BMP_LOGNUM_SY );
- 
-  bmpwin_Add( wk, &wk->win[WIN_MENU],
-      BMP_MENU_FRM, BMP_MENU_PAL, BMP_MENU_PX, BMP_MENU_PY,BMP_MENU_SX, BMP_MENU_SY );
+  bmpwin_Add( wk, &wk->win[WIN_TITLE],
+      BMP_TITLE_FRM, BMP_TITLE_PAL, BMP_TITLE_PX, BMP_TITLE_PY,BMP_TITLE_SX, BMP_TITLE_SY );
 }
 
 //--------------------------------------------------------------
@@ -933,13 +909,13 @@ static GFL_CLWK* obj_ObjAdd(
 static void act_NormalObjAdd( FMISSION_VIEW_PTR wk ) 
 {
   int i;
-  static const u16 pos[ACT_MAX][2] = {
+  static const u8 prm[ACT_MAX][2] = {
    { ACT_MENU_PX+ACT_MENU_OX*0 ,ACT_MENU_PY },
    { ACT_MENU_PX+ACT_MENU_OX*1 ,ACT_MENU_PY },
    { ACT_MENU_PX+ACT_MENU_OX*2 ,ACT_MENU_PY },
-   { ACT_MENU_PX+ACT_MENU_OX*3 ,ACT_MENU_PY },
-   { ACT_UP_PX ,ACT_UP_PY },
-   { ACT_DOWN_PX ,ACT_DOWN_PY },
+   { ACT_UP_PX ,ACT_MENU_PY },
+   { ACT_DOWN_PX ,ACT_MENU_PY },
+   { ACT_INFO_PX ,ACT_INFO_PY },
   };
 
   for(i = 0;i < ACT_MAX;i++){
@@ -947,17 +923,19 @@ static void act_NormalObjAdd( FMISSION_VIEW_PTR wk )
       wk->objResNormal.res[OBJ_RES_CGR].tbl[0],
       wk->objResNormal.res[OBJ_RES_PLTT].tbl[0],
       wk->objResNormal.res[OBJ_RES_CELLANIM].tbl[0],
-      pos[i][0], pos[i][1],
-      ACTANM_POWER_ON+(ACT_ANM_SET*i), OBJ_MENU_BG_PRI, OBJ_SPRI_MENU);
+      prm[i][0], prm[i][1], ACTANM_POWER_ON+(ACT_ANM_SET*i),
+      OBJ_MENU_BG_PRI, OBJ_SPRI_MENU);
   
     GFL_CLACT_WK_SetDrawEnable( wk->pAct[ACT_POWER+i], TRUE );
   }
+#if 0
   BVCAct_SetPosition( wk->pAct[ACT_POWER], ACT_MENU_PX+ACT_MENU_OX*1, ACT_MENU_PY );
   BVCAct_SetPosition( wk->pAct[ACT_HELLO], ACT_MENU_PX+ACT_MENU_OX*2, ACT_MENU_PY );
-  BVCAct_SetPosition( wk->pAct[ACT_RETURN], ACT_MENU_PX+ACT_MENU_OX*3, ACT_MENU_PY );
-  GFL_CLACT_WK_SetDrawEnable( wk->pAct[ACT_THANKS], FALSE );
+  BVCAct_SetPosition( wk->pAct[ACT_RETIRE], ACT_MENU_PX+ACT_MENU_OX*3, ACT_MENU_PY );
   GFL_CLACT_WK_SetDrawEnable( wk->pAct[ACT_UP], FALSE );
   GFL_CLACT_WK_SetDrawEnable( wk->pAct[ACT_DOWN], FALSE );
+  GFL_CLACT_WK_SetDrawEnable( wk->pAct[ACT_INFO], FALSE );
+#endif
 }
 
 /*
@@ -973,6 +951,32 @@ static void act_NormalObjDel( FMISSION_VIEW_PTR wk )
   }
 }
 
+/*
+ *  @brief  パネル用FontOam生成
+ */
+static void act_PanelFOamAdd( FMISSION_VIEW_PTR wk, FONT_OAM* foam, u16 sx, u16 sy, s16 px, s16 py )
+{
+	BMPOAM_ACT_DATA	finit;
+
+	foam->bmp = GFL_BMP_Create( sx, sy, GFL_BMP_16_COLOR, wk->heap_sID );
+
+	finit.bmp = foam->bmp;
+	finit.x = px;
+	finit.y = py;
+	finit.pltt_index = wk->objResNormal.res[OBJ_RES_PLTT].tbl[0];
+	finit.pal_offset = ACT_PAL_FONT;		// pltt_indexのパレット内でのオフセット
+	finit.soft_pri = OBJ_SPRI_MSG;			// ソフトプライオリティ
+	finit.bg_pri = OBJ_BG_PRI;				// BGプライオリティ
+	finit.setSerface = ACT_RENDER_ID;
+	finit.draw_type  = CLSYS_DRAW_SUB;
+
+	foam->oam = BmpOam_ActorAdd( wk->bmpOam, &finit );
+  
+  GFL_BMP_Clear( foam->bmp, 0 );
+	BmpOam_ActorBmpTrans( foam->oam );
+	
+  BmpOam_ActorSetDrawEnable( foam->oam, FALSE );
+}
 
 /**
  *  @brief  パネル生成
@@ -989,16 +993,16 @@ static void act_PanelObjAdd( FMISSION_VIEW_PTR wk, u8 idx )
   pp->n_line = 0;
   pp->que = wk->printQue;
 
-  pp->px = ACT_PANEL_OX*idx;
-  pp->py = ACT_PANEL_OY*idx;
+  pp->px = ACT_PANEL_OX*(idx+1)+ACT_PANEL_PX;
+  pp->py = ACT_PANEL_OY*(idx+1)+ACT_PANEL_PY;
 
   //パネルアクター
   pp->cPanel = obj_ObjAdd( wk,
     wk->objResNormal.res[OBJ_RES_CGR].tbl[0],
     wk->objResNormal.res[OBJ_RES_PLTT].tbl[0],
     wk->objResNormal.res[OBJ_RES_CELLANIM].tbl[0],
-    pp->px, pp->py, ACTANM_PANEL, OBJ_BG_PRI, OBJ_SPRI_PANEL+idx);
-  GFL_CLACT_WK_SetPlttOffs( pp->cPanel, idx, CLWK_PLTTOFFS_MODE_OAM_COLOR );
+    pp->px, pp->py, ACTANM_PANEL_ACT+(idx%3), OBJ_BG_PRI, OBJ_SPRI_PANEL+idx);
+//  GFL_CLACT_WK_SetPlttOffs( pp->cPanel, idx, CLWK_PLTTOFFS_MODE_OAM_COLOR );
   
   //Unionオブジェアクター
   pp->cUnion = obj_ObjAdd( wk,
@@ -1008,26 +1012,13 @@ static void act_PanelObjAdd( FMISSION_VIEW_PTR wk, u8 idx )
     pp->px+ACT_UNION_OX, pp->py+ACT_UNION_OY, 0, OBJ_BG_PRI, OBJ_SPRI_UNION+idx);
   GFL_CLACT_WK_SetPlttOffs( pp->cUnion, idx + ACT_PAL_UNION , CLWK_PLTTOFFS_MODE_PLTT_TOP );
 
-	pp->msgOam.bmp = GFL_BMP_Create( BMP_PANEL_OAM_SX, BMP_PANEL_OAM_SY, GFL_BMP_16_COLOR, wk->heap_sID );
+  //fontOam生成
+  act_PanelFOamAdd( wk, &pp->msgOam[PANEL_FOAM_NAME], BMP_PANEL_NAME_OAM_SX, BMP_PANEL_NAME_OAM_SY, pp->px+ACT_NAME_OX, pp->py+ACT_NAME_OY );
+  pp->str[PANEL_FOAM_NAME] = GFL_STR_CreateBuffer( FMISSION_LOG_BUFLEN_NAME, wk->heap_sID );
+  
+  act_PanelFOamAdd( wk, &pp->msgOam[PANEL_FOAM_MSG], BMP_PANEL_MSG_OAM_SX, BMP_PANEL_MSG_OAM_SY, pp->px+ACT_MSG_OX, pp->py+ACT_MSG_OY );
+  pp->str[PANEL_FOAM_MSG] = GFL_STR_CreateBuffer( FMISSION_LOG_BUFLEN_MSG, wk->heap_sID );
 
-	finit.bmp = pp->msgOam.bmp;
-	finit.x = pp->px + ACT_MSG_OX;
-	finit.y = pp->py + ACT_MSG_OY;
-	finit.pltt_index = wk->objResNormal.res[OBJ_RES_PLTT].tbl[0];
-	finit.pal_offset = ACT_PAL_FONT;		// pltt_indexのパレット内でのオフセット
-	finit.soft_pri = OBJ_SPRI_MSG;			// ソフトプライオリティ
-	finit.bg_pri = OBJ_BG_PRI;				// BGプライオリティ
-	finit.setSerface = ACT_RENDER_ID;
-	finit.draw_type  = CLSYS_DRAW_SUB;
-
-	pp->msgOam.oam = BmpOam_ActorAdd( wk->bmpOam, &finit );
-
-  pp->str = GFL_STR_CreateBuffer( BUFLEN_PANEL_MSG, wk->heap_sID );
-  pp->name = GFL_STR_CreateBuffer( BUFLEN_TR_NAME, wk->heap_sID );
-  GFL_BMP_Clear( pp->msgOam.bmp, 0 );
-	BmpOam_ActorBmpTrans( pp->msgOam.oam );
-
-	BmpOam_ActorSetDrawEnable( pp->msgOam.oam, FALSE );
   GFL_CLACT_WK_SetDrawEnable( pp->cPanel, FALSE );
   GFL_CLACT_WK_SetDrawEnable( pp->cUnion, FALSE );
 }
@@ -1037,15 +1028,16 @@ static void act_PanelObjAdd( FMISSION_VIEW_PTR wk, u8 idx )
  */
 static void act_PanelObjDel( FMISSION_VIEW_PTR wk, u8 idx )
 {
+  int i;
+
   PANEL_WORK* pp = &(wk->panel[idx]);
 
-  GFL_STR_DeleteBuffer( pp->name );
-  GFL_STR_DeleteBuffer( pp->str );
-
-	BmpOam_ActorSetDrawEnable( pp->msgOam.oam, FALSE );
-  BmpOam_ActorDel( pp->msgOam.oam );
-	GFL_BMP_Delete( pp->msgOam.bmp );
-
+  for(i = 0; i < PANEL_FOAM_MAX; i++){
+    GFL_STR_DeleteBuffer( pp->str[i] );
+	  BmpOam_ActorSetDrawEnable( pp->msgOam[i].oam, FALSE );
+    BmpOam_ActorDel( pp->msgOam[i].oam );
+  	GFL_BMP_Delete( pp->msgOam[i].bmp );
+  }
   GFL_CLACT_WK_SetDrawEnable( pp->cUnion, FALSE );
   GFL_CLACT_WK_Remove( pp->cUnion );
   GFL_CLACT_WK_SetDrawEnable( pp->cPanel, FALSE );

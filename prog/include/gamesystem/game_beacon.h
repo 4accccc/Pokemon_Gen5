@@ -43,6 +43,15 @@ typedef enum{
 
 
 ///行動番号
+/*
+ *  行動番号の増やし方
+ *
+ *  1, enum GAMEBEACON_ACTION に定義を追加(BW時点での予約No50までは挿入不可)
+ *  2, src/gamesystem/game_beacon_accessor.c DATA_BeaconDataType[]にデータ追加
+ *  3, resource/message/src/beacon_status.gmm msg_beacon_xxx にアクションメッセージを追加
+ *  4, resource/cross_comm/ライブ通信設定データ.xls にプライオリティデータを追加
+ *  5, src/field/event_debug_livecomm.c DATA_DebugBeaconParam[]にデータ追加
+ */
 typedef enum{
   GAMEBEACON_ACTION_NULL,                     ///<データ無し
   
@@ -98,18 +107,29 @@ typedef enum{
   GAMEBEACON_ACTION_DISTRIBUTION_GPOWER,      ///<Gパワー配布                           50
  
   //スワンで追加されたビーコン
-  GAMEBEACON_ACTION_FEST_MISSION,                 ///<フェスミッション受信                  51
-  GAMEBEACON_ACTION_FMISSION_WILDPOKE_KNOCK_OUT,  ///<フェスミッション 野生ポケモン倒した   52
-  GAMEBEACON_ACTION_FMISSION_WILDPOKE_GET,        ///<フェスミッション 野生ポケモン捕まえた 53
-  GAMEBEACON_ACTION_FMISSION_EVENT_CLEAR,         ///<フェスミッション 指定イベントクリア 　54
-  GAMEBEACON_ACTION_FMISSION_ITEM_GET,            ///<フェスミッション 指定アイテム発見　 　55
+  GAMEBEACON_ACTION_FMISSION,                     ///<フェスミッション受信                  51
+
+  GAMEBEACON_ACTION_FMISSION_POKE_ENCOUNT,        ///<フェスミッション 野生ポケモンエンカウント   52
+  GAMEBEACON_ACTION_FMISSION_POKE_WIN,            ///<フェスミッション 野生ポケモン倒した   53
+  GAMEBEACON_ACTION_FMISSION_POKE_CAPTURE,        ///<フェスミッション 野生ポケモン捕まえた 54
+  GAMEBEACON_ACTION_FMISSION_POKE_ESCAPE,         ///<フェスミッション 野生ポケモン逃げた&逃げられた 55
+  GAMEBEACON_ACTION_FMISSION_TR_ENCOUNT,          ///<フェスミッション トレーナーエンカウント 56
+  GAMEBEACON_ACTION_FMISSION_GAMEOVER,            ///<フェスミッション ゲームオーバー 57
+  GAMEBEACON_ACTION_FMISSION_ITEM_USE,            ///<フェスミッション アイテム使用   　 　58
+  GAMEBEACON_ACTION_FMISSION_GPOWER,              ///<フェスミッション デルパワー使用    　59
+  GAMEBEACON_ACTION_FMISSION_EVENT_CLEAR,         ///<フェスミッション イベントクリア    　60
+  
+  GAMEBEACON_ACTION_FMISSION_FREEWORD,            ///<フェスミッション 一言メッセージ受信   61
+  GAMEBEACON_ACTION_FMISSION_POKE_DOWN,           ///<フェスミッション 先頭ポケモンが瀕死   62 
 
   GAMEBEACON_ACTION_MAX,
 }GAMEBEACON_ACTION;
 
-#define GAMEBEACON_ACTION_FEST_BEACON_START ( GAMEBEACON_ACTION_FEST_MISSION )
-#define GAMEBEACON_ACTION_FEST_BEACON_END   ( GAMEBEACON_ACTION_FMISSION_ITEM_GET )
+#define GAMEBEACON_ACTION_FEST_BEACON_START ( GAMEBEACON_ACTION_FMISSION )
+#define GAMEBEACON_ACTION_FEST_BEACON_END   ( GAMEBEACON_ACTION_FMISSION_POKE_DOWN )
 #define GAMEBEACON_ACTION_FEST_BEACON_NUM   ( (GAMEBEACON_FEST_BEACON_END-GAMEBEACON_ACTION_FEST_BEACON_START)+1)
+#define GAMEBEACON_ACTION_FEST_BEACON_WP_START ( GAMEBEACON_ACTION_FMISSION ) //ミッションパラメータ持ち
+#define GAMEBEACON_ACTION_FEST_BEACON_WP_END ( GAMEBEACON_ACTION_FMISSION_EVENT_CLEAR )  //ミッションパラメータ持ち
 
 //==============================================================================
 //  型定義
@@ -143,6 +163,9 @@ extern int GAMEBEACON_Get_UpdateLogNo(int *start_log_no);
 extern void GAMEBEACON_Reset_UpdateFlag(int log_no);
 extern BOOL GAMEBEACON_Set_SearchUpdateFlag(const GAMEBEACON_INFO *info);
 extern u16 GAMEBEACON_Get_RecvBeaconTime(u16 trainer_id);
+
+extern BOOL GAMEBEACON_Check_FestMission(const GAMEBEACON_INFO *info);
+extern BOOL GAMEBEACON_Check_FestMissionWithParam(const GAMEBEACON_INFO *info);
 
 //--------------------------------------------------------------
 //  ビーコンセット
@@ -180,7 +203,7 @@ extern void GAMEBEACON_Set_DistributionGPower(GPOWER_ID gpower_id);
 #endif
 extern void GAMEBEACON_Set_CriticalHit(const STRBUF *nickname);
 extern void GAMEBEACON_Set_CriticalDamage(const STRBUF *nickname);
-extern void GAMEBEACON_Set_Escape(void);
+extern void GAMEBEACON_Set_Escape( u16 monsno, BOOL run_enemy_f );
 extern void GAMEBEACON_Set_HPLittle(const STRBUF *nickname);
 extern void GAMEBEACON_Set_PPLittle(const STRBUF *nickname);
 extern void GAMEBEACON_Set_Dying(const STRBUF *nickname);

@@ -92,31 +92,22 @@ typedef enum{
 
 ///アクターパレット展開位置
 #define ACT_PAL_FONT      (3)
-#define ACT_PAL_PANEL     (4)   //5本占有
+#define ACT_PAL_PANEL     (4)   //3本占有
 #define ACT_PAL_UNION     (9)   //5本占有
 #define ACT_PAL_WMI       (14)  //通信アイコン占有領域
 #define ACT_PAL_LOCALIZE  (15)  //ローカライズ用空きパレット
 
-///アクターパネル色リロードパレット展開位置
-#define ACT_PANEL_PAL_FRM_V_BLACK (0) //フレーム色(ブラックバージョン)
-#define ACT_PANEL_PAL_FRM_V_WHITE (1) //フレーム色(ホワイトバージョン)
-#define ACT_PANEL_PAL_FRM_V_ELSE  (2) //フレーム色(その他バージョン)
-#define ACT_PANEL_PAL_RANK_MARK   (3) //ランクマークOn/Off切り替え用
-
-///パネルアクター　ランクマーク色転送カラーオフセット
-#define ACT_PANEL_COL_OFS_RANK    (8)
-
 ///フォントカラー
 #define	FCOL_FNTOAM   ( PRINTSYS_MACRO_LSB(1,2,0) )	 ///<OAMフォント黒抜
 #define FCOL_FNTOAM_W ( PRINTSYS_MACRO_LSB(15,3,0))  ///<Oam白抜き
-#define FCOL_FNTOAM_G ( PRINTSYS_MACRO_LSB(3,5,0))  ///<Oam灰抜き
+#define FCOL_FNTOAM_B ( PRINTSYS_MACRO_LSB(1,2,0))  ///<Oam白抜き
 #define FCOL_WHITE_N  ( PRINTSYS_MACRO_LSB(15,2,0) ) ///<BG白抜き
 #define FCOL_POPUP_BASE (9)
 #define FCOL_POPUP_MAIN (1)
 #define FCOL_POPUP_SDW  (2)
 #define FCOL_POPUP      ( PRINTSYS_MACRO_LSB(FCOL_POPUP_MAIN,FCOL_POPUP_SDW,FCOL_POPUP_BASE))  //BGポップアップ
-#define FCOL_LOGNUM_BASE  (1)
-#define FCOL_LOGNUM     ( PRINTSYS_MACRO_LSB(15,14,FCOL_LOGNUM_BASE))  //ログ人数表示
+#define FCOL_TITLE_BASE  (0xD)
+#define FCOL_TITLE       ( PRINTSYS_MACRO_LSB(1,2,FCOL_TITLE_BASE))  //タイトル表示
 
 ///名前を灰色表示するまで経過時間
 #define BEACON_TIMEOUT_FRAME  (3*60*60) //60sec*3
@@ -124,38 +115,47 @@ typedef enum{
 ///表示するログ件数
 #define VIEW_LOG_MAX    (4)
 
-#define BS_LOG_MAX  (30)  //ログ管理数
-#define PANEL_MAX   (5)   //同時描画されるパネル数
+#define MISSION_LOG_MAX   (30)  //ログ管理数
+#define PANEL_MAX         (4)   //同時描画されるパネル数
 #define PANEL_VIEW_START  (1)
-#define PANEL_VIEW_END    (4)
-#define PANEL_VIEW_MAX    (4)   //画面内に描画されるパネル数
-#define PANEL_LINE_END    (5)
+#define PANEL_VIEW_END    (3)
+#define PANEL_VIEW_MAX    (3)   //画面内に描画されるパネル数
+#define PANEL_LINE_END    (4)
 
 #define PANEL_DATA_BLANK (0xFF)
+
+typedef enum{
+ PANEL_FOAM_NAME,
+ PANEL_FOAM_MSG,
+ PANEL_FOAM_MAX,
+}PANEL_FOAM_ID;
+
+typedef enum{
+ PANEL_TYPE_SYS,
+ PANEL_TYPE_ACT,  
+ PANEL_TYPE_MSG,
+}PANEL_TYPE;
 
 ///ポップアップメッセージバッファ長
 #define BUFLEN_POPUP_MSG  (18*6*2+EOM_SIZE)
 #define BUFLEN_TMP_MSG    (BUFLEN_POPUP_MSG)
 
-///パネル文字列バッファ長
-#define BUFLEN_PANEL_MSG  (10+EOM_SIZE)
-///トレーナー名バッファ長
-#define BUFLEN_TR_NAME  (PERSON_NAME_SIZE+EOM_SIZE)
-
 ///メニュー
 typedef enum{
  MENU_F_POWER = 1,
  MENU_F_HELLO = 2,
- MENU_F_THANKS = 4,
- MENU_F_RETURN = 8,
- MENU_F_ALL = 0xF,
+ MENU_F_RETIRE = 4,
+ MENU_F_INFO = 8,
+ MENU_F_UPDOWN = 16,
+ MENU_F_ALL = 0xFF,
 }MENU_FLAG;
 
 typedef enum{
  MENU_POWER,
  MENU_HELLO,
- MENU_THANKS,
- MENU_RETURN,
+ MENU_RETIRE,
+ MENU_INFO,
+ MENU_UPDOWN,
  MENU_ALL,
 }MENU_ID;
 
@@ -175,20 +175,26 @@ typedef enum{
 
 ///////////////////////////////////////////////////
 //SE関連
-#define BVIEW_SE_DECIDE (SEQ_SE_DECIDE1)
-#define BVIEW_SE_MENU   (SEQ_SE_SYS_79)
-#define BVIEW_SE_SELECT (SEQ_SE_SELECT1)
-#define BVIEW_SE_CANCEL (SEQ_SE_CANCEL1)
-#define BVIEW_SE_UPDOWN (SEQ_SE_SELECT4)
-#define BVIEW_SE_NEW_PLAYER (SEQ_SE_SYS_11)
-#define BVIEW_SE_ICON   (SEQ_SE_SELECT2)
+#define FVIEW_SE_DECIDE (SEQ_SE_DECIDE1)
+#define FVIEW_SE_MENU   (SEQ_SE_SYS_79)
+#define FVIEW_SE_SELECT (SEQ_SE_SELECT1)
+#define FVIEW_SE_CANCEL (SEQ_SE_CANCEL1)
+#define FVIEW_SE_UPDOWN (SEQ_SE_SELECT4)
+#define FVIEW_SE_NEW_PLAYER (SEQ_SE_SYS_11)
+#define FVIEW_SE_ICON   (SEQ_SE_SELECT2)
 
 ///////////////////////////////////////////////////
 //BMP関連
 
 //パネルメッセージ表示oamウィンドウ
-#define BMP_PANEL_OAM_SX  (12)  //パネルOAM
-#define BMP_PANEL_OAM_SY  (2)
+
+//全15文字(うち漢字等の入力可能文字以外は12文字以内でないとBitmap領域に入りません)
+#define BMP_PANEL_MSG_OAM_SX  (24)  //パネルOAM(23でいいけど、ライブラリが結局24char取る)
+#define BMP_PANEL_MSG_OAM_SY  (2)
+
+//プレイヤー名 日本＆ハングル(12dot*5) 欧米(6dot*7)
+#define BMP_PANEL_NAME_OAM_SX  (8)  //パネルOAM
+#define BMP_PANEL_NAME_OAM_SY  (2)
 
 //ポップアップウィンドウ
 #define BMP_POPUP_PX (2)
@@ -197,49 +203,26 @@ typedef enum{
 #define BMP_POPUP_SY  (6)
 #define BMP_POPUP_FRM (FRM_POPUP)
 #define BMP_POPUP_PAL (FONT_PAL_POPUP)
-//メニューバーウィンドウ
-#define BMP_MENU_PX  (1)
-#define BMP_MENU_PY  (21)
-#define BMP_MENU_SX  (15)
-#define BMP_MENU_SY  (3)
-#define BMP_MENU_FRM (FRM_MENUMSG)
-#define BMP_MENU_PAL (FONT_PAL)
-//ログ数表示ウィンドウ
-#define BMP_LOGNUM_PX (0)
-#define BMP_LOGNUM_PY (19)
-#define BMP_LOGNUM_SX (6)   //ログ数表示OAM
-#define BMP_LOGNUM_SY (2)
-#define BMP_LOGNUM_FRM (FRM_BACK)
-#define BMP_LOGNUM_PAL (FONT_PAL_LOGNUM)
-//ミッション内容表示ウィンドウ
-#define BMP_FMISSION_PX (4)
-#define BMP_FMISSION_PY (2)
-#define BMP_FMISSION_SX (24)   //
-#define BMP_FMISSION_SY (6)
-#define BMP_FMISSION_FRM (FRM_BACK)
-#define BMP_FMISSION_PAL (FONT_PAL_LOGNUM)
-//ミッションスコア表示ウィンドウ
-#define BMP_FMSCORE_PX (2)
-#define BMP_FMSCORE_PY (9)
-#define BMP_FMSCORE_SX (28)   //
-#define BMP_FMSCORE_SY (2)
-#define BMP_FMSCORE_FRM (FRM_BACK)
-#define BMP_FMSCORE_PAL (FONT_PAL_LOGNUM)
-//ミッションタイム表示ウィンドウ
-#define BMP_FMTIME_PX (16)
-#define BMP_FMTIME_PY (12)
-#define BMP_FMTIME_SX (14)   //
-#define BMP_FMTIME_SY (2)
-#define BMP_FMTIME_FRM (FRM_BACK)
-#define BMP_FMTIME_PAL (FONT_PAL_LOGNUM)
+//タイトルウィンドウ
+#define BMP_TITLE_PX  (5)
+#define BMP_TITLE_PY  (0)
+#define BMP_TITLE_SX  (25)
+#define BMP_TITLE_SY  (5)
+#define BMP_TITLE_FRM (FRM_MENU)
+#define BMP_TITLE_PAL (FONT_PAL_POPUP)
+
+#define BMP_TITLE_OX  (0)
+#define BMP_TITLE_OY  (4)
+#define BMP_ENTRY_STR_OX    (16)
+#define BMP_ENTRY_STR_OY    (3*8)
+#define BMP_ENTRY_NUM_DSX   (9*8)
+#define BMP_ENTRY_NUM_DSY   (16)
+#define BMP_ENTRY_NUM_OX    ((BMP_TITLE_SX*8)-BMP_ENTRY_NUM_DSX)
+#define BMP_ENTRY_NUM_OY    (BMP_ENTRY_STR_OY)
 
 enum{
  WIN_POPUP,
- WIN_MENU,
- WIN_LOGNUM,
- WIN_FMISSION,
- WIN_FMSCORE,
- WIN_FMTIME,
+ WIN_TITLE,
  WIN_MAX,
 };
 
@@ -281,70 +264,69 @@ enum{
 enum{
  ACT_POWER,
  ACT_HELLO,
- ACT_THANKS,
- ACT_RETURN,
+ ACT_RETIRE,
  ACT_UP,
  ACT_DOWN,
+ ACT_INFO,
  ACT_MAX,
 };
 
 ///ノーマルOBJ アニメID
 enum{
- ACTANM_PANEL,
+ ACTANM_PANEL_SYS,
+ ACTANM_PANEL_ACT,
+ ACTANM_PANEL_MSG,
  ACTANM_POWER_ON,
  ACTANM_POWER_ANM,
  ACTANM_POWER_OFF,
  ACTANM_HELLO_ON,
  ACTANM_HELLO_ANM,
  ACTANM_HELLO_OFF,
- ACTANM_THANKS_ON,
- ACTANM_THANKS_ANM,
- ACTANM_THANKS_OFF,
- ACTANM_RETURN_ON,
- ACTANM_RETURN_ANM,
- ACTANM_RETURN_OFF,
- ACTANM_UP_DEF,
- ACTANM_UP_ANM,
+ ACTANM_RETIRE_ON,
+ ACTANM_RETIRE_ANM,
+ ACTANM_RETIRE_OFF,
+ ACTANM_INFO_ON,
+ ACTANM_INFO_ANM,
+ ACTANM_INFO_OFF,
  ACTANM_UP_ON,
+ ACTANM_UP_ANM,
  ACTANM_UP_OFF,
- ACTANM_DOWN_DEF,
- ACTANM_DOWN_ANM,
  ACTANM_DOWN_ON,
+ ACTANM_DOWN_ANM,
  ACTANM_DOWN_OFF,
 };
 
 #define ACT_ANM_SET (3)
 
-#define ACT_PANEL_OX  (13)
+#define ACT_PANEL_OX  (0)
 #define ACT_PANEL_OY  (5*8)
-#define ACT_PANEL_PX  (-ACT_PANEL_OX)
-#define ACT_PANEL_PY  (-ACT_PANEL_OY)
-#define ACT_PANEL_SI_SX (-26*8)  //スライドイン時のスタートポジション
-#define ACT_PANEL_SI_SY (0)
+#define ACT_PANEL_PX  (8)
+#define ACT_PANEL_PY  (6*8-ACT_PANEL_OY)
 
-#define ACT_UNION_OX  (4*8)
-#define ACT_UNION_OY  (3*8)
-#define ACT_MSG_OX    (9*8)
-#define ACT_MSG_OY    (2*8)
+#define ACT_UNION_OX  (2*8)
+#define ACT_UNION_OY  (2*8)
+#define ACT_NAME_OX   (6*8)
+#define ACT_NAME_OY   (4)
+#define ACT_MSG_OX    (6*8)
+#define ACT_MSG_OY    (16+4)
 #define ACT_RANK_OX   (19*8)
 #define ACT_RANK_OY   (4*8)
 
-#define ACT_MENU_PX (16*8+4)
+#define ACT_MENU_PX (20*8+4)
 #define ACT_MENU_PY (21*8+4)
 #define ACT_MENU_OX (4*8)
 #define ACT_MENU_OY (0)
-#define ACT_MENU_NUM  (4)
+#define ACT_MENU_NUM  (3)
 #define ACT_MENU_FMISSION_NUM  (3)
 #define ACT_MENU_SX (24)
 #define ACT_MENU_SY (24)
 #define ACT_MENU_FMISSION_PX (ACT_MENU_PX+ACT_MENU_OX)
 
+#define ACT_UP_PX (11*8)
+#define ACT_DOWN_PX (ACT_UP_PX+8*3)
 
-#define ACT_UP_PX (26*8)
-#define ACT_UP_PY (1*8)
-#define ACT_DOWN_PX (27*8)
-#define ACT_DOWN_PY (5*8)
-
+#define ACT_INFO_PX (2*8)
+#define ACT_INFO_PY (4)
 
 /////////////////////////////////////////////
 //タッチパネル

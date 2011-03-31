@@ -26,11 +26,11 @@
 #include "savedata/intrude_save.h"
 #include "savedata/playtime.h"
 
-#include "gamesystem/link_festival.h"
 #include "gamesystem/game_beacon.h"
 #include "gamesystem/game_beacon_types.h"
 #include "gamesystem/game_beacon_local.h" //許可なく他でinclude禁止
 
+#include "gamesystem/link_festival.h"
 #include "gamesystem/fest_mission_data.h"
 
 //@todo コンバータ作成時にアーカイブとして外部化する

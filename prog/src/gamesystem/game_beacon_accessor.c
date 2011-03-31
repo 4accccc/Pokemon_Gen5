@@ -111,10 +111,18 @@ static const u8 DATA_BeaconDataType[GAMEBEACON_ACTION_MAX][2] = {
 
   //スワンで追加されたビーコン
   BEACON_WSET_DEFAULT,	  BEACON_ICON_INFO,	      ///<FEST_MISSION, フェスタミッションをサーチしました！ 51
-  BEACON_WSET_DEFAULT,	  BEACON_ICON_INFO,	      ///<FMISSION_WILDPOKE_KNOCK_OUT, フェスタミッションをサーチしました！ 52
-  BEACON_WSET_DEFAULT,	  BEACON_ICON_INFO,	      ///<FMISSION_WILDPOKE_GET, フェスタミッションをサーチしました！ 53
-  BEACON_WSET_DEFAULT,	  BEACON_ICON_INFO,	      ///<FMISSION_EVENT_CLEAR, フェスタミッションをサーチしました！ 54
-  BEACON_WSET_DEFAULT,	  BEACON_ICON_INFO,	      ///<FMISSION_ITEM_GET, フェスタミッションをサーチしました！ 55
+  BEACON_WSET_DEFAULT,	  BEACON_ICON_INFO,	      ///<FMISSION_POKE_ENCOUNT, フェスタミッションをサーチしました！ 52
+  BEACON_WSET_DEFAULT,	  BEACON_ICON_INFO,	      ///<FMISSION_POKE_WIN, フェスタミッションをサーチしました！ 53
+  BEACON_WSET_DEFAULT,	  BEACON_ICON_INFO,	      ///<FMISSION_POKE_CAPTURE, フェスタミッションをサーチしました！ 54
+  BEACON_WSET_DEFAULT,	  BEACON_ICON_INFO,	      ///<FMISSION_POKE_ESCAPE, フェスタミッションをサーチしました！ 55
+  BEACON_WSET_DEFAULT,	  BEACON_ICON_INFO,	      ///<FMISSION_TR_ENCOUNT, フェスタミッションをサーチしました！ 56
+  BEACON_WSET_DEFAULT,	  BEACON_ICON_INFO,	      ///<FMISSION_GAMEOVER, フェスタミッションをサーチしました！ 57
+  BEACON_WSET_DEFAULT,	  BEACON_ICON_INFO,	      ///<FMISSION_ITEM_GET, フェスタミッションをサーチしました！ 58
+  BEACON_WSET_DEFAULT,	  BEACON_ICON_INFO,	      ///<FMISSION_GPOWER, フェスタミッションをサーチしました！ 59
+  BEACON_WSET_DEFAULT,	  BEACON_ICON_INFO,	      ///<FMISSION_EVENT_CLEAR, イベントクリア！ 60
+  
+  BEACON_WSET_DEFAULT,	  BEACON_ICON_INFO,	      ///<FMISSION_FREEWORD, フェスタミッションをサーチしました！ 61
+  BEACON_WSET_DEFAULT,	  BEACON_ICON_INFO,	      ///<FMISSION_POKE_DOWN, フェスタミッションをサーチしました！ 62
 };
 
 typedef BOOL (*BEACON_INFO_ERROR_CHECK_FUNC)(const GAMEBEACON_INFO* info );
@@ -542,22 +550,6 @@ BOOL GAMEBEACON_Check_NPC(const GAMEBEACON_INFO *info)
     return TRUE;
   }
   return FALSE;
-}
-
-//==================================================================
-/**
- * フェスミッションビーコンかどうかチェック 
- * @param   info	ビーコン情報へのポインタ
- * @retval  TRUE  NPCデータ(=詳細情報なし)
- */
-//==================================================================
-BOOL GAMEBEACON_Check_FestMission(const GAMEBEACON_INFO *info)
-{
-  if( info->action.action_no < GAMEBEACON_ACTION_FEST_MISSION ||
-      info->action.action_no > GAMEBEACON_ACTION_FMISSION_ITEM_GET ){
-    return FALSE;
-  }
-  return TRUE;
 }
 
 //==================================================================
@@ -1226,12 +1218,11 @@ BOOL GAMEBEACON_Get_Action_FestMission(const GAMEBEACON_INFO *info, FEST_MISSION
 {
   int i;
 
-  if( GAMEBEACON_Check_FestMission(info)){
+  if( GAMEBEACON_Check_FestMissionWithParam(info)){
     FEST_MISSION_Clear(fmwk);
     *fmwk = info->action.fmission;
     return TRUE;
   }
-  GF_ASSERT(0);
   return FALSE;
 }
 

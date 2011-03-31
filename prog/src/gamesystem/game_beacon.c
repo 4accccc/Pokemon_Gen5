@@ -13,6 +13,7 @@
 #include "gamesystem/game_beacon.h"
 #include "gamesystem/game_beacon_types.h"
 #include "gamesystem/fest_mission.h"
+#include "gamesystem/fmission_log_local.h"
 #include "msg/msg_beacon_status.h"
 #include "savedata/encount_sv.h"
 #include "savedata/misc.h"
@@ -380,11 +381,11 @@ static void BeaconInfo_SetFestMissionLog(GAMEBEACON_SYSTEM *bsys, const GAMEBEAC
   LINK_FESTIVAL*  fest_sys;
   LINKFEST_LOG_PARAM log;
   
-  if( info->action.action_no != GAMEBEACON_ACTION_FEST_MISSION ){
-    return;
-  }
   if( bsys->gsys == NULL ){
     GF_ASSERT(0);
+    return;
+  }
+  if( GAMEBEACON_Check_FestMissionWithParam( info ) == FALSE ){
     return;
   }
   fest_sys = GAMESYSTEM_GetLinkFestivalWork( bsys->gsys );
@@ -393,8 +394,24 @@ static void BeaconInfo_SetFestMissionLog(GAMEBEACON_SYSTEM *bsys, const GAMEBEAC
   log.key = info->action.fmission.key;
   log.prm.score.tr_id = info->trainer_id;
   log.prm.score.value = info->action.fmission.my_score;
+  log.prm.score.tmap_root = info->townmap_root_zone_id;
 
-  LINK_FESTIVAL_ScoreLogStore( fest_sys, &log );
+  {
+    LINKFEST_SCORELOG_SET_CODE ret = LINK_FESTIVAL_ScoreLogStore( fest_sys, &log );
+
+    if( ret != LINKFEST_SCORELOG_SET_FAILED ){
+      FMISSION_LOG_TBL* tbl = LINK_FESTIVAL_GetMissionLogStackTbl( fest_sys );
+
+      //ミッションログ収集
+      if( ret != LINKFEST_SCORELOG_SET_UPDATE ){
+        if( ret == LINKFEST_SCORELOG_SET_NEW_ENTRY ){
+          FMISSION_LOG_TBL_SetLogFromBeacon( tbl, info, FMISSION_LOG_SET_NEW, FALSE );
+        }
+        FMISSION_LOG_TBL_SetLogFromBeacon( tbl, info, FMISSION_LOG_SET_MAP, FALSE );
+      }
+      FMISSION_LOG_TBL_SetLogFromBeacon( tbl, info, FMISSION_LOG_SET_NORMAL, FALSE );
+    }
+  }
 }
 
 //==================================================================
@@ -845,6 +862,91 @@ void GAMEBEACON_SUB_SendBeaconSetCommon(GAMEBEACON_SEND_MANAGER *send)
 
 //--------------------------------------------------------------
 /**
+ * @brief フェスミッションビーコン送信用　ビーコンデータ生成共通処理
+ *
+ * INFOパラメータの生成→プレイヤーログ生成→プライオリティチェック→ビーコン送信リクエスト
+ * までを一気に行う
+ *
+ * @param   send		
+ * @param   action
+ * @param   param
+ */
+//--------------------------------------------------------------
+void GAMEBEACON_SUB_SendBeaconSetCommonForFMission(GAMEBEACON_SEND_MANAGER *send, u16 action, u32 param )
+{
+  GAMEBEACON_SEND_MANAGER tmp;
+  LINK_FESTIVAL* fest_sys = GAMESYSTEM_GetLinkFestivalWork( GameBeaconSys->gsys );
+  GAMEBEACON_INFO* info = &tmp.info;
+
+  tmp = *send;  //現時点での内容をコピー
+
+  //パラメータ生成
+  GAMEBEACON_SUB_SendBeaconSetCommon( &tmp );
+  
+
+  switch( action ){
+  case GAMEBEACON_ACTION_FMISSION_FREEWORD:
+    BEACONINFO_Set_FreeWord( info, (const STRBUF*)param);
+    break;
+  case GAMEBEACON_ACTION_FMISSION_POKE_DOWN:
+    BEACONINFO_Set_Dying( info, (const STRBUF*)param);
+    break;
+  default:
+    info->action.fmission = *LINK_FESTIVAL_GetMissionWork( fest_sys );
+    info->action.fmission.param = (u16)param;
+    break;
+  }
+  info->action.action_no = action;
+  info->version_bit = GAMEBEACON_RECV_VERSION_SWAN;  //スワン以降のみ
+  BEACONINFO_Set_Details_Walk( info );
+
+  //生成したパラメータで、自分用のミッションログを生成
+  FMISSION_LOG_TBL_SetLogFromBeacon( LINK_FESTIVAL_GetMissionLogStackTbl(fest_sys), &tmp.info, FMISSION_LOG_SET_NORMAL, TRUE );
+  
+  if(GAMEBEACON_SUB_CheckPriority( action ) == TRUE){
+    //実際の送信バッファに生成したパラメータを反映して、送信リクエストをかける
+    *send = tmp;
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * フェスミッションビーコンかどうかチェック 
+ * @param   info	ビーコン情報へのポインタ
+ *
+ * @retval  TRUE  フェスミッションビーコン
+ * @retval  FALSE フェスミッションビーコンではない
+ */
+//--------------------------------------------------------------
+BOOL GAMEBEACON_Check_FestMission(const GAMEBEACON_INFO *info)
+{
+  if( info->action.action_no < GAMEBEACON_ACTION_FEST_BEACON_START ||
+      info->action.action_no > GAMEBEACON_ACTION_FEST_BEACON_END ){
+    return FALSE;
+  }
+  return TRUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * ミッションパラメータを持つフェスミッションビーコンかどうかチェック 
+ * @param   info	ビーコン情報へのポインタ
+ *
+ * @retval  TRUE  パラメータ持ちビーコン
+ * @retval  FALSE パラメータ持ちビーコンではない
+ */
+//--------------------------------------------------------------
+BOOL GAMEBEACON_Check_FestMissionWithParam(const GAMEBEACON_INFO *info)
+{
+  if( info->action.action_no < GAMEBEACON_ACTION_FEST_BEACON_WP_START ||
+      info->action.action_no > GAMEBEACON_ACTION_FEST_BEACON_WP_END ){
+    return FALSE;
+  }
+  return TRUE;
+}
+
+//--------------------------------------------------------------
+/**
  * フェスビーコン送信をセットした時の共通処理
  *
  * @param   send		
@@ -853,12 +955,34 @@ void GAMEBEACON_SUB_SendBeaconSetCommon(GAMEBEACON_SEND_MANAGER *send)
 //--------------------------------------------------------------
 void GAMEBEACON_SUB_SendBeaconSetFMission( GAMEBEACON_INFO *info, u16 action, u16 param )
 {
-  LINK_FESTIVAL* link_fes = GAMESYSTEM_GetLinkFestivalWork( GameBeaconSys->gsys );
+  LINK_FESTIVAL* fest_sys = GAMESYSTEM_GetLinkFestivalWork( GameBeaconSys->gsys );
   info->action.action_no = action;
-  info->action.fmission = *LINK_FESTIVAL_GetMissionWork( link_fes );
+  info->action.fmission = *LINK_FESTIVAL_GetMissionWork( fest_sys );
   info->action.fmission.param = param;
 
   info->version_bit = GAMEBEACON_RECV_VERSION_SWAN;  //スワン以降のみ
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief フェスミッションのエントリーチェックとスコア計算を行う
+ *
+ * @param   action  LINK_FESTIVAL_MissionScoreCalc()に引き渡す actionナンバー
+ * @param   param LINK_FESTIVAL_MissionScoreCalc()に引き渡すパラメータ
+ *
+ * @retval  TRUE  ミッションエントリー中なのでスコアチェックをした
+ * @retval  FALSE ミッションエントリーしていないのでスコアチェックをスルーした
+ */
+//--------------------------------------------------------------
+BOOL GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACTION action, u16 param )
+{
+  LINK_FESTIVAL* fest_sys = GAMESYSTEM_GetLinkFestivalWork( GameBeaconSys->gsys );
+
+  if( !LINK_FESTIVAL_IsMissionEntry( fest_sys ) ){
+    return FALSE;
+  }
+  LINK_FESTIVAL_MissionScoreCalc( GameBeaconSys->gsys, action, param );
+  return TRUE;
 }
 
 //--------------------------------------------------------------
@@ -1095,10 +1219,10 @@ void GAMEBEACON_SendDataUpdate_SelfIntroduction(void)
  * @param   monsno    ポケモン番号
  */
 //==================================================================
-void GAMEBEACON_Set_PokemonGet(u16 monsno)
+void GAMEBEACON_Set_PokemonGet( u16 monsno )
 {
-  if( LINK_FESTIVAL_MissionScoreCalc( GameBeaconSys->gsys, monsno, 1 )){
-    GAMEBEACON_Set_FMissionWildPokemonGet(monsno);
+  if( GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_POKE_CAPTURE, monsno ) ){
+    GAMEBEACON_Set_FMissionWildPokemonGet( monsno );
     return;
   }
 
@@ -1177,10 +1301,14 @@ void BEACONINFO_Set_SpecialPokemonGet(GAMEBEACON_INFO *info, u16 monsno)
 //==================================================================
 void GAMEBEACON_Set_FMissionWildPokemonGet(u16 monsno)
 {
-  if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_FMISSION_WILDPOKE_GET) == FALSE){ return; };
+  GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_POKE_CAPTURE, monsno );
+#if 0
+  if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_FMISSION_POKE_CAPTURE) == FALSE){ return; };
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
 
   BEACONINFO_Set_FMissionWildPokemonGet(&GameBeaconSys->send.info, monsno);
+#else
+#endif
 }
 
 //==================================================================
@@ -1192,7 +1320,7 @@ void GAMEBEACON_Set_FMissionWildPokemonGet(u16 monsno)
 //==================================================================
 void BEACONINFO_Set_FMissionWildPokemonGet(GAMEBEACON_INFO *info, u16 monsno)
 {
-  GAMEBEACON_SUB_SendBeaconSetFMission( info, GAMEBEACON_ACTION_FMISSION_WILDPOKE_GET, monsno );
+  GAMEBEACON_SUB_SendBeaconSetFMission( info, GAMEBEACON_ACTION_FMISSION_POKE_CAPTURE, monsno );
   
   BEACONINFO_Set_Details_Walk(info);
 }
@@ -1206,13 +1334,15 @@ void BEACONINFO_Set_FMissionWildPokemonGet(GAMEBEACON_INFO *info, u16 monsno)
 //==================================================================
 void GAMEBEACON_Set_FMissionWildPokemonKnockOut(u16 monsno)
 {
-  if( LINK_FESTIVAL_MissionScoreCalc( GameBeaconSys->gsys, monsno, 1 ) == FALSE){
-    return;
+  if( GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_POKE_WIN, monsno ) ){
+    GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_POKE_WIN, monsno );
   }
-  if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_FMISSION_WILDPOKE_KNOCK_OUT) == FALSE){ return; };
+#if 0
+  if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_FMISSION_POKE_WIN) == FALSE){ return; };
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
 
   BEACONINFO_Set_FMissionWildPokemonKnockOut(&GameBeaconSys->send.info, monsno);
+#endif
 }
 
 //==================================================================
@@ -1224,7 +1354,7 @@ void GAMEBEACON_Set_FMissionWildPokemonKnockOut(u16 monsno)
 //==================================================================
 void BEACONINFO_Set_FMissionWildPokemonKnockOut(GAMEBEACON_INFO *info, u16 monsno)
 {
-  GAMEBEACON_SUB_SendBeaconSetFMission( info, GAMEBEACON_ACTION_FMISSION_WILDPOKE_KNOCK_OUT, monsno );
+  GAMEBEACON_SUB_SendBeaconSetFMission( info, GAMEBEACON_ACTION_FMISSION_POKE_WIN, monsno );
   
   BEACONINFO_Set_Details_Walk(info);
 }
@@ -1506,6 +1636,10 @@ void BEACONINFO_Set_CriticalDamage(GAMEBEACON_INFO *info, const STRBUF *nickname
 //==================================================================
 void GAMEBEACON_Set_UseItem(u16 item_no)
 {
+  if( GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_ITEM_USE, item_no ) ){
+    GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_ITEM_USE, item_no );
+    return;
+  }
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_USE_ITEM) == FALSE){ return; };
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
   BEACONINFO_Set_UseItem(&GameBeaconSys->send.info, item_no);
@@ -1549,10 +1683,23 @@ void GAMEBEACON_Set_ZoneChange(ZONEID zone_id, const GAMEDATA *cp_gamedata)
 //==================================================================
 void BEACONINFO_Set_ZoneChange(GAMEBEACON_INFO *info, ZONEID zone_id, const GAMEDATA *cp_gamedata)
 {
+  LINK_FESTIVAL*  fest_sys;
+
   info->zone_id = zone_id;
   info->townmap_root_zone_id = TOWNMAP_UTIL_GetRootZoneID(cp_gamedata, zone_id);
   info->details.details_no = GAMEBEACON_DETAILS_NO_WALK;
   BEACONINFO_Set_Details_Walk(info);
+
+  //フェスミッションログ生成
+  fest_sys = GAMESYSTEM_GetLinkFestivalWork( GameBeaconSys->gsys );
+  if( !LINK_FESTIVAL_IsMissionEntry( fest_sys ) ){
+    return;
+  }
+  if( LINK_FESTIVAL_TMapRootUpdate( fest_sys, info->townmap_root_zone_id ))
+  {
+    //自分用のミッションログを生成
+    FMISSION_LOG_TBL_SetLogFromBeacon( LINK_FESTIVAL_GetMissionLogStackTbl(fest_sys), info, FMISSION_LOG_SET_MAP, TRUE );
+  }
 }
 
 //==============================================================================
@@ -1672,7 +1819,7 @@ void GAMEBEACON_Set_Details_IntroductionPms(const PMS_DATA *pms)
 //==================================================================
 void GAMEBEACON_Set_FestMission( FEST_MISSION* mission )
 {
-  if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_FEST_MISSION) == FALSE){ return; };
+  if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_FMISSION) == FALSE){ return; };
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
   BEACONINFO_Set_FestMission(&GameBeaconSys->send.info, mission);
 }
@@ -1778,7 +1925,7 @@ static void GAMEBEACON_Set_ResortData( GAMEBEACON_SYSTEM *bsys )
 //==================================================================
 void BEACONINFO_Set_FestMission(GAMEBEACON_INFO *info, FEST_MISSION* mission )
 {
-  info->action.action_no = GAMEBEACON_ACTION_FEST_MISSION;
+  info->action.action_no = GAMEBEACON_ACTION_FMISSION;
   info->action.fmission = *mission;
   BEACONINFO_Set_Details_Walk(info);
 }

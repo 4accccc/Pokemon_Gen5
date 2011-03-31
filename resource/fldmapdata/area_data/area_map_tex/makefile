@@ -76,7 +76,7 @@ NSBTXFILES = $(wildcard $(subst $(DQ),,$(NSBTXFILESDIR))/*.nsbtx)
 #
 #----------------------------------------------------------------------------
 do-build: 
-	$(MAKE) -j 3 target
+	$(MAKE) -j $(NUMBER_OF_PROCESSORS) target
 
 target:$(TARGETDIR)/$(NARCNAME)
 

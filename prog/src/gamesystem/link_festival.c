@@ -46,8 +46,11 @@ LINK_FESTIVAL* LINK_FESTIVAL_Create( HEAPID heapID, GAMESYS_WORK* gsys )
   wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(LINK_FESTIVAL) );
 
   FEST_MISSION_Clear( &wk->mission );
-  //ログクリア
+  //スコアログ領域クリア
   log_ClearAll( wk );
+  //ミッションログ領域クリア
+  FMISSION_LOG_TBL_Clear( &wk->mlog_stack_tbl );
+  FMISSION_LOG_TBL_Clear( &wk->mlog_view_tbl );
 
   wk->beacon_wait = 10*60;
   wk->gsys = gsys;
@@ -105,6 +108,27 @@ FEST_MISSION* LINK_FESTIVAL_GetMissionWork( LINK_FESTIVAL* wk )
 
 //---------------------------------------------------------
 /*
+ * @brief リンクフェスティバル ミッションログスタックテーブルポインタ取得
+ */
+//---------------------------------------------------------
+FMISSION_LOG_TBL* LINK_FESTIVAL_GetMissionLogStackTbl( LINK_FESTIVAL* wk )
+{
+  return &wk->mlog_stack_tbl;
+}
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル ミッションログビューテーブルポインタ取得
+ */
+//---------------------------------------------------------
+FMISSION_LOG_TBL* LINK_FESTIVAL_GetMissionLogViewTbl( LINK_FESTIVAL* wk )
+{
+  return &wk->mlog_view_tbl;
+}
+
+
+//---------------------------------------------------------
+/*
  * @brief リンクフェスティバル ミッションスタート
  *
  * この関数を呼んだ時点でビーコン送信は開始されるが、
@@ -113,7 +137,10 @@ FEST_MISSION* LINK_FESTIVAL_GetMissionWork( LINK_FESTIVAL* wk )
 //---------------------------------------------------------
 void LINK_FESTIVAL_MissionStart( LINK_FESTIVAL* wk, const FEST_MISSION* mission, BOOL succeed_f )
 {
+  //ログ領域クリア
   log_ClearAll( wk );
+  FMISSION_LOG_TBL_Clear( &wk->mlog_stack_tbl );
+  FMISSION_LOG_TBL_Clear( &wk->mlog_view_tbl );
 
   FEST_MISSION_Start( &wk->mission, mission, succeed_f );
   wk->live_f = FALSE;
@@ -148,6 +175,8 @@ void LINK_FESTIVAL_MissionEnd( LINK_FESTIVAL* wk )
   GameCommSys_SetPalaceNotConnectFlagForFMission(GAMESYSTEM_GetGameCommSysPtr(wk->gsys), FALSE );
 
   log_ClearAll( wk );
+  FMISSION_LOG_TBL_Clear( &wk->mlog_stack_tbl );
+  FMISSION_LOG_TBL_Clear( &wk->mlog_view_tbl );
 }
 
 //---------------------------------------------------------
@@ -218,6 +247,24 @@ u16 LINK_FESTIVAL_FInfoTimeBonusGet( LINK_FESTIVAL* wk )
 void LINK_FESTIVAL_FInfoTimeBonusReset( LINK_FESTIVAL* wk )
 {
   wk->finfo_bonus = 0;
+}
+
+//---------------------------------------------------------
+/*
+ *  @brief  リンクフェスティバル　保持しているタウンマップルートIDを更新
+ *  @retval TRUE  更新された
+ *  @retval FALSE 値は変わらなかった
+ *
+ *  tmap_root = TOWNMAP_UTIL_GetRootZoneID(cp_gamedata, zone_id);
+ */
+//---------------------------------------------------------
+BOOL LINK_FESTIVAL_TMapRootUpdate( LINK_FESTIVAL* wk, u16 new_root )
+{
+  if( wk->tmap_root != new_root ){
+    wk->tmap_root = new_root;
+    return TRUE;
+  }
+  return FALSE;
 }
 
 //---------------------------------------------------------
@@ -293,10 +340,11 @@ BOOL LINK_FESTIVAL_IsMissionEnd( LINK_FESTIVAL* wk )
  * @brief リンクフェスティバル スコア加算
  */
 //---------------------------------------------------------
-BOOL LINK_FESTIVAL_MissionScoreCalc( GAMESYS_WORK* gsys, u16 param, u16 inc )
+BOOL LINK_FESTIVAL_MissionScoreCalc( GAMESYS_WORK* gsys, FMISSION_LOG_ACTION action, u16 param )
 {
   LINK_FESTIVAL* wk;
   BOOL score_inc = FALSE;
+  int inc = 1;  //@todo 現状スコア1固定
 
   if( gsys == NULL ){
 //    GF_ASSERT(0);
@@ -308,7 +356,7 @@ BOOL LINK_FESTIVAL_MissionScoreCalc( GAMESYS_WORK* gsys, u16 param, u16 inc )
   }
   {
     u32 time_bonus = 0;
-    score_inc =  FEST_MISSION_ScoreCalc( &wk->mission, param, inc, &time_bonus );
+    score_inc =  FEST_MISSION_ScoreCalc( &wk->mission, action, param, inc, &time_bonus );
     if( !score_inc || !time_bonus ){
       return score_inc;  
     }
@@ -342,37 +390,41 @@ int LINK_FESTIVAL_GetMissionEntryNum( LINK_FESTIVAL* wk )
  * @param log 情報を格納したLINKFEST_LOG構造体型ワークへのポインタ
  */
 //---------------------------------------------------------
-BOOL LINK_FESTIVAL_ScoreLogStore( LINK_FESTIVAL* wk, LINKFEST_LOG_PARAM* src )
+LINKFEST_SCORELOG_SET_CODE LINK_FESTIVAL_ScoreLogStore( LINK_FESTIVAL* wk, LINKFEST_LOG_PARAM* src )
 {
   int i;
   LINKFEST_LOG* log;
 
   if( FEST_MISSION_IsLive( &wk->mission ) == FALSE ){
-    return FALSE;
+    return LINKFEST_SCORELOG_SET_FAILED;
   }
   if( wk->mission.type != src->type ||
       wk->mission.key != src->key ){
-    return FALSE; //違うミッションなのではじく
+    return LINKFEST_SCORELOG_SET_FAILED;  //違うミッションなのではじく
   }
   for(i = 0;i < wk->log_num; i++){
     log = &wk->log[i];
 
     if( log->score.tr_id == src->prm.score.tr_id ){ //上書き
-      log->score.value = src->prm.score.value;
+      u16 root = log->score.tmap_root;
+      log->score = src->prm.score;
       OS_FPrintf(OSPRINT_LINKFEST_PAGE,"FMIS log%d up tr_id=%d, score=%d\n",i, log->score.tr_id,log->score.value );
-      return TRUE;
+      if( root != src->prm.score.tmap_root ){
+        return LINKFEST_SCORELOG_SET_MAP_CHANGE;
+      }
+      return LINKFEST_SCORELOG_SET_UPDATE;
     }
   }
   if( wk->log_num >= LINKFEST_LOG_MAX ){
     OS_FPrintf(OSPRINT_LINKFEST_PAGE,"FMIS BufFull\n");
-    return FALSE; //もう入らない
+    return LINKFEST_SCORELOG_SET_FAILED;  //もう入らない
   }
   //新規
   log = &wk->log[wk->log_num];
-  (*log).score = src->prm.score;
+  log->score = src->prm.score;
   OS_FPrintf(OSPRINT_LINKFEST_PAGE,"FMIS nLog%d tr_id=%d, score=%d\n",wk->log_num, log->score.tr_id,log->score.value );
   ++wk->log_num;
-  return TRUE;
+  return LINKFEST_SCORELOG_SET_NEW_ENTRY;
 }
 
 //---------------------------------------------------------
@@ -502,6 +554,7 @@ static void log_ClearAll( LINK_FESTIVAL* wk )
   wk->beacon_timer = 0; 
   wk->finfo_score = 0;
   wk->finfo_bonus = 0;
+  wk->tmap_root = 0xFFFF; //無効値で初期化
 
   wk->ready_timer = 0;
 }

@@ -60,6 +60,17 @@ extern GAMEBEACON_SYSTEM * GameBeaconSys;
 
 //--------------------------------------------------------------
 /**
+ * フェスミッションビーコンかどうかチェック 
+ * @param   info	ビーコン情報へのポインタ
+ *
+ * @retval  TRUE  フェスミッションビーコン
+ * @retval  FALSE フェスミッションビーコンではない
+ */
+//--------------------------------------------------------------
+extern BOOL GAMEBEACON_Check_FestMission(const GAMEBEACON_INFO *info);
+
+//--------------------------------------------------------------
+/**
  * 送信ビーコンをセットした時の共通処理
  *
  * @param   send		
@@ -70,6 +81,20 @@ extern void GAMEBEACON_SUB_SendBeaconSetCommon(GAMEBEACON_SEND_MANAGER *send);
 
 //--------------------------------------------------------------
 /**
+ * @brief フェスミッションビーコン送信用　ビーコンデータ生成共通処理
+ *
+ * INFOパラメータの生成→プレイヤーログ生成→プライオリティチェック→ビーコン送信リクエスト
+ * までを一気に行う
+ *
+ * @param   send		
+ * @param   action
+ * @param   param
+ */
+//--------------------------------------------------------------
+extern void GAMEBEACON_SUB_SendBeaconSetCommonForFMission(GAMEBEACON_SEND_MANAGER *send, u16 action, u32 param );
+
+//--------------------------------------------------------------
+/**
  * フェスビーコン送信をセットした時の共通処理
  *
  * @param   send		
@@ -77,6 +102,19 @@ extern void GAMEBEACON_SUB_SendBeaconSetCommon(GAMEBEACON_SEND_MANAGER *send);
  */
 //--------------------------------------------------------------
 extern void GAMEBEACON_SUB_SendBeaconSetFMission( GAMEBEACON_INFO *info, u16 action, u16 param );
+
+//--------------------------------------------------------------
+/**
+ * @brief フェスミッションのエントリーチェックとスコア計算を行う
+ *
+ * @param   action  LINK_FESTIVAL_MissionScoreCalc()に引き渡す actionナンバー
+ * @param   param LINK_FESTIVAL_MissionScoreCalc()に引き渡すパラメータ
+ *
+ * @retval  TRUE  ミッションエントリー中なのでスコアチェックをした
+ * @retval  FALSE ミッションエントリーしていないのでスコアチェックをスルーした
+ */
+//--------------------------------------------------------------
+extern BOOL GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACTION action, u16 param );
 
 //--------------------------------------------------------------
 /**

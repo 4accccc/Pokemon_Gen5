@@ -25,16 +25,29 @@ SDK_COMPILER_ASSERT( sizeof(FEST_MISSION) <= 20); //フェスミッション構造体型サイ
 
 typedef BOOL (*MISSION_SCORE_CALC_FUNC)( const FEST_MISSION* fmwk, u16 param );
 
+
+typedef struct _MISSION_SCORE_CALC_PARAM{
+  MISSION_SCORE_CALC_FUNC func;
+  u32 log_act_f;  //どのログアクションがスコアアップに対応しているか？
+}MISSION_SCORE_CALC_PARAM;
+
+
+//====================================================
+///ミッションタイプ別スコアインクリメントチェック関数
 static u32 score_CalcTimeBonus( FEST_MISSION* fmwk );
 static BOOL score_CalcWildBtlWin( const FEST_MISSION* fmwk, u16 param );
 static BOOL score_CalcEvent( const FEST_MISSION* fmwk, u16 param );
 
-
-static const MISSION_SCORE_CALC_FUNC DATA_ScoreCalcFuncTbl[] = {
-  NULL,
-  score_CalcWildBtlWin,
-  score_CalcEvent,
-  NULL,
+/*
+ *  ミッションスコア計算に必要なパラメータテーブル
+ *
+ *  @todo いずれ外部化する予定
+ */
+static const MISSION_SCORE_CALC_PARAM DATA_ScoreCalcParamTbl[] = {
+  { NULL, 0 },
+  { score_CalcWildBtlWin, (1<<FMISSION_LOG_ACT_POKE_WIN)|(1<<FMISSION_LOG_ACT_POKE_CAPTURE)},
+  { score_CalcEvent, (1<<FMISSION_LOG_ACT_EVENT_CLEAR) },
+  { NULL, 0 },
 };
 
 //---------------------------------------------------------
@@ -172,10 +185,24 @@ BOOL FEST_MISSION_IsEntry( const FEST_MISSION* fmwk )
 
 //---------------------------------------------------------
 /*
+ * @brief ミッション　スコアインクリメントチェック
+ */
+//---------------------------------------------------------
+BOOL FEST_MISSION_IsScoreUp( FEST_MISSION* fmwk, FMISSION_LOG_ACTION action, u16 value )
+{
+  const MISSION_SCORE_CALC_PARAM* prm = &DATA_ScoreCalcParamTbl[ fmwk->type ];
+  if( (prm->log_act_f & (1<<action)) == FALSE ){
+    return FALSE;
+  }
+  return prm->func(fmwk,value );
+}
+
+//---------------------------------------------------------
+/*
  * @brief ミッション　スコアインクリメント
  */
 //---------------------------------------------------------
-BOOL FEST_MISSION_ScoreCalc( FEST_MISSION* fmwk, u16 param, u16 inc, u32* out_bonus )
+BOOL FEST_MISSION_ScoreCalc( FEST_MISSION* fmwk,  FMISSION_LOG_ACTION action, u16 param, u16 inc, u32* out_bonus )
 {
   u32 bonus = 0;
   
@@ -183,7 +210,7 @@ BOOL FEST_MISSION_ScoreCalc( FEST_MISSION* fmwk, u16 param, u16 inc, u32* out_bo
   if( FEST_MISSION_IsLive( fmwk ) == FALSE ){
     return FALSE;
   }
-  if( !DATA_ScoreCalcFuncTbl[ fmwk->type ](fmwk,param) ){
+  if( !FEST_MISSION_IsScoreUp( fmwk, action, param )){
     return FALSE;
   }
   if( (fmwk->my_score + inc ) > FMISSION_SCORE_MAX ){

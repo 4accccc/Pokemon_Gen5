@@ -91,10 +91,10 @@ $(TARGET_DIR)/$(TARGET_ARC): $(TARGET_ARC)
 
 ifeq	($(CONVERTUSER),true) #CONVERTUSER
 $(TARGET_ARC): $(MAPMATRIX_XLS) $(ZONEID_H) $(LAND_DATA_XLS)
-	$(MAKE) mklandlst			#ランドリスト作成
-	$(MAKE) convxls				#エクセルコンバート
-	$(MAKE) mklst				#一覧を作成
-	$(MAKE) convert				#マトリクスコンバート
+	$(MAKE) -j $(NUMBER_OF_PROCESSORS) mklandlst			#ランドリスト作成
+	$(MAKE) -j $(NUMBER_OF_PROCESSORS) convxls				#エクセルコンバート
+	$(MAKE) -j $(NUMBER_OF_PROCESSORS) mklst				#一覧を作成
+	$(MAKE) -j $(NUMBER_OF_PROCESSORS) convert				#マトリクスコンバート
 	$(MAKE) makearc				#アーカイブ
 	$(NAIXCUT) $(TARGET_ARCIDX)
 	

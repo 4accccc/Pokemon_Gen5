@@ -26,7 +26,7 @@
 #include "app/app_taskmenu.h"
 #include "app/app_keycursor.h"
 #include "item/itemsym.h"
-#include "msg/msg_beacon_status.h"
+#include "msg/msg_fmission_log.h"
 
 #include "sound/pm_sndsys.h"
 #include "sound/swan_sound_data.sadl"
@@ -44,21 +44,21 @@ typedef struct _PANEL_WORK{
   u8  data_idx; //データ配列参照実index
 
   u8  n_line; //現在のライン
-  u8  rank; //ランク
-  u8  sex;  //性別
-  u8  timeout_f;  //タイムアウトフラグ
+  u8  sex:1;  //性別
+  u8  type:7; //パネルタイプ
+
   u16 tr_id;  //トレーナーID
+  u16 act_prm;  //<アクションパラメータ
   s16 px;
   s16 py;
   GFL_CLWK* cPanel;
   GFL_CLWK* cUnion;
-  FONT_OAM  msgOam;
-	STRBUF* str;
-	STRBUF* name;
+  FONT_OAM  msgOam[PANEL_FOAM_MAX];
+	STRBUF* str[PANEL_FOAM_MAX];
+  GFL_TCBL* tcb_print[PANEL_FOAM_MAX];
 
   const PRINT_QUE* que;
-  GFL_TCBL* tcb_print;
-  GFL_TCBL* tcb_icon;
+  GFL_TCBL* tcb_print_name;
 }PANEL_WORK;
 
 /*
@@ -111,21 +111,17 @@ typedef struct _FMISSION_VIEW{
   MY_DATA               my_data;
  
   BEACON_STATUS* b_status;
-  GAMEBEACON_INFO_TBL*  infoStack;  //スタックワーク
-  GAMEBEACON_INFO_TBL*  infoLog;    //ログテーブル
-  GAMEBEACON_INFO*      tmpInfo;
-  GAMEBEACON_INFO*      tmpInfo2;
-  u16                   tmpTime;
-  u16                   newLogTime;
-  GAMEBEACON_INFO*      newLogInfo;
+  FMISSION_LOG_TBL*     logStack;  //スタックワーク
+  FMISSION_LOG_TBL*     logView;   //ログテーブル
+  FMISSION_LOG*         tmpLog;
+  FMISSION_LOG*         tmpLog2;
+  FMISSION_LOG*         newLog;
   PANEL_WORK*           newLogPanel;
 
   u8                    newLogOfs;
   u8                    newLogIdx;
   u8                    newLogWait;
   u8                    old_list_max;
-  u8                    old_sex_ct;   //ログ内の性別が異なる人数
-  u8                    old_version_ct;  //ログ内のカセットバージョンが異なる人数
   BOOL                  first_entry_f;
 
   int       active;
@@ -136,7 +132,6 @@ typedef struct _FMISSION_VIEW{
   u16       event_reserve_f;
 
   int       io_interval;      ///<スタックチェックインターバルカウンタ
-  u8        msg_spd;            ///<メッセージスピード
   u8        gpower_check_req;   ///<発動中のGパワー確認イベントリクエストフラグ
   u8        init_f;             ///<初期化中フラグ
   LOG_CTRL  ctrl;
@@ -166,13 +161,14 @@ typedef struct _FMISSION_VIEW{
   PALETTE_FADE_PTR pfd;
 
   GFL_FONT *fontHandle;
+//  GFL_FONT *sfontHandle;
   PRINT_QUE *printQue;
   APP_TASKMENU_RES* menuRes;
   APP_KEYCURSOR_WORK* key_cursor;
   BVC_TMENU_WORK* tmenu;
 
   WORDSET *wordset;
-  GFL_MSGDATA *mm_status;
+  GFL_MSGDATA *mm_sys;
   GFL_MSGDATA *mm_fmission;
   STRBUF *str_tmp;
   STRBUF *str_expand;

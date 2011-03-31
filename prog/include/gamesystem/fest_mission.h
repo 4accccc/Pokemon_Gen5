@@ -18,6 +18,8 @@
 ///外部参照用
 typedef struct _FEST_MISSION FEST_MISSION;
 
+#include "gamesystem/fmission_log.h"
+
 //---------------------------------------------------------
 /*
  * @brief ミッション管理領域クリア
@@ -77,10 +79,17 @@ extern BOOL FEST_MISSION_IsEntry( const FEST_MISSION* fmwk );
 
 //---------------------------------------------------------
 /*
+ * @brief ミッション　スコアインクリメントチェック
+ */
+//---------------------------------------------------------
+extern BOOL FEST_MISSION_IsScoreUp( FEST_MISSION* fmwk, FMISSION_LOG_ACTION action, u16 value );
+
+//---------------------------------------------------------
+/*
  * @brief ミッション　スコアインクリメント
  */
 //---------------------------------------------------------
-extern BOOL FEST_MISSION_ScoreCalc( FEST_MISSION* fmwk, u16 param, u16 inc, u32* out_bonus );
+extern BOOL FEST_MISSION_ScoreCalc( FEST_MISSION* fmwk,  FMISSION_LOG_ACTION action, u16 param, u16 inc, u32* out_bonus );
 
 //=================================================
 //以下デバッグルーチン

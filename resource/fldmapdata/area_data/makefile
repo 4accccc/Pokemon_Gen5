@@ -100,7 +100,7 @@ G_ANM_LIST	=	$(subst $(DQ),,$(ARC_ANM_LIST_FILENAME))
 #------------------------------------------------------------------------------
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、バイナリ生成
 do-build:	area_map_tex.d subdir
-	$(MAKE) -j 3 target
+	$(MAKE) -j $(NUMBER_OF_PROCESSORS) target
 
 else
 do-build:	subdir $(TARGETDIR)/$(TARGET)

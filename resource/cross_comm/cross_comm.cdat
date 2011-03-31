@@ -214,19 +214,47 @@ static const struct{
 		2,		//priority
 		5 * 60,		//life
 	},
-	{	//52  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_WILDPOKE_KNOCK_OUT)
+	{	//52  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_POKE_ENCOUNT)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//53  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_WILDPOKE_GET)
+	{	//53  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_POKE_WIN)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//54  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_EVENT_CLEAR)
+	{	//54  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_POKE_CAPTURE)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//55  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_ITEM_GET)
+	{	//55  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_POKE_ESCAPE)
+		5,		//priority
+		20 * 60,		//life
+	},
+	{	//56  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_TR_ENCOUNT)
+		5,		//priority
+		20 * 60,		//life
+	},
+	{	//57  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_GAMEOVER)
+		5,		//priority
+		20 * 60,		//life
+	},
+	{	//58  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_ITEM_USE)
+		5,		//priority
+		20 * 60,		//life
+	},
+	{	//59  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_GPOWER)
+		5,		//priority
+		20 * 60,		//life
+	},
+	{	//60  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_EVENT_CLEAR)
+		5,		//priority
+		20 * 60,		//life
+	},
+	{	//61  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_FREEWORD)
+		5,		//priority
+		20 * 60,		//life
+	},
+	{	//62  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_POKE_DOWN)
 		5,		//priority
 		20 * 60,		//life
 	},

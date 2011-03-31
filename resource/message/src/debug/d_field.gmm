@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nagihashi_toru" host="W00268" date="2011-03-31T11:57:07"/>
+	<create user="iwasawa" host="W00270" date="2011-03-25T09:40:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -744,6 +744,11 @@
 	<row id="DEBUG_FIELD_STR_SUBSCRN07">
 		<language name="JPN" width="160">NO GEAR</language>
 		<language name="JPN_KANJI" width="160">NO GEAR</language>
+	</row>
+
+	<row id="DEBUG_FIELD_STR_SUBSCRN08">
+		<language name="JPN" width="160">フェスミッションログ</language>
+		<language name="JPN_KANJI" width="160">フェスミッションログ</language>
 	</row>
 
 	<row id="DEBUG_FIELD_STR_MUSICAL1">

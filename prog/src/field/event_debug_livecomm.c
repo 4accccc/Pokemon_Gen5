@@ -424,6 +424,28 @@ static const D_BEACON_PARAM DATA_DebugBeaconParam[GAMEBEACON_ACTION_MAX] = {
   { GAMEBEACON_Set_DistributionGPower,    BEACON_PSET_GPOWER, 	  BEACON_ARG_GPOWER,	},
   ///<FEST_MISSION フェスタミッション配布 51 
   { GAMEBEACON_Set_FestMission,           BEACON_PSET_SCORE, 	    BEACON_ARG_FMISSION,	},
+  ///<FEST_MISSION フェスタミッション配布 52 
+  { GAMEBEACON_Set_FestMission,           BEACON_PSET_SCORE, 	    BEACON_ARG_FMISSION,	},
+  ///<FEST_MISSION フェスタミッション配布 53 
+  { GAMEBEACON_Set_FestMission,           BEACON_PSET_SCORE, 	    BEACON_ARG_FMISSION,	},
+  ///<FEST_MISSION フェスタミッション配布 54 
+  { GAMEBEACON_Set_FestMission,           BEACON_PSET_SCORE, 	    BEACON_ARG_FMISSION,	},
+  ///<FEST_MISSION フェスタミッション配布 55 
+  { GAMEBEACON_Set_FestMission,           BEACON_PSET_SCORE, 	    BEACON_ARG_FMISSION,	},
+  ///<FEST_MISSION フェスタミッション配布 56 
+  { GAMEBEACON_Set_FestMission,           BEACON_PSET_SCORE, 	    BEACON_ARG_FMISSION,	},
+  ///<FEST_MISSION フェスタミッション配布 57 
+  { GAMEBEACON_Set_FestMission,           BEACON_PSET_SCORE, 	    BEACON_ARG_FMISSION,	},
+  ///<FEST_MISSION フェスタミッション配布 58 
+  { GAMEBEACON_Set_FestMission,           BEACON_PSET_SCORE, 	    BEACON_ARG_FMISSION,	},
+  ///<FEST_MISSION フェスタミッション配布 59 
+  { GAMEBEACON_Set_FestMission,           BEACON_PSET_SCORE, 	    BEACON_ARG_FMISSION,	},
+  ///<FEST_MISSION フェスタミッション配布 60 
+  { GAMEBEACON_Set_FestMission,           BEACON_PSET_SCORE, 	    BEACON_ARG_FMISSION,	},
+  ///<FEST_MISSION フェスタミッション配布 61 
+  { GAMEBEACON_Set_FestMission,           BEACON_PSET_SCORE, 	    BEACON_ARG_FMISSION,	},
+  ///<FEST_MISSION フェスタミッション配布 62 
+  { GAMEBEACON_Set_FestMission,           BEACON_PSET_SCORE, 	    BEACON_ARG_FMISSION,	},
 };
 
 static const  D_BEACON_PRM_SET DATA_DebugBeaconParamSet[BEACON_PSET_MAX] = {

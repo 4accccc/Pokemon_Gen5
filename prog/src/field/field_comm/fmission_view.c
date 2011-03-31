@@ -109,12 +109,6 @@ FMISSION_VIEW_PTR FMISSION_VIEW_Init(GAMESYS_WORK *gsys, FIELD_SUBSCREEN_WORK *s
   wk->active = FALSE;  //無効値で初期化
   sub_SetViewPassive( wk, TRUE );
 
-#ifdef PM_DEBUG
-  //スルーフラグが立っている状態で初期化された場合、最初の一回のアップデートのみする
-  if(DEBUG_BEACON_STATUS_GetStackCheckThrowFlag(wk->b_status) == TRUE ){
-    GAMEBEACON_Stack_Update( wk->infoStack );
-  }
-#endif  //PM_DEBUG
   return wk;
 }
 
@@ -191,12 +185,6 @@ void FMISSION_VIEW_Update(FMISSION_VIEW_PTR wk, BOOL bActive )
     IWASAWA_Printf("BeaconView seq = %d tick = %d\n", before_seq, tick );
   }
 #endif
-  if(DEBUG_BEACON_STATUS_GetStackCheckThrowFlag(wk->b_status) == FALSE ){
-    GAMEBEACON_Stack_Update( wk->infoStack );
-  }
-#else
-  //スタックテーブル更新
-  GAMEBEACON_Stack_Update( wk->infoStack );
 #endif
 }
 
@@ -252,6 +240,18 @@ GMEVENT* FMISSION_VIEW_EventCheck(FMISSION_VIEW_PTR wk, BOOL bEvReqOK )
 static int seq_Main( FMISSION_VIEW_PTR wk )
 {
   int ret;
+  
+  if( wk->io_interval ){
+    wk->io_interval--;
+    return SEQ_MAIN;
+  }
+ 
+  //スタックチェック
+  if( FMissionView_CheckStack( wk ) == FALSE ){
+    return SEQ_MAIN;
+  }
+  wk->io_interval = 30*3; //インターバルを設定
+  return SEQ_LOG_ENTRY;
 
 #if 0
   //特殊ポップアップ起動チェック
@@ -296,11 +296,9 @@ static int seq_Main( FMISSION_VIEW_PTR wk )
  */
 static int seq_LogEntry( FMISSION_VIEW_PTR wk )
 {
-#if 0
   if( !FMissionView_SubSeqLogEntry( wk )){
     return SEQ_LOG_ENTRY;
   }
-#endif
   wk->sub_seq = 0;
   return SEQ_VIEW_UPDATE;
 }
@@ -313,7 +311,7 @@ static int seq_ViewUpdate( FMISSION_VIEW_PTR wk )
   if( wk->eff_task_ct ){
     return SEQ_VIEW_UPDATE;
   }
-//  FMissionView_MenuBarViewSet( wk, MENU_ALL, MENU_ST_ON );
+  FMissionView_MenuBarViewSet( wk, MENU_ALL, MENU_ST_ON );
 //  FMissionView_UpDownViewSet( wk );
   return SEQ_MAIN;
 }

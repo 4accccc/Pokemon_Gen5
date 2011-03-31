@@ -1,5 +1,5 @@
 /*
- *  @file   fest_mission_def.h
+ *  @file   fest_mission_local.h
  *  @brief  フェスタミッションパラメータ構造体定義
  *  @author Miyuki Iwasawa
  *  @date   11.02.04 
@@ -17,6 +17,12 @@ typedef enum{
 }FEST_MISSION_ID;
 #endif
 
+/*
+ *  増やすとき
+ *  1, 定義を追加
+ *  2, check src/field/fest_mission.c
+ *  2, check src/field/event_debug_linkfest.c
+ */
 typedef enum{
   FMISSION_TYPE_NULL,
   FMISSION_TYPE_POKE_SEARCH,

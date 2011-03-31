@@ -1097,6 +1097,7 @@ static void setupUnionSubscreen(DMESSWORK * dmess);
 static void setupDebugLightSubscreen(DMESSWORK * dmess);
 static void setupCGearFirstSubscreen(DMESSWORK * dmess);
 static void setupNoneSubscreen(DMESSWORK * dmess);
+static void setupFMissionLogSubscreen(DMESSWORK * dmess);
 
 
 //--------------------------------------------------------------
@@ -1138,6 +1139,7 @@ static const DEBUG_MENU_LIST DATA_SubcreenMenuList[] =
   { DEBUG_FIELD_STR_SUBSCRN05, (void*)setupUnionSubscreen, GFL_OVERLAY_BLANK_ID },
   { DEBUG_FIELD_STR_SUBSCRN06, (void*)setupCGearFirstSubscreen, GFL_OVERLAY_BLANK_ID },
   { DEBUG_FIELD_STR_SUBSCRN07, (void*)setupNoneSubscreen, GFL_OVERLAY_BLANK_ID },
+  { DEBUG_FIELD_STR_SUBSCRN08, (void*)setupFMissionLogSubscreen, GFL_OVERLAY_BLANK_ID },
 };
 
 static const DEBUG_MENU_INITIALIZER DebugSubscreenSelectData = {
@@ -1243,6 +1245,10 @@ static void setupCGearFirstSubscreen(DMESSWORK * dmess)
 static void setupNoneSubscreen(DMESSWORK * dmess)
 {
   FIELD_SUBSCREEN_ChangeForce(dmess->subscreen, FIELD_SUBSCREEN_NOGEAR);
+}
+static void setupFMissionLogSubscreen(DMESSWORK * dmess)
+{
+  FIELD_SUBSCREEN_ChangeForce(dmess->subscreen, FIELD_SUBSCREEN_FMISSION_VIEW);
 }
 
 

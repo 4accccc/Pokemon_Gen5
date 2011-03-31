@@ -8,8 +8,8 @@ SUBDIRS	= land_camera
 .PHONY: do-build clean
 
 do-build: subdir
-	$(MAKE) -f $(MKFILE_LANDLIST)
-	$(MAKE) -j3 -f $(MKFILE_LAND)
+	$(MAKE) -j $(NUMBER_OF_PROCESSORS) -f $(MKFILE_LANDLIST)
+	$(MAKE) -j $(NUMBER_OF_PROCESSORS) -f $(MKFILE_LAND)
 
 subdir:
 	@$(MAKE_SUBDIR)

@@ -338,6 +338,8 @@ static const DEBUG_MENU_INITIALIZER DebugLinkFestFromFieldMenuData = {
 static const D_MISSION_PARAM DATA_DebugMissionParam[FMISSION_TYPE_MAX] = {
   { 0 },
   { MISSION_PSET_MONSNO_ZERO },
+  { 0 },
+  { 0 },
 };
 
 static const  D_MISSION_PRM_SET DATA_DebugMissionParamSet[MISSION_PSET_MAX] = {

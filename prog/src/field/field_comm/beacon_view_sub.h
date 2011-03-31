@@ -81,12 +81,6 @@ extern BOOL BeaconView_MenuBarCheckAnm( BEACON_VIEW_PTR wk, MENU_ID id );
  */
 extern int BeaconView_SubSeqThanks( BEACON_VIEW_PTR wk );
 
-
-/*
- *  @brief  スクロールボタンアニメセット
- */
-extern void BeaconView_UpDownAnmSet( BEACON_VIEW_PTR wk, SCROLL_DIR dir );
-
 /*
  *  @brief  スクロールボタン状態セット
  */

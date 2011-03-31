@@ -11,6 +11,7 @@
 #include "gamesystem/game_beacon.h"
 #include "gamesystem/game_beacon_types.h"
 #include "msg/msg_beacon_status.h"
+#include "gamesystem/fest_mission.h"
 #include "savedata/encount_sv.h"
 #include "savedata/misc.h"
 #include "net/net_whpipe.h"
@@ -42,6 +43,10 @@
 //==================================================================
 void GAMEBEACON_Set_BattlePokeStart(u16 monsno)
 {
+  if( GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_POKE_ENCOUNT, monsno ) ){
+    GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_POKE_ENCOUNT, monsno );
+    return;
+  }
   if( GAMEBEACON_SUB_PokeBeaconTypeIsSpecial( monsno )){
     GAMEBEACON_Set_BattleSpPokeStart(monsno);
   }else{
@@ -182,6 +187,10 @@ void BEACONINFO_Set_BattleSpPokeVictory(GAMEBEACON_INFO *info, u16 monsno)
 //==================================================================
 void GAMEBEACON_Set_BattleTrainerStart(u16 tr_no)
 {
+  if( GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_TR_ENCOUNT, tr_no ) ){
+    GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_TR_ENCOUNT, tr_no );
+    return;
+  }
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_BATTLE_TRAINER_START) == FALSE){ return; };
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
   BEACONINFO_Set_BattleTrainerStart(&GameBeaconSys->send.info, tr_no);
@@ -238,6 +247,10 @@ void BEACONINFO_Set_BattleTrainerVictory(GAMEBEACON_INFO *info, u16 tr_no)
 //==================================================================
 void GAMEBEACON_Set_BattleLeaderStart(u16 tr_no)
 {
+  if( GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_TR_ENCOUNT, tr_no ) ){
+    GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_TR_ENCOUNT, tr_no );
+    return;
+  }
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_BATTLE_LEADER_START) == FALSE){ return; };
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
   BEACONINFO_Set_BattleLeaderStart(&GameBeaconSys->send.info, tr_no);
@@ -294,6 +307,10 @@ void BEACONINFO_Set_BattleLeaderVictory(GAMEBEACON_INFO *info, u16 tr_no)
 //==================================================================
 void GAMEBEACON_Set_BattleSpTrainerStart(u16 tr_no)
 {
+  if( GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_TR_ENCOUNT, tr_no ) ){
+    GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_TR_ENCOUNT, tr_no );
+    return;
+  }
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_BATTLE_SP_TRAINER_START) == FALSE){ return; };
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
   BEACONINFO_Set_BattleSpTrainerStart(&GameBeaconSys->send.info, tr_no);
@@ -350,6 +367,10 @@ void BEACONINFO_Set_BattleSpTrainerVictory(GAMEBEACON_INFO *info, u16 tr_no)
 //==================================================================
 void GAMEBEACON_Set_BattleChampionStart(u16 tr_no)
 {
+  if( GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_TR_ENCOUNT, tr_no ) ){
+    GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_TR_ENCOUNT, tr_no );
+    return;
+  }
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_BATTLE_CHAMPION_START) == FALSE){ return; };
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
   BEACONINFO_Set_BattleChampionStart(&GameBeaconSys->send.info, tr_no);
@@ -407,6 +428,10 @@ void BEACONINFO_Set_BattleChampionVictory(GAMEBEACON_INFO *info, u16 tr_no)
 //==================================================================
 void GAMEBEACON_Set_GPower(GPOWER_ID g_power_id)
 {
+  if( GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_GPOWER, g_power_id ) ){
+    GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_GPOWER, g_power_id );
+    return;
+  }
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_GPOWER) == FALSE){ return; };
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
   BEACONINFO_Set_GPower(&GameBeaconSys->send.info, g_power_id);
@@ -538,11 +563,21 @@ void BEACONINFO_Set_UnionIn(GAMEBEACON_INFO *info)
 }
 //==================================================================
 /**
- * 送信ビーコンセット：戦闘から逃げ出した
+ * 送信ビーコンセット：野生戦闘から逃げ出したor逃げられた
+ *
+ * @param monsno
+ * @param run_enemy_f 相手に逃げられた時TRUE, 自分から離脱した場合FALSE
  */
 //==================================================================
-void GAMEBEACON_Set_Escape(void)
+void GAMEBEACON_Set_Escape( u16 monsno, BOOL run_enemy_f )
 {
+  if( GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_POKE_ESCAPE, monsno ) ){
+    GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_POKE_ESCAPE, monsno );
+    return;
+  }
+  if( run_enemy_f ){
+    return; //フェスミッション以外では、逃げられた時は送らない
+  }
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_ESCAPE) == FALSE){ return; };
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
   BEACONINFO_Set_Escape(&GameBeaconSys->send.info);
@@ -629,6 +664,9 @@ void BEACONINFO_Set_PPLittle(GAMEBEACON_INFO *info, const STRBUF *nickname)
 //==================================================================
 void GAMEBEACON_Set_Dying(const STRBUF *nickname)
 {
+  if( GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_POKE_DOWN, 0 ) ){
+    GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_POKE_DOWN, (u32)nickname );
+  }
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_DYING) == FALSE){ return; };
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
   BEACONINFO_Set_Dying(&GameBeaconSys->send.info, nickname);
@@ -1079,6 +1117,10 @@ void BEACONINFO_Set_Thankyou(GAMEBEACON_INFO *info, GAMEDATA *gamedata, u32 targ
 //==================================================================
 void GAMEBEACON_Set_FreeWord( const STRBUF *free_word )
 {
+  if( GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_FREEWORD, 0 ) ){
+    GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_FREEWORD, (u32)free_word );
+    return;
+  }
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_FREEWORD) == FALSE){ return; };
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
   BEACONINFO_Set_FreeWord(&GameBeaconSys->send.info, free_word);
@@ -1158,13 +1200,15 @@ void BEACONINFO_Set_SuretigaiCount(GAMEBEACON_INFO *info, u32 count)
 //==================================================================
 void GAMEBEACON_Set_FMissionEventClear( u16 ev_id )
 {
-  if( LINK_FESTIVAL_MissionScoreCalc( GameBeaconSys->gsys, ev_id, 1 ) == FALSE ){
-    return;
+  if( GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_EVENT_CLEAR, ev_id ) ){
+    GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_EVENT_CLEAR, ev_id );
   }
+#if 0
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_FMISSION_EVENT_CLEAR) == FALSE){ return; };
   
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
   BEACONINFO_Set_FMissionEventClear(&GameBeaconSys->send.info, ev_id );
+#endif
 }
 
 //==================================================================

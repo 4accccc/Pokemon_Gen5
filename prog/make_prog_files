@@ -80,7 +80,8 @@ NETWORKSRC =  net/net_icondata.c \
         net_app/gds/gds_main.c \
         gamesystem/g_power.c \
         gamesystem/link_festival.c \
-        gamesystem/fest_mission.c
+        gamesystem/fest_mission.c \
+        gamesystem/fmission_log.c
 
 #ica_anime camera はポケモン交換で使っていますので常駐においてあります k.ohno
 #常駐プログラム
@@ -983,7 +984,8 @@ SRCS_OVERLAY_BEACON_VIEW = field/field_comm/beacon_view_setup.c \
 #GROUP_OVERLAY_SUBSCREEN
 SRCS_OVERLAY_FMISSION_VIEW = field/field_comm/fmission_view.c \
         field/field_comm/fmission_view_sub.c \
-        field/field_comm/fmission_view_setup.c
+        field/field_comm/fmission_view_setup.c \
+        gamesystem/fmission_log_accessor.c
 
 #Dowsing
 #===> GROUP_OVERLAY_FIELD_WEATHER

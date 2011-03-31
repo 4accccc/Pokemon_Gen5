@@ -95,9 +95,9 @@ TARGET_OUTDOOR_AREA = buildmodel_outdoor_area
 #	make do-build ÉãÅ[Éã
 #------------------------------------------------------------------------------
 do-build:	subdir bindata 
-	$(MAKE) package
-	$(MAKE) -j 3 arc
-	$(MAKE) -j 3 texset
+	$(MAKE) -j $(NUMBER_OF_PROCESSORS) package
+	$(MAKE) -j $(NUMBER_OF_PROCESSORS) arc
+	$(MAKE) -j $(NUMBER_OF_PROCESSORS) texset
 
 -include $(DEP_LIST_OUTDOOR)
 -include $(DEP_LIST_INDOOR)

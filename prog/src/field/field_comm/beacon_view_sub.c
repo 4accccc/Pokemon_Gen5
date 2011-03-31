@@ -358,11 +358,7 @@ void BeaconView_MenuBarViewSet( BEACON_VIEW_PTR wk, MENU_ID id, MENU_STATE state
   u8 flag;
   
   if( id == MENU_ALL ){
-    if( wk->mode == VIEW_MODE_NORMAL ){
-      flag = MENU_F_ALL;
-    }else{
-      flag = MENU_F_POWER|MENU_F_HELLO|MENU_F_RETURN;
-    }
+    flag = MENU_F_ALL;
   }else{
     flag = 0x01 << id;
   }
@@ -616,18 +612,6 @@ static int sseq_thanks_CheckInput( BEACON_VIEW_PTR wk )
     return SSEQ_THANKS_VIEW_UPDATE;
   }
   return SSEQ_THANKS_MAIN;
-}
-
-/*
- *  @brief  スクロールボタンアニメセット
- */
-void BeaconView_UpDownAnmSet( BEACON_VIEW_PTR wk, SCROLL_DIR dir )
-{
-  if( wk->scr_repeat_dir == SCROLL_UP ){
-    BVCAct_AnmStart( wk->pAct[ACT_DOWN], ACTANM_DOWN_ANM );
-  }else{
-    BVCAct_AnmStart( wk->pAct[ACT_UP], ACTANM_UP_ANM );
-  }
 }
 
 /*
@@ -941,10 +925,6 @@ static void draw_LogNumWindow( BEACON_VIEW_PTR wk )
  */
 static void draw_MenuWindow( BEACON_VIEW_PTR wk, u8 msg_id, int* task_ct )
 {
-  if( wk->mode == VIEW_MODE_FMISSION ){
-	  GFL_BG_LoadScreenV_Req( FRM_MENUMSG );
-    return;
-  }
   WORDSET_RegisterNumber( wk->wordset, 0, wk->log_count, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
   print_GetMsgToBuf( wk, msg_id );
   BVCPrintReq_BmpwinPrint( &wk->win[WIN_MENU], wk->str_expand, 0, 4, 0, FCOL_WHITE_N, task_ct, wk->init_f );
@@ -955,10 +935,6 @@ static void draw_MenuWindow( BEACON_VIEW_PTR wk, u8 msg_id, int* task_ct )
  */
 static void draw_ClearMenuWindow( BEACON_VIEW_PTR wk )
 {
-  if( wk->mode == VIEW_MODE_FMISSION ){
-	  GFL_BG_LoadScreenV_Req( FRM_MENUMSG );
-    return;
-  }
   GFL_BMP_Clear( wk->win[WIN_MENU].bmp, FCOL_WHITE_N );
   GFL_BMPWIN_TransVramCharacter( wk->win[WIN_MENU].win );
 }
