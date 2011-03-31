@@ -558,10 +558,14 @@ extern void RESORT_PEOPLE_ALL_DATA_UpdateDay( RESORT_PEOPLE_ALL_DATA *p_wk );
 //-------------------------------------
 ///	定数
 //=====================================
-//文字列数    EOMなし
-#define RESORT_CITY_NAME_LEN  (10)
-#define RESORT_MY_NAME_LEN    (10)
-
+//実際の文字列数    EOMなし
+#if PM_LANG == LANG_JAPAN
+#define RESORT_CITY_NAME_LEN  (8)  //TODO NAMEINが対応していないため今は８　後に１０
+#define RESORT_MY_NAME_LEN    (8)  //TODO  ヾ
+#else
+#define RESORT_CITY_NAME_LEN  (20)
+#define RESORT_MY_NAME_LEN    (20)
+#endif
 
 //施設データ数
 #define RESORT_INSTITUTION_DATA_NUM (8)

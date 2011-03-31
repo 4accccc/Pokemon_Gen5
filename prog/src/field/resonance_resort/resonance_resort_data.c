@@ -3328,7 +3328,7 @@ void RESORT_PEOPLE_ALL_DATA_UpdateDay( RESORT_PEOPLE_ALL_DATA *p_wk )
 //=====================================
 struct _RESORT_CITY_DATA
 {
-  STRCODE city_name[RESORT_CITY_NAME_BUFF_MAX+EOM_SIZE];
+  STRCODE city_name[RESORT_CITY_NAME_BUFF_MAX+EOM_SIZE]; //42
   STRCODE my_name[RESORT_MY_NAME_BUFF_MAX+EOM_SIZE];  //84
   u16     lv; 
   u16     state;  //92
@@ -3423,10 +3423,10 @@ u32 RESORT_CITY_DATA_GetData( const RESORT_CITY_DATA *cp_wk, RESORT_CITY_DATA_PA
   switch( param )
   {
   case RESORT_CITY_DATA_PARAM_CITY_NAME: //p_ret_adrs
-    STRTOOL_Copy( cp_wk->city_name, p_ret_adrs, RESORT_CITY_NAME_BUFF_MAX+EOM_SIZE );
+    STRTOOL_Copy( cp_wk->city_name, p_ret_adrs, RESORT_CITY_NAME_LEN+EOM_SIZE );
     return 0;
   case RESORT_CITY_DATA_PARAM_AUTHER_NAME: //p_ret_adrs
-    STRTOOL_Copy( cp_wk->my_name, p_ret_adrs, RESORT_MY_NAME_BUFF_MAX+EOM_SIZE );
+    STRTOOL_Copy( cp_wk->my_name, p_ret_adrs, RESORT_MY_NAME_LEN+EOM_SIZE );
     return 0;
   default:
     GF_ASSERT(0);
@@ -3447,10 +3447,10 @@ void RESORT_CITY_DATA_SetData( RESORT_CITY_DATA *p_wk, RESORT_CITY_DATA_PARAM pa
   switch( param )
   {
   case RESORT_CITY_DATA_PARAM_CITY_NAME: //p_ret_adrs
-    STRTOOL_Copy( (const STRCODE*)data, p_wk->city_name, RESORT_CITY_NAME_BUFF_MAX+EOM_SIZE );
+    STRTOOL_Copy( (const STRCODE*)data, p_wk->city_name, RESORT_CITY_NAME_LEN+EOM_SIZE );
     break;
   case RESORT_CITY_DATA_PARAM_AUTHER_NAME: //p_ret_adrs
-    STRTOOL_Copy( (const STRCODE*)data, p_wk->my_name, RESORT_MY_NAME_BUFF_MAX+EOM_SIZE );
+    STRTOOL_Copy( (const STRCODE*)data, p_wk->my_name, RESORT_MY_NAME_LEN+EOM_SIZE );
     break;
   default:
     GF_ASSERT(0);

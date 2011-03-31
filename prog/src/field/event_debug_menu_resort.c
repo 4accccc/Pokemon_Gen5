@@ -28,7 +28,8 @@
 #include "event_mapchange.h"
 #include "arc/fieldmap/zone_id.h"
 #include "resonance_resort/resort_debug_input.h"
-
+#include "app/name_input.h"
+#include "event_fieldmap_control.h"
 //--------------------------------------------------------------
 /// proto
 //--------------------------------------------------------------
@@ -45,6 +46,8 @@ static BOOL debugMenuCallProc_AllResident( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_AllClear( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_UpdateDay( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_CallDebugInput( DEBUG_MENU_EVENT_WORK *p_wk );
+static BOOL debugMenuCallProc_CallCityNameInput( DEBUG_MENU_EVENT_WORK *p_wk );
+static BOOL debugMenuCallProc_CallOwnerNameInput( DEBUG_MENU_EVENT_WORK *p_wk );
 
 static const DEBUG_MENU_LIST DATA_SubMenuList[] =
 {
@@ -60,6 +63,8 @@ static const DEBUG_MENU_LIST DATA_SubMenuList[] =
   { DEBUG_FIELD_RESORT_10, debugMenuCallProc_AllClear, GFL_OVERLAY_BLANK_ID},
   { DEBUG_FIELD_RESORT_11, debugMenuCallProc_UpdateDay, GFL_OVERLAY_BLANK_ID},
   { DEBUG_FIELD_RESORT_12, debugMenuCallProc_CallDebugInput, GFL_OVERLAY_BLANK_ID },
+  { DEBUG_FIELD_RESORT_13, debugMenuCallProc_CallCityNameInput, GFL_OVERLAY_BLANK_ID },
+  { DEBUG_FIELD_RESORT_14, debugMenuCallProc_CallOwnerNameInput, GFL_OVERLAY_BLANK_ID },
 };
 
 static const DEBUG_MENU_INITIALIZER DebugSubMenuData = {
@@ -346,4 +351,141 @@ static BOOL debugMenuCallProc_CallDebugInput( DEBUG_MENU_EVENT_WORK *p_wk )
   GMEVENT *event = EVENT_CallDebugInputResort( p_wk->gmSys, NULL );
   GMEVENT_ChangeEvent( p_wk->gmEvent, event );
   return TRUE;
+}
+
+//-------------------------------------
+/// デバッグ文字名変更
+//=====================================
+typedef struct
+{
+  GAMESYS_WORK    *p_gamesys;
+  GMEVENT         *p_event;
+  FIELDMAP_WORK *p_field;
+  NAMEIN_PARAM   *p_param;
+  STRBUF          *p_default_str;
+  RESORT_CITY_DATA_PARAM set_param;
+} DEBUG_CHANGENAME_EVENT_WORK;
+static GMEVENT_RESULT debugEvnetChangeName( GMEVENT *p_event, int *p_seq, void *p_wk_adrs );
+static BOOL debugMenuCallProc_CallCityNameInput( DEBUG_MENU_EVENT_WORK *p_wk )
+{
+  GAMESYS_WORK  *p_gamesys  = p_wk->gmSys;
+  GMEVENT       *p_event    = p_wk->gmEvent;
+  FIELDMAP_WORK *p_field  = p_wk->fieldWork;
+  DEBUG_CHANGENAME_EVENT_WORK  *p_ev_wk;
+  GAMEDATA  *p_gamedata = GAMESYSTEM_GetGameData(p_gamesys);
+  RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( GAMEDATA_GetSaveControlWork(p_gamedata) );
+  RESORT_CITY_DATA *p_city = RESONANCE_RESORT_SV_GetCityData(p_resort);
+  STRCODE strcode[RESORT_CITY_NAME_LEN+EOM_SIZE];
+
+  //イヴェント
+  GMEVENT_Change( p_event, debugEvnetChangeName, sizeof(DEBUG_CHANGENAME_EVENT_WORK) );
+  p_ev_wk = GMEVENT_GetEventWork( p_event );
+  GFL_STD_MemClear( p_ev_wk, sizeof(DEBUG_CHANGENAME_EVENT_WORK) );
+
+  //ワーク設定
+  p_ev_wk->p_gamesys  = p_gamesys;
+  p_ev_wk->p_event    = p_event;
+  p_ev_wk->p_field    = p_field;
+  p_ev_wk->set_param  = RESORT_CITY_DATA_PARAM_CITY_NAME;
+
+  //デフォルト名
+  p_ev_wk->p_default_str  = GFL_STR_CreateBuffer( RESORT_CITY_NAME_LEN+EOM_SIZE, HEAPID_PROC );
+  RESORT_CITY_DATA_GetData( p_city, RESORT_CITY_DATA_PARAM_CITY_NAME, strcode );
+  GFL_STR_SetStringCode(p_ev_wk->p_default_str,strcode);
+
+  //名前入力ワーク設定
+  p_ev_wk->p_param  = NAMEIN_AllocParam( HEAPID_PROC, NAMEIN_FREE_WORD, 0, 0, RESORT_CITY_NAME_LEN, p_ev_wk->p_default_str, NULL );
+  p_ev_wk->p_param->prof_flag  = NAMEIN_PROF_ALL_ENABLE;
+
+  return TRUE;
+}
+static BOOL debugMenuCallProc_CallOwnerNameInput( DEBUG_MENU_EVENT_WORK *p_wk )
+{
+  GAMESYS_WORK  *p_gamesys  = p_wk->gmSys;
+  GMEVENT       *p_event    = p_wk->gmEvent;
+  FIELDMAP_WORK *p_field  = p_wk->fieldWork;
+  DEBUG_CHANGENAME_EVENT_WORK  *p_ev_wk;
+  GAMEDATA  *p_gamedata = GAMESYSTEM_GetGameData(p_gamesys);
+  RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( GAMEDATA_GetSaveControlWork(p_gamedata) );
+  RESORT_CITY_DATA *p_city = RESONANCE_RESORT_SV_GetCityData(p_resort);
+  STRCODE strcode[RESORT_MY_NAME_LEN+EOM_SIZE];
+
+  //イヴェント
+  GMEVENT_Change( p_event, debugEvnetChangeName, sizeof(DEBUG_CHANGENAME_EVENT_WORK) );
+  p_ev_wk = GMEVENT_GetEventWork( p_event );
+  GFL_STD_MemClear( p_ev_wk, sizeof(DEBUG_CHANGENAME_EVENT_WORK) );
+
+  //ワーク設定
+  p_ev_wk->p_gamesys  = p_gamesys;
+  p_ev_wk->p_event    = p_event;
+  p_ev_wk->p_field    = p_field;
+  p_ev_wk->set_param  = RESORT_CITY_DATA_PARAM_AUTHER_NAME;
+
+  //デフォルト名
+  p_ev_wk->p_default_str  = GFL_STR_CreateBuffer( RESORT_MY_NAME_LEN+EOM_SIZE, HEAPID_PROC );
+  RESORT_CITY_DATA_GetData( p_city, RESORT_CITY_DATA_PARAM_AUTHER_NAME, strcode );
+  GFL_STR_SetStringCode(p_ev_wk->p_default_str,strcode);
+
+  //名前入力ワーク設定
+  p_ev_wk->p_param  = NAMEIN_AllocParam( HEAPID_PROC, NAMEIN_FREE_WORD, 0, 0, RESORT_MY_NAME_LEN, p_ev_wk->p_default_str, NULL );
+  p_ev_wk->p_param->prof_flag  = NAMEIN_PROF_ALL_ENABLE;
+
+  return TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  主人公名前再設定イベント
+ *
+ *  @param  GMEVENT *event  GMEVENT
+ *  @param  *seq            シーケンス
+ *  @param  *work           ワーク
+ *
+ *  @return 終了コード
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT_RESULT debugEvnetChangeName( GMEVENT *p_event, int *p_seq, void *p_wk_adrs )
+{
+  enum
+  {
+    SEQ_CALL_PROC,
+    SEQ_PROC_END,
+    SEQ_EXIT,
+  };
+
+  DEBUG_CHANGENAME_EVENT_WORK  *p_wk = p_wk_adrs;
+  const STRCODE *cp_strcode = NULL;
+
+  switch(*p_seq )
+  {
+  case SEQ_CALL_PROC:
+    GMEVENT_CallEvent( p_wk->p_event, EVENT_FieldSubProc( p_wk->p_gamesys, p_wk->p_field,
+          FS_OVERLAY_ID(namein), &NameInputProcData, p_wk->p_param ) );
+    *p_seq  = SEQ_PROC_END;
+    break;
+
+  case SEQ_PROC_END:
+    if( !NAMEIN_IsCancel( p_wk->p_param ) )
+    {
+      GAMEDATA  *p_gamedata = GAMESYSTEM_GetGameData(p_wk->p_gamesys);
+      RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( GAMEDATA_GetSaveControlWork(p_gamedata) );
+      RESORT_CITY_DATA *p_city = RESONANCE_RESORT_SV_GetCityData(p_resort);
+
+      NAMEIN_CopyStr( p_wk->p_param, p_wk->p_default_str );
+      cp_strcode = GFL_STR_GetStringCodePointer( p_wk->p_default_str );
+      RESORT_CITY_DATA_SetData( p_city, p_wk->set_param,(u32)cp_strcode );
+    }
+
+    *p_seq  = SEQ_EXIT;
+    break;
+
+
+  case SEQ_EXIT:
+    NAMEIN_FreeParam( p_wk->p_param );
+    GFL_STR_DeleteBuffer( p_wk->p_default_str );
+
+    return GMEVENT_RES_FINISH;
+  }
+
+  return GMEVENT_RES_CONTINUE ;
 }
