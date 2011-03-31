@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-07T19:41:10"/>
+	<create user="matsumiya" host="W00224" date="2011-03-31T18:43:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,9 +263,9 @@
 		</language>
 	</columns>
 
-	<dialog left="1296" top="209" right="2001" bottom="837" maximized="no" rayout="Vertical2">
+	<dialog left="1301" top="154" right="2006" bottom="779" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
@@ -296,29 +296,53 @@
 		<comment>♂</comment>
 		<attribute name="キャラ指定">MAN2
 青年お洒落</attribute>
-		<language name="JPN" width="256">ポケモン捕獲のすすめ</language>
-		<language name="JPN_KANJI" width="256">ポケモン捕獲のすすめ</language>
+		<language name="JPN" width="256">モンスターボールは　おおめに
+もっておいた　ほうが　いいよ！▼
+つかまえたい　ポケモンが　いても
+ボールがないと　どうしようもないよ！</language>
+		<language name="JPN_KANJI" width="256">モンスターボールは　おおめに
+もっておいた　ほうが　いいよ！▼
+つかまえたい　ポケモンが　いても
+ボールがないと　どうしようもないよ！</language>
 	</row>
 
 	<row id="msg_t06pc0101_girl3_01">
-		<comment>♀
-・下記ポケモンと隣接</comment>
+		<comment>♀</comment>
 		<attribute name="キャラ指定">GIRL3</attribute>
-		<language name="JPN" width="256">ポケモンについて
-・回復
-・ＰＰ</language>
-		<language name="JPN_KANJI" width="256">ポケモンについて
-・回復
-・ＰＰ</language>
+		<language name="JPN" width="256">あなたの　[1:01:ポケモン種族名:0]って
+オス　なんだ！▼
+ポケモンの　オスと　メスって
+なにが　ちがうのかしらね？</language>
+		<language name="JPN_KANJI" width="256">あなたの　[1:01:ポケモン種族名:0]って
+オス　なんだ！▼
+ポケモンの　オスと　メスって
+なにが　ちがうのかしらね？</language>
 	</row>
 
-	<row id="msg_t06pc0101_poke_01">
-		<comment>ポケモン
-・メッセージ表示と共に鳴き声再生</comment>
-		<attribute name="キャラ指定">ポケモン
-？？？</attribute>
-		<language name="JPN" width="256">くきゅ？</language>
-		<language name="JPN_KANJI" width="256">くきゅ？</language>
+	<row id="msg_t06pc0101_girl3_02">
+		<comment>♀</comment>
+		<attribute name="キャラ指定">GIRL3</attribute>
+		<language name="JPN" width="256">あなたの　[1:01:ポケモン種族名:0]って
+メス　なんだ！▼
+ポケモンの　オスと　メスって
+なにが　ちがうのかしらね？</language>
+		<language name="JPN_KANJI" width="256">あなたの　[1:01:ポケモン種族名:0]って
+メス　なんだ！▼
+ポケモンの　オスと　メスって
+なにが　ちがうのかしらね？</language>
+	</row>
+
+	<row id="msg_t06pc0101_girl3_03">
+		<comment>♀</comment>
+		<attribute name="キャラ指定">GIRL3</attribute>
+		<language name="JPN" width="256">あなたの　[1:01:ポケモン種族名:0]って……
+せいべつは　わからないのね！▼
+ポケモンの　オスと　メスって
+なにが　ちがうのかしらね？</language>
+		<language name="JPN_KANJI" width="256">あなたの　[1:01:ポケモン種族名:0]って……
+せいべつは　わからないのね！▼
+ポケモンの　オスと　メスって
+なにが　ちがうのかしらね？</language>
 	</row>
 
 	<flowchart-group-list>
