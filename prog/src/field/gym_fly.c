@@ -340,10 +340,9 @@ static int debug_windmeter_time2 = WINDMETER_HIGH_TIME;   // íÜë¨Ç©ÇÁçÇë¨Ç…ïœÇÌÇ
 static u16 debug_blow_event_time_max = BLOW_EVENT_TIME;   // êÅÇ´îÚÇŒÇµÉCÉxÉìÉgÇÃç≈í·åoâﬂéûä‘
 static u16 debug_safe_event_time_max = SAFE_EVENT_TIME;   // à¿ëSínë—ÉCÉxÉìÉgÇÃç≈í·åoâﬂéûä‘
 
-static s16 debug_w = 0;
-static s16 debug_h = 2;
-static u32 debug_sync = 3;
-static u8  debug_time = 4;
+static s16 debug_w = SHAKE_MMDL_WIDTH;
+static u32 debug_sync = SHAKE_MMDL_SYNC;
+static u8  debug_time = SHAKE_MMDL_TIME;
 #endif // GYM_FLY_DEBUG_MENU
 
 //=============================================================================
@@ -1323,17 +1322,10 @@ static GMEVENT_RESULT BlowEvent( GMEVENT* event, int* seq, void* wk )
         FIELD_TASK_MAN* taskMan;
 
         CAM_SHAKE_PARAM shakeParam;
-#ifdef GYM_FLY_DEBUG_MENU
-        shakeParam.Width           = debug_w;
-        shakeParam.Height          = debug_h;
-        shakeParam.Sync            = debug_sync;
-        shakeParam.Time            = debug_time;
-#else
         shakeParam.Width           = 0;
         shakeParam.Height          = 2;
         shakeParam.Sync            = 3;
         shakeParam.Time            = 4;
-#endif
         shakeParam.NowSync         = 0;
         shakeParam.WaitStartFrame  = move_distance*3 - 6; // -6Ç≈Ç‘Ç¬Ç©ÇÈëOÇ…É^ÉXÉNãNìÆ
 
@@ -1581,15 +1573,23 @@ static GMEVENT_RESULT BlowEventSafe( GMEVENT* event, int* seq, void* wk )
         {
           FIELD_TASK* shake;
           FIELD_TASK_MAN* taskMan;
+#ifdef GYM_FLY_DEBUG_MENU
+          shake = FIELD_TASK_ShakeMMdl( p_wk->p_fieldmap, p_wk->mmdl,
+              debug_w,
+              debug_sync,
+              debug_time );
+#else
           shake = FIELD_TASK_ShakeMMdl( p_wk->p_fieldmap, p_wk->mmdl,
               SHAKE_MMDL_WIDTH,
               SHAKE_MMDL_SYNC,
               SHAKE_MMDL_TIME );
+#endif
           taskMan = FIELDMAP_GetTaskManager( p_wk->p_fieldmap );
           FIELD_TASK_MAN_AddTask( taskMan, shake, NULL );
         }
 
-        *seq = SEQ_SHAKE_WAIT;
+        //*seq = SEQ_SHAKE_WAIT;
+        *seq = SEQ_MAIN;
       }
     }
     break;
@@ -2790,8 +2790,6 @@ static void DebugWin_Update_ChangeSafeTime( void *userWork, DEBUGWIN_ITEM *item 
 static void DebugWin_Draw_ChangeSafeTime( void *userWork, DEBUGWIN_ITEM *item );
 static void DebugWin_Update_ChangeWidth( void *userWork, DEBUGWIN_ITEM *item );
 static void DebugWin_Draw_ChangeWidth( void *userWork, DEBUGWIN_ITEM *item );
-static void DebugWin_Update_ChangeHeight( void *userWork, DEBUGWIN_ITEM *item );
-static void DebugWin_Draw_ChangeHeight( void *userWork, DEBUGWIN_ITEM *item );
 static void DebugWin_Update_ChangeSync( void *userWork, DEBUGWIN_ITEM *item );
 static void DebugWin_Draw_ChangeSync( void *userWork, DEBUGWIN_ITEM *item );
 static void DebugWin_Update_ChangeCamTime( void *userWork, DEBUGWIN_ITEM *item );
@@ -2835,11 +2833,6 @@ static void DEBUGMENU_Init( void *p_wk, FIELDMAP_WORK *p_fieldmap, HEAPID heapID
                               heapID );
   DEBUGWIN_AddItemToGroupEx(  DebugWin_Update_ChangeWidth,
                               DebugWin_Draw_ChangeWidth,
-                              p_fieldmap,
-                              DEBUGMENU_GYM_FLY,
-                              heapID );
-  DEBUGWIN_AddItemToGroupEx(  DebugWin_Update_ChangeHeight,
-                              DebugWin_Draw_ChangeHeight,
                               p_fieldmap,
                               DEBUGMENU_GYM_FLY,
                               heapID );
@@ -3099,39 +3092,7 @@ static void DebugWin_Update_ChangeWidth( void *userWork, DEBUGWIN_ITEM *item )
 //-----------------------------------------------------------------------------
 static void DebugWin_Draw_ChangeWidth( void *userWork, DEBUGWIN_ITEM *item )
 {
-  DEBUGWIN_ITEM_SetNameV( item, "CAMÇ‰ÇÍ ÇÊÇ±ÇÕÇŒ[%d]", debug_w );
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  ÉJÉÅÉâÇ‰ÇÍÇÃècïù çXêV
- *
- *	@param	*userWork ÉèÅ[ÉN
- *	@param	*item     ÉAÉCÉeÉÄ
- */
-//-----------------------------------------------------------------------------
-static void DebugWin_Update_ChangeHeight( void *userWork, DEBUGWIN_ITEM *item )
-{
-  int value = debug_h;
-
-  if( DebugWin_ChangeCamData( &value, 0, 600 ) )
-  {
-    // çXêVÇ†ÇË
-    debug_h = value;
-    DEBUGWIN_RefreshScreen();
-  }
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  ÉJÉÅÉâÇ‰ÇÍÇÃècïù  ï`âÊ
- *
- *	@param	*userWork ÉèÅ[ÉN
- *	@param	*item     ÉAÉCÉeÉÄ
- */
-//-----------------------------------------------------------------------------
-static void DebugWin_Draw_ChangeHeight( void *userWork, DEBUGWIN_ITEM *item )
-{
-  DEBUGWIN_ITEM_SetNameV( item, "CAMÇ‰ÇÍ ÇΩÇƒÇÕÇŒ[%d]", debug_h );
+  DEBUGWIN_ITEM_SetNameV( item, "Ç∂Ç´Ç‰ÇÍ ÇÊÇ±ÇÕÇŒ[%d]", debug_w );
 }
 
 //----------------------------------------------------------------------------
@@ -3163,7 +3124,7 @@ static void DebugWin_Update_ChangeSync( void *userWork, DEBUGWIN_ITEM *item )
 //-----------------------------------------------------------------------------
 static void DebugWin_Draw_ChangeSync( void *userWork, DEBUGWIN_ITEM *item )
 {
-  DEBUGWIN_ITEM_SetNameV( item, "CAMÇPÇ‰ÇÍÇÃÉVÉìÉN[%d]", debug_sync );
+  DEBUGWIN_ITEM_SetNameV( item, "Ç∂Ç´ÇPÇ‰ÇÍÇÃÉVÉìÉN[%d]", debug_sync );
 }
 
 //----------------------------------------------------------------------------
@@ -3195,7 +3156,7 @@ static void DebugWin_Update_ChangeCamTime( void *userWork, DEBUGWIN_ITEM *item )
 //-----------------------------------------------------------------------------
 static void DebugWin_Draw_ChangeCamTime( void *userWork, DEBUGWIN_ITEM *item )
 {
-  DEBUGWIN_ITEM_SetNameV( item, "CAMÇ‰ÇÍÇÃÇ©Ç¢Ç∑Ç§[%d]", debug_time );
+  DEBUGWIN_ITEM_SetNameV( item, "Ç∂Ç´Ç‰ÇÍÇÃÇ©Ç¢Ç∑Ç§[%d]", debug_time );
 }
 
 #endif // GYM_FLY_DEBUG_MENU
