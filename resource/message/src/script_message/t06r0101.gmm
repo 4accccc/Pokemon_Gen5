@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-07T20:17:47"/>
+	<create user="matsumiya" host="W00224" date="2011-03-31T18:54:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1296" top="209" right="2001" bottom="837" maximized="no" rayout="Vertical2">
+	<dialog left="1301" top="151" right="2006" bottom="779" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_t06r0101_champion_01">
+	<row id="msg_t06r0101_champion_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・条件を満たす前は不在
 ・イベント戦闘</comment>
@@ -305,7 +305,7 @@
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_t06r0101_champion_02">
+	<row id="msg_t06r0101_champion_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・はい選択時
 ・主人公のポケモンのHP/MPチェック
@@ -317,7 +317,7 @@
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_t06r0101_champion_03">
+	<row id="msg_t06r0101_champion_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<attribute name="キャラ指定">アデク
 ・BWチャンピオン</attribute>
 		<language name="JPN" width="256">回復
@@ -325,7 +325,7 @@
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_t06r0101_champion_04">
+	<row id="msg_t06r0101_champion_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<attribute name="キャラ指定">アデク
 ・BWチャンピオン</attribute>
 		<language name="JPN" width="256">テストメッセージ
@@ -333,7 +333,7 @@
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_t06r0101_champion_05">
+	<row id="msg_t06r0101_champion_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<attribute name="キャラ指定">アデク
 ・BWチャンピオン</attribute>
 		<language name="JPN" width="256">テストメッセージ
@@ -341,18 +341,24 @@
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_t06r0101_champion_06">
+	<row id="msg_t06r0101_champion_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<attribute name="キャラ指定">アデク
+・BWチャンピオン</attribute>
 		<language name="JPN" width="256">テストメッセージ
 ・では二人目</language>
 		<language name="JPN_KANJI" width="256"></language>
 	</row>
 
-	<row id="msg_t06r0101_champion_07">
+	<row id="msg_t06r0101_champion_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<attribute name="キャラ指定">アデク
+・BWチャンピオン</attribute>
 		<language name="JPN" width="256"></language>
 		<language name="JPN_KANJI" width="256"></language>
 	</row>
 
-	<row id="msg_t06r0101_champion_08">
+	<row id="msg_t06r0101_champion_08" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<attribute name="キャラ指定">アデク
+・BWチャンピオン</attribute>
 		<language name="JPN" width="256"></language>
 		<language name="JPN_KANJI" width="256"></language>
 	</row>
@@ -360,13 +366,31 @@
 	<row id="msg_t06r0101_01_01">
 		<comment>♂
 ・塾帰り</comment>
+		<attribute name="キャラ指定">塾帰り</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_t06r0101_02_01">
+	<row id="msg_t06r0101_01_02">
+		<comment>♂
+・塾帰り</comment>
+		<attribute name="キャラ指定">塾帰り</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_t06r0101_02_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・塾帰り</comment>
+		<attribute name="キャラ指定">塾帰り</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_t06r0101_02_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・塾帰り</comment>
+		<attribute name="キャラ指定">塾帰り</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
