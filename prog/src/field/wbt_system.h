@@ -18,6 +18,9 @@
 
 #include "app/wbt_list.h" //WBTLIST_PARAM
 
+#include "app/pokelist.h" //PLIST_DATA
+#include "app/p_status.h" //PSTATUS_DATA
+
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
@@ -69,6 +72,15 @@ extern const REGULATION * WBTSYS_GetRegulation( WBTSYS * wbtsys );
 extern void WBTSYS_SetSelectDLData( WBTSYS * wbtsys, u8 no );
 extern u8 WBTSYS_GetSelectDLData( const WBTSYS * wbtsys );
 
+extern void WBTSYS_SetScriptAnswerWork( WBTSYS * wbtsys, u16 * scr_answer_work );
+//============================================================================================
+//============================================================================================
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+extern void WBTSYS_SetupPokeListData( WBTSYS * wbtsys, GAMEDATA * gamedata, PLIST_DATA * plist_data );
+extern void WBTSYS_SetupPokeStatusData( WBTSYS * wbtsys, GAMEDATA * gamedata, PSTATUS_DATA * pstatus );
+
+extern void WBTSYS_SetPokelistResult( WBTSYS * wbtsys, PLIST_DATA * plist_data );
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
@@ -76,7 +88,7 @@ extern u8 WBTSYS_GetSelectDLData( const WBTSYS * wbtsys );
 extern WBTLIST_PARAM * WBTLIST_PARAM_Create( HEAPID heapID, GAMESYS_WORK * gsys );
 extern void WBTLIST_PARAM_Delete( WBTLIST_PARAM * wbtlist_param );
 
-extern void WBTLIST_PARAM_Setup_Debug( WBTLIST_PARAM * wbtlist_param, HEAPID heapID );
+extern void WBTLIST_PARAM_Setup_Debug( WBTLIST_PARAM * wbtlist_param, WBTLIST_STAGE stage, HEAPID heapID );
 
 //============================================================================================
 //============================================================================================

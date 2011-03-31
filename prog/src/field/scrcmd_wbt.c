@@ -20,7 +20,7 @@
 #include "scrcmd_work.h"
 #include "script_local.h" //SCRIPT_GetEvent
 
-#include "scrcmd_medal.h"
+#include "scrcmd_wbt.h"
 
 #include "savedata/medalbox.h"
 
@@ -31,9 +31,9 @@
 
 #include "field/wbt.h"
 #include "wbt_system.h"
+#include "wbt_system_local.h"
 #include "event_wbt.h"
 
-#include "scrcmd_wbt.h"
 
 #include "system/main.h"
 
@@ -123,12 +123,10 @@ VMCMD_RESULT EvCmdWBTShowTornamentList( VMHANDLE * core, void * wk )
   GMEVENT * next_event;
   WBTLIST_PARAM * p_param;
 
-  p_param = GFL_HEAP_AllocClearMemory( heapID, sizeof(WBTLIST_PARAM) );
-  p_param->gamesys  = gsys;
+  p_param = WBTLIST_PARAM_Create( heapID, gsys );
+  WBTLIST_PARAM_Setup_Debug( p_param, list_type, heapID );
 
-  next_event = EVENT_FieldSubProcNoFade_Callback(
-      gsys, fieldmap, FS_OVERLAY_ID(namein), &WBTListProcData, p_param,
-      NULL, p_param );
+  next_event = WBT_EVENT_ShowTournamentList( gsys, fieldmap, p_param, FALSE );
   SCRIPT_CallEvent( sc, next_event );
   OS_Printf( "WBT List Start\n" );
 
@@ -157,7 +155,6 @@ VMCMD_RESULT EvCmdWBTCheckBattleRule( VMHANDLE * core, void * wk )
   } else {
     *ret_wk = FALSE;
   }
-  GFL_HEAP_FreeMemory( (void*)reg );
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -301,7 +298,7 @@ VMCMD_RESULT EvCmdWBTGetDLNumber( VMHANDLE * core, void * wk )
 
 //--------------------------------------------------------------
 /**
- * @brief スクリプトコマンド：
+ * @brief スクリプトコマンド：参加ポケモンを選択する
  */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdWBTSelectPokemon( VMHANDLE * core, void * wk )
@@ -312,10 +309,10 @@ VMCMD_RESULT EvCmdWBTSelectPokemon( VMHANDLE * core, void * wk )
   u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
   WBTSYS * wbtsys = getWBTSys( wk );
 
-  u8 buf = TRUE;
+  u8 buf = FALSE;
   TAMADA_Printf("EvCmdWBTSelectPokemon\n");
-  //仮：ここからポケモン選択イベントを呼び出す
-  SCRIPT_CallEvent( sc, WBT_EVENT_SetSelectPokeList( NULL, gsys, buf ) );
+  SCRIPT_CallEvent( sc, WBT_EVENT_SetSelectPokeList( wbtsys, gsys, buf ) );
+  WBTSYS_SetScriptAnswerWork( wbtsys, ret_wk );
 
   return VMCMD_RESULT_SUSPEND;
 }

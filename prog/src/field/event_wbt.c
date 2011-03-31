@@ -34,17 +34,18 @@
 #include "print/wordset.h"
 #include "message.naix"
 
-#include "bsubway_scr.h"
-#include "bsubway_scrwork.h"
-#include "scrcmd_bsubway.h"
-#include "bsubway_tr.h"
+//#include "bsubway_scr.h"
+//#include "bsubway_scrwork.h"
+//#include "scrcmd_bsubway.h"
+//#include "bsubway_tr.h"
 
+#include "wbt_system_local.h"
 
 #include "event_wbt.h"
 
-#include "effect_encount.h"
+//#include "effect_encount.h"
 
-#include "scrcmd_menuwin.h"
+//#include "scrcmd_menuwin.h"
 
 #include "script_message.naix"
 //#include "../../../resource/message/dst/script/msg_bsubway_scr.h"
@@ -61,16 +62,6 @@ FS_EXTERN_OVERLAY(pokelist);
 //======================================================================
 //  struct
 //======================================================================
-//--------------------------------------------------------------
-/// EVENT_BSW_COMM_BATTLE_WORK
-//--------------------------------------------------------------
-typedef struct
-{
-  GAMESYS_WORK * gsys;
-  FIELDMAP_WORK * fieldmap;
-  BATTLE_SETUP_PARAM *para;
-  COMM_BTL_DEMO_PARAM *demo_prm;
-}EVENT_BSW_COMM_BATTLE_WORK;
 
 //======================================================================
 //  proto
@@ -86,15 +77,12 @@ typedef struct
 {
   GAMESYS_WORK *gsys;
   FIELDMAP_WORK *fieldmap;
+  WBTSYS * wbtsys;
   
   PSTATUS_DATA status_data;
+
   PLIST_DATA list_data;
   
-  u16 *return_mode;
-  u16 *result_select;
-  u8 *result_num;
-  
-  POKEPARTY *pp_btl_box;
 }EVENT_WORK_POKE_LIST;
 
 //--------------------------------------------------------------
@@ -134,13 +122,10 @@ static GMEVENT_RESULT ev_SelectPokeList( GMEVENT *event, int *seq, void *wk )
   case 4:
     GMEVENT_CallEvent( event, EVENT_FieldFadeIn_Black(
           gsys,work->fieldmap, FIELD_FADE_WAIT) );
-    MI_CpuCopy8( work->list_data.in_num, work->result_num, 6 );
-    *work->result_select = work->list_data.ret_sel;
-    *work->return_mode = work->list_data.ret_mode;
-    GFL_HEAP_FreeMemory( work->list_data.reg );
     (*seq)++;
     break;
   case 5:
+    WBTSYS_SetPokelistResult( work->wbtsys, &work->list_data );
     return( GMEVENT_RES_FINISH );
   }
   
@@ -155,7 +140,7 @@ static GMEVENT_RESULT ev_SelectPokeList( GMEVENT *event, int *seq, void *wk )
  */
 //--------------------------------------------------------------
 GMEVENT * WBT_EVENT_SetSelectPokeList(
-    BSUBWAY_SCRWORK *bsw_scr, GAMESYS_WORK *gsys, BOOL btl_box )
+    WBTSYS *wbtsys, GAMESYS_WORK *gsys, BOOL btl_box )
 {
   GMEVENT *event;
   GAMEDATA *gdata;
@@ -173,77 +158,107 @@ GMEVENT * WBT_EVENT_SetSelectPokeList(
   work = GMEVENT_GetEventWork( event );
   work->gsys = gsys;
   work->fieldmap = fieldmap;
-  work->result_num = bsw_scr->pokelist_select_num;
-  work->result_select = &bsw_scr->pokelist_result_select;
-  work->return_mode = &bsw_scr->pokelist_return_mode;
+  work->wbtsys = wbtsys;
   
-  if( btl_box == FALSE ){
-    pp = GAMEDATA_GetMyPokemon( gdata );
-  }else{
-    pp = bsw_scr->btl_box_party;
-  }
+  WBTSYS_SetupPokeListData( wbtsys, gdata, &work->list_data );
   
-  GF_ASSERT( pp != NULL );
-
-  {
-    int reg = REG_SUBWAY_SINGLE;
-    int type = PL_TYPE_SINGLE;
-    PLIST_DATA *list = &work->list_data;
-    
-    MI_CpuClear8( list, sizeof(PLIST_DATA) );
-    list->pp = pp;
-    
-    switch( bsw_scr->play_mode ){
-    case BSWAY_MODE_DOUBLE:
-    case BSWAY_MODE_S_DOUBLE:
-      reg = REG_SUBWAY_DOUBLE;
-      type = PL_TYPE_DOUBLE;
-      break;
-    case BSWAY_MODE_MULTI:
-    case BSWAY_MODE_S_MULTI:
-    case BSWAY_MODE_COMM_MULTI:
-    case BSWAY_MODE_S_COMM_MULTI:
-      reg = REG_SUBWAY_MALTI;
-      type = PL_TYPE_MULTI;
-      break;
-    }
-    
-#ifdef DEBUG_BSW_PRINT    
-    KAGAYA_Printf( "レギュレーション　%d\n", reg );
-#endif
-    
-    list->reg = (void*)PokeRegulation_LoadDataAlloc( reg, HEAPID_PROC );
-    list->mode = PL_MODE_BATTLE_SUBWAY;
-    list->type = type;
-    
-    //debug
-    #ifdef DEBUG_ONLY_FOR_kagaya
-    {
-      REGULATION *pReg = list->reg;
-      
-#ifdef DEBUG_BSW_PRINT    
-      KAGAYA_Printf( "BSWAY REG NUM_LO = %d, HI =%d, LV = %d\n",
-        pReg->NUM_LO, pReg->NUM_HI, pReg->LEVEL );
-#endif
-    }
-    #endif
-  }
-  
-  {
-    PSTATUS_DATA *st = &work->status_data;
-    ZUKAN_SAVEDATA *zukanSave = GAMEDATA_GetZukanSave( gdata );
-    MI_CpuClear8( st, sizeof(PSTATUS_DATA) );
-    st->ppd = pp;
-    st->ppt = PST_PP_TYPE_POKEPARTY;
-    st->max = PokeParty_GetPokeCount( pp );
-    st->mode = PST_MODE_NORMAL;
-    st->page = PPT_INFO;
-    st->game_data = gdata;
-
-    st->zukan_mode = ZUKANSAVE_GetZenkokuZukanFlag( zukanSave );
-  }
+  WBTSYS_SetupPokeStatusData( wbtsys, gdata, &work->status_data );
    
   return( event );
 }
 
+//=============================================================================
+//
+//    WBTトーナメントリスト画面呼び出し
+//
+//=============================================================================
+//  nsbtx_to_clwkを使いたいので名前入力と同じところにおいてみた
+FS_EXTERN_OVERLAY(namein);
+//-------------------------------------
+///
+//=====================================
+typedef struct
+{
+  GAMESYS_WORK        *gsys;
+  FIELDMAP_WORK       *fieldmap;
+  WBTLIST_PARAM       *wbtlist_param;
+  BOOL                call_fade_flag;
+} WBTLIST_EVENT_WORK;
+
+static GMEVENT_RESULT eventWBTList( GMEVENT *p_event, int *p_seq, void *p_wk_adrs );
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  
+ *
+ *
+ *  @return 終了コード
+ */
+//-----------------------------------------------------------------------------
+GMEVENT * WBT_EVENT_ShowTournamentList(
+    GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
+    WBTLIST_PARAM * wbtlist_param, BOOL call_fade_flag )
+{
+  WBTLIST_EVENT_WORK *p_param;
+  GMEVENT * new_event;
+
+  //イヴェント
+  new_event = GMEVENT_Create( gsys, NULL, eventWBTList, sizeof(WBTLIST_EVENT_WORK) );
+  p_param = GMEVENT_GetEventWork( new_event );
+  GFL_STD_MemClear( p_param, sizeof(WBTLIST_EVENT_WORK) );
+
+  p_param->gsys  = gsys;
+  p_param->fieldmap    = fieldmap;
+  p_param->wbtlist_param = wbtlist_param;
+  p_param->call_fade_flag = call_fade_flag;
+
+  OS_Printf( "WBT List Start\n" );
+
+  return new_event;
+
+}
+//----------------------------------------------------------------------------
+/**
+ *  @brief  WBTリストアプリ呼び出し用イベント
+ *
+ *  @param  GMEVENT *event  GMEVENT
+ *  @param  *seq            シーケンス
+ *  @param  *work           ワーク
+ *
+ *  @return 終了コード
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT_RESULT eventWBTList( GMEVENT *p_event, int *p_seq, void *p_wk_adrs )
+{
+  enum
+  {
+    SEQ_CALL_PROC,
+    SEQ_EXIT,
+  };
+
+  WBTLIST_EVENT_WORK *p_wk = p_wk_adrs;
+  GMEVENT * call_event;
+
+  switch(*p_seq )
+  {
+  case SEQ_CALL_PROC:
+    if ( p_wk->call_fade_flag )
+    {
+      call_event = EVENT_FieldSubProc(
+          p_wk->gsys, p_wk->fieldmap, FS_OVERLAY_ID(namein), &WBTListProcData, p_wk->wbtlist_param );
+    } else {
+      call_event = EVENT_FieldSubProcNoFade(
+          p_wk->gsys, p_wk->fieldmap, FS_OVERLAY_ID(namein), &WBTListProcData, p_wk->wbtlist_param );
+    }
+    GMEVENT_CallEvent( p_event, call_event );
+    *p_seq  = SEQ_EXIT;
+    break;
+
+  case SEQ_EXIT:
+    WBTLIST_PARAM_Delete( p_wk->wbtlist_param );
+    return GMEVENT_RES_FINISH;
+  }
+
+  return GMEVENT_RES_CONTINUE ;
+}
 

@@ -13,7 +13,9 @@
 #include "app/pokelist.h"
 #include "app/p_status.h"
 
-#include "bsubway_scr.h"
+//#include "bsubway_scr.h"
+
+#include "wbt_system.h"
 
 //======================================================================
 //  define
@@ -22,20 +24,22 @@
 //======================================================================
 //  struct
 //======================================================================
-typedef BSUBWAY_SCRWORK WBT_SCRWORK; 
+
 //======================================================================
 //  extern
 //======================================================================
 extern GMEVENT * WBT_EVENT_SetSelectPokeList(
-    WBT_SCRWORK *bsw_scr, GAMESYS_WORK *gsys, BOOL btl_box );
+    WBTSYS *wbtsys, GAMESYS_WORK *gsys, BOOL btl_box );
+
+extern GMEVENT * WBT_EVENT_ShowTournamentList(
+    GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
+    WBTLIST_PARAM * wbtlist_param, BOOL call_fade_flag );
+
 extern GMEVENT * WBT_EVENT_TrainerBattle(
-    WBT_SCRWORK *bsw_scr, GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap );
+    WBTSYS *wbtsys, GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap );
 extern GMEVENT * WBT_EVENT_CommBattle(
-    WBT_SCRWORK *bsw_scr, GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap );
+    WBTSYS *wbtsys, GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap );
 extern GMEVENT * WBT_EVENT_TrainerBeforeMsg(
-    WBT_SCRWORK *bsw_scr, GAMESYS_WORK *gsys,
+    WBTSYS *wbtsys, GAMESYS_WORK *gsys,
     int tr_idx, u16 obj_id, u8 pos_type );
 
-//======================================================================
-//  歴代リーダー情報の表示
-//======================================================================

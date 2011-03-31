@@ -44,6 +44,7 @@
 #include "wbt_dl.h"
 
 #include "app/wbt_list.h"
+#include "event_wbt.h"  //WBT_EVENT_ShowTournamentList
 
 //=============================================================================
 /**
@@ -286,24 +287,12 @@ static GMEVENT_RESULT debugMenuWBTList( GMEVENT *p_event, int *p_seq, void *p_wk
 //-----------------------------------------------------------------------------
 static BOOL debugMenuCallProc_WBTList( DEBUG_WBT_WORK *p_wk )
 {
-  GAMESYS_WORK  *p_gamesys  = p_wk->gmSys;
-  GMEVENT       *p_event    = p_wk->gmEvent;
-  FIELDMAP_WORK *p_field    = p_wk->fieldWork;
-  DEBUG_WBTLIST_EVENT_WORK *p_param;
-
-  //ƒCƒ”ƒFƒ“ƒg
-  GMEVENT_Change( p_event, debugMenuWBTList, sizeof(DEBUG_WBTLIST_EVENT_WORK) );
-  p_param = GMEVENT_GetEventWork( p_event );
-  GFL_STD_MemClear( p_param, sizeof(DEBUG_WBTLIST_EVENT_WORK) );
-
-  p_param->p_gamesys  = p_gamesys;
-  p_param->wbtlist_param = WBTLIST_PARAM_Create( HEAPID_PROC, p_gamesys );
-  WBTLIST_PARAM_Setup_Debug( p_param->wbtlist_param, HEAPID_FIELDMAP );
-  p_param->wbtlist_param->stage = p_wk->stage;
-  p_param->p_event    = p_event;
-  p_param->p_field    = p_field;
-
-  //WBTLIST_
+  GMEVENT * new_event;
+  WBTLIST_PARAM * wbtlist_param;
+  wbtlist_param = WBTLIST_PARAM_Create( HEAPID_PROC, p_wk->gmSys );
+  WBTLIST_PARAM_Setup_Debug( wbtlist_param, p_wk->stage, HEAPID_FIELDMAP );
+  new_event = WBT_EVENT_ShowTournamentList( p_wk->gmSys, p_wk->fieldWork, wbtlist_param, TRUE );
+  GMEVENT_ChangeEvent( p_wk->gmEvent, new_event );
 
   OS_Printf( "WBT List Start\n" );
 
