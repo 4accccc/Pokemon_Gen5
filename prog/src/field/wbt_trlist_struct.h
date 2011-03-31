@@ -12,6 +12,7 @@
 
 typedef struct {
   u8  type;               // タイプ指定
+  u8  sex;                // 性別指定
   u16 mmdl_id;            // 動作モデル指定
   u8 tr_type;             //トレーナータイプ指定
   u8 entry_timing;        //エントリタイミング

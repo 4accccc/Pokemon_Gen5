@@ -35,8 +35,7 @@
 
 static void setupWBTLISTTrainer( WBTLIST_TRAINER * wbtlist_tr, HEAPID heapID, u8 tr_id );
 static void setupWBTLISTResultAll( WBTLIST_PARAM * wbtlist_param, GFL_STD_RandContext * context );
-static void getMMdlObjCodeParam( ARCHANDLE * handle, u16 mmdl_id,
-    u8 * anm_id, u16 * rsc_idx, u8 * sex );
+static void getMMdlObjCodeParam( ARCHANDLE * handle, u16 mmdl_id, u8 * anm_id, u16 * rsc_idx );
 static u8 BTL_CALC_TypeAff( PokeType wazaType, PokeType pokeType );
 
 //============================================================================================
@@ -140,9 +139,9 @@ static void setupWBTLISTTrainer( WBTLIST_TRAINER * wbtlist_tr, HEAPID heapID, u8
 
   wbtlist_tr->priority = tr_rom_data.priority;
   wbtlist_tr->poketype = tr_rom_data.type;
+  wbtlist_tr->sex      = tr_rom_data.sex;
 
-  getMMdlObjCodeParam( handle, tr_rom_data.mmdl_id,
-      &wbtlist_tr->pattern_no, &wbtlist_tr->mmdl_id, &wbtlist_tr->sex );
+  getMMdlObjCodeParam( handle, tr_rom_data.mmdl_id, &wbtlist_tr->pattern_no, &wbtlist_tr->mmdl_id );
 
   GFL_ARC_CloseDataHandle( handle );
 
@@ -255,8 +254,7 @@ static u8 getFrontAnimePatternNo( anm_id )
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-static void getMMdlObjCodeParam( ARCHANDLE * handle, u16 mmdl_id,
-    u8 * anm_id, u16 * rsc_idx, u8 * sex )
+static void getMMdlObjCodeParam( ARCHANDLE * handle, u16 mmdl_id, u8 * anm_id, u16 * rsc_idx )
 {
   OBJCODE_PARAM objcode_param;
   u32 size = sizeof( OBJCODE_PARAM );
@@ -269,11 +267,9 @@ static void getMMdlObjCodeParam( ARCHANDLE * handle, u16 mmdl_id,
   TAMADA_Printf("OBJCODE_PARAM:anm_id = %d\n",objcode_param.anm_id );
   TAMADA_Printf("OBJCODE_PARAM:res_idx = %d\n",
       ((OBJCODE_PARAM_BUF_BBD *)objcode_param.buf)->res_idx );
-  TAMADA_Printf("OBJCODE_PARAM:sex = %d\n",objcode_param.sex );
 
   *anm_id = getFrontAnimePatternNo( objcode_param.anm_id );
   *rsc_idx = ((OBJCODE_PARAM_BUF_BBD *)objcode_param.buf)->res_idx;
-  *sex = objcode_param.sex;
 }
 
 

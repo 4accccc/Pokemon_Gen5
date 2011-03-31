@@ -13,6 +13,7 @@ typedef enum {
 }BOOL;
 
 
+#include "../../../prog/include/pm_version.h"
 #include "../../../prog/src/field/wbt_trlist_struct.h"
 
 #include "..\..\sound\swan_sound_data.sadl"

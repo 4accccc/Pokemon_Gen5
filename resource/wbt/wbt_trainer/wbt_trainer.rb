@@ -75,6 +75,12 @@ PROJECT_ROOT = ENV["PROJECT_ROOT"]
     "戦闘！シロナ" => "SEQ_BGM_VS_SHIRONA",
     "汎用トーナメント" => "SEQ_BGM_VS_GYMLEADER",
   }
+
+  $sex_table = {
+    "男" => "PM_MALE",
+    "女" => "PM_FEMALE",
+    "可変" => "PM_NEUTRAL"
+  }
 #----------------------------------------------------------------------------
 # エクセルデータの各欄の定義
 #----------------------------------------------------------------------------
@@ -84,6 +90,7 @@ class COL
     NAME
     COMMENT_POSITION
     TYPE
+    SEX
     MMDL_ID
     TRTYPE
     ENTRY_TIMING
@@ -118,6 +125,7 @@ class WBT_TRDATA
     @name = column[COL::NAME]
     @comment_pos = column[COL::COMMENT_POSITION]
     @type = column[COL::TYPE]
+    @sex = column[COL::SEX]
     @mmdl_id = column[COL::MMDL_ID]
     @trtype = column[COL::TRTYPE]
     @entry_timing = column[COL::ENTRY_TIMING]
@@ -170,6 +178,7 @@ class WBT_TRDATA
     str = ""
     str += sprintf("\t{ //%03d %s\n", @no, @name)
     str += sprintf("\t\t%2d, //%s\n", $type_table[@type], @type)
+    str += sprintf("\t\t%s, //%s\n", $sex_table[@sex], @sex )
     str += sprintf("\t\t%-16s,// 動作モデル指定\n", @mmdl_id )
     str += sprintf("\t\tTRTYPE_%-12s, //トレーナータイプ指定\n", @trtype )
     str += sprintf("\t\t%2d, //エントリタイミング\n", $entry_timing_table[@entry_timing] )
