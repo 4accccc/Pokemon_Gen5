@@ -28,7 +28,7 @@ enum {
 //============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-extern AREADATA * AREADATA_Create(HEAPID heapID, u16 area_id, u32 season_id);
+extern AREADATA * AREADATA_Create(HEAPID heapID, u16 area_id, u32 season_id,u32 dungeon_area_id);
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -39,7 +39,7 @@ extern void AREADATA_Delete(AREADATA * areadata);
 extern u16 AREADATA_GetAreaIDMax(void);
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-extern u16 AREADATA_GetModelSetID(const AREADATA * areadata);
+extern u16 AREADATA_GetBMListIndex(const AREADATA * areadata);
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 extern u16 AREADATA_GetTextureSetID(const AREADATA * areadata);
@@ -69,4 +69,6 @@ extern u8 AREADATA_GetBBDColor(const AREADATA * areadata);
 
 extern BOOL AREADATA_HasSeason(u16 area_id);
 extern BOOL AREADATA_HasSeasonDiff(u16 area_id);
+
+extern BOOL AREADATA_HasDungeonArea(u16 area_id);
 

@@ -321,7 +321,6 @@ static inline u8 AnimeNoAssert(u8 anmNo)
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static void makeBMIDToEntryTable(FIELD_BMODEL_MAN * man, BMODEL_ID default_id );
-static u16 calcArcIndex(u16 area_id);
 
 static void loadAreaBMData( FIELD_BMODEL_MAN * man, u16 arc_id, u16 file_id );
 static void releaseAreaBMData( FIELD_BMODEL_MAN * man );
@@ -511,11 +510,13 @@ void FIELD_BMODEL_MAN_Draw(FIELD_BMODEL_MAN * man)
 void FIELD_BMODEL_MAN_Load(FIELD_BMODEL_MAN * man, u16 zoneid, const AREADATA * areadata, u8* gray_scale)
 {	
 	u16 area_id = ZONEDATA_GetAreaID(zoneid);
-	u16 bmlist_index = calcArcIndex(area_id);
+	u16 bmlist_index;
   ARCID bmtex_arc_id;
   ARCID mdl_arc_id;
   BMODEL_ID default_id;
   int i;
+
+  bmlist_index = AREADATA_GetBMListIndex(areadata);
 
   if (AREADATA_GetInnerOuterSwitch(areadata) != 0) 
   {	
@@ -898,32 +899,6 @@ static const void* BM_ANIME_DATA_GetAnimeData( const FIELD_BMANIME_DATA* bmanime
   GF_ASSERT( bmanime->ofs[ idx ] != BMANIME_NULL_OFS );
 
   return (const void*)( (u32)(bmanime) + bmanime->ofs[idx] );
-}
-
-
-
-
-
-//------------------------------------------------------------------
-/**
- * @brief エリアIDから配置モデル情報へのインデックス取得
- * @param area_id 
- * @return  u16 情報アーカイブの指定ID
- *
- */
-//------------------------------------------------------------------
-static u16 calcArcIndex(u16 area_id)
-{	
-	if (area_id >= AREA_ID_IN01)
-	{	
-		return area_id - AREA_ID_IN01;
-	}
-	if (area_id >= AREA_ID_OUT01)
-	{	
-		return (area_id - AREA_ID_OUT01) / 4;
-	}
-  GF_ASSERT( 0 );
-	return 0;	//エラー対処
 }
 
 //------------------------------------------------------------------

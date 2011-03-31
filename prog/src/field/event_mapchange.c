@@ -785,7 +785,7 @@ static void JudgeSeasonUpdateOccur( MAPCHANGE_WORK* work )
 
     heapID   = FIELDMAP_GetHeapID( work->fieldmap );
     areaID   = ZONEDATA_GetAreaID( work->loc_req.zone_id );
-    areaData = AREADATA_Create( heapID, areaID, PMSEASON_SPRING );
+    areaData = AREADATA_Create( heapID, areaID, PMSEASON_SPRING , 0 );
     nextZoneIsOutdoor = ( AREADATA_GetInnerOuterSwitch(areaData) != 0 );
 
     AREADATA_Delete( areaData );

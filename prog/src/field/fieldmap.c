@@ -128,6 +128,8 @@
 
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"
 
+#include "savedata/infinity_dungeon_save.h"
+
 //======================================================================
 //	DEBUG定義
 //======================================================================
@@ -544,7 +546,8 @@ FIELDMAP_WORK * FIELDMAP_Create( GAMESYS_WORK *gsys, HEAPID heapID )
   // 地面、見た目にかかわる情報には、進入の情報を関係付ける。
   {
     fieldWork->areadata = AREADATA_Create( heapID,
-        ZONEDATA_GetAreaID(fieldWork->map_id), PMSEASON_GetConsiderCommSeason(gsys) );
+        ZONEDATA_GetAreaID(fieldWork->map_id), PMSEASON_GetConsiderCommSeason(gsys) , 0 );
+
   }
 	
 	//マップコントロール

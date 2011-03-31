@@ -22,7 +22,7 @@
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 struct AREADATA{
-	u16 model_set_index;		//配置モデルセット指定
+	u16 bm_list_index;		//配置モデルインデックス
 	u16 tex_set_index;			//テクスチャセット指定
 	u8  anm_ita_id;	  		//地形ITAアニメセット指定
   u8  anm_itp_id;	  		//地形ITPアニメセット指定
@@ -86,19 +86,26 @@ static void dumpAreaData(const AREADATA * areadata)
  * @return  AREADATA
  */
 //------------------------------------------------------------------
-AREADATA * AREADATA_Create(HEAPID heapID, u16 area_id, u32 season_id)
+AREADATA * AREADATA_Create(HEAPID heapID, u16 area_id, u32 season_id,u32 dungeon_area_id)
 {
   AREADATA * areadata;
   if (AREADATA_HasSeason(area_id))
   {
     area_id += season_id;
   }
+  else if (AREADATA_HasDungeonArea(area_id))
+  {
+    area_id += dungeon_area_id;
+  }
+
   CHECK_AREA_RANGE(area_id);
   areadata = GFL_FILE_LoadDataAllocOfs(
       ARCID_AREADATA,
       heapID,
       sizeof(AREADATA) * area_id,
       sizeof(AREADATA) );
+
+  
 #ifdef  DEBUG_DUMP_AREADATA_INFO
   dumpAreaData(areadata);
 #endif
@@ -114,9 +121,9 @@ void AREADATA_Delete(AREADATA * areadata)
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-u16 AREADATA_GetModelSetID(const AREADATA * areadata)
+u16 AREADATA_GetBMListIndex(const AREADATA * areadata)
 {
-  return areadata->model_set_index;
+  return areadata->bm_list_index;
 }
 
 //------------------------------------------------------------------
@@ -191,6 +198,19 @@ BOOL AREADATA_HasSeason(u16 area_id)
 {
 	if (AREA_ID_OUT01 <= area_id && area_id < AREA_ID_OUT_MAX) return TRUE;
 	return FALSE;
+}
+
+//------------------------------------------------------------------
+//無限ダンジョンエリアのある/なし
+//------------------------------------------------------------------
+BOOL AREADATA_HasDungeonArea(u16 area_id)
+{
+  if (AREA_ID_IN74 <= area_id && area_id < AREA_ID_IN76)
+  {
+    ONOUE_Printf("エリア：無限ダンジョン内\n");
+    return TRUE;
+  }
+  return FALSE;
 }
 
 //------------------------------------------------------------------
