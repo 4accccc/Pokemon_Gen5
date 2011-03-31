@@ -77,9 +77,12 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 #------------------------------------------------------------------------------
 clean:
 	@$(MAKE_SUBDIR)
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
+
 	rm *.txt
 	rm *.bin
-	rm -f $(TARGETDIR)/$(targetname).narc
-	rm -f $(TARGETDIR)/$(targetname).naix
+endif
+	-rm -f $(TARGETDIR)/$(targetname).narc
+	-rm -f $(TARGETDIR)/$(targetname).naix
 
 
