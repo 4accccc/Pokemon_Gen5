@@ -76,17 +76,17 @@ static const struct{
 	u32 nanr;
 }OamResourceTbl[] = {
 	{
-		304,
+		256,
 		NARC_bmpoam_bmpoam_dummy32x16_NCER,
 		NARC_bmpoam_bmpoam_dummy32x16_NANR,
 	},
 	{
-		304,
+		256,
 		NARC_bmpoam_bmpoam_dummy32x16_64k_NCER,
 		NARC_bmpoam_bmpoam_dummy32x16_64k_NANR,
 	},
 	{
-		304,
+		256,
 		NARC_bmpoam_bmpoam_dummy32x16_32k_NCER,
 		NARC_bmpoam_bmpoam_dummy32x16_32k_NANR,
 	},
