@@ -1,5 +1,5 @@
 #event data
-#save date:2011/03/24 18:15:43
+#save date:2011/03/30 13:09:54
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c06gym0101.wms
 #SECTION START:OBJ_EVENT
@@ -28,7 +28,7 @@ SCRID_TRID_PILOT_04
 #Direction Type Number
 DIR_LEFT
 #Parameter 0 Number
-1
+6
 #Parameter 1 Number
 0
 #Parameter 2 Number
@@ -40,7 +40,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-72 64 -312
+72 64 -408
 #event number: 1
 #type
 1
@@ -150,7 +150,7 @@ EV_TYPE_TRAINER
 #Event Script Name
 SCRID_TRID_PILOT_07
 #Direction Type Number
-DIR_LEFT
+DIR_RIGHT
 #Parameter 0 Number
 5
 #Parameter 1 Number
@@ -164,7 +164,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-56 32 -40
+-8 32 -40
 #event number: 5
 #type
 1

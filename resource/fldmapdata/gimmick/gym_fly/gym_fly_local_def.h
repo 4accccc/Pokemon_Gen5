@@ -69,10 +69,10 @@
 #define BOX2_GZ (36)
 //風力変化時間
 //中速に変わる時間
-#define WINDMETER_MIDDLE_TIME (3*30)	//3秒
+#define WINDMETER_MIDDLE_TIME (2*30)	//2秒
 //高速に変わる時間
-#define WINDMETER_HIGH_TIME (5*30)	//5秒
+#define WINDMETER_HIGH_TIME (4*30)	//4秒
 //吹き飛ばしイベントの継続時間
 #define BLOW_EVENT_TIME (4*30)	//4秒
 //安全地帯イベントの継続時間
-#define SAFE_EVENT_TIME (4*30)	//4秒
+#define SAFE_EVENT_TIME (3*30)	//3秒
