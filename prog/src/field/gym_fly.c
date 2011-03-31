@@ -167,10 +167,8 @@ typedef struct {
 ///	音管理
 //=====================================
 typedef struct {
-  u8      seq;
   int     pitch;        // 現pitch
   int     pitch_max;    // pitchの目標
-  BOOL    se_change;    // 風の音2種切り替え
 } SOUND_WORK;
 
 
@@ -272,7 +270,6 @@ static BOOL WINDMETER_CheckAnmSpeed( const WINDMETER_WORK *cp_wk );
 
 // SOUND
 static void SOUND_Update( SOUND_WORK *p_wk, const u16 c_time );
-static void SOUND_ChangeSE( SOUND_WORK *p_wk );
 static void SOUND_ChangePitch( SOUND_WORK *p_wk, const WIND_STATE state );
 
 //-------------------------------------
@@ -388,16 +385,8 @@ void GYM_FLY_Setup(FIELDMAP_WORK *p_fieldmap)
   // 風力計
   p_wk->windmeter_wk.parent_exp_obj = p_wk->exp_obj;
 
-  // サウンド
-  p_wk->sound.seq = 0;
-  p_wk->sound.se_change = FALSE;
-  p_wk->sound.pitch     = SE_PITCH_LOW;
-  p_wk->sound.pitch_max = SE_PITCH_LOW;
-
   // 環境音
-  //FSND_PlayEnvSE( p_wk->p_sound, GYM_FLY_SE_FAN );
-  PMSND_PlaySE( GYM_FLY_SE_FAN );
-  PMSND_PlaySE( GYM_FLY_SE_WIND_NORMAL );
+  FSND_PlayEnvSE( p_wk->p_sound, GYM_FLY_SE_FAN );
 
   // セーブから取得
   p_wk->time_start = SAVE_GetTimeFlg( p_wk->p_sv_wk );
@@ -431,13 +420,7 @@ void GYM_FLY_End(FIELDMAP_WORK *p_fieldmap)
   SAVE_SetTime( p_wk->p_sv_wk, p_wk->time );
 
   // 環境音停止
-  //FSND_StopEnvSE( p_wk->p_sound, GYM_FLY_SE_FAN );
-  {
-    SEPLAYER_ID player_ID = PMSND_GetSE_DefaultPlayerID( GYM_FLY_SE_FAN );
-    PMSND_StopSE_byPlayerID( player_ID );
-    player_ID = PMSND_GetSE_DefaultPlayerID( GYM_FLY_SE_WIND_NORMAL );
-    PMSND_StopSE_byPlayerID( player_ID );
-  }
+  FSND_StopEnvSE( p_wk->p_sound, GYM_FLY_SE_FAN );
 
   // EXPOBJ破棄
   EXPOBJ_ObjDell( p_wk );
@@ -1071,9 +1054,6 @@ static void WIND_ChangeState( FIELDMAP_WORK *p_fieldmap, const WIND_STATE state 
       p_wk->alpha_reset = TRUE;
     }
 
-    // SEチェンジ
-    SOUND_ChangeSE( &p_wk->sound );
-
     ICHI_Printf("風力計状態：低速\n");
     break;
   case WIND_STATE_MIDDLE:
@@ -1092,9 +1072,6 @@ static void WIND_ChangeState( FIELDMAP_WORK *p_fieldmap, const WIND_STATE state 
     }
 
     p_wk->time = 0;
-
-    // SEチェンジ
-    SOUND_ChangeSE( &p_wk->sound );
 
     // 描画軽くするために、風1は消す
     FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GYM_FLY_UNIT_IDX, EFFECT_WIND_1, TRUE );
@@ -1224,6 +1201,7 @@ static GMEVENT_RESULT BlowEvent( GMEVENT* event, int* seq, void* wk )
   // 処理シーケンス
   enum{
     SEQ_WAIT,   // グリッド調度待ち
+    SEQ_SE,     // SE再生
     //SEQ_CAMERA, // カメラ振動
     SEQ_STAY_WALK,// その場で足踏み
     SEQ_START,  // イベント開始 
@@ -1240,6 +1218,20 @@ static GMEVENT_RESULT BlowEvent( GMEVENT* event, int* seq, void* wk )
     {
       // ！マーク
       MMDL_SetAcmd( p_wk->mmdl, AC_MARK_GYOE ); 
+
+      // 機械のSE
+      PMSND_PlaySE( GYM_FLY_SE_MACHINE );
+
+      *seq = SEQ_SE;
+    }
+    break;
+
+  // SE再生
+  case SEQ_SE:
+    if( MMDL_CheckEndAcmd(p_wk->mmdl) )
+    {
+      // 強風のSE
+      PMSND_PlaySE( GYM_FLY_SE_WIND_TURN );
 
       *seq = SEQ_STAY_WALK;
     }
@@ -1489,6 +1481,16 @@ static GMEVENT_RESULT BlowEvent( GMEVENT* event, int* seq, void* wk )
     // 上を向く
     MMDL_SetAcmd( p_wk->mmdl, AC_DIR_U );
 
+    // SE停止
+    {
+      // 強風停止
+      SEPLAYER_ID player_ID = PMSND_GetSE_DefaultPlayerID( GYM_FLY_SE_WIND_TURN );
+      PMSND_StopSE_byPlayerID( player_ID );
+      // 機械音停止
+      player_ID = PMSND_GetSE_DefaultPlayerID( GYM_FLY_SE_MACHINE );
+      PMSND_StopSE_byPlayerID( player_ID );
+    }
+
     return GMEVENT_RES_FINISH;
   }
 
@@ -1517,6 +1519,7 @@ static GMEVENT_RESULT BlowEventSafe( GMEVENT* event, int* seq, void* wk )
   // 処理シーケンス
   enum{
     SEQ_WAIT,   // グリッド調度待ち
+    SEQ_SE,     // SE再生
     SEQ_START,   // イベント開始 
     SEQ_SHAKE_START,// 1回目のゆれ
     SEQ_SHAKE_WAIT, // 振動待ち
@@ -1533,9 +1536,24 @@ static GMEVENT_RESULT BlowEventSafe( GMEVENT* event, int* seq, void* wk )
       // ！マーク
       MMDL_SetAcmd( p_wk->mmdl, AC_MARK_GYOE ); 
 
+      // 機械のSE
+      PMSND_PlaySE( GYM_FLY_SE_MACHINE );
+
+      *seq = SEQ_SE;
+    }
+    break;
+
+  // SE再生
+  case SEQ_SE:
+    if( MMDL_CheckEndAcmd(p_wk->mmdl) )
+    {
+      // 強風のSE
+      PMSND_PlaySE( GYM_FLY_SE_WIND_TURN );
+
       *seq = SEQ_START;
     }
     break;
+
   // イベント開始
   case SEQ_START:
     if( MMDL_CheckEndAcmd(p_wk->mmdl) )
@@ -1655,6 +1673,16 @@ static GMEVENT_RESULT BlowEventSafe( GMEVENT* event, int* seq, void* wk )
       if( MMDL_GetOBJCode( p_wk->mmdl ) != code ){
         FIELD_PLAYER_ChangeOBJCode( p_wk->player, code );
       }
+
+      // SE停止
+      {
+        // 強風停止
+        SEPLAYER_ID player_ID = PMSND_GetSE_DefaultPlayerID( GYM_FLY_SE_WIND_TURN );
+        PMSND_StopSE_byPlayerID( player_ID );
+        // 機械音停止
+        player_ID = PMSND_GetSE_DefaultPlayerID( GYM_FLY_SE_MACHINE );
+        PMSND_StopSE_byPlayerID( player_ID );
+      }
     }
     return GMEVENT_RES_FINISH;
   }
@@ -1720,6 +1748,7 @@ static GMEVENT_RESULT ShortcutEvent( GMEVENT* event, int* seq, void* wk )
   // 処理シーケンス
   enum{
     SEQ_WAIT,   // グリッド調度待ち
+    SEQ_SE,     // SE再生
     SEQ_WIND_SPEEDUP,// 風力最大にUP
     SEQ_WIND_SPEEDUP_WAIT,// 風力最大にUP待ち
     SEQ_STAY_WALK,// その場で足踏み
@@ -1736,6 +1765,20 @@ static GMEVENT_RESULT ShortcutEvent( GMEVENT* event, int* seq, void* wk )
     {
       // ！マーク
       MMDL_SetAcmd( p_wk->mmdl, AC_MARK_GYOE ); 
+
+      // 機械のSE
+      PMSND_PlaySE( GYM_FLY_SE_MACHINE );
+
+      *seq = SEQ_SE;
+    }
+    break;
+
+  // SE再生
+  case SEQ_SE:
+    if( MMDL_CheckEndAcmd(p_wk->mmdl) )
+    {
+      // 強風のSE
+      PMSND_PlaySE( GYM_FLY_SE_WIND_TURN );
 
       *seq = SEQ_WIND_SPEEDUP;
     }
@@ -1894,6 +1937,9 @@ static GMEVENT_RESULT ShortcutEvent( GMEVENT* event, int* seq, void* wk )
           {
             SEPLAYER_ID player_ID = PMSND_GetSE_DefaultPlayerID( GYM_FLY_SE_BLOW );
             PMSND_StopSE_byPlayerID( player_ID );
+            // 強風停止
+            player_ID = PMSND_GetSE_DefaultPlayerID( GYM_FLY_SE_WIND_TURN );
+            PMSND_StopSE_byPlayerID( player_ID );
           }
 
 
@@ -2005,6 +2051,8 @@ static GMEVENT_RESULT ScriptBlowEvent( GMEVENT* event, int* seq, void* wk )
 
   // 処理シーケンス
   enum{
+    SEQ_SE,     // SE再生
+    SEQ_SE2,    // SE再生
     SEQ_WIND_SPEEDUP,// 風力最大にUP
     SEQ_WIND_SPEEDUP_WAIT,// 風力最大にUP待ち
     SEQ_START,  // イベント開始 
@@ -2015,6 +2063,28 @@ static GMEVENT_RESULT ScriptBlowEvent( GMEVENT* event, int* seq, void* wk )
   };
 
   switch( *seq ){
+  // SE再生
+  case SEQ_SE:
+    if( MMDL_CheckEndAcmd(p_wk->mmdl) )
+    {
+      // 機械のSE
+      PMSND_PlaySE( GYM_FLY_SE_MACHINE );
+
+      *seq = SEQ_SE2;
+    }
+    break;
+
+  // SE再生
+  case SEQ_SE2:
+    if( p_wk->time++ > 20 )
+    {
+      // 強風のSE
+      PMSND_PlaySE( GYM_FLY_SE_WIND_TURN );
+
+      *seq = SEQ_WIND_SPEEDUP;
+    }
+    break;
+
   // 風力を最大に上げる
   case SEQ_WIND_SPEEDUP:
     {
@@ -2144,6 +2214,16 @@ static GMEVENT_RESULT ScriptBlowEvent( GMEVENT* event, int* seq, void* wk )
       VecFx32 pos;
       MMDL_GetVectorPos( p_wk->mmdl, &pos );
       MMDL_InitPosition( p_wk->mmdl, &pos, DIR_DOWN );
+    }
+
+    // SE停止
+    {
+      // 強風停止
+      SEPLAYER_ID player_ID = PMSND_GetSE_DefaultPlayerID( GYM_FLY_SE_WIND_TURN );
+      PMSND_StopSE_byPlayerID( player_ID );
+      // 機械音停止
+      player_ID = PMSND_GetSE_DefaultPlayerID( GYM_FLY_SE_MACHINE );
+      PMSND_StopSE_byPlayerID( player_ID );
     }
 
     return GMEVENT_RES_FINISH;
@@ -2524,12 +2604,6 @@ static BOOL WINDMETER_CheckAnmSpeed( const WINDMETER_WORK *cp_wk )
 static void SOUND_Update( SOUND_WORK *p_wk, const u16 c_time )
 {
   
-  enum{
-    SEQ_NORMAL_SE,    // 通常SE再生
-    SEQ_TURN_SE,      // ターンSE再生
-    SEQ_TURN_SE_WAIT, // ターンSE再生待ち
-  };
-  
   // 徐々にPitchを上げる
   if( p_wk->pitch != p_wk->pitch_max )
   {
@@ -2552,45 +2626,6 @@ static void SOUND_Update( SOUND_WORK *p_wk, const u16 c_time )
     }
   }
 
-  switch( p_wk->seq ){
-  case SEQ_NORMAL_SE:    // 通常SE再生
-    {
-      // pitch変更
-      {
-        // 風音
-        SEPLAYER_ID player_ID = PMSND_GetSE_DefaultPlayerID( GYM_FLY_SE_WIND_NORMAL );
-        PMSND_SetStatusSE_byPlayerID( player_ID, PMSND_NOEFFECT, p_wk->pitch, PMSND_NOEFFECT);
-      }
-
-      // SEチェンジ
-      if( p_wk->se_change == TRUE )
-      {
-        p_wk->se_change = FALSE;
-        p_wk->seq = SEQ_TURN_SE;
-      }
-    }
-    break;
-
-  case SEQ_TURN_SE:      // ターンSE再生
-    PMSND_PlaySE( GYM_FLY_SE_WIND_TURN );
-    p_wk->seq = SEQ_TURN_SE_WAIT;
-    break;
-
-  case SEQ_TURN_SE_WAIT: // ターンSE再生待ち
-    {
-      if( p_wk->se_change == TRUE )
-      {
-        PMSND_PlaySE( GYM_FLY_SE_WIND_NORMAL );
-
-        p_wk->se_change = FALSE;
-        p_wk->seq = SEQ_NORMAL_SE;
-      }
-    }
-    break;
-  }
-
-  
-
   // pitch変更
   {
     // 環境音
@@ -2611,8 +2646,8 @@ static void SOUND_Update( SOUND_WORK *p_wk, const u16 c_time )
 
     if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )
     {
-      PMSND_PlaySE( GYM_FLY_SE_WIND_NORMAL );
-      ICHI_Printf("SE H04 Play\n");
+      PMSND_PlaySE( GYM_FLY_SE_MACHINE );
+      ICHI_Printf("SE H07 Play\n");
     }
     if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
     {
@@ -2633,19 +2668,6 @@ static void SOUND_Update( SOUND_WORK *p_wk, const u16 c_time )
 #endif
 
 }
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  音チェンジ
- *
- *	@param	SOUND_WORK *p_wk 
- */
-//-----------------------------------------------------------------------------
-static void SOUND_ChangeSE( SOUND_WORK *p_wk )
-{
-  p_wk->se_change = TRUE;
-}
-
 
 //----------------------------------------------------------------------------
 /**
