@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="lee_hyunjung" host="W00154A" date="2010-07-06T21:31:44" source="m_bar01_00_00.mb"/>
+	<create user="lee_hyunjung" host="W00154A" date="2010-06-02T21:48:24" source="m_bar01_00_00c.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="lee_hyunjung" host="W00154A" date="2010-07-06T21:31:44" source="m_bar01_00_00.mb"/>
+<original_create user="lee_hyunjung" host="W00154A" date="2010-06-02T21:48:24" source="m_bar01_00_00c.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -20,8 +20,8 @@
 	magnify="1.000000"
 	tool_start_frame="0"
 	tex_matrix_mode="maya"
-	compress_node="none" node_size="1 1"
-	compress_material="off" material_size="16 16"
+	compress_node="merge" node_size="1 1"
+	compress_material="on" material_size="17 17"
 	output_texture="used"
 	force_full_weight="off"
 	use_primitive_strip="on"
@@ -29,7 +29,7 @@
 
 <box_test pos_scale="6" xyz="-4.125000 -0.031250 -4.125000" whd="3.000000 0.934570 2.875000"/>
 
-<tex_image_array size="16">
+<tex_image_array size="17">
 	<tex_image index="0" name="art02a"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
@@ -83,130 +83,12 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="2" name="h_kage"
-		width="8" height="8" original_width="8" original_height="8"
-		format="a3i5"
-		palette_name="h_kage_pl"
-		path="C:/home/wb_data3d/field/in61/chip/tex/h_kage.tga"
-	>
-		<bitmap size="32">
-			2020 2020 2020 2020 2020 2020 2020 2020
-			4040 4040 4040 4040 4040 4040 4040 4040
-			4040 4040 4040 4040 4040 4040 4040 4040
-			4040 4040 4040 4040 4040 4040 4040 4040
-		</bitmap>
-	</tex_image>
-	<tex_image index="3" name="hh_dust01"
+	<tex_image index="2" name="chair03"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette16"
 		color0_mode="transparency"
-		palette_name="hh_dust01_pl"
-		path="C:/home/wb_data3d/build_model/indoor/dust01/tex/hh_dust01.tga"
-	>
-		<bitmap size="64">
-			0001 0000 0000 0000 0002 0000 0000 0000
-			0002 0000 0000 0000 0001 0000 0000 0000
-			0001 0000 0000 0000 0002 3300 0333 0000
-			0002 7733 3567 0000 3002 7776 4466 0003
-			3002 6666 4556 0003 3002 5555 4555 0003
-			3002 4335 4554 0003 3002 5445 4455 0003
-			0001 4443 3444 0000 0002 3330 0333 0000
-			0002 0000 0000 0000 0001 0000 0000 0000
-		</bitmap>
-	</tex_image>
-	<tex_image index="4" name="in61_bar01"
-		width="8" height="8" original_width="8" original_height="8"
-		format="palette16"
-		color0_mode="color"
-		palette_name="in61_bar01_pl"
-		path="C:/home/wb_data3d/field/in61/chip/tex/in61_bar01.tga"
-	>
-		<bitmap size="16">
-			0233 4441 4233 4444 4222 4444 4442 4444
-			4442 4444 4442 4444 4442 4444 4442 4444
-		</bitmap>
-	</tex_image>
-	<tex_image index="5" name="in61_bar02"
-		width="8" height="8" original_width="8" original_height="8"
-		format="a5i3"
-		palette_name="in61_bar02_pl"
-		path="C:/home/wb_data3d/field/in61/chip/tex/in61_bar02.tga"
-	>
-		<bitmap size="32">
-			0000 0000 0000 0000 0000 0000 0000 1008
-			0000 0000 1810 3028 0000 1000 3820 5048
-			0000 2010 5838 7868 0000 3818 7058 a088
-			0800 4828 8868 c0a8 1000 5030 a078 d8c0
-		</bitmap>
-	</tex_image>
-	<tex_image index="6" name="in61_bar03"
-		width="32" height="16" original_width="32" original_height="16"
-		format="palette16"
-		color0_mode="transparency"
-		palette_name="in61_bar03_pl"
-		path="C:/home/wb_data3d/field/in61/chip/tex/in61_bar03.tga"
-	>
-		<bitmap size="128">
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			2000 2222 0002 0000 0000 0000 0000 0000
-			5200 5555 0025 0000 0000 0000 0000 0000
-			4520 4444 0254 0000 0000 0000 0000 0000
-			5452 5555 2545 0000 0000 0000 0000 0000
-			5452 5555 2545 0000 0000 0000 0000 0000
-			4521 4444 1254 2000 2222 0000 0000 0000
-			5242 5555 2425 4200 4555 0002 2220 0000
-			2421 2222 1242 3420 3333 0024 5552 0022
-			4242 4444 2424 3420 3333 2024 3335 0225
-			2421 2222 1242 5320 5555 2023 5554 2524
-			4241 4444 1424 4320 4444 2023 4443 2323
-			2410 2222 0142 4310 4555 2023 4443 1223
-			4100 4444 0014 4110 4555 1011 3332 1112
-			1000 1111 0001 1100 1111 0001 1111 0011
-		</bitmap>
-	</tex_image>
-	<tex_image index="7" name="in61_bar05"
-		width="16" height="32" original_width="16" original_height="32"
-		format="palette4"
-		color0_mode="color"
-		palette_name="in61_bar05_pl"
-		path="C:/home/wb_data3d/field/in61/chip/tex/in61_bar05.tga"
-	>
-		<bitmap size="64">
-			ffff ffff 0000 0000 5555 5555 aaaa aaaa
-			aaaa aaaa 5555 5555 5555 5555 aaaa aaaa
-			aaaa aaaa 5555 5555 5555 5555 aaaa aaaa
-			aaaa aaaa 5555 5555 5555 5555 0000 0000
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff 0000 0000
-			ffff ffff ffff ffff ffff ffff ffff ffff
-		</bitmap>
-	</tex_image>
-	<tex_image index="8" name="in61_bar06"
-		width="16" height="16" original_width="16" original_height="16"
-		format="palette16"
-		color0_mode="color"
-		palette_name="in61_bar06_pl"
-		path="C:/home/wb_data3d/field/in61/chip/tex/in61_bar06.tga"
-	>
-		<bitmap size="64">
-			0000 0000 0000 0000 0000 0000 0000 0000
-			2200 2222 2222 2222 2200 4444 4444 4444
-			2200 3334 3333 3333 2200 3334 1133 3311
-			2200 3334 1133 3311 2200 3334 1133 3311
-			2200 1134 3311 1133 2200 1134 3311 1133
-			2200 1134 3311 1133 2200 3334 3333 3333
-			2200 4444 4444 4444 2200 2222 2222 2222
-			0000 0000 0000 0000 0000 0000 0000 0000
-		</bitmap>
-	</tex_image>
-	<tex_image index="9" name="in61_chair"
-		width="16" height="16" original_width="16" original_height="16"
-		format="palette16"
-		color0_mode="transparency"
-		palette_name="in61_chair_pl"
-		path="C:/home/wb_data3d/field/in61/chip/tex/in61_chair.tga"
+		palette_name="chair03_pl"
+		path="C:/home/wb_data3d/field/in61/chip/tex/chair03.tga"
 	>
 		<bitmap size="64">
 			0000 3333 3333 0000 3000 5554 4555 0003
@@ -219,12 +101,12 @@
 			7700 1126 6211 0077 7700 1126 6211 0077
 		</bitmap>
 	</tex_image>
-	<tex_image index="10" name="in61_desk"
+	<tex_image index="3" name="desk02a"
 		width="32" height="16" original_width="32" original_height="16"
 		format="palette16"
 		color0_mode="transparency"
-		palette_name="in61_desk_pl"
-		path="C:/home/wb_data3d/field/in61/chip/tex/in61_desk.tga"
+		palette_name="desk02a_pl"
+		path="C:/home/wb_data3d/field/in61/chip/tex/desk02a.tga"
 	>
 		<bitmap size="128">
 			4444 4444 4444 4444 1111 1111 1111 1111
@@ -245,7 +127,164 @@
 			7777 7777 7777 7777 0777 0000 0000 7700
 		</bitmap>
 	</tex_image>
-	<tex_image index="11" name="in61_kabe01"
+	<tex_image index="4" name="h_kage"
+		width="8" height="8" original_width="8" original_height="8"
+		format="a3i5"
+		palette_name="h_kage_pl"
+		path="C:/home/wb_data3d/field/in61/chip/tex/h_kage.tga"
+	>
+		<bitmap size="32">
+			2020 2020 2020 2020 2020 2020 2020 2020
+			4040 4040 4040 4040 4040 4040 4040 4040
+			4040 4040 4040 4040 4040 4040 4040 4040
+			4040 4040 4040 4040 4040 4040 4040 4040
+		</bitmap>
+	</tex_image>
+	<tex_image index="5" name="hh_dust01"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="hh_dust01_pl"
+		path="C:/home/wb_data3d/build_model/indoor/dust01/tex/hh_dust01.tga"
+	>
+		<bitmap size="64">
+			0001 0000 0000 0000 0002 0000 0000 0000
+			0002 0000 0000 0000 0001 0000 0000 0000
+			0001 0000 0000 0000 0002 3300 0333 0000
+			0002 7733 3567 0000 3002 7776 4466 0003
+			3002 6666 4556 0003 3002 5555 4555 0003
+			3002 4335 4554 0003 3002 5445 4455 0003
+			0001 4443 3444 0000 0002 3330 0333 0000
+			0002 0000 0000 0000 0001 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="6" name="idr_plant01"
+		width="16" height="32" original_width="16" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="idr_plant01_pl"
+		path="C:/home/wb_data3d/field/in61/chip/tex/idr_plant01.tga"
+	>
+		<bitmap size="128">
+			0657 0000 0000 0000 0657 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 1110 0001 0000
+			1000 1111 1013 0001 4100 3124 4114 0014
+			4410 4233 3124 0144 3210 3133 1123 0123
+			2220 1332 2112 0212 1330 2111 1222 0131
+			1341 2211 1211 1441 3441 1221 2111 1343
+			4443 1122 2111 3431 2431 3122 1131 1312
+			2311 4120 1343 1112 0211 4120 1444 1112
+			0211 4120 2334 0120 0210 3200 2113 0020
+			0200 1290 0211 0000 0000 2790 0211 0000
+			0000 2790 0911 0000 0000 2879 9721 0000
+			0000 7879 9772 0000 0000 8879 9788 0000
+			0000 7790 0977 0000 0000 9900 0099 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="7" name="in40_kage"
+		width="8" height="8" original_width="8" original_height="8"
+		format="a3i5"
+		palette_name="in40_kage_pl"
+		path="C:/home/wb_data3d/build_model/indoor/dust01/tex/in40_kage.tga"
+	>
+		<bitmap size="32">
+			2020 2020 2020 2020 2020 2020 2020 2020
+			4040 4040 4040 4040 4040 4040 4040 4040
+			4040 4040 4040 4040 4040 4040 4040 4040
+			4040 4040 4040 4040 4040 4040 4040 4040
+		</bitmap>
+	</tex_image>
+	<tex_image index="8" name="in61_bar01"
+		width="8" height="8" original_width="8" original_height="8"
+		format="palette16"
+		color0_mode="color"
+		palette_name="in61_bar01_pl"
+		path="C:/home/wb_data3d/field/in61/chip/tex/in61_bar01.tga"
+	>
+		<bitmap size="16">
+			0233 4441 4233 4444 4222 4444 4442 4444
+			4442 4444 4442 4444 4442 4444 4442 4444
+		</bitmap>
+	</tex_image>
+	<tex_image index="9" name="in61_bar02"
+		width="8" height="8" original_width="8" original_height="8"
+		format="a5i3"
+		palette_name="in61_bar02_pl"
+		path="C:/home/wb_data3d/field/in61/chip/tex/in61_bar02.tga"
+	>
+		<bitmap size="32">
+			0000 0000 0000 0000 0000 0000 0000 1008
+			0000 0000 1810 3028 0000 1000 3820 5048
+			0000 2010 5838 7868 0000 3818 7058 a088
+			0800 4828 8868 c0a8 1000 5030 a078 d8c0
+		</bitmap>
+	</tex_image>
+	<tex_image index="10" name="in61_bar03"
+		width="32" height="16" original_width="32" original_height="16"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="in61_bar03_pl"
+		path="C:/home/wb_data3d/field/in61/chip/tex/in61_bar03.tga"
+	>
+		<bitmap size="128">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			2000 2222 0002 0000 0000 0000 0000 0000
+			5200 5555 0025 0000 0000 0000 0000 0000
+			4520 4444 2254 0000 0000 0000 0000 0000
+			5452 5555 2545 0000 0000 0000 0000 0000
+			5452 5555 2545 0000 0000 0000 0000 0000
+			4521 4444 1254 2000 2222 0000 0000 0000
+			5242 5555 2425 4200 4555 0002 2220 0000
+			2421 2222 1242 3420 3333 0024 5552 0022
+			4242 4444 2424 3420 3333 2024 3335 0225
+			2421 2222 1242 5320 5555 2023 5554 2524
+			4241 4444 1424 4320 4444 2023 4443 2323
+			2410 2222 0142 4310 4555 2023 4443 1223
+			4100 4444 0014 4110 4555 1011 3332 1112
+			1000 1111 0001 1100 1111 0001 1111 0011
+		</bitmap>
+	</tex_image>
+	<tex_image index="11" name="in61_bar05"
+		width="16" height="32" original_width="16" original_height="32"
+		format="palette4"
+		color0_mode="color"
+		palette_name="in61_bar05_pl"
+		path="C:/home/wb_data3d/field/in61/chip/tex/in61_bar05.tga"
+	>
+		<bitmap size="64">
+			ffff ffff 0000 0000 5555 5555 aaaa aaaa
+			aaaa aaaa 5555 5555 5555 5555 aaaa aaaa
+			aaaa aaaa 5555 5555 5555 5555 aaaa aaaa
+			aaaa aaaa 5555 5555 5555 5555 0000 0000
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff 0000 0000
+			ffff ffff ffff ffff ffff ffff ffff ffff
+		</bitmap>
+	</tex_image>
+	<tex_image index="12" name="in61_bar06"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette16"
+		color0_mode="color"
+		palette_name="in61_bar06_pl"
+		path="C:/home/wb_data3d/field/in61/chip/tex/in61_bar06.tga"
+	>
+		<bitmap size="64">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			2200 2222 2222 2222 2200 4444 4444 4444
+			2200 3334 3333 3333 2200 3334 1133 3311
+			2200 3334 1133 3311 2200 3334 1133 3311
+			2200 1134 3311 1133 2200 1134 3311 1133
+			2200 1134 3311 1133 2200 3334 3333 3333
+			2200 4444 4444 4444 2200 2222 2222 2222
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="13" name="in61_kabe01"
 		width="16" height="32" original_width="16" original_height="32"
 		format="palette16"
 		color0_mode="color"
@@ -271,7 +310,7 @@
 			5555 5555 5555 5555 5555 5555 5555 5555
 		</bitmap>
 	</tex_image>
-	<tex_image index="12" name="in61_kabe02"
+	<tex_image index="14" name="in61_kabe02"
 		width="8" height="8" original_width="8" original_height="8"
 		format="palette4"
 		color0_mode="color"
@@ -280,50 +319,6 @@
 	>
 		<bitmap size="8">
 			5050 5050 5050 5050 5050 5050 5050 5050
-		</bitmap>
-	</tex_image>
-	<tex_image index="13" name="in61_kabin"
-		width="16" height="16" original_width="16" original_height="16"
-		format="palette16"
-		color0_mode="transparency"
-		palette_name="in61_kabin_pl"
-		path="C:/home/wb_data3d/field/in61/chip/tex/in61_kabin.tga"
-	>
-		<bitmap size="64">
-			0000 0000 0000 0000 0000 1110 0001 0000
-			7000 2451 1116 0000 9700 6545 5446 0001
-			2100 2252 4422 0074 4410 4522 2224 0079
-			5610 5662 6624 0071 4610 4644 5662 0001
-			3100 5453 4562 0001 9700 2229 4469 0007
-			7700 99da 7ae9 0007 0000 dfda 0afd 0000
-			8000 deca 8acd 0000 8000 cca8 88ac 0000
-			0000 bb88 088b 0000 0000 0000 0000 0000
-		</bitmap>
-	</tex_image>
-	<tex_image index="14" name="in61_plant01"
-		width="16" height="32" original_width="16" original_height="32"
-		format="palette16"
-		color0_mode="transparency"
-		palette_name="in61_plant01_pl"
-		path="C:/home/wb_data3d/field/in61/chip/tex/in61_plant01.tga"
-	>
-		<bitmap size="128">
-			0657 0000 0000 0000 0657 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 1110 0001 0000
-			1000 1111 1013 0001 4100 3124 4114 0014
-			4410 4233 3124 0144 3210 3133 1123 0123
-			2220 1332 2112 0212 1330 2111 1222 0131
-			1341 2211 1211 1441 3441 1221 2111 1343
-			4443 1122 2111 3431 2431 3122 1131 1312
-			2311 4120 1343 1112 0211 4120 1444 1112
-			0211 4120 2334 0120 0210 3200 2113 0020
-			0200 1290 0211 0000 0000 2790 0211 0000
-			0000 2790 0911 0000 0000 2879 9721 0000
-			0000 7879 9772 0000 0000 8879 9788 0000
-			0000 7790 0977 0000 0000 9900 0099 0000
 		</bitmap>
 	</tex_image>
 	<tex_image index="15" name="in61_yuka01"
@@ -340,9 +335,27 @@
 			6aa9 4001 6aa9 4001 6aa9 4001 5555 5555
 		</bitmap>
 	</tex_image>
+	<tex_image index="16" name="kabinn"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="kabinn_pl"
+		path="C:/home/wb_data3d/field/in61/chip/tex/kabinn.tga"
+	>
+		<bitmap size="64">
+			0000 0000 0000 0000 0000 1110 0001 0000
+			7000 2451 1116 0000 9700 6545 5446 0001
+			2100 2252 4422 0074 4410 4522 2224 0079
+			5610 5662 6624 0071 4610 4644 5662 0001
+			3100 5453 4562 0001 9700 2229 4469 0007
+			7700 99da 7ae9 0007 0000 dfda 0afd 0000
+			8000 deca 8acd 0000 8000 cca8 88ac 0000
+			0000 bb88 088b 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size="16">
+<tex_palette_array size="17">
 	<tex_palette index="0" name="art02a_pl" color_size="16">
 		01d2 0214 0299 02fb 0971 0df6 0e4f 0f3d
 		1297 1953 5ad6 6b5a 7fff 7fff 7fff 7fff
@@ -350,62 +363,65 @@
 	<tex_palette index="1" name="black_pl" color_size="4">
 		0000 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="2" name="h_kage_pl" color_size="8">
-		0000 7fff 7fff 7fff 7fff 7fff 7fff 7fff
-	</tex_palette>
-	<tex_palette index="3" name="hh_dust01_pl" color_size="8">
-		0000 1d39 257c 4631 5294 5ef7 6739 739c
-	</tex_palette>
-	<tex_palette index="4" name="in61_bar01_pl" color_size="8">
-		00fa 10a7 57df 6bff 7fff 7fff 7fff 7fff
-	</tex_palette>
-	<tex_palette index="5" name="in61_bar02_pl" color_size="8">
-		7fff 7fff 7fff 7fff 7fff 7fff 7fff 7fff
-	</tex_palette>
-	<tex_palette index="6" name="in61_bar03_pl" color_size="8">
-		0000 252f 39d6 4218 56ba 6f7d 7fff 7fff
-	</tex_palette>
-	<tex_palette index="7" name="in61_bar05_pl" color_size="4">
-		010f 01da 05fb 10a7
-	</tex_palette>
-	<tex_palette index="8" name="in61_bar06_pl" color_size="8">
-		04e4 0ce5 0d88 1527 160b 7fff 7fff 7fff
-	</tex_palette>
-	<tex_palette index="9" name="in61_chair_pl" color_size="16">
+	<tex_palette index="2" name="chair03_pl" color_size="16">
 		0000 0000 0045 0136 0199 01fc 0468 04ad
 		065d 08cc 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="10" name="in61_desk_pl" color_size="8">
+	<tex_palette index="3" name="desk02a_pl" color_size="8">
 		0000 0000 00ae 00d2 0117 0467 04a9 0ced
 	</tex_palette>
-	<tex_palette index="11" name="in61_kabe01_pl" color_size="16">
+	<tex_palette index="4" name="h_kage_pl" color_size="8">
+		0000 7fff 7fff 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="5" name="hh_dust01_pl" color_size="8">
+		0000 1d39 257c 4631 5294 5ef7 6739 739c
+	</tex_palette>
+	<tex_palette index="6" name="idr_plant01_pl" color_size="16">
+		7fff 0dc6 0965 1628 168d 4b5c 26de 0cec
+		154f 0cc9 7fff 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="7" name="in40_kage_pl" color_size="8">
+		0000 7fff 7fff 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="8" name="in61_bar01_pl" color_size="8">
+		00fa 10a7 57df 6bff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="9" name="in61_bar02_pl" color_size="8">
+		7fff 7fff 7fff 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="10" name="in61_bar03_pl" color_size="8">
+		0000 252f 39d6 4218 56ba 6f7d 7fff 7fff
+	</tex_palette>
+	<tex_palette index="11" name="in61_bar05_pl" color_size="4">
+		010f 01da 05fb 10a7
+	</tex_palette>
+	<tex_palette index="12" name="in61_bar06_pl" color_size="8">
+		04e4 0ce5 0d88 1527 160b 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="13" name="in61_kabe01_pl" color_size="16">
 		010f 01da 05fb 0a1c 0a5e 10a7 129f 1adf
 		22ff 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="12" name="in61_kabe02_pl" color_size="4">
+	<tex_palette index="14" name="in61_kabe02_pl" color_size="4">
 		048d 04ae 7fff 7fff
-	</tex_palette>
-	<tex_palette index="13" name="in61_kabin_pl" color_size="16">
-		0000 088d 0cb1 10d0 10d4 10d7 10fb 1121
-		14a5 19e2 2108 2529 5ad6 6318 739c 7fff
-	</tex_palette>
-	<tex_palette index="14" name="in61_plant01_pl" color_size="16">
-		7fff 0dc6 0965 1628 168d 4b5c 26de 0cec
-		154f 0cc9 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="15" name="in61_yuka01_pl" color_size="4">
 		008e 008f 00b0 7fff
 	</tex_palette>
+	<tex_palette index="16" name="kabinn_pl" color_size="16">
+		0000 088d 0cb1 10d0 10d4 10d7 10fb 1121
+		14a5 19e2 2108 2529 5ad6 6318 739c 7fff
+	</tex_palette>
 </tex_palette_array>
 
-<material_array size="16">
+<material_array size="17">
 	<material index="0" name="art02a"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="9"
+		polygon_id="16"
 		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -447,7 +463,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="2" name="h_kage"
+	<material index="2" name="chair03"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -471,7 +487,55 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="3" name="hh_dust01"
+	<material index="3" name="desk02a"
+		light0="off" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="7"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="3" tex_palette_idx="3"
+		tex_tiling="clamp clamp"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="4" name="h_kage"
+		light0="off" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="4" tex_palette_idx="4"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="5" name="hh_dust01"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -488,68 +552,20 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="3" tex_palette_idx="3"
+		tex_image_idx="5" tex_palette_idx="5"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="4" name="in61_bar01"
+	<material index="6" name="idr_plant01"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="8"
-		fog_flag="on"
-		depth_test_decal="off"
-		translucent_update_depth="off"
-		render_1_pixel="off"
-		far_clipping="off"
-		diffuse="25 25 25"
-		ambient="0 0 0"
-		specular="0 0 0"
-		emission="0 0 0"
-		shininess_table_flag="off"
-		tex_image_idx="4" tex_palette_idx="4"
-		tex_tiling="flip flip"
-		tex_scale="1.000000 1.000000"
-		tex_rotate="0.000000"
-		tex_translate="0.000000 0.000000"
-		tex_gen_mode="none"
-	/>
-	<material index="5" name="in61_bar02"
-		light0="off" light1="off" light2="off" light3="off"
-		face="front"
-		alpha="31"
-		wire_mode="off"
-		polygon_mode="modulate"
-		polygon_id="0"
-		fog_flag="on"
-		depth_test_decal="off"
-		translucent_update_depth="off"
-		render_1_pixel="off"
-		far_clipping="off"
-		diffuse="25 25 25"
-		ambient="0 0 0"
-		specular="0 0 0"
-		emission="0 0 0"
-		shininess_table_flag="off"
-		tex_image_idx="5" tex_palette_idx="5"
-		tex_tiling="flip flip"
-		tex_scale="1.000000 1.000000"
-		tex_rotate="0.000000"
-		tex_translate="0.000000 0.000000"
-		tex_gen_mode="none"
-	/>
-	<material index="6" name="in61_bar03"
-		light0="off" light1="off" light2="off" light3="off"
-		face="front"
-		alpha="31"
-		wire_mode="off"
-		polygon_mode="modulate"
-		polygon_id="0"
+		polygon_id="12"
 		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -567,37 +583,37 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="7" name="in61_bar05"
+	<material index="7" name="in40_kage"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="0"
+		polygon_id="18"
 		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
 		render_1_pixel="off"
 		far_clipping="off"
-		diffuse="25 25 25"
+		diffuse="0 0 0"
 		ambient="0 0 0"
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
 		tex_image_idx="7" tex_palette_idx="7"
-		tex_tiling="repeat repeat"
+		tex_tiling="clamp clamp"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="8" name="in61_bar06"
+	<material index="8" name="in61_bar01"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="1"
+		polygon_id="8"
 		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -615,7 +631,31 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="9" name="in61_chair"
+	<material index="9" name="in61_bar012"
+		light0="off" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="1"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="12" tex_palette_idx="12"
+		tex_tiling="flip flip"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="10" name="in61_bar02"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -633,19 +673,19 @@
 		emission="0 0 0"
 		shininess_table_flag="off"
 		tex_image_idx="9" tex_palette_idx="9"
-		tex_tiling="repeat repeat"
+		tex_tiling="flip flip"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="10" name="in61_desk"
+	<material index="11" name="in61_bar03"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="7"
+		polygon_id="0"
 		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -657,20 +697,20 @@
 		emission="0 0 0"
 		shininess_table_flag="off"
 		tex_image_idx="10" tex_palette_idx="10"
-		tex_tiling="clamp clamp"
+		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="11" name="in61_kabe01"
+	<material index="12" name="in61_bar05"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
 		polygon_id="0"
-		fog_flag="off"
+		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
 		render_1_pixel="off"
@@ -687,38 +727,14 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="12" name="in61_kabe02"
+	<material index="13" name="in61_kabe01"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
 		polygon_id="0"
-		fog_flag="on"
-		depth_test_decal="off"
-		translucent_update_depth="off"
-		render_1_pixel="off"
-		far_clipping="off"
-		diffuse="25 25 25"
-		ambient="0 0 0"
-		specular="0 0 0"
-		emission="0 0 0"
-		shininess_table_flag="off"
-		tex_image_idx="12" tex_palette_idx="12"
-		tex_tiling="repeat repeat"
-		tex_scale="1.000000 1.000000"
-		tex_rotate="0.000000"
-		tex_translate="0.000000 0.000000"
-		tex_gen_mode="none"
-	/>
-	<material index="13" name="in61_kabin"
-		light0="off" light1="off" light2="off" light3="off"
-		face="front"
-		alpha="31"
-		wire_mode="off"
-		polygon_mode="modulate"
-		polygon_id="8"
-		fog_flag="on"
+		fog_flag="off"
 		depth_test_decal="off"
 		translucent_update_depth="off"
 		render_1_pixel="off"
@@ -735,13 +751,13 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="14" name="in61_plant01"
+	<material index="14" name="in61_kabe02"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="12"
+		polygon_id="0"
 		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -783,13 +799,37 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
+	<material index="16" name="kabinn"
+		light0="off" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="8"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="16" tex_palette_idx="16"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
 </material_array>
 
 <matrix_array size="1">
 	<matrix index="0" mtx_weight="1" node_idx="0"/>
 </matrix_array>
 
-<polygon_array size="16">
+<polygon_array size="17">
 	<polygon index="0" name="polygon0"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
@@ -2811,52 +2851,19 @@
 		</mtx_prim>
 	</polygon>
 	<polygon index="10" name="polygon10"
-		vertex_size="44" polygon_size="11"
-		triangle_size="0" quad_size="11"
-		volume_min="-3.797852 -0.001465 -3.673096"
-		volume_max="-1.421875 0.005859 -1.475098"
-		volume_r="5.218750"
+		vertex_size="28" polygon_size="7"
+		triangle_size="0" quad_size="7"
+		volume_min="-3.796875 -0.001465 -3.125000"
+		volume_max="-1.421875 0.000000 -1.475098"
+		volume_r="4.897705"
 		mtx_prim_size="1"
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
 			<mtx_list size="1">0</mtx_list>
 			<primitive_array size="1">
-				<primitive index="0" type="quads" vertex_size="44">
+				<primitive index="0" type="quads" vertex_size="28">
 					<mtx idx="0"/>
-					<tex st="0.000000 8.000000"/>
-					<clr rgb="0 0 0"/>
-					<pos_xyz xyz="-3.704346 0.005859 -3.673096"/>
-					<tex st="8.000000 8.000000"/>
-					<pos_xz xz="-3.685059 -3.626221"/>
-					<tex st="8.000000 0.000000"/>
-					<pos_xz xz="-3.636719 -3.561768"/>
-					<tex st="0.000000 0.000000"/>
-					<pos_xz xz="-3.656006 -3.608643"/>
-					<tex st="0.000000 8.000000"/>
-					<pos_xz xz="-3.685059 -3.626221"/>
-					<tex st="8.000000 8.000000"/>
-					<pos_xz xz="-3.704346 -3.579590"/>
-					<tex st="8.000000 0.000000"/>
-					<pos_xz xz="-3.656006 -3.515137"/>
-					<tex st="0.000000 0.000000"/>
-					<pos_xz xz="-3.636719 -3.561768"/>
-					<tex st="0.000000 8.000000"/>
-					<pos_xz xz="-3.704346 -3.579590"/>
-					<tex st="8.000000 8.000000"/>
-					<pos_xz xz="-3.750977 -3.560303"/>
-					<tex st="8.000000 0.000000"/>
-					<pos_xz xz="-3.702637 -3.495850"/>
-					<tex st="0.000000 0.000000"/>
-					<pos_xz xz="-3.656006 -3.515137"/>
-					<tex st="0.000000 8.000000"/>
-					<pos_xz xz="-3.750977 -3.560303"/>
-					<tex st="8.000000 8.000000"/>
-					<pos_xz xz="-3.797852 -3.579590"/>
-					<tex st="8.000000 0.000000"/>
-					<pos_xz xz="-3.749512 -3.515137"/>
-					<tex st="0.000000 0.000000"/>
-					<pos_xz xz="-3.702637 -3.495850"/>
 					<tex st="0.000000 8.000000"/>
 					<clr rgb="10 9 11"/>
 					<pos_xyz xyz="-1.557861 -0.000732 -1.572266"/>
@@ -3521,6 +3528,56 @@
 		</mtx_prim>
 	</polygon>
 	<polygon index="15" name="polygon15"
+		vertex_size="16" polygon_size="4"
+		triangle_size="0" quad_size="4"
+		volume_min="-3.797852 0.005859 -3.673096"
+		volume_max="-3.636719 0.005859 -3.495850"
+		volume_r="5.218750"
+		mtx_prim_size="1"
+		nrm_flag="off" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">0</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="16">
+					<mtx idx="0"/>
+					<tex st="0.000000 8.000000"/>
+					<pos_xyz xyz="-3.704346 0.005859 -3.673096"/>
+					<tex st="8.000000 8.000000"/>
+					<pos_xz xz="-3.685059 -3.626221"/>
+					<tex st="8.000000 0.000000"/>
+					<pos_xz xz="-3.636719 -3.561768"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xz xz="-3.656006 -3.608643"/>
+					<tex st="0.000000 8.000000"/>
+					<pos_xz xz="-3.685059 -3.626221"/>
+					<tex st="8.000000 8.000000"/>
+					<pos_xz xz="-3.704346 -3.579590"/>
+					<tex st="8.000000 0.000000"/>
+					<pos_xz xz="-3.656006 -3.515137"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xz xz="-3.636719 -3.561768"/>
+					<tex st="0.000000 8.000000"/>
+					<pos_xz xz="-3.704346 -3.579590"/>
+					<tex st="8.000000 8.000000"/>
+					<pos_xz xz="-3.750977 -3.560303"/>
+					<tex st="8.000000 0.000000"/>
+					<pos_xz xz="-3.702637 -3.495850"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xz xz="-3.656006 -3.515137"/>
+					<tex st="0.000000 8.000000"/>
+					<pos_xz xz="-3.750977 -3.560303"/>
+					<tex st="8.000000 8.000000"/>
+					<pos_xz xz="-3.797852 -3.579590"/>
+					<tex st="8.000000 0.000000"/>
+					<pos_xz xz="-3.749512 -3.515137"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xz xz="-3.702637 -3.495850"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="16" name="polygon16"
 		vertex_size="80" polygon_size="30"
 		triangle_size="8" quad_size="22"
 		volume_min="-3.840576 0.003174 -3.715576"
@@ -3718,7 +3775,7 @@
 		rotate="0.000000 0.000000 0.000000"
 		translate="0.000000 0.000000 0.000000"
 		visibility="on"
-		display_size="16"
+		display_size="17"
 		vertex_size="1128" polygon_size="435"
 		triangle_size="204" quad_size="231"
 		volume_min="-4.125000 -0.031250 -4.125000"
@@ -3727,20 +3784,21 @@
 	>
 		<display index="0" material="0" polygon="14" priority="0"/>
 		<display index="1" material="1" polygon="1" priority="0"/>
-		<display index="2" material="2" polygon="10" priority="0"/>
-		<display index="3" material="3" polygon="15" priority="0"/>
-		<display index="4" material="4" polygon="5" priority="0"/>
-		<display index="5" material="5" polygon="6" priority="0"/>
-		<display index="6" material="6" polygon="7" priority="0"/>
-		<display index="7" material="7" polygon="4" priority="0"/>
-		<display index="8" material="8" polygon="0" priority="0"/>
-		<display index="9" material="9" polygon="13" priority="0"/>
-		<display index="10" material="10" polygon="8" priority="0"/>
-		<display index="11" material="11" polygon="3" priority="0"/>
-		<display index="12" material="12" polygon="2" priority="0"/>
-		<display index="13" material="13" polygon="12" priority="0"/>
-		<display index="14" material="14" polygon="11" priority="0"/>
+		<display index="2" material="2" polygon="13" priority="0"/>
+		<display index="3" material="3" polygon="8" priority="0"/>
+		<display index="4" material="4" polygon="10" priority="0"/>
+		<display index="5" material="5" polygon="16" priority="0"/>
+		<display index="6" material="6" polygon="11" priority="0"/>
+		<display index="7" material="7" polygon="15" priority="0"/>
+		<display index="8" material="8" polygon="5" priority="0"/>
+		<display index="9" material="9" polygon="0" priority="0"/>
+		<display index="10" material="10" polygon="6" priority="0"/>
+		<display index="11" material="11" polygon="7" priority="0"/>
+		<display index="12" material="12" polygon="4" priority="0"/>
+		<display index="13" material="13" polygon="3" priority="0"/>
+		<display index="14" material="14" polygon="2" priority="0"/>
 		<display index="15" material="15" polygon="9" priority="0"/>
+		<display index="16" material="16" polygon="12" priority="0"/>
 	</node>
 </node_array>
 
