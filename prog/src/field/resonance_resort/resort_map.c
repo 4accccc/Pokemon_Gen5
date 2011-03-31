@@ -98,8 +98,25 @@ void RESORT_MAP_GetPlaceGridPosByIndex( RESORT_PLACEID placeID, u16 index, u16 *
     *p_z  = 3 + (index/5)*2;
     break;
   case RESORT_PLACEID_FIELD:
-    *p_x  = 2 + (index%5)*3;
-    *p_z  = 3 + (index/5)*3;
+    {
+      static const struct
+      {
+        s16 x;
+        s16 z;
+      }sc_pos_data[]  =
+      {
+        {3,5},
+        {16,5},
+        {28,5},
+        {3,18},
+        {28,18},
+        {3,31},
+        {16,31},
+        {28,31},
+      };
+      *p_x  = sc_pos_data[index].x;
+      *p_z  = sc_pos_data[index].z;
+    }
     break;
     //TODO
   default:

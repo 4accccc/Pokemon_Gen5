@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nagihashi_toru" host="W00268" date="2011-03-09T10:50:17"/>
+	<create user="nagihashi_toru" host="W00268" date="2011-03-31T19:18:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -398,7 +398,7 @@
 		</language>
 	</columns>
 
-	<dialog left="369" top="340" right="1074" bottom="960" maximized="no" rayout="Vertical2">
+	<dialog left="400" top="284" right="1105" bottom="904" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="0" top="521" right="472" bottom="919" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -778,6 +778,73 @@ GTSで　会ったよね！</language>
 	<row id="resort_sys_select_30" back-color="#80ff80,,,,,,,#80ff80,,,,,,,,,,,">
 		<language name="JPN" width="256">どこへ　いどうしますか？</language>
 		<language name="JPN_KANJI" width="256">どこへ　移動しますか？</language>
+	</row>
+
+	<row id="resort_sys_select_info_01" back-color="#80ff80,,,,,,,#80ff80,,,,,,,,,,,">
+		<language name="JPN" width="256">このひとを　まちに　しょうたいします
+おみせをだすことも　あります</language>
+		<language name="JPN_KANJI" width="256">この人を　街に　招待します
+お店をだすことも　あります</language>
+	</row>
+
+	<row id="resort_sys_select_info_02" back-color="#80ff80,,,,,,,#80ff80,,,,,,,,,,,">
+		<language name="JPN" width="256">このひとを　いまいる　ひしょと　いれかえて
+じぶんの　ひしょに　スカウトします
+</language>
+		<language name="JPN_KANJI" width="256">この人を　今いる　秘書と　入れ替えて
+自分の　秘書に　スカウトします</language>
+	</row>
+
+	<row id="resort_sys_select_info_03" back-color="#80ff80,,,,,,,#80ff80,,,,,,,,,,,">
+		<language name="JPN" width="256">このひとへ　まちのスポットを　おしえ
+おきゃくに　きてもらいます
+</language>
+		<language name="JPN_KANJI" width="256">この人へ　街のスポットを　教え
+お客に　きてもらいます</language>
+	</row>
+
+	<row id="resort_sys_select_info_04" back-color="#80ff80,,,,,,,#80ff80,,,,,,,,,,,">
+		<language name="JPN" width="256">このひとが　おこなった
+さいきんの　できごとを　ききます</language>
+		<language name="JPN_KANJI" width="256">この人が　行った
+最近の　出来事を　聞きます</language>
+	</row>
+
+	<row id="resort_sys_select_info_05" back-color="#80ff80,,,,,,,#80ff80,,,,,,,,,,,">
+		<language name="JPN" width="256">このひとを　しょうたいしたら　
+どんなみせを　だしたいか　ききます</language>
+		<language name="JPN_KANJI" width="256">この人を　招待したら　
+どんな店を　出したいか　聞きます</language>
+	</row>
+
+	<row id="resort_sys_select_info_06" back-color="#80ff80,,,,,,,#80ff80,,,,,,,,,,,">
+		<language name="JPN" width="256">このひとが　げいひんかんから　
+いなくならないように　まってもらいます
+</language>
+		<language name="JPN_KANJI" width="256">この人が　迎賓館から　
+いなくならないように　待ってもらいます</language>
+	</row>
+
+	<row id="resort_sys_select_info_07" back-color="#80ff80,,,,,,,#80ff80,,,,,,,,,,,">
+		<language name="JPN" width="256">このひとに　げいひんかんから　
+かえって　もらいます</language>
+		<language name="JPN_KANJI" width="256">この人に　迎賓館から　
+帰って　もらいます</language>
+	</row>
+
+	<row id="resort_sys_select_info_08" back-color="#80ff80,,,,,,,#80ff80,,,,,,,,,,,">
+		<language name="JPN" width="256"></language>
+		<language name="JPN_KANJI" width="256">[1:38:リゾート店名:0]</language>
+	</row>
+
+	<row id="resort_sys_select_info_09" back-color="#80ff80,,,,,,,#80ff80,,,,,,,,,,,">
+		<language name="JPN" width="256"></language>
+		<language name="JPN_KANJI" width="256">困ってない？</language>
+	</row>
+
+	<row id="resort_sys_select_info_10" back-color="#80ff80,,,,,,,#80ff80,,,,,,,,,,,">
+		<language name="JPN" width="256">せんたくしを　とじます</language>
+		<language name="JPN_KANJI" width="256">選択肢を　閉じます</language>
 	</row>
 
 	<row id="resort_sys_00" back-color="#80ff80,,,,,,,#80ff80,,,,,,,,,,,">
@@ -1662,6 +1729,14 @@ GTSで　会ったよね！</language>
 あそびに　きてるらしいよ▼</language>
 		<language name="JPN_KANJI" width="256">最近　とある　ジムリーダーが
 遊びに　きてるらしいよ▼</language>
+	</row>
+
+	<row id="msg_exp_window" back-color="#800080,,,#800080,,#800080,#800080,#800080,,,#800080,,#800080,#800080,,,#800080,,">
+		<comment>■選択項目の説明文を表示するウィンドウに使用
+・文字列が空だと正しく動作しないため、空白文字を設定</comment>
+		<attribute name="キャラ指定">　</attribute>
+		<language name="JPN" width="256">　</language>
+		<language name="JPN_KANJI" width="256">　</language>
 	</row>
 
 	<flowchart-group-list>
