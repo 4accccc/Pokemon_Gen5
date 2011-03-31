@@ -3,7 +3,7 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino_hiroki" host="W00252" date="2011-03-09T19:25:58"/>
+	<create user="fuchino_hiroki" host="W00252" date="2011-03-30T18:19:23"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
@@ -29,7 +29,7 @@
 
 <box_test pos_scale="0" xyz="-0.500000 -0.500000 -0.500000" whd="1.000000 1.000000 1.000000"/>
 
-<tex_image_array size="9">
+<tex_image_array size="10">
 	<tex_image index="0" name="in71_kage"
 		width="8" height="8" original_width="8" original_height="8"
 		format="a3i5"
@@ -241,7 +241,25 @@
 			4022 0033 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="8" name="in71yuka01"
+	<tex_image index="8" name="in71ueki01"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="in71ueki01_pl"
+		path="C:/home/swan_data3d/field/in71/chip/tex/in71ueki01.tga"
+	>
+		<bitmap size="64">
+			6666 6666 6666 6666 6666 6662 6262 6666
+			2662 2666 2666 6266 2223 2666 2666 6622
+			2333 3266 2662 6633 2113 1366 1223 3311
+			2131 2232 3112 3113 3122 2221 2313 2132
+			3122 3221 2211 1322 1132 1325 2131 5522
+			3155 3115 1533 4522 3314 3545 3533 4111
+			3334 3404 5433 4333 5334 5404 4453 4335
+			4554 4000 0045 4554 0440 0000 0044 0440
+		</bitmap>
+	</tex_image>
+	<tex_image index="9" name="in71yuka01"
 		width="64" height="64" original_width="64" original_height="64"
 		format="palette16"
 		color0_mode="color"
@@ -381,7 +399,7 @@
 	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size="9">
+<tex_palette_array size="10">
 	<tex_palette index="0" name="in71_kage_pl" color_size="8">
 		0000 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
@@ -410,7 +428,10 @@
 		56b5 6739 5ef7 4a52 4210 5ed7 5ab6 5ed6
 		6317 5ad5 5f18 56b6 7bde 6f7b 6318 5ad6
 	</tex_palette>
-	<tex_palette index="8" name="in71yuka01_pl" color_size="16">
+	<tex_palette index="8" name="in71ueki01_pl" color_size="8">
+		0d22 26e6 2b47 2b07 1e45 22a6 2f88 7fff
+	</tex_palette>
+	<tex_palette index="9" name="in71yuka01_pl" color_size="16">
 		6317 6738 6759 6b59 6f79 6f7a 6f7b 6f9a
 		6f9b 739a 739b 73bb 73bc 77bc 77dd 7bde
 	</tex_palette>
@@ -521,7 +542,7 @@
 
 <ex_nns_3dme>
 	<ex_model_info scene_name="デフォルトシーン" disp_pos="0.000000 60.000000"/>
-	<ex_tex_image_array size="9">
+	<ex_tex_image_array size="10">
 		<ex_tex_image index="0" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="1" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="2" disp_pos="0.000000 0.000000"/>
@@ -531,8 +552,9 @@
 		<ex_tex_image index="6" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="7" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="8" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="9" disp_pos="0.000000 0.000000"/>
 	</ex_tex_image_array>
-	<ex_tex_palette_array size="9">
+	<ex_tex_palette_array size="10">
 		<ex_tex_palette index="0" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="1" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="2" disp_pos="0.000000 0.000000"/>
@@ -542,6 +564,7 @@
 		<ex_tex_palette index="6" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="7" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="8" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="9" disp_pos="0.000000 0.000000"/>
 	</ex_tex_palette_array>
 	<ex_material_array size="1">
 		<ex_material index="0" disp_pos="0.000000 240.000000"/>

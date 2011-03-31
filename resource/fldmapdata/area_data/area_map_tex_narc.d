@@ -335,8 +335,26 @@ NNSARC_DEPEND_FILES	= \
 	nsbtx_files/tex_set_in71.nsbtx \
 	nsbtx_files/tex_set_in72.nsbtx \
 	nsbtx_files/tex_set_in73.nsbtx \
-	nsbtx_files/tex_set_in74.nsbtx \
-	nsbtx_files/tex_set_in75.nsbtx \
+	nsbtx_files/tex_set_in74_0.nsbtx \
+	nsbtx_files/tex_set_in74_1.nsbtx \
+	nsbtx_files/tex_set_in74_2.nsbtx \
+	nsbtx_files/tex_set_in74_3.nsbtx \
+	nsbtx_files/tex_set_in74_4.nsbtx \
+	nsbtx_files/tex_set_in74_5.nsbtx \
+	nsbtx_files/tex_set_in74_6.nsbtx \
+	nsbtx_files/tex_set_in74_7.nsbtx \
+	nsbtx_files/tex_set_in74_8.nsbtx \
+	nsbtx_files/tex_set_in74_9.nsbtx \
+	nsbtx_files/tex_set_in75_0.nsbtx \
+	nsbtx_files/tex_set_in75_1.nsbtx \
+	nsbtx_files/tex_set_in75_2.nsbtx \
+	nsbtx_files/tex_set_in75_3.nsbtx \
+	nsbtx_files/tex_set_in75_4.nsbtx \
+	nsbtx_files/tex_set_in75_5.nsbtx \
+	nsbtx_files/tex_set_in75_6.nsbtx \
+	nsbtx_files/tex_set_in75_7.nsbtx \
+	nsbtx_files/tex_set_in75_8.nsbtx \
+	nsbtx_files/tex_set_in75_9.nsbtx \
 	nsbtx_files/tex_set_in76.nsbtx \
 	nsbtx_files/tex_set_in77.nsbtx \
 	nsbtx_files/tex_set_in78.nsbtx \
