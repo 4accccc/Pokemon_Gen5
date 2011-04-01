@@ -597,16 +597,71 @@ static u8 searchPokeTagCount( const STRBUF* buf )
  * @param   wset
  */
 //----------------------------------------------------------------------------------
+
+// <localize> ichibayashi@Nintendo
+//   日本版の実装では、バトルメッセージに[1:0E:トレーナー種別名:]が含まれる場合、
+//   翻訳メッセージにおいて[1:0E:トレーナー種別名:]をまたいでタグを移動できない。
+//   argIdxDec による調整がずれるため、タグに代入される単語が、本来参照すべきではない
+//   arg（未初期化を含む）を参照することにより異常になる（最悪とまる）。
+//
+//   翻訳ではしばしば語順を変える必要が生じるので、この制限があると翻訳が非常に困難になる。
+//
+//   事前にタグを走査してargIdxの調整テーブルを作成するように修正。
+//
+//   arg に格納する client_id を [1:0E:トレーナー種別名:] と [1:00:トレーナー名:] に対して
+//   別々に設定するようにするのが、きれいでパフォーマンスにもほぼ影響のない修正と思われるが、
+//   変更箇所が膨大になってしまうので断念。
+//   
 static void registerWords( const STRBUF* buf, const int* args, WORDSET* wset )
 {
-  const STRCODE* sp = GFL_STR_GetStringCodePointer( buf );
+  int i;
+  u8 argIdxDec[WORDSET_DEFAULT_SETNUM];
+  const STRCODE* sp;
   STRCODE eomCode, tagCode;
-  u8  argIdxDec = 0;
-  u8  clientID = BTL_CLIENT_MAX;
 
   eomCode = GFL_STR_GetEOMCode();
   tagCode = PRINTSYS_GetTagStartCode();
 
+  // タグを走査して、bufIdxから減算すべき値argIdxDecのテーブルを作成
+  for (i = 0; i < NELEMS(argIdxDec); i ++) {
+    argIdxDec[i] = 0;
+  }
+
+  sp = GFL_STR_GetStringCodePointer( buf );
+  while( *sp != eomCode )
+  {
+    if( *sp == tagCode )
+    {
+      if( PRINTSYS_IsWordSetTagGroup(sp) )
+      {
+        u32 bufIdx = PRINTSYS_GetTagParam( sp, 0 );
+        u8  tagGrp = PRINTSYS_GetTagGroup( sp );
+
+        if( tagGrp == PRINTSYS_TAGGROUP_WORD )
+        {
+          u8 tagIdx = PRINTSYS_GetTagIndex( sp );
+          switch( tagIdx ){
+          case TAGIDX_TRAINER_TYPE:
+            // [1:0E:トレーナー種別名:bufIdx] の bufIdx より大きい bufIdx を持つWORDは、取得するargIdxを1減らす
+            for (i = bufIdx+1; i < NELEMS(argIdxDec); i ++)
+            {
+              argIdxDec[i] ++;
+            }
+            break;
+          default:
+            break;
+          }
+        }
+      }
+      sp = PRINTSYS_SkipTag( sp );
+    }
+    else {
+      ++sp;
+    }
+  }
+
+
+  sp = GFL_STR_GetStringCodePointer( buf );
   while( *sp != eomCode )
   {
     if( *sp == tagCode )
@@ -616,8 +671,8 @@ static void registerWords( const STRBUF* buf, const int* args, WORDSET* wset )
         u32 bufIdx = PRINTSYS_GetTagParam( sp, 0 );
         u32 argIdx = bufIdx;
         u8  tagGrp = PRINTSYS_GetTagGroup( sp );
-        if( argIdx >= argIdxDec ){
-          argIdx -= argIdxDec;
+        if( argIdx >= argIdxDec[bufIdx] ){
+          argIdx -= argIdxDec[bufIdx];
         }
         BTL_N_Printf( DBGSTR_PRINT_BufIdx, bufIdx);
 
@@ -632,16 +687,16 @@ static void registerWords( const STRBUF* buf, const int* args, WORDSET* wset )
           u8 tagIdx = PRINTSYS_GetTagIndex( sp );
           switch( tagIdx ){
           case TAGIDX_TRAINER_TYPE:
-            clientID = args[ argIdx ];
-            register_TrainerType( wset, bufIdx, clientID );
-            ++argIdxDec;
+            {
+              u8 clientID = args[ argIdx ];
+              register_TrainerType( wset, bufIdx, clientID );
+            }
             break;
           case TAGIDX_TRAINER_NAME:
-            if( clientID == BTL_CLIENT_MAX ){
-              clientID = args[argIdx];
+            {
+              u8 clientID = args[argIdx];
+              register_TrainerName( wset, bufIdx, clientID );
             }
-            register_TrainerName( wset, bufIdx, clientID );
-            clientID = BTL_CLIENT_MAX;
             break;
           case TAGIDX_POKE_NICKNAME:
             BTL_N_Printf( DBGSTR_STR_SetPokeNickname, args[argIdx]);
