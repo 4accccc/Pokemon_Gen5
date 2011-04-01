@@ -95,10 +95,9 @@
 
 // 安全地帯吹き飛ばしイベント
 #define SHAKE_MMDL_WIDTH        (1)         // 横揺れ幅
-#define SHAKE_MMDL_SYNC         (6)         // 1周期にかけるシンク数
-#define SHAKE_MMDL_TIME         (2)         // ゆれ回数
+#define SHAKE_MMDL_SYNC         (4)         // 1周期にかけるシンク数
+#define SHAKE_MMDL_TIME         (6)         // ゆれ回数
 #define SHAKE_WAIT_TIME1        (20)        // 1回目のゆれ開始までの待ち
-#define SHAKE_WAIT_TIME2        (13)        // 2回目のゆれ開始までの待ち
 
 // ショートカット吹き飛ばしイベント用
 #define SHORTCUT_CAMERA_FRAME   (30)        // カメラ速度
@@ -1514,8 +1513,6 @@ static GMEVENT_RESULT BlowEventSafe( GMEVENT* event, int* seq, void* wk )
     SEQ_SE,     // SE再生
     SEQ_START,   // イベント開始 
     SEQ_SHAKE_START,// 1回目のゆれ
-    SEQ_SHAKE_WAIT, // 振動待ち
-    SEQ_SHAKE_START2,// 2回目のゆれ
     SEQ_MAIN,   // メイン処理
     SEQ_EXIT,   // イベント終了
   };
@@ -1588,48 +1585,11 @@ static GMEVENT_RESULT BlowEventSafe( GMEVENT* event, int* seq, void* wk )
           FIELD_TASK_MAN_AddTask( taskMan, shake, NULL );
         }
 
-        //*seq = SEQ_SHAKE_WAIT;
         *seq = SEQ_MAIN;
       }
     }
     break;
-
-  // 振動待ち
-  case SEQ_SHAKE_WAIT:
-    {
-      // 次シーケンス移行チェック
-      FIELD_TASK_MAN* taskMan;
-      taskMan = FIELDMAP_GetTaskManager( p_wk->p_fieldmap );
-      if( FIELD_TASK_MAN_IsAllTaskEnd(taskMan) )
-      {
-        p_wk->save_time = p_wk->time;
-        *seq = SEQ_SHAKE_START2;
-      }
-    }
-    break;
-
-  case SEQ_SHAKE_START2:// 2回目のゆれ
-    {
-      // 指定時間待つ
-      if( (p_wk->time-p_wk->save_time) > SHAKE_WAIT_TIME2 )
-      {
-        // 振動タスク登録
-        {
-          FIELD_TASK* shake;
-          FIELD_TASK_MAN* taskMan;
-          shake = FIELD_TASK_ShakeMMdl( p_wk->p_fieldmap, p_wk->mmdl,
-              SHAKE_MMDL_WIDTH,
-              SHAKE_MMDL_SYNC,
-              SHAKE_MMDL_TIME );
-          taskMan = FIELDMAP_GetTaskManager( p_wk->p_fieldmap );
-          FIELD_TASK_MAN_AddTask( taskMan, shake, NULL );
-        }
-
-        *seq = SEQ_MAIN;
-      }
-    }
-    break;
-
+  
   // メイン処理
   case SEQ_MAIN:
     {
