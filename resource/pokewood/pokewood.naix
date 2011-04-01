@@ -11,9 +11,9 @@
 #define NARC_POKEWOOD_NAIX_
 
 enum {
-	NARC_pokewood_senario01_bin = 0,
-	NARC_pokewood_senario02_bin = 1,
-	NARC_pokewood_senario03_bin = 2
+	NARC_pokewood_pokewood_senario01_bin = 0,
+	NARC_pokewood_pokewood_senario02_bin = 1,
+	NARC_pokewood_pokewood_senario03_bin = 2
 };
 
 /* NARC_POKEWOOD_NAIX_ */

@@ -61,7 +61,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 	$(EXCEL_CONV) $<
 	$(SENARIO_CONV) $(subst .xls,.txt,$<)
 
-$(targetname).narc: $(lbins) $(ltexts) $(lsources)
+$(targetname).narc: $(lsources) $(lbins) $(ltexts) 
 	nnsarc -r -l -n -i $(targetname).narc -S arc.scr
 	$(NAIXCUT) $(targetname).naix
 endif

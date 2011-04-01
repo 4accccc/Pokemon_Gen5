@@ -305,7 +305,7 @@ EVENT_MAX.times{|i|
 }
 
 #バイナリ出力
-filename = ARGV[0].sub(/\.txt/,".bin").sub(/pokewood_/,"")
+filename = ARGV[0].sub(/\.txt/,".bin")
 
 File.open(filename,"w"){|file|
   file.binmode
