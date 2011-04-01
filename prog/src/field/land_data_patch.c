@@ -117,7 +117,8 @@ void FIELD_DATA_PATCH_WriteBuildModel( FIELD_DATA_PATCH *p_sys, BMODEL_ID bmodel
   PositionSt* p_position = (PositionSt*)&p_3dmd->posData;
 
   GF_ASSERT( index < p_3dmd->count );
-  p_position[ index ].resourceID   = bmodelID;
+  p_position[ index ].resourceID        = (bmodelID & 0xFF);
+  p_position[ index ].resourceIDupper   = ((bmodelID>>8)&0xFF);
 }
 
 //----------------------------------------------------------------------------
