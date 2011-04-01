@@ -141,7 +141,10 @@ BOOL FieldLoadMapData_RandomGenerate( FLD_G3D_MAP* g3Dmap, void * exWork )
         block_x = (map_index % 2) * (FIELD_WFBC_BLOCK_SIZE_X/2);
         block_z = (map_index / 2) * (FIELD_WFBC_BLOCK_SIZE_Z/2);
 
+        //レゾナンスリゾート用設定
         buildmodel_count = RESORT_MAPCREATE_SetUpBlock( p_resort_wk, p_attr, p_bm, g3Dmap, buildmodel_count, map_index, heapID );
+
+        //WFBC設定　TODO　いずれ消すはず
         for( i=0; i<(FIELD_WFBC_BLOCK_SIZE_Z/2); i++ )
         {
           for( j=0; j<(FIELD_WFBC_BLOCK_SIZE_X/2); j++ )

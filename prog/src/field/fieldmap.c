@@ -101,6 +101,8 @@
 #include "fld_particle.h"
 
 #include "field_wfbc.h"
+#include "resonance_resort/resort_mapcreate.h"
+#include "savedata/resonance_resort_sv.h"
 #include "fld_vreq.h"
 
 #include "savedata/sodateya_work.h"
@@ -3289,9 +3291,25 @@ static void setupWfbc( GAMEDATA* gdata, FIELDMAP_WORK *fieldWork, u32 zone_id )
 //-----------------------------------------------------------------------------
 static void setupResonanceResort( GAMEDATA* gdata, FIELDMAP_WORK *fieldWork, u32 zone_id )
 {
+  RESORT_MAPCREATE *p_resort_wk = FLDMAPPER_GetResortWork( fieldWork->g3Dmapper );
+
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork(gdata);
+  RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( p_sv );
+  const RESORT_CITY_DATA *cp_city = RESONANCE_RESORT_SV_GetCityData( p_resort );
+  const RESORT_PEOPLE_ALL_DATA *cp_people_all = RESONANCE_RESORT_SV_GetPeopleAllData( p_resort );
+
   if( ZONEDATA_IsResonanceResort( zone_id ) )
   {
-    FLDMAPPER_SetResortData( fieldWork->g3Dmapper, fieldWork->gamedata );
+    //フィールドの場合
+    EVENTDATA_SYSTEM *p_evdata = GAMEDATA_GetEventData( gdata );
+    RESORT_MAPCREATE_Setup( p_resort_wk, zone_id, cp_city, cp_people_all );
+    //RESORT_MAPCREATE_EventDataOverWrite( p_resort_wk, p_evdata );
+    //TODO ドア
+  }
+  else if( ZONEDATA_IsResonanceResortRoom( zone_id ) )
+  {
+    //室内の場合
+    RESORT_MAPCREATE_Setup( p_resort_wk, zone_id, cp_city, cp_people_all );
   }
 }
 

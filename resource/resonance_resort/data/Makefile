@@ -28,6 +28,7 @@ msgfile 		= ..\..\..\prog\include\msg\script/msg_resort_scr.h #TODO
 scriptfile	= ..\..\fldmapdata\script\resort_scr_def.h #TODO
 bmodelfile 	= ../../fldmapdata/build_model/output/buildmodel_outdoor.naix
 fieldevent	= ../../fldmapdata/eventdata/tmp/c16.h
+landpatch 	= ../../fldmapdata/land_data_patch/land_data_patch_def.h
 
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
@@ -76,7 +77,7 @@ $(targetall).narc $(targetall).naix: $(targetpeople).dat $(targetshop).dat $(tar
 	$(NAIXCUT) $(targetall).naix
 
 #データコンバート
-$(targetpeople).dat $(targetshop).dat $(targetservice).dat $(targetpeopleh).h $(targetinstitution).dat: $(xlsname).xls $(msgfile) $(scriptfile) $(PEOPLECONV) $(DEFINECONV) $(bmodelfile) $(fieldevent)
+$(targetpeople).dat $(targetshop).dat $(targetservice).dat $(targetpeopleh).h $(targetinstitution).dat: $(xlsname).xls $(msgfile) $(scriptfile) $(PEOPLECONV) $(DEFINECONV) $(bmodelfile) $(fieldevent) $(landpatch)
 	$(XLSCONV) -o $(targetpeople).csv -p 1 -s csv $(xlsname).xls
 	$(XLSCONV) -o $(targetshop).csv -p 2 -s csv $(xlsname).xls
 	$(XLSCONV) -o $(targetservice).csv -p 3 -s csv $(xlsname).xls
@@ -85,7 +86,7 @@ $(targetpeople).dat $(targetshop).dat $(targetservice).dat $(targetpeopleh).h $(
 	rm -f *.dat
 	ruby $(DEFINECONV) $(targetdefine).csv $(definehash) $(targetpeopleh)
 	ruby $(PEOPLECONV) $(targetpeople).csv $(msgfile) $(scriptfile) $(targetpeople)
-	ruby $(SHOPCONV) $(targetshop).csv $(targetservice).csv $(msgfile) $(bmodelfile) $(targetshop) $(targetservice)
+	ruby $(SHOPCONV) $(targetshop).csv $(targetservice).csv $(msgfile) $(bmodelfile) $(landpatch) $(targetshop) $(targetservice)
 	ruby $(INSTITUTIONCONV) $(targetinstitution).csv $(fieldevent) $(targetinstitution)
 endif
 

@@ -850,7 +850,7 @@ BOOL ZONEDATA_IsWfbcCalcMoodSkip(u16 zone_id)
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  レゾナンスリゾートかどうか
+ *	@brief  レゾナンスリゾートフィールドかどうか
  *
  *	@param	u16 zone_id   ゾーンID
  *
@@ -860,6 +860,20 @@ BOOL ZONEDATA_IsWfbcCalcMoodSkip(u16 zone_id)
 BOOL ZONEDATA_IsResonanceResort( u16 zone_id )
 {
   return zone_id == ZONE_ID_C16;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レゾナンスリゾート室内
+ *
+ *	@param	zone_id   ゾーンID
+ *
+ *	@return TRUE…レゾナンスリゾート室内  FALSEその他マップ
+ */
+//-----------------------------------------------------------------------------
+BOOL ZONEDATA_IsResonanceResortRoom( u16 zone_id )
+{
+  return zone_id == ZONE_ID_C16R0101;
 }
 
 //------------------------------------------------------------------

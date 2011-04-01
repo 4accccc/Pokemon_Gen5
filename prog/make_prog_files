@@ -812,7 +812,8 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/field_goout_effect_data.c\
         field/medal_check.c \
         field/resonance_resort/resort_mapcreate.c \
-        field/resonance_resort/resort_binary_st.c
+        field/resonance_resort/resort_binary_st.c \
+        field/resonance_resort/resort_map.c
 #        field/scrcmd_c03center.c は未使用だったのでなくしました
 
 # デバッグメニュー並列化  ジャンプ系
@@ -1146,7 +1147,6 @@ SRCS_OVERLAY_RESONANCE_RESORT_GIMMICK = field/resonance_resort/resort_field.c \
                                         field/resonance_resort/resort_reception.c \
                                         field/resonance_resort/resort_people.c \
                                         field/resonance_resort/resort_binary.c \
-                                        field/resonance_resort/resort_map.c \
                                         field/resonance_resort/resort_data_manager.c
 #===> GROUP_OVERLAY_GIMMICK
 SRCS_OVERLAY_DEBUG_RESORT = field/event_debug_menu_resort.c \

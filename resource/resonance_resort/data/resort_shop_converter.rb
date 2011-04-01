@@ -22,8 +22,9 @@ ARG_SHOP_CSV    = 0
 ARG_SERVICE_CSV = 1
 ARG_MSG_H       = 2
 ARG_BMODEL_NAIX = 3
-ARG_SHOP_OUTPUT = 4
-ARG_SERVICE_OUTPUT = 5
+ARG_PATCH_H     = 4
+ARG_SHOP_OUTPUT = 5
+ARG_SERVICE_OUTPUT  = 6
 def checkArgument
   if ARGV[ARG_SHOP_CSV] == nil
     puts "引数1にship csvのファイル名を指定してください"
@@ -41,6 +42,10 @@ def checkArgument
     puts "引数４に配置モデルのnaixファイル名を指定してください"
     return false
   end
+  if ARGV[ARG_PATCH_H] == nil
+    puts "引数４に配置モデルのnaixファイル名を指定してください"
+    return false
+  end
   if ARGV[ARG_SHOP_OUTPUT] == nil
     puts "引数5にshop 出力ファイル名を指定してください"
     return false
@@ -50,7 +55,7 @@ def checkArgument
     return false
   end
 
-  for i in 0...ARG_BMODEL_NAIX
+  for i in 0...ARG_PATCH_H
     unless FileTest.exists?(ARGV[i])
       puts "#{ARGV[i]}が見つかりません"
       return false
@@ -166,7 +171,7 @@ SHOP_COL_LIST6         = 11         #列：リスト６
 SHOP_COL_LIST_START    = SHOP_COL_LIST1
 SHOP_COL_LIST_END      = SHOP_COL_LIST6
 SHOP_COL_END           = 12        #列最後
-def convertShop( csv, data, h_define, gmm, bmodel, h_service )
+def convertShop( csv, data, h_define, gmm, bmodel, patch, h_service )
 
   #データの作成
   msgdata = HeaderDataArray.new
@@ -174,6 +179,9 @@ def convertShop( csv, data, h_define, gmm, bmodel, h_service )
 
   bmodeldata = HeaderDataArray.new
   bmodeldata.load( bmodel )
+
+  patchdata = HeaderDataArray.new
+  patchdata.load( patch )
 
   for row in SHOP_ROW_START...csv.row_length-1
 
@@ -201,7 +209,11 @@ def convertShop( csv, data, h_define, gmm, bmodel, h_service )
     rescue HeaderSearchError
       exit(1)
     end
-    data.write_u16( 0 ) #TODO in3dmd
+    begin
+      data.write_u16( patchdata.search( "LAND_DATA_PATCH_#{in3dmd}", "#{row}行ファイル" ) )
+    rescue HeaderSearchError
+      exit(1)
+    end
 
     for i in SHOP_COL_LIST_START...SHOP_COL_LIST_END+1
       list   = csv.get( row, i )
@@ -245,7 +257,7 @@ begin
   service_hash = Hash.new
 
   convertService( serviceCsv, serviceData, $define_hash, $item_hash, ARGV[ARG_MSG_H], service_hash )
-  convertShop( shopCsv, shopData, $define_hash, ARGV[ARG_MSG_H], ARGV[ARG_BMODEL_NAIX], service_hash )
+  convertShop( shopCsv, shopData, $define_hash, ARGV[ARG_MSG_H], ARGV[ARG_BMODEL_NAIX], ARGV[ARG_PATCH_H], service_hash )
 
   #date書き込み
   shopData.genelate( "#{ARGV[ARG_SHOP_OUTPUT]}.dat" )

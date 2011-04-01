@@ -10,7 +10,6 @@
 
 #include "field/fieldmap_proc.h"
 
-
 //------------------------------------------------------------------
 /**
  * @brief	マッパー制御構造体の不完全型定義
@@ -221,13 +220,6 @@ BOOL FLDMAPPER_Connect( FIELDMAP_WORK* fieldmap, FLDMAPPER* g3Dmapper, const MAP
  */
 //--------------------------------------------------------------
 extern EHL_PTR	FLDMAPPER_GetExHegihtPtr( FLDMAPPER* g3Dmapper );
-
-//----------------------------------------------------------------------------
-/**
- *	@brief リゾート用データ設定
- */
-//-----------------------------------------------------------------------------
-extern void FLDMAPPER_SetResortData( FLDMAPPER* g3Dmapper, GAMEDATA *p_gamedata );
 
 #ifdef PM_DEBUG
 //--------------------------------------------------------------
