@@ -6580,7 +6580,7 @@ static const ZONEDATA ZoneData[] = {
 		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
-		0,        // camera id
+		41,        // camera id
 		MC_TYPE_DUNGEON,  // map_chg_type
 		9,
 		FALSE,
