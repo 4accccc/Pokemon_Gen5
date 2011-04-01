@@ -1226,12 +1226,15 @@ static GMEVENT_RESULT BlowEvent( GMEVENT* event, int* seq, void* wk )
 
   // SEÄ¶
   case SEQ_SE:
-    if( MMDL_CheckEndAcmd(p_wk->mmdl) )
     {
-      // ‹­•—‚ÌSE
-      PMSND_PlaySE( GYM_FLY_SE_WIND_TURN );
+      SEPLAYER_ID player_ID = PMSND_GetSE_DefaultPlayerID( GYM_FLY_SE_WIND_TURN );
+      if( PMSND_CheckPlaySE_byPlayerID( player_ID ) == FALSE )
+      {
+        // ‹­•—‚ÌSE
+        PMSND_PlaySE( GYM_FLY_SE_WIND_TURN );
 
-      *seq = SEQ_STAY_WALK;
+        *seq = SEQ_STAY_WALK;
+      }
     }
     break;
 
@@ -1534,12 +1537,15 @@ static GMEVENT_RESULT BlowEventSafe( GMEVENT* event, int* seq, void* wk )
 
   // SEÄ¶
   case SEQ_SE:
-    if( MMDL_CheckEndAcmd(p_wk->mmdl) )
     {
-      // ‹­•—‚ÌSE
-      PMSND_PlaySE( GYM_FLY_SE_WIND_TURN );
+      SEPLAYER_ID player_ID = PMSND_GetSE_DefaultPlayerID( GYM_FLY_SE_WIND_TURN );
+      if( PMSND_CheckPlaySE_byPlayerID( player_ID ) == FALSE )
+      {
+        // ‹­•—‚ÌSE
+        PMSND_PlaySE( GYM_FLY_SE_WIND_TURN );
 
-      *seq = SEQ_START;
+        *seq = SEQ_START;
+      }
     }
     break;
 
@@ -1750,12 +1756,15 @@ static GMEVENT_RESULT ShortcutEvent( GMEVENT* event, int* seq, void* wk )
 
   // SEÄ¶
   case SEQ_SE:
-    if( MMDL_CheckEndAcmd(p_wk->mmdl) )
     {
-      // ‹­•—‚ÌSE
-      PMSND_PlaySE( GYM_FLY_SE_WIND_TURN );
+      SEPLAYER_ID player_ID = PMSND_GetSE_DefaultPlayerID( GYM_FLY_SE_WIND_TURN );
+      if( PMSND_CheckPlaySE_byPlayerID( player_ID ) == FALSE )
+      {
+        // ‹­•—‚ÌSE
+        PMSND_PlaySE( GYM_FLY_SE_WIND_TURN );
 
-      *seq = SEQ_WIND_SPEEDUP;
+        *seq = SEQ_WIND_SPEEDUP;
+      }
     }
     break;
 
