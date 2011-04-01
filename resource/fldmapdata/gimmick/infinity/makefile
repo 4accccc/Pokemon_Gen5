@@ -73,6 +73,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
 # コピー先のnarcが古い場合実行する
 $(targetname).narc: $(DATA_LIST)
 	@nnsarc -i -cl -l -n $(targetname).narc -S $(ARCLIST) > arc_result.txt
+	$(NAIXCUT) $(targetname).naix
 #	@-rm -f *.nsb*
 #	@-rm -f *.bin
 
