@@ -429,8 +429,8 @@
 	</row>
 
 	<row id="WBT_TRNAME_01">
-		<language name="JPN" width="216">？？？</language>
-		<language name="JPN_KANJI" width="216">？？？</language>
+		<language name="JPN" width="216">ホミカ</language>
+		<language name="JPN_KANJI" width="216">ホミカ</language>
 	</row>
 
 	<row id="WBT_TRNAME_02">
@@ -459,8 +459,8 @@
 	</row>
 
 	<row id="WBT_TRNAME_07">
-		<language name="JPN" width="216">？？？</language>
-		<language name="JPN_KANJI" width="216">？？？</language>
+		<language name="JPN" width="216">ゴウソ</language>
+		<language name="JPN_KANJI" width="216">ゴウソ</language>
 	</row>
 
 	<row id="WBT_TRNAME_08">
@@ -689,53 +689,53 @@
 	</row>
 
 	<row id="WBT_TRNAME_53">
-		<language name="JPN" width="216">未定</language>
-		<language name="JPN_KANJI" width="216">未定</language>
+		<language name="JPN" width="216">モブ１</language>
+		<language name="JPN_KANJI" width="216">モブ１</language>
 	</row>
 
 	<row id="WBT_TRNAME_54">
-		<language name="JPN" width="216">未定</language>
-		<language name="JPN_KANJI" width="216">未定</language>
+		<language name="JPN" width="216">モブ２</language>
+		<language name="JPN_KANJI" width="216">モブ２</language>
 	</row>
 
 	<row id="WBT_TRNAME_55">
-		<language name="JPN" width="216">未定</language>
-		<language name="JPN_KANJI" width="216">未定</language>
+		<language name="JPN" width="216">モブ３</language>
+		<language name="JPN_KANJI" width="216">モブ３</language>
 	</row>
 
 	<row id="WBT_TRNAME_56">
-		<language name="JPN" width="216">未定</language>
-		<language name="JPN_KANJI" width="216">未定</language>
+		<language name="JPN" width="216">モブ４</language>
+		<language name="JPN_KANJI" width="216">モブ４</language>
 	</row>
 
 	<row id="WBT_TRNAME_57">
-		<language name="JPN" width="216">未定</language>
-		<language name="JPN_KANJI" width="216">未定</language>
+		<language name="JPN" width="216">モブ５</language>
+		<language name="JPN_KANJI" width="216">モブ５</language>
 	</row>
 
 	<row id="WBT_TRNAME_58">
-		<language name="JPN" width="216">未定</language>
-		<language name="JPN_KANJI" width="216">未定</language>
+		<language name="JPN" width="216">モブ６</language>
+		<language name="JPN_KANJI" width="216">モブ６</language>
 	</row>
 
 	<row id="WBT_TRNAME_59">
-		<language name="JPN" width="216">未定</language>
-		<language name="JPN_KANJI" width="216">未定</language>
+		<language name="JPN" width="216">モブ７</language>
+		<language name="JPN_KANJI" width="216">モブ７</language>
 	</row>
 
 	<row id="WBT_TRNAME_60">
-		<language name="JPN" width="216">未定</language>
-		<language name="JPN_KANJI" width="216">未定</language>
+		<language name="JPN" width="216">モブ８</language>
+		<language name="JPN_KANJI" width="216">モブ８</language>
 	</row>
 
 	<row id="WBT_TRNAME_61">
-		<language name="JPN" width="216">未定</language>
-		<language name="JPN_KANJI" width="216">未定</language>
+		<language name="JPN" width="216">モブ９</language>
+		<language name="JPN_KANJI" width="216">モブ９</language>
 	</row>
 
 	<row id="WBT_TRNAME_62">
-		<language name="JPN" width="216">未定</language>
-		<language name="JPN_KANJI" width="216">未定</language>
+		<language name="JPN" width="216">モブ１０</language>
+		<language name="JPN_KANJI" width="216">モブ１０</language>
 	</row>
 
 	<row id="WBT_TRNAME_63">
