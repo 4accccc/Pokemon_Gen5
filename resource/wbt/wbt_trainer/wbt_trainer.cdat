@@ -20,9 +20,9 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //001 ？？？
+	{ //001 ホミカ
 		 3, //どく
-		PM_MALE, //男
+		PM_FEMALE, //女
 		SWLEADER2       ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		 0, //エントリタイミング
@@ -146,7 +146,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //007 ？？？
+	{ //007 ゴウソ
 		10, //みず
 		PM_MALE, //男
 		SWLEADER8       ,// 動作モデル指定
@@ -715,7 +715,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 	},
 	{ //034 イブキ
 		15, //ドラゴン
-		PM_MALE, //男
+		PM_FEMALE, //女
 		GSLEADER8       ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		 4, //エントリタイミング
@@ -736,7 +736,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 	},
 	{ //035 アンズ
 		 3, //どく
-		PM_MALE, //男
+		PM_FEMALE, //女
 		GSLEADER9       ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		 4, //エントリタイミング
@@ -757,7 +757,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 	},
 	{ //036 ツツジ
 		 5, //いわ
-		PM_MALE, //男
+		PM_FEMALE, //女
 		RSLEADER1       ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		 4, //エントリタイミング
@@ -820,7 +820,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 	},
 	{ //039 アスナ
 		 9, //ほのお
-		PM_MALE, //男
+		PM_FEMALE, //女
 		RSLEADER4       ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		 4, //エントリタイミング
@@ -862,7 +862,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 	},
 	{ //041 ナギ
 		 2, //ひこう
-		PM_MALE, //男
+		PM_FEMALE, //女
 		RSLEADER6       ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		 4, //エントリタイミング
@@ -904,7 +904,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 	},
 	{ //043 ラン
 		13, //エスパー
-		PM_MALE, //男
+		PM_FEMALE, //女
 		RSLEADER8       ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		 4, //エントリタイミング
@@ -967,7 +967,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 	},
 	{ //046 ナタネ
 		11, //くさ
-		PM_MALE, //男
+		PM_FEMALE, //女
 		DPLEADER2       ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		 4, //エントリタイミング
@@ -988,7 +988,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 	},
 	{ //047 メリッサ
 		 7, //ゴースト
-		PM_MALE, //男
+		PM_FEMALE, //女
 		DPLEADER3       ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		 4, //エントリタイミング
@@ -1009,7 +1009,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 	},
 	{ //048 スモモ
 		 1, //かくとう
-		PM_MALE, //男
+		PM_FEMALE, //女
 		DPLEADER4       ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		 4, //エントリタイミング
@@ -1072,7 +1072,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 	},
 	{ //051 スズナ
 		14, //こおり
-		PM_MALE, //男
+		PM_FEMALE, //女
 		DPLEADER7       ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		 4, //エントリタイミング
@@ -1112,7 +1112,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //053 未定
+	{ //053 モブ１
 		 3, //どく
 		PM_MALE, //男
 		ASSISTANTM      ,// 動作モデル指定
@@ -1133,7 +1133,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //054 未定
+	{ //054 モブ２
 		 4, //じめん
 		PM_MALE, //男
 		MOUNTMAN        ,// 動作モデル指定
@@ -1154,7 +1154,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //055 未定
+	{ //055 モブ３
 		13, //エスパー
 		PM_FEMALE, //女
 		ESPW            ,// 動作モデル指定
@@ -1175,7 +1175,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //056 未定
+	{ //056 モブ４
 		 6, //むし
 		PM_MALE, //男
 		VETERANM        ,// 動作モデル指定
@@ -1196,7 +1196,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //057 未定
+	{ //057 モブ５
 		 7, //ゴースト
 		PM_MALE, //男
 		ESPM            ,// 動作モデル指定
@@ -1217,7 +1217,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //058 未定
+	{ //058 モブ６
 		15, //ドラゴン
 		PM_MALE, //男
 		TRAINERM        ,// 動作モデル指定
@@ -1238,7 +1238,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //059 未定
+	{ //059 モブ７
 		 8, //はがね
 		PM_FEMALE, //女
 		VETERANW        ,// 動作モデル指定
@@ -1259,7 +1259,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //060 未定
+	{ //060 モブ８
 		16, //あく
 		PM_MALE, //男
 		VETERANM        ,// 動作モデル指定
@@ -1280,7 +1280,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //061 未定
+	{ //061 モブ９
 		16, //あく
 		PM_FEMALE, //女
 		VETERANW        ,// 動作モデル指定
@@ -1301,7 +1301,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //062 未定
+	{ //062 モブ１０
 		16, //あく
 		PM_FEMALE, //女
 		TRAINERW        ,// 動作モデル指定
