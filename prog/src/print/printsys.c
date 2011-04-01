@@ -1240,6 +1240,9 @@ static void print_stream_task( GFL_TCBL* tcb, void* wk_adrs )
     if( wk->callbackResult ){
       return;
     }
+    // <localize> コールバック引数設定(単発) で指定した引数が、次の1文字では使用されないように変更
+    // コールバック引数設定(単発)の場合、argを戻す
+    wk->arg = wk->current_arg;
   }
 
   if( wk->stopFlag ){
@@ -1295,9 +1298,21 @@ static void print_stream_task( GFL_TCBL* tcb, void* wk_adrs )
 
             if( wk->callback_func ){
               wk->callbackResult = wk->callback_func( wk->arg );
+              if( wk->callbackResult ){
+                // <localize> [潜在バグ] 1フレーム2文字表示の場合、1文字目でコールバックがTRUEを返しても、2文字目が描画される
+                // コールバックがTRUEを返したら、直ちに描画を止めて空転する
+                i = putPerFrame;  // for loop out
+              }
+              else {
+                // <localize> コールバック引数設定(単発) で指定した引数が、次の1文字では使用されないように変更
+                // コールバック引数設定(単発)の場合、argを戻す
+                wk->arg = wk->current_arg;
+              }
             }
 
-            if( wk->state != PRINTSTREAM_STATE_RUNNING ){
+            // <localize> [潜在バグ] 1フレーム2文字表示の場合、1文字目でウェイトが設定されても、2文字目でウェイトがリセットされる
+            // 1フレーム2文字表示の場合、1文字目でウェイトが設定された場合は、2文字目を描画しない
+            if( wk->state != PRINTSTREAM_STATE_RUNNING || wk->wait > 0){
               i = putPerFrame;  // for loop out
             }
             break;
@@ -1319,7 +1334,14 @@ static void print_stream_task( GFL_TCBL* tcb, void* wk_adrs )
             if( wk->callback_func )
             {
               wk->callbackResult = wk->callback_func( wk->arg );
-              wk->arg = wk->current_arg;
+              if( wk->callbackResult ){
+                // <localize> [潜在バグ] 1フレーム2文字表示の場合、1文字目でコールバックがTRUEを返しても、2文字目が描画される
+                // コールバックがTRUEを返したら、直ちに描画を止めて空転する
+                i = putPerFrame;  // for loop out
+              }
+              else {
+                wk->arg = wk->current_arg;
+              }
             }
             break;
           }
