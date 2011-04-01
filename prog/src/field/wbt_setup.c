@@ -93,14 +93,14 @@ void WBTLIST_PARAM_Setup_Debug( WBTLIST_PARAM * wbtlist_param, WBTLIST_STAGE sta
   for ( i = 0; i < WBT_TRAINER_NUM; i ++ )
   {
     static const u16 sample_trid[WBT_TRAINER_NUM] = {
-      0,//チェレン
+      12,//アロエ
       53,//モブ
-      2,//アーティ
-      1,//？？
+      11,//デント
       54,//モブ
-      3,//カミツレ
-      64,//モブ
+      55,//モブ
+      56,//モブ
       18,//シロナ
+      13,//ハチク
     };
     setupWBTLISTTrainer( &wbtlist_param->trainer[i], heapID, sample_trid[i] );
     wbtlist_param->stage = stage;

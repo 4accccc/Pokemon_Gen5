@@ -107,16 +107,16 @@ const REGULATION * WBTSYS_GetRegulation( WBTSYS * wbtsys )
   switch ( wbtsys->rule )
   {
   case WBTRULE_SINGLE:
-    reg_type = REG_LV50_SINGLE;
+    reg_type = REG_WBT_SINGLE;
     break;
   case WBTRULE_DOUBLE:
-    reg_type = REG_LV50_DOUBLE;
+    reg_type = REG_WBT_DOUBLE;
     break;
   case WBTRULE_TRIPLE:
-    reg_type = REG_LV50_TRIPLE;
+    reg_type = REG_WBT_TRIPLE;
     break;
   case WBTRULE_ROTATION:
-    reg_type = REG_LV50_ROTATION;
+    reg_type = REG_WBT_ROTATION;
     break;
   default:
     GF_ASSERT( 0 );
