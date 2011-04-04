@@ -71,7 +71,7 @@ static const ELEVATOR_SET_DATA sc_elevator_pos_table[ELEVATOR_DATA_TABLE_SIZE] =
   {
     ZONE_ID_D31R0401, // エレベーター部屋（ブラック）
     MODELID_ELEVATOR_1,
-    6 , 0 , 8,
+    6 , 0 , 1,
   },
   {
     ZONE_ID_D31R0101, // 受付（ホワイト）
@@ -86,7 +86,7 @@ static const ELEVATOR_SET_DATA sc_elevator_pos_table[ELEVATOR_DATA_TABLE_SIZE] =
   {
     ZONE_ID_D31R0301, // エレベーター部屋（ホワイト）
     MODELID_ELEVATOR_1,
-    6 , 0 , 8,
+    6 , 0 , 1,
   },
 };
 
@@ -111,10 +111,10 @@ static const GFL_G3D_UTIL_RES sc_g3d_util_res[MODEL_RESID_MAX] =
     NARC_infinity_dungeon_gmk_elevator_nsbmd,
     GFL_G3D_UTIL_RESARC,
   },
-  //MODEL_RESID_ELEVATOR_ICA->エレベータアニメーション
+  //MODEL_RESID_ELEVATOR_TA->エレベータアニメーション
   {
     ARCID_INFINITY_DUNGEON_GIMMICK_DATA,
-    NARC_infinity_dungeon_gmk_elevator_nsbca, 
+    NARC_infinity_dungeon_gmk_elevator_nsbta, 
     GFL_G3D_UTIL_RESARC
   },
 };
@@ -296,6 +296,8 @@ static void MapModelInit( INFINITY_DUNGEON_GIMMICK_WK *p_wk )
       MODEL *p_model    = &p_wk->model[p_data->obj_id];
       if( p_wk->zone_id == p_data->zone_id )
       {
+        EXP_OBJ_ANM_CNT_PTR exobj_anm;
+
         // ステータス取得
         p_status = FLD_EXP_OBJ_GetUnitObjStatus( p_model->p_ex_obj,
             MODEL_MANAGER_FLD_EXP_OBJ_UNIT_ID,
@@ -309,6 +311,16 @@ static void MapModelInit( INFINITY_DUNGEON_GIMMICK_WK *p_wk )
         // 見える状態に
         FLD_EXP_OBJ_SetVanish( p_model->p_ex_obj,
             MODEL_MANAGER_FLD_EXP_OBJ_UNIT_ID, p_model->modelID, FALSE );
+        
+        // フレームの初期化
+        FLD_EXP_OBJ_ValidCntAnm(p_model->p_ex_obj, MODEL_MANAGER_FLD_EXP_OBJ_UNIT_ID, p_model->modelID, 0, TRUE);
+
+        // アニメーション取得
+        exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_model->p_ex_obj, MODEL_MANAGER_FLD_EXP_OBJ_UNIT_ID, p_model->modelID, 0 );
+
+        // ループ再生
+        FLD_EXP_OBJ_ChgAnmStopFlg( exobj_anm, FALSE );
+        FLD_EXP_OBJ_ChgAnmLoopFlg( exobj_anm, TRUE );
       }
     }
   }

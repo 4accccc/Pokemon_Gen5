@@ -70,6 +70,9 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
 %.nsbca:	data/%.ica
 	@g3dcvtr $<
 
+%.nsbta:	data/%.ita
+	@g3dcvtr $<
+
 # コピー先のnarcが古い場合実行する
 $(targetname).narc: $(DATA_LIST)
 	@nnsarc -i -cl -l -n $(targetname).narc -S $(ARCLIST) > arc_result.txt
