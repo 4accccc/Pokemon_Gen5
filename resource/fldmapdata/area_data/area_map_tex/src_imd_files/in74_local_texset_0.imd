@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2011-04-04T12:23:50" source="in74_local_texset_0.mb"/>
+	<create user="ibe_mana" host="W00191" date="2011-04-04T16:37:56" source="in74_local_texset_0.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ibe_mana" host="W00191" date="2011-04-04T12:23:50" source="in74_local_texset_0.mb"/>
+<original_create user="ibe_mana" host="W00191" date="2011-04-04T16:37:56" source="in74_local_texset_0.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -34,7 +34,7 @@
 		width="16" height="16" original_width="16" original_height="16"
 		format="a3i5"
 		palette_name="in74_001_pl"
-		path="C:/home/swan_data3d/field/in74/chip/tex_01/in74_001.tga"
+		path="C:/home/swan_data3d/field/in74/chip/tex_00/in74_001.tga"
 	>
 		<bitmap size="128">
 			4141 4141 4141 4141 4141 4141 4141 4041
@@ -60,7 +60,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="in74_001a_pl"
-		path="C:/home/swan_data3d/field/in74/chip/tex_01/in74_001a.tga"
+		path="C:/home/swan_data3d/field/in74/chip/tex_00/in74_001a.tga"
 	>
 		<bitmap size="64">
 			0000 0000 0000 9000 1110 1111 1111 9111
@@ -78,7 +78,7 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="in74_002_pl"
-		path="C:/home/swan_data3d/field/in74/chip/tex_01/in74_002.tga"
+		path="C:/home/swan_data3d/field/in74/chip/tex_00/in74_002.tga"
 	>
 		<bitmap size="32">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -92,7 +92,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="in74_005_pl"
-		path="C:/home/swan_data3d/field/in74/chip/tex_01/in74_005.tga"
+		path="C:/home/swan_data3d/field/in74/chip/tex_00/in74_005.tga"
 	>
 		<bitmap size="512">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -166,7 +166,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="in74_006_pl"
-		path="C:/home/swan_data3d/field/in74/chip/tex_01/in74_006.tga"
+		path="C:/home/swan_data3d/field/in74/chip/tex_00/in74_006.tga"
 	>
 		<bitmap size="64">
 			0000 0000 1111 1111 2222 2222 3333 3333
@@ -184,7 +184,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="in74_007_pl"
-		path="C:/home/swan_data3d/field/in74/chip/tex_01/in74_007.tga"
+		path="C:/home/swan_data3d/field/in74/chip/tex_00/in74_007.tga"
 	>
 		<bitmap size="64">
 			eeee eeee eeee eeee eeee eeee eeed eeee
@@ -202,7 +202,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="in74_008_pl"
-		path="C:/home/swan_data3d/field/in74/chip/tex_01/in74_008.tga"
+		path="C:/home/swan_data3d/field/in74/chip/tex_00/in74_008.tga"
 	>
 		<bitmap size="64">
 			1111 1111 0111 1110 2011 1102 3201 1023
@@ -220,7 +220,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="in74_009_pl"
-		path="C:/home/swan_data3d/field/in74/chip/tex_01/in74_009.tga"
+		path="C:/home/swan_data3d/field/in74/chip/tex_00/in74_009.tga"
 	>
 		<bitmap size="256">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -262,7 +262,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="in74_010_pl"
-		path="C:/home/swan_data3d/field/in74/chip/tex_01/in74_010.tga"
+		path="C:/home/swan_data3d/field/in74/chip/tex_00/in74_010.tga"
 	>
 		<bitmap size="64">
 			6665 6666 6665 6666 5555 5555 5555 5555
@@ -280,7 +280,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="in74_desk_pl"
-		path="C:/home/swan_data3d/field/in74/chip/tex_01/in74_desk.tga"
+		path="C:/home/swan_data3d/field/in74/chip/tex_00/in74_desk.tga"
 	>
 		<bitmap size="128">
 			5555 5555 5555 5555 5555 5555 5555 5555
@@ -306,7 +306,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="in74_ele01_pl"
-		path="C:/home/swan_data3d/field/in74/chip/tex_01/in74_ele01.tga"
+		path="C:/home/swan_data3d/field/in74/chip/tex_00/in74_ele01.tga"
 	>
 		<bitmap size="256">
 			1111 1111 1111 1111 1111 1111 1111 1111
@@ -348,7 +348,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="in74_ele02_pl"
-		path="C:/home/swan_data3d/field/in74/chip/tex_01/in74_ele02.tga"
+		path="C:/home/swan_data3d/field/in74/chip/tex_00/in74_ele02.tga"
 	>
 		<bitmap size="128">
 			bbbb 996a bbbb 996a bbbb 996a bbbb 996a
@@ -373,7 +373,7 @@
 		width="16" height="16" original_width="16" original_height="16"
 		format="a3i5"
 		palette_name="in74_ele03_pl"
-		path="C:/home/swan_data3d/field/in74/chip/tex_01/in74_ele03.tga"
+		path="C:/home/swan_data3d/field/in74/chip/tex_00/in74_ele03.tga"
 	>
 		<bitmap size="128">
 			4040 4040 4040 4040 4140 4342 4544 4545
@@ -399,7 +399,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="in74_ele04_pl"
-		path="C:/home/swan_data3d/field/in74/chip/tex_01/in74_ele04.tga"
+		path="C:/home/swan_data3d/field/in74/chip/tex_00/in74_ele04.tga"
 	>
 		<bitmap size="64">
 			4444 4444 4444 4444 4444 4444 4444 4444
@@ -417,7 +417,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="in74_hana_pl"
-		path="C:/home/swan_data3d/field/in74/chip/tex_01/in74_hana.tga"
+		path="C:/home/swan_data3d/field/in74/chip/tex_00/in74_hana.tga"
 	>
 		<bitmap size="256">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -459,7 +459,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="in74_hana02_pl"
-		path="C:/home/swan_data3d/field/in74/chip/tex_01/in74_hana02.tga"
+		path="C:/home/swan_data3d/field/in74/chip/tex_00/in74_hana02.tga"
 	>
 		<bitmap size="256">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -501,7 +501,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="in74_isu01_pl"
-		path="C:/home/swan_data3d/field/in74/chip/tex_01/in74_isu01.tga"
+		path="C:/home/swan_data3d/field/in74/chip/tex_00/in74_isu01.tga"
 	>
 		<bitmap size="256">
 			6666 6666 6666 6666 6666 6666 6666 8886
@@ -542,7 +542,7 @@
 		width="16" height="16" original_width="16" original_height="16"
 		format="a5i3"
 		palette_name="in74_kage_pl"
-		path="C:/home/swan_data3d/field/in74/chip/tex_01/in74_kage.tga"
+		path="C:/home/swan_data3d/field/in74/chip/tex_00/in74_kage.tga"
 	>
 		<bitmap size="128">
 			3838 3838 3838 3838 3838 3838 3838 3838
@@ -568,7 +568,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="in74_light_pl"
-		path="C:/home/swan_data3d/field/in74/chip/tex_01/in74_light.tga"
+		path="C:/home/swan_data3d/field/in74/chip/tex_00/in74_light.tga"
 	>
 		<bitmap size="16">
 			5555 5555 5555 5555 4444 4444 3333 3333
@@ -580,7 +580,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="in74_mat_pl"
-		path="C:/home/swan_data3d/field/in74/chip/tex_01/in74_mat.tga"
+		path="C:/home/swan_data3d/field/in74/chip/tex_00/in74_mat.tga"
 	>
 		<bitmap size="64">
 			0000 0000 0000 0000 6660 1666 6661 0666
@@ -598,7 +598,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="in74_pc01_pl"
-		path="C:/home/swan_data3d/field/in74/chip/tex_01/in74_pc01.tga"
+		path="C:/home/swan_data3d/field/in74/chip/tex_00/in74_pc01.tga"
 	>
 		<bitmap size="128">
 			8888 8888 8888 8888 8888 8888 8888 8888
@@ -624,7 +624,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="in74_plant01_pl"
-		path="C:/home/swan_data3d/field/in74/chip/tex_01/in74_plant01.tga"
+		path="C:/home/swan_data3d/field/in74/chip/tex_00/in74_plant01.tga"
 	>
 		<bitmap size="128">
 			0657 0000 0000 0000 0657 0000 0000 0000
@@ -649,7 +649,7 @@
 		width="32" height="32" original_width="32" original_height="32"
 		format="a3i5"
 		palette_name="in74_pool01_pl"
-		path="C:/home/swan_data3d/field/in74/chip/tex_01/in74_pool01.tga"
+		path="C:/home/swan_data3d/field/in74/chip/tex_00/in74_pool01.tga"
 	>
 		<bitmap size="512">
 			4343 4545 4b4b 4343 4b43 404c 404f 4142
@@ -723,7 +723,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="in74_pool02_pl"
-		path="C:/home/swan_data3d/field/in74/chip/tex_01/in74_pool02.tga"
+		path="C:/home/swan_data3d/field/in74/chip/tex_00/in74_pool02.tga"
 	>
 		<bitmap size="64">
 			2222 2222 2222 1222 3332 3333 3333 1333
@@ -741,7 +741,7 @@
 		format="palette4"
 		color0_mode="transparency"
 		palette_name="in74_pool03_pl"
-		path="C:/home/swan_data3d/field/in74/chip/tex_01/in74_pool03.tga"
+		path="C:/home/swan_data3d/field/in74/chip/tex_00/in74_pool03.tga"
 	>
 		<bitmap size="512">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -815,7 +815,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="in74_pool04_pl"
-		path="C:/home/swan_data3d/field/in74/chip/tex_01/in74_pool04.tga"
+		path="C:/home/swan_data3d/field/in74/chip/tex_00/in74_pool04.tga"
 	>
 		<bitmap size="64">
 			0000 0000 1111 1111 2222 2222 3333 3333
@@ -833,7 +833,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="in74_pool05_pl"
-		path="C:/home/swan_data3d/field/in74/chip/tex_01/in74_pool05.tga"
+		path="C:/home/swan_data3d/field/in74/chip/tex_00/in74_pool05.tga"
 	>
 		<bitmap size="64">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -851,7 +851,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="in74_pool06_pl"
-		path="C:/home/swan_data3d/field/in74/chip/tex_01/in74_pool06.tga"
+		path="C:/home/swan_data3d/field/in74/chip/tex_00/in74_pool06.tga"
 	>
 		<bitmap size="64">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -869,7 +869,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="in74_pool07_pl"
-		path="C:/home/swan_data3d/field/in74/chip/tex_01/in74_pool07.tga"
+		path="C:/home/swan_data3d/field/in74/chip/tex_00/in74_pool07.tga"
 	>
 		<bitmap size="64">
 			0000 0000 0000 0000 0000 1000 0001 0000
@@ -887,7 +887,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="in74_pool08_pl"
-		path="C:/home/swan_data3d/field/in74/chip/tex_01/in74_pool08.tga"
+		path="C:/home/swan_data3d/field/in74/chip/tex_00/in74_pool08.tga"
 	>
 		<bitmap size="64">
 			0000 0000 0000 0000 0000 1000 0001 0000
@@ -905,17 +905,17 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="in74_saku01_pl"
-		path="C:/home/swan_data3d/field/in74/chip/tex_01/in74_saku01.tga"
+		path="C:/home/swan_data3d/field/in74/chip/tex_00/in74_saku01.tga"
 	>
 		<bitmap size="64">
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
-			1100 1111 1100 1111 2100 2222 2100 2222
-			2100 6666 2100 6666 2100 8886 2100 8886
-			2100 aa86 2100 aa86 5433 bb97 5433 bb97
-			7544 ccb9 7544 ccb9 7544 ccb9 7544 ccb9
-			7544 ccb9 7544 ccb9 7544 ccb9 7544 ccb9
+			0000 7700 0000 7700 0000 8870 0000 8870
+			0000 1187 0000 1187 7000 2218 7000 2218
+			8700 4421 8700 4421 a988 5543 a988 5543
+			3a99 6654 3a99 6654 3a99 6654 3a99 6654
+			3a99 6654 3a99 6654 3a99 6654 3a99 6654
 		</bitmap>
 	</tex_image>
 	<tex_image index="31" name="in74_saku02"
@@ -923,17 +923,17 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="in74_saku02_pl"
-		path="C:/home/swan_data3d/field/in74/chip/tex_01/in74_saku02.tga"
+		path="C:/home/swan_data3d/field/in74/chip/tex_00/in74_saku02.tga"
 	>
 		<bitmap size="64">
-			0000 0000 0000 0000 1121 1111 3333 3333
-			4444 4444 5555 5555 6666 6666 7777 7777
-			8888 8888 9999 9999 9999 9999 9999 9999
-			9999 9999 9999 9999 9999 9999 9999 9999
-			9999 9999 9999 9999 9999 9999 9999 9999
-			9999 9999 9999 9999 9999 9999 9999 9999
-			9999 9999 9999 9999 9999 9999 9999 9999
-			9999 9999 9999 9999 9999 9999 9999 9999
+			0000 0000 1111 1111 2222 2222 3333 3333
+			4444 4444 5555 5555 6666 6666 6666 6666
+			6666 6666 6666 6666 6666 6666 6666 6666
+			6666 6666 6666 6666 6666 6666 6666 6666
+			6666 6666 6666 6666 6666 6666 6666 6666
+			6666 6666 6666 6666 6666 6666 6666 6666
+			6666 6666 6666 6666 6666 6666 6666 6666
+			6666 6666 6666 6666 6666 6666 6666 6666
 		</bitmap>
 	</tex_image>
 </tex_image_array>
@@ -1046,12 +1046,11 @@
 		294a 2d6b 318c 39ce 3def 4631 4e73 56b5
 	</tex_palette>
 	<tex_palette index="30" name="in74_saku01_pl" color_size="16">
-		5520 5d40 6160 6180 6980 6da0 7de1 7e23
-		7e62 7e85 7ea2 7ee5 7f4d 7fff 7fff 7fff
+		000e 0014 0015 0016 0017 0018 001a 0851
+		0852 0853 0854 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="31" name="in74_saku02_pl" color_size="16">
-		1c40 2040 2440 2860 3480 40c0 4900 5520
-		5d60 6180 7fff 7fff 7fff 7fff 7fff 7fff
+	<tex_palette index="31" name="in74_saku02_pl" color_size="8">
+		0004 0005 0007 0009 000b 000d 000e 7fff
 	</tex_palette>
 </tex_palette_array>
 
