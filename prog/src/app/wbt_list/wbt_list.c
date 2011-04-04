@@ -90,7 +90,7 @@ enum
 {
 	BG_FRAME_BACK_M		= GFL_BG_FRAME3_M,		// 下地(BG3)
 	BG_FRAME_MIDDLE_M	= GFL_BG_FRAME2_M,		// 中間(BG2)
-	BG_FRAME_MIDDLE2_M	= GFL_BG_FRAME1_M,		// テキスト(BG1)(未使用)
+	BG_FRAME_MIDDLE2_M	= GFL_BG_FRAME1_M,		// テキスト枠(BG1)
 	BG_FRAME_TEXT_M		= GFL_BG_FRAME0_M,		// テキスト面(BG0)
 	//
 	BG_FRAME_BACK_S		= GFL_BG_FRAME2_S,		// 下地(BG2)
@@ -242,14 +242,12 @@ enum{
 // 最大数
 enum{
 	WBT_OBJ_MAXNUM = 23,			// obj最大
-	WBT_CANVAS_MAXNUM = 2,			// canvas最大
+	WBT_CANVAS_MAXNUM = 3,			// canvas最大
 	WBT_BMPOAM_MAXNUM = 8,			// bmpoam最大
 };
 
 // スピード
 enum{
-//	MOVE_IN_SPEED	= 36,			// スクロールイン
-//	MOVE_OUT_SPEED	= 72,			// スクロールアウト
 	MOVE_IN_SPEED	= 18,			// スクロールイン
 	MOVE_OUT_SPEED	= 36,			// スクロールアウト
 };
@@ -376,7 +374,6 @@ typedef struct
 	GFL_BMP_DATA			*BmpData[WBT_BMPOAM_MAXNUM];	// Bmp
 	BMPOAM_ACT_PTR			BmpOamWork[WBT_BMPOAM_MAXNUM];	// Work
 	PRINT_UTIL				PrintUtil[WBT_CANVAS_MAXNUM];	// 文字表示用
-	PRINT_UTIL				MsgPrintUtil[2];				// 文字表示用
 	PRINT_STREAM			*PrintStream;					// PrintStream
 	GFL_TCBLSYS				*MsgTcblSys;					// メッセージ用タスク
 	STRBUF					*MsgBuffer;						// メッセージ用バッファ
@@ -384,10 +381,13 @@ typedef struct
 	s32						Mode;							// モード(段階)
 	s32						Step;							// ステップ
 	s32						DispCount;						// カウンタ
+	s32						PlayerNum;						// プレイヤの番号
 	u32						MoveFlag;						// 移動可能フラグ
 	s32						Timer[TIMER_MAX];				// タイマ
 	WBTLIST_MOVE_WORK		MoveWork[MWORK_MAX];			// 移動
 	WBTLIST_PARAM_WORK		ParamWork[PARAM_WORK_MAX];		// パラメータのワーク
+	u16						PalBuffer[0x10*8];				// 色変え用(u16なので1パレット0x10分でよい)
+	u16						TmpBuffer[0x10*8];				// パレット用(連続で転送させるためPalBufferと同じサイズを確保)
 	//
 	s16						*EmptyBuffer;					// 座標用のバッファ(必ず破棄すること)
 } WBTLIST_MAIN_WORK;
@@ -529,8 +529,10 @@ const WBTLIST_MAPMODEL_DATA wbt_mapmodel_tbl[] = {
 // CANVASの設定
 // (printutilと対応)
 const WBTLIST_CANVAS_DATA wbt_canvas_tbl[] = {
-	{ GFL_BG_FRAME1_S,	4,	4,	24,	2,	2,},		// 下、up
-	{ GFL_BG_FRAME1_S,	10,	17,	11,	2,	2,},		// 下、down
+	{ GFL_BG_FRAME0_S,	4,	4,	24,	2,	2,},		// 下、up
+	{ GFL_BG_FRAME0_S,	4,	17,	24,	2,	2,},		// 下、down
+	//
+	{ GFL_BG_FRAME0_M,	1,	20,	30,	4,	9,},		// 下、down
 
 	{ 0xff, 0, 0, 0, 0, 0,}, // end code
 };
@@ -565,6 +567,12 @@ const s16 wbt_move_pos_tbl[] = {
 const s16 wbt_bmpoam_off_tbl[] = {
 	36,	8,					// 左側(off)
 	8,	8,					// 右側(off)
+};
+
+// 文字表示位置
+const u8 wbt_string_pos_tbl[] = {
+	96, 0,					// 下画面(上)
+	96, 0,					// 下画面(上)
 };
 
 //=============================================================================
@@ -618,6 +626,9 @@ static void wbt_exit_obj( WBTLIST_MAIN_WORK* wk );
 static void wbt_chg_objseq( WBTLIST_MAIN_WORK *wk, const s32 wnum, const s32 seq );
 static void wbt_set_obj_visible( WBTLIST_MAIN_WORK *wk, const s32 wnum, const BOOL bflg );
 static BOOL wbt_is_anime_end( WBTLIST_MAIN_WORK *wk, const s32 wnum );
+static void wbt_get_obj_paladr( WBTLIST_MAIN_WORK *wk, const s32 pnum, const s32 poff, const s32 drawtype );
+static void wbt_chg_obj_pal( WBTLIST_MAIN_WORK *wk, const s32 wnum, const s32 poff, const s32 mode );
+
 
 //
 // 移動関連
@@ -896,7 +907,7 @@ static void WBTList_BG_LoadResource( WBTLIST_BG_WORK* wk, HEAPID heapID )
 		RES_CHR_M_ID	= NARC_wbt_list_gra_wbt_list_bg_u_NCGR,
 		RES_SCR_M01_ID	= NARC_wbt_list_gra_wbt_list_bg_u_01_NSCR,
 		RES_SCR_M02_ID	= NARC_wbt_list_gra_wbt_list_bg_u_02_NSCR,
-		RES_SCR_M03_ID	= NARC_wbt_list_gra_wbt_list_bg_u_03_NSCR,
+//		RES_SCR_M03_ID	= NARC_wbt_list_gra_wbt_list_bg_u_03_NSCR,
 	};
 	
 	ARCHANDLE	*handle;
@@ -1100,6 +1111,7 @@ static void WBTList_OAM_MAPMODEL_DeleteCLWK( WBTLIST_MAIN_WORK* wk )
 static void wbt_init( WBTLIST_MAIN_WORK* wk )
 {
 	s32		i;
+	s32		buf[2];
 	STRBUF* strbuf;
 	
 	// debug
@@ -1131,8 +1143,14 @@ static void wbt_init( WBTLIST_MAIN_WORK* wk )
 	//
 	// 文字初期化
 	wbt_init_string( wk );
-	wbt_disp_string( wk, 0, 96, 0, strbuf );
-	wbt_disp_string( wk, 1, 44, 0, strbuf );
+	// 下画面(上)
+	buf[0] = wbt_string_pos_tbl[0];
+	buf[1] = wbt_string_pos_tbl[1];
+	wbt_disp_string( wk, 0, buf[0], buf[1], strbuf );
+	// 下画面(下)
+	buf[0] = wbt_string_pos_tbl[2];
+	buf[1] = wbt_string_pos_tbl[3];
+	wbt_disp_string( wk, 1, buf[0], buf[1], strbuf );
 	// 削除
 //	GFL_STR_DeleteBuffer( strbuf );
 	
@@ -1153,19 +1171,30 @@ static void wbt_init( WBTLIST_MAIN_WORK* wk )
 	// パラメータ参照
 	wbt_init_param( wk );
 	
+	// パレットは9番に転送
+	{
+		ARCHANDLE * p_handle  = GFL_ARC_OpenDataHandle( ARCID_FONT, wk->heapID );
+		//上画面フォントパレット
+		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_font_talkwin_nclr, PALTYPE_MAIN_BG, 9*0x20, 0x20, wk->heapID );
+		GFL_ARC_CloseDataHandle( p_handle );
+	}
+	
 	// 削除
 //	GFL_STR_DeleteBuffer( strbuf );
 	
 	// 会話ウィンドウセット(キャラデータを転送)
 	BmpWinFrame_GraphicSet( GFL_BG_FRAME0_M, 1, 8, MENU_TYPE_SYSTEM, wk->heapID);
 //	BmpWinFrame_GraphicSet( GFL_BG_FRAME0_M, 1, 8, MENU_TYPE_TALK, wk->heapID);
-	// canvasの設定
-//	wk->MsgPrintUtil[0].win = GFL_BMPWIN_Create( GFL_BG_FRAME0_M, 0, 19, 32, 5, 8, GFL_BMP_CHRAREA_GET_B );
-	wk->MsgPrintUtil[0].win = GFL_BMPWIN_Create( GFL_BG_FRAME0_M, 1, 20, 30, 4, 8, GFL_BMP_CHRAREA_GET_B );
 	// 表示
-//	BmpWinFrame_Write( wk->MsgPrintUtil[0].win, WINDOW_TRANS_OFF, 1, 8 );
-	BmpWinFrame_Write( wk->MsgPrintUtil[0].win, WINDOW_TRANS_ON,  1, 8 );
+//	BmpWinFrame_Write( wk->MsgPrintUtil[0].win, WINDOW_TRANS_ON,  1, 8 );
+	BmpWinFrame_Write( wk->PrintUtil[2].win, WINDOW_TRANS_ON,  1, 8 );
 	//
+	// クリア
+	wbt_clear_meswin( wk );
+	// クリア
+//	GFL_BMPWIN_ClearTransWindow( wk->MsgPrintUtil[0].win );
+	// スクリーン転送らしい
+//	GFL_BMPWIN_MakeTransWindow( wk->MsgPrintUtil[0].win );
 	// set
 //	wbt_set_meswin( wk, 0 );
 	//
@@ -1344,16 +1373,6 @@ static void wbt_key_00( WBTLIST_MAIN_WORK* wk )
 				tmp = wbt_get_param( wk, PRM_EXPPOS, -1 );
 				wbt_disp_bomb( wk, tmp );
 				//
-#if 0
-				// パネル色変え
-				tmp = wbt_get_param( wk, PRM_EXPPOS, -1 );
-				seq = R_GRAY_SEQ;
-				if(tmp < 4){
-					seq = L_GRAY_SEQ;
-				}
-				wbt_chg_objseq( wk, tmp, seq );
-#endif
-				//
 				// 次へ
 				wk->Step = STEP_LV4;
 //				wbt_init_timer( wk, TIMER_BOMB, info_tbl[0] );
@@ -1374,6 +1393,8 @@ static void wbt_key_00( WBTLIST_MAIN_WORK* wk )
 					seq = L_GRAY_SEQ;
 				}
 				wbt_chg_objseq( wk, tmp, seq );
+				// キャラのパレット変更
+				wbt_chg_obj_pal( wk, tmp, 6, 0 );
 				
 				// 爆破アニメ終了=>ゲージ伸び
 				wk->Step = STEP_LV5;
@@ -1595,7 +1616,6 @@ static void wbt_exit_string( WBTLIST_MAIN_WORK* wk )
 	if(wk->PrintStream){
 		PRINTSYS_PrintStreamDelete( wk->PrintStream );
 	}
-	GFL_BMPWIN_Delete( wk->MsgPrintUtil[0].win );
 }
 
 //-----------------------------------------------------------------------------
@@ -1622,6 +1642,9 @@ static void wbt_init_obj( WBTLIST_MAIN_WORK* wk )
 	wbt_init_obj_bmpoam( wk, CLSYS_DRAW_MAIN, &wbt_bmpoam_tbl[0], &obj_main_info_tbl[0] );
 	// マップモデル
 	wbt_init_mapmodel( wk, &wbt_mapmodel_tbl[0] );
+	//
+	// パレット(すぐ取得でも大丈夫なようだ)
+	wbt_get_obj_paladr( wk, 8, 6, CLSYS_DRAW_MAIN );
 }
 
 //-----------------------------------------------------------------------------
@@ -1869,6 +1892,97 @@ static BOOL wbt_is_anime_end( WBTLIST_MAIN_WORK *wk, const s32 wnum )
 		bflg = FALSE;
 	}
 	return( bflg );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  OBJのパレット取得(標準パレットのみ)
+ *
+ *	@param	WBTLIST_MAIN_WORK* wk
+ *	@param	const s32		パレット本数
+ *	@param	const s32		パレットオフセット
+ *	@param	const s32		上下
+ *
+ *	@retval	u32				アドレス
+ */
+//-----------------------------------------------------------------------------
+static void wbt_get_obj_paladr( WBTLIST_MAIN_WORK *wk, const s32 pnum, const s32 poff, const s32 drawtype )
+{
+	u32	padr = HW_OBJ_PLTT;
+	
+	if(drawtype == CLSYS_DRAW_SUB){
+		padr += 0x400;
+	}
+	padr += poff*0x20;
+	// コピー
+	GFL_STD_MemCopy16( (void*)(padr) , wk->PalBuffer , pnum*0x20 );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  OBJのパレット変更(vblank中にやってくれるのか?)
+ *
+ *	@param	WBTLIST_MAIN_WORK* wk
+ *	@param	const s32		ワーク番号(0-7)(-1は全転送)
+ *	@param	const s32		オフセット
+ *	@param	const s32		(0:変更、1:戻し)
+ *
+ *	@retval	u32				アドレス
+ */
+//-----------------------------------------------------------------------------
+static void wbt_chg_obj_pal( WBTLIST_MAIN_WORK *wk, const s32 wnum, const s32 poff, const s32 mode )
+{
+	u16		tmp;
+	u16		buf[4];
+	s32		i;
+	u32		padr = HW_OBJ_PLTT;
+	
+	// 全戻し用
+	if(wnum == -1){
+		padr = 0;
+		NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_OBJ_PLTT_MAIN, (padr+0x20*(poff)), &wk->PalBuffer[0], 0x20*8 );
+		return;
+	}
+	
+	for(i=0;i<16;i++){
+		// カラーを取得
+		tmp = wk->PalBuffer[wnum*0x10+i];		// palbufferはu16のため
+		//
+#if 1	// カラーの平均を取得
+		buf[0] = tmp&0x1f;			// R
+		buf[1] = (tmp>>5)&0x1f;		// G
+		buf[2] = (tmp>>10)&0x1f;	// B
+		// 候補を調べる
+		buf[3] = (buf[0]+buf[1]+buf[2])/3;
+		// ここまででカラーの平均が出る
+		wk->TmpBuffer[wnum*0x10+i] = (buf[3]<<10)+(buf[3]<<5)+buf[3];
+#else	//
+		// カラーの最大を取得(色の差が激しいので保留)
+		buf[0] = tmp&0x1f;			// R
+		buf[1] = (tmp>>5)&0x1f;		// G
+		buf[2] = (tmp>>10)&0x1f;	// B
+		// 候補を調べる
+		buf[3] = buf[0];
+		if(buf[3] < buf[1]){
+			buf[3] = buf[1];
+		}
+		if(buf[3] < buf[2]){
+			buf[3] = buf[2];
+		}
+		// ここまでで最大のカラーが出る
+		wk->TmpBuffer[wnum*0x10+i] = (buf[3]<<10)+(buf[3]<<5)+buf[3];
+#endif
+	}
+	// 転送
+	if(mode == 0){		// グレースケールへ
+//		GFL_STD_MemCopy16( &wk->TmpBuffer[0] ,(void*)(padr+0x20*(wnum+poff)), 0x20 );
+		padr = 0;
+		NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_OBJ_PLTT_MAIN, (padr+0x20*(wnum+poff)), &wk->TmpBuffer[wnum*0x10], 0x20 );
+	}else{				// オリジナルカラーへ(debug用)
+//		GFL_STD_MemCopy16( &wk->PalBuffer[wnum*0x10] ,(void*)(padr+0x20*(wnum+poff)), 0x20 );
+		padr = 0;
+		NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_OBJ_PLTT_MAIN, (padr+0x20*(wnum+poff)), &wk->PalBuffer[wnum*0x10], 0x20 );
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -2137,14 +2251,13 @@ static void wbt_set_meswin( WBTLIST_MAIN_WORK* wk, const s32 mesid )
 	wk->MsgBuffer = GFL_MSG_CreateString( wk->msg[1], mesid );
 	
 	// test
-//	GFL_FONTSYS_SetColor( 1, 9, 0x0c );
+//	GFL_FONTSYS_SetColor( 1, 2, 0x0f );
 	// stream設定=>ここのstrbufは終わるまで削除してはいけない
 	wk->PrintStream = PRINTSYS_PrintStream(
-				wk->MsgPrintUtil[0].win, 0, 0, wk->MsgBuffer, wk->font,
+				wk->PrintUtil[2].win, 0, 0, wk->MsgBuffer, wk->font,
 				MSGSPEED_GetWait(), wk->MsgTcblSys, 4, wk->heapID, 15 );
-//				MSGSPEED_GetWait(), wk->MsgTcblSys, 4, wk->heapID, 0x0c );
 	// スクリーン転送らしい
-	GFL_BMPWIN_MakeTransWindow( wk->MsgPrintUtil[0].win );
+	GFL_BMPWIN_MakeTransWindow( wk->PrintUtil[2].win );
 }
 
 //-----------------------------------------------------------------------------
@@ -2194,8 +2307,8 @@ static BOOL wbt_main_meswin( WBTLIST_MAIN_WORK* wk )
 static void wbt_clear_meswin( WBTLIST_MAIN_WORK* wk )
 {
 	// clear
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->MsgPrintUtil[0].win ), 15 );
-	GFL_BMPWIN_TransVramCharacter( wk->MsgPrintUtil[0].win );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->PrintUtil[2].win ), 15 );
+	GFL_BMPWIN_TransVramCharacter( wk->PrintUtil[2].win );
 }
 
 //-----------------------------------------------------------------------------
@@ -2283,17 +2396,7 @@ static void wbt_set_gageanim( WBTLIST_MAIN_WORK *wk, const s32 wnum, const s32 m
 //-----------------------------------------------------------------------------
 static BOOL wbt_is_gageanim( WBTLIST_MAIN_WORK *wk, const s32 wnum )
 {
-	s32		clwnum = CLWKID_BAR_00+wnum;
-#if 1
-	BOOL	bflg = wbt_is_anime_end( wk, clwnum );
-#else
-	BOOL	bflg=TRUE;
-	
-	// 終了判定らしい
-	if( GFL_CLACT_WK_CheckAnmActive( wk->wk_obj.clwk[clwnum] ) == FALSE ){
-		bflg = FALSE;
-	}
-#endif
+	BOOL	bflg = wbt_is_anime_end( wk, CLWKID_BAR_00+wnum );
 	return( bflg );
 }
 
@@ -2354,6 +2457,9 @@ static void wbt_init_mode( WBTLIST_MAIN_WORK* wk )
 			}
 			wbt_chg_objseq( wk, i, tmp );
 		}
+		// キャラのパレット変更(戻し)=>なくてよいはず
+		wbt_chg_obj_pal( wk, -1, 6, 1 );
+		
 		// 全バー非表示
 		for(i=0;i<6;i++){
 			wbt_set_obj_visible( wk, CLWKID_BAR_00+i, FALSE );
@@ -2373,6 +2479,9 @@ static void wbt_init_mode( WBTLIST_MAIN_WORK* wk )
 			}
 			wbt_chg_objseq( wk, i, tmp );
 		}
+		// キャラのパレット変更=>なくてよいはず
+		wbt_chg_obj_pal( wk, -1, 6, 1 );
+		
 		//
 		// 2回戦までのパネル色戻し
 		for(i=0;i<4;i++){
@@ -2382,6 +2491,8 @@ static void wbt_init_mode( WBTLIST_MAIN_WORK* wk )
 				tmp = L_GRAY_SEQ;
 			}
 			wbt_chg_objseq( wk, buf[0], tmp );
+			// キャラのパレット変更
+			wbt_chg_obj_pal( wk, buf[0], 6, 0 );
 		}
 		//
 		// 全バー非表示
@@ -2411,6 +2522,9 @@ static void wbt_init_mode( WBTLIST_MAIN_WORK* wk )
 			}
 			wbt_chg_objseq( wk, i, tmp );
 		}
+		// キャラのパレット変更=>なくてよいはず
+		wbt_chg_obj_pal( wk, -1, 6, 1 );
+		
 		// 全バー非表示
 		for(i=0;i<6;i++){
 			wbt_set_obj_visible( wk, CLWKID_BAR_00+i, FALSE );
@@ -2437,6 +2551,7 @@ static void wbt_init_mode( WBTLIST_MAIN_WORK* wk )
 static void wbt_init_param( WBTLIST_MAIN_WORK* wk )
 {
 	s16		i;
+	s16		flg=0;
 	s16		seq;
 	s16		poff;
 	
@@ -2464,6 +2579,14 @@ static void wbt_init_param( WBTLIST_MAIN_WORK* wk )
 			poff = 1;
 		}
 		BmpOam_ActorSetPaletteOffset( wk->BmpOamWork[i], poff );
+		//
+		// プレイヤの番号を調べる
+		if(wk->Param->trainer[i].is_player == 1){
+			if(flg == 0){
+				flg = 1;
+				wk->PlayerNum = i;
+			}
+		}
 	}
 	//
 	// パラメータ計算
@@ -2523,8 +2646,13 @@ static void wbt_calc_param( WBTLIST_MAIN_WORK* wk )
 		}
 		// 最後に自分側の移動可能フラグをセットする
 		offset = PARAM_ROUND1+4;
-		wk->ParamWork[offset].moveflag  = (1<<(wk->ParamWork[PARAM_ROUND1].winpos));
-		wk->ParamWork[offset].moveflag |= (1<<(wk->ParamWork[PARAM_ROUND1+1].winpos));
+		if(wk->PlayerNum < 4){
+			wk->ParamWork[offset].moveflag  = (1<<(wk->ParamWork[PARAM_ROUND1].winpos));
+			wk->ParamWork[offset].moveflag |= (1<<(wk->ParamWork[PARAM_ROUND1+1].winpos));
+		}else{
+			wk->ParamWork[offset].moveflag  = (1<<(wk->ParamWork[PARAM_ROUND1+2].winpos));
+			wk->ParamWork[offset].moveflag |= (1<<(wk->ParamWork[PARAM_ROUND1+3].winpos));
+		}
 	}
 	// 3回戦
 	if(wk->Mode == MODE_ROUND3){
@@ -2549,6 +2677,7 @@ static void wbt_calc_param( WBTLIST_MAIN_WORK* wk )
 			wk->ParamWork[offset+i].mesid = wk->Param->second_stage[i].msg_type;
 		}
 		// 最後に自分側の移動可能フラグをセットする
+		// =>残りが2なのでもれなく出せばよい
 		offset = PARAM_ROUND1+PARAM_ROUND2+2;
 		wk->ParamWork[offset].moveflag  = (1<<(wk->ParamWork[PARAM_ROUND1+PARAM_ROUND2].winpos));
 		wk->ParamWork[offset].moveflag |= (1<<(wk->ParamWork[PARAM_ROUND1+PARAM_ROUND2+1].winpos));
@@ -2706,9 +2835,9 @@ static void wbt_debug_param( WBTLIST_MAIN_WORK* wk )
 	// ??
 	OS_Printf( "stage :%d\n",wk->Param->stage );
 	for(i=0;i<WBT_TRAINER_NUM;i++){
-		OS_Printf( "id,pattern,sex,prio,poketype (%d):%d,%d,%d,%d,%d\n",
+		OS_Printf( "id,pattern,sex,prio,poketype (%d):%d,%d,%d,%d,%d,%d\n",
 					i,wk->Param->trainer[i].mmdl_id, wk->Param->trainer[i].pattern_no, 
-					  wk->Param->trainer[i].sex, wk->Param->trainer[i].priority, wk->Param->trainer[i].poketype );
+					  wk->Param->trainer[i].sex, wk->Param->trainer[i].priority, wk->Param->trainer[i].poketype, wk->Param->trainer[i].is_player);
 	}
 	//
 	for(i=0;i<4;i++){
