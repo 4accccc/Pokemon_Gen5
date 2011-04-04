@@ -3429,7 +3429,7 @@ static BOOL game_update_seq_main_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
         // 通信データ送信
         CTVT_COMM_SendGameReq( commWork, data, CCGDT_TOUCH_EX );
         // SE再生
-        PMSND_PlaySystemSE( SEQ_SE_LCG_07 );
+        PMSND_PlaySystemSE( SEQ_SE_LCG_10 );
       }
       else
       if( retTrg == 1 || retTrg == 3 )
@@ -3437,7 +3437,7 @@ static BOOL game_update_seq_main_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
         // 通信データ送信
         CTVT_COMM_SendGameReq( commWork, data, CCGDT_TOUCH );
         // SE再生
-        PMSND_PlaySystemSE( SEQ_SE_LCG_06 );
+        PMSND_PlaySystemSE( SEQ_SE_LCG_11 );
       }
 
       // 風船を揺らす
