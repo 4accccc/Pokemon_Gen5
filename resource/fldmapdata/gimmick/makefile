@@ -24,7 +24,8 @@ SUBDIRS	=	gym_denki \
 					legend \
 					r04d03 \
 					t01 \
-					infinity
+					infinity \
+					wbt
 
 .PHONY:	do-build clean
 
