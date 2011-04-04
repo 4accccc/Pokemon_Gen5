@@ -12785,6 +12785,42 @@
 
 //--------------------------------------------------------------
 /**
+ * @brief リゾート用　街名を入力するPROCを呼ぶ
+ */
+//--------------------------------------------------------------
+#define _RESORT_INPUT_CITYNAME() \
+      _ASM_RESORT_INPUT_CITYNAME
+
+  .macro _ASM_RESORT_INPUT_CITYNAME
+  .short EV_SEQ_RESORT_INPUT_CITYNAME
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief リゾート用　街名を入力するPROCを呼ぶ
+ */
+//--------------------------------------------------------------
+#define _RESORT_INPUT_AUTHERNAME() \
+      _ASM_RESORT_INPUT_AUTHERNAME
+
+  .macro _ASM_RESORT_INPUT_AUTHERNAME
+  .short EV_SEQ_RESORT_INPUT_AUTHERNAME
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief リゾート用　街名を入力するPROCを呼ぶ
+ */
+//--------------------------------------------------------------
+#define _RESORT_INPUT_AUTHERPHRASE() \
+      _ASM_RESORT_INPUT_AUTHERPHRASE
+
+  .macro _ASM_RESORT_INPUT_AUTHERPHRASE
+  .short EV_SEQ_RESORT_INPUT_AUTHERPHRASE
+  .endm
+
+//--------------------------------------------------------------
+/**
  * @brief 無限ダンジョン初期化
  */
 //--------------------------------------------------------------

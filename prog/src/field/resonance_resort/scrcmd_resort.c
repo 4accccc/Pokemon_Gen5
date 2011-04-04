@@ -15,6 +15,7 @@
 #include "../scrcmd_work.h"
 #include "../scrcmd.h"
 #include "../gmk_tmp_wk.h"
+#include "../event_name_input.h"
 
 //アーカイブ
 #include "msg/script/msg_resort_scr.h"
@@ -1076,6 +1077,72 @@ VMCMD_RESULT EvCmdResortSetSpot( VMHANDLE *p_core, void *p_wk_adrs )
   return VMCMD_RESULT_CONTINUE;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  街の名前を登録
+ *
+ *	@param	VMHANDLE *p_core 仮想マシンハンドル
+ *	@param	*p_wk_adrs       スクリプトコマンドワーク
+ *
+ *	@return 終了コード
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdResortCallInputCityName( VMHANDLE *p_core, void *p_wk_adrs )
+{
+  SCRCMD_WORK*      work = p_wk_adrs;
+  SCRIPT_WORK*      sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK*     gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  GMEVENT* event = EVENT_NameInput_Resort( RESORT_NAMEIN_TYPE_CITY_NAME, gsys, NULL );
+
+  SCRIPT_CallEvent( sc, event );
+
+  return VMCMD_RESULT_SUSPEND;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  自分の街での呼び名を登録
+ *
+ *	@param	VMHANDLE *p_core 仮想マシンハンドル
+ *	@param	*p_wk_adrs       スクリプトコマンドワーク
+ *
+ *	@return 終了コード
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdResortCallInputAutherName( VMHANDLE *p_core, void *p_wk_adrs )
+{
+  SCRCMD_WORK*      work = p_wk_adrs;
+  SCRIPT_WORK*      sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK*     gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  GMEVENT* event = EVENT_NameInput_Resort( RESORT_NAMEIN_TYPE_AUTHER_NAME, gsys, NULL );
+
+  SCRIPT_CallEvent( sc, event );
+
+  return VMCMD_RESULT_SUSPEND;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  自分のくちぐせを登録
+ *
+ *	@param	VMHANDLE *p_core 仮想マシンハンドル
+ *	@param	*p_wk_adrs       スクリプトコマンドワーク
+ *
+ *	@return 終了コード
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdResortCallInputAutherPhrase( VMHANDLE *p_core, void *p_wk_adrs )
+{
+  SCRCMD_WORK*      work = p_wk_adrs;
+  SCRIPT_WORK*      sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK*     gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  GMEVENT* event = EVENT_NameInput_Resort( RESORT_NAMEIN_TYPE_AUTHER_PHASE, gsys, NULL );
+
+  SCRIPT_CallEvent( sc, event );
+
+  return VMCMD_RESULT_SUSPEND;
+}
 //----------------------------------------------------------------------------
 /**
  *	@brief  ショップを取得

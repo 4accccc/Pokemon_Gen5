@@ -16,6 +16,7 @@
 #include "app/name_input.h"
 #include "event_fieldmap_control.h" // for EVENT_FieldSubProc
 #include "system/main.h" // for HEAPID_PROC
+#include "savedata/resonance_resort_sv.h"
 
 
 //=====================================================================================
@@ -25,6 +26,8 @@ static GMEVENT * EVENT_NameInput( GAMESYS_WORK* gameSystem,
     FIELDMAP_WORK* fieldmap, NAMEIN_PARAM* namein_param, BOOL fade_flag );
 static GMEVENT_RESULT EVENT_FUNC_NameInput( GMEVENT* event, int* seq, void* wk ); 
 static GMEVENT_RESULT EVENT_FUNC_NameInput_PartyPoke(
+    GMEVENT* event, int* seq, void* wk );
+static GMEVENT_RESULT EVENT_FUNC_NameInput_Resort(
     GMEVENT* event, int* seq, void* wk );
 
 
@@ -231,6 +234,112 @@ static GMEVENT_RESULT EVENT_FUNC_NameInput_PartyPoke( GMEVENT* event, int* seq, 
     }
 
     GFL_STR_DeleteBuffer( pniw->p_default_str );
+    NAMEIN_FreeParam( pniw->nameInParam );
+    return GMEVENT_RES_FINISH;
+  }
+  return GMEVENT_RES_CONTINUE;
+} 
+
+//=====================================================================================
+// ■レゾナンスリゾート名入力画面呼び出しイベント
+//===================================================================================== 
+
+//-------------------------------------------------------------------------------------
+// ■イベントワーク
+//-------------------------------------------------------------------------------------
+typedef struct {
+	GAMESYS_WORK*  gameSystem;  // ゲームシステム 
+	FIELDMAP_WORK* fieldmap;    // フィールドマップ
+  NAMEIN_PARAM*  nameInParam; // 名前入力画面のパラメータ
+  u16*           retWork;     // 結果の格納先ワークへのポインタ
+  RESORT_NAMEIN_TYPE type;    //タイプ
+} RESORT_NAMEIN_WORK; 
+
+
+//-------------------------------------------------------------------------------------
+/**
+ * @brief イベント(リゾート名入力画面呼び出し)
+ * 
+ * @param gameSystem
+ * @param ret_wk      入力結果を受け取るワーク(TRUE:確定, FALSE:キャンセル)
+ *
+ * @return イベント
+ *          入力画面を呼び出し, リゾート名を設定する。
+ *          名前入力が確定されたかどうかを指定したワークに返す。
+ */
+//-------------------------------------------------------------------------------------
+GMEVENT* EVENT_NameInput_Resort( RESORT_NAMEIN_TYPE type, GAMESYS_WORK* gameSystem, u16* ret_wk )
+{
+  GAMEDATA*   gdata = GAMESYSTEM_GetGameData( gameSystem );
+  MISC        *misc = SaveData_GetMisc( GAMEDATA_GetSaveControlWork(gdata) );
+
+
+  GMEVENT* event;
+  RESORT_NAMEIN_WORK * work;
+
+  // イベント生成
+  event = GMEVENT_Create( 
+      gameSystem, NULL, EVENT_FUNC_NameInput_Resort, sizeof(RESORT_NAMEIN_WORK) );
+
+  // イベントワークを初期化
+  work = GMEVENT_GetEventWork( event );
+  work->gameSystem = gameSystem;
+  work->fieldmap   = GAMESYSTEM_GetFieldMapWork( gameSystem );
+  work->retWork    = ret_wk;
+  work->nameInParam = NAMEIN_AllocParam(  //TODO
+        HEAPID_PROC, NAMEIN_FREE_WORD, 0, 0, 8, NULL, misc );
+  work->type = type;
+
+  return event;
+}
+
+//-------------------------------------------------------------------------------------
+/**
+ * @brief イベント処理関数(リゾート用入力画面呼び出しイベント)
+ */
+//-------------------------------------------------------------------------------------
+static GMEVENT_RESULT EVENT_FUNC_NameInput_Resort( GMEVENT* event, int* seq, void* wk )
+{
+  RESORT_NAMEIN_WORK* pniw = wk;
+
+  switch( *seq )
+  {
+  case 0: //----------------------------------------------- 共通イベント呼び出し
+    GMEVENT_CallEvent( event,
+        EVENT_NameInput(pniw->gameSystem, pniw->fieldmap, pniw->nameInParam, TRUE) );
+    ++(*seq);
+    break;
+  case 1: //----------------------------------------------- イベント終了
+    if( pniw->nameInParam->cancel != TRUE )
+    {
+      GAMEDATA*   gdata = GAMESYSTEM_GetGameData( pniw->gameSystem );
+      SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( gdata );
+      RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( p_sv );
+      RESORT_PEOPLE_ALL_DATA *p_people_all = RESONANCE_RESORT_SV_GetPeopleAllData( p_resort );
+      RESORT_CITY_DATA *p_city = RESONANCE_RESORT_SV_GetCityData( p_resort );
+      RESORT_RECV_DATA *p_owner = RESORT_PEOPLE_ALL_DATA_GetOwnerData( p_people_all );
+      const STRCODE *cp_strcode = GFL_STR_GetStringCodePointer(pniw->nameInParam->strbuf);
+      switch( pniw->type )
+      {
+      case RESORT_NAMEIN_TYPE_CITY_NAME:
+        RESORT_CITY_DATA_SetData( p_city, RESORT_CITY_DATA_PARAM_CITY_NAME, (u32)cp_strcode );
+        break;
+      case RESORT_NAMEIN_TYPE_AUTHER_NAME:
+        RESORT_CITY_DATA_SetData( p_city, RESORT_CITY_DATA_PARAM_AUTHER_NAME, (u32)cp_strcode );
+        break;
+      case RESORT_NAMEIN_TYPE_AUTHER_PHASE:
+        DEBUG_RESORT_DATA_SetPermission( TRUE );
+        RESORT_RECV_DATA_SetData( p_owner, RESORT_DATA_PARAM_EXT9_PHRASE, (u32)cp_strcode);
+        DEBUG_RESORT_DATA_SetPermission( FALSE );
+        break;
+      default:
+        GF_ASSERT(0);
+      }
+    }
+    if( pniw->retWork != NULL )
+    {
+      *(pniw->retWork) = (pniw->nameInParam->cancel != TRUE);
+    }
     NAMEIN_FreeParam( pniw->nameInParam );
     return GMEVENT_RES_FINISH;
   }

@@ -23,3 +23,12 @@
 //-------------------------------------------------------------------------------------
 extern GMEVENT* EVENT_NameInput_PartyPoke( 
     GAMESYS_WORK* gameSystem, u16* ret_wk, u16 party_index, BOOL fade_flag );
+
+
+typedef enum
+{
+  RESORT_NAMEIN_TYPE_CITY_NAME,
+  RESORT_NAMEIN_TYPE_AUTHER_NAME,
+  RESORT_NAMEIN_TYPE_AUTHER_PHASE,
+} RESORT_NAMEIN_TYPE;
+extern GMEVENT* EVENT_NameInput_Resort( RESORT_NAMEIN_TYPE type, GAMESYS_WORK* gameSystem, u16* ret_wk );

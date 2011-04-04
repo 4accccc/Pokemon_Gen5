@@ -1149,6 +1149,15 @@ EVENT_START    ev_resort_secretary_work
       //_CALL sub_tourist_bye
       $LWK_MENU_LOOP = FALSE
 
+    CASE SEQ_SECRETARY_WORK_CITYNAME THEN   //äXñº
+       _RESORT_INPUT_CITYNAME()
+
+    CASE SEQ_SECRETARY_WORK_AUTHERNAME THEN //é©ï™åƒÇ—ñº
+       _RESORT_INPUT_AUTHERNAME()
+
+    CASE SEQ_SECRETARY_WORK_AUTHERPHRASE THEN //é©ï™å˚ï»
+       _RESORT_INPUT_AUTHERPHRASE()
+
     CASE SEQ_SECRETARY_WORK_BYE THEN          //Ç‹ÇΩÇÀ
       _RESORT_GET_MSGID( RESORT_SECRETARY_BYE_MSGID, LWK_MSGID )
       _RESORT_SET_WORD( RESORT_WORD_FREE_NAME, 0 )
@@ -1179,6 +1188,9 @@ sub_secretary_work_main_menu:
 	_BMPMENU_MAKE_LIST( resort_sys_select_12, SEQ_SECRETARY_WORK_GOSSIP )	    //Ç§ÇÌÇ≥
   _BMPMENU_MAKE_LIST( resort_sys_select_13, SEQ_SECRETARY_WORK_CONSTRUCTION )	//çHéñ
   _BMPMENU_MAKE_LIST( resort_sys_select_14, SEQ_SECRETARY_WORK_HELP )	//ã≥Ç¶Çƒ
+  _BMPMENU_MAKE_LIST( resort_sys_select_31, SEQ_SECRETARY_WORK_CITYNAME )	//äXÇÃåƒÇ—ñº
+  _BMPMENU_MAKE_LIST( resort_sys_select_32, SEQ_SECRETARY_WORK_AUTHERNAME )	//é©ï™ÇÃåƒÇ—ñº
+  _BMPMENU_MAKE_LIST( resort_sys_select_33, SEQ_SECRETARY_WORK_AUTHERPHRASE )	//Ç≠ÇøÇÆÇπ
   _BMPMENU_MAKE_LIST( resort_sys_select_10, SEQ_SECRETARY_WORK_BYE )	//Ç‹ÇΩÇÀ
 
 	//ÉÅÉjÉÖÅ[ï\é¶

@@ -38,7 +38,9 @@
   DEF_CMD( EvCmdResortSetDayFlag, EV_SEQ_RESORT_SET_DAY_FLAG)
   DEF_CMD( EvCmdResortEndService, EV_SEQ_RESORT_END_SERVICE )
   DEF_CMD( EvCmdResortSetSpot, EV_SEQ_RESORT_SET_SPOT )
-  DEF_CMD( EvCmdResortSetSpot, EV_SEQ_RESORT_SET_SPOT )
+  DEF_CMD( EvCmdResortCallInputCityName, EV_SEQ_RESORT_INPUT_CITYNAME )
+  DEF_CMD( EvCmdResortCallInputAutherName, EV_SEQ_RESORT_INPUT_AUTHERNAME )
+  DEF_CMD( EvCmdResortCallInputAutherPhrase, EV_SEQ_RESORT_INPUT_AUTHERPHRASE )
   NO_CMD()
   
   END_CMD

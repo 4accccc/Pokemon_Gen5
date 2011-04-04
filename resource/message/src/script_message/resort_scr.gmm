@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2011-04-02T17:58:53"/>
+	<create user="nagihashi_toru" host="W00268" date="2011-04-04T12:48:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -398,14 +398,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1157" top="465" right="1862" bottom="1093" maximized="no" rayout="Vertical2">
+	<dialog left="260" top="106" right="997" bottom="738" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
-		<tag-palette left="1841" top="525" right="2313" bottom="923" visible="yes"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<tag-palette left="808" top="525" right="1280" bottom="923" visible="yes"/>
+		<band id="0" index="1" style="0000" width="562"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="575"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="4" index="0" style="0000" width="729"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -787,6 +787,21 @@ GTSの　ごりよう　ありがとうございます！</language>
 	<row id="resort_sys_select_30" back-color="#80ff80,,,,,,,#80ff80,,,,,,,,,,,">
 		<language name="JPN" width="256">どこへ　いどうしますか？</language>
 		<language name="JPN_KANJI" width="256">どこへ　移動しますか？</language>
+	</row>
+
+	<row id="resort_sys_select_31" back-color="#80ff80,,,,,,,#80ff80,,,,,,,,,,,">
+		<language name="JPN" width="256">まちのよびなを　かえる</language>
+		<language name="JPN_KANJI" width="256">街の呼び名を　変える</language>
+	</row>
+
+	<row id="resort_sys_select_32" back-color="#80ff80,,,,,,,#80ff80,,,,,,,,,,,">
+		<language name="JPN" width="256">じぶんのよびなを　かえる</language>
+		<language name="JPN_KANJI" width="256">自分の呼び名を　変える</language>
+	</row>
+
+	<row id="resort_sys_select_33" back-color="#80ff80,,,,,,,#80ff80,,,,,,,,,,,">
+		<language name="JPN" width="256">じぶんのくちぐせを　かえる</language>
+		<language name="JPN_KANJI" width="256">自分の口ぐせを　変える</language>
 	</row>
 
 	<row id="resort_sys_select_info_01" back-color="#80ff80,,,,,,,#80ff80,,,,,,,,,,,">

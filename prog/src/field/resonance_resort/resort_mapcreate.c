@@ -222,6 +222,7 @@ static int Resort_Mapcreate_SetUpBlockField( RESORT_MAPCREATE *p_wk, NormalVtxFo
 
   FIELD_DATA_PATCH_Delete( p_patch );
 
+  return build_count;
 }
 //----------------------------------------------------------------------------
 /**
