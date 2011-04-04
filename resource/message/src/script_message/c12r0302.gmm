@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-04T14:39:11"/>
+	<create user="matsumiya" host="W00224" date="2011-04-04T16:18:41"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -332,10 +332,10 @@
 		<attribute name="キャラ指定">babyboy1</attribute>
 		<language name="JPN" width="256">あっ！　そいつって
 おにいちゃんの　ポケモン！？▽
-すげー　すげー！！</language>
+わー　すげー！！</language>
 		<language name="JPN_KANJI" width="256">あっ！　そいつって
 おにいちゃんの　ポケモン！？▽
-すげー　すげー！！</language>
+わー　すげー！！</language>
 	</row>
 
 	<row id="msg_c12r0302_babyboy1_03" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
@@ -344,10 +344,10 @@
 		<attribute name="キャラ指定">babyboy1</attribute>
 		<language name="JPN" width="256">あっ！　そいつって
 おねえちゃんの　ポケモン！？▽
-すげー　すげー！！</language>
+わー　すげー！！</language>
 		<language name="JPN_KANJI" width="256">あっ！　そいつって
 おねえちゃんの　ポケモン！？▽
-すげー　すげー！！</language>
+わー　すげー！！</language>
 	</row>
 
 	<flowchart-group-list>
