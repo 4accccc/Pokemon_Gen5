@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-04T12:55:00"/>
+	<create user="matsumiya" host="W00224" date="2011-04-04T14:27:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -313,11 +313,11 @@
 		<attribute name="キャラ指定">スワン主人公ママ</attribute>
 		<language name="JPN" width="256">アララギ博士って　知ってるでしょ
 ポケモン研究で　有名な▼
-あたしの　ふるい　友達なんだけどね
+ママの　ふるい　友達なんだけどね
 彼女に　お願いされたのよ</language>
 		<language name="JPN_KANJI" width="256">アララギ博士って　知ってるでしょ
 ポケモン研究で　有名な▼
-あたしの　ふるい　友達なんだけどね
+ママの　ふるい　友達なんだけどね
 彼女に　お願いされたのよ</language>
 	</row>
 
@@ -368,7 +368,7 @@
 じょしゅを　している　おんなのこが▽
 こっちに　くるんだって！▼
 なまえは　ベル
-おおきな　ぼうしが　めじるしだって▼
+おおきな　ぼうしが　めじるし▼
 だけど　はじめての　まちで
 まよっているかも　しれないし▽
 あなた　さがしてあげてね！</language>
@@ -377,15 +377,16 @@
 助手を　している　女の子が▽
 こっちに　来るんだって！▼
 名前は　ベル
-おおきな　帽子が　目印だって▼
+おおきな　帽子が　目印▼
 だけど　はじめての　街で
 迷っているかも　しれないし▽
 あなた　探してあげてね！</language>
 	</row>
 
-	<row id="msg_c12r0101_swmama_07">
+	<row id="msg_c12r0101_swmama_07" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
-・ポケモン入手まで繰り返し</comment>
+・ポケモン入手まで繰り返し
+※暫定処理</comment>
 		<attribute name="キャラ指定">スワン主人公ママ</attribute>
 		<language name="JPN" width="256">おんなのこの　なまえは　ベル！
 おおきな　ぼうしが　めじるしだって▼
@@ -465,8 +466,8 @@
 　cure_02～06e表示
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">スワン主人公ママ</attribute>
-		<language name="JPN" width="256">ママ『テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">ママ『テストメッセージ</language>
+		<language name="JPN" width="256">ママ『テストメッセージその２</language>
+		<language name="JPN_KANJI" width="256">ママ『テストメッセージその２</language>
 	</row>
 
 	<row id="msg_c12r0101_swmama_cure_04" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
@@ -475,8 +476,8 @@
 　cure_02～06e表示
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">スワン主人公ママ</attribute>
-		<language name="JPN" width="256">ママ『テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">ママ『テストメッセージ</language>
+		<language name="JPN" width="256">ママ『テストメッセージその３</language>
+		<language name="JPN_KANJI" width="256">ママ『テストメッセージその３</language>
 	</row>
 
 	<row id="msg_c12r0101_swmama_cure_05" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
@@ -485,8 +486,8 @@
 　cure_02～06e表示
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">スワン主人公ママ</attribute>
-		<language name="JPN" width="256">ママ『テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">ママ『テストメッセージ</language>
+		<language name="JPN" width="256">ママ『テストメッセージその４</language>
+		<language name="JPN_KANJI" width="256">ママ『テストメッセージその４</language>
 	</row>
 
 	<row id="msg_c12r0101_swmama_cure_06" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
@@ -495,10 +496,12 @@
 　cure_02～06e表示
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">スワン主人公ママ</attribute>
-		<language name="JPN" width="256">ママ『テストメッセージ
+		<language name="JPN" width="256">ママ『テストメッセージ▼
 ・回復させる喜び
-・ポケモン受付嬢</language>
-		<language name="JPN_KANJI" width="256">ママ『テストメッセージ</language>
+・元ポケモン受付嬢</language>
+		<language name="JPN_KANJI" width="256">ママ『テストメッセージ▼
+・回復させる喜び
+・元ポケモン受付嬢</language>
 	</row>
 
 	<row id="msg_c12r0101_game_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">

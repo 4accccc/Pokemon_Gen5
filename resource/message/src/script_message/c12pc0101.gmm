@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-28T14:44:15"/>
+	<create user="matsumiya" host="W00224" date="2011-04-04T14:24:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1294" top="147" right="1999" bottom="775" maximized="no" rayout="Vertical2">
+	<dialog left="1301" top="151" right="2006" bottom="779" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -382,7 +382,7 @@
 モンスターボールを　プレゼント！▼</language>
 	</row>
 
-	<row id="msg_c12pc0101_white_08" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c12pc0101_white_08" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：主人公＝♀
 ・アイテム入手処理
 　No004「モンスターボール」×5</comment>
@@ -393,10 +393,11 @@
 モンスターボールを　プレゼント！▼</language>
 	</row>
 
-	<row id="msg_c12pc0101_white_09" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c12pc0101_white_09" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・メッセージ表示後
-　ポケモンセンターの外に出て行く</comment>
+　ポケモンセンターの外に出て行く
+・主人公操作可能に</comment>
 		<attribute name="キャラ指定">ベル</attribute>
 		<language name="JPN" width="256">ベル『つぎは……▼
 そうだった！　そうでした！▼
@@ -412,6 +413,7 @@
 
 	<row id="msg_c12pc0101_woman1_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
+・続けてwoman1_02
 ・0＝主人公名前
 ・1＝先頭のポケモン（ひんし/タマゴ除く）</comment>
 		<attribute name="キャラ指定">WOMAN1</attribute>
@@ -422,12 +424,13 @@
 	</row>
 
 	<row id="msg_c12pc0101_woman1_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
-		<comment>♀</comment>
+		<comment>♀
+・2＝性格</comment>
 		<attribute name="キャラ指定">WOMAN1</attribute>
-		<language name="JPN" width="256">せいかくは　[1:08:せいかく:0]……！▼
+		<language name="JPN" width="256">せいかくは　[1:08:せいかく:2]……！▼
 その　ポケモンと　いっしょなら
 おもしろい　たびが　できそうね！</language>
-		<language name="JPN_KANJI" width="256">性格は　[1:08:せいかく:0]……！▼
+		<language name="JPN_KANJI" width="256">性格は　[1:08:せいかく:2]……！▼
 その　ポケモンと　一緒なら
 おもしろい　旅が　できそうね！</language>
 	</row>
