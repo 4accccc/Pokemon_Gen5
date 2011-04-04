@@ -439,6 +439,8 @@ static void ButtonAction_First_Change( DEBUG_INPUT_WORK *wk, const STR_PARAM *St
 static void Resident_StoreData( DEBUG_INPUT_WORK *p_wk, RESONANCE_RESORT_SV *p_resort_sv );
 static BOOL Resident_ReStoreData( RESONANCE_RESORT_SV *p_resort_sv, const DEBUG_INPUT_WORK *cp_wk );
 
+static void Tourist_StoreData( DEBUG_INPUT_WORK *p_wk, RESONANCE_RESORT_SV *p_resort_sv );
+static BOOL Tourist_ReStoreData( RESONANCE_RESORT_SV *p_resort_sv, const DEBUG_INPUT_WORK *cp_wk );
 //-------------------------------------
 ///	データ
 //=====================================
@@ -453,7 +455,7 @@ static const STR_PARAM StrParamsFirst[] =
   //何を操作するか
   {STR_TYPE_SWITCH, RESORT_DATA_16,  STR_POS_X, STR_LINE2_POS_Y,
     8*8,STR_LINE2_POS_Y,12*8,TOUCH_H,
-    PEOPLE_00,0,EDITBOX_ID_FIRST_PEOPLE },
+    PEOPLE_00,2,EDITBOX_ID_FIRST_PEOPLE },
 
   //追加ボタン
   {STR_TYPE_BUTTON, CAPTION_NONE,  STR_POS_X, STR_LINE4_POS_Y,
@@ -1234,6 +1236,13 @@ static const STR_PARAM_PAGE sc_resident_page =
   Resident_ReStoreData,
 };
 
+static const STR_PARAM_PAGE sc_tourist_page =
+{
+  sc_resident_display_tbl,
+  NELEMS(sc_resident_display_tbl),
+  Tourist_StoreData,
+  Tourist_ReStoreData,
+};
 static const sc_version_tbl[] =
 {
   0,  //なし
@@ -2546,6 +2555,9 @@ static void ButtonAction_First_Add( DEBUG_INPUT_WORK *wk, const STR_PARAM *StrPa
   case 0: //住民
     wk->p_pageData  = Page_PushPage( wk->p_pageData, &sc_resident_page );
     break;
+  case 1: //旅行者
+    wk->p_pageData  = Page_PushPage( wk->p_pageData, &sc_tourist_page );
+    break;
   default:
     GF_ASSERT(0);
   }
@@ -2560,6 +2572,9 @@ static void ButtonAction_First_Change( DEBUG_INPUT_WORK *wk, const STR_PARAM *St
   {
   case 0: //住民
     wk->p_pageData  = Page_PushPage( wk->p_pageData, &sc_resident_page );
+    break;
+  case 1: //旅行者
+    wk->p_pageData  = Page_PushPage( wk->p_pageData, &sc_tourist_page );
     break;
   default:
     GF_ASSERT(0);
@@ -2867,6 +2882,198 @@ static BOOL Resident_ReStoreData( RESONANCE_RESORT_SV *p_resort_sv, const DEBUG_
   return TRUE;
 }
 
+static void Tourist_StoreData( DEBUG_INPUT_WORK *p_wk, RESONANCE_RESORT_SV *p_resort_sv )
+{
+  //もしAddだったら何もしない
+  if( p_wk->modify_type == DATA_MODIRY_TYPE_ADD )
+  {
+    GFL_STR_ClearBuffer(p_wk->BoxStrBuf[ EDITBOX_ID_BASIC_NAME - EDITBOX_ID_MAX ]);
+    GFL_STR_ClearBuffer(p_wk->BoxStrBuf[ EDITBOX_ID_BASIC_INTRODUCTION - EDITBOX_ID_MAX ]);
+    GFL_STR_ClearBuffer(p_wk->BoxStrBuf[ EDITBOX_ID_EXT9_PHRASE - EDITBOX_ID_MAX ]);
+  }
+  else
+  {
+    RESORT_RECV_BUFF *p_buff = RESONANCE_RESORT_SV_GetDataBuff( p_resort_sv );
+    int index = p_wk->BoxValue[EDITBOX_ID_FIRST_CHANGE_NUM];
+    RESORT_RECV_DATA * p_data = RESORT_RECV_BUFF_GetData( p_buff, index );
+    STRCODE strcode[64];
+    int i;
+
+    if( index >= RESONANCE_RESORT_SV_RECV_BUFF_NUM )
+    {
+      return;
+    }
+
+    //普通に受け取るだけのデータ
+    for( i = 0; i < NELEMS(sc_resident_restore_tbl); i++ )
+    {
+      p_wk->BoxValue[sc_resident_restore_tbl[i].editBoxID]  = RESORT_RECV_DATA_GetData( p_data, sc_resident_restore_tbl[i].resort_param, NULL );
+    }
+
+    //文字データ
+    RESORT_RECV_DATA_GetData( p_data, RESORT_DATA_PARAM_NAME, strcode );
+    GFL_STR_SetStringCode( p_wk->BoxStrBuf[ EDITBOX_ID_BASIC_NAME - EDITBOX_ID_MAX ], strcode );
+    RESORT_RECV_DATA_GetData( p_data, RESORT_DATA_PARAM_INTRODUCTION, strcode );
+    GFL_STR_SetStringCode( p_wk->BoxStrBuf[ EDITBOX_ID_BASIC_INTRODUCTION - EDITBOX_ID_MAX ], strcode );
+    RESORT_RECV_DATA_GetData( p_data, RESORT_DATA_PARAM_EXT9_PHRASE, strcode );
+    GFL_STR_SetStringCode( p_wk->BoxStrBuf[ EDITBOX_ID_EXT9_PHRASE - EDITBOX_ID_MAX ], strcode );
+
+    //アンケート
+    {
+      QUESTIONNAIRE_ANSWER_WORK answer_wk;
+      RESORT_RECV_DATA_GetData( p_data, RESORT_DATA_PARAM_QANSWER, &answer_wk );
+      for( i = 0; i < QUESTION_ID_NUM; i++ )
+      {
+        u32 ansIdx  = QuestionnaireAnswer_ReadBit( &answer_wk, i );
+        p_wk->BoxValue[EDITBOX_ID_BASIC_Q_00+i] = ansIdx;
+      }
+    }
+
+    //施設データ
+    {
+      RESORT_INSTITUTION_DATA *p_institution = RESORT_RESIDENT_DATA_GetInstitution( p_data );
+      p_wk->BoxValue[EDITBOX_ID_RESI_INSTITUTION_ID]  = RESORT_INSTITUTION_DATA_GetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_ID );
+      p_wk->BoxValue[EDITBOX_ID_RESI_LV]  = RESORT_INSTITUTION_DATA_GetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_LV );
+      p_wk->BoxValue[EDITBOX_ID_RESI_EXP]  = RESORT_INSTITUTION_DATA_GetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_EXP );
+      p_wk->BoxValue[EDITBOX_ID_RESI_EV_WK_00]  = RESORT_INSTITUTION_DATA_GetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_WORK_00 );
+      p_wk->BoxValue[EDITBOX_ID_RESI_EV_WK_01]  = RESORT_INSTITUTION_DATA_GetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_WORK_01 );
+      p_wk->BoxValue[EDITBOX_ID_RESI_EV_BIT]  = RESORT_INSTITUTION_DATA_GetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_BIT );
+    }
+
+    //ビット
+    {
+      u16 medal_bit[6];
+      RESORT_RECV_DATA_GetData( p_data, RESORT_DATA_PARAM_EXT1_MEDAL_BIT, medal_bit );
+      p_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_BIT_00]  = medal_bit[0];
+      p_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_BIT_01]  = medal_bit[1];
+      p_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_BIT_02]  = medal_bit[2];
+      p_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_BIT_03]  = medal_bit[3];
+      p_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_BIT_04]  = medal_bit[4];
+      p_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_BIT_05]  = medal_bit[5];
+    }
+
+    //日付
+    {
+      RESORT_DATE date = RESORT_RECV_DATA_GetData( p_data, RESORT_DATA_PARAM_EXT1_RECOMMEND_DATE, NULL );
+      p_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_YEAR]  = RESORT_DATE_GET_YEAR( date );
+      p_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_MONTH]  = RESORT_DATE_GET_MONTH( date );
+      p_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_DAY]  = RESORT_DATE_GET_DAY( date );
+
+      for( i = 0; i < 4; i++ )
+      {
+        date = RESORT_RECV_DATA_GetData( p_data, RESORT_DATA_PARAM_EXT8_RECORD_DATE_00+i, NULL );
+        p_wk->BoxValue[ EDITBOX_ID_EXT8_RECORD_YEAR_00+i] = RESORT_DATE_GET_YEAR( date );
+        p_wk->BoxValue[ EDITBOX_ID_EXT8_RECORD_MONTH_00+i] = RESORT_DATE_GET_MONTH( date );
+        p_wk->BoxValue[ EDITBOX_ID_EXT8_RECORD_DAY_00+i] = RESORT_DATE_GET_DAY( date );
+      }
+    }
+  }
+
+}
+
+static BOOL Tourist_ReStoreData( RESONANCE_RESORT_SV *p_resort_sv, const DEBUG_INPUT_WORK *cp_wk )
+{
+  RESORT_RECV_BUFF *p_buff = RESONANCE_RESORT_SV_GetDataBuff( p_resort_sv );
+  RESORT_RECV_DATA * p_data = NULL;
+  const STRCODE *cp_strcode;
+  int i;
+
+  if( cp_wk->modify_type == DATA_MODIRY_TYPE_ADD )
+  {
+    int i;
+    BOOL is_exits = FALSE;
+    for( i = 0; i < RESONANCE_RESORT_SV_RECV_BUFF_NUM; i++ )
+    {
+
+      p_data = RESORT_RECV_BUFF_GetData( p_buff, i );
+      if( RESORT_RECV_DATA_IsEmpty( p_data ) )
+      {
+        is_exits = TRUE;
+        break;
+      }
+    }
+    if( is_exits == FALSE )
+    {
+      //いれられなかった
+      return FALSE;
+    }
+  }
+  else
+  {
+    int index = cp_wk->BoxValue[EDITBOX_ID_FIRST_CHANGE_NUM];
+    if( index >= RESONANCE_RESORT_SV_RECV_BUFF_NUM )
+    {
+      return FALSE;
+    }
+    p_data = RESORT_RECV_BUFF_GetData( p_buff, index );
+  }
+
+  //普通に受け取るだけのデータ
+  for( i = 0; i < NELEMS(sc_resident_restore_tbl); i++ )
+  {
+    RESORT_RECV_DATA_SetData( p_data, sc_resident_restore_tbl[i].resort_param, cp_wk->BoxValue[sc_resident_restore_tbl[i].editBoxID] );
+  }
+  //文字データ
+  cp_strcode = GFL_STR_GetStringCodePointer( cp_wk->BoxStrBuf[ EDITBOX_ID_BASIC_NAME - EDITBOX_ID_MAX ] );
+  RESORT_RECV_DATA_SetData( p_data, RESORT_DATA_PARAM_NAME, (u32)cp_strcode );
+  cp_strcode = GFL_STR_GetStringCodePointer( cp_wk->BoxStrBuf[ EDITBOX_ID_BASIC_INTRODUCTION - EDITBOX_ID_MAX ] );
+  RESORT_RECV_DATA_SetData( p_data, RESORT_DATA_PARAM_INTRODUCTION, (u32)cp_strcode );
+  cp_strcode = GFL_STR_GetStringCodePointer( cp_wk->BoxStrBuf[ EDITBOX_ID_EXT9_PHRASE - EDITBOX_ID_MAX ] );
+  RESORT_RECV_DATA_SetData( p_data, RESORT_DATA_PARAM_EXT9_PHRASE, (u32)cp_strcode );
+
+  //アンケート
+  {
+    QUESTIONNAIRE_ANSWER_WORK answer_wk = {0};
+    for( i = 0; i < QUESTION_ID_NUM; i++ )
+    {
+      QuestionnaireAnswer_WriteBit( &answer_wk, i, cp_wk->BoxValue[EDITBOX_ID_BASIC_Q_00+i] );
+    }
+    RESORT_RECV_DATA_SetData( p_data, RESORT_DATA_PARAM_QANSWER, (u32)&answer_wk );
+  }
+
+  //施設データ
+  {
+    RESORT_INSTITUTION_DATA *p_institution = RESORT_RESIDENT_DATA_GetInstitution( p_data );
+    RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_ID, cp_wk->BoxValue[EDITBOX_ID_RESI_INSTITUTION_ID] );
+    RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_EXP, cp_wk->BoxValue[EDITBOX_ID_RESI_EXP] );
+    RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_WORK_00, cp_wk->BoxValue[EDITBOX_ID_RESI_EV_WK_00] );
+    RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_WORK_01, cp_wk->BoxValue[EDITBOX_ID_RESI_EV_WK_01] );
+    RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_BIT, cp_wk->BoxValue[EDITBOX_ID_RESI_EV_BIT] );
+  }
+
+  //ビット
+  {
+    u16 medal_bit[6];
+    medal_bit[0] =  cp_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_BIT_00];
+    medal_bit[1] =  cp_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_BIT_01];
+    medal_bit[2] =  cp_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_BIT_02];
+    medal_bit[3] =  cp_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_BIT_03];
+    medal_bit[4] =  cp_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_BIT_04];
+    medal_bit[5] =  cp_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_BIT_05];
+    RESORT_RECV_DATA_SetData( p_data, RESORT_DATA_PARAM_EXT1_MEDAL_BIT, (u32)medal_bit );
+  }
+
+  //日付
+  {
+    RESORT_DATE date;
+
+    date = RESORT_DATE_SET( cp_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_YEAR], 
+                            cp_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_MONTH],
+                            cp_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_DAY] );
+    RESORT_RECV_DATA_SetData( p_data, RESORT_DATA_PARAM_EXT1_RECOMMEND_DATE, date );
+
+
+    for( i = 0; i < 4; i++ )
+    {
+      date = RESORT_DATE_SET( cp_wk->BoxValue[ EDITBOX_ID_EXT8_RECORD_YEAR_00+i],
+                              cp_wk->BoxValue[ EDITBOX_ID_EXT8_RECORD_MONTH_00+i],
+                              cp_wk->BoxValue[ EDITBOX_ID_EXT8_RECORD_DAY_00+i] );
+      RESORT_RECV_DATA_SetData( p_data, RESORT_DATA_PARAM_EXT8_RECORD_DATE_00+i, date );
+    }
+  }
+
+  return TRUE;
+}
 
 static const STR_PARAM_DISPLAY *Page_GetStrParamDisplay( STR_PARAM_PAGE_STACK *p_wk )
 {

@@ -49,12 +49,13 @@
 //_RESORT_SET_WORD用
 #define RESORT_WORD_PEOPLE            (0)
 #define RESORT_WORD_SHOP              (1) //「フラワー○○」とか
+#define RESORT_WORD_SHOP_LABEL        (2) //「売る」とか
 #define RESORT_WORD_FREE_GREET        (3)
 #define RESORT_WORD_FREE_NAME         (4)
+#define RESORT_WORD_COMM_TYPE         (5) //通信種別
 #define RESORT_WORD_FREE_PHRASE       (6)
 #define RESORT_WORD_SHOP_GENRE        (7) //「花屋」とか
 #define RESORT_WORD_FREE_CITY         (8)
-#define RESORT_WORD_SHOP_LABEL        (2) //「売る」とか
 
 //_RESORT_CALL_LIST用
 #define RESORT_LIST_TYPE_BUY            (0)

@@ -1120,7 +1120,9 @@ BOOL RESORT_RECV_DATA_MergeBeacon( RESORT_RECV_DATA *p_wk, const RESORT_BEACON_D
       p_wk->extend_flag |=  1<<cp_beacon->extend_type;
     }
 
+    //初期生成データ
     RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_UPDATE,RESORT_RECV_DATA_UPDATE_FIRST);
+    RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_COMM_ID,RESORT_COMM_TYPE_BEACON);
 
     if( p_wk->extend_flag == 0xFF )
     {
@@ -1163,7 +1165,7 @@ BOOL RESORT_RECV_DATA_MergeBeacon( RESORT_RECV_DATA *p_wk, const RESORT_BEACON_D
  *	@param	RESORT_RECV_DATA *cp_recv   受信データ
  */
 //-----------------------------------------------------------------------------
-void RESORT_RECV_DATA_MergeRecv( RESORT_RECV_DATA *p_wk, const RESORT_RECV_DATA *cp_recv )
+void RESORT_RECV_DATA_MergeRecv( RESORT_RECV_DATA *p_wk, const RESORT_RECV_DATA *cp_recv, RESORT_COMM_TYPE type )
 {
   //ロック
   if( RESORT_RECV_DATA_GetData(p_wk,RESORT_DATA_PARAM_LOCK,NULL) )
@@ -1183,9 +1185,10 @@ void RESORT_RECV_DATA_MergeRecv( RESORT_RECV_DATA *p_wk, const RESORT_RECV_DATA 
 
     RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_UPDATE,RESORT_RECV_DATA_UPDATE_FIRST);
 
-    //生成データ
+    //初期生成データ
     RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_PRESENT_ID, 17+GFUser_GetPublicRand( 20 ) ); //TODO
     RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_PRESENT_NUM, 1 ); //TODO
+    RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_COMM_ID,type);
   }
   else
   {
@@ -2522,7 +2525,7 @@ BOOL RESORT_RECV_BUFF_AddRecv( RESORT_RECV_BUFF *p_wk, const RESORT_RECV_DATA *c
   p_data  = Resort_Recv_Buff_GetSameOwnerData( p_wk, &cp_recv->basic1 );
   if( p_data )
   {
-    RESORT_RECV_DATA_MergeRecv( p_data, cp_recv );
+    RESORT_RECV_DATA_MergeRecv( p_data, cp_recv, type );
     RESORT_Printf( "受信データをマージした！\n" );
     return TRUE;
   }
@@ -2531,7 +2534,7 @@ BOOL RESORT_RECV_BUFF_AddRecv( RESORT_RECV_BUFF *p_wk, const RESORT_RECV_DATA *c
   p_data  = Resort_Recv_Buff_GetEmptyData( p_wk );
   if( p_data )
   {
-    RESORT_RECV_DATA_MergeRecv( p_data, cp_recv );
+    RESORT_RECV_DATA_MergeRecv( p_data, cp_recv, type );
 
 #ifdef  PM_DEBUG
     RESORT_BASIC1_DATA_PrintDebug( &cp_recv->basic1 );

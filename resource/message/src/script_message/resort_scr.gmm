@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nagihashi_toru" host="W00268" date="2011-04-04T12:48:34"/>
+	<create user="nagihashi_toru" host="W00268" date="2011-04-04T18:05:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -398,9 +398,9 @@
 		</language>
 	</columns>
 
-	<dialog left="260" top="106" right="997" bottom="738" maximized="no" rayout="Vertical2">
+	<dialog left="-1043" top="172" right="-306" bottom="804" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
-		<tag-palette left="808" top="525" right="1280" bottom="923" visible="yes"/>
+		<tag-palette left="260" top="261" right="732" bottom="659" visible="no"/>
 		<band id="0" index="1" style="0000" width="562"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="575"/>
@@ -463,11 +463,11 @@
 
 	<row id="resort_tourist_item_00">
 		<language name="JPN" width="256">この　あいだは
-（ランダムマッチ）で　ありがとう！▼
+[1:37:リゾートフリーワード:0]で　ありがとう！▼
 はい！
 これを　あげる！▼</language>
 		<language name="JPN_KANJI" width="256">この　あいだは
-（ランダムマッチ）で　ありがとう！▼
+[1:37:リゾートフリーワード:0]で　ありがとう！▼
 はい！
 これを　あげる！▼</language>
 	</row>
@@ -1923,6 +1923,53 @@ GTSの　ごりよう　ありがとうございます！</language>
 	</row>
 
 	<row id="resort_drill_sel_04" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="256"></language>
+		<language name="JPN_KANJI" width="256"></language>
+	</row>
+
+	<row id="resort_comm_type_00" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<attribute name="キャラ指定">通信タイプ　ここから開始</attribute>
+		<language name="JPN" width="256">　</language>
+		<language name="JPN_KANJI" width="256">　</language>
+	</row>
+
+	<row id="resort_comm_type_01" back-color="#80ff80,,,,,,,#80ff80,,,#80ff80,,,#80ff80,,,#80ff80,,">
+		<attribute name="キャラ指定">ビーコン</attribute>
+		<language name="JPN" width="256">すれちがい</language>
+		<language name="JPN_KANJI" width="256">すれ違い</language>
+	</row>
+
+	<row id="resort_comm_type_02" back-color="#80ff80,,,,,,,#80ff80,,,#80ff80,,,#80ff80,,,#80ff80,,">
+		<attribute name="キャラ指定">CGEAR　赤外線</attribute>
+		<language name="JPN" width="256">CGEAR</language>
+		<language name="JPN_KANJI" width="256">CGEAR</language>
+	</row>
+
+	<row id="resort_comm_type_03" back-color="#80ff80,,,,,,,#80ff80,,,#80ff80,,,#80ff80,,,#80ff80,,">
+		<attribute name="キャラ指定">ユニオン</attribute>
+		<language name="JPN" width="256">ユニオン</language>
+		<language name="JPN_KANJI" width="256">ユニオン</language>
+	</row>
+
+	<row id="resort_comm_type_04" back-color="#80ff80,,,,,,,#80ff80,,,#80ff80,,,#80ff80,,,#80ff80,,">
+		<attribute name="キャラ指定">ランダムマッチ</attribute>
+		<language name="JPN" width="256">ランダムマッチ</language>
+		<language name="JPN_KANJI" width="256">ランダムマッチ</language>
+	</row>
+
+	<row id="resort_comm_type_05" back-color="#80ff80,,,,,,,#80ff80,,,#80ff80,,,#80ff80,,,#80ff80,,">
+		<attribute name="キャラ指定">GTSネゴ</attribute>
+		<language name="JPN" width="256">GTSネゴ</language>
+		<language name="JPN_KANJI" width="256">GTSネゴ</language>
+	</row>
+
+	<row id="resort_comm_type_06" back-color="#80ff80,,,,,,,#80ff80,,,#80ff80,,,#80ff80,,,#80ff80,,">
+		<attribute name="キャラ指定">ハイリンク</attribute>
+		<language name="JPN" width="256">ハイリンク</language>
+		<language name="JPN_KANJI" width="256">ハイリンク</language>
+	</row>
+
+	<row id="resort_comm_type_07" back-color="#80ff80,,,,,,,#80ff80,,,#80ff80,,,#80ff80,,,#80ff80,,">
 		<language name="JPN" width="256"></language>
 		<language name="JPN_KANJI" width="256"></language>
 	</row>

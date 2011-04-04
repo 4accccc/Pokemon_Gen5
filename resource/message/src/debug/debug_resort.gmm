@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nagihashi_toru" host="W00268" date="2011-03-25T12:52:13"/>
+	<create user="nagihashi_toru" host="W00268" date="2011-04-04T19:51:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -294,7 +294,7 @@
 		</language>
 	</columns>
 
-	<dialog left="-1017" top="85" right="-312" bottom="705" maximized="no" rayout="Vertical2">
+	<dialog left="69" top="181" right="774" bottom="801" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -323,7 +323,7 @@
 
 
 	<row id="RESORT_DATA_00">
-		<language name="JPN" width="256">住民基本データ</language>
+		<language name="JPN" width="256">基本データ</language>
 	</row>
 
 	<row id="RESORT_DATA_01">
@@ -419,7 +419,7 @@
 	</row>
 
 	<row id="RESORT_DATA_23">
-		<language name="JPN" width="256">住民レゾ常駐データ</language>
+		<language name="JPN" width="256">レゾ常駐データ</language>
 	</row>
 
 	<row id="RESORT_DATA_24">
@@ -451,7 +451,7 @@
 	</row>
 
 	<row id="RESORT_DATA_31">
-		<language name="JPN" width="256">住民生成データ</language>
+		<language name="JPN" width="256">生成データ</language>
 	</row>
 
 	<row id="RESORT_DATA_32">
@@ -519,7 +519,7 @@
 	</row>
 
 	<row id="RESORT_DATA_48">
-		<language name="JPN" width="256">住民拡張１データ</language>
+		<language name="JPN" width="256">拡張１データ</language>
 	</row>
 
 	<row id="RESORT_DATA_49">
@@ -539,7 +539,7 @@
 	</row>
 
 	<row id="RESORT_DATA_53">
-		<language name="JPN" width="256">住民拡張２データ</language>
+		<language name="JPN" width="256">拡張２データ</language>
 	</row>
 
 	<row id="RESORT_DATA_54">
@@ -559,7 +559,7 @@
 	</row>
 
 	<row id="RESORT_DATA_58">
-		<language name="JPN" width="256">住民拡張３データ</language>
+		<language name="JPN" width="256">拡張３データ</language>
 	</row>
 
 	<row id="RESORT_DATA_59">
@@ -579,7 +579,7 @@
 	</row>
 
 	<row id="RESORT_DATA_63">
-		<language name="JPN" width="256">住民拡張４データ</language>
+		<language name="JPN" width="256">拡張４データ</language>
 	</row>
 
 	<row id="RESORT_DATA_64">
@@ -587,15 +587,15 @@
 	</row>
 
 	<row id="RESORT_DATA_65">
-		<language name="JPN" width="256">住民拡張５データ</language>
+		<language name="JPN" width="256">拡張５データ</language>
 	</row>
 
 	<row id="RESORT_DATA_66">
-		<language name="JPN" width="256">住民拡張６データ</language>
+		<language name="JPN" width="256">拡張６データ</language>
 	</row>
 
 	<row id="RESORT_DATA_67">
-		<language name="JPN" width="256">住民拡張７データ</language>
+		<language name="JPN" width="256">拡張７データ</language>
 	</row>
 
 	<row id="RESORT_DATA_68">
@@ -627,11 +627,11 @@
 	</row>
 
 	<row id="RESORT_DATA_75">
-		<language name="JPN" width="256">住民拡張８データ</language>
+		<language name="JPN" width="256">拡張８データ</language>
 	</row>
 
 	<row id="RESORT_DATA_76">
-		<language name="JPN" width="256">住民拡張９データ</language>
+		<language name="JPN" width="256">拡張９データ</language>
 	</row>
 
 	<row id="RESORT_DATA_77">
@@ -892,6 +892,10 @@
 
 	<row id="PEOPLE_00">
 		<language name="JPN" width="256">住民</language>
+	</row>
+
+	<row id="PEOPLE_01">
+		<language name="JPN" width="256">旅行者</language>
 	</row>
 
 	<row id="ANSWER_000">

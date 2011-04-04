@@ -461,6 +461,17 @@ VMCMD_RESULT EvCmdResortSetWord( VMHANDLE *p_core, void *p_wk_adrs )
       GFL_MSG_Delete( p_msg );
     }
     break;
+  case RESORT_WORD_COMM_TYPE:
+    {
+      u32 data = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_COMM_ID, NULL );
+      GFL_MSGDATA* p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_resort_scr_dat, GFL_HEAP_LOWID(heapID) );
+      STRBUF *p_str = GFL_MSG_CreateString( p_msg, resort_comm_type_00+data );
+
+      WORDSET_RegisterWord( p_wordset, idx, p_str, PM_NEUTRAL, TRUE, PM_LANG );
+      GFL_STR_DeleteBuffer(p_str);
+      GFL_MSG_Delete( p_msg );
+    }
+    break;
   default:
     GF_ASSERT(0);
   }
