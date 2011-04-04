@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-04T14:32:10"/>
+	<create user="matsumiya" host="W00224" date="2011-04-04T14:39:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -306,7 +306,7 @@
 ポケモンを　自慢されるのかい？</language>
 	</row>
 
-	<row id="msg_c12r0301_01_02" back-color="#ffff80,,,,,#ffff80,,,,,,,,,,,,,">
+	<row id="msg_c12r0301_01_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・ポケモン入手後
 ・0＝主人公名前</comment>
@@ -329,7 +329,7 @@
 街の外にも　行けるのにね！</language>
 	</row>
 
-	<row id="msg_c12r0301_02_02" back-color="#ff8080,,,,,#ff8080,,,,,,,,,,,,,">
+	<row id="msg_c12r0301_02_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
 ・ポケモン入手後</comment>
 		<attribute name="キャラ指定">oldwoman1</attribute>
