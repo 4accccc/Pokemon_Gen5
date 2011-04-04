@@ -58,6 +58,7 @@ typedef struct {
   u8  sex;          ///<性別(PM_MALE/PM_FEMALE)
   u8  priority;     ///<優先度(1-5)
   u8  poketype;     ///<タイプ（include/poke_tool/poketype_def.hを参照）
+  u8  is_player;    ///<プレイヤーかどうかのフラグ
 }WBTLIST_TRAINER;
 //-------------------------------------
 //-------------------------------------

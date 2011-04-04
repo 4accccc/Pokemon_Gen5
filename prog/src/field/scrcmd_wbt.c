@@ -124,7 +124,7 @@ VMCMD_RESULT EvCmdWBTShowTornamentList( VMHANDLE * core, void * wk )
   WBTLIST_PARAM * p_param;
 
   p_param = WBTLIST_PARAM_Create( heapID, gsys );
-  WBTLIST_PARAM_Setup_Debug( p_param, list_type, heapID );
+  WBTLIST_PARAM_Setup_Debug( p_param, list_type, gsys );
 
   next_event = WBT_EVENT_ShowTournamentList( gsys, fieldmap, p_param, FALSE );
   SCRIPT_CallEvent( sc, next_event );

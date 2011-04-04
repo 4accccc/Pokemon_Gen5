@@ -21,6 +21,7 @@
 
 #include "msg/msg_wbt_tournament.h"
 #include "arc/message.naix"
+#include "system/main.h"
 
 
 #include "fldmmdl.h"
@@ -34,6 +35,7 @@
 //============================================================================================
 
 static void setupWBTLISTTrainer( WBTLIST_TRAINER * wbtlist_tr, HEAPID heapID, u8 tr_id );
+static void setupWBTLISTPlayer( WBTLIST_TRAINER * wbtlist_tr, HEAPID heapID, GAMEDATA * gamedata );
 static void setupWBTLISTResultAll( WBTLIST_PARAM * wbtlist_param, GFL_STD_RandContext * context );
 static void getMMdlObjCodeParam( ARCHANDLE * handle, u16 mmdl_id, u8 * anm_id, u16 * rsc_idx );
 static u8 BTL_CALC_TypeAff( PokeType wazaType, PokeType pokeType );
@@ -54,13 +56,13 @@ WBTLIST_PARAM * WBTLIST_PARAM_Create( HEAPID heapID, GAMESYS_WORK * gsys )
   //トレーナー情報の初期化
   for ( i = 0; i < WBT_TRAINER_NUM; i ++ )
   {
-    WBTLIST_TRAINER * trdata = &wbtlist_param->trainer[i];
-    trdata->name = GFL_STR_CreateBuffer( BUFLEN_PERSON_NAME, heapID );
-    trdata->mmdl_id = NARC_fldmmdl_mdlres_trainerm_nsbtx;
-    trdata->pattern_no = 2;
-    trdata->sex = PM_MALE;
-    trdata->priority = 1;
-    trdata->poketype = POKETYPE_NORMAL;
+    WBTLIST_TRAINER * wbtlist_tr = &wbtlist_param->trainer[i];
+    wbtlist_tr->name = GFL_STR_CreateBuffer( BUFLEN_PERSON_NAME, heapID );
+    wbtlist_tr->mmdl_id = NARC_fldmmdl_mdlres_trainerm_nsbtx;
+    wbtlist_tr->pattern_no = 2;
+    wbtlist_tr->sex = PM_MALE;
+    wbtlist_tr->priority = 1;
+    wbtlist_tr->poketype = POKETYPE_NORMAL;
   }
   //勝敗結果情報の初期化
 
@@ -76,49 +78,131 @@ void WBTLIST_PARAM_Delete( WBTLIST_PARAM * wbtlist_param )
   int i;
   for ( i = 0; i < WBT_TRAINER_NUM; i ++ )
   {
-    WBTLIST_TRAINER * trdata = &wbtlist_param->trainer[i];
-    GFL_STR_DeleteBuffer( trdata->name );
+    WBTLIST_TRAINER * wbtlist_tr = &wbtlist_param->trainer[i];
+    GFL_STR_DeleteBuffer( wbtlist_tr->name );
   }
   GFL_HEAP_FreeMemory( wbtlist_param );
   TAMADA_Printf("WBTLIST_PARAM:Delete:%08x\n", wbtlist_param );
 }
 
+//============================================================================================
+//
+//============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-void WBTLIST_PARAM_Setup_Debug( WBTLIST_PARAM * wbtlist_param, WBTLIST_STAGE stage, HEAPID heapID )
+//static void setupAllTournamentMember( u64 seed64, u16 * member, 
+
+//============================================================================================
+//
+//============================================================================================
+typedef struct {
+  GAMESYS_WORK * gsys;
+  WBTLIST_STAGE stage;
+  HEAPID heapID;
+  u64 seed64;
+  u16 wbt_trid[ WBT_TRAINER_NUM ];
+}SETUP_WORK;
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void WBTLIST_PARAM_Setup( const SETUP_WORK * setup, WBTLIST_PARAM * wbtlist_param )
 {
-  GFL_STD_RandContext rand_context;
   int i;
-  //仮
+  GAMEDATA * gamedata = GAMESYSTEM_GetGameData( setup->gsys );
+
+  for ( i = 0; i < WBT_TRAINER_NUM; i ++ )
+  {
+    u16 wbt_trid = setup->wbt_trid[ i ];
+    if ( wbt_trid == 0xffff )
+    {
+      setupWBTLISTPlayer(&wbtlist_param->trainer[i], setup->heapID, gamedata );
+    }
+    else
+    {
+      setupWBTLISTTrainer( &wbtlist_param->trainer[i], setup->heapID, setup->wbt_trid[i] );
+    }
+  }
+  {
+    GFL_STD_RandContext rand_context;
+    GFL_STD_RandInit( &rand_context, setup->seed64 );
+    setupWBTLISTResultAll( wbtlist_param, &rand_context );
+  }
+
+  wbtlist_param->stage = setup->stage;
+}
+
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void WBTLIST_PARAM_Setup_Debug( WBTLIST_PARAM * wbtlist_param, WBTLIST_STAGE stage, GAMESYS_WORK * gsys )
+{
+  SETUP_WORK setup;
+  int i;
+  HEAPID heapID = HEAPID_FIELDMAP;
+
+  setup.gsys = gsys;
+  setup.stage = stage;
+  setup.heapID = HEAPID_FIELDMAP;
+  {
+    u64 seed64;
+    seed64 = GFL_STD_MtRand( 0 );
+    setup.seed64 = (seed64 << 32) + GFL_STD_MtRand( 0 );
+  }
+
   for ( i = 0; i < WBT_TRAINER_NUM; i ++ )
   {
     static const u16 sample_trid[WBT_TRAINER_NUM] = {
       12,//アロエ
       53,//モブ
       11,//デント
-      54,//モブ
+      0xffff,//プレイヤー
       55,//モブ
       56,//モブ
       18,//シロナ
       13,//ハチク
     };
-    setupWBTLISTTrainer( &wbtlist_param->trainer[i], heapID, sample_trid[i] );
-    wbtlist_param->stage = stage;
+    setup.wbt_trid[ i ] = sample_trid[ i ];
   }
-  {
-    u64 seed64;
-    seed64 = GFL_STD_MtRand( 0 );
-    seed64 = (seed64 << 32) + GFL_STD_MtRand( 0 );
-    GFL_STD_RandInit( &rand_context, seed64 );
-  }
-  setupWBTLISTResultAll( wbtlist_param, &rand_context );
+  WBTLIST_PARAM_Setup( &setup, wbtlist_param );
 }
-
 
 //============================================================================================
 //
 //============================================================================================
 //------------------------------------------------------------------
+/**
+ * @brief WBTトーナメントリストのプレイヤーデータセットアップ
+ */
+//------------------------------------------------------------------
+static void setupWBTLISTPlayer( WBTLIST_TRAINER * wbtlist_tr, HEAPID heapID, GAMEDATA * gamedata )
+{
+  const MYSTATUS * mystat = GAMEDATA_GetMyStatus( gamedata );
+  ARCHANDLE * handle;
+  u16 mmdl_id;
+
+  wbtlist_tr->is_player = TRUE;
+  wbtlist_tr->priority = 3; //仮  実際はゲーム進行状況から
+  wbtlist_tr->poketype = POKETYPE_NORMAL; //仮  実際は手持ちポケモンタイプから
+  wbtlist_tr->sex      = MyStatus_GetMySex( mystat );
+  if ( wbtlist_tr->sex == PM_MALE )
+  {
+    mmdl_id = HERO;
+  } else {
+    mmdl_id = HEROINE;
+  }
+  handle = GFL_ARC_OpenDataHandle( ARCID_MMDL_PARAM, heapID );
+  getMMdlObjCodeParam( handle, mmdl_id, &wbtlist_tr->pattern_no, &wbtlist_tr->mmdl_id );
+  GFL_ARC_CloseDataHandle( handle );
+
+  MyStatus_CopyNameString( mystat, wbtlist_tr->name );
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief WBTトーナメントリストのトレーナーデータセットアップ
+ *
+ * @todo  cdat形式のトレーナーデータをバイナリ化する
+ */
 //------------------------------------------------------------------
 static void setupWBTLISTTrainer( WBTLIST_TRAINER * wbtlist_tr, HEAPID heapID, u8 tr_id )
 {
@@ -127,15 +211,13 @@ static void setupWBTLISTTrainer( WBTLIST_TRAINER * wbtlist_tr, HEAPID heapID, u8
 
   handle = GFL_ARC_OpenDataHandle( ARCID_MMDL_PARAM, heapID );
 
-#if 0
-  GFL_ARC_LoadDataOfs( &tr_rom_data, ARCID_WBT_TRLIST, NARC_wbt_trlist_wbt_trainer_bin,
-      sizeof(WBT_TRDATA) * tr_id, sizeof(WBT_TRDATA) );
-#endif
   tr_rom_data = WBTTrainerData[ tr_id ];
+#if 0
   TAMADA_Printf("TR_ROM_DATA:tr_id = %d\n", tr_id );
   TAMADA_Printf("TR_ROM_DATA:priority = %d\n", tr_rom_data.priority );
   TAMADA_Printf("TR_ROM_DATA:type = %d\n", tr_rom_data.type );
   TAMADA_Printf("TR_ROM_DATA:mmdl_id = %d\n", tr_rom_data.mmdl_id );
+#endif
 
   wbtlist_tr->priority = tr_rom_data.priority;
   wbtlist_tr->poketype = tr_rom_data.type;
@@ -155,8 +237,37 @@ static void setupWBTLISTTrainer( WBTLIST_TRAINER * wbtlist_tr, HEAPID heapID, u8
 }
 
 //------------------------------------------------------------------
+//------------------------------------------------------------------
+static void DEBUG_DumpResult( const WBTLIST_RESULT * result,
+    const WBTLIST_TRAINER * tr_a, const WBTLIST_TRAINER * tr_b )
+{
+  TAMADA_Printf("upside_win %d \n", result->upside_win );
+  TAMADA_Printf("msg_id = %d\n", result->msg_type );
+  TAMADA_Printf("tr_a:pri(%d) type(%d) sex(%d) id(%d)\n",
+      tr_a->priority, tr_a->poketype, tr_a->sex, tr_a->mmdl_id );
+  TAMADA_Printf("tr_b:pri(%d) type(%d) sex(%d) id(%d)\n",
+      tr_b->priority, tr_b->poketype, tr_b->sex, tr_b->mmdl_id );
+}
+
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+enum {
+  MSG_GROUP_A = msg_wbt_comment_01,
+  MSG_GROUP_B = msg_wbt_comment_06,
+  MSG_GROUP_C = msg_wbt_comment_11,
+  MSG_GROUP_D = msg_wbt_comment_16,
+  MSG_GROUP_E = msg_wbt_comment_21,
+
+  MSG_LAYER_NICEGAME = 0,
+  MSG_LAYER_ONESIDE,
+  MSG_LAYER_ADVANTAGE,
+  MSG_LAYER_EVEN,
+  MSG_LAYER_DISADVANTAGE,
+};
+//------------------------------------------------------------------
 /**
- * @todo  プレイヤーについての判定が必要
+ * @todo  プレイヤーについてのMSG判定が必要
  */
 //------------------------------------------------------------------
 static void setupWBTLISTResult( WBTLIST_RESULT * result,
@@ -166,10 +277,11 @@ static void setupWBTLISTResult( WBTLIST_RESULT * result,
   u32 pri_a = tr_a->priority;
   u32 pri_b = tr_b->priority;
 
+  u8 aff_a = BTL_CALC_TypeAff( tr_a->poketype, tr_b->poketype );
+  u8 aff_b = BTL_CALC_TypeAff( tr_b->poketype, tr_a->poketype );
+
   if ( pri_a == pri_b )
   { //優先度が同じ場合
-    u8 aff_a = BTL_CALC_TypeAff( tr_a->poketype, tr_b->poketype );
-    u8 aff_b = BTL_CALC_TypeAff( tr_b->poketype, tr_a->poketype );
     if ( aff_a == aff_b )
     { //タイプ相性も同じ場合はランダム
       result->upside_win = ( GFL_STD_Rand( context, 2 ) == 0 );
@@ -178,24 +290,81 @@ static void setupWBTLISTResult( WBTLIST_RESULT * result,
     { //タイプ相性が高いほうが勝利
       result->upside_win = ( aff_a > aff_b );
     }
-    result->msg_type = msg_wbt_comment_11;
+    //result->msg_type = msg_wbt_comment_11;
   }
   else
   { //優先度が違う場合、高いほうが勝利
     result->upside_win = ( pri_a > pri_b );
 
+  }
+
+  //とりあえずプレイヤーは勝つ。MSGの整合性は後ほど
+  if ( tr_a->is_player )
+  {
+    result->upside_win = TRUE;
+  }
+  else if ( tr_b->is_player )
+  {
+    result->upside_win = FALSE;
+  }
+
+  //メッセージの割り当て
+  {
+    int msg_layer;
+    int msg_side;
+    static const u8 msg_table[][3] = {
+      { MSG_GROUP_D, MSG_GROUP_D, MSG_GROUP_E },  //MSG_LAYER_NICEGAME
+      { MSG_GROUP_A, MSG_GROUP_A, MSG_GROUP_A },  //MSG_LAYER_ONESIDE
+      { MSG_GROUP_B, MSG_GROUP_B, MSG_GROUP_B },  //MSG_LAYER_ADVANTAGE
+      { MSG_GROUP_C, MSG_GROUP_C, MSG_GROUP_E },  //MSG_LAYER_EVEN
+      { MSG_GROUP_D, MSG_GROUP_D, MSG_GROUP_E },  //MSG_LAYER_DISADVANTAGE
+    };
+
+  //MSGの振り分け
     if ( pri_a >= 4 && pri_b >= 4 )
     {
-      result->msg_type = msg_wbt_comment_16;
+      msg_layer = MSG_LAYER_NICEGAME;
     }
-    else if ( MATH_IAbs( pri_a - pri_b ) >= 2 )
+    else if (
+        ( pri_a - pri_b >= 2 && result->upside_win == TRUE ) ||
+        ( pri_b - pri_a >= 2 && result->upside_win == FALSE ) )
     {
-      result->msg_type = msg_wbt_comment_01;
+      msg_layer = MSG_LAYER_ONESIDE;
     }
-    else if ( MATH_IAbs( pri_a - pri_b ) >= 1 )
+    else if (
+      ( pri_a - pri_b == 1 && result->upside_win == TRUE ) ||
+      ( pri_b - pri_a == 1 && result->upside_win == FALSE ) )
     {
-      result->msg_type = msg_wbt_comment_06;
+      msg_layer = MSG_LAYER_ADVANTAGE;
     }
+    else if ( pri_a == pri_b )
+    {
+      msg_layer = MSG_LAYER_EVEN;
+    }
+    else
+    {
+      msg_layer = MSG_LAYER_DISADVANTAGE;
+    }
+    //タイプ相性の有利・互角・不利
+    if ( aff_a > aff_b )
+    {
+      msg_side = -1;
+    }
+    else if ( aff_a < aff_b )
+    {
+      msg_side = +1;
+    }
+    else
+    {
+      msg_side = 0;
+    }
+    if ( result->upside_win == TRUE)
+    {
+      msg_side *= -1;
+    }
+    msg_side += 1;
+
+    result->msg_type = msg_table[msg_layer][msg_side];
   }
 }
 
@@ -212,6 +381,7 @@ static void setupWBTLISTResultAll( WBTLIST_PARAM * wbtlist_param, GFL_STD_RandCo
     WBTLIST_TRAINER * tr_a = &wbtlist_param->trainer[ i * 2 + 0 ];
     WBTLIST_TRAINER * tr_b = &wbtlist_param->trainer[ i * 2 + 1 ];
     setupWBTLISTResult( result, context, tr_a, tr_b );
+    DEBUG_DumpResult( result, tr_a, tr_b );
   }
 
   //2回戦結果生成
@@ -231,6 +401,7 @@ static void setupWBTLISTResultAll( WBTLIST_PARAM * wbtlist_param, GFL_STD_RandCo
       }
     }
     setupWBTLISTResult( result, context, tr[0], tr[1] );
+    DEBUG_DumpResult( result, tr[0], tr[1] );
   }
 }
 

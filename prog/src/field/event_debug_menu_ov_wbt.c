@@ -290,7 +290,7 @@ static BOOL debugMenuCallProc_WBTList( DEBUG_WBT_WORK *p_wk )
   GMEVENT * new_event;
   WBTLIST_PARAM * wbtlist_param;
   wbtlist_param = WBTLIST_PARAM_Create( HEAPID_PROC, p_wk->gmSys );
-  WBTLIST_PARAM_Setup_Debug( wbtlist_param, p_wk->stage, HEAPID_FIELDMAP );
+  WBTLIST_PARAM_Setup_Debug( wbtlist_param, p_wk->stage, p_wk->gmSys );
   new_event = WBT_EVENT_ShowTournamentList( p_wk->gmSys, p_wk->fieldWork, wbtlist_param, TRUE );
   GMEVENT_ChangeEvent( p_wk->gmEvent, new_event );
 
