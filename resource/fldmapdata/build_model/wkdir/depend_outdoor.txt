@@ -391,4 +391,5 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/rr_nisejim_02.nsbmd \
 	$(RESDIR)/rr_nisejim_03.nsbmd \
 	$(RESDIR)/d03_area51_01.nsbmd \
+	$(RESDIR)/c8_gym_04.nsbmd \
 
