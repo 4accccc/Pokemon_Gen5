@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-30T12:44:57"/>
+	<create user="matsumiya" host="W00224" date="2011-04-04T13:11:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1299" top="178" right="2004" bottom="806" maximized="no" rayout="Vertical2">
+	<dialog left="1301" top="151" right="2006" bottom="779" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -364,6 +364,75 @@
 		<language name="JPN_KANJI" width="256">おたがいの　めと　めが　あったら
 はじまる　ポケモンしょうぶ！▽
 それが　トレーナーの　きまりなの</language>
+	</row>
+
+	<row id="msg_r20_white_11a" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀：主人公＝♂
+・r19のposを踏むと
+　画面下からベル登場</comment>
+		<attribute name="キャラ指定">ベル</attribute>
+		<language name="JPN" width="256">ベル『おうい！</language>
+		<language name="JPN_KANJI" width="256">ベル『おうい！</language>
+	</row>
+
+	<row id="msg_r20_white_11b" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀：主人公＝♀
+・r19のposを踏むと
+　画面下からベル登場</comment>
+		<attribute name="キャラ指定">ベル</attribute>
+		<language name="JPN" width="256">ベル『ねえねえ！</language>
+		<language name="JPN_KANJI" width="256">ベル『ねえねえ！</language>
+	</row>
+
+	<row id="msg_r20_white_12" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・続けて</comment>
+		<attribute name="キャラ指定">ベル</attribute>
+		<language name="JPN" width="256">ごめんね！
+だいじなこと　わすれてた！▼
+はあはあ……▼
+あなたに　たくした　ポケモンずかん
+さりげなく　べんりに　なってるの！▼</language>
+		<language name="JPN_KANJI" width="256">ごめんね！
+大事なこと　忘れてた！▼
+はあはあ……▼
+あなたに　託した　ポケモン図鑑ね
+さりげなく　便利に　なってるの！▼</language>
+	</row>
+
+	<row id="msg_r20_white_13" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・続けて
+・何か効果音？（発注）</comment>
+		<attribute name="キャラ指定">ベル</attribute>
+		<language name="JPN" width="256">じゃじゃーん！！▼
+そのなも　ポケガイダンス！▼</language>
+		<language name="JPN_KANJI" width="256">じゃじゃーん！！▼
+その名も　ポケガイダンス！▼</language>
+	</row>
+
+	<row id="msg_r20_white_14" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・続けて</comment>
+		<attribute name="キャラ指定">ベル</attribute>
+		<language name="JPN" width="256">ポケガイダンスの　せつめい！</language>
+		<language name="JPN_KANJI" width="256">ポケガイダンスの　説明！</language>
+	</row>
+
+	<row id="msg_r20_white_15" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・ヒオウギシティ側に退場
+　画面外に消えると操作可能
+・以降、主人公の家に出現</comment>
+		<attribute name="キャラ指定">ベル</attribute>
+		<language name="JPN" width="256">じゃあ　いっぱい　いっぱい
+ポケモンと　であってね！▼　
+あたしは　あなたのママと
+おはなしを　してまーす！！▼</language>
+		<language name="JPN_KANJI" width="256">じゃあ　いっぱい　いっぱい
+ポケモンと　出会ってね！▼　
+あたしは　あなたのママと
+お話を　してまーす！！▼</language>
 	</row>
 
 	<row id="msg_r20_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
