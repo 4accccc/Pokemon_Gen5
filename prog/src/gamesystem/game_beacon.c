@@ -813,7 +813,7 @@ static void BeaconInfo_SetResortData( GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_
     RESORT_BEACON_DATA_SetBeaconInfo( p_beacon, info );
 
     //マージチェック
-    if( !RESORT_PEOPLE_ALL_DATA_AddBeacon( p_all_people, p_beacon ) )
+    if( !RESORT_PEOPLE_ALL_DATA_MergeBeacon( p_all_people, p_beacon ) )
     {
       //ビーコン追加
       if( RESORT_RECV_BUFF_AddBeacon( p_buff, p_beacon ) == FALSE )

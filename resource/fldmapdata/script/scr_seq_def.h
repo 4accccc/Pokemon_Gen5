@@ -12818,6 +12818,13 @@
   .macro _ASM_RESORT_INPUT_AUTHERPHRASE
   .short EV_SEQ_RESORT_INPUT_AUTHERPHRASE
   .endm
+  
+#define _RESORT_END_ITEM() \
+      _ASM_RESORT_END_ITEM
+
+  .macro _ASM_RESORT_END_ITEM
+  .short EV_SEQ_RESORT_END_ITEM
+  .endm
 
 //--------------------------------------------------------------
 /**

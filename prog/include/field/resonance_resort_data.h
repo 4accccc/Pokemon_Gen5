@@ -283,6 +283,21 @@ typedef enum
 } RESORT_DATA_PARAM;
 
 //-------------------------------------
+///	何の通信からきたかのID
+//=====================================
+typedef enum 
+{
+  RESORT_COMM_TYPE_NULL,
+  RESORT_COMM_TYPE_BEACON,
+  RESORT_COMM_TYPE_CGEAR_IRC,
+  RESORT_COMM_TYPE_UNION,
+  RESORT_COMM_TYPE_RNDMATCH,
+  RESORT_COMM_TYPE_GTSNEGO,
+  RESORT_COMM_TYPE_HYLINK,
+} RESORT_COMM_TYPE;
+
+
+//-------------------------------------
 ///	リゾート用受信データの更新フラグ
 //    ここを増やしたら、RESORT_RECV_DATAのupdateのbitを増やすこと
 //=====================================
@@ -423,7 +438,7 @@ extern RESORT_RECV_DATA * RESORT_RECV_BUFF_GetData( RESORT_RECV_BUFF *p_wk, u32 
 extern void RESORT_RECV_BUFF_Clear( RESORT_RECV_BUFF *p_wk, u32 index );
 
 extern BOOL RESORT_RECV_BUFF_AddBeacon( RESORT_RECV_BUFF *p_wk, const RESORT_BEACON_DATA *cp_beacon );
-extern BOOL RESORT_RECV_BUFF_AddRecv( RESORT_RECV_BUFF *p_wk, const RESORT_RECV_DATA *cp_recv );
+extern BOOL RESORT_RECV_BUFF_AddRecv( RESORT_RECV_BUFF *p_wk, const RESORT_RECV_DATA *cp_recv, RESORT_COMM_TYPE type );
 
 
 //=============================================================================
@@ -546,7 +561,8 @@ extern RESORT_SECRETARY_DATA * RESORT_PEOPLE_ALL_DATA_SearchEmptySecretary( RESO
 extern u32 RESORT_PEOPLE_ALL_DATA_SearchEmptyInstitutionPlaceID( const RESORT_PEOPLE_ALL_DATA *cp_wk );
 extern u32 RESORT_PEOPLE_ALL_DATA_SearchEmptyCondominiumPlaceID( const RESORT_PEOPLE_ALL_DATA *cp_wk );
 
-extern BOOL RESORT_PEOPLE_ALL_DATA_AddBeacon( RESORT_PEOPLE_ALL_DATA *p_wk, const RESORT_BEACON_DATA *cp_beacon );
+extern BOOL RESORT_PEOPLE_ALL_DATA_MergeBeacon( RESORT_PEOPLE_ALL_DATA *p_wk, const RESORT_BEACON_DATA *cp_beacon );
+extern BOOL RESORT_PEOPLE_ALL_DATA_MergeRecv( RESORT_PEOPLE_ALL_DATA *p_wk, const RESORT_RECV_DATA *cp_recv );
 
 extern void RESORT_PEOPLE_ALL_DATA_UpdateDay( RESORT_PEOPLE_ALL_DATA *p_wk );
 

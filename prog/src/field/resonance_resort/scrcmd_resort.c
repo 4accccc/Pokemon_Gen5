@@ -1143,6 +1143,33 @@ VMCMD_RESULT EvCmdResortCallInputAutherPhrase( VMHANDLE *p_core, void *p_wk_adrs
 
   return VMCMD_RESULT_SUSPEND;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アイテムをもらった
+ *
+ *	@param	VMHANDLE *p_core 仮想マシンハンドル
+ *	@param	*p_wk_adrs       スクリプトコマンドワーク
+ *
+ *	@return 終了コード
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdResortEndItem( VMHANDLE *p_core, void *p_wk_adrs )
+{
+  SCRCMD_WORK *p_wk = p_wk_adrs;
+  SCRIPT_WORK *p_script = SCRCMD_WORK_GetScriptWork( p_wk );
+  GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
+  GAMEDATA      *p_gamedata = SCRCMD_WORK_GetGameData( p_wk );
+  FIELDMAP_WORK *p_field = GAMESYSTEM_GetFieldMapWork(p_gamesys);
+  RESORT_PEOPLE_SYS *p_people_sys = Resort_Scrcmd_GetPeopleSys( p_field );
+  RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_field, p_people_sys );
+
+  RESORT_PEOPLE_SetData( p_people, RESORT_DATA_PARAM_PRESENT_ID, 0 );
+  RESORT_PEOPLE_SetData( p_people, RESORT_DATA_PARAM_PRESENT_NUM, 0 );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  ショップを取得

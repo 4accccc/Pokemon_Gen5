@@ -41,6 +41,7 @@
   DEF_CMD( EvCmdResortCallInputCityName, EV_SEQ_RESORT_INPUT_CITYNAME )
   DEF_CMD( EvCmdResortCallInputAutherName, EV_SEQ_RESORT_INPUT_AUTHERNAME )
   DEF_CMD( EvCmdResortCallInputAutherPhrase, EV_SEQ_RESORT_INPUT_AUTHERPHRASE )
+  DEF_CMD( EvCmdResortEndItem, EV_SEQ_RESORT_END_ITEM )
   NO_CMD()
   
   END_CMD

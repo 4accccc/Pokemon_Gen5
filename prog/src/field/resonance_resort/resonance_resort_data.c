@@ -1182,6 +1182,10 @@ void RESORT_RECV_DATA_MergeRecv( RESORT_RECV_DATA *p_wk, const RESORT_RECV_DATA 
     GFL_STD_MemCopy( cp_recv, p_wk, sizeof(RESORT_RECV_DATA) );
 
     RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_UPDATE,RESORT_RECV_DATA_UPDATE_FIRST);
+
+    //生成データ
+    RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_PRESENT_ID, 17+GFUser_GetPublicRand( 20 ) ); //TODO
+    RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_PRESENT_NUM, 1 ); //TODO
   }
   else
   {
@@ -2132,9 +2136,9 @@ u32 RESORT_PROXY_DATA_GetData( const RESORT_PROXY_DATA *cp_wk, RESORT_DATA_PARAM
     }
     return 0;
   case RESORT_DATA_PARAM_PRESENT_ID:
-    return 10; //TODO;
+    return cp_wk->presentID;
   case RESORT_DATA_PARAM_PRESENT_NUM:
-    return 1; //TODO
+    return cp_wk->present_num;
   case RESORT_DATA_PARAM_TYPE:
     return cp_wk->type;
   default:
@@ -2498,11 +2502,12 @@ BOOL RESORT_RECV_BUFF_AddBeacon( RESORT_RECV_BUFF *p_wk, const RESORT_BEACON_DAT
  *
  *	@param	RESORT_RECV_BUFF *p_wk  ワーク
  *	@param	RESORT_RECV_DATA *cp_recv 受信したデータ
+ *	@param  RESORT_COMM_TYPE type 通信タイプ
  *
  *	@retval TRUEビーコン挿し込みした  FALSEしていない*
  */
 //-----------------------------------------------------------------------------
-BOOL RESORT_RECV_BUFF_AddRecv( RESORT_RECV_BUFF *p_wk, const RESORT_RECV_DATA *cp_recv )
+BOOL RESORT_RECV_BUFF_AddRecv( RESORT_RECV_BUFF *p_wk, const RESORT_RECV_DATA *cp_recv, RESORT_COMM_TYPE type )
 {
   RESORT_RECV_DATA *p_data;
 
@@ -3256,7 +3261,7 @@ u32 RESORT_PEOPLE_ALL_DATA_SearchEmptyCondominiumPlaceID( const RESORT_PEOPLE_AL
  *	@return TRUEいれた　FALSEいれなかった
  */
 //-----------------------------------------------------------------------------
-BOOL RESORT_PEOPLE_ALL_DATA_AddBeacon( RESORT_PEOPLE_ALL_DATA *p_wk, const RESORT_BEACON_DATA *cp_beacon )
+BOOL RESORT_PEOPLE_ALL_DATA_MergeBeacon( RESORT_PEOPLE_ALL_DATA *p_wk, const RESORT_BEACON_DATA *cp_beacon )
 {
   int i;
   for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
@@ -3274,6 +3279,22 @@ BOOL RESORT_PEOPLE_ALL_DATA_AddBeacon( RESORT_PEOPLE_ALL_DATA *p_wk, const RESOR
 
   //TODO  住人以外もマージする？
 
+
+  return FALSE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  受信を他のデータにマージ
+ *
+ *	@param	RESORT_PEOPLE_ALL_DATA *p_wk  ワーク
+ *	@param	RESORT_RECV_DATA *cp_recv     受信データ
+ *
+ *	@return TRUEいれた　FALSEいれなかった
+ */
+//-----------------------------------------------------------------------------
+BOOL RESORT_PEOPLE_ALL_DATA_MergeRecv( RESORT_PEOPLE_ALL_DATA *p_wk, const RESORT_RECV_DATA *cp_recv )
+{
+  //TODO 住人マージ
 
   return FALSE;
 }

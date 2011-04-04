@@ -168,12 +168,12 @@ static BOOL debugMenuCallProc_SetRecv( DEBUG_MENU_EVENT_WORK *p_wk )
 
   RESORT_RECV_DATA *p_recv = RESORT_RECV_DATA_Init( GFL_HEAP_LOWID(p_wk->heapID) );
   RESORT_RECV_DATA_SetDebugData( p_recv, p_wk->gdata );
-  if( !RESORT_RECV_BUFF_AddRecv( p_recv_buff, p_recv ) )
+  if( !RESORT_RECV_BUFF_AddRecv( p_recv_buff, p_recv, RESORT_COMM_TYPE_BEACON ) )
   {
     p_recv_buff = GAMEBEACON_DEBUG_GetResortRecvBuffer();
     if( p_recv_buff )
     {
-      RESORT_RECV_BUFF_AddRecv( p_recv_buff, p_recv );
+      RESORT_RECV_BUFF_AddRecv( p_recv_buff, p_recv, RESORT_COMM_TYPE_BEACON );
     }
   }
   RESORT_RECV_DATA_Exit( p_recv );
@@ -220,7 +220,7 @@ static BOOL debugMenuCallProc_AllRecv( DEBUG_MENU_EVENT_WORK *p_wk )
   while( TRUE )
   {
     RESORT_RECV_DATA_SetDebugData( p_recv, p_wk->gdata );
-    if( !RESORT_RECV_BUFF_AddRecv( p_recv_buff, p_recv ) )
+    if( !RESORT_RECV_BUFF_AddRecv( p_recv_buff, p_recv, RESORT_COMM_TYPE_BEACON ) )
     {
       p_recv_tmp_buff = GAMEBEACON_DEBUG_GetResortRecvBuffer();
       if( !p_recv_tmp_buff )
@@ -229,7 +229,7 @@ static BOOL debugMenuCallProc_AllRecv( DEBUG_MENU_EVENT_WORK *p_wk )
       }
       else 
       { 
-        if( !RESORT_RECV_BUFF_AddRecv( p_recv_tmp_buff, p_recv ) )
+        if( !RESORT_RECV_BUFF_AddRecv( p_recv_tmp_buff, p_recv, RESORT_COMM_TYPE_BEACON ) )
         {
           break;
         }

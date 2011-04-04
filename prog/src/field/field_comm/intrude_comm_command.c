@@ -382,8 +382,13 @@ static void _IntrudeRecv_Profile(const int netID, const int size, const void* pD
     SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork(gamedata);
     RESONANCE_RESORT_SV *p_resort_sv  = RESONANCE_RESORT_SV_GetWork( p_sv );
     RESORT_RECV_BUFF *p_buff  = RESONANCE_RESORT_SV_GetDataBuff( p_resort_sv );
+    RESORT_PEOPLE_ALL_DATA *p_people_all = RESONANCE_RESORT_SV_GetPeopleAllData( p_resort_sv );
     OS_Printf( "リゾート受信コールバック！netID=%d size=%d \n", netID, size );
-    RESORT_RECV_BUFF_AddRecv( p_buff, (RESORT_RECV_DATA *)recv_profile->resort_data );
+
+    if( !RESORT_PEOPLE_ALL_DATA_MergeRecv( p_people_all, (RESORT_RECV_DATA *)recv_profile->resort_data) )
+    {
+      RESORT_RECV_BUFF_AddRecv( p_buff, (RESORT_RECV_DATA *)recv_profile->resort_data, RESORT_COMM_TYPE_HYLINK );
+    }
   }
 
   //自分が親ではなくて、通信相手(親)がチュートリアル中の場合。
