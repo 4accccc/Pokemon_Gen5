@@ -858,6 +858,11 @@ SRCS_OVERLAY_DEBUGMENU_STAFF  = field/event_debug_menu_ov_staff.c \
 #GROUP_OVERLAY_DEBUGMENU
 SRCS_OVERLAY_DEBUGMENU_BSUBWAY  = field/event_debug_menu_ov_bsubway.c
 
+# デバッグメニュー並列化  無限ダンジョン
+#===> SRCS_OVERLAY_FIELDMAP
+#GROUP_OVERLAY_DEBUGMENU
+SRCS_OVERLAY_DEBUGMENU_INFINITY  = field/event_debug_menu_ov_infinity.c
+
 # スクリプトコマンド並列化  バトルサブウェイ
 #===> GROUP_OVERLAY_DEBUGMENU
 #GROUP_OVERLAY_SCRCMD
