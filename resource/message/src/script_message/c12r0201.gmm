@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-28T19:14:07"/>
+	<create user="matsumiya" host="W00224" date="2011-04-04T17:31:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="287"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,9 +263,9 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1301" top="151" right="2006" bottom="779" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
@@ -294,29 +294,62 @@
 
 	<row id="msg_c12r0201_fighterm_01">
 		<comment>♂
-・詳細未定</comment>
+・ポケモン入手後からクリアまで</comment>
 		<attribute name="キャラ指定">FIGHTERM
 ライバル父</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">むすこはね
+たびだつ　きっかけが　ほしかったんだ▼
+ほんとうは　いつでも
+この　まちを　とびだせたのにね</language>
+		<language name="JPN_KANJI" width="256">息子はね
+旅立つ　きっかけが　ほしかったんだ▼
+本当は　いつでも
+この街を　飛びだせたのにね</language>
 	</row>
 
 	<row id="msg_c12r0201_fighterm_02">
 		<comment>♂
-・詳細未定</comment>
+・クリア後（暫定）</comment>
 		<attribute name="キャラ指定">FIGHTERM
 ライバル父</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">おさないころに　うしなった　ものを
+とりもどせたようだね▼
+ポケモンが　いてくれた　おかげかな</language>
+		<language name="JPN_KANJI" width="256">幼いころに　失った　ものを
+取り戻せたようだね▼
+ポケモンが　いてくれた　おかげかな</language>
 	</row>
 
-	<row id="msg_c12r0201_fighterm_03">
-		<comment>♂
-・詳細未定</comment>
-		<attribute name="キャラ指定">FIGHTERM
-ライバル父</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_c12r0201_woman3_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀：主人公＝♂
+・0＝主人公名
+・1＝ライバル名</comment>
+		<attribute name="キャラ指定">WOMAN3
+ライバル母</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]くん▼
+もし　[1:00:トレーナー名:1]が　たびさきで
+みちに……　いえ　じんせいに▽
+まよったりしたら　たすけてあげてね</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]くん▼
+もし　[1:00:トレーナー名:1]が　旅先で
+道に……　いえ　人生に▽
+迷ったりしたら　助けてあげてね</language>
+	</row>
+
+	<row id="msg_c12r0201_woman3_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀：主人公＝♀
+・0＝主人公名
+・1＝ライバル名</comment>
+		<attribute name="キャラ指定">WOMAN3
+ライバル母</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さん▼
+もし　[1:00:トレーナー名:1]が　たびさきで
+みちに……　いえ　じんせいに▽
+まよったりしたら　たすけてあげてね</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さん▼
+もし　[1:00:トレーナー名:1]が　旅先で
+道に……　いえ　人生に▽
+迷ったりしたら　助けてあげてね</language>
 	</row>
 
 	<flowchart-group-list>
