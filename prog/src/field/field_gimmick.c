@@ -39,6 +39,7 @@
 #include "resonance_resort/resort_reception.h"
 #include "resonance_resort/resort_field.h"
 #include "infinity_dungeon_gimmick.h"
+#include "wbt_gimmick.h"
 
 FS_EXTERN_OVERLAY(field_gym_insect);
 FS_EXTERN_OVERLAY(field_gym_elec);
@@ -66,6 +67,7 @@ FS_EXTERN_OVERLAY(legend_gimmick);
 FS_EXTERN_OVERLAY(field_gimmick_t01);
 FS_EXTERN_OVERLAY(resonance_resort_gimmick);
 FS_EXTERN_OVERLAY(infinity_dungeon_gimmick);
+FS_EXTERN_OVERLAY(wbt_gimmick);
 
 const static FSOverlayID FldGimmickOverlay[FLD_GIMMICK_MAX] = {
 	NULL,					//0:無し
@@ -126,6 +128,7 @@ const static FSOverlayID FldGimmickOverlay[FLD_GIMMICK_MAX] = {
   FS_OVERLAY_ID(resonance_resort_gimmick),  //リゾート
   FS_OVERLAY_ID(resonance_resort_gimmick),  //リゾート
   FS_OVERLAY_ID(infinity_dungeon_gimmick),  // 無限ダンジョン
+  FS_OVERLAY_ID(wbt_gimmick),  // WBT
 };
 
 const static FLD_GMK_SETUP_FUNC FldGimmickSetupFunc[FLD_GIMMICK_MAX] = {
@@ -187,6 +190,7 @@ const static FLD_GMK_SETUP_FUNC FldGimmickSetupFunc[FLD_GIMMICK_MAX] = {
   RESORT_RECEPTION_Setup, //リゾート迎賓館
   RESORT_FIELD_Setup,     //リゾートフィールド
   INFINITY_DUNGEON_Setup, //無限ダンジョン
+  WBT_GIMMICK_Setup,      // WBT
 };
 
 const static FLD_GMK_END_FUNC FldGimmickEndFunc[FLD_GIMMICK_MAX] = {
@@ -248,6 +252,7 @@ const static FLD_GMK_END_FUNC FldGimmickEndFunc[FLD_GIMMICK_MAX] = {
   RESORT_RECEPTION_End, //リゾート迎賓館
   RESORT_FIELD_End, //リゾートフィールド
   INFINITY_DUNGEON_End, //無限ダンジョン
+  WBT_GIMMICK_End,      // WBT
 };
 
 const static FLD_GMK_MOVE_FUNC FldGimmickMoveFunc[FLD_GIMMICK_MAX] = {
@@ -309,6 +314,7 @@ const static FLD_GMK_MOVE_FUNC FldGimmickMoveFunc[FLD_GIMMICK_MAX] = {
   RESORT_RECEPTION_Move, //リゾート迎賓館
   RESORT_FIELD_Move, //リゾートフィールド
   INFINITY_DUNGEON_Move, // 無限ダンジョン
+  WBT_GIMMICK_Move,      // WBT
 };
 
 //---------------------------------------------------------------------------
