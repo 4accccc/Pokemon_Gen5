@@ -547,9 +547,14 @@ FIELDMAP_WORK * FIELDMAP_Create( GAMESYS_WORK *gsys, HEAPID heapID )
 	}
   // 地面、見た目にかかわる情報には、進入の情報を関係付ける。
   {
-    fieldWork->areadata = AREADATA_Create( heapID,
-        ZONEDATA_GetAreaID(fieldWork->map_id), PMSEASON_GetConsiderCommSeason(gsys) , 0 );
+    // 無限ダンジョンのダンジョンエリア情報を取得
+    SAVE_CONTROL_WORK *p_scw = GAMEDATA_GetSaveControlWork( fieldWork->gamedata );
+    INFINITYDUNGEON_SAVE *p_save = SaveData_GetINFINITYDUNGEON( p_scw );
+    u8 dungeon_area_id = INFINITYDUNGEON_SAVE_GetDungeonAreaID( p_save );
 
+    // エリア情報を取得
+    fieldWork->areadata = AREADATA_Create( heapID,
+        ZONEDATA_GetAreaID(fieldWork->map_id), PMSEASON_GetConsiderCommSeason(gsys) , dungeon_area_id );
   }
 	
 	//マップコントロール
