@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-28T19:20:22"/>
+	<create user="matsumiya" host="W00224" date="2011-04-04T17:54:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,18 +292,39 @@
 	</lock>
 
 
-	<row id="msg_c12r0401_01_01">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_c12r0401_woman1_01">
+		<comment>♀
+・</comment>
+		<attribute name="キャラ指定">woman1</attribute>
+		<language name="JPN" width="256">ヒオウギは　イッシュちほうの
+はずれだから　ポケモントレーナーも▽
+すくないのよね……▼
+イッシュの　ちゅうしんなら
+しょうぶする　ひとも　おおいけれど</language>
+		<language name="JPN_KANJI" width="256">ヒオウギは　イッシュちほうの
+はずれだから　ポケモントレーナーも▽
+すくないのよね……▼
+イッシュの　ちゅうしんなら
+しょうぶする　ひとも　おおいけれど</language>
 	</row>
 
-	<row id="msg_c12r0401_02_01">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_c12r0401_girl2_01">
+		<comment>♀
+・</comment>
+		<attribute name="キャラ指定">girl2</attribute>
+		<language name="JPN" width="256">あたしの　ポケモン
+たたかわせないから　よわいまま……</language>
+		<language name="JPN_KANJI" width="256">あたしの　ポケモン
+たたかわせないから　よわいまま……</language>
+	</row>
+
+	<row id="msg_c12r0401_poke_01">
+		<comment>ポケモン
+・表示にあわせ鳴き声再生</comment>
+		<attribute name="キャラ指定">ポケモン
+・チョロネコ</attribute>
+		<language name="JPN" width="256">みゃーお</language>
+		<language name="JPN_KANJI" width="256">みゃーお</language>
 	</row>
 
 	<flowchart-group-list>
