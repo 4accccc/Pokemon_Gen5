@@ -12924,5 +12924,67 @@
     .short  \ret_wk
     .endm
 
+//--------------------------------------------------------------
+/**
+ * @def _INFINITY_DUNGEON_BATTLE_TRAINER
+ * @brief 無限ダンジョン内トレーナー戦闘
+ * @param trainer_no   トレーナー番号
+ */
+//--------------------------------------------------------------
+#define _INFINITY_DUNGEON_BATTLE_TRAINER() \
+    _ASM_INFINITY_DUNGEON_BATTLE_TRAINER
+
+    .macro  _ASM_INFINITY_DUNGEON_BATTLE_TRAINER
+    .short  EV_SEQ_INFINITY_DUNGEON_BATTLE_TRAINER
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _INFINITY_DUNGEON_BATTLE_TRAINER
+ * @brief 無限ダンジョン内BOSS番号取得
+ * @param ret_wk   ボス番号を受け取るワーク
+ */
+//--------------------------------------------------------------
+#define _INFINITY_DUNGEON_GET_BOSS_NO( ret_wk ) \
+    _ASM_INFINITY_DUNGEON_GET_BOSS_NO ret_wk
+
+    .macro  _ASM_INFINITY_DUNGEON_GET_BOSS_NO ret_wk
+    .short  EV_SEQ_INFINITY_DUNGEON_GET_BOSS_NO
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _INFINITY_DUNGEON_GET_BOSS_OBJ_CODE
+ * @brief 無限ダンジョン内BOSSのOBJ_CODE取得
+ * @param ret_wk   OBJ_CODEを受け取るワーク
+ */
+//--------------------------------------------------------------
+#define _INFINITY_DUNGEON_GET_BOSS_OBJ_CODE( ret_wk ) \
+    _ASM_INFINITY_DUNGEON_GET_BOSS_OBJ_CODE ret_wk
+
+    .macro  _ASM_INFINITY_DUNGEON_GET_BOSS_OBJ_CODE ret_wk
+    .short  EV_SEQ_INFINITY_DUNGEON_GET_BOSS_OBJ_CODE
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _INFINITY_DUNGEON_SET_TRAINER_BATTLE_FLAG
+ * @brief 無限ダンジョン内トレーナーの戦闘状態を設定
+ * @param tr_no   トレーナーNO
+ * @param status   敵の状態
+ */
+//--------------------------------------------------------------
+#define _INFINITY_DUNGEON_SET_TRAINER_BATTLE_FLAG( tr_no ,status ) \
+    _ASM_INFINITY_DUNGEON_SET_TRAINER_BATTLE_FLAG tr_no ,status
+
+    .macro  _ASM_INFINITY_DUNGEON_SET_TRAINER_BATTLE_FLAG tr_no ,status
+    .short  EV_SEQ_INFINITY_DUNGEON_SET_TRAINER_BATTLE_FLAG
+    .short  \tr_no
+    .short  \status
+    .endm
+
+
 //======================================================================
 //======================================================================

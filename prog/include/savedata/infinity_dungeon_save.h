@@ -31,8 +31,8 @@ extern void INFINITYDUNGEON_SAVE_Init(INFINITYDUNGEON_SAVE *p_save);
 extern INFINITYDUNGEON_SAVE* SaveData_GetINFINITYDUNGEON( SAVE_CONTROL_WORK * p_save );
 
 // ダンジョン情報（取得系）
-extern u8 INFINITYDUNGEON_SAVE_GetDungeonStatu( const INFINITYDUNGEON_SAVE *p_save );
-extern u8 INFINITYDUNGEON_SAVE_GetExDungeonStatu( const INFINITYDUNGEON_SAVE *p_save );
+extern u8 INFINITYDUNGEON_SAVE_GetDungeonStatus( const INFINITYDUNGEON_SAVE *p_save );
+extern u8 INFINITYDUNGEON_SAVE_GetExDungeonStatus( const INFINITYDUNGEON_SAVE *p_save );
 extern u8 INFINITYDUNGEON_SAVE_GetExMissionCount( const INFINITYDUNGEON_SAVE *p_save );
 extern u8 INFINITYDUNGEON_SAVE_GetMementoFlag( const INFINITYDUNGEON_SAVE *p_save );
 
@@ -45,7 +45,7 @@ extern u8 INFINITYDUNGEON_SAVE_GetPartnerID( const INFINITYDUNGEON_SAVE *p_save 
 extern u8 INFINITYDUNGEON_SAVE_GetFloorID( const INFINITYDUNGEON_SAVE *p_save );
 extern u8 INFINITYDUNGEON_SAVE_GetRoomID( const INFINITYDUNGEON_SAVE *p_save );
 extern u8 INFINITYDUNGEON_SAVE_GetPartnerID( const INFINITYDUNGEON_SAVE *p_save );
-extern u8 INFINITYDUNGEON_SAVE_GetAreaID( const INFINITYDUNGEON_SAVE *p_save );
+extern u8 INFINITYDUNGEON_SAVE_GetDungeonAreaID( const INFINITYDUNGEON_SAVE *p_save );
 
 // ダンジョン情報（設定系）
 extern void INFINITYDUNGEON_SAVE_SetDungeonStatus( INFINITYDUNGEON_SAVE *p_save ,u8 dungeon_status);

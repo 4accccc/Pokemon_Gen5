@@ -22,7 +22,11 @@
   DEF_CMD( EvCmdInfinityDungeonGetFloorNo, EV_SEQ_INFINITY_DUNGEON_GET_FLOOR_NO )
   DEF_CMD( EvCmdInfinityDungeonFloorMove, EV_SEQ_INFINITY_DUNGEON_MOVE_FLOOR )
   DEF_CMD( EvCmdInfinityDungeonGetAreaNo, EV_SEQ_INFINITY_DUNGEON_GET_AREA_NO )
-  
+  DEF_CMD( EvCmdInfinityDungeonBattleTrainer, EV_SEQ_INFINITY_DUNGEON_BATTLE_TRAINER )
+  DEF_CMD( EvCmdInfinityDungeonGetBossNo, EV_SEQ_INFINITY_DUNGEON_GET_BOSS_NO )
+  DEF_CMD( EvCmdInfinityDungeonSetTrainerBattleFlag, EV_SEQ_INFINITY_DUNGEON_SET_TRAINER_BATTLE_FLAG )
+  DEF_CMD( EvCmdInfinityDungeonGetBossOBJCode, EV_SEQ_INFINITY_DUNGEON_GET_BOSS_OBJ_CODE )
+ 
   END_CMD
   //スクリプトコマンドテーブル終了
 

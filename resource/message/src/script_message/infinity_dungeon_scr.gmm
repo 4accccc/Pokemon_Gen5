@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-05T16:44:28"/>
+	<create user="onoue_masayuki" host="W00272" date="2011-03-31T12:40:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="1502" top="252" right="2215" bottom="885" maximized="no" rayout="Vertical2">
+	<dialog left="1298" top="117" right="2011" bottom="750" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="542" visible="no"/>
-		<band id="0" index="1" style="0000" width="538"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="546"/>
+		<band id="2" index="3" style="0000" width="538"/>
 		<band id="3" index="4" style="0000" width="157"/>
-		<band id="4" index="0" style="0000" width="705"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<band id="4" index="0" style="0000" width="697"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,12 +292,204 @@
 	</lock>
 
 
-	<row id="msg_info_greet_b">
-		<comment>？？？</comment>
-		<language name="JPN" width="256">『くろのまてんろう』に　ようこそ！
-ごようけんを　おつたえください</language>
-		<language name="JPN_KANJI" width="256">『黒の摩天楼』に　ようこそ！
-ごようけんを　おつたえください</language>
+	<row id="msg_w_boss_start_00">
+		<language name="JPN" width="256">せんとう　かいし　ほわいと</language>
+		<language name="JPN_KANJI" width="256">せんとう　かいし　ほわいと</language>
+	</row>
+
+	<row id="msg_w_boss_start_01">
+		<language name="JPN" width="256">せんとう　かいし　ほわいと</language>
+		<language name="JPN_KANJI" width="256">せんとう　かいし　ほわいと</language>
+	</row>
+
+	<row id="msg_w_boss_start_02">
+		<language name="JPN" width="256">せんとう　かいし　ほわいと</language>
+		<language name="JPN_KANJI" width="256">せんとう　かいし　ほわいと</language>
+	</row>
+
+	<row id="msg_w_boss_start_03">
+		<language name="JPN" width="256">せんとう　かいし　ほわいと</language>
+		<language name="JPN_KANJI" width="256">せんとう　かいし　ほわいと</language>
+	</row>
+
+	<row id="msg_w_boss_start_04">
+		<language name="JPN" width="256">せんとう　かいし　ほわいと</language>
+		<language name="JPN_KANJI" width="256">せんとう　かいし　ほわいと</language>
+	</row>
+
+	<row id="msg_w_boss_start_05">
+		<language name="JPN" width="256">せんとう　かいし　ほわいと</language>
+		<language name="JPN_KANJI" width="256">せんとう　かいし　ほわいと</language>
+	</row>
+
+	<row id="msg_w_boss_start_06">
+		<language name="JPN" width="256">せんとう　かいし　ほわいと</language>
+		<language name="JPN_KANJI" width="256">せんとう　かいし　ほわいと</language>
+	</row>
+
+	<row id="msg_w_boss_start_07">
+		<language name="JPN" width="256">せんとう　かいし　ほわいと</language>
+		<language name="JPN_KANJI" width="256">せんとう　かいし　ほわいと</language>
+	</row>
+
+	<row id="msg_w_boss_start_08">
+		<language name="JPN" width="256">せんとう　かいし　ほわいと</language>
+		<language name="JPN_KANJI" width="256">せんとう　かいし　ほわいと</language>
+	</row>
+
+	<row id="msg_w_boss_start_09">
+		<language name="JPN" width="256">せんとう　かいし　ほわいと</language>
+		<language name="JPN_KANJI" width="256">せんとう　かいし　ほわいと</language>
+	</row>
+
+	<row id="msg_b_boss_start_00">
+		<language name="JPN" width="256">せんとう　かいし　ブラック</language>
+		<language name="JPN_KANJI" width="256">せんとう　かいし　ブラック</language>
+	</row>
+
+	<row id="msg_b_boss_start_01">
+		<language name="JPN" width="256">せんとう　かいし　ブラック</language>
+		<language name="JPN_KANJI" width="256">せんとう　かいし　ブラック</language>
+	</row>
+
+	<row id="msg_b_boss_start_02">
+		<language name="JPN" width="256">せんとう　かいし　ブラック</language>
+		<language name="JPN_KANJI" width="256">せんとう　かいし　ブラック</language>
+	</row>
+
+	<row id="msg_b_boss_start_03">
+		<language name="JPN" width="256">せんとう　かいし　ブラック</language>
+		<language name="JPN_KANJI" width="256">せんとう　かいし　ブラック</language>
+	</row>
+
+	<row id="msg_b_boss_start_04">
+		<language name="JPN" width="256">せんとう　かいし　ブラック</language>
+		<language name="JPN_KANJI" width="256">せんとう　かいし　ブラック</language>
+	</row>
+
+	<row id="msg_b_boss_start_05">
+		<language name="JPN" width="256">せんとう　かいし　ブラック</language>
+		<language name="JPN_KANJI" width="256">せんとう　かいし　ブラック</language>
+	</row>
+
+	<row id="msg_b_boss_start_06">
+		<language name="JPN" width="256">せんとう　かいし　ブラック</language>
+		<language name="JPN_KANJI" width="256">せんとう　かいし　ブラック</language>
+	</row>
+
+	<row id="msg_b_boss_start_07">
+		<language name="JPN" width="256">せんとう　かいし　ブラック</language>
+		<language name="JPN_KANJI" width="256">せんとう　かいし　ブラック</language>
+	</row>
+
+	<row id="msg_b_boss_start_08">
+		<language name="JPN" width="256">せんとう　かいし　ブラック</language>
+		<language name="JPN_KANJI" width="256">せんとう　かいし　ブラック</language>
+	</row>
+
+	<row id="msg_b_boss_start_09">
+		<language name="JPN" width="256">せんとう　かいし　ブラック</language>
+		<language name="JPN_KANJI" width="256">せんとう　かいし　ブラック</language>
+	</row>
+
+	<row id="msg_w_boss_end_00">
+		<language name="JPN" width="256">せんとう　しゅうりょう　ホワイト</language>
+		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ホワイト</language>
+	</row>
+
+	<row id="msg_w_boss_end_01">
+		<language name="JPN" width="256">せんとう　しゅうりょう　ホワイト</language>
+		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ホワイト</language>
+	</row>
+
+	<row id="msg_w_boss_end_02">
+		<language name="JPN" width="256">せんとう　しゅうりょう　ホワイト</language>
+		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ホワイト</language>
+	</row>
+
+	<row id="msg_w_boss_end_03">
+		<language name="JPN" width="256">せんとう　しゅうりょう　ホワイト</language>
+		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ホワイト</language>
+	</row>
+
+	<row id="msg_w_boss_end_04">
+		<language name="JPN" width="256">せんとう　しゅうりょう　ホワイト</language>
+		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ホワイト</language>
+	</row>
+
+	<row id="msg_w_boss_end_05">
+		<language name="JPN" width="256">せんとう　しゅうりょう　ホワイト</language>
+		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ホワイト</language>
+	</row>
+
+	<row id="msg_w_boss_end_06">
+		<language name="JPN" width="256">せんとう　しゅうりょう　ホワイト</language>
+		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ホワイト</language>
+	</row>
+
+	<row id="msg_w_boss_end_07">
+		<language name="JPN" width="256">せんとう　しゅうりょう　ホワイト</language>
+		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ホワイト</language>
+	</row>
+
+	<row id="msg_w_boss_end_08">
+		<language name="JPN" width="256">せんとう　しゅうりょう　ホワイト</language>
+		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ホワイト</language>
+	</row>
+
+	<row id="msg_w_boss_end_09">
+		<language name="JPN" width="256">せんとう　しゅうりょう　ホワイト</language>
+		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ホワイト</language>
+	</row>
+
+	<row id="msg_b_boss_end_00">
+		<language name="JPN" width="256">せんとう　しゅうりょう　ブラック</language>
+		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ブラック</language>
+	</row>
+
+	<row id="msg_b_boss_end_01">
+		<language name="JPN" width="256">せんとう　しゅうりょう　ブラック</language>
+		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ブラック</language>
+	</row>
+
+	<row id="msg_b_boss_end_02">
+		<language name="JPN" width="256">せんとう　しゅうりょう　ブラック</language>
+		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ブラック</language>
+	</row>
+
+	<row id="msg_b_boss_end_03">
+		<language name="JPN" width="256">せんとう　しゅうりょう　ブラック</language>
+		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ブラック</language>
+	</row>
+
+	<row id="msg_b_boss_end_04">
+		<language name="JPN" width="256">せんとう　しゅうりょう　ブラック</language>
+		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ブラック</language>
+	</row>
+
+	<row id="msg_b_boss_end_05">
+		<language name="JPN" width="256">せんとう　しゅうりょう　ブラック</language>
+		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ブラック</language>
+	</row>
+
+	<row id="msg_b_boss_end_06">
+		<language name="JPN" width="256">せんとう　しゅうりょう　ブラック</language>
+		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ブラック</language>
+	</row>
+
+	<row id="msg_b_boss_end_07">
+		<language name="JPN" width="256">せんとう　しゅうりょう　ブラック</language>
+		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ブラック</language>
+	</row>
+
+	<row id="msg_b_boss_end_08">
+		<language name="JPN" width="256">せんとう　しゅうりょう　ブラック</language>
+		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ブラック</language>
+	</row>
+
+	<row id="msg_b_boss_end_09">
+		<language name="JPN" width="256">せんとう　しゅうりょう　ブラック</language>
+		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ブラック</language>
 	</row>
 
 	<row id="msg_info_greet_w">
@@ -305,6 +497,13 @@
 		<language name="JPN" width="256">『しろのどうくつ』に　ようこそ！
 ごようけんを　おつたえください</language>
 		<language name="JPN_KANJI" width="256">『白のどうくつ』に　ようこそ！
+ごようけんを　おつたえください</language>
+	</row>
+
+	<row id="msg_info_greet_b">
+		<language name="JPN" width="256">『くろのまてんろう』に　ようこそ！
+ごようけんを　おつたえください</language>
+		<language name="JPN_KANJI" width="256">『黒の摩天楼』に　ようこそ！
 ごようけんを　おつたえください</language>
 	</row>
 

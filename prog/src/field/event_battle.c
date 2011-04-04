@@ -480,6 +480,57 @@ GMEVENT * EVENT_TrialHouseTrainerBattle(
 
 //--------------------------------------------------------------
 /**
+ * 無限ダンジョン内トレーナーバトルイベント
+ * @param gsys  GAMESYS_WORK
+ * @param fieldmap FIELDMAP_WORK
+ * @param tr_id
+ * @param flags
+ * @retval GMEVENT*
+ */
+//--------------------------------------------------------------
+GMEVENT * EVENT_InfinityDungeonTrainerBattle(
+    GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, BATTLE_SETUP_PARAM *bp )
+{
+  GMEVENT * event;
+  BATTLE_EVENT_WORK *bew;
+  
+#if 0
+  {
+    POKEPARTY * myparty = GAMEDATA_GetMyPokemon(GAMESYSTEM_GetGameData(gsys));
+    POKEMON_PARAM * pp = PokeParty_GetMemberPointer( myparty, 0 );
+    PP_Put( pp, ID_PARA_hp, 1 );
+  }
+#endif
+  
+  event = GMEVENT_Create(
+      gsys, NULL, fieldBattleEvent, sizeof(BATTLE_EVENT_WORK) );
+  
+#ifdef PM_DEBUG
+  debug_FieldDebugFlagSet( bp );
+#endif
+  
+  bew = GMEVENT_GetEventWork(event);
+  BEW_Initialize( bew, gsys, bp );
+  
+#if 0
+  bew->is_sub_event = TRUE; //サブイベント呼び出し
+#else
+  bew->is_sub_event = FALSE; //戦闘後のフェードイン目当て
+#endif
+  
+  bew->is_no_lose = TRUE; //敗戦処理無し
+  bew->not_free_bsp = FALSE; //開放する
+  
+  //エンカウントエフェクトとＢＧＭセット(サブウェイ固有)
+  bew->EncEffNo = ENCEFFID_SUBWAY;
+   
+  //エフェクトエンカウト　エフェクト復帰キャンセル
+  EFFECT_ENC_EffectRecoverCancel( FIELDMAP_GetEncount(fieldmap));
+  return event;
+}
+
+//--------------------------------------------------------------
+/**
  * フィールド捕獲デモバトルイベント作成
  * @param gsys  GAMESYS_WORK
  * @param fieldmap FIELDMAP_WORK

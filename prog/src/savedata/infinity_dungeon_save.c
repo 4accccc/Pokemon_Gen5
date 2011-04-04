@@ -95,7 +95,7 @@ INFINITYDUNGEON_SAVE* SaveData_GetINFINITYDUNGEON( SAVE_CONTROL_WORK *p_save )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-u8 INFINITYDUNGEON_SAVE_GetDungeonStatu( const INFINITYDUNGEON_SAVE *p_save )
+u8 INFINITYDUNGEON_SAVE_GetDungeonStatus( const INFINITYDUNGEON_SAVE *p_save )
 {
   return p_save->dungeon_status;
 }
@@ -108,7 +108,7 @@ u8 INFINITYDUNGEON_SAVE_GetDungeonStatu( const INFINITYDUNGEON_SAVE *p_save )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-u8 INFINITYDUNGEON_SAVE_GetExDungeonStatu( const INFINITYDUNGEON_SAVE *p_save )
+u8 INFINITYDUNGEON_SAVE_GetExDungeonStatus( const INFINITYDUNGEON_SAVE *p_save )
 {
   return p_save->ex_dungeon_status;
 }
@@ -411,7 +411,7 @@ void INFINITYDUNGEON_SAVE_SetPartnerID( INFINITYDUNGEON_SAVE *p_save ,u8 partner
  *	@retval
  */
 //-----------------------------------------------------------------------------
-u8 INFINITYDUNGEON_SAVE_GetAreaID( const INFINITYDUNGEON_SAVE *p_save )
+u8 INFINITYDUNGEON_SAVE_GetDungeonAreaID( const INFINITYDUNGEON_SAVE *p_save )
 {
   return p_save->floor_id/INFINITYDUNGEON_FLOOR_MAX;
 }

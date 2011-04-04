@@ -22,7 +22,9 @@
 #define ROOM_MAX_X  (5)    // 部屋X最大数
 #define ROOM_MAX_Y  (5)    // 部屋Y最大数
 #define FLOOR_MAX   (10)   // フロア最大数
-#define ROOM_MAX    (ROOM_MAX_X*ROOM_MAX_Y)    // 部屋最大数
+#define ROOM_MAX    (ROOM_MAX_X*ROOM_MAX_Y)   // 部屋最大数
+#define INFINITY_DUNGEON_TRID_MAX  (32)       // 無限ダンジョン内トレーナーMAX
+#define INFINITY_DUNGEON_OBJID_FIRST (0x100)  // OBJIDのオフセット値
 
 //=============================================================================
 //
@@ -38,4 +40,5 @@
 extern void INFINITY_DUNGEON_WarpNextMap( SCRIPT_WORK *p_scr_work, GAMESYS_WORK *p_gsys, u16 warp_dir );
 extern void INFINITY_DUNGEON_Recovery( SCRIPT_WORK *p_scr_work, GAMESYS_WORK *p_gsys );
 extern void INFINITY_DUNGEON_WarpNextFloor( SCRIPT_WORK *p_scr_work, GAMESYS_WORK *p_gsys, int floor_no );
+extern GMEVENT * INFINITY_DUNGEON_EVENT_TrainerBattle(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap ,u16 obj_id);
 

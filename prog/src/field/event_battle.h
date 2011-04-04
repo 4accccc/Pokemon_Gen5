@@ -45,6 +45,9 @@ extern GMEVENT * EVENT_CaptureDemoBattle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fie
 extern GMEVENT * EVENT_TradeAfterTrainerBattle(
     GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, int rule, int partner_id, int tr_id0, int tr_id1, u32 flags, TRPOKE_AFTER_SAVE_TYPE trade_type );
 
+extern GMEVENT * EVENT_InfinityDungeonTrainerBattle(
+    GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, BATTLE_SETUP_PARAM *bp );
+
 //--------------------------------------------------------------
 /**
  * @brief ÅuîsñkèàóùÅvÇ∆Ç∑ÇÈÇ◊Ç´Ç©Ç«Ç§Ç©ÇÃîªíË

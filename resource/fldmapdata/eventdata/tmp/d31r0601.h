@@ -8,6 +8,7 @@
 #ifndef ZONE_D31R0601_EVC_H
 #define ZONE_D31R0601_EVC_H
 
+#define D31R0601_WKOBJCODE00               0
 
 #endif //ZONE_D31R0601_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d31r0601.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

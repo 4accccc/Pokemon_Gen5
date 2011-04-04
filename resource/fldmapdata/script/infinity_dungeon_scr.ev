@@ -5,7 +5,7 @@
  *	@brief  無限ダンジョン用スクリプト
  *	@author	Masayuki Onoue
  *	@date		2011.02.24
- *
+ *  
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
@@ -18,6 +18,8 @@
   .include  "infinity_dungeon_scr_def.h"
   .include  "d31r0101.h"
   .include  "d31r0201.h"
+  .include  "d31r0501.h"
+  .include  "d31r0601.h"
 
 //--------------------------------------------------------------------
 //		スクリプトテーブル
@@ -31,6 +33,8 @@ _EVENT_DATA		ev_infinity_dungeon_information
 _EVENT_DATA   ev_infinity_dungeon_elevator
 _EVENT_DATA   ev_infinity_dungeon_comeback
 _EVENT_DATA   ev_infinity_dungeon_out_elevator
+_EVENT_DATA   ev_infinity_dungeon_battle_trainer
+_EVENT_DATA   ev_infinity_dungeon_battle_boss_trainer
 _EVENT_DATA_END
 
 
@@ -73,47 +77,48 @@ INIT_EVENT_END
 //	エレベータ移動
 //-----------------------------------------------------------------------------
 INIT_EVENT_START  ev_infinity_dungeon_elevator
-  DEFINE_LOCAL select_floor
-  DEFINE_LOCAL index 
-  DEFINE_LOCAL floor_num
-  DEFINE_LOCAL end_floor
-  DEFINE_LOCAL now_floor
-  DEFINE_LOCAL now_area
-  DEFINE_LOCAL draw_floor_no
+{
+  DEFINE_LOCAL LWK_SELECT_FLOOR
+  DEFINE_LOCAL LWK_INDEX 
+  DEFINE_LOCAL LWK_FLOOR_NUM
+  DEFINE_LOCAL LWK_END_FLOOR
+  DEFINE_LOCAL LWK_NOW_FLOOR
+  DEFINE_LOCAL LWK_NOW_AREA
+  DEFINE_LOCAL LWK_DRAW_FLOOR_NO
 
   // 案内メッセージ
   _SYSWIN_MSG( msg_elevator_01, POS_DOWN )
   _LAST_KEYWAIT()
  
   // フロアIDを取得する
-  _INFINITY_DUNGEON_GET_NOW_FLOOR_NO( now_floor )
+  _INFINITY_DUNGEON_GET_NOW_FLOOR_NO( LWK_NOW_FLOOR )
 
   // エリアIDを取得する
-  _INFINITY_DUNGEON_GET_NOW_AREA_NO(now_area)
+  _INFINITY_DUNGEON_GET_NOW_AREA_NO(LWK_NOW_AREA)
  
   // 階数選択メニュー
-  $floor_num = $now_area
-  $floor_num *= 10
-  $end_floor = $floor_num
-  $end_floor += INFINITYDUNGEON_FLOOR_MAX
-  $index = 0
+  $LWK_FLOOR_NUM = $LWK_NOW_AREA
+  $LWK_FLOOR_NUM *= 10
+  $LWK_END_FLOOR = $LWK_FLOOR_NUM
+  $LWK_END_FLOOR += INFINITYDUNGEON_FLOOR_MAX
+  $LWK_INDEX = 0
 
-  _DEBUG_PRINT_WK(floor_num)
-  _DEBUG_PRINT_WK(end_floor)
+  _DEBUG_PRINT_WK(LWK_FLOOR_NUM)
+  _DEBUG_PRINT_WK(LWK_END_FLOOR)
  
   // リスト作成
-	_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, select_floor )
-  WHILE $floor_num != $end_floor
-    IF $now_floor != $floor_num THEN
+	_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, LWK_SELECT_FLOOR )
+  WHILE $LWK_FLOOR_NUM != $LWK_END_FLOOR
+    IF $LWK_NOW_FLOOR != $LWK_FLOOR_NUM THEN
       // メニューに回数表示を追加
-      $draw_floor_no = $floor_num
-      $draw_floor_no += 1
-	    _NUMBER( 0 ,  draw_floor_no , 2 )
-      _BMPMENU_MAKE_LIST( msg_elevator_02, floor_num )
+      $LWK_DRAW_FLOOR_NO = $LWK_FLOOR_NUM
+      $LWK_DRAW_FLOOR_NO += 1
+	    _NUMBER( 0 ,  LWK_DRAW_FLOOR_NO , 2 )
+      _BMPMENU_MAKE_LIST( msg_elevator_02, LWK_FLOOR_NUM )
     ENDIF
     // カウンタをインクリメント
-    $floor_num += 1
-    $index += 1
+    $LWK_FLOOR_NUM += 1
+    $LWK_INDEX += 1
   ENDWHILE
   // かえる
   _BMPMENU_MAKE_LIST( msg_elevator_03, 0xf0 )
@@ -127,30 +132,30 @@ INIT_EVENT_START  ev_infinity_dungeon_elevator
   _SYSWIN_CLOSE()
  
   // 選択後処理
-  IF ($select_floor != EV_WIN_B_CANCEL)&&($select_floor != 0xff) THEN
-    IF $select_floor != 0xf0 THEN
+  IF ($LWK_SELECT_FLOOR != EV_WIN_B_CANCEL)&&($LWK_SELECT_FLOOR != 0xff) THEN
+    IF $LWK_SELECT_FLOOR != 0xf0 THEN
       // 選択フロア
-      _DEBUG_PRINT_WK(select_floor)
+      _DEBUG_PRINT_WK(LWK_SELECT_FLOOR)
 
       // エレベータから出る
       _RESERVE_SCRIPT( SCRID_INFINITY_DUNGEON_OUT_ELEVATOR )
 
       // 選択フロアまで移動
-      _INFINITY_DUNGEON_MOVE_FLOOR( select_floor )
+      _INFINITY_DUNGEON_MOVE_FLOOR( LWK_SELECT_FLOOR )
     ELSE
       // かえるしょり
       _INFINITY_DUNGEON_WARP(WARP_INFORMATION)
       _RESERVE_SCRIPT( SCRID_INFINITY_DUNGEON_COMEBACK )
     ENDIF
   ENDIF
-
+}
 INIT_EVENT_END
 
 //----------------------------------------------------------------------------
 //	受付
 //-----------------------------------------------------------------------------
 INIT_EVENT_START  ev_infinity_dungeon_information
-
+{
   // 会話開始
   _TALK_OBJ_START()
   
@@ -162,36 +167,37 @@ INIT_EVENT_START  ev_infinity_dungeon_information
     $SCWK_ANSWER = 0
     _CALL dungeon_information
   ENDWHILE
- 
+}
 INIT_EVENT_END
 
 //----------------------------------------------------------------------------
 //	エリア選択（$SCWK_ANSWER == 1でもう一度実行）
 //-----------------------------------------------------------------------------
 dungeon_information:
- DEFINE_LOCAL list_ret
- DEFINE_LOCAL rom_version
+{
+ DEFINE_LOCAL LWK_LIST_RET
+ DEFINE_LOCAL LWK_ROM_VERSION
 
   // 初期化
   $SCWK_ANSWER = 0
   
   // あいさつ
   // ROMバージョンでの判断
-	_GET_ROM_VERSION( rom_version )
-	IF $rom_version == VERSION_B2 THEN
+	_GET_ROM_VERSION( LWK_ROM_VERSION )
+	IF $LWK_ROM_VERSION == VERSION_B2 THEN
     _BALLOONWIN_OBJMSG_POS( msg_info_greet_b , SCWK_TARGET_OBJID, POS_DL )
   ELSE 
     _BALLOONWIN_OBJMSG_POS( msg_info_greet_w , SCWK_TARGET_OBJID, POS_DL )
   ENDIF
 
-	_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, list_ret )
+	_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, LWK_LIST_RET )
   _BMPMENU_MAKE_LIST( msg_info_menu_01, 0 )  //せつめい
   _BMPMENU_MAKE_LIST( msg_info_menu_02, 1 )  //ちょうせんする
   _BMPMENU_MAKE_LIST( msg_info_menu_03, 2 )  //やめる
   _BMPMENU_START()
 
-  IF $list_ret != EV_WIN_B_CANCEL THEN
-    SWITCH $list_ret
+  IF $LWK_LIST_RET != EV_WIN_B_CANCEL THEN
+    SWITCH $LWK_LIST_RET
      CASE 0 THEN
         // せつめい
        _BALLOONWIN_OBJMSG_POS( msg_info_help , SCWK_TARGET_OBJID, POS_DL )
@@ -217,37 +223,37 @@ dungeon_information:
     _BALLOONWIN_CLOSE()
     $SCWK_ANSWER = 0
   ENDIF
-
+}
 _RET
 
 //----------------------------------------------------------------------------
 //	エリア選択
 //-----------------------------------------------------------------------------
 select_area:
-  DEFINE_LOCAL area_menu 
-  DEFINE_LOCAL list_num
-  DEFINE_LOCAL list_count
-  DEFINE_LOCAL menu_num
-  DEFINE_LOCAL start_room
+{
+  DEFINE_LOCAL LWK_AREA_MENU 
+  DEFINE_LOCAL LWK_LIST_NUM
+  DEFINE_LOCAL LWK_LIST_COUNT
+  DEFINE_LOCAL LWK_MENU_NUM
+  DEFINE_LOCAL LWK_START_ROOM
   
   // ダンジョンの状態を取得
-  _INFINITY_DUNGEON_GET_DUNGEON_STATUS( menu_num )
+  _INFINITY_DUNGEON_GET_DUNGEON_STATUS( LWK_MENU_NUM )
  
   // エリア選択メニュー
-  _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, area_menu )
+  _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, LWK_AREA_MENU )
       
   // メニューを呼び出し
-  $list_count = 0
-  WHILE $list_count <= $menu_num
+  $LWK_LIST_COUNT = 0
+  WHILE $LWK_LIST_COUNT <= $LWK_MENU_NUM
     // エリア番号を登録
-    $start_room  = $list_count
-    $start_room *= 10
-    $list_num =  $list_count
-    $list_num += 1
-	  _NUMBER( 0 , list_num , 2 )
-    _BMPMENU_MAKE_LIST( msg_info_area, start_room )
-    $list_count += 1
-    _DEBUG_PRINT_WK(floor_num)
+    $LWK_START_ROOM  = $LWK_LIST_COUNT
+    $LWK_START_ROOM *= 10
+    $LWK_LIST_NUM =  $LWK_LIST_COUNT
+    $LWK_LIST_NUM += 1
+	  _NUMBER( 0 , LWK_LIST_NUM , 2 )
+    _BMPMENU_MAKE_LIST( msg_info_area, LWK_START_ROOM )
+    $LWK_LIST_COUNT += 1
   ENDWHILE
 
   // やめる
@@ -257,7 +263,7 @@ select_area:
   _BMPMENU_START()
 
   // キャンセル判定
-  IF ($area_menu != EV_WIN_B_CANCEL)&&($area_menu != 0xff) THEN
+  IF ($LWK_AREA_MENU != EV_WIN_B_CANCEL)&&($LWK_AREA_MENU != 0xff) THEN
 
     // 確認
     _BALLOONWIN_OBJMSG_POS( msg_info_002 , SCWK_TARGET_OBJID, POS_DL )
@@ -284,8 +290,11 @@ select_area:
       _RESERVE_SCRIPT( SCRID_INFINITY_DUNGEON_OUT_ELEVATOR )
 
       // スタートフロアまで移動
-      _INFINITY_DUNGEON_MOVE_FLOOR( area_menu )
-     
+      _INFINITY_DUNGEON_MOVE_FLOOR( LWK_AREA_MENU )
+  
+      // ボストレーナーの見た目を設定
+      _INFINITY_DUNGEON_GET_BOSS_OBJ_CODE(OBJCHRWORK0)
+    
     ELSE
       // やめる
       _BALLOONWIN_OBJMSG_POS( msg_info_cancel , SCWK_TARGET_OBJID, POS_DL )
@@ -298,13 +307,14 @@ select_area:
     _LAST_KEYWAIT()
     _BALLOONWIN_CLOSE()
   ENDIF
+}
 _RET
 
 //----------------------------------------------------------------------------
 //	帰還
 //-----------------------------------------------------------------------------
-INIT_EVENT_START  ev_infinity_dungeon_comeback
-
+EVENT_START  ev_infinity_dungeon_comeback
+{
   // 道をあける
   _OBJ_ANIME( OBJ_INFORMATION, anm_move_make_room_l )
 	_OBJ_ANIME_WAIT()
@@ -316,19 +326,98 @@ INIT_EVENT_START  ev_infinity_dungeon_comeback
   // みちをふさぐ
   _OBJ_ANIME( OBJ_INFORMATION, anm_move_default_l )
   _OBJ_ANIME_WAIT()
-
+}
 INIT_EVENT_END
-
 
 //----------------------------------------------------------------------------
 //	エレベータから降りる
 //-----------------------------------------------------------------------------
-INIT_EVENT_START  ev_infinity_dungeon_out_elevator
-
+EVENT_START  ev_infinity_dungeon_out_elevator
+{
   // 主人公をエレベータまで移動
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_elev_out )
   _OBJ_ANIME_WAIT()
+}
+INIT_EVENT_END
 
+//----------------------------------------------------------------------------
+//	トレーナーとの戦闘
+//-----------------------------------------------------------------------------
+EVENT_START  ev_infinity_dungeon_battle_trainer
+{
+  // トレーナーとの戦闘
+  _INFINITY_DUNGEON_BATTLE_TRAINER()
+}
+INIT_EVENT_END
+
+//----------------------------------------------------------------------------
+//	BOSSトレーナーとの戦闘
+//-----------------------------------------------------------------------------
+EVENT_START  ev_infinity_dungeon_battle_boss_trainer
+{
+  DEFINE_LOCAL  LWK_ROM_VERSION
+  DEFINE_LOCAL	LWK_HERO_X
+  DEFINE_LOCAL	LWK_HERO_Z
+  DEFINE_LOCAL	LWK_TR_START_MSG_ID
+  DEFINE_LOCAL	LWK_BOSS_TRNO
+    
+  // ROMバージョン取得
+  _GET_ROM_VERSION( LWK_ROM_VERSION )
+
+  // ボスナンバー取得
+  _INFINITY_DUNGEON_GET_BOSS_NO( LWK_BOSS_TRNO )
+
+  // 出口まで歩く
+	IF $LWK_ROM_VERSION == VERSION_B2 THEN
+    _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 6, 7, FORCE_TYPE_NOT, 8, DIR_UD)
+  ELSE 
+    _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 6, 7, FORCE_TYPE_NOT, 8, DIR_UD)
+  ENDIF
+  _OBJ_ANIME_WAIT()
+
+  // 上に向く
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_set_up_dir )
+  _OBJ_ANIME_WAIT()
+
+  // 戦闘前メッセージID取得
+  $LWK_TR_START_MSG_ID = msg_b_boss_start_00
+
+  // メッセージ開始
+  _BALLOONWIN_OBJMSG_POS( LWK_TR_START_MSG_ID , D31R0601_WKOBJCODE00, POS_DOWN )
+  _LAST_KEYWAIT()
+	_BALLOONWIN_CLOSE()
+
+	//トレーナー戦呼び出し
+	_TRAINER_BTL_SET( LWK_BOSS_TRNO, 0 )
+
+  //敗戦チェック
+	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+	
+	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+			_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+	ELSE
+			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+	ENDIF
+
+  // 戦闘終了後メッセージ
+  $LWK_TR_START_MSG_ID = msg_b_boss_end_00
+  _BALLOONWIN_OBJMSG_POS( LWK_TR_START_MSG_ID , D31R0601_WKOBJCODE00, POS_DOWN )
+  _LAST_KEYWAIT()
+	_BALLOONWIN_CLOSE()
+
+  // 出口まで歩く
+	IF $LWK_ROM_VERSION == VERSION_B2 THEN
+    _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 6, 13, FORCE_TYPE_NOT, 8, DIR_UD)
+  ELSE 
+    _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 6, 13, FORCE_TYPE_NOT, 8, DIR_UD)
+  ENDIF
+  _OBJ_ANIME_WAIT()
+
+  // かえるしょり
+  _INFINITY_DUNGEON_WARP(WARP_INFORMATION)
+  _RESERVE_SCRIPT( SCRID_INFINITY_DUNGEON_COMEBACK )
+
+}
 INIT_EVENT_END
 
 //--------------------------------------------------------------------
@@ -356,6 +445,13 @@ _ANIME_LABEL	anm_move_elev_in
 	_ANIME_DATA	AC_WALK_U_8F,3
   _ANIME_DATA	AC_WALK_L_8F,2
 	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 上に向く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_set_up_dir
+  _ANIME_DATA AC_DIR_U,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
