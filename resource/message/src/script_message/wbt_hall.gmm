@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2011-03-08T21:34:01"/>
+	<create user="matsumiya" host="W00224" date="2011-04-04T14:18:28"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -378,15 +378,15 @@
 		</language>
 	</columns>
 
-	<dialog left="6" top="97" right="711" bottom="717" maximized="no" rayout="Vertical2">
+	<dialog left="1463" top="169" right="2168" bottom="789" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="548"/>
-		<band id="3" index="4" style="0000" width="147"/>
+		<band id="2" index="3" style="0000" width="543"/>
+		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -448,59 +448,10 @@
 	<row id="msg_wbt_announce_05" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<attribute name="キャラ指定">アナウンス
 シッポなしメッセージ</attribute>
-		<language name="JPN" width="256">ゆうしょうは……！
+		<language name="JPN" width="256">ゆうしょう　は……！▼
 [1:00:トレーナー名:0]だー！！▼</language>
-		<language name="JPN_KANJI" width="256">優勝は……！
+		<language name="JPN_KANJI" width="256">優勝は……！▼
 [1:00:トレーナー名:0]だー！！▼</language>
-	</row>
-
-	<row id="TEST_STR_03">
-		<language name="JPN" width="256">もじれつ　を　へんしゅう　した　あとで
-「てきよう」を　おすと、つかえない　もじが
-ふくまれていた　ばあいに　けいこくが　でます。</language>
-		<language name="JPN_KANJI" width="256">文字列を編集した後で
-「適用」をおすと、使えない文字が
-ふくまれていた場合に、警告が出ます。</language>
-	</row>
-
-	<row id="TEST_STR_04">
-		<language name="JPN" width="256">とくに　「かんじ」は　ちゅうがっこうまでに
-ならうものしか　つかえません。</language>
-		<language name="JPN_KANJI" width="256">特に漢字は、中学校までに
-習うものしか　使えません。</language>
-	</row>
-
-	<row id="TEST_STR_05">
-		<language name="JPN" width="256">この「かんじ」は　つかえるのかな？　ということを
-わざわざ　しらべなくても
-へんしゅうしながら　たしかめられます。
-</language>
-		<language name="JPN_KANJI" width="256">この漢字は使えるのかな？　ということを、
-わざわざ調べなくても、
-編集しながら確かめられます。
-</language>
-	</row>
-
-	<row id="TEST_STR_06">
-		<language name="JPN" width="256">「かんじ」を　つかう　ひつようが　ない　ばあいは
-JPN_KANJI　の　れつ　を　けすことも　できます。
-</language>
-		<language name="JPN_KANJI" width="256">漢字を使う必要がない場合は、
-JPN_KANJI　の列を消すこともできます。
-</language>
-	</row>
-
-	<row id="TEST_STR_07">
-		<language name="JPN" width="256">メニューバーから
-プロジェクト
-→こうもくせってい
-→げんごのついか／さくじょ
-です。</language>
-		<language name="JPN_KANJI" width="256">メニューバーから
-プロジェクト
-→項目設定
-→言語の追加／削除
-です。</language>
 	</row>
 
 	<row id="msg_test">
