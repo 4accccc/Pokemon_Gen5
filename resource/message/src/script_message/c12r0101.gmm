@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-28T18:00:55"/>
+	<create user="matsumiya" host="W00224" date="2011-04-04T12:55:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1300" top="129" right="2005" bottom="757" maximized="no" rayout="Vertical2">
+	<dialog left="1301" top="151" right="2006" bottom="779" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -294,8 +294,8 @@
 
 	<row id="msg_c12r0101_swmama_01">
 		<comment>♀
-・posイベントで室外から登場
-　入り口より１キャラ上で横並びになる
+・pos（local　4~6．9）を踏むと室外から登場
+・続けてswmama_02
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">スワン主人公ママ</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]！
@@ -306,8 +306,10 @@
 
 	<row id="msg_c12r0101_swmama_02">
 		<comment>♀
+・主人公とママ、横並びになる
+　　ママの顔を見せたいので
 ・メッセージ後、その場で一回転
-・続けて</comment>
+・続けてswmama_03</comment>
 		<attribute name="キャラ指定">スワン主人公ママ</attribute>
 		<language name="JPN" width="256">アララギ博士って　知ってるでしょ
 ポケモン研究で　有名な▼
@@ -322,8 +324,8 @@
 	<row id="msg_c12r0101_swmama_03">
 		<comment>♀
 ・はい/いいえ
-　はい　→
-　いいえ→</comment>
+　はい　→swmama_06
+　いいえ→swmama_05</comment>
 		<attribute name="キャラ指定">スワン主人公ママ</attribute>
 		<language name="JPN" width="256">と　そのまえに▼
 [1:00:トレーナー名:0]！　あなた　じぶんの
@@ -337,8 +339,8 @@
 		<comment>♀
 ・再確認
 ・はい/いいえ
-　はい　→
-　いいえ→</comment>
+　はい　→swmama_06
+　いいえ→swmama_05</comment>
 		<attribute name="キャラ指定">スワン主人公ママ</attribute>
 		<language name="JPN" width="256">もういちど　きくけれど　じぶんの
 パートナーとなる　ポケモン　ほしい？</language>
@@ -359,11 +361,9 @@
 
 	<row id="msg_c12r0101_swmama_06">
 		<comment>♀
-・はい選択
-・メッセージ後、室内に移動
-　詳細未定</comment>
+・はい選択</comment>
 		<attribute name="キャラ指定">スワン主人公ママ</attribute>
-		<language name="JPN" width="256">よね！　よかった！▼
+		<language name="JPN" width="256">ほしいよね！　よかった！▼
 あのね　アララギはかせの
 じょしゅを　している　おんなのこが▽
 こっちに　くるんだって！▼
@@ -372,7 +372,7 @@
 だけど　はじめての　まちで
 まよっているかも　しれないし▽
 あなた　さがしてあげてね！</language>
-		<language name="JPN_KANJI" width="256">よね！　よかった！▼
+		<language name="JPN_KANJI" width="256">ほしいよね！　よかった！▼
 あのね　アララギ博士の
 助手を　している　女の子が▽
 こっちに　来るんだって！▼
@@ -401,10 +401,12 @@
 
 	<row id="msg_c12r0101_swmama_08" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
-・</comment>
+・ライブキャスター入手処理</comment>
 		<attribute name="キャラ指定">スワン主人公ママ</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">あと　でかけるなら
+ライブキャスターを　わすれないでね▼</language>
+		<language name="JPN_KANJI" width="256">あと　でかけるなら
+ライブキャスターを　わすれないでね▼</language>
 	</row>
 
 	<row id="msg_c12r0101_swmama_09" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
