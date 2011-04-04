@@ -378,13 +378,20 @@ static GMEVENT_RESULT TrainerBeforeMsgEvt(
 #include "battle/battle.h"
 
 static BSP_TRAINER_DATA *CreateBSPTrainerData( HEAPID heapID );
-static void MakePokePara( const BSUBWAY_POKEMON *src, POKEMON_PARAM *dest );
-static u16 GetRand( void );
+static void MakePokePara( const BSUBWAY_POKEMON *src, POKEMON_PARAM *dest , u16 level  );
+static u16 GetRand( GFL_STD_RandContext *rand_context );
 static u8 GetPowerRnd(u16 tr_no);
-static void GetPokemonRomData( BSUBWAY_POKEMON_ROM_DATA *prd, int index );
-static void * GetTrainerRomData( u16 tr_no, HEAPID heapID );
+static void GetPokemonRomData( ARCID poke_arc_id,BSUBWAY_POKEMON_ROM_DATA *prd,int index);
+static void * GetTrainerRomData(ARCID tr_arcID, u16 tr_no, HEAPID heapID );
 
 static BOOL IsValidEasyTalk(BSUBWAY_TRAINER *bsw_trainer);
+static BATTLE_SETUP_PARAM * MakeBattleParam( GAMESYS_WORK *p_gsys , const u16 play_mode ,BTL_FIELD_SITUATION *p_sit , const BOOL isAllocRecBuffer ,HEAPID heapID);
+static void EntryMyParty( const POKEPARTY *my_party ,POKEPARTY *entry_party ,const int inMemNum ,const u32 level_correction ,HEAPID heapID);
+static void EntryAITrainer( 
+    const u16 play_mode ,u32 tr_id, BSUBWAY_TRAINER *bsw_trainer 
+    ,BSP_TRAINER_DATA *dst_tr_data ,const u32 ai_bit 
+    ,const BOOL isClearWord ,const BOOL isSetWord );
+static void SetPokeParty( BSUBWAY_PARTNER_DATA *bsw_partner ,POKEPARTY *p_party , u16 levle ,const int inMemNum ,HEAPID heapID );
 
 //--------------------------------------------------------------
 /// アイテムテーブル
@@ -512,58 +519,11 @@ BATTLE_SETUP_PARAM * FBI_TOOL_CreateBattleParam(
   }
 #endif
   
-  {
-//    BTL_FIELD_SITUATION_Init( &sit );
-    BTL_FIELD_SITUATION_SetFromFieldStatus(
-        &sit, gdata, GAMESYSTEM_GetFieldMapWork(gsys) );
-    dst = BATTLE_PARAM_Create( heapID );
-
-    //初期化
-    switch( play_mode ){
-    case BSWAY_MODE_SINGLE:
-    case BSWAY_MODE_S_SINGLE:
-    case BSWAY_MODE_WIFI:
-      BTL_SETUP_Single_Trainer( dst, gdata, &sit, TRID_NULL, heapID );
-      break;
-    case BSWAY_MODE_DOUBLE:
-    case BSWAY_MODE_S_DOUBLE:
-      BTL_SETUP_Double_Trainer( dst, gdata, &sit, TRID_NULL, heapID );
-      break;
-    case BSWAY_MODE_MULTI:
-    case BSWAY_MODE_S_MULTI:
-      BTL_SETUP_AIMulti_Trainer( dst, gdata, &sit,
-          TRID_NULL, TRID_NULL, TRID_NULL, heapID );
-      break;
-    case BSWAY_MODE_COMM_MULTI:
-    case BSWAY_MODE_S_COMM_MULTI:
-      {
-        GFL_NETHANDLE *netHandle = GFL_NET_HANDLE_GetCurrentHandle();
-        int commPos = 0;
-      
-        if( GFL_NET_SystemGetCurrentID() != GFL_NET_NO_PARENTMACHINE ){
-          commPos = 2; //通信子である
-        }
-      
-        BTL_SETUP_AIMulti_Comm( dst, gdata,
-            netHandle, BTL_COMM_DS, commPos,
-            TRID_NULL, TRID_NULL, heapID );
-      }
-      break;
-    default:
-      GF_ASSERT( 0 );
-    }
-
-    BTL_SETUP_AllocRecBuffer( dst, heapID );
-
-  }
+  // バトルパラメータを作成
+  dst = MakeBattleParam( gsys ,play_mode ,&sit ,TRUE ,heapID);
   
-#if 0  
-  { //トレーナーデータ確保
-    dst->tr_data[BTL_CLIENT_ENEMY1] = CreateBSPTrainerData( heapID );
-  }
-#endif
-  
-  { //プレイヤーセット
+  //プレイヤーセット
+  { 
     BTL_CLIENT_ID client = BTL_CLIENT_PLAYER;
     MYSTATUS *mystatus = GAMEDATA_GetMyStatus( gdata );
     BSP_TRAINER_DATA *data;
@@ -571,48 +531,12 @@ BATTLE_SETUP_PARAM * FBI_TOOL_CreateBattleParam(
     //MyStatus
     dst->playerStatus[client] = mystatus;
     
-    //トレーナーデータ確保
-    #if 0 //自身のデータ自体はplayerStatusから
-          //引っ張ってくる為不要であった。
-    dst->tr_data[client] = CreateBSPTrainerData( heapID );
-    data = dst->tr_data[client];
-    
-    MyStatus_CopyNameString(
-        (const MYSTATUS*)mystatus, data->name );
-    data->tr_type = TRTYPE_HERO +
-      MyStatus_GetMySex((const MYSTATUS*)mystatus );
-    #endif
-    
-    //ポケモンセット
-    {
-      int i;
-      POKEMON_PARAM *entry_pp;
-      const POKEMON_PARAM *my_pp;
-      POKEPARTY *party = dst->party[client];
-      PokeParty_Init( party, TEMOTI_POKEMAX );
-      
-      entry_pp = GFL_HEAP_AllocMemoryLo(
-          heapID, POKETOOL_GetWorkSize() );
-      PP_Clear( entry_pp );
-
-      for( i = 0; i < inMemNum; i++ ){
-        my_pp = PokeParty_GetMemberPointer( my_party,i );
-
-        POKETOOL_CopyPPtoPP( (POKEMON_PARAM*)my_pp, entry_pp );
-
-        //レベル５０補正
-        if( PP_Get(my_pp,ID_PARA_level,NULL) != 50 )
-        {
-          POKETOOL_MakeLevelRevise(entry_pp, 50);
-        }
-
-        PokeParty_Add( party, entry_pp );
-      }
-      GFL_HEAP_FreeMemory( entry_pp );
-    }
+    // プレイヤーパーティーの登録
+    EntryMyParty( my_party ,dst->party[client] ,inMemNum ,0 ,heapID);
   }
   
-  { //敵トレーナーセット
+  //敵トレーナーセット
+  {
     PMS_DATA *pd;
     BSP_TRAINER_DATA *tr_data;
     BTL_CLIENT_ID client = BTL_CLIENT_ENEMY1;
@@ -620,8 +544,6 @@ BATTLE_SETUP_PARAM * FBI_TOOL_CreateBattleParam(
     BSUBWAY_TRAINER *bsw_trainer;
 
     //トレーナーデータ確保
-//バトルセットアップで生成されるようになったので不要となった
-//    dst->tr_data[client] = CreateBSPTrainerData( heapID );
     tr_data = dst->tr_data[client];
 
     bsw_partner = &partner_data[0];
@@ -634,137 +556,322 @@ BATTLE_SETUP_PARAM * FBI_TOOL_CreateBattleParam(
     tr_data->tr_id = bsw_trainer->player_id;
 #endif
 
-    tr_data->tr_type = bsw_trainer->tr_type;
-    tr_data->ai_bit = 0x00000087;  //最強
-
-    //name
-    GFL_STR_SetStringCode( tr_data->name, bsw_trainer->name );
-#ifdef PM_DEBUG
-    KAGAYA_Printf( "BSW TR ENEMY1 NAME LEN %d(%d)\n",
-          GFL_STR_GetBufferLength(tr_data->name),
-          d_strcode_len(bsw_trainer->name) );
-#endif
-
-    //win word
-    PMSDAT_Clear( &tr_data->win_word );
-    PMSDAT_Clear( &tr_data->lose_word );
-    //サブウェイパートナーデータの勝ち負けデータが０クリアされているならば、
-    //トレーナーデータのワークもクリアして渡す
-    //０クリアされてなければ、簡易会話が入っているとみなし、データをセットする
-    if( play_mode == BSWAY_MODE_WIFI ){
-      tr_data->win_word = *(PMS_DATA*)bsw_trainer->win_word;
-      tr_data->lose_word = *(PMS_DATA*)bsw_trainer->lose_word;
-    }
-    else if ( IsValidEasyTalk(bsw_trainer) )   //簡易会話ある
-    {
-      tr_data->win_word = *(PMS_DATA*)bsw_trainer->win_word;
-      tr_data->lose_word = *(PMS_DATA*)bsw_trainer->lose_word;
-    }
-
+    // AIトレーナーをセット(ai_bit=最強)
+    EntryAITrainer( play_mode ,tr_data->tr_id ,bsw_trainer ,tr_data ,0x00000087 ,TRUE,TRUE );
+    
     //敵ポケモンセット
-    {
-      int i;
-      POKEMON_PARAM*  pp;
-      POKEPARTY *party = dst->party[client];
-      PokeParty_Init( party, TEMOTI_POKEMAX );
-      pp = GFL_HEAP_AllocMemoryLo( heapID, POKETOOL_GetWorkSize() );
-      
-      for( i = 0; i < inMemNum; i++ ){
-        MakePokePara( &(bsw_partner->btpwd[i]), pp );
-        PokeParty_Add( party, pp );
-      }
-      GFL_HEAP_FreeMemory( pp );
-    }
+    SetPokeParty( bsw_partner ,dst->party[client] ,50 ,inMemNum ,heapID );
 
-    if( dst->multiMode != BTL_MULTIMODE_NONE ) //マルチ
-    { //敵トレーナー２設定
+    // マルチ
+    if( dst->multiMode != BTL_MULTIMODE_NONE )
+    {
+      //敵トレーナー２設定
       client = BTL_CLIENT_ENEMY2;
-//バトルセットアップで生成されるようになったので不要となった
-//    dst->tr_data[client] = CreateBSPTrainerData( heapID );
       tr_data = dst->tr_data[client];
       bsw_partner = &partner_data[1];
       bsw_trainer = &bsw_partner->bt_trd;
-    
-      tr_data->tr_id = bsw_trainer->player_id;
-      tr_data->tr_type = bsw_trainer->tr_type;
-      tr_data->ai_bit = 0x00000087;  //最強
-      
-      //トレーナーデータ　name
-      GFL_STR_SetStringCode( tr_data->name, bsw_trainer->name );
-#ifdef PM_DEBUG
-      KAGAYA_Printf( "BSW TR ENEMY2 NAME LEN %d(%d)\n",
-          GFL_STR_GetBufferLength(tr_data->name),
-          d_strcode_len(bsw_trainer->name) );
-#endif
-      //トレーナーデータ　word
-      //特に設定無し
-    
-      //ポケモンパーティ
-      {
-        int i;
-        POKEMON_PARAM*  pp;
-        POKEPARTY *party = dst->party[client];
-        PokeParty_Init( party, TEMOTI_POKEMAX );
-        pp = GFL_HEAP_AllocMemoryLo( heapID, POKETOOL_GetWorkSize() );
-    
-        for( i = 0; i < inMemNum; i++ ){
-          MakePokePara( &(bsw_partner->btpwd[i]), pp );
-          PokeParty_Add( party, pp );
-        }
-        GFL_HEAP_FreeMemory( pp );
-      }
+
+      // トレーナーデータをセットする
+      EntryAITrainer( play_mode ,tr_data->tr_id ,bsw_trainer ,tr_data ,0x00000087 ,FALSE,FALSE );
+
+      //敵ポケモンセット
+      SetPokeParty( bsw_partner ,dst->party[client] ,50 ,inMemNum ,heapID );
     }
 
-    if( dst->multiMode == BTL_MULTIMODE_PA_AA ) //AIマルチ
-    { //AIパートナー設定
+    //AIマルチ
+    if( dst->multiMode == BTL_MULTIMODE_PA_AA )
+    {
+      //AIパートナー設定
       client = BTL_CLIENT_PARTNER;
       
       //トレーナーデータ
-//バトルセットアップで生成されるようになったので不要となった
-//      dst->tr_data[client] = CreateBSPTrainerData( heapID );
       tr_data = dst->tr_data[client];
       
       bsw_partner = ai_multi_data;
       bsw_trainer = &bsw_partner->bt_trd;
 
-      tr_data->tr_id = bsw_trainer->player_id;
-      tr_data->tr_type = bsw_trainer->tr_type;
-      tr_data->ai_bit = 0x00000087;  //最強
-      
-      KAGAYA_Printf(
-          "セットされたAIパートナーのトレーナータイプ=%d\n",
-          tr_data->tr_type );
+      // トレーナーデータをセットする
+      EntryAITrainer( play_mode ,tr_data->tr_id ,bsw_trainer ,tr_data ,0x00000087 ,TRUE,FALSE );
 
-      //トレーナーデータ　name
-      GFL_STR_SetStringCode( tr_data->name, bsw_trainer->name );
-#ifdef PM_DEBUG
-      KAGAYA_Printf( "BSW TR PARTNER NAME LEN %d(%d)\n",
-          GFL_STR_GetBufferLength(tr_data->name),
-          d_strcode_len(bsw_trainer->name) );
-#endif
-      //トレーナーデータ　word
-      PMSDAT_Clear( &tr_data->win_word );
-      PMSDAT_Clear( &tr_data->lose_word );
-    
-      //ポケモンパーティ
-      {
-        int i;
-        POKEMON_PARAM*  pp;
-        POKEPARTY *party = dst->party[client];
-        PokeParty_Init( party, TEMOTI_POKEMAX );
-        pp = GFL_HEAP_AllocMemoryLo( HEAPID_PROC, POKETOOL_GetWorkSize() );
-    
-        for( i = 0; i < inMemNum; i++ ){
-          MakePokePara( &(bsw_partner->btpwd[i]), pp );
-          PokeParty_Add( party, pp );
-        }
-        GFL_HEAP_FreeMemory( pp );
-      }
+      //敵ポケモンセット
+      SetPokeParty( bsw_partner ,dst->party[client] ,50 ,inMemNum ,heapID );
     }
   }
 
   BTL_SETUP_SetSubwayMode( dst ); //一通りセットした後に呼ぶ事
   return dst;
+}
+
+
+//--------------------------------------------------------------
+/**
+ * BATTLE_SETUP_PARAM作成
+ * @param gsys GAMESYS_WORK
+ * @retval BATTLE_SETUP_PARAM
+ */
+//--------------------------------------------------------------
+BATTLE_SETUP_PARAM * FBI_TOOL_INFINITY_DUNGEON_CreateBattleParam(
+    GAMESYS_WORK *gsys, const POKEPARTY *my_party,
+    const int inMyMemNum , const int inPartnerMemNum , const int inEnemyMemNum ,
+    BSUBWAY_PARTNER_DATA *partner_data,
+    BSUBWAY_PARTNER_DATA *ai_multi_data,
+    u32 trid_offset,
+    const u16 level_max, const u16 level_min,
+    const int level_correction,
+    GFL_STD_RandContext *rand_context)
+{
+  BATTLE_SETUP_PARAM *dst;
+  BTL_FIELD_SITUATION sit;
+  GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+  HEAPID heapID = HEAPID_PROC;
+  u16 play_mode = BSWAY_MODE_SINGLE;  // 初期化しておく
+  
+  // バトルパラメータの初期化
+  {
+    // シングル初期化
+    if( inPartnerMemNum <= 0 )
+    {
+      play_mode = BSWAY_MODE_SINGLE;
+      dst = MakeBattleParam( gsys ,play_mode ,&sit ,FALSE ,heapID);
+    }
+    // プレイヤー+AI(パートナー) vs AI（トレーナー）初期化
+    else
+    {
+      GF_ASSERT("プレイヤー+AI(パートナー) vs AI（トレーナー）は未実装");
+    }
+  }
+  
+  //プレイヤーセット
+  { 
+    BTL_CLIENT_ID client = BTL_CLIENT_PLAYER;
+    MYSTATUS *mystatus = GAMEDATA_GetMyStatus( gdata );
+    BSP_TRAINER_DATA *data;
+
+    //MyStatus
+    dst->playerStatus[client] = mystatus;
+
+    // プレイヤーパーティーのエントリー
+    EntryMyParty( my_party ,dst->party[client] ,inMyMemNum ,0 ,heapID);
+  }
+  
+  {
+    //敵トレーナーセット
+    PMS_DATA *pd;
+    BTL_CLIENT_ID client = BTL_CLIENT_ENEMY1;
+    BSUBWAY_PARTNER_DATA *bsw_partner;
+    BSUBWAY_TRAINER *bsw_trainer;
+    u16 level;
+
+    bsw_partner = &partner_data[0];
+    bsw_trainer = &bsw_partner->bt_trd;
+
+    // トレーナーデータをセットする
+    EntryAITrainer( play_mode ,dst->tr_data[client]->tr_id + trid_offset ,bsw_trainer ,dst->tr_data[client] ,0x00000087 ,TRUE,FALSE );
+     
+    //敵ポケモンセット
+    level = GetRand( rand_context )%(level_max-level_min) + level_min;
+    SetPokeParty( bsw_partner ,dst->party[client] ,level ,inEnemyMemNum ,heapID );
+  }
+
+  return dst;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バトルセットアップパラメータを生成する
+ *
+ *	@param	*p_gsys   
+ *	@param	play_mode BSWAY_MODE_SINGLEなどを指定
+ *	@param	*p_sit    バトルシチュエーションデータ格納先
+ *	@param	isAllocRecBuffer TRUEで録画用バッファを生成
+ *	@param	heapID
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BATTLE_SETUP_PARAM * MakeBattleParam( GAMESYS_WORK *p_gsys , const u16 play_mode ,BTL_FIELD_SITUATION *p_sit , const BOOL isAllocRecBuffer ,HEAPID heapID)
+{
+  BATTLE_SETUP_PARAM  *p_bsp;
+  GAMEDATA            *p_gdata = GAMESYSTEM_GetGameData( p_gsys );
+  FIELDMAP_WORK       *p_field_wk = GAMESYSTEM_GetFieldMapWork(p_gsys);
+    
+  {
+    BTL_FIELD_SITUATION_SetFromFieldStatus( p_sit, p_gdata, p_field_wk );
+    p_bsp = BATTLE_PARAM_Create( heapID );
+
+    //初期化
+    switch( play_mode ){
+    case BSWAY_MODE_SINGLE:
+    case BSWAY_MODE_S_SINGLE:
+    case BSWAY_MODE_WIFI:
+      BTL_SETUP_Single_Trainer( p_bsp, p_gdata, p_sit, TRID_NULL, heapID );
+      break;
+    case BSWAY_MODE_DOUBLE:
+    case BSWAY_MODE_S_DOUBLE:
+      BTL_SETUP_Double_Trainer( p_bsp, p_gdata, p_sit, TRID_NULL, heapID );
+      break;
+    case BSWAY_MODE_MULTI:
+    case BSWAY_MODE_S_MULTI:
+      BTL_SETUP_AIMulti_Trainer( p_bsp, p_gdata, p_sit,
+          TRID_NULL, TRID_NULL, TRID_NULL, heapID );
+      break;
+    case BSWAY_MODE_COMM_MULTI:
+    case BSWAY_MODE_S_COMM_MULTI:
+      {
+        GFL_NETHANDLE *netHandle = GFL_NET_HANDLE_GetCurrentHandle();
+        int commPos = 0;
+      
+        if( GFL_NET_SystemGetCurrentID() != GFL_NET_NO_PARENTMACHINE ){
+          commPos = 2; //通信子である
+        }
+      
+        BTL_SETUP_AIMulti_Comm( p_bsp, p_gdata,
+            netHandle, BTL_COMM_DS, commPos,
+            TRID_NULL, TRID_NULL, heapID );
+      }
+      break;
+    default:
+      GF_ASSERT( 0 );
+    }
+
+    // 録画用バッファを生成
+    if( isAllocRecBuffer == TRUE )
+    {
+      BTL_SETUP_AllocRecBuffer( p_bsp, heapID );
+    }
+  }
+
+  return p_bsp;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  プレイヤーパーティーを登録する
+ *
+ *	@param	client_id     クライアントID       
+ *	@param	*my_party     登録するパーティー
+ *	@param	*entry_party  パーティー登録先
+ *	@param	int inMemNum  パーティーメンバー数
+ *	@param	u32 level_correction レベル補正(0で補正なし)
+ *	@param	heapID
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void EntryMyParty( const POKEPARTY *my_party ,POKEPARTY *entry_party ,const int inMemNum ,const u32 level_correction ,HEAPID heapID)
+{
+  int i;
+  POKEMON_PARAM *entry_pp;
+  const POKEMON_PARAM *my_pp;
+  PokeParty_Init( entry_party, TEMOTI_POKEMAX );
+
+  entry_pp = GFL_HEAP_AllocMemoryLo(
+      heapID, POKETOOL_GetWorkSize() );
+  PP_Clear( entry_pp );
+
+  for( i = 0; i < inMemNum; i++ ){
+    my_pp = PokeParty_GetMemberPointer( my_party,i );
+
+    POKETOOL_CopyPPtoPP( (POKEMON_PARAM*)my_pp, entry_pp );
+
+    if( level_correction != 0 )
+    {
+      //レベル補正
+      if( PP_Get(my_pp,ID_PARA_level,NULL) != level_correction )
+      {
+        POKETOOL_MakeLevelRevise(entry_pp, level_correction );
+      }
+    }
+
+    PokeParty_Add( entry_party, entry_pp );
+  }
+  GFL_HEAP_FreeMemory( entry_pp );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  AIトレーナーデータをセットする
+ *
+ *	@param	play_mode     BSWAY_MODE_SINGLEなどを指定
+ *	@param	tr_id         トレーナーID
+ *	@param	*bsw_trainer  セットするサブウェイトレーナーデータ
+ *	@param	*dst_tr_data  トレーナーデータの格納先
+ *	@param	ai_bit    AI設定
+ *	@param	isSetWord     TRUE=簡易会話をクリアする
+ *	@param	isSetWord     TRUE=簡易会話をセットする
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void EntryAITrainer( 
+    const u16 play_mode ,u32 tr_id, BSUBWAY_TRAINER *bsw_trainer 
+    ,BSP_TRAINER_DATA *dst_tr_data ,const u32 ai_bit 
+    ,const BOOL isClearWord ,const BOOL isSetWord )
+{
+  PMS_DATA *pd;
+
+  dst_tr_data->tr_id = tr_id;
+  dst_tr_data->tr_type = bsw_trainer->tr_type;
+  dst_tr_data->ai_bit = ai_bit;
+
+  //name
+  GFL_STR_SetStringCode( dst_tr_data->name, bsw_trainer->name );
+
+#ifdef PM_DEBUG
+  ONOUE_Printf( "BSW TR ENEMY1 NAME LEN %d(%d)\n",
+      GFL_STR_GetBufferLength(dst_tr_data->name),
+      d_strcode_len(bsw_trainer->name) );
+#endif
+
+  //win word
+  if( isClearWord == TRUE )
+  {
+    PMSDAT_Clear( &dst_tr_data->win_word );
+    PMSDAT_Clear( &dst_tr_data->lose_word );
+  }
+
+  //サブウェイパートナーデータの勝ち負けデータが０クリアされているならば、
+  //トレーナーデータのワークもクリアして渡す
+  //０クリアされてなければ、簡易会話が入っているとみなし、データをセットする
+  if( isSetWord == TRUE )
+  {
+    if( play_mode == BSWAY_MODE_WIFI ){
+      dst_tr_data->win_word = *(PMS_DATA*)bsw_trainer->win_word;
+      dst_tr_data->lose_word = *(PMS_DATA*)bsw_trainer->lose_word;
+    }
+    else if ( IsValidEasyTalk(bsw_trainer) )   //簡易会話ある
+    {
+      dst_tr_data->win_word = *(PMS_DATA*)bsw_trainer->win_word;
+      dst_tr_data->lose_word = *(PMS_DATA*)bsw_trainer->lose_word;
+    }
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ポケモンパーティーをセットする(固定レベル)
+ *
+ *	@param	*bsw_partner  サブウェイパートナーデータ
+ *	@param	*p_party      パーティーデータ格納先
+ *	@param	levle         レベル
+ *	@param	int inMemNum  メンバー数
+ *	@param	heapID        ヒープID
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void SetPokeParty( BSUBWAY_PARTNER_DATA *bsw_partner ,POKEPARTY *p_party , u16 levle ,const int inMemNum ,HEAPID heapID )
+{
+  int i;
+  POKEMON_PARAM*  pp;
+  PokeParty_Init( p_party, TEMOTI_POKEMAX );
+  pp = GFL_HEAP_AllocMemoryLo( heapID, POKETOOL_GetWorkSize() );
+
+  for( i = 0; i < inMemNum; i++ ){
+    MakePokePara( &(bsw_partner->btpwd[i]), pp , levle );
+    PokeParty_Add( p_party, pp );
+  }
+  GFL_HEAP_FreeMemory( pp );
 }
 
 //--------------------------------------------------------------
@@ -785,6 +892,7 @@ static BSP_TRAINER_DATA *CreateBSPTrainerData( HEAPID heapID )
 /**
  *  @brief  バトルサブウェイのポケモンパラメータ生成
  *  @param pwd  [in/out]ポケモンパラメータの展開場所
+ *  @param poke_arc_id [in]ポケモンデータが格納されているアーカイブID
  *  @param poke_no  [in]タワーromデータポケモンナンバー
  *  @param poke_id  [in]ポケモンにセットするid
  *  @param poke_rnd [in]セットする個性乱数(0が引き渡されたら関数内で生成)
@@ -799,7 +907,7 @@ static BSP_TRAINER_DATA *CreateBSPTrainerData( HEAPID heapID )
 //--------------------------------------------------------------
 u32 FBI_TOOL_MakePokemonParam(
     BSUBWAY_POKEMON *pwd,
-    u16 poke_no, u32 poke_id, u32 poke_rnd, u8 pow_rnd,
+    ARCID poke_arc_id, u16 poke_no, u32 poke_id, u32 poke_rnd, u8 pow_rnd,
     u8 mem_idx, BOOL itemfix, HEAPID heapID )
 {
   int i;
@@ -811,7 +919,7 @@ u32 FBI_TOOL_MakePokemonParam(
   MI_CpuClear8(pwd,sizeof(BSUBWAY_POKEMON));
 
   //ロムデータロード
-  GetPokemonRomData(&prd_s,poke_no);
+  GetPokemonRomData(poke_arc_id,&prd_s,poke_no);
 
   //モンスターナンバー
   pwd->mons_no=prd_s.mons_no;
@@ -921,10 +1029,11 @@ u32 FBI_TOOL_MakePokemonParam(
  *  @brief バトルサブウェイ用ポケモンデータからPOKEMON_PARAMを生成
  *  @param src BSUBWAY_POKEMON
  *  @param dest POKEMON_PARAM
+ *  @param level ポケモンのレベル
  *  @retval nothing
  */
 //--------------------------------------------------------------
-static void MakePokePara( const BSUBWAY_POKEMON *src, POKEMON_PARAM *dest )
+static void MakePokePara( const BSUBWAY_POKEMON *src, POKEMON_PARAM *dest , u16 level  )
 {
   int i;
   u8 buf8,waza_pp;
@@ -934,7 +1043,7 @@ static void MakePokePara( const BSUBWAY_POKEMON *src, POKEMON_PARAM *dest )
   PP_Clear(dest);
 
   //monsno,level,pow_rnd,idno
-  PP_SetupEx( dest, src->mons_no, 50, PTL_SETUP_ID_AUTO,
+  PP_SetupEx( dest, src->mons_no, level, PTL_SETUP_ID_AUTO,
       (src->power_rnd & 0x3FFFFFFF), src->personal_rnd);
 
   //form_no
@@ -1043,6 +1152,7 @@ static void MakePokePara( const BSUBWAY_POKEMON *src, POKEMON_PARAM *dest )
 //--------------------------------------------------------------
 /**
  *  バトルサブウェイポケモンロムデータの読み出し
+ * @param poke_arc_id [in]ポケモンデータが格納されているアーカイブID
  * @param[in]  prd    読み出したポケモンデータの格納先
  * @param[in]  index  読み出すポケモンデータのインデックス
  * TOWER_AI_MULTI_ONLY フィールド上で呼ばれる処理
@@ -1050,38 +1160,48 @@ static void MakePokePara( const BSUBWAY_POKEMON *src, POKEMON_PARAM *dest )
  */
 //--------------------------------------------------------------
 static void GetPokemonRomData(
-    BSUBWAY_POKEMON_ROM_DATA *prd,int index)
+    ARCID poke_arc_id,BSUBWAY_POKEMON_ROM_DATA *prd,int index)
 {
 //  index += BSW_PM_ARCDATANO_ORG;
-  GFL_ARC_LoadData( (void*)prd, ARCID_BSW_PD, index );
+  GFL_ARC_LoadData( (void*)prd, poke_arc_id, index );
 }
 
 //--------------------------------------------------------------
 /**
  *  バトルサブウェイトレーナーロムデータの読み出し
+ * @param tr_arcID  [in]トレーナーデータアーカイブID
  * @param tr_no  [in]トレーナーナンバー
  * @param heapID  [in]メモリ確保するためのヒープID
  * TOWER_AI_MULTI_ONLY フィールド上で呼ばれる処理
  * TOWER_AI_MULTI_ONLY 似た処理 frontier_tool.c Frontier_TrainerRomDataGet
  */
 //--------------------------------------------------------------
-static void * GetTrainerRomData( u16 tr_no, HEAPID heapID )
+static void * GetTrainerRomData(ARCID tr_arcID, u16 tr_no, HEAPID heapID )
 {
   tr_no += BSW_TR_ARCDATANO_ORG;
   OS_Printf( "BSUBWAY load TrainerRomData Num = %d\n", tr_no );
-  return GFL_ARC_UTIL_Load( ARCID_BSW_TR, tr_no, 0, heapID );
+  return GFL_ARC_UTIL_Load( tr_arcID, tr_no, 0, heapID );
 }
 
-//--------------------------------------------------------------
+//----------------------------------------------------------------------------
 /**
- * 乱数取得
- * @retval u16 乱数
- * @note 乱数固定の名残
+ *	@brief  乱数を取得
+ *
+ *	@param	*rand_context NULL=GFUser_GetPublicRandで乱数を取得
+ *
+ *	@retval u16 乱数
  */
-//--------------------------------------------------------------
-static u16 GetRand( void )
+//-----------------------------------------------------------------------------
+static u16 GetRand( GFL_STD_RandContext *rand_context )
 {
-  return( GFUser_GetPublicRand(0xffffffff)/65535 );
+  if( rand_context == NULL )
+  {
+    return( GFUser_GetPublicRand(0xffffffff)/65535 );
+  }
+  else
+  {
+    return( GFL_STD_Rand( rand_context, 0xffffffff )/65535 );
+  }
 }
 
 //--------------------------------------------------------------
@@ -1148,14 +1268,18 @@ BOOL FBI_TOOL_MakeRomTrainerData(
 {
   BOOL      ret = 0;
   BSUBWAY_TRAINER_ROM_DATA  *trd;
+  u8 pow_rnd;
 
   //トレーナーデータセット
-  trd = FBI_TOOL_AllocTrainerRomData(tr_data,tr_no, inHeapID);
+  trd = FBI_TOOL_AllocTrainerRomData(tr_data ,ARCID_BSW_TR ,tr_no, NARC_message_btdtrname_dat ,inHeapID);
+
+  // パワー乱数を決定する
+  pow_rnd=GetPowerRnd(tr_no);
 
   //ポケモンデータをセット
   ret = FBI_TOOL_SetBSWayPokemonParam(
       trd, tr_no, &tr_data->btpwd[0],cnt,
-      set_poke_no, set_item_no, poke, inHeapID);
+      ARCID_BSW_PD,set_poke_no, set_item_no, poke, NULL ,pow_rnd ,inHeapID);
   GFL_HEAP_FreeMemory( trd );
   return ret;
 }
@@ -1166,7 +1290,9 @@ BOOL FBI_TOOL_MakeRomTrainerData(
  *  BSUBWAY_TRAINER_ROM_DATA型をメモリ確保して返すので、
  *  呼び出し側が明示的に解放すること
  *  @param tr_data BSUBWAY_PARTER_DATA
+ *  @param tr_arcID トレーナーアーカイブID
  *  @param zero_org_tr_no トレーナーナンバー　ゼロオリジン
+ *  @param msg_trname_data_id トレーナー名が入っているメッセージデータID
  *  @param heapID HEAPID
  *  @retval BSUBWAY_TRAINER_ROM_DATA*
  *  TOWER_AI_MULTI_ONLY フィールド上で呼ばれる処理
@@ -1174,7 +1300,7 @@ BOOL FBI_TOOL_MakeRomTrainerData(
  */
 //--------------------------------------------------------------
 BSUBWAY_TRAINER_ROM_DATA * FBI_TOOL_AllocTrainerRomData(
-    BSUBWAY_PARTNER_DATA *tr_data, u16 zero_org_tr_no, HEAPID inHeapID )
+    BSUBWAY_PARTNER_DATA *tr_data, ARCID tr_arcID, u16 zero_org_tr_no,u16 msg_trname_data_id, HEAPID inHeapID )
 {
   BSUBWAY_TRAINER_ROM_DATA  *trd;
   GFL_MSGDATA *msgdata;
@@ -1182,10 +1308,10 @@ BSUBWAY_TRAINER_ROM_DATA * FBI_TOOL_AllocTrainerRomData(
 
   msgdata =  GFL_MSG_Create(
       GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
-      NARC_message_btdtrname_dat, inHeapID );
+      msg_trname_data_id , inHeapID );
   
   MI_CpuClear8(tr_data, sizeof(BSUBWAY_PARTNER_DATA));
-  trd = GetTrainerRomData(zero_org_tr_no, inHeapID);
+  trd = GetTrainerRomData( tr_arcID ,zero_org_tr_no, inHeapID);
 
   //トレーナーIDをセット
   tr_data->bt_trd.player_id = zero_org_tr_no + BSW_TR_ARCDATANO_ORG; //1 origin
@@ -1228,9 +1354,12 @@ BSUBWAY_TRAINER_ROM_DATA * FBI_TOOL_AllocTrainerRomData(
  * @param tr_no [in]トレーナーナンバー
  * @param pwd [in/out]BSUBWAY_POKEMON構造体
  * @param cnt [in]トレーナーに持たせるポケモンの数
+ * @param poke_arc_id [in]ポケモンデータが格納されているアーカイブID
  * @param set_poke_no [in]ペアトレーナーポケモン (NULLだとチェックなし
  * @param set_item_no [in]ペアトレーナーポケモンアイテム (NULL チェックなし
  * @param poke [in/out]抽選ポケモン二体のパラメータ格納先(NULL チェックなし
+ * @param rand_context [in]乱数値ポインタ(NULL GFUser_GetPublicRandを使用
+ * @param pow_rnd  [in]ポケモンにセットするpow_rnd値
  * @param heapID [in]ヒープID
  * @retval  FALSE  抽選ループが50回以内で終わった
  * @retval  TRUE  抽選ループが50回以内で終わらなかった
@@ -1240,11 +1369,10 @@ BSUBWAY_TRAINER_ROM_DATA * FBI_TOOL_AllocTrainerRomData(
 BOOL FBI_TOOL_SetBSWayPokemonParam(
     BSUBWAY_TRAINER_ROM_DATA *trd,
     u16 tr_no, BSUBWAY_POKEMON *pwd, u8 cnt,
-    u16 *set_poke_no, u16 *set_item_no,
-    BSUBWAY_PAREPOKE_PARAM *poke, HEAPID heapID )
+    ARCID poke_arc_id,u16 *set_poke_no, u16 *set_item_no,
+    BSUBWAY_PAREPOKE_PARAM *poke,GFL_STD_RandContext *rand_context ,u8 pow_rnd, HEAPID heapID )
 {
   int  i,j;
-  u8  pow_rnd;
   u8  poke_index;
   u32  id;
   int  set_index;
@@ -1264,13 +1392,13 @@ BOOL FBI_TOOL_SetBSWayPokemonParam(
   loop_count=0;
   while(set_count!=cnt){
 //    poke_index = gf_rand()%trd->use_poke_cnt;
-    poke_index = GetRand()%trd->use_poke_cnt;
+    poke_index = GetRand( rand_context )%trd->use_poke_cnt;
     set_index=trd->use_poke_table[poke_index];
-    GetPokemonRomData(&prd_d,set_index);
+    GetPokemonRomData(poke_arc_id,&prd_d,set_index);
 
     //モンスターナンバーのチェック（同一のポケモンは持たない）
     for(i=0;i<set_count;i++){
-      GetPokemonRomData(&prd_s,set_index_no[i]);
+      GetPokemonRomData(poke_arc_id,&prd_s,set_index_no[i]);
       if(prd_s.mons_no==prd_d.mons_no){
         break;
       }
@@ -1296,7 +1424,7 @@ BOOL FBI_TOOL_SetBSWayPokemonParam(
     if(loop_count<50){
       //装備アイテムのチェック（同一のアイテムは持たない）
       for(i=0;i<set_count;i++){
-        GetPokemonRomData(&prd_s,set_index_no[i]);
+        GetPokemonRomData(poke_arc_id,&prd_s,set_index_no[i]);
         if((prd_s.item_no)&&(prd_s.item_no==prd_d.item_no)){
           break;
         }
@@ -1325,15 +1453,14 @@ BOOL FBI_TOOL_SetBSWayPokemonParam(
     set_count++;
   }
 
-  pow_rnd=GetPowerRnd(tr_no);
-  id=(GetRand()|(GetRand()<<16));
+  id=(GetRand( rand_context )|(GetRand( rand_context )<<16));
 
   if(loop_count >= 50){
     ret = TRUE;
   }
   for(i=0;i<set_count;i++){
     set_rnd_no[i] = FBI_TOOL_MakePokemonParam(&(pwd[i]),
-      set_index_no[i],id,0,pow_rnd,i,ret,heapID);
+      ARCID_BSW_PD,set_index_no[i],id,0,pow_rnd,i,ret,heapID);
   }
   if(poke == NULL){
     return ret;
@@ -1365,6 +1492,28 @@ static BOOL IsValidEasyTalk(BSUBWAY_TRAINER *bsw_trainer)
   }
 
   return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アーカイブデータを参照してOBJコードを取得
+ *
+ *	@param	tr_arcID
+ *	@param	tr_no
+ *	@param	heapID 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+u16 FBI_TOOL_GetOBJCode(ARCID tr_arcID, u16 tr_no, HEAPID heapID )
+{
+  BSUBWAY_TRAINER_ROM_DATA  *p_trd;
+  u16 obj_code;
+  p_trd = GetTrainerRomData( tr_arcID ,tr_no, heapID);
+  obj_code = FBI_TOOL_GetTrainerOBJCode(p_trd->tr_type);
+  GFL_HEAP_FreeMemory( p_trd );
+
+  return obj_code;
 }
 
 

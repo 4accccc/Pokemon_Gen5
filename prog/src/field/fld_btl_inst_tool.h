@@ -39,15 +39,28 @@ extern u16 FBI_TOOL_GetTrainerOBJCode( u32 inTrType );
 
 extern u32 FBI_TOOL_MakePokemonParam(
     BSUBWAY_POKEMON *pwd,
-    u16 poke_no, u32 poke_id, u32 poke_rnd, u8 pow_rnd,
+    ARCID poke_arc_id, u16 poke_no, u32 poke_id, u32 poke_rnd, u8 pow_rnd,
     u8 mem_idx, BOOL itemfix, HEAPID heapID );
 
 extern BSUBWAY_TRAINER_ROM_DATA * FBI_TOOL_AllocTrainerRomData(
-    BSUBWAY_PARTNER_DATA *tr_data, u16 zero_org_tr_no, HEAPID inHeapID );
+    BSUBWAY_PARTNER_DATA *tr_data, ARCID tr_arcID, u16 zero_org_tr_no,u16 msg_trname_data_id, HEAPID inHeapID );
 
 extern BOOL FBI_TOOL_SetBSWayPokemonParam(
     BSUBWAY_TRAINER_ROM_DATA *trd,
     u16 tr_no, BSUBWAY_POKEMON *pwd, u8 cnt,
-    u16 *set_poke_no, u16 *set_item_no,
-    BSUBWAY_PAREPOKE_PARAM *poke, HEAPID heapID );
+    ARCID poke_arc_id,u16 *set_poke_no, u16 *set_item_no,
+    BSUBWAY_PAREPOKE_PARAM *poke,GFL_STD_RandContext *rand_context ,u8 pow_rnd, HEAPID heapID );
+
+// 無限ダンジョンで使用
+extern BATTLE_SETUP_PARAM * FBI_TOOL_INFINITY_DUNGEON_CreateBattleParam(
+    GAMESYS_WORK *gsys, const POKEPARTY *my_party,
+    const int inMyMemNum , const int inPartnerMemNum , const int inEnemyMemNum ,
+    BSUBWAY_PARTNER_DATA *partner_data,
+    BSUBWAY_PARTNER_DATA *ai_multi_data,
+    u32 trid_offset,
+    const u16 level_max, const u16 level_min,
+    const int level_correction,
+    GFL_STD_RandContext *rand_context);
+
+extern u16 FBI_TOOL_GetOBJCode(ARCID tr_arcID, u16 tr_no, HEAPID heapID );
 

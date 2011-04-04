@@ -478,7 +478,7 @@ void BSUBWAY_SCRWORK_MakePartnerRomData(
 
   //トレーナーデータセット
 //  trd = alloc_TrainerRomData(tr_data,tr_no,heapID); 100425 del saito
-  trd = FBI_TOOL_AllocTrainerRomData( tr_data,tr_no,heapID );
+  trd = FBI_TOOL_AllocTrainerRomData( tr_data, ARCID_BSW_TR ,tr_no,NARC_message_btdtrname_dat,heapID );
 
   //ポケモンデータをセット
   pow_rnd=get_PowerRnd(tr_no);
@@ -492,7 +492,7 @@ void BSUBWAY_SCRWORK_MakePartnerRomData(
 #endif
     FBI_TOOL_MakePokemonParam(
         &(tr_data->btpwd[i]),
-        poke->poke_no[i],poke->poke_tr_id,
+        ARCID_BSW_PD,poke->poke_no[i],poke->poke_tr_id,
         poke->poke_rnd[i],pow_rnd,i,itemfix,heapID );
   }
   GFL_HEAP_FreeMemory( trd );
