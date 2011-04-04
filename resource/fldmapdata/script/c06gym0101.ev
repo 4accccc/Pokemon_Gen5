@@ -160,7 +160,15 @@ ev_leader6_btl:
 	_BALLOONWIN_TALKOBJ_MSG( msg_c06gym0101_leader_05 )
 	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
-
+	
+	//================================================//
+	
+	//ジムトレーナーの視線無効
+	_TRAINER_FLAG_SET( TRID_PILOT_04 )
+	_TRAINER_FLAG_SET( TRID_PILOT_05 )
+	_TRAINER_FLAG_SET( TRID_PILOT_06 )
+	_TRAINER_FLAG_SET( TRID_PILOT_07 )
+		
 	//================================================//
 
 	//電光掲示板フラグセット
