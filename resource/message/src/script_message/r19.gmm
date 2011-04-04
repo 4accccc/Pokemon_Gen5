@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-04T13:10:09"/>
+	<create user="matsumiya" host="W00224" date="2011-04-04T19:27:41"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1301" top="151" right="2006" bottom="779" maximized="no" rayout="Vertical2">
+	<dialog left="1304" top="179" right="2009" bottom="807" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,38 +292,44 @@
 	</lock>
 
 
-	<row id="msg_r19_white_01a" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r19_white_01a" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：主人公＝♂
-・r19のposを踏むと
-　画面下からベル登場</comment>
+・r19のpos（local 23、20～25）を踏むと
+　メッセージ表示
+・表示後、画面下からベル登場
+・続けてwhite_02</comment>
 		<attribute name="キャラ指定">ベル</attribute>
-		<language name="JPN" width="256">ベル『おうい！</language>
-		<language name="JPN_KANJI" width="256">ベル『おうい！</language>
+		<language name="JPN" width="256">ベル『おうい！▼</language>
+		<language name="JPN_KANJI" width="256">ベル『おうい！▼</language>
 	</row>
 
-	<row id="msg_r19_white_01b" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_r19_white_01b" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：主人公＝♀
-・r19のposを踏むと
-　画面下からベル登場</comment>
+・r19のpos（local 23、20～25）を踏むと
+　メッセージ表示
+・表示後、画面下からベル登場
+・続けてwhite_02</comment>
 		<attribute name="キャラ指定">ベル</attribute>
-		<language name="JPN" width="256">ベル『ねえねえ！</language>
-		<language name="JPN_KANJI" width="256">ベル『ねえねえ！</language>
+		<language name="JPN" width="256">ベル『ねえねえ！▼</language>
+		<language name="JPN_KANJI" width="256">ベル『ねえねえ！▼</language>
 	</row>
 
-	<row id="msg_r19_white_02" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_r19_white_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・所定の位置にセットしてwhite_02表示</comment>
 		<attribute name="キャラ指定">ベル</attribute>
-		<language name="JPN" width="256">ベル『またせて　ゴメンね▼
-きみの　ママさんって
-すっごく　おしゃべり　なんだね▼</language>
-		<language name="JPN_KANJI" width="256">ベル『またせて　ゴメンね▼
-きみの　ママさんって
-すっごく　おしゃべり　なんだね▼</language>
+		<language name="JPN" width="256">ベル『またせて　ゴメン！▼
+あなたの　ママって
+すっごく　おしゃべり　なんだねえ▼</language>
+		<language name="JPN_KANJI" width="256">ベル『待たせて　ゴメン！▼
+あなたの　ママって
+すっごく　おしゃべり　なんだねえ▼</language>
 	</row>
 
 	<row id="msg_r19_white_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂：捕獲デモ</comment>
+		<comment>♀
+・メッセージ表示後、捕獲デモに画面切り替え
+・SWAN用の捕獲デモ画面は、未作成</comment>
 		<attribute name="キャラ指定">ベル</attribute>
 		<language name="JPN" width="256">はーい！　それでは
 せつめいを　はじめまーす！▼
@@ -334,21 +340,21 @@
 さらに　くわしい　じょうほうが▽
 ついか　されるように　なっているの！▼
 ということで　わたしが　じっさいに
-ポケモンを　つかまえるね！▼</language>
+ポケモンを　つかまえて　みせるねえ！▼</language>
 		<language name="JPN_KANJI" width="256">はーい！　それでは
-せつめいを　はじめまーす！▼
-ポケモンずかんの　ページはね
-ポケモンと　であうことで▽
-じどうてきに　うまっていくの！▼
-そして　ポケモンを　つかまえたら
-さらに　くわしい　じょうほうが▽
-ついか　されるように　なっているの！▼
-ということで　わたしが　じっさいに
-ポケモンを　つかまえるね！▼</language>
+説明を　はじめまーす！▼
+ポケモン図鑑の　ページはね
+ポケモンと　出会うことで▽
+自動的に　埋まっていくの！▼
+そして　ポケモンを　捕まえたら
+さらに　詳しい　情報が▽
+追加されるように　なっているの！▼
+ということで　わたしが　実際に
+ポケモンを　捕まえて　みせるねえ！▼</language>
 	</row>
 
-	<row id="msg_r19_white_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂
+	<row id="msg_r19_white_04" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
 ・捕獲デモ後、フィールドに復帰すると
 　このメッセージ表示</comment>
 		<attribute name="キャラ指定">ベル</attribute>
@@ -366,25 +372,25 @@
 ねむらせたり　まひさせると▽
 さらに　つかまえやすくなるよ！▼</language>
 		<language name="JPN_KANJI" width="256">ベル『よかったあ！
-ポケモン　つかまったよお▼
+ポケモン　捕まったよお▼
 あっ　あのね
-いまの　ポイントを▽
-せつめい　するね▼
+今の　ポイントを　説明するね▼
 まず　げんきな　ポケモンは
-つかまえにくいの！　おぼえておいて▼
-だから　ポケモンの　たいりょくを
-へらしたほうが　いいんだよね▼
-つかまえたい　ポケモンを
-じぶんの　ポケモンの　わざで▽
+捕まえにくいの！　覚えておいて▼
+だから　ポケモンの　体力を
+減らしたほうが　いいんだよね▼
+捕まえたい　ポケモンを
+自分の　ポケモンの　わざで▽
 ねむらせたり　まひさせると▽
-さらに　つかまえやすくなるよ！▼</language>
+さらに　捕まえやすくなるよ！▼</language>
 	</row>
 
-	<row id="msg_r19_white_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂
-・T02方面に移動、画面外に消えると
-　msg_r01_black_01
-・博士はt02に出現</comment>
+	<row id="msg_r19_white_05" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・ｒ19方面に移動、
+　画面外に消えると主人公操作可能に
+・ベル、主人公の家に出現
+　c12ジムバッジ取得まで</comment>
 		<attribute name="キャラ指定">ベル</attribute>
 		<language name="JPN" width="256">ベル『モンスターボールはね
 ポケモンを　つかまえたり▼
@@ -392,45 +398,47 @@
 つれて　はこぶための　どうぐ　なの！▼
 えーっと！　あたしは
 ヒオウギタウンに　もどるけれど▽
-おたがい　がんばろうね！！▼</language>
+なにかあったら　こえを　かけてねえ！！▼</language>
 		<language name="JPN_KANJI" width="256">ベル『モンスターボールはね
-ポケモンを　つかまえたり▼
-つかまえた　ポケモンを
-つれて　はこぶための　道具なの！▼
+ポケモンを　捕まえたり▼
+捕まえた　ポケモンを
+連れて　運ぶための　道具なの！▼
 えーっと！　あたしは
 ヒオウギタウンに　もどるけれど▽
-おたがい　がんばろうね！！▼</language>
+なにかあったら　声をかけてねえ！！▼</language>
 	</row>
 
-	<row id="msg_r19_champion_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_r19_champion_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・posを踏むとメッセージ表示
-　表示後、カメラがアデク中心に移動
-　続けて</comment>
+・pos（local 27、21～25）を踏むと
+　メッセージ表示
+・表示後、カメラがアデク中心に移動
+　続けてchampion_02</comment>
 		<attribute name="キャラ指定">アデク
 ・BWチャンピオン</attribute>
 		<language name="JPN" width="256">？？？『そこの　トレーナー！！▼</language>
 		<language name="JPN_KANJI" width="256">？？？『そこの　トレーナー！！▼</language>
 	</row>
 
-	<row id="msg_r19_champion_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_r19_champion_02" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・メッセージ表示後、飛び降りる演出
-　続けて</comment>
+　続けてchampion_03</comment>
 		<attribute name="キャラ指定">アデク
 ・BWチャンピオン</attribute>
 		<language name="JPN" width="256">わしは　アデク！▼
-みなに　ポケモンと　ともにあゆむ……
-その　すばらしさを　つたえておる▼</language>
+ポケモンと　ともにあゆむ……　その
+すばらしさを　みなに　つたえておる▼</language>
 		<language name="JPN_KANJI" width="256">わしは　アデク！▼
-みなに　ポケモンと　ともにあゆむ……
-その　すばらしさを　つたえておる▼</language>
+ポケモンと　共に　歩む……　その
+すばらしさを　みなに　伝えておる▼</language>
 	</row>
 
-	<row id="msg_r19_champion_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_r19_champion_03" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・メッセージ表示後
-　主人公の周りをうろうろ</comment>
+　主人公の周りをうろうろ
+・0＝主人公名前</comment>
 		<attribute name="キャラ指定">アデク
 ・BWチャンピオン</attribute>
 		<language name="JPN" width="256">おまえさんは……？▼
@@ -445,24 +453,25 @@
 [1:00:トレーナー名:0]と　いうのか！▼</language>
 	</row>
 
-	<row id="msg_r19_champion_04" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_r19_champion_04" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・メッセージ表示後
 　アデクはt06：サンギタウンへ移動する
-　画面外に移動すると操作可能に</comment>
+　画面外に移動すると操作可能に
+・1＝先頭のポケモン（ひんし/タマゴ除く）</comment>
 		<attribute name="キャラ指定">アデク
 ・BWチャンピオン</attribute>
-		<language name="JPN" width="256">おまえさんの　？？？？？
-なかなか　みごとな　ポケモンだな▼
+		<language name="JPN" width="256">おまえさんの　[1:01:ポケモン種族名:1]
+なかなか　いい　ポケモンだな！▼
 だが　トレーナーである
-おまえさんが　まだまだ　みじゅく……▼
-よし！　きめた！
+おまえさんは　まだまだ　みじゅく……▼
+よし！　ちょいと　きたえてやろう
 わしに　ついてこい！▼</language>
-		<language name="JPN_KANJI" width="256">おまえさんの　？？？？？
-なかなか　みごとな　ポケモンだな▼
+		<language name="JPN_KANJI" width="256">おまえさんの　[1:01:ポケモン種族名:1]
+なかなか　いい　ポケモンだな！▼
 だが　トレーナーである
-おまえさんが　まだまだ　みじゅく……▼
-よし！　きめた！
+おまえさんは　まだまだ　未熟……▼
+よし！　ちょいと　鍛えてやろう
 わしに　ついてこい！▼</language>
 	</row>
 
@@ -507,7 +516,7 @@
 		<attribute name="キャラ指定">少年</attribute>
 		<language name="JPN" width="256">だんさの　うえから　したにむかって……▼
 ぴょーん！！▼</language>
-		<language name="JPN_KANJI" width="256">だんさの　うえから　したにむかって……▼
+		<language name="JPN_KANJI" width="256">段差の　上から　下に向かって……▼
 ぴょーん！！▼</language>
 	</row>
 
