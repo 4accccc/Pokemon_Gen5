@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-04T14:24:52"/>
+	<create user="matsumiya" host="W00224" date="2011-04-04T15:43:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -396,7 +396,7 @@
 	<row id="msg_c12pc0101_white_09" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・メッセージ表示後
-　ポケモンセンターの外に出て行く
+　ポケモンセンターの外に移動
 ・主人公操作可能に</comment>
 		<attribute name="キャラ指定">ベル</attribute>
 		<language name="JPN" width="256">ベル『つぎは……▼
@@ -438,12 +438,12 @@
 	<row id="msg_c12pc0101_middleman2_02">
 		<comment>♂</comment>
 		<attribute name="キャラ指定">MIDDLEMAN2</attribute>
-		<language name="JPN" width="256">よう！　ポケモンセンターが
-だいすきな　オレから　アドバイス！▼
+		<language name="JPN" width="256">よう！　ポケモンセンターに
+いりびたりの　オレから　アドバイス！▼
 ポケモンの　たいりょくが　へったら
 とにかく　かいふく　させるんだぞ！</language>
-		<language name="JPN_KANJI" width="256">よう！　ポケモンセンターが
-大好きな　オレから　アドバイス！▼
+		<language name="JPN_KANJI" width="256">よう！　ポケモンセンターに
+入り浸りの　オレから　アドバイス！▼
 ポケモンの　体力が　減ったら
 とにかく　回復させるんだぞ！</language>
 	</row>
