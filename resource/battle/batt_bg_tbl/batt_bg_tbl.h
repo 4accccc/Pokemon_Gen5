@@ -71,5 +71,6 @@ typedef enum{
 	BATT_BG_OBONID_22,				//エンカウント草（四季あり）
 	BATT_BG_OBONID_23,				//エンカウント草（四季なし）
 	BATT_BG_OBONID_24,				//アスファルト
+	BATT_BG_OBONID_25,				//ポケウッド専用
 }BATT_BG_OBONID;
 
