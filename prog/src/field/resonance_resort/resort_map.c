@@ -113,6 +113,13 @@ void RESORT_MAP_GetPlaceGridPosByIndex( RESORT_PLACEID placeID, u16 index, u16 *
         {3,31},
         {16,31},
         {28,31},
+        //デバッグ用秘書位置 TODO
+        {13,10},
+        {13,13},
+        {13,16},
+        {19,10},
+        {19,13},
+        {19,16},
       };
       *p_x  = sc_pos_data[index].x;
       *p_z  = sc_pos_data[index].z;

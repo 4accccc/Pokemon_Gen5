@@ -277,7 +277,7 @@ static BOOL debugMenuCallProc_AllSecretary( DEBUG_MENU_EVENT_WORK *p_wk )
     if( RESORT_SECRETARY_DATA_IsEmpty( p_dst ) )
     {
       RESORT_RECV_DATA_SetDebugData( p_recv, p_wk->gdata );
-      RESORT_SECRETARY_DATA_SetRecv( p_dst, p_recv, 10+i, 1, i );
+      RESORT_SECRETARY_DATA_SetRecv( p_dst, p_recv, 8+i, 1, i );
     }
   }
 
