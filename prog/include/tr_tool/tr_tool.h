@@ -201,6 +201,7 @@ extern  BtlBgAttr TT_TrainerTypeBtlBgAttrGet( int trtype );
 
 extern void	TT_EncountTrainerPersonalDataMake( TrainerID tr_id, BSP_TRAINER_DATA* data, HEAPID heapID );
 extern void	TT_EncountTrainerPokeDataMake( TrainerID tr_id, POKEPARTY* pparty, HEAPID heapID );
+extern u8 TT_ExTrainerTypeCheck( TrainerID tr_id );
 
 #endif	__ASM_NO_DEF_
 

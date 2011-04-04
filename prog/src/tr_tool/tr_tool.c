@@ -16,6 +16,7 @@
 #include  "tr_tool/trno_def.h"
 #include  "tr_tool/trtype_def.h"
 #include  "tr_tool/trtype_sex.h"
+#include  "tr_tool/ex_trainer_def.h"
 #include  "poke_tool/poke_tool.h"
 #include  "poke_tool/pokeparty.h"
 
@@ -172,22 +173,32 @@ BOOL  TT_TrainerMessageCheck( TrainerID tr_id, int kindID, HEAPID heapID )
 
   ret=FALSE;
 
-  size = GFL_ARC_GetDataSize( ARCID_TRMSGTBL, 0 );
-  GFL_ARC_LoadDataOfs( &ofs, ARCID_TRMSGTBL_OFS, 0, tr_id * 2, 2 );
-  handle = GFL_ARC_OpenDataHandle( ARCID_TRMSGTBL, heapID );
+  if( TT_ExTrainerTypeCheck( tr_id ) == EX_TRTYPE_NONE )
+  {
+    size = GFL_ARC_GetDataSize( ARCID_TRMSGTBL, 0 );
+    GFL_ARC_LoadDataOfs( &ofs, ARCID_TRMSGTBL_OFS, 0, tr_id * 2, 2 );
+    handle = GFL_ARC_OpenDataHandle( ARCID_TRMSGTBL, heapID );
 
-  while( ofs != size ){
-    GFL_ARC_LoadDataOfsByHandle( handle, 0, ofs, 4, &data[ 0 ] );
-    if( ( data[ 0 ] == tr_id ) && ( data[ 1 ] == kindID ) ){
-      ret = TRUE;
-      break;
+    while( ofs != size ){
+      GFL_ARC_LoadDataOfsByHandle( handle, 0, ofs, 4, &data[ 0 ] );
+      if( ( data[ 0 ] == tr_id ) && ( data[ 1 ] == kindID ) ){
+        ret = TRUE;
+        break;
+      }
+      if( data[ 0 ] != tr_id ){
+        break;
+      }
+      ofs += 4;
     }
-    if( data[ 0 ] != tr_id ){
-      break;
-    }
-    ofs += 4;
+    GFL_ARC_CloseDataHandle( handle );
   }
-  GFL_ARC_CloseDataHandle( handle );
+  else
+  {
+    if( kindID == TRMSG_FIGHT_LOSE || kindID == TRMSG_FIGHT_LOSE_2 )
+    {
+      ret = TRUE;
+    }
+  }
 
   return ret;
 }
@@ -209,36 +220,58 @@ void  TT_TrainerMessageGet( TrainerID tr_id, int kindID, STRBUF* str, HEAPID hea
   int           ofs_size;
   u16           ofs;
   u16           data[ 2 ];
-  GFL_MSGDATA*  msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_trmsg_dat, heapID );
+  u8            ex_trtype = TT_ExTrainerTypeCheck( tr_id );
 
-  size = GFL_ARC_GetDataSize( ARCID_TRMSGTBL, 0 );
-#ifdef PM_DEBUG
-  ofs_size = GFL_ARC_GetDataSize( ARCID_TRMSGTBL_OFS, 0 );
-  if( ofs_size < tr_id * 2 )
+  if( ex_trtype == EX_TRTYPE_NONE )
   {
-    GFL_STR_ClearBuffer( str );
-    return;
-  }
-#endif
-  GFL_ARC_LoadDataOfs( &ofs, ARCID_TRMSGTBL_OFS, 0, tr_id * 2, 2 );
-  handle = GFL_ARC_OpenDataHandle( ARCID_TRMSGTBL, heapID );
+    GFL_MSGDATA*  msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_trmsg_dat, heapID );
 
-  while( ofs != size ){
-    GFL_ARC_LoadDataOfsByHandle( handle, 0, ofs, 4, &data[ 0 ] );
-    if( ( data[ 0 ] == tr_id ) && ( data[ 1 ] == kindID ) ){
-      GFL_MSG_GetString( msg, ofs / 4, str );
+    size = GFL_ARC_GetDataSize( ARCID_TRMSGTBL, 0 );
+#ifdef PM_DEBUG
+    ofs_size = GFL_ARC_GetDataSize( ARCID_TRMSGTBL_OFS, 0 );
+    if( ofs_size < tr_id * 2 )
+    {
+      GFL_STR_ClearBuffer( str );
+      return;
+    }
+#endif
+    GFL_ARC_LoadDataOfs( &ofs, ARCID_TRMSGTBL_OFS, 0, tr_id * 2, 2 );
+    handle = GFL_ARC_OpenDataHandle( ARCID_TRMSGTBL, heapID );
+
+    while( ofs != size ){
+      GFL_ARC_LoadDataOfsByHandle( handle, 0, ofs, 4, &data[ 0 ] );
+      if( ( data[ 0 ] == tr_id ) && ( data[ 1 ] == kindID ) ){
+        GFL_MSG_GetString( msg, ofs / 4, str );
+        break;
+      }
+      ofs += 4;
+    }
+    GFL_ARC_CloseDataHandle( handle );
+    GFL_MSG_Delete( msg );
+
+    //  GF_ASSERT_MSG(ofs!=size,"TrainerMessage Not Found");
+    //メッセージが見つからなかったら、STRBUFをクリアして返す
+    if( ofs == size )
+    {
+      GFL_STR_ClearBuffer( str );
+    }
+  }
+  else
+  {
+    switch( ex_trtype )
+    {
+    case EX_TRTYPE_INFINITY_DUNGEON:
+      {
+        GFL_MSGDATA*  msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL,
+            ARCID_MESSAGE, NARC_message_infinity_dungeon_trmsg_dat, heapID );
+        GFL_MSG_GetString( msg, (tr_id - TRID_OFFSET_INFINITY_DUNGEON), str );
+        GFL_MSG_Delete( msg );
+      }
+      break;
+    default:
+      GF_ASSERT(0);
       break;
     }
-    ofs += 4;
-  }
-  GFL_ARC_CloseDataHandle( handle );
-  GFL_MSG_Delete( msg );
-
-//  GF_ASSERT_MSG(ofs!=size,"TrainerMessage Not Found");
-  //メッセージが見つからなかったら、STRBUFをクリアして返す
-  if( ofs == size )
-  {
-    GFL_STR_ClearBuffer( str );
   }
 }
 
@@ -252,7 +285,15 @@ void  TT_TrainerMessageGet( TrainerID tr_id, int kindID, STRBUF* str, HEAPID hea
 //============================================================================================
 void  TT_TrainerDataGet( TrainerID tr_id, TRAINER_DATA* td )
 {
-  GFL_ARC_LoadData( td, ARCID_TRDATA, tr_id );
+  if( tr_id <  TRID_OFFSET_INFINITY_DUNGEON )
+  {
+    GFL_ARC_LoadData( td, ARCID_TRDATA, tr_id );
+  }
+  else
+  {
+    ONOUE_Printf("トレーナーデータ差し替え\n");
+    GFL_ARC_LoadData( td, ARCID_TRDATA, 1 );
+  }
 }
 
 //============================================================================================
@@ -683,6 +724,25 @@ static  void  pp_set_param( TrainerID tr_id, POKEMON_PARAM* pp, int form_no, int
     OS_TPrintf("tr_id:%d mons_no:%d seikaku:%s\n",tr_id,PP_Get(pp,ID_PARA_monsno,NULL),scp_seikaku[PP_Get(pp,ID_PARA_seikaku,NULL)]);
   }
 #endif
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  特殊トレーナータイプを取得する
+ *
+ *	@param	tr_id 
+ *
+ *	@retval 特殊トレーナータイプ
+ */
+//-----------------------------------------------------------------------------
+u8 TT_ExTrainerTypeCheck( TrainerID tr_id )
+{
+  if( tr_id >= TRID_OFFSET_INFINITY_DUNGEON )
+  {
+    return EX_TRTYPE_INFINITY_DUNGEON;
+  }
+
+  return EX_TRTYPE_NONE;
 }
 
 //============================================================================================
