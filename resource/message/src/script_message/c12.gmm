@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-30T11:45:12"/>
+	<create user="matsumiya" host="W00224" date="2011-04-04T15:39:56"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1299" top="178" right="2004" bottom="806" maximized="no" rayout="Vertical2">
+	<dialog left="1301" top="151" right="2006" bottom="779" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -294,10 +294,11 @@
 
 	<row id="msg_c12_rivalsister_01" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
 		<comment>♀
-・pos（）を踏んだとき
-　画面？から登場してメッセージ表示
-・表示後、主人公に隣接して
-※妹と一緒</comment>
+・pos（local　9～13.18）を踏んだとき
+　画面左から登場してメッセージ表示
+・続けてswrival_01
+
+※ライバルと妹は一緒</comment>
 		<attribute name="キャラ指定">ライバル妹
 GIRL2</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]さーん▼</language>
@@ -306,11 +307,7 @@ GIRL2</attribute>
 
 	<row id="msg_c12_swrival_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・posを踏んだとき
-　画面？から登場してメッセージ表示
-・表示後、主人公に隣接して
-※妹と一緒
-
+・主人公に隣接して
 ・1＝ライバル名</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『どこ　いくの？▼
@@ -365,8 +362,8 @@ GIRL2</attribute>
 
 	<row id="msg_c12_swrival_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・pos（）
-　高台（c12p01）のほうを向いて表示
+・pos（local 19~23.23）
+　高台の方（＝左）を向いて表示
 ・１回のみ？</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『どうする？
@@ -377,7 +374,7 @@ GIRL2</attribute>
 
 	<row id="msg_c12_swrival_05" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
 		<comment>♂
-・振り向き会話その１</comment>
+・その場で振り向き会話その１</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『それにしてもさ▼
 ポケモンを　もらえるなんて
@@ -389,19 +386,17 @@ GIRL2</attribute>
 
 	<row id="msg_c12_swrival_06" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
 		<comment>♂
-・振り向き会話その２</comment>
+・その場で振り向き会話その２</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『で　ポケモンと
-ポケモンずかんを　たくされたら▽
-オマエも　たびに　でるのか？</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『で　ポケモンと
-ポケモン図鑑を　たくされたら▽
-オマエも　旅に　でるのか？</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『で　どうするんだよ？
+ポケモンと　いっしょに　たびするのか？</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『で　どうするんだよ？
+ポケモンと　一緒に　旅するのか？</language>
 	</row>
 
 	<row id="msg_c12_swrival_07" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
 		<comment>♂
-・振り向き会話その３
+・その場で振り向き会話その３
 　繰り返し</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『……いいから
@@ -413,101 +408,102 @@ GIRL2</attribute>
 	<row id="msg_c12_swrival_ng01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・禁止メッセージ
-　ポケモンセンター</comment>
+　ポケモンセンター
+・メッセージ表示後、一歩戻す</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『オレさ
 さっきまで　ポケセンに　いたけれど▽
-それっぽい　ひとは　いなかったよ</language>
+それっぽい　ひとは　いなかったよ▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『オレさ
 さっきまで　ポケセンに　いたけれど▽
-それっぽい　人は　いなかったよ</language>
+それっぽい　人は　いなかったよ▼</language>
 	</row>
 
 	<row id="msg_c12_swrival_ng02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・禁止メッセージ
-　トレーナーズスクール</comment>
+　トレーナーズスクール
+・メッセージ表示後、一歩戻す</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『トレーナーズスクールは
-こんど　ポケモンジムに　なる▼
-いまは　こうじを　しているから
-だれも　はいれないよ</language>
+いま　こうじちゅう▼
+ポケモンジムの　ぶぶんが　できるまで
+だれも　はいれない　はずだよ▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『トレーナーズスクールは
-こんど　ポケモンジムに　なる▼
-今は　工事を　しているから
-だれも　はいれないよ</language>
+今　工事中▼
+ポケモンジムが　併設されるまで
+だれも　はいれない　はずだよ▼</language>
 	</row>
 
 	<row id="msg_c12_swrival_ng03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・禁止メッセージ
-　１９番道路ゲート</comment>
+　１９番道路ゲート
+・メッセージ表示後、一歩戻す</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『その　ベルって　ひと
-この　まちに　いるんだろ？▽
-どうろに　でたら　いきちがいになる</language>
+この　まちに　いるんだろ？▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『その　ベルって　人
-この街に　いるんだろ？▽
-道路にでたら　行き違いになる</language>
+この街に　いるんだろ？▼</language>
 	</row>
 
 	<row id="msg_c12_swrival_ng04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・禁止メッセージ
-　主人公の家</comment>
+　主人公の家
+・メッセージ表示後、一歩戻す</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『あのさ……▼
 オマエの　いえに　いないのは
-オマエが　わかってるんじゃないの？</language>
+いちばん　よく　わかってるだろ？▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『あのさ……▼
 オマエの　家に　いないのは
-オマエが　わかってるんじゃないの？</language>
+一番　よく　わかってるだろ？▼</language>
 	</row>
 
 	<row id="msg_c12_swrival_ng05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・禁止メッセージ
-　ライバルの家</comment>
+　ライバルの家
+・メッセージ表示後、一歩戻す</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『オレの　いえに　いたら
-いもうとが　おしえてくれるさ</language>
+いもうとが　おしえてくれるさ▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『オレの　家に　いたら
-妹が　教えてくれるさ</language>
+妹が　教えてくれるさ▼</language>
 	</row>
 
 	<row id="msg_c12_swrival_ng06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・禁止メッセージ
-　ビル（c12r0301）</comment>
+　ビル（c12r0301）
+・メッセージ表示後、一歩戻す</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ベルって　ひとが
-どんな　ひとだか　しらないけれど▼
-オマエの　いえか　そうでないかは
-くべつ　つくだろうよ</language>
+どんな　ひとだか　しらないけれど▽
+たにんの　いえで　くつろぐのか？▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ベルって　人が
-どんな　人だか　知らないけれど▼
-オマエの　家か　そうでないかは
-区別　つくだろうよ</language>
+どんな　人だか　知らないけれど▽
+他人の　家で　くつろぐのか？▼</language>
 	</row>
 
 	<row id="msg_c12_swrival_ng07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・禁止メッセージ
-　ビル（c12r0401）</comment>
+　ビル（c12r0401）
+・メッセージ表示後、一歩戻す</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『ベルって　ひとが
-どんな　ひとだか　しらないけれど▼
-オマエの　いえか　そうでないかは
-くべつ　つくだろうよ</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ベルって　人が
-どんな　人だか　知らないけれど▼
-オマエの　家か　そうでないかは
-区別　つくだろうよ</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『なあ▼
+オマエが　きめれば　いいけれど
+みはらしだいを　みてみないか？</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『なあ▼
+オマエが　決めれば　いいけれど
+見晴台を　みてみないか？</language>
 	</row>
 
 	<row id="msg_c12_swrival_11" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
 		<comment>♂：高台でのイベント
-・posを踏むとメッセージ表示
+・pos（local 4~6.10）を踏むとメッセージ表示
 ・表示後、連れ歩き解除</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『あそこ……▼</language>
@@ -518,9 +514,9 @@ GIRL2</attribute>
 		<comment>♂
 ・ベルと会話前</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『なに？　あのひとが
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『あの　ひとが
 ベルって　ひとか　たしかめないのか？</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『なに？　あの人が
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『あの人が
 ベルって　人か　確かめないのか？</language>
 	</row>
 
@@ -529,14 +525,15 @@ GIRL2</attribute>
 ・ベルと会話前にposを踏んだとき
 ・表示後、主人公を一歩戻す</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『なに？　あのひとが
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『あのひとが
 ベルって　ひとか　たしかめないのか？▼</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『なに？　あの人が
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『あの人が
 ベルって　人か　確かめないのか？▼</language>
 	</row>
 
 	<row id="msg_c12_white_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
+・pos（local 10.5）上向きに配置
 ・話しかけるとメッセージ表示後
 　左右をきょろきょろする
 ・続けてwhite_02</comment>
@@ -549,7 +546,7 @@ GIRL2</attribute>
 		<comment>♀
 ・移動してきて主人公と向き合い
 　メッセージ表示
-・white_03</comment>
+・続けてwhite_03</comment>
 		<attribute name="キャラ指定">ベル</attribute>
 		<language name="JPN" width="256">ねえねえ
 あなたも　そう　おもうでしょ？▼</language>
@@ -559,7 +556,7 @@ GIRL2</attribute>
 
 	<row id="msg_c12_white_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・！マーク帆湯時
+・！マーク表示
 ・はい/いいえ選択肢表示
 　はい　→white_04
 　いいえ→swrival_03
@@ -578,7 +575,7 @@ GIRL2</attribute>
 	<row id="msg_c12_swrival_14" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
 		<comment>♂
 ・いいえ選択時
-・続けて
+・続けてwhite_04
 ・0＝主人公名前
 ・1＝ライバル名</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
@@ -604,10 +601,11 @@ GIRL2</attribute>
 さっそくだけど　ポケモン　選んで！</language>
 	</row>
 
-	<row id="msg_c12_white_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c12_white_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・表示後、画面切り替え
-・ボール選択画面へ（未発注）</comment>
+・ボール選択画面へ（未発注）
+　※今回はBW素材流用</comment>
 		<attribute name="キャラ指定">ベル</attribute>
 		<language name="JPN" width="256">じゃじゃーん！！▼
 このなかに　あなたの
@@ -765,7 +763,7 @@ GIRL2</attribute>
 すっごく　いい　名前　だよねえ▼</language>
 	</row>
 
-	<row id="msg_c12_swrival_15" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
+	<row id="msg_c12_swrival_15" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・続けて</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
@@ -819,7 +817,7 @@ GIRL2</attribute>
 ポケモンに　出会ってほしいんだ▼</language>
 	</row>
 
-	<row id="msg_c12_swrival_16" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
+	<row id="msg_c12_swrival_16" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・続けて</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
@@ -870,11 +868,11 @@ GIRL2</attribute>
 ・1＝ライバル名</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『オマエの　ポケモンが
-どんな　ポケモンか　しりたいな▼
+どんな　ポケモンか　しりたい▼
 なに　かんたんさ
 ポケモンしょうぶ　してくれよ！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『オマエの　ポケモンが
-どんな　ポケモンか　知りたいな▼
+どんな　ポケモンか　知りたい▼
 なに　簡単なことさ
 ポケモン勝負　してくれよ！▼</language>
 	</row>
@@ -1046,9 +1044,9 @@ GIRL2</attribute>
 		<comment>♀
 ・続けて</comment>
 		<attribute name="キャラ指定">ベル</attribute>
-		<language name="JPN" width="256">ベル『タウンマップだけど
+		<language name="JPN" width="256">ベル『その　タウンマップ
 どうして　２つも　あるの？▼</language>
-		<language name="JPN_KANJI" width="256">ベル『タウンマップだけど
+		<language name="JPN_KANJI" width="256">ベル『その　タウンマップ
 どうして　２つも　あるの？▼</language>
 	</row>
 
@@ -1097,7 +1095,8 @@ GIRL2</attribute>
 	<row id="msg_c12_swmama_06">
 		<comment>♀
 ・19番道路の捕獲デモ終了まで
-　繰り返し</comment>
+　繰り返し
+・2＝最初に選択したポケモン</comment>
 		<attribute name="キャラ指定">スワン主人公ママ</attribute>
 		<language name="JPN" width="256">ママ『いってらっしゃい！▼
 [1:01:ポケモン種族名:2]と　いっしょに
@@ -1121,7 +1120,8 @@ GIRL2</attribute>
 	<row id="msg_c12_white_20a" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：主人公＝♂
 ・ジムバッジ取得後
-・ジムを出るとイベント開始</comment>
+・ジムをでるとイベント開始
+・続けてwhite_21</comment>
 		<attribute name="キャラ指定">ベル</attribute>
 		<language name="JPN" width="256">ベル『おうい！▼</language>
 		<language name="JPN_KANJI" width="256">ベル『おうい！▼</language>
@@ -1130,7 +1130,8 @@ GIRL2</attribute>
 	<row id="msg_c12_white_20b" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：主人公＝♀
 ・ジムバッジ取得後
-・ジムを出るとイベント開始</comment>
+・ジムをでるとイベント開始
+・続けてwhite_21</comment>
 		<attribute name="キャラ指定">ベル</attribute>
 		<language name="JPN" width="256">ベル『ねえねえ！▼</language>
 		<language name="JPN_KANJI" width="256">ベル『ねえねえ！▼</language>
@@ -1140,7 +1141,7 @@ GIRL2</attribute>
 		<comment>♀
 ・アイテム入手処理
 　No354「おんがえし」
-・続けて</comment>
+・続けてwhite_22</comment>
 		<attribute name="キャラ指定">ベル</attribute>
 		<language name="JPN" width="256">どうだった？
 ジムリーダーとの　ポケモンしょうぶ▼
@@ -1264,7 +1265,7 @@ GIRL2</attribute>
 あてさきも　登録したよ！▽
 ね！　さっそく　かけてみて！▼
 あなたが　どれだけ　がんばっているか
-アララギはかせに　教えようよ▼</language>
+アララギ博士に　教えようよ▼</language>
 	</row>
 
 	<row id="msg_c12_white_28" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -1305,7 +1306,8 @@ GIRL2</attribute>
 
 	<row id="msg_c12_girl2_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
-・チェレン到着前</comment>
+・チェレン到着前
+・pos（local　25.6）辺り</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">パートナーである　ポケモンを
 たたかわせるのが　ポケモントレーナー▼
@@ -1317,7 +1319,7 @@ GIRL2</attribute>
 ジムリーダー　なんだってね！</language>
 	</row>
 
-	<row id="msg_c12_girl2_02" back-color="#ff8080,,,,,#ff8080,,,,,,,,,,,,,">
+	<row id="msg_c12_girl2_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
 ・チェレン到着後</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
@@ -1331,7 +1333,8 @@ GIRL2</attribute>
 
 	<row id="msg_c12_boy2_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・チェレン到着前</comment>
+・チェレン到着前
+・pos（local　4.7）</comment>
 		<attribute name="キャラ指定">BOY2</attribute>
 		<language name="JPN" width="256">ポケモンのこと　しりたいのに
 トレーナーズスクールは　おやすみ▼
@@ -1343,7 +1346,7 @@ GIRL2</attribute>
 工事を　しているんだって！</language>
 	</row>
 
-	<row id="msg_c12_boy2_02" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
+	<row id="msg_c12_boy2_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・チェレン到着後</comment>
 		<attribute name="キャラ指定">BOY2</attribute>
@@ -1357,8 +1360,8 @@ GIRL2</attribute>
 
 	<row id="msg_c12_oldman_01">
 		<comment>♂
-・</comment>
-		<attribute name="キャラ指定">ＯＬＤＭＡＮ1</attribute>
+・pos（local　21.11）辺り</comment>
+		<attribute name="キャラ指定">OLDMAN1</attribute>
 		<language name="JPN" width="256">みはらしだい　からの　けしき……
 めのまえに　ひろがる　１９ばんどうろ▽
 あれは　ヒオウギの　じまんだな</language>
@@ -1405,35 +1408,33 @@ GIRL2</attribute>
 		<comment>BGメッセージ</comment>
 		<attribute name="キャラ指定">看板：高台</attribute>
 		<language name="JPN" width="256">このさき　ヒオウギみはらしだい
-・テストメッセージ</language>
+ひろがる　イッシュの　けしき</language>
 		<language name="JPN_KANJI" width="256">この先　ヒオウギ見晴台
-・テストメッセージ</language>
+眼下に広がる　イッシュの光景</language>
 	</row>
 
-	<row id="msg_c12_gymsign_01" back-color="#8080ff,,,,,#8080ff,,,,,,,,,,,,,">
+	<row id="msg_c12_gymsign_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>ポケモンジム
-・チェレン到着前
-　フラグ未定</comment>
+・チェレン到着前</comment>
 		<attribute name="キャラ指定">ポケモンジム</attribute>
 		<language name="JPN" width="256">トレーナーズ　スクールは
 ポケモンジム　ぶぶん　ついかのため▽
 ただいま　こうじちゅう　です</language>
 		<language name="JPN_KANJI" width="256">トレーナーズ　スクールは
-ポケモンジム　増設のため▽
+ポケモンジム　併設のため▽
 ただいま　工事中です</language>
 	</row>
 
-	<row id="msg_c12_gymsign_02" back-color="#8080ff,,,,,#8080ff,,,,,,,,,,,,,">
+	<row id="msg_c12_gymsign_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>ポケモンジム
-・チェレン到着後
-　フラグ未定</comment>
+・チェレン到着後</comment>
 		<attribute name="キャラ指定">ポケモンジム</attribute>
 		<language name="JPN" width="256">ヒオウギシティ　ポケモンジム
 リーダー　チェレン▽
-（キャッチフレーズ）</language>
+しんりを　もとめる　もの</language>
 		<language name="JPN_KANJI" width="256">ヒオウギシティ　ポケモンジム
 リーダー　チェレン▽
-（キャッチフレーズ）</language>
+真理を　求める　者</language>
 	</row>
 
 	<flowchart-group-list>
