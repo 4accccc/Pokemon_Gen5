@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-31T18:43:24"/>
+	<create user="matsumiya" host="W00224" date="2011-04-04T21:31:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="200"/>
+		<comment position="4" width="216"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1301" top="154" right="2006" bottom="779" maximized="no" rayout="Vertical2">
+	<dialog left="1299" top="159" right="2004" bottom="787" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -296,18 +296,20 @@
 		<comment>♂</comment>
 		<attribute name="キャラ指定">MAN2
 青年お洒落</attribute>
-		<language name="JPN" width="256">モンスターボールは　おおめに
+		<language name="JPN" width="256">キズぐすりは　おおめに
 もっておいた　ほうが　いいよ！▼
-つかまえたい　ポケモンが　いても
-ボールがないと　どうしようもないよ！</language>
-		<language name="JPN_KANJI" width="256">モンスターボールは　おおめに
-もっておいた　ほうが　いいよ！▼
-つかまえたい　ポケモンが　いても
-ボールがないと　どうしようもないよ！</language>
+いつも　ポケモンセンターの
+ちかくに　いる　わけじゃないからね</language>
+		<language name="JPN_KANJI" width="256">キズぐすりは　多めに
+持っておいた　ほうが　いいよ！▼
+いつも　ポケモンセンターの
+近くにいる　わけじゃないからね</language>
 	</row>
 
-	<row id="msg_t06pc0101_girl3_01">
-		<comment>♀</comment>
+	<row id="msg_t06pc0101_girl3_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・先頭のポケモンが♂
+・0＝先頭のポケモン（ひんし/タマゴ除く）</comment>
 		<attribute name="キャラ指定">GIRL3</attribute>
 		<language name="JPN" width="256">あなたの　[1:01:ポケモン種族名:0]って
 オス　なんだ！▼
@@ -316,11 +318,13 @@
 		<language name="JPN_KANJI" width="256">あなたの　[1:01:ポケモン種族名:0]って
 オス　なんだ！▼
 ポケモンの　オスと　メスって
-なにが　ちがうのかしらね？</language>
+なにが　違うのかしらね？</language>
 	</row>
 
-	<row id="msg_t06pc0101_girl3_02">
-		<comment>♀</comment>
+	<row id="msg_t06pc0101_girl3_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・先頭のポケモンが♀
+・0＝先頭のポケモン（ひんし/タマゴ除く）</comment>
 		<attribute name="キャラ指定">GIRL3</attribute>
 		<language name="JPN" width="256">あなたの　[1:01:ポケモン種族名:0]って
 メス　なんだ！▼
@@ -329,11 +333,13 @@
 		<language name="JPN_KANJI" width="256">あなたの　[1:01:ポケモン種族名:0]って
 メス　なんだ！▼
 ポケモンの　オスと　メスって
-なにが　ちがうのかしらね？</language>
+なにが　違うのかしらね？</language>
 	</row>
 
-	<row id="msg_t06pc0101_girl3_03">
-		<comment>♀</comment>
+	<row id="msg_t06pc0101_girl3_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・先頭のポケモンが性別不明
+・0＝先頭のポケモン（ひんし/タマゴ除く）</comment>
 		<attribute name="キャラ指定">GIRL3</attribute>
 		<language name="JPN" width="256">あなたの　[1:01:ポケモン種族名:0]って……
 せいべつは　わからないのね！▼
@@ -342,7 +348,7 @@
 		<language name="JPN_KANJI" width="256">あなたの　[1:01:ポケモン種族名:0]って……
 せいべつは　わからないのね！▼
 ポケモンの　オスと　メスって
-なにが　ちがうのかしらね？</language>
+なにが　違うのかしらね？</language>
 	</row>
 
 	<flowchart-group-list>
