@@ -157,7 +157,8 @@ typedef struct _FMISSION_VIEW{
   GFL_TCBLSYS*  pTcbSys;
   GFL_TCB*      tcbVIntr;
 
-  int           eff_task_ct;  //エフェクトタスク数
+  int           eff_task_ct;      //エフェクトタスク数
+  int           en_print_task_ct;   //エントリー数プリントタスク数
 
   PALETTE_FADE_PTR pfd;
 

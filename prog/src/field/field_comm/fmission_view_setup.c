@@ -502,6 +502,7 @@ static void _sub_SystemExit(FMISSION_VIEW_PTR wk)
 
   GFL_TCB_DeleteTask( wk->tcbVIntr );
  
+  GFL_TCBL_DeleteAll( wk->pTcbSys );
   GFL_TCBL_Exit( wk->pTcbSys );
 }
 

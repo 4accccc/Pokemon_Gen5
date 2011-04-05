@@ -123,7 +123,7 @@ void FMissionView_InitialDraw( FMISSION_VIEW_PTR wk )
 
   //ミッション情報表示
   draw_MissionInfo( wk );
-  draw_EntryNum( wk, &wk->eff_task_ct );
+  draw_EntryNum( wk, &wk->en_print_task_ct );
 #if 0
   draw_MissionNowScore( wk );
   draw_RestTime( wk, &wk->eff_task_ct );
@@ -251,34 +251,12 @@ BOOL FMissionView_CheckStack( FMISSION_VIEW_PTR wk )
  */
 void FMissionView_ViewUpdate( FMISSION_VIEW_PTR wk )
 {
-  u32 sec;
-  u32 entry;
-  u32 my_score;
-  u32 score;
-
-#if 0
-  wk->init_f = TRUE;
- 
-  sec = wk->fmwk->life/60;
-  if( sec != wk->ctrl.fm_sec ){
-    wk->ctrl.fm_sec = sec; 
-    draw_RestTime( wk, &wk->eff_task_ct );
-  }
-
-  entry = LINK_FESTIVAL_GetMissionEntryNum( wk->fest_sys );
-  if( entry != wk->ctrl.fm_entry ){
-    wk->ctrl.fm_entry = entry;
-    draw_EntryNum( wk, &wk->eff_task_ct );
-  }
+  u8  entry = LINK_FESTIVAL_GetMissionEntryNum( wk->fest_sys );
   
-  score = LINK_FESTIVAL_GetNowScore( wk->fest_sys );
-  if( score != wk->ctrl.fm_score ){
-    wk->ctrl.fm_my_score = wk->fmwk->my_score;
-    wk->ctrl.fm_score = score;
-    draw_MissionNowScore( wk );
+  if( (entry > wk->ctrl.fm_entry) && (wk->en_print_task_ct == 0 )){
+    wk->ctrl.fm_entry = entry;
+    draw_EntryNum( wk, &wk->en_print_task_ct );
   }
-#endif
-  wk->init_f = FALSE;
 }
 
 //---------------------------------------------------

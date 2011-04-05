@@ -244,7 +244,10 @@ GMEVENT* FMISSION_VIEW_EventCheck(FMISSION_VIEW_PTR wk, BOOL bEvReqOK )
 static int seq_Main( FMISSION_VIEW_PTR wk )
 {
   int ret;
-  
+ 
+  //描画更新
+  FMissionView_ViewUpdate( wk );
+ 
   //特殊ポップアップ起動チェック
   if( FMissionView_CheckSpecialPopup( wk ) ){
     wk->io_interval = 30*3; //インターバルを設定
