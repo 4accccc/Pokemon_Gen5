@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="onoue_masayuki" host="W00272" date="2011-03-30T16:44:03"/>
+	<create user="onoue_masayuki" host="W00272" date="2011-04-04T17:18:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -441,6 +441,36 @@
 	<row id="DEBUG_STR_INFINITY_JUMP_6">
 		<language name="JPN" width="240">エレベータ部屋に移動（ホワイト）</language>
 		<language name="JPN_KANJI" width="240">エレベータ部屋に移動（ホワイト）</language>
+	</row>
+
+	<row id="DEBUG_STR_INFINITY_JUMP_7">
+		<language name="JPN" width="240">プール部屋に移動</language>
+		<language name="JPN_KANJI" width="240">プール部屋に移動</language>
+	</row>
+
+	<row id="DEBUG_STR_INFINITY_JUMP_8">
+		<language name="JPN" width="240">かいりき部屋</language>
+		<language name="JPN_KANJI" width="240">かいりき部屋</language>
+	</row>
+
+	<row id="DEBUG_STR_INFINITY_JUMP_9">
+		<language name="JPN" width="240">フラッシュ部屋</language>
+		<language name="JPN_KANJI" width="240">フラッシュ部屋</language>
+	</row>
+
+	<row id="DEBUG_STR_INFINITY_JUMP_10">
+		<language name="JPN" width="240">いあいぎり部屋</language>
+		<language name="JPN_KANJI" width="240">いあいぎり部屋</language>
+	</row>
+
+	<row id="DEBUG_STR_INFINITY_JUMP_11">
+		<language name="JPN" width="240">ボス部屋（ブラック）</language>
+		<language name="JPN_KANJI" width="240">ボス部屋（ブラック）</language>
+	</row>
+
+	<row id="DEBUG_STR_INFINITY_JUMP_12">
+		<language name="JPN" width="240">ボス部屋（ホワイト）</language>
+		<language name="JPN_KANJI" width="240">ボス部屋（ホワイト）</language>
 	</row>
 
 	<row id="DEBUG_STR_INFINITY_NUM">

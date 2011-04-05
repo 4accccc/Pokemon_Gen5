@@ -67,6 +67,12 @@ static const DEBUG_MENU_LIST MenuList[] =
   { DEBUG_STR_INFINITY_JUMP_4 , (void*)DEBUG_STR_INFINITY_JUMP_4 , GFL_OVERLAY_BLANK_ID },  // ジャンプ
   { DEBUG_STR_INFINITY_JUMP_5 , (void*)DEBUG_STR_INFINITY_JUMP_5 , GFL_OVERLAY_BLANK_ID },  // ジャンプ
   { DEBUG_STR_INFINITY_JUMP_6 , (void*)DEBUG_STR_INFINITY_JUMP_6 , GFL_OVERLAY_BLANK_ID },  // ジャンプ
+  { DEBUG_STR_INFINITY_JUMP_7 , (void*)DEBUG_STR_INFINITY_JUMP_7 , GFL_OVERLAY_BLANK_ID },  // ジャンプ
+  { DEBUG_STR_INFINITY_JUMP_8 , (void*)DEBUG_STR_INFINITY_JUMP_8 , GFL_OVERLAY_BLANK_ID },  // ジャンプ
+  { DEBUG_STR_INFINITY_JUMP_9 , (void*)DEBUG_STR_INFINITY_JUMP_9 , GFL_OVERLAY_BLANK_ID },  // ジャンプ
+  { DEBUG_STR_INFINITY_JUMP_10 , (void*)DEBUG_STR_INFINITY_JUMP_10 , GFL_OVERLAY_BLANK_ID },  // ジャンプ
+  { DEBUG_STR_INFINITY_JUMP_11 , (void*)DEBUG_STR_INFINITY_JUMP_11 , GFL_OVERLAY_BLANK_ID },  // ジャンプ
+  { DEBUG_STR_INFINITY_JUMP_12 , (void*)DEBUG_STR_INFINITY_JUMP_12 , GFL_OVERLAY_BLANK_ID },  // ジャンプ
 };
 
 ///リスト メニューヘッダー
@@ -321,6 +327,12 @@ static GMEVENT_RESULT debugMenuMedalInfinityDungeon( GMEVENT *event, int *seq, v
     case DEBUG_STR_INFINITY_JUMP_4: JumpZone(work,ZONE_ID_D31R1101); (*seq)=3; break;
     case DEBUG_STR_INFINITY_JUMP_5: JumpZone(work,ZONE_ID_D31R0401); (*seq)=3; break;
     case DEBUG_STR_INFINITY_JUMP_6: JumpZone(work,ZONE_ID_D31R0301); (*seq)=3; break;
+    case DEBUG_STR_INFINITY_JUMP_7: JumpZone(work,ZONE_ID_D31R0701); (*seq)=3; break;
+    case DEBUG_STR_INFINITY_JUMP_8: JumpZone(work,ZONE_ID_D31R0801); (*seq)=3; break;
+    case DEBUG_STR_INFINITY_JUMP_9: JumpZone(work,ZONE_ID_D31R0901); (*seq)=3; break;
+    case DEBUG_STR_INFINITY_JUMP_10: JumpZone(work,ZONE_ID_D31R1001); (*seq)=3; break;
+    case DEBUG_STR_INFINITY_JUMP_11: JumpZone(work,ZONE_ID_D31R0601); (*seq)=3; break;
+    case DEBUG_STR_INFINITY_JUMP_12: JumpZone(work,ZONE_ID_D31R0501); (*seq)=3; break;
     }
     break;
     // 数値入力
