@@ -633,6 +633,9 @@
 #define SCR_WBT_LIST_1ST_RESULT       (1) ///<1回戦結果
 #define SCR_WBT_LIST_2ND_RESULT       (2) ///<2回戦結果
 
+#define SCR_WBT_EFFECT_LEFT           (0) ///<左 エフェクト位置
+#define SCR_WBT_EFFECT_RIGHT          (1) ///<右 エフェクト位置
+
 //--------------------------------------------------------------
 //  scrcmd_intrude_field.c
 //  ハイリンク関連定義

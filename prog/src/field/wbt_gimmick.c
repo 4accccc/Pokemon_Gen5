@@ -58,6 +58,56 @@ typedef struct {
 
 } WBT_GMK_TMP;
 
+//=============================================================================
+/**
+ *          3Dリソース
+ */
+//=============================================================================
+// リソースの並び順
+enum {
+  RESID_DUMMY_MDL = 0,      // ダミー
+  RESID_DUMMY_ICA,          // ダミー
+};
+
+// OBJインデックス
+enum {
+  OBJ_DUMMY = 0,
+};
+
+// RES
+static const GFL_G3D_UTIL_RES res_3d_table[] =
+{
+  // ダミー
+  { ARCID_WBT_GIMMICK_DATA, NARC_wbt_gmk_dummy_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
+  { ARCID_WBT_GIMMICK_DATA, NARC_wbt_gmk_dummy_nsbca, GFL_G3D_UTIL_RESARC }, // ICA
+};
+
+// ANIME
+static const GFL_G3D_UTIL_ANM anm_3d_table[] =
+{
+  { RESID_DUMMY_ICA, 0 }, // nsbca
+};
+
+// OBJ
+static const GFL_G3D_UTIL_OBJ obj_3d_table[] = 
+{
+  // ダミー
+  {
+    RESID_DUMMY_MDL,        // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_DUMMY_MDL,        // テクスチャリソースID
+    anm_3d_table,           // アニメテーブル(複数指定のため)
+    NELEMS(anm_3d_table),   // アニメリソース数
+  },
+};
+
+// セットアップデータ
+static const GFL_G3D_UTIL_SETUP g3Dutil_Setup = {
+  res_3d_table,				    //リソーステーブル
+	NELEMS(res_3d_table),		//リソース数
+	obj_3d_table,				    //オブジェクト設定テーブル
+	NELEMS(obj_3d_table),		//オブジェクト数
+};
 
 //=============================================================================
 /**
@@ -91,6 +141,7 @@ void WBT_GIMMICK_Setup( FIELDMAP_WORK *p_fieldmap )
   WBT_GMK_TMP *p_wk = GMK_TMP_WK_AllocWork( p_fieldmap, WBT_TMP_ASSIGN_ID,
       FIELDMAP_GetHeapID(p_fieldmap), sizeof(WBT_GMK_TMP) );
 
+  p_wk->exp_obj   = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
   // ギミックは発動させない
   p_wk->trg_vision = FALSE;
   p_wk->trg_effect = FALSE;
@@ -101,6 +152,13 @@ void WBT_GIMMICK_Setup( FIELDMAP_WORK *p_fieldmap )
   ICHI_Printf("gimmick init\n");
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  終了関数
+ *
+ *	@param	p_fieldmap  フィールドワークポインタ
+ */
+//-----------------------------------------------------------------------------
 void WBT_GIMMICK_End( FIELDMAP_WORK *p_fieldmap )
 {
   WBT_GMK_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, WBT_TMP_ASSIGN_ID );
@@ -114,6 +172,13 @@ void WBT_GIMMICK_End( FIELDMAP_WORK *p_fieldmap )
   ICHI_Printf("gimmick end\n");
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  動作関数
+ *
+ *	@param	p_fieldmap  フィールドワークポインタ
+ */
+//-----------------------------------------------------------------------------
 void WBT_GIMMICK_Move( FIELDMAP_WORK *p_fieldmap )
 {
   WBT_GMK_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, WBT_TMP_ASSIGN_ID );
@@ -122,12 +187,69 @@ void WBT_GIMMICK_Move( FIELDMAP_WORK *p_fieldmap )
   EXPOBJ_ObjMain( p_wk );
 }
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ギミックスタート 背景ビジョン開始
+ *
+ *	@param	p_fieldmap  フィールドワークポインタ
+ */
+//-----------------------------------------------------------------------------
+void WBT_GIMMICK_VisionInit( FIELDMAP_WORK *p_fieldmap, u8 type )
+{
+  WBT_GMK_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, WBT_TMP_ASSIGN_ID );
+
+  ICHI_Printf("背景ビジョン開始 %d \n", type);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ギミックスタート 背景ビジョン変更
+ *
+ *	@param	p_fieldmap  フィールドワークポインタ
+ */
+//-----------------------------------------------------------------------------
+void WBT_GIMMICK_VisionChange( FIELDMAP_WORK *p_fieldmap, u8 type )
+{
+  WBT_GMK_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, WBT_TMP_ASSIGN_ID );
+
+  ICHI_Printf("背景ビジョン変更 %d \n", type);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ギミックスタート 通路エフェクト開始
+ *
+ *	@param	p_fieldmap  フィールドワークポインタ
+ */
+//-----------------------------------------------------------------------------
+void WBT_GIMMICK_EffectStart( FIELDMAP_WORK *p_fieldmap, u8 type, u8 pos )
+{
+  WBT_GMK_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, WBT_TMP_ASSIGN_ID );
+
+  ICHI_Printf("通路エフェクト開始 %d pos:%d \n", type, pos);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ギミックスタート 優勝エフェクト開始
+ *
+ *	@param	p_fieldmap  フィールドワークポインタ
+ */
+//-----------------------------------------------------------------------------
+void WBT_GIMMICK_WinEffectStart( FIELDMAP_WORK *p_fieldmap )
+{
+  WBT_GMK_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, WBT_TMP_ASSIGN_ID );
+
+  ICHI_Printf("優勝エフェクト開始\n");
+}
+
+
 //=============================================================================
 /**
  *        static関数
  */
 //=============================================================================
-//
 //=============================================================================
 /**
  *        EXPOBJ
@@ -142,6 +264,34 @@ void WBT_GIMMICK_Move( FIELDMAP_WORK *p_fieldmap )
 //-----------------------------------------------------------------------------
 static void EXPOBJ_ObjSet( WBT_GMK_TMP *p_wk )
 {
+
+  //必要なリソースの用意
+  FLD_EXP_OBJ_AddUnitByHandle( p_wk->exp_obj, &g3Dutil_Setup, EXPOBJ_UNIT_IDX );
+
+  //=====================================
+  // ダミーの設定
+  //
+  {
+    u16     obj_idx = OBJ_DUMMY;    // OBJインデックス
+    VecFx32 pos     = { 0, 0, 0 };
+
+    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx );
+
+    // 座標
+    status->trans = pos;
+    // カリングする
+    FLD_EXP_OBJ_SetCulling( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, TRUE );
+    // 表示
+    FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, FALSE );
+    // アニメ再生
+    {
+      EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, 0 );
+      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, 0, TRUE );
+      FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, FALSE );  // ループ再生設定
+      FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, TRUE );   // アニメ再生設定
+    }
+  }
+
 }
 
 //----------------------------------------------------------------------------
@@ -153,6 +303,7 @@ static void EXPOBJ_ObjSet( WBT_GMK_TMP *p_wk )
 //-----------------------------------------------------------------------------
 static void EXPOBJ_ObjDell( WBT_GMK_TMP *p_wk )
 {
+  FLD_EXP_OBJ_DelUnit( p_wk->exp_obj, EXPOBJ_UNIT_IDX );
 }
 
 //----------------------------------------------------------------------------
@@ -164,5 +315,7 @@ static void EXPOBJ_ObjDell( WBT_GMK_TMP *p_wk )
 //-----------------------------------------------------------------------------
 static void EXPOBJ_ObjMain( WBT_GMK_TMP *p_wk )
 {
+  // アニメーション再生
+  FLD_EXP_OBJ_PlayAnime( p_wk->exp_obj );
 }
 

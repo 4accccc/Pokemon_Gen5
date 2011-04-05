@@ -33,6 +33,7 @@
 #include "wbt_system.h"
 #include "wbt_system_local.h"
 #include "event_wbt.h"
+#include "wbt_gimmick.h"
 
 
 #include "system/main.h"
@@ -430,6 +431,81 @@ VMCMD_RESULT EvCmdWBTGetVictoryCount( VMHANDLE * core, void * wk )
   //仮
   *ret_wk = 1;
   TAMADA_Printf("EvCmdWBTGetVictoryCount == %d\n", *ret_wk );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スクリプトコマンド:WBTギミック背景ビジョン初期化
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTGMKVisionInit( VMHANDLE * core, void * wk )
+{
+  SCRCMD_WORK   *work = wk;
+  GAMESYS_WORK  *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+
+  u8 type = SCRCMD_GetVMWorkValue( core, wk );
+
+  // ギミック開始
+  WBT_GIMMICK_VisionInit( fieldWork, type );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スクリプトコマンド:WBTギミック背景ビジョン変更
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTGMKVisionChange( VMHANDLE * core, void * wk )
+{
+  SCRCMD_WORK   *work = wk;
+  GAMESYS_WORK  *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+
+  u8 type = SCRCMD_GetVMWorkValue( core, wk );
+
+  // ギミック変更
+  WBT_GIMMICK_VisionChange( fieldWork, type );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スクリプトコマンド:WBTギミック通路エフェクト開始
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTGMKEffectStart( VMHANDLE * core, void * wk )
+{
+  SCRCMD_WORK   *work = wk;
+  GAMESYS_WORK  *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+
+  u8 type = SCRCMD_GetVMWorkValue( core, wk );
+  u8 pos = SCRCMD_GetVMWorkValue( core, wk );
+
+  // ギミック開始
+  WBT_GIMMICK_EffectStart( fieldWork, type, pos );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スクリプトコマンド:WBTギミック優勝エフェクト開始
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTGMKWinEffectStart( VMHANDLE * core, void * wk )
+{
+  SCRCMD_WORK   *work = wk;
+  GAMESYS_WORK  *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+
+  // ギミック開始
+  WBT_GIMMICK_WinEffectStart( fieldWork );
+
   return VMCMD_RESULT_CONTINUE;
 }
 

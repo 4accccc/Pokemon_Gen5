@@ -33,3 +33,8 @@ extern VMCMD_RESULT EvCmdWBTSetTournamentName( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTSetEnemyName( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTGetVictoryCount( VMHANDLE * core, void * wk );
 
+extern VMCMD_RESULT EvCmdWBTGMKVisionInit( VMHANDLE * core, void * wk );
+extern VMCMD_RESULT EvCmdWBTGMKVisionChange( VMHANDLE * core, void * wk );
+extern VMCMD_RESULT EvCmdWBTGMKEffectStart( VMHANDLE * core, void * wk );
+extern VMCMD_RESULT EvCmdWBTGMKWinEffectStart( VMHANDLE * core, void * wk );
+
