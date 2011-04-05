@@ -51,6 +51,9 @@
 
 #include "system/wipe.h"
 
+#include "app/app_keycursor.h"
+#include "app/app_printsys_common.h"
+
 //外部公開
 #include "app/wbt_list.h"
 
@@ -102,9 +105,12 @@ enum
 {
 	//メインBG
 	PLTID_BG_BACK_M		= 0,
+	PLTID_BG_MESWIN		= 8,		// メッセージウインドウ表示
+	PLTID_BG_FONT		= 9,		// メッセージ用のフォント
+	//
 	//サブBG
 	PLTID_BG_BACK_S		= 0,		// 下地
-	
+	//
 	//メインOBJ
 	PLTID_OBJ_PANEL		= 0,		// 6本使用
 	PLTID_OBJ_MAPMODEL	= 6,		// 8本使用
@@ -154,19 +160,16 @@ enum{
 	TIMER_MAX,
 };
 
-//-------------------------------------
-/// リソースインデックス
-//-------------------------------------
+// OBJのリソースのインデックス
 enum{
 	RESID_OBJ_PLT = 0,				// パレット
 	RESID_OBJ_CHR,					// キャラ
 	RESID_OBJ_CEL,					// セルアニメ
+	//
 	RESID_OBJ_MAX,
 };
 
-//-------------------------------------
-/// CLWK
-//-------------------------------------
+// CLWK(上画面)
 enum
 {
 	CLWKID_PANEL_00 = 0,			// パネル(上)
@@ -196,9 +199,7 @@ enum
 	CLWKID_MAX,
 };
 
-//-----------------------------------
-// 移動のパラメータ用
-//-----------------------------------
+// 移動のパラメータ
 enum{
 	MWORK_PANEL_L	= 0,			// 左移動
 	MWORK_PANEL_R,					// 右移動
@@ -206,9 +207,7 @@ enum{
 	MWORK_MAX,
 };
 
-//-----------------------------------
 // 移動の種類
-//-----------------------------------
 enum{
 	MOVE_PANEL_IN	= 0,			// パネルin
 	MOVE_PANEL_OUT,					// パネルout
@@ -216,36 +215,13 @@ enum{
 	MOVE_PANEL_MAX,
 };
 
-//-------------------
-// フラグ
-//-------------------
-// 移動のフラグ(MoveWork.flag)
-enum{
-	FLG_MOVE_INIT	= (1<<0),		// 初期化
-	FLG_MOVE_END	= (1<<1),		// 終了
-};
-
-// OBJのフラグ(WBTLIST_OBJ_DATA.dispflag)
-enum{
-	FLG_OBJ_ANIM	= (1<<0),		// アニメあり
-	FLG_OBJ_HFLIP	= (1<<1),		// HFLIP
-	FLG_OBJ_VFLIP	= (1<<2),		// VFLIP
-};
-
-// メッセージのフラグ(MesFlag)
-enum{
-	FLG_MES_1ST		= (1<<0),		// 1回目終了
-	FLG_MES_END		= (1<<1),		// 2回目終了
-};
-
-//-----------------------------------
-// 定義
-//-----------------------------------
 // 最大数
 enum{
 	WBT_OBJ_MAXNUM = 23,			// obj最大
 	WBT_CANVAS_MAXNUM = 3,			// canvas最大
 	WBT_BMPOAM_MAXNUM = 8,			// bmpoam最大
+	//
+	WBT_GAGE_MAXNUM	= 6,			// ゲージ数最大
 };
 
 // スピード
@@ -272,9 +248,36 @@ enum{
 	R_RED_SEQ		= 7,			// 右、赤のシーケンス
 };
 
-// いろいろ
+// クリアカラー
 enum{
 	CLEAR_COLOR		= 15,			// クリアカラー
+};
+
+// mesウインドウ用
+enum{
+	WBT_WIN_TOP_CHR	= 1,			// ウインドウ用の先頭キャラ(0は抜き用のはず)
+};
+
+//-------------------
+// フラグ
+//-------------------
+// 移動のフラグ(MoveWork.flag)
+enum{
+	FLG_MOVE_INIT	= (1<<0),		// 初期化
+	FLG_MOVE_END	= (1<<1),		// 終了
+};
+
+// OBJのフラグ(WBTLIST_OBJ_DATA.dispflag)
+enum{
+	FLG_OBJ_ANIM	= (1<<0),		// アニメあり
+	FLG_OBJ_HFLIP	= (1<<1),		// HFLIP
+	FLG_OBJ_VFLIP	= (1<<2),		// VFLIP
+};
+
+// メッセージのフラグ(MesFlag)
+enum{
+	FLG_MES_1ST		= (1<<0),		// 1回目終了
+	FLG_MES_END		= (1<<1),		// 2回目終了
 };
 
 //=============================================================================
@@ -341,16 +344,16 @@ enum{
 	PARAM_WORK_MAX	= (PARAM_ROUND1 + PARAM_ROUND2 + PARAM_ROUND3),
 };
 
-// パラメータ参照用
+// パラメータ参照用(WBTLIST_PARAM_WORKと対応)
 enum{
-	PRM_EXPPOS = 0,
-	PRM_WINPOS,
-	PRM_MOVEFLAG,
-	PRM_LINEWORK,
-	PRM_PATTERN,
-	PRM_MESID,
-	PRM_T1ST,
-	PRM_T2ND,
+	PRM_EXPPOS = 0,				// 爆発位置
+	PRM_WINPOS,					// 勝った位置
+	PRM_MOVEFLAG,				// 移動可能フラグ
+	PRM_LINEWORK,				// ラインのワーク
+	PRM_PATTERN,				// パターン
+	PRM_MESID,					// メッセージid
+	PRM_T1ST,					// トレーナー番号(左)
+	PRM_T2ND,					// トレーナー番号(右)
 };
 
 //--------------------------------------------------------------
@@ -383,11 +386,13 @@ typedef struct
 	
 	BMPOAM_SYS_PTR			BmpOamSys;						// BMPOAM
 	GFL_BMP_DATA			*BmpData[WBT_BMPOAM_MAXNUM];	// Bmp
-	BMPOAM_ACT_PTR			BmpOamWork[WBT_BMPOAM_MAXNUM];	// Work
+	BMPOAM_ACT_PTR			BmpOamWork[WBT_BMPOAM_MAXNUM];	// BMPOAM用Work
 	PRINT_UTIL				PrintUtil[WBT_CANVAS_MAXNUM];	// 文字表示用
-	PRINT_STREAM			*PrintStream;					// PrintStream
+	PRINT_STREAM			*PrintStream;					// 文字表示用(PrintStream)
 	GFL_TCBLSYS				*MsgTcblSys;					// メッセージ用タスク
 	STRBUF					*MsgBuffer;						// メッセージ用バッファ
+	APP_KEYCURSOR_WORK		*MsgCursorWork;					// ページ送りマーク用ワーク
+	APP_PRINTSYS_COMMON_WORK PrintSysWork;					// 汎用PrintStream管理ワーク
 	//
 	s32						Mode;							// モード(段階)
 	s32						Step;							// ステップ
@@ -396,7 +401,7 @@ typedef struct
 	u32						MoveFlag;						// 移動可能フラグ
 	u32						MesFlag;						// メッセージフラグ
 	s32						Timer[TIMER_MAX];				// タイマ
-	WBTLIST_MOVE_WORK		MoveWork[MWORK_MAX];			// 移動
+	WBTLIST_MOVE_WORK		MoveWork[MWORK_MAX];			// 移動用ワーク
 	WBTLIST_PARAM_WORK		ParamWork[PARAM_WORK_MAX];		// パラメータのワーク
 	u16						PalBuffer[0x10*8];				// 色変え用(u16なので1パレット0x10分でよい)
 	u16						TmpBuffer[0x10*8];				// パレット用(連続で転送させるためPalBufferと同じサイズを確保)
@@ -740,7 +745,8 @@ static GFL_PROC_RESULT WBTListProc_Init( GFL_PROC *proc, int *seq, void *pwk, vo
 	wk->font = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
 	
 	//メッセージ
-	wk->msg[0] = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_wbt_system_dat, wk->heapID );
+	wk->msg[0] = 0;
+//	wk->msg[0] = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_wbt_system_dat, wk->heapID );
 //	wk->msg[1] = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_wbt_trmsg_dat, wk->heapID );
 	wk->msg[1] = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_wbt_tournament_dat, wk->heapID );
 	
@@ -792,8 +798,12 @@ static GFL_PROC_RESULT WBTListProc_Exit( GFL_PROC *proc, int *seq, void *pwk, vo
 	WBTList_OAM_MAPMODEL_DeleteCLWK( wk );
 	
 	//メッセージ破棄
-	GFL_MSG_Delete( wk->msg[0] );
-	GFL_MSG_Delete( wk->msg[1] );
+	if(wk->msg[0]){
+		GFL_MSG_Delete( wk->msg[0] );
+	}
+	if(wk->msg[1]){
+		GFL_MSG_Delete( wk->msg[1] );
+	}
 	
 	//PRINT_QUE
 	PRINTSYS_QUE_Delete( wk->print_que );
@@ -1044,7 +1054,6 @@ static void wbt_init( WBTLIST_MAIN_WORK* wk )
 	
 	// 文字列(test)
 //	strbuf = GFL_MSG_CreateString( wk->msg[0], 0 );
-//	wk->MsgBuffer = GFL_MSG_CreateString( wk->msg[1], 0 );
 	// バッファを確保
 	wk->MsgBuffer = GFL_STR_CreateBuffer( 200, wk->heapID );
 	
@@ -1093,21 +1102,26 @@ static void wbt_init( WBTLIST_MAIN_WORK* wk )
 	{
 		ARCHANDLE * p_handle  = GFL_ARC_OpenDataHandle( ARCID_FONT, wk->heapID );
 		//上画面フォントパレット
-		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_font_talkwin_nclr, PALTYPE_MAIN_BG, 9*0x20, 0x20, wk->heapID );
+		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_font_talkwin_nclr, PALTYPE_MAIN_BG, PLTID_BG_FONT*0x20, 0x20, wk->heapID );
 		GFL_ARC_CloseDataHandle( p_handle );
 	}
 	
 	// 会話ウィンドウセット(キャラデータを転送)
-	BmpWinFrame_GraphicSet( GFL_BG_FRAME0_M, 1, 8, MENU_TYPE_SYSTEM, wk->heapID);
-//	BmpWinFrame_GraphicSet( GFL_BG_FRAME0_M, 1, 8, MENU_TYPE_TALK, wk->heapID);
+	BmpWinFrame_GraphicSet( GFL_BG_FRAME0_M, WBT_WIN_TOP_CHR, PLTID_BG_MESWIN, MENU_TYPE_SYSTEM, wk->heapID);
+//	BmpWinFrame_GraphicSet( GFL_BG_FRAME0_M, WBT_WIN_TOP_CHR, PLTID_BG_MESWIN, MENU_TYPE_TALK, wk->heapID);
 	// 会話ウインドウ表示
-	BmpWinFrame_Write( wk->PrintUtil[2].win, WINDOW_TRANS_ON,  1, 8 );
+	BmpWinFrame_Write( wk->PrintUtil[2].win, WINDOW_TRANS_ON, WBT_WIN_TOP_CHR, PLTID_BG_MESWIN );
 	//
 	// 文字スクリーン作成
 	GFL_BMPWIN_MakeScreen( wk->PrintUtil[2].win );
 	GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(wk->PrintUtil[2].win) );
 	// 文字領域クリア(キャラをクリア転送)
 	wbt_clear_meswin( wk );
+	//
+	// PrintStream用汎用
+	APP_PRINTSYS_COMMON_PrintStreamInit( &wk->PrintSysWork, APP_PRINTSYS_COMMON_TYPE_BOTH );
+	// メッセージ送りマーク用
+	wk->MsgCursorWork = APP_KEYCURSOR_Create( 15, TRUE, TRUE, wk->heapID );
 	//
 	// 削除
 //	GFL_STR_DeleteBuffer( strbuf );
@@ -1146,6 +1160,7 @@ static void wbt_exit( WBTLIST_MAIN_WORK* wk )
 {
 	// それほど複雑ではないので、
 	// 上、下画面をまとめて処理
+	// emptyのバッファクリア
 	GFL_HEAP_FreeMemory( wk->EmptyBuffer );
 	
 	// 文字表示用
@@ -1305,7 +1320,7 @@ static void wbt_key_00( WBTLIST_MAIN_WORK* wk )
 				}
 				wbt_chg_objseq( wk, tmp, seq );
 				// キャラのパレット変更
-				wbt_chg_obj_pal( wk, tmp, 6, 0 );
+				wbt_chg_obj_pal( wk, tmp, PLTID_OBJ_MAPMODEL, 0 );
 				
 				// 爆破アニメ終了=>ゲージ伸び
 				wk->Step = STEP_LV5;
@@ -1519,6 +1534,8 @@ static void wbt_exit_string( WBTLIST_MAIN_WORK* wk )
 	if(wk->PrintStream){
 		PRINTSYS_PrintStreamDelete( wk->PrintStream );
 	}
+	// 文字送り用
+	APP_KEYCURSOR_Delete( wk->MsgCursorWork );
 }
 
 //-----------------------------------------------------------------------------
@@ -2142,7 +2159,6 @@ static void wbt_main_move_panel( WBTLIST_MAIN_WORK* wk )
 //-----------------------------------------------------------------------------
 static void wbt_set_meswin( WBTLIST_MAIN_WORK* wk, const s32 mesid )
 {
-//	s16			num;
 	s16			buf[2];
 	WORDSET		*wordset;
 	STRBUF		*strbuf;
@@ -2152,6 +2168,7 @@ static void wbt_set_meswin( WBTLIST_MAIN_WORK* wk, const s32 mesid )
 	// 各トレーナーの名前をセット
 	buf[0] = wbt_get_param( wk, PRM_T1ST, 0 );		// 左
 	buf[1] = wbt_get_param( wk, PRM_T2ND, 0 );		// 右
+	// 最後は勝者を表示
 	if(wk->MesFlag & FLG_MES_END){
 		buf[0] = wbt_get_param( wk, PRM_WINPOS, 0 );
 	}
@@ -2159,7 +2176,7 @@ static void wbt_set_meswin( WBTLIST_MAIN_WORK* wk, const s32 mesid )
 	WORDSET_RegisterWord( wordset, 1, wk->Param->trainer[ buf[1] ].name, 0, TRUE, PM_LANG );
 	
 	// PrintStream終了時にはdeleteしないとtaskが残ってしまうようだ
-	// 念のためcheck
+	// 念のため0check
 	if( wk->PrintStream ){
 		PRINTSYS_PrintStreamDelete( wk->PrintStream );
 	}
@@ -2168,9 +2185,9 @@ static void wbt_set_meswin( WBTLIST_MAIN_WORK* wk, const s32 mesid )
 		GFL_STR_DeleteBuffer( wk->MsgBuffer );
 		wk->MsgBuffer = GFL_STR_CreateBuffer( 200, wk->heapID );
 	}
-	// メッセージバッファセット
+	// メッセージ仮バッファセット
 	strbuf = GFL_MSG_CreateString( wk->msg[1], mesid );
-	// セット
+	// パラメータを展開しMsgBufferに再セット
 	WORDSET_ExpandStr( wordset, wk->MsgBuffer, strbuf );
 	//
 	// stream設定=>ここのwk->MsgBufferは終わるまで削除してはいけない
@@ -2191,6 +2208,7 @@ static void wbt_set_meswin( WBTLIST_MAIN_WORK* wk, const s32 mesid )
  *	@brief  会話ウインドウ(処理)
  *
  *	@param	WBTLIST_MAIN_WORK* wk
+ *	@param	BOOL				(TRUE:再生中、FALSE:終了)
  *
  *	@retval
  */
@@ -2200,14 +2218,40 @@ static BOOL wbt_main_meswin( WBTLIST_MAIN_WORK* wk )
 	u16		tmp;
 	s32		stat;
 	u32		num;
+	BOOL	bflg;
 	
 	// 念のため
 	if(wk->PrintStream == 0){
 		return( FALSE );
 	}
-	
+	//
+	// 文字送りカーソル処理
+	APP_KEYCURSOR_Main( wk->MsgCursorWork, wk->PrintStream, wk->PrintUtil[2].win );
+	//
+#if 1
+	// streamの入力処理をまとめて処理してくれるらしい
+    bflg = APP_PRINTSYS_COMMON_PrintStreamFunc( &wk->PrintSysWork , wk->PrintStream );
+    if( bflg == TRUE ){
+		// 終了した
+		// 2回目が終了=>もれなく終了
+		if(wk->MesFlag & FLG_MES_1ST){
+			return( FALSE );
+		}
+		// 1回目が終了=>2回目がある
+		wk->MesFlag |= FLG_MES_1ST;
+		wk->MesFlag |= FLG_MES_END;
+		// meswinクリア
+		wbt_clear_meswin( wk );
+		// 指定した番号 + (0-4)のランダム
+		num = GFUser_GetPublicRand( 5 );
+		tmp = wbt_get_param( wk, PRM_MESID, 0 );
+		wbt_set_meswin( wk, (tmp+num) );
+		return( TRUE );
+	}
+	return( TRUE );
+#else
 	stat = PRINTSYS_PrintStreamGetState( wk->PrintStream );
-	if( stat == PRINTSTREAM_STATE_DONE ){		// ここにはくることがあるの?
+	if( stat == PRINTSTREAM_STATE_DONE ){		// ここには来ることがあるの?
 		if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE || GFL_UI_TP_GetTrg()){
 //			PRINTSYS_PrintStreamDelete( wk->PrintStream );
 //			OS_Printf("mes end\n");
@@ -2223,20 +2267,20 @@ static BOOL wbt_main_meswin( WBTLIST_MAIN_WORK* wk )
 			if(wk->MesFlag & FLG_MES_1ST){
 				return( FALSE );
 			}
+			// 1回目が終了=>2回目がある
 			wk->MesFlag |= FLG_MES_1ST;
 			wk->MesFlag |= FLG_MES_END;
 			// meswinクリア
 			wbt_clear_meswin( wk );
-			// 1回目が終了=>2回目がある
 			// 指定した番号 + (0-4)のランダム
 			num = GFUser_GetPublicRand( 5 );
-//			OS_Printf("rand :%d\n",num);
 			tmp = wbt_get_param( wk, PRM_MESID, 0 );
 			wbt_set_meswin( wk, (tmp+num) );
 			return( TRUE );
 		}
 	}
 	return( TRUE );
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -2255,6 +2299,8 @@ static s32 wbt_chk_meswin( WBTLIST_MAIN_WORK* wk )
 	// 前半
 	mesid = wbt_mes_gmm_tbl[2*wk->Mode];
 	
+	// メッセージの最後のときは、
+	// 次の回戦の情報を表示させるための処理
 	wk->MesFlag = 0;
 	if(wk->Mode == MODE_ROUND1){		// 1回戦
 		wk->MesFlag = FLG_MES_1ST;
@@ -2438,10 +2484,10 @@ static void wbt_init_mode( WBTLIST_MAIN_WORK* wk )
 			wbt_chg_objseq( wk, i, tmp );
 		}
 		// キャラのパレット変更(戻し)=>なくてよいはず
-		wbt_chg_obj_pal( wk, -1, 6, 1 );
+		wbt_chg_obj_pal( wk, -1, PLTID_OBJ_MAPMODEL, 1 );
 		
 		// 全バー非表示
-		for(i=0;i<6;i++){
+		for(i=0;i<WBT_GAGE_MAXNUM;i++){
 			wbt_set_obj_visible( wk, CLWKID_BAR_00+i, FALSE );
 		}
 		// 全パネルを閉まった状態にする
@@ -2460,7 +2506,7 @@ static void wbt_init_mode( WBTLIST_MAIN_WORK* wk )
 			wbt_chg_objseq( wk, i, tmp );
 		}
 		// キャラのパレット変更=>なくてよいはず
-		wbt_chg_obj_pal( wk, -1, 6, 1 );
+		wbt_chg_obj_pal( wk, -1, PLTID_OBJ_MAPMODEL, 1 );
 		
 		//
 		// 2回戦までのパネル色戻し
@@ -2472,11 +2518,11 @@ static void wbt_init_mode( WBTLIST_MAIN_WORK* wk )
 			}
 			wbt_chg_objseq( wk, buf[0], tmp );
 			// キャラのパレット変更
-			wbt_chg_obj_pal( wk, buf[0], 6, 0 );
+			wbt_chg_obj_pal( wk, buf[0], PLTID_OBJ_MAPMODEL, 0 );
 		}
 		//
 		// 全バー非表示
-		for(i=0;i<6;i++){
+		for(i=0;i<WBT_GAGE_MAXNUM;i++){
 			wbt_set_obj_visible( wk, CLWKID_BAR_00+i, FALSE );
 		}
 		// 2回戦までのバー再現
@@ -2503,10 +2549,10 @@ static void wbt_init_mode( WBTLIST_MAIN_WORK* wk )
 			wbt_chg_objseq( wk, i, tmp );
 		}
 		// キャラのパレット変更=>なくてよいはず
-		wbt_chg_obj_pal( wk, -1, 6, 1 );
+		wbt_chg_obj_pal( wk, -1, PLTID_OBJ_MAPMODEL, 1 );
 		
 		// 全バー非表示
-		for(i=0;i<6;i++){
+		for(i=0;i<WBT_GAGE_MAXNUM;i++){
 			wbt_set_obj_visible( wk, CLWKID_BAR_00+i, FALSE );
 		}
 		//
@@ -2620,7 +2666,7 @@ static void wbt_calc_param( WBTLIST_MAIN_WORK* wk )
 			// 勝敗チェック
 			if(wk->Param->first_stage[i].upside_win == TRUE){
 				wk->ParamWork[offset+i].winpos	= 2*i;		// 勝った番号
-				wk->ParamWork[offset+i].exppos	= 2*i+1;		// 負けた番号
+				wk->ParamWork[offset+i].exppos	= 2*i+1;	// 負けた番号
 				wk->ParamWork[offset+i].pattern = 0;		// ゲージのパターン
 			}else{
 				wk->ParamWork[offset+i].winpos	= 2*i+1;
