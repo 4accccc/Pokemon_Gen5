@@ -1,0 +1,5 @@
+#../data/c16r1301.mev
+../tmp/c16r1301.bin:../data/c16r1301.mev ../../script/sp_c16r1301.bin $(UNIQ_SCRIPTHEADER) ../tmp/c16r1301.h 
+	@echo ../data/c16r1301.mev
+	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/c16r1301.h 
+
