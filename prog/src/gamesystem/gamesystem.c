@@ -561,6 +561,7 @@ static BOOL GameSystem_Main(GAMESYS_WORK * gsys)
     //リークチェックを除外するマップ
     if( ZONEDATA_IsUnionRoom(zone_id) == FALSE && //ユニオン
         ZONEDATA_IsColosseum(zone_id) == FALSE && //コロシアム
+        ZONEDATA_IsWBTHall(zone_id) == FALSE &&   //WBT会場
         ZONEDATA_IsBattleSubway(zone_id) == FALSE ) //バトルサブウェイ
     {
       heapLeakCheck();
