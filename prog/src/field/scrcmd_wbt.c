@@ -41,6 +41,7 @@
 #include "msg/msg_wbt_system.h"
 
 #include "app/wbt_list.h"
+
 //======================================================================
 //======================================================================
 SDK_COMPILER_ASSERT( SCR_WBT_RULE_NULL == WBTRULE_NULL );
@@ -54,6 +55,13 @@ SDK_COMPILER_ASSERT( SCR_WBT_TYPE_ALL == WBTTYPE_ALL );
 SDK_COMPILER_ASSERT( SCR_WBT_TYPE_CHAMPION == WBTTYPE_CHAMPION );
 SDK_COMPILER_ASSERT( SCR_WBT_TYPE_POKETYPE == WBTTYPE_POKETYPE );
 SDK_COMPILER_ASSERT( SCR_WBT_TYPE_DOWNLOAD == WBTTYPE_DOWNLOAD );
+
+SDK_COMPILER_ASSERT( SCR_WBT_STAGE_RECEPTION == WBTSTAGE_RECEPTION );
+SDK_COMPILER_ASSERT( SCR_WBT_STAGE_ENTRY == WBTSTAGE_ENTRY );
+SDK_COMPILER_ASSERT( SCR_WBT_STAGE_1ST == WBTSTAGE_1ST );
+SDK_COMPILER_ASSERT( SCR_WBT_STAGE_2ND == WBTSTAGE_2ND );
+SDK_COMPILER_ASSERT( SCR_WBT_STAGE_FINAL == WBTSTAGE_FINAL );
+SDK_COMPILER_ASSERT( SCR_WBT_STAGE_WIN == WBTSTAGE_WIN );
 
 //======================================================================
 //======================================================================

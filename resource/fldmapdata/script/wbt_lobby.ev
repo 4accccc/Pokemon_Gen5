@@ -16,6 +16,8 @@
 
   .include "wbt_scr_define.h"
 
+  .include "wbt_hall_def.h"
+
 
 //----------------------------------------------------------------------
 //               スクリプトテーブル
@@ -71,6 +73,7 @@ _TALK_OBJ_START()
 	
   //WBT制御システム開始：終了するときは必ず対で_WBT_SYSTEM_END()をよぶこと！
   _WBT_SYSTEM_START()
+  _WBT_SYSTEM_SET_STAGE( SCR_WBT_STAGE_RECEPTION )
 
   $LWK_WBT_LOBBY_SEQ = WBT_LOBBY_SEQ_FIRST_MENU
 
@@ -207,7 +210,7 @@ _TALK_OBJ_START()
     _WBT_SYSTEM_END() //_WBT_SYSTEM_STARTと対
   ELSE
     //仮・本当はこのまま会場イベントへつながるはず
-    _WBT_SYSTEM_END() //_WBT_SYSTEM_STARTと対
+    //_WBT_SYSTEM_END() //_WBT_SYSTEM_STARTと対
   ENDIF
 	
 EVENT_END
@@ -353,6 +356,8 @@ IF $LWK_CHK_RULE == TRUE THEN
 	_BALLOONWIN_OBJMSG_POS( msg_wbt_info_17, SCWK_TARGET_OBJID, POS_DL )
 	_MSGWIN_CLOSE()
 	
+  _WBT_SYSTEM_SET_STAGE( SCR_WBT_STAGE_ENTRY )
+
   _MAP_FADE_BLACK_OUT()
   _MAP_FADE_END_CHECK()
 
@@ -368,12 +373,13 @@ IF $LWK_CHK_RULE == TRUE THEN
 	
 	//誘導アニメ
 	
-	
 	//リザーブスクリプト－会場－
 	
+  _RESERVE_SCRIPT( SCRID_WBT_HALL_01 )
 	
 	//会場へマップ移動
 	
+  _MAP_CHANGE( ZONE_ID_D05R0201, 31, 15, DIR_LEFT )
 
 //問題ありの場合
 ELSE
