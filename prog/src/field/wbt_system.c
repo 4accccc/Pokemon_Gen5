@@ -31,6 +31,9 @@
 
 //============================================================================================
 //============================================================================================
+static void WBTTRAINER_Init( WBTTRAINER * wbt_tr );
+static void WBTTRAINER_SetPlayer( WBTTRAINER * wbt_tr, GAMEDATA * gamedata );
+static void WBTTRAINER_SetRomTrainer( WBTTRAINER * wbt_tr, u8 tr_id );
 
 //============================================================================================
 //============================================================================================
@@ -41,8 +44,23 @@
 //------------------------------------------------------------------
 WBTSYS * WBTSYS_Create( HEAPID heapID )
 {
+  int i;
   WBTSYS * wbtsys = GFL_HEAP_AllocClearMemory( heapID, sizeof(WBTSYS) );
+
   wbtsys->heapID = heapID;
+  wbtsys->type = WBTTYPE_NULL;
+  wbtsys->rule = WBTRULE_NULL;
+  wbtsys->stage = WBTSTAGE_RECEPTION;
+  {
+    u64 seed64;
+    seed64 = GFL_STD_MtRand( 0 );
+    wbtsys->seed64 = (seed64 << 32) + GFL_STD_MtRand( 0 );
+  }
+
+  for (i = 0; i < WBT_TRAINER_NUM; i ++ )
+  {
+    WBTTRAINER_Init( &wbtsys->wbt_trainer[ i ] );
+  }
   return wbtsys;
 }
 
@@ -53,6 +71,44 @@ void WBTSYS_Delete( WBTSYS * wbtsys )
   GFL_HEAP_FreeMemory( wbtsys );
 }
 
+//============================================================================================
+//============================================================================================
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static const u16 sample_trid[WBT_TRAINER_NUM] = {
+  12,//アロエ
+  53,//モブ
+  11,//デント
+  0xffff,//プレイヤー
+  55,//モブ
+  56,//モブ
+  18,//シロナ
+  13,//ハチク
+};
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void WBTSYS_Setup_Debug( WBTSYS * wbtsys, GAMEDATA * gamedata, WBTSTAGE stage )
+{
+  int i;
+  wbtsys->type = WBTTYPE_ALL;
+  wbtsys->rule = WBTRULE_SINGLE;
+  wbtsys->stage = stage;
+
+  for ( i = 0; i < WBT_TRAINER_NUM; i ++ )
+  {
+    WBTTRAINER * wbt_tr = &wbtsys->wbt_trainer[ i ];
+    if ( sample_trid[i] == 0xffff )
+    {
+      WBTTRAINER_SetPlayer( wbt_tr, gamedata );
+    } else {
+      WBTTRAINER_SetRomTrainer( wbt_tr, sample_trid[i] );
+    }
+  }
+}
+
+//============================================================================================
+//============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 void WBTSYS_SetType( WBTSYS * wbtsys, WBTTYPE type )
@@ -64,6 +120,40 @@ void WBTSYS_SetType( WBTSYS * wbtsys, WBTTYPE type )
 WBTTYPE WBTSYS_GetType( const WBTSYS * wbtsys )
 {
   return wbtsys->type;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void WBTSYS_SetRule( WBTSYS * wbtsys, WBTRULE rule )
+{
+  wbtsys->rule = rule;
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+WBTRULE WBTSYS_GetRule( const WBTSYS * wbtsys )
+{
+  return wbtsys->rule;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void WBTSYS_SetStage( WBTSYS * wbtsys, WBTSTAGE stage )
+{
+  wbtsys->stage = stage;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+WBTSTAGE WBTSYS_GetStage( const WBTSYS * wbtsys )
+{
+  return wbtsys->stage;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+u64 WBTSYS_GetRandomSeed( const WBTSYS * wbtsys )
+{
+  return wbtsys->seed64;
 }
 
 //------------------------------------------------------------------
@@ -82,24 +172,71 @@ u8 WBTSYS_GetSelectDLData( const WBTSYS * wbtsys )
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-void WBTSYS_SetRule( WBTSYS * wbtsys, WBTRULE rule )
-{
-  wbtsys->rule = rule;
-}
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-WBTRULE WBTSYS_GetRule( const WBTSYS * wbtsys )
-{
-  return wbtsys->rule;
-}
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
 void WBTSYS_SetScriptAnswerWork( WBTSYS * wbtsys, u16 * scr_answer_work )
 {
   wbtsys->scr_answer_work = scr_answer_work;
 }
 
+//============================================================================================
+//============================================================================================
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void WBTSYS_SetTrainer( WBTSYS * wbtsys, const WBTTRAINER * wbt_tr, u32 pos )
+{
+  GF_ASSERT( pos < WBT_TRAINER_NUM );
+  wbtsys->wbt_trainer[ pos ] = *wbt_tr;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+const WBTTRAINER * WBTSYS_GetTrainer( const WBTSYS * wbtsys, u32 pos )
+{
+  GF_ASSERT( pos < WBT_TRAINER_NUM );
+  return &wbtsys->wbt_trainer[ pos ];
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void WBTTRAINER_Init( WBTTRAINER * wbt_tr )
+{
+  wbt_tr->wbt_type = WBT_TRTYPE_ROM;
+  wbt_tr->sex = PM_MALE;
+  wbt_tr->pri = 1;
+  wbt_tr->tr_id = 0;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void WBTTRAINER_Set( WBTTRAINER * wbt_tr, WBT_TRTYPE type, u8 tr_id, u8 sex, u8 pri )
+{
+  wbt_tr->wbt_type = type;
+  wbt_tr->tr_id = tr_id;
+  wbt_tr->sex = sex;
+  wbt_tr->pri = pri;
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void WBTTRAINER_SetRomTrainer( WBTTRAINER * wbt_tr, u8 tr_id )
+{
+  WBT_TRDATA tr_rom_data;
+  WBT_TRDATA_Copy( HEAPID_FIELDMAP, tr_id, &tr_rom_data );
+  WBTTRAINER_Set( wbt_tr, WBT_TRTYPE_ROM, tr_id, tr_rom_data.sex, tr_rom_data.priority );
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void WBTTRAINER_SetPlayer( WBTTRAINER * wbt_tr, GAMEDATA * gamedata )
+{
+  const MYSTATUS * mystat = GAMEDATA_GetMyStatus( gamedata );
+  WBTSAVE * wbtsave = GAMEDATA_GetWBTSave( gamedata );
+
+  u8 sex = MyStatus_GetMySex( mystat );
+  u8 pri = 3;
+  if ( WBTSAVE_GetFlag( wbtsave, WBTSAVE_FLAG_WIN_CHAMPION_TOURNAMENT ) == TRUE )
+  {
+    pri = 4;
+  }
+  WBTTRAINER_Set( wbt_tr, WBT_TRTYPE_PLAYER, 0, sex, pri );
+}
 
 //============================================================================================
 //

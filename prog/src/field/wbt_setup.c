@@ -23,6 +23,7 @@
 #include "arc/message.naix"
 #include "system/main.h"
 
+#include "wbt_system_local.h"
 
 #include "fldmmdl.h"
 #include "fieldmap/fldmmdl_mdlparam.naix"
@@ -34,15 +35,20 @@
 //============================================================================================
 //============================================================================================
 
-static void setupWBTLISTTrainer( WBTLIST_TRAINER * wbtlist_tr, HEAPID heapID, u8 tr_id );
-static void setupWBTLISTPlayer( WBTLIST_TRAINER * wbtlist_tr, HEAPID heapID, GAMEDATA * gamedata );
+static void setupWBTLISTtrainer( HEAPID heapID, GAMEDATA * gamedata,
+    WBTLIST_TRAINER * wbtlist_tr, const WBTTRAINER * wbt_tr );
+
 static void setupWBTLISTResultAll( WBTLIST_PARAM * wbtlist_param, GFL_STD_RandContext * context );
 static void getMMdlObjCodeParam( ARCHANDLE * handle, u16 mmdl_id, u8 * anm_id, u16 * rsc_idx );
 static u8 BTL_CALC_TypeAff( PokeType wazaType, PokeType pokeType );
 
 //============================================================================================
+//
+//  WBTトーナメントリスト用パラメータ生成
+//
 //============================================================================================
 //------------------------------------------------------------------
+///  WBTトーナメントリスト用パラメータOBJECT生成
 //------------------------------------------------------------------
 WBTLIST_PARAM * WBTLIST_PARAM_Create( HEAPID heapID, GAMESYS_WORK * gsys )
 {
@@ -72,8 +78,8 @@ WBTLIST_PARAM * WBTLIST_PARAM_Create( HEAPID heapID, GAMESYS_WORK * gsys )
   return wbtlist_param;
 }
 
-
 //------------------------------------------------------------------
+///  WBTトーナメントリスト用パラメータOBJECT削除
 //------------------------------------------------------------------
 void WBTLIST_PARAM_Delete( WBTLIST_PARAM * wbtlist_param )
 {
@@ -89,164 +95,117 @@ void WBTLIST_PARAM_Delete( WBTLIST_PARAM * wbtlist_param )
   TAMADA_Printf("WBTLIST_PARAM:Delete:%08x\n", wbtlist_param );
 }
 
-//============================================================================================
-//
-//============================================================================================
 //------------------------------------------------------------------
+/**
+ * @brief トーナメントリスト用パラメータのセットアップ
+ */
 //------------------------------------------------------------------
-//static void setupAllTournamentMember( u64 seed64, u16 * member, 
-
-//============================================================================================
-//
-//============================================================================================
-typedef struct {
-  GAMESYS_WORK * gsys;
-  WBTTYPE type;
-  WBTRULE rule;
-  u8 select_dl_data;
-  WBTLIST_STAGE stage;
-  HEAPID heapID;
-  u64 seed64;
-  u16 wbt_trid[ WBT_TRAINER_NUM ];
-}SETUP_WORK;
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-static void WBTLIST_PARAM_Setup( const SETUP_WORK * setup, WBTLIST_PARAM * wbtlist_param )
+void WBTLIST_PARAM_Setup( GAMESYS_WORK * gsys, WBTSYS * wbtsys, WBTLIST_PARAM * wbtlist_param )
 {
   int i;
-  GAMEDATA * gamedata = GAMESYSTEM_GetGameData( setup->gsys );
+  GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
 
   for ( i = 0; i < WBT_TRAINER_NUM; i ++ )
   {
-    u16 wbt_trid = setup->wbt_trid[ i ];
-    if ( wbt_trid == 0xffff )
-    {
-      setupWBTLISTPlayer( &wbtlist_param->trainer[i], setup->heapID, gamedata );
-    }
-    else
-    {
-      setupWBTLISTTrainer( &wbtlist_param->trainer[i], setup->heapID, setup->wbt_trid[i] );
-    }
+    const WBTTRAINER * wbt_tr = WBTSYS_GetTrainer( wbtsys, i );
+    setupWBTLISTtrainer( HEAPID_FIELDMAP, gamedata, &wbtlist_param->trainer[i], wbt_tr );
   }
   {
     GFL_STD_RandContext rand_context;
-    GFL_STD_RandInit( &rand_context, setup->seed64 );
+    GFL_STD_RandInit( &rand_context, WBTSYS_GetRandomSeed( wbtsys ) );
     setupWBTLISTResultAll( wbtlist_param, &rand_context );
   }
 
-  wbtlist_param->stage = setup->stage;
-  WBTTOOL_SetTournamentName( setup->type, wbtlist_param->tournament_name );
-  WBTTOOL_SetRuleName( setup->rule, wbtlist_param->tournament_rule );
+  wbtlist_param->stage = WBTSYS_GetStage( wbtsys );
+  WBTTOOL_SetTournamentName( WBTSYS_GetType(wbtsys), wbtlist_param->tournament_name );
+  WBTTOOL_SetRuleName( WBTSYS_GetRule(wbtsys), wbtlist_param->tournament_rule );
 }
 
 
 //------------------------------------------------------------------
+/**
+ * @brief トーナメントリスト用パラメータのセットアップ（デバッグ用）
+ *
+ * デバッグ用にWBTSYSを生成し、それを元にセットアップを行う
+ */
 //------------------------------------------------------------------
 void WBTLIST_PARAM_Setup_Debug( WBTLIST_PARAM * wbtlist_param, WBTLIST_STAGE stage, GAMESYS_WORK * gsys )
 {
-  SETUP_WORK setup;
-  int i;
-  HEAPID heapID = HEAPID_FIELDMAP;
+  GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
+  WBTSYS * wbtsys;
 
-  setup.gsys = gsys;
-  setup.type = WBTTYPE_ALL;
-  setup.rule = WBTRULE_SINGLE;
-  setup.select_dl_data = 0;
-  setup.stage = stage;
-  setup.heapID = HEAPID_FIELDMAP;
-  {
-    u64 seed64;
-    seed64 = GFL_STD_MtRand( 0 );
-    setup.seed64 = (seed64 << 32) + GFL_STD_MtRand( 0 );
-  }
-
-  for ( i = 0; i < WBT_TRAINER_NUM; i ++ )
-  {
-    static const u16 sample_trid[WBT_TRAINER_NUM] = {
-      12,//アロエ
-      53,//モブ
-      11,//デント
-      0xffff,//プレイヤー
-      55,//モブ
-      56,//モブ
-      18,//シロナ
-      13,//ハチク
-    };
-    setup.wbt_trid[ i ] = sample_trid[ i ];
-  }
-  WBTLIST_PARAM_Setup( &setup, wbtlist_param );
+  wbtsys = WBTSYS_Create( HEAPID_FIELDMAP );
+  WBTSYS_Setup_Debug( wbtsys, gamedata, stage );
+  WBTLIST_PARAM_Setup( gsys, wbtsys, wbtlist_param );
+  WBTSYS_Delete( wbtsys );
 }
 
 //============================================================================================
 //
 //============================================================================================
 //------------------------------------------------------------------
-/**
- * @brief WBTトーナメントリストのプレイヤーデータセットアップ
- */
 //------------------------------------------------------------------
-static void setupWBTLISTPlayer( WBTLIST_TRAINER * wbtlist_tr, HEAPID heapID, GAMEDATA * gamedata )
+void WBT_TRDATA_Copy( HEAPID heapID, u8 tr_id, WBT_TRDATA * tr_data )
 {
-  const MYSTATUS * mystat = GAMEDATA_GetMyStatus( gamedata );
-  ARCHANDLE * handle;
-  u16 mmdl_id;
-
-  wbtlist_tr->is_player = TRUE;
-  wbtlist_tr->priority = 3; //仮  実際はゲーム進行状況から
-  wbtlist_tr->poketype = POKETYPE_NORMAL; //仮  実際は手持ちポケモンタイプから
-  wbtlist_tr->sex      = MyStatus_GetMySex( mystat );
-  if ( wbtlist_tr->sex == PM_MALE )
-  {
-    mmdl_id = HERO;
-  } else {
-    mmdl_id = HEROINE;
-  }
-  handle = GFL_ARC_OpenDataHandle( ARCID_MMDL_PARAM, heapID );
-  getMMdlObjCodeParam( handle, mmdl_id, &wbtlist_tr->pattern_no, &wbtlist_tr->mmdl_id );
-  GFL_ARC_CloseDataHandle( handle );
-
-  MyStatus_CopyNameString( mystat, wbtlist_tr->name );
+  *tr_data = WBTTrainerData[ tr_id ];
 }
 
 //------------------------------------------------------------------
-/**
- * @brief WBTトーナメントリストのトレーナーデータセットアップ
- *
- * @todo  cdat形式のトレーナーデータをバイナリ化する
- */
 //------------------------------------------------------------------
-static void setupWBTLISTTrainer( WBTLIST_TRAINER * wbtlist_tr, HEAPID heapID, u8 tr_id )
+static void setupWBTLISTtrainer( HEAPID heapID, GAMEDATA * gamedata,
+    WBTLIST_TRAINER * wbtlist_tr, const WBTTRAINER * wbt_tr )
 {
   WBT_TRDATA tr_rom_data;
   ARCHANDLE * handle;
+  u16 mmdl_id;
+
+  GF_ASSERT( wbt_tr );
+  GF_ASSERT( wbtlist_tr );
+
+  WBT_TRDATA_Copy( heapID, wbt_tr->tr_id, &tr_rom_data );
+
+  switch ( wbt_tr->wbt_type )
+  {
+  case WBT_TRTYPE_DL:
+  case WBT_TRTYPE_SAVE:
+    GF_ASSERT( 0 );
+    /* FALL THROUGH */
+  case WBT_TRTYPE_ROM:
+    wbtlist_tr->is_player = FALSE;
+    wbtlist_tr->priority = tr_rom_data.priority;
+    wbtlist_tr->poketype = tr_rom_data.type;
+    wbtlist_tr->sex      = tr_rom_data.sex;
+    {
+      GFL_MSGDATA * man;
+      man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
+          NARC_message_wbt_trname_dat, heapID );
+      GFL_MSG_GetString( man, wbt_tr->tr_id, wbtlist_tr->name );
+      GFL_MSG_Delete( man );
+    }
+    mmdl_id = tr_rom_data.mmdl_id;
+    break;
+  case WBT_TRTYPE_PLAYER:
+    wbtlist_tr->is_player = TRUE;
+    wbtlist_tr->priority = wbt_tr->pri;
+    wbtlist_tr->poketype = POKETYPE_NORMAL; //仮
+    wbtlist_tr->sex = wbt_tr->sex;
+    if ( wbt_tr->sex == PM_MALE ) {
+      mmdl_id = HERO;
+    } else {
+      mmdl_id = HEROINE;
+    }
+    {
+      const MYSTATUS * mystat = GAMEDATA_GetMyStatus( gamedata );
+      MyStatus_CopyNameString( mystat, wbtlist_tr->name );
+    }
+    break;
+  }
 
   handle = GFL_ARC_OpenDataHandle( ARCID_MMDL_PARAM, heapID );
-
-  tr_rom_data = WBTTrainerData[ tr_id ];
-#if 0
-  TAMADA_Printf("TR_ROM_DATA:tr_id = %d\n", tr_id );
-  TAMADA_Printf("TR_ROM_DATA:priority = %d\n", tr_rom_data.priority );
-  TAMADA_Printf("TR_ROM_DATA:type = %d\n", tr_rom_data.type );
-  TAMADA_Printf("TR_ROM_DATA:mmdl_id = %d\n", tr_rom_data.mmdl_id );
-#endif
-
-  wbtlist_tr->priority = tr_rom_data.priority;
-  wbtlist_tr->poketype = tr_rom_data.type;
-  wbtlist_tr->sex      = tr_rom_data.sex;
-
-  getMMdlObjCodeParam( handle, tr_rom_data.mmdl_id, &wbtlist_tr->pattern_no, &wbtlist_tr->mmdl_id );
-
+  getMMdlObjCodeParam( handle, mmdl_id, &wbtlist_tr->pattern_no, &wbtlist_tr->mmdl_id );
   GFL_ARC_CloseDataHandle( handle );
-
-  {
-    GFL_MSGDATA * man;
-    man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
-        NARC_message_wbt_trname_dat, heapID );
-    GFL_MSG_GetString( man, tr_id, wbtlist_tr->name );
-    GFL_MSG_Delete( man );
-  }
 }
+
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -262,6 +221,11 @@ static void DEBUG_DumpResult( const WBTLIST_RESULT * result,
 }
 
 
+//============================================================================================
+//
+//  対戦結果生成処理
+//
+//============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 enum {
@@ -292,6 +256,7 @@ static void setupWBTLISTResult( WBTLIST_RESULT * result,
   u8 aff_a = BTL_CALC_TypeAff( tr_a->poketype, tr_b->poketype );
   u8 aff_b = BTL_CALC_TypeAff( tr_b->poketype, tr_a->poketype );
 
+  // -----  勝敗判定 --------------------
   if ( pri_a == pri_b )
   { //優先度が同じ場合
     if ( aff_a == aff_b )
@@ -320,7 +285,7 @@ static void setupWBTLISTResult( WBTLIST_RESULT * result,
     result->upside_win = FALSE;
   }
 
-  //メッセージの割り当て
+  // ----- メッセージの割り当て --------------------
   {
     int msg_layer;
     int msg_side;
@@ -418,12 +383,20 @@ static void setupWBTLISTResultAll( WBTLIST_PARAM * wbtlist_param, GFL_STD_RandCo
 }
 
 //============================================================================================
+//
+//  動作モデルデータの参照
+//
 //============================================================================================
 extern const MMDL_BBDACT_ANMTBL DATA_MMDL_BBDACT_ANM_ListTable[MMDL_BLACT_ANMTBLNO_MAX];
 //-----------------------------------------------------------------------------
-//  fldmmdlのOBJCODE_PARAMから正面絵の位置を引っ張る
-//  OBJCODE_PARAM::anm_idからアニメパターンの種類がわかるので、
-//  それぞれのアニメパターンの何番目が正面絵かを判定する
+/**
+ * @brief 動作モデル正面絵パターンナンバーの取得
+ *
+ * fldmmdlのOBJCODE_PARAMから正面絵の位置を引っ張る
+ * OBJCODE_PARAM::anm_idからアニメパターンの種類がわかるので、
+ * それぞれのアニメパターンの種類から下向き静止アニメをとりだし、
+ * その指定パターンを正面絵のパターンナンバーとして取り出している
+ */
 //-----------------------------------------------------------------------------
 static u8 getFrontAnimePatternNo( anm_id )
 {
@@ -436,6 +409,13 @@ static u8 getFrontAnimePatternNo( anm_id )
 }
 
 //-----------------------------------------------------------------------------
+/**
+ * @brief 動作モデルIDから動作モデルパラメータを取得する
+ * @param handle
+ * @param mmdl_id
+ * @param anm_id
+ * @param rsc_idx
+ */
 //-----------------------------------------------------------------------------
 static void getMMdlObjCodeParam( ARCHANDLE * handle, u16 mmdl_id, u8 * anm_id, u16 * rsc_idx )
 {
@@ -456,6 +436,10 @@ static void getMMdlObjCodeParam( ARCHANDLE * handle, u16 mmdl_id, u8 * anm_id, u
 }
 
 
+//============================================================================================
+//============================================================================================
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 
 //============================================================================================
 //

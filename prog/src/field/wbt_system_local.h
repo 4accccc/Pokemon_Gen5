@@ -22,6 +22,15 @@ typedef struct _WBT_REGLATION {
 }WBTREG;
 
 //------------------------------------------------------------------
+//------------------------------------------------------------------
+struct _WBTTRAINER{
+  u8 wbt_type:3; ///<WBT_TRTYPE
+  u8 sex:1;
+  u8 pri:4;
+  u8 tr_id;  ///<トレーナーID（trtypeにより意味が変わる）
+};
+
+//------------------------------------------------------------------
 /**
  * @brief WBT中に保持する進行データ
  */
@@ -32,13 +41,17 @@ struct _WBT_SYSTEM {
   WBTTYPE type;
   ///バトルルール（シングル、ダブル、トリプル、ローテーション）
   WBTRULE rule;
+  ///WBTの進行段階
+  WBTSTAGE stage;
 
   ///選択したダウンロードデータ
   u8 select_dl_data;
 
-  u8 stage;
-
+  u64 seed64;
   GFL_STD_RandContext rand_context;
+
+  ///<参戦トレーナー
+  WBTTRAINER wbt_trainer[ WBT_TRAINER_NUM ];
 
   ///WBT用レギュレーション
   WBTREG wbtreg;
@@ -54,6 +67,7 @@ struct _WBT_SYSTEM {
   BATTLE_SETUP_PARAM *btl_setup_param;
 //  BTL_REC_SEL_PARAM btl_rec_sel_param;
 
+  ///スクリプトとプログラムのやりとりのためのアドレスを保持するポインタ
   u16 * scr_answer_work;
 };
 
