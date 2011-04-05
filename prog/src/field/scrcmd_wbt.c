@@ -79,6 +79,19 @@ static WBTSYS * getWBTSys( SCRCMD_WORK * work )
   return *wbtsys_work;
 }
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static const u16 sample_trid[WBT_TRAINER_NUM] = {
+  18,//シロナ
+  55,//モブ
+  13,//ハチク
+  56,//モブ
+  11,//デント
+  53,//モブ
+  12,//アロエ
+  0xffff,//プレイヤー
+};
+
 //--------------------------------------------------------------
 /**
  * @brief スクリプトコマンド：WBTシステム開始
@@ -94,6 +107,7 @@ VMCMD_RESULT EvCmdWBTSystemStart( VMHANDLE * core, void * wk )
   wbtsys_work = GAMEDATA_GetWBTSysPointer( gamedata );
   GF_ASSERT( *wbtsys_work == NULL );
   *wbtsys_work = WBTSYS_Create( HEAPID_PROC );
+  WBTSYS_SetupTrainer_Debug( *wbtsys_work, gamedata, sample_trid );
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -124,7 +138,10 @@ VMCMD_RESULT EvCmdWBTSystemEnd( VMHANDLE * core, void * wk )
 VMCMD_RESULT EvCmdWBTSystemSetStage( VMHANDLE * core, void * wk )
 {
   u16 stage = SCRCMD_GetVMWorkValue( core, wk );
-  //仮
+  WBTSYS * wbtsys = getWBTSys( wk );
+
+  WBTSYS_SetStage( wbtsys, stage );
+
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -151,7 +168,7 @@ VMCMD_RESULT EvCmdWBTShowTornamentList( VMHANDLE * core, void * wk )
   WBTLIST_PARAM * p_param;
 
   p_param = WBTLIST_PARAM_Create( heapID, gsys );
-  WBTLIST_PARAM_Setup_Debug( p_param, list_type, gsys );
+  WBTLIST_PARAM_Setup( gsys, wbtsys, p_param );
 
   next_event = WBT_EVENT_ShowTournamentList( gsys, fieldmap, p_param, FALSE );
   SCRIPT_CallEvent( sc, next_event );

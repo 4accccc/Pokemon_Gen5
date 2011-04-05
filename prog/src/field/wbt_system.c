@@ -29,6 +29,13 @@
 
 //#include "system/gfl_use.h" //GFUser_GetPublicRand0
 
+#include "poke_tool/poketype_def.h"
+
+#include "tr_tool/trtype_def.h"
+#include "sound/pm_sndsys.h"
+
+#include "../../../resource/wbt/wbt_trainer/wbt_trainer.cdat"
+
 //============================================================================================
 //============================================================================================
 static void WBTTRAINER_Init( WBTTRAINER * wbt_tr );
@@ -75,34 +82,17 @@ void WBTSYS_Delete( WBTSYS * wbtsys )
 //============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static const u16 sample_trid[WBT_TRAINER_NUM] = {
-  12,//アロエ
-  53,//モブ
-  11,//デント
-  0xffff,//プレイヤー
-  55,//モブ
-  56,//モブ
-  18,//シロナ
-  13,//ハチク
-};
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-void WBTSYS_Setup_Debug( WBTSYS * wbtsys, GAMEDATA * gamedata, WBTSTAGE stage )
+void WBTSYS_SetupTrainer_Debug( WBTSYS * wbtsys, GAMEDATA * gamedata, const u16 * tr_tbl )
 {
   int i;
-  wbtsys->type = WBTTYPE_ALL;
-  wbtsys->rule = WBTRULE_SINGLE;
-  wbtsys->stage = stage;
-
   for ( i = 0; i < WBT_TRAINER_NUM; i ++ )
   {
     WBTTRAINER * wbt_tr = &wbtsys->wbt_trainer[ i ];
-    if ( sample_trid[i] == 0xffff )
+    if ( tr_tbl[i] == 0xffff )
     {
       WBTTRAINER_SetPlayer( wbt_tr, gamedata );
     } else {
-      WBTTRAINER_SetRomTrainer( wbt_tr, sample_trid[i] );
+      WBTTRAINER_SetRomTrainer( wbt_tr, tr_tbl[i] );
     }
   }
 }
@@ -181,6 +171,13 @@ void WBTSYS_SetScriptAnswerWork( WBTSYS * wbtsys, u16 * scr_answer_work )
 //============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
+void WBT_TRDATA_Copy( HEAPID heapID, u8 tr_id, WBT_TRDATA * tr_data )
+{
+  *tr_data = WBTTrainerData[ tr_id ];
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 static void WBTSYS_SetTrainer( WBTSYS * wbtsys, const WBTTRAINER * wbt_tr, u32 pos )
 {
   GF_ASSERT( pos < WBT_TRAINER_NUM );
@@ -203,16 +200,18 @@ static void WBTTRAINER_Init( WBTTRAINER * wbt_tr )
   wbt_tr->sex = PM_MALE;
   wbt_tr->pri = 1;
   wbt_tr->tr_id = 0;
+  wbt_tr->poketype = POKETYPE_NORMAL;
 }
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static void WBTTRAINER_Set( WBTTRAINER * wbt_tr, WBT_TRTYPE type, u8 tr_id, u8 sex, u8 pri )
+static void WBTTRAINER_Set( WBTTRAINER * wbt_tr, WBT_TRTYPE type, u8 tr_id, u8 sex, u8 pri, u8 poketype )
 {
   wbt_tr->wbt_type = type;
   wbt_tr->tr_id = tr_id;
   wbt_tr->sex = sex;
   wbt_tr->pri = pri;
+  wbt_tr->poketype = poketype;
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -220,7 +219,7 @@ static void WBTTRAINER_SetRomTrainer( WBTTRAINER * wbt_tr, u8 tr_id )
 {
   WBT_TRDATA tr_rom_data;
   WBT_TRDATA_Copy( HEAPID_FIELDMAP, tr_id, &tr_rom_data );
-  WBTTRAINER_Set( wbt_tr, WBT_TRTYPE_ROM, tr_id, tr_rom_data.sex, tr_rom_data.priority );
+  WBTTRAINER_Set( wbt_tr, WBT_TRTYPE_ROM, tr_id, tr_rom_data.sex, tr_rom_data.priority, tr_rom_data.type );
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -235,7 +234,7 @@ static void WBTTRAINER_SetPlayer( WBTTRAINER * wbt_tr, GAMEDATA * gamedata )
   {
     pri = 4;
   }
-  WBTTRAINER_Set( wbt_tr, WBT_TRTYPE_PLAYER, 0, sex, pri );
+  WBTTRAINER_Set( wbt_tr, WBT_TRTYPE_PLAYER, 0, sex, pri, POKETYPE_NORMAL );
 }
 
 //============================================================================================

@@ -30,7 +30,6 @@
 
 #include "tr_tool/trtype_def.h"
 #include "sound/pm_sndsys.h"
-#include "../../../resource/wbt/wbt_trainer/wbt_trainer.cdat"
 
 //============================================================================================
 //============================================================================================
@@ -38,9 +37,8 @@
 static void setupWBTLISTtrainer( HEAPID heapID, GAMEDATA * gamedata,
     WBTLIST_TRAINER * wbtlist_tr, const WBTTRAINER * wbt_tr );
 
-static void setupWBTLISTResultAll( WBTLIST_PARAM * wbtlist_param, GFL_STD_RandContext * context );
+static void setupWBTLISTResultAll( WBTSYS * wbtsys, WBTLIST_PARAM * wbtlist_param );
 static void getMMdlObjCodeParam( ARCHANDLE * handle, u16 mmdl_id, u8 * anm_id, u16 * rsc_idx );
-static u8 BTL_CALC_TypeAff( PokeType wazaType, PokeType pokeType );
 
 //============================================================================================
 //
@@ -104,6 +102,7 @@ void WBTLIST_PARAM_Setup( GAMESYS_WORK * gsys, WBTSYS * wbtsys, WBTLIST_PARAM * 
 {
   int i;
   GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
+  WBTSTAGE wbtstage;
 
   for ( i = 0; i < WBT_TRAINER_NUM; i ++ )
   {
@@ -113,10 +112,28 @@ void WBTLIST_PARAM_Setup( GAMESYS_WORK * gsys, WBTSYS * wbtsys, WBTLIST_PARAM * 
   {
     GFL_STD_RandContext rand_context;
     GFL_STD_RandInit( &rand_context, WBTSYS_GetRandomSeed( wbtsys ) );
-    setupWBTLISTResultAll( wbtlist_param, &rand_context );
+    WBTSYS_CalcResult( wbtsys, &rand_context );
+    setupWBTLISTResultAll( wbtsys, wbtlist_param );
   }
 
-  wbtlist_param->stage = WBTSYS_GetStage( wbtsys );
+  //ステージ設定
+  wbtstage = WBTSYS_GetStage( wbtsys );
+  switch ( wbtstage )
+  {
+  default:
+    GF_ASSERT_MSG( 0, "stage(%d)には対応していません\n", wbtstage );
+    /* FALL THROUGH */
+
+  case WBTSTAGE_ENTRY:
+    wbtlist_param->stage = WBTLIST_STAGE_ENTRY;
+    break;
+  case WBTSTAGE_1ST:
+    wbtlist_param->stage = WBTLIST_STAGE_1ST;
+    break;
+  case WBTSTAGE_2ND:
+    wbtlist_param->stage = WBTLIST_STAGE_2ND;
+    break;
+  }
   WBTTOOL_SetTournamentName( WBTSYS_GetType(wbtsys), wbtlist_param->tournament_name );
   WBTTOOL_SetRuleName( WBTSYS_GetRule(wbtsys), wbtlist_param->tournament_rule );
 }
@@ -129,13 +146,19 @@ void WBTLIST_PARAM_Setup( GAMESYS_WORK * gsys, WBTSYS * wbtsys, WBTLIST_PARAM * 
  * デバッグ用にWBTSYSを生成し、それを元にセットアップを行う
  */
 //------------------------------------------------------------------
-void WBTLIST_PARAM_Setup_Debug( WBTLIST_PARAM * wbtlist_param, WBTLIST_STAGE stage, GAMESYS_WORK * gsys )
+void WBTLIST_PARAM_Setup_Debug(
+    GAMESYS_WORK * gsys, WBTLIST_PARAM * wbtlist_param,
+    WBTTYPE wbttype, WBTRULE wbtrule,
+    WBTSTAGE stage, const u16 * trid_table )
 {
   GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
   WBTSYS * wbtsys;
 
   wbtsys = WBTSYS_Create( HEAPID_FIELDMAP );
-  WBTSYS_Setup_Debug( wbtsys, gamedata, stage );
+  WBTSYS_SetupTrainer_Debug( wbtsys, gamedata, trid_table );
+  WBTSYS_SetType( wbtsys, wbttype );
+  WBTSYS_SetRule( wbtsys, wbtrule );
+  WBTSYS_SetStage( wbtsys, stage );
   WBTLIST_PARAM_Setup( gsys, wbtsys, wbtlist_param );
   WBTSYS_Delete( wbtsys );
 }
@@ -143,13 +166,6 @@ void WBTLIST_PARAM_Setup_Debug( WBTLIST_PARAM * wbtlist_param, WBTLIST_STAGE sta
 //============================================================================================
 //
 //============================================================================================
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-void WBT_TRDATA_Copy( HEAPID heapID, u8 tr_id, WBT_TRDATA * tr_data )
-{
-  *tr_data = WBTTrainerData[ tr_id ];
-}
-
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static void setupWBTLISTtrainer( HEAPID heapID, GAMEDATA * gamedata,
@@ -206,10 +222,31 @@ static void setupWBTLISTtrainer( HEAPID heapID, GAMEDATA * gamedata,
   GFL_ARC_CloseDataHandle( handle );
 }
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void setupWBTLISTResultAll( WBTSYS * wbtsys, WBTLIST_PARAM * wbtlist_param )
+{
+  int i, j;
 
+  //1回戦結果生成
+  for ( i = 0; i < 4 ; i ++ )
+  {
+    WBTLIST_RESULT * result = &wbtlist_param->first_stage[ i ];
+    result->upside_win = wbtsys->wbt_result[i].upside_win;
+    result->msg_type   = wbtsys->wbt_result[i].msg_id;
+  }
+
+  //2回戦結果生成
+  for ( i = 0; i < 2 ; i ++ )
+  {
+    WBTLIST_RESULT * result = &wbtlist_param->second_stage[i];
+    result->upside_win = wbtsys->wbt_result[WBT_GAME_2ND_1 + i].upside_win;
+    result->msg_type   = wbtsys->wbt_result[WBT_GAME_2ND_1 + i].msg_id;
+  }
+}
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static void DEBUG_DumpResult( const WBTLIST_RESULT * result,
+static void DEBUG_DumpWBTLISTResult( const WBTLIST_RESULT * result,
     const WBTLIST_TRAINER * tr_a, const WBTLIST_TRAINER * tr_b )
 {
   TAMADA_Printf("upside_win %d \n", result->upside_win );
@@ -220,167 +257,6 @@ static void DEBUG_DumpResult( const WBTLIST_RESULT * result,
       tr_b->priority, tr_b->poketype, tr_b->sex, tr_b->mmdl_id );
 }
 
-
-//============================================================================================
-//
-//  対戦結果生成処理
-//
-//============================================================================================
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-enum {
-  MSG_GROUP_A = msg_wbt_comment_01,
-  MSG_GROUP_B = msg_wbt_comment_06,
-  MSG_GROUP_C = msg_wbt_comment_11,
-  MSG_GROUP_D = msg_wbt_comment_16,
-  MSG_GROUP_E = msg_wbt_comment_21,
-
-  MSG_LAYER_NICEGAME = 0,
-  MSG_LAYER_ONESIDE,
-  MSG_LAYER_ADVANTAGE,
-  MSG_LAYER_EVEN,
-  MSG_LAYER_DISADVANTAGE,
-};
-//------------------------------------------------------------------
-/**
- * @brief 対戦結果の生成処理
- */
-//------------------------------------------------------------------
-static void setupWBTLISTResult( WBTLIST_RESULT * result,
-    GFL_STD_RandContext * context,
-    const WBTLIST_TRAINER * tr_a, const WBTLIST_TRAINER * tr_b )
-{
-  u32 pri_a = tr_a->priority;
-  u32 pri_b = tr_b->priority;
-
-  u8 aff_a = BTL_CALC_TypeAff( tr_a->poketype, tr_b->poketype );
-  u8 aff_b = BTL_CALC_TypeAff( tr_b->poketype, tr_a->poketype );
-
-  // -----  勝敗判定 --------------------
-  if ( pri_a == pri_b )
-  { //優先度が同じ場合
-    if ( aff_a == aff_b )
-    { //タイプ相性も同じ場合はランダム
-      result->upside_win = ( GFL_STD_Rand( context, 2 ) == 0 );
-    }
-    else
-    { //タイプ相性が高いほうが勝利
-      result->upside_win = ( aff_a > aff_b );
-    }
-    //result->msg_type = msg_wbt_comment_11;
-  }
-  else
-  { //優先度が違う場合、高いほうが勝利
-    result->upside_win = ( pri_a > pri_b );
-
-  }
-
-  //とりあえずプレイヤーは勝つ。MSGの整合性は後ほど
-  if ( tr_a->is_player )
-  {
-    result->upside_win = TRUE;
-  }
-  else if ( tr_b->is_player )
-  {
-    result->upside_win = FALSE;
-  }
-
-  // ----- メッセージの割り当て --------------------
-  {
-    int msg_layer;
-    int msg_side;
-    static const u8 msg_table[][3] = {
-      { MSG_GROUP_D, MSG_GROUP_D, MSG_GROUP_E },  //MSG_LAYER_NICEGAME
-      { MSG_GROUP_A, MSG_GROUP_A, MSG_GROUP_A },  //MSG_LAYER_ONESIDE
-      { MSG_GROUP_B, MSG_GROUP_B, MSG_GROUP_B },  //MSG_LAYER_ADVANTAGE
-      { MSG_GROUP_C, MSG_GROUP_C, MSG_GROUP_E },  //MSG_LAYER_EVEN
-      { MSG_GROUP_D, MSG_GROUP_D, MSG_GROUP_E },  //MSG_LAYER_DISADVANTAGE
-    };
-
-  //MSGの振り分け
-    if ( pri_a >= 4 && pri_b >= 4 )
-    {
-      msg_layer = MSG_LAYER_NICEGAME;
-    }
-    else if (
-        ( pri_a - pri_b >= 2 && result->upside_win == TRUE ) ||
-        ( pri_b - pri_a >= 2 && result->upside_win == FALSE ) )
-    {
-      msg_layer = MSG_LAYER_ONESIDE;
-    }
-    else if (
-      ( pri_a - pri_b == 1 && result->upside_win == TRUE ) ||
-      ( pri_b - pri_a == 1 && result->upside_win == FALSE ) )
-    {
-      msg_layer = MSG_LAYER_ADVANTAGE;
-    }
-    else if ( pri_a == pri_b )
-    {
-      msg_layer = MSG_LAYER_EVEN;
-    }
-    else
-    {
-      msg_layer = MSG_LAYER_DISADVANTAGE;
-    }
-    //タイプ相性の有利・互角・不利
-    if ( aff_a > aff_b )
-    {
-      msg_side = -1;
-    }
-    else if ( aff_a < aff_b )
-    {
-      msg_side = +1;
-    }
-    else
-    {
-      msg_side = 0;
-    }
-    if ( result->upside_win == TRUE)
-    {
-      msg_side *= -1;
-    }
-    msg_side += 1;
-
-    result->msg_type = msg_table[msg_layer][msg_side];
-  }
-}
-
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-static void setupWBTLISTResultAll( WBTLIST_PARAM * wbtlist_param, GFL_STD_RandContext * context )
-{
-  int i, j;
-
-  //1回戦結果生成
-  for ( i = 0; i < 4 ; i ++ )
-  {
-    WBTLIST_RESULT * result = &wbtlist_param->first_stage[ i ];
-    WBTLIST_TRAINER * tr_a = &wbtlist_param->trainer[ i * 2 + 0 ];
-    WBTLIST_TRAINER * tr_b = &wbtlist_param->trainer[ i * 2 + 1 ];
-    setupWBTLISTResult( result, context, tr_a, tr_b );
-    DEBUG_DumpResult( result, tr_a, tr_b );
-  }
-
-  //2回戦結果生成
-  for ( i = 0; i < 2 ; i ++ )
-  {
-    WBTLIST_RESULT * result = &wbtlist_param->second_stage[i];
-    WBTLIST_TRAINER * tr[2];
-    for ( j = 0; j < 2; j ++ )
-    {
-      if ( wbtlist_param->first_stage[ i * 2 + j ].upside_win )
-      {
-        tr[j] = &wbtlist_param->trainer[ i * 4 + j * 2 + 0 ];
-      }
-      else
-      {
-        tr[j] = &wbtlist_param->trainer[ i * 4 + j * 2 + 1 ];
-      }
-    }
-    setupWBTLISTResult( result, context, tr[0], tr[1] );
-    DEBUG_DumpResult( result, tr[0], tr[1] );
-  }
-}
 
 //============================================================================================
 //
@@ -439,83 +315,62 @@ static void getMMdlObjCodeParam( ARCHANDLE * handle, u16 mmdl_id, u8 * anm_id, u
 //============================================================================================
 //============================================================================================
 //-----------------------------------------------------------------------------
+/**
+ * @brief WBT:パーティー全体のポケモンタイプを判定する
+ * @param party ポケモンパーティへのポインタ
+ * @param seed  乱数生成のタネ
+ * @return  POKETYPE  タイプ（include/poke_tool/poketype_def.h参照）
+ */
 //-----------------------------------------------------------------------------
-
-//============================================================================================
-//
-//    以下はsrc/battle/btl_calc.cからコピペ
-//
-//============================================================================================
-//--------------------------------------------------------------
-/**
- *  タイプ相性値
- */
-//--------------------------------------------------------------
-typedef enum {
-    x0 = 0,
-    xH = 2,
-    x1 = 4,
-    x2 = 8,
-}TypeAffValue;
-
-
-//--------------------------------------------------------------
-/**
- *  タイプ相性テーブル
- */
-//--------------------------------------------------------------
-static const u8 TypeAffTbl[ POKETYPE_NUMS ][ POKETYPE_NUMS ] = {
-//          ノ,  格,  飛,  毒,  地,  岩,  虫,  幽,  鋼,  炎,  水,  草,  電,  超,  氷,  竜,  悪,
-/* ノ */ {  x1,  x1,  x1,  x1,  x1,  xH,  x1,  x0,  xH,  x1,  x1,  x1,  x1,  x1,  x1,  x1,  x1, },
-/* 格 */ {  x2,  x1,  xH,  xH,  x1,  x2,  xH,  x0,  x2,  x1,  x1,  x1,  x1,  xH,  x2,  x1,  x2, },
-/* 飛 */ {  x1,  x2,  x1,  x1,  x1,  xH,  x2,  x1,  xH,  x1,  x1,  x2,  xH,  x1,  x1,  x1,  x1, },
-/* 毒 */ {  x1,  x1,  x1,  xH,  xH,  xH,  x1,  xH,  x0,  x1,  x1,  x2,  x1,  x1,  x1,  x1,  x1, },
-/* 地 */ {  x1,  x1,  x0,  x2,  x1,  x2,  xH,  x1,  x2,  x2,  x1,  xH,  x2,  x1,  x1,  x1,  x1, },
-/* 岩 */ {  x1,  xH,  x2,  x1,  xH,  x1,  x2,  x1,  xH,  x2,  x1,  x1,  x1,  x1,  x2,  x1,  x1, },
-/* 虫 */ {  x1,  xH,  xH,  xH,  x1,  x1,  x1,  xH,  xH,  xH,  x1,  x2,  x1,  x2,  x1,  x1,  x2, },
-/* 幽 */ {  x0,  x1,  x1,  x1,  x1,  x1,  x1,  x2,  xH,  x1,  x1,  x1,  x1,  x2,  x1,  x1,  xH, },
-/* 鋼 */ {  x1,  x1,  x1,  x1,  x1,  x2,  x1,  x1,  xH,  xH,  xH,  x1,  xH,  x1,  x2,  x1,  x1, },
-/* 炎 */ {  x1,  x1,  x1,  x1,  x1,  xH,  x2,  x1,  x2,  xH,  xH,  x2,  x1,  x1,  x2,  xH,  x1, },
-/* 水 */ {  x1,  x1,  x1,  x1,  x2,  x2,  x1,  x1,  x1,  x2,  xH,  xH,  x1,  x1,  x1,  xH,  x1, },
-/* 草 */ {  x1,  x1,  xH,  xH,  x2,  x2,  xH,  x1,  xH,  xH,  x2,  xH,  x1,  x1,  x1,  xH,  x1, },
-/* 電 */ {  x1,  x1,  x2,  x1,  x0,  x1,  x1,  x1,  x1,  x1,  x2,  xH,  xH,  x1,  x1,  xH,  x1, },
-/* 超 */ {  x1,  x2,  x1,  x2,  x1,  x1,  x1,  x1,  xH,  x1,  x1,  x1,  x1,  xH,  x1,  x1,  x0, },
-/* 氷 */ {  x1,  x1,  x2,  x1,  x2,  x1,  x1,  x1,  xH,  xH,  xH,  x2,  x1,  x1,  xH,  x2,  x1, },
-/* 竜 */ {  x1,  x1,  x1,  x1,  x1,  x1,  x1,  x1,  xH,  x1,  x1,  x1,  x1,  x1,  x1,  x2,  x1, },
-/* 悪 */ {  x1,  xH,  x1,  x1,  x1,  x1,  x1,  x2,  xH,  x1,  x1,  x1,  x1,  x2,  x1,  x1,  xH, },
-};
-
-//--------------------------------------------------------------
-/**
- *  タイプ相性計算
- */
-//--------------------------------------------------------------
-static u8 BTL_CALC_TypeAff( PokeType wazaType, PokeType pokeType )
+u8 WBTTOOL_GetPartyPokeType( POKEPARTY * party, u64 seed )
 {
-  if( (wazaType == POKETYPE_NULL) || (pokeType == POKETYPE_NULL) ){
-    return 2;//BTL_TYPEAFF_100;
-  }
-  else
-  {
-    u8 affinity = TypeAffTbl[ wazaType ][ pokeType ];
+  u32 count, i;
+  u8 type_count[ POKETYPE_NUMS ];
+  GFL_STD_RandContext rand_context;
+  GFL_STD_RandInit( &rand_context, seed );
 
-    switch( affinity ){
-    case x0:    return 0; //BTL_TYPEAFF_0;
-    case xH:    return 1; //BTL_TYPEAFF_50;
-    case x1:    return 2; //BTL_TYPEAFF_100;
-    case x2:    return 3; //BTL_TYPEAFF_200;
+  GFL_STD_MemClear( type_count, POKETYPE_NUMS );
+  count = PokeParty_GetPokeCount( party );
+
+  for ( i = 0; i < count; i ++ )
+  {
+    POKEMON_PARAM * pp = PokeParty_GetMemberPointer( party, i );
+    int type1, type2;
+    type1 = PP_Get( pp, ID_PARA_type1, NULL );
+    type2 = PP_Get( pp, ID_PARA_type2, NULL );
+    if ( type1 != POKETYPE_NULL )
+    {
+      type_count[ type1 ] ++;
+    }
+    if ( type1 != type2 && type2 != POKETYPE_NULL )
+    {
+      type_count[ type2 ] ++;
     }
   }
 
-  GF_ASSERT(0);
-  return 0; //BTL_TYPEAFF_0;
+  {
+    u8 max_value = 0, max_count = 0;
+    u8 max_pos_table[ POKETYPE_NUMS ];
+    GFL_STD_MemClear( max_pos_table, POKETYPE_NUMS );
+    for ( i = 0; i < POKETYPE_NUMS; i ++ )
+    {
+      if ( type_count[ i ] > max_value )
+      {
+        max_value = type_count[ i ];
+      }
+    }
+    for ( i = 0; i < POKETYPE_NUMS; i ++ )
+    {
+      if ( type_count[ i ] == max_value )
+      {
+        max_pos_table[ max_count ] = i;
+        max_count ++;
+      }
+    }
+    GF_ASSERT( max_count > 0 );
+    return GFL_STD_Rand( &rand_context, max_count );
+  }
 }
-
-
-
-
-
-
 
 
 

@@ -29,6 +29,10 @@
 //------------------------------------------------------------------
 typedef struct _WBTTRAINER WBTTRAINER;
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+typedef struct _WBTRESULT WBTRESULT;
+
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
@@ -95,7 +99,9 @@ enum {
 //============================================================================================
 extern WBTSYS * WBTSYS_Create( HEAPID heapID );
 extern void WBTSYS_Delete( WBTSYS * wbtsys );
-extern void WBTSYS_Setup_Debug( WBTSYS * wbtsys, GAMEDATA * gamedata, WBTSTAGE stage );
+#ifdef  PM_DEBUG
+extern void WBTSYS_SetupTrainer_Debug( WBTSYS * wbtsys, GAMEDATA * gamedata, const u16 * tr_tbl );
+#endif
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -122,6 +128,7 @@ extern void WBTSYS_SetScriptAnswerWork( WBTSYS * wbtsys, u16 * scr_answer_work )
 //------------------------------------------------------------------
 extern void WBTSYS_SetTrainer( WBTSYS * wbtsys, const WBTTRAINER * wbt_trainer, u32 pos );
 extern const WBTTRAINER * WBTSYS_GetTrainer( const WBTSYS * wbtsys, u32 pos );
+extern void WBTSYS_CalcResult( WBTSYS * wbtsys, GFL_STD_RandContext * context );
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 extern void WBTTOOL_SetTournamentName( WBTTYPE type, STRBUF * strbuf );
@@ -129,6 +136,10 @@ extern void WBTTOOL_SetRuleName( WBTRULE rule, STRBUF * strbuf );
 extern void WBTTOOL_SetEnemyTrainerName( WBTSYS * wbtsys, STRBUF * strbuf );
 extern u8 WBTTOOL_GetEnemyTrainerSex( WBTSYS * wbtsys );
 extern u16 WBTTOOL_GetEnemyTrainerMMdlCode( WBTSYS * wbtsys );
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+extern u8 WBTTOOL_GetPartyPokeType( POKEPARTY * party, u64 seed );
 
 extern void WBT_TRDATA_Copy( HEAPID heapID, u8 tr_id, WBT_TRDATA * tr_data );
 //------------------------------------------------------------------
@@ -145,5 +156,8 @@ extern WBTLIST_PARAM * WBTLIST_PARAM_Create( HEAPID heapID, GAMESYS_WORK * gsys 
 extern void WBTLIST_PARAM_Delete( WBTLIST_PARAM * wbtlist_param );
 
 extern void WBTLIST_PARAM_Setup( GAMESYS_WORK * gsys, WBTSYS * wbtsys, WBTLIST_PARAM * wbtlist_param );
-extern void WBTLIST_PARAM_Setup_Debug( WBTLIST_PARAM * wbtlist_param, WBTLIST_STAGE stage, GAMESYS_WORK * gsys );
+extern void WBTLIST_PARAM_Setup_Debug(
+    GAMESYS_WORK * gsys, WBTLIST_PARAM * wbtlist_param,
+    WBTTYPE wbttype, WBTRULE rule,
+    WBTSTAGE stage, const u16 * trid_table );
 

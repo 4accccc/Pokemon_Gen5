@@ -43,6 +43,7 @@
 
 #include "wbt_dl.h"
 
+#include "savedata/wbt_save.h"  //WBTSAVE
 #include "app/wbt_list.h"
 #include "event_wbt.h"  //WBT_EVENT_ShowTournamentList
 
@@ -71,7 +72,7 @@ struct DEBUG_WBT_WORK{
   FLDMENUFUNC *menuFunc;
   //ZUKAN_SAVEDATA * sv;
   BOOL (*call_func)( DEBUG_WBT_WORK * );
-  WBTLIST_STAGE stage;
+  WBTSTAGE stage;
 };
 
 static BOOL debugMenuCallProc_WBTList_entry( DEBUG_WBT_WORK *p_wk );
@@ -211,17 +212,17 @@ static GMEVENT_RESULT debugMenuWBTEvent( GMEVENT *event, int *seq, void *wk )
 
     case DEBUG_STR_WBT_04:
       work->call_func = debugMenuCallProc_WBTList;
-      work->stage = WBTLIST_STAGE_ENTRY;
+      work->stage = WBTSTAGE_ENTRY;
       (*seq)++;
       break;
     case DEBUG_STR_WBT_05:
       work->call_func = debugMenuCallProc_WBTList;
-      work->stage = WBTLIST_STAGE_1ST;
+      work->stage = WBTSTAGE_1ST;
       (*seq)++;
       break;
     case DEBUG_STR_WBT_06:
       work->call_func = debugMenuCallProc_WBTList;
-      work->stage = WBTLIST_STAGE_2ND;
+      work->stage = WBTSTAGE_2ND;
       (*seq)++;
       break;
     }
@@ -256,6 +257,8 @@ static BOOL debugCommand_printf( DEBUG_WBT_WORK *p_wk )
   OS_Printf("%5d(0x%4x)\n", sizeof(WBT_DL_CHARACTER), sizeof(WBT_DL_CHARACTER) );
   OS_Printf("size of WBT DL DATA = \n");
   OS_Printf("%5d(0x%4x)\n", sizeof(WBT_DL_DATA), sizeof(WBT_DL_DATA) );
+  OS_Printf("size of WBT SAVE DATA = \n");
+  OS_Printf("%5d(0x%4x)\n", WBTSAVE_GetWorkSize(), WBTSAVE_GetWorkSize() );
   return FALSE;
 }
 
@@ -276,6 +279,20 @@ typedef struct
 } DEBUG_WBTLIST_EVENT_WORK;
 
 static GMEVENT_RESULT debugMenuWBTList( GMEVENT *p_event, int *p_seq, void *p_wk_adrs );
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static const u16 sample_trid[WBT_TRAINER_NUM] = {
+  12,//アロエ
+  53,//モブ
+  11,//デント
+  0xffff,//プレイヤー
+  55,//モブ
+  56,//モブ
+  18,//シロナ
+  13,//ハチク
+};
+
 //----------------------------------------------------------------------------
 /**
  *  @brief  UIテンプレート接続
@@ -290,7 +307,9 @@ static BOOL debugMenuCallProc_WBTList( DEBUG_WBT_WORK *p_wk )
   GMEVENT * new_event;
   WBTLIST_PARAM * wbtlist_param;
   wbtlist_param = WBTLIST_PARAM_Create( HEAPID_PROC, p_wk->gmSys );
-  WBTLIST_PARAM_Setup_Debug( wbtlist_param, p_wk->stage, p_wk->gmSys );
+  WBTLIST_PARAM_Setup_Debug(
+      p_wk->gmSys, wbtlist_param,
+      WBTTYPE_ALL, WBTRULE_SINGLE, p_wk->stage, sample_trid );
   new_event = WBT_EVENT_ShowTournamentList( p_wk->gmSys, p_wk->fieldWork, wbtlist_param, TRUE );
   GMEVENT_ChangeEvent( p_wk->gmEvent, new_event );
 

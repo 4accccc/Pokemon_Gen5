@@ -14,6 +14,19 @@
 #include "gamesystem/btl_setup.h"
 
 //------------------------------------------------------------------
+//------------------------------------------------------------------
+typedef enum {
+  WBT_GAME_1ST_1 = 0,
+  WBT_GAME_1ST_2,
+  WBT_GAME_1ST_3,
+  WBT_GAME_1ST_4,
+  WBT_GAME_2ND_1,
+  WBT_GAME_2ND_2,
+  WBT_GAME_FINAL,
+
+  WBT_GAME_TOTAL,
+}WBT_GAME_ID;
+//------------------------------------------------------------------
 ///WBT用レギュレーションデータ
 //------------------------------------------------------------------
 typedef struct _WBT_REGLATION {
@@ -27,9 +40,15 @@ struct _WBTTRAINER{
   u8 wbt_type:3; ///<WBT_TRTYPE
   u8 sex:1;
   u8 pri:4;
+  u8 poketype;
   u8 tr_id;  ///<トレーナーID（trtypeにより意味が変わる）
 };
-
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+struct _WBTRESULT {
+  u8 upside_win;
+  u8 msg_id;
+};
 //------------------------------------------------------------------
 /**
  * @brief WBT中に保持する進行データ
@@ -50,8 +69,11 @@ struct _WBT_SYSTEM {
   u64 seed64;
   GFL_STD_RandContext rand_context;
 
-  ///<参戦トレーナー
+  ///参戦トレーナー
   WBTTRAINER wbt_trainer[ WBT_TRAINER_NUM ];
+
+  ///試合結果
+  WBTRESULT wbt_result[ WBT_GAME_TOTAL ];
 
   ///WBT用レギュレーション
   WBTREG wbtreg;
