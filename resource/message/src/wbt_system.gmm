@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00253" date="2011-03-09T19:59:05"/>
+	<create user="tamada" host="W00253" date="2011-04-04T20:40:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -242,6 +242,11 @@
 				<comment language="japanese">リゾートで使用する自由入力の市長名です。</comment>
 				<comment language="english">リゾートで使用する自由入力の市長名です。</comment>
 			</tag>
+			<tag entry="59" japanese="WBTトーナメント名" english="WBTトーナメント名" view="EP" width="208" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WBTのトーナメント名称</comment>
+				<comment language="english">WBTのトーナメント名称</comment>
+			</tag>
 		</group>
 
 		<group entry="2" japanese="ポケモンＷＢ（数値）" english="ポケモンＷＢ（数値）" color="#c0c0c0">
@@ -424,43 +429,43 @@
 
 
 	<row id="msg_wbtsys_title_01">
-		<language name="JPN" width="256">オール</language>
-		<language name="JPN_KANJI" width="256">オール</language>
+		<language name="JPN" width="256">オールトーナメント</language>
+		<language name="JPN_KANJI" width="256">オールトーナメント</language>
 	</row>
 
 	<row id="msg_wbtsys_title_02">
-		<language name="JPN" width="256">タイプ</language>
-		<language name="JPN_KANJI" width="256">タイプ</language>
+		<language name="JPN" width="256">タイプトーナメント</language>
+		<language name="JPN_KANJI" width="256">タイプトーナメント</language>
 	</row>
 
 	<row id="msg_wbtsys_title_03">
-		<language name="JPN" width="256">チャンピオン</language>
-		<language name="JPN_KANJI" width="256">チャンピオン</language>
+		<language name="JPN" width="256">チャンピオントーナメント</language>
+		<language name="JPN_KANJI" width="256">チャンピオントーナメント</language>
 	</row>
 
 	<row id="msg_wbtsys_title_04">
-		<language name="JPN" width="256">ダウンロード</language>
-		<language name="JPN_KANJI" width="256">ダウンロード</language>
+		<language name="JPN" width="256">ダウンロードトーナメント</language>
+		<language name="JPN_KANJI" width="256">ダウンロードトーナメント</language>
 	</row>
 
 	<row id="msg_wbtsys_rule_single">
-		<language name="JPN" width="256">シングル</language>
-		<language name="JPN_KANJI" width="256">シングル</language>
+		<language name="JPN" width="256">シングルバトル</language>
+		<language name="JPN_KANJI" width="256">シングルバトル</language>
 	</row>
 
 	<row id="msg_wbtsys_rule_double">
-		<language name="JPN" width="256">ダブル</language>
-		<language name="JPN_KANJI" width="256">ダブル</language>
+		<language name="JPN" width="256">ダブルバトル</language>
+		<language name="JPN_KANJI" width="256">ダブルバトル</language>
 	</row>
 
 	<row id="msg_wbtsys_rule_triple">
-		<language name="JPN" width="256">トリプル</language>
-		<language name="JPN_KANJI" width="256">トリプル</language>
+		<language name="JPN" width="256">トリプルバトル</language>
+		<language name="JPN_KANJI" width="256">トリプルバトル</language>
 	</row>
 
 	<row id="msg_wbtsys_rule_rotation">
-		<language name="JPN" width="256">ローテーション</language>
-		<language name="JPN_KANJI" width="256">ローテーション</language>
+		<language name="JPN" width="256">ローテーションバトル</language>
+		<language name="JPN_KANJI" width="256">ローテーションバトル</language>
 	</row>
 
 	<flowchart-group-list>
