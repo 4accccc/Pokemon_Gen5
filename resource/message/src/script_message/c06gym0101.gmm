@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-29T14:46:58"/>
+	<create user="matsumiya" host="W00224" date="2011-04-05T21:36:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1299" top="178" right="2004" bottom="806" maximized="no" rayout="Vertical2">
+	<dialog left="1299" top="177" right="2004" bottom="805" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -486,6 +486,38 @@
 ちなみに　ひこうタイプって
 いわ　でんき　こおりと　意外に▽
 弱点が　多いんすよ！</language>
+	</row>
+
+	<row id="msg_c06gym0101_glasses_02a" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・ジムバッジ取得前＋アイテム入手後
+・ジムバッジ取得まで繰り返し</comment>
+		<attribute name="キャラ指定">DANPEI
+ダンペイ</attribute>
+		<language name="JPN" width="256">かぜの　トンネル！
+それが　この　ジムなんすよね！▼
+おくにある　プロペラが
+いきおいよく　まわりだすと▼
+さっきの　だれかさん　みたいに
+ふきとばされるっすよ！▼
+かぜが　くる！　と　おもったら
+かべに　かこまれた　ばしょに　いって▽
+やりすごして　くださいっす！▼
+ちなみに　ひこうタイプって
+いわ　でんき　こおりと　いがいに▽
+じゃくてんが　おおいんすよ！▼</language>
+		<language name="JPN_KANJI" width="256">風の　トンネル！
+それが　この　ジムなんすよね！▼
+奥にある　プロペラが
+勢いよく　回りだすと▼
+さっきの　だれかさん　みたいに
+ふきとばされるっすよ！▼
+風が　来る！　と　思ったら
+壁に囲まれた　場所に　移動して▽
+やりすごして　くださいっす！▼
+ちなみに　ひこうタイプって
+いわ　でんき　こおりと　意外に▽
+弱点が　多いんすよ！▼</language>
 	</row>
 
 	<row id="msg_c06gym0101_glasses_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
