@@ -106,21 +106,3 @@ extern void WBTLIST_PARAM_Delete( WBTLIST_PARAM * wbtlist_param );
 
 extern void WBTLIST_PARAM_Setup_Debug( WBTLIST_PARAM * wbtlist_param, WBTLIST_STAGE stage, GAMESYS_WORK * gsys );
 
-//============================================================================================
-//============================================================================================
-//------------------------------------------------------------------
-/**
- * @brief WBTでセーブする要素
- */
-//------------------------------------------------------------------
-typedef struct {
-  ///チャンピオントーナメントを1日1回しか出来ないように制御するためのフラグ
-  BOOL ChampionTournamentFlag;
-  ///チャンピオントーナメントに参加できるフラグ（条件クリア後？）
-  BOOL EnableChampionTournamentFlag;
-
-  ///優勝回数カウント
-  u16 WinAllTournamentCount;
-  u16 WinTypeTournamentCount[POKETYPE_MAX];
-}WBT_SAVE;
-
