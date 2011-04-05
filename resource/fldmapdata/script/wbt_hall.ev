@@ -214,6 +214,8 @@ EVENT_END
 /**************************************************************/
 ev_first_game:
 
+//WBTシステムに状態を通知：1回戦へ
+_WBT_SYSTEM_SET_STAGE( SCR_WBT_STAGE_1ST )
 //対戦者出現
 _OBJ_ADD_EX( 14,15,DIR_RIGHT,MMDL_ID_EVENTOBJ_00,MAN1,MV_DMY )
 	
@@ -290,6 +292,8 @@ _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
 _MAP_FADE_BLACK_OUT()
 _MAP_FADE_END_CHECK()
 
+//WBTシステムに状態を通知：2回戦へ
+_WBT_SYSTEM_SET_STAGE( SCR_WBT_STAGE_2ND )
 //トーナメントリスト表示
 _WBT_LIST_CALL( SCR_WBT_LIST_1ST_RESULT )
 

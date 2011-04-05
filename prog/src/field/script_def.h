@@ -633,6 +633,12 @@
 #define SCR_WBT_LIST_1ST_RESULT       (1) ///<1回戦結果
 #define SCR_WBT_LIST_2ND_RESULT       (2) ///<2回戦結果
 
+#define SCR_WBT_STAGE_ENTRY           (0) ///<WBT状態：エントリー
+#define SCR_WBT_STAGE_1ST             (1) ///<WBT状態：1回戦
+#define SCR_WBT_STAGE_2ND             (2) ///<WBT状態：2回戦
+#define SCR_WBT_STAGE_FINAL           (3) ///<WBT状態：決勝戦
+#define SCR_WBT_STAGE_WIN             (4) ///<WBT状態：優勝
+
 #define SCR_WBT_EFFECT_LEFT           (0) ///<左 エフェクト位置
 #define SCR_WBT_EFFECT_RIGHT          (1) ///<右 エフェクト位置
 

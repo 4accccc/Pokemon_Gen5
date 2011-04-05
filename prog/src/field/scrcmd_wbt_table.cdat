@@ -17,6 +17,7 @@
   //WBTŠÖ˜A
   DEF_CMD( EvCmdWBTSystemStart,       EV_SEQ_WBT_SYSTEM_START )
   DEF_CMD( EvCmdWBTSystemEnd,         EV_SEQ_WBT_SYSTEM_END )
+  DEF_CMD( EvCmdWBTSystemSetStage,    EV_SEQ_WBT_SYSTEM_SET_STAGE )
   DEF_CMD( EvCmdWBTShowTornamentList, EV_SEQ_WBT_SHOW_TOURLIST )
   DEF_CMD( EvCmdWBTCheckBattleRule,   EV_SEQ_WBT_CHECK_BATTLE_RULE )
   DEF_CMD( EvCmdWBTSetBattleRule,     EV_SEQ_WBT_SET_BATTLE_RULE )
@@ -29,6 +30,7 @@
   DEF_CMD( EvCmdWBTSetDLNumber,       EV_SEQ_WBT_SET_DL_NUMBER )
   DEF_CMD( EvCmdWBTGetDLNumber,       EV_SEQ_WBT_SET_DL_NUMBER )
   DEF_CMD( EvCmdWBTSelectPokemon,     EV_SEQ_WBT_SELECT_POKEMON )
+  DEF_CMD( EvCmdWBTGetEnemyMMdlCode,  EV_SEQ_WBT_GET_ENEMY_MMDL_CODE )
   DEF_CMD( EvCmdWBTTrainerMsg,        EV_SEQ_WBT_TRAINER_MSG )
   DEF_CMD( EvCmdWBTTrainerBattle,     EV_SEQ_WBT_TRAINER_BATTLE )
   DEF_CMD( EvCmdWBTAnnounce,          EV_SEQ_WBT_ANNOUNCE )

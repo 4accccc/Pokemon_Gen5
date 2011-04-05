@@ -59,17 +59,21 @@ SDK_COMPILER_ASSERT( SCR_WBT_TYPE_DOWNLOAD == WBTTYPE_DOWNLOAD );
 //======================================================================
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-static inline WBTSYS * getWBTSys( SCRCMD_WORK * work )
+static WBTSYS * getWBTSys( SCRCMD_WORK * work )
 {
   GAMEDATA*          gamedata = SCRCMD_WORK_GetGameData( work );
   WBTSYS ** wbtsys_work = GAMEDATA_GetWBTSysPointer( gamedata );
-  GF_ASSERT( *wbtsys_work != NULL );
+  if ( *wbtsys_work == NULL )
+  {
+    OS_Printf("WBTシステムが起動していません！！\n");
+    GF_ASSERT(0);
+  }
   return *wbtsys_work;
 }
 
 //--------------------------------------------------------------
 /**
- * @brief スクリプトコマンド：
+ * @brief スクリプトコマンド：WBTシステム開始
  */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdWBTSystemStart( VMHANDLE * core, void * wk )
@@ -87,7 +91,7 @@ VMCMD_RESULT EvCmdWBTSystemStart( VMHANDLE * core, void * wk )
 
 //--------------------------------------------------------------
 /**
- * @brief スクリプトコマンド：
+ * @brief スクリプトコマンド：WBTシステム終了
  */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdWBTSystemEnd( VMHANDLE * core, void * wk )
@@ -101,6 +105,18 @@ VMCMD_RESULT EvCmdWBTSystemEnd( VMHANDLE * core, void * wk )
   GF_ASSERT( *wbtsys_work != NULL );
   WBTSYS_Delete( *wbtsys_work );
   *wbtsys_work = NULL;
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：状態設定
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTSystemSetStage( VMHANDLE * core, void * wk )
+{
+  u16 stage = SCRCMD_GetVMWorkValue( core, wk );
+  //仮
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -322,6 +338,20 @@ VMCMD_RESULT EvCmdWBTSelectPokemon( VMHANDLE * core, void * wk )
 
 //======================================================================
 //======================================================================
+//--------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：WBT対戦トレーナーの動作モデルコード取得
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTGetEnemyMMdlCode( VMHANDLE * core, void * wk )
+{
+  WBTSYS * wbtsys = getWBTSys( wk );
+  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
+
+  *ret_wk = WBTTOOL_GetEnemyTrainerMMdlCode( wbtsys );
+  return VMCMD_RESULT_CONTINUE;
+}
+
 //--------------------------------------------------------------
 /**
  * @brief スクリプトコマンド：

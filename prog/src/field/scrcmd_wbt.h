@@ -12,6 +12,7 @@
 
 extern VMCMD_RESULT EvCmdWBTSystemStart( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTSystemEnd( VMHANDLE * core, void * wk );
+extern VMCMD_RESULT EvCmdWBTSystemSetStage( VMHANDLE * core, void * wk );
 
 extern VMCMD_RESULT EvCmdWBTShowTornamentList( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTCheckBattleRule( VMHANDLE * core, void * wk );
@@ -26,6 +27,7 @@ extern VMCMD_RESULT EvCmdWBTSetDLNumber( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTGetDLNumber( VMHANDLE * core, void * wk );
 
 extern VMCMD_RESULT EvCmdWBTSelectPokemon( VMHANDLE * core, void * wk );
+extern VMCMD_RESULT EvCmdWBTGetEnemyMMdlCode( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTTrainerMsg( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTTrainerBattle( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTAnnounce( VMHANDLE * core, void * wk );

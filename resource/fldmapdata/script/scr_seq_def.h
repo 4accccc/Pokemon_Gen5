@@ -12142,6 +12142,19 @@
     .short  EV_SEQ_WBT_SYSTEM_END
     .endm
 
+//--------------------------------------------------------------
+/**
+ * @brief WBT：システムに状態を通知
+ * @param stage 状態指定（script_def.hのSCR_WBT_STAGE_～を参照）
+ */
+//--------------------------------------------------------------
+#define _WBT_SYSTEM_SET_STAGE( stage )  \
+    _ASM_WBT_SYSTEM_SET_STAGE stage
+
+    .macro  _ASM_WBT_SYSTEM_SET_STAGE stage
+    .short  EV_SEQ_WBT_SYSTEM_SET_STAGE
+    .short  \stage
+    .endm
 
 //--------------------------------------------------------------
 /**
@@ -12316,6 +12329,20 @@
 
     .macro _ASM_WBT_SELECT_POKEMON ret_wk
     .short  EV_SEQ_WBT_SELECT_POKEMON
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brier WBT：敵トレーナーの動作モデル種別を取得する
+ * @param[out]  ret_wk  動作モデル種別
+ */
+//--------------------------------------------------------------
+#define _WBT_GET_ENEMY_MMDL_CODE( ret_wk ) \
+    _ASM_WBT_GET_ENEMY_MMDL_CODE ret_wk
+
+    .macro  _ASM_WBT_GET_ENEMY_MMDL_CODE ret_wk
+    .short  EV_SEQ_WBT_GET_ENEMY_MMDL_CODE
     .short  \ret_wk
     .endm
 
