@@ -234,13 +234,13 @@ _CAMERA_MOVE( 4056,0,970752,1499136,131103,1015808,1 )	//ˆê”ÔÅŒã‚Ìˆø”‚ÍˆÚ“®‚É‚
 _CAMERA_WAIT_MOVE()
 	
 //ƒuƒ‰ƒbƒNƒCƒ“ŠJŽn
-//_MAP_FADE_BLACK_IN_SLOW()
+_MAP_FADE_BLACK_IN_SLOW()
 	
 //‘ÎíŽÒEƒvƒŒƒCƒ„[‚ðƒXƒe[ƒW’†‰›‚Ü‚ÅˆÚ“®‚³‚¹‚é
 _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_1st_in )
 _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_enemy_1st_in )
 	
-//_MAP_FADE_END_CHECK()
+_MAP_FADE_END_CHECK()
 
 _OBJ_ANIME_WAIT()
 
