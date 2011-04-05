@@ -44,10 +44,9 @@
 #define TIME_NUM_PX     (BMP_FMTIME_SX*8-TIME_NUM_SX)
 
 typedef struct _MENU_BAR_DATA{
-  u8 act;
-  u8 anm;
-  u16 se;
-  u16 menu;
+  u8  px;
+  u8  py;
+  u8  key;
 }MENU_BAR_DATA;
 
 static int touchin_CheckMenu( FMISSION_VIEW_PTR wk, POINT* tp );
@@ -56,6 +55,13 @@ static BOOL effReq_PopupMsg( FMISSION_VIEW_PTR wk, GAMEBEACON_INFO* info, BOOL n
 static void print_GetMsgToBufEx( FMISSION_VIEW_PTR wk, u8 msg_id, const GFL_MSGDATA* handle );
 static void print_GetMsgToBuf( FMISSION_VIEW_PTR wk, u8 msg_id );
 static void print_PopupWindow( FMISSION_VIEW_PTR wk, STRBUF* str, int* task_ct );
+
+static void draw_MissionInfo( FMISSION_VIEW_PTR wk );
+static void draw_MissionNowScore( FMISSION_VIEW_PTR wk );
+static void draw_EntryNum( FMISSION_VIEW_PTR wk, int* task_ct );
+static void draw_RestTime( FMISSION_VIEW_PTR wk, int* task_ct );
+static void draw_MenuIconVisibleSet( FMISSION_VIEW_PTR wk, BOOL visible_f );
+
 static void obj_UpDownViewSet( FMISSION_VIEW_PTR wk );
 static void panel_VisibleSet( PANEL_WORK* pp, BOOL visible_f );
 static void panel_Clear( PANEL_WORK* pp );
@@ -70,11 +76,8 @@ static void list_UpDownReq1st( FMISSION_VIEW_PTR wk, SCROLL_DIR dir, int ret_seq
 static void list_ScrollReq( FMISSION_VIEW_PTR wk, FMISSION_LOG* pl, u8 idx, u8 dir );
 
 static void effReq_PanelScroll( FMISSION_VIEW_PTR wk, u8 dir, PANEL_WORK* new_pp, int* task_ct );
-
-static void draw_MissionInfo( FMISSION_VIEW_PTR wk );
-static void draw_MissionNowScore( FMISSION_VIEW_PTR wk );
-static void draw_EntryNum( FMISSION_VIEW_PTR wk, int* task_ct );
-static void draw_RestTime( FMISSION_VIEW_PTR wk, int* task_ct );
+static void effReq_PopupMsgSys( FMISSION_VIEW_PTR wk, u8 msg_id );
+static void effReq_PopupMsgRetire( FMISSION_VIEW_PTR wk );
 
 static void printReq_FOamPrint( FMISSION_VIEW_PTR wk, PANEL_WORK* pp, PANEL_FOAM_ID id, PRINTSYS_LSB color,int* task_ct );
 
@@ -134,7 +137,7 @@ int FMissionView_CheckInput( FMISSION_VIEW_PTR wk )
 {
   int ret;
   POINT tp;
-#if 0
+  
   if( !GFL_UI_TP_GetPointTrg( (u32*)&tp.x, (u32*)&tp.y )){
     return SEQ_MAIN;
   }
@@ -144,18 +147,63 @@ int FMissionView_CheckInput( FMISSION_VIEW_PTR wk )
   if(ret != GFL_UI_TP_HIT_NONE){
     switch( ret ){
     case MENU_POWER:
-      return SEQ_GPOWER_USE;
+      //return SEQ_GPOWER_USE;
+      FVSEvent_Reserve( wk, EV_GPOWER_USE_MINE );
+      break;
     case MENU_HELLO:
-      BVSEvent_Reserve( wk, EV_CALL_TALKMSG_INPUT );
+      FVSEvent_Reserve( wk, EV_CALL_TALKMSG_INPUT );
       break;
-    case MENU_RETURN:
-      BVSEvent_Reserve( wk, EV_RETURN_CGEAR );
+    case MENU_RETIRE:
+      return SEQ_RETIRE;
+
+    case MENU_INFO:
+      FVSEvent_Reserve( wk, EV_CALL_INFO_VIEW );
       break;
+    case MENU_UP:
+    case MENU_DOWN:
+      list_UpDownReq1st( wk, (ret- MENU_UP)^1, SEQ_MAIN );  //スクロール方向は逆なので反転させてる
+      return SEQ_LIST_SCROLL_REPEAT;
     }
     return SEQ_MAIN;
   }
-#endif
   return SEQ_MAIN;
+}
+
+/*
+ *  @brief  リスト上下ボタン　タッチ判定
+ */
+int FMissionView_CheckInoutTouchUpDown( FMISSION_VIEW_PTR wk )
+{
+  int ret;
+  POINT tp;
+  
+  if( !GFL_UI_TP_GetPointCont( (u32*)&tp.x, (u32*)&tp.y )){
+    return GFL_UI_TP_HIT_NONE;
+  }
+  ret = touchin_CheckMenu( wk, &tp );
+  if( ret == MENU_UP || ret == MENU_DOWN ){
+    return ((ret-MENU_UP)^1);
+  }
+  return GFL_UI_TP_HIT_NONE;
+}
+
+/*
+ *  @brief  特殊ポップアップ起動チェック 
+ */
+BOOL FMissionView_CheckSpecialPopup( FMISSION_VIEW_PTR wk )
+{
+  u16* ret_fword_input =  BEACON_STATUS_GetFreeWordInputResultPointer( wk->b_status );
+
+  //一言メッセージ入力があったかチェック
+  if( (*ret_fword_input) == FALSE ){
+    return FALSE;
+  }
+  *ret_fword_input = FALSE; //フラグリセット
+
+  WORDSET_RegisterWord( wk->wordset, 0,
+    BEACON_STATUS_GetFreeWordBuffer( wk->b_status ), wk->my_data.sex, TRUE, PM_LANG );
+  effReq_PopupMsgSys( wk, msg_sys_free_word_send );
+  return TRUE;
 }
 
 /*
@@ -357,39 +405,89 @@ BOOL FMissionView_SubSeqLogEntry( FMISSION_VIEW_PTR wk )
 #endif
 }
 
+///////////////////////////////////////////////////////////////////
+/*
+ *  @brief  サブシーケンス　リタイアチェック
+ */
+///////////////////////////////////////////////////////////////////
+
+/*
+ *  @brief  サブシーケンス　リタイアチェックメイン
+ */
+BOOL FMissionView_SubSeqRetire( FMISSION_VIEW_PTR wk )
+{
+  switch( wk->sub_seq ){
+  case 0:
+    BVC_PrintQueLimmitUpSet( wk->printQue, TRUE );
+    effReq_PopupMsgRetire( wk );
+    wk->sub_seq++;
+    break;
+  case 1:
+    if( wk->eff_task_ct ){
+      break;
+    }
+    BVC_PrintQueLimmitUpSet( wk->printQue, FALSE );
+    wk->sub_seq = 0;
+    return TRUE;
+  }
+  return FALSE;
+}
+
 /*
  *  @brief  メニューバーあたり判定
  */
 static int touchin_CheckMenu( FMISSION_VIEW_PTR wk, POINT* tp )
 {
-#if 0
   int i, ret;
+  u8  enable = 0;
+
   GFL_UI_TP_HITTBL tbl[2];
+#if 0
   static MENU_BAR_DATA const dat[3] = {
     { ACT_POWER, ACTANM_POWER_ON, BVIEW_SE_MENU, MENU_POWER },
     { ACT_HELLO, ACTANM_HELLO_ON, BVIEW_SE_MENU, MENU_HELLO },
     { ACT_RETURN, ACTANM_RETURN_ON, BVIEW_SE_CANCEL, MENU_RETURN },
   };
+#endif
+  static MENU_BAR_DATA const dat[ACT_MENU_NUM] = {
+    { ACT_MENU_PX+(ACT_MENU_OX*0), ACT_MENU_PY, 0 },
+    { ACT_MENU_PX+(ACT_MENU_OX*1), ACT_MENU_PY, 0 },
+    { ACT_MENU_PX+(ACT_MENU_OX*2), ACT_MENU_PY, 0},
+    { ACT_INFO_PX, ACT_INFO_PY, 0 },
+    { ACT_UP_PX, ACT_MENU_PY, 0x01 },
+    { ACT_DOWN_PX, ACT_MENU_PY, 0x02 },
+  };
 
   tbl[1].rect.top = GFL_UI_TP_HIT_END;
+  
+  if( wk->ctrl.view_top > 0 ){  //上キーチェック
+    enable |= 1;
+  }
+  if( (wk->ctrl.view_top+wk->ctrl.view_max) < wk->ctrl.max ){
+    enable |= 2;
+  }
 
-  for(i = 0;i < ACT_MENU_FMISSION_NUM;i++){
-    u8 seq = GFL_CLACT_WK_GetAnmSeq( wk->pAct[dat[i].act] )-(dat[i].anm);
+  for(i = 0;i < ACT_MENU_NUM;i++){
+    u8 seq = GFL_CLACT_WK_GetAnmSeq( wk->pAct[ACT_POWER+i] )-(ACTANM_POWER_ON+(ACT_ANM_SET*i));
     if( (seq % ACT_ANM_SET) >= 2){
       continue;
     }
-    tbl[0].rect.top = ACT_MENU_PY;
+    if( (dat[i].key != 0) && !(enable & dat[i].key ) ){
+      continue;
+    }
+    tbl[0].rect.top = dat[i].py;
     tbl[0].rect.bottom = tbl[0].rect.top+ACT_MENU_SY;
-    tbl[0].rect.left = ACT_MENU_FMISSION_PX+ACT_MENU_OX*i;
+    tbl[0].rect.left = dat[i].px;
     tbl[0].rect.right = tbl[0].rect.left+ACT_MENU_SX;
 
     ret = GFL_UI_TP_HitSelf( tbl, tp->x, tp->y );
     if(ret != GFL_UI_TP_HIT_NONE) {
-      BVCSound_PlaySE( dat[i].se );
-      return dat[i].menu;
+      if( dat[i].key == 0 ){
+        BVCSound_PlaySE( FVIEW_SE_MENU );
+      }
+      return i;
     }
   }
-#endif
   return GFL_UI_TP_HIT_NONE;
 }
 
@@ -544,6 +642,18 @@ static void draw_RestTime( FMISSION_VIEW_PTR wk, int* task_ct )
   print_GetMsgToBuf( wk, msg_sys_fmission_time_num );
   BVCPrintReq_BmpwinPrintEx( wk, &wk->win[WIN_FMTIME], wk->str_expand, TIME_NUM_PX, 0, FCOL_LOGNUM_BASE, FCOL_LOGNUM, task_ct, FALSE );
 #endif
+}
+
+/*
+ *  @brief  メニューアクター Viewセット
+ */
+static void draw_MenuIconVisibleSet( FMISSION_VIEW_PTR wk, BOOL visible_f )
+{
+  GFL_CLACT_WK_SetDrawEnable( wk->pAct[ACT_POWER], visible_f );
+  GFL_CLACT_WK_SetDrawEnable( wk->pAct[ACT_HELLO], visible_f );
+  GFL_CLACT_WK_SetDrawEnable( wk->pAct[ACT_RETIRE], visible_f );
+  GFL_CLACT_WK_SetDrawEnable( wk->pAct[ACT_UP], visible_f );
+  GFL_CLACT_WK_SetDrawEnable( wk->pAct[ACT_DOWN], visible_f );
 }
 
 /*
@@ -773,12 +883,12 @@ static void list_UpDownReq1st( FMISSION_VIEW_PTR wk, SCROLL_DIR dir, int ret_seq
 
   BVC_PrintQueLimmitUpSet( wk->printQue, TRUE );
 
+  FMissionView_MenuBarViewSet( wk, MENU_ALL, MENU_ST_OFF );
   if( wk->scr_repeat_dir == SCROLL_UP ){
     BVCAct_AnmStart( wk->pAct[ACT_DOWN], ACTANM_DOWN_ANM );
   }else{
     BVCAct_AnmStart( wk->pAct[ACT_UP], ACTANM_UP_ANM );
   }
-  FMissionView_MenuBarViewSet( wk, MENU_ALL, MENU_ST_OFF );
 
   list_UpDownReq( wk, dir );
 }
@@ -974,6 +1084,222 @@ static void tcb_PanelScroll( GFL_TCBL *tcb , void* tcb_wk)
     }
     break;
   }
+  --(*twk->task_ct);
+  GFL_TCBL_Delete(tcb);
+}
+
+/////////////////////////////////////////////////////////////////////
+/*
+ *  @brief  メッセージウィンドウ ポップアップ 
+ */
+/////////////////////////////////////////////////////////////////////
+typedef struct _TASKWK_WIN_POPUP{
+  u8  seq;
+  u8  wait;
+  int child_task;
+ 
+  FMISSION_VIEW_PTR fvp;
+  int* task_ct;
+}TASKWK_WIN_POPUP;
+
+static void taskAdd_WinPopup( FMISSION_VIEW_PTR wk, STRBUF* str, int* task_ct );
+static void tcb_WinPopup( GFL_TCBL *tcb , void* work);
+
+static void effReq_PopupMsgSys( FMISSION_VIEW_PTR wk, u8 msg_id )
+{
+  print_GetMsgToBuf( wk, msg_id );
+  taskAdd_WinPopup( wk, wk->str_expand, &wk->eff_task_ct);
+}
+
+/*
+ *  @brief  メッセージウィンドウ ポップアップタスク登録
+ */
+static void taskAdd_WinPopup( FMISSION_VIEW_PTR wk, STRBUF* str, int* task_ct )
+{
+  GFL_TCBL* tcb;
+  TASKWK_WIN_POPUP* twk;
+
+  tcb = GFL_TCBL_Create( wk->pTcbSys, tcb_WinPopup, sizeof(TASKWK_WIN_POPUP), 0 );
+
+  twk = GFL_TCBL_GetWork(tcb);
+  MI_CpuClear8( twk, sizeof( TASKWK_WIN_POPUP ));
+
+  GFL_STR_CopyBuffer( wk->str_popup, str );
+  
+  twk->fvp = wk;
+  twk->wait = POPUP_WAIT;
+  
+//  IWASAWA_Printf("WinPopup Req\n");
+  FMissionView_MenuBarViewSet( wk, MENU_ALL, MENU_ST_OFF );
+
+  twk->task_ct = task_ct;
+  (*task_ct)++;
+}
+
+static void tcb_WinPopup( GFL_TCBL *tcb , void* tcb_wk)
+{
+  TASKWK_WIN_POPUP* twk = (TASKWK_WIN_POPUP*)tcb_wk;
+  FMISSION_VIEW_PTR fvp = twk->fvp;
+  
+  if( twk->child_task ){
+    return;
+  }
+
+  switch( twk->seq ){
+  case 0:
+    print_PopupWindow( twk->fvp, twk->fvp->str_popup, &twk->child_task );
+    twk->seq++;
+    return;
+  case 1:
+    BVCTaskAdd_MsgUpdown( twk->fvp->pTcbSys, FRM_POPUP, SCROLL_UP, &twk->child_task );
+    twk->seq++;
+    return;
+  case 2:
+    if( BVCPrint_PopupWindowTimeWaitCheck( &twk->wait, FRM_POPUP ) == FALSE ){
+      return;
+    }
+    BVCTaskAdd_MsgUpdown( twk->fvp->pTcbSys, FRM_POPUP, SCROLL_DOWN, &twk->child_task );
+    twk->seq++;
+    return;
+  default:
+    break;
+  }
+//  IWASAWA_Printf("WinPopup End\n" );
+  --(*twk->task_ct);
+  GFL_TCBL_Delete(tcb);
+}
+
+/////////////////////////////////////////////////////////////////////
+/*
+ *  @brief  メッセージウィンドウ リタイア確認 
+ */
+/////////////////////////////////////////////////////////////////////
+typedef struct _TASKWK_WIN_RETIRE{
+  u8  seq;
+  u8  seq_next;
+  u8  wait;
+  u8  type;
+  u8  cancel_f;
+  u8  ret;
+  int child_task;
+
+  GPOWER_ID  g_power;
+  u16 item_num;
+  u16 item_use;
+  u16 mypower_use;
+  u16 mypower_min;
+  u16 mypower_sec;
+  FMISSION_VIEW_PTR fvp;
+  int* task_ct;
+}TASKWK_WIN_RETIRE;
+
+static const u8 DATA_GPowerUseMsg[GPOWER_USE_MAX] = {
+ msg_sys_gpower_use00,
+ msg_sys_gpower_use01,
+ msg_sys_gpower_use02,
+};
+
+static void taskAdd_WinRetire( FMISSION_VIEW_PTR wk, int* task_ct );
+static void tcb_WinRetireYesNo( GFL_TCBL *tcb , void* work);
+
+static void effReq_PopupMsgRetire( FMISSION_VIEW_PTR wk )
+{
+  taskAdd_WinRetire( wk, &wk->eff_task_ct );
+}
+
+/*
+ *  @brief  メッセージウィンドウ リタイア確認タスク登録
+ */
+static void taskAdd_WinRetire( FMISSION_VIEW_PTR wk, int* task_ct )
+{
+  GFL_TCBL* tcb;
+  TASKWK_WIN_RETIRE* twk;
+
+  tcb = GFL_TCBL_Create( wk->pTcbSys, tcb_WinRetireYesNo, sizeof(TASKWK_WIN_RETIRE), 0 );
+
+  twk = GFL_TCBL_GetWork(tcb);
+  MI_CpuClear8( twk, sizeof( TASKWK_WIN_RETIRE ));
+
+  twk->fvp = wk;
+  twk->wait = POPUP_WAIT;
+
+  FMissionView_MenuBarViewSet( wk, MENU_RETIRE, MENU_ST_ANM );
+  FMissionView_MenuBarViewSet( wk, MENU_POWER, MENU_ST_OFF );
+  FMissionView_MenuBarViewSet( wk, MENU_HELLO, MENU_ST_OFF );
+  FMissionView_MenuBarViewSet( wk, MENU_INFO, MENU_ST_OFF );
+  FMissionView_MenuBarViewSet( wk, MENU_UPDOWN, MENU_ST_OFF );
+
+  twk->task_ct = task_ct;
+  (*task_ct)++;
+}
+
+static void tcb_WinRetireYesNo( GFL_TCBL *tcb , void* tcb_wk)
+{
+  TASKWK_WIN_RETIRE* twk = (TASKWK_WIN_RETIRE*)tcb_wk;
+  FMISSION_VIEW_PTR fvp = twk->fvp;
+
+  if( twk->child_task > 0 ){
+    return;
+  }
+
+  switch( twk->seq ){
+  case 0:
+    print_GetMsgToBuf( fvp, msg_sys_retire );
+    print_PopupWindow( fvp, fvp->str_expand, &twk->child_task );
+    twk->seq++;
+    return;
+  case 1:
+    BVCTaskAdd_MsgUpdown( fvp->pTcbSys, FRM_POPUP, SCROLL_UP, &twk->child_task );
+    twk->seq++;
+    return;
+  case 2:
+    BVC_PrintQueLimmitUpSet( fvp->printQue, TRUE );
+    BVCTMenu_Create( fvp->tmenu, TMENU_ID_YESNO );
+    draw_MenuIconVisibleSet( fvp, FALSE );
+    twk->seq++;
+    return;
+  case 3: //選択待ち
+    {
+      int ret = BVCTMenu_Update( fvp->tmenu );
+      if( ret < 0 ){
+        return;
+      }
+      twk->ret = ret;
+
+      if( twk->ret == TMENU_YESNO_YES ){
+        FVSEvent_Reserve( fvp, EV_MISSION_RETIRE );
+        twk->seq = 4;
+      }else{
+        twk->seq = 5;
+      }
+    }
+    return;
+  case 4: //使うイベント待ち
+    if( fvp->event_reserve_exec == FALSE ) {
+      //途中キャンセルされていたら、選択しなおし
+      twk->seq = 3;
+    }else{
+      //正常に使えていれば、メニューを終了させる
+      BVCTMenu_End( fvp->tmenu );
+      twk->seq = 6;
+    }
+    return;
+  case 5: //キャンセル決定アニメ待ち
+    if( BVCTMenu_EndWait( fvp->tmenu, twk->ret )){
+      twk->seq++;
+    }
+    return;
+  case 6:
+    draw_MenuIconVisibleSet( fvp, TRUE );
+    BVCTaskAdd_MsgUpdown( fvp->pTcbSys, FRM_POPUP, SCROLL_DOWN, &twk->child_task );
+    twk->seq++;
+    return;
+  default:
+    break;
+  }
+  FMissionView_MenuBarViewSet( fvp, MENU_ALL, MENU_ST_ON );
+  BVC_PrintQueLimmitUpSet( fvp->printQue, FALSE );
+  
   --(*twk->task_ct);
   GFL_TCBL_Delete(tcb);
 }

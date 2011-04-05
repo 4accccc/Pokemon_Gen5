@@ -20,6 +20,16 @@ extern void FMissionView_InitialDraw( FMISSION_VIEW_PTR wk );
 extern int FMissionView_CheckInput( FMISSION_VIEW_PTR wk );
 
 /*
+ *  @brief  リスト上下ボタン　タッチ判定
+ */
+extern int FMissionView_CheckInoutTouchUpDown( FMISSION_VIEW_PTR wk );
+
+/*
+ *  @brief  特殊ポップアップ起動チェック 
+ */
+extern BOOL FMissionView_CheckSpecialPopup( FMISSION_VIEW_PTR wk );
+
+/*
  *  @brief  スタックからログを一件取り出し
  */
 extern BOOL FMissionView_CheckStack( FMISSION_VIEW_PTR wk );
@@ -33,6 +43,11 @@ extern void FMissionView_ViewUpdate( FMISSION_VIEW_PTR wk );
  *  @brief  サブシーケンス　Newログエントリーメイン
  */
 extern BOOL FMissionView_SubSeqLogEntry( FMISSION_VIEW_PTR wk );
+
+/*
+ *  @brief  サブシーケンス　リタイアチェックメイン
+ */
+extern BOOL FMissionView_SubSeqRetire( FMISSION_VIEW_PTR wk );
 
 //---------------------------------------------------
 /*

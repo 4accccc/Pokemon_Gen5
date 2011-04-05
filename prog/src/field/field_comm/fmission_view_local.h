@@ -129,7 +129,8 @@ typedef struct _FMISSION_VIEW{
   int       seq;
   int       sub_seq;
   u16       event_id;
-  u16       event_reserve_f;
+  u8        event_reserve_f;
+  u8        event_reserve_exec;
 
   int       io_interval;      ///<スタックチェックインターバルカウンタ
   u8        gpower_check_req;   ///<発動中のGパワー確認イベントリクエストフラグ

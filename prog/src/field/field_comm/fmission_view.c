@@ -47,6 +47,7 @@ static int seq_Main( FMISSION_VIEW_PTR wk );
 static int seq_LogEntry( FMISSION_VIEW_PTR wk );
 static int seq_ViewUpdate( FMISSION_VIEW_PTR wk );
 static int seq_ListScrollRepeat( FMISSION_VIEW_PTR wk );
+static int seq_Retire( FMISSION_VIEW_PTR wk );
 static int seq_GPowerUse( FMISSION_VIEW_PTR wk );
 
 static void sub_SetViewPassive( FMISSION_VIEW_PTR wk, BOOL passive_f );
@@ -169,6 +170,9 @@ void FMISSION_VIEW_Update(FMISSION_VIEW_PTR wk, BOOL bActive )
   case SEQ_LIST_SCROLL_REPEAT:
     wk->seq = seq_ListScrollRepeat( wk );
     break;
+  case SEQ_RETIRE:
+    wk->seq = seq_Retire( wk );
+    break;
   case SEQ_GPOWER_USE:
     wk->seq = seq_GPowerUse( wk );
     break;
@@ -241,30 +245,18 @@ static int seq_Main( FMISSION_VIEW_PTR wk )
 {
   int ret;
   
-  if( wk->io_interval ){
-    wk->io_interval--;
-    return SEQ_MAIN;
-  }
- 
-  //スタックチェック
-  if( FMissionView_CheckStack( wk ) == FALSE ){
-    return SEQ_MAIN;
-  }
-  wk->io_interval = 30*3; //インターバルを設定
-  return SEQ_LOG_ENTRY;
-
-#if 0
   //特殊ポップアップ起動チェック
   if( FMissionView_CheckSpecialPopup( wk ) ){
     wk->io_interval = 30*3; //インターバルを設定
     return SEQ_VIEW_UPDATE;
   }
-  
+#if 0
   //通信関連特殊イベント発動チェック
   if( FMissionView_CheckCommEvent( wk )){
     return SEQ_MAIN;
   }
- 
+#endif
+
   //メイン入力チェック
   ret = FMissionView_CheckInput( wk );
   if( ret != SEQ_MAIN ){
@@ -275,20 +267,19 @@ static int seq_Main( FMISSION_VIEW_PTR wk )
     wk->io_interval--;
     return SEQ_MAIN;
   }
- 
+#if 0
   //特殊Gパワー起動チェック
   if( FMissionView_CheckSpecialGPower( wk ) == TRUE ){
     wk->io_interval = 30*3; //インターバルを設定
     return SEQ_VIEW_UPDATE;
   }
+#endif
   //スタックチェック
   if( FMissionView_CheckStack( wk ) == FALSE ){
     return SEQ_MAIN;
   }
   wk->io_interval = 30*3; //インターバルを設定
   return SEQ_LOG_ENTRY;
-#endif
-  return SEQ_MAIN;
 }
 
 /*
@@ -323,7 +314,6 @@ static int seq_ListScrollRepeat( FMISSION_VIEW_PTR wk )
 {
   int ret;
 
-#if 0
   if( !wk->scr_repeat_end ){
     ret = FMissionView_CheckInoutTouchUpDown( wk );
     if( ret != wk->scr_repeat_dir || ret == GFL_UI_TP_HIT_NONE ){
@@ -340,10 +330,8 @@ static int seq_ListScrollRepeat( FMISSION_VIEW_PTR wk )
     wk->scr_repeat_end = FALSE;
     wk->scr_repeat_ct = 0;
     wk->scr_repeat_f = FALSE;
-    if( wk->scr_repeat_ret_seq == SEQ_MAIN ){
-      FMissionView_MenuBarViewSet( wk, MENU_ALL, MENU_ST_ON );
-    }
-    FMissionView_UpDownViewSet( wk );
+    FMissionView_MenuBarViewSet( wk, MENU_ALL, MENU_ST_ON );
+//    FMissionView_UpDownViewSet( wk );
     BVC_PrintQueLimmitUpSet( wk->printQue, FALSE );
     return wk->scr_repeat_ret_seq;
   }
@@ -352,8 +340,19 @@ static int seq_ListScrollRepeat( FMISSION_VIEW_PTR wk )
   if( wk->eff_task_ct == 0 ){
     FMissionView_ListScrollRepeatReq( wk );
   }
-#endif
   return SEQ_LIST_SCROLL_REPEAT;
+}
+
+/*
+ *  @brief  ミッションリタイア確認
+ */
+static int seq_Retire( FMISSION_VIEW_PTR wk )
+{
+  if( !FMissionView_SubSeqRetire( wk )){
+    return SEQ_RETIRE;
+  }
+  wk->sub_seq = 0;
+  return SEQ_MAIN;
 }
 
 /*

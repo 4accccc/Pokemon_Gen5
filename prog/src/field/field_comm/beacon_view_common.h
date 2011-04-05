@@ -1,11 +1,13 @@
 /*
- *  @file   beacon_view_common.c
+ *  @file   beacon_view_common.h
  *  @brief  すれ違いログ＆フェスミッションログ画面　共有サブルーチン群 ヘッダ
  *  @author Miyuki Iwasawa
  *  @date   10.10.20
  */
 
 #pragma once
+
+#include "app/app_taskmenu.h"
 
 #define ACT_RENDER_ID (0)
 
@@ -26,20 +28,32 @@ typedef enum{
 
 //タスクメニューID
 enum{
- TMENU_ID_YESNO,
- TMENU_ID_CHECK,
+ TMENU_ID_CYN,    //確認、はい、いいえ
+ TMENU_ID_YESNO,  //はい、いいえ
+ TMENU_ID_CHECK,  //確認、閉じる
+ TMENU_ID_MAX,
 };
 enum{
- TMENU_YN_CHECK,
- TMENU_YN_YES,
- TMENU_YN_NO,
- TMENU_YN_MAX,
+ TMENU_CYN_CHECK,
+ TMENU_CYN_YES,
+ TMENU_CYN_NO,
+};
+enum{
+ TMENU_YESNO_YES,
+ TMENU_YESNO_NO,
 };
 enum{
  TMENU_CHECK_CALL,
  TMENU_CHECK_CLOSE,
- TMENU_CHECK_MAX,
 };
+enum{
+ TMENU_STR_YES,      //はい
+ TMENU_STR_NO,       //いいえ
+ TMENU_STR_CHECK,    //確認
+ TMENU_STR_CLOSE,    //閉じる
+ TMENU_STR_MAX,
+};
+#define TMENU_ITEM_MAX  (TMENU_CYN_NO+1)
 
 ///ポップアップスクロール
 #define POPUP_HEIGHT  (8*8)
@@ -113,13 +127,16 @@ typedef struct {
   APP_TASKMENU_ITEMWORK item;
 }TMENU_ITEM;
 
+
 //タスクメニュー管理ワーク
 typedef struct _BVC_TMENU_WORK{
   HEAPID  heapID;
   APP_TASKMENU_RES* menuRes;
- 
-  TMENU_ITEM tmenu[TMENU_YN_MAX];
-  TMENU_ITEM tmenu_check[TMENU_CHECK_MAX];
+
+  u8  c_id;   //現在のメニューID
+  u8  c_max;  //現在のメニューの項目数max
+  STRBUF* str[TMENU_STR_MAX];
+  TMENU_ITEM tmenu[TMENU_ITEM_MAX];
 }BVC_TMENU_WORK;
 
 /*
@@ -184,34 +201,23 @@ extern void BVCTMenu_Create( BVC_TMENU_WORK* wk, u8 menu_idx );
  *  @brief  TaskMenu ウィンドウワークを取得する
  */
 //---------------------------------------------------------------
-extern APP_TASKMENU_WIN_WORK* BVCTMenu_GetWinWork( BVC_TMENU_WORK* wk, u8 menu_idx, u8 id );
+extern APP_TASKMENU_WIN_WORK* BVCTMenu_GetWinWork( BVC_TMENU_WORK* wk, u8 select );
 
 /*
  *  @brief  TaskMenu アップデート
  */
-extern int BVCTMenu_Update( BVC_TMENU_WORK* wk,u8 menu_idx );
+extern int BVCTMenu_Update( BVC_TMENU_WORK* wk );
 
 /*
  *  @brief  TaskMenu 終了アニメ待ち
  */
-extern BOOL BVCTMenu_YnEndWait( BVC_TMENU_WORK* wk, u8 select );
+extern BOOL BVCTMenu_EndWait( BVC_TMENU_WORK* wk, u8 select );
 
 /*
  *  @brief  TaskMenu 終了
  */
-extern void BVCTMenu_YnEnd( BVC_TMENU_WORK* wk );
+extern void BVCTMenu_End( BVC_TMENU_WORK* wk );
 
-/*
- *  @brief  TaskMenu Gパワー確認ダイアログ終了アニメ待ち
- */
-extern BOOL BVCTMenu_CheckEndWait( BVC_TMENU_WORK* wk, u8 select );
-
-/*
- *  @brief  TaskMenu 終了
- */
-extern void BVCTMenu_CheckEnd( BVC_TMENU_WORK* wk );
-
-  
 //========================================================================
 //文字列処理系
 //========================================================================
@@ -220,7 +226,7 @@ extern void BVCTMenu_CheckEnd( BVC_TMENU_WORK* wk );
  *  @brief  ポップアップ　タイムウェイトチェック
  */
 //------------------------------------------------------------
-extern BOOL BVCPrint_PopupWindowTimeWaitCheck( u8* p_wait );
+extern BOOL BVCPrint_PopupWindowTimeWaitCheck( u8* p_wait, u8 frame );
 
 //------------------------------------------------------------
 /**

@@ -336,11 +336,8 @@ enum{
 #define ACT_MENU_OX (4*8)
 #define ACT_MENU_OY (0)
 #define ACT_MENU_NUM  (4)
-#define ACT_MENU_FMISSION_NUM  (3)
 #define ACT_MENU_SX (24)
 #define ACT_MENU_SY (24)
-#define ACT_MENU_FMISSION_PX (ACT_MENU_PX+ACT_MENU_OX)
-
 
 #define ACT_UP_PX (26*8)
 #define ACT_UP_PY (1*8)

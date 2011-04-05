@@ -190,18 +190,18 @@ GMEVENT* BVSEvent_CheckCommon( BEACON_VIEW_PTR wk, BOOL bEvReqOK )
       call_event = GMEVENT_CreateOverlayEventCall( wk->gsys,
           FS_OVERLAY_ID( event_gpower ), EVENT_GPowerEffectStart, &param );
     }
-    event = BVSEvent_EventStart( wk, call_event, EVWAIT_TMENU_ANM, (int)(BVCTMenu_GetWinWork( wk->tmenu, TMENU_ID_YESNO, TMENU_YN_YES )) );
+    event = BVSEvent_EventStart( wk, call_event, EVWAIT_TMENU_ANM, (int)(BVCTMenu_GetWinWork( wk->tmenu, TMENU_CYN_YES )) );
     wk->ctrl.g_power = GPOWER_ID_NULL;
     break;
   case EV_GPOWER_CHECK_TMENU_YN:
     call_event = GMEVENT_CreateOverlayEventCall( wk->gsys,
         FS_OVERLAY_ID( event_gpower), EVENT_GPowerEnableListCheck, wk->fieldWork );
-    event = BVSEvent_EventStart( wk, call_event, EVWAIT_TMENU_ANM, (int)(BVCTMenu_GetWinWork( wk->tmenu, TMENU_ID_YESNO, TMENU_YN_CHECK )) );
+    event = BVSEvent_EventStart( wk, call_event, EVWAIT_TMENU_ANM, (int)(BVCTMenu_GetWinWork( wk->tmenu, TMENU_CYN_CHECK )) );
     break;
   case EV_GPOWER_CHECK_TMENU_CHK:
     call_event = GMEVENT_CreateOverlayEventCall( wk->gsys,
         FS_OVERLAY_ID( event_gpower), EVENT_GPowerEnableListCheck, wk->fieldWork );
-    event = BVSEvent_EventStart( wk, call_event, EVWAIT_TMENU_ANM, (int)(BVCTMenu_GetWinWork( wk->tmenu, TMENU_ID_CHECK, TMENU_CHECK_CALL )) );
+    event = BVSEvent_EventStart( wk, call_event, EVWAIT_TMENU_ANM, (int)(BVCTMenu_GetWinWork( wk->tmenu, TMENU_CHECK_CALL )) );
     wk->gpower_check_req = FALSE;
     break;
   case EV_CALL_TALKMSG_INPUT:
@@ -221,14 +221,14 @@ GMEVENT* BVSEvent_CheckCommon( BEACON_VIEW_PTR wk, BOOL bEvReqOK )
       call_event = GMEVENT_CreateOverlayEventCall( wk->gsys,
           FS_OVERLAY_ID( event_fmission ), EVENT_FestMissionStart, &param );
     }
-    event = BVSEvent_EventStart( wk, call_event, EVWAIT_TMENU_ANM, (int)(BVCTMenu_GetWinWork( wk->tmenu, TMENU_ID_YESNO, TMENU_YN_YES )) );
+    event = BVSEvent_EventStart( wk, call_event, EVWAIT_TMENU_ANM, (int)(BVCTMenu_GetWinWork( wk->tmenu, TMENU_CYN_YES )) );
     FEST_MISSION_Clear( &wk->ctrl.mission );
     break;
   
   case EV_FMISSION_CHECK:
     call_event = GMEVENT_CreateOverlayEventCall( wk->gsys,
         FS_OVERLAY_ID( event_fmission), EVENT_FestMissionCheck, &wk->ctrl.mission );
-    event = BVSEvent_EventStart( wk, call_event, EVWAIT_TMENU_ANM, (int)(BVCTMenu_GetWinWork( wk->tmenu, TMENU_ID_YESNO, TMENU_YN_CHECK )) );
+    event = BVSEvent_EventStart( wk, call_event, EVWAIT_TMENU_ANM, (int)(BVCTMenu_GetWinWork( wk->tmenu, TMENU_CYN_CHECK )) );
     break;
 
 #ifdef PM_DEBUG

@@ -145,6 +145,7 @@ void FVS_ReleaseWork( FMISSION_VIEW_PTR wk )
 void FVSEvent_Reserve( FMISSION_VIEW_PTR wk, BEACON_DETAIL_EVENT ev_id)
 {
   wk->event_id = ev_id;
+  wk->event_reserve_exec = FALSE;
 }
 
 /*
@@ -178,9 +179,28 @@ GMEVENT* FVSEvent_CheckCommon( FMISSION_VIEW_PTR wk, BOOL bEvReqOK )
     call_event = EVENT_ChangeSubScreen( wk->gsys, wk->fieldWork, FIELD_SUBSCREEN_NORMAL);
     event = FVSEvent_EventStart( wk, call_event, EVWAIT_MENU_ANM, MENU_RETIRE );
     break;
-  case EV_CALL_DETAIL_VIEW:
-    call_event = EVENT_BeaconDetail( wk->gsys, wk->fieldWork, wk->ctrl.target+wk->ctrl.view_top );
-    event = FVSEvent_EventStart( wk, call_event, EVWAIT_TCB_ANM, 0 );
+  case EV_CALL_INFO_VIEW:
+//    call_event = EVENT_BeaconDetail( wk->gsys, wk->fieldWork, wk->ctrl.target+wk->ctrl.view_top );
+//    event = FVSEvent_EventStart( wk, call_event, EVWAIT_TCB_ANM, 0 );
+    call_event = EVENT_FreeWordInput( wk->gsys, wk->fieldWork, NULL,
+              NAMEIN_FREE_WORD, BEACON_STATUS_GetFreeWordInputResultPointer( wk->b_status ) );
+    event = FVSEvent_EventStart( wk, call_event, EVWAIT_MENU_ANM, MENU_INFO );
+    break;
+  case EV_MISSION_RETIRE:
+    call_event = GMEVENT_CreateOverlayEventCall( wk->gsys,
+      FS_OVERLAY_ID( event_fmission ), EVENT_FestMissionRetire, wk->fieldWork );
+    
+    event = FVSEvent_EventStart( wk, call_event, EVWAIT_TMENU_ANM, (int)(BVCTMenu_GetWinWork( wk->tmenu, TMENU_YESNO_YES )) );
+    break;
+  case EV_GPOWER_USE_MINE:
+    {
+      GPOWER_EFFECT_PARAM param;
+      param.g_power = wk->my_data.power;
+      param.mine_f = TRUE;
+      call_event = GMEVENT_CreateOverlayEventCall( wk->gsys,
+          FS_OVERLAY_ID( event_gpower ), EVENT_GPowerEffectStart, &param );
+    }
+    event = FVSEvent_EventStart( wk, call_event, EVWAIT_MENU_ANM, MENU_POWER );
     break;
   case EV_GPOWER_USE:
     {
@@ -190,18 +210,18 @@ GMEVENT* FVSEvent_CheckCommon( FMISSION_VIEW_PTR wk, BOOL bEvReqOK )
       call_event = GMEVENT_CreateOverlayEventCall( wk->gsys,
           FS_OVERLAY_ID( event_gpower ), EVENT_GPowerEffectStart, &param );
     }
-    event = FVSEvent_EventStart( wk, call_event, EVWAIT_TMENU_ANM, (int)(BVCTMenu_GetWinWork( wk->tmenu, TMENU_ID_YESNO, TMENU_YN_YES )) );
+    event = FVSEvent_EventStart( wk, call_event, EVWAIT_TMENU_ANM, (int)(BVCTMenu_GetWinWork( wk->tmenu, TMENU_CYN_YES )) );
     wk->ctrl.g_power = GPOWER_ID_NULL;
     break;
   case EV_GPOWER_CHECK_TMENU_YN:
     call_event = GMEVENT_CreateOverlayEventCall( wk->gsys,
         FS_OVERLAY_ID( event_gpower), EVENT_GPowerEnableListCheck, wk->fieldWork );
-    event = FVSEvent_EventStart( wk, call_event, EVWAIT_TMENU_ANM, (int)(BVCTMenu_GetWinWork( wk->tmenu, TMENU_ID_YESNO, TMENU_YN_CHECK )) );
+    event = FVSEvent_EventStart( wk, call_event, EVWAIT_TMENU_ANM, (int)(BVCTMenu_GetWinWork( wk->tmenu, TMENU_CYN_CHECK )) );
     break;
   case EV_GPOWER_CHECK_TMENU_CHK:
     call_event = GMEVENT_CreateOverlayEventCall( wk->gsys,
         FS_OVERLAY_ID( event_gpower), EVENT_GPowerEnableListCheck, wk->fieldWork );
-    event = FVSEvent_EventStart( wk, call_event, EVWAIT_TMENU_ANM, (int)(BVCTMenu_GetWinWork( wk->tmenu, TMENU_ID_CHECK, TMENU_CHECK_CALL )) );
+    event = FVSEvent_EventStart( wk, call_event, EVWAIT_TMENU_ANM, (int)(BVCTMenu_GetWinWork( wk->tmenu, TMENU_CHECK_CALL )) );
     wk->gpower_check_req = FALSE;
     break;
   case EV_CALL_TALKMSG_INPUT:
@@ -210,27 +230,6 @@ GMEVENT* FVSEvent_CheckCommon( FMISSION_VIEW_PTR wk, BOOL bEvReqOK )
     event = FVSEvent_EventStart( wk, call_event, EVWAIT_MENU_ANM, MENU_HELLO );
     break;
   
-  case EV_FMISSION_START:
-    {
-      FMISSION_START_PARAM  param;
-
-      MI_CpuClear8(&param,sizeof(FMISSION_START_PARAM));
-      param.mission = wk->ctrl.mission;
-      param.succeed_f = TRUE;
-
-      call_event = GMEVENT_CreateOverlayEventCall( wk->gsys,
-          FS_OVERLAY_ID( event_fmission ), EVENT_FestMissionStart, &param );
-    }
-    event = FVSEvent_EventStart( wk, call_event, EVWAIT_TMENU_ANM, (int)(BVCTMenu_GetWinWork( wk->tmenu, TMENU_ID_YESNO, TMENU_YN_YES )) );
-    FEST_MISSION_Clear( &wk->ctrl.mission );
-    break;
-  
-  case EV_FMISSION_CHECK:
-    call_event = GMEVENT_CreateOverlayEventCall( wk->gsys,
-        FS_OVERLAY_ID( event_fmission), EVENT_FestMissionCheck, &wk->ctrl.mission );
-    event = FVSEvent_EventStart( wk, call_event, EVWAIT_TMENU_ANM, (int)(BVCTMenu_GetWinWork( wk->tmenu, TMENU_ID_YESNO, TMENU_YN_CHECK )) );
-    break;
-
 #ifdef PM_DEBUG
   //デバッグメニューコールリクエスト
   case EV_DEBUG_MENU_CALL:
@@ -298,6 +297,7 @@ static GMEVENT_RESULT event_EventStartMain(GMEVENT * event, int *  seq, void * w
   }
   if( ret ){
     wk->event_reserve_f = FALSE;
+    wk->event_reserve_exec = TRUE;
     GMEVENT_ChangeEvent( event, ev_wk->call_event );
   }
   return GMEVENT_RES_CONTINUE;
@@ -305,19 +305,17 @@ static GMEVENT_RESULT event_EventStartMain(GMEVENT * event, int *  seq, void * w
 
 static BOOL evsub_WaitTypeMenuAnime( FMISSION_VIEW_PTR wk, EVWK_EVENT_START* ev_wk )
 {
-#if 0
   switch( ev_wk->sub_seq ){
   case 0:
-    BeaconView_MenuBarViewSet( wk, ev_wk->param, MENU_ST_ANM );
+    FMissionView_MenuBarViewSet( wk, ev_wk->param, MENU_ST_ANM );
     ev_wk->sub_seq++;
     return FALSE;
   case 1:
-    if( BeaconView_MenuBarCheckAnm( wk, ev_wk->param )){
+    if( FMissionView_MenuBarCheckAnm( wk, ev_wk->param )){
       return FALSE;
     }
     break;
   }
-#endif
   return TRUE;
 }
 
@@ -913,9 +911,9 @@ static void act_NormalObjAdd( FMISSION_VIEW_PTR wk )
    { ACT_MENU_PX+ACT_MENU_OX*0 ,ACT_MENU_PY },
    { ACT_MENU_PX+ACT_MENU_OX*1 ,ACT_MENU_PY },
    { ACT_MENU_PX+ACT_MENU_OX*2 ,ACT_MENU_PY },
+   { ACT_INFO_PX ,ACT_INFO_PY },
    { ACT_UP_PX ,ACT_MENU_PY },
    { ACT_DOWN_PX ,ACT_MENU_PY },
-   { ACT_INFO_PX ,ACT_INFO_PY },
   };
 
   for(i = 0;i < ACT_MAX;i++){
@@ -928,14 +926,6 @@ static void act_NormalObjAdd( FMISSION_VIEW_PTR wk )
   
     GFL_CLACT_WK_SetDrawEnable( wk->pAct[ACT_POWER+i], TRUE );
   }
-#if 0
-  BVCAct_SetPosition( wk->pAct[ACT_POWER], ACT_MENU_PX+ACT_MENU_OX*1, ACT_MENU_PY );
-  BVCAct_SetPosition( wk->pAct[ACT_HELLO], ACT_MENU_PX+ACT_MENU_OX*2, ACT_MENU_PY );
-  BVCAct_SetPosition( wk->pAct[ACT_RETIRE], ACT_MENU_PX+ACT_MENU_OX*3, ACT_MENU_PY );
-  GFL_CLACT_WK_SetDrawEnable( wk->pAct[ACT_UP], FALSE );
-  GFL_CLACT_WK_SetDrawEnable( wk->pAct[ACT_DOWN], FALSE );
-  GFL_CLACT_WK_SetDrawEnable( wk->pAct[ACT_INFO], FALSE );
-#endif
 }
 
 /*

@@ -169,11 +169,11 @@ static BOOL log_MakeLogFromBeacon( FMISSION_LOG* p_log, const GAMEBEACON_INFO *i
 
   if( info->action.action_no == GAMEBEACON_ACTION_FMISSION_FREEWORD ){
     //EOMž‚Ý
-    GFL_STD_MemCopy16( info->action.freeword_message, p_log->str, GAMEBEACON_FREEWORD_MESSAGE_LEN);
+    GFL_STD_MemCopy16( info->action.freeword_message, p_log->str, GAMEBEACON_FREEWORD_MESSAGE_LEN*sizeof(STRCODE));
     p_log->param = 0;
   }else if( info->action.action_no == GAMEBEACON_ACTION_FMISSION_POKE_DOWN ){
     //EOMž‚Ý
-    GFL_STD_MemCopy16( info->action.normal.nickname, p_log->str, MONS_NAME_SIZE);
+    GFL_STD_MemCopy16( info->action.normal.nickname, p_log->str, MONS_NAME_SIZE*sizeof(STRCODE));
     p_log->param = 0;
   }else if( action == FMISSION_LOG_ACT_MAP_CHANGE){
     p_log->param = info->townmap_root_zone_id;

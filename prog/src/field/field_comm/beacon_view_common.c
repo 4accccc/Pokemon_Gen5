@@ -9,8 +9,10 @@
 #include "system/main.h"
 #include "system/bmp_oam.h"
 #include "gamesystem/gamesystem.h"
-#include "field/field_subscreen.h"
 #include "gamesystem/game_beacon.h"
+#include "gamesystem/game_beacon_accessor.h"
+#include "field/field_subscreen.h"
+#include "sound/pm_sndsys.h"
 #include "infowin/infowin.h"
 #include "app_menu_common.naix"
 #include "arc_def.h"
@@ -20,21 +22,28 @@
 #include "message.naix"
 
 #include "field/research_team_def.h"
-#include "beacon_status.naix"
-#include "wifi_unionobj.naix"
-#include "beacon_view_local.h"
+//#include "beacon_status.naix"
+//#include "wifi_unionobj.naix"
+//#include "beacon_view_local.h"
 #include "beacon_view_common.h"
+#include "msg/msg_beacon_view_common.h"
 #include "msg/msg_beacon_status.h"
 
-#include "arc/wifi_unionobj_plt.cdat"
+//#include "arc/wifi_unionobj_plt.cdat"
 
 //タスクメニュー位置
 #define TMENU_PY (21)
 #define TMENU_W  (8)
 #define TMENU_H  (APP_TASKMENU_PLATE_HEIGHT)
 
-#define TMENU_YN_PX (8)
-#define TMENU_CHECK_PX (16)
+#define TMENU_ITEM3_PX (8)
+#define TMENU_ITEM2_PX (16)
+
+typedef struct TMENU_INIT_PARAM{
+ u8 max;
+ u8 px;
+ u8 str_id[TMENU_ITEM_MAX];
+}TMENU_INIT_PARAM;
 
 //=====================================================================
 //三角形の当たり判定
@@ -144,22 +153,20 @@ BVC_TMENU_WORK* BVCTMenu_Init( u8 frame, u8 plt, GFL_FONT *fontHandle, PRINT_QUE
   wk->heapID = heapID;
 	
   msg = GFL_MSG_Create(
-		GFL_MSG_LOAD_FAST, ARCID_MESSAGE, NARC_message_beacon_status_dat, GFL_HEAP_LOWID(heapID) );
+		GFL_MSG_LOAD_FAST, ARCID_MESSAGE, NARC_message_beacon_view_common_dat, GFL_HEAP_LOWID(heapID) );
 
   wk->menuRes = APP_TASKMENU_RES_Create( frame, plt, fontHandle, printQue, heapID );
 
+  for( i = 0; i < TMENU_STR_MAX;i++){
+    wk->str[i] = GFL_MSG_CreateString( msg, msg_bvc_tmenu_01+i ); //メニューに表示する文字列
+  
+  }
   //アイテム初期化
-  for( i = 0;i < TMENU_YN_MAX;i++){
-    wk->tmenu[i].item.str      = GFL_MSG_CreateString( msg, msg_sys_tmenu_yesno_01+i ); //メニューに表示する文字列
+  for( i = 0;i < TMENU_ITEM_MAX;i++){
+    wk->tmenu[i].item.str      = NULL;
     wk->tmenu[i].item.msgColor = APP_TASKMENU_ITEM_MSGCOLOR;   //文字色。デフォルトでよいならばAPP_TASKMENU_ITEM_MSGCOLOR
     wk->tmenu[i].item.type     = APP_TASKMENU_WIN_TYPE_NORMAL; //戻るマークの表示
     wk->tmenu[i].work = NULL;
-  }
-  for( i = 0;i < TMENU_CHECK_MAX;i++){
-    wk->tmenu_check[i].item.str      = GFL_MSG_CreateString( msg, msg_sys_tmenu_check_01+i ); //メニューに表示する文字列
-    wk->tmenu_check[i].item.msgColor = APP_TASKMENU_ITEM_MSGCOLOR;   //文字色。デフォルトでよいならばAPP_TASKMENU_ITEM_MSGCOLOR
-    wk->tmenu_check[i].item.type     = APP_TASKMENU_WIN_TYPE_NORMAL; //戻るマークの表示
-    wk->tmenu_check[i].work = NULL;
   }
   GFL_MSG_Delete( msg );
  
@@ -175,17 +182,13 @@ void BVCTMenu_Release( BVC_TMENU_WORK* wk )
 {
   int i;
 
-  for( i = 0;i < TMENU_CHECK_MAX; i++){
-    if( wk->tmenu_check[i].work != NULL ){
-      APP_TASKMENU_WIN_Delete( wk->tmenu_check[i].work );
-    }
-    GFL_STR_DeleteBuffer( wk->tmenu_check[i].item.str );
-  }
-  for( i = 0;i < TMENU_YN_MAX; i++){
+  for( i = 0;i < TMENU_ITEM_MAX; i++){
     if( wk->tmenu[i].work != NULL ){
       APP_TASKMENU_WIN_Delete( wk->tmenu[i].work );
     }
-    GFL_STR_DeleteBuffer( wk->tmenu[i].item.str );
+  }
+  for( i = 0;i < TMENU_STR_MAX;i++){
+    GFL_STR_DeleteBuffer( wk->str[i] );
   }
   APP_TASKMENU_RES_Delete( wk->menuRes );
   
@@ -197,23 +200,23 @@ void BVCTMenu_Release( BVC_TMENU_WORK* wk )
  *  @brief  TaskMenu YesNo生成
  */
 //---------------------------------------------------------------
-void BVCTMenu_Create( BVC_TMENU_WORK* wk, u8 menu_idx )
+void BVCTMenu_Create( BVC_TMENU_WORK* wk, u8 menu_id )
 {
-  int i,max,px;
-  TMENU_ITEM* tmenu;
+  int i;
 
-  if( menu_idx == TMENU_ID_YESNO ){
-    tmenu = wk->tmenu;
-    max = TMENU_YN_MAX;
-    px = TMENU_YN_PX;
-  }else{
-    tmenu = wk->tmenu_check;
-    max = TMENU_CHECK_MAX;
-    px = TMENU_CHECK_PX;
-  }
-  for( i = 0;i < max;i++){
-    tmenu[i].work = APP_TASKMENU_WIN_CreateEx( wk->menuRes, &tmenu[i].item, 
-                        px+TMENU_W*i, TMENU_PY, TMENU_W, TMENU_H, TRUE, FALSE , wk->heapID );
+  static const TMENU_INIT_PARAM prm[TMENU_ID_MAX] = {
+    { 3, TMENU_ITEM3_PX, { TMENU_STR_CHECK, TMENU_STR_YES, TMENU_STR_NO } }, //CYN
+    { 2, TMENU_ITEM2_PX, { TMENU_STR_YES, TMENU_STR_NO } }, //YN
+    { 2, TMENU_ITEM2_PX, { TMENU_STR_CHECK, TMENU_STR_CLOSE } }, //CHECK
+  };
+
+  wk->c_id = menu_id;
+  wk->c_max = prm[ wk->c_id ].max;
+
+  for( i = 0;i < wk->c_max; i++ ){
+    wk->tmenu[i].item.str = wk->str[ prm[wk->c_id].str_id[i] ];
+    wk->tmenu[i].work = APP_TASKMENU_WIN_CreateEx( wk->menuRes, &wk->tmenu[i].item, 
+                        prm[wk->c_id].px+TMENU_W*i, TMENU_PY, TMENU_W, TMENU_H, TRUE, FALSE , wk->heapID );
   }
 }
 
@@ -222,49 +225,36 @@ void BVCTMenu_Create( BVC_TMENU_WORK* wk, u8 menu_idx )
  *  @brief  TaskMenu ウィンドウワークを取得する
  */
 //---------------------------------------------------------------
-APP_TASKMENU_WIN_WORK* BVCTMenu_GetWinWork( BVC_TMENU_WORK* wk, u8 menu_idx, u8 id )
+APP_TASKMENU_WIN_WORK* BVCTMenu_GetWinWork( BVC_TMENU_WORK* wk, u8 select )
 {
-  if( menu_idx == TMENU_ID_YESNO ){
-    return wk->tmenu[id].work;
-  }else{
-    return wk->tmenu_check[id].work;
-  }
+  return wk->tmenu[select].work;
 }
 
 /*
  *  @brief  TaskMenu アップデート
  */
-int BVCTMenu_Update( BVC_TMENU_WORK* wk,u8 menu_idx )
+int BVCTMenu_Update( BVC_TMENU_WORK* wk )
 {
-  int i,max,ret = -1;
-  TMENU_ITEM* tmenu;
+  int i,ret = -1;
 
-  if( menu_idx == TMENU_ID_YESNO ){
-    tmenu = wk->tmenu;
-    max = TMENU_YN_MAX;
-  }else{
-    tmenu = wk->tmenu_check;
-    max = TMENU_CHECK_MAX;
-  }
-
-  for( i = 0;i < max;i++){
+  for( i = 0; i < wk->c_max; i++ ){
     //まだ書き込み中
-    if( APP_TASKMENU_WIN_IsUpdateMsg( tmenu[i].work ) == TRUE){
-      APP_TASKMENU_WIN_Update( tmenu[i].work );
+    if( APP_TASKMENU_WIN_IsUpdateMsg( wk->tmenu[i].work ) == TRUE){
+      APP_TASKMENU_WIN_Update( wk->tmenu[i].work );
       return ret;
     }
   }
-  for( i = 0;i < max;i++){
-    if( APP_TASKMENU_WIN_IsTrg( tmenu[i].work )){
-      if(i < (max-1)){
-        BVCSound_PlaySE( BVIEW_SE_DECIDE );
+  for( i = 0; i < wk->c_max; i++ ){
+    if( APP_TASKMENU_WIN_IsTrg( wk->tmenu[i].work )){
+      if(i < (wk->c_max-1)){
+        BVCSound_PlaySE( SEQ_SE_DECIDE1 );
       }else{
-        APP_TASKMENU_WIN_SetDecide( tmenu[i].work, TRUE );
-        BVCSound_PlaySE( BVIEW_SE_DECIDE );
+        APP_TASKMENU_WIN_SetDecide( wk->tmenu[i].work, TRUE );
+        BVCSound_PlaySE( SEQ_SE_DECIDE1 );
       }
       ret = i;
     }
-    APP_TASKMENU_WIN_Update( tmenu[i].work );
+    APP_TASKMENU_WIN_Update( wk->tmenu[i].work );
   }
   return ret;
 }
@@ -272,14 +262,14 @@ int BVCTMenu_Update( BVC_TMENU_WORK* wk,u8 menu_idx )
 /*
  *  @brief  TaskMenu 終了アニメ待ち
  */
-BOOL BVCTMenu_YnEndWait( BVC_TMENU_WORK* wk, u8 select )
+BOOL BVCTMenu_EndWait( BVC_TMENU_WORK* wk, u8 select )
 {
   int i;
 
   APP_TASKMENU_WIN_Update( wk->tmenu[select].work );
 
   if( APP_TASKMENU_WIN_IsFinish( wk->tmenu[select].work )){
-    for( i = 0;i < TMENU_YN_MAX;i++){
+    for( i = 0;i < wk->c_max; i++){
       APP_TASKMENU_WIN_Delete( wk->tmenu[i].work );
       wk->tmenu[i].work = NULL;
     }
@@ -291,55 +281,25 @@ BOOL BVCTMenu_YnEndWait( BVC_TMENU_WORK* wk, u8 select )
 /*
  *  @brief  TaskMenu 終了
  */
-void BVCTMenu_YnEnd( BVC_TMENU_WORK* wk )
+void BVCTMenu_End( BVC_TMENU_WORK* wk )
 {
   int i;
 
-  for( i = 0;i < TMENU_YN_MAX;i++){
+  for( i = 0;i < wk->c_max; i++){
     APP_TASKMENU_WIN_Delete( wk->tmenu[i].work );
     wk->tmenu[i].work = NULL;
+    wk->tmenu[i].item.str = NULL;
   }
+  wk->c_id = 0;
+  wk->c_max = 0;
 }
-
-/*
- *  @brief  TaskMenu Gパワー確認ダイアログ終了アニメ待ち
- */
-BOOL BVCTMenu_CheckEndWait( BVC_TMENU_WORK* wk, u8 select )
-{
-  int i;
-
-  APP_TASKMENU_WIN_Update( wk->tmenu_check[select].work );
-
-  if( APP_TASKMENU_WIN_IsFinish( wk->tmenu_check[select].work )){
-    for( i = 0;i < TMENU_CHECK_MAX;i++){
-      APP_TASKMENU_WIN_Delete( wk->tmenu_check[i].work );
-      wk->tmenu_check[i].work = NULL;
-    }
-    return TRUE;
-  }
-  return FALSE;
-}
-
-/*
- *  @brief  TaskMenu 終了
- */
-void BVCTMenu_CheckEnd( BVC_TMENU_WORK* wk )
-{
-  int i;
-
-  for( i = 0;i < TMENU_CHECK_MAX;i++){
-    APP_TASKMENU_WIN_Delete( wk->tmenu_check[i].work );
-    wk->tmenu_check[i].work = NULL;
-  }
-}
-
 
 //------------------------------------------------------------
 /*
  *  @brief  ポップアップ　タイムウェイトチェック
  */
 //------------------------------------------------------------
-BOOL BVCPrint_PopupWindowTimeWaitCheck( u8* p_wait )
+BOOL BVCPrint_PopupWindowTimeWaitCheck( u8* p_wait, u8 frame )
 {
   u32 x,y;
   u16 pat = 0xFFFE; 
@@ -352,7 +312,7 @@ BOOL BVCPrint_PopupWindowTimeWaitCheck( u8* p_wait )
   //タッチチェック
   if( GFL_UI_TP_GetPointTrg( &x, &y )){
     //スクロールのため、スクリーンが実座標+64dotの位置にあるので、ちょっと位置補正してチェック
-    if( GFL_BG_CheckDot( FRM_POPUP, x, y+64, &pat )){
+    if( GFL_BG_CheckDot( frame, x, y+64, &pat )){
       *p_wait = 0;
       return TRUE; 
     }

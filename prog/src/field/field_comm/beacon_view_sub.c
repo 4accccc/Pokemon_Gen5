@@ -947,9 +947,7 @@ static void draw_MenuIconVisibleSet( BEACON_VIEW_PTR wk, BOOL visible_f )
   GFL_CLACT_WK_SetDrawEnable( wk->pAct[ACT_POWER], visible_f );
   GFL_CLACT_WK_SetDrawEnable( wk->pAct[ACT_HELLO], visible_f );
   GFL_CLACT_WK_SetDrawEnable( wk->pAct[ACT_RETURN], visible_f );
-  if( wk->mode == VIEW_MODE_NORMAL ){
-    GFL_CLACT_WK_SetDrawEnable( wk->pAct[ACT_THANKS], visible_f );
-  }
+  GFL_CLACT_WK_SetDrawEnable( wk->pAct[ACT_THANKS], visible_f );
 }
 
 
@@ -1669,7 +1667,7 @@ static void tcb_WinPopup( GFL_TCBL *tcb , void* tcb_wk)
     twk->seq++;
     return;
   case 2:
-    if( BVCPrint_PopupWindowTimeWaitCheck( &twk->wait ) == FALSE ){
+    if( BVCPrint_PopupWindowTimeWaitCheck( &twk->wait, FRM_POPUP ) == FALSE ){
       return;
     }
     BVCTaskAdd_MsgUpdown( twk->bvp->pTcbSys, FRM_POPUP, SCROLL_DOWN, &twk->child_task );
@@ -1827,31 +1825,31 @@ static void tcb_WinGPowerYesNo( GFL_TCBL *tcb , void* tcb_wk)
     return;
   case 2:
     BVC_PrintQueLimmitUpSet( bvp->printQue, TRUE );
-    BVCTMenu_Create( bvp->tmenu, TMENU_ID_YESNO );
+    BVCTMenu_Create( bvp->tmenu, TMENU_ID_CYN );
     draw_ClearMenuWindow( bvp );
     draw_MenuIconVisibleSet( bvp, FALSE );
     twk->seq++;
     return;
   case 3: //選択待ち
     {
-      int ret = BVCTMenu_Update( bvp->tmenu, TMENU_ID_YESNO );
+      int ret = BVCTMenu_Update( bvp->tmenu );
       if( ret < 0 ){
         return;
       }
       twk->ret = ret;
 
       switch( twk->ret){
-      case TMENU_YN_CHECK:
+      case TMENU_CYN_CHECK:
         BVSEvent_Reserve( bvp, EV_GPOWER_CHECK_TMENU_YN );
         twk->seq = 3;
         break;
-      case TMENU_YN_YES:
+      case TMENU_CYN_YES:
         //使うGパワーを覚えておく
         bvp->ctrl.g_power = twk->g_power;
         BVSEvent_Reserve( bvp, EV_GPOWER_USE );
         twk->seq = 4;
         break;
-      case TMENU_YN_NO:
+      case TMENU_CYN_NO:
         twk->seq = 5;
         break;
       }
@@ -1864,12 +1862,12 @@ static void tcb_WinGPowerYesNo( GFL_TCBL *tcb , void* tcb_wk)
       twk->seq = 3;
     }else{
       //正常に使えていれば、メニューを終了させる
-      BVCTMenu_YnEnd( bvp->tmenu );
+      BVCTMenu_End( bvp->tmenu );
       twk->seq = 6;
     }
     return;
   case 5: //キャンセル決定アニメ待ち
-    if( BVCTMenu_YnEndWait( bvp->tmenu, twk->ret )){
+    if( BVCTMenu_EndWait( bvp->tmenu, twk->ret )){
       twk->seq++;
     }
     return;
@@ -1923,7 +1921,7 @@ static void tcb_WinGPowerCheck( GFL_TCBL *tcb , void* tcb_wk)
     return;
   case 4: //選択待ち
     {
-      int ret = BVCTMenu_Update( bvp->tmenu, TMENU_ID_CHECK );
+      int ret = BVCTMenu_Update( bvp->tmenu );
       if( ret < 0 ){
         return;
       }
@@ -1941,12 +1939,12 @@ static void tcb_WinGPowerCheck( GFL_TCBL *tcb , void* tcb_wk)
     if( bvp->gpower_check_req ){
       twk->seq = 4; //途中キャンセルされていたら、選択しなおし
     }else{
-      BVCTMenu_CheckEnd( bvp->tmenu );
+      BVCTMenu_End( bvp->tmenu );
       twk->seq = 7; //実行されていればメニュー削除
     }
     return;
   case 6: //決定アニメ待ち
-    if( BVCTMenu_CheckEndWait( bvp->tmenu, twk->ret )){
+    if( BVCTMenu_EndWait( bvp->tmenu, twk->ret )){
       twk->seq++;
     }
     return;
@@ -2071,33 +2069,33 @@ static void tcb_WinFMissionEntryCheck( GFL_TCBL *tcb , void* tcb_wk)
     return;
   case 2:
     BVC_PrintQueLimmitUpSet( bvp->printQue, TRUE );
-    BVCTMenu_Create( bvp->tmenu, TMENU_ID_YESNO );
+    BVCTMenu_Create( bvp->tmenu, TMENU_ID_CYN );
     draw_ClearMenuWindow( bvp );
     draw_MenuIconVisibleSet( bvp, FALSE );
     twk->seq++;
     return;
   case 3: //選択待ち
     {
-      int ret = BVCTMenu_Update( bvp->tmenu, TMENU_ID_YESNO );
+      int ret = BVCTMenu_Update( bvp->tmenu );
       if( ret < 0 ){
         return;
       }
       twk->ret = ret;
 
       switch( twk->ret){
-      case TMENU_YN_CHECK:
+      case TMENU_CYN_CHECK:
         //ミッション内容を覚えておく
         bvp->ctrl.mission = twk->mission;
         BVSEvent_Reserve( bvp, EV_FMISSION_CHECK );
         twk->seq = 3;
         break;
-      case TMENU_YN_YES:
+      case TMENU_CYN_YES:
         //ミッション内容を覚えておく
         bvp->ctrl.mission = twk->mission;
         BVSEvent_Reserve( bvp, EV_FMISSION_START );
         twk->seq = 4;
         break;
-      case TMENU_YN_NO:
+      case TMENU_CYN_NO:
         //無視ミッション登録しておく
         LINK_FESTIVAL_EgnoreLogStore( bvp->fest_sys, (const FEST_MISSION*)&twk->mission);
         twk->seq = 5;
@@ -2112,12 +2110,12 @@ static void tcb_WinFMissionEntryCheck( GFL_TCBL *tcb , void* tcb_wk)
       twk->seq = 3;
     }else{
       //正常に使えていれば、メニューを終了させる
-      BVCTMenu_YnEnd( bvp->tmenu );
+      BVCTMenu_End( bvp->tmenu );
       twk->seq = 6;
     }
     return;
   case 5: //キャンセル決定アニメ待ち
-    if( BVCTMenu_YnEndWait( bvp->tmenu, twk->ret )){
+    if( BVCTMenu_EndWait( bvp->tmenu, twk->ret )){
       twk->seq++;
     }
     return;
