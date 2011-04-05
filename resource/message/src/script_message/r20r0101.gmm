@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-07-15T19:04:53"/>
+	<create user="matsumiya" host="W00224" date="2011-04-05T12:43:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1299" top="159" right="2004" bottom="787" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,11 +292,25 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_r20r0101_infomationw_01">
+		<comment>♀</comment>
+		<attribute name="キャラ指定">INFORMATIONW
+受付嬢</attribute>
+		<language name="JPN" width="256">こんにちは！　ヒウンシティいきの
+ふねは　タチワキシティから　でてます</language>
+		<language name="JPN_KANJI" width="256">こんにちは！　ヒウンシティ行きの
+船は　タチワキシティから　出航です</language>
+	</row>
+
+	<row id="msg_r20r0101_trainerm_01">
+		<comment>♂
+・？？？？？＝
+　c13ジム攻略に有効なポケモン</comment>
+		<attribute name="キャラ指定">TRAINERM</attribute>
+		<language name="JPN" width="256">ちょいと　コンビナートで
+？？？？？でも　つかまえるかな！</language>
+		<language name="JPN_KANJI" width="256">ちょいと　コンビナートで
+？？？？？でも　捕まえるかな！</language>
 	</row>
 
 	<flowchart-group-list>
