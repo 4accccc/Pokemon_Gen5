@@ -53,6 +53,8 @@ WBTLIST_PARAM * WBTLIST_PARAM_Create( HEAPID heapID, GAMESYS_WORK * gsys )
   wbtlist_param->gamesys = gsys;
   wbtlist_param->stage = WBTLIST_STAGE_ENTRY;
 
+  wbtlist_param->tournament_name = GFL_STR_CreateBuffer( BUFLEN_TOURNAMENT_NAME, heapID );
+  wbtlist_param->tournament_rule = GFL_STR_CreateBuffer( BUFLEN_TOURNAMENT_NAME, heapID );
   //トレーナー情報の初期化
   for ( i = 0; i < WBT_TRAINER_NUM; i ++ )
   {
@@ -81,6 +83,8 @@ void WBTLIST_PARAM_Delete( WBTLIST_PARAM * wbtlist_param )
     WBTLIST_TRAINER * wbtlist_tr = &wbtlist_param->trainer[i];
     GFL_STR_DeleteBuffer( wbtlist_tr->name );
   }
+  GFL_STR_DeleteBuffer( wbtlist_param->tournament_name );
+  GFL_STR_DeleteBuffer( wbtlist_param->tournament_rule );
   GFL_HEAP_FreeMemory( wbtlist_param );
   TAMADA_Printf("WBTLIST_PARAM:Delete:%08x\n", wbtlist_param );
 }
@@ -97,6 +101,9 @@ void WBTLIST_PARAM_Delete( WBTLIST_PARAM * wbtlist_param )
 //============================================================================================
 typedef struct {
   GAMESYS_WORK * gsys;
+  WBTTYPE type;
+  WBTRULE rule;
+  u8 select_dl_data;
   WBTLIST_STAGE stage;
   HEAPID heapID;
   u64 seed64;
@@ -115,7 +122,7 @@ static void WBTLIST_PARAM_Setup( const SETUP_WORK * setup, WBTLIST_PARAM * wbtli
     u16 wbt_trid = setup->wbt_trid[ i ];
     if ( wbt_trid == 0xffff )
     {
-      setupWBTLISTPlayer(&wbtlist_param->trainer[i], setup->heapID, gamedata );
+      setupWBTLISTPlayer( &wbtlist_param->trainer[i], setup->heapID, gamedata );
     }
     else
     {
@@ -129,6 +136,8 @@ static void WBTLIST_PARAM_Setup( const SETUP_WORK * setup, WBTLIST_PARAM * wbtli
   }
 
   wbtlist_param->stage = setup->stage;
+  WBTTOOL_SetTournamentName( setup->type, wbtlist_param->tournament_name );
+  WBTTOOL_SetRuleName( setup->rule, wbtlist_param->tournament_rule );
 }
 
 
@@ -141,6 +150,9 @@ void WBTLIST_PARAM_Setup_Debug( WBTLIST_PARAM * wbtlist_param, WBTLIST_STAGE sta
   HEAPID heapID = HEAPID_FIELDMAP;
 
   setup.gsys = gsys;
+  setup.type = WBTTYPE_ALL;
+  setup.rule = WBTRULE_SINGLE;
+  setup.select_dl_data = 0;
   setup.stage = stage;
   setup.heapID = HEAPID_FIELDMAP;
   {
@@ -267,7 +279,7 @@ enum {
 };
 //------------------------------------------------------------------
 /**
- * @todo  プレイヤーについてのMSG判定が必要
+ * @brief 対戦結果の生成処理
  */
 //------------------------------------------------------------------
 static void setupWBTLISTResult( WBTLIST_RESULT * result,

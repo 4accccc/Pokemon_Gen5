@@ -25,7 +25,7 @@
 //============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-
+#define BUFLEN_TOURNAMENT_NAME  ( (16 * GLOBAL_MSGLEN) + BUFLEN_EOM_SIZE )
 //------------------------------------------------------------------
 ///トーナメントの種類
 //------------------------------------------------------------------
@@ -56,6 +56,14 @@ typedef enum {
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
+typedef enum {
+  WBT_TRTYPE_ROM = 0, ///<ロムに存在するトレーナー
+  WBT_TRTYPE_DL,      ///<ダウンロードデータのトレーナー
+  WBT_TRTYPE_SAVE,    ///<WB（データ引継ぎ）のトレーナー
+  WBT_TRTYPE_PLAYER,  ///<プレイヤー
+}WBT_TRTYPE;
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 enum {
   WBT_DOWNLOAD_NUMBER = 3,
 };
@@ -75,6 +83,14 @@ extern u8 WBTSYS_GetSelectDLData( const WBTSYS * wbtsys );
 extern void WBTSYS_SetScriptAnswerWork( WBTSYS * wbtsys, u16 * scr_answer_work );
 //============================================================================================
 //============================================================================================
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+extern void WBTTOOL_SetTournamentName( WBTTYPE type, STRBUF * strbuf );
+extern void WBTTOOL_SetRuleName( WBTRULE rule, STRBUF * strbuf );
+extern void WBTTOOL_SetEnemyTrainerName( WBTSYS * wbtsys, STRBUF * strbuf );
+extern u8 WBTTOOL_GetEnemyTrainerSex( WBTSYS * wbtsys );
+extern u16 WBTTOOL_GetEnemyTrainerMMdlCode( WBTSYS * wbtsys );
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 extern void WBTSYS_SetupPokeListData( WBTSYS * wbtsys, GAMEDATA * gamedata, PLIST_DATA * plist_data );

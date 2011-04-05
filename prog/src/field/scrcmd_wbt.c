@@ -36,6 +36,8 @@
 
 
 #include "system/main.h"
+#include "arc/message.naix"
+#include "msg/msg_wbt_system.h"
 
 #include "app/wbt_list.h"
 //======================================================================
@@ -359,13 +361,43 @@ VMCMD_RESULT EvCmdWBTAnnounce( VMHANDLE * core, void * wk )
   TAMADA_Printf("EvCmdWBTAnnounce\n");
   return VMCMD_RESULT_SUSPEND;
 }
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static void wordsetRegisterArc( SCRCMD_WORK * work, u32 bufID, u32 arc_id, u32 msg_id )
+{
+  SCRIPT_WORK*      sc = SCRCMD_WORK_GetScriptWork( work );
+  WORDSET*     wordset = SCRIPT_GetWordSet( sc );
+  HEAPID        heapID = SCRCMD_WORK_GetHeapID( work );
+  GFL_MSGDATA     *man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, arc_id, heapID );
+  if( man )
+  {
+    STRBUF * strbuf = SCRIPT_GetMsgTempBuffer( sc );
+    GFL_MSG_GetString( man, msg_id, strbuf );
+    WORDSET_RegisterWord( wordset, bufID, strbuf, PM_NEUTRAL, TRUE, PM_LANG );
+    GFL_MSG_Delete( man );
+  }
+}
+
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdWBTSetTournamentName( VMHANDLE * core, void * wk )
 {
+  SCRCMD_WORK*    work = wk;
+  SCRIPT_WORK*      sc = SCRCMD_WORK_GetScriptWork( work );
+  WORDSET*     wordset = SCRIPT_GetWordSet( sc );
   WBTSYS * wbtsys = getWBTSys( wk );
   u8 idx = VMGetU8(core);
+  WBTTYPE wbttype;
+  u16 msg_id;
+
   TAMADA_Printf("EvCmdWBTSetTournamentName\n");
+  wbttype = WBTSYS_GetType(wbtsys);
+  {
+    STRBUF * strbuf = SCRIPT_GetMsgTempBuffer( sc );
+    WBTTOOL_SetTournamentName( wbttype, strbuf );
+    WORDSET_RegisterWord( wordset, idx, strbuf, PM_NEUTRAL, TRUE, PM_LANG );
+  }
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -373,9 +405,18 @@ VMCMD_RESULT EvCmdWBTSetTournamentName( VMHANDLE * core, void * wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdWBTSetEnemyName( VMHANDLE * core, void * wk )
 {
+  SCRCMD_WORK*    work = wk;
+  SCRIPT_WORK*      sc = SCRCMD_WORK_GetScriptWork( work );
+  WORDSET*     wordset = SCRIPT_GetWordSet( sc );
   WBTSYS * wbtsys = getWBTSys( wk );
   u8 idx = VMGetU8(core);
   TAMADA_Printf("EvCmdWBTSetEnemyName\n");
+  {
+    u8 sex = WBTTOOL_GetEnemyTrainerSex( wbtsys );
+    STRBUF * strbuf = SCRIPT_GetMsgTempBuffer( sc );
+    WBTTOOL_SetEnemyTrainerName( wbtsys, strbuf );
+    WORDSET_RegisterWord( wordset, idx, strbuf, sex, TRUE, PM_LANG );
+  }
   return VMCMD_RESULT_CONTINUE;
 }
 

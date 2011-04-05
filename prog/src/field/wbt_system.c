@@ -20,7 +20,10 @@
 //#include "arc/fieldmap/fldmmdl_mdlres.naix"
 
 //#include "msg/msg_wbt_tournament.h"
-//#include "arc/message.naix"
+
+#include "system/main.h"
+#include "arc/message.naix"
+#include "msg/msg_wbt_system.h"
 
 #include "wbt_system_local.h"
 
@@ -96,8 +99,123 @@ void WBTSYS_SetScriptAnswerWork( WBTSYS * wbtsys, u16 * scr_answer_work )
 {
   wbtsys->scr_answer_work = scr_answer_work;
 }
+
+
 //============================================================================================
+//
+//
+//
 //============================================================================================
+//------------------------------------------------------------------
+/**
+ * @todo  ダウンロードデータへの対応（引数がWBTSYSになる）
+ */
+//------------------------------------------------------------------
+void WBTTOOL_SetTournamentName( WBTTYPE type, STRBUF * strbuf )
+{
+  HEAPID heapID = HEAPID_FIELDMAP;
+  GFL_MSGDATA     *man;
+  u16 msg_id;
+
+  switch ( type )
+  {
+  default:
+  case WBTTYPE_DOWNLOAD:
+    //仮：ダウンロードタイトル名には未対応
+  case WBTTYPE_NULL:
+    GF_ASSERT(0);
+    /* FALL THROUGH */
+  case WBTTYPE_ALL:
+    msg_id = msg_wbtsys_title_01;
+    break;
+  case WBTTYPE_CHAMPION:
+    msg_id = msg_wbtsys_title_03;
+    break;
+  case WBTTYPE_POKETYPE:
+    msg_id = msg_wbtsys_title_02;
+    break;
+  }
+  man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_wbt_system_dat, heapID );
+  if( man )
+  {
+    GFL_MSG_GetString( man, msg_id, strbuf );
+    GFL_MSG_Delete( man );
+  }
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief WBTルール名の取得
+ */
+//------------------------------------------------------------------
+void WBTTOOL_SetRuleName( WBTRULE rule, STRBUF * strbuf )
+{
+  HEAPID heapID = HEAPID_FIELDMAP;
+  GFL_MSGDATA     *man;
+  u16 msg_id;
+  switch ( rule )
+  {
+  case WBTRULE_NULL:
+    GF_ASSERT( 0 );
+    /* FALL THROUGH */
+  case WBTRULE_SINGLE:
+    msg_id = msg_wbtsys_rule_single;
+    break;
+  case WBTRULE_DOUBLE:
+    msg_id = msg_wbtsys_rule_double;
+    break;
+  case WBTRULE_TRIPLE:
+    msg_id = msg_wbtsys_rule_triple;
+    break;
+  case WBTRULE_ROTATION:
+    msg_id = msg_wbtsys_rule_rotation;
+    break;
+  }
+  man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_wbt_system_dat, heapID );
+  if( man )
+  {
+    GFL_MSG_GetString( man, msg_id, strbuf );
+    GFL_MSG_Delete( man );
+  }
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+u8 WBTTOOL_GetEnemyTrainerSex( WBTSYS * wbtsys )
+{
+  return PM_MALE; //仮
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+u16 WBTTOOL_GetEnemyTrainerMMdlCode( WBTSYS * wbtsys )
+{
+  return LEADER7; //仮
+}
+//------------------------------------------------------------------
+/**
+ * @todo  ダウンロードデータへの対応
+ */
+//------------------------------------------------------------------
+void WBTTOOL_SetEnemyTrainerName( WBTSYS * wbtsys, STRBUF * strbuf )
+{
+  if ( wbtsys->type == WBTTYPE_DOWNLOAD 
+      || wbtsys->type == WBTTYPE_NULL )
+  {
+  }
+  else
+  {
+    HEAPID heapID = wbtsys->heapID;
+    GFL_MSGDATA     *man;
+    u16 msg_id = 13; //仮・本当は進行状況から判断する
+    man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_wbt_trname_dat, heapID );
+    if( man )
+    {
+      GFL_MSG_GetString( man, msg_id, strbuf );
+      GFL_MSG_Delete( man );
+    }
+  }
+}
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 const REGULATION * WBTSYS_GetRegulation( WBTSYS * wbtsys )

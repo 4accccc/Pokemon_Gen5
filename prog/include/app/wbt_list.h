@@ -77,5 +77,7 @@ typedef struct
   WBTLIST_TRAINER trainer[ WBT_TRAINER_NUM ];
   WBTLIST_RESULT  first_stage[4];
   WBTLIST_RESULT  second_stage[2];
+  STRBUF * tournament_name;
+  STRBUF * tournament_rule;
 }WBTLIST_PARAM;
 
