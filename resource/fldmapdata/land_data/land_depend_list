@@ -642,6 +642,7 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/m_dun2802_00_01.3dppack \
 	$(DIR_OUTPUT)/m_dun2901_00_01.3dppack \
 	$(DIR_OUTPUT)/m_dun0706_00_00.3dppack \
+	$(DIR_OUTPUT)/m_dun3401_00_00.3dppack \
 	$(DIR_OUTPUT)/m_ruin01_00_00.3dppack \
 	$(DIR_OUTPUT)/m_gate01_00_00.3dppack \
 	$(DIR_OUTPUT)/m_pc01_00_00.3dppack \

@@ -5,6 +5,6 @@
 #define _C16R0401_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_C16R0401  (1)
+#define SCRID_C16R0401 (1)
 
 #endif //_C16R0401_DEF_H_

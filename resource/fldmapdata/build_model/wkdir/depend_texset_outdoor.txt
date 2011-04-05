@@ -617,7 +617,20 @@ DEP_TEXSET_IMD_OUTDOOR013 = \
 	$(SRCDIR)/door_normal01.imd \
 	$(SRCDIR)/door_normal02.imd \
 	$(SRCDIR)/door_normal03.imd \
-	$(SRCDIR)/door_c8_b.imd
+	$(SRCDIR)/door_c8_b.imd \
+	$(SRCDIR)/c8_lbuildb_01.imd \
+	$(SRCDIR)/c8_lbuildw_01.imd \
+	$(SRCDIR)/c8_lbuildb_02.imd \
+	$(SRCDIR)/c8_lbuildw_02.imd \
+	$(SRCDIR)/c8_lbuildb_03.imd \
+	$(SRCDIR)/c8_lbuildw_03.imd \
+	$(SRCDIR)/c8_lbuildb_04.imd \
+	$(SRCDIR)/c8_lbuildw_04.imd \
+	$(SRCDIR)/c8_lbuildb_05.imd \
+	$(SRCDIR)/c8_lbuildw_05.imd \
+	$(SRCDIR)/c8_gym_03.imd \
+	$(SRCDIR)/bigicicle_01.imd \
+	$(SRCDIR)/c8_gym_04.imd
 
 texset/outdoor013.imd: $(DEP_TEXSET_IMD_OUTDOOR013) texset/tmp/outdoor013.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/outdoor013.list
