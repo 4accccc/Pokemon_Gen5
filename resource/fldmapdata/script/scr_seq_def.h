@@ -12431,6 +12431,63 @@
     .short  \ret_wk
     .endm
 
+//--------------------------------------------------------------
+/**
+ * @brief   WBTギミック:背景ビジョンを初期化
+ * @param[in]  type
+ */
+//--------------------------------------------------------------
+#define _WBT_GMK_VISION_INIT( type )  \
+    _ASM_WBT_GMK_VISION_INIT type   
+
+    .macro _ASM_WBT_GMK_VISION_INIT type   
+    .short  EV_SEQ_WBT_GMK_VISION_INIT
+    .short  \type
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief   WBTギミック:背景ビジョンを変更
+ * @param[in]  type
+ */
+//--------------------------------------------------------------
+#define _WBT_GMK_VISION_CHANGE( type )  \
+    _ASM_WBT_GMK_VISION_CHANGE type   
+
+    .macro _ASM_WBT_GMK_VISION_CHANGE type   
+    .short  EV_SEQ_WBT_GMK_VISION_CHANGE
+    .short  \type
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief   WBTギミック:通路エフェクト開始
+ * @param[in]  type
+ * @param[in]  pos    ※script_def.hのSCR_WBT_EFFECT_を参照
+ */
+//--------------------------------------------------------------
+#define _WBT_GMK_EFFECT_START( type, pos )  \
+    _ASM_WBT_GMK_EFFECT_START type, pos  
+
+    .macro _ASM_WBT_GMK_EFFECT_START type, pos  
+    .short  EV_SEQ_WBT_GMK_EFFECT_START
+    .short  \type
+    .short  \pos
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief   WBTギミック:優勝エフェクト開始
+ */
+//--------------------------------------------------------------
+#define _WBT_GMK_WIN_EFFECT_START()  \
+    _ASM_WBT_GMK_WIN_EFFECT_START 
+
+    .macro _ASM_WBT_GMK_WIN_EFFECT_START 
+    .short  EV_SEQ_WBT_GMK_WIN_EFFECT_START
+    .endm
+
+
 //======================================================================
 //
 //  レゾナンスリゾート関連
