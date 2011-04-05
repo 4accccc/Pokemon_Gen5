@@ -60,6 +60,7 @@ EVENT_START ev_wbt_hall_01
 	
 		//マップチェンジ
 		_MAP_CHANGE( ZONE_ID_D05R0101, 15, 6, DIR_UP )
+    _WBT_SYSTEM_END()   //とりあえず・受付で後処理が必要な場合は移動する
 	
 	//勝った場合
 	ELSE
@@ -81,6 +82,7 @@ EVENT_START ev_wbt_hall_01
 	
 			//マップチェンジ
 			_MAP_CHANGE( ZONE_ID_D05R0101, 15, 6, DIR_UP )
+      _WBT_SYSTEM_END()   //とりあえず・受付で後処理が必要な場合は移動する
 		
 		//勝った場合
 		ELSE
@@ -104,6 +106,7 @@ EVENT_START ev_wbt_hall_01
 				
 				//マップチェンジ
 				_MAP_CHANGE( ZONE_ID_D05R0101, 15, 6, DIR_UP )
+        _WBT_SYSTEM_END()   //とりあえず・受付で後処理が必要な場合は移動する
 			
 			//勝った場合
 			ELSE
@@ -120,6 +123,7 @@ EVENT_START ev_wbt_hall_01
 				
 				//マップチェンジ
 				_MAP_CHANGE( ZONE_ID_D05R0101, 15, 6, DIR_UP )
+        _WBT_SYSTEM_END()   //とりあえず・受付で後処理が必要な場合は移動する
 				
 			ENDIF
 			
@@ -154,6 +158,12 @@ _ANIME_LABEL	anm_player_lose
 /**************************************************************/
 EVENT_START		ev_debug_wbt_second_game
 
+  //↓↓↓　本当は受付で行う初期化処理をデバッグ用にここで呼び出し
+  _WBT_SYSTEM_START()
+  _WBT_SET_TOURNAMENT_TYPE( SCR_WBT_TYPE_ALL )
+  _WBT_SET_BATTLE_RULE( SCR_WBT_RULE_SINGLE )
+  //↑↑↑　本当は受付で行う初期化処理をデバッグ用にここで呼び出し
+
 	_OBJ_ADD_EX( 21,15,DIR_RIGHT,MMDL_ID_EVENTOBJ_00,MAN1,MV_DMY )
 
 	//カメラ移動・中央固定　
@@ -171,12 +181,20 @@ EVENT_START		ev_debug_wbt_second_game
 
 	_CAMERA_END()
 
+  _WBT_SYSTEM_END()   //とりあえず・受付で後処理が必要な場合は移動する
+
 EVENT_END
 
 /**************************************************************/
 /*		ＷＢＴ決勝戦から		デバッグ用					  */
 /**************************************************************/
 EVENT_START		ev_debug_wbt_final_game
+
+  //↓↓↓　本当は受付で行う初期化処理をデバッグ用にここで呼び出し
+  _WBT_SYSTEM_START()
+  _WBT_SET_TOURNAMENT_TYPE( SCR_WBT_TYPE_ALL )
+  _WBT_SET_BATTLE_RULE( SCR_WBT_RULE_SINGLE )
+  //↑↑↑　本当は受付で行う初期化処理をデバッグ用にここで呼び出し
 
 	_OBJ_ADD_EX( 21,15,DIR_RIGHT,MMDL_ID_EVENTOBJ_00,MAN1,MV_DMY )
 
@@ -187,6 +205,8 @@ EVENT_START		ev_debug_wbt_final_game
 
 	_CAMERA_END()
 
+
+  _WBT_SYSTEM_END()   //とりあえず・受付で後処理が必要な場合は移動する
 EVENT_END
 
 /**************************************************************/
@@ -222,7 +242,7 @@ _OBJ_ANIME_WAIT()
 //_SE_WAIT()
 
 //１回戦の対戦者名を格納する
-//_WBT_SET_ENEMY_NAME( 0 )
+_WBT_SET_ENEMY_NAME( 0 )
 	
 //プレイヤー名を格納する
 _PLAYER_NAME( 1 )
@@ -267,11 +287,17 @@ _OBJ_ANIME_WAIT()
 //対戦者OBJの削除
 _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
 
+_MAP_FADE_BLACK_OUT()
+_MAP_FADE_END_CHECK()
+
 //トーナメントリスト表示
-//_WBT_LIST_CALL( 1 )
+_WBT_LIST_CALL( SCR_WBT_LIST_1ST_RESULT )
 
 //暗転復帰
 //_MAP_FADE_BLACK_IN_SLOW()
+_MAP_FADE_BLACK_IN()
+_MAP_FADE_END_CHECK()
+
 
 //対戦者・プレイヤー指定座標に表示
 _OBJ_ADD_EX( 14,15,DIR_RIGHT,MMDL_ID_EVENTOBJ_00,MAN1,MV_DMY )
@@ -302,7 +328,7 @@ ENDIF
 _OBJ_ANIME_WAIT()
 
 //２回戦の対戦者名を格納する
-//_WBT_SET_ENEMY_NAME( 0 )
+_WBT_SET_ENEMY_NAME( 0 )
 
 //プレイヤー名を格納する
 _PLAYER_NAME( 1 )
@@ -510,11 +536,14 @@ _OBJ_ANIME_WAIT()
 //対戦者OBJの削除
 _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
 
+_MAP_FADE_BLACK_OUT()
+_MAP_FADE_END_CHECK()
 //決勝戦前のトーナメントリスト表示
-//_WBT_LIST_CALL( 2 )
-
+_WBT_LIST_CALL( SCR_WBT_LIST_2ND_RESULT )
 //暗転復帰
 //_MAP_FADE_BLACK_IN_SLOW()
+_MAP_FADE_BLACK_IN()
+_MAP_FADE_END_CHECK()
 
 //対戦者・プレイヤー指定座標に表示
 _OBJ_ADD_EX( 3,15,DIR_RIGHT,MMDL_ID_EVENTOBJ_00,MAN1,MV_DMY )
@@ -575,7 +604,7 @@ _OBJ_ANIME_WAIT()
 _CAMERA_WAIT_MOVE()
 
 //トーナメント名をセット
-//_WBT_SET_TOURNAMENT_NAME( 0 )
+_WBT_SET_TOURNAMENT_NAME( 0 )
 
 //～～トーナメント　決勝！
 _PLAINWIN_MSG_UP( msg_wbt_announce_04 )
@@ -618,7 +647,7 @@ _OBJ_ANIME_WAIT()
 _CAMERA_WAIT_MOVE()
 
 //決勝戦の対戦者名を格納する
-//_WBT_SET_ENEMY_NAME( 0 )
+_WBT_SET_ENEMY_NAME( 0 )
 
 //プレイヤー名を格納する
 _PLAYER_NAME( 1 )

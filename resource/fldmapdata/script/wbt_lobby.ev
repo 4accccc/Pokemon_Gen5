@@ -336,7 +336,12 @@ _BALLOONWIN_OBJMSG_POS( msg_wbt_info_15, SCWK_TARGET_OBJID, POS_DL )
 _MSGWIN_CLOSE()
 
 //ポケモン選択画面表示　　　　　　　　　　　　　　　　　　　　　　　　
-//  _WBT_SELECT_POKEMON( SCWK_ANSWER )
+  _WBT_SELECT_POKEMON( SCWK_ANSWER )
+
+  IF $SCWK_ANSWER == FALSE THEN
+    //キャンセルした場合は何もせずに戻る
+    _RET
+  ENDIF
 
 //ルールと適用しているかチェック　
 _WBT_CHECK_BATTLE_RULE( LWK_CHK_RULE )
@@ -349,13 +354,13 @@ IF $LWK_CHK_RULE == TRUE THEN
 	_MSGWIN_CLOSE()
 	
   _MAP_FADE_BLACK_OUT()
-  _DISP_FADE_END_CHECK()
+  _MAP_FADE_END_CHECK()
 
 	//トーナメントリスト表示
-	_WBT_LIST_CALL( 0 )
+	_WBT_LIST_CALL( SCR_WBT_LIST_1ST_START )
 	
   _MAP_FADE_BLACK_IN()
-  _DISP_FADE_END_CHECK()
+  _MAP_FADE_END_CHECK()
 
 	//それでは第一回戦を開始します！
 	_BALLOONWIN_OBJMSG_POS( msg_wbt_info_18, SCWK_TARGET_OBJID, POS_DL )
