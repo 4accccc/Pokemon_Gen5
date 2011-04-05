@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-05T12:43:45"/>
+	<create user="matsumiya" host="W00224" date="2011-04-05T12:54:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -303,14 +303,12 @@
 	</row>
 
 	<row id="msg_r20r0101_trainerm_01">
-		<comment>♂
-・？？？？？＝
-　c13ジム攻略に有効なポケモン</comment>
+		<comment>♂</comment>
 		<attribute name="キャラ指定">TRAINERM</attribute>
 		<language name="JPN" width="256">ちょいと　コンビナートで
-？？？？？でも　つかまえるかな！</language>
+ブーバーを　つかまえようかな！</language>
 		<language name="JPN_KANJI" width="256">ちょいと　コンビナートで
-？？？？？でも　捕まえるかな！</language>
+ブーバーを　捕まえようかな！</language>
 	</row>
 
 	<flowchart-group-list>
