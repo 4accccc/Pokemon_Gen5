@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<ita version="1.6.0">
+
+<head>
+	<create user="fuchino_hiroki" host="W00252" date="2011-04-05T19:03:07" source="wbt_e_normal_l.mb"/>
+	<title>Texture SRT Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
+</head>
+
+<body>
+
+<tex_srt_info
+	frame_size="120"
+	tool_start_frame="1"
+	tool_end_frame="120"
+	interpolation="frame"
+	tex_matrix_mode="maya"
+	compress_material="on" material_size="4 4"
+	frame_step_mode="1"
+	tolerance_tex_scale="0.100000"
+	tolerance_tex_rotate="0.100000"
+	tolerance_tex_translate="0.010000"
+/>
+
+<tex_scale_data size="1">
+	1.000000
+</tex_scale_data>
+
+<tex_rotate_data size="1">
+	0.000000
+</tex_rotate_data>
+
+<tex_translate_data size="241">
+	0.000000 0.000000 0.050537 0.100830 0.151367 0.201660 0.252197 0.302490 0.353027 0.403320
+	0.453857 0.504150 0.554688 0.604980 0.655518 0.705811 0.756348 0.806641 0.857178 0.907471
+	0.958008 1.008301 1.058838 1.109131 1.159668 1.210205 1.260498 1.311035 1.361328 1.411865
+	1.462158 1.512695 1.562988 1.613525 1.663818 1.714355 1.764648 1.815186 1.865479 1.916016
+	1.966309 2.016846 2.067139 2.117676 2.167969 2.218506 2.268799 2.319336 2.369629 2.420166
+	2.470703 2.520996 2.571533 2.621826 2.672363 2.722656 2.773193 2.823486 2.874023 2.924316
+	2.974854 3.025146 3.075684 3.125977 3.176514 3.226807 3.277344 3.327637 3.378174 3.428467
+	3.479004 3.529297 3.579834 3.630371 3.680664 3.731201 3.781494 3.832031 3.882324 3.932861
+	3.983154 4.033691 4.083984 4.134521 4.184814 4.235352 4.285645 4.336182 4.386475 4.437012
+	4.487305 4.537842 4.588135 4.638672 4.688965 4.739502 4.789795 4.840332 4.890869 4.941162
+	4.991699 5.041992 5.092529 5.142822 5.193359 5.243652 5.294189 5.344482 5.395020 5.445313
+	5.495850 5.546143 5.596680 5.646973 5.697510 5.747803 5.798340 5.848633 5.899170 5.949463
+	6.000000 0.000000 0.117676 0.235352 0.353027 0.470703 0.588135 0.705811 0.823486 0.941162
+	1.058838 1.176514 1.294189 1.411865 1.529297 1.646973 1.764648 1.882324 2.000000 2.117676
+	2.235352 2.353027 2.470703 2.588135 2.705811 2.823486 2.941162 3.058838 3.176514 3.294189
+	3.411865 3.529297 3.646973 3.764648 3.882324 4.000000 4.117676 4.235352 4.353027 4.470703
+	4.588135 4.705811 4.823486 4.941162 5.058838 5.176514 5.294189 5.411865 5.529297 5.646973
+	5.764648 5.882324 6.000000 6.117676 6.235352 6.353027 6.470703 6.588135 6.705811 6.823486
+	6.941162 7.058838 7.176514 7.294189 7.411865 7.529297 7.646973 7.764648 7.882324 8.000000
+	8.117676 8.235352 8.353027 8.470703 8.588135 8.705811 8.823486 8.941162 9.058838 9.176514
+	9.294189 9.411865 9.529297 9.646973 9.764648 9.882324 10.000000 10.117676 10.235352 10.353027
+	10.470703 10.588135 10.705811 10.823486 10.941162 11.058838 11.176514 11.294189 11.411865 11.529297
+	11.646973 11.764648 11.882324 12.000000 12.117676 12.235352 12.353027 12.470703 12.588135 12.705811
+	12.823486 12.941162 13.058838 13.176514 13.294189 13.411865 13.529297 13.646973 13.764648 13.882324
+	14.000000
+</tex_translate_data>
+
+<tex_srt_anm_array size="4">
+	<tex_srt_anm index="0" material_name="wbt_e_nor01_1">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_t frame_step="1" data_size="120" data_head="1"/>
+	</tex_srt_anm>
+	<tex_srt_anm index="1" material_name="wbt_e_nor01_2">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_t frame_step="1" data_size="120" data_head="1"/>
+	</tex_srt_anm>
+	<tex_srt_anm index="2" material_name="wbt_e_nor01_3">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_t frame_step="1" data_size="120" data_head="121"/>
+	</tex_srt_anm>
+	<tex_srt_anm index="3" material_name="wbt_e_nor01">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_t frame_step="1" data_size="120" data_head="121"/>
+	</tex_srt_anm>
+</tex_srt_anm_array>
+
+</body>
+
+</ita>
