@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="matsuzaki_tsubasa" host="W00193" date="2011-03-31T16:54:06" source="untitled"/>
+	<create user="matsuzaki_tsubasa" host="W00193" date="2011-04-01T20:00:19" source="untitled"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="matsuzaki_tsubasa" host="W00193" date="2011-03-31T16:54:06" source="untitled"/>
+<original_create user="matsuzaki_tsubasa" host="W00193" date="2011-04-01T20:00:19" source="untitled"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -245,43 +245,43 @@
 	<tex_image index="5" name="gym06_emb_jet"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
-		color0_mode="color"
+		color0_mode="transparency"
 		palette_name="gym06_emb_jet_pl"
 		path="C:/Documents and Settings/matsuzaki_tsubasa/My Documents/Swan/in28/map/tex/gym06_emb_jet.tga"
 	>
 		<bitmap size="256">
-			bbcc bbbb ccdb bbbb 44cd 4444 4444 4444
-			bccd bbbb ccdb dbbb 66cc 6666 6666 6666
-			ccdb bbbb ccdb cdbb 44bc 4444 4444 4444
-			cdbb bbcc ccdb ccdb 44bb 4444 4444 4444
-			dbbb bccd ccdd bcdd 99bb 9999 9999 9999
-			bbbb ccdd dccd bccd 88bb 8888 8888 8888
-			cccc ecdc cded bbcc 88bb 8888 8888 8888
-			cccc edcc eedd bbbc 77bb 7777 7777 7777
-			dddd decd ddbb bbdd 77bb 7777 7777 7777
-			bbbb dddd edbb dddc 77dd 7777 7777 7777
-			bbbb eecb dedd cccc 66cc 6666 6666 6666
-			cbbb dccc cede cccd 66cc 6666 6666 6666
-			cbbb cddc ccdc bbdd 66bb 6666 6666 6666
-			ccbb ccdd cbdd bddc 66bb 6666 6666 6666
-			cccb ccbd bbbd dccc 66bb 6666 6666 6666
-			dccc ccbb bbbd ccbb 66bd 6666 6666 6666
-			bdcc ccbb bbbd cbbb 66dc 6666 6666 6666
-			bbdc ccbb bbbd bbbb 99cc 9999 9999 9999
-			aaaa aaaa aaaa aaaa 31aa 1311 1131 3113
-			aaaa aaaa aaaa aaaa 31aa 1311 1131 3113
-			bbbb bbbb bbbb bbbb 20bb 0200 0020 2002
-			bbbb bbbb bbbb bbbb 55bb 5555 5555 5555
-			eeee eeee eeee eeee 88ee 8888 8888 8888
-			eeee eeee eeee eeee 77ee 7777 7777 7777
-			4444 4444 4444 4444 6644 6666 6666 6666
-			4444 4444 4444 4444 6644 6666 6666 6666
-			4444 4444 8444 4488 aa44 aaaa aaaa aaaa
-			4444 4444 8444 4488 aa44 aaaa aaaa aaaa
-			4444 4444 4444 4448 bb44 bbbb bbbb bbbb
-			4444 4444 4444 4444 bb44 bbbb bbbb bbbb
-			4444 4444 4444 4444 bb44 bbbb bbbb bbbb
-			4444 4444 4444 4444 bb44 bbbb bbbb bbbb
+			abbb 5568 ccb6 88ab 66fa 6666 6666 6666
+			abbb 558a ccb8 88ab 88fa 8888 8888 8888
+			abbb 558a ccb8 88ab 66fa 6666 6666 6666
+			abbb 658a ccb8 88ab 66fa 6666 6666 6666
+			abbb 658a ccb8 88ab bbea bbbb bbbb bbbb
+			abbb 658a ccb8 88ab aaea aaaa aaaa aaaa
+			abbb 658a ccb8 88ab aaea aaaa aaaa aaaa
+			abbb 658a ccb8 88ab 99ea 9999 9999 9999
+			abbb 658a ccb8 88ab 99ea 9999 9999 9999
+			abbb 658a ccb8 88ab 99da 9999 9999 9999
+			abbb 658a ccb8 88ab 88da 8888 8888 8888
+			abbb 658a ccb8 88ab 88da 8888 8888 8888
+			abbb 658a ccb8 88ab 88da 8888 8888 8888
+			abbb 658a ccb8 88ab 88da 8888 8888 8888
+			abbb 658a ccb8 88ab 88da 8888 8888 8888
+			abbb 658a ccb8 88ab 88ba 8888 8888 8888
+			eeee eeee eeee eeee 88be 8888 8888 8888
+			ffff ffff ffff ffff bbbf bbbb bbbb bbbb
+			ffff ffff ffff ffff 42ff 2422 2242 4224
+			eeee eeee eeee eeee 42ee 2422 2242 4224
+			cccc cccc cccc cccc 31cc 1311 1131 3113
+			bbbb bbbb bbbb bbbb 77bb 7777 7777 7777
+			cccc cccc cccc cccc aacc aaaa aaaa aaaa
+			cccc cccc cccc cccc 99cc 9999 9999 9999
+			cccc cccc cccc cccc 88cc 8888 8888 8888
+			99cc 9999 9999 9999 88cc 8888 8888 8888
+			99cc 9999 9999 9999 ddcc dddd dddd dddd
+			99cc 9999 9999 9999 ddcc dddd dddd dddd
+			99cc 9999 9999 9999 eecc eeee eeee eeee
+			cccc cccc cccc cccc eecc eeee eeee eeee
+			cccc cccc cccc cccc eecc eeee eeee eeee
+			cccc cccc cccc cccc eecc eeee eeee eeee
 		</bitmap>
 	</tex_image>
 	<tex_image index="6" name="gym06_iriguti"
@@ -895,8 +895,8 @@
 		318c 2d6b 2d6b 294a 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="4" name="gym06_emb_jet_pl" color_size="16">
-		4eaa 35e8 2dc4 2143 6739 6318 5ef7 56b5
-		5294 4e73 2108 14a5 1084 0842 0421 7fff
+		7fff 4eaa 35e8 2dc4 2143 739c 6739 6318
+		5ef7 56b5 5294 4e73 4210 2108 14a5 0421
 	</tex_palette>
 	<tex_palette index="5" name="gym06_emb_pl" color_size="16">
 		001a 0017 0013 0010 6f7b 6b5a 5ad6 4a52
