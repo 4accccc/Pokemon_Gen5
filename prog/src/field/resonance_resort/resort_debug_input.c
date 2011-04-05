@@ -3072,6 +3072,9 @@ static BOOL Tourist_ReStoreData( RESONANCE_RESORT_SV *p_resort_sv, const DEBUG_I
     }
   }
 
+  //更新フラグ
+  RESORT_RECV_DATA_SetData(p_data,RESORT_DATA_PARAM_UPDATE, RESORT_RECV_DATA_UPDATE_FIRST );
+
   return TRUE;
 }
 

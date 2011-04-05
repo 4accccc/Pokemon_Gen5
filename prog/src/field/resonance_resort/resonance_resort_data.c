@@ -1046,7 +1046,7 @@ void RESORT_RECV_DATA_InitInstance( RESORT_RECV_DATA *p_wk )
 //-----------------------------------------------------------------------------
 BOOL RESORT_RECV_DATA_IsEmpty( const RESORT_RECV_DATA *cp_wk )
 {
-  return cp_wk->extend_flag == 0;
+  return RESORT_BASIC1_DATA_IsEmpty( &cp_wk->basic1 );
 }
 //----------------------------------------------------------------------------
 /**
