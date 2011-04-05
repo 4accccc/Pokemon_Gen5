@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-05T12:17:10"/>
+	<create user="matsumiya" host="W00224" date="2011-04-05T18:49:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -306,37 +306,37 @@
 
 	<row id="msg_r20_stop_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
+・（local　31.5）に左向きで配置
 ・c12ジムバッジ入手までストッパー処理
-・話しかけ
-・（local　31.5）に左向きで配置</comment>
+・話しかけ</comment>
 		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">おいおい！　ジムバッジの
-ひとつも　もっていないのか？▽
-それで　このさき　だいじょうぶか？▼
-アデクの　じいさんの　ところで
-きたえてもらったら　どうだ？</language>
+ひとつも　もっていない　くせに▽▽
+このさきに　すすむのか！？▼
+あたりの　トレーナーや　ポケモンと
+たたかいまくって　きたえてみろ！</language>
 		<language name="JPN_KANJI" width="256">おいおい！　ジムバッジの
-ひとつも　もっていないのか？▽
-それで　このさき　だいじょうぶか？▼
-アデクの　じいさんの　ところで
-きたえてもらったら　どうだ？</language>
+ひとつも　持っていない　くせに▽
+この先に　進むのか！？▼
+辺りの　トレーナーや　ポケモンと
+戦いまくって　鍛えてみろ！</language>
 	</row>
 
 	<row id="msg_r20_stop_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・c12ジムバッジ入手までストッパー処理
-・pos＝（local　31.4～6）</comment>
+・pos＝（local　31.4～6）を踏んだとき</comment>
 		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">おいおい！　ジムバッジの
-ひとつも　もっていないのか？▽
-それで　このさき　だいじょうぶか？▼
-アデクの　じいさんの　ところで
-きたえてもらったら　どうだ？▼</language>
+ひとつも　もっていない　くせに▽
+このさきに　すすむのか！？▼
+あたりの　トレーナーや　ポケモンと
+たたかいまくって　きたえてみろ！▼</language>
 		<language name="JPN_KANJI" width="256">おいおい！　ジムバッジの
-ひとつも　もっていないのか？▽
-それで　このさき　だいじょうぶか？▼
-アデクの　じいさんの　ところで
-きたえてもらったら　どうだ？▼</language>
+ひとつも　持っていない　くせに▽
+この先に　進むのか！？▼
+辺りの　トレーナーや　ポケモンと
+戦いまくって　鍛えてみろ！▼</language>
 	</row>
 
 	<row id="msg_r20_stop_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -369,7 +369,7 @@
 	<row id="msg_r20_white_11a" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：主人公＝♂
 ・r20のposを踏むと
-　画面下からベル登場</comment>
+　画面左（＝t06方面）からベル登場</comment>
 		<attribute name="キャラ指定">ベル</attribute>
 		<language name="JPN" width="256">ベル『おうい！▼</language>
 		<language name="JPN_KANJI" width="256">ベル『おうい！▼</language>
@@ -378,7 +378,7 @@
 	<row id="msg_r20_white_11b" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：主人公＝♀
 ・r20のposを踏むと
-　画面下からベル登場</comment>
+　画面左（＝t06方面）からベル登場</comment>
 		<attribute name="キャラ指定">ベル</attribute>
 		<language name="JPN" width="256">ベル『ねえねえ！▼</language>
 		<language name="JPN_KANJI" width="256">ベル『ねえねえ！▼</language>
@@ -386,7 +386,8 @@
 
 	<row id="msg_r20_white_12" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・続けて</comment>
+・正面を向いて、動作モデルのアニメ再生後
+・続けてwhite_13</comment>
 		<attribute name="キャラ指定">ベル</attribute>
 		<language name="JPN" width="256">ごめんね！
 だいじなこと　わすれてた！▼
@@ -402,8 +403,8 @@
 
 	<row id="msg_r20_white_13" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・続けて
-・何か効果音？（発注）</comment>
+・何か効果音？（発注）
+・続けてwhite_14</comment>
 		<attribute name="キャラ指定">ベル</attribute>
 		<language name="JPN" width="256">じゃじゃーん！！▼
 そのなも　ポケガイダンス！▼</language>
@@ -413,10 +414,13 @@
 
 	<row id="msg_r20_white_14" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・続けて</comment>
+・ポケガイダンス機能解放
+・続けてwhite_15</comment>
 		<attribute name="キャラ指定">ベル</attribute>
-		<language name="JPN" width="256">ポケガイダンスの　せつめい！</language>
-		<language name="JPN_KANJI" width="256">ポケガイダンスの　説明！</language>
+		<language name="JPN" width="256">ポケガイダンスの　せつめい！
+・テストメッセージ▼</language>
+		<language name="JPN_KANJI" width="256">ポケガイダンスの　説明！
+・仮メッセージ▼</language>
 	</row>
 
 	<row id="msg_r20_white_15" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
