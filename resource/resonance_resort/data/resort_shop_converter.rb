@@ -244,9 +244,11 @@ begin
 
   #csvì«çûÇ›
   shopCsv = CsvLoader.new
+  shopCsv.setSuffix( '#END' )
   shopCsv.load( ARGV[ARG_SHOP_CSV] )
 
   serviceCsv = CsvLoader.new
+  serviceCsv.setSuffix( '#END' )
   serviceCsv.load( ARGV[ARG_SERVICE_CSV] )
 
   #dataçÏê¨

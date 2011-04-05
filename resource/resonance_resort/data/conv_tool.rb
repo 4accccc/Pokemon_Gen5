@@ -22,16 +22,28 @@ class CsvLoader
 
   def initialize
     @buffer
+    @suffix =''
 
     @row_length  = 0          #s
     @col_length = Array.new   #—ñ
   end
 
+  def setSuffix( suffix )
+    @suffix = suffix
+  end
+
   def load( filename )
+    #suffix‚ª‚È‚¢ê‡‚Í’Êí“Ç‚İ‚İ
+    #suffix‚ª‚ ‚é‚Æ‚«‚Ísuffix‚Ü‚Å“Ç‚İ‚İ
+
     #’·‚³æ“¾
     CSV.open( filename, 'r' ) do |row|
       @row_length  += 1
       @col_length.push( row.size )
+
+      if @suffix != '' && row[0] == @suffix
+        break
+      end
     end
 
     #“ñŸŒ³”z—ñ

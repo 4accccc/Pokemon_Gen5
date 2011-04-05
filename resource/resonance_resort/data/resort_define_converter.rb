@@ -187,6 +187,7 @@ begin
 
   #csv“Ç‚İ
   csv = CsvLoader.new
+  csv.setSuffix( '#END' )
   csv.load( ARGV[0] )
 
   #dataì¬
