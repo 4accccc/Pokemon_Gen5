@@ -58,10 +58,6 @@ typedef enum
 #define RESORT_ZONE_ID_INSTITUTION_06  (ZONE_ID_C16R0701)
 #define RESORT_ZONE_ID_INSTITUTION_07  (ZONE_ID_C16R0801)
 
-
-
-
-
 extern ZONEID RESORT_MAP_PlaceIDToZoneID( RESORT_PLACEID placeID );
-//extern RESORT_PLACEID RESORT_MAP_ZoneIDToPlaceID( ZONEID zoneID );
+extern RESORT_PLACEID RESORT_MAP_ZoneIDToPlaceID( ZONEID zoneID );
 extern void RESORT_MAP_GetPlaceGridPosByIndex( RESORT_PLACEID placeID, u16 index, u16 *p_x, u16 *p_z );

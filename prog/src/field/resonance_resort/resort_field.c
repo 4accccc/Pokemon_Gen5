@@ -40,7 +40,6 @@
  *					’è”éŒ¾
 */
 //=============================================================================
-#define ZONE_ID_RESORT_RECEPTION    (ZONE_ID_C16)
 #define RESORT_FIELD_PEOPLE_MAX     (16)
 //=============================================================================
 /**
@@ -106,7 +105,7 @@ void RESORT_FIELD_Setup( FIELDMAP_WORK *p_fieldmap )
     param.p_mmdlsys = GAMEDATA_GetMMdlSys(p_gamedata);
     param.p_data_manager = p_wk->p_data_manager;
     param.max     = RESORT_FIELD_PEOPLE_MAX;
-    param.placeID  = RESORT_PLACEID_FIELD;
+    param.placeID  = RESORT_MAP_ZoneIDToPlaceID( FIELDMAP_GetZoneID(p_fieldmap) );
     p_wk->p_people_sys = RESORT_PEOPLE_SYS_Init( &param, heapID );
   }
 

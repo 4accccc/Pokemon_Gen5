@@ -129,6 +129,7 @@ const static FSOverlayID FldGimmickOverlay[FLD_GIMMICK_MAX] = {
   FS_OVERLAY_ID(resonance_resort_gimmick),  //リゾート
   FS_OVERLAY_ID(infinity_dungeon_gimmick),  // 無限ダンジョン
   FS_OVERLAY_ID(wbt_gimmick),  // WBT
+  FS_OVERLAY_ID(resonance_resort_gimmick),  //リゾート
 };
 
 const static FLD_GMK_SETUP_FUNC FldGimmickSetupFunc[FLD_GIMMICK_MAX] = {
@@ -191,6 +192,7 @@ const static FLD_GMK_SETUP_FUNC FldGimmickSetupFunc[FLD_GIMMICK_MAX] = {
   RESORT_FIELD_Setup,     //リゾートフィールド
   INFINITY_DUNGEON_Setup, //無限ダンジョン
   WBT_GIMMICK_Setup,      // WBT
+  RESORT_FIELD_Setup,     //リゾートフィールド
 };
 
 const static FLD_GMK_END_FUNC FldGimmickEndFunc[FLD_GIMMICK_MAX] = {
@@ -253,6 +255,7 @@ const static FLD_GMK_END_FUNC FldGimmickEndFunc[FLD_GIMMICK_MAX] = {
   RESORT_FIELD_End, //リゾートフィールド
   INFINITY_DUNGEON_End, //無限ダンジョン
   WBT_GIMMICK_End,      // WBT
+  RESORT_FIELD_End, //リゾートフィールド
 };
 
 const static FLD_GMK_MOVE_FUNC FldGimmickMoveFunc[FLD_GIMMICK_MAX] = {
@@ -315,6 +318,7 @@ const static FLD_GMK_MOVE_FUNC FldGimmickMoveFunc[FLD_GIMMICK_MAX] = {
   RESORT_FIELD_Move, //リゾートフィールド
   INFINITY_DUNGEON_Move, // 無限ダンジョン
   WBT_GIMMICK_Move,      // WBT
+  RESORT_FIELD_Move, //リゾートフィールド
 };
 
 //---------------------------------------------------------------------------

@@ -402,7 +402,6 @@ BOOL RESORT_DATA_MANAGER_IsRecvToResident( const RESORT_DATA_MANAGER *cp_wk, con
   RESORT_PLACEID placeID = RESORT_PEOPLE_ALL_DATA_SearchEmptyInstitutionPlaceID( cp_wk->param.p_all_people );
   u16 peopleID;
   void *p_dst_adrs;
-  placeID = RESORT_PLACEID_FIELD; //TODO
   if( placeID == RESORT_PLACEID_NONE )
   {
     OS_Printf( "Ž{Ý“àˆÊ’u‚ª‹ó‚¢‚Ä‚¢‚È‚¢\n" );
@@ -429,7 +428,6 @@ void RESORT_DATA_MANAGER_RecvToResident( RESORT_DATA_MANAGER *p_wk, RESORT_RECV_
   u16 peopleID;
   void *p_dst_adrs;
   RESORT_RESIDENT_DATA *p_dst;
-  placeID = RESORT_PLACEID_FIELD; //TODO
 
   if( placeID == RESORT_PLACEID_NONE )
   {
@@ -476,7 +474,6 @@ BOOL RESORT_DATA_MANAGER_IsRecvToVisitor( const RESORT_DATA_MANAGER *cp_wk, cons
   RESORT_PLACEID placeID = RESORT_PEOPLE_ALL_DATA_SearchEmptyCondominiumPlaceID( cp_wk->param.p_all_people );
   u16 peopleID;
   void *p_dst;
-  placeID = RESORT_PLACEID_FIELD; //TODO
 
   if( placeID == RESORT_PLACEID_NONE )
   {
@@ -503,7 +500,6 @@ void RESORT_DATA_MANAGER_RecvToVisitor( RESORT_DATA_MANAGER *p_wk, RESORT_RECV_D
   u16 peopleID;
   RESORT_VISITOR_DATA *p_dst;
   void *p_dst_adrs;
-  placeID = RESORT_PLACEID_FIELD; //TODO
 
   if( placeID == RESORT_PLACEID_NONE )
   {
@@ -595,7 +591,6 @@ BOOL RESORT_DATA_MANAGER_IsResidentToVisitor( const RESORT_DATA_MANAGER *cp_wk, 
   RESORT_PLACEID placeID = RESORT_PLACEID_CONDOMINIUM_00; //TODO
   u16 peopleID;
   void *p_dst;
-  placeID = RESORT_PLACEID_FIELD; //TODO
   return Resort_Data_Manager_CheckConvert( cp_wk, RESORT_DATA_MANAGER_CHECKCONVERT_DST_VISITOR, placeID, &peopleID, &p_dst );
 }
 
@@ -613,7 +608,6 @@ void RESORT_DATA_MANAGER_ResidentToVisitor( RESORT_DATA_MANAGER *p_wk, RESORT_RE
   RESORT_PLACEID placeID = RESORT_PLACEID_CONDOMINIUM_00; //TODO
   u16 peopleID;
   void *p_dst;
-  placeID = RESORT_PLACEID_FIELD; //TODO
   if( Resort_Data_Manager_CheckConvert( p_wk, RESORT_DATA_MANAGER_CHECKCONVERT_DST_VISITOR, placeID, &peopleID, &p_dst ) )
   {
     //TODO 

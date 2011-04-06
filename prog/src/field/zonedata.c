@@ -881,7 +881,25 @@ BOOL ZONEDATA_IsResonanceResort( u16 zone_id )
 //-----------------------------------------------------------------------------
 BOOL ZONEDATA_IsResonanceResortRoom( u16 zone_id )
 {
-  return zone_id == ZONE_ID_C16R0101;
+  static const u16 zone_tbl[] = {
+    ZONE_ID_C16R0101,
+    ZONE_ID_C16R0201,
+    ZONE_ID_C16R0301,
+    ZONE_ID_C16R0401,
+    ZONE_ID_C16R0501,
+    ZONE_ID_C16R0601,
+    ZONE_ID_C16R0701,
+    ZONE_ID_C16R0801,
+    ZONE_ID_C16R0901,
+    ZONE_ID_C16R1001,
+    ZONE_ID_C16R1101,
+    ZONE_ID_C16R1201,
+    ZONE_ID_C16R1301,
+    ZONE_ID_C16R1401,
+    ZONE_ID_C16R1501,
+    ZONE_ID_C16R1601,
+  };
+  return isTargetZone( zone_id, zone_tbl, NELEMS( zone_tbl ));
 }
 
 //------------------------------------------------------------------

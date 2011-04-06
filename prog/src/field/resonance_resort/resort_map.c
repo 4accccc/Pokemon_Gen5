@@ -58,14 +58,13 @@ ZONEID RESORT_MAP_PlaceIDToZoneID( RESORT_PLACEID placeID )
 //----------------------------------------------------------------------------
 /**
  *	@brief　ゾーンIDから場所IDへの変換
- *	          この関数はZONEIDに重複がないときにしか扱えないので禁止
+ *	          この関数はZONEIDに重複がないときにしか扱えないのに注意！！
  *
  *	@param	ZONEID zoneID 　ゾーンID
  *
  *	@return 場所ID
  */
 //-----------------------------------------------------------------------------
-/*
 RESORT_PLACEID RESORT_MAP_ZoneIDToPlaceID( ZONEID zoneID )
 {
   int i;
@@ -79,7 +78,6 @@ RESORT_PLACEID RESORT_MAP_ZoneIDToPlaceID( ZONEID zoneID )
   GF_ASSERT(0);
   return 0;
 }
-*/
 //----------------------------------------------------------------------------
 /**
  *	@brief 場所による、インデックスごとの座標を取得
@@ -125,6 +123,17 @@ void RESORT_MAP_GetPlaceGridPosByIndex( RESORT_PLACEID placeID, u16 index, u16 *
       *p_x  = sc_pos_data[index].x;
       *p_z  = sc_pos_data[index].z;
     }
+    break;
+  case RESORT_PLACEID_INSTITUTION_00:
+  case RESORT_PLACEID_INSTITUTION_01:
+  case RESORT_PLACEID_INSTITUTION_02:
+  case RESORT_PLACEID_INSTITUTION_03:
+  case RESORT_PLACEID_INSTITUTION_04:
+  case RESORT_PLACEID_INSTITUTION_05:
+  case RESORT_PLACEID_INSTITUTION_06:
+  case RESORT_PLACEID_INSTITUTION_07:
+    *p_x = 7+index;
+    *p_z = 9;
     break;
     //TODO
   default:

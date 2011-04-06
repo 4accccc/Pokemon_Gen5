@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nagihashi_toru" host="W00268" date="2011-04-04T19:51:29"/>
+	<create user="nagihashi_toru" host="W00268" date="2011-04-06T18:23:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1699,58 +1699,62 @@
 	</row>
 
 	<row id="PLACE_03">
-		<language name="JPN" width="256">コンドミニアム０</language>
+		<language name="JPN" width="256">たいしかん</language>
 	</row>
 
 	<row id="PLACE_04">
-		<language name="JPN" width="256">コンドミニアム１</language>
+		<language name="JPN" width="256">コンドミニアム０</language>
 	</row>
 
 	<row id="PLACE_05">
-		<language name="JPN" width="256">コンドミニアム２</language>
+		<language name="JPN" width="256">コンドミニアム１</language>
 	</row>
 
 	<row id="PLACE_06">
-		<language name="JPN" width="256">コンドミニアム３</language>
+		<language name="JPN" width="256">コンドミニアム２</language>
 	</row>
 
 	<row id="PLACE_07">
-		<language name="JPN" width="256">コンドミニアム４</language>
+		<language name="JPN" width="256">コンドミニアム３</language>
 	</row>
 
 	<row id="PLACE_08">
-		<language name="JPN" width="256">コンドミニアム５</language>
+		<language name="JPN" width="256">コンドミニアム４</language>
 	</row>
 
 	<row id="PLACE_09">
-		<language name="JPN" width="256">しせつ０</language>
+		<language name="JPN" width="256">コンドミニアム５</language>
 	</row>
 
 	<row id="PLACE_10">
-		<language name="JPN" width="256">しせつ１</language>
+		<language name="JPN" width="256">しせつ０</language>
 	</row>
 
 	<row id="PLACE_11">
-		<language name="JPN" width="256">しせつ２</language>
+		<language name="JPN" width="256">しせつ１</language>
 	</row>
 
 	<row id="PLACE_12">
-		<language name="JPN" width="256">しせつ３</language>
+		<language name="JPN" width="256">しせつ２</language>
 	</row>
 
 	<row id="PLACE_13">
-		<language name="JPN" width="256">しせつ４</language>
+		<language name="JPN" width="256">しせつ３</language>
 	</row>
 
 	<row id="PLACE_14">
-		<language name="JPN" width="256">しせつ５</language>
+		<language name="JPN" width="256">しせつ４</language>
 	</row>
 
 	<row id="PLACE_15">
-		<language name="JPN" width="256">しせつ６</language>
+		<language name="JPN" width="256">しせつ５</language>
 	</row>
 
 	<row id="PLACE_16">
+		<language name="JPN" width="256">しせつ６</language>
+	</row>
+
+	<row id="PLACE_17">
 		<language name="JPN" width="256">しせつ７</language>
 	</row>
 
