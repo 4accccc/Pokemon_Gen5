@@ -60,6 +60,30 @@
 //-----------------------------------------------------------------------------
 void CLWK_TransNSBTX( GFL_CLWK* act, u32 arc_idx, u32 tex_idx, u8 ptn_ofs, u16 sx, u16 sy, u32 VramOfs, CLSYS_DRAW_TYPE vram_type, HEAPID HeapID )
 {
+  CLWK_TransNSBTX_Ex( act, arc_idx, tex_idx, ptn_ofs, sx, sy, VramOfs, vram_type, NULL, 0, HeapID );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  nsbtxをニトロキャラクタ、ニトロパレットに変換してCLWKに転送(パレットアニメ対応バージョン)
+ *
+ *	@param	GFL_CLWK* act アクターへのポインタ
+ *	@param  arc_idx   アーカイブＩＤ
+ *	@param	tex_idx   テクスチャのARC内インデックス
+ *	@param  ptn_ofs   テクスチャオフセット（アニメパターンのオフセット）
+ *	@param	sx        転送元データのサイズＸ（キャラ単位）
+ *	@param	sy        転送元データのサイズＹ（キャラ単位）
+ *	@param	VramOfs   転送先オフセット（Byte) (登録済みCGRが転送されているアドレスからのオフセット）
+ *  @param  vramType  転送先VramType
+ *  @param  pfd       初期化済みPALETTE_FADE_PTR(NULLなら直接VRAMに転送)
+ *  @param  palno     アクターが参照しているパレットNo指定(0-15) GFL_CLWKからNoを取得できる関数が無いので自分で指定
+ *	@param	HeapID    ヒープＩＤ
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
+void CLWK_TransNSBTX_Ex( GFL_CLWK* act, u32 arc_idx, u32 tex_idx, u8 ptn_ofs, u16 sx, u16 sy, u32 VramOfs, CLSYS_DRAW_TYPE vram_type, PALETTE_FADE_PTR pfd, u8 palno, HEAPID HeapID )
+{
 	enum {
 		TRANS_PAL_SIZE = 0x20,  ///< 一列
 	};
@@ -120,14 +144,22 @@ void CLWK_TransNSBTX( GFL_CLWK* act, u32 arc_idx, u32 tex_idx, u8 ptn_ofs, u16 s
 
 	  if( vram_type == CLSYS_DRAW_MAIN || vram_type == CLSYS_DRAW_MAX )
 		{
-		  vram = NNS_G2dGetImagePaletteLocation( &ipp, NNS_G2D_VRAM_TYPE_2DMAIN );
-			GX_LoadOBJPltt( pStart, vram, TRANS_PAL_SIZE );
+      if( pfd == NULL ){
+  		  vram = NNS_G2dGetImagePaletteLocation( &ipp, NNS_G2D_VRAM_TYPE_2DMAIN );
+	  		GX_LoadOBJPltt( pStart, vram, TRANS_PAL_SIZE );
+      }else{
+        PaletteWorkSet( pfd, pStart, FADE_MAIN_OBJ, palno*16, TRANS_PAL_SIZE );
+      }
 		}
 
     if( vram_type == CLSYS_DRAW_SUB || vram_type == CLSYS_DRAW_MAX )
 		{
-		  vram = NNS_G2dGetImagePaletteLocation( &ipp, NNS_G2D_VRAM_TYPE_2DSUB );
-			GXS_LoadOBJPltt( pStart, vram, TRANS_PAL_SIZE );
+      if( pfd == NULL ){
+		    vram = NNS_G2dGetImagePaletteLocation( &ipp, NNS_G2D_VRAM_TYPE_2DSUB );
+			  GXS_LoadOBJPltt( pStart, vram, TRANS_PAL_SIZE );
+      }else{
+        PaletteWorkSet( pfd, pStart, FADE_SUB_OBJ, palno*16, TRANS_PAL_SIZE );
+      }
 		}
 	}
 
