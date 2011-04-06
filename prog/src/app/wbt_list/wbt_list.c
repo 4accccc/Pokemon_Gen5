@@ -223,7 +223,7 @@ enum{
 enum{
 	FRAME_PANEL = 60,
 	FRAME_GAGE	= 60,
-	FRAME_BOMB	= 60,
+	FRAME_BOMB	= 10,
 	FRAME_WAIT	= 60,
 };
 
@@ -253,8 +253,10 @@ enum{
 enum{
 	L_WHITE_SEQ		= 0,			// 左、白シーケンス
 	L_GRAY_SEQ		= 1,			// 左、灰シーケンス
-	R_WHITE_SEQ		= 4,			// 左、白シーケンス
-	R_GRAY_SEQ		= 5,			// 左、灰シーケンス
+	L_FLASH_SEQ		= 13,			// 左、点滅(終了後灰)シーケンス
+	R_WHITE_SEQ		= 4,			// 右、白シーケンス
+	R_GRAY_SEQ		= 5,			// 右、灰シーケンス
+	R_FLASH_SEQ		= 14,			// 右、点滅(終了後灰)シーケンス
 	//
 	L_BLUE_SEQ		= 2,			// 左、青シーケンス
 	L_RED_SEQ		= 3,			// 左、赤のシーケンス
@@ -493,14 +495,14 @@ const s16 obj_main_info_tbl[] = {
 
 // OBJのテーブルデータ(上側)
 const WBTLIST_OBJ_DATA wbt_obj_tbl[] = {
-	{ 0,	0x30,	1,	1,	0,	0,	8,	0,},		// 左パネル0
-	{ 0,	0x30,	1,	1,	0,	0,	9,	0,},		// 左パネル1
-	{ 0,	0x30,	1,	1,	0,	0,	10,	0,},		// 左パネル2
-	{ 0,	0x30,	1,	1,	0,	0,	11,	0,},		// 左パネル3
-	{ 4,	0x30,	1,	1,	0,	0,	12,	0,},		// 右パネル0
-	{ 4,	0x30,	1,	1,	0,	0,	13,	0,},		// 右パネル1
-	{ 4,	0x30,	1,	1,	0,	0,	14,	0,},		// 右パネル2
-	{ 4,	0x30,	1,	1,	0,	0,	15,	0,},		// 右パネル3
+	{ 0,	0x30,	1,	1,	0,	1,	8,	0,},		// 左パネル0
+	{ 0,	0x30,	1,	1,	0,	1,	9,	0,},		// 左パネル1
+	{ 0,	0x30,	1,	1,	0,	1,	10,	0,},		// 左パネル2
+	{ 0,	0x30,	1,	1,	0,	1,	11,	0,},		// 左パネル3
+	{ 4,	0x30,	1,	1,	0,	1,	12,	0,},		// 右パネル0
+	{ 4,	0x30,	1,	1,	0,	1,	13,	0,},		// 右パネル1
+	{ 4,	0x30,	1,	1,	0,	1,	14,	0,},		// 右パネル2
+	{ 4,	0x30,	1,	1,	0,	1,	15,	0,},		// 右パネル3
 	{ 2,	0x40,	1,	1,	0,	0,	16,	0,},		// 左、移動パネル0
 	{ 2,	0x40,	1,	1,	0,	0,	17,	0,},		// 左、移動パネル1
 	{ 2,	0x40,	1,	1,	0,	0,	18,	0,},		// 左、移動パネル2
@@ -1318,9 +1320,17 @@ static void wbt_key_00( WBTLIST_MAIN_WORK* wk )
 				// 移動可能パラメータの更新
 				wk->MoveFlag = wbt_get_param( wk, PRM_MOVEFLAG, 0 );
 				//
-				// 爆発
+				// 爆発(保留)
 //				tmp = wbt_get_param( wk, PRM_EXPPOS, -1 );
 //				wbt_disp_bomb( wk, tmp );
+				//
+				// パネル点滅
+				tmp = wbt_get_param( wk, PRM_EXPPOS, -1 );
+				seq = R_FLASH_SEQ;
+				if(tmp < 4){
+					seq = L_FLASH_SEQ;
+				}
+				wbt_chg_objseq( wk, tmp, seq );
 				//
 				// 次へ
 				wk->Step = STEP_LV4;
@@ -1353,21 +1363,17 @@ static void wbt_key_00( WBTLIST_MAIN_WORK* wk )
 		//
 		// LV4(爆破)
 		case STEP_LV4:
-			timer = wbt_main_timer( wk, TIMER_BOMB );
-			if(timer <= 0){
-//			if( wbt_is_anime_end( wk, CLWKID_BOMB ) == FALSE ){
-				// 爆発が終了してから色変え
-				// パネル色変え
-				tmp = wbt_get_param( wk, PRM_EXPPOS, -1 );
-				seq = R_GRAY_SEQ;
-				if(tmp < 4){
-					seq = L_GRAY_SEQ;
-				}
-				wbt_chg_objseq( wk, tmp, seq );
+//			timer = wbt_main_timer( wk, TIMER_BOMB );
+//			if(timer <= 0){
+			// パネル点滅アニメ待ち
+			tmp = wbt_get_param( wk, PRM_EXPPOS, -1 );
+			if( wbt_is_anime_end( wk, tmp ) == FALSE ){
+				// アニメが終了してから色変え
 				// キャラのパレット変更
+				tmp = wbt_get_param( wk, PRM_EXPPOS, -1 );
 				wbt_chg_obj_pal( wk, tmp, PLTID_OBJ_MAPMODEL, 0 );
-				
-				// 爆破アニメ終了=>ゲージ伸び
+				//
+				// アニメ終了=>ゲージ伸び
 				wk->Step = STEP_LV5;
 				wbt_init_timer( wk, TIMER_GAGE, FRAME_GAGE );
 				//
@@ -1818,6 +1824,8 @@ static void wbt_chg_objseq( WBTLIST_MAIN_WORK *wk, const s32 wnum, const s32 seq
 {
 	// 切り替え
 	GFL_CLACT_WK_SetAnmSeq( wk->wk_obj.clwk[wnum], seq );
+	// いれても問題ないはず
+	GFL_CLACT_WK_SetAutoAnmFlag( wk->wk_obj.clwk[wnum], TRUE );
 }
 
 //-----------------------------------------------------------------------------
