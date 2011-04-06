@@ -70,6 +70,10 @@
 #define _DEBUG_LOCAL_
 //#undef  _DEBUG_LOCAL_
 
+// Bボタン戻りがある場合(debug)
+#define _DEBUG_INPUT_
+#undef  _DEBUG_INPUT_
+
 FS_EXTERN_OVERLAY(ui_common);
 
 //=============================================================================
@@ -221,6 +225,8 @@ enum{
 	WBT_CANVAS_MAXNUM = 3,			// canvas最大
 	WBT_BMPOAM_MAXNUM = 8,			// bmpoam最大
 	//
+	WBT_EMPTY_MAXNUM = 44*2,		// emptyの最大値
+	//
 	WBT_GAGE_MAXNUM	= 6,			// ゲージ数最大
 };
 
@@ -248,14 +254,14 @@ enum{
 	R_RED_SEQ		= 7,			// 右、赤のシーケンス
 };
 
-// クリアカラー
+// mes関連
 enum{
-	CLEAR_COLOR		= 15,			// クリアカラー
-};
-
-// mesウインドウ用
-enum{
-	WBT_WIN_TOP_CHR	= 1,			// ウインドウ用の先頭キャラ(0は抜き用のはず)
+	MES_WIN_TOP_CHR		= 1,		// ウインドウ用の先頭キャラ(0は抜き用のはず)
+	MES_STRING_BUFFER	= 200,		// 文字列のバッファ
+	MES_CLEAR_COLOR		= 15,		// クリアカラー
+	MES_CURSOR_COLOR	= 15,		// 文字送りカーソル抜きカラー(printstreamのwindowのパレット番号と対応)
+	//
+	MES_RANDOM_MAX		= 5,		// ランダム値(0-4まで選択)
 };
 
 //-------------------
@@ -549,7 +555,7 @@ const WBTLIST_CANVAS_DATA wbt_canvas_tbl[] = {
 	{ GFL_BG_FRAME0_S,	4,	4,	24,	2,	2,},		// 下、up
 	{ GFL_BG_FRAME0_S,	4,	17,	24,	2,	2,},		// 下、down
 	//
-	{ GFL_BG_FRAME0_M,	1,	20,	30,	4,	9,},		// 下、down
+	{ GFL_BG_FRAME0_M,	1,	20,	30,	4,	9,},		// 上、meswin
 
 	{ 0xff, 0, 0, 0, 0, 0,}, // end code
 };
@@ -577,10 +583,10 @@ const s16 wbt_bar_anim_tbl[] = {
 // パネル移動のx座標(外 -> 中)
 const s16 wbt_move_pos_tbl[] = {
 	-72,   0,				// 左側(-72 <=> 0)
-	220, 148,				// 右側(148 <=> 220)
+	220, 148,				// 右側(220 <=> 148)
 };
 
-// BMPOAMのオフセット
+// BMPOAMの表示オフセット
 const s16 wbt_bmpoam_off_tbl[] = {
 	36,	8,					// 左側(off)
 	8,	8,					// 右側(off)
@@ -589,7 +595,7 @@ const s16 wbt_bmpoam_off_tbl[] = {
 // 文字表示位置
 const u8 wbt_string_pos_tbl[] = {
 	96, 0,					// 下画面(上)
-	96, 0,					// 下画面(上)
+	96, 0,					// 下画面(下)
 };
 
 // メッセージ(はじめ、最後)
@@ -852,10 +858,17 @@ static GFL_PROC_RESULT WBTListProc_Main( GFL_PROC *proc, int *seq, void *pwk, vo
 			}
 			break;
 		case 1:
+#ifndef _DEBUG_INPUT_
+			// 終了判定
+			if(wk->Step == STEP_END){
+				(*seq) ++;
+			}
+#else
 			if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
 			{
 				(*seq) ++;
 			}
+#endif
 			break;
 		case 2:
 			WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT,
@@ -1055,7 +1068,7 @@ static void wbt_init( WBTLIST_MAIN_WORK* wk )
 	// 文字列(test)
 //	strbuf = GFL_MSG_CreateString( wk->msg[0], 0 );
 	// バッファを確保
-	wk->MsgBuffer = GFL_STR_CreateBuffer( 200, wk->heapID );
+	wk->MsgBuffer = GFL_STR_CreateBuffer( MES_STRING_BUFFER, wk->heapID );
 	
 	// 初期化
 	// それほど複雑ではないので、
@@ -1107,10 +1120,10 @@ static void wbt_init( WBTLIST_MAIN_WORK* wk )
 	}
 	
 	// 会話ウィンドウセット(キャラデータを転送)
-	BmpWinFrame_GraphicSet( GFL_BG_FRAME0_M, WBT_WIN_TOP_CHR, PLTID_BG_MESWIN, MENU_TYPE_SYSTEM, wk->heapID);
-//	BmpWinFrame_GraphicSet( GFL_BG_FRAME0_M, WBT_WIN_TOP_CHR, PLTID_BG_MESWIN, MENU_TYPE_TALK, wk->heapID);
+	BmpWinFrame_GraphicSet( GFL_BG_FRAME0_M, MES_WIN_TOP_CHR, PLTID_BG_MESWIN, MENU_TYPE_SYSTEM, wk->heapID);
+//	BmpWinFrame_GraphicSet( GFL_BG_FRAME0_M, MES_WIN_TOP_CHR, PLTID_BG_MESWIN, MENU_TYPE_TALK, wk->heapID);
 	// 会話ウインドウ表示
-	BmpWinFrame_Write( wk->PrintUtil[2].win, WINDOW_TRANS_ON, WBT_WIN_TOP_CHR, PLTID_BG_MESWIN );
+	BmpWinFrame_Write( wk->PrintUtil[2].win, WINDOW_TRANS_ON, MES_WIN_TOP_CHR, PLTID_BG_MESWIN );
 	//
 	// 文字スクリーン作成
 	GFL_BMPWIN_MakeScreen( wk->PrintUtil[2].win );
@@ -1118,10 +1131,10 @@ static void wbt_init( WBTLIST_MAIN_WORK* wk )
 	// 文字領域クリア(キャラをクリア転送)
 	wbt_clear_meswin( wk );
 	//
-	// PrintStream用汎用
+	// 汎用PrintStream用
 	APP_PRINTSYS_COMMON_PrintStreamInit( &wk->PrintSysWork, APP_PRINTSYS_COMMON_TYPE_BOTH );
 	// メッセージ送りマーク用
-	wk->MsgCursorWork = APP_KEYCURSOR_Create( 15, TRUE, TRUE, wk->heapID );
+	wk->MsgCursorWork = APP_KEYCURSOR_Create( MES_CURSOR_COLOR, TRUE, TRUE, wk->heapID );
 	//
 	// 削除
 //	GFL_STR_DeleteBuffer( strbuf );
@@ -1444,7 +1457,7 @@ static void wbt_init_timer( WBTLIST_MAIN_WORK* wk, const s32 tmode, const s32 ti
  *	@param	WBTLIST_MAIN_WORK* wk
  *	@param	const s32 mode		タイマの種類
  *
- *	@retval 時間
+ *	@retval s32					時間
  */
 //-----------------------------------------------------------------------------
 static s32 wbt_main_timer( WBTLIST_MAIN_WORK* wk, const s32 tmode )
@@ -1564,7 +1577,7 @@ static void wbt_init_obj( WBTLIST_MAIN_WORK* wk )
 	wbt_init_mapmodel( wk, &wbt_mapmodel_tbl[0] );
 	//
 	// パレット(すぐ取得でも大丈夫なようだ)
-	wbt_get_obj_paladr( wk, WBT_TRAINER_MAX, 6, CLSYS_DRAW_MAIN );
+	wbt_get_obj_paladr( wk, WBT_TRAINER_MAX, PLTID_OBJ_MAPMODEL, CLSYS_DRAW_MAIN );
 }
 
 //-----------------------------------------------------------------------------
@@ -1798,9 +1811,8 @@ static void wbt_set_obj_visible( WBTLIST_MAIN_WORK *wk, const s32 wnum, const BO
  *
  *	@param	WBTLIST_MAIN_WORK* wk
  *	@param	const s32		objワーク番号
- *	@param	const BOOL		(TRUE:再生中、FALSE:停止、終了)
  *
- *	@retval
+ *	@retval	const BOOL		(TRUE:再生中、FALSE:停止、終了)
  */
 //-----------------------------------------------------------------------------
 static BOOL wbt_is_anime_end( WBTLIST_MAIN_WORK *wk, const s32 wnum )
@@ -1823,7 +1835,7 @@ static BOOL wbt_is_anime_end( WBTLIST_MAIN_WORK *wk, const s32 wnum )
  *	@param	const s32		パレットオフセット
  *	@param	const s32		上下
  *
- *	@retval	u32				アドレス
+ *	@retval
  */
 //-----------------------------------------------------------------------------
 static void wbt_get_obj_paladr( WBTLIST_MAIN_WORK *wk, const s32 pnum, const s32 poff, const s32 drawtype )
@@ -1847,7 +1859,7 @@ static void wbt_get_obj_paladr( WBTLIST_MAIN_WORK *wk, const s32 pnum, const s32
  *	@param	const s32		オフセット
  *	@param	const s32		(0:変更、1:戻し)
  *
- *	@retval	u32				アドレス
+ *	@retval
  */
 //-----------------------------------------------------------------------------
 static void wbt_chg_obj_pal( WBTLIST_MAIN_WORK *wk, const s32 wnum, const s32 poff, const s32 mode )
@@ -1864,6 +1876,7 @@ static void wbt_chg_obj_pal( WBTLIST_MAIN_WORK *wk, const s32 wnum, const s32 po
 		return;
 	}
 	
+	// 16色分
 	for(i=0;i<16;i++){
 		// カラーを取得
 		tmp = wk->PalBuffer[wnum*0x10+i];		// palbufferはu16のため
@@ -1948,7 +1961,7 @@ static void wbt_init_movework( WBTLIST_MAIN_WORK* wk, const s32 wnum, const s16 
  *	@param	WBTLIST_MAIN_WORK* wk
  *	@param	const s32			ワーク番号
  *
- *	@retval
+ *	@retval s16					座標(x)
  */
 //-----------------------------------------------------------------------------
 static s16 wbt_main_movework( WBTLIST_MAIN_WORK* wk, const s32 wnum )
@@ -2193,7 +2206,7 @@ static void wbt_set_meswin( WBTLIST_MAIN_WORK* wk, const s32 mesid )
 	// stream設定=>ここのwk->MsgBufferは終わるまで削除してはいけない
 	wk->PrintStream = PRINTSYS_PrintStream(
 				wk->PrintUtil[2].win, 0, 0, wk->MsgBuffer, wk->font,
-				MSGSPEED_GetWait(), wk->MsgTcblSys, 4, wk->heapID, CLEAR_COLOR );
+				MSGSPEED_GetWait(), wk->MsgTcblSys, 4, wk->heapID, MES_CLEAR_COLOR );
 	// スクリーン転送らしい
 	GFL_BMPWIN_MakeTransWindow( wk->PrintUtil[2].win );
 	
@@ -2208,9 +2221,8 @@ static void wbt_set_meswin( WBTLIST_MAIN_WORK* wk, const s32 mesid )
  *	@brief  会話ウインドウ(処理)
  *
  *	@param	WBTLIST_MAIN_WORK* wk
- *	@param	BOOL				(TRUE:再生中、FALSE:終了)
  *
- *	@retval
+ *	@retval	BOOL				(TRUE:再生中、FALSE:終了)
  */
 //-----------------------------------------------------------------------------
 static BOOL wbt_main_meswin( WBTLIST_MAIN_WORK* wk )
@@ -2242,8 +2254,8 @@ static BOOL wbt_main_meswin( WBTLIST_MAIN_WORK* wk )
 		wk->MesFlag |= FLG_MES_END;
 		// meswinクリア
 		wbt_clear_meswin( wk );
-		// 指定した番号 + (0-4)のランダム
-		num = GFUser_GetPublicRand( 5 );
+		// 指定した番号 + (0-(MES_RANDOM_MAX-1))のランダム
+		num = GFUser_GetPublicRand( MES_RANDOM_MAX );
 		tmp = wbt_get_param( wk, PRM_MESID, 0 );
 		wbt_set_meswin( wk, (tmp+num) );
 		return( TRUE );
@@ -2289,7 +2301,7 @@ static BOOL wbt_main_meswin( WBTLIST_MAIN_WORK* wk )
  *
  *	@param	WBTLIST_MAIN_WORK* wk
  *
- *	@retval
+ *	@retval s32					mesid
  */
 //-----------------------------------------------------------------------------
 static s32 wbt_chk_meswin( WBTLIST_MAIN_WORK* wk )
@@ -2333,7 +2345,7 @@ static s32 wbt_chk_meswin( WBTLIST_MAIN_WORK* wk )
 static void wbt_clear_meswin( WBTLIST_MAIN_WORK* wk )
 {
 	// clear
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->PrintUtil[2].win ), CLEAR_COLOR );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->PrintUtil[2].win ), MES_CLEAR_COLOR );
 	GFL_BMPWIN_TransVramCharacter( wk->PrintUtil[2].win );
 }
 
@@ -2344,12 +2356,18 @@ static void wbt_clear_meswin( WBTLIST_MAIN_WORK* wk )
  *	@param	WBTLIST_MAIN_WORK* wk
  *	@param	const s32			座標index(x,yが2つセットとなっている)
  *
- *	@retval
+ *	@retval s16					座標
  */
 //-----------------------------------------------------------------------------
 static s16 wbt_get_empty( WBTLIST_MAIN_WORK *wk, const s32 num )
 {
 	s16	*adr;
+	
+	// 念のため
+	if((num < 0)||(num >= WBT_EMPTY_MAXNUM)){
+		OS_Printf("empty error :%d\n",num);
+		return(0);
+	}
 	
 	adr = wk->EmptyBuffer;
 	return( adr[num] );
@@ -2925,7 +2943,7 @@ static void wbt_debug_param( WBTLIST_MAIN_WORK* wk )
 //-----------------------------------------------------------------------------
 static void wbt_debug( WBTLIST_MAIN_WORK* wk )
 {
-#ifdef _DEBUG_LOCAL_
+#ifdef _DEBUG_INPUT_
 	// debug
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
 		wk->Step = STEP_INIT;
