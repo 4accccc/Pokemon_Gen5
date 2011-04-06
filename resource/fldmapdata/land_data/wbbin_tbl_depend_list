@@ -3446,3 +3446,15 @@ $(DIR_WBTMP)/m_remainder01_00_00.tbl: $(DIR_RES)/m_remainder01_00_00.bin
 	@echo create_bintbl m_remainder01_00_00
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_remainder01_00_00.bin
 
+$(DIR_WBTMP)/m_rresort02_00_00.tbl: $(DIR_RES)/m_rresort02_00_00.bin
+	@echo create_bintbl m_rresort02_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_rresort02_00_00.bin
+
+$(DIR_WBTMP)/m_rresort03_00_00.tbl: $(DIR_RES)/m_rresort03_00_00.bin
+	@echo create_bintbl m_rresort03_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_rresort03_00_00.bin
+
+$(DIR_WBTMP)/m_rresort04_00_00.tbl: $(DIR_RES)/m_rresort04_00_00.bin
+	@echo create_bintbl m_rresort04_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_rresort04_00_00.bin
+
