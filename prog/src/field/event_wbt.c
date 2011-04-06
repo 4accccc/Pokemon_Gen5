@@ -39,7 +39,7 @@
 //#include "scrcmd_bsubway.h"
 //#include "bsubway_tr.h"
 
-#include "wbt_system_local.h"
+#include "wbt_system.h"
 
 #include "event_wbt.h"
 
@@ -49,7 +49,7 @@
 
 #include "script_message.naix"
 //#include "../../../resource/message/dst/script/msg_bsubway_scr.h"
-#include "../../../resource/message/dst/msg_tower_trainer.h"
+//#include "../../../resource/message/dst/msg_tower_trainer.h"
 
 #include "system/net_err.h"
 

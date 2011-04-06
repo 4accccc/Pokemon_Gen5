@@ -31,7 +31,7 @@
 
 #include "field/wbt.h"
 #include "wbt_system.h"
-#include "wbt_system_local.h"
+
 #include "event_wbt.h"
 #include "wbt_gimmick.h"
 

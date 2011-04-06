@@ -13,8 +13,6 @@
 
 #include "wbt_system_local.h"
 
-#include "msg/msg_wbt_tournament.h"
-
 #include "poke_tool/poketype.h" //PokeType
 
 //============================================================================================
