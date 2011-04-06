@@ -229,8 +229,7 @@ EVENT_START   ev_pos_c06gym0101_guide
 
     // カメラ操作とメッセージ
     _CALL move_camera_start
-    _PLAINWIN_MSG_DOWN( msg_c06gym0101_glasses_02 )
-    _LAST_KEYWAIT()
+    _PLAINWIN_MSG_DOWN( msg_c06gym0101_glasses_02a )
     _MSGWIN_CLOSE()
     _CALL move_camera_end
 
