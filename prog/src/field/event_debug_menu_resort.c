@@ -559,7 +559,7 @@ static BOOL debugMenuCallProc_AllResident( DEBUG_MENU_EVENT_WORK *p_wk )
     if( RESORT_RESIDENT_DATA_IsEmpty( p_dst ) )
     {
       RESORT_RECV_DATA_SetDebugData( p_recv, p_wk->gdata );
-      RESORT_RESIDENT_DATA_SetRecv( p_dst, p_recv, i, 1, i );
+      RESORT_RESIDENT_DATA_SetRecv( p_dst, p_recv, i, RESORT_PLACEID_INSTITUTION_00+i, i );
     }
   }
 

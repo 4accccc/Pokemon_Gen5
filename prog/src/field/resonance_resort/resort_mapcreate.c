@@ -271,7 +271,7 @@ static int Resort_Mapcreate_SetUpBlockRoom( RESORT_MAPCREATE *p_wk, NormalVtxFor
       FIELD_DATA_PATCH* p_patch = FIELD_DATA_PATCH_Create( patch, GFL_HEAP_LOWID(heapID) );
 
       // アトリビュートのオーバーライト
-      FIELD_DATA_PATCH_OverWriteAttrEx( p_patch, p_attr, 0, 0, 0, 0, 32, 32 );
+      FIELD_DATA_PATCH_OverWriteAttr( p_patch, p_attr, 0, 0 );
 
       //3dmdを配置
       build_count = FIELD_LAND_DATA_PATCH_AddBuildModel( p_patch, p_bm, g3Dmap, build_count, 0, 0 );
