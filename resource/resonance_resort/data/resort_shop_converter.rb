@@ -159,18 +159,19 @@ SHOP_COL_START         = 0         #列開始位置
 SHOP_COL_SHOP   = SHOP_COL_START   #列：お店種類
 SHOP_COL_TYPE          = 1         #列：種類
 SHOP_COL_LV            = 2         #列：お店レベル
-SHOP_COL_NAME          = 3         #列：お店名
-SHOP_COL_OUT_MODEL     = 4         #列：外観
-SHOP_COL_IN_3DMD       = 5         #列：内装
-SHOP_COL_LIST1         = 6         #列：リスト１
-SHOP_COL_LIST2         = 7         #列：リスト２
-SHOP_COL_LIST3         = 8         #列：リスト３
-SHOP_COL_LIST4         = 9         #列：リスト４
-SHOP_COL_LIST5         = 10         #列：リスト５
-SHOP_COL_LIST6         = 11         #列：リスト６
+SHOP_COL_NEXTEXP       = 3         #列：次の経験値
+SHOP_COL_NAME          = 4         #列：お店名
+SHOP_COL_OUT_MODEL     = 5         #列：外観
+SHOP_COL_IN_3DMD       = 6         #列：内装
+SHOP_COL_LIST1         = 7         #列：リスト１
+SHOP_COL_LIST2         = 8         #列：リスト２
+SHOP_COL_LIST3         = 9         #列：リスト３
+SHOP_COL_LIST4         = 10         #列：リスト４
+SHOP_COL_LIST5         = 11         #列：リスト５
+SHOP_COL_LIST6         = 12         #列：リスト６
 SHOP_COL_LIST_START    = SHOP_COL_LIST1
 SHOP_COL_LIST_END      = SHOP_COL_LIST6
-SHOP_COL_END           = 12        #列最後
+SHOP_COL_END           = 13        #列最後
 def convertShop( csv, data, h_define, gmm, bmodel, patch, h_service )
 
   #データの作成
@@ -189,6 +190,7 @@ def convertShop( csv, data, h_define, gmm, bmodel, patch, h_service )
     shop    = csv.get( row, SHOP_COL_SHOP )
     type    = csv.get( row, SHOP_COL_TYPE )
     lv      = csv.get( row, SHOP_COL_LV )
+    nextexp = csv.get( row, SHOP_COL_NEXTEXP )
     name    = csv.get( row, SHOP_COL_NAME )
     model   = csv.get( row, SHOP_COL_OUT_MODEL );
     in3dmd  = csv.get( row, SHOP_COL_IN_3DMD );
@@ -197,6 +199,7 @@ def convertShop( csv, data, h_define, gmm, bmodel, patch, h_service )
     data.write_u16( h_define[shop] )
     data.write_u16( 0 ) #TODO
     data.write_u16( lv )
+    data.write_u16( nextexp )
 
     begin
       data.write_u16( msgdata.search( "#{name}", "#{row}行のgmm" ) )

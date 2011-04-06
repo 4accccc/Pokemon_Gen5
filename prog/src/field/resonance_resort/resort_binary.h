@@ -54,3 +54,46 @@ extern const RESORT_BINARY_PEOPLE_DATA * RESORT_BINARY_SearchData( const RESORT_
 //バイナリからデータ取得
 extern u16 RESORT_BINARY_PEOPLE_DATA_GetScrID( const RESORT_BINARY_PEOPLE_DATA *cp_wk );
 extern u16 RESORT_BINARY_PEOPLE_DATA_GetMsgID( const RESORT_BINARY_PEOPLE_DATA *cp_wk, u16 param );
+
+
+//=============================================================================
+/**
+ *					レゾナンスリゾートアピール情報バイナリデータ
+*/
+//=============================================================================
+#define RESORT_BINARY_SPOT_ANSWER_MAX (6)
+#define RESORT_BINARY_SPOT_ANSWER_NUM (3)
+//-------------------------------------
+///	列挙型
+//=====================================
+typedef enum
+{
+  RESORT_BINARY_SPOT_PARAM_MSG_00,
+  RESORT_BINARY_SPOT_PARAM_MSG_01,
+  RESORT_BINARY_SPOT_PARAM_MSG_02,
+
+  RESORT_BINARY_SPOT_PARAM_BAESEXP,
+
+  RESORT_BINARY_SPOT_DATA_START,
+
+  RESORT_BINARY_SPOT_PARAM_TYPE = RESORT_BINARY_SPOT_DATA_START,
+  RESORT_BINARY_SPOT_PARAM_DATA,
+  RESORT_BINARY_SPOT_PARAM_GRADE,
+
+  RESORT_BINARY_SPOT_DATA_END = RESORT_BINARY_SPOT_DATA_START+RESORT_BINARY_SPOT_ANSWER_NUM*RESORT_BINARY_SPOT_ANSWER_MAX-1,
+
+  RESORT_BINARY_SPOT_PARAM_MAX,
+}RESORT_BINARY_SPOT_PARAM;
+
+//-------------------------------------
+///	アピールデータ
+//=====================================
+typedef struct _RESORT_BINARY_SPOT RESORT_BINARY_SPOT;
+
+//-------------------------------------
+/// PUBLIC	
+//=====================================
+extern RESORT_BINARY_SPOT * RESORT_BINARY_SPOT_Init( HEAPID heapID );
+extern void RESORT_BINARY_SPOT_Exit( RESORT_BINARY_SPOT *p_wk );
+extern u16 RESORT_BINARY_SPOT_GetData( const RESORT_BINARY_SPOT *cp_wk, u32 index, RESORT_BINARY_SPOT_PARAM param );
+extern BOOL RESORT_BINARY_SPOT_SearchIndex( const RESORT_BINARY_SPOT *cp_wk, u32 msg, u32 *p_index );

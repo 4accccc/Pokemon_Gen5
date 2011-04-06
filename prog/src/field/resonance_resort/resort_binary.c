@@ -183,3 +183,99 @@ const RESORT_BINARY_PEOPLE_DATA * RESORT_BINARY_SearchData( const RESORT_BINARY_
   return NULL;
 }
 
+//=============================================================================
+/**
+ *					レゾナンスリゾートアピール情報バイナリデータ
+*/
+//=============================================================================
+//-------------------------------------
+///	アピールデータ
+//=====================================
+typedef struct
+{
+  u16 param[ RESORT_BINARY_SPOT_PARAM_MAX ];
+} RESORT_BINARY_SPOT_DATA;
+
+//-------------------------------------
+///	アピールデータ
+//=====================================
+struct _RESORT_BINARY_SPOT
+{
+  u32 size;
+  RESORT_BINARY_SPOT_DATA *p_data;
+};
+
+//-------------------------------------
+/// PUBLIC	
+//=====================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  データ読み込み
+ *
+ *	@param	HEAPID heapID   ヒープID
+ *
+ *	@return ワーク
+ */
+//-----------------------------------------------------------------------------
+RESORT_BINARY_SPOT * RESORT_BINARY_SPOT_Init( HEAPID heapID )
+{
+  RESORT_BINARY_SPOT *p_wk = GFL_HEAP_AllocClearMemory(heapID,sizeof(RESORT_BINARY_SPOT) );
+  p_wk->p_data = GFL_ARC_UTIL_LoadEx(ARCID_RESONANCE_RESORT_DATA, NARC_resonance_resort_data_resort_spot_dat, FALSE, heapID, &p_wk->size );
+  return p_wk;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@briefデータ破棄
+ *
+ *	@param	RESORT_BINARY_SPOT *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void RESORT_BINARY_SPOT_Exit( RESORT_BINARY_SPOT *p_wk )
+{
+  GFL_HEAP_FreeMemory(p_wk->p_data);
+  GFL_HEAP_FreeMemory(p_wk);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief データ取得
+ *
+ *	@param	const RESORT_BINARY_SPOT *cp_wk ワーク
+ *	@param	index インデックス
+ *	@param	param  パラメータ
+ *
+ *	@return データ
+ */
+//-----------------------------------------------------------------------------
+u16 RESORT_BINARY_SPOT_GetData( const RESORT_BINARY_SPOT *cp_wk, u32 index, RESORT_BINARY_SPOT_PARAM param )
+{
+  GF_ASSERT( index < cp_wk->size / sizeof( RESORT_BINARY_SPOT_DATA ) );
+  GF_ASSERT( param < RESORT_BINARY_SPOT_PARAM_MAX );
+  return cp_wk->p_data[ index ].param[ param ];
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief　データ取得（メッセージから）
+ *
+ *	@param	const RESORT_BINARY_SPOT *cp_wk ワーク
+ *	@param	msg メッセージ
+ *	@param	p_index インデックス
+ *
+ *	@return   TRUE …あった FALSE …なかった
+ */
+//-----------------------------------------------------------------------------
+BOOL RESORT_BINARY_SPOT_SearchIndex( const RESORT_BINARY_SPOT *cp_wk, u32 msg, u32 *p_index )
+{
+  for( (*p_index) = 0; (*p_index) < cp_wk->size / sizeof( RESORT_BINARY_SPOT_DATA ); (*p_index)++ )
+  {
+    if( cp_wk->p_data[ (*p_index) ].param[ RESORT_BINARY_SPOT_PARAM_MSG_00 ] == msg
+      || cp_wk->p_data[ (*p_index) ].param[ RESORT_BINARY_SPOT_PARAM_MSG_01 ] == msg 
+      || cp_wk->p_data[ (*p_index) ].param[ RESORT_BINARY_SPOT_PARAM_MSG_02 ] == msg 
+      )
+    {
+      return TRUE;
+    }
+  }
+
+  return FALSE;
+}

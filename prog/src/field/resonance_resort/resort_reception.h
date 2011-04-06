@@ -41,3 +41,4 @@ extern void RESORT_RECEPTION_Action( FIELDMAP_WORK *p_fieldmap, u16 param );
 extern RESORT_PEOPLE_SYS * RESORT_RECEPTION_GetPeopleSys( FIELDMAP_WORK *p_fieldmap );
 extern RESORT_DATA_MANAGER * RESORT_RECEPTION_GetDataManager( FIELDMAP_WORK *p_fieldmap );
 extern RESORT_BINARY_SHOP * RESORT_RECEPTION_GetBinaryShop( FIELDMAP_WORK *p_fieldmap );
+extern RESORT_BINARY_SPOT * RESORT_RECEPTION_GetBinarySpot( FIELDMAP_WORK *p_fieldmap );

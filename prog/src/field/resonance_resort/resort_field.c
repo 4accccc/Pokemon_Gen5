@@ -55,6 +55,7 @@ typedef struct
   RESORT_PEOPLE_SYS *p_people_sys;
   RESORT_DATA_MANAGER *p_data_manager;
   RESORT_BINARY_SHOP *p_binary_shop;
+  RESORT_BINARY_SPOT *p_binary_spot;
 } RESORT_FIELD_WORK;
 
 //=============================================================================
@@ -109,9 +110,10 @@ void RESORT_FIELD_Setup( FIELDMAP_WORK *p_fieldmap )
     p_wk->p_people_sys = RESORT_PEOPLE_SYS_Init( &param, heapID );
   }
 
-  //お店情報
+  //バイナリ情報
   {
     p_wk->p_binary_shop = RESORT_BINARY_SHOP_Init( heapID );
+    p_wk->p_binary_spot = RESORT_BINARY_SPOT_Init( heapID );
   }
 
   NAGI_Printf( "レゾナンスsetup\n" );
@@ -127,6 +129,7 @@ void RESORT_FIELD_End( FIELDMAP_WORK *p_fieldmap )
 {
   RESORT_FIELD_WORK *p_wk = GMK_TMP_WK_GetWork(p_fieldmap, RESORT_FIELD_ASSIGN_ID);
 
+  RESORT_BINARY_SPOT_Exit( p_wk->p_binary_spot );
   RESORT_BINARY_SHOP_Exit( p_wk->p_binary_shop );
   RESORT_PEOPLE_SYS_Exit( p_wk->p_people_sys );
   RESORT_DATA_MANAGER_Exit( p_wk->p_data_manager );
@@ -189,4 +192,18 @@ RESORT_BINARY_SHOP * RESORT_FIELD_GetBinaryShop( FIELDMAP_WORK *p_fieldmap )
 {
   RESORT_FIELD_WORK *p_wk = GMK_TMP_WK_GetWork(p_fieldmap, RESORT_FIELD_ASSIGN_ID);
   return p_wk->p_binary_shop;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アピールデータ
+ *
+ *	@param	FIELDMAP_WORK *p_fieldmap フィールドマップ
+ *
+ *	@return アピールデータ
+ */
+//-----------------------------------------------------------------------------
+RESORT_BINARY_SPOT * RESORT_FIELD_GetBinarySpot( FIELDMAP_WORK *p_fieldmap )
+{
+  RESORT_FIELD_WORK *p_wk = GMK_TMP_WK_GetWork(p_fieldmap, RESORT_FIELD_ASSIGN_ID);
+  return p_wk->p_binary_spot;
 }

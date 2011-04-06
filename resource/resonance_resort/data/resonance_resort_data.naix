@@ -15,7 +15,7 @@ enum {
 	NARC_resonance_resort_data_resort_shop_dat = 1,
 	NARC_resonance_resort_data_resort_service_dat = 2,
 	NARC_resonance_resort_data_resort_institution_dat = 3,
-	NARC_resonance_resort_data_resort_appeal_dat = 4
+	NARC_resonance_resort_data_resort_spot_dat = 4
 };
 
 /* NARC_RESONANCE_RESORT_DATA_NAIX_ */

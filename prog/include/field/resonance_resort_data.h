@@ -163,6 +163,7 @@ typedef enum
   //RECVとRESIDENTにある加工された値を取得
   RESORT_DATA_PARAM_WANT_JOB,
   RESORT_DATA_PARAM_PHRASE, //p_ret_adrsから取得
+  RESORT_DATA_PARAM_WANT_SPOT,
 
   //以下RECVとRESIDENT版にある
   //基本データ

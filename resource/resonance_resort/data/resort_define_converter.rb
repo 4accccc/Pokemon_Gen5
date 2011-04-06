@@ -57,7 +57,9 @@ DEFINE_COL_PERSONALITY   = 14        #列：性格
 DEFINE_COL_VIEW          = 16        #列：見た目
 DEFINE_COL_SEX           = 18        #列：性別
 DEFINE_COL_SERVICE       = 20        #列：サービス
-DEFINE_COL_END           = 22        #列最後
+DEFINE_COL_SPOTTYPE      = 22        #列：行きたいスポットタイプ
+DEFINE_COL_GRADE         = 24        #列：評価
+DEFINE_COL_END           = 26        #列最後
 def convertDefine( csv, header, hash, hashNumber )
 
   hashPersonStr     = Hash.new()
@@ -69,6 +71,8 @@ def convertDefine( csv, header, hash, hashNumber )
   hashNPCStr        = Hash.new()
   hashPersonaliry   = Hash.new()
   hashService       = Hash.new()
+  hashSpotType      = Hash.new()
+  hashGrade         = Hash.new()
 
   #日本語→タグと日本語→値のハッシュを作成
   for row in DEFINE_ROW_START...csv.row_length-1
@@ -103,6 +107,10 @@ def convertDefine( csv, header, hash, hashNumber )
         hashPersonaliry.store( japStr, engStr )
       when DEFINE_COL_SERVICE
         hashService.store( japStr, engStr )
+      when DEFINE_COL_SPOTTYPE
+        hashSpotType.store( japStr, engStr )
+      when DEFINE_COL_GRADE
+        hashGrade.store( japStr, engStr )
       end
 
       col+=2
@@ -165,6 +173,18 @@ def convertDefine( csv, header, hash, hashNumber )
   }
   header.write( "#define RESORT_SERVICE_TYPE_MAX (#{hashService.size}) //最大\n" )
 
+  header.write( "//スポットタイプ\n" )
+  hashSpotType.each{ |k,v|
+    header.write( "#define RESORT_SPOT_TYPE_#{v} (#{hashNumber[k]}) //#{k}\n" )
+  }
+  header.write( "#define RESORT_SPOT_TYPE_MAX (#{hashSpotType.size}) //最大\n" )
+
+  header.write( "//評価\n" )
+  hashGrade.each{ |k,v|
+    header.write( "#define RESORT_GRADE_TYPE_#{v} (#{hashNumber[k]}) //#{k}\n" )
+  }
+  header.write( "#define RESORT_GRADE_TYPE_MAX (#{hashGrade.size}) //最大\n" )
+
   #定義をruby用ハッシュテーブルに書き込み
   hash.write( "$define_hash = {\n" )
   hashNumber.each{ |k,v|
@@ -216,4 +236,3 @@ begin
   header.genelate( "#{ARGV[2]}.h" )
 
 end
-

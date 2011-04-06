@@ -65,3 +65,13 @@
 #define RESORT_SERVICE_TYPE_LV (2) //LV
 #define RESORT_SERVICE_TYPE_ITEM (0) //道具
 #define RESORT_SERVICE_TYPE_MAX (10) //最大
+//スポットタイプ
+#define RESORT_SPOT_TYPE_RANK (2) //ランク
+#define RESORT_SPOT_TYPE_SHOPTYPE (0) //住民
+#define RESORT_SPOT_TYPE_SEX (1) //性別
+#define RESORT_SPOT_TYPE_MAX (3) //最大
+//評価
+#define RESORT_GRADE_TYPE_GOOD (0) //△
+#define RESORT_GRADE_TYPE_GREAT (1) //○
+#define RESORT_GRADE_TYPE_EXCELLENT (2) //◎
+#define RESORT_GRADE_TYPE_MAX (3) //最大

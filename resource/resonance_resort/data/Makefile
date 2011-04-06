@@ -19,7 +19,7 @@ targetshop 		= resort_shop
 targetservice = resort_service
 definehash		= resort_define_hash
 targetinstitution = resort_institution
-targetappeal 	= resort_appeal
+targetspot 		= resort_spot
 
 #------------------------------------------------------------------------------
 #依存するファイル名
@@ -45,7 +45,7 @@ DEFINECONV 	= resort_define_converter.rb
 PEOPLECONV 	= resort_people_converter.rb
 SHOPCONV 		= resort_shop_converter.rb
 INSTITUTIONCONV 		= resort_institution_converter.rb
-APPEALCONV 	= resort_appeal_converter.rb
+SPOTCONV 	= resort_spot_converter.rb
 
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
@@ -74,24 +74,24 @@ $(TARGETDIR_PROG)/$(targetpeopleh).h:	$(targetpeopleh).h
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetall).narc $(targetall).naix: $(targetpeople).dat $(targetshop).dat $(targetservice).dat $(targetinstitution).dat $(targetappeal).dat
+$(targetall).narc $(targetall).naix: $(targetpeople).dat $(targetshop).dat $(targetservice).dat $(targetinstitution).dat $(targetspot).dat
 	nnsarc -r -l -n -i $(targetall) $^
 	$(NAIXCUT) $(targetall).naix
 
 #データコンバート
-$(targetpeople).dat $(targetshop).dat $(targetservice).dat $(targetpeopleh).h $(targetinstitution).dat $(targetappeal).dat: $(xlsname).xls $(msgfile) $(scriptfile) $(PEOPLECONV) $(DEFINECONV) $(bmodelfile) $(fieldevent) $(landpatch)
+$(targetpeople).dat $(targetshop).dat $(targetservice).dat $(targetpeopleh).h $(targetinstitution).dat $(targetspot).dat: $(xlsname).xls $(msgfile) $(scriptfile) $(PEOPLECONV) $(DEFINECONV) $(bmodelfile) $(fieldevent) $(landpatch)
 	$(XLSCONV) -o $(targetpeople).csv -p 1 -s csv $(xlsname).xls
 	$(XLSCONV) -o $(targetshop).csv -p 2 -s csv $(xlsname).xls
 	$(XLSCONV) -o $(targetservice).csv -p 3 -s csv $(xlsname).xls
 	$(XLSCONV) -o $(targetdefine).csv -p 4 -s csv $(xlsname).xls
 	$(XLSCONV) -o $(targetinstitution).csv -p 5 -s csv $(xlsname).xls
-	$(XLSCONV) -o $(targetappeal).csv -p 6 -s csv $(xlsname).xls
+	$(XLSCONV) -o $(targetspot).csv -p 6 -s csv $(xlsname).xls
 	rm -f *.dat
 	ruby $(DEFINECONV) $(targetdefine).csv $(definehash) $(targetpeopleh)
 	ruby $(PEOPLECONV) $(targetpeople).csv $(msgfile) $(scriptfile) $(targetpeople)
 	ruby $(SHOPCONV) $(targetshop).csv $(targetservice).csv $(msgfile) $(bmodelfile) $(landpatch) $(targetshop) $(targetservice)
 	ruby $(INSTITUTIONCONV) $(targetinstitution).csv $(fieldevent) $(targetinstitution)
-	ruby $(APPEALCONV) $(targetappeal).csv $(msgfile) $(targetappeal)
+	ruby $(SPOTCONV) $(targetspot).csv $(msgfile) $(targetspot)
 endif
 
 #------------------------------------------------------------------------------

@@ -1280,6 +1280,9 @@ u32 RESORT_RECV_DATA_GetData( const RESORT_RECV_DATA *cp_wk, RESORT_DATA_PARAM p
       RESORT_BASIC1_DATA_GetIntroduction( &cp_wk->basic1, p_ret_adrs );
     }
     return 0;
+  case RESORT_DATA_PARAM_WANT_SPOT:
+    //‚Ù‚ñ‚Æ‚ÍA“ïˆÕ“x‚Æ«Ši‚ÆŽí—Þ‚É‚æ‚Á‚Ä‚«‚Ü‚é
+    return cp_wk->basic1.trainerID % 10; //TODO;
   case RESORT_DATA_PARAM_NATION:
     return cp_wk->basic1.nation;
   case RESORT_DATA_PARAM_AREA:

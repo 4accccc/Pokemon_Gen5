@@ -338,6 +338,7 @@ _RET
 //==============================================================
 sub_tourist_spot:
 {
+  DEFINE_LOCAL LWK_RET_LVUP
 
   //スポット文を表示
   _RESORT_GET_MSGID( RESORT_MSGID_WHERETOGO, LWK_MSGID )
@@ -352,10 +353,14 @@ sub_tourist_spot:
     _OBJ_WARP_OUT( LWK_OBJID )
     _TIME_WAIT( 30 )
 
-    _RESORT_SET_SPOT( LWK_LIST_RET_IDX, LWK_MSGID )
+    _RESORT_SET_SPOT( LWK_LIST_RET_IDX, LWK_MSGID, LWK_RET_LVUP )
     _RESORT_DELETE_PEOPLE( RESORT_DELTE_PEOPLE_MINE, 0 )
 
     _SYSWIN_MSG( LWK_MSGID, POS_DOWN )
+
+    IF $LWK_RET_LVUP == TRUE THEN
+      _SYSWIN_MSG( resort_sys_13, POS_DOWN )
+    ENDIF
     _SYSWIN_CLOSE()
 
     //選択肢終了

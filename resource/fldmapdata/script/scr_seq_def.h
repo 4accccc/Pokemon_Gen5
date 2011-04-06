@@ -12858,13 +12858,14 @@
  * @param[out]  msgid   表示メッセージ
  */
 //--------------------------------------------------------------
-#define _RESORT_SET_SPOT( idx, ret_msgid ) \
-      _ASM_RESORT_SET_SPOT idx, ret_msgid
+#define _RESORT_SET_SPOT( idx, ret_msgid, ret_lvup ) \
+      _ASM_RESORT_SET_SPOT idx, ret_msgid, ret_lvup
 
-  .macro _ASM_RESORT_SET_SPOT idx, ret_msgid
+  .macro _ASM_RESORT_SET_SPOT idx, ret_msgid, ret_lvup
   .short EV_SEQ_RESORT_SET_SPOT
   .short \idx
   .short \ret_msgid
+  .short \ret_lvup
   .endm
 
 //--------------------------------------------------------------
