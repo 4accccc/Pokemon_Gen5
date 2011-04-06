@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="onoue_masayuki" host="W00272" date="2011-03-31T12:40:18"/>
+	<create user="onoue_masayuki" host="W00272" date="2011-04-05T21:05:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,9 +263,9 @@
 		</language>
 	</columns>
 
-	<dialog left="1298" top="117" right="2011" bottom="750" maximized="no" rayout="Vertical2">
+	<dialog left="1304" top="107" right="2017" bottom="737" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="542" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="542" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="538"/>
@@ -308,203 +308,823 @@
 	</row>
 
 	<row id="msg_w_boss_start_03">
-		<language name="JPN" width="256">せんとう　かいし　ほわいと</language>
-		<language name="JPN_KANJI" width="256">せんとう　かいし　ほわいと</language>
+		<language name="JPN" width="256">せんとう　かいし　ほわいと▼</language>
+		<language name="JPN_KANJI" width="256">せんとう　かいし　ほわいと▼</language>
 	</row>
 
 	<row id="msg_w_boss_start_04">
-		<language name="JPN" width="256">せんとう　かいし　ほわいと</language>
-		<language name="JPN_KANJI" width="256">せんとう　かいし　ほわいと</language>
+		<language name="JPN" width="256">せんとう　かいし　ほわいと▼</language>
+		<language name="JPN_KANJI" width="256">せんとう　かいし　ほわいと▼</language>
 	</row>
 
 	<row id="msg_w_boss_start_05">
-		<language name="JPN" width="256">せんとう　かいし　ほわいと</language>
-		<language name="JPN_KANJI" width="256">せんとう　かいし　ほわいと</language>
+		<language name="JPN" width="256">せんとう　かいし　ほわいと▼</language>
+		<language name="JPN_KANJI" width="256">せんとう　かいし　ほわいと▼</language>
 	</row>
 
 	<row id="msg_w_boss_start_06">
-		<language name="JPN" width="256">せんとう　かいし　ほわいと</language>
-		<language name="JPN_KANJI" width="256">せんとう　かいし　ほわいと</language>
+		<language name="JPN" width="256">せんとう　かいし　ほわいと▼</language>
+		<language name="JPN_KANJI" width="256">せんとう　かいし　ほわいと▼</language>
 	</row>
 
 	<row id="msg_w_boss_start_07">
-		<language name="JPN" width="256">せんとう　かいし　ほわいと</language>
-		<language name="JPN_KANJI" width="256">せんとう　かいし　ほわいと</language>
+		<language name="JPN" width="256">せんとう　かいし　ほわいと▼</language>
+		<language name="JPN_KANJI" width="256">せんとう　かいし　ほわいと▼</language>
 	</row>
 
 	<row id="msg_w_boss_start_08">
-		<language name="JPN" width="256">せんとう　かいし　ほわいと</language>
-		<language name="JPN_KANJI" width="256">せんとう　かいし　ほわいと</language>
+		<language name="JPN" width="256">せんとう　かいし　ほわいと▼</language>
+		<language name="JPN_KANJI" width="256">せんとう　かいし　ほわいと▼</language>
 	</row>
 
 	<row id="msg_w_boss_start_09">
-		<language name="JPN" width="256">せんとう　かいし　ほわいと</language>
-		<language name="JPN_KANJI" width="256">せんとう　かいし　ほわいと</language>
+		<language name="JPN" width="256">せんとう　かいし　ほわいと▼</language>
+		<language name="JPN_KANJI" width="256">せんとう　かいし　ほわいと▼</language>
 	</row>
 
 	<row id="msg_b_boss_start_00">
-		<language name="JPN" width="256">せんとう　かいし　ブラック</language>
-		<language name="JPN_KANJI" width="256">せんとう　かいし　ブラック</language>
+		<language name="JPN" width="256">せんとう　かいし　ブラック▼</language>
+		<language name="JPN_KANJI" width="256">せんとう　かいし　ブラック▼</language>
 	</row>
 
 	<row id="msg_b_boss_start_01">
-		<language name="JPN" width="256">せんとう　かいし　ブラック</language>
-		<language name="JPN_KANJI" width="256">せんとう　かいし　ブラック</language>
+		<language name="JPN" width="256">せんとう　かいし　ブラック▼</language>
+		<language name="JPN_KANJI" width="256">せんとう　かいし　ブラック▼</language>
 	</row>
 
 	<row id="msg_b_boss_start_02">
-		<language name="JPN" width="256">せんとう　かいし　ブラック</language>
-		<language name="JPN_KANJI" width="256">せんとう　かいし　ブラック</language>
+		<language name="JPN" width="256">せんとう　かいし　ブラック▼</language>
+		<language name="JPN_KANJI" width="256">せんとう　かいし　ブラック▼</language>
 	</row>
 
 	<row id="msg_b_boss_start_03">
-		<language name="JPN" width="256">せんとう　かいし　ブラック</language>
-		<language name="JPN_KANJI" width="256">せんとう　かいし　ブラック</language>
+		<language name="JPN" width="256">せんとう　かいし　ブラック▼</language>
+		<language name="JPN_KANJI" width="256">せんとう　かいし　ブラック▼</language>
 	</row>
 
 	<row id="msg_b_boss_start_04">
-		<language name="JPN" width="256">せんとう　かいし　ブラック</language>
-		<language name="JPN_KANJI" width="256">せんとう　かいし　ブラック</language>
+		<language name="JPN" width="256">せんとう　かいし　ブラック▼</language>
+		<language name="JPN_KANJI" width="256">せんとう　かいし　ブラック▼</language>
 	</row>
 
 	<row id="msg_b_boss_start_05">
-		<language name="JPN" width="256">せんとう　かいし　ブラック</language>
-		<language name="JPN_KANJI" width="256">せんとう　かいし　ブラック</language>
+		<language name="JPN" width="256">せんとう　かいし　ブラック▼</language>
+		<language name="JPN_KANJI" width="256">せんとう　かいし　ブラック▼</language>
 	</row>
 
 	<row id="msg_b_boss_start_06">
-		<language name="JPN" width="256">せんとう　かいし　ブラック</language>
-		<language name="JPN_KANJI" width="256">せんとう　かいし　ブラック</language>
+		<language name="JPN" width="256">せんとう　かいし　ブラック▼</language>
+		<language name="JPN_KANJI" width="256">せんとう　かいし　ブラック▼</language>
 	</row>
 
 	<row id="msg_b_boss_start_07">
-		<language name="JPN" width="256">せんとう　かいし　ブラック</language>
-		<language name="JPN_KANJI" width="256">せんとう　かいし　ブラック</language>
+		<language name="JPN" width="256">せんとう　かいし　ブラック▼</language>
+		<language name="JPN_KANJI" width="256">せんとう　かいし　ブラック▼</language>
 	</row>
 
 	<row id="msg_b_boss_start_08">
-		<language name="JPN" width="256">せんとう　かいし　ブラック</language>
-		<language name="JPN_KANJI" width="256">せんとう　かいし　ブラック</language>
+		<language name="JPN" width="256">せんとう　かいし　ブラック▼</language>
+		<language name="JPN_KANJI" width="256">せんとう　かいし　ブラック▼</language>
 	</row>
 
 	<row id="msg_b_boss_start_09">
-		<language name="JPN" width="256">せんとう　かいし　ブラック</language>
-		<language name="JPN_KANJI" width="256">せんとう　かいし　ブラック</language>
+		<language name="JPN" width="256">せんとう　かいし　ブラック▼</language>
+		<language name="JPN_KANJI" width="256">せんとう　かいし　ブラック▼</language>
+	</row>
+
+	<row id="msg_w_boss_first_start_00">
+		<language name="JPN" width="256">しょかい　せんとう　かいし（ホワイト）▼</language>
+		<language name="JPN_KANJI" width="256">しょかい　せんとう　かいし（ホワイト）▼</language>
+	</row>
+
+	<row id="msg_w_boss_first_start_01">
+		<language name="JPN" width="256">しょかい　せんとう　かいし（ホワイト）▼</language>
+		<language name="JPN_KANJI" width="256">しょかい　せんとう　かいし（ホワイト）▼</language>
+	</row>
+
+	<row id="msg_w_boss_first_start_02">
+		<language name="JPN" width="256">しょかい　せんとう　かいし（ホワイト）▼</language>
+		<language name="JPN_KANJI" width="256">しょかい　せんとう　かいし（ホワイト）▼</language>
+	</row>
+
+	<row id="msg_w_boss_first_start_03">
+		<language name="JPN" width="256">しょかい　せんとう　かいし（ホワイト）▼</language>
+		<language name="JPN_KANJI" width="256">しょかい　せんとう　かいし（ホワイト）▼</language>
+	</row>
+
+	<row id="msg_w_boss_first_start_04">
+		<language name="JPN" width="256">しょかい　せんとう　かいし（ホワイト）▼</language>
+		<language name="JPN_KANJI" width="256">しょかい　せんとう　かいし（ホワイト）▼</language>
+	</row>
+
+	<row id="msg_w_boss_first_start_05">
+		<language name="JPN" width="256">しょかい　せんとう　かいし（ホワイト）▼</language>
+		<language name="JPN_KANJI" width="256">しょかい　せんとう　かいし（ホワイト）▼</language>
+	</row>
+
+	<row id="msg_w_boss_first_start_06">
+		<language name="JPN" width="256">しょかい　せんとう　かいし（ホワイト）▼</language>
+		<language name="JPN_KANJI" width="256">しょかい　せんとう　かいし（ホワイト）▼</language>
+	</row>
+
+	<row id="msg_w_boss_first_start_07">
+		<language name="JPN" width="256">しょかい　せんとう　かいし（ホワイト）▼</language>
+		<language name="JPN_KANJI" width="256">しょかい　せんとう　かいし（ホワイト）▼</language>
+	</row>
+
+	<row id="msg_w_boss_first_start_08">
+		<language name="JPN" width="256">しょかい　せんとう　かいし（ホワイト）▼</language>
+		<language name="JPN_KANJI" width="256">しょかい　せんとう　かいし（ホワイト）▼</language>
+	</row>
+
+	<row id="msg_w_boss_first_start_09">
+		<language name="JPN" width="256">しょかい　せんとう　かいし（ホワイト）▼</language>
+		<language name="JPN_KANJI" width="256">しょかい　せんとう　かいし（ホワイト）▼</language>
+	</row>
+
+	<row id="msg_b_boss_first_start_00">
+		<language name="JPN" width="256">しょかい　せんとう　かいし（ブラック）▼</language>
+		<language name="JPN_KANJI" width="256">しょかい　せんとう　かいし（ブラック）▼</language>
+	</row>
+
+	<row id="msg_b_boss_first_start_01">
+		<language name="JPN" width="256">しょかい　せんとう　かいし（ブラック）▼</language>
+		<language name="JPN_KANJI" width="256">しょかい　せんとう　かいし（ブラック）▼</language>
+	</row>
+
+	<row id="msg_b_boss_first_start_02">
+		<language name="JPN" width="256">しょかい　せんとう　かいし（ブラック）▼</language>
+		<language name="JPN_KANJI" width="256">しょかい　せんとう　かいし（ブラック）▼</language>
+	</row>
+
+	<row id="msg_b_boss_first_start_03">
+		<language name="JPN" width="256">しょかい　せんとう　かいし（ブラック）▼</language>
+		<language name="JPN_KANJI" width="256">しょかい　せんとう　かいし（ブラック）▼</language>
+	</row>
+
+	<row id="msg_b_boss_first_start_04">
+		<language name="JPN" width="256">しょかい　せんとう　かいし（ブラック）▼</language>
+		<language name="JPN_KANJI" width="256">しょかい　せんとう　かいし（ブラック）▼</language>
+	</row>
+
+	<row id="msg_b_boss_first_start_05">
+		<language name="JPN" width="256">しょかい　せんとう　かいし（ブラック）▼</language>
+		<language name="JPN_KANJI" width="256">しょかい　せんとう　かいし（ブラック）▼</language>
+	</row>
+
+	<row id="msg_b_boss_first_start_06">
+		<language name="JPN" width="256">しょかい　せんとう　かいし（ブラック）▼</language>
+		<language name="JPN_KANJI" width="256">しょかい　せんとう　かいし（ブラック）▼</language>
+	</row>
+
+	<row id="msg_b_boss_first_start_07">
+		<language name="JPN" width="256">しょかい　せんとう　かいし（ブラック）▼</language>
+		<language name="JPN_KANJI" width="256">しょかい　せんとう　かいし（ブラック）▼</language>
+	</row>
+
+	<row id="msg_b_boss_first_start_08">
+		<language name="JPN" width="256">しょかい　せんとう　かいし（ブラック）▼</language>
+		<language name="JPN_KANJI" width="256">しょかい　せんとう　かいし（ブラック）▼</language>
+	</row>
+
+	<row id="msg_b_boss_first_start_09">
+		<language name="JPN" width="256">しょかい　せんとう　かいし（ブラック）▼</language>
+		<language name="JPN_KANJI" width="256">しょかい　せんとう　かいし（ブラック）▼</language>
 	</row>
 
 	<row id="msg_w_boss_end_00">
-		<language name="JPN" width="256">せんとう　しゅうりょう　ホワイト</language>
-		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ホワイト</language>
+		<language name="JPN" width="256">せんとう　しゅうりょう　ホワイト▼</language>
+		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ホワイト▼</language>
 	</row>
 
 	<row id="msg_w_boss_end_01">
-		<language name="JPN" width="256">せんとう　しゅうりょう　ホワイト</language>
-		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ホワイト</language>
+		<language name="JPN" width="256">せんとう　しゅうりょう　ホワイト▼</language>
+		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ホワイト▼</language>
 	</row>
 
 	<row id="msg_w_boss_end_02">
-		<language name="JPN" width="256">せんとう　しゅうりょう　ホワイト</language>
-		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ホワイト</language>
+		<language name="JPN" width="256">せんとう　しゅうりょう　ホワイト▼</language>
+		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ホワイト▼</language>
 	</row>
 
 	<row id="msg_w_boss_end_03">
-		<language name="JPN" width="256">せんとう　しゅうりょう　ホワイト</language>
-		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ホワイト</language>
+		<language name="JPN" width="256">せんとう　しゅうりょう　ホワイト▼</language>
+		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ホワイト▼</language>
 	</row>
 
 	<row id="msg_w_boss_end_04">
-		<language name="JPN" width="256">せんとう　しゅうりょう　ホワイト</language>
-		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ホワイト</language>
+		<language name="JPN" width="256">せんとう　しゅうりょう　ホワイト▼</language>
+		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ホワイト▼</language>
 	</row>
 
 	<row id="msg_w_boss_end_05">
-		<language name="JPN" width="256">せんとう　しゅうりょう　ホワイト</language>
-		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ホワイト</language>
+		<language name="JPN" width="256">せんとう　しゅうりょう　ホワイト▼</language>
+		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ホワイト▼</language>
 	</row>
 
 	<row id="msg_w_boss_end_06">
-		<language name="JPN" width="256">せんとう　しゅうりょう　ホワイト</language>
-		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ホワイト</language>
+		<language name="JPN" width="256">せんとう　しゅうりょう　ホワイト▼</language>
+		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ホワイト▼</language>
 	</row>
 
 	<row id="msg_w_boss_end_07">
-		<language name="JPN" width="256">せんとう　しゅうりょう　ホワイト</language>
-		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ホワイト</language>
+		<language name="JPN" width="256">せんとう　しゅうりょう　ホワイト▼</language>
+		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ホワイト▼</language>
 	</row>
 
 	<row id="msg_w_boss_end_08">
-		<language name="JPN" width="256">せんとう　しゅうりょう　ホワイト</language>
-		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ホワイト</language>
+		<language name="JPN" width="256">せんとう　しゅうりょう　ホワイト▼</language>
+		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ホワイト▼</language>
 	</row>
 
 	<row id="msg_w_boss_end_09">
-		<language name="JPN" width="256">せんとう　しゅうりょう　ホワイト</language>
-		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ホワイト</language>
+		<language name="JPN" width="256">せんとう　しゅうりょう　ホワイト▼</language>
+		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ホワイト▼</language>
 	</row>
 
 	<row id="msg_b_boss_end_00">
-		<language name="JPN" width="256">せんとう　しゅうりょう　ブラック</language>
-		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ブラック</language>
+		<language name="JPN" width="256">せんとう　しゅうりょう　ブラック▼</language>
+		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ブラック▼</language>
 	</row>
 
 	<row id="msg_b_boss_end_01">
-		<language name="JPN" width="256">せんとう　しゅうりょう　ブラック</language>
-		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ブラック</language>
+		<language name="JPN" width="256">せんとう　しゅうりょう　ブラック▼</language>
+		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ブラック▼</language>
 	</row>
 
 	<row id="msg_b_boss_end_02">
-		<language name="JPN" width="256">せんとう　しゅうりょう　ブラック</language>
-		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ブラック</language>
+		<language name="JPN" width="256">せんとう　しゅうりょう　ブラック▼</language>
+		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ブラック▼</language>
 	</row>
 
 	<row id="msg_b_boss_end_03">
-		<language name="JPN" width="256">せんとう　しゅうりょう　ブラック</language>
-		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ブラック</language>
+		<language name="JPN" width="256">せんとう　しゅうりょう　ブラック▼</language>
+		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ブラック▼</language>
 	</row>
 
 	<row id="msg_b_boss_end_04">
-		<language name="JPN" width="256">せんとう　しゅうりょう　ブラック</language>
-		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ブラック</language>
+		<language name="JPN" width="256">せんとう　しゅうりょう　ブラック▼</language>
+		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ブラック▼</language>
 	</row>
 
 	<row id="msg_b_boss_end_05">
-		<language name="JPN" width="256">せんとう　しゅうりょう　ブラック</language>
-		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ブラック</language>
+		<language name="JPN" width="256">せんとう　しゅうりょう　ブラック▼</language>
+		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ブラック▼</language>
 	</row>
 
 	<row id="msg_b_boss_end_06">
-		<language name="JPN" width="256">せんとう　しゅうりょう　ブラック</language>
-		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ブラック</language>
+		<language name="JPN" width="256">せんとう　しゅうりょう　ブラック▼</language>
+		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ブラック▼</language>
 	</row>
 
 	<row id="msg_b_boss_end_07">
-		<language name="JPN" width="256">せんとう　しゅうりょう　ブラック</language>
-		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ブラック</language>
+		<language name="JPN" width="256">せんとう　しゅうりょう　ブラック▼</language>
+		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ブラック▼</language>
 	</row>
 
 	<row id="msg_b_boss_end_08">
-		<language name="JPN" width="256">せんとう　しゅうりょう　ブラック</language>
-		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ブラック</language>
+		<language name="JPN" width="256">せんとう　しゅうりょう　ブラック▼</language>
+		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ブラック▼</language>
 	</row>
 
 	<row id="msg_b_boss_end_09">
-		<language name="JPN" width="256">せんとう　しゅうりょう　ブラック</language>
-		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ブラック</language>
+		<language name="JPN" width="256">せんとう　しゅうりょう　ブラック▼</language>
+		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ブラック▼</language>
+	</row>
+
+	<row id="msg_b_boss_first_end_00">
+		<language name="JPN" width="256">しょかい　せんとう　おわり（ブラック）▼</language>
+		<language name="JPN_KANJI" width="256">しょかい　せんとう　おわり（ブラック）▼</language>
+	</row>
+
+	<row id="msg_b_boss_first_end_01">
+		<language name="JPN" width="256">しょかい　せんとう　おわり（ブラック）▼</language>
+		<language name="JPN_KANJI" width="256">しょかい　せんとう　おわり（ブラック）▼</language>
+	</row>
+
+	<row id="msg_b_boss_first_end_02">
+		<language name="JPN" width="256">しょかい　せんとう　おわり（ブラック）▼</language>
+		<language name="JPN_KANJI" width="256">しょかい　せんとう　おわり（ブラック）▼</language>
+	</row>
+
+	<row id="msg_b_boss_first_end_03">
+		<language name="JPN" width="256">しょかい　せんとう　おわり（ブラック）▼</language>
+		<language name="JPN_KANJI" width="256">しょかい　せんとう　おわり（ブラック）▼</language>
+	</row>
+
+	<row id="msg_b_boss_first_end_04">
+		<language name="JPN" width="256">しょかい　せんとう　おわり（ブラック）▼</language>
+		<language name="JPN_KANJI" width="256">しょかい　せんとう　おわり（ブラック）▼</language>
+	</row>
+
+	<row id="msg_b_boss_first_end_05">
+		<language name="JPN" width="256">しょかい　せんとう　おわり（ブラック）▼</language>
+		<language name="JPN_KANJI" width="256">しょかい　せんとう　おわり（ブラック）▼</language>
+	</row>
+
+	<row id="msg_b_boss_first_end_06">
+		<language name="JPN" width="256">しょかい　せんとう　おわり（ブラック）▼</language>
+		<language name="JPN_KANJI" width="256">しょかい　せんとう　おわり（ブラック）▼</language>
+	</row>
+
+	<row id="msg_b_boss_first_end_07">
+		<language name="JPN" width="256">しょかい　せんとう　おわり（ブラック）▼</language>
+		<language name="JPN_KANJI" width="256">しょかい　せんとう　おわり（ブラック）▼</language>
+	</row>
+
+	<row id="msg_b_boss_first_end_08">
+		<language name="JPN" width="256">しょかい　せんとう　おわり（ブラック）▼</language>
+		<language name="JPN_KANJI" width="256">しょかい　せんとう　おわり（ブラック）▼</language>
+	</row>
+
+	<row id="msg_b_boss_first_end_09">
+		<language name="JPN" width="256">しょかい　せんとう　おわり（ブラック）▼</language>
+		<language name="JPN_KANJI" width="256">しょかい　せんとう　おわり（ブラック）▼</language>
+	</row>
+
+	<row id="msg_w_boss_first_end_00">
+		<language name="JPN" width="256">しょかい　せんとう　おわり（ホワイト）▼</language>
+		<language name="JPN_KANJI" width="256">しょかい　せんとう　おわり（ホワイト）▼</language>
+	</row>
+
+	<row id="msg_w_boss_first_end_01">
+		<language name="JPN" width="256">しょかい　せんとう　おわり（ホワイト）▼</language>
+		<language name="JPN_KANJI" width="256">しょかい　せんとう　おわり（ホワイト）▼</language>
+	</row>
+
+	<row id="msg_w_boss_first_end_02">
+		<language name="JPN" width="256">しょかい　せんとう　おわり（ホワイト）▼</language>
+		<language name="JPN_KANJI" width="256">しょかい　せんとう　おわり（ホワイト）▼</language>
+	</row>
+
+	<row id="msg_w_boss_first_end_03">
+		<language name="JPN" width="256">しょかい　せんとう　おわり（ホワイト）▼</language>
+		<language name="JPN_KANJI" width="256">しょかい　せんとう　おわり（ホワイト）▼</language>
+	</row>
+
+	<row id="msg_w_boss_first_end_04">
+		<language name="JPN" width="256">しょかい　せんとう　おわり（ホワイト）▼</language>
+		<language name="JPN_KANJI" width="256">しょかい　せんとう　おわり（ホワイト）▼</language>
+	</row>
+
+	<row id="msg_w_boss_first_end_05">
+		<language name="JPN" width="256">しょかい　せんとう　おわり（ホワイト）▼</language>
+		<language name="JPN_KANJI" width="256">しょかい　せんとう　おわり（ホワイト）▼</language>
+	</row>
+
+	<row id="msg_w_boss_first_end_06">
+		<language name="JPN" width="256">しょかい　せんとう　おわり（ホワイト）▼</language>
+		<language name="JPN_KANJI" width="256">しょかい　せんとう　おわり（ホワイト）▼</language>
+	</row>
+
+	<row id="msg_w_boss_first_end_07">
+		<language name="JPN" width="256">しょかい　せんとう　おわり（ホワイト）▼</language>
+		<language name="JPN_KANJI" width="256">しょかい　せんとう　おわり（ホワイト）▼</language>
+	</row>
+
+	<row id="msg_w_boss_first_end_08">
+		<language name="JPN" width="256">しょかい　せんとう　おわり（ホワイト）▼</language>
+		<language name="JPN_KANJI" width="256">しょかい　せんとう　おわり（ホワイト）▼</language>
+	</row>
+
+	<row id="msg_w_boss_first_end_09">
+		<language name="JPN" width="256">しょかい　せんとう　おわり（ホワイト）▼</language>
+		<language name="JPN_KANJI" width="256">しょかい　せんとう　おわり（ホワイト）▼</language>
+	</row>
+
+	<row id="msg_hint_level_0_00">
+		<language name="JPN" width="256">とぼける▼</language>
+		<language name="JPN_KANJI" width="256">とぼける▼</language>
+	</row>
+
+	<row id="msg_hint_level_0_01">
+		<language name="JPN" width="256">とぼける▼</language>
+		<language name="JPN_KANJI" width="256">とぼける▼</language>
+	</row>
+
+	<row id="msg_hint_level_0_02">
+		<language name="JPN" width="256">とぼける▼</language>
+		<language name="JPN_KANJI" width="256">とぼける▼</language>
+	</row>
+
+	<row id="msg_hint_level_0_03">
+		<language name="JPN" width="256">とぼける▼</language>
+		<language name="JPN_KANJI" width="256">とぼける▼</language>
+	</row>
+
+	<row id="msg_hint_level_0_04">
+		<language name="JPN" width="256">とぼける▼</language>
+		<language name="JPN_KANJI" width="256">とぼける▼</language>
+	</row>
+
+	<row id="msg_hint_level_0_05">
+		<language name="JPN" width="256">とぼける▼</language>
+		<language name="JPN_KANJI" width="256">とぼける▼</language>
+	</row>
+
+	<row id="msg_hint_level_0_06">
+		<language name="JPN" width="256">とぼける▼</language>
+		<language name="JPN_KANJI" width="256">とぼける▼</language>
+	</row>
+
+	<row id="msg_hint_level_0_07">
+		<language name="JPN" width="256">とぼける▼</language>
+		<language name="JPN_KANJI" width="256">とぼける▼</language>
+	</row>
+
+	<row id="msg_hint_level_0_08">
+		<language name="JPN" width="256">とぼける▼</language>
+		<language name="JPN_KANJI" width="256">とぼける▼</language>
+	</row>
+
+	<row id="msg_hint_level_0_09">
+		<language name="JPN" width="256">とぼける▼</language>
+		<language name="JPN_KANJI" width="256">とぼける▼</language>
+	</row>
+
+	<row id="msg_hint_level_0_10">
+		<language name="JPN" width="256">とぼける▼</language>
+		<language name="JPN_KANJI" width="256">とぼける▼</language>
+	</row>
+
+	<row id="msg_hint_level_0_11">
+		<language name="JPN" width="256">とぼける▼</language>
+		<language name="JPN_KANJI" width="256">とぼける▼</language>
+	</row>
+
+	<row id="msg_hint_level_1_00_y">
+		<language name="JPN" width="256">この　かいに　いる▼</language>
+		<language name="JPN_KANJI" width="256">この　かいに　いる▼</language>
+	</row>
+
+	<row id="msg_hint_level_1_00_n">
+		<language name="JPN" width="256">この　かいに　いない▼</language>
+		<language name="JPN_KANJI" width="256">この　かいに　いない▼</language>
+	</row>
+
+	<row id="msg_hint_level_1_01_y">
+		<language name="JPN" width="256">この　かいに　いる▼</language>
+		<language name="JPN_KANJI" width="256">この　かいに　いる▼</language>
+	</row>
+
+	<row id="msg_hint_level_1_01_n">
+		<language name="JPN" width="256">この　かいに　いない▼</language>
+		<language name="JPN_KANJI" width="256">この　かいに　いない▼</language>
+	</row>
+
+	<row id="msg_hint_level_1_02_y">
+		<language name="JPN" width="256">この　かいに　いる▼</language>
+		<language name="JPN_KANJI" width="256">この　かいに　いる▼</language>
+	</row>
+
+	<row id="msg_hint_level_1_02_n">
+		<language name="JPN" width="256">この　かいに　いない▼</language>
+		<language name="JPN_KANJI" width="256">この　かいに　いない▼</language>
+	</row>
+
+	<row id="msg_hint_level_1_03_y">
+		<language name="JPN" width="256">この　かいに　いる▼</language>
+		<language name="JPN_KANJI" width="256">この　かいに　いる▼</language>
+	</row>
+
+	<row id="msg_hint_level_1_03_n">
+		<language name="JPN" width="256">この　かいに　いない▼</language>
+		<language name="JPN_KANJI" width="256">この　かいに　いない▼</language>
+	</row>
+
+	<row id="msg_hint_level_1_04_y">
+		<language name="JPN" width="256">この　かいに　いる▼</language>
+		<language name="JPN_KANJI" width="256">この　かいに　いる▼</language>
+	</row>
+
+	<row id="msg_hint_level_1_04_n">
+		<language name="JPN" width="256">この　かいに　いない▼</language>
+		<language name="JPN_KANJI" width="256">この　かいに　いない▼</language>
+	</row>
+
+	<row id="msg_hint_level_1_05_y">
+		<language name="JPN" width="256">この　かいに　いる▼</language>
+		<language name="JPN_KANJI" width="256">この　かいに　いる▼</language>
+	</row>
+
+	<row id="msg_hint_level_1_05_n">
+		<language name="JPN" width="256">この　かいに　いない▼</language>
+		<language name="JPN_KANJI" width="256">この　かいに　いない▼</language>
+	</row>
+
+	<row id="msg_hint_level_1_06_y">
+		<language name="JPN" width="256">この　かいに　いる▼</language>
+		<language name="JPN_KANJI" width="256">この　かいに　いる▼</language>
+	</row>
+
+	<row id="msg_hint_level_1_06_n">
+		<language name="JPN" width="256">この　かいに　いない▼</language>
+		<language name="JPN_KANJI" width="256">この　かいに　いない▼</language>
+	</row>
+
+	<row id="msg_hint_level_1_07_y">
+		<language name="JPN" width="256">この　かいに　いる▼</language>
+		<language name="JPN_KANJI" width="256">この　かいに　いる▼</language>
+	</row>
+
+	<row id="msg_hint_level_1_07_n">
+		<language name="JPN" width="256">この　かいに　いない▼</language>
+		<language name="JPN_KANJI" width="256">この　かいに　いない▼</language>
+	</row>
+
+	<row id="msg_hint_level_1_08_y">
+		<language name="JPN" width="256">この　かいに　いる▼</language>
+		<language name="JPN_KANJI" width="256">この　かいに　いる▼</language>
+	</row>
+
+	<row id="msg_hint_level_1_08_n">
+		<language name="JPN" width="256">この　かいに　いない▼</language>
+		<language name="JPN_KANJI" width="256">この　かいに　いない▼</language>
+	</row>
+
+	<row id="msg_hint_level_1_09_y">
+		<language name="JPN" width="256">この　かいに　いる▼</language>
+		<language name="JPN_KANJI" width="256">この　かいに　いる▼</language>
+	</row>
+
+	<row id="msg_hint_level_1_09_n">
+		<language name="JPN" width="256">この　かいに　いない▼</language>
+		<language name="JPN_KANJI" width="256">この　かいに　いない▼</language>
+	</row>
+
+	<row id="msg_hint_level_1_10_y">
+		<language name="JPN" width="256">この　かいに　いる▼</language>
+		<language name="JPN_KANJI" width="256">この　かいに　いる▼</language>
+	</row>
+
+	<row id="msg_hint_level_1_10_n">
+		<language name="JPN" width="256">この　かいに　いない▼</language>
+		<language name="JPN_KANJI" width="256">この　かいに　いない▼</language>
+	</row>
+
+	<row id="msg_hint_level_1_11_y">
+		<language name="JPN" width="256">この　かいに　いる▼</language>
+		<language name="JPN_KANJI" width="256">この　かいに　いる▼</language>
+	</row>
+
+	<row id="msg_hint_level_1_11_n">
+		<language name="JPN" width="256">この　かいに　いない▼</language>
+		<language name="JPN_KANJI" width="256">この　かいに　いない▼</language>
+	</row>
+
+	<row id="msg_hint_level_2_0_0">
+		<language name="JPN" width="256">このかいにいる▼</language>
+		<language name="JPN_KANJI" width="256">このかいにいる▼</language>
+	</row>
+
+	<row id="msg_hint_level_2_0_1">
+		<language name="JPN" width="256">うえのかい▼</language>
+		<language name="JPN_KANJI" width="256">うえのかい▼</language>
+	</row>
+
+	<row id="msg_hint_level_2_0_2">
+		<language name="JPN" width="256">したのかい▼</language>
+		<language name="JPN_KANJI" width="256">したのかい▼</language>
+	</row>
+
+	<row id="msg_hint_level_2_1_0">
+		<language name="JPN" width="256">このかいにいる▼</language>
+		<language name="JPN_KANJI" width="256">このかいにいる▼</language>
+	</row>
+
+	<row id="msg_hint_level_2_1_1">
+		<language name="JPN" width="256">うえのかい▼</language>
+		<language name="JPN_KANJI" width="256">うえのかい▼</language>
+	</row>
+
+	<row id="msg_hint_level_2_1_2">
+		<language name="JPN" width="256">したのかい▼</language>
+		<language name="JPN_KANJI" width="256">したのかい▼</language>
+	</row>
+
+	<row id="msg_hint_level_2_2_0">
+		<language name="JPN" width="256">このかいにいる▼</language>
+		<language name="JPN_KANJI" width="256">このかいにいる▼</language>
+	</row>
+
+	<row id="msg_hint_level_2_2_1">
+		<language name="JPN" width="256">うえのかい▼</language>
+		<language name="JPN_KANJI" width="256">うえのかい▼</language>
+	</row>
+
+	<row id="msg_hint_level_2_2_2">
+		<language name="JPN" width="256">したのかい▼</language>
+		<language name="JPN_KANJI" width="256">したのかい▼</language>
+	</row>
+
+	<row id="msg_hint_level_2_3_0">
+		<language name="JPN" width="256">このかいにいる▼</language>
+		<language name="JPN_KANJI" width="256">このかいにいる▼</language>
+	</row>
+
+	<row id="msg_hint_level_2_3_1">
+		<language name="JPN" width="256">うえのかい▼</language>
+		<language name="JPN_KANJI" width="256">うえのかい▼</language>
+	</row>
+
+	<row id="msg_hint_level_2_3_2">
+		<language name="JPN" width="256">したのかい▼</language>
+		<language name="JPN_KANJI" width="256">したのかい▼</language>
+	</row>
+
+	<row id="msg_hint_level_2_4_0">
+		<language name="JPN" width="256">このかいにいる▼</language>
+		<language name="JPN_KANJI" width="256">このかいにいる▼</language>
+	</row>
+
+	<row id="msg_hint_level_2_4_1">
+		<language name="JPN" width="256">うえのかい▼</language>
+		<language name="JPN_KANJI" width="256">うえのかい▼</language>
+	</row>
+
+	<row id="msg_hint_level_2_4_2">
+		<language name="JPN" width="256">したのかい▼</language>
+		<language name="JPN_KANJI" width="256">したのかい▼</language>
+	</row>
+
+	<row id="msg_hint_level_2_5_0">
+		<language name="JPN" width="256">このかいにいる▼</language>
+		<language name="JPN_KANJI" width="256">このかいにいる▼</language>
+	</row>
+
+	<row id="msg_hint_level_2_5_1">
+		<language name="JPN" width="256">うえのかい▼</language>
+		<language name="JPN_KANJI" width="256">うえのかい▼</language>
+	</row>
+
+	<row id="msg_hint_level_2_5_2">
+		<language name="JPN" width="256">したのかい▼</language>
+		<language name="JPN_KANJI" width="256">したのかい▼</language>
+	</row>
+
+	<row id="msg_hint_level_2_6_0">
+		<language name="JPN" width="256">このかいにいる▼</language>
+		<language name="JPN_KANJI" width="256">このかいにいる▼</language>
+	</row>
+
+	<row id="msg_hint_level_2_6_1">
+		<language name="JPN" width="256">うえのかい▼</language>
+		<language name="JPN_KANJI" width="256">うえのかい▼</language>
+	</row>
+
+	<row id="msg_hint_level_2_6_2">
+		<language name="JPN" width="256">したのかい▼</language>
+		<language name="JPN_KANJI" width="256">したのかい▼</language>
+	</row>
+
+	<row id="msg_hint_level_2_7_0">
+		<language name="JPN" width="256">このかいにいる▼</language>
+		<language name="JPN_KANJI" width="256">このかいにいる▼</language>
+	</row>
+
+	<row id="msg_hint_level_2_7_1">
+		<language name="JPN" width="256">うえのかい▼</language>
+		<language name="JPN_KANJI" width="256">うえのかい▼</language>
+	</row>
+
+	<row id="msg_hint_level_2_7_2">
+		<language name="JPN" width="256">したのかい▼</language>
+		<language name="JPN_KANJI" width="256">したのかい▼</language>
+	</row>
+
+	<row id="msg_hint_level_2_8_0">
+		<language name="JPN" width="256">このかいにいる▼</language>
+		<language name="JPN_KANJI" width="256">このかいにいる▼</language>
+	</row>
+
+	<row id="msg_hint_level_2_8_1">
+		<language name="JPN" width="256">うえのかい▼</language>
+		<language name="JPN_KANJI" width="256">うえのかい▼</language>
+	</row>
+
+	<row id="msg_hint_level_2_8_2">
+		<language name="JPN" width="256">したのかい▼</language>
+		<language name="JPN_KANJI" width="256">したのかい▼</language>
+	</row>
+
+	<row id="msg_hint_level_2_9_0">
+		<language name="JPN" width="256">このかいにいる▼</language>
+		<language name="JPN_KANJI" width="256">このかいにいる▼</language>
+	</row>
+
+	<row id="msg_hint_level_2_9_1">
+		<language name="JPN" width="256">うえのかい▼</language>
+		<language name="JPN_KANJI" width="256">うえのかい▼</language>
+	</row>
+
+	<row id="msg_hint_level_2_9_2">
+		<language name="JPN" width="256">したのかい▼</language>
+		<language name="JPN_KANJI" width="256">したのかい▼</language>
+	</row>
+
+	<row id="msg_hint_level_2_10_0">
+		<language name="JPN" width="256">このかいにいる▼</language>
+		<language name="JPN_KANJI" width="256">このかいにいる▼</language>
+	</row>
+
+	<row id="msg_hint_level_2_10_1">
+		<language name="JPN" width="256">うえのかい▼</language>
+		<language name="JPN_KANJI" width="256">うえのかい▼</language>
+	</row>
+
+	<row id="msg_hint_level_2_10_2">
+		<language name="JPN" width="256">したのかい▼</language>
+		<language name="JPN_KANJI" width="256">したのかい▼</language>
+	</row>
+
+	<row id="msg_hint_level_2_11_0">
+		<language name="JPN" width="256">このかいにいる▼</language>
+		<language name="JPN_KANJI" width="256">このかいにいる▼</language>
+	</row>
+
+	<row id="msg_hint_level_2_11_1">
+		<language name="JPN" width="256">うえのかい▼</language>
+		<language name="JPN_KANJI" width="256">うえのかい▼</language>
+	</row>
+
+	<row id="msg_hint_level_2_11_2">
+		<language name="JPN" width="256">したのかい▼</language>
+		<language name="JPN_KANJI" width="256">したのかい▼</language>
+	</row>
+
+	<row id="msg_hint_level_3_00">
+		<language name="JPN" width="256">[2:02:３桁:0]階にいるよ！▼</language>
+		<language name="JPN_KANJI" width="256">[2:02:３桁:0]階にいるよ！▼</language>
+	</row>
+
+	<row id="msg_hint_level_3_01">
+		<language name="JPN" width="256">[2:02:３桁:0]階にいるよ！▼</language>
+		<language name="JPN_KANJI" width="256">[2:02:３桁:0]階にいるよ！▼</language>
+	</row>
+
+	<row id="msg_hint_level_3_02">
+		<language name="JPN" width="256">[2:02:３桁:0]階にいるよ！▼</language>
+		<language name="JPN_KANJI" width="256">[2:02:３桁:0]階にいるよ！▼</language>
+	</row>
+
+	<row id="msg_hint_level_3_03">
+		<language name="JPN" width="256">[2:02:３桁:0]階にいるよ！▼</language>
+		<language name="JPN_KANJI" width="256">[2:02:３桁:0]階にいるよ！▼</language>
+	</row>
+
+	<row id="msg_hint_level_3_04">
+		<language name="JPN" width="256">[2:02:３桁:0]階にいるよ！▼</language>
+		<language name="JPN_KANJI" width="256">[2:02:３桁:0]階にいるよ！▼</language>
+	</row>
+
+	<row id="msg_hint_level_3_05">
+		<language name="JPN" width="256">[2:02:３桁:0]階にいるよ！▼</language>
+		<language name="JPN_KANJI" width="256">[2:02:３桁:0]階にいるよ！▼</language>
+	</row>
+
+	<row id="msg_hint_level_3_06">
+		<language name="JPN" width="256">[2:02:３桁:0]階にいるよ！▼</language>
+		<language name="JPN_KANJI" width="256">[2:02:３桁:0]階にいるよ！▼</language>
+	</row>
+
+	<row id="msg_hint_level_3_07">
+		<language name="JPN" width="256">[2:02:３桁:0]階にいるよ！▼</language>
+		<language name="JPN_KANJI" width="256">[2:02:３桁:0]階にいるよ！▼</language>
+	</row>
+
+	<row id="msg_hint_level_3_08">
+		<language name="JPN" width="256">[2:02:３桁:0]階にいるよ！▼</language>
+		<language name="JPN_KANJI" width="256">[2:02:３桁:0]階にいるよ！▼</language>
+	</row>
+
+	<row id="msg_hint_level_3_09">
+		<language name="JPN" width="256">[2:02:３桁:0]階にいるよ！▼</language>
+		<language name="JPN_KANJI" width="256">[2:02:３桁:0]階にいるよ！▼</language>
+	</row>
+
+	<row id="msg_hint_level_3_10">
+		<language name="JPN" width="256">[2:02:３桁:0]階にいるよ！▼</language>
+		<language name="JPN_KANJI" width="256">[2:02:３桁:0]階にいるよ！▼</language>
+	</row>
+
+	<row id="msg_hint_level_3_11">
+		<language name="JPN" width="256">[2:02:３桁:0]階にいるよ！▼</language>
+		<language name="JPN_KANJI" width="256">[2:02:３桁:0]階にいるよ！▼</language>
 	</row>
 
 	<row id="msg_info_greet_w">
 		<comment>？？？</comment>
 		<language name="JPN" width="256">『しろのどうくつ』に　ようこそ！
-ごようけんを　おつたえください</language>
+ごようけんを　おつたえください▼</language>
 		<language name="JPN_KANJI" width="256">『白のどうくつ』に　ようこそ！
-ごようけんを　おつたえください</language>
+ごようけんを　おつたえください▼</language>
 	</row>
 
 	<row id="msg_info_greet_b">
 		<language name="JPN" width="256">『くろのまてんろう』に　ようこそ！
-ごようけんを　おつたえください</language>
+ごようけんを　おつたえください▼</language>
 		<language name="JPN_KANJI" width="256">『黒の摩天楼』に　ようこそ！
-ごようけんを　おつたえください</language>
+ごようけんを　おつたえください▼</language>
 	</row>
 
 	<row id="msg_info_menu_01">
@@ -529,9 +1149,9 @@
 
 	<row id="msg_info_001">
 		<language name="JPN" width="256">じゅんびは　よろしいですか？
-それでは　がんばってくださいね！</language>
+それでは　がんばってくださいね！▼</language>
 		<language name="JPN_KANJI" width="256">じゅんびは　よろしいですか？
-それでは　がんばってくださいね！</language>
+それでは　がんばってくださいね！▼</language>
 	</row>
 
 	<row id="msg_info_002">
@@ -541,9 +1161,9 @@
 
 	<row id="msg_info_cancel">
 		<language name="JPN" width="256">それでは　またの　ごりようを
-おまちして　おります</language>
+おまちして　おります▼</language>
 		<language name="JPN_KANJI" width="256">それでは　またの　ごりようを
-おまちして　おります</language>
+おまちして　おります▼</language>
 	</row>
 
 	<row id="msg_info_area">
@@ -553,11 +1173,11 @@
 
 	<row id="msg_info_help">
 		<language name="JPN" width="256">この　しせつは　トレーナーの　
-みなさまに　たんれんの　ばしょとして　
-ていきょう　されています</language>
+みなさまに　たんれんの　ばしょとして　▼
+ていきょう　されています▼</language>
 		<language name="JPN_KANJI" width="256">この　しせつは　トレーナーの　
-みなさまに　たんれんの　ばしょとして　
-ていきょう　されています</language>
+みなさまに　たんれんの　ばしょとして　▼
+ていきょう　されています▼</language>
 	</row>
 
 	<row id="msg_elevator_01">

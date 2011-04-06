@@ -29,6 +29,7 @@
 #include "system/main.h"  //HEAPID_PROC
 #include "message.naix"
 #include "tr_tool/ex_trainer_def.h"
+#include "msg/script/msg_infinity_dungeon_scr.h"
 
 //=============================================================================
 /**
@@ -43,6 +44,34 @@ typedef struct {
   s32 y;
   s32 z;
 }GRID_DATA;
+
+//-------------------------------------
+///	ルームデータ
+//=====================================
+typedef struct{
+  u32 tr_pos_type;
+  u32 room_type;
+  BOOL can_up_move;
+  BOOL can_down_move;
+  BOOL can_left_move;
+  BOOL can_right_move;
+  u32  room_id;
+}ROOM_DATA;
+
+//-------------------------------------
+///	ダンジョン内トレーナーデータ
+//=====================================
+typedef struct{
+  u32 tr_id[INFINITY_DUNGEON_TRID_MAX]; // 全トレーナーランダム配列
+}DUNGEON_TRAINER;
+
+//-------------------------------------
+///	フロアデータ
+//=====================================
+typedef struct{
+  ROOM_DATA room_data[ROOM_MAX];
+  DUNGEON_TRAINER tr_data;
+}FLOOR_DATA;
 
 //=============================================================================
 /**
@@ -86,8 +115,8 @@ enum{
 static const u16 sc_black_zone_table[] = {
   ZONE_ID_D31R0401, // エレベーター
   ZONE_ID_D31R0601, // ボス
-  ZONE_ID_D31R0801, // 特殊部屋2
-  ZONE_ID_D31R1001, // 特殊部屋1
+  ZONE_ID_D31R0901, // フラッシュ
+  ZONE_ID_D31R0701, // 波乗り
   ZONE_ID_D31R1201, // デフォルト
   ZONE_ID_D31R0201, // 受付
 };
@@ -98,8 +127,8 @@ static const u16 sc_black_zone_table[] = {
 static const u16 sc_white_zone_table[] = {
   ZONE_ID_D31R0301, // エレベーター
   ZONE_ID_D31R0501, // ボス
-  ZONE_ID_D31R0701, // 特殊部屋2
-  ZONE_ID_D31R0901, // 特殊部屋1
+  ZONE_ID_D31R0801, // かいりき
+  ZONE_ID_D31R1001, // いあいぎり
   ZONE_ID_D31R1101, // デフォルト
   ZONE_ID_D31R0101, // 受付
 };
@@ -289,7 +318,6 @@ static const GRID_DATA sc_white_bmodel_pos_table[ROOM_TYPE_MAX][WARP_DIR_MAX] = 
   },
 };
 
-
 //-------------------------------------
 ///	イベントチェンジ用ワーク
 //=====================================
@@ -297,34 +325,6 @@ typedef struct {
   VecFx32 warp_pos;       // 遷移先でのマップ位置
   s32     zone_id;        // 遷移先ゾーンID
 }NEXT_MAP_DATA;
-
-//-------------------------------------
-///	ルームデータ
-//=====================================
-typedef struct {
-  u32 tr_pos_type;
-  u32 room_type;
-  BOOL can_up_move;
-  BOOL can_down_move;
-  BOOL can_left_move;
-  BOOL can_right_move;
-  u32  room_id;
-}ROOM_DATA;
-
-//-------------------------------------
-///	ダンジョン内トレーナーデータ
-//=====================================
-typedef struct {
-  u32 tr_id[INFINITY_DUNGEON_TRID_MAX]; // 全トレーナーランダム配列
-}DUNGEON_TRAINER;
-
-//-------------------------------------
-///	フロアデータ
-//=====================================
-typedef struct {
-  ROOM_DATA room_data[ROOM_MAX];
-  DUNGEON_TRAINER tr_data;
-}FLOOR_DATA;
 
 //-------------------------------------
 ///	マップ復帰用ワーク
@@ -404,6 +404,7 @@ static void InitWorkData( MAP_CHAGE_EVENT_WORK *p_wk ,GAMESYS_WORK *p_gsys);
 static u32  GetDungeonColor( MAP_CHAGE_EVENT_WORK *p_wk );
 static GMEVENT_RESULT MapWarpEvent( GMEVENT *event, int *seq, void *wk );
 static void SetReceptionWarpData( MAP_CHAGE_EVENT_WORK *p_wk );
+static void GetFloorData( INFINITYDUNGEON_SAVE  *p_save ,FLOOR_DATA *p_floor_data );
 
 // ゾーン依存
 static void SetNextZoneData( MAP_CHAGE_EVENT_WORK *p_wk);
@@ -549,11 +550,8 @@ static GMEVENT_RESULT MapWarpEvent( GMEVENT *event, int *seq, void *wk )
       GAMESYS_WORK *p_gsys  = GMEVENT_GetGameSysWork( event );
       InitWorkData( p_wk ,p_gsys );
 
-      // ダンジョンデータの生成
-      SetDungeonData( p_wk->floor_data ,p_wk->seed );
-
-      // トレーナーデータをセット
-      SetTrainerData( p_wk->floor_data ,p_wk->seed );
+      // フロアデータの取得
+      GetFloorData( p_wk->p_save ,p_wk->floor_data);
 
       // フェードアウト
       PMSND_PlaySE( SEQ_SE_KAIDAN );
@@ -586,13 +584,10 @@ static GMEVENT_RESULT MapWarpEvent( GMEVENT *event, int *seq, void *wk )
       // 受付の場合は配置モデルを置かない
       if( p_wk->warp_dir != WARP_INFORMATION )
       {
-        ONOUE_Printf("トレーナー配置\n");
-
         // 次の部屋データを取得する
         p_next_room = GetNextRoomData( p_wk );
 
-        // ボス部屋には封鎖モデルもトレーナーも配置しない
-        if( p_next_room->room_type != ROOM_TYPE_BOSS )
+        if( (p_next_room->room_type != ROOM_TYPE_BOSS) )
         {
           // 配置モデルを配置
           SetBUildModel(p_wk,p_next_room);
@@ -844,7 +839,6 @@ static void SetReceptionWarpData( MAP_CHAGE_EVENT_WORK *p_wk )
   // ループタイプに合わせたゾーンを設定する
   NEXT_MAP_DATA *p_next_map_data  = &p_wk->next_map_data;
   p_next_map_data->zone_id = p_wk->p_zone_data[ ROOM_TYPE_RECEPTION ];
-  p_wk->warp_dir = WARP_DIR_DOWN;
   SetElevatorPos( p_wk );
 }
 
@@ -1086,8 +1080,13 @@ static void SetDungeonData( FLOOR_DATA *p_floor_data , u32 seed )
     // エレベータ部屋設置
     p_floor_data[i].room_data[0].room_type = ROOM_TYPE_ELEVATOR;
   }
+
+  p_floor_data[0].room_data[1].room_type = ROOM_TYPE_DEFAULT;
+  p_floor_data[0].room_data[2].room_type = ROOM_TYPE_SPECIAL1;
+  p_floor_data[0].room_data[3].room_type = ROOM_TYPE_SPECIAL2;
+
   // ボス部屋設置
-  p_floor_data[0].room_data[5].room_type = ROOM_TYPE_BOSS;
+  p_floor_data[0].room_data[4].room_type = ROOM_TYPE_BOSS;
 }
 
 
@@ -1182,12 +1181,15 @@ static void SetBUildModel( MAP_CHAGE_EVENT_WORK *p_wk , ROOM_DATA* p_room_data)
 //-----------------------------------------------------------------------------
 static void SetDummyObj( MAP_CHAGE_EVENT_WORK *p_wk , ROOM_DATA* p_room_data)
 {
-    // 上
-  if( !p_room_data->can_up_move )
+  // 上(エレベータ部屋には上封鎖オブジェクトを置くことがない)
+  if( p_room_data->room_type != ROOM_TYPE_ELEVATOR )
   {
-    // ダミーオブジェクトで封鎖
-    const GRID_DATA *p_grid_data = GetBmodelPos( p_wk ,p_room_data->room_type ,WARP_DIR_UP );
-    AddDummyObj( p_wk , p_grid_data );
+    if( !p_room_data->can_up_move )
+    {
+      // ダミーオブジェクトで封鎖
+      const GRID_DATA *p_grid_data = GetBmodelPos( p_wk ,p_room_data->room_type ,WARP_DIR_UP );
+      AddDummyObj( p_wk , p_grid_data );
+    }
   }
 
   // 下
@@ -1309,22 +1311,13 @@ static void SetTrainer( MAP_CHAGE_EVENT_WORK *p_wk , ROOM_DATA* p_room_data)
         NEXT_MAP_DATA *p_next_map_data = &p_wk->next_map_data;
         u32 tr_id = GetRoomTrainerID(p_wk->floor_data,p_wk->now_floor, p_room_data->room_id ,1 );
         u16 obj_code = FBI_TOOL_GetOBJCode( ARCID_INFINITY_DUGENON_TR , tr_id ,p_wk->heapID);
-        MMDL *mmdl = MMDLSYS_AddMMdlParam( p_wk->p_mmdlsys,3, 3, DIR_DOWN,
-            tr_id + INFINITY_DUNGEON_OBJID_FIRST, obj_code, MV_DMY, p_next_map_data->zone_id );
-        MMDL_SetEventType( mmdl , EV_TYPE_NORMAL);
-        MMDL_SetEventID( mmdl, SCRID_INFINITY_DUNGEON_BATTLE_TRAINER );
-        MMDL_SetParam( mmdl, 4 , MMDL_PARAM_0 );
-        ONOUE_Printf("tr_id;%u\n",tr_id);
-      }
-      {
-        NEXT_MAP_DATA *p_next_map_data = &p_wk->next_map_data;
-        u32 tr_id = GetRoomTrainerID(p_wk->floor_data,p_wk->now_floor, p_room_data->room_id ,2 );
-        u16 obj_code = FBI_TOOL_GetOBJCode( ARCID_INFINITY_DUGENON_TR , tr_id ,p_wk->heapID);
-        MMDL *mmdl = MMDLSYS_AddMMdlParam( p_wk->p_mmdlsys,5, 5, DIR_DOWN,
-            tr_id + INFINITY_DUNGEON_OBJID_FIRST, obj_code, MV_DMY, p_next_map_data->zone_id );
-        MMDL_SetEventType( mmdl , EV_TYPE_NORMAL);
-        MMDL_SetEventID( mmdl, SCRID_INFINITY_DUNGEON_BATTLE_TRAINER );
-        MMDL_SetParam( mmdl, 4 , MMDL_PARAM_0 );
+        MMDL *mmdl = MMDLSYS_AddMMdlParam( p_wk->p_mmdlsys,6, 7, DIR_RIGHT,
+            tr_id + TRID_OFFSET_INFINITY_DUNGEON, obj_code, MV_RND, p_next_map_data->zone_id );
+        MMDL_SetEventType( mmdl , EV_TYPE_TRAINER);
+        MMDL_SetParam( mmdl, 3 , MMDL_PARAM_0 );
+        MMDL_SetMoveLimitX( mmdl, 2 );
+        MMDL_SetMoveLimitZ( mmdl, 2 );
+        MMDL_SetEventID( mmdl, SCRID_INFINITY_DUNGEON_TALK_BATTLE_TRAINER );
         ONOUE_Printf("tr_id;%u\n",tr_id);
       }
     }
@@ -1418,7 +1411,7 @@ GMEVENT * INFINITY_DUNGEON_EVENT_TrainerBattle(GAMESYS_WORK *gsys, FIELDMAP_WORK
   GFL_STD_RandContext rand_context;
 
   // OBJIDからtr_idを求める
-  tr_no = obj_id - INFINITY_DUNGEON_OBJID_FIRST;
+  tr_no = INFINITY_DUNGEON_SAVE_GetTrNo_ByObjId( obj_id );
 
   ONOUE_Printf("tr_no;%u\n",tr_no);
 
@@ -1469,5 +1462,107 @@ GMEVENT * INFINITY_DUNGEON_EVENT_TrainerBattle(GAMESYS_WORK *gsys, FIELDMAP_WORK
     event = EVENT_InfinityDungeonTrainerBattle( gsys, fieldmap, dst );
   }
   return( event );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  無限ダンジョンのフロアデータを取得
+ *
+ *	@param	*p_save       無限ダンジョンセーブ
+ *	@param	*p_floor_data フロアデータセット先
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void GetFloorData( INFINITYDUNGEON_SAVE *p_save ,FLOOR_DATA *p_floor_data )
+{
+  s32 seed = INFINITYDUNGEON_SAVE_GetRandomSeed( p_save );
+  // ダンジョンデータの生成
+  SetDungeonData( p_floor_data ,seed );
+
+  // トレーナーデータをセット
+  SetTrainerData( p_floor_data ,seed );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ヒントメッセージを取得する
+ *
+ *	@param	*p_save 
+ *	@param	hint_level 
+ *	@param	obj_code
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+u32 INFINITY_DUNGEON_GetHintMessage( INFINITYDUNGEON_SAVE *p_save ,u8 hint_level ,u16 obj_code)
+{
+  s32 now_floor;
+  s32 boss_room;
+  s32 boss_floor;
+  FLOOR_DATA floor_data[FLOOR_MAX];
+  static const int sub_pattern_num[] = { 0, 0, 0, 0 }; // 各ヒントレベルのパターン数
+
+  // フロアデータの取得
+  GetFloorData( p_save ,floor_data);
+
+  for( boss_floor = 0; boss_floor<FLOOR_MAX; boss_floor++ )
+  {
+    for( boss_room = 0; boss_room<ROOM_MAX; boss_room++ )
+    {
+      if( floor_data[boss_floor].room_data[boss_room].room_type == ROOM_TYPE_BOSS )
+      {
+        int  talk_pattern;
+        int  sub_str_num = 0;
+        now_floor     = INFINITYDUNGEON_SAVE_GetFloorID( p_save ) % INFINITYDUNGEON_FLOOR_MAX; // エリア内のフロアに変換
+
+        // OBJコードから会話パターンを選択
+        talk_pattern = 0;
+
+        // ヒントレベルごとのメッセージIDを取得
+        switch( hint_level )
+        {
+        case INFINITY_DUNGEON_HINT_LEVEL_1:
+          {
+            return msg_hint_level_0_00+(talk_pattern*sub_pattern_num[hint_level]);
+          }
+          break;
+        case INFINITY_DUNGEON_HINT_LEVEL_2:
+          {
+            if( now_floor != boss_floor )
+            {
+              // 違う階
+              sub_str_num = 1;
+            }
+            return msg_hint_level_1_00_y+(talk_pattern*sub_pattern_num[hint_level])+sub_str_num;
+          }
+          break;
+        case INFINITY_DUNGEON_HINT_LEVEL_3:
+          {
+            if( now_floor < boss_floor )
+            {
+              // 上の階
+              sub_str_num = 1;
+            }
+            else if( now_floor > boss_floor )
+            {
+              // 下の階
+              sub_str_num = 2;
+            }
+            return msg_hint_level_2_0_0+(talk_pattern*sub_pattern_num[hint_level])+sub_str_num;
+          }
+          break;
+        case INFINITY_DUNGEON_HINT_LEVEL_4:
+          {
+            return msg_hint_level_3_00+(talk_pattern*sub_pattern_num[hint_level]);
+          }
+          break;
+        }
+      }
+    }
+  }
+
+  GF_ASSERT(0);
+  return msg_hint_level_0_00; // とぼけるメッセージ
 }
 

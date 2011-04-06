@@ -512,11 +512,7 @@ GMEVENT * EVENT_InfinityDungeonTrainerBattle(
   bew = GMEVENT_GetEventWork(event);
   BEW_Initialize( bew, gsys, bp );
   
-#if 0
   bew->is_sub_event = TRUE; //サブイベント呼び出し
-#else
-  bew->is_sub_event = FALSE; //戦闘後のフェードイン目当て
-#endif
   
   bew->is_no_lose = TRUE; //敗戦処理無し
   bew->not_free_bsp = FALSE; //開放する

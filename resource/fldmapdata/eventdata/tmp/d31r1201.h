@@ -8,7 +8,6 @@
 #ifndef ZONE_D31R1201_EVC_H
 #define ZONE_D31R1201_EVC_H
 
-#define DUMMY_OBJ                          0
 
 #endif //ZONE_D31R1201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d31r1201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

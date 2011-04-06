@@ -18,6 +18,7 @@
 #include "savedata/infinity_dungeon_save.h"
 #include "tr_tool/trno_def.h"
 #include "arc/fieldmap/fldmmdl_objcode.h"  //for OBJCODE
+
 //=============================================================================
 /**
  *					構造体宣言
@@ -116,7 +117,7 @@ VMCMD_RESULT EvCmdInfinityDungeonWarp( VMHANDLE *core, void *wk )
   ONOUE_Printf("warp_dir:%u\n",warp_dir);
   INFINITY_DUNGEON_WarpNextMap( p_scr_wk ,p_gsys ,warp_dir );
 
-  return VMCMD_RESULT_CONTINUE;
+  return VMCMD_RESULT_SUSPEND;
 }
 
 //----------------------------------------------------------------------------
@@ -139,7 +140,7 @@ VMCMD_RESULT EvCmdInfinityDungeonFloorMove( VMHANDLE *core, void *wk )
   // 次のマップへワープ
   INFINITY_DUNGEON_WarpNextFloor( p_scr_wk ,p_gsys ,floor_no );
 
-  return VMCMD_RESULT_CONTINUE;
+  return VMCMD_RESULT_SUSPEND;
 }
 
 //----------------------------------------------------------------------------
@@ -318,6 +319,71 @@ VMCMD_RESULT EvCmdInfinityDungeonSetTrainerBattleFlag( VMHANDLE *p_core, void *p
   p_save = SaveData_GetINFINITYDUNGEON( p_save_data );
   floor_id = INFINITYDUNGEON_SAVE_GetFloorID( p_save );
   INFINITYDUNGEON_SAVE_SetTrainerFlag( p_save ,floor_id ,tr_id ,status );
+
+  // トレーナーID
+  ONOUE_Printf("tr_id=%u ,%u\n",tr_id,status);
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  無限ダンジョントレーナーの戦闘済みフラグを取得する
+ *
+ *	@param	*p_core
+ *	@param	*p_wk_adrs 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdInfinityDungeonGetTrainerBattleFlag( VMHANDLE *p_core, void *p_wk_adrs )
+{
+  u8 floor_id;
+  INFINITYDUNGEON_SAVE  *p_save;
+  SCRCMD_WORK *p_wk = p_wk_adrs;
+  GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
+  GAMEDATA *p_gamedata = GAMESYSTEM_GetGameData(p_gamesys);
+  SAVE_CONTROL_WORK *p_save_data = GAMEDATA_GetSaveControlWork(p_gamedata);
+  u16 tr_id  = SCRCMD_GetVMWorkValue( p_core, p_wk );
+  u16 *p_ret_wk	= SCRCMD_GetVMWork( p_core, p_wk );
+  p_save = SaveData_GetINFINITYDUNGEON( p_save_data );
+  floor_id = INFINITYDUNGEON_SAVE_GetFloorID( p_save );
+  *p_ret_wk = INFINITYDUNGEON_SAVE_GetTrainerFlag( p_save ,floor_id ,tr_id );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  無限ダンジョントレーナーのヒントメッセージIDを取得する
+ *
+ *	@param	*p_core
+ *	@param	*p_wk_adrs 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdInfinityDungeonGetHintMsgID( VMHANDLE *p_core, void *p_wk_adrs )
+{
+  int i,j;
+  u8 hint_level;
+  SCRCMD_WORK   *p_wk = p_wk_adrs;
+  GAMESYS_WORK  *p_gamesys  = SCRCMD_WORK_GetGameSysWork( p_wk );
+  GAMEDATA      *p_gamedata = GAMESYSTEM_GetGameData(p_gamesys);
+  u16           *p_ret_wk   = SCRCMD_GetVMWork( p_core, p_wk );
+  SCRIPT_WORK   *p_scr_wk = SCRCMD_WORK_GetScriptWork( p_wk );
+  const MMDL    *mmdl = SCRIPT_GetTargetObj( p_scr_wk );
+  INFINITYDUNGEON_SAVE  *p_save;
+  SAVE_CONTROL_WORK     *p_save_data = GAMEDATA_GetSaveControlWork(p_gamedata);
+  u16 obj_code = MMDL_GetOBJCode( mmdl );
+
+
+  // セーブデータから必要情報を取得
+  p_save = SaveData_GetINFINITYDUNGEON( p_save_data );
+  hint_level = INFINITY_DUNGEON_SAVE_GetHintLevel( p_save );
+
+  // ヒントメッセージIDを設定する
+  *p_ret_wk = INFINITY_DUNGEON_GetHintMessage( p_save ,hint_level ,obj_code);
 
   return VMCMD_RESULT_CONTINUE;
 }

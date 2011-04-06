@@ -13077,6 +13077,37 @@
     .short  \status
     .endm
 
+//--------------------------------------------------------------
+/**
+ * @def _INFINITY_DUNGEON_GET_TRAINER_BATTLE_FLAG
+ * @brief 無限ダンジョン内トレーナーの戦闘状態を取得
+ * @param tr_no   トレーナーNO
+ * @param ret_wk   敵の状態
+ */
+//--------------------------------------------------------------
+#define _INFINITY_DUNGEON_GET_TRAINER_BATTLE_FLAG( tr_no ,ret_wk ) \
+    _ASM_INFINITY_DUNGEON_GET_TRAINER_BATTLE_FLAG tr_no ,ret_wk
+
+    .macro  _ASM_INFINITY_DUNGEON_GET_TRAINER_BATTLE_FLAG tr_no ,ret_wk
+    .short  EV_SEQ_INFINITY_DUNGEON_GET_TRAINER_BATTLE_FLAG
+    .short  \tr_no
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _INFINITY_DUNGEON_GET_HINT_MSG_ID
+ * @brief ヒントメッセージIDを取得する
+ * @param ret_wk   メッセージID格納先
+ */
+//--------------------------------------------------------------
+#define _INFINITY_DUNGEON_GET_HINT_MSG_ID( ret_wk ) \
+    _ASM_INFINITY_DUNGEON_GET_HINT_MSG_ID ret_wk
+
+    .macro  _ASM_INFINITY_DUNGEON_GET_HINT_MSG_ID ret_wk
+    .short  EV_SEQ_INFINITY_DUNGEON_GET_HINT_MSG_ID
+    .short  \ret_wk
+    .endm
 
 //======================================================================
 //======================================================================

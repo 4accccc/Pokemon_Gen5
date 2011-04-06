@@ -19,12 +19,17 @@
 #include "script_trainer.h"
 //SCRID_TRAINER_MOVE_BATTLE 
 #include "../../../resource/fldmapdata/script/trainer_def.h"
+//SCRID_INFINITY_DUNGEON_MOVE_BATTLE_TRAINER
+#include "../../../resource/fldmapdata/script/infinity_dungeon_scr_def.h"
 
 #include "trainer_eye_data.h"  //TRAINER_HITDATA
 
 #include "script_def.h"
 
 #include "field_event_check.h"
+#include "tr_tool/ex_trainer_def.h"
+
+#include "savedata/infinity_dungeon_save.h"
 
 //======================================================================
 //  define
@@ -104,6 +109,7 @@ static int treye_CheckEyeLine( u16 dir, s16 range,
 
 static u16 tr_GetTrainerEventType( const MMDL *mmdl );
 static BOOL tr_HitCheckEyeLine( const MMDL *mmdl, u16 dir, int range, const FIELD_ENCOUNT* enc );
+static u16 TRAINER_MMDL_CheckInfinityDungeonTrainer( const MMDL *mmdl );
 static BOOL tr_CheckEventFlag( FIELDMAP_WORK *fieldMap, const MMDL *mmdl );
 static void makeHitData( TRAINER_HITDATA *data, MMDL *mmdl, int range, u16 dir );
 static MMDL * tr_CheckPairTrainer( const MMDL *tr_mmdl, u16 tr_id );
@@ -1018,8 +1024,34 @@ static BOOL tr_HitCheckEyeLine( const MMDL *mmdl, u16 dir, int range, const FIEL
 //--------------------------------------------------------------
 u16 TRAINER_MMDL_GetTrainerID( const MMDL *mmdl )
 {
+  BOOL  is_inf_trainer = TRAINER_MMDL_CheckInfinityDungeonTrainer( mmdl );
+  if( is_inf_trainer != TRUE )
+  {
+    u16 scr_id = MMDL_GetEventID( mmdl );
+    return( SCRIPT_GetTrainerID_ByScriptID(scr_id) );
+  }
+  else
+  {
+    // 無限ダンジョン内はOBJIDをトレーナーIDとして使用している
+    return MMDL_GetOBJID( mmdl );
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   無限ダンジョン内トレーナーかチェック
+ * @param   mmdl MMDL*
+ * @retval  TRUE = 無限ダンジョン内トレーナー
+ */
+//--------------------------------------------------------------
+static u16 TRAINER_MMDL_CheckInfinityDungeonTrainer( const MMDL *mmdl )
+{
   u16 scr_id = MMDL_GetEventID( mmdl );
-  return( SCRIPT_GetTrainerID_ByScriptID(scr_id) );
+  if( scr_id == SCRID_INFINITY_DUNGEON_TALK_BATTLE_TRAINER )
+  {
+    return TRUE;
+  }
+  return FALSE;
 }
 
 //--------------------------------------------------------------
@@ -1035,8 +1067,29 @@ static BOOL tr_CheckEventFlag( FIELDMAP_WORK *fieldMap, const MMDL *mmdl )
   GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( fieldMap );
   GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
   EVENTWORK *evwork = GAMEDATA_GetEventWork( gdata );
-  u16 id = TRAINER_MMDL_GetTrainerID( mmdl );
-  return( SCRIPT_CheckEventFlagTrainer(evwork,id) );
+  BOOL  is_inf_trainer = TRAINER_MMDL_CheckInfinityDungeonTrainer( mmdl );
+
+  if( is_inf_trainer != TRUE )
+  {
+    // 通常トレーナー
+    u16 id = TRAINER_MMDL_GetTrainerID( mmdl );
+    return( SCRIPT_CheckEventFlagTrainer(evwork,id) );
+  }
+  else
+  {
+    // 無限ダンジョントレーナー
+    SAVE_CONTROL_WORK* p_save_data;
+    INFINITYDUNGEON_SAVE  *p_save;
+    u16 tr_id;
+    u16 floor_id;
+    BOOL tr_flag;
+    tr_id       = TRAINER_MMDL_GetTrainerID( mmdl );
+    p_save_data = GAMEDATA_GetSaveControlWork( gdata );
+    p_save      = SaveData_GetINFINITYDUNGEON( p_save_data );
+    floor_id    = INFINITYDUNGEON_SAVE_GetFloorID( p_save );
+    tr_flag     = INFINITYDUNGEON_SAVE_GetTrainerFlag( p_save ,floor_id, tr_id );
+    return (tr_flag);
+  }
 }
 
 //--------------------------------------------------------------
@@ -1103,8 +1156,19 @@ static GMEVENT * createTrainerScript( FIELDMAP_WORK *fieldMap, MMDL *mmdl )
 {
   GMEVENT *event;
   GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( fieldMap );
-  event = SCRIPT_SetEventScript(
-      gsys, SCRID_TRAINER_MOVE_BATTLE, mmdl, GFL_HEAPID_APP );
+  BOOL is_inf_tr = TRAINER_MMDL_CheckInfinityDungeonTrainer(mmdl);
+  if( is_inf_tr != TRUE )
+  {
+    event = SCRIPT_SetEventScript(
+        gsys, SCRID_TRAINER_MOVE_BATTLE, mmdl, GFL_HEAPID_APP );
+  }
+  else
+  {
+    // 無限ダンジョン内バトルを開始
+    event = SCRIPT_SetEventScript(
+        gsys, SCRID_INFINITY_DUNGEON_MOVE_BATTLE_TRAINER, mmdl, GFL_HEAPID_APP );
+  }
+
   return( event );
 }
 

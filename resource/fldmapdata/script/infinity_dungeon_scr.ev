@@ -12,6 +12,7 @@
 	.text
 
   .include	"scr_seq_def.h"
+ 	.include  "../../../prog/include/tr_tool/tr_tool.h"
   .include  "../../../prog/src/field/infinity_dungeon_warp_dir.h"
   .include  "../../../prog/src/field/infinity_dungeon_def.h"
   .include  "msg_infinity_dungeon_scr.h"
@@ -33,7 +34,8 @@ _EVENT_DATA		ev_infinity_dungeon_information
 _EVENT_DATA   ev_infinity_dungeon_elevator
 _EVENT_DATA   ev_infinity_dungeon_comeback
 _EVENT_DATA   ev_infinity_dungeon_out_elevator
-_EVENT_DATA   ev_infinity_dungeon_battle_trainer
+_EVENT_DATA   ev_infinity_dungeon_move_battle_trainer
+_EVENT_DATA   ev_infinity_dungeon_talk_battle_trainer
 _EVENT_DATA   ev_infinity_dungeon_battle_boss_trainer
 _EVENT_DATA_END
 
@@ -48,35 +50,35 @@ INIT_EVENT_END
 //----------------------------------------------------------------------------
 //	無限ダンジョン内ワープ(上)
 //-----------------------------------------------------------------------------
-INIT_EVENT_START  ev_infinity_dungeon_warp_up
+EVENT_START  ev_infinity_dungeon_warp_up
   _INFINITY_DUNGEON_WARP(WARP_DIR_UP)
-INIT_EVENT_END
+EVENT_END
 
 //----------------------------------------------------------------------------
 //	無限ダンジョン内ワープ(下)
 //-----------------------------------------------------------------------------
-INIT_EVENT_START  ev_infinity_dungeon_warp_down
+EVENT_START  ev_infinity_dungeon_warp_down
   _INFINITY_DUNGEON_WARP(WARP_DIR_DOWN)
-INIT_EVENT_END
+EVENT_END
 
 //----------------------------------------------------------------------------
 //	無限ダンジョン内ワープ(左)
 //-----------------------------------------------------------------------------
-INIT_EVENT_START  ev_infinity_dungeon_warp_left
+EVENT_START  ev_infinity_dungeon_warp_left
   _INFINITY_DUNGEON_WARP(WARP_DIR_LEFT)
-INIT_EVENT_END
+EVENT_END
 
 //----------------------------------------------------------------------------
 //	無限ダンジョン内ワープ(右)
 //-----------------------------------------------------------------------------
-INIT_EVENT_START  ev_infinity_dungeon_warp_right
+EVENT_START  ev_infinity_dungeon_warp_right
   _INFINITY_DUNGEON_WARP(WARP_DIR_RIGHT)
-INIT_EVENT_END
+EVENT_END
 
 //----------------------------------------------------------------------------
 //	エレベータ移動
 //-----------------------------------------------------------------------------
-INIT_EVENT_START  ev_infinity_dungeon_elevator
+EVENT_START  ev_infinity_dungeon_elevator
 {
   DEFINE_LOCAL LWK_SELECT_FLOOR
   DEFINE_LOCAL LWK_INDEX 
@@ -88,7 +90,6 @@ INIT_EVENT_START  ev_infinity_dungeon_elevator
 
   // 案内メッセージ
   _SYSWIN_MSG( msg_elevator_01, POS_DOWN )
-  _LAST_KEYWAIT()
  
   // フロアIDを取得する
   _INFINITY_DUNGEON_GET_NOW_FLOOR_NO( LWK_NOW_FLOOR )
@@ -149,12 +150,12 @@ INIT_EVENT_START  ev_infinity_dungeon_elevator
     ENDIF
   ENDIF
 }
-INIT_EVENT_END
+EVENT_END
 
 //----------------------------------------------------------------------------
 //	受付
 //-----------------------------------------------------------------------------
-INIT_EVENT_START  ev_infinity_dungeon_information
+EVENT_START  ev_infinity_dungeon_information
 {
   // 会話開始
   _TALK_OBJ_START()
@@ -168,7 +169,7 @@ INIT_EVENT_START  ev_infinity_dungeon_information
     _CALL dungeon_information
   ENDWHILE
 }
-INIT_EVENT_END
+EVENT_END
 
 //----------------------------------------------------------------------------
 //	エリア選択（$SCWK_ANSWER == 1でもう一度実行）
@@ -201,25 +202,21 @@ dungeon_information:
      CASE 0 THEN
         // せつめい
        _BALLOONWIN_OBJMSG_POS( msg_info_help , SCWK_TARGET_OBJID, POS_DL )
-        _LAST_KEYWAIT()
        _BALLOONWIN_CLOSE()
         $SCWK_ANSWER = 1
      CASE 1 THEN
        // どのえりあにちょうせんしますか？
        _BALLOONWIN_OBJMSG_POS( msg_info_000 , SCWK_TARGET_OBJID, POS_DL )
-       _LAST_KEYWAIT()
        _CALL select_area
         $SCWK_ANSWER = 0
      CASE 2 THEN
         // きゃんせる
         _BALLOONWIN_OBJMSG_POS( msg_info_cancel , SCWK_TARGET_OBJID, POS_DL )
-        _LAST_KEYWAIT()
         _BALLOONWIN_CLOSE()
         $SCWK_ANSWER = 0
     ENDSWITCH
   ELSE
     _BALLOONWIN_OBJMSG_POS( msg_info_cancel , SCWK_TARGET_OBJID, POS_DL )
-    _LAST_KEYWAIT()
     _BALLOONWIN_CLOSE()
     $SCWK_ANSWER = 0
   ENDIF
@@ -272,7 +269,6 @@ select_area:
     IF $SCWK_ANSWER == SCR_YES THEN
       // じゅんびはよろしいですね
       _BALLOONWIN_OBJMSG_POS( msg_info_001 , SCWK_TARGET_OBJID, POS_DL )
-      _LAST_KEYWAIT()
       _BALLOONWIN_CLOSE()
    
       // みちをあける
@@ -285,26 +281,23 @@ select_area:
       
       // 無限ダンジョン生成シードを設定
       _INFINITY_DUNGEON_INIT_SEED()
- 
-      // エレベータから出る
-      _RESERVE_SCRIPT( SCRID_INFINITY_DUNGEON_OUT_ELEVATOR )
 
       // スタートフロアまで移動
       _INFINITY_DUNGEON_MOVE_FLOOR( LWK_AREA_MENU )
   
       // ボストレーナーの見た目を設定
       _INFINITY_DUNGEON_GET_BOSS_OBJ_CODE(OBJCHRWORK0)
-    
+       
+      // エレベータから出る
+      _RESERVE_SCRIPT( SCRID_INFINITY_DUNGEON_OUT_ELEVATOR )
     ELSE
       // やめる
       _BALLOONWIN_OBJMSG_POS( msg_info_cancel , SCWK_TARGET_OBJID, POS_DL )
-      _LAST_KEYWAIT()
       _BALLOONWIN_CLOSE()
     ENDIF
   ELSE
       // やめる
     _BALLOONWIN_OBJMSG_POS( msg_info_cancel , SCWK_TARGET_OBJID, POS_DL )
-    _LAST_KEYWAIT()
     _BALLOONWIN_CLOSE()
   ENDIF
 }
@@ -327,7 +320,7 @@ EVENT_START  ev_infinity_dungeon_comeback
   _OBJ_ANIME( OBJ_INFORMATION, anm_move_default_l )
   _OBJ_ANIME_WAIT()
 }
-INIT_EVENT_END
+EVENT_END
 
 //----------------------------------------------------------------------------
 //	エレベータから降りる
@@ -338,17 +331,99 @@ EVENT_START  ev_infinity_dungeon_out_elevator
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_elev_out )
   _OBJ_ANIME_WAIT()
 }
-INIT_EVENT_END
+EVENT_END
 
 //----------------------------------------------------------------------------
-//	トレーナーとの戦闘
+//	トレーナーとの戦闘(会話)
 //-----------------------------------------------------------------------------
-EVENT_START  ev_infinity_dungeon_battle_trainer
+EVENT_START  ev_infinity_dungeon_talk_battle_trainer
 {
-  // トレーナーとの戦闘
-  _INFINITY_DUNGEON_BATTLE_TRAINER()
+  DEFINE_LOCAL  LWK_TR_OBJID
+  DEFINE_LOCAL  LWK_TRID
+  DEFINE_LOCAL  LWK_IS_BATTLE
+  DEFINE_LOCAL  LWK_HINT_MSG_ID
+  
+  _TALK_OBJ_START()
+
+  // OBJID=TRID
+  $LWK_TRID = $SCWK_TARGET_OBJID
+  
+  _DEBUG_PRINT_WK( LWK_TRID )
+
+  // 戦闘データ取得
+  _INFINITY_DUNGEON_GET_TRAINER_BATTLE_FLAG( LWK_TRID ,LWK_IS_BATTLE )
+
+	IF $LWK_IS_BATTLE == FALSE THEN
+
+    //移動終了前、会話へ
+    _TRAINER_MSG_SET( LWK_TRID, TRMSG_FIGHT_START, SCWK_TARGET_OBJID )
+    _BALLOONWIN_CLOSE()
+
+    // トレーナーとの戦闘
+    _INFINITY_DUNGEON_BATTLE_TRAINER()
+
+    // 勝敗チェック
+    _TRAINER_LOSE_CHECK( SCWK_ANSWER )
+    IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+      _TRAINER_WIN()
+      _DEBUG_PRINT_WK( LWK_TRID )
+      _INFINITY_DUNGEON_SET_TRAINER_BATTLE_FLAG( LWK_TRID , TRUE )
+    ELSE
+      _TRAINER_LOSE()
+    ENDIF
+  ELSE
+    // ヒントメッセージ
+    _INFINITY_DUNGEON_GET_HINT_MSG_ID( LWK_HINT_MSG_ID )
+    _BALLOONWIN_OBJMSG_POS( LWK_HINT_MSG_ID , SCWK_TARGET_OBJID, POS_DOWN )
+    _BALLOONWIN_CLOSE()
+	ENDIF
 }
-INIT_EVENT_END
+EVENT_END
+
+//----------------------------------------------------------------------------
+//	トレーナーとの戦闘(視線移動)
+//-----------------------------------------------------------------------------
+EVENT_START  ev_infinity_dungeon_move_battle_trainer
+{
+  DEFINE_LOCAL  LWK_TR_OBJID
+  DEFINE_LOCAL  LWK_TRID
+  DEFINE_LOCAL  LWK_IS_BATTLE
+  DEFINE_LOCAL  LWK_HINT_MSG_ID
+
+  // 視線データ取得
+  _EYE_TRAINER_ID_GET( SCR_EYE_TR_0, LWK_TRID )
+
+  _DEBUG_PRINT_WK( LWK_TRID )
+
+  // 戦闘済み確認
+  _INFINITY_DUNGEON_GET_TRAINER_BATTLE_FLAG( LWK_TRID ,LWK_IS_BATTLE )
+
+	IF $LWK_IS_BATTLE == FALSE THEN
+    // 戦闘開始位置まで移動
+    _EYE_TRAINER_MOVE_SET( SCR_EYE_TR_0 )        //トレーナー移動処理呼び出し
+    _EYE_TRAINER_MOVE()                          //移動終了待ち
+
+    //移動終了前、会話へ
+    _EYE_TRAINER_OBJ_ID_GET( SCR_EYE_TR_0, LWK_TR_OBJID )
+    _TRAINER_MSG_SET( LWK_TRID, TRMSG_FIGHT_START, LWK_TR_OBJID )
+    _BALLOONWIN_CLOSE()
+
+    // トレーナーとの戦闘
+    _INFINITY_DUNGEON_BATTLE_TRAINER()
+
+    // 勝敗チェック
+    _TRAINER_LOSE_CHECK( SCWK_ANSWER )
+    IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+      _TRAINER_WIN()
+      _DEBUG_PRINT_WK( LWK_TRID )
+      _INFINITY_DUNGEON_SET_TRAINER_BATTLE_FLAG( LWK_TRID , TRUE )
+    ELSE
+      _TRAINER_LOSE()
+    ENDIF
+
+	ENDIF
+}
+EVENT_END
 
 //----------------------------------------------------------------------------
 //	BOSSトレーナーとの戦闘
@@ -384,7 +459,6 @@ EVENT_START  ev_infinity_dungeon_battle_boss_trainer
 
   // メッセージ開始
   _BALLOONWIN_OBJMSG_POS( LWK_TR_START_MSG_ID , D31R0601_WKOBJCODE00, POS_DOWN )
-  _LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 
 	//トレーナー戦呼び出し
@@ -392,7 +466,6 @@ EVENT_START  ev_infinity_dungeon_battle_boss_trainer
 
   //敗戦チェック
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
-	
 	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
 			_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
 	ELSE
@@ -402,7 +475,6 @@ EVENT_START  ev_infinity_dungeon_battle_boss_trainer
   // 戦闘終了後メッセージ
   $LWK_TR_START_MSG_ID = msg_b_boss_end_00
   _BALLOONWIN_OBJMSG_POS( LWK_TR_START_MSG_ID , D31R0601_WKOBJCODE00, POS_DOWN )
-  _LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 
   // 出口まで歩く
@@ -418,7 +490,7 @@ EVENT_START  ev_infinity_dungeon_battle_boss_trainer
   _RESERVE_SCRIPT( SCRID_INFINITY_DUNGEON_COMEBACK )
 
 }
-INIT_EVENT_END
+EVENT_END
 
 //--------------------------------------------------------------------
 // 受付がみちをあける

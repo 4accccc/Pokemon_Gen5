@@ -14,6 +14,7 @@
 #include "field/infinity_dungeon_def.h"
 #include "savedata/infinity_dungeon_save.h"
 #include "savedata/save_tbl.h"
+#include "tr_tool/ex_trainer_def.h"
 
 //=============================================================================
 /**
@@ -163,12 +164,13 @@ u32 INFINITYDUNGEON_SAVE_GetRandomSeed( const INFINITYDUNGEON_SAVE *p_save )
  *	@param	floor_id 
  *	@param	trainer_id 
  *
- *	@retval TRUE = 未勝利
+ *	@retval TRUE = 戦闘済み
  */
 //-----------------------------------------------------------------------------
 BOOL INFINITYDUNGEON_SAVE_GetTrainerFlag( const INFINITYDUNGEON_SAVE *p_save ,int floor_id ,int trainer_id )
 {
   u32 bit_mask = 1;
+  trainer_id = INFINITY_DUNGEON_SAVE_GetTrNo_ByObjId(trainer_id);
   bit_mask = bit_mask << trainer_id;
   if( p_save->trainer_flag[floor_id] & bit_mask )
   {
@@ -316,30 +318,31 @@ void INFINITYDUNGEON_SAVE_SetRandomSeed( INFINITYDUNGEON_SAVE *p_save ,u32 rand_
  *	@param	*p_save 
  *	@param	floor_id 
  *	@param	trainer_id 
- *	@param	status      TRUE = 未戦闘 , FALSE = 戦闘済み
+ *	@param	status      FALSE = 未戦闘 , TRUE = 戦闘済み
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
 void INFINITYDUNGEON_SAVE_SetTrainerFlag( INFINITYDUNGEON_SAVE *p_save ,int floor_id ,int trainer_id , BOOL status)
 {
-   if( status == FALSE )
-    {
-      // ビットを下げる
-      u32 bit_mask = 0xffffffff;
-      u32 del_bit  = 1;
+  trainer_id = INFINITY_DUNGEON_SAVE_GetTrNo_ByObjId(trainer_id);
+  if( status == FALSE )
+  {
+    // ビットを下げる
+    u32 bit_mask = 0xffffffff;
+    u32 del_bit  = 1;
 
-      del_bit   = del_bit << trainer_id;
-      bit_mask  = bit_mask ^ del_bit;
-      p_save->trainer_flag[floor_id]  = p_save->trainer_flag[floor_id] & bit_mask;
-    }
-    else
-    {
-      // ビットを上げる
-      s32 bit_mask = 1;
-      bit_mask = bit_mask << trainer_id;
-      p_save->trainer_flag[floor_id]  = p_save->trainer_flag[floor_id] | bit_mask;
-    }
+    del_bit   = del_bit << trainer_id;
+    bit_mask  = bit_mask ^ del_bit;
+    p_save->trainer_flag[floor_id]  = p_save->trainer_flag[floor_id] & bit_mask;
+  }
+  else
+  {
+    // ビットを上げる
+    s32 bit_mask = 1;
+    bit_mask = bit_mask << trainer_id;
+    p_save->trainer_flag[floor_id]  = p_save->trainer_flag[floor_id] | bit_mask;
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -414,5 +417,65 @@ void INFINITYDUNGEON_SAVE_SetPartnerID( INFINITYDUNGEON_SAVE *p_save ,u8 partner
 u8 INFINITYDUNGEON_SAVE_GetDungeonAreaID( const INFINITYDUNGEON_SAVE *p_save )
 {
   return p_save->floor_id/INFINITYDUNGEON_FLOOR_MAX;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  無限ダンジョン内トレーナーNOをObjIDから取得する
+ *
+ *	@param	obj_id 
+ *
+ *	@retval 無限ダンジョン内トレーナNO
+ */
+//-----------------------------------------------------------------------------
+u16 INFINITY_DUNGEON_SAVE_GetTrNo_ByObjId( u16 obj_id )
+{
+  // OBJIDからtr_idを求める
+  return (obj_id - TRID_OFFSET_INFINITY_DUNGEON);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ヒントレベル取得
+ *
+ *	@param	obj_id 
+ *
+ *	@retval ヒントレベル
+ */
+//-----------------------------------------------------------------------------
+u8 INFINITY_DUNGEON_SAVE_GetHintLevel( const INFINITYDUNGEON_SAVE *p_save )
+{
+  s32 floor_id;
+  s32 tr_id;
+  s32 win_num = 0;
+
+  for( floor_id = 0; floor_id<INFINITYDUNGEON_FLOOR_MAX; floor_id++ )
+  {
+    for( tr_id = 0; tr_id<INFINITY_DUNGEON_TRID_MAX; tr_id++ )
+    {
+      BOOL ret = INFINITYDUNGEON_SAVE_GetTrainerFlag( p_save ,floor_id ,tr_id );
+      if( ret == TRUE )
+      {
+        win_num++;
+      }
+    }
+  }
+
+  if( INFINITY_DUNGEON_HINT_LEVEL_WIN_NUM_4 <= win_num )
+  {
+    return INFINITY_DUNGEON_HINT_LEVEL_4;
+  }
+
+  if( INFINITY_DUNGEON_HINT_LEVEL_WIN_NUM_3 <= win_num )
+  {
+    return INFINITY_DUNGEON_HINT_LEVEL_3;
+  }
+  
+  if( INFINITY_DUNGEON_HINT_LEVEL_WIN_NUM_2 <= win_num )
+  {
+    return INFINITY_DUNGEON_HINT_LEVEL_2;
+  }
+
+  return INFINITY_DUNGEON_HINT_LEVEL_1;
 }
 

@@ -13,6 +13,8 @@
 #include <gflib.h>
 #include "script.h"
 #include "scrcmd_work.h"
+#include "field/infinity_dungeon_def.h"
+#include "savedata/infinity_dungeon_save.h"
 
 //=============================================================================
 //
@@ -23,8 +25,6 @@
 #define ROOM_MAX_Y  (5)    // 部屋Y最大数
 #define FLOOR_MAX   (10)   // フロア最大数
 #define ROOM_MAX    (ROOM_MAX_X*ROOM_MAX_Y)   // 部屋最大数
-#define INFINITY_DUNGEON_TRID_MAX  (32)       // 無限ダンジョン内トレーナーMAX
-#define INFINITY_DUNGEON_OBJID_FIRST (0x100)  // OBJIDのオフセット値
 
 //=============================================================================
 //
@@ -41,4 +41,5 @@ extern void INFINITY_DUNGEON_WarpNextMap( SCRIPT_WORK *p_scr_work, GAMESYS_WORK 
 extern void INFINITY_DUNGEON_Recovery( SCRIPT_WORK *p_scr_work, GAMESYS_WORK *p_gsys );
 extern void INFINITY_DUNGEON_WarpNextFloor( SCRIPT_WORK *p_scr_work, GAMESYS_WORK *p_gsys, int floor_no );
 extern GMEVENT * INFINITY_DUNGEON_EVENT_TrainerBattle(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap ,u16 obj_id);
+extern u32 INFINITY_DUNGEON_GetHintMessage( INFINITYDUNGEON_SAVE *p_save ,u8 hint_level ,u16 obj_code);
 

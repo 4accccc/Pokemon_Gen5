@@ -605,7 +605,7 @@ BATTLE_SETUP_PARAM * FBI_TOOL_CreateBattleParam(
 
 //--------------------------------------------------------------
 /**
- * BATTLE_SETUP_PARAMì¬
+ * –³ŒÀƒ_ƒ“ƒWƒ‡ƒ“—pBATTLE_SETUP_PARAMì¬
  * @param gsys GAMESYS_WORK
  * @retval BATTLE_SETUP_PARAM
  */

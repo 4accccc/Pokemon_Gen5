@@ -262,10 +262,36 @@ void  TT_TrainerMessageGet( TrainerID tr_id, int kindID, STRBUF* str, HEAPID hea
     {
     case EX_TRTYPE_INFINITY_DUNGEON:
       {
-        GFL_MSGDATA*  msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL,
-            ARCID_MESSAGE, NARC_message_infinity_dungeon_trmsg_dat, heapID );
-        GFL_MSG_GetString( msg, (tr_id - TRID_OFFSET_INFINITY_DUNGEON), str );
-        GFL_MSG_Delete( msg );
+        GFL_MSGDATA*  msg = NULL;
+
+        // 種類ごとのGMM読みわけ
+        switch( kindID )
+        {
+        case TRMSG_FIGHT_START:
+          {
+            msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL,
+                ARCID_MESSAGE, NARC_message_infinity_dungeon_btl_startmsg_dat, heapID );
+          }
+          break;
+        case TRMSG_FIGHT_LOSE:
+          {
+            msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL,
+                ARCID_MESSAGE, NARC_message_infinity_dungeon_btl_losemsg_dat, heapID );
+          }
+          break;
+        default:
+          {
+            GF_ASSERT_MSG(0,"無限ダンジョン内トレーナーが持ってないタイプのメッセージ表示をしようとした\n");
+          }
+          break;
+        }
+
+        // メッセージの作成
+        if( msg )
+        {
+          GFL_MSG_GetString( msg, (tr_id - TRID_OFFSET_INFINITY_DUNGEON), str );
+          GFL_MSG_Delete( msg );
+        }
       }
       break;
     default:
