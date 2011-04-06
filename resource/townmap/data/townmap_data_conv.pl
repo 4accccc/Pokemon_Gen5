@@ -231,12 +231,12 @@ foreach my $key ( keys %ZONEGROUP_HASH )
 }
 close( FILEOUT );
 
-if( $is_error == 1 )
-{
-  print "ゾーンテーブルにおいて、タウンマップへ設定していないゾーングループがありました。\n";
-  print "Townmap_error.txtを参考にreplace等へ追加をしてください。\n";
-  exit(1);
-}
+#if( $is_error == 1 )
+#{
+#  print "ゾーンテーブルにおいて、タウンマップへ設定していないゾーングループがありました。\n";
+#  print "Townmap_error.txtを参考にreplace等へ追加をしてください。\n";
+#  exit(1);
+#}
 
 #-------------------------------------
 #	正常終了
