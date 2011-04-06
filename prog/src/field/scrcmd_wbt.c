@@ -373,7 +373,7 @@ VMCMD_RESULT EvCmdWBTGetEnemyMMdlCode( VMHANDLE * core, void * wk )
   WBTSYS * wbtsys = getWBTSys( wk );
   u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
 
-  *ret_wk = WBTTOOL_GetEnemyTrainerMMdlCode( wbtsys );
+  *ret_wk = WBTSYS_GetOpponentMMdlObjCode( wbtsys );
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -468,9 +468,9 @@ VMCMD_RESULT EvCmdWBTSetEnemyName( VMHANDLE * core, void * wk )
   u8 idx = VMGetU8(core);
   TAMADA_Printf("EvCmdWBTSetEnemyName\n");
   {
-    u8 sex = WBTTOOL_GetEnemyTrainerSex( wbtsys );
+    u8 sex = WBTSYS_GetOpponentSex( wbtsys );
     STRBUF * strbuf = SCRIPT_GetMsgTempBuffer( sc );
-    WBTTOOL_SetEnemyTrainerName( wbtsys, strbuf );
+    WBTSYS_GetOpponentName( wbtsys, strbuf );
     WORDSET_RegisterWord( wordset, idx, strbuf, sex, TRUE, PM_LANG );
   }
   return VMCMD_RESULT_CONTINUE;

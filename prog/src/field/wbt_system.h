@@ -129,13 +129,15 @@ extern void WBTSYS_SetScriptAnswerWork( WBTSYS * wbtsys, u16 * scr_answer_work )
 extern void WBTSYS_SetTrainer( WBTSYS * wbtsys, const WBTTRAINER * wbt_trainer, u32 pos );
 extern const WBTTRAINER * WBTSYS_GetTrainer( const WBTSYS * wbtsys, u32 pos );
 extern void WBTSYS_CalcResult( WBTSYS * wbtsys, GFL_STD_RandContext * context );
+extern u32 WBTSYS_GetOpponentPos( const WBTSYS * wbtsys );
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 extern void WBTTOOL_SetTournamentName( WBTTYPE type, STRBUF * strbuf );
 extern void WBTTOOL_SetRuleName( WBTRULE rule, STRBUF * strbuf );
-extern void WBTTOOL_SetEnemyTrainerName( WBTSYS * wbtsys, STRBUF * strbuf );
-extern u8 WBTTOOL_GetEnemyTrainerSex( WBTSYS * wbtsys );
-extern u16 WBTTOOL_GetEnemyTrainerMMdlCode( WBTSYS * wbtsys );
+extern void WBTSYS_GetOpponentName( WBTSYS * wbtsys, STRBUF * strbuf );
+extern u8 WBTSYS_GetOpponentSex( WBTSYS * wbtsys );
+extern u16 WBTSYS_GetOpponentMMdlObjCode( WBTSYS * wbtsys );
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------

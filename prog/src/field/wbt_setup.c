@@ -10,6 +10,7 @@
 #include <gflib.h>
 
 #include "wbt_system.h"
+#include "wbt_system_local.h"
 #include "app/wbt_list.h"
 
 #include "poke_tool/regulation_def.h"
@@ -23,7 +24,6 @@
 #include "arc/message.naix"
 #include "system/main.h"
 
-#include "wbt_system_local.h"
 
 #include "fldmmdl.h"
 #include "fieldmap/fldmmdl_mdlparam.naix"
@@ -167,6 +167,7 @@ void WBTLIST_PARAM_Setup_Debug(
 //
 //============================================================================================
 //------------------------------------------------------------------
+/// WBTTRAINER@-->@WBTLIST_TRAINER‚Ö‚Ì•ÏŠ·ˆ—
 //------------------------------------------------------------------
 static void setupWBTLISTtrainer( HEAPID heapID, GAMEDATA * gamedata,
     WBTLIST_TRAINER * wbtlist_tr, const WBTTRAINER * wbt_tr )
@@ -223,25 +224,35 @@ static void setupWBTLISTtrainer( HEAPID heapID, GAMEDATA * gamedata,
 }
 
 //------------------------------------------------------------------
+/// WBTRESULT --> WBTLIST_RESULT‚Ö‚Ì•ÏŠ·ˆ—
 //------------------------------------------------------------------
 static void setupWBTLISTResultAll( WBTSYS * wbtsys, WBTLIST_PARAM * wbtlist_param )
 {
   int i, j;
+  static const u16 comment_tbl[ WBT_COMMENT_TOTAL ] = {
+    msg_wbt_comment_01,
+    msg_wbt_comment_06,
+    msg_wbt_comment_11,
+    msg_wbt_comment_16,
+    msg_wbt_comment_21,
+  };
 
   //1‰ñíŒ‹‰Ê¶¬
   for ( i = 0; i < 4 ; i ++ )
   {
-    WBTLIST_RESULT * result = &wbtlist_param->first_stage[ i ];
-    result->upside_win = wbtsys->wbt_result[i].upside_win;
-    result->msg_type   = wbtsys->wbt_result[i].msg_id;
+    WBTLIST_RESULT * list_res = &wbtlist_param->first_stage[ i ];
+    const WBTRESULT * wbt_res = &wbtsys->wbt_result[i];
+    list_res->upside_win = wbt_res->upside_win;
+    list_res->msg_type   = comment_tbl[ wbt_res->msg_id ];
   }
 
   //2‰ñíŒ‹‰Ê¶¬
   for ( i = 0; i < 2 ; i ++ )
   {
-    WBTLIST_RESULT * result = &wbtlist_param->second_stage[i];
-    result->upside_win = wbtsys->wbt_result[WBT_GAME_2ND_1 + i].upside_win;
-    result->msg_type   = wbtsys->wbt_result[WBT_GAME_2ND_1 + i].msg_id;
+    WBTLIST_RESULT * list_res = &wbtlist_param->second_stage[i];
+    const WBTRESULT * wbt_res = &wbtsys->wbt_result[WBT_GAME_2ND_1 + i];
+    list_res->upside_win = wbt_res->upside_win;
+    list_res->msg_type   = comment_tbl[ wbt_res->msg_id ];
   }
 }
 //------------------------------------------------------------------

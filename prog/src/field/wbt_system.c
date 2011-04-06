@@ -201,17 +201,22 @@ static void WBTTRAINER_Init( WBTTRAINER * wbt_tr )
   wbt_tr->pri = 1;
   wbt_tr->tr_id = 0;
   wbt_tr->poketype = POKETYPE_NORMAL;
+  wbt_tr->mmdl_id = SWHERO;
+  wbt_tr->tr_type = TRTYPE_HERO;
 }
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static void WBTTRAINER_Set( WBTTRAINER * wbt_tr, WBT_TRTYPE type, u8 tr_id, u8 sex, u8 pri, u8 poketype )
+static void WBTTRAINER_Set( WBTTRAINER * wbt_tr,
+    WBT_TRTYPE type, u8 tr_id, u8 sex, u8 pri, u8 poketype, u16 mmdl_id, u16 tr_type )
 {
   wbt_tr->wbt_type = type;
   wbt_tr->tr_id = tr_id;
   wbt_tr->sex = sex;
   wbt_tr->pri = pri;
   wbt_tr->poketype = poketype;
+  wbt_tr->mmdl_id = mmdl_id;
+  wbt_tr->tr_type = tr_type;
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -219,7 +224,9 @@ static void WBTTRAINER_SetRomTrainer( WBTTRAINER * wbt_tr, u8 tr_id )
 {
   WBT_TRDATA tr_rom_data;
   WBT_TRDATA_Copy( HEAPID_FIELDMAP, tr_id, &tr_rom_data );
-  WBTTRAINER_Set( wbt_tr, WBT_TRTYPE_ROM, tr_id, tr_rom_data.sex, tr_rom_data.priority, tr_rom_data.type );
+  WBTTRAINER_Set( wbt_tr, WBT_TRTYPE_ROM,
+      tr_id, tr_rom_data.sex, tr_rom_data.priority, tr_rom_data.type,
+      tr_rom_data.mmdl_id, tr_rom_data.tr_type );
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -228,13 +235,21 @@ static void WBTTRAINER_SetPlayer( WBTTRAINER * wbt_tr, GAMEDATA * gamedata )
   const MYSTATUS * mystat = GAMEDATA_GetMyStatus( gamedata );
   WBTSAVE * wbtsave = GAMEDATA_GetWBTSave( gamedata );
 
+  u16 mmdl_id = SWHERO;
+  u16 tr_type = TRTYPE_HERO;
   u8 sex = MyStatus_GetMySex( mystat );
   u8 pri = 3;
   if ( WBTSAVE_GetFlag( wbtsave, WBTSAVE_FLAG_WIN_CHAMPION_TOURNAMENT ) == TRUE )
   {
     pri = 4;
   }
-  WBTTRAINER_Set( wbt_tr, WBT_TRTYPE_PLAYER, 0, sex, pri, POKETYPE_NORMAL );
+  if ( sex == PM_FEMALE )
+  {
+    mmdl_id = SWHEROINE;
+    tr_type = TRTYPE_HEROINE;
+  }
+  WBTTRAINER_Set( wbt_tr, WBT_TRTYPE_PLAYER,
+      0, sex, pri, POKETYPE_NORMAL, mmdl_id, tr_type );
 }
 
 //============================================================================================
@@ -315,25 +330,39 @@ void WBTTOOL_SetRuleName( WBTRULE rule, STRBUF * strbuf )
   }
 }
 //------------------------------------------------------------------
+/**
+ * @brief 対戦相手の性別を取得する
+ */
 //------------------------------------------------------------------
-u8 WBTTOOL_GetEnemyTrainerSex( WBTSYS * wbtsys )
+u8 WBTSYS_GetOpponentSex( WBTSYS * wbtsys )
 {
-  return PM_MALE; //仮
+  u32 pos = WBTSYS_GetOpponentPos( wbtsys );
+  const WBTTRAINER * wbt_tr = WBTSYS_GetTrainer( wbtsys, pos );
+  return wbt_tr->sex;
 }
 
 //------------------------------------------------------------------
+/**
+ * @brief 対戦相手の動作モデル表示コードを取得する
+ */
 //------------------------------------------------------------------
-u16 WBTTOOL_GetEnemyTrainerMMdlCode( WBTSYS * wbtsys )
+u16 WBTSYS_GetOpponentMMdlObjCode( WBTSYS * wbtsys )
 {
-  return LEADER7; //仮
+  u32 pos = WBTSYS_GetOpponentPos( wbtsys );
+  const WBTTRAINER * wbt_tr = WBTSYS_GetTrainer( wbtsys, pos );
+  return wbt_tr->mmdl_id;
 }
 //------------------------------------------------------------------
 /**
+ * @brief 対戦相手の名前を取得する
  * @todo  ダウンロードデータへの対応
  */
 //------------------------------------------------------------------
-void WBTTOOL_SetEnemyTrainerName( WBTSYS * wbtsys, STRBUF * strbuf )
+void WBTSYS_GetOpponentName( WBTSYS * wbtsys, STRBUF * strbuf )
 {
+  u32 pos = WBTSYS_GetOpponentPos( wbtsys );
+  const WBTTRAINER * wbt_tr = WBTSYS_GetTrainer( wbtsys, pos );
+
   if ( wbtsys->type == WBTTYPE_DOWNLOAD 
       || wbtsys->type == WBTTYPE_NULL )
   {
@@ -342,7 +371,7 @@ void WBTTOOL_SetEnemyTrainerName( WBTSYS * wbtsys, STRBUF * strbuf )
   {
     HEAPID heapID = wbtsys->heapID;
     GFL_MSGDATA     *man;
-    u16 msg_id = 13; //仮・本当は進行状況から判断する
+    u16 msg_id = wbt_tr->tr_id;
     man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_wbt_trname_dat, heapID );
     if( man )
     {

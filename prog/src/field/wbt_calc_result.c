@@ -1,36 +1,47 @@
 //============================================================================================
 /**
  * @file  wbt_calc_result.c
- * @brief
+ * @brief WBT対戦結果の算出処理
  * @author  tamada GAMEFREAK inc.
- * @date  2011.03.30
+ * @date  2011.04.05
  */
 //============================================================================================
 
 #include <gflib.h>
 
 #include "wbt_system.h"
-//#include "app/wbt_list.h"
-
-//#include "poke_tool/regulation_def.h"
-//#include "wbt_trlist_struct.h"  //WBT_TRDATA
-
-//#include "arc_def.h"
-//#include "arc/wbt/wbt_trlist.naix"
-//#include "arc/fieldmap/fldmmdl_mdlres.naix"
-
-#include "msg/msg_wbt_tournament.h"
-//#include "arc/message.naix"
-//#include "system/main.h"
 
 #include "wbt_system_local.h"
 
-//#include "fldmmdl.h"
-//#include "fieldmap/fldmmdl_mdlparam.naix"
+#include "msg/msg_wbt_tournament.h"
 
-//#include "tr_tool/trtype_def.h"
-//#include "sound/pm_sndsys.h"
-//#include "../../../resource/wbt/wbt_trainer/wbt_trainer.cdat"
+#include "poke_tool/poketype.h" //PokeType
+
+//============================================================================================
+//============================================================================================
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+enum {
+  MSG_LAYER_NICEGAME = 0,
+  MSG_LAYER_ONESIDE,
+  MSG_LAYER_ADVANTAGE,
+  MSG_LAYER_EVEN,
+  MSG_LAYER_DISADVANTAGE,
+};
+
+//============================================================================================
+//============================================================================================
+//------------------------------------------------------------------
+/// WBTトーナメントリスト内での寸評メッセージ振り分けテーブル
+//------------------------------------------------------------------
+static const u8 msg_table[][3] = {
+//タイプ相性      有利          互角          不利          
+            { WBT_COMMENT_D, WBT_COMMENT_D, WBT_COMMENT_E },  //MSG_LAYER_NICEGAME
+            { WBT_COMMENT_A, WBT_COMMENT_A, WBT_COMMENT_A },  //MSG_LAYER_ONESIDE
+            { WBT_COMMENT_B, WBT_COMMENT_B, WBT_COMMENT_B },  //MSG_LAYER_ADVANTAGE
+            { WBT_COMMENT_C, WBT_COMMENT_C, WBT_COMMENT_E },  //MSG_LAYER_EVEN
+            { WBT_COMMENT_D, WBT_COMMENT_D, WBT_COMMENT_E },  //MSG_LAYER_DISADVANTAGE
+};
 
 //============================================================================================
 //============================================================================================
@@ -38,6 +49,7 @@ static u8 BTL_CALC_TypeAff( PokeType wazaType, PokeType pokeType );
 
 //============================================================================================
 //============================================================================================
+#ifdef  PM_DEBUG
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static void DEBUG_DumpWBTResult( const WBTRESULT * result,
@@ -50,27 +62,106 @@ static void DEBUG_DumpWBTResult( const WBTRESULT * result,
   TAMADA_Printf("tr_b:pri(%d) type(%d) sex(%d) id(%d)\n",
       tr_b->pri, tr_b->poketype, tr_b->sex, tr_b->tr_id );
 }
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void DEBUG_DumpWBTTrainers( const WBTSYS * wbtsys ) 
+{
+  int i;
+  for ( i = 0; i < WBT_TRAINER_NUM; i ++ )
+  {
+    const WBTTRAINER * wbt_tr = &wbtsys->wbt_trainer[ i ];
+    TAMADA_Printf("WBTTRAINER(%d): wbt_type(%d) pri(%d) poketype(%d) sex(%d) id(%d)\n",
+        i, wbt_tr->wbt_type,
+        wbt_tr->pri, wbt_tr->poketype, wbt_tr->sex, wbt_tr->tr_id );
+  }
+}
+#endif
+
+//============================================================================================
+//============================================================================================
+//------------------------------------------------------------------
+/**
+ * @brief 対戦相手のトレーナー位置を取得する
+ *
+ * 内部で状態（何回戦か）を見て勝敗結果から相手位置を取得する
+ */
+//------------------------------------------------------------------
+u32 WBTSYS_GetOpponentPos( const WBTSYS * wbtsys )
+{
+  const WBTRESULT * wbt_result = wbtsys->wbt_result;
+  u32 player_pos = 0;
+  u32 opponent_pos = 0;
+  int i;
+  u8 res_1st_pos_tbl[ 4 ];
+  u8 res_2nd_pos_tbl[ 2 ];
+
+  //1回戦勝者の位置テーブルを作成
+  for ( i = 0; i < 4; i ++ )
+  {
+    res_1st_pos_tbl[i] = i * 2 + ( wbt_result[ i ].upside_win == TRUE ? 0 : 1 );
+  }
+
+  //2回戦勝者の位置テーブルを作成
+  for ( i = 0; i < 2; i++ )
+  {
+    u32 idx;
+    idx = i * 2 + ( wbt_result[ WBT_GAME_2ND_1 + i ].upside_win == TRUE ? 0 : 1 );
+    res_2nd_pos_tbl[i] = res_1st_pos_tbl[idx];
+  }
+
+  //自分の場所を探す
+  for ( i = 0; i < WBT_TRAINER_NUM; i ++ )
+  {
+    const WBTTRAINER * wbt_tr = &wbtsys->wbt_trainer[ i ];
+    if ( wbt_tr->wbt_type == WBT_TRTYPE_PLAYER )
+    {
+      player_pos = i;
+      break;
+    }
+  }
+  if ( i == WBT_TRAINER_NUM )
+  {
+    DEBUG_DumpWBTTrainers( wbtsys );
+    OS_Printf(" 自分データが見つかりません！\n" );
+    GF_ASSERT( 0 );
+  }
+
+  switch ( WBTSYS_GetStage( wbtsys ) )
+  {
+  case WBTSTAGE_RECEPTION:
+  case WBTSTAGE_WIN:
+  default:
+    GF_ASSERT_MSG( 0, "stage(%d)では対戦相手は確定しません\n");
+    break;
+  case WBTSTAGE_ENTRY:
+  case WBTSTAGE_1ST:
+    {
+      static const opponent_1st_tbl[ WBT_TRAINER_NUM ] = { 1,0, 3,2, 5,4, 7,6 };
+      opponent_pos = opponent_1st_tbl[ player_pos ];
+    }
+    break;
+  case WBTSTAGE_2ND:
+    {
+      static const opponent_2nd_tbl[ WBT_TRAINER_NUM ] = { 1,1, 0,0, 3,3, 2,2 };
+      opponent_pos = res_1st_pos_tbl[ opponent_2nd_tbl [ player_pos ] ];
+    }
+    break;
+  case WBTSTAGE_FINAL:
+    {
+      static const opponent_final_tbl[ WBT_TRAINER_NUM ] = { 1,1,1,1, 0,0,0,0 };
+      opponent_pos = res_2nd_pos_tbl[ opponent_final_tbl[ player_pos ] ];
+    }
+    break;
+  }
+  GF_ASSERT( opponent_pos < WBT_TRAINER_NUM );
+  return opponent_pos;
+}
 
 //============================================================================================
 //
 //  対戦結果生成処理
 //
 //============================================================================================
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-enum {
-  MSG_GROUP_A = msg_wbt_comment_01,
-  MSG_GROUP_B = msg_wbt_comment_06,
-  MSG_GROUP_C = msg_wbt_comment_11,
-  MSG_GROUP_D = msg_wbt_comment_16,
-  MSG_GROUP_E = msg_wbt_comment_21,
-
-  MSG_LAYER_NICEGAME = 0,
-  MSG_LAYER_ONESIDE,
-  MSG_LAYER_ADVANTAGE,
-  MSG_LAYER_EVEN,
-  MSG_LAYER_DISADVANTAGE,
-};
 //------------------------------------------------------------------
 /**
  * @brief 対戦結果の生成処理
@@ -97,7 +188,6 @@ static void calcWBTResult( WBTRESULT * result,
     { //タイプ相性が高いほうが勝利
       result->upside_win = ( aff_a > aff_b );
     }
-    //result->msg_type = msg_wbt_comment_11;
   }
   else
   { //優先度が違う場合、高いほうが勝利
@@ -119,13 +209,6 @@ static void calcWBTResult( WBTRESULT * result,
   {
     int msg_layer;
     int msg_side;
-    static const u8 msg_table[][3] = {
-      { MSG_GROUP_D, MSG_GROUP_D, MSG_GROUP_E },  //MSG_LAYER_NICEGAME
-      { MSG_GROUP_A, MSG_GROUP_A, MSG_GROUP_A },  //MSG_LAYER_ONESIDE
-      { MSG_GROUP_B, MSG_GROUP_B, MSG_GROUP_B },  //MSG_LAYER_ADVANTAGE
-      { MSG_GROUP_C, MSG_GROUP_C, MSG_GROUP_E },  //MSG_LAYER_EVEN
-      { MSG_GROUP_D, MSG_GROUP_D, MSG_GROUP_E },  //MSG_LAYER_DISADVANTAGE
-    };
 
   //MSGの振り分け
     if ( pri_a >= 4 && pri_b >= 4 )
