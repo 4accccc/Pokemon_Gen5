@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="onoue_masayuki" host="W00272" date="2011-04-04T11:47:34"/>
+	<create user="nagihashi_toru" host="W00268" date="2011-04-06T14:38:28"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -375,7 +375,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1298" top="117" right="2011" bottom="750" maximized="no" rayout="Vertical2">
+	<dialog left="-1223" top="219" right="-518" bottom="839" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="752" top="215" right="1280" bottom="737" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -2360,6 +2360,116 @@ LR→補完&quot;</language>
 	<row id="DEBUG_FIELD_RESORT_15">
 		<language name="JPN" width="240">くちぐせ入力</language>
 		<language name="JPN_KANJI" width="240">くちぐせ入力</language>
+	</row>
+
+	<row id="DEBUG_FIELD_RESORT_16">
+		<language name="JPN" width="240">入力</language>
+		<language name="JPN_KANJI" width="240">入力</language>
+	</row>
+
+	<row id="DEBUG_FIELD_RESORT_17">
+		<language name="JPN" width="240"></language>
+		<language name="JPN_KANJI" width="240"></language>
+	</row>
+
+	<row id="DEBUG_FIELD_RESORT_18">
+		<language name="JPN" width="240">移動</language>
+		<language name="JPN_KANJI" width="240">移動</language>
+	</row>
+
+	<row id="DEBUG_FIELD_RESORT_19">
+		<language name="JPN" width="240">クリア</language>
+		<language name="JPN_KANJI" width="240">クリア</language>
+	</row>
+
+	<row id="DEBUG_FIELD_RESORT_20">
+		<language name="JPN" width="240">セット</language>
+		<language name="JPN_KANJI" width="240">セット</language>
+	</row>
+
+	<row id="DEBUG_FIELD_RESORT_21">
+		<language name="JPN" width="240">フィールド</language>
+		<language name="JPN_KANJI" width="240">フィールド</language>
+	</row>
+
+	<row id="DEBUG_FIELD_RESORT_22">
+		<language name="JPN" width="240">ゲストルーム</language>
+		<language name="JPN_KANJI" width="240">ゲストルーム</language>
+	</row>
+
+	<row id="DEBUG_FIELD_RESORT_23">
+		<language name="JPN" width="240">大使館</language>
+		<language name="JPN_KANJI" width="240">大使館</language>
+	</row>
+
+	<row id="DEBUG_FIELD_RESORT_24">
+		<language name="JPN" width="240">施設０</language>
+		<language name="JPN_KANJI" width="240">施設０</language>
+	</row>
+
+	<row id="DEBUG_FIELD_RESORT_25">
+		<language name="JPN" width="240">施設１</language>
+		<language name="JPN_KANJI" width="240">施設１</language>
+	</row>
+
+	<row id="DEBUG_FIELD_RESORT_26">
+		<language name="JPN" width="240">施設２</language>
+		<language name="JPN_KANJI" width="240">施設２</language>
+	</row>
+
+	<row id="DEBUG_FIELD_RESORT_27">
+		<language name="JPN" width="240">施設３</language>
+		<language name="JPN_KANJI" width="240">施設３</language>
+	</row>
+
+	<row id="DEBUG_FIELD_RESORT_28">
+		<language name="JPN" width="240">施設４</language>
+		<language name="JPN_KANJI" width="240">施設４</language>
+	</row>
+
+	<row id="DEBUG_FIELD_RESORT_29">
+		<language name="JPN" width="240">施設５</language>
+		<language name="JPN_KANJI" width="240">施設５</language>
+	</row>
+
+	<row id="DEBUG_FIELD_RESORT_30">
+		<language name="JPN" width="240">施設６</language>
+		<language name="JPN_KANJI" width="240">施設６</language>
+	</row>
+
+	<row id="DEBUG_FIELD_RESORT_31">
+		<language name="JPN" width="240">施設７</language>
+		<language name="JPN_KANJI" width="240">施設７</language>
+	</row>
+
+	<row id="DEBUG_FIELD_RESORT_32">
+		<language name="JPN" width="240">コンドミニアム０</language>
+		<language name="JPN_KANJI" width="240">コンドミニアム０</language>
+	</row>
+
+	<row id="DEBUG_FIELD_RESORT_33">
+		<language name="JPN" width="240">コンドミニアム１</language>
+		<language name="JPN_KANJI" width="240">コンドミニアム１</language>
+	</row>
+
+	<row id="DEBUG_FIELD_RESORT_34">
+		<language name="JPN" width="240">コンドミニアム２</language>
+		<language name="JPN_KANJI" width="240">コンドミニアム２</language>
+	</row>
+
+	<row id="DEBUG_FIELD_RESORT_35">
+		<language name="JPN" width="240">コンドミニアム３</language>
+		<language name="JPN_KANJI" width="240">コンドミニアム３</language>
+	</row>
+
+	<row id="DEBUG_FIELD_RESORT_36">
+		<language name="JPN" width="240">コンドミニアム４</language>
+		<language name="JPN_KANJI" width="240">コンドミニアム４</language>
+	</row>
+
+	<row id="DEBUG_FIELD_RESORT_37">
+		<language name="JPN" width="240">コンドミニアム５</language>
+		<language name="JPN_KANJI" width="240">コンドミニアム５</language>
 	</row>
 
 	<row id="DEBUG_FIELD_INFINITY">

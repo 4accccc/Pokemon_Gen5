@@ -327,6 +327,7 @@ extern void FLDMENUFUNC_InputHeaderListSize(
 extern void FLDMENUFUNC_WriteWindow( FLDMENUFUNC *menuFunc );
 #endif
 extern u32 FLDMENUFUNC_GetNowIndex( const FLDMENUFUNC *menuFunc );
+extern void FLDMENUFUNC_GetListCursor( const FLDMENUFUNC *menuFunc, u16 *list_pos, u16 *cursor_pos );
 
 //はい、いいえ選択メニュー
 extern FLDMENUFUNC * FLDMENUFUNC_AddYesNoMenu(

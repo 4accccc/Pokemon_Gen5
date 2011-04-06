@@ -2035,6 +2035,20 @@ u32 FLDMENUFUNC_GetNowIndex( const FLDMENUFUNC *menuFunc )
   return list + cursor;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *  @brief  現在選択中のインデックスを取得する
+ *
+ *  @param  const FLDMENUFUNC *menuFunc   メニューワーク
+ *
+ *  @return 現在選択しているインデックス
+ */
+//-----------------------------------------------------------------------------
+void FLDMENUFUNC_GetListCursor( const FLDMENUFUNC *menuFunc, u16 *list_pos, u16 *cursor_pos )
+{
+  BmpMenuList_PosGet( menuFunc->pMenuListWork, list_pos, cursor_pos );
+}
+
 //--------------------------------------------------------------
 /**
  * FLDMENUFUNC_HEADER -> BMPMENULIST_HEADER

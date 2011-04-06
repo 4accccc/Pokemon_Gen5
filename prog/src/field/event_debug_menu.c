@@ -78,9 +78,6 @@ extern FSOverlayID debugmenu_overlayID;
 //======================================================================
 //  proto
 //======================================================================
-static FLDMENUFUNC * DEBUGFLDMENU_InitExPos(
-    FIELDMAP_WORK * fieldmap, HEAPID heapID,
-    const DEBUG_MENU_INITIALIZER * init, u16 list_pos, u16 cursor_pos );
 static void DebugMenu_IineCallBack(BMPMENULIST_WORK* lw,u32 param,u8 y);
 static u32 DebugMenu_GetQuickJumpIdx( u32 strID );
 static GMEVENT_RESULT DebugMenuEvent( GMEVENT *event, int *seq, void *wk );
@@ -489,7 +486,7 @@ FLDMENUFUNC * DEBUGFLDMENU_InitEx(
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-static FLDMENUFUNC * DEBUGFLDMENU_InitExPos(
+FLDMENUFUNC * DEBUGFLDMENU_InitExPos(
     FIELDMAP_WORK * fieldmap, HEAPID heapID,
     const DEBUG_MENU_INITIALIZER * init, u16 list_pos, u16 cursor_pos )
 {

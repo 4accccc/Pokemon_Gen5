@@ -90,6 +90,11 @@ extern FLDMENUFUNC * DEBUGFLDMENU_Init(
 extern FLDMENUFUNC * DEBUGFLDMENU_InitArcID(
     FIELDMAP_WORK * fieldmap, HEAPID heapID,
     const DEBUG_MENU_INITIALIZER * init, u32 msg_arc_id );
+
+
+extern FLDMENUFUNC * DEBUGFLDMENU_InitExPos(
+    FIELDMAP_WORK * fieldmap, HEAPID heapID,
+    const DEBUG_MENU_INITIALIZER * init, u16 list_pos, u16 cursor_pos );
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 extern FLDMENUFUNC * DEBUGFLDMENU_InitEx(
