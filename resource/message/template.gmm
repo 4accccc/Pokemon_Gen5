@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00253" date="2011-04-04T20:35:33"/>
+	<create user="tamada" host="W00253" date="2011-04-06T11:44:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -246,6 +246,11 @@
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 				<comment language="japanese">WBTのトーナメント名称</comment>
 				<comment language="english">WBTのトーナメント名称</comment>
+			</tag>
+			<tag entry="60" japanese="未設定タグ" english="未設定タグ" view="EP" width="130" line="1">
+				<parameter number="0" japanese="場所" english="場所" type="int8"/>
+				<comment language="japanese">開発中の決定していないタグに使用する</comment>
+				<comment language="english">開発中の決定していないタグに使用する</comment>
 			</tag>
 		</group>
 
