@@ -154,16 +154,6 @@ enum{
 	STEP_END	= 10000,
 };
 
-// タイマ(念のため、2の倍数にしておく)
-enum{
-	TIMER_PANEL,					// パネルイン/アウト
-	TIMER_GAGE,						// ゲージ伸び
-	TIMER_BOMB,						// 爆発
-	TIMER_WAIT,
-	
-	TIMER_MAX,
-};
-
 // OBJのリソースのインデックス
 enum{
 	RESID_OBJ_PLT = 0,				// パレット
@@ -217,6 +207,24 @@ enum{
 	MOVE_PANEL_OUT,					// パネルout
 	//
 	MOVE_PANEL_MAX,
+};
+
+// タイマindex(念のため、2の倍数にしておく)
+enum{
+	TIMER_PANEL,					// パネルイン/アウト
+	TIMER_GAGE,						// ゲージ伸び
+	TIMER_BOMB,						// 爆発
+	TIMER_WAIT,
+	
+	TIMER_MAX,
+};
+
+// タイマ値
+enum{
+	FRAME_PANEL = 60,
+	FRAME_GAGE	= 60,
+	FRAME_BOMB	= 60,
+	FRAME_WAIT	= 60,
 };
 
 // 最大数
@@ -343,7 +351,7 @@ typedef struct
 
 // 個数
 enum{
-	PARAM_ROUND1 = 1,
+	PARAM_ROUND1 = 2,
 	PARAM_ROUND2 = 5,
 	PARAM_ROUND3 = 3,
 	//
@@ -473,14 +481,6 @@ typedef struct{
  *							データ定義(要整理)
  */
 //=============================================================================
-// テーブル(2の倍数にしておく)
-// ->最終的にはなくす方向
-const s16 info_tbl[] = {
-	60,						// パネルスクロールイン
-	60,						// ゲージ伸び
-	60,						// 爆発
-	60,
-};
 
 // OBJの情報(上側)
 // narc, resid, paloffset, palnum
@@ -600,7 +600,7 @@ const u8 wbt_string_pos_tbl[] = {
 
 // メッセージ(はじめ、最後)
 const u8 wbt_mes_gmm_tbl[] = {
-	msg_wbt_tournament_01, msg_wbt_tournament_01,	// 1回戦
+	msg_wbt_tournament_00, msg_wbt_tournament_01,	// 1回戦(はじめだけ特別)
 	msg_wbt_tournament_01, msg_wbt_tournament_02,	// 2回戦
 	msg_wbt_tournament_02, msg_wbt_tournament_03,	// 決勝戦
 	0,0,
@@ -1281,7 +1281,17 @@ static void wbt_key_00( WBTLIST_MAIN_WORK* wk )
 				//
 				// 1回戦 => 終了
 				if(wk->Mode == MODE_ROUND1){
-					wk->Step = STEP_END;
+//					wk->Step = STEP_END;
+					//
+					// カウンタをすすめる(特別処理)
+					wbt_chk_dispcount( wk );
+					// 移動可能パラメータの更新
+					wk->MoveFlag = wbt_get_param( wk, PRM_MOVEFLAG, 0 );
+					//
+					wk->Step = STEP_LV3+10;
+					wbt_init_move_panel( wk, MOVE_PANEL_OUT );
+					// meswinクリア
+					wbt_clear_meswin( wk );
 				}
 				// 2、3回戦=>パネルアウト
 				else{
@@ -1309,21 +1319,43 @@ static void wbt_key_00( WBTLIST_MAIN_WORK* wk )
 				wk->MoveFlag = wbt_get_param( wk, PRM_MOVEFLAG, 0 );
 				//
 				// 爆発
-				tmp = wbt_get_param( wk, PRM_EXPPOS, -1 );
-				wbt_disp_bomb( wk, tmp );
+//				tmp = wbt_get_param( wk, PRM_EXPPOS, -1 );
+//				wbt_disp_bomb( wk, tmp );
 				//
 				// 次へ
 				wk->Step = STEP_LV4;
-//				wbt_init_timer( wk, TIMER_BOMB, info_tbl[0] );
+				wbt_init_timer( wk, TIMER_BOMB, FRAME_BOMB );
+			}
+			break;
+		//
+		// LV3+10(パネルアウト:MODE_ROUND1用)
+		case STEP_LV3+10:
+			// 初期化
+			wbt_main_move_panel( wk );
+			// 移動終了
+			if( wbt_is_movework( wk, MWORK_PANEL_L ) == FALSE ){
+				wk->Step = STEP_LV3+20;
+				// メッセージ表示
+				mesid = wbt_chk_meswin( wk );
+				wbt_set_meswin( wk, mesid );
+			}
+			break;
+		//
+		// LV3+20(メッセージ待ち:MODE_ROUND1用)
+		case STEP_LV3+20:
+			// メッセージ待ち
+			if( wbt_main_meswin( wk ) == FALSE ){
+				// 終了
+				wk->Step = STEP_END;
 			}
 			break;
 		
 		//
 		// LV4(爆破)
 		case STEP_LV4:
-//			timer = wbt_main_timer( wk, TIMER_BOMB );
-//			if(timer <= 0){
-			if( wbt_is_anime_end( wk, CLWKID_BOMB ) == FALSE ){
+			timer = wbt_main_timer( wk, TIMER_BOMB );
+			if(timer <= 0){
+//			if( wbt_is_anime_end( wk, CLWKID_BOMB ) == FALSE ){
 				// 爆発が終了してから色変え
 				// パネル色変え
 				tmp = wbt_get_param( wk, PRM_EXPPOS, -1 );
@@ -1337,7 +1369,7 @@ static void wbt_key_00( WBTLIST_MAIN_WORK* wk )
 				
 				// 爆破アニメ終了=>ゲージ伸び
 				wk->Step = STEP_LV5;
-				wbt_init_timer( wk, TIMER_GAGE, info_tbl[2] );
+				wbt_init_timer( wk, TIMER_GAGE, FRAME_GAGE );
 				//
 				// ゲージ伸びる処理
 				sbuf[0] = wbt_get_param( wk, PRM_LINEWORK, -1 );
@@ -2178,15 +2210,22 @@ static void wbt_set_meswin( WBTLIST_MAIN_WORK* wk, const s32 mesid )
 	
 	// WORDSET生成
 	wordset = WORDSET_Create( wk->heapID );
-	// 各トレーナーの名前をセット
-	buf[0] = wbt_get_param( wk, PRM_T1ST, 0 );		// 左
-	buf[1] = wbt_get_param( wk, PRM_T2ND, 0 );		// 右
-	// 最後は勝者を表示
-	if(wk->MesFlag & FLG_MES_END){
-		buf[0] = wbt_get_param( wk, PRM_WINPOS, 0 );
+	//
+	// 1回戦の1回目だけ特別処理
+	if((wk->Mode == MODE_ROUND1)&&(mesid == wbt_mes_gmm_tbl[0])){
+		WORDSET_RegisterWord( wordset, 0, wk->Param->tournament_name, 0, TRUE, PM_LANG );
+		WORDSET_RegisterWord( wordset, 1, wk->Param->tournament_rule, 0, TRUE, PM_LANG );
+	}else{
+		// 各トレーナーの名前をセット
+		buf[0] = wbt_get_param( wk, PRM_T1ST, 0 );		// 左
+		buf[1] = wbt_get_param( wk, PRM_T2ND, 0 );		// 右
+		// 最後は勝者を表示
+		if(wk->MesFlag & FLG_MES_END){
+			buf[0] = wbt_get_param( wk, PRM_WINPOS, 0 );
+		}
+		WORDSET_RegisterWord( wordset, 0, wk->Param->trainer[ buf[0] ].name, 0, TRUE, PM_LANG );
+		WORDSET_RegisterWord( wordset, 1, wk->Param->trainer[ buf[1] ].name, 0, TRUE, PM_LANG );
 	}
-	WORDSET_RegisterWord( wordset, 0, wk->Param->trainer[ buf[0] ].name, 0, TRUE, PM_LANG );
-	WORDSET_RegisterWord( wordset, 1, wk->Param->trainer[ buf[1] ].name, 0, TRUE, PM_LANG );
 	
 	// PrintStream終了時にはdeleteしないとtaskが残ってしまうようだ
 	// 念のため0check
@@ -2196,7 +2235,7 @@ static void wbt_set_meswin( WBTLIST_MAIN_WORK* wk, const s32 mesid )
 	// Msgの再構築
 	if(wk->MsgBuffer){
 		GFL_STR_DeleteBuffer( wk->MsgBuffer );
-		wk->MsgBuffer = GFL_STR_CreateBuffer( 200, wk->heapID );
+		wk->MsgBuffer = GFL_STR_CreateBuffer( MES_STRING_BUFFER, wk->heapID );
 	}
 	// メッセージ仮バッファセット
 	strbuf = GFL_MSG_CreateString( wk->msg[1], mesid );
@@ -2315,8 +2354,11 @@ static s32 wbt_chk_meswin( WBTLIST_MAIN_WORK* wk )
 	// 次の回戦の情報を表示させるための処理
 	wk->MesFlag = 0;
 	if(wk->Mode == MODE_ROUND1){		// 1回戦
+		// 1回戦だけ特別(1文章のみ表示)
 		wk->MesFlag = FLG_MES_1ST;
-		mesid = wbt_mes_gmm_tbl[2*wk->Mode+1];
+		if(wk->DispCount == (PARAM_ROUND1-1)){
+			mesid = wbt_mes_gmm_tbl[2*wk->Mode+1];
+		}
 	}
 	else if(wk->Mode == MODE_ROUND2){	// 2回戦
 		if(wk->DispCount == (PARAM_ROUND2-1)){
@@ -2667,13 +2709,23 @@ static void wbt_calc_param( WBTLIST_MAIN_WORK* wk )
 	// 1回戦 => 上記の初期化でよい
 	if(wk->Mode == MODE_ROUND1){
 		// プレイヤの対戦表示
-		offset = 0;
+		offset = 1;
 		if((wk->PlayerNum%2) == 0){		// 上側
 			wk->ParamWork[offset].t_1st	= wk->PlayerNum;
 			wk->ParamWork[offset].t_2nd	= wk->PlayerNum+1;
+			//
+			// 特殊処理(自分の対戦プレートだけ残す)
+			wk->ParamWork[offset].moveflag  = 0xff;
+			wk->ParamWork[offset].moveflag &= ~(1<<(wk->PlayerNum));
+			wk->ParamWork[offset].moveflag &= ~(1<<(wk->PlayerNum+1));
 		}else{							// 下側
 			wk->ParamWork[offset].t_1st	= wk->PlayerNum-1;
 			wk->ParamWork[offset].t_2nd	= wk->PlayerNum;
+			//
+			// 特殊処理(自分の対戦プレートだけ残す)
+			wk->ParamWork[offset].moveflag  = 0xff;
+			wk->ParamWork[offset].moveflag &= ~(1<<(wk->PlayerNum-1));
+			wk->ParamWork[offset].moveflag &= ~(1<<(wk->PlayerNum));
 		}
 //		return;
 	}
@@ -2800,8 +2852,11 @@ static s16 wbt_get_param( WBTLIST_MAIN_WORK* wk, const s32 mode, const s32 off )
 			offset = PARAM_ROUND1+PARAM_ROUND2+PARAM_ROUND3-1;
 		}
 	}
-	else{
-		offset = 0;
+	else if(wk->Mode == MODE_ROUND1){
+		offset += wk->DispCount;
+		if(offset >= (PARAM_ROUND1)){
+			offset = PARAM_ROUND1-1;
+		}
 	}
 	//
 	// 取得
@@ -2841,22 +2896,24 @@ static BOOL wbt_chk_dispcount( WBTLIST_MAIN_WORK* wk )
 	wk->DispCount++;
 	// 2回戦
 	if(wk->Mode == MODE_ROUND2){
-		if(wk->DispCount >= 4){
-			wk->DispCount = 4;
+		if(wk->DispCount >= (PARAM_ROUND2-1)){
+			wk->DispCount = (PARAM_ROUND2-1);
 			bflg = TRUE;
 		}
 	}
 	// 3回戦
 	else if(wk->Mode == MODE_ROUND3){
-		if(wk->DispCount >= 2){
-			wk->DispCount = 2;
+		if(wk->DispCount >= (PARAM_ROUND3-1)){
+			wk->DispCount = (PARAM_ROUND3-1);
 			bflg = TRUE;
 		}
 	}
 	// 1回戦
-	else{
-		wk->DispCount = 0;
-		bflg = TRUE;
+	else if(wk->Mode == MODE_ROUND1){
+		if(wk->DispCount >= (PARAM_ROUND1-1)){
+			wk->DispCount = PARAM_ROUND1-1;
+			bflg = TRUE;
+		}
 	}
 	// 終了判定
 	return( bflg );
@@ -2877,19 +2934,21 @@ static BOOL wbt_is_dispcount( WBTLIST_MAIN_WORK* wk )
 	
 	// 2回戦
 	if(wk->Mode == MODE_ROUND2){
-		if(wk->DispCount >= 4){
+		if(wk->DispCount >= (PARAM_ROUND2-1)){
 			bflg = TRUE;
 		}
 	}
 	// 3回戦
 	else if(wk->Mode == MODE_ROUND3){
-		if(wk->DispCount >= 2){
+		if(wk->DispCount >= (PARAM_ROUND3-1)){
 			bflg = TRUE;
 		}
 	}
 	// 1回戦
-	else{
-		bflg = TRUE;
+	else if(wk->Mode == MODE_ROUND1){
+		if(wk->DispCount >= (PARAM_ROUND1-1)){
+			bflg = TRUE;
+		}
 	}
 	// 終了判定
 	return( bflg );
