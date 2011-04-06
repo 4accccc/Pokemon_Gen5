@@ -10,6 +10,7 @@
 #include <gflib.h>
 #include "system/main.h"
 #include "system/bmp_oam.h"
+#include "system/nsbtx_to_clwk.h"
 #include "gamesystem/gamesystem.h"
 #include "field/field_subscreen.h"
 #include "gamesystem/game_beacon.h"
@@ -25,12 +26,12 @@
 #include "beacon_status.naix"
 #include "wifi_unionobj.naix"
 #include "fmission_view_local.h"
-//#include "beacon_view_common.h"
 #include "fmission_view_sub.h"
 
 #include "gamesystem/fest_mission_nw.h"
 #include "gamesystem/fmission_log_accessor.h"
 #include "arc/wifi_unionobj_plt.cdat"
+#include "fieldmap/fldmmdl_mdlres.naix" //フィールド人物OBJ
 #include "msg/script/msg_festmission_event.h"
 
 #define SCORE_NUM_SX    (40)
@@ -727,16 +728,27 @@ static PANEL_WORK* panel_GetPanelFromDataIndex( FMISSION_VIEW_PTR wk, u8 data_id
  */
 static void panel_UnionObjUpdate( FMISSION_VIEW_PTR wk, PANEL_WORK* pp, FMISSION_LOG* pl)
 {
-  u8 sex, char_no, p_ofs;
- 
-  char_no = FMISSION_LOG_GetTrView( pl );
+  static const int file[2] = {
+    NARC_fldmmdl_mdlres_swhero_nsbtx,
+    NARC_fldmmdl_mdlres_swheroine_nsbtx
+  };
 
-  //キャラクタ転送
-  GFL_CLGRP_CGR_Replace(  wk->objResUnion.res[ OBJ_RES_CGR ].tbl[ pp->id ],
+  if( !pp->mine_f ){  //ほかのプレイヤー
+    u8 char_no, p_ofs;
+
+    char_no = FMISSION_LOG_GetTrView( pl );
+
+    //キャラクタ転送
+    GFL_CLGRP_CGR_Replace(  wk->objResUnion.res[ OBJ_RES_CGR ].tbl[ pp->id ],
                           wk->resCharUnion[ char_no ].p_char );
-  //パレット転送
-  p_ofs = 16*sc_wifi_unionobj_plt[char_no];
-  PaletteWorkSet( wk->pfd, &wk->resPlttUnion.dat[p_ofs], FADE_SUB_OBJ, (ACT_PAL_UNION+pp->id)*16, 0x20 );
+    //パレット転送
+    p_ofs = 16*sc_wifi_unionobj_plt[char_no];
+    PaletteWorkSet( wk->pfd, &wk->resPlttUnion.dat[p_ofs], FADE_SUB_OBJ, (ACT_PAL_UNION+pp->id)*16, 0x20 );
+  }else{
+    //自分
+    CLWK_TransNSBTX_Ex( pp->cUnion, ARCID_MMDL_RES, file[pp->sex], 3,  //3パターン目が正面絵
+      NSBTX_DEF_SX, NSBTX_DEF_SY, 0, CLSYS_DEFREND_SUB, wk->pfd, (ACT_PAL_UNION+pp->id), wk->tmpHeapID );
+  }
 }
 
 /*
@@ -765,6 +777,7 @@ static void panel_Draw( FMISSION_VIEW_PTR wk, PANEL_WORK* pp, FMISSION_LOG* pl, 
   FMISSION_LOG_ACTION action = FMISSION_LOG_GetAction( pl );
 
   pp->sex = FMISSION_LOG_GetSex( pl );
+  pp->mine_f = FMISSION_LOG_IsPlayerLog( pl );
   pp->type = panel_GetType( wk, action, FMISSION_LOG_GetActionParam( pl ) );
 
   IWASAWA_Printf("PanelDraw %d\n", action);

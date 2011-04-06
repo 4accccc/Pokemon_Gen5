@@ -45,7 +45,8 @@ typedef struct _PANEL_WORK{
 
   u8  n_line; //現在のライン
   u8  sex:1;  //性別
-  u8  type:7; //パネルタイプ
+  u8  mine_f:1;  //プレイヤー自身のログならTRUE
+  u8  type:6; //パネルタイプ(enum PANEL_TYPE)
 
   u16 tr_id;  //トレーナーID
   u16 act_prm;  //<アクションパラメータ
