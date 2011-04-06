@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nagihashi_toru" host="W00268" date="2011-03-01T12:07:16"/>
+	<create user="tamada" host="W00253" date="2011-04-04T20:35:33"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -241,6 +241,11 @@
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 				<comment language="japanese">リゾートで使用する自由入力の市長名です。</comment>
 				<comment language="english">リゾートで使用する自由入力の市長名です。</comment>
+			</tag>
+			<tag entry="59" japanese="WBTトーナメント名" english="WBTトーナメント名" view="EP" width="208" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WBTのトーナメント名称</comment>
+				<comment language="english">WBTのトーナメント名称</comment>
 			</tag>
 		</group>
 
@@ -3661,6 +3666,131 @@
 	<row id="swleader8_01">
 		<language name="JPN" width="216">みず</language>
 		<language name="JPN_KANJI" width="216">みず</language>
+	</row>
+
+	<row id="rgleader1_01">
+		<language name="JPN" width="216">タケシ</language>
+		<language name="JPN_KANJI" width="216">タケシ</language>
+	</row>
+
+	<row id="rgleader2_01">
+		<language name="JPN" width="216">カスミ</language>
+		<language name="JPN_KANJI" width="216">カスミ</language>
+	</row>
+
+	<row id="rgleader3_01">
+		<language name="JPN" width="216">マチス</language>
+		<language name="JPN_KANJI" width="216">マチス</language>
+	</row>
+
+	<row id="rgleader4_01">
+		<language name="JPN" width="216">エリカ</language>
+		<language name="JPN_KANJI" width="216">エリカ</language>
+	</row>
+
+	<row id="rgleader5_01">
+		<language name="JPN" width="216">ナツメ</language>
+		<language name="JPN_KANJI" width="216">ナツメ</language>
+	</row>
+
+	<row id="rgleader6_01">
+		<language name="JPN" width="216">カツラ</language>
+		<language name="JPN_KANJI" width="216">カツラ</language>
+	</row>
+
+	<row id="rgleader7_01">
+		<language name="JPN" width="216">サカキ</language>
+		<language name="JPN_KANJI" width="216">サカキ</language>
+	</row>
+
+	<row id="gsleader1_01">
+		<language name="JPN" width="216">ハヤト</language>
+		<language name="JPN_KANJI" width="216">ハヤト</language>
+	</row>
+
+	<row id="gsleader2_01">
+		<language name="JPN" width="216">ツクシ</language>
+		<language name="JPN_KANJI" width="216">ツクシ</language>
+	</row>
+
+	<row id="gsleader3_01">
+		<language name="JPN" width="216">アカネ</language>
+		<language name="JPN_KANJI" width="216">アカネ</language>
+	</row>
+
+	<row id="gsleader4_01">
+		<language name="JPN" width="216">マツバ</language>
+		<language name="JPN_KANJI" width="216">マツバ</language>
+	</row>
+
+	<row id="gsleader5_01">
+		<language name="JPN" width="216">シジマ</language>
+		<language name="JPN_KANJI" width="216">シジマ</language>
+	</row>
+
+	<row id="gsleader6_01">
+		<language name="JPN" width="216">ミカン</language>
+		<language name="JPN_KANJI" width="216">ミカン</language>
+	</row>
+
+	<row id="gsleader7_01">
+		<language name="JPN" width="216">ヤナギ</language>
+		<language name="JPN_KANJI" width="216">ヤナギ</language>
+	</row>
+
+	<row id="gsleader8_01">
+		<language name="JPN" width="216">イブキ</language>
+		<language name="JPN_KANJI" width="216">イブキ</language>
+	</row>
+
+	<row id="gsleader9_01">
+		<language name="JPN" width="216">アンズ</language>
+		<language name="JPN_KANJI" width="216">アンズ</language>
+	</row>
+
+	<row id="rsleader1_01">
+		<language name="JPN" width="216">ツツジ</language>
+		<language name="JPN_KANJI" width="216">ツツジ</language>
+	</row>
+
+	<row id="rsleader2_01">
+		<language name="JPN" width="216">トウキ</language>
+		<language name="JPN_KANJI" width="216">トウキ</language>
+	</row>
+
+	<row id="rsleader3_01">
+		<language name="JPN" width="216">テッセン</language>
+		<language name="JPN_KANJI" width="216">テッセン</language>
+	</row>
+
+	<row id="rsleader4_01">
+		<language name="JPN" width="216">アスナ</language>
+		<language name="JPN_KANJI" width="216">アスナ</language>
+	</row>
+
+	<row id="rsleader5_01">
+		<language name="JPN" width="216">センリ</language>
+		<language name="JPN_KANJI" width="216">センリ</language>
+	</row>
+
+	<row id="rsleader6_01">
+		<language name="JPN" width="216">ナギ</language>
+		<language name="JPN_KANJI" width="216">ナギ</language>
+	</row>
+
+	<row id="rsleader7_01">
+		<language name="JPN" width="216">フウ</language>
+		<language name="JPN_KANJI" width="216">フウ</language>
+	</row>
+
+	<row id="rsleader8_01">
+		<language name="JPN" width="216">ラン</language>
+		<language name="JPN_KANJI" width="216">ラン</language>
+	</row>
+
+	<row id="eleader1_01">
+		<language name="JPN" width="216">アダン</language>
+		<language name="JPN_KANJI" width="216">アダン</language>
 	</row>
 
 	<flowchart-group-list>

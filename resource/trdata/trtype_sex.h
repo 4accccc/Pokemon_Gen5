@@ -131,6 +131,31 @@ static	const	u8	TrTypeSexTable[]={
 	PTL_SEX_MALE,		//ジムリーダー55
 	PTL_SEX_MALE,		//ジムリーダー77
 	PTL_SEX_MALE,		//ジムリーダー8
+	PTL_SEX_MALE,		//ポケモントレーナー1111
+	PTL_SEX_FEMALE,		//ポケモントレーナー222
+	PTL_SEX_MALE,		//ポケモントレーナー333
+	PTL_SEX_FEMALE,		//ポケモントレーナー444
+	PTL_SEX_FEMALE,		//ポケモントレーナー555
+	PTL_SEX_MALE,		//ポケモントレーナー666
+	PTL_SEX_MALE,		//ポケモントレーナー777
+	PTL_SEX_MALE,		//ポケモントレーナー1111
+	PTL_SEX_MALE,		//ポケモントレーナー222
+	PTL_SEX_FEMALE,		//ポケモントレーナー333
+	PTL_SEX_MALE,		//ポケモントレーナー444
+	PTL_SEX_MALE,		//ポケモントレーナー555
+	PTL_SEX_FEMALE,		//ポケモントレーナー666
+	PTL_SEX_MALE,		//ポケモントレーナー777
+	PTL_SEX_FEMALE,		//ポケモントレーナー88
+	PTL_SEX_FEMALE,		//ポケモントレーナー9
+	PTL_SEX_FEMALE,		//ポケモントレーナー1111
+	PTL_SEX_MALE,		//ポケモントレーナー222
+	PTL_SEX_MALE,		//ポケモントレーナー333
+	PTL_SEX_FEMALE,		//ポケモントレーナー444
+	PTL_SEX_MALE,		//ポケモントレーナー555
+	PTL_SEX_FEMALE,		//ポケモントレーナー666
+	PTL_SEX_MALE,		//ポケモントレーナー777
+	PTL_SEX_FEMALE,		//ポケモントレーナー88
+	PTL_SEX_MALE,		//ポケモントレーナー1111
 	PTL_SEX_MALE,		//男主人公（シューター）
 	PTL_SEX_FEMALE,	//女主人公（シューター）
 };

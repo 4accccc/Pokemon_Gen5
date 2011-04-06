@@ -130,6 +130,31 @@
 #define	TRTYPE_SWLEADER5    ( 117 )    //ジムリーダー55
 #define	TRTYPE_SWLEADER7    ( 118 )    //ジムリーダー77
 #define	TRTYPE_SWLEADER8    ( 119 )    //ジムリーダー8
-#define	TRTYPE_HERO_S	    ( 120 )
-#define	TRTYPE_HEROINE_S	( 121 )
-#define	TRTYPE_MAX	( 122 )
+#define	TRTYPE_RGLEADER1    ( 120 )    //ポケモントレーナー1111
+#define	TRTYPE_RGLEADER2    ( 121 )    //ポケモントレーナー222
+#define	TRTYPE_RGLEADER3    ( 122 )    //ポケモントレーナー333
+#define	TRTYPE_RGLEADER4    ( 123 )    //ポケモントレーナー444
+#define	TRTYPE_RGLEADER5    ( 124 )    //ポケモントレーナー555
+#define	TRTYPE_RGLEADER6    ( 125 )    //ポケモントレーナー666
+#define	TRTYPE_RGLEADER7    ( 126 )    //ポケモントレーナー777
+#define	TRTYPE_GSLEADER1    ( 127 )    //ポケモントレーナー1111
+#define	TRTYPE_GSLEADER2    ( 128 )    //ポケモントレーナー222
+#define	TRTYPE_GSLEADER3    ( 129 )    //ポケモントレーナー333
+#define	TRTYPE_GSLEADER4    ( 130 )    //ポケモントレーナー444
+#define	TRTYPE_GSLEADER5    ( 131 )    //ポケモントレーナー555
+#define	TRTYPE_GSLEADER6    ( 132 )    //ポケモントレーナー666
+#define	TRTYPE_GSLEADER7    ( 133 )    //ポケモントレーナー777
+#define	TRTYPE_GSLEADER8    ( 134 )    //ポケモントレーナー88
+#define	TRTYPE_GSLEADER9    ( 135 )    //ポケモントレーナー9
+#define	TRTYPE_RSLEADER1    ( 136 )    //ポケモントレーナー1111
+#define	TRTYPE_RSLEADER2    ( 137 )    //ポケモントレーナー222
+#define	TRTYPE_RSLEADER3    ( 138 )    //ポケモントレーナー333
+#define	TRTYPE_RSLEADER4    ( 139 )    //ポケモントレーナー444
+#define	TRTYPE_RSLEADER5    ( 140 )    //ポケモントレーナー555
+#define	TRTYPE_RSLEADER6    ( 141 )    //ポケモントレーナー666
+#define	TRTYPE_RSLEADER7    ( 142 )    //ポケモントレーナー777
+#define	TRTYPE_RSLEADER8    ( 143 )    //ポケモントレーナー88
+#define	TRTYPE_ELEADER1    ( 144 )    //ポケモントレーナー1111
+#define	TRTYPE_HERO_S	    ( 145 )
+#define	TRTYPE_HEROINE_S	( 146 )
+#define	TRTYPE_MAX	( 147 )
