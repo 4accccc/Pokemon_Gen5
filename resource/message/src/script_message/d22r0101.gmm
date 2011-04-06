@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-05T21:51:23"/>
+	<create user="matsumiya" host="W00224" date="2011-04-06T17:28:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1288" top="144" right="1989" bottom="771" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="526"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="539"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="4" index="0" style="0000" width="693"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -295,182 +295,305 @@
 	<row id="msg_d22r0101_swrival_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・戦闘前
+・pos（）を踏むとメッセージ表示
+・表示後、トレーナー戦闘に
 ・1＝ライバル名</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『ヒオウギを　でてから
+どう　かわったか　たしかめたいよな？▽
+てなわけで　しょうぶ　するよ▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ヒオウギを　でてから
+どう　変わったか　確かめたいよな？▽
+てなわけで　勝負するよ▼</language>
 	</row>
 
 	<row id="msg_d22r0101_swrival_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・迷子探し前</comment>
+・戦闘後、フィールドに戻ると
+　自動でメッセージ表示
+・続けてswrival_03</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『それなりに　すごいかな
+ポケモンの　ちからも　ひきだしてさ▼
+で　どうして　ここにいるんだ？▼
+えっ……　タウンマップ！？▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『それなりに　すごいかな
+ポケモンの　力も　引き出してさ▼
+で　どうして　ここにいるんだ？▼
+えっ……　タウンマップ！？▼</language>
 	</row>
 
-	<row id="msg_d22r0101_swrival_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>♂
-・迷子探し中その１</comment>
-		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_d22r0101_swrival_03" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<comment>システム
+・メッセージのみ
+　道具を減らす処理など必要なし
+・続けてswrival_04</comment>
+		<attribute name="キャラ指定">システム</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]は
+タウンマップを　てわたした！▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
+タウンマップを　手渡した！▼</language>
 	</row>
 
 	<row id="msg_d22r0101_swrival_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・迷子探し中その2</comment>
+・メッセージ表示後、横を向く
+・続けてbreederm_01</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『……アイツめ
+いもうとのくせに　おせっかい　だよな▼
+オマエも　わざわざ　ごくろうさん▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『……アイツめ
+妹のくせに　おせっかい　だよな▼
+オマエも　わざわざ　ごくろうさん▼</language>
+	</row>
+
+	<row id="msg_d22r0101_breederm_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・画面上から移動してくる
+　breederwも一緒に
+・続けてswrival_05
+</comment>
+		<attribute name="キャラ指定">BREEDERM
+・牧場主</attribute>
+		<language name="JPN" width="256">？？？『にぎやかだと　おもえば
+ポケモンしょうぶ　だったのですね▽
+いいねー　わかいねー▼</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_d22r0101_swrival_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・迷子探し中その３</comment>
+・続けてbreederm_02</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『ダレ？▼</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_d22r0101_swrival_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d22r0101_breederm_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・迷子発見時</comment>
-		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">テストメッセージ
-・みつかったのか！</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
-	</row>
-
-	<row id="msg_d22r0101_swrival_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>♂
-・迷子発見時</comment>
-		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">テストメッセージ
-・じゃあ　よんでくる！</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
-	</row>
-
-	<row id="msg_d22r0101_swrival_08" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>♂
-・画面暗転後その１</comment>
-		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">テストメッセージ
-・じゃあ　よんでくる！</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
-	</row>
-
-	<row id="msg_d22r0101_swrival_09" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>♂
-・画面暗転後その２</comment>
-		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">テストメッセージ
-・じゃあ　よんでくる！</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
-	</row>
-
-	<row id="msg_d22r0101_mountain1_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂
-・牧場イベント中配置</comment>
-		<attribute name="キャラ指定">牧場主</attribute>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]『こっちじゃないみたいだ</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『こっちじゃないみたいだ</language>
-	</row>
-
-	<row id="msg_d22r0101_mountain1_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<attribute name="キャラ指定">牧場主</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
-	</row>
-
-	<row id="msg_d22r0101_mountain1_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<attribute name="キャラ指定">牧場主</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
-	</row>
-
-	<row id="msg_d22r0101_mountain1_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<attribute name="キャラ指定">牧場主</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
-	</row>
-
-	<row id="msg_d22r0101_mountain1_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<attribute name="キャラ指定">牧場主</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
+・続けてbreederw_01</comment>
+		<attribute name="キャラ指定">BREEDERM
+・牧場主</attribute>
+		<language name="JPN" width="256">？？？『ダレって……▼
+ぼくは　この　ぼくじょうの　オーナー！
+そして　となりにいるのが　おくさん！▼</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_d22r0101_breederw_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
-・</comment>
+・アイテム入手処理
+　No000「モーモーミルク」
+・続けて</comment>
 		<attribute name="キャラ指定">BREEDERW
-・娘</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
+・嫁</attribute>
+		<language name="JPN" width="256">おくさん『あれだけ　あばれたら
+ポケモンの　たいりょく　へったでしょ？▽
+これを　あげるわ▼</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_d22r0101_breederw_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_d22r0101_breederw_02" back-color="#ff8080,,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・</comment>
 		<attribute name="キャラ指定">BREEDERW
-・娘</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
+・嫁</attribute>
+		<language name="JPN" width="256">その　モーモーミルクを　ポケモンに
+のませたら　げんきいっぱい　よ！</language>
+		<language name="JPN_KANJI" width="256"></language>
+	</row>
+
+	<row id="msg_d22r0101_breederm_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・続けて</comment>
+		<attribute name="キャラ指定">BREEDERM
+・牧場主</attribute>
+		<language name="JPN" width="256">オーナー『ところで　きみたち
+このあたりで　ぼくの▽
+ヨーテリーを　みなかったー？▼
+いつも　いっしょに　いるのに
+どこへ　いったか　みあたらないんだー▽
+よんでも　こないし　どうしたのかな？▼</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_d22r0101_swrival_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・！マーク表示
+・メッセージ表示後、
+　？方向にダッシュで移動
+　画面外に消えると続けて</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『ポケモンが　いなくなったのに
+のんきな　ひとたちだな！！▼
+オレが　さがすよ！
+[1:00:トレーナー名:0]！　オマエも　てつだえ！！▼</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_d22r0101_breederm_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・続けて</comment>
+		<attribute name="キャラ指定">BREEDERM
+・牧場主</attribute>
+		<language name="JPN" width="256">オーナー『なぜ　かれは　おこったの？▼
+ぼくじょうの　どこかで
+あそんでいるだけだと　おもうけど▼</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_d22r0101_breederw_03" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
-・</comment>
+・主人公操作可能に</comment>
 		<attribute name="キャラ指定">BREEDERW
-・娘</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
+・嫁</attribute>
+		<language name="JPN" width="256">おくさん『あなたの　ポケモンが
+キズついたら　あたしに　いってね▽
+げんきに　してあげるから！</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_d22r0101_breederw_04" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
-		<comment>♀
-・</comment>
-		<attribute name="キャラ指定">BREEDERW
-・娘</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
+	<row id="msg_d22r0101_swrival_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・迷子探し中その１
+・pos</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『いないな……
+あっちは　どうだ？</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_d22r0101_breederw_05" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
-		<comment>♀
-・</comment>
-		<attribute name="キャラ指定">BREEDERW
-・娘</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
+	<row id="msg_d22r0101_swrival_08" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・迷子探し中その２
+・pos</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『みつからないのかよ
+しんぱい　だな……　ヨーテリー</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_d22r0101_02_03">
+	<row id="msg_d22r0101_poke_01">
+		<comment>ポケモン
+・pos
+・ヨーテリーの鳴き声</comment>
+		<attribute name="キャラ指定">ポケモン</attribute>
+		<language name="JPN" width="256">……くううん▼</language>
+		<language name="JPN_KANJI" width="256">……くううん▼</language>
+	</row>
+
+	<row id="msg_d22r0101_swrival_09" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・迷子探し中その３
+・pos</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『いまの　なきごえ……
+オマエ　あの　あたりを　さがせよ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_d22r0101_swrival_10" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・poke_02表示まで繰り返し</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">オマエは　そのあたりを　さがせって！</language>
+		<language name="JPN_KANJI" width="256"></language>
+	</row>
+
+	<row id="msg_d22r0101_poke_02">
 		<comment>ポケモン
 ・ヨーテリー
 ・調べると姿を見せる？</comment>
 		<attribute name="キャラ指定">ポケモン</attribute>
-		<language name="JPN" width="256">・迷子のポケモン</language>
-		<language name="JPN_KANJI" width="256">・迷子のポケモン</language>
+		<language name="JPN" width="256">ヨーテリー『？？？</language>
+		<language name="JPN_KANJI" width="256">ヨーテリー『？？？</language>
 	</row>
 
-	<row id="msg_d22r0101_02_04">
-		<attribute name="キャラ指定">ポケモン</attribute>
-		<language name="JPN" width="256">なきごえ　その１</language>
-		<language name="JPN_KANJI" width="256">なきごえ　その１</language>
+	<row id="msg_d22r0101_swrival_11" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・メッセージ表示後</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『みつかったのか！！▼
+オーナーを　よんでくるから
+オマエは　ポケモンの　そばにいろ！▼</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_d22r0101_02_05">
-		<attribute name="キャラ指定">ポケモン</attribute>
-		<language name="JPN" width="256">なきごえ　その１</language>
-		<language name="JPN_KANJI" width="256">なきごえ　その１</language>
+	<row id="msg_d22r0101_swrival_12" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『
+ポケモンと　いっしょに　いることを
+あたりまえだと～</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_d22r0101_02_06">
-		<attribute name="キャラ指定">ポケモン</attribute>
-		<language name="JPN" width="256">なきごえ　その１</language>
-		<language name="JPN_KANJI" width="256">なきごえ　その１</language>
+	<row id="msg_d22r0101_breederm_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・ポケモン発見まで繰り返し</comment>
+		<attribute name="キャラ指定">BREEDERM
+・牧場主</attribute>
+		<language name="JPN" width="256">オーナー『この　ぼくじょうは
+・由来などの説明</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_d22r0101_breederm_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・</comment>
+		<attribute name="キャラ指定">BREEDERM
+・牧場主</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_d22r0101_breederm_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・</comment>
+		<attribute name="キャラ指定">BREEDERM
+・牧場主</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_d22r0101_breederw_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>♀
+・HP/PP満タン時
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">BREEDERW
+・嫁</attribute>
+		<language name="JPN" width="256">あら？　あなたの　ポケモン
+げんき　いっぱいって　かんじね！！</language>
+		<language name="JPN_KANJI" width="256">あら？　あなたの　ポケモン
+元気一杯って　感じね！！</language>
+	</row>
+
+	<row id="msg_d22r0101_breederw_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>♀
+・HP/PP満タンでない時
+　続けて画面暗転して回復処理
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">BREEDERW
+・嫁</attribute>
+		<language name="JPN" width="256">あなたの　ポケモン……
+なんだか　げんきが　ないみたい▼
+ちょっと　やすんで　いきなさい
+げんきがないと　どこにも　いけないわ▼</language>
+		<language name="JPN_KANJI" width="256">あなたの　ポケモン……
+なんだか　元気が　ないみたい▼
+ちょっと　休んで　いきなさい
+元気がないと　どこにも　行けないわ▼</language>
+	</row>
+
+	<row id="msg_d22r0101_breederw_06" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>♀
+・ポケモン発見後一回のみ</comment>
+		<attribute name="キャラ指定">BREEDERW
+・嫁</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<flowchart-group-list>
