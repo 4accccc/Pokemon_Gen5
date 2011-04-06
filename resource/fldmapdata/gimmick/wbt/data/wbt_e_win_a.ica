@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<ica version="1.6.0">
+
+<head>
+	<create user="fuchino_hiroki" host="W00252" date="2011-04-06T15:10:43" source="wbt_e_win_a.mb"/>
+	<title>Character Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
+</head>
+
+<body>
+
+<node_anm_info
+	frame_size="121"
+	scaling_rule="standard"
+	magnify="1.000000"
+	tool_start_frame="0"
+	tool_end_frame="120"
+	interpolation="frame"
+	compress_node="merge" node_size="1 1"
+	frame_step_mode="1"
+	tolerance_scale="0.100000"
+	tolerance_rotate="0.100000"
+	tolerance_translate="0.100000"
+/>
+
+<node_scale_data size="1">
+	1.000000
+</node_scale_data>
+
+<node_rotate_data size="1">
+	0.000000
+</node_rotate_data>
+
+<node_translate_data size="122">
+	0.000000 0.000000 -1.733398 -3.466553 -5.199951 -6.933350 -8.666748 -10.399902 -12.133301 -13.866699
+	-15.600098 -17.333252 -19.066650 -20.800049 -22.533447 -24.266602 -26.000000 -27.733398 -29.466553 -31.199951
+	-32.933350 -34.666748 -36.399902 -38.133301 -39.866699 -41.600098 -43.333252 -45.066650 -46.800049 -48.533447
+	-50.266602 -52.000000 -53.733398 -55.466553 -57.199951 -58.933350 -60.666748 -62.399902 -64.133301 -65.866699
+	-67.600098 -69.333252 -71.066650 -72.800049 -74.533447 -76.266602 -78.000000 -79.733398 -81.466553 -83.199951
+	-84.933350 -86.666748 -88.399902 -90.133301 -91.866699 -93.600098 -95.333252 -97.066650 -98.800049 -100.533447
+	-102.266602 -104.000000 -105.733398 -107.466553 -109.199951 -110.933350 -112.666748 -114.399902 -116.133301 -117.866699
+	-119.600098 -121.333252 -123.066650 -124.800049 -126.533447 -128.266602 -130.000000 -131.733398 -133.466553 -135.199951
+	-136.933350 -138.666748 -140.399902 -142.133301 -143.866699 -145.600098 -147.333252 -149.066650 -150.800049 -152.533447
+	-154.266602 -156.000000 -157.733398 -159.466553 -161.199951 -162.933350 -164.666748 -166.399902 -168.133301 -169.866699
+	-171.600098 -173.333252 -175.066650 -176.800049 -178.533447 -180.266602 -182.000000 -183.733398 -185.466797 -187.199951
+	-188.933350 -190.666748 -192.399902 -194.133301 -195.866699 -197.600098 -199.333252 -201.066650 -202.800049 -204.533447
+	-206.266602 -208.000000
+</node_translate_data>
+
+<node_anm_array size="1">
+	<node_anm index="0">
+		<scale_x frame_step="1" data_size="1" data_head="0"/>
+		<scale_y frame_step="1" data_size="1" data_head="0"/>
+		<scale_z frame_step="1" data_size="1" data_head="0"/>
+		<rotate_x frame_step="1" data_size="1" data_head="0"/>
+		<rotate_y frame_step="1" data_size="1" data_head="0"/>
+		<rotate_z frame_step="1" data_size="1" data_head="0"/>
+		<translate_x frame_step="1" data_size="1" data_head="0"/>
+		<translate_y frame_step="1" data_size="121" data_head="1"/>
+		<translate_z frame_step="1" data_size="1" data_head="0"/>
+	</node_anm>
+</node_anm_array>
+
+</body>
+
+</ica>
