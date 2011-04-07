@@ -4389,6 +4389,33 @@ $(DIR_WBBIN)/c03_n00_00.wbbin: $(DIR_RES)/c03_n00_00.bin normal_d_bin.alltbl
 	@echo create_wbbin c03_n00_00
 	@ruby wb_bin_conv.rb BIN $(DIR_RES)/c03_n00_00.bin 
 
+#resort01_01_00
+$(DIR_OUTPUT)/resort01_01_00.3dppack: $(DIR_TEMP)/resort01_01_00.nsbmd $(DIR_RES)/resort01_01_00.bin $(DIR_RES)/resort01_01_00.3dmd
+	@echo create 3dppack resort01_01_00
+	@$(BINLINKER) $(DIR_TEMP)/resort01_01_00.nsbmd $(DIR_RES)/resort01_01_00.bin $(DIR_RES)/resort01_01_00.3dmd $(DIR_OUTPUT)/resort01_01_00.3dppack RD
+
+$(DIR_TEMP)/resort01_01_00.nsbmd: $(DIR_RES)/resort01_01_00.imd
+	@echo create_nsbmd resort01_01_00
+	@$(G3DCVTR) $(DIR_RES)/resort01_01_00.imd -emdl -o $(DIR_TEMP)/resort01_01_00.nsbmd
+
+#resort01_00_01
+$(DIR_OUTPUT)/resort01_00_01.3dppack: $(DIR_TEMP)/resort01_00_01.nsbmd $(DIR_RES)/resort01_00_01.bin $(DIR_RES)/resort01_00_01.3dmd
+	@echo create 3dppack resort01_00_01
+	@$(BINLINKER) $(DIR_TEMP)/resort01_00_01.nsbmd $(DIR_RES)/resort01_00_01.bin $(DIR_RES)/resort01_00_01.3dmd $(DIR_OUTPUT)/resort01_00_01.3dppack RD
+
+$(DIR_TEMP)/resort01_00_01.nsbmd: $(DIR_RES)/resort01_00_01.imd
+	@echo create_nsbmd resort01_00_01
+	@$(G3DCVTR) $(DIR_RES)/resort01_00_01.imd -emdl -o $(DIR_TEMP)/resort01_00_01.nsbmd
+
+#resort01_01_01
+$(DIR_OUTPUT)/resort01_01_01.3dppack: $(DIR_TEMP)/resort01_01_01.nsbmd $(DIR_RES)/resort01_01_01.bin $(DIR_RES)/resort01_01_01.3dmd
+	@echo create 3dppack resort01_01_01
+	@$(BINLINKER) $(DIR_TEMP)/resort01_01_01.nsbmd $(DIR_RES)/resort01_01_01.bin $(DIR_RES)/resort01_01_01.3dmd $(DIR_OUTPUT)/resort01_01_01.3dppack RD
+
+$(DIR_TEMP)/resort01_01_01.nsbmd: $(DIR_RES)/resort01_01_01.imd
+	@echo create_nsbmd resort01_01_01
+	@$(G3DCVTR) $(DIR_RES)/resort01_01_01.imd -emdl -o $(DIR_TEMP)/resort01_01_01.nsbmd
+
 #m_dun0101_00_00
 $(DIR_OUTPUT)/m_dun0101_00_00.3dppack: $(DIR_TEMP)/m_dun0101_00_00.nsbmd $(DIR_WBBIN)/m_dun0101_00_00.wbbin $(DIR_WBBIN)/m_dun0101_00_00_ex.wbbin $(DIR_RES)/m_dun0101_00_00.3dmd
 	@echo create 3dppack m_dun0101_00_00
