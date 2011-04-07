@@ -640,6 +640,14 @@
 #define SCR_WBT_STAGE_FINAL           (4) ///<WBT状態：決勝戦
 #define SCR_WBT_STAGE_WIN             (5) ///<WBT状態：優勝
 
+#define SCR_WBT_TRMSG_1ST             (0) ///<WBTトレーナーMSG指定：1回戦
+#define SCR_WBT_TRMSG_2ND             (1) ///<WBTトレーナーMSG指定：2回戦
+#define SCR_WBT_TRMSG_3RD             (2) ///<WBTトレーナーMSG指定：決勝戦
+#define SCR_WBT_TRMSG_LOSE            (3) ///<WBTトレーナーMSG指定：（使用しない）
+#define SCR_WBT_TRMSG_PLAYER_WIN      (4) ///<WBTトレーナーMSG指定：プレイヤー勝利
+#define SCR_WBT_TRMSG_PLAYER_LOSE     (5) ///<WBTトレーナーMSG指定：プレイヤー敗北
+#define SCR_WBT_TRMSG_ANNOUNCE        (6) ///<WBTトレーナーMSG指定：（使用しない）
+
 #define SCR_WBT_EFFECT_POS_L          (0) ///<左 エフェクト位置
 #define SCR_WBT_EFFECT_POS_R          (1) ///<右 エフェクト位置
 

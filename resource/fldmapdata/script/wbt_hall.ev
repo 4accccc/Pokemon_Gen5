@@ -47,13 +47,7 @@ EVENT_START ev_wbt_hall_01
 	_CALL ev_first_game
 	
 	//負けた場合
-	IF $SCWK_ANSWER == 1 THEN
-	
-		//対戦負けメッセージの表示　ＭＳＧ表示専用コマンド
-		
-		//プレイヤー退場アニメ
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_lose )
-		_OBJ_ANIME_WAIT()
+  IF $SCWK_ANSWER != SCR_BATTLE_RESULT_WIN THEN
 	
 		//予約スクリプト
 		//_RESERVE_SCRIPT( SCRID_RESERVE_D05R0101 )
@@ -69,14 +63,8 @@ EVENT_START ev_wbt_hall_01
 		_CALL ev_second_game
 	
 		//負けた場合
-		IF $SCWK_ANSWER == 1 THEN
+    IF $SCWK_ANSWER != SCR_BATTLE_RESULT_WIN THEN
 		
-			//対戦負けメッセージの表示　ＭＳＧ表示専用コマンド
-		
-			//プレイヤー退場アニメ
-			_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_lose )
-			_OBJ_ANIME_WAIT()
-
 			//予約スクリプト
 			//_RESERVE_SCRIPT( SCRID_RESERVE_D05R0101 )
 	
@@ -91,7 +79,7 @@ EVENT_START ev_wbt_hall_01
 			_CALL ev_final_game
 			
 			//負けた場合
-			IF $SCWK_ANSWER == 1 THEN
+      IF $SCWK_ANSWER != SCR_BATTLE_RESULT_WIN THEN
 			
 				//決勝戦の対戦者名を格納する
 				//_WBT_SET_ENEMY_NAME( 0,3 )
@@ -260,22 +248,38 @@ _PLAINWIN_MSG_UP( msg_wbt_announce_01 )
 _PLAINWIN_CLOSE()
 
 //１回戦対戦前メッセージの表示　ＭＳＧ表示専用コマンド
+_WBT_TRAINER_MSG( SCR_WBT_TRMSG_1ST, MMDL_ID_EVENTOBJ_00 )
+_BALLOONWIN_CLOSE()
 	
 //戦闘開始　バトル専用コマンド
-//_TRAINER_BTL_SET( )
-
+_WBT_TRAINER_BATTLE( 0 )
 //結果チェック
-//_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
 //勝った場合
-//IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
 		
-//_TRAINER_WIN()
+  //対戦者・主人公勝ちメッセージ表示　　　　　　
+  _WBT_TRAINER_MSG( SCR_WBT_TRMSG_PLAYER_WIN, MMDL_ID_EVENTOBJ_00 )
+  _BALLOONWIN_CLOSE()
 
+  //対戦者退場
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_enemy_1st_out )
+  _OBJ_ANIME_WAIT()
+
+  //対戦者OBJの削除
+  _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+
+ELSE
 //負けた場合
-//ELSE
+  //対戦負けメッセージの表示　ＭＳＧ表示専用コマンド
+  _WBT_TRAINER_MSG( SCR_WBT_TRMSG_PLAYER_LOSE, MMDL_ID_EVENTOBJ_00 )
+  _BALLOONWIN_CLOSE()
+  
+  //プレイヤー退場アニメ
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_lose )
+  _OBJ_ANIME_WAIT()
 
-//	_TRAINER_LOSE()
-//ENDIF
+ENDIF
 
 _CAMERA_END()
 
@@ -285,15 +289,6 @@ _RET
 /*		ＷＢＴ２回戦										  */
 /**************************************************************/
 ev_second_game:
-
-//対戦者・主人公勝ちメッセージ表示　　　　　　
-
-//対戦者退場
-_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_enemy_1st_out )
-_OBJ_ANIME_WAIT()
-
-//対戦者OBJの削除
-_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
 
 _MAP_FADE_BLACK_OUT()
 _MAP_FADE_END_CHECK()
@@ -349,19 +344,38 @@ _PLAINWIN_MSG_UP( msg_wbt_announce_02 )
 _PLAINWIN_CLOSE()
 
 //２回戦対戦前メッセージの表示　ＭＳＧ表示専用コマンド
+_WBT_TRAINER_MSG( SCR_WBT_TRMSG_2ND, MMDL_ID_EVENTOBJ_00 )
+_BALLOONWIN_CLOSE()
 
 //戦闘開始　バトル専用コマンド
-//_TRAINER_BTL_SET( )
+_WBT_TRAINER_BATTLE( 0 )
 //結果チェック
-//_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
 //勝った場合
-//IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
 		
-//	_TRAINER_WIN()
+  //対戦者・主人公勝ちメッセージ表示　　　　　　
+  _WBT_TRAINER_MSG( SCR_WBT_TRMSG_PLAYER_WIN, MMDL_ID_EVENTOBJ_00 )
+  _BALLOONWIN_CLOSE()
+
+  //対戦者退場
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_enemy_2nd_out )
+  _OBJ_ANIME_WAIT()
+
+  //対戦者OBJの削除
+  _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+
+ELSE
 //負けた場合
-//ELSE
-//	_TRAINER_LOSE()
-//ENDIF
+  //対戦負けメッセージの表示　ＭＳＧ表示専用コマンド
+  _WBT_TRAINER_MSG( SCR_WBT_TRMSG_PLAYER_LOSE, MMDL_ID_EVENTOBJ_00 )
+  _BALLOONWIN_CLOSE()
+
+  //プレイヤー退場アニメ
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_lose )
+  _OBJ_ANIME_WAIT()
+
+ENDIF
 
 _RET
 
@@ -538,15 +552,6 @@ _RET
 /**************************************************************/
 ev_final_game:
 
-//対戦者・主人公勝ちメッセージ表示　　　　　　
-
-//対戦者退場
-_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_enemy_2nd_out )
-_OBJ_ANIME_WAIT()
-
-//対戦者OBJの削除
-_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
-
 _MAP_FADE_BLACK_OUT()
 _MAP_FADE_END_CHECK()
 //決勝戦前のトーナメントリスト表示
@@ -671,19 +676,24 @@ _PLAINWIN_MSG_UP( msg_wbt_announce_03 )
 _PLAINWIN_CLOSE()
 
 //決勝戦対戦前メッセージの表示　ＭＳＧ表示専用コマンド
+_WBT_TRAINER_MSG( SCR_WBT_TRMSG_3RD, MMDL_ID_EVENTOBJ_00 )
+_BALLOONWIN_CLOSE()
 
 //戦闘開始　バトル専用コマンド
-//_TRAINER_BTL_SET( )
+_WBT_TRAINER_BATTLE( 0 )
 //結果チェック
-//_TRAINER_LOSE_CHECK( SCWK_ANSWER )
-//勝った場合
-//IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
-		
-//	_TRAINER_WIN()
-//負けた場合
-//ELSE
-//	_TRAINER_LOSE()
-//ENDIF
+_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+  //勝った場合
+  //対戦者・主人公勝ちメッセージ表示　　　　　　
+  _WBT_TRAINER_MSG( SCR_WBT_TRMSG_PLAYER_WIN, MMDL_ID_EVENTOBJ_00 )
+  _BALLOONWIN_CLOSE()
+ELSE
+  //負けた場合
+  //対戦負けメッセージの表示　ＭＳＧ表示専用コマンド
+  _WBT_TRAINER_MSG( SCR_WBT_TRMSG_PLAYER_LOSE, MMDL_ID_EVENTOBJ_00 )
+  _BALLOONWIN_CLOSE()
+ENDIF
 
 _RET
 

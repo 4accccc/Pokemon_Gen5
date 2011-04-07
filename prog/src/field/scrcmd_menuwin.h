@@ -13,6 +13,24 @@
 //======================================================================
 //  extern 
 //======================================================================
+extern VMCMD_RESULT EvCmdBalloonWin_Write( VMHANDLE * core, void * wk,
+    STRBUF * msgbuf, u16 obj_id, u16 pos_type, TALKMSGWIN_TYPE type );
+
+extern void EvCmdBalloonWin_GetOffsetPos(
+    const VecFx32 *pos, VecFx32 *offs,
+    const GFL_G3D_CAMERA *cp_g3Dcamera,
+    const FIELD_CAMERA *fld_camera,
+    u8 pos_type );
+
+extern void EvCmdBalloonWin_GetWinType( u16 pos_type,
+    FLDTALKMSGWIN_IDX *pOutWin, TAIL_SETPAT *pOutTail );
+
+extern u8 EvCmdBalloonWin_GetWinTypeDefault(
+    const MMDL *jiki, const VecFx32 *pos );
+
+//======================================================================
+//  extern 
+//======================================================================
 extern VMCMD_RESULT EvCmdYesNoWin( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdBmpMenuInit( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdBmpMenuInitEx( VMHANDLE *core, void *wk );
@@ -37,15 +55,6 @@ extern VMCMD_RESULT EvCmdBalloonWinWriteWB( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdBalloonWinClose( VMHANDLE *core, void *wk );
 extern BOOL SCREND_CheckEndBallonWin(SCREND_CHECK *end_check , int *seq);
 
-extern void EvCmdBalloonWin_GetOffsetPos(
-    const VecFx32 *pos, VecFx32 *offs,
-    const GFL_G3D_CAMERA *cp_g3Dcamera,
-    const FIELD_CAMERA *fld_camera,
-    u8 pos_type );
-extern void EvCmdBalloonWin_GetWinType( u16 pos_type,
-    FLDTALKMSGWIN_IDX *pOutWin, TAIL_SETPAT *pOutTail );
-extern u8 EvCmdBalloonWin_GetWinTypeDefault(
-    const MMDL *jiki, const VecFx32 *pos );
 
 extern VMCMD_RESULT EvCmdTrainerMessageSet( VMHANDLE *core, void *wk );
 

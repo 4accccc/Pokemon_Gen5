@@ -252,6 +252,14 @@ static void WBTTRAINER_SetPlayer( WBTTRAINER * wbt_tr, GAMEDATA * gamedata )
       0, sex, pri, POKETYPE_NORMAL, mmdl_id, tr_type );
 }
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+u8 WBTTRAINER_GetID( const WBTTRAINER * wbt_tr )
+{
+  return wbt_tr->tr_id;
+}
+
+
 //============================================================================================
 //
 //
@@ -329,6 +337,19 @@ void WBTTOOL_SetRuleName( WBTRULE rule, STRBUF * strbuf )
     GFL_MSG_Delete( man );
   }
 }
+
+//------------------------------------------------------------------
+/**
+ * @brief 対戦相手のトレーナーデータを取得
+ */
+//------------------------------------------------------------------
+const WBTTRAINER * WBTSYS_GetOpponentTrainer( const WBTSYS * wbtsys )
+{
+  u32 pos = WBTSYS_GetOpponentPos( wbtsys );
+  const WBTTRAINER * wbt_tr = WBTSYS_GetTrainer( wbtsys, pos );
+  return wbt_tr;
+}
+
 //------------------------------------------------------------------
 /**
  * @brief 対戦相手の性別を取得する

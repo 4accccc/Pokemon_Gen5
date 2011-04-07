@@ -93,6 +93,19 @@ typedef enum {
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 enum {
+  WBT_TRMSG_1ST_FIGHT_START = 0,
+  WBT_TRMSG_2ND_FIGHT_START,
+  WBT_TRMSG_3RD_FIGHT_START,
+  WBT_TRMSG_FIGHT_LOSE,
+  WBT_TRMSG_PLAYER_WIN,
+  WBT_TRMSG_PLAYER_LOSE,
+  WBT_TRMSG_ANNOUNCE,
+
+  WBT_TRMSG_TYPE_NUM,
+};
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+enum {
   WBT_DOWNLOAD_NUMBER = 3,
 };
 //============================================================================================
@@ -131,6 +144,8 @@ extern const WBTTRAINER * WBTSYS_GetTrainer( const WBTSYS * wbtsys, u32 pos );
 extern void WBTSYS_CalcResult( WBTSYS * wbtsys, GFL_STD_RandContext * context );
 extern u32 WBTSYS_GetOpponentPos( const WBTSYS * wbtsys );
 
+extern const WBTTRAINER * WBTSYS_GetOpponentTrainer( const WBTSYS * wbtsys );
+extern u8 WBTTRAINER_GetID( const WBTTRAINER * wbt_tr );
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 extern void WBTTOOL_SetTournamentName( WBTTYPE type, STRBUF * strbuf );

@@ -42,6 +42,9 @@
 
 #include "app/wbt_list.h"
 
+#include "scrcmd_menuwin.h" //EvCmdBalloonWin_Write
+#include "arc/message.naix" //NARC_message_wbt_trmsg_dat
+
 //======================================================================
 //======================================================================
 SDK_COMPILER_ASSERT( SCR_WBT_RULE_NULL == WBTRULE_NULL );
@@ -62,6 +65,14 @@ SDK_COMPILER_ASSERT( SCR_WBT_STAGE_1ST == WBTSTAGE_1ST );
 SDK_COMPILER_ASSERT( SCR_WBT_STAGE_2ND == WBTSTAGE_2ND );
 SDK_COMPILER_ASSERT( SCR_WBT_STAGE_FINAL == WBTSTAGE_FINAL );
 SDK_COMPILER_ASSERT( SCR_WBT_STAGE_WIN == WBTSTAGE_WIN );
+
+SDK_COMPILER_ASSERT( WBT_TRMSG_1ST_FIGHT_START == SCR_WBT_TRMSG_1ST );
+SDK_COMPILER_ASSERT( WBT_TRMSG_2ND_FIGHT_START == SCR_WBT_TRMSG_2ND );
+SDK_COMPILER_ASSERT( WBT_TRMSG_3RD_FIGHT_START == SCR_WBT_TRMSG_3RD );
+SDK_COMPILER_ASSERT( WBT_TRMSG_FIGHT_LOSE == SCR_WBT_TRMSG_LOSE );
+SDK_COMPILER_ASSERT( WBT_TRMSG_PLAYER_WIN == SCR_WBT_TRMSG_PLAYER_WIN );
+SDK_COMPILER_ASSERT( WBT_TRMSG_PLAYER_LOSE == SCR_WBT_TRMSG_PLAYER_LOSE );
+SDK_COMPILER_ASSERT( WBT_TRMSG_ANNOUNCE == SCR_WBT_TRMSG_ANNOUNCE );
 
 //======================================================================
 //======================================================================
@@ -379,17 +390,49 @@ VMCMD_RESULT EvCmdWBTGetEnemyMMdlCode( VMHANDLE * core, void * wk )
 
 //--------------------------------------------------------------
 /**
- * @brief スクリプトコマンド：
+ * @brief スクリプトコマンド：WBT対戦トレーナーのメッセージ表示
  */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdWBTTrainerMsg( VMHANDLE * core, void * wk )
 {
+  SCRCMD_WORK * work = wk;
+  SCRIPT_WORK * sc = SCRCMD_WORK_GetScriptWork( work );
   WBTSYS * wbtsys = getWBTSys( wk );
   u16 type = SCRCMD_GetVMWorkValue( core, wk );
   u16 obj_id = SCRCMD_GetVMWorkValue( core, wk );
-  //仮：トレーナーに合わせたメッセージを表示する
+  BOOL result; 
+
+  const WBTTRAINER * opponent = WBTSYS_GetOpponentTrainer( wbtsys );
+  u16 msg_id = WBTTRAINER_GetID( opponent ) * WBT_TRMSG_TYPE_NUM;
+  STRBUF *msgbuf = SCRIPT_GetMsgBuffer( sc );
+
+  switch ( type )
+  {
+  default:
+    GF_ASSERT( 0 );
+  case WBT_TRMSG_1ST_FIGHT_START:
+  case WBT_TRMSG_2ND_FIGHT_START:
+  case WBT_TRMSG_3RD_FIGHT_START:
+  case WBT_TRMSG_PLAYER_WIN:
+  case WBT_TRMSG_PLAYER_LOSE:
+    msg_id += type;
+  };
   TAMADA_Printf("EvCmdWBTTrainerMsg(type = %d, obj_id =%d )\n", type, obj_id );
-  return VMCMD_RESULT_SUSPEND;
+  {
+    WORDSET *wordset = SCRIPT_GetWordSet( sc );
+    STRBUF *tmpbuf = SCRIPT_GetMsgTempBuffer( sc );
+
+    GFL_MSGDATA * msgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
+        NARC_message_wbt_trmsg_dat, SCRCMD_WORK_GetHeapID( work ) );
+    GFL_MSG_GetString( msgData, msg_id, tmpbuf );
+    GFL_MSG_Delete( msgData );
+
+    WORDSET_ExpandStr( wordset, msgbuf, tmpbuf );
+  }
+
+  //トレーナーに合わせたメッセージを表示する
+  return EvCmdBalloonWin_Write( core, wk, msgbuf, obj_id,
+      SCRCMD_MSGWIN_DEFAULT, TALKMSGWIN_TYPE_NORMAL );
 }
 //--------------------------------------------------------------
 /**
@@ -398,10 +441,14 @@ VMCMD_RESULT EvCmdWBTTrainerMsg( VMHANDLE * core, void * wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdWBTTrainerBattle( VMHANDLE * core, void * wk )
 {
+  SCRCMD_WORK * work = wk;
+  GAMEDATA*          gamedata = SCRCMD_WORK_GetGameData( work );
   WBTSYS * wbtsys = getWBTSys( wk );
   u16 num = SCRCMD_GetVMWorkValue( core, wk );
-  //仮：ここからトレーナーバトルイベントを呼び出す
   TAMADA_Printf("EvCmdWBTTrainerBattle( num = %d)\n", num);
+  //仮：ここからトレーナーバトルイベントを呼び出す
+  //今は勝ち結果を指定しているだけ
+  GAMEDATA_SetLastBattleResult( gamedata, BTL_RESULT_WIN );
   return VMCMD_RESULT_SUSPEND;
 }
 //--------------------------------------------------------------
