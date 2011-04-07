@@ -262,6 +262,8 @@ enum{
 	L_RED_SEQ		= 3,			// 左、赤のシーケンス
 	R_BLUE_SEQ		= 6,			// 右、青シーケンス
 	R_RED_SEQ		= 7,			// 右、赤のシーケンス
+	//
+	GAGE_GRAY_SEQ	= 14,			// 灰色ゲージ
 };
 
 // mes関連
@@ -416,6 +418,7 @@ typedef struct
 	s32						PlayerNum;						// プレイヤの番号
 	u32						MoveFlag;						// 移動可能フラグ
 	u32						MesFlag;						// メッセージフラグ
+	s32						DebugFlag;						// debug
 	s32						Timer[TIMER_MAX];				// タイマ
 	WBTLIST_MOVE_WORK		MoveWork[MWORK_MAX];			// 移動用ワーク
 	WBTLIST_PARAM_WORK		ParamWork[PARAM_WORK_MAX];		// パラメータのワーク
@@ -683,6 +686,7 @@ static s16 wbt_get_empty( WBTLIST_MAIN_WORK *wk, const s32 num );
 static void wbt_set_gageanim( WBTLIST_MAIN_WORK *wk, const s32 wnum, const s32 mode, const s32 umode );
 static BOOL wbt_is_gageanim( WBTLIST_MAIN_WORK *wk, const s32 wnum );
 static void wbt_disp_bomb( WBTLIST_MAIN_WORK* wk, const s32 num );
+static void wbt_chg_gage_color( WBTLIST_MAIN_WORK* wk );
 static void wbt_init_mode( WBTLIST_MAIN_WORK* wk );
 //
 // 以下、(アプリの)パラメータ関連
@@ -1081,6 +1085,7 @@ static void wbt_init( WBTLIST_MAIN_WORK* wk )
 	//
 	wk->DispCount	= 0;
 	wk->MoveFlag	= 0;
+	wk->DebugFlag	= 1;
 	
 	for(i=0;i<TIMER_MAX;i++){
 		wk->Timer[i] = 0;
@@ -1381,6 +1386,9 @@ static void wbt_key_00( WBTLIST_MAIN_WORK* wk )
 				sbuf[0] = wbt_get_param( wk, PRM_LINEWORK, -1 );
 				sbuf[1] = wbt_get_param( wk, PRM_PATTERN,  -1 );
 				wbt_set_gageanim( wk, sbuf[0], 0, sbuf[1] );
+				//
+				// 反対側のゲージが灰色になる
+				wbt_chg_gage_color( wk );
 			}
 			break;
 		
@@ -2528,6 +2536,44 @@ static void wbt_disp_bomb( WBTLIST_MAIN_WORK* wk, const s32 num )
 
 //-----------------------------------------------------------------------------
 /**
+ *	@brief  ゲージの色を落とす(シーケンスの変更)
+ *
+ *	@param	WBTLIST_MAIN_WORK* wk
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void wbt_chg_gage_color( WBTLIST_MAIN_WORK* wk )
+{
+	s16		buf[4];
+	
+	// 3回戦目以外は処理しない
+	if(wk->Mode == MODE_ROUND3){
+		// ゲージ伸びる番号を取得
+		buf[0] = wbt_get_param( wk, PRM_LINEWORK, -1 );
+		buf[1] = wbt_get_param( wk, PRM_PATTERN,  -1 );
+		//
+		// 灰色にする番号を求める
+		if(buf[0] == 4){		// 左側
+			if(buf[1] == 0){	// 上側->対象は下側
+				buf[2] = 1;
+			}else{				// 下側->対象は上側
+				buf[2] = 0;
+			}
+		}else{
+			if(buf[1] == 0){	// 上側->対象は下側
+				buf[2] = 3;
+			}else{				// 下側->対象は上側
+				buf[2] = 2;
+			}
+		}
+		// ゲージのシーケンスを変更
+		wbt_chg_objseq( wk, CLWKID_BAR_00+buf[2], GAGE_GRAY_SEQ );
+	}
+}
+
+//-----------------------------------------------------------------------------
+/**
  *	@brief  初期状態にする
  *
  *	@param	WBTLIST_MAIN_WORK* wk
@@ -3011,6 +3057,8 @@ static void wbt_debug_param( WBTLIST_MAIN_WORK* wk )
 static void wbt_debug( WBTLIST_MAIN_WORK* wk )
 {
 #ifdef _DEBUG_INPUT_
+	s32		i;
+	
 	// debug
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
 		wk->Step = STEP_INIT;
@@ -3020,21 +3068,13 @@ static void wbt_debug( WBTLIST_MAIN_WORK* wk )
 		wbt_init_param( wk );
 		OS_Printf("debug init \n");
 	}
-#if 0		// パラメータ参照に変更
 	// debug
-	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
-		wk->Mode++;
-		if(wk->Mode > MODE_ROUND3){
-			wk->Mode = MODE_ROUND1;
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
+		wk->DebugFlag = 1 - wk->DebugFlag;
+		for(i=0;i<8;i++){
+			wbt_chg_obj_pal( wk, i, PLTID_OBJ_MAPMODEL, wk->DebugFlag );
 		}
-		wk->Step = STEP_INIT;
-		wk->DispCount = 0;
-		//
-		wbt_init_param( wk );
-		OS_Printf("---- round : %d ----\n",wk->Mode);
-		OS_Printf("mode,step :%d,%d\n",wk->Mode,wk->Step);
 	}
-#endif
 #endif
 }
 
