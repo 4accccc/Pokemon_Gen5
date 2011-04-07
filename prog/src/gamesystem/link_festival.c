@@ -398,8 +398,8 @@ LINKFEST_SCORELOG_SET_CODE LINK_FESTIVAL_ScoreLogStore( LINK_FESTIVAL* wk, LINKF
   if( FEST_MISSION_IsLive( &wk->mission ) == FALSE ){
     return LINKFEST_SCORELOG_SET_FAILED;
   }
-  if( wk->mission.type != src->type ||
-      wk->mission.key != src->key ){
+  if( (src->type != FMISSION_TYPE_EX_WITHOUT_PARAM) && 
+      (wk->mission.type != src->type || wk->mission.key != src->key ) ){
     return LINKFEST_SCORELOG_SET_FAILED;  //違うミッションなのではじく
   }
   for(i = 0;i < wk->log_num; i++){
@@ -407,13 +407,21 @@ LINKFEST_SCORELOG_SET_CODE LINK_FESTIVAL_ScoreLogStore( LINK_FESTIVAL* wk, LINKF
 
     if( log->score.tr_id == src->prm.score.tr_id ){ //上書き
       u16 root = log->score.tmap_root;
+      u32 value = log->score.value;
+
       log->score = src->prm.score;
+      if( src->type == FMISSION_TYPE_EX_WITHOUT_PARAM ){
+        log->score.value = value; //パラメータ無しタイプはスコアを書き換えない
+      }
       OS_FPrintf(OSPRINT_LINKFEST_PAGE,"FMIS log%d up tr_id=%d, score=%d\n",i, log->score.tr_id,log->score.value );
       if( root != src->prm.score.tmap_root ){
         return LINKFEST_SCORELOG_SET_MAP_CHANGE;
       }
       return LINKFEST_SCORELOG_SET_UPDATE;
     }
+  }
+  if( src->type == FMISSION_TYPE_EX_WITHOUT_PARAM ){
+    return LINKFEST_SCORELOG_SET_FAILED;  //ミッションパラメータを持たないタイプは、新規では取得しない
   }
   if( wk->log_num >= LINKFEST_LOG_MAX ){
     OS_FPrintf(OSPRINT_LINKFEST_PAGE,"FMIS BufFull\n");

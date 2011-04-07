@@ -380,37 +380,43 @@ static void BeaconInfo_SetFestMissionLog(GAMEBEACON_SYSTEM *bsys, const GAMEBEAC
 {
   LINK_FESTIVAL*  fest_sys;
   LINKFEST_LOG_PARAM log;
+  LINKFEST_SCORELOG_SET_CODE ret = LINKFEST_SCORELOG_SET_FAILED;
   
   if( bsys->gsys == NULL ){
     GF_ASSERT(0);
     return;
   }
-  if( GAMEBEACON_Check_FestMissionWithParam( info ) == FALSE ){
+  if( GAMEBEACON_Check_FestMission( info ) == FALSE ){
     return;
   }
   fest_sys = GAMESYSTEM_GetLinkFestivalWork( bsys->gsys );
+ 
+  //ログストアパラメータ生成
   LINKFEST_LOG_PARAM_Clear( &log );
-  log.type = info->action.fmission.type;
-  log.key = info->action.fmission.key;
   log.prm.score.tr_id = info->trainer_id;
-  log.prm.score.value = info->action.fmission.my_score;
   log.prm.score.tmap_root = info->townmap_root_zone_id;
 
-  {
-    LINKFEST_SCORELOG_SET_CODE ret = LINK_FESTIVAL_ScoreLogStore( fest_sys, &log );
+  if( GAMEBEACON_Check_FestMissionWithParam( info ) ){
+    log.type = info->action.fmission.type;
+    log.key = info->action.fmission.key;
+    log.prm.score.value = info->action.fmission.my_score;
+  }else{
+    log.type = FMISSION_TYPE_EX_WITHOUT_PARAM;
+  }  
+  
+  ret = LINK_FESTIVAL_ScoreLogStore( fest_sys, &log );
 
-    if( ret != LINKFEST_SCORELOG_SET_FAILED ){
-      FMISSION_LOG_TBL* tbl = LINK_FESTIVAL_GetMissionLogStackTbl( fest_sys );
+  if( ret != LINKFEST_SCORELOG_SET_FAILED ){
+    FMISSION_LOG_TBL* tbl = LINK_FESTIVAL_GetMissionLogStackTbl( fest_sys );
 
-      //ミッションログ収集
-      if( ret != LINKFEST_SCORELOG_SET_UPDATE ){
-        if( ret == LINKFEST_SCORELOG_SET_NEW_ENTRY ){
-          FMISSION_LOG_TBL_SetLogFromBeacon( tbl, info, FMISSION_LOG_SET_NEW, FALSE );
-        }
-        FMISSION_LOG_TBL_SetLogFromBeacon( tbl, info, FMISSION_LOG_SET_MAP, FALSE );
+    //ミッションログ収集
+    if( ret != LINKFEST_SCORELOG_SET_UPDATE ){
+      if( ret == LINKFEST_SCORELOG_SET_NEW_ENTRY ){
+        FMISSION_LOG_TBL_SetLogFromBeacon( tbl, info, FMISSION_LOG_SET_NEW, FALSE );
       }
-      FMISSION_LOG_TBL_SetLogFromBeacon( tbl, info, FMISSION_LOG_SET_NORMAL, FALSE );
+      FMISSION_LOG_TBL_SetLogFromBeacon( tbl, info, FMISSION_LOG_SET_MAP, FALSE );
     }
+    FMISSION_LOG_TBL_SetLogFromBeacon( tbl, info, FMISSION_LOG_SET_NORMAL, FALSE );
   }
 }
 

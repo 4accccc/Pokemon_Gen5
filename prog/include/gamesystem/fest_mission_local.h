@@ -30,6 +30,8 @@ typedef enum{
   FMISSION_TYPE_ITEM,
   FMISSION_TYPE_MAX,
   FMISSION_TYPE_END = FMISSION_TYPE_MAX-1,
+
+  FMISSION_TYPE_EX_WITHOUT_PARAM = 0xFF,  ///<ログセット処理用の特殊コード。実際のミッションタイプとしては使いません
 }FMISSION_TYPE_ID;
 
 typedef enum{

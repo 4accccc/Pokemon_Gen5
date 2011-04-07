@@ -48,8 +48,8 @@ typedef struct _LINKFEST_LOG{
 
 //フェスタログ受け渡し構造体
 typedef struct _LINKFEST_LOG_PARAM{
-  u8  type;
-  u32 key;
+  u8  type; ///<ミッションタイプ FMISSION_TYPE_ID型
+  u32 key;  ///<ミッションマジックキー
   LINKFEST_LOG prm;
 }LINKFEST_LOG_PARAM;
 

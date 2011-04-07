@@ -19,7 +19,7 @@ typedef enum{
 ///ミッションアーカイブデータフォーマット
 typedef struct _FMISSION_ARCDATA{
   //1
-  u16   type:4;     //ミッションタイプ 4bit(15種類)
+  u16   type:4;     //ミッションタイプ 4bit(15種類 FMISSION_TYPE_ID型)
   u16   time:12;    //ミッション時間(秒、最大1時間) 12bit(3600s/4095s)
   u16   param;      //ミッションパラメータ            16bit
   //2
