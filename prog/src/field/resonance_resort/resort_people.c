@@ -81,9 +81,6 @@ static void Visitor_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder )
 //秘書
 static void Secretary_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder );
 
-//NPC
-static void Npc_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder );
-
 //行動関数
 static BOOL Action_WarpDown( RESORT_PEOPLE *p_wk, u32 *p_seq, FIELD_PLAYER *p_player );
 static BOOL Action_WarpUp( RESORT_PEOPLE *p_wk, u32 *p_seq, FIELD_PLAYER *p_player );
@@ -113,10 +110,6 @@ static const RESORT_PEOPLE_FUNCTION sc_people_function[RESORT_PEOPLE_TYPE_MAX]  
   //RESORT_PEOPLE_TYPE_SECRETARY
   {
     Secretary_SetupMmdHeader,
-  },
-  //RESORT_PEOPLE_TYPE_NPC
-  {
-    Npc_SetupMmdHeader,
   },
 };
 
@@ -520,23 +513,6 @@ static void Secretary_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder
   u8 trainer_view = RESORT_ABSTRUCT_DATA_GetData( p_wk->p_abstruct_data, RESORT_DATA_PARAM_TRAINERVIEW, NULL );
   p_hedder->obj_code = UnionView_GetObjCode( trainer_view );
   p_hedder->event_id = RESORT_BINARY_PEOPLE_DATA_GetScrID( p_wk->cp_binary  );
-}
-
-//-------------------------------------
-///NPC
-//=====================================
-//----------------------------------------------------------------------------
-/**
- *	@brief  MMDLヘッダ作成
- *
- *	@param	void *p_data_adrs   データ
- *	@param	*p_hedder           MMDL作成用ヘッダ
- */
-//-----------------------------------------------------------------------------
-static void Npc_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder )
-{
-  p_hedder->obj_code = GIRL2; //TODO
-  p_hedder->event_id = RESORT_BINARY_PEOPLE_DATA_GetScrID( p_wk->cp_binary );
 }
 //-------------------------------------
 ///ACTION
