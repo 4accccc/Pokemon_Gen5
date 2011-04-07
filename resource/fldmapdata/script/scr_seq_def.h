@@ -12433,22 +12433,8 @@
 
 //--------------------------------------------------------------
 /**
- * @brief   WBTギミック:背景ビジョンを初期化
- * @param[in]  type
- */
-//--------------------------------------------------------------
-#define _WBT_GMK_VISION_INIT( type )  \
-    _ASM_WBT_GMK_VISION_INIT type   
-
-    .macro _ASM_WBT_GMK_VISION_INIT type   
-    .short  EV_SEQ_WBT_GMK_VISION_INIT
-    .short  \type
-    .endm
-
-//--------------------------------------------------------------
-/**
  * @brief   WBTギミック:背景ビジョンを変更
- * @param[in]  type
+ * @param[in]  type   ※script_def.hのSCR_WBT_VISION_を参照
  */
 //--------------------------------------------------------------
 #define _WBT_GMK_VISION_CHANGE( type )  \
@@ -12462,8 +12448,8 @@
 //--------------------------------------------------------------
 /**
  * @brief   WBTギミック:通路エフェクト開始
- * @param[in]  type
- * @param[in]  pos    ※script_def.hのSCR_WBT_EFFECT_を参照
+ * @param[in]  type   ※script_def.hのSCR_WBT_EFFECT_を参照
+ * @param[in]  pos    ※script_def.hのSCR_WBT_EFFECT_POS_を参照
  */
 //--------------------------------------------------------------
 #define _WBT_GMK_EFFECT_START( type, pos )  \

@@ -491,25 +491,6 @@ VMCMD_RESULT EvCmdWBTGetVictoryCount( VMHANDLE * core, void * wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  スクリプトコマンド:WBTギミック背景ビジョン初期化
- */
-//-----------------------------------------------------------------------------
-VMCMD_RESULT EvCmdWBTGMKVisionInit( VMHANDLE * core, void * wk )
-{
-  SCRCMD_WORK   *work = wk;
-  GAMESYS_WORK  *gsys = SCRCMD_WORK_GetGameSysWork( work );
-  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
-
-  u8 type = SCRCMD_GetVMWorkValue( core, wk );
-
-  // ギミック開始
-  WBT_GIMMICK_VisionInit( fieldWork, type );
-
-  return VMCMD_RESULT_CONTINUE;
-}
-
-//----------------------------------------------------------------------------
-/**
  *	@brief  スクリプトコマンド:WBTギミック背景ビジョン変更
  */
 //-----------------------------------------------------------------------------

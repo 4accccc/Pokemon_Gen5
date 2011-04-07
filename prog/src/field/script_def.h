@@ -640,8 +640,16 @@
 #define SCR_WBT_STAGE_FINAL           (4) ///<WBT状態：決勝戦
 #define SCR_WBT_STAGE_WIN             (5) ///<WBT状態：優勝
 
-#define SCR_WBT_EFFECT_LEFT           (0) ///<左 エフェクト位置
-#define SCR_WBT_EFFECT_RIGHT          (1) ///<右 エフェクト位置
+#define SCR_WBT_EFFECT_POS_L          (0) ///<左 エフェクト位置
+#define SCR_WBT_EFFECT_POS_R          (1) ///<右 エフェクト位置
+
+// 背景ビジョン定義 ※リソースの並びと同一なので変更不可
+#define SCR_WBT_VISION_VS             (0) ///<VSビジョン
+#define SCR_WBT_VISION_WIN            (1) ///<優勝ビジョン
+#define SCR_WBT_VISION_ALL            (2) ///<オールトーナメントビジョン
+
+// 通路エフェクト定義 ※リソースの並びと同一なので変更不可
+#define SCR_WBT_EFFECT_NORMAL         (0) ///<ノーマルエフェクト
 
 //--------------------------------------------------------------
 //  scrcmd_intrude_field.c

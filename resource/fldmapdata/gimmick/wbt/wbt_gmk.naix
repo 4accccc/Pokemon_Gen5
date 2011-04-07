@@ -11,8 +11,26 @@
 #define NARC_WBT_GMK_NAIX_
 
 enum {
-	NARC_wbt_gmk_dummy_nsbmd = 0,
-	NARC_wbt_gmk_dummy_nsbca = 1
+	NARC_wbt_gmk_wbt_v_vs_nsbmd = 0,
+	NARC_wbt_gmk_wbt_v_vs_nsbta = 1,
+	NARC_wbt_gmk_wbt_v_vs_name_nsbmd = 2,
+	NARC_wbt_gmk_wbt_v_win_nsbmd = 3,
+	NARC_wbt_gmk_wbt_v_win_nsbta = 4,
+	NARC_wbt_gmk_wbt_v_win_name_nsbmd = 5,
+	NARC_wbt_gmk_wbt_e_win_a_nsbmd = 6,
+	NARC_wbt_gmk_wbt_e_win_a_nsbca = 7,
+	NARC_wbt_gmk_wbt_e_win_a_nsbta = 8,
+	NARC_wbt_gmk_wbt_e_win_b_nsbmd = 9,
+	NARC_wbt_gmk_wbt_e_win_b_nsbca = 10,
+	NARC_wbt_gmk_wbt_e_win_b_nsbta = 11,
+	NARC_wbt_gmk_wbt_v_all_nsbmd = 12,
+	NARC_wbt_gmk_wbt_v_all_nsbta = 13,
+	NARC_wbt_gmk_wbt_e_normal_l_nsbmd = 14,
+	NARC_wbt_gmk_wbt_e_normal_l_nsbca = 15,
+	NARC_wbt_gmk_wbt_e_normal_l_nsbta = 16,
+	NARC_wbt_gmk_wbt_e_normal_r_nsbmd = 17,
+	NARC_wbt_gmk_wbt_e_normal_r_nsbca = 18,
+	NARC_wbt_gmk_wbt_e_normal_r_nsbta = 19
 };
 
 /* NARC_WBT_GMK_NAIX_ */

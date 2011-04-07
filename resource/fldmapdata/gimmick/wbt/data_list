@@ -1,4 +1,22 @@
 DATA_LIST = \
-     dummy.nsbmd \
-		 dummy.nsbca \
+     wbt_v_vs.nsbmd \
+     wbt_v_vs.nsbta \
+     wbt_v_vs_name.nsbmd \
+     wbt_v_win.nsbmd \
+     wbt_v_win.nsbta \
+     wbt_v_win_name.nsbmd \
+		 wbt_e_win_a.nsbmd \
+		 wbt_e_win_a.nsbca \
+		 wbt_e_win_a.nsbta \
+		 wbt_e_win_b.nsbmd \
+		 wbt_e_win_b.nsbca \
+		 wbt_e_win_b.nsbta \
+     wbt_v_all.nsbmd \
+     wbt_v_all.nsbta \
+		 wbt_e_normal_l.nsbmd \
+		 wbt_e_normal_l.nsbca \
+		 wbt_e_normal_l.nsbta \
+		 wbt_e_normal_r.nsbmd \
+		 wbt_e_normal_r.nsbca \
+		 wbt_e_normal_r.nsbta \
 
