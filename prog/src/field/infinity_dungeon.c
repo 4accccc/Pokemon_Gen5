@@ -31,6 +31,9 @@
 #include "tr_tool/ex_trainer_def.h"
 #include "msg/script/msg_infinity_dungeon_scr.h"
 
+#include "../../../resource/infinity_dungeon/data/infinity_dungeon_tr_move_type.cdat"
+#include "../../../resource/infinity_dungeon/data/infinity_dungeon_room_pos_type.cdat"
+
 //=============================================================================
 /**
  *					構造体宣言
@@ -1073,7 +1076,7 @@ static void SetDungeonData( FLOOR_DATA *p_floor_data , u32 seed )
       }
 
       // 部屋情報設定
-      p_floor_data[i].room_data[j].tr_pos_type = 0;
+      p_floor_data[i].room_data[j].tr_pos_type = GFUser_GetPublicRand(INF_TR_ROOM_POS_TYPE_MAX);
       p_floor_data[i].room_data[j].room_id = j;
 
     }
@@ -1302,26 +1305,28 @@ static u16 GetFieldDir( u16 warp_dir )
 //-----------------------------------------------------------------------------
 static void SetTrainer( MAP_CHAGE_EVENT_WORK *p_wk , ROOM_DATA* p_room_data)
 {
-  // トレーナータイプごとの配置を行う
-  switch( p_room_data->tr_pos_type )
+  int i;
+  const INF_ROOM_SET_TR_PARAM *p_tr_room;
+  p_tr_room = &sc_room_tr_param[p_room_data->tr_pos_type];
+
+  for( i= 0; i<p_tr_room->member_num; i++ )
   {
-  default:
-    {
-      {
-        NEXT_MAP_DATA *p_next_map_data = &p_wk->next_map_data;
-        u32 tr_id = GetRoomTrainerID(p_wk->floor_data,p_wk->now_floor, p_room_data->room_id ,1 );
-        u16 obj_code = FBI_TOOL_GetOBJCode( ARCID_INFINITY_DUGENON_TR , tr_id ,p_wk->heapID);
-        MMDL *mmdl = MMDLSYS_AddMMdlParam( p_wk->p_mmdlsys,6, 7, DIR_RIGHT,
-            tr_id + TRID_OFFSET_INFINITY_DUNGEON, obj_code, MV_RND, p_next_map_data->zone_id );
-        MMDL_SetEventType( mmdl , EV_TYPE_TRAINER);
-        MMDL_SetParam( mmdl, 3 , MMDL_PARAM_0 );
-        MMDL_SetMoveLimitX( mmdl, 2 );
-        MMDL_SetMoveLimitZ( mmdl, 2 );
-        MMDL_SetEventID( mmdl, SCRID_INFINITY_DUNGEON_TALK_BATTLE_TRAINER );
-        ONOUE_Printf("tr_id;%u\n",tr_id);
-      }
-    }
-    break;
+    const INF_ROOM_TR_DATA *p_md = &p_tr_room->tr_move_data[i];
+    NEXT_MAP_DATA *p_next_map_data = &p_wk->next_map_data;
+    const INF_MMDL_PARAM *p_mmdlp = &sc_mmdl_param[p_md->move_type];
+
+    u32 tr_id = GetRoomTrainerID(p_wk->floor_data,p_wk->now_floor, p_room_data->room_id ,i );
+    u16 obj_code = FBI_TOOL_GetOBJCode( ARCID_INFINITY_DUGENON_TR , tr_id ,p_wk->heapID);
+    MMDL *mmdl = MMDLSYS_AddMMdlParam( p_wk->p_mmdlsys,p_md->g_x, p_md->g_y, p_mmdlp->direction,
+        tr_id + TRID_OFFSET_INFINITY_DUNGEON, obj_code, p_mmdlp->move_code,
+        p_next_map_data->zone_id );
+    MMDL_SetEventType( mmdl , p_mmdlp->ev_type);
+    MMDL_SetParam( mmdl, p_mmdlp->param0 , MMDL_PARAM_0 );
+    MMDL_SetParam( mmdl, p_mmdlp->param1 , MMDL_PARAM_1 );
+    MMDL_SetMoveLimitX( mmdl, p_mmdlp->lim_x );
+    MMDL_SetMoveLimitZ( mmdl, 2 );
+    MMDL_SetEventID( mmdl, SCRID_INFINITY_DUNGEON_TALK_BATTLE_TRAINER );
+    ONOUE_Printf("tr_id;%u\n",tr_id);
   }
 }
 
@@ -1344,19 +1349,16 @@ static int GetRoomTrainerIDPos( FLOOR_DATA *p_floor_data ,u32 floor_id ,u32 room
 
   for( i = 0; i<ROOM_MAX; i++ )
   {
+    u32 tr_type = p_floor_data[floor_id].room_data[i].tr_pos_type;
+    const INF_ROOM_SET_TR_PARAM *p_tr_room = &sc_room_tr_param[tr_type];
+
     // 指定の部屋まで移動した場合は終了する
     if( room_id <= i )
     {
       break;
     }
-
-    // トレーナー配置タイプごとのトレーナー数を加算する
-    switch( p_floor_data[floor_id].room_data[i].tr_pos_type )
-    {
-    default:
-      tr_num++;
-      break;
-    }
+    // 人数加算
+    tr_num+=p_tr_room->member_num;
   }
 
   return tr_num+room_tr_no;

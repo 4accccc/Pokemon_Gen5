@@ -1,0 +1,35 @@
+//[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
+/**
+ *
+ *	@file		infinity_dungeon_tr_move_type.cdat
+ *	@brief  トレーナー移動データ
+ *	@author	Masayuki Onoue
+ *	@date		2011.02.25
+ *  @note   コンバータによって出力されたファイルです
+ *
+ */
+//]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+
+//-------------------------------------
+///	MMDL用パラメータ
+//=====================================
+typedef struct {
+  u16 move_code;
+  u16 ev_type;
+  u16 direction;
+  u16 param0;
+  u16 param1;
+  s32 lim_x;
+  s32 lim_z;
+}INF_MMDL_PARAM;
+
+static const INF_MMDL_PARAM sc_mmdl_param[] = {
+    { MV_DMY ,EV_TYPE_TRAINER ,DIR_DOWN ,1 ,2 ,3 ,4 ,},  // INF_MOVE_CODE_TYPE_STAY
+    { MV_DMY ,EV_TYPE_TRAINER ,DIR_DOWN ,5 ,6 ,7 ,8 ,},  // INF_MOVE_CODE_TYPE_STOP
+    { MV_DMY ,EV_TYPE_TRAINER ,DIR_DOWN ,9 ,10 ,11 ,12 ,},  // INF_MOVE_CODE_TYPE_RND
+};
+
+// ナンバー定義
+#define INF_MOVE_CODE_TYPE_STAY (0)
+#define INF_MOVE_CODE_TYPE_STOP (1)
+#define INF_MOVE_CODE_TYPE_RND (2)

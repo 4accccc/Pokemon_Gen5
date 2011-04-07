@@ -25,6 +25,7 @@ HEAD_STR = inf
 #※トレーナーデータ名
 #------------------------------------------------------------------------------
 TDM_FILE = inf_tr.tdm
+PDM_FILE = inf_pm.pdm
 
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
@@ -34,7 +35,7 @@ TARGETDIR	= $(PROJECT_ARCDIR)
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
 #------------------------------------------------------------------------------
-SUBDIRS	=
+SUBDIRS	= data
 
 PDFILES:=$(wildcard $(HEAD_STR)pd_*.bin)
 TDFILES:=$(wildcard $(HEAD_STR)td_*.bin)
@@ -61,9 +62,9 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 .SUFFIXES: .bin
 
 #パーソナルデータ生成
-do-build: binmake narc
+do-build: out_end narc
 
-binmake:
+out_end : $(TDM_FILE) $(PDM_FILE)
 	ruby ../../tools/btl_subway/bts_trainer_arr.rb ../../tools/btl_subway/trainer.txt > ../../tools/btl_subway/bts_tr_arr.rb
 	ruby ../../tools/btl_subway/btl_subway_conv.rb pd_list.txt $(TDM_FILE) ../../resource/message/template.gmm $(HEAD_STR)
 
