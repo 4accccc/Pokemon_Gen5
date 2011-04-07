@@ -53,7 +53,7 @@ include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 #------------------------------------------------------------------------------
 LDIRT_CLEAN = $(TARGETDIR)$(POKEMON_DATA) $(TARGETDIR)$(TRAINER_DATA)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-LDIRT_CLEAN += $(POKEMON_DATA) $(TRAINER_DATA) *.bin
+LDIRT_CLEAN += $(POKEMON_DATA) $(TRAINER_DATA) *.bin out_end
 endif
 
 .PHONY:	do-build
