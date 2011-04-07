@@ -41,6 +41,8 @@ static RESORT_DATA_MANAGER * Resort_Scrcmd_GetDataManager( FIELDMAP_WORK *p_fiel
 static RESORT_PEOPLE * Resort_Scrcmd_GetFrontPeople( FIELDMAP_WORK *p_fieldmap, RESORT_PEOPLE_SYS *p_people_sys );
 static s32 PrmExp_Up( s32 exp, s32 other, s32 up );
 
+static GMEVENT* EVENT_StartBlendBrightness( GMEVENT* parent, GAMESYS_WORK* gsys, int plane, int now, int next, int sync );
+
 //=============================================================================
 /**
  *					スクリプトコマンド外部公開
@@ -139,7 +141,9 @@ VMCMD_RESULT EvCmdResortGetData( VMHANDLE *p_core, void *p_wk_adrs )
     }
     break;
   case RESORT_GET_PARAM_MERGE_FLAG:
-    *p_ret_wk = ( RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_UPDATE, NULL ) > RESORT_RECV_DATA_UPDATE_NONE );
+    //TODO
+    //*p_ret_wk = ( RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_UPDATE, NULL ) > RESORT_RECV_DATA_UPDATE_NONE );
+    *p_ret_wk = FALSE;
     break;
   case RESORT_GET_PARAM_PRESENT_ID:
     *p_ret_wk = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_PRESENT_ID, NULL );
@@ -653,7 +657,7 @@ VMCMD_RESULT EvCmdResortMergeOff( VMHANDLE *p_core, void *p_wk_adrs )
 
 
   //マージフラグをOFF
-  RESORT_PEOPLE_SetData( p_people, RESORT_DATA_PARAM_UPDATE, RESORT_RECV_DATA_UPDATE_NONE );
+  //RESORT_PEOPLE_SetData( p_people, RESORT_DATA_PARAM_UPDATE, RESORT_RECV_DATA_UPDATE_NONE );
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -1264,6 +1268,53 @@ VMCMD_RESULT EvCmdResortEndItem( VMHANDLE *p_core, void *p_wk_adrs )
 
   return VMCMD_RESULT_CONTINUE;
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  暗転から復帰
+ *
+ *	@param	VMHANDLE *p_core 仮想マシンハンドル
+ *	@param	*p_wk_adrs       スクリプトコマンドワーク
+ *
+ *	@return 終了コード
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdResortStartBlendBrightness( VMHANDLE *p_core, void *p_wk_adrs )
+{
+  GMEVENT* event;
+  GMEVENT* parent;
+  SCRCMD_WORK *p_wk = p_wk_adrs;
+  SCRIPT_WORK *p_script = SCRCMD_WORK_GetScriptWork( p_wk );
+  GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
+
+  s16 now = (s16)SCRCMD_GetVMWorkValue( p_core, p_wk );
+  s16 next = (s16)SCRCMD_GetVMWorkValue( p_core, p_wk );
+  s16 sync = (s16)SCRCMD_GetVMWorkValue( p_core, p_wk );
+  parent = SCRIPT_GetEvent( p_script );
+
+  event = EVENT_StartBlendBrightness( parent, p_gamesys, GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_OBJ, now, next, sync );
+  SCRIPT_CallEvent( p_script, event );
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  BG面のアルファを設定
+ *
+ *	@param	FIELDMAP_WORK *p_fieldmap   フィールド
+ *
+ *	@return ショップ
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdResortUseMsgAlpha( VMHANDLE *p_core, void *p_wk_adrs )
+{
+  SCRCMD_WORK *p_wk = p_wk_adrs;
+  SCRIPT_WORK *p_script = SCRCMD_WORK_GetScriptWork( p_wk );
+  SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( p_script );
+  u16 is_use = VMGetU16( p_core );
+
+  FLDMSGBG_UseBlendAlpha( fparam->msgBG, is_use );
+  return VMCMD_RESULT_CONTINUE;
+}
 
 //----------------------------------------------------------------------------
 /**
@@ -1423,4 +1474,76 @@ static s32 PrmExp_Up( s32 exp, s32 other, s32 up )
     exp = PRMEXP_MAX - other;
   }
   return exp;
+}
+//=============================================================================
+/**
+ *  輝度変更イベント
+ */
+//=============================================================================
+//-------------------------------------
+///	イベントワーク
+//=====================================
+typedef struct
+{
+  int plane;
+  int now;
+  int next;
+  int sync;
+  int cnt;
+} EVENT_BRIGHT_WORK;
+
+static GMEVENT_RESULT Event_BlendBrightness( GMEVENT* event, int* seq, void* wk );
+//----------------------------------------------------------------------------
+/**
+ *	@brief  輝度変更イベント
+ *
+ *	@param	GMEVENT* parent   親イベント
+ *	@param	gsys      ゲームシステム
+ *	@param  plane     BG面	
+ *	@param	now       現在の輝度
+ *	@param	next      変更後の輝度
+ *	@param  sync      シンク
+ *
+ *	@return イベント
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT* EVENT_StartBlendBrightness( GMEVENT* parent, GAMESYS_WORK* gsys, int plane, int now, int next, int sync )
+{
+  GMEVENT* event;
+  EVENT_BRIGHT_WORK* work;
+
+  // 生成
+  event = GMEVENT_Create( gsys, parent, Event_BlendBrightness, sizeof(EVENT_BRIGHT_WORK) );
+
+  // 初期化
+  work = GMEVENT_GetEventWork( event );
+  GFL_STD_MemClear( work, sizeof(EVENT_BRIGHT_WORK));
+  work->plane = plane;
+  work->now   = now;
+  work->next  = next;
+  work->sync  = sync;
+  work->cnt   = 0;
+  return event;
+} 
+static GMEVENT_RESULT Event_BlendBrightness( GMEVENT* event, int* seq, void* wk )
+{
+  EVENT_BRIGHT_WORK* work = wk;
+
+  switch( *seq )
+  {
+  case 0:
+    {
+      int brightness = work->now + (work->next - work->now) * work->cnt / work->sync;
+      if( work->cnt++ > work->sync )
+      {
+        brightness = work->next;
+        (*seq)++;
+      }
+      G2_SetBlendBrightness( work->plane, brightness );
+    }
+    break;
+  case 1:
+    return GMEVENT_RES_FINISH;
+  }
+  return GMEVENT_RES_CONTINUE;
 }

@@ -12904,11 +12904,44 @@
   .short EV_SEQ_RESORT_INPUT_AUTHERPHRASE
   .endm
   
+//--------------------------------------------------------------
+/**
+ * @brief リゾート用　アイテムを貰った後の処理
+ */
+//--------------------------------------------------------------
 #define _RESORT_END_ITEM() \
       _ASM_RESORT_END_ITEM
 
   .macro _ASM_RESORT_END_ITEM
   .short EV_SEQ_RESORT_END_ITEM
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief リゾート用  ブレンドブライトネス
+ */
+//--------------------------------------------------------------
+#define _RESORT_BLEND_BRIGHTNESS( now, next, sync ) \
+    _ASM_RESORT_BLEND_BRIGHTNESS now, next, sync
+
+  .macro _ASM_RESORT_BLEND_BRIGHTNESS now, next, sync
+  .short EV_SEQ_RESORT_BLEND_BRIGHTNESS
+  .short \now
+  .short \next
+  .short \sync
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief リゾート用  メッセージにアルファを適用するかどうか
+ */
+//--------------------------------------------------------------
+#define _RESORT_USE_MSG_ALPHA( is_use ) \
+      _ASM_RESORT_USE_MSG_ALPHA is_use
+  
+  .macro _ASM_RESORT_USE_MSG_ALPHA is_use
+  .short EV_SEQ_RESORT_USE_MSGALPHA
+  .short \is_use
   .endm
 
 //--------------------------------------------------------------

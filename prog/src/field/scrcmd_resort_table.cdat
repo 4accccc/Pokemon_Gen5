@@ -42,6 +42,8 @@
   DEF_CMD( EvCmdResortCallInputAutherName, EV_SEQ_RESORT_INPUT_AUTHERNAME )
   DEF_CMD( EvCmdResortCallInputAutherPhrase, EV_SEQ_RESORT_INPUT_AUTHERPHRASE )
   DEF_CMD( EvCmdResortEndItem, EV_SEQ_RESORT_END_ITEM )
+  DEF_CMD( EvCmdResortStartBlendBrightness, EV_SEQ_RESORT_BLEND_BRIGHTNESS )
+  DEF_CMD( EvCmdResortUseMsgAlpha, EV_SEQ_RESORT_USE_MSGALPHA )
   NO_CMD()
   
   END_CMD

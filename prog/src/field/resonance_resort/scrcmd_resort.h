@@ -48,3 +48,5 @@ extern VMCMD_RESULT EvCmdResortCallInputCityName( VMHANDLE *p_core, void *p_wk_a
 extern VMCMD_RESULT EvCmdResortCallInputAutherName( VMHANDLE *p_core, void *p_wk_adrs );
 extern VMCMD_RESULT EvCmdResortCallInputAutherPhrase( VMHANDLE *p_core, void *p_wk_adrs );
 extern VMCMD_RESULT EvCmdResortEndItem( VMHANDLE *p_core, void *p_wk_adrs );
+extern VMCMD_RESULT EvCmdResortStartBlendBrightness( VMHANDLE *p_core, void *p_wk_adrs );
+extern VMCMD_RESULT EvCmdResortUseMsgAlpha( VMHANDLE *p_core, void *p_wk_adrs );

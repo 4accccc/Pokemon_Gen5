@@ -467,6 +467,7 @@ extern void FLDKEYWAITCURSOR_WriteBmpBG(
 
 //‚»‚Ì‘¼
 extern void FLDMSGBG_SetBlendAlpha( BOOL set );
+extern void FLDMSGBG_UseBlendAlpha( FLDMSGBG *fmb, BOOL is_use );
 
 extern void FLDMSGBG_RecoveryBG( FLDMSGBG *fmb );
 

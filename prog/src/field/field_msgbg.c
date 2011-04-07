@@ -201,7 +201,8 @@ struct _TAG_FLDMSGBG
   GFL_TCB *pVBlankTCB;
   
   u8 req_reset_bg2_control;
-  u8 padding[3];
+  u8 use_blendalpha;
+  u8 padding[2];
   
   void *pArcChara_KeyWaitCursor;
   NNSG2dCharacterData *pChara_KeyWaitCursor;
@@ -359,7 +360,7 @@ static void setBGResource( FLDMSGBG *fmb, const BOOL trans );
 static void setBGResourceNoLoad3D( FLDMSGBG *fmb, const BOOL trans );
 static void tcbSetBG1Resource( GFL_TCB *tcb, void *wk );
 static void setBG1Resource( FLDMSGBG *fmb );
-static void resetBG2Control( BOOL cnt_set );
+static void resetBG2Control( BOOL cont_set, BOOL blendalpha );
 static void resetBG2ControlProc( FLDMSGBG *fmb );
 static void transBGResource( int bgFrame, HEAPID heapID );
 static void transBGResourceParts( int bgFrame, HEAPID heapID, MSGBG_TRANS_RES res );
@@ -417,6 +418,7 @@ FLDMSGBG * FLDMSGBG_Create( HEAPID heapID, GFL_G3D_CAMERA *g3Dcamera )
   fmb->bgFrame = BGFRAME_ERROR;
   fmb->bgFrameBld = BGFRAME_ERROR;
   fmb->g3Dcamera = g3Dcamera;
+  fmb->use_blendalpha = TRUE;
   
   { //font
     fmb->fontHandle = GFL_FONT_Create(
@@ -1154,7 +1156,7 @@ static FLDMSGWIN * fldmsgwin_Add( FLDMSGBG *fmb, GFL_MSGDATA *msgData,
   
   if( pltt_no == PANO_FONT ){
     winframe_SetPaletteBlack( fmb->heapID );
-    setBlendAlpha( TRUE );
+    setBlendAlpha( fmb->use_blendalpha );
   }else{
     winframe_SetPaletteWhith( fmb->heapID );
   }
@@ -1372,7 +1374,7 @@ FLDSYSWIN * FLDSYSWIN_AddEx(
   sysWin->bmpwin = syswin_InitBmp( bmppos_x, bmppos_y, bmpsiz_x, bmpsiz_y, fmb->heapID );
   sysWin->msgPrint = FLDMSGPRINT_SetupPrint( fmb, msgData, sysWin->bmpwin );
   
-  setBlendAlpha( TRUE );
+  setBlendAlpha( fmb->use_blendalpha );
 
   return( sysWin );
 }
@@ -1562,7 +1564,7 @@ static FLDMENUFUNC * fldmenufunc_AddMenuList( FLDMSGBG *fmb,
   
   if( pltt_no == PANO_FONT ){
     winframe_SetPaletteBlack( fmb->heapID );
-    setBlendAlpha( TRUE );
+    setBlendAlpha( fmb->use_blendalpha );
   }else{
     winframe_SetPaletteWhith( fmb->heapID );
   }
@@ -2339,7 +2341,7 @@ FLDMSGWIN_STREAM * FLDMSGWIN_STREAM_Add(
   FLDKEYWAITCURSOR_Init( &msgWin->cursor_work, fmb );
 
   winframe_SetPaletteBlack( fmb->heapID );
-  setBlendAlpha( TRUE );
+  setBlendAlpha( fmb->use_blendalpha);
   return( msgWin );
 }
 
@@ -2583,7 +2585,7 @@ FLDSYSWIN_STREAM * FLDSYSWIN_STREAM_Add(
   FLDKEYWAITCURSOR_Init( &sysWin->cursor_work, fmb );
   
   winframe_SetPaletteBlack( fmb->heapID );
-  setBlendAlpha( TRUE );
+  setBlendAlpha( fmb->use_blendalpha );
   return( sysWin );
 }
 
@@ -5270,7 +5272,7 @@ static void tcbSetBG1Resource( GFL_TCB *tcb, void *wk )
  * @param   heapID
  */
 //--------------------------------------------------------------
-static void resetBG2Control( BOOL cont_set )
+static void resetBG2Control( BOOL cont_set, BOOL blendalpha )
 {
   u8 frame = FLDMSGBG_BGFRAME_BLD;
   
@@ -5300,6 +5302,7 @@ static void resetBG2Control( BOOL cont_set )
     GFL_BG_LoadScreenReq( frame );
   }
   
+  if(blendalpha)
   { //ブレンド
     int plane1 = GX_BLEND_PLANEMASK_BG2; 
     int plane2 = GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 |
@@ -5325,10 +5328,10 @@ static void resetBG2ControlProc( FLDMSGBG *fmb )
     
     if( fmb->bgFrameBld == BGFRAME_ERROR ){
       GFL_BG_FreeBGControl( FLDMSGBG_BGFRAME_BLD );
-      resetBG2Control( TRUE );
+      resetBG2Control( TRUE, fmb->use_blendalpha );
       fmb->bgFrameBld = FLDMSGBG_BGFRAME_BLD;
     }else{
-      resetBG2Control( FALSE );
+      resetBG2Control( FALSE, fmb->use_blendalpha );
     }
   }
 }
@@ -5436,6 +5439,18 @@ static void setBlendAlpha( BOOL on )
 void FLDMSGBG_SetBlendAlpha( BOOL set )
 {
   setBlendAlpha( set );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アルファ使用フラグを設定
+ *
+ *	@param	FLDMSGBG *fmb フィールドメッセージ
+ *	@param	is_use  TRUEで使用  FALSEで不使用
+ */
+//-----------------------------------------------------------------------------
+void FLDMSGBG_UseBlendAlpha( FLDMSGBG *fmb, BOOL is_use )
+{
+  fmb->use_blendalpha = is_use;
 }
 
 //--------------------------------------------------------------
