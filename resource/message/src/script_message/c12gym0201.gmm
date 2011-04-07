@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-07T14:55:58"/>
+	<create user="matsumiya" host="W00224" date="2011-04-07T19:47:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1288" top="143" right="1993" bottom="771" maximized="no" rayout="Vertical2">
+	<dialog left="1291" top="148" right="1996" bottom="776" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -293,7 +293,8 @@
 
 
 	<row id="msg_c12gym0201_swleader1_01">
-		<comment>？？？</comment>
+		<comment>♂
+・</comment>
 		<attribute name="キャラ指定">SWLEADER1
 ジムリーダー
 チェレン</attribute>
@@ -304,25 +305,41 @@
 	</row>
 
 	<row id="msg_c12gym0201_swleader1_02">
-		<comment>？？？</comment>
+		<comment>♂
+・</comment>
+		<attribute name="キャラ指定">SWLEADER1
+ジムリーダー
+チェレン</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_c12gym0201_swleader1_03">
-		<comment>？？？</comment>
+		<comment>♂
+・</comment>
+		<attribute name="キャラ指定">SWLEADER1
+ジムリーダー
+チェレン</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_c12gym0201_swleader1_04">
-		<comment>？？？</comment>
+		<comment>♂
+・</comment>
+		<attribute name="キャラ指定">SWLEADER1
+ジムリーダー
+チェレン</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_c12gym0201_swleader1_05">
-		<comment>？？？</comment>
+		<comment>♂
+・</comment>
+		<attribute name="キャラ指定">SWLEADER1
+ジムリーダー
+チェレン</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
@@ -334,7 +351,7 @@
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_c12gym0201_02_01">
+	<row id="msg_c12gym0201_02_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>？？？</comment>
 		<attribute name="キャラ指定">トレーナー２</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
@@ -365,7 +382,7 @@
 記念に　これを　さしあげますよ▼</language>
 	</row>
 
-	<row id="msg_c12gym0201_glasses_02" back-color="#80ffff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c12gym0201_glasses_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・ジムバッジ取得前＋アイテム入手後
 ・ジムバッジ取得まで繰り返し</comment>
@@ -397,7 +414,7 @@
 先に　進めるっす！！</language>
 	</row>
 
-	<row id="msg_c12gym0201_glasses_03" back-color="#80ffff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c12gym0201_glasses_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・ジムバッジ取得後</comment>
 		<attribute name="キャラ指定">DANPEI

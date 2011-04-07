@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-04T21:36:54"/>
+	<create user="matsumiya" host="W00224" date="2011-04-07T20:09:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1299" top="159" right="2004" bottom="787" maximized="no" rayout="Vertical2">
+	<dialog left="1291" top="148" right="1996" bottom="776" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -297,18 +297,14 @@
 ・イベント戦闘</comment>
 		<attribute name="キャラ指定">アデク
 ・BWチャンピオン</attribute>
-		<language name="JPN" width="256">アデク『では　さっそくだが
-・トレーナー２連戦
-・準備はＯＫか？</language>
+		<language name="JPN" width="256">アデク『</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_t06r0101_champion_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・はい選択時
-・主人公のポケモンのHP/MPチェック
-　
-　</comment>
+・主人公のポケモンのHP/MPチェック</comment>
 		<attribute name="キャラ指定">アデク
 ・BWチャンピオン</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
@@ -316,49 +312,30 @@
 	</row>
 
 	<row id="msg_t06r0101_champion_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・</comment>
 		<attribute name="キャラ指定">アデク
 ・BWチャンピオン</attribute>
-		<language name="JPN" width="256">回復
-・ポケセン誘導</language>
+		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_t06r0101_champion_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・</comment>
 		<attribute name="キャラ指定">アデク
 ・BWチャンピオン</attribute>
-		<language name="JPN" width="256">テストメッセージ
-・では一人目</language>
+		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_t06r0101_champion_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・</comment>
 		<attribute name="キャラ指定">アデク
 ・BWチャンピオン</attribute>
-		<language name="JPN" width="256">テストメッセージ
-・回復処理</language>
+		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
-	</row>
-
-	<row id="msg_t06r0101_champion_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<attribute name="キャラ指定">アデク
-・BWチャンピオン</attribute>
-		<language name="JPN" width="256">テストメッセージ
-・では二人目</language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-
-	<row id="msg_t06r0101_champion_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<attribute name="キャラ指定">アデク
-・BWチャンピオン</attribute>
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-
-	<row id="msg_t06r0101_champion_08" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<attribute name="キャラ指定">アデク
-・BWチャンピオン</attribute>
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
 	</row>
 
 	<row id="msg_t06r0101_01_01">
@@ -371,7 +348,7 @@
 
 	<row id="msg_t06r0101_01_02">
 		<comment>♂
-・塾帰り</comment>
+・1人目：塾帰り♂</comment>
 		<attribute name="キャラ指定">塾帰り</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
@@ -385,9 +362,9 @@
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_t06r0101_02_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_t06r0101_02_02" back-color="#80ffff,,,,,,,,,,,,,,,,,,">
 		<comment>♀
-・塾帰り</comment>
+・2人目：塾帰り♀</comment>
 		<attribute name="キャラ指定">塾帰り</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
