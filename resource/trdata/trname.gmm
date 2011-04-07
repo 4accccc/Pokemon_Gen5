@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00253" date="2011-04-04T20:35:33"/>
+	<create user="tamada" host="W00253" date="2011-04-06T11:44:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -246,6 +246,11 @@
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 				<comment language="japanese">WBTのトーナメント名称</comment>
 				<comment language="english">WBTのトーナメント名称</comment>
+			</tag>
+			<tag entry="60" japanese="未設定タグ" english="未設定タグ" view="EP" width="130" line="1">
+				<parameter number="0" japanese="場所" english="場所" type="int8"/>
+				<comment language="japanese">開発中の決定していないタグに使用する</comment>
+				<comment language="english">開発中の決定していないタグに使用する</comment>
 			</tag>
 		</group>
 
@@ -3649,8 +3654,8 @@
 	</row>
 
 	<row id="swleader2_01">
-		<language name="JPN" width="216">どく</language>
-		<language name="JPN_KANJI" width="216">どく</language>
+		<language name="JPN" width="216">ホミカ</language>
+		<language name="JPN_KANJI" width="216">ホミカ</language>
 	</row>
 
 	<row id="swleader5_01">
@@ -3791,6 +3796,116 @@
 	<row id="eleader1_01">
 		<language name="JPN" width="216">アダン</language>
 		<language name="JPN_KANJI" width="216">アダン</language>
+	</row>
+
+	<row id="swrival_01">
+		<language name="JPN" width="216">ライバル</language>
+		<language name="JPN_KANJI" width="216">ライバル</language>
+	</row>
+
+	<row id="swrival_02">
+		<language name="JPN" width="216">ライバル</language>
+		<language name="JPN_KANJI" width="216">ライバル</language>
+	</row>
+
+	<row id="swrival_03">
+		<language name="JPN" width="216">ライバル</language>
+		<language name="JPN_KANJI" width="216">ライバル</language>
+	</row>
+
+	<row id="tanpan_18">
+		<language name="JPN" width="216">サブロウ</language>
+		<language name="JPN_KANJI" width="216">サブロウ</language>
+	</row>
+
+	<row id="mini_14">
+		<language name="JPN" width="216">キミヨ</language>
+		<language name="JPN_KANJI" width="216">キミヨ</language>
+	</row>
+
+	<row id="swrival_04">
+		<language name="JPN" width="216">ライバル</language>
+		<language name="JPN_KANJI" width="216">ライバル</language>
+	</row>
+
+	<row id="swrival_05">
+		<language name="JPN" width="216">ライバル</language>
+		<language name="JPN_KANJI" width="216">ライバル</language>
+	</row>
+
+	<row id="swrival_06">
+		<language name="JPN" width="216">ライバル</language>
+		<language name="JPN_KANJI" width="216">ライバル</language>
+	</row>
+
+	<row id="schoolb_11">
+		<language name="JPN" width="216">ケンサク</language>
+		<language name="JPN_KANJI" width="216">ケンサク</language>
+	</row>
+
+	<row id="schoolg_09">
+		<language name="JPN" width="216">サチ</language>
+		<language name="JPN_KANJI" width="216">サチ</language>
+	</row>
+
+	<row id="tanpan_19">
+		<language name="JPN" width="216">ツネオ</language>
+		<language name="JPN_KANJI" width="216">ツネオ</language>
+	</row>
+
+	<row id="mini_15">
+		<language name="JPN" width="216">アマネ</language>
+		<language name="JPN_KANJI" width="216">アマネ</language>
+	</row>
+
+	<row id="kindergartenm_06">
+		<language name="JPN" width="216">ハジメ</language>
+		<language name="JPN_KANJI" width="216">ハジメ</language>
+	</row>
+
+	<row id="kindergartenw_06">
+		<language name="JPN" width="216">カズミ</language>
+		<language name="JPN_KANJI" width="216">カズミ</language>
+	</row>
+
+	<row id="futago_05">
+		<language name="JPN" width="216">ミカとミコ</language>
+		<language name="JPN_KANJI" width="216">ミカとミコ</language>
+	</row>
+
+	<row id="childcare_05">
+		<language name="JPN" width="216">ミツコ</language>
+		<language name="JPN_KANJI" width="216">ミツコ</language>
+	</row>
+
+	<row id="gentle_05">
+		<language name="JPN" width="216">マルコム</language>
+		<language name="JPN_KANJI" width="216">マルコム</language>
+	</row>
+
+	<row id="heads_06">
+		<language name="JPN" width="216">クック</language>
+		<language name="JPN_KANJI" width="216">クック</language>
+	</row>
+
+	<row id="guitarw_01">
+		<language name="JPN" width="216">ルー</language>
+		<language name="JPN_KANJI" width="216">ルー</language>
+	</row>
+
+	<row id="breederm_04">
+		<language name="JPN" width="216">ソウタ</language>
+		<language name="JPN_KANJI" width="216">ソウタ</language>
+	</row>
+
+	<row id="breederw_04">
+		<language name="JPN" width="216">マキ</language>
+		<language name="JPN_KANJI" width="216">マキ</language>
+	</row>
+
+	<row id="cleaning_03">
+		<language name="JPN" width="216">モキチ</language>
+		<language name="JPN_KANJI" width="216">モキチ</language>
 	</row>
 
 	<flowchart-group-list>

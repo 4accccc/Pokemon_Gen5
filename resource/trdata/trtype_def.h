@@ -155,6 +155,8 @@
 #define	TRTYPE_RSLEADER7    ( 142 )    //ポケモントレーナー777
 #define	TRTYPE_RSLEADER8    ( 143 )    //ポケモントレーナー88
 #define	TRTYPE_ELEADER1    ( 144 )    //ポケモントレーナー1111
-#define	TRTYPE_HERO_S	    ( 145 )
-#define	TRTYPE_HEROINE_S	( 146 )
-#define	TRTYPE_MAX	( 147 )
+#define	TRTYPE_SWRIVAL    ( 145 )    //ポケモントレーナー（SWRIVAL）
+#define	TRTYPE_GUITARW    ( 146 )    //ギタリスト
+#define	TRTYPE_HERO_S	    ( 147 )
+#define	TRTYPE_HEROINE_S	( 148 )
+#define	TRTYPE_MAX	( 149 )
