@@ -24,9 +24,8 @@ enum {
 	NARC_wbt_list_gra_wbt_list_bg_u_NSCR = 10,
 	NARC_wbt_list_gra_wbt_list_bg_u_01_NSCR = 11,
 	NARC_wbt_list_gra_wbt_list_bg_u_02_NSCR = 12,
-	NARC_wbt_list_gra_wbt_list_bg_u_03_NSCR = 13,
-	NARC_wbt_list_gra_wbt_list_obj_u_NANR = 14,
-	NARC_wbt_list_gra_trainer_obj_pos_tblbin = 15
+	NARC_wbt_list_gra_wbt_list_obj_u_NANR = 13,
+	NARC_wbt_list_gra_trainer_obj_pos_tblbin = 14
 };
 
 /* NARC_WBT_LIST_GRA_NAIX_ */

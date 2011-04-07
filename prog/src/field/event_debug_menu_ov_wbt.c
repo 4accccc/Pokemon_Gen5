@@ -52,7 +52,23 @@
  *					定数宣言
 */
 //=============================================================================
+// DEBUG_WBT_WORK.Flag
+enum{
+	FLG_SET_MODE	= (1<<0),		// 独自入力モードへ移行
+	//
+	FLG_WIN_UPDATE	= (1<<1),		// アップデートが必要(初期化時のみ)
+};
 
+enum{
+	TRAINER_PTN_MAX	= ( 56 ),		// 最大(関数から取得だろう)
+	//
+	DWBT_WIN_OFF_X	= (  1 ),		// offx
+	DWBT_WIN_OFF_Y	= ( 16 ),		// offx
+	DWBT_WIN_WIDTH	= ( 30 ),		// width
+	DWBT_WIN_HEIGHT	= (  8 ),		// height
+};
+
+#define WINCLR_COL(col) (((col)<<4)|(col))
 //=============================================================================
 /**
  *					グローバル
@@ -73,6 +89,16 @@ struct DEBUG_WBT_WORK{
   //ZUKAN_SAVEDATA * sv;
   BOOL (*call_func)( DEBUG_WBT_WORK * );
   WBTSTAGE stage;
+	//
+	// 以下に追加していく予定
+	s32			Step;							// 
+	u32			Flag;							// フラグ
+	u16			Trbuffer[WBT_TRAINER_NUM];		// セットするバッファ
+	s32			Index;							// インデックス(0-8)
+	WORDSET		*wordset;						// WordSet
+	GFL_MSGDATA	*msgman;						// メッセージマネージャー
+	GFL_BMPWIN	*bmpwin;
+	GFL_FONT	*fontHandle;					// Font
 };
 
 static BOOL debugMenuCallProc_WBTList_entry( DEBUG_WBT_WORK *p_wk );
@@ -80,6 +106,18 @@ static BOOL debugMenuCallProc_WBTList_1st( DEBUG_WBT_WORK *p_wk );
 static BOOL debugMenuCallProc_WBTList_2nd( DEBUG_WBT_WORK *p_wk );
 static BOOL debugMenuCallProc_WBTList( DEBUG_WBT_WORK *p_wk );
 static BOOL debugCommand_printf( DEBUG_WBT_WORK *p_wk );
+//
+static BOOL debugMenuMain( DEBUG_WBT_WORK *wk );
+static BOOL debugMenuKeyInput( DEBUG_WBT_WORK *wk );
+//
+static void createNumWin( DEBUG_WBT_WORK * wk );
+static void deleteNumWin( DEBUG_WBT_WORK * wk );
+static void printNumWin(  DEBUG_WBT_WORK * wk, s32 num, const s32 mnum, const s32 xpos, const s32 ypos );
+static void updateNumWin( DEBUG_WBT_WORK * wk );
+static void clearNumWin(  DEBUG_WBT_WORK * wk );
+static void dispInfo( DEBUG_WBT_WORK * wk );
+static void dispInfoPrintf( DEBUG_WBT_WORK * wk );
+
 //=============================================================================
 /**
  *					外部公開
@@ -130,6 +168,34 @@ static const DEBUG_MENU_INITIALIZER DebugMenuWBTImitializer = {
   NULL
 };
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+// 初期パラメータ
+static const u16 sample_trid[WBT_TRAINER_NUM] = {
+  12,//アロエ
+  53,//モブ
+  11,//デント
+  0xffff,//プレイヤー
+  55,//モブ
+  56,//モブ
+  18,//シロナ
+  13,//ハチク
+};
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static const s16 dwbt_info_tbl[] = {
+	4,		0,			// index
+	//
+	4,		4+16,		// 項目番号(0)
+	4+48,	4+16,		// 項目番号(1)
+	4+96,	4+16,		// 項目番号(2)
+	4+144,	4+16,		// 項目番号(3)
+	4,		4+32,		// 項目番号(4)
+	4+48,	4+32,		// 項目番号(5)
+	4+96,	4+32,		// 項目番号(6)
+	4+144,	4+32,		// 項目番号(7)
+};
 
 //--------------------------------------------------------------
 /**
@@ -162,8 +228,22 @@ BOOL debugMenuCallProc_WBT( DEBUG_MENU_EVENT_WORK *wk )
   work->gmEvent = event;
   work->heapID = heapID;
   work->fieldWork = fieldWork;
+  
   //work->sv = GAMEDATA_GetWBTSave( GAMESYSTEM_GetGameData(wk->gmSys) );
-
+	// 追加
+	{
+		s32		i;
+		
+		work->Flag 	= 0;
+		work->Index = 0;
+		work->Step	= 0;
+		// 値をセット
+		for(i=0;i<WBT_TRAINER_NUM;i++){
+			work->Trbuffer[i] = sample_trid[i];
+		}
+		// 大丈夫?
+		work->fontHandle = FLDMSGBG_GetFontHandle( FIELDMAP_GetFldMsgBG( wk->fieldWork ) );
+	}
   return TRUE;
 }
 
@@ -198,7 +278,8 @@ static GMEVENT_RESULT debugMenuWBTEvent( GMEVENT *event, int *seq, void *wk )
       break;
 
     case DEBUG_STR_WBT_01:
-      (*seq)++;
+    	*seq = 3;
+//      (*seq)++;
       break;
 
     case DEBUG_STR_WBT_02:
@@ -237,6 +318,14 @@ static GMEVENT_RESULT debugMenuWBTEvent( GMEVENT *event, int *seq, void *wk )
     } else {
       return GMEVENT_RES_FINISH;
     }
+    
+  // 数値入力画面に移行
+  // (内部で戻し)
+  case 3:
+	if( debugMenuMain( work ) == TRUE ){
+		*seq = 1;
+	}
+    break;
   }
 
   return GMEVENT_RES_CONTINUE;
@@ -280,19 +369,6 @@ typedef struct
 
 static GMEVENT_RESULT debugMenuWBTList( GMEVENT *p_event, int *p_seq, void *p_wk_adrs );
 
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-static const u16 sample_trid[WBT_TRAINER_NUM] = {
-  12,//アロエ
-  53,//モブ
-  11,//デント
-  0xffff,//プレイヤー
-  55,//モブ
-  56,//モブ
-  18,//シロナ
-  13,//ハチク
-};
-
 //----------------------------------------------------------------------------
 /**
  *  @brief  UIテンプレート接続
@@ -309,7 +385,8 @@ static BOOL debugMenuCallProc_WBTList( DEBUG_WBT_WORK *p_wk )
   wbtlist_param = WBTLIST_PARAM_Create( HEAPID_PROC, p_wk->gmSys );
   WBTLIST_PARAM_Setup_Debug(
       p_wk->gmSys, wbtlist_param,
-      WBTTYPE_ALL, WBTRULE_SINGLE, p_wk->stage, sample_trid );
+//      WBTTYPE_ALL, WBTRULE_SINGLE, p_wk->stage, sample_trid );
+      WBTTYPE_ALL, WBTRULE_SINGLE, p_wk->stage, p_wk->Trbuffer );
   new_event = WBT_EVENT_ShowTournamentList( p_wk->gmSys, p_wk->fieldWork, wbtlist_param, TRUE );
   GMEVENT_ChangeEvent( p_wk->gmEvent, new_event );
 
@@ -354,6 +431,295 @@ static GMEVENT_RESULT debugMenuWBTList( GMEVENT *p_event, int *p_seq, void *p_wk
 
   return GMEVENT_RES_CONTINUE ;
 }
+
+//----------------------------------------------------------------------------
+// 以下に追加していく予定
+// (event_debug_num_input)からほぼ持ってきた
+//----------------------------------------------------------------------------
+/**
+ *  @brief  デバッグ用処理(Main)
+ *
+ *  @param  DEBUG_WBT_WORK *wk
+ *
+ *  @return BOOL			(FALSE:処理中、TRUE:終了)
+ */
+//-----------------------------------------------------------------------------
+static BOOL debugMenuMain( DEBUG_WBT_WORK *wk )
+{
+	BOOL	bflg = FALSE;
+	
+	switch( wk->Step ){
+		// 初期化
+		case 0:
+			wk->Step = 1;
+			// ウインドウ作成
+			createNumWin( wk );
+			wk->Flag |= FLG_WIN_UPDATE;
+			break;
+		
+		// 通常
+		case 1:
+			// 入力処理
+			if( debugMenuKeyInput( wk ) == TRUE ){
+				wk->Step = 2;
+			}
+			break;
+		
+		// 終了
+		case 2:
+			wk->Step = 0;
+			// ウインドウ破棄
+			deleteNumWin( wk );
+			// 情報表示
+			dispInfoPrintf( wk );
+			bflg = TRUE;
+			break;
+		default:
+			break;
+	}
+	return( bflg );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  デバッグ用処理(入力画面)
+ *
+ *  @param  DEBUG_WBT_WORK *wk
+ *
+ *  @return BOOL			(FALSE:処理中、TRUE:終了)
+ */
+//-----------------------------------------------------------------------------
+static BOOL debugMenuKeyInput( DEBUG_WBT_WORK *wk )
+{
+	u16		tmp;
+	s16		flg=0;
+	s32		idx;
+	BOOL	bflg=FALSE;
+	
+	idx = wk->Index;
+	// 戻し
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
+		// 戻し
+		wk->Flag &= ~FLG_SET_MODE;
+		bflg = TRUE;
+//		OS_Printf("end\n");
+	}
+	// 上
+	if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP ){
+		wk->Index--;
+		if(wk->Index < 0){
+			wk->Index = WBT_TRAINER_NUM-1;
+		}
+		flg = 1;
+	}
+	// 下
+	else if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN ){
+		wk->Index++;
+		if(wk->Index >= WBT_TRAINER_NUM){
+			wk->Index = 0;
+		}
+		flg = 1;
+	}
+	// 左(減らす)
+	if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT ){
+		// プレイヤの場合=>最大番号に変更
+		tmp = wk->Trbuffer[wk->Index];
+		if(tmp == 0xffff){
+			wk->Trbuffer[wk->Index] = TRAINER_PTN_MAX;
+		}
+		else{
+			if(tmp == 0){
+				// プレイヤにする
+				wk->Trbuffer[wk->Index] = 0xffff;
+			}else{
+				wk->Trbuffer[wk->Index]--;
+			}
+		}
+		flg = 1;
+	}
+	// 右(増やす)
+	else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT ){
+		// プレイヤの場合=>最大番号に変更
+		tmp = wk->Trbuffer[wk->Index];
+		if(tmp == 0xffff){
+			wk->Trbuffer[wk->Index] = 0;
+		}
+		else{
+			if(tmp == TRAINER_PTN_MAX){
+				// プレイヤにする
+				wk->Trbuffer[wk->Index] = 0xffff;
+			}else{
+				wk->Trbuffer[wk->Index]++;
+			}
+		}
+		flg = 1;
+	}
+	// 更新
+	if(wk->Flag & FLG_WIN_UPDATE){
+		flg = 1;
+	}
+	
+	// 更新
+	if(flg == 1){
+//		OS_Printf("index, num:%d,%d\n", wk->Index, wk->Trbuffer[wk->Index]);
+		// 表示まとめ
+		dispInfo( wk );
+		wk->Flag &= ~FLG_WIN_UPDATE;
+	}
+	return( bflg );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief	数値入力ウインドウ：生成
+ *
+ *  @param  DEBUG_WBT_WORK *wk
+ *
+ *  @return
+ */
+//-----------------------------------------------------------------------------
+static void createNumWin( DEBUG_WBT_WORK * wk )
+{
+	GFL_BMP_DATA	*bmp;
+	GFL_BMPWIN		*bmpwin;
+	
+	wk->wordset = WORDSET_Create( wk->heapID );
+	wk->msgman  = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL,
+							ARCID_DEBUG_MESSAGE, NARC_debug_message_d_numinput_dat, wk->heapID);
+	
+	bmpwin = GFL_BMPWIN_Create( FLDBG_MFRM_MSG, DWBT_WIN_OFF_X, DWBT_WIN_OFF_Y, DWBT_WIN_WIDTH, DWBT_WIN_HEIGHT, 14, GFL_BMP_CHRAREA_GET_B );
+	wk->bmpwin = bmpwin;
+	
+	bmp = GFL_BMPWIN_GetBmp( bmpwin );
+	
+	GFL_BMP_Clear( bmp, WINCLR_COL( 15 ) );
+	GFL_BMPWIN_MakeScreen( bmpwin );
+	GFL_BMPWIN_TransVramCharacter( bmpwin );
+	GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame( bmpwin ) );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief	数値入力ウインドウ：削除
+ *
+ *  @param  DEBUG_WBT_WORK *wk
+ *
+ *  @return
+ */
+//-----------------------------------------------------------------------------
+static void deleteNumWin( DEBUG_WBT_WORK * wk )
+{
+	GFL_BMPWIN * bmpwin = wk->bmpwin;
+	
+	GFL_BMPWIN_ClearScreen( bmpwin );
+	GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame( bmpwin ) );
+	
+	GFL_BMPWIN_Delete( bmpwin );
+	
+	GFL_MSG_Delete( wk->msgman );
+	WORDSET_Delete( wk->wordset );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief	数値入力ウインドウ：表示のみ
+ *
+ *  @param  DEBUG_WBT_WORK *wk
+ *
+ *  @return
+ */
+//-----------------------------------------------------------------------------
+static void printNumWin( DEBUG_WBT_WORK * wk, s32 num, const s32 mnum, const s32 xpos, const s32 ypos )
+{
+	GFL_BMPWIN * bmpwin = wk->bmpwin;
+	
+	STRBUF *expandBuf	= GFL_STR_CreateBuffer( 64, wk->heapID );
+	// 値セット(5桁)
+	STRTOOL_SetNumber( expandBuf, num, mnum, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+	GFL_FONTSYS_SetColor( 1, 2, 15 );
+	PRINTSYS_Print( GFL_BMPWIN_GetBmp( bmpwin ), xpos, ypos, expandBuf, wk->fontHandle );
+	//
+	GFL_STR_DeleteBuffer( expandBuf );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief	数値入力ウインドウ：更新のみ
+ *
+ *  @param  DEBUG_WBT_WORK *wk
+ *
+ *  @return
+ */
+//-----------------------------------------------------------------------------
+static void updateNumWin( DEBUG_WBT_WORK * wk )
+{
+	GFL_BMPWIN * bmpwin = wk->bmpwin;
+	
+	GFL_BMPWIN_TransVramCharacter( bmpwin );					//transfer characters
+	GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame( bmpwin ) );	//transfer screen
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief	数値入力ウインドウ：画面クリア(updateはかけること)
+ *
+ *  @param  DEBUG_WBT_WORK *wk
+ *
+ *  @return
+ */
+//-----------------------------------------------------------------------------
+static void clearNumWin( DEBUG_WBT_WORK * wk )
+{
+	GFL_BMPWIN * bmpwin = wk->bmpwin;
+	GFL_BMP_Clear(GFL_BMPWIN_GetBmp( bmpwin ), WINCLR_COL( 15 ) );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief	表示項目まとめ
+ *
+ *  @param  DEBUG_WBT_WORK *wk
+ *
+ *  @return
+ */
+//-----------------------------------------------------------------------------
+static void dispInfo( DEBUG_WBT_WORK * wk )
+{
+	s32		i;
+	
+	// クリア
+	clearNumWin( wk );
+	//
+	// index
+	printNumWin( wk, wk->Index, 2, dwbt_info_tbl[0], dwbt_info_tbl[1] );
+	// 項目表示
+	for(i=0;i<8;i++){
+		printNumWin( wk, wk->Trbuffer[i], 5, dwbt_info_tbl[2+2*i], dwbt_info_tbl[2+2*i+1] );
+	}
+	// 更新
+	updateNumWin( wk );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief	表示項目まとめ(printf)
+ *
+ *  @param  DEBUG_WBT_WORK *wk
+ *
+ *  @return
+ */
+//-----------------------------------------------------------------------------
+static void dispInfoPrintf( DEBUG_WBT_WORK * wk )
+{
+	s32		i;
+	
+	// 情報表示
+	for(i=0;i<WBT_TRAINER_NUM;i++){
+		OS_Printf("%d :%d\n",i,wk->Trbuffer[i]);
+	}
+}
+
+
 #if 0
 //--------------------------------------------------------------
 /**
