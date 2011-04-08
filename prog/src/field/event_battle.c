@@ -527,6 +527,46 @@ GMEVENT * EVENT_InfinityDungeonTrainerBattle(
 
 //--------------------------------------------------------------
 /**
+ * WBT用対戦イベント
+ * @param gsys  GAMESYS_WORK
+ * @param fieldmap FIELDMAP_WORK
+ * @param tr_id
+ * @param flags
+ * @retval GMEVENT*
+ */
+//--------------------------------------------------------------
+GMEVENT * EVENT_WBTBattle(
+    GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, BATTLE_SETUP_PARAM *bp )
+{
+  GMEVENT * event;
+  BATTLE_EVENT_WORK *bew;
+  
+  event = GMEVENT_Create(
+      gsys, NULL, fieldBattleEvent, sizeof(BATTLE_EVENT_WORK) );
+  
+#ifdef PM_DEBUG
+  debug_FieldDebugFlagSet( bp );
+#endif
+  
+  bew = GMEVENT_GetEventWork(event);
+  BEW_Initialize( bew, gsys, bp );
+  
+  bew->is_sub_event = TRUE; //サブイベント呼び出し
+  
+  bew->is_no_lose = TRUE; //敗戦処理無し
+  bew->not_free_bsp = FALSE; //開放する
+  
+  //エンカウントエフェクトとＢＧＭセット(サブウェイ固有)
+  bew->EncEffNo = ENCEFFID_SUBWAY;
+   
+  //エフェクトエンカウント　エフェクト復帰キャンセル
+  EFFECT_ENC_EffectRecoverCancel( FIELDMAP_GetEncount(fieldmap));
+  return event;
+}
+
+
+//--------------------------------------------------------------
+/**
  * フィールド捕獲デモバトルイベント作成
  * @param gsys  GAMESYS_WORK
  * @param fieldmap FIELDMAP_WORK

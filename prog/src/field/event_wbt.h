@@ -35,8 +35,7 @@ extern GMEVENT * WBT_EVENT_ShowTournamentList(
     GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
     WBTLIST_PARAM * wbtlist_param, BOOL call_fade_flag );
 
-extern GMEVENT * WBT_EVENT_TrainerBattle(
-    WBTSYS *wbtsys, GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap );
+extern GMEVENT * WBT_EVENT_TrainerBattle( WBTSYS *wbtsys, GAMESYS_WORK *gsys );
 extern GMEVENT * WBT_EVENT_CommBattle(
     WBTSYS *wbtsys, GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap );
 extern GMEVENT * WBT_EVENT_TrainerBeforeMsg(

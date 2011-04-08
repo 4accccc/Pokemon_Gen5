@@ -53,6 +53,10 @@
 
 #include "system/net_err.h"
 
+#include "savedata/bsubway_savedata.h"
+#include "battle/bsubway_battle_data.h" //BSUBWAY_PARTNER_DATA
+#include "fld_btl_inst_tool.h"
+
 FS_EXTERN_OVERLAY(pokelist);
 
 //======================================================================
@@ -259,4 +263,112 @@ static GMEVENT_RESULT eventWBTList( GMEVENT *p_event, int *p_seq, void *p_wk_adr
 
   return GMEVENT_RES_CONTINUE ;
 }
+
+//=============================================================================
+//
+//    WBTバトル呼び出し
+//
+//=============================================================================
+typedef struct {
+  GAMESYS_WORK * gsys;
+  WBTSYS * wbtsys;
+  BSUBWAY_PARTNER_DATA tr_data;
+  BATTLE_SETUP_PARAM * bp;
+}WBT_BATTLE_EVENT_WORK, WBEW;
+
+static const u8 pri2pow_table[5] = {
+  0x10, 0x12, 0x14, 0x1a, 0x1f
+};
+
+//-----------------------------------------------------------------------------
+/**
+ * @todo  バトルサブウェイは４体しかポケモンを選択できない。
+ */
+//-----------------------------------------------------------------------------
+static BOOL makeRomTrainerData( BSUBWAY_PARTNER_DATA * tr_data,
+    const WBTTRAINER * wbt_tr,
+    u8 cnt, HEAPID inHeapID)
+{
+  BOOL      ret = 0;
+  BSUBWAY_TRAINER_ROM_DATA  *trd;
+  u8 pow_rnd;
+  u8 tr_pri = WBTTRAINER_GetPriority(wbt_tr);
+  u8 tr_no = WBTTRAINER_GetID(wbt_tr);
+
+  //トレーナーデータセット
+  trd = FBI_TOOL_AllocTrainerRomData(tr_data,
+      ARCID_BSW_TR ,tr_no, NARC_message_wbt_trname_dat ,inHeapID);
+  // パワー乱数を決定する
+  pow_rnd= pri2pow_table[ tr_pri - 1 ];
+  tr_data->bt_trd.tr_type = WBTTRAINER_GetTrainerType( wbt_tr );
+
+  //ポケモンデータをセット
+  ret = FBI_TOOL_SetBSWayPokemonParam(
+      trd, tr_no, &tr_data->btpwd[0], cnt,
+      ARCID_BSW_PD, NULL, NULL, NULL, NULL ,pow_rnd ,inHeapID);
+  GFL_HEAP_FreeMemory( trd );
+  return ret;
+}
+
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+static GMEVENT_RESULT wbtBattleEvent( GMEVENT * event, int *seq, void * work )
+{
+  enum {
+    WBE_SEQ_START = 0,
+    WBE_SEQ_END,
+  };
+  WBEW * wbew = work;
+  GAMESYS_WORK * gsys = wbew->gsys;
+  WBTSYS * wbtsys = wbew->wbtsys;
+
+  switch ( *seq )
+  {
+  case WBE_SEQ_START:
+    {
+      GMEVENT * call_event;
+      FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+      {
+        const WBTTRAINER * wbt_tr = WBTSYS_GetOpponentTrainer( wbtsys );
+        POKEPARTY *party = WBTSYS_GetBattleParty( wbtsys, GAMESYSTEM_GetGameData( gsys ) );
+        //BSWAY_PLAYMODE mode = ptr->PlayMode;
+        BSWAY_PLAYMODE mode = BSWAY_PLAYMODE_SINGLE;
+        BSUBWAY_PARTNER_DATA *tr_data = &wbew->tr_data;
+        int num = 3;//仮
+
+        makeRomTrainerData( tr_data, wbt_tr, 3, HEAPID_PROC );
+        wbew->bp = FBI_TOOL_WBT_CreateBattleParam( gsys, party, mode, tr_data, num  );
+      }
+      call_event = EVENT_WBTBattle( gsys, fieldmap, wbew->bp );
+      GMEVENT_CallEvent( event, call_event );
+    }
+    *seq = WBE_SEQ_END;
+    break;
+
+  case WBE_SEQ_END:
+    BATTLE_PARAM_Delete( wbew->bp );
+    return GMEVENT_RES_FINISH;
+  }
+
+  return GMEVENT_RES_CONTINUE;
+}
+
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+GMEVENT * WBT_EVENT_TrainerBattle( WBTSYS *wbtsys, GAMESYS_WORK *gsys )
+{
+  GMEVENT * event;
+  WBEW * wbew;
+
+  event = GMEVENT_Create( gsys, NULL, wbtBattleEvent, sizeof(WBEW) );
+  wbew = GMEVENT_GetEventWork( event );
+  wbew->gsys = gsys;
+  wbew->wbtsys = wbtsys;
+
+  return event;
+}
+
+
+
+
 

@@ -62,5 +62,11 @@ extern BATTLE_SETUP_PARAM * FBI_TOOL_INFINITY_DUNGEON_CreateBattleParam(
     const int level_correction,
     GFL_STD_RandContext *rand_context);
 
+//WBT‚ÅŽg—p
+extern BATTLE_SETUP_PARAM * FBI_TOOL_WBT_CreateBattleParam(
+    GAMESYS_WORK *gsys, const POKEPARTY *my_party, int inPlayMode,
+    BSUBWAY_PARTNER_DATA *partner_data,
+    const int inMemNum );
+
 extern u16 FBI_TOOL_GetOBJCode(ARCID tr_arcID, u16 tr_no, HEAPID heapID );
 

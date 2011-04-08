@@ -442,13 +442,21 @@ VMCMD_RESULT EvCmdWBTTrainerMsg( VMHANDLE * core, void * wk )
 VMCMD_RESULT EvCmdWBTTrainerBattle( VMHANDLE * core, void * wk )
 {
   SCRCMD_WORK * work = wk;
+  SCRIPT_WORK*      sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK  *gsys = SCRCMD_WORK_GetGameSysWork( work );
   GAMEDATA*          gamedata = SCRCMD_WORK_GetGameData( work );
   WBTSYS * wbtsys = getWBTSys( wk );
-  u16 num = SCRCMD_GetVMWorkValue( core, wk );
-  TAMADA_Printf("EvCmdWBTTrainerBattle( num = %d)\n", num);
-  //仮：ここからトレーナーバトルイベントを呼び出す
-  //今は勝ち結果を指定しているだけ
+  u16 *ret_wk = SCRCMD_GetVMWork( core, wk );
+  GMEVENT * next_event;
+  TAMADA_Printf("EvCmdWBTTrainerBattle\n");
   GAMEDATA_SetLastBattleResult( gamedata, BTL_RESULT_WIN );
+
+  //仮: 今は勝ち結果を指定しているだけ
+  *ret_wk = SCR_BATTLE_RESULT_WIN;
+
+  //ここからトレーナーバトルイベントを呼び出す
+  next_event = WBT_EVENT_TrainerBattle( wbtsys, gsys );
+  SCRIPT_CallEvent( sc, next_event );
   return VMCMD_RESULT_SUSPEND;
 }
 //--------------------------------------------------------------

@@ -675,6 +675,70 @@ BATTLE_SETUP_PARAM * FBI_TOOL_INFINITY_DUNGEON_CreateBattleParam(
 
   return dst;
 }
+//--------------------------------------------------------------
+/**
+ * BATTLE_SETUP_PARAM作成
+ * @param gsys GAMESYS_WORK
+ * @retval BATTLE_SETUP_PARAM
+ */
+//--------------------------------------------------------------
+BATTLE_SETUP_PARAM * FBI_TOOL_WBT_CreateBattleParam(
+    GAMESYS_WORK *gsys, const POKEPARTY *my_party, int inPlayMode,
+    BSUBWAY_PARTNER_DATA *partner_data,
+    const int inMemNum )
+{
+  u16 play_mode;
+  BATTLE_SETUP_PARAM *dst;
+  BTL_FIELD_SITUATION sit;
+  GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+  HEAPID heapID = HEAPID_PROC;
+  play_mode = inPlayMode;
+  
+  // バトルパラメータを作成
+  dst = MakeBattleParam( gsys ,play_mode ,&sit ,TRUE ,heapID);
+  
+  //プレイヤーセット
+  { 
+    BTL_CLIENT_ID client = BTL_CLIENT_PLAYER;
+
+    //MyStatus
+    dst->playerStatus[client] = GAMEDATA_GetMyStatus( gdata );
+    
+    // プレイヤーパーティーの登録
+    EntryMyParty( my_party ,dst->party[client] ,inMemNum ,0 ,heapID);
+  }
+  
+  //敵トレーナーセット
+  {
+    BSP_TRAINER_DATA *tr_data;
+    BTL_CLIENT_ID client = BTL_CLIENT_ENEMY1;
+    BSUBWAY_PARTNER_DATA *bsw_partner;
+    BSUBWAY_TRAINER *bsw_trainer;
+
+    //トレーナーデータ確保
+    tr_data = dst->tr_data[client];
+
+    bsw_partner = &partner_data[0];
+    bsw_trainer = &bsw_partner->bt_trd;
+
+#if 0 //トレーナーID0を設定すると戦闘録画側に異常
+    if ( play_mode == BSWAY_MODE_WIFI ) tr_data->tr_id = 0;
+    else tr_data->tr_id = bsw_trainer->player_id;
+#else //wifiデータ側で専用のトレーナーIDを設定する
+    tr_data->tr_id = bsw_trainer->player_id;
+#endif
+
+    // AIトレーナーをセット(ai_bit=最強)
+    EntryAITrainer( play_mode ,tr_data->tr_id ,bsw_trainer ,tr_data ,0x00000087 ,TRUE,TRUE );
+    
+    //敵ポケモンセット
+    SetPokeParty( bsw_partner ,dst->party[client] ,50 ,inMemNum ,heapID );
+
+  }
+
+  BTL_SETUP_SetSubwayMode( dst ); //一通りセットした後に呼ぶ事
+  return dst;
+}
 
 //----------------------------------------------------------------------------
 /**
