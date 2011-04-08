@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-05T20:28:19"/>
+	<create user="matsumiya" host="W00224" date="2011-04-08T17:23:48"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1384" top="228" right="2089" bottom="856" maximized="no" rayout="Vertical2">
+	<dialog left="1291" top="148" right="1996" bottom="776" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -499,6 +499,17 @@
 経験値が　もらえます！▼
 ポケモンを　どんどん　戦わせて
 どんどん　強くしよう！</language>
+	</row>
+
+	<row id="msg_t06_boy1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・時計台について
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">BOY1</attribute>
+		<language name="JPN" width="256">とけいだい　について
+・テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">時計台について
+・仮メッセージ</language>
 	</row>
 
 	<row id="msg_t06_woman2_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
