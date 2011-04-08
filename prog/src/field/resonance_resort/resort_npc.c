@@ -174,6 +174,7 @@ static void Resort_Npc_Sys_AddAll( RESORT_NPC_SYS *p_wk )
       header.id = RESORT_NPC_INDEX_TO_MMDLID(i);
       header.obj_code = RESORT_BINARY_NPC_GetData(p_wk->p_binary_npc, i, RESORT_BINARY_NPC_PARAM_VIEW);
       header.move_code = RESORT_BINARY_NPC_GetData(p_wk->p_binary_npc, i, RESORT_BINARY_NPC_PARAM_MOVE_CODE);
+      header.dir = DIR_DOWN;
       switch(RESORT_BINARY_NPC_GetData(p_wk->p_binary_npc, i, RESORT_BINARY_NPC_PARAM_TYPE))
       {
       case RESORT_NPC_TYPE_OFFRECO:

@@ -168,6 +168,7 @@ static RESORT_PEOPLE * RESORT_PEOPLE_Init( HEAPID heapID, const RESORT_PEOPLE_IN
 
       header.id = RESORT_PEOPLE_PEOPLEID_TO_MMDLID(cp_param->peopleID);
       p_wk->cp_function->SetupMmdHeader( p_wk, &header );
+      header.dir = DIR_DOWN;
 
       RESORT_MAP_GetPlaceGridPosByIndex( cp_param->placeID, cp_param->peopleID, &grid_x, &grid_z );
 

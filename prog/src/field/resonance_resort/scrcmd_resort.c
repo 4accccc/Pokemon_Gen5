@@ -1484,6 +1484,8 @@ VMCMD_RESULT EvCmdResortSetWordMouthCommAnswer( VMHANDLE *p_core, void *p_wk_adr
   WORDSET_RegisterWord( p_wordset, bufID, p_str, PM_NEUTRAL, TRUE, PM_LANG );
   GFL_STR_DeleteBuffer(p_str);
   GFL_MSG_Delete( p_msg );
+
+  return VMCMD_RESULT_CONTINUE;
 }
 
 //----------------------------------------------------------------------------

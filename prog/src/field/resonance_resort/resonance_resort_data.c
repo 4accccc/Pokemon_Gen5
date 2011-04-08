@@ -20,8 +20,9 @@
 
 //arc
 #include "arc/arc_def.h"
-#include "arc/script_message.naix"
+#include "arc/message.naix"
 #include "msg/script/msg_resort_scr.h"
+#include "msg/msg_place_name.h"
 
 //mine 
 #include "field/resonance_resort/resort_map.h"
@@ -1090,6 +1091,8 @@ BOOL RESORT_RECV_DATA_IsSameOwnerBeacon( const RESORT_RECV_DATA *cp_wk, const RE
 //-----------------------------------------------------------------------------
 BOOL RESORT_RECV_DATA_MergeBeacon( RESORT_RECV_DATA *p_wk, const RESORT_BEACON_DATA *cp_beacon )
 {
+  BOOL change_view   = p_wk->basic1.trainer_view != cp_beacon->basic1.trainer_view;
+
   //ロック
   if( RESORT_RECV_DATA_GetData(p_wk,RESORT_DATA_PARAM_LOCK,NULL) )
   {
@@ -1121,6 +1124,7 @@ BOOL RESORT_RECV_DATA_MergeBeacon( RESORT_RECV_DATA *p_wk, const RESORT_BEACON_D
     }
 
     //初期生成データ
+
     RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_UPDATE,RESORT_RECV_DATA_UPDATE_FIRST);
     RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_COMM_ID,RESORT_COMM_TYPE_BEACON);
 
@@ -1152,7 +1156,14 @@ BOOL RESORT_RECV_DATA_MergeBeacon( RESORT_RECV_DATA *p_wk, const RESORT_BEACON_D
       RESORT_Printf( "!!!すべてマージ完了\n!!!" );
     }
 
-    RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_UPDATE,RESORT_RECV_DATA_UPDATE_MERGE);
+    if( change_view )
+    {
+      RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_UPDATE,RESORT_RECV_DATA_UPDATE_MERGE_VIEW);
+    }
+    else
+    {
+      RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_UPDATE,RESORT_RECV_DATA_UPDATE_MERGE_DATA);
+    }
   }
 
   return TRUE;
@@ -1167,6 +1178,9 @@ BOOL RESORT_RECV_DATA_MergeBeacon( RESORT_RECV_DATA *p_wk, const RESORT_BEACON_D
 //-----------------------------------------------------------------------------
 void RESORT_RECV_DATA_MergeRecv( RESORT_RECV_DATA *p_wk, const RESORT_RECV_DATA *cp_recv, RESORT_COMM_TYPE type )
 {
+
+  BOOL change_view   = p_wk->basic1.trainer_view != cp_recv->basic1.trainer_view;
+
   //ロック
   if( RESORT_RECV_DATA_GetData(p_wk,RESORT_DATA_PARAM_LOCK,NULL) )
   {
@@ -1195,7 +1209,14 @@ void RESORT_RECV_DATA_MergeRecv( RESORT_RECV_DATA *p_wk, const RESORT_RECV_DATA 
     //TODO
     //マージ処理
 
-    RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_UPDATE,RESORT_RECV_DATA_UPDATE_MERGE);
+    if( change_view )
+    {
+      RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_UPDATE,RESORT_RECV_DATA_UPDATE_MERGE_VIEW);
+    }
+    else
+    {
+      RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_UPDATE,RESORT_RECV_DATA_UPDATE_MERGE_DATA);
+    }
   }
 }
 //----------------------------------------------------------------------------
@@ -3435,8 +3456,8 @@ void RESORT_CITY_DATA_InitInstance( RESORT_CITY_DATA *p_wk )
   p_wk->my_name[0]  = GFL_STR_GetEOMCode();
 
   {
-    GFL_MSGDATA *p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_resort_scr_dat, GFL_HEAP_LOWID(HEAPID_SAVE) );
-    STRBUF *p_strbuf = GFL_MSG_CreateString( p_msg, resort_sys_name_00 );
+    GFL_MSGDATA *p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_place_name_dat, GFL_HEAP_LOWID(HEAPID_SAVE) );
+    STRBUF *p_strbuf = GFL_MSG_CreateString( p_msg, MAPNAME_C16 );
     GFL_STR_GetStringCode( p_strbuf, p_wk->city_name, RESORT_CITY_NAME_BUFF_MAX+EOM_SIZE );
     GFL_STR_DeleteBuffer( p_strbuf );
 
@@ -3464,11 +3485,17 @@ u32 RESORT_CITY_DATA_GetData( const RESORT_CITY_DATA *cp_wk, RESORT_CITY_DATA_PA
   switch( param )
   {
   case RESORT_CITY_DATA_PARAM_CITY_NAME: //p_ret_adrs
-    STRTOOL_Copy( cp_wk->city_name, p_ret_adrs, RESORT_CITY_NAME_LEN+EOM_SIZE );
-    return 0;
+    if( p_ret_adrs != NULL )
+    {
+      STRTOOL_Copy( cp_wk->city_name, p_ret_adrs, RESORT_CITY_NAME_LEN+EOM_SIZE );
+    }
+    return (u32)cp_wk->city_name;
   case RESORT_CITY_DATA_PARAM_AUTHER_NAME: //p_ret_adrs
-    STRTOOL_Copy( cp_wk->my_name, p_ret_adrs, RESORT_MY_NAME_LEN+EOM_SIZE );
-    return 0;
+    if( p_ret_adrs != NULL )
+    {
+      STRTOOL_Copy( cp_wk->my_name, p_ret_adrs, RESORT_MY_NAME_LEN+EOM_SIZE );
+    }
+    return (u32)cp_wk->my_name;
   case RESORT_CITY_DATA_PARAM_LV:
     return cp_wk->lv;
   default:

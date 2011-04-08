@@ -96,8 +96,10 @@ FS_EXTERN_OVERLAY(debug_data);
 #include "msg/msg_pmss_peculiar.h"
 #include "../../../resource/quiz/pms_answer.h"
 #include "amprotect.h"
-
 #include "field_goout_effect.h"
+#include "savedata/resonance_resort_sv.h"
+#include "resonance_resort/resort_map.h"
+#include "resonance_resort/resort_binary_st.h"
 
 //============================================================================================
 
@@ -116,6 +118,7 @@ static void MAPCHG_loadMMdlWFBC( GAMEDATA * gamedata, const LOCATION *loc );
 static void MAPCHG_releaseMMdl( GAMEDATA * gamedata );
 
 static void MAPCHG_SetUpWfbc( GAMEDATA * gamedata, const LOCATION *loc );
+static void MAPCHG_SetUpResort( GAMEDATA * gamedata, u16 zone_id );
 
 
 static void MAPCHG_setupFieldSkillMapEff( GAMEDATA * gamedata, u16 zone_id );
@@ -3084,6 +3087,40 @@ static void MAPCHG_SetUpWfbc( GAMEDATA * gamedata, const LOCATION *loc )
     }
   }
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レゾナンスリゾートのセットアップ処理
+ *
+ *	@param	GAMEDATA * gamedata ゲームデータ
+ *	@param	zone_id ゾーンID
+ */
+//-----------------------------------------------------------------------------
+static void MAPCHG_SetUpResort( GAMEDATA * gamedata, u16 zone_id )
+{ 
+  if( ZONEDATA_IsResonanceResortRoom( zone_id ) )
+  {
+    RESONANCE_RESORT_SV *p_sv = RESONANCE_RESORT_SV_GetWork( GAMEDATA_GetSaveControlWork(gamedata) );
+
+    RESORT_PEOPLE_ALL_DATA *p_people_all = RESONANCE_RESORT_SV_GetPeopleAllData( p_sv );
+    RESORT_PLACEID placeID = RESORT_MAP_ZoneIDToPlaceID( zone_id );
+
+    if( RESORT_PLACEID_INSTITUTION_00 <= placeID && placeID <= RESORT_PLACEID_INSTITUTION_07 )
+    {
+
+      RESORT_RESIDENT_DATA *p_resident = RESORT_PEOPLE_ALL_DATA_GetResident( p_people_all, placeID - RESORT_PLACEID_INSTITUTION_00 );
+      if( !RESORT_RESIDENT_DATA_IsEmpty( p_resident ) )
+      {
+        RESORT_INSTITUTION_DATA *p_institution = RESORT_RESIDENT_DATA_GetInstitution( p_resident );
+        RESORT_BINARY_SHOP *p_shop = RESORT_BINARY_SHOP_Init( GFL_HEAP_LOWID(GFL_HEAPID_APP) );
+        const RESORT_BINARY_SHOP_DATA *cp_shop_data = RESORT_BINARY_SHOP_SearchDataByData( p_shop, p_resident );
+
+        GAMEDATA_SetAreaOfs( gamedata, RESORT_BINARY_SHOP_DATA_GetData( cp_shop_data, RESORT_BINARY_SHOP_PARAM_IN_TEX) );
+
+        RESORT_BINARY_SHOP_Exit( p_shop );
+      }
+    }
+  }
+}
 
 //----------------------------------------------------------------------------
 /**
@@ -3188,6 +3225,9 @@ static void MAPCHG_setupMapTools( GAMESYS_WORK * gsys, u16 zone_id )
 
   //フィールド技 マップ効果
   MAPCHG_setupFieldSkillMapEff( gamedata, zone_id );
+
+  //レゾナンスリゾートの設定
+  MAPCHG_SetUpResort( gamedata, zone_id );
 }
 
 //--------------------------------------------------------------

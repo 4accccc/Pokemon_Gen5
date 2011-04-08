@@ -151,7 +151,8 @@ struct _GAMEDATA{
   u32   goout_effect_room_count;    //室外演出部屋内カウンタ
   u8    goout_effect_flag;
   u8    top_medal_id;  // メダルボックスを開いた時に最初に表示されるメダルID
-  u8    dummy[2];
+  u8    area_ofs; //エリアオフセット(今はリゾートでしか使っていない)
+  u8    dummy[1];
 };
 
 //==============================================================================
@@ -2279,4 +2280,31 @@ void GAMEDATA_SetMedalBoxTopMedalID( GAMEDATA *gamedata, u8 medal_id )
 u8 GAMEDATA_GetMedalBoxTopMedalID( GAMEDATA *gamedata )
 {
   return gamedata->top_medal_id;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  エリアオフセットを登録
+ *
+ *	@param	GAMEDATA *gamedata  ゲームデータ
+ *	@param	ofs                 オフセット
+ */
+//-----------------------------------------------------------------------------
+void GAMEDATA_SetAreaOfs( GAMEDATA *gamedata, u8 ofs )
+{
+  gamedata->area_ofs  = ofs;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  エリアオフセットを取得
+ *
+ *	@param	const GAMEDATA *gamedata  ゲームデータ
+ *
+ *	@return エリアオフセット
+ */
+//-----------------------------------------------------------------------------
+u8 GAMEDATA_GetAreaOfs( const GAMEDATA *gamedata )
+{
+  return gamedata->area_ofs;
 }

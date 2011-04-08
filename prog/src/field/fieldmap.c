@@ -563,7 +563,7 @@ FIELDMAP_WORK * FIELDMAP_Create( GAMESYS_WORK *gsys, HEAPID heapID )
     }
     else if ( AREADATA_HasResortInstitutionArea( area_id ) )
     {
-      area_ofs_id = 0; //TODO
+      area_ofs_id = GAMEDATA_GetAreaOfs( fieldWork->gamedata );
     }
 
     // ƒGƒŠƒAî•ñ‚ğæ“¾

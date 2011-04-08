@@ -381,13 +381,11 @@ static void Reception_Buff_UpdateRecv( RECEPTION_BUFF *p_wk )
   for( i = 0; i < RESORT_RECV_BUFF_GetMax(p_wk->p_sv_buff); i++ )
   {
     RESORT_RECV_DATA *p_recv = RESORT_RECV_BUFF_GetData( p_wk->p_sv_buff, i );
-
+    RESORT_RECV_DATA_UPDATE update = RESORT_RECV_DATA_GetData(p_recv,RESORT_DATA_PARAM_UPDATE, NULL);
     if( !RESORT_RECV_DATA_IsEmpty( p_recv ) 
-        && ( RESORT_RECV_DATA_GetData(p_recv,RESORT_DATA_PARAM_UPDATE, NULL) != RESORT_RECV_DATA_UPDATE_NONE ) )
+        && ( update != RESORT_RECV_DATA_UPDATE_NONE ) )
     {
-      RESORT_RECV_DATA_UPDATE update = RESORT_RECV_DATA_GetData(p_recv,RESORT_DATA_PARAM_UPDATE, NULL );
       RESORT_RECV_DATA_SetData(p_recv,RESORT_DATA_PARAM_UPDATE, RESORT_RECV_DATA_UPDATE_NONE );
-
       p_wk->param.UpdateRecvCallback( p_wk->param.p_wk_adrs, p_recv, update );
     }
   }
@@ -396,11 +394,10 @@ static void Reception_Buff_UpdateRecv( RECEPTION_BUFF *p_wk )
   for( i = 0; i < RESORT_RECV_BUFF_GetMax(p_wk->p_recep_buff); i++ )
   {
     RESORT_RECV_DATA *p_recv = RESORT_RECV_BUFF_GetData( p_wk->p_recep_buff, i );
-
+    RESORT_RECV_DATA_UPDATE update = RESORT_RECV_DATA_GetData(p_recv,RESORT_DATA_PARAM_UPDATE, NULL );
     if( !RESORT_RECV_DATA_IsEmpty( p_recv ) 
-        && ( RESORT_RECV_DATA_GetData(p_recv,RESORT_DATA_PARAM_UPDATE, NULL) != RESORT_RECV_DATA_UPDATE_NONE ) )
+        && ( update != RESORT_RECV_DATA_UPDATE_NONE ) )
     {
-      RESORT_RECV_DATA_UPDATE update = RESORT_RECV_DATA_GetData(p_recv,RESORT_DATA_PARAM_UPDATE, NULL );
       RESORT_RECV_DATA_SetData(p_recv,RESORT_DATA_PARAM_UPDATE, RESORT_RECV_DATA_UPDATE_NONE );
 
       p_wk->param.UpdateRecvCallback( p_wk->param.p_wk_adrs, p_recv, update );
@@ -635,6 +632,12 @@ static void Reception_People_UpdateRecvCallback( void *p_wk_adrs, RESORT_RECV_DA
 {
   RECEPTION_PEOPLE *p_wk = p_wk_adrs;
   RESORT_PEOPLE *p_people;
+
+  if( update == RESORT_RECV_DATA_UPDATE_MERGE_DATA )
+  {
+    //データの更新のみなら何も行わない
+    return;
+  }
 
   //受信したデータ番地をもっている人がいるか検索
   p_people = RESORT_PEOPLE_SYS_GetPeopleByData( p_wk->p_people_sys, p_recv );

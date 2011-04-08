@@ -29,6 +29,7 @@
 #include "arc/place_name.naix"
 #include "arc/message.naix"
 #include "msg/msg_place_name.h"
+#include "savedata/resonance_resort_sv.h"
 
 #include "../../../resource/fldmapdata/zonetable/zone_id.h"
 
@@ -1372,7 +1373,18 @@ static void UpdatePlaceName( FIELD_PLACE_NAME* system )
   }
   // 自分のフィールドにいる
   else {
-    GFL_MSG_GetString( system->message,	strID, system->nameBuf );
+    //レゾナンスリゾートはフリーワード
+    if( ZONEDATA_IsResonanceResort( zoneID)  )
+    {
+      RESONANCE_RESORT_SV *p_sv = RESONANCE_RESORT_SV_GetWork( GAMEDATA_GetSaveControlWork(system->gameData ) );
+      RESORT_CITY_DATA *p_city = RESONANCE_RESORT_SV_GetCityData( p_sv );
+      const STRCODE *cp_strcode = (const STRCODE*)RESORT_CITY_DATA_GetData( p_city, RESORT_CITY_DATA_PARAM_CITY_NAME, NULL );
+      GFL_STR_SetStringCode( system->nameBuf, cp_strcode );
+    }
+    else
+    {
+      GFL_MSG_GetString( system->message,	strID, system->nameBuf );
+    }
     system->seasonID  = GAMEDATA_GetSeasonID( system->gameData );
   }
   system->nameLen = GFL_STR_GetBufferLength( system->nameBuf );

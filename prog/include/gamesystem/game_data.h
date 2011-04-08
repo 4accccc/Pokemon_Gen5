@@ -987,3 +987,23 @@ extern WBTSYS ** GAMEDATA_GetWBTSysPointer( GAMEDATA * gamedata );
 //-----------------------------------------------------------------------------
 extern WBTSAVE * GAMEDATA_GetWBTSave( GAMEDATA * gamedata );
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  エリアオフセットを登録
+ *
+ *	@param	GAMEDATA *gamedata  ゲームデータ
+ *	@param	ofs                 オフセット
+ */
+//-----------------------------------------------------------------------------
+extern void GAMEDATA_SetAreaOfs( GAMEDATA *gamedata, u8 ofs );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  エリアオフセットを取得
+ *
+ *	@param	const GAMEDATA *gamedata  ゲームデータ
+ *
+ *	@return エリアオフセット
+ */
+//-----------------------------------------------------------------------------
+extern u8 GAMEDATA_GetAreaOfs( const GAMEDATA *gamedata );
