@@ -112,7 +112,8 @@ static BOOL debugMenuKeyInput( DEBUG_WBT_WORK *wk );
 //
 static void createNumWin( DEBUG_WBT_WORK * wk );
 static void deleteNumWin( DEBUG_WBT_WORK * wk );
-static void printNumWin(  DEBUG_WBT_WORK * wk, s32 num, const s32 mnum, const s32 xpos, const s32 ypos );
+static void printNumWin(  DEBUG_WBT_WORK * wk, const s32 num, const s32 mnum, const s32 xpos, const s32 ypos, const s32 mode );
+static void printTrNameWin( DEBUG_WBT_WORK * wk, const u16 tr_id, const s32 xpos, const s32 ypos );
 static void updateNumWin( DEBUG_WBT_WORK * wk );
 static void clearNumWin(  DEBUG_WBT_WORK * wk );
 static void dispInfo( DEBUG_WBT_WORK * wk );
@@ -187,14 +188,20 @@ static const u16 sample_trid[WBT_TRAINER_NUM] = {
 static const s16 dwbt_info_tbl[] = {
 	4,		0,			// index
 	//
-	4,		4+16,		// 項目番号(0)
-	4+48,	4+16,		// 項目番号(1)
-	4+96,	4+16,		// 項目番号(2)
-	4+144,	4+16,		// 項目番号(3)
-	4,		4+32,		// 項目番号(4)
-	4+48,	4+32,		// 項目番号(5)
-	4+96,	4+32,		// 項目番号(6)
-	4+144,	4+32,		// 項目番号(7)
+	4,		2+16,		// index(0)
+	4+60,	2+16,		// index(1)
+	4+120,	2+16,		// index(2)
+	4+180,	2+16,		// index(3)
+	//
+	4,		2+32,		// 項目番号(0)
+	4+60,	2+32,		// 項目番号(1)
+	4+120,	2+32,		// 項目番号(2)
+	4+180,	2+32,		// 項目番号(3)
+	//
+	4,		2+48,		// 項目番号(00)
+	4+60,	2+48,		// 項目番号(01)
+	4+120,	2+48,		// 項目番号(02)
+	4+180,	2+48,		// 項目番号(03)
 };
 
 //--------------------------------------------------------------
@@ -579,21 +586,64 @@ static void deleteNumWin( DEBUG_WBT_WORK * wk )
  *  @brief	数値入力ウインドウ：表示のみ
  *
  *  @param  DEBUG_WBT_WORK *wk
+ *  @param  const s32		数値
+ *  @param  const s32		桁数
+ *  @param  const s32		xpos
+ *  @param  const s32		ypos
+ *  @param  const s32		(0:通常、1:色変え(赤))
  *
  *  @return
  */
 //-----------------------------------------------------------------------------
-static void printNumWin( DEBUG_WBT_WORK * wk, s32 num, const s32 mnum, const s32 xpos, const s32 ypos )
+static void printNumWin( DEBUG_WBT_WORK * wk, const s32 num, const s32 mnum, const s32 xpos, const s32 ypos, const s32 mode )
 {
 	GFL_BMPWIN * bmpwin = wk->bmpwin;
 	
 	STRBUF *expandBuf	= GFL_STR_CreateBuffer( 64, wk->heapID );
-	// 値セット(5桁)
+	// 値セット
 	STRTOOL_SetNumber( expandBuf, num, mnum, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
-	GFL_FONTSYS_SetColor( 1, 2, 15 );
+	if(mode == 0){			// 通常
+		GFL_FONTSYS_SetColor( 1, 2, 15 );
+	}else{					// 色変え
+		GFL_FONTSYS_SetColor( 3, 2, 15 );
+	}
 	PRINTSYS_Print( GFL_BMPWIN_GetBmp( bmpwin ), xpos, ypos, expandBuf, wk->fontHandle );
 	//
 	GFL_STR_DeleteBuffer( expandBuf );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief	トレーナー名表示
+ *
+ *  @param  DEBUG_WBT_WORK *wk
+ *  @param  const u16		トレーナーのID
+ *  @param  const s32		xpos
+ *  @param  const s32		ypos
+ *
+ *  @return
+ */
+//-----------------------------------------------------------------------------
+static void printTrNameWin( DEBUG_WBT_WORK * wk, const u16 tr_id, const s32 xpos, const s32 ypos )
+{
+	GFL_BMPWIN * bmpwin = wk->bmpwin;
+	
+	STRBUF *strbuf	= GFL_STR_CreateBuffer( 64, wk->heapID );
+	//
+	// プレイヤは要確認
+	if(tr_id == 0xffff){
+		{
+			GAMEDATA * gamedata = GAMESYSTEM_GetGameData( wk->gmSys );
+			const MYSTATUS * mystat = GAMEDATA_GetMyStatus( gamedata );
+			MyStatus_CopyNameString( mystat, strbuf );
+		}
+	}else{
+		// トレーナー名を取得
+		WBTTOOL_SetRomTrainerName( wk->heapID, tr_id, strbuf );
+	}
+	PRINTSYS_Print( GFL_BMPWIN_GetBmp( bmpwin ), xpos, ypos, strbuf, wk->fontHandle );
+	//
+	GFL_STR_DeleteBuffer( strbuf );
 }
 
 //----------------------------------------------------------------------------
@@ -640,15 +690,34 @@ static void clearNumWin( DEBUG_WBT_WORK * wk )
 static void dispInfo( DEBUG_WBT_WORK * wk )
 {
 	s32		i;
+	s32		tmp;
+	s32		mode=0;
 	
 	// クリア
 	clearNumWin( wk );
 	//
 	// index
-	printNumWin( wk, wk->Index, 2, dwbt_info_tbl[0], dwbt_info_tbl[1] );
-	// 項目表示
-	for(i=0;i<8;i++){
-		printNumWin( wk, wk->Trbuffer[i], 5, dwbt_info_tbl[2+2*i], dwbt_info_tbl[2+2*i+1] );
+	printNumWin( wk, wk->Index, 2, dwbt_info_tbl[0], dwbt_info_tbl[1], 0 );
+	//
+	// offsetを求める
+	tmp = wk->Index/4;
+	tmp *= 4;
+	//
+	// indexを表示
+	for(i=0;i<4;i++){
+		mode = 0;
+		if(wk->Index == tmp+i){
+			mode = 1;
+		}
+		printNumWin( wk, tmp+i, 2, dwbt_info_tbl[2+2*i], dwbt_info_tbl[2+2*i+1], mode );
+	}
+	// 番号を表示
+	for(i=0;i<4;i++){
+		printNumWin( wk, wk->Trbuffer[tmp+i], 5, dwbt_info_tbl[2+2*(4+i)], dwbt_info_tbl[2+2*(4+i)+1], 0 );
+	}
+	// 名前を表示
+	for(i=0;i<4;i++){
+		printTrNameWin( wk, wk->Trbuffer[tmp+i], dwbt_info_tbl[2+2*(8+i)], dwbt_info_tbl[2+2*(8+i)+1] );
 	}
 	// 更新
 	updateNumWin( wk );
