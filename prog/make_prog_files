@@ -2235,9 +2235,7 @@ SRCS_OVERLAY_DEBUG_DATA = gamesystem/debug_data.c
 SRCS_OVERLAY_NAMEIN	= app/name_input/namein.c \
 											app/name_input/namein_graphic.c \
 											app/name_input/namein_data.c \
-											system/prof_word.c \
-                      app/wbt_list/wbt_list.c \
-                      app/wbt_list/wbt_list_graphic.c
+											system/prof_word.c
 
 #進化デモ
 #===> SRCS_OVERLAY_WIFINOTE
@@ -2490,6 +2488,11 @@ SRCS_OVERLAY_MANUAL = app/manual/manual.c \
                       app/manual/manual_category.c \
                       app/manual/manual_title.c \
                       app/manual/manual_explain.c
+
+# WBTトーナメントリスト
+#===> SRCS_OVERLAY_UI_COMMON
+SRCS_OVERLAY_WBTLIST = app/wbt_list/wbt_list.c \
+                      app/wbt_list/wbt_list_graphic.c
 
 # 川田デバッグ
 #===> SRCS_OVERLAY_UI_COMMON

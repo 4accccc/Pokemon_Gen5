@@ -172,8 +172,6 @@ GMEVENT * WBT_EVENT_SetSelectPokeList(
 //    WBTトーナメントリスト画面呼び出し
 //
 //=============================================================================
-//  nsbtx_to_clwkを使いたいので名前入力と同じところにおいてみた
-FS_EXTERN_OVERLAY(namein);
 //-------------------------------------
 ///
 //=====================================
@@ -244,11 +242,11 @@ static GMEVENT_RESULT eventWBTList( GMEVENT *p_event, int *p_seq, void *p_wk_adr
   case SEQ_CALL_PROC:
     if ( p_wk->call_fade_flag )
     {
-      call_event = EVENT_FieldSubProc(
-          p_wk->gsys, p_wk->fieldmap, FS_OVERLAY_ID(namein), &WBTListProcData, p_wk->wbtlist_param );
+      call_event = EVENT_FieldSubProc( p_wk->gsys, p_wk->fieldmap,
+          FS_OVERLAY_ID(wbtlist), &WBTListProcData, p_wk->wbtlist_param );
     } else {
-      call_event = EVENT_FieldSubProcNoFade(
-          p_wk->gsys, p_wk->fieldmap, FS_OVERLAY_ID(namein), &WBTListProcData, p_wk->wbtlist_param );
+      call_event = EVENT_FieldSubProcNoFade( p_wk->gsys, p_wk->fieldmap,
+          FS_OVERLAY_ID(wbtlist), &WBTListProcData, p_wk->wbtlist_param );
     }
     GMEVENT_CallEvent( p_event, call_event );
     *p_seq  = SEQ_EXIT;
