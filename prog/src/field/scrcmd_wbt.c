@@ -461,16 +461,35 @@ VMCMD_RESULT EvCmdWBTTrainerBattle( VMHANDLE * core, void * wk )
 }
 //--------------------------------------------------------------
 /**
- * @brief スクリプトコマンド：
+ * @brief スクリプトコマンド：前口上メッセージを表示する
  */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdWBTAnnounce( VMHANDLE * core, void * wk )
 {
+  SCRCMD_WORK * work = wk;
+  SCRIPT_WORK*      sc = SCRCMD_WORK_GetScriptWork( work );
+  STRBUF *msgbuf = SCRIPT_GetMsgBuffer( sc );
+  u16 up_down = SCRCMD_GetVMWorkValue( core, wk );
+
   WBTSYS * wbtsys = getWBTSys( wk );
-  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
-  //仮：前口上メッセージを表示する
+  const WBTTRAINER * opponent = WBTSYS_GetOpponentTrainer( wbtsys );
+  u16 msg_id = WBTTRAINER_GetID( opponent ) * WBT_TRMSG_TYPE_NUM;
+  msg_id += WBT_TRMSG_ANNOUNCE;
+
   TAMADA_Printf("EvCmdWBTAnnounce\n");
-  return VMCMD_RESULT_SUSPEND;
+  {
+
+    WORDSET *wordset = SCRIPT_GetWordSet( sc );
+    STRBUF *tmpbuf = SCRIPT_GetMsgTempBuffer( sc );
+
+    GFL_MSGDATA * msgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
+        NARC_message_wbt_trmsg_dat, SCRCMD_WORK_GetHeapID( work ) );
+    GFL_MSG_GetString( msgData, msg_id, tmpbuf );
+    GFL_MSG_Delete( msgData );
+
+    WORDSET_ExpandStr( wordset, msgbuf, tmpbuf );
+  }
+  return EvCmdplainWin_Write( core, work, msgbuf, TALKMSGWIN_TYPE_NORMAL, up_down );
 }
 
 //--------------------------------------------------------------

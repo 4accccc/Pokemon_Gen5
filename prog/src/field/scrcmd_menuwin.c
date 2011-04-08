@@ -1817,12 +1817,60 @@ static VMCMD_RESULT addPlainWin(
   SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
   u16 msg_id = SCRCMD_GetVMWorkValue( core, work );
   u8 up_down = VMGetU8( core );
+
+  msgbuf = SetExpandWord( work, MSGARC_DEFAULT, msg_id );
+  return EvCmdplainWin_Write( core, wk, msgbuf, type, up_down );
+#if 0
   u16 x = 1;
   u16 y = 1;
   u16 sx = 30;
   u16 sy = 4;
   
   msgbuf = SetExpandWord( work, MSGARC_DEFAULT, msg_id );
+  
+  if( up_down != SCRCMD_MSGWIN_UP ){ //down
+    y = 19;
+  }
+  
+  if( SCREND_CHK_CheckBit(SCREND_CHK_PLAINWIN_OPEN) ){ //オープン済み
+    win = SCRCMD_WORK_GetMsgWinPtr( work );
+    FLDPLAINMSGWIN_ClearMessage( win );
+  }else{
+    win = FLDPLAINMSGWIN_Add( fparam->msgBG, NULL, type, x, y, sx, sy );
+    SCRCMD_WORK_SetMsgWinPtr( work, win );
+  }
+  
+  FLDPLAINMSGWIN_PrintStreamStartStrBuf( win,
+      PLAINMSGWIN_WRITE_START_X, PLAINMSGWIN_WRITE_START_Y, msgbuf );
+  SCREND_CHK_SetBitOn(SCREND_CHK_PLAINWIN_OPEN);
+  
+  VMCMD_SetWait( core, PlainWinMsgWait );
+  return VMCMD_RESULT_SUSPEND;
+#endif
+}
+
+//--------------------------------------------------------------
+/**
+ * プレーンウィンドウ　作成　メイン
+ * @param   core    仮想マシン制御構造体へのポインタ
+ * @param   wk
+ * @param   msgbuf    表示する文字列
+ * @param   type      TALKMSGWIN_TYPE_NORMAL/TALKMSGWIN_TYPE_GIZA
+ * @param   up_down   SCRCMD_MSGWIN_UP/SCRCMD_MSGWIN_DOWN
+ * @retval  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdplainWin_Write( VMHANDLE * core, void * wk,
+    STRBUF * msgbuf, TALKMSGWIN_TYPE type, u8 up_down )
+{
+  FLDPLAINMSGWIN *win;
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
+  u16 x = 1;
+  u16 y = 1;
+  u16 sx = 30;
+  u16 sy = 4;
   
   if( up_down != SCRCMD_MSGWIN_UP ){ //down
     y = 19;

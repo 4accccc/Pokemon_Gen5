@@ -28,6 +28,9 @@ extern void EvCmdBalloonWin_GetWinType( u16 pos_type,
 extern u8 EvCmdBalloonWin_GetWinTypeDefault(
     const MMDL *jiki, const VecFx32 *pos );
 
+extern VMCMD_RESULT EvCmdplainWin_Write( VMHANDLE * core, void * wk,
+    STRBUF * msgbuf, TALKMSGWIN_TYPE type, u8 up_down );
+
 //======================================================================
 //  extern 
 //======================================================================

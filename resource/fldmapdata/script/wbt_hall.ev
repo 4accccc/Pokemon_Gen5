@@ -99,7 +99,7 @@ EVENT_START ev_wbt_hall_01
 			//Ÿ‚Á‚½ê‡
 			ELSE
 			
-        //WBTƒVƒXƒeƒ€‚Éó‘Ô‚ð’Ê’mF2‰ñí‚Ö
+        //WBTƒVƒXƒeƒ€‚Éó‘Ô‚ð’Ê’mFŸ—˜I
         _WBT_SYSTEM_SET_STAGE( SCR_WBT_STAGE_WIN )
 
 				//ŒˆŸí‚Ì‘ÎíŽÒ–¼‚ðŠi”[‚·‚é
@@ -110,6 +110,9 @@ EVENT_START ev_wbt_hall_01
 				_PLAINWIN_CLOSE()
 				//‘ÎíŽÒ‘¤‚É‰Ôá‰‰o
 				
+        //Ÿ‚Á‚½ê‡
+        _WBT_GMK_VISION_CHANGE(SCR_WBT_VISION_WIN_PLAYER)
+        _WBT_GMK_WIN_EFFECT_START()
 				//Š½ºSEÄ¶
 				
 				//ƒ}ƒbƒvƒ`ƒFƒ“ƒW
@@ -560,7 +563,7 @@ _MAP_FADE_BLACK_OUT()
 _MAP_FADE_END_CHECK()
 //ŒˆŸí‘O‚Ìƒg[ƒiƒƒ“ƒgƒŠƒXƒg•\Ž¦
 _WBT_LIST_CALL( SCR_WBT_LIST_2ND_RESULT )
-
+//WBTƒVƒXƒeƒ€‚Éó‘Ô‚ð’Ê’mFŒˆŸí
 _WBT_SYSTEM_SET_STAGE( SCR_WBT_STAGE_FINAL )
 //‘ÎíŽÒEƒvƒŒƒCƒ„[Žw’èÀ•W‚É•\Ž¦
 _WBT_GET_ENEMY_MMDL_CODE( OBJCHRWORK0 )
@@ -640,7 +643,8 @@ _CAMERA_MOVE( 4312,128,1101824,229376,0,1015808,30 )	//ˆê”ÔÅŒã‚Ìˆø”‚ÍˆÚ“®‚É‚©‚
 _CAMERA_WAIT_MOVE()
 
 //‘ÎíŽÒ‚Ì‘OŒûãƒƒbƒZ[ƒW•\Ž¦@‚l‚r‚f•\Ž¦ê—pƒRƒ}ƒ“ƒh
-//_WBT_ANNOUNCE( 0 )
+_WBT_ANNOUNCE( POS_UP )
+_MSGWIN_CLOSE()
 
 //ƒvƒŒƒCƒ„[”ñ•\Ž¦‰ðœŒã
 _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_vanish_off )
@@ -697,9 +701,6 @@ _MAP_FADE_END_CHECK()
 //Œ‹‰Êƒ`ƒFƒbƒN
 //_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
-  //Ÿ‚Á‚½ê‡
-  _WBT_GMK_VISION_CHANGE(SCR_WBT_VISION_WIN_PLAYER)
-  _WBT_GMK_WIN_EFFECT_START()
   //‘ÎíŽÒEŽålŒöŸ‚¿ƒƒbƒZ[ƒW•\Ž¦@@@@@@
   _WBT_TRAINER_MSG( SCR_WBT_TRMSG_PLAYER_WIN, MMDL_ID_EVENTOBJ_00 )
   _BALLOONWIN_CLOSE()
