@@ -96,7 +96,7 @@ KUTIKOMI_COL_QUESTION      = 2     #列:質問文
 KUTIKOMI_COL_ANSWER_NUM    = 3     #列:回答数
 KUTIKOMI_COL_ANSWER_START  = 4     #列：回答開始
 
-KUTIKOMI_COL_ANSWER_MAX    = 4     #列：回答最大数
+KUTIKOMI_COL_ANSWER_MAX    = 6     #列：回答最大数
 def convertKutikomi( csv, data, msg_h, tagHash )
   
   #データの作成

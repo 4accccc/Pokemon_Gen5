@@ -1350,16 +1350,32 @@ VMCMD_RESULT EvCmdResortGetNpcData( VMHANDLE *p_core, void *p_wk_adrs )
     break;
   case RESORT_NPC_DATA_MOUTHCOMM_Q:
     *p_ret_wk =  RESORT_NPC_SYS_GetMoutchCommData( p_nps_sys, RESORT_NPC_MMDLID_TO_INDEX(objid), RESORT_BINARY_MOUTHCOMM_PARAM_QUESTION );
+    break;
   case RESORT_NPC_DATA_MOUTHCOMM_A_NUM:
     *p_ret_wk =  RESORT_NPC_SYS_GetMoutchCommData( p_nps_sys, RESORT_NPC_MMDLID_TO_INDEX(objid), RESORT_BINARY_MOUTHCOMM_PARAM_ANSWER_NUM );
+    break;
   case RESORT_NPC_DATA_MOUTHCOMM_A_00:
-    *p_ret_wk =  RESORT_NPC_SYS_GetMoutchCommData( p_nps_sys, RESORT_NPC_MMDLID_TO_INDEX(objid), RESORT_BINARY_MOUTHCOMM_PARAM_ANSWER_00 );
   case RESORT_NPC_DATA_MOUTHCOMM_A_01:
-    *p_ret_wk =  RESORT_NPC_SYS_GetMoutchCommData( p_nps_sys, RESORT_NPC_MMDLID_TO_INDEX(objid), RESORT_BINARY_MOUTHCOMM_PARAM_ANSWER_01 );
   case RESORT_NPC_DATA_MOUTHCOMM_A_02:
-    *p_ret_wk =  RESORT_NPC_SYS_GetMoutchCommData( p_nps_sys, RESORT_NPC_MMDLID_TO_INDEX(objid), RESORT_BINARY_MOUTHCOMM_PARAM_ANSWER_02 );
   case RESORT_NPC_DATA_MOUTHCOMM_A_03:
-    *p_ret_wk =  RESORT_NPC_SYS_GetMoutchCommData( p_nps_sys, RESORT_NPC_MMDLID_TO_INDEX(objid), RESORT_BINARY_MOUTHCOMM_PARAM_ANSWER_03 );
+  case RESORT_NPC_DATA_MOUTHCOMM_A_04:
+  case RESORT_NPC_DATA_MOUTHCOMM_A_05:
+    param = param - RESORT_NPC_DATA_MOUTHCOMM_A_00;
+    *p_ret_wk =  RESORT_NPC_SYS_GetMoutchCommData( p_nps_sys, RESORT_NPC_MMDLID_TO_INDEX(objid), RESORT_BINARY_MOUTHCOMM_PARAM_ANSWER_00 + param );
+    break;
+  case RESORT_NPC_DATA_MOUTHCOMM_I_00:
+  case RESORT_NPC_DATA_MOUTHCOMM_I_01:
+  case RESORT_NPC_DATA_MOUTHCOMM_I_02:
+  case RESORT_NPC_DATA_MOUTHCOMM_I_03:
+  case RESORT_NPC_DATA_MOUTHCOMM_I_04:
+  case RESORT_NPC_DATA_MOUTHCOMM_I_05:
+    {
+      u16 msgid;
+      param = param - RESORT_NPC_DATA_MOUTHCOMM_I_00;
+      msgid =  RESORT_NPC_SYS_GetMoutchCommData( p_nps_sys, RESORT_NPC_MMDLID_TO_INDEX(objid), RESORT_BINARY_MOUTHCOMM_PARAM_ANSWER_00 + param );
+      *p_ret_wk = msgid - resort_mouthcomm_a_00 + resort_mouthcomm_t_00;
+    }
+    break;
   default:
     GF_ASSERT(0);
   }
@@ -1474,7 +1490,7 @@ VMCMD_RESULT EvCmdResortSetWordMouthCommAnswer( VMHANDLE *p_core, void *p_wk_adr
   GAMEDATA      *p_gamedata = SCRCMD_WORK_GetGameData( p_wk );
   FIELDMAP_WORK *p_field = GAMESYSTEM_GetFieldMapWork(p_gamesys);
   u16 npc_idx     = SCRCMD_GetVMWorkValue(p_core, p_wk );
-  u16 answer_idx	= VMGetU16( p_core );
+  u16 answer_idx	= SCRCMD_GetVMWorkValue( p_core, p_wk );
   u16 bufID      = VMGetU16( p_core );
   WORDSET *p_wordset    = SCRIPT_GetWordSet( p_script );
   const u16 heapID = FIELDMAP_GetHeapID( p_field );
