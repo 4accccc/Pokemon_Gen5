@@ -233,7 +233,7 @@ enum{
 	WBT_CANVAS_MAXNUM = 3,			// canvas最大
 	WBT_BMPOAM_MAXNUM = 8,			// bmpoam最大
 	//
-	WBT_EMPTY_MAXNUM = 44*2,		// emptyの最大値
+	WBT_EMPTY_MAXNUM = 46*2,		// emptyの最大値
 	//
 	WBT_GAGE_MAXNUM	= 6,			// ゲージ数最大
 };
@@ -247,6 +247,9 @@ enum{
 // empty
 enum{
 	BOMB_EMPTY_ID	= 24,			// 爆発のempty
+	//
+	L_BMPOAM_EMPTY_ID	= 44,		// 左側、BMPOAMのempty
+	R_BMPOAM_EMPTY_ID	= 45,		// 右側、BMPOAMのempty
 };
 
 // シーケンス
@@ -589,12 +592,6 @@ const s16 wbt_bar_anim_tbl[] = {
 const s16 wbt_move_pos_tbl[] = {
 	-72,   0,				// 左側(-72 <=> 0)
 	220, 148,				// 右側(220 <=> 148)
-};
-
-// BMPOAMの表示オフセット
-const s16 wbt_bmpoam_off_tbl[] = {
-	36,	8,					// 左側(off)
-	8,	8,					// 右側(off)
 };
 
 // 文字表示位置
@@ -2132,13 +2129,13 @@ static void wbt_init_move_panel_pos( WBTLIST_MAIN_WORK* wk, const s32 wnum, cons
 	if(mode == MOVE_PANEL_IN){	// 出る
 		buf[0] = wbt_move_pos_tbl[1];		// パネル
 		buf[1] = wbt_move_pos_tbl[3];
-		buf[2] = wbt_bmpoam_off_tbl[0];		// bmpoam
-		buf[3] = wbt_bmpoam_off_tbl[1];
+		buf[2] = wbt_get_empty( wk, L_BMPOAM_EMPTY_ID*2 );		// bmpoam
+		buf[3] = wbt_get_empty( wk, L_BMPOAM_EMPTY_ID*2+1 );
 	}else{						// 引っ込む
 		buf[0] = wbt_move_pos_tbl[0];		// パネル
 		buf[1] = wbt_move_pos_tbl[2];
-		buf[2] = wbt_bmpoam_off_tbl[2];		// bmpoam
-		buf[3] = wbt_bmpoam_off_tbl[3];
+		buf[2] = wbt_get_empty( wk, R_BMPOAM_EMPTY_ID*2 );		// bmpoam
+		buf[3] = wbt_get_empty( wk, R_BMPOAM_EMPTY_ID*2+1 );
 	}
 	//
 	// 座標の取得
@@ -2171,8 +2168,8 @@ static void wbt_main_move_panel( WBTLIST_MAIN_WORK* wk )
 	
 	// 左側
 	px = wbt_main_movework( wk, MWORK_PANEL_L );
-	buf[0] = wbt_bmpoam_off_tbl[0];		// bmpoamのオフセット
-	buf[1] = wbt_bmpoam_off_tbl[1];
+	buf[0] = wbt_get_empty( wk, L_BMPOAM_EMPTY_ID*2 );		// bmpoam
+	buf[1] = wbt_get_empty( wk, L_BMPOAM_EMPTY_ID*2+1 );
 	for(i=0;i<4;i++){
 		// 移動許可がない場合はそのまま
 		if(!(wk->MoveFlag & (1<<i))){
@@ -2190,8 +2187,8 @@ static void wbt_main_move_panel( WBTLIST_MAIN_WORK* wk )
 	//
 	// 右側
 	px = wbt_main_movework( wk, MWORK_PANEL_R );
-	buf[0] = wbt_bmpoam_off_tbl[2];		// bmpoamのオフセット
-	buf[1] = wbt_bmpoam_off_tbl[3];
+	buf[0] = wbt_get_empty( wk, R_BMPOAM_EMPTY_ID*2 );		// bmpoam
+	buf[1] = wbt_get_empty( wk, R_BMPOAM_EMPTY_ID*2+1 );
 	for(i=0;i<4;i++){
 		// 移動許可がない場合はそのまま
 		if(!(wk->MoveFlag & (1<<(4+i)))){
