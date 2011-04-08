@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-07T21:50:26"/>
+	<create user="matsumiya" host="W00224" date="2011-04-08T20:33:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1291" top="148" right="1995" bottom="776" maximized="no" rayout="Vertical2">
+	<dialog left="1318" top="192" right="2023" bottom="820" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="529"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="542"/>
+		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="696"/>
+		<band id="4" index="0" style="0000" width="697"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,25 +292,27 @@
 	</lock>
 
 
-	<row id="msg_t06r0101_02_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_t06r0101_girl3_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・続けて</comment>
-		<attribute name="キャラ指定">塾帰り♀</attribute>
+		<attribute name="キャラ指定">GIRL3
+塾帰り♀</attribute>
 		<language name="JPN" width="256">おんなのこ『あっ！　アデクさん
 そのひとが　つよい　トレーナー？▼</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_t06r0101_01_01">
+	<row id="msg_t06r0101_boy3_01">
 		<comment>♂
 ・続けて</comment>
-		<attribute name="キャラ指定">塾帰り♂</attribute>
+		<attribute name="キャラ指定">BOY3
+塾帰り♂</attribute>
 		<language name="JPN" width="256">おとこのこ『ねーねー！
 はやく　ポケモン　みせてよ！▼</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_t06r0101_champion_01" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_t06r0101_champion_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・続けて</comment>
 		<attribute name="キャラ指定">アデク
@@ -320,57 +322,30 @@
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_t06r0101_champion_02" back-color="#ffff80,,,#ff8080,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t06r0101_champion_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・はい/いいえ選択肢表示
-　はい　→
-　いいえ→</comment>
-		<attribute name="キャラ指定">アデク
-・BWチャンピオン</attribute>
-		<language name="JPN" width="256">おまえさん
-じゅんびは　いいかね？▼</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
-	</row>
-
-	<row id="msg_t06r0101_champion_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂
-・いいえ選択時</comment>
-		<attribute name="キャラ指定">アデク
-・BWチャンピオン</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
-	</row>
-
-	<row id="msg_t06r0101_champion_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂
-・はい選択時
+・主人公と向き合ってメッセージ表示
 ・塾帰り♂が主人公に隣接
 　続けて表示</comment>
 		<attribute name="キャラ指定">アデク
 ・BWチャンピオン</attribute>
-		<language name="JPN" width="256">アデク『では　？？？？？！
+		<language name="JPN" width="256">では　？？？？？！
 おもいっきり　たのしめよ！▼</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_t06r0101_champion_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂
-・いいえ選択時</comment>
-		<attribute name="キャラ指定">アデク
-・BWチャンピオン</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
-	</row>
-
-	<row id="msg_t06r0101_01_02">
+	<row id="msg_t06r0101_boy3_02">
 		<comment>♂
 ・1人目：塾帰り♂</comment>
-		<attribute name="キャラ指定">塾帰り♂</attribute>
+		<attribute name="キャラ指定">BOY3
+塾帰り♂</attribute>
 		<language name="JPN" width="256">戦闘前メッセージ▼</language>
 		<language name="JPN_KANJI" width="256">戦闘前メッセージ▼</language>
 	</row>
 
-	<row id="msg_t06r0101_champion_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t06r0101_champion_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・</comment>
 		<attribute name="キャラ指定">アデク
 ・BWチャンピオン</attribute>
 		<language name="JPN" width="256">おまえさん＆ポケモンは
@@ -380,40 +355,48 @@
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_t06r0101_02_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
-		<attribute name="キャラ指定">塾帰り♀</attribute>
+	<row id="msg_t06r0101_girl3_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・</comment>
+		<attribute name="キャラ指定">GIRL3
+塾帰り♀</attribute>
 		<language name="JPN" width="256">おんなのこ『はーい！▼</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_t06r0101_champion_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t06r0101_champion_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・回復処理</comment>
 		<attribute name="キャラ指定">アデク
 ・BWチャンピオン</attribute>
 		<language name="JPN" width="256">アデク『そのまえに　主人公の
-ポケモンたちを　かいふく　しないとな▼</language>
+ポケモンを　かいふく　しないとな▼</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_t06r0101_02_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_t06r0101_girl3_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・2人目：塾帰り♀</comment>
-		<attribute name="キャラ指定">塾帰り♀</attribute>
+		<attribute name="キャラ指定">GIRL3
+塾帰り♀</attribute>
 		<language name="JPN" width="256">戦闘前メッセージ▼</language>
 		<language name="JPN_KANJI" width="256">戦闘前メッセージ▼</language>
 	</row>
 
-	<row id="msg_t06r0101_champion_08" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t06r0101_champion_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・</comment>
 		<attribute name="キャラ指定">アデク
 ・BWチャンピオン</attribute>
 		<language name="JPN" width="256">アデク『いやあ　じつに
 こころおどる　しょうぶ　だったな！▽
-どの　ポケモンも　うれしそうだったし▼</language>
+どの　ポケモンも　うれしそうだったぞ▼</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_t06r0101_champion_09" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_t06r0101_champion_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・</comment>
 		<attribute name="キャラ指定">アデク
 ・BWチャンピオン</attribute>
 		<language name="JPN" width="256">どうだ　主人公
@@ -425,8 +408,11 @@
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_t06r0101_02_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
-		<attribute name="キャラ指定">塾帰り♀</attribute>
+	<row id="msg_t06r0101_girl3_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・</comment>
+		<attribute name="キャラ指定">GIRL3
+塾帰り♀</attribute>
 		<language name="JPN" width="256">でもね　でもね
 人が　創った　道具は
 使い方が　解らないみたい</language>
@@ -434,7 +420,8 @@
 	</row>
 
 	<row id="msg_t06r0101_champion_10" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>・オレンのみ×５入手</comment>
+		<comment>♂
+・オレンのみ×５入手</comment>
 		<attribute name="キャラ指定">アデク
 ・BWチャンピオン</attribute>
 		<language name="JPN" width="256">いろんな　ひと　ポケモンと
@@ -443,27 +430,37 @@
 	</row>
 
 	<row id="msg_t06r0101_champion_11" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・c12ジムバッジ取得後</comment>
 		<attribute name="キャラ指定">アデク
 ・BWチャンピオン</attribute>
 		<language name="JPN" width="256">C12ジムバッジ後</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_t06r0101_champion_12" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_t06r0101_champion_12" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・クリア後</comment>
 		<attribute name="キャラ指定">アデク
 ・BWチャンピオン</attribute>
 		<language name="JPN" width="256">クリア後</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_t06r0101_01_03">
-		<attribute name="キャラ指定">塾帰り♂</attribute>
+	<row id="msg_t06r0101_boy3_03">
+		<comment>♂
+・イベント後</comment>
+		<attribute name="キャラ指定">BOY3
+塾帰り♂</attribute>
 		<language name="JPN" width="256">イベント後</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_t06r0101_02_05" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
-		<attribute name="キャラ指定">塾帰り♀</attribute>
+	<row id="msg_t06r0101_girl3_05" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・イベント後</comment>
+		<attribute name="キャラ指定">GIRL3
+塾帰り♀</attribute>
 		<language name="JPN" width="256">イベント後</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
