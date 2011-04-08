@@ -12,29 +12,14 @@
 #include "wbt_system.h"
 //#include "app/wbt_list.h"
 
-//#include "poke_tool/regulation_def.h"
-//#include "wbt_trlist_struct.h"  //WBT_TRDATA
-
-//#include "arc_def.h"
-//#include "arc/wbt/wbt_trlist.naix"
-//#include "arc/fieldmap/fldmmdl_mdlres.naix"
-
-//#include "msg/msg_wbt_tournament.h"
-
 #include "system/main.h"
-#include "arc/message.naix"
-#include "msg/msg_wbt_system.h"
 
 #include "wbt_system_local.h"
 
-//#include "system/gfl_use.h" //GFUser_GetPublicRand0
-
 #include "poke_tool/poketype_def.h"
 
-#include "tr_tool/trtype_def.h"
-#include "sound/pm_sndsys.h"
+#include "tr_tool/trtype_def.h" //TRTYPE_HERO/TRTYPE_HEROINE
 
-#include "../../../resource/wbt/wbt_trainer/wbt_trainer.cdat"
 
 //============================================================================================
 //============================================================================================
@@ -171,13 +156,6 @@ void WBTSYS_SetScriptAnswerWork( WBTSYS * wbtsys, u16 * scr_answer_work )
 //============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-void WBT_TRDATA_Copy( HEAPID heapID, u8 tr_id, WBT_TRDATA * tr_data )
-{
-  *tr_data = WBTTrainerData[ tr_id ];
-}
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
 static void WBTSYS_SetTrainer( WBTSYS * wbtsys, const WBTTRAINER * wbt_tr, u32 pos )
 {
   GF_ASSERT( pos < WBT_TRAINER_NUM );
@@ -218,16 +196,18 @@ static void WBTTRAINER_Set( WBTTRAINER * wbt_tr,
   wbt_tr->mmdl_id = mmdl_id;
   wbt_tr->tr_type = tr_type;
 }
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static void WBTTRAINER_SetRomTrainer( WBTTRAINER * wbt_tr, u8 tr_id )
 {
   WBT_TRDATA tr_rom_data;
-  WBT_TRDATA_Copy( HEAPID_FIELDMAP, tr_id, &tr_rom_data );
+  WBTTOOL_GetTrRomData( HEAPID_FIELDMAP, tr_id, &tr_rom_data );
   WBTTRAINER_Set( wbt_tr, WBT_TRTYPE_ROM,
       tr_id, tr_rom_data.sex, tr_rom_data.priority, tr_rom_data.type,
       tr_rom_data.mmdl_id, tr_rom_data.tr_type );
 }
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static void WBTTRAINER_SetPlayer( WBTTRAINER * wbt_tr, GAMEDATA * gamedata )
@@ -265,79 +245,6 @@ u8 WBTTRAINER_GetID( const WBTTRAINER * wbt_tr )
 //
 //
 //============================================================================================
-//------------------------------------------------------------------
-/**
- * @todo  ダウンロードデータへの対応（引数がWBTSYSになる）
- */
-//------------------------------------------------------------------
-void WBTTOOL_SetTournamentName( WBTTYPE type, STRBUF * strbuf )
-{
-  HEAPID heapID = HEAPID_FIELDMAP;
-  GFL_MSGDATA     *man;
-  u16 msg_id;
-
-  switch ( type )
-  {
-  default:
-  case WBTTYPE_DOWNLOAD:
-    //仮：ダウンロードタイトル名には未対応
-  case WBTTYPE_NULL:
-    GF_ASSERT(0);
-    /* FALL THROUGH */
-  case WBTTYPE_ALL:
-    msg_id = msg_wbtsys_title_01;
-    break;
-  case WBTTYPE_CHAMPION:
-    msg_id = msg_wbtsys_title_03;
-    break;
-  case WBTTYPE_POKETYPE:
-    msg_id = msg_wbtsys_title_02;
-    break;
-  }
-  man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_wbt_system_dat, heapID );
-  if( man )
-  {
-    GFL_MSG_GetString( man, msg_id, strbuf );
-    GFL_MSG_Delete( man );
-  }
-}
-
-//------------------------------------------------------------------
-/**
- * @brief WBTルール名の取得
- */
-//------------------------------------------------------------------
-void WBTTOOL_SetRuleName( WBTRULE rule, STRBUF * strbuf )
-{
-  HEAPID heapID = HEAPID_FIELDMAP;
-  GFL_MSGDATA     *man;
-  u16 msg_id;
-  switch ( rule )
-  {
-  case WBTRULE_NULL:
-    GF_ASSERT( 0 );
-    /* FALL THROUGH */
-  case WBTRULE_SINGLE:
-    msg_id = msg_wbtsys_rule_single;
-    break;
-  case WBTRULE_DOUBLE:
-    msg_id = msg_wbtsys_rule_double;
-    break;
-  case WBTRULE_TRIPLE:
-    msg_id = msg_wbtsys_rule_triple;
-    break;
-  case WBTRULE_ROTATION:
-    msg_id = msg_wbtsys_rule_rotation;
-    break;
-  }
-  man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_wbt_system_dat, heapID );
-  if( man )
-  {
-    GFL_MSG_GetString( man, msg_id, strbuf );
-    GFL_MSG_Delete( man );
-  }
-}
-
 //------------------------------------------------------------------
 /**
  * @brief 対戦相手のトレーナーデータを取得
@@ -387,18 +294,11 @@ void WBTSYS_GetOpponentName( WBTSYS * wbtsys, STRBUF * strbuf )
   if ( wbtsys->type == WBTTYPE_DOWNLOAD 
       || wbtsys->type == WBTTYPE_NULL )
   {
+    GF_ASSERT( 0 );
   }
   else
-  {
-    HEAPID heapID = wbtsys->heapID;
-    GFL_MSGDATA     *man;
-    u16 msg_id = wbt_tr->tr_id;
-    man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_wbt_trname_dat, heapID );
-    if( man )
-    {
-      GFL_MSG_GetString( man, msg_id, strbuf );
-      GFL_MSG_Delete( man );
-    }
+  { 
+    WBTTOOL_SetRomTrainerName( wbtsys->heapID, wbt_tr->tr_id, strbuf );
   }
 }
 

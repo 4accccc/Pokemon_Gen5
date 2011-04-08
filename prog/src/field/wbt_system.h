@@ -148,17 +148,23 @@ extern const WBTTRAINER * WBTSYS_GetOpponentTrainer( const WBTSYS * wbtsys );
 extern u8 WBTTRAINER_GetID( const WBTTRAINER * wbt_tr );
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-extern void WBTTOOL_SetTournamentName( WBTTYPE type, STRBUF * strbuf );
-extern void WBTTOOL_SetRuleName( WBTRULE rule, STRBUF * strbuf );
 extern void WBTSYS_GetOpponentName( WBTSYS * wbtsys, STRBUF * strbuf );
 extern u8 WBTSYS_GetOpponentSex( WBTSYS * wbtsys );
 extern u16 WBTSYS_GetOpponentMMdlObjCode( WBTSYS * wbtsys );
 
+//============================================================================================
+//  WBTópÉcÅ[Éãä÷êîåQ
+//============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
+extern void WBTTOOL_SetTournamentName( WBTTYPE type, STRBUF * strbuf );
+extern void WBTTOOL_SetRuleName( WBTRULE rule, STRBUF * strbuf );
+extern void WBTTOOL_SetRomTrainerName( HEAPID heapID, u8 tr_id, STRBUF * strbuf );
 extern u8 WBTTOOL_GetPartyPokeType( POKEPARTY * party, u64 seed );
+extern void WBTTOOL_GetTrRomData( HEAPID heapID, u8 tr_id, WBT_TRDATA * tr_data );
 
-extern void WBT_TRDATA_Copy( HEAPID heapID, u8 tr_id, WBT_TRDATA * tr_data );
+//============================================================================================
+//============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 extern void WBTSYS_SetupPokeListData( WBTSYS * wbtsys, GAMEDATA * gamedata, PLIST_DATA * plist_data );

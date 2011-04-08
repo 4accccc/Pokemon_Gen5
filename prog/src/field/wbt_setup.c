@@ -179,7 +179,7 @@ static void setupWBTLISTtrainer( HEAPID heapID, GAMEDATA * gamedata,
   GF_ASSERT( wbt_tr );
   GF_ASSERT( wbtlist_tr );
 
-  WBT_TRDATA_Copy( heapID, wbt_tr->tr_id, &tr_rom_data );
+  WBTTOOL_GetTrRomData( heapID, wbt_tr->tr_id, &tr_rom_data );
 
   switch ( wbt_tr->wbt_type )
   {
@@ -193,28 +193,20 @@ static void setupWBTLISTtrainer( HEAPID heapID, GAMEDATA * gamedata,
     wbtlist_tr->poketype = tr_rom_data.type;
     wbtlist_tr->sex      = tr_rom_data.sex;
     {
-      GFL_MSGDATA * man;
-      man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
-          NARC_message_wbt_trname_dat, heapID );
-      GFL_MSG_GetString( man, wbt_tr->tr_id, wbtlist_tr->name );
-      GFL_MSG_Delete( man );
+      WBTTOOL_SetRomTrainerName( heapID, wbt_tr->tr_id, wbtlist_tr->name );
     }
     mmdl_id = tr_rom_data.mmdl_id;
     break;
   case WBT_TRTYPE_PLAYER:
     wbtlist_tr->is_player = TRUE;
     wbtlist_tr->priority = wbt_tr->pri;
-    wbtlist_tr->poketype = POKETYPE_NORMAL; //仮
+    wbtlist_tr->poketype = wbt_tr->poketype;
     wbtlist_tr->sex = wbt_tr->sex;
-    if ( wbt_tr->sex == PM_MALE ) {
-      mmdl_id = HERO;
-    } else {
-      mmdl_id = HEROINE;
-    }
     {
       const MYSTATUS * mystat = GAMEDATA_GetMyStatus( gamedata );
       MyStatus_CopyNameString( mystat, wbtlist_tr->name );
     }
+    mmdl_id = wbt_tr->mmdl_id;
     break;
   }
 
@@ -320,67 +312,6 @@ static void getMMdlObjCodeParam( ARCHANDLE * handle, u16 mmdl_id, u8 * anm_id, u
 
   *anm_id = getFrontAnimePatternNo( objcode_param.anm_id );
   *rsc_idx = ((OBJCODE_PARAM_BUF_BBD *)objcode_param.buf)->res_idx;
-}
-
-
-//============================================================================================
-//============================================================================================
-//-----------------------------------------------------------------------------
-/**
- * @brief WBT:パーティー全体のポケモンタイプを判定する
- * @param party ポケモンパーティへのポインタ
- * @param seed  乱数生成のタネ
- * @return  POKETYPE  タイプ（include/poke_tool/poketype_def.h参照）
- */
-//-----------------------------------------------------------------------------
-u8 WBTTOOL_GetPartyPokeType( POKEPARTY * party, u64 seed )
-{
-  u32 count, i;
-  u8 type_count[ POKETYPE_NUMS ];
-  GFL_STD_RandContext rand_context;
-  GFL_STD_RandInit( &rand_context, seed );
-
-  GFL_STD_MemClear( type_count, POKETYPE_NUMS );
-  count = PokeParty_GetPokeCount( party );
-
-  for ( i = 0; i < count; i ++ )
-  {
-    POKEMON_PARAM * pp = PokeParty_GetMemberPointer( party, i );
-    int type1, type2;
-    type1 = PP_Get( pp, ID_PARA_type1, NULL );
-    type2 = PP_Get( pp, ID_PARA_type2, NULL );
-    if ( type1 != POKETYPE_NULL )
-    {
-      type_count[ type1 ] ++;
-    }
-    if ( type1 != type2 && type2 != POKETYPE_NULL )
-    {
-      type_count[ type2 ] ++;
-    }
-  }
-
-  {
-    u8 max_value = 0, max_count = 0;
-    u8 max_pos_table[ POKETYPE_NUMS ];
-    GFL_STD_MemClear( max_pos_table, POKETYPE_NUMS );
-    for ( i = 0; i < POKETYPE_NUMS; i ++ )
-    {
-      if ( type_count[ i ] > max_value )
-      {
-        max_value = type_count[ i ];
-      }
-    }
-    for ( i = 0; i < POKETYPE_NUMS; i ++ )
-    {
-      if ( type_count[ i ] == max_value )
-      {
-        max_pos_table[ max_count ] = i;
-        max_count ++;
-      }
-    }
-    GF_ASSERT( max_count > 0 );
-    return GFL_STD_Rand( &rand_context, max_count );
-  }
 }
 
 
