@@ -1494,8 +1494,12 @@ VMCMD_RESULT EvCmdResortSetWordMouthCommAnswer( VMHANDLE *p_core, void *p_wk_adr
   u16 bufID      = VMGetU16( p_core );
   WORDSET *p_wordset    = SCRIPT_GetWordSet( p_script );
   const u16 heapID = FIELDMAP_GetHeapID( p_field );
+  RESORT_NPC_SYS *p_nps_sys = Resort_Scrcmd_GetNpcSys( p_field );
+
   GFL_MSGDATA* p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_resort_scr_dat, GFL_HEAP_LOWID(heapID) );
-  STRBUF *p_str = GFL_MSG_CreateString( p_msg, resort_mouthcomm_a_00 + npc_idx * 2 + answer_idx );
+
+  u16 data = RESORT_NPC_SYS_GetMoutchCommData( p_nps_sys, npc_idx, RESORT_BINARY_MOUTHCOMM_PARAM_ANSWER_00 + answer_idx );
+  STRBUF *p_str = GFL_MSG_CreateString( p_msg, data );
 
   WORDSET_RegisterWord( p_wordset, bufID, p_str, PM_NEUTRAL, TRUE, PM_LANG );
   GFL_STR_DeleteBuffer(p_str);
