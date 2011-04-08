@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-08T17:23:48"/>
+	<create user="matsumiya" host="W00224" date="2011-04-08T17:49:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -435,37 +435,22 @@
 	<row id="msg_t06_champion_09" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・牧場イベントクリア後
-・メッセージ表示後、アデクは
-　t06r0101内へ入る
-・主人公も……</comment>
+・メッセージ表示後、アデクが
+　t06r0101内へ入ると、主人公操作可能</comment>
 		<attribute name="キャラ指定">アデク
 ・BWチャンピオン</attribute>
-		<language name="JPN" width="256">アデク『おう！　きいたぞ！
-・牧場イベント総括＋ほめる▼
-ようし！　ついてこい
-わしの　でしたちが　まっておる▼</language>
-		<language name="JPN_KANJI" width="256">アデク『おう！　きいたぞ！
-・牧場イベント総括＋ほめる▼
-ようし！　ついてこい
-わしの　でしたちが　まっておる▼</language>
-	</row>
-
-	<row id="msg_t06_stop_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>？
-・話しかけ
-・ここに置くか要検討</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">アデク寺子屋クリアまでのストッパー</language>
-		<language name="JPN_KANJI" width="256">アデク寺子屋クリアまでのストッパー</language>
-	</row>
-
-	<row id="msg_t06_stop_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>？
-・pos起動時
-・ここに置くか要検討</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">アデク寺子屋クリアまでのストッパー▼</language>
-		<language name="JPN_KANJI" width="256">アデク寺子屋クリアまでのストッパー▼</language>
+		<language name="JPN" width="256">アデク『おう！　タウンマップを
+ぶじ　ともだちに　わたせたようだな！▼
+ふむう……！▼
+わずかの　あいだに　おまえさんも
+ポケモンも　みちがえるようだ！▼
+よし！　さらに　きたえてやるぞ！▼</language>
+		<language name="JPN_KANJI" width="256">アデク『おう！　タウンマップを
+ぶじ　ともだちに　わたせたようだな！▼
+ふむう……！▼
+わずかの　あいだに　おまえさんも
+ポケモンも　みちがえるようだ！▼
+よし！　さらに　きたえてやるぞ！▼</language>
 	</row>
 
 	<row id="msg_t06_middleman1_01">
@@ -477,9 +462,10 @@
 暮らすだけで　満たされてるんだ！</language>
 	</row>
 
-	<row id="msg_t06_oldman1_01">
+	<row id="msg_t06_oldman1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
-・pos（local 21、24）</comment>
+・pos（local 21、24）
+・仮メッセージ</comment>
 		<attribute name="キャラ指定">OLDMAN1</attribute>
 		<language name="JPN" width="256">？？？？？ぼくじょう　だがな
 やせいポケモンも　とびだすんじゃぞ！</language>
@@ -491,14 +477,10 @@
 		<comment>♀
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">GIRL1</attribute>
-		<language name="JPN" width="256">たたかいに　さんかした　ポケモンは
-けいけんちが　もらえます！▼
-ポケモンを　どんどん　たたかわせて
-どんどん　つよくしよう！</language>
-		<language name="JPN_KANJI" width="256">戦闘に　参加した　ポケモンは
-経験値が　もらえます！▼
-ポケモンを　どんどん　戦わせて
-どんどん　強くしよう！</language>
+		<language name="JPN" width="256">これまでのことを　きろくするため
+レポートを　かいているの！</language>
+		<language name="JPN_KANJI" width="256">これまでのことを　記録するため
+レポートを　書いているの！</language>
 	</row>
 
 	<row id="msg_t06_boy1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
@@ -506,10 +488,14 @@
 ・時計台について
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">BOY1</attribute>
-		<language name="JPN" width="256">とけいだい　について
-・テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">時計台について
-・仮メッセージ</language>
+		<language name="JPN" width="256">ポケモンと　ひとが
+おなじ　じかんを　すごせること……▼
+それを　わすれないように
+とけいだいを　つくったんだって！</language>
+		<language name="JPN_KANJI" width="256">ポケモンと　人が
+同じ　時間を　すごせること……▼
+それを　忘れないように
+時計台を　造ったんだって！</language>
 	</row>
 
 	<row id="msg_t06_woman2_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
