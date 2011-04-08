@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-05T18:49:36"/>
+	<create user="matsumiya" host="W00224" date="2011-04-08T19:58:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1299" top="159" right="2004" bottom="787" maximized="no" rayout="Vertical2">
+	<dialog left="1291" top="251" right="1996" bottom="879" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,10 +292,10 @@
 	</lock>
 
 
-	<row id="msg_r20_01_01">
+	<row id="msg_r20_girl1_01">
 		<comment>♀
 ・t06近く</comment>
-		<attribute name="キャラ指定">？？？</attribute>
+		<attribute name="キャラ指定">GIRL1</attribute>
 		<language name="JPN" width="256">おたがいの　めと　めが　あったら
 はじまる　ポケモンしょうぶ！▽
 それが　トレーナーの　きまりなの</language>
@@ -304,12 +304,13 @@
 それが　トレーナーの　決まりなの</language>
 	</row>
 
-	<row id="msg_r20_stop_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r20_mountman_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・（local　31.5）に左向きで配置
 ・c12ジムバッジ入手までストッパー処理
 ・話しかけ</comment>
-		<attribute name="キャラ指定">？？？</attribute>
+		<attribute name="キャラ指定">MOUNTMAN
+山男</attribute>
 		<language name="JPN" width="256">おいおい！　ジムバッジの
 ひとつも　もっていない　くせに▽▽
 このさきに　すすむのか！？▼
@@ -322,11 +323,12 @@
 戦いまくって　鍛えてみろ！</language>
 	</row>
 
-	<row id="msg_r20_stop_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r20_mountman_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・c12ジムバッジ入手までストッパー処理
-・pos＝（local　31.4～6）を踏んだとき</comment>
-		<attribute name="キャラ指定">？？？</attribute>
+・pos（local　31.4～6）を踏んだとき</comment>
+		<attribute name="キャラ指定">MOUNTMAN
+山男</attribute>
 		<language name="JPN" width="256">おいおい！　ジムバッジの
 ひとつも　もっていない　くせに▽
 このさきに　すすむのか！？▼
@@ -339,11 +341,12 @@
 戦いまくって　鍛えてみろ！▼</language>
 	</row>
 
-	<row id="msg_r20_stop_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r20_mountman_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・c12ジムバッジ入手後
 ・表示後、トレーナー戦闘に</comment>
-		<attribute name="キャラ指定">？？？</attribute>
+		<attribute name="キャラ指定">MOUNTMAN
+山男</attribute>
 		<language name="JPN" width="256">おお！　まぶしく　かがやく
 そいつは　ベーシックバッジ！▼
 だがな　せけんは　きびしい！
@@ -354,10 +357,11 @@
 おれさまが　それを　おしえてやろう！</language>
 	</row>
 
-	<row id="msg_r20_stop_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r20_mountman_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・戦闘後</comment>
-		<attribute name="キャラ指定">？？？</attribute>
+		<attribute name="キャラ指定">MOUNTMAN
+山男</attribute>
 		<language name="JPN" width="256">おまえたちには　まいった！▼
 ポケモンが　いてくれれば　こどもでも
 おとなに　みおとり　しないんだな！</language>
@@ -412,7 +416,7 @@
 その名も　ポケガイダンス！▼</language>
 	</row>
 
-	<row id="msg_r20_white_14" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r20_white_14" back-color="#ffff80,,,#ffff80,,#ffff80,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
 ・ポケガイダンス機能解放
 ・続けてwhite_15</comment>
@@ -444,72 +448,6 @@
 		<attribute name="キャラ指定">看板：道路</attribute>
 		<language name="JPN" width="256">２０ばんどうろ</language>
 		<language name="JPN_KANJI" width="256">２０番道路</language>
-	</row>
-
-	<row id="msg_r20_sppoke1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>ポケモン
-・クリア後に、３匹そろって出現
-・posを踏むとメッセージ表示
-　続けてsppoke2_01</comment>
-		<attribute name="キャラ指定">ポケモン
-ユクシー</attribute>
-		<language name="JPN" width="256">きょううん！▼</language>
-		<language name="JPN_KANJI" width="256">きょううん！▼</language>
-	</row>
-
-	<row id="msg_r20_sppoke2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>ポケモン
-・続けてsppoke3_01</comment>
-		<attribute name="キャラ指定">ポケモン
-エムリット</attribute>
-		<language name="JPN" width="256">きゃううん！▼</language>
-		<language name="JPN_KANJI" width="256">きゃううん！▼</language>
-	</row>
-
-	<row id="msg_r20_sppoke3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>ポケモン
-・続けてsppoke1_02</comment>
-		<attribute name="キャラ指定">ポケモン
-アグノム</attribute>
-		<language name="JPN" width="256">きゅううん！▼</language>
-		<language name="JPN_KANJI" width="256">きゅううん！▼</language>
-	</row>
-
-	<row id="msg_r20_sppoke1_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>ポケモン
-・まずユクシーが飛び去り、メッセージ表示
-・続けてsppoke2_02</comment>
-		<attribute name="キャラ指定">ポケモン
-ユクシー</attribute>
-		<language name="JPN" width="256">ユクシーは
-どこかに　とびさっていった……▼</language>
-		<language name="JPN_KANJI" width="256">ユクシーは
-どこかに　とびさっていった……▼</language>
-	</row>
-
-	<row id="msg_r20_sppoke2_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>ポケモン
-・エムリットが飛び去り、メッセージ表示
-・続けてsppoke3_02</comment>
-		<attribute name="キャラ指定">ポケモン
-エムリット</attribute>
-		<language name="JPN" width="256">エムリットは
-どこかに　とびさっていった……▼</language>
-		<language name="JPN_KANJI" width="256">エムリットは
-どこかに　とびさっていった……▼</language>
-	</row>
-
-	<row id="msg_r20_sppoke3_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>ポケモン
-・最後、アグノムが飛び去り、メッセージ表示
-・３匹とも移動ポケモンになる
-　別途、仕様書作成予定</comment>
-		<attribute name="キャラ指定">ポケモン
-アグノム</attribute>
-		<language name="JPN" width="256">アグノムは
-どこかに　とびさっていった……▼</language>
-		<language name="JPN_KANJI" width="256">アグノムは
-どこかに　とびさっていった……▼</language>
 	</row>
 
 	<flowchart-group-list>
