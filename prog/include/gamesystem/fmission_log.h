@@ -12,6 +12,9 @@
 #define FMISSION_LOG_MAX  (30)  ///<ƒƒOŠi”[”max
 #define FMISSION_LOG_END  (FMISSION_LOG_MAX-1)
 
+#define FMISSION_GPOWER_TBL_MAX (2)
+#define FMISSION_GPOWER_TBL_END (FMISSION_GPOWER_TBL_MAX-1)
+
 #define FMISSION_LOG_BUFLEN_NAME  (PERSON_NAME_SIZE+EOM_SIZE)
 #define FMISSION_LOG_BUFLEN_MSG   ((15*2)+EOM_SIZE)
 
@@ -42,6 +45,8 @@ typedef enum{
 
 typedef struct _FMISSION_LOG  FMISSION_LOG;
 typedef struct _FMISSION_LOG_TBL FMISSION_LOG_TBL;
+typedef struct _FMISSION_GPOWER  FMISSION_GPOWER;
+typedef struct _FMISSION_GPOWER_TBL FMISSION_GPOWER_TBL;
 
 
 //ŠÖ”‚ÌexternéŒ¾‚Í src/gamesystem/fmission_log_local.h

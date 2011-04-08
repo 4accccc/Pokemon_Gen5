@@ -270,13 +270,11 @@ static int seq_Main( FMISSION_VIEW_PTR wk )
     wk->io_interval--;
     return SEQ_MAIN;
   }
-#if 0
   //特殊Gパワー起動チェック
   if( FMissionView_CheckSpecialGPower( wk ) == TRUE ){
     wk->io_interval = 30*3; //インターバルを設定
     return SEQ_VIEW_UPDATE;
   }
-#endif
   //スタックチェック
   if( FMissionView_CheckStack( wk ) == FALSE ){
     return SEQ_MAIN;
@@ -293,8 +291,9 @@ static int seq_LogEntry( FMISSION_VIEW_PTR wk )
   if( !FMissionView_SubSeqLogEntry( wk )){
     return SEQ_LOG_ENTRY;
   }
+  FMissionView_MenuBarViewSet( wk, MENU_ALL, MENU_ST_ON );
   wk->sub_seq = 0;
-  return SEQ_VIEW_UPDATE;
+  return SEQ_MAIN;
 }
 
 /*
@@ -306,7 +305,6 @@ static int seq_ViewUpdate( FMISSION_VIEW_PTR wk )
     return SEQ_VIEW_UPDATE;
   }
   FMissionView_MenuBarViewSet( wk, MENU_ALL, MENU_ST_ON );
-//  FMissionView_UpDownViewSet( wk );
   return SEQ_MAIN;
 }
 
@@ -334,7 +332,6 @@ static int seq_ListScrollRepeat( FMISSION_VIEW_PTR wk )
     wk->scr_repeat_ct = 0;
     wk->scr_repeat_f = FALSE;
     FMissionView_MenuBarViewSet( wk, MENU_ALL, MENU_ST_ON );
-//    FMissionView_UpDownViewSet( wk );
     BVC_PrintQueLimmitUpSet( wk->printQue, FALSE );
     return wk->scr_repeat_ret_seq;
   }

@@ -29,6 +29,7 @@ struct _FMISSION_LOG{
   u16     param;      //ログアクションパラメータ
 };
 
+
 ///ミッションログデータテーブル
 struct _FMISSION_LOG_TBL{
   struct  _FMISSION_LOG log[FMISSION_LOG_MAX];
@@ -37,6 +38,21 @@ struct _FMISSION_LOG_TBL{
   u8  entry_num;  //リング登録数
   u8  view_top;   //描画トップ
 };
+
+///ミッションログ デルパワー
+struct _FMISSION_GPOWER{
+  STRCODE name[PERSON_NAME_SIZE+EOM_SIZE];  //7+EOM 16byte
+  u16 gpower_id;
+  u16 spot_f;   //配布(パワースポット)データかどうか？
+};
+
+///ミッションログ　デルパワーテーブル
+struct _FMISSION_GPOWER_TBL{
+  struct _FMISSION_GPOWER power[FMISSION_GPOWER_TBL_MAX];
+
+  int  entry_num;
+};
+
 
 //------------------------------------------------------------------
 /*
@@ -80,5 +96,32 @@ extern int FMISSION_LOG_TBL_SetLog( FMISSION_LOG_TBL* tbl, const FMISSION_LOG* p
  */
 //------------------------------------------------------------------
 extern void FMISSION_LOG_TBL_SetLogFromBeacon( FMISSION_LOG_TBL* tbl, const GAMEBEACON_INFO *info, FMISSION_LOG_SET_MODE mode, BOOL mine_f );
+
+//------------------------------------------------------------------
+/*
+ *  デルパワーパラメータクリア
+ */
+//------------------------------------------------------------------
+extern void FMISSION_GPOWER_Clear( FMISSION_GPOWER* power );
+
+//------------------------------------------------------------------
+/*
+ *  デルパワーテーブルクリア
+ */
+//------------------------------------------------------------------
+extern void FMISSION_GPOWER_TBL_Clear( FMISSION_GPOWER_TBL* tbl );
+
+//------------------------------------------------------------------
+/*
+ *  デルパワースタック データセット
+ *
+ *  @param  tbl   FMISSION_GPOWER_TBL型構造体へのポインタ
+ *  @param  info  セットするビーコン情報
+ *  @return データをセットしたらTRUE
+ *
+ *  データがいっぱいの場合、積むのを諦める
+ */
+//------------------------------------------------------------------
+extern BOOL FMISSION_GPOWER_TBL_Set( FMISSION_GPOWER_TBL* tbl, const GAMEBEACON_INFO *info );
 
 

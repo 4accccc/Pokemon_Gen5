@@ -107,6 +107,13 @@ extern FMISSION_LOG_TBL* LINK_FESTIVAL_GetMissionLogViewTbl( LINK_FESTIVAL* wk )
 
 //---------------------------------------------------------
 /*
+ * @brief リンクフェスティバル ミッションログGパワーテーブルポインタ取得
+ */
+//---------------------------------------------------------
+extern FMISSION_GPOWER_TBL* LINK_FESTIVAL_GetMissionLogGPowerTbl( LINK_FESTIVAL* wk );
+
+//---------------------------------------------------------
+/*
  * @brief リンクフェスティバル ミッションスタート
  *
  * この関数を呼んだ時点でビーコン送信は開始されるが、

@@ -114,6 +114,7 @@ typedef struct _FMISSION_VIEW{
   BEACON_STATUS* b_status;
   FMISSION_LOG_TBL*     logStack;  //スタックワーク
   FMISSION_LOG_TBL*     logView;   //ログテーブル
+  FMISSION_GPOWER_TBL*  logGPower;  //Gパワーテーブル
   FMISSION_LOG*         tmpLog;
   FMISSION_LOG*         tmpLog2;
   FMISSION_LOG*         newLog;

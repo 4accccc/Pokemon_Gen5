@@ -126,6 +126,15 @@ FMISSION_LOG_TBL* LINK_FESTIVAL_GetMissionLogViewTbl( LINK_FESTIVAL* wk )
   return &wk->mlog_view_tbl;
 }
 
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル ミッションログGパワーテーブルポインタ取得
+ */
+//---------------------------------------------------------
+FMISSION_GPOWER_TBL* LINK_FESTIVAL_GetMissionLogGPowerTbl( LINK_FESTIVAL* wk )
+{
+  return &wk->mlog_gpower_tbl;
+}
 
 //---------------------------------------------------------
 /*
@@ -395,9 +404,6 @@ LINKFEST_SCORELOG_SET_CODE LINK_FESTIVAL_ScoreLogStore( LINK_FESTIVAL* wk, LINKF
   int i;
   LINKFEST_LOG* log;
 
-  if( FEST_MISSION_IsLive( &wk->mission ) == FALSE ){
-    return LINKFEST_SCORELOG_SET_FAILED;
-  }
   if( (src->type != FMISSION_TYPE_EX_WITHOUT_PARAM) && 
       (wk->mission.type != src->type || wk->mission.key != src->key ) ){
     return LINKFEST_SCORELOG_SET_FAILED;  //違うミッションなのではじく

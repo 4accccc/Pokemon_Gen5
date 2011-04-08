@@ -234,7 +234,8 @@ typedef struct _DMENU_LIVE_COMM{
   BEACON_STATUS* b_status;
   GAMEBEACON_INFO_TBL*  infoStack;  //スタックワーク
   GAMEBEACON_INFO_TBL*  infoLog;    //ログテーブル
- 
+  const DEBUG_MENU_INITIALIZER* menu_init_data;
+
   GFL_FONT* fontHandle;
 	GFL_MSGDATA* msgman;						//メッセージマネージャー
   WORDSET* wset;
@@ -295,6 +296,15 @@ static const DEBUG_MENU_LIST DATA_DebugLiveCommFromFieldMenuList[] =
   { dlc_menu_exit, (void*)MENU_EXIT, GFL_OVERLAY_BLANK_ID },
 };
 
+static const DEBUG_MENU_LIST DATA_DebugLiveCommFromFMissionMenuList[] =
+{
+  { dlc_menu_02, (void*)MENU_BEACON_REQ, GFL_OVERLAY_BLANK_ID },
+  { dlc_menu_08, (void*)MENU_RECV_BUF_CHECK, GFL_OVERLAY_BLANK_ID },
+  { dlc_menu_09, (void*)MENU_RECV_BUF_CLEAR, GFL_OVERLAY_BLANK_ID },
+  { dlc_menu_10, (void*)MENU_MY_GPOWER, GFL_OVERLAY_BLANK_ID },
+  { dlc_menu_exit, (void*)MENU_EXIT, GFL_OVERLAY_BLANK_ID },
+};
+
 static const DEBUG_MENU_INITIALIZER DebugLiveCommMenuData = {
   NARC_debug_message_d_livecomm_dat,
   NELEMS(DATA_DebugLiveCommMenuList),
@@ -308,6 +318,15 @@ static const DEBUG_MENU_INITIALIZER DebugLiveCommFromFieldMenuData = {
   NARC_debug_message_d_livecomm_dat,
   NELEMS(DATA_DebugLiveCommFromFieldMenuList),
   DATA_DebugLiveCommFromFieldMenuList,
+  &DATA_DebugMenuList_Default, //流用
+  1, 1, 24, 17,
+  NULL,
+  NULL
+};
+static const DEBUG_MENU_INITIALIZER DebugLiveCommFromFMissionMenuData = {
+  NARC_debug_message_d_livecomm_dat,
+  NELEMS(DATA_DebugLiveCommFromFMissionMenuList),
+  DATA_DebugLiveCommFromFMissionMenuList,
   &DATA_DebugMenuList_Default, //流用
   1, 1, 24, 17,
   NULL,
@@ -523,6 +542,24 @@ static void ninput_SetDebugParam( DMENU_LIVE_COMM* wk, int param, int value );
 //関数定義
 //
 //======================================================================
+
+static void dmenu_WorkInitCommon( DMENU_LIVE_COMM* wk, GAMESYS_WORK* gsys)
+{
+  wk->gsys = gsys; 
+  wk->gdata = GAMESYSTEM_GetGameData( gsys ); 
+  wk->b_status = GAMEDATA_GetBeaconStatus( wk->gdata );
+  wk->fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  wk->save = GAMEDATA_GetSaveControlWork( wk->gdata ); 
+  wk->int_sv = SaveData_GetIntrude( wk->save );
+  wk->item_sv = GAMEDATA_GetMyItem( wk->gdata );
+  wk->misc_sv = (MISC*)SaveData_GetMiscConst( wk->save );
+  wk->my_status = GAMEDATA_GetMyStatus( wk->gdata );
+  wk->fest_sys = GAMESYSTEM_GetLinkFestivalWork( gsys );
+
+  wk->heapID = FIELDMAP_GetHeapID( wk->fieldmap );
+  wk->tmpHeapID = GFL_HEAP_LOWID( wk->heapID );
+}
+
 //--------------------------------------------------------------
 /**
  * すれ違い通信デバッグメニューイベント生成
@@ -537,22 +574,11 @@ GMEVENT* DEBUG_EVENT_LiveComm( GAMESYS_WORK* gsys, void* parent_work )
   event = GMEVENT_Create( gsys, NULL, event_LiveCommMain, sizeof(DMENU_LIVE_COMM) );
 
   wk = GMEVENT_GetEventWork( event );
-  wk->gsys = gsys; 
-  wk->gdata = GAMESYSTEM_GetGameData( gsys ); 
-  wk->b_status = GAMEDATA_GetBeaconStatus( wk->gdata );
-  wk->fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
-  wk->save = GAMEDATA_GetSaveControlWork( wk->gdata ); 
-  wk->int_sv = SaveData_GetIntrude( wk->save );
-  wk->item_sv = GAMEDATA_GetMyItem( wk->gdata );
-  wk->misc_sv = (MISC*)SaveData_GetMiscConst( wk->save );
-  wk->my_status = GAMEDATA_GetMyStatus( wk->gdata );
-  wk->fest_sys = GAMESYSTEM_GetLinkFestivalWork( gsys );
-
-  wk->view_wk = (BEACON_VIEW*)parent_work;
-
-  wk->heapID = FIELDMAP_GetHeapID( wk->fieldmap );
-  wk->tmpHeapID = GFL_HEAP_LOWID( wk->heapID );
   
+  dmenu_WorkInitCommon( wk, gsys );
+  wk->view_wk = (BEACON_VIEW*)parent_work;
+  wk->menu_init_data = &DebugLiveCommMenuData;
+
   dmenu_WorkInit( wk );
 
   return event;
@@ -572,20 +598,33 @@ GMEVENT* DEBUG_EVENT_LiveCommFromField( GAMESYS_WORK* gsys,void* parent_work )
   event = GMEVENT_Create( gsys, NULL, event_LiveCommFromFieldMain, sizeof(DMENU_LIVE_COMM) );
 
   wk = GMEVENT_GetEventWork( event );
-  wk->gsys = gsys; 
-  wk->gdata = GAMESYSTEM_GetGameData( gsys ); 
-  wk->fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
-  wk->save = GAMEDATA_GetSaveControlWork( wk->gdata ); 
-  wk->int_sv = SaveData_GetIntrude( wk->save );
-  wk->item_sv = GAMEDATA_GetMyItem( wk->gdata );
-  wk->misc_sv = (MISC*)SaveData_GetMiscConst( wk->save );
-  wk->my_status = GAMEDATA_GetMyStatus( wk->gdata );
-
+  dmenu_WorkInitCommon( wk, gsys );
   wk->view_wk = NULL; //(BEACON_VIEW*)parent_work;
+  wk->menu_init_data = &DebugLiveCommFromFieldMenuData;
 
-  wk->heapID = FIELDMAP_GetHeapID( wk->fieldmap );
-  wk->tmpHeapID = GFL_HEAP_LOWID( wk->heapID );
-  
+  dmenu_WorkInit( wk );
+
+  return event;
+}
+
+//--------------------------------------------------------------
+/**
+ * すれ違い通信デバッグメニュー ミッションログメニューイベント生成
+ * @param wk  DEBUG_MENU_EVENT_WORK*
+ */
+//--------------------------------------------------------------
+GMEVENT* DEBUG_EVENT_LiveCommFromFMission( GAMESYS_WORK* gsys,void* parent_work )
+{
+  DMENU_LIVE_COMM* wk;
+  GMEVENT* event;
+
+  event = GMEVENT_Create( gsys, NULL, event_LiveCommMain, sizeof(DMENU_LIVE_COMM) );
+
+  wk = GMEVENT_GetEventWork( event );
+  dmenu_WorkInitCommon( wk, gsys );
+  wk->view_wk = NULL; //(BEACON_VIEW*)parent_work;
+  wk->menu_init_data = &DebugLiveCommFromFMissionMenuData;
+
   dmenu_WorkInit( wk );
 
   return event;
@@ -701,7 +740,7 @@ static GMEVENT_RESULT event_LiveCommMain( GMEVENT * event, int *seq, void * work
   switch(*seq)
   {
   case SEQ_MENU_INIT:
-    wk->menuFunc = DEBUGFLDMENU_Init( wk->fieldmap, wk->heapID,  &DebugLiveCommMenuData );
+    wk->menuFunc = DEBUGFLDMENU_Init( wk->fieldmap, wk->heapID,  wk->menu_init_data );
     (*seq)++;
     break;
   case SEQ_MENU_MAIN:
@@ -1721,7 +1760,7 @@ static void breq_BeaconSend( DMENU_LIVE_COMM* wk, EVWK_BEACON_REQ* evwk, u8 dire
   }
   DEBUG_SendBeaconPriorityEgnoreFlagSet( FALSE );
 
-  if(direct_mode){  //ビーコンを飛ばすと同時に直接自分のスタックに積む
+  if(direct_mode && wk->view_wk != NULL){  //ビーコンを飛ばすと同時に直接自分のスタックに積む
     RTCTime recv_time;
     u16 time;
     GAMEBEACON_INFO* info = DEBUG_SendBeaconInfo_GetPtr();

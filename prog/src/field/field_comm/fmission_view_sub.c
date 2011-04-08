@@ -29,6 +29,7 @@
 #include "fmission_view_sub.h"
 
 #include "gamesystem/fest_mission_nw.h"
+#include "gamesystem/fmission_log.h"
 #include "gamesystem/fmission_log_accessor.h"
 #include "arc/wifi_unionobj_plt.cdat"
 #include "fieldmap/fldmmdl_mdlres.naix" //フィールド人物OBJ
@@ -79,6 +80,9 @@ static void list_ScrollReq( FMISSION_VIEW_PTR wk, FMISSION_LOG* pl, u8 idx, u8 d
 static void effReq_PanelScroll( FMISSION_VIEW_PTR wk, u8 dir, PANEL_WORK* new_pp, int* task_ct );
 static void effReq_PopupMsgSys( FMISSION_VIEW_PTR wk, u8 msg_id );
 static void effReq_PopupMsgRetire( FMISSION_VIEW_PTR wk );
+
+static BOOL effReq_PopupMsgGPower( FMISSION_VIEW_PTR wk,  FMISSION_LOG* pl );
+static BOOL effReq_PopupMsgGPowerSpecial( FMISSION_VIEW_PTR wk, GPOWER_ID gpower_id, STRBUF* name_buf );
 
 static void printReq_FOamPrint( FMISSION_VIEW_PTR wk, PANEL_WORK* pp, PANEL_FOAM_ID id, PRINTSYS_LSB color,int* task_ct );
 
@@ -138,7 +142,14 @@ int FMissionView_CheckInput( FMISSION_VIEW_PTR wk )
 {
   int ret;
   POINT tp;
-  
+ 
+#ifdef PM_DEBUG
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START ){
+    FVSEvent_Reserve( wk, EV_DEBUG_MENU_CALL );
+    return SEQ_MAIN;
+  }
+#endif
+ 
   if( !GFL_UI_TP_GetPointTrg( (u32*)&tp.x, (u32*)&tp.y )){
     return SEQ_MAIN;
   }
@@ -205,6 +216,23 @@ BOOL FMissionView_CheckSpecialPopup( FMISSION_VIEW_PTR wk )
     BEACON_STATUS_GetFreeWordBuffer( wk->b_status ), wk->my_data.sex, TRUE, PM_LANG );
   effReq_PopupMsgSys( wk, msg_sys_free_word_send );
   return TRUE;
+}
+
+/*
+ *  @brief  Gパワーポップアップ起動チェック 
+ */
+BOOL FMissionView_CheckSpecialGPower( FMISSION_VIEW_PTR wk )
+{
+  GPOWER_ID gpower_id;
+  BOOL  spot_f;
+
+  gpower_id = FMISSION_GPOWER_TBL_GetData( wk->logGPower, wk->str_tmp, &spot_f );
+  
+  if( gpower_id == GPOWER_ID_NULL ){
+    return FALSE; //ストックがない
+  }
+  //ポップアップをリクエスト
+  return effReq_PopupMsgGPowerSpecial( wk, gpower_id, wk->str_tmp );
 }
 
 /*
@@ -344,6 +372,10 @@ void FMissionView_UpDownViewSet( FMISSION_VIEW_PTR wk )
  */
 BOOL FMissionView_SubSeqLogEntry( FMISSION_VIEW_PTR wk )
 {
+  if( wk->eff_task_ct ){
+    return FALSE;
+  }
+
   switch( wk->sub_seq ){
   case 0:
     FMissionView_MenuBarViewSet( wk, MENU_ALL, MENU_ST_OFF );
@@ -357,6 +389,20 @@ BOOL FMissionView_SubSeqLogEntry( FMISSION_VIEW_PTR wk )
     wk->ctrl.view_top = wk->newLogOfs;
   
     BVCSound_PlaySE( FVIEW_SE_NEW_PLAYER );
+    wk->sub_seq++;
+    break;
+  case 1:
+    if( FMISSION_LOG_IsPlayerLog( wk->newLog ) ||
+        FMISSION_LOG_GetAction( wk->newLog ) != FMISSION_LOG_ACT_GPOWER ){
+      return TRUE;
+    }
+    //Gパワーポップアップリクエスト
+    if( effReq_PopupMsgGPower( wk, wk->newLog ) == FALSE ){
+      return TRUE;
+    }
+    wk->sub_seq++;
+    break;
+  default:
     return TRUE;
   }
   return FALSE;
@@ -1162,6 +1208,190 @@ static void tcb_WinPopup( GFL_TCBL *tcb , void* tcb_wk)
 
 /////////////////////////////////////////////////////////////////////
 /*
+ *  @brief  メッセージウィンドウ Gパワー使用確認 
+ */
+/////////////////////////////////////////////////////////////////////
+typedef struct _TASKWK_WIN_GPOWER{
+  u8  seq;
+  u8  seq_next;
+  u8  wait;
+  u8  type;
+  u8  cancel_f;
+  u8  ret;
+  int child_task;
+
+  GPOWER_ID  g_power;
+  u16 item_num;
+  u16 item_use;
+  u16 mypower_use;
+  u16 mypower_min;
+  u16 mypower_sec;
+  FMISSION_VIEW_PTR fvp;
+  int* task_ct;
+}TASKWK_WIN_GPOWER;
+
+static const u8 DATA_GPowerUseMsg[GPOWER_USE_MAX] = {
+ msg_sys_gpower_use00,
+ msg_sys_gpower_use01,
+ msg_sys_gpower_use02,
+};
+
+static BOOL taskAdd_WinGPower( FMISSION_VIEW_PTR wk, GPOWER_ID gpower_id, BOOL spot_f, int* task_ct );
+static void tcb_WinGPowerYesNo( GFL_TCBL *tcb , void* work);
+static void tcb_WinGPowerCheck( GFL_TCBL *tcb , void* work);
+
+static BOOL effReq_PopupMsgGPower( FMISSION_VIEW_PTR wk,  FMISSION_LOG* pl )
+{
+  GPOWER_ID gpower_id;
+  
+  if( FMISSION_LOG_IsPlayerLog( pl ) ||
+      FMISSION_LOG_GetAction( pl ) != FMISSION_LOG_ACT_GPOWER ){
+    return FALSE;
+  }
+  gpower_id = FMISSION_LOG_GetActionParam( pl );
+  
+  FMISSION_LOG_ActionWordset( pl,  wk->wordset, wk->heap_sID );
+  return taskAdd_WinGPower( wk, gpower_id, FALSE, &wk->eff_task_ct);
+}
+static void effReq_PopupMsgGPowerMine( FMISSION_VIEW_PTR wk )
+{
+  taskAdd_WinGPower( wk,
+      wk->my_data.power, GPOWER_USE_MINE, &wk->eff_task_ct );
+}
+static BOOL effReq_PopupMsgGPowerSpecial( FMISSION_VIEW_PTR wk, GPOWER_ID gpower_id, STRBUF* name_buf )
+{
+  WORDSET_RegisterWord( wk->wordset, 0, name_buf, PM_NEUTRAL, TRUE, PM_LANG);
+
+  return taskAdd_WinGPower( wk, gpower_id, TRUE, &wk->eff_task_ct );
+}
+
+/*
+ *  @brief  メッセージウィンドウ Gパワー使用確認タスク登録
+ */
+static BOOL taskAdd_WinGPower( FMISSION_VIEW_PTR wk, GPOWER_ID gpower_id, BOOL spot_f, int* task_ct )
+{
+  GFL_TCBL* tcb;
+  TASKWK_WIN_GPOWER* twk;
+  
+  //セキュリティ
+  if( gpower_id == GPOWER_ID_NULL || gpower_id > GPOWER_ENABLE_ID_END ){
+    GF_ASSERT(0);
+    return FALSE;
+  }
+  //まったく同じパワーが発動中ならスルーする
+  if( GPOWER_Check_OccurID( gpower_id, wk->gpower_data ) == gpower_id ){
+    return FALSE;
+  }
+
+  tcb = GFL_TCBL_Create( wk->pTcbSys, tcb_WinGPowerYesNo, sizeof(TASKWK_WIN_GPOWER), 0 );
+
+  twk = GFL_TCBL_GetWork(tcb);
+  MI_CpuClear8( twk, sizeof( TASKWK_WIN_GPOWER ));
+
+  wk->ctrl.g_power = GPOWER_ID_NULL;
+  wk->ctrl.mine_power_f = FALSE;
+
+  twk->fvp = wk;
+  twk->wait = POPUP_WAIT;
+  twk->g_power = gpower_id;
+
+  WORDSET_RegisterGPowerName( wk->wordset, 1, twk->g_power );
+
+  FMissionView_MenuBarViewSet( wk, MENU_POWER, MENU_ST_OFF );
+  FMissionView_MenuBarViewSet( wk, MENU_HELLO, MENU_ST_OFF );
+  FMissionView_MenuBarViewSet( wk, MENU_RETIRE, MENU_ST_OFF );
+  FMissionView_MenuBarViewSet( wk, MENU_UPDOWN, MENU_ST_OFF );
+
+  twk->task_ct = task_ct;
+  (*task_ct)++;
+
+  return TRUE;
+}
+
+static void tcb_WinGPowerYesNo( GFL_TCBL *tcb , void* tcb_wk)
+{
+  TASKWK_WIN_GPOWER* twk = (TASKWK_WIN_GPOWER*)tcb_wk;
+  FMISSION_VIEW_PTR fvp = twk->fvp;
+
+  if( twk->child_task > 0 ){
+    return;
+  }
+
+  switch( twk->seq ){
+  case 0:
+    print_GetMsgToBuf( fvp, msg_sys_gpower_use01 );
+    print_PopupWindow( fvp, fvp->str_expand, &twk->child_task );
+    twk->seq++;
+    return;
+  case 1:
+    BVCTaskAdd_MsgUpdown( fvp->pTcbSys, FRM_POPUP, SCROLL_UP, &twk->child_task );
+    twk->seq++;
+    return;
+  case 2:
+    BVC_PrintQueLimmitUpSet( fvp->printQue, TRUE );
+    BVCTMenu_Create( fvp->tmenu, TMENU_ID_CYN );
+    draw_MenuIconVisibleSet( fvp, FALSE );
+    twk->seq++;
+    return;
+  case 3: //選択待ち
+    {
+      int ret = BVCTMenu_Update( fvp->tmenu );
+      if( ret < 0 ){
+        return;
+      }
+      twk->ret = ret;
+
+      switch( twk->ret){
+      case TMENU_CYN_CHECK:
+        FVSEvent_Reserve( fvp, EV_GPOWER_CHECK_TMENU_YN );
+        twk->seq = 3;
+        break;
+      case TMENU_CYN_YES:
+        //使うGパワーを覚えておく
+        fvp->ctrl.g_power = twk->g_power;
+        FVSEvent_Reserve( fvp, EV_GPOWER_USE );
+        twk->seq = 4;
+        break;
+      case TMENU_CYN_NO:
+        twk->seq = 5;
+        break;
+      }
+    }
+    return;
+  case 4: //使うイベント待ち
+    if( fvp->ctrl.g_power != GPOWER_ID_NULL ) {
+      //途中キャンセルされていたら、選択しなおし
+      fvp->ctrl.g_power = GPOWER_ID_NULL;
+      twk->seq = 3;
+    }else{
+      //正常に使えていれば、メニューを終了させる
+      BVCTMenu_End( fvp->tmenu );
+      twk->seq = 6;
+    }
+    return;
+  case 5: //キャンセル決定アニメ待ち
+    if( BVCTMenu_EndWait( fvp->tmenu, twk->ret )){
+      twk->seq++;
+    }
+    return;
+  case 6:
+    draw_MenuIconVisibleSet( fvp, TRUE );
+    BVCTaskAdd_MsgUpdown( fvp->pTcbSys, FRM_POPUP, SCROLL_DOWN, &twk->child_task );
+    twk->seq++;
+    return;
+  default:
+    break;
+  }
+  FMissionView_MenuBarViewSet( fvp, MENU_ALL, MENU_ST_ON );
+  BVC_PrintQueLimmitUpSet( fvp->printQue, FALSE );
+  
+  --(*twk->task_ct);
+  GFL_TCBL_Delete(tcb);
+}
+
+
+/////////////////////////////////////////////////////////////////////
+/*
  *  @brief  メッセージウィンドウ リタイア確認 
  */
 /////////////////////////////////////////////////////////////////////
@@ -1183,12 +1413,6 @@ typedef struct _TASKWK_WIN_RETIRE{
   FMISSION_VIEW_PTR fvp;
   int* task_ct;
 }TASKWK_WIN_RETIRE;
-
-static const u8 DATA_GPowerUseMsg[GPOWER_USE_MAX] = {
- msg_sys_gpower_use00,
- msg_sys_gpower_use01,
- msg_sys_gpower_use02,
-};
 
 static void taskAdd_WinRetire( FMISSION_VIEW_PTR wk, int* task_ct );
 static void tcb_WinRetireYesNo( GFL_TCBL *tcb , void* work);

@@ -189,6 +189,39 @@ BOOL FMISSION_LOG_ViewTbl_GetLog( FMISSION_LOG_TBL *tbl, FMISSION_LOG* p_log, in
 }
 
 //------------------------------------------------------------------
+/*
+ *  Gパワーテーブル データ取得
+ *
+ *  @param  tbl       FMISSION_GPOWER_TBL型構造体へのポインタ
+ *  @param  name_buf  Gパワー発動者の名前を受けるSTRBUFへのポインタ
+ *  @param  spot_f    配布(パワースポット)のデータかどうか？
+ *
+ *  @retval GPOWER_ID_XXXX    データ取得成功
+ *  @retval GPOWER_ID_NULL    データ取得失敗
+ *
+ *  情報取得に成功した場合、テーブル内のデータが前詰めされます
+ */
+//------------------------------------------------------------------
+GPOWER_ID FMISSION_GPOWER_TBL_GetData( FMISSION_GPOWER_TBL* tbl, STRBUF* name_buf, BOOL* spot_f )
+{
+  GPOWER_ID id;
+
+  if( tbl->entry_num == 0 ){
+    return GPOWER_ID_NULL;
+  }
+  GFL_STR_SetStringCodeOrderLength( name_buf, tbl->power[0].name, PERSON_NAME_SIZE+EOM_SIZE );
+  *spot_f = tbl->power[0].spot_f;
+  id = tbl->power[0].gpower_id;
+
+  //テーブル前詰め
+  GFL_STD_MemCopy32( &tbl->power[1], &tbl->power[0], sizeof(FMISSION_GPOWER)*FMISSION_GPOWER_TBL_END);
+  FMISSION_GPOWER_Clear( &tbl->power[FMISSION_GPOWER_TBL_END] );
+  --tbl->entry_num;
+
+  return id;
+}
+
+//------------------------------------------------------------------
 /**
  * ログパラメータ取得　名前
  *
@@ -323,6 +356,11 @@ void FMISSION_LOG_ActionWordset( FMISSION_LOG* p_log,  WORDSET* wset, HEAPID tmp
   case FMISSION_LOG_ACT_POKE_DOWN:
     FMISSION_LOG_GetPokeNickname( p_log, s_buf );
     WORDSET_RegisterWord( wset, 0, s_buf, p_log->sex, TRUE, PM_LANG);
+    break;
+  case FMISSION_LOG_ACT_GPOWER:
+    FMISSION_LOG_GetName( p_log, s_buf );
+    WORDSET_RegisterWord( wset, 0, s_buf, p_log->sex, TRUE, PM_LANG);
+    WORDSET_RegisterGPowerName( wset, 1, p_log->param );
     break;
   default:
     WORDSET_RegisterPokeMonsNameNo( wset, 0, p_log->param );

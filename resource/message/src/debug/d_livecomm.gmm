@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2010-12-17T15:01:09"/>
+	<create user="iwasawa" host="W00270" date="2011-04-08T15:57:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -892,6 +892,61 @@
 	</row>
 
 	<row id="dlc_action_51" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">フェスタミッションはいしん</language>
+		<language name="JPN_KANJI" width="256">フェスタミッション配信</language>
+	</row>
+
+	<row id="dlc_action_52" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">フェスタミッションはいしん</language>
+		<language name="JPN_KANJI" width="256">フェスタミッション配信</language>
+	</row>
+
+	<row id="dlc_action_53" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">フェスタミッションはいしん</language>
+		<language name="JPN_KANJI" width="256">フェスタミッション配信</language>
+	</row>
+
+	<row id="dlc_action_54" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">フェスタミッションはいしん</language>
+		<language name="JPN_KANJI" width="256">フェスタミッション配信</language>
+	</row>
+
+	<row id="dlc_action_55" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">フェスタミッションはいしん</language>
+		<language name="JPN_KANJI" width="256">フェスタミッション配信</language>
+	</row>
+
+	<row id="dlc_action_56" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">フェスタミッションはいしん</language>
+		<language name="JPN_KANJI" width="256">フェスタミッション配信</language>
+	</row>
+
+	<row id="dlc_action_57" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">フェスタミッションはいしん</language>
+		<language name="JPN_KANJI" width="256">フェスタミッション配信</language>
+	</row>
+
+	<row id="dlc_action_58" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">フェスタミッションはいしん</language>
+		<language name="JPN_KANJI" width="256">フェスタミッション配信</language>
+	</row>
+
+	<row id="dlc_action_59" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">フェスタミッションはいしん</language>
+		<language name="JPN_KANJI" width="256">フェスタミッション配信</language>
+	</row>
+
+	<row id="dlc_action_60" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">フェスタミッションはいしん</language>
+		<language name="JPN_KANJI" width="256">フェスタミッション配信</language>
+	</row>
+
+	<row id="dlc_action_61" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">フェスタミッションはいしん</language>
+		<language name="JPN_KANJI" width="256">フェスタミッション配信</language>
+	</row>
+
+	<row id="dlc_action_62" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">フェスタミッションはいしん</language>
 		<language name="JPN_KANJI" width="256">フェスタミッション配信</language>
 	</row>

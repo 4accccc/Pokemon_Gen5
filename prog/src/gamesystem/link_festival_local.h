@@ -42,5 +42,7 @@ struct _LINK_FESTIVAL{
 
   struct  _FMISSION_LOG_TBL mlog_view_tbl;   //ミッションログ表示バッファ
   struct  _FMISSION_LOG_TBL mlog_stack_tbl;  //ミッションログスタックバッファ
+
+  struct  _FMISSION_GPOWER_TBL  mlog_gpower_tbl;  //ミッションログ　デルパワーストックテーブル
 };
 

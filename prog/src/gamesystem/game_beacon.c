@@ -386,10 +386,17 @@ static void BeaconInfo_SetFestMissionLog(GAMEBEACON_SYSTEM *bsys, const GAMEBEAC
     GF_ASSERT(0);
     return;
   }
+  fest_sys = GAMESYSTEM_GetLinkFestivalWork( bsys->gsys );
+
+  if( LINK_FESTIVAL_IsMissionEntry( fest_sys )){
+    //Gパワーストック
+    FMISSION_GPOWER_TBL_Set( 
+      LINK_FESTIVAL_GetMissionLogGPowerTbl(fest_sys), info );
+  }
+
   if( GAMEBEACON_Check_FestMission( info ) == FALSE ){
     return;
   }
-  fest_sys = GAMESYSTEM_GetLinkFestivalWork( bsys->gsys );
  
   //ログストアパラメータ生成
   LINKFEST_LOG_PARAM_Clear( &log );

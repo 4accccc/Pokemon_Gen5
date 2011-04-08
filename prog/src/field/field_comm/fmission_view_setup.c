@@ -234,7 +234,7 @@ GMEVENT* FVSEvent_CheckCommon( FMISSION_VIEW_PTR wk, BOOL bEvReqOK )
   //デバッグメニューコールリクエスト
   case EV_DEBUG_MENU_CALL:
     event = GMEVENT_CreateOverlayEventCall( wk->gsys,
-              FS_OVERLAY_ID( d_livecomm ), DEBUG_EVENT_LiveComm, wk );
+              FS_OVERLAY_ID( d_livecomm ), DEBUG_EVENT_LiveCommFromFMission, wk );
     break;
 #endif  //PM_DEBUG
 
@@ -373,6 +373,7 @@ static void _sub_DataSetup(FMISSION_VIEW_PTR wk)
 
   wk->logStack = LINK_FESTIVAL_GetMissionLogStackTbl( wk->fest_sys );
   wk->logView  = LINK_FESTIVAL_GetMissionLogViewTbl( wk->fest_sys );
+  wk->logGPower = LINK_FESTIVAL_GetMissionLogGPowerTbl( wk->fest_sys );
 
   wk->ctrl.max = FMISSION_LOG_TBL_GetEntryNum( wk->logView );
   wk->ctrl.view_top = FMISSION_LOG_TBL_GetViewTopIdx( wk->logView );

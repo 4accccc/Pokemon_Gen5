@@ -30,6 +30,11 @@ extern int FMissionView_CheckInoutTouchUpDown( FMISSION_VIEW_PTR wk );
 extern BOOL FMissionView_CheckSpecialPopup( FMISSION_VIEW_PTR wk );
 
 /*
+ *  @brief  Gパワーポップアップ起動チェック 
+ */
+extern BOOL FMissionView_CheckSpecialGPower( FMISSION_VIEW_PTR wk );
+
+/*
  *  @brief  スタックからログを一件取り出し
  */
 extern BOOL FMissionView_CheckStack( FMISSION_VIEW_PTR wk );

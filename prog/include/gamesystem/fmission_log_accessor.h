@@ -99,6 +99,22 @@ extern int FMISSION_LOG_ViewTbl_SetLog( FMISSION_LOG_TBL* tbl, const FMISSION_LO
 extern BOOL FMISSION_LOG_ViewTbl_GetLog( FMISSION_LOG_TBL *tbl, FMISSION_LOG* p_log, int ofs );
 
 //------------------------------------------------------------------
+/*
+ *  Gパワーテーブル データ取得
+ *
+ *  @param  tbl       FMISSION_GPOWER_TBL型構造体へのポインタ
+ *  @param  name_buf  Gパワー発動者の名前を受けるSTRBUFへのポインタ
+ *  @param  spot_f    配布(パワースポット)のデータかどうか？
+ *
+ *  @retval GPOWER_ID_XXXX    データ取得成功
+ *  @retval GPOWER_ID_NULL    データ取得失敗
+ *
+ *  情報取得に成功した場合、テーブル内のデータが前詰めされます
+ */
+//------------------------------------------------------------------
+extern GPOWER_ID FMISSION_GPOWER_TBL_GetData( FMISSION_GPOWER_TBL* tbl, STRBUF* name_buf, BOOL* spot_f );
+
+//------------------------------------------------------------------
 /**
  * ログパラメータ取得　名前
  *

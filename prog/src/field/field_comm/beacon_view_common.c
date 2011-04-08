@@ -286,6 +286,7 @@ void BVCTMenu_End( BVC_TMENU_WORK* wk )
   int i;
 
   for( i = 0;i < wk->c_max; i++){
+    APP_TASKMENU_WIN_Hide( wk->tmenu[i].work );
     APP_TASKMENU_WIN_Delete( wk->tmenu[i].work );
     wk->tmenu[i].work = NULL;
     wk->tmenu[i].item.str = NULL;

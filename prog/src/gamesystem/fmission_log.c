@@ -15,6 +15,7 @@
 #include "gamesystem/game_beacon_types.h"
 #include "gamesystem/link_festival.h"
 #include "gamesystem/fest_mission.h"
+#include "gamesystem/g_power.h"
 #include "msg/msg_beacon_status.h"
 #include "savedata/encount_sv.h"
 #include "savedata/misc.h"
@@ -91,7 +92,7 @@ int FMISSION_LOG_TBL_SetLog( FMISSION_LOG_TBL* tbl, const FMISSION_LOG* p_log )
   }else{
     tbl->log[tbl->entry_num++] = *p_log;
   }
-  return tbl->entry_num;
+  return (tbl->entry_num-1);
 }
 
 //------------------------------------------------------------------
@@ -113,6 +114,88 @@ void FMISSION_LOG_TBL_SetLogFromBeacon( FMISSION_LOG_TBL* tbl, const GAMEBEACON_
   if( log_MakeLogFromBeacon( &log, info, mode, mine_f )){
     FMISSION_LOG_TBL_SetLog( tbl, &log );
   }
+}
+
+//------------------------------------------------------------------
+/*
+ *  デルパワーパラメータクリア
+ */
+//------------------------------------------------------------------
+void FMISSION_GPOWER_Clear( FMISSION_GPOWER* power )
+{
+  GFL_STD_MemClear( power, sizeof(FMISSION_GPOWER));
+  power->gpower_id = GPOWER_ID_NULL;
+  {
+    STRCODE eom = GFL_STR_GetEOMCode();
+    GFL_STD_MemFill16( power->name, eom, (PERSON_NAME_SIZE+EOM_SIZE)*sizeof(STRCODE));
+  }
+}
+
+//------------------------------------------------------------------
+/*
+ *  デルパワーテーブルクリア
+ */
+//------------------------------------------------------------------
+void FMISSION_GPOWER_TBL_Clear( FMISSION_GPOWER_TBL* tbl )
+{
+  int i;
+
+  for(i = 0;i < FMISSION_GPOWER_TBL_MAX;i++){
+    FMISSION_GPOWER_Clear( &tbl->power[i] );
+  }
+  tbl->entry_num = 0;
+}
+
+//------------------------------------------------------------------
+/*
+ *  デルパワースタック データセット
+ *
+ *  @param  tbl   FMISSION_GPOWER_TBL型構造体へのポインタ
+ *  @param  info  セットするビーコン情報
+ *  @return データをセットしたらTRUE
+ *
+ *  データがいっぱいの場合、積むのを諦める
+ */
+//------------------------------------------------------------------
+BOOL FMISSION_GPOWER_TBL_Set( FMISSION_GPOWER_TBL* tbl, const GAMEBEACON_INFO *info )
+{
+  FMISSION_GPOWER power;
+  GPOWER_ID id;
+
+  if( tbl->entry_num == FMISSION_GPOWER_TBL_MAX ){
+    return FALSE; //いっぱいなら積まない
+  }
+  FMISSION_GPOWER_Clear( &power );
+
+  //配布パワーとミッションパワーは受け取る
+  switch( info->action.action_no ){
+  case GAMEBEACON_ACTION_DISTRIBUTION_GPOWER:
+    id = info->action.distribution.gpower_id;
+    power.spot_f = TRUE;
+    break;
+  default:
+    return FALSE;
+  }
+#if 0
+  {
+    POWER_CONV_DATA* gpower_data = GPOWER_PowerData_LoadAlloc( GFL_HEAP_LOWID(GFL_HEAPID_APP ) );
+    GPOWER_ID ret_id = GPOWER_Check_OccurID( id, gpower_data );
+
+    GPOWER_PowerData_Unload( gpower_data );
+
+    //現在進行形で発動中のパワーは受け取らない
+    if( ret_id == id ){
+      return FALSE; //同じパワー発動中は捨てる
+    }
+  }
+#endif
+  //名前(info->nameはEOM抜き)
+  GFL_STD_MemCopy16( info->name, power.name, PERSON_NAME_SIZE);
+  power.gpower_id = id;
+
+  tbl->power[tbl->entry_num++] = power;
+
+  return TRUE;
 }
 
 //=================================================================================
