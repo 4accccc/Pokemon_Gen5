@@ -30,34 +30,176 @@ typedef struct {
 }INF_ROOM_SET_TR_PARAM;
 
 static const INF_ROOM_SET_TR_PARAM sc_room_tr_param[] = {
-  { // INF_MOVE_CODE_TYPE_DEFAULT1
-    4 ,
-    { 
-      { INF_MOVE_CODE_TYPE_STAY ,3 ,3 ,}, 
-
-      { INF_MOVE_CODE_TYPE_STAY ,4 ,4 ,}, 
-
-      { INF_MOVE_CODE_TYPE_STAY ,5 ,5 ,}, 
-
-      { INF_MOVE_CODE_TYPE_STAY ,6 ,6 ,}, 
-
-    },
-  }, 
-  { // INF_MOVE_CODE_TYPE_DEFAULT2
-    2 ,
-    { 
-      { INF_MOVE_CODE_TYPE_STOP ,6 ,7 ,}, 
-
-      { INF_MOVE_CODE_TYPE_STOP ,7 ,8 ,}, 
-
-    },
-  }, 
-  { // INF_MOVE_CODE_TYPE_DEFAULT3
+  { // INF_MOVE_CODE_TYPE_B_1
     1 ,
     { 
-      { INF_MOVE_CODE_TYPE_STOP ,6 ,7 ,}, 
+      { INF_MOVE_CODE_TYPE_STOP1 ,6 ,7 ,}, 
+
+    },
+  }, 
+  { // INF_MOVE_CODE_TYPE_C_1
+    1 ,
+    { 
+      { INF_MOVE_CODE_TYPE_RNDDOM1 ,6 ,7 ,}, 
+
+    },
+  }, 
+  { // INF_MOVE_CODE_TYPE_D_1
+    1 ,
+    { 
+      { INF_MOVE_CODE_TYPE_ROTARY1 ,4 ,5 ,}, 
+
+    },
+  }, 
+  { // INF_MOVE_CODE_TYPE_E_1
+    1 ,
+    { 
+      { INF_MOVE_CODE_TYPE_RNDDOM2 ,6 ,7 ,}, 
+
+    },
+  }, 
+  { // INF_MOVE_CODE_TYPE_F_1
+    1 ,
+    { 
+      { INF_MOVE_CODE_TYPE_ROTARY2 ,4 ,5 ,}, 
+
+    },
+  }, 
+  { // INF_MOVE_CODE_TYPE_G_1
+    2 ,
+    { 
+      { INF_MOVE_CODE_TYPE_ROTARY3 ,4 ,5 ,}, 
+
+      { INF_MOVE_CODE_TYPE_ROTARY4 ,8 ,9 ,}, 
+
+    },
+  }, 
+  { // INF_MOVE_CODE_TYPE_H_1
+    2 ,
+    { 
+      { INF_MOVE_CODE_TYPE_ROUND1 ,4 ,5 ,}, 
+
+      { INF_MOVE_CODE_TYPE_ROUND2 ,8 ,9 ,}, 
+
+    },
+  }, 
+  { // INF_MOVE_CODE_TYPE_I_1
+    2 ,
+    { 
+      { INF_MOVE_CODE_TYPE_ROUND3 ,8 ,5 ,}, 
+
+      { INF_MOVE_CODE_TYPE_ROUND4 ,4 ,9 ,}, 
+
+    },
+  }, 
+  { // INF_MOVE_CODE_TYPE_J_1
+    2 ,
+    { 
+      { INF_MOVE_CODE_TYPE_ROTARY5 ,4 ,5 ,}, 
+
+      { INF_MOVE_CODE_TYPE_ROTARY6 ,8 ,9 ,}, 
+
+    },
+  }, 
+  { // INF_MOVE_CODE_TYPE_K_1
+    3 ,
+    { 
+      { INF_MOVE_CODE_TYPE_STOP2 ,6 ,5 ,}, 
+
+      { INF_MOVE_CODE_TYPE_STOP2 ,9 ,8 ,}, 
+
+      { INF_MOVE_CODE_TYPE_STOP2 ,3 ,8 ,}, 
+
+    },
+  }, 
+  { // INF_MOVE_CODE_TYPE_L_1
+    3 ,
+    { 
+      { INF_MOVE_CODE_TYPE_ROTARY7 ,7 ,6 ,}, 
+
+      { INF_MOVE_CODE_TYPE_ROTARY8 ,9 ,10 ,}, 
+
+      { INF_MOVE_CODE_TYPE_ROTARY8 ,5 ,10 ,}, 
+
+    },
+  }, 
+  { // INF_MOVE_CODE_TYPE_M_1
+    3 ,
+    { 
+      { INF_MOVE_CODE_TYPE_STOP2 ,6 ,5 ,}, 
+
+      { INF_MOVE_CODE_TYPE_ROUND5 ,9 ,4 ,}, 
+
+      { INF_MOVE_CODE_TYPE_ROUND6 ,3 ,10 ,}, 
+
+    },
+  }, 
+  { // INF_MOVE_CODE_TYPE_N_1
+    4 ,
+    { 
+      { INF_MOVE_CODE_TYPE_STOP2 ,7 ,5 ,}, 
+
+      { INF_MOVE_CODE_TYPE_STOP2 ,5 ,9 ,}, 
+
+      { INF_MOVE_CODE_TYPE_STOP2 ,4 ,6 ,}, 
+
+      { INF_MOVE_CODE_TYPE_STOP2 ,8 ,8 ,}, 
+
+    },
+  }, 
+  { // INF_MOVE_CODE_TYPE_O_1
+    4 ,
+    { 
+      { INF_MOVE_CODE_TYPE_ROTARY5 ,4 ,5 ,}, 
+
+      { INF_MOVE_CODE_TYPE_ROTARY6 ,8 ,9 ,}, 
+
+      { INF_MOVE_CODE_TYPE_ROTARY9 ,8 ,5 ,}, 
+
+      { INF_MOVE_CODE_TYPE_ROTARY10 ,4 ,9 ,}, 
+
+    },
+  }, 
+  { // INF_MOVE_CODE_TYPE_P_1
+    4 ,
+    { 
+      { INF_MOVE_CODE_TYPE_ROUND7 ,3 ,9 ,}, 
+
+      { INF_MOVE_CODE_TYPE_ROUND8 ,9 ,5 ,}, 
+
+      { INF_MOVE_CODE_TYPE_ROUND9 ,4 ,4 ,}, 
+
+      { INF_MOVE_CODE_TYPE_ROUND10 ,8 ,10 ,}, 
+
+    },
+  }, 
+  { // INF_MOVE_CODE_TYPE_Q_1
+    1 ,
+    { 
+      { INF_MOVE_CODE_TYPE_ROTARY11 ,3 ,4 ,}, 
+
+    },
+  }, 
+  { // INF_MOVE_CODE_TYPE_R_1
+    1 ,
+    { 
+      { INF_MOVE_CODE_TYPE_STOP2 ,6 ,7 ,}, 
+
+    },
+  }, 
+  { // INF_MOVE_CODE_TYPE_S_1
+    1 ,
+    { 
+      { INF_MOVE_CODE_TYPE_STOP2 ,6 ,7 ,}, 
+
+    },
+  }, 
+  { // INF_MOVE_CODE_TYPE_T_1
+    1 ,
+    { 
+      { INF_MOVE_CODE_TYPE_RNDDOM3 ,6 ,7 ,}, 
 
     },
   }, 
 };
-#define INF_TR_ROOM_POS_TYPE_MAX (3) // 部屋タイプの最大数
+#define INF_TR_ROOM_POS_TYPE_MAX (19) // 部屋タイプの最大数
