@@ -234,9 +234,21 @@ static void WBTTRAINER_SetPlayer( WBTTRAINER * wbt_tr, GAMEDATA * gamedata )
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
+u8 WBTTRAINER_GetPriority( const WBTTRAINER * wbt_tr )
+{
+  return wbt_tr->pri;
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 u8 WBTTRAINER_GetID( const WBTTRAINER * wbt_tr )
 {
   return wbt_tr->tr_id;
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+u16 WBTTRAINER_GetTrainerType( const WBTTRAINER * wbt_tr )
+{
+  return wbt_tr->tr_type;
 }
 
 
@@ -415,6 +427,13 @@ void WBTSYS_SetupPokeStatusData( WBTSYS * wbtsys, GAMEDATA * gamedata, PSTATUS_D
   pstatus->game_data = gamedata;
 
   pstatus->zukan_mode = ZUKANSAVE_GetZenkokuZukanFlag( zukanSave );
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+POKEPARTY * WBTSYS_GetBattleParty( WBTSYS * wbtsys, GAMEDATA * gamedata )
+{
+  return getUsePokeParty( wbtsys, gamedata );
 }
 
 

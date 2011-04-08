@@ -145,7 +145,10 @@ extern void WBTSYS_CalcResult( WBTSYS * wbtsys, GFL_STD_RandContext * context );
 extern u32 WBTSYS_GetOpponentPos( const WBTSYS * wbtsys );
 
 extern const WBTTRAINER * WBTSYS_GetOpponentTrainer( const WBTSYS * wbtsys );
+
 extern u8 WBTTRAINER_GetID( const WBTTRAINER * wbt_tr );
+extern u8 WBTTRAINER_GetPriority( const WBTTRAINER * wbt_tr );
+extern u16 WBTTRAINER_GetTrainerType( const WBTTRAINER * wbt_tr );
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 extern void WBTSYS_GetOpponentName( WBTSYS * wbtsys, STRBUF * strbuf );
@@ -171,6 +174,8 @@ extern void WBTSYS_SetupPokeListData( WBTSYS * wbtsys, GAMEDATA * gamedata, PLIS
 extern void WBTSYS_SetupPokeStatusData( WBTSYS * wbtsys, GAMEDATA * gamedata, PSTATUS_DATA * pstatus );
 
 extern void WBTSYS_SetPokelistResult( WBTSYS * wbtsys, PLIST_DATA * plist_data );
+
+extern POKEPARTY * WBTSYS_GetBattleParty( WBTSYS * wbtsys, GAMEDATA * gamedata );
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
@@ -179,8 +184,10 @@ extern WBTLIST_PARAM * WBTLIST_PARAM_Create( HEAPID heapID, GAMESYS_WORK * gsys 
 extern void WBTLIST_PARAM_Delete( WBTLIST_PARAM * wbtlist_param );
 
 extern void WBTLIST_PARAM_Setup( GAMESYS_WORK * gsys, WBTSYS * wbtsys, WBTLIST_PARAM * wbtlist_param );
+#ifdef  PM_DEBUG
 extern void WBTLIST_PARAM_Setup_Debug(
     GAMESYS_WORK * gsys, WBTLIST_PARAM * wbtlist_param,
     WBTTYPE wbttype, WBTRULE rule,
-    WBTSTAGE stage, const u16 * trid_table );
+    WBTSTAGE stage, const u16 * trid_table, int debug_value );
+#endif
 

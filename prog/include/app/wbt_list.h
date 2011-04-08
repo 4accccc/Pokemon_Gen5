@@ -82,5 +82,8 @@ typedef struct
   WBTLIST_RESULT  second_stage[2];
   STRBUF * tournament_name;
   STRBUF * tournament_rule;
+#ifdef  PM_DEBUG
+  int debug_value;
+#endif
 }WBTLIST_PARAM;
 

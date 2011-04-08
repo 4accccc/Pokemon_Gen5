@@ -139,6 +139,7 @@ void WBTLIST_PARAM_Setup( GAMESYS_WORK * gsys, WBTSYS * wbtsys, WBTLIST_PARAM * 
 }
 
 
+#ifdef  PM_DEBUG
 //------------------------------------------------------------------
 /**
  * @brief トーナメントリスト用パラメータのセットアップ（デバッグ用）
@@ -149,7 +150,7 @@ void WBTLIST_PARAM_Setup( GAMESYS_WORK * gsys, WBTSYS * wbtsys, WBTLIST_PARAM * 
 void WBTLIST_PARAM_Setup_Debug(
     GAMESYS_WORK * gsys, WBTLIST_PARAM * wbtlist_param,
     WBTTYPE wbttype, WBTRULE wbtrule,
-    WBTSTAGE stage, const u16 * trid_table )
+    WBTSTAGE stage, const u16 * trid_table, int debug_value )
 {
   GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
   WBTSYS * wbtsys;
@@ -159,9 +160,13 @@ void WBTLIST_PARAM_Setup_Debug(
   WBTSYS_SetType( wbtsys, wbttype );
   WBTSYS_SetRule( wbtsys, wbtrule );
   WBTSYS_SetStage( wbtsys, stage );
+
   WBTLIST_PARAM_Setup( gsys, wbtsys, wbtlist_param );
+  wbtlist_param->debug_value = debug_value;
+
   WBTSYS_Delete( wbtsys );
 }
+#endif
 
 //============================================================================================
 //
