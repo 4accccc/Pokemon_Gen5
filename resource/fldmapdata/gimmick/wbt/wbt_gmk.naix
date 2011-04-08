@@ -26,11 +26,13 @@ enum {
 	NARC_wbt_gmk_wbt_v_all_nsbmd = 12,
 	NARC_wbt_gmk_wbt_v_all_nsbta = 13,
 	NARC_wbt_gmk_wbt_e_normal_l_nsbmd = 14,
-	NARC_wbt_gmk_wbt_e_normal_l_nsbca = 15,
-	NARC_wbt_gmk_wbt_e_normal_l_nsbta = 16,
-	NARC_wbt_gmk_wbt_e_normal_r_nsbmd = 17,
-	NARC_wbt_gmk_wbt_e_normal_r_nsbca = 18,
-	NARC_wbt_gmk_wbt_e_normal_r_nsbta = 19
+	NARC_wbt_gmk_wbt_e_normal_l_nsbma = 15,
+	NARC_wbt_gmk_wbt_e_normal_l_nsbca = 16,
+	NARC_wbt_gmk_wbt_e_normal_l_nsbta = 17,
+	NARC_wbt_gmk_wbt_e_normal_r_nsbmd = 18,
+	NARC_wbt_gmk_wbt_e_normal_r_nsbma = 19,
+	NARC_wbt_gmk_wbt_e_normal_r_nsbca = 20,
+	NARC_wbt_gmk_wbt_e_normal_r_nsbta = 21
 };
 
 /* NARC_WBT_GMK_NAIX_ */

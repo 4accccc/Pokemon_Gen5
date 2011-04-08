@@ -14,9 +14,11 @@ DATA_LIST = \
      wbt_v_all.nsbmd \
      wbt_v_all.nsbta \
 		 wbt_e_normal_l.nsbmd \
+		 wbt_e_normal_l.nsbma \
 		 wbt_e_normal_l.nsbca \
 		 wbt_e_normal_l.nsbta \
 		 wbt_e_normal_r.nsbmd \
+		 wbt_e_normal_r.nsbma \
 		 wbt_e_normal_r.nsbca \
 		 wbt_e_normal_r.nsbta \
 

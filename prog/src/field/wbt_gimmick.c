@@ -115,9 +115,11 @@ enum {
 
   // エフェクト
   RESID_E_NORMAL_L_MDL,     // ノーマル
+  RESID_E_NORMAL_L_IMA,     // ノーマル
   RESID_E_NORMAL_L_ICA,     // ノーマル
   RESID_E_NORMAL_L_ITA,     // ノーマル
   RESID_E_NORMAL_R_MDL,     // ノーマル
+  RESID_E_NORMAL_R_IMA,     // ノーマル
   RESID_E_NORMAL_R_ICA,     // ノーマル
   RESID_E_NORMAL_R_ITA,     // ノーマル
 };
@@ -126,11 +128,13 @@ enum {
 #define RESID_V_START_MDL   ( RESID_V_ALL_MDL )
 #define RESID_V_START_ITA   ( RESID_V_ALL_ITA )
 #define RESID_E_START_MDL   ( RESID_E_NORMAL_L_MDL )
+#define RESID_E_START_IMA   ( RESID_E_NORMAL_L_IMA )
 #define RESID_E_START_ICA   ( RESID_E_NORMAL_L_ICA )
 #define RESID_E_START_ITA   ( RESID_E_NORMAL_L_ITA )
 
 #define RES_V_NUM           (2)   // ビジョンのリソース数
-#define RES_E_NUM           (3)   // エフェクトのリソース数
+#define RES_E_NUM           (4)   // エフェクトのリソース数
+#define RES_E_WIN_NUM       (3)   // 優勝エフェクトのリソース数
 
 // OBJインデックス
 // ユニット別
@@ -434,26 +438,31 @@ void WBT_GIMMICK_EffectStart( FIELDMAP_WORK *p_fieldmap, u8 type, u8 pos )
   GFL_G3D_UTIL_SETUP  setup = {0};
   u8      res_cnt = 0;
   u8      anm_cnt = 0;
+  // リソースIDの開始位置テーブル
+  // ※並び替え不可
+  const   res_start_tbl[ RES_E_NUM ] = {
+    RESID_E_START_MDL,    // モデル
+    RESID_E_START_IMA,    // IMA
+    RESID_E_START_ICA,    // ICA
+    RESID_E_START_ITA,    // ITA
+  };
 
   // RES
-  res_e_table[ res_cnt ].arcive  = ARCID_WBT_GIMMICK_DATA;
-  res_e_table[ res_cnt ].datID   = RESID_E_START_MDL + type + (pos*RES_E_NUM);
-  res_e_table[ res_cnt ].arcType = GFL_G3D_UTIL_RESARC;
-  res_cnt++;
-  res_e_table[ res_cnt ].arcive  = ARCID_WBT_GIMMICK_DATA;
-  res_e_table[ res_cnt ].datID   = RESID_E_START_ICA + type + (pos*RES_E_NUM);
-  res_e_table[ res_cnt ].arcType = GFL_G3D_UTIL_RESARC;
-  res_cnt++;
-  res_e_table[ res_cnt ].arcive  = ARCID_WBT_GIMMICK_DATA;
-  res_e_table[ res_cnt ].datID   = RESID_E_START_ITA + type + (pos*RES_E_NUM);
-  res_e_table[ res_cnt ].arcType = GFL_G3D_UTIL_RESARC;
-  res_cnt++;
+  for( res_cnt=0; res_cnt<RES_E_NUM; res_cnt++ )
+  {
+    res_e_table[ res_cnt ].arcive  = ARCID_WBT_GIMMICK_DATA;
+    res_e_table[ res_cnt ].datID   = res_start_tbl[ res_cnt ] + type + (pos*RES_E_NUM);
+    res_e_table[ res_cnt ].arcType = GFL_G3D_UTIL_RESARC;
+  }
 
   // ANIME
   anm_e_table[ anm_cnt ].anmresID = 1;
   anm_e_table[ anm_cnt ].anmdatID = 0;
   anm_cnt++;
   anm_e_table[ anm_cnt ].anmresID = 2;
+  anm_e_table[ anm_cnt ].anmdatID = 0;
+  anm_cnt++;
+  anm_e_table[ anm_cnt ].anmresID = 3;
   anm_e_table[ anm_cnt ].anmdatID = 0;
   anm_cnt++;
 
@@ -498,7 +507,6 @@ void WBT_GIMMICK_EffectStart( FIELDMAP_WORK *p_fieldmap, u8 type, u8 pos )
     FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, EXPOBJ_UNIT_IDX_EFFECT, obj_idx, FALSE );
 
     // アニメ再生
-    // ica と itaの2つ分
     for( i=0; i<RES_E_NUM-1; i++ )
     {
       EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, EXPOBJ_UNIT_IDX_EFFECT, obj_idx, i );
@@ -530,7 +538,7 @@ void WBT_GIMMICK_WinEffectStart( FIELDMAP_WORK *p_fieldmap )
     // 表示
     FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, FALSE );
     // アニメ再生
-    for( i=0; i<RES_E_NUM-1; i++ )
+    for( i=0; i<RES_E_WIN_NUM-1; i++ )
     {
       EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, i );
       FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, i, TRUE );
@@ -666,7 +674,7 @@ static void EXPOBJ_ObjSet( WBT_GMK_TMP *p_wk )
     // 表示
     FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, TRUE );
     // アニメ再生
-    for( i=0; i<RES_E_NUM-1; i++ )
+    for( i=0; i<RES_E_WIN_NUM-1; i++ )
     {
       EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, i );
       FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, i, TRUE );
@@ -692,7 +700,7 @@ static void EXPOBJ_ObjSet( WBT_GMK_TMP *p_wk )
     // 表示
     FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, TRUE );
     // アニメ再生
-    for( i=0; i<RES_E_NUM-1; i++ )
+    for( i=0; i<RES_E_WIN_NUM-1; i++ )
     {
       EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, i );
       FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, i, TRUE );
@@ -750,7 +758,7 @@ static void EXPOBJ_ObjMain( WBT_GMK_TMP *p_wk )
       // ループエフェクトは表示
       FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, EXPOBJ_UNIT_IDX, OBJ_E_WIN_LOOP, FALSE );
       // ループエフェクトアニメ設定
-      for( i=0; i<RES_E_NUM-1; i++ )
+      for( i=0; i<RES_E_WIN_NUM-1; i++ )
       {
         EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, EXPOBJ_UNIT_IDX, OBJ_E_WIN_LOOP, i );
         FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, EXPOBJ_UNIT_IDX, OBJ_E_WIN_LOOP, i, TRUE );
