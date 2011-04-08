@@ -30,4 +30,8 @@ extern BOOL EtcSave_CheckAcquaintance(ETC_SAVE_WORK *etcsave, u32 trainer_id);
 extern void EtcSave_SetManualFlag( ETC_SAVE_WORK *etcsave, int id );
 extern BOOL EtcSave_GetManualFlag( const ETC_SAVE_WORK *etcsave, int id );
 
+// ƒ‰ƒCƒoƒ‹–¼
+extern void EtcSave_SetRivalName( ETC_SAVE_WORK *etcsave, const STRCODE *name );
+extern const STRCODE * EtcSave_GetRivalName( const ETC_SAVE_WORK *etcsave );
+
 extern void *EtcSave_GetPersonStatePtr( ETC_SAVE_WORK *etcsave );

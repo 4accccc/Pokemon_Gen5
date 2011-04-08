@@ -11,6 +11,8 @@
 #include "savedata/save_tbl.h"
 #include "savedata/etc_save.h"
 #include "savedata/person_state.h"
+#include "buflen.h"
+#include "print/str_tool.h"
 
 
 
@@ -33,8 +35,10 @@ struct _ETC_SAVE_WORK{
   
   u32 manual_flag[MANUAL_FLAG_WORK_MAX]; ///< ゲーム内マニュアルの項目を読んだかどうか(1bit単位
   
+  STRCODE rival_name[PERSON_NAME_SIZE + EOM_SIZE];    // 16
+
   PERSON_STATE  person_state;
-  u8 dummy[88-PERSON_STATE_WORK_SIZE];    ///<将来用に1ブロック分のアライメント全てを確保
+  u8 dummy[72-PERSON_STATE_WORK_SIZE];    ///<将来用に1ブロック分のアライメント全てを確保
 };
 
 
@@ -221,6 +225,32 @@ BOOL EtcSave_GetManualFlag( const ETC_SAVE_WORK *etcsave, int id )
 
   return (etcsave->manual_flag[sector]>>bit)&1; 
 
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ライバルの名前をセット
+ *
+ *	@param	ETC_SAVE_WORK *etcsave  セーブデータ
+ *	@param	STRCODE *name 名前文字列へのポインタ
+ */
+//-----------------------------------------------------------------------------
+void EtcSave_SetRivalName( ETC_SAVE_WORK *etcsave, const STRCODE *name )
+{
+  STRTOOL_Copy( name, etcsave->rival_name, PERSON_NAME_SIZE + EOM_SIZE );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ライバルの名前を取得
+ *
+ *	@param	const ETC_SAVE_WORK *etcsave セーブデータ
+ *
+ *	@return STRCODE 名前文字列へのポインタ
+ */
+//-----------------------------------------------------------------------------
+const STRCODE * EtcSave_GetRivalName( const ETC_SAVE_WORK *etcsave )
+{
+  return etcsave->rival_name;
 }
 
 //----------------------------------------------------------------------------
