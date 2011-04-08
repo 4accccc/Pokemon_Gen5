@@ -545,17 +545,65 @@ VMCMD_RESULT EvCmdWBTGMKVisionChange( VMHANDLE * core, void * wk )
 {
   SCRCMD_WORK   *work = wk;
   GAMESYS_WORK  *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA     *gdata = SCRCMD_WORK_GetGameData( work );
+  HEAPID      heap_id = SCRCMD_WORK_GetHeapID( work );
   SCRIPT_WORK*     sc = SCRCMD_WORK_GetScriptWork( work );
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
   WBTSYS * wbtsys = getWBTSys( wk );
-  STRBUF * strbuf = SCRIPT_GetMsgTempBuffer( sc );
+  STRBUF * strbuf1;
+  STRBUF * strbuf2;   // プレイヤー名専用
 
-  u8 type = SCRCMD_GetVMWorkValue( core, wk );
+  u8 type = SCRCMD_GetVMWorkValue( core, wk );    // ビジョン種類
 
-  WBTSYS_GetOpponentName( wbtsys, strbuf );
+  switch( type ){
+  // VSビジョン
+  // strbuf1 = 左上の名前
+  // strbuf2 = 右下の名前
+  case SCR_WBT_VISION_VS:
+    strbuf1 = SCRIPT_GetMsgTempBuffer( sc );
+    WBTSYS_GetOpponentName( wbtsys, strbuf1 );
+
+    // プレイヤー名作成
+    {
+      MYSTATUS* myStatus;
+      myStatus = GAMEDATA_GetMyStatus( gdata );
+      strbuf2  = MyStatus_CreateNameString( myStatus, heap_id );
+    }
+    break;
+
+  // 優勝ビジョン   プレイヤー勝ち
+  // strbuf1 = 優勝者の名前
+  // strbuf2 = 未使用
+  case SCR_WBT_VISION_WIN_PLAYER:
+    // プレイヤー名コピー
+    {
+      MYSTATUS* myStatus;
+      myStatus = GAMEDATA_GetMyStatus( gdata );
+      strbuf1 = SCRIPT_GetMsgTempBuffer( sc );
+      MyStatus_CopyNameString( myStatus, strbuf1 );
+    }
+    strbuf2 = NULL;
+    break;
+  // 優勝ビジョン   敵が勝ち
+  // strbuf1 = 優勝者の名前
+  // strbuf2 = 未使用
+  case SCR_WBT_VISION_WIN_ENEMY:
+    strbuf1 = SCRIPT_GetMsgTempBuffer( sc );
+    WBTSYS_GetOpponentName( wbtsys, strbuf1 );
+    strbuf2 = NULL;
+    break;
+
+  default:
+    strbuf1 = NULL;
+    strbuf2 = NULL;
+    break;
+  }
 
   // ギミック変更
-  WBT_GIMMICK_VisionChange( fieldWork, type, strbuf );
+  WBT_GIMMICK_VisionChange( fieldWork, type, strbuf1, strbuf2 );
+
+  // strbuf2はプレイヤー名で作成しているかもしれないので破棄
+  if( strbuf2 ){ GFL_STR_DeleteBuffer( strbuf2 ); }
 
   return VMCMD_RESULT_CONTINUE;
 }

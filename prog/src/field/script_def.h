@@ -653,8 +653,9 @@
 
 // 背景ビジョン定義 ※リソースの並びと同一なので変更不可
 #define SCR_WBT_VISION_VS             (0) ///<VSビジョン
-#define SCR_WBT_VISION_WIN            (1) ///<優勝ビジョン
-#define SCR_WBT_VISION_ALL            (2) ///<オールトーナメントビジョン
+#define SCR_WBT_VISION_WIN_PLAYER     (1) ///<優勝ビジョン プレイヤー勝ち
+#define SCR_WBT_VISION_WIN_ENEMY      (2) ///<優勝ビジョン 敵勝ち
+#define SCR_WBT_VISION_ALL            (3) ///<オールトーナメントビジョン
 
 // 通路エフェクト定義 ※リソースの並びと同一なので変更不可
 #define SCR_WBT_EFFECT_NORMAL         (0) ///<ノーマルエフェクト

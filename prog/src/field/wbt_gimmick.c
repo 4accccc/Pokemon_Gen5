@@ -269,8 +269,8 @@ static const GFL_G3D_UTIL_SETUP g3Dutil_Setup = {
 //=====================================
 typedef enum
 {
-  TEX_INDEX_RIVAL,    // 相手の名前
-  TEX_INDEX_MY,       // 自分の名前
+  TEX_INDEX_LEFT,     // 左上の名前
+  TEX_INDEX_RIGHT,    // 右下の名前
   TEX_INDEX_WIN,      // 優勝者の名前
 
   TEX_INDEX_MAX,
@@ -301,7 +301,7 @@ static void EXPOBJ_ObjMain( WBT_GMK_TMP *p_wk );
 
 // 背景ビジョン
 static void VISION_Setup( WBT_GMK_TMP *p_wk, u8 type );
-static void VISION_SetupName( WBT_GMK_TMP *p_wk, u8 type, STRBUF *strbuf );
+static void VISION_SetupName( WBT_GMK_TMP *p_wk, u8 type, STRBUF *strbuf1, STRBUF *strbuf2 );
 static BOOL VISION_Font2Tex( WBT_GMK_TMP *p_wk, TEX_INDEX tex_index, STRBUF *strbuf, HEAPID heapID );
 
 //=============================================================================
@@ -382,10 +382,11 @@ void WBT_GIMMICK_Move( FIELDMAP_WORK *p_fieldmap )
  *	        優勝ビジョンなど
  *
  *	@param	p_fieldmap  フィールドワークポインタ
- *	@param  strbuf      対戦相手名
+ *	@param  strbuf1     対戦者名1
+ *	@param  strbuf2     対戦者名2
  */
 //-----------------------------------------------------------------------------
-void WBT_GIMMICK_VisionChange( FIELDMAP_WORK *p_fieldmap, u8 type, STRBUF *strbuf )
+void WBT_GIMMICK_VisionChange( FIELDMAP_WORK *p_fieldmap, u8 type, STRBUF *strbuf1, STRBUF *strbuf2 )
 {
   WBT_GMK_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, WBT_TMP_ASSIGN_ID );
 
@@ -404,10 +405,15 @@ void WBT_GIMMICK_VisionChange( FIELDMAP_WORK *p_fieldmap, u8 type, STRBUF *strbu
   // ビジョン別設定
   switch( type ){
   case SCR_WBT_VISION_VS:
-  case SCR_WBT_VISION_WIN:
+    GF_ASSERT( strbuf2 );     // VSの場合は2つ名前を使用
+    /* break through */
+  case SCR_WBT_VISION_WIN_PLAYER:
+  case SCR_WBT_VISION_WIN_ENEMY:
+    GF_ASSERT( strbuf1 );
+
     // 名前張り付けのビジョンなら
     // リソースは読み込まない
-    VISION_SetupName( p_wk, type, strbuf );
+    VISION_SetupName( p_wk, type, strbuf1, strbuf2 );
     break;
 
   default:
@@ -872,21 +878,22 @@ static void VISION_Setup( WBT_GMK_TMP *p_wk, u8 type )
  *	@param	strbuf              対戦相手名
  */
 //-----------------------------------------------------------------------------
-static void VISION_SetupName( WBT_GMK_TMP *p_wk, u8 type, STRBUF *strbuf )
+static void VISION_SetupName( WBT_GMK_TMP *p_wk, u8 type, STRBUF *strbuf1, STRBUF *strbuf2 )
 {
   u16   obj_idx;    // OBJインデックス
 
+  // 3DモデルオブジェID判定
   // 名前貼り付けビジョンは
   // VSか優勝だけ
-  if( type == SCR_WBT_VISION_WIN )
-  {
+  switch( type ){
+  case SCR_WBT_VISION_WIN_PLAYER:
+  case SCR_WBT_VISION_WIN_ENEMY:
     obj_idx = OBJ_V_WIN;
-  }
-  else
-  {
+    break;
+  case SCR_WBT_VISION_VS:
     obj_idx = OBJ_V_VS;
+    break;
   }
-
 
   // アニメ再生
   {
@@ -911,20 +918,22 @@ static void VISION_SetupName( WBT_GMK_TMP *p_wk, u8 type, STRBUF *strbuf )
     switch( obj_idx ){
     case OBJ_V_VS:
       {
-        ret = VISION_Font2Tex( p_wk, TEX_INDEX_RIVAL, strbuf, p_wk->heapID );
+        ret = VISION_Font2Tex( p_wk, TEX_INDEX_LEFT, strbuf1, p_wk->heapID );
         GF_ASSERT(ret);
-        ret = VISION_Font2Tex( p_wk, TEX_INDEX_MY, str_player, p_wk->heapID );
+        ret = VISION_Font2Tex( p_wk, TEX_INDEX_RIGHT, strbuf2, p_wk->heapID );
         GF_ASSERT(ret);
 
+        // 表示
         FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, EXPOBJ_UNIT_IDX, OBJ_V_VS_NAME, FALSE );
       }
       break;
 
     case OBJ_V_WIN:
       {
-        ret = VISION_Font2Tex( p_wk, TEX_INDEX_WIN, str_player, p_wk->heapID );
+        ret = VISION_Font2Tex( p_wk, TEX_INDEX_WIN, strbuf1, p_wk->heapID );
         GF_ASSERT(ret);
 
+        // 表示
         FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, EXPOBJ_UNIT_IDX, OBJ_V_WIN_NAME, FALSE );
       }
       break;
@@ -964,14 +973,10 @@ static BOOL VISION_Font2Tex( WBT_GMK_TMP *p_wk, TEX_INDEX tex_index, STRBUF *str
 
   u32           len = 0;
 
-  // どのテクスチャに貼り付けるか
-  // 文字も変える
+  // どのオブジェのテクスチャに貼り付けるか
   switch( tex_index ){
-  case TEX_INDEX_MY:
-    obj_idx = OBJ_V_VS_NAME;
-    break;
-    
-  case TEX_INDEX_RIVAL:
+  case TEX_INDEX_LEFT:
+  case TEX_INDEX_RIGHT:
     obj_idx = OBJ_V_VS_NAME;
     break;
 
