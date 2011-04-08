@@ -265,9 +265,9 @@ static const GFL_G3D_UTIL_SETUP g3Dutil_Setup = {
 //=====================================
 typedef enum
 {
-  TEX_INDEX_MY,     // 自分の名前
-  TEX_INDEX_RIVAL,  // 相手の名前
-  TEX_INDEX_WIN,    // 優勝者の名前
+  TEX_INDEX_RIVAL,    // 相手の名前
+  TEX_INDEX_MY,       // 自分の名前
+  TEX_INDEX_WIN,      // 優勝者の名前
 
   TEX_INDEX_MAX,
 }TEX_INDEX;
@@ -297,8 +297,8 @@ static void EXPOBJ_ObjMain( WBT_GMK_TMP *p_wk );
 
 // 背景ビジョン
 static void VISION_Setup( WBT_GMK_TMP *p_wk, u8 type );
-static void VISION_SetupName( WBT_GMK_TMP *p_wk, u8 type );
-static BOOL VISION_Font2Tex( WBT_GMK_TMP *p_wk, TEX_INDEX tex_index, HEAPID heapID );
+static void VISION_SetupName( WBT_GMK_TMP *p_wk, u8 type, STRBUF *strbuf );
+static BOOL VISION_Font2Tex( WBT_GMK_TMP *p_wk, TEX_INDEX tex_index, STRBUF *strbuf, HEAPID heapID );
 
 //=============================================================================
 /**
@@ -378,9 +378,10 @@ void WBT_GIMMICK_Move( FIELDMAP_WORK *p_fieldmap )
  *	        優勝ビジョンなど
  *
  *	@param	p_fieldmap  フィールドワークポインタ
+ *	@param  strbuf      対戦相手名
  */
 //-----------------------------------------------------------------------------
-void WBT_GIMMICK_VisionChange( FIELDMAP_WORK *p_fieldmap, u8 type )
+void WBT_GIMMICK_VisionChange( FIELDMAP_WORK *p_fieldmap, u8 type, STRBUF *strbuf )
 {
   WBT_GMK_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, WBT_TMP_ASSIGN_ID );
 
@@ -402,7 +403,7 @@ void WBT_GIMMICK_VisionChange( FIELDMAP_WORK *p_fieldmap, u8 type )
   case SCR_WBT_VISION_WIN:
     // 名前張り付けのビジョンなら
     // リソースは読み込まない
-    VISION_SetupName( p_wk, type );
+    VISION_SetupName( p_wk, type, strbuf );
     break;
 
   default:
@@ -483,6 +484,7 @@ void WBT_GIMMICK_EffectStart( FIELDMAP_WORK *p_fieldmap, u8 type, u8 pos )
   // Effectの設定
   {
     u16     obj_idx = OBJ_EFFECT;    // OBJインデックス
+    u8      i;
 
     GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( p_wk->exp_obj, EXPOBJ_UNIT_IDX_EFFECT, obj_idx );
 
@@ -494,10 +496,13 @@ void WBT_GIMMICK_EffectStart( FIELDMAP_WORK *p_fieldmap, u8 type, u8 pos )
     FLD_EXP_OBJ_SetCulling( p_wk->exp_obj, EXPOBJ_UNIT_IDX_EFFECT, obj_idx, TRUE );
     // 表示
     FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, EXPOBJ_UNIT_IDX_EFFECT, obj_idx, FALSE );
+
     // アニメ再生
+    // ica と itaの2つ分
+    for( i=0; i<RES_E_NUM-1; i++ )
     {
-      EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, EXPOBJ_UNIT_IDX_EFFECT, obj_idx, 0 );
-      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, EXPOBJ_UNIT_IDX_EFFECT, obj_idx, 0, TRUE );
+      EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, EXPOBJ_UNIT_IDX_EFFECT, obj_idx, i );
+      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, EXPOBJ_UNIT_IDX_EFFECT, obj_idx, i, TRUE );
       FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, FALSE );  // ループ再生設定
       FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE );  // アニメ再生設定
     }
@@ -520,13 +525,15 @@ void WBT_GIMMICK_WinEffectStart( FIELDMAP_WORK *p_fieldmap )
   // 優勝のアニメ再生
   {
     u16     obj_idx = OBJ_E_WIN_START;    // OBJインデックス
+    u8      i;
 
     // 表示
     FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, FALSE );
     // アニメ再生
+    for( i=0; i<RES_E_NUM-1; i++ )
     {
-      EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, 0 );
-      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, 0, TRUE );
+      EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, i );
+      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, i, TRUE );
       FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, FALSE );  // ループ再生設定
       FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE );  // アニメ再生設定
     }
@@ -646,6 +653,7 @@ static void EXPOBJ_ObjSet( WBT_GMK_TMP *p_wk )
   // WIN エフェクトの設定
   {
     u16     obj_idx = OBJ_E_WIN_START;    // OBJインデックス
+    u8      i;
 
     GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx );
 
@@ -653,14 +661,15 @@ static void EXPOBJ_ObjSet( WBT_GMK_TMP *p_wk )
     status->trans.x = EFFECT_X;
     status->trans.y = EFFECT_Y;
     status->trans.z = EFFECT_Z;
-    // カリングする
-    FLD_EXP_OBJ_SetCulling( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, TRUE );
+    // カリングしない
+    FLD_EXP_OBJ_SetCulling( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, FALSE );
     // 表示
     FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, TRUE );
     // アニメ再生
+    for( i=0; i<RES_E_NUM-1; i++ )
     {
-      EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, 0 );
-      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, 0, TRUE );
+      EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, i );
+      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, i, TRUE );
       FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, FALSE );  // ループ再生設定
       FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, TRUE );  // アニメ再生設定
     }
@@ -670,6 +679,7 @@ static void EXPOBJ_ObjSet( WBT_GMK_TMP *p_wk )
   // WIN エフェクトの設定
   {
     u16     obj_idx = OBJ_E_WIN_LOOP;    // OBJインデックス
+    u8      i;
 
     GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx );
 
@@ -677,14 +687,15 @@ static void EXPOBJ_ObjSet( WBT_GMK_TMP *p_wk )
     status->trans.x = EFFECT_X;
     status->trans.y = EFFECT_Y;
     status->trans.z = EFFECT_Z;
-    // カリングする
-    FLD_EXP_OBJ_SetCulling( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, TRUE );
+    // カリングしない
+    FLD_EXP_OBJ_SetCulling( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, FALSE );
     // 表示
     FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, TRUE );
     // アニメ再生
+    for( i=0; i<RES_E_NUM-1; i++ )
     {
-      EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, 0 );
-      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, 0, TRUE );
+      EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, i );
+      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, i, TRUE );
       FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, TRUE );  // ループ再生設定
       FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, TRUE );  // アニメ再生設定
     }
@@ -732,14 +743,17 @@ static void EXPOBJ_ObjMain( WBT_GMK_TMP *p_wk )
     // アニメ終了したら、ループ用に切り替え
     if( FLD_EXP_OBJ_ChkAnmEnd( exp_anm ) == TRUE )
     {
+      u8 i;
       // 開始エフェクトは消す
       FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, EXPOBJ_UNIT_IDX, OBJ_E_WIN_START, TRUE );
 
-      // ループエフェクト出す
+      // ループエフェクトは表示
+      FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, EXPOBJ_UNIT_IDX, OBJ_E_WIN_LOOP, FALSE );
+      // ループエフェクトアニメ設定
+      for( i=0; i<RES_E_NUM-1; i++ )
       {
-        EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, EXPOBJ_UNIT_IDX, OBJ_E_WIN_LOOP, 0 );
-        FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, EXPOBJ_UNIT_IDX, OBJ_E_WIN_LOOP, FALSE );
-        FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, EXPOBJ_UNIT_IDX, OBJ_E_WIN_LOOP, 0, TRUE );
+        EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, EXPOBJ_UNIT_IDX, OBJ_E_WIN_LOOP, i );
+        FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, EXPOBJ_UNIT_IDX, OBJ_E_WIN_LOOP, i, TRUE );
         FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, TRUE );  // ループ再生設定
         FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE );  // アニメ再生設定
       }
@@ -847,9 +861,10 @@ static void VISION_Setup( WBT_GMK_TMP *p_wk, u8 type )
  *
  *	@param	WBT_GMK_TMP *p_wk   ギミックワーク
  *	@param	type                ビジョン種類
+ *	@param	strbuf              対戦相手名
  */
 //-----------------------------------------------------------------------------
-static void VISION_SetupName( WBT_GMK_TMP *p_wk, u8 type )
+static void VISION_SetupName( WBT_GMK_TMP *p_wk, u8 type, STRBUF *strbuf )
 {
   u16   obj_idx;    // OBJインデックス
 
@@ -881,13 +896,16 @@ static void VISION_SetupName( WBT_GMK_TMP *p_wk, u8 type )
   // 名前の設定
   {
     BOOL ret;
+    STRBUF  *str_player;
+
+    str_player = MyStatus_CreateNameString( &p_wk->p_player_wk->mystatus, p_wk->heapID );
 
     switch( obj_idx ){
     case OBJ_V_VS:
       {
-        ret = VISION_Font2Tex( p_wk, TEX_INDEX_MY, p_wk->heapID );
+        ret = VISION_Font2Tex( p_wk, TEX_INDEX_RIVAL, strbuf, p_wk->heapID );
         GF_ASSERT(ret);
-        ret = VISION_Font2Tex( p_wk, TEX_INDEX_RIVAL, p_wk->heapID );
+        ret = VISION_Font2Tex( p_wk, TEX_INDEX_MY, str_player, p_wk->heapID );
         GF_ASSERT(ret);
 
         FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, EXPOBJ_UNIT_IDX, OBJ_V_VS_NAME, FALSE );
@@ -896,7 +914,7 @@ static void VISION_SetupName( WBT_GMK_TMP *p_wk, u8 type )
 
     case OBJ_V_WIN:
       {
-        ret = VISION_Font2Tex( p_wk, TEX_INDEX_WIN, p_wk->heapID );
+        ret = VISION_Font2Tex( p_wk, TEX_INDEX_WIN, str_player, p_wk->heapID );
         GF_ASSERT(ret);
 
         FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, EXPOBJ_UNIT_IDX, OBJ_V_WIN_NAME, FALSE );
@@ -904,6 +922,7 @@ static void VISION_SetupName( WBT_GMK_TMP *p_wk, u8 type )
       break;
     }
 
+    GFL_HEAP_FreeMemory( str_player );
   }
 }
 
@@ -922,7 +941,7 @@ static void VISION_SetupName( WBT_GMK_TMP *p_wk, u8 type )
  *	@return
  */
 //-----------------------------------------------------------------------------
-static BOOL VISION_Font2Tex( WBT_GMK_TMP *p_wk, TEX_INDEX tex_index, HEAPID heapID )
+static BOOL VISION_Font2Tex( WBT_GMK_TMP *p_wk, TEX_INDEX tex_index, STRBUF *strbuf, HEAPID heapID )
 {
   F2T_WORK      f2t_wk;
   BOOL          ret;
@@ -935,7 +954,6 @@ static BOOL VISION_Font2Tex( WBT_GMK_TMP *p_wk, TEX_INDEX tex_index, HEAPID heap
   GFL_G3D_RES   *p_res;
   u8            obj_idx;
 
-  STRBUF        *strbuf;
   u32           len = 0;
 
   // どのテクスチャに貼り付けるか
@@ -943,17 +961,14 @@ static BOOL VISION_Font2Tex( WBT_GMK_TMP *p_wk, TEX_INDEX tex_index, HEAPID heap
   switch( tex_index ){
   case TEX_INDEX_MY:
     obj_idx = OBJ_V_VS_NAME;
-    strbuf = MyStatus_CreateNameString( &p_wk->p_player_wk->mystatus, heapID );
     break;
     
   case TEX_INDEX_RIVAL:
     obj_idx = OBJ_V_VS_NAME;
-    strbuf = MyStatus_CreateNameString( &p_wk->p_player_wk->mystatus, heapID );
     break;
 
   case TEX_INDEX_WIN:
     obj_idx = OBJ_V_WIN_NAME;
-    strbuf = MyStatus_CreateNameString( &p_wk->p_player_wk->mystatus, heapID );
     break;
   }
 
@@ -978,7 +993,6 @@ static BOOL VISION_Font2Tex( WBT_GMK_TMP *p_wk, TEX_INDEX tex_index, HEAPID heap
   ret = F2T_CopyString( p_res, tex_name[tex_index], NULL, plt_name[tex_index],
       strbuf, ((76/2) - (len/2)), 0, lsb, heapID, &f2t_wk );
 
-  GFL_HEAP_FreeMemory( strbuf );
 
   return ret;
 }

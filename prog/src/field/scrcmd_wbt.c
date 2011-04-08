@@ -545,12 +545,17 @@ VMCMD_RESULT EvCmdWBTGMKVisionChange( VMHANDLE * core, void * wk )
 {
   SCRCMD_WORK   *work = wk;
   GAMESYS_WORK  *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  SCRIPT_WORK*     sc = SCRCMD_WORK_GetScriptWork( work );
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+  WBTSYS * wbtsys = getWBTSys( wk );
+  STRBUF * strbuf = SCRIPT_GetMsgTempBuffer( sc );
 
   u8 type = SCRCMD_GetVMWorkValue( core, wk );
 
+  WBTSYS_GetOpponentName( wbtsys, strbuf );
+
   // ギミック変更
-  WBT_GIMMICK_VisionChange( fieldWork, type );
+  WBT_GIMMICK_VisionChange( fieldWork, type, strbuf );
 
   return VMCMD_RESULT_CONTINUE;
 }

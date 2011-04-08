@@ -73,7 +73,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
 #imdデータからの生成ルール
 %.nsbmd:	data/%.imd
 #	@echo $<をコンバート
-	@g3dcvtr $<
+	@g3dcvtr $< -tex-nomerge
 
 %.nsbca:	data/%.ica
 #	@echo $<をコンバート
