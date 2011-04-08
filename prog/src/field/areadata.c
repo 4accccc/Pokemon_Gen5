@@ -86,17 +86,10 @@ static void dumpAreaData(const AREADATA * areadata)
  * @return  AREADATA
  */
 //------------------------------------------------------------------
-AREADATA * AREADATA_Create(HEAPID heapID, u16 area_id, u32 season_id,u32 dungeon_area_id)
+AREADATA * AREADATA_Create(HEAPID heapID, u16 area_id, u32 area_ofs_id)
 {
   AREADATA * areadata;
-  if (AREADATA_HasSeason(area_id))
-  {
-    area_id += season_id;
-  }
-  else if (AREADATA_HasDungeonArea(area_id))
-  {
-    area_id += dungeon_area_id;
-  }
+  area_id += area_ofs_id;
 
   CHECK_AREA_RANGE(area_id);
   areadata = GFL_FILE_LoadDataAllocOfs(
@@ -212,7 +205,17 @@ BOOL AREADATA_HasDungeonArea(u16 area_id)
   }
   return FALSE;
 }
-
+//------------------------------------------------------------------
+//リゾートのテクスチャ複数エリアかどうか
+//------------------------------------------------------------------
+BOOL AREADATA_HasResortInstitutionArea(u16 area_id)
+{
+  if( AREA_ID_IN72 <= area_id && area_id < AREA_ID_IN73 )
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
 //------------------------------------------------------------------
 //四季のある場所で、変化が顕著な場所かそうでないか？
 //------------------------------------------------------------------

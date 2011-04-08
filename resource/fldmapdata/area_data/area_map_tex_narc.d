@@ -333,7 +333,10 @@ NNSARC_DEPEND_FILES	= \
 	nsbtx_files/tex_set_in69.nsbtx \
 	nsbtx_files/tex_set_in70.nsbtx \
 	nsbtx_files/tex_set_in71.nsbtx \
-	nsbtx_files/tex_set_in72.nsbtx \
+	nsbtx_files/tex_set_in72_0.nsbtx \
+	nsbtx_files/tex_set_in72_1.nsbtx \
+	nsbtx_files/tex_set_in72_2.nsbtx \
+	nsbtx_files/tex_set_in72_3.nsbtx \
 	nsbtx_files/tex_set_in73.nsbtx \
 	nsbtx_files/tex_set_in74_0.nsbtx \
 	nsbtx_files/tex_set_in74_1.nsbtx \

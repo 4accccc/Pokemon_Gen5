@@ -28,7 +28,7 @@ enum {
 //============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-extern AREADATA * AREADATA_Create(HEAPID heapID, u16 area_id, u32 season_id,u32 dungeon_area_id);
+extern AREADATA * AREADATA_Create(HEAPID heapID, u16 area_id, u32 area_ofs_id);
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -71,4 +71,5 @@ extern BOOL AREADATA_HasSeason(u16 area_id);
 extern BOOL AREADATA_HasSeasonDiff(u16 area_id);
 
 extern BOOL AREADATA_HasDungeonArea(u16 area_id);
+extern BOOL AREADATA_HasResortInstitutionArea(u16 area_id);
 

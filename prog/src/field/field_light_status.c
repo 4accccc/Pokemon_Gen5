@@ -94,12 +94,21 @@ void FIELD_LIGHT_STATUS_Get( u32 zone_id, int hour, int minute, int weather_id, 
   //　通常テーブル
   if( p_data == NULL )
   {
-    // 無限ダンジョンのエリア情報はライトに反映しない
-    AREADATA* p_area = AREADATA_Create( GFL_HEAP_LOWID(heapID), ZONEDATA_GetAreaID(zone_id), season , 0 );
-      
-    p_data = LIGHT_STATUS_LoadData( ARCID_FIELD_LIGHT, AREADATA_GetLightType(p_area), &data_num, GFL_HEAP_LOWID(heapID) );
+    u16 area_ofs_id = 0;
 
-    AREADATA_Delete( p_area );
+    if( AREADATA_HasSeason( ZONEDATA_GetAreaID(zone_id) ) )
+    {
+      area_ofs_id = season;
+    }
+
+    // 無限ダンジョンのエリア情報はライトに反映しない
+    {
+      AREADATA* p_area = AREADATA_Create( GFL_HEAP_LOWID(heapID), ZONEDATA_GetAreaID(zone_id), area_ofs_id );
+
+      p_data = LIGHT_STATUS_LoadData( ARCID_FIELD_LIGHT, AREADATA_GetLightType(p_area), &data_num, GFL_HEAP_LOWID(heapID) );
+
+      AREADATA_Delete( p_area );
+    }
   }
 
   // 時間の色を取得

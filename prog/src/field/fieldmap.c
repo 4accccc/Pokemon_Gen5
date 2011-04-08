@@ -547,14 +547,28 @@ FIELDMAP_WORK * FIELDMAP_Create( GAMESYS_WORK *gsys, HEAPID heapID )
 	}
   // 地面、見た目にかかわる情報には、進入の情報を関係付ける。
   {
-    // 無限ダンジョンのダンジョンエリア情報を取得
-    SAVE_CONTROL_WORK *p_scw = GAMEDATA_GetSaveControlWork( fieldWork->gamedata );
-    INFINITYDUNGEON_SAVE *p_save = SaveData_GetINFINITYDUNGEON( p_scw );
-    u8 dungeon_area_id = INFINITYDUNGEON_SAVE_GetDungeonAreaID( p_save );
+    u16 area_id = ZONEDATA_GetAreaID(fieldWork->map_id);
+    u32 area_ofs_id = 0;
+
+    if (AREADATA_HasSeason(area_id))
+    {
+      area_ofs_id = PMSEASON_GetConsiderCommSeason(gsys);
+    }
+    else if (AREADATA_HasDungeonArea(area_id))
+    {
+      // 無限ダンジョンのダンジョンエリア情報を取得
+      SAVE_CONTROL_WORK *p_scw = GAMEDATA_GetSaveControlWork( fieldWork->gamedata );
+      INFINITYDUNGEON_SAVE *p_save = SaveData_GetINFINITYDUNGEON( p_scw );
+      area_ofs_id = INFINITYDUNGEON_SAVE_GetDungeonAreaID( p_save );;
+    }
+    else if ( AREADATA_HasResortInstitutionArea( area_id ) )
+    {
+      area_ofs_id = 0; //TODO
+    }
 
     // エリア情報を取得
     fieldWork->areadata = AREADATA_Create( heapID,
-        ZONEDATA_GetAreaID(fieldWork->map_id), PMSEASON_GetConsiderCommSeason(gsys) , dungeon_area_id );
+        area_id, area_ofs_id );
   }
 	
 	//マップコントロール
