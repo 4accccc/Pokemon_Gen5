@@ -157,6 +157,7 @@ static const DEBUG_MENU_LIST WBTMenuList[] =
   { DEBUG_STR_WBT_04, (void*)DEBUG_STR_WBT_04, GFL_OVERLAY_BLANK_ID },   // トーナメント表アプリ
   { DEBUG_STR_WBT_05, (void*)DEBUG_STR_WBT_05, GFL_OVERLAY_BLANK_ID },   // トーナメント表アプリ
   { DEBUG_STR_WBT_06, (void*)DEBUG_STR_WBT_06, GFL_OVERLAY_BLANK_ID },   // トーナメント表アプリ
+  { DEBUG_STR_WBT_07, (void*)DEBUG_STR_WBT_07, GFL_OVERLAY_BLANK_ID },   // デバッグあり
 };
 
 static const DEBUG_MENU_INITIALIZER DebugMenuWBTImitializer = {
@@ -312,6 +313,9 @@ static GMEVENT_RESULT debugMenuWBTEvent( GMEVENT *event, int *seq, void *wk )
       work->call_func = debugMenuCallProc_WBTList;
       work->stage = WBTSTAGE_2ND;
       (*seq)++;
+      break;
+	//
+    case DEBUG_STR_WBT_07:		// デバッグあり
       break;
     }
     break;

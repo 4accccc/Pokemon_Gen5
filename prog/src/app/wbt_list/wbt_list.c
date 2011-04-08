@@ -301,6 +301,12 @@ enum{
 	FLG_MES_END		= (1<<1),		// 2回目終了
 };
 
+// debugのフラグ
+enum{
+	FLG_DBG_MODE	= (1<<0),		// モード(0:デバッグなし、1:あり)
+	FLG_DBG_COLOR	= (1<<1),		// 色変え
+};
+
 //=============================================================================
 /**
  *								構造体定義
@@ -421,7 +427,7 @@ typedef struct
 	s32						PlayerNum;						// プレイヤの番号
 	u32						MoveFlag;						// 移動可能フラグ
 	u32						MesFlag;						// メッセージフラグ
-	s32						DebugFlag;						// debug
+	u32						DebugFlag;						// debug
 	s32						Timer[TIMER_MAX];				// タイマ
 	WBTLIST_MOVE_WORK		MoveWork[MWORK_MAX];			// 移動用ワーク
 	WBTLIST_PARAM_WORK		ParamWork[PARAM_WORK_MAX];		// パラメータのワーク
@@ -1082,7 +1088,7 @@ static void wbt_init( WBTLIST_MAIN_WORK* wk )
 	//
 	wk->DispCount	= 0;
 	wk->MoveFlag	= 0;
-	wk->DebugFlag	= 1;
+	wk->DebugFlag	= 0;
 	
 	for(i=0;i<TIMER_MAX;i++){
 		wk->Timer[i] = 0;
@@ -1142,6 +1148,13 @@ static void wbt_init( WBTLIST_MAIN_WORK* wk )
 	//
 	// 削除
 //	GFL_STR_DeleteBuffer( strbuf );
+	//
+	// DebugFlagの判定
+	// 本当はここで(FLG_DBG_MODE)の判定
+//	wk->DebugFlag |= FLG_DBG_MODE;		// test
+	if(wk->DebugFlag & FLG_DBG_MODE){
+		wk->DebugFlag |= FLG_DBG_COLOR;
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -3065,13 +3078,27 @@ static void wbt_debug( WBTLIST_MAIN_WORK* wk )
 		wbt_init_param( wk );
 		OS_Printf("debug init \n");
 	}
+#endif
 	// debug
-	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
-		wk->DebugFlag = 1 - wk->DebugFlag;
-		for(i=0;i<8;i++){
-			wbt_chg_obj_pal( wk, i, PLTID_OBJ_MAPMODEL, wk->DebugFlag );
+	{
+		s32		tmp=0;
+		s32		i;
+		//
+		if(wk->DebugFlag & FLG_DBG_MODE){
+			if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
+				// 色変更
+				if(wk->DebugFlag & FLG_DBG_COLOR){
+					wk->DebugFlag &= ~FLG_DBG_COLOR;
+					tmp = 0;
+				}else{
+					wk->DebugFlag |= FLG_DBG_COLOR;
+					tmp = 1;
+				}
+				for(i=0;i<8;i++){
+					wbt_chg_obj_pal( wk, i, PLTID_OBJ_MAPMODEL, tmp );
+				}
+			}
 		}
 	}
-#endif
 }
 
