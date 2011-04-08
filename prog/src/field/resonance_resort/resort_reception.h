@@ -11,6 +11,7 @@
 #pragma once
 #include "field/fieldmap_proc.h"  //for FIELDMAP_WORK
 #include "resort_people.h"
+#include "resort_npc.h"
 #include "resort_data_manager.h"
 
 //=============================================================================

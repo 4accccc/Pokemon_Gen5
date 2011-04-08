@@ -12932,6 +12932,79 @@
 
 //--------------------------------------------------------------
 /**
+ * @brief リゾート用  NPCのデータを取得
+ */
+//--------------------------------------------------------------
+#define _RESORT_GET_NPC_DATA( objid, param, ret_wk ) \
+      _ASM_RESORT_GET_NPC_DATA objid, param, ret_wk
+  
+  .macro _ASM_RESORT_GET_NPC_DATA objid, param, ret_wk
+  .short EV_SEQ_RESORT_GET_NPC_DATA
+  .short \objid
+  .short \param
+  .short \ret_wk
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief リゾート用  所有者データ設定
+ */
+//--------------------------------------------------------------
+#define _RESORT_SET_MY_DATA( param, data ) \
+      _ASM_RESORT_SET_MY_DATA param, data
+  
+  .macro _ASM_RESORT_SET_MY_DATA param, data
+  .short EV_SEQ_RESORT_SET_MY_DATA
+  .short \param
+  .short \data
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief リゾート用  所有者データ取得
+ */
+//--------------------------------------------------------------
+#define _RESORT_GET_MY_DATA( param, ret_wk ) \
+      _ASM_RESORT_GET_MY_DATA param, ret_wk 
+  
+  .macro _ASM_RESORT_GET_MY_DATA param, ret_wk 
+  .short EV_SEQ_RESORT_GET_MY_DATA
+  .short \param
+  .short \ret_wk
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief リゾート用  噂データ取得
+ */
+//--------------------------------------------------------------
+#define _RESORT_GET_MOUTHCOMM( index, cnt, ret_wk ) \
+      _ASM_RESORT_GET_MOUTHCOMM index, cnt, ret_wk 
+  
+  .macro _ASM_RESORT_GET_MOUTHCOMM index, cnt, ret_wk 
+  .short EV_SEQ_RESORT_GET_MOUTHCOMM
+  .short \index
+  .short \cnt
+  .short \ret_wk
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief リゾート用  噂質問を単語登録
+ */
+//--------------------------------------------------------------
+#define _RESORT_SET_WORD_MOUTHCOMM( npc_idx, answer_idx, buf_id ) \
+      _ASM_RESORT_SET_WORD_MOUTHCOMM npc_idx, answer_idx, buf_id
+
+  .macro _ASM_RESORT_SET_WORD_MOUTHCOMM npc_idx, answer_idx, buf_id
+  .short EV_SEQ_RESORT_SET_WORD_MOUTHCOMM
+  .short \npc_idx
+  .short \answer_idx
+  .short \buf_id
+  .endm
+
+//--------------------------------------------------------------
+/**
  * @brief 無限ダンジョン初期化
  */
 //--------------------------------------------------------------

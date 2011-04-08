@@ -31,6 +31,7 @@
 #include "field/resonance_resort_data.h"
 #include "resort_people.h"
 #include "resort_data_manager.h"
+#include "resort_npc.h"
 
 //mine
 #include "resort_field.h"
@@ -40,7 +41,8 @@
  *					定数宣言
 */
 //=============================================================================
-#define RESORT_FIELD_PEOPLE_MAX     (16)
+#define RESORT_FIELD_PEOPLE_MAX   (16)
+#define RESORT_FIELD_NPC_MAX     (32)
 //=============================================================================
 /**
  *				構造体
@@ -51,10 +53,11 @@
 //=====================================
 typedef struct
 {
-  RESORT_PEOPLE_SYS *p_people_sys;
+  RESORT_PEOPLE_SYS   *p_people_sys;
+  RESORT_NPC_SYS      *p_npc_sys;
   RESORT_DATA_MANAGER *p_data_manager;
-  RESORT_BINARY_SHOP *p_binary_shop;
-  RESORT_BINARY_SPOT *p_binary_spot;
+  RESORT_BINARY_SHOP  *p_binary_shop;
+  RESORT_BINARY_SPOT  *p_binary_spot;
 } RESORT_FIELD_WORK;
 
 //=============================================================================
@@ -73,16 +76,15 @@ typedef struct
 void RESORT_FIELD_Setup( FIELDMAP_WORK *p_fieldmap )
 {
   const HEAPID heapID = FIELDMAP_GetHeapID(p_fieldmap);
-
   GAMEDATA *p_gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork(p_fieldmap) );
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_gamedata );
+  RESONANCE_RESORT_SV *p_resort_sv = RESONANCE_RESORT_SV_GetWork( p_sv );
 
   //汎用ワーク確保
   RESORT_FIELD_WORK *p_wk = GMK_TMP_WK_AllocWork(p_fieldmap, RESORT_FIELD_ASSIGN_ID, heapID, sizeof(RESORT_FIELD_WORK));
 
   //データマネージャー
   {
-    SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_gamedata );
-    RESONANCE_RESORT_SV *p_resort_sv = RESONANCE_RESORT_SV_GetWork( p_sv );
 
     RESORT_DATA_MANAGER_INIT_PARAM param;
     GFL_STD_MemClear( &param, sizeof(RESORT_DATA_MANAGER_INIT_PARAM) );
@@ -97,9 +99,6 @@ void RESORT_FIELD_Setup( FIELDMAP_WORK *p_fieldmap )
 
   //人物システム
   {
-    SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_gamedata );
-    RESONANCE_RESORT_SV *p_resort_sv = RESONANCE_RESORT_SV_GetWork( p_sv );
-
     RESORT_PEOPLE_SYS_PARAM param;
     GFL_STD_MemClear( &param, sizeof(RESORT_PEOPLE_SYS_PARAM) );
     param.p_mmdlsys = GAMEDATA_GetMMdlSys(p_gamedata);
@@ -107,6 +106,17 @@ void RESORT_FIELD_Setup( FIELDMAP_WORK *p_fieldmap )
     param.max     = RESORT_FIELD_PEOPLE_MAX;
     param.placeID  = RESORT_MAP_ZoneIDToPlaceID( FIELDMAP_GetZoneID(p_fieldmap) );
     p_wk->p_people_sys = RESORT_PEOPLE_SYS_Init( &param, heapID );
+  }
+
+  //NPCシステム
+  {
+    RESORT_NPC_SYS_PARAM param;
+    GFL_STD_MemClear( &param, sizeof(RESORT_NPC_SYS_PARAM) );
+    param.p_mmdlsys = GAMEDATA_GetMMdlSys(p_gamedata);
+    param.max   = RESORT_FIELD_NPC_MAX;
+    param.p_city = RESONANCE_RESORT_SV_GetCityData( p_resort_sv );
+    param.placeID  = RESORT_MAP_ZoneIDToPlaceID( FIELDMAP_GetZoneID(p_fieldmap) );
+    p_wk->p_npc_sys = RESORT_NPC_SYS_Init( &param, heapID );
   }
 
   //バイナリ情報
@@ -130,6 +140,7 @@ void RESORT_FIELD_End( FIELDMAP_WORK *p_fieldmap )
 
   RESORT_BINARY_SPOT_Exit( p_wk->p_binary_spot );
   RESORT_BINARY_SHOP_Exit( p_wk->p_binary_shop );
+  RESORT_NPC_SYS_Exit( p_wk->p_npc_sys );
   RESORT_PEOPLE_SYS_Exit( p_wk->p_people_sys );
   RESORT_DATA_MANAGER_Exit( p_wk->p_data_manager );
 
@@ -148,6 +159,7 @@ void RESORT_FIELD_Move( FIELDMAP_WORK *p_fieldmap )
   RESORT_FIELD_WORK *p_wk = GMK_TMP_WK_GetWork(p_fieldmap, RESORT_FIELD_ASSIGN_ID);
 
   RESORT_PEOPLE_SYS_Main( p_wk->p_people_sys, FIELDMAP_GetFieldPlayer(p_fieldmap) );
+  RESORT_NPC_SYS_Main( p_wk->p_npc_sys );
 }
 
 //----------------------------------------------------------------------------
@@ -205,4 +217,18 @@ RESORT_BINARY_SPOT * RESORT_FIELD_GetBinarySpot( FIELDMAP_WORK *p_fieldmap )
 {
   RESORT_FIELD_WORK *p_wk = GMK_TMP_WK_GetWork(p_fieldmap, RESORT_FIELD_ASSIGN_ID);
   return p_wk->p_binary_spot;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  NPCシステムを取得
+ *
+ *	@param	FIELDMAP_WORK *p_fieldmap フィールドマップ
+ *
+ *	@return NPCシステム
+ */
+//-----------------------------------------------------------------------------
+RESORT_NPC_SYS * RESORT_FIELD_GetNpcSys( FIELDMAP_WORK *p_fieldmap )
+{
+  RESORT_FIELD_WORK *p_wk = GMK_TMP_WK_GetWork(p_fieldmap, RESORT_FIELD_ASSIGN_ID);
+  return p_wk->p_npc_sys;
 }

@@ -31,6 +31,7 @@ _EVENT_DATA    ev_resort_secretary_space
 _EVENT_DATA    ev_resort_secretary_move
 _EVENT_DATA    ev_resort_secretary_center
 _EVENT_DATA    ev_resort_secretary_pc
+_EVENT_DATA    ev_resort_npc_mouthcomm
 _EVENT_DATA_END
 
 //DEFINE_LOCALの数が多いので、グローバルにおいて使い回しています。
@@ -38,11 +39,20 @@ DEFINE_LOCAL  LWK_MENU_RET
 DEFINE_LOCAL  LWK_MENU_LOOP
 DEFINE_LOCAL  LWK_OBJID
 DEFINE_LOCAL  LWK_MSGID
+DEFINE_LOCAL  LWK_RET
 
 DEFINE_LOCAL LWK_LIST_RET_TYPE
 DEFINE_LOCAL LWK_LIST_RET_PARAM
 DEFINE_LOCAL LWK_LIST_RET_IDX
 DEFINE_LOCAL LWK_LIST_RET_PRICE
+
+
+//------------------------------注意--------------------------------//
+//																	//
+//	NPCのイベントに LOCALWORK11～13 まで使用ししています。		//
+//	話しかけるたびに次の人の噂を云うために使用。        			//
+//																	//
+//------------------------------------------------------------------//
 
 /**************************************************************/
 /*            ZONE_CHANGE_LABEL                               */
@@ -338,8 +348,6 @@ _RET
 //==============================================================
 sub_tourist_spot:
 {
-  DEFINE_LOCAL LWK_RET_LVUP
-
   //スポット文を表示
   _RESORT_GET_MSGID( RESORT_MSGID_WHERETOGO, LWK_MSGID )
 	_BALLOONWIN_OBJMSG( LWK_MSGID, LWK_OBJID )
@@ -353,14 +361,14 @@ sub_tourist_spot:
     _OBJ_WARP_OUT( LWK_OBJID )
     _TIME_WAIT( 30 )
 
-    _RESORT_SET_SPOT( LWK_LIST_RET_IDX, LWK_MSGID, LWK_RET_LVUP )
+    _RESORT_SET_SPOT( LWK_LIST_RET_IDX, LWK_MSGID, LWK_RET )
     _RESORT_DELETE_PEOPLE( RESORT_DELTE_PEOPLE_MINE, 0 )
 
     _RESORT_USE_MSG_ALPHA( FALSE )
     _RESORT_BLEND_BRIGHTNESS( 0, -16, 30 )
 
     _SYSWIN_MSG( LWK_MSGID, POS_DOWN )
-    IF $LWK_RET_LVUP == TRUE THEN
+    IF $LWK_RET == TRUE THEN
       _SYSWIN_MSG( resort_sys_13, POS_DOWN )
     ENDIF
     _SYSWIN_CLOSE()
@@ -697,7 +705,6 @@ _RET
 sub_resident_lot:
 {
   DEFINE_LOCAL LWK_DAY_FLAG
-  DEFINE_LOCAL LWK_RET
 
   _RESORT_GET_DATA( RESORT_GET_PARAM_DAY_FLAG, LWK_DAY_FLAG )
 
@@ -856,39 +863,38 @@ _RET
 //==============================================================
 sub_resident_service_effort:
 {
-  DEFINE_LOCAL LWK_RET_DECIDE
   DEFINE_LOCAL LWK_RET_IDX
 
   _BALLOONWIN_OBJMSG_POS( resort_exercice_00, LWK_OBJID, POS_DL )
 	_BALLOONWIN_CLOSE()
-  _SELECT_TEMOTI_POKE( LWK_RET_DECIDE, LWK_RET_IDX, 0 )
+  _SELECT_TEMOTI_POKE( LWK_RET, LWK_RET_IDX, 0 )
 
-  IF $LWK_RET_DECIDE == TRUE THEN
+  IF $LWK_RET == TRUE THEN
     //たまごチェック
-    _CHECK_TEMOTI_EGG( LWK_RET_DECIDE, LWK_RET_IDX )
+    _CHECK_TEMOTI_EGG( LWK_RET, LWK_RET_IDX )
 
-    IF $LWK_RET_DECIDE == TRUE THEN 
+    IF $LWK_RET == TRUE THEN 
       //選んだものがタマゴだった
       _BALLOONWIN_OBJMSG_POS( resort_exercice_01, LWK_OBJID, POS_DL )
     	_BALLOONWIN_CLOSE()
     ELSE
       SWITCH $LWK_LIST_RET_TYPE 
       CASE RESORT_SERVICE_TYPE_EFFORT_SPEDEF THEN
-        _RESORT_ADD_EFFORT( LWK_RET_IDX, RESORT_ADD_EFFORT_SPEDEF, LWK_LIST_RET_PARAM, LWK_RET_DECIDE )
+        _RESORT_ADD_EFFORT( LWK_RET_IDX, RESORT_ADD_EFFORT_SPEDEF, LWK_LIST_RET_PARAM, LWK_RET )
       CASE RESORT_SERVICE_TYPE_EFFORT_SPEPOW THEN
-        _RESORT_ADD_EFFORT( LWK_RET_IDX, RESORT_ADD_EFFORT_SPEPOW, LWK_LIST_RET_PARAM, LWK_RET_DECIDE )
+        _RESORT_ADD_EFFORT( LWK_RET_IDX, RESORT_ADD_EFFORT_SPEPOW, LWK_LIST_RET_PARAM, LWK_RET )
       CASE RESORT_SERVICE_TYPE_EFFORT_AGI THEN
-        _RESORT_ADD_EFFORT( LWK_RET_IDX, RESORT_ADD_EFFORT_AGI, LWK_LIST_RET_PARAM, LWK_RET_DECIDE )
+        _RESORT_ADD_EFFORT( LWK_RET_IDX, RESORT_ADD_EFFORT_AGI, LWK_LIST_RET_PARAM, LWK_RET )
       CASE RESORT_SERVICE_TYPE_EFFORT_DEF THEN
-        _RESORT_ADD_EFFORT( LWK_RET_IDX, RESORT_ADD_EFFORT_DEF, LWK_LIST_RET_PARAM, LWK_RET_DECIDE )
+        _RESORT_ADD_EFFORT( LWK_RET_IDX, RESORT_ADD_EFFORT_DEF, LWK_LIST_RET_PARAM, LWK_RET )
       CASE RESORT_SERVICE_TYPE_EFFORT_POW THEN
-        _RESORT_ADD_EFFORT( LWK_RET_IDX, RESORT_ADD_EFFORT_POW, LWK_LIST_RET_PARAM, LWK_RET_DECIDE )
+        _RESORT_ADD_EFFORT( LWK_RET_IDX, RESORT_ADD_EFFORT_POW, LWK_LIST_RET_PARAM, LWK_RET )
       CASE RESORT_SERVICE_TYPE_EFFORT_HP THEN
-        _RESORT_ADD_EFFORT( LWK_RET_IDX, RESORT_ADD_EFFORT_HP, LWK_LIST_RET_PARAM, LWK_RET_DECIDE )
+        _RESORT_ADD_EFFORT( LWK_RET_IDX, RESORT_ADD_EFFORT_HP, LWK_LIST_RET_PARAM, LWK_RET )
       DEFAULT
       ENDSWITCH
 
-      IF $LWK_RET_DECIDE == TRUE THEN
+      IF $LWK_RET == TRUE THEN
         _BALLOONWIN_OBJMSG_POS( resort_exercice_03, LWK_OBJID, POS_DL )
         //あげた
         _CALL sub_resident_gold
@@ -907,24 +913,23 @@ _RET
 //==============================================================
 sub_resident_service_friend:
 {
-  DEFINE_LOCAL LWK_RET_DECIDE
   DEFINE_LOCAL LWK_RET_IDX
 
   _BALLOONWIN_OBJMSG_POS( resort_parlor_00, LWK_OBJID, POS_DL )
 	_BALLOONWIN_CLOSE()
-  _SELECT_TEMOTI_POKE( LWK_RET_DECIDE, LWK_RET_IDX, 0 )
+  _SELECT_TEMOTI_POKE( LWK_RET, LWK_RET_IDX, 0 )
 
-  IF $LWK_RET_DECIDE == TRUE THEN
+  IF $LWK_RET == TRUE THEN
     //たまごチェック
-    _CHECK_TEMOTI_EGG( LWK_RET_DECIDE, LWK_RET_IDX )
+    _CHECK_TEMOTI_EGG( LWK_RET, LWK_RET_IDX )
 
-    IF $LWK_RET_DECIDE == TRUE THEN 
+    IF $LWK_RET == TRUE THEN 
       //選んだものがタマゴだった
       _BALLOONWIN_OBJMSG_POS( resort_parlor_01, LWK_OBJID, POS_DL )
     ELSE
-      _RESORT_ADD_KINDLY( LWK_RET_IDX, LWK_LIST_RET_PARAM, LWK_RET_DECIDE )
+      _RESORT_ADD_KINDLY( LWK_RET_IDX, LWK_LIST_RET_PARAM, LWK_RET )
 
-      IF $LWK_RET_DECIDE == TRUE THEN
+      IF $LWK_RET == TRUE THEN
 	      _BLACK_OUT()
 	      _DISP_FADE_END_CHECK()
 	      _ME_PLAY( SEQ_ME_ASA )
@@ -949,22 +954,21 @@ _RET
 //==============================================================
 sub_resident_service_hatch:
 {
-  DEFINE_LOCAL LWK_RET_DECIDE
   DEFINE_LOCAL LWK_RET_IDX
 
   _BALLOONWIN_OBJMSG_POS( resort_nursery_00, LWK_OBJID, POS_DL )
 	_BALLOONWIN_CLOSE()
-  _SELECT_TEMOTI_POKE( LWK_RET_DECIDE, LWK_RET_IDX, 0 )
+  _SELECT_TEMOTI_POKE( LWK_RET, LWK_RET_IDX, 0 )
 
-  IF $LWK_RET_DECIDE == TRUE THEN
+  IF $LWK_RET == TRUE THEN
     //たまごチェック
-    _CHECK_TEMOTI_EGG( LWK_RET_DECIDE, LWK_RET_IDX )
+    _CHECK_TEMOTI_EGG( LWK_RET, LWK_RET_IDX )
 
-    IF $LWK_RET_DECIDE == TRUE THEN 
+    IF $LWK_RET == TRUE THEN 
       //選んだものがタマゴだった
       _RESORT_HATCH( LWK_RET_IDX )
 
-      _PARTY_POKE_EGG_BIRTH( LWK_RET_DECIDE )
+      _PARTY_POKE_EGG_BIRTH( LWK_RET )
 
       _BALLOONWIN_OBJMSG_POS( resort_nursery_02, LWK_OBJID, POS_DL )
       _CALL sub_resident_gold
@@ -982,24 +986,23 @@ _RET
 //==============================================================
 sub_resident_service_lv:
 {
-  DEFINE_LOCAL LWK_RET_DECIDE
   DEFINE_LOCAL LWK_RET_IDX
 
   _BALLOONWIN_OBJMSG_POS( resort_breeder_00, LWK_OBJID, POS_DL )
 	_BALLOONWIN_CLOSE()
-  _SELECT_TEMOTI_POKE( LWK_RET_DECIDE, LWK_RET_IDX, 0 )
+  _SELECT_TEMOTI_POKE( LWK_RET, LWK_RET_IDX, 0 )
 
-  IF $LWK_RET_DECIDE == TRUE THEN
+  IF $LWK_RET == TRUE THEN
     //たまごチェック
-    _CHECK_TEMOTI_EGG( LWK_RET_DECIDE, LWK_RET_IDX )
+    _CHECK_TEMOTI_EGG( LWK_RET, LWK_RET_IDX )
 
-    IF $LWK_RET_DECIDE == TRUE THEN 
+    IF $LWK_RET == TRUE THEN 
       //選んだものがタマゴだった
       _BALLOONWIN_OBJMSG_POS( resort_breeder_01, LWK_OBJID, POS_DL )
     ELSE
-      _RESORT_ADD_LV( LWK_RET_IDX, LWK_RET_DECIDE )
+      _RESORT_ADD_LV( LWK_RET_IDX, LWK_RET )
 
-      IF $LWK_RET_DECIDE == TRUE THEN
+      IF $LWK_RET == TRUE THEN
 
         _BALLOONWIN_OBJMSG_POS( resort_breeder_03, LWK_OBJID, POS_DL )
         //あげた
@@ -1472,8 +1475,6 @@ EVENT_END
 /**************************************************************/
 EVENT_START    ev_resort_secretary_pc
 {
-  DEFINE_LOCAL LWK_BOX_RET
-
 	_TALK_OBJ_START()
   _RESORT_TALK_START()
   
@@ -1502,7 +1503,7 @@ EVENT_START    ev_resort_secretary_pc
 
     ELSIF $LWK_MENU_RET == SEQ_SECRETARY_PC_RECORD THEN
   	  _BALLOONWIN_CLOSE()
-      _CALL_DENDOU_PC_PROC( SCRCMD_DENDOU_PC_DENDOU, LWK_BOX_RET )
+      _CALL_DENDOU_PC_PROC( SCRCMD_DENDOU_PC_DENDOU, LWK_RET )
     ELSE 
 
 	    _BALLOONWIN_CLOSE()
@@ -1512,15 +1513,15 @@ EVENT_START    ev_resort_secretary_pc
       //分岐
       SWITCH $LWK_MENU_RET
       CASE SEQ_SECRETARY_PC_BOX THEN    //整理
-        _CALL_BOX_PROC( LWK_BOX_RET, BOX_MODE_SEIRI )
+        _CALL_BOX_PROC( LWK_RET, BOX_MODE_SEIRI )
       CASE SEQ_SECRETARY_PC_BTLBOX THEN //バトルボックス
-        _CALL_BOX_PROC( LWK_BOX_RET, BOX_MODE_BATTLE )
+        _CALL_BOX_PROC( LWK_RET, BOX_MODE_BATTLE )
       CASE SEQ_SECRETARY_PC_ITEM THEN
-        _CALL_BOX_PROC( LWK_BOX_RET, BOX_MODE_ITEM )
+        _CALL_BOX_PROC( LWK_RET, BOX_MODE_ITEM )
       CASE SEQ_SECRETARY_PC_MAILBOX THEN       //メール
-        _CALL_MAILBOX_PROC( LWK_BOX_RET ) // メールボックス画面へ
+        _CALL_MAILBOX_PROC( LWK_RET ) // メールボックス画面へ
       CASE SEQ_SECRETARY_PC_HELP THEN       //ヘルプをみる
-        _CALL_GAME_MANUAL( LWK_BOX_RET )
+        _CALL_GAME_MANUAL( LWK_RET )
       DEFAULT
       ENDSWITCH
 
@@ -1554,5 +1555,102 @@ sub_secretary_pc_main_menu:
   IF $LWK_MENU_RET == EV_WIN_B_CANCEL THEN
     $LWK_MENU_RET = SEQ_SECRETARY_PC_BYE
   ENDIF
+}
+_RET
+/**************************************************************/
+/*            NPC　クチコミ                     */
+/**************************************************************/
+EVENT_START ev_resort_npc_mouthcomm
+{
+  DEFINE_LOCAL LWK_INDEX
+  DEFINE_LOCAL LWK_TMP
+
+	_TALK_OBJ_START()
+
+  _RESORT_GET_NPC_DATA( LWK_TMP, RESORT_NPC_DATA_OBJID, LWK_OBJID )
+  _RESORT_GET_NPC_DATA( LWK_OBJID, RESORT_NPC_DATA_INDEX, LWK_INDEX )
+
+  _RESORT_GET_MOUTHCOMM( LWK_INDEX, LOCALWORK11, LWK_RET )
+  $LOCALWORK11 += 1
+
+  _DEBUG_PRINT_WK( LWK_INDEX )
+
+  SWITCH $LWK_RET
+  CASE 0 THEN
+    //とくにうわさはない…
+	  _BALLOONWIN_OBJMSG( resort_mouthcomm_sys_00, LWK_OBJID )
+  DEFAULT
+    $LWK_MSGID = $LWK_INDEX
+    $LWK_MSGID *= 2
+    $LWK_MSGID += resort_mouthcomm_t_00
+    $LWK_MSGID += $LWK_RET
+    $LWK_MSGID -= 1
+	  _BALLOONWIN_OBJMSG( LWK_MSGID, LWK_OBJID )
+  ENDSWITCH
+  
+  //あなたのこと聞かせてよ！
+  _BALLOONWIN_OBJMSG( resort_mouthcomm_sys_01, LWK_OBJID )
+
+  //もし何も入力がないならば選択肢はでない
+  $LWK_TMP = $LWK_INDEX
+  $LWK_TMP += RESORT_MY_PARAM_GOSSIP_00
+  _RESORT_GET_MY_DATA( LWK_TMP, LWK_RET )
+
+  IF $LWK_RET == 0 THEN
+    _CALL sub_npc_mouthcomm_question
+  ELSE
+    _YES_NO_WIN( LWK_RET )
+    SWITCH $LWK_RET
+    CASE SCR_YES THEN
+      _CALL sub_npc_mouthcomm_question
+    CASE SCR_NO THEN
+      //今度おしえてね
+      _BALLOONWIN_OBJMSG( resort_mouthcomm_sys_04, LWK_OBJID )
+    DEFAULT
+    ENDSWITCH
+  ENDIF
+
+	_BALLOONWIN_CLOSE()
+
+}
+EVENT_END
+//==============================================================
+//サブルーチン：クチコミ　質問部分
+//==============================================================
+sub_npc_mouthcomm_question:
+{
+  DEFINE_LOCAL LWK_INDEX
+  DEFINE_LOCAL LWK_TMP
+
+  _RESORT_SET_WORD( RESORT_WORD_FREE_NAME, 0 )
+  _RESORT_GET_NPC_DATA( LWK_OBJID, RESORT_NPC_DATA_INDEX, LWK_INDEX )
+
+  //質問文
+  $LWK_TMP = $LWK_INDEX
+  $LWK_TMP += resort_mouthcomm_q_00
+  _BALLOONWIN_CLOSE()
+  _BALLOONWIN_OBJMSG_POS( LWK_TMP, LWK_OBJID, POS_DL )
+
+  //選択肢作成
+	_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 0, LWK_MENU_RET )
+
+  _RESORT_SET_WORD_MOUTHCOMM( LWK_INDEX, 0, 0 )
+	_BMPMENU_MAKE_LIST( resort_mouthcomm_sys_03, 0 )	//質問１
+
+  _RESORT_SET_WORD_MOUTHCOMM( LWK_INDEX, 1, 0 )
+  _BMPMENU_MAKE_LIST( resort_mouthcomm_sys_03, 1 )	//質問２
+
+	//メニュー表示
+	_BMPMENU_START()
+
+  //そうなんだー
+  _BALLOONWIN_OBJMSG( resort_mouthcomm_sys_02, LWK_OBJID )
+
+  //回答を設定
+  $LWK_TMP = $LWK_INDEX
+  $LWK_TMP += RESORT_MY_PARAM_GOSSIP_00
+  //回答は０オリジンから１オリジンにする
+  $LWK_MENU_RET += 1
+  _RESORT_SET_MY_DATA( LWK_TMP, LWK_MENU_RET )
 }
 _RET

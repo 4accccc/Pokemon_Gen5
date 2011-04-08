@@ -399,6 +399,7 @@ static BOOL Resort_Data_Manager_CheckConvert( const RESORT_DATA_MANAGER *cp_wk, 
 //-----------------------------------------------------------------------------
 BOOL RESORT_DATA_MANAGER_IsRecvToResident( const RESORT_DATA_MANAGER *cp_wk, const RESORT_RECV_DATA *cp_src )
 {
+  //êŠ‚ªŠJ‚¢‚Ä‚¢‚é‚©H
   RESORT_PLACEID placeID = RESORT_PEOPLE_ALL_DATA_SearchEmptyInstitutionPlaceID( cp_wk->param.p_all_people );
   u16 peopleID;
   void *p_dst_adrs;

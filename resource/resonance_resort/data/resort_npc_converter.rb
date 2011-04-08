@@ -21,9 +21,10 @@ NPCCSV      = ARGV[0]
 KUTIKOMICSV = ARGV[1]
 OFFRECOCSV  = ARGV[2]
 MSG_HEADER  = ARGV[3]
-OUTPUTNAME_NPC      = ARGV[4]
-OUTPUTNAME_KUTIKOMI = ARGV[5]
-OUTPUTNAME_OFFRECO  = ARGV[6]
+OBJCODE     = ARGV[4]
+OUTPUTNAME_NPC      = ARGV[5]
+OUTPUTNAME_KUTIKOMI = ARGV[6]
+OUTPUTNAME_OFFRECO  = ARGV[7]
 def checkArgument
   if NPCCSV == nil
     puts "引数1にcsvのファイル名を指定してください"
@@ -41,12 +42,16 @@ def checkArgument
     puts "引数4にメッセージヘッダのファイル名を指定してください"
     return false
   end
+  if OBJCODE == nil
+    puts "引数5にメッセージヘッダのファイル名を指定してください"
+    return false
+  end
   if OUTPUTNAME_NPC == nil
-    puts "引数5に出力ファイル名を指定してください"
+    puts "引数6に出力ファイル名を指定してください"
     return false
   end
   if OUTPUTNAME_KUTIKOMI == nil
-    puts "引数6に出力ファイル名を指定してください"
+    puts "引数7に出力ファイル名を指定してください"
     return false
   end
   if OUTPUTNAME_OFFRECO == nil
@@ -69,6 +74,10 @@ def checkArgument
     puts "#{MSG_HEADER}が見つかりません"
     return false
   end
+  unless FileTest.exists?(OBJCODE)
+    puts "#{OBJCODE}が見つかりません"
+    return false
+  end
   return true
 end
 
@@ -87,6 +96,7 @@ KUTIKOMI_COL_QUESTION      = 2     #列:質問文
 KUTIKOMI_COL_ANSWER_NUM    = 3     #列:回答数
 KUTIKOMI_COL_ANSWER_START  = 4     #列：回答開始
 
+KUTIKOMI_COL_ANSWER_MAX    = 4     #列：回答最大数
 def convertKutikomi( csv, data, msg_h, tagHash )
   
   #データの作成
@@ -109,16 +119,19 @@ def convertKutikomi( csv, data, msg_h, tagHash )
 
     data.write_u16( num )
 
-    for index in KUTIKOMI_COL_ANSWER_START...KUTIKOMI_COL_ANSWER_START + num.to_i - 1
+    for index in KUTIKOMI_COL_ANSWER_START...KUTIKOMI_COL_ANSWER_START + KUTIKOMI_COL_ANSWER_MAX
       answer   = csv.get( row, index )
-      begin
-        data.write_u16( msgdata.search( "#{answer}", "#{row}行の#{msg_h}" ) )
-      rescue HeaderSearchError
-        exit(1)
+
+      if answer == nil
+        data.write_u16( 0 )
+      else
+        begin
+          data.write_u16( msgdata.search( "#{answer}", "#{row}行の#{msg_h}" ) )
+        rescue HeaderSearchError
+          exit(1)
+        end
       end
     end
-
-
   end
 end
 
@@ -136,27 +149,37 @@ NPC_COL_LIMIT_X  = 5     #列：X制限
 NPC_COL_LIMIT_Z  = 6     #列：Y制限
 NPC_COL_TYPE     = 7     #列：タイプ
 NPC_COL_KIND     = 8     #列：種類
-def convertNpc( csv, data, tagHash )
+def convertNpc( csv, data, objcode, tagHash )
+
+  objdata = HeaderDataArray.new
+  objdata.load( objcode )
 
   for row in NPC_ROW_START...csv.row_length-1
     
     view    = csv.get( row, NPC_COL_VIEW )
     gridx   = csv.get( row, NPC_COL_GRID_X )
     gridz   = csv.get( row, NPC_COL_GRID_Z )
+    citylv  = csv.get( row, NPC_COL_CITY_LV )
     move    = csv.get( row, NPC_COL_MOVE )
     limit_x = csv.get( row, NPC_COL_LIMIT_X )
     limit_z = csv.get( row, NPC_COL_LIMIT_Z )
     type    = csv.get( row, NPC_COL_TYPE )
     kind    = csv.get( row, NPC_COL_KIND )
 
-    data.write_u16( $define_hash[ view ] )
+    begin
+      data.write_u16( objdata.search( "#{view}", "#{row}行の#{objcode}" ) )
+    rescue HeaderSearchError
+      exit(1)
+    end
     data.write_u16( gridx )
     data.write_u16( gridz )
+    data.write_u16( citylv )
     data.write_u16( $define_hash[ move ] )
     data.write_u16( limit_x )
     data.write_u16( limit_z )
     data.write_u16( $define_hash[ type ] )
     data.write_u16( tagHash[ kind ] )
+    data.write_u16( 0 ) #ダミー
 
   end
 end
@@ -197,7 +220,7 @@ begin
   #コンバート
   convertKutikomi( kutikomiCsv, kutikomiData, MSG_HEADER, tagHash )
   #convertOffreco( offrecoCsv, offrecoData, MSG_HEADER, tagHash )
-  convertNpc( npcCsv, npcData, tagHash )
+  convertNpc( npcCsv, npcData, OBJCODE, tagHash )
 
   #date書き込み
   npcData.genelate( "#{OUTPUTNAME_NPC}.dat" )

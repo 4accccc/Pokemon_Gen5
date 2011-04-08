@@ -28,6 +28,24 @@
 #define RESORT_GET_PARAM_DAY_FLAG           (9)
 #define RESORT_GET_PARAM_IS_INSTITUTION_FULL   (10)
 
+//_RESORT_SET_MY_DATA, _RESORT_GET_MY_DATA用
+#define RESORT_MY_PARAM_GOSSIP_00          (0)
+#define RESORT_MY_PARAM_GOSSIP_01          (1)
+#define RESORT_MY_PARAM_GOSSIP_02          (2)
+#define RESORT_MY_PARAM_GOSSIP_03          (3)
+#define RESORT_MY_PARAM_GOSSIP_04          (4)
+#define RESORT_MY_PARAM_GOSSIP_05          (5)
+#define RESORT_MY_PARAM_GOSSIP_06          (6)
+#define RESORT_MY_PARAM_GOSSIP_07          (7)
+#define RESORT_MY_PARAM_GOSSIP_08          (8)
+#define RESORT_MY_PARAM_GOSSIP_09          (9)
+#define RESORT_MY_PARAM_GOSSIP_10          (10)
+#define RESORT_MY_PARAM_GOSSIP_11          (11)
+#define RESORT_MY_PARAM_GOSSIP_12          (12)
+#define RESORT_MY_PARAM_GOSSIP_13          (13)
+#define RESORT_MY_PARAM_GOSSIP_14          (14)
+#define RESORT_MY_PARAM_GOSSIP_15          (15)
+
 //_RESORT_JOB_CHANGE用
 #define RESORT_JOBCHANGE_RESIDENT_AUTO      (0)
 #define RESORT_JOBCHANGE_RESIDENT_LOT       (1)
@@ -134,3 +152,15 @@
 
 //_RESORT_DELETE_PEOPLE用
 #define RESORT_DELTE_PEOPLE_MINE              (0xFF)
+
+//_RESORT_GET_NPC_DATA用
+#define RESORT_NPC_DATA_OBJID                 (0)
+#define RESORT_NPC_DATA_INDEX                 (1)
+#define RESORT_NPC_DATA_MOUTHCOMM_Q           (2)
+#define RESORT_NPC_DATA_MOUTHCOMM_A_NUM       (3)
+#define RESORT_NPC_DATA_MOUTHCOMM_A_00        (4)
+#define RESORT_NPC_DATA_MOUTHCOMM_A_01        (5)
+#define RESORT_NPC_DATA_MOUTHCOMM_A_02        (6)
+#define RESORT_NPC_DATA_MOUTHCOMM_A_03        (7)
+
+

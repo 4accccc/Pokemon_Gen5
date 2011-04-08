@@ -97,3 +97,99 @@ extern RESORT_BINARY_SPOT * RESORT_BINARY_SPOT_Init( HEAPID heapID );
 extern void RESORT_BINARY_SPOT_Exit( RESORT_BINARY_SPOT *p_wk );
 extern u16 RESORT_BINARY_SPOT_GetData( const RESORT_BINARY_SPOT *cp_wk, u32 index, RESORT_BINARY_SPOT_PARAM param );
 extern BOOL RESORT_BINARY_SPOT_SearchIndex( const RESORT_BINARY_SPOT *cp_wk, u32 msg, u32 *p_index );
+
+//=============================================================================
+/**
+ *      レゾナンスリゾートNPCデータ
+ */
+//=============================================================================
+//-------------------------------------
+///	列挙型
+//=====================================
+typedef enum
+{
+  RESORT_BINARY_NPC_PARAM_VIEW,
+  RESORT_BINARY_NPC_PARAM_GRID_X,
+  RESORT_BINARY_NPC_PARAM_GRID_Z,
+  RESORT_BINARY_NPC_PARAM_CITY_LV,
+  RESORT_BINARY_NPC_PARAM_MOVE_CODE,
+  RESORT_BINARY_NPC_PARAM_LIMIT_X,
+  RESORT_BINARY_NPC_PARAM_LIMIT_Z,
+  RESORT_BINARY_NPC_PARAM_TYPE,
+  RESORT_BINARY_NPC_PARAM_KIND,
+  RESORT_BINARY_NPC_PARAM_DUMMY,
+  RESORT_BINARY_NPC_PARAM_MAX
+} RESORT_BINARY_NPC_PARAM;
+
+//-------------------------------------
+///	NPCデータ
+//=====================================
+typedef struct _RESORT_BINARY_NPC RESORT_BINARY_NPC;
+
+//-------------------------------------
+///	PUBLIC
+//=====================================
+extern RESORT_BINARY_NPC * RESORT_BINARY_NPC_Init( HEAPID heapID );
+extern void RESORT_BINARY_NPC_Exit( RESORT_BINARY_NPC *p_wk );
+extern u16 RESORT_BINARY_NPC_GetData( const RESORT_BINARY_NPC *cp_wk, u32 index, RESORT_BINARY_NPC_PARAM param );
+extern u32 RESORT_BINARY_NPC_GetMax( const RESORT_BINARY_NPC *cp_wk );
+
+//=============================================================================
+/**
+ *      レゾナンスリゾートMOUTHCOMMデータ
+ */
+//=============================================================================
+//-------------------------------------
+///	列挙型
+//=====================================
+typedef enum
+{
+  RESORT_BINARY_MOUTHCOMM_PARAM_TAG,
+  RESORT_BINARY_MOUTHCOMM_PARAM_QUESTION,
+  RESORT_BINARY_MOUTHCOMM_PARAM_ANSWER_NUM,
+  RESORT_BINARY_MOUTHCOMM_PARAM_ANSWER_00,
+  RESORT_BINARY_MOUTHCOMM_PARAM_ANSWER_01,
+  RESORT_BINARY_MOUTHCOMM_PARAM_ANSWER_02,
+  RESORT_BINARY_MOUTHCOMM_PARAM_ANSWER_03,
+
+  RESORT_BINARY_MOUTHCOMM_PARAM_MAX
+} RESORT_BINARY_MOUTHCOMM_PARAM;
+
+//-------------------------------------
+///	MOUTHCOMMデータ
+//=====================================
+typedef struct _RESORT_BINARY_MOUTHCOMM RESORT_BINARY_MOUTHCOMM;
+
+//-------------------------------------
+///	PUBLIC
+//=====================================
+extern RESORT_BINARY_MOUTHCOMM * RESORT_BINARY_MOUTHCOMM_Init( HEAPID heapID );
+extern void RESORT_BINARY_MOUTHCOMM_Exit( RESORT_BINARY_MOUTHCOMM *p_wk );
+extern u16 RESORT_BINARY_MOUTHCOMM_GetData( const RESORT_BINARY_MOUTHCOMM *cp_wk, u32 index, RESORT_BINARY_MOUTHCOMM_PARAM param );
+
+
+//=============================================================================
+/**
+ *      レゾナンスリゾートOFFRECOデータ
+ */
+//=============================================================================
+//-------------------------------------
+///	列挙型
+//=====================================
+typedef enum
+{
+  RESORT_BINARY_OFFRECO_PARAM_DUMMY,
+  RESORT_BINARY_OFFRECO_PARAM_MAX
+} RESORT_BINARY_OFFRECO_PARAM;
+
+//-------------------------------------
+///	OFFRECOデータ
+//=====================================
+typedef struct _RESORT_BINARY_OFFRECO RESORT_BINARY_OFFRECO;
+
+//-------------------------------------
+///	PUBLIC
+//=====================================
+extern RESORT_BINARY_OFFRECO * RESORT_BINARY_OFFRECO_Init( HEAPID heapID );
+extern void RESORT_BINARY_OFFRECO_Exit( RESORT_BINARY_OFFRECO *p_wk );
+extern u16 RESORT_BINARY_OFFRECO_GetData( const RESORT_BINARY_OFFRECO *cp_wk, u32 index, RESORT_BINARY_OFFRECO_PARAM param );

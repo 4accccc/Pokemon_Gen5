@@ -3469,6 +3469,8 @@ u32 RESORT_CITY_DATA_GetData( const RESORT_CITY_DATA *cp_wk, RESORT_CITY_DATA_PA
   case RESORT_CITY_DATA_PARAM_AUTHER_NAME: //p_ret_adrs
     STRTOOL_Copy( cp_wk->my_name, p_ret_adrs, RESORT_MY_NAME_LEN+EOM_SIZE );
     return 0;
+  case RESORT_CITY_DATA_PARAM_LV:
+    return cp_wk->lv;
   default:
     GF_ASSERT(0);
     return 0;
