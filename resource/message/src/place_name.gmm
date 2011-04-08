@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2010-05-25T18:32:03"/>
+	<create user="suginaka_katsunori" host="W00227" date="2011-04-08T17:16:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="83" top="122" right="788" bottom="742" maximized="no" rayout="Vertical2">
+	<dialog left="423" top="263" right="1128" bottom="883" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="551" top="133" right="1024" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -518,8 +518,8 @@
 	</row>
 
 	<row id="MAPNAME_D5">
-		<language name="JPN" width="256">れいとうコンテナ</language>
-		<language name="JPN_KANJI" width="256">冷凍コンテナ</language>
+		<language name="JPN" width="256">ＷＢＴ（仮）</language>
+		<language name="JPN_KANJI" width="256">ＷＢＴ（仮）</language>
 	</row>
 
 	<row id="MAPNAME_D6">
@@ -989,6 +989,146 @@ R14R0101/R15R0101</comment>
 	<row id="MAPNAME_D20_01" text-color="#0000ff,,,,,,,,,,,,,,,,," back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
 		<language name="JPN" width="256">かいていいせき</language>
 		<language name="JPN_KANJI" width="256">海底遺跡</language>
+	</row>
+
+	<row id="MAPNAME_C12" text-color="#0000ff,,,,,,,,,,,,,,,,," back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="256">ヒオウギシティ</language>
+		<language name="JPN_KANJI" width="256">ヒオウギシティ</language>
+	</row>
+
+	<row id="MAPNAME_C13" text-color="#0000ff,,,,,,,,,,,,,,,,," back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="256">タテワキシティ</language>
+		<language name="JPN_KANJI" width="256">タテワキシティ</language>
+	</row>
+
+	<row id="MAPNAME_C14" text-color="#0000ff,,,,,,,,,,,,,,,,," back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="256">セイガイハシティ</language>
+		<language name="JPN_KANJI" width="256">セイガイハシティ</language>
+	</row>
+
+	<row id="MAPNAME_C15" text-color="#0000ff,,,,,,,,,,,,,,,,," back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="256">ポケウッド</language>
+		<language name="JPN_KANJI" width="256">ポケウッド</language>
+	</row>
+
+	<row id="MAPNAME_C16" text-color="#0000ff,,,,,,,,,,,,,,,,," back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="256">レゾナンスリゾート</language>
+		<language name="JPN_KANJI" width="256">レゾナンスリゾート</language>
+	</row>
+
+	<row id="MAPNAME_T06" text-color="#0000ff,,,,,,,,,,,,,,,,," back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="256">サンギタウン</language>
+		<language name="JPN_KANJI" width="256">サンギタウン</language>
+	</row>
+
+	<row id="MAPNAME_T07" text-color="#0000ff,,,,,,,,,,,,,,,,," back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="256">ヤマジタウン</language>
+		<language name="JPN_KANJI" width="256">ヤマジタウン</language>
+	</row>
+
+	<row id="MAPNAME_R19" text-color="#0000ff,,,,,,,,,,,,,,,,," back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="256">１９ばんどうろ</language>
+		<language name="JPN_KANJI" width="256">１９番道路</language>
+	</row>
+
+	<row id="MAPNAME_R20" text-color="#0000ff,,,,,,,,,,,,,,,,," back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="256">２０ばんどうろ</language>
+		<language name="JPN_KANJI" width="256">２０番道路</language>
+	</row>
+
+	<row id="MAPNAME_W21" text-color="#0000ff,,,,,,,,,,,,,,,,," back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="256">２１ばんすいどう</language>
+		<language name="JPN_KANJI" width="256">２１番水道</language>
+	</row>
+
+	<row id="MAPNAME_R22" text-color="#0000ff,,,,,,,,,,,,,,,,," back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="256">２２ばんどうろ</language>
+		<language name="JPN_KANJI" width="256">２２番道路</language>
+	</row>
+
+	<row id="MAPNAME_R23" text-color="#0000ff,,,,,,,,,,,,,,,,," back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="256">２３ばんどうろ</language>
+		<language name="JPN_KANJI" width="256">２３番道路</language>
+	</row>
+
+	<row id="MAPNAME_D11" text-color="#0000ff,,,,,,,,,,,,,,,,," back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="256">ヒウンげすいどう（仮）</language>
+		<language name="JPN_KANJI" width="256">ヒウン下水道（仮）</language>
+	</row>
+
+	<row id="MAPNAME_D22" text-color="#0000ff,,,,,,,,,,,,,,,,," back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="256">ぼくじょう（仮）</language>
+		<language name="JPN_KANJI" width="256">牧場（仮）</language>
+	</row>
+
+	<row id="MAPNAME_D23" text-color="#0000ff,,,,,,,,,,,,,,,,," back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="256">コンビナート（仮）</language>
+		<language name="JPN_KANJI" width="256">コンビナート（仮）</language>
+	</row>
+
+	<row id="MAPNAME_D24" text-color="#0000ff,,,,,,,,,,,,,,,,," back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="256">かざん（仮）</language>
+		<language name="JPN_KANJI" width="256">火山（仮）</language>
+	</row>
+
+	<row id="MAPNAME_D25" text-color="#0000ff,,,,,,,,,,,,,,,,," back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="256">ミステリーハウス（仮）</language>
+		<language name="JPN_KANJI" width="256">ミステリーハウス（仮）</language>
+	</row>
+
+	<row id="MAPNAME_D26" text-color="#0000ff,,,,,,,,,,,,,,,,," back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="256">ネオチャンピオンロード（仮）</language>
+		<language name="JPN_KANJI" width="256">ネオチャンピオンロード（仮）</language>
+	</row>
+
+	<row id="MAPNAME_D27" text-color="#0000ff,,,,,,,,,,,,,,,,," back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="256">アジトせん（仮）</language>
+		<language name="JPN_KANJI" width="256">アジト船（仮）</language>
+	</row>
+
+	<row id="MAPNAME_D28" text-color="#0000ff,,,,,,,,,,,,,,,,," back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="256">ぬけみち（仮）</language>
+		<language name="JPN_KANJI" width="256">抜け道（仮）</language>
+	</row>
+
+	<row id="MAPNAME_D29" text-color="#0000ff,,,,,,,,,,,,,,,,," back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="256">こうどう（仮）</language>
+		<language name="JPN_KANJI" width="256">坑道（仮）</language>
+	</row>
+
+	<row id="MAPNAME_D30" text-color="#0000ff,,,,,,,,,,,,,,,,," back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="256">－－－－－－－－－－</language>
+		<language name="JPN_KANJI" width="256">－－－－－－－－－－</language>
+	</row>
+
+	<row id="MAPNAME_D31W" text-color="#0000ff,,,,,,,,,,,,,,,,," back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="256">しろのたいじゅ（仮）</language>
+		<language name="JPN_KANJI" width="256">白の大樹（仮）</language>
+	</row>
+
+	<row id="MAPNAME_D31B" text-color="#0000ff,,,,,,,,,,,,,,,,," back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="256">くろのまてんろう（仮）</language>
+		<language name="JPN_KANJI" width="256">黒の摩天楼（仮）</language>
+	</row>
+
+	<row id="MAPNAME_D32" text-color="#0000ff,,,,,,,,,,,,,,,,," back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="256">ゲートどうくつ（仮）</language>
+		<language name="JPN_KANJI" width="256">ゲート洞くつ（仮）</language>
+	</row>
+
+	<row id="MAPNAME_D33" text-color="#0000ff,,,,,,,,,,,,,,,,," back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="256">かがみのどうくつ（仮）</language>
+		<language name="JPN_KANJI" width="256">鏡の洞くつ（仮）</language>
+	</row>
+
+	<row id="MAPNAME_D34" text-color="#0000ff,,,,,,,,,,,,,,,,," back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="256">かがみのどうくつ（仮）</language>
+		<language name="JPN_KANJI" width="256">鏡の洞くつ（仮）</language>
+	</row>
+
+	<row id="MAPNAME_H06" text-color="#0000ff,,,,,,,,,,,,,,,,," back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="256">すいちゅうばし（仮）</language>
+		<language name="JPN_KANJI" width="256">水中橋（仮）</language>
 	</row>
 
 	<flowchart-group-list>
