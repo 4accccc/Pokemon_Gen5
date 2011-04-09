@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2010-11-17T15:56:16"/>
+	<create user="mizuguchi_mai" host="W00226" date="2011-04-07T19:01:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -350,6 +350,224 @@
 キミは　どうだい？</language>
 		<language name="JPN_KANJI" width="256">……ここは　いつ来ても　落ち着くね▼
 キミは　どうだい？</language>
+	</row>
+
+	<row id="msg_c12_rivalsister_01">
+		<comment>♀
+・pos（local　9～13.18）を踏んだとき
+　画面左から登場してメッセージ表示
+・続けてswrival_01
+
+※ライバルと妹は一緒</comment>
+		<attribute name="キャラ指定">ライバル妹
+GIRL2</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さーん▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さーん▼</language>
+	</row>
+
+	<row id="msg_c12_swrival_01">
+		<comment>♂
+・主人公に隣接して
+・1＝ライバル名</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『どこ　いくの？▼
+……　……　……
+……　……　……▼
+ポケモンずかん！？▼
+……そのはなし　オレも　ききたいな▼
+わかった！
+ベルって　ひとを　さがすの　てつだうよ▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『どこ　行くの？▼
+……　……　……
+……　……　……▼
+ポケモン図鑑！？▼
+……その話　オレも　ききたいな▼
+わかった！
+ベルって　人を　探すの　手伝うよ▼</language>
+	</row>
+
+	<row id="msg_c12_swrival_02">
+		<comment>♂
+・状況確認
+　主人公はベルを探すこと
+・妹と別れる</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">オマエは　さきに　かえってな▼</language>
+		<language name="JPN_KANJI" width="256">オマエは　先に　帰ってな▼</language>
+	</row>
+
+	<row id="msg_c12_rivalsister_02">
+		<comment>♀
+・メッセージ表示後、ライバルの家方向に
+・主人公、ライバルの向き、動きを追従</comment>
+		<attribute name="キャラ指定">ライバル妹</attribute>
+		<language name="JPN" width="256">はーい！
+じゃーねー　[1:00:トレーナー名:0]さん▼</language>
+		<language name="JPN_KANJI" width="256">はーい！
+じゃーねー　[1:00:トレーナー名:0]さん▼</language>
+	</row>
+
+	<row id="msg_c12_swrival_03">
+		<comment>♂
+・向き合って
+・表示後から連れ歩き開始</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">ライバル名『さてと▼
+ベルって　人を　探すんだな
+どこから　探すか　決めてくれよ</language>
+		<language name="JPN_KANJI" width="256">ライバル名『さてと▼
+ベルって　人を　探すんだな
+どこから　探すか　決めてくれよ</language>
+	</row>
+
+	<row id="msg_c12_swrival_04">
+		<comment>♂
+・pos（local 19~23.23）
+　高台の方（＝左）を向いて表示
+・１回のみ？</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『どうする？
+たかだいも　チェックしておくか</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『どうする？
+高台も　チェックしておくか</language>
+	</row>
+
+	<row id="msg_c12_swrival_05">
+		<comment>♂
+・その場で振り向き会話その１</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『それにしてもさ▼
+ポケモンを　もらえるなんて
+オマエ　すごい　ラッキーだよな</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『それにしてもさ▼
+ポケモンを　もらえるなんて
+オマエ　すごい　ラッキーだよな</language>
+	</row>
+
+	<row id="msg_c12_swrival_06">
+		<comment>♂
+・その場で振り向き会話その２</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『で　どうするんだよ？
+ポケモンと　いっしょに　たびするのか？</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『で　どうするんだよ？
+ポケモンと　一緒に　旅するのか？</language>
+	</row>
+
+	<row id="msg_c12_swrival_07">
+		<comment>♂
+・その場で振り向き会話その３
+　繰り返し</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『……いいから
+ベルって　ひと　さがそう</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『……いいから
+ベルって　人　探そう</language>
+	</row>
+
+	<row id="msg_c12_swrival_ng01">
+		<comment>♂
+・禁止メッセージ
+　ポケモンセンター
+・メッセージ表示後、一歩戻す</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『オレさ
+さっきまで　ポケセンに　いたけれど▽
+それっぽい　ひとは　いなかったよ▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『オレさ
+さっきまで　ポケセンに　いたけれど▽
+それっぽい　人は　いなかったよ▼</language>
+	</row>
+
+	<row id="msg_c12_swrival_ng02">
+		<comment>♂
+・禁止メッセージ
+　トレーナーズスクール
+・メッセージ表示後、一歩戻す</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『トレーナーズスクールは
+いま　こうじちゅう▼
+ポケモンジムの　ぶぶんが　できるまで
+だれも　はいれない　はずだよ▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『トレーナーズスクールは
+今　工事中▼
+ポケモンジムが　併設されるまで
+だれも　はいれない　はずだよ▼</language>
+	</row>
+
+	<row id="msg_c12_swrival_ng03">
+		<comment>♂
+・禁止メッセージ
+　１９番道路ゲート
+・メッセージ表示後、一歩戻す</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『その　ベルって　ひと
+この　まちに　いるんだろ？▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『その　ベルって　人
+この街に　いるんだろ？▼</language>
+	</row>
+
+	<row id="msg_c12_swrival_ng04">
+		<comment>♂
+・禁止メッセージ
+　主人公の家
+・メッセージ表示後、一歩戻す</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『あのさ……▼
+オマエの　いえに　いないのは
+いちばん　よく　わかってるだろ？▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『あのさ……▼
+オマエの　家に　いないのは
+一番　よく　わかってるだろ？▼</language>
+	</row>
+
+	<row id="msg_c12_swrival_ng05">
+		<comment>♂
+・禁止メッセージ
+　ライバルの家
+・メッセージ表示後、一歩戻す</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『オレの　いえに　いたら
+いもうとが　おしえてくれるさ▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『オレの　家に　いたら
+妹が　教えてくれるさ▼</language>
+	</row>
+
+	<row id="msg_c12_swrival_ng06">
+		<comment>♂
+・禁止メッセージ
+　ビル（c12r0301）
+・メッセージ表示後、一歩戻す</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『ベルって　ひとが
+どんな　ひとだか　しらないけれど▽
+たにんの　いえで　くつろぐのか？▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ベルって　人が
+どんな　人だか　知らないけれど▽
+他人の　家で　くつろぐのか？▼</language>
+	</row>
+
+	<row id="msg_c12_swrival_ng07">
+		<comment>♂
+・禁止メッセージ
+　ビル（c12r0401）
+・メッセージ表示後、一歩戻す</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『なあ▼
+オマエが　きめれば　いいけれど
+みはらしだいを　みてみないか？</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『なあ▼
+オマエが　決めれば　いいけれど
+見晴台を　みてみないか？</language>
+	</row>
+
+	<row id="msg_c12_swrival_11">
+		<comment>♂：高台でのイベント
+・pos（local 4~6.10）を踏むとメッセージ表示
+・表示後、連れ歩き解除</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『あそこ……▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『あそこ……▼</language>
 	</row>
 
 	<flowchart-group-list>
