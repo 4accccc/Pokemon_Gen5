@@ -231,6 +231,10 @@
 #define WK_SCENE_C03GYM0101_GATE_3B      16619 /* 0x40eb スワン虫ジム：3Bゲート POS制御ワーク */
 #define WK_SCENE_MEDAL_EVENT             16620 /* 0x40ec メダルおやじイベント制御ワーク */
 #define WK_SCENE_C06GYM0101_GUIDE        16621 /* 0x40ed スワン飛行ジム：ガイド POS制御ワーク */
+#define WK_SCENE_C12R0101                16622 /* 0x40ee ヒオウギシティ自宅：イベント用ワーク */
+#define WK_SCENE_C12_WHITE_MEET          16623 /* 0x40ef ヒオウギシティ：ベルと出会うイベント用ワーク */
+#define WK_SCENE_C12PC0101_PCGUIDE       16624 /* 0x40f0 ヒオウギシティ：ポケモンセンターチュートリアル用ワーク */
+#define WK_SCENE_R19                     16625 /* 0x40f1 19ばんどうろ：ポケモン捕獲イベント用ワーク */
 
 #define WK_SCENE_AREA_END                16655 /* 0x410f  */
 

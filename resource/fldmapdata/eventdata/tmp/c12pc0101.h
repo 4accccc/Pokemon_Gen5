@@ -17,6 +17,7 @@
 #define C12PC0101_SHOPM1_02                5
 #define C12PC0101_PCWOMAN                  6
 #define C12PC0101_DELIVERY                 7
+#define C12PC0101_SWBELL_01                8
 
 #endif //ZONE_C12PC0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c12pc0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

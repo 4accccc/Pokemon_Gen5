@@ -337,6 +337,18 @@ init_flags:
 	//c03r1101のモンスターボールを非表示
 	_FLAG_SET(FV_C03R1101_ITEM_01)
 
+	//★SWAN
+	//c12r0101のベルとママを非表示
+	_FLAG_SET(FV_C12R0101_SWMAMA)
+	_FLAG_SET(FV_C12R0101_SWBELL)
+	
+	//C12のママを非表示
+	_FLAG_SET( FV_C12_SWMAMA )
+	
+	//C12PC0101：PCの曲をつれてけ曲に設定
+	_FLAG_SET( SYS_FLAG_BGM_C12PC0101_GUIDE )
+
+
 }
 _RET
 

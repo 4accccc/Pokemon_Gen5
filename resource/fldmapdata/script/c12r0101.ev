@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_c12r0101.h"
-  //.include  "c12r0101.h"
+  .include  "c12r0101.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +19,373 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c12r0101
+_EVENT_DATA    ev_zone_c12r0101
+_EVENT_DATA    ev_init_c12r0101
+_EVENT_DATA    ev_pos_c12r0101_startevents
+_EVENT_DATA    ev_c12r0101_swmama_01
+_EVENT_DATA    ev_c12r0101_swbell_01
+_EVENT_DATA    ev_bg_c12r0101_wii_01
+_EVENT_DATA    ev_bg_c12r0101_bed_01
+_EVENT_DATA    ev_bg_c12r0101_pc_01
+_EVENT_DATA    ev_c12r0101_prize1_01
+_EVENT_DATA    ev_c12r0101_prize2_01
+_EVENT_DATA    ev_c12r0101_trorhy1_01
+_EVENT_DATA    ev_c12r0101_trorhy2_01
+_EVENT_DATA    ev_c12r0101_trorhy3_01
 _EVENT_DATA_END
 
+//------------------------！注意！------------------------------//
+//																//
+//		LOCALWORK11を回復判定ワークに使用			//
+//		LOCALWORK12をランダムセリフに使用			//
+//		ゾーン内での使用を禁止します							//
+//																//
+//--------------------------------------------------------------//
 
-/**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_zone_c12r0101:
-//  _END
+/************************************************************/
+/*		ZONE_CHANGE                             */
+/************************************************************/
+INIT_EVENT_START   ev_zone_c12r0101
+  
+  //ゲーム開始時・ポケモン捕獲イベント前ならママを非表示
+  IF FLAG_OFF( FV_C12_SWMAMA ) || $WK_SCENE_C12R0101 == 0 THEN
+    _FLAG_SET( FV_C12R0101_SWMAMA )
+  ENDIF
+  
+  //【仮】ポケモン捕獲イベント後・チェレン前ならベルを表示
+  IF $WK_SCENE_R19 <= 1 THEN
+    _FLAG_RESET( FV_C12R0101_SWBELL )
+  ENDIF
+  
+INIT_EVENT_END
 
-/**************************************************************/
-/*                                                            */
-/**************************************************************/
-ev_c12r0101:
-  //とりあえず最初のラベルだけ生成している
-  _END
+/************************************************************/
+/*					FIELD_INIT_SCRIPT						*/
+/************************************************************/
+INIT_EVENT_START ev_init_c12r0101
+/*
+  //【仮】イベント進行で配置を分岐
+  IF $WK_SCENE_R19 <= 1 THEN
+  //ポケモン捕獲イベント後はベル・ママの配置を変更
+    _OBJ_POS_CHANGE( C12R0101_SWMAMA_01, 5, 0, 6, DIR_LEFT )
+    _OBJ_POS_CHANGE( C12R0101_SWBELL_01, 3, 0, 6, DIR_RIGHT )
+  
+  ENDIF
+*/
+INIT_EVENT_END
 
+/************************************************************/
+/*					POS：ママ登場					*/
+/************************************************************/
+EVENT_START ev_pos_c12r0101_startevents
+
+  //階段SE再生
+  _SE_PLAY( SEQ_SE_KAIDAN )
+  _SE_WAIT()
+  
+  //ママ表示
+  //========================================//
+  _FLAG_RESET( FV_C12R0101_SWMAMA )
+  //========================================//
+  _OBJ_ADD( C12R0101_SWMAMA_01 )
+  
+  //メッセージ：ただいま！
+  _PLAYER_NAME( 0 )
+  _BALLOONWIN_OBJMSG_POS( msg_c12r0101_swmama_01, C12R0101_SWMAMA_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：ママ隣接
+  _OBJ_ANIME_AUTO( C12R0101_SWMAMA_01, 8, 10, FORCE_TYPE_NPC, 8, DIR_UD)
+  _OBJ_ANIME_WAIT()
+  
+  //メッセージ：アララギはかせって
+  _BALLOONWIN_OBJMSG_POS( msg_c12r0101_swmama_02, C12R0101_SWMAMA_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：ママ回転
+  _OBJ_ANIME( C12R0101_SWMAMA_01, anm_c12r0101_mama_turn )
+  _OBJ_ANIME_WAIT()
+  
+  //メッセージ：ポケモンずかんほしい？
+  _PLAYER_NAME( 0 ) //プレイヤー名を反映
+  _BALLOONWIN_OBJMSG_POS( msg_c12r0101_swmama_03,C12R0101_SWMAMA_01, POS_DEFAULT )
+  _YES_NO_WIN( SCWK_ANSWER )
+
+  //いいえなら再質問
+  IF $SCWK_ANSWER == SCR_NO THEN
+    //いいえの処理
+    
+    //再質問にyesと答えるまでループ
+    DEFINE_LOCAL	ans_yes
+    $ans_yes = SCR_NO
+
+    WHILE $ans_yes == SCR_NO
+      _MSGWIN_CLOSE()
+      //アニメ：１歩後ずさる
+      _OBJ_ANIME( C12R0101_SWMAMA_01, anm_c12r0101_mama_backstep_01 )
+      _OBJ_ANIME_WAIT()
+      //メッセージ：ええーちょっとおどろき
+     _BALLOONWIN_OBJMSG_POS( msg_c12r0101_swmama_05,C12R0101_SWMAMA_01, POS_DEFAULT )
+     _MSGWIN_CLOSE()
+     
+     //アニメ：もとの位置に戻る
+     _OBJ_ANIME( C12R0101_SWMAMA_01, anm_c12r0101_mama_backstep_02 )
+     _OBJ_ANIME_WAIT()
+     
+     //メッセージ：もういちど
+     _BALLOONWIN_OBJMSG_POS( msg_c12r0101_swmama_04,C12R0101_SWMAMA_01, POS_DEFAULT )
+     _YES_NO_WIN( ans_yes )
+   ENDWHILE
+  ENDIF
+
+  //はいを選択した
+  //メッセージ：ほしいよね！
+  _BALLOONWIN_OBJMSG_POS( msg_c12r0101_swmama_06,C12R0101_SWMAMA_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：通れるように移動
+  _OBJ_ANIME_AUTO( C12R0101_SWMAMA_01, 6, 9, FORCE_TYPE_NPC, 8, DIR_LR)
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME( C12R0101_SWMAMA_01, anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+  
+  //========================================//
+  //POSイベント無効
+  $WK_SCENE_C12R0101 = 1
+  //========================================//
+
+EVENT_END
+
+/************************************************************/
+/*					ママ会話					*/
+/************************************************************/
+EVENT_START ev_c12r0101_swmama_01
+  //まだベルイベントを終えていない
+  IF $WK_SCENE_C12_WHITE_MEET > 2 THEN
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0101_swmama_07 )
+    
+  //【仮】高台でベルと会った後
+  ELSE
+    //ママの回復イベントへ
+    _CALL		ev_everyday
+  ENDIF
+EVENT_END
+
+//ママの回復イベント
+ev_everyday:
+	//回復済みなら一言メッセージ
+	IF $LOCALWORK15 == 999 THEN
+	  _PLAYER_NAME( 0 )
+    //ランダムでメッセージ分岐（５パターン）
+    _BALLOONWIN_TALKOBJ_MSG( SCWK_TEMP0 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+		_RET
+	ENDIF
+
+  //上記の条件に当てはまらなければ回復イベント開始
+  _TALK_OBJ_START()
+
+   //ポケモンは元気？
+  _PLAYER_NAME( 0 )
+  _BALLOONWIN_TALKOBJ_MSG( msg_c12r0101_swmama_cure_01 )
+  _MSGWIN_CLOSE()
+
+  _CALL	ev_kaifuku		//回復処理
+
+  //ランダムでメッセージ分岐（５パターン）
+  _PLAYER_NAME( 0 )
+  $SCWK_TEMP0 = msg_c12r0101_swmama_cure_02
+  _GET_RND( SCWK_TEMP1, 5 )
+  $SCWK_TEMP0 += SCWK_TEMP1
+  _BALLOONWIN_TALKOBJ_MSG( SCWK_TEMP0 )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+
+_RET
+
+
+//回復処理
+ev_kaifuku:
+  //暗転して手持ちポケモンを回復
+  _BLACK_OUT()
+  _DISP_FADE_END_CHECK()
+  _TEMOTI_POKEMON_KAIFUKU()		//回復処理
+  _ME_PLAY( SEQ_ME_ASA )
+  _ME_WAIT()
+  _BLACK_IN()
+  _DISP_FADE_END_CHECK()
+
+  //回復済みチェック用にローカルワークに値を代入
+  $LOCALWORK15 = 999
+
+  //レコードをカウント（自宅休憩回数）
+  _ADD_RECORD( RECID_RECOVERY_HOME, 1 )
+
+_RET
+
+/************************************************************/
+/*					ベル会話					*/
+/************************************************************/
+EVENT_START ev_c12r0101_swbell_01
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0101_white_01 )
+EVENT_END
+
+/************************************************************/
+/*					BG：WII					*/
+/************************************************************/
+EVENT_START ev_bg_c12r0101_wii_01
+  _TALK_START_SE_PLAY()
+  _PLAINWIN_MSG_DOWN( msg_c12r0101_game_01 )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+EVENT_END
+
+/************************************************************/
+/*					BG：bed					*/
+/************************************************************/
+EVENT_START ev_bg_c12r0101_bed_01
+  _TALK_START_SE_PLAY()
+  _PLAINWIN_MSG_DOWN( msg_c12r0101_bed_01 )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+EVENT_END
+
+/************************************************************/
+/*					BG：pc					*/
+/************************************************************/
+EVENT_START ev_bg_c12r0101_pc_01
+  _TALK_START_SE_PLAY()
+  _PLAINWIN_MSG_DOWN( msg_c12r0101_pc_01 )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+EVENT_END
+
+/************************************************************/
+/*						表彰状（地方）						*/
+/************************************************************/
+EVENT_START   ev_c12r0101_prize1_01
+	_TALK_START_SE_PLAY()
+	
+	//イッシュ図鑑完成の賞状だ！
+	_PLAINWIN_MSG_DOWN( msg_c12r0101_award1_01 )
+	_MSGWIN_CLOSE()
+	
+	_CALL_ZUKAN_AWARD( SCR_ZUKAN_AWARD_CHIHOU, 1 )
+	
+EVENT_END
+
+
+/************************************************************/
+/*						表彰状（全国）						*/
+/************************************************************/
+EVENT_START   ev_c12r0101_prize2_01
+	_TALK_START_SE_PLAY()
+	
+	//イッシュ図鑑完成の賞状だ！
+	_PLAINWIN_MSG_DOWN( msg_c12r0101_award2_01 )
+	_MSGWIN_CLOSE()
+	
+	_CALL_ZUKAN_AWARD( SCR_ZUKAN_AWARD_ZENKOKU, 1 )
+	
+EVENT_END
+
+
+/************************************************************/
+/*			バトルサブウェイトロフィ（シングル）			*/
+/************************************************************/
+EVENT_START   ev_c12r0101_trorhy1_01
+	_TALK_START_SE_PLAY()
+	_PLAINWIN_MSG_DOWN( msg_c12r0101_trophy1_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+EVENT_END
+
+
+/************************************************************/
+/*			バトルサブウェイトロフィ（ダブル）				*/
+/************************************************************/
+EVENT_START   ev_c12r0101_trorhy2_01
+	_TALK_START_SE_PLAY()
+	_PLAINWIN_MSG_DOWN( msg_c12r0101_trophy2_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+EVENT_END
+
+
+/************************************************************/
+/*			バトルサブウェイトロフィ（マルチ）				*/
+/************************************************************/
+EVENT_START   ev_c12r0101_trorhy3_01
+	_TALK_START_SE_PLAY()
+	_PLAINWIN_MSG_DOWN( msg_c12r0101_trophy3_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+EVENT_END
+
+//--------------------------------------------------------------------
+//	初回イベント：ママ回転
+//--------------------------------------------------------------------
+	_ANIME_LABEL	anm_c12r0101_mama_turn
+	_ANIME_DATA	AC_DIR_L,1	//回転開始
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_2F,1	//回転終了
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	初回イベント：いいえで後ずさり
+//--------------------------------------------------------------------
+	_ANIME_LABEL	anm_c12r0101_mama_backstep_01
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1	//方向固定
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1	//固定OFF
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	初回イベント：いいえで後ずさり
+//--------------------------------------------------------------------
+	_ANIME_LABEL	anm_c12r0101_mama_backstep_02
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staystep_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0

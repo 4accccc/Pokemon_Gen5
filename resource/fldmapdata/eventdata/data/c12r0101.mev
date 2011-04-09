@@ -1,5 +1,5 @@
 #event data
-#save date:2011/04/08 11:17:15
+#save date:2011/04/09 16:35:09
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c12r0101.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,224 @@ C:\home\swan\resource\fldmapdata\eventdata\data\c12r0101.wms
 #hold event type:
 1
 #hold event number:
+7
+#event number: 0
+#type
+1
+#ID name
+C12R0101_SWMAMA_01
+#OBJ CODE Number
+SWMAMA
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C12R0101_SWMAMA
+#Event Script Name
+SCRID_C12R0101_SWMAMA_01
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
 0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-168 0 24
+#event number: 1
+#type
+1
+#ID name
+C12R0101_SWBELL_01
+#OBJ CODE Number
+SWBELL
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C12R0101_SWBELL
+#Event Script Name
+SCRID_C12R0101_SWBELL_01
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-200 0 152
+#event number: 2
+#type
+1
+#ID name
+C12R0101_TRORHY1_01
+#OBJ CODE Number
+TROPHY1
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C12R0101_TRORHY1_01
+#Event Script Name
+SCRID_C12R0101_TRORHY1_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-232 16 216
+#event number: 3
+#type
+1
+#ID name
+C12R0101_TRORHY2_01
+#OBJ CODE Number
+TROPHY2
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C12R0101_TRORHY2_01
+#Event Script Name
+SCRID_C12R0101_TRORHY2_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-216 16 216
+#event number: 4
+#type
+1
+#ID name
+C12R0101_TRORHY3_01
+#OBJ CODE Number
+TROPHY3
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C12R0101_TRORHY3_01
+#Event Script Name
+SCRID_C12R0101_TRORHY3_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-200 16 216
+#event number: 5
+#type
+1
+#ID name
+C12R0101_PRIZE1_01
+#OBJ CODE Number
+PRIZE1
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C12R0101_PRIZE1_01
+#Event Script Name
+SCRID_C12R0101_PRIZE1_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-88 16 216
+#event number: 6
+#type
+1
+#ID name
+C12R0101_PRIZE2_01
+#OBJ CODE Number
+PRIZE2
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C12R0101_PRIZE2_01
+#Event Script Name
+SCRID_C12R0101_PRIZE2_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-72 16 216
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -19,7 +236,59 @@ C:\home\swan\resource\fldmapdata\eventdata\data\c12r0101.wms
 #hold event type:
 1
 #hold event number:
-0
+4
+#event number: 0
+#Bg Event Label
+BG_C12R0101_PC_01
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_BG_C12R0101_PC_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-40 0 216
+#event number: 1
+#Bg Event Label
+BG_C12R0101_BED_01
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_BG_C12R0101_BED_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-72 0 168
+#event number: 2
+#Bg Event Label
+BG_C12R0101_BED_02
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_BG_C12R0101_BED_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-72 0 184
+#event number: 3
+#Bg Event Label
+BG_C12R0101_WII_01
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_BG_C12R0101_WII_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-152 0 200
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
@@ -29,7 +298,24 @@ C:\home\swan\resource\fldmapdata\eventdata\data\c12r0101.wms
 #hold event type:
 1
 #hold event number:
+1
+#event number: 0
+#Pos Event Label
+POS_C12R0101_STARTEVENTS
+#Pos Script Name
+SCRID_POS_C12R0101_STARTEVENTS
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_C12R0101
+#Event Trigger Work Value
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-104 0 88
+#size
+1 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT

@@ -905,20 +905,20 @@
 		/* not used   881(0x0371) */
 		/* not used   882(0x0372) */
 		/* not used   883(0x0373) */
-		/* not used   884(0x0374) */
-		/* not used   885(0x0375) */
-		/* not used   886(0x0376) */
-		/* not used   887(0x0377) */
-		/* not used   888(0x0378) */
-		/* not used   889(0x0379) */
-		/* not used   890(0x037a) */
-		/* not used   891(0x037b) */
-		/* not used   892(0x037c) */
-		/* not used   893(0x037d) */
-		/* not used   894(0x037e) */
-		/* not used   895(0x037f) */
-		/* not used   896(0x0380) */
-		/* not used   897(0x0381) */
+#define FV_C12PC0101_SWBELL                884 /* 0x0374 ヒオウギシティPC：ベル */
+#define FV_C12R0101_TRORHY1_01             885 /* 0x0375 ヒオウギシティ自宅：バトルサブウェイトロフィー（シングル） */
+#define FV_C12R0101_TRORHY2_01             886 /* 0x0376 ヒオウギシティ自宅：バトルサブウェイトロフィー（ダブル） */
+#define FV_C12R0101_TRORHY3_01             887 /* 0x0377 ヒオウギシティ自宅：バトルサブウェイトロフィー（マルチ） */
+#define FV_C12R0101_PRIZE1_01              888 /* 0x0378 ヒオウギシティ自宅：表彰状（地方） */
+#define FV_C12R0101_PRIZE2_01              889 /* 0x0379 ヒオウギシティ自宅：表彰状（全国） */
+#define FV_R19_POKEMON_HOKAKU              890 /* 0x037a 19ばんどうろ・ポケモン捕獲 */
+#define FV_C12R0101_SWBELL                 891 /* 0x037b ヒオウギシティ自宅・ベル */
+#define FV_C12R0101_SWMAMA                 892 /* 0x037c ヒオウギシティ自宅・ママ */
+#define FV_C12_SWANLEADER1                 893 /* 0x037d ヒオウギシティ・チェレン */
+#define FV_C12_SWBELL                      894 /* 0x037e ヒオウギシティ・ベル */
+#define FV_C12_SWMAMA                      895 /* 0x037f ヒオウギシティ・ママ */
+#define FV_C12_SWRIVAL_SISTER              896 /* 0x0380 ヒオウギシティ・ライバル妹 */
+#define FV_C12_SWRIVAL                     897 /* 0x0381 ヒオウギシティ・ライバル */
 #define FV_PC_MEDALOYAJI                   898 /* 0x0382 ポケセンのメダルおやじ */
 #define FV_D06R0101_PAIR                   899 /* 0x0383 電気穴の洞窟連れ歩き */
 
@@ -2403,7 +2403,7 @@
 #define SYS_FLAG_BGM_C03R0402             2435 /* 0x0983 ヒウンビル（ゲームフリーク）：サウンドクリエイターのＢＧＭ変更イベント */
 #define SYS_FLAG_BGM_R03R0301PLASMA       2436 /* 0x0984 BGM変更フラグ：地下水脈プラズマ団イベント時にBGMを変更する */
 #define SYS_FLAG_BGM_C04GYM0101_SHOW      2437 /* 0x0985 BGM変更フラグ：スワンでんきジム曲変更フラグ */
-		/* not used  2438(0x0986) */
+#define SYS_FLAG_BGM_C12PC0101_GUIDE      2438 /* 0x0986 BGM変更フラグ：スワンヒオウギシティPC BGM変更フラグ */
 		/* not used  2439(0x0987) */
 		/* not used  2440(0x0988) */
 		/* not used  2441(0x0989) */

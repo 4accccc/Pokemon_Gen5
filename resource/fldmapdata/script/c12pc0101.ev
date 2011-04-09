@@ -21,9 +21,161 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_c12pc0101_shop
 _EVENT_DATA    ev_c12pc0101_fix_shop
+_EVENT_DATA    ev_reserve_c12pc0101_pcguide_01
 _EVENT_DATA_END
 
+//=============================================================
+// ポケモンセンターガイドイベント
+//=============================================================
+EVENT_START ev_reserve_c12pc0101_pcguide_01
 
+  //ベル：あんないします
+	_BALLOONWIN_OBJMSG_POS( msg_c12pc0101_white_01 , C12PC0101_SWBELL_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：主人公・ベル受付前へ
+  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 7, 12, FORCE_TYPE_NPC, 8, DIR_LR)
+  _OBJ_ANIME( C12PC0101_SWBELL_01, anm_pcguide_bell_info )
+	_OBJ_ANIME_WAIT()
+	
+	//アニメ：ベル、受付を見る
+	_OBJ_ANIME( C12PC0101_SWBELL_01, anm_staystep_u )
+	_OBJ_ANIME_WAIT()
+	
+	//ベル：ポケモンセンターは
+	_BALLOONWIN_OBJMSG_POS( msg_c12pc0101_white_02 , C12PC0101_SWBELL_01 , POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：主人公・ベル、パソコン方面を見る
+	_OBJ_ANIME( C12PC0101_SWBELL_01, anm_staystep_l )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
+	_OBJ_ANIME_WAIT()
+  
+  //ベル：つぎはあっち
+	_BALLOONWIN_OBJMSG_POS( msg_c12pc0101_white_03 , C12PC0101_SWBELL_01 , POS_DEFAULT )
+  _MSGWIN_CLOSE()
+	
+	//アニメ：主人公・ベルPC前へ
+  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 4, 12, FORCE_TYPE_NPC, 8, DIR_LR)
+  _OBJ_ANIME( C12PC0101_SWBELL_01, anm_pcguide_bell_pc )
+	_OBJ_ANIME_WAIT()
+	
+	//アニメ：ベル、PCを見る
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
+	_OBJ_ANIME( C12PC0101_SWBELL_01, anm_staystep_u )
+	_OBJ_ANIME_WAIT()
+
+	//ベル：これはパソコン
+	_BALLOONWIN_OBJMSG_POS( msg_c12pc0101_white_04 , C12PC0101_SWBELL_01 , POS_DEFAULT )
+  _MSGWIN_CLOSE()
+	
+	//アニメ：主人公・ベル、ショップ方面を見る
+	_OBJ_ANIME( C12PC0101_SWBELL_01, anm_staystep_d )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
+	_OBJ_ANIME_WAIT()
+	
+	//ベル：つぎはあっち
+	_BALLOONWIN_OBJMSG_POS( msg_c12pc0101_white_05 , C12PC0101_SWBELL_01 , POS_DEFAULT )
+  _MSGWIN_CLOSE()
+	
+	//アニメ：主人公・ベルショップ前へ
+  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 9, 16, FORCE_TYPE_NPC, 8, DIR_LR)
+  _OBJ_ANIME( C12PC0101_SWBELL_01, anm_pcguide_bell_shop )
+	_OBJ_ANIME_WAIT()
+	
+	//アニメ：ベル、ショップを見る
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
+	_OBJ_ANIME( C12PC0101_SWBELL_01, anm_staystep_r )
+	_OBJ_ANIME_WAIT()
+	
+	//ベル：ここはショップ
+	_BALLOONWIN_OBJMSG_POS( msg_c12pc0101_white_06 , C12PC0101_SWBELL_01 , POS_DEFAULT )
+  _MSGWIN_CLOSE()
+	
+	//アニメ：主人公・ベル、向き合う
+	_OBJ_ANIME( C12PC0101_SWBELL_01, anm_staystep_u )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
+	_OBJ_ANIME_WAIT()
+	
+	//ベル：プレゼント
+	_PLAYER_NAME( 0 ) //プレイヤー名を反映
+	_BALLOONWIN_OBJMSG_MF( msg_c12pc0101_white_07, msg_c12pc0101_white_08, C12PC0101_SWBELL_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//モンスターボール入手処理
+	_ITEM_EVENT_KEYWAIT(ITEM_MONSUTAABOORU, 5)
+	
+	//ベル：つぎは
+	_BALLOONWIN_OBJMSG_POS( msg_c12pc0101_white_09 , C12PC0101_SWBELL_01 , POS_DEFAULT )
+  _MSGWIN_CLOSE()
+	
+	//ベル退場
+	_OBJ_ANIME( C12PC0101_SWBELL_01, anm_pcguide_bell_bye )
+	_OBJ_ANIME_WAIT()
+	
+	//階段SE再生
+  _SE_PLAY( SEQ_SE_KAIDAN )
+  _SE_WAIT()
+  
+  //ベル動作モデル非表示
+  _OBJ_DEL(C12PC0101_SWBELL_01)
+  
+  //【仮】フィールド通常曲に戻す
+	_BGM_NOW_MAP_RECOVER()
+  
+  //==================================//
+	
+	//ゾーンBGM変更フラグをリセット
+	_FLAG_RESET( SYS_FLAG_BGM_C12PC0101_GUIDE)
+	
+	//C12のSCENE_CHANGE起動
+	$WK_SCENE_C12_WHITE_MEET = 5
+	
+	//C12PC0101のベルを非表示
+	_FLAG_SET( FV_C12PC0101_SWBELL )
+	
+	//C12のママと妹を表示
+	_FLAG_RESET( FV_C12_SWRIVAL_SISTER )
+	_FLAG_RESET( FV_C12_SWMAMA )
+
+	//==================================//
+	
+EVENT_END
+
+//--------------------------------------------------------------------
+//	☆ポケセン案内：案内前に
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_pcguide_bell_info
+  _ANIME_DATA	AC_WALK_U_8F,4
+  _ANIME_DATA	AC_WALK_L_8F,1
+  _ANIME_DATA	AC_STAY_WALK_R_8F,1
+  _ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆ポケセン案内：PC前に
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_pcguide_bell_pc
+  _ANIME_DATA	AC_WALK_L_8F,3
+  _ANIME_DATA	AC_STAY_WALK_R_8F,1
+  _ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆ポケセン案内：ショップ前に
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_pcguide_bell_shop
+  _ANIME_DATA	AC_WALK_R_8F,5
+  _ANIME_DATA	AC_WALK_D_8F,5
+  _ANIME_DATA	AC_WALK_R_8F,1
+  _ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆ポケセン案内：ショップ前に
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_pcguide_bell_bye
+  _ANIME_DATA	AC_WALK_L_8F,2
+  _ANIME_DATA	AC_WALK_D_8F,3
+  _ANIME_DATA	ACMD_END,0
+  
 //=============================================================
 //ショップカウンター 変動ショップ
 //=============================================================
@@ -39,3 +191,48 @@ EVENT_START ev_c12pc0101_fix_shop
   _TALK_OBJ_START()
   _FIX_SHOP_CALL( C10_FS )
 EVENT_END
+
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staystep_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0

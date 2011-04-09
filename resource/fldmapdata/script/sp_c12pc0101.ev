@@ -18,6 +18,10 @@
 //--------------------------------------------------------------
 _FIELD_INIT_LABEL SCRID_INIT_POSTMAN
 _FIELD_RECOVER_LABEL SCRID_RECOVER_POSTMAN
+_SCENE_CHANGE_LABEL		sp_c12pc0101_tbl
 _SP_EVENT_DATA_END
 
 
+//テーブル定義
+sp_c12pc0101_tbl:
+	_SCENE_CHANGE_END

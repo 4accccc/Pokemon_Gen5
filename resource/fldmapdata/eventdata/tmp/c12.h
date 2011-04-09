@@ -15,6 +15,10 @@
 #ifndef ZONE_C12_EVC_H
 #define ZONE_C12_EVC_H
 
+#define C12_SWRIVAL_01                     0
+#define C12_SWMAMA_01                      1
+#define C12_SWBELL_01                      2
+#define C12_SWSISTER_01                    3
 
 #endif //ZONE_C12_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c12.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
