@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-08T17:49:51"/>
+	<create user="matsumiya" host="W00224" date="2011-04-09T12:17:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1291" top="148" right="1996" bottom="776" maximized="no" rayout="Vertical2">
+	<dialog left="1308" top="154" right="2013" bottom="782" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -439,18 +439,22 @@
 　t06r0101内へ入ると、主人公操作可能</comment>
 		<attribute name="キャラ指定">アデク
 ・BWチャンピオン</attribute>
-		<language name="JPN" width="256">アデク『おう！　タウンマップを
-ぶじ　ともだちに　わたせたようだな！▼
+		<language name="JPN" width="256">アデク『おう！　ぶじ　ともだちに
+タウンマップを　わたせたようだな！▼
 ふむう……！▼
 わずかの　あいだに　おまえさんも
 ポケモンも　みちがえるようだ！▼
-よし！　さらに　きたえてやるぞ！▼</language>
-		<language name="JPN_KANJI" width="256">アデク『おう！　タウンマップを
-ぶじ　ともだちに　わたせたようだな！▼
+よし！　きたえるのは　なし▼
+かわりに　おまえさんと　ポケモンの
+ちからを　かしてくれ！▼</language>
+		<language name="JPN_KANJI" width="256">アデク『おう！　友達に　無事
+タウンマップを　渡せたようだな！▼
 ふむう……！▼
 わずかの　あいだに　おまえさんも
 ポケモンも　みちがえるようだ！▼
-よし！　さらに　きたえてやるぞ！▼</language>
+よし！　鍛えるのは　なし▼
+代わりに　おまえさんと　ポケモンの
+力を　貸してくれ！▼</language>
 	</row>
 
 	<row id="msg_t06_middleman1_01">
