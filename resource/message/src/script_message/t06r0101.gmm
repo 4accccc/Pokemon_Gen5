@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-09T13:23:06"/>
+	<create user="matsumiya" host="W00224" date="2011-04-09T13:27:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -464,7 +464,10 @@
 	<row id="msg_t06r0101_champion_11" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・アイテム入手後から
-　c12ジムバッジ取得まで</comment>
+　c12ジムバッジ取得まで
+・このあとt06に移動すると
+　medal_ev.gmm　の
+　msg_mdloyj_intro_01　に</comment>
 		<attribute name="キャラ指定">アデク
 ・BWチャンピオン</attribute>
 		<language name="JPN" width="256">であうはずが　なかった
