@@ -60,7 +60,7 @@ void PMV_GetVoiceWaveIdx( u32 pokeNo,     // [in]ポケモンナンバー
               u32 pokeFormNo,   // [in]ポケモンフォームナンバー
               u32* waveIdx )    // [out]波形IDX
 {
-  if(( pokeNo < MONSNO_HUSIGIDANE)&&( pokeNo > MONSNO_END) ){
+  if(( pokeNo < MONSNO_HUSIGIDANE)||( pokeNo > MONSNO_END) ){
     //指定範囲外
     *waveIdx = PMVOICE_POKE001;
     return;
@@ -95,6 +95,12 @@ BOOL PMV_CustomVoiceWave( u32     pokeNo,     // [in]ポケモンナンバー
 {
   PMV_REF* pmvRef;
   POKEMON_VOICE_PARAM  pvp;
+
+  if(( pokeNo < MONSNO_HUSIGIDANE)||( pokeNo > MONSNO_END) ){
+    //指定範囲外
+    pokeNo = MONSNO_HUSIGIDANE;
+  }
+
 
   //ボリューム＆サンプリングレート設定
   //  *volume = VOICE_VOLUME_DEFAULT;
