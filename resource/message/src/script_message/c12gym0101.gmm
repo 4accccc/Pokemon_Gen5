@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-07T19:21:17"/>
+	<create user="matsumiya" host="W00224" date="2011-04-09T14:54:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1291" top="150" right="1995" bottom="776" maximized="no" rayout="Vertical2">
+	<dialog left="1340" top="198" right="2045" bottom="826" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="529"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="542"/>
+		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="696"/>
+		<band id="4" index="0" style="0000" width="697"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,14 +292,15 @@
 	</lock>
 
 
-	<row id="msg_c12gym0101_woman2_01">
+	<row id="msg_c12gym0101_woman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
-・入り口付近</comment>
+・入り口付近
+・19文字</comment>
 		<attribute name="キャラ指定">WOMAN2</attribute>
-		<language name="JPN" width="256">あたらしい　せんせい　なら
-スクールの　おくに　いらっしゃるわ！</language>
-		<language name="JPN_KANJI" width="256">あたらしい　せんせい　なら
-スクールの　おくに　いらっしゃるわ！</language>
+		<language name="JPN" width="256">あたらしい　せんせい　というか
+ジムリーダーなら　スクールの　おくよ！</language>
+		<language name="JPN_KANJI" width="256">新しい　先生というか
+ジムリーダーは　スクールの　奥よ！</language>
 	</row>
 
 	<row id="msg_c12gym0101_boy3_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -310,9 +311,9 @@
 		<language name="JPN" width="256">きみは　ポケモンしょうぶの　とき
 どうぐを　つかったりしてる？▽
 よければ　これを　つかってみてよ！▼</language>
-		<language name="JPN_KANJI" width="256">きみは　ポケモンしょうぶの　とき
-どうぐを　つかったりしてる？▽
-よければ　これを　つかってみてよ！▼</language>
+		<language name="JPN_KANJI" width="256">きみは　ポケモン勝負の　とき
+道具を　使ったりしてる？▽
+よければ　これを　使ってみてよ！▼</language>
 	</row>
 
 	<row id="msg_c12gym0101_boy3_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -320,18 +321,18 @@
 ・アイテム入手後</comment>
 		<attribute name="キャラ指定">BOY3</attribute>
 		<language name="JPN" width="256">ディフェンダーを　つかった
-ポケモンは　まもりが　たかまる！▼
+ポケモンは　ぼうぎょが　たかまる！▼
 しょうぶのとき　わざを　だすのか
 それとも　どうぐを　つかうのか▽
 トレーナーの　はんだんが　だいじだよ</language>
-		<language name="JPN_KANJI" width="256">ディフェンダーを　つかった
-ポケモンは　まもりが　たかまる！▼
-しょうぶのとき　わざを　だすのか
-それとも　どうぐを　つかうのか▽
-トレーナーの　はんだんが　だいじだよ</language>
+		<language name="JPN_KANJI" width="256">ディフェンダーを　使った
+ポケモンは　防御が　高まる！▼
+勝負のとき　わざを　だすのか
+それとも　道具を　使うのか▽
+トレーナーの　判断が　重用だよ</language>
 	</row>
 
-	<row id="msg_c12gym0101_girl3_01">
+	<row id="msg_c12gym0101_girl3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
 ※仮メッセージ
 　BWと同じ</comment>
@@ -350,7 +351,7 @@
 　ポケモンは　おどろき　進化をやめる」</language>
 	</row>
 
-	<row id="msg_c12gym0101_boy2a_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c12gym0101_boy2a_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・下記少年のと横並び
 ・どちらに話しかけてもこのメッセージから表示
@@ -372,20 +373,20 @@
 効果を　発揮するよ！</language>
 	</row>
 
-	<row id="msg_c12gym0101_boy2b_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c12gym0101_boy2b_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・上記少年と横並び
 ・0＝先頭のポケモン（ひんし/タマゴのぞく）
 ・1＝特性名</comment>
 		<attribute name="キャラ指定">BOY2</attribute>
 		<language name="JPN" width="256">きみの　[1:01:ポケモン種族名:0]の　とくせいは
-[1:06:とくせい名:1]だね▼
+[1:06:とくせい名:1]　だね▼
 えーっと　チェレンせんせい　なら
 どんな　こうかか　おしえてくれるよ！</language>
 		<language name="JPN_KANJI" width="256">きみの　[1:01:ポケモン種族名:0]の　とくせいは
-[1:06:とくせい名:1]だね▼
-えーっと　チェレンせんせい　なら
-どんな　こうかか　おしえてくれるよ！</language>
+[1:06:とくせい名:1]　だね▼
+えーっと　チェレン先生　なら
+どんな　効果か　教えてくれるよ！</language>
 	</row>
 
 	<row id="msg_c12gym0101_board_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
