@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-08T20:33:21"/>
+	<create user="matsumiya" host="W00224" date="2011-04-09T13:23:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,7 +229,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="194"/>
+		<id position="0" width="172"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1318" top="192" right="2023" bottom="820" maximized="no" rayout="Vertical2">
+	<dialog left="1308" top="154" right="2013" bottom="782" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -294,175 +294,227 @@
 
 	<row id="msg_t06r0101_girl3_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
-・続けて</comment>
+・室内に入るとgirl3、boy3に！マーク
+・続けてboy3_01</comment>
 		<attribute name="キャラ指定">GIRL3
 塾帰り♀</attribute>
 		<language name="JPN" width="256">おんなのこ『あっ！　アデクさん
-そのひとが　つよい　トレーナー？▼</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+そのひとを　きたえてあげるの？▼</language>
+		<language name="JPN_KANJI" width="256">おんなのこ『あっ！　アデクさん
+その人を　鍛えてあげるの？▼</language>
 	</row>
 
 	<row id="msg_t06r0101_boy3_01">
 		<comment>♂
-・続けて</comment>
+・続けてchampion_01</comment>
 		<attribute name="キャラ指定">BOY3
 塾帰り♂</attribute>
-		<language name="JPN" width="256">おとこのこ『ねーねー！
-はやく　ポケモン　みせてよ！▼</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">おとこのこ『えー　でも
+このひと　なんだか　つよそうだよ！▼</language>
+		<language name="JPN_KANJI" width="256">おとこのこ『えー　でも
+この人　なんだか　強そうだよ！▼</language>
 	</row>
 
 	<row id="msg_t06r0101_champion_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・続けて</comment>
+・続けてchampion_02</comment>
 		<attribute name="キャラ指定">アデク
 ・BWチャンピオン</attribute>
-		<language name="JPN" width="256">アデク『そうだとも！
-おまえたち　むねを　かしてもらえ！▼</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">アデク『おう！　つよいだろうな
+だが　まけて　まなぶこともある▼
+それになにより　ポケモンしょうぶを
+たのしもう！　と　いっているだろう▼</language>
+		<language name="JPN_KANJI" width="256">アデク『おう！　強いだろうな
+だが　負けて　学ぶこともある▼
+それになにより　ポケモン勝負を
+楽しもう！　と　いっているだろう▼</language>
 	</row>
 
 	<row id="msg_t06r0101_champion_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・主人公と向き合ってメッセージ表示
 ・塾帰り♂が主人公に隣接
-　続けて表示</comment>
+　続けてboy3_02
+・0＝主人公名前</comment>
 		<attribute name="キャラ指定">アデク
 ・BWチャンピオン</attribute>
-		<language name="JPN" width="256">では　？？？？？！
-おもいっきり　たのしめよ！▼</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">というわけで　[1:00:トレーナー名:0]！
+かれらの　あいてを　してくれい！▼</language>
+		<language name="JPN_KANJI" width="256">というわけで　[1:00:トレーナー名:0]！
+彼らの　相手を　してくれい！▼</language>
 	</row>
 
 	<row id="msg_t06r0101_boy3_02">
 		<comment>♂
-・1人目：塾帰り♂</comment>
+・1人目：塾帰り♂（schoolb_11）</comment>
 		<attribute name="キャラ指定">BOY3
 塾帰り♂</attribute>
-		<language name="JPN" width="256">戦闘前メッセージ▼</language>
-		<language name="JPN_KANJI" width="256">戦闘前メッセージ▼</language>
+		<language name="JPN" width="256">ぼくの　ポケモンの
+かっこいいところ　みせてあげます！▼</language>
+		<language name="JPN_KANJI" width="256">ぼくの　ポケモンの
+かっこいいところ　みせてあげます！▼</language>
 	</row>
 
 	<row id="msg_t06r0101_champion_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・</comment>
+・続けてgirl3_02</comment>
 		<attribute name="キャラ指定">アデク
 ・BWチャンピオン</attribute>
-		<language name="JPN" width="256">おまえさん＆ポケモンは
-全力をだしたんだ▼
-それは　すごいことなんだぞ
+		<language name="JPN" width="256">いまの　しょうぶは　どちらも
+なかなか　あっぱれ　だったぞ！▼
 さて　つぎは……▼</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN_KANJI" width="256">今の　勝負は　どちらも
+なかなか　あっぱれ　だったぞ！▼
+さて　次は……▼</language>
 	</row>
 
 	<row id="msg_t06r0101_girl3_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
-・</comment>
+・続けて</comment>
 		<attribute name="キャラ指定">GIRL3
 塾帰り♀</attribute>
 		<language name="JPN" width="256">おんなのこ『はーい！▼</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN_KANJI" width="256">おんなのこ『はーい！▼</language>
 	</row>
 
 	<row id="msg_t06r0101_champion_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・回復処理</comment>
+・回復処理
+・0＝主人公名前</comment>
 		<attribute name="キャラ指定">アデク
 ・BWチャンピオン</attribute>
-		<language name="JPN" width="256">アデク『そのまえに　主人公の
-ポケモンを　かいふく　しないとな▼</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">アデク『そのまえに　[1:00:トレーナー名:0]の
+ポケモンを　げんきに　しないとな▼</language>
+		<language name="JPN_KANJI" width="256">アデク『その前に　[1:00:トレーナー名:0]の
+ポケモンを　元気に　しないとな▼</language>
 	</row>
 
 	<row id="msg_t06r0101_girl3_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
-・2人目：塾帰り♀</comment>
+・2人目：塾帰り♀（schoolg_09）</comment>
 		<attribute name="キャラ指定">GIRL3
 塾帰り♀</attribute>
-		<language name="JPN" width="256">戦闘前メッセージ▼</language>
-		<language name="JPN_KANJI" width="256">戦闘前メッセージ▼</language>
+		<language name="JPN" width="256">おんなのこ『あたしは　ポケモンに
+いいモノを　もたせてみました！▼</language>
+		<language name="JPN_KANJI" width="256">おんなのこ『あたしは　ポケモンに
+いいモノを　持たせてみました！▼</language>
 	</row>
 
 	<row id="msg_t06r0101_champion_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・</comment>
+・続けて</comment>
 		<attribute name="キャラ指定">アデク
 ・BWチャンピオン</attribute>
 		<language name="JPN" width="256">アデク『いやあ　じつに
-こころおどる　しょうぶ　だったな！▽
-どの　ポケモンも　うれしそうだったぞ▼</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+こころおどる　たたかい　だったな！▼
+どの　ポケモンからも　うれしそうな
+きもちが　つたわってきたぞ！▼</language>
+		<language name="JPN_KANJI" width="256">アデク『いやあ　じつに
+こころおどる　戦い　だったな！▼
+どの　ポケモンからも　うれしそうな
+気持ちが　伝わってきたぞ！▼</language>
 	</row>
 
 	<row id="msg_t06r0101_champion_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・</comment>
+・続けて
+・0＝主人公名前</comment>
 		<attribute name="キャラ指定">アデク
 ・BWチャンピオン</attribute>
-		<language name="JPN" width="256">どうだ　主人公
-二人目の　女の子は
-ポケモンに　きのみを　もたせておった
+		<language name="JPN" width="256">どうだ　[1:00:トレーナー名:0]▼
+ふたりめの　おんなのこは
+ポケモンに　きのみを　もたせておった▼
 そうすると　たたかいの　さなか
-たいりょくが　へったとき
-ポケモンが　たべて　げんきになるのだ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+たいりょくが　へったとき　ポケモンが▽
+じぶんで　たべて　げんきになるのだ！▼</language>
+		<language name="JPN_KANJI" width="256">どうだ　[1:00:トレーナー名:0]▼
+二人目の　おんなのこは
+ポケモンに　きのみを　持たせおった▼
+そうすると　戦いの　さなか
+体力が　減ったとき　ポケモンが▽
+自分で　食べて　元気になるのだ！▼</language>
 	</row>
 
 	<row id="msg_t06r0101_girl3_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
-・</comment>
+・続けて</comment>
 		<attribute name="キャラ指定">GIRL3
 塾帰り♀</attribute>
-		<language name="JPN" width="256">でもね　でもね
-人が　創った　道具は
-使い方が　解らないみたい</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">おんなのこ『でもね　でもね▼
+ひとが　つくった　どうぐは
+つかいかたが　わからないみたいなの▼</language>
+		<language name="JPN_KANJI" width="256">おんなのこ『でもね　でもね▼
+ひとが　つくった　どうぐは
+つかいかたが　わからないみたいなの▼</language>
 	</row>
 
 	<row id="msg_t06r0101_champion_10" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・オレンのみ×５入手</comment>
+・アイテム入手処理
+　No155「オレンのみ」×５
+・入手後champion_11</comment>
 		<attribute name="キャラ指定">アデク
 ・BWチャンピオン</attribute>
-		<language name="JPN" width="256">いろんな　ひと　ポケモンと
-であうんだ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">アデク『よければ　おまえさんも
+これを　もたせてみると　いい▼</language>
+		<language name="JPN_KANJI" width="256">アデク『よければ　おまえさんも
+これを　持たせてみると　いい▼</language>
 	</row>
 
 	<row id="msg_t06r0101_champion_11" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・アイテム入手後から
+　c12ジムバッジ取得まで</comment>
+		<attribute name="キャラ指定">アデク
+・BWチャンピオン</attribute>
+		<language name="JPN" width="256">であうはずが　なかった
+ポケモン　ひとと　であえる……▽
+それが　たびの　よさ　だな</language>
+		<language name="JPN_KANJI" width="256">出会うはずが　なかった
+ポケモン　人と　出会える……▽
+それが　旅の　良さ　だな</language>
+	</row>
+
+	<row id="msg_t06r0101_champion_12" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・c12ジムバッジ取得後</comment>
 		<attribute name="キャラ指定">アデク
 ・BWチャンピオン</attribute>
 		<language name="JPN" width="256">C12ジムバッジ後</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN_KANJI" width="256">C12ジムバッジ後</language>
 	</row>
 
-	<row id="msg_t06r0101_champion_12" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t06r0101_champion_13" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・クリア後</comment>
+・クリア後（暫定）</comment>
 		<attribute name="キャラ指定">アデク
 ・BWチャンピオン</attribute>
 		<language name="JPN" width="256">クリア後</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN_KANJI" width="256">クリア後</language>
 	</row>
 
 	<row id="msg_t06r0101_boy3_03">
 		<comment>♂
-・イベント後</comment>
+・オレンのみ入手後</comment>
 		<attribute name="キャラ指定">BOY3
 塾帰り♂</attribute>
-		<language name="JPN" width="256">イベント後</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">ポケモンが　ぼくの　えらんだ
+わざを　だしてくれる……▼
+これって　すごいこと　ですよね！</language>
+		<language name="JPN_KANJI" width="256">ポケモンが　ぼくの　選んだ
+わざを　だしてくれる……▼
+これって　すごいこと　ですよね！</language>
 	</row>
 
 	<row id="msg_t06r0101_girl3_05" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
-・イベント後</comment>
+・オレンのみ入手後</comment>
 		<attribute name="キャラ指定">GIRL3
 塾帰り♀</attribute>
-		<language name="JPN" width="256">イベント後</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">ポケモンのことを　もっと　しれば
+もっと　つよくなれると　おもうの！</language>
+		<language name="JPN_KANJI" width="256">ポケモンのことを　もっと　知れば
+もっと　強くなれると　思うの！</language>
 	</row>
 
 	<flowchart-group-list>
