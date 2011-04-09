@@ -11,7 +11,7 @@
 #pragma once
 
 #define  ZONE_SPEC_ATTR_MAX  ( 17 )
-#define  BATT_BG_TBL_NO_FILE     ( 0xffffffff )
+#define  BATT_BG_TBL_NO_FILE     ( 0xffff )
 #define  BATT_BG_TBL_FILE_MAX  ( 8 ) //春敵・春自・夏敵・夏自・秋敵・秋自・冬敵・冬自の順
 #define  BATT_FIELD_TBL_MAX    ( 4 ) // IMD・ICA・ITA・IMAの順
 
@@ -36,13 +36,12 @@ typedef struct
 typedef struct
 {
 	u16  edge_color;
-	u16  padding;
-	ARCDATID file[ BATT_FIELD_TBL_MAX ][ BATT_BG_TBL_FILE_MAX ];
+	u16 file[ BATT_FIELD_TBL_MAX ][ BATT_BG_TBL_FILE_MAX ];
 }BATT_BG_TBL_STAGE_TABLE;
 
 typedef struct
 { // 最後のx2部分は春春夏夏秋秋冬冬と入っています
-	ARCDATID file[BATT_FIELD_TBL_MAX ][ BATT_FIELD_TBL_SEASON_MAX+BATT_FIELD_TBL_ANIME_MAX ];
+	u16 file[BATT_FIELD_TBL_MAX ][ BATT_FIELD_TBL_SEASON_MAX+BATT_FIELD_TBL_ANIME_MAX ];
 }BATT_BG_TBL_BG_TABLE;
 
 typedef enum{
@@ -71,6 +70,7 @@ typedef enum{
 	BATT_BG_OBONID_22,				//エンカウント草（四季あり）
 	BATT_BG_OBONID_23,				//エンカウント草（四季なし）
 	BATT_BG_OBONID_24,				//アスファルト
-	BATT_BG_OBONID_25,				//ポケウッド専用
+	BATT_BG_OBONID_25,				//ポケウッド撮影
+	BATT_BG_OBONID_26,				//ポケウッド上映
 }BATT_BG_OBONID;
 

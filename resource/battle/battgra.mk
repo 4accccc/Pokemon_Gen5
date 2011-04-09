@@ -37,6 +37,7 @@ include $(PROJECT_RSCDIR)\macro_define
 RES_BGDIR = battle_bg/
 RES_OBJDIR = battle_obj/
 RES_3DDIR = battle_3d/
+RES_PWBGDIR = pokewood_bg/
 
 #コンバータ
 NITRO_COMP = ../../tools/nitro_comp
@@ -52,6 +53,9 @@ BGNCLFILE := $(wildcard $(RES_BGDIR)*.ncl)
 OBJNCGFILE := $(wildcard $(RES_OBJDIR)*.ncg)
 OBJNCEFILE := $(wildcard $(RES_OBJDIR)*.nce)
 OBJNCLFILE := $(wildcard $(RES_OBJDIR)*.ncl)
+PWBGNCGFILE := $(wildcard $(RES_PWBGDIR)*.ncg)
+PWBGNSCFILE := $(wildcard $(RES_PWBGDIR)*.nsc)
+PWBGNCLFILE := $(wildcard $(RES_PWBGDIR)*.ncl)
 
 .PHONY:	do-build clean subdir
 
@@ -59,7 +63,7 @@ OBJNCLFILE := $(wildcard $(RES_OBJDIR)*.ncl)
 #	make do-build ルール
 #------------------------------------------------------------------------------
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-do-build: nsbmd nsbca nsbma nsbta ncgr ncer bg_nclr obj_nclr $(NARCNAME) $(TARGETDIR)/$(NARCNAME)
+do-build: nsbmd nsbca nsbma nsbta ncgr ncer bg_nclr obj_nclr pw_ncgr pw_bg_nclr pw_nscr $(NARCNAME) $(TARGETDIR)/$(NARCNAME)
 else
 do-build: $(TARGETDIR)/$(NARCNAME)
 endif
@@ -106,7 +110,20 @@ bg_nclr: $(notdir $(BGNCLFILE:.ncl=.NCLR))
 %.NCLR: $(RES_BGDIR)%.ncl
 	g2dcvtr $< -o/./
 
-$(NARCNAME): $(notdir $(IMDFILE:.imd=.nsbmd)) $(notdir $(ICAFILE:.ica=.nsbca)) $(notdir $(IMAFILE:.ima=.nsbma)) $(notdir $(ITAFILE:.ita=.nsbta)) $(notdir $(BGNSCFILE:.nsc=.NSCR)) $(notdir $(BGNCGFILE:.ncg=.NCGR)) $(notdir $(BGNCLFILE:.ncl=.NCLR)) $(notdir $(OBJNCEFILE:.nce=.NCER)) $(notdir $(OBJNCLFILE:.ncl=.NCLR)) battgra_3d_wb.scr battgra_wb.scr
+pw_nscr: $(notdir $(PWBGNSCFILE:.nsc=.NSCR))
+%.NSCR: $(RES_PWBGDIR)%.nsc
+	g2dcvtr $< -bg -o/./
+
+pw_ncgr: $(notdir $(PWBGNCGFILE:.ncg=.NCGR))
+%.NCGR: $(RES_PWBGDIR)%.ncg
+	g2dcvtr $< -bg -o/./
+
+pw_bg_nclr: $(notdir $(PWBGNCLFILE:.ncl=.NCLR))
+%.NCLR: $(RES_PWBGDIR)%.ncl
+	g2dcvtr $< -o/./
+
+
+$(NARCNAME): $(notdir $(IMDFILE:.imd=.nsbmd)) $(notdir $(ICAFILE:.ica=.nsbca)) $(notdir $(IMAFILE:.ima=.nsbma)) $(notdir $(ITAFILE:.ita=.nsbta)) $(notdir $(BGNSCFILE:.nsc=.NSCR)) $(notdir $(BGNCGFILE:.ncg=.NCGR)) $(notdir $(BGNCLFILE:.ncl=.NCLR)) $(notdir $(OBJNCEFILE:.nce=.NCER)) $(notdir $(OBJNCLFILE:.ncl=.NCLR)) $(notdir $(PWBGNSCFILE:.nsc=.NSCR)) $(notdir $(PWBGNCGFILE:.ncg=.NCGR)) $(notdir $(PWBGNCLFILE:.ncl=.NCLR)) battgra_3d_wb.scr battgra_wb.scr
 	nnsarc -c -l -n -i $(NARCNAME) -S battgra_3d_wb.scr -S battgra_wb.scr > error
 	$(NAIXCUT) $(NAIXNAME)
 	../../tools/etd.exe $(NAIXNAME)
