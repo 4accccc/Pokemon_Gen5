@@ -97,7 +97,8 @@ static inline void zukan_incorrect(const ZUKAN_SAVEDATA * zw)
 static BOOL monsno_incorrect(u16 monsno)
 {
   if (monsno == 0 || monsno > MONSNO_END) {
-    GF_ASSERT_MSG(0, "ポケモンナンバー異常：%d\n", monsno);
+//    GF_ASSERT_MSG(0, "ポケモンナンバー異常：%d\n", monsno);
+    OS_TPrintf( "ポケモンナンバー異常：%d\n", monsno);
     return TRUE;
   } else {
     return FALSE;
