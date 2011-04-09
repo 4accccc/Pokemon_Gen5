@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2011-02-02T01:09:20"/>
+	<create user="tamada" host="W00253" date="2011-04-06T11:44:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -221,6 +221,36 @@
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 				<comment language="japanese">メダルを集めると上昇するメダルボックスのランク名</comment>
 				<comment language="english">メダルを集めると上昇するメダルボックスのランク名</comment>
+			</tag>
+			<tag entry="55" japanese="リゾートフリーワード" english="リゾートフリーワード" view="EP" width="104" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">リゾートで使用する自由入力の挨拶文です。</comment>
+				<comment language="english">リゾートで使用する自由入力の挨拶文です。</comment>
+			</tag>
+			<tag entry="56" japanese="リゾート店名" english="リゾート店名" view="EP" width="169" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">リゾートで使用する店の名前です。</comment>
+				<comment language="english">リゾートで使用する店の名前です。</comment>
+			</tag>
+			<tag entry="57" japanese="リゾート街名" english="リゾート街名" view="EP" width="130" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">リゾートで使用する自由入力の街名です。</comment>
+				<comment language="english">リゾートで使用する自由入力の街名です。</comment>
+			</tag>
+			<tag entry="58" japanese="リゾート市長名" english="リゾート市長名" view="EP" width="130" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">リゾートで使用する自由入力の市長名です。</comment>
+				<comment language="english">リゾートで使用する自由入力の市長名です。</comment>
+			</tag>
+			<tag entry="59" japanese="WBTトーナメント名" english="WBTトーナメント名" view="EP" width="208" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WBTのトーナメント名称</comment>
+				<comment language="english">WBTのトーナメント名称</comment>
+			</tag>
+			<tag entry="60" japanese="未設定タグ" english="未設定タグ" view="EP" width="130" line="1">
+				<parameter number="0" japanese="場所" english="場所" type="int8"/>
+				<comment language="japanese">開発中の決定していないタグに使用する</comment>
+				<comment language="english">開発中の決定していないタグに使用する</comment>
 			</tag>
 		</group>
 
@@ -3654,11 +3684,71 @@
 	</row>
 
 	<row id="MONSNAME_650">
+		<language name="JPN" width="216">たまご</language>
+		<language name="JPN_KANJI" width="216">たまご</language>
+	</row>
+
+	<row id="MONSNAME_651">
+		<language name="JPN" width="216">だめたまご</language>
+		<language name="JPN_KANJI" width="216">だめたまご</language>
+	</row>
+
+	<row id="MONSNAME_652">
+		<language name="JPN" width="216">ＵＦＯ</language>
+		<language name="JPN_KANJI" width="216">ＵＦＯ</language>
+	</row>
+
+	<row id="MONSNAME_653">
+		<language name="JPN" width="216">かいじゅう</language>
+		<language name="JPN_KANJI" width="216">かいじゅう</language>
+	</row>
+
+	<row id="MONSNAME_654">
+		<language name="JPN" width="216">おおおとこ</language>
+		<language name="JPN_KANJI" width="216">おおおとこ</language>
+	</row>
+
+	<row id="MONSNAME_655">
+		<language name="JPN" width="216">エイリアン</language>
+		<language name="JPN_KANJI" width="216">エイリアン</language>
+	</row>
+
+	<row id="MONSNAME_656">
+		<language name="JPN" width="216">いんせき</language>
+		<language name="JPN_KANJI" width="216">いんせき</language>
+	</row>
+
+	<row id="MONSNAME_657">
+		<language name="JPN" width="216">つなみ</language>
+		<language name="JPN_KANJI" width="216">つなみ</language>
+	</row>
+
+	<row id="MONSNAME_658">
+		<language name="JPN" width="216">たいふう</language>
+		<language name="JPN_KANJI" width="216">たいふう</language>
+	</row>
+
+	<row id="MONSNAME_659">
+		<language name="JPN" width="216">ばいきん</language>
+		<language name="JPN_KANJI" width="216">ばいきん</language>
+	</row>
+
+	<row id="MONSNAME_660">
+		<language name="JPN" width="216">ダム</language>
+		<language name="JPN_KANJI" width="216">ダム</language>
+	</row>
+
+	<row id="MONSNAME_661">
+		<language name="JPN" width="216">おおかじ</language>
+		<language name="JPN_KANJI" width="216">おおかじ</language>
+	</row>
+
+	<row id="MONSNAME_662">
 		<language name="JPN" width="216">タマゴ</language>
 		<language name="JPN_KANJI" width="216">タマゴ</language>
 	</row>
 
-	<row id="MONSNAME_651">
+	<row id="MONSNAME_663">
 		<language name="JPN" width="216">タマゴ</language>
 		<language name="JPN_KANJI" width="216">タマゴ</language>
 	</row>

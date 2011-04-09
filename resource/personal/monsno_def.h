@@ -663,8 +663,20 @@
 #define		MONSNO_GENOSEKUTO		( 649 )
 #define		MONSNO_TAMAGO				( 650 )
 #define		MONSNO_DAMETAMAGO		( 651 )
+#define		MONSNO_ufo					( 652 )
+#define		MONSNO_KAIZYUU			( 653 )
+#define		MONSNO_OOOTOKO			( 654 )
+#define		MONSNO_EIRIAN				( 655 )
+#define		MONSNO_INSEKI				( 656 )
+#define		MONSNO_TUNAMI				( 657 )
+#define		MONSNO_TAIHUU				( 658 )
+#define		MONSNO_BAIKIN				( 659 )
+#define		MONSNO_DAMU					( 660 )
+#define		MONSNO_OOKAZI				( 661 )
+#define		MONSNO_TAMAGO				( 650 )
+#define		MONSNO_DAMETAMAGO		( 651 )
 #define		MONSNO_END					( 649 )
-#define		MONSNO_MAX					( 651 )
+#define		MONSNO_MAX					( 663 )
 
 //別フォルム定義
 //アンノーン
