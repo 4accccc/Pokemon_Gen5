@@ -313,7 +313,7 @@ def write_lst_file( fp_lst, gra_no, form_name )
    fp_lst.printf( "shinou/%03d/pbwb_%03d%s.nmc\n",     gra_no, gra_no, form_name )
    fp_lst.printf( "shinou/%03d/pmwb_%03d%s_n.ncl\n",   gra_no, gra_no, form_name )
    fp_lst.printf( "shinou/%03d/pmwb_%03d%s_r.ncl\n",   gra_no, gra_no, form_name )
-  else
+  when 500..657
    fp_lst.printf( "issyu/%03d/pfwb_%03d%s_m.ncg\n",   gra_no, gra_no, form_name )
    fp_lst.printf( "issyu/%03d/pfwb_%03d%s_f.ncg\n",   gra_no, gra_no, form_name )
    fp_lst.printf( "issyu/%03d/pfwb_%03dc%s_m.ncg\n",  gra_no, gra_no, form_name )
@@ -328,6 +328,21 @@ def write_lst_file( fp_lst, gra_no, form_name )
    fp_lst.printf( "issyu/%03d/pbwb_%03d%s.nmc\n",     gra_no, gra_no, form_name )
    fp_lst.printf( "issyu/%03d/pmwb_%03d%s_n.ncl\n",   gra_no, gra_no, form_name )
    fp_lst.printf( "issyu/%03d/pmwb_%03d%s_r.ncl\n",   gra_no, gra_no, form_name )
+  else
+   fp_lst.printf( "pokewood/%03d/pfwb_%03d%s_m.ncg\n",   gra_no, gra_no, form_name )
+   fp_lst.printf( "pokewood/%03d/pfwb_%03d%s_f.ncg\n",   gra_no, gra_no, form_name )
+   fp_lst.printf( "pokewood/%03d/pfwb_%03dc%s_m.ncg\n",  gra_no, gra_no, form_name )
+   fp_lst.printf( "pokewood/%03d/pfwb_%03dc%s_f.ncg\n",  gra_no, gra_no, form_name )
+   fp_lst.printf( "pokewood/%03d/pfwb_%03d%s.nce\n",     gra_no, gra_no, form_name )
+   fp_lst.printf( "pokewood/%03d/pfwb_%03d%s.nmc\n",     gra_no, gra_no, form_name )
+   fp_lst.printf( "pokewood/%03d/pbwb_%03d%s_m.ncg\n",   gra_no, gra_no, form_name )
+   fp_lst.printf( "pokewood/%03d/pbwb_%03d%s_f.ncg\n",   gra_no, gra_no, form_name )
+   fp_lst.printf( "pokewood/%03d/pbwb_%03dc%s_m.ncg\n",  gra_no, gra_no, form_name )
+   fp_lst.printf( "pokewood/%03d/pbwb_%03dc%s_f.ncg\n",  gra_no, gra_no, form_name )
+   fp_lst.printf( "pokewood/%03d/pbwb_%03d%s.nce\n",     gra_no, gra_no, form_name )
+   fp_lst.printf( "pokewood/%03d/pbwb_%03d%s.nmc\n",     gra_no, gra_no, form_name )
+   fp_lst.printf( "pokewood/%03d/pmwb_%03d%s_n.ncl\n",   gra_no, gra_no, form_name )
+   fp_lst.printf( "pokewood/%03d/pmwb_%03d%s_r.ncl\n",   gra_no, gra_no, form_name )
   end
 end
 
@@ -699,7 +714,10 @@ end
       end
       fp_monsno.printf( "( %d )\n", cnt )
 
-      fp_monsnum.printf( "#define\t\tMONSNO_%03d\t\t( %d )\t\t//%s\n", split_data[ PARA::GRA_NO ].to_i, cnt, split_data[ PARA::POKENAME ] )
+      # 「タマゴ」「ダメタマゴ」はmonsnum_def.hに出力しない
+      if split_data[ PARA::GRA_NO ].to_i!=0 then
+        fp_monsnum.printf( "#define\t\tMONSNO_%03d\t\t( %d )\t\t//%s\n", split_data[ PARA::GRA_NO ].to_i, cnt, split_data[ PARA::POKENAME ] )
+      end
 
       if split_data[ PARA::FORM_NAME ] == "" || split_data[ PARA::FORM_NAME ] == nil
         form_name = ""
@@ -915,9 +933,14 @@ end
   }
 	fp_pokelist.close
 
-  fp_monsno.printf( "#define\t\tMONSNO_TAMAGO\t\t\t\t( %d )\n", monsno_max )
-  fp_monsno.printf( "#define\t\tMONSNO_DAMETAMAGO\t\t( %d )\n", monsno_max + 1 )
-  fp_monsno.printf( "#define\t\tMONSNO_END\t\t\t\t\t( %d )\n",  monsno_max - 1 )
+  # タマゴとダメタマゴの番号はWBとの互換性を考慮して決めうち。
+  # ポケモン定義の最終番号もWBと同じにする
+#  fp_monsno.printf( "#define\t\tMONSNO_TAMAGO\t\t\t\t( %d )\n", monsno_max )
+#  fp_monsno.printf( "#define\t\tMONSNO_DAMETAMAGO\t\t( %d )\n", monsno_max + 1 )
+#  fp_monsno.printf( "#define\t\tMONSNO_END\t\t\t\t\t( %d )\n",  monsno_max - 1 )
+  fp_monsno.printf( "#define\t\tMONSNO_TAMAGO\t\t\t\t( %d )\n", 650 )
+  fp_monsno.printf( "#define\t\tMONSNO_DAMETAMAGO\t\t( %d )\n", 651 )
+  fp_monsno.printf( "#define\t\tMONSNO_END\t\t\t\t\t( %d )\n",  649 )
   fp_monsno.printf( "#define\t\tMONSNO_MAX\t\t\t\t\t( %d )\n",   monsno_max + 1 )
   fp_monsno.print( "\n" )
 
