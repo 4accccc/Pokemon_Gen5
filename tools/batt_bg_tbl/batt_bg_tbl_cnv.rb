@@ -362,7 +362,7 @@ end
   #‚¨–~ƒtƒ@ƒCƒ‹ƒe[ƒuƒ‹¶¬
   fp_stage.printf( "\t.text\n\n" )
   fp_stage.print( "\t.include ../../resource/battle/battgra_wb_def.h\n\n" )
-  fp_stage.printf( "#define BATT_BG_TBL_NO_FILE ( 0xffffffff )\n\n" )
+  fp_stage.printf( "#define BATT_BG_TBL_NO_FILE ( 0xffff )\n\n" )
   stage.size.times{|i|
     fp_stage.printf( "//%s\n", stage[ i ].get_table_name )
     stage_hash[ stage[ i ].get_table_name ] = i
@@ -374,13 +374,13 @@ end
           exit( 1 )
         end
         split_ec = edge_color.split(/:/)
-        fp_stage.printf( "\t.long\t(%s<<10)|(%s<<5)|(%s)\n", split_ec[ 0 ], split_ec[ 1 ], split_ec[ 2 ] )
+        fp_stage.printf( "\t.short\t(%s<<10)|(%s<<5)|(%s)\n", split_ec[ 0 ], split_ec[ 1 ], split_ec[ 2 ] )
       end
       for season in FILE_SPRING..FILE_WINTER_MY
         if stage[ i ].get_file_name( kind, season ) == "~"
-          fp_stage.printf( "\t.long\tBATT_BG_TBL_NO_FILE\n" )
+          fp_stage.printf( "\t.short\tBATT_BG_TBL_NO_FILE\n" )
         else
-          fp_stage.printf( "\t.long\t%s_%s\n", stage[ i ].get_file_name( FILE_IMD, season ).upcase, ext_table[ kind ] )
+          fp_stage.printf( "\t.short\t%s_%s\n", stage[ i ].get_file_name( FILE_IMD, season ).upcase, ext_table[ kind ] )
           fp_scr.printf( "\"%s.%s\"\n", stage[ i ].get_file_name( FILE_IMD, season ), ext_table[ kind ] )
         end
       end
@@ -391,16 +391,16 @@ end
   #”wŒi‚a‚fƒtƒ@ƒCƒ‹ƒe[ƒuƒ‹¶¬
   fp_bg.printf( "\t.text\n\n" )
   fp_bg.print( "\t.include ../../resource/battle/battgra_wb_def.h\n\n" )
-  fp_bg.printf( "#define BATT_BG_TBL_NO_FILE ( 0xffffffff )\n\n" )
+  fp_bg.printf( "#define BATT_BG_TBL_NO_FILE ( 0xffff )\n\n" )
   bg.size.times{|i|
     fp_bg.printf( "//%s\n", bg[ i ].get_table_name )
     bg_hash[ bg[ i ].get_table_name ] = i
     for kind in FILE_IMD..FILE_IMA
       for season in FILE_FLD_SPRING..FILE_FLD_ANIME3
         if bg[ i ].get_file_name( kind, season ) == "~"
-          fp_bg.printf( "\t.long\tBATT_BG_TBL_NO_FILE\n" )
+          fp_bg.printf( "\t.short\tBATT_BG_TBL_NO_FILE\n" )
         else
-          fp_bg.printf( "\t.long\t%s_%s\n", bg[ i ].get_file_name( kind, season ).upcase, ext_table[ kind ] )
+          fp_bg.printf( "\t.short\t%s_%s\n", bg[ i ].get_file_name( kind, season ).upcase, ext_table[ kind ] )
           fp_scr.printf( "\"%s.%s\"\n", bg[ i ].get_file_name( kind, season ), ext_table[ kind ] )
         end
       end
@@ -464,7 +464,7 @@ end
   fp_header.print( "//============================================================================================\n\n" )
   fp_header.printf( "#pragma once\n\n" )
   fp_header.printf( "#define  ZONE_SPEC_ATTR_MAX  ( %d )\n", attribute.size )
-  fp_header.printf( "#define  BATT_BG_TBL_NO_FILE     ( 0xffffffff )\n" )
+  fp_header.printf( "#define  BATT_BG_TBL_NO_FILE     ( 0xffff )\n" )
   fp_header.printf( "#define  BATT_BG_TBL_FILE_MAX  ( 8 ) //t“GEt©E‰Ä“GE‰Ä©EH“GEH©E“~“GE“~©‚Ì‡\n" )
   fp_header.printf( "#define  BATT_FIELD_TBL_MAX    ( 4 ) // IMDEICAEITAEIMA‚Ì‡\n\n" )
   fp_header.printf( "#define  BATT_FIELD_TBL_SEASON_MAX  ( 4 ) // ‘O‚S‚Â‚ª‹Gß•ª\n" )
@@ -489,11 +489,11 @@ end
   fp_header.printf( "}BATT_BG_TBL_ZONE_SPEC_TABLE;\n\n" )
   fp_header.printf( "typedef struct\n{\n" )
   fp_header.printf( "\tu16  edge_color;\n" )
-  fp_header.printf( "\tu16  padding;\n" )
-  fp_header.printf( "\tARCDATID file[ BATT_FIELD_TBL_MAX ][ BATT_BG_TBL_FILE_MAX ];\n" )
+#  fp_header.printf( "\tu16  padding;\n" )
+  fp_header.printf( "\tu16 file[ BATT_FIELD_TBL_MAX ][ BATT_BG_TBL_FILE_MAX ];\n" )
   fp_header.printf( "}BATT_BG_TBL_STAGE_TABLE;\n\n" )
   fp_header.printf( "typedef struct\n{ // ÅŒã‚Ìx2•”•ª‚Ítt‰Ä‰ÄHH“~“~‚Æ“ü‚Á‚Ä‚¢‚Ü‚·\n" )
-  fp_header.printf( "\tARCDATID file[BATT_FIELD_TBL_MAX ][ BATT_FIELD_TBL_SEASON_MAX+BATT_FIELD_TBL_ANIME_MAX ];\n" )
+  fp_header.printf( "\tu16 file[BATT_FIELD_TBL_MAX ][ BATT_FIELD_TBL_SEASON_MAX+BATT_FIELD_TBL_ANIME_MAX ];\n" )
   fp_header.printf( "}BATT_BG_TBL_BG_TABLE;\n\n" )
 
   fp_header.printf( "typedef enum{\n" )
