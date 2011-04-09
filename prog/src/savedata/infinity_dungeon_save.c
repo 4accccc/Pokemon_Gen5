@@ -416,7 +416,14 @@ void INFINITYDUNGEON_SAVE_SetPartnerID( INFINITYDUNGEON_SAVE *p_save ,u8 partner
 //-----------------------------------------------------------------------------
 u8 INFINITYDUNGEON_SAVE_GetDungeonAreaID( const INFINITYDUNGEON_SAVE *p_save )
 {
-  return p_save->floor_id/INFINITYDUNGEON_FLOOR_MAX;
+  if( p_save->floor_id == 0 )
+  {
+    return INFINITY_DUNGEON_AREA_ID_1;
+  }
+  else
+  {
+    return p_save->floor_id/INFINITYDUNGEON_FLOOR_MAX;
+  }
 }
 
 //----------------------------------------------------------------------------

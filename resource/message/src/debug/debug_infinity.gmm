@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="onoue_masayuki" host="W00272" date="2011-04-04T17:18:42"/>
+	<create user="onoue_masayuki" host="W00272" date="2011-04-08T19:38:02"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -476,6 +476,11 @@
 	<row id="DEBUG_STR_INFINITY_NUM">
 		<language name="JPN" width="240">[2:03:４桁:0]</language>
 		<language name="JPN_KANJI" width="240">[2:03:４桁:0]</language>
+	</row>
+
+	<row id="DEBUG_STR_INFINITY_ENDLESS_CHECK">
+		<language name="JPN" width="240">ダンジョン無限生成</language>
+		<language name="JPN_KANJI" width="240">ダンジョン無限生成</language>
 	</row>
 
 	<flowchart-group-list>

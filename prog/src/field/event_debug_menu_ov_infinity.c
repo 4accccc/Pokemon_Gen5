@@ -27,6 +27,7 @@
 #include "event_debug_menu_ov_infinity.h"
 #include "msg/debug/msg_debug_infinity.h"
 #include "savedata/infinity_dungeon_save.h"
+#include "field/infinity_dungeon.h"
 
 //=============================================================================
 /**
@@ -73,6 +74,7 @@ static const DEBUG_MENU_LIST MenuList[] =
   { DEBUG_STR_INFINITY_JUMP_10 , (void*)DEBUG_STR_INFINITY_JUMP_10 , GFL_OVERLAY_BLANK_ID },  // ジャンプ
   { DEBUG_STR_INFINITY_JUMP_11 , (void*)DEBUG_STR_INFINITY_JUMP_11 , GFL_OVERLAY_BLANK_ID },  // ジャンプ
   { DEBUG_STR_INFINITY_JUMP_12 , (void*)DEBUG_STR_INFINITY_JUMP_12 , GFL_OVERLAY_BLANK_ID },  // ジャンプ
+  { DEBUG_STR_INFINITY_ENDLESS_CHECK , (void*)DEBUG_STR_INFINITY_ENDLESS_CHECK , GFL_OVERLAY_BLANK_ID },  // ジャンプ
 };
 
 ///リスト メニューヘッダー
@@ -188,6 +190,23 @@ static void NumInput( INFDUN_WORK* p_wk )
     p_wk->num++;
   }
 
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ダンジョン無限生成テスト
+ *
+ *	@retval FALSE = 継続
+ */
+//-----------------------------------------------------------------------------
+static BOOL DebugDungeonMake()
+{
+  DEBUG_INFINITY_DUNGEON_MakeDungeonData();
+  if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_START )
+  {
+    return TRUE;
+  }
+  return FALSE;
 }
 
 //----------------------------------------------------------------------------
@@ -320,6 +339,13 @@ static GMEVENT_RESULT debugMenuMedalInfinityDungeon( GMEVENT *event, int *seq, v
         (*seq)++;
       }
       break;
+      // 無限生成テスト
+    case DEBUG_STR_INFINITY_ENDLESS_CHECK:
+      {
+        FLDMENUFUNC_DeleteMenu( work->menuFunc );
+        (*seq)=4;
+      }
+      break;
       // ジャンプ
     case DEBUG_STR_INFINITY_JUMP_1: JumpZone(work,ZONE_ID_D31R0201); (*seq)=3; break;
     case DEBUG_STR_INFINITY_JUMP_2: JumpZone(work,ZONE_ID_D31R0101); (*seq)=3; break;
@@ -347,6 +373,13 @@ static GMEVENT_RESULT debugMenuMedalInfinityDungeon( GMEVENT *event, int *seq, v
   case 3:
     // 移動終了待ち
     return GMEVENT_RES_FINISH;
+  case 4:
+    // 終了待ち
+    if( DebugDungeonMake( ) == TRUE)
+    {
+      return GMEVENT_RES_FINISH;
+    }
+    break;
   }
 
 
@@ -355,7 +388,7 @@ static GMEVENT_RESULT debugMenuMedalInfinityDungeon( GMEVENT *event, int *seq, v
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  メダルボックスメニュー起動
+ *	@brief  無限ダンジョンデバッグメニュー起動
  *
  *	@param	*wk 
  *
