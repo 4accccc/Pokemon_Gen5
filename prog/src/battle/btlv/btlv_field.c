@@ -74,6 +74,25 @@ typedef struct
 
 static void _field_anime_delete( BTLV_FIELD_WORK *bfw );
 
+static void _debug_dump(BATT_BG_TBL_BG_TABLE *tbl)
+{
+  int i,j,a;
+  for(a=0;a<30;a++){
+    OS_Printf("%d:\n",a);
+    for(i=0;i<4;i++){
+      OS_Printf("%d: [",i);
+        for(j=0;j<4;j++){
+          OS_Printf("%03d, ", tbl[a].file[i][j]);
+        }
+        OS_Printf("]");
+        for(j=0;j<4;j++){
+          OS_Printf("%03d, ", tbl[a].file[i][j+4]);
+        }
+      OS_Printf("\n");
+    }
+  }
+}
+
 //============================================================================================
 /**
  *  システム初期化
@@ -82,14 +101,30 @@ static void _field_anime_delete( BTLV_FIELD_WORK *bfw );
  * @param[in] index   読み込むリソースのINDEX
  * @param[in] season  季節INDEX
  * @param[in] heapID  ヒープID
+ * @param[in] pokewood ポケウッドフラグ(battle.h参照)
+ * @param[in] pokewoodsenario ポケウッドシナリオNO
  */
 //============================================================================================
-BTLV_FIELD_WORK *BTLV_FIELD_Init( BOOL wcs, int index, u8 season, HEAPID heapID )
+BTLV_FIELD_WORK *BTLV_FIELD_Init( BOOL wcs, int index, u8 season, HEAPID heapID, int pokewood, int pokewoodsenario )
 {
   BTLV_FIELD_WORK *bfw = GFL_HEAP_AllocClearMemory( heapID, sizeof( BTLV_FIELD_WORK ) );
   BOOL  ret;
   BATT_BG_TBL_BG_TABLE* bbtbt = GFL_ARC_LoadDataAlloc( ARCID_BATT_BG_TBL, NARC_batt_bg_tbl_batt_bg_bin,
                                                        GFL_HEAP_LOWID( heapID ) );
+
+  // ポケウッドフラグが立っているときは背景IDを変更
+  if(pokewood==BTL_POKEWOOD_REC){
+    index = 20;
+  }else if(pokewood==BTL_POKEWOOD_SHOW){
+    if(pokewoodsenario==0){
+      index = 21;
+    }else{
+      index = 22;
+    }
+  }
+
+  // 戦闘背景テーブルをデバッグ出力
+//  _debug_dump(bbtbt);
 
   bfw->heapID      = heapID;
   bfw->field_index = index;
@@ -124,13 +159,13 @@ BTLV_FIELD_WORK *BTLV_FIELD_Init( BOOL wcs, int index, u8 season, HEAPID heapID 
     }
   }
 
+
   //RENDER生成
   bfw->field_render = GFL_G3D_RENDER_Create( bfw->field_resource, 0, bfw->field_resource );
 
   if( bfw->anm_count )
   {
     int i, cnt=0;
-
     bfw->field_anm_resource = GFL_HEAP_AllocMemory( bfw->heapID, 4 * bfw->anm_count );
     bfw->field_anm = GFL_HEAP_AllocMemory( bfw->heapID, 4 * bfw->anm_count );
     bfw->field_anm_work = GFL_HEAP_AllocClearMemory( bfw->heapID, sizeof( BTLV_FIELD_ANM_WORK ) * bfw->anm_count );

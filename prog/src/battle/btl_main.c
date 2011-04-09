@@ -36,6 +36,7 @@
 #include "btlv/btlv_mcss.h"
 #include "tr_ai/tr_ai.h"
 #include "pokewood/pokewood_senario.h"
+#include "pokewood/pokewood_work.h"
 
 #include "btl_main.h"
 
@@ -173,7 +174,8 @@ struct _BTL_MAIN_MODULE {
   u8        fMoneyDblUp          : 1;
   u8        fSleepSoundFunc      : 1;
 
-  POKEWOOD_SENARIO *senario;
+  POKEWOOD_SENARIO *pokewood_senario;
+  POKEWOOD_WORK    *pokewood_work;
 };
 
 
@@ -302,7 +304,7 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
 
       GFL_HEAP_CreateHeap( PARENT_HEAP_ID, HEAPID_BTL_SYSTEM, 0x20000 );
       GFL_HEAP_CreateHeap( PARENT_HEAP_ID, HEAPID_BTL_NET,     0x8000 );
-      GFL_HEAP_CreateHeap( PARENT_HEAP_ID, HEAPID_BTL_VIEW,   0xab000 );
+      GFL_HEAP_CreateHeap( PARENT_HEAP_ID, HEAPID_BTL_VIEW,   0xac000 );
 
       wk = GFL_PROC_AllocWork( proc, sizeof(BTL_MAIN_MODULE), HEAPID_BTL_SYSTEM );
       GFL_STD_MemClear32( wk, sizeof(BTL_MAIN_MODULE) );
@@ -337,7 +339,8 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
       wk->fWazaEffectEnable = (CONFIG_GetWazaEffectMode(setup_param->configData) == WAZAEFF_MODE_ON);
       wk->fieldSimWork = BTL_FIELDSIM_CreateWork( wk->heapID );
 
-      OS_TPrintf("pokewood mode=%d\n", setup_param->PokewoodMode);
+      OS_TPrintf("pokewood mode   =%d\n", setup_param->PokewoodMode);
+      OS_TPrintf("pokewood senario=%d\n", setup_param->pokewoodSenario);
 
       PokeCon_Init( &wk->pokeconForClient, wk, FALSE );
       PokeCon_Init( &wk->pokeconForServer, wk, TRUE );
@@ -381,11 +384,7 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
 
       // ポケウッドフラグが立っている場合はシナリオデータを読み込む
       if( setup_param->PokewoodMode ){
-//        GFL_ARC_LoadData( wk->senario, ARCID_POKEWOOD, 0);
-        wk->senario = GFL_ARC_LoadDataAlloc( ARCID_POKEWOOD, 0, HEAPID_BTL_SYSTEM);
-        OS_Printf("pokewood senario size=%d\n", sizeof(POKEWOOD_SENARIO));
-        _print_pokewood_senario( wk->senario );
-
+        POKEWOOD_Init( wk, 0 );
       }
       (*seq)++;
     }
@@ -451,6 +450,11 @@ static GFL_PROC_RESULT BTL_PROC_Main( GFL_PROC* proc, int* seq, void* pwk, void*
   if( wk->mainLoop == NULL ){
     return GFL_PROC_RES_FINISH;
   }
+
+  //デバッグ用にBTL_SYSTEM_HEAPDの残りを表示する
+//  if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_DEBUG){
+//    OS_Printf("BTL_SYSTEM_HEAP=%08x\n", GFL_HEAP_GetHeapFreeSize(HEAPID_BTL_SYSTEM));
+//  }
 
   if( wk->mainLoop( wk ) )
   {
@@ -522,7 +526,7 @@ static GFL_PROC_RESULT BTL_PROC_Quit( GFL_PROC* proc, int* seq, void* pwk, void*
 
     // ポケウッドフラグが立っている場合はシナリオデータを解放する
     if(BTL_MAIN_GetPokewoodMode(wk)){
-      GFL_HEAP_FreeMemory( wk->senario );
+      POKEWOOD_Exit( wk );
     }
 
     // Main側マスター輝度デフォルト以外であれば通信エラー等の可能性->フェードを開始せず即ブラックアウト
@@ -3928,6 +3932,19 @@ int BTL_MAIN_GetPokewoodMode( const BTL_MAIN_MODULE* wk )
 {
   return wk->setupParam->PokewoodMode;
 }
+//=============================================================================================
+/**
+ * ポケウッドのシナリオNOを取得する
+ *
+ * @param   wk
+ *
+ * @retval  int ポケウッドのシナリオNO
+ */
+//=============================================================================================
+int BTL_MAIN_GetPokewoodSenario( const BTL_MAIN_MODULE* wk )
+{
+  return wk->setupParam->pokewoodSenario;
+}
 
 
 //=============================================================================================
@@ -6208,10 +6225,42 @@ static void Bspstore_KenteiData( BTL_MAIN_MODULE* wk )
   }
 }
 
+//=============================================================================================
+/**
+ * @brief	ポケウッド初期化
+ *
+ * @param   wk		      BTL_MAIN_MODULE*
+ * @param   senario_no	読み込むシナリオＮＯ
+ */
+//=============================================================================================
+void POKEWOOD_Init( BTL_MAIN_MODULE* wk, int senario_no )
+{
+  wk->pokewood_senario = GFL_ARC_LoadDataAlloc( ARCID_POKEWOOD, senario_no, HEAPID_BTL_SYSTEM);
+  wk->pokewood_work = GFL_HEAP_AllocMemory( HEAPID_BTL_SYSTEM, sizeof(POKEWOOD_WORK) );
+  OS_Printf("pokewood senario size=%d\n", sizeof(POKEWOOD_SENARIO));
+  _print_pokewood_senario( wk->pokewood_senario );
+
+}
+
+//=============================================================================================
+/**
+ * @brief	ポケウッド解放
+ *
+ * @param   wk		BTL_MAIN_MODULE*
+ */
+//=============================================================================================
+void POKEWOOD_Exit( BTL_MAIN_MODULE* wk )
+{
+  GFL_HEAP_FreeMemory( wk->pokewood_work );
+  GFL_HEAP_FreeMemory( wk->pokewood_senario );
+  
+}
 
 
 static void _print_pokewood_senario( POKEWOOD_SENARIO *senario )
 {
+#ifdef DEBUG_ONLY_FOR_hudson
+
   int i;
   OS_Printf("=================================================\n");
   OS_Printf("senario_no=%d\n", senario->senario_no );
@@ -6259,4 +6308,5 @@ static void _print_pokewood_senario( POKEWOOD_SENARIO *senario )
   
   OS_Printf("=================================================\n");
 
+#endif
 }

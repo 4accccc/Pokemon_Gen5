@@ -220,7 +220,7 @@ static inline BOOL BTLV_INPUT_CheckWazaInfoModeMask( int* hit_pos )
 
 extern  BTLV_INPUT_WORK*  BTLV_INPUT_Init( GAMEDATA* gameData, BTLV_INPUT_TYPE type, BtlCompetitor comp,
                                            PALETTE_FADE_PTR pfd, GFL_FONT* font, u8* cursor_flag, BtlBagMode bagMode,
-                                           BtlMultiMode multiMode, HEAPID heapID );
+                                           BtlMultiMode multiMode, int pokewood, HEAPID heapID );
 extern  BTLV_INPUT_WORK*  BTLV_INPUT_InitEx( GAMEDATA* gameData, BTLV_INPUT_TYPE type, PALETTE_FADE_PTR pfd,
                                              GFL_FONT* font, u8* cursor_flag, HEAPID heapID );
 extern  void              BTLV_INPUT_Exit( BTLV_INPUT_WORK* biw );

@@ -100,6 +100,8 @@ void	MCSS_TOOL_MakeMAWParam( int	mons_no, int form_no, int sex, int rare, BOOL e
 	maw->nmar = POKEGRA_GetMAnmArcIndex( maw->arcID , mons_no, form_no, sex, rare,  dir, egg );
 	maw->ncec = POKEGRA_GetNcecArcIndex( maw->arcID , mons_no, form_no, sex, rare,  dir, egg );
   maw->heap_low = FALSE;
+
+  OS_Printf("mcss ncer=%d, nmcr=%d, nclr=%d, ncbr=%d\n", maw->ncer, maw->nmcr, maw->nclr, maw->ncbr);
 }
 
 //============================================================================================

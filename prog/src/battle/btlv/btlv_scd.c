@@ -246,6 +246,7 @@ void BTLV_SCD_Init( BTLV_SCD* wk )
                              BTL_MAIN_GetCompetitor( wk->mainModule ),
                              BTLV_EFFECT_GetPfd(), wk->font, &wk->cursor_flag, wk->bagMode, 
                              BTL_MAIN_GetMultiMode(wk->mainModule),
+                             BTL_MAIN_GetPokewoodMode( wk->mainModule ),
                              wk->heapID );
 
   ///<obj

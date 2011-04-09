@@ -617,7 +617,8 @@ struct _BTLV_INPUT_WORK
 
   u16                   bag_pal[ 0x10 ];    //バッグボタンパレットを退避しておく
   BtlMultiMode          multiMode;          // 複数人数接続かどうか(BtlMultiModeを参照）
-  u8                    etc[3];
+  u8                    pokewood;           // ポケウッドフラグ（0=なし, 1=撮影, 2=上映）
+  u8                    etc[2];
 
   //ローテーション用POKEMON_PARAM
 #ifdef ROTATION_NEW_SYSTEM
@@ -750,7 +751,7 @@ typedef struct
 //============================================================================================
 static  BTLV_INPUT_WORK*  BTLV_INPUT_InitCore( GAMEDATA* gameData, BTLV_INPUT_TYPE type, BtlCompetitor comp,
                                                PALETTE_FADE_PTR pfd, GFL_FONT* font, u8* cursor_flag, BtlBagMode bagMode,
-                                               BOOL main_loop_tcb_flag, BtlMultiMode multiMode,HEAPID heapID );
+                                               BOOL main_loop_tcb_flag, BtlMultiMode multiMode, int pokewood, HEAPID heapID );
 static  void  BTLV_INPUT_LoadResource( BTLV_INPUT_WORK* biw );
 static  void  TCB_TransformStandby2Command( GFL_TCB* tcb, void* work );
 static  void  TCB_TransformStandby2Waza( GFL_TCB* tcb, void* work );
@@ -872,7 +873,7 @@ static  void  debug_timer_edit_check( BTLV_INPUT_WORK* biw );
 BTLV_INPUT_WORK*  BTLV_INPUT_InitEx( GAMEDATA* gameData, BTLV_INPUT_TYPE type, PALETTE_FADE_PTR pfd, GFL_FONT* font, u8* cursor_flag, HEAPID heapID )
 {
   return BTLV_INPUT_InitCore( gameData, type, BTL_COMPETITOR_WILD, pfd, font, cursor_flag, 
-                              BBAG_MODE_NORMAL, FALSE, BTL_MULTIMODE_NONE, heapID );
+                              BBAG_MODE_NORMAL, FALSE, BTL_MULTIMODE_NONE, 0, heapID );
 }
 
 //============================================================================================
@@ -894,9 +895,10 @@ BTLV_INPUT_WORK*  BTLV_INPUT_InitEx( GAMEDATA* gameData, BTLV_INPUT_TYPE type, P
 //============================================================================================
 BTLV_INPUT_WORK*  BTLV_INPUT_Init( GAMEDATA* gameData, BTLV_INPUT_TYPE type, BtlCompetitor comp, 
                                    PALETTE_FADE_PTR pfd, GFL_FONT* font, u8* cursor_flag, BtlBagMode bagMode, 
-                                   BtlMultiMode multiMode, HEAPID heapID )
+                                   BtlMultiMode multiMode, int pokewood, HEAPID heapID )
 {
-  return BTLV_INPUT_InitCore( gameData, type, comp, pfd, font, cursor_flag, bagMode, TRUE, multiMode, heapID );
+  return BTLV_INPUT_InitCore( gameData, type, comp, pfd, font, cursor_flag, bagMode, TRUE, 
+                              multiMode, pokewood, heapID );
 }
 
 //============================================================================================
@@ -918,7 +920,7 @@ BTLV_INPUT_WORK*  BTLV_INPUT_Init( GAMEDATA* gameData, BTLV_INPUT_TYPE type, Btl
 //============================================================================================
 static  BTLV_INPUT_WORK*  BTLV_INPUT_InitCore( GAMEDATA* gameData, BTLV_INPUT_TYPE type, BtlCompetitor comp,
                                                PALETTE_FADE_PTR pfd, GFL_FONT* font, u8* cursor_flag, BtlBagMode bagMode,
-                                               BOOL main_loop_tcb_flag, BtlMultiMode multiMode, HEAPID heapID )
+                                               BOOL main_loop_tcb_flag, BtlMultiMode multiMode, int pokewood, HEAPID heapID )
 {
   BTLV_INPUT_WORK *biw = GFL_HEAP_AllocClearMemory( heapID, sizeof( BTLV_INPUT_WORK ) );
 
@@ -938,6 +940,7 @@ static  BTLV_INPUT_WORK*  BTLV_INPUT_InitCore( GAMEDATA* gameData, BTLV_INPUT_TY
   biw->old_cursor_pos = CURSOR_NOMOVE;
 
   biw->main_loop_tcb_flag = main_loop_tcb_flag;
+  biw->pokewood = pokewood;
 
   //パレットフェード初期化
   biw->pfd = pfd;
@@ -2109,6 +2112,24 @@ BTLV_INPUT_SCRTYPE  BTLV_INPUT_GetScrType( BTLV_INPUT_WORK* biw )
   return biw->scr_type;
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief	ポケウッド用リソース取得
+ *
+ * @param   arcid		
+ * @param   biw		
+ *
+ * @retval  u32		
+ */
+//----------------------------------------------------------------------------------
+static u32 _get_arcid( int arcid, BTLV_INPUT_WORK *biw )
+{
+  if(biw->pokewood!=0){
+    arcid+=(NARC_battgra_wb_pw_battle_w_bg_NCGR - NARC_battgra_wb_battle_w_bg_NCGR);
+  }
+  return arcid;
+}
+
 //============================================================================================
 /**
  *  @brief  下画面リソースロード
@@ -2122,19 +2143,19 @@ static  void  BTLV_INPUT_LoadResource( BTLV_INPUT_WORK* biw )
   
   // バージョン毎に違うBGのパレットを適用する
   if(GET_VERSION()==VERSION_B2){
-    pltt = NARC_battgra_wb_battle_b_bg_NCLR;
+    pltt = _get_arcid(NARC_battgra_wb_battle_b_bg_NCLR,biw);
   }else{
-    pltt = NARC_battgra_wb_battle_w_bg_NCLR;
+    pltt = _get_arcid(NARC_battgra_wb_battle_w_bg_NCLR,biw);
   }
   
 
   // リソース転送
-  GFL_ARCHDL_UTIL_TransVramBgCharacter( biw->handle, NARC_battgra_wb_battle_w_bg_NCGR,
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( biw->handle, _get_arcid(NARC_battgra_wb_battle_w_bg_NCGR,biw),
                                         GFL_BG_FRAME0_S, 0, 0, FALSE, biw->heapID );
 
-  GFL_ARCHDL_UTIL_TransVramBgCharacter( biw->handle, NARC_battgra_wb_battle_w_bg3_NCGR,
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( biw->handle, _get_arcid(NARC_battgra_wb_battle_w_bg3_NCGR,biw),
                                         GFL_BG_FRAME3_S, 0, 0x8000, FALSE, biw->heapID );
-  GFL_ARCHDL_UTIL_TransVramScreen( biw->handle, NARC_battgra_wb_battle_w_bg3_NSCR,
+  GFL_ARCHDL_UTIL_TransVramScreen( biw->handle, _get_arcid(NARC_battgra_wb_battle_w_bg3_NSCR,biw),
                                    GFL_BG_FRAME3_S, 0, 0, FALSE, biw->heapID );
   PaletteWorkSet_ArcHandle( biw->pfd, biw->handle, pltt, biw->heapID, FADE_SUB_BG, 0x1e0, 0 );
 
@@ -2192,7 +2213,7 @@ static  void  TCB_TransformStandby2Command( GFL_TCB* tcb, void* work )
   switch( ttw->seq_no ){
   case 0:
     GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, ttw->datID, GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
-    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg1a_NSCR,
+    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, _get_arcid(NARC_battgra_wb_battle_w_bg1a_NSCR,ttw->biw),
                                      GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
     SePlayOpen( ttw->biw );
     //GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TTS2C_FRAME1_SCROLL_X );
@@ -2235,9 +2256,9 @@ static  void  TCB_TransformStandby2Waza( GFL_TCB* tcb, void* work )
 
   switch( ttw->seq_no ){
   case 0:
-    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0a_NSCR,
+    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, _get_arcid(NARC_battgra_wb_battle_w_bg0a_NSCR,ttw->biw),
                                      GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
-    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg1h_NSCR,
+    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, _get_arcid(NARC_battgra_wb_battle_w_bg1h_NSCR,ttw->biw),
                                      GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
     SePlayOpen( ttw->biw );
     //GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TTS2C_FRAME1_SCROLL_X );
@@ -2258,12 +2279,12 @@ static  void  TCB_TransformStandby2Waza( GFL_TCB* tcb, void* work )
     {
       if( ( ttw->biw->type == BTLV_INPUT_TYPE_TRIPLE ) && ( ttw->pos != BTLV_MCSS_POS_C ) )
       {
-        GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0b_NSCR,
+        GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, _get_arcid(NARC_battgra_wb_battle_w_bg0b_NSCR,ttw->biw),
                                          GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
       }
       else
       {
-        GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0a_NSCR,
+        GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, _get_arcid(NARC_battgra_wb_battle_w_bg0a_NSCR,ttw->biw),
                                          GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
       }
       GFL_BMPWIN_MakeScreen( ttw->biw->bmp_win );
@@ -2356,7 +2377,7 @@ static  void  TCB_TransformWaza2Command( GFL_TCB* tcb, void* work )
   switch( ttw->seq_no ){
   case 0:
     GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, ttw->datID, GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
-    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg1a_NSCR,
+    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, _get_arcid(NARC_battgra_wb_battle_w_bg1a_NSCR,ttw->biw),
                                      GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
     GFL_BMPWIN_MakeScreen( ttw->biw->bmp_win_shooter );
     change_bag_button_pal( ttw->biw );
@@ -2409,7 +2430,7 @@ static  void  TCB_TransformRotate2Command( GFL_TCB* tcb, void* work )
   switch( ttw->seq_no ){
   case 0:
     GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, ttw->datID, GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
-    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg1a_NSCR,
+    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, _get_arcid(NARC_battgra_wb_battle_w_bg1a_NSCR,ttw->biw),
                                      GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
     SetupScrollUp( ttw->biw, TTW2C_START_SCROLL_X, TTW2C_START_SCROLL_Y, TTW2C_SCROLL_SPEED, TTW2C_SCROLL_COUNT );
     SetupScreenAnime( ttw->biw, 0, SCREEN_ANIME_DIR_BACKWARD );
@@ -2442,7 +2463,7 @@ static  void  TCB_TransformWaza2Dir( GFL_TCB* tcb, void* work )
 {
   TCB_TRANSFORM_WORK* ttw = (TCB_TRANSFORM_WORK *)work;
 
-  GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0a_NSCR,
+  GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, _get_arcid(NARC_battgra_wb_battle_w_bg0a_NSCR,ttw->biw),
                                    GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
   GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, ttw->datID,
                                    GFL_BG_FRAME0_S, 0x0400 + 0x40, 0x40 * 14, FALSE, ttw->biw->heapID );
@@ -2450,12 +2471,12 @@ static  void  TCB_TransformWaza2Dir( GFL_TCB* tcb, void* work )
   GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
   if( ttw->biw->type == BTLV_INPUT_TYPE_TRIPLE )
   {
-    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg1c_NSCR,
+    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, _get_arcid(NARC_battgra_wb_battle_w_bg1c_NSCR,ttw->biw),
                                      GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
   }
   else
   {
-    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg1b_NSCR,
+    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, _get_arcid(NARC_battgra_wb_battle_w_bg1b_NSCR,ttw->biw),
                                      GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
   }
   GFL_BMPWIN_TransVramCharacter( ttw->biw->bmp_win );
@@ -2481,7 +2502,7 @@ static  void  TCB_TransformDir2Waza( GFL_TCB* tcb, void* work )
   case 1:
     GFL_BMPWIN_MakeScreen( ttw->biw->bmp_win );
     GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
-    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg1a_NSCR,
+    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, _get_arcid(NARC_battgra_wb_battle_w_bg1a_NSCR,ttw->biw),
                                      GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
     GFL_BMPWIN_TransVramCharacter( ttw->biw->bmp_win );
     GFL_CLACT_UNIT_SetDrawEnable( ttw->biw->wazatype_clunit, TRUE );
@@ -2533,9 +2554,9 @@ static  void  TCB_TransformWaza2Standby( GFL_TCB* tcb, void* work )
 
   switch( ttw->seq_no ){
   case 0:
-    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0a_NSCR,
+    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, _get_arcid(NARC_battgra_wb_battle_w_bg0a_NSCR,ttw->biw),
                                      GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
-    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg1g_NSCR,
+    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, _get_arcid(NARC_battgra_wb_battle_w_bg1g_NSCR,ttw->biw),
                                      GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
     //GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TSA_SCROLL_X2 );
     //GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TSA_SCROLL_Y2 );
@@ -2646,9 +2667,9 @@ static  void  TCB_TransformStandby2Rotate( GFL_TCB* tcb, void* work )
 
   switch( ttw->seq_no ){
   case 0:
-    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0a_NSCR,
+    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, _get_arcid(NARC_battgra_wb_battle_w_bg0a_NSCR,ttw->biw),
                                      GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
-    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg1h_NSCR,
+    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, _get_arcid(NARC_battgra_wb_battle_w_bg1h_NSCR,ttw->biw),
                                      GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
     SePlayOpen( ttw->biw );
     //GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TTS2C_FRAME1_SCROLL_X );
@@ -2667,7 +2688,7 @@ static  void  TCB_TransformStandby2Rotate( GFL_TCB* tcb, void* work )
   case 1:
     if( ttw->biw->tcb_execute_count == 0 )
     {
-      GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0h_NSCR,
+      GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, _get_arcid(NARC_battgra_wb_battle_w_bg0h_NSCR,ttw->biw),
                                        GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
       GFL_BMPWIN_MakeScreen( ttw->biw->bmp_win );
       GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
@@ -2768,9 +2789,9 @@ static  void  TCB_TransformStandby2BattleRecorder( GFL_TCB* tcb, void* work )
 
   switch( ttw->seq_no ){
   case 0:
-    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0f_NSCR,
+    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, _get_arcid(NARC_battgra_wb_battle_w_bg0f_NSCR,ttw->biw),
                                      GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
-    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg1f_NSCR,
+    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, _get_arcid(NARC_battgra_wb_battle_w_bg1f_NSCR,ttw->biw),
                                      GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
     SePlayOpen( ttw->biw );
     //GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TTS2C_FRAME1_SCROLL_X );
@@ -2821,9 +2842,9 @@ static  void  TCB_TransformStandby2PDC( GFL_TCB* tcb, void* work )
 
   switch( ttw->seq_no ){
   case 0:
-    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0g_NSCR,
+    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, _get_arcid(NARC_battgra_wb_battle_w_bg0g_NSCR,ttw->biw),
                                      GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
-    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg1d_NSCR,
+    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, _get_arcid(NARC_battgra_wb_battle_w_bg1d_NSCR,ttw->biw),
                                      GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
     SePlayOpen( ttw->biw );
     //GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TTS2C_FRAME1_SCROLL_X );
@@ -2865,16 +2886,16 @@ static  void  TCB_TransformCommand2Rotate( GFL_TCB* tcb, void* work )
 #ifdef BUGFIX_AF_BTS7728_20100914
     if( BTLV_EFFECT_GetBagMode() == BBAG_MODE_SHOOTER )
     { 
-      GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0l_NSCR,
+      GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, _get_arcid(NARC_battgra_wb_battle_w_bg0l_NSCR,ttw->biw),
                                        GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
     }
     else
     { 
-      GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0h_NSCR,
+      GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, _get_arcid(NARC_battgra_wb_battle_w_bg0h_NSCR,ttw->biw),
                                        GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
     }
 #else
-     GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0h_NSCR,
+     GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, _get_arcid(NARC_battgra_wb_battle_w_bg0h_NSCR,ttw->biw),
                                       GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
 #endif
     GFL_BMPWIN_MakeScreen( ttw->biw->bmp_win );
@@ -4021,7 +4042,7 @@ static  void  BTLV_INPUT_CreateDirScreen( BTLV_INPUT_WORK* biw, TCB_TRANSFORM_WO
       },
     };
     biw->waza_target = bisp->waza_target;
-    ttw->datID = datID[ type ][ pos ][ bisp->waza_target ];
+    ttw->datID = _get_arcid(datID[ type ][ pos ][ bisp->waza_target ],ttw->biw);
   }
   //パレット転送
   {
@@ -4069,7 +4090,7 @@ static  void  BTLV_INPUT_CreateYesNoScreen( BTLV_INPUT_WORK* biw, const BTLV_INP
   biw->button_exist[ 0 ] = TRUE;  //押せるボタンかどうかチェック
   biw->button_exist[ 1 ] = TRUE;  //押せるボタンかどうかチェック
 
-  GFL_ARCHDL_UTIL_TransVramScreen( biw->handle, NARC_battgra_wb_battle_w_bg1d_NSCR,
+  GFL_ARCHDL_UTIL_TransVramScreen( biw->handle, _get_arcid(NARC_battgra_wb_battle_w_bg1d_NSCR,biw),
                                    GFL_BG_FRAME1_S, 0, 0, FALSE, biw->heapID );
 }
 
@@ -4166,9 +4187,9 @@ static  void  BTLV_INPUT_CreateRotateScreen( BTLV_INPUT_WORK* biw )
   WORDSET_Delete( wordset );
   GFL_STR_DeleteBuffer( monsname_p );
 
-  GFL_ARCHDL_UTIL_TransVramScreen( biw->handle, NARC_battgra_wb_battle_w_bg0c_NSCR,
+  GFL_ARCHDL_UTIL_TransVramScreen( biw->handle, _get_arcid(NARC_battgra_wb_battle_w_bg0c_NSCR,biw),
                                    GFL_BG_FRAME0_S, 0, 0, FALSE, biw->heapID );
-  GFL_ARCHDL_UTIL_TransVramScreen( biw->handle, NARC_battgra_wb_battle_w_bg1e_NSCR,
+  GFL_ARCHDL_UTIL_TransVramScreen( biw->handle, _get_arcid(NARC_battgra_wb_battle_w_bg1e_NSCR,biw),
                                    GFL_BG_FRAME1_S, 0, 0, FALSE, biw->heapID );
 #endif
 }
@@ -5551,22 +5572,22 @@ static  ARCDATID  get_command_screen( BTLV_INPUT_WORK* biw )
       {
         if( biw->focus_pos == BTLV_MCSS_POS_C )
         {
-          return NARC_battgra_wb_battle_w_bg0i_NSCR;
+          return _get_arcid(NARC_battgra_wb_battle_w_bg0i_NSCR,biw);
         }
         else
         {
-          return NARC_battgra_wb_battle_w_bg0c_NSCR;
+          return _get_arcid(NARC_battgra_wb_battle_w_bg0c_NSCR,biw);
         }
       }
       else
       {
         if( biw->focus_pos == BTLV_MCSS_POS_C )
         {
-          return NARC_battgra_wb_battle_w_bg0a_NSCR;
+          return _get_arcid(NARC_battgra_wb_battle_w_bg0a_NSCR,biw);
         }
         else
         {
-          return NARC_battgra_wb_battle_w_bg0b_NSCR;
+          return _get_arcid(NARC_battgra_wb_battle_w_bg0b_NSCR,biw);
         }
       }
     }
@@ -5574,11 +5595,11 @@ static  ARCDATID  get_command_screen( BTLV_INPUT_WORK* biw )
     {
       if( BTLV_EFFECT_GetBagMode() == BBAG_MODE_SHOOTER )
       {
-        return NARC_battgra_wb_battle_w_bg0i_NSCR;
+        return _get_arcid(NARC_battgra_wb_battle_w_bg0i_NSCR,biw);
       }
       else
       {
-        return NARC_battgra_wb_battle_w_bg0a_NSCR;
+        return _get_arcid(NARC_battgra_wb_battle_w_bg0a_NSCR,biw);
       }
     }
   }
@@ -5588,27 +5609,27 @@ static  ARCDATID  get_command_screen( BTLV_INPUT_WORK* biw )
     {
       if( BTLV_EFFECT_GetBagMode() == BBAG_MODE_SHOOTER )
       {
-        return NARC_battgra_wb_battle_w_bg0k_NSCR;
+        return _get_arcid(NARC_battgra_wb_battle_w_bg0k_NSCR,biw);
       }
       else
       {
-        return NARC_battgra_wb_battle_w_bg0e_NSCR;
+        return _get_arcid(NARC_battgra_wb_battle_w_bg0e_NSCR,biw);
       }
     }
     else
     {
       if( BTLV_EFFECT_GetBagMode() == BBAG_MODE_SHOOTER )
       {
-        return NARC_battgra_wb_battle_w_bg0j_NSCR;
+        return _get_arcid(NARC_battgra_wb_battle_w_bg0j_NSCR,biw);
       }
       else
       {
-        return NARC_battgra_wb_battle_w_bg0d_NSCR;
+        return _get_arcid(NARC_battgra_wb_battle_w_bg0d_NSCR,biw);
       }
     }
   }
   //当たり障りのないものを返しておく
-  return NARC_battgra_wb_battle_w_bg0a_NSCR;
+  return _get_arcid(NARC_battgra_wb_battle_w_bg0a_NSCR,biw);
 }
 
 //----------------------------------------------------------------------------------

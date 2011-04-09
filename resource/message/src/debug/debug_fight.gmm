@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="mori" host="W00269" date="2011-02-19T18:11:08"/>
+	<create user="mori" host="W00269" date="2011-04-08T15:52:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -371,6 +371,10 @@
 
 	<row id="DBGF_LABEL_MINUTE">
 		<language name="JPN" width="256">なんふん</language>
+	</row>
+
+	<row id="DBGF_LABEL_PWSENARIO">
+		<language name="JPN" width="256">ポケウッドシナリオ</language>
 	</row>
 
 	<row id="DBGF_LABEL_SEASON">

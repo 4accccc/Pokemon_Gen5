@@ -65,6 +65,8 @@ u32 POKEICON_GetCgxArcIndex( const POKEMON_PASO_PARAM* ppp )
 	return arcIndex;
 }
 
+
+#define MONSNO_WB_MAX ( 651 )
 //--------------------------------------------------------------------------------------------
 /**
  * キャラのアーカイブインデックス取得
@@ -137,7 +139,7 @@ u32 POKEICON_GetCgxArcIndexByMonsNumber( u32 mons_no, u32 form_no, BOOL egg )
     { 
       if( form_no )
       { 
-        file_start = NARC_poke_icon_poke_icon_000_m_NCGR + POKEICON_FILE_MAX * ( MONSNO_MAX + 1 ) + POKEICON_FILE_MAX * ( gra_index + form_no - 1 );
+        file_start = NARC_poke_icon_poke_icon_000_m_NCGR + POKEICON_FILE_MAX * ( MONSNO_WB_MAX + 1 ) + POKEICON_FILE_MAX * ( gra_index + form_no - 1 );
       }
     }
   }
@@ -217,7 +219,7 @@ const u8 POKEICON_GetPalNum( u32 mons_no, u32 form_no, BOOL egg )
     { 
       if( form_no )
       { 
-        mons_no = ( MONSNO_MAX + 1 ) +  ( gra_index + form_no - 1 );
+        mons_no = ( MONSNO_WB_MAX + 1 ) +  ( gra_index + form_no - 1 );
       }
     }
   }

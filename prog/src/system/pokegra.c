@@ -411,6 +411,8 @@ void POKEGRA_MakePattiiruBuchi( NNSG2dCharacterData *p_chara, u32 personal_rnd )
  *	private
  */
 //=============================================================================
+
+#define MONS_GRANO_TAMAGO ( 660 )
 //----------------------------------------------------------------------------
 /**
  *	@brief
@@ -457,7 +459,7 @@ static void PokeGra_GetFileOffset( ARCID arc_id , int mons_no, int form_no, int 
     { 
       form_no = FORMNO_TAMAGO_NORMAL;
     }
-    file_start = POKEGRA_FILE_MAX * ( MONSNO_TAMAGO + form_no );
+    file_start = POKEGRA_FILE_MAX * ( MONS_GRANO_TAMAGO + form_no );
   }
   //ï ÉtÉHÉãÉÄèàóù
   else if( form_no )
@@ -472,15 +474,15 @@ static void PokeGra_GetFileOffset( ARCID arc_id , int mons_no, int form_no, int 
     if( pltt_only )
     { 
       if( ( pltt_only_offset ) && ( form_no ) )
-      { 
+      {                       /*20*/              /*651*/     /*60*/                      /*2*/
         *pltt_only_offset = POKEGRA_FILE_MAX * ( MONSNO_MAX + OTHER_FORM_MAX + 1 ) + 13 + POKEGRA_PLTT_ONLY_MAX * ( gra_index + form_no - 1 ) + rare;
       }
     }
     else
     { 
       if( form_no )
-      { 
-        file_start = POKEGRA_FILE_MAX * ( MONSNO_MAX + 1 ) + POKEGRA_FILE_MAX * ( gra_index + form_no - 1 );
+      {
+        file_start = POKEGRA_FILE_MAX * ( MONSNO_MAX -2 + 1 ) + POKEGRA_FILE_MAX * ( gra_index + form_no - 1 );
       }
     }
   }

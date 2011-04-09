@@ -223,6 +223,7 @@ typedef enum {
   SELITEM_AI8,
   SELITEM_AI9,
 
+  SELITEM_POKEWOOD_SENARIO,
 
   SELITEM_MAX,
   SELITEM_NULL = SELITEM_MAX,
@@ -342,6 +343,7 @@ enum {
   LAYOUT_LABEL_ZONEID_X        = LAYOUT_LABEL_PAGE3_X,
   LAYOUT_LABEL_HOUR_X          = LAYOUT_LABEL_PAGE3_X,
   LAYOUT_LABEL_MINUTE_X        = LAYOUT_LABEL_PAGE3_X,
+  LAYOUT_LABEL_PWSENARIO_X     = LAYOUT_LABEL_PAGE3_X,
 
   LAYOUT_LABEL_BACKGROUND_Y    = 8,
   LAYOUT_LABEL_LAND_Y          = LAYOUT_LABEL_BACKGROUND_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT,
@@ -350,6 +352,7 @@ enum {
   LAYOUT_LABEL_ZONEID_Y        = LAYOUT_LABEL_BACKGROUND_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT*4,
   LAYOUT_LABEL_HOUR_Y          = LAYOUT_LABEL_BACKGROUND_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT*5,
   LAYOUT_LABEL_MINUTE_Y        = LAYOUT_LABEL_BACKGROUND_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT*6,
+  LAYOUT_LABEL_PWSENARIO_Y     = LAYOUT_LABEL_BACKGROUND_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT*8,
 
 
   LAYOUT_LABEL_AI_X   = 160,
@@ -437,6 +440,7 @@ static const LABEL_LAYOUT LabelLayout_Page3[] = {
   { DBGF_LABEL_ZONEID,     LAYOUT_LABEL_ZONEID_X,       LAYOUT_LABEL_ZONEID_Y     },
   { DBGF_LABEL_HOUR,       LAYOUT_LABEL_HOUR_X,         LAYOUT_LABEL_HOUR_Y       },
   { DBGF_LABEL_MINUTE,     LAYOUT_LABEL_MINUTE_X,       LAYOUT_LABEL_MINUTE_Y     },
+  { DBGF_LABEL_PWSENARIO,  LAYOUT_LABEL_PWSENARIO_X,    LAYOUT_LABEL_PWSENARIO_Y  },
 
   { DBGF_LABEL_AI_0,       LAYOUT_LABEL_AI_X,        LAYOUT_LABEL_AI_0_Y,  },
   { DBGF_LABEL_AI_1,       LAYOUT_LABEL_AI_X,        LAYOUT_LABEL_AI_1_Y   },
@@ -541,6 +545,7 @@ static const ITEM_LAYOUT ItemLayout_Page3[] = {
   { SELITEM_ZONEID,      LAYOUT_LABEL_ZONEID_X      +50,   LAYOUT_LABEL_ZONEID_Y     },
   { SELITEM_FLD_HOUR,    LAYOUT_LABEL_HOUR_X        +50,   LAYOUT_LABEL_HOUR_Y       },
   { SELITEM_FLD_MINUTE,  LAYOUT_LABEL_MINUTE_X      +50,   LAYOUT_LABEL_MINUTE_Y     },
+  { SELITEM_POKEWOOD_SENARIO,  LAYOUT_LABEL_PWSENARIO_X+80, LAYOUT_LABEL_PWSENARIO_Y  },
 
   { SELITEM_AI0,         LAYOUT_LABEL_AI_X + 72,    LAYOUT_LABEL_AI_0_Y   },
   { SELITEM_AI1,         LAYOUT_LABEL_AI_X + 72,    LAYOUT_LABEL_AI_1_Y   },
@@ -670,6 +675,7 @@ typedef struct {
   u8   fld_hour;
   u8   fld_minute;
 
+  int  pokewoodSenario;
 }DEBUG_BTL_SAVEDATA;
 
 /**
@@ -1419,8 +1425,9 @@ static void selItem_Increment( DEBUG_BTL_WORK* wk, u16 itemID, int incValue )
   case SELITEM_TRAINER_TYPE:
     save->trainerType = loopValue( save->trainerType + incValue, 0, TRTYPE_MAX -1 );
     break;
-
-
+  case SELITEM_POKEWOOD_SENARIO:
+    save->pokewoodSenario = (save->pokewoodSenario+1)%10;
+    break;
 
   case SELITEM_AI0:   save->fAI_0 ^= 1; break;
   case SELITEM_AI1:   save->fAI_1 ^= 1; break;
@@ -1615,6 +1622,7 @@ static void PrintItem( DEBUG_BTL_WORK* wk, u16 itemID, BOOL fSelect )
         case SELITEM_ZONEID:      printItem_Number( wk, wk->saveData.fld_zoneID, wk->strbuf ); break;
         case SELITEM_FLD_HOUR:    printItem_Number( wk, wk->saveData.fld_hour,   wk->strbuf ); break;
         case SELITEM_FLD_MINUTE:  printItem_Number( wk, wk->saveData.fld_minute, wk->strbuf ); break;
+        case SELITEM_POKEWOOD_SENARIO: printItem_Number( wk, wk->saveData.pokewoodSenario, wk->strbuf ); break;
 
         case SELITEM_MUST_TUIKA:    printItem_Flag( wk, wk->saveData.fMustTuika,    wk->strbuf ); break;
         case SELITEM_MUST_TOKU:     printItem_Flag( wk, wk->saveData.fMustToku,     wk->strbuf ); break;
@@ -1891,13 +1899,14 @@ static BOOL mainProc_Root( DEBUG_BTL_WORK* wk, int* seq )
       { SELITEM_LIMIT_GAME_SEC, SELITEM_LIMIT_GAME_MIN,SELITEM_LIMIT_COMMAND, SELITEM_NULL,           SELITEM_MUST_TUIKA    },
       { SELITEM_LIMIT_COMMAND,  SELITEM_LIMIT_GAME_SEC,SELITEM_LIMIT_GAME_MIN,SELITEM_NULL,           SELITEM_MUST_TUIKA    },
   /*    CurrentItem,            Up-Item,               Down-Item,             Right-Item,             Left-Item */
-      { SELITEM_BACKGROUND,     SELITEM_FLD_MINUTE,    SELITEM_LAND,          SELITEM_AI0,            SELITEM_AI0,          },
+      { SELITEM_BACKGROUND,     SELITEM_POKEWOOD_SENARIO, SELITEM_LAND,          SELITEM_AI0,            SELITEM_AI0,          },
       { SELITEM_LAND,           SELITEM_BACKGROUND,    SELITEM_SEASON,        SELITEM_AI1,            SELITEM_AI1,          },
       { SELITEM_SEASON,         SELITEM_LAND,          SELITEM_WEATHER,       SELITEM_AI2,            SELITEM_AI2,          },
       { SELITEM_WEATHER,        SELITEM_SEASON,        SELITEM_ZONEID,        SELITEM_AI3,            SELITEM_AI3,          },
       { SELITEM_ZONEID,         SELITEM_WEATHER,       SELITEM_FLD_HOUR,      SELITEM_AI4,            SELITEM_AI4,          },
       { SELITEM_FLD_HOUR,       SELITEM_ZONEID,        SELITEM_FLD_MINUTE,    SELITEM_AI5,            SELITEM_AI5,          },
-      { SELITEM_FLD_MINUTE,     SELITEM_FLD_HOUR,      SELITEM_BACKGROUND,    SELITEM_AI6,            SELITEM_AI6,          },
+      { SELITEM_FLD_MINUTE,     SELITEM_FLD_HOUR,      SELITEM_POKEWOOD_SENARIO,    SELITEM_AI6,            SELITEM_AI6,          },
+      { SELITEM_POKEWOOD_SENARIO, SELITEM_FLD_MINUTE,  SELITEM_BACKGROUND,    SELITEM_AI8,            SELITEM_AI8,          },
 
       { SELITEM_AI0,            SELITEM_AI9,           SELITEM_AI1,           SELITEM_BACKGROUND,     SELITEM_BACKGROUND    },
       { SELITEM_AI1,            SELITEM_AI0,           SELITEM_AI2,           SELITEM_LAND,           SELITEM_LAND,         },
@@ -1907,7 +1916,7 @@ static BOOL mainProc_Root( DEBUG_BTL_WORK* wk, int* seq )
       { SELITEM_AI5,            SELITEM_AI4,           SELITEM_AI6,           SELITEM_FLD_HOUR,       SELITEM_FLD_HOUR,     },
       { SELITEM_AI6,            SELITEM_AI5,           SELITEM_AI7,           SELITEM_FLD_MINUTE,     SELITEM_FLD_MINUTE,   },
       { SELITEM_AI7,            SELITEM_AI6,           SELITEM_AI8,           SELITEM_NULL,           SELITEM_NULL          },
-      { SELITEM_AI8,            SELITEM_AI7,           SELITEM_AI9,           SELITEM_NULL,           SELITEM_NULL          },
+      { SELITEM_AI8,            SELITEM_AI7,           SELITEM_AI9,           SELITEM_POKEWOOD_SENARIO, SELITEM_POKEWOOD_SENARIO },
       { SELITEM_AI9,            SELITEM_AI8,           SELITEM_AI0,           SELITEM_NULL,           SELITEM_NULL          },
 
 
@@ -2526,6 +2535,8 @@ FS_EXTERN_OVERLAY(battle);
       if(pokewoodflag != BTL_POKEWOOD_NONE){
         wk->setupParam.PokewoodMode = pokewoodflag;
       }
+
+      wk->setupParam.pokewoodSenario = wk->saveData.pokewoodSenario;
     }
     
     BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyPlayer, BTL_CLIENT_PLAYER );

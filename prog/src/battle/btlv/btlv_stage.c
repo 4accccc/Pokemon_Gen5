@@ -91,13 +91,14 @@ static  void  BTLV_STAGE_CalcPaletteFade( BTLV_STAGE_WORK* bsw );
 /**
  *  システム初期化
  *
- * @param[in] rule    戦闘ルール
- * @param[in] index   読み込むリソースのINDEX
- * @param[in] season  季節INDEX
- * @param[in] heapID  ヒープID
+ * @param[in] rule     戦闘ルール
+ * @param[in] index    読み込むリソースのINDEX
+ * @param[in] season   季節INDEX
+ * @param[in] heapID   ヒープID
+ * @param[in] pokewood ポケウッドフラグ
  */
 //============================================================================================
-BTLV_STAGE_WORK *BTLV_STAGE_Init( BtlRule rule, int index, u8 season, HEAPID heapID )
+BTLV_STAGE_WORK *BTLV_STAGE_Init( BtlRule rule, int index, u8 season, HEAPID heapID, int pokewood )
 {
   BTLV_STAGE_WORK *bsw = GFL_HEAP_AllocClearMemory( heapID, sizeof( BTLV_STAGE_WORK ) );
   BOOL  ret;
@@ -105,6 +106,13 @@ BTLV_STAGE_WORK *BTLV_STAGE_Init( BtlRule rule, int index, u8 season, HEAPID hea
                                                           GFL_HEAP_LOWID( heapID ) );
 
   bsw->heapID = heapID;
+
+  // ポケウッドフラグの参照
+  if( pokewood==BTL_POKEWOOD_REC ){
+    index = BATT_BG_OBONID_25;
+  }else if( pokewood==BTL_POKEWOOD_SHOW ){
+    index = BATT_BG_OBONID_26;
+  }
 
   //リソース読み込み
   if( rule == BTL_RULE_ROTATION )

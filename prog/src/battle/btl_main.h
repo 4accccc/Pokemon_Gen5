@@ -56,6 +56,7 @@ extern BOOL BTL_MAIN_GetDebugFlag( const BTL_MAIN_MODULE* wk, BtlDebugFlag flag 
 extern u16 BTL_MAIN_GetWinBGMNo( const BTL_MAIN_MODULE* wk );
 extern u16 BTL_MAIN_GetClientUseItem( const BTL_MAIN_MODULE* wk, u8 clientID, u8 itemIdx );
 extern int BTL_MAIN_GetPokewoodMode( const BTL_MAIN_MODULE* wk );
+extern int BTL_MAIN_GetPokewoodSenario( const BTL_MAIN_MODULE* wk );
 
 
 /*------------------------------------------------------------------------------*/
@@ -324,3 +325,6 @@ extern void BTL_MAIN_NotifyChapterSkipEnd( BTL_MAIN_MODULE* wk );
 extern BTL_SVFLOW_WORK* BTL_MAIN_GetSVFWorkForAI( const BTL_MAIN_MODULE* wk );
 
 #endif
+
+void POKEWOOD_Init( BTL_MAIN_MODULE* wk, int senario_no );
+void POKEWOOD_Exit( BTL_MAIN_MODULE* wk );
