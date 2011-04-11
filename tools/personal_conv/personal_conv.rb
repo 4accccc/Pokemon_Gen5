@@ -754,7 +754,7 @@ end
 
       fp_icon_scr.printf( "\"poke_icon_%03d%s_m.NCGR\"\n",  gra_no, form_name )
       fp_icon_scr.printf( "\"poke_icon_%03d%s_f.NCGR\"\n",  gra_no, form_name )
-
+      
       fp_icon_attr.printf( "\"poke_icon_%03d%s_m.NCGR\"\n",  gra_no, form_name )
 
       #SARC出力
@@ -926,10 +926,14 @@ end
 	fp_wave.close
 	fp_bank.close
 
+  # pokelist.txtをソート順に出力しなおす?(たまごとだめたまごは含めない）
   fp_pokelist = open( "pokelist.txt", "w" )
   pokelist.sort!
   pokelist.size.times {|i|
-    fp_pokelist.printf( "%s", pokelist[ i ] )
+    if (/\Aたまご/ =~ pokelist[i]) || (/\Aだめたまご/ =~ pokelist[i]) then
+    else
+      fp_pokelist.printf( "%s", pokelist[ i ] )
+    end
   }
 	fp_pokelist.close
 
