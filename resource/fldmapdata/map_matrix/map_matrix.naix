@@ -328,7 +328,11 @@ enum {
 	NARC_map_matrix_dun3401_mat_bin = 314,
 	NARC_map_matrix_rresort02_mat_bin = 315,
 	NARC_map_matrix_rresort03_mat_bin = 316,
-	NARC_map_matrix_rresort04_mat_bin = 317
+	NARC_map_matrix_rresort04_mat_bin = 317,
+	NARC_map_matrix_white0301_mat_bin = 318,
+	NARC_map_matrix_hotel01_mat_bin = 319,
+	NARC_map_matrix_hotel02_mat_bin = 320,
+	NARC_map_matrix_hotel03_mat_bin = 321
 };
 
 /* NARC_MAP_MATRIX_NAIX_ */

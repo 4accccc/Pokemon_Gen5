@@ -647,6 +647,25 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/m_dun0706_00_00.3dppack \
 	$(DIR_OUTPUT)/m_dun3401_00_00.3dppack \
 	$(DIR_OUTPUT)/m_dun3301_01_00.3dppack \
+	$(DIR_OUTPUT)/white2402_00_00.3dppack \
+	$(DIR_OUTPUT)/white2402_01_00.3dppack \
+	$(DIR_OUTPUT)/white2402_00_01.3dppack \
+	$(DIR_OUTPUT)/white2402_01_01.3dppack \
+	$(DIR_OUTPUT)/white2403_00_00.3dppack \
+	$(DIR_OUTPUT)/white2403_01_00.3dppack \
+	$(DIR_OUTPUT)/white2403_02_00.3dppack \
+	$(DIR_OUTPUT)/white2403_00_01.3dppack \
+	$(DIR_OUTPUT)/white2403_01_01.3dppack \
+	$(DIR_OUTPUT)/white2403_02_01.3dppack \
+	$(DIR_OUTPUT)/white0301_00_00.3dppack \
+	$(DIR_OUTPUT)/white0301_00_01.3dppack \
+	$(DIR_OUTPUT)/white0301_00_02.3dppack \
+	$(DIR_OUTPUT)/white0301_01_00.3dppack \
+	$(DIR_OUTPUT)/white0301_01_01.3dppack \
+	$(DIR_OUTPUT)/white0301_01_02.3dppack \
+	$(DIR_OUTPUT)/white0301_02_00.3dppack \
+	$(DIR_OUTPUT)/white0301_02_01.3dppack \
+	$(DIR_OUTPUT)/white0301_02_02.3dppack \
 	$(DIR_OUTPUT)/m_ruin01_00_00.3dppack \
 	$(DIR_OUTPUT)/m_gate01_00_00.3dppack \
 	$(DIR_OUTPUT)/m_pc01_00_00.3dppack \
@@ -833,6 +852,9 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/m_rresort02_00_00.3dppack \
 	$(DIR_OUTPUT)/m_rresort03_00_00.3dppack \
 	$(DIR_OUTPUT)/m_rresort04_00_00.3dppack \
+	$(DIR_OUTPUT)/m_hotel01_00_00.3dppack \
+	$(DIR_OUTPUT)/m_hotel02_00_00.3dppack \
+	$(DIR_OUTPUT)/m_hotel03_00_00.3dppack \
 	$(DIR_OUTPUT)/C3_00_00.ngpack \
 	$(DIR_OUTPUT)/C3_00_01.ngpack \
 	$(DIR_OUTPUT)/C3_01_00.ngpack \

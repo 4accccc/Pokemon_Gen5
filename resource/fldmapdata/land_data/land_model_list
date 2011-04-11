@@ -647,6 +647,25 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/m_dun0706_00_00.nsbmd \
 	$(DIR_TEMP)/m_dun3401_00_00.nsbmd \
 	$(DIR_TEMP)/m_dun3301_01_00.nsbmd \
+	$(DIR_TEMP)/white2402_00_00.nsbmd \
+	$(DIR_TEMP)/white2402_01_00.nsbmd \
+	$(DIR_TEMP)/white2402_00_01.nsbmd \
+	$(DIR_TEMP)/white2402_01_01.nsbmd \
+	$(DIR_TEMP)/white2403_00_00.nsbmd \
+	$(DIR_TEMP)/white2403_01_00.nsbmd \
+	$(DIR_TEMP)/white2403_02_00.nsbmd \
+	$(DIR_TEMP)/white2403_00_01.nsbmd \
+	$(DIR_TEMP)/white2403_01_01.nsbmd \
+	$(DIR_TEMP)/white2403_02_01.nsbmd \
+	$(DIR_TEMP)/white0301_00_00.nsbmd \
+	$(DIR_TEMP)/white0301_00_01.nsbmd \
+	$(DIR_TEMP)/white0301_00_02.nsbmd \
+	$(DIR_TEMP)/white0301_01_00.nsbmd \
+	$(DIR_TEMP)/white0301_01_01.nsbmd \
+	$(DIR_TEMP)/white0301_01_02.nsbmd \
+	$(DIR_TEMP)/white0301_02_00.nsbmd \
+	$(DIR_TEMP)/white0301_02_01.nsbmd \
+	$(DIR_TEMP)/white0301_02_02.nsbmd \
 	$(DIR_TEMP)/m_ruin01_00_00.nsbmd \
 	$(DIR_TEMP)/m_gate01_00_00.nsbmd \
 	$(DIR_TEMP)/m_pc01_00_00.nsbmd \
@@ -833,6 +852,9 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/m_rresort02_00_00.nsbmd \
 	$(DIR_TEMP)/m_rresort03_00_00.nsbmd \
 	$(DIR_TEMP)/m_rresort04_00_00.nsbmd \
+	$(DIR_TEMP)/m_hotel01_00_00.nsbmd \
+	$(DIR_TEMP)/m_hotel02_00_00.nsbmd \
+	$(DIR_TEMP)/m_hotel03_00_00.nsbmd \
 	$(DIR_TEMP)/C3_00_00.nsbmd \
 	$(DIR_TEMP)/C3_00_01.nsbmd \
 	$(DIR_TEMP)/C3_01_00.nsbmd \
