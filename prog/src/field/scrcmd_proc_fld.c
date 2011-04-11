@@ -34,6 +34,7 @@
 #include "event_freeword_input.h"
 #include "event_dendou_pc.h"
 #include "event_game_manual.h"
+#include "event_name_input.h"
 
 #include "scrcmd_proc.h"
 #include "scrcmd_proc_fld.h"
@@ -485,6 +486,25 @@ VMCMD_RESULT EvCmdCallTownMap( VMHANDLE *core, void *wk )
 
   SCRIPT_CallEvent( script, event );
 
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   ライバルの名前入力呼び出し
+ * @param   core    仮想マシン制御構造体へのポインタ
+ * @retval  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdRivalNameInput( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*  work = (SCRCMD_WORK*)wk;
+  SCRIPT_WORK*   scw = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+  u16*        ret_wk = SCRCMD_GetVMWork( core, work );       // コマンド第1引数
+
+  // イベントを呼び出す
+  SCRIPT_CallEvent( scw, EVENT_NameInput_Rival( gsys, ret_wk ) );
   return VMCMD_RESULT_SUSPEND;
 }
 

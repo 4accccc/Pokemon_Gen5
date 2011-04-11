@@ -580,6 +580,23 @@ void WORDSET_RegisterPlayerName( WORDSET* wordset, u32 bufID, const MYSTATUS* my
 
 //------------------------------------------------------------------
 /**
+ * ライバル名を登録
+ *
+ * @param   wordset   単語セットオブジェクト
+ * @param   bufID   バッファID
+ * @param   status
+ *
+ */
+//------------------------------------------------------------------
+void WORDSET_RegisterRivalName( WORDSET* wordset, u32 bufID, const STRCODE* strcode )
+{
+  GFL_STR_SetStringCode(wordset->tmpBuf, strcode);
+  RegisterWord( wordset, bufID, wordset->tmpBuf, NULL );
+}
+
+
+//------------------------------------------------------------------
+/**
  * 指定バッファに国名を登録
  *
  * @param   wordset   ワードセットオブジェクト

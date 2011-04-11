@@ -2079,6 +2079,19 @@
 
 //--------------------------------------------------------------
 /**
+ *  _RIVAL_NAME ライバル名を指定タグにセット
+ *  @param idx セットするタグナンバー
+ */
+//--------------------------------------------------------------
+#define _RIVAL_NAME( idx ) _ASM_RIVAL_NAME idx
+
+  .macro  _ASM_RIVAL_NAME idx
+  .short  EV_SEQ_RIVAL_NAME
+  .byte   \idx
+  .endm
+
+//--------------------------------------------------------------
+/**
  *  _ITEM_NAME アイテム名を指定タグにセット
  *  @param idx セットするタグナンバー
  *  @param itemno 名前を取得するアイテムナンバー
@@ -7925,6 +7938,23 @@
   .short  EV_SEQ_CALL_SORAWOTOBU
   .short  \ret_select
   .short  \ret_zone_id
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _RIVAL_NAME_INPUT
+ * @brief ライバルの名前入力画面を呼び出す
+ * @param ret_wk 入力結果を受け取るワーク
+ * @retval  TRUEのとき、入力した名前を確定した場合
+ * @retval  FALSEのとき、入力をキャンセルした場合
+ */
+//--------------------------------------------------------------
+#define _RIVAL_NAME_INPUT( ret_wk ) \
+    _ASM_RIVAL_NAME_INPUT ret_wk
+
+  .macro  _ASM_RIVAL_NAME_INPUT ret_wk
+  .short  EV_SEQ_RIVAL_NAME_INPUT
+  .short  \ret_wk
   .endm
 
 //======================================================================

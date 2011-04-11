@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ichiraku_katsuhiko" host="W00271" date="2011-03-29T14:35:19"/>
+	<create user="ichiraku_katsuhiko" host="W00271" date="2011-04-11T10:24:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,7 +229,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="152"/>
+		<id position="0" width="209"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="309" top="80" right="1014" bottom="695" maximized="no" rayout="Vertical2">
+	<dialog left="102" top="163" right="807" bottom="778" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="542" visible="no"/>
 		<band id="0" index="1" style="0000" width="522"/>
@@ -830,6 +830,21 @@
 	<row id="msg_debug_ichiraku_2" back-color="#008000,,,#008000,,#008000,#008000,#008000,,,#008000,,#008000,#008000,,,#008000,,">
 		<language name="JPN" width="256">捕獲デモ</language>
 		<language name="JPN_KANJI" width="256">捕獲デモ</language>
+	</row>
+
+	<row id="msg_debug_ichiraku_3" back-color="#008000,,,#008000,,#008000,#008000,#008000,,,#008000,,#008000,#008000,,,#008000,,">
+		<language name="JPN" width="256">ライバル名入力</language>
+		<language name="JPN_KANJI" width="256">ライバル名入力</language>
+	</row>
+
+	<row id="msg_debug_ichiraku_4" back-color="#008000,,,#008000,,#008000,#008000,#008000,,,#008000,,#008000,#008000,,,#008000,,">
+		<language name="JPN" width="256">ライバル名表示</language>
+		<language name="JPN_KANJI" width="256">ライバル名表示</language>
+	</row>
+
+	<row id="msg_debug_ichiraku_4_a" back-color="#008000,,,#008000,,#008000,#008000,#008000,,,#008000,,#008000,#008000,,,#008000,,">
+		<language name="JPN" width="256">ライバル名は　[1:00:トレーナー名:0]　です</language>
+		<language name="JPN_KANJI" width="256">ライバル名は　[1:00:トレーナー名:0]　です</language>
 	</row>
 
 	<flowchart-group-list>

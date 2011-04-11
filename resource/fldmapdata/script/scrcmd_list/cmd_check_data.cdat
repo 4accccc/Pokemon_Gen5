@@ -651,4 +651,6 @@ static const CMD_CHECK_DATA cmd_check_data[] = {
   { FALSE, FALSE, FALSE }, // NO_CMD (648)
   { FALSE, FALSE, FALSE }, // NO_CMD (649)
   { TRUE, FALSE, FALSE }, // _GYM_FLY_BLOW (650)
+  { TRUE, FALSE, FALSE }, // _RIVAL_NAME_INPUT (651)
+  { TRUE, FALSE, FALSE }, // _RIVAL_NAME (652)
 };

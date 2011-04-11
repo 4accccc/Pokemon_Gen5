@@ -51,6 +51,7 @@ extern void WORDSET_RegisterPMSWord( WORDSET* wordset, u32 bufID, PMS_WORD word 
 extern void WORDSET_RegisterPMSDeco( WORDSET* wordset, u32 bufID, PMS_DECO_ID decoID );
 extern void WORDSET_RegisterPokeTypeName( WORDSET* wordset, u32 bufID, u32 typeID );
 extern void WORDSET_RegisterPlayerName( WORDSET* wordset, u32 bufID, const MYSTATUS* my );
+extern void WORDSET_RegisterRivalName( WORDSET* wordset, u32 bufID, const STRCODE* strcode );
 extern void WORDSET_RegisterCountryName( WORDSET* wordset, u32 bufID, u32 countryID );
 extern void WORDSET_RegisterLocalPlaceName(WORDSET* wordset,u32 bufID,u32 countryID,u32 placeID);
 extern void WORDSET_RegisterTrTypeName( WORDSET* wordset, u32 bufID, u8 trType );

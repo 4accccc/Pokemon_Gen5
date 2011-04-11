@@ -16,6 +16,7 @@
 
 #include "item/item.h"
 #include "savedata/myitem_savedata.h"
+#include "savedata/etc_save.h"
 
 #include "field/zonedata.h"
 #include "script.h"
@@ -71,6 +72,28 @@ VMCMD_RESULT EvCmdPlayerName( VMHANDLE * core, void *wk )
   u8 idx = VMGetU8(core);
   
   WORDSET_RegisterPlayerName( wordset, idx, mystatus );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * ライバル名を指定バッファに登録
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @return  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdRivalName( VMHANDLE * core, void *wk ) 
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+  SAVE_CONTROL_WORK* save = GAMEDATA_GetSaveControlWork( gdata );
+  ETC_SAVE_WORK *etcsave = SaveData_GetEtc( save );
+  WORDSET *wordset = SCRIPT_GetWordSet( sc );
+  u8 idx = VMGetU8(core);
+  
+  WORDSET_RegisterRivalName( wordset, idx, EtcSave_GetRivalName( etcsave ) );
   return VMCMD_RESULT_CONTINUE;
 }
 

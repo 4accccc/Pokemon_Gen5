@@ -1325,6 +1325,8 @@ EVENT_START   ev_debug_ichiraku
 	_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
 	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_1,   1 ) // 自動歩行
 	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_2,   2 ) // 捕獲デモ
+	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_3,   3 ) // ライバル名入力
+	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_4,   4 ) // ライバル名表示
 	_BMPMENU_START()
 
   SWITCH $SCWK_ANSWER
@@ -1353,6 +1355,15 @@ EVENT_START   ev_debug_ichiraku
   CASE 2 THEN
     _CAPTURE_DEMO_SET()
     _WILD_WIN()
+  CASE 3 THEN
+    DEFINE_LOCAL ret
+    _RIVAL_NAME_INPUT( ret )
+    _DEBUG_PRINT_WK( ret )
+  CASE 4 THEN
+    _RIVAL_NAME(0)
+    _PLAINWIN_MSG_DOWN( msg_debug_ichiraku_4_a )
+	  _LAST_KEYWAIT()	
+	  _PLAINWIN_CLOSE()
   ENDSWITCH
 
 EVENT_END

@@ -993,6 +993,10 @@
 
   // 飛行ジム
   DEF_CMD( EvCmdGymFly_Blow, EV_SEQ_GYM_FLY_BLOW )
+  
+  // ライバル名関係
+  DEF_CMD( EvCmdRivalNameInput, EV_SEQ_RIVAL_NAME_INPUT )
+  DEF_CMD( EvCmdRivalName, EV_SEQ_RIVAL_NAME )
 
   END_CMD
   //スクリプトコマンドテーブル終了

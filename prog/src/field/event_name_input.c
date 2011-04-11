@@ -17,6 +17,7 @@
 #include "event_fieldmap_control.h" // for EVENT_FieldSubProc
 #include "system/main.h" // for HEAPID_PROC
 #include "savedata/resonance_resort_sv.h"
+#include "savedata/etc_save.h"
 
 
 //=====================================================================================
@@ -28,6 +29,8 @@ static GMEVENT_RESULT EVENT_FUNC_NameInput( GMEVENT* event, int* seq, void* wk )
 static GMEVENT_RESULT EVENT_FUNC_NameInput_PartyPoke(
     GMEVENT* event, int* seq, void* wk );
 static GMEVENT_RESULT EVENT_FUNC_NameInput_Resort(
+    GMEVENT* event, int* seq, void* wk );
+static GMEVENT_RESULT EVENT_FUNC_NameInput_Rival(
     GMEVENT* event, int* seq, void* wk );
 
 
@@ -345,3 +348,93 @@ static GMEVENT_RESULT EVENT_FUNC_NameInput_Resort( GMEVENT* event, int* seq, voi
   }
   return GMEVENT_RES_CONTINUE;
 } 
+
+
+//=====================================================================================
+// ■ライバル名入力画面呼び出しイベント
+//===================================================================================== 
+
+//-------------------------------------------------------------------------------------
+// ■イベントワーク
+//-------------------------------------------------------------------------------------
+typedef struct {
+	GAMESYS_WORK*  gameSystem;  // ゲームシステム 
+	FIELDMAP_WORK* fieldmap;    // フィールドマップ
+  NAMEIN_PARAM*  nameInParam; // 名前入力画面のパラメータ
+  u16*           retWork;     // 結果の格納先ワークへのポインタ
+} RIVAL_NAMEIN_WORK; 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ライバル名入力呼び出しイベント
+ *
+ *	@param	GAMESYS_WORK* gameSystem
+ *	@param	ret_wk        入力結果を受け取るワーク(TRUE:確定 FALSE:キャンセル)
+ *
+ *	@return event
+ */
+//-----------------------------------------------------------------------------
+GMEVENT* EVENT_NameInput_Rival( GAMESYS_WORK* gameSystem, u16* ret_wk )
+{
+  GAMEDATA*   gdata = GAMESYSTEM_GetGameData( gameSystem );
+  MISC        *misc = SaveData_GetMisc( GAMEDATA_GetSaveControlWork(gdata) );
+
+
+  GMEVENT* event;
+  RIVAL_NAMEIN_WORK * work;
+
+  // イベント生成
+  event = GMEVENT_Create( 
+      gameSystem, NULL, EVENT_FUNC_NameInput_Rival, sizeof(RIVAL_NAMEIN_WORK) );
+
+  // イベントワークを初期化
+  work = GMEVENT_GetEventWork( event );
+  work->gameSystem = gameSystem;
+  work->fieldmap   = GAMESYSTEM_GetFieldMapWork( gameSystem );
+  work->retWork    = ret_wk;
+  work->nameInParam = NAMEIN_AllocParam(  //TODO
+        HEAPID_PROC, NAMEIN_RIVALNAME, 0, 0, NAMEIN_PERSON_LENGTH, NULL, misc );
+
+  return event;
+}
+
+//-------------------------------------------------------------------------------------
+/**
+ * @brief イベント処理関数(リゾート用入力画面呼び出しイベント)
+ */
+//-------------------------------------------------------------------------------------
+static GMEVENT_RESULT EVENT_FUNC_NameInput_Rival( GMEVENT* event, int* seq, void* wk )
+{
+  RIVAL_NAMEIN_WORK* pniw = wk;
+
+  switch( *seq )
+  {
+  case 0: //----------------------------------------------- 共通イベント呼び出し
+    GMEVENT_CallEvent( event,
+        EVENT_NameInput(pniw->gameSystem, pniw->fieldmap, pniw->nameInParam, TRUE) );
+    ++(*seq);
+    break;
+  case 1: //----------------------------------------------- イベント終了
+    if( pniw->nameInParam->cancel != TRUE )
+    {
+      GAMEDATA*   gdata = GAMESYSTEM_GetGameData( pniw->gameSystem );
+      SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( gdata );
+      ETC_SAVE_WORK *etcsave = SaveData_GetEtc( p_sv );
+      const STRCODE *cp_strcode = GFL_STR_GetStringCodePointer(pniw->nameInParam->strbuf);
+
+      // セーブデータに保存
+      EtcSave_SetRivalName( etcsave, cp_strcode );
+    }
+
+    // 入力結果をワークに返す
+    if( pniw->retWork != NULL )
+    {
+      *(pniw->retWork) = (pniw->nameInParam->cancel != TRUE);
+    }
+
+    NAMEIN_FreeParam( pniw->nameInParam );
+    return GMEVENT_RES_FINISH;
+  }
+  return GMEVENT_RES_CONTINUE;
+}
+

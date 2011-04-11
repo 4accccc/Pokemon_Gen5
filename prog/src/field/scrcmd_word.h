@@ -10,6 +10,7 @@
 //  extern 
 //======================================================================
 extern VMCMD_RESULT EvCmdPlayerName( VMHANDLE * core, void *wk );
+extern VMCMD_RESULT EvCmdRivalName( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdItemName( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdItemWazaName( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdWazaName( VMHANDLE *core, void *wk );
