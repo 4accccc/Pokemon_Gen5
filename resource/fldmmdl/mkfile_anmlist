@@ -65,10 +65,13 @@ $(DATDIR)%.h: $(TMPDIR)%.csv
 	@echo $@ $<
 	ruby $(RUBY_DAT_RES) $< $(DATDIR)
 	unix2dos -D $@
+	unix2dos -D $(@:%.h=%.cdat)
 
 $(DATDIR)%.cdat: $(TMPDIR)%.csv
+	@echo $@ $<
 	ruby $(RUBY_DAT_RES) $< $(DATDIR)
 	unix2dos -D $@
+	unix2dos -D $(@:%.cdat=%.h)
 
 $(anm_header): $(anm_list)
 	ruby $(RUBY_DAT_LIST) $(anm_header) $(anm_data) $(anm_convert_list) $(TMPDIR) $(ANMFILE_XLS)
