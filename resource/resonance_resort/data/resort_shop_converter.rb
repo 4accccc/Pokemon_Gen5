@@ -82,6 +82,7 @@ SERVICE_COL_MONEY       = 4         #列：値段
 SERVICE_COL_KIND        = 5         #列：サービス種類
 SERVICE_COL_PARAM_1     = 6         #列：サービス種類ごとの効果１
 SERVICE_COL_PARAM_2     = 7         #列：サービス種類ごとの効果２
+SERVICE_COL_EFFECT      = 8         #列：演出メッセージ
 def  convertService( csv, data, h_define, h_item, gmm, h_service )
   
   #データの作成
@@ -97,8 +98,9 @@ def  convertService( csv, data, h_define, h_item, gmm, h_service )
     info    = csv.get( row, SERVICE_COL_INFO )
     money   = csv.get( row, SERVICE_COL_MONEY )
     kind    = csv.get( row, SERVICE_COL_KIND );
-    param1  = csv.get( row, SERVICE_COL_PARAM_1 );
+    param1  = csv.get( row, SERVICE_COL_PARAM_1 )
     param2  = csv.get( row, SERVICE_COL_PARAM_2 )
+    eff     = csv.get( row, SERVICE_COL_EFFECT )
 
     #タグを保存
     h_service.store( tag, row-SERVICE_ROW_START )
@@ -145,6 +147,16 @@ def  convertService( csv, data, h_define, h_item, gmm, h_service )
         puts "名前フラグOFFは道具だけです"
         exit(1)
       end
+    end
+
+    if eff == nil
+      data.write_u16( 0 )
+    else
+      begin
+        data.write_u16( msgdata.search( "#{eff}", "#{row}行のgmm" ) )
+      rescue HeaderSearchError
+        exit(1)
+      end 
     end
 
   end

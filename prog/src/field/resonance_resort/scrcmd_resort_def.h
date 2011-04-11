@@ -74,6 +74,7 @@
 #define RESORT_WORD_FREE_PHRASE       (6)
 #define RESORT_WORD_SHOP_GENRE        (7) //「花屋」とか
 #define RESORT_WORD_FREE_CITY         (8)
+#define RESORT_WORD_SHOP_RESTEXP      (9) //次のレベルまでの経験値
 
 //_RESORT_CALL_LIST用
 #define RESORT_LIST_TYPE_BUY            (0)
@@ -170,5 +171,8 @@
 #define RESORT_NPC_DATA_MOUTHCOMM_I_03        (13)
 #define RESORT_NPC_DATA_MOUTHCOMM_I_04        (14)
 #define RESORT_NPC_DATA_MOUTHCOMM_I_05        (15)
+
+//_RESORT_GET_SERVICE_DATA用
+#define RESORT_SERVICE_DATA_EFFECT            (0)
 
 

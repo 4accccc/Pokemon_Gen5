@@ -378,7 +378,7 @@ sub_tourist_spot:
     _RESORT_DELETE_PEOPLE( RESORT_DELTE_PEOPLE_MINE, 0 )
 
     _RESORT_USE_MSG_ALPHA( FALSE )
-    _RESORT_BLEND_BRIGHTNESS( 0, -16, 30 )
+    _RESORT_BLEND_BRIGHTNESS( 0, -16, 15 )
 
     _SYSWIN_MSG( LWK_MSGID, POS_DOWN )
     IF $LWK_RET == TRUE THEN
@@ -386,7 +386,7 @@ sub_tourist_spot:
     ENDIF
     _SYSWIN_CLOSE()
   
-    _RESORT_BLEND_BRIGHTNESS( -16, 0, 30 )
+    _RESORT_BLEND_BRIGHTNESS( -16, 0, 15 )
     _RESORT_USE_MSG_ALPHA( TRUE )
 
     //選択肢終了
@@ -663,9 +663,9 @@ sub_resident_institution:
 	    _BALLOONWIN_CLOSE()
 
     CASE SEQ_RESIDENT_TROUBLE THEN      //困ってない？
-      //TODO あとでクエスト処理をいれる
-      _RESORT_GET_MSGID( RESORT_RESIDENT_BYE_MSGID, LWK_MSGID )
-	    _BALLOONWIN_OBJMSG( LWK_MSGID, LWK_OBJID )
+      //TODO 経験値表示をきくことになった
+      _RESORT_SET_WORD( RESORT_WORD_SHOP_RESTEXP, 0 )
+	    _BALLOONWIN_OBJMSG( resort_sys_14, LWK_OBJID )
 	    _BALLOONWIN_CLOSE()
 
     CASE SEQ_RESIDENT_BYE THEN          //またね
@@ -912,22 +912,13 @@ sub_resident_service_effort:
       IF $LWK_RET == TRUE THEN
 
         _RESORT_USE_MSG_ALPHA( FALSE )
-        _RESORT_BLEND_BRIGHTNESS( 0, -16, 30 )
+        _RESORT_BLEND_BRIGHTNESS( 0, -16, 15 )
 
-        //TODO
-        SWITCH $LWK_LIST_RET_PARAM
-        CASE 10 THEN
-          _SYSWIN_MSG( resort_service_txt_00, POS_DOWN )
-        CASE 20 THEN
-          _SYSWIN_MSG( resort_service_txt_01, POS_DOWN )
-        CASE 30 THEN
-          _SYSWIN_MSG( resort_service_txt_02, POS_DOWN )
-        DEFAULT
-          _SYSWIN_MSG( resort_service_txt_02, POS_DOWN )
-        ENDSWITCH
+        _RESORT_GET_WORD_SERVICE( LWK_LIST_RET_IDX, RESORT_SERVICE_DATA_EFFECT, LWK_RET )
+        _SYSWIN_MSG( LWK_RET, POS_DOWN )
         _SYSWIN_CLOSE()
 
-        _RESORT_BLEND_BRIGHTNESS( -16, 0, 30 )
+        _RESORT_BLEND_BRIGHTNESS( -16, 0, 15 )
         _RESORT_USE_MSG_ALPHA( TRUE )
 
         _BALLOONWIN_OBJMSG_POS( resort_exercice_03, LWK_OBJID, POS_DL )
@@ -1003,11 +994,13 @@ sub_resident_service_hatch:
       //選んだものがタマゴだった
 
       _RESORT_USE_MSG_ALPHA( FALSE )
-      _RESORT_BLEND_BRIGHTNESS( 0, -16, 30 )
-      _SYSWIN_MSG( resort_service_txt_00, POS_DOWN )
+      _RESORT_BLEND_BRIGHTNESS( 0, -16, 15 )
+
+      _RESORT_GET_WORD_SERVICE( LWK_LIST_RET_IDX, RESORT_SERVICE_DATA_EFFECT, LWK_RET )
+      _SYSWIN_MSG( LWK_RET, POS_DOWN )
       _SYSWIN_CLOSE()
 
-      _RESORT_BLEND_BRIGHTNESS( -16, 0, 30 )
+      _RESORT_BLEND_BRIGHTNESS( -16, 0, 15 )
       _RESORT_USE_MSG_ALPHA( TRUE )
 
       _RESORT_HATCH( LWK_RET_IDX )
@@ -1047,11 +1040,13 @@ sub_resident_service_lv:
 
       IF $LWK_RET == TRUE THEN
         _RESORT_USE_MSG_ALPHA( FALSE )
-        _RESORT_BLEND_BRIGHTNESS( 0, -16, 30 )
-        _SYSWIN_MSG( resort_service_txt_00, POS_DOWN )
+        _RESORT_BLEND_BRIGHTNESS( 0, -16, 15 )
+
+        _RESORT_GET_WORD_SERVICE( LWK_LIST_RET_IDX, RESORT_SERVICE_DATA_EFFECT, LWK_RET )
+        _SYSWIN_MSG( LWK_RET, POS_DOWN )
         _SYSWIN_CLOSE()
 
-        _RESORT_BLEND_BRIGHTNESS( -16, 0, 30 )
+        _RESORT_BLEND_BRIGHTNESS( -16, 0, 15 )
         _RESORT_USE_MSG_ALPHA( TRUE )
 
 

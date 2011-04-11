@@ -13035,6 +13035,21 @@
 
 //--------------------------------------------------------------
 /**
+ * @brief リゾート用  サービス情報を取得
+ */
+//--------------------------------------------------------------
+#define _RESORT_GET_WORD_SERVICE( service_idx, param, ret_wk ) \
+      _ASM_RESORT_GET_WORD_SERVICE service_idx, param, ret_wk
+
+  .macro _ASM_RESORT_GET_WORD_SERVICE service_idx, param, ret_wk
+  .short EV_SEQ_RESORT_GET_SERVICE_DATA
+  .short \service_idx
+  .short \param
+  .short \ret_wk
+  .endm
+
+//--------------------------------------------------------------
+/**
  * @brief 無限ダンジョン初期化
  */
 //--------------------------------------------------------------

@@ -456,6 +456,19 @@ VMCMD_RESULT EvCmdResortSetWord( VMHANDLE *p_core, void *p_wk_adrs )
       GFL_STR_DeleteBuffer(p_str);
     }
     break;
+  case RESORT_WORD_SHOP_RESTEXP:
+    {
+      void *p_data_adrs = RESORT_PEOPLE_GetDataAdrs( p_people );
+      const RESORT_BINARY_SHOP_DATA *cp_shop_data = RESORT_BINARY_SHOP_SearchDataByData( p_shop, p_data_adrs );
+      const RESORT_INSTITUTION_DATA *cp_institution = RESORT_RESIDENT_DATA_GetInstitution( p_data_adrs );
+      u16 next_exp = RESORT_BINARY_SHOP_DATA_GetData( cp_shop_data, RESORT_BINARY_SHOP_PARAM_NEXT_EXP );
+      u16 now_exp = RESORT_INSTITUTION_DATA_GetData( cp_institution, RESORT_INSTITUTION_DATA_PARAM_EXP );
+
+      u32 num = (s32)next_exp - (s32)now_exp;
+      num = MATH_IMax( num, 0 );
+      WORDSET_RegisterNumber( p_wordset, idx, num, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+    }
+    break;
   case RESORT_WORD_SHOP_LABEL:
     {
       u32 data = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_TYPE, NULL );
@@ -1076,8 +1089,7 @@ VMCMD_RESULT EvCmdResortSetSpot( VMHANDLE *p_core, void *p_wk_adrs )
   RESORT_RESIDENT_DATA *p_resident = RESORT_PEOPLE_ALL_DATA_GetResident( p_all_people, idx );
   RESORT_INSTITUTION_DATA *p_institution =  RESORT_RESIDENT_DATA_GetInstitution( p_resident );
   const RESORT_BINARY_SHOP_DATA *cp_binary_shop_data = RESORT_BINARY_SHOP_SearchDataByData( p_shop, p_resident );
-
-  u32 next_exp = RESORT_BINARY_SHOP_DATA_GetData( cp_binary_shop_data, RESORT_BINARY_SHOP_PARAM_NEXET_EXP );
+  u32 next_exp = RESORT_BINARY_SHOP_DATA_GetData( cp_binary_shop_data, RESORT_BINARY_SHOP_PARAM_NEXT_EXP );
 
   u32 lv = RESORT_INSTITUTION_DATA_GetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_LV );
   u32 exp = RESORT_INSTITUTION_DATA_GetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_EXP );
@@ -1159,7 +1171,6 @@ VMCMD_RESULT EvCmdResortSetSpot( VMHANDLE *p_core, void *p_wk_adrs )
         lv++;
         exp = 0;
         *ret_lvup = TRUE;
-
 
         WORDSET_RegisterNumber( p_wordset, 3, lv+1, 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
       }
@@ -1504,6 +1515,47 @@ VMCMD_RESULT EvCmdResortSetWordMouthCommAnswer( VMHANDLE *p_core, void *p_wk_adr
   WORDSET_RegisterWord( p_wordset, bufID, p_str, PM_NEUTRAL, TRUE, PM_LANG );
   GFL_STR_DeleteBuffer(p_str);
   GFL_MSG_Delete( p_msg );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  サービスデータを取得
+ *
+ *	@param	VMHANDLE *p_core 仮想マシンハンドル
+ *	@param	*p_wk_adrs       スクリプトコマンドワーク
+ *
+ *	@return 結果コード
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdResortGetServiceData( VMHANDLE *p_core, void *p_wk_adrs )
+{
+  SCRCMD_WORK *p_wk = p_wk_adrs;
+  SCRIPT_WORK *p_script = SCRCMD_WORK_GetScriptWork( p_wk );
+  GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
+  GAMEDATA      *p_gamedata = SCRCMD_WORK_GetGameData( p_wk );
+  FIELDMAP_WORK *p_field = GAMESYSTEM_GetFieldMapWork(p_gamesys);
+  RESORT_BINARY_SHOP *p_shop = Resort_Scrcmd_GetBinaryShop( p_field );
+  RESORT_PEOPLE_SYS *p_people_sys = Resort_Scrcmd_GetPeopleSys( p_field );
+  RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_field, p_people_sys );
+  void *p_data_adrs = RESORT_PEOPLE_GetDataAdrs( p_people );
+  const RESORT_BINARY_SHOP_DATA *cp_shop_data = RESORT_BINARY_SHOP_SearchDataByData( p_shop, p_data_adrs );
+  u16 service_idx = SCRCMD_GetVMWorkValue( p_core, p_wk );
+  u16 param = SCRCMD_GetVMWorkValue( p_core, p_wk );
+  u16 *p_ret_wk	= SCRCMD_GetVMWork( p_core, p_wk );
+
+  switch( param )
+  {
+  case RESORT_SERVICE_DATA_EFFECT:
+    {
+      const RESORT_BINARY_SERVICE_DATA *cp_service_data = RESORT_BINARY_SHOP_DATA_GetList( p_shop, cp_shop_data, service_idx);
+      *p_ret_wk = RESORT_BINARY_SERVICE_DATA_GetData( cp_service_data, RESORT_BINARY_SERVICE_PARAM_EFFECT );
+    }
+    break;
+  default:
+    GF_ASSERT(0);
+  }
 
   return VMCMD_RESULT_CONTINUE;
 }

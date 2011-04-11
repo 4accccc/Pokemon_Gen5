@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nagihashi_toru" host="W00268" date="2011-04-11T12:43:05"/>
+	<create user="nagihashi_toru" host="W00268" date="2011-04-11T16:33:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -398,7 +398,7 @@
 		</language>
 	</columns>
 
-	<dialog left="-1112" top="209" right="-407" bottom="829" maximized="no" rayout="Vertical2">
+	<dialog left="-1254" top="230" right="-549" bottom="850" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="54" top="427" right="526" bottom="825" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -998,6 +998,17 @@ GTSの　ごりよう　ありがとうございます！</language>
 レベルが　上がった！▼
 [1:38:リゾート店名:0]は
 レベル　[2:00:１桁:3]　になった！！▼</language>
+	</row>
+
+	<row id="resort_sys_14" back-color="#80ff80,,,,,,,#80ff80,,,,,,,,,,,">
+		<language name="JPN" width="256">つぎ　おみせが　はってんするには
+[2:02:３桁:0]　ひつよう　です▼
+どんどん　このみせを
+おすすめして　くださいね▼</language>
+		<language name="JPN_KANJI" width="256">次　お店が　発展するには
+[2:02:３桁:0]　必要　です▼
+どんどん　この店を
+おすすめして　くださいね▼</language>
 	</row>
 
 	<row id="resort_shop_genre_00" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
@@ -1618,7 +1629,7 @@ GTSの　ごりよう　ありがとうございます！</language>
 	</row>
 
 	<row id="resort_service_txt_00" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
-		<attribute name="キャラ指定">演出文（仮</attribute>
+		<attribute name="キャラ指定">演出</attribute>
 		<language name="JPN" width="256">[FF:00:色:2]（スクリプトによる演出とテキストを
 入れます）▼</language>
 		<language name="JPN_KANJI" width="256">[FF:00:色:2]（スクリプトによる演出とテキストを
@@ -1626,13 +1637,55 @@ GTSの　ごりよう　ありがとうございます！</language>
 	</row>
 
 	<row id="resort_service_txt_01" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="256">LV[FF:00:色:2]（スクリプトによる演出とテキストを
+入れます）▼</language>
+		<language name="JPN_KANJI" width="256">LV[FF:00:色:2]（スクリプトによる演出とテキストを
+入れます）▼</language>
+	</row>
+
+	<row id="resort_service_txt_02" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="256">ふか[FF:00:色:2]（スクリプトによる演出とテキストを
+入れます）▼</language>
+		<language name="JPN_KANJI" width="256">ふか[FF:00:色:2]（スクリプトによる演出とテキストを
+入れます）▼</language>
+	</row>
+
+	<row id="resort_service_txt_03" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="256">どりょく[FF:00:色:2]（スクリプトによる演出とテキストを
+入れます）▼</language>
+		<language name="JPN_KANJI" width="256">どりょく[FF:00:色:2]（スクリプトによる演出とテキストを
+入れます）▼</language>
+	</row>
+
+	<row id="resort_service_txt_04" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
 		<language name="JPN" width="256">[FF:00:色:2]（スクリプトによる演出とテキストを
 入れます）▼</language>
 		<language name="JPN_KANJI" width="256">[FF:00:色:2]（スクリプトによる演出とテキストを
 入れます）▼</language>
 	</row>
 
-	<row id="resort_service_txt_02" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+	<row id="resort_service_txt_05" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="256">[FF:00:色:2]（スクリプトによる演出とテキストを
+入れます）▼</language>
+		<language name="JPN_KANJI" width="256">[FF:00:色:2]（スクリプトによる演出とテキストを
+入れます）▼</language>
+	</row>
+
+	<row id="resort_service_txt_06" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="256">[FF:00:色:2]（スクリプトによる演出とテキストを
+入れます）▼</language>
+		<language name="JPN_KANJI" width="256">[FF:00:色:2]（スクリプトによる演出とテキストを
+入れます）▼</language>
+	</row>
+
+	<row id="resort_service_txt_07" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="256">[FF:00:色:2]（スクリプトによる演出とテキストを
+入れます）▼</language>
+		<language name="JPN_KANJI" width="256">[FF:00:色:2]（スクリプトによる演出とテキストを
+入れます）▼</language>
+	</row>
+
+	<row id="resort_service_txt_08" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
 		<language name="JPN" width="256">[FF:00:色:2]（スクリプトによる演出とテキストを
 入れます）▼</language>
 		<language name="JPN_KANJI" width="256">[FF:00:色:2]（スクリプトによる演出とテキストを
