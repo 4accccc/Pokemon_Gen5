@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2011-03-29T14:54:16"/>
+	<create user="matsumiya" host="W00224" date="2011-04-11T20:13:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -364,15 +364,15 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="324"/>
+		<id position="0" width="191"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="1" width="176"/>
+		<comment position="3" width="246"/>
 		<erase position="-1" width="100"/>
 		<language japanese="JPN" english="JPN">
-			<message position="2" width="274"/>
+			<message position="1" width="274"/>
 			<font default=" 0:large" position="4" width="109">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
@@ -383,7 +383,7 @@
 			<line position="-1" width="100"/>
 		</language>
 		<language japanese="JPN_KANJI" english="JPN_KANJI">
-			<message position="3" width="246"/>
+			<message position="2" width="246"/>
 			<font default=" 0:large" position="5" width="106">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
@@ -395,7 +395,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="97" right="1991" bottom="717" maximized="no" rayout="Vertical2">
+	<dialog left="1301" top="136" right="2006" bottom="764" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -424,7 +424,9 @@
 
 
 	<row id="TRID_SWLEADER1_TRMSG_1ST_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<comment>１回戦用対戦前メッセージ</comment>
+		<comment>♂
+・ジムリーダー：チェレン
+・１回戦用対戦前メッセージ</comment>
 		<language name="JPN" width="216">１かいせん
 かりメッセージ▼</language>
 		<language name="JPN_KANJI" width="216">１回戦
@@ -432,7 +434,9 @@
 	</row>
 
 	<row id="TRID_SWLEADER1_TRMSG_2ND_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<comment>２回戦用対戦前メッセージ</comment>
+		<comment>♂
+・ジムリーダー：チェレン
+・２回戦用対戦前メッセージ</comment>
 		<language name="JPN" width="216">２かいせん
 かりメッセージ▼</language>
 		<language name="JPN_KANJI" width="216">２回戦
@@ -440,7 +444,9 @@
 	</row>
 
 	<row id="TRID_SWLEADER1_TRMSG_3RD_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<comment>決勝戦用対戦前メッセージ</comment>
+		<comment>♂
+・ジムリーダー：チェレン
+・決勝戦用対戦前メッセージ</comment>
 		<language name="JPN" width="216">けっしょうせん
 かりメッセージ▼</language>
 		<language name="JPN_KANJI" width="216">決勝戦
@@ -448,7 +454,9 @@
 	</row>
 
 	<row id="TRID_SWLEADER1_TRMSG_FIGHT_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<comment>対戦後メッセージ</comment>
+		<comment>♂
+・ジムリーダー：チェレン
+・対戦後メッセージ</comment>
 		<language name="JPN" width="216">たいせんご
 かりメッセージ▼</language>
 		<language name="JPN_KANJI" width="216">対戦後
@@ -456,7 +464,9 @@
 	</row>
 
 	<row id="TRID_SWLEADER1_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<comment>プレイヤーが勝った場合のメッセージ</comment>
+		<comment>♂
+・ジムリーダー：チェレン
+・プレイヤーが勝った場合のメッセージ</comment>
 		<language name="JPN" width="216">プレイヤーしょうり
 かりメッセージ▼</language>
 		<language name="JPN_KANJI" width="216">プレイヤー勝利
@@ -464,7 +474,9 @@
 	</row>
 
 	<row id="TRID_SWLEADER1_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<comment>プレイヤーが負けた場合のメッセージ</comment>
+		<comment>♂
+・ジムリーダー：チェレン
+・プレイヤーが負けた場合のメッセージ</comment>
 		<language name="JPN" width="216">プレイヤーまけ
 かりメッセージ▼</language>
 		<language name="JPN_KANJI" width="216">プレイヤー負け
@@ -472,7 +484,8 @@
 	</row>
 
 	<row id="TRID_SWLEADER1_TRMSG_OPENING_ANNOUNCE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<comment>前口上メッセージ</comment>
+		<comment>ジムリーダー：チェレン♂
+・ジムリーダー：チェレン・前口上メッセージ</comment>
 		<language name="JPN" width="216">かりメッセージ
 チェレン▼</language>
 		<language name="JPN_KANJI" width="216">仮メッセージ
@@ -480,7 +493,9 @@
 	</row>
 
 	<row id="TRID_SWLEADER2_TRMSG_1ST_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
-		<comment>１回戦用対戦前メッセージ</comment>
+		<comment>♀
+・ジムリーダー：ホミカ
+・１回戦用対戦前メッセージ</comment>
 		<language name="JPN" width="216">１かいせん
 かりメッセージ▼</language>
 		<language name="JPN_KANJI" width="216">１回戦
@@ -488,7 +503,9 @@
 	</row>
 
 	<row id="TRID_SWLEADER2_TRMSG_2ND_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
-		<comment>２回戦用対戦前メッセージ</comment>
+		<comment>♀
+・ジムリーダー：ホミカ
+・２回戦用対戦前メッセージ</comment>
 		<language name="JPN" width="216">２かいせん
 かりメッセージ▼</language>
 		<language name="JPN_KANJI" width="216">２回戦
@@ -496,7 +513,9 @@
 	</row>
 
 	<row id="TRID_SWLEADER2_TRMSG_3RD_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
-		<comment>決勝戦用対戦前メッセージ</comment>
+		<comment>♀
+・ジムリーダー：ホミカ
+・決勝戦用対戦前メッセージ</comment>
 		<language name="JPN" width="216">けっしょうせん
 かりメッセージ▼</language>
 		<language name="JPN_KANJI" width="216">決勝戦
@@ -504,7 +523,9 @@
 	</row>
 
 	<row id="TRID_SWLEADER2_TRMSG_FIGHT_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
-		<comment>対戦後メッセージ</comment>
+		<comment>♀
+・ジムリーダー：ホミカ
+・対戦後メッセージ</comment>
 		<language name="JPN" width="216">たいせんご
 かりメッセージ▼</language>
 		<language name="JPN_KANJI" width="216">対戦後
@@ -512,7 +533,9 @@
 	</row>
 
 	<row id="TRID_SWLEADER2_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
-		<comment>プレイヤーが勝った場合のメッセージ</comment>
+		<comment>♀
+・ジムリーダー：ホミカ
+・プレイヤーが勝った場合のメッセージ</comment>
 		<language name="JPN" width="216">プレイヤーしょうり
 かりメッセージ▼</language>
 		<language name="JPN_KANJI" width="216">プレイヤー勝利
@@ -520,7 +543,9 @@
 	</row>
 
 	<row id="TRID_SWLEADER2_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
-		<comment>プレイヤーが負けた場合のメッセージ</comment>
+		<comment>♀
+・ジムリーダー：ホミカ
+・プレイヤーが負けた場合のメッセージ</comment>
 		<language name="JPN" width="216">プレイヤーまけ
 かりメッセージ▼</language>
 		<language name="JPN_KANJI" width="216">プレイヤー負け
@@ -528,7 +553,9 @@
 	</row>
 
 	<row id="TRID_SWLEADER2_TRMSG_OPENING_ANNOUNCE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
-		<comment>前口上メッセージ</comment>
+		<comment>♀
+・ジムリーダー：ホミカ
+・前口上メッセージ</comment>
 		<language name="JPN" width="216">かりメッセージ
 ホミカ▼</language>
 		<language name="JPN_KANJI" width="216">仮メッセージ
@@ -536,7 +563,9 @@
 	</row>
 
 	<row id="TRID_SWLEADER3_TRMSG_1ST_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<comment>１回戦用対戦前メッセージ</comment>
+		<comment>♂
+・ジムリーダー：アーティ
+・１回戦用対戦前メッセージ</comment>
 		<language name="JPN" width="216">１かいせん
 かりメッセージ▼</language>
 		<language name="JPN_KANJI" width="216">１回戦
@@ -544,7 +573,9 @@
 	</row>
 
 	<row id="TRID_SWLEADER3_TRMSG_2ND_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<comment>２回戦用対戦前メッセージ</comment>
+		<comment>♂
+・ジムリーダー：アーティ
+・２回戦用対戦前メッセージ</comment>
 		<language name="JPN" width="216">２かいせん
 かりメッセージ▼</language>
 		<language name="JPN_KANJI" width="216">２回戦
@@ -552,7 +583,9 @@
 	</row>
 
 	<row id="TRID_SWLEADER3_TRMSG_3RD_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<comment>決勝戦用対戦前メッセージ</comment>
+		<comment>♂
+・ジムリーダー：アーティ
+・決勝戦用対戦前メッセージ</comment>
 		<language name="JPN" width="216">けっしょうせん
 かりメッセージ▼</language>
 		<language name="JPN_KANJI" width="216">決勝戦
@@ -560,7 +593,9 @@
 	</row>
 
 	<row id="TRID_SWLEADER3_TRMSG_FIGHT_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<comment>対戦後メッセージ</comment>
+		<comment>♂
+・ジムリーダー：アーティ
+・対戦後メッセージ</comment>
 		<language name="JPN" width="216">たいせんご
 かりメッセージ▼</language>
 		<language name="JPN_KANJI" width="216">対戦後
@@ -568,7 +603,9 @@
 	</row>
 
 	<row id="TRID_SWLEADER3_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<comment>プレイヤーが勝った場合のメッセージ</comment>
+		<comment>♂
+・ジムリーダー：アーティ
+・プレイヤーが勝った場合のメッセージ</comment>
 		<language name="JPN" width="216">プレイヤーしょうり
 かりメッセージ▼</language>
 		<language name="JPN_KANJI" width="216">プレイヤー勝利
@@ -576,7 +613,9 @@
 	</row>
 
 	<row id="TRID_SWLEADER3_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<comment>プレイヤーが負けた場合のメッセージ</comment>
+		<comment>♂
+・ジムリーダー：アーティ
+・プレイヤーが負けた場合のメッセージ</comment>
 		<language name="JPN" width="216">プレイヤーまけ
 かりメッセージ▼</language>
 		<language name="JPN_KANJI" width="216">プレイヤー負け
@@ -584,7 +623,9 @@
 	</row>
 
 	<row id="TRID_SWLEADER3_TRMSG_OPENING_ANNOUNCE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<comment>前口上メッセージ</comment>
+		<comment>♂
+・ジムリーダー：アーティ
+・前口上メッセージ</comment>
 		<language name="JPN" width="216">かりメッセージ
 アーティ▼</language>
 		<language name="JPN_KANJI" width="216">仮メッセージ
