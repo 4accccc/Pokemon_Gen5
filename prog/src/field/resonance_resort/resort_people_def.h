@@ -66,10 +66,25 @@
 #define RESORT_SERVICE_TYPE_ITEM (0) //道具
 #define RESORT_SERVICE_TYPE_MAX (10) //最大
 //スポットタイプ
-#define RESORT_SPOT_TYPE_RANK (2) //ランク
+#define RESORT_SPOT_TYPE_MOUTHCOMM_07 (9) //クチコミ８
+#define RESORT_SPOT_TYPE_MOUTHCOMM_08 (10) //クチコミ９
+#define RESORT_SPOT_TYPE_MOUTHCOMM_09 (11) //クチコミ１０
+#define RESORT_SPOT_TYPE_MOUTHCOMM_00 (2) //クチコミ１
+#define RESORT_SPOT_TYPE_MOUTHCOMM_10 (12) //クチコミ１１
+#define RESORT_SPOT_TYPE_MOUTHCOMM_01 (3) //クチコミ２
+#define RESORT_SPOT_TYPE_MOUTHCOMM_11 (13) //クチコミ１２
+#define RESORT_SPOT_TYPE_MOUTHCOMM_02 (4) //クチコミ３
 #define RESORT_SPOT_TYPE_SHOPTYPE (0) //住民
+#define RESORT_SPOT_TYPE_MOUTHCOMM_12 (14) //クチコミ１３
+#define RESORT_SPOT_TYPE_MOUTHCOMM_03 (5) //クチコミ４
 #define RESORT_SPOT_TYPE_SEX (1) //性別
-#define RESORT_SPOT_TYPE_MAX (3) //最大
+#define RESORT_SPOT_TYPE_MOUTHCOMM_13 (15) //クチコミ１４
+#define RESORT_SPOT_TYPE_MOUTHCOMM_04 (6) //クチコミ５
+#define RESORT_SPOT_TYPE_MOUTHCOMM_14 (16) //クチコミ１５
+#define RESORT_SPOT_TYPE_MOUTHCOMM_05 (7) //クチコミ６
+#define RESORT_SPOT_TYPE_MOUTHCOMM_15 (17) //クチコミ１６
+#define RESORT_SPOT_TYPE_MOUTHCOMM_06 (8) //クチコミ７
+#define RESORT_SPOT_TYPE_MAX (18) //最大
 //評価
 #define RESORT_GRADE_TYPE_GOOD (0) //△
 #define RESORT_GRADE_TYPE_GREAT (1) //○

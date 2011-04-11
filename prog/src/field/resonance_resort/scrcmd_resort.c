@@ -1139,26 +1139,44 @@ VMCMD_RESULT EvCmdResortSetSpot( VMHANDLE *p_core, void *p_wk_adrs )
 
     add_exp = FX_Whole( sc_grade[ grade ] * add_exp );
 
-    if( type == RESORT_SPOT_TYPE_RANK )
+    switch( type )
     {
-      if( 0 )
-      {
-        is_good = TRUE;
-      }
-    }
-    else if( type == RESORT_SPOT_TYPE_SHOPTYPE )
-    {
+    case RESORT_SPOT_TYPE_SHOPTYPE:
       if( RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_TYPE, NULL ) == data )
       {
         is_good = TRUE;
       }
-    }
-    else if( type == RESORT_SPOT_TYPE_SEX )
-    {
+      break;
+
+    case RESORT_SPOT_TYPE_SEX:
       if( RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_SEX, NULL ) == data )
       {
         is_good = TRUE;
       }
+      break;
+
+    case RESORT_SPOT_TYPE_MOUTHCOMM_00:
+    case RESORT_SPOT_TYPE_MOUTHCOMM_01:
+    case RESORT_SPOT_TYPE_MOUTHCOMM_02:
+    case RESORT_SPOT_TYPE_MOUTHCOMM_03:
+    case RESORT_SPOT_TYPE_MOUTHCOMM_04:
+    case RESORT_SPOT_TYPE_MOUTHCOMM_05:
+    case RESORT_SPOT_TYPE_MOUTHCOMM_06:
+    case RESORT_SPOT_TYPE_MOUTHCOMM_07:
+    case RESORT_SPOT_TYPE_MOUTHCOMM_08:
+    case RESORT_SPOT_TYPE_MOUTHCOMM_09:
+    case RESORT_SPOT_TYPE_MOUTHCOMM_10:
+    case RESORT_SPOT_TYPE_MOUTHCOMM_11:
+    case RESORT_SPOT_TYPE_MOUTHCOMM_12:
+    case RESORT_SPOT_TYPE_MOUTHCOMM_13:
+    case RESORT_SPOT_TYPE_MOUTHCOMM_14:
+    case RESORT_SPOT_TYPE_MOUTHCOMM_15:
+      type = type - RESORT_SPOT_TYPE_MOUTHCOMM_00;
+      if( RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_EXT4_GOSSIP_00 + type, NULL ) == (data + 1) )
+      {
+        is_good = TRUE;
+      } 
+      break;
     }
 
     //

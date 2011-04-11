@@ -82,15 +82,25 @@ def  convertAppeal( csv, data, msg_h )
     rescue HeaderSearchError
       exit(1)
     end
-    begin
-      data.write_u16( msgdata.search( "#{msg1}", "#{row}行の#{msg_h}" ) )
-    rescue HeaderSearchError
-      exit(1)
+
+    if msg1 == nil 
+      data.write_u16(0)
+    else
+      begin
+        data.write_u16( msgdata.search( "#{msg1}", "#{row}行の#{msg_h}" ) )
+      rescue HeaderSearchError
+        exit(1)
+      end
     end
-    begin
-      data.write_u16( msgdata.search( "#{msg2}", "#{row}行の#{msg_h}" ) )
-    rescue HeaderSearchError
-      exit(1)
+
+    if msg2 == nil
+      data.write_u16(0)
+    else
+      begin
+        data.write_u16( msgdata.search( "#{msg2}", "#{row}行の#{msg_h}" ) )
+      rescue HeaderSearchError
+        exit(1)
+      end
     end
 
     data.write_u16( baseexp )
