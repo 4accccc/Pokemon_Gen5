@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00253" date="2011-04-05T10:23:57"/>
+	<create user="suginaka_katsunori" host="W00227" date="2011-04-11T13:07:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -375,9 +375,9 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="100"/>
+		<comment position="4" width="178"/>
 		<erase position="-1" width="100"/>
-		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
+		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="116">
 		</attribute>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="274"/>
@@ -403,9 +403,9 @@
 		</language>
 	</columns>
 
-	<dialog left="6" top="97" right="711" bottom="717" maximized="no" rayout="Vertical2">
+	<dialog left="551" top="83" right="1256" bottom="703" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
+		<tag-palette left="56" top="35" right="529" bottom="433" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
@@ -433,6 +433,8 @@
 
 
 	<row id="msg_wbt_announce_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>１回戦対戦カードメッセージ
+・この後、トレーナーメッセージ表示</comment>
 		<attribute name="キャラ指定">アナウンス
 シッポなしメッセージ</attribute>
 		<language name="JPN" width="256">だい１かいせん
@@ -442,6 +444,8 @@
 	</row>
 
 	<row id="msg_wbt_announce_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>２回戦対戦カードメッセージ
+・この後、トレーナーメッセージ表示</comment>
 		<attribute name="キャラ指定">アナウンス
 シッポなしメッセージ</attribute>
 		<language name="JPN" width="256">だい２かいせん
@@ -451,6 +455,8 @@
 	</row>
 
 	<row id="msg_wbt_announce_03" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>決勝戦対戦カードメッセージ
+・この後、トレーナーメッセージ表示</comment>
 		<attribute name="キャラ指定">アナウンス
 シッポなしメッセージ</attribute>
 		<language name="JPN" width="256">けっしょうせん
@@ -460,6 +466,8 @@
 	</row>
 
 	<row id="msg_wbt_announce_04" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>・主人公入場後のメッセージ
+・この後、対戦者入場</comment>
 		<attribute name="キャラ指定">アナウンス
 シッポなしメッセージ</attribute>
 		<language name="JPN" width="256">[1:3B:WBTトーナメント名:0]
@@ -471,22 +479,551 @@
 	</row>
 
 	<row id="msg_wbt_announce_05" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>このメッセージ後
+背景ビジョンと優勝演出
+msg_wbt_announce_09へ</comment>
 		<attribute name="キャラ指定">アナウンス
 シッポなしメッセージ</attribute>
-		<language name="JPN" width="256">ゆうしょう　は……！▼
-[1:00:トレーナー名:0]だー！！▼</language>
-		<language name="JPN_KANJI" width="256">優勝は……！▼
-[1:00:トレーナー名:0]だー！！▼</language>
+		<language name="JPN" width="256">ゆうしょう　は……！▼</language>
+		<language name="JPN_KANJI" width="256">優勝は……！▼</language>
 	</row>
 
-	<row id="msg_test">
+	<row id="msg_test" back-color="#404040,,,#404040,,#404040,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
 		<language name="JPN" width="256">仮メッセージ▼</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ▼</language>
 	</row>
 
-	<row id="msg_test_yell">
+	<row id="msg_test_yell" back-color="#404040,,,#404040,,#404040,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
 		<language name="JPN" width="256">仮メッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_wbt_announce_06" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>メッセージ後
+対戦者・プレイヤー退場
+続けてmsg_wbt_announce_08へ</comment>
+		<attribute name="キャラ指定">アナウンス
+シッポなしメッセージ</attribute>
+		<language name="JPN" width="256">だい１かいせんを　せいしたのは……！
+[1:00:トレーナー名:0]だー！！▼</language>
+		<language name="JPN_KANJI" width="256">第１回戦を　制したのは
+[1:00:トレーナー名:0]だー！！▼</language>
+	</row>
+
+	<row id="msg_wbt_announce_07" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>メッセージ後
+対戦者・プレイヤー退場
+続けてmsg_wbt_announce_08へ</comment>
+		<attribute name="キャラ指定">アナウンス
+シッポなしメッセージ</attribute>
+		<language name="JPN" width="256">だい２かいせんを　せいしたのは……！
+[1:00:トレーナー名:0]だー！！▼</language>
+		<language name="JPN_KANJI" width="256">第２回戦を　制したのは
+[1:00:トレーナー名:0]だー！！▼</language>
+	</row>
+
+	<row id="msg_wbt_announce_08" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>メッセージ後
+トーナメントリスト画面へ</comment>
+		<attribute name="キャラ指定">アナウンス
+シッポなしメッセージ</attribute>
+		<language name="JPN" width="256">ほかの　たいせんけっかは
+いったい　どうなっているでしょうか？▼
+みなさま　かいじょうビジョンを
+ごらんください！▼</language>
+		<language name="JPN_KANJI" width="256">他の　対戦結果は
+一体　どうなっているのでしょうか？▼
+皆様　会場ビジョンを
+ご覧ください！▼</language>
+	</row>
+
+	<row id="msg_wbt_announce_09" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>続いてmsg_wbt_announce_10</comment>
+		<attribute name="キャラ指定">アナウンス
+シッポなしメッセージ</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]だー！！▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]だー！！▼</language>
+	</row>
+
+	<row id="msg_wbt_announce_10" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>閉会の挨拶
+仮メッセージ</comment>
+		<attribute name="キャラ指定">アナウンス
+シッポなしメッセージ</attribute>
+		<language name="JPN" width="256">[1:3B:WBTトーナメント名:0]
+しゅうりょうの　あいさつ▼</language>
+		<language name="JPN_KANJI" width="256">[1:3B:WBTトーナメント名:0]
+しゅうりょうの　あいさつ▼</language>
+	</row>
+
+	<row id="msg_wbt_yell_2nd_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>二回戦・声援用</comment>
+		<attribute name="キャラ指定">サブウィン・声援</attribute>
+		<language name="JPN" width="256">キャー！</language>
+		<language name="JPN_KANJI" width="256">キャー！</language>
+	</row>
+
+	<row id="msg_wbt_yell_2nd_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>二回戦・声援用</comment>
+		<attribute name="キャラ指定">サブウィン・声援</attribute>
+		<language name="JPN" width="256">がんばって！</language>
+		<language name="JPN_KANJI" width="256">がんばって！</language>
+	</row>
+
+	<row id="msg_wbt_yell_2nd_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>二回戦・声援用</comment>
+		<attribute name="キャラ指定">サブウィン・声援</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]！</language>
+	</row>
+
+	<row id="msg_wbt_yell_2nd_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>二回戦・声援用</comment>
+		<attribute name="キャラ指定">サブウィン・声援</attribute>
+		<language name="JPN" width="256">Ｗ・Ｂ・Ｔ！！</language>
+		<language name="JPN_KANJI" width="256">Ｗ・Ｂ・Ｔ！！</language>
+	</row>
+
+	<row id="msg_wbt_yell_2nd_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>二回戦・声援用</comment>
+		<attribute name="キャラ指定">サブウィン・声援</attribute>
+		<language name="JPN" width="256">ワァァァ！</language>
+		<language name="JPN_KANJI" width="256">ワァァァ！</language>
+	</row>
+
+	<row id="msg_wbt_yell_2nd_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>二回戦・声援用</comment>
+		<attribute name="キャラ指定">サブウィン・声援</attribute>
+		<language name="JPN" width="256">かっこいい！</language>
+		<language name="JPN_KANJI" width="256">かっこいい！</language>
+	</row>
+
+	<row id="msg_wbt_yell_2nd_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>二回戦・声援用</comment>
+		<attribute name="キャラ指定">サブウィン・声援</attribute>
+		<language name="JPN" width="256">まってたぞ！</language>
+		<language name="JPN_KANJI" width="256">待ってたぞ！</language>
+	</row>
+
+	<row id="msg_wbt_yell_2nd_08" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>二回戦・声援用</comment>
+		<attribute name="キャラ指定">サブウィン・声援</attribute>
+		<language name="JPN" width="256">フレー！　フレー！</language>
+		<language name="JPN_KANJI" width="256">フレー！　フレー！</language>
+	</row>
+
+	<row id="msg_wbt_yell_2nd_09" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>二回戦・声援用</comment>
+		<attribute name="キャラ指定">サブウィン・声援</attribute>
+		<language name="JPN" width="256">あつくなってきた！！</language>
+		<language name="JPN_KANJI" width="256">熱くなってきた！！</language>
+	</row>
+
+	<row id="msg_wbt_yell_2nd_10" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>二回戦・声援用</comment>
+		<attribute name="キャラ指定">サブウィン・声援</attribute>
+		<language name="JPN" width="256">ざわざわ……</language>
+		<language name="JPN_KANJI" width="256">ざわざわ……</language>
+	</row>
+
+	<row id="msg_wbt_yell_3rd_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>決勝戦・声援用</comment>
+		<attribute name="キャラ指定">サブウィン・声援</attribute>
+		<language name="JPN" width="256">キャー！</language>
+		<language name="JPN_KANJI" width="256">キャー！</language>
+	</row>
+
+	<row id="msg_wbt_yell_3rd_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>決勝戦・声援用</comment>
+		<attribute name="キャラ指定">サブウィン・声援</attribute>
+		<language name="JPN" width="256">がんばって！</language>
+		<language name="JPN_KANJI" width="256">がんばって！</language>
+	</row>
+
+	<row id="msg_wbt_yell_3rd_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>決勝戦・声援用</comment>
+		<attribute name="キャラ指定">サブウィン・声援</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]！</language>
+	</row>
+
+	<row id="msg_wbt_yell_3rd_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>決勝戦・声援用</comment>
+		<attribute name="キャラ指定">サブウィン・声援</attribute>
+		<language name="JPN" width="256">Ｗ・Ｂ・Ｔ！！</language>
+		<language name="JPN_KANJI" width="256">Ｗ・Ｂ・Ｔ！！</language>
+	</row>
+
+	<row id="msg_wbt_yell_3rd_05" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>決勝戦・声援用</comment>
+		<attribute name="キャラ指定">サブウィン・声援</attribute>
+		<language name="JPN" width="256">ワァァァ！</language>
+		<language name="JPN_KANJI" width="256">ワァァァ！</language>
+	</row>
+
+	<row id="msg_wbt_yell_3rd_06" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>決勝戦・声援用</comment>
+		<attribute name="キャラ指定">サブウィン・声援</attribute>
+		<language name="JPN" width="256">かっこいい！</language>
+		<language name="JPN_KANJI" width="256">かっこいい！</language>
+	</row>
+
+	<row id="msg_wbt_yell_3rd_07" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>決勝戦・声援用</comment>
+		<attribute name="キャラ指定">サブウィン・声援</attribute>
+		<language name="JPN" width="256">まってたぞ！</language>
+		<language name="JPN_KANJI" width="256">待ってたぞ！</language>
+	</row>
+
+	<row id="msg_wbt_yell_3rd_08" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>決勝戦・声援用</comment>
+		<attribute name="キャラ指定">サブウィン・声援</attribute>
+		<language name="JPN" width="256">フレー！　フレー！</language>
+		<language name="JPN_KANJI" width="256">フレー！　フレー！</language>
+	</row>
+
+	<row id="msg_wbt_yell_3rd_09" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>決勝戦・声援用</comment>
+		<attribute name="キャラ指定">サブウィン・声援</attribute>
+		<language name="JPN" width="256">ヒューッ！</language>
+		<language name="JPN_KANJI" width="256">ヒューッ！</language>
+	</row>
+
+	<row id="msg_wbt_yell_3rd_10" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>決勝戦・声援用</comment>
+		<attribute name="キャラ指定">サブウィン・声援</attribute>
+		<language name="JPN" width="256">ざわざわ……</language>
+		<language name="JPN_KANJI" width="256">ざわざわ……</language>
+	</row>
+
+	<row id="msg_wbt_player_title_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>優勝回数が０</comment>
+		<attribute name="キャラ指定">アナウンス
+シッポなしメッセージ</attribute>
+		<language name="JPN" width="256">仮メッセージ　優勝回数０
+[1:00:トレーナー名:0]の　にゅうじょうだー！！▼</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ　優勝回数０
+[1:00:トレーナー名:0]の　入場だー！！▼</language>
+	</row>
+
+	<row id="msg_wbt_player_title_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>優勝回数が１</comment>
+		<attribute name="キャラ指定">アナウンス
+シッポなしメッセージ</attribute>
+		<language name="JPN" width="256">仮メッセージ　優勝回数１
+[1:00:トレーナー名:0]の　にゅうじょうだー！！▼</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ　優勝回数１
+[1:00:トレーナー名:0]の　入場だー！！▼</language>
+	</row>
+
+	<row id="msg_wbt_player_title_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>優勝回数が３以上</comment>
+		<attribute name="キャラ指定">アナウンス
+シッポなしメッセージ</attribute>
+		<language name="JPN" width="256">仮メッセージ　優勝回数３
+[1:00:トレーナー名:0]の　にゅうじょうだー！！▼</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ　優勝回数３
+[1:00:トレーナー名:0]の　入場だー！！▼</language>
+	</row>
+
+	<row id="msg_wbt_player_title_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>優勝回数が５以上</comment>
+		<attribute name="キャラ指定">アナウンス
+シッポなしメッセージ</attribute>
+		<language name="JPN" width="256">仮メッセージ　優勝回数５
+[1:00:トレーナー名:0]の　にゅうじょうだー！！▼</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ　優勝回数５
+[1:00:トレーナー名:0]の　入場だー！！▼</language>
+	</row>
+
+	<row id="msg_wbt_player_title_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>優勝回数が５以上</comment>
+		<attribute name="キャラ指定">アナウンス
+シッポなしメッセージ</attribute>
+		<language name="JPN" width="256">仮メッセージ　優勝回数５
+[1:00:トレーナー名:0]の　にゅうじょうだー！！▼</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ　優勝回数５
+[1:00:トレーナー名:0]の　入場だー！！▼</language>
+	</row>
+
+	<row id="msg_wbt_player_title_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>優勝回数が５以上</comment>
+		<attribute name="キャラ指定">アナウンス
+シッポなしメッセージ</attribute>
+		<language name="JPN" width="256">仮メッセージ　優勝回数５
+[1:00:トレーナー名:0]の　にゅうじょうだー！！▼</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ　優勝回数５
+[1:00:トレーナー名:0]の　入場だー！！▼</language>
+	</row>
+
+	<row id="msg_wbt_player_title_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>優勝回数が５以上</comment>
+		<attribute name="キャラ指定">アナウンス
+シッポなしメッセージ</attribute>
+		<language name="JPN" width="256">仮メッセージ　優勝回数５
+[1:00:トレーナー名:0]の　にゅうじょうだー！！▼</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ　優勝回数５
+[1:00:トレーナー名:0]の　入場だー！！▼</language>
+	</row>
+
+	<row id="msg_wbt_player_title_08" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>優勝回数が５以上</comment>
+		<attribute name="キャラ指定">アナウンス
+シッポなしメッセージ</attribute>
+		<language name="JPN" width="256">仮メッセージ　優勝回数５
+[1:00:トレーナー名:0]の　にゅうじょうだー！！▼</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ　優勝回数５
+[1:00:トレーナー名:0]の　入場だー！！▼</language>
+	</row>
+
+	<row id="msg_wbt_player_title_09" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>優勝回数が10以上</comment>
+		<attribute name="キャラ指定">アナウンス
+シッポなしメッセージ</attribute>
+		<language name="JPN" width="256">仮メッセージ　優勝回数１０
+[1:00:トレーナー名:0]の　にゅうじょうだー！！▼</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ　優勝回数１０
+[1:00:トレーナー名:0]の　入場だー！！▼</language>
+	</row>
+
+	<row id="msg_wbt_player_title_10" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>優勝回数が10以上</comment>
+		<attribute name="キャラ指定">アナウンス
+シッポなしメッセージ</attribute>
+		<language name="JPN" width="256">仮メッセージ　優勝回数１０
+[1:00:トレーナー名:0]の　にゅうじょうだー！！▼</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ　優勝回数１０
+[1:00:トレーナー名:0]の　入場だー！！▼</language>
+	</row>
+
+	<row id="msg_wbt_player_title_11" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>優勝回数が10以上</comment>
+		<attribute name="キャラ指定">アナウンス
+シッポなしメッセージ</attribute>
+		<language name="JPN" width="256">仮メッセージ　優勝回数１０
+[1:00:トレーナー名:0]の　にゅうじょうだー！！▼</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ　優勝回数１０
+[1:00:トレーナー名:0]の　入場だー！！▼</language>
+	</row>
+
+	<row id="msg_wbt_player_title_12" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>優勝回数が10以上</comment>
+		<attribute name="キャラ指定">アナウンス
+シッポなしメッセージ</attribute>
+		<language name="JPN" width="256">仮メッセージ　優勝回数１０
+[1:00:トレーナー名:0]の　にゅうじょうだー！！▼</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ　優勝回数１０
+[1:00:トレーナー名:0]の　入場だー！！▼</language>
+	</row>
+
+	<row id="msg_wbt_player_title_13" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>優勝回数が10以上</comment>
+		<attribute name="キャラ指定">アナウンス
+シッポなしメッセージ</attribute>
+		<language name="JPN" width="256">仮メッセージ　優勝回数１０
+[1:00:トレーナー名:0]の　にゅうじょうだー！！▼</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ　優勝回数１０
+[1:00:トレーナー名:0]の　入場だー！！▼</language>
+	</row>
+
+	<row id="msg_wbt_player_title_14" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>優勝回数が20以上</comment>
+		<attribute name="キャラ指定">アナウンス
+シッポなしメッセージ</attribute>
+		<language name="JPN" width="256">仮メッセージ　優勝回数２０
+[1:00:トレーナー名:0]の　にゅうじょうだー！！▼</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ　優勝回数２０
+[1:00:トレーナー名:0]の　入場だー！！▼</language>
+	</row>
+
+	<row id="msg_wbt_player_title_15" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>優勝回数が20以上</comment>
+		<attribute name="キャラ指定">アナウンス
+シッポなしメッセージ</attribute>
+		<language name="JPN" width="256">仮メッセージ　優勝回数２０
+[1:00:トレーナー名:0]の　にゅうじょうだー！！▼</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ　優勝回数２０
+[1:00:トレーナー名:0]の　入場だー！！▼</language>
+	</row>
+
+	<row id="msg_wbt_player_title_16" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>優勝回数が20以上</comment>
+		<attribute name="キャラ指定">アナウンス
+シッポなしメッセージ</attribute>
+		<language name="JPN" width="256">仮メッセージ　優勝回数２０
+[1:00:トレーナー名:0]の　にゅうじょうだー！！▼</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ　優勝回数２０
+[1:00:トレーナー名:0]の　入場だー！！▼</language>
+	</row>
+
+	<row id="msg_wbt_player_title_17" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>優勝回数が20以上</comment>
+		<attribute name="キャラ指定">アナウンス
+シッポなしメッセージ</attribute>
+		<language name="JPN" width="256">仮メッセージ　優勝回数２０
+[1:00:トレーナー名:0]の　にゅうじょうだー！！▼</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ　優勝回数２０
+[1:00:トレーナー名:0]の　入場だー！！▼</language>
+	</row>
+
+	<row id="msg_wbt_player_title_18" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>優勝回数が20以上</comment>
+		<attribute name="キャラ指定">アナウンス
+シッポなしメッセージ</attribute>
+		<language name="JPN" width="256">仮メッセージ　優勝回数２０
+[1:00:トレーナー名:0]の　にゅうじょうだー！！▼</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ　優勝回数２０
+[1:00:トレーナー名:0]の　入場だー！！▼</language>
+	</row>
+
+	<row id="msg_wbt_player_title_19" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>優勝回数が30以上</comment>
+		<attribute name="キャラ指定">アナウンス
+シッポなしメッセージ</attribute>
+		<language name="JPN" width="256">仮メッセージ　優勝回数３０
+[1:00:トレーナー名:0]の　にゅうじょうだー！！▼</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ　優勝回数３０
+[1:00:トレーナー名:0]の　入場だー！！▼</language>
+	</row>
+
+	<row id="msg_wbt_player_title_20" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>優勝回数が30以上</comment>
+		<attribute name="キャラ指定">アナウンス
+シッポなしメッセージ</attribute>
+		<language name="JPN" width="256">仮メッセージ　優勝回数３０
+[1:00:トレーナー名:0]の　にゅうじょうだー！！▼</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ　優勝回数３０
+[1:00:トレーナー名:0]の　入場だー！！▼</language>
+	</row>
+
+	<row id="msg_wbt_player_title_21" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>優勝回数が30以上</comment>
+		<attribute name="キャラ指定">アナウンス
+シッポなしメッセージ</attribute>
+		<language name="JPN" width="256">仮メッセージ　優勝回数３０
+[1:00:トレーナー名:0]の　にゅうじょうだー！！▼</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ　優勝回数３０
+[1:00:トレーナー名:0]の　入場だー！！▼</language>
+	</row>
+
+	<row id="msg_wbt_player_title_22" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>優勝回数が30以上</comment>
+		<attribute name="キャラ指定">アナウンス
+シッポなしメッセージ</attribute>
+		<language name="JPN" width="256">仮メッセージ　優勝回数３０
+[1:00:トレーナー名:0]の　にゅうじょうだー！！▼</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ　優勝回数３０
+[1:00:トレーナー名:0]の　入場だー！！▼</language>
+	</row>
+
+	<row id="msg_wbt_player_title_23" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>優勝回数が30以上</comment>
+		<attribute name="キャラ指定">アナウンス
+シッポなしメッセージ</attribute>
+		<language name="JPN" width="256">仮メッセージ　優勝回数３０
+[1:00:トレーナー名:0]の　にゅうじょうだー！！▼</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ　優勝回数３０
+[1:00:トレーナー名:0]の　入場だー！！▼</language>
+	</row>
+
+	<row id="msg_wbt_player_title_24" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>優勝回数が50以上</comment>
+		<attribute name="キャラ指定">アナウンス
+シッポなしメッセージ</attribute>
+		<language name="JPN" width="256">仮メッセージ　優勝回数５０
+[1:00:トレーナー名:0]の　にゅうじょうだー！！▼</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ　優勝回数５０
+[1:00:トレーナー名:0]の　入場だー！！▼</language>
+	</row>
+
+	<row id="msg_wbt_player_title_25" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>優勝回数が50以上</comment>
+		<attribute name="キャラ指定">アナウンス
+シッポなしメッセージ</attribute>
+		<language name="JPN" width="256">仮メッセージ　優勝回数５０
+[1:00:トレーナー名:0]の　にゅうじょうだー！！▼</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ　優勝回数５０
+[1:00:トレーナー名:0]の　入場だー！！▼</language>
+	</row>
+
+	<row id="msg_wbt_player_title_26" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>優勝回数が50以上</comment>
+		<attribute name="キャラ指定">アナウンス
+シッポなしメッセージ</attribute>
+		<language name="JPN" width="256">仮メッセージ　優勝回数５０
+[1:00:トレーナー名:0]の　にゅうじょうだー！！▼</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ　優勝回数５０
+[1:00:トレーナー名:0]の　入場だー！！▼</language>
+	</row>
+
+	<row id="msg_wbt_player_title_27" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>優勝回数が50以上</comment>
+		<attribute name="キャラ指定">アナウンス
+シッポなしメッセージ</attribute>
+		<language name="JPN" width="256">仮メッセージ　優勝回数５０
+[1:00:トレーナー名:0]の　にゅうじょうだー！！▼</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ　優勝回数５０
+[1:00:トレーナー名:0]の　入場だー！！▼</language>
+	</row>
+
+	<row id="msg_wbt_player_title_28" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>優勝回数が50以上</comment>
+		<attribute name="キャラ指定">アナウンス
+シッポなしメッセージ</attribute>
+		<language name="JPN" width="256">仮メッセージ　優勝回数５０
+[1:00:トレーナー名:0]の　にゅうじょうだー！！▼</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ　優勝回数５０
+[1:00:トレーナー名:0]の　入場だー！！▼</language>
+	</row>
+
+	<row id="msg_wbt_player_title_29" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>優勝回数が100以上</comment>
+		<attribute name="キャラ指定">アナウンス
+シッポなしメッセージ</attribute>
+		<language name="JPN" width="256">仮メッセージ　優勝回数１００
+[1:00:トレーナー名:0]の　にゅうじょうだー！▼</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ　優勝回数１００
+[1:00:トレーナー名:0]の　入場だー！▼</language>
+	</row>
+
+	<row id="msg_wbt_player_title_30" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>優勝回数が100以上</comment>
+		<attribute name="キャラ指定">アナウンス
+シッポなしメッセージ</attribute>
+		<language name="JPN" width="256">仮メッセージ　優勝回数１００
+[1:00:トレーナー名:0]の　にゅうじょうだー！▼</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ　優勝回数１００
+[1:00:トレーナー名:0]の　入場だー！▼</language>
+	</row>
+
+	<row id="msg_wbt_player_title_31" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>優勝回数が100以上</comment>
+		<attribute name="キャラ指定">アナウンス
+シッポなしメッセージ</attribute>
+		<language name="JPN" width="256">仮メッセージ　優勝回数１００
+[1:00:トレーナー名:0]の　にゅうじょうだー！▼</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ　優勝回数１００
+[1:00:トレーナー名:0]の　入場だー！▼</language>
+	</row>
+
+	<row id="msg_wbt_player_title_32" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>優勝回数が100以上</comment>
+		<attribute name="キャラ指定">アナウンス
+シッポなしメッセージ</attribute>
+		<language name="JPN" width="256">仮メッセージ　優勝回数１００
+[1:00:トレーナー名:0]の　にゅうじょうだー！▼</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ　優勝回数１００
+[1:00:トレーナー名:0]の　入場だー！▼</language>
+	</row>
+
+	<row id="msg_wbt_player_title_33" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>優勝回数が100以上</comment>
+		<attribute name="キャラ指定">アナウンス
+シッポなしメッセージ</attribute>
+		<language name="JPN" width="256">仮メッセージ　優勝回数１００
+[1:00:トレーナー名:0]の　にゅうじょうだー！▼</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ　優勝回数１００
+[1:00:トレーナー名:0]の　入場だー！▼</language>
 	</row>
 
 	<flowchart-group-list>
