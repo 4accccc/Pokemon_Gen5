@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-11T19:17:29"/>
+	<create user="matsumiya" host="W00224" date="2011-04-11T19:48:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1301" top="136" right="2006" bottom="764" maximized="no" rayout="Vertical2">
+	<dialog left="1301" top="136" right="2005" bottom="764" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="529"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="542"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="4" index="0" style="0000" width="696"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -304,32 +304,40 @@
 ジムリーダー
 チェレン</attribute>
 		<language name="JPN" width="256">？？？『チャレンジャーだね！▼</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN_KANJI" width="256">？？？『チャレンジャーだね！▼</language>
 	</row>
 
 	<row id="msg_c12gym0201_swleader1_02">
 		<comment>♂
-・</comment>
+・続けてswleader1_03</comment>
 		<attribute name="キャラ指定">SWLEADER1
 ジムリーダー
 チェレン</attribute>
 		<language name="JPN" width="256">ヒオウギシティの
 ポケモンジムへ　ようこそ！▼
 ぼくは　チェレン
-ここの　ジムリーダーです！▼
-・説明</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+ジムリーダーを　しています！▼
+……ん？　している　というよりは
+なりました　というべきかな？▼</language>
+		<language name="JPN_KANJI" width="256">ヒオウギシティの
+ポケモンジムへ　ようこそ！▼
+ぼくは　チェレン
+ジムリーダーを　しています！▼
+……ん？　している　というよりは
+なりました　というべきかな？▼</language>
 	</row>
 
 	<row id="msg_c12gym0201_swleader1_03">
 		<comment>♂
-・</comment>
+・上を向いてメッセージ表示
+・続けてswleader1_04</comment>
 		<attribute name="キャラ指定">SWLEADER1
 ジムリーダー
 チェレン</attribute>
 		<language name="JPN" width="256">チャレンジャーを　むかえるよ
 ふたりとも　もちばに　いどうして▼</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN_KANJI" width="256">チャレンジャーを　むかえるよ
+ふたりとも　もちばに　いどうして▼</language>
 	</row>
 
 	<row id="msg_c12gym0201_swleader1_04" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
@@ -343,9 +351,9 @@
 ジムリーダー
 チェレン</attribute>
 		<language name="JPN" width="256">あの　ふたりに　かてたなら
-ジムリーダーである
-ボクが　おあいてします</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+ぼくが　おあいて　しますよ</language>
+		<language name="JPN_KANJI" width="256">あの　ふたりに　かてたなら
+ぼくが　おあいて　しますよ</language>
 	</row>
 
 	<row id="msg_c12gym0201_swleader1_05">
@@ -354,8 +362,10 @@
 		<attribute name="キャラ指定">SWLEADER1
 ジムリーダー
 チェレン</attribute>
-		<language name="JPN" width="256">まだ～</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">ぼくと　しょうぶ　したいなら
+あの　ふたりに　かってくださいね</language>
+		<language name="JPN_KANJI" width="256">ぼくと　しょうぶ　したいなら
+あの　ふたりに　かってくださいね</language>
 	</row>
 
 	<row id="msg_c12gym0201_swleader1_06">
@@ -365,9 +375,18 @@
 		<attribute name="キャラ指定">SWLEADER1
 ジムリーダー
 チェレン</attribute>
-		<language name="JPN" width="256">ジムリーダー　チェレン
-はじめての～▼</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">きみにとって　はじめての
+ジムちょうせん　であるように▼
+ぼくにとっても　ジムリーダーとして
+はじめての　ポケモンしょうぶ！
+おたがい　くいが　のこらないよう
+ベストを　つくそう！▼</language>
+		<language name="JPN_KANJI" width="256">きみにとって　はじめての
+ジムちょうせん　であるように▼
+ぼくにとっても　ジムリーダーとして
+はじめての　ポケモンしょうぶ！
+おたがい　くいが　のこらないよう
+ベストを　つくそう！▼</language>
 	</row>
 
 	<row id="msg_c12gym0201_swleader1_07">
@@ -377,9 +396,19 @@
 ジムリーダー
 チェレン</attribute>
 		<language name="JPN" width="256">ジムリーダーとして
-さいしょの　ちょうせんしゃが
-きみで　よかった</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+さいしょの　ちょうせんしゃが▽
+きみで　よかった……▼
+すなおに　そう　おもえる
+すばらしい　たたかい　だったよ▼
+そんな　ポケモンと　きみの
+つよさを　たたえるために　これを！▼</language>
+		<language name="JPN_KANJI" width="256">ジムリーダーとして
+さいしょの　ちょうせんしゃが▽
+きみで　よかった……▼
+すなおに　そう　おもえる
+すばらしい　たたかい　だったよ▼
+そんな　ポケモンと　きみの
+つよさを　たたえるために　これを！▼</language>
 	</row>
 
 	<row id="msg_c12gym0201_swleader1_08">
@@ -405,36 +434,70 @@
 		<language name="JPN" width="256">きみの　きねんすべき　さいしょの
 ジムバッジは　ベーシックバッジ！▼
 その　バッジを　もっていれば
-ひとと　こうかんした▽
-ポケモンでも　レベル２０までなら▽
+レベル２０までの　ポケモンなら▽
+ひとと　こうかんした　ポケモンでも▽
 めいれいを　きいてくれるよ▼
 そして　これも　うけとってほしい！▼</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN_KANJI" width="256">きみの　きねんすべき　さいしょの
+ジムバッジは　ベーシックバッジ！▼
+その　バッジを　もっていれば
+レベル２０までの　ポケモンなら▽
+ひとと　こうかんした　ポケモンでも▽
+めいれいを　きいてくれるよ▼
+そして　これも　うけとってほしい！▼</language>
 	</row>
 
 	<row id="msg_c12gym0201_swleader1_10">
 		<comment>♂
-・アイテム入手処理後</comment>
+・アイテム入手処理後
+・続けてswleader1_11</comment>
 		<attribute name="キャラ指定">SWLEADER1
 ジムリーダー
 チェレン</attribute>
-		<language name="JPN" width="256">ふるいたてる！
-・わざの説明
+		<language name="JPN" width="256">わざマシン８３を　つかうと
+ポケモンに　ふるいたてるの　わざを▽
+おぼえさせることが　できる▼
+そして　たたかっているときに
+「ふるいたてる」を　つかうと▽
+こうげきと　とくこうが　あがるよ！▼
 ちなみに　わざマシンは
-なんどでも　つかえる</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+なんどでも　つかえるからね▼</language>
+		<language name="JPN_KANJI" width="256">わざマシン８３を　つかうと
+ポケモンに　ふるいたてるの　わざを▽
+おぼえさせることが　できる▼
+そして　たたかっているときに
+「ふるいたてる」を　つかうと▽
+こうげきと　とくこうが　あがるよ！▼
+ちなみに　わざマシンは
+なんどでも　つかえるからね</language>
 	</row>
 
-	<row id="msg_c12gym0201_swleader1_11">
+	<row id="msg_c12gym0201_swleader1_11" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
-・表示後に再度会話</comment>
+・クリアまで繰り返し（暫定）</comment>
 		<attribute name="キャラ指定">SWLEADER1
 ジムリーダー
 チェレン</attribute>
-		<language name="JPN" width="256">ポケモンジム
-ジムバッジ
-ポケモンリーグ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">この　イッシュちほう　には
+８つの　ポケモンジム▽
+８つの　ジムバッジが　ある▼
+きみも　ポケモントレーナーなら
+すべての　ジムバッジを　あつめなよ！▼
+そのほうが　ポケモンずかんの
+ページも　うまっていくからね！▼
+うん！　ぼくも　２ねんほどまえ
+ポケモンずかんを　もって▽
+ベルたちと　いっしょに　たびしたんだ</language>
+		<language name="JPN_KANJI" width="256">この　イッシュちほう　には
+８つの　ポケモンジム▽
+８つの　ジムバッジが　ある▼
+きみも　ポケモントレーナーなら
+すべての　ジムバッジを　あつめなよ！▼
+そのほうが　ポケモンずかんの
+ページも　うまっていくからね！▼
+うん！　ぼくも　２ねんほどまえ
+ポケモンずかんを　もって▽
+ベルたちと　いっしょに　たびしたんだ</language>
 	</row>
 
 	<row id="msg_c12gym0201_swleader1_12" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
@@ -451,6 +514,7 @@
 
 	<row id="msg_c12gym0201_boy2_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
+・pos（local 21、19）左向き
 ・戦闘前</comment>
 		<attribute name="キャラ指定">BOY2
 トレーナーID：tanpan_19</attribute>
@@ -458,7 +522,10 @@
 ジムの　トレーナーに　なった　ぼく！▼
 その　つよさを
 きみに　おしえてあげるよ！▼</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN_KANJI" width="256">チェレンさんに　みこまれて
+ジムの　トレーナーに　なった　ぼく！▼
+その　つよさを
+きみに　おしえてあげるよ！▼</language>
 	</row>
 
 	<row id="msg_c12gym0201_boy2_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -467,8 +534,10 @@
 　ジムリーダーに勝利する前</comment>
 		<attribute name="キャラ指定">BOY2
 トレーナーID：tanpan_19</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">もうひとりの　おんなのこに　かてれば
+ジムリーダーと　しょうぶ　できるよ！</language>
+		<language name="JPN_KANJI" width="256">もうひとりの　おんなのこに　かてれば
+ジムリーダーと　しょうぶ　できるよ！</language>
 	</row>
 
 	<row id="msg_c12gym0201_boy2_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -477,17 +546,26 @@
 　ジムリーダーに勝利したあと</comment>
 		<attribute name="キャラ指定">BOY2
 トレーナーID：tanpan_19</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">やっぱり　きみのように
+たびをして　きたえた　ほうが▽
+つよくなれるのかな？</language>
+		<language name="JPN_KANJI" width="256">やっぱり　きみのように
+たびをして　きたえた　ほうが▽
+つよくなれるのかな？</language>
 	</row>
 
 	<row id="msg_c12gym0201_girl2_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
+・pos（local 9、9）右向き
 ・戦闘前</comment>
 		<attribute name="キャラ指定">GIRL2
 トレーナーID：mini_15</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">まだ　ジムの　トレーナーに
+なりたてだけど　チェレンさんから▽
+まなんだことを　おしえてあげる！▼</language>
+		<language name="JPN_KANJI" width="256">まだ　ジムの　トレーナーに
+なりたてだけど　チェレンさんから▽
+まなんだことを　おしえてあげる！▼</language>
 	</row>
 
 	<row id="msg_c12gym0201_girl2_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -496,8 +574,10 @@
 　ジムリーダーに勝利する前</comment>
 		<attribute name="キャラ指定">GIRL2
 トレーナーID：mini_15</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">まっ　ちょっとは　やるわね！
+だけど　もうひとりに　かてるの？</language>
+		<language name="JPN_KANJI" width="256">まっ　ちょっとは　やるわね！
+だけど　もうひとりに　かてるの？</language>
 	</row>
 
 	<row id="msg_c12gym0201_girl2_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -506,8 +586,12 @@
 　ジムリーダーに勝利したあと</comment>
 		<attribute name="キャラ指定">GIRL2
 トレーナーID：mini_15</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">あたしは　チェレンさんに　いろいろ
+おそわって　つよくなる！▽
+ひとそれぞれの　やりかたが　あるのよ</language>
+		<language name="JPN_KANJI" width="256">あたしは　チェレンさんに　いろいろ
+おそわって　つよくなる！▽
+ひとそれぞれの　やりかたが　あるのよ</language>
 	</row>
 
 	<row id="msg_c12gym0201_glasses_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
