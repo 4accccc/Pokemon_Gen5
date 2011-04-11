@@ -54,7 +54,8 @@ EVENT_START ev_wbt_hall_01
 	
 		//マップチェンジ
 		_MAP_CHANGE( ZONE_ID_D05R0101, 15, 6, DIR_UP )
-    _WBT_SYSTEM_END()   //とりあえず・受付で後処理が必要な場合は移動する
+		
+		_WBT_SYSTEM_END()   //とりあえず・受付で後処理が必要な場合は移動する
 	
 	//勝った場合
 	ELSE
@@ -70,7 +71,8 @@ EVENT_START ev_wbt_hall_01
 	
 			//マップチェンジ
 			_MAP_CHANGE( ZONE_ID_D05R0101, 15, 6, DIR_UP )
-      _WBT_SYSTEM_END()   //とりあえず・受付で後処理が必要な場合は移動する
+			
+			_WBT_SYSTEM_END()   //とりあえず・受付で後処理が必要な場合は移動する
 		
 		//勝った場合
 		ELSE
@@ -82,19 +84,34 @@ EVENT_START ev_wbt_hall_01
       IF $SCWK_ANSWER != SCR_BATTLE_RESULT_WIN THEN
 			
 				//決勝戦の対戦者名を格納する
-				//_WBT_SET_ENEMY_NAME( 0,3 )
+				_WBT_SET_ENEMY_NAME( 0 )
 			
-				//優勝は……対戦者だー！
+				//優勝は……
 				_PLAINWIN_MSG_UP( msg_wbt_announce_05 )
 				_PLAINWIN_CLOSE()
 			
 				//対戦者側に花吹雪演出
+				_WBT_GMK_VISION_CHANGE(SCR_WBT_VISION_WIN_ENEMY)
+				_WBT_GMK_WIN_EFFECT_START()
+				
+				_TIME_WAIT( 120 )
 				
 				//歓声SE再生
 				
+				//対戦者だー！
+				_PLAINWIN_MSG_UP( msg_wbt_announce_09 )
+				_PLAINWIN_CLOSE()
+				
+				//トーナメント名をセット
+				_WBT_SET_TOURNAMENT_NAME( 0 )
+				
+				//終了の挨拶
+				_PLAINWIN_MSG_UP( msg_wbt_announce_10 )
+				_PLAINWIN_CLOSE()
+				
 				//マップチェンジ
 				_MAP_CHANGE( ZONE_ID_D05R0101, 15, 6, DIR_UP )
-        _WBT_SYSTEM_END()   //とりあえず・受付で後処理が必要な場合は移動する
+				_WBT_SYSTEM_END()   //とりあえず・受付で後処理が必要な場合は移動する
 			
 			//勝った場合
 			ELSE
@@ -105,19 +122,32 @@ EVENT_START ev_wbt_hall_01
 				//決勝戦の対戦者名を格納する
 				_PLAYER_NAME(0)
 			
-				//優勝は……プレイヤーだー！
+				//優勝は……
 				_PLAINWIN_MSG_UP( msg_wbt_announce_05 )
 				_PLAINWIN_CLOSE()
-				//対戦者側に花吹雪演出
 				
-        //勝った場合
-        _WBT_GMK_VISION_CHANGE(SCR_WBT_VISION_WIN_PLAYER)
-        _WBT_GMK_WIN_EFFECT_START()
+				//プレイヤー側に花吹雪演出
+				_WBT_GMK_VISION_CHANGE(SCR_WBT_VISION_WIN_PLAYER)
+				_WBT_GMK_WIN_EFFECT_START()
+				
 				//歓声SE再生
+				
+				_TIME_WAIT( 120 )
+				
+				//プレイヤーだー！
+				_PLAINWIN_MSG_UP( msg_wbt_announce_09 )
+				_PLAINWIN_CLOSE()
+				
+				//トーナメント名をセット
+				_WBT_SET_TOURNAMENT_NAME( 0 )
+				
+				//終了の挨拶
+				_PLAINWIN_MSG_UP( msg_wbt_announce_10 )
+				_PLAINWIN_CLOSE()
 				
 				//マップチェンジ
 				_MAP_CHANGE( ZONE_ID_D05R0101, 15, 6, DIR_UP )
-        _WBT_SYSTEM_END()   //とりあえず・受付で後処理が必要な場合は移動する
+				_WBT_SYSTEM_END()   //とりあえず・受付で後処理が必要な場合は移動する
 				
 			ENDIF
 			
@@ -133,11 +163,11 @@ EVENT_END
 //	１回戦用　ステージ入場アニメ
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_player_1st_in
-	_ANIME_DATA	AC_WALK_L_8F,7
+	_ANIME_DATA	AC_WALK_L_8F,6
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_enemy_1st_in
-	_ANIME_DATA	AC_WALK_R_8F,7
+	_ANIME_DATA	AC_WALK_R_8F,6
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -166,7 +196,7 @@ EVENT_START		ev_debug_wbt_second_game
 	_CAMERA_PURGE()		//カメラのバインドを解く
 
 	//カメラ操作　ステージ中央にカメラを合わせる
-	_CAMERA_MOVE( 4056,0,970752,1499136,131103,1015808,1 )	//一番最後の引数は移動にかかるフレーム数
+	_CAMERA_MOVE( 2648,0,1069056,1515520,131103,962560,1 )	//一番最後の引数は移動にかかるフレーム数
 	_CAMERA_WAIT_MOVE()
 
 	_CALL ev_second_game
@@ -224,9 +254,12 @@ _CAMERA_START()		//カメラ操作開始
 _CAMERA_PURGE()		//カメラのバインドを解く
 
 //カメラ操作　ステージ中央にカメラを合わせる
-_CAMERA_MOVE( 4056,0,970752,1499136,131103,1015808,1 )	//一番最後の引数は移動にかかるフレーム数
+_CAMERA_MOVE( 2648,0,1069056,1515520,131103,962560,1 )	//一番最後の引数は移動にかかるフレーム数
 _CAMERA_WAIT_MOVE()
-	
+
+//背景ビジョンにロゴ表示
+_WBT_GMK_VISION_CHANGE(SCR_WBT_VISION_ALL)
+
 //ブラックイン開始
 _MAP_FADE_BLACK_IN_SLOW()
 	
@@ -242,7 +275,7 @@ _OBJ_ANIME_WAIT()
 
 //１回戦の対戦者名を格納する
 _WBT_SET_ENEMY_NAME( 0 )
-	
+
 //プレイヤー名を格納する
 _PLAYER_NAME( 1 )
 	
@@ -250,12 +283,29 @@ _PLAYER_NAME( 1 )
 _PLAINWIN_MSG_UP( msg_wbt_announce_01 )
 _PLAINWIN_CLOSE()
 
+//背景ビジョンにVS表示
+_WBT_GMK_VISION_CHANGE(SCR_WBT_VISION_VS)
+
+_TIME_WAIT( 60 )
+
 //１回戦対戦前メッセージの表示　ＭＳＧ表示専用コマンド
 _WBT_TRAINER_MSG( SCR_WBT_TRMSG_1ST, MMDL_ID_EVENTOBJ_00 )
 _BALLOONWIN_CLOSE()
 	
 //戦闘開始　バトル専用コマンド
 _WBT_TRAINER_BATTLE( SCWK_ANSWER )
+
+//背景ビジョンにロゴ表示
+_WBT_GMK_VISION_CHANGE(SCR_WBT_VISION_ALL)
+
+//カメラ移動・中央固定　
+_CAMERA_START()		//カメラ操作開始
+_CAMERA_PURGE()		//カメラのバインドを解く
+
+//カメラ操作　ステージ中央にカメラを合わせる
+_CAMERA_MOVE( 2648,0,1069056,1515520,131103,962560,1 )	//一番最後の引数は移動にかかるフレーム数
+_CAMERA_WAIT_MOVE()
+
 _MAP_FADE_BLACK_IN_FORCE()  //仮：乱用していいコマンドではない
 _MAP_FADE_END_CHECK()
 //結果チェック
@@ -263,26 +313,44 @@ _MAP_FADE_END_CHECK()
 IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
 //勝った場合
 		
-  //対戦者・主人公勝ちメッセージ表示　　　　　　
-  _WBT_TRAINER_MSG( SCR_WBT_TRMSG_PLAYER_WIN, MMDL_ID_EVENTOBJ_00 )
-  _BALLOONWIN_CLOSE()
+	//対戦者・主人公勝ちメッセージ表示　　　　　　
+	_WBT_TRAINER_MSG( SCR_WBT_TRMSG_PLAYER_WIN, MMDL_ID_EVENTOBJ_00 )
+	_BALLOONWIN_CLOSE()
 
-  //対戦者退場
-  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_enemy_1st_out )
-  _OBJ_ANIME_WAIT()
+	//プレイヤー名を格納
+	_PLAYER_NAME(0)
+
+	//第１回戦を制したのは！
+	_PLAINWIN_MSG_UP( msg_wbt_announce_06 )
+	_PLAINWIN_CLOSE()
+
+	//対戦者退場
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_enemy_1st_out )
+	_OBJ_ANIME_WAIT()
+
+	//プレイヤー退場
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_1st_out )
+	_OBJ_ANIME_WAIT()
 
   //対戦者OBJの削除
   _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
 
 ELSE
-//負けた場合
-  //対戦負けメッセージの表示　ＭＳＧ表示専用コマンド
-  _WBT_TRAINER_MSG( SCR_WBT_TRMSG_PLAYER_LOSE, MMDL_ID_EVENTOBJ_00 )
-  _BALLOONWIN_CLOSE()
-  
-  //プレイヤー退場アニメ
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_lose )
-  _OBJ_ANIME_WAIT()
+	//負けた場合
+	//対戦負けメッセージの表示　ＭＳＧ表示専用コマンド
+	_WBT_TRAINER_MSG( SCR_WBT_TRMSG_PLAYER_LOSE, MMDL_ID_EVENTOBJ_00 )
+	_BALLOONWIN_CLOSE()
+ 
+	//１回戦の対戦者名を格納する
+	_WBT_SET_ENEMY_NAME( 0 )
+
+	//第１回戦を制したのは！
+	_PLAINWIN_MSG_UP( msg_wbt_announce_06 )
+	_PLAINWIN_CLOSE()
+ 
+	//プレイヤー退場アニメ
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_lose )
+	_OBJ_ANIME_WAIT()
 
 ENDIF
 
@@ -294,6 +362,10 @@ _RET
 /*		ＷＢＴ２回戦										  */
 /**************************************************************/
 ev_second_game:
+
+//ほかの対戦結果は
+_PLAINWIN_MSG_UP( msg_wbt_announce_08 )
+_PLAINWIN_CLOSE()
 
 _MAP_FADE_BLACK_OUT()
 _MAP_FADE_END_CHECK()
@@ -308,11 +380,20 @@ _WBT_GET_ENEMY_MMDL_CODE( OBJCHRWORK0 )
 _OBJ_ADD_EX( 14,15,DIR_RIGHT,MMDL_ID_EVENTOBJ_00,WKOBJCODE00,MV_DMY )
 _OBJ_POS_CHANGE( MMDL_ID_PLAYER, 31, 0, 15, DIR_LEFT )
 
+//カメラ移動・中央固定　
+_CAMERA_START()		//カメラ操作開始
+_CAMERA_PURGE()		//カメラのバインドを解く
+
+//カメラ操作　ステージ中央にカメラを合わせる
+_CAMERA_MOVE( 2648,0,1069056,1515520,131103,962560,1 )	//一番最後の引数は移動にかかるフレーム数
+_CAMERA_WAIT_MOVE()
+
+//背景ビジョンにロゴ表示
+_WBT_GMK_VISION_CHANGE(SCR_WBT_VISION_ALL)
+
 //暗転復帰
-//_MAP_FADE_BLACK_IN_SLOW()
 _MAP_FADE_BLACK_IN()
 _MAP_FADE_END_CHECK()
-
 
 //歓声SE再生
 //_SE_PLAY()
@@ -348,26 +429,53 @@ _PLAYER_NAME( 1 )
 _PLAINWIN_MSG_UP( msg_wbt_announce_02 )
 _PLAINWIN_CLOSE()
 
+//背景ビジョンにVS表示
+_WBT_GMK_VISION_CHANGE(SCR_WBT_VISION_VS)
+
 //２回戦対戦前メッセージの表示　ＭＳＧ表示専用コマンド
 _WBT_TRAINER_MSG( SCR_WBT_TRMSG_2ND, MMDL_ID_EVENTOBJ_00 )
 _BALLOONWIN_CLOSE()
 
 //戦闘開始　バトル専用コマンド
 _WBT_TRAINER_BATTLE( SCWK_ANSWER )
+
+//背景ビジョンにロゴ表示
+_WBT_GMK_VISION_CHANGE(SCR_WBT_VISION_ALL)
+
+//カメラ移動・中央固定　
+_CAMERA_START()		//カメラ操作開始
+_CAMERA_PURGE()		//カメラのバインドを解く
+
+//カメラ操作　ステージ中央にカメラを合わせる
+_CAMERA_MOVE( 2648,0,1069056,1515520,131103,962560,1 )	//一番最後の引数は移動にかかるフレーム数
+_CAMERA_WAIT_MOVE()
+
 _MAP_FADE_BLACK_IN_FORCE()  //仮：乱用していいコマンドではない
 _MAP_FADE_END_CHECK()
+
 //結果チェック
-//_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
 //勝った場合
 		
-  //対戦者・主人公勝ちメッセージ表示　　　　　　
-  _WBT_TRAINER_MSG( SCR_WBT_TRMSG_PLAYER_WIN, MMDL_ID_EVENTOBJ_00 )
-  _BALLOONWIN_CLOSE()
+	//対戦者・主人公勝ちメッセージ表示　　　　　　
+	_WBT_TRAINER_MSG( SCR_WBT_TRMSG_PLAYER_WIN, MMDL_ID_EVENTOBJ_00 )
+	_BALLOONWIN_CLOSE()
 
-  //対戦者退場
-  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_enemy_2nd_out )
-  _OBJ_ANIME_WAIT()
+	//プレイヤー名を格納
+	_PLAYER_NAME(0)
+
+	//第２回戦を制したのは！
+	_PLAINWIN_MSG_UP( msg_wbt_announce_07 )
+	_PLAINWIN_CLOSE()
+
+	//対戦者退場
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_enemy_2nd_out )
+	_OBJ_ANIME_WAIT()
+	
+	//プレイヤー退場
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_2nd_out )
+	_OBJ_ANIME_WAIT()
 
   //対戦者OBJの削除
   _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
@@ -377,6 +485,13 @@ ELSE
   //対戦負けメッセージの表示　ＭＳＧ表示専用コマンド
   _WBT_TRAINER_MSG( SCR_WBT_TRMSG_PLAYER_LOSE, MMDL_ID_EVENTOBJ_00 )
   _BALLOONWIN_CLOSE()
+
+	//２回戦の対戦者名を格納する
+	_WBT_SET_ENEMY_NAME( 0 )
+
+	//第２回戦を制したのは！
+	_PLAINWIN_MSG_UP( msg_wbt_announce_07 )
+	_PLAINWIN_CLOSE()
 
   //プレイヤー退場アニメ
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_lose )
@@ -393,15 +508,19 @@ _ANIME_LABEL	anm_enemy_1st_out
 	_ANIME_DATA	AC_WALK_L_8F,7
 	_ANIME_DATA	ACMD_END,0
 
+_ANIME_LABEL	anm_player_1st_out
+	_ANIME_DATA	AC_WALK_R_8F,7
+	_ANIME_DATA	ACMD_END,0
+
 //--------------------------------------------------------------------
 //	２回戦用　ステージ入場アニメ
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_player_2nd_in
-	_ANIME_DATA	AC_WALK_L_8F,7
+	_ANIME_DATA	AC_WALK_L_8F,6
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_enemy_2nd_in
-	_ANIME_DATA	AC_WALK_R_8F,7
+	_ANIME_DATA	AC_WALK_R_8F,6
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
@@ -409,7 +528,7 @@ _ANIME_LABEL	anm_enemy_2nd_in
 /**************************************************************/
 ev_first_yell:
 
-//_WBT_GET_VICTORY_COUNT( LWK_WIN_COUNT )
+_WBT_GET_VICTORY_COUNT( LWK_WIN_COUNT )
 
 //優勝回数が１以下の場合
 IF $LWK_WIN_COUNT <= 1 THEN
@@ -472,27 +591,30 @@ IF $LWK_RND <= LWK_PROBABILITY THEN
 	$LWK_YELL_POSX = 1
 	$LWK_YELL_POSY = 1
 
+	//プレイヤー名を格納
+	_PLAYER_NAME(0)
+
 	SWITCH $LWK_MSG
 	CASE 0 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		_SUBWIN_MSG( msg_wbt_yell_2nd_01 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
 	CASE 1 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		_SUBWIN_MSG( msg_wbt_yell_2nd_02 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
 	CASE 2 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		_SUBWIN_MSG( msg_wbt_yell_2nd_03 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
 	CASE 3 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		_SUBWIN_MSG( msg_wbt_yell_2nd_04 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
 	CASE 4 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		_SUBWIN_MSG( msg_wbt_yell_2nd_05 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
 	CASE 5 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		_SUBWIN_MSG( msg_wbt_yell_2nd_06 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
 	CASE 6 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		_SUBWIN_MSG( msg_wbt_yell_2nd_07 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
 	CASE 7 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		_SUBWIN_MSG( msg_wbt_yell_2nd_08 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
 	CASE 8 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		_SUBWIN_MSG( msg_wbt_yell_2nd_09 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
 	CASE 9 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		_SUBWIN_MSG( msg_wbt_yell_2nd_10 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
 	ENDSWITCH
 	
 	//========================================/
@@ -517,27 +639,30 @@ IF $LWK_RND <= LWK_PROBABILITY THEN
 	$LWK_YELL_POSX = 20
 	$LWK_YELL_POSY = 20
 
+	//対戦者名を格納
+	_WBT_SET_ENEMY_NAME( 0 )
+
 	SWITCH $LWK_MSG
 	CASE 0 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		_SUBWIN_MSG( msg_wbt_yell_2nd_01 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
 	CASE 1 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		_SUBWIN_MSG( msg_wbt_yell_2nd_02 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
 	CASE 2 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		_SUBWIN_MSG( msg_wbt_yell_2nd_03 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
 	CASE 3 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		_SUBWIN_MSG( msg_wbt_yell_2nd_04 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
 	CASE 4 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		_SUBWIN_MSG( msg_wbt_yell_2nd_05 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
 	CASE 5 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		_SUBWIN_MSG( msg_wbt_yell_2nd_06 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
 	CASE 6 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		_SUBWIN_MSG( msg_wbt_yell_2nd_07 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
 	CASE 7 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		_SUBWIN_MSG( msg_wbt_yell_2nd_08 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
 	CASE 8 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		_SUBWIN_MSG( msg_wbt_yell_2nd_09 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
 	CASE 9 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		_SUBWIN_MSG( msg_wbt_yell_2nd_10 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
 	ENDSWITCH
 
 	//========================================/
@@ -559,12 +684,19 @@ _RET
 /**************************************************************/
 ev_final_game:
 
+//ほかの対戦結果は
+_PLAINWIN_MSG_UP( msg_wbt_announce_08 )
+_PLAINWIN_CLOSE()
+
 _MAP_FADE_BLACK_OUT()
 _MAP_FADE_END_CHECK()
+
 //決勝戦前のトーナメントリスト表示
 _WBT_LIST_CALL( SCR_WBT_LIST_2ND_RESULT )
+
 //WBTシステムに状態を通知：決勝戦
 _WBT_SYSTEM_SET_STAGE( SCR_WBT_STAGE_FINAL )
+
 //対戦者・プレイヤー指定座標に表示
 _WBT_GET_ENEMY_MMDL_CODE( OBJCHRWORK0 )
 _OBJ_ADD_EX( 3,15,DIR_RIGHT,MMDL_ID_EVENTOBJ_00,WKOBJCODE00,MV_DMY )
@@ -577,23 +709,20 @@ _OBJ_ANIME_WAIT()
 
 _WBT_GMK_VISION_CHANGE(SCR_WBT_VISION_ALL)
 //暗転復帰
-//_MAP_FADE_BLACK_IN_SLOW()
-_MAP_FADE_BLACK_IN()
-_MAP_FADE_END_CHECK()
 
-//カメラ移動
+//カメラ移動・中央固定　
 _CAMERA_START()		//カメラ操作開始
 _CAMERA_PURGE()		//カメラのバインドを解く
 
 //カメラ操作　プレイヤー入場口にカメラを合わせる
-_CAMERA_MOVE( 4312,128,1101824,2793472,0,1011712,1 )	//一番最後の引数は移動にかかるフレーム数
+_CAMERA_MOVE( 3544,0,970752,2801664,131103,1081344,1 )	//一番最後の引数は移動にかかるフレーム数
 _CAMERA_WAIT_MOVE()
+
+_MAP_FADE_BLACK_IN()
+_MAP_FADE_END_CHECK()
 
 //歓声SE再生
 //_SE_PLAY()
-
-//_DISP_FADE_END_CHECK()
-
 //_SE_WAIT()
 
 //プレイヤーの前口上メッセージ表示
@@ -608,12 +737,10 @@ _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_3rd_in )
 _WBT_GMK_EFFECT_START(SCR_WBT_EFFECT_NORMAL,SCR_WBT_EFFECT_POS_R)
 
 //カメラプレイヤー追従
-_CAMERA_MOVE( 4056,0,970752,1499136,131103,1015808,144 )		//一番最後の引数は移動にかかるフレーム数
+_CAMERA_MOVE( 2648,0,1069056,1515520,131103,962560,152 )		//一番最後の引数は移動にかかるフレーム数
 
 //声援表示
 _CALL ev_yell_final_player
-
-
 
 IF $LOCALWORK5 == 1 THEN 
 	//サブウィンクローズ
@@ -639,7 +766,7 @@ _PLAINWIN_MSG_UP( msg_wbt_announce_04 )
 _PLAINWIN_CLOSE()
 
 //カメラを対戦者側に移動
-_CAMERA_MOVE( 4312,128,1101824,229376,0,1015808,30 )	//一番最後の引数は移動にかかるフレーム数
+_CAMERA_MOVE( 3544,0,970752,208896,131103,1081344,30 )	//一番最後の引数は移動にかかるフレーム数
 _CAMERA_WAIT_MOVE()
 
 //対戦者の前口上メッセージ表示　ＭＳＧ表示専用コマンド
@@ -655,7 +782,7 @@ _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_enemy_3rd_in )
 _WBT_GMK_EFFECT_START(SCR_WBT_EFFECT_NORMAL,SCR_WBT_EFFECT_POS_L)
 
 //カメラ対戦者追従
-_CAMERA_MOVE( 4056,0,970752,1499136,131103,1015808,144 )	//一番最後の引数は移動にかかるフレーム数
+_CAMERA_MOVE( 2648,0,1069056,1515520,131103,962560,152 )	//一番最後の引数は移動にかかるフレーム数
 
 //声援表示
 _CALL ev_yell_final_enemy
@@ -682,7 +809,6 @@ _WBT_SET_ENEMY_NAME( 0 )
 //プレイヤー名を格納する
 _PLAYER_NAME( 1 )
 
-
 //決勝戦！　プレイヤーｖｓ対戦者！
 _PLAINWIN_MSG_DOWN( msg_wbt_announce_03 )
 _PLAINWIN_CLOSE()
@@ -695,9 +821,21 @@ _BALLOONWIN_CLOSE()
 
 //戦闘開始　バトル専用コマンド
 _WBT_TRAINER_BATTLE( SCWK_ANSWER )
+
+//背景ビジョンにロゴ表示
 _WBT_GMK_VISION_CHANGE(SCR_WBT_VISION_ALL)
+
+//カメラ移動・中央固定　
+_CAMERA_START()		//カメラ操作開始
+_CAMERA_PURGE()		//カメラのバインドを解く
+
+//カメラ操作　ステージ中央にカメラを合わせる
+_CAMERA_MOVE( 2648,0,1069056,1515520,131103,962560,1 )	//一番最後の引数は移動にかかるフレーム数
+_CAMERA_WAIT_MOVE()
+
 _MAP_FADE_BLACK_IN_FORCE()  //仮：乱用していいコマンドではない
 _MAP_FADE_END_CHECK()
+
 //結果チェック
 //_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
@@ -705,9 +843,6 @@ IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
   _WBT_TRAINER_MSG( SCR_WBT_TRMSG_PLAYER_WIN, MMDL_ID_EVENTOBJ_00 )
   _BALLOONWIN_CLOSE()
 ELSE
-  //負けた場合
-  _WBT_GMK_VISION_CHANGE(SCR_WBT_VISION_WIN_ENEMY)
-  _WBT_GMK_WIN_EFFECT_START()
   //対戦負けメッセージの表示　ＭＳＧ表示専用コマンド
   _WBT_TRAINER_MSG( SCR_WBT_TRMSG_PLAYER_LOSE, MMDL_ID_EVENTOBJ_00 )
   _BALLOONWIN_CLOSE()
@@ -720,6 +855,10 @@ _RET
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_enemy_2nd_out
 	_ANIME_DATA	AC_WALK_L_8F,7
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_player_2nd_out
+	_ANIME_DATA	AC_WALK_R_8F,7
 	_ANIME_DATA	ACMD_END,0
 	
 //--------------------------------------------------------------------
@@ -737,11 +876,11 @@ _ANIME_LABEL	anm_vanish_off
 //	決勝戦用　ステージ入場アニメ
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_player_3rd_in
-	_ANIME_DATA	AC_WALK_L_8F,18
+	_ANIME_DATA	AC_WALK_L_8F,17
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_enemy_3rd_in
-	_ANIME_DATA	AC_WALK_R_8F,18
+	_ANIME_DATA	AC_WALK_R_8F,17
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
@@ -749,27 +888,27 @@ _ANIME_LABEL	anm_enemy_3rd_in
 /**************************************************************/
 ev_introductory_remarks:
 
-//_WBT_GET_VICTORY_COUNT( LWK_WIN_COUNT )
+_WBT_GET_VICTORY_COUNT( LWK_WIN_COUNT )
 
 //優勝回数が０の場合
 IF $LWK_WIN_COUNT == 0 THEN
 
 	//前口上メッセージ表示
-	_PLAINWIN_MSG_UP( msg_test )
+	_PLAINWIN_MSG_UP( msg_wbt_player_title_01 )
 	_PLAINWIN_CLOSE()
 
 //優勝回数が１の場合
 ELSIF $LWK_WIN_COUNT == 1 THEN
 
 	//前口上メッセージ表示
-	_PLAINWIN_MSG_UP( msg_test )
+	_PLAINWIN_MSG_UP( msg_wbt_player_title_02 )
 	_PLAINWIN_CLOSE()
 
 //優勝回数が３以上の場合
 ELSIF $LWK_WIN_COUNT >= 3 THEN
 
 	//前口上メッセージ表示
-	_PLAINWIN_MSG_UP( msg_test )
+	_PLAINWIN_MSG_UP( msg_wbt_player_title_03 )
 	_PLAINWIN_CLOSE()
 
 	//乱数取得
@@ -784,15 +923,15 @@ ELSIF $LWK_WIN_COUNT >= 5 THEN
 	//前口上メッセージ表示
 	SWITCH $LWK_MSG
 	CASE 0 THEN
-		_PLAINWIN_MSG_UP( msg_test )
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_04 )
 	CASE 1 THEN
-		_PLAINWIN_MSG_UP( msg_test )
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_05 )
 	CASE 2 THEN
-		_PLAINWIN_MSG_UP( msg_test )
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_06 )
 	CASE 3 THEN
-		_PLAINWIN_MSG_UP( msg_test )
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_07 )
 	CASE 4 THEN
-		_PLAINWIN_MSG_UP( msg_test )
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_08 )
 	ENDSWITCH
 	_PLAINWIN_CLOSE()
 
@@ -805,36 +944,15 @@ ELSIF $LWK_WIN_COUNT >= 10 THEN
 	//前口上メッセージ表示
 	SWITCH $LWK_MSG
 	CASE 0 THEN
-		_PLAINWIN_MSG_UP( msg_test )
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_09 )
 	CASE 1 THEN
-		_PLAINWIN_MSG_UP( msg_test )
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_10 )
 	CASE 2 THEN
-		_PLAINWIN_MSG_UP( msg_test )
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_11 )
 	CASE 3 THEN
-		_PLAINWIN_MSG_UP( msg_test )
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_12 )
 	CASE 4 THEN
-		_PLAINWIN_MSG_UP( msg_test )
-	ENDSWITCH
-	_PLAINWIN_CLOSE()
-
-//優勝回数が１５以上の場合
-ELSIF $LWK_WIN_COUNT >= 15 THEN
-
-	//乱数取得
-	_GET_RND( LWK_MSG,5 )
-	
-	//前口上メッセージ表示
-	SWITCH $LWK_MSG
-	CASE 0 THEN
-		_PLAINWIN_MSG_UP( msg_test )
-	CASE 1 THEN
-		_PLAINWIN_MSG_UP( msg_test )
-	CASE 2 THEN
-		_PLAINWIN_MSG_UP( msg_test )
-	CASE 3 THEN
-		_PLAINWIN_MSG_UP( msg_test )
-	CASE 4 THEN
-		_PLAINWIN_MSG_UP( msg_test )
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_13 )
 	ENDSWITCH
 	_PLAINWIN_CLOSE()
 
@@ -847,15 +965,15 @@ ELSIF $LWK_WIN_COUNT >= 20 THEN
 	//前口上メッセージ表示
 	SWITCH $LWK_MSG
 	CASE 0 THEN
-		_PLAINWIN_MSG_UP( msg_test )
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_14 )
 	CASE 1 THEN
-		_PLAINWIN_MSG_UP( msg_test )
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_15 )
 	CASE 2 THEN
-		_PLAINWIN_MSG_UP( msg_test )
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_16 )
 	CASE 3 THEN
-		_PLAINWIN_MSG_UP( msg_test )
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_17 )
 	CASE 4 THEN
-		_PLAINWIN_MSG_UP( msg_test )
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_18 )
 	ENDSWITCH
 	_PLAINWIN_CLOSE()
 
@@ -868,15 +986,15 @@ ELSIF $LWK_WIN_COUNT >= 30 THEN
 	//前口上メッセージ表示
 	SWITCH $LWK_MSG
 	CASE 0 THEN
-		_PLAINWIN_MSG_UP( msg_test )
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_19 )
 	CASE 1 THEN
-		_PLAINWIN_MSG_UP( msg_test )
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_20 )
 	CASE 2 THEN
-		_PLAINWIN_MSG_UP( msg_test )
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_21 )
 	CASE 3 THEN
-		_PLAINWIN_MSG_UP( msg_test )
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_22 )
 	CASE 4 THEN
-		_PLAINWIN_MSG_UP( msg_test )
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_23 )
 	ENDSWITCH
 	_PLAINWIN_CLOSE()
 
@@ -889,15 +1007,15 @@ ELSIF $LWK_WIN_COUNT >= 50 THEN
 	//前口上メッセージ表示
 	SWITCH $LWK_MSG
 	CASE 0 THEN
-		_PLAINWIN_MSG_UP( msg_test )
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_24 )
 	CASE 1 THEN
-		_PLAINWIN_MSG_UP( msg_test )
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_25 )
 	CASE 2 THEN
-		_PLAINWIN_MSG_UP( msg_test )
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_26 )
 	CASE 3 THEN
-		_PLAINWIN_MSG_UP( msg_test )
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_27 )
 	CASE 4 THEN
-		_PLAINWIN_MSG_UP( msg_test )
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_28 )
 	ENDSWITCH
 	_PLAINWIN_CLOSE()
 
@@ -910,15 +1028,15 @@ ELSIF $LWK_WIN_COUNT >= 100 THEN
 	//前口上メッセージ表示
 	SWITCH $LWK_MSG
 	CASE 0 THEN
-		_PLAINWIN_MSG_UP( msg_test )
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_29 )
 	CASE 1 THEN
-		_PLAINWIN_MSG_UP( msg_test )
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_30 )
 	CASE 2 THEN
-		_PLAINWIN_MSG_UP( msg_test )
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_31 )
 	CASE 3 THEN
-		_PLAINWIN_MSG_UP( msg_test )
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_32 )
 	CASE 4 THEN
-		_PLAINWIN_MSG_UP( msg_test )
+		_PLAINWIN_MSG_UP( msg_wbt_player_title_33 )
 	ENDSWITCH
 	_PLAINWIN_CLOSE()
 
@@ -934,7 +1052,7 @@ _RET
 /**************************************************************/
 ev_yell_final_player:
 
-//_WBT_GET_VICTORY_COUNT( LWK_WIN_COUNT )
+_WBT_GET_VICTORY_COUNT( LWK_WIN_COUNT )
 
 //優勝回数が１以下の場合
 IF $LWK_WIN_COUNT <= 1 THEN
@@ -986,7 +1104,10 @@ ev_rnd_yell_msg_final:
 
 //声援決め乱数
 _GET_RND( LWK_RND,100 )
-	
+
+//プレイヤー名を格納
+_PLAYER_NAME( 0 )
+
 //優勝回数に応じた確率でメッセージ表示
 IF $LWK_RND <= LWK_PROBABILITY THEN
 
@@ -999,25 +1120,25 @@ IF $LWK_RND <= LWK_PROBABILITY THEN
 
 	SWITCH $LWK_MSG
 	CASE 0 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_01 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
 	CASE 1 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_02 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
 	CASE 2 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_03 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
 	CASE 3 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_04 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
 	CASE 4 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_05 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
 	CASE 5 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_06 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
 	CASE 6 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_07 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
 	CASE 7 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_08 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
 	CASE 8 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_09 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
 	CASE 9 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_10 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
 	ENDSWITCH
 
 	//========================================/
@@ -1047,25 +1168,25 @@ IF $LWK_RND <= LWK_PROBABILITY THEN
 
 	SWITCH $LWK_MSG
 	CASE 0 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_01 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
 	CASE 1 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_02 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
 	CASE 2 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_03 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
 	CASE 3 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_04 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
 	CASE 4 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_05 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
 	CASE 5 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_06 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
 	CASE 6 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_07 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
 	CASE 7 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_08 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
 	CASE 8 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_09 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
 	CASE 9 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_10 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
 	ENDSWITCH
 
 	//========================================/
@@ -1100,25 +1221,25 @@ IF $LWK_RND <= LWK_PROBABILITY THEN
 
 	SWITCH $LWK_MSG
 	CASE 0 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_01 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
 	CASE 1 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_02 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
 	CASE 2 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_03 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
 	CASE 3 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_04 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
 	CASE 4 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_05 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
 	CASE 5 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_06 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
 	CASE 6 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_07 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
 	CASE 7 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_08 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
 	CASE 8 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_09 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
 	CASE 9 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_10 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
 	ENDSWITCH
 
 	//========================================/
@@ -1153,25 +1274,25 @@ IF $LWK_RND <= LWK_PROBABILITY THEN
 
 	SWITCH $LWK_MSG
 	CASE 0 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_01 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
 	CASE 1 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_02 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
 	CASE 2 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_03 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
 	CASE 3 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_04 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
 	CASE 4 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_05 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
 	CASE 5 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_06 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
 	CASE 6 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_07 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
 	CASE 7 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_08 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
 	CASE 8 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_09 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
 	CASE 9 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_10 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
 	ENDSWITCH
 
 	//========================================/
@@ -1206,25 +1327,25 @@ IF $LWK_RND <= LWK_PROBABILITY THEN
 
 	SWITCH $LWK_MSG
 	CASE 0 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_01 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
 	CASE 1 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_02 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
 	CASE 2 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_03 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
 	CASE 3 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_04 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
 	CASE 4 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_05 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
 	CASE 5 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_06 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
 	CASE 6 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_07 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
 	CASE 7 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_08 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
 	CASE 8 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_09 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
 	CASE 9 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_10 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
 	ENDSWITCH
 	
 	//========================================/
@@ -1259,25 +1380,25 @@ IF $LWK_RND <= LWK_PROBABILITY THEN
 
 	SWITCH $LWK_MSG
 	CASE 0 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_01 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
 	CASE 1 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_02 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
 	CASE 2 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_03 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
 	CASE 3 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_04 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
 	CASE 4 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_05 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
 	CASE 5 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_06 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
 	CASE 6 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_07 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
 	CASE 7 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_08 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
 	CASE 8 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_09 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
 	CASE 9 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_10 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
 	ENDSWITCH
 
 	//========================================/
@@ -1296,7 +1417,7 @@ _RET
 /**************************************************************/
 ev_yell_final_enemy:
 
-//_WBT_GET_VICTORY_COUNT( LWK_WIN_COUNT )
+_WBT_GET_VICTORY_COUNT( LWK_WIN_COUNT )
 
 //優勝回数が１以下の場合
 IF $LWK_WIN_COUNT <= 1 THEN
@@ -1348,7 +1469,10 @@ ev_rnd_yell_msg_final_enemy:
 
 //声援決め乱数
 _GET_RND( LWK_RND,100 )
-	
+
+//対戦者名を格納
+_WBT_SET_ENEMY_NAME( 0 )
+
 //優勝回数に応じた確率でメッセージ表示
 IF $LWK_RND <= LWK_PROBABILITY THEN
 
@@ -1361,25 +1485,25 @@ IF $LWK_RND <= LWK_PROBABILITY THEN
 
 	SWITCH $LWK_MSG
 	CASE 0 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_01 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
 	CASE 1 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_02 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
 	CASE 2 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_03 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
 	CASE 3 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_04 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
 	CASE 4 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_05 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
 	CASE 5 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_06 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
 	CASE 6 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_07 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
 	CASE 7 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_08 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
 	CASE 8 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_09 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
 	CASE 9 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_10 , LWK_YELL_POSX , LWK_YELL_POSY , 1 )
 	ENDSWITCH
 
 	//タイムウェイト
@@ -1409,25 +1533,25 @@ IF $LWK_RND <= LWK_PROBABILITY THEN
 
 	SWITCH $LWK_MSG
 	CASE 0 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_01 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
 	CASE 1 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_02 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
 	CASE 2 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_03 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
 	CASE 3 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_04 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
 	CASE 4 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_05 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
 	CASE 5 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_06 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
 	CASE 6 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_07 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
 	CASE 7 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_08 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
 	CASE 8 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_09 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
 	CASE 9 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_10 , LWK_YELL_POSX , LWK_YELL_POSY , 2 )
 	ENDSWITCH
 
 	//========================================/
@@ -1462,25 +1586,25 @@ IF $LWK_RND <= LWK_PROBABILITY THEN
 
 	SWITCH $LWK_MSG
 	CASE 0 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_01 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
 	CASE 1 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_02 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
 	CASE 2 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_03 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
 	CASE 3 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_04 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
 	CASE 4 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_05 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
 	CASE 5 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_06 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
 	CASE 6 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_07 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
 	CASE 7 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_08 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
 	CASE 8 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_09 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
 	CASE 9 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_10 , LWK_YELL_POSX , LWK_YELL_POSY , 3 )
 	ENDSWITCH
 
 	//========================================/
@@ -1515,25 +1639,25 @@ IF $LWK_RND <= LWK_PROBABILITY THEN
 
 	SWITCH $LWK_MSG
 	CASE 0 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_01 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
 	CASE 1 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_02 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
 	CASE 2 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_03 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
 	CASE 3 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_04 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
 	CASE 4 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_05 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
 	CASE 5 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_06 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
 	CASE 6 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_07 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
 	CASE 7 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_08 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
 	CASE 8 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_09 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
 	CASE 9 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_10 , LWK_YELL_POSX , LWK_YELL_POSY , 4 )
 	ENDSWITCH
 	
 	//========================================/
@@ -1567,25 +1691,25 @@ IF $LWK_RND <= LWK_PROBABILITY THEN
 
 	SWITCH $LWK_MSG
 	CASE 0 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_01 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
 	CASE 1 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_02 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
 	CASE 2 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_03 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
 	CASE 3 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_04 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
 	CASE 4 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_05 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
 	CASE 5 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_06 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
 	CASE 6 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_07 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
 	CASE 7 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_08 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
 	CASE 8 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_09 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
 	CASE 9 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_10 , LWK_YELL_POSX , LWK_YELL_POSY , 5 )
 	ENDSWITCH
 
 	//========================================/
@@ -1620,25 +1744,25 @@ IF $LWK_RND <= LWK_PROBABILITY THEN
 
 	SWITCH $LWK_MSG
 	CASE 0 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_01 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
 	CASE 1 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_02 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
 	CASE 2 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_03 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
 	CASE 3 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_04 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
 	CASE 4 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_05 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
 	CASE 5 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_06 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
 	CASE 6 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_07 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
 	CASE 7 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_08 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
 	CASE 8 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_09 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
 	CASE 9 THEN
-		_SUBWIN_MSG( msg_test , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
+		_SUBWIN_MSG( msg_wbt_yell_3rd_10 , LWK_YELL_POSX , LWK_YELL_POSY , 6 )
 	ENDSWITCH
 
 	//========================================/
