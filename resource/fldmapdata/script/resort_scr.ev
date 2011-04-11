@@ -109,6 +109,7 @@ EVENT_START ev_resort_tourist
       _NUMBER( 0, LWK_PRESENT_NUM, 3 )
 	    _SYSWIN_MSG( resort_sys_06, POS_DOWN )
       _SYSWIN_CLOSE()
+      //TODO BPälìæèàóù
     ENDIF
 
     _RESORT_END_ITEM()
@@ -895,6 +896,26 @@ sub_resident_service_effort:
       ENDSWITCH
 
       IF $LWK_RET == TRUE THEN
+
+        _RESORT_USE_MSG_ALPHA( FALSE )
+        _RESORT_BLEND_BRIGHTNESS( 0, -16, 30 )
+
+        //TODO
+        SWITCH $LWK_LIST_RET_PARAM
+        CASE 10 THEN
+          _SYSWIN_MSG( resort_service_txt_00, POS_DOWN )
+        CASE 20 THEN
+          _SYSWIN_MSG( resort_service_txt_01, POS_DOWN )
+        CASE 30 THEN
+          _SYSWIN_MSG( resort_service_txt_02, POS_DOWN )
+        DEFAULT
+          _SYSWIN_MSG( resort_service_txt_02, POS_DOWN )
+        ENDSWITCH
+        _SYSWIN_CLOSE()
+
+        _RESORT_BLEND_BRIGHTNESS( -16, 0, 30 )
+        _RESORT_USE_MSG_ALPHA( TRUE )
+
         _BALLOONWIN_OBJMSG_POS( resort_exercice_03, LWK_OBJID, POS_DL )
         //Ç†Ç∞ÇΩ
         _CALL sub_resident_gold
@@ -966,8 +987,16 @@ sub_resident_service_hatch:
 
     IF $LWK_RET == TRUE THEN 
       //ëIÇÒÇæÇ‡ÇÃÇ™É^É}ÉSÇæÇ¡ÇΩ
-      _RESORT_HATCH( LWK_RET_IDX )
 
+      _RESORT_USE_MSG_ALPHA( FALSE )
+      _RESORT_BLEND_BRIGHTNESS( 0, -16, 30 )
+      _SYSWIN_MSG( resort_service_txt_00, POS_DOWN )
+      _SYSWIN_CLOSE()
+
+      _RESORT_BLEND_BRIGHTNESS( -16, 0, 30 )
+      _RESORT_USE_MSG_ALPHA( TRUE )
+
+      _RESORT_HATCH( LWK_RET_IDX )
       _PARTY_POKE_EGG_BIRTH( LWK_RET )
 
       _BALLOONWIN_OBJMSG_POS( resort_nursery_02, LWK_OBJID, POS_DL )
@@ -1003,6 +1032,14 @@ sub_resident_service_lv:
       _RESORT_ADD_LV( LWK_RET_IDX, LWK_RET )
 
       IF $LWK_RET == TRUE THEN
+        _RESORT_USE_MSG_ALPHA( FALSE )
+        _RESORT_BLEND_BRIGHTNESS( 0, -16, 30 )
+        _SYSWIN_MSG( resort_service_txt_00, POS_DOWN )
+        _SYSWIN_CLOSE()
+
+        _RESORT_BLEND_BRIGHTNESS( -16, 0, 30 )
+        _RESORT_USE_MSG_ALPHA( TRUE )
+
 
         _BALLOONWIN_OBJMSG_POS( resort_breeder_03, LWK_OBJID, POS_DL )
         //Ç†Ç∞ÇΩ
