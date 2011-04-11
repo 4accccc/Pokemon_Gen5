@@ -230,24 +230,24 @@ enum{
 
 // 最大数
 enum{
-	WBT_OBJ_MAXNUM = 23,			// obj最大
-	WBT_CANVAS_MAXNUM = 3,			// canvas最大
-	WBT_BMPOAM_MAXNUM = 8,			// bmpoam最大
+	WBT_OBJ_MAXNUM		= 23,		// obj最大
+	WBT_CANVAS_MAXNUM	= 3,		// canvas最大
+	WBT_BMPOAM_MAXNUM	= 8,		// bmpoam最大
 	//
-	WBT_EMPTY_MAXNUM = 46*2,		// emptyの最大値
+	WBT_EMPTY_MAXNUM	= 46*2,		// emptyの最大値
 	//
-	WBT_GAGE_MAXNUM	= 6,			// ゲージ数最大
+	WBT_GAGE_MAXNUM		= 6,		// ゲージ数最大
 };
 
 // スピード
 enum{
-	MOVE_IN_SPEED	= 18,			// スクロールイン
-	MOVE_OUT_SPEED	= 36,			// スクロールアウト
+	MOVE_IN_SPEED		= 18,		// スクロールイン
+	MOVE_OUT_SPEED		= 36,		// スクロールアウト
 };
 
 // empty
 enum{
-	BOMB_EMPTY_ID	= 24,			// 爆発のempty
+	BOMB_EMPTY_ID		= 24,		// 爆発のempty
 	//
 	L_BMPOAM_EMPTY_ID	= 44,		// 左側、BMPOAMのempty
 	R_BMPOAM_EMPTY_ID	= 45,		// 右側、BMPOAMのempty
@@ -255,19 +255,19 @@ enum{
 
 // シーケンス
 enum{
-	L_WHITE_SEQ		= 0,			// 左、白シーケンス
-	L_GRAY_SEQ		= 1,			// 左、灰シーケンス
-	L_FLASH_SEQ		= 12,			// 左、点滅(終了後灰)シーケンス
-	R_WHITE_SEQ		= 4,			// 右、白シーケンス
-	R_GRAY_SEQ		= 5,			// 右、灰シーケンス
-	R_FLASH_SEQ		= 13,			// 右、点滅(終了後灰)シーケンス
+	L_WHITE_SEQ			= 0,		// 左、白シーケンス
+	L_GRAY_SEQ			= 1,		// 左、灰シーケンス
+	L_FLASH_SEQ			= 12,		// 左、点滅(終了後灰)シーケンス
+	R_WHITE_SEQ			= 4,		// 右、白シーケンス
+	R_GRAY_SEQ			= 5,		// 右、灰シーケンス
+	R_FLASH_SEQ			= 13,		// 右、点滅(終了後灰)シーケンス
 	//
-	L_BLUE_SEQ		= 2,			// 左、青シーケンス
-	L_RED_SEQ		= 3,			// 左、赤のシーケンス
-	R_BLUE_SEQ		= 6,			// 右、青シーケンス
-	R_RED_SEQ		= 7,			// 右、赤のシーケンス
+	L_BLUE_SEQ			= 2,		// 左、青シーケンス
+	L_RED_SEQ			= 3,		// 左、赤のシーケンス
+	R_BLUE_SEQ			= 6,		// 右、青シーケンス
+	R_RED_SEQ			= 7,		// 右、赤のシーケンス
 	//
-	GAGE_GRAY_SEQ	= 14,			// 灰色ゲージ
+	GAGE_GRAY_SEQ		= 14,		// 灰色ゲージ
 };
 
 // mes関連
@@ -302,7 +302,7 @@ enum{
 	FLG_MES_END		= (1<<1),		// 2回目終了
 };
 
-// debugのフラグ
+// debugのフラグ(DebugFlag)
 enum{
 	FLG_DBG_MODE	= (1<<0),		// モード(0:デバッグなし、1:あり)
 	FLG_DBG_COLOR	= (1<<1),		// 色変え
@@ -402,7 +402,7 @@ typedef struct
 	GFL_FONT				*font;
 	//プリントキュー
 	PRINT_QUE				*print_que;
-	GFL_MSGDATA				*msg[2];					// 0:名詞、1:メッセージ(テストで使用)
+	GFL_MSGDATA				*msg[2];						// 0:メッセージ,1:未使用
 	
 	// OAMマップモデル
 	u8						clwk_oam_mmdl_count;
@@ -762,11 +762,9 @@ static GFL_PROC_RESULT WBTListProc_Init( GFL_PROC *proc, int *seq, void *pwk, vo
 	//フォント作成
 	wk->font = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
 	
-	//メッセージ
-	wk->msg[0] = 0;
-//	wk->msg[0] = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_wbt_system_dat, wk->heapID );
-//	wk->msg[1] = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_wbt_trmsg_dat, wk->heapID );
-	wk->msg[1] = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_wbt_tournament_dat, wk->heapID );
+	// メッセージ
+	wk->msg[0] = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_wbt_tournament_dat, wk->heapID );
+	wk->msg[1] = 0;
 	
 	//PRINT_QUE作成
 	wk->print_que = PRINTSYS_QUE_Create( wk->heapID );
@@ -1072,27 +1070,24 @@ static void wbt_init( WBTLIST_MAIN_WORK* wk )
 {
 	s32		i;
 	s32		buf[2];
-//	STRBUF* strbuf;
 	
 	// debug
 	wbt_debug_param( wk );
 	
-	// 文字列(test)
-//	strbuf = GFL_MSG_CreateString( wk->msg[0], 0 );
 	// バッファを確保
 	wk->MsgBuffer = GFL_STR_CreateBuffer( MES_STRING_BUFFER, wk->heapID );
 	
 	// 初期化
 	// それほど複雑ではないので、
 	// 上、下画面をまとめて処理
-	// 外からのパラメータを使用
-	wk->Mode = wk->Param->stage;
-	wk->Step = STEP_INIT;
-	//
+	wk->Mode 		= wk->Param->stage;
+	wk->Step 		= STEP_INIT;
 	wk->DispCount	= 0;
+	wk->PlayerNum	= 0;
 	wk->MoveFlag	= 0;
+	wk->MesFlag		= 0;
 	wk->DebugFlag	= 0;
-	
+	//
 	for(i=0;i<TIMER_MAX;i++){
 		wk->Timer[i] = 0;
 	}
@@ -1149,8 +1144,6 @@ static void wbt_init( WBTLIST_MAIN_WORK* wk )
 	// メッセージ送りマーク用
 	wk->MsgCursorWork = APP_KEYCURSOR_Create( MES_CURSOR_COLOR, TRUE, TRUE, wk->heapID );
 	//
-	// 削除
-//	GFL_STR_DeleteBuffer( strbuf );
 	//
 	// DebugFlagの判定
 #ifdef PM_DEBUG
@@ -1311,9 +1304,8 @@ static void wbt_key_00( WBTLIST_MAIN_WORK* wk )
 				//
 				// 1回戦 => 終了
 				if(wk->Mode == MODE_ROUND1){
-//					wk->Step = STEP_END;
-					//
 					// カウンタをすすめる(特別処理)
+					// 1回戦だけ処理が異なる
 					wbt_chk_dispcount( wk );
 					// 移動可能パラメータの更新
 					wk->MoveFlag = wbt_get_param( wk, PRM_MOVEFLAG, 0 );
@@ -1952,7 +1944,7 @@ static void wbt_chg_obj_pal( WBTLIST_MAIN_WORK *wk, const s32 wnum, const s32 po
 		// カラーを取得
 		tmp = wk->PalBuffer[wnum*0x10+i];		// palbufferはu16のため
 		//
-#if 1	// カラーの平均を取得
+		// カラーの平均を取得
 		buf[0] = tmp&0x1f;			// R
 		buf[1] = (tmp>>5)&0x1f;		// G
 		buf[2] = (tmp>>10)&0x1f;	// B
@@ -1960,30 +1952,12 @@ static void wbt_chg_obj_pal( WBTLIST_MAIN_WORK *wk, const s32 wnum, const s32 po
 		buf[3] = (buf[0]+buf[1]+buf[2])/3;
 		// ここまででカラーの平均が出る
 		wk->TmpBuffer[wnum*0x10+i] = (buf[3]<<10)+(buf[3]<<5)+buf[3];
-#else	//
-		// カラーの最大を取得(色の差が激しいので保留)
-		buf[0] = tmp&0x1f;			// R
-		buf[1] = (tmp>>5)&0x1f;		// G
-		buf[2] = (tmp>>10)&0x1f;	// B
-		// 候補を調べる
-		buf[3] = buf[0];
-		if(buf[3] < buf[1]){
-			buf[3] = buf[1];
-		}
-		if(buf[3] < buf[2]){
-			buf[3] = buf[2];
-		}
-		// ここまでで最大のカラーが出る
-		wk->TmpBuffer[wnum*0x10+i] = (buf[3]<<10)+(buf[3]<<5)+buf[3];
-#endif
 	}
 	// 転送
 	if(mode == 0){		// グレースケールへ
-//		GFL_STD_MemCopy16( &wk->TmpBuffer[0] ,(void*)(padr+0x20*(wnum+poff)), 0x20 );
 		padr = 0;
 		NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_OBJ_PLTT_MAIN, (padr+0x20*(wnum+poff)), &wk->TmpBuffer[wnum*0x10], 0x20 );
 	}else{				// オリジナルカラーへ(debug用)
-//		GFL_STD_MemCopy16( &wk->PalBuffer[wnum*0x10] ,(void*)(padr+0x20*(wnum+poff)), 0x20 );
 		padr = 0;
 		NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_OBJ_PLTT_MAIN, (padr+0x20*(wnum+poff)), &wk->PalBuffer[wnum*0x10], 0x20 );
 	}
@@ -2277,7 +2251,7 @@ static void wbt_set_meswin( WBTLIST_MAIN_WORK* wk, const s32 mesid )
 		wk->MsgBuffer = GFL_STR_CreateBuffer( MES_STRING_BUFFER, wk->heapID );
 	}
 	// メッセージ仮バッファセット
-	strbuf = GFL_MSG_CreateString( wk->msg[1], mesid );
+	strbuf = GFL_MSG_CreateString( wk->msg[0], mesid );
 	// パラメータを展開しMsgBufferに再セット
 	WORDSET_ExpandStr( wordset, wk->MsgBuffer, strbuf );
 	//
@@ -2306,7 +2280,6 @@ static void wbt_set_meswin( WBTLIST_MAIN_WORK* wk, const s32 mesid )
 static BOOL wbt_main_meswin( WBTLIST_MAIN_WORK* wk )
 {
 	u16		tmp;
-	s32		stat;
 	u32		num;
 	BOOL	bflg;
 	
@@ -2318,7 +2291,6 @@ static BOOL wbt_main_meswin( WBTLIST_MAIN_WORK* wk )
 	// 文字送りカーソル処理
 	APP_KEYCURSOR_Main( wk->MsgCursorWork, wk->PrintStream, wk->PrintUtil[2].win );
 	//
-#if 1
 	// streamの入力処理をまとめて処理してくれるらしい
     bflg = APP_PRINTSYS_COMMON_PrintStreamFunc( &wk->PrintSysWork , wk->PrintStream );
     if( bflg == TRUE ){
@@ -2339,38 +2311,6 @@ static BOOL wbt_main_meswin( WBTLIST_MAIN_WORK* wk )
 		return( TRUE );
 	}
 	return( TRUE );
-#else
-	stat = PRINTSYS_PrintStreamGetState( wk->PrintStream );
-	if( stat == PRINTSTREAM_STATE_DONE ){		// ここには来ることがあるの?
-		if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE || GFL_UI_TP_GetTrg()){
-//			PRINTSYS_PrintStreamDelete( wk->PrintStream );
-//			OS_Printf("mes end\n");
-			return( FALSE );
-		}
-	}
-	else if( stat == PRINTSTREAM_STATE_PAUSE ){
-		if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE || GFL_UI_TP_GetTrg()){
-			PRINTSYS_PrintStreamReleasePause( wk->PrintStream );
-//			OS_Printf("mes pause end\n");
-			//
-			// 2回目が終了=>もれなく終了
-			if(wk->MesFlag & FLG_MES_1ST){
-				return( FALSE );
-			}
-			// 1回目が終了=>2回目がある
-			wk->MesFlag |= FLG_MES_1ST;
-			wk->MesFlag |= FLG_MES_END;
-			// meswinクリア
-			wbt_clear_meswin( wk );
-			// 指定した番号 + (0-4)のランダム
-			num = GFUser_GetPublicRand( 5 );
-			tmp = wbt_get_param( wk, PRM_MESID, 0 );
-			wbt_set_meswin( wk, (tmp+num) );
-			return( TRUE );
-		}
-	}
-	return( TRUE );
-#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -2550,7 +2490,6 @@ static void wbt_disp_bomb( WBTLIST_MAIN_WORK* wk, const s32 num )
 	// SetAnimSeqとAutoAnmFlagをする必要があるようだ
 	anum = GFL_CLACT_WK_GetAnmSeq( wk->wk_obj.clwk[CLWKID_BOMB] );
 	// 表示
-//	OS_Printf("anim seq:%d\n",anum);
 	GFL_CLACT_WK_SetAnmSeq( wk->wk_obj.clwk[CLWKID_BOMB], anum );
 	//
 	GFL_CLACT_WK_SetDrawEnable(  wk->wk_obj.clwk[CLWKID_BOMB], TRUE );
