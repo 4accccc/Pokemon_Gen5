@@ -74,6 +74,7 @@
 #define _DEBUG_INPUT_
 #undef  _DEBUG_INPUT_
 
+
 FS_EXTERN_OVERLAY(ui_common);
 
 //=============================================================================
@@ -305,6 +306,8 @@ enum{
 enum{
 	FLG_DBG_MODE	= (1<<0),		// モード(0:デバッグなし、1:あり)
 	FLG_DBG_COLOR	= (1<<1),		// 色変え
+	//
+	FLG_DBG_INPUT	= (1<<4),		// 入力
 };
 
 //=============================================================================
@@ -867,17 +870,17 @@ static GFL_PROC_RESULT WBTListProc_Main( GFL_PROC *proc, int *seq, void *pwk, vo
 			}
 			break;
 		case 1:
-#ifndef _DEBUG_INPUT_
-			// 終了判定
-			if(wk->Step == STEP_END){
-				(*seq) ++;
+			if(!(wk->DebugFlag & FLG_DBG_INPUT)){
+				// 終了判定
+				if(wk->Step == STEP_END){
+					(*seq) ++;
+				}
+			}else{
+				if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
+				{
+					(*seq) ++;
+				}
 			}
-#else
-			if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
-			{
-				(*seq) ++;
-			}
-#endif
 			break;
 		case 2:
 			WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT,
@@ -1150,11 +1153,21 @@ static void wbt_init( WBTLIST_MAIN_WORK* wk )
 //	GFL_STR_DeleteBuffer( strbuf );
 	//
 	// DebugFlagの判定
-	// 本当はここで(FLG_DBG_MODE)の判定
-//	wk->DebugFlag |= FLG_DBG_MODE;		// test
-	if(wk->DebugFlag & FLG_DBG_MODE){
-		wk->DebugFlag |= FLG_DBG_COLOR;
+#ifdef PM_DEBUG
+
+	// 入力debug
+#ifdef _DEBUG_INPUT_
+	wk->DebugFlag |= FLG_DBG_INPUT;
+#endif		// _DEBUG_INPUT
+
+	// ここで(FLG_DBG_MODE)の判定
+	if(wk->Param->debug_value != 0){
+		wk->DebugFlag |= FLG_DBG_MODE;		// test
+		if(wk->DebugFlag & FLG_DBG_MODE){
+			wk->DebugFlag |= FLG_DBG_COLOR;
+		}
 	}
+#endif		// PM_DEBUG
 }
 
 //-----------------------------------------------------------------------------
@@ -3032,10 +3045,11 @@ static BOOL wbt_is_dispcount( WBTLIST_MAIN_WORK* wk )
 //-----------------------------------------------------------------------------
 static void wbt_debug_param( WBTLIST_MAIN_WORK* wk )
 {
+#ifdef PM_DEBUG
+	
 #ifdef _DEBUG_LOCAL_
 	s16			i;
 	
-	// ??
 	OS_Printf( "stage :%d\n",wk->Param->stage );
 	for(i=0;i<WBT_TRAINER_NUM;i++){
 		OS_Printf( "id,pattern,sex,prio,poketype (%d):%d,%d,%d,%d,%d,%d\n",
@@ -3052,7 +3066,9 @@ static void wbt_debug_param( WBTLIST_MAIN_WORK* wk )
 		OS_Printf("2nd :upsidewin,msgtype (%d):%d,%d\n",
 					i,wk->Param->second_stage[i].upside_win,wk->Param->second_stage[i].msg_type);
 	}
-#endif
+#endif		// _DEBUG_LOCAL_
+
+#endif		// PM_DEBUG
 }
 
 //-----------------------------------------------------------------------------
@@ -3066,39 +3082,37 @@ static void wbt_debug_param( WBTLIST_MAIN_WORK* wk )
 //-----------------------------------------------------------------------------
 static void wbt_debug( WBTLIST_MAIN_WORK* wk )
 {
-#ifdef _DEBUG_INPUT_
+#ifdef PM_DEBUG
 	s32		i;
+	s32		tmp=0;
 	
-	// debug
-	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
-		wk->Step = STEP_INIT;
-		// 表示回数
-		wk->DispCount = 0;
-		//
-		wbt_init_param( wk );
-		OS_Printf("debug init \n");
+	// debug input
+	if(wk->DebugFlag & FLG_DBG_INPUT){
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
+			wk->Step = STEP_INIT;
+			// 表示回数
+			wk->DispCount = 0;
+			//
+			wbt_init_param( wk );
+			OS_Printf("debug init \n");
+		}
 	}
-#endif
-	// debug
-	{
-		s32		tmp=0;
-		s32		i;
-		//
-		if(wk->DebugFlag & FLG_DBG_MODE){
-			if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
-				// 色変更
-				if(wk->DebugFlag & FLG_DBG_COLOR){
-					wk->DebugFlag &= ~FLG_DBG_COLOR;
-					tmp = 0;
-				}else{
-					wk->DebugFlag |= FLG_DBG_COLOR;
-					tmp = 1;
-				}
-				for(i=0;i<8;i++){
-					wbt_chg_obj_pal( wk, i, PLTID_OBJ_MAPMODEL, tmp );
-				}
+	// debug mode(color)
+	if(wk->DebugFlag & FLG_DBG_MODE){
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
+			// 色変更
+			if(wk->DebugFlag & FLG_DBG_COLOR){
+				wk->DebugFlag &= ~FLG_DBG_COLOR;
+				tmp = 0;
+			}else{
+				wk->DebugFlag |= FLG_DBG_COLOR;
+				tmp = 1;
+			}
+			for(i=0;i<8;i++){
+				wbt_chg_obj_pal( wk, i, PLTID_OBJ_MAPMODEL, tmp );
 			}
 		}
 	}
+#endif		// PM_DEBUG
 }
 

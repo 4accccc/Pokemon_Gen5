@@ -68,6 +68,14 @@ enum{
 	DWBT_WIN_HEIGHT	= (  8 ),		// height
 };
 
+// DebugMode
+enum{
+	DEBUG_MODE_TR	= 0,			// トレーナー選択
+	DEBUG_MODE_DBG,					// debug
+	//
+	DEBUG_MODE_MAX,					// max
+};
+
 #define WINCLR_COL(col) (((col)<<4)|(col))
 //=============================================================================
 /**
@@ -95,6 +103,8 @@ struct DEBUG_WBT_WORK{
 	u32			Flag;							// フラグ
 	u16			Trbuffer[WBT_TRAINER_NUM];		// セットするバッファ
 	s32			Index;							// インデックス(0-8)
+	s32			DebugNum;						// デバッグ
+	s32			DebugMode;						// モード(0:トレーナー、1:debug)
 	WORDSET		*wordset;						// WordSet
 	GFL_MSGDATA	*msgman;						// メッセージマネージャー
 	GFL_BMPWIN	*bmpwin;
@@ -109,6 +119,8 @@ static BOOL debugCommand_printf( DEBUG_WBT_WORK *p_wk );
 //
 static BOOL debugMenuMain( DEBUG_WBT_WORK *wk );
 static BOOL debugMenuKeyInput( DEBUG_WBT_WORK *wk );
+static BOOL debugMenuKeyInput_tr( DEBUG_WBT_WORK *wk );
+static BOOL debugMenuKeyInput_debug( DEBUG_WBT_WORK *wk );
 //
 static void createNumWin( DEBUG_WBT_WORK * wk );
 static void deleteNumWin( DEBUG_WBT_WORK * wk );
@@ -117,6 +129,7 @@ static void printTrNameWin( DEBUG_WBT_WORK * wk, const u16 tr_id, const s32 xpos
 static void updateNumWin( DEBUG_WBT_WORK * wk );
 static void clearNumWin(  DEBUG_WBT_WORK * wk );
 static void dispInfo( DEBUG_WBT_WORK * wk );
+static void dispInfo_debug( DEBUG_WBT_WORK * wk );
 static void dispInfoPrintf( DEBUG_WBT_WORK * wk );
 
 //=============================================================================
@@ -245,6 +258,8 @@ BOOL debugMenuCallProc_WBT( DEBUG_MENU_EVENT_WORK *wk )
 		work->Flag 	= 0;
 		work->Index = 0;
 		work->Step	= 0;
+		work->DebugNum	= 0;
+		work->DebugMode = 0;
 		// 値をセット
 		for(i=0;i<WBT_TRAINER_NUM;i++){
 			work->Trbuffer[i] = sample_trid[i];
@@ -285,9 +300,9 @@ static GMEVENT_RESULT debugMenuWBTEvent( GMEVENT *event, int *seq, void *wk )
       (*seq)++;
       break;
 
-    case DEBUG_STR_WBT_01:
+    case DEBUG_STR_WBT_01:		// トレーナーせってい
     	*seq = 3;
-//      (*seq)++;
+    	work->DebugMode = DEBUG_MODE_TR;
       break;
 
     case DEBUG_STR_WBT_02:
@@ -316,6 +331,8 @@ static GMEVENT_RESULT debugMenuWBTEvent( GMEVENT *event, int *seq, void *wk )
       break;
 	//
     case DEBUG_STR_WBT_07:		// デバッグあり
+		*seq = 3;
+		work->DebugMode = DEBUG_MODE_DBG;
       break;
     }
     break;
@@ -381,8 +398,7 @@ static BOOL debugMenuCallProc_WBTList( DEBUG_WBT_WORK *p_wk )
   wbtlist_param = WBTLIST_PARAM_Create( HEAPID_PROC, p_wk->gmSys );
   WBTLIST_PARAM_Setup_Debug(
       p_wk->gmSys, wbtlist_param,
-//      WBTTYPE_ALL, WBTRULE_SINGLE, p_wk->stage, sample_trid );
-      WBTTYPE_ALL, WBTRULE_SINGLE, p_wk->stage, p_wk->Trbuffer, 0 );
+      WBTTYPE_ALL, WBTRULE_SINGLE, p_wk->stage, p_wk->Trbuffer, p_wk->DebugNum );
   new_event = WBT_EVENT_ShowTournamentList( p_wk->gmSys, p_wk->fieldWork, wbtlist_param, TRUE );
   GMEVENT_ChangeEvent( p_wk->gmEvent, new_event );
 
@@ -456,12 +472,32 @@ static BOOL debugMenuMain( DEBUG_WBT_WORK *wk )
 //-----------------------------------------------------------------------------
 static BOOL debugMenuKeyInput( DEBUG_WBT_WORK *wk )
 {
-	u16		tmp;
-	s16		flg=0;
-	s32		idx;
 	BOOL	bflg=FALSE;
 	
-	idx = wk->Index;
+	// 入力(トレーナー選択)
+	if(wk->DebugMode == DEBUG_MODE_TR){
+		bflg = debugMenuKeyInput_tr( wk );
+	}else{
+		bflg = debugMenuKeyInput_debug( wk );
+	}
+	return( bflg );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  デバッグ用処理(入力画面:トレーナー選択)
+ *
+ *  @param  DEBUG_WBT_WORK *wk
+ *
+ *  @return BOOL			(FALSE:処理中、TRUE:終了)
+ */
+//-----------------------------------------------------------------------------
+static BOOL debugMenuKeyInput_tr( DEBUG_WBT_WORK *wk )
+{
+	u16		tmp;
+	s16		flg=0;
+	BOOL	bflg=FALSE;
+	
 	// 戻し
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
 		// 戻し
@@ -529,6 +565,56 @@ static BOOL debugMenuKeyInput( DEBUG_WBT_WORK *wk )
 //		OS_Printf("index, num:%d,%d\n", wk->Index, wk->Trbuffer[wk->Index]);
 		// 表示まとめ
 		dispInfo( wk );
+		wk->Flag &= ~FLG_WIN_UPDATE;
+	}
+	return( bflg );
+}
+//----------------------------------------------------------------------------
+/**
+ *  @brief  デバッグ用処理(入力画面:デバッグ)
+ *
+ *  @param  DEBUG_WBT_WORK *wk
+ *
+ *  @return BOOL			(FALSE:処理中、TRUE:終了)
+ */
+//-----------------------------------------------------------------------------
+static BOOL debugMenuKeyInput_debug( DEBUG_WBT_WORK *wk )
+{
+	s16		flg=0;
+	BOOL	bflg=FALSE;
+	
+	// 戻し
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
+		// 戻し
+		wk->Flag &= ~FLG_SET_MODE;
+		bflg = TRUE;
+//		OS_Printf("end\n");
+	}
+	// 左(減らす)
+	if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT ){
+		wk->DebugNum--;
+		if(wk->DebugNum < 0){
+			wk->DebugNum = (DEBUG_MODE_MAX-1);
+		}
+		flg = 1;
+	}
+	// 右(増やす)
+	else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT ){
+		wk->DebugNum++;
+		if(wk->DebugNum > (DEBUG_MODE_MAX-1)){
+			wk->DebugNum = 0;
+		}
+		flg = 1;
+	}
+	// 更新
+	if(wk->Flag & FLG_WIN_UPDATE){
+		flg = 1;
+	}
+	
+	// 更新
+	if(flg == 1){
+		// 表示まとめ
+		dispInfo_debug( wk );
 		wk->Flag &= ~FLG_WIN_UPDATE;
 	}
 	return( bflg );
@@ -684,7 +770,7 @@ static void clearNumWin( DEBUG_WBT_WORK * wk )
 
 //----------------------------------------------------------------------------
 /**
- *  @brief	表示項目まとめ
+ *  @brief	表示項目まとめ(トレーナー)
  *
  *  @param  DEBUG_WBT_WORK *wk
  *
@@ -723,6 +809,31 @@ static void dispInfo( DEBUG_WBT_WORK * wk )
 	for(i=0;i<4;i++){
 		printTrNameWin( wk, wk->Trbuffer[tmp+i], dwbt_info_tbl[2+2*(8+i)], dwbt_info_tbl[2+2*(8+i)+1] );
 	}
+	// 更新
+	updateNumWin( wk );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief	表示項目まとめ(debug)
+ *
+ *  @param  DEBUG_WBT_WORK *wk
+ *
+ *  @return
+ */
+//-----------------------------------------------------------------------------
+static void dispInfo_debug( DEBUG_WBT_WORK * wk )
+{
+	s32		i;
+	s32		tmp;
+	s32		mode=0;
+	
+	// クリア
+	clearNumWin( wk );
+	//
+	// index
+	printNumWin( wk, wk->DebugNum, 2, dwbt_info_tbl[0], dwbt_info_tbl[1], 0 );
+	//
 	// 更新
 	updateNumWin( wk );
 }
