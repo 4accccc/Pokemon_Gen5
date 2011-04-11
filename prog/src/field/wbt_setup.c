@@ -12,6 +12,7 @@
 #include "wbt_system.h"
 #include "wbt_system_local.h"
 #include "app/wbt_list.h"
+#include "wbt_tool.h"
 
 #include "poke_tool/regulation_def.h"
 #include "wbt_trlist_struct.h"  //WBT_TRDATA
@@ -156,7 +157,7 @@ void WBTLIST_PARAM_Setup_Debug(
   WBTSYS * wbtsys;
 
   wbtsys = WBTSYS_Create( HEAPID_FIELDMAP );
-  WBTSYS_SetupTrainer_Debug( wbtsys, gamedata, trid_table );
+  WBTSYS_SetupTrainer( wbtsys, gamedata, trid_table );
   WBTSYS_SetType( wbtsys, wbttype );
   WBTSYS_SetRule( wbtsys, wbtrule );
   WBTSYS_SetStage( wbtsys, stage );

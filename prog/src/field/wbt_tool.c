@@ -14,14 +14,8 @@
 #include "wbt_system.h"
 //#include "app/wbt_list.h"
 
-//#include "poke_tool/regulation_def.h"
-//#include "wbt_trlist_struct.h"  //WBT_TRDATA
-
-//#include "arc_def.h"
-//#include "arc/wbt/wbt_trlist.naix"
-//#include "arc/fieldmap/fldmmdl_mdlres.naix"
-
-//#include "msg/msg_wbt_tournament.h"
+#include "wbt_tool.h"
+#include "wbt_trlist_struct.h"  //WBT_TRDATA
 
 #include "system/main.h"
 #include "arc/message.naix"
@@ -36,7 +30,18 @@
 #include "tr_tool/trtype_def.h"
 #include "sound/pm_sndsys.h"
 
+//============================================================================================
+//============================================================================================
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 #include "../../../resource/wbt/wbt_trainer/wbt_trainer.cdat"
+
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+enum {
+  WBT_ROM_TRAINER_NUM = NELEMS(WBTTrainerData),
+};
 
 //============================================================================================
 //============================================================================================
@@ -205,5 +210,135 @@ u8 WBTTOOL_GetPartyPokeType( POKEPARTY * party, u64 seed )
     return GFL_STD_Rand( &rand_context, max_count );
   }
 }
+
+//============================================================================================
+//
+//
+//  トーナメント出場者選出
+//
+//
+//============================================================================================
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief チャンピオントーナメント出場者選出
+ * @todo  前作主人公の扱いが未実装
+ */
+//-----------------------------------------------------------------------------
+static void entryChampTournament( u16 * tr_list )
+{
+  int tr_idx, j;
+
+  GFL_STD_MemClear( tr_list, sizeof(u16) * WBT_TRAINER_NUM );
+  tr_list[0] = WBT_TRCODE_PLAYER;
+  tr_list[1] = WBT_TRCODE_WBHERO;
+
+  for ( j = 0, tr_idx = 2; j < WBT_ROM_TRAINER_NUM; j ++ )
+  {
+    const WBT_TRDATA * rom_data = &WBTTrainerData[ j ];
+    if ( rom_data->entry_champ == FALSE ) continue;
+    tr_list[tr_idx] = j;
+    tr_idx ++;
+    if ( tr_idx >= WBT_TRAINER_NUM )
+    {
+      break;
+    }
+  }
+  GF_ASSERT( j < WBT_ROM_TRAINER_NUM );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief トーナメントリスト例を追加
+ */
+//-----------------------------------------------------------------------------
+static void entrySampleTournament( u16 * tr_list )
+{
+  static const u16 sample_trid[WBT_TRAINER_NUM] = {
+    18,//シロナ
+    55,//モブ
+    13,//ハチク
+    56,//モブ
+    11,//デント
+    53,//モブ
+    12,//アロエ
+    0xffff,//プレイヤー
+  };
+  GFL_STD_MemCopy( sample_trid, tr_list, sizeof(u16) * WBT_TRAINER_NUM );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief オールトーナメント出場者選出
+ * @todo  未実装
+ */
+//-----------------------------------------------------------------------------
+static void entryAllTournament( const WBT_MATCH_CONDITION * cond, u16 * tr_list )
+{
+  entrySampleTournament( tr_list );
+  //GFL_STD_MemClear( tr_list, sizeof(u16) * WBT_TRAINER_NUM );
+  //tr_list[0] = WBT_TRCODE_PLAYER;   //プレイヤーをセット
+  //  未実装…
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief タイプトーナメント出場者選出
+ * @todo  未実装
+ */
+//-----------------------------------------------------------------------------
+static void entryTypeTournament( const WBT_MATCH_CONDITION * cond, u16 * tr_list )
+{
+  entrySampleTournament( tr_list );
+  //GFL_STD_MemClear( tr_list, sizeof(u16) * WBT_TRAINER_NUM );
+  //tr_list[0] = WBT_TRCODE_PLAYER;   //プレイヤーをセット
+  //  未実装…
+}
+
+
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+void WBTTOOL_MakeEntryList( const WBT_MATCH_CONDITION * cond, u16 * tr_list )
+{
+  switch (cond->type)
+  {
+  case WBTTYPE_NULL:
+  case WBTTYPE_DOWNLOAD:
+    GF_ASSERT_MSG( 0, "仮：まだできていません！\n");
+    /* FALL THROUGH */
+  case WBTTYPE_POKETYPE:
+    entryTypeTournament( cond, tr_list );
+    break;
+  case WBTTYPE_ALL:
+    entryAllTournament( cond, tr_list );
+    break;
+  case WBTTYPE_CHAMPION:
+    entryChampTournament( tr_list );
+    break;
+  }
+}
+
+//============================================================================================
+//============================================================================================
+//-----------------------------------------------------------------------------
+/**
+ * @brief 対戦組み合わせのソート
+ * @param wbt_tr   対戦トレーナー配列へのポインタ
+ * @param
+ *
+ * ①プレイヤーの場所をランダムに決定
+ * ②優先順位の最も高いキャラをプレイヤーと逆側のブロックに配置
+ * ③次に優先順位が高いキャラがプレイヤー側２回戦であたる場所に配置
+ * ④次に優先順位が高いキャラがプレイヤーとあたるように配置
+ * ⑤他はランダムで配置
+ */
+//-----------------------------------------------------------------------------
+void WBTTOOL_SortTrainer( WBTTRAINER * wbt_tr_array, u64 seed64 )
+{
+    GFL_STD_RandContext rand_context;
+    GFL_STD_RandInit( &rand_context, seed64 );
+    //未実装！
+}
+
 
 

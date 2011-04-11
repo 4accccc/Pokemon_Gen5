@@ -15,6 +15,7 @@
 #include "system/main.h"
 
 #include "wbt_system_local.h"
+#include "wbt_tool.h"
 
 #include "poke_tool/poketype_def.h"
 
@@ -26,6 +27,7 @@
 static void WBTTRAINER_Init( WBTTRAINER * wbt_tr );
 static void WBTTRAINER_SetPlayer( WBTTRAINER * wbt_tr, GAMEDATA * gamedata );
 static void WBTTRAINER_SetRomTrainer( WBTTRAINER * wbt_tr, u8 tr_id );
+static void WBTTRAINER_SetWBPlayer( WBTTRAINER * wbt_tr, GAMEDATA * gamedata );
 
 //============================================================================================
 //============================================================================================
@@ -66,18 +68,27 @@ void WBTSYS_Delete( WBTSYS * wbtsys )
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
+/**
+ * @brief トレーナーID配列から実トレーナーデータをセットする
+ */
 //------------------------------------------------------------------
-void WBTSYS_SetupTrainer_Debug( WBTSYS * wbtsys, GAMEDATA * gamedata, const u16 * tr_tbl )
+void WBTSYS_SetupTrainer( WBTSYS * wbtsys, GAMEDATA * gamedata, const u16 * tr_list )
 {
   int i;
   for ( i = 0; i < WBT_TRAINER_NUM; i ++ )
   {
     WBTTRAINER * wbt_tr = &wbtsys->wbt_trainer[ i ];
-    if ( tr_tbl[i] == 0xffff )
+    switch ( tr_list[i] )
     {
+    case WBT_TRCODE_PLAYER:
       WBTTRAINER_SetPlayer( wbt_tr, gamedata );
-    } else {
-      WBTTRAINER_SetRomTrainer( wbt_tr, tr_tbl[i] );
+      break;
+    case WBT_TRCODE_WBHERO:
+      WBTTRAINER_SetWBPlayer( wbt_tr, gamedata );
+      break;
+    default:
+      WBTTRAINER_SetRomTrainer( wbt_tr, tr_list[i] );
+      break;
     }
   }
 }
@@ -152,8 +163,6 @@ void WBTSYS_SetScriptAnswerWork( WBTSYS * wbtsys, u16 * scr_answer_work )
   wbtsys->scr_answer_work = scr_answer_work;
 }
 
-//============================================================================================
-//============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static void WBTSYS_SetTrainer( WBTSYS * wbtsys, const WBTTRAINER * wbt_tr, u32 pos )
@@ -170,6 +179,8 @@ const WBTTRAINER * WBTSYS_GetTrainer( const WBTSYS * wbtsys, u32 pos )
   return &wbtsys->wbt_trainer[ pos ];
 }
 
+//============================================================================================
+//============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static void WBTTRAINER_Init( WBTTRAINER * wbt_tr )
@@ -233,6 +244,24 @@ static void WBTTRAINER_SetPlayer( WBTTRAINER * wbt_tr, GAMEDATA * gamedata )
 }
 
 //------------------------------------------------------------------
+/**
+ * @todo  データ引継ぎ仕様に対応していない
+ */
+//------------------------------------------------------------------
+static void WBTTRAINER_SetWBPlayer( WBTTRAINER * wbt_tr, GAMEDATA * gamedata )
+{
+  u8 tr_id;
+  const MYSTATUS * mystat = GAMEDATA_GetMyStatus( gamedata );
+
+  tr_id = 114; //トウヤ
+  if ( MyStatus_GetMySex( mystat ) != PM_MALE )
+  {
+    tr_id = 115;  //トウコ
+  }
+  WBTTRAINER_SetRomTrainer( wbt_tr, tr_id );
+}
+
+//------------------------------------------------------------------
 //------------------------------------------------------------------
 u8 WBTTRAINER_GetPriority( const WBTTRAINER * wbt_tr )
 {
@@ -257,6 +286,31 @@ u16 WBTTRAINER_GetTrainerType( const WBTTRAINER * wbt_tr )
 //
 //
 //============================================================================================
+//------------------------------------------------------------------
+/**
+ * @brief 対戦組み合わせの確定
+ */
+//------------------------------------------------------------------
+void WBTSYS_MakeMatch( WBTSYS * wbtsys, GAMEDATA * gamedata )
+{
+  int i;
+  u16 tr_list[ WBT_TRAINER_NUM ];
+  WBT_MATCH_CONDITION cond;
+
+  GFL_STD_MemClear( &cond, sizeof(WBT_MATCH_CONDITION) );
+  cond.heapID = wbtsys->heapID;
+  cond.type = wbtsys->type;
+  //cond.rule = wbtsys->rule;
+  cond.level = 0; //仮
+  cond.seed64 = wbtsys->seed64;
+
+  WBTTOOL_MakeEntryList( &cond, tr_list );
+
+  WBTSYS_SetupTrainer( wbtsys, gamedata, tr_list );
+
+  WBTTOOL_SortTrainer( wbtsys->wbt_trainer , wbtsys->seed64 );
+}
+
 //------------------------------------------------------------------
 /**
  * @brief 対戦相手のトレーナーデータを取得

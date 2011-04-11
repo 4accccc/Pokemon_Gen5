@@ -378,3 +378,4 @@ static u8 BTL_CALC_TypeAff( PokeType wazaType, PokeType pokeType )
 
 
 
+

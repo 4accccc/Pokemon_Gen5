@@ -43,6 +43,7 @@
 
 #include "wbt_dl.h"
 
+#include "wbt_tool.h" //WBTTOOL_
 #include "savedata/wbt_save.h"  //WBTSAVE
 #include "app/wbt_list.h"
 #include "event_wbt.h"  //WBT_EVENT_ShowTournamentList
@@ -190,7 +191,7 @@ static const u16 sample_trid[WBT_TRAINER_NUM] = {
   12,//アロエ
   53,//モブ
   11,//デント
-  0xffff,//プレイヤー
+  WBT_TRCODE_PLAYER,//プレイヤー
   55,//モブ
   56,//モブ
   18,//シロナ
@@ -525,13 +526,13 @@ static BOOL debugMenuKeyInput_tr( DEBUG_WBT_WORK *wk )
 	if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT ){
 		// プレイヤの場合=>最大番号に変更
 		tmp = wk->Trbuffer[wk->Index];
-		if(tmp == 0xffff){
+		if(tmp == WBT_TRCODE_PLAYER){
 			wk->Trbuffer[wk->Index] = TRAINER_PTN_MAX;
 		}
 		else{
 			if(tmp == 0){
 				// プレイヤにする
-				wk->Trbuffer[wk->Index] = 0xffff;
+				wk->Trbuffer[wk->Index] = WBT_TRCODE_PLAYER;
 			}else{
 				wk->Trbuffer[wk->Index]--;
 			}
@@ -542,13 +543,13 @@ static BOOL debugMenuKeyInput_tr( DEBUG_WBT_WORK *wk )
 	else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT ){
 		// プレイヤの場合=>最大番号に変更
 		tmp = wk->Trbuffer[wk->Index];
-		if(tmp == 0xffff){
+		if(tmp == WBT_TRCODE_PLAYER){
 			wk->Trbuffer[wk->Index] = 0;
 		}
 		else{
 			if(tmp == TRAINER_PTN_MAX){
 				// プレイヤにする
-				wk->Trbuffer[wk->Index] = 0xffff;
+				wk->Trbuffer[wk->Index] = WBT_TRCODE_PLAYER;
 			}else{
 				wk->Trbuffer[wk->Index]++;
 			}
@@ -721,7 +722,7 @@ static void printTrNameWin( DEBUG_WBT_WORK * wk, const u16 tr_id, const s32 xpos
 	STRBUF *strbuf	= GFL_STR_CreateBuffer( 64, wk->heapID );
 	//
 	// プレイヤは要確認
-	if(tr_id == 0xffff){
+	if(tr_id == WBT_TRCODE_PLAYER){
 		{
 			GAMEDATA * gamedata = GAMESYSTEM_GetGameData( wk->gmSys );
 			const MYSTATUS * mystat = GAMEDATA_GetMyStatus( gamedata );

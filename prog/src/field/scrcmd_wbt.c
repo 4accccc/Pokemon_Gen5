@@ -1,11 +1,11 @@
-//======================================================================
+//============================================================================================
 /**
  * @file  scrcmd_wbt.c
  * @author  tamada GAMEFREAK inc.
  * @date  2011.02.21
  * @brief
  */
-//======================================================================
+//============================================================================================
 
 #include <gflib.h>
 #include "system/gfl_use.h"
@@ -32,6 +32,7 @@
 #include "field/wbt.h"
 #include "wbt_system.h"
 
+#include "wbt_tool.h"
 #include "event_wbt.h"
 #include "wbt_gimmick.h"
 
@@ -45,8 +46,8 @@
 #include "scrcmd_menuwin.h" //EvCmdBalloonWin_Write
 #include "arc/message.naix" //NARC_message_wbt_trmsg_dat
 
-//======================================================================
-//======================================================================
+//============================================================================================
+//============================================================================================
 SDK_COMPILER_ASSERT( SCR_WBT_RULE_NULL == WBTRULE_NULL );
 SDK_COMPILER_ASSERT( SCR_WBT_RULE_SINGLE == WBTRULE_SINGLE );
 SDK_COMPILER_ASSERT( SCR_WBT_RULE_DOUBLE == WBTRULE_DOUBLE );
@@ -74,8 +75,8 @@ SDK_COMPILER_ASSERT( WBT_TRMSG_PLAYER_WIN == SCR_WBT_TRMSG_PLAYER_WIN );
 SDK_COMPILER_ASSERT( WBT_TRMSG_PLAYER_LOSE == SCR_WBT_TRMSG_PLAYER_LOSE );
 SDK_COMPILER_ASSERT( WBT_TRMSG_ANNOUNCE == SCR_WBT_TRMSG_ANNOUNCE );
 
-//======================================================================
-//======================================================================
+//============================================================================================
+//============================================================================================
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 static WBTSYS * getWBTSys( SCRCMD_WORK * work )
@@ -90,19 +91,8 @@ static WBTSYS * getWBTSys( SCRCMD_WORK * work )
   return *wbtsys_work;
 }
 
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-static const u16 sample_trid[WBT_TRAINER_NUM] = {
-  18,//シロナ
-  55,//モブ
-  13,//ハチク
-  56,//モブ
-  11,//デント
-  53,//モブ
-  12,//アロエ
-  0xffff,//プレイヤー
-};
-
+//============================================================================================
+//============================================================================================
 //--------------------------------------------------------------
 /**
  * @brief スクリプトコマンド：WBTシステム開始
@@ -118,7 +108,7 @@ VMCMD_RESULT EvCmdWBTSystemStart( VMHANDLE * core, void * wk )
   wbtsys_work = GAMEDATA_GetWBTSysPointer( gamedata );
   GF_ASSERT( *wbtsys_work == NULL );
   *wbtsys_work = WBTSYS_Create( HEAPID_PROC );
-  WBTSYS_SetupTrainer_Debug( *wbtsys_work, gamedata, sample_trid );
+
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -152,13 +142,18 @@ VMCMD_RESULT EvCmdWBTSystemSetStage( VMHANDLE * core, void * wk )
   WBTSYS * wbtsys = getWBTSys( wk );
 
   WBTSYS_SetStage( wbtsys, stage );
+  //仮：エントリされたらリストを生成する
+  if ( stage == WBTSTAGE_ENTRY )
+  {
+    GAMEDATA* gamedata = SCRCMD_WORK_GetGameData( wk );
+    WBTSYS_MakeMatch( wbtsys, gamedata );
+  }
 
   return VMCMD_RESULT_CONTINUE;
 }
 
-//======================================================================
-//======================================================================
-FS_EXTERN_OVERLAY(namein);
+//============================================================================================
+//============================================================================================
 //--------------------------------------------------------------
 /**
  * @brief スクリプトコマンド：トーナメントリストの表示
@@ -269,8 +264,8 @@ VMCMD_RESULT EvCmdWBTGetTournamentType( VMHANDLE * core, void * wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
-//======================================================================
-//======================================================================
+//============================================================================================
+//============================================================================================
 //--------------------------------------------------------------
 /**
  * @brief スクリプトコマンド：ダウンロードデータ数取得
@@ -372,8 +367,8 @@ VMCMD_RESULT EvCmdWBTSelectPokemon( VMHANDLE * core, void * wk )
   return VMCMD_RESULT_SUSPEND;
 }
 
-//======================================================================
-//======================================================================
+//============================================================================================
+//============================================================================================
 //--------------------------------------------------------------
 /**
  * @brief スクリプトコマンド：WBT対戦トレーナーの動作モデルコード取得
@@ -493,23 +488,9 @@ VMCMD_RESULT EvCmdWBTAnnounce( VMHANDLE * core, void * wk )
 }
 
 //--------------------------------------------------------------
-//--------------------------------------------------------------
-static void wordsetRegisterArc( SCRCMD_WORK * work, u32 bufID, u32 arc_id, u32 msg_id )
-{
-  SCRIPT_WORK*      sc = SCRCMD_WORK_GetScriptWork( work );
-  WORDSET*     wordset = SCRIPT_GetWordSet( sc );
-  HEAPID        heapID = SCRCMD_WORK_GetHeapID( work );
-  GFL_MSGDATA     *man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, arc_id, heapID );
-  if( man )
-  {
-    STRBUF * strbuf = SCRIPT_GetMsgTempBuffer( sc );
-    GFL_MSG_GetString( man, msg_id, strbuf );
-    WORDSET_RegisterWord( wordset, bufID, strbuf, PM_NEUTRAL, TRUE, PM_LANG );
-    GFL_MSG_Delete( man );
-  }
-}
-
-//--------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：
+ */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdWBTSetTournamentName( VMHANDLE * core, void * wk )
 {
@@ -532,6 +513,9 @@ VMCMD_RESULT EvCmdWBTSetTournamentName( VMHANDLE * core, void * wk )
 }
 
 //--------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：
+ */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdWBTSetEnemyName( VMHANDLE * core, void * wk )
 {
@@ -551,6 +535,9 @@ VMCMD_RESULT EvCmdWBTSetEnemyName( VMHANDLE * core, void * wk )
 }
 
 //--------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：
+ */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdWBTGetVictoryCount( VMHANDLE * core, void * wk )
 {
@@ -563,6 +550,8 @@ VMCMD_RESULT EvCmdWBTGetVictoryCount( VMHANDLE * core, void * wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+//============================================================================================
+//============================================================================================
 //----------------------------------------------------------------------------
 /**
  *	@brief  スクリプトコマンド:WBTギミック背景ビジョン変更
