@@ -82,6 +82,7 @@ EVENT_START ev_resort_tourist
   _RESORT_GET_DATA( RESORT_GET_PARAM_FRONT_OBJID, LWK_OBJID )
 
   _RESORT_SET_WORD( RESORT_WORD_PEOPLE, 0 )
+  _RESORT_SET_WORD( RESORT_WORD_COMM_TYPE, 1 )
 
   //挨拶文
   _RESORT_GET_MSGID( RESORT_TOURIST_GREET_MSGID, LWK_MSGID )
@@ -94,7 +95,6 @@ EVENT_START ev_resort_tourist
   _RESORT_GET_DATA( RESORT_GET_PARAM_PRESENT_NUM, LWK_PRESENT_NUM )
 
   IF $LWK_PRESENT_ID != 0 THEN
-    _RESORT_SET_WORD( RESORT_WORD_COMM_TYPE, 0 )
     _RESORT_GET_MSGID( RESORT_TOURIST_ITEM_MSGID, LWK_MSGID )
 	  _BALLOONWIN_OBJMSG( LWK_MSGID, LWK_OBJID )
 	  _BALLOONWIN_CLOSE()
@@ -114,11 +114,6 @@ EVENT_START ev_resort_tourist
 
     _RESORT_END_ITEM()
   ENDIF
-
-  //アピール文
-  _RESORT_GET_MSGID( RESORT_MSGID_APPEAL, LWK_MSGID )
-	_BALLOONWIN_OBJMSG( LWK_MSGID, LWK_OBJID )
-	_BALLOONWIN_CLOSE()
 
   //以下メニュー表示はLWK_MENU_LOOPがFALSEになるまで続く
   $LWK_MENU_LOOP = TRUE
@@ -175,7 +170,7 @@ sub_tourist_main_menu:
 	  _BMPMENU_MAKE_LIST_EX( resort_sys_select_02, resort_sys_select_info_02, SEQ_TOURIST_SCOUT )	    //スカウト
   ENDIF
 
-	_BMPMENU_MAKE_LIST_EX( resort_sys_select_07, resort_sys_select_info_07, SEQ_TOURIST_FAREWELL )	        //さようなら
+	//_BMPMENU_MAKE_LIST_EX( resort_sys_select_07, resort_sys_select_info_07, SEQ_TOURIST_FAREWELL )	        //さようなら  TODO 仮で出さない
 	_BMPMENU_MAKE_LIST_EX( resort_sys_select_04, resort_sys_select_info_04, SEQ_TOURIST_DOING )	      //さいきんどう？
 
   //スポットは施設がないとでない
@@ -185,7 +180,7 @@ sub_tourist_main_menu:
   ENDIF
 
 	_BMPMENU_MAKE_LIST_EX( resort_sys_select_05, resort_sys_select_info_05, SEQ_TOURIST_APPEAL )	    //アピール
-	_BMPMENU_MAKE_LIST_EX( resort_sys_select_06, resort_sys_select_info_06, SEQ_TOURIST_WAIT )	      //まってて
+	//_BMPMENU_MAKE_LIST_EX( resort_sys_select_06, resort_sys_select_info_06, SEQ_TOURIST_WAIT )	      //まってて  TODO 仮で出さない
 	_BMPMENU_MAKE_LIST_EX( resort_sys_select_10, resort_sys_select_info_10, SEQ_TOURIST_BYE )	        //またね
 
 	//メニュー表示
@@ -210,6 +205,23 @@ sub_tourist_invitation:
 	DEFINE_LOCAL LWK_IS_VISITOR
 
   _RESORT_GET_DATA( RESORT_GET_PARAM_IS_INSTITUTION_FULL, LWK_IS_FULL )
+
+  //アピール文
+  _RESORT_GET_MSGID( RESORT_MSGID_APPEAL, LWK_MSGID )
+	_BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DOWN )
+
+	//メニュー表示
+	_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, LWK_MENU_RET )
+  _BMPMENU_MAKE_LIST( resort_sys_select_34, SCR_YES )
+  _BMPMENU_MAKE_LIST( resort_sys_select_35, SCR_NO )
+	_BMPMENU_START()
+
+	 _BALLOONWIN_CLOSE()
+  IF $LWK_MENU_RET == SCR_NO || $LWK_MENU_RET == EV_WIN_B_CANCEL THEN
+    _RET
+  ENDIF
+
+  //いっぱいだったときどれをけすか
   IF $LWK_IS_FULL == TRUE THEN
   
     _SYSWIN_MSG( resort_sys_11, POS_DOWN )
@@ -420,13 +432,14 @@ _RET
 //==============================================================
 sub_tourist_bye:
 {
+  //TODO メッセージが邪魔なのでなので消してみた
   //さよなら文を表示
-  _RESORT_GET_MSGID( RESORT_TOURIST_BYE_MSGID, LWK_MSGID )
+  //_RESORT_GET_MSGID( RESORT_TOURIST_BYE_MSGID, LWK_MSGID )
 
-  _RESORT_SET_WORD( RESORT_WORD_FREE_PHRASE, 0 )
-	_BALLOONWIN_OBJMSG( LWK_MSGID, LWK_OBJID )
-	_LAST_KEYWAIT()
-	_BALLOONWIN_CLOSE()
+  //_RESORT_SET_WORD( RESORT_WORD_FREE_PHRASE, 0 )
+	//_BALLOONWIN_OBJMSG( LWK_MSGID, LWK_OBJID )
+	//_LAST_KEYWAIT()
+	//_BALLOONWIN_CLOSE()
 
   //選択肢終了
   $LWK_MENU_LOOP = FALSE
@@ -656,11 +669,12 @@ sub_resident_institution:
 	    _BALLOONWIN_CLOSE()
 
     CASE SEQ_RESIDENT_BYE THEN          //またね
-      _RESORT_GET_MSGID( RESORT_RESIDENT_BYE_MSGID, LWK_MSGID )
-      _RESORT_SET_WORD( RESORT_WORD_FREE_NAME, 0 )
-	    _BALLOONWIN_OBJMSG( LWK_MSGID, LWK_OBJID )
-	    _LAST_KEYWAIT()
-	    _BALLOONWIN_CLOSE()
+      //TODO　メッセージが邪魔なので消してみた
+      //_RESORT_GET_MSGID( RESORT_RESIDENT_BYE_MSGID, LWK_MSGID )
+      //_RESORT_SET_WORD( RESORT_WORD_FREE_NAME, 0 )
+	    //_BALLOONWIN_OBJMSG( LWK_MSGID, LWK_OBJID )
+	    //_LAST_KEYWAIT()
+	    //_BALLOONWIN_CLOSE()
       $LWK_MENU_LOOP = FALSE
 
     DEFAULT

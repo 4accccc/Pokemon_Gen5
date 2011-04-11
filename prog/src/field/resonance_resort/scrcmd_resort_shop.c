@@ -816,7 +816,14 @@ static void can_player_buy_item( SHOP_BUY_APP_WORK *wk )
   // ˆê‚Â‚¾‚¯”ƒ‚¦‚é‚Ì‚Å‚»‚Ì‚Ü‚Üu‚Í‚¢E‚¢‚¢‚¦v
   }else
   {
-    ShopDecideMsg(wk,  mes_shop_02_03, wk->cp_select );
+    if(wk->cp_select->serviceID == RESORT_SERVICE_TYPE_ITEM )
+    {
+      ShopDecideMsg(wk,  mes_shop_02_03, wk->cp_select );
+    }
+    else
+    {
+      ShopDecideMsg(wk,  mes_shop_02_03_01, wk->cp_select );
+    }
     wk->seq  = SHOPBUY_SEQ_MSG_WAIT;
     wk->next = SHOPBUY_SEQ_ONLY1_YESNO;
   }
