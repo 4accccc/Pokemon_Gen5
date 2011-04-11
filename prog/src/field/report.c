@@ -565,8 +565,16 @@ static void LoadBgGraphic( HEAPID heapID )
 {
 	ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_REPORT_GRA, heapID );
 
-	GFL_ARCHDL_UTIL_TransVramPalette(
-		ah, NARC_report_gra_base_bg_NCLR, PALTYPE_SUB_BG, 0, 0x20*3, heapID );
+  if( GET_VERSION() == VERSION_B2 )
+  {
+	  GFL_ARCHDL_UTIL_TransVramPalette(
+		  ah, NARC_report_gra_base_bg_b_NCLR, PALTYPE_SUB_BG, 0, 0x20*3, heapID );
+    ICHI_Printf("ブラック用パレット読み込み\n");
+  }else{
+	  GFL_ARCHDL_UTIL_TransVramPalette(
+		  ah, NARC_report_gra_base_bg_NCLR, PALTYPE_SUB_BG, 0, 0x20*3, heapID );
+    ICHI_Printf("ホワイト用パレット読み込み\n");
+  }
 	GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_S, 0 );
 
 	GFL_ARCHDL_UTIL_TransVramBgCharacter(

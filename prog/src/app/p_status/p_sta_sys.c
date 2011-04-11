@@ -682,8 +682,16 @@ static void PSTATUS_LoadResource( PSTATUS_WORK *work )
   ARCHANDLE *archandle = GFL_ARC_OpenDataHandle( ARCID_P_STATUS , work->heapId );
 
   //下画面共通パレット
-  GFL_ARCHDL_UTIL_TransVramPalette( archandle , NARC_p_status_gra_p_st_bg_d_NCLR , 
-                    PALTYPE_MAIN_BG , PSTATUS_BG_PLT_MAIN*16*2 , 0 , work->heapId );
+  if( GET_VERSION() == VERSION_B2 )
+  {
+    GFL_ARCHDL_UTIL_TransVramPalette( archandle , NARC_p_status_gra_p_st_bg_d_b_NCLR , 
+                      PALTYPE_MAIN_BG , PSTATUS_BG_PLT_MAIN*16*2 , 0 , work->heapId );
+    ICHI_Printf("ブラック用パレット読み込み\n");
+  }else{
+    GFL_ARCHDL_UTIL_TransVramPalette( archandle , NARC_p_status_gra_p_st_bg_d_NCLR , 
+                      PALTYPE_MAIN_BG , PSTATUS_BG_PLT_MAIN*16*2 , 0 , work->heapId );
+    ICHI_Printf("ホワイト用パレット読み込み\n");
+  }
   //下画面共通キャラ
   GFL_ARCHDL_UTIL_TransVramBgCharacter( archandle , NARC_p_status_gra_p_st_bg_d_NCGR ,
                     PSTATUS_BG_PLATE , 0 , 0, FALSE , work->heapId );
@@ -692,8 +700,16 @@ static void PSTATUS_LoadResource( PSTATUS_WORK *work )
                     PSTATUS_BG_MAIN_BG , 0 , 0, FALSE , work->heapId );
 
   //上画面共通パレット
-  GFL_ARCHDL_UTIL_TransVramPalette( archandle , NARC_p_status_gra_p_st_bg_u_NCLR , 
-                    PALTYPE_SUB_BG , 0 , 0 , work->heapId );
+  if( GET_VERSION() == VERSION_B2 )
+  {
+    GFL_ARCHDL_UTIL_TransVramPalette( archandle , NARC_p_status_gra_p_st_bg_u_b_NCLR , 
+                      PALTYPE_SUB_BG , 0 , 0 , work->heapId );
+    ICHI_Printf("ブラック用パレット読み込み\n");
+  }else{
+    GFL_ARCHDL_UTIL_TransVramPalette( archandle , NARC_p_status_gra_p_st_bg_u_NCLR , 
+                      PALTYPE_SUB_BG , 0 , 0 , work->heapId );
+    ICHI_Printf("ホワイト用パレット読み込み\n");
+  }
   //上画面共通キャラ
   GFL_ARCHDL_UTIL_TransVramBgCharacter( archandle , NARC_p_status_gra_p_st_bg_u_NCGR ,
                     PSTATUS_BG_SUB_PLATE , 0 , 0, FALSE , work->heapId );

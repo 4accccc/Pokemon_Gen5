@@ -695,8 +695,14 @@ static void FIELD_MENU_InitGraphic(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandl
   
   // BGグラフィック転送
   // 下画面背景
-  GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_field_menu_menu_bg_NCLR , 
-                    PALTYPE_SUB_BG , 0 , 0 , work->tempHeapId );
+  if( GET_VERSION() == VERSION_B2 )
+  {
+    GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_field_menu_menu_bg_b_NCLR , PALTYPE_SUB_BG , 0 , 0 , work->tempHeapId );
+    ICHI_Printf("ブラック用パレット読み込み\n");
+  }else{
+    GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_field_menu_menu_bg_NCLR , PALTYPE_SUB_BG , 0 , 0 , work->tempHeapId );
+    ICHI_Printf("ホワイト用パレット読み込み\n");
+  }
   GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_field_menu_menu_bg_NCGR ,
                     FIELD_MENU_BG_BUTTON , 0 , 0, FALSE , work->tempHeapId );
 
