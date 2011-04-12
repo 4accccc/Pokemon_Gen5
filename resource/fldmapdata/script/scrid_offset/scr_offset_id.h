@@ -3,7 +3,7 @@
  * @file  scr_offset_id.h
  * @bfief  スクリプトIDのオフセット定義
  * @author  tamada GAMEFREAK inc.
- * @date  2011 02/24 (Thu) 22:14
+ * @date  2011 04/12 (Tue) 20:50
  *
  * このファイルはコンバータにより自動生成されています
  */
@@ -155,22 +155,22 @@
 #define ID_TV_SCR_OFFSET_END             (10524)
 
 #define ID_PAIR_SCR_OFFSET               (10525) //連れ歩き制御用スクリプト
-#define ID_PAIR_SCR_OFFSET_END           (10534)
+#define ID_PAIR_SCR_OFFSET_END           (10624)
 
-#define ID_MEDAL_SCR_OFFSET              (10535) //メダル関連イベント
-#define ID_MEDAL_SCR_OFFSET_END          (10554)
+#define ID_MEDAL_SCR_OFFSET              (10625) //メダル関連イベント
+#define ID_MEDAL_SCR_OFFSET_END          (10644)
 
-#define ID_WBT_LOBBY_OFFSET              (10555) //WBT：受付イベント
-#define ID_WBT_LOBBY_OFFSET_END          (10564)
+#define ID_WBT_LOBBY_OFFSET              (10645) //WBT：受付イベント
+#define ID_WBT_LOBBY_OFFSET_END          (10654)
 
-#define ID_WBT_HALL_OFFSET               (10565) //WBT：ホール内イベント
-#define ID_WBT_HALL_OFFSET_END           (10584)
+#define ID_WBT_HALL_OFFSET               (10655) //WBT：ホール内イベント
+#define ID_WBT_HALL_OFFSET_END           (10674)
 
-#define ID_RESORT_SCR_OFFSET             (10585) //レゾナンスリゾート共通スクリプト
-#define ID_RESORT_SCR_OFFSET_END         (10634)
+#define ID_RESORT_SCR_OFFSET             (10675) //レゾナンスリゾート共通スクリプト
+#define ID_RESORT_SCR_OFFSET_END         (10724)
 
-#define ID_INFINITY_DUNGEON_SCR_OFFSET   (10635) //無限ダンジョン用スクリプト
-#define ID_INFINITY_DUNGEON_SCR_OFFSET_END (10654)
+#define ID_INFINITY_DUNGEON_SCR_OFFSET   (10725) //無限ダンジョン用スクリプト
+#define ID_INFINITY_DUNGEON_SCR_OFFSET_END (10744)
 
 #define ID_DEBUG_SCR_OFFSET              (12000) //デバッグ用共通スクリプト（この下にはファイルを追加しない！！）
 #define ID_DEBUG_SCR_OFFSET_END          (12199)

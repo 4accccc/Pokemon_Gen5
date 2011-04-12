@@ -3,7 +3,7 @@
  * @file  scr_offset.cdat
  * @bfief  スクリプトIDのオフセットとそれに対応するアーカイブの定義テーブル
  * @author  tamada GAMEFREAK inc.
- * @date  2011 02/24 (Thu) 22:14
+ * @date  2011 04/12 (Tue) 20:50
  *
  * このファイルはコンバータにより自動生成されています
  */
@@ -22,43 +22,43 @@ static const SCRIPT_ARC_TABLE ScriptArcTable[] = {
     },
 #endif //PM_DEBUG
     {//無限ダンジョン用スクリプト
-      ID_INFINITY_DUNGEON_SCR_OFFSET, //(10635),
-      ID_INFINITY_DUNGEON_SCR_OFFSET_END,//(10654),
+      ID_INFINITY_DUNGEON_SCR_OFFSET, //(10725),
+      ID_INFINITY_DUNGEON_SCR_OFFSET_END,//(10744),
       NARC_script_seq_infinity_dungeon_scr_bin,
       ARCID_SCRIPT_MESSAGE,
       NARC_script_message_infinity_dungeon_scr_dat
     },
     {//レゾナンスリゾート共通スクリプト
-      ID_RESORT_SCR_OFFSET,           //(10585),
-      ID_RESORT_SCR_OFFSET_END,       //(10634),
+      ID_RESORT_SCR_OFFSET,           //(10675),
+      ID_RESORT_SCR_OFFSET_END,       //(10724),
       NARC_script_seq_resort_scr_bin,
       ARCID_SCRIPT_MESSAGE,
       NARC_script_message_resort_scr_dat
     },
     {//WBT：ホール内イベント
-      ID_WBT_HALL_OFFSET,             //(10565),
-      ID_WBT_HALL_OFFSET_END,         //(10584),
+      ID_WBT_HALL_OFFSET,             //(10655),
+      ID_WBT_HALL_OFFSET_END,         //(10674),
       NARC_script_seq_wbt_hall_bin,
       ARCID_SCRIPT_MESSAGE,
       NARC_script_message_wbt_hall_dat
     },
     {//WBT：受付イベント
-      ID_WBT_LOBBY_OFFSET,            //(10555),
-      ID_WBT_LOBBY_OFFSET_END,        //(10564),
+      ID_WBT_LOBBY_OFFSET,            //(10645),
+      ID_WBT_LOBBY_OFFSET_END,        //(10654),
       NARC_script_seq_wbt_lobby_bin,
       ARCID_SCRIPT_MESSAGE,
       NARC_script_message_wbt_lobby_dat
     },
     {//メダル関連イベント
-      ID_MEDAL_SCR_OFFSET,            //(10535),
-      ID_MEDAL_SCR_OFFSET_END,        //(10554),
+      ID_MEDAL_SCR_OFFSET,            //(10625),
+      ID_MEDAL_SCR_OFFSET_END,        //(10644),
       NARC_script_seq_medal_scr_bin,
       ARCID_SCRIPT_MESSAGE,
       NARC_script_message_medal_ev_dat
     },
     {//連れ歩き制御用スクリプト
       ID_PAIR_SCR_OFFSET,             //(10525),
-      ID_PAIR_SCR_OFFSET_END,         //(10534),
+      ID_PAIR_SCR_OFFSET_END,         //(10624),
       NARC_script_seq_pair_scr_bin,
       ARCID_SCRIPT_MESSAGE,
       NARC_script_message_pair_scr_dat

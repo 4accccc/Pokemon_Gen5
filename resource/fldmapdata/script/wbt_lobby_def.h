@@ -5,6 +5,6 @@
 #define _WBT_LOBBY_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_WBT_RECEPTION (10555)
+#define SCRID_WBT_RECEPTION (10645)
 
 #endif //_WBT_LOBBY_DEF_H_
