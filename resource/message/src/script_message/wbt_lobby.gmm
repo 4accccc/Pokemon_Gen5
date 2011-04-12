@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2011-02-23T16:43:18"/>
+	<create user="matsumiya" host="W00224" date="2011-04-12T18:59:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -362,7 +362,7 @@
 			</font>
 			<size position="-1" width="100"/>
 			<space position="-1" width="100"/>
-			<width position="7" width="70"/>
+			<width position="7" width="68"/>
 			<line position="-1" width="100"/>
 		</language>
 		<language japanese="JPN_KANJI" english="JPN_KANJI">
@@ -378,15 +378,15 @@
 		</language>
 	</columns>
 
-	<dialog left="6" top="97" right="711" bottom="717" maximized="no" rayout="Vertical2">
+	<dialog left="1615" top="208" right="2320" bottom="828" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="548"/>
-		<band id="3" index="4" style="0000" width="147"/>
+		<band id="2" index="3" style="0000" width="543"/>
+		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -407,7 +407,7 @@
 	</lock>
 
 
-	<row id="msg_wbt_info_01" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
+	<row id="msg_wbt_info_01" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
 		<comment>♀
 初会話時
 ・msg_wbt_info_02へ</comment>
@@ -420,7 +420,7 @@
 あらためまして……▼</language>
 	</row>
 
-	<row id="msg_wbt_info_02" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
+	<row id="msg_wbt_info_02" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
 		<comment>♀
 ・選択肢表示
 msg_wbt_menu_yes
@@ -428,35 +428,35 @@ msg_wbt_menu_explain
 msg_wbt_menu_no</comment>
 		<attribute name="キャラ指定">INFORMATIONW</attribute>
 		<language name="JPN" width="256">ようこそ
-ワールドバトルトーナメントへ！▽
+ワールドバトルトーナメント　へ！▽
 さんか　うけつけを　なさいますか？</language>
 		<language name="JPN_KANJI" width="256">ようこそ
-ワールドバトルトーナメントへ！▽
+ワールドバトルトーナメント　へ！▽
 参加受付を　なさいますか？</language>
 	</row>
 
-	<row id="msg_wbt_menu_yes" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_wbt_menu_yes" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>・msg_wbt_info_10へ</comment>
 		<attribute name="キャラ指定">選択肢表示</attribute>
 		<language name="JPN" width="256">さんかする</language>
 		<language name="JPN_KANJI" width="256">参加する</language>
 	</row>
 
-	<row id="msg_wbt_menu_explain" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_wbt_menu_explain" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>・msg_wbt_info_03へ</comment>
 		<attribute name="キャラ指定">選択肢表示</attribute>
 		<language name="JPN" width="256">せつめいを　きく</language>
 		<language name="JPN_KANJI" width="256">説明を聞く</language>
 	</row>
 
-	<row id="msg_wbt_menu_no" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_wbt_menu_no" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>・msg_wbt_info_09へ</comment>
 		<attribute name="キャラ指定">選択肢表示</attribute>
 		<language name="JPN" width="256">やめる</language>
 		<language name="JPN_KANJI" width="256">やめる</language>
 	</row>
 
-	<row id="msg_wbt_info_03" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
+	<row id="msg_wbt_info_03" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
 		<comment>♀
 ・選択肢表示</comment>
 		<attribute name="キャラ指定">INFORMATIONW</attribute>
@@ -466,49 +466,49 @@ msg_wbt_menu_no</comment>
 説明いたしましょうか？</language>
 	</row>
 
-	<row id="msg_wbt_menu_explain_all" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_wbt_menu_explain_all" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>・msg_wbt_info_04へ</comment>
 		<attribute name="キャラ指定">選択肢表示</attribute>
 		<language name="JPN" width="256">オールトーナメントについて</language>
 		<language name="JPN_KANJI" width="256">オールトーナメントについて</language>
 	</row>
 
-	<row id="msg_wbt_menu_explain_champ" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_wbt_menu_explain_champ" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>・msg_wbt_info_06へ</comment>
 		<attribute name="キャラ指定">選択肢表示</attribute>
 		<language name="JPN" width="256">チャンピオントーナメントについて</language>
 		<language name="JPN_KANJI" width="256">チャンピオントーナメントについて</language>
 	</row>
 
-	<row id="msg_wbt_menu_explain_type" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_wbt_menu_explain_type" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>・msg_wbt_info_05へ</comment>
 		<attribute name="キャラ指定">選択肢表示</attribute>
 		<language name="JPN" width="256">タイプトーナメントについて</language>
 		<language name="JPN_KANJI" width="256">タイプトーナメントについて</language>
 	</row>
 
-	<row id="msg_wbt_menu_explain_dl" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_wbt_menu_explain_dl" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>・msg_wbt_info_07へ</comment>
 		<attribute name="キャラ指定">選択肢表示</attribute>
 		<language name="JPN" width="256">ダウンロードトーナメントについて</language>
 		<language name="JPN_KANJI" width="256">ダウンロードトーナメントについて</language>
 	</row>
 
-	<row id="msg_wbt_menu_explain_rule" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_wbt_menu_explain_rule" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>・msg_wbt_info_08へ</comment>
 		<attribute name="キャラ指定">選択肢表示</attribute>
 		<language name="JPN" width="256">バトルルールについて</language>
 		<language name="JPN_KANJI" width="256">バトルルールについて</language>
 	</row>
 
-	<row id="msg_wbt_menu_back" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_wbt_menu_back" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>・msg_wbt_info_02へ</comment>
 		<attribute name="キャラ指定">選択肢表示</attribute>
 		<language name="JPN" width="256">もどる</language>
 		<language name="JPN_KANJI" width="256">もどる</language>
 	</row>
 
-	<row id="msg_wbt_info_04" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
+	<row id="msg_wbt_info_04" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
 		<comment>♀
 ・msg_wbt_info_03へ</comment>
 		<attribute name="キャラ指定">INFORMATIONW</attribute>
@@ -518,7 +518,7 @@ msg_wbt_menu_no</comment>
 ～～～～～～な　トーナメントです▼</language>
 	</row>
 
-	<row id="msg_wbt_info_05" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
+	<row id="msg_wbt_info_05" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
 		<comment>♀
 ・msg_wbt_info_03へ</comment>
 		<attribute name="キャラ指定">INFORMATIONW</attribute>
@@ -528,7 +528,7 @@ msg_wbt_menu_no</comment>
 ～～～～～～な　トーナメントです▼</language>
 	</row>
 
-	<row id="msg_wbt_info_06" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
+	<row id="msg_wbt_info_06" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
 		<comment>♀
 ・msg_wbt_info_03へ</comment>
 		<attribute name="キャラ指定">INFORMATIONW</attribute>
@@ -538,7 +538,7 @@ msg_wbt_menu_no</comment>
 ～～～～～～な　トーナメントです▼</language>
 	</row>
 
-	<row id="msg_wbt_info_07" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
+	<row id="msg_wbt_info_07" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
 		<comment>♀
 ・msg_wbt_info_03へ</comment>
 		<attribute name="キャラ指定">INFORMATIONW</attribute>
@@ -548,7 +548,7 @@ msg_wbt_menu_no</comment>
 ～～～～～～な　トーナメントです▼</language>
 	</row>
 
-	<row id="msg_wbt_info_08" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
+	<row id="msg_wbt_info_08" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
 		<comment>♀
 ・msg_wbt_info_03へ</comment>
 		<attribute name="キャラ指定">INFORMATIONW</attribute>
@@ -562,7 +562,7 @@ msg_wbt_menu_no</comment>
 ローテーションの　４種類です▼</language>
 	</row>
 
-	<row id="msg_wbt_info_09" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
+	<row id="msg_wbt_info_09" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
 		<comment>♀
 ・会話終了</comment>
 		<attribute name="キャラ指定">INFORMATIONW</attribute>
@@ -572,7 +572,7 @@ msg_wbt_menu_no</comment>
 お待ちして　おります</language>
 	</row>
 
-	<row id="msg_wbt_info_10" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
+	<row id="msg_wbt_info_10" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
 		<comment>♀
 ・選択肢表示
 msg_wbt_menu_all
@@ -586,14 +586,14 @@ msg_wbt_menu_dl</comment>
 参加なさいますか？</language>
 	</row>
 
-	<row id="msg_wbt_menu_all" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_wbt_menu_all" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>・msg_wbt_info_13へ</comment>
 		<attribute name="キャラ指定">選択肢表示</attribute>
 		<language name="JPN" width="256">オールトーナメント</language>
 		<language name="JPN_KANJI" width="256">オールトーナメント</language>
 	</row>
 
-	<row id="msg_wbt_menu_champ" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_wbt_menu_champ" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>・参加フラグが立っていない場合は
 msg_wbt_info_13へ
 ・参加フラグが立っている場合は
@@ -603,21 +603,21 @@ msg_wbt_info_11へ</comment>
 		<language name="JPN_KANJI" width="256">チャンピオントーナメント</language>
 	</row>
 
-	<row id="msg_wbt_menu_type" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_wbt_menu_type" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>・msg_wbt_info_12へ</comment>
 		<attribute name="キャラ指定">選択肢表示</attribute>
 		<language name="JPN" width="256">タイプトーナメント</language>
 		<language name="JPN_KANJI" width="256">タイプトーナメント</language>
 	</row>
 
-	<row id="msg_wbt_menu_dl" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_wbt_menu_dl" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>・msg_wbt_info_14へ</comment>
 		<attribute name="キャラ指定">選択肢表示</attribute>
 		<language name="JPN" width="256">ダウンロードトーナメント</language>
 		<language name="JPN_KANJI" width="256">ダウンロードトーナメント</language>
 	</row>
 
-	<row id="msg_wbt_info_11" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
+	<row id="msg_wbt_info_11" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
 		<comment>♀
 ・会話終了</comment>
 		<attribute name="キャラ指定">INFORMATIONW</attribute>
@@ -626,10 +626,10 @@ msg_wbt_info_11へ</comment>
 またの　おこしを　おまちしております</language>
 		<language name="JPN_KANJI" width="256">本日の　トーナメントは
 すべて　終了しています▼
-またの　お越しを　お待ちしております</language>
+またの　ご来場を　お待ちしております</language>
 	</row>
 
-	<row id="msg_wbt_info_12" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
+	<row id="msg_wbt_info_12" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
 		<comment>♀
 ・選択肢表示</comment>
 		<attribute name="キャラ指定">INFORMATIONW</attribute>
@@ -639,7 +639,7 @@ msg_wbt_info_11へ</comment>
 参加なさいますか？</language>
 	</row>
 
-	<row id="msg_wbt_info_13" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
+	<row id="msg_wbt_info_13" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
 		<comment>♀
 ・選択肢表示</comment>
 		<attribute name="キャラ指定">INFORMATIONW</attribute>
@@ -649,7 +649,7 @@ msg_wbt_info_11へ</comment>
 参加なさいますか？</language>
 	</row>
 
-	<row id="msg_wbt_info_14" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
+	<row id="msg_wbt_info_14" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
 		<comment>♀
 ・選択肢表示</comment>
 		<attribute name="キャラ指定">INFORMATIONW</attribute>
@@ -659,21 +659,21 @@ msg_wbt_info_11へ</comment>
 こちらに　なります</language>
 	</row>
 
-	<row id="msg_wbt_info_14_01" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
+	<row id="msg_wbt_info_14_01" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
 		<comment>♀
 ・会話終了</comment>
 		<attribute name="キャラ指定">INFORMATIONW</attribute>
 		<language name="JPN" width="256">あら……？▼
 おきゃくさまが　さんか　できる
-トーナメントは　ないみたいです……▼
+トーナメントは　ないようですね▼
 またの　おこしを　おまちしております</language>
 		<language name="JPN_KANJI" width="256">あら……？▼
-お客様が　参加　できる
-トーナメントは　ないみたいです……▼
-またの　お越しを　お待ちしております</language>
+おきゃくさまが　参加できる
+トーナメントは　ないようですね▼
+またの　ご来場を　お待ちしております</language>
 	</row>
 
-	<row id="msg_wbt_menu_rule_single" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_wbt_menu_rule_single" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>参加数の条件を満たしている場合は
 ・msg_wbt_info_15へ
 
@@ -684,7 +684,7 @@ msg_wbt_info_11へ</comment>
 		<language name="JPN_KANJI" width="256">シングルバトル</language>
 	</row>
 
-	<row id="msg_wbt_menu_rule_double" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_wbt_menu_rule_double" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>参加数の条件を満たしている場合は
 ・msg_wbt_info_15へ
 
@@ -695,7 +695,7 @@ msg_wbt_info_11へ</comment>
 		<language name="JPN_KANJI" width="256">ダブルバトル</language>
 	</row>
 
-	<row id="msg_wbt_menu_rule_triple" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_wbt_menu_rule_triple" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>参加数の条件を満たしている場合は
 ・msg_wbt_info_15へ
 
@@ -706,7 +706,7 @@ msg_wbt_info_11へ</comment>
 		<language name="JPN_KANJI" width="256">トリプルバトル</language>
 	</row>
 
-	<row id="msg_wbt_menu_rule_rotation" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_wbt_menu_rule_rotation" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>参加数の条件を満たしている場合は
 ・msg_wbt_info_15へ
 
@@ -717,7 +717,7 @@ msg_wbt_info_11へ</comment>
 		<language name="JPN_KANJI" width="256">ローテーションバトル</language>
 	</row>
 
-	<row id="msg_wbt_menu_dl01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_wbt_menu_dl01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>参加数の条件を満たしている場合は
 ・msg_wbt_info_15へ
 
@@ -728,7 +728,7 @@ msg_wbt_info_11へ</comment>
 		<language name="JPN_KANJI" width="256">ダウンロードトーナメント１</language>
 	</row>
 
-	<row id="msg_wbt_menu_dl02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_wbt_menu_dl02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>参加数の条件を満たしている場合は
 ・msg_wbt_info_15へ
 
@@ -739,14 +739,14 @@ msg_wbt_info_11へ</comment>
 		<language name="JPN_KANJI" width="256">ダウンロードトーナメント２</language>
 	</row>
 
-	<row id="msg_wbt_menu_dl03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_wbt_menu_dl03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>・msg_wbt_info_15へ</comment>
 		<attribute name="キャラ指定">選択肢表示</attribute>
 		<language name="JPN" width="256">ダウンロードトーナメント３</language>
 		<language name="JPN_KANJI" width="256">ダウンロードトーナメント３</language>
 	</row>
 
-	<row id="msg_wbt_info_15" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
+	<row id="msg_wbt_info_15" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
 		<comment>♀
 ・ポケモン選択画面へ</comment>
 		<attribute name="キャラ指定">INFORMATIONW</attribute>
@@ -756,7 +756,7 @@ msg_wbt_info_11へ</comment>
 ポケモンを　選んでください▼</language>
 	</row>
 
-	<row id="msg_wbt_info_16" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
+	<row id="msg_wbt_info_16" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
 		<comment>♀
 ・会話終了</comment>
 		<attribute name="キャラ指定">INFORMATIONW</attribute>
@@ -766,7 +766,7 @@ msg_wbt_info_11へ</comment>
 [2:00:１桁:0]ひき　必要ですよ</language>
 	</row>
 
-	<row id="msg_wbt_info_17" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
+	<row id="msg_wbt_info_17" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
 		<comment>♀
 ポケモン選択に異常がなかった場合
 ・つづけてトーナメントリスト表示</comment>
@@ -777,7 +777,7 @@ msg_wbt_info_11へ</comment>
 トーナメントリストを　ご覧ください！▼</language>
 	</row>
 
-	<row id="msg_wbt_info_error1" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
+	<row id="msg_wbt_info_error1" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
 		<comment>♀
 ポケモン選択に異常があった場合
 ・つづけてエラー内容に合わせて
@@ -791,7 +791,7 @@ msg_wbt_info_11へ</comment>
 問題が　あるようです</language>
 	</row>
 
-	<row id="msg_wbt_info_18" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
+	<row id="msg_wbt_info_18" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
 		<comment>♀
 トーナメントリスト表示後
 ・会場内に案内するアニメ表示</comment>
@@ -804,7 +804,7 @@ msg_wbt_info_11へ</comment>
 こちらへ　どうぞ！！▼</language>
 	</row>
 
-	<row id="msg_wbt_menu_normal" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_wbt_menu_normal" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>参加数の条件を満たしている場合は
 ・msg_wbt_info_15へ
 
@@ -815,7 +815,7 @@ msg_wbt_info_11へ</comment>
 		<language name="JPN_KANJI" width="256">ノーマル</language>
 	</row>
 
-	<row id="msg_wbt_menu_honoo" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_wbt_menu_honoo" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>参加数の条件を満たしている場合は
 ・msg_wbt_info_15へ
 
@@ -826,7 +826,7 @@ msg_wbt_info_11へ</comment>
 		<language name="JPN_KANJI" width="256">ほのお</language>
 	</row>
 
-	<row id="msg_wbt_menu_mizu" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_wbt_menu_mizu" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>参加数の条件を満たしている場合は
 ・msg_wbt_info_15へ
 
@@ -837,7 +837,7 @@ msg_wbt_info_11へ</comment>
 		<language name="JPN_KANJI" width="256">みず</language>
 	</row>
 
-	<row id="msg_wbt_menu_kusa" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_wbt_menu_kusa" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>参加数の条件を満たしている場合は
 ・msg_wbt_info_15へ
 
@@ -848,7 +848,7 @@ msg_wbt_info_11へ</comment>
 		<language name="JPN_KANJI" width="256">くさ</language>
 	</row>
 
-	<row id="msg_wbt_menu_denki" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_wbt_menu_denki" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>参加数の条件を満たしている場合は
 ・msg_wbt_info_15へ
 
@@ -859,7 +859,7 @@ msg_wbt_info_11へ</comment>
 		<language name="JPN_KANJI" width="256">でんき</language>
 	</row>
 
-	<row id="msg_wbt_menu_koori" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_wbt_menu_koori" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>参加数の条件を満たしている場合は
 ・msg_wbt_info_15へ
 
@@ -870,7 +870,7 @@ msg_wbt_info_11へ</comment>
 		<language name="JPN_KANJI" width="256">こおり</language>
 	</row>
 
-	<row id="msg_wbt_menu_kakutou" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_wbt_menu_kakutou" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>参加数の条件を満たしている場合は
 ・msg_wbt_info_15へ
 
@@ -881,7 +881,7 @@ msg_wbt_info_11へ</comment>
 		<language name="JPN_KANJI" width="256">かくとう</language>
 	</row>
 
-	<row id="msg_wbt_menu_doku" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_wbt_menu_doku" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>参加数の条件を満たしている場合は
 ・msg_wbt_info_15へ
 
@@ -892,7 +892,7 @@ msg_wbt_info_11へ</comment>
 		<language name="JPN_KANJI" width="256">どく</language>
 	</row>
 
-	<row id="msg_wbt_menu_zimen" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_wbt_menu_zimen" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>参加数の条件を満たしている場合は
 ・msg_wbt_info_15へ
 
@@ -903,7 +903,7 @@ msg_wbt_info_11へ</comment>
 		<language name="JPN_KANJI" width="256">じめん</language>
 	</row>
 
-	<row id="msg_wbt_menu_hikou" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_wbt_menu_hikou" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>参加数の条件を満たしている場合は
 ・msg_wbt_info_15へ
 
@@ -914,7 +914,7 @@ msg_wbt_info_11へ</comment>
 		<language name="JPN_KANJI" width="256">ひこう</language>
 	</row>
 
-	<row id="msg_wbt_menu_esper" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_wbt_menu_esper" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>参加数の条件を満たしている場合は
 ・msg_wbt_info_15へ
 
@@ -925,7 +925,7 @@ msg_wbt_info_11へ</comment>
 		<language name="JPN_KANJI" width="256">エスパー</language>
 	</row>
 
-	<row id="msg_wbt_menu_musi" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_wbt_menu_musi" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>参加数の条件を満たしている場合は
 ・msg_wbt_info_15へ
 
@@ -936,7 +936,7 @@ msg_wbt_info_11へ</comment>
 		<language name="JPN_KANJI" width="256">むし</language>
 	</row>
 
-	<row id="msg_wbt_menu_iwa" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_wbt_menu_iwa" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>参加数の条件を満たしている場合は
 ・msg_wbt_info_15へ
 
@@ -947,7 +947,7 @@ msg_wbt_info_11へ</comment>
 		<language name="JPN_KANJI" width="256">いわ</language>
 	</row>
 
-	<row id="msg_wbt_menu_gorst" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_wbt_menu_gorst" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>参加数の条件を満たしている場合は
 ・msg_wbt_info_15へ
 
@@ -958,7 +958,7 @@ msg_wbt_info_11へ</comment>
 		<language name="JPN_KANJI" width="256">ゴースト</language>
 	</row>
 
-	<row id="msg_wbt_menu_dragon" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_wbt_menu_dragon" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>参加数の条件を満たしている場合は
 ・msg_wbt_info_15へ
 
@@ -969,7 +969,7 @@ msg_wbt_info_11へ</comment>
 		<language name="JPN_KANJI" width="256">ドラゴン</language>
 	</row>
 
-	<row id="msg_wbt_menu_aku" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_wbt_menu_aku" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>参加数の条件を満たしている場合は
 ・msg_wbt_info_15へ
 
@@ -980,7 +980,7 @@ msg_wbt_info_11へ</comment>
 		<language name="JPN_KANJI" width="256">あく</language>
 	</row>
 
-	<row id="msg_wbt_menu_hagane" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_wbt_menu_hagane" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>参加数の条件を満たしている場合は
 ・msg_wbt_info_15へ
 
