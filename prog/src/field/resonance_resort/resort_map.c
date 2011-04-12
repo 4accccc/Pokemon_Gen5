@@ -9,6 +9,8 @@
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #include <gflib.h>
+#include "resort_people_def.h"
+#include "field/field_dir.h"
 #include "resort_map.h"
 //=============================================================================
 /**
@@ -83,18 +85,31 @@ RESORT_PLACEID RESORT_MAP_ZoneIDToPlaceID( ZONEID zoneID )
  *	@brief 場所による、インデックスごとの座標を取得
  *
  *	@param	RESORT_PLACEID placeID 場所ID
+ *	@param  type　人物タイプ
  *	@param  u16 index インデックス（主にpeopleID）
  *	@param	*p_x　Xグリッド座標
  *	@param	*p_z  Zグリッド座標
+ *	@param	*p_dir 方向
  */
 //-----------------------------------------------------------------------------
-void RESORT_MAP_GetPlaceGridPosByIndex( RESORT_PLACEID placeID, u16 index, u16 *p_x, u16 *p_z )
+void RESORT_MAP_GetPlaceGridPosByIndex( RESORT_PLACEID placeID, u16 people_type, u16 kind, u16 peopleID, u16 *p_x, u16 *p_z, u16 *p_dir )
 {
   switch( placeID )
   {
   case RESORT_PLACEID_RECEPTION:
-    *p_x  = 2 + (index%5)*2;
-    *p_z  = 3 + (index/5)*2;
+    if( people_type == RESORT_PEOPLE_TYPE_SECRETARY )
+    {
+      GF_ASSERT( kind == RESORT_SECRETARY_TYPE_SPACE );
+      *p_x  = 13;
+      *p_z  = 13;
+      *p_dir = DIR_LEFT;
+    }
+    else
+    {
+      *p_x  = 2 + (peopleID%5)*2;
+      *p_z  = 3 + (peopleID/5)*2;
+      *p_dir = DIR_DOWN;
+    }
     break;
   case RESORT_PLACEID_FIELD:
     {
@@ -120,8 +135,8 @@ void RESORT_MAP_GetPlaceGridPosByIndex( RESORT_PLACEID placeID, u16 index, u16 *
         {19,13},
         {19,16},
       };
-      *p_x  = sc_pos_data[index].x;
-      *p_z  = sc_pos_data[index].z;
+      *p_x  = sc_pos_data[peopleID].x;
+      *p_z  = sc_pos_data[peopleID].z;
     }
     break;
   case RESORT_PLACEID_INSTITUTION_00:
@@ -132,11 +147,63 @@ void RESORT_MAP_GetPlaceGridPosByIndex( RESORT_PLACEID placeID, u16 index, u16 *
   case RESORT_PLACEID_INSTITUTION_05:
   case RESORT_PLACEID_INSTITUTION_06:
   case RESORT_PLACEID_INSTITUTION_07:
-    *p_x = 7+index;
+    *p_x = 7+peopleID;
     *p_z = 9;
     break;
-    //TODO
+  case RESORT_PLACEID_EMBASSY:
+    //迎賓館の秘書位置
+    if( people_type == RESORT_PEOPLE_TYPE_SECRETARY )
+    {
+      switch( kind )
+      {
+      case RESORT_SECRETARY_TYPE_WORK:
+        *p_x    = 11;
+        *p_z    = 8;
+        *p_dir  = DIR_DOWN;
+        break;
+      case RESORT_SECRETARY_TYPE_MOVE:
+        *p_x    = 4;
+        *p_z    = 13;
+        *p_dir  = DIR_RIGHT;
+        break;
+      case RESORT_SECRETARY_TYPE_CENTER:
+        *p_x    = 11;
+        *p_z    = 10;
+        *p_dir  = DIR_UP;
+        break;
+      case RESORT_SECRETARY_TYPE_PC:
+        *p_x    = 10;
+        *p_z    = 14;
+        *p_dir  = DIR_DOWN;
+        break;
+      default:
+        GF_ASSERT(0);
+      }
+    }
+    break;
   default:
     GF_ASSERT(0);
   }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  秘書タイプ
+ *
+ *	@param	u16 type  秘書タイプ
+ *
+ *	@return 場所ID
+ */
+//-----------------------------------------------------------------------------
+RESORT_PLACEID RESORT_MAP_GetSecretaryPlace( u16 type )
+{
+  static const RESORT_PLACEID sc_secretary_place[RESORT_SECRETARY_TYPE_MAX] =
+  {
+    RESORT_PLACEID_EMBASSY,//RESORT_SECRETARY_TYPE_WORK
+    RESORT_ZONE_ID_RECEPTION,//RESORT_SECRETARY_TYPE_SPACE
+    RESORT_PLACEID_EMBASSY,//RESORT_SECRETARY_TYPE_MOVE
+    RESORT_PLACEID_EMBASSY,//RESORT_SECRETARY_TYPE_CENTER
+    RESORT_PLACEID_EMBASSY,//RESORT_SECRETARY_TYPE_PC
+  };
+
+  return sc_secretary_place[ type ];
 }

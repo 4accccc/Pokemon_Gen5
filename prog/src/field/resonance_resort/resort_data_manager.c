@@ -342,13 +342,7 @@ u32 RESORT_DATA_MANAGER_GetPeopleType( RESORT_DATA_MANAGER_TYPE type )
  *	@return　TRUEで転職可能 FALSEで不可能
  */
 //-----------------------------------------------------------------------------
-typedef enum
-{
-  RESORT_DATA_MANAGER_CHECKCONVERT_DST_VISITOR,
-  RESORT_DATA_MANAGER_CHECKCONVERT_DST_SECRETARY,
-  RESORT_DATA_MANAGER_CHECKCONVERT_DST_RESIDENT,
-}RESORT_DATA_MANAGER_CHECKCONVERT_DST;
-static BOOL Resort_Data_Manager_CheckConvert( const RESORT_DATA_MANAGER *cp_wk, RESORT_DATA_MANAGER_CHECKCONVERT_DST param, RESORT_PLACEID placeID, u16 *p_peopleID, void **pp_dst )
+static BOOL RESORT_DATA_MANAGER_CheckConvert( const RESORT_DATA_MANAGER *cp_wk, RESORT_DATA_MANAGER_CHECKCONVERT_DST param, RESORT_PLACEID placeID, u16 *p_peopleID, void **pp_dst )
 {
   //場所の空きを検索
   *p_peopleID = RESORT_DATA_MANAGER_SearchPlaceEmptyPeopleID( cp_wk, placeID );
@@ -386,6 +380,28 @@ static BOOL Resort_Data_Manager_CheckConvert( const RESORT_DATA_MANAGER *cp_wk, 
   return TRUE;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  開いている施設の場所IDを取得
+ *
+ *	@param	const RESORT_PEOPLE_ALL_DATA *cp_wk  ワーク
+ *
+ *	@return 施設の場所ID  開いてない場合RESORT_PLACEID_NONE
+ */
+//-----------------------------------------------------------------------------
+static RESORT_PLACEID RESORT_DATA_MANAGER_SearchEmptyInstitutionPlaceID( const RESORT_PEOPLE_ALL_DATA *cp_wk )
+{
+  int i;
+  for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
+  {
+    RESORT_RESIDENT_DATA *p_resident=  RESORT_PEOPLE_ALL_DATA_GetResident( (RESORT_PEOPLE_ALL_DATA *)cp_wk, i );
+    if( RESORT_RESIDENT_DATA_IsEmpty(p_resident) )
+    {
+      return RESORT_PLACEID_INSTITUTION_00+i;
+    }
+  }
+  return RESORT_PLACEID_NONE;
+}
 
 //----------------------------------------------------------------------------
 /**
@@ -400,7 +416,7 @@ static BOOL Resort_Data_Manager_CheckConvert( const RESORT_DATA_MANAGER *cp_wk, 
 BOOL RESORT_DATA_MANAGER_IsRecvToResident( const RESORT_DATA_MANAGER *cp_wk, const RESORT_RECV_DATA *cp_src )
 {
   //場所が開いているか？
-  RESORT_PLACEID placeID = RESORT_PEOPLE_ALL_DATA_SearchEmptyInstitutionPlaceID( cp_wk->param.p_all_people );
+  RESORT_PLACEID placeID = RESORT_DATA_MANAGER_SearchEmptyInstitutionPlaceID( cp_wk->param.p_all_people );
   u16 peopleID;
   void *p_dst_adrs;
   if( placeID == RESORT_PLACEID_NONE )
@@ -410,7 +426,7 @@ BOOL RESORT_DATA_MANAGER_IsRecvToResident( const RESORT_DATA_MANAGER *cp_wk, con
   }
   else
   {
-    return Resort_Data_Manager_CheckConvert( cp_wk, RESORT_DATA_MANAGER_CHECKCONVERT_DST_RESIDENT, placeID, &peopleID, &p_dst_adrs );
+    return RESORT_DATA_MANAGER_CheckConvert( cp_wk, RESORT_DATA_MANAGER_CHECKCONVERT_DST_RESIDENT, placeID, &peopleID, &p_dst_adrs );
   }
 }
 
@@ -425,7 +441,7 @@ BOOL RESORT_DATA_MANAGER_IsRecvToResident( const RESORT_DATA_MANAGER *cp_wk, con
 //-----------------------------------------------------------------------------
 void RESORT_DATA_MANAGER_RecvToResident( RESORT_DATA_MANAGER *p_wk, RESORT_RECV_DATA *p_src, u16 type )
 {
-  RESORT_PLACEID placeID = RESORT_PEOPLE_ALL_DATA_SearchEmptyInstitutionPlaceID( p_wk->param.p_all_people );
+  RESORT_PLACEID placeID = RESORT_DATA_MANAGER_SearchEmptyInstitutionPlaceID( p_wk->param.p_all_people );
   u16 peopleID;
   void *p_dst_adrs;
   RESORT_RESIDENT_DATA *p_dst;
@@ -437,7 +453,7 @@ void RESORT_DATA_MANAGER_RecvToResident( RESORT_DATA_MANAGER *p_wk, RESORT_RECV_
     GF_ASSERT(0);
   }
 
-  if( Resort_Data_Manager_CheckConvert( p_wk, RESORT_DATA_MANAGER_CHECKCONVERT_DST_RESIDENT, placeID, &peopleID, &p_dst_adrs ) )
+  if( RESORT_DATA_MANAGER_CheckConvert( p_wk, RESORT_DATA_MANAGER_CHECKCONVERT_DST_RESIDENT, placeID, &peopleID, &p_dst_adrs ) )
   {
     RESORT_INSTITUTION_DATA *p_institution;
 
@@ -460,6 +476,29 @@ void RESORT_DATA_MANAGER_RecvToResident( RESORT_DATA_MANAGER *p_wk, RESORT_RECV_
   }
 }
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  開いているコンドミニアムの場所IDを取得(滞在者インデックス＝コンドミニアムインデックス)
+ *
+ *	@param	const RESORT_PEOPLE_ALL_DATA *cp_wk  ワーク
+ *
+ *	@return コンドミニアムの場所ID  開いてない場合RESORT_PLACEID_NONE
+ */
+//-----------------------------------------------------------------------------
+static RESORT_PLACEID RESORT_DATA_MANAGER_SearchEmptyCondominiumPlaceID( const RESORT_PEOPLE_ALL_DATA *cp_wk )
+{
+  int i;
+  for( i = 0; i < RESORT_VISITOR_DATA_NUM; i++ )
+  {
+    RESORT_VISITOR_DATA *p_visitor = RESORT_PEOPLE_ALL_DATA_GetVisitor( (RESORT_PEOPLE_ALL_DATA *)cp_wk, i );
+    if( RESORT_VISITOR_DATA_IsEmpty(p_visitor) )
+    {
+      return RESORT_PLACEID_CONDOMINIUM_00+i;
+    }
+  }
+  return RESORT_PLACEID_NONE;
+}
 //----------------------------------------------------------------------------
 /**
  *	@brief  旅行者から滞在者になれるか
@@ -472,7 +511,7 @@ void RESORT_DATA_MANAGER_RecvToResident( RESORT_DATA_MANAGER *p_wk, RESORT_RECV_
 //-----------------------------------------------------------------------------
 BOOL RESORT_DATA_MANAGER_IsRecvToVisitor( const RESORT_DATA_MANAGER *cp_wk, const RESORT_RECV_DATA *cp_src )
 {
-  RESORT_PLACEID placeID = RESORT_PEOPLE_ALL_DATA_SearchEmptyCondominiumPlaceID( cp_wk->param.p_all_people );
+  RESORT_PLACEID placeID = RESORT_DATA_MANAGER_SearchEmptyCondominiumPlaceID( cp_wk->param.p_all_people );
   u16 peopleID;
   void *p_dst;
 
@@ -483,7 +522,7 @@ BOOL RESORT_DATA_MANAGER_IsRecvToVisitor( const RESORT_DATA_MANAGER *cp_wk, cons
   }
   else
   {
-    return Resort_Data_Manager_CheckConvert( cp_wk, RESORT_DATA_MANAGER_CHECKCONVERT_DST_VISITOR, placeID, &peopleID, &p_dst );
+    return RESORT_DATA_MANAGER_CheckConvert( cp_wk, RESORT_DATA_MANAGER_CHECKCONVERT_DST_VISITOR, placeID, &peopleID, &p_dst );
   }
 }
 
@@ -497,7 +536,7 @@ BOOL RESORT_DATA_MANAGER_IsRecvToVisitor( const RESORT_DATA_MANAGER *cp_wk, cons
 //-----------------------------------------------------------------------------
 void RESORT_DATA_MANAGER_RecvToVisitor( RESORT_DATA_MANAGER *p_wk, RESORT_RECV_DATA *p_src )
 {
-  RESORT_PLACEID placeID = RESORT_PEOPLE_ALL_DATA_SearchEmptyCondominiumPlaceID( p_wk->param.p_all_people );
+  RESORT_PLACEID placeID = RESORT_DATA_MANAGER_SearchEmptyCondominiumPlaceID( p_wk->param.p_all_people );
   u16 peopleID;
   RESORT_VISITOR_DATA *p_dst;
   void *p_dst_adrs;
@@ -509,7 +548,7 @@ void RESORT_DATA_MANAGER_RecvToVisitor( RESORT_DATA_MANAGER *p_wk, RESORT_RECV_D
     GF_ASSERT(0);
   }
 
-  if( Resort_Data_Manager_CheckConvert( p_wk, RESORT_DATA_MANAGER_CHECKCONVERT_DST_VISITOR, placeID, &peopleID, &p_dst_adrs ) )
+  if( RESORT_DATA_MANAGER_CheckConvert( p_wk, RESORT_DATA_MANAGER_CHECKCONVERT_DST_VISITOR, placeID, &peopleID, &p_dst_adrs ) )
   {  
     p_dst = p_dst_adrs;
     
@@ -528,6 +567,31 @@ void RESORT_DATA_MANAGER_RecvToVisitor( RESORT_DATA_MANAGER *p_wk, RESORT_RECV_D
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  秘書を取得
+ *
+ *	@param	const RESORT_PEOPLE_ALL_DATA *cp_wk  ワーク
+ *	@param  p_index インデックス
+ *
+ *	@return   TRUEで空きが存在  FALSEでいっぱい
+ */
+//-----------------------------------------------------------------------------
+static BOOL RESORT_DATA_MANAGER_SearchEmptySecretary( const RESORT_PEOPLE_ALL_DATA *cp_wk, u32 *p_index )
+{
+  int i;
+  for( i = 0; i < RESORT_SECRETARY_DATA_NUM; i++ )
+  {
+    RESORT_SECRETARY_DATA *p_secretary=  RESORT_PEOPLE_ALL_DATA_GetSecretary( (RESORT_PEOPLE_ALL_DATA *)cp_wk, i );
+    if( RESORT_SECRETARY_DATA_IsEmpty(p_secretary) )
+    {
+      *p_index = i;
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  旅行者を秘書に出来るかチェック
  *
  *	@param	const RESORT_DATA_MANAGER *cp_wk  ワーク
@@ -538,10 +602,18 @@ void RESORT_DATA_MANAGER_RecvToVisitor( RESORT_DATA_MANAGER *p_wk, RESORT_RECV_D
 //-----------------------------------------------------------------------------
 BOOL RESORT_DATA_MANAGER_IsRecvToSecretary( const RESORT_DATA_MANAGER *cp_wk, const RESORT_RECV_DATA *cp_src )
 {
-  RESORT_PLACEID placeID = RESORT_PLACEID_FIELD; //TODO
+  u32 secretary_type;
+  RESORT_PLACEID placeID;
   u16 peopleID;
   void *p_dst;
-  return Resort_Data_Manager_CheckConvert( cp_wk, RESORT_DATA_MANAGER_CHECKCONVERT_DST_SECRETARY, placeID, &peopleID, &p_dst );
+
+  if( !RESORT_DATA_MANAGER_SearchEmptySecretary( cp_wk->param.p_all_people, &secretary_type ) )
+  {
+    return FALSE;
+  }
+  placeID = RESORT_MAP_GetSecretaryPlace( secretary_type );
+
+  return RESORT_DATA_MANAGER_CheckConvert( cp_wk, RESORT_DATA_MANAGER_CHECKCONVERT_DST_SECRETARY, placeID, &peopleID, &p_dst );
 }
 
 //----------------------------------------------------------------------------
@@ -554,12 +626,20 @@ BOOL RESORT_DATA_MANAGER_IsRecvToSecretary( const RESORT_DATA_MANAGER *cp_wk, co
 //-----------------------------------------------------------------------------
 void RESORT_DATA_MANAGER_RecvToSecretary( RESORT_DATA_MANAGER *p_wk, RESORT_RECV_DATA *p_src )
 {
-  RESORT_PLACEID placeID = RESORT_PLACEID_FIELD; //TODO
+  //この秘書のタイプを取得する
+  u32 secretary_type;
+  RESORT_PLACEID placeID;
   u16 peopleID;
   RESORT_SECRETARY_DATA *p_dst;
   void *p_dst_adrs;
 
-  if( Resort_Data_Manager_CheckConvert( p_wk, RESORT_DATA_MANAGER_CHECKCONVERT_DST_SECRETARY, placeID, &peopleID, &p_dst_adrs ) )
+  if( !RESORT_DATA_MANAGER_SearchEmptySecretary( p_wk->param.p_all_people, &secretary_type ) )
+  {
+    GF_ASSERT(0);
+  }
+  placeID = RESORT_MAP_GetSecretaryPlace( secretary_type );
+
+  if( RESORT_DATA_MANAGER_CheckConvert( p_wk, RESORT_DATA_MANAGER_CHECKCONVERT_DST_SECRETARY, placeID, &peopleID, &p_dst_adrs ) )
   {
     p_dst = p_dst_adrs;
 
@@ -592,7 +672,7 @@ BOOL RESORT_DATA_MANAGER_IsResidentToVisitor( const RESORT_DATA_MANAGER *cp_wk, 
   RESORT_PLACEID placeID = RESORT_PLACEID_CONDOMINIUM_00; //TODO
   u16 peopleID;
   void *p_dst;
-  return Resort_Data_Manager_CheckConvert( cp_wk, RESORT_DATA_MANAGER_CHECKCONVERT_DST_VISITOR, placeID, &peopleID, &p_dst );
+  return RESORT_DATA_MANAGER_CheckConvert( cp_wk, RESORT_DATA_MANAGER_CHECKCONVERT_DST_VISITOR, placeID, &peopleID, &p_dst );
 }
 
 //----------------------------------------------------------------------------
@@ -609,7 +689,7 @@ void RESORT_DATA_MANAGER_ResidentToVisitor( RESORT_DATA_MANAGER *p_wk, RESORT_RE
   RESORT_PLACEID placeID = RESORT_PLACEID_CONDOMINIUM_00; //TODO
   u16 peopleID;
   void *p_dst;
-  if( Resort_Data_Manager_CheckConvert( p_wk, RESORT_DATA_MANAGER_CHECKCONVERT_DST_VISITOR, placeID, &peopleID, &p_dst ) )
+  if( RESORT_DATA_MANAGER_CheckConvert( p_wk, RESORT_DATA_MANAGER_CHECKCONVERT_DST_VISITOR, placeID, &peopleID, &p_dst ) )
   {
     //TODO 
     RESORT_VISITOR_DATA_SetRecv( p_dst, p_src, peopleID, placeID, 0 );

@@ -60,4 +60,5 @@ typedef enum
 
 extern ZONEID RESORT_MAP_PlaceIDToZoneID( RESORT_PLACEID placeID );
 extern RESORT_PLACEID RESORT_MAP_ZoneIDToPlaceID( ZONEID zoneID );
-extern void RESORT_MAP_GetPlaceGridPosByIndex( RESORT_PLACEID placeID, u16 index, u16 *p_x, u16 *p_z );
+extern void RESORT_MAP_GetPlaceGridPosByIndex( RESORT_PLACEID placeID, u16 people_type, u16 kind, u16 peopleID, u16 *p_x, u16 *p_z, u16 *p_dir );
+extern RESORT_PLACEID RESORT_MAP_GetSecretaryPlace( u16 type );

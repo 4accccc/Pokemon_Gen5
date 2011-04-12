@@ -734,7 +734,8 @@ sub_resident_lot:
       _NUMBER( 0, LWK_RET, 2 )
   	  _BALLOONWIN_OBJMSG( resort_lot_01, LWK_OBJID )
     	_BALLOONWIN_CLOSE()
- 	    _ITEM_EVENT_KEYWAIT( 10, 1 )
+      $LWK_RET += 10
+ 	    _ITEM_EVENT_KEYWAIT( LWK_RET, 1 )
     ENDIF
 
     _RESORT_SET_DAY_FLAG() 

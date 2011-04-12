@@ -536,8 +536,8 @@ static BOOL debugMenuCallProc_AllSecretary( DEBUG_MENU_EVENT_WORK *p_wk )
     RESORT_SECRETARY_DATA *p_dst = RESORT_PEOPLE_ALL_DATA_GetSecretary( p_all_people, i );
     if( RESORT_SECRETARY_DATA_IsEmpty( p_dst ) )
     {
-      RESORT_RECV_DATA_SetDebugData( p_recv, p_wk->gdata );
-      RESORT_SECRETARY_DATA_SetRecv( p_dst, p_recv, 8+i, 1, i );
+        RESORT_RECV_DATA_SetDebugData( p_recv, p_wk->gdata );
+        RESORT_SECRETARY_DATA_SetRecv( p_dst, p_recv, 8+i, RESORT_MAP_GetSecretaryPlace( i ), i );
     }
   }
 

@@ -92,6 +92,15 @@ extern RESORT_RESIDENT_DATA * RESORT_DATA_MANAGER_SearchResident( const RESORT_D
 //çÏê¨
 extern STRBUF * RESORT_DATA_MANAGER_CreateShopName( const RESORT_BINARY_SHOP *cp_wk, const RESORT_RESIDENT_DATA *cp_data, HEAPID heapID );
 
+
+typedef enum
+{
+  RESORT_DATA_MANAGER_CHECKCONVERT_DST_VISITOR,
+  RESORT_DATA_MANAGER_CHECKCONVERT_DST_SECRETARY,
+  RESORT_DATA_MANAGER_CHECKCONVERT_DST_RESIDENT,
+}RESORT_DATA_MANAGER_CHECKCONVERT_DST;
+extern BOOL RESORT_DATA_MANAGER_CheckConvert( const RESORT_DATA_MANAGER *cp_wk, RESORT_DATA_MANAGER_CHECKCONVERT_DST param, RESORT_PLACEID placeID, u16 *p_peopleID, void **pp_dst );
+
 //=============================================================================
 /**
  *					ÉfÅ[É^íäè€å^

@@ -3233,50 +3233,6 @@ RESORT_SECRETARY_DATA * RESORT_PEOPLE_ALL_DATA_SearchEmptySecretary( RESORT_PEOP
   }
   return NULL;
 }
-//----------------------------------------------------------------------------
-/**
- *	@brief  開いている施設の場所IDを取得
- *
- *	@param	const RESORT_PEOPLE_ALL_DATA *cp_wk  ワーク
- *
- *	@return 施設の場所ID  開いてない場合RESORT_PLACEID_NONE
- */
-//-----------------------------------------------------------------------------
-u32 RESORT_PEOPLE_ALL_DATA_SearchEmptyInstitutionPlaceID( const RESORT_PEOPLE_ALL_DATA *cp_wk )
-{
-  int i;
-  for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
-  {
-    RESORT_RESIDENT_DATA *p_resident=  RESORT_PEOPLE_ALL_DATA_GetResident( (RESORT_PEOPLE_ALL_DATA *)cp_wk, i );
-    if( RESORT_RESIDENT_DATA_IsEmpty(p_resident) )
-    {
-      return RESORT_PLACEID_INSTITUTION_00+i;
-    }
-  }
-  return RESORT_PLACEID_NONE;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  開いているコンドミニアムの場所IDを取得(滞在者インデックス＝コンドミニアムインデックス)
- *
- *	@param	const RESORT_PEOPLE_ALL_DATA *cp_wk  ワーク
- *
- *	@return コンドミニアムの場所ID  開いてない場合RESORT_PLACEID_NONE
- */
-//-----------------------------------------------------------------------------
-u32 RESORT_PEOPLE_ALL_DATA_SearchEmptyCondominiumPlaceID( const RESORT_PEOPLE_ALL_DATA *cp_wk )
-{
-  int i;
-  for( i = 0; i < RESORT_VISITOR_DATA_NUM; i++ )
-  {
-    RESORT_VISITOR_DATA *p_visitor = RESORT_PEOPLE_ALL_DATA_GetVisitor( (RESORT_PEOPLE_ALL_DATA *)cp_wk, i );
-    if( RESORT_VISITOR_DATA_IsEmpty(p_visitor) )
-    {
-      return RESORT_PLACEID_CONDOMINIUM_00+i;
-    }
-  }
-  return RESORT_PLACEID_NONE;
-}
 
 //----------------------------------------------------------------------------
 /**

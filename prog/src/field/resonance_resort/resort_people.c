@@ -147,15 +147,16 @@ static const MMDL_HEADER sc_default_header =
 //-----------------------------------------------------------------------------
 static RESORT_PEOPLE * RESORT_PEOPLE_Init( HEAPID heapID, const RESORT_PEOPLE_INIT_PARAM *cp_param )
 {
+  int kind;
+
   RESORT_PEOPLE *p_wk = GFL_HEAP_AllocClearMemory(heapID, sizeof(RESORT_PEOPLE));
   p_wk->peopleID    = cp_param->peopleID;
   p_wk->p_mmdlsys   = cp_param->p_mmdlsys;
   p_wk->p_abstruct_data = RESORT_ABSTRUCT_DATA_Init( heapID, cp_param->p_data_adrs, PeopleTypeToResortDataType( cp_param->people_type ) );
 
-  {
-    u16 kind = RESORT_ABSTRUCT_DATA_GetData( p_wk->p_abstruct_data, RESORT_DATA_PARAM_TYPE, NULL );
-    p_wk->cp_binary   = RESORT_BINARY_SearchData( cp_param->cp_binary, cp_param->people_type, kind );
-  }
+  kind = RESORT_ABSTRUCT_DATA_GetData( p_wk->p_abstruct_data, RESORT_DATA_PARAM_TYPE, NULL );
+  p_wk->cp_binary   = RESORT_BINARY_SearchData( cp_param->cp_binary, cp_param->people_type, kind );
+
   p_wk->people_type = cp_param->people_type;
   p_wk->cp_function = &sc_people_function[ cp_param->people_type ];
 
@@ -163,14 +164,14 @@ static RESORT_PEOPLE * RESORT_PEOPLE_Init( HEAPID heapID, const RESORT_PEOPLE_IN
     MMDL *p_mmdl = RESORT_PEOPLE_GetMmdl( p_wk );
     if( p_mmdl == NULL )
     {
-      u16 grid_x, grid_z;
+      u16 grid_x, grid_z, dir;
       MMDL_HEADER header = sc_default_header;
 
       header.id = RESORT_PEOPLE_PEOPLEID_TO_MMDLID(cp_param->peopleID);
       p_wk->cp_function->SetupMmdHeader( p_wk, &header );
-      header.dir = DIR_DOWN;
 
-      RESORT_MAP_GetPlaceGridPosByIndex( cp_param->placeID, cp_param->peopleID, &grid_x, &grid_z );
+      RESORT_MAP_GetPlaceGridPosByIndex( cp_param->placeID, cp_param->people_type, kind, cp_param->peopleID, &grid_x, &grid_z, &dir );
+      header.dir = dir;
 
       MMDLHEADER_SetGridPos( &header, grid_x, grid_z, 0 );
       MMDLSYS_AddMMdl( cp_param->p_mmdlsys, &header, RESORT_MAP_PlaceIDToZoneID(cp_param->placeID) );
