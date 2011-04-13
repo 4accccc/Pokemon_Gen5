@@ -217,7 +217,8 @@ SRCS  +=    $(SOUNDSRC) \
         debug/debug_nagihashi.c \
         field/resonance_resort/resonance_resort_data.c \
         field/resonance_resort/resort_map.c \
-        field/resonance_resort/resort_binary_st.c
+        field/resonance_resort/resort_binary_st.c \
+        debug/debug_infinity_dungeon.c
 
 
 #================================================

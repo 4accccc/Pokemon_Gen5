@@ -28,12 +28,16 @@
 #include "msg/debug/msg_debug_infinity.h"
 #include "savedata/infinity_dungeon_save.h"
 #include "field/infinity_dungeon.h"
+#include "field/infinity_dungeon_local_def.h"
 
-//=============================================================================
-/**
- *					定数宣言
-*/
-//=============================================================================
+// 配置データ
+#include "../../../resource/infinity_dungeon/data/infinity_dungeon_tr_move_type.cdat"
+#include "../../../resource/infinity_dungeon/data/infinity_dungeon_room_pos_type.cdat" // INF_TR_ROOM_POS_TYPE_NONE
+
+// グローバル変数
+extern int g_debug_inf_tr_pos_type;
+extern BOOL g_debug_inf_data_change;
+
 
 //=============================================================================
 /**
@@ -57,6 +61,12 @@ typedef struct {
   u32 num_input_type;
 } INFDUN_WORK;
 
+//=============================================================================
+/**
+ *					定数宣言
+*/
+//=============================================================================
+
 ///メニューリスト
 static const DEBUG_MENU_LIST MenuList[] =
 {
@@ -74,7 +84,9 @@ static const DEBUG_MENU_LIST MenuList[] =
   { DEBUG_STR_INFINITY_JUMP_10 , (void*)DEBUG_STR_INFINITY_JUMP_10 , GFL_OVERLAY_BLANK_ID },  // ジャンプ
   { DEBUG_STR_INFINITY_JUMP_11 , (void*)DEBUG_STR_INFINITY_JUMP_11 , GFL_OVERLAY_BLANK_ID },  // ジャンプ
   { DEBUG_STR_INFINITY_JUMP_12 , (void*)DEBUG_STR_INFINITY_JUMP_12 , GFL_OVERLAY_BLANK_ID },  // ジャンプ
-  { DEBUG_STR_INFINITY_ENDLESS_CHECK , (void*)DEBUG_STR_INFINITY_ENDLESS_CHECK , GFL_OVERLAY_BLANK_ID },  // ジャンプ
+  { DEBUG_STR_INFINITY_ENDLESS_CHECK , (void*)DEBUG_STR_INFINITY_ENDLESS_CHECK , GFL_OVERLAY_BLANK_ID },  // ダンジョン無限生成
+  { DEBUG_STR_INFINITY_DEBUG_MODE , (void*)DEBUG_STR_INFINITY_DEBUG_MODE , GFL_OVERLAY_BLANK_ID },  // デバッグモード
+  { DEBUG_STR_INFINITY_TR_POS_TYPE , (void*)DEBUG_STR_INFINITY_TR_POS_TYPE , GFL_OVERLAY_BLANK_ID },  // デバッグモード
 };
 
 ///リスト メニューヘッダー
@@ -119,6 +131,8 @@ static const DEBUG_MENU_INITIALIZER DebugMenuInfDunImitializer = {
 enum {
   STR_NUM_CLEAR_RANK,
   STR_NUM_AREA,
+  STR_NUM_DEBUG_ON_OFF,
+  STR_NUM_TR_POS_TYPE,
 };
 
 //----------------------------------------------------------------------------
@@ -234,6 +248,12 @@ static BOOL NumInputState( INFDUN_WORK* p_wk )
       case STR_NUM_AREA:
         p_wk->num = INFINITYDUNGEON_SAVE_GetDungeonAreaID( p_wk->p_save );
         break;
+      case STR_NUM_DEBUG_ON_OFF:
+        p_wk->num = g_debug_inf_data_change;
+        break;
+      case STR_NUM_TR_POS_TYPE:
+        p_wk->num = g_debug_inf_tr_pos_type;
+        break;
       defautl:
         p_wk->num = 0;
         break;
@@ -271,6 +291,37 @@ static BOOL NumInputState( INFDUN_WORK* p_wk )
           DrawNum( p_wk );
         }
         break;
+      case STR_NUM_DEBUG_ON_OFF:
+        {
+          NumInput(p_wk);
+          if( p_wk->num > 1 )
+          {
+            p_wk->num = 0;
+          }
+          if( p_wk->num < 0 )
+          {
+            p_wk->num = 1;
+          }
+          g_debug_inf_data_change = p_wk->num;
+          DrawNum( p_wk );
+        }
+        break;
+      case STR_NUM_TR_POS_TYPE:
+        {
+          NumInput(p_wk);
+          if( p_wk->num > INF_TR_ROOM_POS_TYPE_NONE )
+          {
+            p_wk->num = 0;
+          }
+          if( p_wk->num < 0 )
+          {
+            p_wk->num = 0;
+          }
+          g_debug_inf_tr_pos_type = p_wk->num;
+          DrawNum( p_wk );
+        }
+        break;
+
       }
       
       // 終了判定
@@ -346,6 +397,24 @@ static GMEVENT_RESULT debugMenuMedalInfinityDungeon( GMEVENT *event, int *seq, v
         (*seq)=4;
       }
       break;
+      // 無限ダンジョンのデータ差し替え機能ON・OFF
+    case DEBUG_STR_INFINITY_DEBUG_MODE:
+      {
+        FLDMENUFUNC_DeleteMenu( work->menuFunc );
+        work->num_input_type = STR_NUM_DEBUG_ON_OFF;
+        (*seq)++;
+      }
+      break;
+      // 無限ダンジョン内トレーナー配置固定
+    case DEBUG_STR_INFINITY_TR_POS_TYPE:
+      {
+        FLDMENUFUNC_DeleteMenu( work->menuFunc );
+        work->num_input_type = STR_NUM_TR_POS_TYPE;
+        (*seq)++;
+      }
+      break;
+
+
       // ジャンプ
     case DEBUG_STR_INFINITY_JUMP_1: JumpZone(work,ZONE_ID_D31R0201); (*seq)=3; break;
     case DEBUG_STR_INFINITY_JUMP_2: JumpZone(work,ZONE_ID_D31R0101); (*seq)=3; break;

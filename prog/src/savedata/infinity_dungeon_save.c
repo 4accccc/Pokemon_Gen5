@@ -162,16 +162,15 @@ u32 INFINITYDUNGEON_SAVE_GetRandomSeed( const INFINITYDUNGEON_SAVE *p_save )
  *
  *	@param	*p_save 
  *	@param	floor_id 
- *	@param	trainer_id 
+ *	@param	trainer_id_pos 
  *
  *	@retval TRUE = 戦闘済み
  */
 //-----------------------------------------------------------------------------
-BOOL INFINITYDUNGEON_SAVE_GetTrainerFlag( const INFINITYDUNGEON_SAVE *p_save ,int floor_id ,int trainer_id )
+BOOL INFINITYDUNGEON_SAVE_GetTrainerFlag( const INFINITYDUNGEON_SAVE *p_save ,int floor_id ,int trainer_id_pos )
 {
   u32 bit_mask = 1;
-  trainer_id = INFINITY_DUNGEON_SAVE_GetTrNo_ByObjId(trainer_id);
-  bit_mask = bit_mask << trainer_id;
+  bit_mask = bit_mask << trainer_id_pos;
   if( p_save->trainer_flag[floor_id] & bit_mask )
   {
     return TRUE;
@@ -204,7 +203,7 @@ u8 INFINITYDUNGEON_SAVE_GetMapStatus( const INFINITYDUNGEON_SAVE *p_save )
 //-----------------------------------------------------------------------------
 u8 INFINITYDUNGEON_SAVE_GetFloorID( const INFINITYDUNGEON_SAVE *p_save )
 {
-  return p_save->floor_id;
+  return (p_save->floor_id % INFINITYDUNGEON_FLOOR_MAX); // エリア内のフロアに変換
 }
 
 //----------------------------------------------------------------------------
@@ -323,16 +322,15 @@ void INFINITYDUNGEON_SAVE_SetRandomSeed( INFINITYDUNGEON_SAVE *p_save ,u32 rand_
  *	@retval
  */
 //-----------------------------------------------------------------------------
-void INFINITYDUNGEON_SAVE_SetTrainerFlag( INFINITYDUNGEON_SAVE *p_save ,int floor_id ,int trainer_id , BOOL status)
+void INFINITYDUNGEON_SAVE_SetTrainerFlag( INFINITYDUNGEON_SAVE *p_save ,int floor_id ,int trainer_id_pos , BOOL status)
 {
-  trainer_id = INFINITY_DUNGEON_SAVE_GetTrNo_ByObjId(trainer_id);
   if( status == FALSE )
   {
     // ビットを下げる
     u32 bit_mask = 0xffffffff;
     u32 del_bit  = 1;
 
-    del_bit   = del_bit << trainer_id;
+    del_bit   = del_bit << trainer_id_pos;
     bit_mask  = bit_mask ^ del_bit;
     p_save->trainer_flag[floor_id]  = p_save->trainer_flag[floor_id] & bit_mask;
   }
@@ -340,7 +338,7 @@ void INFINITYDUNGEON_SAVE_SetTrainerFlag( INFINITYDUNGEON_SAVE *p_save ,int floo
   {
     // ビットを上げる
     s32 bit_mask = 1;
-    bit_mask = bit_mask << trainer_id;
+    bit_mask = bit_mask << trainer_id_pos;
     p_save->trainer_flag[floor_id]  = p_save->trainer_flag[floor_id] | bit_mask;
   }
 }
@@ -453,14 +451,14 @@ u16 INFINITY_DUNGEON_SAVE_GetTrNo_ByObjId( u16 obj_id )
 u8 INFINITY_DUNGEON_SAVE_GetHintLevel( const INFINITYDUNGEON_SAVE *p_save )
 {
   s32 floor_id;
-  s32 tr_id;
+  s32 tr_id_pos;
   s32 win_num = 0;
 
   for( floor_id = 0; floor_id<INFINITYDUNGEON_FLOOR_MAX; floor_id++ )
   {
-    for( tr_id = 0; tr_id<INFINITY_DUNGEON_TRID_MAX; tr_id++ )
+    for( tr_id_pos = 0; tr_id_pos<INFINITY_DUNGEON_TRID_MAX; tr_id_pos++ )
     {
-      BOOL ret = INFINITYDUNGEON_SAVE_GetTrainerFlag( p_save ,floor_id ,tr_id );
+      BOOL ret = INFINITYDUNGEON_SAVE_GetTrainerFlag( p_save ,floor_id ,tr_id_pos );
       if( ret == TRUE )
       {
         win_num++;

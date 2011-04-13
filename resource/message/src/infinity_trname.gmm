@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakatsui" host="DB5YGPBX" date="2010-06-23T17:26:09"/>
+	<create user="onoue_masayuki" host="W00272" date="2011-04-12T12:38:07"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,13 +305,13 @@
 		</language>
 	</columns>
 
-	<dialog left="324" top="478" right="1029" bottom="1098" maximized="no" rayout="Vertical2">
+	<dialog left="1487" top="239" right="2192" bottom="785" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="0" style="0000" width="530"/>
+		<tag-palette left="736" top="133" right="1209" bottom="542" visible="no"/>
+		<band id="0" index="0" style="0000" width="522"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="697"/>
-		<band id="3" index="3" style="0000" width="697"/>
+		<band id="2" index="2" style="0000" width="689"/>
+		<band id="3" index="3" style="0000" width="689"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -1907,6 +1907,86 @@
 
 	<row id="BTD_TR_314">
 		<comment>マルチボス２強</comment>
+		<language name="JPN">クダリ</language>
+		<language name="JPN_KANJI">クダリ</language>
+	</row>
+
+	<row id="BTD_TR_315">
+		<language name="JPN">クダリ</language>
+		<language name="JPN_KANJI">クダリ</language>
+	</row>
+
+	<row id="BTD_TR_316">
+		<language name="JPN">クダリ</language>
+		<language name="JPN_KANJI">クダリ</language>
+	</row>
+
+	<row id="BTD_TR_317">
+		<language name="JPN">クダリ</language>
+		<language name="JPN_KANJI">クダリ</language>
+	</row>
+
+	<row id="BTD_TR_318">
+		<language name="JPN">クダリ</language>
+		<language name="JPN_KANJI">クダリ</language>
+	</row>
+
+	<row id="BTD_TR_319">
+		<language name="JPN">クダリ</language>
+		<language name="JPN_KANJI">クダリ</language>
+	</row>
+
+	<row id="BTD_TR_320">
+		<language name="JPN">クダリ</language>
+		<language name="JPN_KANJI">クダリ</language>
+	</row>
+
+	<row id="BTD_TR_321">
+		<language name="JPN">クダリ</language>
+		<language name="JPN_KANJI">クダリ</language>
+	</row>
+
+	<row id="BTD_TR_322">
+		<language name="JPN">クダリ</language>
+		<language name="JPN_KANJI">クダリ</language>
+	</row>
+
+	<row id="BTD_TR_323">
+		<language name="JPN">クダリ</language>
+		<language name="JPN_KANJI">クダリ</language>
+	</row>
+
+	<row id="BTD_TR_324">
+		<language name="JPN">クダリ</language>
+		<language name="JPN_KANJI">クダリ</language>
+	</row>
+
+	<row id="BTD_TR_325">
+		<language name="JPN">クダリ</language>
+		<language name="JPN_KANJI">クダリ</language>
+	</row>
+
+	<row id="BTD_TR_326">
+		<language name="JPN">クダリ</language>
+		<language name="JPN_KANJI">クダリ</language>
+	</row>
+
+	<row id="BTD_TR_327">
+		<language name="JPN">クダリ</language>
+		<language name="JPN_KANJI">クダリ</language>
+	</row>
+
+	<row id="BTD_TR_328">
+		<language name="JPN">クダリ</language>
+		<language name="JPN_KANJI">クダリ</language>
+	</row>
+
+	<row id="BTD_TR_329">
+		<language name="JPN">クダリ</language>
+		<language name="JPN_KANJI">クダリ</language>
+	</row>
+
+	<row id="BTD_TR_330">
 		<language name="JPN">クダリ</language>
 		<language name="JPN_KANJI">クダリ</language>
 	</row>

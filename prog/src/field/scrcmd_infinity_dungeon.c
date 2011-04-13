@@ -316,12 +316,11 @@ VMCMD_RESULT EvCmdInfinityDungeonSetTrainerBattleFlag( VMHANDLE *p_core, void *p
   SAVE_CONTROL_WORK *p_save_data = GAMEDATA_GetSaveControlWork(p_gamedata);
   u16 tr_id  = SCRCMD_GetVMWorkValue( p_core, p_wk );
   u16 status  = SCRCMD_GetVMWorkValue( p_core, p_wk );
+  u32 id_pos;
   p_save = SaveData_GetINFINITYDUNGEON( p_save_data );
   floor_id = INFINITYDUNGEON_SAVE_GetFloorID( p_save );
-  INFINITYDUNGEON_SAVE_SetTrainerFlag( p_save ,floor_id ,tr_id ,status );
-
-  // トレーナーID
-  ONOUE_Printf("tr_id=%u ,%u\n",tr_id,status);
+  id_pos = INFINITY_DUNGEON_GetTrIDPos( p_save ,floor_id ,tr_id );
+  INFINITYDUNGEON_SAVE_SetTrainerFlag( p_save ,floor_id ,id_pos ,status );
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -346,9 +345,11 @@ VMCMD_RESULT EvCmdInfinityDungeonGetTrainerBattleFlag( VMHANDLE *p_core, void *p
   SAVE_CONTROL_WORK *p_save_data = GAMEDATA_GetSaveControlWork(p_gamedata);
   u16 tr_id  = SCRCMD_GetVMWorkValue( p_core, p_wk );
   u16 *p_ret_wk	= SCRCMD_GetVMWork( p_core, p_wk );
+  u32 id_pos;
   p_save = SaveData_GetINFINITYDUNGEON( p_save_data );
   floor_id = INFINITYDUNGEON_SAVE_GetFloorID( p_save );
-  *p_ret_wk = INFINITYDUNGEON_SAVE_GetTrainerFlag( p_save ,floor_id ,tr_id );
+  id_pos = INFINITY_DUNGEON_GetTrIDPos( p_save ,floor_id ,tr_id );
+  *p_ret_wk = INFINITYDUNGEON_SAVE_GetTrainerFlag( p_save ,floor_id ,id_pos );
 
   return VMCMD_RESULT_CONTINUE;
 }

@@ -37,6 +37,18 @@
 
 #define INFINITY_DUNGEON_TRID_MAX (32)       // 無限ダンジョン内トレーナーMAX
 
+// トレーナー
+#define INF_TRID_START_BLACK  (0)
+#define INF_TRID_CNT_BLACK    (150)
+#define INF_TRID_START_WHITE  (150)
+#define INF_TRID_CNT_WHITE  (150)
+#define INF_TRID_START_MONEY  (300)
+#define INF_TRID_CNT_MONEY  (20)
+#define INF_TRID_START_RECOVERY  (320)
+#define INF_TRID_CNT_RECOVERY  (10)
+#define INF_DUNGEON_TR_DATA_MAX  (170)  // 抽選するトレーナーデータ数
+#define INF_DUNGEON_TR_ID_MAX  (330)  // トレーナーIDの最大値
+
 // ヒントレベル
 #define INFINITY_DUNGEON_HINT_LEVEL_1  (0)
 #define INFINITY_DUNGEON_HINT_LEVEL_2  (1)

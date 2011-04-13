@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="onoue_masayuki" host="W00272" date="2011-04-05T13:25:45"/>
+	<create user="onoue_masayuki" host="W00272" date="2011-04-12T20:11:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -364,7 +364,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="135"/>
+		<id position="0" width="210"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
@@ -395,7 +395,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1406" top="153" right="2119" bottom="786" maximized="no" rayout="Vertical2">
+	<dialog left="1298" top="117" right="2011" bottom="750" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="542" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -422,11 +422,6 @@
 		<operation add_message="no" header_setting="no" tag_setting="no" output_setting="no" display="no" sort="no" flowchart_window="no"/>
 	</lock>
 
-
-	<row id="INF_LOSE_MSG_TRID_000">
-		<language name="JPN" width="216">まけた！▼</language>
-		<language name="JPN_KANJI" width="216">負けた！▼</language>
-	</row>
 
 	<row id="INF_LOSE_MSG_TRID_001">
 		<language name="JPN" width="216">まけた！▼</language>
@@ -2074,156 +2069,6 @@
 	</row>
 
 	<row id="INF_LOSE_MSG_TRID_330">
-		<language name="JPN" width="216">まけた！▼</language>
-		<language name="JPN_KANJI" width="216">負けた！▼</language>
-	</row>
-
-	<row id="INF_LOSE_MSG_TRID_331">
-		<language name="JPN" width="216">まけた！▼</language>
-		<language name="JPN_KANJI" width="216">負けた！▼</language>
-	</row>
-
-	<row id="INF_LOSE_MSG_TRID_332">
-		<language name="JPN" width="216">まけた！▼</language>
-		<language name="JPN_KANJI" width="216">負けた！▼</language>
-	</row>
-
-	<row id="INF_LOSE_MSG_TRID_333">
-		<language name="JPN" width="216">まけた！▼</language>
-		<language name="JPN_KANJI" width="216">負けた！▼</language>
-	</row>
-
-	<row id="INF_LOSE_MSG_TRID_334">
-		<language name="JPN" width="216">まけた！▼</language>
-		<language name="JPN_KANJI" width="216">負けた！▼</language>
-	</row>
-
-	<row id="INF_LOSE_MSG_TRID_335">
-		<language name="JPN" width="216">まけた！▼</language>
-		<language name="JPN_KANJI" width="216">負けた！▼</language>
-	</row>
-
-	<row id="INF_LOSE_MSG_TRID_336">
-		<language name="JPN" width="216">まけた！▼</language>
-		<language name="JPN_KANJI" width="216">負けた！▼</language>
-	</row>
-
-	<row id="INF_LOSE_MSG_TRID_337">
-		<language name="JPN" width="216">まけた！▼</language>
-		<language name="JPN_KANJI" width="216">負けた！▼</language>
-	</row>
-
-	<row id="INF_LOSE_MSG_TRID_338">
-		<language name="JPN" width="216">まけた！▼</language>
-		<language name="JPN_KANJI" width="216">負けた！▼</language>
-	</row>
-
-	<row id="INF_LOSE_MSG_TRID_339">
-		<language name="JPN" width="216">まけた！▼</language>
-		<language name="JPN_KANJI" width="216">負けた！▼</language>
-	</row>
-
-	<row id="INF_LOSE_MSG_TRID_340">
-		<language name="JPN" width="216">まけた！▼</language>
-		<language name="JPN_KANJI" width="216">負けた！▼</language>
-	</row>
-
-	<row id="INF_LOSE_MSG_TRID_341">
-		<language name="JPN" width="216">まけた！▼</language>
-		<language name="JPN_KANJI" width="216">負けた！▼</language>
-	</row>
-
-	<row id="INF_LOSE_MSG_TRID_342">
-		<language name="JPN" width="216">まけた！▼</language>
-		<language name="JPN_KANJI" width="216">負けた！▼</language>
-	</row>
-
-	<row id="INF_LOSE_MSG_TRID_343">
-		<language name="JPN" width="216">まけた！▼</language>
-		<language name="JPN_KANJI" width="216">負けた！▼</language>
-	</row>
-
-	<row id="INF_LOSE_MSG_TRID_344">
-		<language name="JPN" width="216">まけた！▼</language>
-		<language name="JPN_KANJI" width="216">負けた！▼</language>
-	</row>
-
-	<row id="INF_LOSE_MSG_TRID_345">
-		<language name="JPN" width="216">まけた！▼</language>
-		<language name="JPN_KANJI" width="216">負けた！▼</language>
-	</row>
-
-	<row id="INF_LOSE_MSG_TRID_346">
-		<language name="JPN" width="216">まけた！▼</language>
-		<language name="JPN_KANJI" width="216">負けた！▼</language>
-	</row>
-
-	<row id="INF_LOSE_MSG_TRID_347">
-		<language name="JPN" width="216">まけた！▼</language>
-		<language name="JPN_KANJI" width="216">負けた！▼</language>
-	</row>
-
-	<row id="INF_LOSE_MSG_TRID_348">
-		<language name="JPN" width="216">まけた！▼</language>
-		<language name="JPN_KANJI" width="216">負けた！▼</language>
-	</row>
-
-	<row id="INF_LOSE_MSG_TRID_349">
-		<language name="JPN" width="216">まけた！▼</language>
-		<language name="JPN_KANJI" width="216">負けた！▼</language>
-	</row>
-
-	<row id="INF_LOSE_MSG_TRID_350">
-		<language name="JPN" width="216">まけた！▼</language>
-		<language name="JPN_KANJI" width="216">負けた！▼</language>
-	</row>
-
-	<row id="INF_LOSE_MSG_TRID_351">
-		<language name="JPN" width="216">まけた！▼</language>
-		<language name="JPN_KANJI" width="216">負けた！▼</language>
-	</row>
-
-	<row id="INF_LOSE_MSG_TRID_352">
-		<language name="JPN" width="216">まけた！▼</language>
-		<language name="JPN_KANJI" width="216">負けた！▼</language>
-	</row>
-
-	<row id="INF_LOSE_MSG_TRID_353">
-		<language name="JPN" width="216">まけた！▼</language>
-		<language name="JPN_KANJI" width="216">負けた！▼</language>
-	</row>
-
-	<row id="INF_LOSE_MSG_TRID_354">
-		<language name="JPN" width="216">まけた！▼</language>
-		<language name="JPN_KANJI" width="216">負けた！▼</language>
-	</row>
-
-	<row id="INF_LOSE_MSG_TRID_355">
-		<language name="JPN" width="216">まけた！▼</language>
-		<language name="JPN_KANJI" width="216">負けた！▼</language>
-	</row>
-
-	<row id="INF_LOSE_MSG_TRID_356">
-		<language name="JPN" width="216">まけた！▼</language>
-		<language name="JPN_KANJI" width="216">負けた！▼</language>
-	</row>
-
-	<row id="INF_LOSE_MSG_TRID_357">
-		<language name="JPN" width="216">まけた！▼</language>
-		<language name="JPN_KANJI" width="216">負けた！▼</language>
-	</row>
-
-	<row id="INF_LOSE_MSG_TRID_358">
-		<language name="JPN" width="216">まけた！▼</language>
-		<language name="JPN_KANJI" width="216">負けた！▼</language>
-	</row>
-
-	<row id="INF_LOSE_MSG_TRID_359">
-		<language name="JPN" width="216">まけた！▼</language>
-		<language name="JPN_KANJI" width="216">負けた！▼</language>
-	</row>
-
-	<row id="INF_LOSE_MSG_TRID_360">
 		<language name="JPN" width="216">まけた！▼</language>
 		<language name="JPN_KANJI" width="216">負けた！▼</language>
 	</row>

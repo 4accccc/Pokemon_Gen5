@@ -43,6 +43,7 @@ extern void INFINITY_DUNGEON_Recovery( SCRIPT_WORK *p_scr_work, GAMESYS_WORK *p_
 extern void INFINITY_DUNGEON_WarpNextFloor( SCRIPT_WORK *p_scr_work, GAMESYS_WORK *p_gsys, int floor_no );
 extern GMEVENT * INFINITY_DUNGEON_EVENT_TrainerBattle(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap ,u16 obj_id);
 extern u32 INFINITY_DUNGEON_GetHintMessage( INFINITYDUNGEON_SAVE *p_save ,u8 hint_level ,u16 obj_code);
+extern u32 INFINITY_DUNGEON_GetTrIDPos( INFINITYDUNGEON_SAVE *p_save ,u8 floor_id ,u32 tr_id );
 #ifdef PM_DEBUG
 extern void DEBUG_INFINITY_DUNGEON_MakeDungeonData();
 #endif

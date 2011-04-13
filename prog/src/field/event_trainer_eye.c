@@ -30,6 +30,7 @@
 #include "tr_tool/ex_trainer_def.h"
 
 #include "savedata/infinity_dungeon_save.h"
+#include "field/infinity_dungeon.h"
 
 //======================================================================
 //  define
@@ -1083,11 +1084,13 @@ static BOOL tr_CheckEventFlag( FIELDMAP_WORK *fieldMap, const MMDL *mmdl )
     u16 tr_id;
     u16 floor_id;
     BOOL tr_flag;
+    u32 id_pos;
     tr_id       = TRAINER_MMDL_GetTrainerID( mmdl );
     p_save_data = GAMEDATA_GetSaveControlWork( gdata );
     p_save      = SaveData_GetINFINITYDUNGEON( p_save_data );
     floor_id    = INFINITYDUNGEON_SAVE_GetFloorID( p_save );
-    tr_flag     = INFINITYDUNGEON_SAVE_GetTrainerFlag( p_save ,floor_id, tr_id );
+    id_pos      = INFINITY_DUNGEON_GetTrIDPos( p_save ,floor_id ,tr_id );
+    tr_flag     = INFINITYDUNGEON_SAVE_GetTrainerFlag( p_save ,floor_id, id_pos );
     return (tr_flag);
   }
 }
