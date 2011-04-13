@@ -181,6 +181,25 @@ void ISS_SWITCH_SYS_ZoneChange( ISS_SWITCH_SYS* system, u16 zoneID )
   ZoneChange( system, zoneID );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スイッチセットの音量を設定する
+ *
+ *	@param	system
+ *	@param  volume  音量 0-127
+ */
+//-----------------------------------------------------------------------------
+void ISS_SWITCH_SYS_SwitchSetVolume( ISS_SWITCH_SYS* system, const int volume, const u16 fadeFrame )
+{
+  ISS_SWITCH_SET* set;
+
+  set = GetCurrentSwitchSet( system );
+
+  if( set ) { 
+    ISS_SWITCH_SET_SetVlolume( set, volume, fadeFrame );
+  }
+}
+
 //-------------------------------------------------------------------------------
 /**
  * @brief スイッチを ON にする

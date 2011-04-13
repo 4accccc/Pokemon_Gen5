@@ -63,3 +63,6 @@ extern BOOL ISS_SWITCH_SET_IsValidAt( const ISS_SWITCH_SET* set, u16 zoneID );
 extern BOOL ISS_SWITCH_SET_CheckSwitchOn( const ISS_SWITCH_SET* set, SWITCH_INDEX idx );
 // スイッチセットの状態をBGMのボリュームに反映させる
 extern void ISS_SWITCH_SET_SetBGMVolume( const ISS_SWITCH_SET* set ); 
+
+// スイッチセットの音量を設定（各スイッチに反映される）
+extern void ISS_SWITCH_SET_SetVlolume( ISS_SWITCH_SET* set, const int volume, const u16 fadeFrame );

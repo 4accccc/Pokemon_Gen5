@@ -38,6 +38,11 @@ extern void ISS_SWITCH_SYS_Off( ISS_SWITCH_SYS* system );
 extern void ISS_SWITCH_SYS_ZoneChange( ISS_SWITCH_SYS* system, u16 zoneID );
 
 //==========================================================================
+// ■スイッチセット制御
+//==========================================================================
+extern void ISS_SWITCH_SYS_SwitchSetVolume( ISS_SWITCH_SYS* system, const int volume, const u16 fadeFrame );
+
+//==========================================================================
 // ■スイッチ制御
 //==========================================================================
 // スイッチ ON/OFF

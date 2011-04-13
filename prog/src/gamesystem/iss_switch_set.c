@@ -30,16 +30,30 @@ static u8 Debug_switchSetNum = 0;
 //===============================================================================
 #define MAX_VALID_ZONE_NUM (9) // スイッチ状態を維持するゾーンの最大数
 
+// スイッチセットの状態
+//  現在は音量の上げ下げのみ
+typedef enum {
+  SWITCH_SET_STATE_DEFAULT,      // 通常
+  SWITCH_SET_STATE_VOLUME_DOWN,  // 音量ダウン
+  SWITCH_SET_STATE_VOLUME_UP,    // 音量アップ
+} SWITCH_SET_STATE;
+
 
 //===============================================================================
 // ■ISSスイッチセット
 //===============================================================================
 struct _ISS_SWITCH_SET
 { 
+  SWITCH_SET_STATE  state;             // 状態
   u32 soundIdx;                        // シーケンス番号
   u16 validZone[ MAX_VALID_ZONE_NUM ]; // スイッチが有効な場所配列
   u8  validZoneNum;                    // スイッチが有効な場所の数
   ISS_SWITCH* IssSwitch[ SWITCH_NUM ]; // スイッチ
+  int volume;                          // 全てのスイッチの音量
+  int tmpVolume;                       // 計算用
+  int tmpMaxVolume;                    // 計算用
+  u16 fadeCount;                       // フェードカウンタ
+  u16 fadeFrame;                       // フェードフレーム数
 
 #ifdef DEBUG_MODE
   u8 debugID; // 識別子
@@ -67,6 +81,11 @@ static void SwitchSetMain( ISS_SWITCH_SET* set ); // スイッチセットのメイン動作
 static void SwitchOn( ISS_SWITCH_SET* set, SWITCH_INDEX swIdx ); // スイッチを押す
 static void SwitchOff( ISS_SWITCH_SET* set, SWITCH_INDEX swIdx ); // スイッチを離す
 static void ResetSwitch( ISS_SWITCH_SET* set ); // スイッチをリセットする
+
+static void SwitchSetBGM_VolumeUp( ISS_SWITCH_SET *set );
+static void SwitchSetBGM_VolumeDown( ISS_SWITCH_SET *set );
+static void IncFadeCount( ISS_SWITCH_SET *set );
+static BOOL CheckFadeFinish( ISS_SWITCH_SET *set );
 
 #ifdef DEBUG_MODE
 static void Debug_PrintSwitchSet( const ISS_SWITCH_SET* set ); // スイッチの状態を出力する
@@ -293,6 +312,35 @@ void ISS_SWITCH_SET_SetBGMVolume( const ISS_SWITCH_SET* set )
   SetBGMVolume( set );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スイッチセットに対する音量を設定する
+ *	        ここで設定した音量は全てのスイッチに反映される
+ *
+ *	@param  set
+ *	@param  volume    音量（0-127）
+ */
+//-----------------------------------------------------------------------------
+void ISS_SWITCH_SET_SetVlolume( ISS_SWITCH_SET* set, const int volume, const u16 fadeFrame )
+{
+
+  // 状態変える
+  if( set->volume < volume )     {set->state = SWITCH_SET_STATE_VOLUME_UP;}
+  else if( set->volume > volume ){set->state = SWITCH_SET_STATE_VOLUME_DOWN;}
+  else 
+  {
+    // 音量が同じなら変更なし
+    set->state = SWITCH_SET_STATE_DEFAULT; 
+    return;
+  }
+
+  // フェードフレーム数セット
+  set->fadeFrame = fadeFrame;
+  // 現在の音量との差
+  set->tmpVolume = GFL_STD_Abs( set->volume - volume );
+  // 現在の音量を最大音量として保存
+  set->tmpMaxVolume = set->volume;
+}
 
 //===============================================================================
 // ■private method
@@ -309,10 +357,16 @@ static void InitSwitchSet( ISS_SWITCH_SET* set )
 {
   int i;
 
+  set->state = SWITCH_SET_STATE_DEFAULT;
   set->soundIdx = 0;
   set->validZoneNum = 0; 
   for( i=0; i<MAX_VALID_ZONE_NUM; i++ ) { set->validZone[i] = 0; } 
   for( i=0; i<SWITCH_NUM; i++ ) { set->IssSwitch[i] = NULL; } 
+  set->volume = 127;  // 最大ボリューム
+  set->tmpVolume = 127;  // 最大ボリューム
+  set->tmpMaxVolume = 127;  // 最大ボリューム
+  set->fadeCount = 0;
+  set->fadeFrame = 0;
 
 #ifdef DEBUG_MODE
   OS_TFPrintf( PRINT_TARGET, 
@@ -495,6 +549,16 @@ static void SwitchSetMain( ISS_SWITCH_SET* set )
   int i;
   ISS_SWITCH* sw;
 
+  // ボリューム制御
+  switch( set->state ){
+  case SWITCH_SET_STATE_VOLUME_UP:    SwitchSetBGM_VolumeUp( set );   break;
+  case SWITCH_SET_STATE_VOLUME_DOWN:  SwitchSetBGM_VolumeDown( set ); break;
+  case SWITCH_SET_STATE_DEFAULT:
+    // 何もしない
+    break;
+  default: ASSERT_REPLACE(0);
+  }
+
   for( i=0; i<SWITCH_NUM; i++ )
   {
     sw = GetSwitch( set, i );
@@ -551,6 +615,16 @@ static void ResetSwitch( ISS_SWITCH_SET* set )
 {
   int i;
   ISS_SWITCH* sw;
+  
+  // 状態を初期化
+  set->state = SWITCH_SET_STATE_DEFAULT;
+
+  // 音量を最高値にする(初期化)
+  set->volume = 127;
+  set->tmpVolume = 127;
+  set->tmpMaxVolume = 127;
+  set->fadeCount = 0;
+  set->fadeFrame = 0;
 
   // スイッチ0をONにする
   sw = GetSwitch( set, SWITCH_00 );
@@ -689,7 +763,93 @@ static void SetBGMVolume( const ISS_SWITCH_SET* set )
   for( i=SWITCH_00; i<SWITCH_NUM; i++ )
   {
     sw = GetSwitch( set, i ); 
-    ISS_SWITCH_SetBGMVolume( sw, 127 );
+    ISS_SWITCH_SetBGMVolume( sw, set->volume );
+  }
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ボリューム上げる処理
+ *
+ *	@param	set
+ */
+//-----------------------------------------------------------------------------
+static void SwitchSetBGM_VolumeUp( ISS_SWITCH_SET *set )
+{
+  // フェード値更新
+  IncFadeCount( set );
+
+  // ボリューム計算
+  set->volume = set->tmpMaxVolume + set->tmpVolume * set->fadeCount / set->fadeFrame;
+
+  // フェード完了チェック
+  if( CheckFadeFinish( set ) == TRUE )
+  {
+    // 状態初期に戻す
+    set->state = SWITCH_SET_STATE_DEFAULT;
+    ICHI_Printf("volume %d \n", set->volume);
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ボリューム下げる処理
+ *
+ *	@param	set
+ */
+//-----------------------------------------------------------------------------
+static void SwitchSetBGM_VolumeDown( ISS_SWITCH_SET *set )
+{
+  // フェード値更新
+  IncFadeCount( set );
+
+  // ボリューム計算
+  set->volume = set->tmpMaxVolume - set->tmpVolume * set->fadeCount / set->fadeFrame;
+
+  // フェード完了チェック
+  if( CheckFadeFinish( set ) == TRUE )
+  {
+    // 状態初期に戻す
+    set->state = SWITCH_SET_STATE_DEFAULT;
+    ICHI_Printf("volume %d \n", set->volume);
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フェードカウンタをインクリメントする
+ *
+ *	@param	set
+ */
+//-----------------------------------------------------------------------------
+static void IncFadeCount( ISS_SWITCH_SET *set )
+{
+  set->fadeCount++;
+  if( set->fadeFrame < set->fadeCount )
+  {
+    set->fadeCount = set->fadeFrame;
+  }
+}
+
+//-------------------------------------------------------------------------------
+/**
+ * @brief フェードが完了したかどうかをチェックする
+ *
+ * @param sw
+ *
+ * @return フェードが完了した場合 TRUE
+ *         そうでない場合 FALSE
+ */
+//-------------------------------------------------------------------------------
+static BOOL CheckFadeFinish( ISS_SWITCH_SET *set )
+{
+  if( set->fadeFrame <= set->fadeCount )
+  {
+    return TRUE;
+  }
+  else
+  {
+    return FALSE;
   }
 }
 
