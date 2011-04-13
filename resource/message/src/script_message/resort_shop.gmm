@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nagihashi_toru" host="W00268" date="2011-04-11T12:52:25"/>
+	<create user="shimoyamada" host="W00184" date="2011-04-14T00:17:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -395,9 +395,9 @@
 		</language>
 	</columns>
 
-	<dialog left="-1234" top="169" right="-529" bottom="789" maximized="no" rayout="Vertical2">
+	<dialog left="1134" top="533" right="1839" bottom="1161" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
-		<tag-palette left="551" top="133" right="1024" bottom="531" visible="no"/>
+		<tag-palette left="551" top="133" right="1024" bottom="531" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -617,18 +617,24 @@
 種類：[1:38:リゾート店名:1]</language>
 	</row>
 
-	<row id="mes_shop_09_06">
+	<row id="mes_shop_09_06" back-color="#ffff00,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">[1:00:トレーナー名:0]　ですね
-かいこ　しても　よろしいですか？</language>
+こうたい　しても　よろしいですか？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]　ですね
-解雇　しても　よろしいですか？</language>
+こうたい　しても　よろしいですか？</language>
 	</row>
 
-	<row id="mes_shop_09_07">
+	<row id="mes_shop_09_07" back-color="#ffff00,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">[1:00:トレーナー名:0]　を
-かいこ　しました▼</language>
+こうたい　しました▼
+[1:00:トレーナー名:0]さんは
+しばらく　コンドミニアムで▽
+あそぶようです▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]　を
-解雇　しました▼</language>
+こうたい　しました▼
+[1:00:トレーナー名:0]さんは
+しばらく　コンドミニアムで▽
+あそぶようです▼</language>
 	</row>
 
 	<row id="mes_shop_09_09">
@@ -659,18 +665,21 @@
 紹介　しました▼</language>
 	</row>
 
-	<row id="mes_shop_09_15">
+	<row id="mes_shop_09_15" back-color="#ffff00,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">[1:38:リゾート店名:0]　を
-かえても　いいですか？</language>
+たてかえても　いいですか？</language>
 		<language name="JPN_KANJI" width="256">[1:38:リゾート店名:0]　を
-変えても　いいですか？</language>
+たてかえても　いいですか？</language>
 	</row>
 
-	<row id="mes_shop_09_16">
-		<language name="JPN" width="256">[1:38:リゾート店名:0]　は
-コンドミニアムへ　いどう　しました▼</language>
-		<language name="JPN_KANJI" width="256">[1:38:リゾート店名:0]　は
-コンドミニアムへ　移動　しました▼</language>
+	<row id="mes_shop_09_16" back-color="#ff0000,,,,,,,,,,,,,,,,,">
+		<comment>0：施設名でなくトレーナー名に変更</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さんは
+コンドミニアムへ　いきました▼
+あとで　あいさつへ　いきましょう▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんは
+コンドミニアムへ　いきました▼
+あとで　あいさつへ　いきましょう▼</language>
 	</row>
 
 	<row id="mes_shop_09_17">
