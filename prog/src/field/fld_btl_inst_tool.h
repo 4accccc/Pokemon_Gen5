@@ -64,7 +64,7 @@ extern BATTLE_SETUP_PARAM * FBI_TOOL_INFINITY_DUNGEON_CreateBattleParam(
 
 //WBT‚ÅŽg—p
 extern BATTLE_SETUP_PARAM * FBI_TOOL_WBT_CreateBattleParam(
-    GAMESYS_WORK *gsys, const POKEPARTY *my_party, int inPlayMode,
+    GAMESYS_WORK *gsys, const POKEPARTY *my_party, BtlRule rule,
     BSUBWAY_PARTNER_DATA *partner_data,
     const int inMemNum );
 

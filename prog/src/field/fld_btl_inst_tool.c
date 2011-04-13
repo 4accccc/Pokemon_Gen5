@@ -683,19 +683,40 @@ BATTLE_SETUP_PARAM * FBI_TOOL_INFINITY_DUNGEON_CreateBattleParam(
  */
 //--------------------------------------------------------------
 BATTLE_SETUP_PARAM * FBI_TOOL_WBT_CreateBattleParam(
-    GAMESYS_WORK *gsys, const POKEPARTY *my_party, int inPlayMode,
+    GAMESYS_WORK *gsys, const POKEPARTY *my_party, BtlRule rule,
     BSUBWAY_PARTNER_DATA *partner_data,
     const int inMemNum )
 {
-  u16 play_mode;
   BATTLE_SETUP_PARAM *dst;
   BTL_FIELD_SITUATION sit;
   GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
   HEAPID heapID = HEAPID_PROC;
-  play_mode = inPlayMode;
   
   // バトルパラメータを作成
-  dst = MakeBattleParam( gsys ,play_mode ,&sit ,TRUE ,heapID);
+  //dst = MakeBattleParam( gsys ,play_mode ,&sit ,TRUE ,heapID);
+  {
+    FIELDMAP_WORK       *p_field_wk = GAMESYSTEM_GetFieldMapWork( gsys );
+    BTL_FIELD_SITUATION_SetFromFieldStatus( &sit, gdata, p_field_wk );
+    dst = BATTLE_PARAM_Create( heapID );
+    //初期化
+    switch( rule ){
+    case BTL_RULE_SINGLE:
+      BTL_SETUP_Single_Trainer( dst, gdata, &sit, TRID_NULL, heapID );
+      break;
+    case BTL_RULE_DOUBLE:
+      BTL_SETUP_Double_Trainer( dst, gdata, &sit, TRID_NULL, heapID );
+      break;
+    case BTL_RULE_TRIPLE:
+      BTL_SETUP_Triple_Trainer( dst, gdata, &sit, TRID_NULL, heapID );
+      break;
+    case BTL_RULE_ROTATION:
+      BTL_SETUP_Rotation_Trainer( dst, gdata, &sit, TRID_NULL, heapID );
+      break;
+    default:
+      GF_ASSERT( 0 );
+    }
+  }
+
   
   //プレイヤーセット
   { 
@@ -721,15 +742,13 @@ BATTLE_SETUP_PARAM * FBI_TOOL_WBT_CreateBattleParam(
     bsw_partner = &partner_data[0];
     bsw_trainer = &bsw_partner->bt_trd;
 
-#if 0 //トレーナーID0を設定すると戦闘録画側に異常
-    if ( play_mode == BSWAY_MODE_WIFI ) tr_data->tr_id = 0;
-    else tr_data->tr_id = bsw_trainer->player_id;
-#else //wifiデータ側で専用のトレーナーIDを設定する
     tr_data->tr_id = bsw_trainer->player_id;
-#endif
 
     // AIトレーナーをセット(ai_bit=最強)
-    EntryAITrainer( play_mode ,tr_data->tr_id ,bsw_trainer ,tr_data ,0x00000087 ,TRUE,TRUE );
+    {
+      u16 play_mode = BSWAY_MODE_SINGLE;  //とりあえずWIFI以外にしておく
+      EntryAITrainer( play_mode ,tr_data->tr_id ,bsw_trainer ,tr_data ,0x00000087 ,TRUE,TRUE );
+    }
     
     //敵ポケモンセット
     SetPokeParty( bsw_partner ,dst->party[client] ,50 ,inMemNum ,heapID );

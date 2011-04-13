@@ -40,6 +40,7 @@
 //#include "bsubway_tr.h"
 
 #include "wbt_system.h"
+#include "wbt_tool.h"
 
 #include "event_wbt.h"
 
@@ -282,6 +283,10 @@ static const u8 pri2pow_table[5] = {
 
 //-----------------------------------------------------------------------------
 /**
+ * @param tr_data
+ * @param wbt_tr
+ * @param cnt
+ * @param inHeapID
  * @todo  バトルサブウェイは４体しかポケモンを選択できない。
  */
 //-----------------------------------------------------------------------------
@@ -332,11 +337,12 @@ static GMEVENT_RESULT wbtBattleEvent( GMEVENT * event, int *seq, void * work )
         const WBTTRAINER * wbt_tr = WBTSYS_GetOpponentTrainer( wbtsys );
         POKEPARTY *party = WBTSYS_GetBattleParty( wbtsys, GAMESYSTEM_GetGameData( gsys ) );
         //BSWAY_PLAYMODE mode = ptr->PlayMode;
-        BSWAY_PLAYMODE mode = BSWAY_PLAYMODE_SINGLE;
+        WBTRULE wbt_rule = WBTSYS_GetRule( wbtsys );
+        BSWAY_PLAYMODE mode = WBTTOOL_WBTRuleToBtlRule( wbt_rule );
         BSUBWAY_PARTNER_DATA *tr_data = &wbew->tr_data;
-        int num = 3;//仮
+        int num = WBTTOOL_GetPartyMaxByRule( wbt_rule );
 
-        makeRomTrainerData( tr_data, wbt_tr, 3, HEAPID_PROC );
+        makeRomTrainerData( tr_data, wbt_tr, num, HEAPID_PROC );
         wbew->bp = FBI_TOOL_WBT_CreateBattleParam( gsys, party, mode, tr_data, num  );
       }
       call_event = EVENT_WBTBattle( gsys, fieldmap, wbew->bp );
@@ -354,6 +360,12 @@ static GMEVENT_RESULT wbtBattleEvent( GMEVENT * event, int *seq, void * work )
 }
 
 //-----------------------------------------------------------------------------
+/**
+ * @brief WBTトレーナー対戦イベントの生成
+ * @param wbtsys
+ * @param gsys
+ * @return  生成イベント
+ */
 //-----------------------------------------------------------------------------
 GMEVENT * WBT_EVENT_TrainerBattle( WBTSYS *wbtsys, GAMESYS_WORK *gsys )
 {

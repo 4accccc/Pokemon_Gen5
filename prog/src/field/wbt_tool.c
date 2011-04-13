@@ -151,6 +151,44 @@ void WBTTOOL_SetRomTrainerName( HEAPID heapID, u8 tr_id, STRBUF * strbuf )
   }
 }
 
+//------------------------------------------------------------------
+/**
+ * @brief ルールごとの参加ポケモン数
+ */
+//------------------------------------------------------------------
+u8 WBTTOOL_GetPartyMaxByRule( WBTRULE rule )
+{
+  switch ( rule )
+  {
+  default:
+  case WBTRULE_NULL:
+    GF_ASSERT( 0 );
+    /* FALL THROUGH */
+  case WBTRULE_SINGLE:
+    return 3;
+  case WBTRULE_DOUBLE:
+    return 4;
+  case WBTRULE_TRIPLE:
+  case WBTRULE_ROTATION:
+    return 6;
+  }
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief WBTRULEとBTLRuleの間の変換
+ */
+//------------------------------------------------------------------
+BtlRule WBTTOOL_WBTRuleToBtlRule( WBTRULE wbt_rule )
+{
+  SDK_COMPILER_ASSERT( BTL_RULE_SINGLE == WBTRULE_SINGLE - 1);
+  SDK_COMPILER_ASSERT( BTL_RULE_DOUBLE == WBTRULE_DOUBLE - 1);
+  SDK_COMPILER_ASSERT( BTL_RULE_TRIPLE == WBTRULE_TRIPLE - 1);
+  SDK_COMPILER_ASSERT( BTL_RULE_ROTATION == WBTRULE_ROTATION - 1);
+  GF_ASSERT( wbt_rule <= WBTRULE_ROTATION );
+  return wbt_rule - 1;
+}
+
 //============================================================================================
 //============================================================================================
 //-----------------------------------------------------------------------------

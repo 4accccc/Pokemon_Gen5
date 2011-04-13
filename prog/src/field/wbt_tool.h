@@ -53,4 +53,6 @@ extern void WBTTOOL_GetTrRomData( HEAPID heapID, u8 tr_id, WBT_TRDATA * tr_data 
 
 extern void WBTTOOL_MakeEntryList( const WBT_MATCH_CONDITION * cond, u16 * tr_list );
 extern void WBTTOOL_SortTrainer( WBTTRAINER * wbt_tr_array, u64 seed64 );
+extern u8 WBTTOOL_GetPartyMaxByRule( WBTRULE rule );
+extern BtlRule WBTTOOL_WBTRuleToBtlRule( WBTRULE wbt_rule );
 
