@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-13T13:15:32"/>
+	<create user="matsumiya" host="W00224" date="2011-04-13T17:57:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -395,14 +395,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1297" top="192" right="2002" bottom="820" maximized="no" rayout="Vertical2">
+	<dialog left="1453" top="261" right="2152" bottom="877" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="0" style="0000" width="530"/>
+		<band id="0" index="0" style="0000" width="524"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="697"/>
-		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<band id="2" index="2" style="0000" width="691"/>
+		<band id="3" index="3" style="0000" width="691"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1842,7 +1842,7 @@
 おれの　まもりは　かたいぜ！▼</language>
 		<language name="JPN_KANJI" width="216">おれは　タケシ！
 いわタイプの　エキスパートさ！▽
-おれの　まもりは　かたいぜ！▼</language>
+おれの　守りは　堅いぜ！▼</language>
 	</row>
 
 	<row id="TRID_RGLEADER1_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -1856,9 +1856,9 @@
 いたくも　かゆくも　ないぜ！▼</language>
 		<language name="JPN_KANJI" width="216">おれは　タケシ！
 いわタイプの　エキスパートさ！▼
-ちょっとや　そっとの　こうげきじゃ
-おれの　ポケモンたちは　へいき▽
-いたくも　かゆくも　ないぜ！▼</language>
+ちょっとや　そっとの　攻撃じゃ
+おれの　ポケモンたちは　平気▽
+痛くも　かゆくも　ないぜ！▼</language>
 	</row>
 
 	<row id="TRID_RGLEADER1_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -1868,9 +1868,9 @@
 		<language name="JPN" width="216">……まもりを　うわまわる
 きょうれつな　こうげき……▽
 おれの　よそう　いじょうだ……！▼</language>
-		<language name="JPN_KANJI" width="216">……まもりを　うわまわる
-きょうれつな　こうげき……▽
-おれの　よそう　いじょうだ……！▼</language>
+		<language name="JPN_KANJI" width="216">……守りを　上回る
+強烈な　攻撃……▽
+おれの　予想以上だ……！▼</language>
 	</row>
 
 	<row id="TRID_RGLEADER1_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -1882,9 +1882,9 @@
 それにしても　せかいは　ひろい！
 おれの　まもりが　つうじないとは▼</language>
 		<language name="JPN_KANJI" width="216">タケシ『ありがとう！
-いい　しょうぶが　できた！▼
-それにしても　せかいは　ひろい！
-おれの　まもりが　つうじないとは▼</language>
+いい　勝負が　できた！▼
+それにしても　世界は　広い！
+おれの　守りが　通じないとは▼</language>
 	</row>
 
 	<row id="TRID_RGLEADER1_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -1896,9 +1896,9 @@
 おれの　まもりは
 せかいでも　つうじるんだな！▼</language>
 		<language name="JPN_KANJI" width="216">タケシ『ありがとう！
-いい　しょうぶが　できた！▼
-おれの　まもりは
-せかいでも　つうじるんだな！▼</language>
+いい　勝負が　できた！▼
+おれの　守りは
+世界でも　通じるんだな！▼</language>
 	</row>
 
 	<row id="TRID_RGLEADER1_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -1907,7 +1907,7 @@
 ・前口上メッセージ</comment>
 		<language name="JPN" width="216">つよくて　かたい　いしの　おとこォ！
 タケシ！　ここに　とうじょうッ！！▼</language>
-		<language name="JPN_KANJI" width="216">つよくて　かたい　いしの　おとこォ！
+		<language name="JPN_KANJI" width="216">強くて　かたい　いしの　男ォ！
 タケシ！　ここに　登場ッ！！▼</language>
 	</row>
 
@@ -1918,7 +1918,7 @@
 		<language name="JPN" width="216">あたしは　カスミ！
 みずタイプの　つかいて　よ！▼</language>
 		<language name="JPN_KANJI" width="216">あたしは　カスミ！
-みずタイプの　つかいて　よ！▼</language>
+みずタイプの　使い手よ！▼</language>
 	</row>
 
 	<row id="TRID_RGLEADER2_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
@@ -1929,8 +1929,8 @@
 みずタイプの　つかいて　よ！▽
 あたしに　かてるかしら？▼</language>
 		<language name="JPN_KANJI" width="216">あたしは　カスミ！
-みずタイプの　つかいて　よ！▽
-あたしに　かてるかしら？▼</language>
+みずタイプの　使い手よ！▽
+あたしに　勝てるかしら？▼</language>
 	</row>
 
 	<row id="TRID_RGLEADER2_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
@@ -1942,9 +1942,9 @@
 そう！　あたしの　みずタイプの
 ポケモンは　とても　つよいわよっ！▼</language>
 		<language name="JPN_KANJI" width="216">あたしは　カスミ！
-みずタイプの　つかいて　よ！▼
+みずタイプの　使い手よ！▼
 そう！　あたしの　みずタイプの
-ポケモンは　とても　つよいわよっ！▼</language>
+ポケモンは　とても　強いわよっ！▼</language>
 	</row>
 
 	<row id="TRID_RGLEADER2_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
@@ -1955,8 +1955,8 @@
 あんたの　じつりょく
 すなおに　みとめるわ……▼</language>
 		<language name="JPN_KANJI" width="216">やるじゃない……▼
-あんたの　じつりょく
-すなおに　みとめるわ……▼</language>
+あんたの　実力
+素直に　認めるわ……▼</language>
 	</row>
 
 	<row id="TRID_RGLEADER2_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,,,,,,,,,,,,,,,">
@@ -1967,12 +1967,12 @@
 つよい　トレーナーと　たたかうのが▽
 ゆめ　だったの……▼
 それは　かなったけれど　つぎの
-ゆめは　あんたに　かつことねっ！</language>
-		<language name="JPN_KANJI" width="216">カスミ『あたし……　たびに　でて
-つよい　トレーナーと　たたかうのが▽
-ゆめ　だったの……▼
-それは　かなったけれど　つぎの
-ゆめは　あんたに　かつことねっ！</language>
+ゆめは　あんたに　かつことねっ！▼</language>
+		<language name="JPN_KANJI" width="216">カスミ『あたし……　旅に　でて
+強い　トレーナーと　戦うのが▽
+夢だったの……▼
+それは　かなったけれど　次の
+夢は　あんたに　勝つことねっ！▼</language>
 	</row>
 
 	<row id="TRID_RGLEADER2_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
@@ -1983,9 +1983,9 @@
 つよい　トレーナーと　たたかうのが▽
 ゆめ　だったの……▼
 それが　いま　かなったのねっ！</language>
-		<language name="JPN_KANJI" width="216">カスミ『あたし……　たびに　でて
-つよい　トレーナーと　たたかうのが▽
-ゆめ　だったの……▼
+		<language name="JPN_KANJI" width="216">カスミ『あたし……　旅に　でて
+強い　トレーナーと　戦うのが▽
+夢だったの……▼
 それが　いま　かなったのねっ！</language>
 	</row>
 
@@ -1996,7 +1996,7 @@
 		<language name="JPN" width="216">おてんば　にんぎょッ！
 カスミ！　いま　その　でばんッ！▼</language>
 		<language name="JPN_KANJI" width="216">おてんば　にんぎょッ！
-カスミ！　いま　その　でばんッ！▼</language>
+カスミ！　今　その　出番ッ！▼</language>
 	</row>
 
 	<row id="TRID_RGLEADER3_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -2097,8 +2097,8 @@
 ・１回戦用対戦前メッセージ</comment>
 		<language name="JPN" width="216">わたくし　くさタイプを　あいする
 エリカと　もうします▼</language>
-		<language name="JPN_KANJI" width="216">わたくし　くさタイプを　あいする
-エリカと　もうします▼</language>
+		<language name="JPN_KANJI" width="216">わたくし　くさタイプを　愛する
+エリカと　申します▼</language>
 	</row>
 
 	<row id="TRID_RGLEADER4_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
@@ -2109,9 +2109,9 @@
 エリカと　もうします▼
 わたくしと　しあいを　なさりたいのは
 あなた　なのですね▼</language>
-		<language name="JPN_KANJI" width="216">わたくし　くさタイプを　あいする
-エリカと　もうします▼
-わたくしと　しあいを　なさりたいのは
+		<language name="JPN_KANJI" width="216">わたくし　くさタイプを　愛する
+エリカと　申します▼
+わたくしと　試合を　なさりたいのは
 あなた　なのですね▼</language>
 	</row>
 
@@ -2125,12 +2125,12 @@
 ポケモン　しゅぎょうも▽
 つづけて　きたんですもの……▽
 わたくし　まけませんわよ！▼</language>
-		<language name="JPN_KANJI" width="216">わたくし　くさタイプを　あいする
-エリカと　もうします▼
-いけばなの　しゅぎょうと　ともに
-ポケモン　しゅぎょうも▽
-つづけて　きたんですもの……▽
-わたくし　まけませんわよ！▼</language>
+		<language name="JPN_KANJI" width="216">わたくし　くさタイプを　愛する
+エリカと　申します▼
+生け花の　修行と　ともに
+ポケモン　修行も▽
+続けて　きたんですもの……▽
+わたくし　負けませんわよ！▼</language>
 	</row>
 
 	<row id="TRID_RGLEADER4_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
@@ -2153,10 +2153,10 @@
 すばらしい　しあい　でした▽
 わたくし　かんどう　いたしましたわ</language>
 		<language name="JPN_KANJI" width="216">エリカ『まいり　ましたわ
-おつよい　ですのね……▼
+お強い　ですのね……▼
 それにしても　とても
-すばらしい　しあい　でした▽
-わたくし　かんどう　いたしましたわ</language>
+すばらしい　試合でした▽
+わたくし　感動いたしましたわ</language>
 	</row>
 
 	<row id="TRID_RGLEADER4_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
@@ -2168,11 +2168,11 @@
 あいする　ポケモンと　ともにたたかい
 しょうりを　える……　これが▽
 トレーナーの　よろこび　ですわ</language>
-		<language name="JPN_KANJI" width="216">エリカ『わたくし　かてて
-かんどう　いたしております▼
-あいする　ポケモンと　ともにたたかい
-しょうりを　える……　これが▽
-トレーナーの　よろこび　ですわ</language>
+		<language name="JPN_KANJI" width="216">エリカ『わたくし　勝てて
+感動いたしております▼
+愛する　ポケモンと　ともに戦い
+勝利を　得る……　これが▽
+トレーナーの　喜び　ですわ</language>
 	</row>
 
 	<row id="TRID_RGLEADER4_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
@@ -2181,8 +2181,8 @@
 ・前口上メッセージ</comment>
 		<language name="JPN" width="216">しぜんを　あいする　おじょうさま！
 エリカ！　いざ　まいりますッ！！▼</language>
-		<language name="JPN_KANJI" width="216">しぜんを　あいする　おじょうさま！
-エリカ！　いざ　まいりますッ！！▼</language>
+		<language name="JPN_KANJI" width="216">自然を　愛する　おじょうさま！
+エリカ！　いざ　参りますッ！！▼</language>
 	</row>
 
 	<row id="TRID_RGLEADER5_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -2191,8 +2191,8 @@
 ・１回戦用対戦前メッセージ</comment>
 		<language name="JPN" width="216">あなたと　たたかう　よかんは
 ３ねんまえ　から　あったのよ▼</language>
-		<language name="JPN_KANJI" width="216">あなたと　たたかう　よかんは
-３ねんまえ　から　あったのよ▼</language>
+		<language name="JPN_KANJI" width="216">あなたと　戦う　予感は
+３年前から　あったのよ▼</language>
 	</row>
 
 	<row id="TRID_RGLEADER5_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -2203,10 +2203,10 @@
 ３ねんまえ　から　あったのよ▼
 だって　わたし　エスパーだから……
 それでも　たたかうのね？▼</language>
-		<language name="JPN_KANJI" width="216">あなたと　たたかう　よかんは
-３ねんまえ　から　あったのよ▼
+		<language name="JPN_KANJI" width="216">あなたと　戦う　予感は
+３年前から　あったのよ▼
 だって　あたし　エスパーだから……
-それでも　たたかうのね？▼</language>
+それでも　戦うのね？▼</language>
 	</row>
 
 	<row id="TRID_RGLEADER5_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -2218,10 +2218,10 @@
 あなたが　のぞむなら
 わたしの　エスパー　のうりょく▽
 みせて　あげるわ！▼</language>
-		<language name="JPN_KANJI" width="216">あなたと　たたかう　よかんは
-３ねんまえ　から　あったのよ▼
-あなたが　のぞむなら
-わたしの　エスパー　のうりょく▽
+		<language name="JPN_KANJI" width="216">あなたと　戦う　予感は
+３年前から　あったのよ▼
+あなたが　望むなら
+わたしの　エスパー能力▽
 みせて　あげるわ！▼</language>
 	</row>
 
@@ -2231,8 +2231,8 @@
 ・対戦後メッセージ</comment>
 		<language name="JPN" width="216">わたしが　みた　みらいと
 ……ちがう！？▼</language>
-		<language name="JPN_KANJI" width="216">わたしが　みた　みらいと
-……ちがう！？▼</language>
+		<language name="JPN_KANJI" width="216">わたしが　みた　未来と
+……違う！？▼</language>
 	</row>
 
 	<row id="TRID_RGLEADER5_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -2244,13 +2244,13 @@
 かんぜんな　みらい　よちは
 できないのかも……▼
 それも　あなたが　つよくて
-わたしの　ちからを　こえたからね</language>
-		<language name="JPN_KANJI" width="216">ナツメ『この　つよさ……！
-よそく　いじょう　だわ……！▼
-かんぜんな　みらい　よちは
+わたしの　ちからを　こえたからね▼</language>
+		<language name="JPN_KANJI" width="216">ナツメ『この　強さ……！
+予測　以上だわ……！▼
+完全な　未来予知は
 できないのかも……▼
-それも　あなたが　つよくて
-わたしの　ちからを　こえたからね</language>
+それも　あなたが　強くて
+わたしの　力を　超えたからね▼</language>
 	</row>
 
 	<row id="TRID_RGLEADER5_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -2260,9 +2260,9 @@
 		<language name="JPN" width="216">ナツメ『この　しょうり……！▼
 ３ねんまえに　みた　こうけいと
 まったく　おなじ　だわ▼</language>
-		<language name="JPN_KANJI" width="216">ナツメ『この　しょうり……！▼
-３ねんまえに　みた　こうけいと
-まったく　おなじ　だわ▼</language>
+		<language name="JPN_KANJI" width="216">ナツメ『この　勝利……！▼
+３年前に　みた　光景と
+まったく　同じだわ▼</language>
 	</row>
 
 	<row id="TRID_RGLEADER5_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -2272,7 +2272,7 @@
 		<language name="JPN" width="216">エスパァー　レディーッ！！
 ナツメ！　さっそうと　とうじょうッ！▼</language>
 		<language name="JPN_KANJI" width="216">エスパァー　レディーッ！！
-ナツメ！　さっそうと　とうじょうッ！▼</language>
+ナツメ！　さっそうと　登場ッ！▼</language>
 	</row>
 
 	<row id="TRID_RGLEADER6_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
@@ -2283,7 +2283,7 @@
 ほのおで　やいて　こがしまくる▽
 つわもの　ばかり　なのだー！▼</language>
 		<language name="JPN_KANJI" width="216">わしの　ポケモンは
-ほのおで　やいて　こがしまくる▽
+炎で　焼いて　焦がしまくる▽
 つわもの　ばかり　なのだー！▼</language>
 	</row>
 
@@ -2297,7 +2297,7 @@
 つわもの　ばかり　なのだー！▼</language>
 		<language name="JPN_KANJI" width="216">うおおーいっ！▼
 わしの　ポケモンは
-ほのおで　やいて　こがしまくる▽
+炎で　焼いて　焦がしまくる▽
 つわもの　ばかり　なのだー！▼</language>
 	</row>
 
@@ -2312,7 +2312,7 @@
 さあ　いくぞ！　うおおーす！▼</language>
 		<language name="JPN_KANJI" width="216">うおおーいっ！▼
 わしの　ポケモンは
-ほのおで　やいて　こがしまくる▽
+炎で　焼いて　焦がしまくる▽
 つわもの　ばかり　なのだー！▼
 さあ　いくぞ！　うおおーす！▼</language>
 	</row>
@@ -2324,7 +2324,7 @@
 		<language name="JPN" width="216">なんたること！
 きはくでは　まけていなかったのだが！▼</language>
 		<language name="JPN_KANJI" width="216">なんたること！
-きはくでは　まけていなかったのだが！▼</language>
+気迫では　負けていなかったのだが！▼</language>
 	</row>
 
 	<row id="TRID_RGLEADER6_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,,,,,,,,,,,,,,,">
@@ -2337,10 +2337,10 @@
 さらに　つよくなるばかり……！▽
 いつか　また　たたかおう！▼</language>
 		<language name="JPN_KANJI" width="216">カツラ『み……　みごと！
-わしは　もえつきた……！▼
-だが　わしの　もえあがる　おもいは
-さらに　つよくなるばかり……！▽
-いつか　また　たたかおう！▼</language>
+わしは　燃え尽きた……！▼
+だが　わしの　燃えあがる　思いは
+さらに　強くなるばかり……！▽
+いつか　また　戦おう！▼</language>
 	</row>
 
 	<row id="TRID_RGLEADER6_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
@@ -2352,18 +2352,18 @@
 わしの　ほのお　ポケモンを▽
 パワーアップ　させるぞ！▼</language>
 		<language name="JPN_KANJI" width="216">カツラ『うおおーいっ！▼
-この　しょうりの　ねつで
+この　勝利の　熱で
 わしの　ほのお　ポケモンを▽
 パワーアップ　させるぞ！▼</language>
 	</row>
 
-	<row id="TRID_RGLEADER6_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
+	<row id="TRID_RGLEADER6_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂：アナウンス
 ・ジムリーダー：カツラ
 ・前口上メッセージ</comment>
 		<language name="JPN" width="216">ねっけつ　クイズ　おやじィ！
 カツラ！　だすのは　ポケモンだァ！！▼</language>
-		<language name="JPN_KANJI" width="216">ねっけつ　クイズ　おやじィ！
+		<language name="JPN_KANJI" width="216">熱血　クイズ　おやじィ！
 カツラ！　だすのは　ポケモンだァ！！▼</language>
 	</row>
 
@@ -2373,28 +2373,28 @@
 ・１回戦用対戦前メッセージ</comment>
 		<language name="JPN" width="216">わたしに　はむかう　なら
 いたい　めに　あって　もらう！▼</language>
-		<language name="JPN_KANJI" width="216">わたしに　はむかう　なら
-いたい　めに　あって　もらう！▼</language>
+		<language name="JPN_KANJI" width="216">わたしに　刃向かう　なら
+痛い　目に　あって　もらう！▼</language>
 	</row>
 
-	<row id="TRID_RGLEADER7_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="TRID_RGLEADER7_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：サカキ
 ・２回戦用対戦前メッセージ</comment>
 		<language name="JPN" width="216">わたしに　はむかう　なら
 いたい　めに　あって　もらう！▼</language>
-		<language name="JPN_KANJI" width="216">わたしに　はむかう　なら
-いたい　めに　あって　もらう！▼</language>
+		<language name="JPN_KANJI" width="216">わたしに　刃向かう　なら
+痛い　目に　あって　もらう！▼</language>
 	</row>
 
-	<row id="TRID_RGLEADER7_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="TRID_RGLEADER7_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：サカキ
 ・決勝戦用対戦前メッセージ</comment>
 		<language name="JPN" width="216">わたしに　はむかう　なら
 いたい　めに　あって　もらう！▼</language>
-		<language name="JPN_KANJI" width="216">わたしに　はむかう　なら
-いたい　めに　あって　もらう！▼</language>
+		<language name="JPN_KANJI" width="216">わたしに　刃向かう　なら
+痛い　目に　あって　もらう！▼</language>
 	</row>
 
 	<row id="TRID_RGLEADER7_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -2402,9 +2402,9 @@
 ・ジムリーダー：サカキ
 ・対戦後メッセージ</comment>
 		<language name="JPN" width="216">ぐ　ぐーッ！
-このおれが　まける　なんて！ ▼</language>
+この　おれが　まける　なんて！ ▼</language>
 		<language name="JPN_KANJI" width="216">ぐ　ぐーッ！
-このおれが　まける　なんて！ ▼</language>
+この　おれが　負ける　なんて！ ▼</language>
 	</row>
 
 	<row id="TRID_RGLEADER7_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -2413,14 +2413,14 @@
 ・プレイヤーが勝った場合のメッセージ</comment>
 		<language name="JPN" width="216">サカキ『はぐ！
 この　おれが　まける　なんて！▼
-きみに　いう　ことは　なにもない……！▼
+きみに　いうことは　なにもない……！▼
 わたしは　これから　ひとり
 みずからを　きたえると　しよう▼</language>
 		<language name="JPN_KANJI" width="216">サカキ『はぐ！
-この　おれが　まける　なんて！▼
-きみに　いう　ことは　なにもない……！▼
-わたしは　これから　ひとり
-みずからを　きたえると　しよう▼</language>
+この　おれが　負ける　なんて！▼
+きみに　いうことは　なにもない……！▼
+わたしは　これから　一人
+自らを　鍛えると　しよう▼</language>
 	</row>
 
 	<row id="TRID_RGLEADER7_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -2432,9 +2432,9 @@
 きみとは　また　どこかで
 たたかいたい　ものだ……！▼</language>
 		<language name="JPN_KANJI" width="216">サカキ『はーッ　はーッ！
-はげしい　たたかい　だった！▼
+激しい　戦い　だった！▼
 きみとは　また　どこかで
-たたかいたい　ものだ……！▼</language>
+戦いたい　ものだ……！▼</language>
 	</row>
 
 	<row id="TRID_RGLEADER7_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -2443,8 +2443,8 @@
 ・前口上メッセージ</comment>
 		<language name="JPN" width="216">みずから　さいきょうの　トレーナーと
 なのる　おとこ　サカキ　でばんだッ！▼</language>
-		<language name="JPN_KANJI" width="216">みずから　さいきょうの　トレーナーと
-なのる　おとこ　サカキ　でばんだッ！▼</language>
+		<language name="JPN_KANJI" width="216">自ら　最強の　トレーナーと
+名乗る　男　サカキ　出番だッ！▼</language>
 	</row>
 
 	<row id="TRID_GSLEADER1_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
@@ -2454,9 +2454,9 @@
 		<language name="JPN" width="216">おおぞらを　かれいに　まう
 とりポケモンの　ほんとうの　すごさ▽
 おもいしらせて　やるよ！▼</language>
-		<language name="JPN_KANJI" width="216">おおぞらを　かれいに　まう
-とりポケモンの　ほんとうの　すごさ▽
-おもいしらせて　やるよ！▼</language>
+		<language name="JPN_KANJI" width="216">大空を　華麗に　舞う
+とりポケモンの　本当の　すごさ▽
+思い知らせて　やるよ！▼</language>
 	</row>
 
 	<row id="TRID_GSLEADER1_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
@@ -2467,10 +2467,10 @@
 とりポケモンの　ほんとうの　すごさ▽
 おもいしらせて　やるよ！▽
 さあ！　かぜよ　ふけ！！▼</language>
-		<language name="JPN_KANJI" width="216">おおぞらを　かれいに　まう
-とりポケモンの　ほんとうの　すごさ▽
-おもいしらせて　やるよ！▽
-さあ！　かぜよ　ふけ！！▼</language>
+		<language name="JPN_KANJI" width="216">大空を　華麗に　舞う
+とりポケモンの　本当の　すごさ▽
+思い知らせて　やるよ！▽
+さあ！　風よ　吹け！！▼</language>
 	</row>
 
 	<row id="TRID_GSLEADER1_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
@@ -2482,11 +2482,11 @@
 おもいしらせて　やるよ！▼
 ……とうさん！　おれの　たたかい
 そらから　みていてくれ！▼</language>
-		<language name="JPN_KANJI" width="216">おおぞらを　かれいに　まう
-とりポケモンの　ほんとうの　すごさ▽
-おもいしらせて　やるよ！▼
-……とうさん！　おれの　たたかい
-そらから　みていてくれ！▼</language>
+		<language name="JPN_KANJI" width="216">大空を　華麗に　舞う
+とりポケモンの　本当の　すごさ▽
+思い知らせて　やるよ！▼
+……とうさん！　おれの　戦い
+空から　みていてくれ！▼</language>
 	</row>
 
 	<row id="TRID_GSLEADER1_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
@@ -2496,7 +2496,7 @@
 		<language name="JPN" width="216">わかった……
 いさぎよく　ちに　おりるよ▼</language>
 		<language name="JPN_KANJI" width="216">わかった……
-いさぎよく　ちに　おりるよ▼</language>
+いさぎよく　地に　降りるよ▼</language>
 	</row>
 
 	<row id="TRID_GSLEADER1_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,,,,,,,,,,,,,,,">
@@ -2508,11 +2508,11 @@
 おれは　さいきょうの
 とりつかいに　なるため▽
 ポケモンと　おのれを　きたえるよ！▼</language>
-		<language name="JPN_KANJI" width="216">ハヤト『まけたものは　しかたない
-すなおに　きみの　つよさ　みとめる▼
-おれは　さいきょうの
+		<language name="JPN_KANJI" width="216">ハヤト『負けたものは　しかたない
+素直に　きみの　強さ　認める▼
+おれは　最強の
 とりつかいに　なるため▽
-ポケモンと　おのれを　きたえるよ！▼</language>
+ポケモンと　おのれを　鍛えるよ！▼</language>
 	</row>
 
 	<row id="TRID_GSLEADER1_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
@@ -2523,8 +2523,8 @@
 とうさんが　たいせつに　していた
 ポケモンで　みごと　かったよ！！▼</language>
 		<language name="JPN_KANJI" width="216">ハヤト『……とうさん！▼
-とうさんが　たいせつに　していた
-ポケモンで　みごと　かったよ！！▼</language>
+とうさんが　大切に　していた
+ポケモンで　みごと　勝ったよ！！▼</language>
 	</row>
 
 	<row id="TRID_GSLEADER1_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
@@ -2533,8 +2533,8 @@
 ・前口上メッセージ</comment>
 		<language name="JPN" width="216">かれいなる　ひこうポケモン　つかい！
 ハヤト！　いま　まいおりるゥ！！▼</language>
-		<language name="JPN_KANJI" width="216">かれいなる　ひこうポケモン　つかい！
-ハヤト！　いま　まいおりるゥ！！▼</language>
+		<language name="JPN_KANJI" width="216">華麗なる　ひこうポケモン使い！
+ハヤト！　今　舞い降りるゥ！！▼</language>
 	</row>
 
 	<row id="TRID_GSLEADER2_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -2544,7 +2544,7 @@
 		<language name="JPN" width="216">むしポケモンの　ことなら
 だれにも　まけないよ！▼</language>
 		<language name="JPN_KANJI" width="216">むしポケモンの　ことなら
-だれにも　まけないよ！▼</language>
+だれにも　負けないよ！▼</language>
 	</row>
 
 	<row id="TRID_GSLEADER2_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -2557,10 +2557,10 @@
 むしポケモン　けんきゅうで▽
 えらい　はかせに　なるんだから！▼</language>
 		<language name="JPN_KANJI" width="216">むしポケモンの　ことなら
-だれにも　まけないよ！▼
-なんたって　しょうらいは
-むしポケモン　けんきゅうで▽
-えらい　はかせに　なるんだから！▼</language>
+だれにも　負けないよ！▼
+なんたって　将来は
+むしポケモン　研究で▽
+偉い　博士に　なるんだから！▼</language>
 	</row>
 
 	<row id="TRID_GSLEADER2_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -2572,9 +2572,9 @@
 ポケモンしょうぶで　ぼくの
 けんきゅう　せいか　みせてあげるよ▼</language>
 		<language name="JPN_KANJI" width="216">むしポケモンの　ことなら
-だれにも　まけないよ！▼
-ポケモンしょうぶで　ぼくの
-けんきゅう　せいか　みせてあげるよ▼</language>
+だれにも　負けないよ！▼
+ポケモン勝負で　ぼくの
+研究成果　みせてあげるよ▼</language>
 	</row>
 
 	<row id="TRID_GSLEADER2_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -2594,9 +2594,9 @@
 あーあ
 ぼくの　けんきゅうも　まだまだだ！▼</language>
 		<language name="JPN_KANJI" width="216">ツクシ『うわ　すごい！
-きみ　ポケモンに　くわしいんだね！▼
+きみ　ポケモンに　詳しいんだね！▼
 あーあ
-ぼくの　けんきゅうも　まだまだだ！▼</language>
+ぼくの　研究も　まだまだだ！▼</language>
 	</row>
 
 	<row id="TRID_GSLEADER2_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -2604,11 +2604,11 @@
 ・ジムリーダー：ツクシ
 ・プレイヤーが負けた場合のメッセージ</comment>
 		<language name="JPN" width="216">ツクシ『ありがとう！▼
-きみの　おかげで
+きみと　しょうぶ　できた　おかげで
 ぼくの　けんきゅうも　はかどったよ！▼</language>
 		<language name="JPN_KANJI" width="216">ツクシ『ありがとう！▼
-きみの　おかげで
-ぼくの　けんきゅうも　はかどったよ！▼</language>
+きみと　勝負できた　おかげで
+ぼくの　研究も　はかどったよ！▼</language>
 	</row>
 
 	<row id="TRID_GSLEADER2_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -2617,8 +2617,8 @@
 ・前口上メッセージ</comment>
 		<language name="JPN" width="216">あるく　むしポケ　だいひゃっかァ！
 ツクシ！　ちしきを　おひろめだァ！▼</language>
-		<language name="JPN_KANJI" width="216">あるく　むしポケ　だいひゃっかァ！
-ツクシ！　ちしきを　おひろめだァ！▼</language>
+		<language name="JPN_KANJI" width="216">歩く　むしポケ　大百科ァ！
+ツクシ！　知識を　お披露目だァ！▼</language>
 	</row>
 
 	<row id="TRID_GSLEADER3_TRMSG_1ST_FIGHT_START" text-color=",,,#000000,,,,,,,,,,,,,," back-color="#ff8080,,,,,,,,,,,,,,,,,">
@@ -2628,7 +2628,7 @@
 		<language name="JPN" width="216">ゆうとくけど　うち
 めっちゃ　つよいでー！▼</language>
 		<language name="JPN_KANJI" width="216">ゆうとくけど　うち
-めっちゃ　つよいでー！▼</language>
+めっちゃ　強いでー！▼</language>
 	</row>
 
 	<row id="TRID_GSLEADER3_TRMSG_2ND_FIGHT_START" text-color=",,,#000000,,,,,,,,,,,,,," back-color="#ff8080,,,,,,,,,,,,,,,,,">
@@ -2640,9 +2640,9 @@
 あんた　うちに　まけても
 ないたら　あかんで！▼</language>
 		<language name="JPN_KANJI" width="216">ゆうとくけど　うち
-めっちゃ　つよいでー！▼
-あんた　うちに　まけても
-ないたら　あかんで！▼</language>
+めっちゃ　強いでー！▼
+あんた　うちに　負けても
+泣いたら　あかんで！▼</language>
 	</row>
 
 	<row id="TRID_GSLEADER3_TRMSG_3RD_FIGHT_START" text-color=",,,#000000,,,,,,,,,,,,,," back-color="#ff8080,,,,,,,,,,,,,,,,,">
@@ -2653,12 +2653,12 @@
 めっちゃ　つよいでー！▼
 それに　いっしょに　たたかってくれる
 ポケモンも　かわいくて　つよいんよ！▼
-ほな　はじめよか！</language>
+ほな　はじめよか！▼</language>
 		<language name="JPN_KANJI" width="216">ゆうとくけど　うち
-めっちゃ　つよいでー！▼
-それに　いっしょに　たたかってくれる
-ポケモンも　かわいくて　つよいんよ！▼
-ほな　はじめよか！</language>
+めっちゃ　強いでー！▼
+それに　一緒に　戦ってくれる
+ポケモンも　かわいくて　強いんよ！▼
+ほな　始めよか！▼</language>
 	</row>
 
 	<row id="TRID_GSLEADER3_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
@@ -2691,7 +2691,7 @@
 ……　……　……
 ……　……　……▼
 ふう！
-ないたら　すっきり　したわ！▼
+泣いたら　すっきり　したわ！▼
 うち　もっともっと
 ポケモン　つようなって▽
 また　チャレンジ　するわ！▼</language>
@@ -2705,8 +2705,8 @@
 ポケモン　つかうの　うまいんやから▽
 つぎは　かてるんとちゃう？▼</language>
 		<language name="JPN_KANJI" width="216">アカネ『あんた　そんだけ
-ポケモン　つかうの　うまいんやから▽
-つぎは　かてるんとちゃう？▼</language>
+ポケモン　使うの　うまいんやから▽
+次は　勝てるんとちゃう？▼</language>
 	</row>
 
 	<row id="TRID_GSLEADER3_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
@@ -2726,9 +2726,9 @@
 		<language name="JPN" width="216">ぼくの　しゅぎょう▼
 きみ　にも
 きょうりょく　してもらおう！▼</language>
-		<language name="JPN_KANJI" width="216">ぼくの　しゅぎょう▼
+		<language name="JPN_KANJI" width="216">ぼくの　修行▼
 きみ　にも
-きょうりょく　してもらおう！▼</language>
+協力してもらおう！▼</language>
 	</row>
 
 	<row id="TRID_GSLEADER4_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -2739,10 +2739,10 @@
 ぼくの　しゅぎょう▼
 きみ　にも
 きょうりょく　してもらおう！▼</language>
-		<language name="JPN_KANJI" width="216">つよい　あいてと　たたかうことも
-ぼくの　しゅぎょう▼
+		<language name="JPN_KANJI" width="216">強い　相手と　戦うことも
+ぼくの　修行▼
 きみ　にも
-きょうりょく　してもらおう！▼</language>
+協力してもらおう！▼</language>
 	</row>
 
 	<row id="TRID_GSLEADER4_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -2754,11 +2754,11 @@
 ぼくの　しゅぎょう▼
 きみ　にも
 きょうりょく　してもらおう！▼</language>
-		<language name="JPN_KANJI" width="216">かみさまと　いわれる
-ポケモンと　であうための▽
-ぼくの　しゅぎょう▼
+		<language name="JPN_KANJI" width="216">神様と　いわれる
+ポケモンと　出会うための▽
+ぼくの　修行▼
 きみ　にも
-きょうりょく　してもらおう！▼</language>
+協力してもらおう！▼</language>
 	</row>
 
 	<row id="TRID_GSLEADER4_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -2778,11 +2778,11 @@
 けれど　きみには
 それだけでは　ない　なにかが……▽
 なにかが　そなわっているんだね▼</language>
-		<language name="JPN_KANJI" width="216">マツバ『しょうぶの　じつりょくでは
-それほど　まけていない　はず！▼
+		<language name="JPN_KANJI" width="216">マツバ『勝負の　実力では
+それほど　負けていない　はず！▼
 けれど　きみには
 それだけでは　ない　なにかが……▽
-なにかが　そなわっているんだね▼</language>
+なにかが　備わっているんだね▼</language>
 	</row>
 
 	<row id="TRID_GSLEADER4_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -2796,8 +2796,8 @@
 そのときは　よろしく！▼</language>
 		<language name="JPN_KANJI" width="216">マツバ『また　ひとつ
 なにかが　みえた……▼
-また　きみと　たたかえば
-あたらしく　なにか　みえるはず……▽
+また　きみと　戦えば
+新しく　なにか　みえるはず……▽
 そのときは　よろしく！▼</language>
 	</row>
 
@@ -2805,10 +2805,10 @@
 		<comment>♂：アナウンス
 ・ジムリーダー：マツバ
 ・前口上メッセージ</comment>
-		<language name="JPN" width="216">せんりがんを　もつ　しゅけんじゃ！
+		<language name="JPN" width="216">せんりがんを　もつ　しゅげんじゃ！
 みえるは　しょうりかァ　マツバ！▼</language>
-		<language name="JPN_KANJI" width="216">せんりがんを　もつ　しゅけんじゃ！
-みえるは　しょうりかァ　マツバ！▼</language>
+		<language name="JPN_KANJI" width="216">千里眼を　持つ　修験者！
+みえるは　勝利かァ　マツバ！▼</language>
 	</row>
 
 	<row id="TRID_GSLEADER5_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
@@ -2816,7 +2816,7 @@
 ・ジムリーダー：シジマ
 ・１回戦用対戦前メッセージ</comment>
 		<language name="JPN" width="216">いっとくが　わしは　つよいぞ！▼</language>
-		<language name="JPN_KANJI" width="216">いっとくが　わしは　つよいぞ！▼</language>
+		<language name="JPN_KANJI" width="216">いっとくが　わしは　強いぞ！▼</language>
 	</row>
 
 	<row id="TRID_GSLEADER5_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
@@ -2824,9 +2824,9 @@
 ・ジムリーダー：シジマ
 ・２回戦用対戦前メッセージ</comment>
 		<language name="JPN" width="216">いきなり　だが
-しょうぶと　いくかぁ！▼</language>
+ポケモンしょうぶと　いくかぁ！▼</language>
 		<language name="JPN_KANJI" width="216">いきなり　だが
-しょうぶと　いくかぁ！▼</language>
+ポケモン勝負と　いくかぁ！▼</language>
 	</row>
 
 	<row id="TRID_GSLEADER5_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
@@ -2834,7 +2834,7 @@
 ・ジムリーダー：シジマ
 ・決勝戦用対戦前メッセージ</comment>
 		<language name="JPN" width="216">いっとくが　わしは　つよいぞ！▼
-こうやって　まいにち
+なにしろ　まいにち
 たきに　うたれて　いるからな！▼
 なに？
 ポケモンとは　かんけい　ない？▼
@@ -2843,16 +2843,16 @@
 ……　……　……
 ……　……　……▼
 では　しょうぶと　いくかぁ！▼</language>
-		<language name="JPN_KANJI" width="216">いっとくが　わしは　つよいぞ！▼
-こうやって　まいにち
-たきに　うたれて　いるからな！▼
+		<language name="JPN_KANJI" width="216">いっとくが　わしは　強いぞ！▼
+なにしろ　毎日
+滝に　うたれて　いるからな！▼
 なに？
-ポケモンとは　かんけい　ない？▼
+ポケモンとは　関係ない？▼
 ……　……　……
 それも　そうだ▼
 ……　……　……
 ……　……　……▼
-では　しょうぶと　いくかぁ！▼</language>
+では　勝負と　いくかぁ！▼</language>
 	</row>
 
 	<row id="TRID_GSLEADER5_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,,,#ffff80,,,,,,#ffff80,,,,,,">
@@ -2870,7 +2870,7 @@
 		<language name="JPN" width="216">シジマ『うーむ　わしが
 まけるとは……　こりゃ　まいった！▼</language>
 		<language name="JPN_KANJI" width="216">シジマ『うーむ　わしが
-まけるとは……　こりゃ　まいった！▼</language>
+負けるとは……　こりゃ　まいった！▼</language>
 	</row>
 
 	<row id="TRID_GSLEADER5_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
@@ -2882,9 +2882,9 @@
 でも　まけは　まけ　だからな
 きょうから　２４じかん　とっくんだ！▼</language>
 		<language name="JPN_KANJI" width="216">シジマ『わはは！
-わし　たのしかったよ！▼
-でも　まけは　まけ　だからな
-きょうから　２４じかん　とっくんだ！▼</language>
+わし　楽しかったよ！▼
+でも　負け　負け　だからな
+今日から　２４時間　特訓だ！▼</language>
 	</row>
 
 	<row id="TRID_GSLEADER5_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
@@ -2893,8 +2893,8 @@
 ・前口上メッセージ</comment>
 		<language name="JPN" width="216">うなる　こぶしで　かたる　おとこォ！
 シジマ！　さあ　かたれかたれェー！！▼</language>
-		<language name="JPN_KANJI" width="216">うなる　こぶしで　かたる　おとこォ！
-シジマ！　さあ　かたれかたれェー！！▼</language>
+		<language name="JPN_KANJI" width="216">うなる　こぶしで　語る　男ォ！
+シジマ！　さあ　語れ語れェー！！▼</language>
 	</row>
 
 	<row id="TRID_GSLEADER6_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -2906,7 +2906,7 @@
 シャキーン！！▼
 は……　はがねタイプ　です▼</language>
 		<language name="JPN_KANJI" width="216">あたしは　ミカン▼
-つかう　ポケモンは
+使う　ポケモンは
 シャキーン！！▼
 は……　はがねタイプ　です▼</language>
 	</row>
@@ -2922,11 +2922,11 @@
 ……はがねタイプって
 ごぞんじ　ですか？▼</language>
 		<language name="JPN_KANJI" width="216">あたしは　ミカン▼
-つかう　ポケモンは
+使う　ポケモンは
 シャキーン！！▼
 は……　はがねタイプ　です▼
 ……はがねタイプって
-ごぞんじ　ですか？▼</language>
+ご存知ですか？▼</language>
 	</row>
 
 	<row id="TRID_GSLEADER6_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -2943,13 +2943,13 @@
 するどくて　つ　つよいんですよ？▽
 ほんと　なんですよ？▼</language>
 		<language name="JPN_KANJI" width="216">あたしは　ミカン▼
-つかう　ポケモンは
+使う　ポケモンは
 シャキーン！！▼
 は……　はがねタイプ　です▼
 ……はがねタイプって
-ごぞんじ　ですか？▼
-とっても　かたくて　つめたくて
-するどくて　つ　つよいんですよ？▽
+ご存知ですか？▼
+とっても　硬くて　冷たくて
+鋭くて　つ　強いんですよ？▽
 ほんと　なんですよ？▼</language>
 	</row>
 
@@ -2973,7 +2973,7 @@
 ……がんばって　くださいね▼</language>
 		<language name="JPN_KANJI" width="216">ミカン『ポケモン　トレーナーとして
 あなたのほうが　うわて　みたい▽
-つよさも　やさしさも　ね▼
+強さも　優しさも　ね▼
 あ　あの……
 あんまり　うまく　いえないけど▽
 ……がんばって　くださいね▼</language>
@@ -2987,10 +2987,10 @@
 これくらいでは　さびないの！▼
 あなたも　あきらめずに
 きたえていれば　また　あえますよね▼</language>
-		<language name="JPN_KANJI" width="216">ミカン『きたえぬかれた　はがねは
+		<language name="JPN_KANJI" width="216">ミカン『鍛えぬかれた　はがねは
 これくらいでは　さびないの！▼
 あなたも　あきらめずに
-きたえていれば　また　あえますよね▼</language>
+鍛えていれば　また　会えますよね▼</language>
 	</row>
 
 	<row id="TRID_GSLEADER6_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -2999,8 +2999,8 @@
 ・前口上メッセージ</comment>
 		<language name="JPN" width="216">てっぺき　ガードの　おんなのこォ！
 ミカン！　そのガード　くずせるかァ！▼</language>
-		<language name="JPN_KANJI" width="216">てっぺき　ガードの　おんなのこォ！
-ミカン！　そのガード　くずせるかァ！▼</language>
+		<language name="JPN_KANJI" width="216">鉄壁ガードの　おんなのこォ！
+ミカン！　そのガード　崩せるかァ！▼</language>
 	</row>
 
 	<row id="TRID_GSLEADER7_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
@@ -3009,8 +3009,8 @@
 ・１回戦用対戦前メッセージ</comment>
 		<language name="JPN" width="216">ふゆの　ヤナギと　よばれる
 その　じつりょく　みせてやろうかの▼</language>
-		<language name="JPN_KANJI" width="216">ふゆの　ヤナギと　よばれる
-その　じつりょく　みせてやろうかの▼</language>
+		<language name="JPN_KANJI" width="216">冬の　ヤナギと　呼ばれる
+その実力　みせてやろうかの▼</language>
 	</row>
 
 	<row id="TRID_GSLEADER7_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
@@ -3022,9 +3022,9 @@
 じんせいの　せんぱい　として
 それを　おしえて　やろう▼</language>
 		<language name="JPN_KANJI" width="216">わたしも　いろいろ
-つらいことを　あじわった▼
-じんせいの　せんぱい　として
-それを　おしえて　やろう▼</language>
+つらいことを　味わった▼
+人生の　先輩として
+それを　教えて　やろう▼</language>
 	</row>
 
 	<row id="TRID_GSLEADER7_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
@@ -3036,11 +3036,11 @@
 おいそれと　まけたりは　せん▼
 ふゆの　ヤナギと　よばれる
 その　じつりょく　みせてやろうかの▼</language>
-		<language name="JPN_KANJI" width="216">きみが　うまれるまえから
-ポケモンと　いっしょに　いる▼
-おいそれと　まけたりは　せん▼
-ふゆの　ヤナギと　よばれる
-その　じつりょく　みせてやろうかの▼</language>
+		<language name="JPN_KANJI" width="216">きみが　生まれる前から
+ポケモンと　一緒に　いる▼
+おいそれと　負けたりは　せん▼
+冬の　ヤナギと　呼ばれる
+その実力　みせてやろうかの▼</language>
 	</row>
 
 	<row id="TRID_GSLEADER7_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
@@ -3050,7 +3050,7 @@
 		<language name="JPN" width="216">ふうむ
 さくが　つきた……　か▼</language>
 		<language name="JPN_KANJI" width="216">ふうむ
-さくが　つきた……　か▼</language>
+策が　尽きた……　か▼</language>
 	</row>
 
 	<row id="TRID_GSLEADER7_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,,,,,,,,,,,,,,,">
@@ -3063,10 +3063,10 @@
 なにが　あっても▽
 のりこえて　いけるだろうよ▼</language>
 		<language name="JPN_KANJI" width="216">ヤナギ『うんうん
-みごとな　たたかいっぷり▼
-その　つよい　きもちが　あれば
+みごとな　戦いっぷり▼
+その　強い　気持ちが　あれば
 なにが　あっても▽
-のりこえて　いけるだろうよ▼</language>
+乗り越えて　いけるだろうよ▼</language>
 	</row>
 
 	<row id="TRID_GSLEADER7_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
@@ -3079,12 +3079,12 @@
 これから　ながい　じかん▽
 ポケモンと　いっしょに　いられる▽
 それを　たいせつ　にな▼</language>
-		<language name="JPN_KANJI" width="216">ヤナギ『こおりと　ゆきが　とければ
-はるに　なる……▼
-まけたとはいえ　きみは
-これから　ながい　じかん▽
-ポケモンと　いっしょに　いられる▽
-それを　たいせつ　にな▼</language>
+		<language name="JPN_KANJI" width="216">ヤナギ『氷と　雪が　とければ
+春に　なる……▼
+負けたとはいえ　きみは
+これから　長い　時間▽
+ポケモンと　一緒に　いられる▽
+それを　大切にな▼</language>
 	</row>
 
 	<row id="TRID_GSLEADER7_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
@@ -3093,8 +3093,8 @@
 ・前口上メッセージ</comment>
 		<language name="JPN" width="216">ふゆの　きびしさを　おしえるもの
 ヤナギ！　さあッ　おしえてくれェ！▼</language>
-		<language name="JPN_KANJI" width="216">ふゆの　きびしさを　おしえるもの
-ヤナギ！　さあッ　おしえてくれェ！▼</language>
+		<language name="JPN_KANJI" width="216">冬の　厳しさを　教える者
+ヤナギ！　さあッ　教えてくれェ！▼</language>
 	</row>
 
 	<row id="TRID_GSLEADER8_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -3105,8 +3105,8 @@
 せかいで　いちばんの
 ドラゴンつかい　よ▼</language>
 		<language name="JPN_KANJI" width="216">わたしが　イブキ！▼
-せかいで　いちばんの
-ドラゴンつかい　よ▼</language>
+世界で　一番の
+ドラゴン使い　よ▼</language>
 	</row>
 
 	<row id="TRID_GSLEADER8_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -3119,10 +3119,10 @@
 じつりょくも　してんのうに　だって
 まけてなんか　ないわよ！▼</language>
 		<language name="JPN_KANJI" width="216">わたしが　イブキ！▼
-せかいで　いちばんの
-ドラゴンつかい　よ▼
-じつりょくも　してんのうに　だって
-まけてなんか　ないわよ！▼</language>
+世界で　一番の
+ドラゴン使い　よ▼
+実力も　四天王に　だって
+負けてなんか　ないわよ！▼</language>
 	</row>
 
 	<row id="TRID_GSLEADER8_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -3135,10 +3135,10 @@
 どんな　あいて　だって
 ぜんりょくで　ぶつかって　あげる！▼</language>
 		<language name="JPN_KANJI" width="216">わたしが　イブキ！▼
-せかいで　いちばんの
-ドラゴンつかい　よ▼
-どんな　あいて　だって
-ぜんりょくで　ぶつかって　あげる！▼</language>
+世界で　一番の
+ドラゴン使い　よ▼
+どんな　相手だって
+全力で　ぶつかって　あげる！▼</language>
 	</row>
 
 	<row id="TRID_GSLEADER8_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -3146,7 +3146,7 @@
 ・ジムリーダー：イブキ
 ・対戦後メッセージ</comment>
 		<language name="JPN" width="216">おわった……▼</language>
-		<language name="JPN_KANJI" width="216">おわった……▼</language>
+		<language name="JPN_KANJI" width="216">終わった……▼</language>
 	</row>
 
 	<row id="TRID_GSLEADER8_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -3158,13 +3158,13 @@
 しんじられない
 なにかの　まちがいよ……▼
 ……あなた　じまん　していいわよ
-この　わたしに　かったんだから！</language>
+この　わたしに　かったんだから！▼</language>
 		<language name="JPN_KANJI" width="216">イブキ『この　わたしが
-まけるなんて……▼
-しんじられない
+負けるなんて……▼
+信じられない
 なにかの　まちがいよ……▼
-……あなた　じまん　していいわよ
-この　わたしに　かったんだから！</language>
+……あなた　自慢していいわよ
+この　わたしに　勝ったんだから！▼</language>
 	</row>
 
 	<row id="TRID_GSLEADER8_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -3175,10 +3175,10 @@
 いままでの　わたしに　なかったもの▽
 それが　わかったような　きがする▼
 あなたって　ふしぎな　トレーナーね▼</language>
-		<language name="JPN_KANJI" width="216">イブキ『あなたと　たたかって
+		<language name="JPN_KANJI" width="216">イブキ『あなたと　戦って
 いままでの　わたしに　なかったもの▽
-それが　わかったような　きがする▼
-あなたって　ふしぎな　トレーナーね▼</language>
+それが　わかったような　気がする▼
+あなたって　不思議な　トレーナーね▼</language>
 	</row>
 
 	<row id="TRID_GSLEADER8_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -3187,8 +3187,8 @@
 ・前口上メッセージ</comment>
 		<language name="JPN" width="216">せいなる　ドラゴンポケモン　つかい！
 イブキ！　その　ちからを　みせよォ！▼</language>
-		<language name="JPN_KANJI" width="216">せいなる　ドラゴンポケモン　つかい！
-イブキ！　その　ちからを　みせよォ！▼</language>
+		<language name="JPN_KANJI" width="216">聖なる　ドラゴンポケモン使い！
+イブキ！　その　力を　みせよォ！▼</language>
 	</row>
 
 	<row id="TRID_GSLEADER9_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
@@ -3199,8 +3199,8 @@
 どくポケモンの　おそろしさ
 うけてみると　いいわ！▼</language>
 		<language name="JPN_KANJI" width="216">あたいが　アンズ！▼
-どくポケモンの　おそろしさ
-うけてみると　いいわ！▼</language>
+どくポケモンの　恐ろしさ
+受けてみると　いいわ！▼</language>
 	</row>
 
 	<row id="TRID_GSLEADER9_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
@@ -3215,8 +3215,8 @@
 		<language name="JPN_KANJI" width="216">あたいが　アンズ！
 げんだいに　いきる　しのびよ！▼
 あたいが　つかう
-どくポケモンの　おそろしさ▽
-うけてみると　いいわ！▼</language>
+どくポケモンの　恐ろしさ
+受けてみると　いいわ！▼</language>
 	</row>
 
 	<row id="TRID_GSLEADER9_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
@@ -3230,11 +3230,11 @@
 どくポケモンの　おそろしさ▽
 うけてみると　いいわ！▼</language>
 		<language name="JPN_KANJI" width="216">あたいが　アンズ！▼
-しゅぎょうの　すえ　えとくした
-しのびの　わざの　ごくい！▼
-それを　みにつけた
-どくポケモンの　おそろしさ▽
-うけてみると　いいわ！▼</language>
+修行の　末　会得した
+忍びの　技の　極意！▼
+それを　身につけた
+どくポケモンの　恐ろしさ▽
+受けてみると　いいわ！▼</language>
 	</row>
 
 	<row id="TRID_GSLEADER9_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
@@ -3244,7 +3244,7 @@
 		<language name="JPN" width="216">あんた　なかなか　いい
 たたかいかた　するじゃない！▼</language>
 		<language name="JPN_KANJI" width="216">あんた　なかなか　いい
-たたかいかた　するじゃない！▼</language>
+戦い方　するじゃない！▼</language>
 	</row>
 
 	<row id="TRID_GSLEADER9_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,,,,,,,,,,,,,,,">
@@ -3255,10 +3255,10 @@
 もっと　もっと　つよくなるわ！▼
 あたいの　ちちうえにも　あんたにも
 にどと　まけない　ようにね！▼</language>
-		<language name="JPN_KANJI" width="216">アンズ『もっと　しゅぎょうして
-もっと　もっと　つよくなるわ！▼
-あたいの　ちちうえにも　あんたにも
-にどと　まけない　ようにね！▼</language>
+		<language name="JPN_KANJI" width="216">アンズ『もっと　修行して
+もっと　もっと　強くなるわ！▼
+あたいの　父上にも　あんたにも
+二度と　負けない　ようにね！▼</language>
 	</row>
 
 	<row id="TRID_GSLEADER9_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
@@ -3270,11 +3270,11 @@
 ポケモンの　みちは
 しゅぎょうの　みち！▽
 また　ここで　あおうね！▼</language>
-		<language name="JPN_KANJI" width="216">アンズ『かてた　とはいえ
-あんた　かなり　つよかったよ！▼
-ポケモンの　みちは
-しゅぎょうの　みち！▽
-また　ここで　あおうね！▼</language>
+		<language name="JPN_KANJI" width="216">アンズ『勝てた　とはいえ
+あんた　かなり　強かったよ！▼
+ポケモンの　道は
+修行の　道！▽
+また　ここで　会おうね！▼</language>
 	</row>
 
 	<row id="TRID_GSLEADER9_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
@@ -3282,71 +3282,85 @@
 ・ジムリーダー：アンズ
 ・前口上メッセージ</comment>
 		<language name="JPN" width="216">どくの　ことなら　なんでもござれ！
-アンズ！　にんぽう　さくれつッ！！▼</language>
+アンズ！　どくを　おみまいだッ！！▼</language>
 		<language name="JPN_KANJI" width="216">どくの　ことなら　なんでもござれ！
-アンズ！　にんぽう　さくれつッ！！▼</language>
+アンズ！　どくを　おみまいだッ！！▼</language>
 	</row>
 
 	<row id="TRID_RSLEADER1_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
 ・ジムリーダー：ツツジ
 ・１回戦用対戦前メッセージ</comment>
-		<language name="JPN" width="216">１かいせん
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">１回戦
-仮メッセージ▼</language>
+		<language name="JPN" width="216">あなた　どのような　ポケモンで
+どんなふうに　たたかうのか▽
+わたくしに　おしえてくださるかしら？▼</language>
+		<language name="JPN_KANJI" width="216">あなた　どのような　ポケモンで
+どんな風に　戦うのか▽
+わたくしに　教えてくださるかしら？▼</language>
 	</row>
 
 	<row id="TRID_RSLEADER1_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
 ・ジムリーダー：ツツジ
 ・２回戦用対戦前メッセージ</comment>
-		<language name="JPN" width="216">２かいせん
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">２回戦
-仮メッセージ▼</language>
+		<language name="JPN" width="216">おおくの　トレーナーと
+ポケモンしょうぶを　することで▽
+さまざまなこと　まなべるはずよ▼</language>
+		<language name="JPN_KANJI" width="216">多くの　トレーナーと
+ポケモン勝負を　することで▽
+さまざまなこと　学べるはずよ▼</language>
 	</row>
 
 	<row id="TRID_RSLEADER1_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
 ・ジムリーダー：ツツジ
 ・決勝戦用対戦前メッセージ</comment>
-		<language name="JPN" width="216">あなた　どのような　ポケモンで
+		<language name="JPN" width="216">トレーナーズ　スクールで
+まなんだこと　しょうぶに　いかします▼
+あなた　どのような　ポケモンで
 どんなふうに　たたかうのか▽
 わたくしに　おしえてくださるかしら？▼</language>
-		<language name="JPN_KANJI" width="216">決勝戦
-仮メッセージ▼</language>
+		<language name="JPN_KANJI" width="216">トレーナーズ　スクールで
+学んだこと　勝負に　活かします▼
+あなた　どのような　ポケモンで
+どんな風に　戦うのか▽
+わたくしに　教えてくださるかしら？▼</language>
 	</row>
 
 	<row id="TRID_RSLEADER1_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
 ・ジムリーダー：ツツジ
 ・対戦後メッセージ</comment>
-		<language name="JPN" width="216">たいせんご
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">対戦後
-仮メッセージ▼</language>
+		<language name="JPN" width="216">わたくし　まけたのね……▼</language>
+		<language name="JPN_KANJI" width="216">わたくし　負けたのね……▼</language>
 	</row>
 
 	<row id="TRID_RSLEADER1_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
 ・ジムリーダー：ツツジ
 ・プレイヤーが勝った場合のメッセージ</comment>
-		<language name="JPN" width="216">ツツジ『わたくし　まけたのね……
-もっと　おおくの　ことを
-まなぶ　ひつようが　あるみたい……▼</language>
-		<language name="JPN_KANJI" width="216">プレイヤー勝利
-仮メッセージ▼</language>
+		<language name="JPN" width="216">ツツジ『もっと　おおくの　ことを
+まなぶ　ひつようが　あるみたい……▽
+また　トーナメントに　さんかします▼
+そのときは　また
+おあいて　してくださるかしら？▼</language>
+		<language name="JPN_KANJI" width="216">ツツジ『もっと　多くの　ことを
+学ぶ　必要が　あるみたい……▽
+また　トーナメントに　参加します▼
+そのときは　また
+お相手してくださるかしら？▼</language>
 	</row>
 
 	<row id="TRID_RSLEADER1_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
 ・ジムリーダー：ツツジ
 ・プレイヤーが負けた場合のメッセージ</comment>
-		<language name="JPN" width="216">プレイヤーまけ
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">プレイヤー負け
-仮メッセージ▼</language>
+		<language name="JPN" width="216">ツツジ『いままでの　しょうぶで
+まなんだことを　いかすことで▽
+しょうりすることが　できましたわ▼</language>
+		<language name="JPN_KANJI" width="216">ツツジ『今までの　勝負で
+学んだことを　活かすことで▽
+勝利することが　できましたわ▼</language>
 	</row>
 
 	<row id="TRID_RSLEADER1_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -3354,39 +3368,53 @@
 ・ジムリーダー：ツツジ
 ・前口上メッセージ</comment>
 		<language name="JPN" width="216">いわに　ときめく　ゆうとうせい！
-ツツジ▼</language>
-		<language name="JPN_KANJI" width="216">仮メッセージ
-ツツジ▼</language>
+ツツジ！　たたかえッ！　ときめけッ！▼</language>
+		<language name="JPN_KANJI" width="216">いわに　ときめく　優等生！
+ツツジ！　戦えッ！　ときめけッ！▼</language>
 	</row>
 
 	<row id="TRID_RSLEADER2_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・ジムリーダー：トウキ
 ・１回戦用対戦前メッセージ</comment>
-		<language name="JPN" width="216">１かいせん
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">１回戦
-仮メッセージ▼</language>
+		<language name="JPN" width="216">ボクの　あいてを　しよう　という
+キミの　じつりょく……▽
+どれほどの　ものか　みせてもらうよ！▼</language>
+		<language name="JPN_KANJI" width="216">ボクの　相手を　しよう　という
+キミの　実力……▽
+どれほどの　ものか　みせてもらうよ！▼</language>
 	</row>
 
 	<row id="TRID_RSLEADER2_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・ジムリーダー：トウキ
 ・２回戦用対戦前メッセージ</comment>
-		<language name="JPN" width="216">２かいせん
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">２回戦
-仮メッセージ▼</language>
+		<language name="JPN" width="216">ポケモンしょうぶは　なみの
+みちひきに　にている！▼
+キミが　その　みちひきを　よめる
+トレーナーか　ためさせてもらうよ！▼</language>
+		<language name="JPN_KANJI" width="216">ポケモン勝負は　波の
+満ち引きに　似ている！▼
+キミが　その　満ち引きを　読める
+トレーナーか　試させてもらうよ！▼</language>
 	</row>
 
 	<row id="TRID_RSLEADER2_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・ジムリーダー：トウキ
 ・決勝戦用対戦前メッセージ</comment>
-		<language name="JPN" width="216">けっしょうせん
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">決勝戦
-仮メッセージ▼</language>
+		<language name="JPN" width="216">はげしい　なみに　もまれ……▼
+くらい　どうくつで
+しゅぎょう　している　ボクの▼
+あいてを　しよう　という
+キミの　じつりょく……▽
+どれほどの　ものか　みせてもらうよ！▼</language>
+		<language name="JPN_KANJI" width="216">激しい　波に　もまれ……▼
+暗い　洞穴で
+修行している　ボクの▼
+相手を　しよう　という
+キミの　実力……▽
+どれほどの　ものか　みせてもらうよ！▼</language>
 	</row>
 
 	<row id="TRID_RSLEADER2_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
@@ -3395,28 +3423,34 @@
 ・対戦後メッセージ</comment>
 		<language name="JPN" width="216">ううーん　よそう　していたより
 キミは　ビッグウェーブ！▼</language>
-		<language name="JPN_KANJI" width="216">対戦後
-仮メッセージ▼</language>
+		<language name="JPN_KANJI" width="216">ううーん　予想していたより
+キミは　ビッグウェーブ！▼</language>
 	</row>
 
 	<row id="TRID_RSLEADER2_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・ジムリーダー：トウキ
 ・プレイヤーが勝った場合のメッセージ</comment>
-		<language name="JPN" width="216">プレイヤーしょうり
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">プレイヤー勝利
-仮メッセージ▼</language>
+		<language name="JPN" width="216">トウキ『キミの さいのうは
+いつのひか　おおきな　なみと　なって▼
+ポケモン　トレーナーたちの　あいだに
+おどろきの　あらしを　まきおこす！▼</language>
+		<language name="JPN_KANJI" width="216">トウキ『キミの 才能は
+いつの日か　大きな　波と　なって▼
+ポケモン　トレーナーたちの　あいだに
+驚きの　あらしを　巻き起こす！▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER2_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
+	<row id="TRID_RSLEADER2_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,,,#ffff80,,,,,,,,,,,,">
 		<comment>♂
 ・ジムリーダー：トウキ
 ・プレイヤーが負けた場合のメッセージ</comment>
-		<language name="JPN" width="216">プレイヤーまけ
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">プレイヤー負け
-仮メッセージ▼</language>
+		<language name="JPN" width="216">トウキ『いどみつづける　ことで
+ボクじしんが　おこした　ウェーブに▽
+うまく　のることが　できたよ！▼</language>
+		<language name="JPN_KANJI" width="216">トウキ『限界に　挑み続けることで
+ボク自身が　起こした　ウェーブに▽
+うまく　乗ることが　できたよ！▼</language>
 	</row>
 
 	<row id="TRID_RSLEADER2_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
@@ -3424,39 +3458,47 @@
 ・ジムリーダー：トウキ
 ・前口上メッセージ</comment>
 		<language name="JPN" width="216">かくとう　ビッグウェーブ！
-トウキ▼</language>
-		<language name="JPN_KANJI" width="216">仮メッセージ
-トウキ▼</language>
+トウキ！　あらたな　なみをおこせェ！▼</language>
+		<language name="JPN_KANJI" width="216">かくとう　ビッグウェーブ！
+トウキ！　新たな　波を起こせェ！▼</language>
 	</row>
 
 	<row id="TRID_RSLEADER3_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：テッセン
 ・１回戦用対戦前メッセージ</comment>
-		<language name="JPN" width="216">テッセンが　ポケモンで
-しびれさせて　やるぞい！▼</language>
-		<language name="JPN_KANJI" width="216">１回戦
-仮メッセージ▼</language>
+		<language name="JPN" width="216">げんきそうな　トレーナーだのう
+わっはははは！　いいこと　じゃよ！▼</language>
+		<language name="JPN_KANJI" width="216">元気そうな　トレーナーだのう
+わっはははは！　いいこと　じゃよ！▼</language>
 	</row>
 
 	<row id="TRID_RSLEADER3_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：テッセン
 ・２回戦用対戦前メッセージ</comment>
-		<language name="JPN" width="216">２かいせん
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">２回戦
-仮メッセージ▼</language>
+		<language name="JPN" width="216">げんきそうな　トレーナーだのう
+わっはははは！　いいこと　じゃよ！▼
+この　テッセンが　ポケモンで
+しびれさせて　やるぞい！▼</language>
+		<language name="JPN_KANJI" width="216">元気そうな　トレーナーだのう
+わっはははは！　いいこと　じゃよ！▼
+この　テッセンが　ポケモンで
+しびれさせて　やるぞい！▼</language>
 	</row>
 
 	<row id="TRID_RSLEADER3_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：テッセン
 ・決勝戦用対戦前メッセージ</comment>
-		<language name="JPN" width="216">けっしょうせん
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">決勝戦
-仮メッセージ▼</language>
+		<language name="JPN" width="216">わっはははは！
+わらう　かどには　ふく　きたる！▼
+たのしい　ポケモンしょうぶ　をして
+もっともっと　わらうと　するぞい！▼</language>
+		<language name="JPN_KANJI" width="216">わっはははは！
+笑う門には　福来る！▼
+楽しい　ポケモン勝負をして
+もっともっと　笑うと　するぞい！▼</language>
 	</row>
 
 	<row id="TRID_RSLEADER3_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -3465,29 +3507,35 @@
 ・対戦後メッセージ</comment>
 		<language name="JPN" width="216">わっはははは！　わしの　まけじゃ！
 おまえさんには　しびれた　わい▼</language>
-		<language name="JPN_KANJI" width="216">対戦後
-仮メッセージ▼</language>
+		<language name="JPN_KANJI" width="216">わっはははは！　わしの　負けじゃ！
+おまえさんには　しびれた　わい▼</language>
 	</row>
 
 	<row id="TRID_RSLEADER3_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：テッセン
 ・プレイヤーが勝った場合のメッセージ</comment>
-		<language name="JPN" width="216">わっはははは！　みどころの　ある　
-わかものの　しゅつげん
+		<language name="JPN" width="216">テッセン『わっはははは！▼
+みどころの　ある　
+わかものの　しゅつげん▽
 じつに　たのもしい　ことじゃ！▼</language>
-		<language name="JPN_KANJI" width="216">プレイヤー勝利
-仮メッセージ▼</language>
+		<language name="JPN_KANJI" width="216">テッセン『わっはははは！▼
+見所のある　若者の　出現
+じつに　頼もしい　ことじゃ！▼</language>
 	</row>
 
 	<row id="TRID_RSLEADER3_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：テッセン
 ・プレイヤーが負けた場合のメッセージ</comment>
-		<language name="JPN" width="216">テッセン『……さて
-デンジと　かいぞうに　ついて▼</language>
-		<language name="JPN_KANJI" width="216">プレイヤー負け
-仮メッセージ▼</language>
+		<language name="JPN" width="216">テッセン『……さてと▼
+デンジという　トレーナーと
+ポケモンジムの　かいぞうに　ついて▽
+かたりあうと　するかっ　わっはははは▼</language>
+		<language name="JPN_KANJI" width="216">テッセン『……さてと▼
+デンジという　トレーナーと
+ポケモンジムの　改造に　ついて▽
+語り合うと　するかっ　わっはははは▼</language>
 	</row>
 
 	<row id="TRID_RSLEADER3_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -3495,69 +3543,93 @@
 ・ジムリーダー：テッセン
 ・前口上メッセージ</comment>
 		<language name="JPN" width="216">あっかるい　でんげき　オヤジ！ 
-テッセン▼</language>
-		<language name="JPN_KANJI" width="216">仮メッセージ
-テッセン▼</language>
+テッセン！　わっはははははははーッ！▼</language>
+		<language name="JPN_KANJI" width="216">あっかるい　でんげき　オヤジ！ 
+テッセン！　わっはははははははーッ！▼</language>
 	</row>
 
 	<row id="TRID_RSLEADER4_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムリーダー：アスナ
 ・１回戦用対戦前メッセージ</comment>
-		<language name="JPN" width="216">１かいせん
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">１回戦
-仮メッセージ▼</language>
+		<language name="JPN" width="216">かざんの　ちかくで
+みがきあげた　ホットな　わざ▽
+あなたに　みせてあげるよ！▼</language>
+		<language name="JPN_KANJI" width="216">火山の　近くで
+磨きあげた　ホットな　技▽
+あなたに　みせてあげるよ！▼</language>
 	</row>
 
 	<row id="TRID_RSLEADER4_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムリーダー：アスナ
 ・２回戦用対戦前メッセージ</comment>
-		<language name="JPN" width="216">２かいせん
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">２回戦
-仮メッセージ▼</language>
+		<language name="JPN" width="216">してんのう　だった
+おじいちゃん　ゆずりの　さいのうと▼
+かざんの　ちかくで
+みがきあげた　ホットな　わざ▽
+あなたに　みせてあげるよ！▼</language>
+		<language name="JPN_KANJI" width="216">四天王だった
+おじいちゃん　譲りの　才能と▼
+火山の　近くで
+磨きあげた　ホットな　技▽
+あなたに　みせてあげるよ！▼</language>
 	</row>
 
 	<row id="TRID_RSLEADER4_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムリーダー：アスナ
 ・決勝戦用対戦前メッセージ</comment>
-		<language name="JPN" width="216">けっしょうせん
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">決勝戦
-仮メッセージ▼</language>
+		<language name="JPN" width="216">これまでに　みにつけた
+じぶんと　ポケモンの　つよさ▼
+だしきるには　むりせず
+じぶんらしく　ふるまうこと▽
+いまから　それを　おしえてあげるね！▼</language>
+		<language name="JPN_KANJI" width="216">これまでに　身につけた
+自分と　ポケモンの　強さ▼
+だしきるには　無理せず
+自分らしく　ふるまうこと▽
+今から　それを　教えてあげるね！▼</language>
 	</row>
 
 	<row id="TRID_RSLEADER4_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムリーダー：アスナ
 ・対戦後メッセージ</comment>
-		<language name="JPN" width="216">たいせんご
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">対戦後
-仮メッセージ▼</language>
+		<language name="JPN" width="216">くう……　また
+かたに　ちから　はいっちゃって……▼</language>
+		<language name="JPN_KANJI" width="216">くう……　また
+肩に　力　はいっちゃって……▼</language>
 	</row>
 
 	<row id="TRID_RSLEADER4_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムリーダー：アスナ
 ・プレイヤーが勝った場合のメッセージ</comment>
-		<language name="JPN" width="216">プレイヤーしょうり
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">プレイヤー勝利
-仮メッセージ▼</language>
+		<language name="JPN" width="216">アスナ『あなたの　つよさ
+だれかを　おもいださせるのよね……▼
+いろんな　ひとと　たたかい
+そのたびに　あいての　いろんな▽
+いいところを　まなんで　きたのね！▼</language>
+		<language name="JPN_KANJI" width="216">アスナ『あなたの　強さ
+だれかを　思い出させるのよね……▼
+いろんな　人と　戦い
+そのたびに　相手の　いろんな▽
+いいところを　学んで　きたのね！▼</language>
 	</row>
 
 	<row id="TRID_RSLEADER4_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムリーダー：アスナ
 ・プレイヤーが負けた場合のメッセージ</comment>
-		<language name="JPN" width="216">プレイヤーまけ
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">プレイヤー負け
-仮メッセージ▼</language>
+		<language name="JPN" width="216">アスナ『じぶんらしく　することで
+ポケモンも　ちからを　だしきれた▼
+あたし……　すこしは
+せいちょう　できたのかも？▼</language>
+		<language name="JPN_KANJI" width="216">アスナ『自分らしく　することで
+ポケモンも　力を　だしきれた▼
+あたし……　少しは
+成長できたのかも？▼</language>
 	</row>
 
 	<row id="TRID_RSLEADER4_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
@@ -3565,70 +3637,93 @@
 ・ジムリーダー：アスナ
 ・前口上メッセージ</comment>
 		<language name="JPN" width="216">やけど　しそうな　じょうねつの　ひと
-アスナ▼</language>
-		<language name="JPN_KANJI" width="216">仮メッセージ
-アスナ▼</language>
+アスナ！　さあ　もえろもえろーッ！！▼</language>
+		<language name="JPN_KANJI" width="216">やけど　しそうな　情熱の　人！
+アスナ！　さあ　燃えろ燃えろーッ！！▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER5_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="TRID_RSLEADER5_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：センリ
 ・１回戦用対戦前メッセージ</comment>
-		<language name="JPN" width="216">１かいせん
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">１回戦
-仮メッセージ▼</language>
+		<language name="JPN" width="216">わたしは　トレーナー　として
+ぜんりょくを　つくす！▼
+きみも　ほんきで　かかってくるんだ！▼</language>
+		<language name="JPN_KANJI" width="216">わたしは　トレーナー　として
+全力を　尽くす！▼
+きみも　本気で　かかってくるんだ！▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER5_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="TRID_RSLEADER5_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：センリ
 ・２回戦用対戦前メッセージ</comment>
-		<language name="JPN" width="216">２かいせん
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">２回戦
-仮メッセージ▼</language>
+		<language name="JPN" width="216">わたしは　トレーナー　として
+ぜんりょくを　つくす！▼
+きみも　ほんきで　かかってくるんだ！▼</language>
+		<language name="JPN_KANJI" width="216">わたしは　トレーナー　として
+全力を　尽くす！▼
+きみも　本気で　かかってくるんだ！▼</language>
 	</row>
 
 	<row id="TRID_RSLEADER5_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：センリ
 ・決勝戦用対戦前メッセージ</comment>
-		<language name="JPN" width="216">わたしは　トレーナー　として
-ぜんりょくを　つくす！
+		<language name="JPN" width="216">おのれの　こどもに　まけ……▼
+じぶんじしんを　みつめなおした
+わたしに　まける　ようそは　ない！▼
+わたしは　トレーナー　として
+ぜんりょくを　つくす！▼
 きみも　ほんきで　かかってくるんだ！▼</language>
-		<language name="JPN_KANJI" width="216">決勝戦
-仮メッセージ▼</language>
+		<language name="JPN_KANJI" width="216">己の　子供に　まけ……▼
+自分自身を　みつめなおした
+わたしに　負ける　要素は　ない！▼
+わたしは　トレーナー　として
+全力を　尽くす！▼
+きみも　本気で　かかってくるんだ！▼</language>
 	</row>
 
 	<row id="TRID_RSLEADER5_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：センリ
 ・対戦後メッセージ</comment>
-		<language name="JPN" width="216">たいせんご
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">対戦後
-仮メッセージ▼</language>
+		<language name="JPN" width="216">……！　まさか……
+まさか　きみに……▽
+きみに　まける　とは……▼</language>
+		<language name="JPN_KANJI" width="216">……！　まさか……
+まさか　きみに……▽
+きみに　負ける　とは……▼</language>
 	</row>
 
 	<row id="TRID_RSLEADER5_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：センリ
 ・プレイヤーが勝った場合のメッセージ</comment>
-		<language name="JPN" width="216">プレイヤーしょうり
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">プレイヤー勝利
-仮メッセージ▼</language>
+		<language name="JPN" width="216">センリ『わたしは　トーナメントに
+いどみ　おのれを　きたえなおす！▼
+きみに　まけた　ままでは
+トレーナーとして　くやしすぎるからな▼</language>
+		<language name="JPN_KANJI" width="216">センリ『わたしは　トーナメントに
+挑み　己を　鍛えなおす！▼
+きみに　負けた　ままでは
+トレーナーとして　くやしすぎるからな▼</language>
 	</row>
 
 	<row id="TRID_RSLEADER5_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：センリ
 ・プレイヤーが負けた場合のメッセージ</comment>
-		<language name="JPN" width="216">プレイヤーまけ
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">プレイヤー負け
-仮メッセージ▼</language>
+		<language name="JPN" width="216">センリ『こんかい　わたしが
+しょうり　したのも　ときの　うん▼
+まだまだ　つよさを　おいもとめ
+いつ　いかなるときでも　かてるよう▽
+しょうじん　せねば　ならないな！▼</language>
+		<language name="JPN_KANJI" width="216">センリ『今回　わたしが
+勝利したのも　時の運▼
+まだまだ　強さを　追い求め
+いつ　いかなるときでも　勝てるよう▽
+精進せねば　ならないな！▼</language>
 	</row>
 
 	<row id="TRID_RSLEADER5_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -3636,39 +3731,51 @@
 ・ジムリーダー：センリ
 ・前口上メッセージ</comment>
 		<language name="JPN" width="216">つよさを　おいもとめる　おとこ！
-センリ▼</language>
-		<language name="JPN_KANJI" width="216">仮メッセージ
-センリ▼</language>
+センリ！　その　つよさ　みせつけろ！▼</language>
+		<language name="JPN_KANJI" width="216">強さを　追い求める　男！
+センリ！　その　強さ　みせつけろ！▼</language>
 	</row>
 
 	<row id="TRID_RSLEADER6_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムリーダー：ナギ
 ・１回戦用対戦前メッセージ</comment>
-		<language name="JPN" width="216">１かいせん
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">１回戦
-仮メッセージ▼</language>
+		<language name="JPN" width="216">さあ　わたしと　ポケモンが　おりなす
+かれいな　まいを　みせましょう！▼</language>
+		<language name="JPN_KANJI" width="216">さあ　わたしと　ポケモンが　織りなす
+華麗な　舞を　みせましょう！▼</language>
 	</row>
 
 	<row id="TRID_RSLEADER6_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムリーダー：ナギ
 ・２回戦用対戦前メッセージ</comment>
-		<language name="JPN" width="216">２かいせん
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">２回戦
-仮メッセージ▼</language>
+		<language name="JPN" width="216">どんな　くるしい　しょうぶも
+ゆうがに　かってみせる……▼
+さあ　わたしと　ポケモンが　おりなす
+かれいな　まいを　みせましょう！▼</language>
+		<language name="JPN_KANJI" width="216">どんな　苦しい　勝負も
+優雅に　勝ってみせる……▼
+さあ　わたしと　ポケモンが　織りなす
+華麗な　舞を　みせましょう！▼</language>
 	</row>
 
 	<row id="TRID_RSLEADER6_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムリーダー：ナギ
 ・決勝戦用対戦前メッセージ</comment>
-		<language name="JPN" width="216">けっしょうせん
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">決勝戦
-仮メッセージ▼</language>
+		<language name="JPN" width="216">とりポケモンと　こころを　かよわし
+いっしょに　おおぞらを　まい……▼
+どんな　くるしい　しょうぶも
+ゆうがに　かってみせる……▼
+さあ　わたしと　ポケモンが　おりなす
+かれいな　まいを　みせましょう！▼</language>
+		<language name="JPN_KANJI" width="216">とりポケモンと　心を　通わし
+一緒に　大空を　舞い……▼
+どんな　苦しい　勝負も
+優雅に　勝ってみせる……▼
+さあ　わたしと　ポケモンが　織りなす
+華麗な　舞を　みせましょう！▼</language>
 	</row>
 
 	<row id="TRID_RSLEADER6_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
@@ -3676,11 +3783,9 @@
 ・ジムリーダー：ナギ
 ・対戦後メッセージ</comment>
 		<language name="JPN" width="216">わたしより　かれいに
-ポケモンを　たたかわせる　ひと……▽
-はじめて　であいました……▼</language>
-		<language name="JPN_KANJI" width="216">わたしより　かれいに
-ポケモンを　たたかわせる　ひと……▽
-はじめて　であいました……▼</language>
+ポケモンを　たたかわせる　ひと……▼</language>
+		<language name="JPN_KANJI" width="216">わたしより　華麗に
+ポケモンを　戦わせる　人……▼</language>
 	</row>
 
 	<row id="TRID_RSLEADER6_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,,,,,,,,,,,,,,,">
@@ -3690,7 +3795,7 @@
 		<language name="JPN" width="216">ナギ『あなたには　まけました　けど
 わたしは　これからも▽
 とりポケモンに　こだわって　いきます▼</language>
-		<language name="JPN_KANJI" width="216">ナギ『あなたには　まけました　けど
+		<language name="JPN_KANJI" width="216">ナギ『あなたには　負けました　けど
 わたしは　これからも▽
 とりポケモンに　こだわって　いきます▼</language>
 	</row>
@@ -3699,10 +3804,16 @@
 		<comment>♀
 ・ジムリーダー：ナギ
 ・プレイヤーが負けた場合のメッセージ</comment>
-		<language name="JPN" width="216">プレイヤーまけ
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">プレイヤー負け
-仮メッセージ▼</language>
+		<language name="JPN" width="216">ナギ『……かてましたが　あなたも
+ポケモンと　こころを　かよわす▽
+トレーナーの　ようですね▼
+また　ここで　おたがいの
+ポケモンを　たたかわせましょう！▼</language>
+		<language name="JPN_KANJI" width="216">ナギ『……勝てましたが　あなたも
+ポケモンと　心を　通わす▽
+トレーナーの　ようですね▼
+また　ここで　お互いの
+ポケモンを　戦わせましょう！▼</language>
 	</row>
 
 	<row id="TRID_RSLEADER6_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
@@ -3710,48 +3821,66 @@
 ・ジムリーダー：ナギ
 ・前口上メッセージ</comment>
 		<language name="JPN" width="216">せかいに　はばたく　とりつかい！
-ナギ▼</language>
-		<language name="JPN_KANJI" width="216">仮メッセージ
-ナギ▼</language>
+ナギ！　そらたかく　はばたけッー！！▼</language>
+		<language name="JPN_KANJI" width="216">世界に　羽ばたく　とり使い！
+ナギ！　空高く　羽ばたけッー！！▼</language>
 	</row>
 
 	<row id="TRID_RSLEADER7_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：フウ
 ・１回戦用対戦前メッセージ</comment>
-		<language name="JPN" width="216">１かいせん
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">１回戦
-仮メッセージ▼</language>
+		<language name="JPN" width="216">ぼくと　ポケモンは
+きもちを　ひとつに　できる！▼
+そんな　ぼくの　コンビネーション
+きみに　やぶることが　できる？▼</language>
+		<language name="JPN_KANJI" width="216">ぼくと　ポケモンは
+気持ちを　一つに　できる！▼
+そんな　ぼくの　コンビネーション
+きみに　破ることが　できる？▼</language>
 	</row>
 
 	<row id="TRID_RSLEADER7_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：フウ
 ・２回戦用対戦前メッセージ</comment>
-		<language name="JPN" width="216">２かいせん
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">２回戦
-仮メッセージ▼</language>
+		<language name="JPN" width="216">きびしい　しゅぎょうの　けっか
+ぼくと　ポケモンは▽
+きもちを　ひとつに　できる！▼
+そんな　ぼくの　コンビネーション
+きみに　やぶることが　できる？▼</language>
+		<language name="JPN_KANJI" width="216">厳しい　修行の　結果
+ぼくと　ポケモンは▽
+気持ちを　一つに　できる！▼
+そんな　ぼくの　コンビネーション
+きみに　破ることが　できる？▼</language>
 	</row>
 
 	<row id="TRID_RSLEADER7_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：フウ
 ・決勝戦用対戦前メッセージ</comment>
-		<language name="JPN" width="216">けっしょうせん
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">決勝戦
-仮メッセージ▼</language>
+		<language name="JPN" width="216">きびしい　しゅぎょうの　けっか
+ぼくと　ポケモンは▽
+きもちを　ひとつに　できる！▼
+そんな　ぼくの　コンビネーション！
+ぼくと　ポケモンとの　きずなを▽
+きみに　やぶることが　できる？▼</language>
+		<language name="JPN_KANJI" width="216">厳しい　修行の　結果
+ぼくと　ポケモンは▽
+気持ちを　一つに　できる！▼
+そんな　ぼくの　コンビネーション！
+ぼくと　ポケモンとの　きずなを▽
+きみに　破ることが　できる？▼</language>
 	</row>
 
 	<row id="TRID_RSLEADER7_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：フウ
 ・対戦後メッセージ</comment>
-		<language name="JPN" width="216">フウ『ぼっ　ぼくの　ポケモンたちの
+		<language name="JPN" width="216">ぼっ　ぼくと　ポケモンとの
 コンビネーションが……！▼</language>
-		<language name="JPN_KANJI" width="216">フウ『ぼっ　ぼくの　ポケモンたちの
+		<language name="JPN_KANJI" width="216">ぼっ　ぼくと　ポケモンとの
 コンビネーションが……！▼</language>
 	</row>
 
@@ -3759,20 +3888,30 @@
 		<comment>♂
 ・ジムリーダー：フウ
 ・プレイヤーが勝った場合のメッセージ</comment>
-		<language name="JPN" width="216">プレイヤーしょうり
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">プレイヤー勝利
-仮メッセージ▼</language>
+		<language name="JPN" width="216">フウ『ぼくと　ポケモンの　きずなより
+きみと　ポケモンとの▽
+きずなの　ほうが▽
+はるかに　つよかった　みたいだね……▼</language>
+		<language name="JPN_KANJI" width="216">フウ『ぼくと　ポケモンの　きずなより
+きみと　ポケモンとの▽
+きずなの　ほうが▽
+はるかに　強かった　みたいだね……▼</language>
 	</row>
 
 	<row id="TRID_RSLEADER7_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：フウ
 ・プレイヤーが負けた場合のメッセージ</comment>
-		<language name="JPN" width="216">プレイヤーまけ
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">プレイヤー負け
-仮メッセージ▼</language>
+		<language name="JPN" width="216">フウ『ぼく　ほんとうは　ふたご！▼
+きょうだい　そろえば
+もっともっと　つよいんだ！▼
+だって　おたがいの　かんがえが
+あたまに　うかぶんだから！▼</language>
+		<language name="JPN_KANJI" width="216">フウ『ぼく　本当は　双子！▼
+兄弟　そろえば
+もっともっと　強いんだ！▼
+だって　お互いの　考えが
+頭に　浮かぶんだから！▼</language>
 	</row>
 
 	<row id="TRID_RSLEADER7_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -3780,69 +3919,95 @@
 ・ジムリーダー：フウ
 ・前口上メッセージ</comment>
 		<language name="JPN" width="216">しんぴの　コンビネーション！！ 
-フウ▼</language>
-		<language name="JPN_KANJI" width="216">仮メッセージ
-フウ▼</language>
+フウ！　ポケモンとの　れんけいだッ！▼</language>
+		<language name="JPN_KANJI" width="216">神秘の　コンビネーション！！ 
+フウ！　ポケモンとの　連携だッ！▼</language>
 	</row>
 
 	<row id="TRID_RSLEADER8_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムリーダー：ラン
 ・１回戦用対戦前メッセージ</comment>
-		<language name="JPN" width="216">１かいせん
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">１回戦
-仮メッセージ▼</language>
+		<language name="JPN" width="216">あたしと　ポケモンは
+きもちを　ひとつに　できるヨ！▼
+そんな　あたしの　コンビネーション
+きみに　やぶることが　できる？▼</language>
+		<language name="JPN_KANJI" width="216">あたしと　ポケモンは
+気持ちを　一つに　できる！▼
+そんな　あたしの　コンビネーション
+きみに　破ることが　できる？▼</language>
 	</row>
 
 	<row id="TRID_RSLEADER8_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムリーダー：ラン
 ・２回戦用対戦前メッセージ</comment>
-		<language name="JPN" width="216">２かいせん
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">２回戦
-仮メッセージ▼</language>
+		<language name="JPN" width="216">きびしい　しゅぎょうの　けっか
+あたしと　ポケモンは▽
+きもちを　ひとつに　できるヨ！▼
+そんな　あたしの　コンビネーション
+きみに　やぶることが　できる？▼</language>
+		<language name="JPN_KANJI" width="216">厳しい　修行の　結果
+あたしと　ポケモンは▽
+気持ちを　一つに　できる！▼
+そんな　あたしの　コンビネーション
+きみに　破ることが　できる？▼</language>
 	</row>
 
 	<row id="TRID_RSLEADER8_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムリーダー：ラン
 ・決勝戦用対戦前メッセージ</comment>
-		<language name="JPN" width="216">けっしょうせん
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">決勝戦
-仮メッセージ▼</language>
+		<language name="JPN" width="216">きびしい　しゅぎょうの　けっか
+あたしと　ポケモンは▽
+きもちを　ひとつに　できるヨ！▼
+そんな　あたしの　コンビネーション！
+あたしと　ポケモンとの　きずなを▽
+きみに　やぶることが　できる？▼</language>
+		<language name="JPN_KANJI" width="216">厳しい　修行の　結果
+あたしと　ポケモンは▽
+気持ちを　一つに　できる！▼
+そんな　あたしの　コンビネーション！
+あたしと　ポケモンとの　きずなを▽
+きみに　破ることが　できる？▼</language>
 	</row>
 
 	<row id="TRID_RSLEADER8_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムリーダー：ラン
 ・対戦後メッセージ</comment>
-		<language name="JPN" width="216">たいせんご
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">対戦後
-仮メッセージ▼</language>
+		<language name="JPN" width="216">あっ　あたしと　ポケモンとの
+コンビネーションが……！▼</language>
+		<language name="JPN_KANJI" width="216">あっ　あたしと　ポケモンとの
+コンビネーションが……！▼</language>
 	</row>
 
 	<row id="TRID_RSLEADER8_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムリーダー：ラン
 ・プレイヤーが勝った場合のメッセージ</comment>
-		<language name="JPN" width="216">ラン『あっ　あたしの　ポケモンたちの
-コンビネーションが……！▼</language>
-		<language name="JPN_KANJI" width="216">ラン『あっ　あたしの　ポケモンたちの
-コンビネーションが……！▼</language>
+		<language name="JPN" width="216">ラン『あなたと　ポケモンなら
+もっと　つよくなれる！▽
+たたかった　あたしには　わかるわ！▼</language>
+		<language name="JPN_KANJI" width="216">ラン『あなたと　ポケモンなら
+もっと　強くなれる！▽
+戦った　あたしには　わかるわ！▼</language>
 	</row>
 
 	<row id="TRID_RSLEADER8_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムリーダー：ラン
 ・プレイヤーが負けた場合のメッセージ</comment>
-		<language name="JPN" width="216">プレイヤーまけ
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">プレイヤー負け
-仮メッセージ▼</language>
+		<language name="JPN" width="216">ラン『あたし　ほんとうは　ふたご！▼
+きょうだい　そろえば
+もっともっと　つよいのヨ！▼
+だって　おたがいの　かんがえが
+あたまに　うかぶんだから！▼</language>
+		<language name="JPN_KANJI" width="216">ラン『あたし　本当は　双子！▼
+兄弟　そろえば
+もっともっと　強いのヨ！▼
+だって　お互いの　考えが
+頭に　浮かぶんだから！▼</language>
 	</row>
 
 	<row id="TRID_RSLEADER8_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
@@ -3850,40 +4015,53 @@
 ・ジムリーダー：ラン
 ・前口上メッセージ</comment>
 		<language name="JPN" width="216">しんぴの　コンビネーション！！ 
-ラン▼</language>
-		<language name="JPN_KANJI" width="216">仮メッセージ
-ラン▼</language>
+ラン！　ポケモンとの　れんけいだッ！▼</language>
+		<language name="JPN_KANJI" width="216">神秘の　コンビネーション！！ 
+ラン！　ポケモンとの　連携だッ！▼</language>
 	</row>
 
 	<row id="TRID_ELEADER1_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：アダン
 ・１回戦用対戦前メッセージ</comment>
-		<language name="JPN" width="216">１かいせん
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">１回戦
-仮メッセージ▼</language>
+		<language name="JPN" width="216">さあ　ぞんぶんに　ごらんなさい▼
+わたしと　ポケモンが　おりなす
+みずの　イリュージョンを！▼</language>
+		<language name="JPN_KANJI" width="216">さあ　存分に　ごらんなさい▼
+わたしと　ポケモンが　織りなす
+みずの　イリュージョンを！▼</language>
 	</row>
 
 	<row id="TRID_ELEADER1_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：アダン
 ・２回戦用対戦前メッセージ</comment>
-		<language name="JPN" width="216">２かいせん
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">２回戦
-仮メッセージ▼</language>
+		<language name="JPN" width="216">カムバック　してから　わたしが
+こだわるのは　はなやかさ！▼
+さあ　ぞんぶんに　ごらんなさい▼
+わたしと　ポケモンが　おりなす
+みずの　イリュージョンを！▼</language>
+		<language name="JPN_KANJI" width="216">カムバック　してから　わたしが
+こだわるのは　はなやかさ！▼
+さあ　存分に　ごらんなさい▼
+わたしと　ポケモンが　織りなす
+みずの　イリュージョンを！▼</language>
 	</row>
 
 	<row id="TRID_ELEADER1_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：アダン
 ・決勝戦用対戦前メッセージ</comment>
-		<language name="JPN" width="216">さあ　ぞんぶんに　ごらんなさい
+		<language name="JPN" width="216">ポケモンの　わざの　はなやかさ！
+それを　みせつけつつ　かちましょう！▼
+さあ　ぞんぶんに　ごらんなさい▼
 わたしと　ポケモンが　おりなす
 みずの　イリュージョンを！▼</language>
-		<language name="JPN_KANJI" width="216">決勝戦
-仮メッセージ▼</language>
+		<language name="JPN_KANJI" width="216">ポケモンの　技の　はなやかさ！
+それを　みせつけつつ　勝ちましょう！▼
+さあ　存分に　ごらんなさい▼
+わたしと　ポケモンが　織りなす
+みずの　イリュージョンを！▼</language>
 	</row>
 
 	<row id="TRID_ELEADER1_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -3893,27 +4071,47 @@
 		<language name="JPN" width="216">たははは！　ユー　アー　ウィナー！
 すなわち　わたくしの　まけです▼</language>
 		<language name="JPN_KANJI" width="216">たははは！　ユー　アー　ウィナー！
-すなわち　わたくしの　まけです▼</language>
+すなわち　わたくしの　負けです▼</language>
 	</row>
 
 	<row id="TRID_ELEADER1_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：アダン
 ・プレイヤーが勝った場合のメッセージ</comment>
-		<language name="JPN" width="216">プレイヤーしょうり
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">プレイヤー勝利
-仮メッセージ▼</language>
+		<language name="JPN" width="216">アダン『ユーには　だれにも　まけない
+さいのうの　きらめきを　かんじます！▼
+しかし　ちょっと
+はなやかさが　たりませんな！▼
+わたしの　ふくでも
+かして　あげましょうか？▼
+……　……　……
+……　……　……
+はっはっは　ジョークですよ！▼</language>
+		<language name="JPN_KANJI" width="216">アダン『ユーには　だれにも　負けない
+才能の　きらめきを　感じます！▼
+しかし　ちょっと
+はなやかさが　たりませんな！▼
+わたしの　服でも
+貸して　あげましょうか？▼
+……　……　……
+……　……　……
+はっはっは　ジョークですよ！▼</language>
 	</row>
 
 	<row id="TRID_ELEADER1_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：アダン
 ・プレイヤーが負けた場合のメッセージ</comment>
-		<language name="JPN" width="216">プレイヤーまけ
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">プレイヤー負け
-仮メッセージ▼</language>
+		<language name="JPN" width="216">アダン『たははは！
+アイ　アム　ウィナー！▼
+ダンディズムとは　こだわり▼
+わたしは　うつくしく　かつことに
+こだわって　いるのですよ！▼</language>
+		<language name="JPN_KANJI" width="216">アダン『たははは！
+アイ　アム　ウィナー！▼
+ダンディズムとは　こだわり▼
+わたしは　美しく　勝つことに
+こだわって　いるのですよ！▼</language>
 	</row>
 
 	<row id="TRID_ELEADER1_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -3921,9 +4119,9 @@
 ・ジムリーダー：アダン
 ・前口上メッセージ</comment>
 		<language name="JPN" width="216">みずも　したたる　ダンディズム！
-アダン▼</language>
-		<language name="JPN_KANJI" width="216">仮メッセージ
-アダン▼</language>
+アダン！　おしゃれに　ふるまえッ！！</language>
+		<language name="JPN_KANJI" width="216">みずも　したたる　ダンディズム！
+アダン！　おしゃれに　ふるまえッ！！</language>
 	</row>
 
 	<row id="TRID_DPLEADER1_TRMSG_1ST_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
