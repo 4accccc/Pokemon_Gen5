@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-12T18:55:03"/>
+	<create user="matsumiya" host="W00224" date="2011-04-13T20:01:48"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -403,7 +403,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1437" top="246" right="2142" bottom="866" maximized="no" rayout="Vertical2">
+	<dialog left="1297" top="192" right="2002" bottom="820" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="56" top="35" right="529" bottom="433" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -411,7 +411,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -522,9 +522,12 @@ msg_wbt_announce_09へ</comment>
 [1:00:トレーナー名:0]　だーッ！！▼</language>
 	</row>
 
-	<row id="msg_wbt_announce_08" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_wbt_announce_08" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>メッセージ後
-トーナメントリスト画面へ</comment>
+トーナメントリスト画面へ
+・１回戦のあとと
+　２回戦のあとでは
+　メッセージを変えたほうがいい</comment>
 		<attribute name="キャラ指定">アナウンス
 シッポなしメッセージ</attribute>
 		<language name="JPN" width="256">ほかの　たいせんけっか　は
@@ -617,8 +620,8 @@ msg_wbt_announce_09へ</comment>
 	<row id="msg_wbt_yell_2nd_09" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>二回戦・声援用</comment>
 		<attribute name="キャラ指定">サブウィン・声援</attribute>
-		<language name="JPN" width="256">たぎる！！</language>
-		<language name="JPN_KANJI" width="256">たぎる！！</language>
+		<language name="JPN" width="256">やっちゃって！</language>
+		<language name="JPN_KANJI" width="256">やっちゃって！</language>
 	</row>
 
 	<row id="msg_wbt_yell_2nd_10" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -631,8 +634,8 @@ msg_wbt_announce_09へ</comment>
 	<row id="msg_wbt_yell_3rd_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>決勝戦・声援用</comment>
 		<attribute name="キャラ指定">サブウィン・声援</attribute>
-		<language name="JPN" width="256">キャー！！</language>
-		<language name="JPN_KANJI" width="256">キャー！！</language>
+		<language name="JPN" width="256">キャアッ！！</language>
+		<language name="JPN_KANJI" width="256">キャアッ！！</language>
 	</row>
 
 	<row id="msg_wbt_yell_3rd_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -659,8 +662,8 @@ msg_wbt_announce_09へ</comment>
 	<row id="msg_wbt_yell_3rd_05" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>決勝戦・声援用</comment>
 		<attribute name="キャラ指定">サブウィン・声援</attribute>
-		<language name="JPN" width="256">ああああ！！</language>
-		<language name="JPN_KANJI" width="256">ああああ！！</language>
+		<language name="JPN" width="256">ファイト！！</language>
+		<language name="JPN_KANJI" width="256">ファイト！！</language>
 	</row>
 
 	<row id="msg_wbt_yell_3rd_06" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -702,10 +705,14 @@ msg_wbt_announce_09へ</comment>
 		<comment>優勝回数が０</comment>
 		<attribute name="キャラ指定">アナウンス
 シッポなしメッセージ</attribute>
-		<language name="JPN" width="256">仮メッセージ　優勝回数０
-[1:00:トレーナー名:0]の　にゅうじょうだー！！▼</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ　優勝回数０
-[1:00:トレーナー名:0]の　入場だー！！▼</language>
+		<language name="JPN" width="256">この　たたかいに　かてば
+ワールドバトルトーナメント▽
+はじめての　ゆうしょうッ！▽
+[1:00:トレーナー名:0]の　にゅうじょう　だッ！！▼</language>
+		<language name="JPN_KANJI" width="256">この　戦いに　勝てば
+ワールドバトルトーナメント▽
+初めての　優勝ッ！▽
+[1:00:トレーナー名:0]の　入場だッ！！▼</language>
 	</row>
 
 	<row id="msg_wbt_player_title_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
