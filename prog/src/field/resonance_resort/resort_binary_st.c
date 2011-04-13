@@ -105,8 +105,11 @@ void RESORT_BINARY_SHOP_Exit( RESORT_BINARY_SHOP *p_wk )
  *	@returnÅ@å¬ï ÇÃìXèÓïÒ
  */
 //-----------------------------------------------------------------------------
-const RESORT_BINARY_SHOP_DATA * RESORT_BINARY_SHOP_SearchData( const RESORT_BINARY_SHOP *cp_wk, u16 shop, u16 type, u16 lv )
+u32 RESORT_BINARY_SHOP_SearchShopID( const RESORT_BINARY_SHOP *cp_wk, const RESORT_RESIDENT_DATA *cp_data )
 {
+  u16 shop  = RESORT_RESIDENT_DATA_GetData( cp_data, RESORT_DATA_PARAM_WANT_JOB, NULL );
+  u16 type  = 0; //TODO
+  u16 lv    = 0;  //TODO
   int i;
   for( i = 0; i < (cp_wk->shop_size / sizeof(RESORT_BINARY_SHOP_DATA)); i++ )
   {
@@ -115,13 +118,13 @@ const RESORT_BINARY_SHOP_DATA * RESORT_BINARY_SHOP_SearchData( const RESORT_BINA
       &&  cp_shop->param[ RESORT_BINARY_SHOP_PARAM_TYPE ] == type
       &&  cp_shop->param[ RESORT_BINARY_SHOP_PARAM_LV ] == lv )
     {
-      return cp_shop;
+      return i;
     }
   }
 
   GF_ASSERT_MSG(0, "shop%d type%d lv%d\n", shop, type, lv);
 
-  return NULL;
+  return 0;
 }
 //----------------------------------------------------------------------------
 /**
@@ -135,12 +138,11 @@ const RESORT_BINARY_SHOP_DATA * RESORT_BINARY_SHOP_SearchData( const RESORT_BINA
 //-----------------------------------------------------------------------------
 const RESORT_BINARY_SHOP_DATA * RESORT_BINARY_SHOP_SearchDataByData( const RESORT_BINARY_SHOP *cp_wk, RESORT_RESIDENT_DATA *p_data )
 {
+  RESORT_INSTITUTION_DATA *p_institution = RESORT_RESIDENT_DATA_GetInstitution( p_data );
+  u16 id = RESORT_INSTITUTION_DATA_GetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_ID );
+  const RESORT_BINARY_SHOP_DATA* cp_shop = &cp_wk->p_shop[id];
 
-  RESORT_INSTITUTION_DATA *p_institution =  RESORT_RESIDENT_DATA_GetInstitution( p_data );
-  u16 shop = RESORT_RESIDENT_DATA_GetData( p_data, RESORT_DATA_PARAM_TYPE, NULL );
-  u16 type = 0; //TODO
-  u16 lv = RESORT_INSTITUTION_DATA_GetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_LV );
-  return RESORT_BINARY_SHOP_SearchData( cp_wk, shop, type, lv );
+  return cp_shop;
 }
 
 //----------------------------------------------------------------------------

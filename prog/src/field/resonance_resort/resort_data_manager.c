@@ -462,10 +462,6 @@ void RESORT_DATA_MANAGER_RecvToResident( RESORT_DATA_MANAGER *p_wk, RESORT_RECV_
     //データを転職
     RESORT_RESIDENT_DATA_SetRecv( p_dst, p_src, peopleID, placeID, type );
 
-    //施設に情報を設定
-    p_institution = RESORT_RESIDENT_DATA_GetInstitution( p_dst );
-    RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_ID, type);
-
     //アップデート
     RESORT_DATA_MANAGER_Update( p_wk );
   }

@@ -445,7 +445,6 @@ VMCMD_RESULT EvCmdResortSetWord( VMHANDLE *p_core, void *p_wk_adrs )
     break;
   case RESORT_WORD_FREE_CITY:
     {
-      //TODO@’ÊM‚ð‚·‚éê‡A‚±‚ê‚Í‘ŠŽè‚ÌŒÄ‚Ñ–¼‚É‚È‚é‚Í‚¸
       STRCODE city[RESORT_CITY_NAME_LEN+EOM_SIZE];
       STRBUF *p_str = GFL_STR_CreateBuffer( RESORT_CITY_NAME_LEN+EOM_SIZE, GFL_HEAP_LOWID(heapID) );
 

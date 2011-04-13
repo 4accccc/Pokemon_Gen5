@@ -24,6 +24,7 @@
 #include "arc/script_message.naix"
 #include "msg/script/msg_resort_scr.h"
 #include "msg/msg_place_name.h"
+#include "resort_binary_st.h"
 
 //mine 
 #include "field/resonance_resort/resort_map.h"
@@ -133,7 +134,7 @@ void RESORT_INSTITUTION_DATA_Exit( RESORT_INSTITUTION_DATA *p_wk )
 void RESORT_INSTITUTION_DATA_InitInstance( RESORT_INSTITUTION_DATA *p_wk )
 {
   GFL_STD_MemClear(p_wk,sizeof(RESORT_INSTITUTION_DATA));
-  p_wk->institutionID = RESORT_RESIDENT_TYPE_MAX;
+  p_wk->institutionID = 0xFFFF;
 }
 //----------------------------------------------------------------------------
 /**
@@ -146,7 +147,7 @@ void RESORT_INSTITUTION_DATA_InitInstance( RESORT_INSTITUTION_DATA *p_wk )
 //-----------------------------------------------------------------------------
 BOOL RESORT_INSTITUTION_DATA_IsEmpty( const RESORT_INSTITUTION_DATA *cp_wk )
 {
-  return cp_wk->institutionID == RESORT_RESIDENT_TYPE_MAX;
+  return cp_wk->institutionID == 0xFFFF;
 }
 
 //----------------------------------------------------------------------------
@@ -923,7 +924,8 @@ struct _RESORT_RECV_DATA
   u8                  padding1  :5;
   u8                  day_flag  :1;
   u8                  keep_flag :1;
-  u16                 padding2;
+  u8                  want_job;
+  u8                  padding2;
   RESORT_INSTITUTION_DATA institution;
 #if 0
   u8                  lv;
@@ -967,6 +969,13 @@ struct _RESORT_PROXY_DATA
 };
 
 SDK_COMPILER_ASSERT(sizeof(RESORT_PROXY_DATA)==RESORT_PROXY_DATA_SIZE);
+
+//=============================================================================
+/**
+ *    RESORT_RECV_DATAのPRIVATE
+ */
+//=============================================================================
+static void Resort_Recv_Data_SetWantJob( RESORT_RECV_DATA *p_wk );
 
 //=============================================================================
 /**
@@ -1199,11 +1208,15 @@ void RESORT_RECV_DATA_MergeRecv( RESORT_RECV_DATA *p_wk, const RESORT_RECV_DATA 
     GFL_STD_MemCopy( cp_recv, p_wk, sizeof(RESORT_RECV_DATA) );
 
     RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_UPDATE,RESORT_RECV_DATA_UPDATE_FIRST);
-
-    //初期生成データ
-    RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_PRESENT_ID, 17+GFUser_GetPublicRand( 20 ) ); //TODO
-    RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_PRESENT_NUM, 1 ); //TODO
+    //TODO 初期生成データ
+    RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_PRESENT_ID, 17+GFUser_GetPublicRand( 20 ));
+    RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_PRESENT_NUM, 1);
     RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_COMM_ID,type);
+    {
+      //タイプによってなりたいものがきまる
+      RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_WANT_JOB, GFUser_GetPublicRand( RESORT_RESIDENT_TYPE_MAX ) );
+      Resort_Recv_Data_SetWantJob( p_wk );
+    }
   }
   else
   {
@@ -1288,7 +1301,7 @@ u32 RESORT_RECV_DATA_GetData( const RESORT_RECV_DATA *cp_wk, RESORT_DATA_PARAM p
     RESORT_BASIC1_DATA_GetIntroduction( &cp_wk->basic1, p_ret_adrs );
     return 0;
   case RESORT_DATA_PARAM_WANT_JOB:
-    return cp_wk->basic1.trainerID % RESORT_RESIDENT_TYPE_MAX; //TODO
+    return cp_wk->want_job;
   case RESORT_DATA_PARAM_EVENT_FLAG:
     return 0; //TODO
   case RESORT_DATA_PARAM_PHRASE:
@@ -1578,6 +1591,9 @@ void RESORT_RECV_DATA_SetData( RESORT_RECV_DATA *p_wk, RESORT_DATA_PARAM param, 
   case RESORT_DATA_PARAM_INTRODUCTION:
     GFL_STD_MemCopy( (const void*)data, p_wk->basic1.introduction, sizeof(STRCODE)*GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN );
     OS_TPrintf( "デバッグ用値設定\n" );
+    break;
+  case RESORT_DATA_PARAM_WANT_JOB:
+    p_wk->want_job  = data;
     break;
   case RESORT_DATA_PARAM_TRAINERVIEW:
     if( data > UNION_VIEW_INDEX_MAN_END )
@@ -2638,13 +2654,34 @@ static RESORT_RECV_DATA * Resort_Recv_Buff_GetSameOwnerData( RESORT_RECV_BUFF *p
 //-----------------------------------------------------------------------------
 void RESORT_RESIDENT_DATA_SetRecv( RESORT_RESIDENT_DATA *p_wk, const RESORT_RECV_DATA *cp_recv, u16 peopleID, u16 placeID, u16 type )
 {
-  //TODO このあたりで変換するかも
+  //TODO 変換データ
   *p_wk   = *cp_recv;
-  RESORT_RESIDENT_DATA_SetData(p_wk,RESORT_DATA_PARAM_LOCK,FALSE);
-  p_wk->peopleID = peopleID;
+
+  //場所を設定
+  p_wk->peopleID  = peopleID;
   p_wk->placeID   = placeID;
   p_wk->type      = type;
+
+  //今のお店がなりたいお店
+  RESORT_RESIDENT_DATA_SetData( p_wk, RESORT_DATA_PARAM_WANT_JOB, type );
+
+  //ロックフラグ解除
+  RESORT_RESIDENT_DATA_SetData(p_wk,RESORT_DATA_PARAM_LOCK,FALSE);
+
+  //お店を決定
+  Resort_Recv_Data_SetWantJob( p_wk );
 }
+
+
+static void Resort_Recv_Data_SetWantJob( RESORT_RECV_DATA *p_wk )
+{
+  RESORT_BINARY_SHOP *p_shop = RESORT_BINARY_SHOP_Init( GFL_HEAP_LOWID(GFL_HEAPID_APP) );
+  u16 shopID = RESORT_BINARY_SHOP_SearchShopID( p_shop, p_wk );
+  RESORT_INSTITUTION_DATA *p_institution = RESORT_RESIDENT_DATA_GetInstitution(p_wk);
+  RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_ID, shopID );
+  RESORT_BINARY_SHOP_Exit( p_shop );
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  受信データから施設データを取得
@@ -2801,8 +2838,6 @@ u32 RESORT_VISITOR_DATA_GetData( const RESORT_VISITOR_DATA *cp_wk, RESORT_DATA_P
     return cp_wk->basic1.sex;
   case RESORT_DATA_PARAM_TRAINERVIEW:
     return RESORT_GET_TrainerView( cp_wk->basic1.trainer_view, cp_wk->basic1.sex );
-  case RESORT_DATA_PARAM_WANT_JOB:
-    return cp_wk->basic1.trainerID % RESORT_RESIDENT_TYPE_MAX; //TODO
   case RESORT_DATA_PARAM_EVENT_FLAG:
     return cp_wk->event_flag;
   case RESORT_DATA_PARAM_TYPE:
