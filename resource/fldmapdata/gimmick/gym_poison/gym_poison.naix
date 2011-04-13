@@ -1,0 +1,19 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: gym_poison.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_GYM_POISON_NAIX_
+#define NARC_GYM_POISON_NAIX_
+
+enum {
+	NARC_gym_poison_speaker_nsbmd = 0,
+	NARC_gym_poison_speaker_nsbca = 1
+};
+
+/* NARC_GYM_POISON_NAIX_ */
+#endif

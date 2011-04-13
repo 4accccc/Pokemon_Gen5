@@ -320,6 +320,7 @@
   ARCID_INFINITY_DUGENON_PD "infinity_dungeon_pd.narc" #無限ダンジョンポケモンデータ
   ARCID_INFINITY_DUGENON_TR "infinity_dungeon_td.narc" #無限ダンジョントレーナーデータ 
   ARCID_WBT_GIMMICK_DATA   "fieldmap/wbt_gmk.narc"   #WBTギミックデータ
+  ARCID_GYM_POISON "fieldmap/gym_poison.narc"  #毒ジム
 
   ARCID_POKEWOOD   "pokewood.narc"   #ポケウッドシナリオデータ
   
