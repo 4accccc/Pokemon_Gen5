@@ -26,5 +26,6 @@
 #ifndef ZONE_D05R0101_EVB_H
 #define ZONE_D05R0101_EVB_H
 
+#define BGID_WBT_ENTRY_CHECKER            0
 
 #endif //ZONE_D05R0101_EVB_H
