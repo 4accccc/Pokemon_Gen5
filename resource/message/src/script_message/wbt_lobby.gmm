@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-12T18:59:14"/>
+	<create user="matsumiya" host="W00224" date="2011-04-13T11:14:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -378,7 +378,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1615" top="208" right="2320" bottom="828" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -665,75 +665,63 @@ msg_wbt_info_11へ</comment>
 		<attribute name="キャラ指定">INFORMATIONW</attribute>
 		<language name="JPN" width="256">あら……？▼
 おきゃくさまが　さんか　できる
-トーナメントは　ないようですね▼
+トーナメントは　ございませんね▼
 またの　おこしを　おまちしております</language>
 		<language name="JPN_KANJI" width="256">あら……？▼
 おきゃくさまが　参加できる
-トーナメントは　ないようですね▼
+トーナメントは　ございませんね▼
 またの　ご来場を　お待ちしております</language>
 	</row>
 
 	<row id="msg_wbt_menu_rule_single" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>参加数の条件を満たしている場合は
-・msg_wbt_info_15へ
-
-参加数が満たしていない場合は
-・msg_wbt_info16へ</comment>
+		<comment>参加数の条件を
+・満たしている　→msg_wbt_info_15
+・満たしていない→msg_wbt_info16</comment>
 		<attribute name="キャラ指定">選択肢表示</attribute>
 		<language name="JPN" width="256">シングルバトル</language>
 		<language name="JPN_KANJI" width="256">シングルバトル</language>
 	</row>
 
 	<row id="msg_wbt_menu_rule_double" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>参加数の条件を満たしている場合は
-・msg_wbt_info_15へ
-
-参加数が満たしていない場合は
-・msg_wbt_info16へ</comment>
+		<comment>参加数の条件を
+・満たしている　→msg_wbt_info_15
+・満たしていない→msg_wbt_info16</comment>
 		<attribute name="キャラ指定">選択肢表示</attribute>
 		<language name="JPN" width="256">ダブルバトル</language>
 		<language name="JPN_KANJI" width="256">ダブルバトル</language>
 	</row>
 
 	<row id="msg_wbt_menu_rule_triple" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>参加数の条件を満たしている場合は
-・msg_wbt_info_15へ
-
-参加数が満たしていない場合は
-・msg_wbt_info16へ</comment>
+		<comment>参加数の条件を
+・満たしている　→msg_wbt_info_15
+・満たしていない→msg_wbt_info16</comment>
 		<attribute name="キャラ指定">選択肢表示</attribute>
 		<language name="JPN" width="256">トリプルバトル</language>
 		<language name="JPN_KANJI" width="256">トリプルバトル</language>
 	</row>
 
 	<row id="msg_wbt_menu_rule_rotation" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>参加数の条件を満たしている場合は
-・msg_wbt_info_15へ
-
-参加数が満たしていない場合は
-・msg_wbt_info16へ</comment>
+		<comment>参加数の条件を
+・満たしている　→msg_wbt_info_15
+・満たしていない→msg_wbt_info16</comment>
 		<attribute name="キャラ指定">選択肢表示</attribute>
 		<language name="JPN" width="256">ローテーションバトル</language>
 		<language name="JPN_KANJI" width="256">ローテーションバトル</language>
 	</row>
 
 	<row id="msg_wbt_menu_dl01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>参加数の条件を満たしている場合は
-・msg_wbt_info_15へ
-
-参加数が満たしていない場合は
-・msg_wbt_info16へ</comment>
+		<comment>参加数の条件を
+・満たしている　→msg_wbt_info_15
+・満たしていない→msg_wbt_info16</comment>
 		<attribute name="キャラ指定">選択肢表示</attribute>
 		<language name="JPN" width="256">ダウンロードトーナメント１</language>
 		<language name="JPN_KANJI" width="256">ダウンロードトーナメント１</language>
 	</row>
 
 	<row id="msg_wbt_menu_dl02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>参加数の条件を満たしている場合は
-・msg_wbt_info_15へ
-
-参加数が満たしていない場合は
-・msg_wbt_info16へ</comment>
+		<comment>参加数の条件を
+・満たしている　→msg_wbt_info_15
+・満たしていない→msg_wbt_info16</comment>
 		<attribute name="キャラ指定">選択肢表示</attribute>
 		<language name="JPN" width="256">ダウンロードトーナメント２</language>
 		<language name="JPN_KANJI" width="256">ダウンロードトーナメント２</language>
@@ -805,187 +793,153 @@ msg_wbt_info_11へ</comment>
 	</row>
 
 	<row id="msg_wbt_menu_normal" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>参加数の条件を満たしている場合は
-・msg_wbt_info_15へ
-
-参加数が満たしていない場合は
-・msg_wbt_info16へ</comment>
+		<comment>参加数の条件を
+・満たしている　→msg_wbt_info_15
+・満たしていない→msg_wbt_info16</comment>
 		<attribute name="キャラ指定">選択肢表示</attribute>
 		<language name="JPN" width="256">ノーマル</language>
 		<language name="JPN_KANJI" width="256">ノーマル</language>
 	</row>
 
 	<row id="msg_wbt_menu_honoo" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>参加数の条件を満たしている場合は
-・msg_wbt_info_15へ
-
-参加数が満たしていない場合は
-・msg_wbt_info16へ</comment>
+		<comment>参加数の条件を
+・満たしている　→msg_wbt_info_15
+・満たしていない→msg_wbt_info16</comment>
 		<attribute name="キャラ指定">選択肢表示</attribute>
 		<language name="JPN" width="256">ほのお</language>
 		<language name="JPN_KANJI" width="256">ほのお</language>
 	</row>
 
 	<row id="msg_wbt_menu_mizu" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>参加数の条件を満たしている場合は
-・msg_wbt_info_15へ
-
-参加数が満たしていない場合は
-・msg_wbt_info16へ</comment>
+		<comment>参加数の条件を
+・満たしている　→msg_wbt_info_15
+・満たしていない→msg_wbt_info16</comment>
 		<attribute name="キャラ指定">選択肢表示</attribute>
 		<language name="JPN" width="256">みず</language>
 		<language name="JPN_KANJI" width="256">みず</language>
 	</row>
 
 	<row id="msg_wbt_menu_kusa" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>参加数の条件を満たしている場合は
-・msg_wbt_info_15へ
-
-参加数が満たしていない場合は
-・msg_wbt_info16へ</comment>
+		<comment>参加数の条件を
+・満たしている　→msg_wbt_info_15
+・満たしていない→msg_wbt_info16</comment>
 		<attribute name="キャラ指定">選択肢表示</attribute>
 		<language name="JPN" width="256">くさ</language>
 		<language name="JPN_KANJI" width="256">くさ</language>
 	</row>
 
 	<row id="msg_wbt_menu_denki" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>参加数の条件を満たしている場合は
-・msg_wbt_info_15へ
-
-参加数が満たしていない場合は
-・msg_wbt_info16へ</comment>
+		<comment>参加数の条件を
+・満たしている　→msg_wbt_info_15
+・満たしていない→msg_wbt_info16</comment>
 		<attribute name="キャラ指定">選択肢表示</attribute>
 		<language name="JPN" width="256">でんき</language>
 		<language name="JPN_KANJI" width="256">でんき</language>
 	</row>
 
 	<row id="msg_wbt_menu_koori" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>参加数の条件を満たしている場合は
-・msg_wbt_info_15へ
-
-参加数が満たしていない場合は
-・msg_wbt_info16へ</comment>
+		<comment>参加数の条件を
+・満たしている　→msg_wbt_info_15
+・満たしていない→msg_wbt_info16</comment>
 		<attribute name="キャラ指定">選択肢表示</attribute>
 		<language name="JPN" width="256">こおり</language>
 		<language name="JPN_KANJI" width="256">こおり</language>
 	</row>
 
 	<row id="msg_wbt_menu_kakutou" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>参加数の条件を満たしている場合は
-・msg_wbt_info_15へ
-
-参加数が満たしていない場合は
-・msg_wbt_info16へ</comment>
+		<comment>参加数の条件を
+・満たしている　→msg_wbt_info_15
+・満たしていない→msg_wbt_info16</comment>
 		<attribute name="キャラ指定">選択肢表示</attribute>
 		<language name="JPN" width="256">かくとう</language>
 		<language name="JPN_KANJI" width="256">かくとう</language>
 	</row>
 
 	<row id="msg_wbt_menu_doku" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>参加数の条件を満たしている場合は
-・msg_wbt_info_15へ
-
-参加数が満たしていない場合は
-・msg_wbt_info16へ</comment>
+		<comment>参加数の条件を
+・満たしている　→msg_wbt_info_15
+・満たしていない→msg_wbt_info16</comment>
 		<attribute name="キャラ指定">選択肢表示</attribute>
 		<language name="JPN" width="256">どく</language>
 		<language name="JPN_KANJI" width="256">どく</language>
 	</row>
 
 	<row id="msg_wbt_menu_zimen" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>参加数の条件を満たしている場合は
-・msg_wbt_info_15へ
-
-参加数が満たしていない場合は
-・msg_wbt_info16へ</comment>
+		<comment>参加数の条件を
+・満たしている　→msg_wbt_info_15
+・満たしていない→msg_wbt_info16</comment>
 		<attribute name="キャラ指定">選択肢表示</attribute>
 		<language name="JPN" width="256">じめん</language>
 		<language name="JPN_KANJI" width="256">じめん</language>
 	</row>
 
 	<row id="msg_wbt_menu_hikou" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>参加数の条件を満たしている場合は
-・msg_wbt_info_15へ
-
-参加数が満たしていない場合は
-・msg_wbt_info16へ</comment>
+		<comment>参加数の条件を
+・満たしている　→msg_wbt_info_15
+・満たしていない→msg_wbt_info16</comment>
 		<attribute name="キャラ指定">選択肢表示</attribute>
 		<language name="JPN" width="256">ひこう</language>
 		<language name="JPN_KANJI" width="256">ひこう</language>
 	</row>
 
 	<row id="msg_wbt_menu_esper" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>参加数の条件を満たしている場合は
-・msg_wbt_info_15へ
-
-参加数が満たしていない場合は
-・msg_wbt_info16へ</comment>
+		<comment>参加数の条件を
+・満たしている　→msg_wbt_info_15
+・満たしていない→msg_wbt_info16</comment>
 		<attribute name="キャラ指定">選択肢表示</attribute>
 		<language name="JPN" width="256">エスパー</language>
 		<language name="JPN_KANJI" width="256">エスパー</language>
 	</row>
 
 	<row id="msg_wbt_menu_musi" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>参加数の条件を満たしている場合は
-・msg_wbt_info_15へ
-
-参加数が満たしていない場合は
-・msg_wbt_info16へ</comment>
+		<comment>参加数の条件を
+・満たしている　→msg_wbt_info_15
+・満たしていない→msg_wbt_info16</comment>
 		<attribute name="キャラ指定">選択肢表示</attribute>
 		<language name="JPN" width="256">むし</language>
 		<language name="JPN_KANJI" width="256">むし</language>
 	</row>
 
 	<row id="msg_wbt_menu_iwa" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>参加数の条件を満たしている場合は
-・msg_wbt_info_15へ
-
-参加数が満たしていない場合は
-・msg_wbt_info16へ</comment>
+		<comment>参加数の条件を
+・満たしている　→msg_wbt_info_15
+・満たしていない→msg_wbt_info16</comment>
 		<attribute name="キャラ指定">選択肢表示</attribute>
 		<language name="JPN" width="256">いわ</language>
 		<language name="JPN_KANJI" width="256">いわ</language>
 	</row>
 
 	<row id="msg_wbt_menu_gorst" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>参加数の条件を満たしている場合は
-・msg_wbt_info_15へ
-
-参加数が満たしていない場合は
-・msg_wbt_info16へ</comment>
+		<comment>参加数の条件を
+・満たしている　→msg_wbt_info_15
+・満たしていない→msg_wbt_info16</comment>
 		<attribute name="キャラ指定">選択肢表示</attribute>
 		<language name="JPN" width="256">ゴースト</language>
 		<language name="JPN_KANJI" width="256">ゴースト</language>
 	</row>
 
 	<row id="msg_wbt_menu_dragon" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>参加数の条件を満たしている場合は
-・msg_wbt_info_15へ
-
-参加数が満たしていない場合は
-・msg_wbt_info16へ</comment>
+		<comment>参加数の条件を
+・満たしている　→msg_wbt_info_15
+・満たしていない→msg_wbt_info16</comment>
 		<attribute name="キャラ指定">選択肢表示</attribute>
 		<language name="JPN" width="256">ドラゴン</language>
 		<language name="JPN_KANJI" width="256">ドラゴン</language>
 	</row>
 
 	<row id="msg_wbt_menu_aku" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>参加数の条件を満たしている場合は
-・msg_wbt_info_15へ
-
-参加数が満たしていない場合は
-・msg_wbt_info16へ</comment>
+		<comment>参加数の条件を
+・満たしている　→msg_wbt_info_15
+・満たしていない→msg_wbt_info16</comment>
 		<attribute name="キャラ指定">選択肢表示</attribute>
 		<language name="JPN" width="256">あく</language>
 		<language name="JPN_KANJI" width="256">あく</language>
 	</row>
 
 	<row id="msg_wbt_menu_hagane" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>参加数の条件を満たしている場合は
-・msg_wbt_info_15へ
-
-参加数が満たしていない場合は
-・msg_wbt_info16へ</comment>
+		<comment>参加数の条件を
+・満たしている　→msg_wbt_info_15
+・満たしていない→msg_wbt_info16</comment>
 		<attribute name="キャラ指定">選択肢表示</attribute>
 		<language name="JPN" width="256">はがね</language>
 		<language name="JPN_KANJI" width="256">はがね</language>
