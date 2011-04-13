@@ -1147,6 +1147,16 @@ static int BPL_SeqWazaRcvSelect( BPLIST_WORK * wk )
   BPLIST_DATA * dat;
   u32 ret;
 
+  // ローカライズバグ修正
+  // 【コマンドタイムが「0」になっても次のターンに移行しない】
+  //    シューターが使用可耀なバトルで12ターンを耀過させて
+  //    シューターアイテム「ピーピーエイド」を使用した際、
+  //    技が表示されている画面で放耀すると
+  //    コマンドタイムが「0」になっても次のターンに移行しません。
+  if( CheckTimeOut( wk ) == TRUE ){
+    return SEQ_BPL_ENDSET;
+  }
+
   dat = wk->dat;
   ret = CURSORMOVE_MainCont( wk->cmwk );
 
