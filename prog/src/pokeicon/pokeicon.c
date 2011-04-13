@@ -66,7 +66,11 @@ u32 POKEICON_GetCgxArcIndex( const POKEMON_PASO_PARAM* ppp )
 }
 
 
-#define MONSNO_WB_MAX ( 651 )
+//#define MONSNO_WB_MAX ( 651 )
+#define MONSNO_SWANICON_MAX ( 661 )
+#define MONS_GRANO_TAMAGO ( 660 )
+#define MONS_PALNO_TAMAGO ( 662 )
+
 //--------------------------------------------------------------------------------------------
 /**
  * キャラのアーカイブインデックス取得
@@ -118,7 +122,7 @@ u32 POKEICON_GetCgxArcIndexByMonsNumber( u32 mons_no, u32 form_no, BOOL egg )
     { 
       form_no = 0;
     }
-    file_start = NARC_poke_icon_poke_icon_000_m_NCGR + POKEICON_FILE_MAX * ( MONSNO_TAMAGO + form_no );
+    file_start = NARC_poke_icon_poke_icon_000_m_NCGR + POKEICON_FILE_MAX * ( MONS_GRANO_TAMAGO + form_no );
   }
   //別フォルム処理
   else if( form_no )
@@ -139,7 +143,7 @@ u32 POKEICON_GetCgxArcIndexByMonsNumber( u32 mons_no, u32 form_no, BOOL egg )
     { 
       if( form_no )
       { 
-        file_start = NARC_poke_icon_poke_icon_000_m_NCGR + POKEICON_FILE_MAX * ( MONSNO_WB_MAX + 1 ) + POKEICON_FILE_MAX * ( gra_index + form_no - 1 );
+        file_start = NARC_poke_icon_poke_icon_000_m_NCGR + POKEICON_FILE_MAX * ( MONSNO_SWANICON_MAX + 1 ) + POKEICON_FILE_MAX * ( gra_index + form_no - 1 );
       }
     }
   }
@@ -198,7 +202,7 @@ const u8 POKEICON_GetPalNum( u32 mons_no, u32 form_no, BOOL egg )
     { 
       form_no = 0;
     }
-    mons_no = MONSNO_TAMAGO + form_no;
+    mons_no = MONS_PALNO_TAMAGO + form_no;
   }
   //別フォルム処理
   else if( form_no )
@@ -219,7 +223,8 @@ const u8 POKEICON_GetPalNum( u32 mons_no, u32 form_no, BOOL egg )
     { 
       if( form_no )
       { 
-        mons_no = ( MONSNO_WB_MAX + 1 ) +  ( gra_index + form_no - 1 );
+        OS_Printf("monsno=%d, gra_index=%d, form_no=%d\n", mons_no, gra_index, form_no);
+        mons_no = ( MONS_PALNO_TAMAGO + 1) +  ( gra_index + form_no  );
       }
     }
   }
