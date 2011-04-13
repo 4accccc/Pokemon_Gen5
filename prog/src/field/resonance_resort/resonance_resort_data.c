@@ -2695,6 +2695,18 @@ RESORT_INSTITUTION_DATA * RESORT_RESIDENT_DATA_GetInstitution( RESORT_RESIDENT_D
 {
   return &p_wk->institution;
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  “]E
+ *
+ *	@param	RESORT_RESIDENT_DATA *p_wk ƒ[ƒN
+ */
+//-----------------------------------------------------------------------------
+void RESORT_RESIDENT_DATA_JobChange( RESORT_RESIDENT_DATA *p_wk )
+{
+  p_wk->type      = RESORT_RESIDENT_DATA_GetData( p_wk, RESORT_DATA_PARAM_WANT_JOB, NULL );
+  Resort_Recv_Data_SetWantJob( p_wk );
+}
 
 //=============================================================================
 /**

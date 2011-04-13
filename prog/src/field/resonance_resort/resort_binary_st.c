@@ -107,9 +107,10 @@ void RESORT_BINARY_SHOP_Exit( RESORT_BINARY_SHOP *p_wk )
 //-----------------------------------------------------------------------------
 u32 RESORT_BINARY_SHOP_SearchShopID( const RESORT_BINARY_SHOP *cp_wk, const RESORT_RESIDENT_DATA *cp_data )
 {
+  RESORT_INSTITUTION_DATA *p_institution = RESORT_RESIDENT_DATA_GetInstitution( (RESORT_RESIDENT_DATA *)cp_data ); 
   u16 shop  = RESORT_RESIDENT_DATA_GetData( cp_data, RESORT_DATA_PARAM_WANT_JOB, NULL );
   u16 type  = 0; //TODO
-  u16 lv    = 0;  //TODO
+  u16 lv    = RESORT_INSTITUTION_DATA_GetData(p_institution,RESORT_INSTITUTION_DATA_PARAM_LV );
   int i;
   for( i = 0; i < (cp_wk->shop_size / sizeof(RESORT_BINARY_SHOP_DATA)); i++ )
   {

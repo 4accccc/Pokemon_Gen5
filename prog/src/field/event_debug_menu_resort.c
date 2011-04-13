@@ -617,6 +617,18 @@ static BOOL debugMenuCallProc_DesignerSetup( DEBUG_MENU_EVENT_WORK *p_wk )
 
   //0,1,2をマーケットLv1,2,3,にする
   {
+    SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(p_wk->gdata);
+    RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( pSave );
+    RESORT_PEOPLE_ALL_DATA *p_all_people = RESONANCE_RESORT_SV_GetPeopleAllData( p_resort );
+    int i;
+    for( i = 0; i < 3; i++ )
+    {
+      RESORT_RESIDENT_DATA *p_resident = RESORT_PEOPLE_ALL_DATA_GetResident(p_all_people,i);
+      RESORT_INSTITUTION_DATA *p_institution = RESORT_RESIDENT_DATA_GetInstitution( p_resident );
+      RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_LV, i );
+      RESORT_RESIDENT_DATA_SetData( p_resident, RESORT_DATA_PARAM_WANT_JOB, RESORT_RESIDENT_TYPE_MARKET );
+      RESORT_RESIDENT_DATA_JobChange( p_resident );
+    }
   }
 
   return FALSE;
