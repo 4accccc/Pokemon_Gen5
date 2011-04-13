@@ -50,6 +50,7 @@
   DEF_CMD( EvCmdResortGetMouthComm, EV_SEQ_RESORT_GET_MOUTHCOMM )
   DEF_CMD( EvCmdResortSetWordMouthCommAnswer, EV_SEQ_RESORT_SET_WORD_MOUTHCOMM )
   DEF_CMD( EvCmdResortGetServiceData, EV_SEQ_RESORT_GET_SERVICE_DATA )
+  DEF_CMD( EvCmdResortGetOffreco, EV_SEQ_RESORT_GET_OFFRECO )
   NO_CMD()
   
   END_CMD

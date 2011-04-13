@@ -32,6 +32,7 @@ _EVENT_DATA    ev_resort_secretary_move
 _EVENT_DATA    ev_resort_secretary_center
 _EVENT_DATA    ev_resort_secretary_pc
 _EVENT_DATA    ev_resort_npc_mouthcomm
+_EVENT_DATA    ev_resort_npc_offreco
 _EVENT_DATA_END
 
 //DEFINE_LOCALの数が多いので、グローバルにおいて使い回しています。
@@ -1700,3 +1701,26 @@ sub_npc_mouthcomm_question:
   _RESORT_SET_MY_DATA( LWK_TMP, LWK_MENU_RET )
 }
 _RET
+
+/**************************************************************/
+/*            NPC　クチコミ                     */
+/**************************************************************/
+EVENT_START ev_resort_npc_offreco
+{
+  DEFINE_LOCAL LWK_INDEX
+  DEFINE_LOCAL LWK_TMP
+  DEFINE_LOCAL LWK_CNT
+
+  _TALK_OBJ_START()
+
+  _RESORT_GET_NPC_DATA( LWK_TMP, RESORT_NPC_DATA_OBJID, LWK_OBJID )
+  _RESORT_GET_NPC_DATA( LWK_OBJID, RESORT_NPC_DATA_INDEX, LWK_INDEX )
+
+  _RESORT_GET_OFFRECO( LWK_INDEX, LOCALWORK12, LWK_MSGID )
+  $LOCALWORK12 += 1
+
+  _BALLOONWIN_OBJMSG( LWK_MSGID, LWK_OBJID )
+  _BALLOONWIN_CLOSE()
+}
+EVENT_END
+

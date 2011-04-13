@@ -147,8 +147,16 @@ void RESORT_MAP_GetPlaceGridPosByIndex( RESORT_PLACEID placeID, u16 people_type,
   case RESORT_PLACEID_INSTITUTION_05:
   case RESORT_PLACEID_INSTITUTION_06:
   case RESORT_PLACEID_INSTITUTION_07:
-    *p_x = 7+peopleID;
-    *p_z = 9;
+    if( people_type == RESORT_PEOPLE_TYPE_RESIDENT )
+    {
+      *p_x = 7;
+      *p_z = 9;
+    }
+    else
+    {
+      *p_x = 3+peopleID;
+      *p_z = 6;
+    }
     break;
   case RESORT_PLACEID_EMBASSY:
     //å}ïoäŸÇÃîÈèëà íu

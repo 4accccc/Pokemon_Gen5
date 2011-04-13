@@ -48,3 +48,5 @@ extern void RESORT_NPC_SYS_Main( RESORT_NPC_SYS *p_wk );
 extern u16 RESORT_NPC_SYS_GetType( const RESORT_NPC_SYS *cp_wk, u32 index );
 extern u16 RESORT_NPC_SYS_GetMoutchCommData( const RESORT_NPC_SYS *cp_wk, u32 index, RESORT_BINARY_MOUTHCOMM_PARAM param );
 extern u16 RESORT_NPC_SYS_GetOffRecoData( const RESORT_NPC_SYS *cp_wk, u32 index, RESORT_BINARY_OFFRECO_PARAM param );
+extern u32 RESORT_NPC_SYS_GetOffRecoMax( const RESORT_NPC_SYS *cp_wk );
+extern u32 RESORT_NPC_SYS_GetParam( const RESORT_NPC_SYS *cp_wk, u32 index );

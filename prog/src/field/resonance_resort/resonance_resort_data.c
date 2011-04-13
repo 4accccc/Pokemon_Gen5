@@ -21,6 +21,7 @@
 //arc
 #include "arc/arc_def.h"
 #include "arc/message.naix"
+#include "arc/script_message.naix"
 #include "msg/script/msg_resort_scr.h"
 #include "msg/msg_place_name.h"
 
@@ -555,7 +556,7 @@ static BOOL RESORT_BASIC2_DATA_IsValid( const RESORT_BASIC2_DATA *cp_wk )
 //=====================================
 typedef struct
 {
-  u8  medal_bit[12];
+  u8  medal_bit[RESORT_RECV_MEDAL_BIT_BYTE];
   u8  recommend_medalID;
   u8  medal_num;
   RESORT_DATE recommend_date;
@@ -1376,8 +1377,11 @@ u32 RESORT_RECV_DATA_GetData( const RESORT_RECV_DATA *cp_wk, RESORT_DATA_PARAM p
   //拡張データ1
   case RESORT_DATA_PARAM_EXT1_MEDAL_BIT:  //p_ret_adrsから取得 u8*12
     RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_01 );
-    GFL_STD_MemCopy( cp_wk->extend1.medal_bit, p_ret_adrs, sizeof(u8)*12 );
-    return 0;
+    if( p_ret_adrs )
+    {
+      GFL_STD_MemCopy( cp_wk->extend1.medal_bit, p_ret_adrs, sizeof(u8)*RESORT_RECV_MEDAL_BIT_BYTE );
+    }
+    return (u32)cp_wk->extend1.medal_bit;
   case RESORT_DATA_PARAM_EXT1_RECOMMEND_MEDAL_ID:
     RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_01 );
     return cp_wk->extend1.recommend_medalID;
@@ -1665,7 +1669,7 @@ void RESORT_RECV_DATA_SetData( RESORT_RECV_DATA *p_wk, RESORT_DATA_PARAM param, 
   //拡張データ1
   case RESORT_DATA_PARAM_EXT1_MEDAL_BIT:
     RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_01 );
-    GFL_STD_MemCopy( (const void *)data, p_wk->extend1.medal_bit, sizeof(u8)*12 );
+    GFL_STD_MemCopy( (const void *)data, p_wk->extend1.medal_bit, sizeof(u8)*RESORT_RECV_MEDAL_BIT_BYTE );
     break;
   case RESORT_DATA_PARAM_EXT1_RECOMMEND_MEDAL_ID:
     RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_01 );
@@ -3416,8 +3420,9 @@ void RESORT_CITY_DATA_InitInstance( RESORT_CITY_DATA *p_wk )
     STRBUF *p_strbuf = GFL_MSG_CreateString( p_msg, MAPNAME_C16 );
     GFL_STR_GetStringCode( p_strbuf, p_wk->city_name, RESORT_CITY_NAME_BUFF_MAX+EOM_SIZE );
     GFL_STR_DeleteBuffer( p_strbuf );
+    GFL_MSG_Delete( p_msg );
 
-
+    p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_resort_scr_dat, GFL_HEAP_LOWID(HEAPID_SAVE) );
     p_strbuf = GFL_MSG_CreateString( p_msg, resort_sys_name_01 );
     GFL_STR_GetStringCode( p_strbuf, p_wk->my_name, RESORT_MY_NAME_BUFF_MAX+EOM_SIZE );
     GFL_STR_DeleteBuffer( p_strbuf );

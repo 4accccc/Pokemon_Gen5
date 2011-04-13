@@ -224,12 +224,13 @@ static const DEBUG_MENU_LIST DATA_DebugMenuList[] =
 #define QuickJumpSelect  DEBUG_FIELD_STR17_01
 #elif defined DEBUG_ONLY_FOR_ohno
 #define QuickJumpStart   DEBUG_FIELD_STR19
-//#elif defined DEBUG_ONLY_FOR_
-//  #define QuickJumpStart
 #elif defined DEBUG_ONLY_FOR_iwasawa
 #define QuickJumpStart   DEBUG_FIELD_NUMINPUT
 #define QuickJumpSelect  DEBUG_FIELD_STR65
 #elif defined DEBUG_ONLY_FOR_shimoyamada
+#define QuickJumpStart   DEBUG_FIELD_NUMINPUT
+#define QuickJumpSelect  DEBUG_FIELD_RESORT
+#elif defined DEBUG_ONLY_FOR_ohkubo_tomohiko
 #define QuickJumpStart   DEBUG_FIELD_NUMINPUT
 #define QuickJumpSelect  DEBUG_FIELD_RESORT
 #elif defined DEBUG_ONLY_FOR_onoue_masayuki

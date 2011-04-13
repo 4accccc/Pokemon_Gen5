@@ -13050,6 +13050,22 @@
 
 //--------------------------------------------------------------
 /**
+ * @brief リゾート用  サービス情報を取得
+ */
+//--------------------------------------------------------------
+#define _RESORT_GET_OFFRECO( npc_idx, cnt, ret_wk ) \
+      _ASM_RESORT_GET_OFFRECO npc_idx, cnt, ret_wk
+
+  .macro _ASM_RESORT_GET_OFFRECO npc_idx, cnt, ret_wk
+  .short EV_SEQ_RESORT_GET_OFFRECO
+  .short \npc_idx
+  .short \cnt
+  .short \ret_wk
+  .endm
+
+
+//--------------------------------------------------------------
+/**
  * @brief 無限ダンジョン初期化
  */
 //--------------------------------------------------------------

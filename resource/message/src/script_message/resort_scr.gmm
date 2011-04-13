@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nagihashi_toru" host="W00268" date="2011-04-11T16:33:58"/>
+	<create user="nagihashi_toru" host="W00268" date="2011-04-12T18:11:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -2739,6 +2739,29 @@ GTSの　ごりよう　ありがとうございます！</language>
 	<row id="resort_mouthcomm_sys_04" back-color="#00ffff,,,,,,,#00ffff,,,#00ffff,,,#00ffff,,,#00ffff,,">
 		<language name="JPN" width="256">こんど　おしえてね！▼</language>
 		<language name="JPN_KANJI" width="256">今度　教えてね！▼</language>
+	</row>
+
+	<row id="resort_offreco_00" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">オフレコ：内部データ語り</attribute>
+		<language name="JPN" width="256">ここだけの　はなし　なんだけど
+きいて　きいて！▼
+[FF:00:色:2][1:00:トレーナー名:0]さん[FF:00:色:0]って……
+ビットが　ON　みたいね▼</language>
+		<language name="JPN_KANJI" width="256">ここだけの　はなし　なんだけど
+きいて　きいて！▼
+[FF:00:色:2][1:00:トレーナー名:0]さん[FF:00:色:0]って……
+ビットが　ON　みたいね▼</language>
+	</row>
+
+	<row id="resort_offreco_01" back-color="#8080ff,,,,,,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<language name="JPN" width="256">ここだけの　はなし　なんだけど
+きいて　きいて！▼
+[FF:00:色:2][1:00:トレーナー名:0]さん[FF:00:色:0]って……
+ビットが　OFF　みたいね▼</language>
+		<language name="JPN_KANJI" width="256">ここだけの　はなし　なんだけど
+きいて　きいて！▼
+[FF:00:色:2][1:00:トレーナー名:0]さん[FF:00:色:0]って……
+ビットが　OFF　みたいね▼</language>
 	</row>
 
 	<flowchart-group-list>

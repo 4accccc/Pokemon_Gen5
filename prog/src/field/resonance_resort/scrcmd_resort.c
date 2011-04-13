@@ -1409,6 +1409,8 @@ VMCMD_RESULT EvCmdResortGetNpcData( VMHANDLE *p_core, void *p_wk_adrs )
     GF_ASSERT(0);
   }
 
+
+  NAGI_Printf( "NPC obj%d param%d ret%d\n",objid, param, *p_ret_wk );
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -1533,6 +1535,79 @@ VMCMD_RESULT EvCmdResortSetWordMouthCommAnswer( VMHANDLE *p_core, void *p_wk_adr
   WORDSET_RegisterWord( p_wordset, bufID, p_str, PM_NEUTRAL, TRUE, PM_LANG );
   GFL_STR_DeleteBuffer(p_str);
   GFL_MSG_Delete( p_msg );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  オフレコを取得
+ *
+ *	@param	VMHANDLE *p_core 仮想マシンハンドル
+ *	@param	*p_wk_adrs       スクリプトコマンドワーク
+ *
+ *	@return 結果コード
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdResortGetOffreco( VMHANDLE *p_core, void *p_wk_adrs )
+{
+  SCRCMD_WORK *p_wk = p_wk_adrs;
+  SCRIPT_WORK *p_script = SCRCMD_WORK_GetScriptWork( p_wk );
+  GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
+  GAMEDATA      *p_gamedata = SCRCMD_WORK_GetGameData( p_wk );
+  FIELDMAP_WORK *p_field = GAMESYSTEM_GetFieldMapWork(p_gamesys);
+  RESORT_NPC_SYS *p_nps_sys = Resort_Scrcmd_GetNpcSys( p_field );
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( GAMESYSTEM_GetGameData(p_gamesys) );
+  RESONANCE_RESORT_SV *p_resort_sv = RESONANCE_RESORT_SV_GetWork( p_sv );
+  RESORT_PEOPLE_ALL_DATA *p_people_all = RESONANCE_RESORT_SV_GetPeopleAllData( p_resort_sv );
+  u16 npc_idx     = SCRCMD_GetVMWorkValue(p_core, p_wk );
+  u16 cnt         = SCRCMD_GetVMWorkValue(p_core, p_wk );
+  u16 *p_ret_wk   = SCRCMD_GetVMWork(p_core,p_wk);
+  
+  u32 resident_idx = RESORT_NPC_SYS_GetParam( p_nps_sys, npc_idx );
+  RESORT_RESIDENT_DATA *p_resident = RESORT_PEOPLE_ALL_DATA_GetResident( p_people_all, resident_idx );
+  const u8  *cp_bit;
+  u8  bit_offs;
+  u8  bit_idx;
+
+  if( RESORT_RESIDENT_DATA_IsEmpty( p_resident ) )
+  {
+    //住人がいないのに話しかけた
+    return VMCMD_RESULT_CONTINUE;
+  }
+
+  cp_bit = (const u8*)RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_EXT1_MEDAL_BIT, NULL );
+  
+  //回りこみ
+  cnt %= RESORT_NPC_SYS_GetOffRecoMax( p_nps_sys );
+
+  //ビット位置
+  bit_idx   = cnt / 8;
+  bit_offs  = cnt % 8;
+  
+  {
+    //その人物を単語登録
+    WORDSET *p_wordset    = SCRIPT_GetWordSet( p_script );
+    STRCODE name[PERSON_NAME_SIZE+EOM_SIZE];
+    const u16 heapID = FIELDMAP_GetHeapID( p_field );
+    STRBUF *p_str = GFL_STR_CreateBuffer( PERSON_NAME_SIZE+EOM_SIZE, GFL_HEAP_LOWID(heapID) );
+    u32 sex = RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_SEX, NULL );
+    RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_NAME, name );
+    GFL_STR_SetStringCode( p_str, name );
+
+    WORDSET_RegisterWord( p_wordset, 0, p_str, sex, TRUE, PM_LANG );
+
+    GFL_STR_DeleteBuffer(p_str);
+  }
+
+  if( (cp_bit[ bit_idx ] & 1<<bit_offs) != 0 )
+  {
+    *p_ret_wk = RESORT_NPC_SYS_GetOffRecoData( p_nps_sys, cnt, RESORT_BINARY_OFFRECO_PARAM_ON_MSG );
+  }
+  else
+  {
+    *p_ret_wk = RESORT_NPC_SYS_GetOffRecoData( p_nps_sys, cnt, RESORT_BINARY_OFFRECO_PARAM_OFF_MSG );
+  }
 
   return VMCMD_RESULT_CONTINUE;
 }

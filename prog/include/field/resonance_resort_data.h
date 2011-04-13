@@ -133,6 +133,9 @@ typedef enum
 //リゾート用代理データの全サイズ
 #define RESORT_PROXY_DATA_SIZE    (8)
 
+//メダルビットのバイト数
+#define RESORT_RECV_MEDAL_BIT_BYTE (12)
+
 #define RESORT_PEOPLE_ID_NULL (0xFFFF)
 
 #define RESORT_PEOPLE_PRECENT_ID_BP (1000)

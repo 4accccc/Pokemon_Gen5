@@ -494,3 +494,16 @@ u16 RESORT_BINARY_OFFRECO_GetData( const RESORT_BINARY_OFFRECO *cp_wk, u32 index
 {
   return cp_wk->p_data[ index ].param[ param ];
 }
+//----------------------------------------------------------------------------
+/** 
+ *	@brief  Å‘å”‚ðŽæ“¾
+ *
+ *	@param	const RESORT_BINARY_OFFRECO *cp_wk  ƒ[ƒN
+ *
+ *	@return Å‘å”
+ */
+//-----------------------------------------------------------------------------
+u32 RESORT_BINARY_OFFRECO_GetMax( const RESORT_BINARY_OFFRECO *cp_wk )
+{
+  return cp_wk->size / sizeof( RESORT_BINARY_OFFRECO_DATA );
+}

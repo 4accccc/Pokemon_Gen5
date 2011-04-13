@@ -27,11 +27,11 @@ def checkArgument
     return false
   end
   if MSG_HEADER == nil
-    puts "引数1にメッセージヘッダのファイル名を指定してください"
+    puts "引数2にメッセージヘッダのファイル名を指定してください"
     return false
   end
   if OUTPUTNAME == nil
-    puts "引数２に出力ファイル名を指定してください"
+    puts "引数3に出力ファイル名を指定してください"
     return false
   end
   unless FileTest.exists?(TARGETCSV)
@@ -58,10 +58,11 @@ SPOT_COL_START    = 1     #列開始位置
 SPOT_COL_MSG_00   = SPOT_COL_START     #列:メッセージ
 SPOT_COL_MSG_01   = 2     #列:メッセージ
 SPOT_COL_MSG_02   = 3     #列:メッセージ
-SPOT_COL_BASEEXP  = 4     #列：ベース経験値
-SPOT_COL_TYPE     = 5     #列：タイプ
-SPOT_COL_DATA     = 6     #列：データ
-SPOT_COL_EXP      = 7     #列：経験値
+SPOT_COL_GROUP    = 4     #列：グループ
+SPOT_COL_BASEEXP  = 5     #列：ベース経験値
+SPOT_COL_TYPE     = 6     #列：タイプ
+SPOT_COL_DATA     = 7     #列：データ
+SPOT_COL_EXP      = 8     #列：経験値
 
 SPOT_COL_DATA_MAX = 6     #タイプ、データ、経験値が何回あるか
 def  convertAppeal( csv, data, msg_h )

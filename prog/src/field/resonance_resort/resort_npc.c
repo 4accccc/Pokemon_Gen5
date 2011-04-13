@@ -136,9 +136,7 @@ u16 RESORT_NPC_SYS_GetMoutchCommData( const RESORT_NPC_SYS *cp_wk, u32 index, RE
 //-----------------------------------------------------------------------------
 u16 RESORT_NPC_SYS_GetOffRecoData( const RESORT_NPC_SYS *cp_wk, u32 index, RESORT_BINARY_OFFRECO_PARAM param )
 {
-  u16 kind = RESORT_BINARY_NPC_GetData( cp_wk->p_binary_npc, index, RESORT_BINARY_NPC_PARAM_KIND );
-  GF_ASSERT( RESORT_BINARY_NPC_GetData( cp_wk->p_binary_npc, index, RESORT_BINARY_NPC_PARAM_TYPE ) == RESORT_NPC_TYPE_OFFRECO );
-  return RESORT_BINARY_OFFRECO_GetData( cp_wk->p_binary_offreco, kind, param );
+  return RESORT_BINARY_OFFRECO_GetData( cp_wk->p_binary_offreco, index, param );
 }
 
 //----------------------------------------------------------------------------
@@ -151,19 +149,15 @@ u16 RESORT_NPC_SYS_GetOffRecoData( const RESORT_NPC_SYS *cp_wk, u32 index, RESOR
 static void Resort_Npc_Sys_AddAll( RESORT_NPC_SYS *p_wk )
 {
   int i;
-  
-  if( p_wk->param.placeID != RESORT_PLACEID_FIELD )
-  {
-    return;
-  }
 
   for( i = 0; i < RESORT_BINARY_NPC_GetMax( p_wk->p_binary_npc ); i++ )
   {
     u16 city_lv  = RESORT_CITY_DATA_GetData(p_wk->param.p_city, RESORT_CITY_DATA_PARAM_LV, NULL);
     u16 apper_lv = RESORT_BINARY_NPC_GetData(p_wk->p_binary_npc, i, RESORT_BINARY_NPC_PARAM_CITY_LV);
+    u16 placeID = RESORT_BINARY_NPC_GetData(p_wk->p_binary_npc, i, RESORT_BINARY_NPC_PARAM_PLACE);
 
     MMDL *p_mmdl = MMDLSYS_SearchOBJID( p_wk->param.p_mmdlsys, RESORT_NPC_INDEX_TO_MMDLID(i) );
-    if( apper_lv >= city_lv && p_mmdl == NULL )
+    if( apper_lv >= city_lv && p_mmdl == NULL && p_wk->param.placeID == placeID )
     {
       MMDL_HEADER header;
       u16 grid_x, grid_z;
@@ -178,8 +172,7 @@ static void Resort_Npc_Sys_AddAll( RESORT_NPC_SYS *p_wk )
       switch(RESORT_BINARY_NPC_GetData(p_wk->p_binary_npc, i, RESORT_BINARY_NPC_PARAM_TYPE))
       {
       case RESORT_NPC_TYPE_OFFRECO:
-        GF_ASSERT(0); //TODO　まだできてない
-        header.event_id = 0;
+        header.event_id = SCRID_RESORT_NPC_OFFRECO;
         break;
       case RESORT_NPC_TYPE_MOUTHCOMM:
         header.event_id = SCRID_RESORT_NPC_MOUTHCOMM;
@@ -196,4 +189,32 @@ static void Resort_Npc_Sys_AddAll( RESORT_NPC_SYS *p_wk )
       MMDLSYS_AddMMdl( p_wk->param.p_mmdlsys, &header, RESORT_ZONE_ID_FIELD );
     }
   }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  オフレコの最大数取得
+ *
+ *	@param	const RESORT_NPC_SYS *cp_wk   ワーク
+ *
+ *	@return オフレコ最大数
+ */
+//-----------------------------------------------------------------------------
+u32 RESORT_NPC_SYS_GetOffRecoMax( const RESORT_NPC_SYS *cp_wk )
+{
+  return RESORT_BINARY_OFFRECO_GetMax( cp_wk->p_binary_offreco );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  引数を取得
+ *
+ *	@param	const RESORT_NPC_SYS *cp_wk ワーク
+ *	@param	index   インデックス
+ *
+ *	@return 引数
+ */
+//-----------------------------------------------------------------------------
+u32 RESORT_NPC_SYS_GetParam( const RESORT_NPC_SYS *cp_wk, u32 index )
+{
+  return RESORT_BINARY_NPC_GetData( cp_wk->p_binary_npc, index, RESORT_BINARY_NPC_PARAM_KIND );
 }

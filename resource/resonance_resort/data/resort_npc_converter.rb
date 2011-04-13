@@ -136,19 +136,69 @@ def convertKutikomi( csv, data, msg_h, tagHash )
 end
 
 #-------------------------------------
+# オフレコデータコンバート
+#=====================================
+OFFRECO_ROW_START    = 1     #行開始位置
+OFFRECO_COL_START    = 0     #列開始位置
+OFFRECO_COL_TAG      = OFFRECO_COL_START     #列:タグ
+OFFRECO_COL_BIT      = 1     #列:ビット番号
+OFFRECO_COL_GROUP    = 2     #列:グループ
+OFFRECO_COL_TYPE     = 3     #列：オフレコタイプ
+OFFRECO_COL_MSG_ON   = 4     #列：メッセージ
+OFFRECO_COL_MSG_OFF  = 5     #列：メッセージ
+
+def convertOffreco( csv, data, msg_h, tagHash )
+  
+  #データの作成
+  msgdata = HeaderDataArray.new
+  msgdata.load( msg_h )
+
+  for row in OFFRECO_ROW_START...csv.row_length-1
+    
+    tag   = csv.get( row, OFFRECO_COL_TAG )
+    bit   = csv.get( row, OFFRECO_COL_BIT )
+    group = csv.get( row, OFFRECO_COL_GROUP )
+    type  = csv.get( row, OFFRECO_COL_TYPE )
+    msg_on  = csv.get( row, OFFRECO_COL_MSG_ON )
+    msg_off = csv.get( row, OFFRECO_COL_MSG_OFF )
+
+    tagHash.store( tag, row-OFFRECO_ROW_START )
+
+    data.write_u16( bit )
+    data.write_u16( group )
+    data.write_u16( $define_hash[ type ] )
+    begin
+      data.write_u16( msgdata.search( "#{msg_on}", "#{row}行の#{msg_h}" ) )
+    rescue HeaderSearchError
+      exit(1)
+    end
+    begin
+      data.write_u16( msgdata.search( "#{msg_off}", "#{row}行の#{msg_h}" ) )
+    rescue HeaderSearchError
+      exit(1)
+    end
+
+    #アライメント
+    data.write_u16(0)
+
+  end
+end
+
+#-------------------------------------
 # NPCのデータコンバート
 #=====================================
 NPC_ROW_START    = 1     #行開始位置
 NPC_COL_START    = 0     #列開始位置
 NPC_COL_VIEW   = NPC_COL_START     #列:見た目
-NPC_COL_GRID_X   = 1     #列:X座標
-NPC_COL_GRID_Z   = 2     #列:Y座標
-NPC_COL_CITY_LV  = 3     #列：街レベル
-NPC_COL_MOVE     = 4     #列：移動
-NPC_COL_LIMIT_X  = 5     #列：X制限
-NPC_COL_LIMIT_Z  = 6     #列：Y制限
-NPC_COL_TYPE     = 7     #列：タイプ
-NPC_COL_KIND     = 8     #列：種類
+NPC_COL_PLACE    = 1     #列:場所
+NPC_COL_GRID_X   = 2     #列:X座標
+NPC_COL_GRID_Z   = 3     #列:Y座標
+NPC_COL_CITY_LV  = 4     #列：街レベル
+NPC_COL_MOVE     = 5     #列：移動
+NPC_COL_LIMIT_X  = 6     #列：X制限
+NPC_COL_LIMIT_Z  = 7     #列：Y制限
+NPC_COL_TYPE     = 8     #列：タイプ
+NPC_COL_KIND     = 9     #列：種類
 def convertNpc( csv, data, objcode, tagHash )
 
   objdata = HeaderDataArray.new
@@ -157,6 +207,7 @@ def convertNpc( csv, data, objcode, tagHash )
   for row in NPC_ROW_START...csv.row_length-1
     
     view    = csv.get( row, NPC_COL_VIEW )
+    place   = csv.get( row, NPC_COL_PLACE )
     gridx   = csv.get( row, NPC_COL_GRID_X )
     gridz   = csv.get( row, NPC_COL_GRID_Z )
     citylv  = csv.get( row, NPC_COL_CITY_LV )
@@ -171,6 +222,7 @@ def convertNpc( csv, data, objcode, tagHash )
     rescue HeaderSearchError
       exit(1)
     end
+    data.write_u16( $define_hash[ place ] )
     data.write_u16( gridx )
     data.write_u16( gridz )
     data.write_u16( citylv )
@@ -219,7 +271,7 @@ begin
 
   #コンバート
   convertKutikomi( kutikomiCsv, kutikomiData, MSG_HEADER, tagHash )
-  #convertOffreco( offrecoCsv, offrecoData, MSG_HEADER, tagHash )
+  convertOffreco( offrecoCsv, offrecoData, MSG_HEADER, tagHash )
   convertNpc( npcCsv, npcData, OBJCODE, tagHash )
 
   #date書き込み
