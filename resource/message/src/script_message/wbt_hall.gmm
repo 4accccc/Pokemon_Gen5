@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-13T20:01:48"/>
+	<create user="suginaka_katsunori" host="W00227" date="2011-04-13T21:05:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -403,7 +403,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1297" top="192" right="2002" bottom="820" maximized="no" rayout="Vertical2">
+	<dialog left="106" top="110" right="811" bottom="730" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="56" top="35" right="529" bottom="433" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -1033,6 +1033,42 @@ msg_wbt_announce_09へ</comment>
 [1:00:トレーナー名:0]の　にゅうじょうだー！▼</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ　優勝回数１００
 [1:00:トレーナー名:0]の　入場だー！▼</language>
+	</row>
+
+	<row id="msg_wbt_announce_08a" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>２回戦用
+メッセージ後
+トーナメントリスト画面へ</comment>
+		<attribute name="キャラ指定">アナウンス
+シッポなしメッセージ</attribute>
+		<language name="JPN" width="256">それでは　ほかの　たいせんけっかを
+ビジョンにて　ごかくにん　くださいッ！▼</language>
+		<language name="JPN_KANJI" width="256">それでは　他の　対戦結果を
+ビジョンにて　ご確認　くださいッ！▼</language>
+	</row>
+
+	<row id="msg_wbt_announce_11" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>ダブルノックアウト用
+メッセージ後　ざわざわＳＥ再生
+続いてmsg_wbt_announce_11へ</comment>
+		<attribute name="キャラ指定">アナウンス
+シッポなしメッセージ</attribute>
+		<language name="JPN" width="256">仮メッセージ
+判定をすることを伝えるメッセージ▼</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ
+判定をすることを伝えるメッセージ▼</language>
+	</row>
+
+	<row id="msg_wbt_announce_12" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>ダブルノックアウト用
+メッセージ後
+通常処理へ</comment>
+		<attribute name="キャラ指定">アナウンス
+シッポなしメッセージ</attribute>
+		<language name="JPN" width="256">仮メッセージ
+判定が終わり勝者を伝える　メッセージ▼</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ
+判定が終わり勝者を伝える　メッセージ▼</language>
 	</row>
 
 	<flowchart-group-list>
