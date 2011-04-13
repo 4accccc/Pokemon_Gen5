@@ -2040,6 +2040,19 @@ void RESORT_BEACON_DATA_SetBeaconInfo( RESORT_BEACON_DATA *p_wk, const GAMEBEACO
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  トレーナーID
+ *
+ *	@param	const RESORT_BEACON_DATA *cp_wk ワーク
+ *
+ *	@return トレーナーID
+ */
+//-----------------------------------------------------------------------------
+u32 RESORT_BEACON_DATA_GetTrainerID( const RESORT_BEACON_DATA *cp_wk )
+{
+  return cp_wk->basic1.trainerID;
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief  ビーコンデータの正当性チェック
  *
  *	@param	const RESORT_BEACON_DATA *cp_wk ワーク 
@@ -3401,7 +3414,7 @@ struct _RESORT_CITY_DATA
   STRCODE my_name[RESORT_MY_NAME_BUFF_MAX+EOM_SIZE];  //84
   u16     lv; 
   u16     state;  //92
-  u32     trainerID[32];  //128 220
+  u32     trainerID[RESORT_TRAINER_ID_STORE_SIZE];  //128 220
   u8      encount[32];  //32 252
   u8      decoration[32]; //32 284
   u8      ev_flag[32];  //32 316
@@ -3415,7 +3428,7 @@ struct _RESORT_CITY_DATA
   u8      secret_present_type;  
   u8      secret_present_num;
   u8      secret_present_flag;
-  u8      pad;
+  u8      trainerID_cnt;
 };
 SDK_COMPILER_ASSERT(sizeof(RESORT_CITY_DATA) == RESORT_CITY_DATA_SIZE );
 
@@ -3545,6 +3558,45 @@ void RESORT_CITY_DATA_SetData( RESORT_CITY_DATA *p_wk, RESORT_CITY_DATA_PARAM pa
 //-----------------------------------------------------------------------------
 void RESORT_CITY_DATA_UpdateDay( RESORT_CITY_DATA *p_wk )
 {
+  GFL_STD_MemClear( p_wk->trainerID, sizeof(u32)*RESORT_TRAINER_ID_STORE_SIZE );
+  p_wk->trainerID_cnt = 0;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  トレーナーID追加処理
+ *
+ *	@param	RESORT_CITY_DATA *p_wk  ワーク
+ *	@param	trainerID               トレーナーID
+ */
+//-----------------------------------------------------------------------------
+void RESORT_CITY_DATA_AddTrainerID( RESORT_CITY_DATA *p_wk, u32 trainerID )
+{
+  p_wk->trainerID[ p_wk->trainerID_cnt ]  = trainerID;
+  p_wk->trainerID_cnt++;
+  p_wk->trainerID_cnt %= RESORT_TRAINER_ID_STORE_SIZE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  トレーナーIDがあるかどうか
+ *
+ *	@param	const RESORT_CITY_DATA *cp_wk ワーク
+ *	@param	trainerID   トレーナーID
+ *
+ *	@return TRUEで存在  FALSEでなし
+ */
+//-----------------------------------------------------------------------------
+BOOL RESORT_CITY_DATA_CheckTrainerID( const RESORT_CITY_DATA *cp_wk, u32 trainerID )
+{
+  int i;
+  for( i = 0; i < RESORT_TRAINER_ID_STORE_SIZE; i++ )
+  {
+    if( cp_wk->trainerID[ i ] == trainerID )
+    {
+      return TRUE;
+    }
+  }
+
+  return FALSE;
 }
 
 //=============================================================================

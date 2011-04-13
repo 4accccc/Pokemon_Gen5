@@ -359,6 +359,7 @@ extern void RESORT_BEACON_DATA_Exit( RESORT_BEACON_DATA *p_wk );
 extern void RESORT_BEACON_DATA_SetMyData( RESORT_BEACON_DATA *p_wk, RESORT_EXTEND_TYPE type, const GAMEDATA *cp_gamedata );
 extern void RESORT_BEACON_DATA_GetExtendData( const RESORT_BEACON_DATA *cp_wk, u8 *p_extend_buff, RESORT_EXTEND_TYPE *p_type );
 extern void RESORT_BEACON_DATA_SetBeaconInfo( RESORT_BEACON_DATA *p_wk, const GAMEBEACON_INFO *cp_beacon_info );
+extern u32 RESORT_BEACON_DATA_GetTrainerID( const RESORT_BEACON_DATA *cp_wk );
 extern BOOL RESORT_BEACON_DATA_IsValid( const RESORT_BEACON_DATA *cp_wk );
 
 //-------------------------------------
@@ -591,6 +592,8 @@ extern RESORT_RECV_DATA * RESORT_PEOPLE_ALL_DATA_GetOwnerData( RESORT_PEOPLE_ALL
 //街データ総サイズ
 #define RESORT_CITY_DATA_SIZE       (372)
 
+#define RESORT_TRAINER_ID_STORE_SIZE (32)
+
 //-------------------------------------
 ///	引数
 //=====================================
@@ -618,6 +621,8 @@ extern u32 RESORT_CITY_DATA_GetData( const RESORT_CITY_DATA *cp_wk, RESORT_CITY_
 extern void RESORT_CITY_DATA_SetData( RESORT_CITY_DATA *p_wk, RESORT_CITY_DATA_PARAM param, u32 data );
 
 extern void RESORT_CITY_DATA_UpdateDay( RESORT_CITY_DATA *p_wk );
+extern void RESORT_CITY_DATA_AddTrainerID( RESORT_CITY_DATA *p_wk, u32 trainerID );
+extern BOOL RESORT_CITY_DATA_CheckTrainerID( const RESORT_CITY_DATA *cp_wk, u32 trainerID );
 
 //=============================================================================
 /**
