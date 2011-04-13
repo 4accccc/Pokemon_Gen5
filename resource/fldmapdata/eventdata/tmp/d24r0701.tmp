@@ -1,0 +1,5 @@
+#../data/d24r0701.mev
+../tmp/d24r0701.bin:../data/d24r0701.mev ../../script/sp_d24r0701.bin $(UNIQ_SCRIPTHEADER) ../tmp/d24r0701.h 
+	@echo ../data/d24r0701.mev
+	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/d24r0701.h 
+

@@ -1776,6 +1776,66 @@ d33r0101_def.h: d33r0101.ev
 d34r0101_def.h: d34r0101.ev
 	$(EV_DEF) d34r0101.ev $(SCR_OFFS_ID_H)
 
+r04r0102_def.h: r04r0102.ev
+	$(EV_DEF) r04r0102.ev $(SCR_OFFS_ID_H)
+
+r04r0301_def.h: r04r0301.ev
+	$(EV_DEF) r04r0301.ev $(SCR_OFFS_ID_H)
+
+r04r0302_def.h: r04r0302.ev
+	$(EV_DEF) r04r0302.ev $(SCR_OFFS_ID_H)
+
+r04r0401_def.h: r04r0401.ev
+	$(EV_DEF) r04r0401.ev $(SCR_OFFS_ID_H)
+
+r04r0402_def.h: r04r0402.ev
+	$(EV_DEF) r04r0402.ev $(SCR_OFFS_ID_H)
+
+r04r0501_def.h: r04r0501.ev
+	$(EV_DEF) r04r0501.ev $(SCR_OFFS_ID_H)
+
+r04r0502_def.h: r04r0502.ev
+	$(EV_DEF) r04r0502.ev $(SCR_OFFS_ID_H)
+
+r04r0601_def.h: r04r0601.ev
+	$(EV_DEF) r04r0601.ev $(SCR_OFFS_ID_H)
+
+r04r0701_def.h: r04r0701.ev
+	$(EV_DEF) r04r0701.ev $(SCR_OFFS_ID_H)
+
+r04r0801_def.h: r04r0801.ev
+	$(EV_DEF) r04r0801.ev $(SCR_OFFS_ID_H)
+
+r04r0901_def.h: r04r0901.ev
+	$(EV_DEF) r04r0901.ev $(SCR_OFFS_ID_H)
+
+r04r1001_def.h: r04r1001.ev
+	$(EV_DEF) r04r1001.ev $(SCR_OFFS_ID_H)
+
+d24r0101_def.h: d24r0101.ev
+	$(EV_DEF) d24r0101.ev $(SCR_OFFS_ID_H)
+
+d24r0201_def.h: d24r0201.ev
+	$(EV_DEF) d24r0201.ev $(SCR_OFFS_ID_H)
+
+d24r0301_def.h: d24r0301.ev
+	$(EV_DEF) d24r0301.ev $(SCR_OFFS_ID_H)
+
+d24r0401_def.h: d24r0401.ev
+	$(EV_DEF) d24r0401.ev $(SCR_OFFS_ID_H)
+
+d24r0501_def.h: d24r0501.ev
+	$(EV_DEF) d24r0501.ev $(SCR_OFFS_ID_H)
+
+d24r0601_def.h: d24r0601.ev
+	$(EV_DEF) d24r0601.ev $(SCR_OFFS_ID_H)
+
+d24r0701_def.h: d24r0701.ev
+	$(EV_DEF) d24r0701.ev $(SCR_OFFS_ID_H)
+
+d03r0301_def.h: d03r0301.ev
+	$(EV_DEF) d03r0301.ev $(SCR_OFFS_ID_H)
+
 ifeq ($(PM_DEBUG),yes)
 debug_scr_def.h: debug_scr.ev
 	$(EV_DEF) debug_scr.ev $(SCR_OFFS_ID_H)
