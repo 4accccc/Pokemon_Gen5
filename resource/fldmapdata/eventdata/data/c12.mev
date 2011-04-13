@@ -1,5 +1,5 @@
 #event data
-#save date:2011/04/09 15:50:28
+#save date:2011/04/13 11:31:16
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c12.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\c12.wms
 #hold event type:
 1
 #hold event number:
-4
+7
 #event number: 0
 #type
 1
@@ -24,7 +24,7 @@ EV_TYPE_NORMAL
 #Flag Name
 FV_C12_SWRIVAL
 #Event Script Name
-SCRID_C12_SWRIVAL_01
+SCRID_C12_RIVAL_PAIR_01
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -134,6 +134,99 @@ DIR_UP
 EVENTDATA_POSTYPE_GRID
 #position
 24 16 -360
+#event number: 4
+#type
+1
+#ID name
+C12_MAN3_01
+#OBJ CODE Number
+MAN3
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C12_MAN3_01
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+1
+#Move Limit Z Number
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-24 16 -552
+#event number: 5
+#type
+1
+#ID name
+C12_OLDMAN1_01
+#OBJ CODE Number
+OLDMAN1
+#MOVE CODE Number
+MV_RND_V
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C12_OLDMAN1_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+120 16 -472
+#event number: 6
+#type
+1
+#ID name
+C12_BOY2_01
+#OBJ CODE Number
+BOY2
+#MOVE CODE Number
+MV_RND_V
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C12_BOY2_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-184 16 -392
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -143,7 +236,72 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-0
+5
+#event number: 0
+#Bg Event Label
+BG_C12_BOARD_01
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C12_BOARD_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+136 16 -312
+#event number: 1
+#Bg Event Label
+BG_C12_BOARD_02
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C12_BOARD_02
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-40 16 -664
+#event number: 2
+#Bg Event Label
+BG_C12_BOARD_03
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C12_BOARD_03
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+24 16 -56
+#event number: 3
+#Bg Event Label
+BG_C12_BOARD_04
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C12_BOARD_04
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-168 16 -312
+#event number: 4
+#Bg Event Label
+BG_C12_BOARD_05
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_C12_BOARD_04
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-104 16 -312
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
@@ -153,12 +311,12 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-6
+13
 #event number: 0
 #Pos Event Label
-POS_C12_RIVAL_MEET
+POS_C12_RIVAL_PAIR_01
 #Pos Script Name
-SCRID_POS_C12_RIVAL_MEET
+SCRID_POS_C12_RIVAL_PAIR_01
 #Pos Check Type
 POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
@@ -181,11 +339,11 @@ POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
 WK_SCENE_C12_WHITE_MEET
 #Event Trigger Work Value
-0
+1
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--72 16 -504
+8 16 -328
 #size
 1 1
 #event number: 2
@@ -209,7 +367,7 @@ EVENTDATA_POSTYPE_GRID
 #Pos Event Label
 POS_C12_SWBELL_MEET_01
 #Pos Script Name
-SCRID_POS_C12_SWBELL_MEET_01
+SCRID_POS_C12_RIVAL_PAIR_RETURN_01
 #Pos Check Type
 POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
@@ -254,6 +412,125 @@ WK_SCENE_C12_WHITE_MEET
 EVENTDATA_POSTYPE_GRID
 #position
 -184 144 72
+#size
+3 1
+#event number: 6
+#Pos Event Label
+POS_C12_RIVAL_PAIR_01_GUIDE
+#Pos Script Name
+SCRID_POS_C12_RIVAL_PAIR_01_GUIDE
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_C12_RIVAL_GUIDE_01
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+40 16 -72
+#size
+1 3
+#event number: 7
+#Pos Event Label
+POS_C12_NG_02
+#Pos Script Name
+SCRID_POS_C12_NG_02
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_C12_WHITE_MEET
+#Event Trigger Work Value
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-136 16 -328
+#size
+1 1
+#event number: 8
+#Pos Event Label
+POS_C12_NG_04
+#Pos Script Name
+SCRID_POS_C12_NG_04
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_C12_WHITE_MEET
+#Event Trigger Work Value
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-8 16 -680
+#size
+1 1
+#event number: 9
+#Pos Event Label
+POS_C12_NG_05
+#Pos Script Name
+SCRID_POS_C12_NG_05
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_C12_WHITE_MEET
+#Event Trigger Work Value
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-152 16 -680
+#size
+1 1
+#event number: 10
+#Pos Event Label
+POS_C12_NG_06
+#Pos Script Name
+SCRID_POS_C12_NG_06
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_C12_WHITE_MEET
+#Event Trigger Work Value
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-72 16 -504
+#size
+1 1
+#event number: 11
+#Pos Event Label
+POS_C12_NG_07
+#Pos Script Name
+SCRID_POS_C12_NG_07
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_C12_WHITE_MEET
+#Event Trigger Work Value
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+184 16 -72
+#size
+1 1
+#event number: 12
+#Pos Event Label
+POS_C12_NG_03
+#Pos Script Name
+SCRID_POS_C12_NG_03
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_C12_WHITE_MEET
+#Event Trigger Work Value
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+72 16 104
 #size
 3 1
 #Map Event List Data End

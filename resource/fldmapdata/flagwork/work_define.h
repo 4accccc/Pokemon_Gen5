@@ -235,6 +235,7 @@
 #define WK_SCENE_C12_WHITE_MEET          16623 /* 0x40ef ヒオウギシティ：ベルと出会うイベント用ワーク */
 #define WK_SCENE_C12PC0101_PCGUIDE       16624 /* 0x40f0 ヒオウギシティ：ポケモンセンターチュートリアル用ワーク */
 #define WK_SCENE_R19                     16625 /* 0x40f1 19ばんどうろ：ポケモン捕獲イベント用ワーク */
+#define WK_SCENE_C12_RIVAL_GUIDE_01      16626 /* 0x40f2 ヒオウギシティ：POSイベント */
 
 #define WK_SCENE_AREA_END                16655 /* 0x410f  */
 
@@ -287,7 +288,7 @@
 #define WK_OTHER_DISCOVER_EGG            16697 /* 0x4139 ３番道路：育て屋でタマゴが発見されたときに教えてくれるPOSイベント用のワーク 00 なし 01 POSイベント有効。「おーい！」と声をかけてくれる。 */
 		/* not used 16698(0x413a) */
 #define WK_OTHER_C05R0701_WAZA           16699 /* 0x413b 日替わり指定わざ見せ用ワーク */
-		/* not used 16700(0x413c) */
+#define WK_OTHER_C12_RIVAL_PAIR          16700 /* 0x413c スワン：ヒオウギシティ連れ歩き用ワーク 0&#xff5e;2でセリフを変える */
 		/* not used 16701(0x413d) */
 		/* not used 16702(0x413e) */
 

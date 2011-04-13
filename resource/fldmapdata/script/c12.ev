@@ -21,19 +21,33 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_pos_c12_rival_meet
 _EVENT_DATA    ev_c12_swrival_01
-_EVENT_DATA    ev_pos_c12_ng_01
 _EVENT_DATA    ev_pos_c12_swbell_meet_02
 _EVENT_DATA    ev_pos_c12_swbell_meet_03
 _EVENT_DATA    ev_scene_c12_townmap_01
 _EVENT_DATA    ev_zone_c12
 _EVENT_DATA    ev_init_c12
-_EVENT_DATA    ev_pos_c12_swbell_meet_01
 _EVENT_DATA    ev_c12_swbell_01
 _EVENT_DATA    ev_pos_c12_swbell_meet_04
 _EVENT_DATA    ev_c12_swmama_01
 _EVENT_DATA    ev_c12_swsister_01
+_EVENT_DATA    ev_c12_boy2_01
+_EVENT_DATA    ev_c12_oldman1_01
+_EVENT_DATA    ev_c12_man3_01
+_EVENT_DATA    ev_bg_c12_board_01
+_EVENT_DATA    ev_bg_c12_board_02
+_EVENT_DATA    ev_bg_c12_board_03
+_EVENT_DATA    ev_bg_c12_board_04
+_EVENT_DATA    ev_pos_c12_rival_pair_01
+_EVENT_DATA    ev_pos_c12_rival_pair_return_01
+_EVENT_DATA    ev_pos_c12_ng_01
+_EVENT_DATA    ev_pos_c12_ng_02
+_EVENT_DATA    ev_pos_c12_ng_03
+_EVENT_DATA    ev_pos_c12_ng_04
+_EVENT_DATA    ev_pos_c12_ng_05
+_EVENT_DATA    ev_pos_c12_ng_06
+_EVENT_DATA    ev_pos_c12_ng_07
+_EVENT_DATA    ev_pos_c12_rival_pair_01_guide
 _EVENT_DATA_END
 
 //話しかけた方向取得変数
@@ -70,78 +84,6 @@ INIT_EVENT_START ev_init_c12
   ENDIF
 
 INIT_EVENT_END
-
-/**************************************************************/
-/*  SCENE_CHANGE： ゲーム開始イベント                       */
-/**************************************************************/
-EVENT_START ev_pos_c12_rival_meet
-  
-  //主人公名を代入
-  _PLAYER_NAME(0)
-  //【仮】ライバル名代入
-   _NUMBER( 1 , 12345 , 5 )
-  
-  //妹：主人公さーん！
-  _PLAINWIN_MSG_DOWN( msg_c12_rivalsister_01 )
-	_MSGWIN_CLOSE()
-	
-	//【仮】アニメ：ライバル・妹登場（POSの位置が仮なため登場演出を仮とする）
-	_OBJ_ANIME_AUTO( C12_SWSISTER_01, 43, 762, FORCE_TYPE_NPC, 8, DIR_LR)
-	_OBJ_ANIME_AUTO( C12_SWRIVAL_01, 43, 763, FORCE_TYPE_NPC, 8, DIR_LR)
-  _OBJ_ANIME_WAIT()
-  
-  //ライバル：どこいくの？
-  _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_01,C12_SWRIVAL_01, POS_DEFAULT )
-  _MSGWIN_CLOSE()
-  
-  //アニメ：ライバル・妹向き合う
-  _OBJ_ANIME( C12_SWSISTER_01, anm_staystep_d )
-	_OBJ_ANIME( C12_SWRIVAL_01, anm_staystep_u )
-  _OBJ_ANIME_WAIT()
-  
-  //ライバル：かえってな
-  _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_02,C12_SWRIVAL_01, POS_DEFAULT )
-  _MSGWIN_CLOSE()
-  
-  //アニメ：妹主人公の方を向く
-  _OBJ_ANIME( C12_SWSISTER_01, anm_staystep_r )
-  _OBJ_ANIME_WAIT()
-  
-  //妹：じゃあね
-  _BALLOONWIN_OBJMSG_POS( msg_c12_rivalsister_02,C12_SWSISTER_01, POS_DEFAULT )
-  _MSGWIN_CLOSE()
-  
-  //アニメ：妹退場
-  _OBJ_ANIME_AUTO( C12_SWSISTER_01, 36, 762, FORCE_TYPE_NPC, 8, DIR_LR)
-	_OBJ_ANIME( C12_SWRIVAL_01, anm_staystep_r )
-  
-  //ライバル：さてと
-  _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_03,C12_SWRIVAL_01, POS_DEFAULT )
-  _MSGWIN_CLOSE()
-  
-  _OBJ_ANIME_WAIT()
-  
-  //ライバル妹の動作OBJを非表示
-	_OBJ_DEL(C12_SWSISTER_01)
-  
-  //【仮】連れ歩き開始（後で実装）
-  
-  //【仮】ライバル退場（連れ歩き実装で削除）
-  _OBJ_ANIME_AUTO( C12_SWRIVAL_01, 43, 753, FORCE_TYPE_NPC, 8, DIR_UD)
-  _OBJ_ANIME_WAIT()
-  
-  //【仮】ライバルを高台に移動（連れ歩き実装で削除）
-  _OBJ_POS_CHANGE(C12_SWRIVAL_01,37,8,717,DIR_UP)
-  
-  //========================================//
-  //POSイベント無効
-  $WK_SCENE_C12_WHITE_MEET = 1
-  
-  //ライバル妹を非表示
-  _FLAG_SET(FV_C12_SWRIVAL_SISTER)
-  //========================================//
-  
-EVENT_END
 
 /**************************************************************/
 /*  ライバルはなしかけ                         */
@@ -211,42 +153,6 @@ EVENT_START ev_c12_swsister_01
   _NUMBER( 1 , 12345 , 5 )
   
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12_white_20 )
-EVENT_END
-
-/************************************************************/
-/*						連れ歩き解除						*/
-/************************************************************/
-EVENT_START ev_pos_c12_swbell_meet_01
-{
-
-  //【仮】ライバル名代入
-  _NUMBER( 1 , 12345 , 5 )
-   
-  _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_11, C12_SWRIVAL_01, POS_DEFAULT )
-  _LAST_KEYWAIT()
-  _MSGWIN_CLOSE()
-  
-  //連れ歩き解除
-  //_PAIR_TRAINER_FREE( MV_DMY )
-
-  //自機座標取得
-  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
-  IF $LCW_POSX == 36 THEN
-    _OBJ_ANIME_AUTO( C12_SWRIVAL_01, 38, 714, FORCE_TYPE_NPC, 8, DIR_LR)
-    _OBJ_ANIME_WAIT()
-  ELSE
-    _OBJ_ANIME_AUTO( C12_SWRIVAL_01, 35, 714, FORCE_TYPE_NPC, 8, DIR_LR)
-    _OBJ_ANIME_WAIT()
-    _OBJ_ANIME( C12_SWRIVAL_01, anm_staystep_r )
-    _OBJ_ANIME_WAIT()
-  ENDIF
-
-  
-  //========================================//
-  //POSイベント無効
-  $WK_SCENE_C12_WHITE_MEET = 2
-  //========================================//
-}
 EVENT_END
 
 /**************************************************************/
@@ -786,37 +692,6 @@ _ANIME_LABEL	anm_goto_pc_player
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
-/*  POS：ポケモンセンターNG                         */
-/**************************************************************/
-EVENT_START ev_pos_c12_ng_01
-  //話しかけた方向によって演出を分岐
-  _PLAYER_DIR_GET( LWK_DIR )
-  SWITCH $LWK_DIR
-  CASE DIR_LEFT THEN
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
-    _OBJ_ANIME_WAIT()
-	CASE DIR_RIGHT THEN
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
-    _OBJ_ANIME_WAIT()
-	CASE DIR_UP THEN
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
-    _OBJ_ANIME_WAIT()
-	CASE DIR_DOWN THEN  //本来ここにはこないが念のため
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
-    _OBJ_ANIME_WAIT()
-  ENDSWITCH
-  
-  //ライバル：ちがうよ
-  _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_ng01,C12_SWRIVAL_01, POS_DEFAULT )
-  _MSGWIN_CLOSE()
-  
-  //アニメ：下に移動
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_downwalk )
-  _OBJ_ANIME_WAIT()
-  
-EVENT_END
-
-/**************************************************************/
 /*			タウンマップ入手イベント					  */
 /**************************************************************/
 EVENT_START		ev_scene_c12_townmap_01
@@ -951,6 +826,392 @@ EVENT_START		ev_scene_c12_townmap_01
 	_FLAG_SET( FV_C12_SWBELL )
 
 	//==================================//
+EVENT_END
+
+//====================================================================
+//  C12連れ歩き
+//====================================================================
+//連れ歩きスタート
+EVENT_START ev_pos_c12_rival_pair_01
+{
+  //主人公名を代入
+  _PLAYER_NAME(0)
+  //【仮】ライバル名代入
+   _NUMBER( 1 , 12345 , 5 )
+  
+  //妹：主人公さーん！
+  _PLAINWIN_MSG_DOWN( msg_c12_rivalsister_01 )
+	_MSGWIN_CLOSE()
+	
+	//【仮】アニメ：ライバル・妹登場（POSの位置が仮なため登場演出を仮とする）
+	_OBJ_ANIME_AUTO( C12_SWSISTER_01, 43, 762, FORCE_TYPE_NPC, 8, DIR_LR)
+	_OBJ_ANIME_AUTO( C12_SWRIVAL_01, 43, 763, FORCE_TYPE_NPC, 8, DIR_LR)
+  _OBJ_ANIME_WAIT()
+  
+  //ライバル：どこいくの？
+  _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_01,C12_SWRIVAL_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：ライバル・妹向き合う
+  _OBJ_ANIME( C12_SWSISTER_01, anm_staystep_d )
+	_OBJ_ANIME( C12_SWRIVAL_01, anm_staystep_u )
+  _OBJ_ANIME_WAIT()
+  
+  //ライバル：かえってな
+  _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_02,C12_SWRIVAL_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：妹主人公の方を向く
+  _OBJ_ANIME( C12_SWSISTER_01, anm_staystep_r )
+  _OBJ_ANIME_WAIT()
+  
+  //妹：じゃあね
+  _BALLOONWIN_OBJMSG_POS( msg_c12_rivalsister_02,C12_SWSISTER_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：妹退場
+  _OBJ_ANIME_AUTO( C12_SWSISTER_01, 36, 762, FORCE_TYPE_NPC, 8, DIR_LR)
+	_OBJ_ANIME( C12_SWRIVAL_01, anm_staystep_r )
+  
+  //ライバル：さてと
+  _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_03,C12_SWRIVAL_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  _OBJ_ANIME_WAIT()
+  
+  //ライバル妹の動作OBJを非表示
+	_OBJ_DEL(C12_SWSISTER_01)
+  
+  //アニメ：ライバル主人公に隣接
+  DEFINE_LOCAL  i_x
+  DEFINE_LOCAL  i_z
+
+  _PLAYER_POS_GET( i_x, i_z )
+  $i_x -= 1
+  _OBJ_ANIME_AUTO( C12_SWRIVAL_01, i_x, i_z, FORCE_TYPE_NOT, 8, DIR_LR )
+  _OBJ_ANIME_WAIT()
+
+  //連れ歩き開始
+  _PAIR_TRAINER_SET( C12_SWRIVAL_01, PAIR_ID_NATURAL, PAIR_TYPE_OPEN, TRID_RIVAL_07 )
+  
+  //========================================//
+  //POSイベント無効
+  $WK_SCENE_C12_WHITE_MEET = 1
+  
+  //ライバル妹を非表示
+  _FLAG_SET(FV_C12_SWRIVAL_SISTER)
+  //========================================//
+
+}
+EVENT_END
+
+//連れ歩き解除
+EVENT_START ev_pos_c12_rival_pair_return_01
+{
+
+  //【仮】ライバル名代入
+  _NUMBER( 1 , 12345 , 5 )
+   
+  _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_11, PAIR_TRAINER_01, POS_DEFAULT )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+  
+  //連れ歩き解除
+  _PAIR_TRAINER_FREE( MV_DMY )
+  
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  IF $LCW_POSX == 36 THEN
+    _OBJ_ANIME_AUTO( C12_SWRIVAL_01, 38, 714, FORCE_TYPE_NPC, 8, DIR_LR)
+    _OBJ_ANIME_WAIT()
+  ELSE
+    _OBJ_ANIME_AUTO( C12_SWRIVAL_01, 35, 714, FORCE_TYPE_NPC, 8, DIR_LR)
+    _OBJ_ANIME_WAIT()
+    _OBJ_ANIME( C12_SWRIVAL_01, anm_staystep_r )
+    _OBJ_ANIME_WAIT()
+  ENDIF
+
+  
+  //========================================//
+  //POSイベント無効
+  $WK_SCENE_C12_WHITE_MEET = 2
+  //========================================//
+}
+EVENT_END
+
+/**************************************************************/
+/*  C12：POS：ポケモンセンターNG                         */
+/**************************************************************/
+EVENT_START ev_pos_c12_ng_01
+  
+  //振り向き処理
+  _CALL ev_c12_rival_ng_return01
+  
+  //【仮】ライバル名代入
+  _NUMBER( 1 , 12345 , 5 )
+  
+  //ライバル：ちがうよ
+  _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_ng01,PAIR_TRAINER_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //戻り処理
+  _CALL ev_c12_rival_ng_return02
+
+EVENT_END
+
+/**************************************************************/
+/*  C12：POS：ジムNG                         */
+/**************************************************************/
+EVENT_START ev_pos_c12_ng_02
+  
+  //振り向き処理
+  _CALL ev_c12_rival_ng_return01
+  
+  //【仮】ライバル名代入
+  _NUMBER( 1 , 12345 , 5 )
+  
+  //ライバル：ちがうよ
+  _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_ng02,PAIR_TRAINER_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //戻り処理
+  _CALL ev_c12_rival_ng_return02
+
+EVENT_END
+
+/**************************************************************/
+/*  C12：POS：ゲートNG                         */
+/**************************************************************/
+EVENT_START ev_pos_c12_ng_03
+  
+  //振り向き処理
+  _CALL ev_c12_rival_ng_return01
+  
+  //【仮】ライバル名代入
+  _NUMBER( 1 , 12345 , 5 )
+  
+  //ライバル：ちがうよ
+  _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_ng03,PAIR_TRAINER_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //戻り処理
+  _CALL ev_c12_rival_ng_return02
+
+EVENT_END
+
+/**************************************************************/
+/*  C12：POS：主人公の家NG                         */
+/**************************************************************/
+EVENT_START ev_pos_c12_ng_04
+  
+  //振り向き処理
+  _CALL ev_c12_rival_ng_return01
+  
+  //【仮】ライバル名代入
+  _NUMBER( 1 , 12345 , 5 )
+  
+  //ライバル：ちがうよ
+  _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_ng04,PAIR_TRAINER_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //戻り処理
+  _CALL ev_c12_rival_ng_return02
+
+EVENT_END
+
+/**************************************************************/
+/*  C12：POS：ライバルの家NG                         */
+/**************************************************************/
+EVENT_START ev_pos_c12_ng_05
+  
+  //振り向き処理
+  _CALL ev_c12_rival_ng_return01
+  
+  //【仮】ライバル名代入
+  _NUMBER( 1 , 12345 , 5 )
+  
+  //ライバル：ちがうよ
+  _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_ng05,PAIR_TRAINER_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //戻り処理
+  _CALL ev_c12_rival_ng_return02
+
+EVENT_END
+
+/**************************************************************/
+/*  C12：POS：民家r0301NG                         */
+/**************************************************************/
+EVENT_START ev_pos_c12_ng_06
+  
+  //振り向き処理
+  _CALL ev_c12_rival_ng_return01
+  
+  //【仮】ライバル名代入
+  _NUMBER( 1 , 12345 , 5 )
+  
+  //ライバル：ちがうよ
+  _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_ng06,PAIR_TRAINER_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //戻り処理
+  _CALL ev_c12_rival_ng_return02
+
+EVENT_END
+
+/**************************************************************/
+/*  C12：POS：民家r0401NG                         */
+/**************************************************************/
+EVENT_START ev_pos_c12_ng_07
+  
+  //振り向き処理
+  _CALL ev_c12_rival_ng_return01
+  
+  //【仮】ライバル名代入
+  _NUMBER( 1 , 12345 , 5 )
+  
+  //ライバル：ちがうよ
+  _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_ng07,PAIR_TRAINER_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //戻り処理
+  _CALL ev_c12_rival_ng_return02
+
+EVENT_END
+
+//★C12連れ歩きストッパー振り向き処理
+ev_c12_rival_ng_return01:
+  //進入方向によって演出を分岐
+  _PLAYER_DIR_GET( LWK_DIR )
+  SWITCH $LWK_DIR
+  CASE DIR_LEFT THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
+    _OBJ_ANIME( PAIR_TRAINER_01, anm_dir_l )
+    _OBJ_ANIME_WAIT()
+	CASE DIR_RIGHT THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
+    _OBJ_ANIME( PAIR_TRAINER_01, anm_dir_r )
+    _OBJ_ANIME_WAIT()
+	CASE DIR_UP THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
+    _OBJ_ANIME( PAIR_TRAINER_01, anm_dir_u )
+    _OBJ_ANIME_WAIT()
+	CASE DIR_DOWN THEN  //本来ここにはこないが念のため
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
+    _OBJ_ANIME( PAIR_TRAINER_01, anm_dir_d )
+    _OBJ_ANIME_WAIT()
+  ENDSWITCH
+_RET
+
+//★C12連れ歩きストッパー戻り処理
+ev_c12_rival_ng_return02:
+  //アニメ：下に移動
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_downwalk )
+  _OBJ_ANIME_WAIT()
+_RET
+
+/**************************************************************/
+/*  C12：POS：高台方面                         */
+/**************************************************************/
+EVENT_START ev_pos_c12_rival_pair_01_guide
+  //話しかけた方向によって演出を分岐
+  _PLAYER_DIR_GET( LWK_DIR )
+  SWITCH $LWK_DIR
+  CASE DIR_LEFT THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
+    _OBJ_ANIME_WAIT()
+	CASE DIR_RIGHT THEN //本来ここにはこないが念のため
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
+    _OBJ_ANIME( PAIR_TRAINER_01, anm_staystep_l )
+    _OBJ_ANIME_WAIT()
+	CASE DIR_UP THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
+    _OBJ_ANIME( PAIR_TRAINER_01, anm_staystep_l )
+    _OBJ_ANIME_WAIT()
+	CASE DIR_DOWN THEN 
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
+    _OBJ_ANIME( PAIR_TRAINER_01, anm_staystep_u )
+    _OBJ_ANIME_WAIT()
+  ENDSWITCH
+  
+  //ライバル：ちがうよ
+  _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_04,PAIR_TRAINER_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+   //========================================//
+  //POSイベント無効
+  $WK_SCENE_C12_RIVAL_GUIDE_01 = 1
+  //========================================//
+  
+EVENT_END
+
+
+/**************************************************************/
+/* 少年2                                         */
+/**************************************************************/
+EVENT_START   ev_c12_boy2_01
+ 	//【仮】ジム開放前
+	IF $LOCALWORK11 == 0 THEN
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12_boy2_01 )
+	
+	//ジム開放後
+	ELSE
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12_boy2_02 )
+	ENDIF
+EVENT_END
+
+
+/**************************************************************/
+/* 老人1                                         */
+/**************************************************************/
+EVENT_START   ev_c12_oldman1_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12_oldman_01 )
+EVENT_END
+
+
+/**************************************************************/
+/* 青年3                                         */
+/**************************************************************/
+EVENT_START   ev_c12_man3_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12_bigman_01 )
+EVENT_END
+
+
+/**************************************************************/
+/* 街看板                                         */
+/**************************************************************/
+EVENT_START   ev_bg_c12_board_01
+  _EASY_BGWIN_MSG( msg_c12_sign1_01, TYPE_POST )
+EVENT_END
+
+/**************************************************************/
+/* 主人公家看板                                         */
+/**************************************************************/
+EVENT_START   ev_bg_c12_board_02
+  _PLAYER_NAME( 0 )	 //プレイヤー名を反映
+  _EASY_BGWIN_MSG( msg_c12_sign2_01, TYPE_POST )
+EVENT_END
+
+/**************************************************************/
+/* 見晴らし看板                                         */
+/**************************************************************/
+EVENT_START   ev_bg_c12_board_03
+  _EASY_BGWIN_MSG( msg_c12_sign3_01, TYPE_POST )
+EVENT_END
+
+/**************************************************************/
+/* ジム看板                                         */
+/**************************************************************/
+EVENT_START   ev_bg_c12_board_04
+	
+	//【仮】ジム開放前
+	IF $LOCALWORK11 == 0 THEN
+		_EASY_BGWIN_MSG( msg_c12_gymsign_01, TYPE_POST )
+	
+	//ジム開放後
+	ELSE
+		_EASY_BGWIN_MSG( msg_c12_gymsign_02, TYPE_POST )
+	ENDIF
 EVENT_END
 
 //--------------------------------------------------------------------
