@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-12T21:51:45"/>
+	<create user="matsumiya" host="W00224" date="2011-04-13T11:53:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -395,13 +395,13 @@
 		</language>
 	</columns>
 
-	<dialog left="1591" top="284" right="2290" bottom="907" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1990" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="0" style="0000" width="524"/>
+		<band id="0" index="0" style="0000" width="529"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="691"/>
-		<band id="3" index="3" style="0000" width="691"/>
+		<band id="2" index="2" style="0000" width="696"/>
+		<band id="3" index="3" style="0000" width="696"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -423,7 +423,7 @@
 	</lock>
 
 
-	<row id="TRID_SWLEADER1_TRMSG_1ST_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_SWLEADER1_TRMSG_1ST_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：チェレン
 ・１回戦用対戦前メッセージ</comment>
@@ -433,7 +433,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SWLEADER1_TRMSG_2ND_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_SWLEADER1_TRMSG_2ND_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：チェレン
 ・２回戦用対戦前メッセージ</comment>
@@ -443,7 +443,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SWLEADER1_TRMSG_3RD_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_SWLEADER1_TRMSG_3RD_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：チェレン
 ・決勝戦用対戦前メッセージ</comment>
@@ -453,7 +453,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SWLEADER1_TRMSG_FIGHT_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_SWLEADER1_TRMSG_FIGHT_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：チェレン
 ・対戦後メッセージ</comment>
@@ -463,7 +463,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SWLEADER1_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_SWLEADER1_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：チェレン
 ・プレイヤーが勝った場合のメッセージ</comment>
@@ -473,7 +473,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SWLEADER1_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_SWLEADER1_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：チェレン
 ・プレイヤーが負けた場合のメッセージ</comment>
@@ -483,7 +483,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SWLEADER1_TRMSG_OPENING_ANNOUNCE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_SWLEADER1_TRMSG_OPENING_ANNOUNCE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂：アナウンス
 ・ジムリーダー：チェレン
 ・前口上メッセージ</comment>
@@ -493,7 +493,7 @@
 チェレン▼</language>
 	</row>
 
-	<row id="TRID_SWLEADER2_TRMSG_1ST_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_SWLEADER2_TRMSG_1ST_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ジムリーダー：ホミカ
 ・１回戦用対戦前メッセージ</comment>
@@ -503,7 +503,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SWLEADER2_TRMSG_2ND_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_SWLEADER2_TRMSG_2ND_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ジムリーダー：ホミカ
 ・２回戦用対戦前メッセージ</comment>
@@ -513,7 +513,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SWLEADER2_TRMSG_3RD_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_SWLEADER2_TRMSG_3RD_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ジムリーダー：ホミカ
 ・決勝戦用対戦前メッセージ</comment>
@@ -523,7 +523,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SWLEADER2_TRMSG_FIGHT_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_SWLEADER2_TRMSG_FIGHT_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ジムリーダー：ホミカ
 ・対戦後メッセージ</comment>
@@ -533,7 +533,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SWLEADER2_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_SWLEADER2_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ジムリーダー：ホミカ
 ・プレイヤーが勝った場合のメッセージ</comment>
@@ -543,7 +543,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SWLEADER2_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_SWLEADER2_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ジムリーダー：ホミカ
 ・プレイヤーが負けた場合のメッセージ</comment>
@@ -553,7 +553,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SWLEADER2_TRMSG_OPENING_ANNOUNCE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_SWLEADER2_TRMSG_OPENING_ANNOUNCE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂：アナウンス
 ・ジムリーダー：ホミカ
 ・前口上メッセージ</comment>
@@ -563,7 +563,7 @@
 ホミカ▼</language>
 	</row>
 
-	<row id="TRID_SWLEADER3_TRMSG_1ST_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_SWLEADER3_TRMSG_1ST_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：アーティ
 ・１回戦用対戦前メッセージ</comment>
@@ -573,7 +573,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SWLEADER3_TRMSG_2ND_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_SWLEADER3_TRMSG_2ND_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：アーティ
 ・２回戦用対戦前メッセージ</comment>
@@ -583,7 +583,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SWLEADER3_TRMSG_3RD_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_SWLEADER3_TRMSG_3RD_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：アーティ
 ・決勝戦用対戦前メッセージ</comment>
@@ -593,7 +593,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SWLEADER3_TRMSG_FIGHT_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_SWLEADER3_TRMSG_FIGHT_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：アーティ
 ・対戦後メッセージ</comment>
@@ -603,7 +603,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SWLEADER3_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_SWLEADER3_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：アーティ
 ・プレイヤーが勝った場合のメッセージ</comment>
@@ -613,7 +613,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SWLEADER3_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_SWLEADER3_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：アーティ
 ・プレイヤーが負けた場合のメッセージ</comment>
@@ -623,17 +623,17 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SWLEADER3_TRMSG_OPENING_ANNOUNCE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_SWLEADER3_TRMSG_OPENING_ANNOUNCE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂：アナウンス
 ・ジムリーダー：アーティ
 ・前口上メッセージ</comment>
-		<language name="JPN" width="216">かりメッセージ
+		<language name="JPN" width="216">モスト　インセクト　アーティスト
 アーティ▼</language>
 		<language name="JPN_KANJI" width="216">仮メッセージ
 アーティ▼</language>
 	</row>
 
-	<row id="TRID_SWLEADER4_TRMSG_1ST_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_SWLEADER4_TRMSG_1ST_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ジムリーダー：カミツレ
 ・１回戦用対戦前メッセージ</comment>
@@ -643,7 +643,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SWLEADER4_TRMSG_2ND_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_SWLEADER4_TRMSG_2ND_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ジムリーダー：カミツレ
 ・２回戦用対戦前メッセージ</comment>
@@ -653,7 +653,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SWLEADER4_TRMSG_3RD_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_SWLEADER4_TRMSG_3RD_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ジムリーダー：カミツレ
 ・決勝戦用対戦前メッセージ</comment>
@@ -663,7 +663,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SWLEADER4_TRMSG_FIGHT_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_SWLEADER4_TRMSG_FIGHT_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ジムリーダー：カミツレ
 ・対戦後メッセージ</comment>
@@ -673,7 +673,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SWLEADER4_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_SWLEADER4_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ジムリーダー：カミツレ
 ・プレイヤーが勝った場合のメッセージ</comment>
@@ -683,7 +683,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SWLEADER4_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_SWLEADER4_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ジムリーダー：カミツレ
 ・プレイヤーが負けた場合のメッセージ</comment>
@@ -693,17 +693,17 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SWLEADER4_TRMSG_OPENING_ANNOUNCE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_SWLEADER4_TRMSG_OPENING_ANNOUNCE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂：アナウンス
 ・ジムリーダー：カミツレ
 ・前口上メッセージ</comment>
-		<language name="JPN" width="216">かりメッセージ
+		<language name="JPN" width="216">シャイニング　ビューティー
 カミツレ▼</language>
 		<language name="JPN_KANJI" width="216">仮メッセージ
 カミツレ▼</language>
 	</row>
 
-	<row id="TRID_SWLEADER5_TRMSG_1ST_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_SWLEADER5_TRMSG_1ST_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：ヤーコン
 ・１回戦用対戦前メッセージ</comment>
@@ -713,7 +713,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SWLEADER5_TRMSG_2ND_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_SWLEADER5_TRMSG_2ND_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：ヤーコン
 ・２回戦用対戦前メッセージ</comment>
@@ -723,7 +723,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SWLEADER5_TRMSG_3RD_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_SWLEADER5_TRMSG_3RD_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：ヤーコン
 ・決勝戦用対戦前メッセージ</comment>
@@ -733,7 +733,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SWLEADER5_TRMSG_FIGHT_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_SWLEADER5_TRMSG_FIGHT_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：ヤーコン
 ・対戦後メッセージ</comment>
@@ -743,7 +743,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SWLEADER5_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_SWLEADER5_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：ヤーコン
 ・プレイヤーが勝った場合のメッセージ</comment>
@@ -753,7 +753,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SWLEADER5_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_SWLEADER5_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：ヤーコン
 ・プレイヤーが負けた場合のメッセージ</comment>
@@ -763,17 +763,17 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SWLEADER5_TRMSG_OPENING_ANNOUNCE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_SWLEADER5_TRMSG_OPENING_ANNOUNCE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂：アナウンス
 ・ジムリーダー：ヤーコン
 ・前口上メッセージ</comment>
-		<language name="JPN" width="216">かりメッセージ
+		<language name="JPN" width="216">アンダーグラウンド　ボス
 ヤーコン▼</language>
 		<language name="JPN_KANJI" width="216">仮メッセージ
 ヤーコン▼</language>
 	</row>
 
-	<row id="TRID_SWLEADER6_TRMSG_1ST_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_SWLEADER6_TRMSG_1ST_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ジムリーダー：フウロ
 ・１回戦用対戦前メッセージ</comment>
@@ -783,7 +783,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SWLEADER6_TRMSG_2ND_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_SWLEADER6_TRMSG_2ND_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ジムリーダー：フウロ
 ・２回戦用対戦前メッセージ</comment>
@@ -793,7 +793,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SWLEADER6_TRMSG_3RD_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_SWLEADER6_TRMSG_3RD_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ジムリーダー：フウロ
 ・決勝戦用対戦前メッセージ</comment>
@@ -803,7 +803,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SWLEADER6_TRMSG_FIGHT_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_SWLEADER6_TRMSG_FIGHT_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ジムリーダー：フウロ
 ・対戦後メッセージ</comment>
@@ -813,7 +813,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SWLEADER6_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_SWLEADER6_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ジムリーダー：フウロ
 ・プレイヤーが勝った場合のメッセージ</comment>
@@ -823,7 +823,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SWLEADER6_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_SWLEADER6_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ジムリーダー：フウロ
 ・プレイヤーが負けた場合のメッセージ</comment>
@@ -833,17 +833,17 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SWLEADER6_TRMSG_OPENING_ANNOUNCE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_SWLEADER6_TRMSG_OPENING_ANNOUNCE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂：アナウンス
 ・ジムリーダー：フウロ
 ・前口上メッセージ</comment>
-		<language name="JPN" width="216">かりメッセージ
+		<language name="JPN" width="216">おおぞらの　ぶっとびガール
 フウロ▼</language>
 		<language name="JPN_KANJI" width="216">仮メッセージ
 フウロ▼</language>
 	</row>
 
-	<row id="TRID_SWLEADER7_TRMSG_1ST_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_SWLEADER7_TRMSG_1ST_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：シャガ
 ・１回戦用対戦前メッセージ</comment>
@@ -853,7 +853,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SWLEADER7_TRMSG_2ND_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_SWLEADER7_TRMSG_2ND_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：シャガ
 ・２回戦用対戦前メッセージ</comment>
@@ -863,7 +863,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SWLEADER7_TRMSG_3RD_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_SWLEADER7_TRMSG_3RD_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：シャガ
 ・決勝戦用対戦前メッセージ</comment>
@@ -873,7 +873,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SWLEADER7_TRMSG_FIGHT_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_SWLEADER7_TRMSG_FIGHT_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：シャガ
 ・対戦後メッセージ</comment>
@@ -883,7 +883,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SWLEADER7_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_SWLEADER7_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：シャガ
 ・プレイヤーが勝った場合のメッセージ</comment>
@@ -893,7 +893,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SWLEADER7_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_SWLEADER7_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：シャガ
 ・プレイヤーが負けた場合のメッセージ</comment>
@@ -903,17 +903,17 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SWLEADER7_TRMSG_OPENING_ANNOUNCE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_SWLEADER7_TRMSG_OPENING_ANNOUNCE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂：アナウンス
 ・ジムリーダー：シャガ
 ・前口上メッセージ</comment>
-		<language name="JPN" width="216">かりメッセージ
+		<language name="JPN" width="216">スパルタン　メイヤー
 シャガ▼</language>
 		<language name="JPN_KANJI" width="216">仮メッセージ
 シャガ▼</language>
 	</row>
 
-	<row id="TRID_SWLEADER8_TRMSG_1ST_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_SWLEADER8_TRMSG_1ST_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：ゴウソ
 ・１回戦用対戦前メッセージ</comment>
@@ -923,7 +923,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SWLEADER8_TRMSG_2ND_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_SWLEADER8_TRMSG_2ND_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：ゴウソ
 ・２回戦用対戦前メッセージ</comment>
@@ -933,7 +933,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SWLEADER8_TRMSG_3RD_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_SWLEADER8_TRMSG_3RD_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：ゴウソ
 ・決勝戦用対戦前メッセージ</comment>
@@ -943,7 +943,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SWLEADER8_TRMSG_FIGHT_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_SWLEADER8_TRMSG_FIGHT_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：ゴウソ
 ・対戦後メッセージ</comment>
@@ -953,7 +953,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SWLEADER8_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_SWLEADER8_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：ゴウソ
 ・プレイヤーが勝った場合のメッセージ</comment>
@@ -963,7 +963,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SWLEADER8_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_SWLEADER8_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：ゴウソ
 ・プレイヤーが負けた場合のメッセージ</comment>
@@ -973,7 +973,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SWLEADER8_TRMSG_OPENING_ANNOUNCE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_SWLEADER8_TRMSG_OPENING_ANNOUNCE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂：アナウンス
 ・ジムリーダー：ゴウソ
 ・前口上メッセージ</comment>
@@ -983,7 +983,7 @@
 ゴウソ▼</language>
 	</row>
 
-	<row id="TRID_SWBELL_TRMSG_1ST_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_SWBELL_TRMSG_1ST_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・ポケモントレーナー：ベル
 ・１回戦用対戦前メッセージ</comment>
@@ -993,7 +993,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SWBELL_TRMSG_2ND_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_SWBELL_TRMSG_2ND_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・ポケモントレーナー：ベル
 ・２回戦用対戦前メッセージ</comment>
@@ -1003,7 +1003,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SWBELL_TRMSG_3RD_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_SWBELL_TRMSG_3RD_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・ポケモントレーナー：ベル
 ・決勝戦用対戦前メッセージ</comment>
@@ -1013,7 +1013,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SWBELL_TRMSG_FIGHT_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_SWBELL_TRMSG_FIGHT_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・ポケモントレーナー：ベル
 ・対戦後メッセージ</comment>
@@ -1023,7 +1023,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SWBELL_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_SWBELL_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・ポケモントレーナー：ベル
 ・プレイヤーが勝った場合のメッセージ</comment>
@@ -1033,7 +1033,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SWBELL_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_SWBELL_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・ポケモントレーナー：ベル
 ・プレイヤーが負けた場合のメッセージ</comment>
@@ -1043,7 +1043,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SWBELL_TRMSG_OPENING_ANNOUNCE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_SWBELL_TRMSG_OPENING_ANNOUNCE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂：アナウンス
 ・ポケモントレーナー：ベル
 ・前口上メッセージ</comment>
@@ -1053,7 +1053,7 @@
 ベル▼</language>
 	</row>
 
-	<row id="TRID_LEADER1A_TRMSG_1ST_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_LEADER1A_TRMSG_1ST_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・ポケモントレーナー：ポッド
 ・１回戦用対戦前メッセージ</comment>
@@ -1063,7 +1063,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_LEADER1A_TRMSG_2ND_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_LEADER1A_TRMSG_2ND_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・ポケモントレーナー：ポッド
 ・２回戦用対戦前メッセージ</comment>
@@ -1073,7 +1073,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_LEADER1A_TRMSG_3RD_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_LEADER1A_TRMSG_3RD_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・ポケモントレーナー：ポッド
 ・決勝戦用対戦前メッセージ</comment>
@@ -1083,7 +1083,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_LEADER1A_TRMSG_FIGHT_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_LEADER1A_TRMSG_FIGHT_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・ポケモントレーナー：ポッド
 ・対戦後メッセージ</comment>
@@ -1093,7 +1093,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_LEADER1A_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_LEADER1A_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・ポケモントレーナー：ポッド
 ・プレイヤーが勝った場合のメッセージ</comment>
@@ -1103,7 +1103,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_LEADER1A_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_LEADER1A_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・ポケモントレーナー：ポッド
 ・プレイヤーが負けた場合のメッセージ</comment>
@@ -1113,17 +1113,17 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_LEADER1A_TRMSG_OPENING_ANNOUNCE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_LEADER1A_TRMSG_OPENING_ANNOUNCE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂：アナウンス
 ・ポケモントレーナー：ポッド
 ・前口上メッセージ</comment>
-		<language name="JPN" width="216">かりメッセージ
-ポッド▼</language>
+		<language name="JPN" width="216">トライアル　トライアングルッ！
+ほのおの　ポケモンつかい　ポッド！！▼</language>
 		<language name="JPN_KANJI" width="216">仮メッセージ
 ポッド▼</language>
 	</row>
 
-	<row id="TRID_LEADER1B_TRMSG_1ST_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_LEADER1B_TRMSG_1ST_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・ポケモントレーナー：コーン
 ・１回戦用対戦前メッセージ</comment>
@@ -1133,7 +1133,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_LEADER1B_TRMSG_2ND_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_LEADER1B_TRMSG_2ND_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・ポケモントレーナー：コーン
 ・２回戦用対戦前メッセージ</comment>
@@ -1143,7 +1143,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_LEADER1B_TRMSG_3RD_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_LEADER1B_TRMSG_3RD_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・ポケモントレーナー：コーン
 ・決勝戦用対戦前メッセージ</comment>
@@ -1153,7 +1153,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_LEADER1B_TRMSG_FIGHT_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_LEADER1B_TRMSG_FIGHT_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・ポケモントレーナー：コーン
 ・対戦後メッセージ</comment>
@@ -1163,7 +1163,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_LEADER1B_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_LEADER1B_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・ポケモントレーナー：コーン
 ・プレイヤーが勝った場合のメッセージ</comment>
@@ -1173,7 +1173,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_LEADER1B_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_LEADER1B_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・ポケモントレーナー：コーン
 ・プレイヤーが負けた場合のメッセージ</comment>
@@ -1183,17 +1183,17 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_LEADER1B_TRMSG_OPENING_ANNOUNCE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_LEADER1B_TRMSG_OPENING_ANNOUNCE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂：アナウンス
 ・ポケモントレーナー：コーン
 ・前口上メッセージ</comment>
-		<language name="JPN" width="216">かりメッセージ
-コーン▼</language>
+		<language name="JPN" width="216">トライアル　トライアングルッ！
+みずの　ポケモンつかい　コーン！！▼</language>
 		<language name="JPN_KANJI" width="216">仮メッセージ
 コーン▼</language>
 	</row>
 
-	<row id="TRID_LEADER1C_TRMSG_1ST_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_LEADER1C_TRMSG_1ST_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・ポケモントレーナー：デント
 ・１回戦用対戦前メッセージ</comment>
@@ -1203,7 +1203,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_LEADER1C_TRMSG_2ND_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_LEADER1C_TRMSG_2ND_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・ポケモントレーナー：デント
 ・２回戦用対戦前メッセージ</comment>
@@ -1213,7 +1213,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_LEADER1C_TRMSG_3RD_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_LEADER1C_TRMSG_3RD_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・ポケモントレーナー：デント
 ・決勝戦用対戦前メッセージ</comment>
@@ -1223,7 +1223,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_LEADER1C_TRMSG_FIGHT_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_LEADER1C_TRMSG_FIGHT_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・ポケモントレーナー：デント
 ・対戦後メッセージ</comment>
@@ -1233,7 +1233,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_LEADER1C_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_LEADER1C_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・ポケモントレーナー：デント
 ・プレイヤーが勝った場合のメッセージ</comment>
@@ -1243,7 +1243,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_LEADER1C_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_LEADER1C_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・ポケモントレーナー：デント
 ・プレイヤーが負けた場合のメッセージ</comment>
@@ -1253,17 +1253,17 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_LEADER1C_TRMSG_OPENING_ANNOUNCE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_LEADER1C_TRMSG_OPENING_ANNOUNCE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂：アナウンス
 ・ポケモントレーナー：デント
 ・前口上メッセージ</comment>
-		<language name="JPN" width="216">かりメッセージ
-デント▼</language>
+		<language name="JPN" width="216">トライアル　トライアングルッ！
+くさの　ポケモンつかい　デント！！▼</language>
 		<language name="JPN_KANJI" width="216">仮メッセージ
 デント▼</language>
 	</row>
 
-	<row id="TRID_LEADER2_TRMSG_1ST_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_LEADER2_TRMSG_1ST_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・ポケモントレーナー：アロエ
 ・１回戦用対戦前メッセージ</comment>
@@ -1273,7 +1273,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_LEADER2_TRMSG_2ND_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_LEADER2_TRMSG_2ND_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・ポケモントレーナー：アロエ
 ・２回戦用対戦前メッセージ</comment>
@@ -1283,7 +1283,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_LEADER2_TRMSG_3RD_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_LEADER2_TRMSG_3RD_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・ポケモントレーナー：アロエ
 ・決勝戦用対戦前メッセージ</comment>
@@ -1293,7 +1293,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_LEADER2_TRMSG_FIGHT_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_LEADER2_TRMSG_FIGHT_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・ポケモントレーナー：アロエ
 ・対戦後メッセージ</comment>
@@ -1303,7 +1303,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_LEADER2_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_LEADER2_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・ポケモントレーナー：アロエ
 ・プレイヤーが勝った場合のメッセージ</comment>
@@ -1313,7 +1313,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_LEADER2_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_LEADER2_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・ポケモントレーナー：アロエ
 ・プレイヤーが負けた場合のメッセージ</comment>
@@ -1323,17 +1323,17 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_LEADER2_TRMSG_OPENING_ANNOUNCE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_LEADER2_TRMSG_OPENING_ANNOUNCE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂：アナウンス
 ・ポケモントレーナー：アロエ
 ・前口上メッセージ</comment>
-		<language name="JPN" width="216">かりメッセージ
+		<language name="JPN" width="216">ナチュラル　ボーン　ママ
 アロエ▼</language>
 		<language name="JPN_KANJI" width="216">仮メッセージ
 アロエ▼</language>
 	</row>
 
-	<row id="TRID_LEADER7_TRMSG_1ST_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_LEADER7_TRMSG_1ST_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・ポケモントレーナー：ハチク
 ・１回戦用対戦前メッセージ</comment>
@@ -1343,7 +1343,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_LEADER7_TRMSG_2ND_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_LEADER7_TRMSG_2ND_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・ポケモントレーナー：ハチク
 ・２回戦用対戦前メッセージ</comment>
@@ -1353,7 +1353,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_LEADER7_TRMSG_3RD_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_LEADER7_TRMSG_3RD_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・ポケモントレーナー：ハチク
 ・決勝戦用対戦前メッセージ</comment>
@@ -1363,7 +1363,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_LEADER7_TRMSG_FIGHT_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_LEADER7_TRMSG_FIGHT_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・ポケモントレーナー：ハチク
 ・対戦後メッセージ</comment>
@@ -1373,7 +1373,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_LEADER7_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_LEADER7_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・ポケモントレーナー：ハチク
 ・プレイヤーが勝った場合のメッセージ</comment>
@@ -1383,7 +1383,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_LEADER7_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_LEADER7_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・ポケモントレーナー：ハチク
 ・プレイヤーが負けた場合のメッセージ</comment>
@@ -1393,17 +1393,17 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_LEADER7_TRMSG_OPENING_ANNOUNCE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_LEADER7_TRMSG_OPENING_ANNOUNCE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂：アナウンス
 ・ポケモントレーナー：ハチク
 ・前口上メッセージ</comment>
-		<language name="JPN" width="216">かりメッセージ
+		<language name="JPN" width="216">アイス　マスク
 ハチク▼</language>
 		<language name="JPN_KANJI" width="216">仮メッセージ
 ハチク▼</language>
 	</row>
 
-	<row id="TRID_RGCHAMPION_TRMSG_1ST_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_RGCHAMPION_TRMSG_1ST_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・チャンピオン：グリーン
 ・１回戦用対戦前メッセージ</comment>
@@ -1413,7 +1413,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RGCHAMPION_TRMSG_2ND_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_RGCHAMPION_TRMSG_2ND_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・チャンピオン：グリーン
 ・２回戦用対戦前メッセージ</comment>
@@ -1423,7 +1423,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RGCHAMPION_TRMSG_3RD_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_RGCHAMPION_TRMSG_3RD_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・チャンピオン：グリーン
 ・決勝戦用対戦前メッセージ</comment>
@@ -1433,7 +1433,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RGCHAMPION_TRMSG_FIGHT_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_RGCHAMPION_TRMSG_FIGHT_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・チャンピオン：グリーン
 ・対戦後メッセージ</comment>
@@ -1443,7 +1443,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RGCHAMPION_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_RGCHAMPION_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・チャンピオン：グリーン
 ・プレイヤーが勝った場合のメッセージ</comment>
@@ -1453,7 +1453,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RGCHAMPION_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_RGCHAMPION_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・チャンピオン：グリーン
 ・プレイヤーが負けた場合のメッセージ</comment>
@@ -1463,7 +1463,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RGCHAMPION_TRMSG_OPENING_ANNOUNCE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_RGCHAMPION_TRMSG_OPENING_ANNOUNCE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂：アナウンス
 ・チャンピオン：グリーン
 ・前口上メッセージ</comment>
@@ -1473,7 +1473,7 @@
 グリーン▼</language>
 	</row>
 
-	<row id="TRID_GSCHAMPION_TRMSG_1ST_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_GSCHAMPION_TRMSG_1ST_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・チャンピオン：ワタル
 ・１回戦用対戦前メッセージ</comment>
@@ -1483,7 +1483,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_GSCHAMPION_TRMSG_2ND_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_GSCHAMPION_TRMSG_2ND_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・チャンピオン：ワタル
 ・２回戦用対戦前メッセージ</comment>
@@ -1493,7 +1493,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_GSCHAMPION_TRMSG_3RD_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_GSCHAMPION_TRMSG_3RD_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・チャンピオン：ワタル
 ・決勝戦用対戦前メッセージ</comment>
@@ -1503,7 +1503,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_GSCHAMPION_TRMSG_FIGHT_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_GSCHAMPION_TRMSG_FIGHT_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・チャンピオン：ワタル
 ・対戦後メッセージ</comment>
@@ -1513,7 +1513,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_GSCHAMPION_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_GSCHAMPION_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・チャンピオン：ワタル
 ・プレイヤーが勝った場合のメッセージ</comment>
@@ -1523,7 +1523,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_GSCHAMPION_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_GSCHAMPION_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・チャンピオン：ワタル
 ・プレイヤーが負けた場合のメッセージ</comment>
@@ -1533,7 +1533,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_GSCHAMPION_TRMSG_OPENING_ANNOUNCE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_GSCHAMPION_TRMSG_OPENING_ANNOUNCE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂：アナウンス
 ・チャンピオン：ワタル
 ・前口上メッセージ</comment>
@@ -1543,7 +1543,7 @@
 ワタル▼</language>
 	</row>
 
-	<row id="TRID_RSCHAMPION_TRMSG_1ST_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_RSCHAMPION_TRMSG_1ST_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・チャンピオン：ダイゴ
 ・１回戦用対戦前メッセージ</comment>
@@ -1553,7 +1553,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RSCHAMPION_TRMSG_2ND_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_RSCHAMPION_TRMSG_2ND_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・チャンピオン：ダイゴ
 ・２回戦用対戦前メッセージ</comment>
@@ -1563,7 +1563,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RSCHAMPION_TRMSG_3RD_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_RSCHAMPION_TRMSG_3RD_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・チャンピオン：ダイゴ
 ・決勝戦用対戦前メッセージ</comment>
@@ -1573,7 +1573,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RSCHAMPION_TRMSG_FIGHT_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_RSCHAMPION_TRMSG_FIGHT_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・チャンピオン：ダイゴ
 ・対戦後メッセージ</comment>
@@ -1583,7 +1583,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RSCHAMPION_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_RSCHAMPION_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・チャンピオン：ダイゴ
 ・プレイヤーが勝った場合のメッセージ</comment>
@@ -1593,7 +1593,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RSCHAMPION_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_RSCHAMPION_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・チャンピオン：ダイゴ
 ・プレイヤーが負けた場合のメッセージ</comment>
@@ -1603,7 +1603,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RSCHAMPION_TRMSG_OPENING_ANNOUNCE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_RSCHAMPION_TRMSG_OPENING_ANNOUNCE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂：アナウンス
 ・チャンピオン：ダイゴ
 ・前口上メッセージ</comment>
@@ -1613,7 +1613,7 @@
 ダイゴ▼</language>
 	</row>
 
-	<row id="TRID_ECHAMPION_TRMSG_1ST_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_ECHAMPION_TRMSG_1ST_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・チャンピオン：ミクリ
 ・１回戦用対戦前メッセージ</comment>
@@ -1623,7 +1623,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_ECHAMPION_TRMSG_2ND_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_ECHAMPION_TRMSG_2ND_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・チャンピオン：ミクリ
 ・２回戦用対戦前メッセージ</comment>
@@ -1633,7 +1633,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_ECHAMPION_TRMSG_3RD_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_ECHAMPION_TRMSG_3RD_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・チャンピオン：ミクリ
 ・決勝戦用対戦前メッセージ</comment>
@@ -1643,7 +1643,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_ECHAMPION_TRMSG_FIGHT_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_ECHAMPION_TRMSG_FIGHT_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・チャンピオン：ミクリ
 ・対戦後メッセージ</comment>
@@ -1653,7 +1653,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_ECHAMPION_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_ECHAMPION_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・チャンピオン：ミクリ
 ・プレイヤーが勝った場合のメッセージ</comment>
@@ -1663,7 +1663,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_ECHAMPION_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_ECHAMPION_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・チャンピオン：ミクリ
 ・プレイヤーが負けた場合のメッセージ</comment>
@@ -1673,7 +1673,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_ECHAMPION_TRMSG_OPENING_ANNOUNCE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_ECHAMPION_TRMSG_OPENING_ANNOUNCE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂：アナウンス
 ・チャンピオン：ミクリ
 ・前口上メッセージ</comment>
@@ -1683,7 +1683,7 @@
 ミクリ▼</language>
 	</row>
 
-	<row id="TRID_SHIRONA_TRMSG_1ST_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_SHIRONA_TRMSG_1ST_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・チャンピオン：シロナ
 ・１回戦用対戦前メッセージ</comment>
@@ -1693,7 +1693,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SHIRONA_TRMSG_2ND_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_SHIRONA_TRMSG_2ND_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・チャンピオン：シロナ
 ・２回戦用対戦前メッセージ</comment>
@@ -1703,7 +1703,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SHIRONA_TRMSG_3RD_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_SHIRONA_TRMSG_3RD_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・チャンピオン：シロナ
 ・決勝戦用対戦前メッセージ</comment>
@@ -1713,7 +1713,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SHIRONA_TRMSG_FIGHT_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_SHIRONA_TRMSG_FIGHT_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・チャンピオン：シロナ
 ・対戦後メッセージ</comment>
@@ -1723,7 +1723,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SHIRONA_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_SHIRONA_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・チャンピオン：シロナ
 ・プレイヤーが勝った場合のメッセージ</comment>
@@ -1733,7 +1733,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SHIRONA_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_SHIRONA_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・チャンピオン：シロナ
 ・プレイヤーが負けた場合のメッセージ</comment>
@@ -1743,7 +1743,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_SHIRONA_TRMSG_OPENING_ANNOUNCE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_SHIRONA_TRMSG_OPENING_ANNOUNCE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂：アナウンス
 ・チャンピオン：シロナ
 ・前口上メッセージ</comment>
@@ -1753,7 +1753,7 @@
 シロナ▼</language>
 	</row>
 
-	<row id="TRID_BWCHAMPION_TRMSG_1ST_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_BWCHAMPION_TRMSG_1ST_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・チャンピオン：アデク
 ・１回戦用対戦前メッセージ</comment>
@@ -1763,7 +1763,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_BWCHAMPION_TRMSG_2ND_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_BWCHAMPION_TRMSG_2ND_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・チャンピオン：アデク
 ・２回戦用対戦前メッセージ</comment>
@@ -1773,7 +1773,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_BWCHAMPION_TRMSG_3RD_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_BWCHAMPION_TRMSG_3RD_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・チャンピオン：アデク
 ・決勝戦用対戦前メッセージ</comment>
@@ -1783,7 +1783,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_BWCHAMPION_TRMSG_FIGHT_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_BWCHAMPION_TRMSG_FIGHT_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・チャンピオン：アデク
 ・対戦後メッセージ</comment>
@@ -1793,7 +1793,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_BWCHAMPION_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_BWCHAMPION_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・チャンピオン：アデク
 ・プレイヤーが勝った場合のメッセージ</comment>
@@ -1803,7 +1803,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_BWCHAMPION_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_BWCHAMPION_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・チャンピオン：アデク
 ・プレイヤーが負けた場合のメッセージ</comment>
@@ -1813,7 +1813,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_BWCHAMPION_TRMSG_OPENING_ANNOUNCE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_BWCHAMPION_TRMSG_OPENING_ANNOUNCE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂：アナウンス
 ・チャンピオン：アデク
 ・前口上メッセージ</comment>
@@ -1823,7 +1823,7 @@
 アデク▼</language>
 	</row>
 
-	<row id="TRID_RGLEADER1_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_RGLEADER1_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：タケシ
 ・１回戦用対戦前メッセージ</comment>
@@ -1833,7 +1833,7 @@
 いわタイプの　エキスパートさ！▼</language>
 	</row>
 
-	<row id="TRID_RGLEADER1_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_RGLEADER1_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：タケシ
 ・２回戦用対戦前メッセージ</comment>
@@ -1845,7 +1845,7 @@
 おれの　まもりは　かたいぜ！▼</language>
 	</row>
 
-	<row id="TRID_RGLEADER1_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_RGLEADER1_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：タケシ
 ・決勝戦用対戦前メッセージ</comment>
@@ -1861,7 +1861,7 @@
 いたくも　かゆくも　ないぜ！▼</language>
 	</row>
 
-	<row id="TRID_RGLEADER1_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_RGLEADER1_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：タケシ
 ・対戦後メッセージ</comment>
@@ -1873,7 +1873,7 @@
 おれの　よそう　いじょうだ……！▼</language>
 	</row>
 
-	<row id="TRID_RGLEADER1_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_RGLEADER1_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：タケシ
 ・プレイヤーが勝った場合のメッセージ</comment>
@@ -1887,7 +1887,7 @@
 おれの　まもりが　つうじないとは▼</language>
 	</row>
 
-	<row id="TRID_RGLEADER1_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_RGLEADER1_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：タケシ
 ・プレイヤーが負けた場合のメッセージ</comment>
@@ -1901,7 +1901,7 @@
 せかいでも　つうじるんだな！▼</language>
 	</row>
 
-	<row id="TRID_RGLEADER1_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_RGLEADER1_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂：アナウンス
 ・ジムリーダー：タケシ
 ・前口上メッセージ</comment>
@@ -1911,7 +1911,7 @@
 タケシ！　ここに　登場ッ！！▼</language>
 	</row>
 
-	<row id="TRID_RGLEADER2_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_RGLEADER2_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムリーダー：カスミ
 ・１回戦用対戦前メッセージ</comment>
@@ -1921,7 +1921,7 @@
 みずタイプの　つかいて　よ！▼</language>
 	</row>
 
-	<row id="TRID_RGLEADER2_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_RGLEADER2_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムリーダー：カスミ
 ・２回戦用対戦前メッセージ</comment>
@@ -1933,7 +1933,7 @@
 あたしに　かてるかしら？▼</language>
 	</row>
 
-	<row id="TRID_RGLEADER2_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_RGLEADER2_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムリーダー：カスミ
 ・決勝戦用対戦前メッセージ</comment>
@@ -1947,7 +1947,7 @@
 ポケモンは　とても　つよいわよっ！▼</language>
 	</row>
 
-	<row id="TRID_RGLEADER2_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_RGLEADER2_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムリーダー：カスミ
 ・対戦後メッセージ</comment>
@@ -1959,7 +1959,7 @@
 すなおに　みとめるわ……▼</language>
 	</row>
 
-	<row id="TRID_RGLEADER2_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_RGLEADER2_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムリーダー：カスミ
 ・プレイヤーが勝った場合のメッセージ</comment>
@@ -1975,7 +1975,7 @@
 ゆめは　あんたに　かつことねっ！</language>
 	</row>
 
-	<row id="TRID_RGLEADER2_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_RGLEADER2_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムリーダー：カスミ
 ・プレイヤーが負けた場合のメッセージ</comment>
@@ -1989,7 +1989,7 @@
 それが　いま　かなったのねっ！</language>
 	</row>
 
-	<row id="TRID_RGLEADER2_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_RGLEADER2_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♂：アナウンス
 ・ジムリーダー：カスミ
 ・前口上メッセージ</comment>
@@ -1999,7 +1999,7 @@
 カスミ！　いま　その　でばんッ！▼</language>
 	</row>
 
-	<row id="TRID_RGLEADER3_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_RGLEADER3_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：マチス
 ・１回戦用対戦前メッセージ</comment>
@@ -2011,7 +2011,7 @@
 ナンバー　ワン　ねー！▼</language>
 	</row>
 
-	<row id="TRID_RGLEADER3_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_RGLEADER3_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：マチス
 ・２回戦用対戦前メッセージ</comment>
@@ -2027,7 +2027,7 @@
 びりびり　シビレさせるよ！▼</language>
 	</row>
 
-	<row id="TRID_RGLEADER3_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_RGLEADER3_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：マチス
 ・決勝戦用対戦前メッセージ</comment>
@@ -2045,7 +2045,7 @@
 びりびり　シビレさせるよ！▼</language>
 	</row>
 
-	<row id="TRID_RGLEADER3_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_RGLEADER3_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：マチス
 ・対戦後メッセージ</comment>
@@ -2055,7 +2055,7 @@
 ユー　は　ストロング！▼</language>
 	</row>
 
-	<row id="TRID_RGLEADER3_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_RGLEADER3_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：マチス
 ・プレイヤーが勝った場合のメッセージ</comment>
@@ -2069,7 +2069,7 @@
 ビリビリ　つきすすむと　いいネ！</language>
 	</row>
 
-	<row id="TRID_RGLEADER3_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_RGLEADER3_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：マチス
 ・プレイヤーが負けた場合のメッセージ</comment>
@@ -2081,7 +2081,7 @@
 ワールド　ナンバー　ワーン！！▼</language>
 	</row>
 
-	<row id="TRID_RGLEADER3_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_RGLEADER3_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂：アナウンス
 ・ジムリーダー：マチス
 ・前口上メッセージ</comment>
@@ -2091,7 +2091,7 @@
 マチス！　カモーーーーーンッ！！▼</language>
 	</row>
 
-	<row id="TRID_RGLEADER4_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_RGLEADER4_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムリーダー：エリカ
 ・１回戦用対戦前メッセージ</comment>
@@ -2101,7 +2101,7 @@
 エリカと　もうします▼</language>
 	</row>
 
-	<row id="TRID_RGLEADER4_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_RGLEADER4_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムリーダー：エリカ
 ・２回戦用対戦前メッセージ</comment>
@@ -2115,7 +2115,7 @@
 あなた　なのですね▼</language>
 	</row>
 
-	<row id="TRID_RGLEADER4_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_RGLEADER4_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムリーダー：エリカ
 ・決勝戦用対戦前メッセージ</comment>
@@ -2133,7 +2133,7 @@
 わたくし　まけませんわよ！▼</language>
 	</row>
 
-	<row id="TRID_RGLEADER4_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_RGLEADER4_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムリーダー：エリカ
 ・対戦後メッセージ</comment>
@@ -2143,7 +2143,7 @@
 おみそれ　いたしました……▼</language>
 	</row>
 
-	<row id="TRID_RGLEADER4_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_RGLEADER4_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムリーダー：エリカ
 ・プレイヤーが勝った場合のメッセージ</comment>
@@ -2159,7 +2159,7 @@
 わたくし　かんどう　いたしましたわ</language>
 	</row>
 
-	<row id="TRID_RGLEADER4_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_RGLEADER4_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムリーダー：エリカ
 ・プレイヤーが負けた場合のメッセージ</comment>
@@ -2175,7 +2175,7 @@
 トレーナーの　よろこび　ですわ</language>
 	</row>
 
-	<row id="TRID_RGLEADER4_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_RGLEADER4_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♂：アナウンス
 ・ジムリーダー：エリカ
 ・前口上メッセージ</comment>
@@ -2185,7 +2185,7 @@
 エリカ！　いざ　まいりますッ！！▼</language>
 	</row>
 
-	<row id="TRID_RGLEADER5_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_RGLEADER5_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
 ・ジムリーダー：ナツメ
 ・１回戦用対戦前メッセージ</comment>
@@ -2195,7 +2195,7 @@
 ３ねんまえ　から　あったのよ▼</language>
 	</row>
 
-	<row id="TRID_RGLEADER5_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_RGLEADER5_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
 ・ジムリーダー：ナツメ
 ・２回戦用対戦前メッセージ</comment>
@@ -2209,7 +2209,7 @@
 それでも　たたかうのね？▼</language>
 	</row>
 
-	<row id="TRID_RGLEADER5_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_RGLEADER5_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
 ・ジムリーダー：ナツメ
 ・決勝戦用対戦前メッセージ</comment>
@@ -2225,7 +2225,7 @@
 みせて　あげるわ！▼</language>
 	</row>
 
-	<row id="TRID_RGLEADER5_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_RGLEADER5_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
 ・ジムリーダー：ナツメ
 ・対戦後メッセージ</comment>
@@ -2235,7 +2235,7 @@
 ……ちがう！？▼</language>
 	</row>
 
-	<row id="TRID_RGLEADER5_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_RGLEADER5_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
 ・ジムリーダー：ナツメ
 ・プレイヤーが勝った場合のメッセージ</comment>
@@ -2253,7 +2253,7 @@
 わたしの　ちからを　こえたからね</language>
 	</row>
 
-	<row id="TRID_RGLEADER5_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_RGLEADER5_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
 ・ジムリーダー：ナツメ
 ・プレイヤーが負けた場合のメッセージ</comment>
@@ -2265,7 +2265,7 @@
 まったく　おなじ　だわ▼</language>
 	</row>
 
-	<row id="TRID_RGLEADER5_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_RGLEADER5_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂：アナウンス
 ・ジムリーダー：ナツメ
 ・前口上メッセージ</comment>
@@ -2275,7 +2275,7 @@
 ナツメ！　さっそうと　とうじょうッ！▼</language>
 	</row>
 
-	<row id="TRID_RGLEADER6_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_RGLEADER6_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・ジムリーダー：カツラ
 ・１回戦用対戦前メッセージ</comment>
@@ -2287,7 +2287,7 @@
 つわもの　ばかり　なのだー！▼</language>
 	</row>
 
-	<row id="TRID_RGLEADER6_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_RGLEADER6_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・ジムリーダー：カツラ
 ・２回戦用対戦前メッセージ</comment>
@@ -2301,7 +2301,7 @@
 つわもの　ばかり　なのだー！▼</language>
 	</row>
 
-	<row id="TRID_RGLEADER6_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_RGLEADER6_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・ジムリーダー：カツラ
 ・決勝戦用対戦前メッセージ</comment>
@@ -2317,7 +2317,7 @@
 さあ　いくぞ！　うおおーす！▼</language>
 	</row>
 
-	<row id="TRID_RGLEADER6_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_RGLEADER6_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・ジムリーダー：カツラ
 ・対戦後メッセージ</comment>
@@ -2327,7 +2327,7 @@
 きはくでは　まけていなかったのだが！▼</language>
 	</row>
 
-	<row id="TRID_RGLEADER6_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_RGLEADER6_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・ジムリーダー：カツラ
 ・プレイヤーが勝った場合のメッセージ</comment>
@@ -2343,7 +2343,7 @@
 いつか　また　たたかおう！▼</language>
 	</row>
 
-	<row id="TRID_RGLEADER6_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_RGLEADER6_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・ジムリーダー：カツラ
 ・プレイヤーが負けた場合のメッセージ</comment>
@@ -2357,7 +2357,7 @@
 パワーアップ　させるぞ！▼</language>
 	</row>
 
-	<row id="TRID_RGLEADER6_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_RGLEADER6_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♂：アナウンス
 ・ジムリーダー：カツラ
 ・前口上メッセージ</comment>
@@ -2367,7 +2367,7 @@
 カツラ！　だすのは　ポケモンだァ！！▼</language>
 	</row>
 
-	<row id="TRID_RGLEADER7_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_RGLEADER7_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：サカキ
 ・１回戦用対戦前メッセージ</comment>
@@ -2377,7 +2377,7 @@
 いたい　めに　あって　もらう！▼</language>
 	</row>
 
-	<row id="TRID_RGLEADER7_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_RGLEADER7_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：サカキ
 ・２回戦用対戦前メッセージ</comment>
@@ -2387,7 +2387,7 @@
 いたい　めに　あって　もらう！▼</language>
 	</row>
 
-	<row id="TRID_RGLEADER7_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_RGLEADER7_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：サカキ
 ・決勝戦用対戦前メッセージ</comment>
@@ -2397,7 +2397,7 @@
 いたい　めに　あって　もらう！▼</language>
 	</row>
 
-	<row id="TRID_RGLEADER7_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_RGLEADER7_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：サカキ
 ・対戦後メッセージ</comment>
@@ -2407,7 +2407,7 @@
 このおれが　まける　なんて！ ▼</language>
 	</row>
 
-	<row id="TRID_RGLEADER7_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_RGLEADER7_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：サカキ
 ・プレイヤーが勝った場合のメッセージ</comment>
@@ -2423,7 +2423,7 @@
 みずからを　きたえると　しよう▼</language>
 	</row>
 
-	<row id="TRID_RGLEADER7_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_RGLEADER7_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：サカキ
 ・プレイヤーが負けた場合のメッセージ</comment>
@@ -2437,7 +2437,7 @@
 たたかいたい　ものだ……！▼</language>
 	</row>
 
-	<row id="TRID_RGLEADER7_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_RGLEADER7_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂：アナウンス
 ・ジムリーダー：サカキ
 ・前口上メッセージ</comment>
@@ -2447,7 +2447,7 @@
 なのる　おとこ　サカキ　でばんだッ！▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER1_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER1_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・ジムリーダー：ハヤト
 ・１回戦用対戦前メッセージ</comment>
@@ -2459,7 +2459,7 @@
 おもいしらせて　やるよ！▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER1_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER1_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・ジムリーダー：ハヤト
 ・２回戦用対戦前メッセージ</comment>
@@ -2473,7 +2473,7 @@
 さあ！　かぜよ　ふけ！！▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER1_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER1_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・ジムリーダー：ハヤト
 ・決勝戦用対戦前メッセージ</comment>
@@ -2489,7 +2489,7 @@
 そらから　みていてくれ！▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER1_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER1_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・ジムリーダー：ハヤト
 ・対戦後メッセージ</comment>
@@ -2499,7 +2499,7 @@
 いさぎよく　ちに　おりるよ▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER1_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER1_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・ジムリーダー：ハヤト
 ・プレイヤーが勝った場合のメッセージ</comment>
@@ -2515,7 +2515,7 @@
 ポケモンと　おのれを　きたえるよ！▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER1_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER1_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・ジムリーダー：ハヤト
 ・プレイヤーが負けた場合のメッセージ</comment>
@@ -2527,7 +2527,7 @@
 ポケモンで　みごと　かったよ！！▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER1_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER1_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♂：アナウンス
 ・ジムリーダー：ハヤト
 ・前口上メッセージ</comment>
@@ -2537,7 +2537,7 @@
 ハヤト！　いま　まいおりるゥ！！▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER2_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER2_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：ツクシ
 ・１回戦用対戦前メッセージ</comment>
@@ -2547,7 +2547,7 @@
 だれにも　まけないよ！▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER2_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER2_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：ツクシ
 ・２回戦用対戦前メッセージ</comment>
@@ -2563,7 +2563,7 @@
 えらい　はかせに　なるんだから！▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER2_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER2_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：ツクシ
 ・決勝戦用対戦前メッセージ</comment>
@@ -2577,7 +2577,7 @@
 けんきゅう　せいか　みせてあげるよ▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER2_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER2_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：ツクシ
 ・対戦後メッセージ</comment>
@@ -2585,7 +2585,7 @@
 		<language name="JPN_KANJI" width="216">ツクシ『うーん　ここまでか……▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER2_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER2_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：ツクシ
 ・プレイヤーが勝った場合のメッセージ</comment>
@@ -2599,7 +2599,7 @@
 ぼくの　けんきゅうも　まだまだだ！▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER2_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER2_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：ツクシ
 ・プレイヤーが負けた場合のメッセージ</comment>
@@ -2611,7 +2611,7 @@
 ぼくの　けんきゅうも　はかどったよ！▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER2_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER2_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂：アナウンス
 ・ジムリーダー：ツクシ
 ・前口上メッセージ</comment>
@@ -2621,7 +2621,7 @@
 ツクシ！　ちしきを　おひろめだァ！▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER3_TRMSG_1ST_FIGHT_START" text-color=",,,#ff0000,,,,,,,,,,,,,," back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER3_TRMSG_1ST_FIGHT_START" text-color=",,,#000000,,,,,,,,,,,,,," back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムリーダー：アカネ
 ・１回戦用対戦前メッセージ</comment>
@@ -2631,27 +2631,37 @@
 めっちゃ　つよいでー！▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER3_TRMSG_2ND_FIGHT_START" text-color=",,,#ff0000,,,,,,,,,,,,,," back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER3_TRMSG_2ND_FIGHT_START" text-color=",,,#000000,,,,,,,,,,,,,," back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムリーダー：アカネ
 ・２回戦用対戦前メッセージ</comment>
 		<language name="JPN" width="216">ゆうとくけど　うち
-めっちゃ　つよいでー！▼</language>
+めっちゃ　つよいでー！▼
+あんた　うちに　まけても
+ないたら　あかんで！▼</language>
 		<language name="JPN_KANJI" width="216">ゆうとくけど　うち
-めっちゃ　つよいでー！▼</language>
+めっちゃ　つよいでー！▼
+あんた　うちに　まけても
+ないたら　あかんで！▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER3_TRMSG_3RD_FIGHT_START" text-color=",,,#ff0000,,,,,,,,,,,,,," back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER3_TRMSG_3RD_FIGHT_START" text-color=",,,#000000,,,,,,,,,,,,,," back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムリーダー：アカネ
 ・決勝戦用対戦前メッセージ</comment>
 		<language name="JPN" width="216">ゆうとくけど　うち
-めっちゃ　つよいでー！▼</language>
+めっちゃ　つよいでー！▼
+それに　いっしょに　たたかってくれる
+ポケモンも　かわいくて　つよいんよ！▼
+ほな　はじめよか！</language>
 		<language name="JPN_KANJI" width="216">ゆうとくけど　うち
-めっちゃ　つよいでー！▼</language>
+めっちゃ　つよいでー！▼
+それに　いっしょに　たたかってくれる
+ポケモンも　かわいくて　つよいんよ！▼
+ほな　はじめよか！</language>
 	</row>
 
-	<row id="TRID_GSLEADER3_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER3_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムリーダー：アカネ
 ・対戦後メッセージ</comment>
@@ -2659,7 +2669,7 @@
 		<language name="JPN_KANJI" width="216">アカネ『うぐぅ……▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER3_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER3_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムリーダー：アカネ
 ・プレイヤーが勝った場合のメッセージ</comment>
@@ -2687,7 +2697,7 @@
 また　チャレンジ　するわ！▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER3_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER3_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムリーダー：アカネ
 ・プレイヤーが負けた場合のメッセージ</comment>
@@ -2699,7 +2709,7 @@
 つぎは　かてるんとちゃう？▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER3_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER3_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♂：アナウンス
 ・ジムリーダー：アカネ
 ・前口上メッセージ</comment>
@@ -2709,7 +2719,7 @@
 アカネ！　カモンカモンカモーン！！▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER4_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER4_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：マツバ
 ・１回戦用対戦前メッセージ</comment>
@@ -2721,7 +2731,7 @@
 きょうりょく　してもらおう！▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER4_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER4_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：マツバ
 ・２回戦用対戦前メッセージ</comment>
@@ -2735,7 +2745,7 @@
 きょうりょく　してもらおう！▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER4_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER4_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：マツバ
 ・決勝戦用対戦前メッセージ</comment>
@@ -2751,7 +2761,7 @@
 きょうりょく　してもらおう！▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER4_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER4_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：マツバ
 ・対戦後メッセージ</comment>
@@ -2759,7 +2769,7 @@
 		<language name="JPN_KANJI" width="216">マツバ『なんということだ……▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER4_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER4_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：マツバ
 ・プレイヤーが勝った場合のメッセージ</comment>
@@ -2775,7 +2785,7 @@
 なにかが　そなわっているんだね▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER4_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER4_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：マツバ
 ・プレイヤーが負けた場合のメッセージ</comment>
@@ -2791,7 +2801,7 @@
 そのときは　よろしく！▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER4_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER4_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂：アナウンス
 ・ジムリーダー：マツバ
 ・前口上メッセージ</comment>
@@ -2801,7 +2811,7 @@
 みえるは　しょうりかァ　マツバ！▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER5_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER5_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・ジムリーダー：シジマ
 ・１回戦用対戦前メッセージ</comment>
@@ -2809,7 +2819,7 @@
 		<language name="JPN_KANJI" width="216">いっとくが　わしは　つよいぞ！▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER5_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER5_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・ジムリーダー：シジマ
 ・２回戦用対戦前メッセージ</comment>
@@ -2819,7 +2829,7 @@
 しょうぶと　いくかぁ！▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER5_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER5_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・ジムリーダー：シジマ
 ・決勝戦用対戦前メッセージ</comment>
@@ -2845,7 +2855,7 @@
 では　しょうぶと　いくかぁ！▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER5_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER5_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・ジムリーダー：シジマ
 ・対戦後メッセージ</comment>
@@ -2853,7 +2863,7 @@
 		<language name="JPN_KANJI" width="216">シジマ『まだ　ま　けた……▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER5_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER5_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・ジムリーダー：シジマ
 ・プレイヤーが勝った場合のメッセージ</comment>
@@ -2863,7 +2873,7 @@
 まけるとは……　こりゃ　まいった！▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER5_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER5_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・ジムリーダー：シジマ
 ・プレイヤーが負けた場合のメッセージ</comment>
@@ -2877,7 +2887,7 @@
 きょうから　２４じかん　とっくんだ！▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER5_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER5_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♂：アナウンス
 ・ジムリーダー：シジマ
 ・前口上メッセージ</comment>
@@ -2887,7 +2897,7 @@
 シジマ！　さあ　かたれかたれェー！！▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER6_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER6_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
 ・ジムリーダー：ミカン
 ・１回戦用対戦前メッセージ</comment>
@@ -2901,7 +2911,7 @@
 は……　はがねタイプ　です▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER6_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER6_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
 ・ジムリーダー：ミカン
 ・２回戦用対戦前メッセージ</comment>
@@ -2919,7 +2929,7 @@
 ごぞんじ　ですか？▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER6_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER6_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
 ・ジムリーダー：ミカン
 ・決勝戦用対戦前メッセージ</comment>
@@ -2943,7 +2953,7 @@
 ほんと　なんですよ？▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER6_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER6_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
 ・ジムリーダー：ミカン
 ・対戦後メッセージ</comment>
@@ -2951,7 +2961,7 @@
 		<language name="JPN_KANJI" width="216">ミカン『おみごと　でした……▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER6_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER6_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
 ・ジムリーダー：ミカン
 ・プレイヤーが勝った場合のメッセージ</comment>
@@ -2969,7 +2979,7 @@
 ……がんばって　くださいね▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER6_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER6_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
 ・ジムリーダー：ミカン
 ・プレイヤーが負けた場合のメッセージ</comment>
@@ -2983,7 +2993,7 @@
 きたえていれば　また　あえますよね▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER6_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER6_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂：アナウンス
 ・ジムリーダー：ミカン
 ・前口上メッセージ</comment>
@@ -2993,7 +3003,7 @@
 ミカン！　そのガード　くずせるかァ！▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER7_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER7_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・ジムリーダー：ヤナギ
 ・１回戦用対戦前メッセージ</comment>
@@ -3003,7 +3013,7 @@
 その　じつりょく　みせてやろうかの▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER7_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER7_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・ジムリーダー：ヤナギ
 ・２回戦用対戦前メッセージ</comment>
@@ -3017,7 +3027,7 @@
 それを　おしえて　やろう▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER7_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER7_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・ジムリーダー：ヤナギ
 ・決勝戦用対戦前メッセージ</comment>
@@ -3033,7 +3043,7 @@
 その　じつりょく　みせてやろうかの▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER7_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER7_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・ジムリーダー：ヤナギ
 ・対戦後メッセージ</comment>
@@ -3043,7 +3053,7 @@
 さくが　つきた……　か▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER7_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER7_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・ジムリーダー：ヤナギ
 ・プレイヤーが勝った場合のメッセージ</comment>
@@ -3059,7 +3069,7 @@
 のりこえて　いけるだろうよ▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER7_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER7_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・ジムリーダー：ヤナギ
 ・プレイヤーが負けた場合のメッセージ</comment>
@@ -3077,7 +3087,7 @@
 それを　たいせつ　にな▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER7_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER7_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♂：アナウンス
 ・ジムリーダー：ヤナギ
 ・前口上メッセージ</comment>
@@ -3087,7 +3097,7 @@
 ヤナギ！　さあッ　おしえてくれェ！▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER8_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER8_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
 ・ジムリーダー：イブキ
 ・１回戦用対戦前メッセージ</comment>
@@ -3099,7 +3109,7 @@
 ドラゴンつかい　よ▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER8_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER8_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
 ・ジムリーダー：イブキ
 ・２回戦用対戦前メッセージ</comment>
@@ -3115,7 +3125,7 @@
 まけてなんか　ないわよ！▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER8_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER8_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
 ・ジムリーダー：イブキ
 ・決勝戦用対戦前メッセージ</comment>
@@ -3131,7 +3141,7 @@
 ぜんりょくで　ぶつかって　あげる！▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER8_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER8_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
 ・ジムリーダー：イブキ
 ・対戦後メッセージ</comment>
@@ -3139,7 +3149,7 @@
 		<language name="JPN_KANJI" width="216">イブキ『おわった……▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER8_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER8_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
 ・ジムリーダー：イブキ
 ・プレイヤーが勝った場合のメッセージ</comment>
@@ -3157,7 +3167,7 @@
 この　わたしに　かったんだから！</language>
 	</row>
 
-	<row id="TRID_GSLEADER8_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER8_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
 ・ジムリーダー：イブキ
 ・プレイヤーが負けた場合のメッセージ</comment>
@@ -3171,7 +3181,7 @@
 あなたって　ふしぎな　トレーナーね▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER8_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER8_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂：アナウンス
 ・ジムリーダー：イブキ
 ・前口上メッセージ</comment>
@@ -3181,7 +3191,7 @@
 イブキ！　その　ちからを　みせよォ！▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER9_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER9_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムリーダー：アンズ
 ・１回戦用対戦前メッセージ</comment>
@@ -3193,7 +3203,7 @@
 うけてみると　いいわ！▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER9_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER9_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムリーダー：アンズ
 ・２回戦用対戦前メッセージ</comment>
@@ -3209,7 +3219,7 @@
 うけてみると　いいわ！▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER9_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER9_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムリーダー：アンズ
 ・決勝戦用対戦前メッセージ</comment>
@@ -3227,7 +3237,7 @@
 うけてみると　いいわ！▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER9_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER9_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムリーダー：アンズ
 ・対戦後メッセージ</comment>
@@ -3237,7 +3247,7 @@
 たたかいかた　するじゃない！▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER9_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER9_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムリーダー：アンズ
 ・プレイヤーが勝った場合のメッセージ</comment>
@@ -3251,7 +3261,7 @@
 にどと　まけない　ようにね！▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER9_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER9_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムリーダー：アンズ
 ・プレイヤーが負けた場合のメッセージ</comment>
@@ -3267,7 +3277,7 @@
 また　ここで　あおうね！▼</language>
 	</row>
 
-	<row id="TRID_GSLEADER9_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_GSLEADER9_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♂：アナウンス
 ・ジムリーダー：アンズ
 ・前口上メッセージ</comment>
@@ -3277,7 +3287,7 @@
 アンズ！　にんぽう　さくれつッ！！▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER1_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_RSLEADER1_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
 ・ジムリーダー：ツツジ
 ・１回戦用対戦前メッセージ</comment>
@@ -3287,7 +3297,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER1_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_RSLEADER1_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
 ・ジムリーダー：ツツジ
 ・２回戦用対戦前メッセージ</comment>
@@ -3297,17 +3307,18 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER1_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_RSLEADER1_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
 ・ジムリーダー：ツツジ
 ・決勝戦用対戦前メッセージ</comment>
-		<language name="JPN" width="216">けっしょうせん
-かりメッセージ▼</language>
+		<language name="JPN" width="216">あなた　どのような　ポケモンで
+どんなふうに　たたかうのか▽
+わたくしに　おしえてくださるかしら？▼</language>
 		<language name="JPN_KANJI" width="216">決勝戦
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER1_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_RSLEADER1_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
 ・ジムリーダー：ツツジ
 ・対戦後メッセージ</comment>
@@ -3317,17 +3328,18 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER1_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_RSLEADER1_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
 ・ジムリーダー：ツツジ
 ・プレイヤーが勝った場合のメッセージ</comment>
-		<language name="JPN" width="216">プレイヤーしょうり
-かりメッセージ▼</language>
+		<language name="JPN" width="216">ツツジ『わたくし　まけたのね……
+もっと　おおくの　ことを
+まなぶ　ひつようが　あるみたい……▼</language>
 		<language name="JPN_KANJI" width="216">プレイヤー勝利
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER1_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_RSLEADER1_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
 ・ジムリーダー：ツツジ
 ・プレイヤーが負けた場合のメッセージ</comment>
@@ -3337,17 +3349,17 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER1_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_RSLEADER1_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂：アナウンス
 ・ジムリーダー：ツツジ
 ・前口上メッセージ</comment>
-		<language name="JPN" width="216">かりメッセージ
+		<language name="JPN" width="216">いわに　ときめく　ゆうとうせい！
 ツツジ▼</language>
 		<language name="JPN_KANJI" width="216">仮メッセージ
 ツツジ▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER2_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_RSLEADER2_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・ジムリーダー：トウキ
 ・１回戦用対戦前メッセージ</comment>
@@ -3357,7 +3369,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER2_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_RSLEADER2_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・ジムリーダー：トウキ
 ・２回戦用対戦前メッセージ</comment>
@@ -3367,7 +3379,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER2_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_RSLEADER2_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・ジムリーダー：トウキ
 ・決勝戦用対戦前メッセージ</comment>
@@ -3377,7 +3389,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER2_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_RSLEADER2_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・ジムリーダー：トウキ
 ・対戦後メッセージ</comment>
@@ -3387,7 +3399,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER2_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_RSLEADER2_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・ジムリーダー：トウキ
 ・プレイヤーが勝った場合のメッセージ</comment>
@@ -3397,7 +3409,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER2_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_RSLEADER2_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・ジムリーダー：トウキ
 ・プレイヤーが負けた場合のメッセージ</comment>
@@ -3407,17 +3419,17 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER2_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_RSLEADER2_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♂：アナウンス
 ・ジムリーダー：トウキ
 ・前口上メッセージ</comment>
-		<language name="JPN" width="216">かりメッセージ
+		<language name="JPN" width="216">かくとう　ビッグウェーブ！
 トウキ▼</language>
 		<language name="JPN_KANJI" width="216">仮メッセージ
 トウキ▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER3_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_RSLEADER3_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：テッセン
 ・１回戦用対戦前メッセージ</comment>
@@ -3427,7 +3439,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER3_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_RSLEADER3_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：テッセン
 ・２回戦用対戦前メッセージ</comment>
@@ -3437,7 +3449,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER3_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_RSLEADER3_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：テッセン
 ・決勝戦用対戦前メッセージ</comment>
@@ -3447,7 +3459,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER3_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_RSLEADER3_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：テッセン
 ・対戦後メッセージ</comment>
@@ -3457,7 +3469,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER3_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_RSLEADER3_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：テッセン
 ・プレイヤーが勝った場合のメッセージ</comment>
@@ -3467,7 +3479,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER3_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_RSLEADER3_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：テッセン
 ・プレイヤーが負けた場合のメッセージ</comment>
@@ -3477,17 +3489,17 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER3_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_RSLEADER3_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂：アナウンス
 ・ジムリーダー：テッセン
 ・前口上メッセージ</comment>
-		<language name="JPN" width="216">かりメッセージ
+		<language name="JPN" width="216">あっかるい　でんげき　オヤジ！ 
 テッセン▼</language>
 		<language name="JPN_KANJI" width="216">仮メッセージ
 テッセン▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER4_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_RSLEADER4_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムリーダー：アスナ
 ・１回戦用対戦前メッセージ</comment>
@@ -3497,7 +3509,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER4_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_RSLEADER4_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムリーダー：アスナ
 ・２回戦用対戦前メッセージ</comment>
@@ -3507,7 +3519,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER4_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_RSLEADER4_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムリーダー：アスナ
 ・決勝戦用対戦前メッセージ</comment>
@@ -3517,7 +3529,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER4_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_RSLEADER4_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムリーダー：アスナ
 ・対戦後メッセージ</comment>
@@ -3527,7 +3539,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER4_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_RSLEADER4_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムリーダー：アスナ
 ・プレイヤーが勝った場合のメッセージ</comment>
@@ -3537,7 +3549,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER4_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_RSLEADER4_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムリーダー：アスナ
 ・プレイヤーが負けた場合のメッセージ</comment>
@@ -3547,17 +3559,17 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER4_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_RSLEADER4_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♂：アナウンス
 ・ジムリーダー：アスナ
 ・前口上メッセージ</comment>
-		<language name="JPN" width="216">かりメッセージ
+		<language name="JPN" width="216">やけど　しそうな　じょうねつの　ひと
 アスナ▼</language>
 		<language name="JPN_KANJI" width="216">仮メッセージ
 アスナ▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER5_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_RSLEADER5_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：センリ
 ・１回戦用対戦前メッセージ</comment>
@@ -3567,7 +3579,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER5_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_RSLEADER5_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：センリ
 ・２回戦用対戦前メッセージ</comment>
@@ -3577,7 +3589,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER5_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_RSLEADER5_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：センリ
 ・決勝戦用対戦前メッセージ</comment>
@@ -3587,7 +3599,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER5_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_RSLEADER5_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：センリ
 ・対戦後メッセージ</comment>
@@ -3597,7 +3609,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER5_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_RSLEADER5_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：センリ
 ・プレイヤーが勝った場合のメッセージ</comment>
@@ -3607,7 +3619,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER5_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_RSLEADER5_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：センリ
 ・プレイヤーが負けた場合のメッセージ</comment>
@@ -3617,17 +3629,17 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER5_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_RSLEADER5_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂：アナウンス
 ・ジムリーダー：センリ
 ・前口上メッセージ</comment>
-		<language name="JPN" width="216">かりメッセージ
+		<language name="JPN" width="216">つよさを　おいもとめる　おとこ！
 センリ▼</language>
 		<language name="JPN_KANJI" width="216">仮メッセージ
 センリ▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER6_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_RSLEADER6_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムリーダー：ナギ
 ・１回戦用対戦前メッセージ</comment>
@@ -3637,7 +3649,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER6_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_RSLEADER6_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムリーダー：ナギ
 ・２回戦用対戦前メッセージ</comment>
@@ -3647,7 +3659,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER6_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_RSLEADER6_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムリーダー：ナギ
 ・決勝戦用対戦前メッセージ</comment>
@@ -3657,7 +3669,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER6_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_RSLEADER6_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムリーダー：ナギ
 ・対戦後メッセージ</comment>
@@ -3667,7 +3679,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER6_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_RSLEADER6_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムリーダー：ナギ
 ・プレイヤーが勝った場合のメッセージ</comment>
@@ -3677,7 +3689,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER6_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_RSLEADER6_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムリーダー：ナギ
 ・プレイヤーが負けた場合のメッセージ</comment>
@@ -3687,17 +3699,17 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER6_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_RSLEADER6_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♂：アナウンス
 ・ジムリーダー：ナギ
 ・前口上メッセージ</comment>
-		<language name="JPN" width="216">かりメッセージ
+		<language name="JPN" width="216">せかいに　はばたく　とりつかい！
 ナギ▼</language>
 		<language name="JPN_KANJI" width="216">仮メッセージ
 ナギ▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER7_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_RSLEADER7_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：フウ
 ・１回戦用対戦前メッセージ</comment>
@@ -3707,7 +3719,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER7_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_RSLEADER7_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：フウ
 ・２回戦用対戦前メッセージ</comment>
@@ -3717,7 +3729,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER7_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_RSLEADER7_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：フウ
 ・決勝戦用対戦前メッセージ</comment>
@@ -3727,7 +3739,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER7_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_RSLEADER7_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：フウ
 ・対戦後メッセージ</comment>
@@ -3737,7 +3749,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER7_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_RSLEADER7_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：フウ
 ・プレイヤーが勝った場合のメッセージ</comment>
@@ -3747,7 +3759,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER7_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_RSLEADER7_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：フウ
 ・プレイヤーが負けた場合のメッセージ</comment>
@@ -3757,17 +3769,17 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER7_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_RSLEADER7_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂：アナウンス
 ・ジムリーダー：フウ
 ・前口上メッセージ</comment>
-		<language name="JPN" width="216">かりメッセージ
+		<language name="JPN" width="216">しんぴの　コンビネーション！！ 
 フウ▼</language>
 		<language name="JPN_KANJI" width="216">仮メッセージ
 フウ▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER8_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_RSLEADER8_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムリーダー：ラン
 ・１回戦用対戦前メッセージ</comment>
@@ -3777,7 +3789,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER8_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_RSLEADER8_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムリーダー：ラン
 ・２回戦用対戦前メッセージ</comment>
@@ -3787,7 +3799,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER8_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_RSLEADER8_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムリーダー：ラン
 ・決勝戦用対戦前メッセージ</comment>
@@ -3797,7 +3809,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER8_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_RSLEADER8_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムリーダー：ラン
 ・対戦後メッセージ</comment>
@@ -3807,7 +3819,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER8_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_RSLEADER8_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムリーダー：ラン
 ・プレイヤーが勝った場合のメッセージ</comment>
@@ -3817,7 +3829,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER8_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_RSLEADER8_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムリーダー：ラン
 ・プレイヤーが負けた場合のメッセージ</comment>
@@ -3827,17 +3839,17 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_RSLEADER8_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+	<row id="TRID_RSLEADER8_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,,,,,,,,,,,,,,,">
 		<comment>♂：アナウンス
 ・ジムリーダー：ラン
 ・前口上メッセージ</comment>
-		<language name="JPN" width="216">かりメッセージ
+		<language name="JPN" width="216">しんぴの　コンビネーション！！ 
 ラン▼</language>
 		<language name="JPN_KANJI" width="216">仮メッセージ
 ラン▼</language>
 	</row>
 
-	<row id="TRID_ELEADER1_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_ELEADER1_TRMSG_1ST_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：アダン
 ・１回戦用対戦前メッセージ</comment>
@@ -3847,7 +3859,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_ELEADER1_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_ELEADER1_TRMSG_2ND_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：アダン
 ・２回戦用対戦前メッセージ</comment>
@@ -3857,7 +3869,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_ELEADER1_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_ELEADER1_TRMSG_3RD_FIGHT_START" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：アダン
 ・決勝戦用対戦前メッセージ</comment>
@@ -3867,7 +3879,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_ELEADER1_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_ELEADER1_TRMSG_FIGHT_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：アダン
 ・対戦後メッセージ</comment>
@@ -3877,7 +3889,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_ELEADER1_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_ELEADER1_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：アダン
 ・プレイヤーが勝った場合のメッセージ</comment>
@@ -3887,7 +3899,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_ELEADER1_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_ELEADER1_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ジムリーダー：アダン
 ・プレイヤーが負けた場合のメッセージ</comment>
@@ -3897,17 +3909,17 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_ELEADER1_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="TRID_ELEADER1_TRMSG_OPENING_ANNOUNCE" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂：アナウンス
 ・ジムリーダー：アダン
 ・前口上メッセージ</comment>
-		<language name="JPN" width="216">かりメッセージ
+		<language name="JPN" width="216">みずも　したたる　ダンディズム！
 アダン▼</language>
 		<language name="JPN_KANJI" width="216">仮メッセージ
 アダン▼</language>
 	</row>
 
-	<row id="TRID_DPLEADER1_TRMSG_1ST_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_DPLEADER1_TRMSG_1ST_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：ヒョウタ
 ・１回戦用対戦前メッセージ</comment>
@@ -3917,7 +3929,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_DPLEADER1_TRMSG_2ND_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_DPLEADER1_TRMSG_2ND_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：ヒョウタ
 ・２回戦用対戦前メッセージ</comment>
@@ -3927,7 +3939,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_DPLEADER1_TRMSG_3RD_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_DPLEADER1_TRMSG_3RD_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：ヒョウタ
 ・決勝戦用対戦前メッセージ</comment>
@@ -3937,7 +3949,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_DPLEADER1_TRMSG_FIGHT_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_DPLEADER1_TRMSG_FIGHT_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：ヒョウタ
 ・対戦後メッセージ</comment>
@@ -3947,7 +3959,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_DPLEADER1_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_DPLEADER1_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：ヒョウタ
 ・プレイヤーが勝った場合のメッセージ</comment>
@@ -3957,7 +3969,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_DPLEADER1_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_DPLEADER1_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：ヒョウタ
 ・プレイヤーが負けた場合のメッセージ</comment>
@@ -3967,17 +3979,17 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_DPLEADER1_TRMSG_OPENING_ANNOUNCE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_DPLEADER1_TRMSG_OPENING_ANNOUNCE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂：アナウンス
 ・ジムリーダー：ヒョウタ
 ・前口上メッセージ</comment>
-		<language name="JPN" width="216">かりメッセージ
+		<language name="JPN" width="216">ザ・ロック　といわれる　おとこ
 ヒョウタ▼</language>
 		<language name="JPN_KANJI" width="216">仮メッセージ
 ヒョウタ▼</language>
 	</row>
 
-	<row id="TRID_DPLEADER2_TRMSG_1ST_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_DPLEADER2_TRMSG_1ST_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・ジムリーダー：ナタネ
 ・１回戦用対戦前メッセージ</comment>
@@ -3987,7 +3999,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_DPLEADER2_TRMSG_2ND_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_DPLEADER2_TRMSG_2ND_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・ジムリーダー：ナタネ
 ・２回戦用対戦前メッセージ</comment>
@@ -3997,7 +4009,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_DPLEADER2_TRMSG_3RD_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_DPLEADER2_TRMSG_3RD_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・ジムリーダー：ナタネ
 ・決勝戦用対戦前メッセージ</comment>
@@ -4007,7 +4019,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_DPLEADER2_TRMSG_FIGHT_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_DPLEADER2_TRMSG_FIGHT_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・ジムリーダー：ナタネ
 ・対戦後メッセージ</comment>
@@ -4017,7 +4029,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_DPLEADER2_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_DPLEADER2_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・ジムリーダー：ナタネ
 ・プレイヤーが勝った場合のメッセージ</comment>
@@ -4027,7 +4039,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_DPLEADER2_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_DPLEADER2_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・ジムリーダー：ナタネ
 ・プレイヤーが負けた場合のメッセージ</comment>
@@ -4037,17 +4049,17 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_DPLEADER2_TRMSG_OPENING_ANNOUNCE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_DPLEADER2_TRMSG_OPENING_ANNOUNCE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂：アナウンス
 ・ジムリーダー：ナタネ
 ・前口上メッセージ</comment>
-		<language name="JPN" width="216">かりメッセージ
+		<language name="JPN" width="216">はえる　みどりの　ポケモンつかい
 ナタネ▼</language>
 		<language name="JPN_KANJI" width="216">仮メッセージ
 ナタネ▼</language>
 	</row>
 
-	<row id="TRID_DPLEADER3_TRMSG_1ST_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_DPLEADER3_TRMSG_1ST_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ジムリーダー：メリッサ
 ・１回戦用対戦前メッセージ</comment>
@@ -4057,7 +4069,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_DPLEADER3_TRMSG_2ND_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_DPLEADER3_TRMSG_2ND_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ジムリーダー：メリッサ
 ・２回戦用対戦前メッセージ</comment>
@@ -4067,7 +4079,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_DPLEADER3_TRMSG_3RD_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_DPLEADER3_TRMSG_3RD_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ジムリーダー：メリッサ
 ・決勝戦用対戦前メッセージ</comment>
@@ -4077,7 +4089,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_DPLEADER3_TRMSG_FIGHT_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_DPLEADER3_TRMSG_FIGHT_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ジムリーダー：メリッサ
 ・対戦後メッセージ</comment>
@@ -4087,7 +4099,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_DPLEADER3_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_DPLEADER3_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ジムリーダー：メリッサ
 ・プレイヤーが勝った場合のメッセージ</comment>
@@ -4097,7 +4109,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_DPLEADER3_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_DPLEADER3_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ジムリーダー：メリッサ
 ・プレイヤーが負けた場合のメッセージ</comment>
@@ -4107,17 +4119,17 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_DPLEADER3_TRMSG_OPENING_ANNOUNCE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_DPLEADER3_TRMSG_OPENING_ANNOUNCE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂：アナウンス
 ・ジムリーダー：メリッサ
 ・前口上メッセージ</comment>
-		<language name="JPN" width="216">かりメッセージ
+		<language name="JPN" width="216">みわくの　ソウルフル　ダンサー
 メリッサ▼</language>
 		<language name="JPN_KANJI" width="216">仮メッセージ
 メリッサ▼</language>
 	</row>
 
-	<row id="TRID_DPLEADER4_TRMSG_1ST_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_DPLEADER4_TRMSG_1ST_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・ジムリーダー：スモモ
 ・１回戦用対戦前メッセージ</comment>
@@ -4127,7 +4139,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_DPLEADER4_TRMSG_2ND_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_DPLEADER4_TRMSG_2ND_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・ジムリーダー：スモモ
 ・２回戦用対戦前メッセージ</comment>
@@ -4137,7 +4149,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_DPLEADER4_TRMSG_3RD_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_DPLEADER4_TRMSG_3RD_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・ジムリーダー：スモモ
 ・決勝戦用対戦前メッセージ</comment>
@@ -4147,7 +4159,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_DPLEADER4_TRMSG_FIGHT_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_DPLEADER4_TRMSG_FIGHT_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・ジムリーダー：スモモ
 ・対戦後メッセージ</comment>
@@ -4157,7 +4169,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_DPLEADER4_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_DPLEADER4_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・ジムリーダー：スモモ
 ・プレイヤーが勝った場合のメッセージ</comment>
@@ -4167,7 +4179,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_DPLEADER4_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_DPLEADER4_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・ジムリーダー：スモモ
 ・プレイヤーが負けた場合のメッセージ</comment>
@@ -4177,17 +4189,17 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_DPLEADER4_TRMSG_OPENING_ANNOUNCE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_DPLEADER4_TRMSG_OPENING_ANNOUNCE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂：アナウンス
 ・ジムリーダー：スモモ
 ・前口上メッセージ</comment>
-		<language name="JPN" width="216">かりメッセージ
+		<language name="JPN" width="216">はだしの　てんさい　かくとうむすめ
 スモモ▼</language>
 		<language name="JPN_KANJI" width="216">仮メッセージ
 スモモ▼</language>
 	</row>
 
-	<row id="TRID_DPLEADER5_TRMSG_1ST_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_DPLEADER5_TRMSG_1ST_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：マキシ
 ・１回戦用対戦前メッセージ</comment>
@@ -4197,7 +4209,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_DPLEADER5_TRMSG_2ND_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_DPLEADER5_TRMSG_2ND_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：マキシ
 ・２回戦用対戦前メッセージ</comment>
@@ -4207,7 +4219,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_DPLEADER5_TRMSG_3RD_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_DPLEADER5_TRMSG_3RD_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：マキシ
 ・決勝戦用対戦前メッセージ</comment>
@@ -4217,7 +4229,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_DPLEADER5_TRMSG_FIGHT_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_DPLEADER5_TRMSG_FIGHT_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：マキシ
 ・対戦後メッセージ</comment>
@@ -4227,7 +4239,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_DPLEADER5_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_DPLEADER5_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：マキシ
 ・プレイヤーが勝った場合のメッセージ</comment>
@@ -4237,7 +4249,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_DPLEADER5_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_DPLEADER5_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：マキシ
 ・プレイヤーが負けた場合のメッセージ</comment>
@@ -4247,17 +4259,17 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_DPLEADER5_TRMSG_OPENING_ANNOUNCE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_DPLEADER5_TRMSG_OPENING_ANNOUNCE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂：アナウンス
 ・ジムリーダー：マキシ
 ・前口上メッセージ</comment>
-		<language name="JPN" width="216">かりメッセージ
+		<language name="JPN" width="216">ウォーター　ストリーム　マスクマン
 マキシ▼</language>
 		<language name="JPN_KANJI" width="216">仮メッセージ
 マキシ▼</language>
 	</row>
 
-	<row id="TRID_DPLEADER6_TRMSG_1ST_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_DPLEADER6_TRMSG_1ST_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：トウガン
 ・１回戦用対戦前メッセージ</comment>
@@ -4267,7 +4279,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_DPLEADER6_TRMSG_2ND_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_DPLEADER6_TRMSG_2ND_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：トウガン
 ・２回戦用対戦前メッセージ</comment>
@@ -4277,7 +4289,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_DPLEADER6_TRMSG_3RD_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_DPLEADER6_TRMSG_3RD_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：トウガン
 ・決勝戦用対戦前メッセージ</comment>
@@ -4287,7 +4299,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_DPLEADER6_TRMSG_FIGHT_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_DPLEADER6_TRMSG_FIGHT_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：トウガン
 ・対戦後メッセージ</comment>
@@ -4297,7 +4309,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_DPLEADER6_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_DPLEADER6_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：トウガン
 ・プレイヤーが勝った場合のメッセージ</comment>
@@ -4307,7 +4319,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_DPLEADER6_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_DPLEADER6_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：トウガン
 ・プレイヤーが負けた場合のメッセージ</comment>
@@ -4317,17 +4329,17 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_DPLEADER6_TRMSG_OPENING_ANNOUNCE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_DPLEADER6_TRMSG_OPENING_ANNOUNCE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂：アナウンス
 ・ジムリーダー：トウガン
 ・前口上メッセージ</comment>
-		<language name="JPN" width="216">かりメッセージ
+		<language name="JPN" width="216">こうてつボディの　おとこ
 トウガン▼</language>
 		<language name="JPN_KANJI" width="216">仮メッセージ
 トウガン▼</language>
 	</row>
 
-	<row id="TRID_DPLEADER7_TRMSG_1ST_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_DPLEADER7_TRMSG_1ST_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ジムリーダー：スズナ
 ・１回戦用対戦前メッセージ</comment>
@@ -4337,7 +4349,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_DPLEADER7_TRMSG_2ND_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_DPLEADER7_TRMSG_2ND_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ジムリーダー：スズナ
 ・２回戦用対戦前メッセージ</comment>
@@ -4347,7 +4359,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_DPLEADER7_TRMSG_3RD_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_DPLEADER7_TRMSG_3RD_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ジムリーダー：スズナ
 ・決勝戦用対戦前メッセージ</comment>
@@ -4357,7 +4369,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_DPLEADER7_TRMSG_FIGHT_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_DPLEADER7_TRMSG_FIGHT_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ジムリーダー：スズナ
 ・対戦後メッセージ</comment>
@@ -4367,7 +4379,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_DPLEADER7_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_DPLEADER7_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ジムリーダー：スズナ
 ・プレイヤーが勝った場合のメッセージ</comment>
@@ -4377,7 +4389,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_DPLEADER7_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_DPLEADER7_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ジムリーダー：スズナ
 ・プレイヤーが負けた場合のメッセージ</comment>
@@ -4387,17 +4399,17 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_DPLEADER7_TRMSG_OPENING_ANNOUNCE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_DPLEADER7_TRMSG_OPENING_ANNOUNCE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂：アナウンス
 ・ジムリーダー：スズナ
 ・前口上メッセージ</comment>
-		<language name="JPN" width="216">かりメッセージ
+		<language name="JPN" width="216">ダイヤモンドダスト　ガール
 スズナ▼</language>
 		<language name="JPN_KANJI" width="216">仮メッセージ
 スズナ▼</language>
 	</row>
 
-	<row id="TRID_DPLEADER8_TRMSG_1ST_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_DPLEADER8_TRMSG_1ST_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：デンジ
 ・１回戦用対戦前メッセージ</comment>
@@ -4407,7 +4419,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_DPLEADER8_TRMSG_2ND_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_DPLEADER8_TRMSG_2ND_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：デンジ
 ・２回戦用対戦前メッセージ</comment>
@@ -4417,7 +4429,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_DPLEADER8_TRMSG_3RD_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_DPLEADER8_TRMSG_3RD_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：デンジ
 ・決勝戦用対戦前メッセージ</comment>
@@ -4427,7 +4439,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_DPLEADER8_TRMSG_FIGHT_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_DPLEADER8_TRMSG_FIGHT_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：デンジ
 ・対戦後メッセージ</comment>
@@ -4437,7 +4449,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_DPLEADER8_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_DPLEADER8_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：デンジ
 ・プレイヤーが勝った場合のメッセージ</comment>
@@ -4447,7 +4459,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_DPLEADER8_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_DPLEADER8_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・ジムリーダー：デンジ
 ・プレイヤーが負けた場合のメッセージ</comment>
@@ -4457,17 +4469,17 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_DPLEADER8_TRMSG_OPENING_ANNOUNCE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_DPLEADER8_TRMSG_OPENING_ANNOUNCE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂：アナウンス
 ・ジムリーダー：デンジ
 ・前口上メッセージ</comment>
-		<language name="JPN" width="216">かりメッセージ
+		<language name="JPN" width="216">かがやき　しびれさせる　スター
 デンジ▼</language>
 		<language name="JPN_KANJI" width="216">仮メッセージ
 デンジ▼</language>
 	</row>
 
-	<row id="TRID_ASSISTANTM01_TRMSG_1ST_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_ASSISTANTM01_TRMSG_1ST_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>１回戦用対戦前メッセージ</comment>
 		<language name="JPN" width="216">１かいせん
 かりメッセージ▼</language>
@@ -4475,7 +4487,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_ASSISTANTM01_TRMSG_2ND_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_ASSISTANTM01_TRMSG_2ND_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>２回戦用対戦前メッセージ</comment>
 		<language name="JPN" width="216">２かいせん
 かりメッセージ▼</language>
@@ -4483,7 +4495,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_ASSISTANTM01_TRMSG_3RD_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_ASSISTANTM01_TRMSG_3RD_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>決勝戦用対戦前メッセージ</comment>
 		<language name="JPN" width="216">けっしょうせん
 かりメッセージ▼</language>
@@ -4491,7 +4503,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_ASSISTANTM01_TRMSG_FIGHT_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_ASSISTANTM01_TRMSG_FIGHT_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>対戦後メッセージ</comment>
 		<language name="JPN" width="216">たいせんご
 かりメッセージ▼</language>
@@ -4499,7 +4511,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_ASSISTANTM01_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_ASSISTANTM01_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>プレイヤーが勝った場合のメッセージ</comment>
 		<language name="JPN" width="216">プレイヤーしょうり
 かりメッセージ▼</language>
@@ -4507,7 +4519,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_ASSISTANTM01_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_ASSISTANTM01_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>プレイヤーが負けた場合のメッセージ</comment>
 		<language name="JPN" width="216">プレイヤーまけ
 かりメッセージ▼</language>
@@ -4515,7 +4527,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_ASSISTANTM01_TRMSG_OPENING_ANNOUNCE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_ASSISTANTM01_TRMSG_OPENING_ANNOUNCE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>前口上メッセージ</comment>
 		<language name="JPN" width="216">かりメッセージ
 どくモブトレーナー　けんきゅういん♂▼</language>
@@ -4523,7 +4535,7 @@
 毒モブトレーナー　研究員♂▼</language>
 	</row>
 
-	<row id="TRID_MOUNTMAN01_TRMSG_1ST_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_MOUNTMAN01_TRMSG_1ST_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>１回戦用対戦前メッセージ</comment>
 		<language name="JPN" width="216">１かいせん
 かりメッセージ▼</language>
@@ -4531,7 +4543,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_MOUNTMAN01_TRMSG_2ND_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_MOUNTMAN01_TRMSG_2ND_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>２回戦用対戦前メッセージ</comment>
 		<language name="JPN" width="216">２かいせん
 かりメッセージ▼</language>
@@ -4539,7 +4551,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_MOUNTMAN01_TRMSG_3RD_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_MOUNTMAN01_TRMSG_3RD_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>決勝戦用対戦前メッセージ</comment>
 		<language name="JPN" width="216">けっしょうせん
 かりメッセージ▼</language>
@@ -4547,7 +4559,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_MOUNTMAN01_TRMSG_FIGHT_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_MOUNTMAN01_TRMSG_FIGHT_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>対戦後メッセージ</comment>
 		<language name="JPN" width="216">たいせんご
 かりメッセージ▼</language>
@@ -4555,7 +4567,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_MOUNTMAN01_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_MOUNTMAN01_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>プレイヤーが勝った場合のメッセージ</comment>
 		<language name="JPN" width="216">プレイヤーしょうり
 かりメッセージ▼</language>
@@ -4563,7 +4575,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_MOUNTMAN01_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_MOUNTMAN01_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>プレイヤーが負けた場合のメッセージ</comment>
 		<language name="JPN" width="216">プレイヤーまけ
 かりメッセージ▼</language>
@@ -4571,7 +4583,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_MOUNTMAN01_TRMSG_OPENING_ANNOUNCE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_MOUNTMAN01_TRMSG_OPENING_ANNOUNCE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>前口上メッセージ</comment>
 		<language name="JPN" width="216">かりメッセージ
 じめんモブトレーナー　やまおとこ▼</language>
@@ -4579,7 +4591,7 @@
 地面モブトレーナー　山男▼</language>
 	</row>
 
-	<row id="TRID_ESPW01_TRMSG_1ST_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_ESPW01_TRMSG_1ST_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>１回戦用対戦前メッセージ</comment>
 		<language name="JPN" width="216">１かいせん
 かりメッセージ▼</language>
@@ -4587,7 +4599,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_ESPW01_TRMSG_2ND_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_ESPW01_TRMSG_2ND_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>２回戦用対戦前メッセージ</comment>
 		<language name="JPN" width="216">２かいせん
 かりメッセージ▼</language>
@@ -4595,7 +4607,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_ESPW01_TRMSG_3RD_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_ESPW01_TRMSG_3RD_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>決勝戦用対戦前メッセージ</comment>
 		<language name="JPN" width="216">けっしょうせん
 かりメッセージ▼</language>
@@ -4603,7 +4615,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_ESPW01_TRMSG_FIGHT_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_ESPW01_TRMSG_FIGHT_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>対戦後メッセージ</comment>
 		<language name="JPN" width="216">たいせんご
 かりメッセージ▼</language>
@@ -4611,7 +4623,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_ESPW01_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_ESPW01_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>プレイヤーが勝った場合のメッセージ</comment>
 		<language name="JPN" width="216">プレイヤーしょうり
 かりメッセージ▼</language>
@@ -4619,7 +4631,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_ESPW01_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_ESPW01_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>プレイヤーが負けた場合のメッセージ</comment>
 		<language name="JPN" width="216">プレイヤーまけ
 かりメッセージ▼</language>
@@ -4627,7 +4639,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_ESPW01_TRMSG_OPENING_ANNOUNCE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_ESPW01_TRMSG_OPENING_ANNOUNCE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>前口上メッセージ</comment>
 		<language name="JPN" width="216">かりメッセージ
 エスパーモブトレーナー　サイキッカー♀▼</language>
@@ -4635,7 +4647,7 @@
 エスパーモブトレーナー　サイキッカー♀▼</language>
 	</row>
 
-	<row id="TRID_VETERANM01_TRMSG_1ST_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_VETERANM01_TRMSG_1ST_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>１回戦用対戦前メッセージ</comment>
 		<language name="JPN" width="216">１かいせん
 かりメッセージ▼</language>
@@ -4643,7 +4655,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_VETERANM01_TRMSG_2ND_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_VETERANM01_TRMSG_2ND_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>２回戦用対戦前メッセージ</comment>
 		<language name="JPN" width="216">２かいせん
 かりメッセージ▼</language>
@@ -4651,7 +4663,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_VETERANM01_TRMSG_3RD_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_VETERANM01_TRMSG_3RD_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>決勝戦用対戦前メッセージ</comment>
 		<language name="JPN" width="216">けっしょうせん
 かりメッセージ▼</language>
@@ -4659,7 +4671,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_VETERANM01_TRMSG_FIGHT_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_VETERANM01_TRMSG_FIGHT_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>対戦後メッセージ</comment>
 		<language name="JPN" width="216">たいせんご
 かりメッセージ▼</language>
@@ -4667,7 +4679,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_VETERANM01_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_VETERANM01_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>プレイヤーが勝った場合のメッセージ</comment>
 		<language name="JPN" width="216">プレイヤーしょうり
 かりメッセージ▼</language>
@@ -4675,7 +4687,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_VETERANM01_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_VETERANM01_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>プレイヤーが負けた場合のメッセージ</comment>
 		<language name="JPN" width="216">プレイヤーまけ
 かりメッセージ▼</language>
@@ -4683,7 +4695,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_VETERANM01_TRMSG_OPENING_ANNOUNCE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_VETERANM01_TRMSG_OPENING_ANNOUNCE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>前口上メッセージ</comment>
 		<language name="JPN" width="216">かりメッセージ
 むしモブトレーナー　ベテラントレーナー♂▼</language>
@@ -4691,7 +4703,7 @@
 虫モブトレーナー　ベテラントレーナー♂▼</language>
 	</row>
 
-	<row id="TRID_ESPM01_TRMSG_1ST_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_ESPM01_TRMSG_1ST_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>１回戦用対戦前メッセージ</comment>
 		<language name="JPN" width="216">１かいせん
 かりメッセージ▼</language>
@@ -4699,7 +4711,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_ESPM01_TRMSG_2ND_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_ESPM01_TRMSG_2ND_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>２回戦用対戦前メッセージ</comment>
 		<language name="JPN" width="216">２かいせん
 かりメッセージ▼</language>
@@ -4707,7 +4719,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_ESPM01_TRMSG_3RD_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_ESPM01_TRMSG_3RD_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>決勝戦用対戦前メッセージ</comment>
 		<language name="JPN" width="216">けっしょうせん
 かりメッセージ▼</language>
@@ -4715,7 +4727,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_ESPM01_TRMSG_FIGHT_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_ESPM01_TRMSG_FIGHT_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>対戦後メッセージ</comment>
 		<language name="JPN" width="216">たいせんご
 かりメッセージ▼</language>
@@ -4723,7 +4735,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_ESPM01_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_ESPM01_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>プレイヤーが勝った場合のメッセージ</comment>
 		<language name="JPN" width="216">プレイヤーしょうり
 かりメッセージ▼</language>
@@ -4731,7 +4743,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_ESPM01_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_ESPM01_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>プレイヤーが負けた場合のメッセージ</comment>
 		<language name="JPN" width="216">プレイヤーまけ
 かりメッセージ▼</language>
@@ -4739,7 +4751,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_ESPM01_TRMSG_OPENING_ANNOUNCE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_ESPM01_TRMSG_OPENING_ANNOUNCE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>前口上メッセージ</comment>
 		<language name="JPN" width="216">かりメッセージ
 ゴーストモブトレーナー　サイキッカー♂▼</language>
@@ -4747,7 +4759,7 @@
 ゴーストモブトレーナー　サイキッカー♂▼</language>
 	</row>
 
-	<row id="TRID_TRAINERM01_TRMSG_1ST_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_TRAINERM01_TRMSG_1ST_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>１回戦用対戦前メッセージ</comment>
 		<language name="JPN" width="216">１かいせん
 かりメッセージ▼</language>
@@ -4755,7 +4767,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_TRAINERM01_TRMSG_2ND_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_TRAINERM01_TRMSG_2ND_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>２回戦用対戦前メッセージ</comment>
 		<language name="JPN" width="216">２かいせん
 かりメッセージ▼</language>
@@ -4763,7 +4775,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_TRAINERM01_TRMSG_3RD_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_TRAINERM01_TRMSG_3RD_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>決勝戦用対戦前メッセージ</comment>
 		<language name="JPN" width="216">けっしょうせん
 かりメッセージ▼</language>
@@ -4771,7 +4783,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_TRAINERM01_TRMSG_FIGHT_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_TRAINERM01_TRMSG_FIGHT_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>対戦後メッセージ</comment>
 		<language name="JPN" width="216">たいせんご
 かりメッセージ▼</language>
@@ -4779,7 +4791,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_TRAINERM01_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_TRAINERM01_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>プレイヤーが勝った場合のメッセージ</comment>
 		<language name="JPN" width="216">プレイヤーしょうり
 かりメッセージ▼</language>
@@ -4787,7 +4799,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_TRAINERM01_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_TRAINERM01_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>プレイヤーが負けた場合のメッセージ</comment>
 		<language name="JPN" width="216">プレイヤーまけ
 かりメッセージ▼</language>
@@ -4795,7 +4807,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_TRAINERM01_TRMSG_OPENING_ANNOUNCE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_TRAINERM01_TRMSG_OPENING_ANNOUNCE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>前口上メッセージ</comment>
 		<language name="JPN" width="216">かりメッセージ
 ドラゴンモブトレーナー　エリートトレーナー♂▼</language>
@@ -4803,7 +4815,7 @@
 ドラゴンモブトレーナー　エリートトレーナー♂▼</language>
 	</row>
 
-	<row id="TRID_VETERANW01_TRMSG_1ST_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_VETERANW01_TRMSG_1ST_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>１回戦用対戦前メッセージ</comment>
 		<language name="JPN" width="216">１かいせん
 かりメッセージ▼</language>
@@ -4811,7 +4823,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_VETERANW01_TRMSG_2ND_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_VETERANW01_TRMSG_2ND_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>２回戦用対戦前メッセージ</comment>
 		<language name="JPN" width="216">２かいせん
 かりメッセージ▼</language>
@@ -4819,7 +4831,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_VETERANW01_TRMSG_3RD_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_VETERANW01_TRMSG_3RD_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>決勝戦用対戦前メッセージ</comment>
 		<language name="JPN" width="216">けっしょうせん
 かりメッセージ▼</language>
@@ -4827,7 +4839,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_VETERANW01_TRMSG_FIGHT_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_VETERANW01_TRMSG_FIGHT_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>対戦後メッセージ</comment>
 		<language name="JPN" width="216">たいせんご
 かりメッセージ▼</language>
@@ -4835,7 +4847,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_VETERANW01_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_VETERANW01_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>プレイヤーが勝った場合のメッセージ</comment>
 		<language name="JPN" width="216">プレイヤーしょうり
 かりメッセージ▼</language>
@@ -4843,7 +4855,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_VETERANW01_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_VETERANW01_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>プレイヤーが負けた場合のメッセージ</comment>
 		<language name="JPN" width="216">プレイヤーまけ
 かりメッセージ▼</language>
@@ -4851,7 +4863,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_VETERANW01_TRMSG_OPENING_ANNOUNCE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_VETERANW01_TRMSG_OPENING_ANNOUNCE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>前口上メッセージ</comment>
 		<language name="JPN" width="216">かりメッセージ
 はがねモブトレーナー　ベテラントレーナー♀▼</language>
@@ -4859,7 +4871,7 @@
 はがねモブトレーナー　ベテラントレーナー♀▼</language>
 	</row>
 
-	<row id="TRID_VETERANM02_TRMSG_1ST_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_VETERANM02_TRMSG_1ST_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>１回戦用対戦前メッセージ</comment>
 		<language name="JPN" width="216">１かいせん
 かりメッセージ▼</language>
@@ -4867,7 +4879,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_VETERANM02_TRMSG_2ND_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_VETERANM02_TRMSG_2ND_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>２回戦用対戦前メッセージ</comment>
 		<language name="JPN" width="216">２かいせん
 かりメッセージ▼</language>
@@ -4875,7 +4887,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_VETERANM02_TRMSG_3RD_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_VETERANM02_TRMSG_3RD_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>決勝戦用対戦前メッセージ</comment>
 		<language name="JPN" width="216">けっしょうせん
 かりメッセージ▼</language>
@@ -4883,7 +4895,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_VETERANM02_TRMSG_FIGHT_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_VETERANM02_TRMSG_FIGHT_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>対戦後メッセージ</comment>
 		<language name="JPN" width="216">たいせんご
 かりメッセージ▼</language>
@@ -4891,7 +4903,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_VETERANM02_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_VETERANM02_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>プレイヤーが勝った場合のメッセージ</comment>
 		<language name="JPN" width="216">プレイヤーしょうり
 かりメッセージ▼</language>
@@ -4899,7 +4911,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_VETERANM02_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_VETERANM02_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>プレイヤーが負けた場合のメッセージ</comment>
 		<language name="JPN" width="216">プレイヤーまけ
 かりメッセージ▼</language>
@@ -4907,7 +4919,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_VETERANM02_TRMSG_OPENING_ANNOUNCE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_VETERANM02_TRMSG_OPENING_ANNOUNCE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>前口上メッセージ</comment>
 		<language name="JPN" width="216">かりメッセージ
 あくモブトレーナー　ベテラントレーナー♂▼</language>
@@ -4915,7 +4927,7 @@
 あくモブトレーナー　ベテラントレーナー♂▼</language>
 	</row>
 
-	<row id="TRID_VETERANW02_TRMSG_1ST_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_VETERANW02_TRMSG_1ST_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>１回戦用対戦前メッセージ</comment>
 		<language name="JPN" width="216">１かいせん
 かりメッセージ▼</language>
@@ -4923,7 +4935,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_VETERANW02_TRMSG_2ND_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_VETERANW02_TRMSG_2ND_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>２回戦用対戦前メッセージ</comment>
 		<language name="JPN" width="216">２かいせん
 かりメッセージ▼</language>
@@ -4931,7 +4943,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_VETERANW02_TRMSG_3RD_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_VETERANW02_TRMSG_3RD_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>決勝戦用対戦前メッセージ</comment>
 		<language name="JPN" width="216">けっしょうせん
 かりメッセージ▼</language>
@@ -4939,7 +4951,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_VETERANW02_TRMSG_FIGHT_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_VETERANW02_TRMSG_FIGHT_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>対戦後メッセージ</comment>
 		<language name="JPN" width="216">たいせんご
 かりメッセージ▼</language>
@@ -4947,7 +4959,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_VETERANW02_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_VETERANW02_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>プレイヤーが勝った場合のメッセージ</comment>
 		<language name="JPN" width="216">プレイヤーしょうり
 かりメッセージ▼</language>
@@ -4955,7 +4967,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_VETERANW02_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_VETERANW02_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>プレイヤーが負けた場合のメッセージ</comment>
 		<language name="JPN" width="216">プレイヤーまけ
 かりメッセージ▼</language>
@@ -4963,7 +4975,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_VETERANW02_TRMSG_OPENING_ANNOUNCE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_VETERANW02_TRMSG_OPENING_ANNOUNCE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>前口上メッセージ</comment>
 		<language name="JPN" width="216">かりメッセージ
 あくモブトレーナー　ベテラントレーナー♀▼</language>
@@ -4971,7 +4983,7 @@
 あくモブトレーナー　ベテラントレーナー♀▼</language>
 	</row>
 
-	<row id="TRID_TRAINERW01_TRMSG_1ST_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_TRAINERW01_TRMSG_1ST_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>１回戦用対戦前メッセージ</comment>
 		<language name="JPN" width="216">１かいせん
 かりメッセージ▼</language>
@@ -4979,7 +4991,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_TRAINERW01_TRMSG_2ND_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_TRAINERW01_TRMSG_2ND_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>２回戦用対戦前メッセージ</comment>
 		<language name="JPN" width="216">２かいせん
 かりメッセージ▼</language>
@@ -4987,7 +4999,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_TRAINERW01_TRMSG_3RD_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_TRAINERW01_TRMSG_3RD_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>決勝戦用対戦前メッセージ</comment>
 		<language name="JPN" width="216">けっしょうせん
 かりメッセージ▼</language>
@@ -4995,7 +5007,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_TRAINERW01_TRMSG_FIGHT_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_TRAINERW01_TRMSG_FIGHT_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>対戦後メッセージ</comment>
 		<language name="JPN" width="216">たいせんご
 かりメッセージ▼</language>
@@ -5003,7 +5015,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_TRAINERW01_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_TRAINERW01_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>プレイヤーが勝った場合のメッセージ</comment>
 		<language name="JPN" width="216">プレイヤーしょうり
 かりメッセージ▼</language>
@@ -5011,7 +5023,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_TRAINERW01_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_TRAINERW01_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>プレイヤーが負けた場合のメッセージ</comment>
 		<language name="JPN" width="216">プレイヤーまけ
 かりメッセージ▼</language>
@@ -5019,7 +5031,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_TRAINERW01_TRMSG_OPENING_ANNOUNCE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_TRAINERW01_TRMSG_OPENING_ANNOUNCE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>前口上メッセージ</comment>
 		<language name="JPN" width="216">かりメッセージ
 あくモブトレーナー　エリートトレーナー♀▼</language>
@@ -5027,7 +5039,7 @@
 あくモブトレーナー　エリートトレーナー♀▼</language>
 	</row>
 
-	<row id="TRID_HERO_TRMSG_1ST_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_HERO_TRMSG_1ST_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>１回戦用対戦前メッセージ</comment>
 		<language name="JPN" width="216">１かいせん
 かりメッセージ▼</language>
@@ -5035,7 +5047,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_HERO_TRMSG_2ND_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_HERO_TRMSG_2ND_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>２回戦用対戦前メッセージ</comment>
 		<language name="JPN" width="216">２かいせん
 かりメッセージ▼</language>
@@ -5043,7 +5055,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_HERO_TRMSG_3RD_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_HERO_TRMSG_3RD_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>決勝戦用対戦前メッセージ</comment>
 		<language name="JPN" width="216">けっしょうせん
 かりメッセージ▼</language>
@@ -5051,7 +5063,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_HERO_TRMSG_FIGHT_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_HERO_TRMSG_FIGHT_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>対戦後メッセージ</comment>
 		<language name="JPN" width="216">たいせんご
 かりメッセージ▼</language>
@@ -5059,7 +5071,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_HERO_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_HERO_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>プレイヤーが勝った場合のメッセージ</comment>
 		<language name="JPN" width="216">プレイヤーしょうり
 かりメッセージ▼</language>
@@ -5067,7 +5079,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_HERO_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_HERO_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>プレイヤーが負けた場合のメッセージ</comment>
 		<language name="JPN" width="216">プレイヤーまけ
 かりメッセージ▼</language>
@@ -5075,7 +5087,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_HERO_TRMSG_OPENING_ANNOUNCE" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="TRID_HERO_TRMSG_OPENING_ANNOUNCE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>前口上メッセージ</comment>
 		<language name="JPN" width="216">かりメッセージ
 男主人公▼</language>
@@ -5083,7 +5095,7 @@
 男主人公▼</language>
 	</row>
 
-	<row id="TRID_HEROINE_TRMSG_1ST_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_HEROINE_TRMSG_1ST_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>１回戦用対戦前メッセージ</comment>
 		<language name="JPN" width="216">１かいせん
 かりメッセージ▼</language>
@@ -5091,7 +5103,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_HEROINE_TRMSG_2ND_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_HEROINE_TRMSG_2ND_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>２回戦用対戦前メッセージ</comment>
 		<language name="JPN" width="216">２かいせん
 かりメッセージ▼</language>
@@ -5099,7 +5111,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_HEROINE_TRMSG_3RD_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_HEROINE_TRMSG_3RD_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>決勝戦用対戦前メッセージ</comment>
 		<language name="JPN" width="216">けっしょうせん
 かりメッセージ▼</language>
@@ -5107,7 +5119,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_HEROINE_TRMSG_FIGHT_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_HEROINE_TRMSG_FIGHT_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>対戦後メッセージ</comment>
 		<language name="JPN" width="216">たいせんご
 かりメッセージ▼</language>
@@ -5115,7 +5127,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_HEROINE_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_HEROINE_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>プレイヤーが勝った場合のメッセージ</comment>
 		<language name="JPN" width="216">プレイヤーしょうり
 かりメッセージ▼</language>
@@ -5123,7 +5135,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_HEROINE_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_HEROINE_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>プレイヤーが負けた場合のメッセージ</comment>
 		<language name="JPN" width="216">プレイヤーまけ
 かりメッセージ▼</language>
@@ -5131,7 +5143,7 @@
 仮メッセージ▼</language>
 	</row>
 
-	<row id="TRID_HEROINE_TRMSG_OPENING_ANNOUNCE" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="TRID_HEROINE_TRMSG_OPENING_ANNOUNCE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>前口上メッセージ</comment>
 		<language name="JPN" width="216">かりメッセージ
 女主人公▼</language>
