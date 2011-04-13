@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00253" date="2011-04-06T11:47:52"/>
+	<create user="matsumiya" host="W00224" date="2011-04-13T21:22:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -408,15 +408,15 @@
 		</language>
 	</columns>
 
-	<dialog left="609" top="151" right="1314" bottom="771" maximized="no" rayout="Vertical2">
+	<dialog left="1584" top="100" right="2255" bottom="720" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="496"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="509"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<band id="4" index="0" style="0000" width="663"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -437,7 +437,7 @@
 	</lock>
 
 
-	<row id="msg_wbt_tournament_00" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+	<row id="msg_wbt_tournament_00" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>エントリ直後、
 １回戦用メッセージの前に表示
 </comment>
@@ -448,7 +448,7 @@
 [1:3C:未設定タグ:1]▼</language>
 	</row>
 
-	<row id="msg_wbt_tournament_01" back-color="#80ffff,,,,,,,#80ffff,,,#80ffff,,,#80ffff,,,#80ffff,,">
+	<row id="msg_wbt_tournament_01" back-color="#80ffff,,,,,,,,,,,,,,,,,,">
 		<comment>１回戦用メッセージ
 つづいて対応した寸評へ</comment>
 		<attribute name="キャラ指定">アナウンス</attribute>
@@ -458,7 +458,7 @@
 [1:00:トレーナー名:0]　VS　[1:00:トレーナー名:1]▼</language>
 	</row>
 
-	<row id="msg_wbt_tournament_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+	<row id="msg_wbt_tournament_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>２回戦用メッセージ
 つづいて対応した寸評へ</comment>
 		<attribute name="キャラ指定">アナウンス</attribute>
@@ -468,7 +468,7 @@
 [1:00:トレーナー名:0]　VS　[1:00:トレーナー名:1]▼</language>
 	</row>
 
-	<row id="msg_wbt_tournament_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+	<row id="msg_wbt_tournament_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>決勝戦用メッセージ
 つづいて対応した寸評へ</comment>
 		<attribute name="キャラ指定">アナウンス</attribute>
@@ -478,284 +478,284 @@
 [1:00:トレーナー名:0]　VS　[1:00:トレーナー名:1]▼</language>
 	</row>
 
-	<row id="msg_wbt_comment_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_wbt_comment_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>寸評メッセージ１
 優先順位に２以上差がある場合</comment>
 		<attribute name="キャラ指定">寸評
 アナウンス</attribute>
-		<language name="JPN" width="256">いっぽうてきな　しあいの　けっか
-[1:00:トレーナー名:0]の　しょうり！▼</language>
-		<language name="JPN_KANJI" width="256">一方的な　試合の　結果
-[1:00:トレーナー名:0]の　勝利！▼</language>
+		<language name="JPN" width="256">しあいは　いっぽうてきッ！
+かったのは　[1:00:トレーナー名:0]！！▼</language>
+		<language name="JPN_KANJI" width="256">試合は　一方的ッ！
+勝ったのは　[1:00:トレーナー名:0]！！▼</language>
 	</row>
 
-	<row id="msg_wbt_comment_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_wbt_comment_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>寸評メッセージ１
 優先順位に２以上差がある場合</comment>
 		<attribute name="キャラ指定">寸評
 アナウンス</attribute>
-		<language name="JPN" width="256">いっぽうてきな　しあいの　けっか
-[1:00:トレーナー名:0]の　しょうり！▼</language>
-		<language name="JPN_KANJI" width="256">一方的な　試合の　結果
-[1:00:トレーナー名:0]の　勝利！▼</language>
+		<language name="JPN" width="256">まさに　ワンサイドゲームッ！
+[1:00:トレーナー名:0]の　しょうり！！▼</language>
+		<language name="JPN_KANJI" width="256">まさに　ワンサイドゲームッ！
+[1:00:トレーナー名:0]の　勝利！！▼</language>
 	</row>
 
-	<row id="msg_wbt_comment_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_wbt_comment_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>寸評メッセージ１
 優先順位に２以上差がある場合</comment>
 		<attribute name="キャラ指定">寸評
 アナウンス</attribute>
-		<language name="JPN" width="256">いっぽうてきな　しあいの　けっか
-[1:00:トレーナー名:0]の　しょうり！▼</language>
-		<language name="JPN_KANJI" width="256">一方的な　試合の　結果
-[1:00:トレーナー名:0]の　勝利！▼</language>
+		<language name="JPN" width="256">なにも　させないまま　しょうりを
+てにしたのは　[1:00:トレーナー名:0]　だーッ！！▼</language>
+		<language name="JPN_KANJI" width="256">なにも　させないまま　勝利を
+手にしたのは　[1:00:トレーナー名:0]　だーッ！！▼</language>
 	</row>
 
-	<row id="msg_wbt_comment_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_wbt_comment_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>寸評メッセージ１
 優先順位に２以上差がある場合</comment>
 		<attribute name="キャラ指定">寸評
 アナウンス</attribute>
-		<language name="JPN" width="256">いっぽうてきな　しあいの　けっか
-[1:00:トレーナー名:0]の　しょうり！▼</language>
-		<language name="JPN_KANJI" width="256">一方的な　試合の　結果
-[1:00:トレーナー名:0]の　勝利！▼</language>
+		<language name="JPN" width="256">ピンチらしい　ピンチも　ないまま
+[1:00:トレーナー名:0]が　よゆうの　しょうりッ！▼</language>
+		<language name="JPN_KANJI" width="256">ピンチらしい　ピンチも　ないまま
+[1:00:トレーナー名:0]が　余裕の　勝利ッ！▼</language>
 	</row>
 
-	<row id="msg_wbt_comment_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_wbt_comment_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>寸評メッセージ１
 優先順位に２以上差がある場合</comment>
 		<attribute name="キャラ指定">寸評
 アナウンス</attribute>
-		<language name="JPN" width="256">いっぽうてきな　しあいの　けっか
-[1:00:トレーナー名:0]の　しょうり！▼</language>
-		<language name="JPN_KANJI" width="256">一方的な　試合の　結果
-[1:00:トレーナー名:0]の　勝利！▼</language>
+		<language name="JPN" width="256">あっとうてきッ！
+[1:00:トレーナー名:0]の　あっしょう　ですッ！！▼</language>
+		<language name="JPN_KANJI" width="256">圧倒的ッ！
+[1:00:トレーナー名:0]の　圧勝ですッ！！▼</language>
 	</row>
 
-	<row id="msg_wbt_comment_06" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+	<row id="msg_wbt_comment_06" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>寸評メッセージ２
 優先順位に差が１ある場合</comment>
 		<attribute name="キャラ指定">寸評
 アナウンス</attribute>
-		<language name="JPN" width="256">いきも　つかせぬ　しあいの　すえ
-[1:00:トレーナー名:0]の　しょうり！▼</language>
-		<language name="JPN_KANJI" width="256">息もつかせぬ　試合の末
-[1:00:トレーナー名:0]の　勝利！▼</language>
+		<language name="JPN" width="256">てに　アセにぎる　しょうぶのすえ
+かったのは　[1:00:トレーナー名:0]　[1:00:トレーナー名:0]！▼</language>
+		<language name="JPN_KANJI" width="256">手に　汗握る　勝負の末
+勝ったのは　[1:00:トレーナー名:0]　[1:00:トレーナー名:0]！▼</language>
 	</row>
 
-	<row id="msg_wbt_comment_07" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+	<row id="msg_wbt_comment_07" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>寸評メッセージ２
 優先順位に差が１ある場合</comment>
 		<attribute name="キャラ指定">寸評
 アナウンス</attribute>
-		<language name="JPN" width="256">いきも　つかせぬ　しあいの　すえ
-[1:00:トレーナー名:0]の　しょうり！▼</language>
-		<language name="JPN_KANJI" width="256">息もつかせぬ　試合の末
-[1:00:トレーナー名:0]の　勝利！▼</language>
+		<language name="JPN" width="256">だいねっせん！　はくねつの　しあいに
+かった　トレーナーは　[1:00:トレーナー名:0]ッ！▼</language>
+		<language name="JPN_KANJI" width="256">大熱戦！　白熱の　試合に
+勝った　トレーナーは　[1:00:トレーナー名:0]ッ！▼</language>
 	</row>
 
-	<row id="msg_wbt_comment_08" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+	<row id="msg_wbt_comment_08" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>寸評メッセージ２
 優先順位に差が１ある場合</comment>
 		<attribute name="キャラ指定">寸評
 アナウンス</attribute>
-		<language name="JPN" width="256">いきも　つかせぬ　しあいの　すえ
-[1:00:トレーナー名:0]の　しょうり！▼</language>
-		<language name="JPN_KANJI" width="256">息もつかせぬ　試合の末
-[1:00:トレーナー名:0]の　勝利！▼</language>
+		<language name="JPN" width="256">わずかに　あいてを　うわまわったか？
+みごと　しょうりは　[1:00:トレーナー名:0]！！▼</language>
+		<language name="JPN_KANJI" width="256">わずかに　相手を　うわまわったか？
+みごと　勝利は　[1:00:トレーナー名:0]！！▼</language>
 	</row>
 
-	<row id="msg_wbt_comment_09" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+	<row id="msg_wbt_comment_09" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>寸評メッセージ２
 優先順位に差が１ある場合</comment>
 		<attribute name="キャラ指定">寸評
 アナウンス</attribute>
-		<language name="JPN" width="256">いきも　つかせぬ　しあいの　すえ
-[1:00:トレーナー名:0]の　しょうり！▼</language>
-		<language name="JPN_KANJI" width="256">息もつかせぬ　試合の末
-[1:00:トレーナー名:0]の　勝利！▼</language>
+		<language name="JPN" width="256">ねばる　あいてを　ふりきって
+[1:00:トレーナー名:0]が　かちましたァ！！▼</language>
+		<language name="JPN_KANJI" width="256">粘る　相手を　ふりきって
+[1:00:トレーナー名:0]が　勝ちましたァ！！▼</language>
 	</row>
 
-	<row id="msg_wbt_comment_10" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+	<row id="msg_wbt_comment_10" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>寸評メッセージ２
 優先順位に差が１ある場合</comment>
 		<attribute name="キャラ指定">寸評
 アナウンス</attribute>
-		<language name="JPN" width="256">いきも　つかせぬ　しあいの　すえ
-[1:00:トレーナー名:0]の　しょうり！▼</language>
-		<language name="JPN_KANJI" width="256">息もつかせぬ　試合の末
-[1:00:トレーナー名:0]の　勝利！▼</language>
+		<language name="JPN" width="256">おもわず　いきを　のむ　しあいに
+しょうりしたのは　[1:00:トレーナー名:0]ー！！▼</language>
+		<language name="JPN_KANJI" width="256">思わず　息を　飲む　試合に
+勝利したのは　[1:00:トレーナー名:0]ー！！▼</language>
 	</row>
 
-	<row id="msg_wbt_comment_11" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_wbt_comment_11" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>寸評メッセージ３
 優先順位が同じの場合</comment>
 		<attribute name="キャラ指定">寸評
 アナウンス</attribute>
-		<language name="JPN" width="256">おたがい　ゆずらぬ　せっせんの　すえ
-[1:00:トレーナー名:0]の　しょうり！▼</language>
-		<language name="JPN_KANJI" width="256">お互い　譲らぬ　接戦の末
-[1:00:トレーナー名:0]の　勝利！▼</language>
+		<language name="JPN" width="256">いじと　いじの　ぶつかりあいッ！
+わずかに　うわまわった　[1:00:トレーナー名:0]！▼</language>
+		<language name="JPN_KANJI" width="256">意地と　意地の　ぶつかりあいッ！
+わずかに　うわまわった　[1:00:トレーナー名:0]！▼</language>
 	</row>
 
-	<row id="msg_wbt_comment_12" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_wbt_comment_12" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>寸評メッセージ３
 優先順位が同じの場合</comment>
 		<attribute name="キャラ指定">寸評
 アナウンス</attribute>
-		<language name="JPN" width="256">おたがい　ゆずらぬ　せっせんの　すえ
-[1:00:トレーナー名:0]の　しょうり！▼</language>
-		<language name="JPN_KANJI" width="256">お互い　譲らぬ　接戦の末
-[1:00:トレーナー名:0]の　勝利！▼</language>
+		<language name="JPN" width="256">どちらが　かっても　おかしくない
+たたかいを　せいしたのは　[1:00:トレーナー名:0]！▼</language>
+		<language name="JPN_KANJI" width="256">どちらが　勝っても　おかしくない
+戦いを　制したのは　[1:00:トレーナー名:0]！▼</language>
 	</row>
 
-	<row id="msg_wbt_comment_13" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_wbt_comment_13" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>寸評メッセージ３
 優先順位が同じの場合</comment>
 		<attribute name="キャラ指定">寸評
 アナウンス</attribute>
-		<language name="JPN" width="256">おたがい　ゆずらぬ　せっせんの　すえ
-[1:00:トレーナー名:0]の　しょうり！▼</language>
-		<language name="JPN_KANJI" width="256">お互い　譲らぬ　接戦の末
-[1:00:トレーナー名:0]の　勝利！▼</language>
+		<language name="JPN" width="256">まさに　ごぶと　ごぶの　たたかい！
+いっぽ　ぬきんでたのは　[1:00:トレーナー名:0]！▼</language>
+		<language name="JPN_KANJI" width="256">まさに　五分と　五分の　戦い！
+一歩　抜きんでたのは　[1:00:トレーナー名:0]！▼</language>
 	</row>
 
-	<row id="msg_wbt_comment_14" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_wbt_comment_14" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>寸評メッセージ３
 優先順位が同じの場合</comment>
 		<attribute name="キャラ指定">寸評
 アナウンス</attribute>
-		<language name="JPN" width="256">おたがい　ゆずらぬ　せっせんの　すえ
-[1:00:トレーナー名:0]の　しょうり！▼</language>
-		<language name="JPN_KANJI" width="256">お互い　譲らぬ　接戦の末
-[1:00:トレーナー名:0]の　勝利！▼</language>
+		<language name="JPN" width="256">いっしん　いったいの　めいしょうぶ！
+かったのは　[1:00:トレーナー名:0]　だーッ！！▼</language>
+		<language name="JPN_KANJI" width="256">一進一退の　名勝負！
+勝ったのは　[1:00:トレーナー名:0]　だーッ！！▼</language>
 	</row>
 
-	<row id="msg_wbt_comment_15" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_wbt_comment_15" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>寸評メッセージ３
 優先順位が同じの場合</comment>
 		<attribute name="キャラ指定">寸評
 アナウンス</attribute>
-		<language name="JPN" width="256">おたがい　ゆずらぬ　せっせんの　すえ
-[1:00:トレーナー名:0]の　しょうり！▼</language>
-		<language name="JPN_KANJI" width="256">お互い　譲らぬ　接戦の末
-[1:00:トレーナー名:0]の　勝利！▼</language>
+		<language name="JPN" width="256">まさに　シーソォーゲームッ！
+せいしたのは　[1:00:トレーナー名:0]ッ！！▼</language>
+		<language name="JPN_KANJI" width="256">まさに　シーソォーゲームッ！
+制したのは　[1:00:トレーナー名:0]ッ！！▼</language>
 	</row>
 
-	<row id="msg_wbt_comment_16" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+	<row id="msg_wbt_comment_16" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>寸評メッセージ４
 優先順位が４・５同士の場合</comment>
 		<attribute name="キャラ指定">寸評
 アナウンス</attribute>
-		<language name="JPN" width="256">わざと　わざの　ぶつかりあいの　すえ
-[1:00:トレーナー名:0]の　しょうり！▼</language>
-		<language name="JPN_KANJI" width="256">技と　技の　ぶつかり合いの末
-[1:00:トレーナー名:0]の　勝利！▼</language>
+		<language name="JPN" width="256">この　たたかいを　みれて　しあわせ！
+[1:00:トレーナー名:0]を　たたえようッ！！▼</language>
+		<language name="JPN_KANJI" width="256">この　戦いを　みれて　しあわせ！
+[1:00:トレーナー名:0]を　称えようッ！！▼</language>
 	</row>
 
-	<row id="msg_wbt_comment_17" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+	<row id="msg_wbt_comment_17" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>寸評メッセージ４
 優先順位が４・５同士の場合</comment>
 		<attribute name="キャラ指定">寸評
 アナウンス</attribute>
-		<language name="JPN" width="256">わざと　わざの　ぶつかりあいの　すえ
-[1:00:トレーナー名:0]の　しょうり！▼</language>
-		<language name="JPN_KANJI" width="256">技と　技の　ぶつかり合いの末
-[1:00:トレーナー名:0]の　勝利！▼</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]の　かち！　トレーナーと
+ポケモンは　ここまで　つよくなれる！▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　勝ち！　トレーナーと
+ポケモンは　ここまで　強くなれる！▼</language>
 	</row>
 
-	<row id="msg_wbt_comment_18" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+	<row id="msg_wbt_comment_18" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>寸評メッセージ４
 優先順位が４・５同士の場合</comment>
 		<attribute name="キャラ指定">寸評
 アナウンス</attribute>
-		<language name="JPN" width="256">わざと　わざの　ぶつかりあいの　すえ
-[1:00:トレーナー名:0]の　しょうり！▼</language>
-		<language name="JPN_KANJI" width="256">技と　技の　ぶつかり合いの末
-[1:00:トレーナー名:0]の　勝利！▼</language>
+		<language name="JPN" width="256">これが　ちょうじょうけっせん　か！？
+かった　[1:00:トレーナー名:0]は　なにものッ！？▼</language>
+		<language name="JPN_KANJI" width="256">これが　頂上決戦か！？
+勝った　[1:00:トレーナー名:0]は　何者ッ！？▼</language>
 	</row>
 
-	<row id="msg_wbt_comment_19" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+	<row id="msg_wbt_comment_19" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>寸評メッセージ４
 優先順位が４・５同士の場合</comment>
 		<attribute name="キャラ指定">寸評
 アナウンス</attribute>
-		<language name="JPN" width="256">わざと　わざの　ぶつかりあいの　すえ
-[1:00:トレーナー名:0]の　しょうり！▼</language>
-		<language name="JPN_KANJI" width="256">技と　技の　ぶつかり合いの末
-[1:00:トレーナー名:0]の　勝利！▼</language>
+		<language name="JPN" width="256">そうぜつな　ポケモンしょうぶ……
+のこったのは　[1:00:トレーナー名:0]　だーッ！！▼</language>
+		<language name="JPN_KANJI" width="256">壮絶な　ポケモン勝負……
+残ったのは　[1:00:トレーナー名:0]　だーッ！！▼</language>
 	</row>
 
-	<row id="msg_wbt_comment_20" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+	<row id="msg_wbt_comment_20" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>寸評メッセージ４
 優先順位が４・５同士の場合</comment>
 		<attribute name="キャラ指定">寸評
 アナウンス</attribute>
-		<language name="JPN" width="256">わざと　わざの　ぶつかりあいの　すえ
-[1:00:トレーナー名:0]の　しょうり！▼</language>
-		<language name="JPN_KANJI" width="256">技と　技の　ぶつかり合いの末
-[1:00:トレーナー名:0]の　勝利！▼</language>
+		<language name="JPN" width="256">れきしに　きざまれる　たたかいッ！
+なまえを　のこすのは　[1:00:トレーナー名:0]ッ！▼</language>
+		<language name="JPN_KANJI" width="256">歴史に　刻まれる　戦いッ！
+名前を　残すのは　[1:00:トレーナー名:0]ッ！▼</language>
 	</row>
 
-	<row id="msg_wbt_comment_21" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_wbt_comment_21" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>寸評メッセージ５
 優先順位が同じで
 不利なタイプで勝利した場合</comment>
 		<attribute name="キャラ指定">寸評
 アナウンス</attribute>
-		<language name="JPN" width="256">ふりな　じょうきょうを　ぎゃくてんして
-[1:00:トレーナー名:0]の　しょうり！▼</language>
-		<language name="JPN_KANJI" width="256">不利な状況を　逆転して
-[1:00:トレーナー名:0]の　勝利！▼</language>
+		<language name="JPN" width="256">まさに　だいぎゃくてん！？　あいてを
+うちやぶったのは　[1:00:トレーナー名:0]！！▼</language>
+		<language name="JPN_KANJI" width="256">まさに　大逆転！？　相手を
+打ち破ったのは　[1:00:トレーナー名:0]！！▼</language>
 	</row>
 
-	<row id="msg_wbt_comment_22" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_wbt_comment_22" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>寸評メッセージ５
 優先順位が同じで
 不利なタイプで勝利した場合</comment>
 		<attribute name="キャラ指定">寸評
 アナウンス</attribute>
-		<language name="JPN" width="256">ふりな　じょうきょうを　ぎゃくてんして
-[1:00:トレーナー名:0]の　しょうり！▼</language>
-		<language name="JPN_KANJI" width="256">不利な状況を　逆転して
-[1:00:トレーナー名:0]の　勝利！▼</language>
+		<language name="JPN" width="256">よそうを　うらぎり　しょうりを
+てにした　[1:00:トレーナー名:0]に　エールをッ！▼</language>
+		<language name="JPN_KANJI" width="256">予想を　裏切り　勝利した
+[1:00:トレーナー名:0]に　エールをッ！▼</language>
 	</row>
 
-	<row id="msg_wbt_comment_23" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_wbt_comment_23" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>寸評メッセージ５
 優先順位が同じで
 不利なタイプで勝利した場合</comment>
 		<attribute name="キャラ指定">寸評
 アナウンス</attribute>
-		<language name="JPN" width="256">ふりな　じょうきょうを　ぎゃくてんして
-[1:00:トレーナー名:0]の　しょうり！▼</language>
-		<language name="JPN_KANJI" width="256">不利な状況を　逆転して
-[1:00:トレーナー名:0]の　勝利！▼</language>
+		<language name="JPN" width="256">けいせいを　くつがえしての　しょうり
+あっぱれ　[1:00:トレーナー名:0]　[1:00:トレーナー名:0]！▼</language>
+		<language name="JPN_KANJI" width="256">形勢を　くつがえしての　勝利
+あっぱれ　[1:00:トレーナー名:0]　[1:00:トレーナー名:0]！▼</language>
 	</row>
 
-	<row id="msg_wbt_comment_24" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_wbt_comment_24" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>寸評メッセージ５
 優先順位が同じで
 不利なタイプで勝利した場合</comment>
 		<attribute name="キャラ指定">寸評
 アナウンス</attribute>
-		<language name="JPN" width="256">ふりな　じょうきょうを　ぎゃくてんして
-[1:00:トレーナー名:0]の　しょうり！▼</language>
-		<language name="JPN_KANJI" width="256">不利な状況を　逆転して
-[1:00:トレーナー名:0]の　勝利！▼</language>
+		<language name="JPN" width="256">しょうりの　めがみが　ほほえんだか？
+ぎゃくてん　したのは　[1:00:トレーナー名:0]！▼</language>
+		<language name="JPN_KANJI" width="256">勝利の　女神が　ほほえんだか？
+逆転したのは　[1:00:トレーナー名:0]！▼</language>
 	</row>
 
-	<row id="msg_wbt_comment_25" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_wbt_comment_25" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>寸評メッセージ５
 優先順位が同じで
 不利なタイプで勝利した場合</comment>
 		<attribute name="キャラ指定">寸評
 アナウンス</attribute>
-		<language name="JPN" width="256">ふりな　じょうきょうを　ぎゃくてんして
-[1:00:トレーナー名:0]の　しょうり！▼</language>
-		<language name="JPN_KANJI" width="256">不利な状況を　逆転して
-[1:00:トレーナー名:0]の　勝利！▼</language>
+		<language name="JPN" width="256">ピンチを　ものともしない　タフな
+トレーナーが　[1:00:トレーナー名:0]　だッ！！▼</language>
+		<language name="JPN_KANJI" width="256">ピンチを　ものともしない　タフな
+トレーナーが　[1:00:トレーナー名:0]　だッ！！▼</language>
 	</row>
 
 	<flowchart-group-list>
