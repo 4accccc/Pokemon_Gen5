@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-13T11:14:53"/>
+	<create user="tamada" host="W00253" date="2011-04-13T15:00:38"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -378,7 +378,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="6" top="97" right="711" bottom="717" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -943,6 +943,59 @@ msg_wbt_info_11へ</comment>
 		<attribute name="キャラ指定">選択肢表示</attribute>
 		<language name="JPN" width="256">はがね</language>
 		<language name="JPN_KANJI" width="256">はがね</language>
+	</row>
+
+	<row id="msg_wbt_pc_menu_01" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<comment>WBTエントリチェッカー
+優勝記録確認画面へ</comment>
+		<attribute name="キャラ指定">選択肢表示</attribute>
+		<language name="JPN" width="256">ゆうしょうきろく</language>
+		<language name="JPN_KANJI" width="256">優勝記録</language>
+	</row>
+
+	<row id="msg_wbt_pc_menu_02" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<comment>WBTエントリチェッカー
+トーナメントダウンロードへ</comment>
+		<attribute name="キャラ指定">選択肢表示</attribute>
+		<language name="JPN" width="256">トーナメントダウンロード</language>
+		<language name="JPN_KANJI" width="256">トーナメントダウンロード</language>
+	</row>
+
+	<row id="msg_wbt_pc_menu_03" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<comment>WBTエントリチェッカー
+終了する</comment>
+		<attribute name="キャラ指定">選択肢表示</attribute>
+		<language name="JPN" width="256">やめる</language>
+		<language name="JPN_KANJI" width="256">やめる</language>
+	</row>
+
+	<row id="msg_wbt_pc_info_01" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">仮　優勝記録の説明</language>
+		<language name="JPN_KANJI" width="256">仮　優勝記録の説明</language>
+	</row>
+
+	<row id="msg_wbt_pc_info_02" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">仮　ダウンロードの説明</language>
+		<language name="JPN_KANJI" width="256">仮　ダウンロードの説明</language>
+	</row>
+
+	<row id="msg_wbt_pc_info_03" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">仮　スイッチを切るの説明</language>
+		<language name="JPN_KANJI" width="256">仮　スイッチを切るの説明</language>
+	</row>
+
+	<row id="msg_wbt_pc_on" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">[1:00:トレーナー名:0]は　エントリーチェッカーの
+スイッチを　いれた！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　エントリーチェッカーの
+スイッチを　いれた！</language>
+	</row>
+
+	<row id="msg_wbt_pc_off" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">[1:00:トレーナー名:0]は　エントリーチェッカーの
+スイッチを　きった！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　エントリーチェッカーの
+スイッチを　きった！</language>
 	</row>
 
 	<flowchart-group-list>
