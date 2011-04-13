@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-13T17:57:01"/>
+	<create user="matsumiya" host="W00224" date="2011-04-13T21:38:54"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -395,14 +395,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1453" top="261" right="2152" bottom="877" maximized="no" rayout="Vertical2">
+	<dialog left="1291" top="185" right="1996" bottom="813" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="0" style="0000" width="524"/>
+		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="691"/>
-		<band id="3" index="3" style="0000" width="691"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<band id="2" index="2" style="0000" width="697"/>
+		<band id="3" index="3" style="0000" width="697"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1197,20 +1197,26 @@
 		<comment>♂
 ・ポケモントレーナー：デント
 ・１回戦用対戦前メッセージ</comment>
-		<language name="JPN" width="216">１かいせん
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">１回戦
-仮メッセージ▼</language>
+		<language name="JPN" width="216">はい……　それでは
+くさタイプの　ポケモンが　すきな▽
+ぼく　デントが　おあいてします▼</language>
+		<language name="JPN_KANJI" width="216">はい……　それでは
+くさタイプの　ポケモンが　好きな▽
+ぼく　デントが　お相手します▼</language>
 	</row>
 
 	<row id="TRID_LEADER1C_TRMSG_2ND_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・ポケモントレーナー：デント
 ・２回戦用対戦前メッセージ</comment>
-		<language name="JPN" width="216">２かいせん
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">２回戦
-仮メッセージ▼</language>
+		<language name="JPN" width="216">はい……　それでは
+くさタイプの　ポケモンが　すきな▽
+ぼく　デントが　おあいてします▼
+よろしく　おねがい　いたしますね▼</language>
+		<language name="JPN_KANJI" width="216">はい……　それでは
+くさタイプの　ポケモンが　好きな▽
+ぼく　デントが　お相手します▼
+よろしく　お願い　いたしますね▼</language>
 	</row>
 
 	<row id="TRID_LEADER1C_TRMSG_3RD_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
@@ -1237,10 +1243,14 @@
 		<comment>♂
 ・ポケモントレーナー：デント
 ・プレイヤーが勝った場合のメッセージ</comment>
-		<language name="JPN" width="216">プレイヤーしょうり
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">プレイヤー勝利
-仮メッセージ▼</language>
+		<language name="JPN" width="216">デント『……おどろいた
+きみ　すっごく　つよいんだね▼
+きょうだいの　ポッドや　コーンでも
+かてない　あいて　だったみたい……▼</language>
+		<language name="JPN_KANJI" width="216">デント『……驚いた
+きみ　すっごく　強いんだね▼
+兄弟の　ポッドや　コーンでも
+勝てない　相手だったみたい……▼</language>
 	</row>
 
 	<row id="TRID_LEADER1C_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
@@ -1267,10 +1277,12 @@
 		<comment>♀
 ・ポケモントレーナー：アロエ
 ・１回戦用対戦前メッセージ</comment>
-		<language name="JPN" width="216">１かいせん
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">１回戦
-仮メッセージ▼</language>
+		<language name="JPN" width="216">さあて　トレーナーさん
+どんな　たたかいかたを　するのか▽
+けんきゅう　させて　もらうよ！▼</language>
+		<language name="JPN_KANJI" width="216">さあて　トレーナーさん
+どんな　戦い方を　するのか▽
+研究させて　もらうよ！▼</language>
 	</row>
 
 	<row id="TRID_LEADER2_TRMSG_2ND_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
@@ -1287,10 +1299,16 @@
 		<comment>♀
 ・ポケモントレーナー：アロエ
 ・決勝戦用対戦前メッセージ</comment>
-		<language name="JPN" width="216">けっしょうせん
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">決勝戦
-仮メッセージ▼</language>
+		<language name="JPN" width="216">さあて　トレーナーさん
+あいじょう　こめて▽
+そだてた　ポケモンで▽
+どんな　たたかいかたを　するのか▽
+けんきゅう　させて　もらうよ！▼</language>
+		<language name="JPN_KANJI" width="216">さあて　トレーナーさん
+あいじょう　こめて▽
+そだてた　ポケモンで▽
+どんな　たたかいかたを　するのか▽
+けんきゅう　させて　もらうよ！▼</language>
 	</row>
 
 	<row id="TRID_LEADER2_TRMSG_FIGHT_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
@@ -1307,10 +1325,12 @@
 		<comment>♀
 ・ポケモントレーナー：アロエ
 ・プレイヤーが勝った場合のメッセージ</comment>
-		<language name="JPN" width="216">プレイヤーしょうり
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">プレイヤー勝利
-仮メッセージ▼</language>
+		<language name="JPN" width="216">ウットリ　するほどの
+えもいわれぬ　たたかいっぷり！▽
+アンタと　であえて　よかったよ！▼</language>
+		<language name="JPN_KANJI" width="216">ウットリ　するほどの
+えもいわれぬ　戦いっぷり！▽
+アンタと　出会えて　よかったよ！▼</language>
 	</row>
 
 	<row id="TRID_LEADER2_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
