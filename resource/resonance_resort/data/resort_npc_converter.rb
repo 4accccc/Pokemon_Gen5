@@ -230,7 +230,11 @@ def convertNpc( csv, data, objcode, tagHash )
     data.write_u16( limit_x )
     data.write_u16( limit_z )
     data.write_u16( $define_hash[ type ] )
-    data.write_u16( tagHash[ kind ] )
+    if type == 'クチコミ'
+      data.write_u16( tagHash[ kind ] )
+    else
+      data.write_u16( $define_hash[ kind ] )
+    end
     data.write_u16( 0 ) #ダミー
 
   end
