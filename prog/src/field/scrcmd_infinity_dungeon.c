@@ -18,6 +18,7 @@
 #include "savedata/infinity_dungeon_save.h"
 #include "tr_tool/trno_def.h"
 #include "arc/fieldmap/fldmmdl_objcode.h"  //for OBJCODE
+#include "infinity_dungeon_gimmick.h"
 
 //=============================================================================
 /**
@@ -89,9 +90,11 @@ VMCMD_RESULT EvCmdInfinityDungeonStart( VMHANDLE *core, void *wk )
   SCRCMD_WORK   *p_wk     = wk;
   GAMESYS_WORK  *p_gsys   = SCRCMD_WORK_GetGameSysWork( p_wk );
   SCRIPT_WORK   *p_scr_wk = SCRCMD_WORK_GetScriptWork( p_wk );
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( p_gsys );
+  INF_DUNGEON_DATA *p_dungeon_data = INFINITY_DUNGEON_DataGet(p_fieldmap);
 
   // マップの復帰イベント
-  INFINITY_DUNGEON_Recovery( p_scr_wk ,p_gsys );
+  INFINITY_DUNGEON_Recovery( p_gsys ,p_dungeon_data );
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -112,10 +115,11 @@ VMCMD_RESULT EvCmdInfinityDungeonWarp( VMHANDLE *core, void *wk )
   GAMESYS_WORK  *p_gsys   = SCRCMD_WORK_GetGameSysWork( p_wk );
   u16           warp_dir  = SCRCMD_GetVMWorkValue( core, p_wk );
   SCRIPT_WORK   *p_scr_wk = SCRCMD_WORK_GetScriptWork( p_wk );
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( p_gsys );
+  INF_DUNGEON_DATA *p_dungeon_data = INFINITY_DUNGEON_DataGet(p_fieldmap);
 
-  // 次のマップへワープ
   ONOUE_Printf("warp_dir:%u\n",warp_dir);
-  INFINITY_DUNGEON_WarpNextMap( p_scr_wk ,p_gsys ,warp_dir );
+  INFINITY_DUNGEON_WarpNextMap( p_scr_wk ,p_gsys ,p_dungeon_data ,warp_dir );
 
   return VMCMD_RESULT_SUSPEND;
 }
@@ -136,9 +140,11 @@ VMCMD_RESULT EvCmdInfinityDungeonFloorMove( VMHANDLE *core, void *wk )
   GAMESYS_WORK  *p_gsys   = SCRCMD_WORK_GetGameSysWork( p_wk );
   int           floor_no  = SCRCMD_GetVMWorkValue( core, p_wk );
   SCRIPT_WORK   *p_scr_wk = SCRCMD_WORK_GetScriptWork( p_wk );
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( p_gsys );
+  INF_DUNGEON_DATA *p_dungeon_data = INFINITY_DUNGEON_DataGet(p_fieldmap);
 
   // 次のマップへワープ
-  INFINITY_DUNGEON_WarpNextFloor( p_scr_wk ,p_gsys ,floor_no );
+  INFINITY_DUNGEON_WarpNextFloor( p_scr_wk ,p_gsys ,p_dungeon_data ,floor_no );
 
   return VMCMD_RESULT_SUSPEND;
 }
@@ -192,6 +198,7 @@ VMCMD_RESULT EvCmdInfinityDungeonResetSeed( VMHANDLE *p_core, void *p_wk_adrs )
   ONOUE_Printf("rand_seed=%u\n",seed);
   return VMCMD_RESULT_CONTINUE;
 }
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  現在のフロア番号を取得する
@@ -309,17 +316,21 @@ VMCMD_RESULT EvCmdInfinityDungeonGetBossNo( VMHANDLE *p_core, void *p_wk_adrs )
 VMCMD_RESULT EvCmdInfinityDungeonSetTrainerBattleFlag( VMHANDLE *p_core, void *p_wk_adrs )
 {
   u8 floor_id;
+  INF_DUNGEON_DATA *p_dungeon_data;
   INFINITYDUNGEON_SAVE  *p_save;
   SCRCMD_WORK *p_wk = p_wk_adrs;
   GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
   GAMEDATA *p_gamedata = GAMESYSTEM_GetGameData(p_gamesys);
   SAVE_CONTROL_WORK *p_save_data = GAMEDATA_GetSaveControlWork(p_gamedata);
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( p_gamesys );
   u16 tr_id  = SCRCMD_GetVMWorkValue( p_core, p_wk );
   u16 status  = SCRCMD_GetVMWorkValue( p_core, p_wk );
   u32 id_pos;
+
   p_save = SaveData_GetINFINITYDUNGEON( p_save_data );
   floor_id = INFINITYDUNGEON_SAVE_GetFloorID( p_save );
-  id_pos = INFINITY_DUNGEON_GetTrIDPos( p_save ,floor_id ,tr_id );
+  p_dungeon_data = INFINITY_DUNGEON_DataGet(p_fieldmap);
+  id_pos = INFINITY_DUNGEON_GetTrIDPos( p_dungeon_data ,floor_id ,tr_id );
   INFINITYDUNGEON_SAVE_SetTrainerFlag( p_save ,floor_id ,id_pos ,status );
 
   return VMCMD_RESULT_CONTINUE;
@@ -338,17 +349,20 @@ VMCMD_RESULT EvCmdInfinityDungeonSetTrainerBattleFlag( VMHANDLE *p_core, void *p
 VMCMD_RESULT EvCmdInfinityDungeonGetTrainerBattleFlag( VMHANDLE *p_core, void *p_wk_adrs )
 {
   u8 floor_id;
+  INF_DUNGEON_DATA *p_dungeon_data;
   INFINITYDUNGEON_SAVE  *p_save;
   SCRCMD_WORK *p_wk = p_wk_adrs;
   GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
   GAMEDATA *p_gamedata = GAMESYSTEM_GetGameData(p_gamesys);
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( p_gamesys );
   SAVE_CONTROL_WORK *p_save_data = GAMEDATA_GetSaveControlWork(p_gamedata);
   u16 tr_id  = SCRCMD_GetVMWorkValue( p_core, p_wk );
   u16 *p_ret_wk	= SCRCMD_GetVMWork( p_core, p_wk );
   u32 id_pos;
   p_save = SaveData_GetINFINITYDUNGEON( p_save_data );
   floor_id = INFINITYDUNGEON_SAVE_GetFloorID( p_save );
-  id_pos = INFINITY_DUNGEON_GetTrIDPos( p_save ,floor_id ,tr_id );
+  p_dungeon_data = INFINITY_DUNGEON_DataGet(p_fieldmap);
+  id_pos = INFINITY_DUNGEON_GetTrIDPos( p_dungeon_data ,floor_id ,tr_id );
   *p_ret_wk = INFINITYDUNGEON_SAVE_GetTrainerFlag( p_save ,floor_id ,id_pos );
 
   return VMCMD_RESULT_CONTINUE;
@@ -377,6 +391,8 @@ VMCMD_RESULT EvCmdInfinityDungeonGetHintMsgID( VMHANDLE *p_core, void *p_wk_adrs
   INFINITYDUNGEON_SAVE  *p_save;
   SAVE_CONTROL_WORK     *p_save_data = GAMEDATA_GetSaveControlWork(p_gamedata);
   u16 obj_code = MMDL_GetOBJCode( mmdl );
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( p_gamesys );
+  INF_DUNGEON_DATA *p_dungeon_data = INFINITY_DUNGEON_DataGet(p_fieldmap);
 
 
   // セーブデータから必要情報を取得
@@ -384,7 +400,7 @@ VMCMD_RESULT EvCmdInfinityDungeonGetHintMsgID( VMHANDLE *p_core, void *p_wk_adrs
   hint_level = INFINITY_DUNGEON_SAVE_GetHintLevel( p_save );
 
   // ヒントメッセージIDを設定する
-  *p_ret_wk = INFINITY_DUNGEON_GetHintMessage( p_save ,hint_level ,obj_code);
+  *p_ret_wk = INFINITY_DUNGEON_GetHintMessage( p_save ,p_dungeon_data ,hint_level ,obj_code);
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -431,4 +447,43 @@ VMCMD_RESULT EvCmdInfinityDungeonGetBossOBJCode( VMHANDLE *p_core, void *p_wk_ad
   return VMCMD_RESULT_CONTINUE;
 }
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  無限ダンジョン内トレーナーの戦闘後会話パターンを返す
+ *
+ *	@param	*p_core
+ *	@param	*p_wk_adrs 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdInfinityDungeonGetAfterBtlMsgType( VMHANDLE *p_core, void *p_wk_adrs )
+{
+  INFINITYDUNGEON_SAVE  *p_save;
+  SCRCMD_WORK *p_wk = p_wk_adrs;
+  SCRIPT_WORK   *p_scr_wk = SCRCMD_WORK_GetScriptWork( p_wk );
+  GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
+  const MMDL *mmdl = SCRIPT_GetTargetObj( p_scr_wk );
+  u16 obj_code = MMDL_GetOBJCode( mmdl );
+  u16 *p_ret_wk	= SCRCMD_GetVMWork( p_core, p_wk );
+
+  if( obj_code == DOCTOR )
+  {
+    // ドクター
+    *p_ret_wk = INF_SRC_MSG_TYPE_DOCTOR;
+  }
+  else if( obj_code == NURSE )
+  {
+    // ナース
+    *p_ret_wk = INF_SRC_MSG_TYPE_NURSE;
+  }
+  else
+  {
+    // ヒント
+    *p_ret_wk = INF_SRC_MSG_TYPE_HINT;
+  }
+
+  return VMCMD_RESULT_CONTINUE;
+}
 

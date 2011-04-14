@@ -923,9 +923,8 @@ SRCS_OVERLAY_SCRCMD_RESORT =  field/resonance_resort/scrcmd_resort.c \
 # スクリプトコマンド並列化  無限ダンジョン
 #===> GROUP_OVERLAY_DEBUGMENU
 #GROUP_OVERLAY_SCRCMD
-SRCS_OVERLAY_SCRCMD_INFINITY_DUNGEON  =  field/scrcmd_infinity_dungeon.c \
-                                field/scrcmd_infinity_dungeon_table.c \
-                                field/infinity_dungeon.c
+SRCS_OVERLAY_SCRCMD_INFINITY_DUNGEON  = field/scrcmd_infinity_dungeon.c \
+                                        field/scrcmd_infinity_dungeon_table.c
 
 # ユニオンルームでのミニゲーム制御	OVERLAY_FIELDMAPと並列の位置に配置
 #===> GROUP_OVERLAY_UNION_INTRUDE
@@ -1121,7 +1120,8 @@ SRCS_OVERLAY_FIELD_SEATEMPLE = field/field_seatemple.c
  
 #===> GROUP_OVERLAY_SUBSCREEN
 #GROUP_OVERLAY_GIMMICK
-SRCS_OVERLAY_INFINITY_DUNGEON_GIMMICK = field/infinity_dungeon_gimmick.c
+SRCS_OVERLAY_INFINITY_DUNGEON_GIMMICK = field/infinity_dungeon_gimmick.c \
+                                        field/infinity_dungeon.c
 
 #===> GROUP_OVERLAY_SUBSCREEN
 #GROUP_OVERLAY_GIMMICK

@@ -25,9 +25,6 @@
 */
 //=============================================================================
 
-// ギミックワークのアサインID
-#define GIMMICK_WORK_ASSIGN_ID (0)
-
 // モデルの登録インデックス
 #define MODEL_MANAGER_FLD_EXP_OBJ_UNIT_ID (0)
 
@@ -175,24 +172,32 @@ typedef struct
 } MODEL;
 
 //-------------------------------------
-///	無限ダンジョンギミックワーク
+///	エレベータギミックワーク
 //=====================================
 typedef struct {
   u32  zone_id;
   FLD_EXP_OBJ_CNT_PTR p_ex_obj;
   FIELDMAP_WORK       *p_fieldmap;
   MODEL               model[MODELID_MAX]; // モデル
-} INFINITY_DUNGEON_GIMMICK_WK;
+}INF_ELEVATOR_WK;
+
+//-------------------------------------
+///	ギミックワーク
+//=====================================
+typedef struct {
+  INF_ELEVATOR_WK   elev_wk;
+  INF_DUNGEON_DATA  *p_dungeon_data;
+}INF_GIMMICK_WK;
 
 //=============================================================================
 /**
  *					プロトタイプ宣言
 */
 //=============================================================================
-static void WorkDataInit( INFINITY_DUNGEON_GIMMICK_WK *p_wk ,FIELDMAP_WORK *p_fieldmap );
-static void MapModelInit( INFINITY_DUNGEON_GIMMICK_WK *p_wk );
-static const ELEVATOR_SET_DATA* GetElevatorTable( INFINITY_DUNGEON_GIMMICK_WK *p_wk );
-static u32 GetDungeonColor( INFINITY_DUNGEON_GIMMICK_WK *p_wk );
+static void InitElevatorGimmicWork( INF_ELEVATOR_WK *p_wk ,FIELDMAP_WORK *p_fieldmap );
+static void MapModelInit( INF_ELEVATOR_WK *p_wk );
+static const ELEVATOR_SET_DATA* GetElevatorTable( INF_ELEVATOR_WK *p_wk );
+static u32 GetDungeonColor( INF_ELEVATOR_WK *p_wk );
 
 //----------------------------------------------------------------------------
 /**
@@ -205,19 +210,27 @@ static u32 GetDungeonColor( INFINITY_DUNGEON_GIMMICK_WK *p_wk );
 //-----------------------------------------------------------------------------
 void INFINITY_DUNGEON_Setup( FIELDMAP_WORK *p_fieldmap )
 {
-  INFINITY_DUNGEON_GIMMICK_WK *p_wk = NULL;
-  const HEAPID heapID = FIELDMAP_GetHeapID( p_fieldmap );
+  INF_GIMMICK_WK        *p_gmk_wk = NULL;
+  SAVE_CONTROL_WORK     *p_save_data;
+  INFINITYDUNGEON_SAVE  *p_save;
+  const HEAPID  heapID = FIELDMAP_GetHeapID( p_fieldmap );
+  GAMESYS_WORK  *p_gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
+  GAMEDATA      *p_gdata = GAMESYSTEM_GetGameData( p_gsys );
 
   //汎用ワーク確保
-  p_wk = GMK_TMP_WK_AllocWork(p_fieldmap, GIMMICK_WORK_ASSIGN_ID, 
-      heapID, sizeof(INFINITY_DUNGEON_GIMMICK_WK));
+  p_gmk_wk = GMK_TMP_WK_AllocWork(p_fieldmap, INF_GIMMICK_WORK_ASSIGN_ID, 
+      heapID, sizeof(INF_GIMMICK_WK));
 
   // ワークの初期化
-  WorkDataInit( p_wk , p_fieldmap );
-  
-  // モデルの読み込み
-  MapModelInit( p_wk );
+  InitElevatorGimmicWork( &p_gmk_wk->elev_wk , p_fieldmap );
 
+  // 無限ダンジョンのデータを生成
+  p_save_data = GAMEDATA_GetSaveControlWork( p_gdata );
+  p_save = SaveData_GetINFINITYDUNGEON( p_save_data );
+  INF_MakeDungeonData( &p_gmk_wk->p_dungeon_data ,p_save ,heapID );
+
+  // モデルの読み込み
+  MapModelInit( &p_gmk_wk->elev_wk );
 }
 
 //----------------------------------------------------------------------------
@@ -231,14 +244,17 @@ void INFINITY_DUNGEON_Setup( FIELDMAP_WORK *p_fieldmap )
 //-----------------------------------------------------------------------------
 void INFINITY_DUNGEON_End( FIELDMAP_WORK *p_fieldmap )
 {
-  INFINITY_DUNGEON_GIMMICK_WK *p_wk = NULL;
-  p_wk = GMK_TMP_WK_GetWork(p_fieldmap, GIMMICK_WORK_ASSIGN_ID);
+  INF_GIMMICK_WK *p_wk = NULL;
+  p_wk = GMK_TMP_WK_GetWork(p_fieldmap, INF_GIMMICK_WORK_ASSIGN_ID);
 
-  //破棄
-  FLD_EXP_OBJ_DelUnit( p_wk->p_ex_obj, MODEL_MANAGER_FLD_EXP_OBJ_UNIT_ID );
+  // 破棄
+  FLD_EXP_OBJ_DelUnit( p_wk->elev_wk.p_ex_obj, MODEL_MANAGER_FLD_EXP_OBJ_UNIT_ID );
   
-  //汎用ワーク解放
-  GMK_TMP_WK_FreeWork(p_fieldmap, GIMMICK_WORK_ASSIGN_ID);
+  // ダンジョンデータを開放する
+  INF_FreeDungeonData( &p_wk->p_dungeon_data );
+
+  // 汎用ワーク解放
+  GMK_TMP_WK_FreeWork(p_fieldmap, INF_GIMMICK_WORK_ASSIGN_ID);
 }
 
 //----------------------------------------------------------------------------
@@ -252,11 +268,11 @@ void INFINITY_DUNGEON_End( FIELDMAP_WORK *p_fieldmap )
 //-----------------------------------------------------------------------------
 void INFINITY_DUNGEON_Move( FIELDMAP_WORK *p_fieldmap )
 {
-  INFINITY_DUNGEON_GIMMICK_WK *p_wk = NULL;
-  p_wk = GMK_TMP_WK_GetWork(p_fieldmap, GIMMICK_WORK_ASSIGN_ID);
+  INF_GIMMICK_WK *p_wk = NULL;
+  p_wk = GMK_TMP_WK_GetWork(p_fieldmap, INF_GIMMICK_WORK_ASSIGN_ID);
 
   //通常のギミックモデル
-  FLD_EXP_OBJ_PlayAnime( p_wk->p_ex_obj );
+  FLD_EXP_OBJ_PlayAnime( p_wk->elev_wk.p_ex_obj );
 }
 
 //----------------------------------------------------------------------------
@@ -268,7 +284,7 @@ void INFINITY_DUNGEON_Move( FIELDMAP_WORK *p_fieldmap )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void MapModelInit( INFINITY_DUNGEON_GIMMICK_WK *p_wk )
+static void MapModelInit( INF_ELEVATOR_WK *p_wk )
 {
   //読込み
   FLD_EXP_OBJ_AddUnitByHandle(p_wk->p_ex_obj, &sc_g3d_util_setup, MODEL_MANAGER_FLD_EXP_OBJ_UNIT_ID );
@@ -335,8 +351,9 @@ static void MapModelInit( INFINITY_DUNGEON_GIMMICK_WK *p_wk )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void WorkDataInit( INFINITY_DUNGEON_GIMMICK_WK *p_wk ,FIELDMAP_WORK *p_fieldmap )
+static void InitElevatorGimmicWork( INF_ELEVATOR_WK *p_wk ,FIELDMAP_WORK *p_fieldmap )
 {
+  GFL_STD_MemFill(p_wk, 0, sizeof(INF_ELEVATOR_WK));
   p_wk->p_fieldmap  = p_fieldmap;
   p_wk->zone_id     = FIELDMAP_GetZoneID( p_wk->p_fieldmap );
   p_wk->p_ex_obj    = FIELDMAP_GetExpObjCntPtr( p_wk->p_fieldmap );
@@ -351,7 +368,7 @@ static void WorkDataInit( INFINITY_DUNGEON_GIMMICK_WK *p_wk ,FIELDMAP_WORK *p_fi
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static u32 GetDungeonColor( INFINITY_DUNGEON_GIMMICK_WK *p_wk )
+static u32 GetDungeonColor( INF_ELEVATOR_WK *p_wk )
 {
   return GET_VERSION();
 }
@@ -365,8 +382,25 @@ static u32 GetDungeonColor( INFINITY_DUNGEON_GIMMICK_WK *p_wk )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static const ELEVATOR_SET_DATA* GetElevatorTable( INFINITY_DUNGEON_GIMMICK_WK *p_wk )
+static const ELEVATOR_SET_DATA* GetElevatorTable( INF_ELEVATOR_WK *p_wk )
 {
   return sc_elevator_pos_table;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  無限ダンジョンデータを取得する
+ *
+ *	@param	*p_fieldmap 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+INF_DUNGEON_DATA* INFINITY_DUNGEON_DataGet( FIELDMAP_WORK *p_fieldmap )
+{
+  INF_GIMMICK_WK *p_wk = NULL;
+  p_wk = GMK_TMP_WK_GetWork(p_fieldmap, INF_GIMMICK_WORK_ASSIGN_ID);
+
+  return p_wk->p_dungeon_data;
 }
 

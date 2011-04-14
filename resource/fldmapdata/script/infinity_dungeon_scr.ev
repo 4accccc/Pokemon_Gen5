@@ -348,8 +348,6 @@ EVENT_START  ev_infinity_dungeon_talk_battle_trainer
   // OBJID=TRID
   $LWK_TRID = $SCWK_TARGET_OBJID
   
-  _DEBUG_PRINT_WK( LWK_TRID )
-
   // 戦闘データ取得
   _INFINITY_DUNGEON_GET_TRAINER_BATTLE_FLAG( LWK_TRID ,LWK_IS_BATTLE )
 
@@ -372,10 +370,16 @@ EVENT_START  ev_infinity_dungeon_talk_battle_trainer
       _TRAINER_LOSE()
     ENDIF
   ELSE
-    // ヒントメッセージ
-    _INFINITY_DUNGEON_GET_HINT_MSG_ID( LWK_HINT_MSG_ID )
-    _BALLOONWIN_OBJMSG_POS( LWK_HINT_MSG_ID , SCWK_TARGET_OBJID, POS_DOWN )
-    _BALLOONWIN_CLOSE()
+    _INFINITY_DUNGEON_GET_AFTER_BTL_MSG_TYPE( SCWK_ANSWER )
+    IF $SCWK_ANSWER == INF_SRC_MSG_TYPE_HINT THEN
+      // ヒントメッセージ
+      _INFINITY_DUNGEON_GET_HINT_MSG_ID( LWK_HINT_MSG_ID )
+      _BALLOONWIN_OBJMSG_POS( LWK_HINT_MSG_ID , SCWK_TARGET_OBJID, POS_DOWN )
+      _BALLOONWIN_CLOSE()
+    ELSE
+      // 回復メッセージ呼び出し
+      _CALL recover_trainer
+    ENDIF
 	ENDIF
 }
 EVENT_END
@@ -392,8 +396,6 @@ EVENT_START  ev_infinity_dungeon_move_battle_trainer
 
   // 視線データ取得
   _EYE_TRAINER_ID_GET( SCR_EYE_TR_0, LWK_TRID )
-
-  _DEBUG_PRINT_WK( LWK_TRID )
 
   // 戦闘済み確認
   _INFINITY_DUNGEON_GET_TRAINER_BATTLE_FLAG( LWK_TRID ,LWK_IS_BATTLE )
@@ -415,7 +417,6 @@ EVENT_START  ev_infinity_dungeon_move_battle_trainer
     _TRAINER_LOSE_CHECK( SCWK_ANSWER )
     IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
       _TRAINER_WIN()
-      _DEBUG_PRINT_WK( LWK_TRID )
       _INFINITY_DUNGEON_SET_TRAINER_BATTLE_FLAG( LWK_TRID , TRUE )
     ELSE
       _TRAINER_LOSE()
@@ -491,6 +492,54 @@ EVENT_START  ev_infinity_dungeon_battle_boss_trainer
 
 }
 EVENT_END
+
+
+//--------------------------------------------------------------------
+// 回復トレーナー
+//--------------------------------------------------------------------
+recover_trainer:
+{
+  DEFINE_LOCAL LWK_START_MSG_ID
+  DEFINE_LOCAL LWK_END_MSG_ID
+  DEFINE_LOCAL LWK_CANCEL_MSG_ID
+
+  IF $SCWK_ANSWER == INF_SRC_MSG_TYPE_DOCTOR THEN
+  ELSE
+  ENDIF
+
+  // メッセージ
+  _BALLOONWIN_OBJMSG_POS( LWK_START_MSG_ID , SCWK_TARGET_OBJID, POS_DOWN )
+  _BALLOONWIN_CLOSE()
+
+  // YES_NO
+  _YES_NO_WIN( SCWK_ANSWER )
+
+  // 回復選択後
+  IF $SCWK_ANSWER == SCR_YES THEN
+ 
+    // フェード
+    _BLACK_OUT()
+    _DISP_FADE_END_CHECK()
+
+    // 回復処理
+    _TEMOTI_POKEMON_KAIFUKU()
+	  _ME_PLAY( SEQ_ME_ASA )
+    _ME_WAIT()
+
+    // フェード
+    _BLACK_IN()
+    _DISP_FADE_END_CHECK()
+
+    // 回復後メッセージ
+    _BALLOONWIN_OBJMSG_POS( LWK_START_MSG_ID , SCWK_TARGET_OBJID, POS_DOWN )
+    _BALLOONWIN_CLOSE()
+  ELSE
+    // キャンセルメッセージ
+    _BALLOONWIN_OBJMSG_POS( LWK_START_MSG_ID , SCWK_TARGET_OBJID, POS_DOWN )
+    _BALLOONWIN_CLOSE()
+  ENDIF
+}
+_RET
 
 //--------------------------------------------------------------------
 // 受付がみちをあける

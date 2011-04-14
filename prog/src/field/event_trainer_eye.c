@@ -31,6 +31,7 @@
 
 #include "savedata/infinity_dungeon_save.h"
 #include "field/infinity_dungeon.h"
+#include "infinity_dungeon_gimmick.h"
 
 //======================================================================
 //  define
@@ -1081,6 +1082,7 @@ static BOOL tr_CheckEventFlag( FIELDMAP_WORK *fieldMap, const MMDL *mmdl )
     // 無限ダンジョントレーナー
     SAVE_CONTROL_WORK* p_save_data;
     INFINITYDUNGEON_SAVE  *p_save;
+    INF_DUNGEON_DATA *p_dungeon_data;
     u16 tr_id;
     u16 floor_id;
     BOOL tr_flag;
@@ -1088,8 +1090,9 @@ static BOOL tr_CheckEventFlag( FIELDMAP_WORK *fieldMap, const MMDL *mmdl )
     tr_id       = TRAINER_MMDL_GetTrainerID( mmdl );
     p_save_data = GAMEDATA_GetSaveControlWork( gdata );
     p_save      = SaveData_GetINFINITYDUNGEON( p_save_data );
+    p_dungeon_data = INFINITY_DUNGEON_DataGet(fieldMap);
     floor_id    = INFINITYDUNGEON_SAVE_GetFloorID( p_save );
-    id_pos      = INFINITY_DUNGEON_GetTrIDPos( p_save ,floor_id ,tr_id );
+    id_pos      = INFINITY_DUNGEON_GetTrIDPos( p_dungeon_data ,floor_id ,tr_id );
     tr_flag     = INFINITYDUNGEON_SAVE_GetTrainerFlag( p_save ,floor_id, id_pos );
     return (tr_flag);
   }

@@ -28,6 +28,7 @@
   DEF_CMD( EvCmdInfinityDungeonGetBossOBJCode, EV_SEQ_INFINITY_DUNGEON_GET_BOSS_OBJ_CODE )
   DEF_CMD( EvCmdInfinityDungeonGetTrainerBattleFlag, EV_SEQ_INFINITY_DUNGEON_GET_TRAINER_BATTLE_FLAG )
   DEF_CMD( EvCmdInfinityDungeonGetHintMsgID, EV_SEQ_INFINITY_DUNGEON_GET_HINT_MSG_ID )
+  DEF_CMD( EvCmdInfinityDungeonGetAfterBtlMsgType, EV_SEQ_INFINITY_DUNGEON_GET_AFTER_BTL_MSG_TYPE )
  
   END_CMD
   //スクリプトコマンドテーブル終了

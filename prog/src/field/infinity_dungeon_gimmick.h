@@ -10,6 +10,11 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #pragma once
 
+#include "infinity_dungeon.h"
+
+// ギミックワークのアサインID
+#define INF_GIMMICK_WORK_ASSIGN_ID  (0)
+
 //=============================================================================
 //
 //					プロトタイプ宣言
@@ -18,4 +23,5 @@
 extern void INFINITY_DUNGEON_Setup( FIELDMAP_WORK *p_fieldmap );
 extern void INFINITY_DUNGEON_End( FIELDMAP_WORK *p_fieldmap );
 extern void INFINITY_DUNGEON_Move( FIELDMAP_WORK *p_fieldmap );
+extern INF_DUNGEON_DATA* INFINITY_DUNGEON_DataGet( FIELDMAP_WORK *p_fieldmap );
 

@@ -13297,5 +13297,20 @@
     .short  \ret_wk
     .endm
 
+//--------------------------------------------------------------
+/**
+ * @def _INFINITY_DUNGEON_GET_AFTER_BTL_MSG_TYPE
+ * @brief 戦闘後のメッセージタイプを取得する（ヒント、ナース、ドクター)
+ * @param ret_wk   メッセージID格納先
+ */
+//--------------------------------------------------------------
+#define _INFINITY_DUNGEON_GET_AFTER_BTL_MSG_TYPE( ret_wk ) \
+    _ASM_INFINITY_DUNGEON_GET_AFTER_BTL_MSG_TYPE ret_wk
+
+    .macro  _ASM_INFINITY_DUNGEON_GET_AFTER_BTL_MSG_TYPE ret_wk
+    .short  EV_SEQ_INFINITY_DUNGEON_GET_AFTER_BTL_MSG_TYPE
+    .short  \ret_wk
+    .endm
+
 //======================================================================
 //======================================================================
