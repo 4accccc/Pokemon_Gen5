@@ -342,8 +342,9 @@ static GMEVENT_RESULT event_FestMissionStartMain(GMEVENT * event, int *  seq, vo
 
   switch (*seq) {
   case 0:
-    LINK_FESTIVAL_MissionStart( wk->fest_sys, (const FEST_MISSION*)&wk->mission, wk->succeed_f );
-
+    if( wk->succeed_f ){
+      LINK_FESTIVAL_MissionStart( wk->fest_sys, (const FEST_MISSION*)&wk->mission, wk->succeed_f );
+    }
     wk->win = FLDSYSWIN_AddEx( wk->fmb, wk->msgData, SYSWIN_PX, SYSWIN_PY, SYSWIN_SX, SYSWIN_SY );
     FLDSYSWIN_ClearWindow( wk->win );
     sub_FMissionStartParamDraw( wk );
