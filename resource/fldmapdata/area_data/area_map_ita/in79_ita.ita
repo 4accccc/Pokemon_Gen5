@@ -3,7 +3,7 @@
 <ita version="1.6.0">
 
 <head>
-	<create user="fuchino_hiroki" host="W00252" date="2011-04-05T19:46:09" source="in79_ita.mb"/>
+	<create user="fuchino_hiroki" host="W00252" date="2011-04-14T19:24:09" source="in79_ita.mb"/>
 	<title>Texture SRT Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -16,7 +16,7 @@
 	tool_end_frame="120"
 	interpolation="frame"
 	tex_matrix_mode="maya"
-	compress_material="on" material_size="2 2"
+	compress_material="on" material_size="5 5"
 	frame_step_mode="1"
 	tolerance_tex_scale="0.100000"
 	tolerance_tex_rotate="0.100000"
@@ -31,7 +31,19 @@
 	0.000000
 </tex_rotate_data>
 
-<tex_translate_data size="121">
+<tex_translate_data size="241">
+	0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.250000 0.250000 0.250000 0.250000
+	0.250000 0.250000 0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 0.750000 0.750000
+	0.750000 0.750000 0.750000 0.750000 0.000000 0.000000 0.000000 0.000000 0.000000 0.250000
+	0.250000 0.250000 0.250000 0.250000 0.250000 0.500000 0.500000 0.500000 0.500000 0.500000
+	0.500000 0.750000 0.750000 0.750000 0.750000 0.750000 0.750000 0.000000 0.000000 0.000000
+	0.000000 0.000000 0.250000 0.250000 0.250000 0.250000 0.250000 0.250000 0.500000 0.500000
+	0.500000 0.500000 0.500000 0.500000 0.750000 0.750000 0.750000 0.750000 0.750000 0.750000
+	0.000000 0.000000 0.000000 0.000000 0.000000 0.250000 0.250000 0.250000 0.250000 0.250000
+	0.250000 0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 0.750000 0.750000 0.750000
+	0.750000 0.750000 0.750000 0.000000 0.000000 0.000000 0.000000 0.000000 0.250000 0.250000
+	0.250000 0.250000 0.250000 0.250000 0.500000 0.500000 0.500000 0.500000 0.500000 0.500000
+	0.750000 0.750000 0.750000 0.750000 0.750000 0.750000 0.000000 0.000000 0.000000 0.000000
 	0.000000 0.000000 0.008301 0.016846 0.025146 0.033691 0.041992 0.050537 0.058838 0.067139
 	0.075684 0.083984 0.092529 0.100830 0.109131 0.117676 0.125977 0.134521 0.142822 0.151367
 	0.159668 0.167969 0.176514 0.184814 0.193359 0.201660 0.210205 0.218506 0.226807 0.235352
@@ -47,8 +59,8 @@
 	1.000000
 </tex_translate_data>
 
-<tex_srt_anm_array size="2">
-	<tex_srt_anm index="0" material_name="in79tv_anim2">
+<tex_srt_anm_array size="5">
+	<tex_srt_anm index="0" material_name="in79_fan1">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
@@ -59,8 +71,29 @@
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
-		<tex_translate_s frame_step="1" data_size="120" data_head="1"/>
+		<tex_translate_s frame_step="1" data_size="120" data_head="121"/>
 		<tex_translate_t frame_step="1" data_size="1" data_head="0"/>
+	</tex_srt_anm>
+	<tex_srt_anm index="2" material_name="in79tv_anim2">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_t frame_step="1" data_size="120" data_head="121"/>
+	</tex_srt_anm>
+	<tex_srt_anm index="3" material_name="in79_fan2">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_t frame_step="1" data_size="120" data_head="1"/>
+	</tex_srt_anm>
+	<tex_srt_anm index="4" material_name="in79_fan3">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_t frame_step="1" data_size="120" data_head="1"/>
 	</tex_srt_anm>
 </tex_srt_anm_array>
 
