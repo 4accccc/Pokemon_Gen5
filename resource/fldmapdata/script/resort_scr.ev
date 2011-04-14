@@ -165,6 +165,14 @@ sub_tourist_main_menu:
 
 	_BMPMENU_MAKE_LIST_EX( resort_sys_select_01, resort_sys_select_info_01, SEQ_TOURIST_INVITATION )	//招待
 
+  //スポットは施設がないとでない
+  _RESORT_GET_DATA( RESORT_GET_PARAM_IS_INSTITUTION_EMPTY, LWK_IS_INSTITUTION_EMPTY )
+  IF $LWK_IS_INSTITUTION_EMPTY == FALSE THEN
+	  _BMPMENU_MAKE_LIST_EX( resort_sys_select_03, resort_sys_select_info_03, SEQ_TOURIST_SPOT )	    //スポット
+  ENDIF
+
+	_BMPMENU_MAKE_LIST_EX( resort_sys_select_05, resort_sys_select_info_05, SEQ_TOURIST_APPEAL )	    //アピール
+
   //スカウトは秘書がいっぱいでないとでない
   _RESORT_GET_DATA( RESORT_GET_PARAM_IS_SECREARY_FULL, LWK_IS_SECRETARY_FULL )
   IF $LWK_IS_SECRETARY_FULL == TRUE THEN
@@ -174,13 +182,6 @@ sub_tourist_main_menu:
 	//_BMPMENU_MAKE_LIST_EX( resort_sys_select_07, resort_sys_select_info_07, SEQ_TOURIST_FAREWELL )	        //さようなら  TODO 仮で出さない
 	_BMPMENU_MAKE_LIST_EX( resort_sys_select_04, resort_sys_select_info_04, SEQ_TOURIST_DOING )	      //さいきんどう？
 
-  //スポットは施設がないとでない
-  _RESORT_GET_DATA( RESORT_GET_PARAM_IS_INSTITUTION_EMPTY, LWK_IS_INSTITUTION_EMPTY )
-  IF $LWK_IS_INSTITUTION_EMPTY == FALSE THEN
-	  _BMPMENU_MAKE_LIST_EX( resort_sys_select_03, resort_sys_select_info_03, SEQ_TOURIST_SPOT )	    //スポット
-  ENDIF
-
-	_BMPMENU_MAKE_LIST_EX( resort_sys_select_05, resort_sys_select_info_05, SEQ_TOURIST_APPEAL )	    //アピール
 	//_BMPMENU_MAKE_LIST_EX( resort_sys_select_06, resort_sys_select_info_06, SEQ_TOURIST_WAIT )	      //まってて  TODO 仮で出さない
 	_BMPMENU_MAKE_LIST_EX( resort_sys_select_10, resort_sys_select_info_10, SEQ_TOURIST_BYE )	        //またね
 

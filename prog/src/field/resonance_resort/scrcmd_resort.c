@@ -1568,6 +1568,8 @@ VMCMD_RESULT EvCmdResortGetOffreco( VMHANDLE *p_core, void *p_wk_adrs )
   const u8  *cp_bit;
   u8  bit_offs;
   u8  bit_idx;
+  int i;
+  int bit_on_num;
 
   if( RESORT_RESIDENT_DATA_IsEmpty( p_resident ) )
   {
@@ -1577,13 +1579,37 @@ VMCMD_RESULT EvCmdResortGetOffreco( VMHANDLE *p_core, void *p_wk_adrs )
 
   cp_bit = (const u8*)RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_EXT1_MEDAL_BIT, NULL );
   
-  //回りこみ
-  cnt %= RESORT_NPC_SYS_GetOffRecoMax( p_nps_sys );
+  //ONのビットのグループ数を数える
+  bit_on_num = 0;
+  {
+    u16 now_group;
+    u16 pre_group = 0xFFFF;
+    BOOL is_bit_on  = FALSE;
+    for( i = 0; i < RESORT_NPC_SYS_GetOffRecoMax( p_nps_sys ); i++ )
+    {
+      //ビットが立っているかチェック
+      bit_idx   = i / 8;
+      bit_offs  = i % 8;
+      if( (cp_bit[ bit_idx ] & 1<<bit_offs) != 0 )
+      {
+        is_bit_on = TRUE;
+      }
 
-  //ビット位置
-  bit_idx   = cnt / 8;
-  bit_offs  = cnt % 8;
-  
+      //グループごとにチェック
+      now_group = RESORT_NPC_SYS_GetOffRecoData( p_nps_sys, i, RESORT_BINARY_OFFRECO_PARAM_GROUP );
+      if( pre_group != now_group )
+      {
+        pre_group = now_group;
+
+        if( is_bit_on )
+        {
+          bit_on_num++;
+          is_bit_on = FALSE;
+        }
+      }
+    }
+  }
+
   {
     //その人物を単語登録
     WORDSET *p_wordset    = SCRIPT_GetWordSet( p_script );
@@ -1599,13 +1625,32 @@ VMCMD_RESULT EvCmdResortGetOffreco( VMHANDLE *p_core, void *p_wk_adrs )
     GFL_STR_DeleteBuffer(p_str);
   }
 
-  if( (cp_bit[ bit_idx ] & 1<<bit_offs) != 0 )
+  if( bit_on_num == 0 )
   {
-    *p_ret_wk = RESORT_NPC_SYS_GetOffRecoData( p_nps_sys, cnt, RESORT_BINARY_OFFRECO_PARAM_ON_MSG );
+    int index = RESORT_NPC_SYS_GetOffrecoIndexByType( p_nps_sys, RESORT_OFFRECO_TYPE_ALL_BIT_OFF );
+    *p_ret_wk = RESORT_NPC_SYS_GetOffRecoData( p_nps_sys, index, RESORT_BINARY_OFFRECO_PARAM_MSG_00+resident_idx );
   }
   else
   {
-    *p_ret_wk = RESORT_NPC_SYS_GetOffRecoData( p_nps_sys, cnt, RESORT_BINARY_OFFRECO_PARAM_OFF_MSG );
+    u16 now_group;
+    u16 pre_group = 0xFFFF;
+
+    //回りこみ
+    cnt %= bit_on_num;
+    NAGI_Printf( "offreco %d %d \n", cnt, bit_on_num );
+    for( i = 0; i < RESORT_NPC_SYS_GetOffRecoMax( p_nps_sys ); i++ )
+    {
+      now_group = RESORT_NPC_SYS_GetOffRecoData( p_nps_sys, i, RESORT_BINARY_OFFRECO_PARAM_GROUP );
+      if( pre_group != now_group )
+      {
+        pre_group = now_group;
+        if( cnt-- == 0 )
+        {
+          *p_ret_wk = RESORT_NPC_SYS_GetOffRecoData( p_nps_sys, i, RESORT_BINARY_OFFRECO_PARAM_MSG_00+resident_idx );
+          break;
+        }
+      }
+    }
   }
 
   return VMCMD_RESULT_CONTINUE;

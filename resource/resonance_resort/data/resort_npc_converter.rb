@@ -140,42 +140,34 @@ end
 #=====================================
 OFFRECO_ROW_START    = 1     #行開始位置
 OFFRECO_COL_START    = 0     #列開始位置
-OFFRECO_COL_TAG      = OFFRECO_COL_START     #列:タグ
-OFFRECO_COL_BIT      = 1     #列:ビット番号
-OFFRECO_COL_GROUP    = 2     #列:グループ
-OFFRECO_COL_TYPE     = 3     #列：オフレコタイプ
-OFFRECO_COL_MSG_ON   = 4     #列：メッセージ
-OFFRECO_COL_MSG_OFF  = 5     #列：メッセージ
+OFFRECO_COL_BIT      = OFFRECO_COL_START     #列:ビット番号
+OFFRECO_COL_GROUP    = 1     #列:グループ
+OFFRECO_COL_TYPE     = 2     #列：オフレコタイプ
+OFFRECO_COL_MSG      = 3     #列：メッセージ
 
-def convertOffreco( csv, data, msg_h, tagHash )
+OFFRECO_COL_MSG_NUM  = 8
+def convertOffreco( csv, data, msg_h )
   
   #データの作成
   msgdata = HeaderDataArray.new
   msgdata.load( msg_h )
 
   for row in OFFRECO_ROW_START...csv.row_length-1
-    
-    tag   = csv.get( row, OFFRECO_COL_TAG )
     bit   = csv.get( row, OFFRECO_COL_BIT )
     group = csv.get( row, OFFRECO_COL_GROUP )
     type  = csv.get( row, OFFRECO_COL_TYPE )
-    msg_on  = csv.get( row, OFFRECO_COL_MSG_ON )
-    msg_off = csv.get( row, OFFRECO_COL_MSG_OFF )
-
-    tagHash.store( tag, row-OFFRECO_ROW_START )
 
     data.write_u16( bit )
     data.write_u16( group )
     data.write_u16( $define_hash[ type ] )
-    begin
-      data.write_u16( msgdata.search( "#{msg_on}", "#{row}行の#{msg_h}" ) )
-    rescue HeaderSearchError
-      exit(1)
-    end
-    begin
-      data.write_u16( msgdata.search( "#{msg_off}", "#{row}行の#{msg_h}" ) )
-    rescue HeaderSearchError
-      exit(1)
+
+    for col in OFFRECO_COL_MSG...OFFRECO_COL_MSG+OFFRECO_COL_MSG_NUM-1
+      msg  = csv.get( row, col )
+      begin
+        data.write_u16( msgdata.search( "#{msg}", "#{row}行の#{msg_h}" ) )
+      rescue HeaderSearchError
+        exit(1)
+      end
     end
 
     #アライメント
@@ -275,7 +267,7 @@ begin
 
   #コンバート
   convertKutikomi( kutikomiCsv, kutikomiData, MSG_HEADER, tagHash )
-  convertOffreco( offrecoCsv, offrecoData, MSG_HEADER, tagHash )
+  convertOffreco( offrecoCsv, offrecoData, MSG_HEADER )
   convertNpc( npcCsv, npcData, OBJCODE, tagHash )
 
   #date書き込み

@@ -218,3 +218,53 @@ u32 RESORT_NPC_SYS_GetParam( const RESORT_NPC_SYS *cp_wk, u32 index )
 {
   return RESORT_BINARY_NPC_GetData( cp_wk->p_binary_npc, index, RESORT_BINARY_NPC_PARAM_KIND );
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  グループ数を計算
+ *
+ *	@param	const RESORT_NPC_SYS *cp_wk   ワーク
+ *
+ *	@return グループ数
+ */
+//-----------------------------------------------------------------------------
+u32 RESORT_NPC_SYS_CalcOffrecoGroupMax( const RESORT_NPC_SYS *cp_wk )
+{
+  int i;
+  int cnt = 0;
+  int now_group = 0xFFFF;
+  int pre_group = 0xFFFF;
+  for( i = 0; i < RESORT_BINARY_OFFRECO_GetMax( cp_wk->p_binary_offreco ); i++ )
+  {
+    now_group = RESORT_BINARY_OFFRECO_GetData( cp_wk->p_binary_offreco, i, RESORT_BINARY_OFFRECO_PARAM_GROUP );
+    if( now_group != pre_group )
+    {
+      cnt++;
+      now_group = pre_group;
+    }
+  }
+  return cnt;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  タイプからインデックスを取得
+ *
+ *	@param	const RESORT_NPC_SYS *cp_wk ワーク
+ *	@param	type  タイプ
+ *
+ *	@return インデックス
+ */
+//-----------------------------------------------------------------------------
+u32 RESORT_NPC_SYS_GetOffrecoIndexByType( const RESORT_NPC_SYS *cp_wk, u32 type )
+{
+  int i;
+  for( i = 0; i < RESORT_BINARY_OFFRECO_GetMax( cp_wk->p_binary_offreco ); i++ )
+  {
+    if( RESORT_BINARY_OFFRECO_GetData( cp_wk->p_binary_offreco, i, RESORT_BINARY_OFFRECO_PARAM_TYPE ) == type )
+    {
+      return i;
+    }
+  }
+  GF_ASSERT(0);
+  return 0;
+}

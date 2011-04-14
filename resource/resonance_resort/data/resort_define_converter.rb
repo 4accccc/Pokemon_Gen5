@@ -59,7 +59,13 @@ DEFINE_COL_SEX           = 18        #列：性別
 DEFINE_COL_SERVICE       = 20        #列：サービス
 DEFINE_COL_SPOTTYPE      = 22        #列：行きたいスポットタイプ
 DEFINE_COL_GRADE         = 24        #列：評価
-DEFINE_COL_END           = 26        #列最後
+DEFINE_COL_MOVECODE      = 26        #列：動作コード
+DEFINE_COL_KUTIKOMI_ANS  = 28        #列：クチコミ答え
+DEFINE_COL_OFFRECO_TYPE  = 30        #列：オフレコタイプ
+DEFINE_COL_WANTOGOGROUP  = 32        #列：行きたいお店グループ
+DEFINE_COL_NUMBER        = 34        #列：数値
+DEFINE_COL_PLACE         = 36        #列：場所
+DEFINE_COL_END           = 38        #列最後
 def convertDefine( csv, header, hash, hashNumber )
 
   hashPersonStr     = Hash.new()
@@ -73,6 +79,7 @@ def convertDefine( csv, header, hash, hashNumber )
   hashService       = Hash.new()
   hashSpotType      = Hash.new()
   hashGrade         = Hash.new()
+  hashOffreco       = Hash.new()
 
   #日本語→タグと日本語→値のハッシュを作成
   for row in DEFINE_ROW_START...csv.row_length-1
@@ -111,6 +118,8 @@ def convertDefine( csv, header, hash, hashNumber )
         hashSpotType.store( japStr, engStr )
       when DEFINE_COL_GRADE
         hashGrade.store( japStr, engStr )
+      when DEFINE_COL_OFFRECO_TYPE
+        hashOffreco.store( japStr, engStr )
       end
 
       col+=2
@@ -184,6 +193,13 @@ def convertDefine( csv, header, hash, hashNumber )
     header.write( "#define RESORT_GRADE_TYPE_#{v} (#{hashNumber[k]}) //#{k}\n" )
   }
   header.write( "#define RESORT_GRADE_TYPE_MAX (#{hashGrade.size}) //最大\n" )
+
+
+  header.write( "//オフレコタイプ\n" )
+  hashOffreco.each{ |k,v|
+    header.write( "#define RESORT_OFFRECO_TYPE_#{v} (#{hashNumber[k]}) //#{k}\n" )
+  }
+  header.write( "#define RESORT_OFFRECO_TYPE_MAX (#{hashOffreco.size}) //最大\n" )
 
   #定義をruby用ハッシュテーブルに書き込み
   hash.write( "$define_hash = {\n" )

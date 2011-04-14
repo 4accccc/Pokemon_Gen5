@@ -90,3 +90,9 @@
 #define RESORT_GRADE_TYPE_GREAT (1) //○
 #define RESORT_GRADE_TYPE_EXCELLENT (2) //◎
 #define RESORT_GRADE_TYPE_MAX (3) //最大
+//オフレコタイプ
+#define RESORT_OFFRECO_TYPE_TEST1 (0) //テスト１
+#define RESORT_OFFRECO_TYPE_TEST2 (1) //テスト２
+#define RESORT_OFFRECO_TYPE_TEST3 (2) //テスト３
+#define RESORT_OFFRECO_TYPE_ALL_BIT_OFF (3) //全ビットOFF
+#define RESORT_OFFRECO_TYPE_MAX (4) //最大
