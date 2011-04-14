@@ -42,3 +42,9 @@ extern GMEVENT * WBT_EVENT_TrainerBeforeMsg(
     WBTSYS *wbtsys, GAMESYS_WORK *gsys,
     int tr_idx, u16 obj_id, u8 pos_type );
 
+//
+extern GMEVENT * WIN_RECORD_EVENT_Show(
+    GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
+    WIN_RECORD_PARAM * wr_param, BOOL call_fade_flag );
+
+

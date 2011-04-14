@@ -49,6 +49,7 @@ SUBDIRS	=	wmi \
 			manual \
 			medal\
 			wbt \
+			entry_checker \
 			message\
 			fldmmdl \
 			encount \

@@ -322,3 +322,44 @@ static void getMMdlObjCodeParam( ARCHANDLE * handle, u16 mmdl_id, u8 * anm_id, u
 
 
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+///  WIN_RECORD用パラメータOBJECT生成
+//------------------------------------------------------------------
+WIN_RECORD_PARAM * WIN_RECORD_PARAM_Create( HEAPID heapID, GAMESYS_WORK * gsys )
+{
+	WIN_RECORD_PARAM * wr_param;
+	
+	wr_param 			= GFL_HEAP_AllocClearMemory( heapID, sizeof(WIN_RECORD_PARAM) );
+	wr_param->gamesys	= gsys;
+	// 初期化
+	wr_param->status	= WIN_RECORD_STATUS_LV1;
+	//
+	return wr_param;
+}
+
+//------------------------------------------------------------------
+///  WBTトーナメントリスト用パラメータOBJECT削除
+//------------------------------------------------------------------
+void WIN_RECORD_PARAM_Delete( WIN_RECORD_PARAM * wr_param )
+{
+	// 必要であれば削除を追加
+	GFL_HEAP_FreeMemory( wr_param );
+}
+
+#ifdef  PM_DEBUG
+//------------------------------------------------------------------
+/**
+ * @brief トーナメントリスト用パラメータのセットアップ（デバッグ用）
+ *
+ * デバッグ用にWBTSYSを生成し、それを元にセットアップを行う
+ */
+//------------------------------------------------------------------
+void WIN_RECORD_PARAM_Setup_Debug( GAMESYS_WORK * gsys, WIN_RECORD_PARAM * wr_param )
+{
+	// 必要であれば、ここでパラメータのセットをするらしい
+	
+}
+#endif
+

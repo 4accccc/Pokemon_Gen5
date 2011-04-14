@@ -58,6 +58,8 @@
 #include "battle/bsubway_battle_data.h" //BSUBWAY_PARTNER_DATA
 #include "fld_btl_inst_tool.h"
 
+#include "app/win_record.h"
+
 FS_EXTERN_OVERLAY(pokelist);
 
 //======================================================================
@@ -378,6 +380,100 @@ GMEVENT * WBT_EVENT_TrainerBattle( WBTSYS *wbtsys, GAMESYS_WORK *gsys )
   wbew->wbtsys = wbtsys;
 
   return event;
+}
+
+
+//=============================================================================
+//
+//    WIN_RECORD画面呼び出し
+//
+//=============================================================================
+//-------------------------------------
+///   WIN_RECORD定義
+//=====================================
+typedef struct
+{
+  GAMESYS_WORK        *gsys;
+  FIELDMAP_WORK       *fieldmap;
+  WIN_RECORD_PARAM    *wr_param;
+  BOOL                call_fade_flag;
+} WIN_RECORD_EVENT_WORK;
+
+static GMEVENT_RESULT eventWinRecord( GMEVENT *p_event, int *p_seq, void *p_wk_adrs );
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  WIN_RECORD呼び出し
+ *
+ *
+ *  @return 終了コード
+ */
+//-----------------------------------------------------------------------------
+GMEVENT * WIN_RECORD_EVENT_Show(
+    GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
+    WIN_RECORD_PARAM * wr_param, BOOL call_fade_flag )
+{
+  WIN_RECORD_EVENT_WORK *p_param;
+  GMEVENT * new_event;
+
+  //イヴェント
+  new_event = GMEVENT_Create( gsys, NULL, eventWinRecord, sizeof(WIN_RECORD_EVENT_WORK) );
+  p_param = GMEVENT_GetEventWork( new_event );
+  GFL_STD_MemClear( p_param, sizeof(WIN_RECORD_EVENT_WORK) );
+
+  p_param->gsys			= gsys;
+  p_param->fieldmap		= fieldmap;
+  p_param->wr_param 	= wr_param;
+  p_param->call_fade_flag = call_fade_flag;
+
+  OS_Printf( "Win Record Start\n" );
+
+  return new_event;
+
+}
+//----------------------------------------------------------------------------
+/**
+ *  @brief  WBTリストアプリ呼び出し用イベント
+ *
+ *  @param  GMEVENT *event  GMEVENT
+ *  @param  *seq            シーケンス
+ *  @param  *work           ワーク
+ *
+ *  @return 終了コード
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT_RESULT eventWinRecord( GMEVENT *p_event, int *p_seq, void *p_wk_adrs )
+{
+  enum
+  {
+    SEQ_CALL_PROC,
+    SEQ_EXIT,
+  };
+
+  WIN_RECORD_EVENT_WORK *p_wk = p_wk_adrs;
+  GMEVENT * call_event;
+
+  switch(*p_seq )
+  {
+  case SEQ_CALL_PROC:
+    if ( p_wk->call_fade_flag )
+    {
+      call_event = EVENT_FieldSubProc( p_wk->gsys, p_wk->fieldmap,
+          FS_OVERLAY_ID(entry_checker), &WinRecordProcData, p_wk->wr_param );
+    } else {
+      call_event = EVENT_FieldSubProcNoFade( p_wk->gsys, p_wk->fieldmap,
+          FS_OVERLAY_ID(entry_checker), &WinRecordProcData, p_wk->wr_param );
+    }
+    GMEVENT_CallEvent( p_event, call_event );
+    *p_seq  = SEQ_EXIT;
+    break;
+
+  case SEQ_EXIT:
+    WIN_RECORD_PARAM_Delete( p_wk->wr_param );
+    return GMEVENT_RES_FINISH;
+  }
+
+  return GMEVENT_RES_CONTINUE ;
 }
 
 

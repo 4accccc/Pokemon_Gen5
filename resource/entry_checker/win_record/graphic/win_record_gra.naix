@@ -1,0 +1,30 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: win_record_gra.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_WIN_RECORD_GRA_NAIX_
+#define NARC_WIN_RECORD_GRA_NAIX_
+
+enum {
+	NARC_win_record_gra_win_record_bg_d_NCLR = 0,
+	NARC_win_record_gra_win_record_bg_u_NCLR = 1,
+	NARC_win_record_gra_win_record_obj_d_NCLR = 2,
+	NARC_win_record_gra_win_record_bg_d_NCGR = 3,
+	NARC_win_record_gra_win_record_bg_u_NCGR = 4,
+	NARC_win_record_gra_win_record_obj_d_NCGR = 5,
+	NARC_win_record_gra_win_record_obj_d_NCER = 6,
+	NARC_win_record_gra_win_record_bg_d_01_NSCR = 7,
+	NARC_win_record_gra_win_record_bg_u_01_NSCR = 8,
+	NARC_win_record_gra_win_record_bg_u_02_NSCR = 9,
+	NARC_win_record_gra_win_record_obj_d_NANR = 10,
+	NARC_win_record_gra_win_record_param_tblbin = 11,
+	NARC_win_record_gra_win_record_pos_tblbin = 12
+};
+
+/* NARC_WIN_RECORD_GRA_NAIX_ */
+#endif

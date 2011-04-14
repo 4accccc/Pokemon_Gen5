@@ -17,6 +17,7 @@
 #include "poke_tool/poke_regulation.h"  //REGULATION
 
 #include "app/wbt_list.h" //WBTLIST_PARAM
+#include "app/win_record.h"		// WIN_RECORD_PARAM
 
 #include "app/pokelist.h" //PLIST_DATA
 #include "app/p_status.h" //PSTATUS_DATA
@@ -178,4 +179,12 @@ extern void WBTLIST_PARAM_Setup_Debug(
     WBTTYPE wbttype, WBTRULE rule,
     WBTSTAGE stage, const u16 * trid_table, int debug_value );
 #endif
+
+//
+extern WIN_RECORD_PARAM * WIN_RECORD_PARAM_Create( HEAPID heapID, GAMESYS_WORK * gsys );
+extern void WIN_RECORD_PARAM_Delete( WIN_RECORD_PARAM * wr_param );
+#ifdef  PM_DEBUG
+extern void WIN_RECORD_PARAM_Setup_Debug( GAMESYS_WORK * gsys, WIN_RECORD_PARAM * wr_param );
+#endif
+
 
