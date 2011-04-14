@@ -3930,7 +3930,10 @@ BOOL BTL_MAIN_IsRecordPlayMode( const BTL_MAIN_MODULE* wk )
 //=============================================================================================
 int BTL_MAIN_GetPokewoodMode( const BTL_MAIN_MODULE* wk )
 {
-  return wk->setupParam->PokewoodMode;
+  if(wk!=NULL){
+    return wk->setupParam->PokewoodMode;
+  }
+  return BTL_POKEWOOD_NONE;
 }
 //=============================================================================================
 /**
@@ -3943,7 +3946,10 @@ int BTL_MAIN_GetPokewoodMode( const BTL_MAIN_MODULE* wk )
 //=============================================================================================
 int BTL_MAIN_GetPokewoodSenario( const BTL_MAIN_MODULE* wk )
 {
-  return wk->setupParam->pokewoodSenario;
+  if(wk!=NULL){
+    return wk->setupParam->pokewoodSenario;
+  }
+  return 0;
 }
 
 
