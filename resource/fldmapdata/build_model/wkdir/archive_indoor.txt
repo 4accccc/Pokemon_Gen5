@@ -157,3 +157,8 @@
 "nsbmdfiles/mugenobj07.nsbmd"
 "nsbmdfiles/mugenobj08.nsbmd"
 "nsbmdfiles/mugenobj09.nsbmd"
+"nsbmdfiles/rrobj01.nsbmd"
+"nsbmdfiles/rrobj02.nsbmd"
+"nsbmdfiles/rrobj03.nsbmd"
+"nsbmdfiles/rrobj04.nsbmd"
+"nsbmdfiles/rrobj05.nsbmd"

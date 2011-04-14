@@ -158,4 +158,9 @@ DEP_INDOOR	=	\
 	$(RESDIR)/mugenobj07.nsbmd \
 	$(RESDIR)/mugenobj08.nsbmd \
 	$(RESDIR)/mugenobj09.nsbmd \
+	$(RESDIR)/rrobj01.nsbmd \
+	$(RESDIR)/rrobj02.nsbmd \
+	$(RESDIR)/rrobj03.nsbmd \
+	$(RESDIR)/rrobj04.nsbmd \
+	$(RESDIR)/rrobj05.nsbmd \
 

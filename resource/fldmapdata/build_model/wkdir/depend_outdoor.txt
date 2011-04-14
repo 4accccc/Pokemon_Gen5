@@ -392,4 +392,11 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/rr_nisejim_03.nsbmd \
 	$(RESDIR)/d03_area51_01.nsbmd \
 	$(RESDIR)/c8_gym_04.nsbmd \
+	$(RESDIR)/rr_funsui_01.nsbmd \
+	$(RESDIR)/rr_zou_01.nsbmd \
+	$(RESDIR)/rr_mon_01.nsbmd \
+	$(RESDIR)/rr_hata_01.nsbmd \
+	$(RESDIR)/d23_obj_01.nsbmd \
+	$(RESDIR)/d23_obj_02.nsbmd \
+	$(RESDIR)/d23_obj_03.nsbmd \
 
