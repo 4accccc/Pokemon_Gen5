@@ -353,6 +353,9 @@ _WBT_CHECK_BATTLE_RULE( LWK_CHK_RULE )
 //問題なしの場合
 IF $LWK_CHK_RULE == TRUE THEN
 
+  //エントリー
+  _WBT_SYSTEM_ENTRY()
+
 	//参加受付が終わりました！
 	_BALLOONWIN_OBJMSG_POS( msg_wbt_info_17, SCWK_TARGET_OBJID, POS_DL )
 	_MSGWIN_CLOSE()
@@ -602,12 +605,14 @@ EVENT_END
 //
 //--------------------------------------------------------------
 ev_victory_checker:
+  _WBT_ENTRY_CHECKER_VICTORY_RECORD()
   _RET
 
 //--------------------------------------------------------------
 //
 //--------------------------------------------------------------
 ev_downloader:
+  _WBT_ENTRY_CHECKER_DOWNLOAD()
   _RET
 
 

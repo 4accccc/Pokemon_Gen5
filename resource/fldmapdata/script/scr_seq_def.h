@@ -12188,17 +12188,16 @@
 
 //--------------------------------------------------------------
 /**
- * @brief   WBT:トーナメントリスト表示
- * @param[in] num   トーナメント状態指定  ※script_def.hのSCR_WBT_LIST_～を参照
+ * @brief WBT:システムにエントリーをリクエスト
  */
 //--------------------------------------------------------------
-#define _WBT_LIST_CALL( num ) \
-    _ASM_WBT_LIST_CALL num
+#define _WBT_SYSTEM_ENTRY() \
+    _ASM_WBT_SYSTEM_ENTRY
 
-    .macro _ASM_WBT_LIST_CALL num
-    .short  EV_SEQ_WBT_SHOW_TOURLIST
-    .short  \num
+    .macro  _ASM_WBT_SYSTEM_ENTRY
+    .short  EV_SEQ_WBT_SYSTEM_ENTRY
     .endm
+
 
 //--------------------------------------------------------------
 /**
@@ -12274,6 +12273,20 @@
 
 //--------------------------------------------------------------
 /**
+ * @brief WBT:優勝回数の取得
+ * @param[out]  ret_wk
+ */
+//--------------------------------------------------------------
+#define _WBT_GET_VICTORY_COUNT( ret_wk ) \
+    _ASM_WBT_GET_VICTORY_COUNT ret_wk
+
+    .macro  _ASM_WBT_GET_VICTORY_COUNT ret_wk
+    .short  EV_SEQ_WBT_GET_VICTORY_COUNT
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
  * @brief WBT:ダウンロードデータの数を取得
  * @param[out]  ret_wk  ダウンロードデータの数
  */
@@ -12304,24 +12317,6 @@
 
 //--------------------------------------------------------------
 /**
- * @brief WBT:ダウンロードデータの選択画面を呼び出す
- * @param[out]  ret_wk  選択したダウンロードデータの番号
- * @retval  0   選択しなかった
- * @retval  1-3 選択した番号
- *
- * ダウンロードデータ選択画面を呼び出し、選択したものを返す
- */
-//--------------------------------------------------------------
-#define _WBT_SELECT_DL_DATA( ret_wk )  \
-    _ASM_WBT_SELECT_DL_DATA ret_wk
-
-    .macro _ASM_WBT_SELECT_DL_DATA ret_wk
-    .short  EV_SEQ_WBT_SELECT_DL_DATA
-    .short  \ret_wk
-    .endm
-
-//--------------------------------------------------------------
-/**
  * @brief WBT:選択したダウンロードデータの番号をセット
  * @param[in]  number   セットする番号
  */
@@ -12345,20 +12340,6 @@
 
     .macro _ASM_WBT_GET_DL_NUMBER ret_wk   
     .short  EV_SEQ_WBT_GET_DL_NUMBER
-    .short  \ret_wk
-    .endm
-
-//--------------------------------------------------------------
-/**
- * @brief WBT:  ポケモン選択
- * @param[out]  ret_wk  選択結果
- */
-//--------------------------------------------------------------
-#define _WBT_SELECT_POKEMON( ret_wk ) \
-    _ASM_WBT_SELECT_POKEMON ret_wk
-
-    .macro _ASM_WBT_SELECT_POKEMON ret_wk
-    .short  EV_SEQ_WBT_SELECT_POKEMON
     .short  \ret_wk
     .endm
 
@@ -12449,16 +12430,70 @@
 
 //--------------------------------------------------------------
 /**
- * @brief WBT:優勝回数の取得
- * @param[out]  ret_wk
+ * @brief   WBT:トーナメントリスト表示
+ * @param[in] num   トーナメント状態指定  ※script_def.hのSCR_WBT_LIST_～を参照
  */
 //--------------------------------------------------------------
-#define _WBT_GET_VICTORY_COUNT( ret_wk ) \
-    _ASM_WBT_GET_VICTORY_COUNT ret_wk
+#define _WBT_LIST_CALL( num ) \
+    _ASM_WBT_LIST_CALL num
 
-    .macro  _ASM_WBT_GET_VICTORY_COUNT ret_wk
-    .short  EV_SEQ_WBT_GET_VICTORY_COUNT
+    .macro _ASM_WBT_LIST_CALL num
+    .short  EV_SEQ_WBT_SHOW_TOURNAMENT_LIST
+    .short  \num
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief WBT:  ポケモン選択
+ * @param[out]  ret_wk  選択結果
+ */
+//--------------------------------------------------------------
+#define _WBT_SELECT_POKEMON( ret_wk ) \
+    _ASM_WBT_SELECT_POKEMON ret_wk
+
+    .macro _ASM_WBT_SELECT_POKEMON ret_wk
+    .short  EV_SEQ_WBT_SELECT_POKEMON
     .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief WBT:ダウンロードデータの選択画面を呼び出す
+ * @param[out]  ret_wk  選択したダウンロードデータの番号
+ * @retval  0   選択しなかった
+ * @retval  1-3 選択した番号
+ *
+ * ダウンロードデータ選択画面を呼び出し、選択したものを返す
+ */
+//--------------------------------------------------------------
+#define _WBT_SELECT_DL_DATA( ret_wk )  \
+    _ASM_WBT_SELECT_DL_DATA ret_wk
+
+    .macro _ASM_WBT_SELECT_DL_DATA ret_wk
+    .short  EV_SEQ_WBT_SELECT_DL_DATA
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief WBT:エントリチェッカー：優勝記録画面呼び出し
+ */
+//--------------------------------------------------------------
+#define _WBT_ENTRY_CHECKER_VICTORY_RECORD() \
+    _ASM_WBT_ENTRY_CHECKER_VICTORY_RECORD
+    .macro  _ASM_WBT_ENTRY_CHECKER_VICTORY_RECORD
+    .short  EV_SEQ_WBT_ENTRY_CHECKER_VICTORY_RECORD
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief WBT:エントリチェッカー：ダウンロード画面呼び出し
+ */
+//--------------------------------------------------------------
+#define _WBT_ENTRY_CHECKER_DOWNLOAD() \
+    _ASM_WBT_ENTRY_CHECKER_DOWNLOAD
+    .macro  _ASM_WBT_ENTRY_CHECKER_DOWNLOAD
+    .short  EV_SEQ_WBT_ENTRY_CHECKER_DOWNLOAD
     .endm
 
 //--------------------------------------------------------------

@@ -3,7 +3,7 @@
  * @file  scrcmd_wbt.c
  * @author  tamada GAMEFREAK inc.
  * @date  2011.02.21
- * @brief
+ * @brief WBT用スクリプトコマンド実装
  */
 //============================================================================================
 
@@ -151,38 +151,23 @@ VMCMD_RESULT EvCmdWBTSystemSetStage( VMHANDLE * core, void * wk )
 
   return VMCMD_RESULT_CONTINUE;
 }
-
-//============================================================================================
-//============================================================================================
 //--------------------------------------------------------------
 /**
- * @brief スクリプトコマンド：トーナメントリストの表示
+ * @brief スクリプトコマンド：エントリー
  */
 //--------------------------------------------------------------
-VMCMD_RESULT EvCmdWBTShowTornamentList( VMHANDLE * core, void * wk )
+VMCMD_RESULT EvCmdWBTSystemEntry( VMHANDLE * core, void * wk )
 {
-  u16 list_type = SCRCMD_GetVMWorkValue( core, wk );
-  //仮：ここでトーナメント表を表示
-  SCRCMD_WORK*    work = wk;
-  SCRIPT_WORK*      sc = SCRCMD_WORK_GetScriptWork( work );
-  GAMESYS_WORK  *gsys = SCRIPT_GetGameSysWork( sc );
-  FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
-  HEAPID heapID = SCRCMD_WORK_GetHeapID( work );
   WBTSYS * wbtsys = getWBTSys( wk );
 
-  GMEVENT * next_event;
-  WBTLIST_PARAM * p_param;
+  GAMEDATA* gamedata = SCRCMD_WORK_GetGameData( wk );
+  WBTSYS_MakeMatch( wbtsys, gamedata );
 
-  p_param = WBTLIST_PARAM_Create( heapID, gsys );
-  WBTLIST_PARAM_Setup( gsys, wbtsys, p_param );
-
-  next_event = WBT_EVENT_ShowTournamentList( gsys, fieldmap, p_param, FALSE );
-  SCRIPT_CallEvent( sc, next_event );
-  OS_Printf( "WBT List Start\n" );
-
-  return VMCMD_RESULT_SUSPEND;
+  return VMCMD_RESULT_CONTINUE;
 }
 
+//============================================================================================
+//============================================================================================
 //--------------------------------------------------------------
 /**
  * @brief スクリプトコマンド：ルール準拠の手持ちか？チェック
@@ -264,6 +249,37 @@ VMCMD_RESULT EvCmdWBTGetTournamentType( VMHANDLE * core, void * wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：優勝回数の取得
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTGetVictoryCount( VMHANDLE * core, void * wk )
+{
+  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
+  u32 count = 0;
+
+  {
+    SCRCMD_WORK * work = wk;
+    GAMEDATA * gamedata = SCRCMD_WORK_GetGameData( work );
+    WBTSAVE * wbtsave = GAMEDATA_GetWBTSave( gamedata );
+    u32 id;
+    for ( id = 0; id < WBTWIN_COUNT_MAX; id ++ )
+    {
+      count += WBTSAVE_GetWinCount( wbtsave, id );
+      if ( count >= WBTWIN_MAX )
+      {
+        count = WBTWIN_MAX;
+        break;
+      }
+    }
+  }
+  *ret_wk = count;
+
+  TAMADA_Printf("EvCmdWBTGetVictoryCount == %d\n", *ret_wk );
+  return VMCMD_RESULT_CONTINUE;
+}
+
 //============================================================================================
 //============================================================================================
 //--------------------------------------------------------------
@@ -306,19 +322,6 @@ VMCMD_RESULT EvCmdWBTGetDownLoadName( VMHANDLE * core, void * wk )
 
 //--------------------------------------------------------------
 /**
- * @brief スクリプトコマンド：WBTDLデータのナンバー選択
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdWBTSelectDLData( VMHANDLE * core, void * wk )
-{
-  WBTSYS * wbtsys = getWBTSys( wk );
-  //仮：ここで別画面アプリ呼び出し
-  TAMADA_Printf("EvCmdWBTSelectDLData\n");
-  return VMCMD_RESULT_SUSPEND;
-}
-
-//--------------------------------------------------------------
-/**
  * @brief スクリプトコマンド：WBTDLデータのナンバーセット
  */
 //--------------------------------------------------------------
@@ -346,28 +349,10 @@ VMCMD_RESULT EvCmdWBTGetDLNumber( VMHANDLE * core, void * wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
-//--------------------------------------------------------------
-/**
- * @brief スクリプトコマンド：参加ポケモンを選択する
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdWBTSelectPokemon( VMHANDLE * core, void * wk )
-{
-  SCRCMD_WORK*    work = wk;
-  SCRIPT_WORK*      sc = SCRCMD_WORK_GetScriptWork( work );
-  GAMESYS_WORK *gsys = SCRIPT_GetGameSysWork( sc );
-  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
-  WBTSYS * wbtsys = getWBTSys( wk );
-
-  u8 buf = FALSE;
-  TAMADA_Printf("EvCmdWBTSelectPokemon\n");
-  SCRIPT_CallEvent( sc, WBT_EVENT_SetSelectPokeList( wbtsys, gsys, buf ) );
-  WBTSYS_SetScriptAnswerWork( wbtsys, ret_wk );
-
-  return VMCMD_RESULT_SUSPEND;
-}
-
 //============================================================================================
+//
+//
+//
 //============================================================================================
 //--------------------------------------------------------------
 /**
@@ -431,7 +416,7 @@ VMCMD_RESULT EvCmdWBTTrainerMsg( VMHANDLE * core, void * wk )
 }
 //--------------------------------------------------------------
 /**
- * @brief スクリプトコマンド：
+ * @brief スクリプトコマンド：WBTトレーナー対戦呼び出し
  */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdWBTTrainerBattle( VMHANDLE * core, void * wk )
@@ -489,7 +474,8 @@ VMCMD_RESULT EvCmdWBTAnnounce( VMHANDLE * core, void * wk )
 
 //--------------------------------------------------------------
 /**
- * @brief スクリプトコマンド：
+ * @brief スクリプトコマンド：トーナメント名のセット
+ * @todo  ダウンロードデータへの対応
  */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdWBTSetTournamentName( VMHANDLE * core, void * wk )
@@ -514,7 +500,7 @@ VMCMD_RESULT EvCmdWBTSetTournamentName( VMHANDLE * core, void * wk )
 
 //--------------------------------------------------------------
 /**
- * @brief スクリプトコマンド：
+ * @brief スクリプトコマンド：対戦者名のセット
  */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdWBTSetEnemyName( VMHANDLE * core, void * wk )
@@ -534,23 +520,153 @@ VMCMD_RESULT EvCmdWBTSetEnemyName( VMHANDLE * core, void * wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+//============================================================================================
+//
+//    WBT用コマンド：別アプリ呼び出し
+//
+//============================================================================================
 //--------------------------------------------------------------
 /**
- * @brief スクリプトコマンド：
+ * @brief スクリプトコマンド：トーナメントリストの表示
  */
 //--------------------------------------------------------------
-VMCMD_RESULT EvCmdWBTGetVictoryCount( VMHANDLE * core, void * wk )
+VMCMD_RESULT EvCmdWBTShowTornamentList( VMHANDLE * core, void * wk )
 {
+  u16 list_type = SCRCMD_GetVMWorkValue( core, wk );
+  SCRCMD_WORK*    work = wk;
+  SCRIPT_WORK*      sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK  *gsys = SCRIPT_GetGameSysWork( sc );
+  FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  HEAPID heapID = SCRCMD_WORK_GetHeapID( work );
+  WBTSYS * wbtsys = getWBTSys( wk );
+
+  GMEVENT * next_event;
+  WBTLIST_PARAM * p_param;
+
+  p_param = WBTLIST_PARAM_Create( heapID, gsys );
+  WBTLIST_PARAM_Setup( gsys, wbtsys, p_param );
+
+  next_event = WBT_EVENT_ShowTournamentList( gsys, fieldmap, p_param, FALSE );
+  SCRIPT_CallEvent( sc, next_event );
+  OS_Printf( "WBT List Start\n" );
+
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：参加ポケモンを選択する
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTSelectPokemon( VMHANDLE * core, void * wk )
+{
+  SCRCMD_WORK*    work = wk;
+  SCRIPT_WORK*      sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRIPT_GetGameSysWork( sc );
   u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
   WBTSYS * wbtsys = getWBTSys( wk );
 
-  //仮
-  *ret_wk = 1;
-  TAMADA_Printf("EvCmdWBTGetVictoryCount == %d\n", *ret_wk );
-  return VMCMD_RESULT_CONTINUE;
+  u8 buf = FALSE;
+  TAMADA_Printf("EvCmdWBTSelectPokemon\n");
+  SCRIPT_CallEvent( sc, WBT_EVENT_SetSelectPokeList( wbtsys, gsys, buf ) );
+  WBTSYS_SetScriptAnswerWork( wbtsys, ret_wk );
+
+  return VMCMD_RESULT_SUSPEND;
 }
 
+//----------------------------------------------------------------------------
+//----------------------------------------------------------------------------
+static GMEVENT * createDummyEvent( HEAPID heapID, GAMESYS_WORK * gsys )
+{
+  GMEVENT * new_event;
+  WBTLIST_PARAM * wbtlist_param;
+  FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+
+  wbtlist_param = WBTLIST_PARAM_Create( heapID, gsys );
+  {
+    GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
+    WBTSYS * wbtsys;
+
+    wbtsys = WBTSYS_Create( heapID );
+    WBTSYS_SetType( wbtsys, WBTTYPE_ALL );
+    WBTSYS_SetRule( wbtsys, WBTRULE_SINGLE );
+    WBTSYS_SetStage( wbtsys, WBTSTAGE_ENTRY );
+    WBTSYS_MakeMatch( wbtsys, gamedata );
+
+    WBTLIST_PARAM_Setup( gsys, wbtsys, wbtlist_param );
+    //wbtlist_param->debug_value = debug_value;
+
+    WBTSYS_Delete( wbtsys );
+  }
+  new_event = WBT_EVENT_ShowTournamentList( gsys, fieldmap, wbtlist_param, TRUE );
+  return new_event;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：WBTDLデータのナンバー選択
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTSelectDLData( VMHANDLE * core, void * wk )
+{
+  WBTSYS * wbtsys = getWBTSys( wk );
+  SCRCMD_WORK   *work = wk;
+  GAMESYS_WORK  *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  HEAPID      heap_id = SCRCMD_WORK_GetHeapID( work );
+  GMEVENT * new_event = createDummyEvent( heap_id, gsys );
+  SCRIPT_WORK*      sc = SCRCMD_WORK_GetScriptWork( work );
+
+  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
+  *ret_wk = 0;  //仮：選択せず
+  //仮：ここで別画面アプリ呼び出し
+  TAMADA_Printf("EvCmdWBTSelectDLData\n");
+  SCRIPT_CallEvent( sc, new_event );
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//----------------------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：対エントリーチェッカー（優勝記録確認画面）の呼び出し
+ */
+//----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTECheckerRecord( VMHANDLE * core, void * wk )
+{
+  SCRCMD_WORK   *work = wk;
+  GAMESYS_WORK  *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  HEAPID      heap_id = SCRCMD_WORK_GetHeapID( work );
+  GMEVENT * new_event = createDummyEvent( heap_id, gsys );
+  SCRIPT_WORK*      sc = SCRCMD_WORK_GetScriptWork( work );
+
+  //仮：ここで別画面アプリ呼び出し
+  TAMADA_Printf("EvCmdWBTECheckerRecord\n");
+  SCRIPT_CallEvent( sc, new_event );
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//----------------------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：エントリーチェッカー（ダウンロード画面）の呼び出し
+ */
+//----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTECheckerDownLoad( VMHANDLE * core, void * wk )
+{
+  SCRCMD_WORK   *work = wk;
+  GAMESYS_WORK  *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  HEAPID      heap_id = SCRCMD_WORK_GetHeapID( work );
+  GMEVENT * new_event = createDummyEvent( heap_id, gsys );
+  SCRIPT_WORK*      sc = SCRCMD_WORK_GetScriptWork( work );
+
+  //仮：ここで別画面アプリ呼び出し
+  TAMADA_Printf("EvCmdWBTECheckerDownLoad\n");
+  SCRIPT_CallEvent( sc, new_event );
+  return VMCMD_RESULT_SUSPEND;
+}
+
+
 //============================================================================================
+//
+//      WBT用コマンド：ギミック関連
+//
 //============================================================================================
 //----------------------------------------------------------------------------
 /**
