@@ -69,9 +69,7 @@ extern u16 RESORT_BINARY_PEOPLE_DATA_GetMsgID( const RESORT_BINARY_PEOPLE_DATA *
 typedef enum
 {
   RESORT_BINARY_SPOT_PARAM_MSG_00,
-  RESORT_BINARY_SPOT_PARAM_MSG_01,
-  RESORT_BINARY_SPOT_PARAM_MSG_02,
-
+  RESORT_BINARY_SPOT_PARAM_GROUP,
   RESORT_BINARY_SPOT_PARAM_BAESEXP,
 
   RESORT_BINARY_SPOT_DATA_START,
@@ -97,6 +95,7 @@ extern RESORT_BINARY_SPOT * RESORT_BINARY_SPOT_Init( HEAPID heapID );
 extern void RESORT_BINARY_SPOT_Exit( RESORT_BINARY_SPOT *p_wk );
 extern u16 RESORT_BINARY_SPOT_GetData( const RESORT_BINARY_SPOT *cp_wk, u32 index, RESORT_BINARY_SPOT_PARAM param );
 extern BOOL RESORT_BINARY_SPOT_SearchIndex( const RESORT_BINARY_SPOT *cp_wk, u32 msg, u32 *p_index );
+extern u16 RESORT_BINARY_SPOT_GetMax( const RESORT_BINARY_SPOT *cp_wk );
 
 //=============================================================================
 /**
@@ -206,3 +205,35 @@ extern RESORT_BINARY_OFFRECO * RESORT_BINARY_OFFRECO_Init( HEAPID heapID );
 extern void RESORT_BINARY_OFFRECO_Exit( RESORT_BINARY_OFFRECO *p_wk );
 extern u16 RESORT_BINARY_OFFRECO_GetData( const RESORT_BINARY_OFFRECO *cp_wk, u32 index, RESORT_BINARY_OFFRECO_PARAM param );
 extern u32 RESORT_BINARY_OFFRECO_GetMax( const RESORT_BINARY_OFFRECO *cp_wk );
+
+//=============================================================================
+/**
+ *      レゾナンスリゾートCITYデータ
+ */
+//=============================================================================
+//-------------------------------------
+///	列挙型
+//=====================================
+typedef enum
+{
+  RESORT_BINARY_CITY_PARAM_LV_LOW,
+  RESORT_BINARY_CITY_PARAM_LV_HIGH,
+  RESORT_BINARY_CITY_PARAM_GROUP_00,
+  RESORT_BINARY_CITY_PARAM_GROUP_01,
+  RESORT_BINARY_CITY_PARAM_GROUP_02,
+  RESORT_BINARY_CITY_PARAM_MAX
+} RESORT_BINARY_CITY_PARAM;
+
+//-------------------------------------
+///	CITYデータ
+//=====================================
+typedef struct _RESORT_BINARY_CITY RESORT_BINARY_CITY;
+
+//-------------------------------------
+///	PUBLIC
+//=====================================
+extern RESORT_BINARY_CITY * RESORT_BINARY_CITY_Init( HEAPID heapID );
+extern void RESORT_BINARY_CITY_Exit( RESORT_BINARY_CITY *p_wk );
+extern u16 RESORT_BINARY_CITY_GetData( const RESORT_BINARY_CITY *cp_wk, u32 index, RESORT_BINARY_CITY_PARAM param );
+extern u32 RESORT_BINARY_CITY_GetMax( const RESORT_BINARY_CITY *cp_wk );
+extern u32 RESORT_BINARY_CITY_GetIndexByCityLv( const RESORT_BINARY_CITY *cp_wk, u32 lv );

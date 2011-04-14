@@ -268,16 +268,26 @@ BOOL RESORT_BINARY_SPOT_SearchIndex( const RESORT_BINARY_SPOT *cp_wk, u32 msg, u
 {
   for( (*p_index) = 0; (*p_index) < cp_wk->size / sizeof( RESORT_BINARY_SPOT_DATA ); (*p_index)++ )
   {
-    if( cp_wk->p_data[ (*p_index) ].param[ RESORT_BINARY_SPOT_PARAM_MSG_00 ] == msg
-      || cp_wk->p_data[ (*p_index) ].param[ RESORT_BINARY_SPOT_PARAM_MSG_01 ] == msg 
-      || cp_wk->p_data[ (*p_index) ].param[ RESORT_BINARY_SPOT_PARAM_MSG_02 ] == msg 
-      )
+    if( cp_wk->p_data[ (*p_index) ].param[ RESORT_BINARY_SPOT_PARAM_MSG_00 ] == msg )
     {
       return TRUE;
     }
   }
 
   return FALSE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  最大値取得
+ *
+ *	@param	const RESORT_BINARY_SPOT *cp_wk   ワーク
+ *
+ *	@return 最大値
+ */
+//-----------------------------------------------------------------------------
+u16 RESORT_BINARY_SPOT_GetMax( const RESORT_BINARY_SPOT *cp_wk )
+{
+  return cp_wk->size / sizeof( RESORT_BINARY_SPOT_DATA );
 }
 
 //=============================================================================
@@ -506,4 +516,110 @@ u16 RESORT_BINARY_OFFRECO_GetData( const RESORT_BINARY_OFFRECO *cp_wk, u32 index
 u32 RESORT_BINARY_OFFRECO_GetMax( const RESORT_BINARY_OFFRECO *cp_wk )
 {
   return cp_wk->size / sizeof( RESORT_BINARY_OFFRECO_DATA );
+}
+
+//=============================================================================
+/**
+ *      レゾナンスリゾートCITYデータ
+ */
+//=============================================================================
+//-------------------------------------
+///	CITYバイナリデータ
+//=====================================
+typedef struct
+{
+  u16 param[ RESORT_BINARY_CITY_PARAM_MAX ];
+} RESORT_BINARY_CITY_DATA;
+//-------------------------------------
+///	ワーク
+//=====================================
+struct _RESORT_BINARY_CITY
+{
+  u32 size;
+  RESORT_BINARY_CITY_DATA *p_data;
+};
+
+//-------------------------------------
+///	PUBLIC
+//=====================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  CITYデータを作成
+ *
+ *	@param	HEAPID heapID   ヒープID
+ *
+ *	@return バイナリデータ
+ */
+//-----------------------------------------------------------------------------
+RESORT_BINARY_CITY * RESORT_BINARY_CITY_Init( HEAPID heapID )
+{
+  RESORT_BINARY_CITY *p_wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(RESORT_BINARY_CITY) );
+  p_wk->p_data = GFL_ARC_UTIL_LoadEx(ARCID_RESONANCE_RESORT_DATA, NARC_resonance_resort_data_resort_city_dat, FALSE, heapID, &p_wk->size );
+  return p_wk;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  CITYデータ
+ *
+ *	@param	RESORT_BINARY_CITY *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void RESORT_BINARY_CITY_Exit( RESORT_BINARY_CITY *p_wk )
+{
+  GFL_HEAP_FreeMemory( p_wk->p_data );
+  GFL_HEAP_FreeMemory( p_wk );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  データを取得
+ *
+ *	@param	RESORT_BINARY_CITY *p_wk ワーク
+ *	@param	index   インデックス
+ *	@param	param   引数
+ *
+ *	@return データ
+ */
+//-----------------------------------------------------------------------------
+u16 RESORT_BINARY_CITY_GetData( const RESORT_BINARY_CITY *cp_wk, u32 index, RESORT_BINARY_CITY_PARAM param )
+{
+  return cp_wk->p_data[ index ].param[ param ];
+}
+//----------------------------------------------------------------------------
+/** 
+ *	@brief  最大数を取得
+ *
+ *	@param	const RESORT_BINARY_CITY *cp_wk  ワーク
+ *
+ *	@return 最大数
+ */
+//-----------------------------------------------------------------------------
+u32 RESORT_BINARY_CITY_GetMax( const RESORT_BINARY_CITY *cp_wk )
+{
+  return cp_wk->size / sizeof( RESORT_BINARY_CITY_DATA );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  街レベルからインデックスを取得
+ *
+ *	@param	const RESORT_BINARY_CITY *cp_wk ワーク
+ *	@param	lv  街レベル
+ *
+ *	@return インデックス
+ */
+//-----------------------------------------------------------------------------
+u32 RESORT_BINARY_CITY_GetIndexByCityLv( const RESORT_BINARY_CITY *cp_wk, u32 lv )
+{
+  int i;
+  for( i = 0; i < RESORT_BINARY_CITY_GetMax(cp_wk); i++ )
+  {
+    u16 lv_l = RESORT_BINARY_CITY_GetData(cp_wk,i,RESORT_BINARY_CITY_PARAM_LV_LOW );
+    u16 lv_h = RESORT_BINARY_CITY_GetData(cp_wk,i,RESORT_BINARY_CITY_PARAM_LV_HIGH );
+    if( lv_l <= lv && lv <= lv_h )
+    {
+      return i;
+    }
+  }
+
+  GF_ASSERT(0);
+  return 0;
 }

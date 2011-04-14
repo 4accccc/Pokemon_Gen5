@@ -925,7 +925,7 @@ struct _RESORT_RECV_DATA
   u8                  day_flag  :1;
   u8                  keep_flag :1;
   u8                  want_job;
-  u8                  padding2;
+  u8                  want_spot;
   RESORT_INSTITUTION_DATA institution;
 #if 0
   u8                  lv;
@@ -1316,8 +1316,7 @@ u32 RESORT_RECV_DATA_GetData( const RESORT_RECV_DATA *cp_wk, RESORT_DATA_PARAM p
     }
     return 0;
   case RESORT_DATA_PARAM_WANT_SPOT:
-    //‚Ù‚ñ‚Æ‚ÍA“ïˆÕ“x‚Æ«Ši‚ÆŽí—Þ‚É‚æ‚Á‚Ä‚«‚Ü‚é
-    return cp_wk->basic1.trainerID % 10; //TODO;
+    return cp_wk->want_spot; //TODO;
   case RESORT_DATA_PARAM_NATION:
     return cp_wk->basic1.nation;
   case RESORT_DATA_PARAM_AREA:
@@ -1553,6 +1552,9 @@ void RESORT_RECV_DATA_SetData( RESORT_RECV_DATA *p_wk, RESORT_DATA_PARAM param, 
     break;
   case RESORT_DATA_PARAM_PLACE_ID:
     p_wk->placeID   = data;
+    break;
+  case RESORT_DATA_PARAM_WANT_SPOT:
+    p_wk->want_spot = data;
     break;
   case RESORT_DATA_PARAM_NATION:
     p_wk->basic1.nation = data;

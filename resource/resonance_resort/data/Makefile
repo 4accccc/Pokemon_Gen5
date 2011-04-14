@@ -23,6 +23,7 @@ targetspot 		= resort_spot
 targetnpc 		= resort_npc
 targetkutikomi = resort_kutikomi
 targetoffreco  = resort_offreco
+targetcity 		= resort_city
 
 #------------------------------------------------------------------------------
 #依存するファイル名
@@ -51,6 +52,7 @@ SHOPCONV 		= resort_shop_converter.rb
 INSTITUTIONCONV 		= resort_institution_converter.rb
 SPOTCONV 		= resort_spot_converter.rb
 NPCCONV 			= resort_npc_converter.rb
+CITYCONV		= resort_city_converter.rb
 
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
@@ -79,12 +81,12 @@ $(TARGETDIR_PROG)/$(targetpeopleh).h:	$(targetpeopleh).h
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetall).narc $(targetall).naix: $(targetpeople).dat $(targetshop).dat $(targetservice).dat $(targetinstitution).dat $(targetspot).dat $(targetnpc).dat $(targetkutikomi).dat $(targetoffreco).dat
+$(targetall).narc $(targetall).naix: $(targetpeople).dat $(targetshop).dat $(targetservice).dat $(targetinstitution).dat $(targetspot).dat $(targetnpc).dat $(targetkutikomi).dat $(targetoffreco).dat $(targetcity).dat
 	nnsarc -r -l -n -i $(targetall) $^
 	$(NAIXCUT) $(targetall).naix
 
 #データコンバート
-$(targetpeople).dat $(targetshop).dat $(targetservice).dat $(targetpeopleh).h $(targetinstitution).dat $(targetspot).dat $(targetnpc).dat $(targetkutikomi).dat $(targetoffreco).dat: $(xlsname).xls $(msgfile) $(scriptfile) $(PEOPLECONV) $(DEFINECONV) $(bmodelfile) $(fieldevent) $(landpatch) $(objcode)
+$(targetpeople).dat $(targetshop).dat $(targetservice).dat $(targetpeopleh).h $(targetinstitution).dat $(targetspot).dat $(targetnpc).dat $(targetkutikomi).dat $(targetoffreco).dat $(targetcity).dat: $(xlsname).xls $(msgfile) $(scriptfile) $(PEOPLECONV) $(DEFINECONV) $(bmodelfile) $(fieldevent) $(landpatch) $(objcode)
 	$(XLSCONV) -o $(targetpeople).csv -p 1 -s csv $(xlsname).xls
 	$(XLSCONV) -o $(targetshop).csv -p 2 -s csv $(xlsname).xls
 	$(XLSCONV) -o $(targetservice).csv -p 3 -s csv $(xlsname).xls
@@ -94,6 +96,7 @@ $(targetpeople).dat $(targetshop).dat $(targetservice).dat $(targetpeopleh).h $(
 	$(XLSCONV) -o $(targetnpc).csv -p 7 -s csv $(xlsname).xls
 	$(XLSCONV) -o $(targetkutikomi).csv -p 8 -s csv $(xlsname).xls
 	$(XLSCONV) -o $(targetoffreco).csv -p 9 -s csv $(xlsname).xls
+	$(XLSCONV) -o $(targetcity).csv -p 10 -s csv $(xlsname).xls
 	rm -f *.dat
 	ruby $(DEFINECONV) $(targetdefine).csv $(definehash) $(targetpeopleh)
 	ruby $(PEOPLECONV) $(targetpeople).csv $(msgfile) $(scriptfile) $(targetpeople)
@@ -101,6 +104,7 @@ $(targetpeople).dat $(targetshop).dat $(targetservice).dat $(targetpeopleh).h $(
 	ruby $(INSTITUTIONCONV) $(targetinstitution).csv $(fieldevent) $(targetinstitution)
 	ruby $(SPOTCONV) $(targetspot).csv $(msgfile) $(targetspot)
 	ruby $(NPCCONV) $(targetnpc).csv $(targetkutikomi).csv $(targetoffreco).csv $(msgfile) $(objcode) $(targetnpc) $(targetkutikomi) $(targetoffreco)
+	ruby $(CITYCONV) $(targetcity).csv $(targetcity)
 endif
 
 #------------------------------------------------------------------------------

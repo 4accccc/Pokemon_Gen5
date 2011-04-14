@@ -56,16 +56,15 @@ end
 SPOT_ROW_START    = 1     #行開始位置
 SPOT_COL_START    = 1     #列開始位置
 SPOT_COL_MSG_00   = SPOT_COL_START     #列:メッセージ
-SPOT_COL_MSG_01   = 2     #列:メッセージ
-SPOT_COL_MSG_02   = 3     #列:メッセージ
-SPOT_COL_GROUP    = 4     #列：グループ
-SPOT_COL_BASEEXP  = 5     #列：ベース経験値
-SPOT_COL_TYPE     = 6     #列：タイプ
-SPOT_COL_DATA     = 7     #列：データ
-SPOT_COL_EXP      = 8     #列：経験値
+SPOT_COL_GROUP    = 2     #列：グループ
+SPOT_COL_BASEEXP  = 3     #列：ベース経験値
+SPOT_COL_TYPE     = 4     #列：タイプ
+SPOT_COL_DATA     = 5     #列：データ
+SPOT_COL_EXP      = 6     #列：経験値
 
 SPOT_COL_DATA_MAX = 6     #タイプ、データ、経験値が何回あるか
-def  convertAppeal( csv, data, msg_h )
+
+def convertAppeal( csv, data, msg_h )
   
   #データの作成
   msgdata = HeaderDataArray.new
@@ -73,37 +72,16 @@ def  convertAppeal( csv, data, msg_h )
 
   for row in SPOT_ROW_START...csv.row_length-1
     
-    msg0  = csv.get( row, SPOT_COL_MSG_00 )
-    msg1  = csv.get( row, SPOT_COL_MSG_01 )
-    msg2  = csv.get( row, SPOT_COL_MSG_02 )
+    msg  = csv.get( row, SPOT_COL_MSG_00 )
     baseexp  = csv.get( row, SPOT_COL_BASEEXP )
+    group  = csv.get( row, SPOT_COL_GROUP )
 
     begin
-      data.write_u16( msgdata.search( "#{msg0}", "#{row}行の#{msg_h}" ) )
+      data.write_u16( msgdata.search( "#{msg}", "#{row}行の#{msg_h}" ) )
     rescue HeaderSearchError
       exit(1)
     end
-
-    if msg1 == nil 
-      data.write_u16(0)
-    else
-      begin
-        data.write_u16( msgdata.search( "#{msg1}", "#{row}行の#{msg_h}" ) )
-      rescue HeaderSearchError
-        exit(1)
-      end
-    end
-
-    if msg2 == nil
-      data.write_u16(0)
-    else
-      begin
-        data.write_u16( msgdata.search( "#{msg2}", "#{row}行の#{msg_h}" ) )
-      rescue HeaderSearchError
-        exit(1)
-      end
-    end
-
+    data.write_u16( $define_hash[group] )
     data.write_u16( baseexp )
 
     for col in 0...SPOT_COL_DATA_MAX

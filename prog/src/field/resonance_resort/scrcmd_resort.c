@@ -195,6 +195,7 @@ extern VMCMD_RESULT EvCmdResortGetMsgID( VMHANDLE *p_core, void *p_wk_adrs )
   u16 *p_ret_wk	= SCRCMD_GetVMWork( p_core, p_wk );
   RESORT_PEOPLE_SYS *p_people_sys = Resort_Scrcmd_GetPeopleSys( p_field );
   RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_field, p_people_sys );
+  const u16 heapID = FIELDMAP_GetHeapID( p_field );
 
   switch( param )
   {
@@ -204,7 +205,66 @@ extern VMCMD_RESULT EvCmdResortGetMsgID( VMHANDLE *p_core, void *p_wk_adrs )
   case RESORT_MSGID_WHERETOGO:
     {
       u32 data = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_WANT_SPOT, NULL );
-      *p_ret_wk = data + resort_go_00;
+
+      if( data == 0 )
+      {
+        int i;
+        //街レベルから弱中強グループをランダム選出
+        {
+          SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( GAMESYSTEM_GetGameData(p_gamesys) );
+          RESONANCE_RESORT_SV *p_resort_sv = RESONANCE_RESORT_SV_GetWork( p_sv );
+          RESORT_CITY_DATA *p_city_data = RESONANCE_RESORT_SV_GetCityData( p_resort_sv );
+          u32 lv = RESORT_CITY_DATA_GetData( p_city_data, RESORT_CITY_DATA_PARAM_LV, NULL);
+
+          u32 index;
+          u32 rnd;
+          RESORT_BINARY_CITY *p_binary_city = RESORT_BINARY_CITY_Init( GFL_HEAP_LOWID(heapID) );
+          index = RESORT_BINARY_CITY_GetIndexByCityLv( p_binary_city, lv );
+
+          rnd = GFUser_GetPublicRand(100);
+          for( i = 0; i < 3; i++ )
+          {
+            u16 percent = RESORT_BINARY_CITY_GetData( p_binary_city, index, RESORT_BINARY_CITY_PARAM_GROUP_00+i );
+            if( percent < rnd )
+            {
+              break;
+            }
+            else
+            {
+              rnd -= percent;
+            }
+          }
+          GF_ASSERT( i < 3 );
+          RESORT_BINARY_CITY_Exit( p_binary_city );
+        }
+
+        //選ばれたグループから行きたいお店メッセージをランダム選出
+        //TODO 仮なので結構適当処理になってる
+        {
+          RESORT_BINARY_SPOT *p_binary_spot = RESORT_BINARY_SPOT_Init( GFL_HEAP_LOWID(heapID) );  
+          int cnt = 0;
+          while(1)
+          {
+            u16 group = RESORT_BINARY_SPOT_GetData( p_binary_spot, cnt, RESORT_BINARY_SPOT_PARAM_GROUP );
+            if( group == i )
+            {
+              if( GFUser_GetPublicRand(3) == 0 )
+              {
+                data = RESORT_BINARY_SPOT_GetData( p_binary_spot, cnt, RESORT_BINARY_SPOT_PARAM_MSG_00 );
+                break;
+              }
+            }
+            cnt++;
+            cnt%=RESORT_BINARY_SPOT_GetMax( p_binary_spot );
+          }
+ 
+          RESORT_BINARY_SPOT_Exit(p_binary_spot);
+        }
+
+        RESORT_PEOPLE_SetData( p_people, RESORT_DATA_PARAM_WANT_SPOT, data );
+      }
+
+      *p_ret_wk = data;
     }
     break;
   case RESORT_MSGID_APPEAL:
@@ -1082,7 +1142,7 @@ VMCMD_RESULT EvCmdResortSetSpot( VMHANDLE *p_core, void *p_wk_adrs )
   u16 *ret_msgid = SCRCMD_GetVMWork( p_core, p_wk );
   u16 *ret_lvup = SCRCMD_GetVMWork( p_core, p_wk );
 
-  u32 spot_msg = resort_go_00 + RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_WANT_SPOT, NULL );
+  u32 spot_msg = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_WANT_SPOT, NULL );
 
 
   RESORT_RESIDENT_DATA *p_resident = RESORT_PEOPLE_ALL_DATA_GetResident( p_all_people, idx );
