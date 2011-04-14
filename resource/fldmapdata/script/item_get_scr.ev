@@ -27,6 +27,7 @@ _EVENT_DATA   ev_item_event_intrude_secret
 _EVENT_DATA   ev_item_event_prog_call
 _EVENT_DATA   ev_item_event_field_keywait
 _EVENT_DATA   ev_item_event_fmission_clear
+_EVENT_DATA   ev_item_event_fmission_item_get
 _EVENT_DATA_END //終了
 
 
@@ -685,10 +686,49 @@ EVENT_START ev_item_event_fmission_clear
     
     //アイテム追加
     _ADD_ITEM( i_item, i_get, SCWK_ANSWER )
-    _BEACON_SET_REQ_ITEM_GET( i_item ) 
+//    _BEACON_SET_REQ_ITEM_GET( i_item ) 
   ENDIF
   _LAST_KEYWAIT()
   _SYSWIN_CLOSE()
 }
 EVENT_END
+
+//====================================================================
+//    フェスミッション：ミッションアイテムゲット処理
+//====================================================================
+ev_item_event_fmission_item_get:
+{
+  DEFINE_LOCAL  i_item
+  DEFINE_LOCAL  i_get
+  DEFINE_LOCAL  i_num
+  DEFINE_LOCAL  i_dif
+  DEFINE_LOCAL  i_not_illegal_code
+
+  _FMISSION_ITEM_GET( i_item )
+  _ADD_ITEM_CHK( i_item, 1, i_get )
+ 
+  $SCWK_TEMP0 = $i_item
+  _BEACON_SET_REQ_FMISSION_ITEM_GET( i_item )
+
+  //○○は××を手に入れた
+  _CALL   sub_item_event_field_get
+
+  //スコアが+1されます
+  _SYSWIN_MSG( msg_fmission_fld_item_get_02 , POS_DEFAULT )
+/*
+  _CALL	  sub_pocket_me_set									//MEセット
+  _CALL   sub_item_event_get_msg
+  _ME_WAIT()
+  _AB_KEYWAIT_MARK()
+*/
+  IF $i_get == FALSE THEN
+    //残念これ以上もてない
+    _CALL sub_item_event_fail_nowait
+  ELSE
+    //ポケットにしまった
+    _CALL   sub_item_event_pocket_msg_nowait
+  ENDIF
+}
+_CHG_LOCAL_SCR													//ローカルスクリプトに切り替え
+_END
 

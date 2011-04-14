@@ -33,14 +33,20 @@
 #include "gamesystem/link_festival.h"
 #include "gamesystem/fest_mission_data.h"
 
+#define MIN2SEC(x)  (x*60)
+
 //@todo コンバータ作成時にアーカイブとして外部化する
 static const FMISSION_ARCDATA DATA_MissionArcData[] = {
   { //タブンネを探せミッション
-    FMISSION_TYPE_POKE_SEARCH, 5*60, MONSNO_TABUNNE,
+    FMISSION_TYPE_POKE_SEARCH, MIN2SEC(5), MONSNO_TABUNNE,
     3, ITEM_DERUDAMA, 100, 0, FMISSION_ENDTYPE_CLEAR, 6
   },
   { //タブンネを探せミッション
-    FMISSION_TYPE_POKE_SEARCH, 5*60, MONSNO_TABUNNE,
+    FMISSION_TYPE_POKE_SEARCH, MIN2SEC(5), MONSNO_TABUNNE,
+    10, ITEM_DERUDAMA, 100, 0, FMISSION_ENDTYPE_CLEAR, 6
+  },
+  { //ボールアイテムを探せミッション
+    FMISSION_TYPE_BALL_ITEM, MIN2SEC(5), 0,
     10, ITEM_DERUDAMA, 100, 0, FMISSION_ENDTYPE_CLEAR, 6
   },
 };

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00270" date="2011-02-27T18:52:42"/>
+	<create user="iwasawa" host="W00270" date="2011-04-13T16:10:54"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -299,6 +299,16 @@
 		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]を　探せ！</language>
 	</row>
 
+	<row id="msg_fmission_title02">
+		<language name="JPN" width="256">あの　かねを　ならせ！</language>
+		<language name="JPN_KANJI" width="256">あの　鐘を　鳴らせ！</language>
+	</row>
+
+	<row id="msg_fmission_title03">
+		<language name="JPN" width="256">おちている　どうぐを　さがせ！</language>
+		<language name="JPN_KANJI" width="256">落ちている　道具を　探せ！</language>
+	</row>
+
 	<row id="msg_fmission_exp00">
 		<language name="JPN" width="256">ミッションダミー</language>
 		<language name="JPN_KANJI" width="256">ミッションダミー</language>
@@ -314,6 +324,28 @@
 [1:01:ポケモン種族名:2]を　さがせ！</language>
 		<language name="JPN_KANJI" width="256">[2:04:５桁:0]秒以内に　[2:01:２桁:1]匹の
 [1:01:ポケモン種族名:2]を　探せ！</language>
+	</row>
+
+	<row id="msg_fmission_exp02">
+		<comment>0：分(1-30)
+1：アイテムの数(1-999)
+
+</comment>
+		<language name="JPN" width="256">[2:04:５桁:0]びょう　いないに
+タワーオブヘブンの　かねを　ならせ！</language>
+		<language name="JPN_KANJI" width="256">[2:04:５桁:0]秒　いないに
+タワーオブヘブンの　鐘を　ならせ！</language>
+	</row>
+
+	<row id="msg_fmission_exp03">
+		<comment>0：分(1-30)
+1：アイテムの数(1-999)
+
+</comment>
+		<language name="JPN" width="256">[2:04:５桁:0]びょう　いないに　[2:01:２桁:1]この
+アイテムを　さがせ！</language>
+		<language name="JPN_KANJI" width="256">[2:04:５桁:0]びょう　以内に　[2:01:２桁:1]この
+アイテムを　探せ！</language>
 	</row>
 
 	<flowchart-group-list>

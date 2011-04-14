@@ -710,6 +710,8 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/fldeff_reflect.c \
         field/field_place_name.c \
         field/field_fmission_info.c \
+        field/scrcmd_fmission.c \
+        field/fmission_gimmick.c \
         field/place_name_letter.c \
         field/event_entrance_in.c \
         field/event_entrance_out.c \
@@ -810,7 +812,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/scrcmd_zoroa.c \
         field/scrcmd_leg_gmk.c \
         field/scrcmd_medal.c \
-        field/scrcmd_fmission.c \
         field/event_game_manual.c \
         field/fld_vreq.c \
     		field/field_palace_sys.c \

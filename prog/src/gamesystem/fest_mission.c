@@ -37,6 +37,7 @@ typedef struct _MISSION_SCORE_CALC_PARAM{
 static u32 score_CalcTimeBonus( FEST_MISSION* fmwk );
 static BOOL score_CalcWildBtlWin( const FEST_MISSION* fmwk, u16 param );
 static BOOL score_CalcEvent( const FEST_MISSION* fmwk, u16 param );
+static BOOL score_CalcItem( const FEST_MISSION* fmwk, u16 param );
 
 /*
  *  ミッションスコア計算に必要なパラメータテーブル
@@ -47,7 +48,7 @@ static const MISSION_SCORE_CALC_PARAM DATA_ScoreCalcParamTbl[] = {
   { NULL, 0 },
   { score_CalcWildBtlWin, (1<<FMISSION_LOG_ACT_POKE_WIN)|(1<<FMISSION_LOG_ACT_POKE_CAPTURE)},
   { score_CalcEvent, (1<<FMISSION_LOG_ACT_EVENT_CLEAR) },
-  { NULL, 0 },
+  { score_CalcItem, (1<<FMISSION_LOG_ACT_ITEM_GET) },
 };
 
 //---------------------------------------------------------
@@ -264,6 +265,16 @@ static BOOL score_CalcWildBtlWin( const FEST_MISSION* fmwk, u16 param )
 static BOOL score_CalcEvent( const FEST_MISSION* fmwk, u16 param )
 {
   return ( fmwk->param == param );
+}
+
+//---------------------------------------------------------
+/*
+ * @brief スコア計算 アイテムゲット
+ */
+//---------------------------------------------------------
+static BOOL score_CalcItem( const FEST_MISSION* fmwk, u16 param )
+{
+  return ( fmwk->param == 0 || fmwk->param == param );
 }
 
 //=================================================

@@ -3,7 +3,7 @@
 # @file  uniq_script.list
 # @bfief 非マップ依存のスクリプトリスト
 # @author  tamada GAMEFREAK inc.
-# @date  2011 04/12 (Tue) 20:50
+# @date  2011 04/13 (Wed) 20:12
 #
 #  このファイルはコンバータにより自動生成されています
 #
@@ -61,7 +61,8 @@ UNIQ_SCRIPTFILES = \
 	wbt_lobby.ev \
 	wbt_hall.ev \
 	resort_scr.ev \
-	infinity_dungeon_scr.ev 
+	infinity_dungeon_scr.ev \
+	fmission_scr.ev 
 
 #イベントデータで指定され直接呼ばれるスクリプトファイル
 UNIQ_TOP_EVENT_SCRFILES = \
@@ -107,7 +108,8 @@ UNIQ_TOP_EVENT_SCRFILES = \
 	wbt_lobby.ev \
 	wbt_hall.ev \
 	resort_scr.ev \
-	infinity_dungeon_scr.ev 
+	infinity_dungeon_scr.ev \
+	fmission_scr.ev 
 
 #プログラムやスクリプトから呼ばれるスクリプトファイル
 UNIQ_SUB_EVENT_SCRFILES = \

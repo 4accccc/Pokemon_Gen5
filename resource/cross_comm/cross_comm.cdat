@@ -250,11 +250,15 @@ static const struct{
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//61  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_FREEWORD)
+	{	//61  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_ITEM_GET)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//62  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_POKE_DOWN)
+	{	//62  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_FREEWORD)
+		5,		//priority
+		20 * 60,		//life
+	},
+	{	//63  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_POKE_DOWN)
 		5,		//priority
 		20 * 60,		//life
 	},

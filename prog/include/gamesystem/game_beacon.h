@@ -118,9 +118,10 @@ typedef enum{
   GAMEBEACON_ACTION_FMISSION_ITEM_USE,            ///<フェスミッション アイテム使用   　 　58
   GAMEBEACON_ACTION_FMISSION_GPOWER,              ///<フェスミッション デルパワー使用    　59
   GAMEBEACON_ACTION_FMISSION_EVENT_CLEAR,         ///<フェスミッション イベントクリア    　60
+  GAMEBEACON_ACTION_FMISSION_ITEM_GET,            ///<フェスミッション ミッションアイテム取得    　61
   
-  GAMEBEACON_ACTION_FMISSION_FREEWORD,            ///<フェスミッション 一言メッセージ受信   61
-  GAMEBEACON_ACTION_FMISSION_POKE_DOWN,           ///<フェスミッション 先頭ポケモンが瀕死   62 
+  GAMEBEACON_ACTION_FMISSION_FREEWORD,            ///<フェスミッション 一言メッセージ受信   62
+  GAMEBEACON_ACTION_FMISSION_POKE_DOWN,           ///<フェスミッション 先頭ポケモンが瀕死   63 
 
   GAMEBEACON_ACTION_MAX,
 }GAMEBEACON_ACTION;
@@ -229,6 +230,7 @@ extern void GAMEBEACON_Set_FestMission( FEST_MISSION* mission );
 extern void GAMEBEACON_Set_FMissionWildPokemonGet(u16 monsno);
 extern void GAMEBEACON_Set_FMissionWildPokemonKnockOut(u16 monsno);
 extern void GAMEBEACON_Set_FMissionEventClear( u16 ev_id );
+extern void GAMEBEACON_Set_FMissionItemGet( u16 item_no );
 
 extern void GAMEBEACON_Set_ResortDataEnable( BOOL is_enable );
 extern void GAMEBEACON_Set_ResortRecvBuffer( void *p_buff );

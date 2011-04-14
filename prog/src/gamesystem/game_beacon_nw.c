@@ -1195,7 +1195,7 @@ void BEACONINFO_Set_SuretigaiCount(GAMEBEACON_INFO *info, u32 count)
  * 送信ビーコンセット：フェスミッション　規定イベントクリア
  *
  * @param   gamedata		
- * @param   free_word   一言メッセージ
+ * @param   ev_id    ミッションイベントID
  */
 //==================================================================
 void GAMEBEACON_Set_FMissionEventClear( u16 ev_id )
@@ -1203,27 +1203,21 @@ void GAMEBEACON_Set_FMissionEventClear( u16 ev_id )
   if( GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_EVENT_CLEAR, ev_id ) ){
     GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_EVENT_CLEAR, ev_id );
   }
-#if 0
-  if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_FMISSION_EVENT_CLEAR) == FALSE){ return; };
-  
-  GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
-  BEACONINFO_Set_FMissionEventClear(&GameBeaconSys->send.info, ev_id );
-#endif
 }
 
 //==================================================================
 /**
- * ビーコンセット：一言メッセージ
+ * 送信ビーコンセット：フェスミッション　ミッションアイテムゲット
  *
  * @param   gamedata		
- * @param   free_word   一言メッセージ
+ * @param   item_no    アイテムNo
  */
 //==================================================================
-void BEACONINFO_Set_FMissionEventClear(GAMEBEACON_INFO *info, u16 ev_id )
+void GAMEBEACON_Set_FMissionItemGet( u16 item_no )
 {
-  GAMEBEACON_SUB_SendBeaconSetFMission( info, GAMEBEACON_ACTION_FMISSION_EVENT_CLEAR, ev_id );
-
-  BEACONINFO_Set_Details_Walk(info);
+  if( GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_ITEM_GET, item_no ) ){
+    GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_ITEM_GET, item_no );
+  }
 }
 
 //==============================================================================

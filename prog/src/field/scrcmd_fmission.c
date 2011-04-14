@@ -45,7 +45,9 @@
 #include "event_intrude_subscreen.h"
 #include "fieldmap/zone_id.h"
 #include "field/zonedata.h"
+#include "item/itemsym.h"
 
+#include "scrcmd_fmission.h"
 
 //==================================================================
 /**
@@ -67,6 +69,43 @@ VMCMD_RESULT EvCmdFMissionEventClearCheck( VMHANDLE *core, void *wk )
 
   GAMEBEACON_Set_FMissionEventClear( ev_id );
 
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//==================================================================
+/**
+ * フェスミッション アイテムサーチミッションのアイテム取得処理
+ *
+ * @param   core		
+ * @param   wk		
+ *
+ * @retval  VMCMD_RESULT		
+ */
+//==================================================================
+VMCMD_RESULT EvCmdFMissionItemGet( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*  work = (SCRCMD_WORK*)wk;
+  SCRIPT_WORK*   scw = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+  u16 zone_id = SCRCMD_WORK_GetZoneID( work );
+  MMDL *mmdl = SCRIPT_GetTargetObj( scw );
+ 
+//  u16 ev_id = SCRCMD_GetVMWorkValue( core, wk );
+  u16* ret_wk = SCRCMD_GetVMWork( core, wk );
+
+  { //取得済みフラグセット
+    u8 obj_id = MMDL_GetOBJID( mmdl );
+  }
+  //非表示設定
+  MMDL_SetStatusBitVanish( mmdl, TRUE );
+
+  { //取得するアイテムナンバーを返す
+    u16 param = MMDL_GetParam( mmdl, MMDL_PARAM_0 );
+    *ret_wk = ITEM_AKAIKAKERA+param;
+
+    //ビーコンリクエスト
+//    GAMEBEACON_Set_FMissionEventClear( ev_id );
+  }
   return VMCMD_RESULT_SUSPEND;
 }
 

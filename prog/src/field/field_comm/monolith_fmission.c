@@ -573,8 +573,6 @@ static GFL_PROC_RESULT MonolithFMissionSelectProc_Main( GFL_PROC * proc, int * s
         GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(appwk->parent->gsys);
         GameCommInfo_MessageEntry_FMissionStartWait(game_comm);
       }
-      //appwk->common->power_eqp_update = TRUE; もう退出するので更新しない
-      mfw->decide_cursor_pos = _CURSOR_POS_NONE;
       MonolithTool_PanelBG_Focus(appwk, TRUE, FADE_SUB_BG);
       MonolithTool_PanelOBJ_Focus(appwk, &mfw->panel, 1, PANEL_NO_FOCUS, FADE_SUB_OBJ);
       if(GFL_UI_TP_GetTrg()){
@@ -596,12 +594,16 @@ static GFL_PROC_RESULT MonolithFMissionSelectProc_Main( GFL_PROC * proc, int * s
         && MonolithTool_PanelColor_GetMode(appwk, FADE_SUB_OBJ) != PANEL_COLORMODE_FLASH
         && MonolithTool_CancelIcon_FlashCheck(&mfw->cancel_icon) == FALSE)
     {
+      u16 mission_no = mfw->decide_cursor_pos-1;
+      mfw->decide_cursor_pos = _CURSOR_POS_NONE;
+
       if( mfw->order_end ){
         FEST_MISSION  mission;
         GAME_COMM_NO comm_no = GameCommSys_BootCheck( mfw->gcsp );
 
         //ミッション開始
-        FMISSION_DATA_GetMissionParam( mfw->fmd_man, FMISSION_ID_POKE_SEARCH_TABUNNE, &mission);
+        IWASAWA_Printf("mission no %d->%d\n", mission_no,mission_no%3);
+        FMISSION_DATA_GetMissionParam( mfw->fmd_man, mission_no%3, &mission);
         LINK_FESTIVAL_MissionStart( mfw->fest_sys, &mission, FALSE );
 
 //        GAMEDATA_SetSubScreenMode(GAMESYSTEM_GetGameData(appwk->parent->gsys), FIELD_SUBSCREEN_FMISSION_VIEW );
@@ -1043,7 +1045,7 @@ static void _Setup_PowerNameBMPCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_FMSEL
     GPOWER_NAME_BMP_LEN_X, GPOWER_NAME_BMP_LEN_Y, GFL_BMP_16_COLOR, HEAPID_MONOLITH );
   use_count++;
   for(gpower_id = 0; gpower_id < GPOWER_ID_MAX; gpower_id++){
-    use_power = MonolithToolEx_CheckUsePower(setup->powerdata, gpower_id, occupy, appwk->parent->monolith_status.gpower_distribution_bit);
+    use_power = MONO_USE_POWER_OK;  //MonolithToolEx_CheckUsePower(setup->powerdata, gpower_id, occupy, appwk->parent->monolith_status.gpower_distribution_bit);
     if(use_power == MONO_USE_POWER_NONE){
       continue;
     }
@@ -1108,7 +1110,7 @@ static BOOL _MissionNameBMPDraw(MONOLITH_FMSELECT_WORK *mfw, MONOLITH_SETUP *set
     if(i >= _DUMMY_PANEL_UP_NUM && i < mfw->power_list_num - _DUMMY_PANEL_DOWN_NUM){
       GF_ASSERT(mfw->use_power[i] < NELEMS(print_color));
      
-      FMISSION_DATA_GetMissionParam( mfw->fmd_man, 0, &mission );
+      FMISSION_DATA_GetMissionParam( mfw->fmd_man, mfw->use_gpower_id[i]%3, &mission );
       FEST_MISSION_GetTitleStr( setup->wordset, mfw->mm_fmission, str, &mission, GFL_HEAP_LOWID(HEAPID_MONOLITH) );
 
 //      GFL_MSG_GetString(mfw->mm_fmission, /*mfw->use_gpower_id[i]*/, str);

@@ -43,6 +43,12 @@
 #define MMDL_ID_EVENTOBJ_01 (0xfa) ///<スクリプトイベント内で追加されるOBJID
 #define MMDL_ID_EVENTOBJ_02 (0xf0) ///<スクリプトイベント内で追加されるOBJID
 
+#define MMDL_ID_FMISSION_OBJ_01 (0xBD)    ///<フェスミッション用OBJID
+#define MMDL_ID_FMISSION_OBJ_02 (0xBE)  
+#define MMDL_ID_FMISSION_OBJ_03 (0xBF)  
+
+#define MMDL_ID_FMISSION_OBJ_NUM  (3) ///フェスミッション用OBJは最大3個
+
 //T01-R01で配置される特殊OBJ用ID
 #define MMDL_ID_T01_R01_RIVAL (MMDL_ID_EVENTOBJ_01)
 #define MMDL_ID_T01_R01_SUPPORT (MMDL_ID_EVENTOBJ_02)

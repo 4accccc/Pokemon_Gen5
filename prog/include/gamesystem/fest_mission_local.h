@@ -20,14 +20,13 @@ typedef enum{
 /*
  *  増やすとき
  *  1, 定義を追加
- *  2, check src/field/fest_mission.c
- *  2, check src/field/event_debug_linkfest.c
+ *  3, check src/field/event_debug_linkfest.c
  */
 typedef enum{
   FMISSION_TYPE_NULL,
-  FMISSION_TYPE_POKE_SEARCH,
-  FMISSION_TYPE_EVENT,
-  FMISSION_TYPE_ITEM,
+  FMISSION_TYPE_POKE_SEARCH,  ///<指定ポケモンを倒すか捕まえる
+  FMISSION_TYPE_EVENT,        ///<指定イベントをクリアする
+  FMISSION_TYPE_BALL_ITEM,    ///<ボールアイテムをゲットする
   FMISSION_TYPE_MAX,
   FMISSION_TYPE_END = FMISSION_TYPE_MAX-1,
 

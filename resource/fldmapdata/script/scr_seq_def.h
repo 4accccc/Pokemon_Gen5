@@ -8304,6 +8304,13 @@
 #define _BEACON_SET_REQ_SUBWAY_TROPHY_GET( ) \
     _ASM_BEACON_SET_REQ SCR_BEACON_SET_REQ_SUBWAY_TROPHY_GET, 0
 
+/**
+ * @def _BEACON_SET_REQ_FMISSION_ITEM_GET
+ * @brief ミッションアイテム取得ビーコンセット
+ */
+#define _BEACON_SET_REQ_FMISSION_ITEM_GET( item_no ) \
+    _ASM_BEACON_SET_REQ SCR_BEACON_SET_REQ_FMISSION_ITEM_GET, item_no
+
 //--------------------------------------------------------------
 /**
  * @def _CHECK_GPOWER_FINISH
@@ -8718,6 +8725,14 @@
 //--------------------------------------------------------------
 #define _ITEM_EVENT_SUCCESS_NOWAIT( itemno, num ) \
     _ASM_ITEM_EVENT_SUCCESS_NOWAIT itemno, num
+
+//--------------------------------------------------------------
+/**
+ * @brief フェスミッションアイテム入手イベント
+ */
+//--------------------------------------------------------------
+#define _ITEM_EVENT_FMISSION_ITEM_GET() \
+  _ASM_ITEM_EVENT_FMISSION_ITEM_GET
 
 //--------------------------------------------------------------
 /**
@@ -9202,6 +9217,20 @@
   .macro  _ASM_FMISSION_EVENT_CLEAR_CHECK  ev_id
   .short  EV_SEQ_FMISSION_EVENT_CLEAR_CHECK
   .short  \ev_id    
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * フェスミッション系コマンド　アイテム取得処理
+ *
+ * @param ev_id フェスミッションイベントID
+ */
+//--------------------------------------------------------------
+#define _FMISSION_ITEM_GET( ret_wk ) _ASM_FMISSION_ITEM_GET ret_wk
+
+  .macro  _ASM_FMISSION_ITEM_GET  ret_wk
+  .short  EV_SEQ_FMISSION_ITEM_GET
+  .short  \ret_wk    
   .endm
 
 //--------------------------------------------------------------

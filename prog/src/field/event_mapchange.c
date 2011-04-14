@@ -33,6 +33,7 @@
 #include "field/field_status_local.h" // FIELD_STATUS
 #include "field/field_flagcontrol.h" // FIELD_FLAGCONT_INIT～
 #include "field/fieldmap_proc.h"  // FLDMAP_BASESSYS_GRID
+#include "field/fmission_gimmick.h"
 
 #include "event_season_display.h"
 #include "event_fieldmap_control.h"
@@ -1020,20 +1021,27 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
     (*seq) ++;
     break;
   case MAPCORE_SEQ_BGM_FADE_WAIT:
-#if 0
-    if( work->mapchange_type == EV_MAPCHG_NORMAL ){
-      PAIRSYS_PairMapChangeRecover( work->gameData );
-    }
-#endif
     {
-      FIELDMAP_WORK *p_fld = GAMESYSTEM_GetFieldMapWork(gameSystem);
-      FIELD_GOOUT_EFFECT *p_goout = FIELDMAP_GetGooutEffect( p_fld );
-      FIELD_GOOUT_EFFECT_Setup( p_goout );  //外出表現表示
-    }
-    ENCOUNT_WORK_MapJumpUpdate( gameData, GAMESYSTEM_GetFieldMapWork(gameSystem) );
+      FIELDMAP_WORK* p_fld = GAMESYSTEM_GetFieldMapWork(gameSystem);
 
-    // BGM フェード完了待ち
-    GMEVENT_CallEvent( event, EVENT_FSND_WaitBGMFade(gameSystem) );
+      //フェスミッション用処理
+      if( work->mapchange_type != EV_MAPCHG_UNION ){
+        LINK_FESTIVAL* fest_sys = GAMESYSTEM_GetLinkFestivalWork( gameSystem );
+
+        if( LINK_FESTIVAL_IsMissionEntry( fest_sys )){
+          FMISSION_GIMMICK_MapChangeSetup( fest_sys, gameSystem, work->loc_req.zone_id );
+        }
+      }
+   
+      //外出表現表示
+      FIELD_GOOUT_EFFECT_Setup( FIELDMAP_GetGooutEffect( p_fld ) );
+
+      //エフェクトエンカウントワーク更新
+      ENCOUNT_WORK_MapJumpUpdate( gameData, p_fld );
+
+      // BGM フェード完了待ち
+      GMEVENT_CallEvent( event, EVENT_FSND_WaitBGMFade(gameSystem) );
+    }
     (*seq) ++;
     break;
   case MAPCORE_SEQ_FINISH:

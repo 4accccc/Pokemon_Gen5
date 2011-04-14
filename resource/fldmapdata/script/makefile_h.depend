@@ -156,6 +156,9 @@ resort_scr_def.h: resort_scr.ev
 infinity_dungeon_scr_def.h: infinity_dungeon_scr.ev
 	$(EV_DEF) infinity_dungeon_scr.ev $(SCR_OFFS_ID_H)
 
+fmission_scr_def.h: fmission_scr.ev
+	$(EV_DEF) fmission_scr.ev $(SCR_OFFS_ID_H)
+
 bc10_def.h: bc10.ev
 	$(EV_DEF) bc10.ev $(SCR_OFFS_ID_H)
 

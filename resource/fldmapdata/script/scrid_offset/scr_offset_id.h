@@ -3,7 +3,7 @@
  * @file  scr_offset_id.h
  * @bfief  スクリプトIDのオフセット定義
  * @author  tamada GAMEFREAK inc.
- * @date  2011 04/12 (Tue) 20:50
+ * @date  2011 04/13 (Wed) 20:12
  *
  * このファイルはコンバータにより自動生成されています
  */
@@ -171,6 +171,9 @@
 
 #define ID_INFINITY_DUNGEON_SCR_OFFSET   (10725) //無限ダンジョン用スクリプト
 #define ID_INFINITY_DUNGEON_SCR_OFFSET_END (10744)
+
+#define ID_FMISSION_SCR_OFFSET           (10745) //フェスミッション用スクリプト
+#define ID_FMISSION_SCR_OFFSET_END       (10754)
 
 #define ID_DEBUG_SCR_OFFSET              (12000) //デバッグ用共通スクリプト（この下にはファイルを追加しない！！）
 #define ID_DEBUG_SCR_OFFSET_END          (12199)

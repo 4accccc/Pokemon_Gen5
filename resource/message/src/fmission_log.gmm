@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00270" date="2011-04-08T17:19:09"/>
+	<create user="iwasawa" host="W00270" date="2011-04-14T20:03:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -532,13 +532,19 @@
 	</row>
 
 	<row id="msg_fmission_log_act12" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>ログ用</comment>
+		<language name="JPN" width="256">[1:09:どうぐ名:0]を　みつけた</language>
+		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　見つけた</language>
+	</row>
+
+	<row id="msg_fmission_log_act13" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>ログ用 一言メッセージ
  全言語で max8文字</comment>
 		<language name="JPN" width="256">[1:1C:簡易会話単語:0]</language>
 		<language name="JPN_KANJI" width="256">[1:1C:簡易会話単語:0]</language>
 	</row>
 
-	<row id="msg_fmission_log_act13" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_fmission_log_act14" back-color="#ffff80,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<comment>ログ用</comment>
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]が　ひんし！</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]が　ひんし！</language>

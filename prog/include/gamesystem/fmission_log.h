@@ -33,6 +33,7 @@ typedef enum{
   FMISSION_LOG_ACT_ITEM_USE,      ///<アイテムを使用した
   FMISSION_LOG_ACT_GPOWER,        ///<デルパワーを使った
   FMISSION_LOG_ACT_EVENT_CLEAR,   ///<イベントクリア
+  FMISSION_LOG_ACT_ITEM_GET,      ///<ミッションアイテムを手に入れた
 
   //Haven't MissionParam
   FMISSION_LOG_ACT_FREEWORD,      ///<一言メッセージ

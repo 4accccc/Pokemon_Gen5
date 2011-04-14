@@ -710,7 +710,9 @@ static GMEVENT_RESULT event_LinkFestFromFieldMain( GMEVENT * event, int *seq, vo
           FMISSION_START_PARAM param;
 
           MI_CpuClear8(&param,sizeof(FMISSION_START_PARAM));
-          FMISSION_DATA_GetMissionParam( NULL, FMISSION_ID_POKE_SEARCH_TABUNNE, &param.mission );
+          FMISSION_DATA_GetMissionParam( NULL, FMISSION_ID_ITEM_SEARCH_01, &param.mission );
+          LINK_FESTIVAL_MissionStart( wk->fest_sys, &param.mission, FALSE );
+
           param.succeed_f = FALSE;
 
           mission_ev = GMEVENT_CreateOverlayEventCall( wk->gsys,

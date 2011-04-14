@@ -417,6 +417,7 @@
 #define SCR_BEACON_SET_REQ_SUBWAY_START       (6) ///<サブウェイ挑戦開始
 #define SCR_BEACON_SET_REQ_SUBWAY_WIN         (7) ///<サブウェイ勝利
 #define SCR_BEACON_SET_REQ_SUBWAY_TROPHY_GET  (8) ///<サブウェイトロフィーゲット
+#define SCR_BEACON_SET_REQ_FMISSION_ITEM_GET  (9) ///<フェスミッションアイテムゲット
 
 //--------------------------------------------------------------
 //    タイトルからのスタートメニュー項目

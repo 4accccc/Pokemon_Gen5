@@ -34,7 +34,8 @@ struct _LINK_FESTIVAL{
   u16 log_num;  //スコアログ登録数
   u16 log_idx;  //スコアログリング参照トップindex
   
-  FEST_MISSION  mission;      //現ミッションデータ
+  FEST_MISSION  mission;            //現ミッションデータ
+//  GFL_STD_RandContext rnd_context;  //現ミッションで用いる乱数コンテキスト
 
   //スコアログ
   LINKFEST_LOG  log[LINKFEST_LOG_MAX];

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00270" date="2011-03-29T18:54:10"/>
+	<create user="iwasawa" host="W00270" date="2011-04-14T20:05:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1003,6 +1003,14 @@ msg_sys_gpower_use00～02が
 	</row>
 
 	<row id="msg_beacon_062" back-color="#ffff80,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+		<comment>FMISSION_POKE_DOWN</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さんの　フェスミッションを
+じゅしん　しました</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんの　フェスミッションを
+受信しました</language>
+	</row>
+
+	<row id="msg_beacon_063" back-color="#ffff80,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
 		<comment>FMISSION_POKE_DOWN</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]さんの　フェスミッションを
 じゅしん　しました</language>

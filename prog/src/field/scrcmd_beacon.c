@@ -72,6 +72,9 @@ VMCMD_RESULT EvCmdBeaconSetRequest( VMHANDLE* core, void* wk )
   case SCR_BEACON_SET_REQ_SUBWAY_TROPHY_GET:  //サブウェイトロフィーゲット
     GAMEBEACON_Set_SubwayTrophyGet();
     break;
+  case SCR_BEACON_SET_REQ_FMISSION_ITEM_GET:  //フェスミッションアイテムゲット
+    GAMEBEACON_Set_FMissionItemGet( value );
+    break;
 
   }
   return VMCMD_RESULT_CONTINUE;

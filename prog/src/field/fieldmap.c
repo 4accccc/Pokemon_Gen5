@@ -69,6 +69,8 @@
 #include "fieldmap_func.h"
 #include "field/fieldmap_call.h"
 
+#include "field/fmission_gimmick.h"
+
 #include "arc/fieldmap/zone_id.h"
 #include "field/weather_no.h"
 #include "sound/pm_sndsys.h"
@@ -462,7 +464,7 @@ static BOOL fldmap_CheckPlayerPosUpdate( FIELDMAP_WORK *fieldWork );
 static BOOL fldmap_CheckMoveZoneChange( FIELDMAP_WORK *fieldWork );
 static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork );
 
-static void zoneChange_SetMMdl( GAMEDATA *gdata,
+static void zoneChange_SetMMdl( GAMESYS_WORK* gsys, GAMEDATA *gdata,
 		MMDLSYS *fmmdlsys, EVENTDATA_SYSTEM *evdata, u32 zone_id );
 static void zoneChange_SetBGM( FIELDMAP_WORK* fieldWork, u32 next_zone_id );
 static void zoneChange_SetWeather( FIELDMAP_WORK *fieldWork, u32 zone_id );
@@ -3075,7 +3077,7 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
   SET_CHECK("zonechange:set mmdl");
 	//新規ゾーンに配置する動作モデルセット 1200 micro sec程度削減
   MI_SetMainMemoryPriority(MI_PROCESSOR_ARM9);
-	zoneChange_SetMMdl( gdata, fmmdlsys, evdata, new_zone_id );
+	zoneChange_SetMMdl( fieldWork->gsys, gdata, fmmdlsys, evdata, new_zone_id );
   MI_SetMainMemoryPriority(MI_PROCESSOR_ARM7);
 
   //侵入：通信プレイヤー更新停止フラグリセット
@@ -3111,7 +3113,7 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void zoneChange_SetMMdl( GAMEDATA *gdata,
+static void zoneChange_SetMMdl( GAMESYS_WORK* gsys, GAMEDATA *gdata,
 		MMDLSYS *fmmdlsys, EVENTDATA_SYSTEM *evdata, u32 zone_id )
 {
 	u16 count = EVENTDATA_GetNpcCount( evdata );
@@ -3121,6 +3123,13 @@ static void zoneChange_SetMMdl( GAMEDATA *gdata,
 		const MMDL_HEADER *header = EVENTDATA_GetNpcData( evdata );
 		MMDLSYS_SetMMdl( fmmdlsys, header, zone_id, count, evwork );
 	}
+  {
+    LINK_FESTIVAL* fest_sys = GAMESYSTEM_GetLinkFestivalWork( gsys );
+
+    if( LINK_FESTIVAL_IsMissionEntry( fest_sys )){
+      FMISSION_GIMMICK_MapChangeSetup( fest_sys, gsys, zone_id );
+    }
+  }
 }
 
 //--------------------------------------------------------------

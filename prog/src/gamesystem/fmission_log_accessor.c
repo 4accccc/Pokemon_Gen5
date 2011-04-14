@@ -344,6 +344,7 @@ void FMISSION_LOG_ActionWordset( FMISSION_LOG* p_log,  WORDSET* wset, HEAPID tmp
   }
   switch( p_log->action ){
   case FMISSION_LOG_ACT_ITEM_USE:
+  case FMISSION_LOG_ACT_ITEM_GET:
     WORDSET_RegisterItemName( wset, 0, p_log->param );
     break;
   case FMISSION_LOG_ACT_MAP_CHANGE:

@@ -465,6 +465,8 @@ static const D_BEACON_PARAM DATA_DebugBeaconParam[GAMEBEACON_ACTION_MAX] = {
   { GAMEBEACON_Set_FestMission,           BEACON_PSET_SCORE, 	    BEACON_ARG_FMISSION,	},
   ///<FEST_MISSION フェスタミッション配布 62 
   { GAMEBEACON_Set_FestMission,           BEACON_PSET_SCORE, 	    BEACON_ARG_FMISSION,	},
+  ///<FEST_MISSION フェスタミッション配布 63 
+  { GAMEBEACON_Set_FestMission,           BEACON_PSET_SCORE, 	    BEACON_ARG_FMISSION,	},
 };
 
 static const  D_BEACON_PRM_SET DATA_DebugBeaconParamSet[BEACON_PSET_MAX] = {
