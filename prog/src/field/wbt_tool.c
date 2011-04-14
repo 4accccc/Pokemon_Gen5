@@ -285,6 +285,16 @@ static void entryChampTournament( u16 * tr_list )
   GF_ASSERT( j < WBT_ROM_TRAINER_NUM );
 }
 
+static const u16 presentation_trid[WBT_TRAINER_NUM] = {
+  34,//イブキ
+  27,//ハヤト
+  26,//サカキ
+  35,//アンズ
+  29,//アカネ
+  32,//ミカン
+  28,//ツクシ
+  0xffff//主人公
+};
 //-----------------------------------------------------------------------------
 /**
  * @brief トーナメントリスト例を追加
@@ -292,6 +302,7 @@ static void entryChampTournament( u16 * tr_list )
 //-----------------------------------------------------------------------------
 static void entrySampleTournament( u16 * tr_list )
 {
+#if 0
   static const u16 sample_trid[WBT_TRAINER_NUM] = {
     18,//シロナ
     55,//モブ
@@ -303,6 +314,8 @@ static void entrySampleTournament( u16 * tr_list )
     0xffff,//プレイヤー
   };
   GFL_STD_MemCopy( sample_trid, tr_list, sizeof(u16) * WBT_TRAINER_NUM );
+#endif
+  GFL_STD_MemCopy( presentation_trid, tr_list, sizeof(u16) * WBT_TRAINER_NUM );
 }
 
 //-----------------------------------------------------------------------------

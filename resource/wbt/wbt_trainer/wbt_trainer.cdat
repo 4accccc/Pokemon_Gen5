@@ -423,7 +423,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 5, //いわ
 		PM_MALE, //男
 		RGLEADER1       ,// 動作モデル指定
-		TRTYPE_HERO        , //トレーナータイプ指定
+		TRTYPE_RGLEADER1   , //トレーナータイプ指定
 		 4, //エントリタイミング
 		TRUE , //オールトーナメント参加
 		FALSE, //チャンピオントーナメント参加
@@ -444,7 +444,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		10, //みず
 		PM_FEMALE, //女
 		RGLEADER2       ,// 動作モデル指定
-		TRTYPE_HEROINE     , //トレーナータイプ指定
+		TRTYPE_RGLEADER2   , //トレーナータイプ指定
 		 4, //エントリタイミング
 		TRUE , //オールトーナメント参加
 		FALSE, //チャンピオントーナメント参加
@@ -465,7 +465,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		12, //でんき
 		PM_MALE, //男
 		RGLEADER3       ,// 動作モデル指定
-		TRTYPE_HERO        , //トレーナータイプ指定
+		TRTYPE_RGLEADER3   , //トレーナータイプ指定
 		 4, //エントリタイミング
 		TRUE , //オールトーナメント参加
 		FALSE, //チャンピオントーナメント参加
@@ -486,7 +486,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		11, //くさ
 		PM_FEMALE, //女
 		RGLEADER4       ,// 動作モデル指定
-		TRTYPE_HEROINE     , //トレーナータイプ指定
+		TRTYPE_RGLEADER4   , //トレーナータイプ指定
 		 4, //エントリタイミング
 		TRUE , //オールトーナメント参加
 		FALSE, //チャンピオントーナメント参加
@@ -507,7 +507,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		13, //エスパー
 		PM_FEMALE, //女
 		RGLEADER5       ,// 動作モデル指定
-		TRTYPE_HEROINE     , //トレーナータイプ指定
+		TRTYPE_RGLEADER5   , //トレーナータイプ指定
 		 4, //エントリタイミング
 		TRUE , //オールトーナメント参加
 		FALSE, //チャンピオントーナメント参加
@@ -528,7 +528,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 9, //ほのお
 		PM_MALE, //男
 		RGLEADER6       ,// 動作モデル指定
-		TRTYPE_HERO        , //トレーナータイプ指定
+		TRTYPE_RGLEADER6   , //トレーナータイプ指定
 		 4, //エントリタイミング
 		TRUE , //オールトーナメント参加
 		FALSE, //チャンピオントーナメント参加
@@ -549,7 +549,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 4, //じめん
 		PM_MALE, //男
 		RGLEADER7       ,// 動作モデル指定
-		TRTYPE_HERO        , //トレーナータイプ指定
+		TRTYPE_RGLEADER7   , //トレーナータイプ指定
 		 4, //エントリタイミング
 		TRUE , //オールトーナメント参加
 		FALSE, //チャンピオントーナメント参加
@@ -570,7 +570,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 2, //ひこう
 		PM_MALE, //男
 		GSLEADER1       ,// 動作モデル指定
-		TRTYPE_HERO        , //トレーナータイプ指定
+		TRTYPE_GSLEADER1   , //トレーナータイプ指定
 		 4, //エントリタイミング
 		TRUE , //オールトーナメント参加
 		FALSE, //チャンピオントーナメント参加
@@ -591,7 +591,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 6, //むし
 		PM_MALE, //男
 		GSLEADER2       ,// 動作モデル指定
-		TRTYPE_HERO        , //トレーナータイプ指定
+		TRTYPE_GSLEADER2   , //トレーナータイプ指定
 		 4, //エントリタイミング
 		TRUE , //オールトーナメント参加
 		FALSE, //チャンピオントーナメント参加
@@ -612,7 +612,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //ノーマル
 		PM_FEMALE, //女
 		GSLEADER3       ,// 動作モデル指定
-		TRTYPE_HERO        , //トレーナータイプ指定
+		TRTYPE_GSLEADER3   , //トレーナータイプ指定
 		 4, //エントリタイミング
 		TRUE , //オールトーナメント参加
 		FALSE, //チャンピオントーナメント参加
@@ -633,7 +633,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 7, //ゴースト
 		PM_MALE, //男
 		GSLEADER4       ,// 動作モデル指定
-		TRTYPE_HERO        , //トレーナータイプ指定
+		TRTYPE_GSLEADER4   , //トレーナータイプ指定
 		 4, //エントリタイミング
 		TRUE , //オールトーナメント参加
 		FALSE, //チャンピオントーナメント参加
@@ -654,7 +654,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 1, //かくとう
 		PM_MALE, //男
 		GSLEADER5       ,// 動作モデル指定
-		TRTYPE_HERO        , //トレーナータイプ指定
+		TRTYPE_GSLEADER5   , //トレーナータイプ指定
 		 4, //エントリタイミング
 		TRUE , //オールトーナメント参加
 		FALSE, //チャンピオントーナメント参加
@@ -675,7 +675,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 8, //はがね
 		PM_FEMALE, //女
 		GSLEADER6       ,// 動作モデル指定
-		TRTYPE_HERO        , //トレーナータイプ指定
+		TRTYPE_GSLEADER6   , //トレーナータイプ指定
 		 4, //エントリタイミング
 		TRUE , //オールトーナメント参加
 		FALSE, //チャンピオントーナメント参加
@@ -696,7 +696,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		14, //こおり
 		PM_MALE, //男
 		GSLEADER7       ,// 動作モデル指定
-		TRTYPE_HERO        , //トレーナータイプ指定
+		TRTYPE_GSLEADER7   , //トレーナータイプ指定
 		 4, //エントリタイミング
 		TRUE , //オールトーナメント参加
 		FALSE, //チャンピオントーナメント参加
@@ -717,7 +717,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		15, //ドラゴン
 		PM_FEMALE, //女
 		GSLEADER8       ,// 動作モデル指定
-		TRTYPE_HERO        , //トレーナータイプ指定
+		TRTYPE_GSLEADER8   , //トレーナータイプ指定
 		 4, //エントリタイミング
 		TRUE , //オールトーナメント参加
 		FALSE, //チャンピオントーナメント参加
@@ -738,7 +738,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 3, //どく
 		PM_FEMALE, //女
 		GSLEADER9       ,// 動作モデル指定
-		TRTYPE_HERO        , //トレーナータイプ指定
+		TRTYPE_GSLEADER9   , //トレーナータイプ指定
 		 4, //エントリタイミング
 		TRUE , //オールトーナメント参加
 		FALSE, //チャンピオントーナメント参加
@@ -759,7 +759,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 5, //いわ
 		PM_FEMALE, //女
 		RSLEADER1       ,// 動作モデル指定
-		TRTYPE_HERO        , //トレーナータイプ指定
+		TRTYPE_RSLEADER1   , //トレーナータイプ指定
 		 4, //エントリタイミング
 		TRUE , //オールトーナメント参加
 		FALSE, //チャンピオントーナメント参加
@@ -780,7 +780,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 1, //かくとう
 		PM_MALE, //男
 		RSLEADER2       ,// 動作モデル指定
-		TRTYPE_HERO        , //トレーナータイプ指定
+		TRTYPE_RSLEADER2   , //トレーナータイプ指定
 		 4, //エントリタイミング
 		TRUE , //オールトーナメント参加
 		FALSE, //チャンピオントーナメント参加
@@ -801,7 +801,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		12, //でんき
 		PM_MALE, //男
 		RSLEADER3       ,// 動作モデル指定
-		TRTYPE_HERO        , //トレーナータイプ指定
+		TRTYPE_RSLEADER3   , //トレーナータイプ指定
 		 4, //エントリタイミング
 		TRUE , //オールトーナメント参加
 		FALSE, //チャンピオントーナメント参加
@@ -822,7 +822,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 9, //ほのお
 		PM_FEMALE, //女
 		RSLEADER4       ,// 動作モデル指定
-		TRTYPE_HERO        , //トレーナータイプ指定
+		TRTYPE_RSLEADER4   , //トレーナータイプ指定
 		 4, //エントリタイミング
 		TRUE , //オールトーナメント参加
 		FALSE, //チャンピオントーナメント参加
@@ -843,7 +843,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //ノーマル
 		PM_MALE, //男
 		RSLEADER5       ,// 動作モデル指定
-		TRTYPE_HERO        , //トレーナータイプ指定
+		TRTYPE_RSLEADER5   , //トレーナータイプ指定
 		 4, //エントリタイミング
 		TRUE , //オールトーナメント参加
 		FALSE, //チャンピオントーナメント参加
@@ -864,7 +864,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 2, //ひこう
 		PM_FEMALE, //女
 		RSLEADER6       ,// 動作モデル指定
-		TRTYPE_HERO        , //トレーナータイプ指定
+		TRTYPE_RSLEADER6   , //トレーナータイプ指定
 		 4, //エントリタイミング
 		TRUE , //オールトーナメント参加
 		FALSE, //チャンピオントーナメント参加
@@ -885,7 +885,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		13, //エスパー
 		PM_MALE, //男
 		RSLEADER7       ,// 動作モデル指定
-		TRTYPE_HERO        , //トレーナータイプ指定
+		TRTYPE_RSLEADER7   , //トレーナータイプ指定
 		 4, //エントリタイミング
 		TRUE , //オールトーナメント参加
 		FALSE, //チャンピオントーナメント参加
@@ -906,7 +906,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		13, //エスパー
 		PM_FEMALE, //女
 		RSLEADER8       ,// 動作モデル指定
-		TRTYPE_HERO        , //トレーナータイプ指定
+		TRTYPE_RSLEADER8   , //トレーナータイプ指定
 		 4, //エントリタイミング
 		TRUE , //オールトーナメント参加
 		FALSE, //チャンピオントーナメント参加
@@ -927,7 +927,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		10, //みず
 		PM_MALE, //男
 		ELEADER1        ,// 動作モデル指定
-		TRTYPE_HERO        , //トレーナータイプ指定
+		TRTYPE_ELEADER1    , //トレーナータイプ指定
 		 4, //エントリタイミング
 		TRUE , //オールトーナメント参加
 		FALSE, //チャンピオントーナメント参加
