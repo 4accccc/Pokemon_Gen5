@@ -1169,9 +1169,9 @@
 	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/gsleader5.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
 
 #gsleader6.imd
-./mmdl_res/gsleader6.imd: ./mmdl_nchara/gsleader6.ncg ./mmdl_nchara/gsleader6.ncl ./mmdl_dmy/t4x4x7.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_flip.csv
+./mmdl_res/gsleader6.imd: ./mmdl_nchara/gsleader6.ncg ./mmdl_nchara/gsleader6.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
 	@echo convert ncg_imd gsleader6
-	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/gsleader6.ncg ./mmdl_res ./mmdl_dmy/t4x4x7.imd 4 4 7
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/gsleader6.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
 
 #gsleader7.imd
 ./mmdl_res/gsleader7.imd: ./mmdl_nchara/gsleader7.ncg ./mmdl_nchara/gsleader7.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
