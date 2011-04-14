@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00253" date="2011-04-13T15:00:38"/>
+	<create user="matsumiya" host="W00224" date="2011-04-14T19:28:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -407,7 +407,7 @@
 	</lock>
 
 
-	<row id="msg_wbt_info_01" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
+	<row id="msg_wbt_info_01" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
 		<comment>♀
 初会話時
 ・msg_wbt_info_02へ</comment>
