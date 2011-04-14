@@ -304,7 +304,7 @@ static BOOL makeRomTrainerData( BSUBWAY_PARTNER_DATA * tr_data,
 
   //トレーナーデータセット
   trd = FBI_TOOL_AllocTrainerRomData(tr_data,
-      ARCID_BSW_TR ,tr_no, NARC_message_wbt_trname_dat ,inHeapID);
+      ARCID_WBT_TD ,tr_no, NARC_message_wbt_trname_dat ,inHeapID);
   // パワー乱数を決定する
   pow_rnd= pri2pow_table[ tr_pri - 1 ];
   tr_data->bt_trd.tr_type = WBTTRAINER_GetTrainerType( wbt_tr );
