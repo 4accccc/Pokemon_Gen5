@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="kawamoto_yuki" host="W00239" date="2011-03-08T20:44:12" source="in05_local_texset.mb"/>
+	<create user="kawamoto_yuki" host="W00239" date="2011-04-14T15:05:25" source="in05_local_texset.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="kawamoto_yuki" host="W00239" date="2011-03-08T20:44:12" source="in05_local_texset.mb"/>
+<original_create user="kawamoto_yuki" host="W00239" date="2011-04-14T15:05:25" source="in05_local_texset.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -30,203 +30,198 @@
 <box_test pos_scale="5" xyz="-0.250000 0.000000 -0.250000" whd="4.000000 0.000000 2.000000"/>
 
 <tex_image_array size="30">
-	<tex_image index="0" name="b02_yuka"
-		width="16" height="16" original_width="16" original_height="16"
-		format="palette4"
+	<tex_image index="0" name="in05_book1"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
 		color0_mode="color"
-		palette_name="b02_yuka_pl"
-		path="C:/home/swan_data3d/field/in05/chip/tex/b02_yuka.tga"
+		palette_name="in05_book1_pl"
+		path="C:/home/swan_data3d/field/in05/chip/tex/in05_book1.tga"
 	>
-		<bitmap size="32">
-			5555 1555 aaa9 156a aa55 156a aaa9 1aaa
-			aaa9 1aaa 6aa9 1555 5555 1555 0000 0000
-			1555 5555 156a a955 1a95 aaa9 1aaa aaa9
-			1aaa 56a9 1aaa aaa9 1555 5555 0000 0000
+		<bitmap size="256">
+			8888 8888 8888 8888 8888 8888 8888 8888
+			8888 8888 8888 8888 8888 8888 8888 8888
+			7788 7777 7777 7777 7777 7777 7777 8877
+			7788 7777 7777 7777 7777 7777 7777 8877
+			4788 4444 4444 4444 4444 4444 4444 8874
+			f788 ffee ffee 4fee feef feef eef4 887f
+			3788 c3ff 0cff 40ff cffc 3ff3 ff54 8875
+			3788 c333 0ccc 4000 cccc 3333 5554 8875
+			3788 c322 0cdd 4011 cddc 3223 6654 8875
+			3788 c322 0cdd 4011 cddc 3223 6654 8875
+			3788 c322 0cdd 4011 cddc 3223 6654 8875
+			3788 c322 0cdd 4011 cddc 3223 6654 8875
+			3788 c322 0cdd 4011 cddc 3223 6654 8875
+			3788 c322 0cdd 4011 cddc 3223 6654 8875
+			3788 c333 0ccc 7000 cccc 3333 5557 8875
+			7788 7433 77cc 7700 7cc7 7337 5577 8877
+			9977 9999 9999 9999 9999 9999 9999 7799
+			9977 9999 9999 9999 9999 9999 9999 7799
+			b899 bbbb bbbb bbbb bbbb bbbb bbbb 998b
+			ab99 aa88 aaaa aaaa aaaa aaaa 88aa 99ba
+			ab99 aa88 aaaa aaaa aaaa aaaa 88aa 99ba
+			ab99 aaaa aaaa aaaa aaaa aaaa aaaa 99ba
+			ab99 aaaa aaaa aaaa aaaa aaaa aaaa 99ba
+			ab99 aaaa aaaa aaaa aaaa aaaa aaaa 99ba
+			ab99 aaaa aaaa aaaa aaaa aaaa aaaa 99ba
+			ab99 aaaa aaaa aaaa aaaa aaaa aaaa 99ba
+			ab99 aaaa aaaa aaaa aaaa aaaa aaaa 99ba
+			ab99 aa88 aaaa aaaa aaaa aaaa 88aa 99ba
+			ab99 aa88 aaaa aaaa aaaa aaaa 88aa 99ba
+			b899 bbbb bbbb bbbb bbbb bbbb bbbb 998b
+			9977 9999 9999 9999 9999 9999 9999 7799
+			9977 9999 9999 9999 9999 9999 9999 7799
 		</bitmap>
 	</tex_image>
-	<tex_image index="1" name="b05_kabe2"
-		width="8" height="8" original_width="8" original_height="8"
-		format="palette4"
-		color0_mode="color"
-		palette_name="b05_kabe2_pl"
-		path="C:/home/swan_data3d/field/in05/chip/tex/b05_kabe2.tga"
-	>
-		<bitmap size="8">
-			0000 0000 0000 0000 0000 0000 0000 5555
-		</bitmap>
-	</tex_image>
-	<tex_image index="2" name="h_mado"
-		width="16" height="16" original_width="16" original_height="16"
-		format="palette4"
-		color0_mode="color"
-		palette_name="h_mado_pl"
-		path="C:/home/swan_data3d/field/in05/chip/tex/h_mado.tga"
-	>
-		<bitmap size="32">
-			0000 aaa4 0000 6aa9 4000 1aaa 9000 06aa
-			a400 41aa a900 906a aa40 641a aa90 1906
-			aaa4 0641 6aa9 0190 1aaa 0064 06aa 0019
-			41aa 0006 906a 0001 641a 0000 1906 0000
-		</bitmap>
-	</tex_image>
-	<tex_image index="3" name="in05_book"
+	<tex_image index="1" name="in05_book2"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
-		palette_name="in05_book_pl"
-		path="C:/home/swan_data3d/field/in05/chip/tex/in05_book.tga"
+		palette_name="in05_book2_pl"
+		path="C:/home/swan_data3d/field/in05/chip/tex/in05_book2.tga"
 	>
 		<bitmap size="256">
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 1100 1111 1111 1111 0001
-			0000 0000 0000 1111 1111 1111 1111 0011
-			0000 0000 1100 1111 1111 1111 1111 0011
-			0000 0000 1111 1111 1111 1111 1111 0011
-			0000 1000 1111 1111 1111 1111 1111 0011
-			0000 1110 1111 1111 1111 1111 1111 0001
-			1000 1111 1111 1111 1111 1111 1111 0002
-			1100 1111 1111 1111 1111 1111 2111 0022
-			4400 4444 4444 4444 1114 1111 2211 0022
-			4400 4444 4444 4444 1144 1111 2222 0022
-			4400 4444 4444 4444 1144 2111 2222 0022
-			4400 4444 4444 4444 1114 2221 2222 0002
-			1100 1111 1111 1111 2111 2222 3222 0003
-			2200 2222 2222 2222 2222 2222 3322 0033
-			4400 4444 4444 4444 2244 2222 3332 0033
-			4400 4444 4444 4444 2444 2222 3333 0033
-			4400 4444 4444 4444 2444 3322 3333 0033
-			4400 4444 4444 4444 2244 3333 3333 0033
-			2200 2222 2222 2222 3222 3333 3333 0003
-			3300 3333 3333 3333 3333 3333 3333 0000
-			4300 4444 4444 4444 3334 3333 0033 0000
-			4300 4444 4444 4444 3344 3333 0000 0000
-			4300 4444 4444 4444 3344 0333 0000 0000
-			4300 4444 4444 4444 3334 0003 0000 0000
-			3300 3333 3333 3333 3333 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
+			1112 1111 1111 2211 a122 21aa aa12 21aa
+			3312 3333 3333 2213 a122 21aa aa12 21aa
+			6312 6666 6666 2213 a122 21aa aa12 21aa
+			6312 6666 6666 2213 a122 21aa aa12 21aa
+			6312 6666 6666 2213 a122 21aa aa12 21aa
+			6312 6666 6666 2213 a122 21aa aa12 21aa
+			6312 6666 6666 2213 a122 21aa aa12 21aa
+			6312 6666 6666 2213 a122 219a aa12 219a
+			6312 6666 6666 2213 a122 2199 9a12 2199
+			3312 3333 3333 2213 a122 2189 9a12 2189
+			1112 1111 1111 2211 a122 2188 9a12 2188
+			1112 2211 1111 2211 a122 2188 8a12 2188
+			3312 2213 3311 2211 a122 2188 8a12 2188
+			6312 2216 6631 2213 a122 2188 8a12 2188
+			6312 2216 6631 2213 a122 2188 8a12 2188
+			6312 2216 6631 2213 a122 2188 8a12 2188
+			6312 2216 6631 2213 a122 2188 8a12 2188
+			6312 2216 6631 2213 a122 2188 8a12 2188
+			6312 2216 6631 2213 a122 2188 8a12 2188
+			6312 2216 6631 2213 a122 2188 8a12 2188
+			6312 2216 6631 2213 a122 2188 8a12 2188
+			6312 2216 6631 2213 a122 2188 8a12 2188
+			6312 2216 6631 2213 a122 2188 8a12 2188
+			6312 2216 6631 2213 a122 2188 8a12 2188
+			6312 2216 6631 2213 a122 2188 9a12 2188
+			6312 2216 6631 2213 a122 2189 9a12 2188
+			6312 2216 6631 2213 a122 2189 9a12 2188
+			6317 7716 6631 2713 a122 219a aa12 2189
+			1170 0071 1117 2071 a122 21aa aa12 219a
+			7700 0007 7770 2007 5122 215a a512 215a
+			0000 0000 0000 2000 1422 2411 1142 2411
+			0000 0000 0000 2000 4422 2444 4442 2444
 		</bitmap>
 	</tex_image>
-	<tex_image index="4" name="in05_g_l"
-		width="16" height="16" original_width="16" original_height="16"
-		format="a5i3"
-		palette_name="in05_g_l_pl"
-		path="C:/home/swan_data3d/field/in05/chip/tex/in05_g_l.tga"
+	<tex_image index="2" name="in05_book3"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="in05_book3_pl"
+		path="C:/home/swan_data3d/field/in05/chip/tex/in05_book3.tga"
+	>
+		<bitmap size="256">
+			3334 3333 3333 4433 a344 43aa 9a34 4399
+			1134 1111 1111 4431 a344 43aa 9a34 4399
+			6134 6666 6666 4431 a344 43aa 9a34 4399
+			6134 6666 6666 4431 a344 43aa 9a34 4399
+			6134 6666 6666 4431 a344 43aa 9a34 4399
+			6134 6666 6666 4431 a344 43aa 9a34 4399
+			6134 6666 6666 4431 a344 43aa aa34 43aa
+			6134 6666 6666 4431 a344 439a aa34 439a
+			1134 1111 1111 4431 a344 4399 9a34 4399
+			3334 3333 3333 4433 a344 4389 9a34 4389
+			3334 4433 3333 4433 a344 4388 9a34 4388
+			3334 4433 3333 4433 a344 4388 8a34 4388
+			1134 4431 1133 4433 a344 4388 8a34 4388
+			6134 4436 6613 4431 a344 4388 8a34 4388
+			6134 4436 6613 4431 a344 4388 8a34 4388
+			6134 4436 6613 4431 a344 4388 8a34 4388
+			6134 4436 6613 4431 a344 4388 8a34 4388
+			6134 4436 6613 4431 a344 4388 8a34 4388
+			6134 4436 6613 4431 a344 4388 8a34 4388
+			6134 4436 6613 4431 a344 4388 8a34 4388
+			6134 4436 6613 4431 a344 4388 8a34 4388
+			6134 4436 6613 4431 a344 4388 8a34 4388
+			6134 4436 6613 4431 a344 4388 8a34 4388
+			6134 4436 6613 4431 a344 4388 8a34 4388
+			6134 4436 6613 4431 a344 4388 9a34 4388
+			6134 4436 6613 4431 a344 4389 9a34 4388
+			6134 4436 6613 4431 a344 4389 9a34 4388
+			6137 7736 6613 4731 a344 439a aa34 4389
+			3370 0073 3337 4073 a344 43aa aa34 439a
+			7700 0007 7770 4007 5344 435a a534 435a
+			0000 0000 0000 4000 3244 2233 3324 2233
+			0000 0000 0000 2000 2222 2222 2222 2222
+		</bitmap>
+	</tex_image>
+	<tex_image index="3" name="in05_door"
+		width="16" height="32" original_width="16" original_height="32"
+		format="palette16"
+		color0_mode="color"
+		palette_name="in05_door_pl"
+		path="C:/home/swan_data3d/field/in05/chip/tex/in05_door.tga"
 	>
 		<bitmap size="128">
-			0000 0000 0000 0000 0000 0000 0000 0000
-			b800 b8b8 b8b8 00b8 b800 b8b8 b8b8 00b8
-			b800 b8b8 b8b8 00b8 b800 b8b8 b8b8 00b8
-			a000 a0a0 a0a0 00a0 a000 a0a0 a0a0 00a0
-			a000 a0a0 a0a0 00a0 a000 a0a0 a0a0 00a0
-			a000 a0a0 a0a0 00a0 a000 a0a0 a0a0 00a0
-			a000 a0a0 a0a0 00a0 a000 a0a0 a0a0 00a0
-			a000 a0a0 a0a0 00a0 a000 a0a0 a0a0 00a0
-			a000 a0a0 a0a0 00a0 a000 a0a0 a0a0 00a0
-			a000 a0a0 a0a0 00a0 a000 a0a0 a0a0 00a0
-			a000 a0a0 a0a0 00a0 a000 a0a0 a0a0 00a0
-			8000 8080 8080 0080 8000 8080 8080 0080
-			6000 6060 6060 0060 6000 6060 6060 0060
-			4000 4040 4040 0040 4000 4040 4040 0040
-			2000 2020 2020 0020 2000 2020 2020 0020
-			0000 0000 0000 0000 0000 0000 0000 0000
+			3332 3333 3333 0033 3332 3333 3333 0033
+			3332 3333 3333 0033 3332 3333 3333 0033
+			3332 3333 3333 0033 3332 3333 3333 0033
+			3332 3333 3333 0033 3332 3333 3333 0033
+			3332 3333 3333 0033 3332 3333 3333 0033
+			3332 3333 3333 0033 3332 3333 3333 0033
+			5632 3330 3333 0033 5732 3330 3333 0033
+			5732 3330 3333 0033 5732 3330 3333 0033
+			5732 3331 3333 0033 4532 3331 3333 0033
+			1032 3331 3333 0033 3332 3333 3333 0033
+			3332 3333 3333 0033 3332 3333 3333 0033
+			3332 3333 3333 0033 3332 3333 3333 0033
+			3332 3333 3333 0033 3332 3333 3333 0033
+			3332 3333 3333 0033 3332 3333 3333 0033
+			3332 3333 3333 0033 3332 3333 3333 0033
+			3332 3333 3333 0033 3332 3333 3333 0033
 		</bitmap>
 	</tex_image>
-	<tex_image index="5" name="in05_genkan"
-		width="16" height="16" original_width="16" original_height="16"
+	<tex_image index="4" name="in05_genkan"
+		width="32" height="16" original_width="32" original_height="16"
 		format="palette16"
 		color0_mode="color"
 		palette_name="in05_genkan_pl"
 		path="C:/home/swan_data3d/field/in05/chip/tex/in05_genkan.tga"
 	>
-		<bitmap size="64">
-			6666 6666 6666 6666 4456 4444 4444 4444
-			2246 0122 1100 0111 2246 0111 2100 0001
-			1246 1011 0100 0000 1136 2100 0011 0011
-			2036 1002 0012 0122 0036 0000 1011 0011
-			0036 1000 0002 0000 0036 2100 0001 0000
-			0036 1000 0011 1210 1136 0001 0000 0000
-			2136 0002 0011 0000 1236 0001 0000 0121
-			1236 0110 0000 0011 2236 0211 0020 0000
+		<bitmap size="128">
+			7777 7777 7777 7777 7777 7777 7777 7777
+			7777 7777 7777 7777 7777 7777 7777 7777
+			6677 6666 6666 6666 6666 6666 6666 6666
+			5677 4444 4444 4444 4444 4444 4444 4444
+			4677 1122 1001 1101 0010 0000 0000 0000
+			4677 1112 0001 0120 0010 0000 0001 0000
+			4677 1112 0010 0001 0110 0000 1000 1000
+			4677 0011 1121 0100 0100 0020 0000 1000
+			4677 0220 1210 0000 1010 0110 1000 0001
+			4677 0000 1100 0000 1011 0210 0000 0001
+			3677 0000 0210 0000 0000 1200 1000 0010
+			3677 0000 0121 0000 0000 1020 1120 0000
+			3677 0000 1110 0000 0002 1022 0021 0000
+			3677 0111 0000 0000 0000 0000 0001 0100
+			3677 0221 1100 0000 0000 1000 0010 0001
+			3677 0112 0000 2100 0001 1100 0010 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="6" name="in05_in"
-		width="32" height="16" original_width="32" original_height="16"
-		format="a3i5"
-		palette_name="in05_in_pl"
-		path="C:/home/swan_data3d/field/in05/chip/tex/in05_in.tga"
-	>
-		<bitmap size="256">
-			e5e5 e5e5 e5e5 e5e5 e5e5 e5e5 e5e5 e5e5
-			e5e5 e5e5 e5e5 e5e5 e5e5 e5e5 e5e5 e5e5
-			e5e5 e5e5 e5e5 e5e5 e5e5 e5e5 e5e5 e5e5
-			e5e5 e5e5 e5e5 e5e5 e5e5 e5e5 e5e5 e5e5
-			e5e5 e5e5 e5e5 e5e5 e5e5 e5e5 e5e5 e5e5
-			e5e5 e5e5 e5e5 e5e5 e5e5 e5e5 e5e5 e5e5
-			e5e5 e5e5 e5e5 e5e5 e5e5 e5e5 e5e5 e5e5
-			e5e5 e5e5 e5e5 e5e5 e5e5 e5e5 e5e5 e5e5
-			e5e5 e5e5 e5e5 e5e5 e5e5 e5e5 e5e5 e5e5
-			e5e5 e5e5 e5e5 e5e5 e5e5 e5e5 e5e5 e5e5
-			e5e5 e5e5 e5e5 e5e5 e5e5 e5e5 e5e5 e5e5
-			e5e5 e5e5 e5e5 e5e5 e5e5 e5e5 e5e5 e5e5
-			e5e5 e5e5 e5e5 e5e5 a5a5 a5a5 a5a5 a5a5
-			a5a5 a5a5 a5a5 a5a5 e5e5 e5e5 e5e5 e5e5
-			e5e5 e5e5 a5a5 a5a5 85a5 8585 8585 8585
-			8585 8585 8585 a585 a5a5 e5a5 e5e5 e5e5
-			e5e5 a5a5 85a5 8585 8585 4545 4545 4545
-			4545 4545 4545 8585 8585 a5a5 a5a5 e5e5
-			a5a5 85a5 8585 4545 4545 2545 2525 2525
-			2525 2525 4525 4545 8545 8585 a585 a5a5
-			85a5 8585 4545 2545 2525 2525 2525 2525
-			2525 2525 2525 2525 4545 4545 8585 a585
-			8585 4545 2545 2525 2525 0505 0505 0505
-			0505 0505 2505 2525 2525 4525 4545 8585
-			4585 2545 2525 0525 0505 0505 0505 0505
-			0505 0505 0505 0505 2505 2525 4525 8545
-			4545 2525 0525 0505 0505 0505 0505 0505
-			0505 0505 0505 0505 0505 2505 2525 4545
-			2545 2525 0505 0505 0505 0505 0505 0505
-			0505 0505 0505 0505 0505 0505 2525 4525
-			2525 0525 0505 0505 0505 0505 0505 0505
-			0505 0505 0505 0505 0505 0505 2505 2525
-		</bitmap>
-	</tex_image>
-	<tex_image index="7" name="in05_kabinn"
-		width="16" height="16" original_width="16" original_height="16"
-		format="palette16"
-		color0_mode="transparency"
-		palette_name="in05_kabinn_pl"
-		path="C:/home/swan_data3d/field/in05/chip/tex/in05_kabinn.tga"
-	>
-		<bitmap size="64">
-			0000 0000 0000 0000 0000 3300 0000 0000
-			0000 3330 0333 0000 0000 3231 3323 0000
-			3000 3323 3233 0000 3000 2132 0333 0000
-			3000 2313 1132 0000 0000 3771 1133 0000
-			0000 6560 0076 0000 0000 6460 0076 0000
-			0000 6460 0077 0000 0000 6460 0077 0000
-			0000 6589 0987 0000 9000 6899 9998 0000
-			0000 9999 0999 0000 0000 0000 0000 0000
-		</bitmap>
-	</tex_image>
-	<tex_image index="8" name="in05_kage"
+	<tex_image index="5" name="in05_kage"
 		width="8" height="8" original_width="8" original_height="8"
 		format="a3i5"
 		palette_name="in05_kage_pl"
 		path="C:/home/swan_data3d/field/in05/chip/tex/in05_kage.tga"
 	>
 		<bitmap size="32">
-			2020 2020 2020 2020 2020 2020 2020 2020
-			4040 4040 4040 4040 4040 4040 4040 4040
-			4040 4040 4040 4040 4040 4040 4040 4040
-			4040 4040 4040 4040 4040 4040 4040 4040
+			2020 2020 2020 2020 4020 4040 4040 2040
+			4020 4040 4040 2040 4020 4040 4040 2040
+			4020 4040 4040 2040 4020 4040 4040 2040
+			4020 4040 4040 2040 2020 2020 2020 2020
 		</bitmap>
 	</tex_image>
-	<tex_image index="9" name="in05_locker"
+	<tex_image index="6" name="in05_locker"
 		width="32" height="64" original_width="32" original_height="64"
 		format="palette16"
 		color0_mode="color"
@@ -234,73 +229,73 @@
 		path="C:/home/swan_data3d/field/in05/chip/tex/in05_locker.tga"
 	>
 		<bitmap size="512">
-			aaaa aaaa aaaa aaaa aaaa 6677 6666 6666
-			99aa 9999 9999 9999 aa99 6677 6666 6666
-			229a 2222 2222 2222 a922 6677 6666 66a6
-			429a 4444 4444 4444 a944 6677 6666 66a6
-			429a 8844 8888 4498 a944 6677 a66a 66a6
-			429a 6844 6666 4496 a944 6677 a66a 6696
-			429a 6844 6666 4496 a944 6677 a669 66a6
-			429a aa44 aaaa 44aa a944 6677 9669 66a6
-			429a 4444 4444 4444 a944 6677 a66a 66a6
-			429a 0004 0000 4000 a944 6677 966a 6696
-			429a aaa4 aaaa 4aaa a944 6677 a669 66a6
-			429a 2224 2222 4222 a944 6677 666a 6666
-			429a 0004 0000 4000 a944 6677 6666 6666
-			429a aaa4 aaaa 4aaa a944 6677 6666 6666
-			429a 2224 2222 4222 a944 7777 7777 7777
-			429a 4444 4444 4444 a944 7777 7777 7777
-			429a 4444 4444 4444 a944 6666 6666 7666
-			429a 4444 4444 4444 a944 6666 6666 7666
-			429a 4444 4444 4444 a944 aaa6 aaaa 76aa
-			429a 4444 4444 4444 a944 99a6 9999 76a8
-			429a 4000 4444 4444 a944 99a6 8999 76a8
-			429a 4a90 4444 4444 a944 99a6 8899 76a8
-			429a 4a90 4444 4444 a944 99a6 8889 76a9
-			429a 4a90 4444 4444 a944 99a6 9888 76a9
-			429a 4a90 4444 4444 a944 89a6 9988 76a9
-			429a 4a90 4444 4444 a944 88a6 9998 76a9
-			429a 4a90 4444 4444 a944 88a6 9999 76a8
-			429a 4aa0 4444 4444 a944 98a6 8999 76a8
-			429a 4444 4444 4444 a944 99a6 8899 76a8
-			429a 4444 4444 4444 a944 aaa6 aaaa 76aa
-			429a 4444 4444 4444 a944 6666 6666 7666
-			429a 4444 4444 4444 a944 7777 7777 7777
-			289a 2222 2222 2222 a922 aaaa aaaa aaaa
-			289a 2222 2222 2222 a922 9999 9999 a999
-			289a 2222 2222 2222 a922 8889 8888 a988
-			289a 2222 2222 2222 a922 8889 8888 a988
-			289a 2222 2222 2222 a922 8889 8888 a988
-			289a 2222 2222 2222 a922 8889 8888 a988
-			399a 3333 3333 3333 a933 8889 8888 a988
-			399a 3333 3333 3333 a933 8889 8888 a988
-			399a 3333 3333 3333 a933 8889 8888 a988
-			399a 3333 3333 3333 a933 8889 8888 a988
-			399a 3333 3333 3333 a933 8889 8888 a988
-			599a 5555 5555 5555 a955 8889 8888 a988
-			599a 5555 5555 5555 a955 8889 8888 a988
-			599a 5555 5555 5555 a955 8889 8888 a988
-			599a 5555 5555 5555 a955 8889 8888 a988
-			599a 5555 5555 5555 a955 8889 8888 a988
-			99aa 9999 9999 9999 aa99 8889 8888 a988
-			aaaa aaaa aaaa aaaa aaaa 8889 8888 a988
-			999a 9999 9999 9999 a999 8889 8888 a988
-			449a 4444 4444 1111 a911 8889 8888 a988
-			149a 1111 4111 4444 a914 8889 8888 a988
-			119a 1111 1111 1111 a911 8889 8888 a988
-			119a 1111 1111 1111 a911 8889 8888 a988
-			119a 1111 1111 1111 a911 8889 8888 a988
-			119a 1111 1111 1111 a911 8889 8888 a988
-			119a 1111 1111 1111 a911 8889 8888 a988
-			119a 1111 1111 1111 a911 8889 8888 a988
-			119a 1111 1111 1111 a911 8889 8888 a988
-			119a 1111 1111 1111 a911 8889 8888 a988
-			119a 1111 1111 1111 a911 8889 8888 a988
-			999a 9999 9999 9999 a999 999a 9999 aa99
-			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			dddd dddd dddd dddd dddd 88aa 8888 8888
+			ccdd cccc cccc cccc ddcc 88aa 8888 8888
+			55cd 5555 5555 5555 dc55 88aa 8888 88d8
+			65cd 6666 6666 6666 dc66 88aa 8888 88d8
+			65cd bb66 bbbb 66cb dc66 88aa d88d 88d8
+			65cd 8b66 8888 66c9 dc66 88aa d88d 88c8
+			65cd 9b66 9999 66d9 dc66 88aa d88c 88d8
+			65cd dd66 dddd 66dd dc66 88aa c88c 88d8
+			65cd 5566 5555 6655 dc66 88aa d88d 88d8
+			65cd 5556 5555 6555 dc66 88aa c88d 88c8
+			65cd ddd6 cccc 6ccc dc66 88aa d88c 88d8
+			65cd ccd6 7777 6777 dc66 88aa 888d 8888
+			65cd 5556 5555 6555 dc66 88aa 8888 8888
+			65cd ddd6 cccc 6ccc dc66 88aa 8888 8888
+			65cd ccd6 7777 6777 dc66 aaaa aaaa aaaa
+			65cd 5556 5555 6555 dc66 aaaa aaaa aaaa
+			65cd 5556 5555 6555 dc66 8888 8888 a888
+			65cd 6666 6666 6666 dc66 8888 8888 a888
+			65cd 6666 6666 6666 dc66 ddd8 dddd a8dd
+			65cd 6666 6666 6666 dc66 ccd8 cccc a8db
+			65cd 6fff 6666 6666 dc66 ccd8 bccc a8db
+			65cd 6fdf 6666 6666 dc66 ccd8 bbcc a8db
+			65cd 6fdf 6666 6666 dc66 ccd8 bbbc a8dc
+			65cd 6fdf 6666 6666 dc66 ccd8 cbbb a8dc
+			65cd 6ecf 6666 6666 dc66 bcd8 ccbb a8dc
+			65cd 6ecf 6666 6666 dc66 bbd8 cccb a8dc
+			65cd 6ecf 6666 6666 dc66 bbd8 cccc a8db
+			65cd 6fee 6666 6666 dc66 cbd8 bccc a8db
+			65cd 6666 6666 6666 dc66 ccd8 bbcc a8db
+			65cd 6666 6666 6666 dc66 ddd8 dddd a8dd
+			65cd 6666 6666 6666 dc66 8888 8888 a888
+			45cd 4444 4444 4444 dc44 aaaa aaaa aaaa
+			45cd 4444 4444 4444 dc44 dddd dddd dddd
+			45cd 4444 4444 4444 dc44 cccc cccc dccc
+			55cd 5555 5555 5555 dc55 bbbc bbbb dcbb
+			55cd 5555 5555 5555 dc55 bbbc bbbb dcbb
+			55cd 5555 5555 5555 dc55 bbbc bbbb dcbb
+			55cd 5555 5555 5555 dc55 bbbc bbbb dcbb
+			11cd 1111 1111 1111 dc11 bbbc bbbb dcbb
+			11cd 1111 1111 1111 dc11 bbbc bbbb dcbb
+			11cd 1111 1111 1111 dc11 bbbc bbbb dcbb
+			11cd 1111 1111 1111 dc11 bbbc bbbb dcbb
+			11cd 1111 1111 1111 dc11 bbbc bbbb dcbb
+			00cd 0000 0000 0000 dc00 bbbc bbbb dcbb
+			00cd 0000 0000 0000 dc00 bbbc bbbb dcbb
+			00cd 0000 0000 0000 dc00 bbbc bbbb dcbb
+			00cd 0000 0000 0000 dc00 bbbc bbbb dcbb
+			00cd 0000 0000 0000 dc00 bbbc bbbb dcbb
+			cccd cccc cccc cccc dccc bbbc bbbb dcbb
+			dddd dddd dddd dddd dddd bbbc bbbb dcbb
+			cccd cccc cccc cccc dccc bbbc bbbb dcbb
+			22cd 2222 2222 2222 dc22 bbbc bbbb dcbb
+			22cd 2222 2222 2222 dc22 bbbc bbbb dcbb
+			22cd 2222 2222 2222 dc22 bbbc bbbb dcbb
+			22cd 2222 2222 2222 dc22 bbbc bbbb dcbb
+			22cd 2222 2222 2222 dc22 bbbc bbbb dcbb
+			22cd 2222 2222 2222 dc22 bbbc bbbb dcbb
+			22cd 2222 2222 2222 dc22 bbbc bbbb dcbb
+			22cd 2222 2222 2222 dc22 bbbc bbbb dcbb
+			22cd 2222 2222 2222 dc22 bbbc bbbb dcbb
+			22cd 2222 2222 2222 dc22 bbbc bbbb dcbb
+			331c 3333 3333 3333 d133 bbbc bbbb dcbb
+			111c 1111 1111 1111 d111 cccc cccc dccc
+			cccc cccc cccc cccc dccc dddd dddd dddd
 		</bitmap>
 	</tex_image>
-	<tex_image index="10" name="in05_m_h02_04"
+	<tex_image index="7" name="in05_m_h02_04"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette16"
 		color0_mode="color"
@@ -308,59 +303,199 @@
 		path="C:/home/swan_data3d/field/in05/chip/tex/in05_m_h02_04.tga"
 	>
 		<bitmap size="64">
-			4444 4444 4444 4444 3333 3333 3333 3333
-			1111 1111 1111 1111 0000 0000 0000 0000
-			1111 1111 1111 1111 4444 4444 4444 4444
-			3333 3333 3333 3333 3333 1113 3111 3333
-			1333 2221 1222 3331 2133 2222 2222 3312
-			4433 2224 4222 3344 3333 4443 3444 3333
-			3333 3333 3333 3333 1111 1111 1111 1111
-			1111 1111 1111 1111 0000 0000 0000 0000
+			0000 0000 0000 0000 1111 1111 1111 1111
+			3333 3333 3333 3333 4444 4444 4444 4444
+			3333 3333 3333 3333 0000 0000 0000 0000
+			1111 1111 1111 1111 1111 3331 1333 1111
+			3111 2223 3222 1113 2311 2222 2222 1132
+			0011 2220 0222 1100 1111 0001 1000 1111
+			1111 1111 1111 1111 3333 3333 3333 3333
+			3333 3333 3333 3333 4444 4444 4444 4444
 		</bitmap>
 	</tex_image>
-	<tex_image index="11" name="in05_mat"
+	<tex_image index="8" name="in05_mat1"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="color"
-		palette_name="in05_mat_pl"
-		path="C:/home/swan_data3d/field/in05/chip/tex/in05_mat.tga"
+		palette_name="in05_mat1_pl"
+		path="C:/home/swan_data3d/field/in05/chip/tex/in05_mat1.tga"
 	>
 		<bitmap size="256">
-			4222 4444 4444 4444 4444 4444 4444 4444
-			2555 2222 2222 2222 2222 2222 2222 2222
-			2555 2222 2222 2222 2222 2222 2222 2222
-			2555 7782 7777 7777 7777 7777 7777 7777
-			2555 8872 8888 8888 8888 8888 8888 8888
-			2555 2872 2222 2222 2222 2222 2222 2222
-			2555 2872 2222 2222 2222 2222 2222 2222
-			2555 2872 2222 2222 2222 2222 2222 2222
-			2555 2872 2222 2222 2222 2222 2222 9962
-			2555 2872 2222 2222 2222 2222 6222 0199
-			2555 2872 2222 2222 2222 2222 9622 0001
-			2555 2872 2222 2222 2222 2222 0962 0000
-			2555 2872 2222 2222 2222 2222 0192 0000
-			2555 2872 2222 2222 2222 2222 0016 9900
-			2555 2872 2222 2222 2222 2222 0019 0990
-			2555 2872 2222 2222 2222 2222 9999 0099
-			2555 2872 2222 2222 2222 2222 9999 0099
-			2555 2872 2222 2222 2222 2222 0019 0990
-			2555 2872 2222 2222 2222 2222 0016 9900
-			2555 2872 2222 2222 2222 2222 0192 0000
-			2555 2872 2222 2222 2222 2222 0962 0000
-			2555 2872 2222 2222 2222 2222 9622 0001
-			2555 2872 2222 2222 2222 2222 6222 0199
-			2555 2872 2222 2222 2222 2222 2222 9962
-			2555 2872 2222 2222 2222 2222 2222 2222
-			2555 2872 2222 2222 2222 2222 2222 2222
-			2555 2872 2222 2222 2222 2222 2222 2222
-			2555 8872 8888 8888 8888 8888 8888 8888
-			2555 7782 7777 7777 7777 7777 7777 7777
-			2555 2222 2222 2222 2222 2222 2222 2222
-			2555 2222 2222 2222 2222 2222 2222 2222
-			5333 5555 5555 5555 5555 5555 5555 5555
+			9666 9999 9999 9999 9999 9999 9999 9999
+			6aaa 66b6 6666 6666 6b66 b666 666b 6666
+			6aaa 6666 6666 666b 6666 6666 6666 6666
+			6aaa 6666 6666 6666 6666 6666 6666 6666
+			baaa cccb cccc cccc cccc cccc cccc cccc
+			6aaa ddcb dddd dddd dddd dddd dddd dddd
+			6aaa 8dc6 6666 6666 6666 6666 6666 b666
+			6aaa 8dc6 6b66 6666 6666 6666 66bb 666b
+			6aaa 8dc6 6666 6666 6666 6666 66bb 0056
+			6aaa 8dc6 6666 bb66 6666 6666 5666 3100
+			baaa 8dc6 6666 bb66 b666 6666 0566 3331
+			6aaa 8dc6 6666 6666 b666 6666 3056 3333
+			6aaa 8dc6 6666 6666 6666 6666 3106 3343
+			6aaa 8dc6 66b6 6666 66b6 6666 3315 0233
+			6aaa 8dc6 6666 66b6 6666 6666 3310 2023
+			6aaa 8dc6 6666 6666 6666 6666 0000 3200
+			6aaa 8dc6 6666 6666 6666 66b6 0000 3200
+			6aaa 8dc6 66b6 6666 6666 6666 3310 2023
+			6aaa 8dc6 6666 b666 666b 6666 3315 0233
+			6aaa 8dc6 6666 6666 6666 6666 3106 3334
+			6aaa 8dc6 6666 66b6 6666 6666 3056 3333
+			6aaa 8dc6 66b6 6666 6666 bb66 0566 3331
+			6aaa 8dc6 6666 6666 6666 bb66 5666 3100
+			6aaa 8dc6 6666 6666 6666 6666 6666 0056
+			6aaa 8dc6 6666 6666 6b66 6666 66b6 6666
+			6aaa 8dc6 6666 66b6 6b66 6666 6666 6666
+			6aaa ddc6 dddd dddd dddd dddd dddd dddd
+			baaa cccb cccc cccc cccc cccc cccc cccc
+			baaa 666b 6666 6666 6666 6666 6666 6666
+			baaa 666b 6666 6666 6666 6666 6666 6666
+			a777 aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			a777 aaaa aaaa aaaa aaaa aaaa aaaa aaaa
 		</bitmap>
 	</tex_image>
-	<tex_image index="12" name="in05_sch02"
+	<tex_image index="9" name="in05_mat2"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette4"
+		color0_mode="color"
+		palette_name="in05_mat2_pl"
+		path="C:/home/swan_data3d/field/in05/chip/tex/in05_mat2.tga"
+	>
+		<bitmap size="32">
+			000a 0000 354a 31d1 4c7a 0044 054a 4444
+			154a 0757 cf0a 1704 c13a cf44 044a 4347
+			44ca 715f 433a 0145 733a 4441 45ca 7557
+			541a 3077 f51a 57cc aaaa aaaa aaaa aaaa
+		</bitmap>
+	</tex_image>
+	<tex_image index="10" name="in05_poster1"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="color"
+		palette_name="in05_poster1_pl"
+		path="C:/home/swan_data3d/field/in05/chip/tex/in05_poster1.tga"
+	>
+		<bitmap size="256">
+			7777 7777 7777 7777 7777 8887 7888 7777
+			7777 7777 7777 7777 8777 8888 7888 7777
+			8877 9878 7887 9799 8889 8888 7888 7777
+			9977 8979 7997 8799 8889 8888 7888 7777
+			8877 8878 7997 8899 8889 8888 7888 7777
+			7777 7777 8777 8888 8888 8888 7888 7777
+			7777 7777 8887 8888 8888 8888 7888 7777
+			7777 9777 9899 9989 8898 8888 7888 7777
+			7777 9887 9899 9989 8898 8888 7888 7777
+			8777 9888 9899 9989 8898 8888 78a5 7777
+			8887 8888 665a 8888 8888 6888 78a3 7777
+			8888 6a88 4443 8863 8888 4368 7853 7777
+			8888 4358 3663 6343 8888 4436 7885 7777
+			8888 6345 0001 4361 638a 3634 788a 7777
+			5888 0634 2620 3610 34a6 a312 7888 7777
+			3888 1064 3336 3363 1663 6320 7888 7777
+			3588 2013 2126 2346 01a1 8a42 7888 7777
+			3a88 6006 0002 1242 1010 8633 7788 7777
+			3a88 6106 0002 0132 6100 8863 7777 7777
+			3a88 6216 2126 0026 3200 778a 7777 7777
+			3588 6623 3343 0016 4610 7776 7777 7777
+			5888 2663 2621 0001 a321 7777 7777 7777
+			5888 1643 0000 0000 6332 7777 7777 7777
+			8888 3335 0012 1000 7646 7777 7777 7777
+			8888 3658 1133 2100 77a3 7777 7777 7777
+			8888 5888 6335 6101 7764 7777 7777 7777
+			8888 7778 64a7 4212 777a 7777 7777 7777
+			7888 7777 3a77 4316 7776 7777 7777 7777
+			7778 7777 6777 a324 7777 7777 7777 7777
+			7777 7777 a777 6334 7777 7777 7777 7777
+			7777 7777 6777 7a43 7777 7777 7777 7777
+			7777 7777 7777 7763 7777 7777 7777 7777
+		</bitmap>
+	</tex_image>
+	<tex_image index="11" name="in05_poster2"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="color"
+		palette_name="in05_poster2_pl"
+		path="C:/home/swan_data3d/field/in05/chip/tex/in05_poster2.tga"
+	>
+		<bitmap size="256">
+			5555 5555 5555 5555 5555 5555 5555 5555
+			5555 5555 5555 5555 5555 5555 5555 5555
+			5555 5555 5555 5555 5555 5555 5555 5555
+			6555 7677 6767 6776 5776 5555 5555 5555
+			6555 6677 6767 6376 5766 5555 5555 5555
+			6555 7637 6763 6336 5776 5555 5555 5555
+			5555 5555 5555 5555 5555 5555 5555 5555
+			5555 5555 5555 5555 5555 5555 5555 5555
+			7555 6567 7657 6767 5667 5555 5555 5555
+			7555 6566 7657 3767 5667 5555 5555 5555
+			7555 6567 7657 3367 5666 5555 5555 5555
+			5555 5555 5555 5555 5555 5555 5555 5555
+			5555 5555 5555 5555 5555 5555 5555 5555
+			6555 3653 3665 3465 5623 5555 5555 5555
+			6555 3653 6665 3665 5623 5555 5555 5555
+			5555 5555 5555 5555 5555 5555 5555 5555
+			5555 7755 5557 5555 5555 5555 5555 5555
+			5555 1775 5557 5555 5555 5555 5555 5555
+			5555 0177 5557 5555 5555 5555 5555 5555
+			7555 0017 7777 7777 5777 5555 5555 5555
+			7755 0001 1111 1171 5717 5555 5555 5555
+			1775 0000 0000 0070 5707 5555 5555 5555
+			0175 0000 0000 0070 5707 5555 5555 5555
+			0075 0000 0000 0070 5707 5555 5555 5555
+			7775 7777 7777 7777 5777 5555 5555 5555
+			5555 5555 5555 5555 5555 5555 5555 5555
+			5555 5555 5555 5555 5555 5555 5555 5555
+			5555 5555 6365 6636 5663 5555 5555 5555
+			5555 5555 6365 6636 5663 5555 5555 5555
+			5555 5555 5555 5555 5555 5555 5555 5555
+			5555 5555 5555 5555 5555 5555 5555 5555
+			5555 5555 5555 5555 5555 5555 5555 5555
+		</bitmap>
+	</tex_image>
+	<tex_image index="12" name="in05_poster3"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="color"
+		palette_name="in05_poster3_pl"
+		path="C:/home/swan_data3d/field/in05/chip/tex/in05_poster3.tga"
+	>
+		<bitmap size="256">
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			dfff ffff ffff ffff ffff ffff ffff ffff
+			bdff fffd ddff fddd ffff ffff ffff ffff
+			bbdf ffdb bbbd bbbb fffd ffff ffff ffff
+			bdff dffd 345b 5431 ffdb ffff ffff ffff
+			dfff bdff 0014 1000 fdb4 ffff ffff ffff
+			ffff 4bdf 0000 0000 db40 ffff ffff ffff
+			ffff 15bf 7000 0071 b510 ffff ffff ffff
+			ffff 04bd 6330 736d b400 fffd ffff ffff
+			dddd 33be bd47 4dbb b377 ddde fddd ffff
+			bbbb bbbb bbbb bbbb bbbb bbbb fbbb ffff
+			eeee eeee bbee ebbb eeee eeee feee ffff
+			dddd 32be bd47 4dbb b277 ddde fddd ffff
+			ffff 04bd 6330 736d b400 fffd ffff ffff
+			ffff 15bf 7000 0071 b510 ffff ffff ffff
+			ffff 4bdf 0000 0000 db40 ffff ffff ffff
+			ffff bdff 0014 1000 fdb4 ffdf ffff ffff
+			ffff dfff 345b 5431 ffdb fdbd ffff ffff
+			ffff ffff bbbd bbbb dffd dbbb ffff ffff
+			ffff ffff ddff fddd ffff fdbd ffff ffff
+			ffff ffff ffff ffff ffff ffdf ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			dddd dddd dddd dddd dddd dddd fddd ffff
+			8888 8888 8888 8888 8888 8888 f888 ffff
+			8888 8888 8888 8888 8888 8888 f888 ffff
+			8888 c8ac 8c8c a8ca accc 89ac f888 ffff
+			8888 c8a8 ca8c aaca aacc 89ac f888 ffff
+			8888 acca caca ca8a 8a88 89ca f888 ffff
+			8888 9999 9999 9999 9999 8999 f888 ffff
+			8888 8888 8888 8888 8888 8888 f888 ffff
+			8888 8888 8888 8888 8888 8888 f888 ffff
+		</bitmap>
+	</tex_image>
+	<tex_image index="13" name="in05_sch02"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette16"
 		color0_mode="transparency"
@@ -378,7 +513,7 @@
 			5555 5555 bd85 ccbb 5555 5555 bf85 cccc
 		</bitmap>
 	</tex_image>
-	<tex_image index="13" name="in05_sch_b2"
+	<tex_image index="14" name="in05_sch_b2"
 		width="64" height="64" original_width="64" original_height="64"
 		format="palette16"
 		color0_mode="color"
@@ -516,48 +651,12 @@
 			2222 2222 2222 2222 2222 2222 2222 2222
 		</bitmap>
 	</tex_image>
-	<tex_image index="14" name="in05_sch_ka2"
+	<tex_image index="15" name="in05_sch_ka1"
 		width="8" height="32" original_width="8" original_height="32"
 		format="palette16"
 		color0_mode="color"
-		palette_name="in05_sch_ka2_pl"
-		path="C:/home/swan_data3d/field/in05/chip/tex/in05_sch_ka2.tga"
-	>
-		<bitmap size="64">
-			1111 1111 1111 1111 3333 3333 0000 0000
-			0000 0000 4444 4444 5555 5555 5555 5555
-			5555 5555 5555 5555 5555 5555 5555 5555
-			4444 4444 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			3333 3333 3333 3333 2222 2222 1111 1111
-		</bitmap>
-	</tex_image>
-	<tex_image index="15" name="in05_sch_ka3"
-		width="8" height="32" original_width="8" original_height="32"
-		format="palette16"
-		color0_mode="color"
-		palette_name="in05_sch_ka3_pl"
-		path="C:/home/swan_data3d/field/in05/chip/tex/in05_sch_ka3.tga"
-	>
-		<bitmap size="64">
-			5555 5555 5555 5555 4444 4444 3333 3333
-			1111 1111 1111 1111 1111 1111 1111 1111
-			0000 0000 0000 0000 3333 3333 3333 3333
-			0000 0000 0000 0000 1111 1111 1111 1111
-			1111 1111 1111 1111 1111 1111 1111 1111
-			2222 2222 3333 3333 3333 3333 3333 3333
-			3333 3333 3333 3333 1111 1111 1111 1111
-			3333 3333 3333 3333 4444 4444 5555 5555
-		</bitmap>
-	</tex_image>
-	<tex_image index="16" name="in05_sch_kabe"
-		width="8" height="32" original_width="8" original_height="32"
-		format="palette16"
-		color0_mode="color"
-		palette_name="in05_sch_kabe_pl"
-		path="C:/home/swan_data3d/field/in05/chip/tex/in05_sch_kabe.tga"
+		palette_name="in05_sch_ka1_pl"
+		path="C:/home/swan_data3d/field/in05/chip/tex/in05_sch_ka1.tga"
 	>
 		<bitmap size="64">
 			0000 0000 1111 1111 2222 2222 2222 2222
@@ -570,7 +669,51 @@
 			1111 1111 1111 1111 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="17" name="in05_sch_mado"
+	<tex_image index="16" name="in05_sch_ka2"
+		width="8" height="32" original_width="8" original_height="32"
+		format="palette16"
+		color0_mode="color"
+		palette_name="in05_sch_ka2_pl"
+		path="C:/home/swan_data3d/field/in05/chip/tex/in05_sch_ka2.tga"
+	>
+		<bitmap size="64">
+			1111 1111 1111 1111 3333 3333 0000 0000
+			0000 0000 0000 0000 6666 6666 6666 6666
+			7777 7777 7777 7777 7337 7337 7337 7337
+			7557 7557 5775 5775 5775 5775 3773 3773
+			6336 6336 6336 6336 0440 0440 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			3333 3333 3333 3333 2222 2222 1111 1111
+		</bitmap>
+	</tex_image>
+	<tex_image index="17" name="in05_sch_ka3"
+		width="16" height="32" original_width="16" original_height="32"
+		format="palette16"
+		color0_mode="color"
+		palette_name="in05_sch_ka3_pl"
+		path="C:/home/swan_data3d/field/in05/chip/tex/in05_sch_ka3.tga"
+	>
+		<bitmap size="128">
+			1111 8201 1102 1111 1111 8201 1102 1111
+			3777 8253 3352 7777 2222 8252 2252 2222
+			3777 8243 3342 7777 8888 8248 8842 8888
+			8888 8248 8842 8888 6666 8236 6632 6666
+			6666 8236 6632 6666 6666 8236 6632 6666
+			6666 8236 6632 6666 6666 8236 6632 6666
+			6666 8236 6632 6666 6666 8236 6632 6666
+			6666 8236 6632 6666 6666 8236 6632 6666
+			6666 8236 6632 6666 6666 8236 6632 6666
+			6666 8236 6632 6666 6666 8236 6632 6666
+			6666 8236 6632 6666 6666 8236 6632 6666
+			bbbb 82db bbd2 bbbb aaaa 82ba aab2 aaaa
+			cccc 9bdc ccdb cccc cccc 9bdc ccdb cccc
+			dddd 9bed ddeb dddd dddd aded dded dddd
+			dddd aded dded dddd eeee adee eeed eeee
+			eeee adee eeed eeee eeee adee eeed eeee
+		</bitmap>
+	</tex_image>
+	<tex_image index="18" name="in05_sch_mado"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette4"
 		color0_mode="transparency"
@@ -584,7 +727,7 @@
 			800a a002 bffa affe aaaa aaaa 5555 5555
 		</bitmap>
 	</tex_image>
-	<tex_image index="18" name="in05_sch_t"
+	<tex_image index="19" name="in05_sch_t"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="color"
@@ -626,7 +769,7 @@
 			2334 2222 2222 4332 1125 8601 9998 7999
 		</bitmap>
 	</tex_image>
-	<tex_image index="19" name="in05_sch_x"
+	<tex_image index="20" name="in05_sch_x"
 		width="8" height="8" original_width="8" original_height="8"
 		format="palette16"
 		color0_mode="color"
@@ -638,35 +781,7 @@
 			4422 0044 4422 0044 4411 0044 4411 0044
 		</bitmap>
 	</tex_image>
-	<tex_image index="20" name="in05_sch_y"
-		width="16" height="16" original_width="16" original_height="16"
-		format="palette4"
-		color0_mode="color"
-		palette_name="in05_sch_y_pl"
-		path="C:/home/swan_data3d/field/in05/chip/tex/in05_sch_y.tga"
-	>
-		<bitmap size="32">
-			5555 1555 fffd 1fff fffd 155b fffd 1fff
-			e6e5 15bf fffd 1fff 5555 1555 0000 0000
-			1555 5555 1fff fffd 16ff ff95 1fff fffd
-			1ff9 5bfd 1fff fffd 1555 5555 0000 0000
-		</bitmap>
-	</tex_image>
-	<tex_image index="21" name="in05_sch_y03"
-		width="16" height="16" original_width="16" original_height="16"
-		format="palette4"
-		color0_mode="color"
-		palette_name="in05_sch_y03_pl"
-		path="C:/home/swan_data3d/field/in05/chip/tex/in05_sch_y03.tga"
-	>
-		<bitmap size="32">
-			0000 0000 5554 1555 5554 1aaa 5554 1aaa
-			5554 1aaa 5554 1aaa 5554 1aaa 5554 1aaa
-			aaa4 1555 aaa4 1555 aaa4 1555 aaa4 1555
-			aaa4 1555 aaa4 1555 5554 1555 0000 0000
-		</bitmap>
-	</tex_image>
-	<tex_image index="22" name="in05_sch_zou"
+	<tex_image index="21" name="in05_sch_zou"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette16"
 		color0_mode="color"
@@ -675,58 +790,16 @@
 	>
 		<bitmap size="64">
 			2224 2222 3333 1111 2224 2222 4444 1111
-			2224 2244 6666 0000 2524 2255 5555 0000
-			2424 2255 4444 0000 2524 2244 4444 0000
-			2424 2255 4444 0000 2524 2255 4444 2222
-			2424 2244 4444 2222 2224 2222 4444 2222
-			2224 2222 4444 2222 4445 4444 5555 2222
-			4444 4444 5555 2222 3333 3333 3333 2222
+			2324 2245 8888 0000 2624 2276 6666 0000
+			2524 2267 4444 0000 2624 2245 4444 0000
+			2524 2266 4444 0000 2624 2277 4444 2222
+			2424 2245 4444 2222 2324 2243 4444 2222
+			2224 2222 4444 2222 2224 2222 6666 2222
+			5556 5555 6666 2222 5556 5555 3333 2222
 			3333 3333 3333 2222 2222 2222 2222 2222
 		</bitmap>
 	</tex_image>
-	<tex_image index="23" name="in05_shelf"
-		width="32" height="32" original_width="32" original_height="32"
-		format="palette16"
-		color0_mode="color"
-		palette_name="in05_shelf_pl"
-		path="C:/home/swan_data3d/field/in05/chip/tex/in05_shelf.tga"
-	>
-		<bitmap size="256">
-			8888 8888 8888 8888 8888 8888 8888 8888
-			8888 8888 8888 8888 8888 8888 8888 8888
-			7788 7777 7777 7777 7777 7777 7777 8877
-			7788 7777 7777 7777 7777 7777 7777 8877
-			4788 4444 4444 4444 4444 4444 4444 8874
-			f788 ffee ffee 4fee feef feef eef4 887f
-			f788 ffff ffff 4fff ffff ffff fff4 887f
-			3788 c322 0cdd 4011 cddc 3223 6654 8875
-			3788 c322 0cdd 4011 cddc 3223 6654 8875
-			3788 c322 0cdd 4011 cddc 3223 6654 8875
-			3788 c322 0cdd 4011 cddc 3223 6654 8875
-			3788 c322 0cdd 4011 cddc 3223 6654 8875
-			3788 c322 0cdd 4011 cddc 3223 6654 8875
-			3788 c322 0cdd 4011 cddc 3223 6654 8875
-			3788 c322 0cdd 4011 cddc 3223 6654 8875
-			3788 c322 0cdd 4011 cddc 3223 6654 8875
-			9977 9999 9999 9999 9999 9999 9999 7799
-			9977 9999 9999 9999 9999 9999 9999 7799
-			b899 bbbb bbbb bbbb bbbb bbbb bbbb 998b
-			ab99 aa88 aaaa aaaa aaaa aaaa 88aa 99ba
-			ab99 aa88 aaaa aaaa aaaa aaaa 88aa 99ba
-			ab99 aaaa aaaa aaaa aaaa aaaa aaaa 99ba
-			ab99 aaaa aaaa aaaa aaaa aaaa aaaa 99ba
-			ab99 aaaa aaaa aaaa aaaa aaaa aaaa 99ba
-			ab99 aaaa aaaa aaaa aaaa aaaa aaaa 99ba
-			ab99 aaaa aaaa aaaa aaaa aaaa aaaa 99ba
-			ab99 aaaa aaaa aaaa aaaa aaaa aaaa 99ba
-			ab99 aa88 aaaa aaaa aaaa aaaa 88aa 99ba
-			ab99 aa88 aaaa aaaa aaaa aaaa 88aa 99ba
-			b899 bbbb bbbb bbbb bbbb bbbb bbbb 998b
-			9977 9999 9999 9999 9999 9999 9999 7799
-			9977 9999 9999 9999 9999 9999 9999 7799
-		</bitmap>
-	</tex_image>
-	<tex_image index="24" name="in05_shelf01"
+	<tex_image index="22" name="in05_shelf01"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette16"
 		color0_mode="color"
@@ -744,367 +817,319 @@
 			248b 0011 57d0 ce9d 248b 0011 57d0 ce9d
 		</bitmap>
 	</tex_image>
-	<tex_image index="25" name="in05_shelf05"
-		width="16" height="16" original_width="16" original_height="16"
-		format="palette16"
-		color0_mode="color"
-		palette_name="in05_shelf05_pl"
-		path="C:/home/swan_data3d/field/in05/chip/tex/in05_shelf05.tga"
-	>
-		<bitmap size="64">
-			6555 5555 5555 5556 6775 7777 7777 5776
-			6775 7777 7777 5776 5775 5555 5555 5775
-			2775 2222 2222 5772 2775 5555 5555 5772
-			2775 5555 5544 5772 2775 4555 449b 5772
-			2775 4544 189b 5772 2775 44ac 189b 5772
-			2775 03ac 189b 5772 2775 03ac 189b 5772
-			2775 03ac 189b 5772 2775 03ac 189b 5772
-			2775 03ac 189b 5772 2775 03ac 189b 5772
-		</bitmap>
-	</tex_image>
-	<tex_image index="26" name="in05_shelf06"
+	<tex_image index="23" name="in05_shelf02"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
-		palette_name="in05_shelf06_pl"
-		path="C:/home/swan_data3d/field/in05/chip/tex/in05_shelf06.tga"
+		palette_name="in05_shelf02_pl"
+		path="C:/home/swan_data3d/field/in05/chip/tex/in05_shelf02.tga"
 	>
 		<bitmap size="256">
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 9990 00a9 0000 0000 0000
-			0000 0000 0000 9bb9 0a99 0000 0000 0000
-			0000 0000 0000 9bb9 0a99 0000 0000 0000
-			0000 0000 0000 9999 0a99 0000 0000 0000
-			0000 0000 0000 9999 0a99 0000 0000 0000
-			0000 0000 0000 999a 0aa9 0000 0000 0000
-			0000 0000 0000 aaa0 00aa 0000 0000 0000
+			0000 0000 0000 bbb0 00cb 0000 0000 0000
+			0000 0000 0000 bddb 0cbb 0000 0000 0000
+			0000 0000 0000 bddb 0cbb 0000 0000 0000
+			0000 0000 0000 bbbb 0cbb 0000 0000 0000
+			0000 0000 0000 bbbb 0cbb 0000 0000 0000
+			0000 0000 0000 bbbc 0ccb 0000 0000 0000
+			0000 0000 0000 ccc0 00cc 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 2000 0000 0000 0000
-			0000 0000 2222 0022 1200 0002 0000 0000
-			0000 0000 1120 0002 1200 0021 0000 0000
-			0000 0000 2112 0000 2000 0211 0000 0000
-			0000 2000 0211 0000 0000 2112 0000 0000
-			0000 1200 0021 0000 0000 1120 0202 0000
-			0000 1120 0002 0000 0000 1200 0221 0000
-			0000 2112 0000 0000 0000 2000 0211 0000
-			2000 0211 0000 0000 0000 0000 0212 0000
-			0000 0022 0000 0000 0000 0000 0220 0000
-			0000 0000 0000 0000 0000 0000 0200 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
-			3300 0433 0000 0020 0000 0000 6660 0076
-			5530 4333 0000 0022 0000 0000 6886 0766
-			5530 4333 2000 2221 2222 0022 6886 0766
-			3330 4333 1200 1111 1111 0021 6666 0766
-			3330 4333 2220 2222 2222 0022 6666 0766
-			3340 4433 0000 0000 0000 0000 6667 0776
-			4400 0444 0000 0000 0000 0000 7770 0077
+			0000 7000 3333 0007 3700 0073 0000 0000
+			0000 3000 2112 0003 1300 0732 0000 0000
+			0000 7000 1123 0003 2300 7321 0000 0000
+			0000 3700 1212 0003 3700 3212 0737 0000
+			0000 2370 2321 0003 7000 2123 0323 0000
+			0000 1237 3732 0007 0000 1237 0312 0000
+			0000 2123 0073 0000 0000 2370 0311 0000
+			0000 3213 0007 0000 0000 1230 0321 0000
+			0000 7337 0000 0000 0000 3370 0733 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 7337 0000 0000 0000 0000
+			4400 0544 7000 3223 0000 0000 8880 0098
+			6640 5444 3700 3312 3333 0073 8aa8 0988
+			6640 5444 2300 1111 1111 0031 8aa8 0988
+			4440 5444 2300 2211 2222 0032 8888 0988
+			4440 5444 3700 3312 3333 0073 8888 0988
+			4450 5544 7000 3223 0000 0000 8889 0998
+			5500 0555 0000 7330 0000 0000 9990 0099
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="27" name="in05_yuka"
+	<tex_image index="24" name="in05_shelf03"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette16"
+		color0_mode="color"
+		palette_name="in05_shelf03_pl"
+		path="C:/home/swan_data3d/field/in05/chip/tex/in05_shelf03.tga"
+	>
+		<bitmap size="64">
+			6666 6666 6666 7666 4444 4444 4444 7624
+			3344 3333 3333 7624 4451 3333 3333 7624
+			4188 3333 3333 7624 1881 3334 3333 7624
+			1014 3334 3333 7624 3333 3334 3333 7624
+			1014 3334 3333 7624 1881 3334 3333 7624
+			4188 3333 3333 7624 3351 3333 3333 7624
+			4444 4444 4444 7623 2222 2222 2222 7622
+			6666 6666 6666 7666 6666 6666 6666 7666
+		</bitmap>
+	</tex_image>
+	<tex_image index="25" name="in05_speaker"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="color"
+		palette_name="in05_speaker_pl"
+		path="C:/home/swan_data3d/field/in05/chip/tex/in05_speaker.tga"
+	>
+		<bitmap size="256">
+			5322 2223 2222 1111 9911 7778 1111 1111
+			5322 2223 2222 1111 1111 1111 1111 1111
+			5322 2223 2222 1111 1111 1111 1111 1111
+			5322 2223 2222 1111 1111 1111 1111 1111
+			5322 2223 2222 1111 1111 1111 1111 1111
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 8732 0237 0000 0000 0000
+			0000 0000 6200 6666 6666 0002 0000 0000
+			0000 0000 8600 8686 8686 0006 0000 0000
+			0000 0000 6662 4445 6544 0036 0000 0000
+			0000 0000 8683 8585 8585 0386 0000 0000
+			0000 2000 4568 4444 5444 2865 0000 0000
+			0000 3000 8587 8585 8585 3785 0000 0000
+			0000 7000 4566 4444 4444 7665 0000 0000
+			0000 8000 8587 8585 8585 8785 0000 0000
+			0000 7000 4566 4444 4444 7665 0000 0000
+			0000 3000 8587 8585 8585 3785 0000 0000
+			0000 2000 5568 4444 5444 2865 0000 0000
+			0000 0000 8683 8585 8585 0386 0000 0000
+			0000 0000 6662 5555 6555 0266 0000 0000
+			0000 0000 8600 8686 8686 0006 0000 0000
+			0000 0000 3200 6666 3666 0002 0000 0000
+			0000 0000 0000 8732 0237 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="26" name="in05_stoubu"
+		width="16" height="32" original_width="16" original_height="32"
+		format="palette16"
+		color0_mode="color"
+		palette_name="in05_stoubu_pl"
+		path="C:/home/swan_data3d/field/in05/chip/tex/in05_stoubu.tga"
+	>
+		<bitmap size="128">
+			9999 9999 9999 4444 1111 1111 1111 4444
+			4444 4444 4444 4444 8888 8888 8888 4444
+			dddd dddd dddd 2222 cc7a cc7a cc7a 1111
+			cc7a cc7a cc7a 1111 cccc cccc cccc 4444
+			cc7a cc7a cc7a 3333 cc7a cc7a cc7a bbbb
+			cccc cccc cccc dddd cccc cccc cccc a850
+			cccc cccc cccc a850 bbbb bbbb bbbb a835
+			8888 8888 8888 a835 8888 8888 8888 a850
+			7777 7777 7777 a850 dddd dddd dddd a835
+			cccc cccc cccc a835 8ccc 8aaa cccc a850
+			cccc cccc cccc a850 aa8c aaaa cc8a a835
+			cccc cccc cccc a835 aa8c aaaa cc8a a850
+			bbbb bbbb bbbb a850 7888 7aaa 8888 a835
+			8888 8888 8888 a835 7777 7777 7777 1111
+			aaaa aaaa aaaa 4444 6666 6666 6666 b777
+			6666 6666 6666 8787 6666 6666 6666 7777
+		</bitmap>
+	</tex_image>
+	<tex_image index="27" name="in05_yuka1"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette4"
 		color0_mode="color"
-		palette_name="in05_yuka_pl"
-		path="C:/home/swan_data3d/field/in05/chip/tex/in05_yuka.tga"
+		palette_name="in05_yuka1_pl"
+		path="C:/home/swan_data3d/field/in05/chip/tex/in05_yuka1.tga"
 	>
 		<bitmap size="32">
-			0000 8000 aaa8 eaaa 5558 e555 5558 e555
-			5558 e555 5558 e555 5558 e555 5558 e555
-			5558 e555 5558 e555 5558 e555 5558 e555
-			5558 e555 5558 e555 aaa8 eaaa fffe ffff
+			0000 a000 aaa8 faaa 5558 f955 5558 f955
+			5558 f955 5558 f955 5558 f955 5558 f955
+			5558 f955 5558 f955 5558 f955 5558 f955
+			5558 f955 aaa8 faaa fffe ffff fffe ffff
 		</bitmap>
 	</tex_image>
-	<tex_image index="28" name="r_sun_hikari"
-		width="32" height="64" original_width="32" original_height="64"
-		format="a5i3"
-		palette_name="r_sun_hikari_pl"
-		path="C:/home/swan_data3d/field/in05/chip/tex/r_sun_hikari.tga"
+	<tex_image index="28" name="in05_yuka2"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette4"
+		color0_mode="transparency"
+		palette_name="in05_yuka2_pl"
+		path="C:/home/swan_data3d/field/in05/chip/tex/in05_yuka2.tga"
 	>
-		<bitmap size="1024">
-			b1b1 b9b1 b1b9 b1b1 8181 9181 8191 8181
-			0101 0101 0101 0101 0101 0101 0101 0101
-			b1b1 b9b1 b1b9 b1b1 8181 9181 8191 8181
-			0101 0101 0101 0101 0101 0101 0101 0101
-			a1a1 b1a1 a1b1 a1a1 6161 8161 6181 6161
-			0101 0101 0101 0101 0101 0101 0101 0101
-			9191 a191 91a1 9191 4949 6149 4961 4949
-			0101 0101 0101 0101 0101 0101 0101 0101
-			8181 9181 8191 8181 2121 4921 2149 2121
-			0101 0101 0101 0101 0101 0101 0101 0101
-			6161 8161 6181 6161 0101 2101 0121 0101
-			0101 0101 0101 0101 0101 0101 0101 0101
-			4949 6149 4961 4949 0101 0101 0101 0101
-			0101 0101 0101 0101 0101 0101 0101 0101
-			2121 4921 2149 2121 0101 0101 0101 0101
-			0101 0101 0101 0101 0101 0101 0101 0101
-			0101 2101 0121 0101 0101 0101 0101 0101
-			0101 0101 0101 0101 0101 0101 0101 0101
-			0101 0101 0101 0101 0101 0101 0101 0101
-			0101 0101 0101 0101 0101 0101 0101 0101
-			0101 0101 0101 0101 0101 0101 0101 0101
-			0101 0101 0101 0101 0101 0101 0101 0101
-			0101 0101 0101 0101 0101 0101 0101 0101
-			0101 0101 0101 0101 0101 0101 0101 0101
-			0101 0101 0101 0101 0101 0101 0101 0101
-			0101 0101 0101 0101 0101 0101 0101 0101
-			0101 0101 0101 0101 0101 0101 0101 0101
-			0101 0101 0101 0101 0101 0101 0101 0101
-			0101 0101 0101 0101 0101 0101 0101 0101
-			0101 0101 0101 0101 0101 0101 0101 0101
-			0101 0101 0101 0101 0101 0101 0101 0101
-			0101 0101 0101 0101 0101 0101 0101 0101
-			8282 9282 8292 8282 d2d2 d2d2 d2d2 d2d2
-			0202 0202 0202 0202 0202 0202 0202 0202
-			8282 9282 8292 8282 d2d2 d2d2 d2d2 d2d2
-			0202 0202 0202 0202 0202 0202 0202 0202
-			6262 8262 6282 6262 baba d2ba bad2 baba
-			0202 0202 0202 0202 0202 0202 0202 0202
-			4a4a 624a 4a62 4a4a b2b2 bab2 b2ba b2b2
-			0202 0202 0202 0202 0202 0202 0202 0202
-			2222 4a22 224a 2222 a2a2 b2a2 a2b2 a2a2
-			0202 0202 0202 0202 0202 0202 0202 0202
-			0202 2202 0222 0202 9292 a292 92a2 9292
-			0202 0202 0202 0202 0202 0202 0202 0202
-			0202 0202 0202 0202 8282 9282 8292 8282
-			0202 0202 0202 0202 0202 0202 0202 0202
-			0202 0202 0202 0202 6262 8262 6282 6262
-			0202 0202 0202 0202 0202 0202 0202 0202
-			0202 0202 0202 0202 4a4a 624a 4a62 4a4a
-			0202 0202 0202 0202 0202 0202 0202 0202
-			0202 0202 0202 0202 2222 4a22 224a 2222
-			0202 0202 0202 0202 0202 0202 0202 0202
-			0202 0202 0202 0202 0202 2202 0222 0202
-			0202 0202 0202 0202 0202 0202 0202 0202
-			0202 0202 0202 0202 0202 0202 0202 0202
-			0202 0202 0202 0202 0202 0202 0202 0202
-			0202 0202 0202 0202 0202 0202 0202 0202
-			0202 0202 0202 0202 0202 0202 0202 0202
-			0202 0202 0202 0202 0202 0202 0202 0202
-			0202 0202 0202 0202 0202 0202 0202 0202
-			0202 0202 0202 0202 0202 0202 0202 0202
-			0202 0202 0202 0202 0202 0202 0202 0202
-			0202 0202 0202 0202 0202 0202 0202 0202
-			0202 0202 0202 0202 0202 0202 0202 0202
-			0000 0000 0000 0000 b0b0 b8b0 b0b8 b0b0
-			b0b0 b8b0 b0b8 b0b0 0000 0000 0000 0000
-			0000 0000 0000 0000 b0b0 b8b0 b0b8 b0b0
-			b0b0 b8b0 b0b8 b0b0 0000 0000 0000 0000
-			0000 0000 0000 0000 a0a0 b0a0 a0b0 a0a0
-			a0a0 b0a0 a0b0 a0a0 0000 0000 0000 0000
-			0000 0000 0000 0000 9090 a090 90a0 9090
-			9090 a090 90a0 9090 0000 0000 0000 0000
-			0000 0000 0000 0000 8080 9080 8090 8080
-			8080 9080 8090 8080 0000 0000 0000 0000
-			0000 0000 0000 0000 6060 8060 6080 6060
-			6060 8060 6080 6060 0000 0000 0000 0000
-			0000 0000 0000 0000 4848 6048 4860 4848
-			4848 6048 4860 4848 0000 0000 0000 0000
-			0000 0000 0000 0000 2020 4820 2048 2020
-			2020 4820 2048 2020 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 2000 0020 0000
-			0000 2000 0020 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0303 0303 0303 0303 0303 0303 0303 0303
-			0303 0303 0303 0303 0303 0303 0303 0303
-			0303 0303 0303 0303 0303 0303 0303 0303
-			0303 0303 0303 0303 0303 0303 0303 0303
-			0303 0303 0303 0303 0303 0303 0303 0303
-			0303 0303 0303 0303 0303 0303 0303 0303
-			0303 0303 0303 0303 0303 0303 0303 0303
-			0303 0303 0303 0303 0303 0303 0303 0303
-			0303 0303 0303 0303 0303 0303 0303 0303
-			0303 0303 0303 0303 0303 0303 0303 0303
-			0303 0303 0303 0303 0303 0303 0303 0303
-			0303 0303 0303 0303 0303 0303 0303 0303
-			0303 0303 0303 0303 0303 0303 0303 0303
-			0303 0303 0303 0303 0303 0303 0303 0303
-			0303 0303 0303 0303 0303 0303 0303 0303
-			0303 0303 0303 0303 0303 0303 0303 0303
-			0303 0303 0303 0303 0303 0303 0303 0303
-			0303 0303 0303 0303 0303 0303 0303 0303
-			0303 0303 0303 0303 0303 0303 0303 0303
-			0303 0303 0303 0303 0303 0303 0303 0303
-			0303 0303 0303 0303 0303 0303 0303 0303
-			0303 0303 0303 0303 0303 0303 0303 0303
-			0303 0303 0303 0303 0303 0303 0303 0303
-			0303 0303 0303 0303 0303 0303 0303 0303
-			0303 0303 0303 0303 0303 0303 0303 0303
-			0303 0303 0303 0303 0303 0303 0303 0303
-			0303 0303 0303 0303 0303 0303 0303 0303
-			0303 0303 0303 0303 0303 0303 0303 0303
-			0303 0303 0303 0303 0303 0303 0303 0303
-			0303 0303 0303 0303 0303 0303 0303 0303
-			0303 0303 0303 0303 0303 0303 0303 0303
-			0303 0303 0303 0303 0303 0303 0303 0303
+		<bitmap size="32">
+			5555 d555 aaa9 d56a aa55 d56a aaa9 daaa
+			aaa9 daaa 6aa9 d555 5555 d555 ffff ffff
+			d555 5555 d56a a955 da95 aaa9 daaa aaa9
+			daaa 56a9 daaa aaa9 d555 5555 ffff ffff
 		</bitmap>
 	</tex_image>
-	<tex_image index="29" name="r_sun_mado"
-		width="16" height="64" original_width="16" original_height="64"
+	<tex_image index="29" name="in05_yuka3"
+		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="color"
-		palette_name="r_sun_mado_pl"
-		path="C:/home/swan_data3d/field/in05/chip/tex/r_sun_mado.tga"
+		palette_name="in05_yuka3_pl"
+		path="C:/home/swan_data3d/field/in05/chip/tex/in05_yuka3.tga"
 	>
 		<bitmap size="256">
-			6666 6666 8876 8888 6666 6666 8887 7888
-			6666 7666 8888 6788 6666 8766 8888 6678
-			6666 8876 8888 7667 6666 8887 7888 8766
-			7666 8888 6788 7876 8766 8888 6678 6787
-			8876 8888 7667 6678 8887 7888 8766 6667
-			8888 6788 7876 6666 8888 6678 6787 6666
-			8888 7667 6678 6666 7888 8766 6667 6666
-			6788 7876 6666 6666 6678 6787 6666 6666
-			9999 9999 bba9 bbbb 9999 9999 bbba abbb
-			9999 a999 bbbb 9abb 9999 ba99 bbbb 99ab
-			9999 bba9 bbbb a99a 9999 bbba abbb ba99
-			a999 bbbb 9abb aba9 ba99 bbbb 99ab 9aba
-			bba9 bbbb a99a 99ab bbba abbb ba99 999a
-			bbbb 9abb aba9 9999 bbbb 99ab 9aba 9999
-			bbbb a99a 99ab 9999 abbb ba99 999a 9999
-			9abb aba9 9999 9999 99ab 9aba 9999 9999
-			0000 0000 2210 2222 0000 0000 2221 1222
-			0000 1000 2222 0122 0000 2100 2222 0012
-			0000 2210 2222 1001 0000 2221 1222 2100
-			1000 2222 0122 1210 2100 2222 0012 0121
-			2210 2222 1001 0012 2221 1222 2100 0001
-			2222 0122 1210 0000 2222 0012 0121 0000
-			2222 1001 0012 0000 1222 2100 0001 0000
-			0122 1210 0000 0000 0012 0121 0000 0000
-			3333 3333 5543 5555 3333 3333 5554 4555
-			3333 4333 5555 3455 3333 5433 5555 3345
-			3333 5543 5555 4334 3333 5554 4555 5433
-			4333 5555 3455 4543 5433 5555 3345 3454
-			5543 5555 4334 3345 5554 4555 5433 3334
-			5555 3455 4543 3333 5555 3345 3454 3333
-			5555 4334 3345 3333 4555 5433 3334 3333
-			3455 4543 3333 3333 3345 3454 3333 3333
+			eeff eeee eeee eeee eeee eeee eeee ffee
+			888f 8888 d888 dddd dddd 000d 0000 f000
+			778e 7777 d877 cccc cccc 110d 1111 e011
+			978e 9999 d879 bbbc ccbb 210d 2222 e012
+			978e 9979 d879 babc cbcb 210d 3232 e012
+			978e 9999 d879 bcbc cbba 110d 2222 e012
+			778e 7999 d879 bbbc cbbb 210d 3122 e012
+			978e 9999 d879 abac cbcb 310d 3222 e012
+			978e 9997 d879 bbbc cbbb 210d 2222 e012
+			778e 7777 d877 cccc cccc 110d 1111 e011
+			888e 8888 d888 dddd dddd 000d 0000 e000
+			ddde dddd 5ddd 5555 5555 ddd5 dddd eddd
+			ccde cccc 5dcc 4444 4444 ccd5 cccc edcc
+			ccde cbbb 5dcb 5664 4666 bcd5 bbab edca
+			bcde abbb 5dcb 6464 4656 ccd5 acbb edcb
+			bcde bbba 5dcb 6464 4666 bcd5 babb edcb
+			bcde bacb 5dcb 4665 4665 bcd5 bbba edcb
+			bcde bbba 5dcc 6655 4646 bcd5 bcbc edcb
+			bcde bcba 5dcb 6664 4666 bcd5 cbab edcb
+			ccde cccc 5dcc 5444 5445 ccd5 cccc eddc
+			ddde dddd 5ddd 5555 5555 ddd5 dddd eddd
+			000e 0000 d000 dddd dddd 888d 8888 e888
+			110e 1111 d011 cccc cccc 778d 7777 e877
+			110e 2222 d012 bbbc cbbb 978d 9999 e879
+			210e 3222 d012 bbcc cbaa 778d 9999 e879
+			210e 2323 d011 cbbc cbbc 978d 7999 e879
+			110e 2122 d012 bbac cbab 978d 9999 e879
+			210e 2222 d012 bbcc cabb 778d 9999 e879
+			210e 3223 d012 abcc cbcb 978d 7999 e879
+			100e 1111 d011 cccc cccc 778d 7777 e877
+			000f 0000 d000 dddd dddd 888d 8888 f888
+			eeff eeee eeee eeee eeee eeee eeee ffee
 		</bitmap>
 	</tex_image>
 </tex_image_array>
 
 <tex_palette_array size="30">
-	<tex_palette index="0" name="b02_yuka_pl" color_size="4">
-		2e36 2e57 3278 7fff
-	</tex_palette>
-	<tex_palette index="1" name="b05_kabe2_pl" color_size="4">
-		0000 67df 7fff 7fff
-	</tex_palette>
-	<tex_palette index="2" name="h_mado_pl" color_size="4">
-		7339 7b9c 7fff 7fff
-	</tex_palette>
-	<tex_palette index="3" name="in05_book_pl" color_size="8">
-		6c1f 7d80 12e0 00ac 7fff 7fff 7fff 7fff
-	</tex_palette>
-	<tex_palette index="4" name="in05_g_l_pl" color_size="8">
-		7fff 7fff 7fff 7fff 7fff 7fff 7fff 7fff
-	</tex_palette>
-	<tex_palette index="5" name="in05_genkan_pl" color_size="8">
-		4e73 4a52 4631 4210 3def 35ad 318c 7fff
-	</tex_palette>
-	<tex_palette index="6" name="in05_in_pl" color_size="8">
-		2118 2959 319b 39dd 3dfe 0000 7fff 7fff
-	</tex_palette>
-	<tex_palette index="7" name="in05_kabinn_pl" color_size="16">
-		7c1f 1ea4 4fdf 21bd 7fff 6b5a 56b5 5294
-		4a52 318c 7fff 7fff 7fff 7fff 7fff 7fff
-	</tex_palette>
-	<tex_palette index="8" name="in05_kage_pl" color_size="8">
-		0000 7fff 7fff 7fff 7fff 7fff 7fff 7fff
-	</tex_palette>
-	<tex_palette index="9" name="in05_locker_pl" color_size="16">
-		316b 6737 5ef6 56b4 6738 4e72 7fff 5ef7
-		5294 4a52 39ce 7fff 7fff 7fff 7fff 7fff
-	</tex_palette>
-	<tex_palette index="10" name="in05_m_h02_04_pl" color_size="8">
-		10a7 18eb 1d0d 2150 2572 7fff 7fff 7fff
-	</tex_palette>
-	<tex_palette index="11" name="in05_mat_pl" color_size="16">
-		69a1 664b 0ac0 0520 2b68 05c0 5b5b 02bd
-		1b1f 77bd 7fff 7fff 7fff 7fff 7fff 7fff
-	</tex_palette>
-	<tex_palette index="12" name="in05_sch02_pl" color_size="16">
-		7c1f 081c 0b9e 6bbd 2527 4a0c 62f6 39aa
-		566f 5eb2 56b0 420d 2d6a 5294 4631 2d6b
-	</tex_palette>
-	<tex_palette index="13" name="in05_sch_b2_pl" color_size="16">
-		18e0 2120 2560 3670 3af8 4247 4aac 4e53
-		627e 7fff 7fff 7fff 7fff 7fff 7fff 7fff
-	</tex_palette>
-	<tex_palette index="14" name="in05_sch_ka2_pl" color_size="8">
-		5b5e 3637 46bb 4efd 677e 6f9f 7fff 7fff
-	</tex_palette>
-	<tex_palette index="15" name="in05_sch_ka3_pl" color_size="8">
-		739c 6f7b 6739 5ef7 5ad6 5294 7fff 7fff
-	</tex_palette>
-	<tex_palette index="16" name="in05_sch_kabe_pl" color_size="8">
-		570e 5f51 6bb4 6fd5 77f9 73f7 7fff 7fff
-	</tex_palette>
-	<tex_palette index="17" name="in05_sch_mado_pl" color_size="4">
-		7fff 00ca 0d0e 19b4
-	</tex_palette>
-	<tex_palette index="18" name="in05_sch_t_pl" color_size="16">
-		0088 00ca 0d0e 1571 19b4 2617 3634 3e76
-		4698 5b5d 7fff 7fff 7fff 7fff 7fff 7fff
-	</tex_palette>
-	<tex_palette index="19" name="in05_sch_x_pl" color_size="8">
-		0000 154e 1570 19d3 7fff 7fff 7fff 7fff
-	</tex_palette>
-	<tex_palette index="20" name="in05_sch_y03_pl" color_size="4">
-		5254 5a96 5eb7 7fff
-	</tex_palette>
-	<tex_palette index="21" name="in05_sch_y_pl" color_size="4">
-		25f4 2a36 2e37 3278
-	</tex_palette>
-	<tex_palette index="22" name="in05_sch_zou_pl" color_size="8">
-		14cc 2130 7fff 739c 6f7b 5ef7 5294 7fff
-	</tex_palette>
-	<tex_palette index="23" name="in05_shelf01_pl" color_size="16">
-		0000 0088 00ca 065c 0d0e 0e9f 1481 18fd
-		19b4 1ea4 24e3 2617 6739 72cc 7fff 7fff
-	</tex_palette>
-	<tex_palette index="24" name="in05_shelf05_pl" color_size="16">
-		01d7 024c 0ceb 0e39 150c 154e 1570 19d3
-		1eb0 26d6 2d9a 2f39 421f 7fff 7fff 7fff
-	</tex_palette>
-	<tex_palette index="25" name="in05_shelf06_pl" color_size="16">
-		6fe0 7aff 72dd 7803 4c02 7e74 03a7 0264
-		4bf5 001e 0013 4e7f 7fff 7fff 7fff 7fff
-	</tex_palette>
-	<tex_palette index="26" name="in05_shelf_pl" color_size="16">
+	<tex_palette index="0" name="in05_book1_pl" color_size="16">
 		59a7 65e8 3a46 3205 296b 12bb 16dc 090d
 		1171 0d2f 19b4 1572 1cf9 295d 5ef7 56b5
 	</tex_palette>
-	<tex_palette index="27" name="in05_yuka_pl" color_size="4">
+	<tex_palette index="1" name="in05_book2_pl" color_size="16">
+		0d0e 21ea 1da9 222b 1dc9 3e2f 268d 1d89
+		739c 6b5a 6318 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="2" name="in05_book3_pl" color_size="16">
+		0d0e 4950 3d2d 454f 3d2d 45b0 5571 392b
+		739c 6b5a 6739 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="3" name="in05_door_pl" color_size="8">
+		2d97 2975 421f 39db 4211 4e74 6739 6318
+	</tex_palette>
+	<tex_palette index="4" name="in05_genkan_pl" color_size="8">
+		4e73 4a52 4631 4210 3def 35ad 318c 2529
+	</tex_palette>
+	<tex_palette index="5" name="in05_kage_pl" color_size="8">
+		0000 7fff 7fff 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="6" name="in05_locker_pl" color_size="16">
+		5ad6 5ef6 6f78 739a 6738 6317 6738 5294
+		7fff 6b5a 5ef7 5294 4e73 4631 3def 39ce
+	</tex_palette>
+	<tex_palette index="7" name="in05_m_h02_04_pl" color_size="8">
+		2591 216f 214d 1d0b 18e9 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="8" name="in05_mat1_pl" color_size="16">
+		7ef1 6e07 6e8d 69a1 65c3 6311 0ac0 0520
+		1ac5 2b68 05c0 12a3 12dc 1b1f 7fff 7fff
+	</tex_palette>
+	<tex_palette index="9" name="in05_mat2_pl" color_size="4">
+		1a87 1ea8 1a27 1ac8
+	</tex_palette>
+	<tex_palette index="10" name="in05_poster1_pl" color_size="16">
+		4d28 4dac 5293 6339 675a 56f8 5af7 02bf
+		231f 3b5f 4ed7 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="11" name="in05_poster2_pl" color_size="8">
+		7de7 7e4b 7bdc 7ffd 7bdc 7ff7 7ffa 7fff
+	</tex_palette>
+	<tex_palette index="12" name="in05_poster3_pl" color_size="16">
+		76cd 76ed 76ef 7710 7b55 7fb9 7358 7aee
+		460e 3dcc 5692 7ffe 4e50 77bd 7bde 739c
+	</tex_palette>
+	<tex_palette index="13" name="in05_sch02_pl" color_size="16">
+		7c1f 081c 0b9e 6bbd 2527 4a0c 62f6 39aa
+		566f 5eb2 56b0 420d 2d6a 5294 4631 2d6b
+	</tex_palette>
+	<tex_palette index="14" name="in05_sch_b2_pl" color_size="16">
+		18e0 2120 2560 3670 3af8 4247 4aac 4e53
+		627e 7fff 7fff 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="15" name="in05_sch_ka1_pl" color_size="8">
+		570e 5f51 6bb4 6fd5 77f9 73f7 7fff 7fff
+	</tex_palette>
+	<tex_palette index="16" name="in05_sch_ka2_pl" color_size="8">
+		57df 2ab9 3b5d 479f 477f 4f9f 63bf 6fdf
+	</tex_palette>
+	<tex_palette index="17" name="in05_sch_ka3_pl" color_size="16">
+		52d6 5718 6b9c 677b 635a 5f39 73bd 679c
+		6fbd 5ef7 5ad6 56b5 5294 4e73 4a52 7fff
+	</tex_palette>
+	<tex_palette index="18" name="in05_sch_mado_pl" color_size="4">
+		7fff 00ca 0d0e 19b4
+	</tex_palette>
+	<tex_palette index="19" name="in05_sch_t_pl" color_size="16">
+		0088 00ca 0d0e 1571 19b4 2617 3634 3e76
+		4698 5b5d 7fff 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="20" name="in05_sch_x_pl" color_size="8">
+		0000 154e 1570 19d3 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="21" name="in05_sch_zou_pl" color_size="16">
+		14cc 2130 7fff 739c 6f7b 6739 5ef7 5ad6
+		5294 7fff 7fff 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="22" name="in05_shelf01_pl" color_size="16">
+		0000 0088 00ca 065c 0d0e 0e9f 1481 18fd
+		19b4 1ea4 24e3 2617 6739 72cc 7fff 7fff
+	</tex_palette>
+	<tex_palette index="23" name="in05_shelf02_pl" color_size="16">
+		2560 627e 5e5c 4e53 7803 4c02 7e74 31a5
+		03a7 0264 4bf5 001e 0013 4e7f 7fff 7fff
+	</tex_palette>
+	<tex_palette index="24" name="in05_shelf03_pl" color_size="16">
+		7bfd 73fb 33a7 3fea 4fef 63f6 5f18 52b5
+		7fff 7fff 7fff 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="25" name="in05_speaker_pl" color_size="16">
+		633a 7fff 6318 5ef7 56b5 5294 4e73 4a52
+		4631 39ce 7fff 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="26" name="in05_stoubu_pl" color_size="16">
+		3ef8 5bbe 537c 2e33 4b1a 3675 0445 14c9
+		18ea 254d 10a8 210b 252c 318f 7fff 7fff
+	</tex_palette>
+	<tex_palette index="27" name="in05_yuka1_pl" color_size="4">
 		6b5a 6318 5ef7 56b5
 	</tex_palette>
-	<tex_palette index="28" name="r_sun_hikari_pl" color_size="8">
-		2adf 5bff 6bff 7c1f 7fff 7fff 7fff 7fff
+	<tex_palette index="28" name="in05_yuka2_pl" color_size="4">
+		7fff 2e57 3278 2e36
 	</tex_palette>
-	<tex_palette index="29" name="r_sun_mado_pl" color_size="16">
-		3e99 42fc 473f 4d44 5565 55a5 5de8 6629
-		6a6a 7bbd 7fde 7fff 7fff 7fff 7fff 7fff
+	<tex_palette index="29" name="in05_yuka3_pl" color_size="16">
+		5e77 6298 62b8 66d9 5e52 5a52 5e72 46d2
+		42b1 4af3 6739 6318 5ef7 5ad6 5294 4a52
 	</tex_palette>
 </tex_palette_array>
 
 <material_array size="30">
-	<material index="0" name="b02_yuka"
+	<material index="0" name="in05_book1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1128,7 +1153,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="1" name="b05_kabe2"
+	<material index="1" name="in05_book2"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1152,7 +1177,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="2" name="h_mado"
+	<material index="2" name="in05_book3"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1176,7 +1201,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="3" name="in05_book"
+	<material index="3" name="in05_door"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1200,7 +1225,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="4" name="in05_g_l"
+	<material index="4" name="in05_genkan"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1224,7 +1249,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="5" name="in05_genkan"
+	<material index="5" name="in05_kage"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1248,7 +1273,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="6" name="in05_in"
+	<material index="6" name="in05_locker"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1272,7 +1297,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="7" name="in05_kabinn"
+	<material index="7" name="in05_m_h02_04"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1296,7 +1321,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="8" name="in05_kage"
+	<material index="8" name="in05_mat1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1320,7 +1345,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="9" name="in05_locker"
+	<material index="9" name="in05_mat2"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1344,7 +1369,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="10" name="in05_m_h02_04"
+	<material index="10" name="in05_poster1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1368,7 +1393,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="11" name="in05_mat"
+	<material index="11" name="in05_poster2"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1392,7 +1417,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="12" name="in05_sch02"
+	<material index="12" name="in05_poster3"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1416,7 +1441,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="13" name="in05_sch_b2"
+	<material index="13" name="in05_sch02"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1440,7 +1465,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="14" name="in05_sch_ka2"
+	<material index="14" name="in05_sch_b2"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1464,7 +1489,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="15" name="in05_sch_ka3"
+	<material index="15" name="in05_sch_ka1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1488,7 +1513,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="16" name="in05_sch_kabe"
+	<material index="16" name="in05_sch_ka2"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1512,7 +1537,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="17" name="in05_sch_mado"
+	<material index="17" name="in05_sch_ka3"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1536,7 +1561,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="18" name="in05_sch_t"
+	<material index="18" name="in05_sch_mado"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1560,7 +1585,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="19" name="in05_sch_x"
+	<material index="19" name="in05_sch_t"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1584,7 +1609,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="20" name="in05_sch_y"
+	<material index="20" name="in05_sch_x"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1601,14 +1626,14 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="20" tex_palette_idx="21"
+		tex_image_idx="20" tex_palette_idx="20"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="21" name="in05_sch_y03"
+	<material index="21" name="in05_sch_zou"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1625,14 +1650,14 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="21" tex_palette_idx="20"
+		tex_image_idx="21" tex_palette_idx="21"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="22" name="in05_sch_zou"
+	<material index="22" name="in05_shelf01"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1656,7 +1681,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="23" name="in05_shelf"
+	<material index="23" name="in05_shelf02"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1673,14 +1698,14 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="23" tex_palette_idx="26"
+		tex_image_idx="23" tex_palette_idx="23"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="24" name="in05_shelf01"
+	<material index="24" name="in05_shelf03"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1697,14 +1722,14 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="24" tex_palette_idx="23"
+		tex_image_idx="24" tex_palette_idx="24"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="25" name="in05_shelf05"
+	<material index="25" name="in05_speaker"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1721,14 +1746,14 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="25" tex_palette_idx="24"
+		tex_image_idx="25" tex_palette_idx="25"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="26" name="in05_shelf06"
+	<material index="26" name="in05_stoubu"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1745,14 +1770,14 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="26" tex_palette_idx="25"
+		tex_image_idx="26" tex_palette_idx="26"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="27" name="in05_yuka"
+	<material index="27" name="in05_yuka1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1776,7 +1801,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="28" name="r_sun_hikari"
+	<material index="28" name="in05_yuka2"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1800,7 +1825,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="29" name="r_sun_mado"
+	<material index="29" name="in05_yuka3"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1845,12 +1870,12 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="0.000000 64.000000"/>
+					<tex st="0.000000 32.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_s xyz="4.500000 0.000000 3.500000"/>
-					<tex st="16.000000 64.000000"/>
+					<tex st="32.000000 32.000000"/>
 					<pos_xy xy="5.500000 0.000000"/>
-					<tex st="16.000000 0.000000"/>
+					<tex st="32.000000 0.000000"/>
 					<pos_xz xz="5.500000 2.500000"/>
 					<tex st="0.000000 0.000000"/>
 					<pos_xy xy="4.500000 0.000000"/>
@@ -1872,12 +1897,12 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="0.000000 16.000000"/>
+					<tex st="0.000000 32.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_s xyz="-0.500000 0.000000 0.500000"/>
-					<tex st="16.000000 16.000000"/>
+					<tex st="32.000000 32.000000"/>
 					<pos_xy xy="0.500000 0.000000"/>
-					<tex st="16.000000 0.000000"/>
+					<tex st="32.000000 0.000000"/>
 					<pos_xz xz="0.500000 -0.500000"/>
 					<tex st="0.000000 0.000000"/>
 					<pos_xy xy="-0.500000 0.000000"/>
@@ -1899,12 +1924,12 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="0.000000 8.000000"/>
+					<tex st="0.000000 32.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_s xyz="0.500000 0.000000 0.500000"/>
-					<tex st="8.000000 8.000000"/>
+					<tex st="32.000000 32.000000"/>
 					<pos_xy xy="1.500000 0.000000"/>
-					<tex st="8.000000 0.000000"/>
+					<tex st="32.000000 0.000000"/>
 					<pos_xz xz="1.500000 -0.500000"/>
 					<tex st="0.000000 0.000000"/>
 					<pos_xy xy="0.500000 0.000000"/>
@@ -1926,12 +1951,12 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="0.000000 16.000000"/>
+					<tex st="0.000000 32.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_s xyz="1.500000 0.000000 0.500000"/>
-					<tex st="16.000000 16.000000"/>
+					<tex st="32.000000 32.000000"/>
 					<pos_xy xy="2.500000 0.000000"/>
-					<tex st="16.000000 0.000000"/>
+					<tex st="32.000000 0.000000"/>
 					<pos_xz xz="2.500000 -0.500000"/>
 					<tex st="0.000000 0.000000"/>
 					<pos_xy xy="1.500000 0.000000"/>
@@ -1956,9 +1981,9 @@
 					<tex st="0.000000 32.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_s xyz="2.500000 0.000000 0.500000"/>
-					<tex st="32.000000 32.000000"/>
+					<tex st="16.000000 32.000000"/>
 					<pos_xy xy="3.500000 0.000000"/>
-					<tex st="32.000000 0.000000"/>
+					<tex st="16.000000 0.000000"/>
 					<pos_xz xz="3.500000 -0.500000"/>
 					<tex st="0.000000 0.000000"/>
 					<pos_xy xy="2.500000 0.000000"/>
@@ -1983,9 +2008,9 @@
 					<tex st="0.000000 16.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_s xyz="3.500000 0.000000 0.500000"/>
-					<tex st="16.000000 16.000000"/>
+					<tex st="32.000000 16.000000"/>
 					<pos_xy xy="4.500000 0.000000"/>
-					<tex st="16.000000 0.000000"/>
+					<tex st="32.000000 0.000000"/>
 					<pos_xz xz="4.500000 -0.500000"/>
 					<tex st="0.000000 0.000000"/>
 					<pos_xy xy="3.500000 0.000000"/>
@@ -2007,12 +2032,12 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="0.000000 16.000000"/>
+					<tex st="0.000000 8.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_s xyz="4.500000 0.000000 0.500000"/>
-					<tex st="16.000000 16.000000"/>
+					<tex st="8.000000 8.000000"/>
 					<pos_xy xy="5.500000 0.000000"/>
-					<tex st="16.000000 0.000000"/>
+					<tex st="8.000000 0.000000"/>
 					<pos_xz xz="5.500000 -0.500000"/>
 					<tex st="0.000000 0.000000"/>
 					<pos_xy xy="4.500000 0.000000"/>
@@ -2034,10 +2059,10 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="0.000000 16.000000"/>
+					<tex st="0.000000 64.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_s xyz="5.500000 0.000000 0.500000"/>
-					<tex st="32.000000 16.000000"/>
+					<tex st="32.000000 64.000000"/>
 					<pos_xy xy="6.500000 0.000000"/>
 					<tex st="32.000000 0.000000"/>
 					<pos_xz xz="6.500000 -0.500000"/>
@@ -2061,12 +2086,12 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="0.000000 16.000000"/>
+					<tex st="0.000000 32.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_s xyz="6.500000 0.000000 0.500000"/>
-					<tex st="16.000000 16.000000"/>
+					<tex st="32.000000 32.000000"/>
 					<pos_xy xy="7.500000 0.000000"/>
-					<tex st="16.000000 0.000000"/>
+					<tex st="32.000000 0.000000"/>
 					<pos_xz xz="7.500000 -0.500000"/>
 					<tex st="0.000000 0.000000"/>
 					<pos_xy xy="6.500000 0.000000"/>
@@ -2088,12 +2113,12 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="0.000000 8.000000"/>
+					<tex st="0.000000 16.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_s xyz="-0.500000 0.000000 1.500000"/>
-					<tex st="8.000000 8.000000"/>
+					<tex st="16.000000 16.000000"/>
 					<pos_xy xy="0.500000 0.000000"/>
-					<tex st="8.000000 0.000000"/>
+					<tex st="16.000000 0.000000"/>
 					<pos_xz xz="0.500000 0.500000"/>
 					<tex st="0.000000 0.000000"/>
 					<pos_xy xy="-0.500000 0.000000"/>
@@ -2115,12 +2140,12 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="0.000000 64.000000"/>
+					<tex st="0.000000 16.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_s xyz="0.500000 0.000000 1.500000"/>
-					<tex st="32.000000 64.000000"/>
+					<tex st="16.000000 16.000000"/>
 					<pos_xy xy="1.500000 0.000000"/>
-					<tex st="32.000000 0.000000"/>
+					<tex st="16.000000 0.000000"/>
 					<pos_xz xz="1.500000 0.500000"/>
 					<tex st="0.000000 0.000000"/>
 					<pos_xy xy="0.500000 0.000000"/>
@@ -2169,12 +2194,12 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="0.000000 16.000000"/>
+					<tex st="0.000000 32.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_s xyz="2.500000 0.000000 1.500000"/>
-					<tex st="16.000000 16.000000"/>
+					<tex st="32.000000 32.000000"/>
 					<pos_xy xy="3.500000 0.000000"/>
-					<tex st="16.000000 0.000000"/>
+					<tex st="32.000000 0.000000"/>
 					<pos_xz xz="3.500000 0.500000"/>
 					<tex st="0.000000 0.000000"/>
 					<pos_xy xy="2.500000 0.000000"/>
@@ -2196,12 +2221,12 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="0.000000 16.000000"/>
+					<tex st="0.000000 32.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_s xyz="3.500000 0.000000 1.500000"/>
-					<tex st="16.000000 16.000000"/>
+					<tex st="32.000000 32.000000"/>
 					<pos_xy xy="4.500000 0.000000"/>
-					<tex st="16.000000 0.000000"/>
+					<tex st="32.000000 0.000000"/>
 					<pos_xz xz="4.500000 0.500000"/>
 					<tex st="0.000000 0.000000"/>
 					<pos_xy xy="3.500000 0.000000"/>
@@ -2223,12 +2248,12 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="0.000000 64.000000"/>
+					<tex st="0.000000 16.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_s xyz="4.500000 0.000000 1.500000"/>
-					<tex st="64.000000 64.000000"/>
+					<tex st="16.000000 16.000000"/>
 					<pos_xy xy="5.500000 0.000000"/>
-					<tex st="64.000000 0.000000"/>
+					<tex st="16.000000 0.000000"/>
 					<pos_xz xz="5.500000 0.500000"/>
 					<tex st="0.000000 0.000000"/>
 					<pos_xy xy="4.500000 0.000000"/>
@@ -2250,12 +2275,12 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="0.000000 32.000000"/>
+					<tex st="0.000000 64.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_s xyz="5.500000 0.000000 1.500000"/>
-					<tex st="8.000000 32.000000"/>
+					<tex st="64.000000 64.000000"/>
 					<pos_xy xy="6.500000 0.000000"/>
-					<tex st="8.000000 0.000000"/>
+					<tex st="64.000000 0.000000"/>
 					<pos_xz xz="6.500000 0.500000"/>
 					<tex st="0.000000 0.000000"/>
 					<pos_xy xy="5.500000 0.000000"/>
@@ -2331,10 +2356,10 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="0.000000 16.000000"/>
+					<tex st="0.000000 32.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_s xyz="0.500000 0.000000 2.500000"/>
-					<tex st="16.000000 16.000000"/>
+					<tex st="16.000000 32.000000"/>
 					<pos_xy xy="1.500000 0.000000"/>
 					<tex st="16.000000 0.000000"/>
 					<pos_xz xz="1.500000 1.500000"/>
@@ -2358,12 +2383,12 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="0.000000 32.000000"/>
+					<tex st="0.000000 16.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_s xyz="1.500000 0.000000 2.500000"/>
-					<tex st="32.000000 32.000000"/>
+					<tex st="16.000000 16.000000"/>
 					<pos_xy xy="2.500000 0.000000"/>
-					<tex st="32.000000 0.000000"/>
+					<tex st="16.000000 0.000000"/>
 					<pos_xz xz="2.500000 1.500000"/>
 					<tex st="0.000000 0.000000"/>
 					<pos_xy xy="1.500000 0.000000"/>
@@ -2385,12 +2410,12 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="0.000000 8.000000"/>
+					<tex st="0.000000 32.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_s xyz="2.500000 0.000000 2.500000"/>
-					<tex st="8.000000 8.000000"/>
+					<tex st="32.000000 32.000000"/>
 					<pos_xy xy="3.500000 0.000000"/>
-					<tex st="8.000000 0.000000"/>
+					<tex st="32.000000 0.000000"/>
 					<pos_xz xz="3.500000 1.500000"/>
 					<tex st="0.000000 0.000000"/>
 					<pos_xy xy="2.500000 0.000000"/>
@@ -2412,12 +2437,12 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="0.000000 16.000000"/>
+					<tex st="0.000000 8.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_s xyz="3.500000 0.000000 2.500000"/>
-					<tex st="16.000000 16.000000"/>
+					<tex st="8.000000 8.000000"/>
 					<pos_xy xy="4.500000 0.000000"/>
-					<tex st="16.000000 0.000000"/>
+					<tex st="8.000000 0.000000"/>
 					<pos_xz xz="4.500000 1.500000"/>
 					<tex st="0.000000 0.000000"/>
 					<pos_xy xy="3.500000 0.000000"/>
@@ -2547,12 +2572,12 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="0.000000 16.000000"/>
+					<tex st="0.000000 32.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_s xyz="0.500000 0.000000 3.500000"/>
-					<tex st="16.000000 16.000000"/>
+					<tex st="32.000000 32.000000"/>
 					<pos_xy xy="1.500000 0.000000"/>
-					<tex st="16.000000 0.000000"/>
+					<tex st="32.000000 0.000000"/>
 					<pos_xz xz="1.500000 2.500000"/>
 					<tex st="0.000000 0.000000"/>
 					<pos_xy xy="0.500000 0.000000"/>
@@ -2577,9 +2602,9 @@
 					<tex st="0.000000 32.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_s xyz="1.500000 0.000000 3.500000"/>
-					<tex st="32.000000 32.000000"/>
+					<tex st="16.000000 32.000000"/>
 					<pos_xy xy="2.500000 0.000000"/>
-					<tex st="32.000000 0.000000"/>
+					<tex st="16.000000 0.000000"/>
 					<pos_xz xz="2.500000 2.500000"/>
 					<tex st="0.000000 0.000000"/>
 					<pos_xy xy="1.500000 0.000000"/>
@@ -2628,12 +2653,12 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="0.000000 64.000000"/>
+					<tex st="0.000000 16.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_s xyz="3.500000 0.000000 3.500000"/>
-					<tex st="32.000000 64.000000"/>
+					<tex st="16.000000 16.000000"/>
 					<pos_xy xy="4.500000 0.000000"/>
-					<tex st="32.000000 0.000000"/>
+					<tex st="16.000000 0.000000"/>
 					<pos_xz xz="4.500000 2.500000"/>
 					<tex st="0.000000 0.000000"/>
 					<pos_xy xy="3.500000 0.000000"/>
@@ -2666,14 +2691,14 @@
 		<display index="1" material="1" polygon="2" priority="0"/>
 		<display index="2" material="2" polygon="3" priority="0"/>
 		<display index="3" material="3" polygon="4" priority="0"/>
-		<display index="4" material="4" polygon="6" priority="0"/>
-		<display index="5" material="5" polygon="5" priority="0"/>
+		<display index="4" material="4" polygon="5" priority="0"/>
+		<display index="5" material="5" polygon="6" priority="0"/>
 		<display index="6" material="6" polygon="7" priority="0"/>
-		<display index="7" material="7" polygon="8" priority="0"/>
-		<display index="8" material="8" polygon="9" priority="0"/>
-		<display index="9" material="9" polygon="10" priority="0"/>
-		<display index="10" material="10" polygon="12" priority="0"/>
-		<display index="11" material="11" polygon="11" priority="0"/>
+		<display index="7" material="7" polygon="10" priority="0"/>
+		<display index="8" material="8" polygon="8" priority="0"/>
+		<display index="9" material="9" polygon="9" priority="0"/>
+		<display index="10" material="10" polygon="11" priority="0"/>
+		<display index="11" material="11" polygon="12" priority="0"/>
 		<display index="12" material="12" polygon="13" priority="0"/>
 		<display index="13" material="13" polygon="14" priority="0"/>
 		<display index="14" material="14" polygon="15" priority="0"/>
