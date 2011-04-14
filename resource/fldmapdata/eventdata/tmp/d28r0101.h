@@ -4,6 +4,7 @@
 
 #define DOOR_ID_D28R0101_D28R0201_EXIT01  0
 #define DOOR_ID_D28R0101_D28R0201_EXIT02  1
+#define DOOR_ID_D28R0101_D11R0101_EXIT01  2
 
 #endif //ZONE_D28R0101_EVD_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d28r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
