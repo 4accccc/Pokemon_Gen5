@@ -99,8 +99,12 @@ EVENT_START ev_wbt_hall_01
 				//歓声SE再生
 				
 				//対戦者だー！
-				_PLAINWIN_MSG_UP( msg_wbt_announce_09 )
-				_PLAINWIN_CLOSE()
+				_GIZAPLAINWIN_MSG_POS( msg_wbt_announce_09, POS_UP )
+				_GIZAPLAINWIN_CLOSE()
+				//_PLAINWIN_MSG_UP( msg_wbt_announce_09 )
+				//_PLAINWIN_CLOSE()
+				
+				_TIME_WAIT( 60 )
 				
 				//トーナメント名をセット
 				_WBT_SET_TOURNAMENT_NAME( 0 )
@@ -108,6 +112,8 @@ EVENT_START ev_wbt_hall_01
 				//終了の挨拶
 				_PLAINWIN_MSG_UP( msg_wbt_announce_10 )
 				_PLAINWIN_CLOSE()
+				
+				_TIME_WAIT( 60 )
 				
 				//マップチェンジ
 				_MAP_CHANGE( ZONE_ID_D05R0101, 15, 6, DIR_UP )
@@ -135,8 +141,12 @@ EVENT_START ev_wbt_hall_01
 				_TIME_WAIT( 120 )
 				
 				//プレイヤーだー！
-				_PLAINWIN_MSG_UP( msg_wbt_announce_09 )
-				_PLAINWIN_CLOSE()
+				//_PLAINWIN_MSG_UP( msg_wbt_announce_09 )
+				//_PLAINWIN_CLOSE()
+				_GIZAPLAINWIN_MSG_POS( msg_wbt_announce_09, POS_UP )
+				_GIZAPLAINWIN_CLOSE()
+				
+				_TIME_WAIT( 60 )
 				
 				//トーナメント名をセット
 				_WBT_SET_TOURNAMENT_NAME( 0 )
@@ -144,6 +154,8 @@ EVENT_START ev_wbt_hall_01
 				//終了の挨拶
 				_PLAINWIN_MSG_UP( msg_wbt_announce_10 )
 				_PLAINWIN_CLOSE()
+				
+				_TIME_WAIT( 60 )
 				
 				//マップチェンジ
 				_MAP_CHANGE( ZONE_ID_D05R0101, 15, 6, DIR_UP )
@@ -190,7 +202,7 @@ EVENT_START		ev_debug_wbt_second_game
   _WBT_SYSTEM_ENTRY()
   //↑↑↑　本当は受付で行う初期化処理をデバッグ用にここで呼び出し
 
-  _WBT_GET_ENEMY_MMDL_CODE( OBJCHRWORK0 )
+	_WBT_GET_ENEMY_MMDL_CODE( OBJCHRWORK0 )
 	_OBJ_ADD_EX( 21,15,DIR_RIGHT,MMDL_ID_EVENTOBJ_00,WKOBJCODE00,MV_DMY )
 
 	//カメラ移動・中央固定　
@@ -325,8 +337,10 @@ IF $SCWK_ANSWER == SCR_WBT_BATTLE_RESULT_WIN THEN
 	_PLAYER_NAME(0)
 
 	//第１回戦を制したのは！
-	_PLAINWIN_MSG_UP( msg_wbt_announce_06 )
-	_PLAINWIN_CLOSE()
+	_GIZAPLAINWIN_MSG_POS( msg_wbt_announce_06, POS_UP )
+	_GIZAPLAINWIN_CLOSE()
+	//_PLAINWIN_MSG_UP( msg_wbt_announce_06 )
+	//_PLAINWIN_CLOSE()
 
 	//対戦者退場
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_enemy_1st_out )
@@ -349,8 +363,10 @@ ELSE
 	_WBT_SET_ENEMY_NAME( 0 )
 
 	//第１回戦を制したのは！
-	_PLAINWIN_MSG_UP( msg_wbt_announce_06 )
-	_PLAINWIN_CLOSE()
+	_GIZAPLAINWIN_MSG_POS( msg_wbt_announce_06, POS_UP )
+	_GIZAPLAINWIN_CLOSE()
+	//_PLAINWIN_MSG_UP( msg_wbt_announce_06 )
+	//_PLAINWIN_CLOSE()
  
 	//プレイヤー退場アニメ
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_lose )
@@ -436,6 +452,8 @@ _PLAINWIN_CLOSE()
 //背景ビジョンにVS表示
 _WBT_GMK_VISION_CHANGE(SCR_WBT_VISION_VS)
 
+_TIME_WAIT( 60 )
+
 //２回戦対戦前メッセージの表示　ＭＳＧ表示専用コマンド
 _WBT_TRAINER_MSG( SCR_WBT_TRMSG_2ND, MMDL_ID_EVENTOBJ_00 )
 _BALLOONWIN_CLOSE()
@@ -470,8 +488,10 @@ IF $SCWK_ANSWER == SCR_WBT_BATTLE_RESULT_WIN THEN
 	_PLAYER_NAME(0)
 
 	//第２回戦を制したのは！
-	_PLAINWIN_MSG_UP( msg_wbt_announce_07 )
-	_PLAINWIN_CLOSE()
+	_GIZAPLAINWIN_MSG_POS( msg_wbt_announce_07, POS_UP )
+	_GIZAPLAINWIN_CLOSE()
+	//_PLAINWIN_MSG_UP(  )
+	//_PLAINWIN_CLOSE()
 
 	//対戦者退場
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_enemy_2nd_out )
@@ -494,8 +514,10 @@ ELSE
 	_WBT_SET_ENEMY_NAME( 0 )
 
 	//第２回戦を制したのは！
-	_PLAINWIN_MSG_UP( msg_wbt_announce_07 )
-	_PLAINWIN_CLOSE()
+	_GIZAPLAINWIN_MSG_POS( msg_wbt_announce_07, POS_UP )
+	_GIZAPLAINWIN_CLOSE()
+	//_PLAINWIN_MSG_UP( msg_wbt_announce_07 )
+	//_PLAINWIN_CLOSE()
 
   //プレイヤー退場アニメ
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_lose )
@@ -689,7 +711,7 @@ _RET
 ev_final_game:
 
 //ほかの対戦結果は
-_PLAINWIN_MSG_UP( msg_wbt_announce_08 )
+_PLAINWIN_MSG_UP( msg_wbt_announce_08a )
 _PLAINWIN_CLOSE()
 
 _MAP_FADE_BLACK_OUT()
