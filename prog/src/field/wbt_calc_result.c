@@ -246,7 +246,7 @@ static void calcWBTResult( WBTRESULT * result,
     {
       msg_side = 0;
     }
-    if ( result->upside_win == TRUE)
+    if ( result->upside_win == FALSE)
     {
       msg_side *= -1;
     }
