@@ -285,15 +285,18 @@ static void entryChampTournament( u16 * tr_list )
   GF_ASSERT( j < WBT_ROM_TRAINER_NUM );
 }
 
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 static const u16 presentation_trid[WBT_TRAINER_NUM] = {
   34,//イブキ
   27,//ハヤト
-  26,//サカキ
-  35,//アンズ
-  29,//アカネ
   32,//ミカン
+  35,//アンズ
+
+  29,//アカネ
+  33,//ヤナギ
   28,//ツクシ
-  0xffff//主人公
+  WBT_TRCODE_PLAYER//主人公
 };
 //-----------------------------------------------------------------------------
 /**
@@ -311,7 +314,7 @@ static void entrySampleTournament( u16 * tr_list )
     11,//デント
     53,//モブ
     12,//アロエ
-    0xffff,//プレイヤー
+    WBT_TRCODE_PLAYER,//プレイヤー
   };
   GFL_STD_MemCopy( sample_trid, tr_list, sizeof(u16) * WBT_TRAINER_NUM );
 #endif

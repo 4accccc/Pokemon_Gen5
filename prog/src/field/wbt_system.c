@@ -21,6 +21,7 @@
 
 #include "tr_tool/trtype_def.h" //TRTYPE_HERO/TRTYPE_HEROINE
 
+#include "savedata/bsubway_savedata.h"  //bsubway_battle_data.hの内部定義のため
 #include "battle/bsubway_battle_data.h" //BSUBWAY_PARTNER_DATA
 #include "fld_btl_inst_tool.h"
 #include "message.naix"    //NARC_message_wbt_trname_dat
@@ -426,6 +427,8 @@ const REGULATION * WBTSYS_GetRegulation( WBTSYS * wbtsys )
   return &wbtsys->wbtreg.base_reg;
 }
 
+//============================================================================================
+//============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 void WBTSYS_SetPokelistResult( WBTSYS * wbtsys, PLIST_DATA * plist_data )
@@ -576,6 +579,8 @@ POKEPARTY * WBTSYS_CreateBattleParty( WBTSYS * wbtsys, GAMEDATA * gamedata )
   return entry_party;
 }
 
+//============================================================================================
+//============================================================================================
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 static const u8 pri2pow_table[5] = {
@@ -623,19 +628,22 @@ static BOOL makeRomTrainerData( BSUBWAY_PARTNER_DATA * tr_data,
  * @brief WBT用BATTLE_SETUP_PARAM生成
  */
 //------------------------------------------------------------------
-BATTLE_SETUP_PARAM * WBTSYS_CreateBattleSetupParam(
-    WBTSYS * wbtsys, GAMESYS_WORK * gsys, BSUBWAY_PARTNER_DATA * tr_data )
+BATTLE_SETUP_PARAM * WBTSYS_CreateBattleSetupParam( WBTSYS * wbtsys, GAMESYS_WORK * gsys )
 {
   BATTLE_SETUP_PARAM * bp;
+  BSUBWAY_PARTNER_DATA * tr_data;
   const WBTTRAINER * wbt_tr = WBTSYS_GetOpponentTrainer( wbtsys );
-  POKEPARTY *party = WBTSYS_CreateBattleParty( wbtsys, GAMESYSTEM_GetGameData( gsys ) );
+  POKEPARTY *party;
   WBTRULE wbt_rule = WBTSYS_GetRule( wbtsys );
   BSWAY_PLAYMODE mode = WBTTOOL_WBTRuleToBtlRule( wbt_rule );
   int num = WBTTOOL_GetPartyMaxByRule( wbt_rule );
 
+  tr_data = GFL_HEAP_AllocMemoryLo( HEAPID_PROC, sizeof(BSUBWAY_PARTNER_DATA) );
+  party = WBTSYS_CreateBattleParty( wbtsys, GAMESYSTEM_GetGameData( gsys ) );
   makeRomTrainerData( tr_data, wbt_tr, num, HEAPID_PROC );
   bp = FBI_TOOL_WBT_CreateBattleParam( gsys, party, mode, tr_data, num  );
   GFL_HEAP_FreeMemory( party );
+  GFL_HEAP_FreeMemory( tr_data );
   return bp;
 }
 
@@ -655,6 +663,7 @@ void WBTSYS_ReflectBattleResult( WBTSYS * wbtsys, GAMEDATA * gamedata )
   {
   default:
     GF_ASSERT_MSG( 0, "想定外のBtlResult(%d)\n", result );
+  case BTL_RESULT_RUN:  //自分が逃げた
     result = BTL_RESULT_LOSE;
     break;
   case BTL_RESULT_LOSE:
