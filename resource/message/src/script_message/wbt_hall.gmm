@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2011-04-13T21:05:58"/>
+	<create user="matsumiya" host="W00224" date="2011-04-15T11:07:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -403,15 +403,15 @@
 		</language>
 	</columns>
 
-	<dialog left="106" top="110" right="811" bottom="730" maximized="no" rayout="Vertical2">
+	<dialog left="1396" top="180" right="2098" bottom="796" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="56" top="35" right="529" bottom="433" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="527"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="540"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<band id="4" index="0" style="0000" width="694"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -437,9 +437,9 @@
 ・この後、トレーナーメッセージ表示</comment>
 		<attribute name="キャラ指定">アナウンス
 シッポなしメッセージ</attribute>
-		<language name="JPN" width="256">だい１かいせん
+		<language name="JPN" width="256">だい１かいせんッ！
 [1:00:トレーナー名:0]　VS　[1:00:トレーナー名:1]▼</language>
-		<language name="JPN_KANJI" width="256">第１回戦
+		<language name="JPN_KANJI" width="256">第１回戦ッ！
 [1:00:トレーナー名:0]　VS　[1:00:トレーナー名:1]▼</language>
 	</row>
 
@@ -448,9 +448,9 @@
 ・この後、トレーナーメッセージ表示</comment>
 		<attribute name="キャラ指定">アナウンス
 シッポなしメッセージ</attribute>
-		<language name="JPN" width="256">だい２かいせん
+		<language name="JPN" width="256">だい２かいせんッ！！
 [1:00:トレーナー名:0]　VS　[1:00:トレーナー名:1]▼</language>
-		<language name="JPN_KANJI" width="256">第２回戦
+		<language name="JPN_KANJI" width="256">第２回戦ッ！！
 [1:00:トレーナー名:0]　VS　[1:00:トレーナー名:1]▼</language>
 	</row>
 
@@ -459,9 +459,9 @@
 ・この後、トレーナーメッセージ表示</comment>
 		<attribute name="キャラ指定">アナウンス
 シッポなしメッセージ</attribute>
-		<language name="JPN" width="256">けっしょうせん
+		<language name="JPN" width="256">けっしょうせんッー！！
 [1:00:トレーナー名:0]　VS　[1:00:トレーナー名:1]▼</language>
-		<language name="JPN_KANJI" width="256">決勝戦
+		<language name="JPN_KANJI" width="256">決勝戦ッー！！
 [1:00:トレーナー名:0]　VS　[1:00:トレーナー名:1]▼</language>
 	</row>
 
