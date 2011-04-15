@@ -44,6 +44,7 @@ extern void RESORT_BINARY_SHOP_Exit( RESORT_BINARY_SHOP *p_wk );
 
 extern u32 RESORT_BINARY_SHOP_SearchShopID( const RESORT_BINARY_SHOP *cp_wk, const RESORT_RESIDENT_DATA *cp_data );
 extern const RESORT_BINARY_SHOP_DATA * RESORT_BINARY_SHOP_SearchDataByData( const RESORT_BINARY_SHOP *cp_wk, RESORT_RESIDENT_DATA *p_data );
+extern u32 RESORT_BINARY_SHOP_DATA_GetMax( const RESORT_BINARY_SHOP *cp_wk );
 
 //-------------------------------------
 ///	Ç®ìXÇÃÉfÅ[É^

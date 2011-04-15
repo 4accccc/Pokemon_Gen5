@@ -112,7 +112,8 @@ u32 RESORT_BINARY_SHOP_SearchShopID( const RESORT_BINARY_SHOP *cp_wk, const RESO
   u16 type  = 0; //TODO
   u16 lv    = RESORT_INSTITUTION_DATA_GetData(p_institution,RESORT_INSTITUTION_DATA_PARAM_LV );
   int i;
-  for( i = 0; i < (cp_wk->shop_size / sizeof(RESORT_BINARY_SHOP_DATA)); i++ )
+
+  for( i = 0; i < RESORT_BINARY_SHOP_DATA_GetMax(cp_wk); i++ )
   {
     const RESORT_BINARY_SHOP_DATA* cp_shop = &cp_wk->p_shop[i];
     if( cp_shop->param[ RESORT_BINARY_SHOP_PARAM_SHOP ] == shop
@@ -143,7 +144,22 @@ const RESORT_BINARY_SHOP_DATA * RESORT_BINARY_SHOP_SearchDataByData( const RESOR
   u16 id = RESORT_INSTITUTION_DATA_GetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_ID );
   const RESORT_BINARY_SHOP_DATA* cp_shop = &cp_wk->p_shop[id];
 
+  GF_ASSERT(id < RESORT_BINARY_SHOP_DATA_GetMax(cp_wk));
+
   return cp_shop;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  最大値を取得
+ *
+ *	@param	const RESORT_BINARY_SHOP *cp_wk ワーク
+ *
+ *	@return 最大値
+ */
+//-----------------------------------------------------------------------------
+u32 RESORT_BINARY_SHOP_DATA_GetMax( const RESORT_BINARY_SHOP *cp_wk )
+{
+  return (cp_wk->shop_size / sizeof(RESORT_BINARY_SHOP_DATA));
 }
 
 //----------------------------------------------------------------------------

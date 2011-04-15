@@ -1089,6 +1089,20 @@ BOOL RESORT_RECV_DATA_IsSameOwnerBeacon( const RESORT_RECV_DATA *cp_wk, const RE
 }
 
 
+static void Resort_Recv_Data_InitSetup( RESORT_RECV_DATA *p_wk, RESORT_COMM_TYPE type )
+{
+
+  //初期生成データ TODO
+  RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_COMM_ID,type);
+  RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_PRESENT_ID, 17+GFUser_GetPublicRand( 20 ));
+  RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_PRESENT_NUM, 1);
+  {
+    //タイプによってなりたいものがきまる
+    RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_WANT_JOB, GFUser_GetPublicRand( RESORT_RESIDENT_TYPE_MAX ) );
+    Resort_Recv_Data_SetWantJob( p_wk );
+  }
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  ビーコンをマージ
@@ -1134,9 +1148,8 @@ BOOL RESORT_RECV_DATA_MergeBeacon( RESORT_RECV_DATA *p_wk, const RESORT_BEACON_D
     }
 
     //初期生成データ
-
     RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_UPDATE,RESORT_RECV_DATA_UPDATE_FIRST);
-    RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_COMM_ID,RESORT_COMM_TYPE_BEACON);
+    Resort_Recv_Data_InitSetup( p_wk, RESORT_COMM_TYPE_BEACON );
 
     if( p_wk->extend_flag == 0xFF )
     {
@@ -1208,15 +1221,7 @@ void RESORT_RECV_DATA_MergeRecv( RESORT_RECV_DATA *p_wk, const RESORT_RECV_DATA 
     GFL_STD_MemCopy( cp_recv, p_wk, sizeof(RESORT_RECV_DATA) );
 
     RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_UPDATE,RESORT_RECV_DATA_UPDATE_FIRST);
-    //TODO 初期生成データ
-    RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_PRESENT_ID, 17+GFUser_GetPublicRand( 20 ));
-    RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_PRESENT_NUM, 1);
-    RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_COMM_ID,type);
-    {
-      //タイプによってなりたいものがきまる
-      RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_WANT_JOB, GFUser_GetPublicRand( RESORT_RESIDENT_TYPE_MAX ) );
-      Resort_Recv_Data_SetWantJob( p_wk );
-    }
+    Resort_Recv_Data_InitSetup( p_wk, type );
   }
   else
   {
@@ -3510,7 +3515,9 @@ u32 RESORT_CITY_DATA_GetData( const RESORT_CITY_DATA *cp_wk, RESORT_CITY_DATA_PA
   case RESORT_CITY_DATA_PARAM_CITY_NAME: //p_ret_adrs
     if( p_ret_adrs != NULL )
     {
-      STRTOOL_Copy( cp_wk->city_name, p_ret_adrs, RESORT_CITY_NAME_LEN+EOM_SIZE );
+
+      //TODO 名前入力対応街のため8文字にしているが「レゾナンスリゾート」で９文字のため
+      STRTOOL_Copy( cp_wk->city_name, p_ret_adrs, 9+EOM_SIZE );
     }
     return (u32)cp_wk->city_name;
   case RESORT_CITY_DATA_PARAM_AUTHER_NAME: //p_ret_adrs

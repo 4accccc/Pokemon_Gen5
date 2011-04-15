@@ -84,6 +84,8 @@ EVENT_START ev_resort_tourist
 
   _RESORT_SET_WORD( RESORT_WORD_PEOPLE, 0 )
   _RESORT_SET_WORD( RESORT_WORD_COMM_TYPE, 1 )
+  _RESORT_SET_WORD( RESORT_WORD_FREE_PHRASE, 2 )
+  _RESORT_SET_WORD( RESORT_WORD_FREE_CITY, 3 )
 
   //挨拶文
   _RESORT_GET_MSGID( RESORT_TOURIST_GREET_MSGID, LWK_MSGID )
@@ -115,6 +117,9 @@ EVENT_START ev_resort_tourist
 
     _RESORT_END_ITEM()
   ENDIF
+
+  //訪問してきました
+	_SYSWIN_MSG( resort_sys_select_00, POS_DOWN )
 
   //以下メニュー表示はLWK_MENU_LOOPがFALSEになるまで続く
   $LWK_MENU_LOOP = TRUE
@@ -157,9 +162,6 @@ sub_tourist_main_menu:
   DEFINE_LOCAL LWK_IS_SECRETARY_FULL 
   DEFINE_LOCAL LWK_IS_INSTITUTION_EMPTY
 
-  //どうしますか？
-	_SYSWIN_MSG( resort_sys_select_00, POS_DOWN )
-
   _SYSWIN_MSG( msg_exp_window , POS_DOWN ) // 説明文表示用のウィンドウを表示
 	_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, LWK_MENU_RET )
 
@@ -171,7 +173,7 @@ sub_tourist_main_menu:
 	  _BMPMENU_MAKE_LIST_EX( resort_sys_select_03, resort_sys_select_info_03, SEQ_TOURIST_SPOT )	    //スポット
   ENDIF
 
-	_BMPMENU_MAKE_LIST_EX( resort_sys_select_05, resort_sys_select_info_05, SEQ_TOURIST_APPEAL )	    //アピール
+	//_BMPMENU_MAKE_LIST_EX( resort_sys_select_05, resort_sys_select_info_05, SEQ_TOURIST_APPEAL )	    //アピール
 
   //スカウトは秘書がいっぱいでないとでない
   _RESORT_GET_DATA( RESORT_GET_PARAM_IS_SECREARY_FULL, LWK_IS_SECRETARY_FULL )
@@ -617,6 +619,10 @@ sub_resident_institution:
   _RESORT_GET_MSGID( RESORT_RESIDENT_GREET_MSGID, LWK_MSGID )
   _RESORT_SET_WORD( RESORT_WORD_PEOPLE, 0 )
   _RESORT_SET_WORD( RESORT_WORD_FREE_NAME, 1 )
+
+  _RESORT_SET_WORD( RESORT_WORD_PEOPLE, 0 )
+  _RESORT_SET_WORD( RESORT_WORD_FREE_NAME, 1 )
+  _RESORT_SET_WORD( RESORT_WORD_FREE_PHRASE, 2 )
 
 	_BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DL )
 
