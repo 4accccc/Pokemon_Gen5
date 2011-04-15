@@ -67,7 +67,7 @@ enum {
 #ifdef PM_DEBUG
 
 #define HEAPSIZE_SYSTEM (0x006000)
-#define HEAPSIZE_APP    (0x182000)   // PL,GSÇ≈ÇÕñÒ0x13A000
+#define HEAPSIZE_APP    (0x183000)   // PL,GSÇ≈ÇÕñÒ0x13A000
 #define HEAPSIZE_DSI    (0x486000)   // DSIÇÕ16M
 //NITROÇ≈makeÇµÇΩéûÇ…HEAPID_EXTRAópÇ…4000ëùÇ‚Ç∑
 #define HEAPSIZE_APP_NTR    (0x184000)   // PL,GSÇ≈ÇÕñÒ0x13A000
