@@ -89,10 +89,6 @@ def convertAppeal( csv, data, msg_h )
       dat  = csv.get( row, SPOT_COL_DATA + col*3 )
       exp   = csv.get( row, SPOT_COL_EXP + col*3 )
 
-      p type
-      p dat
-      p exp
-
       data.write_u16( $define_hash[type] )
       data.write_u16( $define_hash[dat] )
       data.write_u16( $define_hash[exp] )
