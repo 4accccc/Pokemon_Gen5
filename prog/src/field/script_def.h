@@ -649,6 +649,10 @@
 #define SCR_WBT_TRMSG_PLAYER_LOSE     (5) ///<WBTトレーナーMSG指定：プレイヤー敗北
 #define SCR_WBT_TRMSG_ANNOUNCE        (6) ///<WBTトレーナーMSG指定：（使用しない）
 
+#define SCR_WBT_BATTLE_RESULT_LOSE    (0) ///<WBT対戦結果：敗北
+#define SCR_WBT_BATTLE_RESULT_WIN     (1) ///<WBT対戦結果：勝利
+#define SCR_WBT_BATTLE_RESULT_DRAW    (2) ///<WBT対戦結果：引き分け
+
 #define SCR_WBT_EFFECT_POS_L          (0) ///<左 エフェクト位置
 #define SCR_WBT_EFFECT_POS_R          (1) ///<右 エフェクト位置
 
