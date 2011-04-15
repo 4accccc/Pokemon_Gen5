@@ -12,7 +12,8 @@
 
 enum {
 	NARC_gym_poison_speaker_nsbmd = 0,
-	NARC_gym_poison_speaker_nsbca = 1
+	NARC_gym_poison_speaker_nsbca = 1,
+	NARC_gym_poison_speaker_nsbta = 2
 };
 
 /* NARC_GYM_POISON_NAIX_ */

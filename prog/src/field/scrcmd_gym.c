@@ -39,6 +39,7 @@
 #include "gym_fly.h"
 #include "gym_ice.h"
 #include "gym_dragon.h"
+#include "gym_poison.h"
 
 //--電気--
 //--------------------------------------------------------------
@@ -348,4 +349,29 @@ VMCMD_RESULT EvCmdGymDragon_( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_SUSPEND;
 }
 #endif
+
+//--毒--
+//--------------------------------------------------------------
+/**
+ * @brief   毒ジムギミック スピーカーのアニメSTOP
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @return  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGymPoison_AnmStop( VMHANDLE * core, void *wk )
+{
+  u16 idx;
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork( gsys );
+
+  // ギミックID
+  idx  = VMGetU16( core );
+
+  // アニメSTOP
+  GYM_POISON_AnmStop( gsys, idx );
+
+  //イベントコールするので、一度制御を返す
+  return VMCMD_RESULT_SUSPEND;
+}
 

@@ -27,7 +27,9 @@
  *					プロトタイプ宣言
 */
 //=============================================================================
-extern void GYM_POISON_Setup(FIELDMAP_WORK *fieldWork);
-extern void GYM_POISON_End(FIELDMAP_WORK *fieldWork);
-extern void GYM_POISON_Move(FIELDMAP_WORK *fieldWork);
+extern void GYM_POISON_Setup(FIELDMAP_WORK *p_fieldmap);
+extern void GYM_POISON_End(FIELDMAP_WORK *p_fieldmap);
+extern void GYM_POISON_Move(FIELDMAP_WORK *p_fieldmap);
 
+// スクリプトコマンドで呼ばれる関数
+extern void GYM_POISON_AnmStop(GAMESYS_WORK *gsys, const int idx);

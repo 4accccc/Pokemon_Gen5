@@ -19,7 +19,7 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 =end
 
-def writeData( read_file, write_file, filecount )
+def writeData( read_file, write_file, filecount, array_component )
   lines = fields = 0
   ret = 0
   array = Array.new
@@ -54,9 +54,17 @@ def writeData( read_file, write_file, filecount )
     write_file.print "},\n"
   }
   write_file.print "};\n"
-  write_file.printf("#define MAP_ARRAY_%d_ROW\t%d\n", filecount, lines)
-  write_file.printf("#define MAP_ARRAY_%d_COL\t%d\n", filecount, fields)
+
+=begin
+  write_file.printf("#define MAP_ARRAY_%d_ROW\t(%d)", filecount, lines)
+  write_file.printf("\t//マップ縦\n")
+  write_file.printf("#define MAP_ARRAY_%d_COL\t(%d)", filecount, fields)
+  write_file.printf("\t//マップ横\n")
   write_file.print "\n"
+=end
+
+  array_component << lines
+  array_component << fields
 
   return ret
 end
@@ -73,11 +81,26 @@ f_new.print  <<EOS
 EOS
 
 count = 1
+array_component = Array.new
 
 # データ分配列作成
-while writeData( f_old, f_new, count ) == 0
+while writeData( f_old, f_new, count, array_component ) == 0
   count += 1
 end
+
+f_new.print "\n"
+f_new.printf("#define MAP_ARRAY_NUM\t(%d)", count)
+f_new.printf("\t//マップ配列の総数\n")
+
+f_new.print "\n"
+f_new.printf("//マップデータ2次元配列の要素数の配列\n")
+f_new.printf("static const int map_component_max[%d][2] = {\n", count)
+1.upto(count){|i|
+  f_new.printf("\t{ %d, %d },", array_component.shift, array_component.shift)
+  f_new.printf("\t// [行MAX][列MAX]\n")
+}
+f_new.printf("};\n")
+
 
 f_old.close
 f_new.close

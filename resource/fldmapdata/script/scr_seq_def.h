@@ -7152,6 +7152,19 @@
   .short  \head
   .endm
 
+//--------------------------------------------------------------
+/**
+ * ジムコマンド　毒ジムスピーカーOFF
+ * @param idx   ギミックインデックス0～2
+ */
+//--------------------------------------------------------------
+#define _GYM_POISON_ANM_STOP(idx) _ASM_GYM_POISON_ANM_STOP idx
+
+  .macro  _ASM_GYM_POISON_ANM_STOP idx
+  .short  EV_SEQ_GYM_POISON_ANM_STOP
+  .short  \idx
+  .endm
+
 //======================================================================
 //
 //  モデルアニメ関連
