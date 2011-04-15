@@ -638,10 +638,13 @@ VMCMD_RESULT EvCmdWBTECheckerRecord( VMHANDLE * core, void * wk )
   SCRCMD_WORK   *work = wk;
   GAMESYS_WORK  *gsys = SCRCMD_WORK_GetGameSysWork( work );
   HEAPID      heap_id = SCRCMD_WORK_GetHeapID( work );
-  GMEVENT * new_event = createDummyEvent( heap_id, gsys );
   SCRIPT_WORK*      sc = SCRCMD_WORK_GetScriptWork( work );
+  FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  GMEVENT * new_event;
+  WIN_RECORD_PARAM * wr_param;
 
-  //仮：ここで別画面アプリ呼び出し
+  wr_param = WIN_RECORD_PARAM_Create( heap_id, gsys );
+  new_event = WIN_RECORD_EVENT_Show( gsys, fieldmap, wr_param, TRUE );
   TAMADA_Printf("EvCmdWBTECheckerRecord\n");
   SCRIPT_CallEvent( sc, new_event );
   return VMCMD_RESULT_SUSPEND;
