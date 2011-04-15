@@ -3,7 +3,7 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino_hiroki" host="W00252" date="2011-04-14T16:00:44"/>
+	<create user="fuchino_hiroki" host="W00252" date="2011-04-15T17:50:03"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
@@ -29,7 +29,7 @@
 
 <box_test pos_scale="0" xyz="-0.500000 -0.500000 -0.500000" whd="1.000000 1.000000 1.000000"/>
 
-<tex_image_array size="24">
+<tex_image_array size="25">
 	<tex_image index="0" name="in71_kage"
 		width="8" height="8" original_width="8" original_height="8"
 		format="a3i5"
@@ -825,7 +825,49 @@
 			4444 3414 1111 3421 4444 3344 3333 0333
 		</bitmap>
 	</tex_image>
-	<tex_image index="20" name="in71ten01"
+	<tex_image index="20" name="in71stop1"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="in71stop1_pl"
+		path="C:/home/swan_data3d/field/in71/chip/tex/in71stop1.tga"
+	>
+		<bitmap size="256">
+			0000 0000 0000 0000 0000 0000 7700 0007
+			0000 0000 0000 0000 0000 0000 5570 0075
+			0000 0000 0000 0000 0000 0000 4457 0765
+			0000 0000 0000 0000 0000 0000 4458 0865
+			0000 0000 0000 0000 0000 0000 5568 0866
+			0000 0000 0000 0000 0000 0000 6680 0086
+			0000 0000 0000 0000 0000 0000 8800 0008
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 7788 0087
+			0000 0000 0000 0000 0000 8000 7787 0087
+			0000 0000 0000 0000 0000 8000 6683 0086
+			0000 0000 0000 0000 0000 3000 6583 0086
+			0000 0000 0000 0000 0000 1300 5483 0086
+			0000 0000 0000 0000 0000 1330 5482 0086
+			0000 0000 0000 0000 3000 3213 5482 0086
+			0000 0000 0000 0000 3333 2231 5482 0086
+			0000 0000 0000 3333 2113 2233 5472 0086
+			0000 3330 3333 1133 2332 2222 5470 0086
+			3333 3133 1311 3321 2222 0222 5470 0086
+			1131 2113 3233 2223 2222 0002 5470 0086
+			3323 2232 2222 2222 0022 0000 5470 0086
+			2222 2222 2222 0022 0000 0000 5470 0086
+			2222 0222 0000 0000 0000 0000 5470 0086
+			0000 0000 0000 0000 0000 0000 5460 0076
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 8880 0088
+			0000 0000 0000 0000 0000 0000 6678 0876
+			0000 0000 0000 0000 0000 0000 4468 0864
+			0000 0000 0000 0000 0000 0000 4458 0864
+			0000 0000 0000 0000 0000 0000 4458 0864
+			0000 0000 0000 0000 0000 0000 5578 0875
+			0000 0000 0000 0000 0000 0000 8880 0088
+		</bitmap>
+	</tex_image>
+	<tex_image index="21" name="in71ten01"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="color"
@@ -867,7 +909,7 @@
 			8888 8888 8888 8888 8888 8888 8888 8888
 		</bitmap>
 	</tex_image>
-	<tex_image index="21" name="in71tou01"
+	<tex_image index="22" name="in71tou01"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette16"
 		color0_mode="color"
@@ -885,7 +927,7 @@
 			5255 5555 5555 5525 4344 4444 4444 4434
 		</bitmap>
 	</tex_image>
-	<tex_image index="22" name="in71ueki01"
+	<tex_image index="23" name="in71ueki01"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette16"
 		color0_mode="transparency"
@@ -903,7 +945,7 @@
 			4554 4000 0045 4554 0440 0000 0044 0440
 		</bitmap>
 	</tex_image>
-	<tex_image index="23" name="in71yuka01"
+	<tex_image index="24" name="in71yuka01"
 		width="64" height="64" original_width="64" original_height="64"
 		format="palette16"
 		color0_mode="color"
@@ -1043,7 +1085,7 @@
 	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size="24">
+<tex_palette_array size="25">
 	<tex_palette index="0" name="in71_kage_pl" color_size="8">
 		0000 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
@@ -1116,17 +1158,21 @@
 	<tex_palette index="19" name="in71snt_pl" color_size="8">
 		2e45 777f 7bbf 6bf7 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="20" name="in71ten01_pl" color_size="16">
+	<tex_palette index="20" name="in71stop1_pl" color_size="16">
+		7c1f 1c18 1814 1c16 4f9f 02df 029c 01f6
+		0192 7fff 7fff 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="21" name="in71ten01_pl" color_size="16">
 		2e45 32a5 36c6 3ae6 3b06 4367 47a8 4a52
 		56b5 5ef7 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="21" name="in71tou01_pl" color_size="8">
+	<tex_palette index="22" name="in71tou01_pl" color_size="8">
 		1ce7 318c 4631 4a52 4e73 56b5 7fff 7fff
 	</tex_palette>
-	<tex_palette index="22" name="in71ueki01_pl" color_size="8">
+	<tex_palette index="23" name="in71ueki01_pl" color_size="8">
 		0d22 26e6 2b47 2b07 1e45 22a6 2f88 7fff
 	</tex_palette>
-	<tex_palette index="23" name="in71yuka01_pl" color_size="16">
+	<tex_palette index="24" name="in71yuka01_pl" color_size="16">
 		6317 6738 6759 6b59 6f79 6f7a 6f7b 6f9a
 		6f9b 739a 739b 73bb 73bc 77bc 77dd 7bde
 	</tex_palette>
@@ -1237,7 +1283,7 @@
 
 <ex_nns_3dme>
 	<ex_model_info scene_name="デフォルトシーン" disp_pos="0.000000 60.000000"/>
-	<ex_tex_image_array size="24">
+	<ex_tex_image_array size="25">
 		<ex_tex_image index="0" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="1" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="2" disp_pos="0.000000 0.000000"/>
@@ -1262,8 +1308,9 @@
 		<ex_tex_image index="21" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="22" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="23" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="24" disp_pos="0.000000 0.000000"/>
 	</ex_tex_image_array>
-	<ex_tex_palette_array size="24">
+	<ex_tex_palette_array size="25">
 		<ex_tex_palette index="0" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="1" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="2" disp_pos="0.000000 0.000000"/>
@@ -1288,6 +1335,7 @@
 		<ex_tex_palette index="21" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="22" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="23" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="24" disp_pos="0.000000 0.000000"/>
 	</ex_tex_palette_array>
 	<ex_material_array size="1">
 		<ex_material index="0" disp_pos="0.000000 240.000000"/>
