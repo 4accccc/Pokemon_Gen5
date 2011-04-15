@@ -509,8 +509,6 @@ ev_vs_rival:
 	//というわけで！
 	_BALLOONWIN_OBJMSG_POS( msg_c12_swrival_17, C12_SWRIVAL_01, POS_DEFAULT )
 	_MSGWIN_CLOSE()
-	
-//【仮】戦闘スキップ
 
 	//ライバル戦呼び出し　最初の３匹によって分岐　負けてもシナリオ進行
 	IF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_KUSA THEN
@@ -559,6 +557,7 @@ ev_vs_rival:
   //========================================//
   
   _TIME_WAIT( 24 )
+	
 	
 	//アニメ：ベル・主人公、ライバル見送る
 	_OBJ_ANIME( C12_SWBELL_01, anm_staystep_d )

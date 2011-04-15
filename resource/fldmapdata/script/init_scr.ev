@@ -351,12 +351,14 @@ init_flags:
 	_FLAG_SET(FV_C12R0101_PRIZE2_01)
 	*/
 	
+	//d22r0101のbreederを非表示
+	_FLAG_SET(FV_D22R0101_BREEDER_01)
+	
 	//C12のママを非表示
 	_FLAG_SET( FV_C12_SWMAMA )
 	
 	//C12PC0101：PCの曲をつれてけ曲に設定
 	_FLAG_SET( SYS_FLAG_BGM_C12PC0101_GUIDE )
-
 
 }
 _RET

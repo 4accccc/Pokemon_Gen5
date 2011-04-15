@@ -386,8 +386,8 @@
 #define FE_C04GYM0101_CLEAR                370 /* 0x0172 スワンでんきジム：ジムクリアフラグ */
 #define FE_C03GYM0101_COCCON_01            371 /* 0x0173 スワンむしジム：繭状態フラグ */
 #define FE_C03GYM0101_COCCON_02            372 /* 0x0174 スワンむしジム：繭状態フラグ */
-		/* not used   373(0x0175) */
-		/* not used   374(0x0176) */
+#define FE_C12GYM_OPEN                     373 /* 0x0175 スワンノーマルジム：営業フラグ */
+#define FE_D22R0101_BREEEDERW_01           374 /* 0x0176 スワン牧場：BREEDERWクリア後会話フラグ */
 		/* not used   375(0x0177) */
 		/* not used   376(0x0178) */
 		/* not used   377(0x0179) */
@@ -900,18 +900,18 @@
 		/* not used   876(0x036c) */
 		/* not used   877(0x036d) */
 		/* not used   878(0x036e) */
-		/* not used   879(0x036f) */
-		/* not used   880(0x0370) */
-		/* not used   881(0x0371) */
-		/* not used   882(0x0372) */
-		/* not used   883(0x0373) */
+#define FV_D22R0101_BREEDER_01             879 /* 0x036f 牧場：ブリーダー */
+#define FV_D22R0101_POKEMON_01             880 /* 0x0370 牧場：ヨーテリー */
+#define FV_D22R0101_SWRIVAL_01             881 /* 0x0371 牧場：ライバル */
+#define FV_T06_SUNGLASSES_01               882 /* 0x0372 サンギタウン：メダルおやじ */
+#define FV_T06_CHAMPION_01                 883 /* 0x0373 サンギタウン：アデク */
 #define FV_C12PC0101_SWBELL                884 /* 0x0374 ヒオウギシティPC：ベル */
 #define FV_C12R0101_TRORHY1_01             885 /* 0x0375 ヒオウギシティ自宅：バトルサブウェイトロフィー（シングル） */
 #define FV_C12R0101_TRORHY2_01             886 /* 0x0376 ヒオウギシティ自宅：バトルサブウェイトロフィー（ダブル） */
 #define FV_C12R0101_TRORHY3_01             887 /* 0x0377 ヒオウギシティ自宅：バトルサブウェイトロフィー（マルチ） */
 #define FV_C12R0101_PRIZE1_01              888 /* 0x0378 ヒオウギシティ自宅：表彰状（地方） */
 #define FV_C12R0101_PRIZE2_01              889 /* 0x0379 ヒオウギシティ自宅：表彰状（全国） */
-#define FV_R19_POKEMON_HOKAKU              890 /* 0x037a 19ばんどうろ・ポケモン捕獲 */
+#define FV_R19_CHAMPION_01                 890 /* 0x037a 19ばんどうろ：アデク */
 #define FV_C12R0101_SWBELL                 891 /* 0x037b ヒオウギシティ自宅・ベル */
 #define FV_C12R0101_SWMAMA                 892 /* 0x037c ヒオウギシティ自宅・ママ */
 #define FV_C12_SWANLEADER1                 893 /* 0x037d ヒオウギシティ・チェレン */

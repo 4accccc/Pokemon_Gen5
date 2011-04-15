@@ -9,11 +9,16 @@
 #ifndef ZONE_R19_EVC_H
 #define ZONE_R19_EVC_H
 
+#define R19_BOY2_01                        0
+#define R19_CHAMPION_01                    1
 
 #endif //ZONE_R19_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r19.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
 #ifndef ZONE_R19_EVB_H
 #define ZONE_R19_EVB_H
 
+#define BG_R19_BOARD_01                   0
+#define BG_R19_BOARD_03                   1
+#define BG_R19_BOARD_02                   2
 
 #endif //ZONE_R19_EVB_H

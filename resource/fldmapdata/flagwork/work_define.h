@@ -236,6 +236,10 @@
 #define WK_SCENE_C12PC0101_PCGUIDE       16624 /* 0x40f0 ヒオウギシティ：ポケモンセンターチュートリアル用ワーク */
 #define WK_SCENE_R19                     16625 /* 0x40f1 19ばんどうろ：ポケモン捕獲イベント用ワーク */
 #define WK_SCENE_C12_RIVAL_GUIDE_01      16626 /* 0x40f2 ヒオウギシティ：POSイベント */
+#define WK_SCENE_T06                     16627 /* 0x40f3 サンギタウン：POＳ */
+#define WK_SCENE_T06R0101                16628 /* 0x40f4 サンギタウン：SCENE_CHANGE制御ワーク */
+#define WK_SCENE_D22R0101                16629 /* 0x40f5 牧場：POS制御ワーク */
+#define WK_SCENE_C12GYM_OPEN             16630 /* 0x40f6 C12：ジム関連イベント用ワーク */
 
 #define WK_SCENE_AREA_END                16655 /* 0x410f  */
 
