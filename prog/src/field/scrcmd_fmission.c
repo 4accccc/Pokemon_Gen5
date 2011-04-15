@@ -106,6 +106,9 @@ VMCMD_RESULT EvCmdFMissionItemGet( VMHANDLE *core, void *wk )
     //ビーコンリクエスト
 //    GAMEBEACON_Set_FMissionEventClear( ev_id );
   }
+  //OBJ削除
+  MMDL_Delete( mmdl );
+
   return VMCMD_RESULT_SUSPEND;
 }
 

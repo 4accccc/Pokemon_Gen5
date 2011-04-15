@@ -89,7 +89,14 @@ extern BOOL FEST_MISSION_IsScoreUp( FEST_MISSION* fmwk, FMISSION_LOG_ACTION acti
  * @brief ミッション　スコアインクリメント
  */
 //---------------------------------------------------------
-extern BOOL FEST_MISSION_ScoreCalc( FEST_MISSION* fmwk,  FMISSION_LOG_ACTION action, u16 param, u16 inc, u32* out_bonus );
+extern BOOL FEST_MISSION_ScoreCalc( FEST_MISSION* fmwk,  FMISSION_LOG_ACTION action, u16 param, u16 inc );
+
+//---------------------------------------------------------
+/*
+ * @brief ミッション　タイムボーナス計算
+ */
+//---------------------------------------------------------
+extern u32 FEST_MISSION_TimeBonusCalc( FEST_MISSION* fmwk,  u16 score_diff );
 
 //=================================================
 //以下デバッグルーチン

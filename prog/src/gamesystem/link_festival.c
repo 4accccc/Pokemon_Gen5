@@ -75,14 +75,22 @@ void LINK_FESTIVAL_Delete( LINK_FESTIVAL* wk )
 //---------------------------------------------------------
 void LINK_FESTIVAL_Update( LINK_FESTIVAL* wk )
 {
-  if( wk->live_f && 
-      GAMEDATA_GetIntrudeReverseArea( GAMESYSTEM_GetGameData(wk->gsys)) == FALSE ){  //表フィールドにいる間だけ更新
+  if( FEST_MISSION_IsEntry(&wk->mission) == FALSE){
+    return;
+  }
+  if( wk->live_f && GAMEDATA_GetIntrudeReverseArea( GAMESYSTEM_GetGameData(wk->gsys)) == FALSE ){  //表フィールドにいる間だけ更新
+    u32 score;
     FEST_MISSION_Update( &wk->mission );
+
+    score = LINK_FESTIVAL_GetNowScore(wk);
+    if( score-wk->now_score ){
+      wk->finfo_bonus += FEST_MISSION_TimeBonusCalc( &wk->mission,  score-wk->now_score );
+      wk->now_score = score;
+    }
   }
   if( wk->ready_timer ){
     --wk->ready_timer;
   }
-
   lnkfes_BeaconSend( wk );
 }
 
@@ -286,7 +294,7 @@ BOOL LINK_FESTIVAL_TMapRootUpdate( LINK_FESTIVAL* wk, u16 new_root )
 u32 LINK_FESTIVAL_GetNowScore( LINK_FESTIVAL* wk )
 {
   int i;
-  u32 score = 0;
+  u32 score = wk->mission.my_score;
 
   if( FEST_MISSION_IsEntry(&wk->mission) == FALSE){
     return 0;
@@ -294,7 +302,10 @@ u32 LINK_FESTIVAL_GetNowScore( LINK_FESTIVAL* wk )
   for(i = 0;i < wk->log_num;i++){
     score += wk->log[i].score.value;
   }
-  return (score+wk->mission.my_score);
+  if( score > 0xFFFF ){
+    return 0xFFFF;
+  }
+  return score;
 }
 
 //---------------------------------------------------------
@@ -352,31 +363,16 @@ BOOL LINK_FESTIVAL_IsMissionEnd( LINK_FESTIVAL* wk )
 BOOL LINK_FESTIVAL_MissionScoreCalc( GAMESYS_WORK* gsys, FMISSION_LOG_ACTION action, u16 param )
 {
   LINK_FESTIVAL* wk;
-  BOOL score_inc = FALSE;
   int inc = 1;  //@todo 現状スコア1固定
 
   if( gsys == NULL ){
-//    GF_ASSERT(0);
     return FALSE;
   }
   wk = GAMESYSTEM_GetLinkFestivalWork( gsys );
   if( wk == NULL ){
     return FALSE;
   }
-  {
-    u32 time_bonus = 0;
-    score_inc =  FEST_MISSION_ScoreCalc( &wk->mission, action, param, inc, &time_bonus );
-    if( !score_inc || !time_bonus ){
-      return score_inc;  
-    }
-    if( (time_bonus/60) == 0 ){
-      time_bonus = 1; //最低1
-    }else{
-      time_bonus /= 60;
-    }
-    wk->finfo_bonus += time_bonus;
-  }
-  return score_inc;
+  return FEST_MISSION_ScoreCalc( &wk->mission, action, param, inc );
 }
 
 //---------------------------------------------------------
@@ -539,10 +535,6 @@ void LINKFEST_LOG_PARAM_Clear( LINKFEST_LOG_PARAM* log_prm )
 //---------------------------------------------------------
 static void lnkfes_BeaconSend( LINK_FESTIVAL* wk )
 {
-  if( FEST_MISSION_IsLive(&wk->mission) == FALSE){
-    wk->beacon_timer = 0;
-    return;
-  }
   if( wk->beacon_timer > 0 ){
     --wk->beacon_timer;
     return;
@@ -568,6 +560,7 @@ static void log_ClearAll( LINK_FESTIVAL* wk )
   wk->beacon_timer = 0; 
   wk->finfo_score = 0;
   wk->finfo_bonus = 0;
+  wk->now_score = 0;
   wk->tmap_root = 0xFFFF; //無効値で初期化
 
   wk->ready_timer = 0;

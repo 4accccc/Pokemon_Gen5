@@ -30,6 +30,7 @@ struct _LINK_FESTIVAL{
   u16 finfo_bonus;  //フィールドで表示しているタイムボーナス
 
   u16 tmap_root;    //現在のルートゾーンID
+  u16 now_score;    //現在のスコア
 
   u16 log_num;  //スコアログ登録数
   u16 log_idx;  //スコアログリング参照トップindex
