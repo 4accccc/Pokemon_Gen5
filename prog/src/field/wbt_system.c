@@ -22,6 +22,10 @@
 #include "tr_tool/trtype_def.h" //TRTYPE_HERO/TRTYPE_HEROINE
 
 
+#ifdef  PM_DEBUG
+//#define DEBUG_WEAK_PARTY  //定義すると手持ちが激しく弱くなる
+#endif
+
 //============================================================================================
 //============================================================================================
 static void WBTTRAINER_Init( WBTTRAINER * wbt_tr );
@@ -177,6 +181,21 @@ const WBTTRAINER * WBTSYS_GetTrainer( const WBTSYS * wbtsys, u32 pos )
 {
   GF_ASSERT( pos < WBT_TRAINER_NUM );
   return &wbtsys->wbt_trainer[ pos ];
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief 参加ポケモンの補正レベルを取得する
+ * @param wbtsys
+ * @retval  0       補正しない
+ * @retval  その他  補正するレベル値
+ *
+ * @todo  ダウンロードデータへの対応
+ */
+//------------------------------------------------------------------
+static u8 WBTSYS_GetRevisePokeLevel( const WBTSYS * wbtsys )
+{
+  return 50;
 }
 
 //============================================================================================
@@ -413,7 +432,18 @@ void WBTSYS_SetPokelistResult( WBTSYS * wbtsys, PLIST_DATA * plist_data )
   {
     *wbtsys->scr_answer_work = TRUE;
   }
-
+#ifdef  PM_DEBUG
+  {
+    int i;
+    TAMADA_Printf("Select Mons:");
+    for (i = 0; i < 6; i ++ )
+    {
+      TAMADA_Printf("%02d ", wbtsys->pokelist_select_num[i] );
+    }
+    TAMADA_Printf("\n ret_sel(%d) ret_mode(%d) script_return(%d)\n",
+        wbtsys->pokelist_result_select, wbtsys->pokelist_return_mode, *wbtsys->scr_answer_work );
+  }
+#endif
 }
 
 //------------------------------------------------------------------
@@ -484,10 +514,54 @@ void WBTSYS_SetupPokeStatusData( WBTSYS * wbtsys, GAMEDATA * gamedata, PSTATUS_D
 }
 
 //------------------------------------------------------------------
+/**
+ * @brief 参戦するポケモンパーティを生成する
+ * @param wbtsys
+ * @param gamedata
+ *
+ * @return  POKEPARTY 生成したポケモンパーティ
+ *
+ * @note    呼び出し元で責任を持ってメモリを開放する必要がある
+ */
 //------------------------------------------------------------------
-POKEPARTY * WBTSYS_GetBattleParty( WBTSYS * wbtsys, GAMEDATA * gamedata )
+POKEPARTY * WBTSYS_CreateBattleParty( WBTSYS * wbtsys, GAMEDATA * gamedata )
 {
-  return getUsePokeParty( wbtsys, gamedata );
+  POKEPARTY * entry_party;
+  POKEPARTY * base_party;
+  POKEMON_PARAM * entry_pp;
+  u32 cnt, max;
+  u8 revise_level;
+
+  entry_party = GFL_HEAP_AllocMemory( wbtsys->heapID, PokeParty_GetWorkSize() );
+  PokeParty_Init( entry_party, TEMOTI_POKEMAX );
+  base_party = getUsePokeParty( wbtsys, gamedata );
+  entry_pp = GFL_HEAP_AllocMemoryLo( wbtsys->heapID, POKETOOL_GetWorkSize() );
+  PP_Clear( entry_pp );
+  max = WBTTOOL_GetPartyMaxByRule( wbtsys->rule );
+#ifdef DEBUG_WEAK_PARTY
+  max = 1;
+#endif
+  revise_level = WBTSYS_GetRevisePokeLevel( wbtsys );
+  for ( cnt = 0; cnt < max; cnt ++ )
+  {
+    POKEMON_PARAM * base_pp;
+    u32 pos = wbtsys->pokelist_select_num[ cnt ];
+    GF_ASSERT( pos );
+    pos -= 1; //1 origin --> 0 origin
+    base_pp = PokeParty_GetMemberPointer( base_party, pos );
+    POKETOOL_CopyPPtoPP( base_pp, entry_pp );
+    if ( revise_level != 0 && PP_Get( entry_pp, ID_PARA_level, NULL ) != revise_level )
+    { //必要な場合はレベルを補正する
+      POKETOOL_MakeLevelRevise( entry_pp, revise_level );
+    }
+#ifdef DEBUG_WEAK_PARTY
+    PP_Put( entry_pp, ID_PARA_hp, 1 );  //負けやすくする！
+#endif
+    PokeParty_Add( entry_party, entry_pp );
+  }
+  GFL_HEAP_FreeMemory( entry_pp );
+
+  return entry_party;
 }
 
 

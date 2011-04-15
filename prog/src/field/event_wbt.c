@@ -59,6 +59,7 @@
 #include "fld_btl_inst_tool.h"
 
 #include "app/win_record.h"
+#include "tr_tool/ex_trainer_def.h"
 
 FS_EXTERN_OVERLAY(pokelist);
 
@@ -308,6 +309,8 @@ static BOOL makeRomTrainerData( BSUBWAY_PARTNER_DATA * tr_data,
   // パワー乱数を決定する
   pow_rnd= pri2pow_table[ tr_pri - 1 ];
   tr_data->bt_trd.tr_type = WBTTRAINER_GetTrainerType( wbt_tr );
+  //tr_data->bt_trd.player_id = tr_no + BSW_TR_ARCDATANO_ORG; //1 origin
+  tr_data->bt_trd.player_id = tr_no + TRID_OFFSET_WBT;
 
   //ポケモンデータをセット
   ret = FBI_TOOL_SetBSWayPokemonParam(
@@ -337,8 +340,7 @@ static GMEVENT_RESULT wbtBattleEvent( GMEVENT * event, int *seq, void * work )
       FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
       {
         const WBTTRAINER * wbt_tr = WBTSYS_GetOpponentTrainer( wbtsys );
-        POKEPARTY *party = WBTSYS_GetBattleParty( wbtsys, GAMESYSTEM_GetGameData( gsys ) );
-        //BSWAY_PLAYMODE mode = ptr->PlayMode;
+        POKEPARTY *party = WBTSYS_CreateBattleParty( wbtsys, GAMESYSTEM_GetGameData( gsys ) );
         WBTRULE wbt_rule = WBTSYS_GetRule( wbtsys );
         BSWAY_PLAYMODE mode = WBTTOOL_WBTRuleToBtlRule( wbt_rule );
         BSUBWAY_PARTNER_DATA *tr_data = &wbew->tr_data;
@@ -346,6 +348,7 @@ static GMEVENT_RESULT wbtBattleEvent( GMEVENT * event, int *seq, void * work )
 
         makeRomTrainerData( tr_data, wbt_tr, num, HEAPID_PROC );
         wbew->bp = FBI_TOOL_WBT_CreateBattleParam( gsys, party, mode, tr_data, num  );
+        GFL_HEAP_FreeMemory( party );
       }
       call_event = EVENT_WBTBattle( gsys, fieldmap, wbew->bp );
       GMEVENT_CallEvent( event, call_event );

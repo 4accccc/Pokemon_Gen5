@@ -24,6 +24,7 @@
 #include "msg\msg_btl_ui.h"
 #include "msg\msg_wazaname.h"
 
+#include "tr_tool/ex_trainer_def.h" //TRID_OFFSET_WBT
 #ifdef PM_DEBUG
 #include "script_message.naix"
 #include "msg\script\msg_n01r0502.h"
@@ -80,6 +81,7 @@ typedef enum {
   MSGSRC_WAZAOBOE,
   MSGSRC_YESNO,
   MSGSRC_SUBWAY,
+  MSGSRC_WBT,
 
   MSGDATA_MAX,
 }MsgSrcID;
@@ -160,6 +162,7 @@ void BTL_STR_InitSystem( const BTL_MAIN_MODULE* mainModule, u8 playerClientID, c
     NARC_message_waza_oboe_dat,
     NARC_message_yesnomenu_dat,
     NARC_message_tower_trainer_dat,
+    NARC_message_wbt_trmsg_dat,
   };
 
   int i;
@@ -924,7 +927,21 @@ void BTL_STR_MakeStringWaza( STRBUF* dst, u8 pokeID, u16 waza )
 //=============================================================================================
 void BTL_STR_MakeStringSubway( STRBUF* dst, u16 subwayTRID, BtlResult playerResult )
 {
-  if( subwayTRID )
+  OS_Printf("BTL_STR_MakeStringSubway(%d)\n",subwayTRID);
+  if( subwayTRID >= TRID_OFFSET_WBT )
+  {
+    u16 strID;
+    subwayTRID -= TRID_OFFSET_WBT;
+    strID = subwayTRID * 7; //WBT_TRMSG_TYPE_NUM;
+    if( playerResult == BTL_RESULT_LOSE ){
+      strID = 5; //WBT_TRMSG_PLAYER_LOSE
+      //strID += 5; //WBT_TRMSG_PLAYER_LOSE
+    }else{
+      strID += 3; //WBT_TRMSG_FIGHT_LOSE
+    }
+    GFL_MSG_GetString( SysWork.msg[MSGSRC_WBT], strID, dst );
+  }
+  else if( subwayTRID )
   {
     u16 strID = (subwayTRID - 1) * 3;
 

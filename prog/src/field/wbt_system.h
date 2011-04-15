@@ -164,7 +164,7 @@ extern void WBTSYS_SetupPokeStatusData( WBTSYS * wbtsys, GAMEDATA * gamedata, PS
 
 extern void WBTSYS_SetPokelistResult( WBTSYS * wbtsys, PLIST_DATA * plist_data );
 
-extern POKEPARTY * WBTSYS_GetBattleParty( WBTSYS * wbtsys, GAMEDATA * gamedata );
+extern POKEPARTY * WBTSYS_CreateBattleParty( WBTSYS * wbtsys, GAMEDATA * gamedata );
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------

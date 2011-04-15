@@ -726,7 +726,7 @@ BATTLE_SETUP_PARAM * FBI_TOOL_WBT_CreateBattleParam(
     dst->playerStatus[client] = GAMEDATA_GetMyStatus( gdata );
     
     // プレイヤーパーティーの登録
-    EntryMyParty( my_party ,dst->party[client] ,inMemNum ,0 ,heapID);
+    PokeParty_Copy( my_party, dst->party[client] );
   }
   
   //敵トレーナーセット
