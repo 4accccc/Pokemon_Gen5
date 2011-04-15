@@ -778,7 +778,7 @@ end
       if speabi2 == ""
         speabi2 = "|"
       end
-      pokelist << "%s\t%s\t%s\t%s\t%s\t%s\n" % [ split_data[ PARA::POKENAME ], split_data[ PARA::GRA_NO ], split_data[ PARA::TYPE1 ], split_data[ PARA::TYPE2 ], speabi1, speabi2 ]
+      pokelist << "%s\t%03d\t%s\t%s\t%s\t%s\n" % [ split_data[ PARA::POKENAME ], split_data[ PARA::GRA_NO ].to_i, split_data[ PARA::TYPE1 ], split_data[ PARA::TYPE2 ], speabi1, speabi2 ]
     end
     if split_data[ PARA::FORM_NAME ] != "" && split_data[ PARA::POKENAME ] != ""
       form[ monsno[ split_data[ PARA::POKENAME ] ] ].add_form_name( split_data[ PARA::FORM_NAME ] )
