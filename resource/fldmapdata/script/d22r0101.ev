@@ -606,7 +606,7 @@ EVENT_START ev_pos_d22r0101_pokesearch_05
   $WK_SCENE_D22R0101 = 5
   
   //D22R0101ƒ‰ƒCƒoƒ‹”ñ•\Ž¦
-  _FLAG_RESET(FV_D22R0101_SWRIVAL_01)
+  _FLAG_SET(FV_D22R0101_SWRIVAL_01)
   
   //========================================//
 EVENT_END
