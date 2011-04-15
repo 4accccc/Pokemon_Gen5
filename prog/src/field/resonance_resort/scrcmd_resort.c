@@ -225,7 +225,7 @@ extern VMCMD_RESULT EvCmdResortGetMsgID( VMHANDLE *p_core, void *p_wk_adrs )
           for( i = 0; i < 3; i++ )
           {
             u16 percent = RESORT_BINARY_CITY_GetData( p_binary_city, index, RESORT_BINARY_CITY_PARAM_GROUP_00+i );
-            if( percent < rnd )
+            if( percent > rnd )
             {
               break;
             }
@@ -235,6 +235,7 @@ extern VMCMD_RESULT EvCmdResortGetMsgID( VMHANDLE *p_core, void *p_wk_adrs )
             }
           }
           GF_ASSERT( i < 3 );
+          i %= 3;
           NAGI_Printf( "group%d idx%d lv%d\n", i, index, lv );
           RESORT_BINARY_CITY_Exit( p_binary_city );
         }
