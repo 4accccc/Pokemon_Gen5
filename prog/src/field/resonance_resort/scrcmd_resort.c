@@ -1238,6 +1238,11 @@ VMCMD_RESULT EvCmdResortSetSpot( VMHANDLE *p_core, void *p_wk_adrs )
         is_good = TRUE;
       } 
       break;
+    case RESORT_SPOT_TYPE_NONE:
+      is_good = FALSE;
+      break;
+    default:
+      GF_ASSERT(0);
     }
 
     //
