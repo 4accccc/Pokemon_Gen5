@@ -572,7 +572,7 @@ const WBTLIST_CANVAS_DATA wbt_canvas_tbl[] = {
 	{ GFL_BG_FRAME0_S,	4,	4,	24,	2,	2,},		// 下、up
 	{ GFL_BG_FRAME0_S,	4,	17,	24,	2,	2,},		// 下、down
 	//
-	{ GFL_BG_FRAME0_M,	1,	20,	30,	4,	9,},		// 上、meswin
+	{ GFL_BG_FRAME0_M,	1,	19,	30,	4,	9,},		// 上、meswin
 
 	{ 0xff, 0, 0, 0, 0, 0,}, // end code
 };
@@ -1140,9 +1140,11 @@ static void wbt_init( WBTLIST_MAIN_WORK* wk )
 	wbt_clear_meswin( wk );
 	//
 	// 汎用PrintStream用
-	APP_PRINTSYS_COMMON_PrintStreamInit( &wk->PrintSysWork, APP_PRINTSYS_COMMON_TYPE_BOTH );
+//	APP_PRINTSYS_COMMON_PrintStreamInit( &wk->PrintSysWork, APP_PRINTSYS_COMMON_TYPE_BOTH );
+	APP_PRINTSYS_COMMON_PrintStreamInit( &wk->PrintSysWork, APP_PRINTSYS_COMMON_TYPE_KEY );
 	// メッセージ送りマーク用
-	wk->MsgCursorWork = APP_KEYCURSOR_Create( MES_CURSOR_COLOR, TRUE, TRUE, wk->heapID );
+//	wk->MsgCursorWork = APP_KEYCURSOR_Create( MES_CURSOR_COLOR, TRUE, TRUE, wk->heapID );
+	wk->MsgCursorWork = APP_KEYCURSOR_Create( MES_CURSOR_COLOR, TRUE, FALSE, wk->heapID );
 	//
 	//
 	// DebugFlagの判定
