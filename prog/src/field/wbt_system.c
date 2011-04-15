@@ -21,6 +21,10 @@
 
 #include "tr_tool/trtype_def.h" //TRTYPE_HERO/TRTYPE_HEROINE
 
+#include "battle/bsubway_battle_data.h" //BSUBWAY_PARTNER_DATA
+#include "fld_btl_inst_tool.h"
+#include "message.naix"    //NARC_message_wbt_trname_dat
+#include "tr_tool/ex_trainer_def.h" //TRID_OFFSET_WBT
 
 #ifdef  PM_DEBUG
 //#define DEBUG_WEAK_PARTY  //定義すると手持ちが激しく弱くなる
@@ -166,6 +170,14 @@ void WBTSYS_SetScriptAnswerWork( WBTSYS * wbtsys, u16 * scr_answer_work )
 {
   wbtsys->scr_answer_work = scr_answer_work;
 }
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+u16 * WBTSYS_GetScriptAnswerWork( WBTSYS * wbtsys )
+{
+  GF_ASSERT( wbtsys->scr_answer_work );
+  return wbtsys->scr_answer_work;
+}
+
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -562,6 +574,95 @@ POKEPARTY * WBTSYS_CreateBattleParty( WBTSYS * wbtsys, GAMEDATA * gamedata )
   GFL_HEAP_FreeMemory( entry_pp );
 
   return entry_party;
+}
+
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+static const u8 pri2pow_table[5] = {
+  0x10, 0x12, 0x14, 0x1a, 0x1f
+};
+
+//-----------------------------------------------------------------------------
+/**
+ * @param tr_data
+ * @param wbt_tr
+ * @param cnt
+ * @param inHeapID
+ * @todo  バトルサブウェイは４体しかポケモンを選択できない。
+ */
+//-----------------------------------------------------------------------------
+static BOOL makeRomTrainerData( BSUBWAY_PARTNER_DATA * tr_data,
+    const WBTTRAINER * wbt_tr,
+    u8 cnt, HEAPID inHeapID)
+{
+  BOOL      ret = 0;
+  BSUBWAY_TRAINER_ROM_DATA  *trd;
+  u8 pow_rnd;
+  u8 tr_pri = WBTTRAINER_GetPriority(wbt_tr);
+  u8 tr_no = WBTTRAINER_GetID(wbt_tr);
+
+  //トレーナーデータセット
+  trd = FBI_TOOL_AllocTrainerRomData(tr_data,
+      ARCID_WBT_TD ,tr_no, NARC_message_wbt_trname_dat ,inHeapID);
+  // パワー乱数を決定する
+  pow_rnd= pri2pow_table[ tr_pri - 1 ];
+  tr_data->bt_trd.tr_type = WBTTRAINER_GetTrainerType( wbt_tr );
+  //tr_data->bt_trd.player_id = tr_no + BSW_TR_ARCDATANO_ORG; //1 origin
+  tr_data->bt_trd.player_id = tr_no + TRID_OFFSET_WBT;
+
+  //ポケモンデータをセット
+  ret = FBI_TOOL_SetBSWayPokemonParam(
+      trd, tr_no, &tr_data->btpwd[0], cnt,
+      ARCID_BSW_PD, NULL, NULL, NULL, NULL ,pow_rnd ,inHeapID);
+  GFL_HEAP_FreeMemory( trd );
+  return ret;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief WBT用BATTLE_SETUP_PARAM生成
+ */
+//------------------------------------------------------------------
+BATTLE_SETUP_PARAM * WBTSYS_CreateBattleSetupParam(
+    WBTSYS * wbtsys, GAMESYS_WORK * gsys, BSUBWAY_PARTNER_DATA * tr_data )
+{
+  BATTLE_SETUP_PARAM * bp;
+  const WBTTRAINER * wbt_tr = WBTSYS_GetOpponentTrainer( wbtsys );
+  POKEPARTY *party = WBTSYS_CreateBattleParty( wbtsys, GAMESYSTEM_GetGameData( gsys ) );
+  WBTRULE wbt_rule = WBTSYS_GetRule( wbtsys );
+  BSWAY_PLAYMODE mode = WBTTOOL_WBTRuleToBtlRule( wbt_rule );
+  int num = WBTTOOL_GetPartyMaxByRule( wbt_rule );
+
+  makeRomTrainerData( tr_data, wbt_tr, num, HEAPID_PROC );
+  bp = FBI_TOOL_WBT_CreateBattleParam( gsys, party, mode, tr_data, num  );
+  GFL_HEAP_FreeMemory( party );
+  return bp;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief WBT戦闘結果の反映
+ * @param wbtsys
+ * @param gamedata
+ */
+//------------------------------------------------------------------
+void WBTSYS_ReflectBattleResult( WBTSYS * wbtsys, GAMEDATA * gamedata )
+{
+  u16 * ret_wk = WBTSYS_GetScriptAnswerWork( wbtsys );
+  u32 result = GAMEDATA_GetLastBattleResult( gamedata ); 
+
+  switch ( result )
+  {
+  default:
+    GF_ASSERT_MSG( 0, "想定外のBtlResult(%d)\n", result );
+    result = BTL_RESULT_LOSE;
+    break;
+  case BTL_RESULT_LOSE:
+  case BTL_RESULT_WIN:
+  case BTL_RESULT_DRAW:
+    break;
+  }
+  *ret_wk = result;
 }
 
 

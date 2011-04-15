@@ -22,6 +22,8 @@
 #include "app/pokelist.h" //PLIST_DATA
 #include "app/p_status.h" //PSTATUS_DATA
 
+#include "savedata/bsubway_savedata.h"  //bsubway_battle_data.h‚Ì“à•”’è‹`‚Ì‚½‚ß
+#include "battle/bsubway_battle_data.h" //BSUBWAY_PARTNER_DATA
 //#include "wbt_trlist_struct.h"  //WBT_TRDATA
 
 //============================================================================================
@@ -133,6 +135,7 @@ extern void WBTSYS_SetSelectDLData( WBTSYS * wbtsys, u8 no );
 extern u8 WBTSYS_GetSelectDLData( const WBTSYS * wbtsys );
 
 extern void WBTSYS_SetScriptAnswerWork( WBTSYS * wbtsys, u16 * scr_answer_work );
+extern u16 * WBTSYS_GetScriptAnswerWork( WBTSYS * wbtsys );
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
@@ -165,6 +168,9 @@ extern void WBTSYS_SetupPokeStatusData( WBTSYS * wbtsys, GAMEDATA * gamedata, PS
 extern void WBTSYS_SetPokelistResult( WBTSYS * wbtsys, PLIST_DATA * plist_data );
 
 extern POKEPARTY * WBTSYS_CreateBattleParty( WBTSYS * wbtsys, GAMEDATA * gamedata );
+extern BATTLE_SETUP_PARAM * WBTSYS_CreateBattleSetupParam(
+    WBTSYS * wbtsys, GAMESYS_WORK * gsys, BSUBWAY_PARTNER_DATA * tr_data );
+extern void WBTSYS_ReflectBattleResult( WBTSYS * wbtsys, GAMEDATA * gamedata );
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------

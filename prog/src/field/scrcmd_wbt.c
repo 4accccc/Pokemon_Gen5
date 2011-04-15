@@ -75,6 +75,10 @@ SDK_COMPILER_ASSERT( WBT_TRMSG_PLAYER_WIN == SCR_WBT_TRMSG_PLAYER_WIN );
 SDK_COMPILER_ASSERT( WBT_TRMSG_PLAYER_LOSE == SCR_WBT_TRMSG_PLAYER_LOSE );
 SDK_COMPILER_ASSERT( WBT_TRMSG_ANNOUNCE == SCR_WBT_TRMSG_ANNOUNCE );
 
+SDK_COMPILER_ASSERT( BTL_RESULT_LOSE == SCR_WBT_BATTLE_RESULT_LOSE );
+SDK_COMPILER_ASSERT( BTL_RESULT_WIN == SCR_WBT_BATTLE_RESULT_WIN );
+SDK_COMPILER_ASSERT( BTL_RESULT_DRAW == SCR_WBT_BATTLE_RESULT_DRAW );
+
 //============================================================================================
 //============================================================================================
 //--------------------------------------------------------------
@@ -431,8 +435,8 @@ VMCMD_RESULT EvCmdWBTTrainerBattle( VMHANDLE * core, void * wk )
   TAMADA_Printf("EvCmdWBTTrainerBattle\n");
   GAMEDATA_SetLastBattleResult( gamedata, BTL_RESULT_WIN );
 
-  //仮: 今は勝ち結果を指定しているだけ
-  *ret_wk = SCR_BATTLE_RESULT_WIN;
+  //対戦結果を受け取るワークを設定する
+  WBTSYS_SetScriptAnswerWork( wbtsys, ret_wk );
 
   //ここからトレーナーバトルイベントを呼び出す
   next_event = WBT_EVENT_TrainerBattle( wbtsys, gsys );

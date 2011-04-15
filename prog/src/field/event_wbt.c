@@ -48,7 +48,7 @@
 
 //#include "scrcmd_menuwin.h"
 
-#include "script_message.naix"
+//#include "script_message.naix"
 //#include "../../../resource/message/dst/script/msg_bsubway_scr.h"
 //#include "../../../resource/message/dst/msg_tower_trainer.h"
 
@@ -59,7 +59,6 @@
 #include "fld_btl_inst_tool.h"
 
 #include "app/win_record.h"
-#include "tr_tool/ex_trainer_def.h"
 
 FS_EXTERN_OVERLAY(pokelist);
 
@@ -280,6 +279,7 @@ typedef struct {
   BATTLE_SETUP_PARAM * bp;
 }WBT_BATTLE_EVENT_WORK, WBEW;
 
+#if 0
 static const u8 pri2pow_table[5] = {
   0x10, 0x12, 0x14, 0x1a, 0x1f
 };
@@ -319,6 +319,7 @@ static BOOL makeRomTrainerData( BSUBWAY_PARTNER_DATA * tr_data,
   GFL_HEAP_FreeMemory( trd );
   return ret;
 }
+#endif
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -338,6 +339,7 @@ static GMEVENT_RESULT wbtBattleEvent( GMEVENT * event, int *seq, void * work )
     {
       GMEVENT * call_event;
       FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+#if 0
       {
         const WBTTRAINER * wbt_tr = WBTSYS_GetOpponentTrainer( wbtsys );
         POKEPARTY *party = WBTSYS_CreateBattleParty( wbtsys, GAMESYSTEM_GetGameData( gsys ) );
@@ -350,6 +352,8 @@ static GMEVENT_RESULT wbtBattleEvent( GMEVENT * event, int *seq, void * work )
         wbew->bp = FBI_TOOL_WBT_CreateBattleParam( gsys, party, mode, tr_data, num  );
         GFL_HEAP_FreeMemory( party );
       }
+#endif
+      wbew->bp = WBTSYS_CreateBattleSetupParam( wbtsys, gsys, &wbew->tr_data );
       call_event = EVENT_WBTBattle( gsys, fieldmap, wbew->bp );
       GMEVENT_CallEvent( event, call_event );
     }
@@ -357,6 +361,7 @@ static GMEVENT_RESULT wbtBattleEvent( GMEVENT * event, int *seq, void * work )
     break;
 
   case WBE_SEQ_END:
+    WBTSYS_ReflectBattleResult( wbtsys, GAMESYSTEM_GetGameData(gsys) ); //í“¬Œ‹‰Ê‚ð”½‰f‚·‚é
     BATTLE_PARAM_Delete( wbew->bp );
     return GMEVENT_RES_FINISH;
   }
