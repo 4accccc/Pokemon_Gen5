@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-05T15:10:06"/>
+	<create user="suginaka_katsunori" host="W00227" date="2011-04-15T11:44:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1311" top="175" right="2016" bottom="803" maximized="no" rayout="Vertical2">
+	<dialog left="1288" top="133" right="1993" bottom="753" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -315,8 +315,8 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
-		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
 	</dialog>
@@ -473,6 +473,76 @@
 		<comment>未使用</comment>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_d05r0101_trainerm_01" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<comment>♂
+・GRIDX=20、GRIDZ=23
+簡易テーブルの前</comment>
+		<attribute name="キャラ指定">TRAINERM
+エリートトレーナー♂</attribute>
+		<language name="JPN" width="256">仮メッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_d05r0101_backpackerw_01" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#ffffff,,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<comment>♀
+・GRIDX=9、GRIDZ=22
+大きなテーブルの前</comment>
+		<attribute name="キャラ指定">BACKPACKERW
+バックパッカー♀</attribute>
+		<language name="JPN" width="256">仮メッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_d05r0101_badman_01" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#ffffff,,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<comment>♂
+・GRIDX=4、GRIDZ=10
+GIRL2と隣り合わせ</comment>
+		<attribute name="キャラ指定">BADMAN
+スキンヘッド</attribute>
+		<language name="JPN" width="256">仮メッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_d05r0101_girl2_01" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#ffffff,,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<comment>♀
+・GRIDX=5、GRIDZ=10
+BADMANと隣り合わせ</comment>
+		<attribute name="キャラ指定">GIRL2
+ミニスカート</attribute>
+		<language name="JPN" width="256">仮メッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_d05r0101_policeman_01" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#ffffff,,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<comment>♂
+・GRIDX=5、GRIDZ=6
+客席ストッパー</comment>
+		<attribute name="キャラ指定">POLICEMAN
+警備員</attribute>
+		<language name="JPN" width="256">仮メッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_d05r0101_policeman_02" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#ffffff,,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<comment>♂
+・GRIDX=24、GRIDZ=6
+客席ストッパー</comment>
+		<attribute name="キャラ指定">POLICEMAN
+警備員</attribute>
+		<language name="JPN" width="256">仮メッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_d05r0101_shopm_01" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#ffffff,,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<comment>♂
+・GRIDX=23、GRIDZ=12
+売り物は全部売り切れのお店</comment>
+		<attribute name="キャラ指定">SHOPM
+売店の店員</attribute>
+		<language name="JPN" width="256">仮メッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<flowchart-group-list>
