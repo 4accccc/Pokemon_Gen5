@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-16T11:53:54"/>
+	<create user="matsumiya" host="W00224" date="2011-04-16T16:09:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1633" top="306" right="2338" bottom="926" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -298,12 +298,8 @@
 		<attribute name="キャラ指定">SWLEADER2
 ジムリーダー
 ホミカ</attribute>
-		<language name="JPN" width="256">さっきは　ありがとー！▼
-ボクの　むしポケモンが　きみと
-たたかいたいって　さわいでさ[BE:01:ページ切り替え（クリア）]
-ではでは
-さっそくだけど　しょうぶ　だね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ▼</language>
+		<language name="JPN" width="256">せんとうまえメッセージ▼</language>
+		<language name="JPN_KANJI" width="256">戦闘前メッセージ▼</language>
 	</row>
 
 	<row id="msg_c13gym0102_swleader_02">
@@ -311,13 +307,8 @@
 ・戦闘後メッセージ</comment>
 		<attribute name="キャラ指定">ジムリーダー
 ホミカ</attribute>
-		<language name="JPN" width="256">あうう
-まけちゃったよ……[BE:01:ページ切り替え（クリア）]
-それにしても　きみ
-すっごく　つよいんだねえ[BE:01:ページ切り替え（クリア）]
-これ　ジムバッジ！
-ボクに　かったから　あげる！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ▼</language>
+		<language name="JPN" width="256">せんとうごメッセージ▼</language>
+		<language name="JPN_KANJI" width="256">戦闘後メッセージ▼</language>
 	</row>
 
 	<row id="msg_c13gym0102_swleader_03">
@@ -336,14 +327,10 @@
 　No???「（調整中）」</comment>
 		<attribute name="キャラ指定">ジムリーダー
 ホミカ</attribute>
-		<language name="JPN" width="256">ビートルバッジ
-かっこいいでしょ！[BE:01:ページ切り替え（クリア）]
-それに　バッジを　３コ　もっていれば
-レベル４０までの　ポケモンは▽
-いうことを　きいてくれるしね▼
-えーっと　そうだ
-これも　あげるよ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ▼</language>
+		<language name="JPN" width="256">トシキックバッジの　せつめい
+わざマシンを　あげる▼</language>
+		<language name="JPN_KANJI" width="256">トシキックバッジの　せつめい
+わざマシンを　あげる▼</language>
 	</row>
 
 	<row id="msg_c13gym0102_swleader_05">
@@ -351,12 +338,8 @@
 ・アイテム入手処理後</comment>
 		<attribute name="キャラ指定">ジムリーダー
 ホミカ</attribute>
-		<language name="JPN" width="256">「むしのていこう」は
-ダメージを　あたえた　あいての▽
-とくこうも　さげるんだよね▼
-そういう　なんでもないような　ことが
-だいじ　だったり　するからさ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">わざマシンの　せつめい</language>
+		<language name="JPN_KANJI" width="256">わざマシンの　説明</language>
 	</row>
 
 	<row id="msg_c13gym0102_swleader_06">
@@ -364,17 +347,17 @@
 ・leader_05表示後</comment>
 		<attribute name="キャラ指定">ジムリーダー
 ホミカ</attribute>
-		<language name="JPN" width="256">きみは　たびに　でてから
-どれだけの　はっけんを　した？▼
-ボクはね　こどものころに
-むしポケモンの　うつくしさに▽
-じゅんじょうハートを　うばわれ▼
-えをかいたり　しょうぶしたりを
-ずっと　くりかえして……　それでも▽
-いまだに　はっけんが　あるんだ▼
-ポケモンと　くらす　せかいは
-ほんと ふしぎで　みちているんだー</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">クリアまでの　メッセージ</language>
+		<language name="JPN_KANJI" width="256">クリア前の　メッセージ</language>
+	</row>
+
+	<row id="msg_c13gym0102_swleader_07">
+		<comment>♀
+・殿堂入り後</comment>
+		<attribute name="キャラ指定">ジムリーダー
+ホミカ</attribute>
+		<language name="JPN" width="256">クリアしてからの　メッセージ</language>
+		<language name="JPN_KANJI" width="256">クリア後の　メッセージ</language>
 	</row>
 
 	<flowchart-group-list>
