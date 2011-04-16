@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-16T11:53:59"/>
+	<create user="matsumiya" host="W00224" date="2011-04-16T12:32:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1312" top="199" right="2017" bottom="827" maximized="no" rayout="Vertical2">
+	<dialog left="1298" top="167" right="2003" bottom="795" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -295,25 +295,25 @@
 	<row id="msg_c13gym0101_glasses_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・ジムバッジ取得前＋アイテム入手前
-・ジムに入ると
-　主人公に隣接してメッセージ表示
-・No030「おいしいみず」入手</comment>
+・posを踏むとメッセージ表示
+・アイテム入手処理
+　No030「おいしいみず」</comment>
 		<attribute name="キャラ指定">DANPEI
 ダンペイ</attribute>
-		<language name="JPN" width="256">どうも！　じぶんは
-ポケモンジムに　ちょうせんする▽
-トレーナーを　ガイドする▽
-ガイドーと　いいます▼
-ジムに　ちょうせん
-ありがとう　ございます▽
-きねんに　これを　さしあげますよ！▼</language>
-		<language name="JPN_KANJI" width="256">どうも！　自分は
-ポケモンジムに　挑戦する▽
-トレーナーを　ガイドする▽
-ガイドーと　いいます▼
-ジムに　挑戦
-ありがとう　ございます▽
-記念に　これを　さしあげますよ▼</language>
+		<language name="JPN" width="256">ここは　ポケモンジムであり
+ライブハウスにも　なってるんすよ！▼
+ジムリーダーたちは　なかで
+れんしゅう　していますが▽
+どんどん　チャレンジ　してください！▼
+あっ！
+ワンドリンク　どうぞっす！▼</language>
+		<language name="JPN_KANJI" width="256">ここは　ポケモンジムであり
+ライブハウスにも　なってるんすよ！▼
+ジムリーダーたちは　中で
+練習していますが▽
+どんどん　チャレンジ　してください！▼
+あっ！
+ワンドリンク　どうぞっす！▼</language>
 	</row>
 
 	<row id="msg_c13gym0101_glasses_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -322,30 +322,28 @@
 ・ジムバッジ取得まで繰り返し</comment>
 		<attribute name="キャラ指定">DANPEI
 ダンペイ</attribute>
-		<language name="JPN" width="256">ポケモンしょうぶの　きほんは
-タイプの　あいしょう　なんですよね[BE:01:ページ切り替え（クリア）]
-あいてのポケモンに　たいして
-ゆうりなタイプの　ポケモン[BE:00:ページ切り替え（行送り）]
-ゆうりなタイプの　わざをえらべば[BE:00:ページ切り替え（行送り）]
-しょうりは　めのまえ　っすよね▼
-ということで　この　ジムは
-カーテンに　かかれた▽
-ポケモンの　タイプに　たいして▼
-あいしょうの　いい　ポケモンの
-タイプの　スイッチを　ふめば▽
-さきに　すすめるっす！！</language>
-		<language name="JPN_KANJI" width="256">ポケモン勝負の　基本は
-タイプの　相性　なんですよね[BE:01:ページ切り替え（クリア）]
-相手のポケモンに　対して
-有利なタイプの　ポケモン[BE:00:ページ切り替え（行送り）]
-有利なタイプの　技を　選べば[BE:00:ページ切り替え（行送り）]
-勝利は　目前っすよね▼
-ということで　この　ジムは
-カーテンに　かかれた▽
-ポケモンの　タイプに　対して▼
-相性のいい　ポケモンの　タイプの
-スイッチを　踏めば▽
-先に　進めるっす！！</language>
+		<language name="JPN" width="256">この　ポケモンジムの　トレーナーは
+みんな　どくタイプの▽
+ポケモンを　くりだしてくるっす！▼
+どくタイプの　ポケモンには
+くさや　むしタイプの　こうげきが▽
+ききにくいので　ちゅうい　っす！▼
+あと　どく　じょうたいに　なると
+ＨＰが　どんどん　へっていくから▽
+きをつけたほうが　いいっすよ！▼
+ちなみに　どくタイプの　ポケモンは
+どく　じょうたいに　ならないんすよね</language>
+		<language name="JPN_KANJI" width="256">この　ポケモンジムの　トレーナーは
+みんな　どくタイプの▽
+ポケモンを　繰り出してくるっす！▼
+どくタイプの　ポケモンには
+くさや　むしタイプの　攻撃が▽
+効きにくいので　ちゅうい　っす！▼
+あと　どく状態に　なると
+ＨＰが　どんどん　減っていくから▽
+気をつけたほうが　いいっすよ！▼
+ちなみに　どくタイプの　ポケモンは
+どく状態に　ならないんすよね</language>
 	</row>
 
 	<row id="msg_c13gym0101_glasses_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -353,12 +351,14 @@
 ・ジムバッジ取得後</comment>
 		<attribute name="キャラ指定">DANPEI
 ダンペイ</attribute>
-		<language name="JPN" width="256">ジムバッジを　てにいれた
-その　すばらしい　しゅんかんを[BE:00:ページ切り替え（行送り）]
-いつまでも　おぼえていてほしいっすね</language>
-		<language name="JPN_KANJI" width="256">ジムバッジを　手に入れた
-その　素晴らしい　瞬間を[BE:00:ページ切り替え（行送り）]
-いつまでも　覚えていてほしいっすね</language>
+		<language name="JPN" width="256">その　かがやく　ジムバッジは
+ポケモンと　いっしょに　てにいれた▽
+だいじな　もの　なんすよねえ……▽
+それを　ずっと　わすれないでください</language>
+		<language name="JPN_KANJI" width="256">その　輝く　ジムバッジは
+ポケモンと　一緒に　手に入れた▽
+大事な　もの　なんすよねえ……▽
+それを　ずっと　忘れないでください</language>
 	</row>
 
 	<flowchart-group-list>
