@@ -9,6 +9,14 @@
 #define DOOR_ID_C16_C16R1201_EXIT01       4
 #define DOOR_ID_C16_C16R1301_EXIT01       5
 #define DOOR_ID_C16_C16R1401_EXIT01       6
+#define DOOR_ID_C16_C16R0101_EXIT01       7
+#define DOOR_ID_C16_C16R0201_EXIT01       8
+#define DOOR_ID_C16_C16R0301_EXIT01       9
+#define DOOR_ID_C16_C16R0401_EXIT01      10
+#define DOOR_ID_C16_C16R0501_EXIT01      11
+#define DOOR_ID_C16_C16R0601_EXIT01      12
+#define DOOR_ID_C16_C16R0701_EXIT01      13
+#define DOOR_ID_C16_C16R0801_EXIT01      14
 
 #endif //ZONE_C16_EVD_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c16.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
