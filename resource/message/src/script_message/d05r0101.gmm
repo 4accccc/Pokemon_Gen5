@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-16T15:15:37"/>
+	<create user="matsumiya" host="W00224" date="2011-04-16T15:21:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1284" top="156" right="1989" bottom="785" maximized="no" rayout="Vertical2">
+	<dialog left="1292" top="190" right="1997" bottom="818" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -354,12 +354,12 @@
 ・GRIDX=9、GRIDZ=22</comment>
 		<attribute name="キャラ指定">BACKPACKERW
 バックパッカー♀</attribute>
-		<language name="JPN" width="256">ぼくは　かんせんに　きただけだけど
+		<language name="JPN" width="256">あたし　かんせんに　きただけだけど
 ちょうせんのため　とおくから　くる▽
-トレーナーも　たくさん　いそうだね</language>
-		<language name="JPN_KANJI" width="256">ぼくは　観戦に　来ただけだけど
+トレーナーも　たくさん　いそうね</language>
+		<language name="JPN_KANJI" width="256">あたし　観戦に　来ただけだけど
 挑戦のため　遠くから　来る▽
-トレーナーも　たくさん　いそうだね</language>
+トレーナーも　たくさん　いそうね</language>
 	</row>
 
 	<row id="msg_d05r0101_badman_01" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#ffffff,,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
