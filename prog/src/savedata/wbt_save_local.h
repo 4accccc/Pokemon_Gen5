@@ -6,6 +6,11 @@
  * @date  2011.04.05
  */
 //============================================================================================
+#pragma once
+
+enum {
+  LOCAL_WBTWIN_COUNT_MAX = 19,
+};
 //------------------------------------------------------------------
 /**
  * @brief WBTでセーブする要素
@@ -19,6 +24,6 @@ struct _WBTSAVE{
   u32 flag;
 
   ///優勝回数カウント（WBTWIN_COUNT定義で指定）
-  u16 WinCount[ WBTWIN_COUNT_MAX ];
+  u16 WinCount[ LOCAL_WBTWIN_COUNT_MAX ];
 };
 

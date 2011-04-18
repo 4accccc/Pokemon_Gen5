@@ -12,6 +12,8 @@
 
 #include "wbt_save_local.h"
 
+#include "savedata/trialhouse_save.h"
+#include "trialhouse_save_local.h"
 
 #include "poke_tool/poketype_def.h"
 
@@ -43,6 +45,8 @@ SDK_COMPILER_ASSERT( WBTWIN_COUNT_POKETYPE_AKU == POKETYPE_AKU );
 
 SDK_COMPILER_ASSERT( WBTWIN_COUNT_ALLTOURNAMENT == POKETYPE_MAX );
 
+//include/savedata/wbt_save.h‚Æsrc/savedata/wbt_save_local.h‚Æ‚Å‚Ì’è‹`‚ÉH‚¢ˆá‚¢‚ª‚È‚¢‚æ‚¤‚É
+SDK_COMPILER_ASSERT( WBTWIN_COUNT_MAX == LOCAL_WBTWIN_COUNT_MAX );
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
@@ -59,6 +63,13 @@ void WBTSAVE_Init( WBTSAVE * wbtsave )
   GFL_STD_MemClear( wbtsave, sizeof(WBTSAVE) );
 }
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+WBTSAVE * SAVEDATA_GetWBTSave( SAVE_CONTROL_WORK * sv )
+{
+  THSV_WORK * thsv = THSV_GetSvPtr( sv );
+  return &thsv->wbtsave;
+}
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------

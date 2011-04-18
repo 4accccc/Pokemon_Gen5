@@ -7,6 +7,7 @@
 //==============================================================================
 #pragma once
 
+#include "savedata/wbt_save_local.h"
 
 #define TH_MONS_DATA_MAX  (4)
 #define TH_TITLE_MSG_MAX (16+1)   ///< メッセージの数 battle_exmination.hのBATTLE_EXAMINATION_TITLE_MSG_MAXと同じサイズ
@@ -36,4 +37,6 @@ struct _THSV_WORK
   u8 DownloadBits[16];                   //ダウンロード用ビット群
   STRCODE Name[TH_TITLE_MSG_MAX];                        //検定名　ダウンロード検定名
   u8 padding[2];
-};    //20x2+16+34+2 = 92byte
+
+  struct _WBTSAVE wbtsave;
+};    //20x2+16+34+2 = 92byte + wbtsave(48byte) --> 140byte
