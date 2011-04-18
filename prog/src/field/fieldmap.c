@@ -558,10 +558,17 @@ FIELDMAP_WORK * FIELDMAP_Create( GAMESYS_WORK *gsys, HEAPID heapID )
     }
     else if (AREADATA_HasDungeonArea(area_id))
     {
-      // 無限ダンジョンのダンジョンエリア情報を取得
-      SAVE_CONTROL_WORK *p_scw = GAMEDATA_GetSaveControlWork( fieldWork->gamedata );
-      INFINITYDUNGEON_SAVE *p_save = SaveData_GetINFINITYDUNGEON( p_scw );
-      area_ofs_id = INFINITYDUNGEON_SAVE_GetDungeonAreaID( p_save );;
+      PLAYER_WORK *pw = GAMESYSTEM_GetMyPlayerWork(gsys);
+      ZONEID zone_id = PLAYERWORK_getZoneID( pw );
+ 
+      // 無限ダンジョン受付は常に0番に固定
+      if( (zone_id != ZONE_ID_D31R0101) && (zone_id != ZONE_ID_D31R0201) )
+      {
+        // 無限ダンジョンのダンジョンエリア情報を取得
+        SAVE_CONTROL_WORK *p_scw = GAMEDATA_GetSaveControlWork( fieldWork->gamedata );
+        INFINITYDUNGEON_SAVE *p_save = SaveData_GetINFINITYDUNGEON( p_scw );
+        area_ofs_id = INFINITYDUNGEON_SAVE_GetDungeonAreaID( p_save );
+      }
     }
     else if ( AREADATA_HasResortInstitutionArea( area_id ) )
     {

@@ -33,6 +33,7 @@ struct _INFINITYDUNGEON_SAVE{
 
   u32 rand_seed;
   u32 trainer_flag[INFINITYDUNGEON_FLOOR_MAX];
+  u32 recover_flag;
   u8  map_status;
   u8  floor_id;
   u8  room_id;
@@ -482,5 +483,58 @@ u8 INFINITY_DUNGEON_SAVE_GetHintLevel( const INFINITYDUNGEON_SAVE *p_save )
   }
 
   return INFINITY_DUNGEON_HINT_LEVEL_1;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  回復トレーナー状態取得
+ *
+ *	@param	*p_save 
+ *	@param	recover_flg_pos ビット位置
+ *
+ *	@retval TRUE = 回復済み
+ */
+//-----------------------------------------------------------------------------
+BOOL INFINITYDUNGEON_SAVE_GetRecoverFlag( const INFINITYDUNGEON_SAVE *p_save ,int recover_flg_pos )
+{
+  u32 bit_mask = 1;
+  bit_mask = bit_mask << recover_flg_pos;
+  if( p_save->recover_flag & bit_mask )
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  回復トレーナー状態設定
+ *
+ *	@param	*p_save 
+ *	@param	recover_flg_pos ビット位置
+ *	@param	status          TRUE = 回復済み
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void INFINITYDUNGEON_SAVE_SetRecoverFlag( INFINITYDUNGEON_SAVE *p_save ,int recover_flg_pos ,BOOL status)
+{
+  if( status == FALSE )
+  {
+    // ビットを下げる
+    u32 bit_mask = 0xffffffff;
+    u32 del_bit  = 1;
+
+    del_bit   = del_bit << recover_flg_pos;
+    bit_mask  = bit_mask ^ del_bit;
+    p_save->recover_flag = p_save->recover_flag & bit_mask;
+  }
+  else
+  {
+    // ビットを上げる
+    s32 bit_mask = 1;
+    bit_mask = bit_mask << recover_flg_pos;
+    p_save->recover_flag = p_save->recover_flag | bit_mask;
+  }
 }
 

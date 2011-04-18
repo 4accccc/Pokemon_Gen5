@@ -45,9 +45,9 @@ typedef enum
 typedef struct {
   u16       zone_id;
   u16       obj_id;
-  s32 gx;
-  s32 gy;
-  s32 gz;
+  s32 x;
+  s32 y;
+  s32 z;
 }ELEVATOR_SET_DATA;
 
 #define ELEVATOR_DATA_TABLE_SIZE (6)
@@ -58,32 +58,32 @@ static const ELEVATOR_SET_DATA sc_elevator_pos_table[ELEVATOR_DATA_TABLE_SIZE] =
   {
     ZONE_ID_D31R0201, // 受付（ブラック）
     MODELID_ELEVATOR_1,
-    7 , 0 , 0,
+    120 , 0 , 32,
   },
   {
     ZONE_ID_D31R0201, // 受付（ブラック）
     MODELID_ELEVATOR_2,
-    11 , 0 , 0,
+    182 , 0 , 32,
   },
   {
     ZONE_ID_D31R0401, // エレベーター部屋（ブラック）
     MODELID_ELEVATOR_1,
-    6 , 0 , 1,
+    104 , 0 , 0,
   },
   {
     ZONE_ID_D31R0101, // 受付（ホワイト）
     MODELID_ELEVATOR_1,
-    7 , 0 , 0,
+    120 , 0 , 32,
   },
   {
     ZONE_ID_D31R0101, // 受付（ホワイト）
     MODELID_ELEVATOR_2,
-    11 , 0 , 0,
+    184 , 0 , 32,
   },
   {
     ZONE_ID_D31R0301, // エレベーター部屋（ホワイト）
     MODELID_ELEVATOR_1,
-    6 , 0 , 1,
+    104 , 0 , 0,
   },
 };
 
@@ -320,9 +320,9 @@ static void MapModelInit( INF_ELEVATOR_WK *p_wk )
             p_model->modelID );
 
         // 位置を設定
-        p_status->trans.x = FX32_CONST(p_data->gx*FIELD_CONST_GRID_SIZE);
-        p_status->trans.y = FX32_CONST(p_data->gy*FIELD_CONST_GRID_SIZE);
-        p_status->trans.z = FX32_CONST(p_data->gz*FIELD_CONST_GRID_SIZE);
+        p_status->trans.x = FX32_CONST(p_data->x);
+        p_status->trans.y = FX32_CONST(p_data->y);
+        p_status->trans.z = FX32_CONST(p_data->z);
 
         // 見える状態に
         FLD_EXP_OBJ_SetVanish( p_model->p_ex_obj,
@@ -331,12 +331,12 @@ static void MapModelInit( INF_ELEVATOR_WK *p_wk )
         // フレームの初期化
         FLD_EXP_OBJ_ValidCntAnm(p_model->p_ex_obj, MODEL_MANAGER_FLD_EXP_OBJ_UNIT_ID, p_model->modelID, 0, TRUE);
 
-        // アニメーション取得
-        exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_model->p_ex_obj, MODEL_MANAGER_FLD_EXP_OBJ_UNIT_ID, p_model->modelID, 0 );
-
-        // ループ再生
-        FLD_EXP_OBJ_ChgAnmStopFlg( exobj_anm, FALSE );
-        FLD_EXP_OBJ_ChgAnmLoopFlg( exobj_anm, TRUE );
+//        // アニメーション取得
+//        exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_model->p_ex_obj, MODEL_MANAGER_FLD_EXP_OBJ_UNIT_ID, p_model->modelID, 0 );
+//
+//        // ループ再生
+//        FLD_EXP_OBJ_ChgAnmStopFlg( exobj_anm, FALSE );
+//        FLD_EXP_OBJ_ChgAnmLoopFlg( exobj_anm, TRUE );
       }
     }
   }

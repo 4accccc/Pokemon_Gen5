@@ -487,3 +487,65 @@ VMCMD_RESULT EvCmdInfinityDungeonGetAfterBtlMsgType( VMHANDLE *p_core, void *p_w
   return VMCMD_RESULT_CONTINUE;
 }
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  無限ダンジョン回復トレーナーの回復フラグを設定する
+ *
+ *	@param	*p_core
+ *	@param	*p_wk_adrs 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdInfinityDungeonSetRecoverFlag( VMHANDLE *p_core, void *p_wk_adrs )
+{
+  INF_DUNGEON_DATA *p_dungeon_data;
+  INFINITYDUNGEON_SAVE  *p_save;
+  SCRCMD_WORK *p_wk = p_wk_adrs;
+  GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
+  GAMEDATA *p_gamedata = GAMESYSTEM_GetGameData(p_gamesys);
+  SAVE_CONTROL_WORK *p_save_data = GAMEDATA_GetSaveControlWork(p_gamedata);
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( p_gamesys );
+  u16 tr_id  = SCRCMD_GetVMWorkValue( p_core, p_wk );
+  u16 status  = SCRCMD_GetVMWorkValue( p_core, p_wk );
+  u32 id_pos;
+
+  p_save = SaveData_GetINFINITYDUNGEON( p_save_data );
+  p_dungeon_data = INFINITY_DUNGEON_DataGet(p_fieldmap);
+  id_pos = INFINITY_DUNGEON_GetRecoverFlgPos( p_dungeon_data ,tr_id );
+  INFINITYDUNGEON_SAVE_SetRecoverFlag( p_save ,id_pos ,status );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  無限ダンジョン回復トレーナーの回復フラグを取得
+ *
+ *	@param	*p_core
+ *	@param	*p_wk_adrs 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdInfinityDungeonGetRecoverFlag( VMHANDLE *p_core, void *p_wk_adrs )
+{
+  INF_DUNGEON_DATA *p_dungeon_data;
+  INFINITYDUNGEON_SAVE  *p_save;
+  SCRCMD_WORK *p_wk = p_wk_adrs;
+  GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
+  GAMEDATA *p_gamedata = GAMESYSTEM_GetGameData(p_gamesys);
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( p_gamesys );
+  SAVE_CONTROL_WORK *p_save_data = GAMEDATA_GetSaveControlWork(p_gamedata);
+  u16 tr_id  = SCRCMD_GetVMWorkValue( p_core, p_wk );
+  u16 *p_ret_wk	= SCRCMD_GetVMWork( p_core, p_wk );
+  u32 id_pos;
+  p_save = SaveData_GetINFINITYDUNGEON( p_save_data );
+  p_dungeon_data = INFINITY_DUNGEON_DataGet(p_fieldmap);
+  id_pos = INFINITY_DUNGEON_GetRecoverFlgPos( p_dungeon_data ,tr_id );
+  *p_ret_wk = INFINITYDUNGEON_SAVE_GetRecoverFlag( p_save ,id_pos );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+

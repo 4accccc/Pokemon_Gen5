@@ -29,6 +29,8 @@
   DEF_CMD( EvCmdInfinityDungeonGetTrainerBattleFlag, EV_SEQ_INFINITY_DUNGEON_GET_TRAINER_BATTLE_FLAG )
   DEF_CMD( EvCmdInfinityDungeonGetHintMsgID, EV_SEQ_INFINITY_DUNGEON_GET_HINT_MSG_ID )
   DEF_CMD( EvCmdInfinityDungeonGetAfterBtlMsgType, EV_SEQ_INFINITY_DUNGEON_GET_AFTER_BTL_MSG_TYPE )
+  DEF_CMD( EvCmdInfinityDungeonGetRecoverFlag, EV_SEQ_INFINITY_DUNGEON_GET_RECOVER_FLAG )
+  DEF_CMD( EvCmdInfinityDungeonSetRecoverFlag, EV_SEQ_INFINITY_DUNGEON_SET_RECOVER_FLAG )
  
   END_CMD
   //スクリプトコマンドテーブル終了

@@ -13400,5 +13400,39 @@
     .short  \ret_wk
     .endm
 
+//--------------------------------------------------------------
+/**
+ * @def _INFINITY_DUNGEON_SET_RECOVER_FLAG
+ * @brief 無限ダンジョン内回復トレーナーの状態を設定(TRUE=回復済み)
+ * @param tr_no   トレーナーNO
+ * @param status   回復状態
+ */
+//--------------------------------------------------------------
+#define _INFINITY_DUNGEON_SET_RECOVER_FLAG( tr_no ,status ) \
+    _ASM_INFINITY_DUNGEON_SET_RECOVER_FLAG tr_no ,status
+
+    .macro  _ASM_INFINITY_DUNGEON_SET_RECOVER_FLAG tr_no ,status
+    .short  EV_SEQ_INFINITY_DUNGEON_SET_RECOVER_FLAG
+    .short  \tr_no
+    .short  \status
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _INFINITY_DUNGEON_GET_TRAINER_BATTLE_FLAG
+ * @brief 無限ダンジョン内回復トレーナーの状態を取得(TRUE=回復済み)
+ * @param tr_no   トレーナーNO
+ * @param ret_wk   回復状態
+ */
+//--------------------------------------------------------------
+#define _INFINITY_DUNGEON_GET_RECOVER_FLAG( tr_no ,ret_wk ) \
+    _ASM_INFINITY_DUNGEON_GET_RECOVER_FLAG tr_no ,ret_wk
+
+    .macro  _ASM_INFINITY_DUNGEON_GET_RECOVER_FLAG tr_no ,ret_wk
+    .short  EV_SEQ_INFINITY_DUNGEON_GET_RECOVER_FLAG
+    .short  \tr_no
+    .short  \ret_wk
+    .endm
+
 //======================================================================
 //======================================================================

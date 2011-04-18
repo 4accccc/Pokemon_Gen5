@@ -106,7 +106,16 @@ struct _INF_DUNGEON_DATA{
   INF_DUNGEON_SEED  seed;
   ROOM_DATA         room_data[FLOOR_MAX][ROOM_MAX];
   DUNGEON_TRAINER   tr_data[FLOOR_MAX];
+  u32               recover_data[INFINITY_DUNGEON_RECOVERTR_MAX];
 };
+
+//-------------------------------------
+///	レベルデータ
+//=====================================
+typedef struct {
+  u16 level_max;
+  u16 level_min;
+}INF_LEVEL_TABLE_PARAM;
 
 //=============================================================================
 /**
@@ -323,6 +332,38 @@ static const GRID_DATA sc_white_bmodel_pos_table[ROOM_TYPE_MAX][WARP_DIR_MAX] = 
   },
 };
 
+//-------------------------------------
+// エリアごとのエリアテーブル
+//=====================================
+static const INF_LEVEL_TABLE_PARAM sc_level_table[] = {
+  { 40 , 45 },   // エリア 1
+  { 45 , 50 },   // エリア 2
+  { 50 , 55 },   // エリア 3
+  { 55 , 60 },   // エリア 4
+  { 60 , 65 },   // エリア 5
+  { 65 , 70 },   // エリア 6
+  { 70 , 75 },   // エリア 7
+  { 75 , 80 },   // エリア 8
+  { 80 , 85 },   // エリア 9
+  { 85 , 90 },   // エリア 10
+};
+
+//-------------------------------------
+// エリアごとのエリアテーブル
+//=====================================
+static const u8 sc_pow_rnd_table[] = {
+  3*1, // エリア 1
+  3*2, // エリア 2
+  3*3, // エリア 3
+  3*4, // エリア 4
+  3*5, // エリア 5
+  3*6, // エリア 6
+  3*7, // エリア 7
+  3*8, // エリア 8
+  3*9, // エリア 9
+  31, // エリア 10
+};
+
 // 配置データ
 #include "../../../resource/infinity_dungeon/data/infinity_dungeon_tr_move_type.cdat"
 #include "../../../resource/infinity_dungeon/data/infinity_dungeon_room_pos_type.cdat"
@@ -434,7 +475,7 @@ static BOOL CheckDigEnd( ROOM_DATA *p_room_data ,int fs_x ,int fs_y);
 static void RemoveTrRoom( INF_DUNGEON_DATA *p_dungeon_data ,u8 floor_no ,int rmv_num ,GFL_STD_RandContext *rand_context );
 
 #ifdef PM_DEBUG
-static void INF_DEBUG_OutPutFloorData( ROOM_DATA *p_room_data );
+static void INF_DEBUG_OutPutFloorData( ROOM_DATA *p_room_data ,INFINITYDUNGEON_SAVE *p_save );
 static void INF_DEBUG_OverwritRoomData( ROOM_DATA *p_room_data );
 #endif
 
@@ -684,7 +725,7 @@ static GMEVENT_RESULT MapWarpEvent( GMEVENT *event, int *seq, void *wk )
       MMDLSYS_ClearPauseMoveProc(FIELDMAP_GetMMdlSys(p_wk->p_field_work));
       
 #ifdef PM_DEBUG      
-      INF_DEBUG_OutPutFloorData(&p_wk->p_dungeon_data->room_data[p_wk->now_floor][0] );
+      INF_DEBUG_OutPutFloorData(p_wk->p_dungeon_data->room_data[p_wk->now_floor] ,p_wk->p_save );
 #endif
 
       return GMEVENT_RES_FINISH;
@@ -1772,7 +1813,7 @@ static void SetDungeonData( INF_DUNGEON_DATA *p_dungeon_data ,int area_no, u32 s
           }
         }
       }
-      OS_Printf("RM%2d:%d人\n",floor_no,member_num);
+      //OS_Printf("RM%2d:%d人\n",floor_no,member_num);
 
       if( member_num > INFINITY_DUNGEON_TRID_MAX )
       {
@@ -1883,6 +1924,7 @@ static void SetTrainerData( INF_DUNGEON_DATA *p_dungeon_data , u32 seed )
     u32 room_id_index;
     u32 member_index;
     u32 member_num[ROOM_MAX];
+    u32 recover_index = 0;
 
     for( n = 0; n<FLOOR_MAX; n++)
     {
@@ -1907,7 +1949,8 @@ static void SetTrainerData( INF_DUNGEON_DATA *p_dungeon_data , u32 seed )
 
       tr_id = INF_TRID_START_RECOVERY + GFL_STD_Rand( &rand_context ,INF_TRID_CNT_RECOVERY);
       p_dungeon_data->tr_data[n].tr_id[id_pos] = tr_id;
-      //OS_Printf("回復トレーナーID：%u\n",tr_id);
+      p_dungeon_data->recover_data[recover_index] = tr_id;
+      recover_index++;
       OS_Printf("回復トレーナー部屋NO：%u\n",room_id_array[room_id_index]);
     }
   }
@@ -1983,9 +2026,50 @@ static void GetSetWhiteTrainerIDTable( u32 *p_trid_array )
 //-----------------------------------------------------------------------------
 static void SetBUildModel( MAP_CHAGE_EVENT_WORK *p_wk , ROOM_DATA* p_room_data)
 {
-  BMODEL_ID bmodel_id = NARC_output_buildmodel_indoor_mugenobj01_nsbmd;
-  GFL_G3D_OBJSTATUS status;
+  //-------------------------------------
+  // 封鎖用モデルOBJ(黒)
+  //=====================================
+  static const BMODEL_ID sc_black_bmodel_table[] = {
+    NARC_output_buildmodel_indoor_mugenobj01_nsbmd, // 上
+    NARC_output_buildmodel_indoor_mugenobj05_nsbmd, // 下
+    NARC_output_buildmodel_indoor_mugenobj04_nsbmd, // 右
+    NARC_output_buildmodel_indoor_mugenobj06_nsbmd, // 左
+  };
+  //-------------------------------------
+  // 封鎖用モデルOBJ(白)
+  //=====================================
+  static const BMODEL_ID sc_white_bmodel_table[] = {
+    NARC_output_buildmodel_indoor_mugenobj02_nsbmd,
+    NARC_output_buildmodel_indoor_mugenobj08_nsbmd,
+    NARC_output_buildmodel_indoor_mugenobj09_nsbmd,
+    NARC_output_buildmodel_indoor_mugenobj07_nsbmd,
+  };
 
+  GFL_G3D_OBJSTATUS status;
+  const BMODEL_ID *p_bmodel_id_table;
+  u32 version = GetDungeonColor();
+
+  // 表示座標を初期化
+  status.trans.x = 0;
+  status.trans.y = 0;
+  status.trans.z = 0;
+  VEC_Set( &status.scale, FX32_ONE, FX32_ONE, FX32_ONE );
+  GFL_CALC3D_MTX_CreateRot( 0, 0, 0, &status.rotate );
+
+  // モデルテーブル差し替え
+  if( version == VERSION_B2 )
+  {
+    p_bmodel_id_table = sc_black_bmodel_table;
+  }
+  else
+  {
+    p_bmodel_id_table = sc_white_bmodel_table;
+  }
+  
+  // ブラック（テスト
+  p_bmodel_id_table = sc_black_bmodel_table;
+
+  // 配置
   if( p_room_data->room_type != ROOM_TYPE_BOSS )
   {
     // 上
@@ -1993,42 +2077,26 @@ static void SetBUildModel( MAP_CHAGE_EVENT_WORK *p_wk , ROOM_DATA* p_room_data)
     {
       if( !p_room_data->can_move[INF_MOVE_UP] )
       {
-        const GRID_DATA *p_grid_data = GetBmodelPos( p_wk ,p_room_data->room_type ,WARP_DIR_UP );
-        VEC_Set( &status.scale, FX32_ONE, FX32_ONE, FX32_ONE );
-        GFL_CALC3D_MTX_CreateRot( 0, 0, 0, &status.rotate );
-        SetGridPos(&status.trans,p_grid_data->x,p_grid_data->y,p_grid_data->z);
-        FIELD_BMODEL_Create_Direct( p_wk->p_bmodel_man, bmodel_id, &status );
+        FIELD_BMODEL_Create_Direct( p_wk->p_bmodel_man, p_bmodel_id_table[INF_MOVE_UP], &status );
       }
     }
 
     // 下
     if( !p_room_data->can_move[INF_MOVE_DOWN] )
     {
-      const GRID_DATA *p_grid_data = GetBmodelPos( p_wk ,p_room_data->room_type ,WARP_DIR_DOWN );
-      VEC_Set( &status.scale, FX32_ONE, FX32_ONE, FX32_ONE );
-      GFL_CALC3D_MTX_CreateRot( 0, 0, 0, &status.rotate );
-      SetGridPos(&status.trans,p_grid_data->x,p_grid_data->y,p_grid_data->z);
-      FIELD_BMODEL_Create_Direct( p_wk->p_bmodel_man, bmodel_id, &status );
+      FIELD_BMODEL_Create_Direct( p_wk->p_bmodel_man, p_bmodel_id_table[INF_MOVE_DOWN], &status );
     }
 
     // 左
     if( !p_room_data->can_move[INF_MOVE_LEFT]  )
     {
-      const GRID_DATA *p_grid_data = GetBmodelPos( p_wk ,p_room_data->room_type ,WARP_DIR_LEFT );
-      VEC_Set( &status.scale, FX32_ONE, FX32_ONE, FX32_ONE );
-      GFL_CALC3D_MTX_CreateRot( 0, 0, 0, &status.rotate );
-      SetGridPos(&status.trans,p_grid_data->x,p_grid_data->y,p_grid_data->z);
-      FIELD_BMODEL_Create_Direct( p_wk->p_bmodel_man, bmodel_id, &status );
+      FIELD_BMODEL_Create_Direct( p_wk->p_bmodel_man, p_bmodel_id_table[INF_MOVE_LEFT], &status );
     }
 
     // 右
     if( !p_room_data->can_move[INF_MOVE_RIGHT] )
     {
-      const GRID_DATA *p_grid_data = GetBmodelPos( p_wk ,p_room_data->room_type ,WARP_DIR_RIGHT );
-      VEC_Set( &status.scale, FX32_ONE, FX32_ONE, FX32_ONE );
-      GFL_CALC3D_MTX_CreateRot( 0, 0, 0, &status.rotate );
-      SetGridPos(&status.trans,p_grid_data->x,p_grid_data->y,p_grid_data->z);
-      FIELD_BMODEL_Create_Direct( p_wk->p_bmodel_man, bmodel_id, &status );
+      FIELD_BMODEL_Create_Direct( p_wk->p_bmodel_man, p_bmodel_id_table[INF_MOVE_RIGHT], &status );
     }
   }
 }
@@ -2289,13 +2357,25 @@ static u32 GetRoomTrainerID( INF_DUNGEON_DATA *p_dungeon_data ,u32 floor_id ,u32
 //-----------------------------------------------------------------------------
 GMEVENT * INFINITY_DUNGEON_EVENT_TrainerBattle(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap ,u16 obj_id)
 {
-  GMEVENT * event;
+  GMEVENT   *event;
+  GAMEDATA  *p_gdata;
+  SAVE_CONTROL_WORK     *p_save_data;
+  INFINITYDUNGEON_SAVE  *p_save;
+  u32 area_no;
+
   BSUBWAY_TRAINER_ROM_DATA  *trd;
   BSUBWAY_PARTNER_DATA tr_data;
   HEAPID heapID = HEAPID_FIELDMAP;
   u16 tr_no;
-  u8 pow_rnd;
   GFL_STD_RandContext rand_context;
+
+  // セーブデータの取得
+  p_gdata       = GAMESYSTEM_GetGameData( gsys );
+  p_save_data         = GAMEDATA_GetSaveControlWork( p_gdata );
+  p_save        = SaveData_GetINFINITYDUNGEON( p_save_data );
+  
+  // 現在のエリア取得
+  area_no = INFINITYDUNGEON_SAVE_GetDungeonAreaID( p_save );
 
   // OBJIDからtr_idを求める
   tr_no = INFINITY_DUNGEON_SAVE_GetTrNo_ByObjId( obj_id );
@@ -2308,13 +2388,10 @@ GMEVENT * INFINITY_DUNGEON_EVENT_TrainerBattle(GAMESYS_WORK *gsys, FIELDMAP_WORK
   // 乱数を作成
   GFL_STD_RandInit( &rand_context, 5 );
 
-  // パワー乱数を決定する
-  pow_rnd=31;
-
   //ポケモンデータをセット
   FBI_TOOL_SetBSWayPokemonParam(
       trd, tr_no , tr_data.btpwd,2,
-      ARCID_INFINITY_DUGENON_PD,NULL, NULL, NULL, &rand_context, pow_rnd, heapID);
+      ARCID_INFINITY_DUGENON_PD,NULL, NULL, NULL, &rand_context, sc_pow_rnd_table[area_no], heapID);
 
   GFL_HEAP_FreeMemory( trd );
 
@@ -2342,7 +2419,8 @@ GMEVENT * INFINITY_DUNGEON_EVENT_TrainerBattle(GAMESYS_WORK *gsys, FIELDMAP_WORK
         member_num , 0 , 2,
         &tr_data,
         NULL ,TRID_OFFSET_INFINITY_DUNGEON ,
-        20 , 10 , 0 , &rand_context);
+        sc_level_table[area_no].level_max ,
+        sc_level_table[area_no].level_min , 0 , &rand_context);
 
     GFL_HEAP_FreeMemory(party);
 
@@ -2506,6 +2584,40 @@ u32 INFINITY_DUNGEON_GetTrIDPos( INF_DUNGEON_DATA *p_dungeon_data ,u8 floor_id ,
   return 0;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  回復トレーナーの回復フラグを取得
+ *
+ *	@param	*p_dungeon_data 
+ *	@param	tr_id 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+u32 INFINITY_DUNGEON_GetRecoverFlgPos( INF_DUNGEON_DATA *p_dungeon_data ,u32 tr_id )
+{
+  u32 i;
+  u32 master_seed;
+  u32 *p_trid;
+
+  tr_id = INFINITY_DUNGEON_SAVE_GetTrNo_ByObjId(tr_id);
+
+  // トレーナーIDリストを取得
+  p_trid = p_dungeon_data->recover_data;
+
+  // 検索
+  for( i= 0; i<INFINITY_DUNGEON_RECOVERTR_MAX; i++ )
+  {
+    if( p_trid[i] == tr_id )
+    {
+      return i;
+    }
+  }
+
+  GF_ASSERT_MSG(0,"ID位置が発見できませんでした");
+  return 0;
+}
+
 #ifdef PM_DEBUG
 
 //----------------------------------------------------------------------------
@@ -2537,12 +2649,13 @@ static void INF_DEBUG_OverwritRoomData( ROOM_DATA *p_room_data )
 /**
  *	@brief  フロアデータのデバッグ出力
  *
- *	@param	floor_id    フロアID
+ *	@param	*p_room_data 
+ *	@param	p_save 
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void INF_DEBUG_OutPutFloorData( ROOM_DATA *p_room_data )
+static void INF_DEBUG_OutPutFloorData( ROOM_DATA *p_room_data ,INFINITYDUNGEON_SAVE *p_save )
 {
   int i,j,k;
   int draw;
@@ -2591,6 +2704,7 @@ static void INF_DEBUG_OutPutFloorData( ROOM_DATA *p_room_data )
           // 真ん中の列
         case 2:
           {
+            u8 now_room_id = INFINITYDUNGEON_SAVE_GetRoomID( p_save );
             if( p_room_data[room_id].can_move[INF_MOVE_LEFT] == TRUE )
             {
               OS_TFPrintf( 3,"　");
@@ -2600,7 +2714,15 @@ static void INF_DEBUG_OutPutFloorData( ROOM_DATA *p_room_data )
               OS_TFPrintf( 3,"■");
             }
 
-            OS_TFPrintf( 3,"　　　"); //部屋の中心
+            // 現在地表示
+            if( room_id == now_room_id )
+            {
+              OS_TFPrintf( 3,"　主　"); //部屋の中心
+            }
+            else
+            {
+              OS_TFPrintf( 3,"　　　"); //部屋の中心
+            }
 
             if( p_room_data[room_id].can_move[INF_MOVE_RIGHT] == TRUE )
             {
@@ -2614,7 +2736,7 @@ static void INF_DEBUG_OutPutFloorData( ROOM_DATA *p_room_data )
           break;
         case 3:
           {
-            OS_TFPrintf( 3,"■　　　■");
+            OS_TFPrintf( 3,"■%2d　　■",room_id);
           }
           break;
           // 下の列
