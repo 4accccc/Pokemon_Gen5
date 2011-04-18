@@ -16,4 +16,17 @@
 //----------------------------------------------------------------------
 extern void FMISSION_GIMMICK_MapChangeSetup( LINK_FESTIVAL* fest_sys, GAMESYS_WORK* gsys, u16 zone_id );
 
+//----------------------------------------------------------------------
+/*
+ *  @brief  フェスミッションギミック 削除　
+ */
+//----------------------------------------------------------------------
+extern void FMISSION_GIMMICK_Delete( LINK_FESTIVAL* fest_sys, GAMESYS_WORK* gsys );
+
+//----------------------------------------------------------------------
+/*
+ *  @brief  フェスミッションギミック　フラグセット
+ */
+//----------------------------------------------------------------------
+extern void FMISSION_GIMMICK_FlagSet( LINK_FESTIVAL* fest_sys, u16 zone_id, u16 idx );
 

@@ -48,6 +48,8 @@
 #include "item/itemsym.h"
 
 #include "scrcmd_fmission.h"
+#include "fmission_gimmick.h"
+#include "fmission_gimmick_def.h"
 
 //==================================================================
 /**
@@ -95,6 +97,7 @@ VMCMD_RESULT EvCmdFMissionItemGet( VMHANDLE *core, void *wk )
 
   { //取得済みフラグセット
     u8 obj_id = MMDL_GetOBJID( mmdl );
+    FMISSION_GIMMICK_FlagSet( GAMESYSTEM_GetLinkFestivalWork( gsys ), zone_id, obj_id-MMDL_ID_FMISSION_OBJ_01 );
   }
   //非表示設定
   MMDL_SetStatusBitVanish( mmdl, TRUE );

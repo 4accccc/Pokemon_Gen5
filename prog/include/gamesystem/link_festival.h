@@ -195,6 +195,21 @@ extern BOOL LINK_FESTIVAL_TMapRootUpdate( LINK_FESTIVAL* wk, u16 new_root );
 
 //---------------------------------------------------------
 /*
+ *  @brief  リンクフェスティバル ミッションフラグセット
+ */
+//---------------------------------------------------------
+extern void LINK_FESTIVAL_MissionFlagSet( LINK_FESTIVAL* wk, u16 zone_idx, u8 flag_idx );
+
+//---------------------------------------------------------
+/*
+ *  @brief  リンクフェスティバル ミッションフラグチェック
+ */
+//---------------------------------------------------------
+extern BOOL LINK_FESTIVAL_MissionFlagCheck( LINK_FESTIVAL* wk, u16 zone_idx, u8 flag_idx );
+
+
+//---------------------------------------------------------
+/*
  * @brief リンクフェスティバル　現在のスコア
  *
  * @retval  現在のスコア

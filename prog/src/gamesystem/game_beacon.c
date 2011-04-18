@@ -908,9 +908,13 @@ void GAMEBEACON_SUB_SendBeaconSetCommon(GAMEBEACON_SEND_MANAGER *send)
 void GAMEBEACON_SUB_SendBeaconSetCommonForFMission(GAMEBEACON_SEND_MANAGER *send, u16 action, u32 param )
 {
   GAMEBEACON_SEND_MANAGER tmp;
-  LINK_FESTIVAL* fest_sys = GAMESYSTEM_GetLinkFestivalWork( GameBeaconSys->gsys );
+  LINK_FESTIVAL* fest_sys;
   GAMEBEACON_INFO* info = &tmp.info;
 
+  if( GameBeaconSys->gsys  == NULL ) {
+    return;
+  }
+  fest_sys = GAMESYSTEM_GetLinkFestivalWork( GameBeaconSys->gsys );
   tmp = *send;  //現時点での内容をコピー
 
   //パラメータ生成
@@ -1009,7 +1013,12 @@ void GAMEBEACON_SUB_SendBeaconSetFMission( GAMEBEACON_INFO *info, u16 action, u1
 //--------------------------------------------------------------
 BOOL GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACTION action, u16 param )
 {
-  LINK_FESTIVAL* fest_sys = GAMESYSTEM_GetLinkFestivalWork( GameBeaconSys->gsys );
+  LINK_FESTIVAL* fest_sys;
+  
+  if( GameBeaconSys->gsys == NULL ){
+    return FALSE;
+  }
+  fest_sys = GAMESYSTEM_GetLinkFestivalWork( GameBeaconSys->gsys );
 
   if( !LINK_FESTIVAL_IsMissionEntry( fest_sys ) ){
     return FALSE;
@@ -1370,26 +1379,6 @@ void GAMEBEACON_Set_FMissionWildPokemonKnockOut(u16 monsno)
   if( GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_POKE_WIN, monsno ) ){
     GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_POKE_WIN, monsno );
   }
-#if 0
-  if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_FMISSION_POKE_WIN) == FALSE){ return; };
-  GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
-
-  BEACONINFO_Set_FMissionWildPokemonKnockOut(&GameBeaconSys->send.info, monsno);
-#endif
-}
-
-//==================================================================
-/**
- * ビーコンセット：フェスミッションポケモン倒した
- *
- * @param   monsno    ポケモン番号
- */
-//==================================================================
-void BEACONINFO_Set_FMissionWildPokemonKnockOut(GAMEBEACON_INFO *info, u16 monsno)
-{
-  GAMEBEACON_SUB_SendBeaconSetFMission( info, GAMEBEACON_ACTION_FMISSION_POKE_WIN, monsno );
-  
-  BEACONINFO_Set_Details_Walk(info);
 }
 
 //==================================================================

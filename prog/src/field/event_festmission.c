@@ -26,6 +26,8 @@
 #include "field/script.h"
 #include "field/script_local.h"
 #include "field/field_msgbg.h"
+#include "field/field_fade.h"
+#include "field/fmission_gimmick.h"
 #include "./event_fieldmap_control.h"
 #include "./event_festmission.h"
 #include "./event_subscreen.h"
@@ -38,6 +40,7 @@
 #include "msg/script/msg_festmission_event.h"
 
 #include "../../../resource/fldmapdata/script/item_get_scr_def.h" //SCRID_～
+#include "../../../resource/fldmapdata/script/usescript.h"  //DISP_FADE_SPEED
 
 ///////////////////////////////////////////////////////
 //リテラル
@@ -371,13 +374,31 @@ static GMEVENT_RESULT event_FestMissionStartMain(GMEVENT * event, int *  seq, vo
     TIMEICON_Exit( wk->timeIcon );
     FLDSYSWIN_STREAM_Delete( wk->winStream );
 #endif    
-    {
+    if( !wk->succeed_f ){
       GMEVENT* call_ev = EVENT_ChangeSubScreen( wk->gsys, wk->fieldmap, FIELD_SUBSCREEN_FMISSION_VIEW );
       GMEVENT_CallEvent( event, call_ev );
+      (*seq) = 5;
+      break;
     }
+    GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT, 0, 16, DISP_FADE_SPEED );
+    PMSND_PlaySE( SEQ_SE_W295_01 );
+
     (*seq)++;
     break;
   case 3:
+    if( GFL_FADE_CheckFade() == FALSE ){
+      FMISSION_GIMMICK_MapChangeSetup( wk->fest_sys, wk->gsys, FIELDMAP_GetZoneID( wk->fieldmap) );
+      FIELD_SUBSCREEN_ChangeForce( FIELDMAP_GetFieldSubscreenWork( wk->fieldmap ), FIELD_SUBSCREEN_FMISSION_VIEW );
+      GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT, 16, 0, DISP_FADE_SPEED );
+      (*seq)++;
+    }
+    break;
+  case 4:
+    if( GFL_FADE_CheckFade() == FALSE ){
+      (*seq)++;
+    }
+    break;
+  case 5:
     LINK_FESTIVAL_MissionLiveStatusSet( wk->fest_sys, TRUE );
     sub_ReleaseFMissionWork( wk );
     return GMEVENT_RES_FINISH;
@@ -417,18 +438,34 @@ static GMEVENT_RESULT event_FestMissionEndMain(GMEVENT * event, int *  seq, void
     break;
   case 2:
     if( PMSND_CheckPlayBGM() == FALSE ){
+      LINK_FESTIVAL_MissionEnd( wk->fest_sys );
+      GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT, 0, 16, DISP_FADE_SPEED );
+      PMSND_PlaySE( SEQ_SE_W295_01 );
       GMEVENT_CallEvent(event, EVENT_FSND_PopBGM( wk->gsys, FSND_FADE_NONE, FSND_FADE_FAST));
       (*seq)++;
     }
     break;
   case 3:
-    LINK_FESTIVAL_MissionEnd( wk->fest_sys );
-
+    if( GFL_FADE_CheckFade() == TRUE ){
+      break;
+    }
+//  FMISSION_GIMMICK_MapChangeSetup( wk->fest_sys, wk->gsys, FIELDMAP_GetZoneID( wk->fieldmap) );
     FLDSYSWIN_ClearWindow( wk->win );
     FLDSYSWIN_Delete( wk->win );
+    FMISSION_GIMMICK_Delete( wk->fest_sys, wk->gsys );
+    FIELD_SUBSCREEN_ChangeForce( FIELDMAP_GetFieldSubscreenWork( wk->fieldmap ), FIELD_SUBSCREEN_NORMAL );
+    GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT, 16, 0, DISP_FADE_SPEED );
+    (*seq)++;
+    break;
+  case 4:
+#if 0
     {
       GMEVENT* call_ev = EVENT_ChangeSubScreen( wk->gsys, wk->fieldmap, FIELD_SUBSCREEN_NORMAL );
       GMEVENT_CallEvent( event, call_ev );
+    }
+#endif
+    if( GFL_FADE_CheckFade() == TRUE ){
+      break;
     }
     if( wk->result ){ //クリアしていればアイテム入手イベントコール
       (*seq)++;
@@ -436,7 +473,7 @@ static GMEVENT_RESULT event_FestMissionEndMain(GMEVENT * event, int *  seq, void
       (*seq) = 0xFF;  //終了
     }
     break;
-  case 4:
+  case 5:
     { //クリアしていればアイテム入手イベントコール
       s16 num;
       MYITEM_PTR item_sv = GAMEDATA_GetMyItem( wk->gdata );

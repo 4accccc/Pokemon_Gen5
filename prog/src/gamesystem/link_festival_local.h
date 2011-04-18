@@ -10,6 +10,13 @@
 #pragma once
 
 #include "fmission_log_local.h"
+#include "field/fmission_gimmick_def.h"
+
+#if (FMISSION_GIMMICK_DATA_MAX%8)
+  #define FMISSION_FLAG_AREA_LEN  ((FMISSION_GIMMICK_DATA_MAX/8)+1)
+#else
+  #define FMISSION_FLAG_AREA_LEN  (FMISSION_GIMMICK_DATA_MAX/8)
+#endif
 
 //==============================================================================
 //  構造体定義
@@ -37,6 +44,9 @@ struct _LINK_FESTIVAL{
   
   FEST_MISSION  mission;            //現ミッションデータ
 //  GFL_STD_RandContext rnd_context;  //現ミッションで用いる乱数コンテキスト
+
+  //ミッションフラグ領域
+  u8  m_flag[FMISSION_FLAG_AREA_LEN];
 
   //スコアログ
   LINKFEST_LOG  log[LINKFEST_LOG_MAX];

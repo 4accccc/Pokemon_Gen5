@@ -43,11 +43,13 @@
 #include "../../../resource/fldmapdata/script/fmission_scr_def.h" //SCRID_～
 
 #include "field/fmission_gimmick.h"
+#include "field/fmission_gimmick_def.h"
 
 //======================================================================
 //======================================================================
 #define FMISSION_GIMMICK_ITEM_MAX (5)
-#define FMISSION_GIMMICK_ITEM_SET_MAX (MMDL_ID_FMISSION_OBJ_NUM)
+
+#define ZONE_ERROR  (0xFFFF)
 
 typedef struct _FMISSION_ITEM_POS{
   u16 x,y,z;
@@ -60,7 +62,14 @@ typedef struct _FMISSION_GIMMICK_DATA{
 }FMISSION_GIMMICK_DATA;
 
 //@todo いずれ外部ファイル化する
-static const FMISSION_GIMMICK_DATA  DATA_FMissionGimmickData[] = {
+static const u16 DATA_FMissionGimmickZone[FMISSION_GIMMICK_DATA_MAX] = {
+  ZONE_ID_C01,
+  ZONE_ID_R03,
+  ZONE_ID_C02,
+};
+
+//@todo いずれ外部ファイル化する
+static const FMISSION_GIMMICK_DATA  DATA_FMissionGimmickData[FMISSION_GIMMICK_DATA_MAX] = {
   { 5, ZONE_ID_C01,
     {
       { 746, 0, 600 },
@@ -90,11 +99,11 @@ static const FMISSION_GIMMICK_DATA  DATA_FMissionGimmickData[] = {
   },
 };
 
-#define FMISSION_GIMMICK_DATA_MAX (NELEMS(DATA_FMissionGimmickData))
+static u16 sub_GetZoneIdx( u16 zone_id );
 
 static void itemball_Setup( LINK_FESTIVAL* fest_sys, const FEST_MISSION* fmwk, GAMESYS_WORK* gsys, u16 zone_id );
-static const FMISSION_GIMMICK_DATA* itemball_GetZoneData( u16 zone_id );
-static void itemball_MMdlSet( GFL_STD_RandContext* rnd_c, const FMISSION_GIMMICK_DATA* dat, u16 zone_id, MMDLSYS* mmdlsys );
+static const FMISSION_GIMMICK_DATA* itemball_AllocZoneData( u16 zone_id, HEAPID heapID );
+static void itemball_MMdlSet( LINK_FESTIVAL* fest_sys, GFL_STD_RandContext* rnd_c, const FMISSION_GIMMICK_DATA* dat, u16 zone_id, MMDLSYS* mmdlsys );
 
 static void rnd_Init( const u32 key, const u16 zone_id, GFL_STD_RandContext* rnd_c );
 static u8 rnd_Get( GFL_STD_RandContext* rnd_c, u32 range, u8* p_tbl, int tbl_max );
@@ -118,6 +127,60 @@ void FMISSION_GIMMICK_MapChangeSetup( LINK_FESTIVAL* fest_sys, GAMESYS_WORK* gsy
 
 //----------------------------------------------------------------------
 /*
+ *  @brief  フェスミッションギミック 削除　
+ */
+//----------------------------------------------------------------------
+void FMISSION_GIMMICK_Delete( LINK_FESTIVAL* fest_sys, GAMESYS_WORK* gsys )
+{
+  int i;
+  GAMEDATA* gdata = GAMESYSTEM_GetGameData(gsys);
+  MMDLSYS* mmdlsys =  GAMEDATA_GetMMdlSys( gdata );
+
+  for(i = 0;i < FMISSION_GIMMICK_MAX;i++){
+    MMDL* mmdl = MMDLSYS_SearchOBJID( mmdlsys, MMDL_ID_FMISSION_OBJ_01+i );
+    if( mmdl != NULL ){
+      MMDL_Delete( mmdl);
+    }
+  }
+}
+
+//----------------------------------------------------------------------
+/*
+ *  @brief  フェスミッションギミック　フラグセット
+ */
+//----------------------------------------------------------------------
+void FMISSION_GIMMICK_FlagSet( LINK_FESTIVAL* fest_sys, u16 zone_id, u16 idx )
+{
+  u16 zone_idx = sub_GetZoneIdx( zone_id );
+
+  if( zone_idx != ZONE_ERROR ){
+    LINK_FESTIVAL_MissionFlagSet( fest_sys, zone_idx, idx );
+  }
+}
+
+//======================================================================
+//======================================================================
+
+//----------------------------------------------------------------------
+/*
+ *  @brief  ゾーンキー取得
+ */
+//----------------------------------------------------------------------
+static u16 sub_GetZoneIdx( u16 zone_id )
+{
+  int i;
+
+  for( i = 0;i < FMISSION_GIMMICK_DATA_MAX;i++){
+    if( DATA_FMissionGimmickZone[i] == zone_id ){
+      return i;
+    }
+  }
+  return ZONE_ERROR;
+}
+
+
+//----------------------------------------------------------------------
+/*
  *  @brief  アイテムボール配置
  */
 //----------------------------------------------------------------------
@@ -125,15 +188,15 @@ static void itemball_Setup( LINK_FESTIVAL* fest_sys, const FEST_MISSION* fmwk, G
 {
   GFL_STD_RandContext rnd_c;
   GAMEDATA* gdata = GAMESYSTEM_GetGameData(gsys);
-  const FMISSION_GIMMICK_DATA* dat = itemball_GetZoneData( zone_id );
-	MMDLSYS *mmdlsys = GAMEDATA_GetMMdlSys( gdata );
+  const FMISSION_GIMMICK_DATA* dat = itemball_AllocZoneData( zone_id, GFL_HEAP_LOWID(HEAPID_FIELDMAP) );
 
   if( dat == NULL){
     return;
   }
   IWASAWA_Printf("FMissionGimmick key=%d\n", fmwk->key );
+
   rnd_Init( fmwk->key, zone_id, &rnd_c );
-  itemball_MMdlSet( &rnd_c, dat, zone_id, GAMEDATA_GetMMdlSys( gdata ));
+  itemball_MMdlSet( fest_sys, &rnd_c, dat, zone_id, GAMEDATA_GetMMdlSys( gdata ));
 }
 
 //----------------------------------------------------------------------
@@ -143,16 +206,12 @@ static void itemball_Setup( LINK_FESTIVAL* fest_sys, const FEST_MISSION* fmwk, G
  *  @retval NULL 該当データがない
  */
 //----------------------------------------------------------------------
-static const FMISSION_GIMMICK_DATA* itemball_GetZoneData( u16 zone_id )
+static const FMISSION_GIMMICK_DATA* itemball_AllocZoneData( u16 zone_id, HEAPID heapID )
 {
-  int i;
+  u16 zone_idx = sub_GetZoneIdx( zone_id );
 
-  for( i = 0;i < FMISSION_GIMMICK_DATA_MAX;i++){
-    const FMISSION_GIMMICK_DATA* dat = &DATA_FMissionGimmickData[i];
-
-    if( dat->zone_id == zone_id ){
-      return dat;
-    }
+  if( zone_idx != ZONE_ERROR ){
+    return &DATA_FMissionGimmickData[zone_idx];
   }
   return NULL;
 }
@@ -164,24 +223,29 @@ static const FMISSION_GIMMICK_DATA* itemball_GetZoneData( u16 zone_id )
  *  @retval NULL 該当データがない
  */
 //----------------------------------------------------------------------
-static void itemball_MMdlSet( GFL_STD_RandContext* rnd_c, const FMISSION_GIMMICK_DATA* dat, u16 zone_id, MMDLSYS* mmdlsys )
+static void itemball_MMdlSet( LINK_FESTIVAL* fest_sys, GFL_STD_RandContext* rnd_c, const FMISSION_GIMMICK_DATA* dat, u16 zone_id, MMDLSYS* mmdlsys )
 {
-  int i, max;
+  int i, max, rnd;
   u8 tbl[FMISSION_GIMMICK_ITEM_MAX]; 
   MMDL* mmdl;
+  u16 zone_idx = sub_GetZoneIdx( zone_id );
  
-  if( dat->num < FMISSION_GIMMICK_ITEM_SET_MAX ){
+  if( dat->num < FMISSION_GIMMICK_MAX ){
     max = dat->num;
   }else{
-    max = FMISSION_GIMMICK_ITEM_SET_MAX;
+    max = FMISSION_GIMMICK_MAX;
   }
   for( i = 0;i < max;i++){
     tbl[i] = rnd_Get( rnd_c, dat->num, tbl, i );
+    rnd = GFL_STD_Rand0( rnd_c, 4);
 
+    if(LINK_FESTIVAL_MissionFlagCheck( fest_sys, zone_idx, i )){
+      continue;
+    }
     mmdl = MMDLSYS_AddMMdlParam( mmdlsys, dat->pos[tbl[i]].x, dat->pos[tbl[i]].z,
-            DIR_DOWN, MMDL_ID_FMISSION_OBJ_01+i, MONSTERBALL, MV_DMY, zone_id );
+            DIR_DOWN, MMDL_ID_FMISSION_OBJ_01+i, FESITEM, MV_DMY, zone_id );
     MMDL_SetEventID( mmdl, SCRID_FMISSION_ITEM_BALL_GET );
-    MMDL_SetParam( mmdl,GFL_STD_Rand0( rnd_c, 4), MMDL_PARAM_0 );
+    MMDL_SetParam( mmdl, rnd, MMDL_PARAM_0 );
     MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_NOT_SAVE );  //セーブ対象にしない
   }
 }

@@ -286,6 +286,31 @@ BOOL LINK_FESTIVAL_TMapRootUpdate( LINK_FESTIVAL* wk, u16 new_root )
 
 //---------------------------------------------------------
 /*
+ *  @brief  リンクフェスティバル ミッションフラグセット
+ */
+//---------------------------------------------------------
+void LINK_FESTIVAL_MissionFlagSet( LINK_FESTIVAL* wk, u16 zone_idx, u8 flag_idx )
+{
+  int no = zone_idx*FMISSION_GIMMICK_MAX+flag_idx;
+
+  wk->m_flag[(no/8)] |= (0x01)<<(no%8);
+}
+
+//---------------------------------------------------------
+/*
+ *  @brief  リンクフェスティバル ミッションフラグチェック
+ */
+//---------------------------------------------------------
+BOOL LINK_FESTIVAL_MissionFlagCheck( LINK_FESTIVAL* wk, u16 zone_idx, u8 flag_idx )
+{
+  int no = zone_idx*FMISSION_GIMMICK_MAX+flag_idx;
+
+  return ( wk->m_flag[(no/8)] & ((0x01)<<(no%8)));
+}
+
+
+//---------------------------------------------------------
+/*
  * @brief リンクフェスティバル　現在のスコア
  *
  * @retval  現在のスコア
@@ -562,6 +587,7 @@ static void log_ClearAll( LINK_FESTIVAL* wk )
   wk->finfo_bonus = 0;
   wk->now_score = 0;
   wk->tmap_root = 0xFFFF; //無効値で初期化
+  MI_CpuClear8( wk->m_flag, sizeof(u8)*FMISSION_FLAG_AREA_LEN);
 
   wk->ready_timer = 0;
 }
