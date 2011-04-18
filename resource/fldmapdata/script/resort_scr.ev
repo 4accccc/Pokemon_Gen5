@@ -41,11 +41,13 @@ DEFINE_LOCAL  LWK_MENU_LOOP
 DEFINE_LOCAL  LWK_OBJID
 DEFINE_LOCAL  LWK_MSGID
 DEFINE_LOCAL  LWK_RET
+DEFINE_LOCAL  LWK_YESNO
 
 DEFINE_LOCAL LWK_LIST_RET_TYPE
 DEFINE_LOCAL LWK_LIST_RET_PARAM
 DEFINE_LOCAL LWK_LIST_RET_IDX
 DEFINE_LOCAL LWK_LIST_RET_PRICE
+DEFINE_LOCAL LWK_INDEX
 
 
 //------------------------------注意--------------------------------//
@@ -573,7 +575,6 @@ EVENT_END
 //==============================================================
 sub_resident_merge:
 {
-  DEFINE_LOCAL LWK_YESNO
   DEFINE_LOCAL LWK_IS_CHANGE
   DEFINE_LOCAL LWK_X
   DEFINE_LOCAL LWK_Z
@@ -1649,7 +1650,6 @@ _RET
 /**************************************************************/
 EVENT_START ev_resort_npc_mouthcomm
 {
-  DEFINE_LOCAL LWK_INDEX
   DEFINE_LOCAL LWK_TMP
 
 	_TALK_OBJ_START()
@@ -1657,40 +1657,43 @@ EVENT_START ev_resort_npc_mouthcomm
   _RESORT_GET_NPC_DATA( LWK_TMP, RESORT_NPC_DATA_OBJID, LWK_OBJID )
   _RESORT_GET_NPC_DATA( LWK_OBJID, RESORT_NPC_DATA_INDEX, LWK_INDEX )
 
-  _RESORT_GET_MOUTHCOMM( LWK_INDEX, LOCALWORK11, LWK_RET )
-  $LOCALWORK11 += 1
 
-  _DEBUG_PRINT_WK( LWK_INDEX )
-
-  SWITCH $LWK_RET
-  CASE 0 THEN
-    //とくにうわさはない…
-	  _BALLOONWIN_OBJMSG( resort_mouthcomm_sys_00, LWK_OBJID )
-  DEFAULT
-    $LWK_RET += RESORT_NPC_DATA_MOUTHCOMM_I_00
-    _RESORT_GET_NPC_DATA( LWK_OBJID, LWK_RET, LWK_MSGID )
-	  _BALLOONWIN_OBJMSG( LWK_MSGID, LWK_OBJID )
-  ENDSWITCH
-  
-  //あなたのこと聞かせてよ！
-  _BALLOONWIN_OBJMSG( resort_mouthcomm_sys_01, LWK_OBJID )
-
-  //もし何も入力がないならば選択肢はでない
+  //自分のクチコミに何も入力がないならば初回
   $LWK_TMP = $LWK_INDEX
   $LWK_TMP += RESORT_MY_PARAM_GOSSIP_00
   _RESORT_GET_MY_DATA( LWK_TMP, LWK_RET )
 
   IF $LWK_RET == 0 THEN
+    //初回
+    
+    //初回挨拶
+    _RESORT_GET_NPC_DATA( LWK_OBJID, RESORT_NPC_DATA_MOUTHCOMM_MSG_00, LWK_MSGID )
+    _BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DOWN )
+
     _CALL sub_npc_mouthcomm_question
   ELSE
-    _YES_NO_WIN( LWK_RET )
-    SWITCH $LWK_RET
-    CASE SCR_YES THEN
+    //通常
+
+    //選択肢
+    _RESORT_GET_NPC_DATA( LWK_OBJID, RESORT_NPC_DATA_MOUTHCOMM_MSG_01, LWK_MSGID )
+    _BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DOWN )
+
+	  //メニュー表示
+	  _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, LWK_MENU_RET )
+    _BMPMENU_MAKE_LIST( resort_mouthcomm_sel_00, SEQ_MOUTHCOMM_HEAR )
+    _BMPMENU_MAKE_LIST( resort_mouthcomm_sel_01, SEQ_MOUTHCOMM_ANSWER )
+    _BMPMENU_MAKE_LIST( resort_mouthcomm_sel_02, SEQ_MOUTHCOMM_CANCEL )
+	  _BMPMENU_START()
+    IF $LWK_MENU_RET == EV_WIN_B_CANCEL THEN
+      $LWK_MENU_RET = SEQ_MOUTHCOMM_CANCEL
+    ENDIF
+
+    SWITCH $LWK_MENU_RET
+    CASE SEQ_MOUTHCOMM_HEAR THEN
+      //噂があるかないか
+      _CALL sub_npc_mouthcomm_hear
+    CASE SEQ_MOUTHCOMM_ANSWER THEN
       _CALL sub_npc_mouthcomm_question
-    CASE SCR_NO THEN
-      //今度おしえてね
-      _BALLOONWIN_OBJMSG( resort_mouthcomm_sys_04, LWK_OBJID )
-    DEFAULT
     ENDSWITCH
   ENDIF
 
@@ -1699,11 +1702,62 @@ EVENT_START ev_resort_npc_mouthcomm
 }
 EVENT_END
 //==============================================================
+//サブルーチン：クチコミ　うわさをきく部分
+//==============================================================
+sub_npc_mouthcomm_hear:
+{
+  //クチコミを取得
+  _RESORT_GET_MOUTHCOMM( LWK_INDEX, LOCALWORK11, LWK_RET )
+  $LOCALWORK11 += 1
+
+  IF $LWK_RET == 0 THEN
+    //とくにうわさはない…
+    _RESORT_GET_NPC_DATA( LWK_OBJID, RESORT_NPC_DATA_MOUTHCOMM_MSG_04, LWK_MSGID )
+    _BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DOWN )
+  ELSE
+    //噂をいう
+    _CALL sub_npc_mouthcomm_hear_core
+  ENDIF 
+}
+_RET
+
+//==============================================================
+//サブルーチン：クチコミ　うわさをきく部分
+//==============================================================
+sub_npc_mouthcomm_hear_core:
+{
+  $LWK_MENU_LOOP = TRUE
+  WHILE $LWK_MENU_LOOP == TRUE
+    
+    //クチコミを取得
+    _RESORT_GET_MOUTHCOMM( LWK_INDEX, LOCALWORK11, LWK_RET )
+    $LOCALWORK11 += 1
+
+    //噂をいう
+    $LWK_RET += RESORT_NPC_DATA_MOUTHCOMM_I_00
+    _RESORT_GET_NPC_DATA( LWK_OBJID, LWK_RET, LWK_MSGID )
+	  _BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DOWN )
+
+    //もっと聞きたい？
+    _RESORT_GET_NPC_DATA( LWK_OBJID, RESORT_NPC_DATA_MOUTHCOMM_MSG_03, LWK_MSGID )
+    _BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DOWN )
+
+    //はい/いいえ
+ 	  _YES_NO_WIN( LWK_YESNO )
+    IF $LWK_YESNO == SCR_NO THEN
+      $LWK_MENU_LOOP = FALSE
+    ENDIF
+
+  ENDWHILE
+
+}
+_RET
+
+//==============================================================
 //サブルーチン：クチコミ　質問部分
 //==============================================================
 sub_npc_mouthcomm_question:
 {
-  DEFINE_LOCAL LWK_INDEX
   DEFINE_LOCAL LWK_TMP
   DEFINE_LOCAL LWK_CNT
 
@@ -1714,7 +1768,7 @@ sub_npc_mouthcomm_question:
   //質問文
   _BALLOONWIN_CLOSE()
   _RESORT_GET_NPC_DATA( LWK_OBJID, RESORT_NPC_DATA_MOUTHCOMM_Q, LWK_MSGID )
-  _BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DL )
+  _BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DOWN )
 
   //選択肢作成
 	_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 0, LWK_MENU_RET )
@@ -1730,7 +1784,8 @@ sub_npc_mouthcomm_question:
 	_BMPMENU_START()
 
   //そうなんだー
-  _BALLOONWIN_OBJMSG( resort_mouthcomm_sys_02, LWK_OBJID )
+  _RESORT_GET_NPC_DATA( LWK_OBJID, RESORT_NPC_DATA_MOUTHCOMM_MSG_02, LWK_MSGID )
+  _BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DOWN )
 
   //回答を設定
   $LWK_TMP = $LWK_INDEX
@@ -1742,11 +1797,10 @@ sub_npc_mouthcomm_question:
 _RET
 
 /**************************************************************/
-/*            NPC　クチコミ                     */
+/*            NPC　オフレコ                     */
 /**************************************************************/
 EVENT_START ev_resort_npc_offreco
 {
-  DEFINE_LOCAL LWK_INDEX
   DEFINE_LOCAL LWK_TMP
   DEFINE_LOCAL LWK_CNT
 

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nagihashi_toru" host="W00268" date="2011-04-18T16:17:16"/>
+	<create user="nagihashi_toru" host="W00268" date="2011-04-18T20:22:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -398,7 +398,7 @@
 		</language>
 	</columns>
 
-	<dialog left="-1253" top="138" right="-548" bottom="758" maximized="no" rayout="Vertical2">
+	<dialog left="-1251" top="175" right="-546" bottom="795" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="434" top="226" right="906" bottom="624" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -2874,7 +2874,7 @@ GTSの　ごりよう　ありがとうございます！</language>
 		<language name="JPN" width="256">ねぇねぇ　[FF:00:色:2][1:3A:リゾート市長名:0][FF:00:色:0]！
 あなたって　こいびとは　いるの？</language>
 		<language name="JPN_KANJI" width="256">ねぇねぇ　[FF:00:色:2][1:3A:リゾート市長名:0][FF:00:色:0]！
-あなたって　恋人は　[FF:00:色:2]い[FF:00:色:0]るの？</language>
+あなたって　こいびとは　いるの？</language>
 	</row>
 
 	<row id="resort_mouthcomm_q_01" back-color="#00ffff,,,,,,,#00ffff,,,#00ffff,,,#00ffff,,,#00ffff,,">
@@ -3463,6 +3463,7 @@ GTSの　ごりよう　ありがとうございます！</language>
 	</row>
 
 	<row id="resort_mouthcomm_sys_03" back-color="#00ffff,,,,,,,#00ffff,,,#00ffff,,,#00ffff,,,#00ffff,,">
+		<attribute name="キャラ指定">選択肢用</attribute>
 		<language name="JPN" width="256">[1:37:リゾートフリーワード:0]</language>
 		<language name="JPN_KANJI" width="256">[1:37:リゾートフリーワード:0]</language>
 	</row>
@@ -3470,6 +3471,44 @@ GTSの　ごりよう　ありがとうございます！</language>
 	<row id="resort_mouthcomm_sys_04" back-color="#00ffff,,,,,,,#00ffff,,,#00ffff,,,#00ffff,,,#00ffff,,">
 		<language name="JPN" width="256">こんど　おしえてね！▼</language>
 		<language name="JPN_KANJI" width="256">今度　教えてね！▼</language>
+	</row>
+
+	<row id="resort_mouthcomm_sys_05" back-color="#00ffff,,,,,,,#00ffff,,,#00ffff,,,#00ffff,,,#00ffff,,">
+		<language name="JPN" width="256">もっと　ききたい？</language>
+		<language name="JPN_KANJI" width="256">もっと　ききたい？</language>
+	</row>
+
+	<row id="resort_mouthcomm_sys_06" back-color="#00ffff,,,,,,,#00ffff,,,#00ffff,,,#00ffff,,,#00ffff,,">
+		<language name="JPN" width="256"></language>
+		<language name="JPN_KANJI" width="256"></language>
+	</row>
+
+	<row id="resort_mouthcomm_sys_07" back-color="#00ffff,,,,,,,#00ffff,,,#00ffff,,,#00ffff,,,#00ffff,,">
+		<language name="JPN" width="256">この　まちは　こいびとと　くるには
+さいこうの　ばしょね▼
+こいびとっていえば
+おもしろい　はなしや
+こたえを　あつめているんだけどね……</language>
+		<language name="JPN_KANJI" width="256">この　まちは　こいびとと　くるには
+さいこうの　ばしょね▼
+こいびとっていえば
+おもしろい　はなしや
+こたえを　あつめているんだけどね……</language>
+	</row>
+
+	<row id="resort_mouthcomm_sel_00" back-color="#00ffff,,,,,,,#00ffff,,,#00ffff,,,#00ffff,,,#00ffff,,">
+		<language name="JPN" width="256">うわさを　きく</language>
+		<language name="JPN_KANJI" width="256">うわさを　きく</language>
+	</row>
+
+	<row id="resort_mouthcomm_sel_01" back-color="#00ffff,,,,,,,#00ffff,,,#00ffff,,,#00ffff,,,#00ffff,,">
+		<language name="JPN" width="256">こたえる</language>
+		<language name="JPN_KANJI" width="256">こたえる</language>
+	</row>
+
+	<row id="resort_mouthcomm_sel_02" back-color="#00ffff,,,,,,,#00ffff,,,#00ffff,,,#00ffff,,,#00ffff,,">
+		<language name="JPN" width="256">やめる</language>
+		<language name="JPN_KANJI" width="256">やめる</language>
 	</row>
 
 	<row id="resort_offreco_00" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">

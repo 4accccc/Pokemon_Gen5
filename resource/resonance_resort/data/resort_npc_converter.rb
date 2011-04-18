@@ -92,11 +92,17 @@ end
 KUTIKOMI_ROW_START    = 1     #行開始位置
 KUTIKOMI_COL_START    = 0     #列開始位置
 KUTIKOMI_COL_TAG      = KUTIKOMI_COL_START     #列:タグ
-KUTIKOMI_COL_QUESTION      = 1     #列:質問文
-KUTIKOMI_COL_ANSWER_NUM    = 2     #列:回答数
-KUTIKOMI_COL_ANSWER_START  = 3     #列：回答開始
+KUTIKOMI_COL_MSG_00      = 1     #列:初期挨拶文
+KUTIKOMI_COL_MSG_01      = 2     #列:初期挨拶文
+KUTIKOMI_COL_MSG_02      = 3     #列:初期挨拶文
+KUTIKOMI_COL_MSG_03      = 4     #列:初期挨拶文
+KUTIKOMI_COL_MSG_04      = 5     #列:初期挨拶文
+KUTIKOMI_COL_QUESTION      = 6    #列:質問文
+KUTIKOMI_COL_ANSWER_NUM    = 7     #列:回答数
+KUTIKOMI_COL_ANSWER_START  = 8     #列：回答開始
 
 KUTIKOMI_COL_ANSWER_MAX    = 6     #列：回答最大数
+KUTIKOMI_COL_MSG_MAX    = 5     #列：文章最大数
 def convertKutikomi( csv, data, msg_h, tagHash )
   
   #データの作成
@@ -110,6 +116,15 @@ def convertKutikomi( csv, data, msg_h, tagHash )
     num   = csv.get( row, KUTIKOMI_COL_ANSWER_NUM )
 
     tagHash.store( tag, row-KUTIKOMI_ROW_START )
+
+    for index in KUTIKOMI_COL_MSG_00...KUTIKOMI_COL_MSG_00 + KUTIKOMI_COL_MSG_MAX
+      msg = csv.get( row, index )
+      begin
+        data.write_u16( msgdata.search( "#{msg}", "#{row}行の#{msg_h}" ) )
+      rescue HeaderSearchError
+        exit(1)
+      end
+    end
 
     begin
       data.write_u16( msgdata.search( "#{ques}", "#{row}行の#{msg_h}" ) )

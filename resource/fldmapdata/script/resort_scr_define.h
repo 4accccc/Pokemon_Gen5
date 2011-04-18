@@ -58,3 +58,8 @@
 #define SEQ_SECRETARY_PC_MAILBOX  (4)
 #define SEQ_SECRETARY_PC_HELP     (5)
 #define SEQ_SECRETARY_PC_BYE      (6)
+
+//クチコミNPCの分岐
+#define SEQ_MOUTHCOMM_HEAR        (0)
+#define SEQ_MOUTHCOMM_ANSWER      (1)
+#define SEQ_MOUTHCOMM_CANCEL      (2)

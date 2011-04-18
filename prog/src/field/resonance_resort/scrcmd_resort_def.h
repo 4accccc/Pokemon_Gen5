@@ -178,6 +178,12 @@
 #define RESORT_NPC_DATA_MOUTHCOMM_I_04        (14)
 #define RESORT_NPC_DATA_MOUTHCOMM_I_05        (15)
 
+#define RESORT_NPC_DATA_MOUTHCOMM_MSG_00      (16)  //‰Šúˆ¥ŽA•¶
+#define RESORT_NPC_DATA_MOUTHCOMM_MSG_01      (17)  //’Êíˆ¥ŽA•¶
+#define RESORT_NPC_DATA_MOUTHCOMM_MSG_02      (18)  //‰ñ“šŠm”F•¶
+#define RESORT_NPC_DATA_MOUTHCOMM_MSG_03      (19)  //ŒJ‚è•Ô‚µ•¶
+#define RESORT_NPC_DATA_MOUTHCOMM_MSG_04      (20)  //‰\‚ª‚È‚¢‚Æ‚«•¶
+
 //_RESORT_GET_SERVICE_DATA—p
 #define RESORT_SERVICE_DATA_EFFECT            (0)
 

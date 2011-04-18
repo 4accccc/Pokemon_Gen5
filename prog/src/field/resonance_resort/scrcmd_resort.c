@@ -1534,6 +1534,16 @@ VMCMD_RESULT EvCmdResortGetNpcData( VMHANDLE *p_core, void *p_wk_adrs )
       *p_ret_wk = msgid - resort_mouthcomm_a_00 + resort_mouthcomm_t_00;
     }
     break;
+	case RESORT_NPC_DATA_MOUTHCOMM_MSG_00:
+	case RESORT_NPC_DATA_MOUTHCOMM_MSG_01:
+	case RESORT_NPC_DATA_MOUTHCOMM_MSG_02:
+	case RESORT_NPC_DATA_MOUTHCOMM_MSG_03:
+	case RESORT_NPC_DATA_MOUTHCOMM_MSG_04:
+    {
+      param = param - RESORT_NPC_DATA_MOUTHCOMM_MSG_00;
+      *p_ret_wk =  RESORT_NPC_SYS_GetMoutchCommData( p_nps_sys, RESORT_NPC_MMDLID_TO_INDEX(objid), RESORT_BINARY_MOUTHCOMM_PARAM_MSG_00 + param );
+    }
+    break;
   default:
     GF_ASSERT(0);
   }
