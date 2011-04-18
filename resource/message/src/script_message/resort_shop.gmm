@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2011-04-14T00:17:46"/>
+	<create user="shimoyamada" host="W00184" date="2011-04-16T14:44:07"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -395,7 +395,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1134" top="533" right="1839" bottom="1161" maximized="no" rayout="Vertical2">
+	<dialog left="1224" top="531" right="1929" bottom="1159" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="551" top="133" right="1024" bottom="531" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -594,8 +594,8 @@
 	</row>
 
 	<row id="mes_shop_09_01">
-		<language name="JPN" width="256">ひしょ[2:00:１桁:1]：[1:00:トレーナー名:0]</language>
-		<language name="JPN_KANJI" width="256">ひしょ[2:00:１桁:1]：[1:00:トレーナー名:0]</language>
+		<language name="JPN" width="256">だい[2:00:１桁:1]：[1:00:トレーナー名:0]</language>
+		<language name="JPN_KANJI" width="256">だい[2:00:１桁:1]：[1:00:トレーナー名:0]</language>
 	</row>
 
 	<row id="mes_shop_09_02">
@@ -603,18 +603,34 @@
 		<language name="JPN_KANJI" width="256">[2:00:１桁:1]：[1:38:リゾート店名:0]</language>
 	</row>
 
-	<row id="mes_shop_09_03">
+	<row id="mes_shop_09_03" back-color="#ff0000,,,,,,,,,,,,,,,,,">
+		<comment>0：秘書名
+1：秘書№
+
+3：年
+4：月
+5：日</comment>
 		<language name="JPN" width="256">なまえ：[1:00:トレーナー名:0]
-ひしょ：だい[2:01:２桁:1]ひしょ</language>
-		<language name="JPN_KANJI" width="256">名前：[1:00:トレーナー名:0]
-ひしょ：だい[2:01:２桁:1]ひしょ</language>
+しゅるい：だい[2:01:２桁:1]ひしょ
+であったひ：２０１１／４／１６</language>
+		<language name="JPN_KANJI" width="256">なまえ：[1:00:トレーナー名:0]
+しゅるい：だい[2:01:２桁:1]ひしょ
+であったひ：２０１１／４／１６</language>
 	</row>
 
-	<row id="mes_shop_09_04">
-		<language name="JPN" width="256">おみせ：[1:38:リゾート店名:0]
-しゅるい：[1:38:リゾート店名:1]</language>
-		<language name="JPN_KANJI" width="256">お店：[1:38:リゾート店名:0]
-種類：[1:38:リゾート店名:1]</language>
+	<row id="mes_shop_09_04" back-color="#ff0000,,,,,,,,,,,,,,,,,">
+		<comment>0：お店名
+1：種類名
+2：レベル
+3：年
+4：月
+5：日</comment>
+		<language name="JPN" width="256">しゅるい：[1:38:リゾート店名:1]
+レベル　：１
+であったひ：２０１１／４／１６</language>
+		<language name="JPN_KANJI" width="256">しゅるい：[1:38:リゾート店名:1]
+レベル　：１
+であったひ：２０１１／４／１６</language>
 	</row>
 
 	<row id="mes_shop_09_06" back-color="#ffff00,,,,,,,,,,,,,,,,,">
@@ -629,12 +645,12 @@
 こうたい　しました▼
 [1:00:トレーナー名:0]さんは
 しばらく　コンドミニアムで▽
-あそぶようです▼</language>
+ゆっくり　するそうです▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]　を
 こうたい　しました▼
 [1:00:トレーナー名:0]さんは
 しばらく　コンドミニアムで▽
-あそぶようです▼</language>
+ゆっくり　するそうです▼</language>
 	</row>
 
 	<row id="mes_shop_09_09">
@@ -675,10 +691,10 @@
 	<row id="mes_shop_09_16" back-color="#ff0000,,,,,,,,,,,,,,,,,">
 		<comment>0：施設名でなくトレーナー名に変更</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]さんは
-コンドミニアムへ　いきました▼
+コンドミニアムへ　いきました▽
 あとで　あいさつへ　いきましょう▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんは
-コンドミニアムへ　いきました▼
+コンドミニアムへ　いきました▽
 あとで　あいさつへ　いきましょう▼</language>
 	</row>
 

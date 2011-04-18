@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2011-04-14T01:17:31"/>
+	<create user="shimoyamada" host="W00184" date="2011-04-16T16:47:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -398,14 +398,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1183" top="779" right="1887" bottom="1407" maximized="no" rayout="Vertical2">
+	<dialog left="1070" top="352" right="1775" bottom="980" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
-		<tag-palette left="1908" top="367" right="2380" bottom="765" visible="yes"/>
-		<band id="0" index="1" style="0000" width="529"/>
+		<tag-palette left="552" top="367" right="1024" bottom="765" visible="yes"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="345"/>
-		<band id="3" index="4" style="0000" width="349"/>
-		<band id="4" index="0" style="0000" width="696"/>
+		<band id="3" index="4" style="0000" width="350"/>
+		<band id="4" index="0" style="0000" width="697"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -438,17 +438,18 @@
 		<attribute name="キャラ指定">0：観光客名
 1：通信名
 2：クチグセ
-3：リゾート名</attribute>
+3：リゾート名
+4：プレイヤー名</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『[1:37:リゾートフリーワード:2]
-[1:37:リゾートフリーワード:1]で　あったこと▽
+[1:37:リゾートフリーワード:1]で　であったこと▽
 おぼえている？▼
-[1:39:リゾート街名:3]が　きになって
-あそびに　きました▼</language>
+[1:00:トレーナー名:4]の　[1:39:リゾート街名:3]が
+きになって　あそびに　きました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『[1:37:リゾートフリーワード:2]
-[1:37:リゾートフリーワード:1]で　あったこと▽
+[1:37:リゾートフリーワード:1]で　であったこと▽
 おぼえている？▼
-[1:39:リゾート街名:3]が　きになって
-あそびに　きました▼</language>
+[1:00:トレーナー名:4]の　[1:39:リゾート街名:3]が
+きになって　あそびに　きました▼</language>
 	</row>
 
 	<row id="resort_tourist_joy_00" back-color=",,,,,#ff0000,,,,,,,,,,,,,">
@@ -474,10 +475,8 @@
 	</row>
 
 	<row id="resort_tourist_item_00" back-color=",,,,,#ffff00,,,,,,,,,,,,,">
-		<language name="JPN" width="256">おみやげに
-これ　さしあげます！▼</language>
-		<language name="JPN_KANJI" width="256">おみやげに
-これ　さしあげます！▼</language>
+		<language name="JPN" width="256">これ　おみやげ　です▼</language>
+		<language name="JPN_KANJI" width="256">これ　おみやげ　です▼</language>
 	</row>
 
 	<row id="resort_proxy_greet_gts" back-color=",,,,,#ffff00,,,,,,,,,,,,,">
@@ -589,18 +588,14 @@ GTSの　ごりよう　ありがとうございます！</language>
 	<row id="resort_secretary_greet_02" back-color=",,,,,#ffff00,,,,,,,,,,,,,">
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『
 [1:37:リゾートフリーワード:1]▼
-[1:3A:リゾート市長名:2]！
-わたくしの　ポケモンで▽
+わたしの　ポケモンで
 [1:3A:リゾート市長名:2]を▽
-おすきな　ばしょへ　おはこびします▽
-どちらに　いどうされますか？</language>
+おすきな　ばしょへ　おつれします▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『
 [1:37:リゾートフリーワード:1]▼
-[1:3A:リゾート市長名:2]！
-わたくしの　ポケモンで▽
+わたしの　ポケモンで
 [1:3A:リゾート市長名:2]を▽
-おすきな　ばしょへ　おはこびします▽
-どちらに　いどうされますか？</language>
+おすきな　ばしょへ　おつれします▼</language>
 	</row>
 
 	<row id="resort_secretary_greet_03" back-color=",,,,,#ffff00,,,,,,,,,,,,,">
@@ -838,10 +833,10 @@ GTSの　ごりよう　ありがとうございます！</language>
 	</row>
 
 	<row id="resort_sys_select_info_02" back-color="#80ff80,,,,,#ffff00,,#80ff80,,,,,,,,,,,">
-		<language name="JPN" width="256">じぶんの　ひしょとして　スカウトします
-いまいる　ひしょと　いれかわります</language>
-		<language name="JPN_KANJI" width="256">自分の　秘書に　スカウトします
-いまいる　秘書と　入れ替えします</language>
+		<language name="JPN" width="256">ひしょとして　スカウト　します
+いまの　ひしょと　こうたい　します</language>
+		<language name="JPN_KANJI" width="256">ひしょとして　スカウト　します
+いまの　ひしょと　こうたい　します</language>
 	</row>
 
 	<row id="resort_sys_select_info_03" back-color="#80ff80,,,,,#ffff00,,#80ff80,,,,,,,,,,,">
@@ -852,8 +847,10 @@ GTSの　ごりよう　ありがとうございます！</language>
 	</row>
 
 	<row id="resort_sys_select_info_04" back-color="#80ff80,,,,,#ffff00,,#80ff80,,,,,,,,,,,">
-		<language name="JPN" width="256">さいきんの　できごとを　ききます</language>
-		<language name="JPN_KANJI" width="256">最近の　出来事を　聞きます</language>
+		<language name="JPN" width="256">さいきんの　できごとを
+はなして　もらいます</language>
+		<language name="JPN_KANJI" width="256">さいきんの　できごとを
+はなして　もらいます</language>
 	</row>
 
 	<row id="resort_sys_select_info_05" back-color="#80ff80,,,,,#ffff00,,#80ff80,,,,,,,,,,,">
@@ -894,9 +891,15 @@ GTSの　ごりよう　ありがとうございます！</language>
 
 	<row id="resort_sys_00" back-color="#80ff80,,,,,,,#80ff80,,,,,,,,,,,">
 		<language name="JPN" width="256">[1:38:リゾート店名:0]
-『[1:38:リゾート店名:1]』が　できました！▼</language>
+『[1:38:リゾート店名:1]』が▽
+つくられた！▼
+『[1:38:リゾート店名:1]』を
+たずねてみよう！▼</language>
 		<language name="JPN_KANJI" width="256">[1:38:リゾート店名:0]
-『[1:38:リゾート店名:1]』が　できました！▼</language>
+『[1:38:リゾート店名:1]』が▽
+つくられた！▼
+『[1:38:リゾート店名:1]』を
+たずねてみよう！▼</language>
 	</row>
 
 	<row id="resort_sys_01" back-color="#80ff80,,,,,,,#80ff80,,,,,,,,,,,">
@@ -911,49 +914,91 @@ GTSの　ごりよう　ありがとうございます！</language>
 		<language name="JPN_KANJI" width="256">誰と　いれかえますか？</language>
 	</row>
 
-	<row id="resort_sys_03" back-color="#80ff80,,,,,#ffff00,,#80ff80,,,,,,,,,,,">
+	<row id="resort_sys_03" back-color="#80ff80,,,,,#ff0000,,#80ff80,,,,,,,,,,,">
 		<language name="JPN" width="256">[FF:00:色:2][1:38:リゾート店名:0][FF:00:色:0]に
 [FF:00:色:2][1:00:トレーナー名:1][FF:00:色:0]が　やってきた！▼
-[1:00:トレーナー名:1]は
+[FF:00:色:2][1:00:トレーナー名:1][FF:00:色:0]『チャオ！▼
+[FF:00:色:2][1:38:リゾート店名:0][FF:00:色:0]『テス！
+ようこそ！▼
+・・・・・・・・・・・・・・・・・・
+・・・・・・・・・・・・・・・・・・▼
+（行きたい場所×
+効果（◎○×）によるリアクション）▼
+[1:00:トレーナー名:1]は　[FF:00:色:2][1:38:リゾート店名:0]に[FF:00:色:0]
 ちょっぴり まんぞく　した！▼
 [FF:00:色:2][1:38:リゾート店名:0][FF:00:色:0]の　にんきが
-[2:02:３桁:2]　あがった！！▼</language>
+[2:02:３桁:2]　あがった！▼</language>
 		<language name="JPN_KANJI" width="256">[FF:00:色:2][1:38:リゾート店名:0][FF:00:色:0]に
 [FF:00:色:2][1:00:トレーナー名:1][FF:00:色:0]が　やってきた！▼
-[1:00:トレーナー名:1]は
+[FF:00:色:2][1:00:トレーナー名:1][FF:00:色:0]『チャオ！▼
+[FF:00:色:2][1:38:リゾート店名:0][FF:00:色:0]『テス！
+ようこそ！▼
+・・・・・・・・・・・・・・・・・・
+・・・・・・・・・・・・・・・・・・▼
+（行きたい場所×
+効果（◎○×）によるリアクション）▼
+[1:00:トレーナー名:1]は　[FF:00:色:2][1:38:リゾート店名:0]に[FF:00:色:0]
 ちょっぴり まんぞく　した！▼
 [FF:00:色:2][1:38:リゾート店名:0][FF:00:色:0]の　にんきが
-[2:02:３桁:2]　あがった！！▼</language>
+[2:02:３桁:2]　あがった！▼</language>
 	</row>
 
-	<row id="resort_sys_04" back-color="#80ff80,,,,,#ffff00,,#80ff80,,,,,,,,,,,">
+	<row id="resort_sys_04" back-color="#80ff80,,,,,#ff0000,,#80ff80,,,,,,,,,,,">
 		<language name="JPN" width="256">[FF:00:色:2][1:38:リゾート店名:0][FF:00:色:0]に
 [FF:00:色:2][1:00:トレーナー名:1][FF:00:色:0]が　やってきた！▼
-[1:00:トレーナー名:1]は
+[FF:00:色:2][1:00:トレーナー名:1][FF:00:色:0]『チャオ！▼
+[FF:00:色:2][1:38:リゾート店名:0][FF:00:色:0]『テス！
+ようこそ！▼
+・・・・・・・・・・・・・・・・・・
+・・・・・・・・・・・・・・・・・・▼
+（行きたい場所×
+効果（◎○×）によるリアクション）▼
+[1:00:トレーナー名:1]は　[FF:00:色:2][1:38:リゾート店名:0]に[FF:00:色:0]
 まんぞくした！▼
 [FF:00:色:2][1:38:リゾート店名:0][FF:00:色:0]の　にんきが
-[2:02:３桁:2]　あがった！！▼</language>
+[2:02:３桁:2]　あがった！▼</language>
 		<language name="JPN_KANJI" width="256">[FF:00:色:2][1:38:リゾート店名:0][FF:00:色:0]に
 [FF:00:色:2][1:00:トレーナー名:1][FF:00:色:0]が　やってきた！▼
-[1:00:トレーナー名:1]は
+[FF:00:色:2][1:00:トレーナー名:1][FF:00:色:0]『チャオ！▼
+[FF:00:色:2][1:38:リゾート店名:0][FF:00:色:0]『テス！
+ようこそ！▼
+・・・・・・・・・・・・・・・・・・
+・・・・・・・・・・・・・・・・・・▼
+（行きたい場所×
+効果（◎○×）によるリアクション）▼
+[1:00:トレーナー名:1]は　[FF:00:色:2][1:38:リゾート店名:0]に[FF:00:色:0]
 まんぞくした！▼
 [FF:00:色:2][1:38:リゾート店名:0][FF:00:色:0]の　にんきが
-[2:02:３桁:2]　あがった！！▼</language>
+[2:02:３桁:2]　あがった！▼</language>
 	</row>
 
-	<row id="resort_sys_05" back-color="#80ff80,,,,,#ffff00,,#80ff80,,,,,,,,,,,">
+	<row id="resort_sys_05" back-color="#80ff80,,,,,#ff0000,,#80ff80,,,,,,,,,,,">
 		<language name="JPN" width="256">[FF:00:色:2][1:38:リゾート店名:0][FF:00:色:0]に
 [FF:00:色:2][1:00:トレーナー名:1][FF:00:色:0]が　やってきた！▼
-[1:00:トレーナー名:1]は
-すごく まんぞくした！▼
+[FF:00:色:2][1:00:トレーナー名:1][FF:00:色:0]『チャオ！▼
+[FF:00:色:2][1:38:リゾート店名:0][FF:00:色:0]『テス！
+ようこそ！▼
+・・・・・・・・・・・・・・・・・・
+・・・・・・・・・・・・・・・・・・▼
+（行きたい場所×
+効果（◎○×）によるリアクション）▼
+[1:00:トレーナー名:1]は　[FF:00:色:2][1:38:リゾート店名:0]に[FF:00:色:0]
+ものすごく まんぞくした！▼
 [FF:00:色:2][1:38:リゾート店名:0][FF:00:色:0]の　にんきが
-[2:02:３桁:2]　あがった！！▼</language>
+[2:02:３桁:2]　あがった！▼</language>
 		<language name="JPN_KANJI" width="256">[FF:00:色:2][1:38:リゾート店名:0][FF:00:色:0]に
 [FF:00:色:2][1:00:トレーナー名:1][FF:00:色:0]が　やってきた！▼
-[1:00:トレーナー名:1]は
-すごく まんぞくした！▼
+[FF:00:色:2][1:00:トレーナー名:1][FF:00:色:0]『チャオ！▼
+[FF:00:色:2][1:38:リゾート店名:0][FF:00:色:0]『テス！
+ようこそ！▼
+・・・・・・・・・・・・・・・・・・
+・・・・・・・・・・・・・・・・・・▼
+（行きたい場所×
+効果（◎○×）によるリアクション）▼
+[1:00:トレーナー名:1]は　[FF:00:色:2][1:38:リゾート店名:0]に[FF:00:色:0]
+ものすごく まんぞくした！▼
 [FF:00:色:2][1:38:リゾート店名:0][FF:00:色:0]の　にんきが
-[2:02:３桁:2]　あがった！！▼</language>
+[2:02:３桁:2]　あがった！▼</language>
 	</row>
 
 	<row id="resort_sys_06" back-color="#80ff80,,,,,#ffff00,,#80ff80,,,,,,,,,,,">
@@ -974,13 +1019,13 @@ GTSの　ごりよう　ありがとうございます！</language>
 [FF:00:色:2][1:00:トレーナー名:1][FF:00:色:0]は
 あまり　まんぞく　しなかった……▼
 [FF:00:色:2][1:00:トレーナー名:1][FF:00:色:0]は
-そのまま　かえってしまった……▼</language>
+かえっていった……▼</language>
 		<language name="JPN_KANJI" width="256">[FF:00:色:2][1:38:リゾート店名:0][FF:00:色:0]に
 [FF:00:色:2][1:00:トレーナー名:1][FF:00:色:0]が　やってきた！▼
 [FF:00:色:2][1:00:トレーナー名:1][FF:00:色:0]は
 あまり　まんぞく　しなかった……▼
 [FF:00:色:2][1:00:トレーナー名:1][FF:00:色:0]は
-そのまま　かえってしまった……▼</language>
+かえっていった……▼</language>
 	</row>
 
 	<row id="resort_sys_09" back-color="#80ff80,,,,,#ffff00,,#80ff80,,,,,,,,,,,">
@@ -1021,36 +1066,36 @@ GTSの　ごりよう　ありがとうございます！</language>
 2：
 3：レベル
 4：新施設名</attribute>
-		<language name="JPN" width="256">なんと　[1:38:リゾート店名:0]の
+		<language name="JPN" width="256">[1:38:リゾート店名:0]の
 レベルが　あがった！▼
 [1:38:リゾート店名:0]は
 レベル　[2:00:１桁:3]　になった！！▼
-[1:38:リゾート店名:0]から
-[1:38:リゾート店名:4]に　なった！▼</language>
-		<language name="JPN_KANJI" width="256">なんと　[1:38:リゾート店名:0]の
+『[1:38:リゾート店名:0]』から
+『[1:38:リゾート店名:4]』に　なった！▼</language>
+		<language name="JPN_KANJI" width="256">[1:38:リゾート店名:0]の
 レベルが　あがった！▼
 [1:38:リゾート店名:0]は
 レベル　[2:00:１桁:3]　になった！！▼
-[1:38:リゾート店名:0]から
-[1:38:リゾート店名:4]に　なった！▼</language>
+『[1:38:リゾート店名:0]』から
+『[1:38:リゾート店名:4]』に　なった！▼</language>
 	</row>
 
 	<row id="resort_sys_14" back-color="#80ff80,,,,,#ff0000,,#80ff80,,,,,,,,,,,">
 		<attribute name="キャラ指定">0：レベル数
 1：リゾート名</attribute>
-		<language name="JPN" width="256">つぎの　レベルに　なるには
-あと　にんきが　[2:02:３桁:0]　ひつよう　です▼
+		<language name="JPN" width="256">つぎの　レベルに　あがるには
+にんきが　　あと[2:02:３桁:0]　ひつよう　です▼
 どんどん　[1:38:リゾート店名:1]を
 おすすめして　ください▼</language>
-		<language name="JPN_KANJI" width="256">つぎの　レベルに　なるには
-あと　にんきが　[2:02:３桁:0]　ひつよう　です▼
+		<language name="JPN_KANJI" width="256">つぎの　レベルに　あがるには
+にんきが　　あと[2:02:３桁:0]　ひつよう　です▼
 どんどん　[1:38:リゾート店名:1]を
 おすすめして　ください▼</language>
 	</row>
 
 	<row id="resort_shop_genre_00" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
-		<language name="JPN" width="256">ポケモンくじ</language>
-		<language name="JPN_KANJI" width="256">ポケモンくじ</language>
+		<language name="JPN" width="256">くじびきや</language>
+		<language name="JPN_KANJI" width="256">くじびきや</language>
 	</row>
 
 	<row id="resort_shop_genre_01" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
@@ -1332,7 +1377,7 @@ GTSの　ごりよう　ありがとうございます！</language>
 『[1:38:リゾート店名:0]』へ　ようこそ！</language>
 	</row>
 
-	<row id="resort_shopinfo_10" back-color="#ff78ff,,,,,#ffff00,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+	<row id="resort_shopinfo_10" back-color="#ff78ff,,,,,#c0c0c0,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
 		<attribute name="キャラ指定">ジムもどき</attribute>
 		<language name="JPN" width="256">ポケモンと　トレーナーの　きずなを　たしかめる
 『[1:38:リゾート店名:0]』へ　ようこそ！</language>
@@ -1348,17 +1393,35 @@ GTSの　ごりよう　ありがとうございます！</language>
 『[1:38:リゾート店名:0]』です</language>
 	</row>
 
-	<row id="resort_lot_00" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+	<row id="resort_lot_00" back-color="#ff78ff,,,,,#ffff00,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
 		<attribute name="キャラ指定">くじびき</attribute>
-		<language name="JPN" width="256">ざんねんですが　はずれました……▼</language>
-		<language name="JPN_KANJI" width="256">残念ですが　外れました……▼</language>
+		<language name="JPN" width="256">……　……　……　……　……　……
+……　……　……　……　……　……▼
+……　……　……　……　……　……
+……　……　……　……　……　……▼
+ざんねんですが　はずれました……▼</language>
+		<language name="JPN_KANJI" width="256">……　……　……　……　……　……
+……　……　……　……　……　……▼
+……　……　……　……　……　……
+……　……　……　……　……　……▼
+ざんねんですが　はずれました……▼</language>
 	</row>
 
-	<row id="resort_lot_01" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
-		<language name="JPN" width="256">[2:01:２桁:0]とうが　あたりました！
+	<row id="resort_lot_01" back-color="#ff78ff,,,,,#ffff00,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="256">……　……　……　……　……　……
+……　……　……　……　……　……▼
+……　……　……　……　……　……
+……　……　……　……　……　……▼
+おめでとうございます！！▼
+[2:01:２桁:0]とうが　あたりました！
 しょうひんは　こちらです！▼</language>
-		<language name="JPN_KANJI" width="256">[2:01:２桁:0]等が　当たりました！
-賞品は　こちらです！▼</language>
+		<language name="JPN_KANJI" width="256">……　……　……　……　……　……
+……　……　……　……　……　……▼
+……　……　……　……　……　……
+……　……　……　……　……　……▼
+おめでとうございます！！▼
+[2:01:２桁:0]とうが　あたりました！
+しょうひんは　こちらです！▼</language>
 	</row>
 
 	<row id="resort_lot_02" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
@@ -2409,17 +2472,25 @@ GTSの　ごりよう　ありがとうございます！</language>
 入れます）▼</language>
 	</row>
 
-	<row id="resort_history_00" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
-		<attribute name="キャラ指定">履歴</attribute>
-		<language name="JPN" width="256">イッシュずかんを　
-コンプリートしたよ！▼</language>
-		<language name="JPN_KANJI" width="256">イッシュ図鑑を　
-コンプリートしたよ！▼</language>
+	<row id="resort_history_00" back-color="#8080ff,,,#8080ff,,#ff0000,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！
+……なんと！▼
+２０１１ねん４がつ１８にちに
+イッシュずかんを▽
+かんせい　させました！▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！
+……なんと！▼
+２０１１ねん４がつ１８にちに
+イッシュずかんを▽
+かんせい　させました！▼</language>
 	</row>
 
 	<row id="resort_appeal_00" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
 		<attribute name="キャラ指定">アピール　ポケモンくじ</attribute>
-		<language name="JPN" width="256">ぼく　このまちに　すんで
+		<language name="JPN" width="256">このまちに　すんで
 みんなを　ドキドキ　わくわくさせたいな▼</language>
 		<language name="JPN_KANJI" width="256">みんなを
 ドキドキ　ワクワクさせたいな▼</language>
@@ -2427,107 +2498,107 @@ GTSの　ごりよう　ありがとうございます！</language>
 
 	<row id="resort_appeal_01" back-color="#ff0000,,,,,#ffff00,,#ff0000,,,#ff0000,,,#ff0000,,,#ff0000,,">
 		<attribute name="キャラ指定">美容室</attribute>
-		<language name="JPN" width="256">ぼく　このまちに　すんで
+		<language name="JPN" width="256">このまちに　すんで
 いろいろな　ポケモンを▽
 きれいに　したいな▼</language>
-		<language name="JPN_KANJI" width="256">ぼく　このまちに　すんで
+		<language name="JPN_KANJI" width="256">このまちに　すんで
 いろいろな　ポケモンを▽
 きれいに　したいな▼</language>
 	</row>
 
 	<row id="resort_appeal_02" back-color="#ff0000,,,,,#ffff00,,#ff0000,,,#ff0000,,,#ff0000,,,#ff0000,,">
 		<attribute name="キャラ指定">育て屋</attribute>
-		<language name="JPN" width="256">ぼく　このまちに　すんで
+		<language name="JPN" width="256">このまちに　すんで
 ポケモンを　きたえて　きたえて▽
-つよく　するんだ▼</language>
-		<language name="JPN_KANJI" width="256">ぼく　このまちに　すんで
+つよく　したいな▼</language>
+		<language name="JPN_KANJI" width="256">このまちに　すんで
 ポケモンを　きたえて　きたえて▽
-つよく　するんだ▼</language>
+つよく　したいな▼</language>
 	</row>
 
 	<row id="resort_appeal_03" back-color="#ff0000,,,,,#ffff00,,#ff0000,,,#ff0000,,,#ff0000,,,#ff0000,,">
 		<attribute name="キャラ指定">マーケット</attribute>
-		<language name="JPN" width="256">ぼく　このまちに　すんで
+		<language name="JPN" width="256">このまちに　すんで
 いいものを　いっぱい　あつめて▽
 みんなを　おどろかせたいな！▼</language>
-		<language name="JPN_KANJI" width="256">ぼく　このまちに　すんで
+		<language name="JPN_KANJI" width="256">このまちに　すんで
 いいものを　いっぱい　あつめて▽
 みんなを　おどろかせたいな！▼</language>
 	</row>
 
 	<row id="resort_appeal_04" back-color="#ff0000,,,,,#ffff00,,#ff0000,,,#ff0000,,,#ff0000,,,#ff0000,,">
 		<attribute name="キャラ指定">花屋</attribute>
-		<language name="JPN" width="256">ぼく　このまちに　すんで
+		<language name="JPN" width="256">このまちに　すんで
 きれいな　はなで▽
 みんなを　いやしたいな！▼</language>
-		<language name="JPN_KANJI" width="256">ぼく　このまちに　すんで
+		<language name="JPN_KANJI" width="256">このまちに　すんで
 きれいな　はなで▽
 みんなを　いやしたいな！▼</language>
 	</row>
 
 	<row id="resort_appeal_05" back-color="#ff0000,,,,,#ffff00,,#ff0000,,,#ff0000,,,#ff0000,,,#ff0000,,">
 		<attribute name="キャラ指定">道場</attribute>
-		<language name="JPN" width="256">ぼく　このまちに　すんで
+		<language name="JPN" width="256">このまちに　すんで
 いろんな　ポケモンを　きたえて▽
 きたえて　つよく　したいな！▼</language>
-		<language name="JPN_KANJI" width="256">ぼく　このまちに　すんで
+		<language name="JPN_KANJI" width="256">このまちに　すんで
 いろんな　ポケモンを　きたえて▽
 きたえて　つよく　したいな！▼</language>
 	</row>
 
 	<row id="resort_appeal_06" back-color="#ff0000,,,,,#ffff00,,#ff0000,,,#ff0000,,,#ff0000,,,#ff0000,,">
 		<attribute name="キャラ指定">保育所</attribute>
-		<language name="JPN" width="256">ぼく　このまちに　すんで
+		<language name="JPN" width="256">このまちに　すんで
 ポケモンが　うまれる　しゅんかんに▽
 たちあいたいんだ▼</language>
-		<language name="JPN_KANJI" width="256">ぼく　このまちに　すんで
+		<language name="JPN_KANJI" width="256">このまちに　すんで
 ポケモンが　うまれる　しゅんかんに▽
 たちあいたいんだ▼</language>
 	</row>
 
 	<row id="resort_appeal_07" back-color="#ff0000,,,,,#ffff00,,#ff0000,,,#ff0000,,,#ff0000,,,#ff0000,,">
 		<attribute name="キャラ指定">宝石店</attribute>
-		<language name="JPN" width="256">ぼく　このまちに　すんで
+		<language name="JPN" width="256">このまちに　すんで
 きれいなものに▽
 かこまれた　せいかつが　したいな▼</language>
-		<language name="JPN_KANJI" width="256">ぼく　このまちに　すんで
+		<language name="JPN_KANJI" width="256">このまちに　すんで
 きれいなものに▽
 かこまれた　せいかつが　したいな▼</language>
 	</row>
 
 	<row id="resort_appeal_08" back-color="#ff0000,,,,,#ffff00,,#ff0000,,,#ff0000,,,#ff0000,,,#ff0000,,">
 		<attribute name="キャラ指定">古道具屋</attribute>
-		<language name="JPN" width="256">ぼく　このまちに　すんで
+		<language name="JPN" width="256">このまちに　すんで
 こだわりの　どうぐを　そろえて▽
 みんなを　おどろかせたいな！▼</language>
-		<language name="JPN_KANJI" width="256">ぼく　このまちに　すんで
+		<language name="JPN_KANJI" width="256">このまちに　すんで
 こだわりの　どうぐを　そろえて▽
 みんなを　おどろかせたいな！▼</language>
 	</row>
 
 	<row id="resort_appeal_09" back-color="#ff0000,,,,,#ffff00,,#ff0000,,,#ff0000,,,#ff0000,,,#ff0000,,">
 		<attribute name="キャラ指定">レストラン</attribute>
-		<language name="JPN" width="256">ぼく　このまちに　すんで
+		<language name="JPN" width="256">このまちに　すんで
 おいしい　ごはんを　つくって▽
 ポケモンを　しあわせにしたいな！▼</language>
-		<language name="JPN_KANJI" width="256">ぼく　このまちに　すんで
+		<language name="JPN_KANJI" width="256">このまちに　すんで
 おいしい　ごはんを　つくって▽
 ポケモンを　しあわせにしたいな！▼</language>
 	</row>
 
 	<row id="resort_appeal_10" back-color="#ff0000,,,,,#ffff00,,#ff0000,,,#ff0000,,,#ff0000,,,#ff0000,,">
 		<attribute name="キャラ指定">ジムもどき</attribute>
-		<language name="JPN" width="256">ぼく　このまちに　すんで
+		<language name="JPN" width="256">このまちに　すんで
 ジムリーダーに　なりたいな！▼</language>
-		<language name="JPN_KANJI" width="256">ぼく　このまちに　すんで
+		<language name="JPN_KANJI" width="256">このまちに　すんで
 ジムリーダーに　なりたいな！▼</language>
 	</row>
 
 	<row id="resort_appeal_11" back-color="#ff0000,,,,,#ffff00,,#ff0000,,,#ff0000,,,#ff0000,,,#ff0000,,">
 		<attribute name="キャラ指定">民家</attribute>
-		<language name="JPN" width="256">ぼく　このまちに　すんで
+		<language name="JPN" width="256">このまちに　すんで
 じゆう　きままに　くらいしたい！▼</language>
-		<language name="JPN_KANJI" width="256">ぼく　このまちに　すんで
+		<language name="JPN_KANJI" width="256">このまちに　すんで
 じゆう　きままに　くらいしたい！▼</language>
 	</row>
 
@@ -2659,6 +2730,60 @@ GTSの　ごりよう　ありがとうございます！</language>
 		<language name="JPN_KANJI" width="256">なにもしたくない▼</language>
 	</row>
 
+	<row id="resort_go_24" back-color="#ffff80,,,,,#ff0000,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<attribute name="キャラ指定">弱</attribute>
+		<language name="JPN" width="256">おとこのひとが　いる
+ばしょへ　いきたい！▼</language>
+		<language name="JPN_KANJI" width="256">おとこのひとが　いる
+ばしょへ　いきたい！▼</language>
+	</row>
+
+	<row id="resort_go_25" back-color="#ffff80,,,,,#ff0000,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<attribute name="キャラ指定">弱</attribute>
+		<language name="JPN" width="256">おんなのひとが　いる
+ばしょへ　いきたい！▼</language>
+		<language name="JPN_KANJI" width="256">おんなのひとが　いる
+ばしょへ　いきたい！▼</language>
+	</row>
+
+	<row id="resort_go_26" back-color="#ffff80,,,,,#ff0000,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<attribute name="キャラ指定">弱</attribute>
+		<language name="JPN" width="256">ショッピングが　したい！▼</language>
+		<language name="JPN_KANJI" width="256">ショッピングが　したい！▼</language>
+	</row>
+
+	<row id="resort_go_27" back-color="#ffff80,,,,,#ff0000,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<attribute name="キャラ指定">弱</attribute>
+		<language name="JPN" width="256">ポケモンを　すごく　できる
+ばしょへ　いきたい！▼</language>
+		<language name="JPN_KANJI" width="256">ポケモンを　すごく　できる
+ばしょへ　いきたい！▼</language>
+	</row>
+
+	<row id="resort_go_28" back-color="#ffff80,,,,,#ff0000,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<attribute name="キャラ指定">強</attribute>
+		<language name="JPN" width="256">すきなひとが　たくさん　いるんだけど
+この　きもち　わかるひと　いない？▼</language>
+		<language name="JPN_KANJI" width="256">すきなひとが　たくさん　いるんだけど
+この　きもち　わかるひと　いない？▼</language>
+	</row>
+
+	<row id="resort_go_29" back-color="#ffff80,,,,,#ff0000,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<attribute name="キャラ指定">強</attribute>
+		<language name="JPN" width="256">すきなひとが　ひとりだけ　いるんだけど
+この　きもち　わかるひと　いない？▼</language>
+		<language name="JPN_KANJI" width="256">すきなひとが　ひとりだけ　いるんだけど
+この　きもち　わかるひと　いない？▼</language>
+	</row>
+
+	<row id="resort_go_30" back-color="#ffff80,,,,,#ff0000,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<attribute name="キャラ指定">強</attribute>
+		<language name="JPN" width="256">すきなひとが　できないんだけど
+この　きもち　わかるひと　いない？▼</language>
+		<language name="JPN_KANJI" width="256">すきなひとが　できないんだけど
+この　きもち　わかるひと　いない？▼</language>
+	</row>
+
 	<row id="resort_gossip_00" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
 		<attribute name="キャラ指定">秘書が話す噂</attribute>
 		<language name="JPN" width="256">さいきん　とある　ジムリーダーが
@@ -2772,14 +2897,14 @@ GTSの　ごりよう　ありがとうございます！</language>
 		<language name="JPN" width="256">ここは　イッシュちほうの
 はるかみなみの　うみに　ある▽
 うめたてて　つくられた　しま▼
-ヒウンシティから　ひこうきで
-くることが　できるよ▼
+ヒウンシティから　ひこうき　からでしか
+くることが　できない　ばしょだ▼
 </language>
 		<language name="JPN_KANJI" width="256">ここは　イッシュちほうの
 はるかみなみの　うみに　ある▽
 うめたてて　つくられた　しま▼
-ヒウンシティから　ひこうきで
-くることが　できるよ▼
+ヒウンシティから　ひこうき　からでしか
+くることが　できない　ばしょだ▼
 </language>
 	</row>
 
@@ -2840,8 +2965,8 @@ GTSの　ごりよう　ありがとうございます！</language>
 
 	<row id="resort_comm_type_05" back-color="#80ff80,,,,,,,#80ff80,,,#80ff80,,,#80ff80,,,#80ff80,,">
 		<attribute name="キャラ指定">GTSネゴ</attribute>
-		<language name="JPN" width="256">GTSネゴ</language>
-		<language name="JPN_KANJI" width="256">GTSネゴ</language>
+		<language name="JPN" width="256">ＧＴＳ</language>
+		<language name="JPN_KANJI" width="256">ＧＴＳ</language>
 	</row>
 
 	<row id="resort_comm_type_06" back-color="#80ff80,,,,,,,#80ff80,,,#80ff80,,,#80ff80,,,#80ff80,,">
