@@ -124,6 +124,8 @@ EVENT_START ev_wbt_hall_01
 			
         //WBTシステムに状態を通知：勝利！
         _WBT_SYSTEM_SET_STAGE( SCR_WBT_STAGE_WIN )
+        //優勝回数をカウントアップ
+        _WBT_INC_VICTORY_COUNT()
 
 				//決勝戦の対戦者名を格納する
 				_PLAYER_NAME(0)

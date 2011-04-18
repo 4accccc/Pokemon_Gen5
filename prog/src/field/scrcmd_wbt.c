@@ -95,6 +95,53 @@ static WBTSYS * getWBTSys( SCRCMD_WORK * work )
   return *wbtsys_work;
 }
 
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static void incVictoryCount( WBTSYS * wbtsys, SCRCMD_WORK * work )
+{
+  GAMEDATA * gamedata = SCRCMD_WORK_GetGameData( work );
+  WBTSAVE * wbtsave = GAMEDATA_GetWBTSave( gamedata );
+  WBTWIN_COUNT id;
+
+  switch ( WBTSYS_GetType( wbtsys ) )
+  {
+  case WBTTYPE_NULL:
+  case WBTTYPE_DOWNLOAD:
+    //何もしない
+    return;
+  case WBTTYPE_ALL:
+    id = WBTWIN_COUNT_ALLTOURNAMENT;
+    break;
+  case WBTTYPE_CHAMPION:
+    id = WBTWIN_COUNT_CHAMPION;
+    break;
+  case WBTTYPE_POKETYPE:
+    id = WBTSYS_GetPokeType( wbtsys );
+    break;
+  }
+  WBTSAVE_IncWinCount( wbtsave, id );
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static u16 calcTotalVictory( SCRCMD_WORK * work )
+{
+  u32 count = 0;
+
+  GAMEDATA * gamedata = SCRCMD_WORK_GetGameData( work );
+  WBTSAVE * wbtsave = GAMEDATA_GetWBTSave( gamedata );
+  u32 id;
+  for ( id = 0; id < WBTWIN_COUNT_MAX; id ++ )
+  {
+    count += WBTSAVE_GetWinCount( wbtsave, id );
+    if ( count >= WBTWIN_MAX )
+    {
+      count = WBTWIN_MAX;
+      break;
+    }
+  }
+  return count;
+}
 //============================================================================================
 //============================================================================================
 //--------------------------------------------------------------
@@ -145,13 +192,8 @@ VMCMD_RESULT EvCmdWBTSystemSetStage( VMHANDLE * core, void * wk )
   u16 stage = SCRCMD_GetVMWorkValue( core, wk );
   WBTSYS * wbtsys = getWBTSys( wk );
 
+  TAMADA_Printf("EvCmdWBTSystemSetStage(%d)\n", stage);
   WBTSYS_SetStage( wbtsys, stage );
-  //仮：エントリされたらリストを生成する
-  if ( stage == WBTSTAGE_ENTRY )
-  {
-    GAMEDATA* gamedata = SCRCMD_WORK_GetGameData( wk );
-    WBTSYS_MakeMatch( wbtsys, gamedata );
-  }
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -166,6 +208,7 @@ VMCMD_RESULT EvCmdWBTSystemEntry( VMHANDLE * core, void * wk )
 
   GAMEDATA* gamedata = SCRCMD_WORK_GetGameData( wk );
   WBTSYS_MakeMatch( wbtsys, gamedata );
+  TAMADA_Printf("EvCmdWBTSystemEntry\n");
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -255,29 +298,66 @@ VMCMD_RESULT EvCmdWBTGetTournamentType( VMHANDLE * core, void * wk )
 
 //--------------------------------------------------------------
 /**
+ * @brief スクリプトコマンド：WBTトーナメントのタイプセット
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTSetTournamentPokeType( VMHANDLE * core, void * wk )
+{
+  u16 type = SCRCMD_GetVMWorkValue( core, wk );
+  WBTSYS * wbtsys = getWBTSys( wk );
+  WBTSYS_SetPokeType( wbtsys, type );
+  TAMADA_Printf("EvCmdWBTSetTournamentType <= %d\n", type);
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：WBTトーナメントのタイプ取得
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTGetTournamentPokeType( VMHANDLE * core, void * wk )
+{
+  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
+  WBTSYS * wbtsys = getWBTSys( wk );
+  *ret_wk = WBTSYS_GetPokeType( wbtsys );
+  TAMADA_Printf("EvCmdWBTGetTournamentType == %d\n", *ret_wk);
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：優勝回数のインクリメント
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTIncVictoryCount( VMHANDLE * core, void * wk )
+{
+  u16 stage = SCRCMD_GetVMWorkValue( core, wk );
+  WBTSYS * wbtsys = getWBTSys( wk );
+
+  TAMADA_Printf("EvCmdWBTSystemSetStage(%d)\n", stage);
+  WBTSYS_SetStage( wbtsys, stage );
+  //勝利したら優勝回数をカウントアップ
+  if ( stage == WBTSTAGE_ENTRY )
+  {
+    SCRCMD_WORK * work = wk;
+    incVictoryCount( wbtsys, work );
+  }
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
  * @brief スクリプトコマンド：優勝回数の取得
  */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdWBTGetVictoryCount( VMHANDLE * core, void * wk )
 {
+  SCRCMD_WORK * work = wk;
   u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
   u32 count = 0;
 
-  {
-    SCRCMD_WORK * work = wk;
-    GAMEDATA * gamedata = SCRCMD_WORK_GetGameData( work );
-    WBTSAVE * wbtsave = GAMEDATA_GetWBTSave( gamedata );
-    u32 id;
-    for ( id = 0; id < WBTWIN_COUNT_MAX; id ++ )
-    {
-      count += WBTSAVE_GetWinCount( wbtsave, id );
-      if ( count >= WBTWIN_MAX )
-      {
-        count = WBTWIN_MAX;
-        break;
-      }
-    }
-  }
+  count = calcTotalVictory( work );
   *ret_wk = count;
 
   TAMADA_Printf("EvCmdWBTGetVictoryCount == %d\n", *ret_wk );

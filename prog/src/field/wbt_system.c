@@ -132,6 +132,19 @@ WBTRULE WBTSYS_GetRule( const WBTSYS * wbtsys )
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
+void WBTSYS_SetPokeType( WBTSYS * wbtsys, PokeType poketype )
+{
+  wbtsys->poketype = poketype;
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+PokeType WBTSYS_GetPokeType( const WBTSYS * wbtsys )
+{
+  return wbtsys->poketype;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 void WBTSYS_SetStage( WBTSYS * wbtsys, WBTSTAGE stage )
 {
   wbtsys->stage = stage;

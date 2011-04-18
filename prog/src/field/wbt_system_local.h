@@ -86,6 +86,8 @@ struct _WBT_SYSTEM {
   ///WBTの進行段階
   WBTSTAGE stage;
 
+  ///タイプトーナメントの場合のタイプ
+  PokeType poketype;
   ///選択したダウンロードデータ
   u8 select_dl_data;
 

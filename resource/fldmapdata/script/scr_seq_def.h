@@ -12315,6 +12315,46 @@
 
 //--------------------------------------------------------------
 /**
+ * @brief   WBT:トーナメントの種類をセット
+ * @param[in]  type ※script_def.hのSCR_WBT_TYPE_を参照
+ */
+//--------------------------------------------------------------
+#define _WBT_SET_TOURNAMENT_POKETYPE( type )  \
+    _ASM_WBT_SET_TOURNAMENT_POKETYPE type   
+
+    .macro _ASM_WBT_SET_TOURNAMENT_POKETYPE type   
+    .short  EV_SEQ_WBT_SET_TOURNAMENT_POKETYPE
+    .short  \type
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief   WBT:トーナメントの種類を取得
+ * @param[out]  ret_wk ※script_def.hのSCR_WBT_TYPE_を参照
+ */
+//--------------------------------------------------------------
+#define _WBT_GET_TOURNAMENT_POKETYPE( ret_wk )   \
+    _ASM_WBT_GET_TOURNAMENT_POKETYPE ret_wk   
+
+    .macro _ASM_WBT_GET_TOURNAMENT_POKETYPE ret_wk   
+    .short  EV_SEQ_WBT_GET_TOURNAMENT_POKETYPE
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief WBT:優勝回数のインクリメント
+ */
+//--------------------------------------------------------------
+#define _WBT_INC_VICTORY_COUNT() \
+    _ASM_WBT_INC_VICTORY_COUNT
+
+    .macro  _ASM_WBT_INC_VICTORY_COUNT ret_wk
+    .short  EV_SEQ_WBT_INC_VICTORY_COUNT
+    .endm
+
+//--------------------------------------------------------------
+/**
  * @brief WBT:優勝回数の取得
  * @param[out]  ret_wk
  */

@@ -121,6 +121,9 @@ extern WBTTYPE WBTSYS_GetType( const WBTSYS * wbtsys );
 extern void WBTSYS_SetRule( WBTSYS * wbtsys, WBTRULE rule );
 extern WBTRULE WBTSYS_GetRule( const WBTSYS * wbtsys );
 
+extern void WBTSYS_SetPokeType( WBTSYS * wbtsys, PokeType poketype );
+extern PokeType WBTSYS_GetPokeType( const WBTSYS * wbtsys );
+
 extern void WBTSYS_SetStage( WBTSYS * wbtsys, WBTSTAGE stage );
 extern WBTSTAGE WBTSYS_GetStage( const WBTSYS * wbtsys );
 
