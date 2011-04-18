@@ -77,6 +77,7 @@ extern WBTSAVE * SAVEDATA_GetWBTSave( SAVE_CONTROL_WORK * sv );
 extern void WBTSAVE_UpdateChampionKey( WBTSAVE * save );
 
 extern u16 WBTSAVE_GetWinCount( const WBTSAVE * wbtsave, WBTWIN_COUNT id );
+extern void WBTSAVE_SetWinCount( WBTSAVE * wbtsave, WBTWIN_COUNT id, u16 value );
 extern void WBTSAVE_IncWinCount( WBTSAVE * wbtsave, WBTWIN_COUNT id );
 
 extern BOOL WBTSAVE_GetFlag( const WBTSAVE * wbtsave, WBTSAVE_FLAG flag_id );

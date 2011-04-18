@@ -98,6 +98,20 @@ u16 WBTSAVE_GetWinCount( const WBTSAVE * wbtsave, WBTWIN_COUNT id )
 /**
  */
 //------------------------------------------------------------------
+void WBTSAVE_SetWinCount( WBTSAVE * wbtsave, WBTWIN_COUNT id, u16 value )
+{
+  GF_ASSERT( id < WBTWIN_COUNT_MAX );
+  if ( value > WBTWIN_MAX )
+  {
+    value = WBTWIN_MAX;
+  }
+  wbtsave->WinCount[ id ] = value;
+}
+
+//------------------------------------------------------------------
+/**
+ */
+//------------------------------------------------------------------
 void WBTSAVE_IncWinCount( WBTSAVE * wbtsave, WBTWIN_COUNT id )
 {
   GF_ASSERT( id < WBTWIN_COUNT_MAX );
