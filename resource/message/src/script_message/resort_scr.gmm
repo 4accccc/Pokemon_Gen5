@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nagihashi_toru" host="W00268" date="2011-04-18T20:22:21"/>
+	<create user="shimoyamada" host="W00184" date="2011-04-18T22:37:28"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -398,9 +398,9 @@
 		</language>
 	</columns>
 
-	<dialog left="-1251" top="175" right="-546" bottom="795" maximized="no" rayout="Vertical2">
+	<dialog left="1081" top="564" right="1786" bottom="1192" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
-		<tag-palette left="434" top="226" right="906" bottom="624" visible="yes"/>
+		<tag-palette left="1797" top="484" right="2269" bottom="882" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="345"/>
@@ -439,13 +439,13 @@
 1：通信名
 2：クチグセ
 3：リゾート名</attribute>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]『[1:37:リゾートフリーワード:2]
-[1:37:リゾートフリーワード:1]で　あったこと▽
+		<language name="JPN" width="256">[1:00:トレーナー名:0]『[1:37:リゾートフリーワード:2]▼
+[1:37:リゾートフリーワード:1]で　あったこと
 おぼえている？▼
 [1:39:リゾート街名:3]が　きになって
 あそびに　きました▼</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『[1:37:リゾートフリーワード:2]
-[1:37:リゾートフリーワード:1]で　あったこと▽
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『[1:37:リゾートフリーワード:2]▼
+[1:37:リゾートフリーワード:1]で　あったこと
 おぼえている？▼
 [1:39:リゾート街名:3]が　きになって
 あそびに　きました▼</language>
@@ -474,10 +474,8 @@
 	</row>
 
 	<row id="resort_tourist_item_00" back-color=",,,,,#ffff00,,,,,,,,,,,,,">
-		<language name="JPN" width="256">おみやげに
-これ　さしあげます！▼</language>
-		<language name="JPN_KANJI" width="256">おみやげに
-これ　さしあげます！▼</language>
+		<language name="JPN" width="256">これ　おみやげ　です▼</language>
+		<language name="JPN_KANJI" width="256">これ　おみやげ　です▼</language>
 	</row>
 
 	<row id="resort_proxy_greet_gts" back-color=",,,,,#ffff00,,,,,,,,,,,,,">
@@ -589,18 +587,14 @@ GTSの　ごりよう　ありがとうございます！</language>
 	<row id="resort_secretary_greet_02" back-color=",,,,,#ffff00,,,,,,,,,,,,,">
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『
 [1:37:リゾートフリーワード:1]▼
-[1:3A:リゾート市長名:2]！
-わたくしの　ポケモンで▽
+わたしの　ポケモンで
 [1:3A:リゾート市長名:2]を▽
-おすきな　ばしょへ　おはこびします▽
-どちらに　いどうされますか？</language>
+おすきな　ばしょへ　おつれします▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『
 [1:37:リゾートフリーワード:1]▼
-[1:3A:リゾート市長名:2]！
-わたくしの　ポケモンで▽
+わたしの　ポケモンで
 [1:3A:リゾート市長名:2]を▽
-おすきな　ばしょへ　おはこびします▽
-どちらに　いどうされますか？</language>
+おすきな　ばしょへ　おつれします▼</language>
 	</row>
 
 	<row id="resort_secretary_greet_03" back-color=",,,,,#ffff00,,,,,,,,,,,,,">
@@ -892,11 +886,17 @@ GTSの　ごりよう　ありがとうございます！</language>
 		<language name="JPN_KANJI" width="256">会話を　終わりに　します</language>
 	</row>
 
-	<row id="resort_sys_00" back-color="#80ff80,,,,,,,#80ff80,,,,,,,,,,,">
+	<row id="resort_sys_00" back-color="#80ff80,,,,,#ffff00,,#80ff80,,,,,,,,,,,">
 		<language name="JPN" width="256">[1:38:リゾート店名:0]
-『[1:38:リゾート店名:1]』が　できました！▼</language>
+『[1:38:リゾート店名:1]』が▽
+つくられた！▼
+『[1:38:リゾート店名:1]』を
+たずねてみよう！▼</language>
 		<language name="JPN_KANJI" width="256">[1:38:リゾート店名:0]
-『[1:38:リゾート店名:1]』が　できました！▼</language>
+『[1:38:リゾート店名:1]』が▽
+つくられた！▼
+『[1:38:リゾート店名:1]』を
+たずねてみよう！▼</language>
 	</row>
 
 	<row id="resort_sys_01" back-color="#80ff80,,,,,,,#80ff80,,,,,,,,,,,">
@@ -1020,11 +1020,26 @@ GTSの　ごりよう　ありがとうございます！</language>
 おすすめして　ください▼</language>
 	</row>
 
-	<row id="resort_sys_15" back-color="#80ff80,,,,,,,#80ff80,,,,,,,,,,,">
+	<row id="resort_sys_15" back-color="#80ff80,,,,,#ff0000,,#80ff80,,,,,,,,,,,">
+		<attribute name="キャラ指定">0：観光客名
+1：店舗名
+2：店舗の住民名
+3：住民フリーワード
+4：店舗フリーワード</attribute>
 		<language name="JPN" width="256">[FF:00:色:2][1:38:リゾート店名:1][FF:00:色:0]に
-[FF:00:色:2][1:00:トレーナー名:0][FF:00:色:0]が　やってきた！▼</language>
+[FF:00:色:2][1:00:トレーナー名:0][FF:00:色:0]が　やってきた！▼
+[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:3]！
+ようこそ！▼
+[FF:00:色:2][1:00:トレーナー名:0][FF:00:色:0]『[1:37:リゾートフリーワード:4]！▼
+……　……　……　……　……　……
+……　……　……　……　……　……▼</language>
 		<language name="JPN_KANJI" width="256">[FF:00:色:2][1:38:リゾート店名:1][FF:00:色:0]に
-[FF:00:色:2][1:00:トレーナー名:0][FF:00:色:0]が　やってきた！▼</language>
+[FF:00:色:2][1:00:トレーナー名:0][FF:00:色:0]が　やってきた！▼
+[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:3]！
+ようこそ！▼
+[FF:00:色:2][1:00:トレーナー名:0][FF:00:色:0]『[1:37:リゾートフリーワード:4]！▼
+……　……　……　……　……　……
+……　……　……　……　……　……▼</language>
 	</row>
 
 	<row id="resort_sys_16" back-color="#80ff80,,,,,,,#80ff80,,,,,,,,,,,">
@@ -1056,8 +1071,8 @@ GTSの　ごりよう　ありがとうございます！</language>
 	</row>
 
 	<row id="resort_shop_genre_00" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
-		<language name="JPN" width="256">ポケモンくじ</language>
-		<language name="JPN_KANJI" width="256">ポケモンくじ</language>
+		<language name="JPN" width="256">くじびきや</language>
+		<language name="JPN_KANJI" width="256">くじびきや</language>
 	</row>
 
 	<row id="resort_shop_genre_01" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
@@ -1339,7 +1354,7 @@ GTSの　ごりよう　ありがとうございます！</language>
 『[1:38:リゾート店名:0]』へ　ようこそ！</language>
 	</row>
 
-	<row id="resort_shopinfo_10" back-color="#ff78ff,,,,,#ffff00,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+	<row id="resort_shopinfo_10" back-color="#ff78ff,,,,,#c0c0c0,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
 		<attribute name="キャラ指定">ジムもどき</attribute>
 		<language name="JPN" width="256">ポケモンと　トレーナーの　きずなを　たしかめる
 『[1:38:リゾート店名:0]』へ　ようこそ！</language>
@@ -1357,15 +1372,33 @@ GTSの　ごりよう　ありがとうございます！</language>
 
 	<row id="resort_lot_00" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
 		<attribute name="キャラ指定">くじびき</attribute>
-		<language name="JPN" width="256">ざんねんですが　はずれました……▼</language>
-		<language name="JPN_KANJI" width="256">残念ですが　外れました……▼</language>
+		<language name="JPN" width="256">……　……　……　……　……　……
+……　……　……　……　……　……▼
+……　……　……　……　……　……
+……　……　……　……　……　……▼
+ざんねんですが　はずれました……▼</language>
+		<language name="JPN_KANJI" width="256">……　……　……　……　……　……
+……　……　……　……　……　……▼
+……　……　……　……　……　……
+……　……　……　……　……　……▼
+ざんねんですが　はずれました……▼</language>
 	</row>
 
 	<row id="resort_lot_01" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
-		<language name="JPN" width="256">[2:01:２桁:0]とうが　あたりました！
+		<language name="JPN" width="256">……　……　……　……　……　……
+……　……　……　……　……　……▼
+……　……　……　……　……　……
+……　……　……　……　……　……▼
+おめでとうございます！！▼
+[2:01:２桁:0]とうが　あたりました！
 しょうひんは　こちらです！▼</language>
-		<language name="JPN_KANJI" width="256">[2:01:２桁:0]等が　当たりました！
-賞品は　こちらです！▼</language>
+		<language name="JPN_KANJI" width="256">……　……　……　……　……　……
+……　……　……　……　……　……▼
+……　……　……　……　……　……
+……　……　……　……　……　……▼
+おめでとうございます！！▼
+[2:01:２桁:0]とうが　あたりました！
+しょうひんは　こちらです！▼</language>
 	</row>
 
 	<row id="resort_lot_02" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
@@ -2416,12 +2449,1124 @@ GTSの　ごりよう　ありがとうございます！</language>
 入れます）▼</language>
 	</row>
 
-	<row id="resort_history_00" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
-		<attribute name="キャラ指定">履歴</attribute>
-		<language name="JPN" width="256">イッシュずかんを　
-コンプリートしたよ！▼</language>
-		<language name="JPN_KANJI" width="256">イッシュ図鑑を　
-コンプリートしたよ！▼</language>
+	<row id="resort_history_00" back-color="#8080ff,,,#8080ff,,#ff0000,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にちに
+イッシュずかんを▽
+かんせい　させました！▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にちに
+イッシュずかんを▽
+かんせい　させました！▼</language>
+	</row>
+
+	<row id="resort_history_01" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にちに
+ぜんこくずかんを▽
+かんせい　させました！▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にちに
+ぜんこくずかんを▽
+かんせい　させました！▼</language>
+	</row>
+
+	<row id="resort_history_02" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にちに
+メダルを　てにいれました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にちに
+メダルを　てにいれました▼</language>
+	</row>
+
+	<row id="resort_history_03" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にちに
+めずらしい　メダルを▽
+てにいれました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にちに
+めずらしい　メダルを▽
+てにいれました▼</language>
+	</row>
+
+	<row id="resort_history_04" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にちに
+ものすごく　めずらしい　メダルを▽
+てにいれました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にちに
+ものすごく　めずらしい　メダルを▽
+てにいれました▼</language>
+	</row>
+
+	<row id="resort_history_05" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にちに
+バトルサブウェイで▽
+７れんしょう　しました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にちに
+バトルサブウェイで▽
+７れんしょう　しました▼</language>
+	</row>
+
+	<row id="resort_history_06" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にちに
+バトルサブウェイで▽
+サブウェイマスターを　たおしました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にちに
+バトルサブウェイで▽
+サブウェイマスターを　たおしました▼</language>
+	</row>
+
+	<row id="resort_history_07" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にちに
+サブウェイの　スーパートレインで▽
+サブウェイマスターを　たおしました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にちに
+サブウェイの　スーパートレインで▽
+サブウェイマスターを　たおしました▼</language>
+	</row>
+
+	<row id="resort_history_08" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にちに
+ポケウッドで▽
+えいがを　さつえいしました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にちに
+ポケウッドで▽
+えいがを　さつえいしました▼</language>
+	</row>
+
+	<row id="resort_history_09" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+ポケウッドで　さつえいした　えいがを▽
+ポケデミーしょうを　とりました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+ポケウッドで　さつえいした　えいがを▽
+ポケデミーしょうを　とりました▼</language>
+	</row>
+
+	<row id="resort_history_10" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+ポケモンミュージカルに▽
+さんか　しました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+ポケモンミュージカルに▽
+さんか　しました▼</language>
+	</row>
+
+	<row id="resort_history_11" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+ハイリンクで　しんにゅう　しました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+ハイリンクで　しんにゅう　しました▼</language>
+	</row>
+
+	<row id="resort_history_12" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+ハイリンクで　しんにゅう　されました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+ハイリンクで　しんにゅう　されました▼</language>
+	</row>
+
+	<row id="resort_history_13" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+タマゴを　ふかさせました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+タマゴを　ふかさせました▼</language>
+	</row>
+
+	<row id="resort_history_14" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+ポケモンの　レベルを　あげました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+ポケモンの　レベルを　あげました▼</language>
+	</row>
+
+	<row id="resort_history_15" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+マックスアップで　ポケモンを▽
+パワーアップ　させました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+マックスアップで　ポケモンを▽
+パワーアップ　させました▼</language>
+	</row>
+
+	<row id="resort_history_16" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+キトサンで　ポケモンを▽
+パワーアップ　させました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+キトサンで　ポケモンを▽
+パワーアップ　させました▼</language>
+	</row>
+
+	<row id="resort_history_17" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+マックスアップで　ポケモンを▽
+パワーアップ　させました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+マックスアップで　ポケモンを▽
+パワーアップ　させました▼</language>
+	</row>
+
+	<row id="resort_history_18" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+キトサンで　ポケモンを▽
+パワーアップ　させました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+キトサンで　ポケモンを▽
+パワーアップ　させました▼</language>
+	</row>
+
+	<row id="resort_history_19" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+マックスアップで　ポケモンを▽
+パワーアップ　させました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+マックスアップで　ポケモンを▽
+パワーアップ　させました▼</language>
+	</row>
+
+	<row id="resort_history_20" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+キトサンで　ポケモンを▽
+パワーアップ　させました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+キトサンで　ポケモンを▽
+パワーアップ　させました▼</language>
+	</row>
+
+	<row id="resort_history_21" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+テレビを　みました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+テレビを　みました▼</language>
+	</row>
+
+	<row id="resort_history_22" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+ごみばこの　なかを　しらべました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+ごみばこの　なかを　しらべました▼</language>
+	</row>
+
+	<row id="resort_history_23" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+なんと……▼
+いろちがい　ポケモンを
+つかまえました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+なんと……▼
+いろちがい　ポケモンを
+つかまえました▼</language>
+	</row>
+
+	<row id="resort_history_24" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+ポケモンに　ニックネームを▽
+つけました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+ポケモンに　ニックネームを▽
+つけました▼</language>
+	</row>
+
+	<row id="resort_history_25" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+ボックスの　トレイに▽
+なまえを　つけました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+ボックスの　トレイに▽
+なまえを　つけました▼</language>
+	</row>
+
+	<row id="resort_history_26" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+１つの　ボックスを▽
+タマゴで　いっぱいに　しました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+１つの　ボックスを▽
+タマゴで　いっぱいに　しました▼</language>
+	</row>
+
+	<row id="resort_history_27" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+ポケモンを　つりあげました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+ポケモンを　つりあげました▼</language>
+	</row>
+
+	<row id="resort_history_28" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+タマゴを　もらいました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+タマゴを　もらいました▼</language>
+	</row>
+
+	<row id="resort_history_29" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+かくしアイテムを　みつけました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+かくしアイテムを　みつけました▼</language>
+	</row>
+
+	<row id="resort_history_30" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+かせきを　ふくげん　しました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+かせきを　ふくげん　しました▼</language>
+	</row>
+
+	<row id="resort_history_31" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+なんと……！▼
+キュレムと　レシラムを
+がったい　させました！▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+なんと……！▼
+キュレムと　レシラムを
+がったい　させました！▼</language>
+	</row>
+
+	<row id="resort_history_32" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+なんと……！▼
+キュレムと　ゼクロムを
+がったい　させました！▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+なんと……！▼
+キュレムと　ゼクロムを
+がったい　させました！▼</language>
+	</row>
+
+	<row id="resort_history_33" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+ぐるぐるこうかん　をしました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+ぐるぐるこうかん　をしました▼</language>
+	</row>
+
+	<row id="resort_history_34" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+おえかきを　をしました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+おえかきを　をしました▼</language>
+	</row>
+
+	<row id="resort_history_35" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+つうしんたいせん　をしました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+つうしんたいせん　をしました▼</language>
+	</row>
+
+	<row id="resort_history_36" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+でんこうけいじばんを　みました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+でんこうけいじばんを　みました▼</language>
+	</row>
+
+	<row id="resort_history_37" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+あいしょうしんだんを　しました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+あいしょうしんだんを　しました▼</language>
+	</row>
+
+	<row id="resort_history_38" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+ともだちコードこうかんを　しました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+ともだちコードこうかんを　しました▼</language>
+	</row>
+
+	<row id="resort_history_39" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+ふしぎなおくりものを　もらいました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+ふしぎなおくりものを　もらいました▼</language>
+	</row>
+
+	<row id="resort_history_40" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+かんらんしゃで　デート　しました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+かんらんしゃで　デート　しました▼</language>
+	</row>
+
+	<row id="resort_history_41" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+ランダムマッチで▽
+シングルバトルを　しました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+ランダムマッチで▽
+シングルバトルを　しました▼</language>
+	</row>
+
+	<row id="resort_history_42" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+ランダムマッチで▽
+ダブルバトルを　しました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+ランダムマッチで▽
+ダブルバトルを　しました▼</language>
+	</row>
+
+	<row id="resort_history_43" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+ランダムマッチで▽
+トリプルバトルを　しました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+ランダムマッチで▽
+トリプルバトルを　しました▼</language>
+	</row>
+
+	<row id="resort_history_44" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+ランダムマッチで▽
+ローテーションバトルを　しました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+ランダムマッチで▽
+ローテーションバトルを　しました▼</language>
+	</row>
+
+	<row id="resort_history_45" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+ランダムマッチで▽
+シューターバトルを　しました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+ランダムマッチで▽
+シューターバトルを　しました▼</language>
+	</row>
+
+	<row id="resort_history_46" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+メダルボックスを▽
+パワーアップ　させました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+メダルボックスを▽
+パワーアップ　させました▼</language>
+	</row>
+
+	<row id="resort_history_47" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+むげんダンジョンに▽
+ちょうせん　しました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+むげんダンジョンに▽
+ちょうせん　しました▼</language>
+	</row>
+
+	<row id="resort_history_48" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+むげんダンジョンの　１０Ｆに
+とうたつ　しました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+むげんダンジョンの　１０Ｆに
+とうたつ　しました▼</language>
+	</row>
+
+	<row id="resort_history_49" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+むげんダンジョンの　２０Ｆに
+とうたつ　しました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+むげんダンジョンの　２０Ｆに
+とうたつ　しました▼</language>
+	</row>
+
+	<row id="resort_history_50" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+むげんダンジョンの　３０Ｆに
+とうたつ　しました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+むげんダンジョンの　３０Ｆに
+とうたつ　しました▼</language>
+	</row>
+
+	<row id="resort_history_51" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+むげんダンジョンの　４０Ｆに
+とうたつ　しました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+むげんダンジョンの　４０Ｆに
+とうたつ　しました▼</language>
+	</row>
+
+	<row id="resort_history_52" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+むげんダンジョンの　５０Ｆに
+とうたつ　しました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+むげんダンジョンの　５０Ｆに
+とうたつ　しました▼</language>
+	</row>
+
+	<row id="resort_history_53" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+ＷＢＴに　ちょうせん　しました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+ＷＢＴに　ちょうせん　しました▼</language>
+	</row>
+
+	<row id="resort_history_54" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+ＷＢＴの　ノーマル　トーナメントで▽
+ゆうしょう　しました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+ＷＢＴの　ノーマル　トーナメントで▽
+ゆうしょう　しました▼</language>
+	</row>
+
+	<row id="resort_history_55" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+ＷＢＴの　チャンピオン・トーナメントで▽
+ゆうしょう　しました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+ＷＢＴの　チャンピオン・トーナメントで▽
+ゆうしょう　しました▼</language>
+	</row>
+
+	<row id="resort_history_56" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+レゾナンスリゾートで▽
+スポットの　レベルを　あげました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+レゾナンスリゾートで▽
+スポットの　レベルを　あげました▼</language>
+	</row>
+
+	<row id="resort_history_57" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+レゾナンスリゾートで▽
+リゾートの　レベルを　あげました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+レゾナンスリゾートで▽
+リゾートの　レベルを　あげました▼</language>
+	</row>
+
+	<row id="resort_history_58" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+ライブキャスターで▽
+ふうせんわりゲームを　しました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+ライブキャスターで▽
+ふうせんわりゲームを　しました▼</language>
+	</row>
+
+	<row id="resort_history_59" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+ライブキャスターで▽
+ふうせんわりゲームを　しました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+ライブキャスターで▽
+ふうせんわりゲームを　しました▼</language>
+	</row>
+
+	<row id="resort_history_60" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+トライアルハウスに▽
+ちょうせん　しました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+トライアルハウスに▽
+ちょうせん　しました▼</language>
+	</row>
+
+	<row id="resort_history_61" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+ジャッジに　ポケモンを
+みてもらいました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+ジャッジに　ポケモンを
+みてもらいました▼</language>
+	</row>
+
+	<row id="resort_history_62" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+メールを　かいて▽
+ポケモンに　もたせました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+メールを　かいて▽
+ポケモンに　もたせました▼</language>
+	</row>
+
+	<row id="resort_history_63" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+ゆめとくせいを　もった▽
+ポケモンを　つかまえました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+ゆめとくせいを　もった▽
+ポケモンを　つかまえました▼</language>
+	</row>
+
+	<row id="resort_history_64" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+ポケガイダンスの▽
+ミッションを　クリアしました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+ポケガイダンスの▽
+ミッションを　クリアしました▼</language>
+	</row>
+
+	<row id="resort_history_65" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+キーシステムで▽
+すごいこと　しました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+キーシステムで▽
+すごいこと　しました▼</language>
+	</row>
+
+	<row id="resort_history_66" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+ライブキャスターで▽
+かいわを　たのしみました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+ライブキャスターで▽
+かいわを　たのしみました▼</language>
+	</row>
+
+	<row id="resort_history_67" back-color="#8080ff,,,,,#ff0000,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<attribute name="キャラ指定">履歴
+0：クチグセ
+1：観光客名
+2：年
+3：月
+4：日</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+Ｗｉ－Ｆｉクラブで　あそびました▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:0]！▼
+２０１１ねん４がつ１８にち
+Ｗｉ－Ｆｉクラブで　あそびました▼</language>
 	</row>
 
 	<row id="resort_appeal_00" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
@@ -2434,107 +3579,107 @@ GTSの　ごりよう　ありがとうございます！</language>
 
 	<row id="resort_appeal_01" back-color="#ff0000,,,,,#ffff00,,#ff0000,,,#ff0000,,,#ff0000,,,#ff0000,,">
 		<attribute name="キャラ指定">美容室</attribute>
-		<language name="JPN" width="256">ぼく　このまちに　すんで
+		<language name="JPN" width="256">このまちに　すんで
 いろいろな　ポケモンを▽
 きれいに　したいな▼</language>
-		<language name="JPN_KANJI" width="256">ぼく　このまちに　すんで
+		<language name="JPN_KANJI" width="256">このまちに　すんで
 いろいろな　ポケモンを▽
 きれいに　したいな▼</language>
 	</row>
 
 	<row id="resort_appeal_02" back-color="#ff0000,,,,,#ffff00,,#ff0000,,,#ff0000,,,#ff0000,,,#ff0000,,">
 		<attribute name="キャラ指定">育て屋</attribute>
-		<language name="JPN" width="256">ぼく　このまちに　すんで
+		<language name="JPN" width="256">このまちに　すんで
 ポケモンを　きたえて　きたえて▽
-つよく　するんだ▼</language>
-		<language name="JPN_KANJI" width="256">ぼく　このまちに　すんで
+つよく　したいな▼</language>
+		<language name="JPN_KANJI" width="256">このまちに　すんで
 ポケモンを　きたえて　きたえて▽
-つよく　するんだ▼</language>
+つよく　したいな▼</language>
 	</row>
 
 	<row id="resort_appeal_03" back-color="#ff0000,,,,,#ffff00,,#ff0000,,,#ff0000,,,#ff0000,,,#ff0000,,">
 		<attribute name="キャラ指定">マーケット</attribute>
-		<language name="JPN" width="256">ぼく　このまちに　すんで
+		<language name="JPN" width="256">このまちに　すんで
 いいものを　いっぱい　あつめて▽
 みんなを　おどろかせたいな！▼</language>
-		<language name="JPN_KANJI" width="256">ぼく　このまちに　すんで
+		<language name="JPN_KANJI" width="256">このまちに　すんで
 いいものを　いっぱい　あつめて▽
 みんなを　おどろかせたいな！▼</language>
 	</row>
 
 	<row id="resort_appeal_04" back-color="#ff0000,,,,,#ffff00,,#ff0000,,,#ff0000,,,#ff0000,,,#ff0000,,">
 		<attribute name="キャラ指定">花屋</attribute>
-		<language name="JPN" width="256">ぼく　このまちに　すんで
+		<language name="JPN" width="256">このまちに　すんで
 きれいな　はなで▽
 みんなを　いやしたいな！▼</language>
-		<language name="JPN_KANJI" width="256">ぼく　このまちに　すんで
+		<language name="JPN_KANJI" width="256">このまちに　すんで
 きれいな　はなで▽
 みんなを　いやしたいな！▼</language>
 	</row>
 
 	<row id="resort_appeal_05" back-color="#ff0000,,,,,#ffff00,,#ff0000,,,#ff0000,,,#ff0000,,,#ff0000,,">
 		<attribute name="キャラ指定">道場</attribute>
-		<language name="JPN" width="256">ぼく　このまちに　すんで
+		<language name="JPN" width="256">このまちに　すんで
 いろんな　ポケモンを　きたえて▽
 きたえて　つよく　したいな！▼</language>
-		<language name="JPN_KANJI" width="256">ぼく　このまちに　すんで
+		<language name="JPN_KANJI" width="256">このまちに　すんで
 いろんな　ポケモンを　きたえて▽
 きたえて　つよく　したいな！▼</language>
 	</row>
 
 	<row id="resort_appeal_06" back-color="#ff0000,,,,,#ffff00,,#ff0000,,,#ff0000,,,#ff0000,,,#ff0000,,">
 		<attribute name="キャラ指定">保育所</attribute>
-		<language name="JPN" width="256">ぼく　このまちに　すんで
+		<language name="JPN" width="256">このまちに　すんで
 ポケモンが　うまれる　しゅんかんに▽
 たちあいたいんだ▼</language>
-		<language name="JPN_KANJI" width="256">ぼく　このまちに　すんで
+		<language name="JPN_KANJI" width="256">このまちに　すんで
 ポケモンが　うまれる　しゅんかんに▽
 たちあいたいんだ▼</language>
 	</row>
 
 	<row id="resort_appeal_07" back-color="#ff0000,,,,,#ffff00,,#ff0000,,,#ff0000,,,#ff0000,,,#ff0000,,">
 		<attribute name="キャラ指定">宝石店</attribute>
-		<language name="JPN" width="256">ぼく　このまちに　すんで
+		<language name="JPN" width="256">このまちに　すんで
 きれいなものに▽
 かこまれた　せいかつが　したいな▼</language>
-		<language name="JPN_KANJI" width="256">ぼく　このまちに　すんで
+		<language name="JPN_KANJI" width="256">このまちに　すんで
 きれいなものに▽
 かこまれた　せいかつが　したいな▼</language>
 	</row>
 
 	<row id="resort_appeal_08" back-color="#ff0000,,,,,#ffff00,,#ff0000,,,#ff0000,,,#ff0000,,,#ff0000,,">
 		<attribute name="キャラ指定">古道具屋</attribute>
-		<language name="JPN" width="256">ぼく　このまちに　すんで
+		<language name="JPN" width="256">このまちに　すんで
 こだわりの　どうぐを　そろえて▽
 みんなを　おどろかせたいな！▼</language>
-		<language name="JPN_KANJI" width="256">ぼく　このまちに　すんで
+		<language name="JPN_KANJI" width="256">このまちに　すんで
 こだわりの　どうぐを　そろえて▽
 みんなを　おどろかせたいな！▼</language>
 	</row>
 
 	<row id="resort_appeal_09" back-color="#ff0000,,,,,#ffff00,,#ff0000,,,#ff0000,,,#ff0000,,,#ff0000,,">
 		<attribute name="キャラ指定">レストラン</attribute>
-		<language name="JPN" width="256">ぼく　このまちに　すんで
+		<language name="JPN" width="256">このまちに　すんで
 おいしい　ごはんを　つくって▽
 ポケモンを　しあわせにしたいな！▼</language>
-		<language name="JPN_KANJI" width="256">ぼく　このまちに　すんで
+		<language name="JPN_KANJI" width="256">このまちに　すんで
 おいしい　ごはんを　つくって▽
 ポケモンを　しあわせにしたいな！▼</language>
 	</row>
 
 	<row id="resort_appeal_10" back-color="#ff0000,,,,,#ffff00,,#ff0000,,,#ff0000,,,#ff0000,,,#ff0000,,">
 		<attribute name="キャラ指定">ジムもどき</attribute>
-		<language name="JPN" width="256">ぼく　このまちに　すんで
+		<language name="JPN" width="256">このまちに　すんで
 ジムリーダーに　なりたいな！▼</language>
-		<language name="JPN_KANJI" width="256">ぼく　このまちに　すんで
+		<language name="JPN_KANJI" width="256">このまちに　すんで
 ジムリーダーに　なりたいな！▼</language>
 	</row>
 
 	<row id="resort_appeal_11" back-color="#ff0000,,,,,#ffff00,,#ff0000,,,#ff0000,,,#ff0000,,,#ff0000,,">
 		<attribute name="キャラ指定">民家</attribute>
-		<language name="JPN" width="256">ぼく　このまちに　すんで
+		<language name="JPN" width="256">このまちに　すんで
 じゆう　きままに　くらいしたい！▼</language>
-		<language name="JPN_KANJI" width="256">ぼく　このまちに　すんで
+		<language name="JPN_KANJI" width="256">このまちに　すんで
 じゆう　きままに　くらいしたい！▼</language>
 	</row>
 
@@ -2666,6 +3811,60 @@ GTSの　ごりよう　ありがとうございます！</language>
 		<language name="JPN_KANJI" width="256">なにもしたくない▼</language>
 	</row>
 
+	<row id="resort_go_24" back-color="#ffff80,,,,,#ff0000,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<attribute name="キャラ指定">弱</attribute>
+		<language name="JPN" width="256">おとこのひとが　いる
+ばしょへ　いきたい！▼</language>
+		<language name="JPN_KANJI" width="256">おとこのひとが　いる
+ばしょへ　いきたい！▼</language>
+	</row>
+
+	<row id="resort_go_25" back-color="#ffff80,,,,,#ff0000,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<attribute name="キャラ指定">弱</attribute>
+		<language name="JPN" width="256">おんなのひとが　いる
+ばしょへ　いきたい！▼</language>
+		<language name="JPN_KANJI" width="256">おんなのひとが　いる
+ばしょへ　いきたい！▼</language>
+	</row>
+
+	<row id="resort_go_26" back-color="#ffff80,,,,,#ff0000,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<attribute name="キャラ指定">弱</attribute>
+		<language name="JPN" width="256">ショッピングが　したい！▼</language>
+		<language name="JPN_KANJI" width="256">ショッピングが　したい！▼</language>
+	</row>
+
+	<row id="resort_go_27" back-color="#ffff80,,,,,#ff0000,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<attribute name="キャラ指定">弱</attribute>
+		<language name="JPN" width="256">じぶんの　ポケモンを　すごく　できる
+ばしょへ　いきたい！▼</language>
+		<language name="JPN_KANJI" width="256">じぶんの　ポケモンを　すごく　できる
+ばしょへ　いきたい！▼</language>
+	</row>
+
+	<row id="resort_go_28" back-color="#ffff80,,,,,#ff0000,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<attribute name="キャラ指定">強</attribute>
+		<language name="JPN" width="256">すきなひとが　たくさん　いるんだけど
+この　きもち　わかるひと　いない？▼</language>
+		<language name="JPN_KANJI" width="256">すきなひとが　たくさん　いるんだけど
+この　きもち　わかるひと　いない？▼</language>
+	</row>
+
+	<row id="resort_go_29" back-color="#ffff80,,,,,#ff0000,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<attribute name="キャラ指定">強</attribute>
+		<language name="JPN" width="256">すきなひとが　ひとりだけ　いるんだけど
+この　きもち　わかるひと　いない？▼</language>
+		<language name="JPN_KANJI" width="256">すきなひとが　ひとりだけ　いるんだけど
+この　きもち　わかるひと　いない？▼</language>
+	</row>
+
+	<row id="resort_go_30" back-color="#ffff80,,,,,#ff0000,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<attribute name="キャラ指定">強</attribute>
+		<language name="JPN" width="256">すきなひとが　できないんだけど
+この　きもち　わかるひと　いない？▼</language>
+		<language name="JPN_KANJI" width="256">すきなひとが　できないんだけど
+この　きもち　わかるひと　いない？▼</language>
+	</row>
+
 	<row id="resort_go_eff_00" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は
 ショッピングを　たのしんだ▼</language>
@@ -2690,136 +3889,212 @@ GTSの　ごりよう　ありがとうございます！</language>
 	</row>
 
 	<row id="resort_drill_00" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
-		<language name="JPN" width="256">やあ　[1:00:トレーナー名:0]くん▼
-いや　ここでは
-[1:3A:リゾート市長名:1]　だったね▼
-きみは　わたしに　スカウトされて
-このまちの　リーダーに　なったんだ▼
-きみの　もくてきは　ただ　ひとつ！
-ここを　すてきな　まちに　することだ▼
-あそびに　きた　トレーナー　みんなが
-まんぞくできる　まちに　してくれ▼　</language>
-		<language name="JPN_KANJI" width="256">やあ　[1:00:トレーナー名:0]くん▼
-いや　ここでは
-[1:3A:リゾート市長名:1]　だったね▼
-きみは　わたしに　スカウトされて
-このまちの　リーダーに　なったんだ▼
-きみの　もくてきは　ただ　ひとつ！
-ここを　すてきな　まちに　することだ▼
-あそびに　きた　トレーナー　みんなが
-まんぞくできる　まちに　してくれ▼　</language>
-	</row>
-
-	<row id="resort_drill_01" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
-		<language name="JPN" width="256">かいちょう『[1:3A:リゾート市長名:1]
+		<attribute name="キャラ指定">定型分</attribute>
+		<language name="JPN" width="256">かいちょう『やあ！　[1:3A:リゾート市長名:1]
 ききたいことは　あるかね？</language>
-		<language name="JPN_KANJI" width="256">かいちょう『[1:3A:リゾート市長名:1]
+		<language name="JPN_KANJI" width="256">かいちょう『やあ！　[1:3A:リゾート市長名:1]
 ききたいことは　あるかね？</language>
 	</row>
 
-	<row id="resort_drill_02" back-color="#c0c0c0,,,,,,,#c0c0c0,,,#c0c0c0,,,#c0c0c0,,,#c0c0c0,,">
-		<attribute name="キャラ指定">回答
+	<row id="resort_drill_sel_ans_01" back-color="#c0c0c0,,,,,,,#c0c0c0,,,#c0c0c0,,,#c0c0c0,,,#c0c0c0,,">
+		<attribute name="キャラ指定">回答１
+ここはって　どこ？</attribute>
+		<language name="JPN" width="256">ここは　イッシュちほうの
+はるか　みなみの　うみに　ある▽
+うめたてて　つくられた　しま▼
+ヒウンシティから　ひこうき　からでしか
+くることが　できない　ばしょだ▼
+たくさんの　おかねを　とうじて
+トレーナーが　はねやすみ　できる▽
+すてきな　リゾートに　なるように▽
+かいはつ　しているのだ▼</language>
+		<language name="JPN_KANJI" width="256">ここは　イッシュちほうの
+はるか　みなみの　うみに　ある▽
+うめたてて　つくられた　しま▼
+ヒウンシティから　ひこうき　からでしか
+くることが　できない　ばしょだ▼
+たくさんの　おかねを　とうじて
+トレーナーが　はねやすみ　できる▽
+すてきな　リゾートに　なるように▽
+かいはつ　しているのだ▼</language>
+	</row>
+
+	<row id="resort_drill_sel_ans_02" back-color="#c0c0c0,,,,,,,#c0c0c0,,,#c0c0c0,,,#c0c0c0,,,#c0c0c0,,">
+		<attribute name="キャラ指定">回答２
 もくてきは？</attribute>
 		<language name="JPN" width="256">きみは　わたしに　スカウトされて
-このまちの　リーダーに　なったんだ▼
+この　しまの　リーダーに　なったんだ▼
 きみの　もくてきは　ただ　ひとつ！
-ここを　すてきな　まちに　することだ▼
+すてきな　リゾートを　つくることだ▼
 あそびに　きた　トレーナー　みんなが
-まんぞくできる　まちに　してくれ▼　</language>
+まんぞくできる　しまに　してくれ▼
+しごとが　らくになるように　ひしょも
+ついているから　やくだててくれ▼　</language>
 		<language name="JPN_KANJI" width="256">きみは　わたしに　スカウトされて
-このまちの　リーダーに　なったんだ▼
+この　しまの　リーダーに　なったんだ▼
 きみの　もくてきは　ただ　ひとつ！
-ここを　すてきな　まちに　することだ▼
+すてきな　リゾートを　つくることだ▼
 あそびに　きた　トレーナー　みんなが
-まんぞくできる　まちに　してくれ▼　</language>
+まんぞくできる　しまに　してくれ▼
+しごとが　らくになるように　ひしょも
+ついているから　やくだててくれ▼　</language>
 	</row>
 
-	<row id="resort_drill_03" back-color="#c0c0c0,,,,,,,#c0c0c0,,,#c0c0c0,,,#c0c0c0,,,#c0c0c0,,">
-		<attribute name="キャラ指定">回答
-店を大きくするには</attribute>
-		<language name="JPN" width="256">みせを　おおきくするには
-ゲストルームに　いる　ひとに▽
-おすすめとして　おしえるんだ▼
-ゲストが　おみせに　まんぞくすると
-たくさんの　にんきを　えられるよ▼
-にんきが　ふえると
-おみせの　レベルが　あがり▽
-みせが　はってん　するんだ▼</language>
-		<language name="JPN_KANJI" width="256">みせを　おおきくするには
-ゲストルームに　いる　ひとに▽
-おみせを　おしえるんだ▼
-おみせが　きにいられると
-たくさんの　けいけんちを　えられるよ▼
-けいけんちが　ふえると
-おみせの　レベルが　あがり▽
-みせが　はってん　するんだ▼</language>
+	<row id="resort_drill_sel_ans_03" back-color="#c0c0c0,,,,,,,#c0c0c0,,,#c0c0c0,,,#c0c0c0,,,#c0c0c0,,">
+		<attribute name="キャラ指定">回答３
+すてきにな　リゾートにするには？</attribute>
+		<language name="JPN" width="256">まず　つうしんを　して
+まちに　ゲストを　よぶ　のだ▼
+つうしんした　あいては
+このさきの　ワープポイントから　いく
+ゲストルームに　やってくるから▽
+はなしかけて　みよう▼
+ゲストルームで
+きみが　できることは　２つ▼
+「まちに　しょうたい」　すること
+「スポットに　あんない」　することだ▼</language>
+		<language name="JPN_KANJI" width="256">まず　つうしんを　して
+まちに　ゲストを　よぶ　のだ▼
+つうしんした　あいては
+このさきの　ワープポイントから　いく
+ゲストルームに　やってくるから▽
+はなしかけて　みよう▼
+ゲストルームで
+きみが　できることは　２つ▼
+「まちに　しょうたい」　すること
+「スポットに　あんない」　することだ▼</language>
 	</row>
 
-	<row id="resort_drill_04" back-color="#c0c0c0,,,,,,,#c0c0c0,,,#c0c0c0,,,#c0c0c0,,,#c0c0c0,,">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
+	<row id="resort_drill_sel_ans_04" back-color="#c0c0c0,,,,,,,#c0c0c0,,,#c0c0c0,,,#c0c0c0,,,#c0c0c0,,">
+		<attribute name="キャラ指定">回答４
+ゲストをよぶ　には？</attribute>
+		<language name="JPN" width="256">ゲストをよぶ　には
+とにかく　つうしんする　ことだ▼
+Ｃ－ＧＥＡＲを　ＯＮにしておけば
+すれちがった　あいてが　やってくるよ▼
+ハイリンクで　しんちゅうされたり
+ユニオンルームや　ＩＲつうしん▽
+ランダムマッチ　ＧＴＳ　……などで▽
+あそんだ　あいても　やってくるよ▼
+つうしん　したら
+ゲストルームへ　いってみよう▼</language>
+		<language name="JPN_KANJI" width="256">ゲストをよぶ　には
+とにかく　つうしんする　ことだ▼
+Ｃ－ＧＥＡＲを　ＯＮにしておけば
+すれちがった　あいてが　やってくるよ▼
+ハイリンクで　しんちゅうされたり
+ユニオンルームや　ＩＲつうしん▽
+ランダムマッチ　ＧＴＳ　……などで▽
+あそんだ　あいても　やってくるよ▼
+つうしん　したら
+ゲストルームへ　いってみよう▼</language>
 	</row>
 
-	<row id="resort_drill_05" back-color="#c0c0c0,,,,,,,#c0c0c0,,,#c0c0c0,,,#c0c0c0,,,#c0c0c0,,">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
+	<row id="resort_drill_sel_ans_05" back-color="#c0c0c0,,,,,,,#c0c0c0,,,#c0c0c0,,,#c0c0c0,,,#c0c0c0,,">
+		<attribute name="キャラ指定">回答５
+「しょうたい　する」って？</attribute>
+		<language name="JPN" width="256">「しょうたいする」を　えらぶと
+ゲストが　リゾートの　じゅうにんに▽
+なって　たてものを　たてるんだ▼
+ゆめを　もっている　ひとは
+とくべつな　スポットが　できるから▼
+しょうたいする　ときに　あいての
+はなしを　よくきいて　えらんでくれ▼</language>
+		<language name="JPN_KANJI" width="256">「しょうたいする」を　えらぶと
+ゲストが　リゾートの　じゅうにんに▽
+なって　たてものを　たてるんだ▼
+ゆめを　もっている　ひとは
+とくべつな　スポットが　できるから▼
+しょうたいする　ときに　あいての
+はなしを　よくきいて　えらんでくれ▼</language>
 	</row>
 
-	<row id="resort_drill_06" back-color="#c0c0c0,,,,,,,#c0c0c0,,,#c0c0c0,,,#c0c0c0,,,#c0c0c0,,">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
+	<row id="resort_drill_sel_ans_06" back-color="#c0c0c0,,,,,,,#c0c0c0,,,#c0c0c0,,,#c0c0c0,,,#c0c0c0,,">
+		<attribute name="キャラ指定">回答６
+「スポットを　おしえる」って？</attribute>
+		<language name="JPN" width="256">ゲストルームに　いる　ひとへ
+「スポットおしえる」を　やってみよう▼
+ゲストが　まんぞくすると
+あんない　した　スポットと▽
+まちの　にんきが　あがるんだ▼
+にんきを　たくさんあつめると
+レベルアップ　するぞ▼
+スポットの　レベルが　あがれば
+しなものや　サービスが▽
+べんりに　なるよ▼
+まちの　レベルが　あがると
+あたらしい　スポットを　つくれたり▽
+ゆうめいじんが　やってくる　のだ▼
+ゲストの　いきたい　ばしょに
+みみを　かたむけて▽
+にんきを　どんどん　あげてくれ▼</language>
+		<language name="JPN_KANJI" width="256">ゲストルームに　いる　ひとへ
+「スポットおしえる」を　やってみよう▼
+ゲストが　まんぞくすると
+あんない　した　スポットと▽
+まちの　にんきが　あがるんだ▼
+にんきを　たくさんあつめると
+レベルアップ　するぞ▼
+スポットの　レベルが　あがれば
+しなものや　サービスが▽
+べんりに　なるよ▼
+まちの　レベルが　あがると
+あたらしい　スポットを　つくれたり▽
+ゆうめいじんが　やってくる　のだ▼
+ゲストの　いきたい　ばしょに
+みみを　かたむけて▽
+にんきを　どんどん　あげてくれ▼</language>
 	</row>
 
-	<row id="resort_drill_07" back-color="#c0c0c0,,,,,,,#c0c0c0,,,#c0c0c0,,,#c0c0c0,,,#c0c0c0,,">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
+	<row id="resort_drill_sel_ans_07" back-color="#c0c0c0,,,,,,,#c0c0c0,,,#c0c0c0,,,#c0c0c0,,,#c0c0c0,,">
+		<attribute name="キャラ指定">回答７
+だいじょうぶ！</attribute>
+		<language name="JPN" width="256">きみの　つくるまち
+たのしみに　しているよ▼</language>
+		<language name="JPN_KANJI" width="256">きみの　つくるまち
+たのしみに　しているよ▼</language>
 	</row>
 
-	<row id="resort_drill_08" back-color="#c0c0c0,,,,,,,#c0c0c0,,,#c0c0c0,,,#c0c0c0,,,#c0c0c0,,">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
+	<row id="resort_drill_sel_01" back-color="#c0c0c0,,,,,,,#c0c0c0,,,#c0c0c0,,,#c0c0c0,,,#c0c0c0,,">
+		<attribute name="キャラ指定">選択肢１</attribute>
+		<language name="JPN" width="256">ここって　どこ？</language>
+		<language name="JPN_KANJI" width="256">ここって　どこ？</language>
 	</row>
 
-	<row id="resort_drill_09" back-color="#c0c0c0,,,,,,,#c0c0c0,,,#c0c0c0,,,#c0c0c0,,,#c0c0c0,,">
-		<attribute name="キャラ指定">回答
-どこにあるの</attribute>
-		<language name="JPN" width="256">ここは　イッシュちほうの
-はるかみなみの　うみに　ある▽
-うめたてて　つくられた　しま▼
-ヒウンシティから　ひこうきで
-くることが　できるよ▼
-</language>
-		<language name="JPN_KANJI" width="256">ここは　イッシュちほうの
-はるかみなみの　うみに　ある▽
-うめたてて　つくられた　しま▼
-ヒウンシティから　ひこうきで
-くることが　できるよ▼
-</language>
-	</row>
-
-	<row id="resort_drill_sel_00" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+	<row id="resort_drill_sel_02" back-color="#c0c0c0,,,,,,,#c0c0c0,,,#c0c0c0,,,#c0c0c0,,,#c0c0c0,,">
+		<attribute name="キャラ指定">選択肢２</attribute>
 		<language name="JPN" width="256">もくてきは？</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">もくてきは？</language>
 	</row>
 
-	<row id="resort_drill_sel_01" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
-		<language name="JPN" width="256">ひとを　よぶには？</language>
-		<language name="JPN_KANJI" width="256"></language>
+	<row id="resort_drill_sel_03" back-color="#c0c0c0,,,,,,,#c0c0c0,,,#c0c0c0,,,#c0c0c0,,,#c0c0c0,,">
+		<attribute name="キャラ指定">選択肢３</attribute>
+		<language name="JPN" width="256">すてきな　リゾートに　するには？</language>
+		<language name="JPN_KANJI" width="256">すてきな　リゾートに　するには？</language>
 	</row>
 
-	<row id="resort_drill_sel_02" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
-		<language name="JPN" width="256">みせを　おおきくするには？</language>
-		<language name="JPN_KANJI" width="256"></language>
+	<row id="resort_drill_sel_04" back-color="#c0c0c0,,,,,,,#c0c0c0,,,#c0c0c0,,,#c0c0c0,,,#c0c0c0,,">
+		<attribute name="キャラ指定">選択肢４</attribute>
+		<language name="JPN" width="256">ゲストを　よぶには？</language>
+		<language name="JPN_KANJI" width="256">ゲストを　よぶには？</language>
 	</row>
 
-	<row id="resort_drill_sel_03" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
-		<language name="JPN" width="256">ここは　どこにあるの？</language>
-		<language name="JPN_KANJI" width="256"></language>
+	<row id="resort_drill_sel_05" back-color="#c0c0c0,,,,,,,#c0c0c0,,,#c0c0c0,,,#c0c0c0,,,#c0c0c0,,">
+		<attribute name="キャラ指定">選択肢５</attribute>
+		<language name="JPN" width="256">「しょうたい　する」って？</language>
+		<language name="JPN_KANJI" width="256">「しょうたい　する」って？</language>
 	</row>
 
-	<row id="resort_drill_sel_04" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
+	<row id="resort_drill_sel_06" back-color="#c0c0c0,,,,,,,#c0c0c0,,,#c0c0c0,,,#c0c0c0,,,#c0c0c0,,">
+		<attribute name="キャラ指定">選択肢６</attribute>
+		<language name="JPN" width="256">「スポットを　おしえる」って？</language>
+		<language name="JPN_KANJI" width="256">「スポットを　おしえる」って？</language>
+	</row>
+
+	<row id="resort_drill_sel_07" back-color="#c0c0c0,,,,,,,#c0c0c0,,,#c0c0c0,,,#c0c0c0,,,#c0c0c0,,">
+		<attribute name="キャラ指定">選択肢７</attribute>
+		<language name="JPN" width="256">だいじょうぶ！</language>
+		<language name="JPN_KANJI" width="256">だいじょうぶ！</language>
 	</row>
 
 	<row id="resort_comm_type_00" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
@@ -3516,22 +4791,212 @@ GTSの　ごりよう　ありがとうございます！</language>
 		<language name="JPN" width="256">ここだけの　はなし　なんだけど
 きいて　きいて！▼
 [FF:00:色:2][1:00:トレーナー名:0]さん[FF:00:色:0]って……
-ビットが　ON　みたいね▼</language>
+でんどういり　しているみたいね▼</language>
 		<language name="JPN_KANJI" width="256">ここだけの　はなし　なんだけど
 きいて　きいて！▼
 [FF:00:色:2][1:00:トレーナー名:0]さん[FF:00:色:0]って……
-ビットが　ON　みたいね▼</language>
+でんどういり　しているみたいね▼</language>
 	</row>
 
 	<row id="resort_offreco_01" back-color="#8080ff,,,,,,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="256">ここだけの　はなし　なんだけど
 きいて　きいて！▼
 [FF:00:色:2][1:00:トレーナー名:0]さん[FF:00:色:0]って……
-ビットが　OFF　みたいね▼</language>
+サブウェイマスターを▽
+たおしている　みたいね▼</language>
 		<language name="JPN_KANJI" width="256">ここだけの　はなし　なんだけど
 きいて　きいて！▼
 [FF:00:色:2][1:00:トレーナー名:0]さん[FF:00:色:0]って……
-ビットが　OFF　みたいね▼</language>
+サブウェイマスターを▽
+たおしている　みたいね▼</language>
+	</row>
+
+	<row id="resort_offreco_02" back-color="#8080ff,,,,,,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<language name="JPN" width="256">ここだけの　はなし　なんだけど
+きいて　きいて！▼
+[FF:00:色:2][1:00:トレーナー名:0]さん[FF:00:色:0]って……
+スーパートレインの▽
+サブウェイマスターを▽
+たおしている　みたいね▼</language>
+		<language name="JPN_KANJI" width="256">ここだけの　はなし　なんだけど
+きいて　きいて！▼
+[FF:00:色:2][1:00:トレーナー名:0]さん[FF:00:色:0]って……
+スーパートレインの▽
+サブウェイマスターを▽
+たおしている　みたいね▼</language>
+	</row>
+
+	<row id="resort_offreco_03" back-color="#8080ff,,,,,,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<language name="JPN" width="256">ここだけの　はなし　なんだけど
+きいて　きいて！▼
+[FF:00:色:2][1:00:トレーナー名:0]さん[FF:00:色:0]って……
+ボックスには　ポケモンが▽
+３０ひき　いない　みたいね▼</language>
+		<language name="JPN_KANJI" width="256">ここだけの　はなし　なんだけど
+きいて　きいて！▼
+[FF:00:色:2][1:00:トレーナー名:0]さん[FF:00:色:0]って……
+ボックスには　ポケモンが▽
+３０ひき　いない　みたいね▼</language>
+	</row>
+
+	<row id="resort_offreco_04" back-color="#8080ff,,,,,,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<language name="JPN" width="256">ここだけの　はなし　なんだけど
+きいて　きいて！▼
+[FF:00:色:2][1:00:トレーナー名:0]さん[FF:00:色:0]って……
+ボックスには　ポケモンが▽
+１２０ひき　いない　みたいね▼</language>
+		<language name="JPN_KANJI" width="256">ここだけの　はなし　なんだけど
+きいて　きいて！▼
+[FF:00:色:2][1:00:トレーナー名:0]さん[FF:00:色:0]って……
+ボックスには　ポケモンが▽
+１２０ひき　いない　みたいね▼</language>
+	</row>
+
+	<row id="resort_offreco_05" back-color="#8080ff,,,,,,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<language name="JPN" width="256">ここだけの　はなし　なんだけど
+きいて　きいて！▼
+[FF:00:色:2][1:00:トレーナー名:0]さん[FF:00:色:0]って……
+ボックスには　ポケモンが▽
+５００ひき　いじょう　いるみたいね▼</language>
+		<language name="JPN_KANJI" width="256">ここだけの　はなし　なんだけど
+きいて　きいて！▼
+[FF:00:色:2][1:00:トレーナー名:0]さん[FF:00:色:0]って……
+ボックスには　ポケモンが▽
+５００ひき　いじょう　いるみたいね▼</language>
+	</row>
+
+	<row id="resort_offreco_06" back-color="#8080ff,,,,,,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<language name="JPN" width="256">ここだけの　はなし　なんだけど
+きいて　きいて！▼
+[FF:00:色:2][1:00:トレーナー名:0]さん[FF:00:色:0]って……
+ともだち　てちょうの　とうろくが▽
+だれも　いない　みたいね……▼</language>
+		<language name="JPN_KANJI" width="256">ここだけの　はなし　なんだけど
+きいて　きいて！▼
+[FF:00:色:2][1:00:トレーナー名:0]さん[FF:00:色:0]って……
+ともだち　てちょうの　とうろくが▽
+だれも　いない　みたいね……▼</language>
+	</row>
+
+	<row id="resort_offreco_07" back-color="#8080ff,,,,,,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<language name="JPN" width="256">ここだけの　はなし　なんだけど
+きいて　きいて！▼
+[FF:00:色:2][1:00:トレーナー名:0]さん[FF:00:色:0]って……
+ともだち　てちょうの　とうろくが▽
+８にん　ちかく　いる　みたいね▼</language>
+		<language name="JPN_KANJI" width="256">ここだけの　はなし　なんだけど
+きいて　きいて！▼
+[FF:00:色:2][1:00:トレーナー名:0]さん[FF:00:色:0]って……
+ともだち　てちょうの　とうろくが▽
+８にん　ちかく　いる　みたいね▼</language>
+	</row>
+
+	<row id="resort_offreco_08" back-color="#8080ff,,,,,,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<language name="JPN" width="256">ここだけの　はなし　なんだけど
+きいて　きいて！▼
+[FF:00:色:2][1:00:トレーナー名:0]さん[FF:00:色:0]って……
+ともだち　てちょうの　とうろくが▽
+１６にん　ちかく　いる　みたいね▼</language>
+		<language name="JPN_KANJI" width="256">ここだけの　はなし　なんだけど
+きいて　きいて！▼
+[FF:00:色:2][1:00:トレーナー名:0]さん[FF:00:色:0]って……
+ともだち　てちょうの　とうろくが▽
+１６にん　ちかく　いる　みたいね▼</language>
+	</row>
+
+	<row id="resort_offreco_09" back-color="#8080ff,,,,,,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<language name="JPN" width="256">ここだけの　はなし　なんだけど
+きいて　きいて！▼
+[FF:00:色:2][1:00:トレーナー名:0]さん[FF:00:色:0]って……
+ともだち　てちょうの　とうろくが▽
+３２にん　ちかく　いる　みたいね▼</language>
+		<language name="JPN_KANJI" width="256">ここだけの　はなし　なんだけど
+きいて　きいて！▼
+[FF:00:色:2][1:00:トレーナー名:0]さん[FF:00:色:0]って……
+ともだち　てちょうの　とうろくが▽
+３２にん　ちかく　いる　みたいね▼</language>
+	</row>
+
+	<row id="resort_offreco_10" back-color="#8080ff,,,,,,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<language name="JPN" width="256">ここだけの　はなし　なんだけど
+きいて　きいて！▼
+[FF:00:色:2][1:00:トレーナー名:0]さん[FF:00:色:0]って……
+ともだち　てちょうの　とうろくが▽
+３２にん　いっぱい　いるみたいね▼</language>
+		<language name="JPN_KANJI" width="256">ここだけの　はなし　なんだけど
+きいて　きいて！▼
+[FF:00:色:2][1:00:トレーナー名:0]さん[FF:00:色:0]って……
+ともだち　てちょうの　とうろくが▽
+３２にん　いっぱい　いるみたいね▼</language>
+	</row>
+
+	<row id="resort_offreco_11" back-color="#8080ff,,,,,,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<language name="JPN" width="256">ここだけの　はなし　なんだけど
+きいて　きいて！▼
+[FF:00:色:2][1:00:トレーナー名:0]さん[FF:00:色:0]って……
+ダウジングで　ひろう　どうぐを▽
+ぜんぜん　みつけて　いない　みたいね▼</language>
+		<language name="JPN_KANJI" width="256">ここだけの　はなし　なんだけど
+きいて　きいて！▼
+[FF:00:色:2][1:00:トレーナー名:0]さん[FF:00:色:0]って……
+ダウジングで　ひろう　どうぐを▽
+ぜんぜん　みつけて　いない　みたいね▼</language>
+	</row>
+
+	<row id="resort_offreco_12" back-color="#8080ff,,,,,,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<language name="JPN" width="256">ここだけの　はなし　なんだけど
+きいて　きいて！▼
+[FF:00:色:2][1:00:トレーナー名:0]さん[FF:00:色:0]って……
+ダウジングで　ひろう　どうぐを▽
+たくさん　みつけている　みたいね▼</language>
+		<language name="JPN_KANJI" width="256">ここだけの　はなし　なんだけど
+きいて　きいて！▼
+[FF:00:色:2][1:00:トレーナー名:0]さん[FF:00:色:0]って……
+ダウジングで　ひろう　どうぐを▽
+たくさん　みつけている　みたいね▼</language>
+	</row>
+
+	<row id="resort_offreco_13" back-color="#8080ff,,,,,,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<language name="JPN" width="256">ここだけの　はなし　なんだけど
+きいて　きいて！▼
+[FF:00:色:2][1:00:トレーナー名:0]さん[FF:00:色:0]って……
+ダウジングで　ひろう　どうぐを▽
+ほとんど　みつけている　みたいね▼</language>
+		<language name="JPN_KANJI" width="256">ここだけの　はなし　なんだけど
+きいて　きいて！▼
+[FF:00:色:2][1:00:トレーナー名:0]さん[FF:00:色:0]って……
+ダウジングで　ひろう　どうぐを▽
+たくさん　みつけている　みたいね▼</language>
+	</row>
+
+	<row id="resort_offreco_14" back-color="#8080ff,,,,,,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<language name="JPN" width="256">ここだけの　はなし　なんだけど
+きいて　きいて！▼
+[FF:00:色:2][1:00:トレーナー名:0]さん[FF:00:色:0]って……
+ＧＴＳネゴシエーションで▽
+だれとも　しりあいに▽
+なっていないみたいね▼</language>
+		<language name="JPN_KANJI" width="256">ここだけの　はなし　なんだけど
+きいて　きいて！▼
+[FF:00:色:2][1:00:トレーナー名:0]さん[FF:00:色:0]って……
+ＧＴＳネゴシエーションで▽
+だれとも　しりあいに▽
+なっていないみたいね▼</language>
+	</row>
+
+	<row id="resort_offreco_15" back-color="#8080ff,,,,,,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
+		<language name="JPN" width="256">ここだけの　はなし　なんだけど
+きいて　きいて！▼
+[FF:00:色:2][1:00:トレーナー名:0]さん[FF:00:色:0]って……
+ＧＴＳネゴシエーションで▽
+だれとも　しりあいに▽
+なっていないみたいね▼</language>
+		<language name="JPN_KANJI" width="256">ここだけの　はなし　なんだけど
+きいて　きいて！▼
+[FF:00:色:2][1:00:トレーナー名:0]さん[FF:00:色:0]って……
+ＧＴＳネゴシエーションで▽
+だれとも　しりあいに▽
+なっていないみたいね▼</language>
 	</row>
 
 	<row id="resort_city_rank_00" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
