@@ -3447,11 +3447,11 @@ DEP_TEXSET_IMD_INDOOR074 = \
 	$(SRCDIR)/warp02.imd \
 	$(SRCDIR)/warp03.imd \
 	$(SRCDIR)/shelf06.imd \
-	$(SRCDIR)/mugenobj02.imd \
+	$(SRCDIR)/mugenobj01.imd \
 	$(SRCDIR)/mugenobj03.imd \
-	$(SRCDIR)/mugenobj07.imd \
-	$(SRCDIR)/mugenobj08.imd \
-	$(SRCDIR)/mugenobj09.imd
+	$(SRCDIR)/mugenobj04.imd \
+	$(SRCDIR)/mugenobj05.imd \
+	$(SRCDIR)/mugenobj06.imd
 
 texset/indoor074.imd: $(DEP_TEXSET_IMD_INDOOR074) texset/tmp/indoor074.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/indoor074.list
@@ -3495,11 +3495,11 @@ DEP_TEXSET_IMD_INDOOR075 = \
 	$(SRCDIR)/warp02.imd \
 	$(SRCDIR)/warp03.imd \
 	$(SRCDIR)/shelf06.imd \
-	$(SRCDIR)/mugenobj01.imd \
+	$(SRCDIR)/mugenobj02.imd \
 	$(SRCDIR)/mugenobj03.imd \
-	$(SRCDIR)/mugenobj04.imd \
-	$(SRCDIR)/mugenobj05.imd \
-	$(SRCDIR)/mugenobj06.imd
+	$(SRCDIR)/mugenobj07.imd \
+	$(SRCDIR)/mugenobj08.imd \
+	$(SRCDIR)/mugenobj09.imd
 
 texset/indoor075.imd: $(DEP_TEXSET_IMD_INDOOR075) texset/tmp/indoor075.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/indoor075.list
