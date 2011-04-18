@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-13T21:33:25"/>
+	<create user="suginaka_katsunori" host="W00227" date="2011-04-18T19:14:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -408,7 +408,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1291" top="185" right="1996" bottom="813" maximized="no" rayout="Vertical2">
+	<dialog left="510" top="112" right="1215" bottom="732" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -416,7 +416,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -438,9 +438,9 @@
 
 
 	<row id="msg_wbt_tournament_00" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
-		<comment>エントリ直後、
-１回戦用メッセージの前に表示
-</comment>
+		<comment>エントリ直後
+文字送り後、名前を表示し
+msg_wbt_tournament_00aへ</comment>
 		<attribute name="キャラ指定">アナウンス</attribute>
 		<language name="JPN" width="256">[1:3B:WBTトーナメント名:0]
 [1:3C:未設定タグ:1]▼</language>
@@ -448,7 +448,15 @@
 [1:3C:未設定タグ:1]▼</language>
 	</row>
 
-	<row id="msg_wbt_tournament_01" back-color="#80ffff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_wbt_tournament_00a" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>文字送り後
+msg_wbt_tournament_01へ</comment>
+		<attribute name="キャラ指定">アナウンス</attribute>
+		<language name="JPN" width="256">仮メッセージ▼</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ▼</language>
+	</row>
+
+	<row id="msg_wbt_tournament_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
 		<comment>１回戦用メッセージ
 つづいて対応した寸評へ</comment>
 		<attribute name="キャラ指定">アナウンス</attribute>
