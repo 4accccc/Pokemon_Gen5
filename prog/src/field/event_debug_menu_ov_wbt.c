@@ -98,6 +98,8 @@ struct DEBUG_WBT_WORK{
   //ZUKAN_SAVEDATA * sv;
   BOOL (*call_func)( DEBUG_WBT_WORK * );
   WBTSTAGE stage;
+  // win_record用
+  WIN_RECORD_STATUS status;
 	//
 	// 以下に追加していく予定
 	s32			Step;							// 
@@ -174,6 +176,10 @@ static const DEBUG_MENU_LIST WBTMenuList[] =
   { DEBUG_STR_WBT_05, (void*)DEBUG_STR_WBT_05, GFL_OVERLAY_BLANK_ID },   // トーナメント表アプリ
   { DEBUG_STR_WBT_06, (void*)DEBUG_STR_WBT_06, GFL_OVERLAY_BLANK_ID },   // トーナメント表アプリ
   { DEBUG_STR_WBT_07, (void*)DEBUG_STR_WBT_07, GFL_OVERLAY_BLANK_ID },   // デバッグあり
+  //
+  { DEBUG_STR_WBT_08, (void*)DEBUG_STR_WBT_08, GFL_OVERLAY_BLANK_ID },   // エントリーチェック:1
+  { DEBUG_STR_WBT_09, (void*)DEBUG_STR_WBT_09, GFL_OVERLAY_BLANK_ID },   // エントリーチェック:2
+  { DEBUG_STR_WBT_10, (void*)DEBUG_STR_WBT_10, GFL_OVERLAY_BLANK_ID },   // エントリーチェック:3
 };
 
 static const DEBUG_MENU_INITIALIZER DebugMenuWBTImitializer = {
@@ -343,9 +349,28 @@ static GMEVENT_RESULT debugMenuWBTEvent( GMEVENT *event, int *seq, void *wk )
 		*seq = 3;
 		work->DebugMode = DEBUG_MODE_DBG;
       break;
+	//
+	// 追加
+	//
+    case DEBUG_STR_WBT_08:		// エントリーチェック:1
+		work->call_func = debugMenuCallProc_WinRecord;
+		work->status = WIN_RECORD_STATUS_LV1;
+		(*seq)++;
+		break;
+	//
+	case DEBUG_STR_WBT_09:		// エントリーチェック:2
+		work->call_func = debugMenuCallProc_WinRecord;
+		work->status = WIN_RECORD_STATUS_LV2;
+		(*seq)++;
+		break;
+	//
+	case DEBUG_STR_WBT_10:		// エントリーチェック:3
+		work->call_func = debugMenuCallProc_WinRecord;
+		work->status = WIN_RECORD_STATUS_LV3;
+		(*seq)++;
+		break;
     }
     break;
-
   case 2:
     FLDMENUFUNC_DeleteMenu( work->menuFunc );
     if (work->call_func != NULL
@@ -885,6 +910,8 @@ static BOOL debugMenuCallProc_WinRecord( DEBUG_WBT_WORK *p_wk )
 //	WIN_RECORD_PARAM_Setup_Debug(
 //		p_wk->gmSys, wr_param,
 //		WBTTYPE_ALL, WBTRULE_SINGLE, p_wk->stage, p_wk->Trbuffer, p_wk->DebugNum );
+	// debug用
+	wr_param->status = p_wk->status;
 	//
 	new_event = WIN_RECORD_EVENT_Show( p_wk->gmSys, p_wk->fieldWork, wr_param, TRUE );
 	GMEVENT_ChangeEvent( p_wk->gmEvent, new_event );

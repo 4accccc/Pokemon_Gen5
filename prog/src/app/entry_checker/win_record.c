@@ -251,6 +251,7 @@ enum{
 	//
 	FLG_MW_UPDATE		= (1<<4),		// 更新
 	FLG_MW_BAR_UPDATE	= (1<<5),		// バー更新
+	FLG_MW_NO_SCROLL	= (1<<6),		// スクロールなし(MODE_LV1と同じ)
 	//
 	FLG_MW_END			= (1<<8),		// 終了
 	//
@@ -657,10 +658,10 @@ static void wr_set_obj_visible( WIN_RECORD_MAIN_WORK *wk, const s32 wmode, const
 static BOOL wr_is_anime_end( WIN_RECORD_MAIN_WORK *wk, const s32 wmode, const s32 wnum );
 //
 static void wr_init_obj_bmpoam( WIN_RECORD_MAIN_WORK* wk, const s32 drawtype, const WIN_RECORD_BMPOAM_DATA *bmp_adr, const s16 *info_adr );
-static void wr_disp_bmpoam( WIN_RECORD_MAIN_WORK* wk, const wnum, const STRBUF *strbuf );
+static void wr_disp_bmpoam( WIN_RECORD_MAIN_WORK* wk, const s32 wnum, const STRBUF *strbuf );
 //
 static void wr_init_string( WIN_RECORD_MAIN_WORK* wk );
-static void wr_disp_string( WIN_RECORD_MAIN_WORK* wk, const s32 mode, const s32 x, const s32 y, STRBUF* strbuf, const u32 dispmode );
+static void wr_disp_string( WIN_RECORD_MAIN_WORK* wk, const s32 mode, const s32 x, const s32 y, const STRBUF* strbuf, const u32 dispmode );
 static void wr_update_string( WIN_RECORD_MAIN_WORK* wk, const s32 mode );
 static void wr_exit_string( WIN_RECORD_MAIN_WORK* wk );
 static void wr_clear_canvas( WIN_RECORD_MAIN_WORK* wk, const s32 mode );
@@ -668,7 +669,7 @@ static void wr_disp_playername( WIN_RECORD_MAIN_WORK* wk, const s32 mode, const 
 static void wr_disp_string_id( WIN_RECORD_MAIN_WORK* wk, const s32 mode, const s32 mesid, const s32 xpos, const s32 ypos, const u32 dispmode );
 //
 static void wr_set_panel( WIN_RECORD_MAIN_WORK* wk, const s32 wnum, const s32 num, const BOOL bflg );
-static void wr_set_panel_all( WIN_RECORD_MAIN_WORK* wk, const s32 wnum, const s32 num );
+static void wr_set_panel_all( WIN_RECORD_MAIN_WORK* wk, const s32 wnum, const s32 num, const BOOL dispflg );
 //
 static void wr_init_param( WIN_RECORD_MAIN_WORK* wk );
 static BOOL wr_chk_key_input( WIN_RECORD_MAIN_WORK* wk );
@@ -888,7 +889,9 @@ static void wr_init( WIN_RECORD_MAIN_WORK* wk )
 	// 上、下画面をまとめて処理
 	wk->Step 		= STEP_INIT;
 	wk->DebugFlag	= 0;
-	wk->Mode		= MODE_LV2;
+//	wk->Mode		= MODE_LV2;
+//	wk->Mode		= MODE_LV1;
+	wk->Mode		= wk->Param->status;
 	wk->TopNum		= 0;
 	wk->Flag		= 0;
 	//
@@ -1263,11 +1266,10 @@ static void wr_init_obj_res( WIN_RECORD_MAIN_WORK* wk, const s32 drawtype, const
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  OBJ初期化(res)
+ *	@brief  OBJ初期化(cmn res)
  *
  *	@param	WIN_RECORD_MAIN_WORK* wk
  *	@param	const s32			drawtype
- *	@param	const s16*			アドレス
  *
  *	@retval
  */
@@ -1295,7 +1297,7 @@ static void wr_init_obj_res_cmn( WIN_RECORD_MAIN_WORK* wk, const s32 drawtype )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  OBJ初期化
+ *	@brief  OBJ初期化まとめ
  *
  *	@param	WIN_RECORD_MAIN_WORK* wk
  *
@@ -1373,9 +1375,17 @@ static void wr_chg_objseq( WIN_RECORD_MAIN_WORK *wk, const s32 wmode, const s32 
 {
 	// 切り替え
 	if(wmode == CLWKMODE_NORMAL){			// 通常
+		if(wnum >= CLWKID_MAX){
+			OS_Printf("obj max error:%d\n",wnum);
+			return;
+		}
 		GFL_CLACT_WK_SetAnmSeq( wk->wk_obj.clwk[wnum], seq );
 		GFL_CLACT_WK_SetAutoAnmFlag( wk->wk_obj.clwk[wnum], TRUE );
 	}else{
+		if(wnum >= CLWKID_CMN_MAX){
+			OS_Printf("cmn obj max error:%d\n",wnum);
+			return;
+		}
 		GFL_CLACT_WK_SetAnmSeq( wk->wk_obj.cmn_clwk[wnum], seq );
 		GFL_CLACT_WK_SetAutoAnmFlag( wk->wk_obj.cmn_clwk[wnum], TRUE );
 	}
@@ -1386,8 +1396,9 @@ static void wr_chg_objseq( WIN_RECORD_MAIN_WORK *wk, const s32 wmode, const s32 
  *	@brief  OBJの表示/非表示
  *
  *	@param	WIN_RECORD_MAIN_WORK* wk
- *	@param	const s32		objワーク番号
- *	@param	const BOOL		(TRUE:表示、FALSE:非表示)
+ *	@param	const s32			(0:通常、1:共通)
+ *	@param	const s32			objワーク番号
+ *	@param	const BOOL			(TRUE:表示、FALSE:非表示)
  *
  *	@retval
  */
@@ -1396,8 +1407,16 @@ static void wr_set_obj_visible( WIN_RECORD_MAIN_WORK *wk, const s32 wmode, const
 {
 	// 表示/非表示
 	if(wmode == CLWKMODE_NORMAL){
+		if(wnum >= CLWKID_MAX){
+			OS_Printf("obj max error:%d\n",wnum);
+			return;
+		}
 		GFL_CLACT_WK_SetDrawEnable(  wk->wk_obj.clwk[wnum], bflg );
 	}else{
+		if(wnum >= CLWKID_CMN_MAX){
+			OS_Printf("cmn obj max error:%d\n",wnum);
+			return;
+		}
 		GFL_CLACT_WK_SetDrawEnable(  wk->wk_obj.cmn_clwk[wnum], bflg );
 	}
 }
@@ -1407,9 +1426,10 @@ static void wr_set_obj_visible( WIN_RECORD_MAIN_WORK *wk, const s32 wmode, const
  *	@brief  OBJのアニメの終了待ち
  *
  *	@param	WIN_RECORD_MAIN_WORK* wk
- *	@param	const s32		objワーク番号
+ *	@param	const s32			(0:通常、1:共通)
+ *	@param	const s32			objワーク番号
  *
- *	@retval	const BOOL		(TRUE:再生中、FALSE:停止、終了)
+ *	@retval	const BOOL			(TRUE:再生中、FALSE:停止、終了)
  */
 //-----------------------------------------------------------------------------
 static BOOL wr_is_anime_end( WIN_RECORD_MAIN_WORK *wk, const s32 wmode, const s32 wnum )
@@ -1418,17 +1438,24 @@ static BOOL wr_is_anime_end( WIN_RECORD_MAIN_WORK *wk, const s32 wmode, const s3
 	
 	// 終了判定らしい
 	if(wmode == CLWKMODE_NORMAL){
+		if(wnum >= CLWKID_MAX){
+			OS_Printf("obj max error:%d\n",wnum);
+			return( FALSE );
+		}
 		if( GFL_CLACT_WK_CheckAnmActive( wk->wk_obj.clwk[wnum] ) == FALSE ){
 			bflg = FALSE;
 		}
 	}else{
+		if(wnum >= CLWKID_CMN_MAX){
+			OS_Printf("cmn obj max error:%d\n",wnum);
+			return( FALSE );
+		}
 		if( GFL_CLACT_WK_CheckAnmActive( wk->wk_obj.cmn_clwk[wnum] ) == FALSE ){
 			bflg = FALSE;
 		}
 	}
 	return( bflg );
 }
-
 
 //-----------------------------------------------------------------------------
 /**
@@ -1487,18 +1514,21 @@ static void wr_init_obj_bmpoam( WIN_RECORD_MAIN_WORK* wk, const s32 drawtype, co
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  OBJ初期化(bmpoam)
+ *	@brief  OB文字列表示(bmpoam)
  *
  *	@param	WIN_RECORD_MAIN_WORK* wk
- *	@param	const s32				drawtype
- *	@param	const WIN_RECORD_BMPOAM_DATA*	アドレス
- *	@param	const s16*					アドレス
+ *	@param	const s32				ワーク番号
+ *	@param	const STRBUF*			表示文字列
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void wr_disp_bmpoam( WIN_RECORD_MAIN_WORK* wk, const wnum, const STRBUF *strbuf )
+static void wr_disp_bmpoam( WIN_RECORD_MAIN_WORK* wk, const s32 wnum, const STRBUF *strbuf )
 {
+	if(wnum >= WIN_RECORD_BMPOAM_MAXNUM){
+		OS_Printf("bmpoamj max error:%d\n",wnum);
+		return;
+	}
 	GFL_BMP_Clear( wk->BmpData[wnum], 0 );
 	PRINTSYS_PrintQueColor( wk->print_que, wk->BmpData[wnum], 0, 0, strbuf, wk->font, PRINTSYS_LSB_Make(15,14,0) );
 	BmpOam_ActorBmpTrans( wk->BmpOamWork[wnum] );
@@ -1540,12 +1570,13 @@ static void wr_init_string( WIN_RECORD_MAIN_WORK* wk )
  *	@param	const s32			Canvasの番号
  *	@param	const s32			表示座標(x)
  *	@param	const s32			表示座標(y)
- *	@param	STRBUF* 			表示文字列
+ *	@param	const STRBUF* 		表示文字列
+ *	@param	const u32			表示位置(左、右、中央など)
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void wr_disp_string( WIN_RECORD_MAIN_WORK* wk, const s32 mode, const s32 x, const s32 y, STRBUF* strbuf, const u32 dispmode )
+static void wr_disp_string( WIN_RECORD_MAIN_WORK* wk, const s32 mode, const s32 x, const s32 y, const STRBUF* strbuf, const u32 dispmode )
 {
 	// 表示
 	PRINTTOOL_PrintColor(
@@ -1564,6 +1595,7 @@ static void wr_disp_string( WIN_RECORD_MAIN_WORK* wk, const s32 mode, const s32 
  *	@brief  文字表示準備(現在、Canvasの作成)
  *
  *	@param	WIN_RECORD_MAIN_WORK* wk
+ *	@param	const s32				Canvasの番号
  *
  *	@retval
  */
@@ -1603,6 +1635,7 @@ static void wr_exit_string( WIN_RECORD_MAIN_WORK* wk )
  *	@brief  ウインドウクリア
  *
  *	@param	WIN_RECORD_MAIN_WORK* wk
+ *	@param	const s32				キャンバスの番号
  *
  *	@retval
  */
@@ -1622,6 +1655,7 @@ static void wr_clear_canvas( WIN_RECORD_MAIN_WORK* wk, const s32 mode )
  *	@param	const mode				(PrintUtil[mode]のmode)
  *	@param	const s32				x座標
  *	@param	const s32				y座標
+ *	@param	const u32				表示位置(左、中央、右)
  *
  *	@retval
  */
@@ -1679,6 +1713,7 @@ static void wr_disp_playername( WIN_RECORD_MAIN_WORK* wk, const s32 mode, const 
  *	@param	const s32				mesid
  *	@param	const s32				x座標
  *	@param	const s32				y座標
+ *	@param	const u32				表示位置(左、中央、右)
  *
  *	@retval
  */
@@ -1747,8 +1782,8 @@ static void wr_set_panel( WIN_RECORD_MAIN_WORK* wk, const s32 wnum, const s32 nu
 	// 数字表示
 	//----------
 	strbuf2 = GFL_STR_CreateBuffer( 64, wk->heapID );
-//	STRTOOL_SetNumber( expandBuf, wk->CountBuffer[num], 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
-	STRTOOL_SetNumber( strbuf2, wk->CountBuffer[num], 4, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+	STRTOOL_SetNumber( strbuf2, wk->CountBuffer[num], 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+//	STRTOOL_SetNumber( strbuf2, wk->CountBuffer[num], 4, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
 	WORDSET_RegisterWord( wordset, 0, strbuf2, 0, TRUE, PM_LANG );
 	// 最終出力バッファ
 	expandbuf = GFL_STR_CreateBuffer( 64, wk->heapID );
@@ -1790,11 +1825,12 @@ static void wr_set_panel( WIN_RECORD_MAIN_WORK* wk, const s32 wnum, const s32 nu
  *	@param	WIN_RECORD_MAIN_WORK* wk
  *	@param	const s32			ワーク番号
  *	@param	const s32			テーブルの何番目か(注意:直接シーケンス番号ではない)
+ *	@param	const BOOL			表示フラグ(通常:TRUE、強制非表示:FALSE)
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void wr_set_panel_all( WIN_RECORD_MAIN_WORK* wk, const s32 wnum, const s32 num )
+static void wr_set_panel_all( WIN_RECORD_MAIN_WORK* wk, const s32 wnum, const s32 num, const BOOL dispflg )
 {
 	s16				tmp=0;
 	BOOL			bflg=FALSE;
@@ -1807,6 +1843,10 @@ static void wr_set_panel_all( WIN_RECORD_MAIN_WORK* wk, const s32 wnum, const s3
 		// テーブルから変更するシーケンス番号を求める
 		tmp = adr[num];
 		bflg = TRUE;
+	}
+	// 強制フラグ
+	if(dispflg == FALSE){
+		bflg = FALSE;
 	}
 	// 表示
 	wr_set_panel( wk, wnum, tmp, bflg );
@@ -1823,13 +1863,27 @@ static void wr_set_panel_all( WIN_RECORD_MAIN_WORK* wk, const s32 wnum, const s3
 //-----------------------------------------------------------------------------
 static void wr_init_param( WIN_RECORD_MAIN_WORK* wk )
 {
-	s16					buf[2];
+	s16					num;
+	s16					nmax;
 	s16					i;
 	GFL_UI_TP_HITTBL	*adr = &wk->HitBuffer[0];
+	BOOL				bflg;
 	//
+	// 最大数を調べる
+	num = 4;			// 表示パネル数
+	nmax = wr_gmm_max_tbl[wk->Mode];
+	if(nmax < 4){
+		num = nmax;
+	}
+	
 	// 表示/非表示と座標セット
 	for(i=0;i<4;i++){
-		wr_set_panel_all( wk, i, wk->TopNum+i );
+		bflg = TRUE;
+		// チェック
+		if(i >= num){
+			bflg = FALSE;
+		}
+		wr_set_panel_all( wk, i, wk->TopNum+i, bflg );
 	}
 	//
 	// タッチペン領域計算
@@ -1842,6 +1896,20 @@ static void wr_init_param( WIN_RECORD_MAIN_WORK* wk )
 	adr->rect.bottom	= 0;
 	adr->rect.left		= 0;
 	adr->rect.right		= 0;
+	//
+	// フラグも用意しておく
+	if(wk->Mode == MODE_LV1){
+		wk->Flag |= FLG_MW_NO_SCROLL;
+	}
+	//
+	// スクロール関連を非表示
+	if(wk->Flag & FLG_MW_NO_SCROLL){
+		// バー非表示
+		wr_set_obj_visible( wk, CLWKMODE_NORMAL, CLWKID_BAR, FALSE );
+		// 左右矢印非表示
+		wr_set_obj_visible( wk, CLWKMODE_CMN, CLWKID_CMN_LEFT,  FALSE );
+		wr_set_obj_visible( wk, CLWKMODE_CMN, CLWKID_CMN_RIGHT, FALSE );
+	}
 }
 
 //-----------------------------------------------------------------------------------------------------------------
@@ -1874,44 +1942,55 @@ static BOOL wr_chk_key_input( WIN_RECORD_MAIN_WORK* wk )
 	//
 	// 上
 	if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP ){
-		wk->TopNum--;
-		if(wk->TopNum < 0){
-			wk->TopNum = 0;
+		// スクロールありの対応
+		if(!(wk->Flag & FLG_MW_NO_SCROLL)){
+			wk->TopNum--;
+			if(wk->TopNum < 0){
+				wk->TopNum = 0;
+			}
+			flg = 1;
 		}
-		flg = 1;
 	}
 	// 下
 	else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN ){
-		wk->TopNum++;
-		if(wk->TopNum >= (wr_gmm_max_tbl[wk->Mode]-3)){
-			wk->TopNum = wr_gmm_max_tbl[wk->Mode]-3-1;
+		// スクロールありの対応
+		if(!(wk->Flag & FLG_MW_NO_SCROLL)){
+			wk->TopNum++;
+			if(wk->TopNum >= (wr_gmm_max_tbl[wk->Mode]-3)){
+				wk->TopNum = wr_gmm_max_tbl[wk->Mode]-3-1;
+			}
+			flg = 1;
 		}
-		flg = 1;
 	}
 	// 左
 	else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT ){
-		wk->TopNum -= 4;
-		if(wk->TopNum < 0){
-			wk->TopNum = 0;
+		// スクロールありの対応
+		if(!(wk->Flag & FLG_MW_NO_SCROLL)){
+			wk->TopNum -= 4;
+			if(wk->TopNum < 0){
+				wk->TopNum = 0;
+			}
+			flg = 1;
+			// アニメ再生
+			wnum = CLWKID_CMN_LEFT;
+			wr_chg_objseq( wk, CLWKMODE_CMN, wnum, wr_cmn_btn_tbl[wnum*4+1] );
+			wk->Flag |= FLG_MW_ANM_LEFT;
 		}
-		flg = 1;
-		//
-		// アニメ再生
-		wnum = CLWKID_CMN_LEFT;
-		wr_chg_objseq( wk, CLWKMODE_CMN, wnum, wr_cmn_btn_tbl[wnum*4+1] );
-		wk->Flag |= FLG_MW_ANM_LEFT;
 	}
 	// 右
 	else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT ){
-		wk->TopNum +=4 ;
-		if(wk->TopNum >= (wr_gmm_max_tbl[wk->Mode]-3)){
-			wk->TopNum = wr_gmm_max_tbl[wk->Mode]-3-1;
+		// スクロールありの対応
+		if(!(wk->Flag & FLG_MW_NO_SCROLL)){
+			wk->TopNum +=4 ;
+			if(wk->TopNum >= (wr_gmm_max_tbl[wk->Mode]-3)){
+				wk->TopNum = wr_gmm_max_tbl[wk->Mode]-3-1;
+			}
+			flg = 1;
+			// アニメ再生
+			wnum = CLWKID_CMN_RIGHT;
+			wr_chg_objseq( wk, CLWKMODE_CMN, wnum, wr_cmn_btn_tbl[wnum*4+1] );
+			wk->Flag |= FLG_MW_ANM_RIGHT;
 		}
-		flg = 1;
-		// アニメ再生
-		wnum = CLWKID_CMN_RIGHT;
-		wr_chg_objseq( wk, CLWKMODE_CMN, wnum, wr_cmn_btn_tbl[wnum*4+1] );
-		wk->Flag |= FLG_MW_ANM_RIGHT;
 	}
 	// 戻る
 	else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
@@ -1935,6 +2014,8 @@ static BOOL wr_chk_key_input( WIN_RECORD_MAIN_WORK* wk )
  *	@brief  タッチペン用データ取得
  *
  *	@param	WIN_RECORD_MAIN_WORK* wk
+ *	@param	const s32				領域の番号
+ *	@param	GFL_UI_TP_HITTBL		タッチペン判定用
  *
  *	@retval
  */
@@ -1973,6 +2054,7 @@ static void wr_get_tp_area( WIN_RECORD_MAIN_WORK* wk, const s32 num, GFL_UI_TP_H
  *	@brief  タッチペン入力
  *
  *	@param	WIN_RECORD_MAIN_WORK* wk
+ *	@param	BOOL					(TRUE:タッチあり、FALSE:なし)
  *
  *	@retval
  */
@@ -1999,27 +2081,33 @@ static BOOL wr_chk_tp_input( WIN_RECORD_MAIN_WORK* wk )
 	
 	// 左
 	if(ret == AREA_TP_LEFT){
-		wk->TopNum -= 4;
-		if(wk->TopNum < 0){
-			wk->TopNum = 0;
+		// スクロールありの対応
+		if(!(wk->Flag & FLG_MW_NO_SCROLL)){
+			wk->TopNum -= 4;
+			if(wk->TopNum < 0){
+				wk->TopNum = 0;
+			}
+			// アニメ再生
+			wnum = CLWKID_CMN_LEFT;
+			wr_chg_objseq( wk, CLWKMODE_CMN, wnum, wr_cmn_btn_tbl[wnum*4+1] );
+			wk->Flag |= FLG_MW_ANM_LEFT;
+			flg = 1;
 		}
-		// アニメ再生
-		wnum = CLWKID_CMN_LEFT;
-		wr_chg_objseq( wk, CLWKMODE_CMN, wnum, wr_cmn_btn_tbl[wnum*4+1] );
-		wk->Flag |= FLG_MW_ANM_LEFT;
-		flg = 1;
 	}
 	// 右
 	else if(ret == AREA_TP_RIGHT){
-		wk->TopNum +=4 ;
-		if(wk->TopNum >= (wr_gmm_max_tbl[wk->Mode]-3)){
-			wk->TopNum = wr_gmm_max_tbl[wk->Mode]-3-1;
+		// スクロールありの対応
+		if(!(wk->Flag & FLG_MW_NO_SCROLL)){
+			wk->TopNum +=4 ;
+			if(wk->TopNum >= (wr_gmm_max_tbl[wk->Mode]-3)){
+				wk->TopNum = wr_gmm_max_tbl[wk->Mode]-3-1;
+			}
+			// アニメ再生
+			wnum = CLWKID_CMN_RIGHT;
+			wr_chg_objseq( wk, CLWKMODE_CMN, wnum, wr_cmn_btn_tbl[wnum*4+1] );
+			wk->Flag |= FLG_MW_ANM_RIGHT;
+			flg = 1;
 		}
-		// アニメ再生
-		wnum = CLWKID_CMN_RIGHT;
-		wr_chg_objseq( wk, CLWKMODE_CMN, wnum, wr_cmn_btn_tbl[wnum*4+1] );
-		wk->Flag |= FLG_MW_ANM_RIGHT;
-		flg = 1;
 	}
 	// ×
 	else if(ret == AREA_TP_CROSS){
@@ -2039,10 +2127,13 @@ static BOOL wr_chk_tp_input( WIN_RECORD_MAIN_WORK* wk )
 	}
 	// スクロールバー
 	else{
-		// contで取得
-		if(cret == AREA_TP_SCROLL){
-			wr_set_scrollbar( wk );
-			flg = 3;
+		// スクロールありの対応
+		if(!(wk->Flag & FLG_MW_NO_SCROLL)){
+			// contで取得
+			if(cret == AREA_TP_SCROLL){
+				wr_set_scrollbar( wk );
+				flg = 3;
+			}
 		}
 	}
 	//
@@ -2156,26 +2247,42 @@ static BOOL wr_set_scrollbar( WIN_RECORD_MAIN_WORK* wk )
 //-----------------------------------------------------------------------------
 static void wr_param_update( WIN_RECORD_MAIN_WORK* wk )
 {
+	s16				num;
+	s16				nmax;
 	s32				i;
 	u32				py;
 	GFL_CLACTPOS	pos;
+	BOOL			bflg;
 	
 	// バー更新
 	if(wk->Flag & FLG_MW_BAR_UPDATE){
-		py = SCROLLBAR_GetPosY( wr_gmm_max_tbl[wk->Mode]-4, wk->TopNum, 32, 160, 16 );
-		// 座標の更新
-		GFL_CLACT_WK_GetPos( wk->wk_obj.clwk[CLWKID_BAR], &pos, CLSYS_DEFREND_MAIN );
-//		pos.x = 238;	// test
-		pos.y = py;
-		GFL_CLACT_WK_SetPos( wk->wk_obj.clwk[CLWKID_BAR], &pos, CLSYS_DEFREND_MAIN );
-		//
-		wk->Flag &= ~FLG_MW_BAR_UPDATE;
+		// スクロールありの対応
+		if(!(wk->Flag & FLG_MW_NO_SCROLL)){
+			py = SCROLLBAR_GetPosY( wr_gmm_max_tbl[wk->Mode]-4, wk->TopNum, 32, 160, 16 );
+			// 座標の更新
+			GFL_CLACT_WK_GetPos( wk->wk_obj.clwk[CLWKID_BAR], &pos, CLSYS_DEFREND_MAIN );
+//			pos.x = 238;	// test
+			pos.y = py;
+			GFL_CLACT_WK_SetPos( wk->wk_obj.clwk[CLWKID_BAR], &pos, CLSYS_DEFREND_MAIN );
+			//
+			wk->Flag &= ~FLG_MW_BAR_UPDATE;
+		}
 	}
 	// 更新
 	if(wk->Flag & FLG_MW_UPDATE){
+		// 最大数を調べる
+		num = 4;			// 表示パネル数
+		nmax = wr_gmm_max_tbl[wk->Mode];
+		if(nmax < 4){
+			num = nmax;
+		}
 		// 表示/非表示と座標セット
 		for(i=0;i<4;i++){
-			wr_set_panel_all( wk, i, wk->TopNum+i );
+			bflg = TRUE;
+			if(i >= num){
+				bflg = FALSE;
+			}
+			wr_set_panel_all( wk, i, wk->TopNum+i, bflg );
 		}
 		//
 		wk->Flag &= ~FLG_MW_UPDATE;

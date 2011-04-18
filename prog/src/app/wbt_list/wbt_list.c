@@ -268,6 +268,9 @@ enum{
 	R_RED_SEQ			= 7,		// 右、赤のシーケンス
 	//
 	GAGE_GRAY_SEQ		= 14,		// 灰色ゲージ
+	//
+	L_WIN_SEQ			= 15,		// 左、勝ちシーケンス
+	R_WIN_SEQ			= 16,		// 右、勝ちシーケンス
 };
 
 // mes関連
@@ -300,6 +303,9 @@ enum{
 enum{
 	FLG_MES_1ST		= (1<<0),		// 1回目終了
 	FLG_MES_END		= (1<<1),		// 2回目終了
+	//
+	FLG_MES_EX1		= (1<<2),		// 1回戦特別(ex1)
+	FLG_MES_EX2		= (1<<3),		// 1回戦特別(ex2)
 };
 
 // debugのフラグ(DebugFlag)
@@ -367,9 +373,9 @@ typedef struct
 
 // 個数
 enum{
-	PARAM_ROUND1 = 2,
-	PARAM_ROUND2 = 5,
-	PARAM_ROUND3 = 3,
+	PARAM_ROUND1 = 3,		// 決めせりふ(1) + トーナメント、ルール名(1) + 1回戦(1)
+	PARAM_ROUND2 = 5,		// 人数分の結果(4) + 2回戦(1)
+	PARAM_ROUND3 = 3,		// 人数分の結果(2) + 決勝戦(1)
 	//
 	PARAM_WORK_MAX	= (PARAM_ROUND1 + PARAM_ROUND2 + PARAM_ROUND3),
 };
@@ -502,7 +508,7 @@ typedef struct{
 // OBJの情報(上側)
 // narc, resid, paloffset, palnum
 const s16 obj_main_info_tbl[] = {
-	NARC_wbt_list_gra_wbt_list_obj_u_NCLR, RESID_OBJ_PLT, 0, 5,	// NCL
+	NARC_wbt_list_gra_wbt_list_obj_u_NCLR, RESID_OBJ_PLT, 0, 6,	// NCL
 	NARC_wbt_list_gra_wbt_list_obj_u_NCGR, RESID_OBJ_CHR, 0, 0,	// NCG
 	NARC_wbt_list_gra_wbt_list_obj_u_NCER, RESID_OBJ_CEL, 0, 0, // NCE
 	NARC_wbt_list_gra_wbt_list_obj_u_NANR, -1, 0, 0,			// NAR?
@@ -609,12 +615,12 @@ const u8 wbt_string_pos_tbl[] = {
 	96, 0,					// 下画面(下)
 };
 
-// メッセージ(はじめ、最後)
+// メッセージ(はじめ、最後、0回目(1回戦のみ有効)、1回目(1回戦のみ有効))
 const u8 wbt_mes_gmm_tbl[] = {
-	msg_wbt_tournament_00, msg_wbt_tournament_01,	// 1回戦(はじめだけ特別)
-	msg_wbt_tournament_01, msg_wbt_tournament_02,	// 2回戦
-	msg_wbt_tournament_02, msg_wbt_tournament_03,	// 決勝戦
-	0,0,
+	msg_wbt_tournament_00, msg_wbt_tournament_01, msg_wbt_tournament_03, msg_wbt_tournament_00,	// 1回戦
+	msg_wbt_tournament_01, msg_wbt_tournament_02, 0, 0,											// 2回戦
+	msg_wbt_tournament_02, msg_wbt_tournament_03, 0, 0,											// 決勝戦
+	0,0,0,0,
 };
 
 //=============================================================================
@@ -1139,11 +1145,9 @@ static void wbt_init( WBTLIST_MAIN_WORK* wk )
 	// 文字領域クリア(キャラをクリア転送)
 	wbt_clear_meswin( wk );
 	//
-	// 汎用PrintStream用
-//	APP_PRINTSYS_COMMON_PrintStreamInit( &wk->PrintSysWork, APP_PRINTSYS_COMMON_TYPE_BOTH );
+	// 汎用PrintStream用(キー入力のみ、とした)
 	APP_PRINTSYS_COMMON_PrintStreamInit( &wk->PrintSysWork, APP_PRINTSYS_COMMON_TYPE_KEY );
-	// メッセージ送りマーク用
-//	wk->MsgCursorWork = APP_KEYCURSOR_Create( MES_CURSOR_COLOR, TRUE, TRUE, wk->heapID );
+	// メッセージ送りマーク用(キー入力のみ、とした)
 	wk->MsgCursorWork = APP_KEYCURSOR_Create( MES_CURSOR_COLOR, TRUE, FALSE, wk->heapID );
 	//
 	//
@@ -1283,7 +1287,33 @@ static void wbt_key_00( WBTLIST_MAIN_WORK* wk )
 			// 初期状態にする
 			wbt_init_mode( wk );
 			//
+			// 1回戦は特別処理(決めセリフ)
+			if(wk->Mode == MODE_ROUND1){
+				wk->Step = STEP_INIT+10;
+				// メッセージ表示
+				mesid = wbt_chk_meswin( wk );
+				wbt_set_meswin( wk, mesid );
+			}
+			//
 			break;
+		
+		// メッセージ表示待ち(きめセリフまち)
+		case STEP_INIT+10:
+			// メッセージ待ち
+			if( wbt_main_meswin( wk ) == FALSE ){
+				// カウンタをすすめる(特別処理)
+				// 1回戦だけ処理が異なる
+				wbt_chk_dispcount( wk );
+				// 移動可能パラメータの更新
+				wk->MoveFlag = wbt_get_param( wk, PRM_MOVEFLAG, 0 );
+				//
+				wk->Step = STEP_LV1;
+				wbt_init_move_panel( wk, MOVE_PANEL_IN );
+				// meswinクリア
+				wbt_clear_meswin( wk );
+			}
+			break;
+		
 		
 		// LV1(パネルイン)
 		case STEP_LV1:
@@ -1406,6 +1436,14 @@ static void wbt_key_00( WBTLIST_MAIN_WORK* wk )
 				//
 				// 反対側のゲージが灰色になる
 				wbt_chg_gage_color( wk );
+				//
+				// 勝ったパネル演出
+				tmp = wbt_get_param( wk, PRM_WINPOS, -1 );
+				seq = R_WIN_SEQ;
+				if(tmp < 4){
+					seq = L_WIN_SEQ;
+				}
+				wbt_chg_objseq( wk, tmp, seq );
 			}
 			break;
 		
@@ -1422,6 +1460,15 @@ static void wbt_key_00( WBTLIST_MAIN_WORK* wk )
 				// ゲージ伸び終了
 				wk->Step = STEP_LV5+10;
 				wbt_set_gageanim( wk, sbuf[0], 1, sbuf[1] );
+				//
+				// 勝ったパネル演出終了
+				// =>通常に戻す
+				tmp = wbt_get_param( wk, PRM_WINPOS, -1 );
+				seq = R_WHITE_SEQ;
+				if(tmp < 4){
+					seq = L_WHITE_SEQ;
+				}
+				wbt_chg_objseq( wk, tmp, seq );
 			}
 			break;
 		// ゲージ切り替え後待ち
@@ -2219,6 +2266,7 @@ static void wbt_main_move_panel( WBTLIST_MAIN_WORK* wk )
 //-----------------------------------------------------------------------------
 static void wbt_set_meswin( WBTLIST_MAIN_WORK* wk, const s32 mesid )
 {
+	s16			flg;
 	s16			buf[2];
 	WORDSET		*wordset;
 	STRBUF		*strbuf;
@@ -2226,8 +2274,13 @@ static void wbt_set_meswin( WBTLIST_MAIN_WORK* wk, const s32 mesid )
 	// WORDSET生成
 	wordset = WORDSET_Create( wk->heapID );
 	//
-	// 1回戦の1回目だけ特別処理
-	if((wk->Mode == MODE_ROUND1)&&(mesid == wbt_mes_gmm_tbl[0])){
+	// 1回戦の1,2回目だけ特別処理
+	flg = 0;
+	if((wk->MesFlag & FLG_MES_EX1)||(wk->MesFlag & FLG_MES_EX2)){
+		flg = 1;
+	}
+	if((wk->Mode == MODE_ROUND1)&&(flg == 1)){
+		// トーナメント名、ルール名
 		WORDSET_RegisterWord( wordset, 0, wk->Param->tournament_name, 0, TRUE, PM_LANG );
 		WORDSET_RegisterWord( wordset, 1, wk->Param->tournament_rule, 0, TRUE, PM_LANG );
 	}else{
@@ -2329,7 +2382,7 @@ static s32 wbt_chk_meswin( WBTLIST_MAIN_WORK* wk )
 	s32		mesid;
 	
 	// 前半
-	mesid = wbt_mes_gmm_tbl[2*wk->Mode];
+	mesid = wbt_mes_gmm_tbl[4*wk->Mode];
 	
 	// メッセージの最後のときは、
 	// 次の回戦の情報を表示させるための処理
@@ -2337,20 +2390,30 @@ static s32 wbt_chk_meswin( WBTLIST_MAIN_WORK* wk )
 	if(wk->Mode == MODE_ROUND1){		// 1回戦
 		// 1回戦だけ特別(1文章のみ表示)
 		wk->MesFlag = FLG_MES_1ST;
-		if(wk->DispCount == (PARAM_ROUND1-1)){
-			mesid = wbt_mes_gmm_tbl[2*wk->Mode+1];
+		if(wk->DispCount == 0){
+			// 1回目 => 「決めせりふ」
+			mesid = wbt_mes_gmm_tbl[4*wk->Mode+2];
+			wk->MesFlag |= FLG_MES_EX1;
+		}
+		else if(wk->DispCount == 1){
+			// 2回目 => 「トーナメント名、ルール」
+			mesid = wbt_mes_gmm_tbl[4*wk->Mode+3];
+			wk->MesFlag |= FLG_MES_EX2;
+		}
+		else if(wk->DispCount == (PARAM_ROUND1-1)){
+			mesid = wbt_mes_gmm_tbl[4*wk->Mode+1];
 		}
 	}
 	else if(wk->Mode == MODE_ROUND2){	// 2回戦
 		if(wk->DispCount == (PARAM_ROUND2-1)){
 			wk->MesFlag = FLG_MES_1ST;
-			mesid = wbt_mes_gmm_tbl[2*wk->Mode+1];
+			mesid = wbt_mes_gmm_tbl[4*wk->Mode+1];
 		}
 	}
 	else if(wk->Mode == MODE_ROUND3){	// 3回戦
 		if(wk->DispCount == (PARAM_ROUND3-1)){
 			wk->MesFlag = FLG_MES_1ST;
-			mesid = wbt_mes_gmm_tbl[2*wk->Mode+1];
+			mesid = wbt_mes_gmm_tbl[4*wk->Mode+1];
 		}
 	}
 	return( mesid );
@@ -2726,8 +2789,15 @@ static void wbt_calc_param( WBTLIST_MAIN_WORK* wk )
 	}
 	// 1回戦 => 上記の初期化でよい
 	if(wk->Mode == MODE_ROUND1){
-		// プレイヤの対戦表示
-		offset = 1;
+		// 0番目はパネルを出さない
+		// 「決めセリフまち」
+		offset = 0;
+		wk->ParamWork[offset].moveflag	= 0;
+		//
+		// 1番目はパネルを全部出すので初期化のまま(0xff)でよい
+		//
+		// 2番目はプレイヤの対戦表示
+		offset = 2;
 		if((wk->PlayerNum%2) == 0){		// 上側
 			wk->ParamWork[offset].t_1st	= wk->PlayerNum;
 			wk->ParamWork[offset].t_2nd	= wk->PlayerNum+1;
@@ -2788,7 +2858,7 @@ static void wbt_calc_param( WBTLIST_MAIN_WORK* wk )
 			wk->ParamWork[offset].t_2nd = wk->ParamWork[PARAM_ROUND1+3].winpos;
 		}
 		// 2回戦
-		wk->ParamWork[offset].mesid = wbt_mes_gmm_tbl[2*1+1];
+		wk->ParamWork[offset].mesid = wbt_mes_gmm_tbl[4*1+1];
 	}
 	// 3回戦
 	if(wk->Mode == MODE_ROUND3){
@@ -2821,7 +2891,7 @@ static void wbt_calc_param( WBTLIST_MAIN_WORK* wk )
 		wk->ParamWork[offset].moveflag  = (1<<(wk->ParamWork[PARAM_ROUND1+PARAM_ROUND2].winpos));
 		wk->ParamWork[offset].moveflag |= (1<<(wk->ParamWork[PARAM_ROUND1+PARAM_ROUND2+1].winpos));
 		// 3回戦
-		wk->ParamWork[offset].mesid = wbt_mes_gmm_tbl[2*2+1];
+		wk->ParamWork[offset].mesid = wbt_mes_gmm_tbl[4*2+1];
 		//
 		wk->ParamWork[offset].t_1st = wk->ParamWork[PARAM_ROUND1+PARAM_ROUND2].winpos;
 		wk->ParamWork[offset].t_2nd = wk->ParamWork[PARAM_ROUND1+PARAM_ROUND2+1].winpos;
