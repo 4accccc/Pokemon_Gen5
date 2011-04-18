@@ -3331,8 +3331,7 @@ static void setupResonanceResort( GAMEDATA* gdata, FIELDMAP_WORK *fieldWork, u32
     //フィールドの場合
     EVENTDATA_SYSTEM *p_evdata = GAMEDATA_GetEventData( gdata );
     RESORT_MAPCREATE_Setup( p_resort_wk, zone_id, cp_city, cp_people_all );
-    //RESORT_MAPCREATE_EventDataOverWrite( p_resort_wk, p_evdata );
-    //TODO ドア
+    RESORT_MAPCREATE_EventDataOverWrite( p_resort_wk, p_evdata );
   }
   else if( ZONEDATA_IsResonanceResortRoom( zone_id ) )
   {
