@@ -140,7 +140,6 @@ struct _GAMEDATA{
   TRIAL_HOUSE_WORK_PTR  TrialHouseWorkPtr;    //トライアルハウスワーク
   MUSICAL_SCRIPT_WORK *musicalScrWork;  //ミュージカルスクリプト用ワーク
   WBTSYS * wbtsys;                    ///<WBT用システムワーク
-  WBTSAVE * wbtsave;                  ///<WBT用セーブワーク
 
   PLAYTIME* playtime; // プレイ時間
   
@@ -296,9 +295,6 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
 
   //WBT用システムワーク初期化
   gd->wbtsys = NULL;
-
-  //WBT用セーブデータ初期化（仮でGAMEDATAにおいてある）
-  gd->wbtsave = GFL_HEAP_AllocClearMemory( heapID, WBTSAVE_GetWorkSize() );
 
   //スクリプトオーバーレイ初期化
   gd->scriptCommandOverlayID  = 0;
@@ -2035,7 +2031,7 @@ WBTSYS ** GAMEDATA_GetWBTSysPointer( GAMEDATA * gamedata )
 //----------------------------------------------------------
 WBTSAVE * GAMEDATA_GetWBTSave( GAMEDATA * gamedata )
 {
-  return gamedata->wbtsave;
+  return SAVEDATA_GetWBTSave( gamedata->sv_control_ptr );
 }
 
 //==================================================================
