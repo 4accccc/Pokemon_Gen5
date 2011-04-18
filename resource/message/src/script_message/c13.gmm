@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-04T19:56:58"/>
+	<create user="matsumiya" host="W00224" date="2011-04-18T21:36:33"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1304" top="179" right="2009" bottom="807" maximized="no" rayout="Vertical2">
+	<dialog left="1300" top="169" right="2005" bottom="797" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -294,37 +294,36 @@
 
 	<row id="msg_c13_stop_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・c13r0401：船舶所でホミカと会話前
-・ジムへのストッパー</comment>
+・GRIDX=217、GRIDZ=642、下向き
+・会話時</comment>
 		<attribute name="キャラ指定">SUNGLASSES</attribute>
-		<language name="JPN" width="256">……なかには　だれもいない▼
-はいりたいなら
-ジムリーダーでも　さがしてきな</language>
-		<language name="JPN_KANJI" width="256">……なかには　だれもいない▼
-はいりたいなら
-ジムリーダーでも　さがしてきな</language>
+		<language name="JPN" width="256">このさきは　みわくの　ワンダーランド
+ポケウッド！▼
+いわゆる　えいがスタジオ　だが
+いまは　オーディションを　していて▽
+かんけいしゃ　いがい　はいれないぞ！</language>
+		<language name="JPN_KANJI" width="256">この先は　魅惑の　ワンダーランド
+ポケウッド！▼
+いわゆる　映画スタジオ　だが
+いまは　オーディションを　していて▽
+関係者以外　入れないぞ！</language>
 	</row>
 
 	<row id="msg_c13_stop_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・c13r0401：船舶所でホミカと会話前
-・ジムへのストッパー解除</comment>
+・GRIDX=217、GRIDZ=642、下向き
+・pos時</comment>
 		<attribute name="キャラ指定">SUNGLASSES</attribute>
-		<language name="JPN" width="256">……ん？
-ジムリーダーなら　いるぞ</language>
-		<language name="JPN_KANJI" width="256">……ん？
-ジムリーダーなら　いるぞ</language>
-	</row>
-
-	<row id="msg_c13_stop_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂
-・c13r0401：船舶所でホミカと会話前
-・ジムクリア後</comment>
-		<attribute name="キャラ指定">SUNGLASSES</attribute>
-		<language name="JPN" width="256">バンドが　リハーサルしてる
-はいってもいいが　あいてされないぞ</language>
-		<language name="JPN_KANJI" width="256">バンドが　リハーサルしてる
-はいってもいいが　あいてされないぞ</language>
+		<language name="JPN" width="256">このさきは　みわくの　ワンダーランド
+ポケウッド！▼
+いわゆる　えいがスタジオ　だが
+いまは　オーディションを　していて▽
+かんけいしゃ　いがい　はいれないぞ！▼</language>
+		<language name="JPN_KANJI" width="256">この先は　魅惑の　ワンダーランド
+ポケウッド！▼
+いわゆる　映画スタジオ　だが
+いまは　オーディションを　していて▽
+関係者以外　入れないぞ！▼</language>
 	</row>
 
 	<row id="msg_c13_swleader2_01">
