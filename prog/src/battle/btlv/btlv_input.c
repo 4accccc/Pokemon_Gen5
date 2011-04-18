@@ -4042,7 +4042,7 @@ static  void  BTLV_INPUT_CreateDirScreen( BTLV_INPUT_WORK* biw, TCB_TRANSFORM_WO
       },
     };
     biw->waza_target = bisp->waza_target;
-    ttw->datID = _get_arcid(datID[ type ][ pos ][ bisp->waza_target ],ttw->biw);
+    ttw->datID = _get_arcid(datID[ type ][ pos ][ bisp->waza_target ],biw);
   }
   //パレット転送
   {
@@ -4909,6 +4909,7 @@ static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL
   int trg   = GFL_UI_KEY_GetTrg();
   int cont  = GFL_UI_KEY_GetCont();
   BOOL decide_flag = FALSE;
+
 
   //Bボタン無効ならBボタンを押していないことにする
   if( biw->b_button_flag == FALSE )
