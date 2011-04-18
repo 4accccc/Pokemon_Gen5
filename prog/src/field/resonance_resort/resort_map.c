@@ -106,8 +106,33 @@ void RESORT_MAP_GetPlaceGridPosByIndex( RESORT_PLACEID placeID, u16 people_type,
     }
     else
     {
-      *p_x  = 2 + (peopleID%5)*2;
-      *p_z  = 3 + (peopleID/5)*2;
+      static const struct
+      {
+        s16 x;
+        s16 z;
+      }sc_pos_data[]  =
+      {
+        {4,2},
+        {6,3},
+        {8,2},
+        {10,3},
+        {12,2},
+        {14,3},
+        {16,2},
+        {18,3},
+        {4,4},
+        {6,5},
+        {8,4},
+        {10,5},
+        {12,4},
+        {14,5},
+        {16,4},
+        {18,5},
+      };
+
+      GF_ASSERT( peopleID < NELEMS(sc_pos_data) );
+      *p_x  = sc_pos_data[peopleID].x;
+      *p_z  = sc_pos_data[peopleID].z;
       *p_dir = DIR_DOWN;
     }
     break;
