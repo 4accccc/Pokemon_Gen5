@@ -617,7 +617,7 @@ const u8 wbt_string_pos_tbl[] = {
 
 // メッセージ(はじめ、最後、0回目(1回戦のみ有効)、1回目(1回戦のみ有効))
 const u8 wbt_mes_gmm_tbl[] = {
-	msg_wbt_tournament_00, msg_wbt_tournament_01, msg_wbt_tournament_03, msg_wbt_tournament_00,	// 1回戦
+	msg_wbt_tournament_00, msg_wbt_tournament_01, msg_wbt_tournament_00, msg_wbt_tournament_00a,// 1回戦
 	msg_wbt_tournament_01, msg_wbt_tournament_02, 0, 0,											// 2回戦
 	msg_wbt_tournament_02, msg_wbt_tournament_03, 0, 0,											// 決勝戦
 	0,0,0,0,
@@ -1287,7 +1287,7 @@ static void wbt_key_00( WBTLIST_MAIN_WORK* wk )
 			// 初期状態にする
 			wbt_init_mode( wk );
 			//
-			// 1回戦は特別処理(決めセリフ)
+			// 1回戦は特別処理
 			if(wk->Mode == MODE_ROUND1){
 				wk->Step = STEP_INIT+10;
 				// メッセージ表示
@@ -1297,7 +1297,7 @@ static void wbt_key_00( WBTLIST_MAIN_WORK* wk )
 			//
 			break;
 		
-		// メッセージ表示待ち(きめセリフまち)
+		// メッセージ表示待ち
 		case STEP_INIT+10:
 			// メッセージ待ち
 			if( wbt_main_meswin( wk ) == FALSE ){
@@ -2391,12 +2391,12 @@ static s32 wbt_chk_meswin( WBTLIST_MAIN_WORK* wk )
 		// 1回戦だけ特別(1文章のみ表示)
 		wk->MesFlag = FLG_MES_1ST;
 		if(wk->DispCount == 0){
-			// 1回目 => 「決めせりふ」
+			// 1回目 => 「トーナメント名、ルール」
 			mesid = wbt_mes_gmm_tbl[4*wk->Mode+2];
 			wk->MesFlag |= FLG_MES_EX1;
 		}
 		else if(wk->DispCount == 1){
-			// 2回目 => 「トーナメント名、ルール」
+			// 2回目 => 「決めセリフ」
 			mesid = wbt_mes_gmm_tbl[4*wk->Mode+3];
 			wk->MesFlag |= FLG_MES_EX2;
 		}

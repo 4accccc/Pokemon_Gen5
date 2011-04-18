@@ -40,6 +40,8 @@
 //アプリ共通素材
 #include "app/app_menu_common.h"
 
+#include "system/tr2dgra.h"
+
 // サウンド
 #include "sound/pm_sndsys.h"
 
@@ -111,12 +113,14 @@ enum{
 enum{
 	WIN_RECORD_CANVAS_MAXNUM 	= 1,		// canvas
 	WIN_RECORD_BMPOAM_MAXNUM	= 8,		// bmpoam
-	WIN_RECORD_EMPTY_MAXNUM		= 13*2,		// empty
+	WIN_RECORD_EMPTY_MAXNUM		= 14*2,		// empty
 	//
 	WIN_RECORD_CMN_OBJ_MAXNUM	= 4,		// common(obj)
 	WIN_RECORD_OBJ_MAXNUM		= 5,		// obj
 	//
 	WIN_RECORD_BGNUM_MAXNUM		= 8,		// bg
+	//
+	WIN_RECORD_UP_OBJ_MAXNUM	= 1,		// obj(up)
 };
 
 
@@ -130,6 +134,10 @@ enum{
 	RESID_OBJ_PLT,							// パレット
 	RESID_OBJ_CHR,							// キャラ
 	RESID_OBJ_CEL,							// セルアニメ
+	// 通常(up)
+	RESID_UP_OBJ_PLT,						// パレット
+	RESID_UP_OBJ_CHR,						// キャラ
+	RESID_UP_OBJ_CEL,						// セルアニメ
 	//
 	RESID_OBJ_MAX,
 };
@@ -148,8 +156,10 @@ enum
 
 // clwork
 enum{
-	CLWKMODE_NORMAL = 0,
-	CLWKMODE_CMN,
+	CLWKMODE_NORMAL = 0,					// 通常(down)
+	CLWKMODE_CMN,							// 共通(down)
+	//
+	CLWKMODE_UP,							// トレーナー(up)
 };
 
 // empty
@@ -200,7 +210,7 @@ enum{
 	TMT_MAX,
 };
 
-// CLWK
+// CLWK(下画面共通)
 enum{
 	CLWKID_CMN_LEFT = 0,	// 左
 	CLWKID_CMN_RIGHT,		// 右
@@ -224,6 +234,13 @@ enum{
 	//
 	CMN_CROSS_ON_SEQ	= 8,	// ×オン
 	CMN_RETURN_ON_SEQ	= 9,	// 戻るオン
+};
+
+// CLWK(up)
+enum{
+	CLWKID_UP_TRAINER = 0,		// トレーナー
+	//
+	CLWKID_UP_MAX,
 };
 
 //-------------------
@@ -275,6 +292,7 @@ typedef struct
 	// 通常
 	GFL_CLWK	*clwk[WIN_RECORD_OBJ_MAXNUM];			// CLWK
 	//
+	GFL_CLWK	*up_clwk[WIN_RECORD_UP_OBJ_MAXNUM];		// CLWK(up)
 } WIN_RECORD_OBJ_WORK;
 
 //--------------------------------------------------------------
@@ -307,6 +325,7 @@ typedef struct
 	s32						TopNum;							// 先頭の番号
 	s32						MaxNum;							// 個数
 	u32						Flag;							// フラグ
+	s32						TrainerId;						// トレーナーID
 	s32						CountBuffer[TMT_MAX];			// カウント
 	//
 	s16						*EmptyBuffer;					// 座標用のバッファ(必ず破棄すること)
@@ -470,6 +489,26 @@ static const WIN_RECORD_OBJ_DATA wr_obj_cmn_tbl[] = {
 	{ 5,	0x30,	2,	1,	0,	1,	8,	0,},		// 右マーク
 	{ 0,	0x30,	2,	1,	0,	1,	9,	0,},		// ×マーク
 	{ 1,	0x30,	2,	1,	0,	1, 10,	0,},		// 戻るマーク
+
+	{ 0xff, 0, 0, 0, 0, 0, 0, 0,}, // end code
+};
+
+//------------------
+// OBJの情報(up)
+//------------------
+// 情報
+static const s16 wr_obj_up_itbl[] = {
+	RESID_UP_OBJ_PLT,
+	RESID_UP_OBJ_CHR,
+	RESID_UP_OBJ_CEL,
+	//
+	WIN_RECORD_UP_OBJ_MAXNUM,
+	2,
+};
+
+// OBJのテーブルデータ(up)
+static const WIN_RECORD_OBJ_DATA wr_obj_up_tbl[] = {
+	{ 0,	0x30,	2,	1,	0,	1,	13,	0,},		// トレーナー
 
 	{ 0xff, 0, 0, 0, 0, 0, 0, 0,}, // end code
 };
@@ -651,6 +690,7 @@ static void wr_init_bg( WIN_RECORD_MAIN_WORK* wk );
 static void wr_init_obj_clwk( WIN_RECORD_MAIN_WORK* wk, const s32 drawtype, const WIN_RECORD_OBJ_DATA *obj_adr, const s16 *info_adr );
 static void wr_init_obj_res( WIN_RECORD_MAIN_WORK* wk, const s32 drawtype, const s16 *info_adr );
 static void wr_init_obj_res_cmn( WIN_RECORD_MAIN_WORK* wk, const s32 drawtype );
+static void wr_init_obj_res_up( WIN_RECORD_MAIN_WORK* wk, const s32 drawtype, const s32 id );
 static void wr_init_obj( WIN_RECORD_MAIN_WORK* wk );
 static void wr_exit_obj( WIN_RECORD_MAIN_WORK* wk );
 static void wr_chg_objseq( WIN_RECORD_MAIN_WORK *wk, const s32 wmode, const s32 wnum, const s32 seq );
@@ -889,11 +929,10 @@ static void wr_init( WIN_RECORD_MAIN_WORK* wk )
 	// 上、下画面をまとめて処理
 	wk->Step 		= STEP_INIT;
 	wk->DebugFlag	= 0;
-//	wk->Mode		= MODE_LV2;
-//	wk->Mode		= MODE_LV1;
-	wk->Mode		= wk->Param->status;
+	wk->Mode		= wk->Param->status;	// 外部から
 	wk->TopNum		= 0;
 	wk->Flag		= 0;
+	wk->TrainerId	= 0;					// トレーナーID
 	//
 	// カウント表示用バッファ
 	for(i=0;i<TMT_MAX;i++){
@@ -1181,10 +1220,14 @@ static void wr_init_obj_clwk( WIN_RECORD_MAIN_WORK* wk, const s32 drawtype, cons
 	buf[4] = iadr[4];		// mode(0:通常、1:cmn)
 	//
 	// アドレスセット
-	if(buf[4] == 1){		// cmn
-		clwk = &wk->wk_obj.cmn_clwk[0];
-	}else{					// 通常
+	if(buf[4] == CLWKMODE_NORMAL){			// 通常
 		clwk = &wk->wk_obj.clwk[0];
+	}
+	else if(buf[4] == CLWKMODE_CMN){		// cmn
+		clwk = &wk->wk_obj.cmn_clwk[0];
+	}
+	else{									// up
+		clwk = &wk->wk_obj.up_clwk[0];
 	}
 	
 	for(i=0;i<buf[3];i++){
@@ -1297,6 +1340,28 @@ static void wr_init_obj_res_cmn( WIN_RECORD_MAIN_WORK* wk, const s32 drawtype )
 
 //-----------------------------------------------------------------------------
 /**
+ *	@brief  OBJ初期化(res up)(トレーナーデータ専用)
+ *
+ *	@param	WIN_RECORD_MAIN_WORK* wk
+ *	@param	const s32			drawtype
+ *	@param	const s32			id
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void wr_init_obj_res_up( WIN_RECORD_MAIN_WORK* wk, const s32 drawtype, const s32 id )
+{
+	ARCHANDLE*	p_handle = TR2DGRA_OpenHandle( wk->heapID );
+	//
+	wk->wk_obj.res[ RESID_UP_OBJ_PLT ] = TR2DGRA_OBJ_PLTT_Register( p_handle, id, drawtype, 0, wk->heapID );
+	wk->wk_obj.res[ RESID_UP_OBJ_CHR ] = TR2DGRA_OBJ_CGR_Register(  p_handle, id, drawtype, wk->heapID );
+	wk->wk_obj.res[ RESID_UP_OBJ_CEL ] = TR2DGRA_OBJ_CELLANM_Register( id, APP_COMMON_MAPPING_32K, drawtype, wk->heapID );
+	//
+	GFL_ARC_CloseDataHandle( p_handle );
+}
+
+//-----------------------------------------------------------------------------
+/**
  *	@brief  OBJ初期化まとめ
  *
  *	@param	WIN_RECORD_MAIN_WORK* wk
@@ -1311,10 +1376,14 @@ static void wr_init_obj( WIN_RECORD_MAIN_WORK* wk )
 	wr_init_obj_res( wk, CLSYS_DRAW_MAIN, &wr_obj_main_info_tbl[0] );
 	// リソース読み込み(cmn)
 	wr_init_obj_res_cmn( wk, CLSYS_DRAW_MAIN );
+	// リソース読み込み(up)
+	wr_init_obj_res_up( wk, CLSYS_DRAW_SUB, wk->TrainerId );
 	// CLWK登録(通常)
 	wr_init_obj_clwk( wk, CLSYS_DRAW_MAIN, &wr_obj_tbl[0], &wr_obj_main_itbl[0] );
 	// CLWK登録(cmn)
 	wr_init_obj_clwk( wk, CLSYS_DRAW_MAIN, &wr_obj_cmn_tbl[0], &wr_obj_cmn_itbl[0] );
+	// CLWK登録(up)
+	wr_init_obj_clwk( wk, CLSYS_DRAW_SUB, &wr_obj_up_tbl[0], &wr_obj_up_itbl[0] );
 	//
 	// BmpOAM初期化
 	wk->BmpOamSys = BmpOam_Init( wk->heapID, p_clunit );
@@ -1342,6 +1411,9 @@ static void wr_exit_obj( WIN_RECORD_MAIN_WORK* wk )
 	for(i=0;i<WIN_RECORD_CMN_OBJ_MAXNUM;i++){
 		GFL_CLACT_WK_Remove( wk->wk_obj.cmn_clwk[i] );
 	}
+	for(i=0;i<WIN_RECORD_UP_OBJ_MAXNUM;i++){
+		GFL_CLACT_WK_Remove( wk->wk_obj.up_clwk[i] );
+	}
 	//リソース破棄 
 	GFL_CLGRP_PLTT_Release( wk->wk_obj.res[RESID_OBJ_PLT] );
 	GFL_CLGRP_CGR_Release(  wk->wk_obj.res[RESID_OBJ_CHR] );
@@ -1350,6 +1422,10 @@ static void wr_exit_obj( WIN_RECORD_MAIN_WORK* wk )
 	GFL_CLGRP_PLTT_Release( wk->wk_obj.res[RESID_CMN_OBJ_PLT] );
 	GFL_CLGRP_CGR_Release(  wk->wk_obj.res[RESID_CMN_OBJ_CHR] );
 	GFL_CLGRP_CELLANIM_Release( wk->wk_obj.res[RESID_CMN_OBJ_CEL] );
+	//リソース破棄 
+	GFL_CLGRP_PLTT_Release( wk->wk_obj.res[RESID_UP_OBJ_PLT] );
+	GFL_CLGRP_CGR_Release(  wk->wk_obj.res[RESID_UP_OBJ_CHR] );
+	GFL_CLGRP_CELLANIM_Release( wk->wk_obj.res[RESID_UP_OBJ_CEL] );
 	//
 	// BmpOAM後処理
 	for(i=0;i<WIN_RECORD_BMPOAM_MAXNUM;i++){
@@ -1381,7 +1457,8 @@ static void wr_chg_objseq( WIN_RECORD_MAIN_WORK *wk, const s32 wmode, const s32 
 		}
 		GFL_CLACT_WK_SetAnmSeq( wk->wk_obj.clwk[wnum], seq );
 		GFL_CLACT_WK_SetAutoAnmFlag( wk->wk_obj.clwk[wnum], TRUE );
-	}else{
+	}
+	else if(wmode == CLWKMODE_CMN){			// 共通
 		if(wnum >= CLWKID_CMN_MAX){
 			OS_Printf("cmn obj max error:%d\n",wnum);
 			return;
@@ -1389,6 +1466,15 @@ static void wr_chg_objseq( WIN_RECORD_MAIN_WORK *wk, const s32 wmode, const s32 
 		GFL_CLACT_WK_SetAnmSeq( wk->wk_obj.cmn_clwk[wnum], seq );
 		GFL_CLACT_WK_SetAutoAnmFlag( wk->wk_obj.cmn_clwk[wnum], TRUE );
 	}
+	else if(wmode == CLWKMODE_UP){			// 上画面
+		if(wnum >= CLWKID_UP_MAX){
+			OS_Printf("up obj max error:%d\n",wnum);
+			return;
+		}
+		GFL_CLACT_WK_SetAnmSeq( wk->wk_obj.up_clwk[wnum], seq );
+		GFL_CLACT_WK_SetAutoAnmFlag( wk->wk_obj.up_clwk[wnum], TRUE );
+	}
+	
 }
 
 //-----------------------------------------------------------------------------
@@ -1406,18 +1492,26 @@ static void wr_chg_objseq( WIN_RECORD_MAIN_WORK *wk, const s32 wmode, const s32 
 static void wr_set_obj_visible( WIN_RECORD_MAIN_WORK *wk, const s32 wmode, const s32 wnum, const BOOL bflg )
 {
 	// 表示/非表示
-	if(wmode == CLWKMODE_NORMAL){
+	if(wmode == CLWKMODE_NORMAL){		// 通常
 		if(wnum >= CLWKID_MAX){
 			OS_Printf("obj max error:%d\n",wnum);
 			return;
 		}
 		GFL_CLACT_WK_SetDrawEnable(  wk->wk_obj.clwk[wnum], bflg );
-	}else{
+	}
+	else if(wmode == CLWKMODE_CMN){		// 共通
 		if(wnum >= CLWKID_CMN_MAX){
 			OS_Printf("cmn obj max error:%d\n",wnum);
 			return;
 		}
 		GFL_CLACT_WK_SetDrawEnable(  wk->wk_obj.cmn_clwk[wnum], bflg );
+	}
+	else if(wmode == CLWKMODE_UP){		// up
+		if(wnum >= CLWKID_UP_MAX){
+			OS_Printf("up obj max error:%d\n",wnum);
+			return;
+		}
+		GFL_CLACT_WK_SetDrawEnable(  wk->wk_obj.up_clwk[wnum], bflg );
 	}
 }
 
@@ -1437,7 +1531,7 @@ static BOOL wr_is_anime_end( WIN_RECORD_MAIN_WORK *wk, const s32 wmode, const s3
 	BOOL	bflg=TRUE;
 	
 	// 終了判定らしい
-	if(wmode == CLWKMODE_NORMAL){
+	if(wmode == CLWKMODE_NORMAL){		// 通常
 		if(wnum >= CLWKID_MAX){
 			OS_Printf("obj max error:%d\n",wnum);
 			return( FALSE );
@@ -1445,12 +1539,22 @@ static BOOL wr_is_anime_end( WIN_RECORD_MAIN_WORK *wk, const s32 wmode, const s3
 		if( GFL_CLACT_WK_CheckAnmActive( wk->wk_obj.clwk[wnum] ) == FALSE ){
 			bflg = FALSE;
 		}
-	}else{
+	}
+	else if(wmode == CLWKMODE_CMN){		// 共通
 		if(wnum >= CLWKID_CMN_MAX){
 			OS_Printf("cmn obj max error:%d\n",wnum);
 			return( FALSE );
 		}
 		if( GFL_CLACT_WK_CheckAnmActive( wk->wk_obj.cmn_clwk[wnum] ) == FALSE ){
+			bflg = FALSE;
+		}
+	}
+	else if(wmode == CLWKMODE_UP){		// up
+		if(wnum >= CLWKID_UP_MAX){
+			OS_Printf("up obj max error:%d\n",wnum);
+			return( FALSE );
+		}
+		if( GFL_CLACT_WK_CheckAnmActive( wk->wk_obj.up_clwk[wnum] ) == FALSE ){
 			bflg = FALSE;
 		}
 	}
