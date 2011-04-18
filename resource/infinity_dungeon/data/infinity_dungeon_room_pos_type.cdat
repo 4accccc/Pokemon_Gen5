@@ -127,7 +127,7 @@ static const INF_ROOM_SET_TR_PARAM sc_room_tr_param[] = {
   { // INF_ROOM_POS_TYPE_M_1
     3 ,ROOM_TYPE_DEFAULT ,
     { 
-      { INF_MOVE_CODE_TYPE_STOP2 ,6 ,5 ,}, 
+      { INF_MOVE_CODE_TYPE_STOP2 ,6 ,7 ,}, 
 
       { INF_MOVE_CODE_TYPE_ROUND5 ,9 ,4 ,}, 
 
