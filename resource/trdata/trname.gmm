@@ -3893,12 +3893,12 @@
 		<language name="JPN_KANJI" width="216">ルー</language>
 	</row>
 
-	<row id="breederm_04">
+	<row id="tanpan_20">
 		<language name="JPN" width="216">ソウタ</language>
 		<language name="JPN_KANJI" width="216">ソウタ</language>
 	</row>
 
-	<row id="breederw_04">
+	<row id="mini_16">
 		<language name="JPN" width="216">マキ</language>
 		<language name="JPN_KANJI" width="216">マキ</language>
 	</row>
@@ -4006,6 +4006,96 @@
 	<row id="bchamp2_2_01">
 		<language name="JPN" width="216">１００Ｂ</language>
 		<language name="JPN_KANJI" width="216">１００Ｂ</language>
+	</row>
+
+	<row id="dpleader1_01">
+		<language name="JPN" width="216">ヒョウタ</language>
+		<language name="JPN_KANJI" width="216">ヒョウタ</language>
+	</row>
+
+	<row id="dpleader2_01">
+		<language name="JPN" width="216">ナタネ</language>
+		<language name="JPN_KANJI" width="216">ナタネ</language>
+	</row>
+
+	<row id="dpleader3_01">
+		<language name="JPN" width="216">メリッサ</language>
+		<language name="JPN_KANJI" width="216">メリッサ</language>
+	</row>
+
+	<row id="dpleader4_01">
+		<language name="JPN" width="216">スモモ</language>
+		<language name="JPN_KANJI" width="216">スモモ</language>
+	</row>
+
+	<row id="dpleader5_01">
+		<language name="JPN" width="216">マキシ</language>
+		<language name="JPN_KANJI" width="216">マキシ</language>
+	</row>
+
+	<row id="dpleader6_01">
+		<language name="JPN" width="216">トウガン</language>
+		<language name="JPN_KANJI" width="216">トウガン</language>
+	</row>
+
+	<row id="dpleader7_01">
+		<language name="JPN" width="216">スズナ</language>
+		<language name="JPN_KANJI" width="216">スズナ</language>
+	</row>
+
+	<row id="dpleader8_01">
+		<language name="JPN" width="216">デンジ</language>
+		<language name="JPN_KANJI" width="216">デンジ</language>
+	</row>
+
+	<row id="rgchampion_01">
+		<language name="JPN" width="216">グリーン</language>
+		<language name="JPN_KANJI" width="216">グリーン</language>
+	</row>
+
+	<row id="gschampion_01">
+		<language name="JPN" width="216">ワタル</language>
+		<language name="JPN_KANJI" width="216">ワタル</language>
+	</row>
+
+	<row id="rschampion_01">
+		<language name="JPN" width="216">ダイゴ</language>
+		<language name="JPN_KANJI" width="216">ダイゴ</language>
+	</row>
+
+	<row id="echampion_01">
+		<language name="JPN" width="216">ミクリ</language>
+		<language name="JPN_KANJI" width="216">ミクリ</language>
+	</row>
+
+	<row id="worker2_18">
+		<language name="JPN" width="216">マサヒロ</language>
+		<language name="JPN_KANJI" width="216">マサヒロ</language>
+	</row>
+
+	<row id="worker2_19">
+		<language name="JPN" width="216">ゴーディ</language>
+		<language name="JPN_KANJI" width="216">ゴーディ</language>
+	</row>
+
+	<row id="worker2_20">
+		<language name="JPN" width="216">ケンスケ</language>
+		<language name="JPN_KANJI" width="216">ケンスケ</language>
+	</row>
+
+	<row id="worker2_21">
+		<language name="JPN" width="216">アンガス</language>
+		<language name="JPN_KANJI" width="216">アンガス</language>
+	</row>
+
+	<row id="worker2_22">
+		<language name="JPN" width="216">ミツハル</language>
+		<language name="JPN_KANJI" width="216">ミツハル</language>
+	</row>
+
+	<row id="worker2_23">
+		<language name="JPN" width="216">ケイジ</language>
+		<language name="JPN_KANJI" width="216">ケイジ</language>
 	</row>
 
 	<flowchart-group-list>

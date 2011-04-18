@@ -30,7 +30,7 @@ static	const	u8	TrTypeSexTable[]={
 	PTL_SEX_FEMALE,		//ふたごちゃん
 	PTL_SEX_MALE,		//ポケモンブリーダー♂
 	PTL_SEX_FEMALE,		//ポケモンブリーダー♀
-	PTL_SEX_FEMALE,		//ポケモントレーナー2222
+	PTL_SEX_FEMALE,		//ポケモントレーナー22222
 	PTL_SEX_MALE,		//ジムリーダー3
 	PTL_SEX_FEMALE,		//ジムリーダー44
 	PTL_SEX_MALE,		//ジムリーダー55
@@ -65,7 +65,7 @@ static	const	u8	TrTypeSexTable[]={
 	PTL_SEX_MALE,		//カラテおう
 	PTL_SEX_MALE,		//けんきゅういん♂
 	PTL_SEX_MALE,		//サッカーせんしゅ
-	PTL_SEX_MALE,		//ポケモントレーナー7777
+	PTL_SEX_MALE,		//ポケモントレーナー77777
 	PTL_SEX_FEMALE,		//ジムリーダー8A
 	PTL_SEX_MALE,		//ジムリーダー8B
 	PTL_SEX_MALE,		//スキンヘッズ
@@ -100,7 +100,7 @@ static	const	u8	TrTypeSexTable[]={
 	PTL_SEX_MALE,		//おまわりさん
 	PTL_SEX_FEMALE,		//メイド
 	PTL_SEX_MALE,		//サブウェイマスター（BCHAMP）
-	PTL_SEX_MALE,		//チャンピオン
+	PTL_SEX_MALE,		//ポケモントレーナー（CHAMPION）
 	PTL_SEX_MALE,		//サイクリング♂
 	PTL_SEX_FEMALE,		//サイクリング♀
 	PTL_SEX_MALE,		//バイクずき
@@ -131,31 +131,31 @@ static	const	u8	TrTypeSexTable[]={
 	PTL_SEX_MALE,		//ジムリーダー55
 	PTL_SEX_MALE,		//ジムリーダー7
 	PTL_SEX_MALE,		//ジムリーダー8
-	PTL_SEX_MALE,		//ポケモントレーナー1111
-	PTL_SEX_FEMALE,		//ポケモントレーナー2222
-	PTL_SEX_MALE,		//ポケモントレーナー333
-	PTL_SEX_FEMALE,		//ポケモントレーナー444
-	PTL_SEX_FEMALE,		//ポケモントレーナー555
-	PTL_SEX_MALE,		//ポケモントレーナー666
-	PTL_SEX_MALE,		//ポケモントレーナー7777
-	PTL_SEX_MALE,		//ポケモントレーナー1111
-	PTL_SEX_MALE,		//ポケモントレーナー2222
-	PTL_SEX_FEMALE,		//ポケモントレーナー333
-	PTL_SEX_MALE,		//ポケモントレーナー444
-	PTL_SEX_MALE,		//ポケモントレーナー555
-	PTL_SEX_FEMALE,		//ポケモントレーナー666
-	PTL_SEX_MALE,		//ポケモントレーナー7777
-	PTL_SEX_FEMALE,		//ポケモントレーナー88
+	PTL_SEX_MALE,		//ポケモントレーナー11111
+	PTL_SEX_FEMALE,		//ポケモントレーナー22222
+	PTL_SEX_MALE,		//ポケモントレーナー3333
+	PTL_SEX_FEMALE,		//ポケモントレーナー4444
+	PTL_SEX_FEMALE,		//ポケモントレーナー5555
+	PTL_SEX_MALE,		//ポケモントレーナー6666
+	PTL_SEX_MALE,		//ポケモントレーナー77777
+	PTL_SEX_MALE,		//ポケモントレーナー11111
+	PTL_SEX_MALE,		//ポケモントレーナー22222
+	PTL_SEX_FEMALE,		//ポケモントレーナー3333
+	PTL_SEX_MALE,		//ポケモントレーナー4444
+	PTL_SEX_MALE,		//ポケモントレーナー5555
+	PTL_SEX_FEMALE,		//ポケモントレーナー6666
+	PTL_SEX_MALE,		//ポケモントレーナー77777
+	PTL_SEX_FEMALE,		//ポケモントレーナー888
 	PTL_SEX_FEMALE,		//ポケモントレーナー9
-	PTL_SEX_FEMALE,		//ポケモントレーナー1111
-	PTL_SEX_MALE,		//ポケモントレーナー2222
-	PTL_SEX_MALE,		//ポケモントレーナー333
-	PTL_SEX_FEMALE,		//ポケモントレーナー444
-	PTL_SEX_MALE,		//ポケモントレーナー555
-	PTL_SEX_FEMALE,		//ポケモントレーナー666
-	PTL_SEX_MALE,		//ポケモントレーナー7777
-	PTL_SEX_FEMALE,		//ポケモントレーナー88
-	PTL_SEX_MALE,		//ポケモントレーナー1111
+	PTL_SEX_FEMALE,		//ポケモントレーナー11111
+	PTL_SEX_MALE,		//ポケモントレーナー22222
+	PTL_SEX_MALE,		//ポケモントレーナー3333
+	PTL_SEX_FEMALE,		//ポケモントレーナー4444
+	PTL_SEX_MALE,		//ポケモントレーナー5555
+	PTL_SEX_FEMALE,		//ポケモントレーナー6666
+	PTL_SEX_MALE,		//ポケモントレーナー77777
+	PTL_SEX_FEMALE,		//ポケモントレーナー888
+	PTL_SEX_MALE,		//ポケモントレーナー11111
 	PTL_SEX_MALE,		//ポケモントレーナー（SWRIVAL）
 	PTL_SEX_FEMALE,		//ギタリスト
 	PTL_SEX_MALE,		//むげんボスＷ（BREEDERM_1）
@@ -178,6 +178,18 @@ static	const	u8	TrTypeSexTable[]={
 	PTL_SEX_FEMALE,		//むげんボスＢ（VETERANW_4）
 	PTL_SEX_MALE,		//むげんボスＷ（BCHAMP2_1）
 	PTL_SEX_MALE,		//むげんボスＢ（BCHAMP2_2）
+	PTL_SEX_MALE,		//ポケモントレーナー11111
+	PTL_SEX_FEMALE,		//ポケモントレーナー22222
+	PTL_SEX_FEMALE,		//ポケモントレーナー3333
+	PTL_SEX_FEMALE,		//ポケモントレーナー4444
+	PTL_SEX_MALE,		//ポケモントレーナー5555
+	PTL_SEX_MALE,		//ポケモントレーナー6666
+	PTL_SEX_FEMALE,		//ポケモントレーナー77777
+	PTL_SEX_MALE,		//ポケモントレーナー888
+	PTL_SEX_MALE,		//ポケモントレーナー（RGCHAMPION）
+	PTL_SEX_MALE,		//ポケモントレーナー（GSCHAMPION）
+	PTL_SEX_MALE,		//ポケモントレーナー（RSCHAMPION）
+	PTL_SEX_MALE,		//ポケモントレーナー（ECHAMPION）
 	PTL_SEX_MALE,		//男主人公（シューター）
 	PTL_SEX_FEMALE,	//女主人公（シューター）
 };

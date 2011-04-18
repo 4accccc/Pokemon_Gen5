@@ -879,8 +879,8 @@
 	</row>
 
 	<row id="MSG_TRTYPE_CHAMPION">
-		<language name="JPN" width="216">チャンピオン</language>
-		<language name="JPN_KANJI" width="216">チャンピオン</language>
+		<language name="JPN" width="216">ポケモントレーナー</language>
+		<language name="JPN_KANJI" width="216">ポケモントレーナー</language>
 	</row>
 
 	<row id="MSG_TRTYPE_CYCLINGM">
@@ -1266,6 +1266,66 @@
 	<row id="MSG_TRTYPE_BCHAMP2_2">
 		<language name="JPN" width="216">むげんボスＢ</language>
 		<language name="JPN_KANJI" width="216">むげんボスＢ</language>
+	</row>
+
+	<row id="MSG_TRTYPE_DPLEADER1">
+		<language name="JPN" width="216">ポケモントレーナー</language>
+		<language name="JPN_KANJI" width="216">ポケモントレーナー</language>
+	</row>
+
+	<row id="MSG_TRTYPE_DPLEADER2">
+		<language name="JPN" width="216">ポケモントレーナー</language>
+		<language name="JPN_KANJI" width="216">ポケモントレーナー</language>
+	</row>
+
+	<row id="MSG_TRTYPE_DPLEADER3">
+		<language name="JPN" width="216">ポケモントレーナー</language>
+		<language name="JPN_KANJI" width="216">ポケモントレーナー</language>
+	</row>
+
+	<row id="MSG_TRTYPE_DPLEADER4">
+		<language name="JPN" width="216">ポケモントレーナー</language>
+		<language name="JPN_KANJI" width="216">ポケモントレーナー</language>
+	</row>
+
+	<row id="MSG_TRTYPE_DPLEADER5">
+		<language name="JPN" width="216">ポケモントレーナー</language>
+		<language name="JPN_KANJI" width="216">ポケモントレーナー</language>
+	</row>
+
+	<row id="MSG_TRTYPE_DPLEADER6">
+		<language name="JPN" width="216">ポケモントレーナー</language>
+		<language name="JPN_KANJI" width="216">ポケモントレーナー</language>
+	</row>
+
+	<row id="MSG_TRTYPE_DPLEADER7">
+		<language name="JPN" width="216">ポケモントレーナー</language>
+		<language name="JPN_KANJI" width="216">ポケモントレーナー</language>
+	</row>
+
+	<row id="MSG_TRTYPE_DPLEADER8">
+		<language name="JPN" width="216">ポケモントレーナー</language>
+		<language name="JPN_KANJI" width="216">ポケモントレーナー</language>
+	</row>
+
+	<row id="MSG_TRTYPE_RGCHAMPION">
+		<language name="JPN" width="216">ポケモントレーナー</language>
+		<language name="JPN_KANJI" width="216">ポケモントレーナー</language>
+	</row>
+
+	<row id="MSG_TRTYPE_GSCHAMPION">
+		<language name="JPN" width="216">ポケモントレーナー</language>
+		<language name="JPN_KANJI" width="216">ポケモントレーナー</language>
+	</row>
+
+	<row id="MSG_TRTYPE_RSCHAMPION">
+		<language name="JPN" width="216">ポケモントレーナー</language>
+		<language name="JPN_KANJI" width="216">ポケモントレーナー</language>
+	</row>
+
+	<row id="MSG_TRTYPE_ECHAMPION">
+		<language name="JPN" width="216">ポケモントレーナー</language>
+		<language name="JPN_KANJI" width="216">ポケモントレーナー</language>
 	</row>
 
 	<row id="MSG_TRTYPE_HERO_S">
