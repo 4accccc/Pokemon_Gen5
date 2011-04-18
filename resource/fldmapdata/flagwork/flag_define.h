@@ -389,8 +389,8 @@
 #define FE_C12GYM_OPEN                     373 /* 0x0175 スワンノーマルジム：営業フラグ */
 #define FE_D22R0101_BREEEDERW_01           374 /* 0x0176 スワン牧場：BREEDERWクリア後会話フラグ */
 #define FE_C12GYM0101_ITEMGET_01           375 /* 0x0177 スワン：ノーマルジムアイテム入手フラグ */
-		/* not used   376(0x0178) */
-		/* not used   377(0x0179) */
+#define FE_C13GYM_TRBTL1                   376 /* 0x0178 C13毒ジムトレーナーの対戦済みチェックフラグ（１人目） */
+#define FE_C13GYM_TRBTL2                   377 /* 0x0179 C13毒ジムトレーナーの対戦済みチェックフラグ（２人目） */
 		/* not used   378(0x017a) */
 		/* not used   379(0x017b) */
 		/* not used   380(0x017c) */
