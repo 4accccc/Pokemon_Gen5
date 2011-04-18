@@ -2149,11 +2149,41 @@ nsbtx_files/tex_set_in78.nsbtx: src_imd_files/in00_texset.imd src_imd_files/in78
 	@-$(TEX_MAG) -q -o marged_imd_files/tex_set_in78.imd src_imd_files/in00_texset.imd src_imd_files/in78_local_texset.imd src_imd_files/tex_griddmy.imd
 	@$(G3DCVTR) marged_imd_files/tex_set_in78.imd -o nsbtx_files/tex_set_in78.nsbtx -etex
 
-nsbtx_files/tex_set_in79.nsbtx: src_imd_files/in00_texset.imd src_imd_files/in79_local_texset.imd src_imd_files/tex_griddmy.imd
-	@echo src_imd_files/in00_texset.imd + src_imd_files/in79_local_texset.imd Å® nsbtx_files/tex_set_in79.nsbtx
-	@-rm marged_imd_files/tex_set_in79.imd
-	@-$(TEX_MAG) -q -o marged_imd_files/tex_set_in79.imd src_imd_files/in00_texset.imd src_imd_files/in79_local_texset.imd src_imd_files/tex_griddmy.imd
-	@$(G3DCVTR) marged_imd_files/tex_set_in79.imd -o nsbtx_files/tex_set_in79.nsbtx -etex
+nsbtx_files/tex_set_in79_0.nsbtx: src_imd_files/in00_texset.imd src_imd_files/in79_local_texset_0.imd src_imd_files/tex_griddmy.imd
+	@echo src_imd_files/in00_texset.imd + src_imd_files/in79_local_texset_0.imd Å® nsbtx_files/tex_set_in79_0.nsbtx
+	@-rm marged_imd_files/tex_set_in79_0.imd
+	@-$(TEX_MAG) -q -o marged_imd_files/tex_set_in79_0.imd src_imd_files/in00_texset.imd src_imd_files/in79_local_texset_0.imd src_imd_files/tex_griddmy.imd
+	@$(G3DCVTR) marged_imd_files/tex_set_in79_0.imd -o nsbtx_files/tex_set_in79_0.nsbtx -etex
+
+nsbtx_files/tex_set_in79_1.nsbtx: src_imd_files/in00_texset.imd src_imd_files/in79_local_texset_1.imd src_imd_files/tex_griddmy.imd
+	@echo src_imd_files/in00_texset.imd + src_imd_files/in79_local_texset_1.imd Å® nsbtx_files/tex_set_in79_1.nsbtx
+	@-rm marged_imd_files/tex_set_in79_1.imd
+	@-$(TEX_MAG) -q -o marged_imd_files/tex_set_in79_1.imd src_imd_files/in00_texset.imd src_imd_files/in79_local_texset_1.imd src_imd_files/tex_griddmy.imd
+	@$(G3DCVTR) marged_imd_files/tex_set_in79_1.imd -o nsbtx_files/tex_set_in79_1.nsbtx -etex
+
+nsbtx_files/tex_set_in79_2.nsbtx: src_imd_files/in00_texset.imd src_imd_files/in79_local_texset_2.imd src_imd_files/tex_griddmy.imd
+	@echo src_imd_files/in00_texset.imd + src_imd_files/in79_local_texset_2.imd Å® nsbtx_files/tex_set_in79_2.nsbtx
+	@-rm marged_imd_files/tex_set_in79_2.imd
+	@-$(TEX_MAG) -q -o marged_imd_files/tex_set_in79_2.imd src_imd_files/in00_texset.imd src_imd_files/in79_local_texset_2.imd src_imd_files/tex_griddmy.imd
+	@$(G3DCVTR) marged_imd_files/tex_set_in79_2.imd -o nsbtx_files/tex_set_in79_2.nsbtx -etex
+
+nsbtx_files/tex_set_in79_3.nsbtx: src_imd_files/in00_texset.imd src_imd_files/in79_local_texset_3.imd src_imd_files/tex_griddmy.imd
+	@echo src_imd_files/in00_texset.imd + src_imd_files/in79_local_texset_3.imd Å® nsbtx_files/tex_set_in79_3.nsbtx
+	@-rm marged_imd_files/tex_set_in79_3.imd
+	@-$(TEX_MAG) -q -o marged_imd_files/tex_set_in79_3.imd src_imd_files/in00_texset.imd src_imd_files/in79_local_texset_3.imd src_imd_files/tex_griddmy.imd
+	@$(G3DCVTR) marged_imd_files/tex_set_in79_3.imd -o nsbtx_files/tex_set_in79_3.nsbtx -etex
+
+nsbtx_files/tex_set_in79_4.nsbtx: src_imd_files/in00_texset.imd src_imd_files/in79_local_texset_4.imd src_imd_files/tex_griddmy.imd
+	@echo src_imd_files/in00_texset.imd + src_imd_files/in79_local_texset_4.imd Å® nsbtx_files/tex_set_in79_4.nsbtx
+	@-rm marged_imd_files/tex_set_in79_4.imd
+	@-$(TEX_MAG) -q -o marged_imd_files/tex_set_in79_4.imd src_imd_files/in00_texset.imd src_imd_files/in79_local_texset_4.imd src_imd_files/tex_griddmy.imd
+	@$(G3DCVTR) marged_imd_files/tex_set_in79_4.imd -o nsbtx_files/tex_set_in79_4.nsbtx -etex
+
+nsbtx_files/tex_set_in79_5.nsbtx: src_imd_files/in00_texset.imd src_imd_files/in79_local_texset_5.imd src_imd_files/tex_griddmy.imd
+	@echo src_imd_files/in00_texset.imd + src_imd_files/in79_local_texset_5.imd Å® nsbtx_files/tex_set_in79_5.nsbtx
+	@-rm marged_imd_files/tex_set_in79_5.imd
+	@-$(TEX_MAG) -q -o marged_imd_files/tex_set_in79_5.imd src_imd_files/in00_texset.imd src_imd_files/in79_local_texset_5.imd src_imd_files/tex_griddmy.imd
+	@$(G3DCVTR) marged_imd_files/tex_set_in79_5.imd -o nsbtx_files/tex_set_in79_5.nsbtx -etex
 
 nsbtx_files/tex_set_in80.nsbtx: src_imd_files/in00_texset.imd src_imd_files/in80_local_texset.imd src_imd_files/tex_griddmy.imd
 	@echo src_imd_files/in00_texset.imd + src_imd_files/in80_local_texset.imd Å® nsbtx_files/tex_set_in80.nsbtx
