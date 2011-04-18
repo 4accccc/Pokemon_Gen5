@@ -179,12 +179,16 @@ static void calcWBTResult( WBTRESULT * result,
   if ( pri_a == pri_b )
   { //優先度が同じ場合
     if ( aff_a == aff_b )
-    { //タイプ相性も同じ場合はランダム
+    { //タイプ相性も同じ場合は５：５のランダムで抽選
       result->upside_win = ( GFL_STD_Rand( context, 2 ) == 0 );
     }
     else
-    { //タイプ相性が高いほうが勝利
+    { //タイプ相性が高いほうが有利（７：３）に抽選
       result->upside_win = ( aff_a > aff_b );
+      if ( GFL_STD_Rand( context, 10 ) >= 7 )
+      {
+        result->upside_win = !(result->upside_win);
+      }
     }
   }
   else
