@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2011-04-17T16:12:24" source="in67_local_texset.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2011-04-18T10:16:49" source="in67_local_texset.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ohkubo_tomohiko" host="W00195" date="2011-04-17T16:12:24" source="in67_local_texset.mb"/>
+<original_create user="ohkubo_tomohiko" host="W00195" date="2011-04-18T10:16:49" source="in67_local_texset.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -848,12 +848,12 @@
 		path="C:/home/swan_data3d/field/in67/chip/tex/in67mat01.tga"
 	>
 		<bitmap size="64">
-			4420 4444 4444 4444 9940 9999 9999 9999
-			7792 7777 7777 7777 5673 5555 5555 5555
+			4420 4444 4444 4444 9942 9999 9999 9999
+			7794 7777 7777 7777 5673 5555 5555 5555
 			9573 5559 5555 5555 7573 5557 5555 5555
-			7573 9957 9999 9999 7573 7957 7777 7777
-			7573 7957 7777 7777 7573 7957 7777 5977
-			7573 7957 7777 5597 9573 9959 9999 5556
+			7573 7957 7777 7777 7573 7757 7777 7777
+			7573 7757 7777 7777 7573 7757 7777 5977
+			7573 7757 7777 5597 9573 7959 9777 5556
 			5673 5555 5555 5555 7773 7777 7777 7777
 			7748 7777 7777 7777 3381 3333 3333 3333
 		</bitmap>
