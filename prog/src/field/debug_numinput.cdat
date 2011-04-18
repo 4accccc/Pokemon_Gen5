@@ -411,4 +411,31 @@ static const DEBUG_NUMINPUT_LIST DNI_ResonanceResort[] = {
   { dni_resort_08, 6, &DNI_RResortBeaconDiv }, //リゾートビーコン拡張分割シンク
   { dni_resort_09, 7, &DNI_RResortBeaconDiv }, //リゾートビーコン拡張分割シンク
 };
+//////////////////////////////////////////////////////
+static const DEBUG_NUMINPUT_PARAM DNI_WBTSaveCounter =
+{
+  0, 9999, DebugGetWBTSaveCounter, DebugSetWBTSaveCounter,
+};
+static const DEBUG_NUMINPUT_LIST DNI_WBTSaveCount[] = {
+  //gmm_id, param, dni_param
+  { dni_wbtsave_normal,  WBTWIN_COUNT_POKETYPE_NORMAL,   &DNI_WBTSaveCounter },
+  { dni_wbtsave_kakutou, WBTWIN_COUNT_POKETYPE_KAKUTOU,  &DNI_WBTSaveCounter },
+  { dni_wbtsave_hikou,   WBTWIN_COUNT_POKETYPE_HIKOU,    &DNI_WBTSaveCounter },
+  { dni_wbtsave_doku,    WBTWIN_COUNT_POKETYPE_DOKU,     &DNI_WBTSaveCounter },
+  { dni_wbtsave_jimen,   WBTWIN_COUNT_POKETYPE_JIMEN,    &DNI_WBTSaveCounter },
+  { dni_wbtsave_iwa,     WBTWIN_COUNT_POKETYPE_IWA,      &DNI_WBTSaveCounter },
+  { dni_wbtsave_mushi,   WBTWIN_COUNT_POKETYPE_MUSHI,    &DNI_WBTSaveCounter },
+  { dni_wbtsave_ghost,   WBTWIN_COUNT_POKETYPE_GHOST,    &DNI_WBTSaveCounter },
+  { dni_wbtsave_hagane,  WBTWIN_COUNT_POKETYPE_HAGANE,   &DNI_WBTSaveCounter },
+  { dni_wbtsave_honoo,   WBTWIN_COUNT_POKETYPE_HONOO,    &DNI_WBTSaveCounter },
+  { dni_wbtsave_mizu,    WBTWIN_COUNT_POKETYPE_MIZU,     &DNI_WBTSaveCounter },
+  { dni_wbtsave_kusa,    WBTWIN_COUNT_POKETYPE_KUSA,     &DNI_WBTSaveCounter },
+  { dni_wbtsave_denki,   WBTWIN_COUNT_POKETYPE_DENKI,    &DNI_WBTSaveCounter },
+  { dni_wbtsave_esper,   WBTWIN_COUNT_POKETYPE_ESPER,    &DNI_WBTSaveCounter },
+  { dni_wbtsave_koori,   WBTWIN_COUNT_POKETYPE_KOORI,    &DNI_WBTSaveCounter },
+  { dni_wbtsave_dragon,  WBTWIN_COUNT_POKETYPE_DRAGON,   &DNI_WBTSaveCounter },
+  { dni_wbtsave_aku,     WBTWIN_COUNT_POKETYPE_AKU,      &DNI_WBTSaveCounter },
+  { dni_wbtsave_all,     WBTWIN_COUNT_ALLTOURNAMENT,     &DNI_WBTSaveCounter },
+  { dni_wbtsave_champ,   WBTWIN_COUNT_CHAMPION,          &DNI_WBTSaveCounter },
+};
 #endif  //PM_DEBUG

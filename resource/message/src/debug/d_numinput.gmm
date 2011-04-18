@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00170" date="2011-02-09T17:59:49"/>
+	<create user="tamada" host="W00253" date="2011-04-18T17:33:56"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -365,7 +365,7 @@
 		</language>
 	</columns>
 
-	<dialog left="-1205" top="145" right="-500" bottom="773" maximized="no" rayout="Vertical2">
+	<dialog left="6" top="97" right="711" bottom="717" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="412" top="136" right="940" bottom="658" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -1093,6 +1093,106 @@
 	<row id="dni_resort_09" back-color="#8080ff,,,,,,#8080ff,,,#8080ff,,,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="240">拡張分割フレーム８</language>
 		<language name="JPN_KANJI" width="240">拡張分割フレーム８</language>
+	</row>
+
+	<row id="dni_wbtsave_title" back-color="#80ffff,,,,,,#80ffff,,,#80ffff,,,#80ffff,,,#80ffff,,">
+		<language name="JPN" width="240">ＷＢＴセーブ</language>
+		<language name="JPN_KANJI" width="240">ＷＢＴセーブ</language>
+	</row>
+
+	<row id="dni_wbtsave_normal" back-color="#80ffff,,,,,,#80ffff,,,#80ffff,,,#80ffff,,,#80ffff,,">
+		<language name="JPN" width="240">タイプ：ノーマル</language>
+		<language name="JPN_KANJI" width="240">タイプ：ノーマル</language>
+	</row>
+
+	<row id="dni_wbtsave_kakutou" back-color="#80ffff,,,,,,#80ffff,,,#80ffff,,,#80ffff,,,#80ffff,,">
+		<language name="JPN" width="240">タイプ：格闘</language>
+		<language name="JPN_KANJI" width="240">タイプ：格闘</language>
+	</row>
+
+	<row id="dni_wbtsave_hikou" back-color="#80ffff,,,,,,#80ffff,,,#80ffff,,,#80ffff,,,#80ffff,,">
+		<language name="JPN" width="240">タイプ：飛行</language>
+		<language name="JPN_KANJI" width="240">タイプ：飛行</language>
+	</row>
+
+	<row id="dni_wbtsave_doku" back-color="#80ffff,,,,,,#80ffff,,,#80ffff,,,#80ffff,,,#80ffff,,">
+		<language name="JPN" width="240">タイプ：毒</language>
+		<language name="JPN_KANJI" width="240">タイプ：毒</language>
+	</row>
+
+	<row id="dni_wbtsave_jimen" back-color="#80ffff,,,,,,#80ffff,,,#80ffff,,,#80ffff,,,#80ffff,,">
+		<language name="JPN" width="240">タイプ：地面</language>
+		<language name="JPN_KANJI" width="240">タイプ：地面</language>
+	</row>
+
+	<row id="dni_wbtsave_iwa" back-color="#80ffff,,,,,,#80ffff,,,#80ffff,,,#80ffff,,,#80ffff,,">
+		<language name="JPN" width="240">タイプ：岩</language>
+		<language name="JPN_KANJI" width="240">タイプ：岩</language>
+	</row>
+
+	<row id="dni_wbtsave_mushi" back-color="#80ffff,,,,,,#80ffff,,,#80ffff,,,#80ffff,,,#80ffff,,">
+		<language name="JPN" width="240">タイプ：虫</language>
+		<language name="JPN_KANJI" width="240">タイプ：虫</language>
+	</row>
+
+	<row id="dni_wbtsave_ghost" back-color="#80ffff,,,,,,#80ffff,,,#80ffff,,,#80ffff,,,#80ffff,,">
+		<language name="JPN" width="240">タイプ：ゴースト</language>
+		<language name="JPN_KANJI" width="240">タイプ：ゴースト</language>
+	</row>
+
+	<row id="dni_wbtsave_hagane" back-color="#80ffff,,,,,,#80ffff,,,#80ffff,,,#80ffff,,,#80ffff,,">
+		<language name="JPN" width="240">タイプ：鋼</language>
+		<language name="JPN_KANJI" width="240">タイプ：鋼</language>
+	</row>
+
+	<row id="dni_wbtsave_honoo" back-color="#80ffff,,,,,,#80ffff,,,#80ffff,,,#80ffff,,,#80ffff,,">
+		<language name="JPN" width="240">タイプ：炎</language>
+		<language name="JPN_KANJI" width="240">タイプ：炎</language>
+	</row>
+
+	<row id="dni_wbtsave_mizu" back-color="#80ffff,,,,,,#80ffff,,,#80ffff,,,#80ffff,,,#80ffff,,">
+		<language name="JPN" width="240">タイプ：水</language>
+		<language name="JPN_KANJI" width="240">タイプ：水</language>
+	</row>
+
+	<row id="dni_wbtsave_kusa" back-color="#80ffff,,,,,,#80ffff,,,#80ffff,,,#80ffff,,,#80ffff,,">
+		<language name="JPN" width="240">タイプ：草</language>
+		<language name="JPN_KANJI" width="240">タイプ：草</language>
+	</row>
+
+	<row id="dni_wbtsave_denki" back-color="#80ffff,,,,,,#80ffff,,,#80ffff,,,#80ffff,,,#80ffff,,">
+		<language name="JPN" width="240">タイプ：電気</language>
+		<language name="JPN_KANJI" width="240">タイプ：電気</language>
+	</row>
+
+	<row id="dni_wbtsave_esper" back-color="#80ffff,,,,,,#80ffff,,,#80ffff,,,#80ffff,,,#80ffff,,">
+		<language name="JPN" width="240">タイプ：エスパー</language>
+		<language name="JPN_KANJI" width="240">タイプ：エスパー</language>
+	</row>
+
+	<row id="dni_wbtsave_koori" back-color="#80ffff,,,,,,#80ffff,,,#80ffff,,,#80ffff,,,#80ffff,,">
+		<language name="JPN" width="240">タイプ：氷</language>
+		<language name="JPN_KANJI" width="240">タイプ：氷</language>
+	</row>
+
+	<row id="dni_wbtsave_dragon" back-color="#80ffff,,,,,,#80ffff,,,#80ffff,,,#80ffff,,,#80ffff,,">
+		<language name="JPN" width="240">タイプ：ドラゴン</language>
+		<language name="JPN_KANJI" width="240">タイプ：ドラゴン</language>
+	</row>
+
+	<row id="dni_wbtsave_aku" back-color="#80ffff,,,,,,#80ffff,,,#80ffff,,,#80ffff,,,#80ffff,,">
+		<language name="JPN" width="240">タイプ：あく</language>
+		<language name="JPN_KANJI" width="240">タイプ：あく</language>
+	</row>
+
+	<row id="dni_wbtsave_all" back-color="#80ffff,,,,,,#80ffff,,,#80ffff,,,#80ffff,,,#80ffff,,">
+		<language name="JPN" width="240">オールトーナメント</language>
+		<language name="JPN_KANJI" width="240">オールトーナメント</language>
+	</row>
+
+	<row id="dni_wbtsave_champ" back-color="#80ffff,,,,,,#80ffff,,,#80ffff,,,#80ffff,,,#80ffff,,">
+		<language name="JPN" width="240">チャンピオン</language>
+		<language name="JPN_KANJI" width="240">チャンピオン</language>
 	</row>
 
 	<flowchart-group-list>

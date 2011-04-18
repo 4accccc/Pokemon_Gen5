@@ -231,6 +231,9 @@ static void DebugSetRResortBeaconFlag(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32
 static u32 DebugGetRResortBeaconDiv( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param );
 static void DebugSetRResortBeaconDiv(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value );
 
+//WBTセーブ
+static u32 DebugGetWBTSaveCounter( GAMESYS_WORK * gsys, GAMEDATA* gdata, u32 param );
+static void DebugSetWBTSaveCounter( GAMESYS_WORK * gsys, GAMEDATA* gdata, u32 param, u32 value );
 
 
 #include "debug_numinput.cdat"
@@ -323,6 +326,10 @@ static const DEBUG_NUMINPUT_INITIALIZER DATA_ResonanceResort  =
 {
   D_NINPUT_DATA_LIST, NELEMS( DNI_ResonanceResort ), DNI_ResonanceResort
 };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_WBTSave =
+{
+  D_NINPUT_DATA_LIST, NELEMS( DNI_WBTSaveCount), DNI_WBTSaveCount
+};
 
 /// 数値入力　メニューヘッダー
 static const FLDMENUFUNC_HEADER DATA_DNumInput_MenuFuncHeader =
@@ -375,6 +382,7 @@ static const DEBUG_MENU_LIST DATA_DNumInputMenu[] =
   { dni_palace_time_00, (void*)&DATA_PalaceTime, GFL_OVERLAY_BLANK_ID },
   { dni_ltvt_00, (void*)&DATA_LocalLivecaster, GFL_OVERLAY_BLANK_ID },
   { dni_resort_00, (void*)&DATA_ResonanceResort, GFL_OVERLAY_BLANK_ID },
+  { dni_wbtsave_title, (void*)&DATA_WBTSave, GFL_OVERLAY_BLANK_ID },
 };
 
 static const DEBUG_MENU_INITIALIZER DATA_DNumInput_MenuInitializer = {
@@ -1791,6 +1799,17 @@ static void DebugSetRResortBeaconDiv(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 
 {
   sc_extend_frame_max[ param ]  = value;
 }
-
+//=============================================================================
+//=============================================================================
+static u32 DebugGetWBTSaveCounter( GAMESYS_WORK * gsys, GAMEDATA* gdata, u32 param )
+{
+  WBTSAVE * wbtsave = GAMEDATA_GetWBTSave( gdata );
+  return WBTSAVE_GetWinCount( wbtsave, param );
+}
+static void DebugSetWBTSaveCounter( GAMESYS_WORK * gsys, GAMEDATA* gdata, u32 param, u32 value )
+{
+  WBTSAVE * wbtsave = GAMEDATA_GetWBTSave( gdata );
+  WBTSAVE_SetWinCount( wbtsave, param, value );
+}
 #endif  //PM_DEBUG
 
