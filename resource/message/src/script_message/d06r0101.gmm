@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-05T15:11:55"/>
+	<create user="matsumiya" host="W00224" date="2011-04-18T21:32:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1295" top="201" right="2000" bottom="829" maximized="no" rayout="Vertical2">
+	<dialog left="1300" top="169" right="2005" bottom="797" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -431,7 +431,7 @@
 ……人が　いなければ
 ボクの　理想の　場所だ▼
 さて　キミは　選ばれた……
-そういうと　驚くかい？[BE:09:速度コントロール:0][BE:09:速度コントロール:0]</language>
+そういうと　驚くかい？[BE:09:速度コントロール:0]</language>
 	</row>
 
 	<row id="msg_d06r0101_boss_11" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-02-16T21:38:40"/>
+	<create user="matsumiya" host="W00224" date="2011-04-18T21:31:56"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1300" top="229" right="2005" bottom="857" maximized="no" rayout="Vertical2">
+	<dialog left="1300" top="169" right="2005" bottom="797" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -549,7 +549,7 @@
 		<comment>ドラゴン技教え
 ・0＝技名</comment>
 		<attribute name="キャラ指定">システム</attribute>
-		<language name="JPN" width="256">[1:06:とくせい名:1]を
+		<language name="JPN" width="256">[1:07:わざ名:1]を
 わすれさせて　よろしいですね？</language>
 		<language name="JPN_KANJI" width="256">[1:07:わざ名:1]を
 忘れさせて　よろしいですね？</language>
