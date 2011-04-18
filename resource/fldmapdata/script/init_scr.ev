@@ -359,6 +359,9 @@ init_flags:
 	
 	//C12PC0101FPC‚Ì‹È‚ð‚Â‚ê‚Ä‚¯‹È‚ÉÝ’è
 	_FLAG_SET( SYS_FLAG_BGM_C12PC0101_GUIDE )
+	
+	//T06‚Ìƒƒ_ƒ‹‚¨‚â‚¶‚ð”ñ•\Ž¦
+	_FLAG_SET( FV_T06_SUNGLASSES_01 )
 
 }
 _RET

@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_c12gym0101.h"
-  //.include  "c12gym0101.h"
+  .include  "c12gym0101.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +19,205 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c12gym0101
+_EVENT_DATA    ev_c12gym0101_boy2_01
+_EVENT_DATA    ev_c12gym0101_woman2_01
+_EVENT_DATA    ev_c12gym0101_boy3_01
+_EVENT_DATA    ev_bg_c12gym0101_board_01
+_EVENT_DATA    ev_c12gym0101_girl3_01
 _EVENT_DATA_END
 
+//話しかけた方向取得変数
+DEFINE_LOCAL LWK_DIR
+DEFINE_LOCAL  LCW_POSX
+DEFINE_LOCAL  LCW_POSZ
+/**************************************************************/
+/*  ディフェンダーをくれる                         */
+/**************************************************************/
+EVENT_START ev_c12gym0101_boy2_01
+  _EASY_TALK_ITEM_EVENT(ITEM_DHIFENDAA, 1, FE_C12GYM0101_ITEMGET_01, msg_c12gym0101_boy3_01, msg_c12gym0101_boy3_02, msg_c12gym0101_boy3_02 )
+EVENT_END
 
 /**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
+/*  GIRL3_01                         */
 /**************************************************************/
-//ev_zone_c12gym0101:
-//  _END
+EVENT_START ev_c12gym0101_woman2_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12gym0101_woman2_01 )
+EVENT_END
 
 /**************************************************************/
-/*                                                            */
+/*  GIRL3_02                         */
 /**************************************************************/
-ev_c12gym0101:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START ev_c12gym0101_girl3_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12gym0101_girl3_01 )
+EVENT_END
 
+
+/**************************************************************/
+/*  黒板                         */
+/**************************************************************/
+EVENT_START ev_c12gym0101_boy3_01
+  _TALK_START_SE_PLAY()
+  
+  //話しかけた方向によって演出を分岐
+  _PLAYER_DIR_GET( LWK_DIR )
+  SWITCH $LWK_DIR
+  CASE DIR_LEFT THEN
+    _OBJ_ANIME( C12GYM0101_BOY3_01, anm_dir_r )
+    _OBJ_ANIME( C12GYM0101_BOY3_02, anm_dir_r )
+	CASE DIR_RIGHT THEN
+    _OBJ_ANIME( C12GYM0101_BOY3_01, anm_dir_l )
+    _OBJ_ANIME( C12GYM0101_BOY3_02, anm_dir_l )
+	CASE DIR_UP THEN  //本来ここにはこないが念のため
+    _OBJ_ANIME( C12GYM0101_BOY3_01, anm_dir_d )
+    _OBJ_ANIME( C12GYM0101_BOY3_02, anm_dir_d )
+	CASE DIR_DOWN THEN  
+    _OBJ_ANIME( C12GYM0101_BOY3_01, anm_dir_u )
+    _OBJ_ANIME( C12GYM0101_BOY3_02, anm_dir_u )
+  ENDSWITCH
+  
+  _OBJ_ANIME_WAIT()
+  
+  //メッセージ：ポケモンにはとくせいとよばれる
+  _BALLOONWIN_OBJMSG_POS( msg_c12gym0101_boy2a_01, C12GYM0101_BOY3_01 ,POS_UL)
+  _MSGWIN_CLOSE()
+  
+  //瀕死・タマゴを除くポケモンの先頭を選択
+  DEFINE_LOCAL LWK_FRONT
+  _GET_PARTY_FRONT_POKEMON  ( LWK_FRONT , POKECOUNT_MODE_BATTLE_ENABLE )
+  //先頭ポケモンの名前を取得
+  _TEMOTI_MONS_NAME  (  0 , LWK_FRONT  )
+  
+  //【仮】戦闘ポケモンの特性を格納
+  
+  //メッセージ：ポケモンにはとくせいとよばれる
+  _BALLOONWIN_OBJMSG_POS( msg_c12gym0101_boy2b_01, C12GYM0101_BOY3_02 ,POS_UR)
+  _MSGWIN_CLOSE()
+EVENT_END
+/**************************************************************/
+/*  黒板                         */
+/**************************************************************/
+EVENT_START ev_bg_c12gym0101_board_01
+{
+	//ローカル変数を定義
+	DEFINE_LOCAL	LWK_STATE_SELECT
+
+	_TALK_START_SE_PLAY()
+	
+	//こくばんに　ポケモンが　たたかっているときに　おこる
+	_SYSWIN_MSG( msg_c12gym0101_board_01 , POS_DOWN )
+	
+	//『やめる』が選択されるまで繰り返し
+	WHILE $LWK_STATE_SELECT != 5
+		
+		//どれについて　みますか？
+		_SYSWIN_MSG( msg_c12gym0101_board_02 , POS_DOWN )
+			
+		//分岐・どく・まひ・ねむり・やけど・こおり・やめる
+		_BMPMENU_INIT_RIGHT(MENU_X1, MENU_Y1, 0, 1, LWK_STATE_SELECT )
+		
+		_BMPMENU_MAKE_LIST( msg_c12gym0101_board_win_01, 0 )	//どく
+		_BMPMENU_MAKE_LIST( msg_c12gym0101_board_win_02, 1 )	//まひ
+		_BMPMENU_MAKE_LIST( msg_c12gym0101_board_win_03, 2 )	//ねむり
+		_BMPMENU_MAKE_LIST( msg_c12gym0101_board_win_04, 3 )	//やけど
+		_BMPMENU_MAKE_LIST( msg_c12gym0101_board_win_05, 4 )	//こおり
+		_BMPMENU_MAKE_LIST( msg_c12gym0101_board_win_06, 5 )	//やめる
+		//メニュー表示
+		_BMPMENU_START()
+		
+		//選択結果で分岐
+			
+			//どく選択
+			IF $LWK_STATE_SELECT == 0 THEN
+				
+				//どくを　うけると　たいりょくが　へっていきます
+				_SYSWIN_MSG( msg_c12gym0101_board_03 , POS_DOWN )
+					
+			//まひ選択
+			ELSIF $LWK_STATE_SELECT == 1 THEN
+				
+				//まひすると　すばやさが　さがり
+				_SYSWIN_MSG( msg_c12gym0101_board_04 , POS_DOWN )
+					
+			//ねむり選択
+			ELSIF $LWK_STATE_SELECT == 2 THEN
+			
+				//ねむって　しまうと　その　あいだ　こうげき　できません
+				_SYSWIN_MSG( msg_c12gym0101_board_05 , POS_DOWN )
+				
+			//やけど選択
+			ELSIF $LWK_STATE_SELECT == 3 THEN
+				
+				//やけどに　なると　こうげきりょくが　さがるだけでなく
+				_SYSWIN_MSG( msg_c12gym0101_board_06 , POS_DOWN )
+				
+			//こおり選択
+			ELSIF $LWK_STATE_SELECT == 4 THEN
+				
+				//こおって　しまうと　なにも　できなくなります
+				_SYSWIN_MSG( msg_c12gym0101_board_07 , POS_DOWN )
+				
+			//キャンセル
+			ELSE
+				$LWK_STATE_SELECT = 5	//やめるを選択したことにする
+				
+			ENDIF
+		
+		ENDWHILE
+	
+	//ウインドウを閉じて終了
+	_SYSWIN_CLOSE()
+	
+}
+EVENT_END
+
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staystep_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：hatena
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_hatena
+	_ANIME_DATA	AC_MARK_HATENA,1
+	_ANIME_DATA	ACMD_END,0

@@ -82,6 +82,12 @@ INIT_EVENT_START ev_init_c12
    ELSIF $WK_SCENE_C12_WHITE_MEET == 5 THEN
     _OBJ_POS_CHANGE( C12_SWBELL_01, 47, 1, 740, DIR_DOWN )
   ENDIF
+  
+  //ジムストッパー（ジム開放まで）
+  IF $WK_SCENE_C12_WHITE_MEET < 2 || $WK_SCENE_C12GYM_OPEN >= 1 THEN
+    //連れ歩き中・ジムオープンはドア前にいない
+    _OBJ_POS_CHANGE( C12_BOY2_01, 36, 1, 741, DIR_RIGHT )
+  ENDIF
 
 INIT_EVENT_END
 
@@ -1086,20 +1092,17 @@ ev_c12_rival_ng_return01:
   CASE DIR_LEFT THEN
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
     _OBJ_ANIME( PAIR_TRAINER_01, anm_dir_l )
-    _OBJ_ANIME_WAIT()
 	CASE DIR_RIGHT THEN
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
     _OBJ_ANIME( PAIR_TRAINER_01, anm_dir_r )
-    _OBJ_ANIME_WAIT()
 	CASE DIR_UP THEN
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
     _OBJ_ANIME( PAIR_TRAINER_01, anm_dir_u )
-    _OBJ_ANIME_WAIT()
 	CASE DIR_DOWN THEN  //本来ここにはこないが念のため
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
     _OBJ_ANIME( PAIR_TRAINER_01, anm_dir_d )
-    _OBJ_ANIME_WAIT()
   ENDSWITCH
+  _OBJ_ANIME_WAIT()
 _RET
 
 //★C12連れ歩きストッパー戻り処理

@@ -9,6 +9,10 @@
 #ifndef ZONE_C12GYM0201_EVC_H
 #define ZONE_C12GYM0201_EVC_H
 
+#define C12GYM0201_SWLEADER1_01            0
+#define C12GYM0201_BOY2_01                 1
+#define C12GYM0201_GIRL2_01                2
+#define C12GYM0201_DANPEI_01               3
 
 #endif //ZONE_C12GYM0201_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c12gym0201.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

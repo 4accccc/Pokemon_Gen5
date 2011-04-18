@@ -240,6 +240,7 @@
 #define WK_SCENE_T06R0101                16628 /* 0x40f4 サンギタウン：SCENE_CHANGE制御ワーク */
 #define WK_SCENE_D22R0101                16629 /* 0x40f5 牧場：POS制御ワーク */
 #define WK_SCENE_C12GYM_OPEN             16630 /* 0x40f6 C12：ジム関連イベント用ワーク */
+#define WK_SCENE_C12GYM0201              16631 /* 0x40f7 C12：ジム進行管理用ワーク */
 
 #define WK_SCENE_AREA_END                16655 /* 0x410f  */
 

@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_c12gym0201.h"
-  //.include  "c12gym0201.h"
+  .include  "c12gym0201.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +19,511 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c12gym0201
+_EVENT_DATA    ev_zone_c12gym0201
+_EVENT_DATA    ev_init_c12gym0201
+_EVENT_DATA    ev_scene_c12gym0201_start
+_EVENT_DATA    ev_c12gym0201_swleader1_01
+_EVENT_DATA    ev_c12gym0201_boy2_01
+_EVENT_DATA    ev_c12gym0201_girl2_01
+_EVENT_DATA    ev_c12gym0201_danpei_01
 _EVENT_DATA_END
 
+//話しかけた方向取得変数
+DEFINE_LOCAL LWK_DIR
+DEFINE_LOCAL  LCW_POSX
+DEFINE_LOCAL  LCW_POSZ
+/************************************************************/
+/*		ZONE_CHANGE                             */
+/************************************************************/
+INIT_EVENT_START   ev_zone_c12gym0201
+  
+//
+  
+INIT_EVENT_END
 
-/**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_zone_c12gym0201:
-//  _END
+/************************************************************/
+/*					FIELD_INIT_SCRIPT						*/
+/************************************************************/
+INIT_EVENT_START ev_init_c12gym0201
 
-/**************************************************************/
-/*                                                            */
-/**************************************************************/
-ev_c12gym0201:
-  //とりあえず最初のラベルだけ生成している
-  _END
+  //イベント進行でアデクの配置を分岐
+  IF $WK_SCENE_C12GYM0201 == 0 THEN
+    _OBJ_POS_CHANGE( C12GYM0201_SWLEADER1_01, 15, 0, 18, DIR_DOWN )
+    _OBJ_POS_CHANGE( C12GYM0201_BOY2_01, 17, 0, 19, DIR_LEFT )
+    _OBJ_POS_CHANGE( C12GYM0201_GIRL2_01, 13, 0, 19, DIR_RIGHT )
+    _OBJ_POS_CHANGE( C12GYM0201_DANPEI_01, 15, 0, 21, DIR_UP )
+  ENDIF
 
+INIT_EVENT_END
+
+/********************************************************************/
+/*            初回イベント                                    */
+/********************************************************************/
+EVENT_START ev_scene_c12gym0201_start
+
+  //アニメ：サングラス「！」
+  _OBJ_ANIME( C12GYM0201_DANPEI_01, anm_danpei_gyoe )
+  _OBJ_ANIME_WAIT()
+  
+  //メッセージ：これをさしあげるっすよ
+  _BALLOONWIN_OBJMSG_POS( msg_c12gym0201_glasses_01,C12GYM0201_DANPEI_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：サングラス隣接
+  _OBJ_ANIME( C12GYM0201_DANPEI_01, anm_walk_d )
+  _OBJ_ANIME_WAIT()
+  
+  //おいしいみず入手処理
+  _ITEM_EVENT_KEYWAIT( ITEM_OISIIMIZU, 1 )
+  //【仮】メッセージ：これをさしあげるっすよ（キー送りメッセージ必要）
+  _BALLOONWIN_OBJMSG_POS( msg_c12gym0201_glasses_02,C12GYM0201_DANPEI_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_c12gym0201_glasses_03,C12GYM0201_DANPEI_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：サングラス退場
+  _OBJ_ANIME( C12GYM0201_DANPEI_01, anm_danpei_return )
+  _OBJ_ANIME_WAIT()
+  
+  //カメラ操作　チェレン中心に
+  _CAMERA_START()		//カメラ操作開始
+  _CAMERA_PURGE()		//カメラのバインドを解く
+  
+  _CAMERA_MOVE( 9688,0,970752,1015808,0,1277952,40 )
+  
+  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+  
+  //アニメ：チェレンたち主人公の方に向く
+  _OBJ_ANIME( C12GYM0201_SWLEADER1_01, anm_common_gyoe )
+  _OBJ_ANIME( C12GYM0201_BOY2_01, anm_staystep_d )
+  _OBJ_ANIME( C12GYM0201_GIRL2_01, anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+  
+  //メッセージ：ようこそ
+  _BALLOONWIN_OBJMSG_POS( msg_c12gym0201_swleader1_02,C12GYM0201_SWLEADER1_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：チェレン左右を見る
+  _OBJ_ANIME( C12GYM0201_SWLEADER1_01, r19_rival_look_children)
+  _OBJ_ANIME_WAIT()
+  
+  //メッセージ：持ち場に
+  _BALLOONWIN_OBJMSG_POS( msg_c12gym0201_swleader1_03,C12GYM0201_SWLEADER1_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：持ち場に移動
+  _OBJ_ANIME_AUTO( C12GYM0201_BOY2_01, 21, 18, FORCE_TYPE_NPC, 8, DIR_UD)
+  _OBJ_ANIME_AUTO( C12GYM0201_GIRL2_01, 9, 9, FORCE_TYPE_NPC, 8, DIR_UD)
+  _OBJ_ANIME_WAIT()
+  
+  //アニメ：方向を整える
+  _OBJ_ANIME( C12GYM0201_BOY2_01, anm_staystep_l)
+  _OBJ_ANIME( C12GYM0201_GIRL2_01, anm_staystep_r)
+  _OBJ_ANIME_WAIT()
+  
+  //自機にカメラを戻す
+  _CAMERA_DEF_MOVE (24)
+  
+  //チェレン主人公に隣接
+  _OBJ_ANIME_AUTO( C12GYM0201_SWLEADER1_01, 15, 21, FORCE_TYPE_NPC, 8, DIR_UD)
+  _OBJ_ANIME_WAIT()
+  
+  //カメラ待ち
+  _CAMERA_WAIT_MOVE()
+  _CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+  _CAMERA_END()		//カメラ操作終了
+  
+  //メッセージ：あの二人に
+  _BALLOONWIN_OBJMSG_POS( msg_c12gym0201_swleader1_04,C12GYM0201_SWLEADER1_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //チェレン退場
+  _OBJ_ANIME_AUTO( C12GYM0201_SWLEADER1_01, 15, 11, FORCE_TYPE_NPC, 8, DIR_UD)
+  _OBJ_ANIME_WAIT()
+  
+  //チェレン持ち位置にワープ
+  _OBJ_POS_CHANGE( C12GYM0201_SWLEADER1_01, 15, 2, 2, DIR_DOWN )
+  
+  //========================================/
+  
+  //【仮】おいしい水入手済み（使用するフラグが仮）
+  _FLAG_SET(FE_C01GYM_ITEM)
+  
+  //SCENE_CHANGE無効
+  $WK_SCENE_C12GYM0201 = 1
+  
+  //========================================/
+
+EVENT_END
+
+//--------------------------------------------------------------------
+//	サングラス「！」ふりむく
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_danpei_gyoe
+  _ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	サングラス：移動
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_danpei_return
+  _ANIME_DATA	AC_WALK_L_8F,3
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//チェレン：左右を見る                     
+//--------------------------------------------------------------------
+	_ANIME_LABEL r19_rival_look_children
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA ACMD_END,0
+
+/********************************************************************/
+/*            ジムリーダー                                    */
+/********************************************************************/
+EVENT_START ev_c12gym0201_swleader1_01
+{
+	_TALK_OBJ_START()
+	//バッジフラグ取得
+	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_01 )
+
+	//ジムバッジフラグで分岐
+	IF $SCWK_TEMP0 == 0 THEN
+	
+	  IF $WK_SCENE_C12GYM0201 >= 3 THEN
+  		//バッジ入手前なら、ジムリーダー戦イベント
+  		_CALL		ev_leader1_btl
+  	
+  	//トレーナーとまだ戦っていない
+    ELSE
+      _BALLOONWIN_OBJMSG( msg_c12gym0201_swleader1_05 , C12GYM0201_SWLEADER1_01 )
+			_LAST_KEYWAIT()
+			_BALLOONWIN_CLOSE()
+    ENDIF
+
+	ELSE
+
+		//ゲームクリア前なら
+		IF FLAG_OFF( SYS_FLAG_GAME_CLEAR )  THEN
+		
+			//キミは　たびに　でてから　どれだけの
+			_BALLOONWIN_OBJMSG( msg_c12gym0201_swleader1_11 , C12GYM0201_SWLEADER1_01 )
+			_LAST_KEYWAIT()
+			_BALLOONWIN_CLOSE()
+			
+		//ゲームクリア後なら
+		ELSE
+		
+			//やあ　さいきんは　ポケモンを　そだて
+			_BALLOONWIN_OBJMSG( msg_c12gym0201_swleader1_12 , C12GYM0201_SWLEADER1_01 )
+			_LAST_KEYWAIT()
+			_BALLOONWIN_CLOSE()
+		
+		ENDIF
+
+	ENDIF
+}
+EVENT_END
+
+//ジムリーダー戦
+ev_leader1_btl:
+
+	//メッセージ：きみとってはじめての
+	_BALLOONWIN_TALKOBJ_MSG( msg_c12gym0201_swleader1_06 )
+	_BALLOONWIN_CLOSE()
+
+	//トレーナー戦呼び出し
+	_TRAINER_BTL_SET( TRID_SWLEADER1_01, 0 )
+	
+	//敗戦チェック
+	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+	
+	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+			_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+	ELSE
+			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+	ENDIF
+		
+	//メッセージ:きみでよかった
+	_BALLOONWIN_TALKOBJ_MSG( msg_c12gym0201_swleader1_07 )
+	_BALLOONWIN_CLOSE()
+
+  //リーダー戦勝利時の情報登録
+  _SET_GYM_VICTORY_INFO( BADGE_ID_01 )
+	//バッジ入手処理
+	_SET_BADGE_FLAG( BADGE_ID_01 )		//バッジフラグon
+	_PLAYER_NAME( 0 )
+	
+	{
+	
+	//バッジ入手演出再生
+	_ME_PLAY( SEQ_ME_BADGE )
+	
+	//性別が格納されるローカル変数を定義
+	DEFINE_LOCAL SCWK_SEX
+	_GET_MY_SEX(SCWK_SEX)
+	
+	//男性だった場合
+	IF $SCWK_SEX == PM_MALE THEN
+		_CALL_FLD3D_CUTIN( FLDCIID_GYM01 )
+	//女性だった場合
+	ELSE
+		_CALL_FLD3D_CUTIN( FLDCIID_GYM01F )
+	ENDIF
+	
+	//ME待ち
+	_ME_WAIT()
+		
+	}
+	
+	//～～はベーシックバッジを入手した！
+	_SYSWIN_MSG( msg_c12gym0201_swleader1_08 , POS_DEFAULT )
+	_SYSWIN_CLOSE()
+
+	//メッセージ：そしてこれも
+	_BALLOONWIN_TALKOBJ_MSG( msg_c12gym0201_swleader1_09)
+	_BALLOONWIN_CLOSE()
+
+	//わざマシン入手処理　「ふるいたてる」
+	_ITEM_EVENT_KEYWAIT( ITEM_WAZAMASIN83, 1 )
+
+	//リーダー：わざマシンの解説
+	_BALLOONWIN_TALKOBJ_MSG( msg_c12gym0201_swleader1_10 )
+	_LAST_KEYWAIT()
+	_BALLOONWIN_CLOSE()
+
+EVENT_END
+
+/********************************************************************/
+/*            BOY2                                    */
+/********************************************************************/
+EVENT_START ev_c12gym0201_boy2_01
+
+  _TALK_OBJ_START()
+  
+  //バッジフラグ取得
+  _GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_01 )
+  
+  //ジム未クリア
+  IF $SCWK_TEMP0 == 0 THEN
+    //既に戦ったかチェック
+    _TRAINER_FLAG_CHECK( TRID_TANPAN_19, SCWK_ANSWER )
+    
+    //まだ勝利していない
+    IF $SCWK_ANSWER ==  FALSE THEN
+      
+      //トレーナー曲再生
+      _TRAINER_BGM_SET(  TRID_TANPAN_19 )
+      
+      //
+      _BALLOONWIN_OBJMSG( msg_c12gym0201_boy2_01 , C12GYM0201_BOY2_01 )
+      _LAST_KEYWAIT()
+      _BALLOONWIN_CLOSE()
+      
+      //トレーナー戦呼び出し
+      _TRAINER_BTL_SET( TRID_TANPAN_19, 0 )
+      
+      //結果チェック
+      _CALL ev_battle_check
+      
+      //========================================/
+      //ジム進行状況にプラス1
+       $WK_SCENE_C12GYM0201 += 1
+       
+       //トレーナーフラグセット
+       _TRAINER_FLAG_SET( TRID_TANPAN_19 )
+       
+       //========================================/
+      
+    //戦闘済み
+    ELSE
+      _BALLOONWIN_OBJMSG( msg_c12gym0201_boy2_02 , C12GYM0201_BOY2_01 )
+      _LAST_KEYWAIT()
+      _BALLOONWIN_CLOSE()
+    ENDIF
+  
+  //ジムクリア済み
+  ELSE
+    _BALLOONWIN_OBJMSG( msg_c12gym0201_boy2_03 , C12GYM0201_BOY2_01 )
+    _LAST_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+  ENDIF
+
+EVENT_END
+
+ev_battle_check:	
+	//敗戦チェック
+	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+	
+	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+			_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+	ELSE
+			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+	ENDIF
+_RET
+/********************************************************************/
+/*            GIRL2                                    */
+/********************************************************************/
+EVENT_START ev_c12gym0201_girl2_01
+
+  _TALK_OBJ_START()
+  
+  //バッジフラグ取得
+  _GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_01 )
+  
+  //ジム未クリア
+    IF $SCWK_TEMP0 == 0 THEN
+    //既に戦ったかチェック
+    _TRAINER_FLAG_CHECK( TRID_MINI_14, SCWK_ANSWER )
+    
+    //まだ勝利していない
+    IF $SCWK_ANSWER ==  FALSE THEN
+      
+      //トレーナー曲再生
+      _TRAINER_BGM_SET(  TRID_MINI_14 )
+      
+      //
+      _BALLOONWIN_OBJMSG( msg_c12gym0201_girl2_01 , C12GYM0201_GIRL2_01 )
+      _LAST_KEYWAIT()
+      _BALLOONWIN_CLOSE()
+      
+      //トレーナー戦呼び出し
+      _TRAINER_BTL_SET( TRID_MINI_14, 0 )
+      
+      //結果チェック
+      _CALL ev_battle_check
+      
+      //========================================/
+      //ジム進行状況にプラス1
+       $WK_SCENE_C12GYM0201 += 1
+       
+       //トレーナーフラグセット
+       _TRAINER_FLAG_SET( TRID_MINI_14 )
+       
+       //========================================/
+      
+    //戦闘済み
+    ELSE
+      _BALLOONWIN_OBJMSG( msg_c12gym0201_girl2_02 , C12GYM0201_GIRL2_01 )
+      _LAST_KEYWAIT()
+      _BALLOONWIN_CLOSE()
+    ENDIF
+  
+  //ジムクリア済み
+  ELSE
+    _BALLOONWIN_OBJMSG( msg_c12gym0201_girl2_03 , C12GYM0201_GIRL2_01 )
+    _LAST_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+  ENDIF
+
+EVENT_END
+
+/********************************************************************/
+/*            GIRL2                                    */
+/********************************************************************/
+EVENT_START ev_c12gym0201_danpei_01
+
+  //分岐：ジムバッジ取得しているか、いないか
+  _GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_01 )
+  
+  //ジムバッジを取得していない場合
+  IF $SCWK_TEMP0 == 0 THEN
+  
+  //ジムバッジフラグが０の場合
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12gym0201_glasses_03 )
+  
+  //ジムバッジフラグがそれ以外の場合
+  ELSE
+  
+  //ジムバッジを　てにいれた　きょう　という　すばらしい　ひを
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12gym0201_glasses_04 )
+  
+  ENDIF
+
+EVENT_END
+
+
+//--------------------------------------------------------------------
+//	☆共通処理：下に1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_d
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：上に1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_u
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+
+//--------------------------------------------------------------------
+//	☆共通処理：右に1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_r
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：左に1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_l
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+ //--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staystep_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：hatena
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_hatena
+	_ANIME_DATA	AC_MARK_HATENA,1
+	_ANIME_DATA	ACMD_END,0

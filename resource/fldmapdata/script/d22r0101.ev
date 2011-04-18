@@ -605,6 +605,9 @@ EVENT_START ev_pos_d22r0101_pokesearch_05
   //POSイベント無効
   $WK_SCENE_D22R0101 = 5
   
+  //T06のアテグ誘導POSを有効
+  $WK_SCENE_T06 = 3
+  
   //D22R0101ライバル非表示
   _FLAG_SET(FV_D22R0101_SWRIVAL_01)
   

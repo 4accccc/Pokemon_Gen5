@@ -1,5 +1,5 @@
 #../data/t06.mev
-../tmp/t06.bin:../data/t06.mev ../../script/sp_t06.bin $(UNIQ_SCRIPTHEADER) ../tmp/t06.h ../../zonetable/zone_id.h ../tmp/t06pc0101.h ../../../../prog/include/field/field_dir.h ../../../../prog/include/field/eventdata_type.h ../tmp/t06r0201.h ../tmp/t06r0301.h ../tmp/t06r0101.h 
+../tmp/t06.bin:../data/t06.mev ../../script/sp_t06.bin $(UNIQ_SCRIPTHEADER) ../tmp/t06.h ../../zonetable/zone_id.h ../tmp/t06pc0101.h ../../../../prog/include/field/field_dir.h ../../../../prog/include/field/eventdata_type.h ../tmp/t06r0201.h ../tmp/t06r0301.h ../tmp/t06r0101.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h ../../script/T06_def.h ../../flagwork/work_define.h 
 	@echo ../data/t06.mev
-	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/t06.h ../../zonetable/zone_id.h ../tmp/t06pc0101.h ../../../../prog/include/field/field_dir.h ../../../../prog/include/field/eventdata_type.h ../tmp/t06r0201.h ../tmp/t06r0301.h ../tmp/t06r0101.h 
+	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/t06.h ../../zonetable/zone_id.h ../tmp/t06pc0101.h ../../../../prog/include/field/field_dir.h ../../../../prog/include/field/eventdata_type.h ../tmp/t06r0201.h ../tmp/t06r0301.h ../tmp/t06r0101.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h ../../script/T06_def.h ../../flagwork/work_define.h 
 

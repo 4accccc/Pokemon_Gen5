@@ -12,6 +12,8 @@
 #ifndef ZONE_T06_EVC_H
 #define ZONE_T06_EVC_H
 
+#define T06_CHAMPION_01                    0
+#define T06_SUNGLASSES_01                  1
 
 #endif //ZONE_T06_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/t06.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

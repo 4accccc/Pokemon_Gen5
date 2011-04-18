@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_t06r0101.h"
-  //.include  "t06r0101.h"
+  .include  "t06r0101.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +19,303 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_t06r0101
+_EVENT_DATA    ev_zone_t06r0101
+_EVENT_DATA    ev_init_t06r0101
+_EVENT_DATA    ev_scene_t06r0101_champion_01
+_EVENT_DATA    ev_t06r0101_champion_01
+_EVENT_DATA    ev_t06r0101_girl3_01
+_EVENT_DATA    ev_t06r0101_boy3_01
 _EVENT_DATA_END
 
 
-/**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_zone_t06r0101:
-//  _END
+/************************************************************/
+/*		ZONE_CHANGE                             */
+/************************************************************/
+INIT_EVENT_START   ev_zone_t06r0101
+  
+//
+  
+INIT_EVENT_END
+
+/************************************************************/
+/*					FIELD_INIT_SCRIPT						*/
+/************************************************************/
+INIT_EVENT_START ev_init_t06r0101
+	//イベントの値によって人物のの初期位置を変更する
+  IF $WK_SCENE_T06R0101 == 0 THEN
+    _OBJ_POS_CHANGE( T06R0101_CHAMPION_01, 6, 0, 11, DIR_UP )
+  ENDIF
+INIT_EVENT_END
+
+/************************************************************/
+/*					CHENE_CHANGE：子どもと対戦						*/
+/************************************************************/
+EVENT_START ev_scene_t06r0101_champion_01
+  
+  //アニメ：アテグと主人公入室
+  _OBJ_ANIME( T06R0101_CHAMPION_01, anm_champion_goto_children )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_goto_children )
+  _OBJ_ANIME_WAIT()
+
+  //アニメ：子どもたち下を向く
+  _OBJ_ANIME( T06R0101_BOY3_01, anm_childoren_look_pl )
+  _OBJ_ANIME( T06R0101_GIRL3_01, anm_childoren_look_pl )
+  _OBJ_ANIME_WAIT()
+  
+  //メッセージ：あっ！
+  _BALLOONWIN_OBJMSG_POS( msg_t06r0101_girl3_01,T06R0101_GIRL3_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //メッセージ：えー！
+  _BALLOONWIN_OBJMSG_POS( msg_t06r0101_boy3_01,T06R0101_BOY3_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //メッセージ：おう！
+  _BALLOONWIN_OBJMSG_POS( msg_t06r0101_champion_01,T06R0101_CHAMPION_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：主人公とアデク向き合う
+  _OBJ_ANIME( T06R0101_CHAMPION_01, anm_staystep_l )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
+  _OBJ_ANIME_WAIT()
+  
+  //メッセージ：というわけで
+  _PLAYER_NAME( 0 )
+  _BALLOONWIN_OBJMSG_POS( msg_t06r0101_champion_02,T06R0101_CHAMPION_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：主人公とアテグ上を向く・BOY3隣接
+  _OBJ_ANIME_AUTO( T06R0101_BOY3_01, 6, 9, FORCE_TYPE_NPC, 8, DIR_LR)
+  _OBJ_ANIME( T06R0101_CHAMPION_01, anm_staystep_u )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
+  _OBJ_ANIME_WAIT()
+  
+  //メッセージ：ぼくの　ポケモンの
+  _BALLOONWIN_OBJMSG_POS( msg_t06r0101_boy3_02,T06R0101_BOY3_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //戦闘処理
+  _TRAINER_BTL_SET( TRID_SCHOOLB_11, 0 )
+  _CALL ev_battle_check
+  
+  //アニメ：BOY3定位置に戻る
+  _OBJ_ANIME( T06R0101_BOY3_01, anm_boy3_back )
+  
+  //メッセージ：ポケモンのさてつぎは
+  _BALLOONWIN_OBJMSG_POS( msg_t06r0101_champion_03,T06R0101_CHAMPION_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  _OBJ_ANIME_WAIT()
+  
+  //メッセージ：はーい！
+  _BALLOONWIN_OBJMSG_POS( msg_t06r0101_girl3_02,T06R0101_GIRL3_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //メッセージ：その前に
+  _PLAYER_NAME( 0 )
+  _BALLOONWIN_OBJMSG_POS( msg_t06r0101_champion_04,T06R0101_CHAMPION_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：主人公のほうを向く
+	_OBJ_ANIME( T06R0101_CHAMPION_01, anm_staystep_l )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
+  _OBJ_ANIME_WAIT()
+  
+  //【仮】回復処理（メッセージが必要かも）
+  _SE_PLAY( SEQ_SE_RECOVERY )
+  _SE_WAIT()
+	//回復処理
+	_TEMOTI_POKEMON_KAIFUKU()
+	
+	//アニメ：GIRL3と主人公向き合う
+	_OBJ_ANIME( T06R0101_CHAMPION_01, anm_staystep_u )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
+	_OBJ_ANIME_AUTO( T06R0101_GIRL3_01, 6, 9, FORCE_TYPE_NPC, 8, DIR_LR)
+  _OBJ_ANIME_WAIT()
+  
+  //メッセージ：あたしは　ポケモンに
+  _BALLOONWIN_OBJMSG_POS( msg_t06r0101_girl3_03,T06R0101_GIRL3_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //戦闘処理
+  _TRAINER_BTL_SET( TRID_SCHOOLG_09, 0 )
+  _CALL ev_battle_check
+  
+  //メッセージ：こころおどる
+  _BALLOONWIN_OBJMSG_POS( msg_t06r0101_champion_05,T06R0101_CHAMPION_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  _OBJ_ANIME( T06R0101_CHAMPION_01, anm_staystep_l )
+  _OBJ_ANIME( T06R0101_CHAMPION_01, anm_staystep_r )
+  _OBJ_ANIME( T06R0101_GIRL3_01, anm_girl3_back )
+  _OBJ_ANIME_WAIT()
+  
+  //メッセージ：どうだ
+  _PLAYER_NAME( 0 )
+  _BALLOONWIN_OBJMSG_POS( msg_t06r0101_champion_06,T06R0101_CHAMPION_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //メッセージ：でもね
+  _BALLOONWIN_OBJMSG_POS( msg_t06r0101_girl3_04,T06R0101_GIRL3_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //メッセージ：よければ
+  _BALLOONWIN_OBJMSG_POS( msg_t06r0101_champion_10,T06R0101_CHAMPION_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //オレンのみ入手処理
+	_ITEM_EVENT_KEYWAIT(ITEM_ORENNOMI, 5)
+	
+	//メッセージ：よければ
+  _BALLOONWIN_OBJMSG_POS( msg_t06r0101_champion_11,T06R0101_CHAMPION_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //========================================//
+  //SCENE_CHANGE無効
+  $WK_SCENE_T06R0101 = 1
+  
+  //T06のSCENE_CHANGE有効（メダルおやじ導入イベント）
+  $WK_SCENE_T06 = 5
+  
+  //T06のメダルおやじを表示
+	_FLAG_RESET( FV_T06_SUNGLASSES_01 )
+	
+  //========================================//
+  
+EVENT_END
+
+//戦闘チェック
+ev_battle_check:
+  //結果チェック
+  _TRAINER_LOSE_CHECK( SCWK_ANSWER )
+  IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+    _TRAINER_WIN()
+  ELSE
+    _TRAINER_LOSE()
+  ENDIF
+_RET
+
+//--------------------------------------------------------------------
+//	チャンピオン：入室
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_champion_goto_children
+  _ANIME_DATA	AC_WALK_U_8F,1
+  _ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	主人公：入室
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_goto_children
+  _ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	子ども：主人公に気がつく
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_childoren_look_pl
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	BOY3：定位置に戻る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_boy3_back
+  _ANIME_DATA	AC_WALK_R_8F,1
+  _ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	GIRL3：定位置に戻る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_girl3_back
+  _ANIME_DATA	AC_WALK_L_8F,1
+  _ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
-/*                                                            */
+/* アデクはなしかけ                                         */
 /**************************************************************/
-ev_t06r0101:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START   ev_t06r0101_champion_01
+  
+  //クリア後ならセリフを分岐
+  IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t06r0101_champion_13 )
+  //ヒオウギジムクリア後ならセリフを変更
+  ELSIF $WK_SCENE_C12GYM_OPEN >= 2 THEN
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t06r0101_champion_12 )
+  ELSE
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t06r0101_champion_11 )
+  ENDIF
+EVENT_END
 
+/**************************************************************/
+/* BOY3はなしかけ                                         */
+/**************************************************************/
+EVENT_START   ev_t06r0101_girl3_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t06r0101_girl3_05 )
+EVENT_END
+
+
+/**************************************************************/
+/* GIRL3はなしかけ                                         */
+/**************************************************************/
+EVENT_START   ev_t06r0101_boy3_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t06r0101_boy3_03 )
+EVENT_END
+
+
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staystep_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：hatena
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_hatena
+	_ANIME_DATA	AC_MARK_HATENA,1
+	_ANIME_DATA	ACMD_END,0
