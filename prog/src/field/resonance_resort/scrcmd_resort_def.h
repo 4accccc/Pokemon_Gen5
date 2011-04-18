@@ -75,6 +75,12 @@
 #define RESORT_WORD_SHOP_GENRE        (7) //「花屋」とか
 #define RESORT_WORD_FREE_CITY         (8)
 #define RESORT_WORD_SHOP_RESTEXP      (9) //次のレベルまでの経験値
+#define RESORT_WORD_SHOP_LV           (10)
+#define RESORT_WORD_CITY_LV           (11)
+#define RESORT_WORD_CITY_RANK         (12)
+
+#define RESORT_WORD_PARAM_FRONT       (0xFE)  //目の前の人
+#define RESORT_WORD_PARAM_NONE        (0xFF)
 
 //_RESORT_CALL_LIST用
 #define RESORT_LIST_TYPE_BUY            (0)

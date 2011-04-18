@@ -61,6 +61,7 @@ SPOT_COL_BASEEXP  = 3     #列：ベース経験値
 SPOT_COL_TYPE     = 4     #列：タイプ
 SPOT_COL_DATA     = 5     #列：データ
 SPOT_COL_EXP      = 6     #列：経験値
+SPOT_COL_EFF_MSG  = 7     #列：msgid
 
 SPOT_COL_DATA_MAX = 6     #タイプ、データ、経験値が何回あるか
 
@@ -85,13 +86,19 @@ def convertAppeal( csv, data, msg_h )
     data.write_u16( baseexp )
 
     for col in 0...SPOT_COL_DATA_MAX
-      type  = csv.get( row, SPOT_COL_TYPE + col*3 )
-      dat  = csv.get( row, SPOT_COL_DATA + col*3 )
-      exp   = csv.get( row, SPOT_COL_EXP + col*3 )
+      type  = csv.get( row, SPOT_COL_TYPE + col*4 )
+      dat   = csv.get( row, SPOT_COL_DATA + col*4 )
+      exp   = csv.get( row, SPOT_COL_EXP + col*4 )
+      eff   = csv.get( row, SPOT_COL_EFF_MSG + col*4 )
 
       data.write_u16( $define_hash[type] )
       data.write_u16( $define_hash[dat] )
       data.write_u16( $define_hash[exp] )
+      begin
+        data.write_u16( msgdata.search( "#{eff}", "#{row}行の#{msg_h}" ) )
+      rescue HeaderSearchError
+        exit(1)
+      end
     end
   end
 end

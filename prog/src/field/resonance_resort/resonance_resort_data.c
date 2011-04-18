@@ -3429,7 +3429,7 @@ struct _RESORT_CITY_DATA
   u32     talk_cnt;     //7*4=28 376
   u32     build_cnt;
   u32     quest_clear_cnt;
-  u32     todo1;  //TODO
+  u32     exp;  //TODO
   u32     todo2;  //TODO
   u32     todo3;  //TODO
   u8      secret_present_type;  
@@ -3528,6 +3528,8 @@ u32 RESORT_CITY_DATA_GetData( const RESORT_CITY_DATA *cp_wk, RESORT_CITY_DATA_PA
     return (u32)cp_wk->my_name;
   case RESORT_CITY_DATA_PARAM_LV:
     return cp_wk->lv;
+  case RESORT_CITY_DATA_PARAM_EXP:
+    return cp_wk->exp;
   default:
     GF_ASSERT(0);
     return 0;
@@ -3535,7 +3537,7 @@ u32 RESORT_CITY_DATA_GetData( const RESORT_CITY_DATA *cp_wk, RESORT_CITY_DATA_PA
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  データ取得
+ *	@brief  データ設定
  *
  *	@param	RESORT_CITY_DATA *p_wk  街データ
  *	@param	param                   引数
@@ -3551,6 +3553,12 @@ void RESORT_CITY_DATA_SetData( RESORT_CITY_DATA *p_wk, RESORT_CITY_DATA_PARAM pa
     break;
   case RESORT_CITY_DATA_PARAM_AUTHER_NAME: //p_ret_adrs
     STRTOOL_Copy( (const STRCODE*)data, p_wk->my_name, RESORT_MY_NAME_LEN+EOM_SIZE );
+    break;
+  case RESORT_CITY_DATA_PARAM_LV:
+    p_wk->lv = data;
+    break;
+  case RESORT_CITY_DATA_PARAM_EXP:
+    p_wk->exp = data;
     break;
   default:
     GF_ASSERT(0);

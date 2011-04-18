@@ -104,7 +104,7 @@ $(targetpeople).dat $(targetshop).dat $(targetservice).dat $(targetpeopleh).h $(
 	ruby $(INSTITUTIONCONV) $(targetinstitution).csv $(fieldevent) $(targetinstitution)
 	ruby $(SPOTCONV) $(targetspot).csv $(msgfile) $(targetspot)
 	ruby $(NPCCONV) $(targetnpc).csv $(targetkutikomi).csv $(targetoffreco).csv $(msgfile) $(objcode) $(targetnpc) $(targetkutikomi) $(targetoffreco)
-	ruby $(CITYCONV) $(targetcity).csv $(targetcity)
+	ruby $(CITYCONV) $(targetcity).csv $(msgfile) $(targetcity)
 endif
 
 #------------------------------------------------------------------------------

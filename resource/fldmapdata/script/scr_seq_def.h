@@ -12677,17 +12677,19 @@
 //--------------------------------------------------------------
 /**
  * @brief リゾート用　文字バッファへ登録
- * @param[in]  param 何を登録するか「下記値を設定」
+ * @param[in]  type何を登録するか「下記値を設定」
+ * @param[in]  param typeへきて
  *  RESORT_WORD_PEOPLE…話しかけ中の人物名
  *
  * @param[in]  idx 何番の箇所へ登録するか
  */
 //--------------------------------------------------------------
-#define _RESORT_SET_WORD( param, idx ) \
-    _ASM_RESORT_SET_WORD param, idx
+#define _RESORT_SET_WORD( type, param, idx ) \
+    _ASM_RESORT_SET_WORD type, param, idx
 
-  .macro _ASM_RESORT_SET_WORD param, idx
+  .macro _ASM_RESORT_SET_WORD type, param, idx
   .short EV_SEQ_RESORT_SET_WORD
+  .short  \type
   .short  \param
   .short  \idx
   .endm
@@ -12949,16 +12951,20 @@
  * @brief リゾート用　おすすめスポットを教える
  * @param[in]   idx     施設インデックス
  * @param[out]  msgid   表示メッセージ
+ *
+ * @note ２に施設経験値　３に施設レベル　４に街経験値　５に街レベルが入る
  */
 //--------------------------------------------------------------
-#define _RESORT_SET_SPOT( idx, ret_msgid, ret_lvup ) \
-      _ASM_RESORT_SET_SPOT idx, ret_msgid, ret_lvup
+#define _RESORT_SET_SPOT( idx, ret_grade_msg, ret_eff_msg, ret_lvup, ret_city_lvup) \
+      _ASM_RESORT_SET_SPOT idx, ret_grade_msg, ret_eff_msg, ret_lvup, ret_city_lvup
 
-  .macro _ASM_RESORT_SET_SPOT idx, ret_msgid, ret_lvup
+  .macro _ASM_RESORT_SET_SPOT idx, ret_grade_msg, ret_eff_msg, ret_lvup, ret_city_lvup
   .short EV_SEQ_RESORT_SET_SPOT
   .short \idx
-  .short \ret_msgid
+  .short \ret_grade_msg
+  .short \ret_eff_msg
   .short \ret_lvup
+  .short \ret_city_lvup
   .endm
 
 //--------------------------------------------------------------

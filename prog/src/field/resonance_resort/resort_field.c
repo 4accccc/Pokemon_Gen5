@@ -32,6 +32,7 @@
 #include "resort_people.h"
 #include "resort_data_manager.h"
 #include "resort_npc.h"
+#include "resort_binary.h"
 
 //mine
 #include "resort_field.h"
@@ -58,6 +59,7 @@ typedef struct
   RESORT_DATA_MANAGER *p_data_manager;
   RESORT_BINARY_SHOP  *p_binary_shop;
   RESORT_BINARY_SPOT  *p_binary_spot;
+  RESORT_BINARY_CITY  *p_binary_city;
 } RESORT_FIELD_WORK;
 
 //=============================================================================
@@ -123,6 +125,7 @@ void RESORT_FIELD_Setup( FIELDMAP_WORK *p_fieldmap )
   {
     p_wk->p_binary_shop = RESORT_BINARY_SHOP_Init( heapID );
     p_wk->p_binary_spot = RESORT_BINARY_SPOT_Init( heapID );
+    p_wk->p_binary_city = RESORT_BINARY_CITY_Init( heapID );
   }
 
   NAGI_Printf( "レゾナンスsetup\n" );
@@ -138,6 +141,8 @@ void RESORT_FIELD_End( FIELDMAP_WORK *p_fieldmap )
 {
   RESORT_FIELD_WORK *p_wk = GMK_TMP_WK_GetWork(p_fieldmap, RESORT_FIELD_ASSIGN_ID);
 
+
+  RESORT_BINARY_CITY_Exit( p_wk->p_binary_city );
   RESORT_BINARY_SPOT_Exit( p_wk->p_binary_spot );
   RESORT_BINARY_SHOP_Exit( p_wk->p_binary_shop );
   RESORT_NPC_SYS_Exit( p_wk->p_npc_sys );
@@ -218,6 +223,22 @@ RESORT_BINARY_SPOT * RESORT_FIELD_GetBinarySpot( FIELDMAP_WORK *p_fieldmap )
   RESORT_FIELD_WORK *p_wk = GMK_TMP_WK_GetWork(p_fieldmap, RESORT_FIELD_ASSIGN_ID);
   return p_wk->p_binary_spot;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  街データ取得
+ *
+ *	@param	FIELDMAP_WORK *p_fieldmap   フィールドマップ
+ *
+ *	@return 街データ
+ */
+//-----------------------------------------------------------------------------
+RESORT_BINARY_CITY * RESORT_FIELD_GetBinaryCity(  FIELDMAP_WORK *p_fieldmap )
+{
+  RESORT_FIELD_WORK *p_wk = GMK_TMP_WK_GetWork(p_fieldmap, RESORT_FIELD_ASSIGN_ID);
+  return p_wk->p_binary_city;
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  NPCシステムを取得
