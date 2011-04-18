@@ -249,7 +249,7 @@ void RESORT_BINARY_SPOT_Exit( RESORT_BINARY_SPOT *p_wk )
 //-----------------------------------------------------------------------------
 u16 RESORT_BINARY_SPOT_GetData( const RESORT_BINARY_SPOT *cp_wk, u32 index, RESORT_BINARY_SPOT_PARAM param )
 {
-  GF_ASSERT( index < cp_wk->size / sizeof( RESORT_BINARY_SPOT_DATA ) );
+  GF_ASSERT( index < RESORT_BINARY_SPOT_GetMax(cp_wk) );
   GF_ASSERT( param < RESORT_BINARY_SPOT_PARAM_MAX );
   return cp_wk->p_data[ index ].param[ param ];
 }
@@ -266,9 +266,10 @@ u16 RESORT_BINARY_SPOT_GetData( const RESORT_BINARY_SPOT *cp_wk, u32 index, RESO
 //-----------------------------------------------------------------------------
 BOOL RESORT_BINARY_SPOT_SearchIndex( const RESORT_BINARY_SPOT *cp_wk, u32 msg, u32 *p_index )
 {
-  for( (*p_index) = 0; (*p_index) < cp_wk->size / sizeof( RESORT_BINARY_SPOT_DATA ); (*p_index)++ )
+  for( (*p_index) = 0; (*p_index) < RESORT_BINARY_SPOT_GetMax(cp_wk); (*p_index)++ )
   {
-    if( cp_wk->p_data[ (*p_index) ].param[ RESORT_BINARY_SPOT_PARAM_MSG_00 ] == msg )
+    NAGI_Printf( "data %d msg %d \n", RESORT_BINARY_SPOT_GetData(cp_wk, *p_index, RESORT_BINARY_SPOT_PARAM_MSG_00), msg );
+    if( RESORT_BINARY_SPOT_GetData(cp_wk, *p_index, RESORT_BINARY_SPOT_PARAM_MSG_00) == msg )
     {
       return TRUE;
     }
@@ -287,6 +288,7 @@ BOOL RESORT_BINARY_SPOT_SearchIndex( const RESORT_BINARY_SPOT *cp_wk, u32 msg, u
 //-----------------------------------------------------------------------------
 u16 RESORT_BINARY_SPOT_GetMax( const RESORT_BINARY_SPOT *cp_wk )
 {
+  NAGI_Printf( "size%d data%d\n", cp_wk->size, sizeof( RESORT_BINARY_SPOT_DATA ) );
   return cp_wk->size / sizeof( RESORT_BINARY_SPOT_DATA );
 }
 

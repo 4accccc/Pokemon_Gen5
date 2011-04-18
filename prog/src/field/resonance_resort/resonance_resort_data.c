@@ -1321,7 +1321,7 @@ u32 RESORT_RECV_DATA_GetData( const RESORT_RECV_DATA *cp_wk, RESORT_DATA_PARAM p
     }
     return 0;
   case RESORT_DATA_PARAM_WANT_SPOT:
-    return cp_wk->want_spot; //TODO;
+    return cp_wk->want_spot + resort_go_00; //TODO;
   case RESORT_DATA_PARAM_NATION:
     return cp_wk->basic1.nation;
   case RESORT_DATA_PARAM_AREA:
@@ -1559,7 +1559,7 @@ void RESORT_RECV_DATA_SetData( RESORT_RECV_DATA *p_wk, RESORT_DATA_PARAM param, 
     p_wk->placeID   = data;
     break;
   case RESORT_DATA_PARAM_WANT_SPOT:
-    p_wk->want_spot = data;
+    p_wk->want_spot = data - resort_go_00;
     break;
   case RESORT_DATA_PARAM_NATION:
     p_wk->basic1.nation = data;

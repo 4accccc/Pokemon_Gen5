@@ -253,18 +253,15 @@ extern VMCMD_RESULT EvCmdResortGetMsgID( VMHANDLE *p_core, void *p_wk_adrs )
               if( GFUser_GetPublicRand(3) == 0 )
               {
                 data = RESORT_BINARY_SPOT_GetData( p_binary_spot, cnt, RESORT_BINARY_SPOT_PARAM_MSG_00 );
+                RESORT_PEOPLE_SetData( p_people, RESORT_DATA_PARAM_WANT_SPOT, data );
                 break;
               }
             }
             cnt++;
             cnt%=RESORT_BINARY_SPOT_GetMax( p_binary_spot );
           }
- 
         }
-
-        RESORT_PEOPLE_SetData( p_people, RESORT_DATA_PARAM_WANT_SPOT, data );
       }
-
       *p_ret_wk = data;
     }
     break;
@@ -1205,7 +1202,6 @@ VMCMD_RESULT EvCmdResortSetSpot( VMHANDLE *p_core, void *p_wk_adrs )
 
   //何も起こらないときのメッセージ
   *ret_grade_msg  = resort_sys_08;
-  *ret_eff_msg    = 0;
   *ret_lvup       = FALSE;
   *ret_city_lvup  = FALSE;
 
@@ -1215,6 +1211,7 @@ VMCMD_RESULT EvCmdResortSetSpot( VMHANDLE *p_core, void *p_wk_adrs )
     GF_ASSERT(0);
     return VMCMD_RESULT_CONTINUE;
   }
+  *ret_eff_msg    = RESORT_BINARY_SPOT_GetData( p_spot, index, RESORT_BINARY_SPOT_PARAM_EFF_MSG );
 
   //TODO
   if( lv >= 2 )
@@ -1283,7 +1280,6 @@ VMCMD_RESULT EvCmdResortSetSpot( VMHANDLE *p_core, void *p_wk_adrs )
     if( is_good )
     {
       *ret_grade_msg = resort_sys_03 + grade;
-      *ret_eff_msg   = RESORT_BINARY_SPOT_GetData( p_spot, index, RESORT_BINARY_SPOT_PARAM_EFF_MSG );
       WORDSET_RegisterNumber( p_wordset, 2, add_exp, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
       exp = RESORT_INSTITUTION_DATA_GetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_EXP );
       next_exp = RESORT_BINARY_SHOP_DATA_GetData( cp_binary_shop_data, RESORT_BINARY_SHOP_PARAM_NEXT_EXP );
