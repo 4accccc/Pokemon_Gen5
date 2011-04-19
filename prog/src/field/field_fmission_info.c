@@ -87,6 +87,8 @@ typedef enum{
 #define SCORE_UP_VIEW_TIME  (60)
 #define TIME_BONUS_VIEW_TIME  (60)
 
+#define FMINFO_SE_SCOREUP (SEQ_SE_PC_ON)
+
 #include "field_fmission_info_def.h"
 
 //===================================================================================
@@ -606,6 +608,7 @@ static void taskAddCheck_ScoreUp( FIELD_FMISSION_INFO* wk )
   }
   wk->score_up_ct = SCORE_UP_VIEW_TIME;
   LINK_FESTIVAL_FInfoScoreInc( wk->fest_sys );
+  PMSND_PlaySE( FMINFO_SE_SCOREUP );
 
   if( wk->t_scoreup_f ){
     return; //すでにタスクがあるので、時間更新だけ

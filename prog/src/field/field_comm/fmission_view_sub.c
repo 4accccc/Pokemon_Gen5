@@ -387,8 +387,27 @@ BOOL FMissionView_SubSeqLogEntry( FMISSION_VIEW_PTR wk )
     //スクロールリクエスト
     list_ScrollReq( wk, wk->newLog, wk->newLogIdx, SCROLL_DOWN );
     wk->ctrl.view_top = wk->newLogOfs;
-  
-    BVCSound_PlaySE( FVIEW_SE_NEW_PLAYER );
+
+    
+    {
+      FMISSION_LOG_ACTION action = FMISSION_LOG_GetAction( wk->newLog );
+ 
+      switch( action ){
+      case FMISSION_LOG_ACT_FREEWORD:
+        BVCSound_PlaySE( FVIEW_SE_FREEWORD );
+        break;
+      case FMISSION_LOG_ACT_NEW_ENTRY:
+        BVCSound_PlaySE( FVIEW_SE_NEW_PLAYER );
+        break;
+      default:
+        if( FEST_MISSION_IsScoreUp( wk->fmwk, action, FMISSION_LOG_GetActionParam( wk->newLog ))){
+          BVCSound_PlaySE( FVIEW_SE_SCOREUP );
+        }else{
+          BVCSound_PlaySE( FVIEW_SE_NORMAL_LOG );
+        }
+        break;
+      }
+    } 
     wk->sub_seq++;
     break;
   case 1:

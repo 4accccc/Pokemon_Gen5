@@ -62,6 +62,9 @@
 #define CWIN_STR_OX02  (8)
 #define CWIN_STR_OY    (16)
 
+#define EVFMISSION_SE_FADE_EFF  (SEQ_SE_W295_01)
+#define EVFMISSION_SE_END_EFF   (SEQ_SE_PC_LOGOFF)
+
 typedef struct _POWER_FLD_EFF{
   u8  ct;
   GAMESYS_WORK * gsys;
@@ -381,7 +384,7 @@ static GMEVENT_RESULT event_FestMissionStartMain(GMEVENT * event, int *  seq, vo
       break;
     }
     GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT, 0, 16, DISP_FADE_SPEED );
-    PMSND_PlaySE( SEQ_SE_W295_01 );
+    PMSND_PlaySE( EVFMISSION_SE_FADE_EFF );
 
     (*seq)++;
     break;
@@ -422,6 +425,7 @@ static GMEVENT_RESULT event_FestMissionEndMain(GMEVENT * event, int *  seq, void
     }else{  //タイムアップの場合
       evcall_MsgPrint( wk->gsys, event, wk->fmb, wk->msgData, msg_fmission_end_timeup );
     }
+    PMSND_PlaySE( EVFMISSION_SE_END_EFF );
     (*seq)++;
     break;
   case 1:
@@ -440,7 +444,7 @@ static GMEVENT_RESULT event_FestMissionEndMain(GMEVENT * event, int *  seq, void
     if( PMSND_CheckPlayBGM() == FALSE ){
       LINK_FESTIVAL_MissionEnd( wk->fest_sys );
       GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT, 0, 16, DISP_FADE_SPEED );
-      PMSND_PlaySE( SEQ_SE_W295_01 );
+      PMSND_PlaySE( EVFMISSION_SE_FADE_EFF );
       GMEVENT_CallEvent(event, EVENT_FSND_PopBGM( wk->gsys, FSND_FADE_NONE, FSND_FADE_FAST));
       (*seq)++;
     }
