@@ -1094,8 +1094,14 @@ static void Resort_Recv_Data_InitSetup( RESORT_RECV_DATA *p_wk, RESORT_COMM_TYPE
 
   //初期生成データ TODO
   RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_COMM_ID,type);
-  RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_PRESENT_ID, 17+GFUser_GetPublicRand( 20 ));
-  RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_PRESENT_NUM, 1);
+
+  //TODO α用に２０％の確率でもらう
+  if( 20 > GFUser_GetPublicRand(100) )
+  {
+    RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_PRESENT_ID, 17+GFUser_GetPublicRand( 20 ));
+    RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_PRESENT_NUM, 1);
+  }
+
   {
     //タイプによってなりたいものがきまる
     RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_WANT_JOB, GFUser_GetPublicRand( RESORT_RESIDENT_TYPE_MAX ) );

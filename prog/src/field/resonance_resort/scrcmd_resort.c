@@ -203,7 +203,7 @@ extern VMCMD_RESULT EvCmdResortGetMsgID( VMHANDLE *p_core, void *p_wk_adrs )
   switch( param )
   {
   case RESORT_MSGID_RECENT:
-    *p_ret_wk = resort_history_00; //TODO
+    *p_ret_wk = resort_history_00 + GFUser_GetPublicRand(67); //TODO
     break;
   case RESORT_MSGID_WHERETOGO:
     {
