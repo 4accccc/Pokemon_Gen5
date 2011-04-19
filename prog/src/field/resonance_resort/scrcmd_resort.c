@@ -209,7 +209,7 @@ extern VMCMD_RESULT EvCmdResortGetMsgID( VMHANDLE *p_core, void *p_wk_adrs )
     {
       u32 data = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_WANT_SPOT, NULL );
 
-      if( data == 0 )
+      if( data <= resort_go_00 )
       {
         int i;
         //街レベルから弱中強グループをランダム選出

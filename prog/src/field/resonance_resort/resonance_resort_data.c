@@ -1089,9 +1089,16 @@ BOOL RESORT_RECV_DATA_IsSameOwnerBeacon( const RESORT_RECV_DATA *cp_wk, const RE
 }
 
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  初回生成時の設定
+ *
+ *	@param	RESORT_RECV_DATA *p_wk  ワーク
+ *	@param	type                    通信タイプ
+ */
+//-----------------------------------------------------------------------------
 static void Resort_Recv_Data_InitSetup( RESORT_RECV_DATA *p_wk, RESORT_COMM_TYPE type )
 {
-
   //初期生成データ TODO
   RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_COMM_ID,type);
 
