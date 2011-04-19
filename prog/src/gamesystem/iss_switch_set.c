@@ -324,6 +324,14 @@ void ISS_SWITCH_SET_SetBGMVolume( const ISS_SWITCH_SET* set )
 void ISS_SWITCH_SET_SetVlolume( ISS_SWITCH_SET* set, const int volume, const u16 fadeFrame )
 {
 
+  // フェードフレームが0なら即時反映
+  if( fadeFrame == 0 )
+  {
+    set->volume = volume;
+    set->state = SWITCH_SET_STATE_DEFAULT;
+    return;
+  }
+
   // 状態変える
   if( set->volume < volume )     {set->state = SWITCH_SET_STATE_VOLUME_UP;}
   else if( set->volume > volume ){set->state = SWITCH_SET_STATE_VOLUME_DOWN;}
@@ -340,6 +348,13 @@ void ISS_SWITCH_SET_SetVlolume( ISS_SWITCH_SET* set, const int volume, const u16
   set->tmpVolume = GFL_STD_Abs( set->volume - volume );
   // 現在の音量を最大音量として保存
   set->tmpMaxVolume = set->volume;
+
+  ICHI_Printf("======================================\n");
+  ICHI_Printf("スイッチISS 音量フェード開始\n");
+  if( set->state == SWITCH_SET_STATE_VOLUME_UP ){ ICHI_Printf("音量UP\n"); }
+  if( set->state == SWITCH_SET_STATE_VOLUME_DOWN ){ ICHI_Printf("音量DOWN\n"); }
+  ICHI_Printf("フェードフレーム %d \n", set->fadeFrame);
+  ICHI_Printf("現在音量 %d 差 %d \n", set->volume, set->tmpVolume);
 }
 
 //===============================================================================
