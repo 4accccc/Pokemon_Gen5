@@ -210,7 +210,7 @@ EVENT_START   ev_pos_c06gym0101_guide
 		_OBJ_ANIME_WAIT()
 
 		//アイテム入手フラグで分岐
-		IF FLAG_OFF( FE_C04GYM_ITEM ) THEN
+		IF FLAG_OFF( FE_C06GYM_ITEM ) THEN
       // おいしいみず入手イベント
       _BALLOONWIN_OBJMSG( msg_c06gym0101_glasses_01, C06GYM0101_DANPEI_01 )
       _BALLOONWIN_CLOSE()
