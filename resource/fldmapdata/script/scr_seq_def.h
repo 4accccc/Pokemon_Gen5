@@ -13448,5 +13448,22 @@
     .short  \ret_wk
     .endm
 
+//--------------------------------------------------------------
+/**
+ * @def _INFINITY_DUNGEON_ACTION_ELEVATOR
+ * @brief 無限ダンジョン内のエレベータを操作
+ * @param elev_id   エレベータNO
+ * @param is_open   TRUE=開ける、FALSE=閉める
+ */
+//--------------------------------------------------------------
+#define _INFINITY_DUNGEON_ACTION_ELEVATOR( elev_id ,is_open ) \
+    _ASM_INFINITY_DUNGEON_ACTION_ELEVATOR elev_id ,is_open
+
+    .macro  _ASM_INFINITY_DUNGEON_ACTION_ELEVATOR elev_id ,is_open
+    .short  EV_SEQ_INFINITY_DUNGEON_ELEVETOR_ACTION
+    .short  \elev_id
+    .short  \is_open
+    .endm
+
 //======================================================================
 //======================================================================

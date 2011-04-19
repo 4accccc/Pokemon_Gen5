@@ -151,22 +151,22 @@ static const u16 sc_white_zone_table[] = {
 // エレベータ部屋のエレベータ位置(ブラック)
 //=====================================
 static const GRID_DATA sc_black_elevator_pos = {
-  6 , 0 , 1 ,
+  6 , 0 , 0 ,
 };
 
 //-------------------------------------
 // エレベータ部屋のエレベータ位置(ホワイト)
 //=====================================
 static const GRID_DATA sc_white_elevator_pos = {
-  6 , 0 , 1 ,
+  6 , 0 , 0 ,
 };
 
 //-------------------------------------
 // エレベータ部屋のエレベータ位置(受付)
 //=====================================
 static const GRID_DATA sc_reception_elevator_pos[] = {
-  7 , 0 , 1 , // 左
-  11, 0 , 1 , // 右
+  7 , 0 , 2 , // 左
+  11, 0 , 2 , // 右
 };
 
 //-------------------------------------
@@ -593,6 +593,7 @@ extern void INFINITY_DUNGEON_WarpNextFloor( SCRIPT_WORK *p_scr_work, GAMESYS_WOR
     p_wk->next_floor = floor_no%INFINITYDUNGEON_FLOOR_MAX;
     p_wk->map_change_type = MAP_CHAGE_TYPE_FOOR;
     p_wk->p_dungeon_data = p_dungeon_data;
+    p_wk->warp_dir = WARP_DIR_DOWN;
   }
   
   // データを生成するためにフロアを設定する
@@ -666,7 +667,6 @@ static GMEVENT_RESULT MapWarpEvent( GMEVENT *event, int *seq, void *wk )
 //      GetFloorData( p_wk->p_save ,&p_wk->dungeon_data );
 
       // フェードアウト
-      PMSND_PlaySE( SEQ_SE_KAIDAN );
       MMDLSYS_PauseMoveProc( FIELDMAP_GetMMdlSys( p_wk->p_field_work ) );
       GMEVENT_CallEvent( event, EVENT_FieldFadeOut_PlayerDir( p_wk->p_gsys, p_wk->p_field_work ) );
       (*seq)++;
@@ -2066,9 +2066,6 @@ static void SetBUildModel( MAP_CHAGE_EVENT_WORK *p_wk , ROOM_DATA* p_room_data)
     p_bmodel_id_table = sc_white_bmodel_table;
   }
   
-  // ブラック（テスト
-  p_bmodel_id_table = sc_black_bmodel_table;
-
   // 配置
   if( p_room_data->room_type != ROOM_TYPE_BOSS )
   {
@@ -2218,6 +2215,8 @@ static u16 GetFieldDir( u16 warp_dir )
     return DIR_LEFT;
   case WARP_DIR_RIGHT:
     return DIR_RIGHT;
+  case WARP_INFORMATION:
+    return WARP_DIR_DOWN;
   default:
     return WARP_DIR_DOWN;
   }

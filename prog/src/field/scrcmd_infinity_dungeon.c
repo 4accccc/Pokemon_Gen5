@@ -279,6 +279,32 @@ VMCMD_RESULT EvCmdInfinityDungeonBattleTrainer( VMHANDLE *p_core, void *p_wk_adr
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  エレベーターを開ける
+ *
+ *	@param	*p_core
+ *	@param	*p_wk_adrs 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdInfinityDungeonOpenElevator( VMHANDLE *p_core, void *p_wk_adrs )
+{
+  INFINITYDUNGEON_SAVE  *p_save;
+  SCRCMD_WORK *p_wk = p_wk_adrs;
+  SCRIPT_WORK   *p_scr_wk = SCRCMD_WORK_GetScriptWork( p_wk );
+  GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( p_gamesys );
+  u16 id  = SCRCMD_GetVMWorkValue( p_core, p_wk );
+  BOOL is_open  = SCRCMD_GetVMWorkValue( p_core, p_wk );
+
+  SCRIPT_CallEvent(
+      p_scr_wk, INFINITY_DUNGEON_EVENT_ElevatorOpen(p_gamesys,p_fieldmap,is_open,id) );
+
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  無限ダンジョン内に配置されているボストレーナーナンバーを取得
  *
  *	@param	*p_core

@@ -51,6 +51,9 @@ INIT_EVENT_END
 //	無限ダンジョン内ワープ(上)
 //-----------------------------------------------------------------------------
 EVENT_START  ev_infinity_dungeon_warp_up
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_set_up_dir )
+  _OBJ_ANIME_WAIT()
+	_SE_PLAY( SEQ_SE_KAIDAN )
   _INFINITY_DUNGEON_WARP(WARP_DIR_UP)
 EVENT_END
 
@@ -58,6 +61,9 @@ EVENT_END
 //	無限ダンジョン内ワープ(下)
 //-----------------------------------------------------------------------------
 EVENT_START  ev_infinity_dungeon_warp_down
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_set_down_dir )
+  _OBJ_ANIME_WAIT()
+	_SE_PLAY( SEQ_SE_KAIDAN )
   _INFINITY_DUNGEON_WARP(WARP_DIR_DOWN)
 EVENT_END
 
@@ -65,6 +71,9 @@ EVENT_END
 //	無限ダンジョン内ワープ(左)
 //-----------------------------------------------------------------------------
 EVENT_START  ev_infinity_dungeon_warp_left
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_set_left_dir )
+  _OBJ_ANIME_WAIT()
+	_SE_PLAY( SEQ_SE_KAIDAN )
   _INFINITY_DUNGEON_WARP(WARP_DIR_LEFT)
 EVENT_END
 
@@ -72,6 +81,9 @@ EVENT_END
 //	無限ダンジョン内ワープ(右)
 //-----------------------------------------------------------------------------
 EVENT_START  ev_infinity_dungeon_warp_right
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_set_right_dir )
+  _OBJ_ANIME_WAIT()
+	_SE_PLAY( SEQ_SE_KAIDAN )
   _INFINITY_DUNGEON_WARP(WARP_DIR_RIGHT)
 EVENT_END
 
@@ -87,6 +99,16 @@ EVENT_START  ev_infinity_dungeon_elevator
   DEFINE_LOCAL LWK_NOW_FLOOR
   DEFINE_LOCAL LWK_NOW_AREA
   DEFINE_LOCAL LWK_DRAW_FLOOR_NO
+
+  // エレベータを開ける
+  _INFINITY_DUNGEON_ACTION_ELEVATOR( 0 ,TRUE)
+
+  // エレベータに乗り込む
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_elev_in_02 )
+  _OBJ_ANIME_WAIT()
+
+  // エレベータを閉める
+  _INFINITY_DUNGEON_ACTION_ELEVATOR( 0 ,FALSE)
 
   // 案内メッセージ
   _SYSWIN_MSG( msg_elevator_01, POS_DOWN )
@@ -135,19 +157,31 @@ EVENT_START  ev_infinity_dungeon_elevator
   // 選択後処理
   IF ($LWK_SELECT_FLOOR != EV_WIN_B_CANCEL)&&($LWK_SELECT_FLOOR != 0xff) THEN
     IF $LWK_SELECT_FLOOR != 0xf0 THEN
-      // 選択フロア
-      _DEBUG_PRINT_WK(LWK_SELECT_FLOOR)
+      
+      // エレベータ移動音
+      _SE_PLAY( SEQ_SE_FLD_23 )
 
       // エレベータから出る
       _RESERVE_SCRIPT( SCRID_INFINITY_DUNGEON_OUT_ELEVATOR )
 
       // 選択フロアまで移動
       _INFINITY_DUNGEON_MOVE_FLOOR( LWK_SELECT_FLOOR )
+      _SE_STOP()
     ELSE
       // かえるしょり
       _INFINITY_DUNGEON_WARP(WARP_INFORMATION)
       _RESERVE_SCRIPT( SCRID_INFINITY_DUNGEON_COMEBACK )
     ENDIF
+  ELSE
+    // エレベータを開ける
+    _INFINITY_DUNGEON_ACTION_ELEVATOR( 0 ,TRUE)
+    
+    // エレベータから降りる
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_elev_out )
+    _OBJ_ANIME_WAIT()
+
+    // エレベータを閉める
+    _INFINITY_DUNGEON_ACTION_ELEVATOR( 0 ,FALSE)
   ENDIF
 }
 EVENT_END
@@ -276,15 +310,29 @@ select_area:
 	    _OBJ_ANIME_WAIT()
 
       // 主人公をエレベータまで移動
-      _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_elev_in )
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_elev_in_01 )
 	    _OBJ_ANIME_WAIT()
       
+      // エレベータを開ける
+      _INFINITY_DUNGEON_ACTION_ELEVATOR( 0 ,TRUE)
+
+      // エレベータに乗り込む
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_elev_in_02 )
+	    _OBJ_ANIME_WAIT()
+ 
+      // エレベータを閉める
+      _INFINITY_DUNGEON_ACTION_ELEVATOR( 0 ,FALSE)
+      
+      // エレベータ移動音
+      _SE_PLAY( SEQ_SE_FLD_23 )
+
       // 無限ダンジョン生成シードを設定
       // 内部で初期化も行っている
       _INFINITY_DUNGEON_INIT_SEED()
 
       // スタートフロアまで移動
       _INFINITY_DUNGEON_MOVE_FLOOR( LWK_AREA_MENU )
+      _SE_STOP()
   
       // ボストレーナーの見た目を設定
       _INFINITY_DUNGEON_GET_BOSS_OBJ_CODE(OBJCHRWORK0)
@@ -309,11 +357,22 @@ _RET
 //-----------------------------------------------------------------------------
 EVENT_START  ev_infinity_dungeon_comeback
 {
+   
+  // エレベータを開ける
+  _INFINITY_DUNGEON_ACTION_ELEVATOR( 0 ,TRUE)
+
+   // エレベータから降りる
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_elev_out )
+  _OBJ_ANIME_WAIT()
+
+  // エレベータを閉める
+  _INFINITY_DUNGEON_ACTION_ELEVATOR( 0 ,FALSE )
+
   // 道をあける
   _OBJ_ANIME( OBJ_INFORMATION, anm_move_make_room_l )
 	_OBJ_ANIME_WAIT()
   
-  // 主人公をエレベータまで移動
+  // 主人公をエレベータ受付まで移動
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_elev_out_reception )
   _OBJ_ANIME_WAIT()
   
@@ -328,9 +387,19 @@ EVENT_END
 //-----------------------------------------------------------------------------
 EVENT_START  ev_infinity_dungeon_out_elevator
 {
-  // 主人公をエレベータまで移動
+  _SE_PLAY( SEQ_SE_FLD_87 ) //エレベーター到着音
+  _SE_WAIT()
+            
+  // エレベータを開ける
+  _INFINITY_DUNGEON_ACTION_ELEVATOR( 0 ,TRUE)
+
+  // 主人公をエレベータから降りる
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_elev_out )
   _OBJ_ANIME_WAIT()
+   
+  // エレベータを閉める
+  _INFINITY_DUNGEON_ACTION_ELEVATOR( 0 ,FALSE)
+
 }
 EVENT_END
 
@@ -573,6 +642,7 @@ _RET
 _ANIME_LABEL	anm_move_make_room_l
 	_ANIME_DATA	AC_WALK_U_8F,1
   _ANIME_DATA	AC_WALK_R_8F,1
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
   _ANIME_DATA AC_DIR_L,1
 	_ANIME_DATA	ACMD_END,0
 
@@ -582,32 +652,66 @@ _ANIME_LABEL	anm_move_make_room_l
 _ANIME_LABEL	anm_move_default_l
   _ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	AC_WALK_D_8F,1
-  _ANIME_DATA AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 // エレベータまで移動(主人公)
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_move_elev_in
-	_ANIME_DATA	AC_WALK_U_8F,3
+_ANIME_LABEL	anm_move_elev_in_01
+	_ANIME_DATA	AC_WALK_U_8F,2
   _ANIME_DATA	AC_WALK_L_8F,2
-	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// エレベータまで移動(主人公)
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_move_elev_in_02
+	_ANIME_DATA	AC_WALK_U_8F,2
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 // 上に向く
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_set_up_dir
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
   _ANIME_DATA AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 下に向く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_set_down_dir
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 右に向く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_set_right_dir
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 左に向く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_set_left_dir
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA AC_DIR_L,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 // 受付まで移動(主人公)
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_move_elev_out_reception
-	_ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA	AC_WALK_D_8F,1
   _ANIME_DATA	AC_WALK_R_8F,2
-	_ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA	AC_WALK_D_8F,2
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
   _ANIME_DATA AC_DIR_U,1
 	_ANIME_DATA	ACMD_END,0
 
@@ -615,6 +719,6 @@ _ANIME_LABEL	anm_move_elev_out_reception
 // 受付まで移動(主人公)
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_move_elev_out
-  _ANIME_DATA	AC_WALK_D_8F,1
+  _ANIME_DATA	AC_WALK_D_8F,2
 	_ANIME_DATA	ACMD_END,0
 

@@ -31,7 +31,6 @@
 //-------------------------------------
 ///	モデル管理
 //=====================================
-//モデルID
 typedef enum
 {
   MODELID_ELEVATOR_1,
@@ -153,6 +152,17 @@ static const GFL_G3D_UTIL_SETUP sc_g3d_util_setup =
   MODELID_MAX,      //オブジェクト数
 };
 
+//-------------------------------------
+///	エレベータアニメーションフレーム定義
+//=====================================
+typedef enum
+{
+  ELEVATOR_START_FRAME_OPEN   = 0,
+  ELEVATOR_END_FRAME_OPEN     = 14,
+  ELEVATOR_START_FRAME_CLOSE  = 15,
+  ELEVATOR_END_FRAME_CLOSE    = 29,
+}ELEVATOR_ANIME_FRAME;
+
 
 //=============================================================================
 /**
@@ -189,6 +199,16 @@ typedef struct {
   INF_DUNGEON_DATA  *p_dungeon_data;
 }INF_GIMMICK_WK;
 
+//-------------------------------------
+///	エレベータ開閉イベントワーク
+//=====================================
+typedef struct {
+  FIELDMAP_WORK   *p_fieldmap;
+  INF_GIMMICK_WK  *p_gimmick_wk;
+  u8              model_no;
+  BOOL            is_open;
+}INF_ELEVTER_EVENT_WK;
+
 //=============================================================================
 /**
  *					プロトタイプ宣言
@@ -198,6 +218,7 @@ static void InitElevatorGimmicWork( INF_ELEVATOR_WK *p_wk ,FIELDMAP_WORK *p_fiel
 static void MapModelInit( INF_ELEVATOR_WK *p_wk );
 static const ELEVATOR_SET_DATA* GetElevatorTable( INF_ELEVATOR_WK *p_wk );
 static u32 GetDungeonColor( INF_ELEVATOR_WK *p_wk );
+static GMEVENT_RESULT ElevatorOpenEvent( GMEVENT *p_event, int *seq, void *wk );
 
 //----------------------------------------------------------------------------
 /**
@@ -331,12 +352,14 @@ static void MapModelInit( INF_ELEVATOR_WK *p_wk )
         // フレームの初期化
         FLD_EXP_OBJ_ValidCntAnm(p_model->p_ex_obj, MODEL_MANAGER_FLD_EXP_OBJ_UNIT_ID, p_model->modelID, 0, TRUE);
 
-//        // アニメーション取得
-//        exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_model->p_ex_obj, MODEL_MANAGER_FLD_EXP_OBJ_UNIT_ID, p_model->modelID, 0 );
-//
-//        // ループ再生
-//        FLD_EXP_OBJ_ChgAnmStopFlg( exobj_anm, FALSE );
-//        FLD_EXP_OBJ_ChgAnmLoopFlg( exobj_anm, TRUE );
+        // アニメーション取得
+        exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_model->p_ex_obj, MODEL_MANAGER_FLD_EXP_OBJ_UNIT_ID, p_model->modelID, 0 );
+
+        // アニメーション停止
+        FLD_EXP_OBJ_ChgAnmStopFlg( exobj_anm, TRUE );
+
+        // ループ再生
+        //FLD_EXP_OBJ_ChgAnmLoopFlg( exobj_anm, FALSE );
       }
     }
   }
@@ -402,5 +425,107 @@ INF_DUNGEON_DATA* INFINITY_DUNGEON_DataGet( FIELDMAP_WORK *p_fieldmap )
   p_wk = GMK_TMP_WK_GetWork(p_fieldmap, INF_GIMMICK_WORK_ASSIGN_ID);
 
   return p_wk->p_dungeon_data;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  無限ダンジョンのエレベータギミック起動
+ *
+ *	@param	*p_gsys
+ *	@param	*p_fieldmap 
+ *	@param	is_open      TRUE = 開く
+ *	@param	elev_no     エレベータ番号
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+GMEVENT * INFINITY_DUNGEON_EVENT_ElevatorOpen(GAMESYS_WORK *p_gsys, FIELDMAP_WORK *p_fieldmap ,BOOL is_open ,int elev_no)
+{
+  GMEVENT   *event;
+  INF_ELEVTER_EVENT_WK *p_wk;
+
+  // イベント作成
+  event = GMEVENT_Create(
+      p_gsys, NULL, ElevatorOpenEvent, sizeof(INF_ELEVTER_EVENT_WK) );
+
+  // ワークに値をセット
+	p_wk = GMEVENT_GetEventWork( event );
+  p_wk->p_fieldmap = p_fieldmap;
+  p_wk->p_gimmick_wk = GMK_TMP_WK_GetWork(p_fieldmap, INF_GIMMICK_WORK_ASSIGN_ID);
+  p_wk->model_no = elev_no;
+  p_wk->is_open = is_open;
+
+  return( event );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  エレベータを開くイベント
+ *
+ *	@param	*p_event
+ *	@param	*seq
+ *	@param	*wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT_RESULT ElevatorOpenEvent( GMEVENT *p_event, int *seq, void *wk )
+{
+  fx32 start_frame ,end_frame;
+  fx32 frame;
+  EXP_OBJ_ANM_CNT_PTR exobj_anm;
+  INF_ELEVTER_EVENT_WK *p_wk = wk;
+  u8 mode_no = p_wk->model_no;
+  MODEL *p_model = &p_wk->p_gimmick_wk->elev_wk.model[mode_no];
+  u32 sound_id; 
+
+  // アニメーションの取得
+  exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_model->p_ex_obj, MODEL_MANAGER_FLD_EXP_OBJ_UNIT_ID, p_model->modelID, 0 );
+
+  // アニメーションフレーム定義
+  if( p_wk->is_open == TRUE )
+  {
+    start_frame = ELEVATOR_START_FRAME_OPEN << FX32_SHIFT;
+    end_frame = ELEVATOR_END_FRAME_OPEN << FX32_SHIFT;
+    sound_id = SEQ_SE_FLD_136;  //エレベータの開く音
+  }
+  else
+  {
+    start_frame = ELEVATOR_START_FRAME_CLOSE << FX32_SHIFT;
+    end_frame = ELEVATOR_END_FRAME_CLOSE << FX32_SHIFT;
+    sound_id = SEQ_SE_FLD_137;  //エレベータのしまる音
+  }
+
+  // アニメーション
+  switch( *seq )
+  {
+    // アニメーションの初期化
+  case 0:
+    {
+      // 閉じた状態に初期化
+      FLD_EXP_OBJ_SetObjAnmFrm(p_model->p_ex_obj, MODEL_MANAGER_FLD_EXP_OBJ_UNIT_ID, p_model->modelID, 0 , start_frame);
+      FLD_EXP_OBJ_ChgAnmStopFlg( exobj_anm, FALSE );
+      
+      // 開閉音
+      PMSND_PlaySE( sound_id );
+      (*seq)++;
+
+    }
+    break;
+    // アニメーションの終了待ち
+  case 1:
+    {
+      frame = FLD_EXP_OBJ_GetObjAnmFrm(p_model->p_ex_obj, MODEL_MANAGER_FLD_EXP_OBJ_UNIT_ID, p_model->modelID, 0 );
+      if( frame >= end_frame && (PMSND_CheckPlaySE()))
+      {
+        // アニメーション停止
+        FLD_EXP_OBJ_ChgAnmStopFlg( exobj_anm, TRUE );
+        return GMEVENT_RES_FINISH;
+      }
+    }
+    break;
+  }
+  return GMEVENT_RES_CONTINUE;
 }
 

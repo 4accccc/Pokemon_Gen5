@@ -24,4 +24,5 @@ extern void INFINITY_DUNGEON_Setup( FIELDMAP_WORK *p_fieldmap );
 extern void INFINITY_DUNGEON_End( FIELDMAP_WORK *p_fieldmap );
 extern void INFINITY_DUNGEON_Move( FIELDMAP_WORK *p_fieldmap );
 extern INF_DUNGEON_DATA* INFINITY_DUNGEON_DataGet( FIELDMAP_WORK *p_fieldmap );
+extern GMEVENT * INFINITY_DUNGEON_EVENT_ElevatorOpen(GAMESYS_WORK *p_gsys, FIELDMAP_WORK *p_fieldmap ,BOOL inOpen ,int elev_no);
 
