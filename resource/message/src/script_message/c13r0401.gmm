@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-18T19:42:51"/>
+	<create user="matsumiya" host="W00224" date="2011-04-19T19:29:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1300" top="169" right="2005" bottom="797" maximized="no" rayout="Vertical2">
+	<dialog left="1308" top="133" right="2013" bottom="761" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -291,6 +291,47 @@
 		<operation add_message="no" header_setting="no" tag_setting="no" output_setting="no" display="no" sort="no" flowchart_window="no"/>
 	</lock>
 
+
+	<row id="msg_c13r0401_swrival_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・c13でのイベント後、出現
+　カウンター前に配置
+・はい/いいえの選択肢表示
+・はい　→swrival_02
+　いいえ→swrival_04</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『オマエ
+ヒウンに　いくんだろ？</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『オマエ
+ヒウンに　いくんだろ？</language>
+	</row>
+
+	<row id="msg_c13r0401_swrival_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・続けてswrival_03</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">プラズマだん　おいかけるからな▼</language>
+		<language name="JPN_KANJI" width="256">プラズマだん　おいかけるからな▼</language>
+	</row>
+
+	<row id="msg_c13r0401_swrival_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・上を向いて
+・続けてpilot_02</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">な！　ヒウンいきの　ふね
+さっさと　だしてくれよ▼</language>
+		<language name="JPN_KANJI" width="256">な！　ヒウンいきの　ふね
+さっさと　だしてくれよ▼</language>
+	</row>
+
+	<row id="msg_c13r0401_swrival_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・いいえ選択時</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">なんだよ！</language>
+		<language name="JPN_KANJI" width="256">なんだよ！</language>
+	</row>
 
 	<row id="msg_c13r0401_pilot_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
@@ -339,10 +380,10 @@
 		<language name="JPN_KANJI" width="256">ヒウン行きの　船は　ここから！</language>
 	</row>
 
-	<row id="msg_c13r0401_02_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c13r0401_veteranw_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・船長登場前</comment>
-		<attribute name="キャラ指定">？？？</attribute>
+		<attribute name="キャラ指定">VETERANW</attribute>
 		<language name="JPN" width="256">せんちょうなら　ポケウッド！▼
 なんでも　むすめの　ホミカちゃんが
 ジムリーダーと　バンドリーダーの▽
@@ -355,10 +396,10 @@
 自分は　船長と　役者を　するってさ</language>
 	</row>
 
-	<row id="msg_c13r0401_02_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c13r0401_veteranw_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・船長登場後</comment>
-		<attribute name="キャラ指定">？？？</attribute>
+		<attribute name="キャラ指定">VETERANW</attribute>
 		<language name="JPN" width="256">じぶんの　じんせい　だもの▼
 ひとつのことを　つきつめるのも
 いろんなことを　やるのも▽

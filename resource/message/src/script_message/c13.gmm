@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-19T15:41:55"/>
+	<create user="matsumiya" host="W00224" date="2011-04-19T19:23:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="210"/>
+		<comment position="4" width="255"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="1313" top="118" right="2018" bottom="746" maximized="no" rayout="Vertical2">
+	<dialog left="1308" top="133" right="2013" bottom="761" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -294,7 +294,7 @@
 
 	<row id="msg_c13_pilot_01" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
 		<comment>♂
-・pos（GRIDX=00、GRIDZ=00）を
+・pos（GRIDX=201、GRIDZ=650～652）を
 　踏むとイベント起動。カメラ移動</comment>
 		<attribute name="キャラ指定">PILOT
 船長</attribute>
@@ -403,6 +403,260 @@
 いわゆる　映画スタジオ　だが
 いまは　オーディションを　していて▽
 関係者以外　入れないぞ！▼</language>
+	</row>
+
+	<row id="msg_c13_tvt_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>・GIRDX=214～220、GRIDZ=646で発生
+・ママからの連絡
+・コール音再生と同時に表示
+・コール音終了後に？？？を表示
+</comment>
+		<attribute name="キャラ指定">システム
+ライブキャスター</attribute>
+		<language name="JPN" width="256">ライブキャスターが　なっている</language>
+		<language name="JPN_KANJI" width="256">ライブキャスターが　鳴っている</language>
+	</row>
+
+	<row id="msg_c13_tvt_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>・メッセージ表示後、ライブキャスター画面へ</comment>
+		<attribute name="キャラ指定">システム
+ライブキャスター</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]は
+ライブキャスターを　つなげた▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
+ライブキャスターを　つなげた▼</language>
+	</row>
+
+	<row id="msg_c13_swleader2_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・ポケウッドでのチュートリアル終了後
+・GRIDX=239、GRIDZ=669、右向きに配置
+　※c13gym0101から削除しておく
+・ホミカ、ライバルに話しかける
+　もしくはpos（GRIDX=239、GRIDZ=670）を踏むと
+　このメッセージから
+・続けてneohakaim1_01</comment>
+		<attribute name="キャラ指定">SWLEADER2
+ジムリーダー
+ホミカ</attribute>
+		<language name="JPN" width="256">ホミカ『あんたらの　その　かっこう
+もしかして　プラズマだん？▼</language>
+		<language name="JPN_KANJI" width="256">ホミカ『あんたらの　その　かっこう
+もしかして　プラズマだん？▼</language>
+	</row>
+
+	<row id="msg_c13_neohakaim1_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>♂
+・ポケウッドでのチュートリアル終了後
+・GRIDX=240、GRIDZ=670、左向きに配置
+・続けてswrival_01</comment>
+		<attribute name="キャラ指定">ネオプラズマ団♂</attribute>
+		<language name="JPN" width="256">？？？『ノーノーノー！▼
+おれらは　ネオプラズマだん
+ネオ　ってところが　だいじだぜ▼</language>
+		<language name="JPN_KANJI" width="256">？？？『ノーノーノー！▼
+おれらは　ネオプラズマだん
+ネオ　ってところが　だいじだぜ▼</language>
+	</row>
+
+	<row id="msg_c13_swrival_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・ポケウッドでのチュートリアル終了後
+・GRIDX=238、GRIDZ=671、右向きに配置
+・続けてneohakaim2_01
+・1＝ライバル名</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『プラズマだん　ふっかつ？▼
+ポケモンを　すくう　といいつつ
+ただの　ポケモンどろぼう　だった▽
+おまえらだ！　どうせ　ここでも▽
+なにか　わるいこと　してたんだろ？▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『プラズマだん　ふっかつ？▼
+ポケモンを　すくう　といいつつ
+ただの　ポケモンどろぼう　だった▽
+おまえらだ！　どうせ　ここでも▽
+なにか　わるいこと　してたんだろ？▼</language>
+	</row>
+
+	<row id="msg_c13_neohakaim2_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>♂
+・ポケウッドでのチュートリアル終了後
+・GRIDX=241、GRIDZ=671、左向きに配置
+・続けてneohakaiw_01</comment>
+		<attribute name="キャラ指定">ネオプラズマ団♂</attribute>
+		<language name="JPN" width="256">なぞのおとこ『ぼくじょう　では
+ヨーテリーに　おいかけられるし▼</language>
+		<language name="JPN_KANJI" width="256">なぞのおとこ『ぼくじょう　では
+ヨーテリーに　おいかけられるし▼</language>
+	</row>
+
+	<row id="msg_c13_neohakaiw_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>♂
+・ポケウッドでのチュートリアル終了後
+・GRIDX=241、GRIDZ=669、左向きに配置
+・続けてneohakaim1_02</comment>
+		<attribute name="キャラ指定">ネオプラズマ団♀</attribute>
+		<language name="JPN" width="256">なぞのおんな『ここじゃ　からまれるし
+なんだか　イマイチね▼</language>
+		<language name="JPN_KANJI" width="256">なぞのおんな『ここじゃ　からまれるし
+なんだか　イマイチね▼</language>
+	</row>
+
+	<row id="msg_c13_neohakaim1_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>♂
+・続けてswrival_02</comment>
+		<attribute name="キャラ指定">ネオプラズマ団♂</attribute>
+		<language name="JPN" width="256">なぞのおとこ『まあ　いいさ▼
+こいつら　ボコボコにして
+ポケモンを　うばえば　いいだけさ▼
+ボーイ　アンド　ガール
+じゅんびが　できたら　かかってきな？▼</language>
+		<language name="JPN_KANJI" width="256">なぞのおとこ『まあ　いいさ▼
+こいつら　ボコボコにして
+ポケモンを　うばえば　いいだけさ▼
+ボーイ　アンド　ガール
+じゅんびが　できたら　かかってきな？▼</language>
+	</row>
+
+	<row id="msg_c13_swrival_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・一歩前に出てメッセージ
+・主人公操作可能
+・1＝ライバル名</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『ボコボコに　されるのは
+オマエたち　だけどな！▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ボコボコに　されるのは
+オマエたち　だけどな！▼</language>
+	</row>
+
+	<row id="msg_c13_swleader2_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・戦闘するまで繰り返し
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">SWLEADER2
+ジムリーダー
+ホミカ</attribute>
+		<language name="JPN" width="256">ホミカ『[1:00:トレーナー名:0]
+アナタも　てつだって！</language>
+		<language name="JPN_KANJI" width="256">ホミカ『[1:00:トレーナー名:0]
+アナタも　てつだって！</language>
+	</row>
+
+	<row id="msg_c13_swrival_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・戦闘するまで繰り返し
+・1＝ライバル名</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『！</language>
+		<language name="JPN_KANJI" width="256"></language>
+	</row>
+
+	<row id="msg_c13_neohakaim1_03" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>♂
+・はい/いいえの選択肢表示
+・はい　→neohakaim1_04
+　いいえ→neohakaim1_05</comment>
+		<attribute name="キャラ指定">ネオプラズマ団♂</attribute>
+		<language name="JPN" width="256">ネオプラズマだん『どうする？
+オレと　たたかうかい？</language>
+		<language name="JPN_KANJI" width="256">ネオプラズマだん『どうする？
+オレと　たたかうかい？</language>
+	</row>
+
+	<row id="msg_c13_neohakaim1_04" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>♂
+・はい選択時
+・メッセージ表示後、トレーナー戦闘へ</comment>
+		<attribute name="キャラ指定">ネオプラズマ団♂</attribute>
+		<language name="JPN" width="256">オマエの　ポケモン
+いただくと　するぜ！▼</language>
+		<language name="JPN_KANJI" width="256">オマエの　ポケモン
+いただくと　するぜ！▼</language>
+	</row>
+
+	<row id="msg_c13_neohakaim1_05" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>♂
+・いいえ選択時
+・再度話しかけたときはneohakaim1_03から</comment>
+		<attribute name="キャラ指定">ネオプラズマ団♂</attribute>
+		<language name="JPN" width="256">そうそう
+オレたちに　さからうなよ</language>
+		<language name="JPN_KANJI" width="256">そうそう
+オレたちに　さからうなよ</language>
+	</row>
+
+	<row id="msg_c13_neohakaim1_06" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>♂
+・戦闘後、フィールドでのメッセージ
+・メッセージ表示後、ネオプラズマ団
+　全員画面右に移動する
+・船のSE？（要検討）
+・続けてswrival_04</comment>
+		<attribute name="キャラ指定">ネオプラズマ団♂</attribute>
+		<language name="JPN" width="256">ネオプラズマだん『まさか！　こんな
+こどもたちに　ふかくを　とるとは……▼
+クッ……　ヒウンシティに　もどり▽
+たいせいを　たてなおすぞ！▼</language>
+		<language name="JPN_KANJI" width="256">ネオプラズマだん『まさか！　こんな
+こどもたちに　ふかくを　とるとは……▼
+クッ……　ヒウンシティに　もどり▽
+たいせいを　たてなおすぞ！▼</language>
+	</row>
+
+	<row id="msg_c13_swrival_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・続けてswleader2_05
+・1＝ライバル名</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『あいつら！　にげるための
+ふねを　ようい　してたのか▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『あいつら！　にげるための
+ふねを　ようい　してたのか▼</language>
+	</row>
+
+	<row id="msg_c13_swleader2_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・メッセージ後、画面左へ
+・続けてswleader2_06</comment>
+		<attribute name="キャラ指定">SWLEADER2
+ジムリーダー
+ホミカ</attribute>
+		<language name="JPN" width="256">ホミカ『アタシの　オヤジに　いえば
+ヒウンまで　つれていってくれるけどネ▼
+あいつらが　なにかしてないか
+アタシ　まちを　みてまわるから▼</language>
+		<language name="JPN_KANJI" width="256">ホミカ『アタシの　オヤジに　いえば
+ヒウンまで　つれていってくれるけどネ▼
+あいつらが　なにかしてないか
+アタシ　まちを　みてまわるから▼</language>
+	</row>
+
+	<row id="msg_c13_swleader2_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・振り返りメッセージ表示
+・表示後、c13gym0101方面に移動していく
+・続けて</comment>
+		<attribute name="キャラ指定">SWLEADER2
+ジムリーダー
+ホミカ</attribute>
+		<language name="JPN" width="256">……まけていたら　たいせつな
+ポケモンを　とられるところ　だったわ▼
+あなたたち　アリガトね！▼</language>
+		<language name="JPN_KANJI" width="256">……まけていたら　たいせつな
+ポケモンを　とられるところ　だったわ▼
+あなたたち　アリガトね！▼</language>
+	</row>
+
+	<row id="msg_c13_swrival_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・表示後、c13r0401へ
+・1＝ライバル名</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『よし！
+オマエ　おいかけるぞ！▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『よし！
+オマエ　おいかけるぞ！▼</language>
 	</row>
 
 	<row id="msg_c13_badman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
