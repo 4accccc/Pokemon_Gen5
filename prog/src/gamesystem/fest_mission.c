@@ -60,6 +60,8 @@ void FEST_MISSION_Clear( FEST_MISSION* fmwk )
 {
   MI_CpuClear8( fmwk, sizeof(FEST_MISSION));
 
+  //–³Œø’l‚Å‰Šú‰»
+  fmwk->target = FMISSION_TARGET_NULL;
   fmwk->type = FMISSION_TYPE_NULL;
 }
 

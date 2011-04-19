@@ -341,15 +341,16 @@ u32 LINK_FESTIVAL_GetNowScore( LINK_FESTIVAL* wk )
  * @param u32* 取得するアイテム数を返すu32のワークポインタ
  * @retval  TRUE    ミッション成功
  * @retval  FALSE   ミッション失敗
+ *
+ * エントリーしてない時に呼び出すと不定の値が返るので注意
+ * LINK_FESTIVAL_IsMissionEntry(), FEST_MISSION_IsEntry(&wk->mission)でチェックしてから呼ぶこと
+ *
  */
 //---------------------------------------------------------
 BOOL LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, u32* score, u32* item_num )
 {
   *score = 0;
   *item_num = 0;
-  if( FEST_MISSION_IsEntry(&wk->mission) == FALSE){
-    return FALSE;
-  }
   *score = LINK_FESTIVAL_GetNowScore( wk );
 
   if( *score >= wk->mission.target){
@@ -372,11 +373,18 @@ BOOL LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, u32* score, u32* item_nu
 BOOL LINK_FESTIVAL_IsMissionEnd( LINK_FESTIVAL* wk )
 {
   u32 score,item_num;
-  BOOL ret = LINK_FESTIVAL_GetMissionResult( wk, &score, &item_num );
+  BOOL ret;
 
-  if(ret){
+  if( FEST_MISSION_IsEntry(&wk->mission) == FALSE){
+    return FALSE;
+  }
+  ret = LINK_FESTIVAL_GetMissionResult( wk, &score, &item_num );
+
+  //スコアクリア型の終了チェック
+  if(ret && (wk->mission.end_type == FMISSION_ENDTYPE_CLEAR)){
     return TRUE;
   }
+  //タイムオーバーチェック
   return FEST_MISSION_IsEnd(&wk->mission);
 }
 

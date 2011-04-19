@@ -68,6 +68,7 @@ struct _FEST_MISSION{
   u16 act_prm;      ///<アクションパラメータ
 };
 
-#define FMISSION_SCORE_MAX  (999) //ミッションスコア最大値
+#define FMISSION_TARGET_NULL (0x3FF)  //ミッション目標無効値
+#define FMISSION_SCORE_MAX  (999)     //ミッションスコア最大値
 #define FMISSION_LIFE_MAX   (0x3FFFF) //ミッションライフMax
 
