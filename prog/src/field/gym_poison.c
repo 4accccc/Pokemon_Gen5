@@ -34,10 +34,7 @@
 
 // script
 #include "script_def.h"
-#include "../../../resource/fldmapdata/flagwork/flag_define.h"
-
-// save
-#include "savedata/misc.h"               // for MISC
+#include "../../../resource/fldmapdata/flagwork/work_define.h"
 
 // mine
 #include "gym_poison.h"
@@ -447,32 +444,29 @@ static void EXPOBJ_ObjMain( GYM_POISON_TMP *p_wk )
 //-----------------------------------------------------------------------------
 static void MAP_Init( MAP_WORK *p_wk, FIELDMAP_WORK *p_fieldmap )
 {
+  GYM_POISON_TMP *p_gym_wk = GMK_TMP_WK_GetWork(p_fieldmap, GYM_POISON_TMP_ASSIGN_ID);
+  GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
+  GAMEDATA   *gdata = GAMESYSTEM_GetGameData( gsys );
+  EVENTWORK* p_evwk = GAMEDATA_GetEventWork( gdata );
+
+  u16 *local_wk0 = EVENTWORK_GetEventWorkAdrs( p_evwk, LOCALWORK0 );
+  u16 *local_wk1 = EVENTWORK_GetEventWorkAdrs( p_evwk, LOCALWORK1 );
+  u16 *local_wk2 = EVENTWORK_GetEventWorkAdrs( p_evwk, LOCALWORK2 );
+
   p_wk->p_fieldmap = p_fieldmap;
+
   //ISSを保存
   {
     ISS_SYS *p_iss  = GAMESYSTEM_GetIssSystem( FIELDMAP_GetGameSysWork(p_fieldmap) );
     p_wk->p_iss_switch  = ISS_SYS_GetIssSwitchSystem( p_iss );
+    p_wk->volume_idx = VOLUME_IDX_NULL;
   }
-  p_wk->volume_idx = VOLUME_IDX_NULL;
 
+  // ISS設定
   {
-    GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
-    GAMEDATA   *gdata = GAMESYSTEM_GetGameData( gsys );
-    EVENTWORK* p_evwk = GAMEDATA_GetEventWork( gdata );
-    SAVE_CONTROL_WORK *save = GAMEDATA_GetSaveControlWork( gdata );
-    MISC *misc = SaveData_GetMisc( save );
-
     // トレーナー戦闘フラグがONの時はISSスイッチをOFFにする
-    BOOL iss_flg1 = !( EVENTWORK_CheckEventFlag( p_evwk, FE_C13GYM_TRBTL1 ) );
-    BOOL iss_flg2 = !( EVENTWORK_CheckEventFlag( p_evwk, FE_C13GYM_TRBTL2 ) );
-
-    // ジムクリアしているなら強制的にスイッチON
-    if( MISC_GetBadgeFlag( misc, BADGE_ID_02 ) )
-    {
-      iss_flg1 = TRUE;
-      iss_flg2 = TRUE;
-      ICHI_Printf("強制スイッチON\n");
-    }
+    BOOL  iss_flg1 = (*local_wk0 == 0 ) ? TRUE : FALSE;
+    BOOL  iss_flg2 = (*local_wk1 == 0 ) ? TRUE : FALSE;
 
     ICHI_Printf("ISS スイッチ1 %d \n", iss_flg1);
     ICHI_Printf("ISS スイッチ2 %d \n", iss_flg2);
@@ -483,6 +477,32 @@ static void MAP_Init( MAP_WORK *p_wk, FIELDMAP_WORK *p_fieldmap )
     ISS_SWITCH_SYS_ReserveSwitch( p_wk->p_iss_switch, SWITCH_03, iss_flg2, GYM_POISON_BGM );
     ISS_SWITCH_SYS_ReserveSwitch( p_wk->p_iss_switch, SWITCH_04, TRUE, GYM_POISON_BGM );
 
+  }
+
+  // スピーカー設定
+  // ジムリーダー話したフラグがたっているとアニメOFFにする
+  if( *local_wk2 == 1 )
+  {
+    u8 i;
+
+    for( i=OBJ_SPEAKER_1; i<OBJ_NUM; i++ )
+    {
+      u16 obj_idx = i;    // OBJインデックス
+
+      // アニメ再生
+      {
+        // アニメ再生OFF
+        EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_gym_wk->exp_obj, GYM_POISON_UNIT_IDX, obj_idx, 0 );
+
+        // ICA
+        FLD_EXP_OBJ_ValidCntAnm( p_gym_wk->exp_obj, GYM_POISON_UNIT_IDX, obj_idx, 0, FALSE );
+        // ITA
+        FLD_EXP_OBJ_ValidCntAnm( p_gym_wk->exp_obj, GYM_POISON_UNIT_IDX, obj_idx, 1, FALSE );
+
+        FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, TRUE );  // アニメSTOP
+        FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, FALSE );  // ループ再生設定
+      }
+    }
   }
 
 

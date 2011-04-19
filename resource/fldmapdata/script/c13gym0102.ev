@@ -32,6 +32,7 @@ _EVENT_DATA_END
 // 
 // LOCALWORK0⇒ドラムISS
 // LOCALWORK1⇒ギターISS
+// LOCALWORK2⇒ボーカルISS
 //------------------------------------------------------------------//
 
 
@@ -50,8 +51,6 @@ INIT_EVENT_START  ev_zone_c13gym0102
 
 	//バッジフラグ取得
 	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_02 )
-
-  _DEBUG_PRINT_WK( SCWK_TEMP0 )
 
 	IF $SCWK_TEMP0 == 0 THEN
     // ジムクリア前
@@ -87,9 +86,6 @@ INIT_EVENT_END
 /************************************************************/
 INIT_EVENT_START  ev_init_c13gym0102
 {
-    _DEBUG_PRINT_WK( LOCALWORK0 )
-    _DEBUG_PRINT_WK( LOCALWORK1 )
-
     IF $LOCALWORK0 == 1 THEN
       // ISSスイッチOFF
       // ⇒プログラムで処理
@@ -113,7 +109,6 @@ INIT_EVENT_END
 /************************************************************/
 EVENT_START	ev_c13gym0102_leader2_01
 {
-
 
   // ジムトレーナー全員のフラグがたっていない
   IF $LOCALWORK0 == 0 || $LOCALWORK1 == 0 THEN
@@ -159,6 +154,7 @@ EVENT_START	ev_c13gym0102_leader2_01
       _GYM_POISON_ANM_STOP(0)
       _GYM_POISON_ANM_STOP(1)
       _GYM_POISON_ANM_STOP(2)
+
     }
   ENDIF
 
@@ -238,9 +234,8 @@ ev_leader2_btl:
 	//================================================//
 	
 	//ジムトレーナーのフラグOFF
-  // 【仮】トレーナーID未定義なのでコメントアウト
-	//_TRAINER_FLAG_SET( TRID_PILOT_04 )
-	//_TRAINER_FLAG_SET( TRID_PILOT_05 )
+	_TRAINER_FLAG_SET( TRID_HEADS_06 )
+	_TRAINER_FLAG_SET( TRID_GUITARW_01 )
 
 	//================================================//
 	//電光掲示板フラグセット
@@ -348,6 +343,9 @@ sub_iss_off_vocal:
   IF $SCWK_ANSWER == TRUE THEN
 	  //ISSスイッチをオフに
 	  _ISS_SWITCH_OFF( 1 )
+
+    // フラグON
+    $LOCALWORK2 = 1
   ENDIF
 _RET
 
