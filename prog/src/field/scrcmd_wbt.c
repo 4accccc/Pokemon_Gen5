@@ -332,17 +332,13 @@ VMCMD_RESULT EvCmdWBTGetTournamentPokeType( VMHANDLE * core, void * wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdWBTIncVictoryCount( VMHANDLE * core, void * wk )
 {
-  u16 stage = SCRCMD_GetVMWorkValue( core, wk );
+  SCRCMD_WORK * work = wk;
   WBTSYS * wbtsys = getWBTSys( wk );
+  WBTSTAGE stage = WBTSYS_GetStage( wbtsys );
 
-  TAMADA_Printf("EvCmdWBTSystemSetStage(%d)\n", stage);
-  WBTSYS_SetStage( wbtsys, stage );
-  //勝利したら優勝回数をカウントアップ
-  if ( stage == WBTSTAGE_ENTRY )
-  {
-    SCRCMD_WORK * work = wk;
-    incVictoryCount( wbtsys, work );
-  }
+  TAMADA_Printf("EvCmdWBTIncVictoryCount\n");
+  GF_ASSERT( stage == WBTSTAGE_ENTRY );
+  incVictoryCount( wbtsys, work );
 
   return VMCMD_RESULT_CONTINUE;
 }
