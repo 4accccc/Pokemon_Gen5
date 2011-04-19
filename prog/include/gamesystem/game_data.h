@@ -1007,3 +1007,14 @@ extern void GAMEDATA_SetAreaOfs( GAMEDATA *gamedata, u8 ofs );
  */
 //-----------------------------------------------------------------------------
 extern u8 GAMEDATA_GetAreaOfs( const GAMEDATA *gamedata );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  リゾート用バッファを取得 メモリ削減のためポインタ渡し
+ *
+ *	@param	GAMEDATA *gamedata  ゲームデータ
+ *
+ *	@return バッファ
+ */
+//-----------------------------------------------------------------------------
+extern void ** GAMEDATA_GetResortBuffer( GAMEDATA *gamedata );

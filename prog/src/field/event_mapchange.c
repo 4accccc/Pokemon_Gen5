@@ -3105,6 +3105,7 @@ static void MAPCHG_SetUpWfbc( GAMEDATA * gamedata, const LOCATION *loc )
 //-----------------------------------------------------------------------------
 static void MAPCHG_SetUpResort( GAMEDATA * gamedata, u16 zone_id )
 { 
+  //室内のテクスチャ読み替え処理
   if( ZONEDATA_IsResonanceResortRoom( zone_id ) )
   {
     RESONANCE_RESORT_SV *p_sv = RESONANCE_RESORT_SV_GetWork( GAMEDATA_GetSaveControlWork(gamedata) );
@@ -3126,6 +3127,27 @@ static void MAPCHG_SetUpResort( GAMEDATA * gamedata, u16 zone_id )
 
         RESORT_BINARY_SHOP_Exit( p_shop );
       }
+    }
+  }
+
+  //迎賓館のみ存在する拡張バッファをつくって登録
+  if( zone_id == ZONE_ID_C16R1601 )
+  {
+    //迎賓館にいったらバッファ作成
+    void **pp_buff = GAMEDATA_GetResortBuffer( gamedata );
+    if( *pp_buff == NULL )
+    {
+      *pp_buff = RESORT_RECV_BUFF_Init( HEAPID_PROC, RECEPTION_BUFF_RECV_MAX );
+    }
+  }
+  else
+  {
+    //他にいったらバッファ削除
+    void **pp_buff = GAMEDATA_GetResortBuffer( gamedata );
+    if( *pp_buff != NULL )
+    {
+      RESORT_RECV_BUFF_Exit( *pp_buff );
+      *pp_buff = NULL;
     }
   }
 }

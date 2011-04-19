@@ -283,7 +283,6 @@ RESORT_BINARY_CITY * RESORT_RECEPTION_GetBinaryCity( FIELDMAP_WORK *p_fieldmap )
 //-------------------------------------
 ///	’è”
 //=====================================
-#define RECEPTION_BUFF_RECV_MAX (8)
 
 //-------------------------------------
 ///	ƒoƒbƒtƒ@ŠÇ—
@@ -330,9 +329,13 @@ static RECEPTION_BUFF * RECEPTION_BUFF_Init( HEAPID heapID, const RECEPTION_BUFF
     p_wk->p_proxy_buff  = RESONANCE_RESORT_SV_GetProxyBuff( p_resort_sv );
   }
 
-  //Œ}•oŠÙ‚Ì‚Ý‘¶Ý‚·‚éŠg’£ƒoƒbƒtƒ@‚ð‚Â‚­‚Á‚Ä“o˜^
-  p_wk->p_recep_buff  = RESORT_RECV_BUFF_Init( heapID, RECEPTION_BUFF_RECV_MAX );
-  GAMEBEACON_Set_ResortRecvBuffer( p_wk->p_recep_buff );
+  //Œ}•oŠÙ‚Ì‚Ý‘¶Ý‚·‚éŠg’£ƒoƒbƒtƒ@‚ð“o˜^
+  {
+    void **pp_buff = GAMEDATA_GetResortBuffer( cp_param->p_gamedata );
+    GF_ASSERT( *pp_buff != NULL );
+    p_wk->p_recep_buff  = *pp_buff;
+    GAMEBEACON_Set_ResortRecvBuffer( p_wk->p_recep_buff );
+  }
 
   return p_wk;
 }
@@ -346,7 +349,6 @@ static RECEPTION_BUFF * RECEPTION_BUFF_Init( HEAPID heapID, const RECEPTION_BUFF
 static void RECEPTION_BUFF_Exit( RECEPTION_BUFF *p_wk )
 {
   GAMEBEACON_Set_ResortRecvBuffer( NULL );
-  RESORT_RECV_BUFF_Exit( p_wk->p_recep_buff );
   GFL_HEAP_FreeMemory( p_wk );
 }
 //----------------------------------------------------------------------------
@@ -557,8 +559,9 @@ static RECEPTION_PEOPLE * RECEPTION_PEOPLE_Init( HEAPID heapID, FIELDMAP_WORK *p
     param.max = RECEPTION_PEOPLE_MAX;
     param.placeID = RESORT_PLACEID_RECEPTION;
     p_wk->p_people_sys = RESORT_PEOPLE_SYS_Init( &param, heapID );
+    RESORT_PEOPLE_SYS_EraseMMdl( p_wk->p_people_sys );  //Šg’£ƒoƒbƒtƒ@‚Å–ß‚Á‚Ä‚­‚é‚±‚Æ‚ðl‚¦‚Äˆê’UÁ‚·
+    RESORT_PEOPLE_SYS_AddAll( p_wk->p_people_sys );
   }
-
 
   return p_wk;
 }

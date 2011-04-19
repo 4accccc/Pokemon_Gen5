@@ -562,7 +562,9 @@ static BOOL GameSystem_Main(GAMESYS_WORK * gsys)
     if( ZONEDATA_IsUnionRoom(zone_id) == FALSE && //ユニオン
         ZONEDATA_IsColosseum(zone_id) == FALSE && //コロシアム
         ZONEDATA_IsWBTHall(zone_id) == FALSE &&   //WBT会場
-        ZONEDATA_IsBattleSubway(zone_id) == FALSE ) //バトルサブウェイ
+        ZONEDATA_IsBattleSubway(zone_id) == FALSE &&  //バトルサブウェイ
+        ZONEDATA_IsResonanceResortRoom(zone_id) == FALSE //レゾナンスリゾート室内
+        ) 
     {
       heapLeakCheck();
     }

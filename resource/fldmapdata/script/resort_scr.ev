@@ -394,7 +394,7 @@ sub_tourist_spot:
     //ââèoï∂
     _SYSWIN_MSG( LWK_MSGID2, POS_DOWN )
     //ñûë´ÇµÇΩÇ©Ç«Ç§Ç©
-    IF $LWK_RET == resort_sys_08 THEN
+    IF $LWK_MSGID == resort_sys_08 THEN
       //ñûë´ÇµÇ»Ç©Ç¡ÇΩ
       _SYSWIN_MSG( LWK_MSGID, POS_DOWN )
     ELSE

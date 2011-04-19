@@ -108,6 +108,7 @@ void RESORT_FIELD_Setup( FIELDMAP_WORK *p_fieldmap )
     param.max     = RESORT_FIELD_PEOPLE_MAX;
     param.placeID  = RESORT_MAP_ZoneIDToPlaceID( FIELDMAP_GetZoneID(p_fieldmap) );
     p_wk->p_people_sys = RESORT_PEOPLE_SYS_Init( &param, heapID );
+    RESORT_PEOPLE_SYS_AddAll( p_wk->p_people_sys );
   }
 
   //NPCƒVƒXƒeƒ€

@@ -151,7 +151,8 @@ struct _GAMEDATA{
   u8    goout_effect_flag;
   u8    top_medal_id;  // メダルボックスを開いた時に最初に表示されるメダルID
   u8    area_ofs; //エリアオフセット(今はリゾートでしか使っていない)
-  u8    dummy[1];
+  u8    dummy;
+  void *p_resort_buff;  //レゾナンスリゾート用バッファ
 };
 
 //==============================================================================
@@ -2303,4 +2304,18 @@ void GAMEDATA_SetAreaOfs( GAMEDATA *gamedata, u8 ofs )
 u8 GAMEDATA_GetAreaOfs( const GAMEDATA *gamedata )
 {
   return gamedata->area_ofs;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  リゾート用バッファを取得 メモリ削減のためポインタ渡し
+ *
+ *	@param	GAMEDATA *gamedata  ゲームデータ
+ *
+ *	@return バッファ
+ */
+//-----------------------------------------------------------------------------
+void ** GAMEDATA_GetResortBuffer( GAMEDATA *gamedata )
+{
+  return &gamedata->p_resort_buff;
 }

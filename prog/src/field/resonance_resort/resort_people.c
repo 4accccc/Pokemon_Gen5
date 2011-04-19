@@ -727,7 +727,6 @@ RESORT_PEOPLE_SYS * RESORT_PEOPLE_SYS_Init( const RESORT_PEOPLE_SYS_PARAM *cp_pa
 
   p_wk->p_binary = RESORT_BINARY_PEOPLE_Init( heapID );
 
-  RESORT_PEOPLE_SYS_AddAll( p_wk );
   return p_wk;
 }
 //----------------------------------------------------------------------------
@@ -914,6 +913,27 @@ void RESORT_PEOPLE_SYS_RemoveAll( RESORT_PEOPLE_SYS *p_wk )
     {
       RESORT_PEOPLE_Exit( p_people );
       p_wk->p_people[i] = NULL;
+    }
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  l•¨‚ÉŠÖŒW‚·‚éMMDL‚ðíœ
+ *
+ *	@param	RESORT_PEOPLE_SYS *p_wk ƒ[ƒN
+ */
+//-----------------------------------------------------------------------------
+void RESORT_PEOPLE_SYS_EraseMMdl( RESORT_PEOPLE_SYS *p_wk )
+{
+  u32 no = 0;
+  MMDL *mmdl;
+
+  while( MMDLSYS_SearchUseMMdl(p_wk->param.p_mmdlsys,&mmdl,&no) == TRUE ){
+    if( MMDL_GetOBJID(mmdl) >= RESORT_PEOPLE_MMDLID_OFS
+        && MMDL_GetZoneID(mmdl) == RESORT_MAP_PlaceIDToZoneID(p_wk->param.placeID) )
+    {
+      MMDL_Delete( mmdl );
     }
   }
 }
