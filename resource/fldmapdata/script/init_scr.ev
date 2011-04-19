@@ -356,6 +356,8 @@ init_flags:
 	
 	//C12のママを非表示
 	_FLAG_SET( FV_C12_SWMAMA )
+	//C12のライバルを非表示
+	_FLAG_SET( FV_C12_SWANLEADER1 )
 	
 	//C12PC0101：PCの曲をつれてけ曲に設定
 	_FLAG_SET( SYS_FLAG_BGM_C12PC0101_GUIDE )

@@ -295,7 +295,18 @@ ev_leader1_btl:
 	_BALLOONWIN_TALKOBJ_MSG( msg_c12gym0201_swleader1_10 )
 	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
-
+	
+	 //========================================/
+   //ジムクリアC12のSCENECHANGE起動
+    $WK_SCENE_C12GYM_OPEN = 2
+    
+   //C12のベル表示
+   _FLAG_RESET( FV_C12_SWBELL )
+   //C12R0101のベル表示
+   _FLAG_RESET( FV_C12R0101_SWBELL )
+    
+   //========================================//
+   
 EVENT_END
 
 /********************************************************************/

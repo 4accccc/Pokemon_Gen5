@@ -48,6 +48,8 @@ _EVENT_DATA    ev_pos_c12_ng_05
 _EVENT_DATA    ev_pos_c12_ng_06
 _EVENT_DATA    ev_pos_c12_ng_07
 _EVENT_DATA    ev_pos_c12_rival_pair_01_guide
+_EVENT_DATA    ev_scene_c12_gymclear_01
+_EVENT_DATA    ev_c12_swleader1_01
 _EVENT_DATA_END
 
 //話しかけた方向取得変数
@@ -88,6 +90,17 @@ INIT_EVENT_START ev_init_c12
     //連れ歩き中・ジムオープンはドア前にいない
     _OBJ_POS_CHANGE( C12_BOY2_01, 36, 1, 741, DIR_RIGHT )
   ENDIF
+  
+  //ジムクリア後
+  IF $WK_SCENE_C12GYM_OPEN == 2 THEN
+    _OBJ_POS_CHANGE( C12_SWBELL_01, 42, 1, 741, DIR_LEFT )
+  ENDIF
+  
+  //【仮】ポケガイダンスまでライバルとベルの位置を変更（ジム内のチェレンについて要検討）
+  IF $WK_SCENE_C12GYM_OPEN == 3 THEN
+    _OBJ_POS_CHANGE( C12_SWBELL_01, 40, 1, 740, DIR_RIGHT )
+    _OBJ_POS_CHANGE( C12_SWLEADER1_01, 38, 1, 740, DIR_LEFT )
+  ENDIF
 
 INIT_EVENT_END
 
@@ -117,9 +130,21 @@ EVENT_END
 /*  ベルはなしかけ                         */
 /**************************************************************/
 EVENT_START ev_c12_swbell_01
-  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12_white_14 )
+  //ジムクリア後
+  IF $WK_SCENE_C12GYM_OPEN == 3 THEN
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12_white_29 )
+  ELSE
+  //ジムクリア前
+   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12_white_14 )
+  ENDIF
 EVENT_END
 
+/**************************************************************/
+/*  ベルはなしかけ                         */
+/**************************************************************/
+EVENT_START ev_c12_swleader1_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12_swleader1_04 )
+EVENT_END
 
 /**************************************************************/
 /*  ママはなしかけ                         */
@@ -171,7 +196,7 @@ EVENT_START ev_pos_c12_swbell_meet_02
   _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_13,C12_SWRIVAL_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
   //1歩戻る
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_upwalk )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_u )
   _OBJ_ANIME_WAIT()
 EVENT_END
 
@@ -833,6 +858,141 @@ EVENT_START		ev_scene_c12_townmap_01
 	//==================================//
 EVENT_END
 
+/**************************************************************/
+/*			ジムクリア後イベント					  */
+/**************************************************************/
+EVENT_START		ev_scene_c12_gymclear_01
+  
+  //男女別メッセージ
+  _BALLOONWIN_OBJMSG_MF( msg_c12_white_20a, msg_c12_white_20b, C12_SWBELL_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：ベル接近
+  _OBJ_ANIME( C12_SWBELL_01, anm_walk_l )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_gymclear_pl_to_bell )
+  _OBJ_ANIME_WAIT()
+  
+  //メッセージ：これを
+	_BALLOONWIN_OBJMSG_POS( msg_c12_white_21,C12_SWBELL_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+  
+  //わざマシン入手処理　「おんがえし」
+	_ITEM_EVENT_KEYWAIT( ITEM_WAZAMASIN27, 1 )
+	
+	//メッセージ：そのわざはね
+	_BALLOONWIN_OBJMSG_POS( msg_c12_white_22,C12_SWBELL_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：ベルジムの方を向く
+  _OBJ_ANIME( C12_SWBELL_01, anm_gymclear_bell_look_gym )
+  _OBJ_ANIME_WAIT()
+  
+  //メッセージ：それにしても
+  _BALLOONWIN_OBJMSG_POS( msg_c12_white_23,C12_SWBELL_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //カメラ操作　アデク追従
+  _CAMERA_START()		//カメラ操作開始
+  _CAMERA_PURGE()		//カメラのバインドを解く
+  
+  _CAMERA_MOVE( 9688,0,970752,2588672,65551,48410624,24 )
+  
+  //========================================// 
+  //C12のチェレン表示
+  _FLAG_RESET( FV_C12_SWANLEADER1 )
+  //OBJ生成
+  _OBJ_ADD( C12_SWLEADER1_01 )
+  //========================================//
+  
+  //階段SE再生
+  _SE_PLAY( SEQ_SE_KAIDAN )
+  _SE_WAIT()
+  
+  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+  
+  //メッセージ：なにかいった？
+  _BALLOONWIN_OBJMSG_POS( msg_c12_swleader1_01,C12_SWLEADER1_01, POS_UL )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：ベルその場ジャンプ
+  _OBJ_ANIME( C12_SWBELL_01, anm_gymclear_bell_jump )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
+  _OBJ_ANIME_WAIT()
+  
+  //メッセージ：うひゃあ
+  _BALLOONWIN_OBJMSG_POS( msg_c12_white_24,C12_SWBELL_01, POS_UR )
+  _MSGWIN_CLOSE()
+  
+  //メッセージ：せっかくだから
+  _BALLOONWIN_OBJMSG_POS( msg_c12_swleader1_02,C12_SWLEADER1_01, POS_UL )
+  _MSGWIN_CLOSE()
+  
+  //自機にカメラを戻す
+  _CAMERA_DEF_MOVE (24)
+  
+  //アニメ：主人公に隣接
+  _OBJ_ANIME_AUTO( C12_SWLEADER1_01, 39, 740, FORCE_TYPE_NPC, 8, DIR_LR)
+	_OBJ_ANIME_WAIT()
+	
+	//カメラ待ち
+  _CAMERA_WAIT_MOVE()
+  _CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+  _CAMERA_END()		//カメラ操作終了
+  
+  //【仮】登録SE再生
+  
+  //メッセージ：これで
+  _BALLOONWIN_OBJMSG_POS( msg_c12_swleader1_03,C12_SWLEADER1_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //メッセージ：あっ　あたしも
+  _BALLOONWIN_OBJMSG_POS( msg_c12_white_26,C12_SWBELL_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：主人公に隣接
+  _OBJ_ANIME( C12_SWBELL_01, anm_walk_l )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
+  _OBJ_ANIME_WAIT()
+  
+  //【仮】登録SE再生
+  
+  //メッセージ：いっしょに
+  _BALLOONWIN_OBJMSG_POS( msg_c12_white_27,C12_SWBELL_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //【仮】登録デモ再生
+  
+  //========================================/
+  //C12のSCENECHANGE無効
+  $WK_SCENE_C12GYM_OPEN = 3
+  
+  //========================================//
+EVENT_END
+
+//--------------------------------------------------------------------
+//	☆ジムクリアイベント：主人公ベルに隣接
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_gymclear_pl_to_bell
+  _ANIME_DATA	AC_WALK_D_8F,2
+  _ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆ジムクリアイベント：ベル、ジムを見てから主人公を見る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_gymclear_bell_look_gym
+  _ANIME_DATA	AC_STAY_WALK_U_8F,1
+  _ANIME_DATA	AC_WAIT_8F,1
+  _ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	☆ジムクリアイベント：ベルその場ジャンプ
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_gymclear_bell_jump
+	_ANIME_DATA	AC_STAY_JUMP_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
 //====================================================================
 //  C12連れ歩き
 //====================================================================
@@ -1108,7 +1268,7 @@ _RET
 //★C12連れ歩きストッパー戻り処理
 ev_c12_rival_ng_return02:
   //アニメ：下に移動
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_downwalk )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_d )
   _OBJ_ANIME_WAIT()
 _RET
 
@@ -1153,7 +1313,7 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_c12_boy2_01
  	//【仮】ジム開放前
-	IF $LOCALWORK11 == 0 THEN
+	IF $WK_SCENE_C12GYM_OPEN < 1 THEN
 		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12_boy2_01 )
 	
 	//ジム開放後
@@ -1242,19 +1402,33 @@ _ANIME_LABEL	anm_townmap_bell_bye
   _ANIME_DATA	AC_WALK_U_8F,11
 	_ANIME_DATA	ACMD_END,0
 
-
 //--------------------------------------------------------------------
 //	☆共通処理：下に1歩歩く
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_downwalk
+_ANIME_LABEL	anm_walk_d
 	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //	☆共通処理：上に1歩歩く
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_upwalk
+_ANIME_LABEL	anm_walk_u
 	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+
+//--------------------------------------------------------------------
+//	☆共通処理：右に1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_r
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：左に1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_l
+	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 	
 //--------------------------------------------------------------------
