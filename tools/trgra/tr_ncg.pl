@@ -1,8 +1,12 @@
 
 #====================================================================================
 #
-#	12×12で描かれたNCGキャラを1Dフォーマットにコンバートして吐き出す
+#	10*10で描かれたNCGキャラを1Dフォーマットにコンバートして吐き出す
 #
+# BWでは 32x32charのファイルの左上を基点に10x10charのエリアを切り出していたが
+# スワンでは左上に静止画が配置されなくなったため、ファイルの左下を基点とするように変更
+#
+# 切り出しエリア(0,22)～(9,31)
 #====================================================================================
 
 #====================================================================================
@@ -17,6 +21,8 @@ use constant NCG_LINE_SIZE2			=>	0x40;
 use constant NCG_LINE_SIZE4			=>	0x80;
 use constant NCG_LINE_SIZE8			=>	0x100;
 use constant NCG_LINE_ALL_SIZE	=>	0x400;
+use constant NCG_LINE_OFS_SIZE	=>	22; #22ライン読み飛ばす
+use constant NCG_LINE_CHAR_OFFSET => (NCG_LINE_ALL_SIZE*NCG_LINE_OFS_SIZE+NCG_HEAD_SIZE);
 use constant NCG_LINE_SIZE4_AMARI		=>	(NCG_LINE_ALL_SIZE - NCG_LINE_SIZE4);
 use constant NCG_LINE_SIZE8_AMARI		=>	(NCG_LINE_ALL_SIZE - NCG_LINE_SIZE8);
 use constant NCG_LINE_SIZE10_AMARI	=>	(NCG_LINE_ALL_SIZE - (NCG_LINE_SIZE2 + NCG_LINE_SIZE8));
@@ -90,14 +96,14 @@ sub NCGRMake
 
 	#10x10のOAMは無いので、8x8,2*4,2*4,4*2,4*2,2*2の6つのOAMにあわせる
 	#8x8
-	seek( NCG, NCG_HEAD_SIZE, SEEK_SET);
+	seek( NCG, NCG_LINE_CHAR_OFFSET, SEEK_SET);
 	for( $i = 0 ; $i < 8; $i++ ){
 		read NCG, $data, NCG_LINE_SIZE8;
 		print NCGR $data;
 		read NCG, $data, NCG_LINE_SIZE8_AMARI;
 	}
 	#2x4
-	seek( NCG, NCG_HEAD_SIZE, SEEK_SET);
+	seek( NCG, NCG_LINE_CHAR_OFFSET, SEEK_SET);
 	for( $i = 0 ; $i < 4; $i++ ){
 		read NCG, $data, NCG_LINE_SIZE8;
 		read NCG, $data, NCG_LINE_SIZE2;
@@ -105,7 +111,7 @@ sub NCGRMake
 		read NCG, $data, NCG_LINE_SIZE10_AMARI;
 	}
 	#2x4
-	seek( NCG, NCG_HEAD_SIZE+(NCG_LINE_ALL_SIZE*4), SEEK_SET);
+	seek( NCG, NCG_LINE_CHAR_OFFSET+(NCG_LINE_ALL_SIZE*4), SEEK_SET);
 	for( $i = 0 ; $i < 4; $i++ ){
 		read NCG, $data, NCG_LINE_SIZE8;
 		read NCG, $data, NCG_LINE_SIZE2;
@@ -113,13 +119,13 @@ sub NCGRMake
 		read NCG, $data, NCG_LINE_SIZE10_AMARI;
 	}
 	#4x2
-	seek( NCG, (NCG_HEAD_SIZE+(NCG_LINE_ALL_SIZE*8)), SEEK_SET);
+	seek( NCG, (NCG_LINE_CHAR_OFFSET+(NCG_LINE_ALL_SIZE*8)), SEEK_SET);
 	for( $i = 0 ; $i < 2; $i++ ){
 		read NCG, $data, NCG_LINE_SIZE4;
 		print NCGR $data;
 		read NCG, $data, NCG_LINE_SIZE4_AMARI;
 	}
-	seek( NCG, (NCG_HEAD_SIZE+(NCG_LINE_ALL_SIZE*8)), SEEK_SET);
+	seek( NCG, (NCG_LINE_CHAR_OFFSET+(NCG_LINE_ALL_SIZE*8)), SEEK_SET);
 	for( $i = 0 ; $i < 2; $i++ ){
 		read NCG, $data, NCG_LINE_SIZE4;
 		read NCG, $data, NCG_LINE_SIZE4;
@@ -127,7 +133,7 @@ sub NCGRMake
 		read NCG, $data, NCG_LINE_SIZE8_AMARI;
 	}
 	#2x2
-	seek( NCG, (NCG_HEAD_SIZE+(NCG_LINE_ALL_SIZE*8)), SEEK_SET);
+	seek( NCG, (NCG_LINE_CHAR_OFFSET+(NCG_LINE_ALL_SIZE*8)), SEEK_SET);
 	for( $i = 0 ; $i < 2; $i++ ){
 		read NCG, $data, NCG_LINE_SIZE8;
 		read NCG, $data, NCG_LINE_SIZE2;
