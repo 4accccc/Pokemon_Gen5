@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-16T16:09:47"/>
+	<create user="matsumiya" host="W00224" date="2011-04-19T11:59:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,13 +229,13 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="152"/>
+		<id position="0" width="202"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="169"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,9 +263,9 @@
 		</language>
 	</columns>
 
-	<dialog left="1633" top="306" right="2338" bottom="926" maximized="no" rayout="Vertical2">
+	<dialog left="1300" top="169" right="2005" bottom="797" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
@@ -291,6 +291,20 @@
 		<operation add_message="no" header_setting="no" tag_setting="no" output_setting="no" display="no" sort="no" flowchart_window="no"/>
 	</lock>
 
+
+	<row id="msg_c13gym0102_swleader2_ng">
+		<comment>♀
+・他のトレーナーに勝利前で
+　戦闘できない
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">SWLEADER2
+ジムリーダー
+ホミカ</attribute>
+		<language name="JPN" width="256">まわりの　おとが　おおきすぎて
+[1:00:トレーナー名:0]の　こえが　きこえない！</language>
+		<language name="JPN_KANJI" width="256">周りの　音が　大きすぎて
+[1:00:トレーナー名:0]の　声が　きこえない！</language>
+	</row>
 
 	<row id="msg_c13gym0102_swleader2_01">
 		<comment>♀
