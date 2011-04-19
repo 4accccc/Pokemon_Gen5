@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2011-04-18T22:37:28"/>
+	<create user="nagihashi_toru" host="W00268" date="2011-04-19T15:23:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -398,14 +398,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1081" top="564" right="1786" bottom="1192" maximized="no" rayout="Vertical2">
+	<dialog left="-871" top="305" right="-368" bottom="856" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
-		<tag-palette left="1797" top="484" right="2269" bottom="882" visible="yes"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<tag-palette left="808" top="484" right="1280" bottom="882" visible="yes"/>
+		<band id="0" index="1" style="0000" width="495"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="345"/>
-		<band id="3" index="4" style="0000" width="350"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="2" index="3" style="0000" width="328"/>
+		<band id="3" index="4" style="0000" width="495"/>
+		<band id="4" index="0" style="0000" width="591"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -3685,9 +3685,9 @@ GTSの　ごりよう　ありがとうございます！</language>
 
 	<row id="resort_go_00" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<attribute name="キャラ指定">行きたい場所
-難易度０　性格A</attribute>
-		<language name="JPN" width="256">ドキドキ　ワクワク　したいな▼</language>
-		<language name="JPN_KANJI" width="256">ドキドキ　ワクワク　したいな▼</language>
+このラベルは使用禁止</attribute>
+		<language name="JPN" width="256">　</language>
+		<language name="JPN_KANJI" width="256">　</language>
 	</row>
 
 	<row id="resort_go_01" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
@@ -3748,8 +3748,6 @@ GTSの　ごりよう　ありがとうございます！</language>
 	</row>
 
 	<row id="resort_go_12" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
-		<attribute name="キャラ指定">行きたい場所
-難易度１　性格A</attribute>
 		<language name="JPN" width="256">ドキドキ　ワクワク　したいな▼</language>
 		<language name="JPN_KANJI" width="256">ドキドキ　ワクワク　したいな▼</language>
 	</row>
