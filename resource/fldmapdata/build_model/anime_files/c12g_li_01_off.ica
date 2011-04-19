@@ -3,7 +3,7 @@
 <ica version="1.6.0">
 
 <head>
-	<create user="kawamoto_yuki" host="W00239" date="2011-04-06T18:07:49" source="c12_gymlight_01_off.mb"/>
+	<create user="kawamoto_yuki" host="W00239" date="2011-04-18T21:14:18" source="c12_gymlight_01_off.mb"/>
 	<title>Character Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -25,15 +25,15 @@
 />
 
 <node_scale_data size="3">
-	1.000000 0.070068 0.107910
+	1.000000 0.010010 0.121094
 </node_scale_data>
 
 <node_rotate_data size="1">
 	0.000000
 </node_rotate_data>
 
-<node_translate_data size="3">
-	0.000000 -1.000000 1.000000
+<node_translate_data size="1">
+	0.000000
 </node_translate_data>
 
 <node_anm_array size="4">
@@ -77,9 +77,9 @@
 		<rotate_x frame_step="1" data_size="1" data_head="0"/>
 		<rotate_y frame_step="1" data_size="1" data_head="0"/>
 		<rotate_z frame_step="1" data_size="1" data_head="0"/>
-		<translate_x frame_step="1" data_size="1" data_head="1"/>
+		<translate_x frame_step="1" data_size="1" data_head="0"/>
 		<translate_y frame_step="1" data_size="1" data_head="0"/>
-		<translate_z frame_step="1" data_size="1" data_head="2"/>
+		<translate_z frame_step="1" data_size="1" data_head="0"/>
 	</node_anm>
 </node_anm_array>
 
