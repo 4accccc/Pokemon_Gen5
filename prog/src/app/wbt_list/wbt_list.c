@@ -1425,6 +1425,14 @@ static void wbt_key_00( WBTLIST_MAIN_WORK* wk )
 				tmp = wbt_get_param( wk, PRM_EXPPOS, -1 );
 				wbt_chg_obj_pal( wk, tmp, PLTID_OBJ_MAPMODEL, 0 );
 				//
+				// 点滅パネルの色を灰色にする
+				tmp = wbt_get_param( wk, PRM_EXPPOS, -1 );
+				seq = R_GRAY_SEQ;
+				if(tmp < 4){
+					seq = L_GRAY_SEQ;
+				}
+				wbt_chg_objseq( wk, tmp, seq );
+				//
 				// アニメ終了=>ゲージ伸び
 				wk->Step = STEP_LV5;
 				wbt_init_timer( wk, TIMER_GAGE, FRAME_GAGE );
