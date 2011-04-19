@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-06-30T12:33:16"/>
+	<create user="matsumiya" host="W00224" date="2011-04-19T12:43:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -67,6 +67,11 @@
 			<tag entry="11" japanese="ボックス名" english="ボックス名" view="EP" width="96" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 			</tag>
+			<tag entry="12" japanese="ポケモンニックネーム（正体）" english="ポケモンニックネーム（正体）" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">バトル用。イリュージョンの影響を受けないニックネーム取得。</comment>
+				<comment language="english">バトル用。イリュージョンの影響を受けないニックネーム取得。</comment>
+			</tag>
 			<tag entry="13" japanese="ステータス名" english="ステータス名" view="EP" width="74" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 				<comment language="japanese">たいりょく、こうげきりょく、ぼうぎょりょく、とくこう、とくぼう、すばやさ、かいひりつ、めいちゅう</comment>
@@ -77,6 +82,14 @@
 				<comment language="japanese">「たんぱんこぞう」「エリートトレーナー」など</comment>
 				<comment language="english">「たんぱんこぞう」「エリートトレーナー」など</comment>
 			</tag>
+			<tag entry="15" japanese="趣味（調査レーダー）" english="趣味（調査レーダー）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="16" japanese="Gパワー名称" english="Gパワー名称" view="EP" width="156" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">Gパワーの名称です</comment>
+				<comment language="english">Gパワーの名称です</comment>
+			</tag>
 			<tag entry="17" japanese="特殊状態名" english="特殊状態名" view="EP" width="48" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 				<comment language="japanese">ポケモンの特殊状態です。</comment>
@@ -86,6 +99,9 @@
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 				<comment language="japanese">バッグのポケットの名前。「ポケット」の部分も含む。</comment>
 				<comment language="english">バッグのポケットの名前。「ポケット」の部分も含む。</comment>
+			</tag>
+			<tag entry="19" japanese="アンケート回答" english="アンケート回答" view="EP" width="108" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 			</tag>
 			<tag entry="26" japanese="カップ名" english="カップ名" view="EP" width="72" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
@@ -108,19 +124,17 @@
 				<comment language="japanese">ぼうけんノートなどで使う</comment>
 				<comment language="english">ぼうけんノートなどで使う</comment>
 			</tag>
-			<tag entry="34" japanese="コンテスト名称" english="コンテスト名称" view="EP" width="120" line="1">
+			<tag entry="34" japanese="ミュージカル演目名" english="ミュージカル演目名" view="EP" width="234" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
-				<comment language="japanese">コンテストのジャンル
-「○○○○○コンテスト」</comment>
-				<comment language="english">コンテストのジャンル
-「○○○○○コンテスト」</comment>
+				<comment language="japanese">ミュージカルの演目名</comment>
+				<comment language="english">ミュージカルの演目名</comment>
 			</tag>
-			<tag entry="35" japanese="コンテストランク" english="コンテストランク" view="EP" width="84" line="1">
+			<tag entry="35" japanese="ミュージカルコンディション" english="ミュージカルコンディション" view="EP" width="65" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
-				<comment language="japanese">○○○○ランク
-「ランク」も含む</comment>
-				<comment language="english">○○○○ランク
-「ランク」も含む</comment>
+				<comment language="japanese">ミュージカルのコンディション
+クール・キュート・エレガント・ユニーク</comment>
+				<comment language="english">ミュージカルのコンディション
+クール・キュート・エレガント・ユニーク</comment>
 			</tag>
 			<tag entry="36" japanese="国名" english="国名" view="EP" width="216" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
@@ -137,12 +151,70 @@
 				<comment language="japanese">リボンの名前</comment>
 				<comment language="english">リボンの名前</comment>
 			</tag>
-			<tag entry="40" japanese="しゅみ名" english="しゅみ名" view="EP" length="4" line="1">
+			<tag entry="40" japanese="広場ミニゲーム" english="広場ミニゲーム" view="EP" width="120" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場のミニゲーム名</comment>
+				<comment language="english">WiFi広場のミニゲーム名</comment>
+			</tag>
+			<tag entry="41" japanese="広場イベント名" english="広場イベント名" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場イベント名</comment>
+				<comment language="english">WiFi広場イベント名</comment>
+			</tag>
+			<tag entry="42" japanese="広場アイテム名" english="広場アイテム名" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場のアイテム名</comment>
+				<comment language="english">WiFi広場のアイテム名</comment>
+			</tag>
+			<tag entry="43" japanese="日本の挨拶" english="日本の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">日本の挨拶</comment>
+				<comment language="english">日本の挨拶</comment>
+			</tag>
+			<tag entry="44" japanese="英語の挨拶" english="英語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">英語の挨拶</comment>
+				<comment language="english">英語の挨拶</comment>
+			</tag>
+			<tag entry="45" japanese="フランス語の挨拶" english="フランス語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">フランス語の挨拶</comment>
+				<comment language="english">フランス語の挨拶</comment>
+			</tag>
+			<tag entry="46" japanese="ドイツ語の挨拶" english="ドイツ語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ドイツ語の挨拶</comment>
+				<comment language="english">ドイツ語の挨拶</comment>
+			</tag>
+			<tag entry="47" japanese="イタリア語の挨拶" english="イタリア語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">イタリア語の挨拶</comment>
+				<comment language="english">イタリア語の挨拶</comment>
+			</tag>
+			<tag entry="48" japanese="スペイン語の挨拶" english="スペイン語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">スペイン語の挨拶</comment>
+				<comment language="english">スペイン語の挨拶</comment>
+			</tag>
+			<tag entry="49" japanese="ミュージカルグッズ部位" english="ミュージカルグッズ部位" view="EP" width="39" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="50" japanese="PDW家具名" english="PDW家具名" view="EP" width="192" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="51" japanese="ミュージカル客層" english="ミュージカル客層" view="EP" width="78" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">おとこのひと、女の子等</comment>
+				<comment language="english">おとこのひと、女の子等</comment>
+			</tag>
+			<tag entry="52" japanese="DS本体名" english="DS本体名" view="EP" width="130" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">DS本体のユーザー名</comment>
+				<comment language="english">DS本体のユーザー名</comment>
 			</tag>
 		</group>
 
-		<group entry="2" japanese="ポケモンＷＢ（数値）" english="ポケモンＷＢ（数値）">
+		<group entry="2" japanese="ポケモンＷＢ（数値）" english="ポケモンＷＢ（数値）" color="#c0c0c0">
 			<tag entry="00" japanese="１桁" english="１桁" view="EP" width="8" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 			</tag>
@@ -171,9 +243,15 @@
 			<tag entry="07" japanese="８桁" english="８桁" view="EP" width="64" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 			</tag>
+			<tag entry="08" japanese="９桁" english="９桁" view="EP" width="72" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="09" japanese="10桁" english="10桁" view="EP" width="80" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
 		</group>
 
-		<group entry="189" japanese="汎用コントロール" english="汎用コントロール">
+		<group entry="189" japanese="汎用コントロール" english="汎用コントロール" color="#c0c0c0">
 			<tag entry="00" japanese="カラー変更" english="カラー変更" view="EP" length="0" line="1">
 				<parameter number="0" japanese="文字色番号" english="文字色番号" type="int8"/>
 				<parameter number="1" japanese="影色番号" english="影色番号" type="int8"/>
@@ -192,9 +270,23 @@
 				<comment language="english">当該行の文字列を
 ウィンドウ内で右寄せします。</comment>
 			</tag>
+			<tag entry="04" japanese="X加算" english="X加算" view="EP" length="0" line="1">
+				<parameter number="0" japanese="加算値" english="加算値" type="int8"/>
+				<comment language="japanese">描画X座標を加算します。
+使用は許可制です。</comment>
+				<comment language="english">描画X座標を加算します。
+使用は許可制です。</comment>
+			</tag>
+			<tag entry="05" japanese="X指定" english="X指定" view="EP" length="0" line="1">
+				<parameter number="0" japanese="Ｘ座標" english="Ｘ座標" type="int16"/>
+				<comment language="japanese">描画Ｘ座標を指定値に変更。
+使用は許可制です。</comment>
+				<comment language="english">描画Ｘ座標を指定値に変更。
+使用は許可制です。</comment>
+			</tag>
 		</group>
 
-		<group entry="190" japanese="動的コントロール" english="Word">
+		<group entry="190" japanese="動的コントロール" english="Word" color="#c0c0c0">
 			<tag entry="00" japanese="ページ切り替え（行送り）" english="ページ切り替え（行送り）" view="EP" length="0" line="1"/>
 			<tag entry="01" japanese="ページ切り替え（クリア）" english="ページ切り替え（クリア）" view="EP" length="0" line="1"/>
 			<tag entry="02" japanese="ウェイト変更（単発）" english="ウェイト変更（単発）" view="EP" length="0" line="1">
@@ -212,11 +304,21 @@
 			</tag>
 			<tag entry="07" japanese="コールバック引数リセット" english="コールバック引数リセット" view="EP" length="0" line="1"/>
 			<tag entry="08" japanese="描画領域クリア" english="描画領域クリア" view="EP" length="0" line="1"/>
+			<tag entry="09" japanese="速度コントロール" english="速度コントロール" view="EP" length="0" line="1">
+				<parameter number="0" japanese="モード" english="モード" type="int8"/>
+				<comment language="japanese">ユーザConfig設定に応じて
+相対的に速い（遅い）速度になるように、ウェイトフレーム値などを操作します。</comment>
+				<comment language="english">ユーザConfig設定に応じて
+相対的に速い（遅い）速度になるように、ウェイトフレーム値などを操作します。</comment>
+			</tag>
 		</group>
 
 		<group entry="254" japanese="文字列展開" english="Word">
 		</group>
 
+		<set japanese="RESET" english="RESET" value="BE:09:速度コントロール:0"/>
+		<set japanese="FAST" english="FAST" value="BE:09:速度コントロール:1"/>
+		<set japanese="SLOW" english="SLOW" value="BE:09:速度コントロール:2"/>
 		<set japanese="500%" english="500%" value="FF:01:サイズ:500"/>
 		<set japanese="400%" english="400%" value="FF:01:サイズ:400"/>
 		<set japanese="300%" english="300%" value="FF:01:サイズ:300"/>
@@ -266,16 +368,16 @@
 		</language>
 	</columns>
 
-	<dialog left="235" top="95" right="940" bottom="723" maximized="no" rayout="Vertical2">
+	<dialog left="235" top="95" right="937" bottom="723" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="649" top="113" right="1122" bottom="511" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="527"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="540"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
-		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<band id="4" index="0" style="0000" width="694"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="1" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
 	</dialog>
@@ -358,9 +460,9 @@
 　趣味関連の兄弟をおいた場合、メッセージ変更</comment>
 		<attribute name="キャラ指定">バックパッカー</attribute>
 		<language name="JPN" width="256">へぇ！　きみの　しゅみは
-[1:28:しゅみ名:6]　なんだね！</language>
+[1:0F:趣味（調査レーダー）:6]　なんだね！</language>
 		<language name="JPN_KANJI" width="256">へぇ！　君の　趣味は
-[1:28:しゅみ名:6]　なんだね！</language>
+[1:0F:趣味（調査レーダー）:6]　なんだね！</language>
 	</row>
 
 	<row id="msg_babyboy1_01">
@@ -520,72 +622,72 @@ POS　</comment>
 		<comment>20カ国と交換
 POS</comment>
 		<attribute name="キャラ指定">ガードマン</attribute>
-		<language name="JPN" width="256">きみか　[1:00:トレーナー名:3][BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">きみか　[1:00:トレーナー名:3]▼
 さいきん　きみを　さがしにくる
-トレーナーが　おおいんだよ[BE:00:ページ切り替え（行送り）]
-なんだ　アイドル　みたいじゃないか[BE:01:ページ切り替え（クリア）]
+トレーナーが　おおいんだよ▽
+なんだ　アイドル　みたいじゃないか▼
 だが　おじさんもな
-きみの　としごろには[BE:00:ページ切り替え（行送り）]
-おんなのこに　キャーキャー[BE:00:ページ切り替え（行送り）]
-いわれてたんだぞ　はっは[BE:01:ページ切り替え（クリア）]
+きみの　としごろには▽
+おんなのこに　キャーキャー▽
+いわれてたんだぞ　はっは▼
 ……ほい
-とおって　いいぞ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きみか　[1:00:トレーナー名:3][BE:01:ページ切り替え（クリア）]
+とおって　いいぞ▼</language>
+		<language name="JPN_KANJI" width="256">きみか　[1:00:トレーナー名:3]▼
 最近　きみを　探しにくる
-トレーナーが　多いんだよ[BE:00:ページ切り替え（行送り）]
-なんだ　アイドル　みたいじゃないか[BE:01:ページ切り替え（クリア）]
+トレーナーが　多いんだよ▽
+なんだ　アイドル　みたいじゃないか▼
 だが　おじさんもな
-きみの　年ごろには[BE:00:ページ切り替え（行送り）]
-女の子に　キャーキャー[BE:00:ページ切り替え（行送り）]
-言われてたんだぞ　はっは[BE:01:ページ切り替え（クリア）]
+きみの　年ごろには▽
+女の子に　キャーキャー▽
+言われてたんだぞ　はっは▼
 ……ほい
-通って　いいぞ[BE:01:ページ切り替え（クリア）]</language>
+通って　いいぞ▼</language>
 	</row>
 
 	<row id="msg_policeman_01_08" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>25カ国と交換
 POS</comment>
 		<attribute name="キャラ指定">ガードマン</attribute>
-		<language name="JPN" width="256">って　きみか　[1:00:トレーナー名:3][BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">って　きみか　[1:00:トレーナー名:3]▼
 さいきんじゃ　きみ　みたいな
-グローバルな　トレーナーが[BE:00:ページ切り替え（行送り）]
-おおい　みたいだな[BE:01:ページ切り替え（クリア）]
+グローバルな　トレーナーが▽
+おおい　みたいだな▼
 そうすると　なんだ
-せかいへいわも　そう　とおくはない[BE:00:ページ切り替え（行送り）]
-そう　おもっても　いいのか？[BE:01:ページ切り替え（クリア）]
+せかいへいわも　そう　とおくはない▽
+そう　おもっても　いいのか？▼
 ほい
-まぁ　とおってくれ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">って　きみか　[1:00:トレーナー名:3][BE:01:ページ切り替え（クリア）]
+まぁ　とおってくれ▼</language>
+		<language name="JPN_KANJI" width="256">って　きみか　[1:00:トレーナー名:3]▼
 最近じゃ　きみ　みたいな
-グローバルな　トレーナーが[BE:00:ページ切り替え（行送り）]
-多い　みたいだな[BE:01:ページ切り替え（クリア）]
+グローバルな　トレーナーが▽
+多い　みたいだな▼
 そうすると　なんだ
-世界平和も　そう　遠くはない[BE:00:ページ切り替え（行送り）]
-そう　思っても　いいのか？[BE:01:ページ切り替え（クリア）]
+世界平和も　そう　遠くはない▽
+そう　思っても　いいのか？▼
 ほい
-まぁ　通ってくれ[BE:01:ページ切り替え（クリア）]</language>
+まぁ　通ってくれ▼</language>
 	</row>
 
 	<row id="msg_policeman_01_09" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>30カ国と交換
 POS</comment>
 		<attribute name="キャラ指定">ガードマン</attribute>
-		<language name="JPN" width="256">きみか　[1:00:トレーナー名:3][BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">きみか　[1:00:トレーナー名:3]▼
 きみが　ここに　くるように　なってから
-ユナイテッドタワーは　だいぶ[BE:00:ページ切り替え（行送り）]
-いそがしくなってきた　きがするよ[BE:01:ページ切り替え（クリア）]
+ユナイテッドタワーは　だいぶ▽
+いそがしくなってきた　きがするよ▼
 おじさんとしちゃ
 しごとが　ふえるんだが▽
-まぁ　うれしい　ひめいって　やつだな[BE:00:ページ切り替え（行送り）]
-がんばれよ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">きみか　[1:00:トレーナー名:3][BE:01:ページ切り替え（クリア）]
+まぁ　うれしい　ひめいって　やつだな▽
+がんばれよ▼</language>
+		<language name="JPN_KANJI" width="256">きみか　[1:00:トレーナー名:3]▼
 きみが　ここに　来るように　なってから
-ユナイテッドタワーは　だいぶ[BE:00:ページ切り替え（行送り）]
-忙しくなってきた　気がするよ[BE:01:ページ切り替え（クリア）]
+ユナイテッドタワーは　だいぶ▽
+忙しくなってきた　気がするよ▼
 おじさんとしちゃ
 仕事が　増えるんだが▽
-まぁ　うれしい　悲鳴って　やつだな[BE:00:ページ切り替え（行送り）]
-頑張れよ[BE:01:ページ切り替え（クリア）]</language>
+まぁ　うれしい　悲鳴って　やつだな▽
+頑張れよ▼</language>
 	</row>
 
 	<row id="msg_policeman_01_10" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
@@ -898,10 +1000,10 @@ POS</comment>
 能動的に話しかけた時</comment>
 		<attribute name="キャラ指定">ガードマン</attribute>
 		<language name="JPN" width="256">おじさんも　きみの　としごろには
-おんなのこに　キャーキャー[BE:00:ページ切り替え（行送り）]
+おんなのこに　キャーキャー▽
 いわれてたんだぞ　はっは</language>
 		<language name="JPN_KANJI" width="256">おじさんも　きみの　年ごろには
-女の子に　キャーキャー[BE:00:ページ切り替え（行送り）]
+女の子に　キャーキャー▽
 言われてたんだぞ　はっは</language>
 	</row>
 
@@ -910,10 +1012,10 @@ POS</comment>
 能動的に話しかけた時</comment>
 		<attribute name="キャラ指定">ガードマン</attribute>
 		<language name="JPN" width="256">さいきんじゃ　きみ　みたいな
-グローバルな　トレーナーが[BE:00:ページ切り替え（行送り）]
+グローバルな　トレーナーが▽
 おおい　みたいだな</language>
 		<language name="JPN_KANJI" width="256">最近じゃ　きみ　みたいな
-グローバルな　トレーナーが[BE:00:ページ切り替え（行送り）]
+グローバルな　トレーナーが▽
 多い　みたいだな</language>
 	</row>
 
