@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-18T21:36:33"/>
+	<create user="matsumiya" host="W00224" date="2011-04-19T14:16:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -291,6 +291,82 @@
 		<operation add_message="no" header_setting="no" tag_setting="no" output_setting="no" display="no" sort="no" flowchart_window="no"/>
 	</lock>
 
+
+	<row id="msg_c13_pilot_01" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・</comment>
+		<attribute name="キャラ指定">PILOT
+船長</attribute>
+		<language name="JPN" width="256">？？？『ホミカよ　
+ちちを　とめないでおくれ▼
+わたしは　じぶんの　かのうせいを
+さぐるため　ポケウッドに　いきます！▼
+えいがも　とれる
+せんちょうを　めざすのです！▼</language>
+		<language name="JPN_KANJI" width="256">？？？『ホミカよ　
+ちちを　とめないでおくれ▼
+わたしは　じぶんの　かのうせいを
+さぐるため　ポケウッドに　いきます！▼
+えいがも　とれる
+せんちょうを　めざすのです！▼</language>
+	</row>
+
+	<row id="msg_c13_swleader2_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・</comment>
+		<attribute name="キャラ指定">SWLEADER2
+ジムリーダー
+ホミカ</attribute>
+		<language name="JPN" width="256">ホミカ『あのね！
+アンタ　せんちょう　でしょ？▼
+ふね　うごかしてくれな
+こまる　ひと　いるでしょーが！▼</language>
+		<language name="JPN_KANJI" width="256">ホミカ『あのね！
+アンタ　せんちょう　でしょ？▼
+ふね　うごかしてくれな
+こまる　ひと　いるでしょーが！▼</language>
+	</row>
+
+	<row id="msg_c13_pilot_02" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・</comment>
+		<attribute name="キャラ指定">PILOT
+船長</attribute>
+		<language name="JPN" width="256">せんちょう『いとしの　むすめよ▼
+きみは　ジムリーダーと　バンドを
+かけもち　しているではないですか？▽
+わたしにも　できるはずなのです！▼</language>
+		<language name="JPN_KANJI" width="256">せんちょう『いとしの　むすめよ▼
+きみは　ジムリーダーと　バンドを
+かけもち　しているではないですか？▽
+わたしにも　できるはずなのです！▼</language>
+	</row>
+
+	<row id="msg_c13_swleader2_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・</comment>
+		<attribute name="キャラ指定">SWLEADER2
+ジムリーダー
+ホミカ</attribute>
+		<language name="JPN" width="256">ホミカ『あー　もう！！▼
+バカ！　バカ！　バカ！　バカ！
+バカ！　バカ！　バカ！　バカーー！▼
+かけもちが　わるいんじゃ　なくて
+めいわく　かけるな！　っていいたいの▼
+せんちょうの　つごうで
+ふねに　のれないとか　ないでしょーが▼
+あー　もう！
+ジムに　いこッ！▼</language>
+		<language name="JPN_KANJI" width="256">ホミカ『あー　もう！！▼
+バカ！　バカ！　バカ！　バカ！
+バカ！　バカ！　バカ！　バカーー！▼
+かけもちが　わるいんじゃ　なくて
+めいわく　かけるな！　っていいたいの▼
+せんちょうの　つごうで
+ふねに　のれないとか　ないでしょーが▼
+あー　もう！
+ジムに　いこッ！▼</language>
+	</row>
 
 	<row id="msg_c13_stop_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
@@ -326,32 +402,17 @@
 関係者以外　入れないぞ！▼</language>
 	</row>
 
-	<row id="msg_c13_swleader2_01">
-		<comment>♀
-・ジムの前
-・c13r0401：船舶所で会話後</comment>
-		<attribute name="キャラ指定">SWLEADER2
-ジムリーダー
-ホミカ</attribute>
-		<language name="JPN" width="256">ジムリーダー　ホミカについて</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
-	</row>
-
 	<row id="msg_c13_02_01">
 		<comment>♂
-・</comment>
+・GRIDX=00、GRIDZ=00</comment>
 		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">ジムリーダー　ホミカについて
-・ライブハウス「？？？」に
-・え？　だって　かのじょ
-　ジムリーダーだけど　どうじに
-　バンドも　やってるし</language>
+		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_c13_03_01">
 		<comment>♂
-・</comment>
+・GRIDX=00、GRIDZ=00</comment>
 		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
@@ -359,7 +420,7 @@
 
 	<row id="msg_c13_04_01">
 		<comment>♂
-・</comment>
+・GRIDX=00、GRIDZ=00</comment>
 		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
@@ -367,7 +428,7 @@
 
 	<row id="msg_c13_05_01">
 		<comment>♀
-・</comment>
+・GRIDX=00、GRIDZ=00</comment>
 		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
@@ -375,7 +436,7 @@
 
 	<row id="msg_c13_06_01">
 		<comment>♀
-・</comment>
+・GRIDX=00、GRIDZ=00</comment>
 		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">ヒウンシティについて</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
