@@ -157,7 +157,7 @@ static void Resort_Npc_Sys_AddAll( RESORT_NPC_SYS *p_wk )
     u16 placeID = RESORT_BINARY_NPC_GetData(p_wk->p_binary_npc, i, RESORT_BINARY_NPC_PARAM_PLACE);
 
     MMDL *p_mmdl = MMDLSYS_SearchOBJID( p_wk->param.p_mmdlsys, RESORT_NPC_INDEX_TO_MMDLID(i) );
-    if( apper_lv >= city_lv && p_mmdl == NULL && p_wk->param.placeID == placeID )
+    if( apper_lv <= city_lv && p_mmdl == NULL && p_wk->param.placeID == placeID )
     {
       MMDL_HEADER header;
       u16 grid_x, grid_z;
