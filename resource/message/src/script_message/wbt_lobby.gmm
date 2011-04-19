@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-14T19:28:09"/>
+	<create user="tamada" host="W00253" date="2011-04-19T11:55:57"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -996,6 +996,13 @@ msg_wbt_info_11へ</comment>
 スイッチを　きった！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　エントリーチェッカーの
 スイッチを　きった！</language>
+	</row>
+
+	<row id="msg_wbt_pc_blank" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<comment>説明ウィンドウを表示するための
+空っぽのダミーウィンドウ用データ</comment>
+		<language name="JPN" width="256"></language>
+		<language name="JPN_KANJI" width="256"></language>
 	</row>
 
 	<flowchart-group-list>

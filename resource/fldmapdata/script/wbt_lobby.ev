@@ -576,7 +576,7 @@ EVENT_START ev_wbt_entry_checker
   $LOG_OUT = FALSE
 
   WHILE $LOG_OUT == FALSE
-    _SYSWIN_MSG( msg_wbt_pc_on, POS_DOWN )
+    _SYSWIN_MSG( msg_wbt_pc_blank, POS_DOWN )
     _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, TRUE, LWK_SELECT_POS )
     _BMPMENU_MAKE_LIST_EX( msg_wbt_pc_menu_01, msg_wbt_pc_info_01, msg_wbt_pc_menu_01 )
     _BMPMENU_MAKE_LIST_EX( msg_wbt_pc_menu_02, msg_wbt_pc_info_02, msg_wbt_pc_menu_02 )
