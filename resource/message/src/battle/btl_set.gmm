@@ -6357,21 +6357,21 @@
 	<row id="BTL_STRID_SET_ChangePokeType">
 		<comment>タイプ変化メッセージ</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:0F:ポケモンのタイプ:1]タイプに　なった！</language>
+[1:03:ポケモンタイプ:1]タイプに　なった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:0F:ポケモンのタイプ:1]タイプに　なった！</language>
+[1:03:ポケモンタイプ:1]タイプに　なった！</language>
 	</row>
 	<row id="BTL_STRID_SET_ChangePokeType_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
-[1:0F:ポケモンのタイプ:1]タイプに　なった！</language>
+[1:03:ポケモンタイプ:1]タイプに　なった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
-[1:0F:ポケモンのタイプ:1]タイプに　なった！</language>
+[1:03:ポケモンタイプ:1]タイプに　なった！</language>
 	</row>
 	<row id="BTL_STRID_SET_ChangePokeType_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
-[1:0F:ポケモンのタイプ:1]タイプに　なった！</language>
+[1:03:ポケモンタイプ:1]タイプに　なった！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
-[1:0F:ポケモンのタイプ:1]タイプに　なった！</language>
+[1:03:ポケモンタイプ:1]タイプに　なった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Drain">
