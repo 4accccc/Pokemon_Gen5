@@ -90,19 +90,7 @@ typedef enum {
   WBT_TRTYPE_SAVE,    ///<WB（データ引継ぎ）のトレーナー
   WBT_TRTYPE_PLAYER,  ///<プレイヤー
 }WBT_TRTYPE;
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-enum {
-  WBT_TRMSG_1ST_FIGHT_START = 0,
-  WBT_TRMSG_2ND_FIGHT_START,
-  WBT_TRMSG_3RD_FIGHT_START,
-  WBT_TRMSG_FIGHT_LOSE,
-  WBT_TRMSG_PLAYER_WIN,
-  WBT_TRMSG_PLAYER_LOSE,
-  WBT_TRMSG_ANNOUNCE,
 
-  WBT_TRMSG_TYPE_NUM,
-};
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 enum {

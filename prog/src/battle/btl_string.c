@@ -25,6 +25,7 @@
 #include "msg\msg_wazaname.h"
 
 #include "tr_tool/ex_trainer_def.h" //TRID_OFFSET_WBT
+#include "field/wbt.h"  //WBT_TRMSG_`
 #ifdef PM_DEBUG
 #include "script_message.naix"
 #include "msg\script\msg_n01r0502.h"
@@ -927,17 +928,16 @@ void BTL_STR_MakeStringWaza( STRBUF* dst, u8 pokeID, u16 waza )
 //=============================================================================================
 void BTL_STR_MakeStringSubway( STRBUF* dst, u16 subwayTRID, BtlResult playerResult )
 {
-  OS_Printf("BTL_STR_MakeStringSubway(%d)\n",subwayTRID);
+  //OS_Printf("BTL_STR_MakeStringSubway(%d)\n",subwayTRID);
   if( subwayTRID >= TRID_OFFSET_WBT )
   {
     u16 strID;
     subwayTRID -= TRID_OFFSET_WBT;
-    strID = subwayTRID * 7; //WBT_TRMSG_TYPE_NUM;
+    strID = subwayTRID * WBT_TRMSG_TYPE_NUM;
     if( playerResult == BTL_RESULT_LOSE ){
-      strID = 5; //WBT_TRMSG_PLAYER_LOSE
-      //strID += 5; //WBT_TRMSG_PLAYER_LOSE
+      strID += WBT_TRMSG_FIGHT_WIN;
     }else{
-      strID += 3; //WBT_TRMSG_FIGHT_LOSE
+      strID += WBT_TRMSG_FIGHT_LOSE;
     }
     GFL_MSG_GetString( SysWork.msg[MSGSRC_WBT], strID, dst );
   }

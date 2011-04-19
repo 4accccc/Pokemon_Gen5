@@ -645,9 +645,10 @@
 #define SCR_WBT_TRMSG_2ND             (1) ///<WBTトレーナーMSG指定：2回戦
 #define SCR_WBT_TRMSG_3RD             (2) ///<WBTトレーナーMSG指定：決勝戦
 #define SCR_WBT_TRMSG_LOSE            (3) ///<WBTトレーナーMSG指定：（使用しない）
-#define SCR_WBT_TRMSG_PLAYER_WIN      (4) ///<WBTトレーナーMSG指定：プレイヤー勝利
-#define SCR_WBT_TRMSG_PLAYER_LOSE     (5) ///<WBTトレーナーMSG指定：プレイヤー敗北
-#define SCR_WBT_TRMSG_ANNOUNCE        (6) ///<WBTトレーナーMSG指定：（使用しない）
+#define SCR_WBT_TRMSG_WIN             (4) ///<WBTトレーナーMSG指定：（使用しない）
+#define SCR_WBT_TRMSG_PLAYER_WIN      (5) ///<WBTトレーナーMSG指定：プレイヤー勝利
+#define SCR_WBT_TRMSG_PLAYER_LOSE     (6) ///<WBTトレーナーMSG指定：プレイヤー敗北
+#define SCR_WBT_TRMSG_ANNOUNCE        (7) ///<WBTトレーナーMSG指定：（使用しない）
 
 #define SCR_WBT_BATTLE_RESULT_LOSE    (0) ///<WBT対戦結果：敗北
 #define SCR_WBT_BATTLE_RESULT_WIN     (1) ///<WBT対戦結果：勝利
