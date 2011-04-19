@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2011-04-13T12:19:09" source="mugenobj.mb"/>
+	<create user="ibe_mana" host="W00191" date="2011-04-19T10:40:42" source="mugenobj.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ibe_mana" host="W00191" date="2011-04-13T12:19:09" source="mugenobj.mb"/>
+<original_create user="ibe_mana" host="W00191" date="2011-04-19T10:40:42" source="mugenobj.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="5" xyz="-5.263184 0.147705 -1.408936" whd="1.031250 1.477295 1.297852"/>
+<box_test pos_scale="5" xyz="2.736816 0.147705 6.591064" whd="1.031250 1.477295 1.297852"/>
 
 <tex_image_array size="1">
 	<tex_image index="0" name="in74_007"
@@ -35,25 +35,24 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="in74_007_pl"
-		path="C:/home/swan_data3d/field/in74/chip/tex_05/in74_007.tga"
+		path="C:/home/swan_data3d/build_model/indoor/in74_mugenobj/tex/in74_007.tga"
 	>
 		<bitmap size="64">
+			7777 7777 7777 7777 7777 7777 7777 7777
+			7777 7777 7777 7777 6666 6666 6666 6666
+			6666 6666 5555 5555 5555 5555 5555 5555
+			4444 4444 4444 4444 4444 4444 3333 3333
+			3333 3333 3333 3333 2222 2222 2222 2222
+			2222 2222 1111 1111 1111 1111 1111 1111
 			0000 0000 0000 0000 0000 0000 0000 0000
-			2222 2222 3333 3333 7777 7777 8888 8888
-			4444 4444 aaaa aaaa bbbb bbbb dddd dddd
-			dddd dddd dddd dddd dddd dddd dddd dddd
-			dddd dddd dddd dddd dddd dddd dddd dddd
-			dddd dddd dddd dddd dddd dddd dddd dddd
-			dddd dddd dddd dddd dddd dddd dddd dddd
-			dddd dddd dddd dddd dddd dddd dddd dddd
+			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
 </tex_image_array>
 
 <tex_palette_array size="1">
-	<tex_palette index="0" name="in74_007_pl" color_size="16">
-		0382 0362 0362 0342 02a2 0383 0302 0302
-		02c2 0282 0262 0241 0221 0221 7fff 7fff
+	<tex_palette index="0" name="in74_007_pl" color_size="8">
+		2040 2440 3480 40a0 50c0 58e0 6500 7920
 	</tex_palette>
 </tex_palette_array>
 
@@ -498,7 +497,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="0.000000 0.000000 0.000000"
+		translate="256.000000 0.000000 256.000000"
 		visibility="on"
 		display_size="2"
 		vertex_size="192" polygon_size="72"
