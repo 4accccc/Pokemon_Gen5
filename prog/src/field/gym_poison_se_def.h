@@ -11,4 +11,5 @@
 #pragma once
 
 
+#define GYM_POISON_BGM     (SEQ_BGM_POISONE_GYM_01) //ISS
 

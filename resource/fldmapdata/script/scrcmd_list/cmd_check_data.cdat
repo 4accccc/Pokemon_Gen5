@@ -654,4 +654,5 @@ static const CMD_CHECK_DATA cmd_check_data[] = {
   { TRUE, FALSE, FALSE }, // _RIVAL_NAME_INPUT (651)
   { TRUE, FALSE, FALSE }, // _RIVAL_NAME (652)
   { TRUE, FALSE, FALSE }, // _GYM_POISON_ANM_STOP (653)
+  { TRUE, TRUE, FALSE }, // _GYM_POISON_ISS_OBJ_STOP (654)
 };

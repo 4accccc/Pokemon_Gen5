@@ -32,6 +32,13 @@
 // sound
 #include "sound/pm_sndsys.h"
 
+// script
+#include "script_def.h"
+#include "../../../resource/fldmapdata/flagwork/flag_define.h"
+
+// save
+#include "savedata/misc.h"               // for MISC
+
 // mine
 #include "gym_poison.h"
 #include "gym_poison_se_def.h"
@@ -308,11 +315,36 @@ void GYM_POISON_AnmStop(GAMESYS_WORK *gsys, const int idx)
   {
     u16 obj_idx = idx;    // OBJインデックス
 
-    // アニメ再生
+    // アニメ再生OFF
     EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, GYM_POISON_UNIT_IDX, obj_idx, 0 );
+
     // ICA
+    FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, GYM_POISON_UNIT_IDX, obj_idx, 0, FALSE );
+    // ITA
+    FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, GYM_POISON_UNIT_IDX, obj_idx, 1, FALSE );
+
     FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, TRUE );  // アニメSTOP
+    FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, FALSE );  // ループ再生設定
   }
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ISSOBJのアニメストップ
+ *
+ *	@param	*gsys
+ *	@param	int obj_id
+ */
+//-----------------------------------------------------------------------------
+void GYM_POISON_IssObjStop(GAMESYS_WORK *gsys, const int obj_id)
+{
+  FIELDMAP_WORK     *p_fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  const MMDLSYS     *cp_mmdlsys = FIELDMAP_GetMMdlSys( p_fieldmap );
+
+  MMDL *mmdl = MMDLSYS_SearchOBJID( cp_mmdlsys, obj_id );  // 
+  MMDL_OnStatusBit( mmdl, MMDL_STABIT_PAUSE_ANM );
+  ICHI_Printf("ISS OBJ %d ANM STOP \n", obj_id);
 }
 
 //=============================================================================
@@ -422,6 +454,36 @@ static void MAP_Init( MAP_WORK *p_wk, FIELDMAP_WORK *p_fieldmap )
     p_wk->p_iss_switch  = ISS_SYS_GetIssSwitchSystem( p_iss );
   }
   p_wk->volume_idx = VOLUME_IDX_NULL;
+
+  {
+    GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
+    GAMEDATA   *gdata = GAMESYSTEM_GetGameData( gsys );
+    EVENTWORK* p_evwk = GAMEDATA_GetEventWork( gdata );
+    SAVE_CONTROL_WORK *save = GAMEDATA_GetSaveControlWork( gdata );
+    MISC *misc = SaveData_GetMisc( save );
+
+    // トレーナー戦闘フラグがONの時はISSスイッチをOFFにする
+    BOOL iss_flg1 = !( EVENTWORK_CheckEventFlag( p_evwk, FE_C13GYM_TRBTL1 ) );
+    BOOL iss_flg2 = !( EVENTWORK_CheckEventFlag( p_evwk, FE_C13GYM_TRBTL2 ) );
+
+    // ジムクリアしているなら強制的にスイッチON
+    if( MISC_GetBadgeFlag( misc, BADGE_ID_02 ) )
+    {
+      iss_flg1 = TRUE;
+      iss_flg2 = TRUE;
+      ICHI_Printf("強制スイッチON\n");
+    }
+
+    ICHI_Printf("ISS スイッチ1 %d \n", iss_flg1);
+    ICHI_Printf("ISS スイッチ2 %d \n", iss_flg2);
+
+    // ISS予約
+    ISS_SWITCH_SYS_ReserveSwitch( p_wk->p_iss_switch, SWITCH_01, TRUE, GYM_POISON_BGM );
+    ISS_SWITCH_SYS_ReserveSwitch( p_wk->p_iss_switch, SWITCH_02, iss_flg1, GYM_POISON_BGM );
+    ISS_SWITCH_SYS_ReserveSwitch( p_wk->p_iss_switch, SWITCH_03, iss_flg2, GYM_POISON_BGM );
+    ISS_SWITCH_SYS_ReserveSwitch( p_wk->p_iss_switch, SWITCH_04, TRUE, GYM_POISON_BGM );
+
+  }
 
 
   // 初期音量を設定

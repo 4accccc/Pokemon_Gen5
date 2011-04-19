@@ -375,3 +375,25 @@ VMCMD_RESULT EvCmdGymPoison_AnmStop( VMHANDLE * core, void *wk )
   return VMCMD_RESULT_SUSPEND;
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief   毒ジムギミック ISSOBJのアニメSTOP
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @return  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGymPoison_IssObjStop( VMHANDLE * core, void *wk )
+{
+  u16 obj_id;
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  // OBJID
+  obj_id  = VMGetU16( core );
+
+  GYM_POISON_IssObjStop( gsys, obj_id );
+
+  //イベントコールするので、一度制御を返す
+  return VMCMD_RESULT_SUSPEND;
+}
+

@@ -7165,6 +7165,20 @@
   .short  \idx
   .endm
 
+//--------------------------------------------------------------
+/**
+ * ジムコマンド　毒ジム ISSOBJのアニメSTOP
+ * @param obj_id  ISSOBJのOBJID
+ */
+//--------------------------------------------------------------
+#define _GYM_POISON_ISS_OBJ_STOP( obj_id ) \
+    _ASM_GYM_POISON_ISS_OBJ_STOP obj_id
+
+  .macro  _ASM_GYM_POISON_ISS_OBJ_STOP obj_id
+  .short  EV_SEQ_GYM_POISON_ISS_OBJ_STOP 
+  .short  \obj_id
+  .endm
+
 //======================================================================
 //
 //  モデルアニメ関連

@@ -10,6 +10,7 @@
 #ifndef ZONE_C13GYM0101_EVC_H
 #define ZONE_C13GYM0101_EVC_H
 
+#define C13GYM0101_DANPEI_01               0
 
 #endif //ZONE_C13GYM0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c13gym0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
