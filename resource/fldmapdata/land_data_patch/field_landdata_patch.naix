@@ -58,7 +58,10 @@ enum {
 	NARC_field_landdata_patch_WF_LAKE_01_dat = 44,
 	NARC_field_landdata_patch_WF_LAKE_02_dat = 45,
 	NARC_field_landdata_patch_RESORT_INSTITUTION_ON_dat = 46,
-	NARC_field_landdata_patch_RESORT_DUMMY_dat = 47
+	NARC_field_landdata_patch_RESORT_DUMMY_dat = 47,
+	NARC_field_landdata_patch_RESORT_MARKET_00_dat = 48,
+	NARC_field_landdata_patch_RESORT_MARKET_01_dat = 49,
+	NARC_field_landdata_patch_RESORT_MARKET_02_dat = 50
 };
 
 /* NARC_FIELD_LANDDATA_PATCH_NAIX_ */

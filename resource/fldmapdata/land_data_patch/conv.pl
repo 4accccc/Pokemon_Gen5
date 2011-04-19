@@ -115,7 +115,18 @@ for( $i=0; $i<$INPUT_DATA_MAX; $i++ )
     open( FILEIN, $filename_3dmd );
     binmode( FILEIN );
 
-    @data3dmd_c = unpack( "C*", <FILEIN> ); #unsigned charÇ≈Ç›ÇÈ
+    @data3dmd_c = ();
+    while ($c = getc(FILEIN))
+    {
+      print unpack( "C", $c ); 
+      push( @data3dmd_c, unpack( "C", $c ) );
+    }
+    #@data3dmd_c = unpack( "C*", <FILEIN> ); #unsigned charÇ≈Ç›ÇÈ Ç»Ç∫Ç©Ç±ÇÍÇæÇ∆ç≈å„Ç‹Ç≈ÇÊÇ›Ç±ÇÒÇ≈Ç≠ÇÍÇ»Ç¢
+    print( "\n@data3dmd_c\n" );
+    print( "\nsize $#data3dmd_c\n" );
+
+    $size = (-s $filename_3dmd);
+    print( "\n$size\n" );
 
     close( FILEIN );
   }

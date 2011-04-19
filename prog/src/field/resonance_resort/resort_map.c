@@ -174,8 +174,9 @@ void RESORT_MAP_GetPlaceGridPosByIndex( RESORT_PLACEID placeID, u16 people_type,
   case RESORT_PLACEID_INSTITUTION_07:
     if( people_type == RESORT_PEOPLE_TYPE_RESIDENT )
     {
-      *p_x = 7;
-      *p_z = 9;
+      *p_x = 11;
+      *p_z = 12;
+      *p_dir  = DIR_LEFT;
     }
     else
     {

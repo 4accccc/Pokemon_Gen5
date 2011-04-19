@@ -252,8 +252,7 @@ static int Resort_Mapcreate_SetUpBlockRoom( RESORT_MAPCREATE *p_wk, NormalVtxFor
     {
       RESORT_PLACEID placeID = RESORT_RESIDENT_DATA_GetData( cp_temp, RESORT_DATA_PARAM_PLACE_ID, NULL );
       //Zl‚ª“ñlŽ{Ý‚É‚¢‚È‚¢‚Æ‚¢‚¤‘O’ñ
-      //TODO ‰¼‚ÉŠO‚µ‚Ä‚¢‚é
-      //if( p_wk->zoneID == RESORT_MAP_PlaceIDToZoneID( placeID ) )
+      if( p_wk->zoneID == RESORT_MAP_PlaceIDToZoneID( placeID ) )
       {
         cp_resident = cp_temp;
         break;
@@ -267,6 +266,7 @@ static int Resort_Mapcreate_SetUpBlockRoom( RESORT_MAPCREATE *p_wk, NormalVtxFor
     {
       const RESORT_BINARY_SHOP_DATA *cp_binary_shop = RESORT_BINARY_SHOP_SearchDataByData( p_wk->p_shop_data, (RESORT_RESIDENT_DATA *)cp_resident );
       u16 patch = RESORT_BINARY_SHOP_DATA_GetData( cp_binary_shop, RESORT_BINARY_SHOP_PARAM_IN_3DMD );
+
 
       FIELD_DATA_PATCH* p_patch = FIELD_DATA_PATCH_Create( patch, GFL_HEAP_LOWID(heapID) );
 

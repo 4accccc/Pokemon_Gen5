@@ -2068,6 +2068,15 @@ RESORT_PEOPLE * Resort_Scrcmd_GetFrontPeople( FIELDMAP_WORK *p_fieldmap, RESORT_
   // 目の前にいる人物を検索
   p_frontmmdl = MMDLSYS_SearchGridPos( cp_mmdlsys, gx, gz, FALSE );
 
+  //いなかったらカウンターの無効の可能性があるため、もう１歩先を探す
+  if( p_frontmmdl == NULL )
+  {
+    s16 mx, my, mz;
+    FIELD_PLAYER_GetGridPos( p_player, &mx, &my, &mz );
+
+    p_frontmmdl = MMDLSYS_SearchGridPos( cp_mmdlsys, mx+(gx-mx)*2, mz+(gz-mz)*2, FALSE );
+  }
+
   p_people = RESORT_PEOPLE_SYS_GetPeopleByMmdl( p_people_sys, p_frontmmdl );
 
   //GF_ASSERT( p_people != NULL ); //いなくても許可する箇所があるため

@@ -1334,7 +1334,7 @@ u32 RESORT_RECV_DATA_GetData( const RESORT_RECV_DATA *cp_wk, RESORT_DATA_PARAM p
     }
     return 0;
   case RESORT_DATA_PARAM_WANT_SPOT:
-    return cp_wk->want_spot + resort_go_00; //TODO;
+    return cp_wk->want_spot + resort_go_00;
   case RESORT_DATA_PARAM_NATION:
     return cp_wk->basic1.nation;
   case RESORT_DATA_PARAM_AREA:

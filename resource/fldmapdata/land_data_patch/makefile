@@ -88,7 +88,7 @@ $(targetname).narc: $(XLSFILE) $(FILE_3DMD) $(FILE_ATTR)
 	nnsarc -c -l -n -i $(targetname) -S $(LIST_FILE)
 	$(NAIXCUT) $(targetname).naix
 	-rm	$(LIST_FILE)
-	-rm	*.dat
+	#-rm	*.dat
 endif
 
 #------------------------------------------------------------------------------
