@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-16T15:46:37"/>
+	<create user="suginaka_katsunori" host="W00227" date="2011-04-18T18:59:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -335,103 +335,6 @@
 		<operation add_message="no" header_setting="no" tag_setting="no" output_setting="no" display="no" sort="no" flowchart_window="no"/>
 	</lock>
 
-
-	<row id="msg_d05r0101_black_01" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#ffffff,,,#ffffff,,#404040,#ffffff,,,#ffffff,,">
-		<comment>未使用</comment>
-		<attribute name="キャラ指定">友達♂
-チェレン</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_d05r0101_black_02" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#ffffff,,,#ffffff,,#404040,#ffffff,,,#ffffff,,">
-		<comment>未使用</comment>
-		<attribute name="キャラ指定">友達♂
-チェレン</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_d05r0101_black_03" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#ffffff,,,#ffffff,,#404040,#ffffff,,,#ffffff,,">
-		<comment>未使用</comment>
-		<attribute name="キャラ指定">友達♂
-チェレン</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_d05r0101_black_04" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#ffffff,,,#ffffff,,#404040,#ffffff,,,#ffffff,,">
-		<comment>未使用</comment>
-		<attribute name="キャラ指定">友達♂
-チェレン</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_d05r0101_black_05" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#ffffff,,,#ffffff,,#404040,#ffffff,,,#ffffff,,">
-		<comment>未使用</comment>
-		<attribute name="キャラ指定">友達♂
-チェレン</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_d05r0101_black_06" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#ffffff,,,#ffffff,,#404040,#ffffff,,,#ffffff,,">
-		<comment>未使用</comment>
-		<attribute name="キャラ指定">友達♂
-チェレン</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_d05r0101_workman2_01" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#ffffff,,,#ffffff,,#404040,#ffffff,,,#ffffff,,">
-		<comment>未使用</comment>
-		<attribute name="キャラ指定">作業員</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_d05r0101_sage2_01" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#ffffff,,,#ffffff,,#404040,#ffffff,,,#ffffff,,">
-		<comment>未使用</comment>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_d05r0101_sage2_02" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#ffffff,,,#ffffff,,#404040,#ffffff,,,#ffffff,,">
-		<comment>未使用</comment>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_d05r0101_hakaim_01" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#ffffff,,,#ffffff,,#404040,#ffffff,,,#ffffff,,">
-		<comment>未使用</comment>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_d05r0101_black_07" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#ffffff,,,#ffffff,,#404040,#ffffff,,,#ffffff,,">
-		<comment>未使用</comment>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_d05r0101_hakaim_02" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#ffffff,,,#ffffff,,#404040,#ffffff,,,#ffffff,,">
-		<comment>未使用</comment>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_d05r0101_workman_01" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#ffffff,,,#ffffff,,#404040,#ffffff,,,#ffffff,,">
-		<comment>未使用</comment>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_d05r0101_black_08" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#ffffff,,,#ffffff,,#404040,#ffffff,,,#ffffff,,">
-		<comment>未使用</comment>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
 
 	<row id="msg_d05r0101_trainerm_01" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#ffffff,,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
 		<comment>♂
