@@ -21,6 +21,8 @@
 #include "field/wbt.h"
 //system
 #include "gamesystem/gamesystem.h"
+#include "savedata/wbt_save.h"
+#include "savedata/mystatus.h"
 
 //=============================================================================
 /**
@@ -57,5 +59,7 @@ typedef struct{
 	GAMESYS_WORK		*gamesys;	///<システム
 	//
 	WIN_RECORD_STATUS	status;		///<クリア状態
+  const WBTSAVE * wbtsave;    ///<セーブデータ：優勝回数参照用(include/savedata/wbt_save.h)
+  const MYSTATUS * my_status; ///<セーブデータ：自分情報（include/savedata/mystatus.h)
 }WIN_RECORD_PARAM;
 

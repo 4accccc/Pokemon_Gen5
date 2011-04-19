@@ -22,26 +22,26 @@ enum {
 ///各トーナメントでの優勝回数カウント指定
 //----------------------------------------------------------
 typedef enum {
-  WBTWIN_COUNT_POKETYPE_NORMAL   = 0,
-  WBTWIN_COUNT_POKETYPE_KAKUTOU  = 1,
-  WBTWIN_COUNT_POKETYPE_HIKOU    = 2,
-  WBTWIN_COUNT_POKETYPE_DOKU     = 3,
-  WBTWIN_COUNT_POKETYPE_JIMEN    = 4,
-  WBTWIN_COUNT_POKETYPE_IWA      = 5,
-  WBTWIN_COUNT_POKETYPE_MUSHI    = 6,
-  WBTWIN_COUNT_POKETYPE_GHOST    = 7,
-  WBTWIN_COUNT_POKETYPE_HAGANE   = 8,
-  WBTWIN_COUNT_POKETYPE_HONOO    = 9,
-  WBTWIN_COUNT_POKETYPE_MIZU     = 10,
-  WBTWIN_COUNT_POKETYPE_KUSA     = 11,
-  WBTWIN_COUNT_POKETYPE_DENKI    = 12,
-  WBTWIN_COUNT_POKETYPE_ESPER    = 13,
-  WBTWIN_COUNT_POKETYPE_KOORI    = 14,
-  WBTWIN_COUNT_POKETYPE_DRAGON   = 15,
-  WBTWIN_COUNT_POKETYPE_AKU      = 16,
+  WBTWIN_COUNT_POKETYPE_NORMAL   = 0,   ///<タイプトーナメント優勝回数：ノーマル
+  WBTWIN_COUNT_POKETYPE_KAKUTOU  = 1,   ///<タイプトーナメント優勝回数：格闘
+  WBTWIN_COUNT_POKETYPE_HIKOU    = 2,   ///<タイプトーナメント優勝回数：飛行
+  WBTWIN_COUNT_POKETYPE_DOKU     = 3,   ///<タイプトーナメント優勝回数：毒
+  WBTWIN_COUNT_POKETYPE_JIMEN    = 4,   ///<タイプトーナメント優勝回数：地面
+  WBTWIN_COUNT_POKETYPE_IWA      = 5,   ///<タイプトーナメント優勝回数：岩
+  WBTWIN_COUNT_POKETYPE_MUSHI    = 6,   ///<タイプトーナメント優勝回数：虫
+  WBTWIN_COUNT_POKETYPE_GHOST    = 7,   ///<タイプトーナメント優勝回数：ゴースト
+  WBTWIN_COUNT_POKETYPE_HAGANE   = 8,   ///<タイプトーナメント優勝回数：はがね
+  WBTWIN_COUNT_POKETYPE_HONOO    = 9,   ///<タイプトーナメント優勝回数：炎
+  WBTWIN_COUNT_POKETYPE_MIZU     = 10,  ///<タイプトーナメント優勝回数：水
+  WBTWIN_COUNT_POKETYPE_KUSA     = 11,  ///<タイプトーナメント優勝回数：草
+  WBTWIN_COUNT_POKETYPE_DENKI    = 12,  ///<タイプトーナメント優勝回数：電気
+  WBTWIN_COUNT_POKETYPE_ESPER    = 13,  ///<タイプトーナメント優勝回数：エスパー
+  WBTWIN_COUNT_POKETYPE_KOORI    = 14,  ///<タイプトーナメント優勝回数：氷
+  WBTWIN_COUNT_POKETYPE_DRAGON   = 15,  ///<タイプトーナメント優勝回数：ドラゴン
+  WBTWIN_COUNT_POKETYPE_AKU      = 16,  ///<タイプトーナメント優勝回数：悪
 
-  WBTWIN_COUNT_ALLTOURNAMENT     = 17,
-  WBTWIN_COUNT_CHAMPION          = 18,
+  WBTWIN_COUNT_ALLTOURNAMENT     = 17,  ///<オールトーナメント優勝回数
+  WBTWIN_COUNT_CHAMPION          = 18,  ///<チャンピオントーナメント優勝回数
 
   WBTWIN_COUNT_MAX,
 }WBTWIN_COUNT;
