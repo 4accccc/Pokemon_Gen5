@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2010-07-09T11:13:01"/>
+	<create user="shimoyamada" host="W00184" date="2011-04-19T11:24:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -279,7 +279,7 @@
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="1" width="215"/>
+		<comment position="1" width="319"/>
 		<erase position="-1" width="100"/>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="274"/>
@@ -305,9 +305,9 @@
 		</language>
 	</columns>
 
-	<dialog left="447" top="251" right="1152" bottom="879" maximized="no" rayout="Vertical2">
+	<dialog left="1094" top="395" right="1799" bottom="1023" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
-		<tag-palette left="657" top="209" right="1130" bottom="607" visible="no"/>
+		<tag-palette left="551" top="209" right="1024" bottom="607" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -834,11 +834,14 @@
 		<language name="JPN_KANJI" font=" 1:small" width="216">性別</language>
 	</row>
 
-	<row id="msg_gtc_03_005">
+	<row id="msg_gtc_03_005" back-color="#404040,,,#404040,,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
 		<comment>ポケモンをさがす画面：
-入力された性別指定</comment>
-		<language name="JPN" font=" 1:small" width="216">[1:28:広場ミニゲーム:1]</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">[1:28:広場ミニゲーム:1]</language>
+入力された性別指定
+
+
+※未使用2011.4.19空白にした</comment>
+		<language name="JPN" font=" 1:small" width="216"></language>
+		<language name="JPN_KANJI" font=" 1:small" width="216"></language>
 	</row>
 
 	<row id="msg_gtc_03_006">
@@ -848,11 +851,14 @@
 		<language name="JPN_KANJI" font=" 1:small" width="216">レベル</language>
 	</row>
 
-	<row id="msg_gtc_03_007">
+	<row id="msg_gtc_03_007" back-color="#404040,,,#404040,,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
 		<comment>ポケモンをさがす画面：
-入力されたレベル指定</comment>
-		<language name="JPN" font=" 1:small" width="216">[1:29:広場イベント名:2]</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">[1:29:広場イベント名:2]</language>
+入力されたレベル指定
+
+
+※未使用2011.4.19空白にした</comment>
+		<language name="JPN" font=" 1:small" width="216"></language>
+		<language name="JPN_KANJI" font=" 1:small" width="216"></language>
 	</row>
 
 	<row id="msg_gtc_03_008">
@@ -939,18 +945,22 @@
 		<language name="JPN_KANJI" font=" 1:small" width="216">[1:01:ポケモン種族名:5]</language>
 	</row>
 
-	<row id="msg_gtc_04_010">
+	<row id="msg_gtc_04_010" back-color="#404040,,,#404040,,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
 		<comment>検索ポケモンデータ閲覧画面：
-検索されたポケモンの替わりにほしいポケモン性別指定</comment>
-		<language name="JPN" font=" 1:small" width="216">[1:28:広場ミニゲーム:6]</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">[1:28:広場ミニゲーム:6]</language>
+検索されたポケモンの替わりにほしいポケモン性別指定
+
+※未使用2011.4.19空白にした</comment>
+		<language name="JPN" font=" 1:small" width="216"></language>
+		<language name="JPN_KANJI" font=" 1:small" width="216"></language>
 	</row>
 
-	<row id="msg_gtc_04_011">
+	<row id="msg_gtc_04_011" back-color="#404040,,,#404040,,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
 		<comment>検索ポケモンデータ閲覧画面：
-検索されたポケモンの替わりにほしいポケモンレベル指定</comment>
-		<language name="JPN" font=" 1:small" width="216">[1:29:広場イベント名:7]</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">[1:29:広場イベント名:7]</language>
+検索されたポケモンの替わりにほしいポケモンレベル指定
+
+※未使用2011.4.19空白にした</comment>
+		<language name="JPN" font=" 1:small" width="216"></language>
+		<language name="JPN_KANJI" font=" 1:small" width="216"></language>
 	</row>
 
 	<row id="msg_gtc_04_012">
@@ -1111,11 +1121,14 @@
 		<language name="JPN_KANJI" font=" 1:small" width="216">[1:01:ポケモン種族名:0]</language>
 	</row>
 
-	<row id="msg_gtc_05_010">
+	<row id="msg_gtc_05_010" back-color="#404040,,,#404040,,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
 		<comment>ポケモンをあずける画面：
-ほしいポケモンのレベル入力項目</comment>
-		<language name="JPN" font=" 1:small" width="216">[1:29:広場イベント名:1]</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">[1:29:広場イベント名:1]</language>
+ほしいポケモンのレベル入力項目
+
+
+※未使用2011.4.19空白にした</comment>
+		<language name="JPN" font=" 1:small" width="216"></language>
+		<language name="JPN_KANJI" font=" 1:small" width="216"></language>
 	</row>
 
 	<row id="msg_gtc_05_011">
