@@ -63,3 +63,12 @@
 #define SEQ_MOUTHCOMM_HEAR        (0)
 #define SEQ_MOUTHCOMM_ANSWER      (1)
 #define SEQ_MOUTHCOMM_CANCEL      (2)
+
+//ê‡ñæÇ∑ÇÈêl
+#define SEQ_INFOMATION_Q00        (0)
+#define SEQ_INFOMATION_Q01        (1)
+#define SEQ_INFOMATION_Q02        (2)
+#define SEQ_INFOMATION_Q03        (3)
+#define SEQ_INFOMATION_Q04        (4)
+#define SEQ_INFOMATION_Q05        (5)
+#define SEQ_INFOMATION_Q06        (6)

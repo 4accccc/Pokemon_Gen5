@@ -10,6 +10,7 @@
 #ifndef ZONE_C16R1501_EVC_H
 #define ZONE_C16R1501_EVC_H
 
+#define C16R1501_INFOMATION_MAN            0
 
 #endif //ZONE_C16R1501_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c16r1501.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

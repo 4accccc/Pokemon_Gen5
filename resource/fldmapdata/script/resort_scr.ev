@@ -13,6 +13,7 @@
   .include  "../../../prog/src/field/resonance_resort/scrcmd_resort_def.h"
   .include  "../../../prog/src/field/resonance_resort/resort_people_def.h"
   .include  "resort_scr_define.h"
+  .include  "c16r1501.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -33,6 +34,7 @@ _EVENT_DATA    ev_resort_secretary_center
 _EVENT_DATA    ev_resort_secretary_pc
 _EVENT_DATA    ev_resort_npc_mouthcomm
 _EVENT_DATA    ev_resort_npc_offreco
+_EVENT_DATA    ev_resort_infomation
 _EVENT_DATA_END
 
 //DEFINE_LOCALの数が多いので、グローバルにおいて使い回しています。
@@ -1841,3 +1843,54 @@ EVENT_START ev_resort_npc_offreco
 }
 EVENT_END
 
+
+/**************************************************************/
+/*            説明する人                                       */
+/**************************************************************/
+EVENT_START ev_resort_infomation
+{
+  _TALK_OBJ_START()
+
+  $LWK_MENU_LOOP = TRUE
+  WHILE $LWK_MENU_LOOP == TRUE
+
+    _RESORT_SET_WORD( RESORT_WORD_FREE_NAME, RESORT_WORD_PARAM_NONE, 0 )
+    _BALLOONWIN_OBJMSG_POS( resort_drill_00, C16R1501_INFOMATION_MAN, POS_DOWN )
+
+    _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, LWK_MENU_RET )
+    _BMPMENU_MAKE_LIST( resort_drill_sel_01, SEQ_INFOMATION_Q00 )
+    _BMPMENU_MAKE_LIST( resort_drill_sel_02, SEQ_INFOMATION_Q01 )
+    _BMPMENU_MAKE_LIST( resort_drill_sel_03, SEQ_INFOMATION_Q02 )
+    _BMPMENU_MAKE_LIST( resort_drill_sel_04, SEQ_INFOMATION_Q03 )
+    _BMPMENU_MAKE_LIST( resort_drill_sel_05, SEQ_INFOMATION_Q04 )
+    _BMPMENU_MAKE_LIST( resort_drill_sel_06, SEQ_INFOMATION_Q05 )
+    _BMPMENU_MAKE_LIST( resort_drill_sel_07, SEQ_INFOMATION_Q06 )
+    _BMPMENU_START()
+
+    IF $LWK_MENU_RET == EV_WIN_B_CANCEL THEN
+      $LWK_MENU_RET = SEQ_INFOMATION_Q06
+    ENDIF
+
+    SWITCH $LWK_MENU_RET
+    CASE SEQ_INFOMATION_Q00 THEN
+      _BALLOONWIN_OBJMSG_POS( resort_drill_sel_ans_01, C16R1501_INFOMATION_MAN, POS_DOWN )
+    CASE SEQ_INFOMATION_Q01 THEN  
+      _BALLOONWIN_OBJMSG_POS( resort_drill_sel_ans_02, C16R1501_INFOMATION_MAN, POS_DOWN )
+    CASE SEQ_INFOMATION_Q02 THEN  
+      _BALLOONWIN_OBJMSG_POS( resort_drill_sel_ans_03, C16R1501_INFOMATION_MAN, POS_DOWN )
+    CASE SEQ_INFOMATION_Q03 THEN  
+      _BALLOONWIN_OBJMSG_POS( resort_drill_sel_ans_04, C16R1501_INFOMATION_MAN, POS_DOWN )
+    CASE SEQ_INFOMATION_Q04 THEN  
+      _BALLOONWIN_OBJMSG_POS( resort_drill_sel_ans_05, C16R1501_INFOMATION_MAN, POS_DOWN )
+    CASE SEQ_INFOMATION_Q05 THEN  
+      _BALLOONWIN_OBJMSG_POS( resort_drill_sel_ans_06, C16R1501_INFOMATION_MAN, POS_DOWN )
+    CASE SEQ_INFOMATION_Q06 THEN  
+      _BALLOONWIN_OBJMSG_POS( resort_drill_sel_ans_07, C16R1501_INFOMATION_MAN, POS_DOWN )
+      $LWK_MENU_LOOP = FALSE
+    DEFAULT
+      $LWK_MENU_LOOP = FALSE //念のため無限ループを避ける
+    ENDSWITCH
+  ENDWHILE
+  _BALLOONWIN_CLOSE()
+}
+EVENT_END
