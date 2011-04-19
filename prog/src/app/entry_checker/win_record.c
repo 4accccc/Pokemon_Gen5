@@ -121,6 +121,8 @@ enum{
 	WIN_RECORD_BGNUM_MAXNUM		= 8,		// bg
 	//
 	WIN_RECORD_UP_OBJ_MAXNUM	= 1,		// obj(up)
+	//
+	WIN_RECORD_MAX_COUNT		= 9999,		// 最大数
 };
 
 
@@ -259,18 +261,21 @@ enum{
 	FLG_OBJ_VFLIP		= (1<<2),		// VFLIP
 };
 
-// アニメ処理(WIN_RECORD_MAIN_WORK.Flag)
+// WIN_RECORD_MAIN_WORK.Flag
 enum{
-	FLG_MW_ANM_LEFT		= (1<<0),		// 左
-	FLG_MW_ANM_RIGHT	= (1<<1),		// 右
-	FLG_MW_ANM_CROSS	= (1<<2),		// ×
-	FLG_MW_ANM_RETURN	= (1<<3),		// 戻る
+	FLG_MW_ANM_LEFT		= (1<<0),		// 左矢印アニメ
+	FLG_MW_ANM_RIGHT	= (1<<1),		// 右矢印アニメ
+	FLG_MW_ANM_CROSS	= (1<<2),		// ×アニメ
+	FLG_MW_ANM_RETURN	= (1<<3),		// 戻るアニメ
 	//
 	FLG_MW_UPDATE		= (1<<4),		// 更新
 	FLG_MW_BAR_UPDATE	= (1<<5),		// バー更新
 	FLG_MW_NO_SCROLL	= (1<<6),		// スクロールなし(MODE_LV1と同じ)
 	//
-	FLG_MW_END			= (1<<8),		// 終了
+	FLG_MW_RET_END		= (1<<8),		// RETURNで終了
+	FLG_MW_CROSS_END	= (1<<9),		// ×で終了
+	//
+	FLG_MW_END			= (1<<12),		// 終了
 	//
 	// フラグまとめ(アニメ再生中か)
 	FLG_MW_ANM_ALL		= (FLG_MW_ANM_LEFT|FLG_MW_ANM_RIGHT|FLG_MW_ANM_CROSS|FLG_MW_ANM_RETURN),
@@ -661,6 +666,34 @@ static const s16 wr_cmn_btn_tbl[] = {
 	CMN_RETURN_SEQ, CMN_RETURN_ON_SEQ, CMN_RETURN_SEQ,    0,	// 戻る
 };
 
+//-------------------------
+// 優勝回数の対応状況
+// (ここでの並びとの対応)
+//-------------------------
+static const u8 wbtwin_tbl[] = {
+	WBTWIN_COUNT_ALLTOURNAMENT,		// オール
+	WBTWIN_COUNT_CHAMPION,			// チャンピオン
+	WBTWIN_COUNT_POKETYPE_NORMAL,	// ノーマル
+	WBTWIN_COUNT_POKETYPE_HONOO,	// ほのお
+	WBTWIN_COUNT_POKETYPE_MIZU,		// みず
+	WBTWIN_COUNT_POKETYPE_KUSA,		// くさ
+	WBTWIN_COUNT_POKETYPE_DENKI,	// でんき
+	WBTWIN_COUNT_POKETYPE_KOORI,	// こおり
+	WBTWIN_COUNT_POKETYPE_KAKUTOU,	// かくとう
+	WBTWIN_COUNT_POKETYPE_DOKU,		// どく
+	//
+	WBTWIN_COUNT_POKETYPE_JIMEN,	// じめん
+	WBTWIN_COUNT_POKETYPE_HIKOU,	// ひこう
+	WBTWIN_COUNT_POKETYPE_ESPER,	// エスパー
+	WBTWIN_COUNT_POKETYPE_MUSHI,	// むし
+	WBTWIN_COUNT_POKETYPE_IWA,		// いわ
+	WBTWIN_COUNT_POKETYPE_GHOST,	// ゴースト
+	WBTWIN_COUNT_POKETYPE_DRAGON,	// ドラゴン
+	WBTWIN_COUNT_POKETYPE_AKU,		// あく
+	WBTWIN_COUNT_POKETYPE_HAGANE,	// はがね
+	WBTWIN_COUNT_POKETYPE_NORMAL,	// pad
+};
+
 //=============================================================================
 /**
  *							プロトタイプ宣言
@@ -712,6 +745,8 @@ static void wr_set_panel( WIN_RECORD_MAIN_WORK* wk, const s32 wnum, const s32 nu
 static void wr_set_panel_all( WIN_RECORD_MAIN_WORK* wk, const s32 wnum, const s32 num, const BOOL dispflg );
 //
 static void wr_init_param( WIN_RECORD_MAIN_WORK* wk );
+static void wr_set_param( WIN_RECORD_MAIN_WORK* wk );
+//
 static BOOL wr_chk_key_input( WIN_RECORD_MAIN_WORK* wk );
 //
 static void wr_get_tp_area( WIN_RECORD_MAIN_WORK* wk, const s32 num, GFL_UI_TP_HITTBL *tpbuffer );
@@ -943,6 +978,11 @@ static void wr_init( WIN_RECORD_MAIN_WORK* wk )
 	// パラメータ用のバッファ取得(必ず破棄すること)
 	wk->ParamBuffer = GFL_ARC_LoadDataAlloc( ARCID_WIN_RECORD_GRA, NARC_win_record_gra_win_record_param_tblbin, wk->heapID );
 	//
+	//------------------
+	// パラメータセット
+	//------------------
+	wr_set_param( wk );
+	
 	//---------------
 	// bgの初期化
 	//---------------
@@ -1019,6 +1059,20 @@ static void wr_main( WIN_RECORD_MAIN_WORK* wk )
 //-----------------------------------------------------------------------------
 static void wr_exit( WIN_RECORD_MAIN_WORK* wk )
 {
+	//-----------------
+	// 終了パラメータ
+	//------------------
+	// ×で終了 => フリームーブとなる
+	if(wk->Flag & FLG_MW_CROSS_END){
+		wk->Param->result = TRUE;
+	}
+	// RETURNで終了 => パソコン画面へ
+	else{
+		wk->Param->result = FALSE;
+	}
+#if 1	// 結果
+	OS_Printf("result : %d\n",wk->Param->result);
+#endif
 	// 上、下画面をまとめて処理
 	// emptyのバッファクリア
 	GFL_HEAP_FreeMemory( wk->EmptyBuffer );
@@ -2016,6 +2070,45 @@ static void wr_init_param( WIN_RECORD_MAIN_WORK* wk )
 	}
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  パラメータセット
+ *
+ *	@param	WIN_ROUND_MAIN_WORK* wk
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void wr_set_param( WIN_RECORD_MAIN_WORK* wk )
+{
+	u16		cnt;
+	s32		i;
+	u32		tmp;
+	
+	// 性別を取得
+	tmp = MyStatus_GetMySex( wk->Param->my_status );
+	wk->TrainerId = 0;			// 男性
+	if(tmp == PM_FEMALE){
+		wk->TrainerId = 1;		// 女性
+	}
+	//
+	// 優勝回数
+	for(i=0;i<TMT_MAX;i++){
+		cnt = WBTSAVE_GetWinCount( wk->Param->wbtsave, wbtwin_tbl[i] );
+		// 念のため
+		if( cnt >= WIN_RECORD_MAX_COUNT ){
+			cnt = WIN_RECORD_MAX_COUNT;
+		}
+		wk->CountBuffer[i] = cnt;
+	}
+#if 0
+	OS_Printf("boy :%d\n",wk->TrainerId);
+	for(i=0;i<TMT_MAX;i++){
+		OS_Printf("%d, %d: %d\n",i,wbtwin_tbl[i],wk->CountBuffer[i]);
+	}
+#endif
+}
+
 //-----------------------------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -2099,9 +2192,9 @@ static BOOL wr_chk_key_input( WIN_RECORD_MAIN_WORK* wk )
 	// 戻る
 	else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
 		// アニメ再生
-		wnum = CLWKID_CMN_RETURN;
+		wnum = CLWKID_CMN_CROSS;
 		wr_chg_objseq( wk, CLWKMODE_CMN, wnum, wr_cmn_btn_tbl[wnum*4+1] );
-		wk->Flag |= FLG_MW_ANM_RETURN;
+		wk->Flag |= FLG_MW_ANM_CROSS;
 	}
 	//
 	// 更新
@@ -2301,6 +2394,15 @@ static void wr_chk_anim( WIN_RECORD_MAIN_WORK* wk )
 			// 戻るボタン(飛び先変更はある)
 			if((wnum == CLWKID_CMN_CROSS)||(wnum == CLWKID_CMN_RETURN)){
 				wk->Flag |= FLG_MW_END;
+				//
+				// ×ボタン終了
+				if(wnum == CLWKID_CMN_CROSS){
+					wk->Flag |= FLG_MW_CROSS_END;
+				}
+				// RETURNボタン終了
+				else if(wnum == CLWKID_CMN_RETURN){
+					wk->Flag |= FLG_MW_RET_END;
+				}
 				// 終了処理
 				wk->Step = STEP_END;
 			}
@@ -2407,13 +2509,7 @@ static void wr_param_update( WIN_RECORD_MAIN_WORK* wk )
 static void wr_debug( WIN_RECORD_MAIN_WORK* wk )
 {
 #ifdef PM_DEBUG
-	// debug mode
-//	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
-//		wk->Mode++;
-//		if(wk->Mode > 2){
-//			wk->Mode = 0;
-//		}
-//	}
+
 #endif		// PM_DEBUG
 }
 
