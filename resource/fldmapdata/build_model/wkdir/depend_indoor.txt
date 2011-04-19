@@ -163,4 +163,5 @@ DEP_INDOOR	=	\
 	$(RESDIR)/rrobj03.nsbmd \
 	$(RESDIR)/rrobj04.nsbmd \
 	$(RESDIR)/rrobj05.nsbmd \
+	$(RESDIR)/door_c13gym.nsbmd \
 

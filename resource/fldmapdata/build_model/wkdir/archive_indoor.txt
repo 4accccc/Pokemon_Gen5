@@ -162,3 +162,4 @@
 "nsbmdfiles/rrobj03.nsbmd"
 "nsbmdfiles/rrobj04.nsbmd"
 "nsbmdfiles/rrobj05.nsbmd"
+"nsbmdfiles/door_c13gym.nsbmd"
