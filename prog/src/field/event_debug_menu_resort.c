@@ -21,6 +21,7 @@
 
 #include "debug_message.naix"
 #include "msg/debug/msg_d_field.h"
+#include "msg/debug/msg_debug_resort2.h"
 
 #include "item/itemsym.h"
 #include "event_debug_menu_resort.h"
@@ -55,11 +56,13 @@ static BOOL debugMenuCallProc_AllResident( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_AllClear( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_UpdateDay( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_DesignerSetup( DEBUG_MENU_EVENT_WORK *p_wk );
+static BOOL debugMenuCallProc_PresenSetup( DEBUG_MENU_EVENT_WORK *p_wk );
 
 static const DEBUG_MENU_LIST DATA_SubMenuList[] =
 {
   { DEBUG_FIELD_RESORT_18, debugMenuCallProc_ChangeMap, GFL_OVERLAY_BLANK_ID },
   { DEBUG_FIELD_RESORT_38, debugMenuCallProc_DesignerSetup, GFL_OVERLAY_BLANK_ID },
+  { DEBUG_FIELD_RESORT_39, debugMenuCallProc_PresenSetup, GFL_OVERLAY_BLANK_ID },
   { DEBUG_FIELD_RESORT_16, debugMenuCallProc_Input, GFL_OVERLAY_BLANK_ID},
   { DEBUG_FIELD_RESORT_01, debugMenuCallProc_SetRecv, GFL_OVERLAY_BLANK_ID },
   { DEBUG_FIELD_RESORT_05, debugMenuCallProc_AllRecv, GFL_OVERLAY_BLANK_ID},
@@ -633,6 +636,349 @@ static BOOL debugMenuCallProc_DesignerSetup( DEBUG_MENU_EVENT_WORK *p_wk )
 
   return FALSE;
 }
+static void PresenSetup_SetRecv( RESORT_RECV_DATA *p_recv, GFL_MSGDATA *p_msg, u32 people_type, int cnt )
+{
+  typedef struct
+  {
+    u8  name;
+    u8  phrase;
+    u8  commID;
+    u8  view;
+    u8  shop_id;
+    u8  shop_type;
+    u8  placeID;
+    u8  dummy;
+  } PRESEN_DATA;
+
+  static const PRESEN_DATA sc_tourist_data[]  =
+  {
+    //旅行者
+    {
+      RESORT_NAME_00,
+      RESORT_PHRASE_00,
+      RESORT_COMM_TYPE_BEACON,
+      0,
+    },
+    {
+      RESORT_NAME_01,
+      RESORT_PHRASE_01,
+      RESORT_COMM_TYPE_CGEAR_IRC,
+      1,
+    },
+    {
+      RESORT_NAME_02,
+      RESORT_PHRASE_02,
+      RESORT_COMM_TYPE_UNION,
+      2,
+    },
+    {
+      RESORT_NAME_03,
+      RESORT_PHRASE_03,
+      RESORT_COMM_TYPE_RNDMATCH,
+      3,
+    },
+    {
+      RESORT_NAME_04,
+      RESORT_PHRASE_04,
+      RESORT_COMM_TYPE_GTSNEGO,
+      4,
+    },
+    {
+      RESORT_NAME_05,
+      RESORT_PHRASE_05,
+      RESORT_COMM_TYPE_HYLINK,
+      5,
+    },
+    {
+      RESORT_NAME_06,
+      RESORT_PHRASE_06,
+      RESORT_COMM_TYPE_BEACON,
+      6,
+    },
+    {
+      RESORT_NAME_07,
+      RESORT_PHRASE_07,
+      RESORT_COMM_TYPE_CGEAR_IRC,
+      7,
+    },
+    {
+      RESORT_NAME_08,
+      RESORT_PHRASE_08,
+      RESORT_COMM_TYPE_UNION,
+      0,
+    },
+    {
+      RESORT_NAME_09,
+      RESORT_PHRASE_09,
+      RESORT_COMM_TYPE_RNDMATCH,
+      1,
+    },
+    {
+      RESORT_NAME_10,
+      RESORT_PHRASE_10,
+      RESORT_COMM_TYPE_GTSNEGO,
+      2,
+    },
+    {
+      RESORT_NAME_11,
+      RESORT_PHRASE_11,
+      RESORT_COMM_TYPE_HYLINK,
+      3,
+    },
+    {
+      RESORT_NAME_12,
+      RESORT_PHRASE_12,
+      RESORT_COMM_TYPE_BEACON,
+      4,
+    },
+    {
+      RESORT_NAME_13,
+      RESORT_PHRASE_13,
+      RESORT_COMM_TYPE_CGEAR_IRC,
+      5,
+    },
+    {
+      RESORT_NAME_14,
+      RESORT_PHRASE_14,
+      RESORT_COMM_TYPE_UNION,
+      6,
+    },
+    {
+      RESORT_NAME_15,
+      RESORT_PHRASE_15,
+      RESORT_COMM_TYPE_RNDMATCH,
+      7,
+    },
+  };
+
+  static const PRESEN_DATA sc_secretary_data[]  =
+  {
+    //秘書
+    {
+      RESORT_NAME_16,
+      RESORT_PHRASE_16,
+      RESORT_COMM_TYPE_BEACON,
+      0,
+    },
+    {
+      RESORT_NAME_17,
+      RESORT_PHRASE_17,
+      RESORT_COMM_TYPE_BEACON,
+      1,
+    },
+    {
+      RESORT_NAME_18,
+      RESORT_PHRASE_18,
+      RESORT_COMM_TYPE_BEACON,
+      2,
+    },
+    {
+      RESORT_NAME_19,
+      RESORT_PHRASE_19,
+      RESORT_COMM_TYPE_BEACON,
+      3,
+    },
+    {
+      RESORT_NAME_20,
+      RESORT_PHRASE_20,
+      RESORT_COMM_TYPE_BEACON,
+      4,
+    },
+  };
+
+  static const PRESEN_DATA sc_resident_data[]  =
+  {
+    //住人
+    {
+      RESORT_NAME_21,
+      RESORT_PHRASE_21,
+      RESORT_COMM_TYPE_BEACON,
+      5,
+      9,
+      RESORT_RESIDENT_TYPE_MARKET,
+      RESORT_PLACEID_INSTITUTION_00,
+    },
+    {
+      RESORT_NAME_22,
+      RESORT_PHRASE_22,
+      RESORT_COMM_TYPE_BEACON,
+      12,
+      3,
+      RESORT_RESIDENT_TYPE_PARLOR,
+      RESORT_PLACEID_INSTITUTION_01,
+    },
+    {
+      RESORT_NAME_23,
+      RESORT_PHRASE_23,
+      RESORT_COMM_TYPE_BEACON,
+      6,
+      6,
+      RESORT_RESIDENT_TYPE_BREEDER,
+      RESORT_PLACEID_INSTITUTION_02,
+    },
+  };
+
+  int i;
+
+  const PRESEN_DATA * sc_presen_data;
+
+  switch( people_type )
+  {
+  case RESORT_PEOPLE_TYPE_TOURIST:
+    sc_presen_data = sc_tourist_data;
+    GF_ASSERT( cnt < NELEMS(sc_tourist_data) );
+    break;
+  case RESORT_PEOPLE_TYPE_SECRETARY:
+    sc_presen_data = sc_secretary_data;
+    GF_ASSERT( cnt < NELEMS(sc_secretary_data) );
+    break;
+  case RESORT_PEOPLE_TYPE_RESIDENT:
+    sc_presen_data = sc_resident_data;
+    GF_ASSERT( cnt < NELEMS(sc_resident_data) );
+    break;
+  default:
+    GF_ASSERT(0);
+  }
+
+  RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_TRAINER_ID, GFUser_GetPublicRand(0xFFFF) );
+  RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_TRAINERVIEW, sc_presen_data[cnt].view );
+  if( sc_presen_data[cnt].view < 8 )
+  {
+    RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_SEX, PM_MALE );
+  }
+  else
+  {
+    RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_SEX, PM_FEMALE );
+  }
+
+  //名前
+  {
+    STRBUF *p_strbuf = GFL_MSG_CreateString(p_msg, sc_presen_data[cnt].name );
+    const STRCODE *cp_strcode = GFL_STR_GetStringCodePointer(p_strbuf);
+    RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_NAME, (u32)cp_strcode );
+    GFL_STR_DeleteBuffer( p_strbuf );
+  }
+
+  //口癖
+  {
+    STRBUF *p_strbuf = GFL_MSG_CreateString(p_msg, sc_presen_data[cnt].phrase );
+    const STRCODE *cp_strcode = GFL_STR_GetStringCodePointer(p_strbuf);
+    RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_INTRODUCTION, (u32)cp_strcode );
+    RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_EXT9_PHRASE, (u32)cp_strcode );
+    GFL_STR_DeleteBuffer( p_strbuf );
+  }
+
+  RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_EXTEND_BIT, 0xFF );
+  RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_VER, PM_VERSION );
+  RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_LANG, PM_LANG );
+  RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_COMM_ID, sc_presen_data[cnt].commID );
+
+  //噂
+  for( i = RESORT_DATA_PARAM_EXT4_GOSSIP_00; i <= RESORT_DATA_PARAM_EXT4_GOSSIP_15; i++ )
+  {
+    RESORT_RECV_DATA_SetData( p_recv, i, GFUser_GetPublicRand(2) );
+  }
+
+  //お店
+  if( RESORT_PLACEID_INSTITUTION_00 <= sc_presen_data[cnt].placeID 
+    && sc_presen_data[cnt].placeID <= RESORT_PLACEID_INSTITUTION_07 )
+  {
+
+    RESORT_INSTITUTION_DATA *p_institution = RESORT_RESIDENT_DATA_GetInstitution( p_recv );
+    RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_ID, sc_presen_data[cnt].shop_id );
+    RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_TYPE, sc_presen_data[cnt].shop_type );
+    RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_WANT_JOB, sc_presen_data[cnt].shop_type );
+    RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_PLACE_ID, sc_presen_data[cnt].placeID );
+  }
+}
+
+static BOOL debugMenuCallProc_PresenSetup( DEBUG_MENU_EVENT_WORK *p_wk )
+{
+  SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(p_wk->gdata);
+  RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( pSave );
+  RESORT_PEOPLE_ALL_DATA *p_all_people = RESONANCE_RESORT_SV_GetPeopleAllData( p_resort );
+  RESORT_RECV_BUFF *p_recv_buff = RESONANCE_RESORT_SV_GetDataBuff( p_resort );
+  RESORT_RECV_BUFF *p_recv_tmp_buff = NULL;
+
+  GFL_MSGDATA *p_msg = GFL_MSG_Create(GFL_MSG_LOAD_NORMAL,ARCID_DEBUG_MESSAGE,NARC_debug_message_debug_resort2_dat, GFL_HEAP_LOWID(p_wk->heapID) );
+  RESORT_RECV_DATA *p_recv = RESORT_RECV_DATA_Init( GFL_HEAP_LOWID(p_wk->heapID) );
+  int i;
+  int cnt = 0;
+
+  //まずはデータクリア
+  debugMenuCallProc_AllClear( p_wk );
+
+  //旅行者への追加
+  while( TRUE )
+  {
+    PresenSetup_SetRecv( p_recv, p_msg, RESORT_PEOPLE_TYPE_TOURIST, cnt++ );
+    if( !RESORT_RECV_BUFF_AddRecv( p_recv_buff, p_recv, RESORT_RECV_DATA_GetData(p_recv,RESORT_DATA_PARAM_COMM_ID,NULL) ) )
+    {
+      p_recv_tmp_buff = GAMEBEACON_DEBUG_GetResortRecvBuffer();
+      if( !p_recv_tmp_buff )
+      {
+        break;
+      }
+      else 
+      { 
+        if( !RESORT_RECV_BUFF_AddRecv( p_recv_tmp_buff, p_recv, RESORT_RECV_DATA_GetData(p_recv,RESORT_DATA_PARAM_COMM_ID,NULL) ) )
+        {
+          break;
+        }
+      }
+    }
+  }
+
+  //秘書への追加
+  for( i = 0; i < RESORT_SECRETARY_DATA_NUM; i++ )
+  {
+    RESORT_SECRETARY_DATA *p_dst = RESORT_PEOPLE_ALL_DATA_GetSecretary( p_all_people, i );
+    PresenSetup_SetRecv( p_recv, p_msg, RESORT_PEOPLE_TYPE_SECRETARY, i );
+    RESORT_SECRETARY_DATA_SetRecv( p_dst, p_recv, 8+i, RESORT_MAP_GetSecretaryPlace( i ), i );
+  }
+
+  //住人への追加
+  for( i = 0; i < 3; i++ )
+  {
+    RESORT_RESIDENT_DATA *p_dst = RESORT_PEOPLE_ALL_DATA_GetResident( p_all_people, i );
+    PresenSetup_SetRecv( p_dst, p_msg, RESORT_PEOPLE_TYPE_RESIDENT, i );
+  }
+
+  //自分の街、自分のよびな
+  {
+    RESORT_CITY_DATA *p_city = RESONANCE_RESORT_SV_GetCityData( p_resort );
+    MYSTATUS *p_mystatus = GAMEDATA_GetMyStatus(p_wk->gdata);
+
+    STRBUF *p_myname = GFL_STR_CreateBuffer( 128, GFL_HEAP_LOWID(p_wk->heapID) );
+    const STRCODE *cp_strcode;
+    MyStatus_CopyNameString( p_mystatus, p_myname );
+
+    {
+      STRBUF *p_strbuf = GFL_MSG_CreateString(p_msg, RESORT_CITY_00 + GFUser_GetPublicRand(10) );
+
+      GFL_STR_AddString( p_myname, p_strbuf );
+      cp_strcode = GFL_STR_GetStringCodePointer(p_myname);
+      RESORT_CITY_DATA_SetData( p_city, RESORT_CITY_DATA_PARAM_CITY_NAME, (u32)cp_strcode );
+      GFL_STR_DeleteBuffer( p_strbuf );
+    }
+    MyStatus_CopyNameString( p_mystatus, p_myname );
+    {
+      STRBUF *p_strbuf = GFL_MSG_CreateString(p_msg, RESORT_AUTHER_00 + GFUser_GetPublicRand(5) );
+      GFL_STR_AddString( p_myname, p_strbuf );
+      cp_strcode = GFL_STR_GetStringCodePointer(p_myname);
+      RESORT_CITY_DATA_SetData( p_city, RESORT_CITY_DATA_PARAM_AUTHER_NAME, (u32)cp_strcode );
+      GFL_STR_DeleteBuffer( p_strbuf );
+    }
+
+    GFL_STR_DeleteBuffer( p_myname );
+  }
+
+  RESORT_RECV_DATA_Exit( p_recv );
+  GFL_MSG_Delete( p_msg );
+
+  return FALSE;
+}
+
 static BOOL debugMenuCallProc_CallDebugInput( DEBUG_MENU_EVENT_WORK *p_wk )
 {
   GMEVENT *event = EVENT_CallDebugInputResort( p_wk->gmSys, NULL );

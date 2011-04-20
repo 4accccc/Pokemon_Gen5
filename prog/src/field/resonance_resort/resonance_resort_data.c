@@ -935,12 +935,12 @@ struct _RESORT_RECV_DATA
   u32                 bit; //20
 #endif
   u32                 kosei;  //TODO　個性？  //16
-  u32                 extend_flag:8;  //20
+  u32                 extend_flag:9;  //20
   u32                 lock      :1;
   u32                 update    :2; //RESORT_RECV_DATA_UPDATEの値 
   u32                 peopleID  :8;
   u32                 placeID   :8;
-  u32                 type     :5;  //自分がなんのタイプRESORT_RESIDENT_TYPE_xxx
+  u32                 type     :4;  //自分がなんのタイプRESORT_RESIDENT_TYPE_xxx
 };
 SDK_COMPILER_ASSERT( sizeof(RESORT_RECV_DATA) == RESORT_RECV_DATA_SIZE );
 

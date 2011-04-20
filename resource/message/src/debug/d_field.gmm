@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00253" date="2011-04-19T11:48:30"/>
+	<create user="nagihashi_toru" host="W00268" date="2011-04-20T11:36:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -2480,6 +2480,11 @@ LR→補完&quot;</language>
 	<row id="DEBUG_FIELD_RESORT_38">
 		<language name="JPN" width="240">デザイナーさん用設定</language>
 		<language name="JPN_KANJI" width="240">デザイナーさん用設定</language>
+	</row>
+
+	<row id="DEBUG_FIELD_RESORT_39">
+		<language name="JPN" width="240">プレゼン用設定</language>
+		<language name="JPN_KANJI" width="240">プレゼン用設定</language>
 	</row>
 
 	<row id="DEBUG_FIELD_INFINITY">
