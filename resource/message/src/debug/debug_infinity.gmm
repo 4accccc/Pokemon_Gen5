@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="onoue_masayuki" host="W00272" date="2011-04-11T16:52:10"/>
+	<create user="onoue_masayuki" host="W00272" date="2011-04-20T14:55:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -491,6 +491,11 @@
 	<row id="DEBUG_STR_INFINITY_TR_POS_TYPE">
 		<language name="JPN" width="240">トレーナー配置タイプ(デバッグフラグON時）</language>
 		<language name="JPN_KANJI" width="240">トレーナー配置タイプ(デバッグフラグON時）</language>
+	</row>
+
+	<row id="DEBUG_STR_INFINITY_SEED_CHANGE">
+		<language name="JPN" width="240">シード固定(0=ランダム)</language>
+		<language name="JPN_KANJI" width="240">シード固定(0=ランダム)</language>
 	</row>
 
 	<flowchart-group-list>

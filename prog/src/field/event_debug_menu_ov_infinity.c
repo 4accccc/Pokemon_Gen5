@@ -35,8 +35,9 @@
 #include "../../../resource/infinity_dungeon/data/infinity_dungeon_room_pos_type.cdat" // INF_TR_ROOM_POS_TYPE_NONE
 
 // グローバル変数
-extern int g_debug_inf_tr_pos_type;
+extern int  g_debug_inf_tr_pos_type;
 extern BOOL g_debug_inf_data_change;
+extern u32  g_debug_inf_master_seed;
 
 
 //=============================================================================
@@ -86,7 +87,8 @@ static const DEBUG_MENU_LIST MenuList[] =
   { DEBUG_STR_INFINITY_JUMP_12 , (void*)DEBUG_STR_INFINITY_JUMP_12 , GFL_OVERLAY_BLANK_ID },  // ジャンプ
   { DEBUG_STR_INFINITY_ENDLESS_CHECK , (void*)DEBUG_STR_INFINITY_ENDLESS_CHECK , GFL_OVERLAY_BLANK_ID },  // ダンジョン無限生成
   { DEBUG_STR_INFINITY_DEBUG_MODE , (void*)DEBUG_STR_INFINITY_DEBUG_MODE , GFL_OVERLAY_BLANK_ID },  // デバッグモード
-  { DEBUG_STR_INFINITY_TR_POS_TYPE , (void*)DEBUG_STR_INFINITY_TR_POS_TYPE , GFL_OVERLAY_BLANK_ID },  // デバッグモード
+  { DEBUG_STR_INFINITY_TR_POS_TYPE , (void*)DEBUG_STR_INFINITY_TR_POS_TYPE , GFL_OVERLAY_BLANK_ID },  // トレーナー位置固定
+  { DEBUG_STR_INFINITY_SEED_CHANGE , (void*)DEBUG_STR_INFINITY_SEED_CHANGE , GFL_OVERLAY_BLANK_ID },  // シード
 };
 
 ///リスト メニューヘッダー
@@ -133,6 +135,7 @@ enum {
   STR_NUM_AREA,
   STR_NUM_DEBUG_ON_OFF,
   STR_NUM_TR_POS_TYPE,
+  STR_NUM_SEED,
 };
 
 //----------------------------------------------------------------------------
@@ -254,6 +257,10 @@ static BOOL NumInputState( INFDUN_WORK* p_wk )
       case STR_NUM_TR_POS_TYPE:
         p_wk->num = g_debug_inf_tr_pos_type;
         break;
+      case STR_NUM_SEED:
+        p_wk->num = g_debug_inf_master_seed;
+        break;
+
       defautl:
         p_wk->num = 0;
         break;
@@ -318,6 +325,21 @@ static BOOL NumInputState( INFDUN_WORK* p_wk )
             p_wk->num = 0;
           }
           g_debug_inf_tr_pos_type = p_wk->num;
+          DrawNum( p_wk );
+        }
+        break;
+      case STR_NUM_SEED:
+        {
+          NumInput(p_wk);
+          if( p_wk->num < 0 )
+          {
+            p_wk->num = 0;
+          }
+          if( p_wk->num > 0xFFFFFFFF )
+          {
+            p_wk->num = 0;
+          }
+          g_debug_inf_master_seed = p_wk->num;
           DrawNum( p_wk );
         }
         break;
@@ -410,6 +432,13 @@ static GMEVENT_RESULT debugMenuMedalInfinityDungeon( GMEVENT *event, int *seq, v
       {
         FLDMENUFUNC_DeleteMenu( work->menuFunc );
         work->num_input_type = STR_NUM_TR_POS_TYPE;
+        (*seq)++;
+      }
+      break;
+    case DEBUG_STR_INFINITY_SEED_CHANGE:
+      {
+        FLDMENUFUNC_DeleteMenu( work->menuFunc );
+        work->num_input_type = STR_NUM_SEED;
         (*seq)++;
       }
       break;

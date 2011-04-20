@@ -16,7 +16,8 @@
 */
 //=============================================================================
 
-BOOL g_debug_inf_data_change = FALSE;
+BOOL g_debug_inf_data_change  = FALSE;
 int g_debug_inf_tr_pos_type   = 0;
+u32 g_debug_inf_master_seed   = 0;
 
 #endif

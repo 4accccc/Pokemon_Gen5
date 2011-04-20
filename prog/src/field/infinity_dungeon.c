@@ -38,6 +38,7 @@
 #ifdef PM_DEBUG
 extern int g_debug_inf_tr_pos_type;
 extern BOOL g_debug_inf_data_change;
+extern u32  g_debug_inf_master_seed;
 #endif
 
 //=============================================================================
@@ -748,12 +749,23 @@ static void SetDungeonSeed( INF_DUNGEON_SEED *p_seed ,u32 master_seed )
 {
   int i,n;
   GFL_STD_RandContext rand_context;
-   
+ 
   // シード生成用シード
+#ifdef PM_DEBUG
+  if( g_debug_inf_master_seed == 0 )
+  {
+    p_seed->master_seed = master_seed;
+  }
+  else
+  {
+    p_seed->master_seed = g_debug_inf_master_seed;
+  }
+#else
   p_seed->master_seed = master_seed;
+#endif
 
   // 乱数を作成
-  GFL_STD_RandInit( &rand_context, master_seed );
+  GFL_STD_RandInit( &rand_context, p_seed->master_seed );
 
   // 子シードを生成
   p_seed->tr_data_seed = GFL_STD_Rand( &rand_context, GFL_STD_RAND_MAX);
@@ -767,6 +779,8 @@ static void SetDungeonSeed( INF_DUNGEON_SEED *p_seed ,u32 master_seed )
       p_seed->tr_seed[i][n] = GFL_STD_Rand( &rand_context, GFL_STD_RAND_MAX);
     }
   }
+
+  OS_TFPrintf(1,"シード番号:%u\n",p_seed->master_seed);
 }
 
 //----------------------------------------------------------------------------
@@ -857,19 +871,15 @@ static void SetNextZoneID( MAP_CHAGE_EVENT_WORK *p_wk )
   switch( warp_dir )
   {
   case WARP_DIR_UP:
-    ONOUE_Printf("WARP_DIR_UP\n");
     p_wk->next_room -= ROOM_MAX_X;
     break;
   case WARP_DIR_DOWN:
-    ONOUE_Printf("WARP_DIR_DOWN\n");
     p_wk->next_room += ROOM_MAX_X;
     break;
   case WARP_DIR_LEFT:
-    ONOUE_Printf("WARP_DIR_LEFT\n");
     p_wk->next_room --;
     break;
   case WARP_DIR_RIGHT:
-    ONOUE_Printf("WARP_DIR_RIGHT\n");
     p_wk->next_room ++;
     break;
   defautl:
@@ -2464,7 +2474,6 @@ static void GetFloorData( INFINITYDUNGEON_SAVE *p_save ,INF_DUNGEON_DATA *p_dung
 
   // ダンジョンデータを生成
   SetDungeonData( p_dungeon_data ,area_no ,p_seed->dungeon_data_seed ,5 ,5);
-  OS_TFPrintf(1,"ダンジョン生成用Seed = %un",p_seed->dungeon_data_seed);
  
   // トレーナーデータをセット
   SetTrainerData( p_dungeon_data ,p_seed->tr_data_seed );
