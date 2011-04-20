@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nagihashi_toru" host="W00268" date="2011-04-20T18:11:28"/>
+	<create user="nagihashi_toru" host="W00268" date="2011-04-20T19:34:54"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -398,14 +398,14 @@
 		</language>
 	</columns>
 
-	<dialog left="-921" top="323" right="-291" bottom="826" maximized="no" rayout="Vertical2">
+	<dialog left="118" top="285" right="823" bottom="905" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="552" top="484" right="1024" bottom="882" visible="no"/>
-		<band id="0" index="1" style="0000" width="455"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="328"/>
-		<band id="3" index="4" style="0000" width="292"/>
-		<band id="4" index="0" style="0000" width="622"/>
+		<band id="3" index="4" style="0000" width="367"/>
+		<band id="4" index="0" style="0000" width="697"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -619,12 +619,6 @@ GTSの　ごりよう　ありがとうございます！</language>
 [1:3A:リゾート市長名:0]！▼</language>
 		<language name="JPN_KANJI" width="256">かしこまりました
 [1:3A:リゾート市長名:0]！▼</language>
-	</row>
-
-	<row id="resort_sys_name_00" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#c0c0c0,,#ffff80,#c0c0c0,,,#c0c0c0,,">
-		<comment>選択質問文</comment>
-		<language name="JPN" width="256">レゾナンスリゾート</language>
-		<language name="JPN_KANJI" width="256">レゾナンスリゾート</language>
 	</row>
 
 	<row id="resort_sys_name_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#c0c0c0,,#ffff80,#c0c0c0,,,#c0c0c0,,">
@@ -1509,6 +1503,11 @@ GTSの　ごりよう　ありがとうございます！</language>
 	<row id="resort_nursery_03" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
 		<language name="JPN" width="256">きょうは　もう　みせじまいです▼</language>
 		<language name="JPN_KANJI" width="256">今日は　もう　店じまいです▼</language>
+	</row>
+
+	<row id="resort_nursery_04" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="256">いよいよ　うまれますよ！▼</language>
+		<language name="JPN_KANJI" width="256">いよいよ　うまれますよ！▼</language>
 	</row>
 
 	<row id="resort_service_00" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
