@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="onoue_masayuki" host="W00272" date="2011-04-20T12:07:39"/>
+	<create user="nakamura_akira" host="W00280" date="2011-04-20T18:59:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,9 +263,9 @@
 		</language>
 	</columns>
 
-	<dialog left="209" top="233" right="709" bottom="866" maximized="no" rayout="Vertical2">
+	<dialog left="529" top="262" right="1029" bottom="895" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="542" visible="yes"/>
+		<tag-palette left="1003" top="105" right="1476" bottom="514" visible="no"/>
 		<band id="0" index="1" style="0000" width="484"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="317"/>
@@ -693,313 +693,437 @@
 	</row>
 
 	<row id="msg_hint_level_0_00">
-		<language name="JPN" width="256">とぼける▼</language>
-		<language name="JPN_KANJI" width="256">とぼける▼</language>
+		<language name="JPN" width="256">キミ　つよいんだね
+びっくりしたよ▼</language>
+		<language name="JPN_KANJI" width="256">キミ　強いんだね
+びっくりしたよ▼</language>
 	</row>
 
 	<row id="msg_hint_level_0_01">
-		<language name="JPN" width="256">とぼける▼</language>
-		<language name="JPN_KANJI" width="256">とぼける▼</language>
+		<language name="JPN" width="256">アナタ　すごいわ
+また　たたかいましょう▼</language>
+		<language name="JPN_KANJI" width="256">アナタ　すごいわ
+また　戦いましょう▼</language>
 	</row>
 
 	<row id="msg_hint_level_0_02">
-		<language name="JPN" width="256">とぼける▼</language>
-		<language name="JPN_KANJI" width="256">とぼける▼</language>
+		<language name="JPN" width="256">なかなか　やるな！
+ほかの　トレーナーに　まけるなよ！▼</language>
+		<language name="JPN_KANJI" width="256">なかなか　やるな！
+他の　トレーナーに　負けるなよ！▼</language>
 	</row>
 
 	<row id="msg_hint_level_0_03">
-		<language name="JPN" width="256">とぼける▼</language>
-		<language name="JPN_KANJI" width="256">とぼける▼</language>
+		<language name="JPN" width="256">まけたわ
+アナタ　ほんとうに　つよいわね▼</language>
+		<language name="JPN_KANJI" width="256">負けたわ
+アナタ　本当に　強いわね▼</language>
 	</row>
 
 	<row id="msg_hint_level_0_04">
-		<language name="JPN" width="256">とぼける▼</language>
-		<language name="JPN_KANJI" width="256">とぼける▼</language>
+		<language name="JPN" width="256">ん？　ボストレーナー？
+どこにいるか　しらないよ▼</language>
+		<language name="JPN_KANJI" width="256">ん？　ボストレーナー？
+どこにいるか　知らないよ▼</language>
 	</row>
 
 	<row id="msg_hint_level_0_05">
-		<language name="JPN" width="256">とぼける▼</language>
-		<language name="JPN_KANJI" width="256">とぼける▼</language>
+		<language name="JPN" width="256">ボストレーナー？
+そのへんに　いるんじゃないかしら▼</language>
+		<language name="JPN_KANJI" width="256">ボストレーナー？
+その辺に　いるんじゃないかしら▼</language>
 	</row>
 
 	<row id="msg_hint_level_0_06">
-		<language name="JPN" width="256">とぼける▼</language>
-		<language name="JPN_KANJI" width="256">とぼける▼</language>
+		<language name="JPN" width="256">ボストレーナー？
+はて　どこかで　みたような……▼</language>
+		<language name="JPN_KANJI" width="256">ボストレーナー？
+はて　どこかで　見たような……▼</language>
 	</row>
 
 	<row id="msg_hint_level_0_07">
-		<language name="JPN" width="256">とぼける▼</language>
-		<language name="JPN_KANJI" width="256">とぼける▼</language>
+		<language name="JPN" width="256">ボストレーナー？　どこかで　みたわよ
+どこだったかしら……▼</language>
+		<language name="JPN_KANJI" width="256">ボストレーナー？　どこかで　見たわよ
+どこだったかしら……▼</language>
 	</row>
 
 	<row id="msg_hint_level_1_00_y">
-		<language name="JPN" width="256">この　かいに　いる▼</language>
-		<language name="JPN_KANJI" width="256">この　かいに　いる▼</language>
+		<language name="JPN" width="256">ボストレーナー？　それなら
+このかいで　みたよ▼</language>
+		<language name="JPN_KANJI" width="256">ボストレーナー？　それなら
+この階で　見たよ▼</language>
 	</row>
 
 	<row id="msg_hint_level_1_00_n">
-		<language name="JPN" width="256">この　かいに　いない▼</language>
-		<language name="JPN_KANJI" width="256">この　かいに　いない▼</language>
+		<language name="JPN" width="256">ボストレーナー？
+このかいでは　みてないよ▼</language>
+		<language name="JPN_KANJI" width="256">ボストレーナー？
+この階では　見てないよ▼</language>
 	</row>
 
 	<row id="msg_hint_level_1_01_y">
-		<language name="JPN" width="256">この　かいに　いる▼</language>
-		<language name="JPN_KANJI" width="256">この　かいに　いる▼</language>
+		<language name="JPN" width="256">ボストレーナー？
+それなら　このかいで　みたわよ▼</language>
+		<language name="JPN_KANJI" width="256">ボストレーナー？
+それなら　この階で　見たわよ▼</language>
 	</row>
 
 	<row id="msg_hint_level_1_01_n">
-		<language name="JPN" width="256">この　かいに　いない▼</language>
-		<language name="JPN_KANJI" width="256">この　かいに　いない▼</language>
+		<language name="JPN" width="256">ボストレーナー？
+このかいでは　みてないわ▼</language>
+		<language name="JPN_KANJI" width="256">ボストレーナー？
+この階では　見てないわ▼</language>
 	</row>
 
 	<row id="msg_hint_level_1_02_y">
-		<language name="JPN" width="256">この　かいに　いる▼</language>
-		<language name="JPN_KANJI" width="256">この　かいに　いる▼</language>
+		<language name="JPN" width="256">ボストレーナー？
+このかいで　みかけたよ▼</language>
+		<language name="JPN_KANJI" width="256">ボストレーナー？
+この階で　見かけたよ▼</language>
 	</row>
 
 	<row id="msg_hint_level_1_02_n">
-		<language name="JPN" width="256">この　かいに　いない▼</language>
-		<language name="JPN_KANJI" width="256">この　かいに　いない▼</language>
+		<language name="JPN" width="256">ボストレーナー？
+このかいには　いないとおもうよ▼</language>
+		<language name="JPN_KANJI" width="256">ボストレーナー？
+この階には　いないと思うよ▼</language>
 	</row>
 
 	<row id="msg_hint_level_1_03_y">
-		<language name="JPN" width="256">この　かいに　いる▼</language>
-		<language name="JPN_KANJI" width="256">この　かいに　いる▼</language>
+		<language name="JPN" width="256">ボストレーナーを　さがしているの？
+このかいに　いるのを　みたわよ▼</language>
+		<language name="JPN_KANJI" width="256">ボストレーナーを　探しているの？
+この階に　いるのを　見たわよ▼</language>
 	</row>
 
 	<row id="msg_hint_level_1_03_n">
-		<language name="JPN" width="256">この　かいに　いない▼</language>
-		<language name="JPN_KANJI" width="256">この　かいに　いない▼</language>
+		<language name="JPN" width="256">ボストレーナーを　さがしているの？
+このかいでは　みてないわね▼</language>
+		<language name="JPN_KANJI" width="256">ボストレーナーを　探しているの？
+この階では　見てないわね▼</language>
 	</row>
 
 	<row id="msg_hint_level_1_04_y">
-		<language name="JPN" width="256">この　かいに　いる▼</language>
-		<language name="JPN_KANJI" width="256">この　かいに　いる▼</language>
+		<language name="JPN" width="256">ボストレーナーかい？
+それなら　このかいで　みたぞ▼</language>
+		<language name="JPN_KANJI" width="256">ボストレーナーかい？
+それなら　この階で　見たぞ▼</language>
 	</row>
 
 	<row id="msg_hint_level_1_04_n">
-		<language name="JPN" width="256">この　かいに　いない▼</language>
-		<language name="JPN_KANJI" width="256">この　かいに　いない▼</language>
+		<language name="JPN" width="256">ボストレーナーかい？
+このかいでは　みてないね▼</language>
+		<language name="JPN_KANJI" width="256">ボストレーナーかい？
+この階では　見てないね▼</language>
 	</row>
 
 	<row id="msg_hint_level_1_05_y">
-		<language name="JPN" width="256">この　かいに　いる▼</language>
-		<language name="JPN_KANJI" width="256">この　かいに　いる▼</language>
+		<language name="JPN" width="256">ボストレーナー？
+このかいに　いるんじゃ　ないかしら▼</language>
+		<language name="JPN_KANJI" width="256">ボストレーナー？
+この階に　いるんじゃ　ないかしら▼</language>
 	</row>
 
 	<row id="msg_hint_level_1_05_n">
-		<language name="JPN" width="256">この　かいに　いない▼</language>
-		<language name="JPN_KANJI" width="256">この　かいに　いない▼</language>
+		<language name="JPN" width="256">ボストレーナー？
+このかいには　いないと　おもうわよ▼</language>
+		<language name="JPN_KANJI" width="256">ボストレーナー？
+この階には　いないと　思うわよ▼</language>
 	</row>
 
 	<row id="msg_hint_level_1_06_y">
-		<language name="JPN" width="256">この　かいに　いる▼</language>
-		<language name="JPN_KANJI" width="256">この　かいに　いる▼</language>
+		<language name="JPN" width="256">ボストレーナーじゃと？　ひみつじゃぞ
+……　このかいに　おるぞ▼</language>
+		<language name="JPN_KANJI" width="256">ボストレーナーじゃと？　秘密じゃぞ
+……　この階に　おるぞ▼</language>
 	</row>
 
 	<row id="msg_hint_level_1_06_n">
-		<language name="JPN" width="256">この　かいに　いない▼</language>
-		<language name="JPN_KANJI" width="256">この　かいに　いない▼</language>
+		<language name="JPN" width="256">ボストレーナーじゃと？
+このかいでは　みかけておらん▼</language>
+		<language name="JPN_KANJI" width="256">ボストレーナーじゃと？
+この階では　見かけておらんぞ▼</language>
 	</row>
 
 	<row id="msg_hint_level_1_07_y">
-		<language name="JPN" width="256">この　かいに　いる▼</language>
-		<language name="JPN_KANJI" width="256">この　かいに　いる▼</language>
+		<language name="JPN" width="256">ボストレーナーですって？
+ええ　このかいで　みましたわ▼</language>
+		<language name="JPN_KANJI" width="256">ボストレーナーですって？
+ええ　この階で　見ましたわ▼</language>
 	</row>
 
 	<row id="msg_hint_level_1_07_n">
-		<language name="JPN" width="256">この　かいに　いない▼</language>
-		<language name="JPN_KANJI" width="256">この　かいに　いない▼</language>
+		<language name="JPN" width="256">ボストレーナーですって？
+このかいでは　みかけてないわね▼</language>
+		<language name="JPN_KANJI" width="256">ボストレーナーですって？
+この階では　見かけてないわね▼</language>
 	</row>
 
 	<row id="msg_hint_level_2_0_0">
-		<language name="JPN" width="256">このかいにいる▼</language>
-		<language name="JPN_KANJI" width="256">このかいにいる▼</language>
+		<language name="JPN" width="256">ボストレーナー？　それなら
+このかいで　みたよ▼</language>
+		<language name="JPN_KANJI" width="256">ボストレーナー？　それなら
+この階で　見たよ▼</language>
 	</row>
 
 	<row id="msg_hint_level_2_0_1">
-		<language name="JPN" width="256">うえのかい▼</language>
-		<language name="JPN_KANJI" width="256">うえのかい▼</language>
+		<language name="JPN" width="256">え？　ボストレーナーなら
+うえのかいで　みたよ▼</language>
+		<language name="JPN_KANJI" width="256">え？　ボストレーナーなら
+上の階で　見たよ▼</language>
 	</row>
 
 	<row id="msg_hint_level_2_0_2">
-		<language name="JPN" width="256">したのかい▼</language>
-		<language name="JPN_KANJI" width="256">したのかい▼</language>
+		<language name="JPN" width="256">え？　ボストレーナーなら
+したのかいで　みたよ▼</language>
+		<language name="JPN_KANJI" width="256">え？　ボストレーナーなら
+下の階で　見たよ▼</language>
 	</row>
 
 	<row id="msg_hint_level_2_1_0">
-		<language name="JPN" width="256">このかいにいる▼</language>
-		<language name="JPN_KANJI" width="256">このかいにいる▼</language>
+		<language name="JPN" width="256">ボストレーナー？
+それなら　このかいで　みたわよ▼</language>
+		<language name="JPN_KANJI" width="256">ボストレーナー？
+それなら　この階で　見たわよ▼</language>
 	</row>
 
 	<row id="msg_hint_level_2_1_1">
-		<language name="JPN" width="256">うえのかい▼</language>
-		<language name="JPN_KANJI" width="256">うえのかい▼</language>
+		<language name="JPN" width="256">ボストレーナーなら
+うえのかいで　みたわ▼</language>
+		<language name="JPN_KANJI" width="256">ボストレーナーなら
+上の階で　見たわよ▼</language>
 	</row>
 
 	<row id="msg_hint_level_2_1_2">
-		<language name="JPN" width="256">したのかい▼</language>
-		<language name="JPN_KANJI" width="256">したのかい▼</language>
+		<language name="JPN" width="256">ボストレーナーなら
+したのかいで　みたわ▼</language>
+		<language name="JPN_KANJI" width="256">ボストレーナーなら
+下の階で　見たわ▼</language>
 	</row>
 
 	<row id="msg_hint_level_2_2_0">
-		<language name="JPN" width="256">このかいにいる▼</language>
-		<language name="JPN_KANJI" width="256">このかいにいる▼</language>
+		<language name="JPN" width="256">ボストレーナー？
+このかいで　みかけたよ▼</language>
+		<language name="JPN_KANJI" width="256">ボストレーナー？
+この階で　見かけたよ▼</language>
 	</row>
 
 	<row id="msg_hint_level_2_2_1">
-		<language name="JPN" width="256">うえのかい▼</language>
-		<language name="JPN_KANJI" width="256">うえのかい▼</language>
+		<language name="JPN" width="256">ボストレーナー？
+さっき　うえのかいで　みかけたよ▼</language>
+		<language name="JPN_KANJI" width="256">ボストレーナー？
+さっき　上の階で　見かけたよ▼</language>
 	</row>
 
 	<row id="msg_hint_level_2_2_2">
-		<language name="JPN" width="256">したのかい▼</language>
-		<language name="JPN_KANJI" width="256">したのかい▼</language>
+		<language name="JPN" width="256">ボストレーナー？
+さっき　したのかいで　みかけたよ▼</language>
+		<language name="JPN_KANJI" width="256">ボストレーナー？
+さっき　下の階で　見かけたよ▼</language>
 	</row>
 
 	<row id="msg_hint_level_2_3_0">
-		<language name="JPN" width="256">このかいにいる▼</language>
-		<language name="JPN_KANJI" width="256">このかいにいる▼</language>
+		<language name="JPN" width="256">ボストレーナーを　さがしているの？
+このかいに　いるのを　みたわよ▼</language>
+		<language name="JPN_KANJI" width="256">ボストレーナーを　探しているの？
+この階に　いるのを　見たわよ▼</language>
 	</row>
 
 	<row id="msg_hint_level_2_3_1">
-		<language name="JPN" width="256">うえのかい▼</language>
-		<language name="JPN_KANJI" width="256">うえのかい▼</language>
+		<language name="JPN" width="256">ボストレーナーを　さがしているの？
+うえのかいに　いるみたいよ▼</language>
+		<language name="JPN_KANJI" width="256">ボストレーナーを　探しているの？
+上の階に　いるみたいよ▼</language>
 	</row>
 
 	<row id="msg_hint_level_2_3_2">
-		<language name="JPN" width="256">したのかい▼</language>
-		<language name="JPN_KANJI" width="256">したのかい▼</language>
+		<language name="JPN" width="256">ボストレーナーを　さがしているの？
+したのかいに　いるみたいよ▼</language>
+		<language name="JPN_KANJI" width="256">ボストレーナーを　探しているの？
+下の階に　いるみたいよ▼</language>
 	</row>
 
 	<row id="msg_hint_level_2_4_0">
-		<language name="JPN" width="256">このかいにいる▼</language>
-		<language name="JPN_KANJI" width="256">このかいにいる▼</language>
+		<language name="JPN" width="256">ボストレーナーかい？
+それなら　このかいで　みたぞ▼</language>
+		<language name="JPN_KANJI" width="256">ボストレーナーかい？
+それなら　この階で　見たぞ▼</language>
 	</row>
 
 	<row id="msg_hint_level_2_4_1">
-		<language name="JPN" width="256">うえのかい▼</language>
-		<language name="JPN_KANJI" width="256">うえのかい▼</language>
+		<language name="JPN" width="256">ボストレーナーかい？
+うえのかいに　いるらしいよ▼</language>
+		<language name="JPN_KANJI" width="256">ボストレーナーかい？
+上の階に　いるらしいよ▼</language>
 	</row>
 
 	<row id="msg_hint_level_2_4_2">
-		<language name="JPN" width="256">したのかい▼</language>
-		<language name="JPN_KANJI" width="256">したのかい▼</language>
+		<language name="JPN" width="256">ボストレーナーかい？
+したのかいに　いるらしいよ▼</language>
+		<language name="JPN_KANJI" width="256">ボストレーナーかい？
+下の階に　いるらしいよ▼</language>
 	</row>
 
 	<row id="msg_hint_level_2_5_0">
-		<language name="JPN" width="256">このかいにいる▼</language>
-		<language name="JPN_KANJI" width="256">このかいにいる▼</language>
+		<language name="JPN" width="256">ボストレーナー？
+このかいに　いるんじゃ　ないかしら▼</language>
+		<language name="JPN_KANJI" width="256">ボストレーナー？
+この階に　いるんじゃ　ないかしら▼</language>
 	</row>
 
 	<row id="msg_hint_level_2_5_1">
-		<language name="JPN" width="256">うえのかい▼</language>
-		<language name="JPN_KANJI" width="256">うえのかい▼</language>
+		<language name="JPN" width="256">ボストレーナー？
+うえのかいに　いるって　うわさよ▼</language>
+		<language name="JPN_KANJI" width="256">ボストレーナー？
+上の階に　いるって　うわさよ▼</language>
 	</row>
 
 	<row id="msg_hint_level_2_5_2">
-		<language name="JPN" width="256">したのかい▼</language>
-		<language name="JPN_KANJI" width="256">したのかい▼</language>
+		<language name="JPN" width="256">ボストレーナー？
+したのかいに　いるって　うわさよ▼</language>
+		<language name="JPN_KANJI" width="256">ボストレーナー？
+下の階に　いるって　うわさよ▼</language>
 	</row>
 
 	<row id="msg_hint_level_2_6_0">
-		<language name="JPN" width="256">このかいにいる▼</language>
-		<language name="JPN_KANJI" width="256">このかいにいる▼</language>
+		<language name="JPN" width="256">ボストレーナーじゃと？　ひみつじゃぞ
+……　このかいに　おるぞ▼</language>
+		<language name="JPN_KANJI" width="256">ボストレーナーじゃと？　秘密じゃぞ
+……　この階に　おるぞ▼</language>
 	</row>
 
 	<row id="msg_hint_level_2_6_1">
-		<language name="JPN" width="256">うえのかい▼</language>
-		<language name="JPN_KANJI" width="256">うえのかい▼</language>
+		<language name="JPN" width="256">ボストレーナーじゃと？　ひみつじゃぞ
+……　うえのかいじゃ▼</language>
+		<language name="JPN_KANJI" width="256">ボストレーナーじゃと？　秘密じゃぞ
+……　上の階じゃ▼</language>
 	</row>
 
 	<row id="msg_hint_level_2_6_2">
-		<language name="JPN" width="256">したのかい▼</language>
-		<language name="JPN_KANJI" width="256">したのかい▼</language>
+		<language name="JPN" width="256">ボストレーナーじゃと？　ひみつじゃぞ
+……　したのかいじゃ▼</language>
+		<language name="JPN_KANJI" width="256">ボストレーナーじゃと？　秘密じゃぞ
+……　下の階じゃ▼</language>
 	</row>
 
 	<row id="msg_hint_level_2_7_0">
-		<language name="JPN" width="256">このかいにいる▼</language>
-		<language name="JPN_KANJI" width="256">このかいにいる▼</language>
+		<language name="JPN" width="256">ボストレーナーですって？
+ええ　このかいで　みましたわ▼</language>
+		<language name="JPN_KANJI" width="256">ボストレーナーですって？
+ええ　この階で　見ましたわ▼</language>
 	</row>
 
 	<row id="msg_hint_level_2_7_1">
-		<language name="JPN" width="256">うえのかい▼</language>
-		<language name="JPN_KANJI" width="256">うえのかい▼</language>
+		<language name="JPN" width="256">ボストレーナーですって？
+うえのかいは　しらべたかしら？▼</language>
+		<language name="JPN_KANJI" width="256">ボストレーナーですって？
+上の階は　調べたかしら？▼</language>
 	</row>
 
 	<row id="msg_hint_level_2_7_2">
-		<language name="JPN" width="256">したのかい▼</language>
-		<language name="JPN_KANJI" width="256">したのかい▼</language>
+		<language name="JPN" width="256">ボストレーナーですて？
+したのかいは　しらべたかしら？▼</language>
+		<language name="JPN_KANJI" width="256">ボストレーナーですって？
+下の階は　調べたかしら？▼</language>
 	</row>
 
 	<row id="msg_hint_level_3_00">
-		<language name="JPN" width="256">[2:02:３桁:0]階にいるよ！▼</language>
-		<language name="JPN_KANJI" width="256">[2:02:３桁:0]階にいるよ！▼</language>
+		<language name="JPN" width="256">ボストレーナーが　みつからないの？
+[2:02:３桁:0]かいに　いたよ！▼</language>
+		<language name="JPN_KANJI" width="256">ボストレーナーが　見つからないの？
+[2:02:３桁:0]階にいたよ！▼</language>
 	</row>
 
 	<row id="msg_hint_level_3_01">
-		<language name="JPN" width="256">[2:02:３桁:0]階にいるよ！▼</language>
-		<language name="JPN_KANJI" width="256">[2:02:３桁:0]階にいるよ！▼</language>
+		<language name="JPN" width="256">ボストレーナーが　いないの？
+[2:02:３桁:0]かいで　みたわよ▼</language>
+		<language name="JPN_KANJI" width="256">ボストレーナーが　いないの？
+[2:02:３桁:0]階で　見たわよ▼</language>
 	</row>
 
 	<row id="msg_hint_level_3_02">
-		<language name="JPN" width="256">[2:02:３桁:0]階にいるよ！▼</language>
-		<language name="JPN_KANJI" width="256">[2:02:３桁:0]階にいるよ！▼</language>
+		<language name="JPN" width="256">ボストレーナー？
+[2:02:３桁:0]かいに　いると　おもうよ▼</language>
+		<language name="JPN_KANJI" width="256">ボストレーナー？
+[2:02:３桁:0]階に　いると　思うよ▼</language>
 	</row>
 
 	<row id="msg_hint_level_3_03">
-		<language name="JPN" width="256">[2:02:３桁:0]階にいるよ！▼</language>
-		<language name="JPN_KANJI" width="256">[2:02:３桁:0]階にいるよ！▼</language>
+		<language name="JPN" width="256">ボストレーナー？
+[2:02:３桁:0]かいで　みかけたわよ▼</language>
+		<language name="JPN_KANJI" width="256">ボストレーナー？
+[2:02:３桁:0]階で　見かけたわよ▼</language>
 	</row>
 
 	<row id="msg_hint_level_3_04">
-		<language name="JPN" width="256">[2:02:３桁:0]階にいるよ！▼</language>
-		<language name="JPN_KANJI" width="256">[2:02:３桁:0]階にいるよ！▼</language>
+		<language name="JPN" width="256">ボストレーナー？
+それなら　[2:02:３桁:0]かいに　いたぞ▼</language>
+		<language name="JPN_KANJI" width="256">ボストレーナー？
+それなら　[2:02:３桁:0]階に　いたぞ▼</language>
 	</row>
 
 	<row id="msg_hint_level_3_05">
-		<language name="JPN" width="256">[2:02:３桁:0]階にいるよ！▼</language>
-		<language name="JPN_KANJI" width="256">[2:02:３桁:0]階にいるよ！▼</language>
+		<language name="JPN" width="256">ボストレーナー？
+それなら　[2:02:３桁:0]階に　いたわよ▼</language>
+		<language name="JPN_KANJI" width="256">ボストレーナー？
+それなら　[2:02:３桁:0]階に　いたわよ▼</language>
 	</row>
 
 	<row id="msg_hint_level_3_06">
-		<language name="JPN" width="256">[2:02:３桁:0]階にいるよ！▼</language>
-		<language name="JPN_KANJI" width="256">[2:02:３桁:0]階にいるよ！▼</language>
+		<language name="JPN" width="256">ボストレーナーじゃと？
+ああ　[2:02:３桁:0]かいで　みかけたぞ▼</language>
+		<language name="JPN_KANJI" width="256">ボストレーナーじゃと？
+ああ　[2:02:３桁:0]階で　見かけたぞ▼</language>
 	</row>
 
 	<row id="msg_hint_level_3_07">
-		<language name="JPN" width="256">[2:02:３桁:0]階にいるよ！▼</language>
-		<language name="JPN_KANJI" width="256">[2:02:３桁:0]階にいるよ！▼</language>
+		<language name="JPN" width="256">ボストレーナーですって？　それなら
+[2:02:３桁:0]かいに　いってごらんなさい▼</language>
+		<language name="JPN_KANJI" width="256">ボストレーナですって？　それなら
+[2:02:３桁:0]階に　行ってごらんなさい▼</language>
 	</row>
 
 	<row id="msg_doctor_msg_00">
-		<language name="JPN" width="256">かいふくしますか？（ドクター）</language>
-		<language name="JPN_KANJI" width="256">かいふくしますか？（ドクター）</language>
+		<language name="JPN" width="256">ポケモンが　つかれているようだ
+かいふくして　あげようか？</language>
+		<language name="JPN_KANJI" width="256">ポケモンが　疲れているようだ
+回復して　あげようか？</language>
 	</row>
 
 	<row id="msg_doctor_msg_01">
-		<language name="JPN" width="256">キャンセル（ドクター）</language>
-		<language name="JPN_KANJI" width="256">キャンセル（ドクター）</language>
+		<language name="JPN" width="256">わっかた　かいふくしたくなったら
+ここに　くるといい</language>
+		<language name="JPN_KANJI" width="256">わかった　回復したくなったら
+ここに　来るといい</language>
 	</row>
 
 	<row id="msg_doctor_msg_02">
-		<language name="JPN" width="256">回復終わり（ドクター）</language>
-		<language name="JPN_KANJI" width="256">回復終わり（ドクター）</language>
+		<language name="JPN" width="256">たんれんも　いいが　ポケモンに
+あまり　むり　させないようにな</language>
+		<language name="JPN_KANJI" width="256">鍛錬も　いいが　ポケモンに
+あまり　無理　させないようにな</language>
 	</row>
 
 	<row id="msg_nurse_msg_00">
-		<language name="JPN" width="256">かいふくしますか？（ナース）</language>
-		<language name="JPN_KANJI" width="256">かいふくしますか？（ナース）</language>
+		<language name="JPN" width="256">あら？　ポケモンが　おつかれね
+かいふくして　あげましょうか？</language>
+		<language name="JPN_KANJI" width="256">あら？　ポケモンが　お疲れね
+回復して　あげましょうか？</language>
 	</row>
 
 	<row id="msg_nurse_msg_01">
-		<language name="JPN" width="256">キャンセル（ナース）</language>
-		<language name="JPN_KANJI" width="256">キャンセル（ナース）</language>
+		<language name="JPN" width="256">わかったわ
+でも　むりは　きんもつよ！</language>
+		<language name="JPN_KANJI" width="256">わかったわ
+でも　無理は　禁物よ！</language>
 	</row>
 
 	<row id="msg_nurse_msg_02">
-		<language name="JPN" width="256">回復終わり（ナース）</language>
-		<language name="JPN_KANJI" width="256">回復終わり（ナース）</language>
+		<language name="JPN" width="256">さきは　まだまだ　ながいわ
+がんばってね！</language>
+		<language name="JPN_KANJI" width="256">先は　まだまだ　長いわ
+がんばってね！</language>
 	</row>
 
 	<row id="msg_info_greet_w">
