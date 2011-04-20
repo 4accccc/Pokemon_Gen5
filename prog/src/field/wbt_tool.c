@@ -30,6 +30,8 @@
 #include "tr_tool/trtype_def.h"
 #include "sound/pm_sndsys.h"
 
+#define ROM_201104ALPHA
+
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
@@ -256,81 +258,225 @@ u8 WBTTOOL_GetPartyPokeType( POKEPARTY * party, u64 seed )
 //
 //
 //============================================================================================
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-#if 0
-static void entryTournament( const WBT_MATCH_CONDITION * cond, u16 * tr_list )
-{
-  enum {
+  typedef enum {
     ENTRY_NON = 0,
     ENTRY_CANDIDATE,
     ENTRY_DECIDE,
-  };
+  }ENTRY_CODE;
   enum {
-    TOTAL_ENTRY_NUM = 112,      ///<エントリーROMデータ総数（仮）
     CHAMP_ENTRY_RATE = 10,  ///<チャンピオンがエントリーする確率
-    ID_CHAMP_START = 14,
   };
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+static u32 setupEntryTable( const WBT_MATCH_CONDITION * cond, u8 * entry_table )
+{
+  int candidate_count = 0;
   int i;
-  u8 entry_table[TOTAL_ENTRY_NUM];
+  GFL_STD_MemFill( entry_table, ENTRY_NON, WBT_TRCODE_NUM );
+
+  //全体から出場者を抽出
+  for ( i = 0; i < WBT_TRCODE_NUM; i ++ )
+  {
+    const WBT_TRDATA * rom_data = &WBTTrainerData[ i ];
+    if ( rom_data->entry_timing > cond->level ) continue;
+    entry_table[ i ] = ENTRY_CANDIDATE;
+    candidate_count ++;
+  }
+  return candidate_count; //候補者数
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+static u32 countEntry( const u8 * entry_table, ENTRY_CODE entryCode )
+{
+  u32 count = 0;
+  int i;
+  for ( i = 0; i < WBT_TRCODE_NUM; i ++ )
+  {
+    if ( entry_table[i] == entryCode ) count ++;
+  }
+  return count;
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+static u32 countEntryWithPri( const u8 * entry_table, ENTRY_CODE entryCode, u8 pri )
+{
+  u32 candidate_count = 0;
+  int i;
+  for ( i = 0; i < WBT_TRCODE_NUM; i ++ )
+  {
+    if (entry_table[i] == entryCode)
+    {
+      if ( pri == WBT_TRPRI_NULL || WBTTrainerData[i].priority == pri)
+      {
+        candidate_count ++;
+      }
+    }
+  }
+  return candidate_count;
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+static u32 selectCandidateByPri( const u8 * entry_table, u8 pri, u8 step )
+{
+  u32 pos_count = step;
+  u32 i = 0;
+  GF_ASSERT( step > 0 )
+  for ( i = 0; i < WBT_TRCODE_NUM; i ++ )
+  {
+    if ( entry_table[i] == ENTRY_CANDIDATE )
+    {
+      if ( pri == WBT_TRPRI_NULL || WBTTrainerData[i].priority == pri )
+      {
+        pos_count --;
+        if ( pos_count == 0 )
+        {
+          return i;
+        }
+      }
+    }
+  }
+  GF_ASSERT( i < WBT_TRCODE_NUM );
+  return i;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @param entry_table
+ * @param rand_context
+ * @param pri
+ * @param num
+ */
+//-----------------------------------------------------------------------------
+static u32 selectCharacters( u8 * entry_table, GFL_STD_RandContext * rand_context, u8 pri, u8 num )
+{
+  int i;
+  int count = num;
+  u32 candidate_count = countEntryWithPri( entry_table, ENTRY_CANDIDATE, pri );
+
+  //候補数以上に選ぶ必要がある場合はAssert
+  GF_ASSERT( count <= candidate_count );
+  while ( count )
+  {
+    u32 select;
+    if ( candidate_count == 1 )
+    { //場所はランダムで決めるまでもない
+      select = selectCandidateByPri( entry_table, pri, 1 );
+    }
+    else
+    {
+      u32 step;
+      step = GFL_STD_Rand( rand_context, candidate_count ) + 1;
+      select = selectCandidateByPri( entry_table, pri, step );
+    }
+    GF_ASSERT( entry_table[select] == ENTRY_CANDIDATE );
+    entry_table[select] = ENTRY_DECIDE;
+    TAMADA_Printf("SELECT TRAINER(%03d):pri(%d)candidate(%2d)\n", select, pri, candidate_count );
+    candidate_count --;
+    count --;
+    if ( candidate_count == 0 && count ) return count;
+  }
+
+
+  //選から漏れた候補者を消す
+  for ( i = 0; i < WBT_TRCODE_NUM; i ++ )
+  {
+    if ( entry_table[i] == ENTRY_CANDIDATE )
+    {
+      if ( pri == WBT_TRPRI_NULL ||WBTTrainerData[i].priority == pri )
+      {
+        entry_table[i] = ENTRY_NON;
+      }
+    }
+  }
+  return 0;
+}
+
+//-----------------------------------------------------------------------------
+//チャンピオンの登録処理（確率によって一人だけ参加することがある）
+//-----------------------------------------------------------------------------
+static BOOL selectChamp( u8 * entry_table, GFL_STD_RandContext * rand_context )
+{
+  int i;
+  int keep_id = -1;
+  if ( GFL_STD_Rand( rand_context, 100 ) < CHAMP_ENTRY_RATE )
+  {
+    keep_id = GFL_STD_Rand( rand_context, WBT_TRCODE_NUM_CHAMP );
+    entry_table[ WBT_TRCODE_CHAMP_START + keep_id ] = ENTRY_DECIDE;
+  }
+  for ( i = 0; i < WBT_TRCODE_NUM_CHAMP; i++ )
+  {
+    if ( keep_id != i )
+    {
+      entry_table[ WBT_TRCODE_CHAMP_START + i ] = ENTRY_NON;
+    }
+  }
+  return ( keep_id != -1 );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief オールトーナメント出場者選出
+ * @todo  未実装
+ */
+//-----------------------------------------------------------------------------
+static void entryAllTournament( const WBT_MATCH_CONDITION * cond, u16 * tr_list )
+{
+  int i;
+  u8 entry_table[WBT_TRCODE_NUM];
   int candidate_count = 0;
   int decide_count = 0;
+  int rest;
+  u32 leader_num  = cond->leader_num;
+  u32 mob_num     = WBT_TRAINER_MAX - 1 - leader_num;
 
   GFL_STD_RandContext rand_context;
   GFL_STD_RandInit( &rand_context, cond->seed64 );
 
-  GFL_STD_MemFill( entry_table, ENTRY_NON, TOTAL_ENTRY_NUM );
+  candidate_count = setupEntryTable( cond, entry_table );
 
-  //全体からオールトーナメント出場者を抽出
-  for ( i = 0; i < TOTAL_ENTRY_NUM; i ++ )
+#ifdef  ROM_201104ALPHA
+  //赤緑・金銀リーダーを無理やりエントリー
+  leader_num = 7;
+  mob_num = 0;
+  GFL_STD_MemFill( entry_table, ENTRY_NON, WBT_TRCODE_NUM );
+  for ( i = WBT_TRCODE_OTHER_LEADER_START; i < WBT_TRCODE_OTHER_LEADER_START + 16; i ++ )
+  {
+    entry_table[i] = ENTRY_CANDIDATE;
+  }
+  candidate_count = countEntry( entry_table, ENTRY_CANDIDATE );
+#else
+  TAMADA_Printf("TOTAL CANDIDATES=%d\n", candidate_count );
+  //全体からオールトーナメント出場者以外を排除
+  for ( i = 0; i < WBT_TRCODE_NUM; i ++ )
   {
     const WBT_TRDATA * rom_data = &WBTTrainerData[ i ];
-    if ( rom_data->entry_timing > cond->level ) continue;
-    if ( rom_data->entry_all == 0 ) continue;
-    entry_table[ i ] = ENTRY_CANDIDATE;
-    candidate_count ++;
+    if ( rom_data->entry_all ) continue;
+    entry_table[ i ] = ENTRY_NON;
   }
+
   //チャンピオンの登録処理（確率によって一人だけ参加することがある）
+  if (selectChamp( entry_table, &rand_context ) == TRUE )
   {
-    int keep_id = -1;
-    if ( GFL_STD_Rand( &rand_context, 100 ) < CHAMP_ENTRY_RATE )
-    {
-      keep_id = GFL_STD_Rand( &rand_context, 6 );
-      entry_table[ ID_CHAMP_START + keep_id ] = ENTRY_DECIDE;
-      candidate_count --;
-      decide_count ++;
-    }
-    for ( i = 0; i < 6; i++ )
-    {
-      if ( keep_id != i )
-      {
-        if ( entry_table[ ID_CHAMP_START + i ] != 0 ) candidate_count --;
-        entry_table[ ID_CHAMP_START + i ] = ENTRY_NON;
-      }
-    }
+    decide_count ++;
+    leader_num --;
   }
+#endif
+  //リーダークラスの参加者を抽選する
+  rest = selectCharacters( entry_table, &rand_context, WBT_TRPRI_LEADER, leader_num );
+  TAMADA_Printf("SELECT LEADER:%d,rest=%d\n",leader_num, rest );
+
   //他の参加者を抽選する
-  for ( ;decide_count < WBT_TRAINER_NUM - 1; decide_count ++ )
-  {
-    u32 pos = GFL_STD_Rand( &rand_context, candidate_count ) + 1;
-    for ( i = 0; i < TOTAL_ENTRY_NUM; i ++ )
-    {
-      if ( entry_table[i] == ENTRY_CANDIDATE )
-      {
-        pos --;
-        if ( pos == 0 )
-        {
-          entry_table[ i ] = ENTRY_DECIDE;
-          break;
-        }
-      }
-    }
-    GF_ASSERT( i < TOTAL_ENTRY_NUM );
-  }
+  rest = selectCharacters( entry_table, &rand_context, WBT_TRPRI_NULL, mob_num );
+  TAMADA_Printf("SELECT MOB:%d,rest=%d\n",mob_num, rest );
+
+  candidate_count = countEntry( entry_table, ENTRY_CANDIDATE );
+  GF_ASSERT( candidate_count == 0 );
+
   //選択された結果を戻り値テーブルに反映する
   {
     u32 tr_pos = 0;
-    for ( i = 0; i < TOTAL_ENTRY_NUM; i ++ )
+    tr_list[tr_pos ++ ] = WBT_TRCODE_PLAYER;  //プレイヤーは登録する
+    for ( i = 0; i < WBT_TRCODE_NUM; i ++ )
     {
       if ( entry_table[i] == ENTRY_DECIDE )
       {
@@ -341,7 +487,7 @@ static void entryTournament( const WBT_MATCH_CONDITION * cond, u16 * tr_list )
   }
 
 }
-#endif
+
 //-----------------------------------------------------------------------------
 /**
  * @brief チャンピオントーナメント出場者選出
@@ -409,20 +555,6 @@ static void entrySampleTournament( u16 * tr_list )
 
 //-----------------------------------------------------------------------------
 /**
- * @brief オールトーナメント出場者選出
- * @todo  未実装
- */
-//-----------------------------------------------------------------------------
-static void entryAllTournament( const WBT_MATCH_CONDITION * cond, u16 * tr_list )
-{
-  entrySampleTournament( tr_list );
-  //GFL_STD_MemClear( tr_list, sizeof(u16) * WBT_TRAINER_NUM );
-  //tr_list[0] = WBT_TRCODE_PLAYER;   //プレイヤーをセット
-  //  未実装…
-}
-
-//-----------------------------------------------------------------------------
-/**
  * @brief タイプトーナメント出場者選出
  * @todo  未実装
  */
@@ -450,7 +582,7 @@ void WBTTOOL_MakeEntryList( const WBT_MATCH_CONDITION * cond, u16 * tr_list )
     entryTypeTournament( cond, tr_list );
     break;
   case WBTTYPE_ALL:
-    entryAllTournament( cond, tr_list );
+    entryAllTournament( cond, tr_list, 7, 0 );
     break;
   case WBTTYPE_CHAMPION:
     entryChampTournament( tr_list );

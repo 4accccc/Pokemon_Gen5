@@ -23,6 +23,28 @@
 enum {
   WBT_TRCODE_PLAYER = 0xffff,
   WBT_TRCODE_WBHERO = 0xfffe,
+
+  WBT_TRCODE_NUM = 115,
+  WBT_TRCODE_NUM_CHAMP = 6,
+  WBT_TRCODE_BATTLE_MOB_NUM = 10,
+
+  WBT_TRCODE_CHAMP_START = 14,
+  WBT_TRCODE_OTHER_LEADER_START = WBT_TRCODE_CHAMP_START + WBT_TRCODE_NUM_CHAMP,
+  WBT_TRCODE_MOB_START = 53,
+  WBT_TRCODE_WBHERO_START = 63,
+
+  WBT_TRCODE_MOB_LAST = 114,
+};
+
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+enum {
+  WBT_TRPRI_NULL = 0,
+  WBT_TRPRI_WEAK_MOB = 1,
+  WBT_TRPRI_MOB,
+  WBT_TRPRI_LEADER,
+  WBT_TRPRI_CHAMP,
+  WBT_TRPRI_SPECIAL,
 };
 
 //-----------------------------------------------------------------------------
@@ -35,7 +57,8 @@ typedef struct {
   //WBTRule rule;
   
   WBT_ALLTOURNAMENT_LEVEL level;
-  PokeType poketype;
+  PokeType poketype;              ///<タイプトーナメント用：タイプ指定
+  u8 leader_num;                  ///<オールトーナメント用：リーダー人数
 
   u64 seed64;
 }WBT_MATCH_CONDITION;

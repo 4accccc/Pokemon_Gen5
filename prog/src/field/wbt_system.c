@@ -299,10 +299,10 @@ static void WBTTRAINER_SetWBPlayer( WBTTRAINER * wbt_tr, GAMEDATA * gamedata )
   u8 tr_id;
   const MYSTATUS * mystat = GAMEDATA_GetMyStatus( gamedata );
 
-  tr_id = 114; //トウヤ
+  tr_id = WBT_TRCODE_WBHERO_START; //トウヤ
   if ( MyStatus_GetMySex( mystat ) != PM_MALE )
   {
-    tr_id = 115;  //トウコ
+    tr_id = WBT_TRCODE_WBHERO_START + 1;  //トウコ
   }
   WBTTRAINER_SetRomTrainer( wbt_tr, tr_id );
 }
@@ -347,11 +347,11 @@ void WBTSYS_DEBUG_dumpTrainer( const WBTSYS * wbtsys )
   for ( i = 0; i < WBT_TRAINER_NUM; i ++ )
   {
     const WBTTRAINER * wbt_tr = WBTSYS_GetTrainer( wbtsys, i );
-    OS_Printf("WBTTRAINER:POS=%02d\n", i );
-    OS_Printf("  wbt_tr_type(%d)sex(%d)pri(%d)poketype(%2d)",
-        wbt_tr->wbt_tr_type, wbt_tr->sex, wbt_tr->pri, wbt_tr->poketype );
-    OS_Printf("tr_id(%03d)mmdl_id(%04x)btl_tr_type(%03d)\n",
-        wbt_tr->tr_id, wbt_tr->mmdl_id, wbt_tr->btl_tr_type );
+    TAMADA_Printf("WBTTRAINER:POS=%02d", i );
+    TAMADA_Printf("  wbt_tr_type(%d)tr_id(%03d)sex(%d)pri(%d)poketype(%2d)",
+        wbt_tr->wbt_tr_type, wbt_tr->tr_id, wbt_tr->sex, wbt_tr->pri, wbt_tr->poketype );
+    TAMADA_Printf("mmdl_id(%04x)btl_tr_type(%03d)\n",
+         wbt_tr->mmdl_id, wbt_tr->btl_tr_type );
   }
 }
 #endif
@@ -376,10 +376,15 @@ void WBTSYS_MakeMatch( WBTSYS * wbtsys, GAMEDATA * gamedata )
   WBTTOOL_MakeEntryList( &cond, tr_list );
 
   WBTSYS_SetupTrainer( wbtsys, gamedata, tr_list );
+#ifdef  PM_DEBUG
   WBTSYS_DEBUG_dumpTrainer( wbtsys );
+  TAMADA_Printf("\n");
+#endif
 
   WBTTOOL_SortTrainer( wbtsys->wbt_trainer , wbtsys->seed64, wbtsys->heapID );
+#ifdef  PM_DEBUG
   WBTSYS_DEBUG_dumpTrainer( wbtsys );
+#endif
 }
 
 //------------------------------------------------------------------
