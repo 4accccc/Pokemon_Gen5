@@ -640,8 +640,7 @@ void RESORT_DATA_MANAGER_RecvToSecretary( RESORT_DATA_MANAGER *p_wk, RESORT_RECV
     p_dst = p_dst_adrs;
 
     //éÛêM
-    //TODO 0
-    RESORT_SECRETARY_DATA_SetRecv( p_dst, p_src, peopleID, placeID, 0 );
+    RESORT_SECRETARY_DATA_SetRecv( p_dst, p_src, peopleID, placeID, secretary_type );
 
     //çXêV
     RESORT_DATA_MANAGER_Update( p_wk );
