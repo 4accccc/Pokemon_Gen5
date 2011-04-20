@@ -42,7 +42,7 @@ extern void INFINITY_DUNGEON_Recovery( GAMESYS_WORK *p_gsys ,INF_DUNGEON_DATA  *
 extern void INFINITY_DUNGEON_WarpNextFloor( SCRIPT_WORK *p_scr_work, GAMESYS_WORK *p_gsys ,INF_DUNGEON_DATA *p_dungeon_data ,int floor_no );
 extern GMEVENT * INFINITY_DUNGEON_EVENT_TrainerBattle(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap ,u16 obj_id);
 extern u32 INFINITY_DUNGEON_GetHintMessage( INFINITYDUNGEON_SAVE *p_save ,INF_DUNGEON_DATA *p_dungeon_data ,u8 hint_level ,u16 obj_code);
-extern u32 INFINITY_DUNGEON_GetTrIDPos( INF_DUNGEON_DATA *p_dungeon_data ,u8 floor_id ,u32 tr_id );
+extern u32 INFINITY_DUNGEON_GetTrIDPos( INF_DUNGEON_DATA *p_dungeon_data ,u8 floor_id ,u16 obj_id );
 #ifdef PM_DEBUG
 extern void DEBUG_INFINITY_DUNGEON_MakeDungeonData();
 #endif
@@ -50,5 +50,5 @@ extern void DEBUG_INFINITY_DUNGEON_MakeDungeonData();
 extern void INF_MakeDungeonData( INF_DUNGEON_DATA **pp_wk,INFINITYDUNGEON_SAVE *p_save ,HEAPID heapID);
 extern void INF_FreeDungeonData(INF_DUNGEON_DATA **pp_wk);
 extern void INF_ReCalcDungeonData( INF_DUNGEON_DATA *p_wk,INFINITYDUNGEON_SAVE *p_save );
-extern u32 INFINITY_DUNGEON_GetRecoverFlgPos( INF_DUNGEON_DATA *p_dungeon_data ,u32 tr_id );
+extern u32 INFINITY_DUNGEON_GetRecoverFlgPos( INF_DUNGEON_DATA *p_dungeon_data ,u16 tr_id );
 
