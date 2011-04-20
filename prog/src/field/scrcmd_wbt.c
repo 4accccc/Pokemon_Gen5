@@ -337,7 +337,7 @@ VMCMD_RESULT EvCmdWBTIncVictoryCount( VMHANDLE * core, void * wk )
   WBTSTAGE stage = WBTSYS_GetStage( wbtsys );
 
   TAMADA_Printf("EvCmdWBTIncVictoryCount\n");
-  GF_ASSERT( stage == WBTSTAGE_ENTRY );
+  GF_ASSERT( stage == WBTSTAGE_WIN );
   incVictoryCount( wbtsys, work );
 
   return VMCMD_RESULT_CONTINUE;
