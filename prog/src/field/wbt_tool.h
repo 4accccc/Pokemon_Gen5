@@ -35,6 +35,7 @@ typedef struct {
   //WBTRule rule;
   
   WBT_ALLTOURNAMENT_LEVEL level;
+  PokeType poketype;
 
   u64 seed64;
 }WBT_MATCH_CONDITION;
@@ -52,7 +53,7 @@ extern u8 WBTTOOL_GetPartyPokeType( POKEPARTY * party, u64 seed );
 extern void WBTTOOL_GetTrRomData( HEAPID heapID, u8 tr_id, WBT_TRDATA * tr_data );
 
 extern void WBTTOOL_MakeEntryList( const WBT_MATCH_CONDITION * cond, u16 * tr_list );
-extern void WBTTOOL_SortTrainer( WBTTRAINER * wbt_tr_array, u64 seed64 );
+extern void WBTTOOL_SortTrainer( WBTTRAINER * wbt_tr_array, u64 seed64, HEAPID heapID );
 extern u8 WBTTOOL_GetPartyMaxByRule( WBTRULE rule );
 extern BtlRule WBTTOOL_WBTRuleToBtlRule( WBTRULE wbt_rule );
 

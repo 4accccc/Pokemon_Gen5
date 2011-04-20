@@ -187,7 +187,7 @@ static void setupWBTLISTtrainer( HEAPID heapID, GAMEDATA * gamedata,
 
   WBTTOOL_GetTrRomData( heapID, wbt_tr->tr_id, &tr_rom_data );
 
-  switch ( wbt_tr->wbt_type )
+  switch ( wbt_tr->wbt_tr_type )
   {
   case WBT_TRTYPE_DL:
   case WBT_TRTYPE_SAVE:

@@ -60,20 +60,7 @@ static void DEBUG_DumpWBTResult( const WBTRESULT * result,
   TAMADA_Printf("tr_b:pri(%d) type(%d) sex(%d) id(%d)\n",
       tr_b->pri, tr_b->poketype, tr_b->sex, tr_b->tr_id );
 }
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-static void DEBUG_DumpWBTTrainers( const WBTSYS * wbtsys ) 
-{
-  int i;
-  for ( i = 0; i < WBT_TRAINER_NUM; i ++ )
-  {
-    const WBTTRAINER * wbt_tr = &wbtsys->wbt_trainer[ i ];
-    TAMADA_Printf("WBTTRAINER(%d): wbt_type(%d) pri(%d) poketype(%d) sex(%d) id(%d)\n",
-        i, wbt_tr->wbt_type,
-        wbt_tr->pri, wbt_tr->poketype, wbt_tr->sex, wbt_tr->tr_id );
-  }
-}
-#endif
+#endif  //PM_DEBUG
 
 //============================================================================================
 //============================================================================================
@@ -111,7 +98,7 @@ u32 WBTSYS_GetOpponentPos( const WBTSYS * wbtsys )
   for ( i = 0; i < WBT_TRAINER_NUM; i ++ )
   {
     const WBTTRAINER * wbt_tr = &wbtsys->wbt_trainer[ i ];
-    if ( wbt_tr->wbt_type == WBT_TRTYPE_PLAYER )
+    if ( wbt_tr->wbt_tr_type == WBT_TRTYPE_PLAYER )
     {
       player_pos = i;
       break;
@@ -119,7 +106,7 @@ u32 WBTSYS_GetOpponentPos( const WBTSYS * wbtsys )
   }
   if ( i == WBT_TRAINER_NUM )
   {
-    DEBUG_DumpWBTTrainers( wbtsys );
+    WBTSYS_DEBUG_dumpTrainer( wbtsys );
     OS_Printf(" 自分データが見つかりません！\n" );
     GF_ASSERT( 0 );
   }
@@ -198,11 +185,11 @@ static void calcWBTResult( WBTRESULT * result,
   }
 
   //とりあえずプレイヤーは勝つ。MSGの整合性は後ほど
-  if ( tr_a->wbt_type == WBT_TRTYPE_PLAYER )
+  if ( tr_a->wbt_tr_type == WBT_TRTYPE_PLAYER )
   {
     result->upside_win = TRUE;
   }
-  else if ( tr_b->wbt_type == WBT_TRTYPE_PLAYER )
+  else if ( tr_b->wbt_tr_type == WBT_TRTYPE_PLAYER )
   {
     result->upside_win = FALSE;
   }

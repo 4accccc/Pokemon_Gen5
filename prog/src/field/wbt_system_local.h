@@ -55,13 +55,13 @@ typedef struct _WBT_REGLATION {
 /// WBT用トレーナーデータ
 //------------------------------------------------------------------
 struct _WBTTRAINER{
-  u8 wbt_type:3;    ///<WBT_TRTYPE
+  u8 wbt_tr_type:3; ///<WBT_TRTYPE
   u8 sex:1;         ///<性別
   u8 pri:4;         ///<優先順位（対戦結果やコメント判定に使用）
   u8 poketype;      ///<手持ちパーティのポケモンタイプ
-  u8 tr_id;         ///<トレーナーID（wbt_typeにより意味が変わる）
+  u8 tr_id;         ///<トレーナーID（wbt_tr_typeにより意味が変わる）
   u16 mmdl_id;      ///<動作モデルコード
-  u16 tr_type;      ///<トレーナータイプ（tr_tool/trtype_def.h)
+  u16 btl_tr_type;  ///<トレーナータイプ（tr_tool/trtype_def.h)
 };
 
 //------------------------------------------------------------------

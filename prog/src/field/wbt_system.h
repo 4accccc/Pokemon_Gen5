@@ -126,6 +126,9 @@ extern void WBTSYS_SetScriptAnswerWork( WBTSYS * wbtsys, u16 * scr_answer_work )
 extern u16 * WBTSYS_GetScriptAnswerWork( WBTSYS * wbtsys );
 //============================================================================================
 //============================================================================================
+#ifdef  PM_DEBUG
+extern void WBTSYS_DEBUG_dumpTrainer( const WBTSYS * wbtsys );
+#endif
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 extern void WBTSYS_MakeMatch( WBTSYS * wbtsys, GAMEDATA * gamedata );
@@ -139,7 +142,8 @@ extern const WBTTRAINER * WBTSYS_GetOpponentTrainer( const WBTSYS * wbtsys );
 
 extern u8 WBTTRAINER_GetID( const WBTTRAINER * wbt_tr );
 extern u8 WBTTRAINER_GetPriority( const WBTTRAINER * wbt_tr );
-extern u16 WBTTRAINER_GetTrainerType( const WBTTRAINER * wbt_tr );
+extern u16 WBTTRAINER_GetBattleTrainerType( const WBTTRAINER * wbt_tr );
+extern WBT_TRTYPE WBTTRAINER_GetWBTTrainerType( const WBTTRAINER * wbt_tr );
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 extern void WBTSYS_GetOpponentName( WBTSYS * wbtsys, STRBUF * strbuf );

@@ -29,6 +29,7 @@
 
 #ifdef  PM_DEBUG
 //#define DEBUG_WEAK_PARTY  //定義すると手持ちが激しく弱くなる
+//#define DEBUG_STRONG_PARTY  //定義すると手持ちが激しく強くなる
 #endif
 
 //============================================================================================
@@ -230,27 +231,27 @@ static u8 WBTSYS_GetRevisePokeLevel( const WBTSYS * wbtsys )
 //------------------------------------------------------------------
 static void WBTTRAINER_Init( WBTTRAINER * wbt_tr )
 {
-  wbt_tr->wbt_type = WBT_TRTYPE_ROM;
+  wbt_tr->wbt_tr_type = WBT_TRTYPE_ROM;
   wbt_tr->sex = PM_MALE;
   wbt_tr->pri = 1;
   wbt_tr->tr_id = 0;
   wbt_tr->poketype = POKETYPE_NORMAL;
   wbt_tr->mmdl_id = SWHERO;
-  wbt_tr->tr_type = TRTYPE_HERO;
+  wbt_tr->btl_tr_type = TRTYPE_HERO;
 }
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static void WBTTRAINER_Set( WBTTRAINER * wbt_tr,
-    WBT_TRTYPE type, u8 tr_id, u8 sex, u8 pri, u8 poketype, u16 mmdl_id, u16 tr_type )
+    WBT_TRTYPE type, u8 tr_id, u8 sex, u8 pri, u8 poketype, u16 mmdl_id, u16 btl_tr_type )
 {
-  wbt_tr->wbt_type = type;
+  wbt_tr->wbt_tr_type = type;
   wbt_tr->tr_id = tr_id;
   wbt_tr->sex = sex;
   wbt_tr->pri = pri;
   wbt_tr->poketype = poketype;
   wbt_tr->mmdl_id = mmdl_id;
-  wbt_tr->tr_type = tr_type;
+  wbt_tr->btl_tr_type = btl_tr_type;
 }
 
 //------------------------------------------------------------------
@@ -272,7 +273,7 @@ static void WBTTRAINER_SetPlayer( WBTTRAINER * wbt_tr, GAMEDATA * gamedata )
   WBTSAVE * wbtsave = GAMEDATA_GetWBTSave( gamedata );
 
   u16 mmdl_id = SWHERO;
-  u16 tr_type = TRTYPE_HERO;
+  u16 btl_tr_type = TRTYPE_HERO;
   u8 sex = MyStatus_GetMySex( mystat );
   u8 pri = 3;
   if ( WBTSAVE_GetFlag( wbtsave, WBTSAVE_FLAG_WIN_CHAMPION_TOURNAMENT ) == TRUE )
@@ -282,10 +283,10 @@ static void WBTTRAINER_SetPlayer( WBTTRAINER * wbt_tr, GAMEDATA * gamedata )
   if ( sex == PM_FEMALE )
   {
     mmdl_id = SWHEROINE;
-    tr_type = TRTYPE_HEROINE;
+    btl_tr_type = TRTYPE_HEROINE;
   }
   WBTTRAINER_Set( wbt_tr, WBT_TRTYPE_PLAYER,
-      0, sex, pri, POKETYPE_NORMAL, mmdl_id, tr_type );
+      0, sex, pri, POKETYPE_NORMAL, mmdl_id, btl_tr_type );
 }
 
 //------------------------------------------------------------------
@@ -320,17 +321,40 @@ u8 WBTTRAINER_GetID( const WBTTRAINER * wbt_tr )
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-u16 WBTTRAINER_GetTrainerType( const WBTTRAINER * wbt_tr )
+u16 WBTTRAINER_GetBattleTrainerType( const WBTTRAINER * wbt_tr )
 {
-  return wbt_tr->tr_type;
+  return wbt_tr->btl_tr_type;
 }
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+WBT_TRTYPE WBTTRAINER_GetWBTTrainerType( const WBTTRAINER * wbt_tr )
+{
+  return wbt_tr->wbt_tr_type;
+}
 
 //============================================================================================
 //
 //
 //
 //============================================================================================
+#ifdef  PM_DEBUG
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void WBTSYS_DEBUG_dumpTrainer( const WBTSYS * wbtsys )
+{
+  int i;
+  for ( i = 0; i < WBT_TRAINER_NUM; i ++ )
+  {
+    const WBTTRAINER * wbt_tr = WBTSYS_GetTrainer( wbtsys, i );
+    OS_Printf("WBTTRAINER:POS=%02d\n", i );
+    OS_Printf("  wbt_tr_type(%d)sex(%d)pri(%d)poketype(%2d)",
+        wbt_tr->wbt_tr_type, wbt_tr->sex, wbt_tr->pri, wbt_tr->poketype );
+    OS_Printf("tr_id(%03d)mmdl_id(%04x)btl_tr_type(%03d)\n",
+        wbt_tr->tr_id, wbt_tr->mmdl_id, wbt_tr->btl_tr_type );
+  }
+}
+#endif
 //------------------------------------------------------------------
 /**
  * @brief 対戦組み合わせの確定
@@ -352,8 +376,10 @@ void WBTSYS_MakeMatch( WBTSYS * wbtsys, GAMEDATA * gamedata )
   WBTTOOL_MakeEntryList( &cond, tr_list );
 
   WBTSYS_SetupTrainer( wbtsys, gamedata, tr_list );
+  WBTSYS_DEBUG_dumpTrainer( wbtsys );
 
-  WBTTOOL_SortTrainer( wbtsys->wbt_trainer , wbtsys->seed64 );
+  WBTTOOL_SortTrainer( wbtsys->wbt_trainer , wbtsys->seed64, wbtsys->heapID );
+  WBTSYS_DEBUG_dumpTrainer( wbtsys );
 }
 
 //------------------------------------------------------------------
@@ -569,7 +595,13 @@ POKEPARTY * WBTSYS_CreateBattleParty( WBTSYS * wbtsys, GAMEDATA * gamedata )
 #ifdef DEBUG_WEAK_PARTY
   max = 1;
 #endif
+#ifdef  DEBUG_STRONG_PARTY
+  max = PokeParty_GetPokeCount( base_party );
+#endif
   revise_level = WBTSYS_GetRevisePokeLevel( wbtsys );
+#ifdef  DEBUG_STRONG_PARTY
+  revise_level = 100;
+#endif
   for ( cnt = 0; cnt < max; cnt ++ )
   {
     POKEMON_PARAM * base_pp;
@@ -624,7 +656,7 @@ static BOOL makeRomTrainerData( BSUBWAY_PARTNER_DATA * tr_data,
       ARCID_WBT_TD ,tr_no, NARC_message_wbt_trname_dat ,inHeapID);
   // パワー乱数を決定する
   pow_rnd= pri2pow_table[ tr_pri - 1 ];
-  tr_data->bt_trd.tr_type = WBTTRAINER_GetTrainerType( wbt_tr );
+  tr_data->bt_trd.tr_type = WBTTRAINER_GetBattleTrainerType( wbt_tr );
   //tr_data->bt_trd.player_id = tr_no + BSW_TR_ARCDATANO_ORG; //1 origin
   tr_data->bt_trd.player_id = tr_no + TRID_OFFSET_WBT;
 
