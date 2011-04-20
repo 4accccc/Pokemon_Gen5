@@ -48,6 +48,7 @@ typedef enum {
   FIELD_SUBSCREEN_CGEARFIRST,         // CGEAR起動画面
   FIELD_SUBSCREEN_CGEAR_ONOFF,         // CGEAR電源ON　OFF画面
   FIELD_SUBSCREEN_FMISSION_VIEW,       // フェスミッション画面
+  FIELD_SUBSCREEN_WBT,                ///< WBT専用下画面
 #if PM_DEBUG
   FIELD_SUBSCREEN_DEBUG_LIGHT,        // デバッグライト制御パネル
   FIELD_SUBSCREEN_DEBUG_TOUCHCAMERA,  // デバッグカメラ

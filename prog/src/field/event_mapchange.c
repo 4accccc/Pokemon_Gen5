@@ -3216,6 +3216,10 @@ static void MAPCHG_setupMapTools( GAMESYS_WORK * gsys, u16 zone_id )
   {
     GAMEDATA_SetSubScreenMode(gamedata, FIELD_SUBSCREEN_NOGEAR);
   }
+  else if ( ZONEDATA_IsWBTHall( zone_id ) )
+  { //WBT会場では下画面を専用のものに変更する
+    GAMEDATA_SetSubScreenMode(gamedata, FIELD_SUBSCREEN_WBT);
+  }
   else
   {
     //裏フィールドにいるのに下画面が侵入になっていない場合は侵入にする

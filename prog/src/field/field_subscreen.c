@@ -22,6 +22,7 @@
 #include "c_gear/c_gear_power_onoff.h"
 #include "field_menu.h"
 #include "dowsing/dowsing.h"
+#include "c_gear/wbt_subscreen.h"
 
 #include "sound/snd_viewer.h"
 #include "sound/pm_sndsys.h"
@@ -87,6 +88,7 @@ struct _FIELD_SUBSCREEN_WORK {
     void * checker;
     REPORT_WORK * reportWork;
     CGEAR_POWER_ONOFF * cgear_power_onoff;
+    WBTSUBSCRN_WORK * wbtSubScrnWork;
   };
   u16 angle_h;
   u16 angle_v;
@@ -157,6 +159,11 @@ static void init_nogear_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_
 static void update_nogear_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL bActive );
 static void exit_nogear_subscreen( FIELD_SUBSCREEN_WORK* pWork );
 static void actioncallback_nogear_subscreen( FIELD_SUBSCREEN_WORK* pWork, FIELD_SUBSCREEN_ACTION actionno );
+
+static void init_wbt_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode );
+static void update_wbt_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL bActive );
+static void exit_wbt_subscreen( FIELD_SUBSCREEN_WORK* pWork );
+static void actioncallback_wbt_subscreen( FIELD_SUBSCREEN_WORK* pWork, FIELD_SUBSCREEN_ACTION actionno );
 
 static void init_light_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode );
 static void update_light_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL bActive );
@@ -288,6 +295,15 @@ static const FIELD_SUBSCREEN_FUNC_TABLE funcTable[] =
     evcheck_fmission_view_subscreen,
     exit_fmission_view_subscreen,
     NULL ,
+  },
+  { // Cギアの未取得時
+    FIELD_SUBSCREEN_WBT,       
+    init_wbt_subscreen,
+    update_wbt_subscreen,
+    NULL ,
+    NULL ,
+    exit_wbt_subscreen,
+    actioncallback_wbt_subscreen,
   },
 #if PM_DEBUG
   { // デバッグライト制御パネル
@@ -956,6 +972,61 @@ static void actioncallback_nogear_subscreen( FIELD_SUBSCREEN_WORK* pWork , FIELD
 static void update_nogear_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
 {
   NOGEAR_Main(pWork->nogearWork,bActive);
+}
+
+
+//=============================================================================
+//=============================================================================
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  WBT専用下画面の初期化
+ *  
+ *  @param  heapID  ヒープＩＤ
+ */
+//-----------------------------------------------------------------------------
+static void init_wbt_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode )
+{
+  // Overlay
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(wbt_subscreen) );
+  
+  pWork->wbtSubScrnWork = WBTSUBSCRN_Init(CGEAR_SV_GetCGearSaveData(
+    GAMEDATA_GetSaveControlWork(
+    GAMESYSTEM_GetGameData(FIELDMAP_GetGameSysWork(pWork->fieldmap))
+    )), pWork, FIELDMAP_GetGameSysWork(pWork->fieldmap));
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  WBTSUBSCRNーの破棄
+ */
+//-----------------------------------------------------------------------------
+static void exit_wbt_subscreen( FIELD_SUBSCREEN_WORK* pWork )
+{
+  WBTSUBSCRN_Exit(pWork->wbtSubScrnWork);
+
+  // Overlay
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(wbt_subscreen) );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  アクションが行われた事を通知
+ */
+//-----------------------------------------------------------------------------
+static void actioncallback_wbt_subscreen( FIELD_SUBSCREEN_WORK* pWork , FIELD_SUBSCREEN_ACTION actionno)
+{
+  WBTSUBSCRN_ActionCallback(pWork->wbtSubScrnWork, actionno);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  WBTSUBSCRNの更新
+ */
+//-----------------------------------------------------------------------------
+static void update_wbt_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
+{
+  WBTSUBSCRN_Main(pWork->wbtSubScrnWork,bActive);
 }
 
 
