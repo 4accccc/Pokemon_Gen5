@@ -427,7 +427,7 @@ static void entryAllTournament( const WBT_MATCH_CONDITION * cond, u16 * tr_list 
   int decide_count = 0;
   int rest;
   u32 leader_num  = cond->leader_num;
-  u32 mob_num     = WBT_TRAINER_MAX - 1 - leader_num;
+  u32 mob_num     = WBT_TRAINER_NUM - 1 - leader_num;
 
   GFL_STD_RandContext rand_context;
   GFL_STD_RandInit( &rand_context, cond->seed64 );
@@ -582,7 +582,7 @@ void WBTTOOL_MakeEntryList( const WBT_MATCH_CONDITION * cond, u16 * tr_list )
     entryTypeTournament( cond, tr_list );
     break;
   case WBTTYPE_ALL:
-    entryAllTournament( cond, tr_list, 7, 0 );
+    entryAllTournament( cond, tr_list );
     break;
   case WBTTYPE_CHAMPION:
     entryChampTournament( tr_list );
