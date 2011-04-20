@@ -262,6 +262,8 @@ FMMDL_RESLIST_NCGIMD = \
 	swidolw.imd \
 	swrival.imd \
 	fesitem.imd \
+	swplazmam.imd \
+	swplazmaw.imd \
 	tsure_001.imd \
 	tsure_002.imd \
 	tsure_003.imd \
