@@ -53,6 +53,7 @@
 #include "../gmk_tmp_wk.h"
 #include "savedata/resonance_resort_sv.h"
 #include "wifi_unionobj_plt.cdat" //for sc_wifi_unionobj_plt
+#include "scrcmd_resort.h"
 
 // BMPWIN定義テーブル
 
@@ -267,7 +268,7 @@ static void sort_shop_main( SHOP_BUY_APP_WORK *wk );
 static  int shop_buy_printwait( SHOP_BUY_APP_WORK *wk );
 static void string_alloc( SHOP_BUY_APP_WORK *wk );  
 
-static RESORT_PEOPLE * Resort_Scrcmd_GetFrontPeople( FIELDMAP_WORK *p_fieldmap );
+static RESORT_PEOPLE * Resort_ScrcmdShop_GetFrontPeople( FIELDMAP_WORK *p_fieldmap );
 static RESORT_BINARY_SHOP * Resort_Scrcmd_GetBinaryShop( FIELDMAP_WORK *p_fieldmap );
 
 static void ItemList_move_callback( BMPMENULIST_WORK * wk, u32 param, u8 mode);
@@ -292,6 +293,10 @@ static void SecretaryList_Change( SHOP_BUY_APP_WORK *wk, int type, int id );
 static void InstitutionList_Change( SHOP_BUY_APP_WORK *wk, int type, int id );
 static void SecretaryList_Decide( SHOP_BUY_APP_WORK *wk, int type, int id );
 static void InstitutionList_Decide( SHOP_BUY_APP_WORK *wk, int type, int id );
+
+
+//scrcmd_resort.cのソースを使う
+extern RESORT_PEOPLE * Resort_Scrcmd_GetFrontPeople( FIELDMAP_WORK *p_fieldmap, RESORT_PEOPLE_SYS *p_people_sys );
 
 //--------------------------------------------------------------------
 /**
@@ -358,7 +363,7 @@ VMCMD_RESULT EvCmdResortCallList( VMHANDLE *core, void *wk )
 
     //自分のお店データを取得
     {
-      RESORT_PEOPLE *p_people = Resort_Scrcmd_GetFrontPeople( fieldmap );
+      RESORT_PEOPLE *p_people = Resort_ScrcmdShop_GetFrontPeople( fieldmap );
 
       GF_ASSERT( RESORT_PEOPLE_GetPeopleData( p_people, RESORT_PEOPLE_DATA_PARAM_TYPE ) == RESORT_PEOPLE_TYPE_RESIDENT );
 
@@ -2750,7 +2755,7 @@ static void submenu_screen_clear( int type )
  *	@return 目の前の人物を取得
  */
 //-----------------------------------------------------------------------------
-static RESORT_PEOPLE * Resort_Scrcmd_GetFrontPeople( FIELDMAP_WORK *p_fieldmap )
+static RESORT_PEOPLE * Resort_ScrcmdShop_GetFrontPeople( FIELDMAP_WORK *p_fieldmap )
 {
   RESORT_PEOPLE_SYS *p_people_sys = NULL;
   {
@@ -2766,20 +2771,7 @@ static RESORT_PEOPLE * Resort_Scrcmd_GetFrontPeople( FIELDMAP_WORK *p_fieldmap )
     GF_ASSERT( p_people_sys != NULL );
   }
 
-  {
-    s16 gx, gy, gz;
-    FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( p_fieldmap );
-    const MMDLSYS * cp_mmdlsys = FIELDMAP_GetMMdlSys( p_fieldmap );
-    MMDL* p_frontmmdl;
-
-    // 目の前のグリッド取得
-    FIELD_PLAYER_GetFrontGridPos( p_player, &gx, &gy, &gz );
-
-    // 目の前にいる人物を検索
-    p_frontmmdl = MMDLSYS_SearchGridPos( cp_mmdlsys, gx, gz, FALSE );
-
-    return RESORT_PEOPLE_SYS_GetPeopleByMmdl( p_people_sys, p_frontmmdl );
-  }
+  return Resort_Scrcmd_GetFrontPeople( p_fieldmap, p_people_sys );
 }
 //----------------------------------------------------------------------------
 /**

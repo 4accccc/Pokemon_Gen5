@@ -39,11 +39,13 @@ static RESORT_BINARY_SPOT * Resort_Scrcmd_GetBinarySpot( FIELDMAP_WORK *p_fieldm
 static RESORT_PEOPLE_SYS * Resort_Scrcmd_GetPeopleSys( FIELDMAP_WORK *p_field );
 static RESORT_DATA_MANAGER * Resort_Scrcmd_GetDataManager( FIELDMAP_WORK *p_field );
 static RESORT_BINARY_CITY *Resort_Scrcmd_GetBinaryCity( FIELDMAP_WORK *p_fieldmap );
-static RESORT_PEOPLE * Resort_Scrcmd_GetFrontPeople( FIELDMAP_WORK *p_fieldmap, RESORT_PEOPLE_SYS *p_people_sys );
 static u16 Resort_Scrcmd_GetMmdlID( FIELDMAP_WORK *p_fieldmap );
 static RESORT_NPC_SYS * Resort_Scrcmd_GetNpcSys( FIELDMAP_WORK *p_field );
 static s32 PrmExp_Up( s32 exp, s32 other, s32 up );
 static GMEVENT* EVENT_StartBlendBrightness( GMEVENT* parent, GAMESYS_WORK* gsys, int plane, int now, int next, int sync );
+
+
+extern RESORT_PEOPLE * Resort_Scrcmd_GetFrontPeople( FIELDMAP_WORK *p_fieldmap, RESORT_PEOPLE_SYS *p_people_sys );
 
 //=============================================================================
 /**
@@ -2051,32 +2053,51 @@ static RESORT_DATA_MANAGER * Resort_Scrcmd_GetDataManager( FIELDMAP_WORK *p_fiel
  *	@param	FIELDMAP_WORK *p_fieldmap フィールド
  *	@param	*p_people_sys             人物システム
  *
- *	@return 目の前の人物を取得
+ *	@return 目の前の人物を取
+ *
+ *	@note   field_event_check.cのgetFrontTalkOBJ関数とほぼ同じことをしています
  */
 //-----------------------------------------------------------------------------
 RESORT_PEOPLE * Resort_Scrcmd_GetFrontPeople( FIELDMAP_WORK *p_fieldmap, RESORT_PEOPLE_SYS *p_people_sys )
 {
-  s16 gx, gy, gz;
+  enum
+  {
+    FRONT_TALKOBJ_HEIGHT_DIFF =  (FX32_CONST(16)), //話しかけ可能なOBJのY値差分
+  };
+
   FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( p_fieldmap );
   const MMDLSYS * cp_mmdlsys = FIELDMAP_GetMMdlSys( p_fieldmap );
-  RESORT_PEOPLE *p_people;
-  MMDL* p_frontmmdl;
+  FLDMAPPER *p_mapper = FIELDMAP_GetFieldG3Dmapper( p_fieldmap );
 
-  // 目の前のグリッド取得
+  s16 gx, gy, gz;
+  RESORT_PEOPLE *p_people;
+  MMDL* p_playermmdl;
+  MMDL* p_frontmmdl;
+  MAPATTR attr;
+  MAPATTR_VALUE attr_val;
+  VecFx32 pos;
+
+  // 自機動作モデルを取得
+  p_playermmdl = FIELD_PLAYER_GetMMdl( p_player );
   FIELD_PLAYER_GetFrontGridPos( p_player, &gx, &gy, &gz );
 
-  // 目の前にいる人物を検索
-  p_frontmmdl = MMDLSYS_SearchGridPos( cp_mmdlsys, gx, gz, FALSE );
-
-  //いなかったらカウンターの無効の可能性があるため、もう１歩先を探す
-  if( p_frontmmdl == NULL )
+  //カウンターかどうかチェック
+  MMDL_TOOL_GridPosToVectorPos( gx, gy, gz, &pos );
+  attr = MAPATTR_GetAttribute( p_mapper, &pos );
+  attr_val = MAPATTR_GetAttrValue( attr );
+  if( MAPATTR_VALUE_CheckCounter(attr_val) == TRUE )
   {
-    s16 mx, my, mz;
-    FIELD_PLAYER_GetGridPos( p_player, &mx, &my, &mz );
-
-    p_frontmmdl = MMDLSYS_SearchGridPos( cp_mmdlsys, mx+(gx-mx)*2, mz+(gz-mz)*2, FALSE );
+    u16 dir = MMDL_GetDirDisp( p_playermmdl );
+    MMDL_TOOL_AddDirGrid( dir, &gx, &gz, 1 );
   }
 
+  // 目の前にいる動作モデルを検索
+  p_frontmmdl = MMDLSYS_SearchGridPosEx(
+      cp_mmdlsys, gx, gz, MMDL_GetVectorPosY(p_playermmdl),
+      FRONT_TALKOBJ_HEIGHT_DIFF, FALSE );
+
+
+  // 動作モデルから人物を取得
   p_people = RESORT_PEOPLE_SYS_GetPeopleByMmdl( p_people_sys, p_frontmmdl );
 
   //GF_ASSERT( p_people != NULL ); //いなくても許可する箇所があるため
