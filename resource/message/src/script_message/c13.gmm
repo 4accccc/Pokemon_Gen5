@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-19T19:23:23"/>
+	<create user="matsumiya" host="W00224" date="2011-04-20T12:04:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1308" top="133" right="2013" bottom="761" maximized="no" rayout="Vertical2">
+	<dialog left="1288" top="117" right="1993" bottom="745" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -445,12 +445,13 @@
 もしかして　プラズマだん？▼</language>
 	</row>
 
-	<row id="msg_c13_neohakaim1_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c13_swplazmam1_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ポケウッドでのチュートリアル終了後
 ・GRIDX=240、GRIDZ=670、左向きに配置
 ・続けてswrival_01</comment>
-		<attribute name="キャラ指定">ネオプラズマ団♂</attribute>
+		<attribute name="キャラ指定">SWPLAZMAM
+ネオプラズマ団♂</attribute>
 		<language name="JPN" width="256">？？？『ノーノーノー！▼
 おれらは　ネオプラズマだん
 ネオ　ってところが　だいじだぜ▼</language>
@@ -478,34 +479,37 @@
 なにか　わるいこと　してたんだろ？▼</language>
 	</row>
 
-	<row id="msg_c13_neohakaim2_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c13_swplazmam2_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ポケウッドでのチュートリアル終了後
 ・GRIDX=241、GRIDZ=671、左向きに配置
 ・続けてneohakaiw_01</comment>
-		<attribute name="キャラ指定">ネオプラズマ団♂</attribute>
+		<attribute name="キャラ指定">SWPLAZMAM
+ネオプラズマ団♂</attribute>
 		<language name="JPN" width="256">なぞのおとこ『ぼくじょう　では
 ヨーテリーに　おいかけられるし▼</language>
 		<language name="JPN_KANJI" width="256">なぞのおとこ『ぼくじょう　では
 ヨーテリーに　おいかけられるし▼</language>
 	</row>
 
-	<row id="msg_c13_neohakaiw_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c13_swplazmaw_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・ポケウッドでのチュートリアル終了後
 ・GRIDX=241、GRIDZ=669、左向きに配置
 ・続けてneohakaim1_02</comment>
-		<attribute name="キャラ指定">ネオプラズマ団♀</attribute>
+		<attribute name="キャラ指定">SWPLAZMAW
+ネオプラズマ団♀</attribute>
 		<language name="JPN" width="256">なぞのおんな『ここじゃ　からまれるし
 なんだか　イマイチね▼</language>
 		<language name="JPN_KANJI" width="256">なぞのおんな『ここじゃ　からまれるし
 なんだか　イマイチね▼</language>
 	</row>
 
-	<row id="msg_c13_neohakaim1_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c13_swplazmam1_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・続けてswrival_02</comment>
-		<attribute name="キャラ指定">ネオプラズマ団♂</attribute>
+		<attribute name="キャラ指定">SWPLAZMAM
+ネオプラズマ団♂</attribute>
 		<language name="JPN" width="256">なぞのおとこ『まあ　いいさ▼
 こいつら　ボコボコにして
 ポケモンを　うばえば　いいだけさ▼
@@ -552,48 +556,52 @@
 		<language name="JPN_KANJI" width="256"></language>
 	</row>
 
-	<row id="msg_c13_neohakaim1_03" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c13_swplazmam1_03" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・はい/いいえの選択肢表示
 ・はい　→neohakaim1_04
 　いいえ→neohakaim1_05</comment>
-		<attribute name="キャラ指定">ネオプラズマ団♂</attribute>
+		<attribute name="キャラ指定">SWPLAZMAM
+ネオプラズマ団♂</attribute>
 		<language name="JPN" width="256">ネオプラズマだん『どうする？
 オレと　たたかうかい？</language>
 		<language name="JPN_KANJI" width="256">ネオプラズマだん『どうする？
 オレと　たたかうかい？</language>
 	</row>
 
-	<row id="msg_c13_neohakaim1_04" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c13_swplazmam1_04" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・はい選択時
 ・メッセージ表示後、トレーナー戦闘へ</comment>
-		<attribute name="キャラ指定">ネオプラズマ団♂</attribute>
+		<attribute name="キャラ指定">SWPLAZMAM
+ネオプラズマ団♂</attribute>
 		<language name="JPN" width="256">オマエの　ポケモン
 いただくと　するぜ！▼</language>
 		<language name="JPN_KANJI" width="256">オマエの　ポケモン
 いただくと　するぜ！▼</language>
 	</row>
 
-	<row id="msg_c13_neohakaim1_05" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c13_swplazmam1_05" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・いいえ選択時
 ・再度話しかけたときはneohakaim1_03から</comment>
-		<attribute name="キャラ指定">ネオプラズマ団♂</attribute>
+		<attribute name="キャラ指定">SWPLAZMAM
+ネオプラズマ団♂</attribute>
 		<language name="JPN" width="256">そうそう
 オレたちに　さからうなよ</language>
 		<language name="JPN_KANJI" width="256">そうそう
 オレたちに　さからうなよ</language>
 	</row>
 
-	<row id="msg_c13_neohakaim1_06" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c13_swplazmam1_06" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・戦闘後、フィールドでのメッセージ
 ・メッセージ表示後、ネオプラズマ団
 　全員画面右に移動する
 ・船のSE？（要検討）
 ・続けてswrival_04</comment>
-		<attribute name="キャラ指定">ネオプラズマ団♂</attribute>
+		<attribute name="キャラ指定">SWPLAZMAM
+ネオプラズマ団♂</attribute>
 		<language name="JPN" width="256">ネオプラズマだん『まさか！　こんな
 こどもたちに　ふかくを　とるとは……▼
 クッ……　ヒウンシティに　もどり▽
