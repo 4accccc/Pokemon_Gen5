@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-20T12:04:24"/>
+	<create user="matsumiya" host="W00224" date="2011-04-20T18:20:57"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -643,6 +643,8 @@
 	<row id="msg_c13_swleader2_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・振り返りメッセージ表示
+　アイテム入手処理
+　No420「ひでんマシン０１」（いあいぎり）
 ・表示後、c13gym0101方面に移動していく
 ・続けて</comment>
 		<attribute name="キャラ指定">SWLEADER2
@@ -650,10 +652,12 @@
 ホミカ</attribute>
 		<language name="JPN" width="256">……まけていたら　たいせつな
 ポケモンを　とられるところ　だったわ▼
-あなたたち　アリガトね！▼</language>
+あなたたち　アリガトね
+これは　ほんの　きもち！▼</language>
 		<language name="JPN_KANJI" width="256">……まけていたら　たいせつな
 ポケモンを　とられるところ　だったわ▼
-あなたたち　アリガトね！▼</language>
+あなたたち　アリガトね
+これは　ほんの　きもち！▼</language>
 	</row>
 
 	<row id="msg_c13_swrival_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -661,9 +665,13 @@
 ・表示後、c13r0401へ
 ・1＝ライバル名</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『よし！
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『それ……
+・ひでんマシンの説明▼
+よし！
 オマエ　おいかけるぞ！▼</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『よし！
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『それ……
+・ひでんマシンの説明▼
+よし！
 オマエ　おいかけるぞ！▼</language>
 	</row>
 
@@ -717,12 +725,11 @@
 なんていうか　想像できないわ</language>
 	</row>
 
-	<row id="msg_c13_06_01" text-color=",,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_c13_guiterw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・GRIDX=00、GRIDZ=00
 ・仮メッセージ</comment>
-		<attribute name="キャラ指定">ギタリスト♀
-・未発注</attribute>
+		<attribute name="キャラ指定">GUITARW</attribute>
 		<language name="JPN" width="256">ポケモンも　がっきも
 うまくなりたいって　よくばり　かな？</language>
 		<language name="JPN_KANJI" width="256">ポケモンも　楽器も
