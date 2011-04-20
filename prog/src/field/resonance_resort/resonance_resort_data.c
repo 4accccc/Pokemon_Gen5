@@ -1112,6 +1112,13 @@ static void Resort_Recv_Data_InitSetup( RESORT_RECV_DATA *p_wk, RESORT_COMM_TYPE
   {
     //タイプによってなりたいものがきまる
     RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_WANT_JOB, GFUser_GetPublicRand( RESORT_RESIDENT_TYPE_MAX ) );
+
+    //α用にジムにならない
+    if( RESORT_RECV_DATA_GetData(p_wk,RESORT_DATA_PARAM_WANT_JOB,NULL ) == RESORT_RESIDENT_TYPE_GYM )
+    {
+      RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_WANT_JOB, RESORT_RESIDENT_TYPE_MARKET );
+    }
+
     Resort_Recv_Data_SetWantJob( p_wk );
   }
 }
