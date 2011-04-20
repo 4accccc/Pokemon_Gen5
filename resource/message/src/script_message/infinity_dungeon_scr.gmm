@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakamura_akira" host="W00280" date="2011-04-19T19:21:02"/>
+	<create user="onoue_masayuki" host="W00272" date="2011-04-20T12:07:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -732,26 +732,6 @@
 		<language name="JPN_KANJI" width="256">とぼける▼</language>
 	</row>
 
-	<row id="msg_hint_level_0_08">
-		<language name="JPN" width="256">とぼける▼</language>
-		<language name="JPN_KANJI" width="256">とぼける▼</language>
-	</row>
-
-	<row id="msg_hint_level_0_09">
-		<language name="JPN" width="256">とぼける▼</language>
-		<language name="JPN_KANJI" width="256">とぼける▼</language>
-	</row>
-
-	<row id="msg_hint_level_0_10">
-		<language name="JPN" width="256">とぼける▼</language>
-		<language name="JPN_KANJI" width="256">とぼける▼</language>
-	</row>
-
-	<row id="msg_hint_level_0_11">
-		<language name="JPN" width="256">とぼける▼</language>
-		<language name="JPN_KANJI" width="256">とぼける▼</language>
-	</row>
-
 	<row id="msg_hint_level_1_00_y">
 		<language name="JPN" width="256">この　かいに　いる▼</language>
 		<language name="JPN_KANJI" width="256">この　かいに　いる▼</language>
@@ -828,46 +808,6 @@
 	</row>
 
 	<row id="msg_hint_level_1_07_n">
-		<language name="JPN" width="256">この　かいに　いない▼</language>
-		<language name="JPN_KANJI" width="256">この　かいに　いない▼</language>
-	</row>
-
-	<row id="msg_hint_level_1_08_y">
-		<language name="JPN" width="256">この　かいに　いる▼</language>
-		<language name="JPN_KANJI" width="256">この　かいに　いる▼</language>
-	</row>
-
-	<row id="msg_hint_level_1_08_n">
-		<language name="JPN" width="256">この　かいに　いない▼</language>
-		<language name="JPN_KANJI" width="256">この　かいに　いない▼</language>
-	</row>
-
-	<row id="msg_hint_level_1_09_y">
-		<language name="JPN" width="256">この　かいに　いる▼</language>
-		<language name="JPN_KANJI" width="256">この　かいに　いる▼</language>
-	</row>
-
-	<row id="msg_hint_level_1_09_n">
-		<language name="JPN" width="256">この　かいに　いない▼</language>
-		<language name="JPN_KANJI" width="256">この　かいに　いない▼</language>
-	</row>
-
-	<row id="msg_hint_level_1_10_y">
-		<language name="JPN" width="256">この　かいに　いる▼</language>
-		<language name="JPN_KANJI" width="256">この　かいに　いる▼</language>
-	</row>
-
-	<row id="msg_hint_level_1_10_n">
-		<language name="JPN" width="256">この　かいに　いない▼</language>
-		<language name="JPN_KANJI" width="256">この　かいに　いない▼</language>
-	</row>
-
-	<row id="msg_hint_level_1_11_y">
-		<language name="JPN" width="256">この　かいに　いる▼</language>
-		<language name="JPN_KANJI" width="256">この　かいに　いる▼</language>
-	</row>
-
-	<row id="msg_hint_level_1_11_n">
 		<language name="JPN" width="256">この　かいに　いない▼</language>
 		<language name="JPN_KANJI" width="256">この　かいに　いない▼</language>
 	</row>
@@ -992,66 +932,6 @@
 		<language name="JPN_KANJI" width="256">したのかい▼</language>
 	</row>
 
-	<row id="msg_hint_level_2_8_0">
-		<language name="JPN" width="256">このかいにいる▼</language>
-		<language name="JPN_KANJI" width="256">このかいにいる▼</language>
-	</row>
-
-	<row id="msg_hint_level_2_8_1">
-		<language name="JPN" width="256">うえのかい▼</language>
-		<language name="JPN_KANJI" width="256">うえのかい▼</language>
-	</row>
-
-	<row id="msg_hint_level_2_8_2">
-		<language name="JPN" width="256">したのかい▼</language>
-		<language name="JPN_KANJI" width="256">したのかい▼</language>
-	</row>
-
-	<row id="msg_hint_level_2_9_0">
-		<language name="JPN" width="256">このかいにいる▼</language>
-		<language name="JPN_KANJI" width="256">このかいにいる▼</language>
-	</row>
-
-	<row id="msg_hint_level_2_9_1">
-		<language name="JPN" width="256">うえのかい▼</language>
-		<language name="JPN_KANJI" width="256">うえのかい▼</language>
-	</row>
-
-	<row id="msg_hint_level_2_9_2">
-		<language name="JPN" width="256">したのかい▼</language>
-		<language name="JPN_KANJI" width="256">したのかい▼</language>
-	</row>
-
-	<row id="msg_hint_level_2_10_0">
-		<language name="JPN" width="256">このかいにいる▼</language>
-		<language name="JPN_KANJI" width="256">このかいにいる▼</language>
-	</row>
-
-	<row id="msg_hint_level_2_10_1">
-		<language name="JPN" width="256">うえのかい▼</language>
-		<language name="JPN_KANJI" width="256">うえのかい▼</language>
-	</row>
-
-	<row id="msg_hint_level_2_10_2">
-		<language name="JPN" width="256">したのかい▼</language>
-		<language name="JPN_KANJI" width="256">したのかい▼</language>
-	</row>
-
-	<row id="msg_hint_level_2_11_0">
-		<language name="JPN" width="256">このかいにいる▼</language>
-		<language name="JPN_KANJI" width="256">このかいにいる▼</language>
-	</row>
-
-	<row id="msg_hint_level_2_11_1">
-		<language name="JPN" width="256">うえのかい▼</language>
-		<language name="JPN_KANJI" width="256">うえのかい▼</language>
-	</row>
-
-	<row id="msg_hint_level_2_11_2">
-		<language name="JPN" width="256">したのかい▼</language>
-		<language name="JPN_KANJI" width="256">したのかい▼</language>
-	</row>
-
 	<row id="msg_hint_level_3_00">
 		<language name="JPN" width="256">[2:02:３桁:0]階にいるよ！▼</language>
 		<language name="JPN_KANJI" width="256">[2:02:３桁:0]階にいるよ！▼</language>
@@ -1088,26 +968,6 @@
 	</row>
 
 	<row id="msg_hint_level_3_07">
-		<language name="JPN" width="256">[2:02:３桁:0]階にいるよ！▼</language>
-		<language name="JPN_KANJI" width="256">[2:02:３桁:0]階にいるよ！▼</language>
-	</row>
-
-	<row id="msg_hint_level_3_08">
-		<language name="JPN" width="256">[2:02:３桁:0]階にいるよ！▼</language>
-		<language name="JPN_KANJI" width="256">[2:02:３桁:0]階にいるよ！▼</language>
-	</row>
-
-	<row id="msg_hint_level_3_09">
-		<language name="JPN" width="256">[2:02:３桁:0]階にいるよ！▼</language>
-		<language name="JPN_KANJI" width="256">[2:02:３桁:0]階にいるよ！▼</language>
-	</row>
-
-	<row id="msg_hint_level_3_10">
-		<language name="JPN" width="256">[2:02:３桁:0]階にいるよ！▼</language>
-		<language name="JPN_KANJI" width="256">[2:02:３桁:0]階にいるよ！▼</language>
-	</row>
-
-	<row id="msg_hint_level_3_11">
 		<language name="JPN" width="256">[2:02:３桁:0]階にいるよ！▼</language>
 		<language name="JPN_KANJI" width="256">[2:02:３桁:0]階にいるよ！▼</language>
 	</row>
