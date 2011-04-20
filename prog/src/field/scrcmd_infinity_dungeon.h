@@ -34,4 +34,5 @@ extern VMCMD_RESULT EvCmdInfinityDungeonGetAfterBtlMsgType( VMHANDLE *p_core, vo
 extern VMCMD_RESULT EvCmdInfinityDungeonGetRecoverFlag( VMHANDLE *p_core, void *p_wk_adrs );
 extern VMCMD_RESULT EvCmdInfinityDungeonSetRecoverFlag( VMHANDLE *p_core, void *p_wk_adrs );
 extern VMCMD_RESULT EvCmdInfinityDungeonOpenElevator( VMHANDLE *p_core, void *p_wk_adrs );
+extern VMCMD_RESULT EvCmdInfinityDungeonGetBossFloor( VMHANDLE *p_core, void *p_wk_adrs );
 

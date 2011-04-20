@@ -33,6 +33,7 @@
 #include "msg/script/msg_infinity_dungeon_scr.h"
 #include "infinity_dungeon_gimmick.h"
 #include "gmk_tmp_wk.h"
+#include "arc/fieldmap/fldmmdl_objcode.h"  //for OBJCODE
 
 // グローバル変数
 #ifdef PM_DEBUG
@@ -366,6 +367,45 @@ static const u8 sc_pow_rnd_table[] = {
   31, // エリア 10
 };
 
+//-------------------------------------
+// トレーナータイプからヒントメッセージタイプに変換
+//=====================================
+static const struct 
+{
+  int obj_code;
+  int talk_pattern;
+} sc_talk_pattern_table[INFINITY_DUNGEON_TALK_PATTERN_MAX] =
+{
+  {MIDDLEMAN1,4},
+  {MIDDLEWOMAN1,5},
+  {BAKER,5},
+  {WOMAN3,3},
+  {FIGHTERM,2},
+  {FIGHTERW,3},
+  {BADMAN,2},
+  {POLICEMAN,4},
+  {MOUNTMAN,4},
+  {WORKMAN2,2},
+  {CLEANINGM,6},
+  {WORKMAN,2},
+  {ESPM,2},
+  {ESPW,3},
+  {ASSISTANTM,2},
+  {ASSISTANTW,3},
+  {BOY3,0},
+  {GIRL3,1},
+  {WAITER,2},
+  {WAITRESS,3},
+  {BOY2,0},
+  {GIRL2,1},
+  {BACKPACKERM,2},
+  {BACKPACKERW,3},
+  {BOY4,0},
+  {GIRL4,1},
+  {LADY,7},
+  {GENTLEMAN,6},
+};
+
 // 配置データ
 #include "../../../resource/infinity_dungeon/data/infinity_dungeon_tr_move_type.cdat"
 #include "../../../resource/infinity_dungeon/data/infinity_dungeon_room_pos_type.cdat"
@@ -427,6 +467,7 @@ static GMEVENT_RESULT MapWarpEvent( GMEVENT *event, int *seq, void *wk );
 static void SetReceptionWarpData( MAP_CHAGE_EVENT_WORK *p_wk );
 static void GetFloorData( INFINITYDUNGEON_SAVE *p_save ,INF_DUNGEON_DATA *p_dungeon_data );
 static void SetDungeonSeed( INF_DUNGEON_SEED *p_seed ,u32 master_seed );
+static u8 GetTrainerTalkPattern( u16 obj_code );
 
 // ゾーン依存
 static void SetNextZoneData( MAP_CHAGE_EVENT_WORK *p_wk);
@@ -1690,6 +1731,7 @@ static void SetDungeonData( INF_DUNGEON_DATA *p_dungeon_data ,int area_no, u32 s
     p_rd->room_type = ROOM_TYPE_BOSS;
     p_rd->tr_pos_type = INF_TR_ROOM_POS_TYPE_NONE;
     boss_floor = floor_no;
+    OS_TFPrintf(1,"ボス部屋:%d階 room_id = %u \n",boss_floor+1,p_rd->room_id);
   }
 
   // エレベータ設置配列を取得
@@ -2481,6 +2523,60 @@ static void GetFloorData( INFINITYDUNGEON_SAVE *p_save ,INF_DUNGEON_DATA *p_dung
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  ボス部屋の存在するフロアを返す
+ *
+ *	@param	*p_save 
+ *	@param	*p_dungeon_data 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+u32 INFINITY_DUNGEON_GetBossFloor( INF_DUNGEON_DATA *p_dungeon_data )
+{
+  s32 boss_room;
+  s32 boss_floor;
+
+  // ボスの存在するフロアを検索する
+  for( boss_floor = 0; boss_floor<FLOOR_MAX; boss_floor++ )
+  {
+    for( boss_room = 0; boss_room<ROOM_MAX; boss_room++ )
+    {
+      if( p_dungeon_data->room_data[boss_floor][boss_room].room_type == ROOM_TYPE_BOSS )
+      {
+        return boss_floor;
+      }
+    }
+  }
+
+  GF_ASSERT_MSG(0,"ボス部屋が見つかりません");
+  return 0;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  表示コードに対応した会話パターンを返す
+ *
+ *	@param	obj_code
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static u8 GetTrainerTalkPattern( u16 obj_code)
+{
+  int i;
+  for( i = 0; i < INFINITY_DUNGEON_TALK_PATTERN_MAX; i++ )
+  {
+    if( sc_talk_pattern_table[i].obj_code == obj_code )
+    {
+      return sc_talk_pattern_table[i].talk_pattern;
+    }
+  }
+
+  GF_ASSERT_MSG(0,"会話パターンの登録されていない表示コードです\n");
+  return 0;
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief  ヒントメッセージを取得する
  *
  *	@param	*p_save 
@@ -2493,31 +2589,25 @@ static void GetFloorData( INFINITYDUNGEON_SAVE *p_save ,INF_DUNGEON_DATA *p_dung
 //-----------------------------------------------------------------------------
 u32 INFINITY_DUNGEON_GetHintMessage( INFINITYDUNGEON_SAVE *p_save ,INF_DUNGEON_DATA *p_dungeon_data ,u8 hint_level ,u16 obj_code)
 {
-  s32 now_floor;
-  s32 boss_room;
-  s32 boss_floor;
-  static const int sub_pattern_num[] = { 0, 0, 0, 0 }; // 各ヒントレベルのパターン数
-  
-  for( boss_floor = 0; boss_floor<FLOOR_MAX; boss_floor++ )
-  {
-    for( boss_room = 0; boss_room<ROOM_MAX; boss_room++ )
-    {
-      if( p_dungeon_data->room_data[boss_floor][boss_room].room_type == ROOM_TYPE_BOSS )
-      {
-        // ボス部屋検索
-        break;
-      }
-    }
-  }
+  BOOL is_boss_floor = FALSE;
+  u32 boss_floor;
+  static const int sub_pattern_num[] = { 1, 2, 3, 1 }; // 各ヒントレベルのパターン数
+ 
   {
     int   talk_pattern;
     int   sub_str_num = 0;
     u32   ret_msg_id;
     BOOL  is_get_msg_id = FALSE;
-    now_floor     = INFINITYDUNGEON_SAVE_GetFloorID( p_save );
+    u8 now_floor;
+
+    now_floor = INFINITYDUNGEON_SAVE_GetFloorID( p_save );
+    
+    // ボスの存在するフロアを検索する
+    boss_floor = INFINITY_DUNGEON_GetBossFloor( p_dungeon_data );
+
 
     // OBJコードから会話パターンを選択
-    talk_pattern = 0;
+    talk_pattern = GetTrainerTalkPattern( obj_code );
 
     // ヒントレベルごとのメッセージIDを取得
     switch( hint_level )
@@ -2596,6 +2686,8 @@ u32 INFINITY_DUNGEON_GetTrIDPos( INF_DUNGEON_DATA *p_dungeon_data ,u8 floor_id ,
 
   // トレーナーIDリストを取得
   p_trid = p_dungeon_data->tr_data[floor_id].tr_id;
+  
+  OS_Printf("検索対象トレーナーID:%u\n",tr_id);
 
   // 検索
   for( i= 0; i<INFINITY_DUNGEON_TRID_MAX; i++ )
@@ -2605,6 +2697,16 @@ u32 INFINITY_DUNGEON_GetTrIDPos( INF_DUNGEON_DATA *p_dungeon_data ,u8 floor_id ,
       return i;
     }
   }
+
+#ifdef PM_DEBUG
+  // データ列挙
+  p_trid = p_dungeon_data->tr_data[floor_id].tr_id;
+  OS_Printf("エラー検索対象トレーナーID:%u\n",tr_id);
+  for( i= 0; i<INFINITY_DUNGEON_TRID_MAX; i++ )
+  {
+    OS_Printf("ID:%u\n",p_trid[i]);
+  }
+#endif
 
   GF_ASSERT_MSG(0,"ID位置が発見できませんでした");
   return 0;

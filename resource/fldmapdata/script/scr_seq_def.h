@@ -13465,5 +13465,20 @@
     .short  \is_open
     .endm
 
+//--------------------------------------------------------------
+/**
+ * @def _INFINITY_DUNGEON_GET_BOSS_FLOOR
+ * @brief 無限ダンジョン内のボスの存在するフロアを格納する
+ * @param ret_wk   ボスの存在するフロア
+ */
+//--------------------------------------------------------------
+#define _INFINITY_DUNGEON_GET_BOSS_FLOOR( ret_wk ) \
+    _ASM_INFINITY_DUNGEON_GET_BOSS_FLOOR ret_wk
+
+    .macro  _ASM_INFINITY_DUNGEON_GET_BOSS_FLOOR ret_wk
+    .short  EV_SEQ_INFINITY_DUNGEON_GET_BOSS_FLOOR
+    .short  \ret_wk
+    .endm
+
 //======================================================================
 //======================================================================

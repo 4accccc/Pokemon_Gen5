@@ -51,4 +51,6 @@ extern void INF_MakeDungeonData( INF_DUNGEON_DATA **pp_wk,INFINITYDUNGEON_SAVE *
 extern void INF_FreeDungeonData(INF_DUNGEON_DATA **pp_wk);
 extern void INF_ReCalcDungeonData( INF_DUNGEON_DATA *p_wk,INFINITYDUNGEON_SAVE *p_save );
 extern u32 INFINITY_DUNGEON_GetRecoverFlgPos( INF_DUNGEON_DATA *p_dungeon_data ,u16 tr_id );
+extern u32 INFINITY_DUNGEON_GetBossFloor( INF_DUNGEON_DATA *p_dungeon_data );
+
 

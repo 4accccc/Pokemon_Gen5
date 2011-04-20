@@ -45,28 +45,28 @@ typedef struct {
 //===================================== 
 static const INF_BOSS_DATA sc_boss_data[] = {
   // ホワイト
-  { TRID_BIGFOUR1_01 , TRAINERM},
-  { TRID_BIGFOUR1_01 , TRAINERM},
-  { TRID_BIGFOUR1_01 , TRAINERM},
-  { TRID_BIGFOUR1_01 , TRAINERM},
-  { TRID_BIGFOUR1_01 , TRAINERM},
-  { TRID_BIGFOUR1_01 , TRAINERM},
-  { TRID_BIGFOUR1_01 , TRAINERM},
-  { TRID_BIGFOUR1_01 , TRAINERM},
-  { TRID_BIGFOUR1_01 , TRAINERM},
-  { TRID_BIGFOUR1_01 , TRAINERM},
+  { TRID_BREEDERM_1_01 , BREEDERM},
+  { TRID_BREEDERW_1_01 , BREEDERW},
+  { TRID_RANGERM_1_01 , RANGERM},
+  { TRID_RANGERW_1_01 , RANGERW},
+  { TRID_BCHAMP_1_01 , TBOSS},
+  { TRID_ELITEM_2_01 , TRAINERM},
+  { TRID_ELITEW_2_01 , TRAINERW},
+  { TRID_VETERANM_3_01 , VETERANM},
+  { TRID_VETERANW_3_01 , VETERANW},
+  { TRID_BCHAMP2_1_01 , TBOSS},
 
   // ブラック
-  { TRID_BIGFOUR1_01 , TRAINERM},
-  { TRID_BIGFOUR1_01 , TRAINERM},
-  { TRID_BIGFOUR1_01 , TRAINERM},
-  { TRID_BIGFOUR1_01 , TRAINERM},
-  { TRID_BIGFOUR1_01 , TRAINERM},
-  { TRID_BIGFOUR1_01 , TRAINERM},
-  { TRID_BIGFOUR1_01 , TRAINERM},
-  { TRID_BIGFOUR1_01 , TRAINERM},
-  { TRID_BIGFOUR1_01 , TRAINERM},
-  { TRID_BIGFOUR1_01 , TRAINERM},
+  { TRID_BREEDERM_2_01 , BREEDERM},
+  { TRID_BREEDERW_2_01 , BREEDERW},
+  { TRID_RANGERM_2_01 , RANGERM},
+  { TRID_RANGERW_2_01 , RANGERW},
+  { TRID_BCHAMP_2_01 , TBOSSBL},
+  { TRID_ELITEM_3_01 , TRAINERM},
+  { TRID_ELITEW_3_01 , TRAINERW},
+  { TRID_VETERANM_4_01 , VETERANM},
+  { TRID_VETERANW_4_01 , VETERANW},
+  { TRID_BCHAMP2_2_01 , TBOSSBL},
 };
 
 //=============================================================================
@@ -575,3 +575,38 @@ VMCMD_RESULT EvCmdInfinityDungeonGetRecoverFlag( VMHANDLE *p_core, void *p_wk_ad
   return VMCMD_RESULT_CONTINUE;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ボスの見た目（OBJ_CODE)を返す
+ *
+ *	@param	*p_core
+ *	@param	*p_wk_adrs 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdInfinityDungeonGetBossFloor( VMHANDLE *p_core, void *p_wk_adrs )
+{
+  INFINITYDUNGEON_SAVE  *p_save;
+  SCRCMD_WORK *p_wk = p_wk_adrs;
+  GAMESYS_WORK *p_gsys = SCRCMD_WORK_GetGameSysWork( p_wk );
+  GAMEDATA *p_gamedata = GAMESYSTEM_GetGameData(p_gsys);
+  SAVE_CONTROL_WORK *p_save_data = GAMEDATA_GetSaveControlWork(p_gamedata);
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( p_gsys );
+  INF_DUNGEON_DATA *p_dungeon_data = INFINITY_DUNGEON_DataGet(p_fieldmap);
+  u8  area_id;
+  u16 *p_ret_wk	= SCRCMD_GetVMWork( p_core, p_wk );
+  u32 boss_floor;
+  
+  // エリアIDを取得
+  p_save = SaveData_GetINFINITYDUNGEON( p_save_data );
+  area_id = INFINITYDUNGEON_SAVE_GetDungeonAreaID( p_save );
+  
+  // ボス部屋の位置を検索
+  boss_floor = INFINITY_DUNGEON_GetBossFloor( p_dungeon_data );
+
+  // ボスのいるフロアを返す
+  *p_ret_wk = boss_floor + (area_id * FLOOR_MAX) + 1;
+
+  return VMCMD_RESULT_CONTINUE;
+}
