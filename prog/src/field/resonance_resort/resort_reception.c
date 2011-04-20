@@ -463,7 +463,7 @@ static void Reception_Buff_UpdateProxy( RECEPTION_BUFF *p_wk )
 ///	íËêî
 //=====================================
 //ìÆçÏè„å¿êî
-#define RECEPTION_PEOPLE_MAX (24)
+#define RECEPTION_PEOPLE_MAX (32)
 //çXêVä‘äu
 #define RECEPTION_PEOPLE_UPDATE_INTERVAL (0)
 

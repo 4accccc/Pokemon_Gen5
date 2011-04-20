@@ -749,6 +749,10 @@ static void PresenSetup_SetRecv( RESORT_RECV_DATA *p_recv, GFL_MSGDATA *p_msg, u
       RESORT_COMM_TYPE_RNDMATCH,
       7,
     },
+    //î‘ï∫
+    {
+      0
+    },
   };
 
   static const PRESEN_DATA sc_secretary_data[]  =
@@ -912,6 +916,7 @@ static BOOL debugMenuCallProc_PresenSetup( DEBUG_MENU_EVENT_WORK *p_wk )
   while( TRUE )
   {
     PresenSetup_SetRecv( p_recv, p_msg, RESORT_PEOPLE_TYPE_TOURIST, cnt++ );
+    NAGI_Printf( "cnt = %d\n", cnt );
     if( !RESORT_RECV_BUFF_AddRecv( p_recv_buff, p_recv, RESORT_RECV_DATA_GetData(p_recv,RESORT_DATA_PARAM_COMM_ID,NULL) ) )
     {
       p_recv_tmp_buff = GAMEBEACON_DEBUG_GetResortRecvBuffer();
@@ -934,7 +939,7 @@ static BOOL debugMenuCallProc_PresenSetup( DEBUG_MENU_EVENT_WORK *p_wk )
   {
     RESORT_SECRETARY_DATA *p_dst = RESORT_PEOPLE_ALL_DATA_GetSecretary( p_all_people, i );
     PresenSetup_SetRecv( p_recv, p_msg, RESORT_PEOPLE_TYPE_SECRETARY, i );
-    RESORT_SECRETARY_DATA_SetRecv( p_dst, p_recv, 8+i, RESORT_MAP_GetSecretaryPlace( i ), i );
+    RESORT_SECRETARY_DATA_SetRecv( p_dst, p_recv, 16+i, RESORT_MAP_GetSecretaryPlace( i ), i );
   }
 
   //èZêlÇ÷ÇÃí«â¡

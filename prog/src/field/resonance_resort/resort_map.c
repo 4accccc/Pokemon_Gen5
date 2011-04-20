@@ -128,6 +128,16 @@ void RESORT_MAP_GetPlaceGridPosByIndex( RESORT_PLACEID placeID, u16 people_type,
         {14,5},
         {16,4},
         {18,5},
+
+        //Ç±ÇÍà»è„Ç»ÇÈÇ±Ç∆ÇÕÇ»Ç¢
+        {4,6},
+        {6,7},
+        {8,6},
+        {10,7},
+        {12,6},
+        {14,7},
+        {16,6},
+        {18,7},
       };
 
       GF_ASSERT( peopleID < NELEMS(sc_pos_data) );
