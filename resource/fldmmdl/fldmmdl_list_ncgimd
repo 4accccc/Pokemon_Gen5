@@ -264,6 +264,9 @@ FMMDL_RESLIST_NCGIMD = \
 	fesitem.imd \
 	swplazmam.imd \
 	swplazmaw.imd \
+	swleader2iss.imd \
+	musicianw.imd \
+	guitarw.imd \
 	tsure_001.imd \
 	tsure_002.imd \
 	tsure_003.imd \

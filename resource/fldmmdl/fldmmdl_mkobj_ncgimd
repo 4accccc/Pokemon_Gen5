@@ -1323,6 +1323,21 @@
 	@echo convert ncg_imd swplazmaw
 	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/swplazmaw.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
 
+#swleader2iss.imd
+./mmdl_res/swleader2iss.imd: ./mmdl_nchara/swleader2iss.ncg ./mmdl_nchara/swleader2iss.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
+	@echo convert ncg_imd swleader2iss
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/swleader2iss.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
+
+#musicianw.imd
+./mmdl_res/musicianw.imd: ./mmdl_nchara/musicianw.ncg ./mmdl_nchara/musicianw.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
+	@echo convert ncg_imd musicianw
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/musicianw.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
+
+#guitarw.imd
+./mmdl_res/guitarw.imd: ./mmdl_nchara/guitarw.ncg ./mmdl_nchara/guitarw.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
+	@echo convert ncg_imd guitarw
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/guitarw.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
+
 #tsure_001.imd
 ./mmdl_res/tsure_001.imd: ./mmdl_nchara/pokemon//tsure_001.ncg ./mmdl_nchara/pokemon//tsure_001.ncl ./mmdl_dmy/t4x4x8.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_poke_nonflip.csv
 	@echo convert ncg_imd tsure_001
