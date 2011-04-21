@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-04T21:12:48"/>
+	<create user="matsumiya" host="W00224" date="2011-04-21T15:50:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1389" top="198" right="2094" bottom="826" maximized="no" rayout="Vertical2">
+	<dialog left="1290" top="221" right="1995" bottom="849" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="726" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -296,7 +296,7 @@
 		<comment>♀
 ・手持ちの先頭がポケモンの場合
 ・はい/いいえの選択肢表示
-　はい→favorite_03
+　はい　→favorite_03
 　いいえ→favorite_04
 ・0＝手持ちで先頭にいるポケモン名</comment>
 		<attribute name="キャラ指定">WOMAN1</attribute>
@@ -310,7 +310,7 @@
 		<comment>♀
 ・手持ちの先頭がタマゴの場合
 ・はい/いいえの選択肢表示
-　はい→favorite_03
+　はい　→favorite_03
 　いいえ→favorite_05</comment>
 		<attribute name="キャラ指定">WOMAN1</attribute>
 		<language name="JPN" width="256">あなたの　おきにいりって
