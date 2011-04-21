@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-21T15:15:20"/>
+	<create user="matsumiya" host="W00224" date="2011-04-21T16:12:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1756" top="246" right="2461" bottom="874" maximized="no" rayout="Vertical2">
+	<dialog left="1290" top="221" right="1995" bottom="849" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -319,9 +319,9 @@
 		<attribute name="キャラ指定">WAITRESS
 </attribute>
 		<language name="JPN" width="256">この　ふねは　１にち　１かい
-しゅっこうする　きゃくせん　です▼</language>
-		<language name="JPN_KANJI" width="256">この船は　１日　１回
-出航する　客船です▼</language>
+しゅっこうする　ゆうらんせん　です▼</language>
+		<language name="JPN_KANJI" width="256">この船は　１日１回
+出航する　遊覧船です▼</language>
 	</row>
 
 	<row id="msg_c03p16_cabinguide_01b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
