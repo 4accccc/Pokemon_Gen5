@@ -361,6 +361,7 @@ static void RESORT_BASIC1_DATA_SetBeaconInfo( RESORT_BASIC1_DATA *p_wk, const GA
   GFL_STD_MemClear( p_wk, sizeof(RESORT_BASIC1_DATA) );
   
   GFL_STD_MemCopy( cp_beacon_info->name, p_wk->name, sizeof(STRCODE)*PERSON_NAME_SIZE );
+  GFL_STD_MemCopy( cp_beacon_info->self_introduction, p_wk->introduction, sizeof(STRCODE)*GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN );
   p_wk->trainerID = cp_beacon_info->trainer_id;
   p_wk->sex       = cp_beacon_info->sex;
   p_wk->version   = cp_beacon_info->pm_version;
@@ -481,8 +482,8 @@ static void RESORT_BASIC1_DATA_GetIntroduction( const RESORT_BASIC1_DATA *cp_dat
 //-----------------------------------------------------------------------------
 static void RESORT_BASIC1_DATA_PrintDebug( const RESORT_BASIC1_DATA *cp_wk )
 {
-  STRCODE name[PERSON_NAME_SIZE+1];
-  char str_name[PERSON_NAME_SIZE+1];
+  STRCODE name[128];
+  char str_name[128];
 
   GFL_STD_MemCopy( cp_wk->name, name, PERSON_NAME_SIZE*sizeof(STRCODE) );
   name[PERSON_NAME_SIZE]  = GFL_STR_GetEOMCode();
