@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-20T11:51:39"/>
+	<create user="matsumiya" host="W00224" date="2011-04-21T18:33:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -378,7 +378,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1374" top="180" right="2079" bottom="800" maximized="no" rayout="Vertical2">
+	<dialog left="1292" top="158" right="1997" bottom="786" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -570,6 +570,55 @@ msg_wbt_menu_no</comment>
 お待ちして　おります</language>
 	</row>
 
+	<row id="msg_wbt_info_09a" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ff78ff,,,,,,,,,,,,,,,,,,">
+		<comment>♀
+・１回戦で負けた場合のメッセージ</comment>
+		<attribute name="キャラ指定">INFORMATIONW</attribute>
+		<language name="JPN" width="256">……ざんねん　でしたね
+またの　さんかを　おまちしております</language>
+		<language name="JPN_KANJI" width="256">……残念でしたね
+またの　参加を　お待ちしております</language>
+	</row>
+
+	<row id="msg_wbt_info_09b" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ff78ff,,,,,,,,,,,,,,,,,,">
+		<comment>♀
+・２回戦で負けた場合のメッセージ</comment>
+		<attribute name="キャラ指定">INFORMATIONW</attribute>
+		<language name="JPN" width="256">あと　いっぽで　けっしょうせん……
+またの　さんかを　おまちしております</language>
+		<language name="JPN_KANJI" width="256">あと　一歩で　決勝戦……
+またの　参加を　お待ちしております</language>
+	</row>
+
+	<row id="msg_wbt_info_09c" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ff78ff,,,,,,,,,,,,,,,,,,">
+		<comment>♀
+・優勝した場合のメッセージ</comment>
+		<attribute name="キャラ指定">INFORMATIONW</attribute>
+		<language name="JPN" width="256">ゆうしょう　おめでとうございます！
+またの　さんかを　おまちしております</language>
+		<language name="JPN_KANJI" width="256">優勝　おめでとうございます！
+またの　参加を　お待ちしております</language>
+	</row>
+
+	<row id="msg_wbt_info_09d" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ff78ff,,,,,,,,,,,,,,,,,,">
+		<comment>♀
+・チャンピオントーナメント解放時のメッセージ
+※暫定</comment>
+		<attribute name="キャラ指定">INFORMATIONW</attribute>
+		<language name="JPN" width="256">ゆうしょう　おめでとうございます！▼
+こんかいの　ゆうしょうで
+チャンピオントーナメントに▽
+さんか　できるように　なりました！▼
+それでは　またの　さんかを
+おまちして　おります！</language>
+		<language name="JPN_KANJI" width="256">優勝　おめでとうございます！▼
+今回の　優勝で
+チャンピオントーナメントに▽
+参加できるように　なりました！▼
+それでは　またの　参加を
+お待ちして　おります！</language>
+	</row>
+
 	<row id="msg_wbt_info_10" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
 		<comment>♀
 ・選択肢表示
@@ -757,10 +806,10 @@ msg_wbt_info_11へ</comment>
 ポケモン選択に異常がなかった場合
 ・つづけてトーナメントリスト表示</comment>
 		<attribute name="キャラ指定">INFORMATIONW</attribute>
-		<language name="JPN" width="256">さんか　うけつけが　おわりました！
-トーナメントリストを　ごらんください！▼</language>
-		<language name="JPN_KANJI" width="256">参加受付が　完了しました！
-トーナメントリストを　ご覧ください！▼</language>
+		<language name="JPN" width="256">さんか　うけつけが　おわりました
+トーナメントリストを　ごらんください▼</language>
+		<language name="JPN_KANJI" width="256">参加受付が　完了しました
+トーナメントリストを　ご覧ください▼</language>
 	</row>
 
 	<row id="msg_wbt_info_error1" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
@@ -777,17 +826,17 @@ msg_wbt_info_11へ</comment>
 問題が　あるようです</language>
 	</row>
 
-	<row id="msg_wbt_info_18" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
+	<row id="msg_wbt_info_18" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 トーナメントリスト表示後
 ・会場内に案内するアニメ表示</comment>
 		<attribute name="キャラ指定">INFORMATIONW</attribute>
 		<language name="JPN" width="256">それでは　だい１かいせんを
-かいし　いたします！▼
-こちらへ　どうぞ！！▼</language>
+かいし　いたします▼
+こちらへ　どうぞ！▼</language>
 		<language name="JPN_KANJI" width="256">それでは　第１回戦を
-開始いたします！▼
-こちらへ　どうぞ！！▼</language>
+開始いたします▼
+こちらへ　どうぞ！▼</language>
 	</row>
 
 	<row id="msg_wbt_menu_normal" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">

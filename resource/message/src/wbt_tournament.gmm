@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-20T10:34:13"/>
+	<create user="matsumiya" host="W00224" date="2011-04-21T18:34:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -408,7 +408,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1297" top="151" right="2002" bottom="779" maximized="no" rayout="Vertical2">
+	<dialog left="1292" top="158" right="1997" bottom="786" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -448,14 +448,24 @@ msg_wbt_tournament_00aへ</comment>
 [1:3C:未設定タグ:1]▼</language>
 	</row>
 
-	<row id="msg_wbt_tournament_00a" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_wbt_tournament_00a" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>文字送り後
-msg_wbt_tournament_01へ</comment>
+msg_wbt_tournament_00bへ</comment>
 		<attribute name="キャラ指定">アナウンス</attribute>
 		<language name="JPN" width="256">こんかい　エントリーした
 ポケモントレーナーたちは　こちらッ！▼</language>
 		<language name="JPN_KANJI" width="256">今回　エントリーした
 ポケモントレーナーたちは　こちらッ！▼</language>
+	</row>
+
+	<row id="msg_wbt_tournament_00b" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,,,,,,,,,,,,,,,,">
+		<comment>文字送り後
+１回戦開始</comment>
+		<attribute name="キャラ指定">アナウンス</attribute>
+		<language name="JPN" width="256">[1:3B:WBTトーナメント名:0]
+それでは　かいまく　ですッ！！▼</language>
+		<language name="JPN_KANJI" width="256">[1:3B:WBTトーナメント名:0]
+それでは　開幕ですッ！！▼</language>
 	</row>
 
 	<row id="msg_wbt_tournament_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
