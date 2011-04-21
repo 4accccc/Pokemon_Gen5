@@ -12,128 +12,25 @@
 #include <nitro.h>
 #include "gflib.h"
 #include "arc_def.h"
-#include "no_gear.h"
-#include "system/main.h"  //HEAPID
-#include "message.naix"
-#include "print/printsys.h"
-#include "print/wordset.h"
-#include "print/global_font.h"
-#include "font/font.naix"
-#include "print/str_tool.h"
-#include "sound/pm_sndsys.h"
-#include "system/wipe.h"
 
-//#include "c_gear.naix"
-//#include "c_gear_obj_NANR_LBLDEFS.h"
-#include "wbt_list_gra.naix"
+#include "system/main.h"  //HEAPID
 
 #include "wbt_subscreen.h"
-//#include "msg/msg_c_gear.h"
-//#include "msg/msg_invasion.h"
 
-#include "net/wih_dwc.h"
+#include "net/wih_dwc.h"  //WIH_DWC_GetAllBeaconTypeBit
 
-#define _NET_DEBUG (1)  //デバッグ時は１
+#include "arc/wbt/wbt_subscreen.naix"
+
+//#define _NET_DEBUG (1)  //デバッグ時は１
 
 // サウンド仮想ラベル
-#define GEAR_SE_DECIDE_ (SEQ_SE_DP_DECIDE)
-#define GEAR_SE_CANCEL_ (SEQ_SE_DP_SELECT)
+//#define GEAR_SE_DECIDE_ (SEQ_SE_DP_DECIDE)
+//#define GEAR_SE_CANCEL_ (SEQ_SE_DP_SELECT)
 
-#define MSG_COUNTDOWN_FRAMENUM (30*3)
 
 //--------------------------------------------
 // 画面構成定義
 //--------------------------------------------
-#define _WINDOW_MAXNUM (4)   //ウインドウのパターン数
-
-#define _MESSAGE_BUF_NUM	( 100*2 )
-
-#define _BUTTON_WIN_CENTERX (16)   // 真ん中
-#define _BUTTON_WIN_CENTERY (13)   //
-#define _BUTTON_WIN_WIDTH (22)    // ウインドウ幅
-#define _BUTTON_WIN_HEIGHT (3)    // ウインドウ高さ
-#define _BUTTON_WIN_PAL   (12)  // ウインドウ
-#define _BUTTON_MSG_PAL   (13)  // メッセージフォント
-
-#define	_BUTTON_WIN_CGX_SIZE   ( 18+12 )
-#define	_BUTTON_WIN_CGX	( 2 )
-
-
-#define	_BUTTON_FRAME_CGX		( _BUTTON_WIN_CGX + ( 23 * 16 ) )	// 通信システムウィンドウ転送先
-
-#define	FBMP_COL_WHITE		(15)
-
-
-//-------------------------
-
-#define PANEL_Y1 (6)
-#define PANEL_Y2 (4)
-#define PANEL_X1 (-2)
-
-#define PANEL_HEIDHT1 (C_GEAR_PANEL_HEIGHT-1)
-#define PANEL_HEIGHT2 (C_GEAR_PANEL_HEIGHT)
-
-#define PANEL_WIDTH (C_GEAR_PANEL_WIDTH)
-#define PANEL_SIZEXY (4)   //
-
-typedef enum{
-	_CLACT_PLT,
-	_CLACT_CHR,
-	_CLACT_ANM,
-} _WBTSUBSCRN_CLACT_TYPE;
-
-
-
-
-#define _WBTSUBSCRN_NET_CHANGEPAL_NUM (4)
-#define _WBTSUBSCRN_NET_CHANGEPAL_POSX (0xC)
-#define _WBTSUBSCRN_NET_CHANGEPAL_POSY (1)
-#define _WBTSUBSCRN_NET_CHANGEPAL_MAX (3)
-
-
-//--------------------------
-
-typedef enum{
-	_SELECTANIM_NONE,
-	_SELECTANIM_STANDBY,
-	_SELECTANIM_ANIMING,
-	
-} _SELECTANIM_ENUM;
-
-
-
-//--------------------------
-
-typedef struct {
-	int leftx;
-	int lefty;
-	int width;
-	int height;
-} _WINDOWPOS;
-
-
-
-
-
-
-// 表示OAMの時間とかの最大
-#define _CLACT_TIMEPARTS_MAX (9)
-
-#define _CLACT_EDITMARKOFF (7)
-#define _CLACT_EDITMARKON (8)
-
-
-// タイプ
-#define _CLACT_TYPE_MAX (3)
-
-//-------------------------------------------------------------------------
-///	文字表示色定義(default)	-> gflib/fntsys.hへ移動
-//------------------------------------------------------------------
-
-#define WINCLR_COL(col)	(((col)<<4)|(col))
-
-
-
 //--------------------------------------------
 // 内部ワーク
 //--------------------------------------------
@@ -192,7 +89,6 @@ static void _modeSelectMenuWait(WBTSUBSCRN_WORK* pWork);
  * @retval  none
  */
 //------------------------------------------------------------------------------
-
 static void _changeState(WBTSUBSCRN_WORK* pWork,StateFunc state)
 {
 	pWork->state = state;
@@ -216,44 +112,30 @@ static void _changeStateDebug(WBTSUBSCRN_WORK* pWork,StateFunc state, int line)
 
 //------------------------------------------------------------------------------
 /**
- * @brief   ギアのARCを読み込み
+ * @brief   ARCを読み込み
  * @retval  none
  */
 //------------------------------------------------------------------------------
-
-//static const u32 _bgpal[]={NARC_c_gear_c_gear_m_NCLR,NARC_c_gear_c_gear_f_NCLR,NARC_c_gear_c_gear_m_NCLR};
-//static const u32 _bgcgx[]={NARC_c_gear_c_gear_m1_NCGR,NARC_c_gear_c_gear_f1_NCGR,NARC_c_gear_c_gear_m1_NCGR};
-
-
-static void _gearArcCreate(WBTSUBSCRN_WORK* pWork)
+static void _loadArc(WBTSUBSCRN_WORK* pWork)
 {
-	ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_WBTLIST_GRA, pWork->heapID );
+	ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_WBT_SUBSCREEN, pWork->heapID );
 	MYSTATUS* pMy = GAMEDATA_GetMyStatus( GAMESYSTEM_GetGameData(pWork->pGameSys) );
 	u32 sex = MyStatus_GetMySex(pMy);
 	
-	GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_wbt_list_gra_wbt_list_bg_d_NCLR,//_bgpal[ sex ],
+	GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_wbt_subscreen_wbt_d_NCLR,
 																		PALTYPE_SUB_BG, 0, 0,  pWork->heapID);
-
-
 
 	
 	// サブ画面BGキャラ転送
-	pWork->subchar = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_wbt_list_gra_wbt_list_bg_d_NCGR,//_bgcgx[sex],
+	pWork->subchar = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_wbt_subscreen_wbt_d_NCGR,
 																																GEAR_MAIN_FRAME, 0, 0, pWork->heapID);
 
 	GFL_ARCHDL_UTIL_TransVramScreenCharOfs(p_handle,
-																				 //NARC_c_gear_c_gear01_n_NSCR,
-                                         NARC_wbt_list_gra_wbt_list_bg_d_01_NSCR,
+                                         NARC_wbt_subscreen_wbt_d_NSCR,
 																				 GEAR_MAIN_FRAME, 0,
 																				 GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
 																				 pWork->heapID);
 
-	GFL_ARCHDL_UTIL_TransVramScreenCharOfs(p_handle,
-																				 //NARC_c_gear_c_gear01_n_NSCR,
-                                         NARC_wbt_list_gra_wbt_list_bg_d_02_NSCR,
-																				 GEAR_BMPWIN_FRAME, 0,
-																				 GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
-																				 pWork->heapID);
 
 	GFL_ARC_CloseDataHandle( p_handle );
 
@@ -275,12 +157,16 @@ static void _createSubBg(WBTSUBSCRN_WORK* pWork)
 		GFL_BG_SetVisible( i, VISIBLE_OFF );
 	}
 	{
-		int frame = GEAR_MAIN_FRAME;
-		GFL_BG_BGCNT_HEADER TextBgCntDat = {
-			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x00000, GFL_BG_CHRSIZ_256x256,GX_BG_EXTPLTT_01,
-			0, 0, 0, FALSE
+		const int frame = GEAR_MAIN_FRAME;
+		const GFL_BG_BGCNT_HEADER TextBgCntDat = {
+    //X, Y, ｽｸﾘｰﾝﾊﾞｯﾌｧ、ｽｸﾘｰﾝｵﾌｾｯﾄ, ｽｸﾘｰﾝｻｲｽﾞ、            ｶﾗｰﾓｰﾄﾞ
+			0, 0, 0x800,      0,          GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      //ｽｸﾘｰﾝﾍﾞｰｽ、         ｷｬﾗﾍﾞｰｽ、               ｷｬﾗｻｲｽﾞ
+			GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x00000, GFL_BG_CHRSIZ_256x256,
+      //拡張ﾊﾟﾚｯﾄｽﾛｯﾄ、 表示優先度、ｴﾘｱｵｰﾊﾞｰ、ﾀﾞﾐｰ、ﾓｻﾞｲｸﾌﾗｸﾞ
+      GX_BG_EXTPLTT_01, 0,          0,        0,    FALSE
 			};
+
 		GFL_BG_SetBGControl( frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
 
 		GFL_BG_SetVisible( frame, VISIBLE_ON );
@@ -290,6 +176,7 @@ static void _createSubBg(WBTSUBSCRN_WORK* pWork)
 		GFL_BG_FillScreen( frame,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
 		GFL_BG_LoadScreenReq( frame );
 	}
+#if 0
 	{
 		int frame = GEAR_BMPWIN_FRAME;
 		GFL_BG_BGCNT_HEADER TextBgCntDat = {
@@ -321,6 +208,7 @@ static void _createSubBg(WBTSUBSCRN_WORK* pWork)
 		GFL_BG_FillScreen( frame,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
 		GFL_BG_LoadScreenReq( frame );
 	}
+#endif
 
 //	G2S_SetBlendAlpha( GEAR_MAIN_FRAME|GEAR_BUTTON_FRAME, GEAR_BMPWIN_FRAME , 9, 15 );
 
@@ -332,20 +220,19 @@ static void _createSubBg(WBTSUBSCRN_WORK* pWork)
  * @retval  none
  */
 //------------------------------------------------------------------------------
-
 static void _modeInit(WBTSUBSCRN_WORK* pWork)
 {
 	_createSubBg(pWork);   //BGVRAM設定
-	_gearArcCreate(pWork);  //ARC読み込み BG&OBJ
+	_loadArc(pWork);  //ARC読み込み BG
 
   _CHANGE_STATE(pWork,_modeSelectMenuWait);
 
 }
 
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 static void _workEnd(WBTSUBSCRN_WORK* pWork)
 {
-
-
 	GFL_BG_FreeCharacterArea(GEAR_MAIN_FRAME,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar),
 													 GFL_ARCUTIL_TRANSINFO_GetSize(pWork->subchar));
 
@@ -360,7 +247,6 @@ static void _workEnd(WBTSUBSCRN_WORK* pWork)
 	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_OFF ); //SUB DISP OBJ ON
 }
 
-
 //------------------------------------------------------------------------------
 /**
  * @brief   モードセレクト画面待機
@@ -369,13 +255,8 @@ static void _workEnd(WBTSUBSCRN_WORK* pWork)
 //------------------------------------------------------------------------------
 static void _modeSelectMenuWait(WBTSUBSCRN_WORK* pWork)
 {
-
-
+  /* do nothing */
 }
-
-
-
-
 
 //------------------------------------------------------------------------------
 /**
@@ -394,8 +275,6 @@ WBTSUBSCRN_WORK* WBTSUBSCRN_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pS
 	pWork->pGameSys = pGameSys;
 
 	_modeInit(pWork);
-
-
 
 	return pWork;
 }
@@ -444,7 +323,6 @@ void WBTSUBSCRN_Exit( WBTSUBSCRN_WORK* pWork )
   _workEnd(pWork);
 	G2S_BlendNone();
 	GFL_HEAP_FreeMemory(pWork);
-
 }
 
 

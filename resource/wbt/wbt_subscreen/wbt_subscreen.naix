@@ -1,0 +1,20 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: wbt_subscreen.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_WBT_SUBSCREEN_NAIX_
+#define NARC_WBT_SUBSCREEN_NAIX_
+
+enum {
+	NARC_wbt_subscreen_wbt_d_NCLR = 0,
+	NARC_wbt_subscreen_wbt_d_NCGR = 1,
+	NARC_wbt_subscreen_wbt_d_NSCR = 2
+};
+
+/* NARC_WBT_SUBSCREEN_NAIX_ */
+#endif
