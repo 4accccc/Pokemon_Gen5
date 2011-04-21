@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2011-04-21T02:53:35"/>
+	<create user="nagihashi_toru" host="W00268" date="2011-04-21T12:28:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -398,14 +398,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1253" top="398" right="1958" bottom="1026" maximized="no" rayout="Vertical2">
+	<dialog left="-854" top="343" right="-285" bottom="919" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="552" top="484" right="1024" bottom="882" visible="yes"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="561"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="328"/>
-		<band id="3" index="4" style="0000" width="367"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="2" index="3" style="0000" width="245"/>
+		<band id="3" index="4" style="0000" width="147"/>
+		<band id="4" index="0" style="0000" width="591"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -1014,11 +1014,11 @@ GTSの　ごりよう　ありがとうございます！</language>
 2：
 3：レベル
 4：新施設名</attribute>
-		<language name="JPN" width="256">[1:38:リゾート店名:0]は
+		<language name="JPN" width="256">[1:38:リゾート店名:1]は
 レベル　[2:00:１桁:3]　になった！▼
 『[1:38:リゾート店名:1]』　から
 『[1:38:リゾート店名:0]』に　なった！▼</language>
-		<language name="JPN_KANJI" width="256">[1:38:リゾート店名:0]は
+		<language name="JPN_KANJI" width="256">[1:38:リゾート店名:1]は
 レベル　[2:00:１桁:3]　になった！▼
 『[1:38:リゾート店名:1]』　から
 『[1:38:リゾート店名:0]』に　なった！▼</language>
