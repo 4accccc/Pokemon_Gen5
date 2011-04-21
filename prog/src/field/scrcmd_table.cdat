@@ -209,7 +209,7 @@
   DEF_CMD( EvCmdTrainerLoseCheck, EV_SEQ_TRAINER_LOSE_CHECK )
   DEF_CMD( EvCmdTrainerWin, EV_SEQ_TRAINER_WIN )
 
-  NO_CMD()
+  DEF_CMD( EvCmdTrainerBgmSetByTrtype, EV_SEQ_TRAINER_BGM_SET_BY_TRTYPE )
   NO_CMD()
   NO_CMD()
 

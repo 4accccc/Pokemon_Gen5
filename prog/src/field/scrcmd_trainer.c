@@ -385,6 +385,32 @@ VMCMD_RESULT EvCmdTrainerBgmSet( VMHANDLE *core, void *wk )
 
 //--------------------------------------------------------------
 /**
+ * トレーナーBGM再生(トレーナータイプから指定)
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @return	"1"
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdTrainerBgmSetByTrtype( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*  work = wk;
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA*    gdata = SCRCMD_WORK_GetGameData( work );
+  SCRIPT_WORK*    sc = SCRCMD_WORK_GetScriptWork( work );
+  u32           type = SCRCMD_GetVMWorkValue(core,wk);
+  u32            seq = FSND_GetTrainerEyeBGM( type );
+  GMEVENT*     event = EVENT_FSND_PushPlayEventBGM( gsys, seq );
+  /*
+  GMEVENT*     event = EVENT_FSND_PushPlayNextBGM( 
+                         gsys, seq, FSND_FADE_FAST, FSND_FADE_NONE );
+                         */
+  // 100413 即時再生に変更
+
+  SCRIPT_CallEvent( sc, event );
+	return VMCMD_RESULT_SUSPEND;
+}
+
+//--------------------------------------------------------------
+/**
  * トレーナー勝利
  * @param	core		仮想マシン制御構造体へのポインタ
  * @return	VMCMD_RESULT_SUSPEND

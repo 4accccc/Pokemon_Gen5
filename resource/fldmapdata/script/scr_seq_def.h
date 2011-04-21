@@ -2708,6 +2708,20 @@
 
 //--------------------------------------------------------------
 /**
+ *  _TRAINER_BGM_SET_BY_TRAINER トレーナーBGMセット(トレーナータイプ)
+ *  @param tr_type トレーナータイプ
+ */
+//--------------------------------------------------------------
+#define _TRAINER_BGM_SET_BY_TRTYPE(  tr_type ) \
+  _ASM_TRAINER_BGM_SET_BY_TRTYPE  tr_type
+
+  .macro  _ASM_TRAINER_BGM_SET_BY_TRTYPE  tr_type
+  .short  EV_SEQ_TRAINER_BGM_SET_BY_TRTYPE
+  .short  \tr_type
+  .endm
+
+//--------------------------------------------------------------
+/**
  * @def _TRAINER_WIN
  * @brief トレーナー戦勝利
  *
@@ -13477,6 +13491,22 @@
 
     .macro  _ASM_INFINITY_DUNGEON_GET_BOSS_FLOOR ret_wk
     .short  EV_SEQ_INFINITY_DUNGEON_GET_BOSS_FLOOR
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _INFINITY_DUNGEON_GET_TRTYPE
+ * @brief 無限ダンジョン内トレーナーのトレーナータイプ
+ * @param ret_wk   トレーナータイプ
+ */
+//--------------------------------------------------------------
+#define _INFINITY_DUNGEON_GET_TRTYPE( tr_no ,ret_wk ) \
+    _ASM_INFINITY_DUNGEON_GET_TRTYPE tr_no ,ret_wk
+
+    .macro  _ASM_INFINITY_DUNGEON_GET_TRTYPE tr_no ,ret_wk
+    .short  EV_SEQ_INFINITY_DUNGEON_GET_TRTYPE
+    .short  \tr_no
     .short  \ret_wk
     .endm
 

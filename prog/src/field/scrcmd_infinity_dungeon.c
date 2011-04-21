@@ -19,6 +19,7 @@
 #include "tr_tool/trno_def.h"
 #include "arc/fieldmap/fldmmdl_objcode.h"  //for OBJCODE
 #include "infinity_dungeon_gimmick.h"
+#include "fld_btl_inst_tool.h"
 
 //=============================================================================
 /**
@@ -420,7 +421,6 @@ VMCMD_RESULT EvCmdInfinityDungeonGetHintMsgID( VMHANDLE *p_core, void *p_wk_adrs
   FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( p_gamesys );
   INF_DUNGEON_DATA *p_dungeon_data = INFINITY_DUNGEON_DataGet(p_fieldmap);
 
-
   // セーブデータから必要情報を取得
   p_save = SaveData_GetINFINITYDUNGEON( p_save_data );
   hint_level = INFINITY_DUNGEON_SAVE_GetHintLevel( p_save );
@@ -577,7 +577,7 @@ VMCMD_RESULT EvCmdInfinityDungeonGetRecoverFlag( VMHANDLE *p_core, void *p_wk_ad
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  ボスの見た目（OBJ_CODE)を返す
+ *	@brief  ボスが存在するフロア番号を返す
  *
  *	@param	*p_core
  *	@param	*p_wk_adrs 
@@ -610,3 +610,36 @@ VMCMD_RESULT EvCmdInfinityDungeonGetBossFloor( VMHANDLE *p_core, void *p_wk_adrs
 
   return VMCMD_RESULT_CONTINUE;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  無限ダンジョントレーナーのトレーナータイプを取得
+ *
+ *	@param	*p_core
+ *	@param	*p_wk_adrs 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdInfinityDungeonGetTrainerType( VMHANDLE *p_core, void *p_wk_adrs )
+{
+  u8 floor_id;
+  INF_DUNGEON_DATA *p_dungeon_data;
+  INFINITYDUNGEON_SAVE  *p_save;
+  SCRCMD_WORK *p_wk = p_wk_adrs;
+  GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
+  GAMEDATA *p_gamedata = GAMESYSTEM_GetGameData(p_gamesys);
+  SAVE_CONTROL_WORK *p_save_data = GAMEDATA_GetSaveControlWork(p_gamedata);
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( p_gamesys );
+  const u16 heapID = FIELDMAP_GetHeapID( p_fieldmap );
+  u16 tr_id  = SCRCMD_GetVMWorkValue( p_core, p_wk );
+  u16 *p_ret_wk	= SCRCMD_GetVMWork( p_core, p_wk );
+
+  // 無限ダンジョントレーナーIDに変換
+  tr_id = INFINITY_DUNGEON_SAVE_GetTrNo_ByObjId( tr_id );
+
+  *p_ret_wk = FBI_TOOL_GetTrtype(ARCID_INFINITY_DUGENON_TR , tr_id ,heapID); 
+
+  return VMCMD_RESULT_CONTINUE;
+}
+

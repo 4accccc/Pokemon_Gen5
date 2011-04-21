@@ -33,6 +33,7 @@
   DEF_CMD( EvCmdInfinityDungeonSetRecoverFlag, EV_SEQ_INFINITY_DUNGEON_SET_RECOVER_FLAG )
   DEF_CMD( EvCmdInfinityDungeonOpenElevator, EV_SEQ_INFINITY_DUNGEON_ELEVETOR_ACTION )
   DEF_CMD( EvCmdInfinityDungeonGetBossFloor, EV_SEQ_INFINITY_DUNGEON_GET_BOSS_FLOOR )
+  DEF_CMD( EvCmdInfinityDungeonGetTrainerType, EV_SEQ_INFINITY_DUNGEON_GET_TRTYPE )
  
   END_CMD
   //スクリプトコマンドテーブル終了

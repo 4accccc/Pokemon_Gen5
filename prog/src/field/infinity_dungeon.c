@@ -2687,8 +2687,6 @@ u32 INFINITY_DUNGEON_GetTrIDPos( INF_DUNGEON_DATA *p_dungeon_data ,u8 floor_id ,
   // トレーナーIDリストを取得
   p_trid = p_dungeon_data->tr_data[floor_id].tr_id;
   
-  OS_Printf("検索対象トレーナーID:%u\n",tr_id);
-
   // 検索
   for( i= 0; i<INFINITY_DUNGEON_TRID_MAX; i++ )
   {

@@ -1599,6 +1599,27 @@ u16 FBI_TOOL_GetOBJCode(ARCID tr_arcID, u16 tr_no, HEAPID heapID )
   return obj_code;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アーカイブデータを参照してトレーナータイプを取得
+ *
+ *	@param	tr_arcID
+ *	@param	tr_no
+ *	@param	heapID 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+u16 FBI_TOOL_GetTrtype(ARCID tr_arcID, u16 tr_no, HEAPID heapID )
+{
+  BSUBWAY_TRAINER_ROM_DATA  *p_trd;
+	u16 tr_type;
+  p_trd = GetTrainerRomData( tr_arcID ,tr_no, heapID);
+  tr_type = p_trd->tr_type;
+  GFL_HEAP_FreeMemory( p_trd );
+
+  return tr_type;
+}
 
 
 //===ＯＢＪコード取得===
