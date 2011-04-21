@@ -1216,7 +1216,7 @@ VMCMD_RESULT EvCmdResortSetSpot( VMHANDLE *p_core, void *p_wk_adrs )
   *ret_eff_msg    = RESORT_BINARY_SPOT_GetData( p_spot, index, RESORT_BINARY_SPOT_PARAM_EFF_MSG );
 
   //TODO
-  if( lv >= 2 )
+  if( lv >= 3 )
   {
     //ВЈВ≈В…Н≈СеВЊБI
     return VMCMD_RESULT_CONTINUE;
