@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-02-27T14:48:33"/>
+	<create user="matsumiya" host="W00224" date="2011-04-21T16:54:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="1405" top="196" right="2110" bottom="824" maximized="no" rayout="Vertical2">
+	<dialog left="1290" top="221" right="1995" bottom="849" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="807" top="209" right="1280" bottom="607" visible="no"/>
+		<tag-palette left="807" top="209" right="1280" bottom="607" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,48 +292,60 @@
 	</lock>
 
 
-	<row id="msg_c03p15_01_01" back-color=",,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+	<row id="msg_c03p15_pilot_01" back-color=",,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
 		<comment>♂
 ・到着デモ後、主人公と向き合いメッセージ表示</comment>
-		<attribute name="キャラ指定">？？</attribute>
-		<language name="JPN" width="256">おう！　おう！　おう！
-ヒウンに　とうちゃく　だぜ！</language>
-		<language name="JPN_KANJI" width="256">おう！　おう！　おう！
-ヒウンに　到着だぜ！</language>
+		<attribute name="キャラ指定">PILOT
+船長</attribute>
+		<language name="JPN" width="256">みなさま！
+ヒウンに　とうちゃく　でございます▼</language>
+		<language name="JPN_KANJI" width="256">みなさま！
+ヒウンに　とうちゃく　でございます▼</language>
 	</row>
 
-	<row id="msg_c03p15_01_02" back-color=",,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+	<row id="msg_c03p15_swrival_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#ffffff,,,#ffffff,,#80ff80,#ffffff,,,#ffffff,,">
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『
+ネオプラズマだん　どこだ？▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『
+ネオプラズマだん　どこだ？▼</language>
+	</row>
+
+	<row id="msg_c03p15_pilot_02" back-color=",,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
 		<comment>♂
 ・はい/いいえの選択肢表示
-・はい→
-・いいえ→</comment>
-		<attribute name="キャラ指定">？？</attribute>
-		<language name="JPN" width="256">おう！　どうした？
-ふねで　タチワキに　いくのか？</language>
-		<language name="JPN_KANJI" width="256">おう！　どうした？
-ふねで　タチワキに　行くのか？</language>
+・はい　→pilot_03
+・いいえ→pilot_04</comment>
+		<attribute name="キャラ指定">PILOT
+船長</attribute>
+		<language name="JPN" width="256">おや？　どうなさいました
+タチワキまで　ふねに　のられますか？</language>
+		<language name="JPN_KANJI" width="256">おや？　どうなさいました
+タチワキまで　船に　乗られますか？</language>
 	</row>
 
-	<row id="msg_c03p15_01_03" back-color=",,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+	<row id="msg_c03p15_pilot_03" back-color=",,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
 		<comment>♂
 ・はい選択
 ・セリフ後、画面フェードアウト→出航デモへ</comment>
-		<attribute name="キャラ指定">？？</attribute>
-		<language name="JPN" width="256">おう！　わかったぜ！
-こっちだ　こっち！！</language>
-		<language name="JPN_KANJI" width="256">おう！　わかったぜ！
-こっちだ　こっち！！</language>
+		<attribute name="キャラ指定">PILOT
+船長</attribute>
+		<language name="JPN" width="256">よろしいですとも！
+それでは　こちらへ　どうぞ！▼</language>
+		<language name="JPN_KANJI" width="256">よろしいですとも！
+それでは　こちらへ　どうぞ！▼</language>
 	</row>
 
-	<row id="msg_c03p15_01_04" back-color=",,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+	<row id="msg_c03p15_pilot_04" back-color=",,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
 		<comment>♂
 ・いいえ選択
 ・再度会話時はmsg_c03p15_01_02</comment>
-		<attribute name="キャラ指定">？？</attribute>
-		<language name="JPN" width="256">おう！　わかったぜ！
-のりたくなれば　こえを　かけてくれ！</language>
-		<language name="JPN_KANJI" width="256">おう！　わかったぜ！
-乗りたくなれば　声を　かけてくれ！</language>
+		<attribute name="キャラ指定">PILOT
+船長</attribute>
+		<language name="JPN" width="256">わかりました！　のりたくなったときは
+えんりょ　なさらずに　どうぞ！</language>
+		<language name="JPN_KANJI" width="256">わかりました！　乗りたくなったときは
+遠慮なさらずに　どうぞ！</language>
 	</row>
 
 	<row id="msg_c03p15_leader3_01" back-color="#404040,,,#404040,,#404040,#404040,#ffffff,,,#ffffff,,#404040,#ffffff,,,#ffffff,,">
