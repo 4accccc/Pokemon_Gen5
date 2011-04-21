@@ -195,6 +195,7 @@ VMCMD_RESULT EvCmdInfinityDungeonResetSeed( VMHANDLE *p_core, void *p_wk_adrs )
   u32 seed = GFL_STD_MtRand( GFL_STD_RAND_MAX );
   p_save = SaveData_GetINFINITYDUNGEON( p_save_data );
   INFINITYDUNGEON_SAVE_SetRandomSeed( p_save ,seed );
+  INFINITYDUNGEON_SAVE_InitDungeonData( p_save );
 
   ONOUE_Printf("rand_seed=%u\n",seed);
   return VMCMD_RESULT_CONTINUE;
@@ -322,10 +323,24 @@ VMCMD_RESULT EvCmdInfinityDungeonGetBossNo( VMHANDLE *p_core, void *p_wk_adrs )
   GAMEDATA *p_gamedata = GAMESYSTEM_GetGameData(p_gamesys);
   SAVE_CONTROL_WORK *p_save_data = GAMEDATA_GetSaveControlWork(p_gamedata);
   u16 *p_ret_wk	= SCRCMD_GetVMWork( p_core, p_wk );
+  u8  area_id;
+  u32 version;
   p_save = SaveData_GetINFINITYDUNGEON( p_save_data );
 
+  // エリアIDを取得
+  area_id = INFINITYDUNGEON_SAVE_GetDungeonAreaID( p_save );
+
+  // バージョン指定
+  version = GET_VERSION();
+
+  // オフセット分ずらす
+  if( version == VERSION_B2 )
+  {
+    area_id += 10;
+  }
+
   // ボスインデックスを返す
-  *p_ret_wk = TRID_LEADER3_02;
+  *p_ret_wk = sc_boss_data[area_id].tr_id;
 
   return VMCMD_RESULT_CONTINUE;
 }

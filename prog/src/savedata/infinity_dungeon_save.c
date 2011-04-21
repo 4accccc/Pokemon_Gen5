@@ -16,6 +16,11 @@
 #include "savedata/save_tbl.h"
 #include "tr_tool/ex_trainer_def.h"
 
+// グローバル変数
+#ifdef PM_DEBUG
+extern BOOL g_debug_inf_is_presentation;
+#endif
+
 //=============================================================================
 /**
  *					構造体宣言
@@ -29,7 +34,7 @@ struct _INFINITYDUNGEON_SAVE{
   u8  dungeon_status;
   u8  ex_dungeon_status;
   u8  ex_mission_count;
-  u8  memento_status;
+  u8  memento_status;       // 未使用
 
   u32 rand_seed;
   u32 trainer_flag[INFINITYDUNGEON_FLOOR_MAX];
@@ -72,6 +77,28 @@ int INFINITYDUNGEON_SAVE_GetWorkSize(void)
 void INFINITYDUNGEON_SAVE_Init(INFINITYDUNGEON_SAVE *p_save)
 {
   GFL_STD_MemFill(p_save, 0, sizeof(INFINITYDUNGEON_SAVE));
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ダンジョンデータの初期化
+ *
+ *	@param	*p_save セーブデータポインタ
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void INFINITYDUNGEON_SAVE_InitDungeonData(INFINITYDUNGEON_SAVE *p_save)
+{
+  // トレーナー戦闘フラグ
+  GFL_STD_MemFill(p_save->trainer_flag, 0, sizeof(u32)*INFINITYDUNGEON_FLOOR_MAX);
+  
+  // ダンジョン内データ
+  p_save->recover_flag  = 0;
+  p_save->map_status    = 0;
+  p_save->floor_id      = 0;
+  p_save->room_id       = 0;
+  p_save->partner_id    = 0;
 }
 
 //----------------------------------------------------------------------------
@@ -467,6 +494,46 @@ u8 INFINITY_DUNGEON_SAVE_GetHintLevel( const INFINITYDUNGEON_SAVE *p_save )
     }
   }
 
+#ifdef PM_DEBUG
+  // プレゼン用マップ差し替え
+  if( g_debug_inf_is_presentation == TRUE )
+  {
+    if( 4 <= win_num )
+    {
+      return INFINITY_DUNGEON_HINT_LEVEL_4;
+    }
+
+    if( 3 <= win_num )
+    {
+      return INFINITY_DUNGEON_HINT_LEVEL_3;
+    }
+
+    if( 2 <= win_num )
+    {
+      return INFINITY_DUNGEON_HINT_LEVEL_2;
+    }
+
+    return INFINITY_DUNGEON_HINT_LEVEL_1;
+  }
+  else
+  {
+    if( INFINITY_DUNGEON_HINT_LEVEL_WIN_NUM_4 <= win_num )
+    {
+      return INFINITY_DUNGEON_HINT_LEVEL_4;
+    }
+
+    if( INFINITY_DUNGEON_HINT_LEVEL_WIN_NUM_3 <= win_num )
+    {
+      return INFINITY_DUNGEON_HINT_LEVEL_3;
+    }
+
+    if( INFINITY_DUNGEON_HINT_LEVEL_WIN_NUM_2 <= win_num )
+    {
+      return INFINITY_DUNGEON_HINT_LEVEL_2;
+    }
+    return INFINITY_DUNGEON_HINT_LEVEL_1;
+  }
+#else
   if( INFINITY_DUNGEON_HINT_LEVEL_WIN_NUM_4 <= win_num )
   {
     return INFINITY_DUNGEON_HINT_LEVEL_4;
@@ -476,13 +543,14 @@ u8 INFINITY_DUNGEON_SAVE_GetHintLevel( const INFINITYDUNGEON_SAVE *p_save )
   {
     return INFINITY_DUNGEON_HINT_LEVEL_3;
   }
-  
+
   if( INFINITY_DUNGEON_HINT_LEVEL_WIN_NUM_2 <= win_num )
   {
     return INFINITY_DUNGEON_HINT_LEVEL_2;
   }
 
   return INFINITY_DUNGEON_HINT_LEVEL_1;
+#endif
 }
 
 //----------------------------------------------------------------------------

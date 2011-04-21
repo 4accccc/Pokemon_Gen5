@@ -37,9 +37,10 @@
 
 // グローバル変数
 #ifdef PM_DEBUG
-extern int g_debug_inf_tr_pos_type;
+extern int  g_debug_inf_tr_pos_type;
 extern BOOL g_debug_inf_data_change;
 extern u32  g_debug_inf_master_seed;
+extern BOOL g_debug_inf_is_presentation;
 #endif
 
 //=============================================================================
@@ -406,6 +407,27 @@ static const struct
   {GENTLEMAN,6},
 };
 
+//-------------------------------------
+// 各エリアのフロアサイズ
+//=====================================
+static const struct 
+{
+  int fs_x;
+  int fs_y;
+}sc_floor_size[FLOOR_MAX] =
+{
+  { 3 ,3 }, // エリア 1
+  { 3 ,3 }, // エリア 2
+  { 3 ,3 }, // エリア 3
+  { 4 ,4 }, // エリア 4
+  { 4 ,4 }, // エリア 5
+  { 4 ,4 }, // エリア 6
+  { 5 ,5 }, // エリア 7
+  { 5 ,5 }, // エリア 8
+  { 5 ,5 }, // エリア 9
+  { 5 ,5 }, // エリア 10
+};
+
 // 配置データ
 #include "../../../resource/infinity_dungeon/data/infinity_dungeon_tr_move_type.cdat"
 #include "../../../resource/infinity_dungeon/data/infinity_dungeon_room_pos_type.cdat"
@@ -484,6 +506,8 @@ static void SetBUildModel( MAP_CHAGE_EVENT_WORK *p_wk , ROOM_DATA* p_room_data);
 static const GRID_DATA* GetBmodelPos( MAP_CHAGE_EVENT_WORK *p_wk ,int room_type ,int warp_dir  );
 static void AddDummyObj( MAP_CHAGE_EVENT_WORK *p_wk , const GRID_DATA *p_grid_data);
 static void SetDummyObj( MAP_CHAGE_EVENT_WORK *p_wk , ROOM_DATA* p_room_data);
+static void SetRecoverTrainer( INF_DUNGEON_DATA  *p_dungeon_data ,int floor_no ,
+    int *room_id_array ,int cnt,u32 *member_num , GFL_STD_RandContext *rand_context ,u32 *recover_index );
 
 // グリッド
 static void SetGridPos( VecFx32 *vec ,s32 x ,s32 y ,s32 z );
@@ -1883,6 +1907,276 @@ static void SetDungeonData( INF_DUNGEON_DATA *p_dungeon_data ,int area_no, u32 s
       }
     }
   }
+
+   
+#ifdef PM_DEBUG
+  // プレゼン用マップ差し替え
+  if( g_debug_inf_is_presentation == TRUE )
+  {
+    ROOM_DATA *p_rd;
+
+    // 部屋タイプを初期化
+    {
+    const INF_ROOM_SETUP_PARAM *sc_room_setup = &sc_room_setup_param[area_no];
+      for( i = 0; i<FLOOR_MAX; i++ )
+      {
+        for( j = 0; j<ROOM_MAX; j++ )
+        {
+          // 初期化
+          p_dungeon_data->room_data[i][j].room_id = j;
+          p_dungeon_data->room_data[i][j].room_type = ROOM_TYPE_DEFAULT;
+          p_dungeon_data->room_data[i][j].tr_pos_type = INF_TR_ROOM_POS_TYPE_NONE;
+
+          // 扉を閉じる
+          for( k = 0 ; k < 4 ; k++ )
+          {
+            p_dungeon_data->room_data[i][j].can_move[k]  = FALSE;
+          }
+        }
+      }
+    }
+
+    // データ差し替え(１階)
+    {
+      // エレベータ部屋
+      p_rd = &p_dungeon_data->room_data[0][1];
+      p_rd->room_type = ROOM_TYPE_ELEVATOR;
+      p_rd->tr_pos_type = INF_TR_ROOM_POS_TYPE_NONE;
+      p_rd->can_move[INF_MOVE_UP]   = FALSE;
+      p_rd->can_move[INF_MOVE_DOWN] = TRUE;
+      p_rd->can_move[INF_MOVE_LEFT] = FALSE;
+      p_rd->can_move[INF_MOVE_RIGHT]= TRUE;
+    }
+    {
+      u8  tr_pos_type = INF_ROOM_POS_TYPE_K_1;
+      p_rd = &p_dungeon_data->room_data[0][2];
+      p_rd->can_move[INF_MOVE_UP]   = FALSE;
+      p_rd->can_move[INF_MOVE_DOWN] = TRUE;
+      p_rd->can_move[INF_MOVE_LEFT] = TRUE;
+      p_rd->can_move[INF_MOVE_RIGHT]= TRUE;
+
+      p_rd->tr_pos_type = tr_pos_type;
+      p_rd->room_type = sc_room_tr_param[tr_pos_type].room_type;
+    }
+    {
+      p_rd = &p_dungeon_data->room_data[0][3];
+      p_rd->can_move[INF_MOVE_UP]   = FALSE;
+      p_rd->can_move[INF_MOVE_DOWN] = FALSE;
+      p_rd->can_move[INF_MOVE_LEFT] = TRUE;
+      p_rd->can_move[INF_MOVE_RIGHT]= FALSE;
+      p_rd->tr_pos_type = INF_TR_ROOM_POS_TYPE_NONE;
+    }
+    {
+      u8  tr_pos_type = INF_ROOM_POS_TYPE_E_1;
+      p_rd = &p_dungeon_data->room_data[0][6];
+      p_rd->can_move[INF_MOVE_UP]   = TRUE;
+      p_rd->can_move[INF_MOVE_DOWN] = TRUE;
+      p_rd->can_move[INF_MOVE_LEFT] = FALSE;
+      p_rd->can_move[INF_MOVE_RIGHT]= TRUE;
+
+      p_rd->tr_pos_type = tr_pos_type;
+      p_rd->room_type = sc_room_tr_param[tr_pos_type].room_type;
+    }
+    {
+      p_rd = &p_dungeon_data->room_data[0][7];
+      p_rd->can_move[INF_MOVE_UP]   = TRUE;
+      p_rd->can_move[INF_MOVE_DOWN] = TRUE;
+      p_rd->can_move[INF_MOVE_LEFT] = TRUE;
+      p_rd->can_move[INF_MOVE_RIGHT]= FALSE;
+      p_rd->tr_pos_type = INF_TR_ROOM_POS_TYPE_NONE;
+    }
+    {
+      u8  tr_pos_type = INF_ROOM_POS_TYPE_J_1;
+      p_rd = &p_dungeon_data->room_data[0][10];
+      p_rd->can_move[INF_MOVE_UP]   = FALSE;
+      p_rd->can_move[INF_MOVE_DOWN] = FALSE;
+      p_rd->can_move[INF_MOVE_LEFT] = FALSE;
+      p_rd->can_move[INF_MOVE_RIGHT]= TRUE;
+
+      p_rd->tr_pos_type = tr_pos_type;
+      p_rd->room_type = sc_room_tr_param[tr_pos_type].room_type;
+    }
+    {
+      u8  tr_pos_type = INF_ROOM_POS_TYPE_G_1;
+      p_rd = &p_dungeon_data->room_data[0][11];
+      p_rd->can_move[INF_MOVE_UP]   = TRUE;
+      p_rd->can_move[INF_MOVE_DOWN] = FALSE;
+      p_rd->can_move[INF_MOVE_LEFT] = TRUE;
+      p_rd->can_move[INF_MOVE_RIGHT]= TRUE;
+
+      p_rd->tr_pos_type = tr_pos_type;
+      p_rd->room_type = sc_room_tr_param[tr_pos_type].room_type;
+    }
+    {
+      u8  tr_pos_type = INF_ROOM_POS_TYPE_F_1;
+      p_rd = &p_dungeon_data->room_data[0][12];
+      p_rd->can_move[INF_MOVE_UP]   = TRUE;
+      p_rd->can_move[INF_MOVE_DOWN] = FALSE;
+      p_rd->can_move[INF_MOVE_LEFT] = TRUE;
+      p_rd->can_move[INF_MOVE_RIGHT]= TRUE;
+
+      p_rd->tr_pos_type = tr_pos_type;
+      p_rd->room_type = sc_room_tr_param[tr_pos_type].room_type;
+    }
+    {
+      p_rd = &p_dungeon_data->room_data[0][13];
+      p_rd->can_move[INF_MOVE_UP]   = FALSE;
+      p_rd->can_move[INF_MOVE_DOWN] = FALSE;
+      p_rd->can_move[INF_MOVE_LEFT] = TRUE;
+      p_rd->can_move[INF_MOVE_RIGHT]= FALSE;
+      p_rd->tr_pos_type = INF_TR_ROOM_POS_TYPE_NONE;
+    }
+
+    
+    // データ差し替え(2階)
+    {
+      // エレベータ部屋
+      p_rd = &p_dungeon_data->room_data[1][7];
+      p_rd->room_type = ROOM_TYPE_ELEVATOR;
+      p_rd->tr_pos_type = INF_TR_ROOM_POS_TYPE_NONE;
+      p_rd->can_move[INF_MOVE_UP]   = FALSE;
+      p_rd->can_move[INF_MOVE_DOWN] = TRUE;
+      p_rd->can_move[INF_MOVE_LEFT] = TRUE;
+      p_rd->can_move[INF_MOVE_RIGHT]= FALSE;
+    }
+    {
+      u8  tr_pos_type = INF_ROOM_POS_TYPE_Q_1;
+      p_rd = &p_dungeon_data->room_data[1][5];
+      p_rd->can_move[INF_MOVE_UP]   = FALSE;
+      p_rd->can_move[INF_MOVE_DOWN] = TRUE;
+      p_rd->can_move[INF_MOVE_LEFT] = FALSE;
+      p_rd->can_move[INF_MOVE_RIGHT]= TRUE;
+
+      p_rd->tr_pos_type = tr_pos_type;
+      p_rd->room_type = sc_room_tr_param[tr_pos_type].room_type;
+    }
+    {
+      p_rd = &p_dungeon_data->room_data[1][6];
+      p_rd->can_move[INF_MOVE_UP]   = FALSE;
+      p_rd->can_move[INF_MOVE_DOWN] = TRUE;
+      p_rd->can_move[INF_MOVE_LEFT] = TRUE;
+      p_rd->can_move[INF_MOVE_RIGHT]= TRUE;
+      p_rd->tr_pos_type = INF_TR_ROOM_POS_TYPE_NONE;
+    }
+    {
+      u8  tr_pos_type = INF_ROOM_POS_TYPE_E_1;
+      p_rd = &p_dungeon_data->room_data[1][10];
+      p_rd->can_move[INF_MOVE_UP]   = TRUE;
+      p_rd->can_move[INF_MOVE_DOWN] = FALSE;
+      p_rd->can_move[INF_MOVE_LEFT] = FALSE;
+      p_rd->can_move[INF_MOVE_RIGHT]= TRUE;
+
+      p_rd->tr_pos_type = tr_pos_type;
+      p_rd->room_type = sc_room_tr_param[tr_pos_type].room_type;
+    }
+    {
+      u8  tr_pos_type = INF_ROOM_POS_TYPE_S_1;
+      p_rd = &p_dungeon_data->room_data[1][11];
+      p_rd->can_move[INF_MOVE_UP]   = TRUE;
+      p_rd->can_move[INF_MOVE_DOWN] = FALSE;
+      p_rd->can_move[INF_MOVE_LEFT] = TRUE;
+      p_rd->can_move[INF_MOVE_RIGHT]= TRUE;
+
+      p_rd->tr_pos_type = tr_pos_type;
+      p_rd->room_type = sc_room_tr_param[tr_pos_type].room_type;
+    }
+    {
+      p_rd = &p_dungeon_data->room_data[1][12];
+      p_rd->can_move[INF_MOVE_UP]   = TRUE;
+      p_rd->can_move[INF_MOVE_DOWN] = FALSE;
+      p_rd->can_move[INF_MOVE_LEFT] = TRUE;
+      p_rd->can_move[INF_MOVE_RIGHT]= FALSE;
+      p_rd->tr_pos_type = INF_TR_ROOM_POS_TYPE_NONE;
+    }
+
+    // データ差し替え(3階)
+    {
+      // エレベータ部屋
+      p_rd = &p_dungeon_data->room_data[2][11];
+      p_rd->room_type = ROOM_TYPE_ELEVATOR;
+      p_rd->tr_pos_type = INF_TR_ROOM_POS_TYPE_NONE;
+      p_rd->can_move[INF_MOVE_UP]   = FALSE;
+      p_rd->can_move[INF_MOVE_DOWN] = TRUE;
+      p_rd->can_move[INF_MOVE_LEFT] = FALSE;
+      p_rd->can_move[INF_MOVE_RIGHT]= FALSE;
+    }
+    {
+      // ボス部屋
+      p_rd = &p_dungeon_data->room_data[2][13];
+      p_rd->room_type = ROOM_TYPE_BOSS;
+      p_rd->tr_pos_type = INF_TR_ROOM_POS_TYPE_NONE;
+      p_rd->can_move[INF_MOVE_UP]   = FALSE;
+      p_rd->can_move[INF_MOVE_DOWN] = TRUE;
+      p_rd->can_move[INF_MOVE_LEFT] = FALSE;
+      p_rd->can_move[INF_MOVE_RIGHT]= FALSE;
+    }
+    {
+      p_rd = &p_dungeon_data->room_data[2][15];
+      p_rd->can_move[INF_MOVE_UP]   = FALSE;
+      p_rd->can_move[INF_MOVE_DOWN] = FALSE;
+      p_rd->can_move[INF_MOVE_LEFT] = FALSE;
+      p_rd->can_move[INF_MOVE_RIGHT]= TRUE;
+      p_rd->tr_pos_type = INF_TR_ROOM_POS_TYPE_NONE;
+    }
+    {
+      p_rd = &p_dungeon_data->room_data[2][16];
+      p_rd->can_move[INF_MOVE_UP]   = TRUE;
+      p_rd->can_move[INF_MOVE_DOWN] = FALSE;
+      p_rd->can_move[INF_MOVE_LEFT] = TRUE;
+      p_rd->can_move[INF_MOVE_RIGHT]= TRUE;
+      p_rd->tr_pos_type = INF_TR_ROOM_POS_TYPE_NONE;
+    }
+    {
+      u8  tr_pos_type = INF_ROOM_POS_TYPE_F_1;
+      p_rd = &p_dungeon_data->room_data[2][17];
+      p_rd->can_move[INF_MOVE_UP]   = FALSE;
+      p_rd->can_move[INF_MOVE_DOWN] = FALSE;
+      p_rd->can_move[INF_MOVE_LEFT] = TRUE;
+      p_rd->can_move[INF_MOVE_RIGHT]= TRUE;
+
+      p_rd->tr_pos_type = tr_pos_type;
+      p_rd->room_type = sc_room_tr_param[tr_pos_type].room_type;
+    }
+    {
+      p_rd = &p_dungeon_data->room_data[2][18];
+      p_rd->can_move[INF_MOVE_UP]   = TRUE;
+      p_rd->can_move[INF_MOVE_DOWN] = FALSE;
+      p_rd->can_move[INF_MOVE_LEFT] = TRUE;
+      p_rd->can_move[INF_MOVE_RIGHT]= FALSE;
+      p_rd->tr_pos_type = INF_TR_ROOM_POS_TYPE_NONE;
+    }
+
+    // 4階
+    p_dungeon_data->room_data[3][0].room_type = ROOM_TYPE_ELEVATOR;
+    p_dungeon_data->room_data[3][1].tr_pos_type = INF_ROOM_POS_TYPE_E_1;
+
+    // 5階
+    p_dungeon_data->room_data[4][0].room_type = ROOM_TYPE_ELEVATOR;
+    p_dungeon_data->room_data[4][1].tr_pos_type = INF_ROOM_POS_TYPE_E_1;
+
+    // 6階
+    p_dungeon_data->room_data[5][0].room_type = ROOM_TYPE_ELEVATOR;
+    p_dungeon_data->room_data[5][1].tr_pos_type = INF_ROOM_POS_TYPE_E_1;
+
+    // 7階
+    p_dungeon_data->room_data[6][0].room_type = ROOM_TYPE_ELEVATOR;
+    p_dungeon_data->room_data[6][1].tr_pos_type = INF_ROOM_POS_TYPE_E_1;
+
+    // 8階
+    p_dungeon_data->room_data[7][0].room_type = ROOM_TYPE_ELEVATOR;
+    p_dungeon_data->room_data[7][1].tr_pos_type = INF_ROOM_POS_TYPE_E_1;
+
+    // 9階
+    p_dungeon_data->room_data[8][0].room_type = ROOM_TYPE_ELEVATOR;
+    p_dungeon_data->room_data[8][1].tr_pos_type = INF_ROOM_POS_TYPE_E_1;
+
+    // 10階
+    p_dungeon_data->room_data[9][0].room_type = ROOM_TYPE_ELEVATOR;
+    p_dungeon_data->room_data[9][1].tr_pos_type = INF_ROOM_POS_TYPE_E_1;
+
+ }
+#endif
+
 }
 
 //----------------------------------------------------------------------------
@@ -1979,11 +2273,7 @@ static void SetTrainerData( INF_DUNGEON_DATA *p_dungeon_data , u32 seed )
 
   // 回復トレーナー配置位置を決める
   {
-    int id_pos = 0;
     int room_id_array[ROOM_MAX];
-    u16 tr_id;
-    u32 room_id_index;
-    u32 member_index;
     u32 member_num[ROOM_MAX];
     u32 recover_index = 0;
 
@@ -2004,18 +2294,82 @@ static void SetTrainerData( INF_DUNGEON_DATA *p_dungeon_data , u32 seed )
         }
       }
       GF_ASSERT_MSG(cnt!=0,"回復トレーナーが置ける場所がありません\n");
-      room_id_index = GFL_STD_Rand( &rand_context ,cnt);
-      member_index = GFL_STD_Rand( &rand_context ,member_num[room_id_index]);
-      id_pos = GetRoomTrainerIDPos( p_dungeon_data ,n ,room_id_array[room_id_index] ,member_index);
 
-      tr_id = INF_TRID_START_RECOVERY + GFL_STD_Rand( &rand_context ,INF_TRID_CNT_RECOVERY);
-      p_dungeon_data->tr_data[n].tr_id[id_pos] = tr_id;
-      p_dungeon_data->recover_data[recover_index] = tr_id;
-      recover_index++;
-      OS_Printf("回復トレーナー部屋NO：%u\n",room_id_array[room_id_index]);
+#ifdef PM_DEBUG
+      if( (g_debug_inf_is_presentation == FALSE) )
+      {
+        // 通常配置
+        SetRecoverTrainer( p_dungeon_data ,n ,room_id_array ,cnt ,member_num ,&rand_context ,&recover_index);
+      }
+      else
+      {
+        if( (n == 0 ) || (n == 1 ) || (n == 2 ) ) 
+        {
+          // プレゼンテーション固定
+          u16 tr_id;
+          int id_pos = 0;
+
+          switch(n)
+          {
+          case 0:
+          case 2:
+            id_pos = GetRoomTrainerIDPos( p_dungeon_data ,n ,24 ,0);
+            OS_Printf("回復トレーナー部屋NO：24（固定）\n");
+            break;
+          case 1:
+            id_pos = GetRoomTrainerIDPos( p_dungeon_data ,n ,10 ,0);
+            OS_Printf("回復トレーナー部屋NO：10（固定）\n");
+            break;
+          }
+          tr_id = INF_TRID_START_RECOVERY + GFL_STD_Rand( &rand_context ,INF_TRID_CNT_RECOVERY);
+          p_dungeon_data->tr_data[n].tr_id[id_pos] = tr_id;
+          p_dungeon_data->recover_data[recover_index] = tr_id;
+          recover_index++;
+        }
+        else
+        {
+          SetRecoverTrainer( p_dungeon_data ,n ,room_id_array ,cnt ,member_num ,&rand_context ,&recover_index);
+        }
+      }
+
+#else
+      SetRecoverTrainer( p_dungeon_data ,n ,room_id_array ,cnt ,member_num ,&rand_context ,&recover_index);
+#endif
     }
   }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  回復トレーナー設置
+ *
+ *	@param	*p_dungeon_data ダンジョンデータ
+ *	@param	floor_no        設置フロア
+ *	@param	*room_id_array  配置可能部屋リスト
+ *	@param	cnt             配置可能部屋数
+ *	@param	*member_num     トレーナー数配列
+ *	@param	*rand_context   
+ *	@param	*recover_index  回復トレーナーインデックス
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void SetRecoverTrainer( INF_DUNGEON_DATA  *p_dungeon_data ,int floor_no 
+    ,int *room_id_array ,int cnt,u32 *member_num , GFL_STD_RandContext *rand_context ,u32 *recover_index )
+{
+  int id_pos = 0;
+  u16 tr_id;
+  u32 room_id_index;
+  u32 member_index;
 
+  room_id_index = GFL_STD_Rand( rand_context ,cnt);
+  member_index = GFL_STD_Rand( rand_context ,member_num[room_id_index]);
+  id_pos = GetRoomTrainerIDPos( p_dungeon_data ,floor_no ,room_id_array[room_id_index] ,member_index);
+
+  tr_id = INF_TRID_START_RECOVERY + GFL_STD_Rand( rand_context ,INF_TRID_CNT_RECOVERY);
+  p_dungeon_data->tr_data[floor_no].tr_id[id_pos] = tr_id;
+  p_dungeon_data->recover_data[(*recover_index)] = tr_id;
+  (*recover_index)++;
+  OS_Printf("回復トレーナー部屋NO：%u\n",room_id_array[room_id_index]);
 }
 
 //----------------------------------------------------------------------------
@@ -2514,8 +2868,8 @@ static void GetFloorData( INFINITYDUNGEON_SAVE *p_save ,INF_DUNGEON_DATA *p_dung
   u32 area_no = INFINITYDUNGEON_SAVE_GetDungeonAreaID( p_save );
   INF_DUNGEON_SEED *p_seed = &p_dungeon_data->seed;
 
-  // ダンジョンデータを生成
-  SetDungeonData( p_dungeon_data ,area_no ,p_seed->dungeon_data_seed ,5 ,5);
+  // ダンジョンデータを生成(エリアに対応したサイズで生成する)
+  SetDungeonData( p_dungeon_data ,area_no ,p_seed->dungeon_data_seed ,sc_floor_size[area_no].fs_x ,sc_floor_size[area_no].fs_y);
  
   // トレーナーデータをセット
   SetTrainerData( p_dungeon_data ,p_seed->tr_data_seed );

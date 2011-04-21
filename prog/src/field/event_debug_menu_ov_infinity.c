@@ -38,6 +38,7 @@
 extern int  g_debug_inf_tr_pos_type;
 extern BOOL g_debug_inf_data_change;
 extern u32  g_debug_inf_master_seed;
+extern BOOL g_debug_inf_is_presentation;
 
 
 //=============================================================================
@@ -89,6 +90,7 @@ static const DEBUG_MENU_LIST MenuList[] =
   { DEBUG_STR_INFINITY_DEBUG_MODE , (void*)DEBUG_STR_INFINITY_DEBUG_MODE , GFL_OVERLAY_BLANK_ID },  // デバッグモード
   { DEBUG_STR_INFINITY_TR_POS_TYPE , (void*)DEBUG_STR_INFINITY_TR_POS_TYPE , GFL_OVERLAY_BLANK_ID },  // トレーナー位置固定
   { DEBUG_STR_INFINITY_SEED_CHANGE , (void*)DEBUG_STR_INFINITY_SEED_CHANGE , GFL_OVERLAY_BLANK_ID },  // シード
+  { DEBUG_STR_INFINITY_PRESENTATION , (void*)DEBUG_STR_INFINITY_PRESENTATION , GFL_OVERLAY_BLANK_ID },  // プレゼン
 };
 
 ///リスト メニューヘッダー
@@ -136,6 +138,7 @@ enum {
   STR_NUM_DEBUG_ON_OFF,
   STR_NUM_TR_POS_TYPE,
   STR_NUM_SEED,
+  STR_NUM_PRESENTATION,
 };
 
 //----------------------------------------------------------------------------
@@ -260,6 +263,9 @@ static BOOL NumInputState( INFDUN_WORK* p_wk )
       case STR_NUM_SEED:
         p_wk->num = g_debug_inf_master_seed;
         break;
+      case STR_NUM_PRESENTATION:
+        p_wk->num = g_debug_inf_is_presentation;
+        break;
 
       defautl:
         p_wk->num = 0;
@@ -340,6 +346,21 @@ static BOOL NumInputState( INFDUN_WORK* p_wk )
             p_wk->num = 0;
           }
           g_debug_inf_master_seed = p_wk->num;
+          DrawNum( p_wk );
+        }
+        break;
+      case STR_NUM_PRESENTATION:
+        {
+          NumInput(p_wk);
+          if( p_wk->num > 1 )
+          {
+            p_wk->num = 0;
+          }
+          if( p_wk->num < 0 )
+          {
+            p_wk->num = 1;
+          }
+          g_debug_inf_is_presentation = p_wk->num;
           DrawNum( p_wk );
         }
         break;
@@ -439,6 +460,13 @@ static GMEVENT_RESULT debugMenuMedalInfinityDungeon( GMEVENT *event, int *seq, v
       {
         FLDMENUFUNC_DeleteMenu( work->menuFunc );
         work->num_input_type = STR_NUM_SEED;
+        (*seq)++;
+      }
+      break;
+    case DEBUG_STR_INFINITY_PRESENTATION:
+      {
+        FLDMENUFUNC_DeleteMenu( work->menuFunc );
+        work->num_input_type = STR_NUM_PRESENTATION;
         (*seq)++;
       }
       break;

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="onoue_masayuki" host="W00272" date="2011-04-20T14:55:25"/>
+	<create user="onoue_masayuki" host="W00272" date="2011-04-21T11:43:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -496,6 +496,11 @@
 	<row id="DEBUG_STR_INFINITY_SEED_CHANGE">
 		<language name="JPN" width="240">シード固定(0=ランダム)</language>
 		<language name="JPN_KANJI" width="240">シード固定(0=ランダム)</language>
+	</row>
+
+	<row id="DEBUG_STR_INFINITY_PRESENTATION">
+		<language name="JPN" width="240">プレゼンテーション(0=有効)</language>
+		<language name="JPN_KANJI" width="240">プレゼンテーション(0=有効)</language>
 	</row>
 
 	<flowchart-group-list>

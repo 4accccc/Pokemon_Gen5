@@ -31,6 +31,7 @@ extern void INFINITYDUNGEON_SAVE_Init(INFINITYDUNGEON_SAVE *p_save);
 extern INFINITYDUNGEON_SAVE* SaveData_GetINFINITYDUNGEON( SAVE_CONTROL_WORK * p_save );
 extern u16 INFINITY_DUNGEON_SAVE_GetTrNo_ByObjId( u16 obj_id );
 extern u8 INFINITY_DUNGEON_SAVE_GetHintLevel( const INFINITYDUNGEON_SAVE *p_save );
+extern void INFINITYDUNGEON_SAVE_InitDungeonData(INFINITYDUNGEON_SAVE *p_save);
 
 // ダンジョン情報（取得系）
 extern u8 INFINITYDUNGEON_SAVE_GetDungeonStatus( const INFINITYDUNGEON_SAVE *p_save );
