@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakamura_akira" host="W00280" date="2011-04-21T12:07:12"/>
+	<create user="nakamura_akira" host="W00280" date="2011-04-21T19:49:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="637" top="138" right="1137" bottom="771" maximized="no" rayout="Vertical2">
+	<dialog left="355" top="137" right="855" bottom="770" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="105" right="1280" bottom="514" visible="no"/>
 		<band id="0" index="1" style="0000" width="484"/>
@@ -292,82 +292,82 @@
 	</lock>
 
 
-	<row id="msg_w_boss_start_00">
+	<row id="msg_w_boss_start_00" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<language name="JPN" width="256">せんとう　かいし　ほわいと</language>
 		<language name="JPN_KANJI" width="256">せんとう　かいし　ほわいと</language>
 	</row>
 
-	<row id="msg_w_boss_start_01">
+	<row id="msg_w_boss_start_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<language name="JPN" width="256">せんとう　かいし　ほわいと</language>
 		<language name="JPN_KANJI" width="256">せんとう　かいし　ほわいと</language>
 	</row>
 
-	<row id="msg_w_boss_start_02">
+	<row id="msg_w_boss_start_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<language name="JPN" width="256">せんとう　かいし　ほわいと</language>
 		<language name="JPN_KANJI" width="256">せんとう　かいし　ほわいと</language>
 	</row>
 
-	<row id="msg_w_boss_start_03">
+	<row id="msg_w_boss_start_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<language name="JPN" width="256">せんとう　かいし　ほわいと▼</language>
 		<language name="JPN_KANJI" width="256">せんとう　かいし　ほわいと▼</language>
 	</row>
 
-	<row id="msg_w_boss_start_04">
+	<row id="msg_w_boss_start_04" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<language name="JPN" width="256">せんとう　かいし　ほわいと▼</language>
 		<language name="JPN_KANJI" width="256">せんとう　かいし　ほわいと▼</language>
 	</row>
 
-	<row id="msg_w_boss_start_05">
+	<row id="msg_w_boss_start_05" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<language name="JPN" width="256">せんとう　かいし　ほわいと▼</language>
 		<language name="JPN_KANJI" width="256">せんとう　かいし　ほわいと▼</language>
 	</row>
 
-	<row id="msg_w_boss_start_06">
+	<row id="msg_w_boss_start_06" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<language name="JPN" width="256">せんとう　かいし　ほわいと▼</language>
 		<language name="JPN_KANJI" width="256">せんとう　かいし　ほわいと▼</language>
 	</row>
 
-	<row id="msg_w_boss_start_07">
+	<row id="msg_w_boss_start_07" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<language name="JPN" width="256">せんとう　かいし　ほわいと▼</language>
 		<language name="JPN_KANJI" width="256">せんとう　かいし　ほわいと▼</language>
 	</row>
 
-	<row id="msg_w_boss_start_08">
+	<row id="msg_w_boss_start_08" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<language name="JPN" width="256">せんとう　かいし　ほわいと▼</language>
 		<language name="JPN_KANJI" width="256">せんとう　かいし　ほわいと▼</language>
 	</row>
 
-	<row id="msg_w_boss_start_09">
+	<row id="msg_w_boss_start_09" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<language name="JPN" width="256">せんとう　かいし　ほわいと▼</language>
 		<language name="JPN_KANJI" width="256">せんとう　かいし　ほわいと▼</language>
 	</row>
 
-	<row id="msg_b_boss_start_00">
+	<row id="msg_b_boss_start_00" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">せんとう　かいし　ブラック▼</language>
 		<language name="JPN_KANJI" width="256">せんとう　かいし　ブラック▼</language>
 	</row>
 
-	<row id="msg_b_boss_start_01">
+	<row id="msg_b_boss_start_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">せんとう　かいし　ブラック▼</language>
 		<language name="JPN_KANJI" width="256">せんとう　かいし　ブラック▼</language>
 	</row>
 
-	<row id="msg_b_boss_start_02">
+	<row id="msg_b_boss_start_02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">せんとう　かいし　ブラック▼</language>
 		<language name="JPN_KANJI" width="256">せんとう　かいし　ブラック▼</language>
 	</row>
 
-	<row id="msg_b_boss_start_03">
+	<row id="msg_b_boss_start_03" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">せんとう　かいし　ブラック▼</language>
 		<language name="JPN_KANJI" width="256">せんとう　かいし　ブラック▼</language>
 	</row>
 
-	<row id="msg_b_boss_start_04">
+	<row id="msg_b_boss_start_04" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">せんとう　かいし　ブラック▼</language>
 		<language name="JPN_KANJI" width="256">せんとう　かいし　ブラック▼</language>
 	</row>
 
-	<row id="msg_b_boss_start_05">
+	<row id="msg_b_boss_start_05" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">おまえの　ちからは　しっている
 そのちからが　おとろえていないか
 たしかめてやろう！</language>
@@ -376,102 +376,102 @@
 確かめてやろう！▼</language>
 	</row>
 
-	<row id="msg_b_boss_start_06">
+	<row id="msg_b_boss_start_06" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">せんとう　かいし　ブラック▼</language>
 		<language name="JPN_KANJI" width="256">せんとう　かいし　ブラック▼</language>
 	</row>
 
-	<row id="msg_b_boss_start_07">
+	<row id="msg_b_boss_start_07" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">せんとう　かいし　ブラック▼</language>
 		<language name="JPN_KANJI" width="256">せんとう　かいし　ブラック▼</language>
 	</row>
 
-	<row id="msg_b_boss_start_08">
+	<row id="msg_b_boss_start_08" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">せんとう　かいし　ブラック▼</language>
 		<language name="JPN_KANJI" width="256">せんとう　かいし　ブラック▼</language>
 	</row>
 
-	<row id="msg_b_boss_start_09">
+	<row id="msg_b_boss_start_09" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">せんとう　かいし　ブラック▼</language>
 		<language name="JPN_KANJI" width="256">せんとう　かいし　ブラック▼</language>
 	</row>
 
-	<row id="msg_w_boss_first_start_00">
+	<row id="msg_w_boss_first_start_00" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<language name="JPN" width="256">しょかい　せんとう　かいし（ホワイト）▼</language>
 		<language name="JPN_KANJI" width="256">しょかい　せんとう　かいし（ホワイト）▼</language>
 	</row>
 
-	<row id="msg_w_boss_first_start_01">
+	<row id="msg_w_boss_first_start_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<language name="JPN" width="256">しょかい　せんとう　かいし（ホワイト）▼</language>
 		<language name="JPN_KANJI" width="256">しょかい　せんとう　かいし（ホワイト）▼</language>
 	</row>
 
-	<row id="msg_w_boss_first_start_02">
+	<row id="msg_w_boss_first_start_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<language name="JPN" width="256">しょかい　せんとう　かいし（ホワイト）▼</language>
 		<language name="JPN_KANJI" width="256">しょかい　せんとう　かいし（ホワイト）▼</language>
 	</row>
 
-	<row id="msg_w_boss_first_start_03">
+	<row id="msg_w_boss_first_start_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<language name="JPN" width="256">しょかい　せんとう　かいし（ホワイト）▼</language>
 		<language name="JPN_KANJI" width="256">しょかい　せんとう　かいし（ホワイト）▼</language>
 	</row>
 
-	<row id="msg_w_boss_first_start_04">
+	<row id="msg_w_boss_first_start_04" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<language name="JPN" width="256">しょかい　せんとう　かいし（ホワイト）▼</language>
 		<language name="JPN_KANJI" width="256">しょかい　せんとう　かいし（ホワイト）▼</language>
 	</row>
 
-	<row id="msg_w_boss_first_start_05">
+	<row id="msg_w_boss_first_start_05" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<language name="JPN" width="256">しょかい　せんとう　かいし（ホワイト）▼</language>
 		<language name="JPN_KANJI" width="256">しょかい　せんとう　かいし（ホワイト）▼</language>
 	</row>
 
-	<row id="msg_w_boss_first_start_06">
+	<row id="msg_w_boss_first_start_06" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<language name="JPN" width="256">しょかい　せんとう　かいし（ホワイト）▼</language>
 		<language name="JPN_KANJI" width="256">しょかい　せんとう　かいし（ホワイト）▼</language>
 	</row>
 
-	<row id="msg_w_boss_first_start_07">
+	<row id="msg_w_boss_first_start_07" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<language name="JPN" width="256">しょかい　せんとう　かいし（ホワイト）▼</language>
 		<language name="JPN_KANJI" width="256">しょかい　せんとう　かいし（ホワイト）▼</language>
 	</row>
 
-	<row id="msg_w_boss_first_start_08">
+	<row id="msg_w_boss_first_start_08" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<language name="JPN" width="256">しょかい　せんとう　かいし（ホワイト）▼</language>
 		<language name="JPN_KANJI" width="256">しょかい　せんとう　かいし（ホワイト）▼</language>
 	</row>
 
-	<row id="msg_w_boss_first_start_09">
+	<row id="msg_w_boss_first_start_09" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<language name="JPN" width="256">しょかい　せんとう　かいし（ホワイト）▼</language>
 		<language name="JPN_KANJI" width="256">しょかい　せんとう　かいし（ホワイト）▼</language>
 	</row>
 
-	<row id="msg_b_boss_first_start_00">
+	<row id="msg_b_boss_first_start_00" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">しょかい　せんとう　かいし（ブラック）▼</language>
 		<language name="JPN_KANJI" width="256">しょかい　せんとう　かいし（ブラック）▼</language>
 	</row>
 
-	<row id="msg_b_boss_first_start_01">
+	<row id="msg_b_boss_first_start_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">しょかい　せんとう　かいし（ブラック）▼</language>
 		<language name="JPN_KANJI" width="256">しょかい　せんとう　かいし（ブラック）▼</language>
 	</row>
 
-	<row id="msg_b_boss_first_start_02">
+	<row id="msg_b_boss_first_start_02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">しょかい　せんとう　かいし（ブラック）▼</language>
 		<language name="JPN_KANJI" width="256">しょかい　せんとう　かいし（ブラック）▼</language>
 	</row>
 
-	<row id="msg_b_boss_first_start_03">
+	<row id="msg_b_boss_first_start_03" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">しょかい　せんとう　かいし（ブラック）▼</language>
 		<language name="JPN_KANJI" width="256">しょかい　せんとう　かいし（ブラック）▼</language>
 	</row>
 
-	<row id="msg_b_boss_first_start_04">
+	<row id="msg_b_boss_first_start_04" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">しょかい　せんとう　かいし（ブラック）▼</language>
 		<language name="JPN_KANJI" width="256">しょかい　せんとう　かいし（ブラック）▼</language>
 	</row>
 
-	<row id="msg_b_boss_first_start_05">
+	<row id="msg_b_boss_first_start_05" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">ここまでくるとは　いいうでだな▼
 おまえの　ちからが
 どれほどのものか　みせてもらおう！▼</language>
@@ -480,102 +480,102 @@
 見せてもらおう！▼</language>
 	</row>
 
-	<row id="msg_b_boss_first_start_06">
+	<row id="msg_b_boss_first_start_06" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">しょかい　せんとう　かいし（ブラック）▼</language>
 		<language name="JPN_KANJI" width="256">しょかい　せんとう　かいし（ブラック）▼</language>
 	</row>
 
-	<row id="msg_b_boss_first_start_07">
+	<row id="msg_b_boss_first_start_07" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">しょかい　せんとう　かいし（ブラック）▼</language>
 		<language name="JPN_KANJI" width="256">しょかい　せんとう　かいし（ブラック）▼</language>
 	</row>
 
-	<row id="msg_b_boss_first_start_08">
+	<row id="msg_b_boss_first_start_08" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">しょかい　せんとう　かいし（ブラック）▼</language>
 		<language name="JPN_KANJI" width="256">しょかい　せんとう　かいし（ブラック）▼</language>
 	</row>
 
-	<row id="msg_b_boss_first_start_09">
+	<row id="msg_b_boss_first_start_09" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">しょかい　せんとう　かいし（ブラック）▼</language>
 		<language name="JPN_KANJI" width="256">しょかい　せんとう　かいし（ブラック）▼</language>
 	</row>
 
-	<row id="msg_w_boss_end_00">
+	<row id="msg_w_boss_end_00" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<language name="JPN" width="256">せんとう　しゅうりょう　ホワイト▼</language>
 		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ホワイト▼</language>
 	</row>
 
-	<row id="msg_w_boss_end_01">
+	<row id="msg_w_boss_end_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<language name="JPN" width="256">せんとう　しゅうりょう　ホワイト▼</language>
 		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ホワイト▼</language>
 	</row>
 
-	<row id="msg_w_boss_end_02">
+	<row id="msg_w_boss_end_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<language name="JPN" width="256">せんとう　しゅうりょう　ホワイト▼</language>
 		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ホワイト▼</language>
 	</row>
 
-	<row id="msg_w_boss_end_03">
+	<row id="msg_w_boss_end_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<language name="JPN" width="256">せんとう　しゅうりょう　ホワイト▼</language>
 		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ホワイト▼</language>
 	</row>
 
-	<row id="msg_w_boss_end_04">
+	<row id="msg_w_boss_end_04" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<language name="JPN" width="256">せんとう　しゅうりょう　ホワイト▼</language>
 		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ホワイト▼</language>
 	</row>
 
-	<row id="msg_w_boss_end_05">
+	<row id="msg_w_boss_end_05" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<language name="JPN" width="256">せんとう　しゅうりょう　ホワイト▼</language>
 		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ホワイト▼</language>
 	</row>
 
-	<row id="msg_w_boss_end_06">
+	<row id="msg_w_boss_end_06" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<language name="JPN" width="256">せんとう　しゅうりょう　ホワイト▼</language>
 		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ホワイト▼</language>
 	</row>
 
-	<row id="msg_w_boss_end_07">
+	<row id="msg_w_boss_end_07" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<language name="JPN" width="256">せんとう　しゅうりょう　ホワイト▼</language>
 		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ホワイト▼</language>
 	</row>
 
-	<row id="msg_w_boss_end_08">
+	<row id="msg_w_boss_end_08" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<language name="JPN" width="256">せんとう　しゅうりょう　ホワイト▼</language>
 		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ホワイト▼</language>
 	</row>
 
-	<row id="msg_w_boss_end_09">
+	<row id="msg_w_boss_end_09" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<language name="JPN" width="256">せんとう　しゅうりょう　ホワイト▼</language>
 		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ホワイト▼</language>
 	</row>
 
-	<row id="msg_b_boss_end_00">
+	<row id="msg_b_boss_end_00" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">せんとう　しゅうりょう　ブラック▼</language>
 		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ブラック▼</language>
 	</row>
 
-	<row id="msg_b_boss_end_01">
+	<row id="msg_b_boss_end_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">せんとう　しゅうりょう　ブラック▼</language>
 		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ブラック▼</language>
 	</row>
 
-	<row id="msg_b_boss_end_02">
+	<row id="msg_b_boss_end_02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">せんとう　しゅうりょう　ブラック▼</language>
 		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ブラック▼</language>
 	</row>
 
-	<row id="msg_b_boss_end_03">
+	<row id="msg_b_boss_end_03" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">せんとう　しゅうりょう　ブラック▼</language>
 		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ブラック▼</language>
 	</row>
 
-	<row id="msg_b_boss_end_04">
+	<row id="msg_b_boss_end_04" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">せんとう　しゅうりょう　ブラック▼</language>
 		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ブラック▼</language>
 	</row>
 
-	<row id="msg_b_boss_end_05">
+	<row id="msg_b_boss_end_05" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">さすがだな▼
 そのちから　おとろえては　
 いないようだ▼
@@ -585,52 +585,52 @@
 さらなる　高みを　目指すが　いい▼</language>
 	</row>
 
-	<row id="msg_b_boss_end_06">
+	<row id="msg_b_boss_end_06" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">せんとう　しゅうりょう　ブラック▼</language>
 		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ブラック▼</language>
 	</row>
 
-	<row id="msg_b_boss_end_07">
+	<row id="msg_b_boss_end_07" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">せんとう　しゅうりょう　ブラック▼</language>
 		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ブラック▼</language>
 	</row>
 
-	<row id="msg_b_boss_end_08">
+	<row id="msg_b_boss_end_08" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">せんとう　しゅうりょう　ブラック▼</language>
 		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ブラック▼</language>
 	</row>
 
-	<row id="msg_b_boss_end_09">
+	<row id="msg_b_boss_end_09" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">せんとう　しゅうりょう　ブラック▼</language>
 		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ブラック▼</language>
 	</row>
 
-	<row id="msg_b_boss_first_end_00">
+	<row id="msg_b_boss_first_end_00" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">しょかい　せんとう　おわり（ブラック）▼</language>
 		<language name="JPN_KANJI" width="256">しょかい　せんとう　おわり（ブラック）▼</language>
 	</row>
 
-	<row id="msg_b_boss_first_end_01">
+	<row id="msg_b_boss_first_end_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">しょかい　せんとう　おわり（ブラック）▼</language>
 		<language name="JPN_KANJI" width="256">しょかい　せんとう　おわり（ブラック）▼</language>
 	</row>
 
-	<row id="msg_b_boss_first_end_02">
+	<row id="msg_b_boss_first_end_02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">しょかい　せんとう　おわり（ブラック）▼</language>
 		<language name="JPN_KANJI" width="256">しょかい　せんとう　おわり（ブラック）▼</language>
 	</row>
 
-	<row id="msg_b_boss_first_end_03">
+	<row id="msg_b_boss_first_end_03" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">しょかい　せんとう　おわり（ブラック）▼</language>
 		<language name="JPN_KANJI" width="256">しょかい　せんとう　おわり（ブラック）▼</language>
 	</row>
 
-	<row id="msg_b_boss_first_end_04">
+	<row id="msg_b_boss_first_end_04" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">しょかい　せんとう　おわり（ブラック）▼</language>
 		<language name="JPN_KANJI" width="256">しょかい　せんとう　おわり（ブラック）▼</language>
 	</row>
 
-	<row id="msg_b_boss_first_end_05">
+	<row id="msg_b_boss_first_end_05" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">たいしたものだな
 ここまできたのも　じつりょくのようだ▼
 おまえなら　あのひとに
@@ -645,570 +645,580 @@
 目指すが　いい▼</language>
 	</row>
 
-	<row id="msg_b_boss_first_end_06">
+	<row id="msg_b_boss_first_end_06" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">しょかい　せんとう　おわり（ブラック）▼</language>
 		<language name="JPN_KANJI" width="256">しょかい　せんとう　おわり（ブラック）▼</language>
 	</row>
 
-	<row id="msg_b_boss_first_end_07">
+	<row id="msg_b_boss_first_end_07" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">しょかい　せんとう　おわり（ブラック）▼</language>
 		<language name="JPN_KANJI" width="256">しょかい　せんとう　おわり（ブラック）▼</language>
 	</row>
 
-	<row id="msg_b_boss_first_end_08">
+	<row id="msg_b_boss_first_end_08" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">しょかい　せんとう　おわり（ブラック）▼</language>
 		<language name="JPN_KANJI" width="256">しょかい　せんとう　おわり（ブラック）▼</language>
 	</row>
 
-	<row id="msg_b_boss_first_end_09">
+	<row id="msg_b_boss_first_end_09" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">しょかい　せんとう　おわり（ブラック）▼</language>
 		<language name="JPN_KANJI" width="256">しょかい　せんとう　おわり（ブラック）▼</language>
 	</row>
 
-	<row id="msg_w_boss_first_end_00">
+	<row id="msg_w_boss_first_end_00" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<language name="JPN" width="256">しょかい　せんとう　おわり（ホワイト）▼</language>
 		<language name="JPN_KANJI" width="256">しょかい　せんとう　おわり（ホワイト）▼</language>
 	</row>
 
-	<row id="msg_w_boss_first_end_01">
+	<row id="msg_w_boss_first_end_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<language name="JPN" width="256">しょかい　せんとう　おわり（ホワイト）▼</language>
 		<language name="JPN_KANJI" width="256">しょかい　せんとう　おわり（ホワイト）▼</language>
 	</row>
 
-	<row id="msg_w_boss_first_end_02">
+	<row id="msg_w_boss_first_end_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<language name="JPN" width="256">しょかい　せんとう　おわり（ホワイト）▼</language>
 		<language name="JPN_KANJI" width="256">しょかい　せんとう　おわり（ホワイト）▼</language>
 	</row>
 
-	<row id="msg_w_boss_first_end_03">
+	<row id="msg_w_boss_first_end_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<language name="JPN" width="256">しょかい　せんとう　おわり（ホワイト）▼</language>
 		<language name="JPN_KANJI" width="256">しょかい　せんとう　おわり（ホワイト）▼</language>
 	</row>
 
-	<row id="msg_w_boss_first_end_04">
+	<row id="msg_w_boss_first_end_04" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<language name="JPN" width="256">しょかい　せんとう　おわり（ホワイト）▼</language>
 		<language name="JPN_KANJI" width="256">しょかい　せんとう　おわり（ホワイト）▼</language>
 	</row>
 
-	<row id="msg_w_boss_first_end_05">
+	<row id="msg_w_boss_first_end_05" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<language name="JPN" width="256">しょかい　せんとう　おわり（ホワイト）▼</language>
 		<language name="JPN_KANJI" width="256">しょかい　せんとう　おわり（ホワイト）▼</language>
 	</row>
 
-	<row id="msg_w_boss_first_end_06">
+	<row id="msg_w_boss_first_end_06" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<language name="JPN" width="256">しょかい　せんとう　おわり（ホワイト）▼</language>
 		<language name="JPN_KANJI" width="256">しょかい　せんとう　おわり（ホワイト）▼</language>
 	</row>
 
-	<row id="msg_w_boss_first_end_07">
+	<row id="msg_w_boss_first_end_07" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<language name="JPN" width="256">しょかい　せんとう　おわり（ホワイト）▼</language>
 		<language name="JPN_KANJI" width="256">しょかい　せんとう　おわり（ホワイト）▼</language>
 	</row>
 
-	<row id="msg_w_boss_first_end_08">
+	<row id="msg_w_boss_first_end_08" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<language name="JPN" width="256">しょかい　せんとう　おわり（ホワイト）▼</language>
 		<language name="JPN_KANJI" width="256">しょかい　せんとう　おわり（ホワイト）▼</language>
 	</row>
 
-	<row id="msg_w_boss_first_end_09">
+	<row id="msg_w_boss_first_end_09" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<language name="JPN" width="256">しょかい　せんとう　おわり（ホワイト）▼</language>
 		<language name="JPN_KANJI" width="256">しょかい　せんとう　おわり（ホワイト）▼</language>
 	</row>
 
-	<row id="msg_hint_level_0_00">
+	<row id="msg_hint_level_0_00" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="256">キミ　つよいんだね
 びっくりしたよ</language>
 		<language name="JPN_KANJI" width="256">キミ　強いんだね
 びっくりしたよ</language>
 	</row>
 
-	<row id="msg_hint_level_0_01">
+	<row id="msg_hint_level_0_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="256">アナタ　すごいわ
 また　たたかいましょう</language>
 		<language name="JPN_KANJI" width="256">アナタ　すごいわ
 また　戦いましょう</language>
 	</row>
 
-	<row id="msg_hint_level_0_02">
+	<row id="msg_hint_level_0_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="256">なかなか　やるな！
 ほかの　トレーナーに　まけるなよ！</language>
 		<language name="JPN_KANJI" width="256">なかなか　やるな！
 他の　トレーナーに　負けるなよ！</language>
 	</row>
 
-	<row id="msg_hint_level_0_03">
+	<row id="msg_hint_level_0_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="256">まけたわ
 アナタ　ほんとうに　つよいわね</language>
 		<language name="JPN_KANJI" width="256">負けたわ
 アナタ　本当に　強いわね</language>
 	</row>
 
-	<row id="msg_hint_level_0_04">
+	<row id="msg_hint_level_0_04" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="256">ん？　ボストレーナー？
 どこにいるか　しらないよ</language>
 		<language name="JPN_KANJI" width="256">ん？　ボストレーナー？
 どこにいるか　知らないよ</language>
 	</row>
 
-	<row id="msg_hint_level_0_05">
+	<row id="msg_hint_level_0_05" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="256">ボストレーナー？
 そのへんに　いるんじゃないかしら</language>
 		<language name="JPN_KANJI" width="256">ボストレーナー？
 その辺に　いるんじゃないかしら</language>
 	</row>
 
-	<row id="msg_hint_level_0_06">
+	<row id="msg_hint_level_0_06" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="256">ボストレーナー？
 はて　どこかで　みたような……</language>
 		<language name="JPN_KANJI" width="256">ボストレーナー？
 はて　どこかで　見たような……</language>
 	</row>
 
-	<row id="msg_hint_level_0_07">
+	<row id="msg_hint_level_0_07" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="256">ボストレーナー？　どこかで　みたわよ
 どこだったかしら……</language>
 		<language name="JPN_KANJI" width="256">ボストレーナー？　どこかで　見たわよ
 どこだったかしら……</language>
 	</row>
 
-	<row id="msg_hint_level_1_00_y">
+	<row id="msg_hint_level_1_00_y" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="256">ボストレーナー？　それなら
 このかいで　みたよ</language>
 		<language name="JPN_KANJI" width="256">ボストレーナー？　それなら
 この階で　見たよ</language>
 	</row>
 
-	<row id="msg_hint_level_1_00_n">
+	<row id="msg_hint_level_1_00_n" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="256">ボストレーナー？
 このかいでは　みてないよ</language>
 		<language name="JPN_KANJI" width="256">ボストレーナー？
 この階では　見てないよ</language>
 	</row>
 
-	<row id="msg_hint_level_1_01_y">
+	<row id="msg_hint_level_1_01_y" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="256">ボストレーナー？
 それなら　このかいで　みたわよ</language>
 		<language name="JPN_KANJI" width="256">ボストレーナー？
 それなら　この階で　見たわよ</language>
 	</row>
 
-	<row id="msg_hint_level_1_01_n">
+	<row id="msg_hint_level_1_01_n" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="256">ボストレーナー？
 このかいでは　みてないわ</language>
 		<language name="JPN_KANJI" width="256">ボストレーナー？
 この階では　見てないわ</language>
 	</row>
 
-	<row id="msg_hint_level_1_02_y">
+	<row id="msg_hint_level_1_02_y" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="256">ボストレーナー？
 このかいで　みかけたよ</language>
 		<language name="JPN_KANJI" width="256">ボストレーナー？
 この階で　見かけたよ</language>
 	</row>
 
-	<row id="msg_hint_level_1_02_n">
+	<row id="msg_hint_level_1_02_n" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="256">ボストレーナー？
 このかいには　いないとおもうよ</language>
 		<language name="JPN_KANJI" width="256">ボストレーナー？
 この階には　いないと思うよ</language>
 	</row>
 
-	<row id="msg_hint_level_1_03_y">
+	<row id="msg_hint_level_1_03_y" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="256">ボストレーナーを　さがしているの？
 このかいに　いるのを　みたわよ</language>
 		<language name="JPN_KANJI" width="256">ボストレーナーを　探しているの？
 この階に　いるのを　見たわよ</language>
 	</row>
 
-	<row id="msg_hint_level_1_03_n">
+	<row id="msg_hint_level_1_03_n" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="256">ボストレーナーを　さがしているの？
 このかいでは　みてないわね</language>
 		<language name="JPN_KANJI" width="256">ボストレーナーを　探しているの？
 この階では　見てないわね</language>
 	</row>
 
-	<row id="msg_hint_level_1_04_y">
+	<row id="msg_hint_level_1_04_y" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="256">ボストレーナーかい？
 それなら　このかいで　みたぞ</language>
 		<language name="JPN_KANJI" width="256">ボストレーナーかい？
 それなら　この階で　見たぞ</language>
 	</row>
 
-	<row id="msg_hint_level_1_04_n">
+	<row id="msg_hint_level_1_04_n" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="256">ボストレーナーかい？
 このかいでは　みてないね</language>
 		<language name="JPN_KANJI" width="256">ボストレーナーかい？
 この階では　見てないね</language>
 	</row>
 
-	<row id="msg_hint_level_1_05_y">
+	<row id="msg_hint_level_1_05_y" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="256">ボストレーナー？
 このかいに　いるんじゃ　ないかしら</language>
 		<language name="JPN_KANJI" width="256">ボストレーナー？
 この階に　いるんじゃ　ないかしら</language>
 	</row>
 
-	<row id="msg_hint_level_1_05_n">
+	<row id="msg_hint_level_1_05_n" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="256">ボストレーナー？
 このかいには　いないと　おもうわよ</language>
 		<language name="JPN_KANJI" width="256">ボストレーナー？
 この階には　いないと　思うわよ</language>
 	</row>
 
-	<row id="msg_hint_level_1_06_y">
+	<row id="msg_hint_level_1_06_y" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="256">ボストレーナーじゃと？　ひみつじゃぞ
 ……　このかいに　おるぞ</language>
 		<language name="JPN_KANJI" width="256">ボストレーナーじゃと？　秘密じゃぞ
 ……　この階に　おるぞ</language>
 	</row>
 
-	<row id="msg_hint_level_1_06_n">
+	<row id="msg_hint_level_1_06_n" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="256">ボストレーナーじゃと？
 このかいでは　みかけておらん</language>
 		<language name="JPN_KANJI" width="256">ボストレーナーじゃと？
 この階では　見かけておらんぞ</language>
 	</row>
 
-	<row id="msg_hint_level_1_07_y">
+	<row id="msg_hint_level_1_07_y" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="256">ボストレーナーですって？
 ええ　このかいで　みましたわ</language>
 		<language name="JPN_KANJI" width="256">ボストレーナーですって？
 ええ　この階で　見ましたわ</language>
 	</row>
 
-	<row id="msg_hint_level_1_07_n">
+	<row id="msg_hint_level_1_07_n" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="256">ボストレーナーですって？
 このかいでは　みかけてないわね</language>
 		<language name="JPN_KANJI" width="256">ボストレーナーですって？
 この階では　見かけてないわね</language>
 	</row>
 
-	<row id="msg_hint_level_2_0_0">
+	<row id="msg_hint_level_2_0_0" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="256">ボストレーナー？　それなら
 このかいで　みたよ</language>
 		<language name="JPN_KANJI" width="256">ボストレーナー？　それなら
 この階で　見たよ</language>
 	</row>
 
-	<row id="msg_hint_level_2_0_1">
+	<row id="msg_hint_level_2_0_1" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="256">え？　ボストレーナーなら
 うえのかいで　みたよ</language>
 		<language name="JPN_KANJI" width="256">え？　ボストレーナーなら
 上の階で　見たよ</language>
 	</row>
 
-	<row id="msg_hint_level_2_0_2">
+	<row id="msg_hint_level_2_0_2" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="256">え？　ボストレーナーなら
 したのかいで　みたよ</language>
 		<language name="JPN_KANJI" width="256">え？　ボストレーナーなら
 下の階で　見たよ</language>
 	</row>
 
-	<row id="msg_hint_level_2_1_0">
+	<row id="msg_hint_level_2_1_0" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="256">ボストレーナー？
 それなら　このかいで　みたわよ</language>
 		<language name="JPN_KANJI" width="256">ボストレーナー？
 それなら　この階で　見たわよ</language>
 	</row>
 
-	<row id="msg_hint_level_2_1_1">
+	<row id="msg_hint_level_2_1_1" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="256">ボストレーナーなら
 うえのかいで　みたわ</language>
 		<language name="JPN_KANJI" width="256">ボストレーナーなら
 上の階で　見たわよ</language>
 	</row>
 
-	<row id="msg_hint_level_2_1_2">
+	<row id="msg_hint_level_2_1_2" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="256">ボストレーナーなら
 したのかいで　みたわ</language>
 		<language name="JPN_KANJI" width="256">ボストレーナーなら
 下の階で　見たわ</language>
 	</row>
 
-	<row id="msg_hint_level_2_2_0">
+	<row id="msg_hint_level_2_2_0" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="256">ボストレーナー？
 このかいで　みかけたよ</language>
 		<language name="JPN_KANJI" width="256">ボストレーナー？
 この階で　見かけたよ</language>
 	</row>
 
-	<row id="msg_hint_level_2_2_1">
+	<row id="msg_hint_level_2_2_1" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="256">ボストレーナー？
 さっき　うえのかいで　みかけたよ</language>
 		<language name="JPN_KANJI" width="256">ボストレーナー？
 さっき　上の階で　見かけたよ</language>
 	</row>
 
-	<row id="msg_hint_level_2_2_2">
+	<row id="msg_hint_level_2_2_2" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="256">ボストレーナー？
 さっき　したのかいで　みかけたよ</language>
 		<language name="JPN_KANJI" width="256">ボストレーナー？
 さっき　下の階で　見かけたよ</language>
 	</row>
 
-	<row id="msg_hint_level_2_3_0">
+	<row id="msg_hint_level_2_3_0" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="256">ボストレーナーを　さがしているの？
 このかいに　いるのを　みたわよ</language>
 		<language name="JPN_KANJI" width="256">ボストレーナーを　探しているの？
 この階に　いるのを　見たわよ</language>
 	</row>
 
-	<row id="msg_hint_level_2_3_1">
+	<row id="msg_hint_level_2_3_1" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="256">ボストレーナーを　さがしているの？
 うえのかいに　いるみたいよ</language>
 		<language name="JPN_KANJI" width="256">ボストレーナーを　探しているの？
 上の階に　いるみたいよ</language>
 	</row>
 
-	<row id="msg_hint_level_2_3_2">
+	<row id="msg_hint_level_2_3_2" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="256">ボストレーナーを　さがしているの？
 したのかいに　いるみたいよ</language>
 		<language name="JPN_KANJI" width="256">ボストレーナーを　探しているの？
 下の階に　いるみたいよ</language>
 	</row>
 
-	<row id="msg_hint_level_2_4_0">
+	<row id="msg_hint_level_2_4_0" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="256">ボストレーナーかい？
 それなら　このかいで　みたぞ</language>
 		<language name="JPN_KANJI" width="256">ボストレーナーかい？
 それなら　この階で　見たぞ</language>
 	</row>
 
-	<row id="msg_hint_level_2_4_1">
+	<row id="msg_hint_level_2_4_1" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="256">ボストレーナーかい？
 うえのかいに　いるらしいよ</language>
 		<language name="JPN_KANJI" width="256">ボストレーナーかい？
 上の階に　いるらしいよ</language>
 	</row>
 
-	<row id="msg_hint_level_2_4_2">
+	<row id="msg_hint_level_2_4_2" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="256">ボストレーナーかい？
 したのかいに　いるらしいよ</language>
 		<language name="JPN_KANJI" width="256">ボストレーナーかい？
 下の階に　いるらしいよ</language>
 	</row>
 
-	<row id="msg_hint_level_2_5_0">
+	<row id="msg_hint_level_2_5_0" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="256">ボストレーナー？
 このかいに　いるんじゃ　ないかしら</language>
 		<language name="JPN_KANJI" width="256">ボストレーナー？
 この階に　いるんじゃ　ないかしら</language>
 	</row>
 
-	<row id="msg_hint_level_2_5_1">
+	<row id="msg_hint_level_2_5_1" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="256">ボストレーナー？
 うえのかいに　いるって　うわさよ</language>
 		<language name="JPN_KANJI" width="256">ボストレーナー？
 上の階に　いるって　うわさよ</language>
 	</row>
 
-	<row id="msg_hint_level_2_5_2">
+	<row id="msg_hint_level_2_5_2" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="256">ボストレーナー？
 したのかいに　いるって　うわさよ</language>
 		<language name="JPN_KANJI" width="256">ボストレーナー？
 下の階に　いるって　うわさよ</language>
 	</row>
 
-	<row id="msg_hint_level_2_6_0">
+	<row id="msg_hint_level_2_6_0" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="256">ボストレーナーじゃと？　ひみつじゃぞ
 ……　このかいに　おるぞ</language>
 		<language name="JPN_KANJI" width="256">ボストレーナーじゃと？　秘密じゃぞ
 ……　この階に　おるぞ</language>
 	</row>
 
-	<row id="msg_hint_level_2_6_1">
+	<row id="msg_hint_level_2_6_1" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="256">ボストレーナーじゃと？　ひみつじゃぞ
 ……　うえのかいじゃ</language>
 		<language name="JPN_KANJI" width="256">ボストレーナーじゃと？　秘密じゃぞ
 ……　上の階じゃ</language>
 	</row>
 
-	<row id="msg_hint_level_2_6_2">
+	<row id="msg_hint_level_2_6_2" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="256">ボストレーナーじゃと？　ひみつじゃぞ
 ……　したのかいじゃ</language>
 		<language name="JPN_KANJI" width="256">ボストレーナーじゃと？　秘密じゃぞ
 ……　下の階じゃ</language>
 	</row>
 
-	<row id="msg_hint_level_2_7_0">
+	<row id="msg_hint_level_2_7_0" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="256">ボストレーナーですって？
 ええ　このかいで　みましたわ</language>
 		<language name="JPN_KANJI" width="256">ボストレーナーですって？
 ええ　この階で　見ましたわ</language>
 	</row>
 
-	<row id="msg_hint_level_2_7_1">
+	<row id="msg_hint_level_2_7_1" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="256">ボストレーナーですって？
 うえのかいは　しらべたかしら？</language>
 		<language name="JPN_KANJI" width="256">ボストレーナーですって？
 上の階は　調べたかしら？</language>
 	</row>
 
-	<row id="msg_hint_level_2_7_2">
+	<row id="msg_hint_level_2_7_2" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="256">ボストレーナーですて？
 したのかいは　しらべたかしら？</language>
 		<language name="JPN_KANJI" width="256">ボストレーナーですって？
 下の階は　調べたかしら？</language>
 	</row>
 
-	<row id="msg_hint_level_3_00">
+	<row id="msg_hint_level_3_00" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="256">ボストレーナーが　みつからないの？
 [2:02:３桁:0]かいに　いたよ！</language>
 		<language name="JPN_KANJI" width="256">ボストレーナーが　見つからないの？
 [2:02:３桁:0]階にいたよ！</language>
 	</row>
 
-	<row id="msg_hint_level_3_01">
+	<row id="msg_hint_level_3_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="256">ボストレーナーが　いないの？
 [2:02:３桁:0]かいで　みたわよ</language>
 		<language name="JPN_KANJI" width="256">ボストレーナーが　いないの？
 [2:02:３桁:0]階で　見たわよ</language>
 	</row>
 
-	<row id="msg_hint_level_3_02">
+	<row id="msg_hint_level_3_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="256">ボストレーナー？
 [2:02:３桁:0]かいに　いると　おもうよ</language>
 		<language name="JPN_KANJI" width="256">ボストレーナー？
 [2:02:３桁:0]階に　いると　思うよ</language>
 	</row>
 
-	<row id="msg_hint_level_3_03">
+	<row id="msg_hint_level_3_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="256">ボストレーナー？
 [2:02:３桁:0]かいで　みかけたわよ</language>
 		<language name="JPN_KANJI" width="256">ボストレーナー？
 [2:02:３桁:0]階で　見かけたわよ</language>
 	</row>
 
-	<row id="msg_hint_level_3_04">
+	<row id="msg_hint_level_3_04" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="256">ボストレーナー？
 それなら　[2:02:３桁:0]かいに　いたぞ</language>
 		<language name="JPN_KANJI" width="256">ボストレーナー？
 それなら　[2:02:３桁:0]階に　いたぞ</language>
 	</row>
 
-	<row id="msg_hint_level_3_05">
+	<row id="msg_hint_level_3_05" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="256">ボストレーナー？
 それなら　[2:02:３桁:0]階に　いたわよ</language>
 		<language name="JPN_KANJI" width="256">ボストレーナー？
 それなら　[2:02:３桁:0]階に　いたわよ</language>
 	</row>
 
-	<row id="msg_hint_level_3_06">
+	<row id="msg_hint_level_3_06" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="256">ボストレーナーじゃと？
 ああ　[2:02:３桁:0]かいで　みかけたぞ</language>
 		<language name="JPN_KANJI" width="256">ボストレーナーじゃと？
 ああ　[2:02:３桁:0]階で　見かけたぞ</language>
 	</row>
 
-	<row id="msg_hint_level_3_07">
+	<row id="msg_hint_level_3_07" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<language name="JPN" width="256">ボストレーナーですって？　それなら
 [2:02:３桁:0]かいに　いってごらんなさい</language>
 		<language name="JPN_KANJI" width="256">ボストレーナですって？　それなら
 [2:02:３桁:0]階に　行ってごらんなさい</language>
 	</row>
 
-	<row id="msg_doctor_msg_00">
+	<row id="msg_doctor_msg_00" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
 		<language name="JPN" width="256">ポケモンが　つかれているようだ
 かいふくして　あげようか？</language>
 		<language name="JPN_KANJI" width="256">ポケモンが　疲れているようだ
 回復して　あげようか？</language>
 	</row>
 
-	<row id="msg_doctor_msg_01">
+	<row id="msg_doctor_msg_01" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
 		<language name="JPN" width="256">わっかた　かいふくしたくなったら
 ここに　くるといい</language>
 		<language name="JPN_KANJI" width="256">わかった　回復したくなったら
 ここに　来るといい</language>
 	</row>
 
-	<row id="msg_doctor_msg_02">
+	<row id="msg_doctor_msg_02" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
 		<language name="JPN" width="256">たんれんも　いいが　ポケモンに
 あまり　むり　させないようにな</language>
 		<language name="JPN_KANJI" width="256">鍛錬も　いいが　ポケモンに
 あまり　無理　させないようにな</language>
 	</row>
 
-	<row id="msg_nurse_msg_00">
+	<row id="msg_nurse_msg_00" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
 		<language name="JPN" width="256">あら？　ポケモンが　おつかれね
 かいふくして　あげましょうか？</language>
 		<language name="JPN_KANJI" width="256">あら？　ポケモンが　お疲れね
 回復して　あげましょうか？</language>
 	</row>
 
-	<row id="msg_nurse_msg_01">
+	<row id="msg_nurse_msg_01" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
 		<language name="JPN" width="256">わかったわ
 でも　むりは　きんもつよ！</language>
 		<language name="JPN_KANJI" width="256">わかったわ
 でも　無理は　禁物よ！</language>
 	</row>
 
-	<row id="msg_nurse_msg_02">
+	<row id="msg_nurse_msg_02" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
 		<language name="JPN" width="256">さきは　まだまだ　ながいわ
 がんばってね！</language>
 		<language name="JPN_KANJI" width="256">先は　まだまだ　長いわ
 がんばってね！</language>
 	</row>
 
-	<row id="msg_info_greet_w">
-		<comment>？？？</comment>
+	<row id="msg_info_greet_w" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
+		<comment>旧メッセージ</comment>
 		<language name="JPN" width="256">『しろのどうくつ』に　ようこそ！
 ごようけんを　おつたえください▼</language>
 		<language name="JPN_KANJI" width="256">『白のどうくつ』に　ようこそ！
 ごようけんを　おつたえください▼</language>
 	</row>
 
-	<row id="msg_info_greet_b">
+	<row id="msg_info_greet_b" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
+		<comment>旧メッセージ</comment>
 		<language name="JPN" width="256">『くろのまてんろう』に　ようこそ！
 ごようけんを　おつたえください▼</language>
 		<language name="JPN_KANJI" width="256">『黒の摩天楼』に　ようこそ！
 ごようけんを　おつたえください▼</language>
 	</row>
 
-	<row id="msg_info_menu_01">
+	<row id="msg_info_menu_01" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
+		<comment>旧メッセージ</comment>
 		<language name="JPN" width="256">せつめい</language>
 		<language name="JPN_KANJI" width="256">説明</language>
 	</row>
 
-	<row id="msg_info_menu_02">
+	<row id="msg_info_menu_02" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
+		<comment>旧メッセージ</comment>
 		<language name="JPN" width="256">ちょうせんする</language>
 		<language name="JPN_KANJI" width="256">挑戦する</language>
 	</row>
 
-	<row id="msg_info_menu_03">
+	<row id="msg_info_menu_03" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
+		<comment>旧メッセージ</comment>
 		<language name="JPN" width="256">やめる</language>
 		<language name="JPN_KANJI" width="256">やめる</language>
 	</row>
 
-	<row id="msg_info_000">
+	<row id="msg_info_000" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
+		<comment>旧メッセージ</comment>
 		<language name="JPN" width="256">どの エリアに？</language>
 		<language name="JPN_KANJI" width="256">どの エリアに？</language>
 	</row>
 
-	<row id="msg_info_001">
+	<row id="msg_info_001" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
+		<comment>旧メッセージ</comment>
 		<language name="JPN" width="256">じゅんびは　よろしいですか？
 それでは　がんばってくださいね！▼</language>
 		<language name="JPN_KANJI" width="256">じゅんびは　よろしいですか？
 それでは　がんばってくださいね！▼</language>
 	</row>
 
-	<row id="msg_info_002">
+	<row id="msg_info_002" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
+		<comment>旧メッセージ</comment>
 		<language name="JPN" width="256">ちょうせん　なさいますか？</language>
 		<language name="JPN_KANJI" width="256">ちょうせん　なさいますか？</language>
 	</row>
 
-	<row id="msg_info_cancel">
+	<row id="msg_info_cancel" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
+		<comment>旧メッセージ</comment>
 		<language name="JPN" width="256">それでは　またの　ごりようを
 おまちして　おります▼</language>
 		<language name="JPN_KANJI" width="256">それでは　またの　ごりようを
 おまちして　おります▼</language>
 	</row>
 
-	<row id="msg_info_area">
+	<row id="msg_info_area" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
+		<comment>旧メッセージ</comment>
 		<language name="JPN" width="256">エリア[2:01:２桁:0]</language>
 		<language name="JPN_KANJI" width="256">エリア[2:01:２桁:0]</language>
 	</row>
 
-	<row id="msg_info_help">
+	<row id="msg_info_help" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
+		<comment>旧メッセージ</comment>
 		<language name="JPN" width="256">この　しせつは　トレーナーの　
 みなさまに　たんれんの　ばしょとして　▼
 ていきょう　されています▼</language>
@@ -1217,27 +1227,31 @@
 ていきょう　されています▼</language>
 	</row>
 
-	<row id="msg_elevator_01">
+	<row id="msg_elevator_01" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
+		<comment>旧メッセージ</comment>
 		<language name="JPN" width="256">なんかい？</language>
 		<language name="JPN_KANJI" width="256">なんかい？</language>
 	</row>
 
-	<row id="msg_elevator_02">
+	<row id="msg_elevator_02" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
+		<comment>旧メッセージ</comment>
 		<language name="JPN" width="256">[2:01:２桁:0]かい</language>
 		<language name="JPN_KANJI" width="256">[2:01:２桁:0]かい</language>
 	</row>
 
-	<row id="msg_elevator_03">
+	<row id="msg_elevator_03" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
+		<comment>旧メッセージ</comment>
 		<language name="JPN" width="256">かえる</language>
 		<language name="JPN_KANJI" width="256">かえる</language>
 	</row>
 
-	<row id="msg_elevator_04">
+	<row id="msg_elevator_04" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
+		<comment>旧メッセージ</comment>
 		<language name="JPN" width="256">やめる</language>
 		<language name="JPN_KANJI" width="256">やめる</language>
 	</row>
 
-	<row id="msg_info_ex_b_01">
+	<row id="msg_info_ex_b_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>・トレーナー名＝プレイヤー名
 ・どうぐ名＝キーアイテム名</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]さま！
@@ -1250,13 +1264,13 @@
 ご連絡いたします▼</language>
 	</row>
 
-	<row id="msg_info_ex_b_02">
+	<row id="msg_info_ex_b_02" text-color="#ffffff,,,#ffffff,,#ffffff,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>・トレーナー名＝プレイヤー名</comment>
 		<language name="JPN" width="256">……
 オーナーからの　ほうこくです▼
 [1:00:トレーナー名:0]さま
 ほんじつから　しんしせつ！▼
-『しろのまてんろう』が
+『しろの　まてんろう』が
 かいほう　されました！▼
 こちらでは　いままでとは　ことなる
 あたらしい　トレーナーとの▽
@@ -1266,7 +1280,7 @@
 オーナーからの　報告です▼
 [1:00:トレーナー名:0]様
 本日から　新施設！▼
-『白の摩天楼』が
+『白の　摩天楼』が
 開放　されました！▼
 こちらでは　今までとは　ことなる
 新しい　トレーナーとの▽
@@ -1274,14 +1288,14 @@
 ぜひ　ごりようください</language>
 	</row>
 
-	<row id="msg_info_greet_b_01">
+	<row id="msg_info_greet_b_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN">いらっしゃいませ
 ごようけんを　おつたえください</language>
 		<language name="JPN_KANJI">いらっしゃいませ
 ご用件を　お伝えください</language>
 	</row>
 
-	<row id="msg_info_help_b_01">
+	<row id="msg_info_help_b_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>・トレーナー名＝プレイヤー名</comment>
 		<language name="JPN" width="256">この　しせつは　トレーナーの　
 みなさまに　たんれんの　ばしょとして▽
@@ -1307,7 +1321,7 @@
 エリアクリアを　目指して　ください▼</language>
 	</row>
 
-	<row id="msg_info_help_b_02">
+	<row id="msg_info_help_b_02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">エリアクリアには　１０かいそうで
 こうせいされた　エリアの　どこかにいる▽
 ボストレーナーを　たおすことで
@@ -1332,7 +1346,7 @@
 挑戦してみては　いかがでしょうか？▼</language>
 	</row>
 
-	<row id="msg_info_help_b_03">
+	<row id="msg_info_help_b_03" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">なお　しせつでは　
 しんけんしょうぶを　していただきます▼
 まんがいち　トレーナーとの
@@ -1354,36 +1368,36 @@
 あらかじめ　ご了承ください</language>
 	</row>
 
-	<row id="msg_info_b_000">
+	<row id="msg_info_b_000" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">ほんじつは　どの　しせつに
 ちょうせんなさいますか？</language>
 		<language name="JPN_KANJI" width="256">本日は　どの　施設に
 挑戦なさいますか？</language>
 	</row>
 
-	<row id="msg_info_institution_b_01">
+	<row id="msg_info_institution_b_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN">くろの　まてんろう</language>
 		<language name="JPN_KANJI">黒の　摩天楼</language>
 	</row>
 
-	<row id="msg_info_institution_b_02">
+	<row id="msg_info_institution_b_02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">しろの　まてんろう</language>
 		<language name="JPN_KANJI" width="256">白の　摩天楼</language>
 	</row>
 
-	<row id="msg_info_b_001">
+	<row id="msg_info_b_001" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">どの　エリアに
 ちょうせんなさいますか？</language>
 		<language name="JPN_KANJI" width="256">どの　エリアに
 挑戦なさいますか？</language>
 	</row>
 
-	<row id="msg_info_b_area">
+	<row id="msg_info_b_area" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">エリア[2:01:２桁:0]</language>
 		<language name="JPN_KANJI" width="256">エリア[2:01:２桁:0]</language>
 	</row>
 
-	<row id="msg_info_attention_b_01">
+	<row id="msg_info_attention_b_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>・トレーナー名＝プレイヤー名
 ・ニックネーム＝ポケモン名
 ・2桁＝エリアの数字</comment>
@@ -1404,22 +1418,22 @@
 つけてから　挑戦してください</language>
 	</row>
 
-	<row id="msg_info_b_002">
+	<row id="msg_info_b_002" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">どちらで　ちょうせんなさいますか？</language>
 		<language name="JPN_KANJI" width="256">どちらで　挑戦なさいますか？</language>
 	</row>
 
-	<row id="msg_info_select_b_01">
+	<row id="msg_info_select_b_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">シングル　たんさく</language>
 		<language name="JPN_KANJI" width="256">シングル　探索</language>
 	</row>
 
-	<row id="msg_info_select_b_02">
+	<row id="msg_info_select_b_02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">パートナー　たんさく</language>
 		<language name="JPN_KANJI" width="256">パートナー　探索</language>
 	</row>
 
-	<row id="msg_info_attention_b_02">
+	<row id="msg_info_attention_b_02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">エリア5　いこうは
 「シングル　たんさく」　のみの▽
 ちょうせんと　なっております▼</language>
@@ -1428,7 +1442,7 @@
 挑戦と　なっております▼</language>
 	</row>
 
-	<row id="msg_info_single_b_01">
+	<row id="msg_info_single_b_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">「シングル　たんさく」ですね？▼
 こちらは　おひとりでの　
 ちょうせんと　なります▼</language>
@@ -1437,7 +1451,7 @@
 挑戦と　なります▼</language>
 	</row>
 
-	<row id="msg_info_partner_b_01">
+	<row id="msg_info_partner_b_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">「パートナー　たんさく」ですね？▼
 こちらは　おふたりでの
 ちょうせんと　なります▼</language>
@@ -1446,46 +1460,46 @@
 挑戦と　なります▼</language>
 	</row>
 
-	<row id="msg_info_b_003">
+	<row id="msg_info_b_003" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">ちょうせんなさいますか？</language>
 		<language name="JPN_KANJI" width="256">挑戦なさいますか？</language>
 	</row>
 
-	<row id="msg_info_b_004">
+	<row id="msg_info_b_004" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">じゅんびは　よろしいですか？
 それでは　がんばてくださいね！</language>
 		<language name="JPN_KANJI" width="256">準備は　よろしいですか？
 それでは　がんばてくださいね！</language>
 	</row>
 
-	<row id="msg_info_b_cancel">
+	<row id="msg_info_b_cancel" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">それでは　またの　ごりようを
 おまちして　おります</language>
 		<language name="JPN_KANJI" width="256">それでは　またの　ごりようを
 おまちして　おります</language>
 	</row>
 
-	<row id="msg_elevator_001">
+	<row id="msg_elevator_b_001" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">なんかいに　いどうしますか？</language>
 		<language name="JPN_KANJI" width="256">何階に　移動しますか？</language>
 	</row>
 
-	<row id="msg_elevator_002">
+	<row id="msg_elevator_b_002" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">[2:01:２桁:0]かい</language>
 		<language name="JPN_KANJI" width="256">[2:01:２桁:0]階</language>
 	</row>
 
-	<row id="msg_elevator_003">
+	<row id="msg_elevator_b_003" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">うけつけに　もどる</language>
 		<language name="JPN_KANJI" width="256">受付に　戻る</language>
 	</row>
 
-	<row id="msg_elevator_004">
+	<row id="msg_elevator_b_004" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">やめる</language>
 		<language name="JPN_KANJI" width="256">やめる</language>
 	</row>
 
-	<row id="msg_info_clear_b_01">
+	<row id="msg_info_clear_b_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>・トレーナー名＝プレイヤー名
 ・2桁＝エリアの数字</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]さま！▼
@@ -1500,7 +1514,7 @@
 お選びください！</language>
 	</row>
 
-	<row id="msg_info_clear_b_02">
+	<row id="msg_info_clear_b_02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>・2桁＝エリアの数字</comment>
 		<language name="JPN" width="256">あわせて　エリア[2:01:２桁:0]への
 ちょうせんが　かのうと　なりました▼
@@ -1512,7 +1526,7 @@
 おまちして　おります▼</language>
 	</row>
 
-	<row id="msg_info_clear_b_03">
+	<row id="msg_info_clear_b_03" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>・トレーナー名＝プレイヤー名</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]さま！▼
 エリア5の　クリア
@@ -1526,7 +1540,7 @@
 さしあげます！</language>
 	</row>
 
-	<row id="msg_info_clear_b_04">
+	<row id="msg_info_clear_b_04" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>・トレーナー名＝プレイヤー名</comment>
 		<language name="JPN" width="256">さて　[1:00:トレーナー名:0]さま▼
 エリア5までの　ちょうせん
@@ -1543,7 +1557,7 @@
 ここからが　本当の　挑戦です！▼</language>
 	</row>
 
-	<row id="msg_info_clear_b_05">
+	<row id="msg_info_clear_b_05" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">エリア6からは　さらに　てごわい
 トレーナーが　おまちしております▼
 また　エリア6からは　パートナーとの
@@ -1562,7 +1576,7 @@
 お待ちして　おります▼</language>
 	</row>
 
-	<row id="msg_info_clear_b_06">
+	<row id="msg_info_clear_b_06" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>・トレーナー名＝プレイヤー名</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]さま！▼
 ……　まさか　すべての　エリアを？▼
@@ -1582,7 +1596,352 @@
 がんばってくださいね▼</language>
 	</row>
 
-	<row id="msg_event_b_01">
+	<row id="msg_info_ex_w_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<comment>・トレーナー名＝プレイヤー名
+・どうぐ名＝キーアイテム名</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さま！
+それは　[1:09:どうぐ名:0]ですね？▼
+かしこまりました　オーナーに
+ごれんらくいたします▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]様！
+それは　[1:09:どうぐ名:0]ですね？▼
+かしこまりました　オーナーに
+ご連絡いたします▼</language>
+	</row>
+
+	<row id="msg_info_ex_w_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<comment>・トレーナー名＝プレイヤー名</comment>
+		<language name="JPN" width="256">……
+オーナーからの　ほうこくです▼
+[1:00:トレーナー名:0]さま
+ほんじつから　しんしせつ！▼
+『くろの　たいじゅ』が
+かいほう　されました！▼
+こちらでは　いままでとは　ことなる
+あたらしい　トレーナーとの▽
+たいせんを　おたのしみいただけます▼
+ぜひ　ごりようください</language>
+		<language name="JPN_KANJI" width="256">……
+オーナーからの　報告です▼
+[1:00:トレーナー名:0]様
+本日から　新施設！▼
+『黒の　大樹』が
+開放　されました！▼
+こちらでは　今までとは　ことなる
+新しい　トレーナーとの▽
+対戦を　お楽しみいただけます▼
+ぜひ　ごりようください</language>
+	</row>
+
+	<row id="msg_info_greet_w_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN">いらっしゃいませ
+ごようけんを　おつたえください</language>
+		<language name="JPN_KANJI">いらっしゃいませ
+ご用件を　お伝えください</language>
+	</row>
+
+	<row id="msg_info_help_w_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<comment>・トレーナー名＝プレイヤー名</comment>
+		<language name="JPN" width="256">この　しせつは　トレーナーの　
+みなさまに　たんれんの　ばしょとして▽
+ていきょうされている　しせつです▼
+しせつないには　[1:00:トレーナー名:0]さまと　
+おなじく　しせつ　ちょうせんちゅうの▽
+トレーナーのかたが　いらっしゃいます▼
+ほかの　トレーナーのかたは
+[1:00:トレーナー名:0]さまを　みかけましたら▽
+たいせんを　いどんできます▼
+たちふさがる　トレーナーを　たおし
+エリアクリアを　めざして　ください▼</language>
+		<language name="JPN_KANJI" width="256">この　施設は　トレーナーの　
+皆様に　鍛錬の　場所として▽
+提供されている　施設です▼
+施設内には　[1:00:トレーナー名:0]様と　
+同じく　施設　挑戦中の▽
+トレーナーの方が　いらっしゃいます▼
+他の　トレーナーの方は
+[1:00:トレーナー名:0]様を　見かけましたら▽
+対戦を　挑んできます▼
+立ちふさがる　トレーナーを　倒し
+エリアクリアを　目指して　ください▼</language>
+	</row>
+
+	<row id="msg_info_help_w_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="256">エリアクリアには　１０かいそうで
+こうせいされた　エリアの　どこかにいる▽
+ボストレーナーを　たおすことで
+つぎのエリアに　ちょうせんすることが▽
+できるようになります▼
+エリアにいる　トレーナーと　
+たいせんして　うでを　みがくもよし▼
+ボストレーナーを　さがしだし
+エリアクリアを　めざすもよし▼
+じぶんの　つよさの　げんかいに
+ちょうせんしてみては▽
+いかがでしょうか？▼</language>
+		<language name="JPN_KANJI" width="256">エリアクリアには　１０階層で　構成された
+エリアの　どこかにいる　ボストレーナーを▽
+倒すことで　次のエリアに
+挑戦することが　できるようになります▼
+エリアにいる　トレーナーと
+対戦して　腕を　磨くもよし▼
+ボストレーナーを　探し出し
+エリアクリアを　目指すもよし▼
+自分の　強さの　限界に
+挑戦してみては　いかがでしょうか？▼</language>
+	</row>
+
+	<row id="msg_info_help_w_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="256">なお　しせつでは　
+しんけんしょうぶを　していただきます▼
+まんがいち　トレーナーとの
+たいせんに　まけたばあい▽
+もうしわけありませんが
+たいせんあいてに　しょうきんを▽
+おしはらいください▼
+また　バッグにある　どうぐのしようを
+きんししておりますので▽
+あらかじめ　ごりょうしょうください</language>
+		<language name="JPN_KANJI" width="256">なお　施設では　
+真剣勝負を　していただきます▼
+万が一　トレーナーとの
+対戦に　負けた場合▽
+申し訳ありませんが　対戦相手に
+賞金を　お支払いください▼
+また　バッグにある　どうぐの使用を
+禁止しておりますので▽
+あらかじめ　ご了承ください</language>
+	</row>
+
+	<row id="msg_info_w_000" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="256">ほんじつは　どの　しせつに
+ちょうせんなさいますか？</language>
+		<language name="JPN_KANJI" width="256">本日は　どの　施設に
+挑戦なさいますか？</language>
+	</row>
+
+	<row id="msg_info_institution_w_01" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN">しろの　たいじゅ</language>
+		<language name="JPN_KANJI">白の　大樹</language>
+	</row>
+
+	<row id="msg_info_institution_w_02" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="256">くろの　たいじゅ</language>
+		<language name="JPN_KANJI" width="256">黒の　大樹</language>
+	</row>
+
+	<row id="msg_info_w_001" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="256">どの　エリアに
+ちょうせんなさいますか？</language>
+		<language name="JPN_KANJI" width="256">どの　エリアに
+挑戦なさいますか？</language>
+	</row>
+
+	<row id="msg_info_w_area" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="256">エリア[2:01:２桁:0]</language>
+		<language name="JPN_KANJI" width="256">エリア[2:01:２桁:0]</language>
+	</row>
+
+	<row id="msg_info_attention_w_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<comment>・トレーナー名＝プレイヤー名
+・ニックネーム＝ポケモン名
+・2桁＝エリアの数字</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さま！▼
+しつれいですが　おつれの
+[1:02:ポケモンニックネーム:0]では▽
+エリア[2:01:２桁:0]に　ちょうせんするには
+しょうしょう　じつりょくが　たりません▼
+もうしわけありませんが
+じつりょくを　つけてから▽
+ちょうせんしてください</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]様！▼
+失礼ですが　お連れの
+[1:02:ポケモンニックネーム:0]では▽
+エリア[2:01:２桁:0]に　挑戦するには
+少々　実力が　足りません▼
+申し訳ありませんが　実力を
+つけてから　挑戦してください</language>
+	</row>
+
+	<row id="msg_info_w_002" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="256">どちらで　ちょうせんなさいますか？</language>
+		<language name="JPN_KANJI" width="256">どちらで　挑戦なさいますか？</language>
+	</row>
+
+	<row id="msg_info_select_w_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="256">シングル　たんさく</language>
+		<language name="JPN_KANJI" width="256">シングル　探索</language>
+	</row>
+
+	<row id="msg_info_select_w_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="256">パートナー　たんさく</language>
+		<language name="JPN_KANJI" width="256">パートナー　探索</language>
+	</row>
+
+	<row id="msg_info_attention_w_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="256">エリア5　いこうは
+「シングル　たんさく」　のみの▽
+ちょうせんと　なっております▼</language>
+		<language name="JPN_KANJI" width="256">エリア5　以降は
+「シングル　探索」のみの▽
+挑戦と　なっております▼</language>
+	</row>
+
+	<row id="msg_info_single_w_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="256">「シングル　たんさく」ですね？▼
+こちらは　おひとりでの　
+ちょうせんと　なります▼</language>
+		<language name="JPN_KANJI" width="256">「シングル　探索」ですね？▼
+こちらは　おひとりでの　
+挑戦と　なります▼</language>
+	</row>
+
+	<row id="msg_info_partner_w_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="256">「パートナー　たんさく」ですね？▼
+こちらは　おふたりでの
+ちょうせんと　なります▼</language>
+		<language name="JPN_KANJI" width="256">「パートナー　探索」ですね？▼
+こちらは　おふたりでの
+挑戦と　なります▼</language>
+	</row>
+
+	<row id="msg_info_w_003" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="256">ちょうせんなさいますか？</language>
+		<language name="JPN_KANJI" width="256">挑戦なさいますか？</language>
+	</row>
+
+	<row id="msg_info_w_004" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="256">じゅんびは　よろしいですか？
+それでは　がんばてくださいね！</language>
+		<language name="JPN_KANJI" width="256">準備は　よろしいですか？
+それでは　がんばてくださいね！</language>
+	</row>
+
+	<row id="msg_info_w_cancel" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="256">それでは　またの　ごりようを
+おまちして　おります</language>
+		<language name="JPN_KANJI" width="256">それでは　またの　ごりようを
+おまちして　おります</language>
+	</row>
+
+	<row id="msg_elevator_w_001" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="256">なんかいに　いどうしますか？</language>
+		<language name="JPN_KANJI" width="256">何階に　移動しますか？</language>
+	</row>
+
+	<row id="msg_elevator_w_002" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="256">[2:01:２桁:0]かい</language>
+		<language name="JPN_KANJI" width="256">[2:01:２桁:0]階</language>
+	</row>
+
+	<row id="msg_elevator_w_003" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="256">うけつけに　もどる</language>
+		<language name="JPN_KANJI" width="256">受付に　戻る</language>
+	</row>
+
+	<row id="msg_elevator_w_004" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="256">やめる</language>
+		<language name="JPN_KANJI" width="256">やめる</language>
+	</row>
+
+	<row id="msg_info_clear_w_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<comment>・トレーナー名＝プレイヤー名
+・2桁＝エリアの数字</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さま！▼
+エリア[2:01:２桁:0]の　クリア
+おめでとうございます！▼
+きねんに　おすきなものを　
+おえらびください！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]様！▼
+エリア[2:01:２桁:0]の　クリア
+おめでとうございます！▼
+記念に　お好きなものを　
+お選びください！</language>
+	</row>
+
+	<row id="msg_info_clear_w_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<comment>・2桁＝エリアの数字</comment>
+		<language name="JPN" width="256">あわせて　エリア[2:01:２桁:0]への
+ちょうせんが　かのうと　なりました▼
+ひきつづき　ちょうせんを
+おまちして　おります▼</language>
+		<language name="JPN_KANJI" width="256">あわせて　エリア[2:01:２桁:0]への
+挑戦が　可能と　なりました▼
+引き続き　挑戦を
+おまちして　おります▼</language>
+	</row>
+
+	<row id="msg_info_clear_w_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<comment>・トレーナー名＝プレイヤー名</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さま！▼
+エリア5の　クリア
+おめでとうございます！▼
+こちらの　とくべつな
+きねんひんを　さしあげます！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]様！▼
+エリア5の　クリア
+おめでとうございます！▼
+こちらの　特別な　記念品を
+さしあげます！</language>
+	</row>
+
+	<row id="msg_info_clear_w_04" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<comment>・トレーナー名＝プレイヤー名</comment>
+		<language name="JPN" width="256">さて　[1:00:トレーナー名:0]さま▼
+エリア5までの　ちょうせん
+いかがでしたか？▼
+まだまだ　ものたりない　……
+そんな　かんじですね？▼
+はい
+ここからが　ほんとうの　ちょうせんです！▼</language>
+		<language name="JPN_KANJI" width="256">さて　[1:00:トレーナー名:0]様▼
+エリア5までの　挑戦　いかがでしたか？▼
+まだまだ　物足りない　……
+そんな　感じですね？▼
+はい
+ここからが　本当の　挑戦です！▼</language>
+	</row>
+
+	<row id="msg_info_clear_w_05" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<language name="JPN" width="256">エリア6からは　さらに　てごわい
+トレーナーが　おまちしております▼
+また　エリア6からは　パートナーとの
+ちょうせんが　できません▼
+ごりょうしょうください▼
+さらなる　エリアを　めざし▽
+ひきつづき　ちょうせんを
+おまちして　おります▼</language>
+		<language name="JPN_KANJI" width="256">エリア６からは　さらに　手ごわい
+トレーナーが　お待ちしております▼
+また　エリア6からは　パートナーとの
+挑戦が　できません▼
+ご了承ください▼
+さらなる　エリアを　目指し▽
+引き続き　挑戦を　
+お待ちして　おります▼</language>
+	</row>
+
+	<row id="msg_info_clear_w_06" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<comment>・トレーナー名＝プレイヤー名</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さま！▼
+……　まさか　すべての　エリアを？▼
+おどろきました　この　しせつで
+はじめての　かいきょですよ！▼
+おめでとうございます▼
+これからも　さいきょうの　
+トレーナーを　めざして▽
+がんばってくださいね▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]様！▼
+……　まさか　全ての　エリアを？▼
+驚きました　この　施設で
+はじめての　快挙ですよ！▼
+おめでとうございます▼
+これからも　最強の　
+トレーナーを　目指して▽
+がんばってくださいね▼</language>
+	</row>
+
+	<row id="msg_event_b_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">やぁ！　キミも　くろのまてんろうに
 ちょうせんしに　きたのかい？▼
 もくてきは　なに？▼
@@ -1609,7 +1968,7 @@
 戦うことも　あるかもね▼</language>
 	</row>
 
-	<row id="msg_event_b_02">
+	<row id="msg_event_b_02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">そうだ！
 キミに　いいことを　おしえてあげるよ▼
 エリアを　クリアしたいのなら
