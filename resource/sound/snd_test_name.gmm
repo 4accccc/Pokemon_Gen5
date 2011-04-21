@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nagihashi_toru" host="W00268" date="2011-03-01T12:07:16"/>
+	<create user="tamada" host="W00253" date="2011-04-06T11:44:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -241,6 +241,16 @@
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 				<comment language="japanese">リゾートで使用する自由入力の市長名です。</comment>
 				<comment language="english">リゾートで使用する自由入力の市長名です。</comment>
+			</tag>
+			<tag entry="59" japanese="WBTトーナメント名" english="WBTトーナメント名" view="EP" width="208" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WBTのトーナメント名称</comment>
+				<comment language="english">WBTのトーナメント名称</comment>
+			</tag>
+			<tag entry="60" japanese="未設定タグ" english="未設定タグ" view="EP" width="130" line="1">
+				<parameter number="0" japanese="場所" english="場所" type="int8"/>
+				<comment language="japanese">開発中の決定していないタグに使用する</comment>
+				<comment language="english">開発中の決定していないタグに使用する</comment>
 			</tag>
 		</group>
 
@@ -5147,6 +5157,10 @@
 		<language name="JPN" width="256">BGM-INSECT-GYM-01</language>
 		<language name="JPN_KANJI" width="256">BGM-INSECT-GYM-01</language>
 	</row>
+	<row id="msg_seq_bgm_poisone_gym_01">
+		<language name="JPN" width="256">BGM-POISONE-GYM-01</language>
+		<language name="JPN_KANJI" width="256">BGM-POISONE-GYM-01</language>
+	</row>
 	<row id="msg_seq_bgm_lcg_01">
 		<language name="JPN" width="256">BGM-LCG-01</language>
 		<language name="JPN_KANJI" width="256">BGM-LCG-01</language>
@@ -5155,42 +5169,38 @@
 		<language name="JPN" width="256">BGM-LCG-02</language>
 		<language name="JPN_KANJI" width="256">BGM-LCG-02</language>
 	</row>
+	<row id="msg_seq_bgm_wbt_lobby">
+		<language name="JPN" width="256">BGM-WBT-LOBBY</language>
+		<language name="JPN_KANJI" width="256">BGM-WBT-LOBBY</language>
+	</row>
+	<row id="msg_seq_bgm_wbt_ground">
+		<language name="JPN" width="256">BGM-WBT-GROUND</language>
+		<language name="JPN_KANJI" width="256">BGM-WBT-GROUND</language>
+	</row>
+	<row id="msg_seq_bgm_wbt_fanfare">
+		<language name="JPN" width="256">BGM-WBT-FANFARE</language>
+		<language name="JPN_KANJI" width="256">BGM-WBT-FANFARE</language>
+	</row>
+	<row id="msg_seq_bgm_mugen_lobby_b">
+		<language name="JPN" width="256">BGM-MUGEN-lobby-B</language>
+		<language name="JPN_KANJI" width="256">BGM-MUGEN-lobby-B</language>
+	</row>
+	<row id="msg_seq_bgm_mugen_lobby_w">
+		<language name="JPN" width="256">BGM-MUGEN-lobby-W</language>
+		<language name="JPN_KANJI" width="256">BGM-MUGEN-lobby-W</language>
+	</row>
+	<row id="msg_seq_bgm_mugen_d_b">
+		<language name="JPN" width="256">BGM-MUGEN-D-B</language>
+		<language name="JPN_KANJI" width="256">BGM-MUGEN-D-B</language>
+	</row>
+	<row id="msg_seq_bgm_mugen_d_w">
+		<language name="JPN" width="256">BGM-MUGEN-D-W</language>
+		<language name="JPN_KANJI" width="256">BGM-MUGEN-D-W</language>
+	</row>
 	<row id="msg_seq_bgm_end">
 		<language name="JPN" width="256">BGM-END</language>
 		<language name="JPN_KANJI" width="256">BGM-END</language>
 	</row>
-          <row id="msg_seq_1184">
-          <language name="JPN" width="256">dmy</language>
-          <language name="JPN_KANJI" width="256">dmy</language>
-          </row>
-          <row id="msg_seq_1185">
-          <language name="JPN" width="256">dmy</language>
-          <language name="JPN_KANJI" width="256">dmy</language>
-          </row>
-          <row id="msg_seq_1186">
-          <language name="JPN" width="256">dmy</language>
-          <language name="JPN_KANJI" width="256">dmy</language>
-          </row>
-          <row id="msg_seq_1187">
-          <language name="JPN" width="256">dmy</language>
-          <language name="JPN_KANJI" width="256">dmy</language>
-          </row>
-          <row id="msg_seq_1188">
-          <language name="JPN" width="256">dmy</language>
-          <language name="JPN_KANJI" width="256">dmy</language>
-          </row>
-          <row id="msg_seq_1189">
-          <language name="JPN" width="256">dmy</language>
-          <language name="JPN_KANJI" width="256">dmy</language>
-          </row>
-          <row id="msg_seq_1190">
-          <language name="JPN" width="256">dmy</language>
-          <language name="JPN_KANJI" width="256">dmy</language>
-          </row>
-          <row id="msg_seq_1191">
-          <language name="JPN" width="256">dmy</language>
-          <language name="JPN_KANJI" width="256">dmy</language>
-          </row>
           <row id="msg_seq_1192">
           <language name="JPN" width="256">dmy</language>
           <language name="JPN_KANJI" width="256">dmy</language>
@@ -8802,6 +8812,34 @@
 	<row id="msg_seq_se_md_04">
 		<language name="JPN" width="256">MD-04</language>
 		<language name="JPN_KANJI" width="256">MD-04</language>
+	</row>
+	<row id="msg_seq_se_sw_wbt_01">
+		<language name="JPN" width="256">SW-WBT-01</language>
+		<language name="JPN_KANJI" width="256">SW-WBT-01</language>
+	</row>
+	<row id="msg_seq_se_sw_wbt_02">
+		<language name="JPN" width="256">SW-WBT-02</language>
+		<language name="JPN_KANJI" width="256">SW-WBT-02</language>
+	</row>
+	<row id="msg_seq_se_sw_wbt_03">
+		<language name="JPN" width="256">SW-WBT-03</language>
+		<language name="JPN_KANJI" width="256">SW-WBT-03</language>
+	</row>
+	<row id="msg_seq_se_sw_wbt_04">
+		<language name="JPN" width="256">SW-WBT-04</language>
+		<language name="JPN_KANJI" width="256">SW-WBT-04</language>
+	</row>
+	<row id="msg_seq_se_sw_wbt_05">
+		<language name="JPN" width="256">SW-WBT-05</language>
+		<language name="JPN_KANJI" width="256">SW-WBT-05</language>
+	</row>
+	<row id="msg_seq_se_sw_wbt_06">
+		<language name="JPN" width="256">SW-WBT-06</language>
+		<language name="JPN_KANJI" width="256">SW-WBT-06</language>
+	</row>
+	<row id="msg_seq_se_sw_wbt_07">
+		<language name="JPN" width="256">SW-WBT-07</language>
+		<language name="JPN_KANJI" width="256">SW-WBT-07</language>
 	</row>
 	<row id="msg_seq_se_dmy_390">
 		<language name="JPN" width="256">DMY-390</language>
