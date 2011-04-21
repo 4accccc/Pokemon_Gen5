@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nagihashi_toru" host="W00268" date="2011-04-21T12:28:05"/>
+	<create user="nagihashi_toru" host="W00268" date="2011-04-21T14:46:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -398,14 +398,14 @@
 		</language>
 	</columns>
 
-	<dialog left="-854" top="343" right="-285" bottom="919" maximized="no" rayout="Vertical2">
+	<dialog left="-1194" top="227" right="-489" bottom="847" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
-		<tag-palette left="552" top="484" right="1024" bottom="882" visible="yes"/>
-		<band id="0" index="1" style="0000" width="561"/>
+		<tag-palette left="552" top="484" right="1024" bottom="882" visible="no"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="245"/>
+		<band id="2" index="3" style="0000" width="548"/>
 		<band id="3" index="4" style="0000" width="147"/>
-		<band id="4" index="0" style="0000" width="591"/>
+		<band id="4" index="0" style="0000" width="697"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -1048,13 +1048,13 @@ GTSの　ごりよう　ありがとうございます！</language>
 4：店舗フリーワード</attribute>
 		<language name="JPN" width="256">[1:38:リゾート店名:1]に
 [1:00:トレーナー名:0]が　やってきた！▼
-[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:3]！▼
+[1:00:トレーナー名:2]『[1:37:リゾートフリーワード:3]！▼
 [1:00:トレーナー名:0]『[1:37:リゾートフリーワード:4]！▼
 ……　……　……　……　……　……
 ……　……　……　……　……　……▼</language>
 		<language name="JPN_KANJI" width="256">[1:38:リゾート店名:1]に
 [1:00:トレーナー名:0]が　やってきた！▼
-[1:00:トレーナー名:1]『[1:37:リゾートフリーワード:3]！▼
+[1:00:トレーナー名:2]『[1:37:リゾートフリーワード:3]！▼
 [1:00:トレーナー名:0]『[1:37:リゾートフリーワード:4]！▼
 ……　……　……　……　……　……
 ……　……　……　……　……　……▼</language>

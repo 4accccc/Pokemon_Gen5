@@ -252,7 +252,7 @@ extern VMCMD_RESULT EvCmdResortGetMsgID( VMHANDLE *p_core, void *p_wk_adrs )
             u16 group = RESORT_BINARY_SPOT_GetData( p_binary_spot, cnt, RESORT_BINARY_SPOT_PARAM_GROUP );
             if( group == i )
             {
-              if( GFUser_GetPublicRand(3) == 0 )
+              if( GFUser_GetPublicRand(10) == 0 )
               {
                 data = RESORT_BINARY_SPOT_GetData( p_binary_spot, cnt, RESORT_BINARY_SPOT_PARAM_MSG_00 );
                 RESORT_PEOPLE_SetData( p_people, RESORT_DATA_PARAM_WANT_SPOT, data );
@@ -550,7 +550,7 @@ VMCMD_RESULT EvCmdResortSetWord( VMHANDLE *p_core, void *p_wk_adrs )
       const RESORT_BINARY_SHOP_DATA *cp_shop_data = RESORT_BINARY_SHOP_SearchDataByData( p_shop, p_data );
       const RESORT_INSTITUTION_DATA *cp_institution = RESORT_RESIDENT_DATA_GetInstitution( p_data );
       u16 lv = RESORT_INSTITUTION_DATA_GetData( cp_institution, RESORT_INSTITUTION_DATA_PARAM_LV );
-      WORDSET_RegisterNumber( p_wordset, idx, lv, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+      WORDSET_RegisterNumber( p_wordset, idx, lv+1, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
     }
     break;
   case RESORT_WORD_CITY_LV:
