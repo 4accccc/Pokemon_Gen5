@@ -1111,7 +1111,7 @@ static BOOL _MissionNameBMPDraw(MONOLITH_FMSELECT_WORK *mfw, MONOLITH_SETUP *set
       GF_ASSERT(mfw->use_power[i] < NELEMS(print_color));
      
       FMISSION_DATA_GetMissionParam( mfw->fmd_man, mfw->use_gpower_id[i]%3, &mission );
-      FEST_MISSION_GetTitleStr( setup->wordset, mfw->mm_fmission, str, &mission, GFL_HEAP_LOWID(HEAPID_MONOLITH) );
+      FEST_MISSION_GetTitleStr( mfw->mm_fmission, str, &mission, GFL_HEAP_LOWID(HEAPID_MONOLITH) );
 
 //      GFL_MSG_GetString(mfw->mm_fmission, /*mfw->use_gpower_id[i]*/, str);
       PRINTSYS_PrintColor( mfw->bmp_power_name[i], 0, 0, str, 

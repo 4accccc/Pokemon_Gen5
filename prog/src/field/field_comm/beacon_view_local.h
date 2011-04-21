@@ -14,6 +14,9 @@
 #include "gamesystem/g_power.h"
 #include "gamesystem/link_festival.h"
 #include "gamesystem/fest_mission.h"
+#include "gamesystem/fest_mission_nw.h"
+#include "gamesystem/fmission_log.h"
+#include "gamesystem/fmission_log_accessor_bv.h"
 #include "net/wih_dwc.h"
 #include "field/field_comm/intrude_work.h"
 #include "field/fld_vreq.h"
@@ -111,6 +114,7 @@ typedef struct _BEACON_VIEW{
   WIFI_LIST*  wifi_list;
   LINK_FESTIVAL*  fest_sys;
   FEST_MISSION*  fmwk;
+  FMISSION_ENTRY_TBL* fmission_entry_tbl;
   POWER_CONV_DATA* gpower_data;
 
   ////////////////////////////////////////

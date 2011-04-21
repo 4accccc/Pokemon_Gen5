@@ -56,5 +56,6 @@ struct _LINK_FESTIVAL{
   struct  _FMISSION_LOG_TBL mlog_stack_tbl;  //ミッションログスタックバッファ
 
   struct  _FMISSION_GPOWER_TBL  mlog_gpower_tbl;  //ミッションログ　デルパワーストックテーブル
+  struct  _FMISSION_ENTRY_TBL   mlog_entry_tbl;   //ミッションログ　エントリーデータストックテーブル
 };
 

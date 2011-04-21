@@ -397,6 +397,9 @@ static void BeaconInfo_SetFestMissionLog(GAMEBEACON_SYSTEM *bsys, const GAMEBEAC
   if( GAMEBEACON_Check_FestMission( info ) == FALSE ){
     return;
   }
+
+  //エントリーデータストック
+  FMISSION_ENTRY_TBL_Set( fest_sys, info );
  
   //ログストアパラメータ生成
   LINKFEST_LOG_PARAM_Clear( &log );
@@ -1343,14 +1346,8 @@ void BEACONINFO_Set_SpecialPokemonGet(GAMEBEACON_INFO *info, u16 monsno)
 //==================================================================
 void GAMEBEACON_Set_FMissionWildPokemonGet(u16 monsno)
 {
+  //チェックはGAMEBEACON_Set_PokemonGet()で事前に行っているので、ここではやらなくていい
   GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_POKE_CAPTURE, monsno );
-#if 0
-  if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_FMISSION_POKE_CAPTURE) == FALSE){ return; };
-  GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
-
-  BEACONINFO_Set_FMissionWildPokemonGet(&GameBeaconSys->send.info, monsno);
-#else
-#endif
 }
 
 //==================================================================

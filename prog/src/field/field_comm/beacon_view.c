@@ -268,6 +268,12 @@ static int seq_Main( BEACON_VIEW_PTR wk )
     return SEQ_MAIN;
   }
  
+  //フェスミッションエントリーポップアップ起動チェック
+  if( BeaconView_CheckSpecialFMissionEntry( wk ) ){
+    wk->io_interval = 30*3; //インターバルを設定
+    return SEQ_VIEW_UPDATE;
+  }
+ 
   //メイン入力チェック
   ret = BeaconView_CheckInput( wk );
   if( ret != SEQ_MAIN ){

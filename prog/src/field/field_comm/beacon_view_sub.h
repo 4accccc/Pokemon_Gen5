@@ -43,6 +43,11 @@ extern BOOL BeaconView_CheckSpecialPopup( BEACON_VIEW_PTR wk );
 extern BOOL BeaconView_CheckSpecialGPower( BEACON_VIEW_PTR wk );
 
 /*
+ *  @brief  フェスミッションお誘いポップアップ起動チェック 
+ */
+extern BOOL BeaconView_CheckSpecialFMissionEntry( BEACON_VIEW_PTR wk );
+
+/*
  *  @brief  スタックからログを一件取り出し
  */
 extern BOOL BeaconView_CheckStack( BEACON_VIEW_PTR wk );

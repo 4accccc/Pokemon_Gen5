@@ -82,6 +82,7 @@ static void list_UpDownReq1st( BEACON_VIEW_PTR wk, SCROLL_DIR dir, int ret_seq )
 static void list_ScrollReq( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info, u8 idx, u8 dir, PANEL_DRAW_TYPE draw_type );
 
 static void taskAdd_IconEffect( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO* info, BOOL new_f );
+static void taskAdd_WinFMission( BEACON_VIEW_PTR wk, FEST_MISSION* fmwk, int* task_ct );
 
 static void effReq_PanelScroll( BEACON_VIEW_PTR wk, u8 dir, PANEL_WORK* new_pp, PANEL_WORK* ignore_pp, int* task_ct );
 static void effReq_PanelSlideIn( BEACON_VIEW_PTR wk, PANEL_WORK* pp, int* task_ct );
@@ -279,6 +280,38 @@ BOOL BeaconView_CheckSpecialGPower( BEACON_VIEW_PTR wk )
  
   return TRUE;
 }
+
+/*
+ *  @brief  フェスミッションお誘いポップアップ起動チェック 
+ */
+BOOL BeaconView_CheckSpecialFMissionEntry( BEACON_VIEW_PTR wk )
+{
+  FEST_MISSION mission;
+ 
+  //なにか別のミッションに参加中ならスルーする
+  if( FEST_MISSION_IsEntry( wk->fmwk ) ){
+    return FALSE;
+  }
+  //ハイリンクに侵入されていたらスルー
+  if( GameCommSys_BootCheck( wk->game_comm ) != GAME_COMM_NO_FIELD_BEACON_SEARCH ){
+    return FALSE;
+  }
+  //スタックチェック
+  if( FMISSION_ENTRY_TBL_GetData( wk->fmission_entry_tbl, &mission, wk->str_tmp ) == FALSE ){
+    return FALSE;
+  }
+  //名前ワードセット展開
+  WORDSET_RegisterWord( wk->wordset, 0, wk->str_tmp, 0, TRUE, PM_LANG );
+  //ミッション名ワードセット展開
+  FEST_MISSION_GetTitleStr( wk->mm_fmission, wk->str_tmp, &mission, wk->tmpHeapID);
+  WORDSET_RegisterWord( wk->wordset, 1, wk->str_tmp, 0, TRUE, PM_LANG );
+
+  //ポップアップをリクエスト
+  taskAdd_WinFMission( wk, &mission, &wk->eff_task_ct);
+ 
+  return TRUE;
+}
+
 
 /*
  *  @brief  スタックからログを一件取り出し
@@ -1569,7 +1602,7 @@ static BOOL effReq_PopupMsg( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info, BOOL new
     return TRUE;
   }
   if( GAMEBEACON_Check_FestMission( info ) ){
-    return effReq_PopupMsgFMission( wk, info );
+    return FALSE; //フェスビーコンはポップアップ出さない//effReq_PopupMsgFMission( wk, info );
   }
   switch( action ){
   case GAMEBEACON_ACTION_SEARCH:
@@ -1990,7 +2023,6 @@ typedef struct _TASKWK_WIN_FMISSION{
   int* task_ct;
 }TASKWK_WIN_FMISSION;
 
-static void taskAdd_WinFMission( BEACON_VIEW_PTR wk, FEST_MISSION* fmwk, int* task_ct );
 static void tcb_WinFMissionEntryCheck( GFL_TCBL *tcb , void* work);
 
 static BOOL effReq_PopupMsgFMission( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info )

@@ -30,7 +30,7 @@ struct _FMISSION_LOG{
 };
 
 
-///ミッションログデータテーブル
+///ミッションログデータテーブル(いっぱいになったら、古いほうから押し出す)
 struct _FMISSION_LOG_TBL{
   struct  _FMISSION_LOG log[FMISSION_LOG_MAX];
   
@@ -46,13 +46,24 @@ struct _FMISSION_GPOWER{
   u16 spot_f;   //配布(パワースポット)データかどうか？
 };
 
-///ミッションログ　デルパワーテーブル
+///ミッションログ　デルパワーテーブル(いっぱいになったら押し出さない)
 struct _FMISSION_GPOWER_TBL{
   struct _FMISSION_GPOWER power[FMISSION_GPOWER_TBL_MAX];
 
   int  entry_num;
 };
 
+///フェスミッションお誘いログデータ
+struct _FMISSION_ENTRY{
+  STRCODE name[PERSON_NAME_SIZE+EOM_SIZE];  //7+EOM 16byte
+  FEST_MISSION  mission;  //ミッションパラメータ 
+};
+
+///フェスミッションお誘いログデータテーブル(いっぱいになったら、古いほうから押し出す)
+struct _FMISSION_ENTRY_TBL{
+  struct _FMISSION_ENTRY  entry[FMISSION_ENTRY_TBL_MAX];
+  int entry_num;
+};
 
 //------------------------------------------------------------------
 /*
@@ -124,4 +135,41 @@ extern void FMISSION_GPOWER_TBL_Clear( FMISSION_GPOWER_TBL* tbl );
 //------------------------------------------------------------------
 extern BOOL FMISSION_GPOWER_TBL_Set( FMISSION_GPOWER_TBL* tbl, const GAMEBEACON_INFO *info );
 
+//------------------------------------------------------------------
+/*
+ *  ミッションエントリーデータ パラメータクリア
+ */
+//------------------------------------------------------------------
+extern void FMISSION_ENTRY_Clear( FMISSION_ENTRY* entry );
+
+//------------------------------------------------------------------
+/*
+ *  ミッションエントリーデータ テーブルクリア
+ */
+//------------------------------------------------------------------
+extern void FMISSION_ENTRY_TBL_Clear( FMISSION_ENTRY_TBL* tbl );
+
+//------------------------------------------------------------------
+/*
+ *  ミッションエントリーデータスタック データセット
+ *
+ *  @param  tbl   FMISSION_ENTRY_TBL型構造体へのポインタ
+ *  @param  info  セットするビーコン情報
+ *  @return データをセットしたらTRUE
+ *
+ *  データがいっぱいの場合、一番古いデータを押し出して積む
+ */
+//------------------------------------------------------------------
+extern void FMISSION_ENTRY_TBL_Set( LINK_FESTIVAL* fest_sys, const GAMEBEACON_INFO *info );
+
+//------------------------------------------------------------------
+/*
+ *  ミッションエントリーデータスタック アップデート 
+ *
+ *  @param  tbl   FMISSION_ENTRY_TBL型構造体へのポインタ
+ *
+ *  格納したミッションのライフを減算する 
+ */
+//------------------------------------------------------------------
+extern void FMISSION_ENTRY_TBL_Update( LINK_FESTIVAL* fest_sys );
 

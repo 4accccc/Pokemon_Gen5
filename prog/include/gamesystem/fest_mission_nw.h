@@ -23,7 +23,7 @@ extern void FEST_MISSION_WordsetParamAll( WORDSET* wset, FEST_MISSION* fmwk );
  * ミッションパラメータからミッションタイトル文字列を生成
  */
 //---------------------------------------------------------
-extern void FEST_MISSION_GetTitleStr( WORDSET* wset, GFL_MSGDATA* man, STRBUF* str, const FEST_MISSION* mission, HEAPID heapID );
+extern void FEST_MISSION_GetTitleStr( GFL_MSGDATA* man, STRBUF* str, const FEST_MISSION* mission, HEAPID heapID );
 
 //---------------------------------------------------------
 /*
@@ -32,5 +32,5 @@ extern void FEST_MISSION_GetTitleStr( WORDSET* wset, GFL_MSGDATA* man, STRBUF* s
  * ミッションパラメータからミッション説明文を生成
  */
 //---------------------------------------------------------
-extern void FEST_MISSION_GetExpStr( WORDSET* wset, GFL_MSGDATA* man, STRBUF* str, const FEST_MISSION* mission, HEAPID heapID );
+extern void FEST_MISSION_GetExpStr( GFL_MSGDATA* man, STRBUF* str, const FEST_MISSION* mission, HEAPID heapID );
 

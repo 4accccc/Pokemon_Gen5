@@ -993,7 +993,8 @@ SRCS_OVERLAY_BEACON_VIEW_COMMON = field/field_comm/beacon_view_common.c
 #GROUP_OVERLAY_SUBSCREEN
 SRCS_OVERLAY_BEACON_VIEW = field/field_comm/beacon_view_setup.c \
         field/field_comm/beacon_view.c \
-        field/field_comm/beacon_view_sub.c
+        field/field_comm/beacon_view_sub.c \
+        gamesystem/fmission_log_accessor_bv.c
 
 #FMissionView
 #===> SRCS_OVERLAY_BEACON_VIEW_COMMON
@@ -1001,7 +1002,7 @@ SRCS_OVERLAY_BEACON_VIEW = field/field_comm/beacon_view_setup.c \
 SRCS_OVERLAY_FMISSION_VIEW = field/field_comm/fmission_view.c \
         field/field_comm/fmission_view_sub.c \
         field/field_comm/fmission_view_setup.c \
-        gamesystem/fmission_log_accessor.c
+        gamesystem/fmission_log_accessor_fv.c
 
 #Dowsing
 #===> GROUP_OVERLAY_FIELD_WEATHER

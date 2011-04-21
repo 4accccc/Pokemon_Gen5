@@ -604,7 +604,7 @@ static void sub_FMissionStartParamDraw( FMISSION_EVWORK* wk )
   int sec = LINKFEST_FRAME2SEC(wk->mission.life);
 
   //パラメータ
-  FEST_MISSION_GetExpStr( wk->wset, wk->msgFmis, wk->s_buf, &wk->mission, wk->heapID );
+  FEST_MISSION_GetExpStr( wk->msgFmis, wk->s_buf, &wk->mission, wk->heapID );
   sub_FMissionParamDraw( wk, wk->s_buf, CWIN_STR_OX01, 2 );
   
   //パラメータまとめてWordset
@@ -634,7 +634,7 @@ static void sub_FMissionStartParamDraw( FMISSION_EVWORK* wk )
 static void sub_FMissionEndParamDraw( FMISSION_EVWORK* wk )
 {
   //パラメータ
-  FEST_MISSION_GetExpStr( wk->wset, wk->msgFmis, wk->s_buf, &wk->mission, wk->heapID );
+  FEST_MISSION_GetExpStr( wk->msgFmis, wk->s_buf, &wk->mission, wk->heapID );
   sub_FMissionParamDraw( wk, wk->s_buf, CWIN_STR_OX01, 5 );
   
   //パラメータまとめてWordset
@@ -662,11 +662,11 @@ static void sub_FMissionEndParamDraw( FMISSION_EVWORK* wk )
 static void sub_FMissionCheckParamDraw( FMISSION_EVWORK* wk )
 {
   //タイトル
-  FEST_MISSION_GetTitleStr( wk->wset, wk->msgFmis, wk->s_buf, &wk->mission, wk->heapID );
+  FEST_MISSION_GetTitleStr( wk->msgFmis, wk->s_buf, &wk->mission, wk->heapID );
   FLDSYSWIN_PrintStrBuf( wk->win, CWIN_STR_OX01, CWIN_STR_OY*0, wk->s_buf );
   
   //説明文
-  FEST_MISSION_GetExpStr( wk->wset, wk->msgFmis, wk->s_buf, &wk->mission, wk->heapID );
+  FEST_MISSION_GetExpStr( wk->msgFmis, wk->s_buf, &wk->mission, wk->heapID );
   sub_FMissionParamDraw( wk, wk->s_buf, CWIN_STR_OX01, 2 );
  
   //パラメータまとめてWordset

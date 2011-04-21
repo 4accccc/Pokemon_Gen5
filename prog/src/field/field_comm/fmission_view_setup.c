@@ -33,7 +33,7 @@
 #include "wifi_unionobj.naix"
 #include "wmi.naix"
 #include "gamesystem/fmission_log.h"
-#include "gamesystem/fmission_log_accessor.h"
+#include "gamesystem/fmission_log_accessor_fv.h"
 #include "fmission_view_local.h"
 #include "fmission_view_sub.h"
 

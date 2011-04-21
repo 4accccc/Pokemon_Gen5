@@ -19,6 +19,9 @@
 #define LINKFEST_LOG_END  (LINKFEST_LOG_MAX-1) //フェスタミッションログEndIndex
 
 #define LINKFEST_FRAME2SEC(frame) ((frame/60)+((frame%60)!=0))
+#define LINKFEST_SEC2FRAME(sec) (sec*60)
+
+#define LINKFEST_LIFE_LIMIT (LINKFEST_SEC2FRAME(30)) //frame単位で30秒
 
 typedef enum{
   LINKFEST_SCORELOG_SET_FAILED,     ///<ログストア失敗
@@ -111,6 +114,13 @@ extern FMISSION_LOG_TBL* LINK_FESTIVAL_GetMissionLogViewTbl( LINK_FESTIVAL* wk )
  */
 //---------------------------------------------------------
 extern FMISSION_GPOWER_TBL* LINK_FESTIVAL_GetMissionLogGPowerTbl( LINK_FESTIVAL* wk );
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル ミッションエントリーデータテーブルポインタ取得
+ */
+//---------------------------------------------------------
+extern FMISSION_ENTRY_TBL* LINK_FESTIVAL_GetMissionLogEntryTbl( LINK_FESTIVAL* wk );
 
 //---------------------------------------------------------
 /*

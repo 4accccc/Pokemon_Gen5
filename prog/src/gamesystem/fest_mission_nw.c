@@ -62,15 +62,18 @@ void FEST_MISSION_WordsetParamAll( WORDSET* wset, FEST_MISSION* fmwk )
  * ミッションパラメータからミッションタイトル文字列を生成
  */
 //---------------------------------------------------------
-void FEST_MISSION_GetTitleStr( WORDSET* wset, GFL_MSGDATA* man, STRBUF* str, const FEST_MISSION* fmwk, HEAPID heapID )
+void FEST_MISSION_GetTitleStr( GFL_MSGDATA* man, STRBUF* str, const FEST_MISSION* fmwk, HEAPID heapID )
 {
+  WORDSET* wset = WORDSET_CreateEx( 1, WORDSET_DEFAULT_BUFLEN, GFL_HEAP_LOWID(heapID));
   STRBUF* tmp = GFL_STR_CreateBuffer( BUFLEN_FMISSION_TITLE, GFL_HEAP_LOWID(heapID) );
+
   GFL_MSG_GetString( man, msg_fmission_title00+fmwk->type, tmp );
 
   wset_MissionParam( wset, 0, DATA_FMissionDataType[fmwk->type].param_wset, fmwk->param ); 
   WORDSET_ExpandStr( wset, str, tmp );
 
   GFL_STR_DeleteBuffer( tmp );
+  WORDSET_Delete( wset );
 }
 
 //---------------------------------------------------------
@@ -80,9 +83,11 @@ void FEST_MISSION_GetTitleStr( WORDSET* wset, GFL_MSGDATA* man, STRBUF* str, con
  * ミッションパラメータからミッション説明文を生成
  */
 //---------------------------------------------------------
-void FEST_MISSION_GetExpStr( WORDSET* wset, GFL_MSGDATA* man, STRBUF* str, const FEST_MISSION* fmwk, HEAPID heapID )
+void FEST_MISSION_GetExpStr( GFL_MSGDATA* man, STRBUF* str, const FEST_MISSION* fmwk, HEAPID heapID )
 {
+  WORDSET* wset = WORDSET_CreateEx( 3, WORDSET_DEFAULT_BUFLEN, GFL_HEAP_LOWID(heapID));
   STRBUF* tmp = GFL_STR_CreateBuffer( BUFLEN_FMISSION_EXP, GFL_HEAP_LOWID(heapID) );
+  
   GFL_MSG_GetString( man, msg_fmission_exp00+fmwk->type, tmp );
 
   //時間
@@ -95,6 +100,7 @@ void FEST_MISSION_GetExpStr( WORDSET* wset, GFL_MSGDATA* man, STRBUF* str, const
   WORDSET_ExpandStr( wset, str, tmp );
 
   GFL_STR_DeleteBuffer( tmp );
+  WORDSET_Delete( wset );
 }
 
 //---------------------------------------------------------

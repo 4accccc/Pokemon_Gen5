@@ -37,8 +37,17 @@
 
 #include "link_festival_local.h"
 
+typedef enum{
+  ENTRY_UPDATE0,
+  ENTRY_UPDATE1,
+  ENTRY_UPDATE2,
+  ENTRY_NEW,    //新規
+  ENTRY_NONE,   //積まない
+}ENTRY_CHECK;
+
 static FMISSION_LOG_ACTION log_GetLogActionFromBeacon( const GAMEBEACON_INFO *info, FMISSION_LOG_SET_MODE mode );
 static BOOL log_MakeLogFromBeacon( FMISSION_LOG* p_log, const GAMEBEACON_INFO *info, FMISSION_LOG_SET_MODE mode, BOOL mine_f );
+static ENTRY_CHECK entry_CheckStock( LINK_FESTIVAL* fest_sys, const GAMEBEACON_INFO *info );
 
 //------------------------------------------------------------------
 /*
@@ -167,7 +176,7 @@ BOOL FMISSION_GPOWER_TBL_Set( FMISSION_GPOWER_TBL* tbl, const GAMEBEACON_INFO *i
   }
   FMISSION_GPOWER_Clear( &power );
 
-  //配布パワーとミッションパワーは受け取る
+  //配布パワーを受け取る(ミッションパワーはFMISSION_LOGからログ画面で起動)
   switch( info->action.action_no ){
   case GAMEBEACON_ACTION_DISTRIBUTION_GPOWER:
     id = info->action.distribution.gpower_id;
@@ -196,6 +205,116 @@ BOOL FMISSION_GPOWER_TBL_Set( FMISSION_GPOWER_TBL* tbl, const GAMEBEACON_INFO *i
   tbl->power[tbl->entry_num++] = power;
 
   return TRUE;
+}
+
+//------------------------------------------------------------------
+/*
+ *  ミッションエントリーデータ パラメータクリア
+ */
+//------------------------------------------------------------------
+void FMISSION_ENTRY_Clear( FMISSION_ENTRY* entry )
+{
+  GFL_STD_MemClear( entry, sizeof(FMISSION_ENTRY));
+  FEST_MISSION_Clear( &entry->mission );
+
+  {
+    STRCODE eom = GFL_STR_GetEOMCode();
+    GFL_STD_MemFill16( entry->name, eom, (PERSON_NAME_SIZE+EOM_SIZE)*sizeof(STRCODE));
+  }
+}
+
+//------------------------------------------------------------------
+/*
+ *  ミッションエントリーデータ テーブルクリア
+ */
+//------------------------------------------------------------------
+void FMISSION_ENTRY_TBL_Clear( FMISSION_ENTRY_TBL* tbl )
+{
+  int i;
+
+  for(i = 0;i < FMISSION_ENTRY_TBL_MAX;i++){
+    FMISSION_ENTRY_Clear( &tbl->entry[i] );
+  }
+  tbl->entry_num = 0;
+}
+
+//------------------------------------------------------------------
+/*
+ *  ミッションエントリーデータスタック データセット
+ *
+ *  @param  tbl   FMISSION_ENTRY_TBL型構造体へのポインタ
+ *  @param  info  セットするビーコン情報
+ *  @return データをセットしたらTRUE
+ *
+ *  データがいっぱいの場合、一番古いデータを押し出して積む
+ */
+//------------------------------------------------------------------
+void FMISSION_ENTRY_TBL_Set( LINK_FESTIVAL* fest_sys, const GAMEBEACON_INFO *info )
+{
+  FMISSION_ENTRY entry;
+  ENTRY_CHECK ret;
+  FMISSION_ENTRY_TBL* tbl = &fest_sys->mlog_entry_tbl;
+
+  //アクションチェック
+  if(GAMEBEACON_Check_FestMissionWithParam(info) == FALSE){
+    return;
+  }
+  ret = entry_CheckStock( fest_sys, info );
+
+  if(ret == ENTRY_NONE){
+    return;
+  }
+
+  FMISSION_ENTRY_Clear(&entry);
+
+  //パラメータセット
+  entry.mission = info->action.fmission;
+  //名前(info->nameはEOM抜き)
+  GFL_STD_MemCopy16( info->name, entry.name, PERSON_NAME_SIZE);
+
+  if( ret == ENTRY_NEW ){
+    if( tbl->entry_num == FMISSION_ENTRY_TBL_MAX ){
+      //古いデータを押し出して積む
+      GFL_STD_MemCopy32( &tbl->entry[1], &tbl->entry[0], sizeof(FMISSION_ENTRY)*FMISSION_ENTRY_TBL_END);
+      tbl->entry[FMISSION_ENTRY_TBL_END] = entry;
+    }else{
+      tbl->entry[tbl->entry_num++] = entry;
+    }
+  }else{
+    //上書き
+    tbl->entry[ret] = entry;
+  }
+}
+
+//------------------------------------------------------------------
+/*
+ *  ミッションエントリーデータスタック アップデート 
+ *
+ *  @param  tbl   FMISSION_ENTRY_TBL型構造体へのポインタ
+ *
+ *  格納したミッションのライフを減算する 
+ */
+//------------------------------------------------------------------
+void FMISSION_ENTRY_TBL_Update( LINK_FESTIVAL* fest_sys )
+{
+  int i,end;
+  FMISSION_ENTRY_TBL* tbl = &fest_sys->mlog_entry_tbl;
+
+  for(i = 0;i < tbl->entry_num; i++ ){
+    if( tbl->entry[i].mission.life ){
+      if( --tbl->entry[i].mission.life < LINKFEST_LIFE_LIMIT ){
+        end = tbl->entry_num-1;
+        if( i < end ){
+          GFL_STD_MemCopy32( &tbl->entry[i+1], &tbl->entry[i], sizeof(FMISSION_ENTRY)*(end-i));
+          if( end > 0){
+            --i;  //前詰めしたのでサーチ位置もずらしておく
+          }
+        }
+        FMISSION_ENTRY_Clear( &tbl->entry[tbl->entry_num-1] );
+        --tbl->entry_num;
+      }
+    }
+  }
 }
 
 //=================================================================================
@@ -266,3 +385,46 @@ static BOOL log_MakeLogFromBeacon( FMISSION_LOG* p_log, const GAMEBEACON_INFO *i
   return TRUE;
 }
 
+//------------------------------------------------------------------
+/*
+ *  ミッションエントリーデータをストックするかチェック 
+ *
+ *  @param  info  セットするビーコン情報
+ *  @param  new_f 新規エントリーならTRUE
+ */
+//------------------------------------------------------------------
+static ENTRY_CHECK entry_CheckStock( LINK_FESTIVAL* fest_sys, const GAMEBEACON_INFO *info )
+{
+  int i;
+  const FEST_MISSION* fmwk;
+  FMISSION_ENTRY_TBL* tbl = &fest_sys->mlog_entry_tbl;
+
+  //アクションチェック
+  if(GAMEBEACON_Check_FestMissionWithParam(info) == FALSE){
+    return ENTRY_NONE;
+  }
+  fmwk = &info->action.fmission;
+
+  //スタックにすでに積まれているミッションと同一なら無視か上書き
+  for( i = 0;i < tbl->entry_num;i++){
+    if( tbl->entry[i].mission.type == fmwk->type &&
+        tbl->entry[i].mission.key == fmwk->key ){
+      if( tbl->entry[i].mission.life < fmwk->life ){  //新しい方がライフが長ければ上書き
+        return ENTRY_UPDATE0+i;
+      }
+      return ENTRY_NONE;
+    }
+  }
+  //現在のミッションと同一なら積まない
+  if( LINK_FESTIVAL_IsMissionEntry( fest_sys )){
+    if( fmwk->type == fest_sys->mission.type  && 
+        fmwk->key == fest_sys->mission.key ){
+      return ENTRY_NONE;
+    }
+  }
+  //無視対象のミッションなら積まない
+  if( LINK_FESTIVAL_IsEgnoreMission( fest_sys, fmwk )){
+    return ENTRY_NONE;
+  }
+  return ENTRY_NEW;
+}

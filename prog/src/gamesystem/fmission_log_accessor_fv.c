@@ -1,11 +1,12 @@
 //====================================================================================
 /**
- *  @file   fmission_log_accessor.c
- *  @brief  フェスミッションログ　データアクセス(フィールド)
+ *  @file   fmission_log_accessor_fv.c
+ *  @brief  フェスミッションログ　データアクセス(フィールド FMISSION_VIEWオーバーレイ)
  *  @author Miyuki Iwasawa
  *  @date   11.03.23
  *
  *  fmission_logのルーチンのうち、フィールド上からだけアクセスできれば良い関数を集めてある
+ *  FMissionViewバージョン
  */
 //====================================================================================
 
@@ -38,7 +39,7 @@
 
 #include "link_festival_local.h"
 #include "gamesystem/fmission_log.h"
-#include "gamesystem/fmission_log_accessor.h"
+#include "gamesystem/fmission_log_accessor_fv.h"
 
 #define BUFLEN_LOGACT_WORDSET_TMP (10+EOM_SIZE)
 

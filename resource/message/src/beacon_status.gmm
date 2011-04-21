@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00270" date="2011-04-14T20:05:21"/>
+	<create user="iwasawa" host="W00270" date="2011-04-21T16:37:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -267,7 +267,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -399,12 +399,14 @@
 	</row>
 
 	<row id="msg_sys_fmission_check">
-		<language name="JPN" width="256">[1:00:トレーナー名:0]さん　から　フェスミッションを
-じゅしん　しました。
-ミッションに　さんか　しますか？</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さん　から　フェスミッションを
-受信しました。
-ミッションに　参加しますか？</language>
+		<comment>0：トレーナー名
+1：フェスミッション名(max15文字)</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さんの　フェスミッション
+「[1:1C:簡易会話単語:1]」に
+さんか　しますか？</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんの　フェスミッション
+「[1:1C:簡易会話単語:1]」に
+参加　しますか？</language>
 	</row>
 
 	<row id="msg_sys_fmission_reward">

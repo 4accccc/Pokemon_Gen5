@@ -30,7 +30,7 @@
 
 #include "gamesystem/fest_mission_nw.h"
 #include "gamesystem/fmission_log.h"
-#include "gamesystem/fmission_log_accessor.h"
+#include "gamesystem/fmission_log_accessor_fv.h"
 #include "arc/wifi_unionobj_plt.cdat"
 #include "fieldmap/fldmmdl_mdlres.naix" //フィールド人物OBJ
 #include "msg/script/msg_festmission_event.h"
@@ -610,7 +610,7 @@ static void print_PopupWindow( FMISSION_VIEW_PTR wk, STRBUF* str, int* task_ct )
  */
 static void draw_MissionInfo( FMISSION_VIEW_PTR wk )
 {
-  FEST_MISSION_GetTitleStr( wk->wordset, wk->mm_fmission, wk->str_expand, wk->fmwk, wk->tmpHeapID );
+  FEST_MISSION_GetTitleStr( wk->mm_fmission, wk->str_expand, wk->fmwk, wk->tmpHeapID );
   BVCPrintReq_BmpwinPrint( &wk->win[WIN_TITLE], wk->str_expand,
       BMP_TITLE_OX, BMP_TITLE_OY, FCOL_TITLE_BASE, FCOL_TITLE, NULL, wk->init_f );
 

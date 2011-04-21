@@ -75,6 +75,8 @@ void LINK_FESTIVAL_Delete( LINK_FESTIVAL* wk )
 //---------------------------------------------------------
 void LINK_FESTIVAL_Update( LINK_FESTIVAL* wk )
 {
+  FMISSION_ENTRY_TBL_Update( wk );
+
   if( FEST_MISSION_IsEntry(&wk->mission) == FALSE){
     return;
   }
@@ -142,6 +144,16 @@ FMISSION_LOG_TBL* LINK_FESTIVAL_GetMissionLogViewTbl( LINK_FESTIVAL* wk )
 FMISSION_GPOWER_TBL* LINK_FESTIVAL_GetMissionLogGPowerTbl( LINK_FESTIVAL* wk )
 {
   return &wk->mlog_gpower_tbl;
+}
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル ミッションエントリーデータテーブルポインタ取得
+ */
+//---------------------------------------------------------
+FMISSION_ENTRY_TBL* LINK_FESTIVAL_GetMissionLogEntryTbl( LINK_FESTIVAL* wk )
+{
+  return &wk->mlog_entry_tbl;
 }
 
 //---------------------------------------------------------
@@ -529,7 +541,7 @@ BOOL LINK_FESTIVAL_IsEgnoreMission( LINK_FESTIVAL* wk, const FEST_MISSION* fmwk 
     return TRUE;
   }
   //残り時間が一定以上か？
-  if( fmwk->life/60 < 30 ){
+  if( fmwk->life < LINKFEST_LIFE_LIMIT ){
     OS_FPrintf(OSPRINT_LINKFEST_PAGE,"FMIS Egnore3 type=%d, key=%08x, param=%d life=%dsec\n",
       fmwk->type, fmwk->key, fmwk->param, fmwk->life/60 );
     return TRUE;

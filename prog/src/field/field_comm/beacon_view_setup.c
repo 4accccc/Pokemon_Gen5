@@ -93,6 +93,7 @@ BEACON_VIEW* BVS_InitWork( GAMESYS_WORK* gsys, FIELD_SUBSCREEN_WORK* subscreen )
   wk->fld_vreq = FIELDMAP_GetFldVReq(wk->fieldWork);
   wk->fest_sys = GAMESYSTEM_GetLinkFestivalWork(gsys);
   wk->fmwk = LINK_FESTIVAL_GetMissionWork( wk->fest_sys );
+  wk->fmission_entry_tbl = LINK_FESTIVAL_GetMissionLogEntryTbl( wk->fest_sys );
   wk->subscreen = subscreen;
  
   wk->heap_sID = HEAPID_FIELD_SUBSCREEN;
