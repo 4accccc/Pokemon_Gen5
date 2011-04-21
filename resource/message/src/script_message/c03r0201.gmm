@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-04T21:13:23"/>
+	<create user="matsumiya" host="W00224" date="2011-04-21T15:33:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,8 +292,9 @@
 	</lock>
 
 
-	<row id="msg_c03r0201_sunglasses_01">
-		<comment>♂</comment>
+	<row id="msg_c03r0201_sunglasses_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+※SWANでメッセージ調整予定</comment>
 		<attribute name="キャラ指定">SUNGLASSES</attribute>
 		<language name="JPN" width="256">いまは　イッシュちほうの
 でんせつを　モチーフにした▽
@@ -305,7 +306,6 @@
 
 	<row id="msg_c03r0201_lady_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
-
 ※SWANでメッセージ調整予定</comment>
 		<attribute name="キャラ指定">LADY</attribute>
 		<language name="JPN" width="256">アーティさんの　えを　みたいなら
@@ -314,49 +314,55 @@
 ポケモンジムに　行くと　いいわね！</language>
 	</row>
 
-	<row id="msg_c03r0201_painting1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c03r0201_painting1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
-・GRIDX=8~9、GRIDZ=10の絵画</comment>
+・GRIDX=8~9、GRIDZ=10の絵画
+※SWANでメッセージ調整予定</comment>
 		<attribute name="キャラ指定">絵画</attribute>
 		<language name="JPN" width="256">タイトル「りそうと　しんじつ」</language>
 		<language name="JPN_KANJI" width="256">タイトル「理想と真実」</language>
 	</row>
 
-	<row id="msg_c03r0201_painting2_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c03r0201_painting2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
-・GRIDX=11、GRIDZ=10の絵画</comment>
+・GRIDX=11、GRIDZ=10の絵画
+※SWANでメッセージ調整予定</comment>
 		<attribute name="キャラ指定">絵画</attribute>
 		<language name="JPN" width="256">タイトル「まいあがる　りゅう」</language>
 		<language name="JPN_KANJI" width="256">タイトル「舞い上がる　白い竜」</language>
 	</row>
 
-	<row id="msg_c03r0201_painting3_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c03r0201_painting3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
-・GRIDX=7~8、GRIDZ=5の絵画</comment>
+・GRIDX=7~8、GRIDZ=5の絵画
+※SWANでメッセージ調整予定</comment>
 		<attribute name="キャラ指定">絵画</attribute>
 		<language name="JPN" width="256">タイトル「しろき　ほのお」</language>
 		<language name="JPN_KANJI" width="256">タイトル「白き炎」</language>
 	</row>
 
-	<row id="msg_c03r0201_painting4_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c03r0201_painting4_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
-・GRIDX=10、GRIDZ=5の絵画</comment>
+・GRIDX=10、GRIDZ=5の絵画
+※SWANでメッセージ調整予定</comment>
 		<attribute name="キャラ指定">絵画</attribute>
 		<language name="JPN" width="256">タイトル「まいおりる　りゅう」</language>
 		<language name="JPN_KANJI" width="256">タイトル「舞い降りる　黒い竜」</language>
 	</row>
 
-	<row id="msg_c03r0201_painting5_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c03r0201_painting5_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
-・GRIDX=12~13、GRIDZ=5の絵画</comment>
+・GRIDX=12~13、GRIDZ=5の絵画
+※SWANでメッセージ調整予定</comment>
 		<attribute name="キャラ指定">絵画</attribute>
 		<language name="JPN" width="256">タイトル「くろい　いなずま」</language>
 		<language name="JPN_KANJI" width="256">タイトル「黒い稲妻」</language>
 	</row>
 
-	<row id="msg_c03r0201_painting6_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c03r0201_painting6_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
-・GRIDX=2、GRIDZ=9の絵画</comment>
+・GRIDX=2、GRIDZ=9の絵画
+※SWANでメッセージ調整予定</comment>
 		<attribute name="キャラ指定">絵画</attribute>
 		<language name="JPN" width="256">タイトル「ふたごの　えいゆう」</language>
 		<language name="JPN_KANJI" width="256">タイトル「双子の英雄」</language>
