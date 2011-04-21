@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2011-04-16T14:44:07"/>
+	<create user="shimoyamada" host="W00184" date="2011-04-20T22:14:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -395,7 +395,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1224" top="531" right="1929" bottom="1159" maximized="no" rayout="Vertical2">
+	<dialog left="1203" top="421" right="1908" bottom="1049" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="551" top="133" right="1024" bottom="531" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -594,8 +594,9 @@
 	</row>
 
 	<row id="mes_shop_09_01">
-		<language name="JPN" width="256">だい[2:00:１桁:1]：[1:00:トレーナー名:0]</language>
-		<language name="JPN_KANJI" width="256">だい[2:00:１桁:1]：[1:00:トレーナー名:0]</language>
+		<comment>秘書用の番号ラベル</comment>
+		<language name="JPN" width="256">[2:00:１桁:1]：[1:00:トレーナー名:0]</language>
+		<language name="JPN_KANJI" width="256">[2:00:１桁:1]：[1:00:トレーナー名:0]</language>
 	</row>
 
 	<row id="mes_shop_09_02">
