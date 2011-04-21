@@ -27,6 +27,7 @@
 #include "message.naix"    //NARC_message_wbt_trname_dat
 #include "tr_tool/ex_trainer_def.h" //TRID_OFFSET_WBT
 
+#include "sound/swan_sound_data.sadl"
 #ifdef  PM_DEBUG
 //#define DEBUG_WEAK_PARTY  //定義すると手持ちが激しく弱くなる
 //#define DEBUG_STRONG_PARTY  //定義すると手持ちが激しく強くなる
@@ -692,11 +693,37 @@ BATTLE_SETUP_PARAM * WBTSYS_CreateBattleSetupParam( WBTSYS * wbtsys, GAMESYS_WOR
   party = WBTSYS_CreateBattleParty( wbtsys, GAMESYSTEM_GetGameData( gsys ) );
   makeRomTrainerData( tr_data, wbt_tr, num, HEAPID_PROC );
   bp = FBI_TOOL_WBT_CreateBattleParam( gsys, party, mode, tr_data, num  );
+
+  /* 仮：α版用BGM設定 */
+  if ( wbtsys->stage == WBTSTAGE_FINAL )
+  {
+    bp->musicDefault = SEQ_BGM_VS_WCS;
+    bp->musicWin = SEQ_BGM_WIN5;
+  } else {
+    bp->musicDefault = SEQ_BGM_VS_SUBWAY_TRAINER;
+    bp->musicWin = SEQ_BGM_WIN2;
+  }
+
   GFL_HEAP_FreeMemory( party );
   GFL_HEAP_FreeMemory( tr_data );
   return bp;
 }
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static u32 countDeadStatus( const BtlPokeStatCode * party_state )
+{
+  int i;
+  u32 count = 0;
+  for ( i = 0; i < TEMOTI_POKEMAX; i ++ )
+  {
+    if ( party_state[i] == BTL_POKESTATE_DEAD )
+    {
+      count ++;
+    }
+  }
+  return count;
+}
 //------------------------------------------------------------------
 /**
  * @brief WBT戦闘結果の反映
@@ -704,11 +731,14 @@ BATTLE_SETUP_PARAM * WBTSYS_CreateBattleSetupParam( WBTSYS * wbtsys, GAMESYS_WOR
  * @param gamedata
  */
 //------------------------------------------------------------------
-void WBTSYS_ReflectBattleResult( WBTSYS * wbtsys, GAMEDATA * gamedata )
+void WBTSYS_ReflectBattleResult( WBTSYS * wbtsys, GAMEDATA * gamedata, BATTLE_SETUP_PARAM * bsp )
 {
   u16 * ret_wk = WBTSYS_GetScriptAnswerWork( wbtsys );
   u32 result = GAMEDATA_GetLastBattleResult( gamedata ); 
+  u32 my_count    = countDeadStatus( bsp->party_state[ BTL_CLIENT_PLAYER ] );
+  u32 enemy_count = countDeadStatus( bsp->party_state[ BTL_CLIENT_ENEMY1 ] );
 
+  TAMADA_Printf("my_count = %d, enemy_count = %d\n", my_count, enemy_count );
   switch ( result )
   {
   default:

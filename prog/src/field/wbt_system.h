@@ -93,6 +93,16 @@ typedef enum {
 }WBT_TRTYPE;
 
 //------------------------------------------------------------------
+/// WBTÇ≈ÇÃèüîsåãâ 
+//------------------------------------------------------------------
+typedef enum {
+  WBT_BTL_RESULT_LOSE = 0,
+  WBT_BTL_RESULT_WIN,
+  WBT_BTL_RESULT_DRAW,
+  WBT_BTL_RESULT_DKO_WIN,
+  WBT_BTL_RESULT_DKO_LOSE,
+}WBT_BTL_RESULT;
+//------------------------------------------------------------------
 //------------------------------------------------------------------
 enum {
   WBT_DOWNLOAD_NUMBER = 3,
@@ -162,7 +172,9 @@ extern void WBTSYS_SetPokelistResult( WBTSYS * wbtsys, PLIST_DATA * plist_data )
 
 extern POKEPARTY * WBTSYS_CreateBattleParty( WBTSYS * wbtsys, GAMEDATA * gamedata );
 extern BATTLE_SETUP_PARAM * WBTSYS_CreateBattleSetupParam( WBTSYS * wbtsys, GAMESYS_WORK * gsys );
-extern void WBTSYS_ReflectBattleResult( WBTSYS * wbtsys, GAMEDATA * gamedata );
+
+extern void WBTSYS_ReflectBattleResult(
+    WBTSYS * wbtsys, GAMEDATA * gamedata, BATTLE_SETUP_PARAM * bsp );
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------

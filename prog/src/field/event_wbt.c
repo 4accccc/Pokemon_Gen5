@@ -282,7 +282,7 @@ static GMEVENT_RESULT wbtBattleEvent( GMEVENT * event, int *seq, void * work )
     break;
 
   case WBE_SEQ_END:
-    WBTSYS_ReflectBattleResult( wbtsys, GAMESYSTEM_GetGameData(gsys) ); //í“¬Œ‹‰Ê‚ð”½‰f‚·‚é
+    WBTSYS_ReflectBattleResult( wbtsys, GAMESYSTEM_GetGameData(gsys), wbew->bp ); //í“¬Œ‹‰Ê‚ð”½‰f‚·‚é
     BATTLE_PARAM_Delete( wbew->bp );
     return GMEVENT_RES_FINISH;
   }
