@@ -437,6 +437,8 @@ typedef struct
 	u32						MoveFlag;						// 移動可能フラグ
 	u32						MesFlag;						// メッセージフラグ
 	u32						DebugFlag;						// debug
+	s32						RandCount;						// random用カウンタ
+	s32						RandBuffer[4];					// random用のバッファ
 	s32						Timer[TIMER_MAX];				// タイマ
 	WBTLIST_MOVE_WORK		MoveWork[MWORK_MAX];			// 移動用ワーク
 	WBTLIST_PARAM_WORK		ParamWork[PARAM_WORK_MAX];		// パラメータのワーク
@@ -707,6 +709,8 @@ static void wbt_calc_param( WBTLIST_MAIN_WORK* wk );
 static s16  wbt_get_param(  WBTLIST_MAIN_WORK* wk, const s32 mode, const s32 off );
 static BOOL wbt_chk_dispcount( WBTLIST_MAIN_WORK* wk );
 static BOOL wbt_is_dispcount( WBTLIST_MAIN_WORK* wk );
+//
+static void wbt_calc_random( WBTLIST_MAIN_WORK* wk );
 
 // 以下(debug)
 static void wbt_debug_param( WBTLIST_MAIN_WORK* wk );
@@ -1093,7 +1097,11 @@ static void wbt_init( WBTLIST_MAIN_WORK* wk )
 	wk->MoveFlag	= 0;
 	wk->MesFlag		= 0;
 	wk->DebugFlag	= 0;
+	wk->RandCount	= 0;
 	//
+	for(i=0;i<4;i++){
+		wk->RandBuffer[i] = -1;
+	}
 	for(i=0;i<TIMER_MAX;i++){
 		wk->Timer[i] = 0;
 	}
@@ -2368,7 +2376,15 @@ static BOOL wbt_main_meswin( WBTLIST_MAIN_WORK* wk )
 		// meswinクリア
 		wbt_clear_meswin( wk );
 		// 指定した番号 + (0-(MES_RANDOM_MAX-1))のランダム
-		num = GFUser_GetPublicRand( MES_RANDOM_MAX );
+//		num = GFUser_GetPublicRand( MES_RANDOM_MAX );
+		num = wk->RandBuffer[wk->RandCount];
+		wk->RandCount++;
+		// 念のため
+		if(wk->RandCount >= 3){
+			wk->RandCount = 3;
+		}
+		OS_Printf("rand :%d\n",num);
+		//
 		tmp = wbt_get_param( wk, PRM_MESID, 0 );
 		wbt_set_meswin( wk, (tmp+num) );
 		return( TRUE );
@@ -2768,6 +2784,9 @@ static void wbt_init_param( WBTLIST_MAIN_WORK* wk )
 	wbt_calc_param( wk );
 	// 移動パラメータセット
 	wk->MoveFlag = wbt_get_param( wk, PRM_MOVEFLAG, 0 );
+	//
+	// ランダム取得
+	wbt_calc_random( wk );
 }
 
 //-----------------------------------------------------------------------------
@@ -3048,6 +3067,60 @@ static BOOL wbt_is_dispcount( WBTLIST_MAIN_WORK* wk )
 	}
 	// 終了判定
 	return( bflg );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  乱数の作成
+ *
+ *	@param	WBTLIST_MAIN_WORK* wk
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void wbt_calc_random( WBTLIST_MAIN_WORK* wk )
+{
+	s32		tmp;
+	s32		i;
+	s32		j;
+	s32		k;
+	s32		flg;
+	//
+	k=0;
+	// 多めの回数分処理(こないはず)
+	for(i=0;i<128;i++){
+		flg = 0;
+		// (0-4)のランダムをセット
+		tmp = GFUser_GetPublicRand( MES_RANDOM_MAX );
+		// 同じものがあるかチェック
+		for(j=0;j<4;j++){
+			if(tmp == wk->RandBuffer[j]){
+				flg = 1;
+				break;
+			}
+		}
+		// ここまでで同じものがあるかがわかるので、
+		// ない場合は要素に追加
+		if(flg == 0){
+			wk->RandBuffer[k] = tmp;
+			k++;
+			if(k >= 4){
+				break;
+			}
+		}
+	}
+	// どうしても見つからなかった
+	// (こないはず)
+	if(i == 128){
+		for(i=0;i<4;i++){
+			wk->RandBuffer[i] = i;
+		}
+		OS_Printf("rand not found\n");
+	}
+	// ここまででRandBuffer[]に、値がもとまる
+	OS_Printf("rand :%d, %d, %d, %d\n", wk->RandBuffer[0], wk->RandBuffer[1], wk->RandBuffer[2], wk->RandBuffer[3] );
+	//
+	wk->RandCount = 0;
 }
 
 
