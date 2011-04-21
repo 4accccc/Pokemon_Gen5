@@ -168,24 +168,25 @@ end
 #=====================================
 SHOP_ROW_START         = 1         #行開始位置
 SHOP_COL_START         = 0         #列開始位置
-SHOP_COL_SHOP   = SHOP_COL_START   #列：お店種類
-SHOP_COL_TYPE          = 1         #列：種類
-SHOP_COL_LV            = 2         #列：お店レベル
-SHOP_COL_NEXTEXP       = 3         #列：次の経験値
-SHOP_COL_NAME          = 4         #列：お店名
-SHOP_COL_OUT_MODEL     = 5         #列：外観
-SHOP_COL_IN_3DMD       = 6         #列：内装
-SHOP_COL_IN_TEX        = 7         #列：TEX
-SHOP_COL_LIST1         = 8         #列：リスト１
-SHOP_COL_LIST2         = 9         #列：リスト２
-SHOP_COL_LIST3         = 10         #列：リスト３
-SHOP_COL_LIST4         = 11         #列：リスト４
-SHOP_COL_LIST5         = 12         #列：リスト５
-SHOP_COL_LIST6         = 13         #列：リスト６
+SHOP_COL_TAG   = SHOP_COL_START   #列：タグ
+SHOP_COL_SHOP          = 1   #列：お店種類
+SHOP_COL_TYPE          = 2         #列：種類
+SHOP_COL_LV            = 3         #列：お店レベル
+SHOP_COL_NEXTEXP       = 4         #列：次の経験値
+SHOP_COL_NAME          = 5         #列：お店名
+SHOP_COL_OUT_MODEL     = 6         #列：外観
+SHOP_COL_IN_3DMD       = 7         #列：内装
+SHOP_COL_IN_TEX        = 8         #列：TEX
+SHOP_COL_LIST1         = 9         #列：リスト１
+SHOP_COL_LIST2         = 10         #列：リスト２
+SHOP_COL_LIST3         = 11         #列：リスト３
+SHOP_COL_LIST4         = 12         #列：リスト４
+SHOP_COL_LIST5         = 13         #列：リスト５
+SHOP_COL_LIST6         = 14         #列：リスト６
 SHOP_COL_LIST_START    = SHOP_COL_LIST1
 SHOP_COL_LIST_END      = SHOP_COL_LIST6
-SHOP_COL_END           = 14        #列最後
-def convertShop( csv, data, h_define, gmm, bmodel, patch, h_service )
+SHOP_COL_END           = 15        #列最後
+def convertShop( csv, data, h_define, gmm, bmodel, patch, h_service, header )
 
   #データの作成
   msgdata = HeaderDataArray.new
@@ -200,6 +201,7 @@ def convertShop( csv, data, h_define, gmm, bmodel, patch, h_service )
   for row in SHOP_ROW_START...csv.row_length-1
 
     #データ取得
+    tag     = csv.get( row, SHOP_COL_TAG )
     shop    = csv.get( row, SHOP_COL_SHOP )
     type    = csv.get( row, SHOP_COL_TYPE )
     lv      = csv.get( row, SHOP_COL_LV )
@@ -214,6 +216,10 @@ def convertShop( csv, data, h_define, gmm, bmodel, patch, h_service )
     data.write_u16( 0 ) #TODO
     data.write_u16( lv )
     data.write_u16( nextexp )
+
+
+    #ヘッダに書きこみ
+    header.write( "#define RESORT_SHOP_ID_#{tag} (#{row-SHOP_ROW_START})\n" )
 
     begin
       data.write_u16( msgdata.search( "#{name}", "#{row}行のgmm" ) )
@@ -273,15 +279,24 @@ begin
   serviceData = BinaryBuilder.new
   shopData    = BinaryBuilder.new
 
+  #ヘッダ作成
+  header      = TextBuilder.new
+  header.write_header( "#{ARGV[ARG_SHOP_OUTPUT]}.h", 
+                    "#レゾナンスリゾートお店IDの定義情報です",
+                    "Toru=Nagihashi" )
+
   #コンバート
   service_hash = Hash.new
 
   convertService( serviceCsv, serviceData, $define_hash, $item_hash, ARGV[ARG_MSG_H], service_hash )
-  convertShop( shopCsv, shopData, $define_hash, ARGV[ARG_MSG_H], ARGV[ARG_BMODEL_NAIX], ARGV[ARG_PATCH_H], service_hash )
+  convertShop( shopCsv, shopData, $define_hash, ARGV[ARG_MSG_H], ARGV[ARG_BMODEL_NAIX], ARGV[ARG_PATCH_H], service_hash, header )
 
   #date書き込み
   shopData.genelate( "#{ARGV[ARG_SHOP_OUTPUT]}.dat" )
   serviceData.genelate( "#{ARGV[ARG_SERVICE_OUTPUT]}.dat" )
+
+  #ヘッダ書き込み
+  header.genelate( "#{ARGV[ARG_SHOP_OUTPUT]}.h" )
 
 end
 

@@ -67,7 +67,7 @@ include	$(PROJECT_RSCDIR)\macro_define
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	$(TARGETDIR_ARC)/$(targetall).narc $(TARGETDIR_ARC)/$(targetall).naix $(TARGETDIR_PROG)/$(targetpeopleh).h
+do-build:	$(TARGETDIR_ARC)/$(targetall).narc $(TARGETDIR_ARC)/$(targetall).naix $(TARGETDIR_PROG)/$(targetpeopleh).h $(TARGETDIR_PROG)/$(targetshop).h
 
 # narc のコピーだけ実行する
 $(TARGETDIR_ARC)/$(targetall).narc: $(targetall).narc
@@ -79,6 +79,10 @@ $(TARGETDIR_ARC)/$(targetall).naix: $(targetall).naix
 $(TARGETDIR_PROG)/$(targetpeopleh).h:	$(targetpeopleh).h
 	$(COPY) $(targetpeopleh).h $(TARGETDIR_PROG)
 
+$(TARGETDIR_PROG)/$(targetshop).h:	$(targetshop).h
+	$(COPY) $(targetshop).h $(TARGETDIR_PROG)
+
+
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
 $(targetall).narc $(targetall).naix: $(targetpeople).dat $(targetshop).dat $(targetservice).dat $(targetinstitution).dat $(targetspot).dat $(targetnpc).dat $(targetkutikomi).dat $(targetoffreco).dat $(targetcity).dat
@@ -86,7 +90,7 @@ $(targetall).narc $(targetall).naix: $(targetpeople).dat $(targetshop).dat $(tar
 	$(NAIXCUT) $(targetall).naix
 
 #データコンバート
-$(targetpeople).dat $(targetshop).dat $(targetservice).dat $(targetpeopleh).h $(targetinstitution).dat $(targetspot).dat $(targetnpc).dat $(targetkutikomi).dat $(targetoffreco).dat $(targetcity).dat: $(xlsname).xls $(msgfile) $(scriptfile) $(PEOPLECONV) $(DEFINECONV) $(bmodelfile) $(fieldevent) $(landpatch) $(objcode)
+$(targetpeople).dat $(targetshop).dat $(targetservice).dat $(targetpeopleh).h $(targetinstitution).dat $(targetspot).dat $(targetnpc).dat $(targetkutikomi).dat $(targetoffreco).dat $(targetcity).dat $(targetshop).h: $(xlsname).xls $(msgfile) $(scriptfile) $(PEOPLECONV) $(DEFINECONV) $(bmodelfile) $(fieldevent) $(landpatch) $(objcode)
 	$(XLSCONV) -o $(targetpeople).csv -p 1 -s csv $(xlsname).xls
 	$(XLSCONV) -o $(targetshop).csv -p 2 -s csv $(xlsname).xls
 	$(XLSCONV) -o $(targetservice).csv -p 3 -s csv $(xlsname).xls
