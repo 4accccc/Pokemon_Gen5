@@ -2507,7 +2507,9 @@ SRCS_OVERLAY_WBTLIST = app/wbt_list/wbt_list.c \
 # エントリーチェッカー
 #===> SRCS_OVERLAY_UI_COMMON
 SRCS_OVERLAY_ENTRY_CHECKER = app/entry_checker/win_record.c \
-                             app/entry_checker/win_record_graphic.c
+                             app/entry_checker/win_record_graphic.c \
+                             app/entry_checker/t_download.c \
+                             app/entry_checker/t_download_graphic.c
 
 # 川田デバッグ
 #===> SRCS_OVERLAY_UI_COMMON

@@ -36,6 +36,7 @@
 #include "system/net_err.h"
 
 #include "app/win_record.h"
+#include "app/t_download.h"
 
 FS_EXTERN_OVERLAY(pokelist);
 
@@ -398,6 +399,99 @@ static GMEVENT_RESULT eventWinRecord( GMEVENT *p_event, int *p_seq, void *p_wk_a
 
   case SEQ_EXIT:
     WIN_RECORD_PARAM_Delete( p_wk->wr_param );
+    return GMEVENT_RES_FINISH;
+  }
+
+  return GMEVENT_RES_CONTINUE ;
+}
+
+//=============================================================================
+//
+//    T_DOWNLOAD画面呼び出し
+//
+//=============================================================================
+//-------------------------------------
+///   T_DOWNLOAD定義
+//=====================================
+typedef struct
+{
+  GAMESYS_WORK        *gsys;
+  FIELDMAP_WORK       *fieldmap;
+  T_DOWNLOAD_PARAM    *td_param;
+  BOOL                call_fade_flag;
+} T_DOWNLOAD_EVENT_WORK;
+
+static GMEVENT_RESULT eventTDownload( GMEVENT *p_event, int *p_seq, void *p_wk_adrs );
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  T_DOWNLOAD呼び出し
+ *
+ *
+ *  @return 終了コード
+ */
+//-----------------------------------------------------------------------------
+GMEVENT * T_DOWNLOAD_EVENT_Show(
+    GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
+    T_DOWNLOAD_PARAM * td_param, BOOL call_fade_flag )
+{
+  T_DOWNLOAD_EVENT_WORK *p_param;
+  GMEVENT * new_event;
+
+  //イヴェント
+  new_event = GMEVENT_Create( gsys, NULL, eventTDownload, sizeof(T_DOWNLOAD_EVENT_WORK) );
+  p_param = GMEVENT_GetEventWork( new_event );
+  GFL_STD_MemClear( p_param, sizeof(T_DOWNLOAD_EVENT_WORK) );
+
+  p_param->gsys			= gsys;
+  p_param->fieldmap		= fieldmap;
+  p_param->td_param 	= td_param;
+  p_param->call_fade_flag = call_fade_flag;
+
+  OS_Printf( "T Download Start\n" );
+
+  return new_event;
+
+}
+//----------------------------------------------------------------------------
+/**
+ *  @brief  T_DOWNLOAD呼び出し用イベント
+ *
+ *  @param  GMEVENT *event  GMEVENT
+ *  @param  *seq            シーケンス
+ *  @param  *work           ワーク
+ *
+ *  @return 終了コード
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT_RESULT eventTDownload( GMEVENT *p_event, int *p_seq, void *p_wk_adrs )
+{
+  enum
+  {
+    SEQ_CALL_PROC,
+    SEQ_EXIT,
+  };
+
+  T_DOWNLOAD_EVENT_WORK *p_wk = p_wk_adrs;
+  GMEVENT * call_event;
+
+  switch(*p_seq )
+  {
+  case SEQ_CALL_PROC:
+    if ( p_wk->call_fade_flag )
+    {
+      call_event = EVENT_FieldSubProc( p_wk->gsys, p_wk->fieldmap,
+          FS_OVERLAY_ID(entry_checker), &TDownloadProcData, p_wk->td_param );
+    } else {
+      call_event = EVENT_FieldSubProcNoFade( p_wk->gsys, p_wk->fieldmap,
+          FS_OVERLAY_ID(entry_checker), &TDownloadProcData, p_wk->td_param );
+    }
+    GMEVENT_CallEvent( p_event, call_event );
+    *p_seq  = SEQ_EXIT;
+    break;
+
+  case SEQ_EXIT:
+    T_DOWNLOAD_PARAM_Delete( p_wk->td_param );
     return GMEVENT_RES_FINISH;
   }
 

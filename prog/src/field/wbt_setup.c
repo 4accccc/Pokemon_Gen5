@@ -366,3 +366,51 @@ void WIN_RECORD_PARAM_Setup_Debug( GAMESYS_WORK * gsys, WIN_RECORD_PARAM * wr_pa
 }
 #endif
 
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+///  TDOWNLOAD用パラメータOBJECT生成
+//------------------------------------------------------------------
+T_DOWNLOAD_PARAM * T_DOWNLOAD_PARAM_Create( HEAPID heapID, GAMESYS_WORK * gsys )
+{
+	GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
+	T_DOWNLOAD_PARAM 	*td_param;
+	
+	td_param 			= GFL_HEAP_AllocClearMemory( heapID, sizeof(T_DOWNLOAD_PARAM) );
+	td_param->gamesys	= gsys;
+	// 初期化
+//	wr_param->status	  = WIN_RECORD_STATUS_LV1;
+//  wr_param->wbtsave   = GAMEDATA_GetWBTSave( gamedata );  //WBT優勝回数
+//  wr_param->my_status = GAMEDATA_GetMyStatus( gamedata ); //自分情報
+	//
+	return td_param;
+}
+
+//------------------------------------------------------------------
+///  TDOWNLOAD用パラメータOBJECT削除
+//------------------------------------------------------------------
+void T_DOWNLOAD_PARAM_Delete( T_DOWNLOAD_PARAM * td_param )
+{
+	// 必要であれば削除を追加
+	GFL_HEAP_FreeMemory( td_param );
+}
+
+#ifdef  PM_DEBUG
+//------------------------------------------------------------------
+/**
+ * @brief TDOWNLOAD用パラメータのセットアップ（デバッグ用）
+ *
+ * デバッグ用にWBTSYSを生成し、それを元にセットアップを行う
+ */
+//------------------------------------------------------------------
+void T_DOWNLOAD_PARAM_Setup_Debug( GAMESYS_WORK * gsys, T_DOWNLOAD_PARAM * td_param )
+{
+	// 必要であれば、ここでパラメータのセットをするらしい
+	
+}
+#endif
+
+
+
+

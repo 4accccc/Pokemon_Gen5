@@ -121,6 +121,7 @@ static BOOL debugMenuCallProc_WBTList( DEBUG_WBT_WORK *p_wk );
 static BOOL debugCommand_printf( DEBUG_WBT_WORK *p_wk );
 // test
 static BOOL debugMenuCallProc_WinRecord( DEBUG_WBT_WORK *p_wk );
+static BOOL debugMenuCallProc_TDownload( DEBUG_WBT_WORK *p_wk );
 //
 static BOOL debugMenuMain( DEBUG_WBT_WORK *wk );
 static BOOL debugMenuKeyInput( DEBUG_WBT_WORK *wk );
@@ -320,7 +321,7 @@ static GMEVENT_RESULT debugMenuWBTEvent( GMEVENT *event, int *seq, void *wk )
       debugCommand_printf( NULL );
       return GMEVENT_RES_CONTINUE;
 #else
-      	work->call_func = debugMenuCallProc_WinRecord;
+      	work->call_func = debugMenuCallProc_TDownload;
 		(*seq)++;
 		break;
 #endif
@@ -920,7 +921,34 @@ static BOOL debugMenuCallProc_WinRecord( DEBUG_WBT_WORK *p_wk )
 	return TRUE;
 }
 
-
+//----------------------------------------------------------------------------
+/**
+ *  @brief  デバッグ用トーナメントダウンロードイベント
+ *
+ *  @param  DEBUG_WBT_WORK *p_wk   ワーク
+ *
+ *  @return 終了コード
+ */
+//-----------------------------------------------------------------------------
+static BOOL debugMenuCallProc_TDownload( DEBUG_WBT_WORK *p_wk )
+{
+	GMEVENT 			*new_event;
+	T_DOWNLOAD_PARAM 	*td_param;
+	td_param = T_DOWNLOAD_PARAM_Create( HEAPID_PROC, p_wk->gmSys );
+	//
+	// なくても大丈夫なので保留
+//	WIN_RECORD_PARAM_Setup_Debug(
+//		p_wk->gmSys, wr_param,
+//		WBTTYPE_ALL, WBTRULE_SINGLE, p_wk->stage, p_wk->Trbuffer, p_wk->DebugNum );
+	// debug用
+//	wr_param->status = p_wk->status;
+	//
+	new_event = T_DOWNLOAD_EVENT_Show( p_wk->gmSys, p_wk->fieldWork, td_param, TRUE );
+	GMEVENT_ChangeEvent( p_wk->gmEvent, new_event );
+	//
+	OS_Printf( "T Download Start\n" );
+	return TRUE;
+}
 
 
 

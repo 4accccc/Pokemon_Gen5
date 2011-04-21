@@ -47,4 +47,9 @@ extern GMEVENT * WIN_RECORD_EVENT_Show(
     GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
     WIN_RECORD_PARAM * wr_param, BOOL call_fade_flag );
 
+//
+extern GMEVENT * T_DOWNLOAD_EVENT_Show(
+    GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
+    T_DOWNLOAD_PARAM * td_param, BOOL call_fade_flag );
+
 

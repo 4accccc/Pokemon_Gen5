@@ -18,6 +18,7 @@
 
 #include "app/wbt_list.h" //WBTLIST_PARAM
 #include "app/win_record.h"		// WIN_RECORD_PARAM
+#include "app/t_download.h"		// T_DOWNLOAD_PARAM
 
 #include "app/pokelist.h" //PLIST_DATA
 #include "app/p_status.h" //PSTATUS_DATA
@@ -182,6 +183,13 @@ extern WIN_RECORD_PARAM * WIN_RECORD_PARAM_Create( HEAPID heapID, GAMESYS_WORK *
 extern void WIN_RECORD_PARAM_Delete( WIN_RECORD_PARAM * wr_param );
 #ifdef  PM_DEBUG
 extern void WIN_RECORD_PARAM_Setup_Debug( GAMESYS_WORK * gsys, WIN_RECORD_PARAM * wr_param );
+#endif
+
+//
+extern T_DOWNLOAD_PARAM * T_DOWNLOAD_PARAM_Create( HEAPID heapID, GAMESYS_WORK * gsys );
+extern void T_DOWNLOAD_PARAM_Delete( T_DOWNLOAD_PARAM * td_param );
+#ifdef PM_DEBUG
+extern void T_DOWNLOAD_PARAM_Setup_Debug( GAMESYS_WORK * gsys, T_DOWNLOAD_PARAM * td_param );
 #endif
 
 
