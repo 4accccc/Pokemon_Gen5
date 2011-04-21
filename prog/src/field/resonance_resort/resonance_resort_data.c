@@ -2965,6 +2965,11 @@ struct _RESORT_SECRETARY_DATA
   u8    peopleID;
   u8    type;
   u8    dummy;
+  u8    meet_year;
+  u8    meet_month;
+  u8    meet_day;
+  u8    dummy2;
+
 };
 SDK_COMPILER_ASSERT( sizeof(RESORT_SECRETARY_DATA) == RESORT_SECRETARY_DATA_SIZE );
 
@@ -3054,6 +3059,12 @@ u32 RESORT_SECRETARY_DATA_GetData( const RESORT_SECRETARY_DATA *cp_wk, RESORT_DA
     return 10; //TODO;
   case RESORT_DATA_PARAM_PRESENT_NUM:
     return 1; //TODO
+  case RESORT_DATA_PARAM_MEET_YEAR:
+    return cp_wk->meet_year;
+  case RESORT_DATA_PARAM_MEET_MONTH:
+    return cp_wk->meet_month;
+  case RESORT_DATA_PARAM_MEET_DAY:
+    return cp_wk->meet_day;
   case RESORT_DATA_PARAM_TYPE:
     return cp_wk->type;
   default:
@@ -3079,6 +3090,15 @@ void RESORT_SECRETARY_DATA_SetData( RESORT_SECRETARY_DATA *p_wk, RESORT_DATA_PAR
     break;
   case RESORT_DATA_PARAM_PLACE_ID:
     p_wk->placeID = data;
+    break;
+  case RESORT_DATA_PARAM_MEET_YEAR:
+    p_wk->meet_year = data;
+    break;
+  case RESORT_DATA_PARAM_MEET_MONTH:
+    p_wk->meet_month = data;
+    break;
+  case RESORT_DATA_PARAM_MEET_DAY:
+    p_wk->meet_day = data;
     break;
   case RESORT_DATA_PARAM_LOCK:
     //‚È‚É‚à‚µ‚È‚¢
@@ -3106,6 +3126,9 @@ void RESORT_SECRETARY_DATA_SetRecv( RESORT_SECRETARY_DATA *p_wk, const RESORT_RE
   p_wk->peopleID  = peopleID;
   p_wk->placeID   = placeID;
   p_wk->type      = type;
+  p_wk->meet_year = cp_recv->meet_year;
+  p_wk->meet_month = cp_recv->meet_month;
+  p_wk->meet_day  = cp_recv->meet_day;
 }
 
 //=============================================================================

@@ -895,6 +895,18 @@ static void PresenSetup_SetRecv( RESORT_RECV_DATA *p_recv, GFL_MSGDATA *p_msg, u
     RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_WANT_JOB, sc_presen_data[cnt].shop_type );
     RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_PLACE_ID, sc_presen_data[cnt].placeID );
   }
+
+  //éÛêMì˙éû
+  {
+    RTCDate date;
+    RTCTime time;
+    GFL_RTC_GetDateTime(&date, &time);
+    RESORT_RECV_DATA_SetData(p_recv,RESORT_DATA_PARAM_MEET_YEAR, date.year );
+    RESORT_RECV_DATA_SetData(p_recv,RESORT_DATA_PARAM_MEET_MONTH, date.month );
+    RESORT_RECV_DATA_SetData(p_recv,RESORT_DATA_PARAM_MEET_DAY, date.day );
+    RESORT_RECV_DATA_SetData(p_recv,RESORT_DATA_PARAM_MEET_HOUR, time.hour );
+    RESORT_RECV_DATA_SetData(p_recv,RESORT_DATA_PARAM_MEET_MIN, time.minute );
+  }
 }
 
 static BOOL debugMenuCallProc_PresenSetup( DEBUG_MENU_EVENT_WORK *p_wk )

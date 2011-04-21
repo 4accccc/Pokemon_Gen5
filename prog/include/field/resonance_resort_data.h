@@ -525,7 +525,7 @@ extern void RESORT_VISITOR_DATA_SetData( RESORT_VISITOR_DATA *p_wk, RESORT_DATA_
  *  秘書データ
  */
 //=============================================================================
-#define RESORT_SECRETARY_DATA_SIZE  (RESORT_BASIC1_DATA_SIZE+RESORT_BASIC2_DATA_SIZE+4)
+#define RESORT_SECRETARY_DATA_SIZE  (RESORT_BASIC1_DATA_SIZE+RESORT_BASIC2_DATA_SIZE+8)
 
 //-------------------------------------
 ///	秘書データ

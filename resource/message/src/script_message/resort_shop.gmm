@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2011-04-21T18:35:27"/>
+	<create user="nagihashi_toru" host="W00268" date="2011-04-21T19:09:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -395,14 +395,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1137" top="464" right="1842" bottom="1092" maximized="no" rayout="Vertical2">
+	<dialog left="-904" top="300" right="-330" bottom="927" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="301" top="187" right="774" bottom="585" visible="no"/>
-		<band id="0" index="0" style="0000" width="530"/>
+		<band id="0" index="0" style="0000" width="566"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="697"/>
-		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<band id="2" index="2" style="0000" width="399"/>
+		<band id="3" index="3" style="0000" width="591"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -612,11 +612,11 @@
 4：月
 5：日</comment>
 		<language name="JPN" width="256">だい[2:01:２桁:1]ひしょ
-
-であったひ：２０１１／４／２１</language>
+[1:37:リゾートフリーワード:3]
+であったひ：２０[2:01:２桁:4]／[2:01:２桁:5]／[2:01:２桁:6]</language>
 		<language name="JPN_KANJI" width="256">だい[2:01:２桁:1]ひしょ
-
-であったひ：２０１１／４／２１</language>
+[1:37:リゾートフリーワード:3]
+であったひ：２０[2:01:２桁:4]／[2:01:２桁:5]／[2:01:２桁:6]</language>
 	</row>
 
 	<row id="mes_shop_09_03_01">
@@ -657,11 +657,11 @@
 4：月
 5：日</comment>
 		<language name="JPN" width="256">[1:38:リゾート店名:1]　ＬＶ.[2:01:２桁:2]
-
-であったひ：２０１１／４／２１</language>
+[1:37:リゾートフリーワード:3]
+であったひ：２０[2:01:２桁:4]／[2:01:２桁:5]／[2:01:２桁:6]</language>
 		<language name="JPN_KANJI" width="256">[1:38:リゾート店名:1]　ＬＶ.[2:01:２桁:2]
-
-であったひ：２０１１／４／２１</language>
+[1:37:リゾートフリーワード:3]
+であったひ：２０[2:01:２桁:4]／[2:01:２桁:5]／[2:01:２桁:6]</language>
 	</row>
 
 	<row id="mes_shop_09_04_01" back-color="#ff0000,,,,,,,,,,,,,,,,,">

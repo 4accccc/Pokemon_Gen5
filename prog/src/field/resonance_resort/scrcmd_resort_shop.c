@@ -64,6 +64,7 @@ typedef struct {
   u16 param2;
   u32 price;    // 値段
   STRBUF *p_name; //名前
+  STRBUF *p_decidename; //決定名
   STRBUF *p_info; //情報
   void *p_data_adrs;
 }RESORT_SHOP_ITEM;
@@ -272,9 +273,9 @@ static RESORT_PEOPLE * Resort_ScrcmdShop_GetFrontPeople( FIELDMAP_WORK *p_fieldm
 static RESORT_BINARY_SHOP * Resort_Scrcmd_GetBinaryShop( FIELDMAP_WORK *p_fieldmap );
 
 static void ItemList_move_callback( BMPMENULIST_WORK * wk, u32 param, u8 mode);
-static void SelectPoeple_move_callback( BMPMENULIST_WORK * wk, u32 param, u8 mode);
-static void SortPoeple_move_callback( BMPMENULIST_WORK * wk, u32 param, u8 mode);
-static void SortPoeple_Cursor_SetPos( SHOP_BUY_APP_WORK *wk );
+static void SelectPeople_move_callback( BMPMENULIST_WORK * wk, u32 param, u8 mode);
+static void SortPeople_move_callback( BMPMENULIST_WORK * wk, u32 param, u8 mode);
+static void SortPeople_Cursor_SetPos( SHOP_BUY_APP_WORK *wk );
 
 //アイテム・サービスリストの場合
 static void ItemList_Init( GAMESYS_WORK *gsys, struct _SHOP_BUY_APP_WORK *wk, int type, int id );
@@ -385,7 +386,7 @@ VMCMD_RESULT EvCmdResortCallList( VMHANDLE *core, void *wk )
       sbw->wk.List_Exit = SecretaryList_Exit;
       sbw->wk.msg_select  = mes_shop_09_09;
       sbw->wk.msg_decide  = mes_shop_09_10;
-      sbw->wk.call_back = SelectPoeple_move_callback;
+      sbw->wk.call_back = SelectPeople_move_callback;
       sbw->wk.icon = NULL;
       break;
     case RESORT_LIST_SELECT_SECRETARY_DEL:
@@ -393,7 +394,7 @@ VMCMD_RESULT EvCmdResortCallList( VMHANDLE *core, void *wk )
       sbw->wk.List_Exit = SecretaryList_Exit;
       sbw->wk.msg_select  = mes_shop_09_06;
       sbw->wk.msg_decide  = mes_shop_09_07;
-      sbw->wk.call_back = SelectPoeple_move_callback;
+      sbw->wk.call_back = SelectPeople_move_callback;
       sbw->wk.icon = NULL;
       break;
     case RESORT_LIST_SELECT_INSTATITUTION:
@@ -401,7 +402,7 @@ VMCMD_RESULT EvCmdResortCallList( VMHANDLE *core, void *wk )
       sbw->wk.List_Exit = InstitutionList_Exit;
       sbw->wk.msg_select  = mes_shop_09_12;
       sbw->wk.msg_decide  = mes_shop_09_13;
-      sbw->wk.call_back = SelectPoeple_move_callback;
+      sbw->wk.call_back = SelectPeople_move_callback;
       sbw->wk.icon = NULL;
       break;
     case RESORT_LIST_SELECT_INSTATITUTION_DEL:
@@ -409,7 +410,7 @@ VMCMD_RESULT EvCmdResortCallList( VMHANDLE *core, void *wk )
       sbw->wk.List_Exit = InstitutionList_Exit;
       sbw->wk.msg_select  = mes_shop_09_15;
       sbw->wk.msg_decide  = mes_shop_09_16;
-      sbw->wk.call_back = SelectPoeple_move_callback;
+      sbw->wk.call_back = SelectPeople_move_callback;
       sbw->wk.icon = NULL;
       break;
     }
@@ -428,7 +429,7 @@ VMCMD_RESULT EvCmdResortCallList( VMHANDLE *core, void *wk )
       sbw->wk.msg_start   = mes_shop_09_17;
       sbw->wk.msg_select  = mes_shop_09_18;
       sbw->wk.msg_decide  = mes_shop_09_19;
-      sbw->wk.call_back = SortPoeple_move_callback;
+      sbw->wk.call_back = SortPeople_move_callback;
       sbw->wk.icon = NULL;
       break;
     case RESORT_LIST_SORT_INSTATITUTION:
@@ -439,7 +440,7 @@ VMCMD_RESULT EvCmdResortCallList( VMHANDLE *core, void *wk )
       sbw->wk.msg_start   = mes_shop_09_17;
       sbw->wk.msg_select  = mes_shop_09_18;
       sbw->wk.msg_decide  = mes_shop_09_19;
-      sbw->wk.call_back = SortPoeple_move_callback;
+      sbw->wk.call_back = SortPeople_move_callback;
       sbw->wk.icon = NULL;
       break;
     }
@@ -979,7 +980,7 @@ static void sort_shop_main( SHOP_BUY_APP_WORK *wk )
         wk->is_sort = TRUE;
         wk->cp_select = &wk->lineup[ret];
         BmpMenuList_PosGet( wk->menuList, &wk->insert_list, &wk->insert_cursor );
-        SortPoeple_Cursor_SetPos( wk );
+        SortPeople_Cursor_SetPos( wk );
         GFL_CLACT_WK_SetDrawEnable( wk->ClactWork[SHOP_OBJ_CURSOR_RED], TRUE );
       }
     }
@@ -1477,11 +1478,13 @@ static void shop_item_set( SHOP_BUY_APP_WORK *wk, int type, int id )
       u16 name = RESORT_BINARY_SERVICE_DATA_GetData( cp_data, RESORT_BINARY_SERVICE_PARAM_NAME );
       u16 info = RESORT_BINARY_SERVICE_DATA_GetData( cp_data, RESORT_BINARY_SERVICE_PARAM_INFO );
       wk->lineup[i].p_name = GFL_MSG_CreateString( resortMsgData, name );
+      wk->lineup[i].p_decidename  = GFL_MSG_CreateString( resortMsgData, name );
       wk->lineup[i].p_info = GFL_MSG_CreateString( resortMsgData, info );
     }
     else
     {
       wk->lineup[i].p_name = GFL_MSG_CreateString( itemMsgData, wk->lineup[i].param1 );
+      wk->lineup[i].p_decidename  = GFL_MSG_CreateString( itemMsgData, wk->lineup[i].param1 );
       wk->lineup[i].p_info = GFL_MSG_CreateString( itemInfoMsgData, wk->lineup[i].param1 );
     }
     
@@ -1532,12 +1535,18 @@ static void shop_secretary_set( SHOP_BUY_APP_WORK *wk, int type, int id )
       wk->lineup[cnt].p_data_adrs = p_secretary;
 
       {
+
+        u16 y = RESORT_SECRETARY_DATA_GetData( p_secretary, RESORT_DATA_PARAM_MEET_YEAR, NULL );
+        u16 m = RESORT_SECRETARY_DATA_GetData( p_secretary, RESORT_DATA_PARAM_MEET_MONTH, NULL );
+        u16 d = RESORT_SECRETARY_DATA_GetData( p_secretary, RESORT_DATA_PARAM_MEET_DAY, NULL );
+
         STRCODE name[PERSON_NAME_SIZE + EOM_SIZE];
         STRBUF *p_name;
         STRBUF *p_name_str;
         STRBUF *p_info_str;
         STRBUF *p_name_tmp = GFL_MSG_CreateString( wk->shopMsgData, mes_shop_09_01 );
         STRBUF *p_info_tmp = GFL_MSG_CreateString( wk->shopMsgData, mes_shop_09_03 );
+        STRBUF *p_secinfo  = GFL_MSG_CreateString( wk->shopMsgData, mes_shop_09_03_01+cnt);
         u8 sex = RESORT_SECRETARY_DATA_GetData( p_secretary, RESORT_DATA_PARAM_SEX, NULL );
         RESORT_SECRETARY_DATA_GetData( p_secretary, RESORT_DATA_PARAM_NAME, name );
         p_name = GFL_STR_CreateBuffer( PERSON_NAME_SIZE + EOM_SIZE, wk->heapId );
@@ -1549,12 +1558,19 @@ static void shop_secretary_set( SHOP_BUY_APP_WORK *wk, int type, int id )
         WORDSET_RegisterWord( wk->wordSet, 0, p_name, sex, TRUE, PM_LANG );
 
         WORDSET_ExpandStr( wk->wordSet, p_name_str, p_name_tmp );
+
+        WORDSET_RegisterWord( wk->wordSet, 3, p_secinfo, PM_NEUTRAL, TRUE, PM_LANG );
+        WORDSET_RegisterNumber( wk->wordSet, 4, y, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+        WORDSET_RegisterNumber( wk->wordSet, 5, m, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+        WORDSET_RegisterNumber( wk->wordSet, 6, d, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
         WORDSET_ExpandStr( wk->wordSet, p_info_str, p_info_tmp );
 
         wk->lineup[cnt].p_name =  p_name_str;
+        wk->lineup[cnt].p_decidename = GFL_STR_CreateCopyBuffer(p_name,wk->heapId );
         wk->lineup[cnt].p_info =  p_info_str;
 
         GFL_STR_DeleteBuffer( p_name );
+        GFL_STR_DeleteBuffer( p_secinfo );
         GFL_STR_DeleteBuffer( p_info_tmp );
         GFL_STR_DeleteBuffer( p_name_tmp );
 
@@ -1592,6 +1608,7 @@ static void shop_institution_set( SHOP_BUY_APP_WORK *wk, int type, int id )
 
     if( !RESORT_RESIDENT_DATA_IsEmpty(p_resident) )
     {
+
       // 商品ラインナップテーブルにIDと値段を登録
       wk->lineup[cnt].id    = i;
       wk->lineup[cnt].serviceID = 0;
@@ -1601,11 +1618,17 @@ static void shop_institution_set( SHOP_BUY_APP_WORK *wk, int type, int id )
       wk->lineup[cnt].p_data_adrs = p_resident;
 
       {
+        RESORT_INSTITUTION_DATA *p_institution = RESORT_RESIDENT_DATA_GetInstitution(p_resident);
+        u32 lv = RESORT_INSTITUTION_DATA_GetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_LV );
         u16 shop = RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_TYPE, NULL );
+        u16 y = RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_MEET_YEAR, NULL );
+        u16 m = RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_MEET_MONTH, NULL );
+        u16 d = RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_MEET_DAY, NULL );
         STRBUF *p_shopname = RESORT_DATA_MANAGER_CreateShopName( wk->p_shop, p_resident, wk->heapId );
 
         GFL_MSGDATA* p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_resort_scr_dat, GFL_HEAP_LOWID(wk->heapId) );
-        STRBUF *p_shopinfo = GFL_MSG_CreateString( p_msg, resort_shop_genre_00+shop );
+        STRBUF *p_shoplabel = GFL_MSG_CreateString( p_msg, resort_shop_genre_00+shop );
+        STRBUF *p_shopinfo  = GFL_MSG_CreateString( wk->shopMsgData, mes_shop_09_04_01 + shop);
 
         STRBUF *p_name_str;
         STRBUF *p_info_str;
@@ -1621,15 +1644,22 @@ static void shop_institution_set( SHOP_BUY_APP_WORK *wk, int type, int id )
         WORDSET_ExpandStr( wk->wordSet, p_name_str, p_name_tmp );
 
 
-        WORDSET_RegisterWord( wk->wordSet, 1, p_shopinfo, PM_NEUTRAL, TRUE, PM_LANG );
+        WORDSET_RegisterWord( wk->wordSet, 1, p_shoplabel, PM_NEUTRAL, TRUE, PM_LANG );
+        WORDSET_RegisterNumber( wk->wordSet, 2, lv+1, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+        WORDSET_RegisterWord( wk->wordSet, 3, p_shopinfo, PM_NEUTRAL, TRUE, PM_LANG );
+        WORDSET_RegisterNumber( wk->wordSet, 4, y, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+        WORDSET_RegisterNumber( wk->wordSet, 5, m, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+        WORDSET_RegisterNumber( wk->wordSet, 6, d, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
         WORDSET_ExpandStr( wk->wordSet, p_info_str, p_info_tmp );
 
         wk->lineup[cnt].p_name =  p_name_str;
+        wk->lineup[cnt].p_decidename = GFL_STR_CreateCopyBuffer( p_shopname, wk->heapId);
         wk->lineup[cnt].p_info =  p_info_str;
 
         GFL_STR_DeleteBuffer( p_info_tmp );
         GFL_STR_DeleteBuffer( p_name_tmp );
         GFL_STR_DeleteBuffer( p_shopinfo );
+        GFL_STR_DeleteBuffer( p_shoplabel );
         GFL_MSG_Delete( p_msg );
         GFL_STR_DeleteBuffer( p_shopname );
 
@@ -1682,6 +1712,7 @@ static void SecretaryList_Change( SHOP_BUY_APP_WORK *wk, int type, int id )
     WORDSET_RegisterWord( wk->wordSet, 0, p_name, sex, TRUE, PM_LANG );
 
     WORDSET_ExpandStr( wk->wordSet, wk->lineup[i].p_name, p_name_tmp );
+    GFL_STR_CopyBuffer( p_name, wk->lineup[i].p_decidename );
     WORDSET_ExpandStr( wk->wordSet, wk->lineup[i].p_info, p_info_tmp );
 
     GFL_STR_DeleteBuffer( p_name );
@@ -1734,7 +1765,7 @@ static void InstitutionList_Change( SHOP_BUY_APP_WORK *wk, int type, int id )
 
     WORDSET_ExpandStr( wk->wordSet, wk->lineup[i].p_name, p_name_tmp );
 
-
+    GFL_STR_CopyBuffer( p_shopname, wk->lineup[i].p_decidename );
     WORDSET_RegisterWord( wk->wordSet, 1, p_shopinfo, PM_NEUTRAL, TRUE, PM_LANG );
     WORDSET_ExpandStr( wk->wordSet, wk->lineup[i].p_info, p_info_tmp );
 
@@ -1781,6 +1812,11 @@ static void shop_item_release( SHOP_BUY_APP_WORK *wk )
         GFL_STR_DeleteBuffer( wk->lineup[i].p_info );
         wk->lineup[i].p_info  = NULL;
       }
+      if( wk->lineup[i].p_decidename )
+      {
+        GFL_STR_DeleteBuffer( wk->lineup[i].p_decidename );
+        wk->lineup[i].p_decidename = NULL;
+      }
       if( wk->lineup[i].p_name )
       {
         GFL_STR_DeleteBuffer( wk->lineup[i].p_name );
@@ -1804,7 +1840,7 @@ static int init_work( SHOP_BUY_APP_WORK *wk, int type )
   wk->shopMsgData     = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, 
                                              NARC_script_message_resort_shop_dat, wk->heapId );
 
-  wk->wordSet   = WORDSET_Create( wk->heapId );
+  wk->wordSet   = WORDSET_CreateEx( WORDSET_DEFAULT_SETNUM, WORDSET_COUNTRY_BUFLEN, wk->heapId );
 
   // 展開用バッファ
   wk->expandBuf = GFL_STR_CreateBuffer( SHOP_STRING_MAX, wk->heapId );
@@ -2664,7 +2700,7 @@ static void ShopDecideMsg( SHOP_BUY_APP_WORK *wk, int strId, const RESORT_SHOP_I
   _clear_msg_bmpwin( wk->win[SHOP_BUY_BMPWIN_TALKMSG] );
 
   // 表示文字列登録
-  WORDSET_RegisterWord( wk->wordSet, 0, cp_select->p_name, PM_NEUTRAL, TRUE, PM_LANG );
+  WORDSET_RegisterWord( wk->wordSet, 0, cp_select->p_decidename, PM_NEUTRAL, TRUE, PM_LANG );
   WORDSET_RegisterNumber( wk->wordSet, 1, cp_select->param2, 
                             2, STR_NUM_DISP_LEFT, STR_NUM_CODE_ZENKAKU );  
 
@@ -2886,7 +2922,7 @@ static void InstitutionList_Exit( GAMESYS_WORK *gsys, struct _SHOP_BUY_APP_WORK 
  * @param   mode    
  */
 //----------------------------------------------------------------------------------
-static void SelectPoeple_move_callback( BMPMENULIST_WORK * wk, u32 param, u8 mode)
+static void SelectPeople_move_callback( BMPMENULIST_WORK * wk, u32 param, u8 mode)
 {
   SHOP_BUY_APP_WORK *sbw = BmpMenuList_GetWorkPtr( wk );
   GFL_CLACTPOS clpos;
@@ -2912,7 +2948,7 @@ static void SelectPoeple_move_callback( BMPMENULIST_WORK * wk, u32 param, u8 mod
     people_resource_change( sbw, RESORT_SHOP_ITEMID_NONE );
   }
 }
-static void SortPoeple_move_callback( BMPMENULIST_WORK * wk, u32 param, u8 mode)
+static void SortPeople_move_callback( BMPMENULIST_WORK * wk, u32 param, u8 mode)
 {
   SHOP_BUY_APP_WORK *sbw = BmpMenuList_GetWorkPtr( wk );
   GFL_CLACTPOS clpos;
@@ -2943,7 +2979,7 @@ static void SortPoeple_move_callback( BMPMENULIST_WORK * wk, u32 param, u8 mode)
   {
     GF_ASSERT( sbw->cp_select != NULL );
 
-    SortPoeple_Cursor_SetPos( sbw );
+    SortPeople_Cursor_SetPos( sbw );
     GFL_CLACT_WK_SetDrawEnable( sbw->ClactWork[SHOP_OBJ_CURSOR_RED], TRUE );
   }
   else
@@ -2952,7 +2988,7 @@ static void SortPoeple_move_callback( BMPMENULIST_WORK * wk, u32 param, u8 mode)
   }
 }
 
-static void SortPoeple_Cursor_SetPos( SHOP_BUY_APP_WORK *wk )
+static void SortPeople_Cursor_SetPos( SHOP_BUY_APP_WORK *wk )
 {
   GFL_CLACTPOS clpos;
   u16 list, cursor;
