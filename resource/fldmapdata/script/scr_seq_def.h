@@ -12268,6 +12268,21 @@
     .short  EV_SEQ_WBT_SYSTEM_ENTRY
     .endm
 
+//--------------------------------------------------------------
+/**
+ * @brief WBT:トーナメント開催条件をチェック
+ * @param[in]   type ※script_def.hのSCR_WBT_TYPE_を参照
+ * @param[out]  ret_wk  TRUEのとき開催できる、FALSEのときは開催できない
+ */
+//--------------------------------------------------------------
+#define _WBT_CHECK_TOURNAMENT( type, ret_wk ) \
+    _ASM_WBT_CHECK_TOURNAMENT type, ret_wk
+
+    .macro  _ASM_WBT_CHECK_TOURNAMENT type, ret_wk
+    .short  EV_SEQ_WBT_CHECK_TOURNAMENT
+    .short  \type
+    .short  \ret_wk
+    .endm
 
 //--------------------------------------------------------------
 /**

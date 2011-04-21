@@ -16,14 +16,17 @@
 
   .include "wbt_scr_define.h"
 
-  .include "wbt_hall_def.h"
+  .include "wbt_hall_def.h" //リザーブスクリプトID参照
 
+  .include  "d05r0101.h"    //OBJID参照
 
 //----------------------------------------------------------------------
 //               スクリプトテーブル
 //----------------------------------------------------------------------
 _EVENT_DATA		ev_wbt_reception
 _EVENT_DATA   ev_wbt_entry_checker
+_EVENT_DATA   ev_pos_wbt_reception
+_EVENT_DATA   ev_reserve_wbt_exit
 _EVENT_DATA_END
 
 
@@ -38,11 +41,64 @@ _EVENT_DATA_END
 /**************************************************************/
 /*		ＷＢＴ・受付スクリプト								  */
 /**************************************************************/
-//FH_01		初会話フラグ
-//FH_02		チャンピオントーナメント参加フラグ	タイムフラグ
-
 
 EVENT_START	ev_wbt_reception
+
+  _TALK_OBJ_START()
+
+  //ＷＢＴ受付メイン処理
+  _CALL ev_wbt_main
+
+EVENT_END
+
+/**************************************************************/
+/*    ＷＢＴ・ＰＯＳスクリプト                */
+/**************************************************************/
+EVENT_START   ev_pos_wbt_reception
+
+DEFINE_LOCAL  LWK_POSX
+DEFINE_LOCAL  LWK_POSZ
+
+  _PLAYER_POS_GET( LWK_POSX, LWK_POSZ )
+  IF $LWK_POSX == 14 THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_reception_l )
+    _OBJ_ANIME_WAIT()
+  ELSIF $LWK_POSX == 16 THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_reception_r )
+    _OBJ_ANIME_WAIT()
+  ENDIF
+  //話しかけていないのでちゃんと指定してあげる
+  $SCWK_TARGET_OBJID = D05R0101_INFOMATIONW_01
+
+  //ＷＢＴ受付メイン処理
+  _CALL ev_wbt_main
+
+EVENT_END
+
+//--------------------------------------------------------------------
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_player_reception_l
+_ANIME_DATA   AC_WALK_R_8F, 1
+_ANIME_DATA   AC_STAY_WALK_U_8F,1
+_ANIME_DATA   ACMD_END, 0
+
+//--------------------------------------------------------------------
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_player_reception_r
+_ANIME_DATA   AC_WALK_L_8F, 1
+_ANIME_DATA   AC_STAY_WALK_U_8F,1
+_ANIME_DATA   ACMD_END, 0
+
+/********************************************************************/
+//
+//
+//                      WBT受付メイン
+//
+//
+/********************************************************************/
+//FH_02		チャンピオントーナメント参加フラグ	タイムフラグ
+
+ev_wbt_main:
 
 DEFINE_LOCAL	LWK_WBT_LOBBY_SEQ
 DEFINE_LOCAL	LWK_WBT_SELECT_TOURNAMENT
@@ -54,23 +110,6 @@ DEFINE_LOCAL  LWK_REG
 DEFINE_LOCAL	LWK_CHK_RULE
 DEFINE_LOCAL	LWK_DL_COUNT
 
-_TALK_OBJ_START()
-
-	//初会話の場合
-	IF FLAG_OFF( FH_01 ) THEN
-		
-		//あら　はじめて　ですね！
-		_BALLOONWIN_OBJMSG_POS( msg_wbt_info_01, SCWK_TARGET_OBJID, POS_DL )
-	
-		//========================================/
-		
-		//初会話フラグをたてる
-		_FLAG_SET( FH_01 )
-		
-		//========================================/
-	
-	ENDIF
-	
   //WBT制御システム開始：終了するときは必ず対で_WBT_SYSTEM_END()をよぶこと！
   _WBT_SYSTEM_START()
   _WBT_SYSTEM_SET_STAGE( SCR_WBT_STAGE_RECEPTION )
@@ -186,8 +225,15 @@ _TALK_OBJ_START()
         $LWK_WBT_LOBBY_SEQ = WBT_LOBBY_SEQ_END
       ELSE
         $LWK_CHK_RULE = FALSE
-        _CALL ev_registok
+        _CALL ev_select_pokemon
+
         IF $LWK_CHK_RULE == TRUE THEN
+          //エントリー
+          _WBT_SYSTEM_ENTRY()
+          _WBT_SYSTEM_SET_STAGE( SCR_WBT_STAGE_ENTRY )
+
+          //会場へ入る
+          _CALL ev_enter_hall
           $LWK_WBT_LOBBY_SEQ = WBT_LOBBY_SEQ_HALL
         ELSE
           $LWK_WBT_LOBBY_SEQ = WBT_LOBBY_SEQ_SELECT_TOURNAMENT
@@ -213,8 +259,9 @@ _TALK_OBJ_START()
     //仮・本当はこのまま会場イベントへつながるはず
     //_WBT_SYSTEM_END() //_WBT_SYSTEM_STARTと対
   ENDIF
+
+  _RET
 	
-EVENT_END
 
 
 /**************************************************************/
@@ -261,9 +308,18 @@ _BALLOONWIN_OBJMSG_POS( msg_wbt_info_10, SCWK_TARGET_OBJID, POS_DL )
 _BMPMENU_INIT_RIGHT( MENU_X1,MENU_Y1,0,1,LWK_MENU )
 
 _BMPMENU_MAKE_LIST( msg_wbt_menu_all, SCR_WBT_TYPE_ALL )		//オールトーナメント
-_BMPMENU_MAKE_LIST( msg_wbt_menu_type, SCR_WBT_TYPE_POKETYPE )		//タイプトーナメント
-_BMPMENU_MAKE_LIST( msg_wbt_menu_champ, SCR_WBT_TYPE_CHAMPION )		//チャンピオントーナメント
-_BMPMENU_MAKE_LIST( msg_wbt_menu_dl, SCR_WBT_TYPE_DOWNLOAD )		//ダウンロードトーナメント
+_WBT_CHECK_TOURNAMENT( SCR_WBT_TYPE_POKETYPE, SCWK_ANSWER )
+IF $SCWK_ANSWER == TRUE THEN
+  _BMPMENU_MAKE_LIST( msg_wbt_menu_type, SCR_WBT_TYPE_POKETYPE )		//タイプトーナメント
+ENDIF
+_WBT_CHECK_TOURNAMENT( SCR_WBT_TYPE_CHAMPION, SCWK_ANSWER )
+IF $SCWK_ANSWER == TRUE THEN
+  _BMPMENU_MAKE_LIST( msg_wbt_menu_champ, SCR_WBT_TYPE_CHAMPION )		//チャンピオントーナメント
+ENDIF
+_WBT_CHECK_TOURNAMENT( SCR_WBT_TYPE_DOWNLOAD, SCWK_ANSWER )
+IF $SCWK_ANSWER == TRUE THEN
+  _BMPMENU_MAKE_LIST( msg_wbt_menu_dl, SCR_WBT_TYPE_DOWNLOAD )		//ダウンロードトーナメント
+ENDIF
 _BMPMENU_MAKE_LIST( msg_wbt_menu_back, SCR_WBT_TYPE_NULL )		//もどる
 
 //メニュー表示
@@ -331,9 +387,9 @@ ev_regist_check:
 _RET
 
 /**************************************************************/
-/*		手持ちに問題がなかった場合							  */
+/*		参加するポケモンの選択          */
 /**************************************************************/
-ev_registok:
+ev_select_pokemon:
 
 //トーナメントに参加するポケモンを選択してください
 _BALLOONWIN_OBJMSG_POS( msg_wbt_info_15, SCWK_TARGET_OBJID, POS_DL )
@@ -350,45 +406,11 @@ _MSGWIN_CLOSE()
 //ルールと適用しているかチェック　
 _WBT_CHECK_BATTLE_RULE( LWK_CHK_RULE )
 
-//問題なしの場合
 IF $LWK_CHK_RULE == TRUE THEN
+//問題なしの場合
 
-  //エントリー
-  _WBT_SYSTEM_ENTRY()
-
-	//参加受付が終わりました！
-	_BALLOONWIN_OBJMSG_POS( msg_wbt_info_17, SCWK_TARGET_OBJID, POS_DL )
-	_MSGWIN_CLOSE()
-	
-  _WBT_SYSTEM_SET_STAGE( SCR_WBT_STAGE_ENTRY )
-
-  _MAP_FADE_BLACK_OUT()
-  _MAP_FADE_END_CHECK()
-
-	//トーナメントリスト表示
-	_WBT_LIST_CALL( SCR_WBT_LIST_1ST_START )
-	
-  _MAP_FADE_BLACK_IN()
-  _MAP_FADE_END_CHECK()
-
-	//それでは第一回戦を開始します！
-	_BALLOONWIN_OBJMSG_POS( msg_wbt_info_18, SCWK_TARGET_OBJID, POS_DL )
-	_MSGWIN_CLOSE()
-	
-	//誘導アニメ
-	
-	//リザーブスクリプト－会場－
-	
-  _RESERVE_SCRIPT( SCRID_WBT_HALL_01 )
-	
-	//会場へマップ移動
-	
-  _MAP_FADE_BLACK_OUT_SLOW()
-  _MAP_FADE_END_CHECK()
-  _MAP_CHANGE_NO_FADE( ZONE_ID_D05R0201, 31, 0, 15, DIR_LEFT )
-
-//問題ありの場合
 ELSE
+//問題ありの場合
 
 	//参加するポケモンに問題があるようです
 	_BALLOONWIN_OBJMSG_POS( msg_wbt_info_error1, SCWK_TARGET_OBJID, POS_DL )
@@ -398,6 +420,62 @@ ELSE
 ENDIF
 
 _RET
+
+/**************************************************************/
+//  エントリー→会場へ入場する
+/**************************************************************/
+ev_enter_hall:
+
+	//参加受付が終わりました！
+	_BALLOONWIN_OBJMSG_POS( msg_wbt_info_17, SCWK_TARGET_OBJID, POS_DL )
+	_MSGWIN_CLOSE()
+
+  //_MAP_FADE_BLACK_OUT()
+  //_MAP_FADE_END_CHECK()
+
+	////トーナメントリスト表示
+	//_WBT_LIST_CALL( SCR_WBT_LIST_1ST_START )
+	
+  //_MAP_FADE_BLACK_IN()
+  //_MAP_FADE_END_CHECK()
+
+	////それでは第一回戦を開始します！
+	//_BALLOONWIN_OBJMSG_POS( msg_wbt_info_18, SCWK_TARGET_OBJID, POS_DL )
+	//_MSGWIN_CLOSE()
+	
+
+  _OBJ_ANIME( SCWK_TARGET_OBJID, anm_infowoman_move_r )
+  _OBJ_ANIME_WAIT()
+
+	//誘導アニメ
+	//会場へマップ移動
+	
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_enter )
+  _MAP_FADE_BLACK_OUT_SLOW()
+  _OBJ_ANIME_WAIT()
+  _MAP_FADE_END_CHECK()
+  _MAP_CHANGE_NO_FADE( ZONE_ID_D05R0201, 31, 0, 15, DIR_LEFT )
+
+	//リザーブスクリプト－会場－
+	
+  _RESERVE_SCRIPT( SCRID_WBT_HALL_01 )
+
+  _RET
+
+//--------------------------------------------------------------------
+//  受付嬢    プレイヤーに道をあけるアニメ
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_infowoman_move_r
+  _ANIME_DATA  AC_WALK_R_8F, 1
+  _ANIME_DATA  AC_STAY_WALK_L_8F,1
+  _ANIME_DATA  ACMD_END, 0
+
+//--------------------------------------------------------------------
+//  プレイヤー　WBT会場へ入っていくアニメ
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_player_enter
+  _ANIME_DATA  AC_WALK_U_8F,5
+  _ANIME_DATA  ACMD_END, 0
 
 /**************************************************************/
 /*		トーナメントの説明									  */
@@ -411,10 +489,24 @@ _BALLOONWIN_OBJMSG_POS( msg_wbt_info_03, SCWK_TARGET_OBJID, POS_DL )
 _BMPMENU_INIT_RIGHT( MENU_X1,MENU_Y1,0,1,LWK_MENU )
 
 _BMPMENU_MAKE_LIST( msg_wbt_menu_explain_all, 0 )	//オールトーナメントについて
-_BMPMENU_MAKE_LIST( msg_wbt_menu_explain_type, 1 )	//タイプトーナメントについて
-_BMPMENU_MAKE_LIST( msg_wbt_menu_explain_champ, 2 )	//チャンピオントーナメントについて
-_BMPMENU_MAKE_LIST( msg_wbt_menu_explain_dl, 3 )	//ダウンロードトーナメントについて
+
+_WBT_CHECK_TOURNAMENT( SCR_WBT_TYPE_POKETYPE, SCWK_ANSWER )
+IF $SCWK_ANSWER == TRUE THEN
+  _BMPMENU_MAKE_LIST( msg_wbt_menu_explain_type, 1 )	//タイプトーナメントについて
+ENDIF
+
+_WBT_CHECK_TOURNAMENT( SCR_WBT_TYPE_CHAMPION, SCWK_ANSWER )
+IF $SCWK_ANSWER == TRUE THEN
+  _BMPMENU_MAKE_LIST( msg_wbt_menu_explain_champ, 2 )	//チャンピオントーナメントについて
+ENDIF
+
+_WBT_CHECK_TOURNAMENT( SCR_WBT_TYPE_DOWNLOAD, SCWK_ANSWER )
+IF $SCWK_ANSWER == TRUE THEN
+  _BMPMENU_MAKE_LIST( msg_wbt_menu_explain_dl, 3 )	//ダウンロードトーナメントについて
+ENDIF
+
 _BMPMENU_MAKE_LIST( msg_wbt_menu_explain_rule, 4 )	//バトルルールについて
+
 _BMPMENU_MAKE_LIST( msg_wbt_menu_back, 5 )			//もどる
 
 //メニュー表示
@@ -558,6 +650,34 @@ ELSE
 ENDIF
 
 _RET
+
+/********************************************************************/
+//
+//        WBT終了後
+//
+/********************************************************************/
+EVENT_START	ev_reserve_wbt_exit
+
+  $SCWK_TARGET_OBJID = D05R0101_INFOMATIONW_01
+
+  //本当はwbt_hall.ev::ev_wbt_hall_exitで設定した戻り値で分岐する
+
+  //仮当て：「またの　参加を～」
+  _BALLOONWIN_OBJMSG_POS( msg_wbt_info_09, SCWK_TARGET_OBJID, POS_DL )
+  _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
+
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_exit )
+  _OBJ_ANIME_WAIT()
+
+EVENT_END
+
+//--------------------------------------------------------------------
+//  プレイヤー　WBT終了後
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_player_exit
+  _ANIME_DATA AC_WALK_D_8F,2
+  _ANIME_DATA ACMD_END, 0
 
 
 /********************************************************************/

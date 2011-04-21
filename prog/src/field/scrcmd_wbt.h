@@ -15,6 +15,7 @@ extern VMCMD_RESULT EvCmdWBTSystemEnd( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTSystemSetStage( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTSystemEntry( VMHANDLE * core, void * wk );
 
+extern VMCMD_RESULT EvCmdWBTCheckTournament( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTCheckBattleRule( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTSetBattleRule( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTGetBattleRule( VMHANDLE * core, void * wk );

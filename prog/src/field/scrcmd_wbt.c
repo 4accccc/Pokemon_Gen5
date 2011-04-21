@@ -35,7 +35,7 @@
 #include "wbt_tool.h"
 #include "event_wbt.h"
 #include "wbt_gimmick.h"
-
+#include "field/eventwork.h"  //EVENTWORK_
 
 #include "system/main.h"
 #include "arc/message.naix"
@@ -45,6 +45,8 @@
 
 #include "scrcmd_menuwin.h" //EvCmdBalloonWin_Write
 #include "arc/message.naix" //NARC_message_wbt_trmsg_dat
+
+#include "../../../resource/fldmapdata/flagwork/flag_define.h"  //SYS_FLAG_GAMECLEAR
 
 //============================================================================================
 //============================================================================================
@@ -216,6 +218,47 @@ VMCMD_RESULT EvCmdWBTSystemEntry( VMHANDLE * core, void * wk )
 
 //============================================================================================
 //============================================================================================
+//--------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：トーナメント開催状態の取得
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTCheckTournament( VMHANDLE * core, void * wk )
+{
+  enum {
+    CHAMP_OPEN_COUNT = 10,  ///<仮：オールトーナメント１０回クリアでチャンプトーナメント解除
+  };
+
+  WBTSYS * wbtsys = getWBTSys( wk );
+  u16 type = SCRCMD_GetVMWorkValue( core, wk );
+  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
+
+  SCRCMD_WORK   *work = wk;
+  GAMEDATA * gamedata = SCRCMD_WORK_GetGameData( work );
+  EVENTWORK * evwork = GAMEDATA_GetEventWork( gamedata );
+  WBTSAVE * wbtsave = GAMEDATA_GetWBTSave( gamedata );
+
+  switch ( type )
+  {
+  case WBTTYPE_NULL:
+  case WBTTYPE_ALL:
+    *ret_wk = TRUE; //いつだってオールトーナメントは開催する
+    break;
+  case WBTTYPE_POKETYPE:
+    //ゲームクリアしていたらタイプトーナメントは開催する
+    *ret_wk = EVENTWORK_CheckEventFlag( evwork, SYS_FLAG_GAME_CLEAR );
+    break;
+  case WBTTYPE_CHAMPION:
+    //オールトーナメントを規定回数以上優勝していたらチャンピオントーナメントは開催する
+    *ret_wk = WBTSAVE_GetWinCount( wbtsave, WBTWIN_COUNT_ALLTOURNAMENT) >= CHAMP_OPEN_COUNT;
+    break;
+  case WBTTYPE_DOWNLOAD:
+    *ret_wk = FALSE;  //仮：ダウンロードデータには未対応
+    break;
+  }
+  return VMCMD_RESULT_CONTINUE;
+}
+
 //--------------------------------------------------------------
 /**
  * @brief スクリプトコマンド：ルール準拠の手持ちか？チェック
