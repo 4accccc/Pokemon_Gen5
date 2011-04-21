@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakamura_akira" host="W00280" date="2011-04-20T20:39:03"/>
+	<create user="nakamura_akira" host="W00280" date="2011-04-21T12:07:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="829" top="139" right="1329" bottom="772" maximized="no" rayout="Vertical2">
+	<dialog left="637" top="138" right="1137" bottom="771" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="105" right="1280" bottom="514" visible="no"/>
 		<band id="0" index="1" style="0000" width="484"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="317"/>
 		<band id="3" index="4" style="0000" width="484"/>
 		<band id="4" index="0" style="0000" width="591"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1580,6 +1580,55 @@
 これからも　最強の　
 トレーナーを　目指して▽
 がんばってくださいね▼</language>
+	</row>
+
+	<row id="msg_event_b_01">
+		<language name="JPN" width="256">やぁ！　キミも　くろのまてんろうに
+ちょうせんしに　きたのかい？▼
+もくてきは　なに？▼
+おかね？
+さいかそうへの　ちょうせん？▼
+それとも　ポケモンの　いくせい？
+まあ　どれでもいいけど　……▼
+ボクは　つよい　トレーナーを
+さがしているんだ▼
+キミが　このばしょで
+もっと　つよくなったら▽
+たたかうことも　あるかもね▼</language>
+		<language name="JPN_KANJI" width="256">やぁ！　キミも　黒の摩天楼に
+挑戦しに　来たのかい？▼
+目的は　なに？▼
+お金？
+最下層への　挑戦？▼
+それとも　ポケモンの　育成？
+まあ　どれでもいいけど　……▼
+ボクは　強い　トレーナーを
+探しているんだ▼
+キミが　この場所で
+もっと　強くなったら▽
+戦うことも　あるかもね▼</language>
+	</row>
+
+	<row id="msg_event_b_02">
+		<language name="JPN" width="256">そうだ！
+キミに　いいことを　おしえてあげるよ▼
+エリアを　クリアしたいのなら
+まずは　ほかの　トレーナーと▽
+たたかうことだね▼
+かれらは　このばしょを
+よくしっている▼
+ボストレーナーの　ばしょも
+しっているはずさ▼
+それじゃ　また　あおう▼</language>
+		<language name="JPN_KANJI" width="256">そうだ！
+キミに　いいことを　教えてあげるよ▼
+エリアを　クリアしたいのなら
+まずは　他の　トレーナーと▽
+戦うことだね▼
+彼らは　この場所を　よく知っている▼
+ボストレーナーの　場所も
+知っているはずさ▼
+それじゃ　また　会おう▼</language>
 	</row>
 
 	<flowchart-group-list>
