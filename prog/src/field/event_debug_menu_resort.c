@@ -33,6 +33,7 @@
 #include "event_fieldmap_control.h"
 #include "event_name_input.h"
 #include "resonance_resort/resort_map.h"
+#include "resonance_resort/resort_shop.h"
 
 //--------------------------------------------------------------
 /// proto
@@ -798,7 +799,7 @@ static void PresenSetup_SetRecv( RESORT_RECV_DATA *p_recv, GFL_MSGDATA *p_msg, u
       RESORT_PHRASE_21,
       RESORT_COMM_TYPE_BEACON,
       5,
-      9,
+      RESORT_SHOP_ID_MARKET_00,
       RESORT_RESIDENT_TYPE_MARKET,
       RESORT_PLACEID_INSTITUTION_00,
     },
@@ -807,7 +808,7 @@ static void PresenSetup_SetRecv( RESORT_RECV_DATA *p_recv, GFL_MSGDATA *p_msg, u
       RESORT_PHRASE_22,
       RESORT_COMM_TYPE_BEACON,
       12,
-      3,
+      RESORT_SHOP_ID_PARLOR_00,
       RESORT_RESIDENT_TYPE_PARLOR,
       RESORT_PLACEID_INSTITUTION_01,
     },
@@ -816,7 +817,7 @@ static void PresenSetup_SetRecv( RESORT_RECV_DATA *p_recv, GFL_MSGDATA *p_msg, u
       RESORT_PHRASE_23,
       RESORT_COMM_TYPE_BEACON,
       6,
-      6,
+      RESORT_SHOP_ID_BREEDER_00,
       RESORT_RESIDENT_TYPE_BREEDER,
       RESORT_PLACEID_INSTITUTION_02,
     },
