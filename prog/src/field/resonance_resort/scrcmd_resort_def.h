@@ -78,6 +78,7 @@
 #define RESORT_WORD_SHOP_LV           (10)
 #define RESORT_WORD_CITY_LV           (11)
 #define RESORT_WORD_CITY_RANK         (12)
+#define RESORT_WORD_CITY_RESTEXP      (13)
 
 #define RESORT_WORD_PARAM_FRONT       (0xFE)  //ñ⁄ÇÃëOÇÃêl
 #define RESORT_WORD_PARAM_NONE        (0xFF)

@@ -1103,6 +1103,18 @@ static void Resort_Recv_Data_InitSetup( RESORT_RECV_DATA *p_wk, RESORT_COMM_TYPE
   //初期生成データ TODO
   RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_COMM_ID,type);
 
+  //受信日時
+  {
+    RTCDate date;
+    RTCTime time;
+    GFL_RTC_GetDateTime(&date, &time);
+    RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_MEET_YEAR, date.year );
+    RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_MEET_MONTH, date.month );
+    RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_MEET_DAY, date.day );
+    RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_MEET_HOUR, time.hour );
+    RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_MEET_MIN, time.minute );
+  }
+
   //TODO α用に２０％の確率でもらう
   if( 20 > GFUser_GetPublicRand(100) )
   {
@@ -1114,8 +1126,13 @@ static void Resort_Recv_Data_InitSetup( RESORT_RECV_DATA *p_wk, RESORT_COMM_TYPE
     //タイプによってなりたいものがきまる
     RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_WANT_JOB, GFUser_GetPublicRand( RESORT_RESIDENT_TYPE_MAX ) );
 
-    //α用にジムにならない
+    //TODO α用にジムにならない
     if( RESORT_RECV_DATA_GetData(p_wk,RESORT_DATA_PARAM_WANT_JOB,NULL ) == RESORT_RESIDENT_TYPE_GYM )
+    {
+      RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_WANT_JOB, RESORT_RESIDENT_TYPE_MARKET );
+    }
+    //TODO α用に家にならない
+    if( RESORT_RECV_DATA_GetData(p_wk,RESORT_DATA_PARAM_WANT_JOB,NULL ) == RESORT_RESIDENT_TYPE_HOUSE )
     {
       RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_WANT_JOB, RESORT_RESIDENT_TYPE_MARKET );
     }

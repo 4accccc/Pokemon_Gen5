@@ -212,7 +212,7 @@ static int Resort_Mapcreate_SetUpBlockField( RESORT_MAPCREATE *p_wk, NormalVtxFo
         FIELD_DATA_PATCH_WriteBuildModel( p_patch, bmodel, 0 );
 
         // アトリビュートのオーバーライト
-        FIELD_DATA_PATCH_OverWriteAttrEx( p_patch, p_attr, 0, 0, local_grid_x, local_grid_z, 7, 5 );
+        FIELD_DATA_PATCH_OverWriteAttrEx( p_patch, p_attr, 0, 0, local_grid_x, local_grid_z, 5, 5 );
 
         //3dmdを配置
         build_count = FIELD_LAND_DATA_PATCH_AddBuildModel( p_patch, p_bm, g3Dmap, build_count, local_grid_x, local_grid_z );

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nagihashi_toru" host="W00268" date="2011-04-21T14:46:11"/>
+	<create user="nagihashi_toru" host="W00268" date="2011-04-21T15:37:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -398,7 +398,7 @@
 		</language>
 	</columns>
 
-	<dialog left="-1194" top="227" right="-489" bottom="847" maximized="no" rayout="Vertical2">
+	<dialog left="-1280" top="131" right="-575" bottom="751" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="552" top="484" right="1024" bottom="882" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -645,6 +645,17 @@ GTSの　ごりよう　ありがとうございます！</language>
 [1:3A:リゾート市長名:0]！▼</language>
 		<language name="JPN_KANJI" width="256">かしこまりました
 [1:3A:リゾート市長名:0]！▼</language>
+	</row>
+
+	<row id="resort_secretary_talk_00">
+		<language name="JPN" width="256">げんざいの　リゾートレベル[2:01:２桁:0]
+『[1:37:リゾートフリーワード:2]』です▼
+つぎの　レベルまで
+にんきは　あと[2:03:４桁:1]ひつようです▼</language>
+		<language name="JPN_KANJI" width="256">げんざいの　リゾートレベル[2:01:２桁:0]
+『[1:37:リゾートフリーワード:2]』です▼
+つぎの　レベルまで
+にんきは　あと[2:03:４桁:1]ひつようです▼</language>
 	</row>
 
 	<row id="resort_sys_name_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#c0c0c0,,#ffff80,#c0c0c0,,,#c0c0c0,,">

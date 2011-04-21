@@ -542,7 +542,7 @@ VMCMD_RESULT EvCmdResortSetWord( VMHANDLE *p_core, void *p_wk_adrs )
 
       u32 num = (s32)next_exp - (s32)now_exp;
       num = MATH_IMax( num, 0 );
-      WORDSET_RegisterNumber( p_wordset, idx, num, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+      WORDSET_RegisterNumber( p_wordset, idx, num, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
     }
     break;
   case RESORT_WORD_SHOP_LV:
@@ -556,7 +556,7 @@ VMCMD_RESULT EvCmdResortSetWord( VMHANDLE *p_core, void *p_wk_adrs )
   case RESORT_WORD_CITY_LV:
     {
       u32 lv = RESORT_CITY_DATA_GetData( p_city_data, RESORT_CITY_DATA_PARAM_LV, NULL );
-      WORDSET_RegisterNumber( p_wordset, idx, lv, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+      WORDSET_RegisterNumber( p_wordset, idx, lv+1, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
     }
     break;
   case RESORT_WORD_CITY_RANK:
@@ -569,6 +569,18 @@ VMCMD_RESULT EvCmdResortSetWord( VMHANDLE *p_core, void *p_wk_adrs )
       WORDSET_RegisterWord( p_wordset, idx, p_str, PM_NEUTRAL, TRUE, PM_LANG );
       GFL_STR_DeleteBuffer(p_str);
       GFL_MSG_Delete( p_msg );
+    }
+    break;
+  case RESORT_WORD_CITY_RESTEXP:
+    {
+      u32 lv = RESORT_CITY_DATA_GetData( p_city_data, RESORT_CITY_DATA_PARAM_LV, NULL );
+      u32 now_exp = RESORT_CITY_DATA_GetData( p_city_data, RESORT_CITY_DATA_PARAM_EXP, NULL );
+      u32 city_idx = RESORT_BINARY_CITY_GetIndexByCityLv( p_city, lv );
+      u32 next_exp = RESORT_BINARY_CITY_GetData( p_city, city_idx, RESORT_BINARY_CITY_PARAM_EXP);
+
+      u32 num = (s32)next_exp - (s32)now_exp;
+      num = MATH_IMax( num, 0 );
+      WORDSET_RegisterNumber( p_wordset, idx, num, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
     }
     break;
   case RESORT_WORD_SHOP_LABEL:
