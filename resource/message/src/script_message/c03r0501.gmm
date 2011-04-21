@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-02-27T15:16:46"/>
+	<create user="matsumiya" host="W00224" date="2011-04-21T16:08:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1296" top="159" right="2001" bottom="787" maximized="no" rayout="Vertical2">
+	<dialog left="1290" top="221" right="1995" bottom="849" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -291,85 +291,6 @@
 		<operation add_message="no" header_setting="no" tag_setting="no" output_setting="no" display="no" sort="no" flowchart_window="no"/>
 	</lock>
 
-
-	<row id="msg_c03r0501_middlewoman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・フィーリングチェックのデータがない
-
-※SWANでc03r1101に引越し</comment>
-		<attribute name="キャラ指定">MIDDLEWOMAN2</attribute>
-		<language name="JPN" width="256">わたしは　フィーリングうらないし▼
-よのなか　Ｃギアを　つかって
-フィーリングチェックを　している▽
-ヒトが　おおいんですってね</language>
-		<language name="JPN_KANJI" width="256">わたしは　フィーリング占い師▼
-世の中　Ｃ－ＧＥＡＲを　使って
-フィーリングチェックを　している▽
-ヒトが　多いんですってね</language>
-	</row>
-
-	<row id="msg_c03r0501_middlewoman2_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・フィーリングチェックのデータがある
-・はい/いいえの選択肢
-　はい→middlewoman2_03
-　いいえ→middlewoman2_04
-・データが1つしかないとき
-　→middlewoman2_05</comment>
-		<attribute name="キャラ指定">MIDDLEWOMAN2</attribute>
-		<language name="JPN" width="256">わたしは　フィーリングうらないし▼
-フィーリングチェックの　せいせきから
-あなたの　きょうの　ラッキーマンを▽
-ずばっと　あてちゃうわ！▽
-どう　あなた　うらなってみる？</language>
-		<language name="JPN_KANJI" width="256">わたしは　フィーリング占い師▼
-フィーリングチェックの　成績から
-あなたの　今日の　ラッキーマンを▽
-ずばっと　当てちゃうわ！▽
-どう　あなた　占ってみる？</language>
-	</row>
-
-	<row id="msg_c03r0501_middlewoman2_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・はい選択時
-・0＝フィーリングチェックをしたトレーナー名</comment>
-		<attribute name="キャラ指定">MIDDLEWOMAN2</attribute>
-		<language name="JPN" width="256">きょうの　あなたが　とんでもなく
-ハッピーに　すごせる　ヒトは……▼
-ずばり　[1:00:トレーナー名:0]　ね！</language>
-		<language name="JPN_KANJI" width="256">今日の　あなたが　とんでもなく
-ハッピーに　すごせる　ヒトは……▼
-ずばり　[1:00:トレーナー名:0]　ね！</language>
-	</row>
-
-	<row id="msg_c03r0501_middlewoman2_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・いいえ選択時</comment>
-		<attribute name="キャラ指定">MIDDLEWOMAN2</attribute>
-		<language name="JPN" width="256">あら　えんりょ　しなくていいのよ
-タダで　うらなってあげるのに</language>
-		<language name="JPN_KANJI" width="256">あら　遠慮しなくていいのよ
-タダで　占ってあげるのに</language>
-	</row>
-
-	<row id="msg_c03r0501_middlewoman2_05" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・データが1つしかないとき
-・0＝フィーリングチェックをしたトレーナー名</comment>
-		<attribute name="キャラ指定">MIDDLEWOMAN2</attribute>
-		<language name="JPN" width="256">きょうの　あなたが　とんでもなく
-ハッピーに　すごせる　ヒトは……▼
-あら　[1:00:トレーナー名:0]さん　としか
-フィーリングチェックを　していないのね▼
-いろんな　ヒトと
-フィーリングチェックを　すると　いいわ！</language>
-		<language name="JPN_KANJI" width="256">今日の　あなたが　とんでもなく
-ハッピーに　すごせる　ヒトは……▼
-あら　[1:00:トレーナー名:0]さん　としか
-フィーリングチェックを　していないのね▼
-いろんな　ヒトと
-フィーリングチェックを　すると　いいわ！</language>
-	</row>
 
 	<row id="msg_c03r0501_mountain_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
