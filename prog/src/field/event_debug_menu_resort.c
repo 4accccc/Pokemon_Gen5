@@ -875,15 +875,25 @@ static void PresenSetup_SetRecv( RESORT_RECV_DATA *p_recv, GFL_MSGDATA *p_msg, u
     GFL_STR_DeleteBuffer( p_strbuf );
   }
 
-  RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_EXTEND_BIT, 0xFF );
+  RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_EXTEND_BIT, 0x1FF );
   RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_VER, PM_VERSION );
   RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_LANG, PM_LANG );
   RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_COMM_ID, sc_presen_data[cnt].commID );
 
-  //噂
+  //クチコミ
   for( i = RESORT_DATA_PARAM_EXT4_GOSSIP_00; i <= RESORT_DATA_PARAM_EXT4_GOSSIP_15; i++ )
   {
-    RESORT_RECV_DATA_SetData( p_recv, i, GFUser_GetPublicRand(2) );
+    RESORT_RECV_DATA_SetData( p_recv, i, GFUser_GetPublicRand(3) );
+  }
+
+  //オフレコ
+  {
+    u8  bit[12];
+    for( i  = 0; i < NELEMS(bit); i++ )
+    {
+      bit[i]  = GFUser_GetPublicRand( 0xFF );
+    }
+    RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_EXT1_MEDAL_BIT, (u32)bit );
   }
 
   //お店
