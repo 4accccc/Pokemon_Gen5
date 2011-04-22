@@ -10,6 +10,8 @@
 #define ZONE_R20_EVC_H
 
 #define R20_MOUNTMAN_01                    0
+#define TR_TANPAN_18                       1
+#define TR_MINI_14                         2
 
 #endif //ZONE_R20_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r20.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
