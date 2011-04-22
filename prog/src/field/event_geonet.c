@@ -70,7 +70,7 @@ static GMEVENT_RESULT geonetEvent( GMEVENT * event, int *seq, void *work )
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-GMEVENT * EVENT_Geonet( GAMESYS_WORK * gsys )
+GMEVENT * EVENT_Geonet( GAMESYS_WORK * gsys, void* parent )
 {
   GMEVENT * event;
   GEONET_WORK * geo_work;

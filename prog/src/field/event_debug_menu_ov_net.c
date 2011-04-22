@@ -326,7 +326,10 @@ BOOL debugMenuCallProc_DebugSake( DEBUG_MENU_EVENT_WORK *p_wk )
 //-----------------------------------------------------------------------------
 BOOL debugMenuCallProc_Geonet( DEBUG_MENU_EVENT_WORK * p_wk )
 {
-  GMEVENT_ChangeEvent( p_wk->gmEvent, EVENT_Geonet( p_wk->gmSys ) );
+  GMEVENT* event = GMEVENT_CreateOverlayEventCall( p_wk->gmSys,
+    FS_OVERLAY_ID( notwifi_event_geonet ), EVENT_Geonet, NULL );
+
+  GMEVENT_ChangeEvent( p_wk->gmEvent, event );
   return TRUE;
 }
 //--------------------------------------------------------------

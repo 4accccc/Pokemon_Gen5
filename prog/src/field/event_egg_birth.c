@@ -126,24 +126,23 @@ static GMEVENT_RESULT EggBirthEvent( GMEVENT* event, int* seq, void* wk )
  * @brief ƒ^ƒ}ƒS›z‰»ƒCƒxƒ“ƒg ¶¬
  *
  * @param gameSystem
- * @param fieldmap
- * @param egg        ›z‰»‚³‚¹‚éƒ^ƒ}ƒS
+ * @param egg        ›z‰»‚³‚¹‚éƒ^ƒ}ƒS‚ÌPOKEMON_PARAM
  */
 //-------------------------------------------------------------------------------------
-GMEVENT* EVENT_EggBirth( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap, POKEMON_PARAM* egg )
+GMEVENT* EVENT_EggBirth( GAMESYS_WORK* gameSystem, void* parent )
 {
 	GMEVENT* event;
 	EVENT_WORK* work;
-
+  
   // ¶¬
   event = GMEVENT_Create( gameSystem, NULL, EggBirthEvent, sizeof(EVENT_WORK) );
   work  = GMEVENT_GetEventWork( event );
 
   // ‰Šú‰»
 	work->gameSystem = gameSystem;
-	work->fieldmap   = fieldmap;
+	work->fieldmap   = GAMESYSTEM_GetFieldMapWork( gameSystem );
   work->gameData   = GAMESYSTEM_GetGameData( gameSystem );
-  work->egg        = egg;
+  work->egg        = (POKEMON_PARAM*)(parent);
 
 	return event;
 }

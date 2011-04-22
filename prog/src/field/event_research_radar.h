@@ -11,6 +11,8 @@
 #include "gamesystem/gamesystem.h"
 #include "field/fieldmap_proc.h"
 
+FS_EXTERN_OVERLAY( notwifi_event_research_radar );
+
 //-------------------------------------------------------------------------------------
 /**
  * @brief 調査レーダー画面呼び出しイベント 生成
@@ -19,4 +21,4 @@
  * @param fieldmap
  */
 //-------------------------------------------------------------------------------------
-extern GMEVENT* EVENT_ResearchRadar( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap );
+extern GMEVENT* EVENT_ResearchRadar( GAMESYS_WORK* gameSystem, void* parent );

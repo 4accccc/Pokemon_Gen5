@@ -180,7 +180,11 @@ GMEVENT* BVSEvent_CheckCommon( BEACON_VIEW_PTR wk, BOOL bEvReqOK )
     event = BVSEvent_EventStart( wk, call_event, EVWAIT_MENU_ANM, MENU_RETURN );
     break;
   case EV_CALL_DETAIL_VIEW:
-    call_event = EVENT_BeaconDetail( wk->gsys, wk->fieldWork, wk->ctrl.target+wk->ctrl.view_top );
+    {
+      u32 target = wk->ctrl.target+wk->ctrl.view_top;
+      call_event = GMEVENT_CreateOverlayEventCall( wk->gsys,
+          FS_OVERLAY_ID( notwifi_event_beacon_detail ), EVENT_BeaconDetail, &target );
+    }
     event = BVSEvent_EventStart( wk, call_event, EVWAIT_TCB_ANM, 0 );
     break;
   case EV_GPOWER_USE:

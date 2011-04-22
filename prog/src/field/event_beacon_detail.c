@@ -129,10 +129,11 @@ static GMEVENT_RESULT EVENT_BeaconDetailMain(GMEVENT * event, int *  seq, void *
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-GMEVENT* EVENT_BeaconDetail(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, u8 target )
+GMEVENT* EVENT_BeaconDetail(GAMESYS_WORK * gsys, void* work )
 {
   GMEVENT* event;
   EVENT_BEACON_DETAIL_WORK * bdw;
+  u32 target = *((u32*)work);
 
   event = GMEVENT_Create(gsys, NULL, EVENT_BeaconDetailMain, sizeof(EVENT_BEACON_DETAIL_WORK));
   

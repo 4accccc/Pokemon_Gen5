@@ -396,7 +396,6 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
 				field/map_matrix.c \
         field/map_replace.c \
         field/warpdata.c \
-        field/event_poke_status.c \
         field/script_trainer.c \
         field/scrcmd_work.c \
         field/scrcmd_enviroments.c \
@@ -419,12 +418,10 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         field/event_gameover.c \
         field/event_gameclear.c \
         field/event_gamestart.c \
-        field/event_cg_wireless.c \
         field/event_fieldmap_menu.c \
 				field/event_shortcut_menu.c \
 				field/event_field_proclink.c \
         field/event_fldmmdl_control.c \
-        field/event_geonet.c \
         field/event_demo3d.c \
         demo/demo3d/demo3d_param.c \
         field/field_wfbc_data.c \
@@ -437,7 +434,6 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         field/scrcmd_gimmick_st.c \
         field/calender.c \
         field/scrcmd_faceup.c \
-        field/event_beacon_detail.c \
         field/field_comm/game_beacon_search.c \
 				gamesystem/game_beacon_nw.c \
 				gamesystem/game_beacon_accessor.c \
@@ -449,12 +445,10 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         field/united_nations_st.c \
         field/scrcmd_un_init.c \
         field/vblank_bg_scale_expand.c \
-        field/event_egg_birth.c \
         app/townmap/townmap_util.c \
         field/scrcmd_easytalk.c \
         field/scrcmd_weather.c \
         debug/debug_mystery_card.c \
-        field/event_research_radar.c \
         field/event_research_team.c \
         app/research_radar/questionnaire_index.c \
 				savedata/symbol_save_notwifi.c \
@@ -499,8 +493,44 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         gamesystem/fest_mission_nw.c \
         gamesystem/fest_mission_data.c
 
+###########################################################
+# アンチWIFIプログラム 並列化イベントグループ
+# GROUP_OVERLAY_NOTWIFI_EVENT_ALL
+# NOTWIFIオーバーレイで並列化可能なevent系を切り分けた
+# m.iwasawa 11.04.22
+
+#ライブ通信詳細画面アプリ呼び出しイベント
+#===> SRCS_OVERLAY_NOTWIFI
+#GROUP_OVERLAY_NOTWIFI_EVENT_ALL
+SRCS_OVERLAY_NOTWIFI_EVENT_BEACON_DETAIL = field/event_beacon_detail.c
+
+#タマゴ生まれアプリ呼び出しイベント
+#===> SRCS_OVERLAY_NOTWIFI
+#GROUP_OVERLAY_NOTWIFI_EVENT_ALL
+SRCS_OVERLAY_NOTWIFI_EVENT_EGG_BIRTH = field/event_egg_birth.c
+
+#CGearワイヤレス画面アプリ呼び出しイベント
+#===> SRCS_OVERLAY_NOTWIFI
+#GROUP_OVERLAY_NOTWIFI_EVENT_ALL
+SRCS_OVERLAY_NOTWIFI_EVENT_CG_WIRELESS = field/event_cg_wireless.c
+
+#調査レーダー画面アプリ呼び出しイベント
+#===> SRCS_OVERLAY_NOTWIFI
+#GROUP_OVERLAY_NOTWIFI_EVENT_ALL
+SRCS_OVERLAY_NOTWIFI_EVENT_RESEARCH_RADAR = field/event_research_radar.c
+
+#GeoNet画面アプリ呼び出しイベント
+#===> SRCS_OVERLAY_NOTWIFI
+#GROUP_OVERLAY_NOTWIFI_EVENT_ALL
+SRCS_OVERLAY_NOTWIFI_EVENT_GEONET = field/event_geonet.c
+
+#ポケモンステータス画面アプリ呼び出しイベント
+#===> SRCS_OVERLAY_NOTWIFI
+#GROUP_OVERLAY_NOTWIFI_EVENT_ALL
+SRCS_OVERLAY_NOTWIFI_EVENT_POKE_STATUS = field/event_poke_status.c
 
 #侵入システムでほぼ常駐に置かなければいけないもの(ユニオンの常駐物と並列化)
+#===> GROUP_OVERLAY_NOTWIFI_EVENT_ALL
 #===> SRCS_OVERLAY_NOTWIFI
 #GROUP_OVERLAY_UNION_INTRUDE_SYSTEM
 SRCS_OVERLAY_INTRUDE_SYSTEM = field/field_comm/intrude_comm.c \
@@ -511,6 +541,7 @@ SRCS_OVERLAY_INTRUDE_SYSTEM = field/field_comm/intrude_comm.c \
         field/field_comm/intrude_symbol.c
 
 #ユニオンシステムでほぼ常駐に置かなければいけないもの(侵入の常駐物と並列化)
+#===> GROUP_OVERLAY_NOTWIFI_EVENT_ALL
 #===> SRCS_OVERLAY_NOTWIFI
 #GROUP_OVERLAY_UNION_INTRUDE_SYSTEM
 SRCS_OVERLAY_UNION_SYSTEM = net_app/union/union_comm.c \

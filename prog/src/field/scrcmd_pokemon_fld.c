@@ -80,7 +80,15 @@ VMCMD_RESULT EvCmdPartyPokeSelect( VMHANDLE *core, void *wk )
   GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
   
   {
-    GMEVENT *event = EVENT_CreatePokeSelect( gsys , ret_decide , ret_wk );
+    EVENT_POKESEL_PARAM prm;
+    GMEVENT *event;
+    
+    MI_CpuClear8( &prm, sizeof(EVENT_POKESEL_PARAM));
+    prm.retDecide = ret_decide;
+    prm.retPos = ret_wk;
+    
+    event = GMEVENT_CreateOverlayEventCall( gsys,
+      FS_OVERLAY_ID( notwifi_event_poke_status ), EVENT_CreatePokeSelect, (void*)&prm );
     SCRIPT_CallEvent( scw, event );
   }
   
@@ -753,25 +761,34 @@ VMCMD_RESULT EvCmdSkillTeachSelectPokemon( VMHANDLE * core, void * wk )
   }
   else
   {
-    u16 wazano;
+    EVENT_POKESEL_PARAM_WOBOE prm;
     GMEVENT * event;
+    
+    MI_CpuClear8( &prm, sizeof(EVENT_POKESEL_PARAM_WOBOE));
+    
     switch ( mode )
     {
     case SCR_SKILLTEACH_MODE_STRONGEST:
-      wazano = PL_SP_WAZANO_STRONGEST;
+      prm.wazano = PL_SP_WAZANO_STRONGEST;
       break;
     case SCR_SKILLTEACH_MODE_COALESCENCE:
-      wazano = PL_SP_WAZANO_COALESCENCE;
+      prm.wazano = PL_SP_WAZANO_COALESCENCE;
       break;
     case SCR_SKILLTEACH_MODE_DRAGON:
-      wazano = WAZANO_RYUUSEIGUN;
+      prm.wazano = WAZANO_RYUUSEIGUN;
       break;
     default:
       GF_ASSERT( 0 );
-      wazano = WAZANO_WARUAGAKI;
+      prm.wazano = WAZANO_WARUAGAKI;
       break;
     }
-    event = EVENT_CreatePokeSelectWazaOboe( gsys , ret_decide , ret_wk, learnBit, wazano );
+
+    prm.retDecide = ret_decide;
+    prm.retPos = ret_wk;
+    prm.learnBit = learnBit;
+
+    event = GMEVENT_CreateOverlayEventCall( gsys,
+      FS_OVERLAY_ID( notwifi_event_poke_status ), EVENT_CreatePokeSelectWazaOboe, (void*)&prm );
     SCRIPT_CallEvent( scw, event );
   }
   
@@ -896,14 +913,24 @@ VMCMD_RESULT EvCmdPartyPokeWazaSelect( VMHANDLE *core, void *wk )
   u16*         ret_decide = SCRCMD_GetVMWork( core, work );       // コマンド第1引数
   u16*             ret_wk = SCRCMD_GetVMWork( core, work );       // コマンド第2引数
   u16             pokePos = SCRCMD_GetVMWorkValue( core, work );  // コマンド第3引数
-  u16               value = SCRCMD_GetVMWorkValue( core, work );  // コマンド第4引数 秘伝選択可能(1可 0不可)
+  u16               value = SCRCMD_GetVMWorkValue( core, work );  // コマンド第4引数 技No(0なら忘れ親父モードで秘伝選択不可になる)
   SCRIPT_WORK*        scw = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
   FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
   
   {
-    BOOL canSelHiden = ( value == 0 );
-    GMEVENT *event = EVENT_CreateWazaSelect( gsys , fieldmap , pokePos , ret_decide , ret_wk , canSelHiden, value );
+    GMEVENT* event;
+    EVENT_POKESEL_PARAM_WSELECT prm;
+    
+    MI_CpuClear8( &prm, sizeof(EVENT_POKESEL_PARAM_WSELECT));
+
+    prm.retDecide = ret_decide;
+    prm.retPos = ret_wk;
+    prm.canSelHiden = ( value == WAZANO_NULL );
+    prm.wazano = value;
+
+    event = GMEVENT_CreateOverlayEventCall( gsys,
+      FS_OVERLAY_ID( notwifi_event_poke_status ), EVENT_CreateWazaSelect, (void*)&prm );
     SCRIPT_CallEvent( scw, event );
   }
   
@@ -941,7 +968,9 @@ extern VMCMD_RESULT EvCmdPartyPokeEggBirth( VMHANDLE *core, void *wk )
     u32     friend = PP_Get( param, ID_PARA_friend, NULL );
 
     if( tamago_flag && (fusei_tamago_flag == FALSE) && (friend == 0) ) {
-      SCRIPT_CallEvent( scw, EVENT_EggBirth( gsys, fieldmap, param ) ); // 孵化イベント
+      GMEVENT* event = GMEVENT_CreateOverlayEventCall( gsys,
+          FS_OVERLAY_ID( notwifi_event_egg_birth ), EVENT_EggBirth, (void*)param );
+      SCRIPT_CallEvent( scw, event ); // 孵化イベント
       *ret_wk = i;
       return VMCMD_RESULT_SUSPEND;
     }

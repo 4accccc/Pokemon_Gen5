@@ -827,7 +827,16 @@ VMCMD_RESULT EvCmdSelectMusicalPoke( VMHANDLE *core, void *wk )
   GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
   
   {
-    GMEVENT *event = EVENT_CreatePokeSelectMusical( gsys , ret_decide , ret_wk );
+    EVENT_POKESEL_PARAM prm;
+    GMEVENT *event;
+    
+    MI_CpuClear8( &prm, sizeof(EVENT_POKESEL_PARAM));
+    prm.retDecide = ret_decide;
+    prm.retPos = ret_wk;
+    
+    event = GMEVENT_CreateOverlayEventCall( gsys,
+      FS_OVERLAY_ID( notwifi_event_poke_status ), EVENT_CreatePokeSelectMusical, (void*)&prm );
+
     SCRIPT_CallEvent( scw, event );
   }
   

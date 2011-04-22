@@ -102,7 +102,7 @@ static GMEVENT_RESULT ResearchRadarCallEvent( GMEVENT* event, int* seq, void* wk
  * @param fieldmap
  */
 //-------------------------------------------------------------------------------------
-GMEVENT* EVENT_ResearchRadar( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap )
+GMEVENT* EVENT_ResearchRadar( GAMESYS_WORK* gameSystem, void* parent )
 {
 	GMEVENT* event;
 	EVENT_WORK* work;
@@ -113,7 +113,7 @@ GMEVENT* EVENT_ResearchRadar( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap 
 
   // 初期化
 	work->gameSystem    = gameSystem;
-	work->fieldmap      = fieldmap;
+	work->fieldmap      = (FIELDMAP_WORK*)parent;
   work->researchParam = GFL_HEAP_AllocMemory( HEAPID_PROC, sizeof(RESEARCH_PARAM) );
 
   // 調査レーダー呼び出しパラメータ設定

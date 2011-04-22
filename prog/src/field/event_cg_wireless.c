@@ -188,26 +188,17 @@ static GMEVENT_RESULT EVENT_CG_WirelessMain(GMEVENT * event, int *  seq, void * 
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-GMEVENT* EVENT_CG_Wireless(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,GMEVENT * prevevent,BOOL bCreate)
+GMEVENT* EVENT_CG_Wireless(GAMESYS_WORK * gsys, void* parent )
 {
-  GMEVENT * event = prevevent;
   BATTLE_SETUP_PARAM * para;
   EVENT_CG_WIRELESS_WORK * dbw;
-  FIELD_SUBSCREEN_WORK * subscreen;
 
-  subscreen = FIELDMAP_GetFieldSubscreenWork(fieldmap);
-
-  if(bCreate){
-    event = GMEVENT_Create(gsys, NULL, EVENT_CG_WirelessMain, sizeof(EVENT_CG_WIRELESS_WORK));
-  }
-  else{
-    GMEVENT_Change( event,EVENT_CG_WirelessMain, sizeof(EVENT_CG_WIRELESS_WORK) );
-  }
+  GMEVENT* event = GMEVENT_Create(gsys, NULL, EVENT_CG_WirelessMain, sizeof(EVENT_CG_WIRELESS_WORK));
+  
   dbw = GMEVENT_GetEventWork(event);
   dbw->gameData = GAMESYSTEM_GetGameData(gsys);
   dbw->ctrl = GAMEDATA_GetSaveControlWork(dbw->gameData);
   dbw->gsys = gsys;
-//  dbw->bPalaceJump = FIELD_SUBSCREEN_EnablePalaceUse(subscreen);
   return event;
 }
 

@@ -5270,10 +5270,12 @@ static GMEVENT_RESULT EVENT_ButtonEffectWait( GMEVENT *event, int *seq, void *wk
     p_cevent = EVENT_IrcBattle(pWork->pGameSys, fieldWork, NULL, TRUE);
     break;
   case FIELD_SUBSCREEN_ACTION_WIRELESS:
-    p_cevent= EVENT_CG_Wireless(pWork->pGameSys, fieldWork, NULL, TRUE);
+    p_cevent = GMEVENT_CreateOverlayEventCall( pWork->pGameSys,
+          FS_OVERLAY_ID( notwifi_event_cg_wireless ), EVENT_CG_Wireless, NULL );
     break;
   case FIELD_SUBSCREEN_ACTION_SCANRADAR:
-    p_cevent= EVENT_ResearchRadar( pWork->pGameSys, fieldWork );
+    p_cevent = GMEVENT_CreateOverlayEventCall( pWork->pGameSys,
+          FS_OVERLAY_ID( notwifi_event_research_radar ), EVENT_ResearchRadar, (void*)fieldWork );
     break;
   case FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_BEACON_VIEW:
     p_cevent= EVENT_ChangeSubScreen(pWork->pGameSys, fieldWork, FIELD_SUBSCREEN_BeaconViewCheck(pWork->subscreen));

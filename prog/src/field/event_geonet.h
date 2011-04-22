@@ -10,7 +10,10 @@
 #include <gflib.h>
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/game_event.h"
+
+FS_EXTERN_OVERLAY( notwifi_event_geonet );
+
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-extern GMEVENT * EVENT_Geonet( GAMESYS_WORK * gsys );
+extern GMEVENT * EVENT_Geonet( GAMESYS_WORK * gsys, void* parent );
 

@@ -11,59 +11,71 @@
 
 #pragma once
 
+FS_EXTERN_OVERLAY( notwifi_event_poke_status );
+
+typedef struct _EVENT_POKESEL_PARAM{
+  u16*  retDecide;  ///<選択結果の格納先ワーク
+  u16*  retPos;     ///<選択位置の格納先ワーク
+}EVENT_POKESEL_PARAM;
+
+typedef struct _EVENT_POKESEL_PARAM_WOBOE{
+  u16*  retDecide;  ///<選択結果の格納先ワーク
+  u16*  retPos;     ///<選択位置の格納先ワーク
+  u8    learnBit;   ///<覚えられるポケモンを示すビット
+  u16   wazano;     ///<覚える対象の技ナンバー
+}EVENT_POKESEL_PARAM_WOBOE;
+
+typedef struct _EVENT_POKESEL_PARAM_WSELECT{
+ u16* retDecide;    ///< 選択結果の格納先ワーク
+ u16* retPos;       ///< 選択位置の格納先ワーク
+ u8   pokePos;      ///< ポケモンの位置
+ u16  wazano;       ///< 覚える技NO
+ BOOL canSelHiden;  ///< 秘伝選択可能
+}EVENT_POKESEL_PARAM_WSELECT;
+
 //-------------------------------------------------------------------------------------
 /**
  * @brief ポケモン選択イベント
  *
  * @param gsys      ゲームシステム
- * @param retDecide 選択結果の格納先ワーク
- * @param retValue  選択位置の格納先ワーク
+ * @param parent    EVENT_POKESEL_PARAM*  選択結果の格納パラメータ
  *
  * @return イベント
  */
 //-------------------------------------------------------------------------------------
 extern GMEVENT * EVENT_CreatePokeSelect( 
-    GAMESYS_WORK * gsys, u16* retDecide , u16* retPos );
+    GAMESYS_WORK * gsys, void* parent );
 
 //------------------------------------------------------------------
 /**
  * @brief ポケモン選択イベント：わざ覚え
  *
  * @param gsys      ゲームシステム
- * @param fieldmap  フィールドマップ
- * @param retDecide 選択結果の格納先ワーク
- * @param retValue  選択位置の格納先ワーク
- * @param learnBit  覚えられるポケモンを示すビット
- * @param wazano    覚える対象のわざナンバー
+ * @param parent    EVENT_POKESEL_PARAM_WOBOE*  選択結果の格納パラメータ他
  */
 //------------------------------------------------------------------
 extern GMEVENT * EVENT_CreatePokeSelectWazaOboe( 
-    GAMESYS_WORK * gsys, u16* retDecide , u16* retPos, u8 learnBit, u16 wazano );
+    GAMESYS_WORK * gsys, void* parent );
 
 //-------------------------------------------------------------------------------------
 /**
  * @brief ポケモン選択イベント：ミュージカル
  *
  * @param gsys      ゲームシステム
- * @param retDecide 選択結果の格納先ワーク
- * @param retValue  選択位置の格納先ワーク
+ * @param parent    EVENT_POKESEL_PARAM*  選択結果の格納パラメータ
  *
  * @return イベント
  */
 //-------------------------------------------------------------------------------------
 extern GMEVENT * EVENT_CreatePokeSelectMusical( 
-    GAMESYS_WORK * gsys, u16* retDecide , u16* retPos );
+    GAMESYS_WORK * gsys, void* parent );
 
 //------------------------------------------------------------------
 /**
  * @brief ポケモン選択イベント
  *
  * @param gsys      ゲームシステム
- * @param fieldmap  フィールドマップ
- * @param pokePos   ポケモンの位置
- * @param retDecide 選択結果の格納先ワーク
- * @param retPos    選択位置の格納先ワーク
- * @param canSelHiden 秘伝選択可能
+ * @param parent    EVENT_POKESEL_PARAM_WSELECT*  選択結果の格納パラメータ他
  */
 //------------------------------------------------------------------
-extern GMEVENT * EVENT_CreateWazaSelect( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, u16 pokePos , u16* retDecide , u16* retPos , const BOOL canSelHiden, u16 wazaNo );
+extern GMEVENT * EVENT_CreateWazaSelect( GAMESYS_WORK * gsys, void* parent );

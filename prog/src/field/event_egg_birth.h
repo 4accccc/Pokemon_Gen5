@@ -12,14 +12,15 @@
 #include "field/fieldmap_proc.h"
 #include "poke_tool/poke_tool.h"
 
+FS_EXTERN_OVERLAY( notwifi_event_egg_birth );
+
 //-------------------------------------------------------------------------------------
 /**
  * @brief É^É}ÉSõzâªÉCÉxÉìÉg ê∂ê¨
  *
  * @param gameSystem
- * @param fieldmap
- * @param egg        õzâªÇ≥ÇπÇÈÉ^É}ÉS
+ * @param egg        õzâªÇ≥ÇπÇÈÉ^É}ÉSÇÃPOKEMON_PARAM
  */
 //-------------------------------------------------------------------------------------
-extern GMEVENT* EVENT_EggBirth( 
-    GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap, POKEMON_PARAM* egg ); 
+extern GMEVENT* EVENT_EggBirth( GAMESYS_WORK* gameSystem, void* parent );
+

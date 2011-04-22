@@ -18,6 +18,7 @@
 #include "app/box_mode.h"
 #include "net_app/comm_tvt_sys.h"  //TVトランシーバ
 
+FS_EXTERN_OVERLAY( notwifi_event_cg_wireless );
 
 typedef enum{
   WIRELESS_CALLTYPE_PALACE,
@@ -42,5 +43,5 @@ typedef struct {
 extern void EVENT_CG_WIRELESS_SetEnd(EVENT_CG_WIRELESS_WORK* pWk);
 
 
-extern GMEVENT* EVENT_CG_Wireless(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,GMEVENT * prevevent,BOOL bCreate);
+extern GMEVENT* EVENT_CG_Wireless(GAMESYS_WORK * gsys, void* parent);
 

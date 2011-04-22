@@ -47,18 +47,18 @@ typedef struct
  * @brief ポケモン選択イベント
  *
  * @param gsys      ゲームシステム
- * @param retDecide 選択結果の格納先ワーク
- * @param retValue  選択位置の格納先ワーク
+ * @param parent    EVENT_POKESEL_PARAM*  選択結果の格納パラメータ
  */
 //------------------------------------------------------------------
 GMEVENT * EVENT_CreatePokeSelect( 
-    GAMESYS_WORK * gsys, u16* retDecide , u16* retPos )
+    GAMESYS_WORK * gsys, void* parent )
 {
 	GMEVENT* event;
 	SELECT_POKE_WORK* psw;
   PLIST_DATA* pl_data;
   GAMEDATA*  gdata = GAMESYSTEM_GetGameData( gsys );
   POKEPARTY* party = GAMEDATA_GetMyPokemon( gdata );
+  EVENT_POKESEL_PARAM* prm = (EVENT_POKESEL_PARAM*)parent;
 
   // ポケモンリスト生成
   pl_data    = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(PLIST_DATA) );
@@ -74,8 +74,8 @@ GMEVENT * EVENT_CreatePokeSelect(
 	psw->fieldmap  = GAMESYSTEM_GetFieldMapWork( gsys );
   psw->plData    = pl_data;
   psw->psData    = NULL;
-  psw->retDecide = retDecide;
-  psw->retPos    = retPos;
+  psw->retDecide = prm->retDecide;
+  psw->retPos    = prm->retPos;
 	return event;
 }
 
@@ -84,19 +84,18 @@ GMEVENT * EVENT_CreatePokeSelect(
  * @brief ポケモン選択イベント：わざ覚え
  *
  * @param gsys      ゲームシステム
- * @param retDecide 選択結果の格納先ワーク
- * @param retValue  選択位置の格納先ワーク
- * @param learnBit  覚えられるポケモンを示すビット
+ * @param parent    EVENT_POKESEL_PARAM_WOBOE*  選択結果の格納パラメータ他
  */
 //------------------------------------------------------------------
 GMEVENT * EVENT_CreatePokeSelectWazaOboe( 
-    GAMESYS_WORK * gsys, u16* retDecide , u16* retPos, u8 learnBit, u16 wazano )
+    GAMESYS_WORK * gsys, void* parent )
 {
 	GMEVENT* event;
 	SELECT_POKE_WORK* psw;
   PLIST_DATA* pl_data;
   GAMEDATA*  gdata = GAMESYSTEM_GetGameData( gsys );
   POKEPARTY* party = GAMEDATA_GetMyPokemon( gdata );
+  EVENT_POKESEL_PARAM_WOBOE* prm = (EVENT_POKESEL_PARAM_WOBOE*)parent;
 
   // ポケモンリスト生成
   pl_data    = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(PLIST_DATA) );
@@ -104,8 +103,8 @@ GMEVENT * EVENT_CreatePokeSelectWazaOboe(
   pl_data->mode = PL_MODE_SET_WAZA;
   pl_data->type = PL_TYPE_SINGLE;
   pl_data->ret_sel = 0;
-  pl_data->wazaLearnBit = learnBit;
-  pl_data->waza = wazano;
+  pl_data->wazaLearnBit = prm->learnBit;
+  pl_data->waza = prm->wazano;
 
   // イベント生成
   event = GMEVENT_Create(gsys, NULL, EVENT_FUNC_PokeSelect, sizeof(SELECT_POKE_WORK));
@@ -114,8 +113,8 @@ GMEVENT * EVENT_CreatePokeSelectWazaOboe(
 	psw->fieldmap  = GAMESYSTEM_GetFieldMapWork( gsys );
   psw->plData    = pl_data;
   psw->psData    = NULL;
-  psw->retDecide = retDecide;
-  psw->retPos    = retPos;
+  psw->retDecide = prm->retDecide;
+  psw->retPos    = prm->retPos;
 	return event;
 }
 
@@ -125,12 +124,11 @@ GMEVENT * EVENT_CreatePokeSelectWazaOboe(
  * @brief ポケモン選択イベント:ミュージカル
  *
  * @param gsys      ゲームシステム
- * @param retDecide 選択結果の格納先ワーク
- * @param retValue  選択位置の格納先ワーク
+ * @param parent    EVENT_POKESEL_PARAM*  選択結果の格納パラメータ
  */
 //------------------------------------------------------------------
 GMEVENT * EVENT_CreatePokeSelectMusical( 
-    GAMESYS_WORK * gsys, u16* retDecide , u16* retPos )
+    GAMESYS_WORK * gsys, void* parent )
 {
 	GMEVENT* event;
 	SELECT_POKE_WORK* psw;
@@ -139,6 +137,7 @@ GMEVENT * EVENT_CreatePokeSelectMusical(
   GAMEDATA*  gdata = GAMESYSTEM_GetGameData( gsys );
   POKEPARTY* party = GAMEDATA_GetMyPokemon( gdata );
   ZUKAN_SAVEDATA *zukanSave = GAMEDATA_GetZukanSave( gdata );
+  EVENT_POKESEL_PARAM* prm = (EVENT_POKESEL_PARAM*)parent;
 
   // ポケモンリスト生成
   pl_data    = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(PLIST_DATA) );
@@ -165,8 +164,8 @@ GMEVENT * EVENT_CreatePokeSelectMusical(
 	psw->fieldmap  = GAMESYSTEM_GetFieldMapWork( gsys );
   psw->plData    = pl_data;
   psw->psData    = ps_data;
-  psw->retDecide = retDecide;
-  psw->retPos    = retPos;
+  psw->retDecide = prm->retDecide;
+  psw->retPos    = prm->retPos;
 	return event;
 }
 
@@ -265,31 +264,28 @@ typedef struct
  * @brief ポケモン選択イベント
  *
  * @param gsys      ゲームシステム
- * @param fieldmap  フィールドマップ
- * @param pokePos   ポケモンの位置
- * @param retDecide 選択結果の格納先ワーク
- * @param retPos    選択位置の格納先ワーク
- * @param canSelHiden 秘伝選択可能
+ * @param parent    EVENT_POKESEL_PARAM_WSELECT*  選択結果の格納パラメータ他
  */
 //------------------------------------------------------------------
 GMEVENT * EVENT_CreateWazaSelect( 
-    GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, u16 pokePos , u16* retDecide , u16* retPos , const BOOL canSelHiden, u16 wazaNo )
+    GAMESYS_WORK * gsys, void* parent )
 {
 	GMEVENT* event;
 	SELECT_WAZA_WORK* wsw;
   PSTATUS_DATA* ps_data;
   GAMEDATA*  gdata = GAMESYSTEM_GetGameData( gsys );
   POKEPARTY* party = GAMEDATA_GetMyPokemon( gdata );
+  EVENT_POKESEL_PARAM_WSELECT* prm = (EVENT_POKESEL_PARAM_WSELECT*)parent;
 
   // ポケモンリスト生成
   ps_data    = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(PLIST_DATA) );
   ps_data->ppd = party;
   ps_data->ppt = PST_PP_TYPE_POKEPARTY;
   ps_data->max = PokeParty_GetPokeCount( party );
-  ps_data->pos = pokePos;
+  ps_data->pos = prm->pokePos;
   ps_data->page = PPT_SKILL;
-  ps_data->waza = wazaNo;
-  if( canSelHiden == TRUE )
+  ps_data->waza = prm->wazano;
+  if( prm->canSelHiden == TRUE )
   {
     ps_data->mode = PST_MODE_WAZAADD_HIDEN;
   }
@@ -304,10 +300,10 @@ GMEVENT * EVENT_CreateWazaSelect(
   event = GMEVENT_Create(gsys, NULL, EVENT_FUNC_WazaSelect, sizeof(SELECT_WAZA_WORK));
   wsw   = GMEVENT_GetEventWork(event);
 	wsw->gsys      = gsys;
-	wsw->fieldmap  = fieldmap;
+	wsw->fieldmap  = GAMESYSTEM_GetFieldMapWork( gsys );
   wsw->psData    = ps_data;
-  wsw->retDecide = retDecide;
-  wsw->retPos    = retPos;
+  wsw->retDecide = prm->retDecide;
+  wsw->retPos    = prm->retPos;
 	return event;
 }
 
