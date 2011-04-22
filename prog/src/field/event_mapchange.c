@@ -100,7 +100,7 @@ FS_EXTERN_OVERLAY(debug_data);
 #include "field_goout_effect.h"
 #include "savedata/resonance_resort_sv.h"
 #include "resonance_resort/resort_map.h"
-#include "resonance_resort/resort_binary_st.h"
+#include "resonance_resort/resort_binary.h"
 
 //============================================================================================
 

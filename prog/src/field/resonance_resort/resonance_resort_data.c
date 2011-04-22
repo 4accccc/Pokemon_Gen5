@@ -24,7 +24,7 @@
 #include "arc/script_message.naix"
 #include "msg/script/msg_resort_scr.h"
 #include "msg/msg_place_name.h"
-#include "resort_binary_st.h"
+#include "resort_binary.h"
 
 //mine 
 #include "field/resonance_resort/resort_map.h"
