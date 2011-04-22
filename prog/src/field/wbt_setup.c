@@ -380,7 +380,7 @@ T_DOWNLOAD_PARAM * T_DOWNLOAD_PARAM_Create( HEAPID heapID, GAMESYS_WORK * gsys )
 	td_param 			= GFL_HEAP_AllocClearMemory( heapID, sizeof(T_DOWNLOAD_PARAM) );
 	td_param->gamesys	= gsys;
 	// ‰Šú‰»
-//	wr_param->status	  = WIN_RECORD_STATUS_LV1;
+	td_param->status	  = T_DOWNLOAD_STATUS_VIEW;
 //  wr_param->wbtsave   = GAMEDATA_GetWBTSave( gamedata );  //WBT—DŸ‰ñ”
 //  wr_param->my_status = GAMEDATA_GetMyStatus( gamedata ); //©•ªî•ñ
 	//

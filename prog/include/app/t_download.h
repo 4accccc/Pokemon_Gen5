@@ -42,11 +42,19 @@ extern const GFL_PROC_DATA TDownloadProcData;
  *								構造体定義
  */
 //=============================================================================
+//-------------------------------------
+/// 状態
+//-------------------------------------
+typedef enum {
+	T_DOWNLOAD_STATUS_VIEW = 0,		///<見るだけ
+	T_DOWNLOAD_STATUS_SELECT,		///<選択
+}T_DOWNLOAD_STATUS;
 
 // トーナメントダウンロード
 typedef struct{
 	GAMESYS_WORK		*gamesys;
 	//
+	T_DOWNLOAD_STATUS	status;
 	BOOL				result;
 }T_DOWNLOAD_PARAM;
 

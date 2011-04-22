@@ -100,6 +100,8 @@ struct DEBUG_WBT_WORK{
   WBTSTAGE stage;
   // win_record用
   WIN_RECORD_STATUS status;
+  // t_download用
+  T_DOWNLOAD_STATUS	t_status;
 	//
 	// 以下に追加していく予定
 	s32			Step;							// 
@@ -181,6 +183,9 @@ static const DEBUG_MENU_LIST WBTMenuList[] =
   { DEBUG_STR_WBT_08, (void*)DEBUG_STR_WBT_08, GFL_OVERLAY_BLANK_ID },   // エントリーチェック:1
   { DEBUG_STR_WBT_09, (void*)DEBUG_STR_WBT_09, GFL_OVERLAY_BLANK_ID },   // エントリーチェック:2
   { DEBUG_STR_WBT_10, (void*)DEBUG_STR_WBT_10, GFL_OVERLAY_BLANK_ID },   // エントリーチェック:3
+  //
+  { DEBUG_STR_WBT_11, (void*)DEBUG_STR_WBT_11, GFL_OVERLAY_BLANK_ID },   // ダウンロード：1
+  { DEBUG_STR_WBT_12, (void*)DEBUG_STR_WBT_12, GFL_OVERLAY_BLANK_ID },   // ダウンロード：2
 };
 
 static const DEBUG_MENU_INITIALIZER DebugMenuWBTImitializer = {
@@ -322,6 +327,7 @@ static GMEVENT_RESULT debugMenuWBTEvent( GMEVENT *event, int *seq, void *wk )
       return GMEVENT_RES_CONTINUE;
 #else
       	work->call_func = debugMenuCallProc_TDownload;
+      	work->t_status = T_DOWNLOAD_STATUS_VIEW;
 		(*seq)++;
 		break;
 #endif
@@ -370,6 +376,20 @@ static GMEVENT_RESULT debugMenuWBTEvent( GMEVENT *event, int *seq, void *wk )
 		work->status = WIN_RECORD_STATUS_LV3;
 		(*seq)++;
 		break;
+	//
+	case DEBUG_STR_WBT_11:		// ダウンロード：1
+		work->call_func = debugMenuCallProc_TDownload;
+		work->t_status = T_DOWNLOAD_STATUS_VIEW;
+		(*seq)++;
+		break;
+	//
+	case DEBUG_STR_WBT_12:		// ダウンロード：2
+		work->call_func = debugMenuCallProc_TDownload;
+		work->t_status = T_DOWNLOAD_STATUS_SELECT;
+		(*seq)++;
+		break;
+	//
+	
     }
     break;
   case 2:
@@ -941,7 +961,7 @@ static BOOL debugMenuCallProc_TDownload( DEBUG_WBT_WORK *p_wk )
 //		p_wk->gmSys, wr_param,
 //		WBTTYPE_ALL, WBTRULE_SINGLE, p_wk->stage, p_wk->Trbuffer, p_wk->DebugNum );
 	// debug用
-//	wr_param->status = p_wk->status;
+	td_param->status = p_wk->t_status;
 	//
 	new_event = T_DOWNLOAD_EVENT_Show( p_wk->gmSys, p_wk->fieldWork, td_param, TRUE );
 	GMEVENT_ChangeEvent( p_wk->gmEvent, new_event );
