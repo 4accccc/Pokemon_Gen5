@@ -1204,14 +1204,14 @@
 	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/rsleader3.ncg ./mmdl_res ./mmdl_dmy/t4x4x7.imd 4 4 7
 
 #rsleader4.imd
-./mmdl_res/rsleader4.imd: ./mmdl_nchara/rsleader4.ncg ./mmdl_nchara/rsleader4.ncl ./mmdl_dmy/t4x4x7.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_flip.csv
+./mmdl_res/rsleader4.imd: ./mmdl_nchara/rsleader4.ncg ./mmdl_nchara/rsleader4.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
 	@echo convert ncg_imd rsleader4
-	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/rsleader4.ncg ./mmdl_res ./mmdl_dmy/t4x4x7.imd 4 4 7
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/rsleader4.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
 
 #rsleader5.imd
-./mmdl_res/rsleader5.imd: ./mmdl_nchara/rsleader5.ncg ./mmdl_nchara/rsleader5.ncl ./mmdl_dmy/t4x4x7.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_flip.csv
+./mmdl_res/rsleader5.imd: ./mmdl_nchara/rsleader5.ncg ./mmdl_nchara/rsleader5.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
 	@echo convert ncg_imd rsleader5
-	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/rsleader5.ncg ./mmdl_res ./mmdl_dmy/t4x4x7.imd 4 4 7
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/rsleader5.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
 
 #rsleader6.imd
 ./mmdl_res/rsleader6.imd: ./mmdl_nchara/rsleader6.ncg ./mmdl_nchara/rsleader6.ncl ./mmdl_dmy/t4x4x7.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_flip.csv
@@ -1219,19 +1219,19 @@
 	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/rsleader6.ncg ./mmdl_res ./mmdl_dmy/t4x4x7.imd 4 4 7
 
 #rsleader7.imd
-./mmdl_res/rsleader7.imd: ./mmdl_nchara/rsleader7.ncg ./mmdl_nchara/rsleader7.ncl ./mmdl_dmy/t4x4x7.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_flip.csv
+./mmdl_res/rsleader7.imd: ./mmdl_nchara/rsleader7.ncg ./mmdl_nchara/rsleader7.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
 	@echo convert ncg_imd rsleader7
-	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/rsleader7.ncg ./mmdl_res ./mmdl_dmy/t4x4x7.imd 4 4 7
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/rsleader7.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
 
 #rsleader8.imd
-./mmdl_res/rsleader8.imd: ./mmdl_nchara/rsleader8.ncg ./mmdl_nchara/rsleader8.ncl ./mmdl_dmy/t4x4x7.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_flip.csv
+./mmdl_res/rsleader8.imd: ./mmdl_nchara/rsleader8.ncg ./mmdl_nchara/rsleader8.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
 	@echo convert ncg_imd rsleader8
-	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/rsleader8.ncg ./mmdl_res ./mmdl_dmy/t4x4x7.imd 4 4 7
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/rsleader8.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
 
 #eleader1.imd
-./mmdl_res/eleader1.imd: ./mmdl_nchara/eleader1.ncg ./mmdl_nchara/eleader1.ncl ./mmdl_dmy/t4x4x7.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_flip.csv
+./mmdl_res/eleader1.imd: ./mmdl_nchara/eleader1.ncg ./mmdl_nchara/eleader1.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
 	@echo convert ncg_imd eleader1
-	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/eleader1.ncg ./mmdl_res ./mmdl_dmy/t4x4x7.imd 4 4 7
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/eleader1.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
 
 #dpleader1.imd
 ./mmdl_res/dpleader1.imd: ./mmdl_nchara/dpleader1.ncg ./mmdl_nchara/dpleader1.ncl ./mmdl_dmy/t4x4x7.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_flip.csv
