@@ -217,7 +217,7 @@ typedef struct {
 static void InitElevatorGimmicWork( INF_ELEVATOR_WK *p_wk ,FIELDMAP_WORK *p_fieldmap );
 static void MapModelInit( INF_ELEVATOR_WK *p_wk );
 static const ELEVATOR_SET_DATA* GetElevatorTable( INF_ELEVATOR_WK *p_wk );
-static u32 GetDungeonColor( INF_ELEVATOR_WK *p_wk );
+static u32 GetDungeonColor();
 static GMEVENT_RESULT ElevatorOpenEvent( GMEVENT *p_event, int *seq, void *wk );
 
 //----------------------------------------------------------------------------
@@ -395,7 +395,7 @@ static void InitElevatorGimmicWork( INF_ELEVATOR_WK *p_wk ,FIELDMAP_WORK *p_fiel
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static u32 GetDungeonColor( INF_ELEVATOR_WK *p_wk )
+static u32 GetDungeonColor()
 {
   return GET_VERSION();
 }
@@ -492,13 +492,29 @@ static GMEVENT_RESULT ElevatorOpenEvent( GMEVENT *p_event, int *seq, void *wk )
   {
     start_frame = ELEVATOR_START_FRAME_OPEN << FX32_SHIFT;
     end_frame = ELEVATOR_END_FRAME_OPEN << FX32_SHIFT;
-    sound_id = SEQ_SE_FLD_136;  //エレベータの開く音
+
+    if( GetDungeonColor() == VERSION_B2 )
+    {
+      sound_id = SEQ_SE_SW_MDUN_BL_01;  //エレベータの開く音
+    }
+    else
+    {
+      sound_id = SEQ_SE_SW_MDUN_WH_01;  //エレベータの開く音
+    }
   }
   else
   {
     start_frame = ELEVATOR_START_FRAME_CLOSE << FX32_SHIFT;
     end_frame = ELEVATOR_END_FRAME_CLOSE << FX32_SHIFT;
-    sound_id = SEQ_SE_FLD_137;  //エレベータのしまる音
+    
+    if( GetDungeonColor() == VERSION_B2 )
+    {
+      sound_id = SEQ_SE_SW_MDUN_BL_02;  //エレベータのしまる音
+    }
+    else
+    {
+      sound_id = SEQ_SE_SW_MDUN_WH_02;  //エレベータのしまる音
+    }
   }
 
   // アニメーション

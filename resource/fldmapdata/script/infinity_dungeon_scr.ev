@@ -53,7 +53,7 @@ INIT_EVENT_END
 EVENT_START  ev_infinity_dungeon_warp_up
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_set_up_dir )
   _OBJ_ANIME_WAIT()
-	_SE_PLAY( SEQ_SE_KAIDAN )
+  _CALL play_floor_move_se
   _INFINITY_DUNGEON_WARP(WARP_DIR_UP)
 EVENT_END
 
@@ -63,7 +63,7 @@ EVENT_END
 EVENT_START  ev_infinity_dungeon_warp_down
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_set_down_dir )
   _OBJ_ANIME_WAIT()
-	_SE_PLAY( SEQ_SE_KAIDAN )
+  _CALL play_floor_move_se
   _INFINITY_DUNGEON_WARP(WARP_DIR_DOWN)
 EVENT_END
 
@@ -73,7 +73,7 @@ EVENT_END
 EVENT_START  ev_infinity_dungeon_warp_left
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_set_left_dir )
   _OBJ_ANIME_WAIT()
-	_SE_PLAY( SEQ_SE_KAIDAN )
+  _CALL play_floor_move_se
   _INFINITY_DUNGEON_WARP(WARP_DIR_LEFT)
 EVENT_END
 
@@ -83,7 +83,7 @@ EVENT_END
 EVENT_START  ev_infinity_dungeon_warp_right
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_set_right_dir )
   _OBJ_ANIME_WAIT()
-	_SE_PLAY( SEQ_SE_KAIDAN )
+  _CALL play_floor_move_se
   _INFINITY_DUNGEON_WARP(WARP_DIR_RIGHT)
 EVENT_END
 
@@ -175,8 +175,8 @@ EVENT_START  ev_infinity_dungeon_elevator
     IF $LWK_SELECT_FLOOR != 0xf0 THEN
       
       // エレベータ移動音
-      _SE_PLAY( SEQ_SE_FLD_23 )
-
+      _CALL play_elevator_move_se
+      
       // エレベータから出る
       _RESERVE_SCRIPT( SCRID_INFINITY_DUNGEON_OUT_ELEVATOR )
 
@@ -389,7 +389,7 @@ select_area:
       _INFINITY_DUNGEON_ACTION_ELEVATOR( 0 ,FALSE)
       
       // エレベータ移動音
-      _SE_PLAY( SEQ_SE_FLD_23 )
+      _CALL play_elevator_move_se
 
       // 無限ダンジョン生成シードを設定
       // 内部で初期化も行っている
@@ -512,7 +512,7 @@ EVENT_END
 //-----------------------------------------------------------------------------
 EVENT_START  ev_infinity_dungeon_out_elevator
 {
-  _SE_PLAY( SEQ_SE_FLD_87 ) //エレベーター到着音
+  _CALL play_elevator_stop_se
   _SE_WAIT()
             
   // エレベータを開ける
@@ -901,6 +901,57 @@ area_first_clear:
 
   _LAST_KEYWAIT()
   _BALLOONWIN_CLOSE()
+}
+_RET
+
+//--------------------------------------------------------------------
+// フロア移動音再生
+//--------------------------------------------------------------------
+play_floor_move_se:
+{
+  DEFINE_LOCAL LWK_ROM_VERSION
+
+  // ROMバージョンでの判断
+  _GET_ROM_VERSION( LWK_ROM_VERSION )
+	IF $LWK_ROM_VERSION == VERSION_B2 THEN
+    _SE_PLAY( SEQ_SE_SW_MDUN_BL_05 )
+  ELSE
+    _SE_PLAY( SEQ_SE_SW_MDUN_WH_05 )
+  ENDIF
+}
+_RET
+
+//--------------------------------------------------------------------
+// エレベータ移動音
+//--------------------------------------------------------------------
+play_elevator_move_se:
+{
+  DEFINE_LOCAL LWK_ROM_VERSION
+
+  // ROMバージョンでの判断
+  _GET_ROM_VERSION( LWK_ROM_VERSION )
+	IF $LWK_ROM_VERSION == VERSION_B2 THEN
+    _SE_PLAY( SEQ_SE_SW_MDUN_BL_03 )
+  ELSE
+    _SE_PLAY( SEQ_SE_SW_MDUN_WH_03 )
+  ENDIF
+}
+_RET
+
+//--------------------------------------------------------------------
+// エレベータ到着音
+//--------------------------------------------------------------------
+play_elevator_stop_se:
+{
+  DEFINE_LOCAL LWK_ROM_VERSION
+
+  // ROMバージョンでの判断
+  _GET_ROM_VERSION( LWK_ROM_VERSION )
+	IF $LWK_ROM_VERSION == VERSION_B2 THEN
+    _SE_PLAY( SEQ_SE_SW_MDUN_BL_03 )
+  ELSE
+    _SE_PLAY( SEQ_SE_SW_MDUN_BL_04 )
+  ENDIF
 }
 _RET
 
