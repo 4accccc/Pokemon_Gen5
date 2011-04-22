@@ -12,11 +12,52 @@
 
 #include "field/resonance_resort_data.h"
 #include "resort_binary_st.h"
+#include "resonance_resort_data.naix"
+
+//=============================================================================
+/**
+ *  バイナリ操作
+ *    ->データ構造としては、u16の配列構造体がいくつか繋がっているもの
+ */
+//=============================================================================
+//-------------------------------------
+///	ワーク
+//=====================================
+typedef struct _RESORT_BINARY RESORT_BINARY;
+
+//-------------------------------------
+///	PUBLIC
+//=====================================
+extern RESORT_BINARY * RESORT_BINARY_Init( ARCDATID datID, u32 param_max, HEAPID heapID );
+extern void RESORT_BINARY_Exit( RESORT_BINARY *p_wk );
+extern u16 RESORT_BINARY_GetData( const RESORT_BINARY *cp_wk, u32 index, u32 param );
+extern u32 RESORT_BINARY_GetMax( const RESORT_BINARY *cp_wk );
+
 //=============================================================================
 /**
  *					レゾナンスリゾート人物バイナリデータ
 */
 //=============================================================================
+//-------------------------------------
+///	データ
+//=====================================
+typedef enum
+{
+  RESORT_BINARY_PEOPLE_PARAM_PEOPLE_TYPE,
+  RESORT_BINARY_PEOPLE_PARAM_KIND,
+  RESORT_BINARY_PEOPLE_PARAM_PERSONALITY,
+  RESORT_BINARY_PEOPLE_PARAM_VIEW,
+  RESORT_BINARY_PEOPLE_PARAM_SEX,
+  RESORT_BINARY_PEOPLE_PARAM_SCRID,
+  RESORT_BINARY_PEOPLE_PARAM_MSGID_00,
+  RESORT_BINARY_PEOPLE_PARAM_MSGID_01,
+  RESORT_BINARY_PEOPLE_PARAM_MSGID_02,
+  RESORT_BINARY_PEOPLE_PARAM_MSGID_03,
+  RESORT_BINARY_PEOPLE_PARAM_MSGID_04,
+  RESORT_BINARY_PEOPLE_PARAM_MSGID_05,
+  RESORT_BINARY_PEOPLE_PARAM_MAX,
+}RESORT_BINARY_PEOPLE_PARAM;
+
 //-------------------------------------
 ///	人物要素定義  値はコンバータから吐き出されるので型を付けてあげる
 //=====================================
@@ -34,20 +75,23 @@ typedef s32 RESORT_NPC_TYPE;
 //-------------------------------------
 ///	人物バイナリデータワーク
 //=====================================
-typedef struct _RESORT_BINARY_PEOPLE RESORT_BINARY_PEOPLE;
+typedef RESORT_BINARY RESORT_BINARY_PEOPLE;
 
 //-------------------------------------
-///	人物バイナリデータ 各人物分のワーク
+///	人物バイナリデータ 各人物分のワーク(直接アクセス禁止)
 //=====================================
-typedef struct _RESORT_BINARY_PEOPLE_DATA RESORT_BINARY_PEOPLE_DATA;
+typedef struct _RESORT_BINARY_PEOPLE_DATA
+{
+  u16 param[RESORT_BINARY_PEOPLE_PARAM_MAX];
+} RESORT_BINARY_PEOPLE_DATA;
 
 //-------------------------------------
 /// PUBLIC	
 //=====================================
 //バイナリ読み込み、破棄
-extern RESORT_BINARY_PEOPLE * RESORT_BINARY_PEOPLE_Init( HEAPID heapID );
-extern void RESORT_BINARY_PEOPLE_Exit( RESORT_BINARY_PEOPLE *p_wk );
-
+#define RESORT_BINARY_PEOPLE_Init(x) RESORT_BINARY_Init(NARC_resonance_resort_data_resort_people_dat,RESORT_BINARY_PEOPLE_PARAM_MAX,x)
+#define RESORT_BINARY_PEOPLE_Exit(x) RESORT_BINARY_Exit(x)
+#define RESORT_BINARY_PEOPLE_GetMax(x) RESORT_BINARY_GetMax(x)
 
 extern const RESORT_BINARY_PEOPLE_DATA * RESORT_BINARY_SearchData( const RESORT_BINARY_PEOPLE *cp_wk, RESORT_PEOPLE_TYPE people_type, RESORT_KIND_TYPE kind );
 
@@ -88,16 +132,16 @@ typedef enum
 //-------------------------------------
 ///	アピールデータ
 //=====================================
-typedef struct _RESORT_BINARY_SPOT RESORT_BINARY_SPOT;
+typedef RESORT_BINARY RESORT_BINARY_SPOT;
 
 //-------------------------------------
 /// PUBLIC	
 //=====================================
-extern RESORT_BINARY_SPOT * RESORT_BINARY_SPOT_Init( HEAPID heapID );
-extern void RESORT_BINARY_SPOT_Exit( RESORT_BINARY_SPOT *p_wk );
-extern u16 RESORT_BINARY_SPOT_GetData( const RESORT_BINARY_SPOT *cp_wk, u32 index, RESORT_BINARY_SPOT_PARAM param );
+#define RESORT_BINARY_SPOT_Init(x) RESORT_BINARY_Init( NARC_resonance_resort_data_resort_spot_dat,RESORT_BINARY_SPOT_PARAM_MAX,x)
+#define RESORT_BINARY_SPOT_Exit(x) RESORT_BINARY_Exit(x)
+#define RESORT_BINARY_SPOT_GetData(x,y,z) RESORT_BINARY_GetData(x,y,z)
 extern BOOL RESORT_BINARY_SPOT_SearchIndex( const RESORT_BINARY_SPOT *cp_wk, u32 msg, u32 *p_index );
-extern u16 RESORT_BINARY_SPOT_GetMax( const RESORT_BINARY_SPOT *cp_wk );
+#define RESORT_BINARY_SPOT_GetMax(x) RESORT_BINARY_GetMax(x)
 
 //=============================================================================
 /**
@@ -126,15 +170,15 @@ typedef enum
 //-------------------------------------
 ///	NPCデータ
 //=====================================
-typedef struct _RESORT_BINARY_NPC RESORT_BINARY_NPC;
+typedef RESORT_BINARY RESORT_BINARY_NPC;
 
 //-------------------------------------
 ///	PUBLIC
 //=====================================
-extern RESORT_BINARY_NPC * RESORT_BINARY_NPC_Init( HEAPID heapID );
-extern void RESORT_BINARY_NPC_Exit( RESORT_BINARY_NPC *p_wk );
-extern u16 RESORT_BINARY_NPC_GetData( const RESORT_BINARY_NPC *cp_wk, u32 index, RESORT_BINARY_NPC_PARAM param );
-extern u32 RESORT_BINARY_NPC_GetMax( const RESORT_BINARY_NPC *cp_wk );
+#define RESORT_BINARY_NPC_Init(x) RESORT_BINARY_Init(NARC_resonance_resort_data_resort_npc_dat,RESORT_BINARY_NPC_PARAM_MAX,x)
+#define RESORT_BINARY_NPC_Exit(x) RESORT_BINARY_Exit(x)
+#define RESORT_BINARY_NPC_GetData(x,y,z) RESORT_BINARY_GetData(x,y,z)
+#define RESORT_BINARY_NPC_GetMax(x) RESORT_BINARY_GetMax(x)
 
 //=============================================================================
 /**
@@ -166,14 +210,14 @@ typedef enum
 //-------------------------------------
 ///	MOUTHCOMMデータ
 //=====================================
-typedef struct _RESORT_BINARY_MOUTHCOMM RESORT_BINARY_MOUTHCOMM;
+typedef RESORT_BINARY RESORT_BINARY_MOUTHCOMM;
 
 //-------------------------------------
 ///	PUBLIC
 //=====================================
-extern RESORT_BINARY_MOUTHCOMM * RESORT_BINARY_MOUTHCOMM_Init( HEAPID heapID );
-extern void RESORT_BINARY_MOUTHCOMM_Exit( RESORT_BINARY_MOUTHCOMM *p_wk );
-extern u16 RESORT_BINARY_MOUTHCOMM_GetData( const RESORT_BINARY_MOUTHCOMM *cp_wk, u32 index, RESORT_BINARY_MOUTHCOMM_PARAM param );
+#define RESORT_BINARY_MOUTHCOMM_Init(x) RESORT_BINARY_Init(NARC_resonance_resort_data_resort_kutikomi_dat,RESORT_BINARY_MOUTHCOMM_PARAM_MAX,x)
+#define RESORT_BINARY_MOUTHCOMM_Exit(x) RESORT_BINARY_Exit(x)
+#define RESORT_BINARY_MOUTHCOMM_GetData(x,y,z) RESORT_BINARY_GetData(x,y,z)
 
 
 //=============================================================================
@@ -203,15 +247,15 @@ typedef enum
 //-------------------------------------
 ///	OFFRECOデータ
 //=====================================
-typedef struct _RESORT_BINARY_OFFRECO RESORT_BINARY_OFFRECO;
+typedef RESORT_BINARY RESORT_BINARY_OFFRECO;
 
 //-------------------------------------
 ///	PUBLIC
 //=====================================
-extern RESORT_BINARY_OFFRECO * RESORT_BINARY_OFFRECO_Init( HEAPID heapID );
-extern void RESORT_BINARY_OFFRECO_Exit( RESORT_BINARY_OFFRECO *p_wk );
-extern u16 RESORT_BINARY_OFFRECO_GetData( const RESORT_BINARY_OFFRECO *cp_wk, u32 index, RESORT_BINARY_OFFRECO_PARAM param );
-extern u32 RESORT_BINARY_OFFRECO_GetMax( const RESORT_BINARY_OFFRECO *cp_wk );
+#define RESORT_BINARY_OFFRECO_Init(x) RESORT_BINARY_Init(NARC_resonance_resort_data_resort_offreco_dat,RESORT_BINARY_OFFRECO_PARAM_MAX,x)
+#define RESORT_BINARY_OFFRECO_Exit(x) RESORT_BINARY_Exit(x) 
+#define RESORT_BINARY_OFFRECO_GetData(x,y,z) RESORT_BINARY_GetData(x,y,z)
+#define RESORT_BINARY_OFFRECO_GetMax(x) RESORT_BINARY_GetMax(x)
 
 //=============================================================================
 /**
@@ -230,19 +274,21 @@ typedef enum
   RESORT_BINARY_CITY_PARAM_GROUP_02,
   RESORT_BINARY_CITY_PARAM_EXP,
   RESORT_BINARY_CITY_PARAM_RANK,
+  RESORT_BINARY_CITY_PARAM_PRESENT_LIST,
+  RESORT_BINARY_CITY_PARAM_PRESENT_PER,
   RESORT_BINARY_CITY_PARAM_MAX
 } RESORT_BINARY_CITY_PARAM;
 
 //-------------------------------------
 ///	CITYデータ
 //=====================================
-typedef struct _RESORT_BINARY_CITY RESORT_BINARY_CITY;
+typedef RESORT_BINARY RESORT_BINARY_CITY;
 
 //-------------------------------------
 ///	PUBLIC
 //=====================================
-extern RESORT_BINARY_CITY * RESORT_BINARY_CITY_Init( HEAPID heapID );
-extern void RESORT_BINARY_CITY_Exit( RESORT_BINARY_CITY *p_wk );
-extern u16 RESORT_BINARY_CITY_GetData( const RESORT_BINARY_CITY *cp_wk, u32 index, RESORT_BINARY_CITY_PARAM param );
-extern u32 RESORT_BINARY_CITY_GetMax( const RESORT_BINARY_CITY *cp_wk );
+#define RESORT_BINARY_CITY_Init( x ) RESORT_BINARY_Init(NARC_resonance_resort_data_resort_city_dat,RESORT_BINARY_CITY_PARAM_MAX,x)
+#define RESORT_BINARY_CITY_Exit( x ) RESORT_BINARY_Exit( x )
+#define RESORT_BINARY_CITY_GetData( x, y, z ) RESORT_BINARY_GetData(x,y,z)
+#define RESORT_BINARY_CITY_GetMax( x ) RESORT_BINARY_GetMax( x )
 extern u32 RESORT_BINARY_CITY_GetIndexByCityLv( const RESORT_BINARY_CITY *cp_wk, u32 lv );

@@ -13,7 +13,6 @@
 
 //resource
 #include "arc_def.h"
-#include "resonance_resort_data.naix"
 
 //outer
 #include "resort_binary.h"
@@ -25,46 +24,85 @@
 
 //=============================================================================
 /**
+ *  バイナリ操作
+ */
+//=============================================================================
+//-------------------------------------
+///	ワーク
+//=====================================
+struct _RESORT_BINARY
+{
+  u32 param_max;
+  u32 size;
+  u16 *p_data;
+};
+
+//-------------------------------------
+///	PUBLIC
+//=====================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バイナリ読み込み
+ *
+ *	@param	HEAPID heapID   ヒープID
+ *
+ *	@return バイナリデータ
+ */
+//-----------------------------------------------------------------------------
+RESORT_BINARY * RESORT_BINARY_Init( ARCDATID datID, u32 param_max, HEAPID heapID )
+{
+  RESORT_BINARY *p_wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(RESORT_BINARY) );
+  p_wk->p_data = GFL_ARC_UTIL_LoadEx(ARCID_RESONANCE_RESORT_DATA, datID, FALSE, heapID, &p_wk->size );
+  p_wk->param_max = param_max;
+  return p_wk;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バイナリ破棄
+ *
+ *	@param	RESORT_BINARY *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void RESORT_BINARY_Exit( RESORT_BINARY *p_wk )
+{
+  GFL_HEAP_FreeMemory( p_wk->p_data );
+  GFL_HEAP_FreeMemory( p_wk );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  データを取得
+ *
+ *	@param	RESORT_BINARY *p_wk ワーク
+ *	@param	index   インデックス
+ *	@param	param   引数
+ *
+ *	@return データ
+ */
+//-----------------------------------------------------------------------------
+u16 RESORT_BINARY_GetData( const RESORT_BINARY *cp_wk, u32 index, u32 param )
+{
+  u32 off = cp_wk->param_max * index + param;
+  return cp_wk->p_data[off];
+}
+//----------------------------------------------------------------------------
+/** 
+ *	@brief  最大数を取得
+ *
+ *	@param	const RESORT_BINARY *cp_wk  ワーク
+ *
+ *	@return 最大数
+ */
+//-----------------------------------------------------------------------------
+u32 RESORT_BINARY_GetMax( const RESORT_BINARY *cp_wk )
+{
+  return cp_wk->size / (cp_wk->param_max * sizeof(u16));
+}
+
+//=============================================================================
+/**
  *					レゾナンスリゾート人物バイナリデータ
 */
 //=============================================================================
-//-------------------------------------
-///	データ
-//=====================================
-typedef enum
-{
-  RESORT_BINARY_PEOPLE_PARAM_PEOPLE_TYPE,
-  RESORT_BINARY_PEOPLE_PARAM_KIND,
-  RESORT_BINARY_PEOPLE_PARAM_PERSONALITY,
-  RESORT_BINARY_PEOPLE_PARAM_VIEW,
-  RESORT_BINARY_PEOPLE_PARAM_SEX,
-  RESORT_BINARY_PEOPLE_PARAM_SCRID,
-  RESORT_BINARY_PEOPLE_PARAM_MSGID_00,
-  RESORT_BINARY_PEOPLE_PARAM_MSGID_01,
-  RESORT_BINARY_PEOPLE_PARAM_MSGID_02,
-  RESORT_BINARY_PEOPLE_PARAM_MSGID_03,
-  RESORT_BINARY_PEOPLE_PARAM_MSGID_04,
-  RESORT_BINARY_PEOPLE_PARAM_MSGID_05,
-  RESORT_BINARY_PEOPLE_PARAM_MAX,
-}RESORT_BINARY_PEOPLE_PARAM;
-
-//-------------------------------------
-///	人物バイナリの内容
-//=====================================
-struct _RESORT_BINARY_PEOPLE_DATA
-{
-  u16 param[RESORT_BINARY_PEOPLE_PARAM_MAX];
-} ;
-
-
-//-------------------------------------
-///	人物バイナリデータワーク
-//=====================================
-struct _RESORT_BINARY_PEOPLE
-{
-  u32   size;
-  RESORT_BINARY_PEOPLE_DATA  *p_data;
-};
 
 //-------------------------------------
 /// PRIVATE
@@ -72,58 +110,6 @@ struct _RESORT_BINARY_PEOPLE
 //-------------------------------------
 /// PUBLIC	
 //=====================================
-//----------------------------------------------------------------------------
-/**
- *	@brief  バイナリ読み込み
- *
- *	@param	HEAPID heapID ヒープID
- *
- *	@returnデータ
- */
-//-----------------------------------------------------------------------------
-RESORT_BINARY_PEOPLE * RESORT_BINARY_PEOPLE_Init( HEAPID heapID )
-{
-  RESORT_BINARY_PEOPLE *p_wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(RESORT_BINARY_PEOPLE) );
-
-  p_wk->p_data = GFL_ARC_UTIL_LoadEx(ARCID_RESONANCE_RESORT_DATA, NARC_resonance_resort_data_resort_people_dat, FALSE, heapID, &p_wk->size );
-
-#ifdef DEBUG_DATA_PRINT
-  {
-    int i;
-    for( i = 0; i < (p_wk->size / sizeof(RESORT_BINARY_PEOPLE_DATA)); i++ )
-    {
-      const RESORT_BINARY_PEOPLE_DATA* cp_data = &p_wk->p_data[i];
-      OS_Printf( "type%d\n", cp_data->param[ RESORT_BINARY_PEOPLE_PARAM_PEOPLE_TYPE ] );
-      OS_Printf( "kind%d\n", cp_data->param[ RESORT_BINARY_PEOPLE_PARAM_KIND        ] );
-      OS_Printf( "pers%d\n", cp_data->param[ RESORT_BINARY_PEOPLE_PARAM_PERSONALITY ] );
-      OS_Printf( "view%d\n", cp_data->param[ RESORT_BINARY_PEOPLE_PARAM_VIEW        ] );
-      OS_Printf( "sex %d\n", cp_data->param[ RESORT_BINARY_PEOPLE_PARAM_SEX         ] );
-      OS_Printf( "scri%d\n", cp_data->param[ RESORT_BINARY_PEOPLE_PARAM_SCRID       ] );
-      OS_Printf( "msg0%d\n", cp_data->param[ RESORT_BINARY_PEOPLE_PARAM_MSGID_00    ] );
-      OS_Printf( "msg1%d\n", cp_data->param[ RESORT_BINARY_PEOPLE_PARAM_MSGID_01    ] );
-      OS_Printf( "msg2%d\n", cp_data->param[ RESORT_BINARY_PEOPLE_PARAM_MSGID_02    ] );
-      OS_Printf( "msg3%d\n", cp_data->param[ RESORT_BINARY_PEOPLE_PARAM_MSGID_03    ] );
-      OS_Printf( "msg4%d\n", cp_data->param[ RESORT_BINARY_PEOPLE_PARAM_MSGID_04    ] );
-      OS_Printf( "msg5%d\n", cp_data->param[ RESORT_BINARY_PEOPLE_PARAM_MSGID_05    ] );
-    }
-  }
-#endif //DEBUG_DATA_PRINT
-
-  return p_wk;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  バイナリ破棄
- *
- *	@param	RESORT_BINARY_PEOPLE *p_wk ワーク
- */
-//-----------------------------------------------------------------------------
-void RESORT_BINARY_PEOPLE_Exit( RESORT_BINARY_PEOPLE *p_wk )
-{
-  GFL_HEAP_FreeMemory( p_wk->p_data );
-  GFL_HEAP_FreeMemory( p_wk );
-}
-
 //----------------------------------------------------------------------------
 /**
  *	@brief  スクリプトIDを取得
@@ -169,11 +155,11 @@ const RESORT_BINARY_PEOPLE_DATA * RESORT_BINARY_SearchData( const RESORT_BINARY_
 {
   int i;
   const RESORT_BINARY_PEOPLE_DATA *cp_data;
-  for( i = 0; i < cp_wk->size/sizeof(RESORT_BINARY_PEOPLE_DATA); i++ )
+  for( i = 0; i < RESORT_BINARY_PEOPLE_GetMax(cp_wk); i++ )
   {
-    cp_data   = &cp_wk->p_data[i];
-    if( cp_data->param[RESORT_BINARY_PEOPLE_PARAM_PEOPLE_TYPE] == people_type
-        && cp_data->param[RESORT_BINARY_PEOPLE_PARAM_KIND] == kind)
+    cp_data   = (const RESORT_BINARY_PEOPLE_DATA *)(cp_wk->p_data + cp_wk->param_max * i);
+    if( RESORT_BINARY_GetData(cp_wk,i,RESORT_BINARY_PEOPLE_PARAM_PEOPLE_TYPE) == people_type
+        && RESORT_BINARY_GetData(cp_wk,i,RESORT_BINARY_PEOPLE_PARAM_KIND) == kind )
     {
       return cp_data;
     }
@@ -181,77 +167,6 @@ const RESORT_BINARY_PEOPLE_DATA * RESORT_BINARY_SearchData( const RESORT_BINARY_
 
   GF_ASSERT_MSG(0, "people_type%d kind%d\n", people_type, kind);
   return NULL;
-}
-
-//=============================================================================
-/**
- *					レゾナンスリゾートアピール情報バイナリデータ
-*/
-//=============================================================================
-//-------------------------------------
-///	アピールデータ
-//=====================================
-typedef struct
-{
-  u16 param[ RESORT_BINARY_SPOT_PARAM_MAX ];
-} RESORT_BINARY_SPOT_DATA;
-
-//-------------------------------------
-///	アピールデータ
-//=====================================
-struct _RESORT_BINARY_SPOT
-{
-  u32 size;
-  RESORT_BINARY_SPOT_DATA *p_data;
-};
-
-//-------------------------------------
-/// PUBLIC	
-//=====================================
-//----------------------------------------------------------------------------
-/**
- *	@brief  データ読み込み
- *
- *	@param	HEAPID heapID   ヒープID
- *
- *	@return ワーク
- */
-//-----------------------------------------------------------------------------
-RESORT_BINARY_SPOT * RESORT_BINARY_SPOT_Init( HEAPID heapID )
-{
-  RESORT_BINARY_SPOT *p_wk = GFL_HEAP_AllocClearMemory(heapID,sizeof(RESORT_BINARY_SPOT) );
-  p_wk->p_data = GFL_ARC_UTIL_LoadEx(ARCID_RESONANCE_RESORT_DATA, NARC_resonance_resort_data_resort_spot_dat, FALSE, heapID, &p_wk->size );
-  return p_wk;
-}
-//----------------------------------------------------------------------------
-/**
- *	@briefデータ破棄
- *
- *	@param	RESORT_BINARY_SPOT *p_wk ワーク
- */
-//-----------------------------------------------------------------------------
-void RESORT_BINARY_SPOT_Exit( RESORT_BINARY_SPOT *p_wk )
-{
-  GFL_HEAP_FreeMemory(p_wk->p_data);
-  GFL_HEAP_FreeMemory(p_wk);
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief データ取得
- *
- *	@param	const RESORT_BINARY_SPOT *cp_wk ワーク
- *	@param	index インデックス
- *	@param	param  パラメータ
- *
- *	@return データ
- */
-//-----------------------------------------------------------------------------
-u16 RESORT_BINARY_SPOT_GetData( const RESORT_BINARY_SPOT *cp_wk, u32 index, RESORT_BINARY_SPOT_PARAM param )
-{
-  GF_ASSERT( index < RESORT_BINARY_SPOT_GetMax(cp_wk) );
-  GF_ASSERT( param < RESORT_BINARY_SPOT_PARAM_MAX );
-  return cp_wk->p_data[ index ].param[ param ];
 }
 //----------------------------------------------------------------------------
 /**
@@ -277,328 +192,7 @@ BOOL RESORT_BINARY_SPOT_SearchIndex( const RESORT_BINARY_SPOT *cp_wk, u32 msg, u
 
   return FALSE;
 }
-//----------------------------------------------------------------------------
-/**
- *	@brief  最大値取得
- *
- *	@param	const RESORT_BINARY_SPOT *cp_wk   ワーク
- *
- *	@return 最大値
- */
-//-----------------------------------------------------------------------------
-u16 RESORT_BINARY_SPOT_GetMax( const RESORT_BINARY_SPOT *cp_wk )
-{
-  NAGI_Printf( "size%d data%d\n", cp_wk->size, sizeof( RESORT_BINARY_SPOT_DATA ) );
-  return cp_wk->size / sizeof( RESORT_BINARY_SPOT_DATA );
-}
 
-//=============================================================================
-/**
- *      レゾナンスリゾートNPCデータ
- */
-//=============================================================================
-//-------------------------------------
-///	NPCバイナリデータ
-//=====================================
-typedef struct
-{
-  u16 param[ RESORT_BINARY_NPC_PARAM_MAX ];
-} RESORT_BINARY_NPC_DATA;
-//-------------------------------------
-///	ワーク
-//=====================================
-struct _RESORT_BINARY_NPC
-{
-  u32 size;
-  RESORT_BINARY_NPC_DATA *p_data;
-};
-
-//-------------------------------------
-///	PUBLIC
-//=====================================
-//----------------------------------------------------------------------------
-/**
- *	@brief  NPCデータを作成
- *
- *	@param	HEAPID heapID   ヒープID
- *
- *	@return バイナリデータ
- */
-//-----------------------------------------------------------------------------
-RESORT_BINARY_NPC * RESORT_BINARY_NPC_Init( HEAPID heapID )
-{
-  RESORT_BINARY_NPC *p_wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(RESORT_BINARY_NPC) );
-  p_wk->p_data = GFL_ARC_UTIL_LoadEx(ARCID_RESONANCE_RESORT_DATA, NARC_resonance_resort_data_resort_npc_dat, FALSE, heapID, &p_wk->size );
-  return p_wk;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  NPCデータ
- *
- *	@param	RESORT_BINARY_NPC *p_wk ワーク
- */
-//-----------------------------------------------------------------------------
-void RESORT_BINARY_NPC_Exit( RESORT_BINARY_NPC *p_wk )
-{
-  GFL_HEAP_FreeMemory( p_wk->p_data );
-  GFL_HEAP_FreeMemory( p_wk );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  データを取得
- *
- *	@param	RESORT_BINARY_NPC *p_wk ワーク
- *	@param	index   インデックス
- *	@param	param   引数
- *
- *	@return データ
- */
-//-----------------------------------------------------------------------------
-u16 RESORT_BINARY_NPC_GetData( const RESORT_BINARY_NPC *cp_wk, u32 index, RESORT_BINARY_NPC_PARAM param )
-{
-  return cp_wk->p_data[ index ].param[ param ];
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  データ最大値
- *
- *	@param	const RESORT_BINARY_NPC *cp_wk  ワーク
- *
- *	@return 最大
- */
-//-----------------------------------------------------------------------------
-u32 RESORT_BINARY_NPC_GetMax( const RESORT_BINARY_NPC *cp_wk )
-{
-  return cp_wk->size / sizeof(RESORT_BINARY_NPC_DATA);
-}
-
-//=============================================================================
-/**
- *      レゾナンスリゾートMOUTHCOMMデータ
- */
-//=============================================================================
-//-------------------------------------
-///	MOUTHCOMMバイナリデータ
-//=====================================
-typedef struct
-{
-  u16 param[ RESORT_BINARY_MOUTHCOMM_PARAM_MAX ];
-} RESORT_BINARY_MOUTHCOMM_DATA;
-//-------------------------------------
-///	ワーク
-//=====================================
-struct _RESORT_BINARY_MOUTHCOMM
-{
-  u32 size;
-  RESORT_BINARY_MOUTHCOMM_DATA *p_data;
-};
-
-//-------------------------------------
-///	PUBLIC
-//=====================================
-//----------------------------------------------------------------------------
-/**
- *	@brief  MOUTHCOMMデータを作成
- *
- *	@param	HEAPID heapID   ヒープID
- *
- *	@return バイナリデータ
- */
-//-----------------------------------------------------------------------------
-RESORT_BINARY_MOUTHCOMM * RESORT_BINARY_MOUTHCOMM_Init( HEAPID heapID )
-{
-  RESORT_BINARY_MOUTHCOMM *p_wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(RESORT_BINARY_MOUTHCOMM) );
-  p_wk->p_data = GFL_ARC_UTIL_LoadEx(ARCID_RESONANCE_RESORT_DATA, NARC_resonance_resort_data_resort_kutikomi_dat, FALSE, heapID, &p_wk->size );
-  return p_wk;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  MOUTHCOMMデータ
- *
- *	@param	RESORT_BINARY_MOUTHCOMM *p_wk ワーク
- */
-//-----------------------------------------------------------------------------
-void RESORT_BINARY_MOUTHCOMM_Exit( RESORT_BINARY_MOUTHCOMM *p_wk )
-{
-  GFL_HEAP_FreeMemory( p_wk->p_data );
-  GFL_HEAP_FreeMemory( p_wk );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  データを取得
- *
- *	@param	RESORT_BINARY_MOUTHCOMM *p_wk ワーク
- *	@param	index   インデックス
- *	@param	param   引数
- *
- *	@return データ
- */
-//-----------------------------------------------------------------------------
-u16 RESORT_BINARY_MOUTHCOMM_GetData( const RESORT_BINARY_MOUTHCOMM *cp_wk, u32 index, RESORT_BINARY_MOUTHCOMM_PARAM param )
-{
-  return cp_wk->p_data[ index ].param[ param ];
-}
-
-//=============================================================================
-/**
- *      レゾナンスリゾートOFFRECOデータ
- */
-//=============================================================================
-//-------------------------------------
-///	OFFRECOバイナリデータ
-//=====================================
-typedef struct
-{
-  u16 param[ RESORT_BINARY_OFFRECO_PARAM_MAX ];
-} RESORT_BINARY_OFFRECO_DATA;
-//-------------------------------------
-///	ワーク
-//=====================================
-struct _RESORT_BINARY_OFFRECO
-{
-  u32 size;
-  RESORT_BINARY_OFFRECO_DATA *p_data;
-};
-
-//-------------------------------------
-///	PUBLIC
-//=====================================
-//----------------------------------------------------------------------------
-/**
- *	@brief  OFFRECOデータを作成
- *
- *	@param	HEAPID heapID   ヒープID
- *
- *	@return バイナリデータ
- */
-//-----------------------------------------------------------------------------
-RESORT_BINARY_OFFRECO * RESORT_BINARY_OFFRECO_Init( HEAPID heapID )
-{
-  RESORT_BINARY_OFFRECO *p_wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(RESORT_BINARY_OFFRECO) );
-  p_wk->p_data = GFL_ARC_UTIL_LoadEx(ARCID_RESONANCE_RESORT_DATA, NARC_resonance_resort_data_resort_offreco_dat, FALSE, heapID, &p_wk->size );
-  return p_wk;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  OFFRECOデータ
- *
- *	@param	RESORT_BINARY_OFFRECO *p_wk ワーク
- */
-//-----------------------------------------------------------------------------
-void RESORT_BINARY_OFFRECO_Exit( RESORT_BINARY_OFFRECO *p_wk )
-{
-  GFL_HEAP_FreeMemory( p_wk->p_data );
-  GFL_HEAP_FreeMemory( p_wk );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  データを取得
- *
- *	@param	RESORT_BINARY_OFFRECO *p_wk ワーク
- *	@param	index   インデックス
- *	@param	param   引数
- *
- *	@return データ
- */
-//-----------------------------------------------------------------------------
-u16 RESORT_BINARY_OFFRECO_GetData( const RESORT_BINARY_OFFRECO *cp_wk, u32 index, RESORT_BINARY_OFFRECO_PARAM param )
-{
-  return cp_wk->p_data[ index ].param[ param ];
-}
-//----------------------------------------------------------------------------
-/** 
- *	@brief  最大数を取得
- *
- *	@param	const RESORT_BINARY_OFFRECO *cp_wk  ワーク
- *
- *	@return 最大数
- */
-//-----------------------------------------------------------------------------
-u32 RESORT_BINARY_OFFRECO_GetMax( const RESORT_BINARY_OFFRECO *cp_wk )
-{
-  return cp_wk->size / sizeof( RESORT_BINARY_OFFRECO_DATA );
-}
-
-//=============================================================================
-/**
- *      レゾナンスリゾートCITYデータ
- */
-//=============================================================================
-//-------------------------------------
-///	CITYバイナリデータ
-//=====================================
-typedef struct
-{
-  u16 param[ RESORT_BINARY_CITY_PARAM_MAX ];
-} RESORT_BINARY_CITY_DATA;
-//-------------------------------------
-///	ワーク
-//=====================================
-struct _RESORT_BINARY_CITY
-{
-  u32 size;
-  RESORT_BINARY_CITY_DATA *p_data;
-};
-
-//-------------------------------------
-///	PUBLIC
-//=====================================
-//----------------------------------------------------------------------------
-/**
- *	@brief  CITYデータを作成
- *
- *	@param	HEAPID heapID   ヒープID
- *
- *	@return バイナリデータ
- */
-//-----------------------------------------------------------------------------
-RESORT_BINARY_CITY * RESORT_BINARY_CITY_Init( HEAPID heapID )
-{
-  RESORT_BINARY_CITY *p_wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(RESORT_BINARY_CITY) );
-  p_wk->p_data = GFL_ARC_UTIL_LoadEx(ARCID_RESONANCE_RESORT_DATA, NARC_resonance_resort_data_resort_city_dat, FALSE, heapID, &p_wk->size );
-  return p_wk;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  CITYデータ
- *
- *	@param	RESORT_BINARY_CITY *p_wk ワーク
- */
-//-----------------------------------------------------------------------------
-void RESORT_BINARY_CITY_Exit( RESORT_BINARY_CITY *p_wk )
-{
-  GFL_HEAP_FreeMemory( p_wk->p_data );
-  GFL_HEAP_FreeMemory( p_wk );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  データを取得
- *
- *	@param	RESORT_BINARY_CITY *p_wk ワーク
- *	@param	index   インデックス
- *	@param	param   引数
- *
- *	@return データ
- */
-//-----------------------------------------------------------------------------
-u16 RESORT_BINARY_CITY_GetData( const RESORT_BINARY_CITY *cp_wk, u32 index, RESORT_BINARY_CITY_PARAM param )
-{
-  return cp_wk->p_data[ index ].param[ param ];
-}
-//----------------------------------------------------------------------------
-/** 
- *	@brief  最大数を取得
- *
- *	@param	const RESORT_BINARY_CITY *cp_wk  ワーク
- *
- *	@return 最大数
- */
-//-----------------------------------------------------------------------------
-u32 RESORT_BINARY_CITY_GetMax( const RESORT_BINARY_CITY *cp_wk )
-{
-  return cp_wk->size / sizeof( RESORT_BINARY_CITY_DATA );
-}
 //----------------------------------------------------------------------------
 /**
  *	@brief  街レベルからインデックスを取得

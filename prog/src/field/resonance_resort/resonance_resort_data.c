@@ -3527,6 +3527,7 @@ struct _RESORT_CITY_DATA
   u8      secret_present_num;
   u8      secret_present_flag;
   u8      trainerID_cnt;
+  u32     rnd;
 };
 SDK_COMPILER_ASSERT(sizeof(RESORT_CITY_DATA) == RESORT_CITY_DATA_SIZE );
 
@@ -3572,6 +3573,7 @@ void RESORT_CITY_DATA_InitInstance( RESORT_CITY_DATA *p_wk )
   GFL_STD_MemClear(p_wk,sizeof(RESORT_CITY_DATA));
   p_wk->city_name[0] = GFL_STR_GetEOMCode();
   p_wk->my_name[0]  = GFL_STR_GetEOMCode();
+  p_wk->rnd         = GFUser_GetPublicRand(0);
 
   {
     GFL_MSGDATA *p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_place_name_dat, GFL_HEAP_LOWID(HEAPID_SAVE) );
@@ -3664,8 +3666,12 @@ void RESORT_CITY_DATA_SetData( RESORT_CITY_DATA *p_wk, RESORT_CITY_DATA_PARAM pa
 //-----------------------------------------------------------------------------
 void RESORT_CITY_DATA_UpdateDay( RESORT_CITY_DATA *p_wk )
 {
+  //ビーコントレーナーセーブを破棄
   GFL_STD_MemClear( p_wk->trainerID, sizeof(u32)*RESORT_TRAINER_ID_STORE_SIZE );
   p_wk->trainerID_cnt = 0;
+
+  //乱数再抽選
+  p_wk->rnd         = GFUser_GetPublicRand(0);
 }
 //----------------------------------------------------------------------------
 /**
@@ -3703,6 +3709,24 @@ BOOL RESORT_CITY_DATA_CheckTrainerID( const RESORT_CITY_DATA *cp_wk, u32 trainer
   }
 
   return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  乱数を取得
+ *
+ *	@param	const RESORT_CITY_DATA *cp_wk　ワーク
+ *	@param	ofs オフセット
+ *	@param	max   最大
+ *
+ *	@return 乱数
+ */
+//-----------------------------------------------------------------------------
+u32 RESORT_CITY_DATA_GetRnd( const RESORT_CITY_DATA *cp_wk, u32 ofs, u32 max )
+{
+  GFL_STD_RandContext rnd;
+  GFL_STD_RandInit( &rnd, cp_wk->rnd + ofs << 32 );
+  return GFL_STD_Rand( &rnd, max );
 }
 
 //=============================================================================

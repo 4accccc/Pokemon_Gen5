@@ -612,7 +612,7 @@ extern RESORT_RECV_DATA * RESORT_PEOPLE_ALL_DATA_GetOwnerData( RESORT_PEOPLE_ALL
 #define RESORT_INSTITUTION_DATA_NUM (8)
 
 //街データ総サイズ
-#define RESORT_CITY_DATA_SIZE       (372)
+#define RESORT_CITY_DATA_SIZE       (376)
 
 #define RESORT_TRAINER_ID_STORE_SIZE (32)
 
@@ -646,6 +646,10 @@ extern void RESORT_CITY_DATA_SetData( RESORT_CITY_DATA *p_wk, RESORT_CITY_DATA_P
 extern void RESORT_CITY_DATA_UpdateDay( RESORT_CITY_DATA *p_wk );
 extern void RESORT_CITY_DATA_AddTrainerID( RESORT_CITY_DATA *p_wk, u32 trainerID );
 extern BOOL RESORT_CITY_DATA_CheckTrainerID( const RESORT_CITY_DATA *cp_wk, u32 trainerID );
+
+extern u32 RESORT_CITY_DATA_GetRnd( const RESORT_CITY_DATA *cp_wk, u32 ofs, u32 max );
+
+#define RESORT_CITY_DATA_GetRndRecv( x,y,z )  RESORT_CITY_DATA_GetRnd( x,RESORT_RECV_DATA_GetData(x,RESORT_DATA_PARAM_TRAINER_ID,NULL ), z )
 
 //=============================================================================
 /**
