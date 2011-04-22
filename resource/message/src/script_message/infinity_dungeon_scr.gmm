@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakamura_akira" host="W00280" date="2011-04-21T19:49:24"/>
+	<create user="nakamura_akira" host="W00280" date="2011-04-22T12:05:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="355" top="137" right="855" bottom="770" maximized="no" rayout="Vertical2">
+	<dialog left="495" top="289" right="995" bottom="922" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="105" right="1280" bottom="514" visible="no"/>
 		<band id="0" index="1" style="0000" width="484"/>
@@ -342,9 +342,15 @@
 		<language name="JPN_KANJI" width="256">せんとう　かいし　ほわいと▼</language>
 	</row>
 
-	<row id="msg_b_boss_start_00" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
-		<language name="JPN" width="256">せんとう　かいし　ブラック▼</language>
-		<language name="JPN_KANJI" width="256">せんとう　かいし　ブラック▼</language>
+	<row id="msg_b_boss_start_00" text-color="#ffffff,,,#ffffff,,#ffffff,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+		<language name="JPN" width="256">また　ちょうせんしてくれて
+うれしいよ▼
+さあ　キミの　ポケモンの　ちからを
+みせてもらうよ！▼</language>
+		<language name="JPN_KANJI" width="256">また　挑戦してくれて
+うれしいよ▼
+さあ　キミの　ポケモンの　力を
+見せてもらうよ！▼</language>
 	</row>
 
 	<row id="msg_b_boss_start_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
@@ -446,9 +452,19 @@
 		<language name="JPN_KANJI" width="256">しょかい　せんとう　かいし（ホワイト）▼</language>
 	</row>
 
-	<row id="msg_b_boss_first_start_00" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
-		<language name="JPN" width="256">しょかい　せんとう　かいし（ブラック）▼</language>
-		<language name="JPN_KANJI" width="256">しょかい　せんとう　かいし（ブラック）▼</language>
+	<row id="msg_b_boss_first_start_00" text-color="#ffffff,,,#ffffff,,#ffffff,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+		<language name="JPN" width="256">ようこそ　くろの　まてんろうへ！▼
+ここに　たどりつけたと　いうことは
+トレーナーとして　それなりの▽
+じつりょくが　あるようだね▼
+さあ　キミの　ポケモンの　ちからを
+みせてもらうよ！▼</language>
+		<language name="JPN_KANJI" width="256">ようこそ　黒の　摩天楼へ！▼
+ここに　たどり着けたと　いうことは
+トレーナーとして　それなりの▽
+実力が　あるようだね▼
+さあ　キミの　ポケモンの　力を
+見せてもらうよ！▼</language>
 	</row>
 
 	<row id="msg_b_boss_first_start_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
@@ -550,9 +566,15 @@
 		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ホワイト▼</language>
 	</row>
 
-	<row id="msg_b_boss_end_00" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
-		<language name="JPN" width="256">せんとう　しゅうりょう　ブラック▼</language>
-		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ブラック▼</language>
+	<row id="msg_b_boss_end_00" text-color="#ffffff,,,#ffffff,,#ffffff,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+		<language name="JPN" width="256">いぜんより　てごわくなったね▼
+キミが　どこまで
+つよくなるのか　たのしみだよ▼
+また　ちょうせんして　くれよ▼</language>
+		<language name="JPN_KANJI" width="256">以前より　手強くなったね▼
+キミが　どこまで
+強くなるのか　楽しみだよ▼
+また　挑戦して　くれよ▼</language>
 	</row>
 
 	<row id="msg_b_boss_end_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
@@ -605,9 +627,21 @@
 		<language name="JPN_KANJI" width="256">せんとう　しゅうりょう　ブラック▼</language>
 	</row>
 
-	<row id="msg_b_boss_first_end_00" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
-		<language name="JPN" width="256">しょかい　せんとう　おわり（ブラック）▼</language>
-		<language name="JPN_KANJI" width="256">しょかい　せんとう　おわり（ブラック）▼</language>
+	<row id="msg_b_boss_first_end_00" text-color="#ffffff,,,#ffffff,,#ffffff,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+		<language name="JPN" width="256">おどろいたよ　よそういじょうだ▼
+キミの　ポケモンの　ちから
+みせてもらったよ▼
+キミなら　つぎの　エリアも
+クリアできるだろう▼
+キミの　かつやくを　たのしみに
+しているよ▼</language>
+		<language name="JPN_KANJI" width="256">驚いたよ　想像以上だ▼
+キミの　ポケモンの　力
+見せてもらったよ▼
+キミなら　次の　エリアも
+クリアできるだろう▼
+キミの　活躍を　楽しみに
+しているよ▼</language>
 	</row>
 
 	<row id="msg_b_boss_first_end_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
