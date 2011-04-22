@@ -194,10 +194,9 @@ VMCMD_RESULT EvCmdInfinityDungeonResetSeed( VMHANDLE *p_core, void *p_wk_adrs )
   SAVE_CONTROL_WORK *p_save_data = GAMEDATA_GetSaveControlWork(p_gamedata);
   u32 seed = GFL_STD_MtRand( GFL_STD_RAND_MAX );
   p_save = SaveData_GetINFINITYDUNGEON( p_save_data );
-  INFINITYDUNGEON_SAVE_SetRandomSeed( p_save ,seed );
   INFINITYDUNGEON_SAVE_InitDungeonData( p_save );
+  INFINITYDUNGEON_SAVE_SetRandomSeed( p_save ,seed );
 
-  ONOUE_Printf("rand_seed=%u\n",seed);
   return VMCMD_RESULT_CONTINUE;
 }
 

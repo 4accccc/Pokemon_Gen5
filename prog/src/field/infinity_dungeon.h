@@ -47,10 +47,10 @@ extern u32 INFINITY_DUNGEON_GetTrIDPos( INF_DUNGEON_DATA *p_dungeon_data ,u8 flo
 extern void DEBUG_INFINITY_DUNGEON_MakeDungeonData();
 #endif
 
-extern void INF_MakeDungeonData( INF_DUNGEON_DATA **pp_wk,INFINITYDUNGEON_SAVE *p_save ,HEAPID heapID);
-extern void INF_FreeDungeonData(INF_DUNGEON_DATA **pp_wk);
+extern void INF_MakeDungeonData( INF_DUNGEON_DATA *p_wk,INFINITYDUNGEON_SAVE *p_save ,HEAPID heapID);
 extern void INF_ReCalcDungeonData( INF_DUNGEON_DATA *p_wk,INFINITYDUNGEON_SAVE *p_save );
 extern u32 INFINITY_DUNGEON_GetRecoverFlgPos( INF_DUNGEON_DATA *p_dungeon_data ,u16 tr_id );
 extern u32 INFINITY_DUNGEON_GetBossFloor( INF_DUNGEON_DATA *p_dungeon_data );
+extern u32 INF_GetDungeonDataSize();
 
 

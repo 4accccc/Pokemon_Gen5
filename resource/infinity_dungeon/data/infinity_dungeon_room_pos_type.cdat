@@ -202,6 +202,13 @@ static const INF_ROOM_SET_TR_PARAM sc_room_tr_param[] = {
 
     },
   }, 
+  { // INF_ROOM_POS_TYPE_EX_1
+    1 ,ROOM_TYPE_DEFAULT ,
+    { 
+      { INF_MOVE_CODE_TYPE_STOP1 ,6 ,7 ,}, 
+
+    },
+  }, 
 };
 #define INF_ROOM_POS_TYPE_B_1 (0)
 #define INF_ROOM_POS_TYPE_C_1 (1)
@@ -222,4 +229,5 @@ static const INF_ROOM_SET_TR_PARAM sc_room_tr_param[] = {
 #define INF_ROOM_POS_TYPE_R_1 (16)
 #define INF_ROOM_POS_TYPE_S_1 (17)
 #define INF_ROOM_POS_TYPE_T_1 (18)
-#define INF_TR_ROOM_POS_TYPE_NONE (19) // トレーナーを配置しない
+#define INF_ROOM_POS_TYPE_EX_1 (19)
+#define INF_TR_ROOM_POS_TYPE_NONE (20) // トレーナーを配置しない

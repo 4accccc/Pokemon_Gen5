@@ -637,6 +637,7 @@ recover_trainer:
 
       // 回復後メッセージ
       _BALLOONWIN_OBJMSG_POS( LWK_END_MSG_ID , SCWK_TARGET_OBJID, POS_DOWN )
+      _LAST_KEYWAIT()
       _BALLOONWIN_CLOSE()
       
       // 回復済みフラグを立てる
@@ -644,11 +645,13 @@ recover_trainer:
     ELSE
       // キャンセルメッセージ
       _BALLOONWIN_OBJMSG_POS( LWK_CANCEL_MSG_ID , SCWK_TARGET_OBJID, POS_DOWN )
+      _LAST_KEYWAIT()
       _BALLOONWIN_CLOSE()
     ENDIF
   ELSE
      // 回復後メッセージ
     _BALLOONWIN_OBJMSG_POS( LWK_END_MSG_ID , SCWK_TARGET_OBJID, POS_DOWN )
+    _LAST_KEYWAIT()
     _BALLOONWIN_CLOSE()
   ENDIF
 }

@@ -248,7 +248,11 @@ void INFINITY_DUNGEON_Setup( FIELDMAP_WORK *p_fieldmap )
   // 無限ダンジョンのデータを生成
   p_save_data = GAMEDATA_GetSaveControlWork( p_gdata );
   p_save = SaveData_GetINFINITYDUNGEON( p_save_data );
-  INF_MakeDungeonData( &p_gmk_wk->p_dungeon_data ,p_save ,heapID );
+
+  // 無限ダンジョンワーク確保
+  p_gmk_wk->p_dungeon_data = GFL_HEAP_AllocMemory( heapID , INF_GetDungeonDataSize() );
+
+  INF_MakeDungeonData( p_gmk_wk->p_dungeon_data ,p_save ,heapID );
 
   // モデルの読み込み
   MapModelInit( &p_gmk_wk->elev_wk );
@@ -272,7 +276,7 @@ void INFINITY_DUNGEON_End( FIELDMAP_WORK *p_fieldmap )
   FLD_EXP_OBJ_DelUnit( p_wk->elev_wk.p_ex_obj, MODEL_MANAGER_FLD_EXP_OBJ_UNIT_ID );
   
   // ダンジョンデータを開放する
-  INF_FreeDungeonData( &p_wk->p_dungeon_data );
+  GFL_HEAP_FreeMemory( p_wk->p_dungeon_data );
 
   // 汎用ワーク解放
   GMK_TMP_WK_FreeWork(p_fieldmap, INF_GIMMICK_WORK_ASSIGN_ID);
