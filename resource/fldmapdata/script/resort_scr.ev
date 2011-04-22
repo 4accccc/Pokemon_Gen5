@@ -123,6 +123,7 @@ EVENT_START ev_resort_tourist
   ENDIF
 
   //–K–â‚µ‚Ä‚«‚Ü‚µ‚½
+  _RESORT_SET_WORD( RESORT_WORD_PEOPLE, RESORT_WORD_PARAM_FRONT, 0 )
 	_SYSWIN_MSG( resort_sys_select_00, POS_DOWN )
 
   //ˆÈ‰ºƒƒjƒ…[•\Ž¦‚ÍLWK_MENU_LOOP‚ªFALSE‚É‚È‚é‚Ü‚Å‘±‚­

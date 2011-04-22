@@ -380,7 +380,7 @@ static void _recvResort(const int netID, const int size, const void* pData, void
   OS_Printf( "リゾート受信コールバック！netID=%d size=%d \n", netID, size );
 
 
-  if( !RESORT_PEOPLE_ALL_DATA_MergeRecv( p_people_all, pData) )
+  if( !RESORT_PEOPLE_ALL_DATA_MergeRecv( p_people_all, pData, RESORT_COMM_TYPE_GTSNEGO) )
   {
     RESORT_RECV_BUFF_AddRecv( p_buff, pData, RESORT_COMM_TYPE_GTSNEGO );
   }

@@ -58,12 +58,14 @@ static BOOL debugMenuCallProc_AllClear( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_UpdateDay( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_DesignerSetup( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_PresenSetup( DEBUG_MENU_EVENT_WORK *p_wk );
+static BOOL debugMenuCallProc_PresenRecvAdd( DEBUG_MENU_EVENT_WORK *p_wk );
 
 static const DEBUG_MENU_LIST DATA_SubMenuList[] =
 {
   { DEBUG_FIELD_RESORT_18, debugMenuCallProc_ChangeMap, GFL_OVERLAY_BLANK_ID },
   { DEBUG_FIELD_RESORT_38, debugMenuCallProc_DesignerSetup, GFL_OVERLAY_BLANK_ID },
   { DEBUG_FIELD_RESORT_39, debugMenuCallProc_PresenSetup, GFL_OVERLAY_BLANK_ID },
+  { DEBUG_FIELD_RESORT_40, debugMenuCallProc_PresenRecvAdd, GFL_OVERLAY_BLANK_ID },
   { DEBUG_FIELD_RESORT_16, debugMenuCallProc_Input, GFL_OVERLAY_BLANK_ID},
   { DEBUG_FIELD_RESORT_01, debugMenuCallProc_SetRecv, GFL_OVERLAY_BLANK_ID },
   { DEBUG_FIELD_RESORT_05, debugMenuCallProc_AllRecv, GFL_OVERLAY_BLANK_ID},
@@ -845,7 +847,7 @@ static void PresenSetup_SetRecv( RESORT_RECV_DATA *p_recv, GFL_MSGDATA *p_msg, u
     GF_ASSERT(0);
   }
 
-  RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_TRAINER_ID, GFUser_GetPublicRand(0xFFFF) );
+  RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_TRAINER_ID, people_type*1000 + cnt );
   RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_TRAINERVIEW, sc_presen_data[cnt].view );
   if( sc_presen_data[cnt].view < 8 )
   {
@@ -914,39 +916,16 @@ static BOOL debugMenuCallProc_PresenSetup( DEBUG_MENU_EVENT_WORK *p_wk )
   SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(p_wk->gdata);
   RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( pSave );
   RESORT_PEOPLE_ALL_DATA *p_all_people = RESONANCE_RESORT_SV_GetPeopleAllData( p_resort );
-  RESORT_RECV_BUFF *p_recv_buff = RESONANCE_RESORT_SV_GetDataBuff( p_resort );
-  RESORT_RECV_BUFF *p_recv_tmp_buff = NULL;
 
   GFL_MSGDATA *p_msg = GFL_MSG_Create(GFL_MSG_LOAD_NORMAL,ARCID_DEBUG_MESSAGE,NARC_debug_message_debug_resort2_dat, GFL_HEAP_LOWID(p_wk->heapID) );
   RESORT_RECV_DATA *p_recv = RESORT_RECV_DATA_Init( GFL_HEAP_LOWID(p_wk->heapID) );
   int i;
-  int cnt = 0;
 
   //まずはデータクリア
   debugMenuCallProc_AllClear( p_wk );
 
-  //旅行者への追加
-  while( TRUE )
-  {
-    PresenSetup_SetRecv( p_recv, p_msg, RESORT_PEOPLE_TYPE_TOURIST, cnt++ );
-    NAGI_Printf( "cnt = %d\n", cnt );
-    if( !RESORT_RECV_BUFF_AddRecv( p_recv_buff, p_recv, RESORT_RECV_DATA_GetData(p_recv,RESORT_DATA_PARAM_COMM_ID,NULL) ) )
-    {
-      p_recv_tmp_buff = GAMEBEACON_DEBUG_GetResortRecvBuffer();
-      if( !p_recv_tmp_buff )
-      {
-        break;
-      }
-      else 
-      { 
-        if( !RESORT_RECV_BUFF_AddRecv( p_recv_tmp_buff, p_recv, RESORT_RECV_DATA_GetData(p_recv,RESORT_DATA_PARAM_COMM_ID,NULL) ) )
-        {
-          break;
-        }
-      }
-    }
-  }
-
+  debugMenuCallProc_PresenRecvAdd(p_wk);
+ 
   //秘書への追加
   for( i = 0; i < RESORT_SECRETARY_DATA_NUM; i++ )
   {
@@ -989,6 +968,47 @@ static BOOL debugMenuCallProc_PresenSetup( DEBUG_MENU_EVENT_WORK *p_wk )
     }
 
     GFL_STR_DeleteBuffer( p_myname );
+  }
+
+  RESORT_RECV_DATA_Exit( p_recv );
+  GFL_MSG_Delete( p_msg );
+
+  return FALSE;
+}
+static BOOL debugMenuCallProc_PresenRecvAdd( DEBUG_MENU_EVENT_WORK *p_wk )
+{
+  SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(p_wk->gdata);
+  RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( pSave );
+  RESORT_RECV_BUFF *p_recv_buff = RESONANCE_RESORT_SV_GetDataBuff( p_resort );
+  RESORT_RECV_BUFF *p_recv_tmp_buff = NULL;
+  RESORT_PEOPLE_ALL_DATA *p_all_people = RESONANCE_RESORT_SV_GetPeopleAllData( p_resort );
+
+  GFL_MSGDATA *p_msg = GFL_MSG_Create(GFL_MSG_LOAD_NORMAL,ARCID_DEBUG_MESSAGE,NARC_debug_message_debug_resort2_dat, GFL_HEAP_LOWID(p_wk->heapID) );
+  RESORT_RECV_DATA *p_recv = RESORT_RECV_DATA_Init( GFL_HEAP_LOWID(p_wk->heapID) );
+  int cnt = 0;
+  //旅行者への追加
+  while( TRUE )
+  {
+    PresenSetup_SetRecv( p_recv, p_msg, RESORT_PEOPLE_TYPE_TOURIST, cnt++ );
+    NAGI_Printf( "cnt = %d\n", cnt );
+    if( !RESORT_PEOPLE_ALL_DATA_MergeRecv( p_all_people, p_recv, RESORT_RECV_DATA_GetData(p_recv,RESORT_DATA_PARAM_COMM_ID,NULL) ) )
+    {
+      if( !RESORT_RECV_BUFF_AddRecv( p_recv_buff, p_recv, RESORT_RECV_DATA_GetData(p_recv,RESORT_DATA_PARAM_COMM_ID,NULL) ) )
+      {
+        p_recv_tmp_buff = GAMEBEACON_DEBUG_GetResortRecvBuffer();
+        if( !p_recv_tmp_buff )
+        {
+          break;
+        }
+        else 
+        { 
+          if( !RESORT_RECV_BUFF_AddRecv( p_recv_tmp_buff, p_recv, RESORT_RECV_DATA_GetData(p_recv,RESORT_DATA_PARAM_COMM_ID,NULL) ) )
+          {
+            break;
+          }
+        }
+      }
+    }
   }
 
   RESORT_RECV_DATA_Exit( p_recv );

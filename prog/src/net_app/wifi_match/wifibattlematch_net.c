@@ -3515,7 +3515,7 @@ static void WifiBattleMatch_RecvResort(const int netID, const int size, const vo
 
   OS_Printf( "リゾート受信コールバック！netID=%d size=%d \n", netID, size );
 
-  if( !RESORT_PEOPLE_ALL_DATA_MergeRecv( p_people_all, cp_data_adrs ) )
+  if( !RESORT_PEOPLE_ALL_DATA_MergeRecv( p_people_all, cp_data_adrs,RESORT_COMM_TYPE_RNDMATCH ) )
   {
     RESORT_RECV_BUFF_AddRecv( p_buff, cp_data_adrs, RESORT_COMM_TYPE_RNDMATCH );
   }

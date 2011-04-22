@@ -1043,7 +1043,7 @@ static void _UnionRecv_FirstResortData(const int netID, const int size, const vo
   situ->mycomm.resort_receive = TRUE;
 
 
-  if( !RESORT_PEOPLE_ALL_DATA_MergeRecv( p_people_all, pData ) )
+  if( !RESORT_PEOPLE_ALL_DATA_MergeRecv( p_people_all, pData, RESORT_COMM_TYPE_UNION ) )
   {
     RESORT_RECV_BUFF_AddRecv( p_buff, pData, RESORT_COMM_TYPE_UNION );
   }

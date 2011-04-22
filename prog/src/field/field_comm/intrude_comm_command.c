@@ -385,7 +385,7 @@ static void _IntrudeRecv_Profile(const int netID, const int size, const void* pD
     RESORT_PEOPLE_ALL_DATA *p_people_all = RESONANCE_RESORT_SV_GetPeopleAllData( p_resort_sv );
     OS_Printf( "リゾート受信コールバック！netID=%d size=%d \n", netID, size );
 
-    if( !RESORT_PEOPLE_ALL_DATA_MergeRecv( p_people_all, (RESORT_RECV_DATA *)recv_profile->resort_data) )
+    if( !RESORT_PEOPLE_ALL_DATA_MergeRecv( p_people_all, (RESORT_RECV_DATA *)recv_profile->resort_data, RESORT_COMM_TYPE_HYLINK) )
     {
       RESORT_RECV_BUFF_AddRecv( p_buff, (RESORT_RECV_DATA *)recv_profile->resort_data, RESORT_COMM_TYPE_HYLINK );
     }

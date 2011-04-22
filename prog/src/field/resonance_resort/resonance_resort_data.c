@@ -1089,6 +1089,19 @@ BOOL RESORT_RECV_DATA_IsSameOwnerBeacon( const RESORT_RECV_DATA *cp_wk, const RE
   return RESORT_BASIC1_DATA_IsSameOwner( &cp_wk->basic1, &cp_beacon->basic1 );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  同じ所有者かチェック
+ *
+ *	@param	const RESORT_RECV_DATA *cp_wk   ワーク
+ *	@param	const RESORT_RECV_DATA *cp_wk    受信
+ *	@return TRUEで同じ所有者  FALSEで異なる所有者
+ */
+//-----------------------------------------------------------------------------
+BOOL RESORT_RECV_DATA_IsSameOwnerRecv( const RESORT_RECV_DATA *cp_wk, const RESORT_RECV_DATA *cp_recv )
+{
+  return RESORT_BASIC1_DATA_IsSameOwner( &cp_wk->basic1, &cp_recv->basic1 );
+}
 
 //----------------------------------------------------------------------------
 /**
@@ -1237,7 +1250,7 @@ BOOL RESORT_RECV_DATA_MergeBeacon( RESORT_RECV_DATA *p_wk, const RESORT_BEACON_D
  *	@param	RESORT_RECV_DATA *cp_recv   受信データ
  */
 //-----------------------------------------------------------------------------
-void RESORT_RECV_DATA_MergeRecv( RESORT_RECV_DATA *p_wk, const RESORT_RECV_DATA *cp_recv, RESORT_COMM_TYPE type )
+BOOL RESORT_RECV_DATA_MergeRecv( RESORT_RECV_DATA *p_wk, const RESORT_RECV_DATA *cp_recv, RESORT_COMM_TYPE type )
 {
 
   BOOL change_view   = p_wk->basic1.trainer_view != cp_recv->basic1.trainer_view;
@@ -1245,13 +1258,13 @@ void RESORT_RECV_DATA_MergeRecv( RESORT_RECV_DATA *p_wk, const RESORT_RECV_DATA 
   //ロック
   if( RESORT_RECV_DATA_GetData(p_wk,RESORT_DATA_PARAM_LOCK,NULL) )
   {
-    return;
+    return FALSE;
   }
 
   //不正対策
   if( !RESORT_RECV_DATA_IsValid( cp_recv ) )
   {
-    return;
+    return FALSE;
   }
 
   if( RESORT_RECV_DATA_IsEmpty( p_wk ) )
@@ -1275,6 +1288,8 @@ void RESORT_RECV_DATA_MergeRecv( RESORT_RECV_DATA *p_wk, const RESORT_RECV_DATA 
       RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_UPDATE,RESORT_RECV_DATA_UPDATE_MERGE_DATA);
     }
   }
+
+  return TRUE;
 }
 //----------------------------------------------------------------------------
 /**
@@ -3407,8 +3422,23 @@ BOOL RESORT_PEOPLE_ALL_DATA_MergeBeacon( RESORT_PEOPLE_ALL_DATA *p_wk, const RES
  *	@return TRUEいれた　FALSEいれなかった
  */
 //-----------------------------------------------------------------------------
-BOOL RESORT_PEOPLE_ALL_DATA_MergeRecv( RESORT_PEOPLE_ALL_DATA *p_wk, const RESORT_RECV_DATA *cp_recv )
+BOOL RESORT_PEOPLE_ALL_DATA_MergeRecv( RESORT_PEOPLE_ALL_DATA *p_wk, const RESORT_RECV_DATA *cp_recv, RESORT_COMM_TYPE type )
 {
+  int i;
+  for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
+  {
+    RESORT_RESIDENT_DATA *p_resident = RESORT_PEOPLE_ALL_DATA_GetResident( p_wk, i );
+    if( !RESORT_RESIDENT_DATA_IsEmpty(p_resident) 
+      &&  RESORT_RESIDENT_DATA_IsSameOwnerRecv(p_resident,cp_recv) )
+    {
+      if( RESORT_RESIDENT_DATA_MergeRecv( p_resident, cp_recv, type ) )
+      {
+        return TRUE;
+      }
+    }
+  }
+
+
   //TODO 住人マージ
 
   return FALSE;

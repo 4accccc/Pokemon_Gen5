@@ -905,7 +905,7 @@ static void _recvResortData(const int netID, const int size, const void* pData, 
 
   OS_TPrintf("リゾート受信 netID = %d\n", netID);
   //TODO ミュージカルとサブウェイの赤外線受付もここになってしまう
-  if( !RESORT_PEOPLE_ALL_DATA_MergeRecv( p_people_all, pData ) )
+  if( !RESORT_PEOPLE_ALL_DATA_MergeRecv( p_people_all, pData, RESORT_COMM_TYPE_CGEAR_IRC ) )
   {
     RESORT_RECV_BUFF_AddRecv( p_buff, pData, RESORT_COMM_TYPE_CGEAR_IRC );
   }
