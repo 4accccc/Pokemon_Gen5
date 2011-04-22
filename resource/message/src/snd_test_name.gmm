@@ -8841,6 +8841,66 @@
 		<language name="JPN" width="256">SW-WBT-07</language>
 		<language name="JPN_KANJI" width="256">SW-WBT-07</language>
 	</row>
+	<row id="msg_seq_se_sw_fes_01">
+		<language name="JPN" width="256">SW-FES-01</language>
+		<language name="JPN_KANJI" width="256">SW-FES-01</language>
+	</row>
+	<row id="msg_seq_se_sw_fes_02">
+		<language name="JPN" width="256">SW-FES-02</language>
+		<language name="JPN_KANJI" width="256">SW-FES-02</language>
+	</row>
+	<row id="msg_seq_se_sw_fes_03">
+		<language name="JPN" width="256">SW-FES-03</language>
+		<language name="JPN_KANJI" width="256">SW-FES-03</language>
+	</row>
+	<row id="msg_seq_se_sw_fes_04">
+		<language name="JPN" width="256">SW-FES-04</language>
+		<language name="JPN_KANJI" width="256">SW-FES-04</language>
+	</row>
+	<row id="msg_seq_se_sw_fes_05">
+		<language name="JPN" width="256">SW-FES-05</language>
+		<language name="JPN_KANJI" width="256">SW-FES-05</language>
+	</row>
+	<row id="msg_seq_se_sw_mdun_bl_01">
+		<language name="JPN" width="256">SW-MDUN-BL-01</language>
+		<language name="JPN_KANJI" width="256">SW-MDUN-BL-01</language>
+	</row>
+	<row id="msg_seq_se_sw_mdun_bl_02">
+		<language name="JPN" width="256">SW-MDUN-BL-02</language>
+		<language name="JPN_KANJI" width="256">SW-MDUN-BL-02</language>
+	</row>
+	<row id="msg_seq_se_sw_mdun_bl_03">
+		<language name="JPN" width="256">SW-MDUN-BL-03</language>
+		<language name="JPN_KANJI" width="256">SW-MDUN-BL-03</language>
+	</row>
+	<row id="msg_seq_se_sw_mdun_bl_04">
+		<language name="JPN" width="256">SW-MDUN-BL-04</language>
+		<language name="JPN_KANJI" width="256">SW-MDUN-BL-04</language>
+	</row>
+	<row id="msg_seq_se_sw_mdun_bl_05">
+		<language name="JPN" width="256">SW-MDUN-BL-05</language>
+		<language name="JPN_KANJI" width="256">SW-MDUN-BL-05</language>
+	</row>
+	<row id="msg_seq_se_sw_mdun_wh_01">
+		<language name="JPN" width="256">SW-MDUN-WH-01</language>
+		<language name="JPN_KANJI" width="256">SW-MDUN-WH-01</language>
+	</row>
+	<row id="msg_seq_se_sw_mdun_wh_02">
+		<language name="JPN" width="256">SW-MDUN-WH-02</language>
+		<language name="JPN_KANJI" width="256">SW-MDUN-WH-02</language>
+	</row>
+	<row id="msg_seq_se_sw_mdun_wh_03">
+		<language name="JPN" width="256">SW-MDUN-WH-03</language>
+		<language name="JPN_KANJI" width="256">SW-MDUN-WH-03</language>
+	</row>
+	<row id="msg_seq_se_sw_mdun_wh_04">
+		<language name="JPN" width="256">SW-MDUN-WH-04</language>
+		<language name="JPN_KANJI" width="256">SW-MDUN-WH-04</language>
+	</row>
+	<row id="msg_seq_se_sw_mdun_wh_05">
+		<language name="JPN" width="256">SW-MDUN-WH-05</language>
+		<language name="JPN_KANJI" width="256">SW-MDUN-WH-05</language>
+	</row>
 	<row id="msg_seq_se_dmy_390">
 		<language name="JPN" width="256">DMY-390</language>
 		<language name="JPN_KANJI" width="256">DMY-390</language>
