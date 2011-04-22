@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nagihashi_toru" host="W00268" date="2011-04-20T15:32:30"/>
+	<create user="nagihashi_toru" host="W00268" date="2011-04-22T16:32:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -294,7 +294,7 @@
 		</language>
 	</columns>
 
-	<dialog left="-894" top="207" right="-189" bottom="827" maximized="no" rayout="Vertical2">
+	<dialog left="-1180" top="137" right="-475" bottom="757" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -576,6 +576,30 @@
 
 	<row id="RESORT_AUTHER_05">
 		<language name="JPN" width="256">おうじ</language>
+	</row>
+
+	<row id="RESORT_MYPHRASE_00">
+		<language name="JPN" width="256">おっす！</language>
+	</row>
+
+	<row id="RESORT_MYPHRASE_01">
+		<language name="JPN" width="256">どーもっす！</language>
+	</row>
+
+	<row id="RESORT_MYPHRASE_02">
+		<language name="JPN" width="256">へいよー！</language>
+	</row>
+
+	<row id="RESORT_MYPHRASE_03">
+		<language name="JPN" width="256">これでいいのだ！</language>
+	</row>
+
+	<row id="RESORT_MYPHRASE_04">
+		<language name="JPN" width="256">ざんす！</language>
+	</row>
+
+	<row id="RESORT_MYPHRASE_05">
+		<language name="JPN" width="256">おハロー！</language>
 	</row>
 
 	<flowchart-group-list>
