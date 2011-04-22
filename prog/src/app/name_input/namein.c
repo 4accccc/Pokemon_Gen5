@@ -33,6 +33,7 @@
 #include "msg/msg_namein.h"
 #include "wifi_unionobj_plt.cdat" //ユニオンOBJのパレット位置
 #include "wifi_unionobj.naix"
+#include "place_name.naix"
 
 //  print
 #include "print/str_tool.h"
@@ -88,7 +89,7 @@ static inline void DEBUG_NAMEIN_Print( STRCODE *x , int len )
 
 #define NAMEIN_KEY_TOUCH  //キーとタッチの操作わけ処理ON
 
-#define NAMEIN_STRINPUT_CENTERING
+//#define NAMEIN_STRINPUT_CENTERING
 //センタリングしていたが、最大文字数が１０になったので、
 //センタリングできなくなった -> 最大文字が８にへりましたので戻します
 
@@ -1109,6 +1110,14 @@ static void STRINPUT_Init( STRINPUT_WORK *p_wk, const STRBUF * cp_default_str, u
   p_wk->strlen  = strlen;
   p_wk->p_que   = p_que;
 
+  if( strlen > STRINPUT_CENTERLING_MAX )
+  {
+    p_wk->is_centering = FALSE;
+  }
+  else
+  {
+    p_wk->is_centering = TRUE;
+  }
 
   //BMPWIN作成
   p_wk->p_bmpwin  = GFL_BMPWIN_Create( BG_FRAME_STR_M, STRINPUT_BMPWIN_X, STRINPUT_BMPWIN_Y, STRINPUT_BMPWIN_W, STRINPUT_BMPWIN_H, PLT_BG_FONT_M, GFL_BMP_CHRAREA_GET_B );
@@ -1157,12 +1166,15 @@ static void STRINPUT_Init( STRINPUT_WORK *p_wk, const STRBUF * cp_default_str, u
     GFL_CLACTPOS  clpos;
     clpos.y = STRINPUT_BAR_Y;
 
-#ifdef NAMEIN_STRINPUT_CENTERING
+    if( p_wk->is_centering )
+    {
+      x = (256 / 2 - STRINPUT_BMPWIN_X*8 ) - (p_wk->strlen * STRINPUT_STR_OFFSET_X) /2 ;  //開始
+    }
+    else
+    {
+      x = 0;
+    }
 
-    x = (256 / 2 - STRINPUT_BMPWIN_X*8 ) - (p_wk->strlen * STRINPUT_STR_OFFSET_X) /2 ;  //開始
-#else
-    x = 0;
-#endif
     for( i = 0; i < OBJ_BAR_NUM; i++ )
     { 
       clpos.x = STRINPUT_BAR_START_X + x + i * STRINPUT_BAR_OFFSET_X;
@@ -1257,15 +1269,18 @@ static void STRINPUT_Main( STRINPUT_WORK *p_wk )
 
 
         GFL_STR_SetStringCodeOrderLength( p_wk->p_strbuf, code, 2 );
-#ifdef NAMEIN_STRINPUT_CENTERING
-        x = (256 / 2 - STRINPUT_BMPWIN_X*8 ) - (p_wk->strlen * STRINPUT_STR_OFFSET_X) /2 ;  //開始
-        x += i * STRINPUT_STR_OFFSET_X + STRINPUT_BAR_OFFSET_X/2;               //１文字ずつセンタリング
-        x -= PRINTSYS_GetStrWidth( p_wk->p_strbuf, p_wk->p_font, 0 )/2;
-#else
-        x = 0;
-        x += i * STRINPUT_STR_OFFSET_X;
-        x += (STRINPUT_BAR_OFFSET_X/2 - PRINTSYS_GetStrWidth( p_wk->p_strbuf, p_wk->p_font, 0 )/2);
-#endif
+        if( p_wk->is_centering )
+        {
+          x = (256 / 2 - STRINPUT_BMPWIN_X*8 ) - (p_wk->strlen * STRINPUT_STR_OFFSET_X) /2 ;  //開始
+          x += i * STRINPUT_STR_OFFSET_X + STRINPUT_BAR_OFFSET_X/2;               //１文字ずつセンタリング
+          x -= PRINTSYS_GetStrWidth( p_wk->p_strbuf, p_wk->p_font, 0 )/2;
+        }
+        else
+        {
+          x = 0;
+          x += i * STRINPUT_STR_OFFSET_X;
+          x += (STRINPUT_BAR_OFFSET_X/2 - PRINTSYS_GetStrWidth( p_wk->p_strbuf, p_wk->p_font, 0 )/2);
+        }
 
         //変換文字入力中はフォントの色を変える
         if( i >= p_wk->input_idx )
@@ -4243,6 +4258,18 @@ static void ICON_Init( ICON_WORK *p_wk, ICON_TYPE type, u32 param1, u32 param2, 
       is_comp = TRUE;
       break;
 
+    case ICON_TYPE_CITY:
+      arcID = ARCID_PLACE_NAME;
+      plt   = NARC_place_name_icon_c_NCLR;
+      chr   = NARC_place_name_icon_c_NCGR;
+      cel   = NARC_place_name_icon_c_NCER;
+      anm   = NARC_place_name_icon_c_NANR;
+      is_sex_visible = FALSE;
+      plt_src_ofs = 0;
+      pos.x  = ICON_POS_X;
+      pos.y  = ICON_POS_CITY_Y;
+      break;
+
     case ICON_TYPE_HATENA:
       /* fallthrough */
     case ICON_TYPE_BOX:
@@ -4326,6 +4353,9 @@ static void ICON_Init( ICON_WORK *p_wk, ICON_TYPE type, u32 param1, u32 param2, 
       break;
     case ICON_TYPE_BOX:
       GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk, 2 );
+      GFL_CLACT_WK_SetPlttOffs( p_wk->p_clwk, 0, CLWK_PLTTOFFS_MODE_PLTT_TOP );
+      break;
+    case ICON_TYPE_CITY:
       GFL_CLACT_WK_SetPlttOffs( p_wk->p_clwk, 0, CLWK_PLTTOFFS_MODE_PLTT_TOP );
       break;
     default:
@@ -4566,6 +4596,10 @@ static ICON_TYPE ICON_GetModoToType( NAMEIN_MODE mode, int param1 )
 { 
   switch( mode )
   { 
+  case NAMEIN_FREE_RESORT_AUTHER:
+    /* fallthrough  */
+  case NAMEIN_FREE_RESORT_PHRASE:
+    /* fallthrough  */
   case NAMEIN_FREE_WORD:
     /* fallthrough */
   case NAMEIN_GREETING_WORD:
@@ -4593,6 +4627,9 @@ static ICON_TYPE ICON_GetModoToType( NAMEIN_MODE mode, int param1 )
     { 
       return ICON_TYPE_PERSON;
     }
+
+  case NAMEIN_FREE_RESORT_CITY:
+    return ICON_TYPE_CITY;
 
   default:
     GF_ASSERT( 0 );

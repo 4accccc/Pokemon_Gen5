@@ -27,7 +27,7 @@ enum {
   MY_GOLD_MAX = 9999999,
 };
 
-#define NAMEIN_SAVEMODE_MAX (8)
+#define NAMEIN_SAVEMODE_MAX (12)
 
 ///タイトルメニューフラグ定義
 typedef enum {

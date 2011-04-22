@@ -102,7 +102,6 @@ extern void RESORT_INSTITUTION_DATA_SetBit( RESORT_INSTITUTION_DATA *p_wk, RESOR
  *    ３…リゾート用代理データ
  *          GTSなどサーバーを介するときに入れるデータ
  *        基本情報１
- *        TODO
 */
 //=============================================================================
 //-------------------------------------
@@ -599,8 +598,8 @@ extern RESORT_RECV_DATA * RESORT_PEOPLE_ALL_DATA_GetOwnerData( RESORT_PEOPLE_ALL
 //=====================================
 //実際の文字列数    EOMなし
 #if PM_LANG == LANG_JAPAN
-#define RESORT_CITY_NAME_LEN  (8)  //TODO NAMEINが対応していないため今は８　後に１０
-#define RESORT_MY_NAME_LEN    (8)  //TODO  ヾ
+#define RESORT_CITY_NAME_LEN  (10)
+#define RESORT_MY_NAME_LEN    (10)
 #else
 #define RESORT_CITY_NAME_LEN  (20)
 #define RESORT_MY_NAME_LEN    (20)

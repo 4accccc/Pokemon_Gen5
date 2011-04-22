@@ -522,9 +522,8 @@ VMCMD_RESULT EvCmdResortSetWord( VMHANDLE *p_core, void *p_wk_adrs )
     break;
   case RESORT_WORD_FREE_CITY:
     {
-      //TODO 名前入力対応街のため8文字にしているが「レゾナンスリゾート」で９文字のため
-      STRCODE city[9+EOM_SIZE];
-      STRBUF *p_str = GFL_STR_CreateBuffer( 9+EOM_SIZE, GFL_HEAP_LOWID(heapID) );
+      STRCODE city[RESORT_CITY_NAME_LEN+EOM_SIZE];
+      STRBUF *p_str = GFL_STR_CreateBuffer( RESORT_CITY_NAME_LEN+EOM_SIZE, GFL_HEAP_LOWID(heapID) );
 
       RESORT_CITY_DATA_GetData( p_city_data, RESORT_CITY_DATA_PARAM_CITY_NAME, city );
       GFL_STR_SetStringCode( p_str, city );

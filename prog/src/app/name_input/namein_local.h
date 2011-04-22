@@ -161,6 +161,7 @@ typedef enum
 //=====================================
 //文字列長
 #define STRINPUT_STR_LEN      (10)     //最大入力文字列長
+#define STRINPUT_CENTERLING_MAX (8)     //この文字数まではセンタリングする
 #define STRINPUT_CHANGE_LEN   (3)      //変換文字列長
 //BMPWINサイズ
 #define STRINPUT_BMPWIN_X     (8)
@@ -317,6 +318,7 @@ typedef enum
 #define ICON_WIDTH  (32)
 #define ICON_HEIGHT (32)
 #define ICON_POS_POKE_X  (46-32/2)
+#define ICON_POS_CITY_Y  (28)
 
 //アイコンの動作
 #define ICON_MOVE_SYNC  (8)
@@ -334,6 +336,7 @@ typedef enum
   ICON_TYPE_POKE,
   ICON_TYPE_BOX,
   ICON_TYPE_HATENA,
+  ICON_TYPE_CITY,
 } ICON_TYPE;
 
 //-------------------------------------
@@ -404,7 +407,7 @@ typedef struct
   u16               input_idx;    //確定文字列文字数（EOMのぞく）
   u16               change_idx;   //変換文字列文字数（EOMのぞく）
   u16               strlen;       //EOMを除く最大文字列長
-  u16               dummy;
+  u16               is_centering; //センタリングするかどうか
   BOOL              is_update;    //文字描画アップデート
   PRINT_UTIL        util;         //文字描画UTIL
   GFL_FONT          *p_font;      //フォント

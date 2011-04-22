@@ -3576,9 +3576,7 @@ u32 RESORT_CITY_DATA_GetData( const RESORT_CITY_DATA *cp_wk, RESORT_CITY_DATA_PA
   case RESORT_CITY_DATA_PARAM_CITY_NAME: //p_ret_adrs
     if( p_ret_adrs != NULL )
     {
-
-      //TODO –¼‘O“ü—Í‘Î‰žŠX‚Ì‚½‚ß8•¶Žš‚É‚µ‚Ä‚¢‚é‚ªuƒŒƒ]ƒiƒ“ƒXƒŠƒ][ƒgv‚Å‚X•¶Žš‚Ì‚½‚ß
-      STRTOOL_Copy( cp_wk->city_name, p_ret_adrs, 9+EOM_SIZE );
+      STRTOOL_Copy( cp_wk->city_name, p_ret_adrs, RESORT_CITY_NAME_LEN+EOM_SIZE );
     }
     return (u32)cp_wk->city_name;
   case RESORT_CITY_DATA_PARAM_AUTHER_NAME: //p_ret_adrs

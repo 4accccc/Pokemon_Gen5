@@ -40,6 +40,10 @@ typedef enum
   NAMEIN_THANKS_WORD,   // すれちがいお礼言葉 param1自分の性別
   NAMEIN_FREE_WORD,     // すれちがいフリーワードparam1自分の性別
 
+  NAMEIN_FREE_RESORT_CITY,    //リゾート名
+  NAMEIN_FREE_RESORT_AUTHER,  //リゾート呼び名  param1自分の性別
+  NAMEIN_FREE_RESORT_PHRASE,  //リゾート口癖  param1 自分の性別
+
 	NAMEIN_MAX,
 }NAMEIN_MODE;
 

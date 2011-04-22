@@ -275,10 +275,30 @@ GMEVENT* EVENT_NameInput_Resort( RESORT_NAMEIN_TYPE type, GAMESYS_WORK* gameSyst
 {
   GAMEDATA*   gdata = GAMESYSTEM_GetGameData( gameSystem );
   MISC        *misc = SaveData_GetMisc( GAMEDATA_GetSaveControlWork(gdata) );
-
+  MYSTATUS    *mystatus = GAMEDATA_GetMyStatus(gdata);
+  NAMEIN_MODE mode;
+  u32         len;
 
   GMEVENT* event;
   RESORT_NAMEIN_WORK * work;
+
+  switch( type )
+  {
+  default:
+    GF_ASSERT(0);
+  case RESORT_NAMEIN_TYPE_CITY_NAME:
+    mode = NAMEIN_FREE_RESORT_CITY;
+    len = RESORT_CITY_NAME_LEN;
+    break;
+  case RESORT_NAMEIN_TYPE_AUTHER_NAME:
+    mode = NAMEIN_FREE_RESORT_AUTHER;
+    len = RESORT_MY_NAME_LEN;
+    break;
+  case RESORT_NAMEIN_TYPE_AUTHER_PHASE:
+    mode = NAMEIN_FREE_RESORT_PHRASE;
+    len = RESORT_PHRASE_LEN;
+    break;
+  }
 
   // ƒCƒxƒ“ƒg¶¬
   event = GMEVENT_Create( 
@@ -289,8 +309,8 @@ GMEVENT* EVENT_NameInput_Resort( RESORT_NAMEIN_TYPE type, GAMESYS_WORK* gameSyst
   work->gameSystem = gameSystem;
   work->fieldmap   = GAMESYSTEM_GetFieldMapWork( gameSystem );
   work->retWork    = ret_wk;
-  work->nameInParam = NAMEIN_AllocParam(  //TODO
-        HEAPID_PROC, NAMEIN_FREE_WORD, 0, 0, 8, NULL, misc );
+  work->nameInParam = NAMEIN_AllocParam(
+        HEAPID_PROC, mode, MyStatus_GetMySex(mystatus), 0, len, NULL, misc );
   work->type = type;
 
   return event;
