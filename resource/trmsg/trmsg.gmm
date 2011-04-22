@@ -15421,42 +15421,42 @@ può accadere ancora di tutto!</language>
 ポケモンに　謝らないとな</language>
 	</row>
 
-	<row id="TRID_BREEDERM_04_TRMSG_FIGHT_START">
+	<row id="TRID_TANPAN_20_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">せんとうまえ
 テストメッセージ</language>
 		<language name="JPN_KANJI" width="216">戦闘前
 仮メッセージ</language>
 	</row>
 
-	<row id="TRID_BREEDERM_04_TRMSG_FIGHT_LOSE">
+	<row id="TRID_TANPAN_20_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">せんとうまけ
 テストメッセージ</language>
 		<language name="JPN_KANJI" width="216">戦闘負け
 テストメッセージ</language>
 	</row>
 
-	<row id="TRID_BREEDERM_04_TRMSG_FIGHT_AFTER">
+	<row id="TRID_TANPAN_20_TRMSG_FIGHT_AFTER">
 		<language name="JPN" width="216">せんとうご
 テストメッセージ</language>
 		<language name="JPN_KANJI" width="216">戦闘後
 テストメッセージ</language>
 	</row>
 
-	<row id="TRID_BREEDERW_04_TRMSG_FIGHT_START">
+	<row id="TRID_MINI_16_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">せんとうまえ
 テストメッセージ</language>
 		<language name="JPN_KANJI" width="216">戦闘前
 仮メッセージ</language>
 	</row>
 
-	<row id="TRID_BREEDERW_04_TRMSG_FIGHT_LOSE">
+	<row id="TRID_MINI_16_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">せんとうまけ
 テストメッセージ</language>
 		<language name="JPN_KANJI" width="216">戦闘負け
 テストメッセージ</language>
 	</row>
 
-	<row id="TRID_BREEDERW_04_TRMSG_FIGHT_AFTER">
+	<row id="TRID_MINI_16_TRMSG_FIGHT_AFTER">
 		<language name="JPN" width="216">せんとうご
 テストメッセージ</language>
 		<language name="JPN_KANJI" width="216">戦闘後
