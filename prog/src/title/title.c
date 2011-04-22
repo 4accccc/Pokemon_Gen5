@@ -305,7 +305,7 @@ GFL_PROC_RESULT TitleProcInit( GFL_PROC * proc, int * seq, void * pwk, void * my
 #endif
 
   SND_STRM_Init( HEAPID_TITLE_DEMO );
-  SND_STRM_Load( STRM_TITLE );
+  //SND_STRM_Load( STRM_TITLE );
 
   return GFL_PROC_RES_FINISH;
 }
