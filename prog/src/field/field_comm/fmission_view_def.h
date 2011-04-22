@@ -186,9 +186,9 @@ typedef enum{
 #define FVIEW_SE_CANCEL (SEQ_SE_CANCEL1)
 #define FVIEW_SE_UPDOWN (SEQ_SE_SELECT4)
 #define FVIEW_SE_NORMAL_LOG (SEQ_SE_SYS_11)
-#define FVIEW_SE_NEW_PLAYER (SEQ_SE_PC_LOGIN)
-#define FVIEW_SE_FREEWORD   (SEQ_SE_FLD_108)
-#define FVIEW_SE_SCOREUP    (SEQ_SE_FLD_07)
+#define FVIEW_SE_NEW_PLAYER (SEQ_SE_SW_FES_01)
+#define FVIEW_SE_FREEWORD   (SEQ_SE_SW_FES_02)
+#define FVIEW_SE_SCOREUP    (SEQ_SE_SW_FES_03)
 #define FVIEW_SE_ICON   (SEQ_SE_SELECT2)
 
 ///////////////////////////////////////////////////

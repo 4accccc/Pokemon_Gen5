@@ -87,7 +87,7 @@ typedef enum{
 #define SCORE_UP_VIEW_TIME  (60)
 #define TIME_BONUS_VIEW_TIME  (60)
 
-#define FMINFO_SE_SCOREUP (SEQ_SE_PC_ON)
+#define FMINFO_SE_SCOREUP (SEQ_SE_SW_FES_04)
 
 #include "field_fmission_info_def.h"
 

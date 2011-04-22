@@ -63,7 +63,7 @@
 #define CWIN_STR_OY    (16)
 
 #define EVFMISSION_SE_FADE_EFF  (SEQ_SE_W295_01)
-#define EVFMISSION_SE_END_EFF   (SEQ_SE_PC_LOGOFF)
+#define EVFMISSION_SE_END_EFF   (SEQ_SE_SW_FES_05)
 
 typedef struct _POWER_FLD_EFF{
   u8  ct;
