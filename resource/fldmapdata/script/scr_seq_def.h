@@ -13525,5 +13525,50 @@
     .short  \ret_wk
     .endm
 
+//--------------------------------------------------------------
+/**
+ * @def _INFINITY_DUNGEON_SET_DUNGEON_STATUS
+ * @brief 無限ダンジョンステータスを設定する
+ * @param status   ダンジョンステータス
+ */
+//--------------------------------------------------------------
+#define _INFINITY_DUNGEON_SET_DUNGEON_STATUS( status ) \
+    _ASM_INFINITY_DUNGEON_SET_DUNGEON_STATUS status
+
+    .macro  _ASM_INFINITY_DUNGEON_SET_DUNGEON_STATUS status
+    .short  EV_SEQ_INFINITY_DUNGEON_SET_DUNGEON_STATUS
+    .short  \status
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _INFINITY_DUNGEON_SET_MAP_STATUS
+ * @brief 無限ダンジョンMAPステータスを設定する
+ * @param status   MPAステータス
+ */
+//--------------------------------------------------------------
+#define _INFINITY_DUNGEON_SET_MAP_STATUS( status ) \
+    _ASM_INFINITY_DUNGEON_SET_MAP_STATUS status
+
+    .macro  _ASM_INFINITY_DUNGEON_SET_MAP_STATUS status
+    .short  EV_SEQ_INFINITY_DUNGEON_SET_MAP_STATUS
+    .short  \status
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _INFINITY_DUNGEON_GET_MAP_STATUS
+ * @brief 無限ダンジョンMAPステータスを取得する
+ * @param ret_wk   マップステータス格納先
+ */
+//--------------------------------------------------------------
+#define _INFINITY_DUNGEON_GET_MAP_STATUS( ret_wk ) \
+    _ASM_INFINITY_DUNGEON_GET_MAP_STATUS ret_wk
+
+    .macro  _ASM_INFINITY_DUNGEON_GET_MAP_STATUS ret_wk
+    .short  EV_SEQ_INFINITY_DUNGEON_GET_MAP_STATUS
+    .short  \ret_wk
+    .endm
+
 //======================================================================
 //======================================================================

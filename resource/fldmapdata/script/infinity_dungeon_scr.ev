@@ -99,6 +99,10 @@ EVENT_START  ev_infinity_dungeon_elevator
   DEFINE_LOCAL LWK_NOW_FLOOR
   DEFINE_LOCAL LWK_NOW_AREA
   DEFINE_LOCAL LWK_DRAW_FLOOR_NO
+  DEFINE_LOCAL LWK_ROM_VERSION
+ 
+  // ROMバージョンでの判断
+	_GET_ROM_VERSION( LWK_ROM_VERSION )
 
   // エレベータを開ける
   _INFINITY_DUNGEON_ACTION_ELEVATOR( 0 ,TRUE)
@@ -111,8 +115,12 @@ EVENT_START  ev_infinity_dungeon_elevator
   _INFINITY_DUNGEON_ACTION_ELEVATOR( 0 ,FALSE)
 
   // 案内メッセージ
-  _SYSWIN_MSG( msg_elevator_01, POS_DOWN )
- 
+	IF $LWK_ROM_VERSION == VERSION_B2 THEN
+    _SYSWIN_MSG( msg_elevator_b_001, POS_DOWN )
+  ELSE 
+    _SYSWIN_MSG( msg_elevator_w_001, POS_DOWN )
+  ENDIF
+
   // フロアIDを取得する
   _INFINITY_DUNGEON_GET_NOW_FLOOR_NO( LWK_NOW_FLOOR )
 
@@ -126,28 +134,36 @@ EVENT_START  ev_infinity_dungeon_elevator
   $LWK_END_FLOOR += INFINITYDUNGEON_FLOOR_MAX
   $LWK_INDEX = 0
 
-  _DEBUG_PRINT_WK(LWK_FLOOR_NUM)
-  _DEBUG_PRINT_WK(LWK_END_FLOOR)
- 
   // リスト作成
 	_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, LWK_SELECT_FLOOR )
   WHILE $LWK_FLOOR_NUM != $LWK_END_FLOOR
-    IF $LWK_NOW_FLOOR != $LWK_FLOOR_NUM THEN
+    IF $LWK_NOW_FLOOR != $LWK_INDEX THEN
       // メニューに回数表示を追加
       $LWK_DRAW_FLOOR_NO = $LWK_FLOOR_NUM
       $LWK_DRAW_FLOOR_NO += 1
+      
+      // 階数
 	    _NUMBER( 0 ,  LWK_DRAW_FLOOR_NO , 2 )
-      _BMPMENU_MAKE_LIST( msg_elevator_02, LWK_FLOOR_NUM )
+      IF $LWK_ROM_VERSION == VERSION_B2 THEN
+        _BMPMENU_MAKE_LIST( msg_elevator_b_002, LWK_FLOOR_NUM )
+      ELSE 
+        _BMPMENU_MAKE_LIST( msg_elevator_b_002, LWK_FLOOR_NUM )
+      ENDIF
     ENDIF
     // カウンタをインクリメント
     $LWK_FLOOR_NUM += 1
     $LWK_INDEX += 1
   ENDWHILE
-  // かえる
-  _BMPMENU_MAKE_LIST( msg_elevator_03, 0xf0 )
 
-  // やめる
-  _BMPMENU_MAKE_LIST( msg_elevator_04, 0xff )
+  
+  // かえる・やめる
+	IF $LWK_ROM_VERSION == VERSION_B2 THEN
+    _BMPMENU_MAKE_LIST( msg_elevator_b_003, 0xf0 )
+    _BMPMENU_MAKE_LIST( msg_elevator_b_004, 0xff )
+  ELSE 
+    _BMPMENU_MAKE_LIST( msg_elevator_w_003, 0xf0 )
+    _BMPMENU_MAKE_LIST( msg_elevator_w_004, 0xff )
+  ENDIF
 
   _BMPMENU_START()
 
@@ -202,6 +218,7 @@ EVENT_START  ev_infinity_dungeon_information
     $SCWK_ANSWER = 0
     _CALL dungeon_information
   ENDWHILE
+       
 }
 EVENT_END
 
@@ -216,13 +233,14 @@ dungeon_information:
   // 初期化
   $SCWK_ANSWER = 0
   
-  // あいさつ
   // ROMバージョンでの判断
 	_GET_ROM_VERSION( LWK_ROM_VERSION )
+
+  // あいさつ
 	IF $LWK_ROM_VERSION == VERSION_B2 THEN
-    _BALLOONWIN_OBJMSG_POS( msg_info_greet_b , SCWK_TARGET_OBJID, POS_DL )
+    _BALLOONWIN_OBJMSG_POS( msg_info_greet_b_01 , SCWK_TARGET_OBJID, POS_DL )
   ELSE 
-    _BALLOONWIN_OBJMSG_POS( msg_info_greet_w , SCWK_TARGET_OBJID, POS_DL )
+    _BALLOONWIN_OBJMSG_POS( msg_info_greet_w_01 , SCWK_TARGET_OBJID, POS_DL )
   ENDIF
 
 	_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, LWK_LIST_RET )
@@ -234,23 +252,41 @@ dungeon_information:
   IF $LWK_LIST_RET != EV_WIN_B_CANCEL THEN
     SWITCH $LWK_LIST_RET
      CASE 0 THEN
+
+        // トレーナー名をセット
+        _PLAYER_NAME( 0 )
+
         // せつめい
-       _BALLOONWIN_OBJMSG_POS( msg_info_help , SCWK_TARGET_OBJID, POS_DL )
-       _BALLOONWIN_CLOSE()
+        IF $LWK_ROM_VERSION == VERSION_B2 THEN
+          _BALLOONWIN_OBJMSG_POS( msg_info_help_b_01 , SCWK_TARGET_OBJID, POS_DL )
+          _BALLOONWIN_OBJMSG_POS( msg_info_help_b_02 , SCWK_TARGET_OBJID, POS_DL )
+          _BALLOONWIN_OBJMSG_POS( msg_info_help_b_03 , SCWK_TARGET_OBJID, POS_DL )
+        ELSE 
+          _BALLOONWIN_OBJMSG_POS( msg_info_help_w_01 , SCWK_TARGET_OBJID, POS_DL )
+          _BALLOONWIN_OBJMSG_POS( msg_info_help_w_02 , SCWK_TARGET_OBJID, POS_DL )
+          _BALLOONWIN_OBJMSG_POS( msg_info_help_w_03 , SCWK_TARGET_OBJID, POS_DL )
+        ENDIF
+
         $SCWK_ANSWER = 1
      CASE 1 THEN
-       // どのえりあにちょうせんしますか？
-       _BALLOONWIN_OBJMSG_POS( msg_info_000 , SCWK_TARGET_OBJID, POS_DL )
+        // どのえりあにちょうせんしますか？
+        IF $LWK_ROM_VERSION == VERSION_B2 THEN
+          _BALLOONWIN_OBJMSG_POS( msg_info_b_001 , SCWK_TARGET_OBJID, POS_DL )
+        ELSE 
+          _BALLOONWIN_OBJMSG_POS( msg_info_w_001 , SCWK_TARGET_OBJID, POS_DL )
+        ENDIF
        _CALL select_area
         $SCWK_ANSWER = 0
      CASE 2 THEN
         // きゃんせる
-        _BALLOONWIN_OBJMSG_POS( msg_info_cancel , SCWK_TARGET_OBJID, POS_DL )
+        _BALLOONWIN_OBJMSG_POS( msg_info_b_cancel , SCWK_TARGET_OBJID, POS_DL )
+        _LAST_KEYWAIT()
         _BALLOONWIN_CLOSE()
         $SCWK_ANSWER = 0
     ENDSWITCH
   ELSE
-    _BALLOONWIN_OBJMSG_POS( msg_info_cancel , SCWK_TARGET_OBJID, POS_DL )
+    _BALLOONWIN_OBJMSG_POS( msg_info_b_cancel , SCWK_TARGET_OBJID, POS_DL )
+    _LAST_KEYWAIT()
     _BALLOONWIN_CLOSE()
     $SCWK_ANSWER = 0
   ENDIF
@@ -267,13 +303,22 @@ select_area:
   DEFINE_LOCAL LWK_LIST_COUNT
   DEFINE_LOCAL LWK_MENU_NUM
   DEFINE_LOCAL LWK_START_ROOM
+  DEFINE_LOCAL  LWK_ROM_VERSION
   
+  // ROMバージョン取得
+  _GET_ROM_VERSION( LWK_ROM_VERSION )
+ 
   // ダンジョンの状態を取得
   _INFINITY_DUNGEON_GET_DUNGEON_STATUS( LWK_MENU_NUM )
+
+  // 最大値制限
+  IF $LWK_MENU_NUM > INFINITY_DUNGEON_AREA_ID_10 THEN
+    $LWK_MENU_NUM = INFINITY_DUNGEON_AREA_ID_10
+  ENDIF
  
   // エリア選択メニュー
   _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, LWK_AREA_MENU )
-      
+   
   // メニューを呼び出し
   $LWK_LIST_COUNT = 0
   WHILE $LWK_LIST_COUNT <= $LWK_MENU_NUM
@@ -283,26 +328,46 @@ select_area:
     $LWK_LIST_NUM =  $LWK_LIST_COUNT
     $LWK_LIST_NUM += 1
 	  _NUMBER( 0 , LWK_LIST_NUM , 2 )
-    _BMPMENU_MAKE_LIST( msg_info_area, LWK_START_ROOM )
+	  
+    IF $LWK_ROM_VERSION == VERSION_B2 THEN
+      _BMPMENU_MAKE_LIST( msg_info_b_area, LWK_START_ROOM )
+    ELSE 
+      _BMPMENU_MAKE_LIST( msg_info_w_area, LWK_START_ROOM )
+    ENDIF
+
     $LWK_LIST_COUNT += 1
   ENDWHILE
 
   // やめる
-  _BMPMENU_MAKE_LIST( msg_elevator_04, 0xff )
+  IF $LWK_ROM_VERSION == VERSION_B2 THEN
+    _BMPMENU_MAKE_LIST( msg_elevator_b_004, 0xff )
+  ELSE 
+    _BMPMENU_MAKE_LIST( msg_elevator_b_004, 0xff )
+  ENDIF
 
   // メニュー開始
   _BMPMENU_START()
 
   // キャンセル判定
   IF ($LWK_AREA_MENU != EV_WIN_B_CANCEL)&&($LWK_AREA_MENU != 0xff) THEN
-
+    
     // 確認
-    _BALLOONWIN_OBJMSG_POS( msg_info_002 , SCWK_TARGET_OBJID, POS_DL )
+    IF $LWK_ROM_VERSION == VERSION_B2 THEN
+      _BALLOONWIN_OBJMSG_POS( msg_info_single_b_01 , SCWK_TARGET_OBJID, POS_DL )
+    ELSE 
+      _BALLOONWIN_OBJMSG_POS( msg_info_single_w_01 , SCWK_TARGET_OBJID, POS_DL )
+    ENDIF
+
     _YES_NO_WIN( SCWK_ANSWER )
 
     IF $SCWK_ANSWER == SCR_YES THEN
+       
       // じゅんびはよろしいですね
-      _BALLOONWIN_OBJMSG_POS( msg_info_001 , SCWK_TARGET_OBJID, POS_DL )
+      IF $LWK_ROM_VERSION == VERSION_B2 THEN
+        _BALLOONWIN_OBJMSG_POS( msg_info_b_004 , SCWK_TARGET_OBJID, POS_DL )
+      ELSE 
+        _BALLOONWIN_OBJMSG_POS( msg_info_w_004 , SCWK_TARGET_OBJID, POS_DL )
+      ENDIF
       _BALLOONWIN_CLOSE()
    
       // みちをあける
@@ -341,13 +406,21 @@ select_area:
       _RESERVE_SCRIPT( SCRID_INFINITY_DUNGEON_OUT_ELEVATOR )
     ELSE
       // やめる
-      _BALLOONWIN_OBJMSG_POS( msg_info_cancel , SCWK_TARGET_OBJID, POS_DL )
+      _BALLOONWIN_OBJMSG_POS( msg_info_b_cancel , SCWK_TARGET_OBJID, POS_DL )
+      _LAST_KEYWAIT()
       _BALLOONWIN_CLOSE()
     ENDIF
   ELSE
-      // やめる
-    _BALLOONWIN_OBJMSG_POS( msg_info_cancel , SCWK_TARGET_OBJID, POS_DL )
-    _BALLOONWIN_CLOSE()
+    // やめる
+    IF $LWK_ROM_VERSION == VERSION_B2 THEN
+      _BALLOONWIN_OBJMSG_POS( msg_info_b_cancel , SCWK_TARGET_OBJID, POS_DL )
+      _LAST_KEYWAIT()
+      _BALLOONWIN_CLOSE()
+    ELSE 
+      _BALLOONWIN_OBJMSG_POS( msg_info_w_cancel , SCWK_TARGET_OBJID, POS_DL )
+      _LAST_KEYWAIT()
+      _BALLOONWIN_CLOSE()
+    ENDIF
   ENDIF
 }
 _RET
@@ -357,7 +430,10 @@ _RET
 //-----------------------------------------------------------------------------
 EVENT_START  ev_infinity_dungeon_comeback
 {
-   
+  DEFINE_LOCAL  LWK_MAP_STATUS
+  DEFINE_LOCAL  LWK_DUNGEON_STATUS
+  DEFINE_LOCAL  LWK_NOW_AREA
+
   // エレベータを開ける
   _INFINITY_DUNGEON_ACTION_ELEVATOR( 0 ,TRUE)
 
@@ -379,6 +455,55 @@ EVENT_START  ev_infinity_dungeon_comeback
   // みちをふさぐ
   _OBJ_ANIME( OBJ_INFORMATION, anm_move_default_l )
   _OBJ_ANIME_WAIT()
+
+  // マップステータスを取得
+  _INFINITY_DUNGEON_GET_MAP_STATUS( LWK_MAP_STATUS )
+  
+  // ダンジョンの状態を取得
+  _INFINITY_DUNGEON_GET_DUNGEON_STATUS( LWK_DUNGEON_STATUS )
+
+  // エリアIDを取得する
+  _INFINITY_DUNGEON_GET_NOW_AREA_NO(LWK_NOW_AREA)
+  
+  // 会話開始音
+  _TALK_START_SE_PLAY()
+  
+  // ボス勝利判定
+  IF $LWK_MAP_STATUS == INFINITY_DUNGEON_MAP_STATUS_BOSS_WIN THEN
+    
+    // 初クリア判定
+    IF $LWK_NOW_AREA == $LWK_DUNGEON_STATUS THEN
+    
+      // ランクアップ処理
+      $LWK_DUNGEON_STATUS+=1
+      _INFINITY_DUNGEON_SET_DUNGEON_STATUS( LWK_DUNGEON_STATUS )
+
+      IF $LWK_NOW_AREA == INFINITY_DUNGEON_AREA_ID_5 THEN
+        // エリア５クリア
+        _CALL area5_item_get
+      ELSIF $LWK_NOW_AREA == INFINITY_DUNGEON_AREA_ID_10 THEN
+        // エリア１０クリア
+        _CALL item_get
+        _CALL all_area_clear
+      ELSIF $LWK_NOW_AREA == INFINITY_DUNGEON_AREA_ID_1 THEN
+        // 初クリア
+        _CALL item_get
+        _CALL area_first_clear
+      ENDIF
+    ELSE
+      // ２回目のクリア
+      _CALL item_get
+      _BALLOONWIN_OBJMSG_POS( msg_info_b_cancel , OBJ_INFORMATION, POS_DL )
+      _LAST_KEYWAIT()
+      _BALLOONWIN_CLOSE()
+    ENDIF
+  ELSE
+    // エレベータからの帰還
+    _BALLOONWIN_OBJMSG_POS( msg_info_b_cancel , OBJ_INFORMATION, POS_DL )
+    _LAST_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+  ENDIF
+
 }
 EVENT_END
 
@@ -455,6 +580,7 @@ EVENT_START  ev_infinity_dungeon_talk_battle_trainer
       _INFINITY_DUNGEON_GET_BOSS_FLOOR( LWK_BOSS_FLOOR )
       _NUMBER( 0 , LWK_BOSS_FLOOR , 3 )
       _BALLOONWIN_OBJMSG_POS( LWK_HINT_MSG_ID , SCWK_TARGET_OBJID, POS_DOWN )
+      _LAST_KEYWAIT()
       _BALLOONWIN_CLOSE()
     ELSE
       // 回復メッセージ呼び出し
@@ -523,8 +649,17 @@ EVENT_START  ev_infinity_dungeon_battle_boss_trainer
   DEFINE_LOCAL	LWK_HERO_X
   DEFINE_LOCAL	LWK_HERO_Z
   DEFINE_LOCAL	LWK_TR_START_MSG_ID
+  DEFINE_LOCAL	LWK_TR_END_MSG_ID
   DEFINE_LOCAL	LWK_BOSS_TRNO
-    
+  DEFINE_LOCAL  LWK_DUNGEON_STATUS
+  DEFINE_LOCAL  LWK_NOW_AREA
+
+  // ダンジョンの状態を取得
+  _INFINITY_DUNGEON_GET_DUNGEON_STATUS( LWK_DUNGEON_STATUS )
+
+  // エリアIDを取得する
+  _INFINITY_DUNGEON_GET_NOW_AREA_NO(LWK_NOW_AREA)
+ 
   // ROMバージョン取得
   _GET_ROM_VERSION( LWK_ROM_VERSION )
 
@@ -544,7 +679,27 @@ EVENT_START  ev_infinity_dungeon_battle_boss_trainer
   _OBJ_ANIME_WAIT()
 
   // 戦闘前メッセージID取得
-  $LWK_TR_START_MSG_ID = msg_b_boss_start_00
+	IF $LWK_ROM_VERSION == VERSION_B2 THEN
+    IF $LWK_NOW_AREA == $LWK_DUNGEON_STATUS THEN
+      $LWK_TR_START_MSG_ID  = msg_b_boss_first_start_00
+      $LWK_TR_END_MSG_ID    = msg_b_boss_first_end_00
+    ELSE
+      $LWK_TR_START_MSG_ID  = msg_b_boss_start_00
+      $LWK_TR_END_MSG_ID    = msg_b_boss_end_00
+    ENDIF
+  ELSE
+    IF $LWK_NOW_AREA == $LWK_DUNGEON_STATUS THEN
+      $LWK_TR_START_MSG_ID  = msg_w_boss_first_start_00
+      $LWK_TR_END_MSG_ID    = msg_w_boss_first_end_00
+    ELSE
+      $LWK_TR_START_MSG_ID  = msg_w_boss_start_00
+      $LWK_TR_END_MSG_ID    = msg_w_boss_end_00
+    ENDIF
+  ENDIF
+
+  // エリア分ずらす
+  $LWK_TR_START_MSG_ID  += $LWK_NOW_AREA
+  $LWK_TR_END_MSG_ID    += $LWK_NOW_AREA
 
   // メッセージ開始
   _BALLOONWIN_OBJMSG_POS( LWK_TR_START_MSG_ID , D31R0601_WKOBJCODE00, POS_DOWN )
@@ -556,16 +711,18 @@ EVENT_START  ev_infinity_dungeon_battle_boss_trainer
   //敗戦チェック
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
-			_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+	  _TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
 	ELSE
-			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+	  _TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 	ENDIF
 
   // 戦闘終了後メッセージ
-  $LWK_TR_START_MSG_ID = msg_b_boss_end_00
-  _BALLOONWIN_OBJMSG_POS( LWK_TR_START_MSG_ID , D31R0601_WKOBJCODE00, POS_DOWN )
+  _BALLOONWIN_OBJMSG_POS( LWK_TR_END_MSG_ID , D31R0601_WKOBJCODE00, POS_DOWN )
 	_BALLOONWIN_CLOSE()
 
+  // 勝利フラグをセット
+  _INFINITY_DUNGEON_SET_MAP_STATUS( INFINITY_DUNGEON_MAP_STATUS_BOSS_WIN )
+  
   // 出口まで歩く
 	IF $LWK_ROM_VERSION == VERSION_B2 THEN
     _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 6, 13, FORCE_TYPE_NOT, 8, DIR_UD)
@@ -615,13 +772,14 @@ recover_trainer:
   
     // メッセージ
     _BALLOONWIN_OBJMSG_POS( LWK_START_MSG_ID , SCWK_TARGET_OBJID, POS_DOWN )
-    _BALLOONWIN_CLOSE()
 
     // YES_NO
     _YES_NO_WIN( SCWK_ANSWER )
 
     // 回復選択後
     IF $SCWK_ANSWER == SCR_YES THEN
+      
+      _BALLOONWIN_CLOSE()
       // フェード
       _BLACK_OUT()
       _DISP_FADE_END_CHECK()
@@ -654,6 +812,95 @@ recover_trainer:
     _LAST_KEYWAIT()
     _BALLOONWIN_CLOSE()
   ENDIF
+}
+_RET
+
+//--------------------------------------------------------------------
+// エリア５初回クリア専用アイテム入手
+//--------------------------------------------------------------------
+area5_item_get:
+{
+}
+_RET
+
+//--------------------------------------------------------------------
+// アイテム入手
+//--------------------------------------------------------------------
+item_get:
+{
+  DEFINE_LOCAL  LWK_ROM_VERSION
+  DEFINE_LOCAL  LWK_DUNGEON_STATUS
+  DEFINE_LOCAL  LWK_ITEM_ID
+ 
+  // ROMバージョンでの判断
+	_GET_ROM_VERSION( LWK_ROM_VERSION )
+
+  _INFINITY_DUNGEON_GET_DUNGEON_STATUS( LWK_DUNGEON_STATUS )
+  
+  // データ登録
+  _PLAYER_NAME( 0 )
+  _NUMBER( 1 ,  LWK_DUNGEON_STATUS , 2 )
+
+  // クリアメッセージ
+	IF $LWK_ROM_VERSION == VERSION_B2 THEN
+    _BALLOONWIN_OBJMSG_POS( msg_info_clear_b_01 , OBJ_INFORMATION, POS_DOWN )
+  ELSE 
+    _BALLOONWIN_OBJMSG_POS( msg_info_clear_w_01 , OBJ_INFORMATION, POS_DOWN )
+  ENDIF
+
+  
+  // リスト作成
+	_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 0, LWK_ITEM_ID )
+
+  _ITEM_NAME( 0, ITEM_AOZORAPUREETO )
+  _BMPMENU_MAKE_LIST( msg_event_item_name, ITEM_AOZORAPUREETO )
+  
+  _ITEM_NAME( 0, ITEM_HINOTAMAPUREETO )
+  _BMPMENU_MAKE_LIST( msg_event_item_name, ITEM_HINOTAMAPUREETO )
+  
+  _ITEM_NAME( 0, ITEM_SIZUKUPUREETO )
+  _BMPMENU_MAKE_LIST( msg_event_item_name, ITEM_SIZUKUPUREETO )
+  
+  _ITEM_NAME( 0, ITEM_DAITINOPUREETO )
+  _BMPMENU_MAKE_LIST( msg_event_item_name, ITEM_DAITINOPUREETO )
+  
+  _ITEM_NAME( 0, ITEM_KOUTETUPUREETO )
+  _BMPMENU_MAKE_LIST( msg_event_item_name, ITEM_KOUTETUPUREETO )
+
+  _BMPMENU_START()
+
+  // アイテム入手メッセージ
+	_BALLOONWIN_CLOSE()
+  _ITEM_EVENT_KEYWAIT( LWK_ITEM_ID , 1  )
+}
+_RET
+
+//--------------------------------------------------------------------
+// 全エリアクリア
+//--------------------------------------------------------------------
+all_area_clear:
+{
+  // 未実装
+  _LAST_KEYWAIT()
+  _BALLOONWIN_CLOSE()
+}
+_RET
+
+//--------------------------------------------------------------------
+// エリア初回クリア
+//--------------------------------------------------------------------
+area_first_clear:
+{
+  DEFINE_LOCAL  LWK_DUNGEON_STATUS
+  _INFINITY_DUNGEON_GET_DUNGEON_STATUS( LWK_DUNGEON_STATUS )
+  $LWK_DUNGEON_STATUS += 1
+
+  // クリアメッセージ
+  _NUMBER( 0 ,  LWK_DUNGEON_STATUS , 2 )
+  _BALLOONWIN_OBJMSG_POS( msg_info_clear_b_02 , OBJ_INFORMATION, POS_DOWN )
+
+  _LAST_KEYWAIT()
+  _BALLOONWIN_CLOSE()
 }
 _RET
 

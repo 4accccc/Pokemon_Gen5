@@ -177,6 +177,31 @@ VMCMD_RESULT EvCmdInfinityDungeonGetStatus( VMHANDLE *p_core, void *p_wk_adrs )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  ダンジョンのステータス設定
+ *
+ *	@param	*p_core
+ *	@param	*p_wk_adrs 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdInfinityDungeonSetStatus( VMHANDLE *p_core, void *p_wk_adrs )
+{
+  INFINITYDUNGEON_SAVE  *p_save;
+  SCRCMD_WORK *p_wk = p_wk_adrs;
+  GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
+  GAMEDATA *p_gamedata = GAMESYSTEM_GetGameData(p_gamesys);
+  SAVE_CONTROL_WORK *p_save_data = GAMEDATA_GetSaveControlWork(p_gamedata);
+  u8 status  = SCRCMD_GetVMWorkValue( p_core, p_wk );
+
+  p_save = SaveData_GetINFINITYDUNGEON( p_save_data );
+  INFINITYDUNGEON_SAVE_SetDungeonStatus( p_save ,status );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  無限ダンジョン生成用シードをランダム初期化
  *
  *	@param	*p_core
@@ -653,6 +678,56 @@ VMCMD_RESULT EvCmdInfinityDungeonGetTrainerType( VMHANDLE *p_core, void *p_wk_ad
   tr_id = INFINITY_DUNGEON_SAVE_GetTrNo_ByObjId( tr_id );
 
   *p_ret_wk = FBI_TOOL_GetTrtype(ARCID_INFINITY_DUGENON_TR , tr_id ,heapID); 
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  MAPステータスの取得
+ *
+ *	@param	*p_core
+ *	@param	*p_wk_adrs 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdInfinityDungeonGetMapStatus( VMHANDLE *p_core, void *p_wk_adrs )
+{
+  INFINITYDUNGEON_SAVE  *p_save;
+  SCRCMD_WORK *p_wk = p_wk_adrs;
+  GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
+  GAMEDATA *p_gamedata = GAMESYSTEM_GetGameData(p_gamesys);
+  SAVE_CONTROL_WORK *p_save_data = GAMEDATA_GetSaveControlWork(p_gamedata);
+  u16 *p_ret_wk	= SCRCMD_GetVMWork( p_core, p_wk );
+  
+  p_save = SaveData_GetINFINITYDUNGEON( p_save_data );
+  *p_ret_wk = INFINITYDUNGEON_SAVE_GetMapStatus( p_save );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  MAPステータスの設定
+ *
+ *	@param	*p_core
+ *	@param	*p_wk_adrs 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdInfinityDungeonSetMapStatus( VMHANDLE *p_core, void *p_wk_adrs )
+{
+  INFINITYDUNGEON_SAVE  *p_save;
+  SCRCMD_WORK *p_wk = p_wk_adrs;
+  GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
+  GAMEDATA *p_gamedata = GAMESYSTEM_GetGameData(p_gamesys);
+  SAVE_CONTROL_WORK *p_save_data = GAMEDATA_GetSaveControlWork(p_gamedata);
+  u8 status  = SCRCMD_GetVMWorkValue( p_core, p_wk );
+
+  p_save = SaveData_GetINFINITYDUNGEON( p_save_data );
+  INFINITYDUNGEON_SAVE_SetMapStatus( p_save ,status );
 
   return VMCMD_RESULT_CONTINUE;
 }

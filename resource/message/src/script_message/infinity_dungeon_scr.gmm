@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakamura_akira" host="W00280" date="2011-04-22T12:05:00"/>
+	<create user="onoue_masayuki" host="W00272" date="2011-04-22T20:31:33"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -373,10 +373,10 @@
 		<language name="JPN_KANJI" width="256">せんとう　かいし　ブラック▼</language>
 	</row>
 
-	<row id="msg_b_boss_start_05" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+	<row id="msg_b_boss_start_05" text-color="#ffffff,,,#ffffff,,#ffffff,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">おまえの　ちからは　しっている
 そのちからが　おとろえていないか
-たしかめてやろう！</language>
+たしかめてやろう！▼</language>
 		<language name="JPN_KANJI" width="256">おまえの　力は　知っている
 その力が　衰えていないか
 確かめてやろう！▼</language>
@@ -1183,22 +1183,6 @@
 がんばってね！</language>
 	</row>
 
-	<row id="msg_info_greet_w" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
-		<comment>旧メッセージ</comment>
-		<language name="JPN" width="256">『しろのどうくつ』に　ようこそ！
-ごようけんを　おつたえください▼</language>
-		<language name="JPN_KANJI" width="256">『白のどうくつ』に　ようこそ！
-ごようけんを　おつたえください▼</language>
-	</row>
-
-	<row id="msg_info_greet_b" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
-		<comment>旧メッセージ</comment>
-		<language name="JPN" width="256">『くろのまてんろう』に　ようこそ！
-ごようけんを　おつたえください▼</language>
-		<language name="JPN_KANJI" width="256">『黒の摩天楼』に　ようこそ！
-ごようけんを　おつたえください▼</language>
-	</row>
-
 	<row id="msg_info_menu_01" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
 		<comment>旧メッセージ</comment>
 		<language name="JPN" width="256">せつめい</language>
@@ -1215,50 +1199,6 @@
 		<comment>旧メッセージ</comment>
 		<language name="JPN" width="256">やめる</language>
 		<language name="JPN_KANJI" width="256">やめる</language>
-	</row>
-
-	<row id="msg_info_000" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
-		<comment>旧メッセージ</comment>
-		<language name="JPN" width="256">どの エリアに？</language>
-		<language name="JPN_KANJI" width="256">どの エリアに？</language>
-	</row>
-
-	<row id="msg_info_001" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
-		<comment>旧メッセージ</comment>
-		<language name="JPN" width="256">じゅんびは　よろしいですか？
-それでは　がんばってくださいね！▼</language>
-		<language name="JPN_KANJI" width="256">じゅんびは　よろしいですか？
-それでは　がんばってくださいね！▼</language>
-	</row>
-
-	<row id="msg_info_002" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
-		<comment>旧メッセージ</comment>
-		<language name="JPN" width="256">ちょうせん　なさいますか？</language>
-		<language name="JPN_KANJI" width="256">ちょうせん　なさいますか？</language>
-	</row>
-
-	<row id="msg_info_cancel" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
-		<comment>旧メッセージ</comment>
-		<language name="JPN" width="256">それでは　またの　ごりようを
-おまちして　おります▼</language>
-		<language name="JPN_KANJI" width="256">それでは　またの　ごりようを
-おまちして　おります▼</language>
-	</row>
-
-	<row id="msg_info_area" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
-		<comment>旧メッセージ</comment>
-		<language name="JPN" width="256">エリア[2:01:２桁:0]</language>
-		<language name="JPN_KANJI" width="256">エリア[2:01:２桁:0]</language>
-	</row>
-
-	<row id="msg_info_help" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
-		<comment>旧メッセージ</comment>
-		<language name="JPN" width="256">この　しせつは　トレーナーの　
-みなさまに　たんれんの　ばしょとして　▼
-ていきょう　されています▼</language>
-		<language name="JPN_KANJI" width="256">この　しせつは　トレーナーの　
-みなさまに　たんれんの　ばしょとして　▼
-ていきょう　されています▼</language>
 	</row>
 
 	<row id="msg_elevator_01" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
@@ -1380,7 +1320,7 @@
 挑戦してみては　いかがでしょうか？▼</language>
 	</row>
 
-	<row id="msg_info_help_b_03" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+	<row id="msg_info_help_b_03" text-color="#ffffff,,,#ffffff,,#ffffff,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">なお　しせつでは　
 しんけんしょうぶを　していただきます▼
 まんがいち　トレーナーとの
@@ -1390,7 +1330,7 @@
 おしはらいください▼
 また　バッグにある　どうぐのしようを
 きんししておりますので▽
-あらかじめ　ごりょうしょうください</language>
+あらかじめ　ごりょうしょうください▼</language>
 		<language name="JPN_KANJI" width="256">なお　施設では　
 真剣勝負を　していただきます▼
 万が一　トレーナーとの
@@ -1399,7 +1339,7 @@
 賞金を　お支払いください▼
 また　バッグにある　どうぐの使用を
 禁止しておりますので▽
-あらかじめ　ご了承ください</language>
+あらかじめ　ご了承ください▼</language>
 	</row>
 
 	<row id="msg_info_b_000" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
@@ -1499,11 +1439,11 @@
 		<language name="JPN_KANJI" width="256">挑戦なさいますか？</language>
 	</row>
 
-	<row id="msg_info_b_004" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+	<row id="msg_info_b_004" text-color="#ffffff,,,#ffffff,,#ffffff,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">じゅんびは　よろしいですか？
-それでは　がんばてくださいね！</language>
+それでは　がんばてくださいね！▼</language>
 		<language name="JPN_KANJI" width="256">準備は　よろしいですか？
-それでは　がんばてくださいね！</language>
+それでは　がんばてくださいね！▼</language>
 	</row>
 
 	<row id="msg_info_b_cancel" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
@@ -1533,31 +1473,31 @@
 		<language name="JPN_KANJI" width="256">やめる</language>
 	</row>
 
-	<row id="msg_info_clear_b_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+	<row id="msg_info_clear_b_01" text-color="#ffffff,,,#ffffff,,#ffffff,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>・トレーナー名＝プレイヤー名
 ・2桁＝エリアの数字</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]さま！▼
-エリア[2:01:２桁:0]の　クリア
+エリア[2:01:２桁:1]の　クリア
 おめでとうございます！▼
 きねんに　おすきなものを　
 おえらびください！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]様！▼
-エリア[2:01:２桁:0]の　クリア
+エリア[2:01:２桁:1]の　クリア
 おめでとうございます！▼
 記念に　お好きなものを　
 お選びください！</language>
 	</row>
 
-	<row id="msg_info_clear_b_02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+	<row id="msg_info_clear_b_02" text-color="#ffffff,,,#ffffff,,#ffffff,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>・2桁＝エリアの数字</comment>
 		<language name="JPN" width="256">あわせて　エリア[2:01:２桁:0]への
 ちょうせんが　かのうと　なりました▼
 ひきつづき　ちょうせんを
-おまちして　おります▼</language>
+おまちして　おります</language>
 		<language name="JPN_KANJI" width="256">あわせて　エリア[2:01:２桁:0]への
 挑戦が　可能と　なりました▼
 引き続き　挑戦を
-おまちして　おります▼</language>
+おまちして　おります</language>
 	</row>
 
 	<row id="msg_info_clear_b_03" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
@@ -1776,7 +1716,7 @@
 		<language name="JPN_KANJI" width="256">エリア[2:01:２桁:0]</language>
 	</row>
 
-	<row id="msg_info_attention_w_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+	<row id="msg_info_attention_w_01" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<comment>・トレーナー名＝プレイヤー名
 ・ニックネーム＝ポケモン名
 ・2桁＝エリアの数字</comment>
@@ -1787,14 +1727,14 @@
 しょうしょう　じつりょくが　たりません▼
 もうしわけありませんが
 じつりょくを　つけてから▽
-ちょうせんしてください</language>
+ちょうせんしてください▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]様！▼
 失礼ですが　お連れの
 [1:02:ポケモンニックネーム:0]では▽
 エリア[2:01:２桁:0]に　挑戦するには
 少々　実力が　足りません▼
 申し訳ありませんが　実力を
-つけてから　挑戦してください</language>
+つけてから　挑戦してください▼</language>
 	</row>
 
 	<row id="msg_info_w_002" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
@@ -1844,11 +1784,11 @@
 		<language name="JPN_KANJI" width="256">挑戦なさいますか？</language>
 	</row>
 
-	<row id="msg_info_w_004" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+	<row id="msg_info_w_004" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<language name="JPN" width="256">じゅんびは　よろしいですか？
-それでは　がんばてくださいね！</language>
+それでは　がんばてくださいね！▼</language>
 		<language name="JPN_KANJI" width="256">準備は　よろしいですか？
-それでは　がんばてくださいね！</language>
+それでは　がんばてくださいね！▼</language>
 	</row>
 
 	<row id="msg_info_w_cancel" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
@@ -2022,6 +1962,11 @@
 ボストレーナーの　場所も
 知っているはずさ▼
 それじゃ　また　会おう▼</language>
+	</row>
+
+	<row id="msg_event_item_name" text-color="#ffffff,,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,," back-color="#000000,,,,,,,#000000,,,#000000,,,#000000,,,#000000,,">
+		<language name="JPN" width="256">[1:09:どうぐ名:0]</language>
+		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]</language>
 	</row>
 
 	<flowchart-group-list>

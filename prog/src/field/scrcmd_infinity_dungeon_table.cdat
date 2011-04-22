@@ -34,6 +34,9 @@
   DEF_CMD( EvCmdInfinityDungeonOpenElevator, EV_SEQ_INFINITY_DUNGEON_ELEVETOR_ACTION )
   DEF_CMD( EvCmdInfinityDungeonGetBossFloor, EV_SEQ_INFINITY_DUNGEON_GET_BOSS_FLOOR )
   DEF_CMD( EvCmdInfinityDungeonGetTrainerType, EV_SEQ_INFINITY_DUNGEON_GET_TRTYPE )
+  DEF_CMD( EvCmdInfinityDungeonSetStatus, EV_SEQ_INFINITY_DUNGEON_SET_DUNGEON_STATUS )
+  DEF_CMD( EvCmdInfinityDungeonGetMapStatus, EV_SEQ_INFINITY_DUNGEON_GET_MAP_STATUS )
+  DEF_CMD( EvCmdInfinityDungeonSetMapStatus, EV_SEQ_INFINITY_DUNGEON_SET_MAP_STATUS )
  
   END_CMD
   //スクリプトコマンドテーブル終了
