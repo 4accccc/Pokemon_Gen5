@@ -11,7 +11,6 @@
 #pragma once
 
 #include "field/resonance_resort_data.h"
-#include "resort_binary_st.h"
 #include "resonance_resort_data.naix"
 
 //=============================================================================
