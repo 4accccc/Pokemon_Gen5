@@ -2,6 +2,7 @@
 #ifndef ZONE_D23_EVD_H
 #define ZONE_D23_EVD_H
 
+#define DOOR_ID_D23_D23R0101_EXIT01       0
 
 #endif //ZONE_D23_EVD_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d23.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
