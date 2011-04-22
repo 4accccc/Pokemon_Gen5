@@ -476,7 +476,7 @@ static void Tourist_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder )
 {
   u8 trainer_view = RESORT_ABSTRUCT_DATA_GetData( p_wk->p_abstruct_data, RESORT_DATA_PARAM_TRAINERVIEW, NULL );
   p_hedder->obj_code = UnionView_GetObjCode( trainer_view );
-  p_hedder->move_code = MV_DOWN; //TODO
+  p_hedder->move_code = MV_DIR_RND;
   p_hedder->event_id = RESORT_BINARY_PEOPLE_DATA_GetScrID( p_wk->cp_binary );
 }
 //-------------------------------------
