@@ -276,12 +276,22 @@ GMEVENT* EVENT_NameInput_Resort( RESORT_NAMEIN_TYPE type, GAMESYS_WORK* gameSyst
   GAMEDATA*   gdata = GAMESYSTEM_GetGameData( gameSystem );
   MISC        *misc = SaveData_GetMisc( GAMEDATA_GetSaveControlWork(gdata) );
   MYSTATUS    *mystatus = GAMEDATA_GetMyStatus(gdata);
+
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( gdata );
+  RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( p_sv );
+  RESORT_PEOPLE_ALL_DATA *p_people_all = RESONANCE_RESORT_SV_GetPeopleAllData( p_resort );
+  RESORT_CITY_DATA *p_city = RESONANCE_RESORT_SV_GetCityData( p_resort );
+  RESORT_RECV_DATA *p_owner = RESORT_PEOPLE_ALL_DATA_GetOwnerData( p_people_all );
+
   NAMEIN_MODE mode;
   u32         len;
+  STRBUF      *p_default_str;
+  STRCODE     strcode[64];
 
   GMEVENT* event;
   RESORT_NAMEIN_WORK * work;
 
+  p_default_str = GFL_STR_CreateBuffer( 64, GFL_HEAP_LOWID(HEAPID_PROC) );
   switch( type )
   {
   default:
@@ -289,16 +299,20 @@ GMEVENT* EVENT_NameInput_Resort( RESORT_NAMEIN_TYPE type, GAMESYS_WORK* gameSyst
   case RESORT_NAMEIN_TYPE_CITY_NAME:
     mode = NAMEIN_FREE_RESORT_CITY;
     len = RESORT_CITY_NAME_LEN;
+    RESORT_CITY_DATA_GetData( p_city, RESORT_CITY_DATA_PARAM_CITY_NAME, strcode );
     break;
   case RESORT_NAMEIN_TYPE_AUTHER_NAME:
     mode = NAMEIN_FREE_RESORT_AUTHER;
     len = RESORT_MY_NAME_LEN;
+    RESORT_CITY_DATA_GetData( p_city, RESORT_CITY_DATA_PARAM_AUTHER_NAME, strcode );
     break;
   case RESORT_NAMEIN_TYPE_AUTHER_PHASE:
     mode = NAMEIN_FREE_RESORT_PHRASE;
     len = RESORT_PHRASE_LEN;
+    RESORT_RECV_DATA_GetData( p_owner, RESORT_DATA_PARAM_EXT9_PHRASE, strcode);
     break;
   }
+  GFL_STR_SetStringCode( p_default_str, strcode );
 
   // ƒCƒxƒ“ƒg¶¬
   event = GMEVENT_Create( 
@@ -310,9 +324,11 @@ GMEVENT* EVENT_NameInput_Resort( RESORT_NAMEIN_TYPE type, GAMESYS_WORK* gameSyst
   work->fieldmap   = GAMESYSTEM_GetFieldMapWork( gameSystem );
   work->retWork    = ret_wk;
   work->nameInParam = NAMEIN_AllocParam(
-        HEAPID_PROC, mode, MyStatus_GetMySex(mystatus), 0, len, NULL, misc );
+        HEAPID_PROC, mode, MyStatus_GetMySex(mystatus), 0, len, p_default_str, misc );
   work->type = type;
 
+  GFL_STR_DeleteBuffer( p_default_str );
+    
   return event;
 }
 
