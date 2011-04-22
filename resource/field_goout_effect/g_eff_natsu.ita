@@ -3,7 +3,7 @@
 <ita version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2011-01-14T14:44:03" source="g_eff_natsu.mb"/>
+	<create user="ibe_mana" host="W00191" date="2011-04-22T12:41:00" source="g_eff_natsu.mb"/>
 	<title>Texture SRT Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -16,12 +16,54 @@
 	tool_end_frame="32"
 	interpolation="frame"
 	tex_matrix_mode="maya"
-	compress_material="off" material_size="2 2"
+	compress_material="off" material_size="5 5"
 	frame_step_mode="1"
 	tolerance_tex_scale="0.100000"
 	tolerance_tex_rotate="0.100000"
 	tolerance_tex_translate="0.010000"
 />
+
+<tex_scale_data size="1">
+	1.000000
+</tex_scale_data>
+
+<tex_rotate_data size="1">
+	0.000000
+</tex_rotate_data>
+
+<tex_translate_data size="65">
+	0.000000 0.000000 0.064453 0.129150 0.193604 0.258057 0.322510 0.387207 0.451660 0.516113
+	0.580566 0.645264 0.709717 0.774170 0.838623 0.903320 0.967773 1.032227 1.096680 1.161377
+	1.225830 1.290283 1.354736 1.419434 1.483887 1.548340 1.612793 1.677490 1.741943 1.806396
+	1.870850 1.935547 2.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.019287
+	0.038574 0.057617 0.076904 0.096191 0.115479 0.134521 0.153809 0.173096 0.192383 0.211426
+	0.230713 0.250000 0.269287 0.288574 0.307617 0.326904 0.346191 0.365479 0.384521 0.403809
+	0.423096 0.442383 0.461426 0.480713 0.500000
+</tex_translate_data>
+
+<tex_srt_anm_array size="3">
+	<tex_srt_anm index="0" material_name="g_eff_n01_2">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_t frame_step="1" data_size="32" data_head="1"/>
+	</tex_srt_anm>
+	<tex_srt_anm index="1" material_name="g_eff_n02_3">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="32" data_head="33"/>
+		<tex_translate_t frame_step="1" data_size="1" data_head="0"/>
+	</tex_srt_anm>
+	<tex_srt_anm index="2" material_name="g_eff_n02_2">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="32" data_head="33"/>
+		<tex_translate_t frame_step="1" data_size="1" data_head="0"/>
+	</tex_srt_anm>
+</tex_srt_anm_array>
 
 </body>
 

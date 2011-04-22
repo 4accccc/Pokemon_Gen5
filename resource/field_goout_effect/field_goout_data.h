@@ -29,4 +29,4 @@
 #define GOOUT_COMBI_MAX  (8)
 #define GOOUT_COMBI_EFFECT_MAX  (4)
 //íËêî
-#define FIELD_GOOUT_ROOM_COUNT_MAX  (180)
+#define FIELD_GOOUT_ROOM_COUNT_MAX  (0)

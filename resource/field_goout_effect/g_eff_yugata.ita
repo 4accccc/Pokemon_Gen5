@@ -3,7 +3,7 @@
 <ita version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2011-01-14T16:11:28" source="g_eff_yugata.mb"/>
+	<create user="ibe_mana" host="W00191" date="2011-04-20T18:05:24" source="g_eff_yugata.mb"/>
 	<title>Texture SRT Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -11,17 +11,61 @@
 <body>
 
 <tex_srt_info
-	frame_size="32"
+	frame_size="40"
 	tool_start_frame="1"
-	tool_end_frame="32"
+	tool_end_frame="40"
 	interpolation="frame"
 	tex_matrix_mode="maya"
-	compress_material="off" material_size="2 2"
+	compress_material="off" material_size="5 5"
 	frame_step_mode="1"
 	tolerance_tex_scale="0.100000"
 	tolerance_tex_rotate="0.100000"
 	tolerance_tex_translate="0.010000"
 />
+
+<tex_scale_data size="1">
+	1.000000
+</tex_scale_data>
+
+<tex_rotate_data size="1">
+	0.000000
+</tex_rotate_data>
+
+<tex_translate_data size="81">
+	0.000000 0.000000 0.051270 0.102539 0.153809 0.205078 0.256348 0.307617 0.358887 0.410156
+	0.461426 0.512939 0.564209 0.615479 0.666748 0.718018 0.769287 0.820557 0.871826 0.923096
+	0.974365 1.025635 1.076904 1.128174 1.179443 1.230713 1.281982 1.333252 1.384521 1.435791
+	1.487061 1.538574 1.589844 1.641113 1.692383 1.743652 1.794922 1.846191 1.897461 1.948730
+	2.000000 0.000000 0.012939 0.025635 0.038574 0.051270 0.064209 0.076904 0.089844 0.102539
+	0.115479 0.128174 0.141113 0.153809 0.166748 0.179443 0.192383 0.205078 0.218018 0.230713
+	0.243652 0.256348 0.269287 0.281982 0.294922 0.307617 0.320557 0.333252 0.346191 0.358887
+	0.371826 0.384521 0.397461 0.410156 0.423096 0.435791 0.448730 0.461426 0.474365 0.487061
+	0.500000
+</tex_translate_data>
+
+<tex_srt_anm_array size="3">
+	<tex_srt_anm index="0" material_name="g_eff_n01_2">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_t frame_step="1" data_size="40" data_head="1"/>
+	</tex_srt_anm>
+	<tex_srt_anm index="1" material_name="g_eff_n02_3">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="40" data_head="41"/>
+		<tex_translate_t frame_step="1" data_size="1" data_head="0"/>
+	</tex_srt_anm>
+	<tex_srt_anm index="2" material_name="g_eff_n02_2">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="40" data_head="41"/>
+		<tex_translate_t frame_step="1" data_size="1" data_head="0"/>
+	</tex_srt_anm>
+</tex_srt_anm_array>
 
 </body>
 
