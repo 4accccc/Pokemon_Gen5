@@ -71,7 +71,7 @@ EVENT_START ev_wbt_hall_01
 			_CALL ev_final_game
 			
 			//負けた場合
-      IF $SCWK_ANSWER != SCR_WBT_BATTLE_RESULT_WIN THEN
+      		IF $SCWK_ANSWER != SCR_WBT_BATTLE_RESULT_WIN THEN
 				
 				//優勝は……
 				_PLAINWIN_MSG_UP( msg_wbt_announce_05 )
@@ -119,15 +119,17 @@ EVENT_START ev_wbt_hall_01
 			ELSE
 			//勝った場合
 			
-				//決勝戦の対戦者名を格納する
-				_PLAYER_NAME(0)
+
 			
 				//優勝は……
 				_PLAINWIN_MSG_UP( msg_wbt_announce_05 )
 				_PLAINWIN_CLOSE()
 
 				_TIME_WAIT( 60 )
-
+				
+				//プレイヤー名を格納する
+				_PLAYER_NAME(0)
+				
 				//プレイヤーだー！
 				_GIZAPLAINWIN_MSG_POS( msg_wbt_announce_09, POS_UP )
 				_GIZAPLAINWIN_CLOSE()
@@ -145,14 +147,6 @@ EVENT_START ev_wbt_hall_01
 				_WBT_GMK_VISION_CHANGE(SCR_WBT_VISION_WIN_PLAYER)
 				_WBT_GMK_WIN_EFFECT_START()
 				
-				//歓声SE再生
-				
-				_TIME_WAIT( 120 )
-
-				//対戦者側に花吹雪演出
-				_WBT_GMK_VISION_CHANGE(SCR_WBT_VISION_WIN_ENEMY)
-				_WBT_GMK_WIN_EFFECT_START()
-
 				_TIME_WAIT( 70 )
 				
 				//対戦者・主人公勝ちメッセージ表示　　　　　　
@@ -178,7 +172,6 @@ EVENT_START ev_wbt_hall_01
 
 			//WBT会場　終了処理
 			_CALL ev_wbt_hall_exit
-				
 			
 		ENDIF
 		
@@ -212,6 +205,8 @@ _ANIME_LABEL	anm_player_lose
 ev_wbt_hall_exit:
 
 	_END_EVENT_BGM()
+
+	_SE_STOP()
 
 	//予約スクリプト
 	_RESERVE_SCRIPT( SCRID_RESERVE_WBT_EXIT )
