@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nagihashi_toru" host="W00268" date="2011-04-21T19:09:37"/>
+	<create user="shimoyamada" host="W00184" date="2011-04-23T16:29:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -395,13 +395,13 @@
 		</language>
 	</columns>
 
-	<dialog left="-904" top="300" right="-330" bottom="927" maximized="no" rayout="Vertical2">
+	<dialog left="1030" top="386" right="1735" bottom="1014" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="301" top="187" right="774" bottom="585" visible="no"/>
-		<band id="0" index="0" style="0000" width="566"/>
+		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="399"/>
-		<band id="3" index="3" style="0000" width="591"/>
+		<band id="2" index="2" style="0000" width="697"/>
+		<band id="3" index="3" style="0000" width="697"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -594,29 +594,34 @@
 	</row>
 
 	<row id="mes_shop_09_01">
-		<comment>秘書用の番号ラベル</comment>
-		<language name="JPN" width="256">[2:00:１桁:1]：[1:00:トレーナー名:0]</language>
-		<language name="JPN_KANJI" width="256">[2:00:１桁:1]：[1:00:トレーナー名:0]</language>
+		<comment>秘書用の番号ラベル
+0：秘書名
+1：数字</comment>
+		<language name="JPN" width="256">[2:00:１桁:1]．[1:00:トレーナー名:0]</language>
+		<language name="JPN_KANJI" width="256">[2:00:１桁:1]．[1:00:トレーナー名:0]</language>
 	</row>
 
 	<row id="mes_shop_09_02">
-		<language name="JPN" width="256">[2:00:１桁:1]：[1:38:リゾート店名:0]</language>
-		<language name="JPN_KANJI" width="256">[2:00:１桁:1]：[1:38:リゾート店名:0]</language>
+		<comment>0：お店名
+1：配置番号</comment>
+		<language name="JPN" width="256">[2:00:１桁:1]．[1:38:リゾート店名:0]</language>
+		<language name="JPN_KANJI" width="256">[2:00:１桁:1]．[1:38:リゾート店名:0]</language>
 	</row>
 
-	<row id="mes_shop_09_03" back-color="#ff0000,,,,,,,,,,,,,,,,,">
+	<row id="mes_shop_09_03">
 		<comment>0：秘書名
 1：秘書№
 
-3：年
-4：月
-5：日</comment>
-		<language name="JPN" width="256">だい[2:01:２桁:1]ひしょ
+3：説明文18文字
+4：年
+5：月
+6：日</comment>
+		<language name="JPN" width="256">【だい[2:01:２桁:1]ひしょ】
 [1:37:リゾートフリーワード:3]
-であったひ：２０[2:01:２桁:4]／[2:01:２桁:5]／[2:01:２桁:6]</language>
-		<language name="JPN_KANJI" width="256">だい[2:01:２桁:1]ひしょ
+であったひ：　２０[2:01:２桁:4]／[2:01:２桁:5]／[2:01:２桁:6]</language>
+		<language name="JPN_KANJI" width="256">【だい[2:01:２桁:1]ひしょ】
 [1:37:リゾートフリーワード:3]
-であったひ：２０[2:01:２桁:4]／[2:01:２桁:5]／[2:01:２桁:6]</language>
+であったひ：　２０[2:01:２桁:4]／[2:01:２桁:5]／[2:01:２桁:6]</language>
 	</row>
 
 	<row id="mes_shop_09_03_01">
@@ -649,101 +654,102 @@
 		<language name="JPN_KANJI" width="256">いどうなら　おまかせ！</language>
 	</row>
 
-	<row id="mes_shop_09_04" back-color="#ff0000,,,,,,,,,,,,,,,,,">
+	<row id="mes_shop_09_04">
 		<comment>0：お店名
 1：種類名
 2：レベル
-3：年
-4：月
-5：日</comment>
-		<language name="JPN" width="256">[1:38:リゾート店名:1]　ＬＶ.[2:01:２桁:2]
+3：説明文18文字
+4：年
+5：月
+6：日</comment>
+		<language name="JPN" width="256">【[1:38:リゾート店名:1]　　ＬＶ.[2:01:２桁:2]】
 [1:37:リゾートフリーワード:3]
-であったひ：２０[2:01:２桁:4]／[2:01:２桁:5]／[2:01:２桁:6]</language>
-		<language name="JPN_KANJI" width="256">[1:38:リゾート店名:1]　ＬＶ.[2:01:２桁:2]
+であったひ：　２０[2:01:２桁:4]／[2:01:２桁:5]／[2:01:２桁:6]</language>
+		<language name="JPN_KANJI" width="256">【[1:38:リゾート店名:1]　　ＬＶ.[2:01:２桁:2]】
 [1:37:リゾートフリーワード:3]
-であったひ：２０[2:01:２桁:4]／[2:01:２桁:5]／[2:01:２桁:6]</language>
+であったひ：　２０[2:01:２桁:4]／[2:01:２桁:5]／[2:01:２桁:6]</language>
 	</row>
 
-	<row id="mes_shop_09_04_01" back-color="#ff0000,,,,,,,,,,,,,,,,,">
+	<row id="mes_shop_09_04_01">
 		<comment>マーケット役割説明</comment>
 		<language name="JPN" width="256">どきどき　わくわく　ラッキーくじ。</language>
 		<language name="JPN_KANJI" width="256">どきどき　わくわく　ラッキーくじ。</language>
 	</row>
 
-	<row id="mes_shop_09_04_02" back-color="#ff0000,,,,,,,,,,,,,,,,,">
+	<row id="mes_shop_09_04_02">
 		<comment>くじ役割説明</comment>
 		<language name="JPN" width="256">ポケモンを　うつくしく　きれいに！</language>
 		<language name="JPN_KANJI" width="256">ポケモンを　うつくしく　きれいに！</language>
 	</row>
 
-	<row id="mes_shop_09_04_03" back-color="#ff0000,,,,,,,,,,,,,,,,,">
+	<row id="mes_shop_09_04_03">
 		<comment>育て屋役割説明</comment>
 		<language name="JPN" width="256">ポケモンの　レベルを　あげます。</language>
 		<language name="JPN_KANJI" width="256">ポケモンの　レベルを　あげます。</language>
 	</row>
 
-	<row id="mes_shop_09_04_04" back-color="#ff0000,,,,,,,,,,,,,,,,,">
+	<row id="mes_shop_09_04_04">
 		<comment>マーケット役割説明</comment>
 		<language name="JPN" width="256">いいものを　やすく　うります。</language>
 		<language name="JPN_KANJI" width="256">いいものを　やすく　うります。</language>
 	</row>
 
-	<row id="mes_shop_09_04_05" back-color="#ff0000,,,,,,,,,,,,,,,,,">
+	<row id="mes_shop_09_04_05">
 		<comment>花屋役割説明</comment>
 		<language name="JPN" width="256">きのみを　うります。</language>
 		<language name="JPN_KANJI" width="256">きのみを　うります。</language>
 	</row>
 
-	<row id="mes_shop_09_04_06" back-color="#ff0000,,,,,,,,,,,,,,,,,">
+	<row id="mes_shop_09_04_06">
 		<comment>道場役割説明</comment>
 		<language name="JPN" width="256">ポケモンを　つよくします。</language>
 		<language name="JPN_KANJI" width="256">ポケモンを　つよくします。</language>
 	</row>
 
-	<row id="mes_shop_09_04_07" back-color="#ff0000,,,,,,,,,,,,,,,,,">
+	<row id="mes_shop_09_04_07">
 		<comment>保育所役割説明</comment>
 		<language name="JPN" width="256">タマゴを　ふか　させます。</language>
 		<language name="JPN_KANJI" width="256">タマゴを　ふか　させます。</language>
 	</row>
 
-	<row id="mes_shop_09_04_08" back-color="#ff0000,,,,,,,,,,,,,,,,,">
+	<row id="mes_shop_09_04_08">
 		<comment>宝石役割説明</comment>
 		<language name="JPN" width="256">きれいな　もの　うります。</language>
 		<language name="JPN_KANJI" width="256">きれいな　もの　うります。</language>
 	</row>
 
-	<row id="mes_shop_09_04_09" back-color="#ff0000,,,,,,,,,,,,,,,,,">
+	<row id="mes_shop_09_04_09">
 		<comment>古道具屋役割説明</comment>
 		<language name="JPN" width="256">ほりだしもの　うっています。</language>
 		<language name="JPN_KANJI" width="256">ほりだしもの　うっています。</language>
 	</row>
 
-	<row id="mes_shop_09_04_10" back-color="#ff0000,,,,,,,,,,,,,,,,,">
+	<row id="mes_shop_09_04_10">
 		<comment>レストラン役割説明</comment>
 		<language name="JPN" width="256">ポケモンを　まんぞく　させます。</language>
 		<language name="JPN_KANJI" width="256">ポケモンを　まんぞく　させます。</language>
 	</row>
 
-	<row id="mes_shop_09_04_11" back-color="#ff0000,,,,,,,,,,,,,,,,,">
+	<row id="mes_shop_09_04_11">
 		<comment>ジム役割説明</comment>
 		<language name="JPN" width="256">ジムもどき</language>
 		<language name="JPN_KANJI" width="256">ジムもどき</language>
 	</row>
 
-	<row id="mes_shop_09_04_12" back-color="#ff0000,,,,,,,,,,,,,,,,,">
+	<row id="mes_shop_09_04_12">
 		<comment>家役割説明</comment>
 		<language name="JPN" width="256">じゆう　きままに　くらしています。</language>
 		<language name="JPN_KANJI" width="256">じゆう　きままに　くらしています。</language>
 	</row>
 
-	<row id="mes_shop_09_06" back-color="#ffff00,,,,,,,,,,,,,,,,,">
+	<row id="mes_shop_09_06">
 		<language name="JPN" width="256">[1:00:トレーナー名:0]　ですね
 こうたい　しても　よろしいですか？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]　ですね
 こうたい　しても　よろしいですか？</language>
 	</row>
 
-	<row id="mes_shop_09_07" back-color="#ffff00,,,,,,,,,,,,,,,,,">
+	<row id="mes_shop_09_07">
 		<language name="JPN" width="256">[1:00:トレーナー名:0]　を
 こうたい　しました▼
 [1:00:トレーナー名:0]さんは
@@ -784,14 +790,14 @@
 しょうかい　しました▼</language>
 	</row>
 
-	<row id="mes_shop_09_15" back-color="#ffff00,,,,,,,,,,,,,,,,,">
+	<row id="mes_shop_09_15">
 		<language name="JPN" width="256">『[1:38:リゾート店名:0]』　を
 たてかえても　いいですか？</language>
 		<language name="JPN_KANJI" width="256">『[1:38:リゾート店名:0]』　を
 たてかえても　いいですか？</language>
 	</row>
 
-	<row id="mes_shop_09_16" back-color="#ff0000,,,,,,,,,,,,,,,,,">
+	<row id="mes_shop_09_16">
 		<comment>0：施設名でなくトレーナー名に変更</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]さんは
 コンドミニアムへ　いきました▽
