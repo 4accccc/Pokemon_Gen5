@@ -398,3 +398,4 @@
 "nsbmdfiles/d23_obj_01.nsbmd"
 "nsbmdfiles/d23_obj_02.nsbmd"
 "nsbmdfiles/d23_obj_03.nsbmd"
+"nsbmdfiles/t06_house_04.nsbmd"

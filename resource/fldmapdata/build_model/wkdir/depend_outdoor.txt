@@ -399,4 +399,5 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/d23_obj_01.nsbmd \
 	$(RESDIR)/d23_obj_02.nsbmd \
 	$(RESDIR)/d23_obj_03.nsbmd \
+	$(RESDIR)/t06_house_04.nsbmd \
 
