@@ -35,7 +35,6 @@
 #include "wbt_tool.h"
 #include "event_wbt.h"
 #include "wbt_gimmick.h"
-#include "field/eventwork.h"  //EVENTWORK_
 
 #include "system/main.h"
 #include "arc/message.naix"
@@ -46,7 +45,6 @@
 #include "scrcmd_menuwin.h" //EvCmdBalloonWin_Write
 #include "arc/message.naix" //NARC_message_wbt_trmsg_dat
 
-#include "../../../resource/fldmapdata/flagwork/flag_define.h"  //SYS_FLAG_GAMECLEAR
 
 //============================================================================================
 //============================================================================================
@@ -225,18 +223,12 @@ VMCMD_RESULT EvCmdWBTSystemEntry( VMHANDLE * core, void * wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdWBTCheckTournament( VMHANDLE * core, void * wk )
 {
-  enum {
-    CHAMP_OPEN_COUNT = 10,  ///<仮：オールトーナメント１０回クリアでチャンプトーナメント解除
-  };
-
   WBTSYS * wbtsys = getWBTSys( wk );
   u16 type = SCRCMD_GetVMWorkValue( core, wk );
   u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
 
   SCRCMD_WORK   *work = wk;
   GAMEDATA * gamedata = SCRCMD_WORK_GetGameData( work );
-  EVENTWORK * evwork = GAMEDATA_GetEventWork( gamedata );
-  WBTSAVE * wbtsave = GAMEDATA_GetWBTSave( gamedata );
 
   switch ( type )
   {
@@ -245,15 +237,13 @@ VMCMD_RESULT EvCmdWBTCheckTournament( VMHANDLE * core, void * wk )
     *ret_wk = TRUE; //いつだってオールトーナメントは開催する
     break;
   case WBTTYPE_POKETYPE:
-    //ゲームクリアしていたらタイプトーナメントは開催する
-    *ret_wk = EVENTWORK_CheckEventFlag( evwork, SYS_FLAG_GAME_CLEAR );
+    *ret_wk = WBTTOOL_GetStatus( gamedata, WBT_COND_ID_ENABLE_POKETYPE_TOURNAMENT );
     break;
   case WBTTYPE_CHAMPION:
-    //オールトーナメントを規定回数以上優勝していたらチャンピオントーナメントは開催する
-    *ret_wk = WBTSAVE_GetWinCount( wbtsave, WBTWIN_COUNT_ALLTOURNAMENT) >= CHAMP_OPEN_COUNT;
+    *ret_wk = WBTTOOL_GetStatus( gamedata, WBT_COND_ID_ENABLE_CHAMPION_TOURNAMENT );
     break;
   case WBTTYPE_DOWNLOAD:
-    *ret_wk = FALSE;  //仮：ダウンロードデータには未対応
+    *ret_wk = WBTTOOL_GetStatus( gamedata, WBT_COND_ID_ENABLE_DOWNLOAD_TOURNAMENT );
     break;
   }
   return VMCMD_RESULT_CONTINUE;

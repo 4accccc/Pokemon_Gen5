@@ -435,11 +435,11 @@ static void entryAllTournament( const WBT_MATCH_CONDITION * cond, u16 * tr_list 
   candidate_count = setupEntryTable( cond, entry_table );
 
 #ifdef  ROM_201104ALPHA
-  //赤緑・金銀リーダーを無理やりエントリー
+  //αバージョン用：/カントー、ジョウト、ホウエンのリーダーを無理やりエントリー
   leader_num = 7;
   mob_num = 0;
   GFL_STD_MemFill( entry_table, ENTRY_NON, WBT_TRCODE_NUM );
-  for ( i = WBT_TRCODE_OTHER_LEADER_START; i < WBT_TRCODE_OTHER_LEADER_START + 16; i ++ )
+  for ( i = WBT_TRCODE_OTHER_LEADER_START; i < WBT_TRCODE_OTHER_LEADER_START + 16+8+1; i ++ )
   {
     entry_table[i] = ENTRY_CANDIDATE;
   }
@@ -739,7 +739,49 @@ void WBTTOOL_SortTrainer( WBTTRAINER * wbt_tr_array, u64 seed64, HEAPID heapID )
   }
 }
 
+//============================================================================================
+//============================================================================================
 
+#include "field/eventwork.h"  //EVENTWORK_
+#include "../../../resource/fldmapdata/flagwork/flag_define.h"  //SYS_FLAG_GAMECLEAR
+  enum {
+    CHAMP_OPEN_COUNT = 10,  ///<仮：オールトーナメント１０回クリアでチャンプトーナメント解除
+  };
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief WBTの様々なイベント判定を取得する
+ * @param gamedata
+ * @param cond_id   wbt_tool.hのWBT_COND_IDを参照
+ * @return  BOOL    結果を
+ */
+//-----------------------------------------------------------------------------
+BOOL WBTTOOL_GetStatus( GAMEDATA * gamedata, WBT_COND_ID cond_id )
+{
+  WBTSAVE * wbtsave = GAMEDATA_GetWBTSave( gamedata );
+  EVENTWORK * evwork = GAMEDATA_GetEventWork( gamedata );
+
+  switch ( cond_id )
+  {
+  case WBT_COND_ID_ENABLE_POKETYPE_TOURNAMENT:
+    //ゲームクリアしていたらタイプトーナメントは開催する
+    return EVENTWORK_CheckEventFlag( evwork, SYS_FLAG_GAME_CLEAR );
+    break;
+  case WBT_COND_ID_ENABLE_CHAMPION_TOURNAMENT:
+    //オールトーナメントを規定回数以上優勝していたらチャンピオントーナメントは開催する
+    return (WBTSAVE_GetWinCount( wbtsave, WBTWIN_COUNT_ALLTOURNAMENT) >= CHAMP_OPEN_COUNT);
+    break;
+  case WBT_COND_ID_ENABLE_DOWNLOAD_TOURNAMENT:
+    return FALSE;  //仮：ダウンロードデータには未対応
+    break;
+  case WBT_COND_ID_ENTRY_CHAMP_IN_ALL:
+    //ゲームクリアしていたらチャンピオンはオールトーナメントに参戦できる
+    return EVENTWORK_CheckEventFlag( evwork, SYS_FLAG_GAME_CLEAR );
+  default:
+    GF_ASSERT( 0 );
+  }
+  return FALSE;
+}
 
 
 

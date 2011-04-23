@@ -48,6 +48,18 @@ enum {
 };
 
 //-----------------------------------------------------------------------------
+/**
+ * @brief WBTにまつわる判定処理
+ */
+//-----------------------------------------------------------------------------
+typedef enum {
+  WBT_COND_ID_ENABLE_POKETYPE_TOURNAMENT,   ///<タイプトーナメント開催可能か？
+  WBT_COND_ID_ENABLE_CHAMPION_TOURNAMENT,   ///<チャンピオントーナメント開催可能か？
+  WBT_COND_ID_ENABLE_DOWNLOAD_TOURNAMENT,   ///<ダウンロードトーナメント開催可能か？
+  WBT_COND_ID_ENTRY_CHAMP_IN_ALL,           ///<オールトーナメントにチャンピオン参戦するか？
+}WBT_COND_ID;
+
+//-----------------------------------------------------------------------------
 //  トーナメント出場者の決定に必要な引数定義
 //-----------------------------------------------------------------------------
 typedef struct {
@@ -79,4 +91,8 @@ extern void WBTTOOL_MakeEntryList( const WBT_MATCH_CONDITION * cond, u16 * tr_li
 extern void WBTTOOL_SortTrainer( WBTTRAINER * wbt_tr_array, u64 seed64, HEAPID heapID );
 extern u8 WBTTOOL_GetPartyMaxByRule( WBTRULE rule );
 extern BtlRule WBTTOOL_WBTRuleToBtlRule( WBTRULE wbt_rule );
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+extern BOOL WBTTOOL_GetStatus( GAMEDATA * gamedata, WBT_COND_ID cond_id );
 
