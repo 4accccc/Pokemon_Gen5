@@ -68,9 +68,10 @@ typedef struct {
   WBTTYPE type;
   //WBTRule rule;
   
-  WBT_ALLTOURNAMENT_LEVEL level;
+  WBT_ALLTOUR_LEVEL level;
   PokeType poketype;              ///<タイプトーナメント用：タイプ指定
   u8 leader_num;                  ///<オールトーナメント用：リーダー人数
+  BOOL champ_entry;               ///<オールトーナメント用：チャンピオンはエントリーするか？
 
   u64 seed64;
 }WBT_MATCH_CONDITION;
@@ -95,4 +96,7 @@ extern BtlRule WBTTOOL_WBTRuleToBtlRule( WBTRULE wbt_rule );
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 extern BOOL WBTTOOL_GetStatus( GAMEDATA * gamedata, WBT_COND_ID cond_id );
+extern u32 WBTTOOL_GetAllTournamentLeaderRate( GAMEDATA * gamedata, GFL_STD_RandContext * context );
+extern WBT_ALLTOUR_LEVEL WBTTOOL_GetAllTournamentEntryLevel( GAMEDATA * gamedata );
+
 

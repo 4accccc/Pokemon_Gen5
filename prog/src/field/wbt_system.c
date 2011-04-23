@@ -60,6 +60,7 @@ WBTSYS * WBTSYS_Create( HEAPID heapID )
     u64 seed64;
     seed64 = GFL_STD_MtRand( 0 );
     wbtsys->seed64 = (seed64 << 32) + GFL_STD_MtRand( 0 );
+    GFL_STD_RandInit( &wbtsys->rand_context, wbtsys->seed64 );
   }
 
   for (i = 0; i < WBT_TRAINER_NUM; i ++ )
@@ -370,8 +371,10 @@ void WBTSYS_MakeMatch( WBTSYS * wbtsys, GAMEDATA * gamedata )
   GFL_STD_MemClear( &cond, sizeof(WBT_MATCH_CONDITION) );
   cond.heapID = wbtsys->heapID;
   cond.type = wbtsys->type;
-  //cond.rule = wbtsys->rule;
-  cond.level = 0; //‰¼
+  cond.poketype = wbtsys->poketype;
+  cond.level = WBTTOOL_GetAllTournamentEntryLevel( gamedata );
+  cond.leader_num = WBTTOOL_GetAllTournamentLeaderRate( gamedata, &wbtsys->rand_context );
+  cond.champ_entry = WBTTOOL_GetStatus( gamedata, WBT_COND_ID_ENTRY_CHAMP_IN_ALL );
   cond.seed64 = wbtsys->seed64;
 
   WBTTOOL_MakeEntryList( &cond, tr_list );

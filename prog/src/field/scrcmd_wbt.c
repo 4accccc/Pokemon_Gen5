@@ -332,7 +332,7 @@ VMCMD_RESULT EvCmdWBTGetTournamentType( VMHANDLE * core, void * wk )
 
 //--------------------------------------------------------------
 /**
- * @brief スクリプトコマンド：WBTトーナメントのタイプセット
+ * @brief スクリプトコマンド：WBTタイプトーナメントのポケモンタイプセット
  */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdWBTSetTournamentPokeType( VMHANDLE * core, void * wk )
@@ -340,13 +340,13 @@ VMCMD_RESULT EvCmdWBTSetTournamentPokeType( VMHANDLE * core, void * wk )
   u16 type = SCRCMD_GetVMWorkValue( core, wk );
   WBTSYS * wbtsys = getWBTSys( wk );
   WBTSYS_SetPokeType( wbtsys, type );
-  TAMADA_Printf("EvCmdWBTSetTournamentType <= %d\n", type);
+  TAMADA_Printf("EvCmdWBTSetTournamentPokeType <= %d\n", type);
   return VMCMD_RESULT_CONTINUE;
 }
 
 //--------------------------------------------------------------
 /**
- * @brief スクリプトコマンド：WBTトーナメントのタイプ取得
+ * @brief スクリプトコマンド：WBTタイプトーナメントのポケモンタイプ取得
  */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdWBTGetTournamentPokeType( VMHANDLE * core, void * wk )
@@ -354,7 +354,7 @@ VMCMD_RESULT EvCmdWBTGetTournamentPokeType( VMHANDLE * core, void * wk )
   u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
   WBTSYS * wbtsys = getWBTSys( wk );
   *ret_wk = WBTSYS_GetPokeType( wbtsys );
-  TAMADA_Printf("EvCmdWBTGetTournamentType == %d\n", *ret_wk);
+  TAMADA_Printf("EvCmdWBTGetTournamentPokeType == %d\n", *ret_wk);
   return VMCMD_RESULT_CONTINUE;
 }
 

@@ -278,7 +278,7 @@ static u32 setupEntryTable( const WBT_MATCH_CONDITION * cond, u8 * entry_table )
   for ( i = 0; i < WBT_TRCODE_NUM; i ++ )
   {
     const WBT_TRDATA * rom_data = &WBTTrainerData[ i ];
-    if ( rom_data->entry_timing > cond->level ) continue;
+    if ( rom_data->entry_timing <= cond->level ) continue;
     entry_table[ i ] = ENTRY_CANDIDATE;
     candidate_count ++;
   }
@@ -416,7 +416,6 @@ static BOOL selectChamp( u8 * entry_table, GFL_STD_RandContext * rand_context )
 //-----------------------------------------------------------------------------
 /**
  * @brief オールトーナメント出場者選出
- * @todo  未実装
  */
 //-----------------------------------------------------------------------------
 static void entryAllTournament( const WBT_MATCH_CONDITION * cond, u16 * tr_list )
@@ -455,7 +454,7 @@ static void entryAllTournament( const WBT_MATCH_CONDITION * cond, u16 * tr_list 
   }
 
   //チャンピオンの登録処理（確率によって一人だけ参加することがある）
-  if (selectChamp( entry_table, &rand_context ) == TRUE )
+  if (cond->champ_entry && selectChamp( entry_table, &rand_context ) == TRUE )
   {
     decide_count ++;
     leader_num --;
@@ -556,17 +555,68 @@ static void entrySampleTournament( u16 * tr_list )
 //-----------------------------------------------------------------------------
 /**
  * @brief タイプトーナメント出場者選出
- * @todo  未実装
  */
 //-----------------------------------------------------------------------------
 static void entryTypeTournament( const WBT_MATCH_CONDITION * cond, u16 * tr_list )
 {
-  entrySampleTournament( tr_list );
-  //GFL_STD_MemClear( tr_list, sizeof(u16) * WBT_TRAINER_NUM );
-  //tr_list[0] = WBT_TRCODE_PLAYER;   //プレイヤーをセット
-  //  未実装…
-}
+  int i;
+  u8 entry_table[WBT_TRCODE_NUM];
+  int candidate_count = 0;
+  int decide_count = 0;
+  int rest;
+  u32 leader_num;
+  u32 mob_num;
 
+  GFL_STD_RandContext rand_context;
+  GFL_STD_RandInit( &rand_context, cond->seed64 );
+
+  GFL_STD_MemFill( entry_table, ENTRY_CANDIDATE, WBT_TRCODE_NUM );
+  candidate_count = countEntry( entry_table, ENTRY_CANDIDATE );
+
+  TAMADA_Printf("TOTAL CANDIDATES=%d\n", candidate_count );
+  //全体からトーナメント出場者以外を排除
+  for ( i = 0; i < WBT_TRCODE_NUM; i ++ )
+  {
+    const WBT_TRDATA * rom_data = &WBTTrainerData[ i ];
+    //タイプ一致、あるいはオールマイティの場合は参戦する
+    if ( rom_data->type_tournament_id == cond->poketype
+        || rom_data->type_tournament_id == POKETYPE_NULL )
+    {
+      TAMADA_Printf("TYPE TOURNAMENT CANDIDATE %3d (poketype=%2d)\n",
+          i, rom_data->type_tournament_id );
+      continue;
+    }
+    entry_table[ i ] = ENTRY_NON;
+  }
+
+  //リーダークラスの参加者を抽選する
+  leader_num = countEntryWithPri( entry_table, ENTRY_CANDIDATE, WBT_TRPRI_LEADER );
+  rest = selectCharacters( entry_table, &rand_context, WBT_TRPRI_LEADER, leader_num );
+  TAMADA_Printf("SELECT LEADER:%d,rest=%d\n",leader_num, rest );
+
+  //他の参加者を抽選する
+  mob_num = WBT_TRAINER_NUM - 1 - leader_num;
+  rest = selectCharacters( entry_table, &rand_context, WBT_TRPRI_NULL, mob_num );
+  TAMADA_Printf("SELECT MOB:%d,rest=%d\n",mob_num, rest );
+
+  candidate_count = countEntry( entry_table, ENTRY_CANDIDATE );
+  GF_ASSERT( candidate_count == 0 );
+
+  //選択された結果を戻り値テーブルに反映する
+  {
+    u32 tr_pos = 0;
+    tr_list[tr_pos ++ ] = WBT_TRCODE_PLAYER;  //プレイヤーは登録する
+    for ( i = 0; i < WBT_TRCODE_NUM; i ++ )
+    {
+      if ( entry_table[i] == ENTRY_DECIDE )
+      {
+        tr_list[ tr_pos ] = i;
+        tr_pos ++;
+      }
+    }
+  }
+
+}
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -578,14 +628,14 @@ void WBTTOOL_MakeEntryList( const WBT_MATCH_CONDITION * cond, u16 * tr_list )
   case WBTTYPE_DOWNLOAD:
     GF_ASSERT_MSG( 0, "仮：まだできていません！\n");
     /* FALL THROUGH */
-  case WBTTYPE_POKETYPE:
-    entryTypeTournament( cond, tr_list );
-    break;
   case WBTTYPE_ALL:
     entryAllTournament( cond, tr_list );
     break;
   case WBTTYPE_CHAMPION:
     entryChampTournament( tr_list );
+    break;
+  case WBTTYPE_POKETYPE:
+    entryTypeTournament( cond, tr_list );
     break;
   }
 }
@@ -784,8 +834,61 @@ BOOL WBTTOOL_GetStatus( GAMEDATA * gamedata, WBT_COND_ID cond_id )
 }
 
 
+//-----------------------------------------------------------------------------
+/**
+ * @brief リーダーの参戦比率を取得する
+ * @param gamedata
+ * @param context
+ * @return リーダーの人数（自分を除く7人のうち占める数）
+ */
+//-----------------------------------------------------------------------------
+u32 WBTTOOL_GetAllTournamentLeaderRate( GAMEDATA * gamedata, GFL_STD_RandContext * context )
+{
+  EVENTWORK * evwork = GAMEDATA_GetEventWork( gamedata );
+  u32 badge_count = MISC_GetBadgeCount( GAMEDATA_GetMiscWork( gamedata ) );
 
 
+  if (EVENTWORK_CheckEventFlag( evwork, SYS_FLAG_GAME_CLEAR ) == TRUE )
+  {
+    return GFL_STD_Rand( context, 3 ) + 5;
+  }
+  else if ( badge_count >= 7 )
+  {
+    return 5;
+  }
+  else if ( badge_count >= 5 )
+  {
+    return 4;
+  }
+  return 3;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief オールトーナメントでのトレーナー参戦レベルを取得する
+ * @param gamedata
+ * @return  WBT_ALLTOUR_LEVEL
+ */
+//-----------------------------------------------------------------------------
+WBT_ALLTOUR_LEVEL WBTTOOL_GetAllTournamentEntryLevel( GAMEDATA * gamedata )
+{
+  EVENTWORK * evwork = GAMEDATA_GetEventWork( gamedata );
+  u32 badge_count = MISC_GetBadgeCount( GAMEDATA_GetMiscWork( gamedata ) );
+
+  if (EVENTWORK_CheckEventFlag( evwork, SYS_FLAG_GAME_CLEAR ) == TRUE )
+  {
+    return WBT_ALLTOUR_LEVEL3;
+  }
+  else if ( badge_count >= 8 )
+  {
+    return WBT_ALLTOUR_LEVEL2;
+  }
+  else if ( badge_count >= 6 )
+  {
+    return WBT_ALLTOUR_LEVEL1;
+  }
+  return WBT_ALLTOUR_LEVEL0;
+}
 
 
 

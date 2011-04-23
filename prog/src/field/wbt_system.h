@@ -75,13 +75,16 @@ typedef enum {
 }WBTSTAGE;
 
 //------------------------------------------------------------------
+/**
+ * @brief オールトーナメント参戦トレーナーのレベル
+ */
 //------------------------------------------------------------------
 typedef enum {
-  WBT_ALLTOUR_LEVEL_0 = 0,
-  WBT_ALLTOUR_LEVEL_1,
-  WBT_ALLTOUR_LEVEL_2,
-  WBT_ALLTOUR_LEVEL_3,
-}WBT_ALLTOURNAMENT_LEVEL;
+  WBT_ALLTOUR_LEVEL0 = 0,
+  WBT_ALLTOUR_LEVEL1,
+  WBT_ALLTOUR_LEVEL2,
+  WBT_ALLTOUR_LEVEL3,
+}WBT_ALLTOUR_LEVEL;
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
