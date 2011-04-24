@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-05T17:37:31"/>
+	<create user="matsumiya" host="W00224" date="2011-04-24T17:28:38"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1295" top="201" right="2000" bottom="829" maximized="no" rayout="Vertical2">
+	<dialog left="1462" top="192" right="2167" bottom="820" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="445"/>
@@ -292,7 +292,443 @@
 	</lock>
 
 
-	<row id="msg_r05_breederw_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_r05_badrider_00w" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂：WHITEver
+・トリプルバトルのチュートリアル
+・GRIDX＝340、GRIDZ＝433、右向き
+・ライモンのジムバッジ取得前</comment>
+		<attribute name="キャラ指定">BADRIDER</attribute>
+		<language name="JPN" width="256">オレは……　こいする　おとこ
+そのなも　チャールズ▼
+いまは　めのまえの　あいてと
+トリプルバトルの　まっさいちゅう！</language>
+		<language name="JPN_KANJI" width="256">オレは……　恋する男
+その名も　チャールズ▼
+いまは　めのまえの　あいてと
+トリプルバトルの　まっさいちゅう！</language>
+	</row>
+
+	<row id="msg_r05_badrider_01w" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<comment>♂：WHITEver
+・ライモンのジムバッジ取得後
+・はい/いいえ選択肢表示
+　はい　→badrider_02
+　いいえ→badrider_03
+
+※SWANで修正</comment>
+		<attribute name="キャラ指定">BADRIDER</attribute>
+		<language name="JPN" width="256">オレは……　こいする　おとこ
+そのなも　チャールズ▼
+ほれた　おんなの　きをひきたくて
+トリプルバトル　という　スタイルの▽
+ポケモンしょうぶを　きわめたのさ！▼
+トリプルバトルが
+どんな　しょうぶか　しりたいか？</language>
+		<language name="JPN_KANJI" width="256">オレは……　恋する男
+その名も　チャールズ▼
+ほれた　女の　気をひきたくて
+トリプルバトル　という　スタイルの▽
+ポケモン勝負を　極めたのさ！▼
+トリプルバトルが
+どんな　勝負か　しりたいか？</language>
+	</row>
+
+	<row id="msg_r05_badrider_02w" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂：WHITEver
+・いいえ選択時
+　再度会話はbadrider_01から</comment>
+		<attribute name="キャラ指定">BADRIDER</attribute>
+		<language name="JPN" width="256">……まいったぜ！　あいての
+きをひくのは　ほんと　むずかしいな</language>
+		<language name="JPN_KANJI" width="256">……まいったぜ！　相手の
+気をひくのは　ほんと　難しいな</language>
+	</row>
+
+	<row id="msg_r05_badrider_03w" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂：WHITEver
+・メッセージ表示後にアニメ(どこかに行って戻る）
+・続けてbadrider_04</comment>
+		<attribute name="キャラ指定">BADRIDER</attribute>
+		<language name="JPN" width="256">トリプルバトルとは
+ポケモンを　３びきずつ　だして▽
+たたかう　ポケモンしょうぶ　さ！▼
+ルールは　かんたん！▼
+あいての　ポケモンを
+すべて　ひんしに　するだけ……▼
+ざっと　いじょうが
+トリプルバトルの　あらましさ▼</language>
+		<language name="JPN_KANJI" width="256">トリプルバトルとは
+ポケモンを　３匹ずつ　だして▽
+戦う　ポケモン勝負　さ！▼
+ルールは　簡単！▼
+相手の　ポケモンを
+すべて　ひんしに　するだけ……▼
+ざっと　以上が
+トリプルバトルの　あらましさ▼</language>
+	</row>
+
+	<row id="msg_r05_badrider_04w" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂：WHITEver
+・はい/いいえ選択肢表示
+・はい→badrider_05
+　はい、だけど戦闘可能ポケモン2匹以下→badrider_06
+　いいえ→badrider_07</comment>
+		<attribute name="キャラ指定">BADRIDER</attribute>
+		<language name="JPN" width="256">オレは……　こいする　おとこ
+そのなも　チャールズ▼
+どうだ！　おまえも　トレーナーなら
+やらないか　トリプルバトルを？</language>
+		<language name="JPN_KANJI" width="256">オレは……　恋する男
+その名も　チャールズ▼
+どうだ！　おまえも　トレーナーなら
+やらないか　トリプルバトルを？</language>
+	</row>
+
+	<row id="msg_r05_badrider_05w" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂：WHITEver
+・はい選択時
+　メッセージ表示後、トレーナー戦闘へ</comment>
+		<attribute name="キャラ指定">BADRIDER</attribute>
+		<language name="JPN" width="256">いい　こころがけ　だな▼
+だけど　オレは　こいする　おとこ
+そのなも　チャールズ▼
+いつだって　フルスロットルだぜ！▼</language>
+		<language name="JPN_KANJI" width="256">いい　こころがけ　だな▼
+だけど　オレは　恋する男
+その名も　チャールズ▼
+いつだって　フルスロットルだぜ！▼</language>
+	</row>
+
+	<row id="msg_r05_badrider_06w" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・WHITEver
+・はい、だけど戦えるポケモンが２匹以下</comment>
+		<attribute name="キャラ指定">BADRIDER</attribute>
+		<language name="JPN" width="256">もえあがった　きもちに
+みずを　さして　すまない……▼
+トリプルバトルには
+たたかえる　ポケモンが▽
+３びき　ひつよう　なんだよ</language>
+		<language name="JPN_KANJI" width="256">燃えあがった　気持ちに
+水を　さして　すまないな……▼
+トリプルバトルには
+戦える　ポケモンが▽
+３匹　必要なんだよ</language>
+	</row>
+
+	<row id="msg_r05_badrider_07w" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・WHITEver
+・いいえ選択時
+　再度会話はbadrider_04から</comment>
+		<attribute name="キャラ指定">BADRIDER</attribute>
+		<language name="JPN" width="256">オレは……　こいする　おとこ
+そのなも　チャールズ▼
+そんなオレから　アドバイス……▼
+チャレンジこそが　じんせい　なんだぜ</language>
+		<language name="JPN_KANJI" width="256">オレは……　恋する男
+その名も　チャールズ▼
+そんなオレから　アドバイス……▼
+チャレンジこそが　人生なんだぜ</language>
+	</row>
+
+	<row id="msg_r05_badrider_08w" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂：WHITEver
+・トレーナー戦闘後
+　フィールド復帰時で自動表示
+・表示後、左を向いてbadrider_09w</comment>
+		<attribute name="キャラ指定">BADRIDER</attribute>
+		<language name="JPN" width="256">……ふっ　ざまあねえな
+おしえるつもりが　おそわるとはな▼
+それにしても　おまえには
+みどころが　ある▼
+じぶんの　ポケモンへの　りかいがなきゃ
+トリプルバトルは　かてないからな▼</language>
+		<language name="JPN_KANJI" width="256">……ふっ　ざまあねえな
+教えるつもりが　教わるとはな▼
+それにしても　おまえには
+見所が　ある▼
+じぶんの　ポケモンへの　理解がなきゃ
+トリプルバトルは　勝てないからな▼</language>
+	</row>
+
+	<row id="msg_r05_badrider_09w" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂：WHITEver
+・表示後、画面左に消えていく
+　消えると暗転、ストッパー削除</comment>
+		<attribute name="キャラ指定">BADRIDER</attribute>
+		<language name="JPN" width="256">オレは……　こいする　おとこ
+そのなも　チャールズ▼
+バイクにのって　かぜになるのが
+にあう　ツミな　おとこさ</language>
+		<language name="JPN_KANJI" width="256">オレは……　恋する男
+その名も　チャールズ▼
+バイクに乗って　風になるのが
+似合う　ツミな　男さ</language>
+	</row>
+
+	<row id="msg_r05_badrider_00b" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
+		<comment>♂：BLACKver
+・ローテーションバトルのチュートリアル
+・GRIDX＝340、GRIDZ＝433、右向き
+・ライモンのジムバッジ取得前</comment>
+		<attribute name="キャラ指定">BADRIDER</attribute>
+		<language name="JPN" width="256">オレは……　こいする　おとこ
+そのなも　チャールズ▼
+いまは　めのまえの　あいてと
+ローテーションバトルの　さなかさ！</language>
+		<language name="JPN_KANJI" width="256">オレは……　恋する男
+その名も　チャールズ▼
+いまは　めのまえの　あいてと
+ローテーションバトルの　さなかさ！</language>
+	</row>
+
+	<row id="msg_r05_badrider_01b" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
+		<comment>♂：BLACKver
+・ローテーションバトルのチュートリアル
+・ライモンのジムバッジ取得後
+・はい/いいえ選択肢表示
+　はい　→badrider_02
+　いいえ→badrider_03</comment>
+		<attribute name="キャラ指定">BADRIDER</attribute>
+		<language name="JPN" width="256">オレは……　こいする　おとこ
+そのなも　チャールズ▼
+ほれた　おんなの　きをひきたくて
+ローテーションバトル　という▽
+スタイルの　しょうぶを　きわめたのさ▼
+ローテーションバトルが
+どんな　しょうぶか　しりたいか？</language>
+		<language name="JPN_KANJI" width="256">オレは……　恋する男
+その名も　チャールズ▼
+ほれた　女の　気をひきたくて
+ローテーションバトル　という▽
+スタイルの　しょうぶを　きわめたのさ▼
+ローテーションバトルが
+どんな　しょうぶか　しりたいか？</language>
+	</row>
+
+	<row id="msg_r05_badrider_02b" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
+		<comment>♂：BLACKver
+・いいえ選択時
+　再度会話はbadrider_01から</comment>
+		<attribute name="キャラ指定">BADRIDER</attribute>
+		<language name="JPN" width="256">……まいったぜ！　あいての
+きをひくのは　ほんと　むずかしいな</language>
+		<language name="JPN_KANJI" width="256">……まいったぜ！　相手の
+気をひくのは　ほんと　難しいな</language>
+	</row>
+
+	<row id="msg_r05_badrider_03b" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
+		<comment>♂：BLACKver
+・メッセージ表示後にアニメ(どこかに行って戻る）
+・続けてbadrider_04</comment>
+		<attribute name="キャラ指定">BADRIDER</attribute>
+		<language name="JPN" width="256">ローテーションバトルとは
+ポケモンを　３びきずつ　だして▽
+たたかう　ポケモンしょうぶ　さ！▼
+そして　だした　ポケモンは
+まえに１ひき！　うしろに２ひきの▽
+ポジションで　セットされる▼
+この　ポジションは　１ターンごとに
+かわるというのが　ポイント……▼
+ざっと　いじょうが
+ローテーションバトルの　あらましさ▼</language>
+		<language name="JPN_KANJI" width="256">ローテーションバトルとは
+ポケモンを　３匹ずつ　だして▽
+戦う　ポケモン勝負　さ！▼
+そして　だした　ポケモンは
+前衛に１匹！　後衛に２匹の▽
+ポジションで　セットされる▼
+この　ポジションは　１ターンごとに
+換わるというのが　ポイント……▼
+ざっと　以上が
+ローテーションバトルの　あらましさ▼</language>
+	</row>
+
+	<row id="msg_r05_badrider_04b" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
+		<comment>♂：BLACKver
+・はい/いいえ選択肢表示
+・はい→badrider_05
+　はい、だけど戦闘可能ポケモン2匹以下→badrider_06
+　いいえ→badrider_07</comment>
+		<attribute name="キャラ指定">BADRIDER</attribute>
+		<language name="JPN" width="256">オレは……　こいする　おとこ
+そのなも　チャールズ▼
+どうだ！　おまえも　トレーナーなら
+やらないか　ローテーションバトルを？</language>
+		<language name="JPN_KANJI" width="256">オレは……　恋する男
+その名も　チャールズ▼
+どうだ！　おまえも　トレーナーなら
+やらないか　ローテーションバトルを？</language>
+	</row>
+
+	<row id="msg_r05_badrider_05b" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
+		<comment>♂
+・BLACKver
+・はい選択時
+　メッセージ表示後、トレーナー戦闘へ</comment>
+		<attribute name="キャラ指定">BADRIDER</attribute>
+		<language name="JPN" width="256">いい　こころがけ　だな▼
+だけど　オレは　こいする　おとこ
+そのなも　チャールズ▼
+いつだって　フルスロットルだぜ！▼</language>
+		<language name="JPN_KANJI" width="256">いい　こころがけ　だな▼
+だけど　オレは　恋する男
+その名も　チャールズ▼
+いつだって　フルスロットルだぜ！▼</language>
+	</row>
+
+	<row id="msg_r05_badrider_06b" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
+		<comment>♂：BLACKver
+・はい、だけど戦えるポケモンが２匹以下</comment>
+		<attribute name="キャラ指定">BADRIDER</attribute>
+		<language name="JPN" width="256">もえあがった　きもちに
+みずを　さして　すまない……▼
+ローテーションバトルには
+たたかえる　ポケモンが▽
+３びき　ひつよう　なんだよ</language>
+		<language name="JPN_KANJI" width="256">燃えあがった　気持ちに
+水を　さして　すまないな……▼
+ローテーションバトルには
+戦える　ポケモンが▽
+３匹　必要なんだよ</language>
+	</row>
+
+	<row id="msg_r05_badrider_07b" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
+		<comment>♂：BLACKver
+・いいえ選択時
+　再度会話はbadrider_04から</comment>
+		<attribute name="キャラ指定">BADRIDER</attribute>
+		<language name="JPN" width="256">オレは……　こいする　おとこ
+そのなも　チャールズ▼
+そんなオレから　アドバイス……▼
+チャレンジこそが　じんせい　なんだぜ</language>
+		<language name="JPN_KANJI" width="256">オレは……　恋する男
+その名も　チャールズ▼
+そんなオレから　アドバイス……▼
+チャレンジこそが　人生なんだぜ</language>
+	</row>
+
+	<row id="msg_r05_badrider_08b" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
+		<comment>♂：BLACKver
+・トレーナー戦闘後
+　フィールド復帰時で自動表示
+・表示後、左を向いてbadrider_09b</comment>
+		<attribute name="キャラ指定">BADRIDER</attribute>
+		<language name="JPN" width="256">……ふっ　ざまあねえな
+おしえるつもりが　おそわるとはな▼
+それにしても　おまえには
+みどころが　ある▼
+じぶんの　ポケモンへの　りかいがなきゃ
+ローテーションバトルは　かてないからな▼</language>
+		<language name="JPN_KANJI" width="256">……ふっ　ざまあねえな
+教えるつもりが　教わるとはな▼
+それにしても　おまえには
+見所が　ある▼
+じぶんの　ポケモンへの　理解がなきゃ
+ローテーションバトルは　勝てないからな▼</language>
+	</row>
+
+	<row id="msg_r05_badrider_09b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
+		<comment>♂：BLACKver
+・表示後、画面左に消えていく
+　消えると暗転、ストッパー削除</comment>
+		<attribute name="キャラ指定">BADRIDER</attribute>
+		<language name="JPN" width="256">オレは……　こいする　おとこ
+そのなも　チャールズ▼
+バイクにのって　かぜになるのが
+にあう　ツミな　おとこさ</language>
+		<language name="JPN_KANJI" width="256">オレは……　恋する男
+その名も　チャールズ▼
+バイクに乗って　風になるのが
+似合う　ツミな　男さ</language>
+	</row>
+
+	<row id="msg_r05_stop01_01" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,,,#ffff80,,,,,,,,,,,,,">
+		<comment>？
+・ライモンのジムバッジ取得前
+・GRIDX＝342、GRIDZ＝433、左向き
+・チャールズと勝負中</comment>
+		<attribute name="キャラ指定">ストッパーその１</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_r05_stop01_02" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,,,#ffff80,,,,,,,,,,,,,">
+		<comment>？
+・ライモンのジムバッジ取得後</comment>
+		<attribute name="キャラ指定">ストッパーその１</attribute>
+		<language name="JPN" width="256">ジムバッジが　４こ……
+きみなら　チャールズに　かてるかも！</language>
+		<language name="JPN_KANJI" width="256">ジムバッジが　４こ……
+きみなら　チャールズに　かてるかも！</language>
+	</row>
+
+	<row id="msg_r05_stop02_01" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
+		<comment>？
+・GRIDX＝343、GRIDZ＝434</comment>
+		<attribute name="キャラ指定">ストッパーその２</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_r05_stop03_01" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
+		<comment>？
+・GRIDX＝340、GRIDZ＝436、上向き</comment>
+		<attribute name="キャラ指定">ストッパーその３</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_r05_stop04_01" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
+		<comment>？
+・GRIDX＝341、GRIDZ＝436、上向き</comment>
+		<attribute name="キャラ指定">ストッパーその４</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_r05_stop05_01" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
+		<comment>？
+・GRIDX＝337、GRIDZ＝431、右向き</comment>
+		<attribute name="キャラ指定">ストッパーその５</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_r05_stop06_01" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
+		<comment>？
+・GRIDX＝336、GRIDZ＝432、右向き</comment>
+		<attribute name="キャラ指定">ストッパーその５</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_r05_stop07_01" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
+		<comment>？
+・GRIDX＝336、GRIDZ＝433、右向き</comment>
+		<attribute name="キャラ指定">ストッパーその５</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_r05_stop08_01" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
+		<comment>？
+・GRIDX＝337、GRIDZ＝434、右向き</comment>
+		<attribute name="キャラ指定">ストッパーその５</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_r05_stop09_01" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
+		<comment>？
+・GRIDX＝338、GRIDZ＝435、右向き</comment>
+		<attribute name="キャラ指定">ストッパーその５</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_r05_breederw_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・1日1種類のきのみが5コ買える
 ・道具は以下からランダムで選択
@@ -322,7 +758,7 @@
 ねっ　ほしいでしょ？　買うでしょ？</language>
 	</row>
 
-	<row id="msg_r05_breederw_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_r05_breederw_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・いいえ選択
 　日が変わる前に再度会話したとき
@@ -334,7 +770,7 @@
 せっかく　集めた　きのみ　なのに</language>
 	</row>
 
-	<row id="msg_r05_breederw_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_r05_breederw_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・はい選択
 　続けてアイテム入手処理</comment>
@@ -345,7 +781,7 @@
 あなた　買い物上手　よね！！▼</language>
 	</row>
 
-	<row id="msg_r05_breederw_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_r05_breederw_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・はい選択、バッグが一杯</comment>
 		<attribute name="キャラ指定">BREEDERW</attribute>
@@ -355,7 +791,7 @@
 バッグが　いっぱいだよね！</language>
 	</row>
 
-	<row id="msg_r05_breederw_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_r05_breederw_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・はい選択、お金がない</comment>
 		<attribute name="キャラ指定">BREEDERW</attribute>
@@ -365,7 +801,7 @@
 お金が　たりないよね！</language>
 	</row>
 
-	<row id="msg_r05_breederw_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_r05_breederw_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・購入後
 ・日が変わるまで繰り返し</comment>
@@ -376,7 +812,7 @@
 よかったら　明日　買いにきてね！</language>
 	</row>
 
-	<row id="msg_r05_breederw_07" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_r05_breederw_07" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・msg_r05_breederw_02表示後に会話</comment>
 		<attribute name="キャラ指定">BREEDERW</attribute>
