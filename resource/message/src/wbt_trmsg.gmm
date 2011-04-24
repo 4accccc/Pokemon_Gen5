@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-24T15:19:53"/>
+	<create user="matsumiya" host="W00224" date="2011-04-24T16:19:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -395,14 +395,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1371" top="105" right="2076" bottom="733" maximized="no" rayout="Vertical2">
+	<dialog left="1292" top="158" right="1997" bottom="786" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1773,80 +1773,106 @@
 		<comment>♂
 ・チャンピオン：ダイゴ
 ・１回戦用対戦前メッセージ</comment>
-		<language name="JPN" width="216">１かいせん
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">１回戦
-仮メッセージ▼</language>
+		<language name="JPN" width="216">やあ
+ボクは　ダイゴ▼
+きみの　ポケモン
+なかなか　いい　かんじだね▼</language>
+		<language name="JPN_KANJI" width="216">やあ
+ボクは　ダイゴ▼
+きみの　ポケモン
+なかなか　いい　感じだね▼</language>
 	</row>
 
 	<row id="TRID_RSCHAMPION_TRMSG_2ND_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・チャンピオン：ダイゴ
 ・２回戦用対戦前メッセージ</comment>
-		<language name="JPN" width="216">２かいせん
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">２回戦
-仮メッセージ▼</language>
+		<language name="JPN" width="216">ボクの　なまえは　ダイゴ▼
+めずらしい　いしに
+きょうみが　あって▽
+あちこち　たびしてるんだ▼</language>
+		<language name="JPN_KANJI" width="216">ボクの　名前は　ダイゴ▼
+珍しい　石に
+興味が　あって▽
+あちこち　旅してるんだ▼</language>
 	</row>
 
 	<row id="TRID_RSCHAMPION_TRMSG_3RD_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・チャンピオン：ダイゴ
 ・決勝戦用対戦前メッセージ</comment>
-		<language name="JPN" width="216">けっしょうせん
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">決勝戦
-仮メッセージ▼</language>
+		<language name="JPN" width="216">これまでの　たびの　なかで
+きみの　なかに　めばえた　なにか▼
+その　すべてを
+ボクに　ぶつけてほしい！▽
+さあ　はじめよう！！▼</language>
+		<language name="JPN_KANJI" width="216">これまでの　旅の　中で
+きみの　中に　芽生えた　なにか▼
+その　すべてを
+ボクに　ぶつけてほしい！▽
+さあ　はじめよう！！▼</language>
 	</row>
 
 	<row id="TRID_RSCHAMPION_TRMSG_FIGHT_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・チャンピオン：ダイゴ
 ・対戦後メッセージ</comment>
-		<language name="JPN" width="216">たいせんご
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">対戦後
-仮メッセージ▼</language>
+		<language name="JPN" width="216">きみは　ほんとうに　すばらしい
+ポケモン　トレーナー　だよ！▼</language>
+		<language name="JPN_KANJI" width="216">きみは　本当に　すばらしい
+ポケモン　トレーナー　だよ！▼</language>
 	</row>
 
 	<row id="TRID_RSCHAMPION_TRMSG_FIGHT_PLAYER_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・チャンピオン：ダイゴ
 ・対戦後　プレイヤー負けメッセージ</comment>
-		<language name="JPN" width="216">たいせんご　プレイヤーまけ
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">対戦後　プレイヤー負け
-仮メッセージ▼</language>
+		<language name="JPN" width="216">けっきょく　ボクが　いちばん
+つよくて　すごいんだよね▼</language>
+		<language name="JPN_KANJI" width="216">結局　ボクが　一番
+強くて　すごいんだよね▼</language>
 	</row>
 
 	<row id="TRID_RSCHAMPION_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・チャンピオン：ダイゴ
 ・プレイヤーが勝った場合のメッセージ</comment>
-		<language name="JPN" width="216">プレイヤーしょうり
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">プレイヤー勝利
-仮メッセージ▼</language>
+		<language name="JPN" width="216">ダイゴ『おめでとう！▼
+きみの　ポケモンを　おもう　きもち
+そして　その　きもちに　こたえるため▽
+ぜんりょくを　つくした　ポケモン▼
+それらが　あわさって　ひとつと　なり
+おおきな　ちからを　うみだした▼
+だからこそ　こうして
+きみが　しょうりを　つかんだ！▼</language>
+		<language name="JPN_KANJI" width="216">ダイゴ『おめでとう！▼
+きみの　ポケモンを　思う　気持ち
+そして　その　気持ちに　応えるため▽
+全力を　尽くした　ポケモン▼
+それらが　あわさって　ひとつと　なり
+大きな　力を　生みだした▼
+だからこそ　こうして
+きみが　勝利を　つかんだ！▼</language>
 	</row>
 
 	<row id="TRID_RSCHAMPION_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・チャンピオン：ダイゴ
 ・プレイヤーが負けた場合のメッセージ</comment>
-		<language name="JPN" width="216">プレイヤーまけ
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">プレイヤー負け
-仮メッセージ▼</language>
+		<language name="JPN" width="216">ダイゴ『じゃあ　ボクは　これで
+また　どこかで　あうかもしれないね▼</language>
+		<language name="JPN_KANJI" width="216">ダイゴ『じゃあ　ボクは　これで
+また　どこかで　会うかもしれないね▼</language>
 	</row>
 
 	<row id="TRID_RSCHAMPION_TRMSG_OPENING_ANNOUNCE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂：アナウンス
 ・チャンピオン：ダイゴ
 ・前口上メッセージ</comment>
-		<language name="JPN" width="216">かりメッセージ
-ダイゴ▼</language>
-		<language name="JPN_KANJI" width="216">仮メッセージ
-ダイゴ▼</language>
+		<language name="JPN" width="216">デボンコーポレーション　おんぞうし
+さすらいの　いしあつめは　ダイゴッ！▼</language>
+		<language name="JPN_KANJI" width="216">デボンコーポレーション　御曹司
+さすらいの　石集めは　ダイゴッ！▼</language>
 	</row>
 
 	<row id="TRID_ECHAMPION_TRMSG_1ST_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
@@ -1873,8 +1899,10 @@
 		<comment>♂
 ・チャンピオン：ミクリ
 ・決勝戦用対戦前メッセージ</comment>
-		<language name="JPN" width="216">けっしょうせん
-かりメッセージ▼</language>
+		<language name="JPN" width="216">さあ！　いちばん
+かれいに　ポケモンと▽
+おどれるのは　だれなのか！▽
+いま　ここで　みせて　もらおう！▼</language>
 		<language name="JPN_KANJI" width="216">決勝戦
 仮メッセージ▼</language>
 	</row>
@@ -1883,10 +1911,12 @@
 		<comment>♂
 ・チャンピオン：ミクリ
 ・対戦後メッセージ</comment>
-		<language name="JPN" width="216">たいせんご
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">対戦後
-仮メッセージ▼</language>
+		<language name="JPN" width="216">なんと　ワンダフル！▼
+にくらしいほど　エレガント！▼
+だけど　とっても　グロリアス！▼</language>
+		<language name="JPN_KANJI" width="216">なんと　ワンダフル！▼
+にくらしいほど　エレガント！▼
+だけど　とっても　グロリアス！▼</language>
 	</row>
 
 	<row id="TRID_ECHAMPION_TRMSG_FIGHT_PLAYER_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
@@ -1923,7 +1953,7 @@
 		<comment>♂：アナウンス
 ・チャンピオン：ミクリ
 ・前口上メッセージ</comment>
-		<language name="JPN" width="216">かりメッセージ
+		<language name="JPN" width="216">みずを　あいする　アーティスト
 ミクリ▼</language>
 		<language name="JPN_KANJI" width="216">仮メッセージ
 ミクリ▼</language>
