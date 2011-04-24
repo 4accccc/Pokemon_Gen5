@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-05T16:33:22"/>
+	<create user="matsumiya" host="W00224" date="2011-04-24T18:20:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1295" top="201" right="2000" bottom="829" maximized="no" rayout="Vertical2">
+	<dialog left="1306" top="115" right="2011" bottom="738" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -307,33 +307,83 @@
 まれに　ポケモンと　ぶつかるんだよね</language>
 	</row>
 
-	<row id="msg_h02_woman2_01">
-		<comment>♀</comment>
+	<row id="msg_h02_woman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+※SWANでメッセージ変更</comment>
 		<attribute name="キャラ指定">WOMAN2</attribute>
 		<language name="JPN" width="256">ふねが　とおるたびに
 はねばしが　あがったり　さがったり▼
 もっとも　ふねの　うんこうは
 ヤーコンさんが　きめているから▼
 はしの　あげさげを　きめるのは
-ヤーコンさんしだい　ってことね</language>
+ヤーコンさんしだい　ってことね▼
+テストメッセージ
+ホドモエの　あたらしい　めいぶつは
+ワールドバトルトーナメント！▼
+ついでに　チャールズ！！</language>
 		<language name="JPN_KANJI" width="256">船が　通るたびに
 跳ね橋が　あがったり　さがったり▼
 もっとも　船の　運行は
 ヤーコンさんが　決めているから▼
 橋の　あげさげを　決めるのは
-ヤーコンさん次第　ってことね</language>
+ヤーコンさん次第　ってことね▼
+テストメッセージ
+ホドモエの　あたらしい　めいぶつは
+ワールドバトルトーナメント！▼
+ついでに　チャールズ！！</language>
 	</row>
 
-	<row id="msg_h02_boy2" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_h02_boy2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・SWANでメッセージ変更</comment>
+・SWANでイベント変更
+・手持ちにリザードンがいない</comment>
 		<attribute name="キャラ指定">BOY2</attribute>
-		<language name="JPN" width="256">ホドモエの　あたらしい　めいぶつは
-ワールドバトルトーナメント！▼
-ついでに　チャールズ！！</language>
-		<language name="JPN_KANJI" width="256">ホドモエの　新しい　名物は
-ワールドバトルトーナメント！▼
-ついでに　チャールズ！！</language>
+		<language name="JPN" width="256">ホドモエの　はねばし……
+またの　なまえを　リザードンブリッジ！▼
+なんでも　リザードンという
+ポケモンのように　みえるから　だって▼
+……でも　リザードンって　ポケモン
+みたことないから　よくわからないや</language>
+		<language name="JPN_KANJI" width="256">ホドモエの　はねばし……
+またの　なまえを　リザードンブリッジ！▼
+なんでも　リザードンという
+ポケモンのように　みえるから　だって▼
+……でも　リザードンって　ポケモン
+みたことないから　よくわからないや</language>
+	</row>
+
+	<row id="msg_h02_boy2_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・SWANでイベント変更
+・手持ちにリザードンがいる</comment>
+		<attribute name="キャラ指定">BOY2</attribute>
+		<language name="JPN" width="256">ホドモエの　はねばし……
+またの　なまえを　リザードンブリッジ！▼
+なんでも　リザードンという
+ポケモンのように　みえるから　だって</language>
+		<language name="JPN_KANJI" width="256">ホドモエの　はねばし……
+またの　なまえを　リザードンブリッジ！▼
+なんでも　リザードンという
+ポケモンのように　みえるから　だって</language>
+	</row>
+
+	<row id="msg_h02_boy2_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・アイテム入手処理
+　No000「？？？？？？？」</comment>
+		<attribute name="キャラ指定">BOY2</attribute>
+		<language name="JPN" width="256">ありがとう！</language>
+		<language name="JPN_KANJI" width="256">ありがとう！</language>
+	</row>
+
+	<row id="msg_h02_boy2_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・アイテム入手後</comment>
+		<attribute name="キャラ指定">BOY2</attribute>
+		<language name="JPN" width="256">このはしをつくったひとは
+リザードンと　いっしょにいたのかな</language>
+		<language name="JPN_KANJI" width="256">このはしをつくったひとは
+リザードンと　いっしょにいたのかな</language>
 	</row>
 
 	<flowchart-group-list>
