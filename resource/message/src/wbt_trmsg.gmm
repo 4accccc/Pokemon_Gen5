@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-20T11:45:55"/>
+	<create user="matsumiya" host="W00224" date="2011-04-24T15:19:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -395,14 +395,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1579" top="240" right="2281" bottom="858" maximized="no" rayout="Vertical2">
+	<dialog left="1371" top="105" right="2076" bottom="733" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="0" style="0000" width="527"/>
+		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="694"/>
-		<band id="3" index="3" style="0000" width="694"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<band id="2" index="2" style="0000" width="697"/>
+		<band id="3" index="3" style="0000" width="697"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1567,160 +1567,206 @@
 		<comment>♂
 ・チャンピオン：グリーン
 ・１回戦用対戦前メッセージ</comment>
-		<language name="JPN" width="216">１かいせん
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">１回戦
-仮メッセージ▼</language>
+		<language name="JPN" width="216">いまは　むしょうに
+たたかいたい　きぶん　だぜ！▼</language>
+		<language name="JPN_KANJI" width="216">いまは　無性に
+戦いたい　気分だぜ！▼</language>
 	</row>
 
 	<row id="TRID_RGCHAMPION_TRMSG_2ND_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・チャンピオン：グリーン
 ・２回戦用対戦前メッセージ</comment>
-		<language name="JPN" width="216">２かいせん
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">２回戦
-仮メッセージ▼</language>
+		<language name="JPN" width="216">オレは　トレーナー　だからな▼
+つよい　ヤツが　いたら
+たたかいたく　なっちまうんだ▼</language>
+		<language name="JPN_KANJI" width="216">オレは　トレーナー　だからな▼
+つよい　ヤツが　いたら
+たたかいたく　なっちまうんだ▼</language>
 	</row>
 
 	<row id="TRID_RGCHAMPION_TRMSG_3RD_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・チャンピオン：グリーン
 ・決勝戦用対戦前メッセージ</comment>
-		<language name="JPN" width="216">けっしょうせん
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">決勝戦
-仮メッセージ▼</language>
+		<language name="JPN" width="216">たたかえば　わかることだ▼
+おまえの　じつりょくが
+ホンモノか　どうかは　な！▼</language>
+		<language name="JPN_KANJI" width="216">戦えば　わかることだ▼
+おまえの　実力が
+ホンモノか　どうかは　な！▼</language>
 	</row>
 
 	<row id="TRID_RGCHAMPION_TRMSG_FIGHT_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・チャンピオン：グリーン
 ・対戦後メッセージ</comment>
-		<language name="JPN" width="216">たいせんご
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">対戦後
-仮メッセージ▼</language>
+		<language name="JPN" width="216">オレが　こんな　ヤツに
+まけちまう　なんてっ！！▼</language>
+		<language name="JPN_KANJI" width="216">オレが　こんな　ヤツに
+負けちまう　なんてっ！！▼</language>
 	</row>
 
 	<row id="TRID_RGCHAMPION_TRMSG_FIGHT_PLAYER_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・チャンピオン：グリーン
 ・対戦後　プレイヤー負けメッセージ</comment>
-		<language name="JPN" width="216">たいせんご　プレイヤーまけ
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">対戦後　プレイヤー負け
-仮メッセージ▼</language>
+		<language name="JPN" width="216">これが　オレの……　カントーで
+トップレベルの　じつりょく　だぜ！▼</language>
+		<language name="JPN_KANJI" width="216">これが　オレの……　カントーで
+トップレベルの　実力だぜ！▼</language>
 	</row>
 
 	<row id="TRID_RGCHAMPION_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・チャンピオン：グリーン
 ・プレイヤーが勝った場合のメッセージ</comment>
-		<language name="JPN" width="216">プレイヤーしょうり
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">プレイヤー勝利
-仮メッセージ▼</language>
+		<language name="JPN" width="216">グリーン『おまえは　ほんもの　だよ
+つよい　トレーナーだ！▽
+すなおに　みとめるぜ！▼
+だがな！
+わすれるな！▼
+いつか　オレが
+おまえを　たおすからなっ！▼</language>
+		<language name="JPN_KANJI" width="216">グリーン『おまえは　本物だよ
+強い　トレーナーだ！▽
+素直に　認めるぜ！▼
+だがな！
+忘れるな！▼
+いつか　オレが
+おまえを　倒すからなっ！▼</language>
 	</row>
 
 	<row id="TRID_RGCHAMPION_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・チャンピオン：グリーン
 ・プレイヤーが負けた場合のメッセージ</comment>
-		<language name="JPN" width="216">プレイヤーまけ
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">プレイヤー負け
-仮メッセージ▼</language>
+		<language name="JPN" width="216">グリーン『たしかに　おまえは　つよい▼
+だがな　うえには　うえが　いるのさ
+もっと　しょうじん　すること　だぜ！▼
+バイビー！▼</language>
+		<language name="JPN_KANJI" width="216">グリーン『たしかに　おまえは　強い▼
+だがな　上に　上が　いるのさ
+もっと　精進すること　だぜ！▼
+バイビー！▼</language>
 	</row>
 
 	<row id="TRID_RGCHAMPION_TRMSG_OPENING_ANNOUNCE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂：アナウンス
 ・チャンピオン：グリーン
 ・前口上メッセージ</comment>
-		<language name="JPN" width="216">かりメッセージ
-グリーン▼</language>
-		<language name="JPN_KANJI" width="216">仮メッセージ
-グリーン▼</language>
+		<language name="JPN" width="216">カントー　さいきょうの　いでんし！
+オーキドはかせの　まご　グリーンッ！▼</language>
+		<language name="JPN_KANJI" width="216">カントー　最強の　遺伝子！
+オーキド博士の　孫　グリーンッ！▼</language>
 	</row>
 
 	<row id="TRID_GSCHAMPION_TRMSG_1ST_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・チャンピオン：ワタル
 ・１回戦用対戦前メッセージ</comment>
-		<language name="JPN" width="216">１かいせん
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">１回戦
-仮メッセージ▼</language>
+		<language name="JPN" width="216">ドラゴンつかいの　ワタル
+いざ　まいる！▼</language>
+		<language name="JPN_KANJI" width="216">ドラゴン使いの　ワタル
+いざ　参る！▼</language>
 	</row>
 
 	<row id="TRID_GSCHAMPION_TRMSG_2ND_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・チャンピオン：ワタル
 ・２回戦用対戦前メッセージ</comment>
-		<language name="JPN" width="216">２かいせん
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">２回戦
-仮メッセージ▼</language>
+		<language name="JPN" width="216">きみには　ポケモンへの
+あいと　しんらいが　あふれている▼
+すばらしい　しょうぶを
+くりひろげることが　できそうだ！▼</language>
+		<language name="JPN_KANJI" width="216">きみには　ポケモンへの
+愛と　信頼が　あふれている▼
+すばらしい　勝負を
+繰り広げることが　できそうだ！▼</language>
 	</row>
 
 	<row id="TRID_GSCHAMPION_TRMSG_3RD_FIGHT_START" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・チャンピオン：ワタル
 ・決勝戦用対戦前メッセージ</comment>
-		<language name="JPN" width="216">ドラゴンつかいの　ワタル！
+		<language name="JPN" width="216">ここまで　くれば
+なにも　いうことは　ない！▼
+ただ　どちらが　つよいか
+たたかって　きめるだけ！▼
+さいきょうの　トレーナー　として▼
+ドラゴンつかいの　ワタル
 いざ　まいる！▼</language>
-		<language name="JPN_KANJI" width="216">決勝戦
-仮メッセージ▼</language>
+		<language name="JPN_KANJI" width="216">ここまで　くれば
+なにも　いうことは　ない！▼
+ただ　どちらが　強いか
+戦って　決めるだけ！▼
+最強の　トレーナー　として▼
+ドラゴン使いの　ワタル
+いざ　参る！▼</language>
 	</row>
 
 	<row id="TRID_GSCHAMPION_TRMSG_FIGHT_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・チャンピオン：ワタル
 ・対戦後メッセージ</comment>
-		<language name="JPN" width="216">たいせんご
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">対戦後
-仮メッセージ▼</language>
+		<language name="JPN" width="216">……おわった▼</language>
+		<language name="JPN_KANJI" width="216">……終わった▼</language>
 	</row>
 
 	<row id="TRID_GSCHAMPION_TRMSG_FIGHT_PLAYER_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・チャンピオン：ワタル
 ・対戦後　プレイヤー負けメッセージ</comment>
-		<language name="JPN" width="216">たいせんご　プレイヤーまけ
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">対戦後　プレイヤー負け
-仮メッセージ▼</language>
+		<language name="JPN" width="216">どんな　ときも　あきらめない
+それは　きみだって　おなじだろ？▼</language>
+		<language name="JPN_KANJI" width="216">どんな　ときも　あきらめない
+それは　きみだって　同じだろ？▼</language>
 	</row>
 
 	<row id="TRID_GSCHAMPION_TRMSG_FIGHT_AFTER_PLAYER_WIN" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・チャンピオン：ワタル
 ・プレイヤーが勝った場合のメッセージ</comment>
-		<language name="JPN" width="216">プレイヤーしょうり
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">プレイヤー勝利
-仮メッセージ▼</language>
+		<language name="JPN" width="216">ワタル『……だけど
+ふしぎな　きぶん　だよ▼
+きっと　まけた　くやしさより
+いい　トレーナーと▽
+しょうぶを　することが　できた▼
+よろこびの　ほうが
+おおきいから　かな▼</language>
+		<language name="JPN_KANJI" width="216">ワタル『……だけど
+不思議な　気分だよ▼
+きっと　負けた　悔しさより
+いい　トレーナーと▽
+勝負を　することが　できた▼
+よろこびの　方が
+大きいから　かな▼</language>
 	</row>
 
 	<row id="TRID_GSCHAMPION_TRMSG_FIGHT_AFTER_PLAYER_LOSE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・チャンピオン：ワタル
 ・プレイヤーが負けた場合のメッセージ</comment>
-		<language name="JPN" width="216">プレイヤーまけ
-かりメッセージ▼</language>
-		<language name="JPN_KANJI" width="216">プレイヤー負け
-仮メッセージ▼</language>
+		<language name="JPN" width="216">ワタル『トレーナーの　きみが
+ただしくて　つよい　こころを　もてば▽
+ポケモンも　それに　こたえてくれる▼
+そうして　トレーナーも　ポケモンも
+どんどん　つよくなって　いくんだ……▼</language>
+		<language name="JPN_KANJI" width="216">ワタル『トレーナーの　きみが
+正しくて　強い　心を　持てば▽
+ポケモンも　それに　答えてくれる▼
+そうして　トレーナーも　ポケモンも
+どんどん　強くなって　いくんだ……▼</language>
 	</row>
 
 	<row id="TRID_GSCHAMPION_TRMSG_OPENING_ANNOUNCE" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂：アナウンス
 ・チャンピオン：ワタル
 ・前口上メッセージ</comment>
-		<language name="JPN" width="216">かりメッセージ
-ワタル▼</language>
-		<language name="JPN_KANJI" width="216">仮メッセージ
-ワタル▼</language>
+		<language name="JPN" width="216">ながれる　いちぞくの　ちが　さけぶ！
+ドラゴンつかい　ワタル　けんざんッ！▼</language>
+		<language name="JPN_KANJI" width="216">流れる　一族の　血が　叫ぶ！
+ドラゴン使い　ワタル　見参ッ！▼</language>
 	</row>
 
 	<row id="TRID_RSCHAMPION_TRMSG_1ST_FIGHT_START" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
