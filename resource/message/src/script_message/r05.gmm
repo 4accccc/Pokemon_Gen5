@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-24T17:28:38"/>
+	<create user="matsumiya" host="W00224" date="2011-04-24T17:56:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="1462" top="192" right="2167" bottom="820" maximized="no" rayout="Vertical2">
+	<dialog left="1412" top="265" right="2115" bottom="894" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="445"/>
-		<band id="1" index="2" style="0000" width="250"/>
+		<band id="1" index="2" style="0000" width="248"/>
 		<band id="2" index="3" style="0000" width="306"/>
-		<band id="3" index="4" style="0000" width="389"/>
-		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<band id="3" index="4" style="0000" width="387"/>
+		<band id="4" index="0" style="0000" width="695"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -308,14 +308,12 @@
 トリプルバトルの　まっさいちゅう！</language>
 	</row>
 
-	<row id="msg_r05_badrider_01w" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_r05_badrider_01w" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂：WHITEver
 ・ライモンのジムバッジ取得後
 ・はい/いいえ選択肢表示
 　はい　→badrider_02
-　いいえ→badrider_03
-
-※SWANで修正</comment>
+　いいえ→badrider_03</comment>
 		<attribute name="キャラ指定">BADRIDER</attribute>
 		<language name="JPN" width="256">オレは……　こいする　おとこ
 そのなも　チャールズ▼
@@ -460,11 +458,11 @@
 		<language name="JPN" width="256">オレは……　こいする　おとこ
 そのなも　チャールズ▼
 バイクにのって　かぜになるのが
-にあう　ツミな　おとこさ</language>
+にあう　ツミな　おとこさ▼</language>
 		<language name="JPN_KANJI" width="256">オレは……　恋する男
 その名も　チャールズ▼
 バイクに乗って　風になるのが
-似合う　ツミな　男さ</language>
+似合う　ツミな　男さ▼</language>
 	</row>
 
 	<row id="msg_r05_badrider_00b" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
@@ -637,11 +635,11 @@
 		<language name="JPN" width="256">オレは……　こいする　おとこ
 そのなも　チャールズ▼
 バイクにのって　かぜになるのが
-にあう　ツミな　おとこさ</language>
+にあう　ツミな　おとこさ▼</language>
 		<language name="JPN_KANJI" width="256">オレは……　恋する男
 その名も　チャールズ▼
 バイクに乗って　風になるのが
-似合う　ツミな　男さ</language>
+似合う　ツミな　男さ▼</language>
 	</row>
 
 	<row id="msg_r05_stop01_01" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,,,#ffff80,,,,,,,,,,,,,">
@@ -650,8 +648,10 @@
 ・GRIDX＝342、GRIDZ＝433、左向き
 ・チャールズと勝負中</comment>
 		<attribute name="キャラ指定">ストッパーその１</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">こいするおとこに　まけるのか
+ボクには　かのじょが　いるのに！</language>
+		<language name="JPN_KANJI" width="256">こいするおとこに　まけるのか
+ボクには　かのじょが　いるのに！</language>
 	</row>
 
 	<row id="msg_r05_stop01_02" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,,,#ffff80,,,,,,,,,,,,,">
@@ -659,73 +659,109 @@
 ・ライモンのジムバッジ取得後</comment>
 		<attribute name="キャラ指定">ストッパーその１</attribute>
 		<language name="JPN" width="256">ジムバッジが　４こ……
-きみなら　チャールズに　かてるかも！</language>
+きみなら　チャールズに　かてるかも！▼
+ボクの　かわりに
+あいつを　うちまかしてくれ！</language>
 		<language name="JPN_KANJI" width="256">ジムバッジが　４こ……
-きみなら　チャールズに　かてるかも！</language>
+きみなら　チャールズに　かてるかも！▼
+ボクの　かわりに
+あいつを　うちまかしてくれ！</language>
 	</row>
 
-	<row id="msg_r05_stop02_01" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
-		<comment>？
+	<row id="msg_r05_stop02_01" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
 ・GRIDX＝343、GRIDZ＝434</comment>
 		<attribute name="キャラ指定">ストッパーその２</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">しょうぶだから　かちまけは　あるけれ
+なにより　たのしめば　いいのにね▼
+あたしの　かれ　ったら
+すぐ　ムキに　なるんだから！</language>
+		<language name="JPN_KANJI" width="256">しょうぶだから　かちまけは　あるけれ
+なにより　たのしめば　いいのにね▼
+あたしの　かれ　ったら
+すぐ　ムキに　なるんだから！</language>
 	</row>
 
-	<row id="msg_r05_stop03_01" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
-		<comment>？
+	<row id="msg_r05_stop03_01" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#80ffff,,,,,#80ffff,,,,,,,,,,,,,">
+		<comment>♀
 ・GRIDX＝340、GRIDZ＝436、上向き</comment>
 		<attribute name="キャラ指定">ストッパーその３</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">かんがえることは　おおそうだけど
+なんだか　すごく　おもしろそうねっ！</language>
+		<language name="JPN_KANJI" width="256">かんがえることは　おおそうだけど
+なんだか　すごく　おもしろそうねっ！</language>
 	</row>
 
-	<row id="msg_r05_stop04_01" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
-		<comment>？
+	<row id="msg_r05_stop04_01" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
 ・GRIDX＝341、GRIDZ＝436、上向き</comment>
 		<attribute name="キャラ指定">ストッパーその４</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">３びきの　ポケモンと　たたかう！
+なんか　それだけで　こうふんする！</language>
+		<language name="JPN_KANJI" width="256">３びきの　ポケモンと　たたかう！
+なんか　それだけで　こうふんする！</language>
 	</row>
 
-	<row id="msg_r05_stop05_01" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
+	<row id="msg_r05_stop05_01" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#80ffff,,,,,#80ffff,,,,,,,,,,,,,">
 		<comment>？
 ・GRIDX＝337、GRIDZ＝431、右向き</comment>
 		<attribute name="キャラ指定">ストッパーその５</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">トリプルバトルに
+ローテーションバトル……▼
+いろんな　スタイルの
+ポケモンしょうぶが　あるんだな</language>
+		<language name="JPN_KANJI" width="256">トリプルバトルに
+ローテーションバトル……▼
+いろんな　スタイルの
+ポケモンしょうぶが　あるんだな</language>
 	</row>
 
-	<row id="msg_r05_stop06_01" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
+	<row id="msg_r05_stop06_01" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>？
 ・GRIDX＝336、GRIDZ＝432、右向き</comment>
-		<attribute name="キャラ指定">ストッパーその５</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<attribute name="キャラ指定">ストッパーその６</attribute>
+		<language name="JPN" width="256">チャールズという　トレーナー
+なかなか　てごわいな▼
+ジムバッジを　４つ　もっていれば
+いい　しょうぶが　できそうだ</language>
+		<language name="JPN_KANJI" width="256">チャールズという　トレーナー
+なかなか　てごわいな▼
+ジムバッジを　４つ　もっていれば
+いい　しょうぶが　できそうだ</language>
 	</row>
 
-	<row id="msg_r05_stop07_01" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
+	<row id="msg_r05_stop07_01" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#80ffff,,,,,#80ffff,,,,,,,,,,,,,">
 		<comment>？
 ・GRIDX＝336、GRIDZ＝433、右向き</comment>
-		<attribute name="キャラ指定">ストッパーその５</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<attribute name="キャラ指定">ストッパーその７</attribute>
+		<language name="JPN" width="256">ポケモンって　いろいろ　いるから
+だれと　たたかうか　まよいそうね</language>
+		<language name="JPN_KANJI" width="256">ポケモンって　いろいろ　いるから
+だれと　たたかうか　まよいそうね</language>
 	</row>
 
-	<row id="msg_r05_stop08_01" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
+	<row id="msg_r05_stop08_01" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>？
 ・GRIDX＝337、GRIDZ＝434、右向き</comment>
-		<attribute name="キャラ指定">ストッパーその５</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<attribute name="キャラ指定">ストッパーその８</attribute>
+		<language name="JPN" width="256">ポケモン　たくさん　だから
+これ　すきー！</language>
+		<language name="JPN_KANJI" width="256">ポケモン　たくさん　だから
+これ　すきー！</language>
 	</row>
 
-	<row id="msg_r05_stop09_01" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
-		<comment>？
+	<row id="msg_r05_stop09_01" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#80ffff,,,,,#80ffff,,,,,,,,,,,,,">
+		<comment>♂
 ・GRIDX＝338、GRIDZ＝435、右向き</comment>
-		<attribute name="キャラ指定">ストッパーその５</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<attribute name="キャラ指定">ストッパーその９</attribute>
+		<language name="JPN" width="256">こういう　しょうぶを　みてると
+ホドモエに　できた　という▼
+ワールドバトルトーナメントに
+いってみたく　なっちゃうね</language>
+		<language name="JPN_KANJI" width="256">こういう　しょうぶを　みてると
+ホドモエに　できた　という▼
+ワールドバトルトーナメントに
+いってみたく　なっちゃうね</language>
 	</row>
 
 	<row id="msg_r05_breederw_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
