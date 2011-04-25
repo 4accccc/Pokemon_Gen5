@@ -183,7 +183,7 @@ sub_tourist_main_menu:
   //スカウトは秘書がいっぱいでないとでない
   _RESORT_GET_DATA( RESORT_GET_PARAM_IS_SECREARY_FULL, LWK_IS_SECRETARY_FULL )
   IF $LWK_IS_SECRETARY_FULL == TRUE THEN
-	  _BMPMENU_MAKE_LIST_EX( resort_sys_select_02, resort_sys_select_info_02, SEQ_TOURIST_SCOUT )	    //スカウト
+	  //_BMPMENU_MAKE_LIST_EX( resort_sys_select_02, resort_sys_select_info_02, SEQ_TOURIST_SCOUT )	    //スカウト  TODO 仮で出さない
   ENDIF
 
 	//_BMPMENU_MAKE_LIST_EX( resort_sys_select_07, resort_sys_select_info_07, SEQ_TOURIST_FAREWELL )	        //さようなら  TODO 仮で出さない
@@ -735,7 +735,6 @@ sub_resident_institution:
 	    _BALLOONWIN_CLOSE()
 
     CASE SEQ_RESIDENT_TROUBLE THEN      //困ってない？
-      //TODO 経験値表示をきくことになった
       _RESORT_SET_WORD( RESORT_WORD_SHOP_RESTEXP, RESORT_WORD_PARAM_FRONT,0 )
       _RESORT_SET_WORD( RESORT_WORD_SHOP, RESORT_WORD_PARAM_FRONT,1 )
       _RESORT_SET_WORD( RESORT_WORD_SHOP_LV, RESORT_WORD_PARAM_FRONT,2 )
@@ -1778,8 +1777,15 @@ sub_npc_mouthcomm_hear_core:
     _RESORT_GET_MOUTHCOMM( LWK_INDEX, LOCALWORK11, LWK_RET )
     $LOCALWORK11 += 1
 
+    _DEBUG_PRINT_WK( LWK_RET )
+
     //噂をいう
-     $LWK_RET += RESORT_NPC_DATA_MOUTHCOMM_I_00
+    $LWK_RET += RESORT_NPC_DATA_MOUTHCOMM_I_00
+    //１オリジンになっているので
+    $LWK_RET -= 1  
+
+    _DEBUG_PRINT_WK( LWK_RET )
+
     _RESORT_GET_NPC_DATA( LWK_OBJID, LWK_RET, LWK_MSGID )
 	  _BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DOWN )
 
@@ -1789,7 +1795,6 @@ sub_npc_mouthcomm_hear_core:
     IF $LWK_RET == 0 THEN
       $LWK_MENU_LOOP = FALSE
     ELSE
-
       //もっと聞きたい？
       _RESORT_GET_NPC_DATA( LWK_OBJID, RESORT_NPC_DATA_MOUTHCOMM_MSG_03, LWK_MSGID )
       _BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DOWN )

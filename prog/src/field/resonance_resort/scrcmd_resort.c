@@ -1549,8 +1549,10 @@ VMCMD_RESULT EvCmdResortGetNpcData( VMHANDLE *p_core, void *p_wk_adrs )
     {
       u16 msgid;
       param = param - RESORT_NPC_DATA_MOUTHCOMM_I_00;
+      GF_ASSERT_MSG( param < RESORT_NPC_SYS_GetMoutchCommData( p_nps_sys, RESORT_NPC_MMDLID_TO_INDEX(objid), RESORT_BINARY_MOUTHCOMM_PARAM_ANSWER_NUM ), "%d\n", param );
       msgid =  RESORT_NPC_SYS_GetMoutchCommData( p_nps_sys, RESORT_NPC_MMDLID_TO_INDEX(objid), RESORT_BINARY_MOUTHCOMM_PARAM_ANSWER_00 + param );
-      *p_ret_wk = msgid - resort_mouthcomm_a_00 + resort_mouthcomm_t_00;
+      *p_ret_wk = msgid + resort_mouthcomm_t_00 - resort_mouthcomm_a_00;
+      NAGI_Printf( "param[%d]ret[%d]msgid[%d]\n", param ,*p_ret_wk, msgid );
     }
     break;
 	case RESORT_NPC_DATA_MOUTHCOMM_MSG_00:
@@ -1561,6 +1563,7 @@ VMCMD_RESULT EvCmdResortGetNpcData( VMHANDLE *p_core, void *p_wk_adrs )
     {
       param = param - RESORT_NPC_DATA_MOUTHCOMM_MSG_00;
       *p_ret_wk =  RESORT_NPC_SYS_GetMoutchCommData( p_nps_sys, RESORT_NPC_MMDLID_TO_INDEX(objid), RESORT_BINARY_MOUTHCOMM_PARAM_MSG_00 + param );
+      NAGI_Printf( "param[%d]ret[%d]\n", param ,*p_ret_wk );
     }
     break;
   default:
@@ -1639,16 +1642,26 @@ VMCMD_RESULT EvCmdResortGetMouthComm( VMHANDLE *p_core, void *p_wk_adrs )
         if( cnt == 0 )
         {
           WORDSET *p_wordset    = SCRIPT_GetWordSet( p_script );
-          //’PŒê“o˜^   
-          STRCODE name[PERSON_NAME_SIZE+EOM_SIZE];
-          STRBUF *p_str = GFL_STR_CreateBuffer( PERSON_NAME_SIZE+EOM_SIZE, GFL_HEAP_LOWID(heapID) );
-          u32 sex = RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_SEX, NULL );
-          RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_NAME, name );
-          GFL_STR_SetStringCode( p_str, name );
+          //’PŒê“o˜^   l–¼ Œû•È
+          STRCODE name[64];
 
-          WORDSET_RegisterWord( p_wordset, 0, p_str, sex, TRUE, PM_LANG );
+          {
+            STRBUF *p_str = GFL_STR_CreateBuffer( PERSON_NAME_SIZE+EOM_SIZE, GFL_HEAP_LOWID(heapID) );
+            u32 sex = RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_SEX, NULL );
+            RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_NAME, name );
+            GFL_STR_SetStringCode( p_str, name );
+            WORDSET_RegisterWord( p_wordset, 0, p_str, sex, TRUE, PM_LANG );
 
-          GFL_STR_DeleteBuffer(p_str);
+            GFL_STR_DeleteBuffer(p_str);
+          }
+
+          {
+            STRBUF *p_str = GFL_STR_CreateBuffer( RESORT_PHRASE_LEN+EOM_SIZE, GFL_HEAP_LOWID(heapID) );
+            RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_PHRASE, name );
+            GFL_STR_SetStringCode( p_str, name );
+            WORDSET_RegisterWord( p_wordset, 1, p_str, PM_NEUTRAL, TRUE, PM_LANG );
+            GFL_STR_DeleteBuffer(p_str);
+          }
 
           //ƒNƒ`ƒRƒ~î•ñ‚ð•Ô‚·
           *p_ret_wk = gossip;

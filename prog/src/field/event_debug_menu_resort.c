@@ -34,6 +34,7 @@
 #include "event_name_input.h"
 #include "resonance_resort/resort_map.h"
 #include "resonance_resort/resort_shop.h"
+#include "resonance_resort/resort_binary.h"
 
 //--------------------------------------------------------------
 /// proto
@@ -880,10 +881,16 @@ static void PresenSetup_SetRecv( RESORT_RECV_DATA *p_recv, GFL_MSGDATA *p_msg, u
   RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_LANG, PM_LANG );
   RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_COMM_ID, sc_presen_data[cnt].commID );
 
-  //クチコミ
-  for( i = RESORT_DATA_PARAM_EXT4_GOSSIP_00; i <= RESORT_DATA_PARAM_EXT4_GOSSIP_15; i++ )
   {
-    RESORT_RECV_DATA_SetData( p_recv, i, GFUser_GetPublicRand(3) );
+    RESORT_BINARY_MOUTHCOMM *p_data = RESORT_BINARY_MOUTHCOMM_Init( GFL_HEAP_LOWID(HEAPID_PROC) );
+    //クチコミ
+    for( i = RESORT_DATA_PARAM_EXT4_GOSSIP_00; i <= RESORT_DATA_PARAM_EXT4_GOSSIP_15; i++ )
+    {
+      u32 max = RESORT_BINARY_MOUTHCOMM_GetData(p_data,i-RESORT_DATA_PARAM_EXT4_GOSSIP_00, RESORT_BINARY_MOUTHCOMM_PARAM_ANSWER_NUM );
+      RESORT_RECV_DATA_SetData( p_recv, i, GFUser_GetPublicRand(max+1) );
+    }
+
+    RESORT_BINARY_MOUTHCOMM_Exit(p_data);
   }
 
   //オフレコ
