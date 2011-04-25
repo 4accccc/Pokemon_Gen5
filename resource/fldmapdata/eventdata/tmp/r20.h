@@ -10,8 +10,13 @@
 #define ZONE_R20_EVC_H
 
 #define R20_MOUNTMAN_01                    0
-#define TR_TANPAN_18                       1
-#define TR_MINI_14                         2
+#define TR_MINI_14                         1
+#define TR_FUTAGO_05                       2
+#define TR_FUTAGO_05_2                     3
+#define TR_KINDERGARTENM_06                4
+#define TR_KINDERGARTENW_06                5
+#define TR_CHILDCARE_05                    6
+#define TR_TANPAN_18                       7
 
 #endif //ZONE_R20_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r20.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
