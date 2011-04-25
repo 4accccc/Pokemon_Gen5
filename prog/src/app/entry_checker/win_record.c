@@ -95,18 +95,22 @@ enum{
 
 // モード
 enum{
-	MODE_LV1 = 0,
-	MODE_LV2,
-	MODE_LV3,
+	MODE_LV1 = 0,							// シナリオクリア前
+	MODE_LV2,								// シナリオクリア後
+	MODE_LV3,								// チャンピオンバトル出現
 };
 
 // パレット
 enum{
+	// 何本目か(bg)
 	PLTID_BG_FONT				= 8,		// font
 	//
-	MES_CLEAR_COLOR				= 0,		// クリアカラー
+	// (obj)
+	PLTID_OBJ_CMN				= 12,		// cmnのpalのoffset
+	PLTID_OBJ_CMN_NUM			= 4,		// cmnのpalの本数
 	//
-	BMPOAM_FONT_COLOR			= 4,		// BmpOamのカラー
+	// 何番目か
+	MES_CLEAR_COLOR				= 0,		// クリアカラー
 };
 
 // 最大値
@@ -123,6 +127,8 @@ enum{
 	WIN_RECORD_UP_OBJ_MAXNUM	= 1,		// obj(up)
 	//
 	WIN_RECORD_MAX_COUNT		= 9999,		// 最大数
+	//
+	DISP_PANEL_MAXNUM			= 4,		// 1画面のpanel最大表示数
 };
 
 
@@ -166,83 +172,89 @@ enum{
 
 // empty
 enum{
-	EMPTY_PANEL_OFFSET 	= 5,				// パネルのオフセット
+	EMPTY_PANEL_OFFSET 	= 5,				// パネル(5:トーナメント名、6:回数)
 	//
-	EMPTY_PLAYER_NAME	= 11,
-	EMPTY_TITLE_NAME	= 12,
-	//
-	EMPTY_SCROLL_POS	= 4,
+	EMPTY_PLAYER_NAME	= 11,				// プレイヤ名
+	EMPTY_TITLE_NAME	= 12,				// 「ゆうしょうかいすう」
 };
 
 // タッチペンエリア
+// (excelのテーブルと対応)
 enum{
-	AREA_TP_LEFT = 0,
-	AREA_TP_RIGHT,
-	AREA_TP_CROSS,
-	AREA_TP_RETURN,
+	AREA_TP_LEFT = 0,						// 左矢印
+	AREA_TP_RIGHT,							// 右矢印
+	AREA_TP_CROSS,							// ×
+	AREA_TP_RETURN,							// RETURN
 	//
-	AREA_TP_SCROLL,
+	AREA_TP_SCROLL,							// スクロール領域
 	//
 	AREA_TP_MAX,
 };
 
 // トーナメントの番号
 enum{
-	TMT_ALL 	= 0,		// オール
-	TMT_CHAMPION,			// チャンピオン
-	TMT_NORMAL,				// ノーマル
-	TMT_FIRE,				// ほのお
-	TMT_WATER,				// みず
-	TMT_GRASS,				// くさ
-	TMT_ELEC,				// でんき
-	TMT_ICE,				// こおり
-	TMT_BATTLE,				// かくとう
-	TMT_POISON,				// どく
+	TMT_ALL 	= 0,						// オール
+	TMT_CHAMPION,							// チャンピオン
+	TMT_NORMAL,								// ノーマル
+	TMT_FIRE,								// ほのお
+	TMT_WATER,								// みず
+	TMT_GRASS,								// くさ
+	TMT_ELEC,								// でんき
+	TMT_ICE,								// こおり
+	TMT_BATTLE,								// かくとう
+	TMT_POISON,								// どく
 	//
-	TMT_GROUND,				// じめん
-	TMT_FLY,				// ひこう
-	TMT_ESPER,				// エスパー
-	TMT_INSECT,				// むし
-	TMT_ROCK,				// いわ
-	TMT_GHOST,				// ゴースト
-	TMT_DRAGON,				// ドラゴン
-	TMT_EVIL,				// あく
-	TMT_IRON,				// はがね
+	TMT_GROUND,								// じめん
+	TMT_FLY,								// ひこう
+	TMT_ESPER,								// エスパー
+	TMT_INSECT,								// むし
+	TMT_ROCK,								// いわ
+	TMT_GHOST,								// ゴースト
+	TMT_DRAGON,								// ドラゴン
+	TMT_EVIL,								// あく
+	TMT_IRON,								// はがね
 	//
 	TMT_MAX,
 };
 
 // CLWK(下画面共通)
 enum{
-	CLWKID_CMN_LEFT = 0,	// 左
-	CLWKID_CMN_RIGHT,		// 右
-	CLWKID_CMN_CROSS,		// ×
-	CLWKID_CMN_RETURN,		// 戻る
+	CLWKID_CMN_LEFT = 0,					// 左
+	CLWKID_CMN_RIGHT,						// 右
+	CLWKID_CMN_CROSS,						// ×
+	CLWKID_CMN_RETURN,						// 戻る
 	//
 	CLWKID_CMN_MAX,
 };
 
 // シーケンス
 enum{
-	CMN_LEFT_SEQ 		= 4,	// 左
-	CMN_RIGHT_SEQ 		= 5,	// 右
-	CMN_CROSS_SEQ 		= 0,	// ×
-	CMN_RETURN_SEQ 		= 1,	// 戻る
+	CMN_LEFT_SEQ 		= 4,				// 左
+	CMN_RIGHT_SEQ 		= 5,				// 右
+	CMN_CROSS_SEQ 		= 0,				// ×
+	CMN_RETURN_SEQ 		= 1,				// 戻る
 	//
-	CMN_LEFT_ON_SEQ 	= 12,	// 左オン
-	CMN_LEFT_OFF_SEQ 	= 18,	// 左オフ
-	CMN_RIGHT_ON_SEQ 	= 13,	// 右オン
-	CMN_RIGHT_OFF_SEQ 	= 19,	// 右オフ
+	CMN_LEFT_ON_SEQ 	= 12,				// 左オン
+	CMN_LEFT_OFF_SEQ 	= 18,				// 左オフ
+	CMN_RIGHT_ON_SEQ 	= 13,				// 右オン
+	CMN_RIGHT_OFF_SEQ 	= 19,				// 右オフ
 	//
-	CMN_CROSS_ON_SEQ	= 8,	// ×オン
-	CMN_RETURN_ON_SEQ	= 9,	// 戻るオン
+	CMN_CROSS_ON_SEQ	= 8,				// ×オン
+	CMN_RETURN_ON_SEQ	= 9,				// 戻るオン
 };
 
 // CLWK(up)
 enum{
-	CLWKID_UP_TRAINER = 0,		// トレーナー
+	CLWKID_UP_TRAINER	= 0,				// トレーナー
 	//
 	CLWKID_UP_MAX,
+};
+
+// スクロール
+enum{
+	SCRL_TOP_Y			= 32,				// レール上部のY座標
+	SCRL_DOWN_Y			= 160,				// レール下部のY座標
+	SCRL_BAR_SIZE		= 16,				// バーのサイズ
 };
 
 //-------------------
@@ -250,32 +262,32 @@ enum{
 //-------------------
 // 移動のフラグ(MoveWork.flag)
 enum{
-	FLG_MOVE_INIT		= (1<<0),		// 初期化
-	FLG_MOVE_END		= (1<<1),		// 終了
+	FLG_MOVE_INIT		= (1<<0),			// 初期化
+	FLG_MOVE_END		= (1<<1),			// 終了
 };
 
 // OBJのフラグ(WIN_RECORD_OBJ_DATA.dispflag)
 enum{
-	FLG_OBJ_ANIM		= (1<<0),		// アニメあり
-	FLG_OBJ_HFLIP		= (1<<1),		// HFLIP
-	FLG_OBJ_VFLIP		= (1<<2),		// VFLIP
+	FLG_OBJ_ANIM		= (1<<0),			// アニメあり
+	FLG_OBJ_HFLIP		= (1<<1),			// HFLIP
+	FLG_OBJ_VFLIP		= (1<<2),			// VFLIP
 };
 
 // WIN_RECORD_MAIN_WORK.Flag
 enum{
-	FLG_MW_ANM_LEFT		= (1<<0),		// 左矢印アニメ
-	FLG_MW_ANM_RIGHT	= (1<<1),		// 右矢印アニメ
-	FLG_MW_ANM_CROSS	= (1<<2),		// ×アニメ
-	FLG_MW_ANM_RETURN	= (1<<3),		// 戻るアニメ
+	FLG_MW_ANM_LEFT		= (1<<0),			// 左矢印アニメ
+	FLG_MW_ANM_RIGHT	= (1<<1),			// 右矢印アニメ
+	FLG_MW_ANM_CROSS	= (1<<2),			// ×アニメ
+	FLG_MW_ANM_RETURN	= (1<<3),			// 戻るアニメ
 	//
-	FLG_MW_UPDATE		= (1<<4),		// 更新
-	FLG_MW_BAR_UPDATE	= (1<<5),		// バー更新
-	FLG_MW_NO_SCROLL	= (1<<6),		// スクロールなし(MODE_LV1と同じ)
+	FLG_MW_UPDATE		= (1<<4),			// 更新
+	FLG_MW_BAR_UPDATE	= (1<<5),			// バー更新
+	FLG_MW_NO_SCROLL	= (1<<6),			// スクロールなし(MODE_LV1と同じ)
 	//
-	FLG_MW_RET_END		= (1<<8),		// RETURNで終了
-	FLG_MW_CROSS_END	= (1<<9),		// ×で終了
+	FLG_MW_RET_END		= (1<<8),			// RETURNで終了
+	FLG_MW_CROSS_END	= (1<<9),			// ×で終了
 	//
-	FLG_MW_END			= (1<<12),		// 終了
+	FLG_MW_END			= (1<<12),			// 終了
 	//
 	// フラグまとめ(アニメ再生中か)
 	FLG_MW_ANM_ALL		= (FLG_MW_ANM_LEFT|FLG_MW_ANM_RIGHT|FLG_MW_ANM_CROSS|FLG_MW_ANM_RETURN),
@@ -335,7 +347,7 @@ typedef struct
 	//
 	s16						*EmptyBuffer;					// 座標用のバッファ(必ず破棄すること)
 	s16						*ParamBuffer;					// パラメータのバッファ(必ず破棄すること)
-	GFL_UI_TP_HITTBL		HitBuffer[AREA_TP_MAX+1];		// タッチペン用
+	GFL_UI_TP_HITTBL		HitBuffer[AREA_TP_MAX+1];		// タッチペン用(+1は終了コードを入れるため)
 } WIN_RECORD_MAIN_WORK;
 
 //-----------------------------------------
@@ -408,7 +420,6 @@ typedef struct{
 	u8				pad;
 }WIN_RECORD_BGSCN_DATA;
 
-
 //=============================================================================
 /**
  *							データ定義(要整理)
@@ -461,7 +472,7 @@ static const s16 wr_obj_main_itbl[] = {
 	RESID_OBJ_CEL,
 	//
 	WIN_RECORD_OBJ_MAXNUM,
-	0,
+	CLWKMODE_NORMAL,
 };
 
 // OBJのテーブルデータ(通常)
@@ -485,7 +496,7 @@ static const s16 wr_obj_cmn_itbl[] = {
 	RESID_CMN_OBJ_CEL,
 	//
 	WIN_RECORD_CMN_OBJ_MAXNUM,
-	1,
+	CLWKMODE_CMN,
 };
 
 // OBJのテーブルデータ(cmn)
@@ -508,7 +519,7 @@ static const s16 wr_obj_up_itbl[] = {
 	RESID_UP_OBJ_CEL,
 	//
 	WIN_RECORD_UP_OBJ_MAXNUM,
-	2,
+	CLWKMODE_UP,
 };
 
 // OBJのテーブルデータ(up)
@@ -642,17 +653,17 @@ static const u8 wr_gmm_02_tbl[] = {
 // (Modeで参照)
 //----------------
 static const u8 *wr_gmm_all_tbl[] = {
-	wr_gmm_00_tbl,
-	wr_gmm_01_tbl,
-	wr_gmm_02_tbl,
+	wr_gmm_00_tbl,			// シナリオクリア前
+	wr_gmm_01_tbl,			// シナリオクリア後
+	wr_gmm_02_tbl,			// シナリオクリア、チャンピオン後
 };
 
 // 個数最大(要調整)
 static const s16 wr_gmm_max_tbl[] = {
-	1,			// シナリオクリア前
-	18,			// シナリオクリア後
-	19,			// シナリオクリア&チャンピオン後
-	-1,			// pad
+	1,						// シナリオクリア前
+	18,						// シナリオクリア後
+	19,						// シナリオクリア&チャンピオン後
+	-1,						// pad
 };
 
 //---------------------------------
@@ -733,6 +744,7 @@ static BOOL wr_is_anime_end( WIN_RECORD_MAIN_WORK *wk, const s32 wmode, const s3
 static void wr_init_obj_bmpoam( WIN_RECORD_MAIN_WORK* wk, const s32 drawtype, const WIN_RECORD_BMPOAM_DATA *bmp_adr, const s16 *info_adr );
 static void wr_disp_bmpoam( WIN_RECORD_MAIN_WORK* wk, const s32 wnum, const STRBUF *strbuf );
 //
+// 文字列関連
 static void wr_init_string( WIN_RECORD_MAIN_WORK* wk );
 static void wr_disp_string( WIN_RECORD_MAIN_WORK* wk, const s32 mode, const s32 x, const s32 y, const STRBUF* strbuf, const u32 dispmode );
 static void wr_update_string( WIN_RECORD_MAIN_WORK* wk, const s32 mode );
@@ -741,21 +753,25 @@ static void wr_clear_canvas( WIN_RECORD_MAIN_WORK* wk, const s32 mode );
 static void wr_disp_playername( WIN_RECORD_MAIN_WORK* wk, const s32 mode, const s32 xpos, const s32 ypos, const u32 dispmode );
 static void wr_disp_string_id( WIN_RECORD_MAIN_WORK* wk, const s32 mode, const s32 mesid, const s32 xpos, const s32 ypos, const u32 dispmode );
 //
+// パネル表示
 static void wr_set_panel( WIN_RECORD_MAIN_WORK* wk, const s32 wnum, const s32 num, const BOOL bflg );
 static void wr_set_panel_all( WIN_RECORD_MAIN_WORK* wk, const s32 wnum, const s32 num, const BOOL dispflg );
 //
+// パラメータ関連
 static void wr_init_param( WIN_RECORD_MAIN_WORK* wk );
 static void wr_set_param( WIN_RECORD_MAIN_WORK* wk );
+static void wr_update_param( WIN_RECORD_MAIN_WORK* wk );
 //
+// 入力(キー、タッチペン)
 static BOOL wr_chk_key_input( WIN_RECORD_MAIN_WORK* wk );
-//
 static void wr_get_tp_area( WIN_RECORD_MAIN_WORK* wk, const s32 num, GFL_UI_TP_HITTBL *tpbuffer );
 static BOOL wr_chk_tp_input( WIN_RECORD_MAIN_WORK* wk );
 static void wr_chk_anim( WIN_RECORD_MAIN_WORK* wk );
 //
+// スクロールバーの処理
 static BOOL wr_set_scrollbar( WIN_RECORD_MAIN_WORK* wk );
-static void wr_param_update( WIN_RECORD_MAIN_WORK* wk );
 //
+// debug
 static void wr_debug( WIN_RECORD_MAIN_WORK* wk );
 
 //=============================================================================
@@ -1145,7 +1161,7 @@ static void wr_key_all( WIN_RECORD_MAIN_WORK* wk )
 				wr_chk_tp_input( wk );
 			}
 			// パラメータ更新
-			wr_param_update( wk );
+			wr_update_param( wk );
 			break;
 		
 		// END
@@ -1243,9 +1259,9 @@ static void wr_init_bg( WIN_RECORD_MAIN_WORK* wk )
  *	@brief  OBJ初期化(clwk)
  *
  *	@param	WIN_RECORD_MAIN_WORK* wk
- *	@param	const s32				drawtype
- *	@param	const WIN_RECORD_OBJ_DATA* アドレス
- *	@param	const s16*				アドレス
+ *	@param	const s32					drawtype
+ *	@param	const WIN_RECORD_OBJ_DATA*	アドレス
+ *	@param	const s16*					アドレス
  *
  *	@retval
  */
@@ -1385,7 +1401,7 @@ static void wr_init_obj_res_cmn( WIN_RECORD_MAIN_WORK* wk, const s32 drawtype )
 	idx[3] = APP_COMMON_GetBarIconAnimeArcIdx( APP_COMMON_MAPPING_128K );	// anim
 	//
 	// セルアニメ用の処理
-	wk->wk_obj.res[ RESID_CMN_OBJ_PLT ] = GFL_CLGRP_PLTT_RegisterEx(   p_handle, idx[0], drawtype, 0x20*12, 0, 4, wk->heapID );
+	wk->wk_obj.res[ RESID_CMN_OBJ_PLT ] = GFL_CLGRP_PLTT_RegisterEx(   p_handle, idx[0], drawtype, 0x20*PLTID_OBJ_CMN, 0, PLTID_OBJ_CMN_NUM, wk->heapID );
 	wk->wk_obj.res[ RESID_CMN_OBJ_CHR ] = GFL_CLGRP_CGR_Register(      p_handle, idx[1], FALSE, drawtype, wk->heapID );
 	wk->wk_obj.res[ RESID_CMN_OBJ_CEL ] = GFL_CLGRP_CELLANIM_Register( p_handle, idx[2], idx[3], wk->heapID );
 	//
@@ -1494,7 +1510,7 @@ static void wr_exit_obj( WIN_RECORD_MAIN_WORK* wk )
  *	@brief  objのシーケンスの切り替え
  *
  *	@param	WIN_RECORD_MAIN_WORK* wk
- *	@param	const s32			(0:通常、1:共通)
+ *	@param	const s32			(0:通常、1:共通、2:上画面)
  *	@param	const s32			objワーク番号
  *	@param	const s32			シーケンス番号
  *
@@ -1528,7 +1544,6 @@ static void wr_chg_objseq( WIN_RECORD_MAIN_WORK *wk, const s32 wmode, const s32 
 		GFL_CLACT_WK_SetAnmSeq( wk->wk_obj.up_clwk[wnum], seq );
 		GFL_CLACT_WK_SetAutoAnmFlag( wk->wk_obj.up_clwk[wnum], TRUE );
 	}
-	
 }
 
 //-----------------------------------------------------------------------------
@@ -1536,7 +1551,7 @@ static void wr_chg_objseq( WIN_RECORD_MAIN_WORK *wk, const s32 wmode, const s32 
  *	@brief  OBJの表示/非表示
  *
  *	@param	WIN_RECORD_MAIN_WORK* wk
- *	@param	const s32			(0:通常、1:共通)
+ *	@param	const s32			(0:通常、1:共通、2:上画面)
  *	@param	const s32			objワーク番号
  *	@param	const BOOL			(TRUE:表示、FALSE:非表示)
  *
@@ -1574,7 +1589,7 @@ static void wr_set_obj_visible( WIN_RECORD_MAIN_WORK *wk, const s32 wmode, const
  *	@brief  OBJのアニメの終了待ち
  *
  *	@param	WIN_RECORD_MAIN_WORK* wk
- *	@param	const s32			(0:通常、1:共通)
+ *	@param	const s32			(0:通常、1:共通、2:上画面)
  *	@param	const s32			objワーク番号
  *
  *	@retval	const BOOL			(TRUE:再生中、FALSE:停止、終了)
@@ -1622,7 +1637,7 @@ static BOOL wr_is_anime_end( WIN_RECORD_MAIN_WORK *wk, const s32 wmode, const s3
  *	@param	WIN_RECORD_MAIN_WORK* wk
  *	@param	const s32				drawtype
  *	@param	const WIN_RECORD_BMPOAM_DATA*	アドレス
- *	@param	const s16*					アドレス
+ *	@param	const s16*						アドレス
  *
  *	@retval
  */
@@ -1962,9 +1977,9 @@ static void wr_set_panel( WIN_RECORD_MAIN_WORK* wk, const s32 wnum, const s32 nu
 	GFL_CLACT_WK_GetPos( wk->wk_obj.clwk[wnum], &pos, CLSYS_DEFREND_MAIN );
 	//
 	// 座標セット
-	// (左側)
+	// (左側:トーナメント名)
 	BmpOam_ActorSetPos( wk->BmpOamWork[2*wnum],   (pos.x+buf[0]), (pos.y+buf[1]) );
-	// (右側)
+	// (右側:回数)
 	BmpOam_ActorSetPos( wk->BmpOamWork[2*wnum+1], (pos.x+buf[2]), (pos.y+buf[3]) );
 	//
 	// WORDSET破棄
@@ -2028,14 +2043,14 @@ static void wr_init_param( WIN_RECORD_MAIN_WORK* wk )
 	BOOL				bflg;
 	//
 	// 最大数を調べる
-	num = 4;			// 表示パネル数
+	num = DISP_PANEL_MAXNUM;			// 表示パネル数
 	nmax = wr_gmm_max_tbl[wk->Mode];
-	if(nmax < 4){
+	if(nmax < DISP_PANEL_MAXNUM){
 		num = nmax;
 	}
 	
 	// 表示/非表示と座標セット
-	for(i=0;i<4;i++){
+	for(i=0;i<DISP_PANEL_MAXNUM;i++){
 		bflg = TRUE;
 		// チェック
 		if(i >= num){
@@ -2109,6 +2124,59 @@ static void wr_set_param( WIN_RECORD_MAIN_WORK* wk )
 #endif
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  更新(主にwk->TopNumが更新したときに呼ばれる)
+ *
+ *	@param	WIN_RECORD_MAIN_WORK* wk
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void wr_update_param( WIN_RECORD_MAIN_WORK* wk )
+{
+	s16				num;
+	s16				nmax;
+	s32				i;
+	u32				py;
+	GFL_CLACTPOS	pos;
+	BOOL			bflg;
+	
+	// バー更新
+	if(wk->Flag & FLG_MW_BAR_UPDATE){
+		// スクロールありの対応
+		if(!(wk->Flag & FLG_MW_NO_SCROLL)){
+			py = SCROLLBAR_GetPosY( wr_gmm_max_tbl[wk->Mode]-4, wk->TopNum, SCRL_TOP_Y, SCRL_DOWN_Y, SCRL_BAR_SIZE );
+			// 座標の更新
+			GFL_CLACT_WK_GetPos( wk->wk_obj.clwk[CLWKID_BAR], &pos, CLSYS_DEFREND_MAIN );
+//			pos.x = 238;	// test
+			pos.y = py;
+			GFL_CLACT_WK_SetPos( wk->wk_obj.clwk[CLWKID_BAR], &pos, CLSYS_DEFREND_MAIN );
+			//
+			wk->Flag &= ~FLG_MW_BAR_UPDATE;
+		}
+	}
+	// 更新
+	if(wk->Flag & FLG_MW_UPDATE){
+		// 最大数を調べる
+		num = DISP_PANEL_MAXNUM;			// 表示パネル数
+		nmax = wr_gmm_max_tbl[wk->Mode];
+		if(nmax < DISP_PANEL_MAXNUM){
+			num = nmax;
+		}
+		// 表示/非表示と座標セット
+		for(i=0;i<DISP_PANEL_MAXNUM;i++){
+			bflg = TRUE;
+			if(i >= num){
+				bflg = FALSE;
+			}
+			wr_set_panel_all( wk, i, wk->TopNum+i, bflg );
+		}
+		//
+		wk->Flag &= ~FLG_MW_UPDATE;
+	}
+}
+
 //-----------------------------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -2116,6 +2184,7 @@ static void wr_set_param( WIN_RECORD_MAIN_WORK* wk )
  *	@brief  キー入力(上下)
  *
  *	@param	WIN_RECORD_MAIN_WORK* wk
+ *	@param	BOOL					(TRUE:入力あり、FALSE:なし)
  *
  *	@retval
  */
@@ -2163,7 +2232,8 @@ static BOOL wr_chk_key_input( WIN_RECORD_MAIN_WORK* wk )
 	else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT ){
 		// スクロールありの対応
 		if(!(wk->Flag & FLG_MW_NO_SCROLL)){
-			wk->TopNum -= 4;
+			// 1画面分
+			wk->TopNum -= DISP_PANEL_MAXNUM;
 			if(wk->TopNum < 0){
 				wk->TopNum = 0;
 			}
@@ -2178,7 +2248,8 @@ static BOOL wr_chk_key_input( WIN_RECORD_MAIN_WORK* wk )
 	else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT ){
 		// スクロールありの対応
 		if(!(wk->Flag & FLG_MW_NO_SCROLL)){
-			wk->TopNum +=4 ;
+			// 1画面分
+			wk->TopNum += DISP_PANEL_MAXNUM;
 			if(wk->TopNum >= (wr_gmm_max_tbl[wk->Mode]-3)){
 				wk->TopNum = wr_gmm_max_tbl[wk->Mode]-3-1;
 			}
@@ -2223,6 +2294,7 @@ static void wr_get_tp_area( WIN_RECORD_MAIN_WORK* wk, const s32 num, GFL_UI_TP_H
 	s16		buf[4];
 	
 	// 領域を取得
+	// (左上(x,y)、サイズ(w,h)の4個で1つのデータ)
 	for(i=0;i<4;i++){
 		buf[i] = wk->ParamBuffer[4*num+i];
 	}
@@ -2235,6 +2307,7 @@ static void wr_get_tp_area( WIN_RECORD_MAIN_WORK* wk, const s32 num, GFL_UI_TP_H
 		if(buf[i] < 0){
 			buf[i] = 0;
 		}
+		// 判定はu8なのでmaxを255としておく
 		if(buf[i] > 255){
 			buf[i] = 255;
 		}
@@ -2280,7 +2353,7 @@ static BOOL wr_chk_tp_input( WIN_RECORD_MAIN_WORK* wk )
 	if(ret == AREA_TP_LEFT){
 		// スクロールありの対応
 		if(!(wk->Flag & FLG_MW_NO_SCROLL)){
-			wk->TopNum -= 4;
+			wk->TopNum -= DISP_PANEL_MAXNUM;
 			if(wk->TopNum < 0){
 				wk->TopNum = 0;
 			}
@@ -2295,7 +2368,7 @@ static BOOL wr_chk_tp_input( WIN_RECORD_MAIN_WORK* wk )
 	else if(ret == AREA_TP_RIGHT){
 		// スクロールありの対応
 		if(!(wk->Flag & FLG_MW_NO_SCROLL)){
-			wk->TopNum +=4 ;
+			wk->TopNum += DISP_PANEL_MAXNUM;
 			if(wk->TopNum >= (wr_gmm_max_tbl[wk->Mode]-3)){
 				wk->TopNum = wr_gmm_max_tbl[wk->Mode]-3-1;
 			}
@@ -2415,6 +2488,7 @@ static void wr_chk_anim( WIN_RECORD_MAIN_WORK* wk )
  *	@brief  スクロールバーの処理
  *
  *	@param	WIN_RECORD_MAIN_WORK* wk
+ *	@param	BOOL					(TRUE:変更あり、FALSE:なし)
  *
  *	@retval
  */
@@ -2430,7 +2504,7 @@ static BOOL wr_set_scrollbar( WIN_RECORD_MAIN_WORK* wk )
 	// タッチした座標を取得
 	if( GFL_UI_TP_GetPointCont( &buf[0], &buf[1] ) == TRUE ){
 		// どの段階かが求まる
-		cnt = SCROLLBAR_GetCount( wr_gmm_max_tbl[wk->Mode]-4, buf[1], 32, 160, 16 );
+		cnt = SCROLLBAR_GetCount( wr_gmm_max_tbl[wk->Mode]-4, buf[1], SCRL_TOP_Y, SCRL_DOWN_Y, SCRL_BAR_SIZE );
 //		OS_Printf("pos :%d\n",cnt);
 		// 現在の位置をセット
 		wk->TopNum = cnt;
@@ -2441,61 +2515,6 @@ static BOOL wr_set_scrollbar( WIN_RECORD_MAIN_WORK* wk )
 	}
 	return( bflg );
 }
-
-//-----------------------------------------------------------------------------
-/**
- *	@brief  更新(主にwk->TopNumが更新したときに呼ばれる)
- *
- *	@param	WIN_RECORD_MAIN_WORK* wk
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-static void wr_param_update( WIN_RECORD_MAIN_WORK* wk )
-{
-	s16				num;
-	s16				nmax;
-	s32				i;
-	u32				py;
-	GFL_CLACTPOS	pos;
-	BOOL			bflg;
-	
-	// バー更新
-	if(wk->Flag & FLG_MW_BAR_UPDATE){
-		// スクロールありの対応
-		if(!(wk->Flag & FLG_MW_NO_SCROLL)){
-			py = SCROLLBAR_GetPosY( wr_gmm_max_tbl[wk->Mode]-4, wk->TopNum, 32, 160, 16 );
-			// 座標の更新
-			GFL_CLACT_WK_GetPos( wk->wk_obj.clwk[CLWKID_BAR], &pos, CLSYS_DEFREND_MAIN );
-//			pos.x = 238;	// test
-			pos.y = py;
-			GFL_CLACT_WK_SetPos( wk->wk_obj.clwk[CLWKID_BAR], &pos, CLSYS_DEFREND_MAIN );
-			//
-			wk->Flag &= ~FLG_MW_BAR_UPDATE;
-		}
-	}
-	// 更新
-	if(wk->Flag & FLG_MW_UPDATE){
-		// 最大数を調べる
-		num = 4;			// 表示パネル数
-		nmax = wr_gmm_max_tbl[wk->Mode];
-		if(nmax < 4){
-			num = nmax;
-		}
-		// 表示/非表示と座標セット
-		for(i=0;i<4;i++){
-			bflg = TRUE;
-			if(i >= num){
-				bflg = FALSE;
-			}
-			wr_set_panel_all( wk, i, wk->TopNum+i, bflg );
-		}
-		//
-		wk->Flag &= ~FLG_MW_UPDATE;
-	}
-}
-
-
 
 //-----------------------------------------------------------------------------
 /**
