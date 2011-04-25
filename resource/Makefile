@@ -143,6 +143,7 @@ SUBDIRS	=	wmi \
 			beacon_status \
 			fmission \
 			fmission_log \
+			fmission_app \
 			tr_ai \
 			enceff_imd \
 			pl_boat \

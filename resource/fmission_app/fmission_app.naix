@@ -1,0 +1,27 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: fmission_app.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_FMISSION_APP_NAIX_
+#define NARC_FMISSION_APP_NAIX_
+
+enum {
+	NARC_fmission_app_fmapp_obj_nclr = 0,
+	NARC_fmission_app_fmapp_obj_lz_ncgr = 1,
+	NARC_fmission_app_fmapp_obj_ncer = 2,
+	NARC_fmission_app_fmapp_obj_nanr = 3,
+	NARC_fmission_app_fmapp_bgu_nclr = 4,
+	NARC_fmission_app_fmapp_bgu_lz_ncgr = 5,
+	NARC_fmission_app_fmapp_bgd_nclr = 6,
+	NARC_fmission_app_fmapp_bgd_lz_ncgr = 7,
+	NARC_fmission_app_fmapp_bgu03_lz_nscr = 8,
+	NARC_fmission_app_fmapp_bgd03_lz_nscr = 9
+};
+
+/* NARC_FMISSION_APP_NAIX_ */
+#endif
