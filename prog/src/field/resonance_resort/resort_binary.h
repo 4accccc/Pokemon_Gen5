@@ -395,3 +395,44 @@ typedef enum
   RESORT_BINARY_SERVICE_PARAM_MAX,
 }RESORT_BINARY_SERVICE_PARAM;
 extern u16 RESORT_BINARY_SERVICE_DATA_GetData( const RESORT_BINARY_SERVICE_DATA *cp_wk, RESORT_BINARY_SERVICE_PARAM param );
+
+//=============================================================================
+/**
+ *					おみやげデータ
+*/
+//=============================================================================
+//-------------------------------------
+///	ワーク
+//=====================================
+typedef RESORT_BINARY RESORT_BINARY_PRESENT;
+
+//-------------------------------------
+///	取得データ
+//=====================================
+typedef enum
+{
+  RESORT_BINARY_PRESENT_PARAM_PERCENT_00,
+  RESORT_BINARY_PRESENT_PARAM_ITEM_00,   //1000ならBP
+  RESORT_BINARY_PRESENT_PARAM_PERCENT_01,
+  RESORT_BINARY_PRESENT_PARAM_ITEM_01,
+  RESORT_BINARY_PRESENT_PARAM_PERCENT_02,
+  RESORT_BINARY_PRESENT_PARAM_ITEM_02,
+  RESORT_BINARY_PRESENT_PARAM_PERCENT_03,
+  RESORT_BINARY_PRESENT_PARAM_ITEM_03,
+  RESORT_BINARY_PRESENT_PARAM_PERCENT_04,
+  RESORT_BINARY_PRESENT_PARAM_ITEM_04,
+  RESORT_BINARY_PRESENT_PARAM_PERCENT_05,
+  RESORT_BINARY_PRESENT_PARAM_ITEM_05,
+  RESORT_BINARY_PRESENT_PARAM_MAX,
+}RESORT_BINARY_PRESENT_PARAM;
+
+#define RESORT_BINARY_PRESENT_PARAM_ITEM_MAX  (6)
+
+//-------------------------------------
+///	PUBLIC
+//=====================================
+#define RESORT_BINARY_PRESENT_Init(x) RESORT_BINARY_Init(NARC_resonance_resort_data_resort_present_dat,RESORT_BINARY_PRESENT_PARAM_MAX,x)
+#define RESORT_BINARY_PRESENT_Exit(x) RESORT_BINARY_Exit(x)
+#define RESORT_BINARY_PRESENT_GetData(x,y,z) RESORT_BINARY_GetData(x,y,z)
+
+

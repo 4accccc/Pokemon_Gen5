@@ -89,7 +89,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするル
 $(targetall).narc $(targetall).naix: $(targetpeople).dat $(targetshop).dat $(targetservice).dat $(targetinstitution).dat $(targetspot).dat $(targetnpc).dat $(targetkutikomi).dat $(targetoffreco).dat $(targetcity).dat $(targetpresent).dat
 	nnsarc -r -l -n -i $(targetall) $^
 	$(NAIXCUT) $(targetall).naix
-	-rm -f *.dat
+	#-rm -f *.dat
 
 #データコンバート
 $(targetpeople).dat $(targetshop).dat $(targetservice).dat $(targetpeopleh).h $(targetinstitution).dat $(targetspot).dat $(targetnpc).dat $(targetkutikomi).dat $(targetoffreco).dat $(targetcity).dat $(targetpresent).dat $(targetshop).h: $(xlsname).xls $(msgfile) $(scriptfile) $(PEOPLECONV) $(DEFINECONV) $(bmodelfile) $(fieldevent) $(landpatch) $(objcode)

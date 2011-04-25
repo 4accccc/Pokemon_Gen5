@@ -880,8 +880,9 @@ VMCMD_RESULT EvCmdResortLot( VMHANDLE *p_core, void *p_wk_adrs )
 
   RESORT_PEOPLE_SYS *p_people_sys = Resort_Scrcmd_GetPeopleSys( p_field );
   RESORT_PEOPLE* p_people = Resort_Scrcmd_GetFrontPeople( p_field, p_people_sys );
+  void *p_data_adrs = RESORT_PEOPLE_GetDataAdrs( p_people );
 
-  *p_ret_wk = GFUser_GetPublicRand( 11 );
+  *p_ret_wk = RESORT_DATA_GetRndRecv( p_data_adrs, 11 );
 
   return VMCMD_RESULT_CONTINUE;
 }

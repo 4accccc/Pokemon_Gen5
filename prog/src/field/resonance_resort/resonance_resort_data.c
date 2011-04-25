@@ -26,6 +26,8 @@
 #include "msg/msg_place_name.h"
 #include "resort_binary.h"
 
+#include "savedata/resonance_resort_sv.h"
+
 //mine 
 #include "field/resonance_resort/resort_map.h"
 
@@ -75,6 +77,10 @@ static inline RESORT_GET_TrainerView( u8 view, u8 sex )
   }
 }
 
+//-------------------------------------
+///	リゾートデータグローバル参照
+//=====================================
+static RESORT_CITY_DATA *sp_city_data = NULL;
 
 //=============================================================================
 /**
@@ -1116,6 +1122,9 @@ static void Resort_Recv_Data_InitSetup( RESORT_RECV_DATA *p_wk, RESORT_COMM_TYPE
   //初期生成データ TODO
   RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_COMM_ID,type);
 
+
+  NAGI_Printf( "ID[%d]\n", RESORT_RECV_DATA_GetData(p_wk,RESORT_DATA_PARAM_TRAINER_ID,NULL ) );
+
   //受信日時
   {
     RTCDate date;
@@ -1128,16 +1137,43 @@ static void Resort_Recv_Data_InitSetup( RESORT_RECV_DATA *p_wk, RESORT_COMM_TYPE
     RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_MEET_MIN, time.minute );
   }
 
-  //TODO α用に２０％の確率でもらう
-  if( 20 > GFUser_GetPublicRand(100) )
   {
-    RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_PRESENT_ID, 17+GFUser_GetPublicRand( 20 ));
-    RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_PRESENT_NUM, 1);
+    u32 lv  = RESORT_CITY_DATA_GetData( sp_city_data, RESORT_CITY_DATA_PARAM_LV, NULL );
+    RESORT_BINARY_CITY *p_city = RESORT_BINARY_CITY_Init( GFL_HEAP_LOWID(HEAPID_PROC) );
+    u32 city_idx = RESORT_BINARY_CITY_GetIndexByCityLv( p_city, lv );
+    RESORT_BINARY_PRESENT *p_present = RESORT_BINARY_PRESENT_Init( GFL_HEAP_LOWID(HEAPID_PROC) );
+    u32 list = RESORT_BINARY_CITY_GetData(p_city,city_idx,RESORT_BINARY_CITY_PARAM_PRESENT_LIST);
+    u32 per = RESORT_BINARY_CITY_GetData(p_city,city_idx, RESORT_BINARY_CITY_PARAM_PRESENT_PER);
+    NAGI_Printf( "list[%d] lv[%d] city[%d]\n",list,lv,city_idx );
+    if( per > RESORT_DATA_GetRndRecv( p_wk, 100 ))
+    {
+      u32 rnd = RESORT_DATA_GetRndRecv( p_wk, 100 );
+      int i;
+      for( i = 0; i < RESORT_BINARY_PRESENT_PARAM_ITEM_MAX; i++ )
+      {
+        per = RESORT_BINARY_PRESENT_GetData(p_present,list,RESORT_BINARY_PRESENT_PARAM_PERCENT_00+i*2);
+        if( per > rnd )
+        {
+          u32 item = RESORT_BINARY_PRESENT_GetData(p_present,list,RESORT_BINARY_PRESENT_PARAM_ITEM_00+i*2);
+          NAGI_Printf( "item[%d]\n",item );
+          RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_PRESENT_ID, item);
+          RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_PRESENT_NUM, 1);
+          break;
+        }
+        else
+        {
+          rnd -= per;
+        }
+      }
+      GF_ASSERT( RESORT_RECV_DATA_GetData(p_wk,RESORT_DATA_PARAM_PRESENT_ID, NULL) != 0 );
+    }
+    RESORT_BINARY_PRESENT_Exit(p_present);
+    RESORT_BINARY_CITY_Exit(p_city);
   }
 
   {
     //タイプによってなりたいものがきまる
-    RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_WANT_JOB, GFUser_GetPublicRand( RESORT_RESIDENT_TYPE_MAX ) );
+    RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_WANT_JOB, RESORT_DATA_GetRndRecv(p_wk, RESORT_RESIDENT_TYPE_MAX ) );
 
     //TODO α用にジムにならない
     if( RESORT_RECV_DATA_GetData(p_wk,RESORT_DATA_PARAM_WANT_JOB,NULL ) == RESORT_RESIDENT_TYPE_GYM )
@@ -3527,7 +3563,7 @@ struct _RESORT_CITY_DATA
   u8      secret_present_num;
   u8      secret_present_flag;
   u8      trainerID_cnt;
-  u32     rnd;
+  u32     rnd_seed;
 };
 SDK_COMPILER_ASSERT(sizeof(RESORT_CITY_DATA) == RESORT_CITY_DATA_SIZE );
 
@@ -3573,7 +3609,7 @@ void RESORT_CITY_DATA_InitInstance( RESORT_CITY_DATA *p_wk )
   GFL_STD_MemClear(p_wk,sizeof(RESORT_CITY_DATA));
   p_wk->city_name[0] = GFL_STR_GetEOMCode();
   p_wk->my_name[0]  = GFL_STR_GetEOMCode();
-  p_wk->rnd         = GFUser_GetPublicRand(0);
+  p_wk->rnd_seed    = GFUser_GetPublicRand(0);
 
   {
     GFL_MSGDATA *p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_place_name_dat, GFL_HEAP_LOWID(HEAPID_SAVE) );
@@ -3621,6 +3657,8 @@ u32 RESORT_CITY_DATA_GetData( const RESORT_CITY_DATA *cp_wk, RESORT_CITY_DATA_PA
     return cp_wk->lv;
   case RESORT_CITY_DATA_PARAM_EXP:
     return cp_wk->exp;
+  case RESORT_CITY_DATA_PARAM_RND_SEED:
+    return cp_wk->rnd_seed;
   default:
     GF_ASSERT(0);
     return 0;
@@ -3671,7 +3709,7 @@ void RESORT_CITY_DATA_UpdateDay( RESORT_CITY_DATA *p_wk )
   p_wk->trainerID_cnt = 0;
 
   //乱数再抽選
-  p_wk->rnd         = GFUser_GetPublicRand(0);
+  p_wk->rnd_seed      = GFUser_GetPublicRand(0);
 }
 //----------------------------------------------------------------------------
 /**
@@ -3722,12 +3760,62 @@ BOOL RESORT_CITY_DATA_CheckTrainerID( const RESORT_CITY_DATA *cp_wk, u32 trainer
  *	@return 乱数
  */
 //-----------------------------------------------------------------------------
-u32 RESORT_CITY_DATA_GetRnd( const RESORT_CITY_DATA *cp_wk, u32 ofs, u32 max )
+u32 RESORT_DATA_GetRnd( u32 ofs, u32 max )
 {
+  u32 num;
+  u32 general_seed;
+  u8 seed_array[8];
+  u64 *p_seed;
   GFL_STD_RandContext rnd;
-  GFL_STD_RandInit( &rnd, cp_wk->rnd + ofs << 32 );
-  return GFL_STD_Rand( &rnd, max );
+
+  general_seed= RESORT_CITY_DATA_GetData(sp_city_data,RESORT_CITY_DATA_PARAM_RND_SEED,NULL);
+
+  seed_array[0]  = ofs & 0xFF;
+  seed_array[1]  = general_seed & 0xFF;
+  seed_array[2]  = (ofs >> 8) & 0xFF;
+  seed_array[3]  = (general_seed >> 8 ) & 0xFF;
+  seed_array[4]  = (ofs >> 16) & 0xFF;
+  seed_array[5]  = (general_seed >> 16 ) & 0xFF;
+  seed_array[6]  = (ofs >> 24) & 0xFF;
+  seed_array[7]  = (general_seed >> 24 ) & 0xFF;
+
+  p_seed  = (u64*)seed_array;
+
+  GFL_STD_RandInit( &rnd, (*p_seed) );
+  num = GFL_STD_Rand( &rnd, max );
+  OS_TFPrintf(3, "rnd[%d]max[%d]seed_l[%x]seed_h[%x]ofs[%d]grnd[%x]\n",num,max,(u32)((*p_seed)&0xFFFFFFFF),(u32)(((*p_seed)>>32)&0xFFFFFFFF),ofs,general_seed);
+  return num;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  旅行者用乱数取得
+ *
+ *	@param	RESORT_RECV_DATA *p_data  旅行者
+ *	@param	u32 max   最大
+ *
+ *	@return 乱数
+ */
+//-----------------------------------------------------------------------------
+u32 RESORT_DATA_GetRndRecv( RESORT_RECV_DATA *p_wk, u32 max )
+{
+  u32 id = RESORT_RECV_DATA_GetData(p_wk,RESORT_DATA_PARAM_TRAINER_ID,NULL );
+  NAGI_Printf( "ID=%d\n", id );
+  return RESORT_DATA_GetRnd( id, max );
+}
+
+//=============================================================================
+/**
+ *  データ初期化
+ */
+//=============================================================================
+void RESORT_DATA_Boot( const SAVE_CONTROL_WORK* ctrl )
+{
+  RESONANCE_RESORT_SV *p_resort_sv = RESONANCE_RESORT_SV_GetWork( (SAVE_CONTROL_WORK*)ctrl );
+  RESORT_CITY_DATA * p_city = RESONANCE_RESORT_SV_GetCityData( p_resort_sv );
+  sp_city_data = p_city;
+}
+
 
 //=============================================================================
 /**

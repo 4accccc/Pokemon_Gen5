@@ -84,7 +84,7 @@ def convertPresent( csv, data, tag_h )
 
     tag_h.store( tag, row-PRE_ROW_START)
 
-    for cnt in 0...PRE_COL_ITEM_MAX-1
+    for cnt in 0...PRE_COL_ITEM_MAX
       per     = csv.get( row, PRE_COL_PERCENT+cnt*PRE_COL_CEL_NUM )
       item    = csv.get( row, PRE_COL_ITEM+cnt*PRE_COL_CEL_NUM )
 
@@ -135,7 +135,7 @@ def convertCity( csv, data, msg_h, tag_h )
     exp       = csv.get( row, CITY_COL_EXP )
     rank      = csv.get( row, CITY_COL_CITY_RANK )
     pre       = csv.get( row, CITY_COL_PRE_LIST )
-    per      = csv.get( row, CITY_COL_PRE_PER )
+    per       = csv.get( row, CITY_COL_PRE_PER )
 
     data.write_u16( lv_l )
     data.write_u16( lv_h )

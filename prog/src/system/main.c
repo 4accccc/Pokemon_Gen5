@@ -29,6 +29,7 @@
 #include "gamesystem\game_beacon.h"
 #include "gamesystem/g_power.h"
 #include "savedata/config.h"
+#include "field/resonance_resort_data.h"
 
 #include "sound\pm_sndsys.h"
 #include "sound\pm_voice.h"
@@ -351,6 +352,7 @@ static  void  GameInit(void)
   SaveControl_SystemInit(HEAPID_SAVE);
   CONFIG_ApplyMojiMode( SaveData_GetConfig( SaveControl_GetPointer() ) );
   MSGSPEED_InitSystem( SaveControl_GetPointer() );
+  RESORT_DATA_Boot( SaveControl_GetPointer() );
 
   //通信エラー画面管理システム初期化
   NetErr_SystemInit();

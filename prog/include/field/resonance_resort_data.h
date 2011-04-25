@@ -31,6 +31,12 @@ typedef enum
 } RESORT_MAPCHANGE_FLAG;
 
 
+//=============================================================================
+/**
+ *  ÉfÅ[É^èâä˙âª
+ */
+//=============================================================================
+extern void RESORT_DATA_Boot( const SAVE_CONTROL_WORK* ctrl );
 
 //=============================================================================
 /**
@@ -625,6 +631,7 @@ typedef enum
   RESORT_CITY_DATA_PARAM_AUTHER_NAME, //p_ret_adrs
   RESORT_CITY_DATA_PARAM_LV,
   RESORT_CITY_DATA_PARAM_EXP,
+  RESORT_CITY_DATA_PARAM_RND_SEED,
   RESORT_CITY_DATA_PARAM_MAX
 }RESORT_CITY_DATA_PARAM;
 
@@ -647,9 +654,8 @@ extern void RESORT_CITY_DATA_UpdateDay( RESORT_CITY_DATA *p_wk );
 extern void RESORT_CITY_DATA_AddTrainerID( RESORT_CITY_DATA *p_wk, u32 trainerID );
 extern BOOL RESORT_CITY_DATA_CheckTrainerID( const RESORT_CITY_DATA *cp_wk, u32 trainerID );
 
-extern u32 RESORT_CITY_DATA_GetRnd( const RESORT_CITY_DATA *cp_wk, u32 ofs, u32 max );
-
-#define RESORT_CITY_DATA_GetRndRecv( x,y,z )  RESORT_CITY_DATA_GetRnd( x,RESORT_RECV_DATA_GetData(x,RESORT_DATA_PARAM_TRAINER_ID,NULL ), z )
+extern u32 RESORT_DATA_GetRnd( u32 ofs, u32 max );
+extern u32 RESORT_DATA_GetRndRecv( RESORT_RECV_DATA *p_wk, u32 max );
 
 //=============================================================================
 /**
