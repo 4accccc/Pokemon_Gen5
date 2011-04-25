@@ -261,10 +261,10 @@ static const GRID_DATA sc_white_warp_pos_table[ROOM_TYPE_MAX][WARP_DIR_MAX] = {
 static const GRID_DATA sc_black_bmodel_pos_table[ROOM_TYPE_MAX][WARP_DIR_MAX] = {
   // エレベーター部屋
   {
-    { 6 , 0 , 1}, // 上
+    { 6 , 0 , 2}, // 上
     { 6 , 0 , 13}, // 下
-    { 0 , 0 , 7}, // 左
-    { 12 , 0 , 7}, // 右
+    { 1 , 0 , 7}, // 左
+    { 11 , 0 , 7}, // 右
   },
   // ボス部屋
   {
@@ -275,24 +275,24 @@ static const GRID_DATA sc_black_bmodel_pos_table[ROOM_TYPE_MAX][WARP_DIR_MAX] = 
   },
   // 特殊部屋１
   {
-    { 6 , 0 , 1}, // 上
+    { 6 , 0 , 2}, // 上
     { 6 , 0 , 13}, // 下
-    { 0 , 0 , 7}, // 左
-    { 12 , 0 , 7}, // 右
+    { 1 , 0 , 7}, // 左
+    { 11 , 0 , 7}, // 右
   },
   // 特殊部屋２
   {
-    { 6 , 0 , 1}, // 上
+    { 6 , 0 , 2}, // 上
     { 6 , 0 , 13}, // 下
-    { 0 , 0 , 7}, // 左
-    { 12 , 0 , 7}, // 右
+    { 1 , 0 , 7}, // 左
+    { 11 , 0 , 7}, // 右
   },
   // 通常部屋
   {
-    { 6 , 0 , 1}, // 上
+    { 6 , 0 , 2}, // 上
     { 6 , 0 , 13}, // 下
-    { 0 , 0 , 7}, // 左
-    { 12 , 0 , 7}, // 右
+    { 1 , 0 , 7}, // 左
+    { 11 , 0 , 7}, // 右
   },
 };
 //-------------------------------------
@@ -2600,39 +2600,58 @@ static void SetBUildModel( MAP_CHAGE_EVENT_WORK *p_wk , ROOM_DATA* p_room_data)
 //-----------------------------------------------------------------------------
 static void SetDummyObj( MAP_CHAGE_EVENT_WORK *p_wk , ROOM_DATA* p_room_data)
 {
-  // 上(エレベータ部屋には上封鎖オブジェクトを置くことがない)
-  if( p_room_data->room_type != ROOM_TYPE_ELEVATOR )
+  // ボス部屋は封鎖しない
+  if( p_room_data->room_type != ROOM_TYPE_BOSS )
   {
-    if( !p_room_data->can_move[INF_MOVE_UP] )
+    // 上(エレベータ部屋には上封鎖オブジェクトを置くことがない)
+    if( p_room_data->room_type != ROOM_TYPE_ELEVATOR )
+    {
+      if( !p_room_data->can_move[INF_MOVE_UP] )
+      {
+        // ダミーオブジェクトで封鎖
+        const GRID_DATA *p_grid_data = GetBmodelPos( p_wk ,p_room_data->room_type ,WARP_DIR_UP );
+        GRID_DATA gd = *p_grid_data;
+        AddDummyObj( p_wk , &gd );  // 中
+        gd.x = (*p_grid_data).x + 1;
+        AddDummyObj( p_wk , &gd );  // 左
+        gd.x = (*p_grid_data).x - 1;
+        AddDummyObj( p_wk , &gd );  // 右
+      }
+    }
+
+    // 下
+    if( !p_room_data->can_move[INF_MOVE_DOWN] )
     {
       // ダミーオブジェクトで封鎖
-      const GRID_DATA *p_grid_data = GetBmodelPos( p_wk ,p_room_data->room_type ,WARP_DIR_UP );
+      const GRID_DATA *p_grid_data = GetBmodelPos( p_wk ,p_room_data->room_type ,WARP_DIR_DOWN );
       AddDummyObj( p_wk , p_grid_data );
     }
-  }
 
-  // 下
-  if( !p_room_data->can_move[INF_MOVE_DOWN] )
-  {
-    // ダミーオブジェクトで封鎖
-    const GRID_DATA *p_grid_data = GetBmodelPos( p_wk ,p_room_data->room_type ,WARP_DIR_DOWN );
-    AddDummyObj( p_wk , p_grid_data );
-  }
+    // 左
+    if( !p_room_data->can_move[INF_MOVE_LEFT] )
+    {
+      // ダミーオブジェクトで封鎖
+      const GRID_DATA *p_grid_data = GetBmodelPos( p_wk ,p_room_data->room_type ,WARP_DIR_LEFT );
+      GRID_DATA gd = *p_grid_data;
+      AddDummyObj( p_wk , &gd );  // 中
+      gd.z = (*p_grid_data).z - 1;
+      AddDummyObj( p_wk , &gd );  // 上
+      gd.z = (*p_grid_data).z + 1;
+      AddDummyObj( p_wk , &gd );  // 下
+    }
 
-  // 左
-  if( !p_room_data->can_move[INF_MOVE_LEFT] )
-  {
-    // ダミーオブジェクトで封鎖
-    const GRID_DATA *p_grid_data = GetBmodelPos( p_wk ,p_room_data->room_type ,WARP_DIR_LEFT );
-    AddDummyObj( p_wk , p_grid_data );
-  }
-
-  // 右
-  if( !p_room_data->can_move[INF_MOVE_RIGHT] )
-  {
-    // ダミーオブジェクトで封鎖
-    const GRID_DATA *p_grid_data = GetBmodelPos( p_wk ,p_room_data->room_type ,WARP_DIR_RIGHT );
-    AddDummyObj( p_wk , p_grid_data );
+    // 右
+    if( !p_room_data->can_move[INF_MOVE_RIGHT] )
+    {
+      // ダミーオブジェクトで封鎖
+      const GRID_DATA *p_grid_data = GetBmodelPos( p_wk ,p_room_data->room_type ,WARP_DIR_RIGHT );
+      GRID_DATA gd = *p_grid_data;
+      AddDummyObj( p_wk , &gd );  // 中
+      gd.z = (*p_grid_data).z - 1;
+      AddDummyObj( p_wk , &gd );  // 上
+      gd.z = (*p_grid_data).z + 1;
+      AddDummyObj( p_wk , &gd );  // 下
+    }
   }
 }
 

@@ -1,3 +1,5 @@
 DATA_LIST = \
-    elevator.nsbmd \
-    elevator.nsbta \
+    elevator_b.nsbmd \
+    elevator_b.nsbta \
+    elevator_w.nsbmd \
+    elevator_w.nsbta \

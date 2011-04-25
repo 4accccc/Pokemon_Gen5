@@ -190,7 +190,6 @@ EVENT_START  ev_infinity_dungeon_elevator
 
       _INFINITY_DUNGEON_WARP(WARP_INFORMATION)
       _RESERVE_SCRIPT( SCRID_INFINITY_DUNGEON_COMEBACK )
-      
       _SE_STOP()
     ENDIF
   ELSE
@@ -438,6 +437,11 @@ EVENT_START  ev_infinity_dungeon_comeback
   DEFINE_LOCAL  LWK_MAP_STATUS
   DEFINE_LOCAL  LWK_DUNGEON_STATUS
   DEFINE_LOCAL  LWK_NOW_AREA
+
+  // エレベータ移動音
+  _CALL play_elevator_move_se
+  _TIME_WAIT( 50 )
+  _SE_STOP()
 
   _CALL play_elevator_stop_se
   _SE_WAIT()
@@ -738,9 +742,9 @@ EVENT_START  ev_infinity_dungeon_battle_boss_trainer
     _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 6, 13, FORCE_TYPE_NOT, 8, DIR_UD)
   ENDIF
   _OBJ_ANIME_WAIT()
-
-  // エレベータ移動音
-  _CALL play_elevator_move_se
+  
+  // フロア移動
+  _CALL play_floor_move_se
 
   // かえるしょり
   _INFINITY_DUNGEON_WARP(WARP_INFORMATION)

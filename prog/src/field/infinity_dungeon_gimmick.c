@@ -98,19 +98,36 @@ enum
   MODEL_RESID_MAX,
 };
 
-//リソースデータ
-static const GFL_G3D_UTIL_RES sc_g3d_util_res[MODEL_RESID_MAX] =
+//リソースデータ（黒）
+static const GFL_G3D_UTIL_RES sc_g3d_util_res_b[MODEL_RESID_MAX] =
 {
   // MODEL_RESID_ELEVATOR->エレベータデータ
   {
     ARCID_INFINITY_DUNGEON_GIMMICK_DATA,
-    NARC_infinity_dungeon_gmk_elevator_nsbmd,
+    NARC_infinity_dungeon_gmk_elevator_b_nsbmd,
     GFL_G3D_UTIL_RESARC,
   },
   //MODEL_RESID_ELEVATOR_TA->エレベータアニメーション
   {
     ARCID_INFINITY_DUNGEON_GIMMICK_DATA,
-    NARC_infinity_dungeon_gmk_elevator_nsbta, 
+    NARC_infinity_dungeon_gmk_elevator_b_nsbta, 
+    GFL_G3D_UTIL_RESARC
+  },
+};
+
+//リソースデータ（白）
+static const GFL_G3D_UTIL_RES sc_g3d_util_res_w[MODEL_RESID_MAX] =
+{
+  // MODEL_RESID_ELEVATOR->エレベータデータ
+  {
+    ARCID_INFINITY_DUNGEON_GIMMICK_DATA,
+    NARC_infinity_dungeon_gmk_elevator_w_nsbmd,
+    GFL_G3D_UTIL_RESARC,
+  },
+  //MODEL_RESID_ELEVATOR_TA->エレベータアニメーション
+  {
+    ARCID_INFINITY_DUNGEON_GIMMICK_DATA,
+    NARC_infinity_dungeon_gmk_elevator_w_nsbta, 
     GFL_G3D_UTIL_RESARC
   },
 };
@@ -143,10 +160,19 @@ static const GFL_G3D_UTIL_OBJ sc_g3d_util_obj[MODELID_MAX] =
   },
 };
 
-//全情報設定
-static const GFL_G3D_UTIL_SETUP sc_g3d_util_setup =
+// ブラック全情報設定
+static const GFL_G3D_UTIL_SETUP sc_g3d_util_setup_b =
 {
-  sc_g3d_util_res,  //リソーステーブル
+  sc_g3d_util_res_b,  //リソーステーブル
+  MODEL_RESID_MAX,  //リソース最大数
+  sc_g3d_util_obj,  //オブジェクトテーブル
+  MODELID_MAX,      //オブジェクト数
+};
+
+// ホワイト全情報設定
+static const GFL_G3D_UTIL_SETUP sc_g3d_util_setup_w =
+{
+  sc_g3d_util_res_w,  //リソーステーブル
   MODEL_RESID_MAX,  //リソース最大数
   sc_g3d_util_obj,  //オブジェクトテーブル
   MODELID_MAX,      //オブジェクト数
@@ -312,8 +338,15 @@ void INFINITY_DUNGEON_Move( FIELDMAP_WORK *p_fieldmap )
 static void MapModelInit( INF_ELEVATOR_WK *p_wk )
 {
   //読込み
-  FLD_EXP_OBJ_AddUnitByHandle(p_wk->p_ex_obj, &sc_g3d_util_setup, MODEL_MANAGER_FLD_EXP_OBJ_UNIT_ID );
-  
+  if( GetDungeonColor() == VERSION_B2 )
+  {
+    FLD_EXP_OBJ_AddUnitByHandle(p_wk->p_ex_obj, &sc_g3d_util_setup_b, MODEL_MANAGER_FLD_EXP_OBJ_UNIT_ID );
+  }
+  else
+  {
+    FLD_EXP_OBJ_AddUnitByHandle(p_wk->p_ex_obj, &sc_g3d_util_setup_w, MODEL_MANAGER_FLD_EXP_OBJ_UNIT_ID );
+  }
+
   //モデル初期化
   {
     int i;

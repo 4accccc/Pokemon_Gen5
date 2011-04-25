@@ -11,8 +11,10 @@
 #define NARC_INFINITY_DUNGEON_GMK_NAIX_
 
 enum {
-	NARC_infinity_dungeon_gmk_elevator_nsbmd = 0,
-	NARC_infinity_dungeon_gmk_elevator_nsbta = 1
+	NARC_infinity_dungeon_gmk_elevator_b_nsbmd = 0,
+	NARC_infinity_dungeon_gmk_elevator_b_nsbta = 1,
+	NARC_infinity_dungeon_gmk_elevator_w_nsbmd = 2,
+	NARC_infinity_dungeon_gmk_elevator_w_nsbta = 3
 };
 
 /* NARC_INFINITY_DUNGEON_GMK_NAIX_ */
