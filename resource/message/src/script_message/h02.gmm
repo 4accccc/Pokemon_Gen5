@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-24T18:20:39"/>
+	<create user="matsumiya" host="W00224" date="2011-04-25T12:40:17"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1306" top="115" right="2011" bottom="738" maximized="no" rayout="Vertical2">
+	<dialog left="1308" top="222" right="2013" bottom="850" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -340,14 +340,16 @@
 		<attribute name="キャラ指定">BOY2</attribute>
 		<language name="JPN" width="256">ホドモエの　はねばし……
 またの　なまえを　リザードンブリッジ！▼
-なんでも　リザードンという
-ポケモンのように　みえるから　だって▼
+なんでも　あがった　はねばしが
+リザードンという　ポケモンのように▽
+みえるから　だって▼
 ……でも　リザードンって　ポケモン
 みたことないから　よくわからないや</language>
 		<language name="JPN_KANJI" width="256">ホドモエの　はねばし……
 またの　なまえを　リザードンブリッジ！▼
-なんでも　リザードンという
-ポケモンのように　みえるから　だって▼
+なんでも　あがった　はねばしが
+リザードンという　ポケモンのように▽
+みえるから　だって▼
 ……でも　リザードンって　ポケモン
 みたことないから　よくわからないや</language>
 	</row>
@@ -359,12 +361,18 @@
 		<attribute name="キャラ指定">BOY2</attribute>
 		<language name="JPN" width="256">ホドモエの　はねばし……
 またの　なまえを　リザードンブリッジ！▼
-なんでも　リザードンという
-ポケモンのように　みえるから　だって</language>
+なんでも　あがった　はねばしが
+リザードンという　ポケモンのように▽
+みえるから　だって▼
+……でも　リザードンって　ポケモン
+みたことないから　よくわからないや</language>
 		<language name="JPN_KANJI" width="256">ホドモエの　はねばし……
 またの　なまえを　リザードンブリッジ！▼
-なんでも　リザードンという
-ポケモンのように　みえるから　だって</language>
+なんでも　あがった　はねばしが
+リザードンという　ポケモンのように▽
+みえるから　だって▼
+……でも　リザードンって　ポケモン
+みたことないから　よくわからないや</language>
 	</row>
 
 	<row id="msg_h02_boy2_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">

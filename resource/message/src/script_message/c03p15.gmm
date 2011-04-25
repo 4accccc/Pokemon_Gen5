@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-21T16:54:59"/>
+	<create user="matsumiya" host="W00224" date="2011-04-25T12:51:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1290" top="221" right="1995" bottom="849" maximized="no" rayout="Vertical2">
+	<dialog left="1308" top="222" right="2013" bottom="850" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="209" right="1280" bottom="607" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -348,284 +348,123 @@
 遠慮なさらずに　どうぞ！</language>
 	</row>
 
-	<row id="msg_c03p15_leader3_01" back-color="#404040,,,#404040,,#404040,#404040,#ffffff,,,#ffffff,,#404040,#ffffff,,,#ffffff,,">
-		<comment>♂
-・c03p15にマップ切り替えするとイベント発動
-・メッセージ表示後、主人公
-　所定の位置まで移動すると
-　続けてleader3_02</comment>
-		<attribute name="キャラ指定">ジムリーダー
-アーティ</attribute>
-		<language name="JPN" width="256">アーティ『こっち　こっち！▼</language>
-		<language name="JPN_KANJI" width="256">アーティ『こっち　こっち！▼</language>
+	<row id="msg_c03p15_leader3_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#ffffff,,,#ffffff,,#404040,#ffffff,,,#ffffff,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03p15_leader3_02" back-color="#404040,,,#404040,,#404040,#404040,#ffffff,,,#ffffff,,#404040,#ffffff,,,#ffffff,,">
-		<comment>♂
-・続けてwhite_01</comment>
-		<attribute name="キャラ指定">ジムリーダー
-アーティ</attribute>
-		<language name="JPN" width="256">アーティ『プラズマだん……
-このコの　ポケモンを　うばったって▼</language>
-		<language name="JPN_KANJI" width="256">アーティ『プラズマ団……
-このコの　ポケモンを　奪ったって▼</language>
+	<row id="msg_c03p15_leader3_02" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#ffffff,,,#ffffff,,#404040,#ffffff,,,#ffffff,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03p15_white_01" back-color="#404040,,,#404040,,#404040,#404040,#ffffff,,,#ffffff,,#404040,#ffffff,,,#ffffff,,">
-		<comment>♀
-・続けてleader8w_01
-・0＝主人公名前</comment>
-		<attribute name="キャラ指定">友達♀
-ベル</attribute>
-		<language name="JPN" width="256">ベル『……[1:00:トレーナー名:0]　どうしよう▼
-あたしの　ムンナ……
-プラズマだんに　とられちゃったあ▼</language>
-		<language name="JPN_KANJI" width="256">ベル『……[1:00:トレーナー名:0]　どうしよう▼
-あたしの　ムンナ……
-プラズマ団に　とられちゃったあ▼</language>
+	<row id="msg_c03p15_white_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#ffffff,,,#ffffff,,#404040,#ffffff,,,#ffffff,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03p15_leader8w_01" back-color="#404040,,,#404040,,#404040,#404040,#ffffff,,,#ffffff,,#404040,#ffffff,,,#ffffff,,">
-		<comment>♀
-・続けてleader3_03</comment>
-		<attribute name="キャラ指定">ジムリーダー
-アイリス</attribute>
-		<language name="JPN" width="256">？？？『あたしね
-おねーちゃんの　ひめいを　きいて▽
-ひっしに　おいかけたんだよ！▼
-……でも　このまち　おおきいし
-ひとばかりで　みうしなっちゃったの▼</language>
-		<language name="JPN_KANJI" width="256">？？？『あたしね
-おねーちゃんの　ひめいを　きいて▽
-ひっしに　おいかけたんだよ！▼
-……でも　このまち　おおきいし
-ひとばかりで　みうしなっちゃったの▼</language>
+	<row id="msg_c03p15_leader8w_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#ffffff,,,#ffffff,,#404040,#ffffff,,,#ffffff,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03p15_leader3_03" back-color="#404040,,,#404040,,#404040,#404040,#ffffff,,,#ffffff,,#404040,#ffffff,,,#ffffff,,">
-		<comment>♂
-・続けてleader8w_02</comment>
-		<attribute name="キャラ指定">ジムリーダー
-アーティ</attribute>
-		<language name="JPN" width="256">アーティ『アイリス……
-きみは　できることを　したんだから▼</language>
-		<language name="JPN_KANJI" width="256">アーティ『アイリス……
-きみは　できることを　したんだから▼</language>
+	<row id="msg_c03p15_leader3_03" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#ffffff,,,#ffffff,,#404040,#ffffff,,,#ffffff,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03p15_leader8w_02" back-color="#404040,,,#404040,,#404040,#404040,#ffffff,,,#ffffff,,#404040,#ffffff,,,#ffffff,,">
-		<comment>♀
-・続けてwhite_02</comment>
-		<attribute name="キャラ指定">ジムリーダー
-アイリス</attribute>
-		<language name="JPN" width="256">アイリス『……でも　ダメだもん！▼
-ひとの　ポケモンを
-とっちゃ　ダメなんだよ！！▼
-ポケモンと　ひとは　いっしょに
-いるのが　ステキ　なんだもん！▼
-おたがい　ないものを　だしあって
-ささえあうのが　いちばん　だもん！▼</language>
-		<language name="JPN_KANJI" width="256">アイリス『……でも　ダメだもん！▼
-ひとの　ポケモンを
-とっちゃ　ダメなんだよ！！▼
-ポケモンと　ひとは　いっしょに
-いるのが　ステキ　なんだもん！▼
-おたがい　ないものを　だしあって
-ささえあうのが　いちばん　だもん！▼</language>
+	<row id="msg_c03p15_leader8w_02" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#ffffff,,,#ffffff,,#404040,#ffffff,,,#ffffff,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03p15_white_02" back-color="#404040,,,#404040,,#404040,#404040,#ffffff,,,#ffffff,,#404040,#ffffff,,,#ffffff,,">
-		<comment>♀
-・続けてleader3_04</comment>
-		<attribute name="キャラ指定">友達♀
-ベル</attribute>
-		<language name="JPN" width="256">ベル『……アイリスちゃん▼</language>
-		<language name="JPN_KANJI" width="256">ベル『……アイリスちゃん▼</language>
+	<row id="msg_c03p15_white_02" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#ffffff,,,#ffffff,,#404040,#ffffff,,,#ffffff,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03p15_leader3_04" back-color="#404040,,,#404040,,#404040,#404040,#ffffff,,,#ffffff,,#404040,#ffffff,,,#ffffff,,">
-		<comment>♂
-・続けてウインドウを閉じずに
-　leader3_05か
-　leader3_06</comment>
-		<attribute name="キャラ指定">ジムリーダー
-アーティ</attribute>
-		<language name="JPN" width="256">アーティ『うん！　だから　
-ボクたちが　ポケモンを　とりかえす▼</language>
-		<language name="JPN_KANJI" width="256">アーティ『うん！　だから　
-ボクたちが　ポケモンを　とりかえす▼</language>
+	<row id="msg_c03p15_leader3_04" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#ffffff,,,#ffffff,,#404040,#ffffff,,,#ffffff,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03p15_leader3_05" back-color="#404040,,,#404040,,#404040,#404040,#ffffff,,,#ffffff,,#404040,#ffffff,,,#ffffff,,">
-		<comment>♂
-・主人公性別：♂
-・続けてleader3_07</comment>
-		<attribute name="キャラ指定">ジムリーダー
-アーティ</attribute>
-		<language name="JPN" width="256">ね　[1:00:トレーナー名:0]くん▼</language>
-		<language name="JPN_KANJI" width="256">ね　[1:00:トレーナー名:0]くん▼</language>
+	<row id="msg_c03p15_leader3_05" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#ffffff,,,#ffffff,,#404040,#ffffff,,,#ffffff,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03p15_leader3_06" back-color="#404040,,,#404040,,#404040,#404040,#ffffff,,,#ffffff,,#404040,#ffffff,,,#ffffff,,">
-		<comment>♂
-・主人公性別：♀
-・続けてleader3_07</comment>
-		<attribute name="キャラ指定">ジムリーダー
-アーティ</attribute>
-		<language name="JPN" width="256">ね　[1:00:トレーナー名:0]さん▼</language>
-		<language name="JPN_KANJI" width="256">ね　[1:00:トレーナー名:0]さん▼</language>
+	<row id="msg_c03p15_leader3_06" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#ffffff,,,#ffffff,,#404040,#ffffff,,,#ffffff,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03p15_leader3_07" back-color="#404040,,,#404040,,#404040,#404040,#ffffff,,,#ffffff,,#404040,#ffffff,,,#ffffff,,">
-		<comment>♂
-・メッセージ表示後
-　下記のプラズマ団♀が出現する
-・続けてhakaiw_01</comment>
-		<attribute name="キャラ指定">ジムリーダー
-アーティ</attribute>
-		<language name="JPN" width="256">……とはいえ　この　ヒウンシティで
-ひとさがし　ポケモンさがし　だなんて▽
-まさに　くもを　つかむ　はなし▼</language>
-		<language name="JPN_KANJI" width="256">……とはいえ　この　ヒウンシティで
-人探し　ポケモン探し　だなんて▽
-まさに　雲をつかむ　話▼</language>
+	<row id="msg_c03p15_leader3_07" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#ffffff,,,#ffffff,,#404040,#ffffff,,,#ffffff,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03p15_hakaiw_01" back-color="#404040,,,#404040,,#404040,#404040,#ffffff,,,#ffffff,,#404040,#ffffff,,,#ffffff,,">
-		<comment>♀
-・数歩移動し！マーク表示後に
-　メッセージ表示
-・表示後、外周部側に移動
-・画面外に消えると続けて</comment>
-		<attribute name="キャラ指定">プラズマ団♀</attribute>
-		<language name="JPN" width="256">プラズマだん『なんで
-ジムリーダーが　いるの！？▼
-せっかく　うまくいったから
-もういっぴき　うばおうとしたのに……▽
-って　にげなきゃだわ……！！▼</language>
-		<language name="JPN_KANJI" width="256">プラズマ団『なんで
-ジムリーダーが　いるの！？▼
-せっかく　うまくいったから
-もう１匹　奪おうとしたのに……▽
-って　逃げなきゃだわ……！！▼</language>
+	<row id="msg_c03p15_hakaiw_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#ffffff,,,#ffffff,,#404040,#ffffff,,,#ffffff,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03p15_leader3_08" back-color="#404040,,,#404040,,#404040,#404040,#ffffff,,,#ffffff,,#404040,#ffffff,,,#ffffff,,">
-		<comment>♂
-・主人公性別：♂
-・メッセージ表示後、アーティも
-　倍速で外周部側に移動
-・続けて
-　leader8w_03か
-　leader8w_04</comment>
-		<attribute name="キャラ指定">ジムリーダー
-アーティ</attribute>
-		<language name="JPN" width="256">アーティ『[1:00:トレーナー名:0]くん　いくよ！▼
-アイリス！
-きみは　そのコの　そばにいて▼</language>
-		<language name="JPN_KANJI" width="256">アーティ『[1:00:トレーナー名:0]くん　行くよ！▼
-アイリス！
-きみは　そのコの　そばにいて▼</language>
+	<row id="msg_c03p15_leader3_08" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#ffffff,,,#ffffff,,#404040,#ffffff,,,#ffffff,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03p15_leader3_09" back-color="#404040,,,#404040,,#404040,#404040,#ffffff,,,#ffffff,,#404040,#ffffff,,,#ffffff,,">
-		<comment>♂
-・主人公性別：♂
-・メッセージ表示後、アーティも
-　倍速で外周部側に移動
-・続けて
-　leader8w_03か
-　leader8w_04</comment>
-		<attribute name="キャラ指定">ジムリーダー
-アーティ</attribute>
-		<language name="JPN" width="256">アーティ『[1:00:トレーナー名:0]さん　いくよ！▼
-アイリス！
-きみは　そのコの　そばにいて▼</language>
-		<language name="JPN_KANJI" width="256">アーティ『[1:00:トレーナー名:0]さん　行くよ！▼
-アイリス！
-きみは　そのコの　そばにいて▼</language>
+	<row id="msg_c03p15_leader3_09" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#ffffff,,,#ffffff,,#404040,#ffffff,,,#ffffff,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03p15_leader8w_03" back-color="#404040,,,#404040,,#404040,#404040,#ffffff,,,#ffffff,,#404040,#ffffff,,,#ffffff,,">
-		<comment>♀
-・主人公性別：♂
-・c03p07でプラズマ団に勝利するまで繰り返し</comment>
-		<attribute name="キャラ指定">ジムリーダー
-アイリス</attribute>
-		<language name="JPN" width="256">アイリス『あたし　ベルおねーちゃんの
-ボディーガードを　してる！▼
-だから　おにーちゃんは
-わるいやつを　おいかけて！▼</language>
-		<language name="JPN_KANJI" width="256">アイリス『あたし　ベルおねーちゃんの
-ボディーガードを　してる！▼
-だから　おにーちゃんは
-わるいやつを　おいかけて！▼</language>
+	<row id="msg_c03p15_leader8w_03" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#ffffff,,,#ffffff,,#404040,#ffffff,,,#ffffff,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03p15_leader8w_03a" back-color="#404040,,,#404040,,#404040,#404040,#ffffff,,,#ffffff,,#404040,#ffffff,,,#ffffff,,">
-		<comment>♀
-・主人公性別：♂
-・c03p07でプラズマ団に勝利するまで繰り返し</comment>
-		<attribute name="キャラ指定">ジムリーダー
-アイリス</attribute>
-		<language name="JPN" width="256">アイリス『あたし　ベルおねーちゃんの
-ボディーガードを　してる！▼
-だから　おにーちゃんは
-わるいやつを　おいかけて！</language>
-		<language name="JPN_KANJI" width="256">アイリス『あたし　ベルおねーちゃんの
-ボディーガードを　してる！▼
-だから　おにーちゃんは
-わるいやつを　おいかけて！</language>
+	<row id="msg_c03p15_leader8w_03a" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#ffffff,,,#ffffff,,#404040,#ffffff,,,#ffffff,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03p15_leader8w_04" back-color="#404040,,,#404040,,#404040,#404040,#ffffff,,,#ffffff,,#404040,#ffffff,,,#ffffff,,">
-		<comment>♀
-・主人公性別：♀
-・c03p07でプラズマ団に勝利するまで繰り返し</comment>
-		<attribute name="キャラ指定">ジムリーダー
-アイリス</attribute>
-		<language name="JPN" width="256">アイリス『あたし　ベルおねーちゃんの
-ボディーガードを　してる！▼
-だから　おねーちゃんは
-わるいやつを　おいかけて！▼</language>
-		<language name="JPN_KANJI" width="256">アイリス『あたし　ベルおねーちゃんの
-ボディーガードを　してる！▼
-だから　おねーちゃんは
-わるいやつを　おいかけて！▼</language>
+	<row id="msg_c03p15_leader8w_04" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#ffffff,,,#ffffff,,#404040,#ffffff,,,#ffffff,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03p15_leader8w_04a" back-color="#404040,,,#404040,,#404040,#404040,#ffffff,,,#ffffff,,#404040,#ffffff,,,#ffffff,,">
-		<comment>♀
-・主人公性別：♀
-・c03p07でプラズマ団に勝利するまで繰り返し</comment>
-		<attribute name="キャラ指定">ジムリーダー
-アイリス</attribute>
-		<language name="JPN" width="256">アイリス『あたし　ベルおねーちゃんの
-ボディーガードを　してる！▼
-だから　おねーちゃんは
-わるいやつを　おいかけて！</language>
-		<language name="JPN_KANJI" width="256">アイリス『あたし　ベルおねーちゃんの
-ボディーガードを　してる！▼
-だから　おねーちゃんは
-わるいやつを　おいかけて！</language>
+	<row id="msg_c03p15_leader8w_04a" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#ffffff,,,#ffffff,,#404040,#ffffff,,,#ffffff,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03p15_white_03" back-color="#404040,,,#404040,,#404040,#404040,#ffffff,,,#ffffff,,#404040,#ffffff,,,#ffffff,,">
-		<comment>♀
-・c03p07でプラズマ団に勝利するまで繰り返し</comment>
-		<attribute name="キャラ指定">友達♀
-ベル</attribute>
-		<language name="JPN" width="256">ベル『……ごめんね　ムンナ▼
-トレーナーなのに　じぶんの　ポケモンを
-まもって　あげられなくて……　あたし……</language>
-		<language name="JPN_KANJI" width="256">ベル『……ごめんね　ムンナ▼
-トレーナーなのに　じぶんの　ポケモンを
-守って　あげられなくて……　あたし……</language>
+	<row id="msg_c03p15_white_03" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#ffffff,,,#ffffff,,#404040,#ffffff,,,#ffffff,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c03p15_woman1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffffff,,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
 		<comment>♀
-・SWANでメッセージ内容変更</comment>
+※SWANでメッセージ内容変更</comment>
 		<attribute name="キャラ指定">WOMAN1</attribute>
 		<language name="JPN" width="256">かりメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
@@ -635,7 +474,7 @@
 		<comment>♂
 ・プラズマ団アジト船について
 ・ホドモエ到着まで（仮）
-・SWANでメッセージ内容変更</comment>
+※SWANでメッセージ内容変更</comment>
 		<attribute name="キャラ指定">GENTLEMAN</attribute>
 		<language name="JPN" width="256">あの　ふるめかしい　くろふね……
 いったい　なんでしょうなあ</language>
@@ -646,8 +485,8 @@
 	<row id="msg_c03p15_gentleman_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffffff,,,#ffffff,,#ffff80,#ffffff,,,#ffffff,,">
 		<comment>♂
 ・プラズマ団アジト船について
-・ホドモエ到着まで（仮）
-・SWANでメッセージ内容変更</comment>
+・ホドモエ到着後から（仮）
+※SWANでメッセージ内容変更</comment>
 		<attribute name="キャラ指定">GENTLEMAN</attribute>
 		<language name="JPN" width="256">あの　ふるめかしい　くろふね……
 いったい　なんだったんでしょうなあ</language>
