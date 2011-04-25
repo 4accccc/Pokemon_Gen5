@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-04T19:57:41"/>
+	<create user="matsumiya" host="W00224" date="2011-04-25T18:50:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1294" top="205" right="1999" bottom="833" maximized="no" rayout="Vertical2">
+	<dialog left="1297" top="169" right="2002" bottom="797" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,355 +292,156 @@
 	</lock>
 
 
-	<row id="msg_c03p07_black_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_c03p07_glasses_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
-・ポケモンジムまえのpos（お任せ）を踏むと起動
-・ジムからライバルが登場してメッセージ表示
-・続けてblack_02</comment>
-		<attribute name="キャラ指定">友達♂
-チェレン</attribute>
-		<language name="JPN" width="256">チェレン『やあ　[1:00:トレーナー名:0]▼
-たったいま　ジムリーダーの
-アーティさんに　いどんだ　ところさ▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『やあ　[1:00:トレーナー名:0]▼
-たったいま　ジムリーダーの
-アーティさんに　挑んだところさ▼</language>
+・下水道イベントを終えるまでのストッパー</comment>
+		<attribute name="キャラ指定">DANPEI
+ダンペイ</attribute>
+		<language name="JPN" width="256">ジムリーダー　なんですけど▼
+「じけん！　かもしれない……」って
+ちょいと　でていっちゃいましてね▽
+よければ　さがして　きてください</language>
+		<language name="JPN_KANJI" width="256">ジムリーダー　なんですけど▼
+「事件！　かもしれない……」って
+ちょいと　でていっちゃいましてね▽
+よければ　探して　きてください</language>
 	</row>
 
-	<row id="msg_c03p07_black_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_c03p07_black_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c03p07_black_02" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c03p07_black_03" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c03p07_leader3_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c03p07_leader3_02" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c03p07_leader3_03" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c03p07_leader3_04" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c03p07_hakaim_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c03p07_hakaim_02" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c03p07_hakaim_03" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c03p07_hakaim2_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c03p07_hakaiw_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c03p07_leader3_05" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c03p07_leader3_06" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c03p07_leader3_07" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c03p07_hakaim_04" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c03p07_leader8w_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c03p07_leader3_08" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c03p07_leader8w_02" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c03p07_white_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c03p07_tvt_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c03p07_tvt_02" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c03p07_veteranm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
-・ジムのほうを見てメッセージ
-・続けてblack_03</comment>
-		<attribute name="キャラ指定">友達♂
-チェレン</attribute>
-		<language name="JPN" width="256">さすが　ジムリーダーだね▼
-ジムバッジを　てにいれるのに
-ちょっと　てこずったけれど▼
-まあ　ぼくに　かかれば
-むしタイプも　もんだいなし　だね▼</language>
-		<language name="JPN_KANJI" width="256">さすが　ジムリーダーだね▼
-ジムバッジを　入手するのに
-ちょっと　てこずったけれど▼
-まあ　ぼくに　かかれば
-むしタイプも　問題なし　だね▼</language>
-	</row>
-
-	<row id="msg_c03p07_black_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・主人公と向き合ってメッセージ
-・表示後、画面手前に移動する
-・続けてleader3_01</comment>
-		<attribute name="キャラ指定">友達♂
-チェレン</attribute>
-		<language name="JPN" width="256">このまま　イッシュちほうの
-ジムリーダー　ぜんいんに　かつ▼
-そして　ポケモンリーグに　むかい
-チャンピオンを　こえる！▼
-そうすれば　だれもが　ぼくを　つよい
-トレーナーとして　みとめてくれる……▼
-それでこそ　ぼくは
-いきていると　じっかん　できるはず……▼</language>
-		<language name="JPN_KANJI" width="256">このまま　イッシュ地方の
-ジムリーダー　全員に　勝利し▼
-そして　ポケモンリーグに　向かい
-チャンピオンを　超える！▼
-そうすれば　だれもが　ぼくを　強い
-トレーナーとして　認めてくれる……▼
-それでこそ　ぼくは
-生きていると　実感できるはず……▼</language>
-	</row>
-
-	<row id="msg_c03p07_leader3_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・主人公性別：♂
-・チェレン退場し画面外に消えると
-　ジムリーダーが登場してメッセージ
-・続けてleader3_03
-・0＝主人公名前</comment>
-		<attribute name="キャラ指定">ジムリーダー
-アーティ</attribute>
-		<language name="JPN" width="256">アーティ『うおわ？▼
-きみ……　ヤグルマのもりで
-プラズマだんと　たたかってくれた……▼
-たしか　なまえは……▼
-[1:00:トレーナー名:0]くん！▼
-ひょっとして　ジムに　チャレンジ？▼</language>
-		<language name="JPN_KANJI" width="256">アーティ『うおわ？▼
-きみ……　ヤグルマの森で
-プラズマ団と　戦ってくれた……▼
-たしか　名前は……▼
-[1:00:トレーナー名:0]くん！▼
-ひょっとして　ジムに　チャレンジ？▼</language>
-	</row>
-
-	<row id="msg_c03p07_leader3_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・主人公性別：♀
-・チェレン退場し画面外に消えると
-　ジムリーダーが登場してメッセージ
-・続けてleader3_03
-・0＝主人公名前</comment>
-		<attribute name="キャラ指定">ジムリーダー
-アーティ</attribute>
-		<language name="JPN" width="256">アーティ『うおわ？▼
-きみ……　ヤグルマのもりで
-プラズマだんと　たたかってくれた……▼
-たしか　なまえは……▼
-[1:00:トレーナー名:0]さん！▼
-ひょっとして　ジムに　チャレンジ？▼</language>
-		<language name="JPN_KANJI" width="256">アーティ『うおわ？▼
-きみ……　ヤグルマの森で
-プラズマ団と　戦ってくれた……▼
-たしか　名前は……▼
-[1:00:トレーナー名:0]さん！▼
-ひょっとして　ジムに　チャレンジ？▼</language>
-	</row>
-
-	<row id="msg_c03p07_leader3_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・メッセージ表示後、画面下に退場
-　画面外に消えると主人公操作可能に
-・あわせてc03p15にサポート、アイリス出現</comment>
-		<attribute name="キャラ指定">ジムリーダー
-アーティ</attribute>
-		<language name="JPN" width="256">あうう……　もうしわけないけど
-ちょいと　まってくれるかな？▼
-れんらくが　あってさ！
-プラズマだんが　でたらしいんだ！▼
-というか　きみも　きてよ！
-プライムピアって▽
-はとばに　いくからさ！！▼</language>
-		<language name="JPN_KANJI" width="256">あうう……　もうしわけないけど
-ちょいと　待ってくれるかな？▼
-連絡が　あってさ！
-プラズマ団が　でたらしいんだ！▼
-というか　きみも　来てよ！
-プライムピアって▽
-波止場に　行くからさ！！▼</language>
-	</row>
-
-	<row id="msg_c03p07_leader3_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・c03p15、c03イベント後に再度出現
-・posを踏むとメッセージ表示
-・続けてhakaim_01</comment>
-		<attribute name="キャラ指定">ジムリーダー
-アーティ</attribute>
-		<language name="JPN" width="256">アーティ『……▼
-まちがいなく　ココだね▼</language>
-		<language name="JPN_KANJI" width="256">アーティ『……▼
-間違いなく　ココだね▼</language>
-	</row>
-
-	<row id="msg_c03p07_hakaim_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・3人配置（１人は女性）
-・はい/いいえ選択肢表示
-・はい→hakaim_03
-　いいえ→hakaim_02
-・はいを選ぶまでこのメッセージを繰り返し</comment>
-		<attribute name="キャラ指定">プラズマ団♂</attribute>
-		<language name="JPN" width="256">プラズマだん『いない　いない！▼
-この　なかに　なかまとか
-しちけんじんさまは　いない！▼
-ウソだと　おもうなら
-オレと　しょうぶ　してみるか？</language>
-		<language name="JPN_KANJI" width="256">プラズマ団『いない　いない！▼
-この中に　仲間とか
-七賢人さまは　いない！▼
-ウソだと　思うなら
-オレと　勝負してみるか？</language>
-	</row>
-
-	<row id="msg_c03p07_hakaim_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・いいえ選択時</comment>
-		<attribute name="キャラ指定">プラズマ団♂</attribute>
-		<language name="JPN" width="256">プラズマだん『……ふぅ
-びびらせるなよな　もう！▼</language>
-		<language name="JPN_KANJI" width="256">プラズマ団『……ふぅ
-びびらせるなよな　もう！▼</language>
-	</row>
-
-	<row id="msg_c03p07_hakaim_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・はい選択時
-・続けて
-　leader_05か
-　leader_06</comment>
-		<attribute name="キャラ指定">プラズマ団♂</attribute>
-		<language name="JPN" width="256">プラズマだん『くそー！▼
-おれは　こっちの　よわそうな
-ヤツの　あいてを　するから▼
-おまえら　まとめて
-あっちの　つよそうな　ヤツにむかえ▼</language>
-		<language name="JPN_KANJI" width="256">プラズマ団『くそー！▼
-おれは　こっちの　弱そうな
-ヤツの　相手を　するから▼
-おまえら　まとめて
-あっちの　強そうな　ヤツにむかえ▼</language>
-	</row>
-
-	<row id="msg_c03p07_hakaim2_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・hakaim_02でいいえ選択後にはなしかけ</comment>
-		<attribute name="キャラ指定">プラズマ団♂</attribute>
-		<language name="JPN" width="256">よわい　トレーナーに　つかわれる
-ポケモンの　きもちを　かんがえろ！</language>
-		<language name="JPN_KANJI" width="256">弱いトレーナーに　こき使われる
-ポケモンの　気持ちを　考えろ！</language>
-	</row>
-
-	<row id="msg_c03p07_hakaiw_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・hakaim_02でいいえ選択後にはなしかけ</comment>
-		<attribute name="キャラ指定">プラズマ団♀</attribute>
-		<language name="JPN" width="256">いいじゃない
-ひとの　ポケモン　とったって！！</language>
-		<language name="JPN_KANJI" width="256">いいじゃない
-ひとの　ポケモン　奪ったって！！</language>
-	</row>
-
-	<row id="msg_c03p07_leader3_05" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・主人公性別：♂
-・メッセージ表示後、戦闘に</comment>
-		<attribute name="キャラ指定">ジムリーダー
-アーティ</attribute>
-		<language name="JPN" width="256">アーティ『……ったく！▼
-というわけで　[1:00:トレーナー名:0]くん
-そっちの　あいては　おまかせするよ▼</language>
-		<language name="JPN_KANJI" width="256">アーティ『……ったく！▼
-というわけで　[1:00:トレーナー名:0]くん
-そっちの　相手は　おまかせするよ▼</language>
-	</row>
-
-	<row id="msg_c03p07_leader3_06" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・主人公性別：♀
-・メッセージ表示後、戦闘に</comment>
-		<attribute name="キャラ指定">ジムリーダー
-アーティ</attribute>
-		<language name="JPN" width="256">アーティ『……ったく！▼
-というわけで　[1:00:トレーナー名:0]さん
-そっちの　あいては　おまかせするよ▼</language>
-		<language name="JPN_KANJI" width="256">アーティ『……ったく！▼
-というわけで　[1:00:トレーナー名:0]さん
-そっちの　相手は　おまかせするよ▼</language>
-	</row>
-
-	<row id="msg_c03p07_leader3_07" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・hakaim_01でいいえ選択後</comment>
-		<attribute name="キャラ指定">ジムリーダー
-アーティ</attribute>
-		<language name="JPN" width="256">アーティ『……やっぱり　しょうぶして
-なかに　はいるしか　ないのかな</language>
-		<language name="JPN_KANJI" width="256">アーティ『……やっぱり　勝負して
-中に　入るしか　ないのかな</language>
-	</row>
-
-	<row id="msg_c03p07_hakaim_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・戦闘後自動で表示
-・表示後、プラズマ団たち、ビル内に入る</comment>
-		<attribute name="キャラ指定">プラズマ団♂</attribute>
-		<language name="JPN" width="256">プラズマだん『マズイ……▼
-マズイマズイマズイマズイマズイマズイ▼
-プラズマだんと　して　マズイ
-ちぢめて　プラズマズイ！▼
-とりあえず　しちけんじんさまに
-ほうこく　しないと……！▼</language>
-		<language name="JPN_KANJI" width="256">プラズマ団『マズイ……▼
-マズイマズイマズイマズイマズイマズイ▼
-プラズマ団と　して　マズイ
-ちぢめて　プラズマズイ！▼
-とりあえず　七賢人さまに
-報告しないと……！▼</language>
-	</row>
-
-	<row id="msg_c03p07_leader8w_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・外周側からアイリスとベルが来る
-・c03p15の二人を削除
-・所定位置に到達してメッセージ表示
-・続けてleader3_08</comment>
-		<attribute name="キャラ指定">ジムリーダー
-アイリス</attribute>
-		<language name="JPN" width="256">アイリス『……はあ　まよっちゃった▼
-ライブキャスターで　せつめいされても
-チンプンカンプン　だよ！▼</language>
-		<language name="JPN_KANJI" width="256">アイリス『……はあ　まよっちゃった▼
-ライブキャスターで　せつめいされても
-チンプンカンプン　だよ！▼</language>
-	</row>
-
-	<row id="msg_c03p07_leader3_08" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・ビル入り口を見たままメッセージ表示
-・表示後、ビル内に
-・続けてleader8w_02</comment>
-		<attribute name="キャラ指定">ジムリーダー
-アーティ</attribute>
-		<language name="JPN" width="256">アーティ『ここに　プラズマだんがいる▼
-もしかしたら　うばわれた
-ポケモンも　いるかもしれない▽
-じゃあ　ボクは　いくよ！▼</language>
-		<language name="JPN_KANJI" width="256">アーティ『ここに　プラズマ団がいる▼
-もしかしたら　奪われた
-ポケモンも　いるかもしれない▽
-じゃあ　ボクは　いくよ！▼</language>
-	</row>
-
-	<row id="msg_c03p07_leader8w_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・続けて</comment>
-		<attribute name="キャラ指定">ジムリーダー
-アイリス</attribute>
-		<language name="JPN" width="256">アイリス『よーし！
-こんどは　あたしも　たたかう！！▽
-さあ　ベルおねーちゃんも！▼</language>
-		<language name="JPN_KANJI" width="256">アイリス『よーし！
-こんどは　あたしも　たたかう！！▽
-さあ　ベルおねーちゃんも！▼</language>
-	</row>
-
-	<row id="msg_c03p07_white_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・メッセージ表示後、ベルトアイリス
-　ビル内に入る
-・主人公、操作可能に</comment>
-		<attribute name="キャラ指定">友達♀
-ベル</attribute>
-		<language name="JPN" width="256">ベル『ちょ　ちょっとお▼
-[1:00:トレーナー名:0]も　きてえ！▼</language>
-		<language name="JPN_KANJI" width="256">ベル『ちょ　ちょっとお▼
-[1:00:トレーナー名:0]も　来てえ！▼</language>
-	</row>
-
-	<row id="msg_c03p07_tvt_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>・ジムバッジ取得後
-・ジムの外に出るとコール音
-・</comment>
-		<attribute name="キャラ指定">システム
-TVトランシーバー</attribute>
-		<language name="JPN" width="256">ライブキャスターが　なっている</language>
-		<language name="JPN_KANJI" width="256">ライブキャスターが　鳴っている</language>
-	</row>
-
-	<row id="msg_c03p07_tvt_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>・ジムバッジ取得後
-・ライブキャスター画面へ</comment>
-		<attribute name="キャラ指定">システム
-TVトランシーバー</attribute>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]は
-ライブキャスターを　つなげた[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
-ライブキャスターを　つなげた[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_c03p07_veteranm_01">
-		<comment>♂</comment>
+※swanでメッセージ変更予定</comment>
 		<attribute name="キャラ指定">VETERANM</attribute>
 		<language name="JPN" width="256">ジムリーダーが　たしかめるのは
 ちょうせんしゃと　ポケモンとの▽
@@ -650,8 +451,9 @@ TVトランシーバー</attribute>
 きずな……　結びつき　だな！</language>
 	</row>
 
-	<row id="msg_c03p07_trainerw_01">
-		<comment>♀</comment>
+	<row id="msg_c03p07_trainerw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+※swanでメッセージ変更予定</comment>
 		<attribute name="キャラ指定">TRAINERW</attribute>
 		<language name="JPN" width="256">ジムに　チャレンジする　まえに
 キズぐすりの　かずは　たりているか▽
@@ -661,8 +463,9 @@ TVトランシーバー</attribute>
 確認して　おかないとね</language>
 	</row>
 
-	<row id="msg_c03p07_businessman1_01">
-		<comment>♂</comment>
+	<row id="msg_c03p07_businessman1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+※swanでメッセージ変更予定</comment>
 		<attribute name="キャラ指定">BUSINESSMAN
 ビジネスマン</attribute>
 		<language name="JPN" width="256">だれもが　ポケモントレーナーとして
@@ -677,8 +480,9 @@ TVトランシーバー</attribute>
 みんなに　できることだよね</language>
 	</row>
 
-	<row id="msg_c03p07_businessman2_01">
-		<comment>♂</comment>
+	<row id="msg_c03p07_businessman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+※swanでメッセージ変更予定</comment>
 		<attribute name="キャラ指定">BUSINESSMAN
 ビジネスマン</attribute>
 		<language name="JPN" width="256">わたしの　バッグには　６コ
@@ -695,8 +499,9 @@ TVトランシーバー</attribute>
 フレンドリィショップで　買えないんだ</language>
 	</row>
 
-	<row id="msg_c03p07_ol_01">
-		<comment>♀</comment>
+	<row id="msg_c03p07_ol_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+※swanでメッセージ変更予定</comment>
 		<attribute name="キャラ指定">OL
 </attribute>
 		<language name="JPN" width="256">あたしの　ポケモン　かわいーの！▼

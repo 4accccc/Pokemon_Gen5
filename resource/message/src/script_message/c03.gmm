@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-25T18:16:40"/>
+	<create user="matsumiya" host="W00224" date="2011-04-25T18:23:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1299" top="203" right="2004" bottom="831" maximized="no" rayout="Vertical2">
+	<dialog left="1297" top="169" right="2002" bottom="797" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -421,6 +421,14 @@
 		<language name="JPN" width="256">Ｃギアの　くわしい　せつめいは
 あたしの　けんきゅうじょで
 けんきゅうじょは　？？？に　あるわ</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c03_inventor_06">
+		<language name="JPN" width="256">なにしてたの？
+↓
+ジムリーダーなら街に詳しいかも
+・ジムの場所について</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
