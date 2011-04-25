@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00253" date="2011-04-06T11:44:22"/>
+	<create user="ariizumi_nobuhiko" host="W00248" date="2011-04-22T20:03:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -252,6 +252,18 @@
 				<comment language="japanese">開発中の決定していないタグに使用する</comment>
 				<comment language="english">開発中の決定していないタグに使用する</comment>
 			</tag>
+			<tag entry="61" japanese="トライアルハウスランク" english="トライアルハウスランク" view="EP" width="91" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">トライアルハウスでのランクです。
+「マスターランク」など</comment>
+				<comment language="english">トライアルハウスでのランクです。
+「マスターランク」など</comment>
+			</tag>
+			<tag entry="62" japanese="天候" english="天候" view="EP" width="65" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ゲートの電光掲示板に表示されます。「はれ」・「すなあらし」など</comment>
+				<comment language="english">ゲートの電光掲示板に表示されます。「はれ」・「すなあらし」など</comment>
+			</tag>
 		</group>
 
 		<group entry="2" japanese="ポケモンＷＢ（数値）" english="ポケモンＷＢ（数値）" color="#c0c0c0">
@@ -405,13 +417,13 @@
 		</language>
 	</columns>
 
-	<dialog left="6" top="97" right="711" bottom="717" maximized="no" rayout="Vertical2">
+	<dialog left="-126" top="97" right="579" bottom="717" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="0" style="0000" width="530"/>
+		<tag-palette left="736" top="133" right="1209" bottom="536" visible="no"/>
+		<band id="0" index="0" style="0000" width="522"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="697"/>
-		<band id="3" index="3" style="0000" width="697"/>
+		<band id="2" index="2" style="0000" width="689"/>
+		<band id="3" index="3" style="0000" width="689"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -8840,6 +8852,14 @@
 	<row id="msg_seq_se_sw_wbt_07">
 		<language name="JPN" width="256">SW-WBT-07</language>
 		<language name="JPN_KANJI" width="256">SW-WBT-07</language>
+	</row>
+	<row id="msg_seq_se_sw_wbt_08">
+		<language name="JPN" width="256">SW-WBT-08</language>
+		<language name="JPN_KANJI" width="256">SW-WBT-08</language>
+	</row>
+	<row id="msg_seq_se_sw_wbt_09">
+		<language name="JPN" width="256">SW-WBT-09</language>
+		<language name="JPN_KANJI" width="256">SW-WBT-09</language>
 	</row>
 	<row id="msg_seq_se_sw_fes_01">
 		<language name="JPN" width="256">SW-FES-01</language>
