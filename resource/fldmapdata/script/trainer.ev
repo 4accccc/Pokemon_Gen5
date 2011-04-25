@@ -748,6 +748,7 @@ _EVENT_DATA ev_TRID_WORKER2_20
 _EVENT_DATA ev_TRID_WORKER2_21
 _EVENT_DATA ev_TRID_WORKER2_22
 _EVENT_DATA ev_TRID_WORKER2_23
+_EVENT_DATA ev_TRID_MOUNT_14
 _EVENT_DATA ev_TRID_MAX
 _EVENT_DATA ev_trainer_talk_battle
 _EVENT_DATA ev_trainer_move_battle
@@ -1486,6 +1487,7 @@ ev_TRID_WORKER2_20:
 ev_TRID_WORKER2_21:
 ev_TRID_WORKER2_22:
 ev_TRID_WORKER2_23:
+ev_TRID_MOUNT_14:
 ev_TRID_MAX:
 
 //----------------------------------------------------------------------
