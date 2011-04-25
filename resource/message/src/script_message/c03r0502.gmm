@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsushima" host="W00181" date="2010-06-30T17:54:30"/>
+	<create user="matsumiya" host="W00224" date="2011-04-25T20:52:57"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="76" top="110" right="781" bottom="730" maximized="no" rayout="Vertical2">
+	<dialog left="1414" top="237" right="2119" bottom="857" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -296,14 +296,14 @@
 		<comment>●ロックカプセル入手前
 ・１回転してからセリフ。</comment>
 		<attribute name="キャラ指定">CLOWN</attribute>
-		<language name="JPN" width="256">ワタシの　なまえは　ミスターロック
-どんなものでも　あけてしまう[BE:00:ページ切り替え（行送り）]
-まかふしぎな　ピエロでございます…[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ワタシの　なまえは　ミスターロック▼
+どんなものでも　あけてしまう
+まかふしぎな　ピエロでございます…▼
 あなたの　おなまえは　[1:00:トレーナー名:0]さん
 また　おあいすることに　なるでしょう</language>
-		<language name="JPN_KANJI" width="256">ワタシの　名前は　ミスターロック
-どんなものでも　開けてしまう[BE:00:ページ切り替え（行送り）]
-まかふしぎな　ピエロでございます…[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">ワタシの　名前は　ミスターロック▼
+どんなものでも　開けてしまう
+まかふしぎな　ピエロでございます…▼
 あなたの　お名前は　[1:00:トレーナー名:0]さん
 また　お会いすることに　なるでしょう</language>
 	</row>
@@ -314,17 +314,17 @@
 ・このあと、モゾモゾする小芝居。</comment>
 		<attribute name="キャラ指定">CLOWN</attribute>
 		<language name="JPN" width="256">あなたの　バッグの　なかに
-ロックカプセルが　はいっていますね…[BE:01:ページ切り替え（クリア）]
+ロックカプセルが　はいっていますね…▼
 その　カプセルを　あけられるのは
-このよで　ただひとり　ワタシだけ…[BE:01:ページ切り替え（クリア）]
+このよで　ただひとり　ワタシだけ…▼
 ワタシが　あっというまに
-あけて　ごらんにいれましょう…！[BE:01:ページ切り替え（クリア）]</language>
+あけて　ごらんにいれましょう…！▼</language>
 		<language name="JPN_KANJI" width="256">あなたの　バッグの　中に
-ロックカプセルが　入っていますね…[BE:01:ページ切り替え（クリア）]
+ロックカプセルが　入っていますね…▼
 その　カプセルを　開けられるのは
-この世で　ただ一人　ワタシだけ…[BE:01:ページ切り替え（クリア）]
+この世で　ただ一人　ワタシだけ…▼
 ワタシが　あっという間に
-開けて　ご覧にいれましょう…！[BE:01:ページ切り替え（クリア）]</language>
+開けて　ご覧にいれましょう…！▼</language>
 	</row>
 
 	<row id="msg_c03r0502_mrlock_03" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
@@ -332,60 +332,60 @@
 ・このあと、アイテム入手の汎用メッセージ</comment>
 		<attribute name="キャラ指定">CLOWN</attribute>
 		<language name="JPN" width="256">ほら　このとおり
-みごと　あけて　ごらんにいれました…[BE:01:ページ切り替え（クリア）]
+みごと　あけて　ごらんにいれました…▼
 なかには…
-あなたが　こころから　のぞむもの…[BE:00:ページ切り替え（行送り）]
-わざマシン！[BE:01:ページ切り替え（クリア）]</language>
+あなたが　こころから　のぞむもの…▽
+わざマシン！▼</language>
 		<language name="JPN_KANJI" width="256">ほら　このとおり
-見事　開けて　ご覧にいれました…[BE:01:ページ切り替え（クリア）]
+見事　開けて　ご覧にいれました…▼
 中には…
-あなたが　心から　望むもの…[BE:00:ページ切り替え（行送り）]
-わざマシン！[BE:00:ページ切り替え（行送り）]</language>
+あなたが　心から　望むもの…▽
+わざマシン！▼</language>
 	</row>
 
 	<row id="msg_c03r0502_mrlock_04" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
 		<comment>・このセリフのあと、モゾモゾする小芝居。</comment>
 		<attribute name="キャラ指定">CLOWN</attribute>
 		<language name="JPN" width="256">おやおや…
-わざマシンと　いっしょに[BE:00:ページ切り替え（行送り）]
-レターが　はいっていましたよ…[BE:01:ページ切り替え（クリア）]</language>
+わざマシンと　いっしょに▽
+レターが　はいっていましたよ…▼</language>
 		<language name="JPN_KANJI" width="256">おやおや…
-わざマシンと　一緒に[BE:00:ページ切り替え（行送り）]
-レターが　入っていましたよ…[BE:01:ページ切り替え（クリア）]</language>
+わざマシンと　一緒に▽
+レターが　入っていましたよ…▼</language>
 	</row>
 
 	<row id="msg_c03r0502_mrlock_05" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
 		<attribute name="キャラ指定">CLOWN</attribute>
 		<language name="JPN" width="256">『ロックカプセルに　はいっている
-わざマシンは[BE:00:ページ切り替え（行送り）]
-イッシュちほうの　しんらいできる[BE:00:ページ切り替え（行送り）]
-トレーナーに　あずけます[BE:01:ページ切り替え（クリア）]
+わざマシンは▽
+イッシュちほうの　しんらいできる▽
+トレーナーに　あずけます▼
 ロケットだんの　ような　わるものに
-あくようされないで　ください…[BE:01:ページ切り替え（クリア）]</language>
+あくようされないで　ください…▼</language>
 		<language name="JPN_KANJI" width="256">『ロックカプセルに　入っている
-わざマシンは[BE:00:ページ切り替え（行送り）]
-イッシュ地方の　信頼できる[BE:00:ページ切り替え（行送り）]
-トレーナーに　預けます…[BE:01:ページ切り替え（クリア）]
+わざマシンは▽
+イッシュ地方の　信頼できる▽
+トレーナーに　預けます…▼
 ロケット団のような　悪者に
-悪用されないで　ください…[BE:01:ページ切り替え（クリア）]</language>
+悪用されないで　ください…▼</language>
 	</row>
 
 	<row id="msg_c03r0502_mrlock_06" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
 		<comment>・１回転してからセリフ。</comment>
 		<attribute name="キャラ指定">CLOWN</attribute>
-		<language name="JPN" width="256">おや　つづきが　ありますよ…[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">おや　つづきが　ありますよ…▼
 『わざマシン９５は　バークアウト
-あくタイプの　とくしゅこうげきで[BE:00:ページ切り替え（行送り）]
-あいての　とくこうを　さげます[BE:01:ページ切り替え（クリア）]
+あくタイプの　とくしゅこうげきで▽
+あいての　とくこうを　さげます▼
 …なるほど　なるほど
-つかう　ひとの　センスが　とわれる[BE:00:ページ切り替え（行送り）]
-わざですね…！</language>
-		<language name="JPN_KANJI" width="256">おや　続きが　ありますよ…[BE:01:ページ切り替え（クリア）]
+つかう　ひとの　センスが　とわれる▽
+わざ　ですね…！</language>
+		<language name="JPN_KANJI" width="256">おや　続きが　ありますよ…▼
 『わざマシン９５は　バークアウト
-あくタイプの　特殊攻撃で[BE:00:ページ切り替え（行送り）]
-相手の　特攻を　下げます…[BE:01:ページ切り替え（クリア）]
+あくタイプの　特殊攻撃で▽
+相手の　特攻を　下げます…▼
 …なるほど　なるほど
-使う　人の　センスが　問われる[BE:00:ページ切り替え（行送り）]
+使う　人の　センスが　問われる▽
 技ですね…！</language>
 	</row>
 
@@ -394,13 +394,13 @@
 繰り返しのセリフ</comment>
 		<attribute name="キャラ指定">CLOWN</attribute>
 		<language name="JPN" width="256">ロックカプセルを　あけた　ワタシでも
-かたく　とざした　こころの　カギを[BE:00:ページ切り替え（行送り）]
-あけることは　できません…[BE:01:ページ切り替え（クリア）]
+かたく　とざした　こころの　カギを▽
+あけることは　できません…▼
 まことに　かなしき
 ピエロでございます…</language>
 		<language name="JPN_KANJI" width="256">ロックカプセルを　開けた　ワタシでも
-固く　閉ざした　心の　カギを[BE:00:ページ切り替え（行送り）]
-開けることは　できません…[BE:01:ページ切り替え（クリア）]
+固く　閉ざした　心の　カギを▽
+開けることは　できません…▼
 まことに　悲しき
 ピエロでございます…</language>
 	</row>
@@ -413,23 +413,23 @@
 　１回目のパスワード入力</comment>
 		<attribute name="キャラ指定">ASSISTANTM</attribute>
 		<language name="JPN" width="256">ナイショで　とくべつな　マシンを
-こっそり　つくってしまいました[BE:01:ページ切り替え（クリア）]
+こっそり　つくってしまいました▼
 ひみつの　パスワードを
-しっている　ひと　だけに[BE:00:ページ切り替え（行送り）]
-つかえるように　しているのです[BE:01:ページ切り替え（クリア）]</language>
+しっている　ひと　だけに▽
+つかえるように　しているのです▼</language>
 		<language name="JPN_KANJI" width="256">ナイショで　特別な　マシンを
-こっそり　作ってしまいました[BE:01:ページ切り替え（クリア）]
+こっそり　作ってしまいました▼
 秘密の　パスワードを
-知っている人だけに[BE:00:ページ切り替え（行送り）]
-使えるように　しているのです[BE:01:ページ切り替え（クリア）]</language>
+知っている人だけに▽
+使えるように　しているのです▼</language>
 	</row>
 
 	<row id="msg_c03r0502_engineer_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>●１回目のパスワード入力が正しい場合のセリフ
 ※間違った場合はmsg_c03r0502_engineer_05</comment>
 		<attribute name="キャラ指定">ASSISTANTM</attribute>
-		<language name="JPN" width="256">つづきが　ありますよ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">続きが　ありますよ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">つづきが　ありますよ！▼</language>
+		<language name="JPN_KANJI" width="256">続きが　ありますよ！▼</language>
 	</row>
 
 	<row id="msg_c03r0502_engineer_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -437,19 +437,19 @@
 ※間違った場合はmsg_c03r0502_engineer_05
 ・このあとmsg_c03r0502_engineer_04</comment>
 		<attribute name="キャラ指定">ASSISTANTM</attribute>
-		<language name="JPN" width="256">ただしい　パスワードです！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ただしい　パスワードです！▼
 わたしが　つくった　てんそうマシンを
-あつかえるように　しましょう！[BE:01:ページ切り替え（クリア）]
+あつかえるように　しましょう！▼
 とくべつな　ネットワークを　つないで
-とくべつな　ポケモンや　どうぐを[BE:00:ページ切り替え（行送り）]
-ズバッと　もってきてしまう[BE:00:ページ切り替え（行送り）]
+とくべつな　ポケモンや　どうぐを▽
+ズバッと　もってきてしまう▽
 すばらしい　マシンなのです！</language>
-		<language name="JPN_KANJI" width="256">正しい　パスワードです！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">正しい　パスワードです！▼
 わたしが　つくった　転送マシンを
-扱えるように　しましょう！[BE:01:ページ切り替え（クリア）]
+扱えるように　しましょう！▼
 特別な　ネットワークを　つないで
-特別な　ポケモンや　道具を[BE:00:ページ切り替え（行送り）]
-ズバッと　持ってきてしまう[BE:00:ページ切り替え（行送り）]
+特別な　ポケモンや　道具を▽
+ズバッと　持ってきてしまう▽
 すばらしい　マシンなのです！</language>
 	</row>
 
@@ -458,11 +458,11 @@
 このセリフを繰り返す。</comment>
 		<attribute name="キャラ指定">ASSISTANTM</attribute>
 		<language name="JPN" width="256">タイトルメニューに　ボタンを　１コ
-あたらしく　よういしましたよ！[BE:01:ページ切り替え（クリア）]
+あたらしく　よういしましたよ！▼
 レポートを　しっかり　かいてから
 タイトルがめんに　もどってください！</language>
 		<language name="JPN_KANJI" width="256">タイトルメニューに　ボタンを　１個
-新しく　用意しましたよ！[BE:01:ページ切り替え（クリア）]
+新しく　用意しましたよ！▼
 レポートを　しっかり　書いてから
 タイトル画面に　戻ってください！</language>
 	</row>
@@ -471,10 +471,10 @@
 		<comment>●パスワードが間違っていた場合のセリフ</comment>
 		<attribute name="キャラ指定">ASSISTANTM</attribute>
 		<language name="JPN" width="256">ざんねんですが…
-ただしい　パスワードを[BE:00:ページ切り替え（行送り）]
+ただしい　パスワードを▽
 おぼえていない　みたいですね</language>
 		<language name="JPN_KANJI" width="256">残念ですが…
-正しい　パスワードを[BE:00:ページ切り替え（行送り）]
+正しい　パスワードを▽
 覚えていない　みたいですね</language>
 	</row>
 

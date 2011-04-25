@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-04T22:30:11"/>
+	<create user="matsumiya" host="W00224" date="2011-04-25T20:55:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1294" top="205" right="1999" bottom="833" maximized="no" rayout="Vertical2">
+	<dialog left="1297" top="169" right="2002" bottom="797" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,130 +292,40 @@
 	</lock>
 
 
-	<row id="msg_c03r0601_white_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・主人公性別：♂
-・ｃ03ジムバッジ取得後
-・pos（GRIDX=2~7、GRIDZ=9）を踏むと画面下から出現
-　主人公と隣接し向き合ってメッセージ表示
-・0＝主人公名前</comment>
-		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ベル『おうい！　[1:00:トレーナー名:0]▼
-ライブキャスターで　いった
-やくそく　おぼえてるよねえ▼
-というわけで　さっそく
-ポケモンしょうぶ　だよ！▼</language>
-		<language name="JPN_KANJI" width="256">ベル『おうい！　[1:00:トレーナー名:0]▼
-ライブキャスターで　いった
-約束　覚えてるよねえ▼
-というわけで　さっそく
-ポケモン勝負だよ！▼</language>
+	<row id="msg_c03r0601_white_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03r0601_white_01a" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・主人公性別：♀
-・ｃ03ジムバッジ取得後
-・pos（GRIDX=2~7、GRIDZ=9）を踏むと画面下から出現
-　主人公と隣接し向き合ってメッセージ表示
-・0＝主人公名前</comment>
-		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ベル『ねえねえ　[1:00:トレーナー名:0]▼
-ライブキャスターで　いった
-やくそく　おぼえてるよねえ▼
-というわけで　さっそく
-ポケモンしょうぶ　だよ！▼</language>
-		<language name="JPN_KANJI" width="256">ベル『ねえねえ　[1:00:トレーナー名:0]▼
-ライブキャスターで　いった
-約束　覚えてるよねえ▼
-というわけで　さっそく
-ポケモン勝負だよ！▼</language>
+	<row id="msg_c03r0601_white_01a" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03r0601_white_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・メッセージ後、受付嬢の前に移動
-・！、？マークを表示後
-　元の位置にもどりwhite_03</comment>
-		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">と　そのまえに▼</language>
-		<language name="JPN_KANJI" width="256">と　その前に▼</language>
+	<row id="msg_c03r0601_white_02" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03r0601_white_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・メッセージ後、ポケモン戦闘</comment>
-		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ゲートでの　ポケモンしょうぶは
-でんこうけいじばんを▽
-こわさないように　きをつけて▽
-おねがいします！　だって▼
-あたしも　さいしょとは　ちがうもん
-ぜんぜん　だいじょうぶ　だよ！▼
-というわけで　あらためて
-ポケモンしょうぶ　かいし　ね！▼</language>
-		<language name="JPN_KANJI" width="256">ゲートでの　ポケモン勝負は
-電光掲示板を▽
-壊さないように　気をつけて▽
-お願いします！　だって▼
-あたしも　最初とは　違うもん
-ぜんぜん　大丈夫だよ！▼
-というわけで　あらためて
-ポケモン勝負　開始ね！▼</language>
+	<row id="msg_c03r0601_white_03" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03r0601_white_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・画面下を見て
-　芝居後にメッセージ表示
-・続けてwhite_04
-・0＝主人公名前</comment>
-		<language name="JPN" width="256">ベル『……あたしは
-[1:00:トレーナー名:0]や　チェレン▽
-それに　アイリスちゃんの　ように▽
-つよい　トレーナーには　なれないけど▼
-カノコタウンを　たびだってから
-いろいろな　ひとと　であって▼
-あたしの　やりたいこと
-やれることを　かんがえているの！▼
-そういう　いみで　ポケモンは
-あたしに　たくさんの▽
-はじめてを　くれたんだよね！▼</language>
-		<language name="JPN_KANJI" width="256">ベル『……あたしは
-[1:00:トレーナー名:0]や　チェレン▽
-それに　アイリスちゃんの　ように▽
-強い　トレーナーには　なれないけど▼
-カノコタウンを　旅立ってから
-いろいろな　人と　出会って▼
-あたしの　やりたいこと
-やれることを　考えているの！▼
-そういう意味で　ポケモンは
-あたしに　たくさんの▽
-はじめてを　くれたんだよね！▼</language>
+	<row id="msg_c03r0601_white_04" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03r0601_white_05" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・主人公と向き合って
-・メッセージ表示後、画面下に移動
-・画面外に消えると主人公操作可能に
-・0＝主人公名前</comment>
-		<language name="JPN" width="256">……ポケモンを　とられて　たいへんで
-ふあんで　どうしようも　なかったけど▼
-それでも　いえるの
-たびに　でて　よかったって！▼
-それに　ポケモンと　いることが
-すごく　だいじだって　わかったし！▼
-じゃ　また　どこかで　あおうね
-バイバイ！　[1:00:トレーナー名:0]▼</language>
-		<language name="JPN_KANJI" width="256">……ポケモンを　とられて　大変で
-不安で　どうしようも　なかったけど▼
-それでも　いえるの
-旅に　でて　よかったって！▼
-それに　ポケモンと　いることが
-すごく　大事だって　わかったし！▼
-じゃ　また　どこかで　会おうね
-バイバイ！　[1:00:トレーナー名:0]▼</language>
+	<row id="msg_c03r0601_white_05" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c03r0601_middleman2_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
