@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-05T13:48:56"/>
+	<create user="matsumiya" host="W00224" date="2011-04-25T21:21:56"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1294" top="205" right="1999" bottom="833" maximized="no" rayout="Vertical2">
+	<dialog left="1297" top="169" right="2002" bottom="797" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -312,9 +312,9 @@
 		<attribute name="キャラ指定">GIRL1
 少女</attribute>
 		<language name="JPN" width="256">あなた　こんな　しゅるいの
-モンスターボール　つかってる？[BE:01:ページ切り替え（クリア）]</language>
+モンスターボール　つかってる？▼</language>
 		<language name="JPN_KANJI" width="256">あなた　こんな　種類の
-モンスターボール　使ってる？[BE:01:ページ切り替え（クリア）]</language>
+モンスターボール　使ってる？▼</language>
 	</row>
 
 	<row id="msg_c05pc0101_girl1_02" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">

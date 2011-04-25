@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-02T18:35:11"/>
+	<create user="matsumiya" host="W00224" date="2011-04-25T21:18:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1317" top="106" right="2022" bottom="734" maximized="no" rayout="Vertical2">
+	<dialog left="1297" top="169" right="2002" bottom="797" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -296,36 +296,36 @@
 		<comment>♂
 ・戦闘前メッセージ</comment>
 		<attribute name="キャラ指定">LEADER5</attribute>
-		<language name="JPN" width="256">さてと……[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">さてと……▼
 ジムリーダーの　カミツレが
-おまえの　なにを　きにいったのか[BE:01:ページ切り替え（クリア）]
+おまえの　なにを　きにいったのか▼
 その　おてなみ
-はいけんさせて　いただくか[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">さてと……[BE:01:ページ切り替え（クリア）]
+はいけんさせて　いただくか▼</language>
+		<language name="JPN_KANJI" width="256">さてと……▼
 ジムリーダーの　カミツレが
-おまえの　何を　気に入ったのか[BE:01:ページ切り替え（クリア）]
+おまえの　何を　気に入ったのか▼
 その　お手並み
-拝見させて　いただくか[BE:01:ページ切り替え（クリア）]</language>
+拝見させて　いただくか▼</language>
 	</row>
 
 	<row id="msg_c05gym0101_leader_02" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,,">
 		<comment>♂
 ・戦闘後メッセージ</comment>
 		<attribute name="キャラ指定">LEADER5</attribute>
-		<language name="JPN" width="256">なるほど　きにいらないな！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">なるほど　きにいらないな！▼
 ねんれいの　わりに
-どうどうたる　たたかいっぷり[BE:01:ページ切り替え（クリア）]
+どうどうたる　たたかいっぷり▼
 おまえに　さいのうを　みいだす
-にんげんがいるのも　わかるってもんだ[BE:01:ページ切り替え（クリア）]
+にんげんがいるのも　わかるってもんだ▼
 フンッ
-こいつを　もっていけ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">なるほど　気に入らないな！[BE:01:ページ切り替え（クリア）]
+こいつを　もっていけ！▼</language>
+		<language name="JPN_KANJI" width="256">なるほど　気に入らないな！▼
 年齢の　わりに
-堂々たる　戦いっぷり[BE:01:ページ切り替え（クリア）]
+堂々たる　戦いっぷり▼
 おまえに　才能を　見出す
-人間が　いるのも　わかるってもんだ[BE:01:ページ切り替え（クリア）]
+人間が　いるのも　わかるってもんだ▼
 フンッ
-こいつを　持っていけ！[BE:01:ページ切り替え（クリア）]</language>
+こいつを　持っていけ！▼</language>
 	</row>
 
 	<row id="msg_c05gym0101_leader_03" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,,">
@@ -333,9 +333,9 @@
 ・ファンファーレ＋バッジ入手処理</comment>
 		<attribute name="キャラ指定">LEADER5</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は　ヤーコンから
-クエイクバッジを　もらった！[BE:01:ページ切り替え（クリア）]</language>
+クエイクバッジを　もらった！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　ヤーコンから
-クエイクバッジを　もらった！[BE:01:ページ切り替え（クリア）]</language>
+クエイクバッジを　もらった！▼</language>
 	</row>
 
 	<row id="msg_c05gym0101_leader_04" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,,">
@@ -345,18 +345,18 @@
 だとすれば　レベル６０までの
 ポケモンは　おまえに　したがう▼
 ついでだ
-こっちの　わざマシンを　くれてやる[BE:01:ページ切り替え（クリア）]
+こっちの　わざマシンを　くれてやる▼
 ……と　おもったが
-ちょいと　やぼようが　あってな[BE:01:ページ切り替え（クリア）]
+ちょいと　やぼようが　あってな▼
 おまえ　６ばんどうろの　さきにある
 ほらあなの　まえで　まっていろ！</language>
 		<language name="JPN_KANJI" width="256">バッジが　５つか▼
 だとすれば　レベル６０までの
 ポケモンは　おまえに　従う▼
 ついでだ
-こっちの　わざマシンを　くれてやる[BE:01:ページ切り替え（クリア）]
+こっちの　わざマシンを　くれてやる▼
 ……と思ったが
-ちょいと　野暮用が　あってな[BE:01:ページ切り替え（クリア）]
+ちょいと　野暮用が　あってな▼
 おまえ　６番道路の　先にある
 洞穴の前で　待っていろ！</language>
 	</row>
@@ -367,10 +367,10 @@
 　d06：電気石の洞窟ストッパー解除まで
 　繰り返し</comment>
 		<attribute name="キャラ指定">LEADER5</attribute>
-		<language name="JPN" width="256">ヤーコン『どうした？[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ヤーコン『どうした？▼
 ６ばんどうろの　さきにある
 ほらあなの　まえで　まっていろ！</language>
-		<language name="JPN_KANJI" width="256">ヤーコン『どうした？[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">ヤーコン『どうした？▼
 ６番道路の　先にある
 洞穴の　前で　待っていろ！</language>
 	</row>
@@ -380,15 +380,15 @@
 ・d06：電気石の洞窟ストッパー解除後</comment>
 		<attribute name="キャラ指定">LEADER5</attribute>
 		<language name="JPN" width="256">ワシには　おまえの　さいのうが
-どれほどのものか　わからんが[BE:01:ページ切り替え（クリア）]
-いけると　おもうなら　どこまでも[BE:01:ページ切り替え（クリア）]
-やれると　おもうなら　いつまでも[BE:01:ページ切り替え（クリア）]
+どれほどのものか　わからんが▼
+いけると　おもうなら　どこまでも▼
+やれると　おもうなら　いつまでも▼
 すきなように　やればいいじゃねえか
 げんかいを　きめるのは　じぶんってことだ</language>
 		<language name="JPN_KANJI" width="256">ワシには　おまえの　才能が
-どれほどのものか　わからんが[BE:01:ページ切り替え（クリア）]
-行けると思うなら　どこまでも[BE:01:ページ切り替え（クリア）]
-やれると思うなら　いつまでも[BE:01:ページ切り替え（クリア）]
+どれほどのものか　わからんが▼
+行けると思うなら　どこまでも▼
+やれると思うなら　いつまでも▼
 好きなように　やればいいじゃねえか
 限界を決めるのは　自分ってことだ</language>
 	</row>

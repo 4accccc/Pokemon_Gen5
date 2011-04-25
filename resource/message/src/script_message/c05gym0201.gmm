@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-02-24T21:18:33"/>
+	<create user="matsumiya" host="W00224" date="2011-04-25T21:21:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1296" top="159" right="2001" bottom="787" maximized="no" rayout="Vertical2">
+	<dialog left="1297" top="169" right="2002" bottom="797" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -301,11 +301,11 @@
 		<attribute name="キャラ指定">DANPEI
 ダンペイ</attribute>
 		<language name="JPN" width="256">まちにきて　そうそう
-アレコレあって　たいへんだったっすね[BE:01:ページ切り替え（クリア）]
+アレコレあって　たいへんだったっすね▼
 まあ　とりあえずは
 これを　さしあげるっす！▼</language>
 		<language name="JPN_KANJI" width="256">街に来て　早々
-アレコレあって　大変だったっすね[BE:01:ページ切り替え（クリア）]
+アレコレあって　大変だったっすね▼
 まあ　とりあえずは
 これを　さしあげるっす！▼</language>
 	</row>
@@ -317,17 +317,17 @@
 		<attribute name="キャラ指定">DANPEI
 ダンペイ</attribute>
 		<language name="JPN" width="256">ジムリーダーの　ヤーコンさんは
-じめんタイプ　ポケモンの　つかいて！[BE:01:ページ切り替え（クリア）]
+じめんタイプ　ポケモンの　つかいて！▼
 まあ　ここだけの　はなし
-じめんタイプの　ポケモンは[BE:00:ページ切り替え（行送り）]
-みずタイプが　にがて　なんすよね[BE:01:ページ切り替え（クリア）]
+じめんタイプの　ポケモンは▽
+みずタイプが　にがて　なんすよね▼
 ……じゃあ　なんで　ヤーコンさんは
 みずのそばで　くらしているんですかね</language>
 		<language name="JPN_KANJI" width="256">ジムリーダーの　ヤーコンさんは
-じめんタイプ　ポケモンの　使い手！[BE:01:ページ切り替え（クリア）]
+じめんタイプ　ポケモンの　使い手！▼
 まあ　ここだけの話
-じめんタイプの　ポケモンは[BE:00:ページ切り替え（行送り）]
-みずタイプが　苦手なんすよね[BE:01:ページ切り替え（クリア）]
+じめんタイプの　ポケモンは▽
+みずタイプが　苦手なんすよね▼
 ……じゃあ　なんで　ヤーコンさんは
 水のそばで　暮らしているんですかね</language>
 	</row>
@@ -338,11 +338,11 @@
 		<attribute name="キャラ指定">DANPEI
 ダンペイ</attribute>
 		<language name="JPN" width="256">ときどきは　ここで　てにいれた
-ジムバッジを　みて[BE:01:ページ切り替え（クリア）]
+ジムバッジを　みて▼
 この　しょうぶのことを
 おもいだして　ほしいっすね</language>
 		<language name="JPN_KANJI" width="256">ときどきは　ここで　手に入れた
-ジムバッジを　みて[BE:01:ページ切り替え（クリア）]
+ジムバッジを　みて▼
 この　勝負のことを
 思い出して　ほしいっすね</language>
 	</row>
@@ -375,10 +375,10 @@
 		<comment>BGメッセージ
 ・ジムバッジ取得前</comment>
 		<attribute name="キャラ指定">ポケモン像</attribute>
-		<language name="JPN" width="256">ホドモエ　ポケモンジム[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ホドモエ　ポケモンジム▼
 ジムリーダー　ヤーコン
 にんてい　トレーナー！</language>
-		<language name="JPN_KANJI" width="256">ホドモエ　ポケモンジム[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">ホドモエ　ポケモンジム▼
 ジムリーダー　ヤーコン
 認定　トレーナー！</language>
 	</row>
@@ -387,13 +387,13 @@
 		<comment>BGメッセージ
 ・ジムバッジ取得後</comment>
 		<attribute name="キャラ指定">ポケモン像</attribute>
-		<language name="JPN" width="256">ホドモエ　ポケモンジム[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ホドモエ　ポケモンジム▼
 ジムリーダー　ヤーコン
-にんてい　トレーナー！[BE:00:ページ切り替え（行送り）]
+にんてい　トレーナー！▽
 [1:00:トレーナー名:0]</language>
-		<language name="JPN_KANJI" width="256">ホドモエ　ポケモンジム[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">ホドモエ　ポケモンジム▼
 ジムリーダー　ヤーコン
-認定　トレーナー！[BE:00:ページ切り替え（行送り）]
+認定　トレーナー！▽
 [1:00:トレーナー名:0]</language>
 	</row>
 
@@ -401,17 +401,17 @@
 		<comment>BGメッセージ
 ・d06でのストッパー解除時</comment>
 		<attribute name="キャラ指定">ポケモン像</attribute>
-		<language name="JPN" width="256">ホドモエ　ポケモンジム[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ホドモエ　ポケモンジム▼
 ジムリーダー　ヤーコン
-にんてい　トレーナー！[BE:00:ページ切り替え（行送り）]
-[1:00:トレーナー名:0][BE:00:ページ切り替え（行送り）]
-チェレン[BE:00:ページ切り替え（行送り）]
+にんてい　トレーナー！▽
+[1:00:トレーナー名:0]▽
+チェレン▽
 ベル</language>
-		<language name="JPN_KANJI" width="256">ホドモエ　ポケモンジム[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">ホドモエ　ポケモンジム▼
 ジムリーダー　ヤーコン
-認定　トレーナー！[BE:00:ページ切り替え（行送り）]
-[1:00:トレーナー名:0][BE:00:ページ切り替え（行送り）]
-チェレン[BE:00:ページ切り替え（行送り）]
+認定　トレーナー！▽
+[1:00:トレーナー名:0]▽
+チェレン▽
 ベル</language>
 	</row>
 
