@@ -29,6 +29,7 @@
 
 #include "fieldmap.h"
 
+#include "wbt_setup.h"
 #include "wbt_system.h"
 
 #include "event_wbt.h"

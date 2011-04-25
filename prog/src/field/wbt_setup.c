@@ -9,7 +9,7 @@
 
 #include <gflib.h>
 
-#include "wbt_system.h"
+#include "wbt_setup.h"
 #include "wbt_system_local.h"
 #include "app/wbt_list.h"
 #include "wbt_tool.h"

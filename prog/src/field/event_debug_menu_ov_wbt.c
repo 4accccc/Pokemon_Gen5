@@ -43,6 +43,7 @@
 
 #include "wbt_dl.h"
 
+#include "wbt_setup.h"
 #include "wbt_tool.h" //WBTTOOL_
 #include "savedata/wbt_save.h"  //WBTSAVE
 #include "app/wbt_list.h"

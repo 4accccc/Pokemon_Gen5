@@ -171,7 +171,7 @@ u64 WBTSYS_GetRandomSeed( const WBTSYS * wbtsys )
 //------------------------------------------------------------------
 void WBTSYS_SetSelectDLData( WBTSYS * wbtsys, u8 no )
 {
-  GF_ASSERT( no <= WBT_DOWNLOAD_NUMBER );
+  GF_ASSERT( no <= WBT_DOWNLOAD_NUM );
   wbtsys->select_dl_data = no;
 }
 //------------------------------------------------------------------

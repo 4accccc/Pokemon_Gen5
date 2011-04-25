@@ -16,10 +16,6 @@
 
 #include "poke_tool/poke_regulation.h"  //REGULATION
 
-#include "app/wbt_list.h" //WBTLIST_PARAM
-#include "app/win_record.h"		// WIN_RECORD_PARAM
-#include "app/t_download.h"		// T_DOWNLOAD_PARAM
-
 #include "app/pokelist.h" //PLIST_DATA
 #include "app/p_status.h" //PSTATUS_DATA
 
@@ -41,40 +37,6 @@ typedef struct _WBTRESULT WBTRESULT;
 #define BUFLEN_TOURNAMENT_NAME  ( (16 * GLOBAL_MSGLEN) + BUFLEN_EOM_SIZE )
 
 //------------------------------------------------------------------
-///WBTトーナメントの種類
-//------------------------------------------------------------------
-typedef enum {
-  WBTTYPE_NULL,
-  WBTTYPE_ALL,
-  WBTTYPE_CHAMPION,
-  WBTTYPE_POKETYPE,
-  WBTTYPE_DOWNLOAD,
-}WBTTYPE;
-
-//------------------------------------------------------------------
-///WBT対戦ルール
-//------------------------------------------------------------------
-typedef enum {
-  WBTRULE_NULL,
-  WBTRULE_SINGLE,
-  WBTRULE_DOUBLE,
-  WBTRULE_TRIPLE,
-  WBTRULE_ROTATION,
-}WBTRULE;
-
-//------------------------------------------------------------------
-///WBTの状態
-//------------------------------------------------------------------
-typedef enum {
-  WBTSTAGE_RECEPTION = 0,  ///<WBT状態：受付
-  WBTSTAGE_ENTRY,          ///<WBT状態：エントリー
-  WBTSTAGE_1ST,            ///<WBT状態：1回戦
-  WBTSTAGE_2ND,            ///<WBT状態：2回戦
-  WBTSTAGE_FINAL,          ///<WBT状態：決勝戦
-  WBTSTAGE_WIN,            ///<WBT状態：勝利
-}WBTSTAGE;
-
-//------------------------------------------------------------------
 /**
  * @brief オールトーナメント参戦トレーナーのレベル
  */
@@ -86,30 +48,6 @@ typedef enum {
   WBT_ALLTOUR_LEVEL3,
 }WBT_ALLTOUR_LEVEL;
 
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-typedef enum {
-  WBT_TRTYPE_ROM = 0, ///<ロムに存在するトレーナー
-  WBT_TRTYPE_DL,      ///<ダウンロードデータのトレーナー
-  WBT_TRTYPE_SAVE,    ///<WB（データ引継ぎ）のトレーナー
-  WBT_TRTYPE_PLAYER,  ///<プレイヤー
-}WBT_TRTYPE;
-
-//------------------------------------------------------------------
-/// WBTでの勝敗結果
-//------------------------------------------------------------------
-typedef enum {
-  WBT_BTL_RESULT_LOSE = 0,
-  WBT_BTL_RESULT_WIN,
-  WBT_BTL_RESULT_DRAW,
-  WBT_BTL_RESULT_DKO_WIN,
-  WBT_BTL_RESULT_DKO_LOSE,
-}WBT_BTL_RESULT;
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-enum {
-  WBT_DOWNLOAD_NUMBER = 3,
-};
 //============================================================================================
 //============================================================================================
 extern WBTSYS * WBTSYS_Create( HEAPID heapID );
@@ -178,33 +116,4 @@ extern BATTLE_SETUP_PARAM * WBTSYS_CreateBattleSetupParam( WBTSYS * wbtsys, GAME
 
 extern void WBTSYS_ReflectBattleResult(
     WBTSYS * wbtsys, GAMEDATA * gamedata, BATTLE_SETUP_PARAM * bsp );
-//============================================================================================
-//============================================================================================
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-extern WBTLIST_PARAM * WBTLIST_PARAM_Create( HEAPID heapID, GAMESYS_WORK * gsys );
-extern void WBTLIST_PARAM_Delete( WBTLIST_PARAM * wbtlist_param );
-
-extern void WBTLIST_PARAM_Setup( GAMESYS_WORK * gsys, WBTSYS * wbtsys, WBTLIST_PARAM * wbtlist_param );
-#ifdef  PM_DEBUG
-extern void WBTLIST_PARAM_Setup_Debug(
-    GAMESYS_WORK * gsys, WBTLIST_PARAM * wbtlist_param,
-    WBTTYPE wbttype, WBTRULE rule,
-    WBTSTAGE stage, const u16 * trid_table, int debug_value );
-#endif
-
-//
-extern WIN_RECORD_PARAM * WIN_RECORD_PARAM_Create( HEAPID heapID, GAMESYS_WORK * gsys );
-extern void WIN_RECORD_PARAM_Delete( WIN_RECORD_PARAM * wr_param );
-#ifdef  PM_DEBUG
-extern void WIN_RECORD_PARAM_Setup_Debug( GAMESYS_WORK * gsys, WIN_RECORD_PARAM * wr_param );
-#endif
-
-//
-extern T_DOWNLOAD_PARAM * T_DOWNLOAD_PARAM_Create( HEAPID heapID, GAMESYS_WORK * gsys );
-extern void T_DOWNLOAD_PARAM_Delete( T_DOWNLOAD_PARAM * td_param );
-#ifdef PM_DEBUG
-extern void T_DOWNLOAD_PARAM_Setup_Debug( GAMESYS_WORK * gsys, T_DOWNLOAD_PARAM * td_param );
-#endif
-
 
