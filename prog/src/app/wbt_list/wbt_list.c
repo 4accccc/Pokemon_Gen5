@@ -45,6 +45,7 @@
 
 // サウンド
 #include "sound/pm_sndsys.h"
+#include "wbt_list_snd_def.h"
 
 //アーカイブ
 #include "arc_def.h"
@@ -74,6 +75,9 @@
 #define _DEBUG_INPUT_
 #undef  _DEBUG_INPUT_
 
+// SOUND
+#define _DEBUG_SOUND_
+#undef  _DEBUG_SOUND_
 
 FS_EXTERN_OVERLAY(ui_common);
 
@@ -241,8 +245,10 @@ enum{
 
 // スピード
 enum{
-	MOVE_IN_SPEED		= 18,		// スクロールイン
-	MOVE_OUT_SPEED		= 36,		// スクロールアウト
+	MOVE_IN_SPEED		= 9,		// スクロールイン
+	MOVE_OUT_SPEED		= 9,		// スクロールアウト
+//	MOVE_IN_SPEED		= 18,		// スクロールイン
+//	MOVE_OUT_SPEED		= 36,		// スクロールアウト
 };
 
 // empty
@@ -306,6 +312,8 @@ enum{
 	//
 	FLG_MES_EX1		= (1<<2),		// 1回戦特別(ex1)
 	FLG_MES_EX2		= (1<<3),		// 1回戦特別(ex2)
+	//
+	FLG_MES_LAST	= (1<<4),		// それぞれの最後(特別メッセージに変更になった)
 };
 
 // debugのフラグ(DebugFlag)
@@ -437,6 +445,7 @@ typedef struct
 	u32						MoveFlag;						// 移動可能フラグ
 	u32						MesFlag;						// メッセージフラグ
 	u32						DebugFlag;						// debug
+	s32						DebugSound;						// debug(sound)
 	s32						RandCount;						// random用カウンタ
 	s32						RandBuffer[4];					// random用のバッファ
 	s32						Timer[TIMER_MAX];				// タイマ
@@ -619,9 +628,9 @@ const u8 wbt_string_pos_tbl[] = {
 
 // メッセージ(はじめ、最後、0回目(1回戦のみ有効)、1回目(1回戦のみ有効))
 const u8 wbt_mes_gmm_tbl[] = {
-	msg_wbt_tournament_00, msg_wbt_tournament_01, msg_wbt_tournament_00, msg_wbt_tournament_00a,// 1回戦
-	msg_wbt_tournament_01, msg_wbt_tournament_02, 0, 0,											// 2回戦
-	msg_wbt_tournament_02, msg_wbt_tournament_03, 0, 0,											// 決勝戦
+	msg_wbt_tournament_00, msg_wbt_tournament_00b, msg_wbt_tournament_00, msg_wbt_tournament_00a,// 1回戦
+	msg_wbt_tournament_01, msg_wbt_tournament_00c, 0, 0,										 // 2回戦
+	msg_wbt_tournament_02, msg_wbt_tournament_00d, 0, 0,										 // 決勝戦
 	0,0,0,0,
 };
 
@@ -1097,6 +1106,7 @@ static void wbt_init( WBTLIST_MAIN_WORK* wk )
 	wk->MoveFlag	= 0;
 	wk->MesFlag		= 0;
 	wk->DebugFlag	= 0;
+	wk->DebugSound	= 0;
 	wk->RandCount	= 0;
 	//
 	for(i=0;i<4;i++){
@@ -1301,6 +1311,9 @@ static void wbt_key_00( WBTLIST_MAIN_WORK* wk )
 				// メッセージ表示
 				mesid = wbt_chk_meswin( wk );
 				wbt_set_meswin( wk, mesid );
+			}else{
+				// se(panel in)
+				PMSND_PlaySE( SND_WBT_LIST_PANELIN );
 			}
 			//
 			break;
@@ -1319,6 +1332,8 @@ static void wbt_key_00( WBTLIST_MAIN_WORK* wk )
 				wbt_init_move_panel( wk, MOVE_PANEL_IN );
 				// meswinクリア
 				wbt_clear_meswin( wk );
+				// se(panel in)
+				PMSND_PlaySE( SND_WBT_LIST_PANELIN );
 			}
 			break;
 		
@@ -1354,6 +1369,8 @@ static void wbt_key_00( WBTLIST_MAIN_WORK* wk )
 					wbt_init_move_panel( wk, MOVE_PANEL_OUT );
 					// meswinクリア
 					wbt_clear_meswin( wk );
+					// se(panel out)
+					PMSND_PlaySE( SND_WBT_LIST_PANELOUT );
 				}
 				// 2、3回戦=>パネルアウト
 				else{
@@ -1361,6 +1378,8 @@ static void wbt_key_00( WBTLIST_MAIN_WORK* wk )
 					wbt_init_move_panel( wk, MOVE_PANEL_OUT );
 					// meswinクリア
 					wbt_clear_meswin( wk );
+					// se(panel in)
+					PMSND_PlaySE( SND_WBT_LIST_PANELOUT );
 				}
 			}
 			break;
@@ -1460,6 +1479,8 @@ static void wbt_key_00( WBTLIST_MAIN_WORK* wk )
 					seq = L_WIN_SEQ;
 				}
 				wbt_chg_objseq( wk, tmp, seq );
+				// se(bar)
+				PMSND_PlaySE( SND_WBT_LIST_BAR );
 			}
 			break;
 		
@@ -1485,6 +1506,13 @@ static void wbt_key_00( WBTLIST_MAIN_WORK* wk )
 					seq = L_WHITE_SEQ;
 				}
 				wbt_chg_objseq( wk, tmp, seq );
+				//
+				// se(bar)の音を止める
+				{
+					SEPLAYER_ID	player_id;
+					player_id = PMSND_GetSE_DefaultPlayerID( SND_WBT_LIST_BAR );
+					PMSND_StopSE_byPlayerID( player_id ); 
+				}
 			}
 			break;
 		// ゲージ切り替え後待ち
@@ -1494,6 +1522,8 @@ static void wbt_key_00( WBTLIST_MAIN_WORK* wk )
 				// ゲージ伸び終了
 				wk->Step = STEP_LV6;
 				wbt_init_move_panel( wk, MOVE_PANEL_IN );
+				// se(panel in)
+				PMSND_PlaySE( SND_WBT_LIST_PANELIN );
 			}
 			break;
 		
@@ -1525,6 +1555,8 @@ static void wbt_key_00( WBTLIST_MAIN_WORK* wk )
 					wbt_init_move_panel( wk, MOVE_PANEL_OUT );
 					// meswinクリア
 					wbt_clear_meswin( wk );
+					// se(panel in)
+					PMSND_PlaySE( SND_WBT_LIST_PANELOUT );
 				}
 			}
 			break;
@@ -2295,6 +2327,10 @@ static void wbt_set_meswin( WBTLIST_MAIN_WORK* wk, const s32 mesid )
 	if((wk->MesFlag & FLG_MES_EX1)||(wk->MesFlag & FLG_MES_EX2)){
 		flg = 1;
 	}
+	if(wk->MesFlag & FLG_MES_LAST){
+		flg = 2;
+	}
+	//
 	if((wk->Mode == MODE_ROUND1)&&(flg == 1)){
 		// トーナメント名、ルール名
 		WORDSET_RegisterWord( wordset, 0, wk->Param->tournament_name, 0, TRUE, PM_LANG );
@@ -2307,8 +2343,14 @@ static void wbt_set_meswin( WBTLIST_MAIN_WORK* wk, const s32 mesid )
 		if(wk->MesFlag & FLG_MES_END){
 			buf[0] = wbt_get_param( wk, PRM_WINPOS, 0 );
 		}
-		WORDSET_RegisterWord( wordset, 0, wk->Param->trainer[ buf[0] ].name, 0, TRUE, PM_LANG );
-		WORDSET_RegisterWord( wordset, 1, wk->Param->trainer[ buf[1] ].name, 0, TRUE, PM_LANG );
+		if(flg == 2){
+			// トーナメント名、ルール名
+			WORDSET_RegisterWord( wordset, 0, wk->Param->tournament_name, 0, TRUE, PM_LANG );
+			WORDSET_RegisterWord( wordset, 1, wk->Param->tournament_rule, 0, TRUE, PM_LANG );	// なくてもよいはず
+		}else{
+			WORDSET_RegisterWord( wordset, 0, wk->Param->trainer[ buf[0] ].name, 0, TRUE, PM_LANG );
+			WORDSET_RegisterWord( wordset, 1, wk->Param->trainer[ buf[1] ].name, 0, TRUE, PM_LANG );
+		}
 	}
 	
 	// PrintStream終了時にはdeleteしないとtaskが残ってしまうようだ
@@ -2426,18 +2468,21 @@ static s32 wbt_chk_meswin( WBTLIST_MAIN_WORK* wk )
 		}
 		else if(wk->DispCount == (PARAM_ROUND1-1)){
 			mesid = wbt_mes_gmm_tbl[4*wk->Mode+1];
+			wk->MesFlag |= FLG_MES_LAST;
 		}
 	}
 	else if(wk->Mode == MODE_ROUND2){	// 2回戦
 		if(wk->DispCount == (PARAM_ROUND2-1)){
 			wk->MesFlag = FLG_MES_1ST;
 			mesid = wbt_mes_gmm_tbl[4*wk->Mode+1];
+			wk->MesFlag |= FLG_MES_LAST;
 		}
 	}
 	else if(wk->Mode == MODE_ROUND3){	// 3回戦
 		if(wk->DispCount == (PARAM_ROUND3-1)){
 			wk->MesFlag = FLG_MES_1ST;
 			mesid = wbt_mes_gmm_tbl[4*wk->Mode+1];
+			wk->MesFlag |= FLG_MES_LAST;
 		}
 	}
 	return( mesid );
@@ -3205,6 +3250,30 @@ static void wbt_debug( WBTLIST_MAIN_WORK* wk )
 			}
 		}
 	}
+#ifdef _DEBUG_SOUND_
+	// sound
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L ){		// マイナス
+		wk->DebugSound--;
+		if(wk->DebugSound < SEQ_SE_SW_WBT_01){
+			wk->DebugSound = SEQ_SE_SW_WBT_01;
+		}
+		OS_Printf("se :%d\n",wk->DebugSound);
+	}
+	else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R ){	// プラス
+		wk->DebugSound++;
+		if(wk->DebugSound >= SEQ_SE_SW_WBT_07){
+			wk->DebugSound = SEQ_SE_SW_WBT_07;
+		}
+		OS_Printf("se :%d\n",wk->DebugSound);
+	}
+	// X
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
+		PMSND_PlaySE( wk->DebugSound );
+	}
+	
+#endif		// _DEBUG_SOUND_
+
 #endif		// PM_DEBUG
+
 }
 
