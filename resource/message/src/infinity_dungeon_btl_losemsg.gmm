@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="onoue_masayuki" host="W00272" date="2011-04-12T20:11:27"/>
+	<create user="nakamura_akira" host="W00280" date="2011-04-25T15:32:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -395,7 +395,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1298" top="117" right="2011" bottom="750" maximized="no" rayout="Vertical2">
+	<dialog left="266" top="348" right="979" bottom="981" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="542" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -434,8 +434,10 @@
 	</row>
 
 	<row id="INF_LOSE_MSG_TRID_003">
-		<language name="JPN" width="216">まけた！▼</language>
-		<language name="JPN_KANJI" width="216">負けた！▼</language>
+		<language name="JPN" width="216">うんが　なかったのは
+わたしの　ほうだったね　……▼</language>
+		<language name="JPN_KANJI" width="216">運が　なかったのは
+私の　方だったね　……▼</language>
 	</row>
 
 	<row id="INF_LOSE_MSG_TRID_004">
@@ -529,8 +531,8 @@
 	</row>
 
 	<row id="INF_LOSE_MSG_TRID_022">
-		<language name="JPN" width="216">まけた！▼</language>
-		<language name="JPN_KANJI" width="216">負けた！▼</language>
+		<language name="JPN" width="216">やまごもりでもして　やりなおすか▼</language>
+		<language name="JPN_KANJI" width="216">山ごもりでもして　やりなおすか▼</language>
 	</row>
 
 	<row id="INF_LOSE_MSG_TRID_023">
@@ -579,8 +581,10 @@
 	</row>
 
 	<row id="INF_LOSE_MSG_TRID_032">
-		<language name="JPN" width="216">まけた！▼</language>
-		<language name="JPN_KANJI" width="216">負けた！▼</language>
+		<language name="JPN" width="216">よそういじょうの　つよさだ
+おどろいたよ▼</language>
+		<language name="JPN_KANJI" width="216">予想以上の　強さだ
+驚いたよ▼</language>
 	</row>
 
 	<row id="INF_LOSE_MSG_TRID_033">
@@ -654,13 +658,15 @@
 	</row>
 
 	<row id="INF_LOSE_MSG_TRID_047">
-		<language name="JPN" width="216">まけた！▼</language>
-		<language name="JPN_KANJI" width="216">負けた！▼</language>
+		<language name="JPN" width="216">ありがとうございました！　またの
+たいせんを　おまちしております▼</language>
+		<language name="JPN_KANJI" width="216">ありがとうございました！　またの
+対戦を　お待ちしております▼</language>
 	</row>
 
 	<row id="INF_LOSE_MSG_TRID_048">
-		<language name="JPN" width="216">まけた！▼</language>
-		<language name="JPN_KANJI" width="216">負けた！▼</language>
+		<language name="JPN" width="216">こっちが　りょうりされちゃったよ▼</language>
+		<language name="JPN_KANJI" width="216">こっちが　料理されちゃったよ▼</language>
 	</row>
 
 	<row id="INF_LOSE_MSG_TRID_049">
@@ -774,8 +780,10 @@
 	</row>
 
 	<row id="INF_LOSE_MSG_TRID_071">
-		<language name="JPN" width="216">まけた！▼</language>
-		<language name="JPN_KANJI" width="216">負けた！▼</language>
+		<language name="JPN" width="216">うおおお！
+……　まけた▼</language>
+		<language name="JPN_KANJI" width="216">うおおお！
+……　負けた▼</language>
 	</row>
 
 	<row id="INF_LOSE_MSG_TRID_072">
@@ -814,8 +822,10 @@
 	</row>
 
 	<row id="INF_LOSE_MSG_TRID_079">
-		<language name="JPN" width="216">まけた！▼</language>
-		<language name="JPN_KANJI" width="216">負けた！▼</language>
+		<language name="JPN" width="216">ていこうするなんて！
+こうむしっこうぼうがいだぞ！▼</language>
+		<language name="JPN_KANJI" width="216">抵抗するんて！
+公務執行妨害だぞ！▼</language>
 	</row>
 
 	<row id="INF_LOSE_MSG_TRID_080">
@@ -824,8 +834,10 @@
 	</row>
 
 	<row id="INF_LOSE_MSG_TRID_081">
-		<language name="JPN" width="216">まけた！▼</language>
-		<language name="JPN_KANJI" width="216">負けた！▼</language>
+		<language name="JPN" width="216">そなえあれば　うれいなし！
+やまも　たたかいも　いっしょだな！▼</language>
+		<language name="JPN_KANJI" width="216">備えあれば　憂いなし！
+山も　戦いも　一緒だな！▼</language>
 	</row>
 
 	<row id="INF_LOSE_MSG_TRID_082">
@@ -924,8 +936,10 @@
 	</row>
 
 	<row id="INF_LOSE_MSG_TRID_101">
-		<language name="JPN" width="216">まけた！▼</language>
-		<language name="JPN_KANJI" width="216">負けた！▼</language>
+		<language name="JPN" width="216">まけちゃうなんて　まだまだ
+べんきょうが　たりないかな▼</language>
+		<language name="JPN_KANJI" width="216">負けちゃうなんて　まだまだ
+勉強が　足りないかな▼</language>
 	</row>
 
 	<row id="INF_LOSE_MSG_TRID_102">
@@ -944,8 +958,10 @@
 	</row>
 
 	<row id="INF_LOSE_MSG_TRID_105">
-		<language name="JPN" width="216">まけた！▼</language>
-		<language name="JPN_KANJI" width="216">負けた！▼</language>
+		<language name="JPN" width="216">まけちゃった　……
+もっと　がんばらないと　ダメね▼</language>
+		<language name="JPN_KANJI" width="216">負けちゃった　……
+もっと　がんばらないと　ダメね▼</language>
 	</row>
 
 	<row id="INF_LOSE_MSG_TRID_106">
@@ -1129,8 +1145,10 @@
 	</row>
 
 	<row id="INF_LOSE_MSG_TRID_142">
-		<language name="JPN" width="216">まけた！▼</language>
-		<language name="JPN_KANJI" width="216">負けた！▼</language>
+		<language name="JPN" width="216">やまのように　ゆうだいな
+トレーナーだな！　キミは！▼</language>
+		<language name="JPN_KANJI" width="216">山のように　雄大な
+トレーナーだな！　キミは！▼</language>
 	</row>
 
 	<row id="INF_LOSE_MSG_TRID_143">
@@ -1949,8 +1967,10 @@
 	</row>
 
 	<row id="INF_LOSE_MSG_TRID_306">
-		<language name="JPN" width="216">まけた！▼</language>
-		<language name="JPN_KANJI" width="216">負けた！▼</language>
+		<language name="JPN" width="216">まけたわ　やくそくどおり　
+かいふくしたいなら　こえを　かけて▼</language>
+		<language name="JPN_KANJI" width="216">負けたわ　約束どおり
+回復したいなら　声を　かけて▼</language>
 	</row>
 
 	<row id="INF_LOSE_MSG_TRID_307">
@@ -2029,8 +2049,10 @@
 	</row>
 
 	<row id="INF_LOSE_MSG_TRID_322">
-		<language name="JPN" width="216">まけた！▼</language>
-		<language name="JPN_KANJI" width="216">負けた！▼</language>
+		<language name="JPN" width="216">まけても　ゆうがさを　うしなわない
+それが　ほんとうの　おぼっちゃまさ▼</language>
+		<language name="JPN_KANJI" width="216">負けても　優雅さを　失わない
+それが　本当の　おぼっちゃまさ▼</language>
 	</row>
 
 	<row id="INF_LOSE_MSG_TRID_323">

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="onoue_masayuki" host="W00272" date="2011-04-12T20:11:40"/>
+	<create user="nakamura_akira" host="W00280" date="2011-04-25T15:22:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -364,7 +364,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="195"/>
+		<id position="0" width="291"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
@@ -395,14 +395,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1298" top="117" right="2011" bottom="750" maximized="no" rayout="Vertical2">
+	<dialog left="437" top="349" right="937" bottom="982" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="542" visible="no"/>
-		<band id="0" index="0" style="0000" width="530"/>
+		<band id="0" index="0" style="0000" width="484"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="697"/>
-		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<band id="2" index="2" style="0000" width="317"/>
+		<band id="3" index="3" style="0000" width="591"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -434,8 +434,10 @@
 	</row>
 
 	<row id="INF_BATTLE_START_MSG_TRID_003">
-		<language name="JPN" width="216">しょうぶだ！▼</language>
-		<language name="JPN_KANJI" width="216">勝負だ！▼</language>
+		<language name="JPN" width="216">わたしに　めを　つけられたのが
+うんのつきだ！　しょうぶ！▼</language>
+		<language name="JPN_KANJI" width="216">私に　目を　つけられたのが
+運の　尽きだ　勝負！▼</language>
 	</row>
 
 	<row id="INF_BATTLE_START_MSG_TRID_004">
@@ -529,8 +531,9 @@
 	</row>
 
 	<row id="INF_BATTLE_START_MSG_TRID_022">
-		<language name="JPN" width="216">しょうぶだ！▼</language>
-		<language name="JPN_KANJI" width="216">勝負だ！▼</language>
+		<language name="JPN" width="216">やまおとこの　じつりょくを
+おみせしよう！▼</language>
+		<language name="JPN_KANJI" width="216">山男の　実力を　お見せしよう！▼</language>
 	</row>
 
 	<row id="INF_BATTLE_START_MSG_TRID_023">
@@ -579,8 +582,10 @@
 	</row>
 
 	<row id="INF_BATTLE_START_MSG_TRID_032">
-		<language name="JPN" width="216">しょうぶだ！▼</language>
-		<language name="JPN_KANJI" width="216">勝負だ！▼</language>
+		<language name="JPN" width="216">こころが　ふるえる　……
+キミは　かなりの　つよさだな？▼</language>
+		<language name="JPN_KANJI" width="216">心が　震える　……
+キミは　かなりの　強さだな？▼</language>
 	</row>
 
 	<row id="INF_BATTLE_START_MSG_TRID_033">
@@ -654,13 +659,17 @@
 	</row>
 
 	<row id="INF_BATTLE_START_MSG_TRID_047">
-		<language name="JPN" width="216">しょうぶだ！▼</language>
-		<language name="JPN_KANJI" width="216">勝負だ！▼</language>
+		<language name="JPN" width="216">いらっしゃいませ！
+こちらで　たいせんを　どうぞ！▼</language>
+		<language name="JPN_KANJI" width="216">いらっしゃいませ！
+こちらで　対戦を　どうぞ！▼</language>
 	</row>
 
 	<row id="INF_BATTLE_START_MSG_TRID_048">
-		<language name="JPN" width="216">しょうぶだ！▼</language>
-		<language name="JPN_KANJI" width="216">勝負だ！▼</language>
+		<language name="JPN" width="216">きょうの　メインディッシュは
+キミに　きめた！▼</language>
+		<language name="JPN_KANJI" width="216">今日の　メインディッシュは
+キミに　決めた！▼</language>
 	</row>
 
 	<row id="INF_BATTLE_START_MSG_TRID_049">
@@ -774,8 +783,10 @@
 	</row>
 
 	<row id="INF_BATTLE_START_MSG_TRID_071">
-		<language name="JPN" width="216">しょうぶだ！▼</language>
-		<language name="JPN_KANJI" width="216">勝負だ！▼</language>
+		<language name="JPN" width="216">うおおお！
+よし！　しょうぶだ！▼</language>
+		<language name="JPN_KANJI" width="216">うおお！
+よし！　勝負だ！▼</language>
 	</row>
 
 	<row id="INF_BATTLE_START_MSG_TRID_072">
@@ -814,8 +825,10 @@
 	</row>
 
 	<row id="INF_BATTLE_START_MSG_TRID_079">
-		<language name="JPN" width="216">しょうぶだ！▼</language>
-		<language name="JPN_KANJI" width="216">勝負だ！▼</language>
+		<language name="JPN" width="216">こんなところを　あるいているのは
+あやしいな　たいほする！▼</language>
+		<language name="JPN_KANJI" width="216">こんなところを　歩いているのは
+怪しいな　逮捕する！▼</language>
 	</row>
 
 	<row id="INF_BATTLE_START_MSG_TRID_080">
@@ -824,8 +837,10 @@
 	</row>
 
 	<row id="INF_BATTLE_START_MSG_TRID_081">
-		<language name="JPN" width="216">しょうぶだ！▼</language>
-		<language name="JPN_KANJI" width="216">勝負だ！▼</language>
+		<language name="JPN" width="216">たたかいの　じゅんびは　いいかい？
+ゆだんしていると　あぶないぞ！▼</language>
+		<language name="JPN_KANJI" width="216">戦いの　準備は　いいかい？
+油断していると　危ないぞ!▼</language>
 	</row>
 
 	<row id="INF_BATTLE_START_MSG_TRID_082">
@@ -924,8 +939,10 @@
 	</row>
 
 	<row id="INF_BATTLE_START_MSG_TRID_101">
-		<language name="JPN" width="216">しょうぶだ！▼</language>
-		<language name="JPN_KANJI" width="216">勝負だ！▼</language>
+		<language name="JPN" width="216">いつでも　どこでも
+ポケモンしょうぶさ！▼</language>
+		<language name="JPN_KANJI" width="216">いつでも　どこでも
+ポケモン勝負さ！▼</language>
 	</row>
 
 	<row id="INF_BATTLE_START_MSG_TRID_102">
@@ -944,8 +961,10 @@
 	</row>
 
 	<row id="INF_BATTLE_START_MSG_TRID_105">
-		<language name="JPN" width="216">しょうぶだ！▼</language>
-		<language name="JPN_KANJI" width="216">勝負だ！▼</language>
+		<language name="JPN" width="216">トレーナーどうしの　めが　あったら
+……　しょうぶの　あいずよ！▼</language>
+		<language name="JPN_KANJI" width="216">トレーナー同士の　目が　あったら
+……　勝負の　合図よ！▼</language>
 	</row>
 
 	<row id="INF_BATTLE_START_MSG_TRID_106">
@@ -1129,8 +1148,10 @@
 	</row>
 
 	<row id="INF_BATTLE_START_MSG_TRID_142">
-		<language name="JPN" width="216">しょうぶだ！▼</language>
-		<language name="JPN_KANJI" width="216">勝負だ！▼</language>
+		<language name="JPN" width="216">やまのような　ゆうだいな
+わたしに　かてるかな？▼</language>
+		<language name="JPN_KANJI" width="216">山のような　雄大な
+私に　勝てるかな？▼</language>
 	</row>
 
 	<row id="INF_BATTLE_START_MSG_TRID_143">
@@ -1949,8 +1970,10 @@
 	</row>
 
 	<row id="INF_BATTLE_START_MSG_TRID_306">
-		<language name="JPN" width="216">しょうぶだ！▼</language>
-		<language name="JPN_KANJI" width="216">勝負だ！▼</language>
+		<language name="JPN" width="216">おつかれのようね　わたしに
+かてたら　かいふくしてあげる▼</language>
+		<language name="JPN_KANJI" width="216">お疲れのようね　私に
+勝てたら　回復してあげる▼</language>
 	</row>
 
 	<row id="INF_BATTLE_START_MSG_TRID_307">
@@ -2029,8 +2052,8 @@
 	</row>
 
 	<row id="INF_BATTLE_START_MSG_TRID_322">
-		<language name="JPN" width="216">しょうぶだ！▼</language>
-		<language name="JPN_KANJI" width="216">勝負だ！▼</language>
+		<language name="JPN" width="216">さあ　エレガントに　しょうぶしよう！▼</language>
+		<language name="JPN_KANJI" width="216">さあ　エレガントに　勝負しよう！▼</language>
 	</row>
 
 	<row id="INF_BATTLE_START_MSG_TRID_323">
