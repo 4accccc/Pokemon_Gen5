@@ -185,8 +185,13 @@ EVENT_START  ev_infinity_dungeon_elevator
       _SE_STOP()
     ELSE
       // かえるしょり
+      // エレベータ移動音
+      _CALL play_elevator_move_se
+
       _INFINITY_DUNGEON_WARP(WARP_INFORMATION)
       _RESERVE_SCRIPT( SCRID_INFINITY_DUNGEON_COMEBACK )
+      
+      _SE_STOP()
     ENDIF
   ELSE
     // エレベータを開ける
@@ -433,6 +438,9 @@ EVENT_START  ev_infinity_dungeon_comeback
   DEFINE_LOCAL  LWK_MAP_STATUS
   DEFINE_LOCAL  LWK_DUNGEON_STATUS
   DEFINE_LOCAL  LWK_NOW_AREA
+
+  _CALL play_elevator_stop_se
+  _SE_WAIT()
 
   // エレベータを開ける
   _INFINITY_DUNGEON_ACTION_ELEVATOR( 0 ,TRUE)
@@ -731,9 +739,15 @@ EVENT_START  ev_infinity_dungeon_battle_boss_trainer
   ENDIF
   _OBJ_ANIME_WAIT()
 
+  // エレベータ移動音
+  _CALL play_elevator_move_se
+
   // かえるしょり
   _INFINITY_DUNGEON_WARP(WARP_INFORMATION)
   _RESERVE_SCRIPT( SCRID_INFINITY_DUNGEON_COMEBACK )
+
+  // SE止め
+  _SE_STOP()
 
 }
 EVENT_END
@@ -948,9 +962,9 @@ play_elevator_stop_se:
   // ROMバージョンでの判断
   _GET_ROM_VERSION( LWK_ROM_VERSION )
 	IF $LWK_ROM_VERSION == VERSION_B2 THEN
-    _SE_PLAY( SEQ_SE_SW_MDUN_BL_03 )
-  ELSE
     _SE_PLAY( SEQ_SE_SW_MDUN_BL_04 )
+  ELSE
+    _SE_PLAY( SEQ_SE_SW_MDUN_WH_04 )
   ENDIF
 }
 _RET
