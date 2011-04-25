@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-21T15:50:08"/>
+	<create user="matsumiya" host="W00224" date="2011-04-25T20:44:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1290" top="221" right="1995" bottom="849" maximized="no" rayout="Vertical2">
+	<dialog left="1297" top="169" right="2002" bottom="797" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="726" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -371,7 +371,7 @@
 人も　ポケモンも　同じだよ</language>
 	</row>
 
-	<row id="msg_geonet_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_geonet_01" text-color=",,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・GRIDX=7GRIDZ=12
 ・メッセージ表示後、一歩移動(基本は右）して
@@ -387,7 +387,7 @@
 オー　ごめんなさーい！▼</language>
 	</row>
 
-	<row id="msg_geonet_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_geonet_02" text-color=",,,,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・はい/いいえの選択肢表示
 ・はい＋ジオネット登録済み→msg_geonet_03
@@ -398,7 +398,7 @@
 		<language name="JPN_KANJI" width="256">アナタ　ジオネット　しってる？</language>
 	</row>
 
-	<row id="msg_geonet_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_geonet_03" text-color=",,,,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・はい選択＋ジオネット登録済み</comment>
 		<attribute name="キャラ指定">TENNISW</attribute>
@@ -420,7 +420,7 @@
 試すネ！　ビックリするヨ！</language>
 	</row>
 
-	<row id="msg_geonet_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_geonet_04" text-color=",,,,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・はい選択＋ジオネット未登録</comment>
 		<attribute name="キャラ指定">TENNISW</attribute>
@@ -440,7 +440,7 @@
 ばっちり　登録　できるヨ！</language>
 	</row>
 
-	<row id="msg_geonet_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_geonet_05" text-color=",,,,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・いいえ選択時
 ・ポケモン2Fのほうをみながら

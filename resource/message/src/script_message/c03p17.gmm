@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-25T19:59:18"/>
+	<create user="matsumiya" host="W00224" date="2011-04-25T20:43:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -302,168 +302,87 @@
 	</row>
 
 	<row id="msg_c03p17_assistantm_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・アイテム入手前
-・メッセージ表示後、選択肢表示</comment>
-		<attribute name="キャラ指定">ASSISTANTM</attribute>
-		<language name="JPN" width="256">ヤナップ　バオップ　ヒヤップ　の
-３びきは　とくべつな　いしで▽
-しんかをする　ポケモンなんだ！▼
-きみなら　どの　ポケモンを
-しんか　させてみたい？</language>
-		<language name="JPN_KANJI" width="256">ヤナップ　バオップ　ヒヤップ　の
-３匹は　特別な　石を　使うことで▽
-進化をする　ポケモンなんだ！▼
-きみなら　どの　ポケモンを
-進化させて　みたい？</language>
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03p17_assistantm_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・アイテム入手処理
-　No085「リーフのいし」</comment>
-		<attribute name="キャラ指定">ASSISTANTM</attribute>
-		<language name="JPN" width="256">ヤナップ　か……
-それじゃあ　リーフのいし　だね▼</language>
-		<language name="JPN_KANJI" width="256">ヤナップ　か……
-それじゃあ　リーフのいし　だね▼</language>
+	<row id="msg_c03p17_assistantm_02" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03p17_assistantm_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・アイテム入手処理
-　No082「ほのおのいし」</comment>
-		<attribute name="キャラ指定">ASSISTANTM</attribute>
-		<language name="JPN" width="256">バオップ　か……
-それじゃあ　ほのおのいし　だね▼</language>
-		<language name="JPN_KANJI" width="256">バオップ　か……
-それじゃあ　ほのおのいし　だね▼</language>
+	<row id="msg_c03p17_assistantm_03" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03p17_assistantm_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・アイテム入手処理
-　No084「みずのいし」</comment>
-		<attribute name="キャラ指定">ASSISTANTM</attribute>
-		<language name="JPN" width="256">ヒヤップ　か……
-それじゃあ　みずのいし　だね▼</language>
-		<language name="JPN_KANJI" width="256">ヒヤップ　か……
-それじゃあ　みずのいし　だね▼</language>
+	<row id="msg_c03p17_assistantm_04" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03p17_assistantm_05" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・アイテム入手後</comment>
-		<attribute name="キャラ指定">ASSISTANTM</attribute>
-		<language name="JPN" width="256">きみが　しっているか　しらないか
-ぼくには　わからないが　アドバイス！▼
-ポケモンは　しんか　すると
-ちからづよく　なるけれど　かわりに▽
-わざを　おぼえにくくなる▼
-とくに　いしで　しんか　する
-ポケモンは　その　けいこうが　つよい▼
-なので　いい　わざを　おぼえてから
-いしを　つかって　しんか　させるか▼
-さっさと　いしで　しんか　させてから
-わざマシンで　わざを　おぼえさせるか▽
-それは　きみに　おまかせさ！</language>
-		<language name="JPN_KANJI" width="256">きみが　知っているか　知らないか
-ぼくには　わからないが　アドバイス！▼
-ポケモンは　進化すると
-力強く　なるけれど　代わりに▽
-技を　覚えにくくなる▼
-特に　石で　進化する
-ポケモンは　その傾向が　強い▼
-なので　いい　技を　覚えてから
-石を　使って　進化させるか▼
-さっさと　石で　進化させてから
-わざマシンで　技を　覚えさせるか▽
-それは　きみに　おまかせさ！</language>
+	<row id="msg_c03p17_assistantm_05" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03p17_select_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>・続けてassistantm_06</comment>
-		<attribute name="キャラ指定">選択肢</attribute>
-		<language name="JPN" width="256">ヤナップ</language>
-		<language name="JPN_KANJI" width="256">ヤナップ</language>
+	<row id="msg_c03p17_select_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03p17_select_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>・続けてassistantm_07</comment>
-		<attribute name="キャラ指定">選択肢</attribute>
-		<language name="JPN" width="256">バオップ</language>
-		<language name="JPN_KANJI" width="256">バオップ</language>
+	<row id="msg_c03p17_select_02" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03p17_select_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>・続けてassistantm_08</comment>
-		<attribute name="キャラ指定">選択肢</attribute>
-		<language name="JPN" width="256">ヒヤップ</language>
-		<language name="JPN_KANJI" width="256">ヒヤップ</language>
+	<row id="msg_c03p17_select_03" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03p17_select_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>・続けてassistantm_10</comment>
-		<attribute name="キャラ指定">選択肢</attribute>
-		<language name="JPN" width="256">やめる</language>
-		<language name="JPN_KANJI" width="256">やめる</language>
+	<row id="msg_c03p17_select_04" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03p17_assistantm_06" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・はい/いいえの選択肢表示
-・はい→assistantm_02
-　いいえ→assistantm_09</comment>
-		<attribute name="キャラ指定">ASSISTANTM</attribute>
-		<language name="JPN" width="256">ヤナップ　なんだね？</language>
-		<language name="JPN_KANJI" width="256">ヤナップ　なんだね？</language>
+	<row id="msg_c03p17_assistantm_06" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03p17_assistantm_07" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・はい/いいえの選択肢表示
-・はい→assistantm_03
-　いいえ→assistantm_09</comment>
-		<attribute name="キャラ指定">ASSISTANTM</attribute>
-		<language name="JPN" width="256">バオップ　なんだね？</language>
-		<language name="JPN_KANJI" width="256">バオップ　なんだね？</language>
+	<row id="msg_c03p17_assistantm_07" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03p17_assistantm_08" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・はい/いいえの選択肢表示
-・はい→assistantm_04
-　いいえ→assistantm_09</comment>
-		<attribute name="キャラ指定">ASSISTANTM</attribute>
-		<language name="JPN" width="256">ヒヤップ　なんだね？</language>
-		<language name="JPN_KANJI" width="256">ヒヤップ　なんだね？</language>
+	<row id="msg_c03p17_assistantm_08" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03p17_assistantm_09" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・アイテム入手前
-・選択肢表示
-　Bボタン→終了
-※SWANでメッセージ調整</comment>
-		<attribute name="キャラ指定">ASSISTANTM</attribute>
-		<language name="JPN" width="256">じゃあ　きみなら
-ヤナップ　バオップ　ヒヤップ　の▽
-どの　ポケモンを　しんか　させたい？</language>
-		<language name="JPN_KANJI" width="256">じゃあ　きみなら
-ヤナップ　バオップ　ヒヤップ　の▽
-どの　ポケモンを　進化させたい？</language>
+	<row id="msg_c03p17_assistantm_09" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03p17_assistantm_10" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・やめる選択時</comment>
-		<attribute name="キャラ指定">ASSISTANTM</attribute>
-		<language name="JPN" width="256">うん　そうだね▼
-えらぶのは　むずかしいよね
-きまったら　また　はなしてよ！</language>
-		<language name="JPN_KANJI" width="256">うん　そうだね▼
-選ぶのは　難しいよね
-決まったら　また　話してよ！</language>
+	<row id="msg_c03p17_assistantm_10" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c03p17_badman_01">

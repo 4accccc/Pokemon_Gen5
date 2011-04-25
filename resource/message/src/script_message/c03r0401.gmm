@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-02-27T14:59:47"/>
+	<create user="matsumiya" host="W00224" date="2011-04-25T20:47:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1563" top="230" right="2268" bottom="850" maximized="no" rayout="Vertical2">
+	<dialog left="1297" top="169" right="2002" bottom="797" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="437" right="1280" bottom="835" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -314,11 +314,11 @@
 </comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">ひとりで　さみしそうだったから
-えほんを　よんであげてたの！[BE:00:ページ切り替え（行送り）]
-おにいちゃんにも　きかせてあげる！[BE:01:ページ切り替え（クリア）]</language>
+えほんを　よんであげてたの！▽
+おにいちゃんにも　きかせてあげる！▼</language>
 		<language name="JPN_KANJI" width="256">一人で　さみしそうだったから
-絵本を　読んであげてたの！[BE:00:ページ切り替え（行送り）]
-お兄ちゃんにも　聞かせてあげる！[BE:01:ページ切り替え（クリア）]</language>
+絵本を　読んであげてたの！▽
+お兄ちゃんにも　聞かせてあげる！▼</language>
 	</row>
 
 	<row id="msg_c03r0401_girl1_01_2" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
@@ -332,11 +332,11 @@
 </comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">ひとりで　さみしそうだったから
-えほんを　よんであげてたの！[BE:00:ページ切り替え（行送り）]
-おねえちゃんにも　きかせてあげる！[BE:01:ページ切り替え（クリア）]</language>
+えほんを　よんであげてたの！▽
+おねえちゃんにも　きかせてあげる！▼</language>
 		<language name="JPN_KANJI" width="256">一人で　さみしそうだったから
-絵本を　読んであげてたの！[BE:00:ページ切り替え（行送り）]
-お姉ちゃんにも　聞かせてあげる！[BE:01:ページ切り替え（クリア）]</language>
+絵本を　読んであげてたの！▽
+お姉ちゃんにも　聞かせてあげる！▼</language>
 	</row>
 
 	<row id="msg_c03r0401_girl1_02" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -350,14 +350,14 @@
 ●ゾロア未登録
 　→msg_c03r0401_girl1_03</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
-		<language name="JPN" width="256">おはなしの　つづきを　してあげるね！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">おはなしの　つづきを　してあげるね！▼
 …　…　…　…
-ひとりぼっちに　なった　ゾロアは[BE:00:ページ切り替え（行送り）]
-おかあさんを　さがしまわりました…[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">お話の　続きを　してあげるね！[BE:01:ページ切り替え（クリア）]
+ひとりぼっちに　なった　ゾロアは▽
+おかあさんを　さがしまわりました…▼</language>
+		<language name="JPN_KANJI" width="256">お話の　続きを　してあげるね！▼
 …　…　…　…
-ひとりぼっちに　なった　ゾロアは[BE:00:ページ切り替え（行送り）]
-おかあさんを　探しまわりました…[BE:01:ページ切り替え（クリア）]</language>
+ひとりぼっちに　なった　ゾロアは▽
+おかあさんを　探しまわりました…▼</language>
 	</row>
 
 	<row id="msg_c03r0401_girl1_03" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -372,9 +372,9 @@
 msg_c03r0401_girl1_04</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">あんた　ゾロアって　みたことある？
-ほら　こんな　ポケモンなのよ！[BE:01:ページ切り替え（クリア）]</language>
+ほら　こんな　ポケモンなのよ！▼</language>
 		<language name="JPN_KANJI" width="256">あんた　ゾロアって　みたことある？
-ほら　こんな　ポケモンなのよ！[BE:01:ページ切り替え（クリア）]</language>
+ほら　こんな　ポケモンなのよ！▼</language>
 	</row>
 
 	<row id="msg_c03r0401_girl1_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -382,17 +382,17 @@ msg_c03r0401_girl1_04</comment>
 ・男の子（ゾロア）に向いてからセリフ。</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">ゾロアは　ひとを　ばかす　ちからを
-もってるんだって！[BE:01:ページ切り替え（クリア）]
+もってるんだって！▼
 ばかされたら　こわいけど
-あたし　ゾロアって　すきよ！[BE:00:ページ切り替え（行送り）]
-だって　かわいいんだもん！[BE:01:ページ切り替え（クリア）]
+あたし　ゾロアって　すきよ！▽
+だって　かわいいんだもん！▼
 ……あら？
 あんたが　なんで　あかくなるのよ！</language>
 		<language name="JPN_KANJI" width="256">ゾロアは　人を　化かす　力を
-持ってるんだって！[BE:01:ページ切り替え（クリア）]
+持ってるんだって！▼
 化かされたら　こわいけど
-あたし　ゾロアって　好きよ！[BE:00:ページ切り替え（行送り）]
-だって　可愛いんだもん！[BE:01:ページ切り替え（クリア）]
+あたし　ゾロアって　好きよ！▽
+だって　可愛いんだもん！▼
 ……あら？
 あんたが　なんで　あかくなるのよ！</language>
 	</row>
@@ -402,10 +402,10 @@ msg_c03r0401_girl1_04</comment>
 ・繰り返しのセリフ。</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">ヒウンシティは　ひろくて
-ぐるぐる　めが　まわっちゃうよ[BE:00:ページ切り替え（行送り）]
+ぐるぐる　めが　まわっちゃうよ▽
 あたしだって　まいごに　なるわ！</language>
 		<language name="JPN_KANJI" width="256">ヒウンシティは　広くて
-ぐるぐる　目が　回っちゃうよ[BE:00:ページ切り替え（行送り）]
+ぐるぐる　目が　回っちゃうよ▽
 あたしだって　迷子に　なるわ！</language>
 	</row>
 
@@ -414,10 +414,10 @@ msg_c03r0401_girl1_04</comment>
 ※主人公が男</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">このコ　まいごなの！
-さみしそうだから　おにいちゃんも[BE:00:ページ切り替え（行送り）]
+さみしそうだから　おにいちゃんも▽
 おはなしして　あげて！</language>
 		<language name="JPN_KANJI" width="256">このコ　迷子なの！
-さみしそうだから　おにいちゃんも[BE:00:ページ切り替え（行送り）]
+さみしそうだから　おにいちゃんも▽
 お話して　あげて！</language>
 	</row>
 
@@ -426,10 +426,10 @@ msg_c03r0401_girl1_04</comment>
 ※主人公が女</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">このコ　まいごなの！
-さみしそうだから　おねえちゃんも[BE:00:ページ切り替え（行送り）]
+さみしそうだから　おねえちゃんも▽
 おはなしして　あげて！</language>
 		<language name="JPN_KANJI" width="256">このコ　迷子なの！
-さみしそうだから　お姉ちゃんも[BE:00:ページ切り替え（行送り）]
+さみしそうだから　お姉ちゃんも▽
 お話して　あげて！</language>
 	</row>
 
@@ -463,9 +463,9 @@ msg_c03r0401_girl1_04</comment>
 　→msg_c03r0401_girl1_10</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">ゾロアが　ばけてたんだ！
-すごい　すごーい！[BE:01:ページ切り替え（クリア）]</language>
+すごい　すごーい！▼</language>
 		<language name="JPN_KANJI" width="256">ゾロアが　化けてたんだ！
-すごい　すごーい！[BE:01:ページ切り替え（クリア）]</language>
+すごい　すごーい！▼</language>
 	</row>
 
 	<row id="msg_c03r0401_girl1_08" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -473,13 +473,13 @@ msg_c03r0401_girl1_04</comment>
 ・主人公に向いてから、セリフ。</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">ゾロアと　セレビィは
-すごく　なかよしみたい！[BE:01:ページ切り替え（クリア）]
+すごく　なかよしみたい！▼
 セレビィと　いっしょに
-つれていって　ほしいのよ！　きっと！[BE:01:ページ切り替え（クリア）]</language>
+つれていって　ほしいのよ！　きっと！▼</language>
 		<language name="JPN_KANJI" width="256">ゾロアと　セレビィは
-すごく　仲良しみたい！[BE:01:ページ切り替え（クリア）]
+すごく　仲良しみたい！▼
 セレビィと　一緒に
-つれていって　ほしいのよ！　きっと！[BE:01:ページ切り替え（クリア）]</language>
+つれていって　ほしいのよ！　きっと！▼</language>
 	</row>
 
 	<row id="msg_c03r0401_narrator_01">
@@ -520,8 +520,8 @@ msg_c03r0401_girl1_04</comment>
 →続けてmsg_c03r0401_narrator_04
 ※未使用データ（2010.06.18）</comment>
 		<attribute name="キャラ指定">ゾロア</attribute>
-		<language name="JPN" width="256">……　……　きゅぅん？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">……　……　きゅぅん？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">……　……　きゅぅん？▼</language>
+		<language name="JPN_KANJI" width="256">……　……　きゅぅん？▼</language>
 	</row>
 
 	<row id="msg_c03r0401_narrator_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
@@ -537,11 +537,11 @@ msg_c03r0401_girl1_04</comment>
 		<comment>・セリフ後、少女は去ります。</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">ともだちの　セレビィと　あえるのを
-ゾロアは　ここで　まってたのね！[BE:00:ページ切り替え（行送り）]
-あたし　ほっとしちゃった！[BE:01:ページ切り替え（クリア）]</language>
+ゾロアは　ここで　まってたのね！▽
+あたし　ほっとしちゃった！▼</language>
 		<language name="JPN_KANJI" width="256">友達の　セレビィと　会えるのを
-ゾロアは　ここで　待ってたのね！[BE:00:ページ切り替え（行送り）]
-あたし　ほっとしちゃった！[BE:01:ページ切り替え（クリア）]</language>
+ゾロアは　ここで　待ってたのね！▽
+あたし　ほっとしちゃった！▼</language>
 	</row>
 
 	<row id="msg_c03r0401_girl1_10_1" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -550,19 +550,19 @@ msg_c03r0401_girl1_04</comment>
 ※姿がゾロアに戻っているときのセリフ。</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">ゾロアと　セレビィは
-すごく　なかよしみたい！[BE:01:ページ切り替え（クリア）]
+すごく　なかよしみたい！▼
 セレビィと　いっしょに
-つれていって　ほしいのよ！　きっと！[BE:01:ページ切り替え（クリア）]
+つれていって　ほしいのよ！　きっと！▼
 ……でも　おにいちゃん
-ゾロアを　なかまに　できるの？[BE:01:ページ切り替え（クリア）]
+ゾロアを　なかまに　できるの？▼
 つれていける　ポケモンは
 ６ひき　まで　なんでしょ？</language>
 		<language name="JPN_KANJI" width="256">ゾロアと　セレビィは
-すごく　仲良しみたい！[BE:01:ページ切り替え（クリア）]
+すごく　仲良しみたい！▼
 セレビィと　一緒に
-つれていって　ほしいのよ！　きっと！[BE:01:ページ切り替え（クリア）]
+つれていって　ほしいのよ！　きっと！▼
 ……でも　お兄ちゃん
-ゾロアを　仲間に　できるの？[BE:01:ページ切り替え（クリア）]
+ゾロアを　仲間に　できるの？▼
 連れていける　ポケモンは
 ６匹まで　なんでしょ？</language>
 	</row>
@@ -573,19 +573,19 @@ msg_c03r0401_girl1_04</comment>
 ※姿がゾロアに戻っているときのセリフ。</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">ゾロアと　セレビィは
-すごく　なかよしみたい！[BE:01:ページ切り替え（クリア）]
+すごく　なかよしみたい！▼
 セレビィと　いっしょに
-つれていって　ほしいのよ！　きっと！[BE:01:ページ切り替え（クリア）]
+つれていって　ほしいのよ！　きっと！▼
 ……でも　おねえちゃん
-ゾロアを　なかまに　できるの？[BE:01:ページ切り替え（クリア）]
+ゾロアを　なかまに　できるの？▼
 つれていける　ポケモンは
 ６ひき　まで　なんでしょ？</language>
 		<language name="JPN_KANJI" width="256">ゾロアと　セレビィは
-すごく　仲良しみたい！[BE:01:ページ切り替え（クリア）]
+すごく　仲良しみたい！▼
 セレビィと　一緒に
-つれていって　ほしいのよ！　きっと！[BE:01:ページ切り替え（クリア）]
+つれていって　ほしいのよ！　きっと！▼
 ……でも　お姉ちゃん
-ゾロアを　仲間に　できるの？[BE:01:ページ切り替え（クリア）]
+ゾロアを　仲間に　できるの？▼
 連れていける　ポケモンは
 ６匹まで　なんでしょ？</language>
 	</row>
@@ -628,9 +628,9 @@ msg_c03r0401_girl1_04</comment>
 　　→msg_c03r0401_girl1_14へ。</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">おにいちゃん
-モンスターボール　もってる？[BE:01:ページ切り替え（クリア）]</language>
+モンスターボール　もってる？▼</language>
 		<language name="JPN_KANJI" width="256">お兄ちゃん
-モンスターボール　持ってる？[BE:01:ページ切り替え（クリア）]</language>
+モンスターボール　持ってる？▼</language>
 	</row>
 
 	<row id="msg_c03r0401_girl1_13_2" text-color="#000000,,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -643,9 +643,9 @@ msg_c03r0401_girl1_04</comment>
 　　→msg_c03r0401_girl1_14へ。</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">おねえちゃん
-モンスターボール　もってる？[BE:01:ページ切り替え（クリア）]</language>
+モンスターボール　もってる？▼</language>
 		<language name="JPN_KANJI" width="256">おねえちゃん
-モンスターボール　持ってる？[BE:01:ページ切り替え（クリア）]</language>
+モンスターボール　持ってる？▼</language>
 	</row>
 
 	<row id="msg_c03r0401_girl1_14" text-color="#000000,,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -653,9 +653,9 @@ msg_c03r0401_girl1_04</comment>
 　→msg_c03r0401_narrator_01</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">……このコを
-つれていって　あげられないの？[BE:01:ページ切り替え（クリア）]</language>
+つれていって　あげられないの？▼</language>
 		<language name="JPN_KANJI" width="256">……このコを
-つれていって　あげられないの？[BE:01:ページ切り替え（クリア）]</language>
+つれていって　あげられないの？▼</language>
 	</row>
 
 	<row id="msg_c03r0401_statue_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -673,21 +673,21 @@ msg_c03r0401_girl1_04</comment>
 ※姿が少年のままのときのセリフ。</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">ゾロアと　セレビィは
-すごく　なかよしみたい！[BE:01:ページ切り替え（クリア）]
+すごく　なかよしみたい！▼
 セレビィと　いっしょに
-つれていって　ほしいのよ！　きっと！[BE:01:ページ切り替え（クリア）]
+つれていって　ほしいのよ！　きっと！▼
 ……でも　おにいちゃん
-ゾロアを　なかまに　できるの？[BE:01:ページ切り替え（クリア）]
+ゾロアを　なかまに　できるの？▼
 つれていける　ポケモンは
-６ひき　まで　なんでしょ？[BE:01:ページ切り替え（クリア）]</language>
+６ひき　まで　なんでしょ？▼</language>
 		<language name="JPN_KANJI" width="256">ゾロアと　セレビィは
-すごく　仲良しみたい！[BE:01:ページ切り替え（クリア）]
+すごく　仲良しみたい！▼
 セレビィと　一緒に
-つれていって　ほしいのよ！　きっと！[BE:01:ページ切り替え（クリア）]
+つれていって　ほしいのよ！　きっと！▼
 ……でも　お兄ちゃん
-ゾロアを　仲間に　できるの？[BE:01:ページ切り替え（クリア）]
+ゾロアを　仲間に　できるの？▼
 連れていける　ポケモンは
-６匹まで　なんでしょ？[BE:01:ページ切り替え（クリア）]</language>
+６匹まで　なんでしょ？▼</language>
 	</row>
 
 	<row id="msg_c03r0401_girl1_15_2" text-color="#ff0000,,,#ff0000,,#ff0000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -696,21 +696,21 @@ msg_c03r0401_girl1_04</comment>
 ※姿が少年のままのときのセリフ。</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">ゾロアと　セレビィは
-すごく　なかよしみたい！[BE:01:ページ切り替え（クリア）]
+すごく　なかよしみたい！▼
 セレビィと　いっしょに
-つれていって　ほしいのよ！　きっと！[BE:01:ページ切り替え（クリア）]
+つれていって　ほしいのよ！　きっと！▼
 ……でも　おねえちゃん
-ゾロアを　なかまに　できるの？[BE:01:ページ切り替え（クリア）]
+ゾロアを　なかまに　できるの？▼
 つれていける　ポケモンは
-６ひき　まで　なんでしょ？[BE:01:ページ切り替え（クリア）]</language>
+６ひき　まで　なんでしょ？▼</language>
 		<language name="JPN_KANJI" width="256">ゾロアと　セレビィは
-すごく　仲良しみたい！[BE:01:ページ切り替え（クリア）]
+すごく　仲良しみたい！▼
 セレビィと　一緒に
-つれていって　ほしいのよ！　きっと！[BE:01:ページ切り替え（クリア）]
+つれていって　ほしいのよ！　きっと！▼
 ……でも　お姉ちゃん
-ゾロアを　仲間に　できるの？[BE:01:ページ切り替え（クリア）]
+ゾロアを　仲間に　できるの？▼
 連れていける　ポケモンは
-６匹まで　なんでしょ？[BE:01:ページ切り替え（クリア）]</language>
+６匹まで　なんでしょ？▼</language>
 	</row>
 
 	<row id="msg_c03r0401_narrator_05" text-color="#000000,,,,,,,#000000,,,#000000,,,#000000,,,#000000,,">

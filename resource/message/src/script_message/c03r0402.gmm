@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-21T15:53:59"/>
+	<create user="matsumiya" host="W00224" date="2011-04-25T20:48:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1290" top="221" right="1995" bottom="849" maximized="no" rayout="Vertical2">
+	<dialog left="1297" top="169" right="2002" bottom="797" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,11 +292,11 @@
 	</lock>
 
 
-	<row id="msg_c03r0402_director_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03r0402_director_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・全国版フラグ・増田部長フラグ
 　どちらもまだで話しかけた
-※テキストはプラチナのまま</comment>
+※swanでメッセージ調整予定</comment>
 		<attribute name="キャラ指定">MAN2</attribute>
 		<language name="JPN" width="256">やあ！
 ぼくは　ゲーム　ディレクター▼
@@ -513,8 +513,9 @@
 育ててたのに　残念だなー</language>
 	</row>
 
-	<row id="msg_c03r0402_04_01">
-		<comment>♂</comment>
+	<row id="msg_c03r0402_04_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・クリア前</comment>
 		<attribute name="キャラ指定">MIDDLEMAN2</attribute>
 		<language name="JPN" width="256">おれ　カビゴン▼
 じゃなくて　プランナー！▼
@@ -531,8 +532,10 @@
 ・クリア後
 　はい/いいえの確認</comment>
 		<attribute name="キャラ指定">MIDDLEMAN2</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">おっ　つよくなったね！　わかるよ
+ぼくと　ポケモンしょうぶ　してみる？</language>
+		<language name="JPN_KANJI" width="256">おっ　強くなったね！　わかるよ
+ぼくと　ポケモン勝負　してみる？</language>
 	</row>
 
 	<row id="msg_c03r0402_04_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
@@ -540,8 +543,8 @@
 ・クリア後＋はい選択
 ・メッセージ表示後、戦闘に</comment>
 		<attribute name="キャラ指定">MIDDLEMAN2</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">じゃあ　はじめるよー！▼</language>
+		<language name="JPN_KANJI" width="256">じゃあ　はじめるよー！▼</language>
 	</row>
 
 	<row id="msg_c03r0402_04_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
@@ -549,8 +552,14 @@
 ・クリア後＋戦闘後
 ・日塚が変わるまで繰り返し</comment>
 		<attribute name="キャラ指定">MIDDLEMAN2</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">いろいろ　かんがえてるよね！▼
+まけたけれど　べんきょうになったし
+なにより　おもしろかったよ！▽
+また　あした　おいでよ</language>
+		<language name="JPN_KANJI" width="256">いろいろ　考えてるよね！▼
+負けたけれど　勉強になったし
+なにより　おもしろかったよ！▽
+また　明日　おいでよ</language>
 	</row>
 
 	<row id="msg_c03r0402_04_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
@@ -558,13 +567,23 @@
 ・クリア後＋いいえ選択
 ・再度会話は03_02から</comment>
 		<attribute name="キャラ指定">MIDDLEMAN2</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">いいえ　かー▼
+ポケモンの　とくせいとか
+もたせる　どうぐの　くみあわせとか▽
+いろいろ　かんがえて▽
+そだててたのに　ざんねんだなー</language>
+		<language name="JPN_KANJI" width="256">いいえ　かー▼
+ポケモンの　特性とか
+持たせる　道具の　組み合わせとか▽
+いろいろ　考えて▽
+育ててたのに　残念だなー</language>
 	</row>
 
-	<row id="msg_c03r0402_05_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c03r0402_05_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・クリア前</comment>
+・クリア前
+
+※swanでメッセージ調整など</comment>
 		<attribute name="キャラ指定">TRAINERM</attribute>
 		<language name="JPN" width="256">ぼく　サウンドデザイナー！▼
 おんがくが　かわる　すてきな
