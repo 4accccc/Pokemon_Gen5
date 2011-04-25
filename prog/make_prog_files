@@ -529,6 +529,11 @@ SRCS_OVERLAY_NOTWIFI_EVENT_GEONET = field/event_geonet.c
 #GROUP_OVERLAY_NOTWIFI_EVENT_ALL
 SRCS_OVERLAY_NOTWIFI_EVENT_POKE_STATUS = field/event_poke_status.c
 
+#フェスミッションアプリ呼び出しイベント
+#===> SRCS_OVERLAY_NOTWIFI
+#GROUP_OVERLAY_NOTWIFI_EVENT_ALL
+SRCS_OVERLAY_NOTWIFI_EVENT_FMISSION_APP = field/event_fmission_app.c
+
 #侵入システムでほぼ常駐に置かなければいけないもの(ユニオンの常駐物と並列化)
 #===> GROUP_OVERLAY_NOTWIFI_EVENT_ALL
 #===> SRCS_OVERLAY_NOTWIFI
@@ -2466,6 +2471,12 @@ SRCS_OVERLAY_EGG_DEMO = demo/egg_demo/egg_demo.c \
 SRCS_OVERLAY_BEACON_DETAIL = app/beacon_detail/beacon_detail.c \
 											 app/beacon_detail/beacon_detail_gra.c \
 											 app/beacon_detail/beacon_detail_sub.c
+
+# フェスミッション詳細画面
+#===> SRCS_OVERLAY_UI_COMMON
+SRCS_OVERLAY_FMISSION_APP = app/fmission_app/fmission_app.c \
+        app/fmission_app/fmission_app_gra.c \
+        app/fmission_app/fmission_app_sub.c
 
 # すれ違い調査レーダー画面
 #===> SRCS_OVERLAY_UI_COMMON

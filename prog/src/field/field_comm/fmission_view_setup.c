@@ -18,10 +18,11 @@
 #include "app_menu_common.naix"
 #include "arc_def.h"
 #include "font/font.naix"
+#include "field/fieldmap.h"
 #include "field/fmission_view.h"
 #include "print\printsys.h"
 #include "message.naix"
-#include "field/event_beacon_detail.h"
+#include "field/event_fmission_app.h"
 #include "field/event_subscreen.h"
 #include "field/event_gpower.h"
 #include "field/event_freeword_input.h"
@@ -180,10 +181,11 @@ GMEVENT* FVSEvent_CheckCommon( FMISSION_VIEW_PTR wk, BOOL bEvReqOK )
     event = FVSEvent_EventStart( wk, call_event, EVWAIT_MENU_ANM, MENU_RETIRE );
     break;
   case EV_CALL_INFO_VIEW:
-//    call_event = EVENT_BeaconDetail( wk->gsys, wk->fieldWork, wk->ctrl.target+wk->ctrl.view_top );
-//    event = FVSEvent_EventStart( wk, call_event, EVWAIT_TCB_ANM, 0 );
-    call_event = EVENT_FreeWordInput( wk->gsys, wk->fieldWork, NULL,
-              NAMEIN_FREE_WORD, BEACON_STATUS_GetFreeWordInputResultPointer( wk->b_status ) );
+    {
+      FMISSION_APP_MODE mode = FMISSION_APP_MODE_INFO;
+      call_event = GMEVENT_CreateOverlayEventCall( wk->gsys,
+          FS_OVERLAY_ID( notwifi_event_fmission_app ), EVENT_FMissionApp, (void*)&mode );
+    }
     event = FVSEvent_EventStart( wk, call_event, EVWAIT_MENU_ANM, MENU_INFO );
     break;
   case EV_MISSION_RETIRE:

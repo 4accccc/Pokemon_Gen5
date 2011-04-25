@@ -27,15 +27,23 @@ extern const GFL_PROC_DATA FMissionAppProcData;
  */
 //=============================================================================
 
+typedef enum{
+  FMISSION_APP_MODE_INFO,
+  FMISSION_APP_MODE_RESULT,
+}FMISSION_APP_MODE;
+
 //=============================================================================
 /**
  *								構造体定義
  */
 //=============================================================================
+
 //-------------------------------------
 ///	PROCに渡す引数
 //=====================================
 typedef struct
 {	
-	GAMESYS_WORK				*gamesys;	//[in]ゲームシステム
+	GAMESYS_WORK* gsys;	//[in]ゲームシステム
+  GAMEDATA*     gdata;
+  FMISSION_APP_MODE mode;
 }FMISSION_APP_PARAM;
