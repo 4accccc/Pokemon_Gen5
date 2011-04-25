@@ -665,6 +665,8 @@ BATTLE_SETUP_PARAM * FBI_TOOL_INFINITY_DUNGEON_CreateBattleParam(
     bsw_partner = &partner_data[0];
     bsw_trainer = &bsw_partner->bt_trd;
 
+    dst->tr_data[client]->tr_id = bsw_trainer->player_id  - BSW_TR_ARCDATANO_ORG;
+
     // トレーナーデータをセットする
     EntryAITrainer( play_mode ,dst->tr_data[client]->tr_id + trid_offset ,bsw_trainer ,dst->tr_data[client] ,0x00000087 ,TRUE,FALSE );
      
