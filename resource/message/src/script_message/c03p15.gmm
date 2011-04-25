@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-25T12:51:00"/>
+	<create user="matsumiya" host="W00224" date="2011-04-25T17:45:28"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1308" top="222" right="2013" bottom="850" maximized="no" rayout="Vertical2">
+	<dialog left="1297" top="169" right="2002" bottom="797" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="209" right="1280" bottom="607" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,26 +292,64 @@
 	</lock>
 
 
-	<row id="msg_c03p15_pilot_01" back-color=",,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+	<row id="msg_c03p15_pilot_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color=",,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
 		<comment>♂
-・到着デモ後、主人公と向き合いメッセージ表示</comment>
+・到着デモ後、主人公と向き合いメッセージ表示
+・ライバルは先に降りている
+・続けてswrival_01</comment>
 		<attribute name="キャラ指定">PILOT
 船長</attribute>
 		<language name="JPN" width="256">みなさま！
 ヒウンに　とうちゃく　でございます▼</language>
 		<language name="JPN_KANJI" width="256">みなさま！
-ヒウンに　とうちゃく　でございます▼</language>
+ヒウンに　到着で　ございます▼</language>
 	</row>
 
-	<row id="msg_c03p15_swrival_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#ffffff,,,#ffffff,,#80ff80,#ffffff,,,#ffffff,,">
+	<row id="msg_c03p15_swrival_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#ffffff,,,#ffffff,,#80ff80,#ffffff,,,#ffffff,,">
+		<comment>♂
+・続けてswrival_02
+・1＝ライバル名</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『
-ネオプラズマだん　どこだ？▼</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『
-ネオプラズマだん　どこだ？▼</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『ここが　ヒウンか……
+きいてよりも　はるかに　でかいな▼
+フン！　どこに　にげても
+ネオプラズマだんは　さがしだすぜ▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ここが　ヒウンか……
+きいてよりも　はるかに　でかいな▼
+フン！　どこに　逃げても
+ネオプラズマ団は　探しだすぜ▼</language>
 	</row>
 
-	<row id="msg_c03p15_pilot_02" back-color=",,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+	<row id="msg_c03p15_swrival_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#ffffff,,,#ffffff,,#80ff80,#ffffff,,,#ffffff,,">
+		<comment>♂
+・振り向いてメッセージ
+・ライブキャスターに
+　ライバルのあて先登録
+・続けてswrival_03</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">そうだ　[1:00:トレーナー名:0]！
+てわけして　さがすからな▼
+おたがいの　ライブキャスターに
+とうろく　しあうぞ▼</language>
+		<language name="JPN_KANJI" width="256">そうだ　[1:00:トレーナー名:0]！
+手分けして　探すからな▼
+お互いの　ライブキャスターに
+登録しあうぞ▼</language>
+	</row>
+
+	<row id="msg_c03p15_swrival_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#ffffff,,,#ffffff,,#80ff80,#ffffff,,,#ffffff,,">
+		<comment>♂
+・停泊しているアジト船をみながら表示
+・表示後、c03に向かって移動
+　画面外に消えると主人公操作可能に</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">へんな　ふね……
+いまどき　はんせん　かよ？▼</language>
+		<language name="JPN_KANJI" width="256">変な　船……
+いまどき　帆船かよ？▼</language>
+	</row>
+
+	<row id="msg_c03p15_pilot_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color=",,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
 		<comment>♂
 ・はい/いいえの選択肢表示
 ・はい　→pilot_03
@@ -324,7 +362,7 @@
 タチワキまで　船に　乗られますか？</language>
 	</row>
 
-	<row id="msg_c03p15_pilot_03" back-color=",,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+	<row id="msg_c03p15_pilot_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color=",,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
 		<comment>♂
 ・はい選択
 ・セリフ後、画面フェードアウト→出航デモへ</comment>
@@ -336,7 +374,7 @@
 それでは　こちらへ　どうぞ！▼</language>
 	</row>
 
-	<row id="msg_c03p15_pilot_04" back-color=",,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+	<row id="msg_c03p15_pilot_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color=",,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
 		<comment>♂
 ・いいえ選択
 ・再度会話時はmsg_c03p15_01_02</comment>
@@ -466,8 +504,10 @@
 		<comment>♀
 ※SWANでメッセージ内容変更</comment>
 		<attribute name="キャラ指定">WOMAN1</attribute>
-		<language name="JPN" width="256">かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">ガマンを　ためこむぐらいなら
+うみに　むかって　さけべばいいよ</language>
+		<language name="JPN_KANJI" width="256">ガマンを　ためこむぐらいなら
+うみに　むかって　さけべばいいよ</language>
 	</row>
 
 	<row id="msg_c03p15_gentleman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffffff,,,#ffffff,,#ffff80,#ffffff,,,#ffffff,,">

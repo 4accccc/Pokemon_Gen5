@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-17T12:17:28"/>
+	<create user="matsumiya" host="W00224" date="2011-04-25T18:16:40"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1299" top="203" right="2004" bottom="831" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,21 +292,144 @@
 	</lock>
 
 
-	<row id="msg_c03_leader3_01" text-color="#000000,,,,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>♂
-・c03p15イベント後
-　GRIDX=27、GRIDZ=36似出現
-・pos起動（GRIDX=25~27、GRIDZ=34~37）
-・表示前に左右きょろきょろ
-・表示後、ジムのある側に倍速移動
-　画面外に消えると主人公操作可能に
-※c03p01のアーティを削除</comment>
+	<row id="msg_c03_inventor_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
+		<comment>♀
+・主人公に隣接してメッセージ表示
+・表示後、連れ歩きでｃ01ｒ0101へ</comment>
+		<attribute name="キャラ指定">ASSISTANTW
+発明家</attribute>
+		<language name="JPN" width="256">ヤッホー！
+アタシは　マコモ</language>
+		<language name="JPN_KANJI" width="256">ヤッホー！
+アタシは　マコモ</language>
+	</row>
+
+	<row id="msg_c03_inventor_02">
+		<comment>♀
+・</comment>
+		<attribute name="キャラ指定">ASSISTANTW
+発明家</attribute>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c03_inventor_03">
+		<comment>♀
+・</comment>
+		<attribute name="キャラ指定">ASSISTANTW
+発明家</attribute>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c03_inventor_04">
+		<comment>♀
+・</comment>
+		<attribute name="キャラ指定">ASSISTANTW
+発明家</attribute>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c03_inventor_04_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>システムメッセージ
+ＭＥ再生</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]は
+[FF:00:色:2]Ｃギア[FF:00:色:0]を　てにいれた！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
+[FF:00:色:2]Ｃ－ＧＥＡＲ[FF:00:色:0]を　手に入れた！</language>
+	</row>
+
+	<row id="msg_c03_inventor_04_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>システムメッセージ
+・はい/いいえの選択肢表示
+・はい→Ｃギアをアクティブで起動
+　いいえ→Ｃギアをパッシブで起動</comment>
+		<language name="JPN" width="256">Ｃギアの　でんげんを　いれて
+つうしんを　はじめますか？</language>
+		<language name="JPN_KANJI" width="256">Ｃ－ＧＥＡＲの　電源を入れて
+通信を　始めますか？</language>
+	</row>
+
+	<row id="msg_c03_inventor_04_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>選択肢
+・はい／いいえを特殊な位置に表示するため
+　選択肢メニューとして作成している</comment>
+		<language name="JPN" width="256">はい</language>
+		<language name="JPN_KANJI" width="256">はい</language>
+	</row>
+
+	<row id="msg_c03_inventor_04_04" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>選択肢
+・はい／いいえを特殊な位置に表示するため
+　選択肢メニューとして作成している</comment>
+		<language name="JPN" width="256">いいえ</language>
+		<language name="JPN_KANJI" width="256">いいえ</language>
+	</row>
+
+	<row id="msg_c03_inventor_04_05" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>システムメッセージ
+・いいえを選択したときの再確認</comment>
+		<language name="JPN" width="256">Ｃギアの　きのうが
+せいげんされますが　よろしいですか？</language>
+		<language name="JPN_KANJI" width="256">Ｃ－ＧＥＡＲの　機能が
+制限されますが　よろしいですか？</language>
+	</row>
+
+	<row id="msg_c03_inventor_04_06" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>システムメッセージ
+・『はい』を選択したが
+　本体設定で無線通信をOFFにしているとき
+　（TWL限定）
+・続けてmsg_c01r0102_inventor_08_01</comment>
+		<language name="JPN" width="256">ほんたいの　せっていにより
+むせんつうしんが　つかえません▼
+むせんつうしんを　つかうには
+ほんたいせっていの　むせんつうしんを▽
+オンにしてください　（５０６９９）▼</language>
+		<language name="JPN_KANJI" width="256">本体の　設定により
+無線通信が　使えません▼
+無線通信を　使うには
+本体設定の　無線通信を▽
+ＯＮにしてください　（５０６９９）▼</language>
+	</row>
+
+	<row id="msg_c03_inventor_04_07" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+■d01r0101イベント後
+・主人公に近づいてメッセージ表示
+・はい選択時
+・続けてinventor_09</comment>
+		<language name="JPN" width="256">ほら！　Ｃギアが　きどうして
+がめんが　あらわれたでしょ！▼
+その　がめんの　みぎしたに　ある
+？マークに　タッチすれば▽
+Ｃギアの　せつめいが　よめるわ▼</language>
+		<language name="JPN_KANJI" width="256">ほら！　Ｃ－ＧＥＡＲが　起動して
+画面が　あらわれたでしょ！▼
+その　画面の　右下に　ある
+？マークに　タッチすれば▽
+Ｃ－ＧＥＡＲの　説明が　読めるわ▼</language>
+	</row>
+
+	<row id="msg_c03_inventor_05">
+		<comment>♀
+・メッセージ表示後、？？？に移動
+　画面外に消えると操作可能に</comment>
+		<attribute name="キャラ指定">ASSISTANTW
+発明家</attribute>
+		<language name="JPN" width="256">Ｃギアの　くわしい　せつめいは
+あたしの　けんきゅうじょで
+けんきゅうじょは　？？？に　あるわ</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c03_leader3_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">ジムリーダー
 アーティ</attribute>
-		<language name="JPN" width="256">アーティ『あっち！▼
-んぬん　ジムの　ほうこうだな！？▼</language>
-		<language name="JPN_KANJI" width="256">アーティ『あっち！▼
-んぬん　ジムの　方向だな！？▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c03_leader3_02" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
@@ -325,8 +448,9 @@
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03_businessman1_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂</comment>
+	<row id="msg_c03_businessman1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+※swanでメッセージ変更予定</comment>
 		<attribute name="キャラ指定">BUSINESSMAN
 ビジネスマン</attribute>
 		<language name="JPN" width="256">やっと　しごとが　おわったとき▼
@@ -341,8 +465,9 @@
 喜びに　あふれておるのです！</language>
 	</row>
 
-	<row id="msg_c03_businessman2_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂</comment>
+	<row id="msg_c03_businessman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+※swanでメッセージ変更予定</comment>
 		<attribute name="キャラ指定">BUSINESSMAN
 ビジネスマン</attribute>
 		<language name="JPN" width="256">わたしは　たたかう　ビジネスマン！
@@ -351,8 +476,9 @@
 ……だけど　ポケモンは　弱いのだ</language>
 	</row>
 
-	<row id="msg_c03_businessman3_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂</comment>
+	<row id="msg_c03_businessman3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+※swanでメッセージ変更予定</comment>
 		<attribute name="キャラ指定">BUSINESSMAN
 ビジネスマン</attribute>
 		<language name="JPN" width="256">いそがしい　いそがしいッ！▼
@@ -371,8 +497,9 @@
 なんて　忙しいんだろう！</language>
 	</row>
 
-	<row id="msg_c03_businessman4_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂</comment>
+	<row id="msg_c03_businessman4_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+※swanでメッセージ変更予定</comment>
 		<attribute name="キャラ指定">BUSINESSMAN
 ビジネスマン</attribute>
 		<language name="JPN" width="256">やあ！　トレーナー！
@@ -385,8 +512,9 @@
 元気なら　なんでも　できるからね！</language>
 	</row>
 
-	<row id="msg_c03_businessman5_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂</comment>
+	<row id="msg_c03_businessman5_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+※swanでメッセージ変更予定</comment>
 		<attribute name="キャラ指定">BUSINESSMAN
 ビジネスマン</attribute>
 		<language name="JPN" width="256">……ブツブツ▼
@@ -400,7 +528,8 @@
 	</row>
 
 	<row id="msg_c03_ol1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♀</comment>
+		<comment>♀
+※swanでメッセージ変更予定</comment>
 		<attribute name="キャラ指定">OL
 </attribute>
 		<language name="JPN" width="256">ヒウンシティって　とても
@@ -413,8 +542,9 @@
 人も　たまに　いるのよね</language>
 	</row>
 
-	<row id="msg_c03_ol2_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♀</comment>
+	<row id="msg_c03_ol2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+※swanでメッセージ変更予定</comment>
 		<attribute name="キャラ指定">OL
 </attribute>
 		<language name="JPN" width="256">はとばで　ふねを　ながめるのが
@@ -423,8 +553,9 @@
 アタシの　昼休みスタイルよ</language>
 	</row>
 
-	<row id="msg_c03_ol3_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♀</comment>
+	<row id="msg_c03_ol3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+※swanでメッセージ変更予定</comment>
 		<attribute name="キャラ指定">OL
 </attribute>
 		<language name="JPN" width="256">はたらく　じょせいは　うつくしく
@@ -433,8 +564,9 @@
 戦う　ポケモンは　ステキなの！</language>
 	</row>
 
-	<row id="msg_c03_ol4_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♀</comment>
+	<row id="msg_c03_ol4_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+※swanでメッセージ変更予定</comment>
 		<attribute name="キャラ指定">OL
 </attribute>
 		<language name="JPN" width="256">バトルカンパニーでは
@@ -445,8 +577,9 @@
 歓迎していまーす！</language>
 	</row>
 
-	<row id="msg_c03_ol5_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♀</comment>
+	<row id="msg_c03_ol5_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+※swanでメッセージ変更予定</comment>
 		<attribute name="キャラ指定">OL
 </attribute>
 		<language name="JPN" width="256">つぎこそ！　つぎこそは
@@ -465,12 +598,10 @@
 	</row>
 
 	<row id="msg_c03_sign2_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>未使用</comment>
+		<comment>未使用→削除ラベル</comment>
 		<attribute name="キャラ指定">看板</attribute>
-		<language name="JPN" width="256">ヒウンシティ
-ヒウンは　そらとぶくも　めでたいくも</language>
-		<language name="JPN_KANJI" width="256">ヒウンシティ
-ヒウンは　飛ぶ雲　めでたい雲</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c03_sign3_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
