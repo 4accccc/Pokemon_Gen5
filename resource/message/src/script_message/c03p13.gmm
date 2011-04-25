@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-04T20:01:34"/>
+	<create user="matsumiya" host="W00224" date="2011-04-25T20:07:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1340" top="153" right="2045" bottom="781" maximized="no" rayout="Vertical2">
+	<dialog left="1297" top="169" right="2002" bottom="797" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="788" top="349" right="1261" bottom="747" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -315,32 +315,32 @@
 	</row>
 
 	<row id="msg_c03p13_captain_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>●船長のポジション（GRIDX=20/GIRIDZ=13）
-●船を向いて立っています。
-
-●話し掛けると、振り向いてセリフ。
-●セリフ後に「リバティチケット」の有無をチェックします。
-　・チケットを持っている　→msg_c03p13_captain_02
-　・チケットを持っていない　→再び船を向いて終了。</comment>
+		<comment>♂
+・GRIDX=20、GIRIDZ=13
+・話し掛けると、振り向いてセリフ
+・セリフ後に「リバティチケット」の有無をチェック
+　チケットを持っている　→msg_c03p13_captain_02
+　チケットを持っていない→再び船を向いて終了</comment>
 		<attribute name="キャラ指定">PILOT
 船長</attribute>
 		<language name="JPN" width="256">ごうかきゃくせんと　くらべれば
-とても　ちいさな　ふねですが[BE:00:ページ切り替え（行送り）]
-おおうなばらを　すすむ　ロマンに[BE:00:ページ切り替え（行送り）]
+とても　ちいさな　ふねですが▼
+おおうなばらを　すすむ　ロマンに
 ふねの　サイズは　かんけいないです▼</language>
 		<language name="JPN_KANJI" width="256">豪華客船と　くらべれば
-とても　小さな　船ですが▽
-大海原を　航海する　ロマンに▽
+とても　小さな　船ですが▼
+大海原を　航海する　ロマンに
 船の　サイズは　関係ないのです▼</language>
 	</row>
 
 	<row id="msg_c03p13_captain_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>●リバティチケットを持っているときのセリフ
-　・「はい」　→msg_c03p13_captain_03
-　・「いいえ」　→msg_c03p13_captain_04
-
-※このセリフは初回のみ。
-２回目以降は、msg_c03p13_captain_05になります。</comment>
+		<comment>♂
+・リバティチケット所有時
+・はい/いいえの選択肢表示
+　はい　→msg_c03p13_captain_03
+　いいえ→msg_c03p13_captain_04
+・このセリフは初回のみ
+　２回目以降は、msg_c03p13_captain_05</comment>
 		<attribute name="キャラ指定">PILOT
 船長</attribute>
 		<language name="JPN" width="256">……おや！
@@ -352,9 +352,9 @@
 	</row>
 
 	<row id="msg_c03p13_captain_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>●「はい」のセリフ
-●セリフ後、画面フェードアウト。
-　→出航デモへ</comment>
+		<comment>♂
+・はい選択時
+・表示後後、画面フェードアウト→出航デモへ</comment>
 		<attribute name="キャラ指定">PILOT
 船長</attribute>
 		<language name="JPN" width="256">ちょうど　よい　タイミングでした▼
@@ -366,7 +366,8 @@
 	</row>
 
 	<row id="msg_c03p13_captain_04" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>●「いいえ」のセリフ</comment>
+		<comment>♂
+・いいえ選択時</comment>
 		<attribute name="キャラ指定">PILOT
 船長</attribute>
 		<language name="JPN" width="256">リバティガーデンとうへ
@@ -378,9 +379,12 @@
 	</row>
 
 	<row id="msg_c03p13_captain_05" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>●２回目以降のセリフ。
-　・「はい」　→msg_c03p13_captain_03
-　・「いいえ」　→msg_c03p13_captain_04</comment>
+		<comment>♂
+・リバティチケット所有時で
+　２回目以降
+・はい/いいえの選択肢表示
+　はい　→msg_c03p13_captain_03
+　いいえ→msg_c03p13_captain_04</comment>
 		<attribute name="キャラ指定">PILOT
 船長</attribute>
 		<language name="JPN" width="256">リバティガーデンとうへ　いかれますか？</language>
@@ -388,13 +392,13 @@
 	</row>
 
 	<row id="msg_c03p13_captain_06" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>未使用</comment>
+		<comment>削除ラベル</comment>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c03p13_captain_07" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>未使用</comment>
+		<comment>削除ラベル</comment>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>

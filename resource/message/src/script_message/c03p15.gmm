@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-25T17:45:28"/>
+	<create user="matsumiya" host="W00224" date="2011-04-25T20:36:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -502,7 +502,7 @@
 
 	<row id="msg_c03p15_woman1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffffff,,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
 		<comment>♀
-※SWANでメッセージ内容変更</comment>
+※SWANでメッセージ変更</comment>
 		<attribute name="キャラ指定">WOMAN1</attribute>
 		<language name="JPN" width="256">ガマンを　ためこむぐらいなら
 うみに　むかって　さけべばいいよ</language>
@@ -514,7 +514,7 @@
 		<comment>♂
 ・プラズマ団アジト船について
 ・ホドモエ到着まで（仮）
-※SWANでメッセージ内容変更</comment>
+※SWANでメッセージ変更</comment>
 		<attribute name="キャラ指定">GENTLEMAN</attribute>
 		<language name="JPN" width="256">あの　ふるめかしい　くろふね……
 いったい　なんでしょうなあ</language>
@@ -526,7 +526,7 @@
 		<comment>♂
 ・プラズマ団アジト船について
 ・ホドモエ到着後から（仮）
-※SWANでメッセージ内容変更</comment>
+※SWANでメッセージ変更</comment>
 		<attribute name="キャラ指定">GENTLEMAN</attribute>
 		<language name="JPN" width="256">あの　ふるめかしい　くろふね……
 いったい　なんだったんでしょうなあ</language>
