@@ -43,7 +43,6 @@ EVENT_START ev_wbt_hall_01
 	DEFINE_LOCAL	LWK_YELL_POSX	//サブウィンのX座標
 	DEFINE_LOCAL	LWK_YELL_POSY	//サブウィンのY座標
 	DEFINE_LOCAL	LWK_SUBWIN_NUM	//サブウィンのNo
-  DEFINE_LOCAL  LWK_EFFECT_NO   //表示エフェクトの指定
   DEFINE_LOCAL  LWK_WIN_OR_LOSE
 
 	_CALL ev_first_game
@@ -231,11 +230,11 @@ EVENT_END
 /**************************************************************/
 ev_first_game:
 
+//バックの歓声ＳＥ再生
+_SE_PLAY(SEQ_SE_SW_WBT_07)
+
 //トーナメントリスト表示
 _WBT_LIST_CALL( SCR_WBT_LIST_1ST_START )
-
-//歓声ＳＥ再生
-_SE_PLAY(SEQ_SE_SW_WBT_07)
 
 //WBTシステムに状態を通知：1回戦へ
 _WBT_SYSTEM_SET_STAGE( SCR_WBT_STAGE_1ST )
@@ -291,6 +290,9 @@ _SE_STOP()
 //戦闘開始　バトル専用コマンド
 _WBT_TRAINER_BATTLE( SCWK_ANSWER )
 
+//バックの歓声ＳＥ再生
+_SE_PLAY(SEQ_SE_SW_WBT_07)
+
 //背景ビジョンにロゴ表示
 _WBT_GMK_VISION_CHANGE(SCR_WBT_VISION_ALL)
 
@@ -301,9 +303,6 @@ _CAMERA_PURGE()		//カメラのバインドを解く
 //カメラ操作　ステージ中央にカメラを合わせる
 _CAMERA_MOVE( 2648,0,1069056,1515520,131103,962560,1 )	//一番最後の引数は移動にかかるフレーム数
 _CAMERA_WAIT_MOVE()
-
-//歓声ＳＥ再生
-_SE_PLAY(SEQ_SE_SW_WBT_07)
 
 _MAP_FADE_BLACK_IN_FORCE()  //仮：乱用していいコマンドではない
 _MAP_FADE_END_CHECK()
@@ -448,6 +447,9 @@ _SE_STOP()
 //戦闘開始　バトル専用コマンド
 _WBT_TRAINER_BATTLE( SCWK_ANSWER )
 
+//バックの歓声ＳＥ再生
+_SE_PLAY(SEQ_SE_SW_WBT_07)
+
 //背景ビジョンにロゴ表示
 _WBT_GMK_VISION_CHANGE(SCR_WBT_VISION_ALL)
 
@@ -458,9 +460,6 @@ _CAMERA_PURGE()		//カメラのバインドを解く
 //カメラ操作　ステージ中央にカメラを合わせる
 _CAMERA_MOVE( 2648,0,1069056,1515520,131103,962560,1 )	//一番最後の引数は移動にかかるフレーム数
 _CAMERA_WAIT_MOVE()
-
-//歓声ＳＥ再生
-_SE_PLAY(SEQ_SE_SW_WBT_07)
 
 _MAP_FADE_BLACK_IN_FORCE()  //仮：乱用していいコマンドではない
 _MAP_FADE_END_CHECK()
@@ -749,7 +748,7 @@ _MAP_FADE_END_CHECK()
 //プレイヤーの前口上メッセージ表示
 _CALL ev_introductory_remarks
 
-//歓声ＳＥ再生
+//バックの歓声ＳＥ再生
 _SE_PLAY(SEQ_SE_SW_WBT_07)
 
 //プレイヤー非表示解除後
@@ -765,7 +764,7 @@ _SE_PLAY(SEQ_SE_SW_WBT_01)
 //プレイヤー中央のステージまで歩き出す
 _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_3rd_in )
 
-//歓声ＳＥ再生
+//入場エフェクトＳＥ再生
 _SE_PLAY(SEQ_SE_SW_WBT_04)
 _WBT_GMK_EFFECT_START(SCR_WBT_EFFECT_NORMAL,SCR_WBT_EFFECT_POS_R)
 
@@ -816,7 +815,7 @@ _SE_PLAY(SEQ_SE_SW_WBT_01)
 //対戦者中央のステージまで歩き出す
 _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_enemy_3rd_in )
 
-//歓声ＳＥ再生
+//歓歓声声ＳＥ再生
 _SE_PLAY(SEQ_SE_SW_WBT_04)
 
 _WBT_GMK_EFFECT_START(SCR_WBT_EFFECT_NORMAL,SCR_WBT_EFFECT_POS_L)
@@ -866,6 +865,9 @@ _SE_STOP()
 //戦闘開始　バトル専用コマンド
 _WBT_TRAINER_BATTLE( SCWK_ANSWER )
 
+//無音再生
+_START_EVENT_BGM_SILENT( 1 )
+
 //背景ビジョンにロゴ表示
 _WBT_GMK_VISION_CHANGE(SCR_WBT_VISION_ALL)
 
@@ -876,9 +878,6 @@ _CAMERA_PURGE()		//カメラのバインドを解く
 //カメラ操作　ステージ中央にカメラを合わせる
 _CAMERA_MOVE( 2648,0,1069056,1515520,131103,962560,1 )	//一番最後の引数は移動にかかるフレーム数
 _CAMERA_WAIT_MOVE()
-
-//無音再生
-_START_EVENT_BGM_SILENT( 1 )
 
 _MAP_FADE_BLACK_IN_FORCE()  //仮：乱用していいコマンドではない
 _MAP_FADE_END_CHECK()
@@ -935,7 +934,7 @@ ev_final_result:
           _WBT_SET_ENEMY_NAME( 0 )
         ENDIF
 
-				//歓声ＳＥ再生
+				//バックの歓声ＳＥ再生
 				_SE_PLAY(SEQ_SE_SW_WBT_07)
 
 				//歓声SE再生
