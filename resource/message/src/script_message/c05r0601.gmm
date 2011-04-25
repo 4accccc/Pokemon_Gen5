@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-03T17:17:34"/>
+	<create user="matsumiya" host="W00224" date="2011-04-25T21:34:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1294" top="205" right="1999" bottom="833" maximized="no" rayout="Vertical2">
+	<dialog left="1297" top="169" right="2002" bottom="797" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -329,11 +329,11 @@
 		<attribute name="キャラ指定">WAITRESS
 ウェートレス</attribute>
 		<language name="JPN" width="256">いらっしゃいませ！
-さんちちょくそう　でーす！[BE:01:ページ切り替え（クリア）]
+さんちちょくそう　でーす！▼
 モーモーミルク　いっぽん　５００円
 たびのおともに　いかがですか？</language>
 		<language name="JPN_KANJI" width="256">いらっしゃいませ！
-産地直送　でーす！[BE:01:ページ切り替え（クリア）]
+産地直送　でーす！▼
 モーモーミルク　１本　５００円
 旅のお供に　いかがですか？</language>
 	</row>
@@ -344,8 +344,8 @@
 　続けてアイテム入手処理</comment>
 		<attribute name="キャラ指定">WAITRESS
 ウェートレス</attribute>
-		<language name="JPN" width="256">モーモーミルク　どうぞ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">モーモーミルク　どうぞ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">モーモーミルク　どうぞ！▼</language>
+		<language name="JPN_KANJI" width="256">モーモーミルク　どうぞ！▼</language>
 	</row>
 
 	<row id="msg_c05r0601_waitress_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -376,12 +376,12 @@
 		<attribute name="キャラ指定">WAITRESS
 ウェートレス</attribute>
 		<language name="JPN" width="256">また　こんど
-かってくださいね！[BE:01:ページ切り替え（クリア）]
+かってくださいね！▼
 ちなみに　うちの　モーモーミルクは
 さんち　ちょくそう▽
 しぼりたて　しんせん　なんですよ！</language>
 		<language name="JPN_KANJI" width="256">また　今度
-買ってくださいね！[BE:01:ページ切り替え（クリア）]
+買ってくださいね！▼
 ちなみに　うちの　モーモーミルクは
 産地直送▽
 搾りたて　新鮮　なんですよ！</language>
@@ -394,9 +394,9 @@
 		<attribute name="キャラ指定">WAITRESS
 ウェートレス</attribute>
 		<language name="JPN" width="256">１ダース　１２ほんの
-モーモーミルク　どうぞです！[BE:01:ページ切り替え（クリア）]</language>
+モーモーミルク　どうぞです！▼</language>
 		<language name="JPN_KANJI" width="256">１ダース　１２本の
-モーモーミルク　どうぞです！[BE:01:ページ切り替え（クリア）]</language>
+モーモーミルク　どうぞです！▼</language>
 	</row>
 
 	<row id="msg_c05r0601_waitress_07" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
@@ -547,11 +547,11 @@
 ・WHITEver</comment>
 		<attribute name="キャラ指定">NURSE</attribute>
 		<language name="JPN" width="256">きせつごとの　やさいを
-みているだけでも　たのしくなっちゃう[BE:01:ページ切り替え（クリア）]
+みているだけでも　たのしくなっちゃう▼
 だって　きせつが　かわると
 やさいの　いろあいも　かわるのよ！</language>
 		<language name="JPN_KANJI" width="256">季節ごとの　野菜を
-みているだけでも　心　躍るの！[BE:01:ページ切り替え（クリア）]
+みているだけでも　心　躍るの！▼
 だって　季節が　変わると
 野菜の　色あいも　変わるのよ！</language>
 	</row>
@@ -561,10 +561,10 @@
 ・BLACKver</comment>
 		<attribute name="キャラ指定">NURSE</attribute>
 		<language name="JPN" width="256">いつ　きても
-あらゆる　きせつの　やさいが[BE:00:ページ切り替え（行送り）]
+あらゆる　きせつの　やさいが▽
 そろっているのって　すごいよね</language>
 		<language name="JPN_KANJI" width="256">いつ　来ても
-あらゆる　季節の　野菜が[BE:00:ページ切り替え（行送り）]
+あらゆる　季節の　野菜が▽
 そろっているのって　すごいよね</language>
 	</row>
 
@@ -573,11 +573,11 @@
 ・WHITEver</comment>
 		<attribute name="キャラ指定">WORKMAN</attribute>
 		<language name="JPN" width="256">ホドモエから　はこばれた　にもつが
-どこかの　まちに　とどく……[BE:01:ページ切り替え（クリア）]
+どこかの　まちに　とどく……▼
 せかいって　こうやって
 どこかに　つながっているんだよな</language>
 		<language name="JPN_KANJI" width="256">ホドモエから　運ばれた　荷物が
-どこかの　街に　届く……[BE:01:ページ切り替え（クリア）]
+どこかの　街に　届く……▼
 世界って　こうやって
 どこかに　つながっているんだよな</language>
 	</row>
@@ -587,11 +587,11 @@
 ・BLACKver</comment>
 		<attribute name="キャラ指定">WORKMAN</attribute>
 		<language name="JPN" width="256">どこかの　まちから　はこばれた
-にもつが　ホドモエに　とどく……[BE:01:ページ切り替え（クリア）]
+にもつが　ホドモエに　とどく……▼
 せかいって　こうやって
 どこかに　つながっているんだよな</language>
 		<language name="JPN_KANJI" width="256">どこかの　街から　運ばれた
-荷物が　ホドモエに　届く……[BE:01:ページ切り替え（クリア）]
+荷物が　ホドモエに　届く……▼
 世界って　こうやって
 どこかに　つながっているんだよな</language>
 	</row>

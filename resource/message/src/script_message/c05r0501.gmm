@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-02-14T22:16:19"/>
+	<create user="matsumiya" host="W00224" date="2011-04-25T21:32:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -368,7 +368,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1297" top="186" right="2002" bottom="814" maximized="no" rayout="Vertical2">
+	<dialog left="1297" top="169" right="2002" bottom="797" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -454,130 +454,64 @@
 美しく　怖いものは　ないのに</language>
 	</row>
 
-	<row id="msg_c05r0501_veteranw_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・はい/いいえ
-　はい→veteranw_02
-　いいえ→veteranw_03</comment>
-		<attribute name="キャラ指定">VETERANW</attribute>
-		<language name="JPN" width="256">せかいの　にんげん　すべてが
-わかりあえると　おもいますか？</language>
-		<language name="JPN_KANJI" width="256">世界の　人間すべてが
-わかりあえると　思いますか？</language>
+	<row id="msg_c05r0501_veteranw_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c05r0501_veteranw_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>・はい選択時</comment>
-		<attribute name="キャラ指定">VETERANW</attribute>
-		<language name="JPN" width="256">……なるほど
-わたしも　そう　かんがえています！</language>
-		<language name="JPN_KANJI" width="256">……なるほど
-わたしも　そう　考えています！</language>
+	<row id="msg_c05r0501_veteranw_02" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c05r0501_veteranw_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>・いいえ選択時</comment>
-		<attribute name="キャラ指定">VETERANW</attribute>
-		<language name="JPN" width="256">……そうですね▼
-でも　アナタと　ポケモンは
-わかりあっている▽
-そうでは　ないのですか？</language>
-		<language name="JPN_KANJI" width="256">……そうですね▼
-でも　アナタと　ポケモンは
-わかりあっている▽
-そうでは　ないのですか？</language>
+	<row id="msg_c05r0501_veteranw_03" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c05r0501_gentleman_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・ハイリンクの情報</comment>
-		<attribute name="キャラ指定">GENTLEMAN</attribute>
-		<language name="JPN" width="256">はしを　わたった　せかいでのこと▼
-とほうに　くれていた
-わたしを　たすけてくれたのは▽
-みずしらずの　ひと　だった……▼
-やはり　じんせい　たすけあい　だね</language>
-		<language name="JPN_KANJI" width="256">橋を　渡った　世界でのこと▼
-途方に　暮れていた
-わたしを　助けてくれたのは▽
-見ず知らずの　人だった……▼
-やはり　人生　助け合い　だね</language>
+	<row id="msg_c05r0501_gentleman_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c05r0501_veteranm_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂</comment>
-		<attribute name="キャラ指定">VETERANM</attribute>
-		<language name="JPN" width="256">つよい　こころ　とは　なんだろう？
-やさしさとは　どういうことだ？[BE:01:ページ切り替え（クリア）]
-それを　もっている
-トレーナーや　ポケモンは　いるのか？</language>
-		<language name="JPN_KANJI" width="256">強い心　とは　なんだろう？
-優しさとは　どういうことだ？[BE:01:ページ切り替え（クリア）]
-それを　持っている
-トレーナーや　ポケモンは　いるのか？</language>
+	<row id="msg_c05r0501_veteranm_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c05r0501_girl2_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・ハイリンクの情報</comment>
-		<attribute name="キャラ指定">GIRL2</attribute>
-		<language name="JPN" width="256">つぎに　ハイリンクに　いくときは
-デルパワーを　とうろく　しちゃって▽
-みんなを　えがおに　したいな！</language>
-		<language name="JPN_KANJI" width="256">次に　ハイリンクに　行くときは
-デルパワーを　登録しちゃって▽
-みんなを　笑顔に　したいなあ！</language>
+	<row id="msg_c05r0501_girl2_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c05r0501_oldwoman_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・ハイリンクの情報</comment>
-		<attribute name="キャラ指定">OLDWOMAN</attribute>
-		<language name="JPN" width="256">[BE:09:速度コントロール:2]この　せかいに　あそびにきた　ひとが
-どうぐを　かくしていく……▽
-ハイリンクとは　ユニークだねえ[BE:09:速度コントロール:0]</language>
-		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:2]この世界に　訪れた　人が
-道具を　隠していく……▽
-ハイリンクとは　ユニークだねえ[BE:09:速度コントロール:0]</language>
+	<row id="msg_c05r0501_oldwoman_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c05r0501_mountain_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂</comment>
-		<attribute name="キャラ指定">MOUNTAIN</attribute>
-		<language name="JPN" width="256">ひとから　よく　おもわれたい……
-なにか　みかえりが　ある……▼
-そんな　きもちで　たすけても　いい！
-だって　たすけること　そのものは▽
-すばらしいことじゃ　ないか！</language>
-		<language name="JPN_KANJI" width="256">人から　よく　思われたい……
-なにか　見返りが　ある……▼
-そんな気持ちで　助けても　いい！
-だって　助けること　そのものは▽
-すばらしいことじゃ　ないか！</language>
+	<row id="msg_c05r0501_mountain_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c05r0501_man1_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂</comment>
-		<attribute name="キャラ指定">MAN1</attribute>
-		<language name="JPN" width="256">いきると　いうことは
-あたえられた　じかんを　つかうこと[BE:01:ページ切り替え（クリア）]
-じかんは　とりもどせないんだ
-そのことを　わすれないように……</language>
-		<language name="JPN_KANJI" width="256">生きると　いうことは
-与えられた　時間を　使うこと[BE:01:ページ切り替え（クリア）]
-時間は　取り戻せないんだ
-そのことを　忘れないように……</language>
+	<row id="msg_c05r0501_man1_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c05r0501_woman2_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀</comment>
-		<attribute name="キャラ指定">WOMAN2</attribute>
-		<language name="JPN" width="256">しあわせとは　はかないもの……▼
-えいえんの　しあわせ　なんか
-ないんだから　よくばっちゃ　ダメよ</language>
-		<language name="JPN_KANJI" width="256">幸せとは　はかないもの……▼
-永遠の　幸せなんか　ないんだから
-よくばっちゃ　ダメよ</language>
+	<row id="msg_c05r0501_woman2_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<flowchart-group-list>
