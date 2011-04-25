@@ -26,7 +26,10 @@
 #include "msg/msg_place_name.h"
 #include "resort_binary.h"
 
+//save
 #include "savedata/resonance_resort_sv.h"
+#include "savedata/record.h"
+#include "savedata/medalbox.h"
 
 //mine 
 #include "field/resonance_resort/resort_map.h"
@@ -581,10 +584,22 @@ SDK_COMPILER_ASSERT( sizeof(RESORT_EXTEND1_DATA) == RESORT_EXTEND1_DATA_SIZE );
 //-----------------------------------------------------------------------------
 static void RESORT_EXTEND1_DATA_SetMyData( RESORT_EXTEND1_DATA *p_wk, const GAMEDATA *cp_gamedata )
 {
-  int i;
-  //MEDALBOX *p_mdlbox  = SaveData_GetMedalBox( GAMEDATA_GetSaveControlWork((GAMEDATA*)cp_gamedata) );
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( (GAMEDATA *)cp_gamedata );
+  MEDALBOX *p_mdlbox  = SaveData_GetMedalBox(p_sv);
+  RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( p_sv );
+  RESORT_PEOPLE_ALL_DATA *p_people_all = RESONANCE_RESORT_SV_GetPeopleAllData(p_resort);
+  RESORT_RECV_DATA *p_owner = RESORT_PEOPLE_ALL_DATA_GetOwnerData(p_people_all);
 
   GFL_STD_MemClear( p_wk, sizeof(RESORT_EXTEND1_DATA) );
+
+  //TODO このあたりでメダルビットたてるかも
+  {
+    const void *cp_src = (const void*)RESORT_RECV_DATA_GetData(p_owner,RESORT_DATA_PARAM_EXT1_MEDAL_BIT, NULL );
+    GFL_STD_MemCopy( cp_src, p_wk->medal_bit, RESORT_RECV_MEDAL_BIT_BYTE );
+  }
+
+  p_wk->medal_num  = MEDALBOX_GetMedalCount(p_mdlbox,FALSE);
+  p_wk->recommend_medalID = MEDALBOX_GetPushMedalID(p_mdlbox);
 }
 
 //----------------------------------------------------------------------------
@@ -618,7 +633,14 @@ SDK_COMPILER_ASSERT( sizeof(RESORT_EXTEND2_DATA) == RESORT_EXTEND2_DATA_SIZE );
 //-----------------------------------------------------------------------------
 static void RESORT_EXTEND2_DATA_SetMyData( RESORT_EXTEND2_DATA *p_wk, const GAMEDATA *cp_gamedata )
 {
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( (GAMEDATA *)cp_gamedata );
+  RECORD *p_record = SaveData_GetRecord(p_sv);
   GFL_STD_MemClear( p_wk, sizeof(RESORT_EXTEND2_DATA) );
+
+  p_wk->rank_data[0]  = RECORD_Get(p_record, RECID_CAPTURE_POKE );
+  p_wk->rank_data[1]  = RECORD_Get(p_record, RECID_FISHING_SUCCESS );
+  p_wk->rank_data[2]  = RECORD_Get(p_record, RECID_TAMAGO_HATCHING );
+  p_wk->rank_data[3]  = RECORD_Get(p_record, RECID_BATTLE_COUNT );
 }
 
 //----------------------------------------------------------------------------
@@ -648,7 +670,17 @@ SDK_COMPILER_ASSERT( sizeof(RESORT_EXTEND3_DATA) == RESORT_EXTEND3_DATA_SIZE );
 //-----------------------------------------------------------------------------
 static void RESORT_EXTEND3_DATA_SetMyData( RESORT_EXTEND3_DATA *p_wk, const GAMEDATA *cp_gamedata )
 {
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( (GAMEDATA *)cp_gamedata );
+  RECORD *p_record = SaveData_GetRecord(p_sv);
+
   GFL_STD_MemClear( p_wk, sizeof(RESORT_EXTEND3_DATA) );
+
+  p_wk->rank_data[0]  = RECORD_Get(p_record, REC_FIRST );
+  p_wk->rank_data[1]  = RECORD_Get(p_record, RECID_WIFI_TRADE )
+                      + RECORD_Get(p_record, RECID_COMM_TRADE )
+                      + RECORD_Get(p_record, RECID_IRC_TRADE );
+  p_wk->rank_data[2]  = RECORD_Get(p_record, RECID_SHOPPING_CNT );
+  p_wk->rank_data[3]  = RECORD_Get(p_record, RECID_DENDOU_CNT );
 }
 //----------------------------------------------------------------------------
 /**
@@ -679,7 +711,19 @@ SDK_COMPILER_ASSERT( sizeof(RESORT_EXTEND4_DATA) == RESORT_EXTEND4_DATA_SIZE );
 //-----------------------------------------------------------------------------
 static void RESORT_EXTEND4_DATA_SetMyData( RESORT_EXTEND4_DATA *p_wk, const GAMEDATA *cp_gamedata )
 {
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( (GAMEDATA *)cp_gamedata );
+  RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( p_sv );
+  RESORT_PEOPLE_ALL_DATA *p_people_all = RESONANCE_RESORT_SV_GetPeopleAllData(p_resort);
+  RESORT_RECV_DATA *p_owner = RESORT_PEOPLE_ALL_DATA_GetOwnerData(p_people_all);
+  int i;
+
   GFL_STD_MemClear( p_wk, sizeof(RESORT_EXTEND4_DATA) );
+
+  for( i = 0; i < 16; i++ )
+  {
+    p_wk->gossip[i] = RESORT_RECV_DATA_GetData(p_owner,RESORT_DATA_PARAM_EXT4_GOSSIP_00+i, NULL);
+  }
+
 }
 //----------------------------------------------------------------------------
 /**
@@ -807,7 +851,20 @@ SDK_COMPILER_ASSERT( sizeof(RESORT_EXTEND8_DATA) == RESORT_EXTEND8_DATA_SIZE );
 //-----------------------------------------------------------------------------
 static void RESORT_EXTEND8_DATA_SetMyData( RESORT_EXTEND8_DATA *p_wk, const GAMEDATA *cp_gamedata )
 {
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( (GAMEDATA *)cp_gamedata );
+  RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( p_sv );
+  RESORT_PEOPLE_ALL_DATA *p_people_all = RESONANCE_RESORT_SV_GetPeopleAllData(p_resort);
+  RESORT_RECV_DATA *p_owner = RESORT_PEOPLE_ALL_DATA_GetOwnerData(p_people_all);
+  int i;
+
   GFL_STD_MemClear( p_wk, sizeof(RESORT_EXTEND8_DATA) );
+
+  for( i = 0; i < 4; i++ )
+  {
+    p_wk->record[i]       = RESORT_RECV_DATA_GetData(p_owner,RESORT_DATA_PARAM_EXT8_RECORD_00+i,NULL);
+    p_wk->record_date[i]  = RESORT_RECV_DATA_GetData(p_owner,RESORT_DATA_PARAM_EXT8_RECORD_DATE_00+i,NULL);
+  }
+
 }
 //----------------------------------------------------------------------------
 /**
@@ -839,7 +896,17 @@ SDK_COMPILER_ASSERT( sizeof(RESORT_EXTEND9_DATA) == RESORT_EXTEND9_DATA_SIZE );
 //-----------------------------------------------------------------------------
 static void RESORT_EXTEND9_DATA_SetMyData( RESORT_EXTEND9_DATA *p_wk, const GAMEDATA *cp_gamedata )
 {
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( (GAMEDATA *)cp_gamedata );
+  RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( p_sv );
+  RESORT_PEOPLE_ALL_DATA *p_people_all = RESONANCE_RESORT_SV_GetPeopleAllData(p_resort);
+  RESORT_RECV_DATA *p_owner = RESORT_PEOPLE_ALL_DATA_GetOwnerData(p_people_all);
+
   GFL_STD_MemClear( p_wk, sizeof(RESORT_EXTEND9_DATA) );
+
+  {
+    const void *cp_src = (const void* )RESORT_RECV_DATA_GetData(p_owner,RESORT_DATA_PARAM_EXT9_PHRASE, NULL );
+    GFL_STD_MemCopy( cp_src, p_wk->phrase, sizeof(STRCODE)*RESORT_PHRASE_LEN );
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -1621,8 +1688,11 @@ u32 RESORT_RECV_DATA_GetData( const RESORT_RECV_DATA *cp_wk, RESORT_DATA_PARAM p
   //拡張データ9
   case RESORT_DATA_PARAM_EXT9_PHRASE:
     RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_09 );
-    RESORT_EXTEND9_DATA_GetPhrase( &cp_wk->extend9, (STRCODE *)p_ret_adrs );
-    return 0;
+    if( p_ret_adrs )
+    {
+      RESORT_EXTEND9_DATA_GetPhrase( &cp_wk->extend9, (STRCODE *)p_ret_adrs );
+    }
+    return (u32)&cp_wk->extend9;
   default:
     GF_ASSERT(0);
     return 0;
