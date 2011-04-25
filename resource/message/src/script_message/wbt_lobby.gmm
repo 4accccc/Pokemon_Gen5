@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-21T18:33:21"/>
+	<create user="tamada" host="W00253" date="2011-04-25T21:57:38"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -378,7 +378,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1292" top="158" right="1997" bottom="786" maximized="no" rayout="Vertical2">
+	<dialog left="6" top="97" right="711" bottom="717" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -1050,6 +1050,62 @@ msg_wbt_info_11へ</comment>
 空っぽのダミーウィンドウ用データ</comment>
 		<language name="JPN" width="256"></language>
 		<language name="JPN_KANJI" width="256"></language>
+	</row>
+
+	<row id="msg_wbt_pc_select_01" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">トーナメントゆうしょうきろくを
+よびだした！▼</language>
+		<language name="JPN_KANJI" width="256">トーナメント優勝記録を
+呼び出した！▼</language>
+	</row>
+
+	<row id="msg_wbt_pc_select_02" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">トーナメントダウンロードシステムを
+よびだした！▼</language>
+		<language name="JPN_KANJI" width="256">トーナメントダウンロードシステムを
+呼び出した！▼</language>
+	</row>
+
+	<row id="msg_wbt_pc_menu_dl_01" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">トーナメントをダウンロードする</language>
+		<language name="JPN_KANJI" width="256">トーナメントをダウンロードする</language>
+	</row>
+
+	<row id="msg_wbt_pc_menu_dl_02" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">ダウンロードしたトーナメントをみる</language>
+		<language name="JPN_KANJI" width="256">ダウンロードしたトーナメントを見る</language>
+	</row>
+
+	<row id="msg_wbt_pc_menu_dl_03" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">さようなら</language>
+		<language name="JPN_KANJI" width="256">さようなら</language>
+	</row>
+
+	<row id="msg_wbt_pc_menu_dl_04" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">ＷＩＦＩでダウンロードする</language>
+		<language name="JPN_KANJI" width="256">ＷＩＦＩでダウンロードする</language>
+	</row>
+
+	<row id="msg_wbt_pc_menu_dl_05" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">ワイヤレスでダウンロードする</language>
+		<language name="JPN_KANJI" width="256">ワイヤレスでダウンロードする</language>
+	</row>
+
+	<row id="msg_wbt_pc_info_dl_00" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">トーナメントダウンロードの　ほうほうを
+えらんでください</language>
+		<language name="JPN_KANJI" width="256">トーナメントダウンロードの　方法を
+選んでください</language>
+	</row>
+
+	<row id="msg_wbt_pc_info_dl_01" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">トーナメントダウンロードの説明（仮）</language>
+		<language name="JPN_KANJI" width="256">トーナメントダウンロードの説明（仮）</language>
+	</row>
+
+	<row id="msg_wbt_pc_info_dl_02" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">トーナメントを見るの説明（仮）</language>
+		<language name="JPN_KANJI" width="256">トーナメントを見るの説明（仮）</language>
 	</row>
 
 	<flowchart-group-list>
