@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-25T12:40:17"/>
+	<create user="matsumiya" host="W00224" date="2011-04-25T17:22:41"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -311,26 +311,14 @@
 		<comment>♀
 ※SWANでメッセージ変更</comment>
 		<attribute name="キャラ指定">WOMAN2</attribute>
-		<language name="JPN" width="256">ふねが　とおるたびに
-はねばしが　あがったり　さがったり▼
-もっとも　ふねの　うんこうは
-ヤーコンさんが　きめているから▼
-はしの　あげさげを　きめるのは
-ヤーコンさんしだい　ってことね▼
-テストメッセージ
-ホドモエの　あたらしい　めいぶつは
-ワールドバトルトーナメント！▼
-ついでに　チャールズ！！</language>
-		<language name="JPN_KANJI" width="256">船が　通るたびに
-跳ね橋が　あがったり　さがったり▼
-もっとも　船の　運行は
-ヤーコンさんが　決めているから▼
-橋の　あげさげを　決めるのは
-ヤーコンさん次第　ってことね▼
-テストメッセージ
-ホドモエの　あたらしい　めいぶつは
-ワールドバトルトーナメント！▼
-ついでに　チャールズ！！</language>
+		<language name="JPN" width="256">ホドモエの　めいぶつは
+この　はねばし　に▼
+ワールドバトルトーナメント
+そして　こいするおとこ　チャールズね</language>
+		<language name="JPN_KANJI" width="256">ホドモエの　名物は
+この　跳ね橋に▼
+ワールドバトルトーナメント
+そして　恋する男　チャールズね</language>
 	</row>
 
 	<row id="msg_h02_boy2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -340,58 +328,144 @@
 		<attribute name="キャラ指定">BOY2</attribute>
 		<language name="JPN" width="256">ホドモエの　はねばし……
 またの　なまえを　リザードンブリッジ！▼
-なんでも　あがった　はねばしが
-リザードンという　ポケモンのように▽
-みえるから　だって▼
-……でも　リザードンって　ポケモン
+あがった　はねばしが　リザードンって
+ポケモンのように　みえるからだって▼
+……でも　ぼく　リザードンを
 みたことないから　よくわからないや</language>
 		<language name="JPN_KANJI" width="256">ホドモエの　はねばし……
 またの　なまえを　リザードンブリッジ！▼
-なんでも　あがった　はねばしが
-リザードンという　ポケモンのように▽
-みえるから　だって▼
-……でも　リザードンって　ポケモン
+あがった　はねばしが　リザードンって
+ポケモンのように　みえるからだって▼
+……でも　ぼく　リザードンを
 みたことないから　よくわからないや</language>
 	</row>
 
 	<row id="msg_h02_boy2_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・SWANでイベント変更
-・手持ちにリザードンがいる</comment>
+・手持ちにリザードンがいる
+　続けてboy2_03</comment>
 		<attribute name="キャラ指定">BOY2</attribute>
 		<language name="JPN" width="256">ホドモエの　はねばし……
 またの　なまえを　リザードンブリッジ！▼
-なんでも　あがった　はねばしが
-リザードンという　ポケモンのように▽
-みえるから　だって▼
-……でも　リザードンって　ポケモン
-みたことないから　よくわからないや</language>
+あがった　はねばしが　リザードンって
+ポケモンのように　みえるからだって▼
+……でも　ぼく　リザードンを
+みたことないから　よくわからないや▼
+……えっ！？
+リザードンと　いっしょ　なの？▼</language>
 		<language name="JPN_KANJI" width="256">ホドモエの　はねばし……
 またの　なまえを　リザードンブリッジ！▼
-なんでも　あがった　はねばしが
-リザードンという　ポケモンのように▽
-みえるから　だって▼
-……でも　リザードンって　ポケモン
-みたことないから　よくわからないや</language>
+あがった　はねばしが　リザードンって
+ポケモンのように　みえるからだって▼
+……でも　ぼく　リザードンを
+みたことないから　よくわからないや▼
+……えっ！？
+リザードンと　いっしょ　なの？▼</language>
 	</row>
 
 	<row id="msg_h02_boy2_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
+・主人公の周りを一周してから
+　メッセージ表示
 ・アイテム入手処理
-　No000「？？？？？？？」</comment>
+　No036「ばんのうごな」
+※アイテムは仮</comment>
 		<attribute name="キャラ指定">BOY2</attribute>
-		<language name="JPN" width="256">ありがとう！</language>
-		<language name="JPN_KANJI" width="256">ありがとう！</language>
+		<language name="JPN" width="256">わー！　すごーい！
+たしかに　にてるかも！▼
+ありがとう！
+おれいに　これを　もらってよ！▼</language>
+		<language name="JPN_KANJI" width="256">わー！　すごーい！
+たしかに　にてるかも！▼
+ありがとう！
+おれいに　これを　もらってよ！▼</language>
 	</row>
 
 	<row id="msg_h02_boy2_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・アイテム入手後</comment>
 		<attribute name="キャラ指定">BOY2</attribute>
-		<language name="JPN" width="256">このはしをつくったひとは
-リザードンと　いっしょにいたのかな</language>
-		<language name="JPN_KANJI" width="256">このはしをつくったひとは
-リザードンと　いっしょにいたのかな</language>
+		<language name="JPN" width="256">この　はねばしを　つくった　ひとは
+リザードンと　いっしょに　いたのかな</language>
+		<language name="JPN_KANJI" width="256">この跳ね橋を　デザインした　人は
+リザードンと　一緒に　いたのかな</language>
+	</row>
+
+	<row id="msg_h02_girl2_01" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・仮ラベル</comment>
+		<attribute name="キャラ指定">GIRL2</attribute>
+		<language name="JPN" width="256">ハネ集めの　説明
+やるか　やらないか？</language>
+		<language name="JPN_KANJI" width="256">ハネ集めの　説明
+やるか　やらないか？</language>
+	</row>
+
+	<row id="msg_h02_girl2_02" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・仮ラベル</comment>
+		<attribute name="キャラ指定">GIRL2</attribute>
+		<language name="JPN" width="256">やらない→終了</language>
+		<language name="JPN_KANJI" width="256">やらない→終了</language>
+	</row>
+
+	<row id="msg_h02_girl2_03" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・仮ラベル</comment>
+		<attribute name="キャラ指定">GIRL2</attribute>
+		<language name="JPN" width="256">歩数オーバー→判定</language>
+		<language name="JPN_KANJI" width="256">歩数オーバー→判定</language>
+	</row>
+
+	<row id="msg_h02_girl2_04" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・仮ラベル</comment>
+		<attribute name="キャラ指定">GIRL2</attribute>
+		<language name="JPN" width="256">一定歩数以内に会話
+・終わりにするか　どうか</language>
+		<language name="JPN_KANJI" width="256">一定歩数以内に会話
+・終わりにするか　どうか</language>
+	</row>
+
+	<row id="msg_h02_girl2_05" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・仮ラベル</comment>
+		<attribute name="キャラ指定">GIRL2</attribute>
+		<language name="JPN" width="256">一定歩数以内に会話
+・終わりにしなかった</language>
+		<language name="JPN_KANJI" width="256">一定歩数以内に会話
+・終わりにしなかった</language>
+	</row>
+
+	<row id="msg_h02_girl2_06" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・仮ラベル</comment>
+		<attribute name="キャラ指定">GIRL2</attribute>
+		<language name="JPN" width="256">一定歩数以内に会話
+・終わりにした→判定</language>
+		<language name="JPN_KANJI" width="256">一定歩数以内に会話
+・終わりにした→判定</language>
+	</row>
+
+	<row id="msg_h02_girl2_07" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・仮ラベル</comment>
+		<attribute name="キャラ指定">GIRL2</attribute>
+		<language name="JPN" width="256">途中で別マップに移動した
+→今日はおしまい</language>
+		<language name="JPN_KANJI" width="256">途中で別マップに移動した
+→今日はおしまい</language>
+	</row>
+
+	<row id="msg_h02_girl2_08" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・仮ラベル</comment>
+		<attribute name="キャラ指定">GIRL2</attribute>
+		<language name="JPN" width="256">判定した
+→今日はおしまい</language>
+		<language name="JPN_KANJI" width="256">判定した
+→今日はおしまい</language>
 	</row>
 
 	<flowchart-group-list>
