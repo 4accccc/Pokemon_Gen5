@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-02-24T21:18:21"/>
+	<create user="matsumiya" host="W00224" date="2011-04-25T21:49:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1296" top="159" right="2001" bottom="787" maximized="no" rayout="Vertical2">
+	<dialog left="1297" top="169" right="2002" bottom="797" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -559,14 +559,14 @@ princess_03</attribute>
 とても　すばらしい　ショーでしたわ！</language>
 	</row>
 
-	<row id="msg_c04gym0101_glasses_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c04gym0101_glasses_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・ジムバッジ取得前＋アイテム入手前
 ・ジムに入ると
 　主人公に隣接してメッセージ表示
 ・No030「おいしいみず」入手
 
-・スワンでメッセージ修正</comment>
+・swanでメッセージ修正</comment>
 		<attribute name="キャラ指定">DANPEI
 ダンペイ</attribute>
 		<language name="JPN" width="256">どうっすか？
@@ -585,12 +585,12 @@ princess_03</attribute>
 これを　さしあげるっす！▼</language>
 	</row>
 
-	<row id="msg_c04gym0101_glasses_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c04gym0101_glasses_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・ジムバッジ取得前＋アイテム入手後
 ・ジムバッジ取得まで繰り返し
 
-・スワンでメッセージ修正</comment>
+・swanでメッセージ修正</comment>
 		<attribute name="キャラ指定">DANPEI
 ダンペイ</attribute>
 		<language name="JPN" width="256">この　ファッションショー　ジムは
@@ -617,11 +617,11 @@ princess_03</attribute>
 要注意してくださいっす！</language>
 	</row>
 
-	<row id="msg_c04gym0101_glasses_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c04gym0101_glasses_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・ジムバッジ取得後
 
-・スワンでメッセージ修正</comment>
+・swanでメッセージ修正</comment>
 		<attribute name="キャラ指定">DANPEI
 ダンペイ</attribute>
 		<language name="JPN" width="256">カミツレさんの　まぶしく
@@ -686,51 +686,51 @@ princess_03</attribute>
 ベル</language>
 	</row>
 
-	<row id="msg_c04gym0101_crowd_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04gym0101_crowd_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>退場イベント
 ・0＝主人公名前
-・スワンでラベル追加</comment>
+・swanでラベル追加</comment>
 		<attribute name="キャラ指定">観客</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]！！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]！！</language>
 	</row>
 
-	<row id="msg_c04gym0101_crowd_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04gym0101_crowd_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>退場イベント
-・スワンでラベル追加</comment>
+・swanでラベル追加</comment>
 		<attribute name="キャラ指定">観客</attribute>
 		<language name="JPN" width="256">かっこいい……！</language>
 		<language name="JPN_KANJI" width="256">かっこいい……！</language>
 	</row>
 
-	<row id="msg_c04gym0101_crowd_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04gym0101_crowd_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>退場イベント
-・スワンでラベル追加</comment>
+・swanでラベル追加</comment>
 		<attribute name="キャラ指定">観客</attribute>
 		<language name="JPN" width="256">シビれるー！</language>
 		<language name="JPN_KANJI" width="256">シビれるー！</language>
 	</row>
 
-	<row id="msg_c04gym0101_crowd_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04gym0101_crowd_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>退場イベント
-・スワンでラベル追加</comment>
+・swanでラベル追加</comment>
 		<attribute name="キャラ指定">観客</attribute>
 		<language name="JPN" width="256">ブラボー！</language>
 		<language name="JPN_KANJI" width="256">ブラボー！</language>
 	</row>
 
-	<row id="msg_c04gym0101_crowd_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04gym0101_crowd_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>退場イベント
 ・0＝主人公名前
-・スワンでラベル追加</comment>
+・swanでラベル追加</comment>
 		<attribute name="キャラ指定">観客</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]さーん！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さーん！</language>
 	</row>
 
-	<row id="msg_c04gym0101_crowd_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04gym0101_crowd_06" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>退場イベント
-・スワンでラベル追加</comment>
+・swanでラベル追加</comment>
 		<attribute name="キャラ指定">観客</attribute>
 		<language name="JPN" width="256">ステキ……！</language>
 		<language name="JPN_KANJI" width="256">ステキ……！</language>
