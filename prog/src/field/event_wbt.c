@@ -226,6 +226,7 @@ static GMEVENT_RESULT eventWBTList( GMEVENT *p_event, int *p_seq, void *p_wk_adr
   switch(*p_seq )
   {
   case SEQ_CALL_PROC:
+    PMSND_PlayerSetVolume( SEPLAYER_SE2, 63 );
     if ( p_wk->call_fade_flag )
     {
       call_event = EVENT_FieldSubProc( p_wk->gsys, p_wk->fieldmap,
@@ -240,6 +241,7 @@ static GMEVENT_RESULT eventWBTList( GMEVENT *p_event, int *p_seq, void *p_wk_adr
 
   case SEQ_EXIT:
     WBTLIST_PARAM_Delete( p_wk->wbtlist_param );
+    PMSND_PlayerSetVolume( SEPLAYER_SE2, 127 );
     return GMEVENT_RES_FINISH;
   }
 
