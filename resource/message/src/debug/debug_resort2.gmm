@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nagihashi_toru" host="W00268" date="2011-04-25T17:27:50"/>
+	<create user="nagihashi_toru" host="W00268" date="2011-04-25T19:27:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -294,7 +294,7 @@
 		</language>
 	</columns>
 
-	<dialog left="-1241" top="266" right="-536" bottom="886" maximized="no" rayout="Vertical2">
+	<dialog left="-1274" top="97" right="-569" bottom="717" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -411,7 +411,7 @@
 	</row>
 
 	<row id="RESORT_NAME_22">
-		<language name="JPN" width="256">マサフミ</language>
+		<language name="JPN" width="256">フミコ</language>
 	</row>
 
 	<row id="RESORT_NAME_23">
