@@ -2670,7 +2670,7 @@ static void AddDummyObj( MAP_CHAGE_EVENT_WORK *p_wk , const GRID_DATA *p_grid_da
 {
   NEXT_MAP_DATA *p_next_map_data = &p_wk->next_map_data;
   MMDLSYS_AddMMdlParam( p_wk->p_mmdlsys, p_grid_data->x, p_grid_data->z, DIR_UP,
-      MMDL_ID_EVENTOBJ_00, NONDRAW, MV_DMY, p_next_map_data->zone_id );
+      INFINITY_DUNGEON_BLOCK_OBJ_ID, NONDRAW, MV_DMY, p_next_map_data->zone_id );
 }
 
 //----------------------------------------------------------------------------

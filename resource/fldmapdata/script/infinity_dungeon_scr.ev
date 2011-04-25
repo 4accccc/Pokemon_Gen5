@@ -37,8 +37,13 @@ _EVENT_DATA   ev_infinity_dungeon_out_elevator
 _EVENT_DATA   ev_infinity_dungeon_move_battle_trainer
 _EVENT_DATA   ev_infinity_dungeon_talk_battle_trainer
 _EVENT_DATA   ev_infinity_dungeon_battle_boss_trainer
+_EVENT_DATA   ev_infinity_dungeon_area_arrival
 _EVENT_DATA_END
 
+//----------------------------------------------------------------------------
+//	初回イベント用グローバル変数
+//-----------------------------------------------------------------------------
+DEFINE_LOCAL  LWK_SET_ARRIVAL_EVENT
 
 //----------------------------------------------------------------------------
 //	無限ダンジョン初期化
@@ -524,6 +529,12 @@ EVENT_END
 //-----------------------------------------------------------------------------
 EVENT_START  ev_infinity_dungeon_out_elevator
 {
+  $LWK_SET_ARRIVAL_EVENT = FALSE
+
+  // 到着モデルをセットしておく
+  _CALL add_arrival_model
+
+  // エレベータ到着音
   _CALL play_elevator_stop_se
   _SE_WAIT()
             
@@ -536,7 +547,11 @@ EVENT_START  ev_infinity_dungeon_out_elevator
    
   // エレベータを閉める
   _INFINITY_DUNGEON_ACTION_ELEVATOR( 0 ,FALSE)
-
+ 
+  // エリア初挑戦イベント
+  IF $LWK_SET_ARRIVAL_EVENT == TRUE THEN
+    _RESERVE_SCRIPT( SCRID_INFINITY_DUNGEON_AREA_ARRIVAL )
+  ENDIF
 }
 EVENT_END
 
@@ -756,6 +771,125 @@ EVENT_START  ev_infinity_dungeon_battle_boss_trainer
 }
 EVENT_END
 
+//----------------------------------------------------------------------------
+//	エリア初回イベント（エレベータを降りた後に発生)
+//-----------------------------------------------------------------------------
+EVENT_START  ev_infinity_dungeon_area_arrival
+{
+  DEFINE_LOCAL  LWK_NOW_AREA
+  DEFINE_LOCAL  LWK_ROM_VERSION
+  DEFINE_LOCAL  LWK_START_MSG_ID
+    
+  // ROMバージョンでの判断
+	_GET_ROM_VERSION( LWK_ROM_VERSION )
+ 
+  // エリアIDを取得する
+  _INFINITY_DUNGEON_GET_NOW_AREA_NO(LWK_NOW_AREA)
+  
+  // 主人公がびっくり
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_gyoe )
+  _OBJ_ANIME_WAIT()
+   
+  // 主人公の前まで移動
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_move_arrival_model_01 )
+  _OBJ_ANIME_WAIT()
+ 
+  // メッセージ
+  IF $LWK_ROM_VERSION == VERSION_B2 THEN
+    $LWK_START_MSG_ID = msg_event_b_01_a
+    $LWK_START_MSG_ID += LWK_NOW_AREA
+    _BALLOONWIN_OBJMSG_POS( LWK_START_MSG_ID , MMDL_ID_EVENTOBJ_00, POS_DOWN )
+    $LWK_START_MSG_ID = msg_event_b_01_b
+    $LWK_START_MSG_ID += LWK_NOW_AREA
+    _BALLOONWIN_OBJMSG_POS( LWK_START_MSG_ID , MMDL_ID_EVENTOBJ_00, POS_DOWN )
+  ENDIF
+      
+  _BALLOONWIN_CLOSE()
+ 
+  // 主人公が左によける
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_arrival_02 )
+  _OBJ_ANIME_WAIT()
+
+  // エレベータを開ける
+  _INFINITY_DUNGEON_ACTION_ELEVATOR( 0 ,TRUE)
+ 
+  // エレベータにイベントキャラが乗り込む
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_move_arrival_model_03 )
+  _OBJ_ANIME_WAIT()
+
+  // エレベータを閉める
+  _INFINITY_DUNGEON_ACTION_ELEVATOR( 0 ,FALSE)
+     
+  // エレベータ移動音
+  //_CALL play_elevator_move_se
+  _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+   
+  // 主人公が元の位置に
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_arrival_04 )
+  _OBJ_ANIME_WAIT()
+
+  //_TIME_WAIT( 60 )
+  //_SE_STOP() 
+}
+EVENT_END
+
+//--------------------------------------------------------------------
+// エリア到着イベント用モデル配置
+//--------------------------------------------------------------------
+add_arrival_model:
+{
+  DEFINE_LOCAL  LWK_NOW_AREA
+  DEFINE_LOCAL  LWK_ROM_VERSION
+    
+  // ROMバージョンでの判断
+	_GET_ROM_VERSION( LWK_ROM_VERSION )
+ 
+  // エリアIDを取得する
+  _INFINITY_DUNGEON_GET_NOW_AREA_NO(LWK_NOW_AREA)
+
+  IF $LWK_NOW_AREA == INFINITY_DUNGEON_AREA_ID_1 THEN
+    _FLAG_CHECK( FE_INF_AREA1_ARRIVAL, SCWK_ANSWER ) // 初めてのイベントか？
+    IF $SCWK_ANSWER == FALSE THEN 
+      $LWK_SET_ARRIVAL_EVENT = TRUE
+      _FLAG_SET( FE_INF_AREA1_ARRIVAL )
+    ENDIF
+  ELSIF $LWK_NOW_AREA == INFINITY_DUNGEON_AREA_ID_2 THEN
+    _FLAG_CHECK( FE_INF_AREA2_ARRIVAL, SCWK_ANSWER ) // 初めてのイベントか？
+    IF $SCWK_ANSWER == FALSE THEN 
+      $LWK_SET_ARRIVAL_EVENT = TRUE
+      _FLAG_SET( FE_INF_AREA2_ARRIVAL )
+    ENDIF
+  ELSIF $LWK_NOW_AREA == INFINITY_DUNGEON_AREA_ID_3 THEN
+    _FLAG_CHECK( FE_INF_AREA3_ARRIVAL, SCWK_ANSWER ) // 初めてのイベントか？
+    IF $SCWK_ANSWER == FALSE THEN 
+      $LWK_SET_ARRIVAL_EVENT = TRUE
+      _FLAG_SET( FE_INF_AREA3_ARRIVAL )
+    ENDIF
+  ELSIF $LWK_NOW_AREA == INFINITY_DUNGEON_AREA_ID_4 THEN
+    _FLAG_CHECK( FE_INF_AREA4_ARRIVAL, SCWK_ANSWER ) // 初めてのイベントか？
+    IF $SCWK_ANSWER == FALSE THEN 
+      $LWK_SET_ARRIVAL_EVENT = TRUE
+      _FLAG_SET( FE_INF_AREA4_ARRIVAL )
+    ENDIF
+  ELSIF $LWK_NOW_AREA == INFINITY_DUNGEON_AREA_ID_5 THEN
+    _FLAG_CHECK( FE_INF_AREA5_ARRIVAL, SCWK_ANSWER ) // 初めてのイベントか？
+    IF $SCWK_ANSWER == FALSE THEN 
+      $LWK_SET_ARRIVAL_EVENT = TRUE
+      _FLAG_SET( FE_INF_AREA5_ARRIVAL )
+    ENDIF
+  ENDIF
+
+  // モデル追加
+  IF $LWK_SET_ARRIVAL_EVENT == TRUE THEN
+    IF $LWK_ROM_VERSION == VERSION_B2 THEN
+      _OBJ_ADD_EX( 6, 8, DIR_UD, MMDL_ID_EVENTOBJ_00, TBOSSBL, MV_DMY )
+    ELSE 
+      _OBJ_ADD_EX( 6, 8, DIR_UD, MMDL_ID_EVENTOBJ_00, TBOSS, MV_DMY )
+    ENDIF
+  ENDIF
+
+}
+_RET
 
 //--------------------------------------------------------------------
 // 回復トレーナー
@@ -1057,5 +1191,48 @@ _ANIME_LABEL	anm_move_elev_out_reception
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_move_elev_out
   _ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 到着イベントキャラが主人公の前まで移動
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_move_arrival_model_01
+	_ANIME_DATA	AC_WALK_U_8F,4
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//  びっくりマーク表示
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_gyoe
+  _ANIME_DATA AC_MARK_GYOE,1
+  _ANIME_DATA ACMD_END, 0
+
+//--------------------------------------------------------------------
+// 左によける(主人公)
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_move_arrival_02
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA AC_DIR_L,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 到着イベントキャラがエレベータに乗り込む
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_move_arrival_model_03
+	_ANIME_DATA	AC_WALK_U_8F,4
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 元の位置に戻る(主人公)
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_move_arrival_04
+	_ANIME_DATA	AC_WALK_R_8F,1
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
 

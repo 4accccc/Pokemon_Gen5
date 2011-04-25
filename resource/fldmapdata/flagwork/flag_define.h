@@ -391,11 +391,11 @@
 #define FE_C12GYM0101_ITEMGET_01           375 /* 0x0177 スワン：ノーマルジムアイテム入手フラグ */
 #define FE_C13GYM_TRBTL1                   376 /* 0x0178 C13毒ジムトレーナーの対戦済みチェックフラグ（１人目） */
 #define FE_C13GYM_TRBTL2                   377 /* 0x0179 C13毒ジムトレーナーの対戦済みチェックフラグ（２人目） */
-		/* not used   378(0x017a) */
-		/* not used   379(0x017b) */
-		/* not used   380(0x017c) */
-		/* not used   381(0x017d) */
-		/* not used   382(0x017e) */
+#define FE_INF_AREA1_ARRIVAL               378 /* 0x017a 無限ダンジョンエリア１到着フラグ */
+#define FE_INF_AREA2_ARRIVAL               379 /* 0x017b 無限ダンジョンエリア2到着フラグ */
+#define FE_INF_AREA3_ARRIVAL               380 /* 0x017c 無限ダンジョンエリア３到着フラグ */
+#define FE_INF_AREA4_ARRIVAL               381 /* 0x017d 無限ダンジョンエリア４到着フラグ */
+#define FE_INF_AREA5_ARRIVAL               382 /* 0x017e 無限ダンジョンエリア５到着フラグ */
 		/* not used   383(0x017f) */
 		/* not used   384(0x0180) */
 		/* not used   385(0x0181) */

@@ -18,6 +18,7 @@
 #define INFINITY_DUNGEON_TRDATA_MAX (320)    // 無限ダンジョン内トレーナーデータMAX
 #define INFINITY_DUNGEON_TALK_PATTERN_MAX (28)    // 無限ダンジョンに登場するトレーナータイプ
 #define INFINITY_DUNGEON_TR_ROOM_MIN      (5)     // トレーナーが配置されている部屋数の際少数
+#define INFINITY_DUNGEON_BLOCK_OBJ_ID     (0xB0)     // 封鎖に使用する動作モデルID
 
 //-------------------------------------
 //	ダンジョン移動用定数
