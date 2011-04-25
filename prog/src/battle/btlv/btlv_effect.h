@@ -138,7 +138,9 @@ enum{
   BTLEFF_BENCH_RECOVERY,                      //控えの回復エフェクト
 
   //以下スワンで追加
-  BTLEFF_N_POKE,
+  BTLEFF_N_POKE,                              // Nポケ登場
+  BTLEFF_HERO_APPEAR,                         // 手前ポケモンが主人公と入れ替わり
+  BTLEFF_HERO_DISAPPEAR,                      // 手前主人公がポケモンと入れ替わり
   BTLEFF_STATUS_EFFECT_END,
 };
 
@@ -373,6 +375,7 @@ extern  void              BTLV_EFFECT_StopAllPMVoice( void );
 extern  void              BTLV_EFFECT_ClearOldStatusEffectBuffer( void );
 
 extern void               BTLV_EFFECT_SetTrainerAnimeSpeed( int position, u32 speed );
+extern void               BTLV_EFFECT_ChangeBgAnime( int bg_anime_no );
 
 
 #ifdef PM_DEBUG
