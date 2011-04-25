@@ -74,8 +74,8 @@ INIT_EVENT_START ev_init_c12
   //イベント進行で配置を分岐
   IF $WK_SCENE_C12_WHITE_MEET == 0 THEN
   //ゲーム開始直後なら妹・ライバルの初期位置を変更
-    _OBJ_POS_CHANGE( C12_SWSISTER_01, 36, 1, 762, DIR_UP )
-    _OBJ_POS_CHANGE( C12_SWRIVAL_01, 36, 1, 763, DIR_UP )
+    _OBJ_POS_CHANGE( C12_SWSISTER_01, 42, 1, 751, DIR_RIGHT )
+    _OBJ_POS_CHANGE( C12_SWRIVAL_01, 43, 1, 751, DIR_LEFT )
   
   //【仮】ライバルの位置を移動
   ELSIF $WK_SCENE_C12_WHITE_MEET == 1 THEN
@@ -209,10 +209,8 @@ EVENT_START ev_pos_c12_swbell_meet_03
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
   
   //アニメ：ライバル隣接
-  $LCW_POSX -= 2
+  $LCW_POSZ += 2
   _OBJ_ANIME_AUTO( C12_SWRIVAL_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_LR)
-  _OBJ_ANIME_WAIT()
-  _OBJ_ANIME( C12_SWRIVAL_01, anm_staystep_r )
   _OBJ_ANIME_WAIT()
 
   //ベル：きれい　だよねえ！
@@ -223,17 +221,13 @@ EVENT_START ev_pos_c12_swbell_meet_03
   _OBJ_ANIME( C12_SWBELL_01, anm_swbell_meet_come01 )
   _OBJ_ANIME_WAIT()
   
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  
   //アニメ：ベル主人公に隣接
-  $LCW_POSX += 3
+  $LCW_POSZ -= 1
   _OBJ_ANIME_AUTO( C12_SWBELL_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_LR)
   _OBJ_ANIME_WAIT()
-  
-  //主人公の座標取得
-  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
-  IF $LCW_POSZ == 710 THEN
-    _OBJ_ANIME( C12_SWBELL_01, anm_staystep_l )
-    _OBJ_ANIME_WAIT()
-  ENDIF
   
   //ベル：ねえねえ　そうおもうでしょ？
   _BALLOONWIN_OBJMSG_POS( msg_c12_white_02,C12_SWBELL_01, POS_DEFAULT )
@@ -396,13 +390,13 @@ EVENT_START ev_pos_c12_swbell_meet_03
   _BALLOONWIN_OBJMSG_POS( msg_c12_white_13 , C12_SWBELL_01 , POS_DEFAULT )
   _MSGWIN_CLOSE()
   
-   //アニメ：ベル主人公に隣接
-  IF $LCW_POSZ == 709 THEN
-    _OBJ_ANIME( C12_SWBELL_01, anm_swbell_meet_come02_z709 )
-    _OBJ_ANIME( C12_SWRIVAL_01, anm_staystep_d )
+   //アニメ：ベルライバルに隣接
+  IF $LCW_POSX == 33 THEN
+    _OBJ_ANIME( C12_SWBELL_01, anm_swbell_meet_come02_x33 )
+    _OBJ_ANIME( C12_SWRIVAL_01, anm_staystep_r )
   ELSE
-    _OBJ_ANIME( C12_SWBELL_01, anm_swbell_meet_come02_z710 )
-    _OBJ_ANIME( C12_SWRIVAL_01, anm_staystep_u )
+    _OBJ_ANIME( C12_SWBELL_01, anm_swbell_meet_come02_z34 )
+    _OBJ_ANIME( C12_SWRIVAL_01, anm_staystep_l )
   ENDIF
   
   _OBJ_ANIME_WAIT()
@@ -492,19 +486,19 @@ _ANIME_LABEL	anm_swbell_meet_come01
  //--------------------------------------------------------------------
 //	☆ベルと出会う：主人公に隣接 Z709
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_swbell_meet_come02_z709
-  _ANIME_DATA	AC_WALK_D_8F,1
-  _ANIME_DATA	AC_WALK_L_8F,3
-  _ANIME_DATA	AC_STAY_WALK_U_8F,1
+_ANIME_LABEL	anm_swbell_meet_come02_x33
+  _ANIME_DATA	AC_WALK_R_8F,1
+  _ANIME_DATA	AC_WALK_D_8F,3
+  _ANIME_DATA	AC_STAY_WALK_L_8F,1
   _ANIME_DATA	ACMD_END,0
 
  //--------------------------------------------------------------------
 //	☆ベルと出会う：主人公に隣接 Z710
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_swbell_meet_come02_z710
-  _ANIME_DATA	AC_WALK_U_8F,1
-  _ANIME_DATA	AC_WALK_L_8F,3
-  _ANIME_DATA	AC_STAY_WALK_D_8F,1
+_ANIME_LABEL	anm_swbell_meet_come02_z34
+  _ANIME_DATA	AC_WALK_L_8F,1
+  _ANIME_DATA	AC_WALK_D_8F,3
+  _ANIME_DATA	AC_STAY_WALK_R_8F,1
   _ANIME_DATA	ACMD_END,0
   
 /**************************************************************/
@@ -966,6 +960,9 @@ EVENT_START		ev_scene_c12_gymclear_01
   //C12のSCENECHANGE無効
   $WK_SCENE_C12GYM_OPEN = 3
   
+  //R20 ポケガイダンスPOS有効
+  $WK_SCENE_R20 = 1
+  
   //========================================//
 EVENT_END
 
@@ -1009,8 +1006,8 @@ EVENT_START ev_pos_c12_rival_pair_01
 	_MSGWIN_CLOSE()
 	
 	//【仮】アニメ：ライバル・妹登場（POSの位置が仮なため登場演出を仮とする）
-	_OBJ_ANIME_AUTO( C12_SWSISTER_01, 43, 762, FORCE_TYPE_NPC, 8, DIR_LR)
-	_OBJ_ANIME_AUTO( C12_SWRIVAL_01, 43, 763, FORCE_TYPE_NPC, 8, DIR_LR)
+	_OBJ_ANIME_AUTO( C12_SWSISTER_01, 42, 758, FORCE_TYPE_NPC, 8, DIR_LR)
+	_OBJ_ANIME_AUTO( C12_SWRIVAL_01, 43, 758, FORCE_TYPE_NPC, 8, DIR_LR)
   _OBJ_ANIME_WAIT()
   
   //ライバル：どこいくの？
@@ -1018,8 +1015,8 @@ EVENT_START ev_pos_c12_rival_pair_01
   _MSGWIN_CLOSE()
   
   //アニメ：ライバル・妹向き合う
-  _OBJ_ANIME( C12_SWSISTER_01, anm_staystep_d )
-	_OBJ_ANIME( C12_SWRIVAL_01, anm_staystep_u )
+  _OBJ_ANIME( C12_SWSISTER_01, anm_staystep_r )
+	_OBJ_ANIME( C12_SWRIVAL_01, anm_staystep_l )
   _OBJ_ANIME_WAIT()
   
   //ライバル：かえってな
@@ -1027,7 +1024,7 @@ EVENT_START ev_pos_c12_rival_pair_01
   _MSGWIN_CLOSE()
   
   //アニメ：妹主人公の方を向く
-  _OBJ_ANIME( C12_SWSISTER_01, anm_staystep_r )
+  _OBJ_ANIME( C12_SWSISTER_01, anm_staystep_d )
   _OBJ_ANIME_WAIT()
   
   //妹：じゃあね
@@ -1035,8 +1032,8 @@ EVENT_START ev_pos_c12_rival_pair_01
   _MSGWIN_CLOSE()
   
   //アニメ：妹退場
-  _OBJ_ANIME_AUTO( C12_SWSISTER_01, 36, 762, FORCE_TYPE_NPC, 8, DIR_LR)
-	_OBJ_ANIME( C12_SWRIVAL_01, anm_staystep_r )
+  _OBJ_ANIME_AUTO( C12_SWSISTER_01, 43, 751, FORCE_TYPE_NPC, 8, DIR_LR)
+	_OBJ_ANIME( C12_SWRIVAL_01, anm_staystep_d )
   
   //ライバル：さてと
   _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_03,C12_SWRIVAL_01, POS_DEFAULT )
@@ -1084,17 +1081,12 @@ EVENT_START ev_pos_c12_rival_pair_return_01
   //連れ歩き解除
   _PAIR_TRAINER_FREE( MV_DMY )
   
-  //自機座標取得
-  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
-  IF $LCW_POSX == 36 THEN
-    _OBJ_ANIME_AUTO( C12_SWRIVAL_01, 38, 714, FORCE_TYPE_NPC, 8, DIR_LR)
-    _OBJ_ANIME_WAIT()
-  ELSE
-    _OBJ_ANIME_AUTO( C12_SWRIVAL_01, 35, 714, FORCE_TYPE_NPC, 8, DIR_LR)
-    _OBJ_ANIME_WAIT()
-    _OBJ_ANIME( C12_SWRIVAL_01, anm_staystep_r )
-    _OBJ_ANIME_WAIT()
-  ENDIF
+  //アニメ：定位置に行く
+  _OBJ_ANIME_AUTO( C12_SWRIVAL_01, 35, 714, FORCE_TYPE_NPC, 8, DIR_LR)
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME( C12_SWRIVAL_01, anm_staystep_u )
+  _OBJ_ANIME_WAIT()
+
 
   
   //========================================//
@@ -1295,6 +1287,9 @@ EVENT_START ev_pos_c12_rival_pair_01_guide
     _OBJ_ANIME( PAIR_TRAINER_01, anm_staystep_u )
     _OBJ_ANIME_WAIT()
   ENDSWITCH
+  
+  //【仮】ライバル名代入
+  _NUMBER( 1 , 12345 , 5 )
   
   //ライバル：ちがうよ
   _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_04,PAIR_TRAINER_01, POS_DEFAULT )

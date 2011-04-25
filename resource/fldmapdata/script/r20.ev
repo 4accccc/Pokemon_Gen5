@@ -23,27 +23,135 @@ _EVENT_DATA    ev_pos_r20_mountman_01
 _EVENT_DATA    ev_pos_r20_mountman_02
 _EVENT_DATA    ev_pos_r20_swbell_01
 _EVENT_DATA    ev_r20_mountman_01
+_EVENT_DATA    ev_bg_r20_board_01
 
+//話しかけた方向取得変数
+DEFINE_LOCAL LWK_DIR
+DEFINE_LOCAL  LCW_POSX
+DEFINE_LOCAL  LCW_POSZ
 
 /**************************************************************/
 /*POS：山男ストッパー                                */
 /**************************************************************/
 EVENT_START   ev_pos_r20_mountman_01
-//
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+
+  IF $LCW_POSZ == 644 THEN
+    _OBJ_ANIME( R20_MOUNTMAN_01, anm_mountain_look_pl_z644 )
+    _TIME_WAIT(10)
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
+    _OBJ_ANIME_WAIT()
+  ELSIF $LCW_POSZ == 646 THEN
+    _OBJ_ANIME( R20_MOUNTMAN_01, anm_mountain_look_pl_z646 )
+    _TIME_WAIT(10)
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
+    _OBJ_ANIME_WAIT()
+  ENDIF
+  
+  //メッセージ：おいおい！
+  _BALLOONWIN_OBJMSG_POS( msg_r20_mountman_01, R20_MOUNTMAN_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：主人公1歩戻る・山男もとの位置に戻る
+  IF $LCW_POSZ != 645 THEN
+    _OBJ_ANIME( R20_MOUNTMAN_01, anm_staystep_l )
+  ENDIF
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_l )
+  _OBJ_ANIME_WAIT()
+  
 EVENT_END
+
+//--------------------------------------------------------------------
+//	山男隣接：z644
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_mountain_look_pl_z644
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	山男隣接：z644
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_mountain_look_pl_z646
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
 
 /**************************************************************/
 /*POS：山男ストッパー/ノーマルジムクリア後                     */
 /**************************************************************/
 EVENT_START   ev_pos_r20_mountman_02
-//
+  
+  //アニメ：山男「！」
+  _OBJ_ANIME( R20_MOUNTMAN_01, anm_common_gyoe )
+  _OBJ_ANIME_WAIT()
+  
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+
+  IF $LCW_POSZ == 644 THEN
+    _OBJ_ANIME( R20_MOUNTMAN_01, anm_mountain_topl_z644 )
+    _OBJ_ANIME_WAIT()
+  ELSIF $LCW_POSZ == 646 THEN
+    _OBJ_ANIME( R20_MOUNTMAN_01, anm_mountain_topl_z646 )
+    _OBJ_ANIME_WAIT()
+  ENDIF
+  
+  //メッセージ：おおそれは
+  _BALLOONWIN_OBJMSG_POS( msg_r20_mountman_03, R20_MOUNTMAN_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //戦闘処理
+  _TRAINER_BTL_SET( TRID_MOUNT_14, 0 )
+  
+    //結果チェック
+  _TRAINER_LOSE_CHECK( SCWK_ANSWER )
+  IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+    _TRAINER_WIN()
+  ELSE
+    _TRAINER_LOSE()
+  ENDIF
+  
+  //メッセージ：おおそれは
+  _BALLOONWIN_OBJMSG_POS( msg_r20_mountman_04, R20_MOUNTMAN_01, POS_DEFAULT )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+  
+  //==================================//
+  
+  //R20 POS無効
+  $WK_SCENE_R20 = 3
+
+  //==================================//
 EVENT_END
+
+//--------------------------------------------------------------------
+//	山男隣接：z644
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_mountain_topl_z644
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	山男隣接：z646
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_mountain_topl_z646
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
 /*POS：山男ストッパーはなしかけ                     */
 /**************************************************************/
 EVENT_START   ev_r20_mountman_01
-//
+  IF  $WK_SCENE_R20 == 3 THEN
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r20_mountman_04 )
+  ELSE
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r20_mountman_02 )
+  ENDIF
 EVENT_END
 
 
@@ -51,5 +159,146 @@ EVENT_END
 /*POS：ベルとポケガイダンス                     */
 /**************************************************************/
 EVENT_START   ev_pos_r20_swbell_01
-//
+  //性別が格納されるローカル変数を定義
+  DEFINE_LOCAL SCWK_SEX
+  _GET_MY_SEX(SCWK_SEX)
+  
+  //メッセージ：おおい（しっぽなしメッセージ）
+  //男性だった場合
+  IF $SCWK_SEX == PM_MALE THEN
+  
+  _PLAINWIN_MSG_DOWN( msg_r20_white_11a )
+  
+  //女性だった場合
+  ELSE
+  _PLAINWIN_MSG_DOWN( msg_r20_white_11b )
+
+  
+  ENDIF
+  
+  _MSGWIN_CLOSE()
+
+  //フィールド上にベル配置
+  _OBJ_ADD_EX( 134, 662, DIR_RIGHT, MMDL_ID_EVENTOBJ_00, SWBELL, MV_DMY )
+  
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  //【仮】主人公の位置より1歩下につくように
+  $LCW_POSX -= 1
+  
+  //アニメ：ベル隣接
+  _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_UD)
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
+  _OBJ_ANIME_WAIT()
+  
+  _BALLOONWIN_OBJMSG_POS( msg_r20_white_12, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //【仮】芝居・SE
+  
+  //メッセージ：じゃじゃーん
+  _BALLOONWIN_OBJMSG_POS( msg_r20_white_13, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_r20_white_14, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //メッセージ：じゃあいっぱい
+  _BALLOONWIN_OBJMSG_POS( msg_r20_white_15, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：退場
+  _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 134,662, FORCE_TYPE_NPC, 8, DIR_UD)
+  _OBJ_ANIME_WAIT()
+  
+  //サポートOBJ消す
+	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+	
+  //==================================//
+  
+  //山男戦闘イベントPOS有効
+  $WK_SCENE_R20 = 2
+
+  //==================================//
+  
 EVENT_END
+
+/**************************************************************/
+/*BG：看板1                     */
+/**************************************************************/
+EVENT_START   ev_bg_r20_board_01
+  _EASY_BGWIN_MSG(msg_r20_sign1_01 , TYPE_ROAD)
+EVENT_END
+
+//--------------------------------------------------------------------
+//	☆共通処理：下に1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_d
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：上に1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_u
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+
+//--------------------------------------------------------------------
+//	☆共通処理：右に1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_r
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：左に1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_l
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staystep_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+	

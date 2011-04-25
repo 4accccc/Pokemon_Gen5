@@ -1,5 +1,5 @@
 #event data
-#save date:2011/04/22 16:55:51
+#save date:2011/04/25 16:13:12
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c12.wms
 #SECTION START:OBJ_EVENT
@@ -26,7 +26,7 @@ FV_C12_SWRIVAL
 #Event Script Name
 SCRID_C12_RIVAL_PAIR_01
 #Direction Type Number
-DIR_DOWN
+DIR_LEFT
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -40,7 +40,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--168 16 -696
+-72 16 -504
 #event number: 1
 #type
 1
@@ -102,7 +102,7 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--88 144 168
+-184 144 184
 #event number: 3
 #type
 1
@@ -142,7 +142,7 @@ C12_MAN3_01
 #OBJ CODE Number
 MAN3
 #MOVE CODE Number
-MV_RND
+MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -150,7 +150,7 @@ EV_TYPE_NORMAL
 #Event Script Name
 SCRID_C12_MAN3_01
 #Direction Type Number
-DIR_LEFT
+DIR_DOWN
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -164,7 +164,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--24 16 -552
+-40 16 -712
 #event number: 5
 #type
 1
@@ -357,9 +357,9 @@ WK_SCENE_C12_WHITE_MEET
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--40 16 -680
+-104 16 -648
 #size
-1 3
+4 1
 #event number: 1
 #Pos Event Label
 POS_C12_NG_01
@@ -391,9 +391,9 @@ WK_SCENE_C12_WHITE_MEET
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--120 144 168
+-232 144 136
 #size
-1 2
+6 1
 #event number: 3
 #Pos Event Label
 POS_C12_SWBELL_MEET_01

@@ -23,5 +23,6 @@
 #ifndef ZONE_R20_EVB_H
 #define ZONE_R20_EVB_H
 
+#define BG_R20_BOARD_01                   0
 
 #endif //ZONE_R20_EVB_H
