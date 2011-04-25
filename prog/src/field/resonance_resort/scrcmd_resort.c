@@ -1620,7 +1620,13 @@ VMCMD_RESULT EvCmdResortGetMouthComm( VMHANDLE *p_core, void *p_wk_adrs )
     return VMCMD_RESULT_CONTINUE;
   }
 
-  cnt %= resident_cnt;
+
+  if( cnt >= resident_cnt )
+  {
+    OS_Printf("‘Sˆõ•ª˜b‚µ‚½‚æ\n");
+    return VMCMD_RESULT_CONTINUE;
+  }
+
   i = 0;
   while( 1 )
   {
