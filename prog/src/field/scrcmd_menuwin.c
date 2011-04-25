@@ -1499,7 +1499,7 @@ VMCMD_RESULT EvCmdBalloonWinTalkWrite( VMHANDLE *core, void *wk )
   {
     u8 obj_id = MMDL_GetOBJID( mmdl );
     
-    STRBUF * msgbuf = SetExpandWord( work, MSGARC_DEFAULT, msg_id );
+    STRBUF * msgbuf = SetExpandWord( work, arc_id, msg_id );
   //setupMsgData( work, arc_id, msg_id );
     if( balloonWin_SetWrite(work,msgbuf,obj_id,pos_type,type) == TRUE ){
       VMCMD_SetWait( core, BallonWinMsgWait );
