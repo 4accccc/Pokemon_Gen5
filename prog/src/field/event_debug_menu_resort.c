@@ -660,7 +660,7 @@ static void PresenSetup_SetRecv( RESORT_RECV_DATA *p_recv, GFL_MSGDATA *p_msg, u
       RESORT_NAME_00,
       RESORT_PHRASE_00,
       RESORT_COMM_TYPE_BEACON,
-      0,
+      9,
     },
     {
       RESORT_NAME_01,
@@ -690,13 +690,13 @@ static void PresenSetup_SetRecv( RESORT_RECV_DATA *p_recv, GFL_MSGDATA *p_msg, u
       RESORT_NAME_05,
       RESORT_PHRASE_05,
       RESORT_COMM_TYPE_HYLINK,
-      5,
+      1,
     },
     {
       RESORT_NAME_06,
       RESORT_PHRASE_06,
       RESORT_COMM_TYPE_BEACON,
-      6,
+      12,
     },
     {
       RESORT_NAME_07,
@@ -720,7 +720,7 @@ static void PresenSetup_SetRecv( RESORT_RECV_DATA *p_recv, GFL_MSGDATA *p_msg, u
       RESORT_NAME_10,
       RESORT_PHRASE_10,
       RESORT_COMM_TYPE_GTSNEGO,
-      2,
+      14,
     },
     {
       RESORT_NAME_11,
@@ -744,7 +744,7 @@ static void PresenSetup_SetRecv( RESORT_RECV_DATA *p_recv, GFL_MSGDATA *p_msg, u
       RESORT_NAME_14,
       RESORT_PHRASE_14,
       RESORT_COMM_TYPE_UNION,
-      6,
+      5,
     },
     {
       RESORT_NAME_15,
@@ -777,7 +777,7 @@ static void PresenSetup_SetRecv( RESORT_RECV_DATA *p_recv, GFL_MSGDATA *p_msg, u
       RESORT_NAME_18,
       RESORT_PHRASE_18,
       RESORT_COMM_TYPE_BEACON,
-      2,
+      6,
     },
     {
       RESORT_NAME_19,
@@ -800,7 +800,7 @@ static void PresenSetup_SetRecv( RESORT_RECV_DATA *p_recv, GFL_MSGDATA *p_msg, u
       RESORT_NAME_21,
       RESORT_PHRASE_21,
       RESORT_COMM_TYPE_BEACON,
-      5,
+      1,
       RESORT_SHOP_ID_MARKET_00,
       RESORT_RESIDENT_TYPE_MARKET,
       RESORT_PLACEID_INSTITUTION_00,
@@ -809,7 +809,7 @@ static void PresenSetup_SetRecv( RESORT_RECV_DATA *p_recv, GFL_MSGDATA *p_msg, u
       RESORT_NAME_22,
       RESORT_PHRASE_22,
       RESORT_COMM_TYPE_BEACON,
-      12,
+      2,
       RESORT_SHOP_ID_PARLOR_00,
       RESORT_RESIDENT_TYPE_PARLOR,
       RESORT_PLACEID_INSTITUTION_01,
@@ -818,7 +818,7 @@ static void PresenSetup_SetRecv( RESORT_RECV_DATA *p_recv, GFL_MSGDATA *p_msg, u
       RESORT_NAME_23,
       RESORT_PHRASE_23,
       RESORT_COMM_TYPE_BEACON,
-      6,
+      4,
       RESORT_SHOP_ID_BREEDER_00,
       RESORT_RESIDENT_TYPE_BREEDER,
       RESORT_PLACEID_INSTITUTION_02,
@@ -934,6 +934,13 @@ static BOOL debugMenuCallProc_PresenSetup( DEBUG_MENU_EVENT_WORK *p_wk )
   //まずはデータクリア
   debugMenuCallProc_AllClear( p_wk );
 
+  //お金を最大に
+  {
+    MISC *p_misc = SaveData_GetMisc(pSave);
+    MISC_SetGold(p_misc, MY_GOLD_MAX);
+  }
+
+  //受信バッファに入れる
   debugMenuCallProc_PresenRecvAdd(p_wk);
  
   //秘書への追加

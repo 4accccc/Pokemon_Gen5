@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nagihashi_toru" host="W00268" date="2011-04-22T16:32:43"/>
+	<create user="nagihashi_toru" host="W00268" date="2011-04-25T17:27:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -294,7 +294,7 @@
 		</language>
 	</columns>
 
-	<dialog left="-1180" top="137" right="-475" bottom="757" maximized="no" rayout="Vertical2">
+	<dialog left="-1241" top="266" right="-536" bottom="886" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -327,95 +327,95 @@
 	</row>
 
 	<row id="RESORT_NAME_01">
-		<language name="JPN" width="256">イシハラ</language>
+		<language name="JPN" width="256">ツネカズ</language>
 	</row>
 
 	<row id="RESORT_NAME_02">
-		<language name="JPN" width="256">ツル</language>
+		<language name="JPN" width="256">ヒロアキ</language>
 	</row>
 
 	<row id="RESORT_NAME_03">
-		<language name="JPN" width="256">コムラ</language>
+		<language name="JPN" width="256">トモタカ</language>
 	</row>
 
 	<row id="RESORT_NAME_04">
-		<language name="JPN" width="256">イトウ</language>
+		<language name="JPN" width="256">ケンジロウ</language>
 	</row>
 
 	<row id="RESORT_NAME_05">
-		<language name="JPN" width="256">オオハシ</language>
+		<language name="JPN" width="256">ジュンイチ</language>
 	</row>
 
 	<row id="RESORT_NAME_06">
-		<language name="JPN" width="256">タナカ</language>
+		<language name="JPN" width="256">マサミ</language>
 	</row>
 
 	<row id="RESORT_NAME_07">
-		<language name="JPN" width="256">ミヤハラ</language>
+		<language name="JPN" width="256">トシオ</language>
 	</row>
 
 	<row id="RESORT_NAME_08">
-		<language name="JPN" width="256">エガミ</language>
+		<language name="JPN" width="256">シュウサク</language>
 	</row>
 
 	<row id="RESORT_NAME_09">
-		<language name="JPN" width="256">コホリ</language>
+		<language name="JPN" width="256">シュンスケ</language>
 	</row>
 
 	<row id="RESORT_NAME_10">
-		<language name="JPN" width="256">マツナガ</language>
+		<language name="JPN" width="256">ミツヨ</language>
 	</row>
 
 	<row id="RESORT_NAME_11">
-		<language name="JPN" width="256">ウワイ</language>
+		<language name="JPN" width="256">シン</language>
 	</row>
 
 	<row id="RESORT_NAME_12">
-		<language name="JPN" width="256">スズキ</language>
+		<language name="JPN" width="256">アキラ</language>
 	</row>
 
 	<row id="RESORT_NAME_13">
-		<language name="JPN" width="256">コガ</language>
+		<language name="JPN" width="256">ジロウ</language>
 	</row>
 
 	<row id="RESORT_NAME_14">
-		<language name="JPN" width="256">イワタ</language>
+		<language name="JPN" width="256">サトル</language>
 	</row>
 
 	<row id="RESORT_NAME_15">
-		<language name="JPN" width="256">ヤマガミ</language>
+		<language name="JPN" width="256">ヒトシ</language>
 	</row>
 
 	<row id="RESORT_NAME_16">
-		<language name="JPN" width="256">キナシ</language>
+		<language name="JPN" width="256">ゴルゴ</language>
 	</row>
 
 	<row id="RESORT_NAME_17">
-		<language name="JPN" width="256">フルカワ</language>
+		<language name="JPN" width="256">シュウヘイ</language>
 	</row>
 
 	<row id="RESORT_NAME_18">
-		<language name="JPN" width="256">タジリ</language>
+		<language name="JPN" width="256">レッド</language>
 	</row>
 
 	<row id="RESORT_NAME_19">
-		<language name="JPN" width="256">マスダ</language>
+		<language name="JPN" width="256">テルユキ</language>
 	</row>
 
 	<row id="RESORT_NAME_20">
-		<language name="JPN" width="256">ウンノ</language>
+		<language name="JPN" width="256">トオル</language>
 	</row>
 
 	<row id="RESORT_NAME_21">
-		<language name="JPN" width="256">ウンノ</language>
+		<language name="JPN" width="256">タカオ</language>
 	</row>
 
 	<row id="RESORT_NAME_22">
-		<language name="JPN" width="256">サイトウ</language>
+		<language name="JPN" width="256">マサフミ</language>
 	</row>
 
 	<row id="RESORT_NAME_23">
-		<language name="JPN" width="256">タマダ</language>
+		<language name="JPN" width="256">ソウスケ</language>
 	</row>
 
 	<row id="RESORT_PHRASE_00">
@@ -439,7 +439,7 @@
 	</row>
 
 	<row id="RESORT_PHRASE_05">
-		<language name="JPN" width="256">ドーモ！</language>
+		<language name="JPN" width="256">チャオ！</language>
 	</row>
 
 	<row id="RESORT_PHRASE_06">
@@ -483,7 +483,7 @@
 	</row>
 
 	<row id="RESORT_PHRASE_16">
-		<language name="JPN" width="256">ソウネ！</language>
+		<language name="JPN" width="256">いのち！</language>
 	</row>
 
 	<row id="RESORT_PHRASE_17">
@@ -491,11 +491,11 @@
 	</row>
 
 	<row id="RESORT_PHRASE_18">
-		<language name="JPN" width="256">ゴーゴー！</language>
+		<language name="JPN" width="256">トントントン！</language>
 	</row>
 
 	<row id="RESORT_PHRASE_19">
-		<language name="JPN" width="256">チャオ！</language>
+		<language name="JPN" width="256">ウィース！</language>
 	</row>
 
 	<row id="RESORT_PHRASE_20">
@@ -571,7 +571,7 @@
 	</row>
 
 	<row id="RESORT_AUTHER_04">
-		<language name="JPN" width="256">せいじん</language>
+		<language name="JPN" width="256">のかみ</language>
 	</row>
 
 	<row id="RESORT_AUTHER_05">
