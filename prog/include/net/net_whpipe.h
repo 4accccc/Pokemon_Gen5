@@ -558,6 +558,14 @@ extern void GFL_NET_WL_PauseScan(BOOL bPause);
 
 //-------------------------------------------------------------
 /**
+ * @brief   子→親への切り替えを一時停止し、子機固定(ビーコン受信のみ)する
+ * @param   bPause TRUEで停止 FALSEで解除
+ */
+//-------------------------------------------------------------
+extern void GFL_NET_WL_PauseBeaconSend(BOOL bPause);
+
+//-------------------------------------------------------------
+/**
  * @brief   ユニオンルーム施設の人数を集めるか
  * @param   none
  * @retval  none

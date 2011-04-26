@@ -119,10 +119,10 @@ struct _NET_WL_WORK {
 	u8 bChange;   ///<ビーコン変更フラグ
   u8 crossChannel;
   u8 CrossRand;
-  u8 PauseScan;
+  u8 PauseScan; ///<親機固定フラグ(ビーコン発信のみ)
   u8 crossTimerPause;
   u8 ErrorEndTimer;
-  u8 dummy2;
+  u8 PauseScanShoot;  ///<子機固定フラグ(受信のみ)。スワンで追加
   u8 dummy3;
   //u8 = 16byte
 } ;
@@ -2063,7 +2063,12 @@ static void _crossScanShootEndWait(GFL_NETWL* pNetWL)
 
 static void _crossScanShootWait(GFL_NETWL* pNetWL)
 {
-  pNetWL->CrossRand--;
+  if(_pNetWL->PauseScanShoot){   //子機固定＝ビーコン受信のみ
+    return;
+  }
+  if( pNetWL->CrossRand ){
+    pNetWL->CrossRand--;
+  }
   
   if( pNetWL->CrossRand == 0){
 //			NET_PRINT("_crossScanShootWait WH_EndScan\n");
@@ -2229,7 +2234,6 @@ void DEBUG_GFL_NET_AloneTestCodeReflect( void )
  * @param   bPause TRUEで停止 FALSEで解除
  */
 //-------------------------------------------------------------
-
 void GFL_NET_WL_PauseScan(BOOL bPause)
 {
 
@@ -2243,6 +2247,19 @@ void GFL_NET_WL_PauseScan(BOOL bPause)
     }
   }
 
+}
+
+//-------------------------------------------------------------
+/**
+ * @brief   子→親への切り替えを一時停止し、子機固定(ビーコン受信のみ)する
+ * @param   bPause TRUEで停止 FALSEで解除
+ */
+//-------------------------------------------------------------
+void GFL_NET_WL_PauseBeaconSend(BOOL bPause)
+{
+  if(_pNetWL){
+    _pNetWL->PauseScanShoot = bPause;
+  }
 }
 
 //-------------------------------------------------------------
