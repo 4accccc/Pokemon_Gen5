@@ -96,7 +96,11 @@ def convertPresent( csv, data, tag_h )
         if item == "BP" 
           data.write_u16(1000)
         else
-          data.write_u16( $item_hash[ item ] )
+          if $item_hash[ item ] == nil
+            exit(1)
+          else
+            data.write_u16( $item_hash[ item ] )
+          end
         end
       end
     end

@@ -640,7 +640,7 @@ static BOOL debugMenuCallProc_DesignerSetup( DEBUG_MENU_EVENT_WORK *p_wk )
 
   return FALSE;
 }
-static void PresenSetup_SetRecv( RESORT_RECV_DATA *p_recv, GFL_MSGDATA *p_msg, u32 people_type, int cnt )
+static BOOL PresenSetup_SetRecv( RESORT_RECV_DATA *p_recv, GFL_MSGDATA *p_msg, u32 people_type, int cnt )
 {
   typedef struct
   {
@@ -753,10 +753,6 @@ static void PresenSetup_SetRecv( RESORT_RECV_DATA *p_recv, GFL_MSGDATA *p_msg, u
       RESORT_COMM_TYPE_RNDMATCH,
       7,
     },
-    //î‘ï∫
-    {
-      0
-    },
   };
 
   static const PRESEN_DATA sc_secretary_data[]  =
@@ -832,20 +828,29 @@ static void PresenSetup_SetRecv( RESORT_RECV_DATA *p_recv, GFL_MSGDATA *p_msg, u
 
   switch( people_type )
   {
+  default:
+    GF_ASSERT(0);
   case RESORT_PEOPLE_TYPE_TOURIST:
     sc_presen_data = sc_tourist_data;
-    GF_ASSERT( cnt < NELEMS(sc_tourist_data) );
+    if( cnt >= NELEMS(sc_tourist_data) )
+    {
+      return FALSE;
+    }
     break;
   case RESORT_PEOPLE_TYPE_SECRETARY:
     sc_presen_data = sc_secretary_data;
-    GF_ASSERT( cnt < NELEMS(sc_secretary_data) );
+    if( cnt >= NELEMS(sc_secretary_data) )
+    {
+      return FALSE;
+    }
     break;
   case RESORT_PEOPLE_TYPE_RESIDENT:
     sc_presen_data = sc_resident_data;
-    GF_ASSERT( cnt < NELEMS(sc_resident_data) );
+    if( cnt >= NELEMS(sc_resident_data) )
+    {
+      return FALSE;
+    }
     break;
-  default:
-    GF_ASSERT(0);
   }
 
   RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_TRAINER_ID, people_type*1000 + cnt );
@@ -926,6 +931,8 @@ static void PresenSetup_SetRecv( RESORT_RECV_DATA *p_recv, GFL_MSGDATA *p_msg, u
     RESORT_RECV_DATA_SetData(p_recv,RESORT_DATA_PARAM_MEET_HOUR, time.hour );
     RESORT_RECV_DATA_SetData(p_recv,RESORT_DATA_PARAM_MEET_MIN, time.minute );
   }
+
+  return TRUE;
 }
 
 static BOOL debugMenuCallProc_PresenSetup( DEBUG_MENU_EVENT_WORK *p_wk )
@@ -1020,7 +1027,10 @@ static BOOL debugMenuCallProc_PresenRecvAdd( DEBUG_MENU_EVENT_WORK *p_wk )
   //ó∑çsé“Ç÷ÇÃí«â¡
   while( TRUE )
   {
-    PresenSetup_SetRecv( p_recv, p_msg, RESORT_PEOPLE_TYPE_TOURIST, cnt++ );
+    if( PresenSetup_SetRecv( p_recv, p_msg, RESORT_PEOPLE_TYPE_TOURIST, cnt++ ) == FALSE )
+    {
+      break;
+    }
     NAGI_Printf( "cnt = %d\n", cnt );
     if( !RESORT_PEOPLE_ALL_DATA_MergeRecv( p_all_people, p_recv, RESORT_RECV_DATA_GetData(p_recv,RESORT_DATA_PARAM_COMM_ID,NULL) ) )
     {

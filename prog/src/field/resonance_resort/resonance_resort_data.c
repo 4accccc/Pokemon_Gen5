@@ -1207,8 +1207,8 @@ static void Resort_Recv_Data_InitSetup( RESORT_RECV_DATA *p_wk, RESORT_COMM_TYPE
   {
     u32 lv  = RESORT_CITY_DATA_GetData( sp_city_data, RESORT_CITY_DATA_PARAM_LV, NULL );
     RESORT_BINARY_CITY *p_city = RESORT_BINARY_CITY_Init( GFL_HEAP_LOWID(HEAPID_PROC) );
-    u32 city_idx = RESORT_BINARY_CITY_GetIndexByCityLv( p_city, lv );
     RESORT_BINARY_PRESENT *p_present = RESORT_BINARY_PRESENT_Init( GFL_HEAP_LOWID(HEAPID_PROC) );
+    u32 city_idx = RESORT_BINARY_CITY_GetIndexByCityLv( p_city, lv );
     u32 list = RESORT_BINARY_CITY_GetData(p_city,city_idx,RESORT_BINARY_CITY_PARAM_PRESENT_LIST);
     u32 per = RESORT_BINARY_CITY_GetData(p_city,city_idx, RESORT_BINARY_CITY_PARAM_PRESENT_PER);
     NAGI_Printf( "list[%d] lv[%d] city[%d]\n",list,lv,city_idx );
@@ -1232,7 +1232,7 @@ static void Resort_Recv_Data_InitSetup( RESORT_RECV_DATA *p_wk, RESORT_COMM_TYPE
           rnd -= per;
         }
       }
-      GF_ASSERT( RESORT_RECV_DATA_GetData(p_wk,RESORT_DATA_PARAM_PRESENT_ID, NULL) != 0 );
+      GF_ASSERT_MSG( RESORT_RECV_DATA_GetData(p_wk,RESORT_DATA_PARAM_PRESENT_ID, NULL) != 0, "%d\n", i );
     }
     RESORT_BINARY_PRESENT_Exit(p_present);
     RESORT_BINARY_CITY_Exit(p_city);
