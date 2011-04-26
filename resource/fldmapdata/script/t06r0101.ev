@@ -145,7 +145,6 @@ EVENT_START ev_scene_t06r0101_champion_01
   _MSGWIN_CLOSE()
   
   _OBJ_ANIME( T06R0101_CHAMPION_01, anm_staystep_l )
-  _OBJ_ANIME( T06R0101_CHAMPION_01, anm_staystep_r )
   _OBJ_ANIME( T06R0101_GIRL3_01, anm_girl3_back )
   _OBJ_ANIME_WAIT()
   

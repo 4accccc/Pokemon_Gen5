@@ -11,6 +11,7 @@
 
   .include  "scr_seq_def.h"
   .include  "t06_def.h"
+  .include  "medal_scr_def.h" //T06メダル導入イベント用
 
 //--------------------------------------------------------------
 //              特殊スクリプト
@@ -23,4 +24,5 @@ _SP_EVENT_DATA_END
 //テーブル定義
 sp_t06_tbl:
   _SCENE_CHANGE_DATA		WK_SCENE_T06,5,SCRID_SCENE_T06_MEDAL_01
+  //_SCENE_CHANGE_DATA		WK_SCENE_T06,5,SCRID_SCENE_MEDAL_OYAJI_INTRO
 	_SCENE_CHANGE_END

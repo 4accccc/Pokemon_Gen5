@@ -13,6 +13,7 @@
   .include  "c12.h"
   .include  "c12pc0101.h"
   .include  "c12pc0101_def.h"
+  .include  "c12_def.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -110,7 +111,7 @@ INIT_EVENT_END
 EVENT_START ev_c12_swrival_01
   _TALK_OBJ_START()
   
-  IF $WK_SCENE_C12_WHITE_MEET == 1 THEN
+  IF $WK_SCENE_C12_WHITE_MEET < 3 THEN
      //【仮】ライバル名代入
     _NUMBER( 1 , 12345 , 5 )
     //メッセージ
@@ -1079,7 +1080,7 @@ EVENT_START ev_pos_c12_rival_pair_return_01
   _MSGWIN_CLOSE()
   
   //連れ歩き解除
-  _PAIR_TRAINER_FREE( 0, MV_DMY )
+  _PAIR_TRAINER_FREE( SCRID_C12_SWRIVAL_01, MV_DMY )
   
   //アニメ：定位置に行く
   _OBJ_ANIME_AUTO( C12_SWRIVAL_01, 35, 714, FORCE_TYPE_NPC, 8, DIR_LR)
