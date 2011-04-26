@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="toyama" host="W00153" date="2011-03-30T18:40:41" source="batt_field03_all.mb"/>
+	<create user="toyama" host="W00153" date="2011-04-15T20:00:02" source="batt_field03_all.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="toyama" host="W00153" date="2011-03-30T18:40:41" source="batt_field03_all.mb"/>
+<original_create user="toyama" host="W00153" date="2011-04-15T20:00:02" source="batt_field03_all.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -147,7 +147,7 @@
 
 <material_array size="2">
 	<material index="0" name="file13Material"
-		light0="on" light1="off" light2="off" light3="off"
+		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
 		wire_mode="off"
@@ -171,7 +171,7 @@
 		tex_gen_mode="none"
 	/>
 	<material index="1" name="file14Material"
-		light0="on" light1="off" light2="off" light3="off"
+		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
 		wire_mode="off"
@@ -208,7 +208,7 @@
 		volume_max="5.013428 0.098389 5.013428"
 		volume_r="5.014404"
 		mtx_prim_size="1"
-		nrm_flag="on" clr_flag="off" tex_flag="on"
+		nrm_flag="off" clr_flag="off" tex_flag="on"
 	>
 		<mtx_prim index="0">
 			<mtx_list size="1">0</mtx_list>
@@ -216,7 +216,6 @@
 				<primitive index="0" type="triangle_strip" vertex_size="5">
 					<mtx idx="0"/>
 					<tex st="-22.375000 63.062500"/>
-					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_xyz xyz="0.000000 0.098389 -5.013428"/>
 					<tex st="-19.187500 63.062500"/>
 					<pos_xz xz="-1.297607 -4.842529"/>
@@ -321,7 +320,7 @@
 		volume_max="5.478760 0.098389 5.478760"
 		volume_r="5.479736"
 		mtx_prim_size="1"
-		nrm_flag="on" clr_flag="off" tex_flag="on"
+		nrm_flag="off" clr_flag="off" tex_flag="on"
 	>
 		<mtx_prim index="0">
 			<mtx_list size="1">0</mtx_list>
@@ -329,7 +328,6 @@
 				<primitive index="0" type="quads" vertex_size="96">
 					<mtx idx="0"/>
 					<tex st="38.375000 63.062500"/>
-					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_xyz xyz="4.842529 0.098389 -1.297607"/>
 					<tex st="35.187500 63.062500"/>
 					<pos_xz xz="5.013428 0.000000"/>
