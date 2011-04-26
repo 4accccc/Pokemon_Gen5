@@ -244,26 +244,42 @@ extern VMCMD_RESULT EvCmdResortGetMsgID( VMHANDLE *p_core, void *p_wk_adrs )
         }
 
         //選ばれたグループから行きたいお店メッセージをランダム選出
-        //TODO 仮なので結構適当処理になってる
+        //グループ内になんこ有るのか探索
         {
+          int rnd;
+          int j;
           int cnt = 0;
-          while(1)
+          for( j = 0; j < RESORT_BINARY_SPOT_GetMax(p_binary_spot); j++ )
           {
-            u16 group = RESORT_BINARY_SPOT_GetData( p_binary_spot, cnt, RESORT_BINARY_SPOT_PARAM_GROUP );
+            u16 group = RESORT_BINARY_SPOT_GetData( p_binary_spot, j, RESORT_BINARY_SPOT_PARAM_GROUP );
             if( group == i )
             {
-              if( GFUser_GetPublicRand(10) == 0 )
+              cnt++;
+            }
+          }
+
+          GF_ASSERT( cnt != 0 );
+
+          rnd = GFUser_GetPublicRand(cnt);
+
+          cnt = 0;
+          for( j = 0; j < RESORT_BINARY_SPOT_GetMax(p_binary_spot); j++ )
+          {
+            u16 group = RESORT_BINARY_SPOT_GetData( p_binary_spot, j, RESORT_BINARY_SPOT_PARAM_GROUP );
+            if( group == i )
+            {
+              if( cnt == rnd )
               {
-                data = RESORT_BINARY_SPOT_GetData( p_binary_spot, cnt, RESORT_BINARY_SPOT_PARAM_MSG_00 );
+                data = RESORT_BINARY_SPOT_GetData( p_binary_spot, j, RESORT_BINARY_SPOT_PARAM_MSG_00 );
                 RESORT_PEOPLE_SetData( p_people, RESORT_DATA_PARAM_WANT_SPOT, data );
                 break;
               }
+              cnt++;
             }
-            cnt++;
-            cnt%=RESORT_BINARY_SPOT_GetMax( p_binary_spot );
           }
         }
       }
+      GF_ASSERT( data != 0 );
       *p_ret_wk = data;
     }
     break;
