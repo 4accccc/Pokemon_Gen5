@@ -2584,28 +2584,58 @@ static void ITEM_Sub( FIELD_ITEMMENU_WORK* pWork, int sub_num )
   // アイテムがなくなった場合
   if( MYITEM_GetItemNum( pWork->pMyItem, pWork->ret_item, pWork->heapID ) == 0 )
   {
+    // カーソル位置を修正
     int now_pos = ITEMMENU_GetItemIndex( pWork );         // 現在のカーソル位置のアイテム
     int length = ITEMMENU_GetItemPocketNumber( pWork) + 1;  // 捨てる前の数と比べないとダメなので＋１
+    BOOL is_cursor_end = FALSE;
+    BOOL is_list_end = FALSE;
 
-    // 選択中のアイテムを保管データからも取り除く
-    BAGITEM_PosItemDelete( &pWork->bag_item , now_pos);
+    // カーソル一番下判定
+    if( length == now_pos+1 )
+    {
+      is_cursor_end = TRUE;
+    }
+
+    // リスト一番下判定
+    if( pWork->oamlistpos == length - 7 )
+    {
+      is_list_end = TRUE;
+    }
+
 
     // スクロールバーが無効なら
     if( length < ITEMMENU_SCROLLBAR_ENABLE_NUM )
     {
-      // カーソルが指す座標を下げる
-      pWork->curpos = MATH_IMax( 0, pWork->curpos-1 );
+      // 一番下のときのみひとつ上を選ぶ
+      if( is_cursor_end == TRUE )
+      {
+        pWork->curpos = MATH_IMax( 0, pWork->curpos-1 );
+        OS_Printf("ケース１\n");
+      }
     }
     else
     {
-      HOSAKA_Printf("pre oamlistpos=%d\n", pWork->oamlistpos);
-      // リストを下げる
-      pWork->oamlistpos = MATH_IMax( pWork->oamlistpos-1 , -1 );
-//      pWork->bChange = TRUE;
-//      pWork->bCursorChange = 1;
-//      pWork->bCellChange = 1;
-      
-      HOSAKA_Printf("oamlistpos=%d\n", pWork->oamlistpos);
+      // リスト一番下判定
+      if( is_list_end == FALSE )
+      {
+        //pWork->oamlistpos = MATH_IMax( pWork->oamlistpos + 1 , -1 );
+        OS_Printf("ケース2\n");
+      }
+      else
+      {
+        // カーソルが一番下
+        if( is_cursor_end == FALSE )
+        {
+          pWork->curpos += 1;
+          pWork->oamlistpos = MATH_IMax( pWork->oamlistpos-1 , -1 );
+          OS_Printf("ケース3A\n");
+        }
+        else
+        {
+          pWork->oamlistpos = MATH_IMax( pWork->oamlistpos-1 , -1 );
+          OS_Printf("ケース3B\n");
+        }
+      }
     }
   }
 }    
@@ -2832,16 +2862,55 @@ static void _itemRepositoryInOutInit(FIELD_ITEMMENU_WORK* pWork)
   {
     int now_pos = ITEMMENU_GetItemIndex( pWork );         // 現在のカーソル位置のアイテム
     int length = ITEMMENU_GetItemPocketNumber( pWork) + 1;  // 捨てる前の数と比べないとダメなので＋１
+    BOOL is_cursor_end = FALSE;
+    BOOL is_list_end = FALSE;
+
+    // カーソル一番下判定
+    if( length == now_pos+1 )
+    {
+      is_cursor_end = TRUE;
+    }
+
+    // リスト一番下判定
+    if( pWork->oamlistpos == length - 7 )
+    {
+      is_list_end = TRUE;
+    }
+
 
     // スクロールバーが無効なら
     if( length < ITEMMENU_SCROLLBAR_ENABLE_NUM )
     {
-      // カーソルが指す座標を下げる
-      pWork->curpos = MATH_IMax( 0, pWork->curpos-1 );
+      // 一番下のときのみひとつ上を選ぶ
+      if( is_cursor_end == TRUE )
+      {
+        pWork->curpos = MATH_IMax( 0, pWork->curpos-1 );
+        OS_Printf("ケース１\n");
+      }
     }
     else
     {
-      pWork->oamlistpos = MATH_IMax( pWork->oamlistpos-1 , -1 );
+      // リスト一番下判定
+      if( is_list_end == FALSE )
+      {
+        //pWork->oamlistpos = MATH_IMax( pWork->oamlistpos + 1 , -1 );
+        OS_Printf("ケース2\n");
+      }
+      else
+      {
+        // カーソルが一番下
+        if( is_cursor_end == FALSE )
+        {
+          pWork->curpos += 1;
+          pWork->oamlistpos = MATH_IMax( pWork->oamlistpos-1 , -1 );
+          OS_Printf("ケース3A\n");
+        }
+        else
+        {
+          pWork->oamlistpos = MATH_IMax( pWork->oamlistpos-1 , -1 );
+          OS_Printf("ケース3B\n");
+        }
+      }
     }
   }
 
