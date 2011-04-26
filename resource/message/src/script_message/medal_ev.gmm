@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-09T14:32:55"/>
+	<create user="mizuguchi_mai" host="W00226" date="2011-04-26T12:37:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -377,7 +377,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1308" top="154" right="2013" bottom="782" maximized="no" rayout="Vertical2">
+	<dialog left="1315" top="242" right="2020" bottom="870" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="42" right="1280" bottom="440" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -931,6 +931,30 @@ No627「メダルボックス」</comment>
 		<comment>メダル事務局・NPC話しかけ</comment>
 		<language name="JPN" width="256">かりメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_t06_champion_10" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color=",,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>♂
+・メダルボックス入手イベント後
+　t06r0101方面から出現してメッセージ表示
+・表示後、t06r0101方面に戻る
+　画面外に消えると主人公操作可能</comment>
+		<attribute name="キャラ指定">アデク
+・BWチャンピオン</attribute>
+		<language name="JPN" width="256">アデク『[1:00:トレーナー名:0]！▼
+ヒオウギに　できた
+あたらしい　ポケモンジム　だがな▼
+ジムリーダーが　とうちゃくしたと
+れんらくが　あったぞ！▼
+どれほど　つよくなったか
+ためしてくると　いいだろう！▼</language>
+		<language name="JPN_KANJI" width="256">アデク『[1:00:トレーナー名:0]！▼
+ヒオウギに　できた
+新しい　ポケモンジム　だがな▼
+ジムリーダーが　到着したと
+連絡が　あったぞ！▼
+どれほど　強くなったか
+試してくると　いいだろう！▼</language>
 	</row>
 
 	<flowchart-group-list>

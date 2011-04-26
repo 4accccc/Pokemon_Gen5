@@ -11,6 +11,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_medal_ev.h"
+  .include  "t06.h" //T06メダル導入イベント用
 
   .include  "../../medal/data/mdlid_def.h"
 
@@ -19,7 +20,7 @@
 //----------------------------------------------------------------------
 _EVENT_DATA   ev_init_medal_oyaji
 _EVENT_DATA   ev_recover_medal_oyaji
-_EVENT_DATA   ev_medal_oyaji_intro
+_EVENT_DATA   ev_scene_medal_oyaji_intro
 _EVENT_DATA   ev_medal_oyaji_pc
 _EVENT_DATA   ev_medal_office
 _EVENT_DATA_END
@@ -30,6 +31,9 @@ DEFINE_LOCAL  LWK_MEDAL_RANK
 DEFINE_LOCAL  LWK_MEDAL_COUNT
 DEFINE_LOCAL  LWK_MEDAL_NEXT
 DEFINE_LOCAL  LWK_OYAJI_ID
+
+//ドア変数定義
+DEFINE_LOCAL	DOOR_ANIME_ID
 
 /********************************************************************/
 /*						FIELD_INIT_LABEL                                      */
@@ -107,38 +111,119 @@ sub_medaloyaji_move:
 /********************************************************************/
 /*            メダル初回イベント                                    */
 /********************************************************************/
-EVENT_START ev_medal_oyaji_intro
+EVENT_START ev_scene_medal_oyaji_intro
 
-  //メダルおやじ出現
+  //アニメ：主人公1歩下へ
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_d )
+  _OBJ_ANIME_WAIT()
 
-  _TALK_OBJ_START()
+  //アニメ：メダルおやじ「！」隣接
+  _OBJ_ANIME_AUTO( T06_SUNGLASSES_01, 107, 664, FORCE_TYPE_NPC, 8, DIR_UD)
+  _OBJ_ANIME_WAIT()
 
   _CALL sub_medaloyaji_intro
 
   //メダルおやじ去る
+  _OBJ_ANIME( T06_SUNGLASSES_01, anm_oyaji_bye )
+  _OBJ_ANIME_WAIT()
+  
+  _OBJ_DEL( T06_SUNGLASSES_01 )
 
+  //========================================//
+  
+  //メダルおやじ非表示
+  _FLAG_SET( FV_T06_SUNGLASSES_01 )
+  
+  //アデク出現
+  _FLAG_RESET( FV_T06_CHAMPION_01 )
+  //========================================//
+  
+  //アデクOBJ生成
+  _OBJ_ADD( T06_CHAMPION_01 )
+  
+  //ドア開ける
+	_BMODEL_ANIME_CREATE( DOOR_ANIME_ID, SCR_BMID_DOOR, 107, 661 )
+	_BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_OPEN )
+	_BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
+  
+  //アデクワープ
+  _OBJ_POS_CHANGE(T06_CHAMPION_01,107,2,661,DIR_DOWN)
+  
+  //アニメ：アデク出てくる
+  _OBJ_ANIME_AUTO( T06_CHAMPION_01, 107, 662, FORCE_TYPE_NPC, 8, DIR_LR)
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
+  _OBJ_ANIME_WAIT()
+  
+  //ドア閉じる
+	_BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_CLOSE )
+	_BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
+	_BMODEL_ANIME_DELETE( DOOR_ANIME_ID )
+	
+	//メッセージ：ヒオウギにできた
+	_PLAYER_NAME( 0 )
+	_BALLOONWIN_OBJMSG_POS( msg_t06_champion_10,T06_CHAMPION_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：アデク上を向く
+  _OBJ_ANIME( T06_CHAMPION_01, anm_staystep_u )
+  _OBJ_ANIME_WAIT()
+  
+  
+  //ドア生成
+  _BMODEL_ANIME_CREATE( DOOR_ANIME_ID, SCR_BMID_DOOR, 107, 661 )
+	_BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_OPEN )
+	_BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
+	
+	//アニメ：ドアの中に入る
+	_OBJ_ANIME( T06_CHAMPION_01, anm_walk_u )
+  _OBJ_ANIME_WAIT()
+  
+  //アデクモデル非表示に
+  _OBJ_DEL( T06_CHAMPION_01 )
+  
+  //ドア閉じる
+	_BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_CLOSE )
+	_BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
+	_BMODEL_ANIME_DELETE( DOOR_ANIME_ID )
+
+  //========================================//
+  //T06のアデクを消す
+  _FLAG_SET( FV_T06_CHAMPION_01 )
+  
+  //T06のイベントを終了
+  $WK_SCENE_T06 = 6
+  
+  //C12のジムを開放
+  _FLAG_SET( FE_C12GYM_OPEN )
+  $WK_SCENE_C12GYM_OPEN = 1
+  //========================================//
+
+  //========================================//
+  //メダルおやじイベント進行状況変更
   $WK_SCENE_MEDAL_EVENT = MEDALEV_SEQ_1ST_STAGE
+  //========================================//
+  
 EVENT_END
 
 sub_medaloyaji_intro:
   //前口上
-  _BALLOONWIN_TALKOBJ_MSG( msg_mdloyj_intro_01 )
+  _BALLOONWIN_OBJMSG_POS( msg_mdloyj_intro_01 ,T06_SUNGLASSES_01, POS_DEFAULT )
   _BALLOONWIN_CLOSE()
 
   //メダルボックスをもらう
   _ITEM_EVENT_KEYWAIT( ITEM_MEDARUBOKKUSU, 1 )
 
   //知ってるか尋ねる（尋ねるだけ）
-  _BALLOONWIN_TALKOBJ_MSG( msg_mdloyj_intro_02 )
+  _BALLOONWIN_OBJMSG_POS( msg_mdloyj_intro_02 ,T06_SUNGLASSES_01, POS_DEFAULT )
   _YES_NO_WIN( SCWK_ANSWER )
 
-  _BALLOONWIN_TALKOBJ_MSG( msg_mdloyj_intro_03 )
+  _BALLOONWIN_OBJMSG_POS( msg_mdloyj_intro_03 ,T06_SUNGLASSES_01, POS_DEFAULT )
   _BALLOONWIN_CLOSE()
   //メダルをもらう
   $LWK_MEDAL_ID = MDLID_FIRST_MEDAL
   _CALL sub_medaloyaji_gettitle
 
-  _BALLOONWIN_TALKOBJ_MSG( msg_mdloyj_intro_04 )
+  _BALLOONWIN_OBJMSG_POS( msg_mdloyj_intro_04 ,T06_SUNGLASSES_01, POS_DEFAULT )
   _BALLOONWIN_CLOSE()
   
   //ヒントメダルをもらう
@@ -152,10 +237,19 @@ sub_medaloyaji_intro:
   _SYSWIN_CLOSE()
   
   //
-  _BALLOONWIN_TALKOBJ_MSG( msg_mdloyj_intro_05 )
+  _BALLOONWIN_OBJMSG_POS( msg_mdloyj_intro_05 ,T06_SUNGLASSES_01, POS_DEFAULT )
   _LAST_KEYWAIT()
   _BALLOONWIN_CLOSE()
   _RET
+
+//--------------------------------------------------------------------
+//	メダルおやじ退場
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_oyaji_bye
+	_ANIME_DATA	AC_WALK_D_8F,4
+	_ANIME_DATA	AC_WALK_R_8F,6
+	_ANIME_DATA	AC_WALK_D_8F,5
+	_ANIME_DATA	ACMD_END,0
 
 /********************************************************************/
 /*            メダルおやじ                                          */
@@ -450,7 +544,83 @@ EVENT_START ev_medal_office
 
 EVENT_END
 
+//--------------------------------------------------------------------
+//	☆共通処理：下に1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_d
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
 
+//--------------------------------------------------------------------
+//	☆共通処理：上に1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_u
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
 
+//--------------------------------------------------------------------
+//	☆共通処理：右に1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_r
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
 
+//--------------------------------------------------------------------
+//	☆共通処理：左に1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_l
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+ //--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
 
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staystep_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：hatena
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_hatena
+	_ANIME_DATA	AC_MARK_HATENA,1
+	_ANIME_DATA	ACMD_END,0
