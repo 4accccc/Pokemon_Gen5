@@ -56,6 +56,7 @@ typedef struct{
 	//
 	T_DOWNLOAD_STATUS	status;
 	BOOL				result;
+  u16 *       result_work;
 }T_DOWNLOAD_PARAM;
 
 

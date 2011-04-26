@@ -60,6 +60,7 @@ typedef struct{
 	//
 	WIN_RECORD_STATUS	status;			///<クリア状態
 	BOOL				result;			///<結果 (TRUE:フリー移動に戻る、FALSE:パソコン画面に戻る)
+  u16 *       result_work;
 	//
 	const WBTSAVE		*wbtsave;		///<セーブデータ：優勝回数参照用(include/savedata/wbt_save.h)
 	const MYSTATUS		*my_status;		///<セーブデータ：自分情報（include/savedata/mystatus.h)
