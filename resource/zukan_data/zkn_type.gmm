@@ -3595,6 +3595,66 @@
 		<language name="JPN_KANJI">こせいだいポケモン</language>
 	</row>
 
+	<row id="ZKN_TYPE_650">
+		<language name="JPN">ポケモン</language>
+		<language name="JPN_KANJI">ポケモン</language>
+	</row>
+
+	<row id="ZKN_TYPE_651">
+		<language name="JPN">ポケモン</language>
+		<language name="JPN_KANJI">ポケモン</language>
+	</row>
+
+	<row id="ZKN_TYPE_652">
+		<language name="JPN">ポケモン</language>
+		<language name="JPN_KANJI">ポケモン</language>
+	</row>
+
+	<row id="ZKN_TYPE_653">
+		<language name="JPN">ポケモン</language>
+		<language name="JPN_KANJI">ポケモン</language>
+	</row>
+
+	<row id="ZKN_TYPE_654">
+		<language name="JPN">ポケモン</language>
+		<language name="JPN_KANJI">ポケモン</language>
+	</row>
+
+	<row id="ZKN_TYPE_655">
+		<language name="JPN">ポケモン</language>
+		<language name="JPN_KANJI">ポケモン</language>
+	</row>
+
+	<row id="ZKN_TYPE_656">
+		<language name="JPN">ポケモン</language>
+		<language name="JPN_KANJI">ポケモン</language>
+	</row>
+
+	<row id="ZKN_TYPE_657">
+		<language name="JPN">ポケモン</language>
+		<language name="JPN_KANJI">ポケモン</language>
+	</row>
+
+	<row id="ZKN_TYPE_658">
+		<language name="JPN">ポケモン</language>
+		<language name="JPN_KANJI">ポケモン</language>
+	</row>
+
+	<row id="ZKN_TYPE_659">
+		<language name="JPN">ポケモン</language>
+		<language name="JPN_KANJI">ポケモン</language>
+	</row>
+
+	<row id="ZKN_TYPE_660">
+		<language name="JPN">ポケモン</language>
+		<language name="JPN_KANJI">ポケモン</language>
+	</row>
+
+	<row id="ZKN_TYPE_661">
+		<language name="JPN">ポケモン</language>
+		<language name="JPN_KANJI">ポケモン</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>

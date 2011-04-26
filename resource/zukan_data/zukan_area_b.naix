@@ -659,7 +659,19 @@ enum {
 	NARC_zukan_area_b_zkn_area_b_monsno_646_dat = 645,
 	NARC_zukan_area_b_zkn_area_b_monsno_647_dat = 646,
 	NARC_zukan_area_b_zkn_area_b_monsno_648_dat = 647,
-	NARC_zukan_area_b_zkn_area_b_monsno_649_dat = 648
+	NARC_zukan_area_b_zkn_area_b_monsno_649_dat = 648,
+	NARC_zukan_area_b_zkn_area_b_monsno_650_dat = 649,
+	NARC_zukan_area_b_zkn_area_b_monsno_651_dat = 650,
+	NARC_zukan_area_b_zkn_area_b_monsno_652_dat = 651,
+	NARC_zukan_area_b_zkn_area_b_monsno_653_dat = 652,
+	NARC_zukan_area_b_zkn_area_b_monsno_654_dat = 653,
+	NARC_zukan_area_b_zkn_area_b_monsno_655_dat = 654,
+	NARC_zukan_area_b_zkn_area_b_monsno_656_dat = 655,
+	NARC_zukan_area_b_zkn_area_b_monsno_657_dat = 656,
+	NARC_zukan_area_b_zkn_area_b_monsno_658_dat = 657,
+	NARC_zukan_area_b_zkn_area_b_monsno_659_dat = 658,
+	NARC_zukan_area_b_zkn_area_b_monsno_660_dat = 659,
+	NARC_zukan_area_b_zkn_area_b_monsno_661_dat = 660
 };
 
 /* NARC_ZUKAN_AREA_B_NAIX_ */

@@ -12,7 +12,7 @@
 //============================================================================
 #pragma once
 
-#define ZKN_AREA_ZONE_GROUP_MAX (61)
+#define ZKN_AREA_ZONE_GROUP_MAX (80)
 
 static const u16 zkn_area_zone_group[ZKN_AREA_ZONE_GROUP_MAX] =
 {
@@ -77,4 +77,23 @@ static const u16 zkn_area_zone_group[ZKN_AREA_ZONE_GROUP_MAX] =
   ZONE_ID_H03,  // 254
   ZONE_ID_H04,  // 255
   ZONE_ID_H05,  // 263
+  ZONE_ID_C12,  // 427
+  ZONE_ID_T06,  // 440
+  ZONE_ID_C13,  // 449
+  ZONE_ID_T07,  // 459
+  ZONE_ID_C14,  // 467
+  ZONE_ID_C13,  // 449
+  ZONE_ID_C16,  // 495
+  ZONE_ID_R19,  // 438
+  ZONE_ID_R20,  // 447
+  ZONE_ID_W21,  // 464
+  ZONE_ID_R22,  // 476
+  ZONE_ID_R23,  // 478
+  ZONE_ID_D11R0101,  // 501
+  ZONE_ID_D22,  // 445
+  ZONE_ID_D23,  // 457
+  ZONE_ID_D24,  // 462
+  ZONE_ID_D25R0101,  // 463
+  ZONE_ID_D26,  // 492
+  ZONE_ID_D28R0101,  // 509
 };

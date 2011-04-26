@@ -264,7 +264,7 @@ static const GFL_CLSYS_INIT sc_clsys_init	=
 //-------------------------------------
 ///	ÉèÅ[ÉNçÏê¨ç≈ëÂêî
 //=====================================
-#define GRAPHIC_OBJ_CLWK_CREATE_MAX	(80)
+#define GRAPHIC_OBJ_CLWK_CREATE_MAX	(96)
 
 #endif //GRAPHIC_OBJ_USE
 //=============================================================================

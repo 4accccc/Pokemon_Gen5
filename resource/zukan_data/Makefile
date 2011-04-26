@@ -9,7 +9,7 @@
 #------------------------------------------------------------------------------
 #※コンバートを行う人のユーザーIDをここに書く
 #------------------------------------------------------------------------------
-USERS = kawada_koji nishino matsushima
+include ../townmap/users_def
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
@@ -53,6 +53,8 @@ sources_area_w      = $(input_encount) \
                       $(input_monsno)
 sources_area_b      = $(input_encount) \
                       $(input_monsno)
+
+source_townmap_data = ../townmap/data/townmap_data.xls
 
 .PHONY: do-build clean subdir
 
@@ -118,12 +120,12 @@ $(gmmname): $(sources_data)
 	$(NAIXCUT) $(targetname_data).naix
 	$(COPY) $(gmmname) $(GMMDIR)
 
-$(targetname_area_w).narc: $(sources_area_w)
+$(targetname_area_w).narc: $(sources_area_w) $(source_townmap_data)
 	perl zkn_encount_make.pl $(input_encount) $(input_monsno) w
 	nnsarc -r -l -n -i $(targetname_area_w) -S $(input_area_list_w)
 	$(NAIXCUT) $(targetname_area_w).naix
 
-$(targetname_area_b).narc: $(sources_area_b)
+$(targetname_area_b).narc: $(sources_area_b) $(source_townmap_data)
 	perl zkn_encount_make.pl $(input_encount) $(input_monsno) b
 	nnsarc -r -l -n -i $(targetname_area_b) -S $(input_area_list_b)
 	$(NAIXCUT) $(targetname_area_b).naix
