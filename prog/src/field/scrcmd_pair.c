@@ -72,6 +72,7 @@ VMCMD_RESULT EvCmdPairTrainerParamFree( VMHANDLE * core, void *wk )
     MMDL_ChangeMoveCode( mmdl, move_code );
     MMDL_ChangeOBJID( mmdl, PAIRSYS_GetPairTrainerOriginalObjID(gdata) );
     MMDL_SetStatusBitNotZoneDelete( mmdl, FALSE );
+    MMDL_SetStatusBitFellowHit( mmdl, TRUE );
   }
   PAIRSYS_PairFree( gdata );
   return VMCMD_RESULT_SUSPEND;
