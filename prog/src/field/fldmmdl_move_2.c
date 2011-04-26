@@ -161,7 +161,7 @@ void MMDL_MovePair_Init( MMDL * mmdl )
   Pair_WorkSetJikiSearch( mmdl, work );
   MMDL_SetDrawStatus( mmdl, DRAW_STA_STOP );
   MMDL_OffMoveBitMove( mmdl );
-  MMDL_SetStatusBitFellowHit( mmdl, FALSE );
+  MMDL_SetStatusBitPlayerHit( mmdl, FALSE );
 }
 
 //--------------------------------------------------------------
@@ -179,7 +179,7 @@ void MMDL_MovePair_Move( MMDL * mmdl )
     return;
   }
   
-  MMDL_SetStatusBitFellowHit( mmdl, FALSE );
+//  MMDL_SetStatusBitFellowHit( mmdl, FALSE );
   
   while( DATA_PairMoveTbl[work->seq_no](mmdl,work) == TRUE ){};
 }
