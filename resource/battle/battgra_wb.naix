@@ -325,7 +325,19 @@ enum {
 	NARC_battgra_wb_pw_btl_sel_nomine_l_NSCR = 311,
 	NARC_battgra_wb_pw_btl_sel_nomine_r_NSCR = 312,
 	NARC_battgra_wb_pw_btl_sel_normal_l_NSCR = 313,
-	NARC_battgra_wb_pw_btl_sel_normal_r_NSCR = 314
+	NARC_battgra_wb_pw_btl_sel_normal_r_NSCR = 314,
+	NARC_battgra_wb_pkwd_icon_NCLR = 315,
+	NARC_battgra_wb_pkwd_icon_NCGR = 316,
+	NARC_battgra_wb_pkwd_icon_NCER = 317,
+	NARC_battgra_wb_pkwd_icon_NANR = 318,
+	NARC_battgra_wb_pkwd_movie_NCLR = 319,
+	NARC_battgra_wb_pkwd_movie_NCGR = 320,
+	NARC_battgra_wb_pkwd_movie01_NSCR = 321,
+	NARC_battgra_wb_pkwd_movie02_NSCR = 322,
+	NARC_battgra_wb_pkwd_ui_obj_NCLR = 323,
+	NARC_battgra_wb_pkwd_obj_NCGR = 324,
+	NARC_battgra_wb_pkwd_obj_NCER = 325,
+	NARC_battgra_wb_pkwd_obj_NANR = 326
 };
 
 /* NARC_BATTGRA_WB_NAIX_ */
