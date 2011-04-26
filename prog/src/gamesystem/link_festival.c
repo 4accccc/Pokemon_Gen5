@@ -367,7 +367,7 @@ BOOL LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, u32* score, u32* item_nu
 
   if( *score >= wk->mission.target){
 //    OS_FPrintf( OSPRINT_LINKFEST_PAGE,"ミッションノルマ達成 %d/%d\n",*score,wk->mission.target );
-    *item_num = wk->mission.item_num;
+    *item_num = *score; //wk->mission.item_num;
     return TRUE;
   }
 //  OS_FPrintf( OSPRINT_LINKFEST_PAGE,"ミッションノルマ未達成 %d/%d\n",*score,wk->mission.target );
