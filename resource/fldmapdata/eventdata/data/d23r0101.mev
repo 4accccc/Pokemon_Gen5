@@ -1,5 +1,5 @@
 #event data
-#save date:2011/04/22 17:11:04
+#save date:2011/04/26 19:49:53
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d23r0101.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,100 @@ C:\home\swan\resource\fldmapdata\eventdata\data\d23r0101.wms
 #hold event type:
 1
 #hold event number:
+3
+#event number: 0
+#type
+1
+#ID name
+TR_WORKER2_19
+#OBJ CODE Number
+WORKMAN2
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
 0
+#Event Script Name
+SCRID_TRID_WORKER2_19
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+3
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+1
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+200 32 -456
+#event number: 1
+#type
+1
+#ID name
+TR_WORKER2_20
+#OBJ CODE Number
+WORKMAN2
+#MOVE CODE Number
+MV_RND_UL
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_WORKER2_20
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+4
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+24 0 -552
+#event number: 2
+#type
+1
+#ID name
+TR_WORKER2_18
+#OBJ CODE Number
+WORKMAN2
+#MOVE CODE Number
+MV_RIGHT
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_WORKER2_18
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+2
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+3
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-152 32 -216
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

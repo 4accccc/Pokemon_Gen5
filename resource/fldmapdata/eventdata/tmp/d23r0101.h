@@ -9,6 +9,9 @@
 #ifndef ZONE_D23R0101_EVC_H
 #define ZONE_D23R0101_EVC_H
 
+#define TR_WORKER2_19                      0
+#define TR_WORKER2_20                      1
+#define TR_WORKER2_18                      2
 
 #endif //ZONE_D23R0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d23r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

@@ -1,5 +1,5 @@
 #event data
-#save date:2011/04/15 12:57:27
+#save date:2011/04/26 17:42:15
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d22r0101.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\d22r0101.wms
 #hold event type:
 1
 #hold event number:
-4
+7
 #event number: 0
 #type
 1
@@ -134,6 +134,99 @@ DIR_UP
 EVENTDATA_POSTYPE_GRID
 #position
 568 32 -72
+#event number: 4
+#type
+1
+#ID name
+TR_TANPAN_20
+#OBJ CODE Number
+BOY2
+#MOVE CODE Number
+MV_RT2
+#EVENT TYPE Number
+EV_TYPE_TRAINER_KYORO
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_TANPAN_20
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+1
+#Parameter 1 Number
+5
+#Parameter 2 Number
+0
+#Move Limit X Number
+8
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+56 32 -584
+#event number: 5
+#type
+1
+#ID name
+TR_MINI_16
+#OBJ CODE Number
+GIRL2
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_TRAINER_KYORO
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_MINI_16
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+3
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+568 32 -504
+#event number: 6
+#type
+1
+#ID name
+TR_CLEANING_03
+#OBJ CODE Number
+CLEANINGM
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_CLEANING_03
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+5
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-40 32 -360
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

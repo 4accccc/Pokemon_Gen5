@@ -13,6 +13,9 @@
 #define D22R0101_BREEDERM_01               1
 #define D22R0101_BREEDERW_01               2
 #define D22R0101_POKE_01                   3
+#define TR_TANPAN_20                       4
+#define TR_MINI_16                         5
+#define TR_CLEANING_03                     6
 
 #endif //ZONE_D22R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d22r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
