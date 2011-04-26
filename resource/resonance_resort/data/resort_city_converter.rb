@@ -97,6 +97,7 @@ def convertPresent( csv, data, tag_h )
           data.write_u16(1000)
         else
           if $item_hash[ item ] == nil
+			p "そんな名前のアイテムは存在しません"
             exit(1)
           else
             data.write_u16( $item_hash[ item ] )
@@ -199,6 +200,5 @@ begin
   #date書き込み
   cityData.genelate( "#{OUTPUTCITY}.dat" )
   preData.genelate( "#{OUTPUTPRE}.dat" )
-
 end
 
