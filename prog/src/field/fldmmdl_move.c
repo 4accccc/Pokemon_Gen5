@@ -1530,15 +1530,19 @@ BOOL MMDL_HitCheckRect( const MMDL_RECT *rect0, const MMDL_RECT *rect1 )
  * @param y0  判定する始点Y座標  グリッド
  * @param z0  判定する始点Z座標  グリッド
  * @param old_hit TRUE=mmdl1の過去座標も判定する
+ * @param jiki_f TRUE=mmdl0が自機
  * @retval  BOOL  TRUE=衝突アリ
  */
 //--------------------------------------------------------------
 BOOL MMDL_HitCheckFellow( const MMDL *mmdl0, const MMDL *mmdl1,
-    s16 x0, s16 y0, s16 z0, BOOL old_hit )
+    s16 x0, s16 y0, s16 z0, BOOL old_hit, BOOL jiki_f )
 {
   s16 x1,y1,z1,sy;
   MMDL_RECT rect0,rect1;
-  
+ 
+  if( MMDL_CheckStatusBit(mmdl1,MMDL_STABIT_PLAYER_HIT_NON) && jiki_f ){
+    return FALSE; //自機との判定はスルー
+  }
   MMDL_CreateHitCheckRect( mmdl0, x0, z0, &rect0 );
   
   if( MMDL_CheckStatusBit(mmdl1,MMDL_STABIT_FELLOW_HIT_NON) == 0 )
@@ -1603,12 +1607,17 @@ BOOL MMDL_HitCheckFellow( const MMDL *mmdl0, const MMDL *mmdl1,
 BOOL MMDL_HitCheckMoveFellow( const MMDL *mmdl0, s16 x0, s16 y0, s16 z0 )
 {
   u32 no=0;
+  BOOL  player_f = FALSE;
   MMDL *mmdl1;
   const MMDLSYS *sys = MMDL_GetMMdlSys( mmdl0 );
-  
+  MMDL* player_mmdl = MMDLSYS_SearchMMdlPlayer( (MMDLSYS*)sys );
+
+  if( player_mmdl != NULL ){
+    player_f = ( player_mmdl == mmdl0 );
+  }
   while( MMDLSYS_SearchUseMMdl(sys,&mmdl1,&no) == TRUE ){
     if( mmdl0 != mmdl1 ){
-      if( MMDL_HitCheckFellow(mmdl0,mmdl1,x0,y0,z0,TRUE) == TRUE ){
+      if( MMDL_HitCheckFellow(mmdl0,mmdl1,x0,y0,z0,TRUE, player_f) == TRUE ){
         return( TRUE );
       }
     }

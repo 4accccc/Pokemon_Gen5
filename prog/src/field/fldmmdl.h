@@ -209,6 +209,7 @@ typedef enum
 	MMDL_STABIT_ATTR_OFFS_OFF=(1<<12),///<アトリビュートオフセット設定OFF
 	MMDL_STABIT_RAIL_MOVE = (1<<13),///<レール動作
   MMDL_STABIT_REFLECT_OFF=(1<<14),///<映り込みを描画しない
+	MMDL_STABIT_PLAYER_HIT_NON=(1<<15),///<プレイヤーOBJとの当たり判定無効
 }MMDL_STABIT;
 
 //MMDL_STABIT_HEIGHT_EXPAND=(1<<13),///<拡張高さに反応する
@@ -958,6 +959,7 @@ extern void MMDL_SetStatusBitVanish( MMDL * mmdl, BOOL flag );
 extern BOOL MMDL_CheckStatusBitReflectOff( const MMDL * mmdl );
 extern void MMDL_SetStatusBitReflectOff( MMDL * mmdl, BOOL flag );
 extern void MMDL_SetStatusBitFellowHit( MMDL * mmdl, BOOL flag );
+extern void MMDL_SetStatusBitPlayerHit( MMDL * mmdl, BOOL flag );
 extern void MMDL_SetMoveBitMove( MMDL * mmdl, int flag );
 extern BOOL MMDL_CheckStatusBitTalk( MMDL * mmdl );
 extern void MMDL_SetStatusBitTalkOFF( MMDL * mmdl, BOOL flag );
@@ -1103,7 +1105,7 @@ extern void MMDL_CreateHitCheckRect(
 extern BOOL MMDL_HitCheckRect(
     const MMDL_RECT *rect0, const MMDL_RECT *rect1 );
 extern BOOL MMDL_HitCheckFellow( const MMDL *mmdl0, const MMDL *mmdl1,
-    s16 x0, s16 y0, s16 z0, BOOL old_hit );
+    s16 x0, s16 y0, s16 z0, BOOL old_hit, BOOL jiki_f );
 extern int MMDL_HitCheckMoveFellow(
 	const MMDL * mmdl, s16 x, s16 y, s16 z );
 extern BOOL MMDL_HitCheckXZ( const MMDL *mmdl, s16 x0, s16 z0, BOOL old_hit );

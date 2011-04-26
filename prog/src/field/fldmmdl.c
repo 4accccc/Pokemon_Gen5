@@ -3300,6 +3300,23 @@ void MMDL_SetStatusBitFellowHit( MMDL * mmdl, BOOL flag )
 
 //--------------------------------------------------------------
 /**
+ * MMDL プレイヤーOBJとの当たり判定フラグを設定
+ * @param  mmdl  MMDL *
+ * @param  flag  TRUE=ヒットアリ　FALSE=ヒットナシ
+ * @retval  nothing
+ */
+//--------------------------------------------------------------
+void MMDL_SetStatusBitPlayerHit( MMDL * mmdl, BOOL flag )
+{
+  if( flag == TRUE ){
+    MMDL_OffStatusBit( mmdl, MMDL_STABIT_PLAYER_HIT_NON );
+  }else{
+    MMDL_OnStatusBit( mmdl, MMDL_STABIT_PLAYER_HIT_NON );
+  }
+}
+
+//--------------------------------------------------------------
+/**
  * MMDL 動作中フラグのセット
  * @param  mmdl  MMDL *
  * @param  flag  TRUE=動作中　FALSE=停止中
