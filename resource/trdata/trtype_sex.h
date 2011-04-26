@@ -159,7 +159,7 @@ static	const	u8	TrTypeSexTable[]={
 	PTL_SEX_MALE,		//ポケモントレーナー（SWRIVAL）
 	PTL_SEX_FEMALE,		//ギタリスト
 	PTL_SEX_MALE,		//むげんボスＷ（BREEDERM_1）
-	PTL_SEX_MALE,		//むげんボスＢ（BREEDERM_2）
+	PTL_SEX_MALE,		//ボストレーナー
 	PTL_SEX_FEMALE,		//むげんボスＷ（BREEDERW_1）
 	PTL_SEX_FEMALE,		//むげんボスＢ（BREEDERW_2）
 	PTL_SEX_MALE,		//むげんボスＷ（RANGERM_1）

@@ -158,7 +158,7 @@
 #define	TRTYPE_SWRIVAL    ( 145 )    //ポケモントレーナー（SWRIVAL）
 #define	TRTYPE_GUITARW    ( 146 )    //ギタリスト
 #define	TRTYPE_BREEDERM_1    ( 147 )    //むげんボスＷ（BREEDERM_1）
-#define	TRTYPE_BREEDERM_2    ( 148 )    //むげんボスＢ（BREEDERM_2）
+#define	TRTYPE_BREEDERM_2    ( 148 )    //ボストレーナー
 #define	TRTYPE_BREEDERW_1    ( 149 )    //むげんボスＷ（BREEDERW_1）
 #define	TRTYPE_BREEDERW_2    ( 150 )    //むげんボスＢ（BREEDERW_2）
 #define	TRTYPE_RANGERM_1    ( 151 )    //むげんボスＷ（RANGERM_1）
