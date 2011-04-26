@@ -324,12 +324,15 @@ static void getMMdlObjCodeParam( ARCHANDLE * handle, u16 mmdl_id, u8 * anm_id, u
 
 
 
-//------------------------------------------------------------------
-//------------------------------------------------------------------
+//============================================================================================
+//
+//    優勝記録画面アプリ関連
+//
+//============================================================================================
 //------------------------------------------------------------------
 ///  WIN_RECORD用パラメータOBJECT生成
 //------------------------------------------------------------------
-WIN_RECORD_PARAM * WIN_RECORD_PARAM_Create( HEAPID heapID, GAMESYS_WORK * gsys )
+WIN_RECORD_PARAM * WIN_RECORD_PARAM_Create( HEAPID heapID, GAMESYS_WORK * gsys, u16 * res_work )
 {
   GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
 	WIN_RECORD_PARAM * wr_param;
@@ -340,12 +343,26 @@ WIN_RECORD_PARAM * WIN_RECORD_PARAM_Create( HEAPID heapID, GAMESYS_WORK * gsys )
 	wr_param->status	  = WIN_RECORD_STATUS_LV1;
   wr_param->wbtsave   = GAMEDATA_GetWBTSave( gamedata );  //WBT優勝回数
   wr_param->my_status = GAMEDATA_GetMyStatus( gamedata ); //自分情報
-	//
+
+	//  レベルの反映
+  if ( WBTTOOL_GetStatus( gamedata, WBT_COND_ID_ENABLE_POKETYPE_TOURNAMENT ) == FALSE )
+  { //タイプトーナメントに参戦できない→LV1
+    wr_param->status = WIN_RECORD_STATUS_LV1;
+  }
+  else if ( WBTTOOL_GetStatus( gamedata, WBT_COND_ID_ENABLE_CHAMPION_TOURNAMENT ) == FALSE )
+  { //タイプトーナメントに参戦できるがチャンピオントーナメントに参戦できない→LV2
+    wr_param->status = WIN_RECORD_STATUS_LV2;
+  }
+  else
+  { //タイプトーナメント、チャンピオントーナメントともにOK→LV3
+    wr_param->status = WIN_RECORD_STATUS_LV3;
+  }
+  wr_param->result_work = res_work;
 	return wr_param;
 }
 
 //------------------------------------------------------------------
-///  WBTトーナメントリスト用パラメータOBJECT削除
+///  WBT　WIN_RECORD用パラメータOBJECT削除
 //------------------------------------------------------------------
 void WIN_RECORD_PARAM_Delete( WIN_RECORD_PARAM * wr_param )
 {
@@ -356,9 +373,8 @@ void WIN_RECORD_PARAM_Delete( WIN_RECORD_PARAM * wr_param )
 #ifdef  PM_DEBUG
 //------------------------------------------------------------------
 /**
- * @brief トーナメントリスト用パラメータのセットアップ（デバッグ用）
+ * @brief 　WIN_RECORD用パラメータのセットアップ（デバッグ用）
  *
- * デバッグ用にWBTSYSを生成し、それを元にセットアップを行う
  */
 //------------------------------------------------------------------
 void WIN_RECORD_PARAM_Setup_Debug( GAMESYS_WORK * gsys, WIN_RECORD_PARAM * wr_param )
@@ -369,12 +385,15 @@ void WIN_RECORD_PARAM_Setup_Debug( GAMESYS_WORK * gsys, WIN_RECORD_PARAM * wr_pa
 #endif
 
 
-//------------------------------------------------------------------
-//------------------------------------------------------------------
+//============================================================================================
+//
+//  トーナメントダウンロード画面関連
+//
+//============================================================================================
 //------------------------------------------------------------------
 ///  TDOWNLOAD用パラメータOBJECT生成
 //------------------------------------------------------------------
-T_DOWNLOAD_PARAM * T_DOWNLOAD_PARAM_Create( HEAPID heapID, GAMESYS_WORK * gsys )
+T_DOWNLOAD_PARAM * T_DOWNLOAD_PARAM_Create( HEAPID heapID, GAMESYS_WORK * gsys, u16 * res_work )
 {
 	GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
 	T_DOWNLOAD_PARAM 	*td_param;
@@ -383,9 +402,8 @@ T_DOWNLOAD_PARAM * T_DOWNLOAD_PARAM_Create( HEAPID heapID, GAMESYS_WORK * gsys )
 	td_param->gamesys	= gsys;
 	// 初期化
 	td_param->status	  = T_DOWNLOAD_STATUS_VIEW;
-//  wr_param->wbtsave   = GAMEDATA_GetWBTSave( gamedata );  //WBT優勝回数
-//  wr_param->my_status = GAMEDATA_GetMyStatus( gamedata ); //自分情報
-	//
+	// 戻り値を返す先のポインタ
+  td_param->result_work = res_work;
 	return td_param;
 }
 
@@ -403,7 +421,6 @@ void T_DOWNLOAD_PARAM_Delete( T_DOWNLOAD_PARAM * td_param )
 /**
  * @brief TDOWNLOAD用パラメータのセットアップ（デバッグ用）
  *
- * デバッグ用にWBTSYSを生成し、それを元にセットアップを行う
  */
 //------------------------------------------------------------------
 void T_DOWNLOAD_PARAM_Setup_Debug( GAMESYS_WORK * gsys, T_DOWNLOAD_PARAM * td_param )

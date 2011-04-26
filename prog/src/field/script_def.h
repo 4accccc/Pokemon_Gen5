@@ -656,6 +656,14 @@
 #define SCR_WBT_BATTLE_RESULT_DKO_WIN   (3) ///<WBT対戦結果：DKO -->勝利
 #define SCR_WBT_BATTLE_RESULT_DKO_LOSE  (4) ///<WBT対戦結果：DKO -->敗北
 
+#define SCR_WBT_DL_APP_WIFI           (0) ///<ダウンロードアプリ：WIFIからダウンロード
+#define SCR_WBT_DL_APP_WIRELESS       (1) ///<ダウンロードアプリ：通信でダウンロード
+#define SCR_WBT_DL_APP_LIST           (2) ///<ダウンロードアプリ：閲覧
+#define SCR_WBT_DL_APP_SELECT         (3) ///<ダウンロードアプリ：選択画面
+
+#define SCR_WBT_DL_RESULT_CANCEL      (0xff)  ///<ダウンロードアプリの結果：キャンセル
+#define SCR_WBT_DL_RESULT_X_CANCEL    (0xfe)  ///<ダウンロードアプリの結果：Xボタンで終了
+
 #define SCR_WBT_EFFECT_POS_L          (0) ///<左 エフェクト位置
 #define SCR_WBT_EFFECT_POS_R          (1) ///<右 エフェクト位置
 

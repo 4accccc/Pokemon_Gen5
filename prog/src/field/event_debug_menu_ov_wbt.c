@@ -928,7 +928,7 @@ static BOOL debugMenuCallProc_WinRecord( DEBUG_WBT_WORK *p_wk )
 {
 	GMEVENT 			*new_event;
 	WIN_RECORD_PARAM 	*wr_param;
-	wr_param = WIN_RECORD_PARAM_Create( HEAPID_PROC, p_wk->gmSys );
+	wr_param = WIN_RECORD_PARAM_Create( HEAPID_PROC, p_wk->gmSys, NULL );
 	//
 	// ‚È‚­‚Ä‚à‘åä•v‚È‚Ì‚Å•Û—¯
 //	WIN_RECORD_PARAM_Setup_Debug(
@@ -958,7 +958,7 @@ static BOOL debugMenuCallProc_TDownload( DEBUG_WBT_WORK *p_wk )
 {
 	GMEVENT 			*new_event;
 	T_DOWNLOAD_PARAM 	*td_param;
-	td_param = T_DOWNLOAD_PARAM_Create( HEAPID_PROC, p_wk->gmSys );
+	td_param = T_DOWNLOAD_PARAM_Create( HEAPID_PROC, p_wk->gmSys, NULL );
 	//
 	// ‚È‚­‚Ä‚à‘åä•v‚È‚Ì‚Å•Û—¯
 //	WIN_RECORD_PARAM_Setup_Debug(

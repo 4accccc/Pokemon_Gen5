@@ -680,9 +680,17 @@ _ANIME_LABEL  anm_player_exit
   _ANIME_DATA ACMD_END, 0
 
 
-/********************************************************************/
+
+//======================================================================
+//
 //
 //      WBTエントリーチェッカー
+//
+//
+//======================================================================
+/********************************************************************/
+//
+//      WBTエントリーチェッカー本体
 //
 /********************************************************************/
 DEFINE_LOCAL  LOG_OUT
@@ -690,6 +698,7 @@ DEFINE_LOCAL  LWK_SELECT_POS
 
 EVENT_START ev_wbt_entry_checker
 
+  _SE_PLAY( SEQ_SE_PC_LOGIN )
   _PLAYER_NAME( 0 )
   _SYSWIN_MSG( msg_wbt_pc_on, POS_DOWN )
 
@@ -702,7 +711,6 @@ EVENT_START ev_wbt_entry_checker
     _BMPMENU_MAKE_LIST_EX( msg_wbt_pc_menu_02, msg_wbt_pc_info_02, msg_wbt_pc_menu_02 )
     _BMPMENU_MAKE_LIST_EX( msg_wbt_pc_menu_03, msg_wbt_pc_info_03, msg_wbt_pc_menu_03 )
     _BMPMENU_START()
-    _SYSWIN_CLOSE()
 
     _TIME_WAIT(3) //なんとなくPCのまねをしてSE待ち
 
@@ -718,22 +726,96 @@ EVENT_START ev_wbt_entry_checker
     ENDSWITCH
 
   ENDWHILE
+  _SYSWIN_CLOSE()
 
 EVENT_END
 
-//--------------------------------------------------------------
+/********************************************************************/
 //
-//--------------------------------------------------------------
+//  優勝記録確認画面
+//
+/********************************************************************/
 ev_victory_checker:
-  _WBT_ENTRY_CHECKER_VICTORY_RECORD()
+  _SYSWIN_MSG( msg_wbt_pc_select_01, POS_DOWN )
+  _SYSWIN_CLOSE()
+  _WBT_ENTRY_CHECKER_VICTORY_RECORD( SCWK_ANSWER )
   _RET
 
-//--------------------------------------------------------------
+/********************************************************************/
 //
-//--------------------------------------------------------------
+//  ダウンロード
+//
+/********************************************************************/
 ev_downloader:
-  _WBT_ENTRY_CHECKER_DOWNLOAD()
+DEFINE_LOCAL  LOG_OUT_DL
+
+  $LOG_OUT_DL = FALSE
+  _SYSWIN_MSG( msg_wbt_pc_select_02, POS_DOWN )
+
+  WHILE $LOG_OUT_DL == FALSE && $LOG_OUT == FALSE
+    _SYSWIN_MSG( msg_wbt_pc_blank, POS_DOWN )
+    _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, TRUE, LWK_SELECT_POS )
+    _BMPMENU_MAKE_LIST_EX( msg_wbt_pc_menu_dl_01, msg_wbt_pc_info_dl_01, msg_wbt_pc_menu_dl_01 )
+    _BMPMENU_MAKE_LIST_EX( msg_wbt_pc_menu_dl_02, msg_wbt_pc_info_dl_02, msg_wbt_pc_menu_dl_02 )
+    _BMPMENU_MAKE_LIST_EX( msg_wbt_pc_menu_dl_03, msg_wbt_pc_blank,      msg_wbt_pc_menu_dl_03 )
+    _BMPMENU_START()
+
+    SWITCH $LWK_SELECT_POS
+    CASE msg_wbt_pc_menu_dl_01 THEN
+        _CALL ev_downloader_2
+    CASE msg_wbt_pc_menu_dl_02 THEN
+        _SYSWIN_CLOSE()
+        _WBT_ENTRY_CHECKER_DOWNLOAD( SCR_WBT_DL_APP_LIST, SCWK_ANSWER )
+        IF $SCWK_ANSWER == TRUE THEN
+          $LOG_OUT = TRUE
+        ENDIF
+    CASE msg_wbt_pc_menu_dl_03 THEN
+      $LOG_OUT_DL = TRUE
+    DEFAULT
+      $LOG_OUT_DL = TRUE
+    ENDSWITCH
+
+  ENDWHILE
+  _SYSWIN_CLOSE()
   _RET
 
+ev_downloader_2:
+DEFINE_LOCAL  LOG_OUT_DL2
+  $LOG_OUT_DL2 = FALSE
+  _SYSWIN_MSG( msg_wbt_pc_info_dl_00, POS_DOWN )
+
+  WHILE $LOG_OUT_DL2 == FALSE && $LOG_OUT == FALSE
+
+    _SYSWIN_MSG( msg_wbt_pc_blank, POS_DOWN )
+    _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, TRUE, LWK_SELECT_POS )
+    _BMPMENU_MAKE_LIST( msg_wbt_pc_menu_dl_04, msg_wbt_pc_menu_dl_04 )  //WIFIで
+    _BMPMENU_MAKE_LIST( msg_wbt_pc_menu_dl_05, msg_wbt_pc_menu_dl_05 )  //Wirelessで
+    _BMPMENU_MAKE_LIST( msg_wbt_pc_menu_03, msg_wbt_pc_menu_03 )        //やめる
+    _BMPMENU_START()
+
+    SWITCH $LWK_SELECT_POS
+    CASE msg_wbt_pc_menu_dl_04 THEN
+        _SYSWIN_CLOSE()
+        _WBT_ENTRY_CHECKER_DOWNLOAD( SCR_WBT_DL_APP_WIFI,     SCWK_ANSWER )
+        IF $SCWK_ANSWER == TRUE THEN
+          $LOG_OUT = TRUE
+        ENDIF
+    CASE msg_wbt_pc_menu_dl_05 THEN
+        _SYSWIN_CLOSE()
+        _WBT_ENTRY_CHECKER_DOWNLOAD( SCR_WBT_DL_APP_WIRELESS, SCWK_ANSWER )
+        IF $SCWK_ANSWER == TRUE THEN
+          $LOG_OUT = TRUE
+        ENDIF
+    CASE msg_wbt_pc_menu_03 THEN
+      $LOG_OUT_DL2 = TRUE
+    DEFAULT
+      $LOG_OUT_DL2 = TRUE
+    ENDSWITCH
+
+  ENDWHILE
+
+  _SYSWIN_CLOSE()
+
+  _RET
 
 

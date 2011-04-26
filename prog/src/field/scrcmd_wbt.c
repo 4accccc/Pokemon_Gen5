@@ -760,9 +760,13 @@ VMCMD_RESULT EvCmdWBTECheckerRecord( VMHANDLE * core, void * wk )
   GMEVENT * new_event;
   WIN_RECORD_PARAM * wr_param;
 
-  wr_param = WIN_RECORD_PARAM_Create( heap_id, gsys );
+  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
+
+  wr_param = WIN_RECORD_PARAM_Create( heap_id, gsys, ret_wk );
   new_event = GMEVENT_CreateOverlayEventCall( gsys,
       FS_OVERLAY_ID(notwifi_event_wbt), WIN_RECORD_EVENT_Show, (void*)wr_param );
+  //結果を受け取るワークを設定する
+  //WBTSYS_SetScriptAnswerWork( wbtsys, ret_wk );
   TAMADA_Printf("EvCmdWBTECheckerRecord\n");
   SCRIPT_CallEvent( sc, new_event );
   return VMCMD_RESULT_SUSPEND;
@@ -782,10 +786,14 @@ VMCMD_RESULT EvCmdWBTECheckerDownLoad( VMHANDLE * core, void * wk )
   GMEVENT * new_event;
 	T_DOWNLOAD_PARAM * td_param;
 
-  td_param = T_DOWNLOAD_PARAM_Create( heap_id, gsys );
+  u16 app_id = SCRCMD_GetVMWorkValue( core, wk );
+  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
+
+  td_param = T_DOWNLOAD_PARAM_Create( heap_id, gsys, ret_wk );
 	new_event = GMEVENT_CreateOverlayEventCall( gsys,
       FS_OVERLAY_ID(notwifi_event_wbt), T_DOWNLOAD_EVENT_Show, (void *)td_param );
-  //仮：ここで別画面アプリ呼び出し
+  //結果を受け取るワークを設定する
+  //WBTSYS_SetScriptAnswerWork( wbtsys, ret_wk );
   TAMADA_Printf("EvCmdWBTECheckerDownLoad\n");
   SCRIPT_CallEvent( sc, new_event );
   return VMCMD_RESULT_SUSPEND;

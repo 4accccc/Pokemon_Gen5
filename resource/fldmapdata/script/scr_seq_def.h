@@ -12604,23 +12604,31 @@
 //--------------------------------------------------------------
 /**
  * @brief WBT:エントリチェッカー：優勝記録画面呼び出し
+ * @param ret_wk  Xボタン終了した場合、TRUE
  */
 //--------------------------------------------------------------
-#define _WBT_ENTRY_CHECKER_VICTORY_RECORD() \
-    _ASM_WBT_ENTRY_CHECKER_VICTORY_RECORD
-    .macro  _ASM_WBT_ENTRY_CHECKER_VICTORY_RECORD
+#define _WBT_ENTRY_CHECKER_VICTORY_RECORD( ret_wk ) \
+    _ASM_WBT_ENTRY_CHECKER_VICTORY_RECORD ret_wk
+
+    .macro  _ASM_WBT_ENTRY_CHECKER_VICTORY_RECORD ret_wk
     .short  EV_SEQ_WBT_ENTRY_CHECKER_VICTORY_RECORD
+    .short  \ret_wk
     .endm
 
 //--------------------------------------------------------------
 /**
  * @brief WBT:エントリチェッカー：ダウンロード画面呼び出し
+ * @param[in]   app_id
+ * @param[out]  ret_wk
  */
 //--------------------------------------------------------------
-#define _WBT_ENTRY_CHECKER_DOWNLOAD() \
-    _ASM_WBT_ENTRY_CHECKER_DOWNLOAD
-    .macro  _ASM_WBT_ENTRY_CHECKER_DOWNLOAD
+#define _WBT_ENTRY_CHECKER_DOWNLOAD( app_id, ret_wk ) \
+    _ASM_WBT_ENTRY_CHECKER_DOWNLOAD app_id, ret_wk
+
+    .macro  _ASM_WBT_ENTRY_CHECKER_DOWNLOAD app_id, ret_wk
     .short  EV_SEQ_WBT_ENTRY_CHECKER_DOWNLOAD
+    .short  \app_id
+    .short  \ret_wk
     .endm
 
 //--------------------------------------------------------------
