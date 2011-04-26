@@ -615,7 +615,11 @@ POKEPARTY * WBTSYS_CreateBattleParty( WBTSYS * wbtsys, GAMEDATA * gamedata )
   {
     POKEMON_PARAM * base_pp;
     u32 pos = wbtsys->pokelist_select_num[ cnt ];
-    GF_ASSERT( pos );
+    if ( pos == 0 )
+    {
+      GF_ASSERT_MSG( 0, "ŽQí‚·‚éƒ|ƒPƒ‚ƒ“‚ª³‚µ‚­‚ ‚è‚Ü‚¹‚ñ!!\n" );
+      pos = 1;
+    }
     pos -= 1; //1 origin --> 0 origin
     base_pp = PokeParty_GetMemberPointer( base_party, pos );
     POKETOOL_CopyPPtoPP( base_pp, entry_pp );

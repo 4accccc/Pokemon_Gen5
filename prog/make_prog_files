@@ -474,7 +474,6 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         field/event_league_front01.c \
         field/event_league_front02.c \
         field/event_bsubway.c \
-        field/event_wbt.c \
         field/scrcmd_d12_gmk.c \
         field/field_gimmick_d12_st.c \
         field/fldmmdl.c \
@@ -533,6 +532,11 @@ SRCS_OVERLAY_NOTWIFI_EVENT_POKE_STATUS = field/event_poke_status.c
 #===> SRCS_OVERLAY_NOTWIFI
 #GROUP_OVERLAY_NOTWIFI_EVENT_ALL
 SRCS_OVERLAY_NOTWIFI_EVENT_FMISSION_APP = field/event_fmission_app.c
+
+#フェスミッションアプリ呼び出しイベント
+#===> SRCS_OVERLAY_NOTWIFI
+#GROUP_OVERLAY_NOTWIFI_EVENT_ALL
+SRCS_OVERLAY_NOTWIFI_EVENT_WBT = field/event_wbt.c
 
 #侵入システムでほぼ常駐に置かなければいけないもの(ユニオンの常駐物と並列化)
 #===> GROUP_OVERLAY_NOTWIFI_EVENT_ALL

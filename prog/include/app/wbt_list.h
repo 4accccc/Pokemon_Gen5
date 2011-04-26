@@ -85,5 +85,6 @@ typedef struct
 #ifdef  PM_DEBUG
   int debug_value;
 #endif
+  BOOL call_fade_flag;    //このPROC内部では使用しない。呼び出し側で設定・参照している
 }WBTLIST_PARAM;
 

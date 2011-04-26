@@ -455,7 +455,9 @@ static BOOL debugMenuCallProc_WBTList( DEBUG_WBT_WORK *p_wk )
   WBTLIST_PARAM_Setup_Debug(
       p_wk->gmSys, wbtlist_param,
       WBTTYPE_ALL, WBTRULE_SINGLE, p_wk->stage, p_wk->Trbuffer, p_wk->DebugNum );
-  new_event = WBT_EVENT_ShowTournamentList( p_wk->gmSys, p_wk->fieldWork, wbtlist_param, TRUE );
+  wbtlist_param->call_fade_flag = TRUE; //呼び出し前後でフィールドフェード実行
+  new_event = GMEVENT_CreateOverlayEventCall( p_wk->gmSys,
+      FS_OVERLAY_ID(notwifi_event_wbt), WBT_EVENT_ShowTournamentList, (void *)wbtlist_param );
   GMEVENT_ChangeEvent( p_wk->gmEvent, new_event );
 
   OS_Printf( "WBT List Start\n" );
@@ -935,7 +937,8 @@ static BOOL debugMenuCallProc_WinRecord( DEBUG_WBT_WORK *p_wk )
 	// debug用
 	wr_param->status = p_wk->status;
 	//
-	new_event = WIN_RECORD_EVENT_Show( p_wk->gmSys, p_wk->fieldWork, wr_param, TRUE );
+	new_event = GMEVENT_CreateOverlayEventCall( p_wk->gmSys,
+      FS_OVERLAY_ID(notwifi_event_wbt), WIN_RECORD_EVENT_Show, (void *)wr_param );
 	GMEVENT_ChangeEvent( p_wk->gmEvent, new_event );
 	//
 	OS_Printf( "Win Record Start\n" );
@@ -964,7 +967,8 @@ static BOOL debugMenuCallProc_TDownload( DEBUG_WBT_WORK *p_wk )
 	// debug用
 	td_param->status = p_wk->t_status;
 	//
-	new_event = T_DOWNLOAD_EVENT_Show( p_wk->gmSys, p_wk->fieldWork, td_param, TRUE );
+	new_event = GMEVENT_CreateOverlayEventCall( p_wk->gmSys,
+      FS_OVERLAY_ID(notwifi_event_wbt), T_DOWNLOAD_EVENT_Show, (void *)td_param );
 	GMEVENT_ChangeEvent( p_wk->gmEvent, new_event );
 	//
 	OS_Printf( "T Download Start\n" );

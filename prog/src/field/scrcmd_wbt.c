@@ -550,7 +550,8 @@ VMCMD_RESULT EvCmdWBTTrainerBattle( VMHANDLE * core, void * wk )
   WBTSYS_SetScriptAnswerWork( wbtsys, ret_wk );
 
   //ここからトレーナーバトルイベントを呼び出す
-  next_event = WBT_EVENT_TrainerBattle( wbtsys, gsys );
+  next_event = GMEVENT_CreateOverlayEventCall( gsys,
+      FS_OVERLAY_ID(notwifi_event_wbt), WBT_EVENT_TrainerBattle, (void*)wbtsys );
   SCRIPT_CallEvent( sc, next_event );
   return VMCMD_RESULT_SUSPEND;
 }
@@ -661,7 +662,8 @@ VMCMD_RESULT EvCmdWBTShowTornamentList( VMHANDLE * core, void * wk )
   p_param = WBTLIST_PARAM_Create( heapID, gsys );
   WBTLIST_PARAM_Setup( gsys, wbtsys, p_param );
 
-  next_event = WBT_EVENT_ShowTournamentList( gsys, fieldmap, p_param, FALSE );
+  next_event = GMEVENT_CreateOverlayEventCall( gsys,
+      FS_OVERLAY_ID(notwifi_event_wbt), WBT_EVENT_ShowTournamentList, (void *)p_param );
   SCRIPT_CallEvent( sc, next_event );
   OS_Printf( "WBT List Start\n" );
 
@@ -680,10 +682,12 @@ VMCMD_RESULT EvCmdWBTSelectPokemon( VMHANDLE * core, void * wk )
   GAMESYS_WORK *gsys = SCRIPT_GetGameSysWork( sc );
   u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
   WBTSYS * wbtsys = getWBTSys( wk );
+  GMEVENT * event;
 
-  u8 buf = FALSE;
+  event = GMEVENT_CreateOverlayEventCall( gsys,
+      FS_OVERLAY_ID(notwifi_event_wbt), WBT_EVENT_SetSelectPokeList, (void *)wbtsys );
   TAMADA_Printf("EvCmdWBTSelectPokemon\n");
-  SCRIPT_CallEvent( sc, WBT_EVENT_SetSelectPokeList( wbtsys, gsys, buf ) );
+  SCRIPT_CallEvent( sc, event );
   WBTSYS_SetScriptAnswerWork( wbtsys, ret_wk );
 
   return VMCMD_RESULT_SUSPEND;
@@ -710,10 +714,12 @@ static GMEVENT * createDummyEvent( HEAPID heapID, GAMESYS_WORK * gsys )
 
     WBTLIST_PARAM_Setup( gsys, wbtsys, wbtlist_param );
     //wbtlist_param->debug_value = debug_value;
+    wbtlist_param->call_fade_flag = TRUE; //呼び出し前後でフィールドフェード実行
 
     WBTSYS_Delete( wbtsys );
   }
-  new_event = WBT_EVENT_ShowTournamentList( gsys, fieldmap, wbtlist_param, TRUE );
+  new_event = GMEVENT_CreateOverlayEventCall( gsys,
+      FS_OVERLAY_ID(notwifi_event_wbt), WBT_EVENT_ShowTournamentList, (void *)wbtlist_param );
   return new_event;
 }
 
@@ -755,7 +761,8 @@ VMCMD_RESULT EvCmdWBTECheckerRecord( VMHANDLE * core, void * wk )
   WIN_RECORD_PARAM * wr_param;
 
   wr_param = WIN_RECORD_PARAM_Create( heap_id, gsys );
-  new_event = WIN_RECORD_EVENT_Show( gsys, fieldmap, wr_param, TRUE );
+  new_event = GMEVENT_CreateOverlayEventCall( gsys,
+      FS_OVERLAY_ID(notwifi_event_wbt), WIN_RECORD_EVENT_Show, (void*)wr_param );
   TAMADA_Printf("EvCmdWBTECheckerRecord\n");
   SCRIPT_CallEvent( sc, new_event );
   return VMCMD_RESULT_SUSPEND;
@@ -771,9 +778,13 @@ VMCMD_RESULT EvCmdWBTECheckerDownLoad( VMHANDLE * core, void * wk )
   SCRCMD_WORK   *work = wk;
   GAMESYS_WORK  *gsys = SCRCMD_WORK_GetGameSysWork( work );
   HEAPID      heap_id = SCRCMD_WORK_GetHeapID( work );
-  GMEVENT * new_event = createDummyEvent( heap_id, gsys );
   SCRIPT_WORK*      sc = SCRCMD_WORK_GetScriptWork( work );
+  GMEVENT * new_event;
+	T_DOWNLOAD_PARAM * td_param;
 
+  td_param = T_DOWNLOAD_PARAM_Create( heap_id, gsys );
+	new_event = GMEVENT_CreateOverlayEventCall( gsys,
+      FS_OVERLAY_ID(notwifi_event_wbt), T_DOWNLOAD_EVENT_Show, (void *)td_param );
   //仮：ここで別画面アプリ呼び出し
   TAMADA_Printf("EvCmdWBTECheckerDownLoad\n");
   SCRIPT_CallEvent( sc, new_event );

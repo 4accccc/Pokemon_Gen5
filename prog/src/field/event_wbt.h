@@ -6,16 +6,7 @@
 //======================================================================
 #pragma once
 #include <gflib.h>
-#include "system/gfl_use.h"
-#include "system/vm_cmd.h"
-
-#include "event_fieldmap_control.h"
-#include "app/pokelist.h"
-#include "app/p_status.h"
-
-//#include "bsubway_scr.h"
-
-#include "wbt_system.h"
+#include "gamesystem/game_event.h"
 
 //======================================================================
 //  define
@@ -28,28 +19,18 @@
 //======================================================================
 //  extern
 //======================================================================
-extern GMEVENT * WBT_EVENT_SetSelectPokeList(
-    WBTSYS *wbtsys, GAMESYS_WORK *gsys, BOOL btl_box );
+FS_EXTERN_OVERLAY( notwifi_event_wbt );
 
-extern GMEVENT * WBT_EVENT_ShowTournamentList(
-    GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
-    WBTLIST_PARAM * wbtlist_param, BOOL call_fade_flag );
+extern GMEVENT * WBT_EVENT_SetSelectPokeList( GAMESYS_WORK * gsys, void * parent_work );
 
-extern GMEVENT * WBT_EVENT_TrainerBattle( WBTSYS *wbtsys, GAMESYS_WORK *gsys );
-extern GMEVENT * WBT_EVENT_CommBattle(
-    WBTSYS *wbtsys, GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap );
-extern GMEVENT * WBT_EVENT_TrainerBeforeMsg(
-    WBTSYS *wbtsys, GAMESYS_WORK *gsys,
-    int tr_idx, u16 obj_id, u8 pos_type );
+extern GMEVENT * WBT_EVENT_ShowTournamentList( GAMESYS_WORK * gsys, void * parent_work );
+
+extern GMEVENT * WBT_EVENT_TrainerBattle( GAMESYS_WORK *gsys, void * parent_work );
 
 //
-extern GMEVENT * WIN_RECORD_EVENT_Show(
-    GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
-    WIN_RECORD_PARAM * wr_param, BOOL call_fade_flag );
+extern GMEVENT * WIN_RECORD_EVENT_Show( GAMESYS_WORK * gsys, void * parent_work );
 
 //
-extern GMEVENT * T_DOWNLOAD_EVENT_Show(
-    GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
-    T_DOWNLOAD_PARAM * td_param, BOOL call_fade_flag );
+extern GMEVENT * T_DOWNLOAD_EVENT_Show( GAMESYS_WORK * gsys, void * parent_work );
 
 

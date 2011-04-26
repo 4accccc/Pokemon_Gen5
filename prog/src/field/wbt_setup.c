@@ -73,6 +73,8 @@ WBTLIST_PARAM * WBTLIST_PARAM_Create( HEAPID heapID, GAMESYS_WORK * gsys )
   }
   //Ÿ”sŒ‹‰Êî•ñ‚Ì‰Šú‰»
 
+  wbtlist_param->debug_value = 0;
+  wbtlist_param->call_fade_flag = FALSE;
   TAMADA_Printf("WBTLIST_PARAM:Create:%08x\n", wbtlist_param );
   return wbtlist_param;
 }

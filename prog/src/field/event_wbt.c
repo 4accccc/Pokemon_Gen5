@@ -125,18 +125,19 @@ static GMEVENT_RESULT ev_SelectPokeList( GMEVENT *event, int *seq, void *wk )
  * @retval
  */
 //--------------------------------------------------------------
-GMEVENT * WBT_EVENT_SetSelectPokeList(
-    WBTSYS *wbtsys, GAMESYS_WORK *gsys, BOOL btl_box )
+GMEVENT * WBT_EVENT_SetSelectPokeList( GAMESYS_WORK * gsys, void * parent_work )
 {
   GMEVENT *event;
-  GAMEDATA *gdata;
+  GAMEDATA *gamedata;
+  WBTSYS * wbtsys;
   POKEPARTY *pp;
   FIELDMAP_WORK *fieldmap;
   EVENT_WORK_POKE_LIST *work;
   
-  gdata = GAMESYSTEM_GetGameData( gsys );
-  
+  wbtsys   = (WBTSYS *)parent_work;
+  gamedata = GAMESYSTEM_GetGameData( gsys );
   fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  
   
   event = GMEVENT_Create( gsys, NULL,
       ev_SelectPokeList, sizeof(EVENT_WORK_POKE_LIST) );
@@ -146,9 +147,9 @@ GMEVENT * WBT_EVENT_SetSelectPokeList(
   work->fieldmap = fieldmap;
   work->wbtsys = wbtsys;
   
-  WBTSYS_SetupPokeListData( wbtsys, gdata, &work->list_data );
+  WBTSYS_SetupPokeListData( wbtsys, gamedata, &work->list_data );
   
-  WBTSYS_SetupPokeStatusData( wbtsys, gdata, &work->status_data );
+  WBTSYS_SetupPokeStatusData( wbtsys, gamedata, &work->status_data );
    
   return( event );
 }
@@ -180,9 +181,10 @@ static GMEVENT_RESULT eventWBTList( GMEVENT *p_event, int *p_seq, void *p_wk_adr
  */
 //-----------------------------------------------------------------------------
 GMEVENT * WBT_EVENT_ShowTournamentList(
-    GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
-    WBTLIST_PARAM * wbtlist_param, BOOL call_fade_flag )
-{
+    GAMESYS_WORK * gsys, void * parent_work )
+{ 
+  WBTLIST_PARAM * wbtlist_param = (WBTLIST_PARAM *) parent_work;
+  FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
   WBTLIST_EVENT_WORK *p_param;
   GMEVENT * new_event;
 
@@ -194,7 +196,7 @@ GMEVENT * WBT_EVENT_ShowTournamentList(
   p_param->gsys  = gsys;
   p_param->fieldmap    = fieldmap;
   p_param->wbtlist_param = wbtlist_param;
-  p_param->call_fade_flag = call_fade_flag;
+  p_param->call_fade_flag = wbtlist_param->call_fade_flag;
 
   OS_Printf( "WBT List Start\n" );
 
@@ -301,8 +303,9 @@ static GMEVENT_RESULT wbtBattleEvent( GMEVENT * event, int *seq, void * work )
  * @return  生成イベント
  */
 //-----------------------------------------------------------------------------
-GMEVENT * WBT_EVENT_TrainerBattle( WBTSYS *wbtsys, GAMESYS_WORK *gsys )
+GMEVENT * WBT_EVENT_TrainerBattle( GAMESYS_WORK *gsys, void * parent_work )
 {
+  WBTSYS * wbtsys = (WBTSYS *)parent_work;
   GMEVENT * event;
   WBEW * wbew;
 
@@ -313,7 +316,6 @@ GMEVENT * WBT_EVENT_TrainerBattle( WBTSYS *wbtsys, GAMESYS_WORK *gsys )
 
   return event;
 }
-
 
 //=============================================================================
 //
@@ -328,7 +330,6 @@ typedef struct
   GAMESYS_WORK        *gsys;
   FIELDMAP_WORK       *fieldmap;
   WIN_RECORD_PARAM    *wr_param;
-  BOOL                call_fade_flag;
 } WIN_RECORD_EVENT_WORK;
 
 static GMEVENT_RESULT eventWinRecord( GMEVENT *p_event, int *p_seq, void *p_wk_adrs );
@@ -341,13 +342,12 @@ static GMEVENT_RESULT eventWinRecord( GMEVENT *p_event, int *p_seq, void *p_wk_a
  *  @return 終了コード
  */
 //-----------------------------------------------------------------------------
-GMEVENT * WIN_RECORD_EVENT_Show(
-    GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
-    WIN_RECORD_PARAM * wr_param, BOOL call_fade_flag )
+GMEVENT * WIN_RECORD_EVENT_Show( GAMESYS_WORK * gsys, void * parent_work )
 {
+  WIN_RECORD_PARAM * wr_param = (WIN_RECORD_PARAM *) parent_work;
   WIN_RECORD_EVENT_WORK *p_param;
   GMEVENT * new_event;
-
+  FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
   //イヴェント
   new_event = GMEVENT_Create( gsys, NULL, eventWinRecord, sizeof(WIN_RECORD_EVENT_WORK) );
   p_param = GMEVENT_GetEventWork( new_event );
@@ -356,7 +356,6 @@ GMEVENT * WIN_RECORD_EVENT_Show(
   p_param->gsys			= gsys;
   p_param->fieldmap		= fieldmap;
   p_param->wr_param 	= wr_param;
-  p_param->call_fade_flag = call_fade_flag;
 
   OS_Printf( "Win Record Start\n" );
 
@@ -365,7 +364,7 @@ GMEVENT * WIN_RECORD_EVENT_Show(
 }
 //----------------------------------------------------------------------------
 /**
- *  @brief  WBTリストアプリ呼び出し用イベント
+ *  @brief  WBT WIN_RECORD呼び出し用イベント
  *
  *  @param  GMEVENT *event  GMEVENT
  *  @param  *seq            シーケンス
@@ -388,14 +387,8 @@ static GMEVENT_RESULT eventWinRecord( GMEVENT *p_event, int *p_seq, void *p_wk_a
   switch(*p_seq )
   {
   case SEQ_CALL_PROC:
-    if ( p_wk->call_fade_flag )
-    {
-      call_event = EVENT_FieldSubProc( p_wk->gsys, p_wk->fieldmap,
-          FS_OVERLAY_ID(entry_checker), &WinRecordProcData, p_wk->wr_param );
-    } else {
-      call_event = EVENT_FieldSubProcNoFade( p_wk->gsys, p_wk->fieldmap,
-          FS_OVERLAY_ID(entry_checker), &WinRecordProcData, p_wk->wr_param );
-    }
+    call_event = EVENT_FieldSubProc( p_wk->gsys, p_wk->fieldmap,
+        FS_OVERLAY_ID(entry_checker), &WinRecordProcData, p_wk->wr_param );
     GMEVENT_CallEvent( p_event, call_event );
     *p_seq  = SEQ_EXIT;
     break;
@@ -421,7 +414,6 @@ typedef struct
   GAMESYS_WORK        *gsys;
   FIELDMAP_WORK       *fieldmap;
   T_DOWNLOAD_PARAM    *td_param;
-  BOOL                call_fade_flag;
 } T_DOWNLOAD_EVENT_WORK;
 
 static GMEVENT_RESULT eventTDownload( GMEVENT *p_event, int *p_seq, void *p_wk_adrs );
@@ -434,10 +426,10 @@ static GMEVENT_RESULT eventTDownload( GMEVENT *p_event, int *p_seq, void *p_wk_a
  *  @return 終了コード
  */
 //-----------------------------------------------------------------------------
-GMEVENT * T_DOWNLOAD_EVENT_Show(
-    GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
-    T_DOWNLOAD_PARAM * td_param, BOOL call_fade_flag )
+GMEVENT * T_DOWNLOAD_EVENT_Show( GAMESYS_WORK * gsys, void * parent_work )
 {
+  FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  T_DOWNLOAD_PARAM * td_param = (T_DOWNLOAD_PARAM *) parent_work;
   T_DOWNLOAD_EVENT_WORK *p_param;
   GMEVENT * new_event;
 
@@ -449,7 +441,6 @@ GMEVENT * T_DOWNLOAD_EVENT_Show(
   p_param->gsys			= gsys;
   p_param->fieldmap		= fieldmap;
   p_param->td_param 	= td_param;
-  p_param->call_fade_flag = call_fade_flag;
 
   OS_Printf( "T Download Start\n" );
 
@@ -481,14 +472,8 @@ static GMEVENT_RESULT eventTDownload( GMEVENT *p_event, int *p_seq, void *p_wk_a
   switch(*p_seq )
   {
   case SEQ_CALL_PROC:
-    if ( p_wk->call_fade_flag )
-    {
-      call_event = EVENT_FieldSubProc( p_wk->gsys, p_wk->fieldmap,
-          FS_OVERLAY_ID(entry_checker), &TDownloadProcData, p_wk->td_param );
-    } else {
-      call_event = EVENT_FieldSubProcNoFade( p_wk->gsys, p_wk->fieldmap,
-          FS_OVERLAY_ID(entry_checker), &TDownloadProcData, p_wk->td_param );
-    }
+    call_event = EVENT_FieldSubProc( p_wk->gsys, p_wk->fieldmap,
+        FS_OVERLAY_ID(entry_checker), &TDownloadProcData, p_wk->td_param );
     GMEVENT_CallEvent( p_event, call_event );
     *p_seq  = SEQ_EXIT;
     break;
@@ -500,7 +485,6 @@ static GMEVENT_RESULT eventTDownload( GMEVENT *p_event, int *p_seq, void *p_wk_a
 
   return GMEVENT_RES_CONTINUE ;
 }
-
 
 
 
