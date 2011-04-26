@@ -1085,6 +1085,7 @@ EVENT_START ev_pos_c12_rival_pair_return_01
   //アニメ：定位置に行く
   _OBJ_ANIME_AUTO( C12_SWRIVAL_01, 35, 714, FORCE_TYPE_NPC, 8, DIR_LR)
   _OBJ_ANIME_WAIT()
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_u )
   _OBJ_ANIME( C12_SWRIVAL_01, anm_staystep_u )
   _OBJ_ANIME_WAIT()
 
