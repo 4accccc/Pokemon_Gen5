@@ -10,6 +10,7 @@
 
 #include <gflib.h>
 #include "net/network_define.h"
+#include "net/net_whpipe.h"
 
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/game_init.h"
@@ -72,6 +73,8 @@ static GMEVENT_RESULT EVENT_FMissionAppMain(GMEVENT * event, int *  seq, void * 
       fade_event = EVENT_FieldFadeOut_Black(gsys, fwork, FIELD_FADE_WAIT);
       GMEVENT_CallEvent(event, fade_event);
     }
+    //ビーコンの子→親切り替えをストップ(子の状態で固定リクエスト)
+    GFL_NET_WL_PauseBeaconSend( TRUE );
     (*seq)++;
     break;
   case _FIELD_FADE_CLOSE:
@@ -120,6 +123,8 @@ static GMEVENT_RESULT EVENT_FMissionAppMain(GMEVENT * event, int *  seq, void * 
     (*seq) ++;
     break;
   case _FIELD_END: 
+    //ビーコンの子→親切り替えを再開
+    GFL_NET_WL_PauseBeaconSend( FALSE );
     return GMEVENT_RES_FINISH;
   default:
     GF_ASSERT(0);
