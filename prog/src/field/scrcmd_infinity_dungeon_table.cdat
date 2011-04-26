@@ -37,6 +37,7 @@
   DEF_CMD( EvCmdInfinityDungeonSetStatus, EV_SEQ_INFINITY_DUNGEON_SET_DUNGEON_STATUS )
   DEF_CMD( EvCmdInfinityDungeonGetMapStatus, EV_SEQ_INFINITY_DUNGEON_GET_MAP_STATUS )
   DEF_CMD( EvCmdInfinityDungeonSetMapStatus, EV_SEQ_INFINITY_DUNGEON_SET_MAP_STATUS )
+  DEF_CMD( EvCmdInfinityDungeonGetTrIDByIDPos, EV_SEQ_INFINITY_DUNGEON_GET_TRID_BY_IDPOS )
  
   END_CMD
   //スクリプトコマンドテーブル終了

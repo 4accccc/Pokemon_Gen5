@@ -528,7 +528,6 @@ static void SetReceptionElevatorPos( MAP_CHAGE_EVENT_WORK *p_wk );
 
 // ダンジョン内トレーナー
 static int GetRoomTrainerIDPos( INF_DUNGEON_DATA *p_dungeon_data ,u32 floor_id ,u32 room_id,u8 room_tr_no);
-static u32 GetRoomTrainerID( INF_DUNGEON_DATA *p_dungeon_data ,u32 floor_id ,u32 room_id,u8 room_tr_no);
 static void SetTrainerData( INF_DUNGEON_DATA *p_dungeon_data , u32 seed );
 static void SetTrainer( MAP_CHAGE_EVENT_WORK *p_wk , ROOM_DATA* p_room_data);
 static u32 GetTrSeed( INF_DUNGEON_DATA *p_dungeon_data ,u8 floor_id ,u32 tr_id_pos );
@@ -2757,13 +2756,15 @@ static void SetTrainer( MAP_CHAGE_EVENT_WORK *p_wk , ROOM_DATA* p_room_data)
       NEXT_MAP_DATA *p_next_map_data = &p_wk->next_map_data;
       const INF_MMDL_PARAM *p_mmdlp = &sc_mmdl_param[p_md->move_type];
       u16 tr_id;
+      u8  id_pos;
 
-      tr_id = GetRoomTrainerID(p_wk->p_dungeon_data,p_wk->now_floor, p_room_data->room_id ,i );
+      id_pos = GetRoomTrainerIDPos( p_wk->p_dungeon_data,p_wk->now_floor, p_room_data->room_id ,i );
+      tr_id = INFINITY_DUNGEON_GetTrIDByIDPos( p_wk->p_dungeon_data,p_wk->now_floor ,id_pos );
       if( tr_id != INF_DUNGEON_TR_ID_MAX )
       {
         u16 obj_code = FBI_TOOL_GetOBJCode( ARCID_INFINITY_DUGENON_TR , tr_id ,p_wk->heapID);
         MMDL *mmdl = MMDLSYS_AddMMdlParam( p_wk->p_mmdlsys,p_md->g_x, p_md->g_y, p_mmdlp->direction,
-            tr_id + TRID_OFFSET_INFINITY_DUNGEON, obj_code, p_mmdlp->move_code,
+            id_pos , obj_code, p_mmdlp->move_code,
             p_next_map_data->zone_id );
         MMDL_SetEventType( mmdl , p_mmdlp->ev_type);
         MMDL_SetParam( mmdl, p_mmdlp->param0 , MMDL_PARAM_0 );
@@ -2827,41 +2828,16 @@ static int GetRoomTrainerIDPos( INF_DUNGEON_DATA *p_dungeon_data ,u32 floor_id ,
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  フロア内のトレーナー番号を調べる
- *
- *	@param	*p_dungeon_data フロアデータ
- *	@param	floor_id      フロアID
- *	@param	room_id       部屋ID
- *	@param	room_tr_no    部屋内の相対ID（0～4）
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-static u32 GetRoomTrainerID( INF_DUNGEON_DATA *p_dungeon_data ,u32 floor_id ,u32 room_id,u8 room_tr_no)
-{
-  int id_pos = GetRoomTrainerIDPos( p_dungeon_data ,floor_id ,room_id , room_tr_no);
-
-  // オーバーチェック
-  if( INFINITY_DUNGEON_TRID_MAX <= id_pos)
-  {
-    GF_ASSERT_MSG(0,"トレーナー配置数限界を突破している\n");
-    return INF_DUNGEON_TR_ID_MAX;
-  }
-
-  return p_dungeon_data->tr_data[floor_id].tr_id[id_pos];
-}
-
-//----------------------------------------------------------------------------
-/**
  *	@brief  無限ダンジョン内トレーナー戦闘イベント
  *
  *	@param	*gsys
  *	@param	*fieldmap 
+ *	@param	obj_id
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-GMEVENT * INFINITY_DUNGEON_EVENT_TrainerBattle(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap ,u16 obj_id)
+GMEVENT * INFINITY_DUNGEON_EVENT_TrainerBattle(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap ,u8 obj_id)
 {
   GMEVENT   *event;
   GAMEDATA  *p_gdata;
@@ -2872,13 +2848,13 @@ GMEVENT * INFINITY_DUNGEON_EVENT_TrainerBattle(GAMESYS_WORK *gsys, FIELDMAP_WORK
   BSUBWAY_TRAINER_ROM_DATA  *trd;
   BSUBWAY_PARTNER_DATA tr_data;
   HEAPID heapID = HEAPID_FIELDMAP;
-  u16 tr_no;
+  u16 tr_id;
   GFL_STD_RandContext rand_context;
 
   INF_DUNGEON_DATA *p_dungeon_data;
-  u32 id_pos;
   u32 tr_seed;
   u32 floor_id;
+  u8  id_pos = obj_id;
 
   // セーブデータの取得
   p_gdata       = GAMESYSTEM_GetGameData( gsys );
@@ -2888,24 +2864,23 @@ GMEVENT * INFINITY_DUNGEON_EVENT_TrainerBattle(GAMESYS_WORK *gsys, FIELDMAP_WORK
   // 現在のエリア取得
   area_no = INFINITYDUNGEON_SAVE_GetDungeonAreaID( p_save );
 
-  // OBJIDからtr_noを求める
-  tr_no = INFINITY_DUNGEON_SAVE_GetTrNo_ByObjId( obj_id );
-
   // トレーナーシード
   p_dungeon_data  = INFINITY_DUNGEON_DataGet(fieldmap);
   floor_id        = INFINITYDUNGEON_SAVE_GetFloorID( p_save );
-  id_pos          = INFINITY_DUNGEON_GetTrIDPos( p_dungeon_data ,floor_id ,obj_id ); // 内部でtr_noに変換している
-  tr_seed         = GetTrSeed( p_dungeon_data ,floor_id ,tr_no );
+  tr_seed         = GetTrSeed( p_dungeon_data ,floor_id ,id_pos );
+
+  // トレーナーID
+  tr_id = INFINITY_DUNGEON_GetTrIDByIDPos( p_dungeon_data ,floor_id ,id_pos );
 
   // 乱数を作成
   GFL_STD_RandInit( &rand_context, tr_seed );
   
   //トレーナーデータセット
-  trd = FBI_TOOL_AllocTrainerRomData(&tr_data ,ARCID_INFINITY_DUGENON_TR ,tr_no,NARC_message_infinity_trname_dat ,heapID);
+  trd = FBI_TOOL_AllocTrainerRomData(&tr_data ,ARCID_INFINITY_DUGENON_TR ,tr_id,NARC_message_infinity_trname_dat ,heapID);
 
   //ポケモンデータをセット
   FBI_TOOL_SetBSWayPokemonParam(
-      trd, tr_no , tr_data.btpwd,2,
+      trd, tr_id , tr_data.btpwd,2,
       ARCID_INFINITY_DUGENON_PD,NULL, NULL, NULL, &rand_context, sc_pow_rnd_table[area_no], heapID);
 
   GFL_HEAP_FreeMemory( trd );
@@ -3114,47 +3089,18 @@ u32 INFINITY_DUNGEON_GetHintMessage( INFINITYDUNGEON_SAVE *p_save ,INF_DUNGEON_D
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  トレーナーデータの格納場所を取得
+ *	@brief  無限ダンジョンのIDの場所からトレーナーIDを取得
  *
  *	@param	*p_dungeon_data 
  *	@param	floor_id 
- *	@param	obj_id            内部でトレーナーIDに変換します
+ *	@param	id_pos 
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-u32 INFINITY_DUNGEON_GetTrIDPos( INF_DUNGEON_DATA *p_dungeon_data ,u8 floor_id ,u16 obj_id )
+u16 INFINITY_DUNGEON_GetTrIDByIDPos( INF_DUNGEON_DATA *p_dungeon_data ,u8 floor_id ,u8 id_pos )
 {
-  u32 i;
-  u16 *p_trid;
-  u32 master_seed;
-
-  u16 tr_id = INFINITY_DUNGEON_SAVE_GetTrNo_ByObjId(obj_id);
-
-  // トレーナーIDリストを取得
-  p_trid = p_dungeon_data->tr_data[floor_id].tr_id;
-  
-  // 検索
-  for( i= 0; i<INFINITY_DUNGEON_TRID_MAX; i++ )
-  {
-    if( p_trid[i] == tr_id )
-    {
-      return i;
-    }
-  }
-
-#ifdef PM_DEBUG
-  // データ列挙
-  p_trid = p_dungeon_data->tr_data[floor_id].tr_id;
-  OS_Printf("エラー検索対象トレーナーID:%u\n",tr_id);
-  for( i= 0; i<INFINITY_DUNGEON_TRID_MAX; i++ )
-  {
-    OS_Printf("ID:%u\n",p_trid[i]);
-  }
-#endif
-
-  GF_ASSERT_MSG(0,"ID位置が発見できませんでした");
-  return 0;
+  return p_dungeon_data->tr_data[floor_id].tr_id[id_pos];
 }
 
 //----------------------------------------------------------------------------
@@ -3188,8 +3134,6 @@ u32 INFINITY_DUNGEON_GetRecoverFlgPos( INF_DUNGEON_DATA *p_dungeon_data ,u16 tr_
   u32 i;
   u32 master_seed;
   u32 *p_trid;
-
-  tr_id = INFINITY_DUNGEON_SAVE_GetTrNo_ByObjId(tr_id);
 
   // トレーナーIDリストを取得
   p_trid = p_dungeon_data->recover_data;

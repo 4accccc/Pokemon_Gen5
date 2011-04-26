@@ -13385,16 +13385,16 @@
 /**
  * @def _INFINITY_DUNGEON_SET_TRAINER_BATTLE_FLAG
  * @brief 無限ダンジョン内トレーナーの戦闘状態を設定
- * @param tr_no   トレーナーNO
+ * @param id_pos   トレーナーNO
  * @param status   敵の状態
  */
 //--------------------------------------------------------------
-#define _INFINITY_DUNGEON_SET_TRAINER_BATTLE_FLAG( tr_no ,status ) \
-    _ASM_INFINITY_DUNGEON_SET_TRAINER_BATTLE_FLAG tr_no ,status
+#define _INFINITY_DUNGEON_SET_TRAINER_BATTLE_FLAG( id_pos ,status ) \
+    _ASM_INFINITY_DUNGEON_SET_TRAINER_BATTLE_FLAG id_pos ,status
 
-    .macro  _ASM_INFINITY_DUNGEON_SET_TRAINER_BATTLE_FLAG tr_no ,status
+    .macro  _ASM_INFINITY_DUNGEON_SET_TRAINER_BATTLE_FLAG id_pos ,status
     .short  EV_SEQ_INFINITY_DUNGEON_SET_TRAINER_BATTLE_FLAG
-    .short  \tr_no
+    .short  \id_pos
     .short  \status
     .endm
 
@@ -13402,16 +13402,16 @@
 /**
  * @def _INFINITY_DUNGEON_GET_TRAINER_BATTLE_FLAG
  * @brief 無限ダンジョン内トレーナーの戦闘状態を取得
- * @param tr_no   トレーナーNO
+ * @param id_pos   トレーナーNO
  * @param ret_wk   敵の状態
  */
 //--------------------------------------------------------------
-#define _INFINITY_DUNGEON_GET_TRAINER_BATTLE_FLAG( tr_no ,ret_wk ) \
-    _ASM_INFINITY_DUNGEON_GET_TRAINER_BATTLE_FLAG tr_no ,ret_wk
+#define _INFINITY_DUNGEON_GET_TRAINER_BATTLE_FLAG( id_pos ,ret_wk ) \
+    _ASM_INFINITY_DUNGEON_GET_TRAINER_BATTLE_FLAG id_pos ,ret_wk
 
-    .macro  _ASM_INFINITY_DUNGEON_GET_TRAINER_BATTLE_FLAG tr_no ,ret_wk
+    .macro  _ASM_INFINITY_DUNGEON_GET_TRAINER_BATTLE_FLAG id_pos ,ret_wk
     .short  EV_SEQ_INFINITY_DUNGEON_GET_TRAINER_BATTLE_FLAG
-    .short  \tr_no
+    .short  \id_pos
     .short  \ret_wk
     .endm
 
@@ -13464,7 +13464,7 @@
 
 //--------------------------------------------------------------
 /**
- * @def _INFINITY_DUNGEON_GET_TRAINER_BATTLE_FLAG
+ * @def _INFINITY_DUNGEON_GET_RECOVER_FLAG
  * @brief 無限ダンジョン内回復トレーナーの状態を取得(TRUE=回復済み)
  * @param tr_no   トレーナーNO
  * @param ret_wk   回復状態
@@ -13569,6 +13569,23 @@
 
     .macro  _ASM_INFINITY_DUNGEON_GET_MAP_STATUS ret_wk
     .short  EV_SEQ_INFINITY_DUNGEON_GET_MAP_STATUS
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _INFINITY_DUNGEON_GET_TRID_BY_IDPOS
+ * @brief 無限ダンジョン:トレーナーID位置からトレーナーIDを取得
+ * @param id_pos   トレーナーID位置
+ * @param ret_wk   トレーナーID格納先
+ */
+//--------------------------------------------------------------
+#define _INFINITY_DUNGEON_GET_TRID_BY_IDPOS( id_pos ,ret_wk ) \
+    _ASM_INFINITY_DUNGEON_GET_TRID_BY_IDPOS id_pos ,ret_wk
+
+    .macro  _ASM_INFINITY_DUNGEON_GET_TRID_BY_IDPOS id_pos ,ret_wk
+    .short  EV_SEQ_INFINITY_DUNGEON_GET_TRID_BY_IDPOS
+    .short  \id_pos
     .short  \ret_wk
     .endm
 

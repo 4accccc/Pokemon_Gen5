@@ -454,21 +454,6 @@ u8 INFINITYDUNGEON_SAVE_GetDungeonAreaID( const INFINITYDUNGEON_SAVE *p_save )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  無限ダンジョン内トレーナーNOをObjIDから取得する
- *
- *	@param	obj_id 
- *
- *	@retval 無限ダンジョン内トレーナNO
- */
-//-----------------------------------------------------------------------------
-u16 INFINITY_DUNGEON_SAVE_GetTrNo_ByObjId( u16 obj_id )
-{
-  // OBJIDからtr_idを求める
-  return (obj_id - TRID_OFFSET_INFINITY_DUNGEON);
-}
-
-//----------------------------------------------------------------------------
-/**
  *	@brief  ヒントレベル取得
  *
  *	@param	obj_id 

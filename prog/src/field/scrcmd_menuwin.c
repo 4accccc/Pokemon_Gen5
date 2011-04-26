@@ -32,6 +32,9 @@
 
 #include "sound/pm_sndsys.h"
 
+#include "tr_tool/ex_trainer_def.h" // for TRID_OFFSET_INFINITY_DUNGEON
+#include "../../../resource/fldmapdata/script/infinity_dungeon_scr_def.h" // for SCRID_INFINITY_DUNGEON_TALK_BATTLE_TRAINER
+
 //======================================================================
 //  define
 //======================================================================
@@ -1627,9 +1630,18 @@ VMCMD_RESULT EvCmdTrainerMessageSet( VMHANDLE *core, void *wk )
   u16 tr_id = SCRCMD_GetVMWorkValue( core, work );
   u16 kind_id = SCRCMD_GetVMWorkValue( core, work );
   u16 obj_id  = SCRCMD_GetVMWorkValue( core, work );
-  
+  MMDL *mmdl  = SCRIPT_GetTargetObj( sc );
+  u16  scr_id = MMDL_GetEventID( mmdl );
+ 
   STRBUF *msgbuf = SCRIPT_GetMsgBuffer( sc );
-  
+ 
+  // スクリプトIDで無限ダンジョントレーナーを調べる
+  if( scr_id == SCRID_INFINITY_DUNGEON_TALK_BATTLE_TRAINER )
+  {
+    // 無限ダンジョン用トレーナIDのオフセットを設定
+    tr_id += TRID_OFFSET_INFINITY_DUNGEON;
+  }
+    
   KAGAYA_Printf( "TR ID =%d, KIND ID =%d\n", tr_id, kind_id );
   
   //吹きだしウィンドウ既開チェック開いていたら処理を行わない
