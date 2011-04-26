@@ -1093,7 +1093,7 @@ siwasawa_add_pair_menu:
     CASE 2 THEN
       //òAÇÍï‡Ç´èIóπ
       IF FLAG_ON( SYS_FLAG_PAIR ) THEN
-        _PAIR_TRAINER_FREE( MV_DMY )
+        _PAIR_TRAINER_FREE( 0, MV_DMY )
         _OBJ_DEL( PAIR_TRAINER_01 )
       ENDIF
     DEFAULT

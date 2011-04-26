@@ -602,16 +602,19 @@
 /**
  * トレーナー連れ歩き終了処理呼び出し
  *
- * @param obj_id_wk   連れ歩き対象のOBJIDを格納したワーク
+ * @param ev_id_wk     連れ歩き対象に設定する新しいイベントIDを格納したワーク
  * @param move_code_wk 連れ歩き対象に設定する新しい動作コードを格納したワーク
  */
 //--------------------------------------------------------------
-  .macro _ASM_PAIR_TRAINER_FREE move_code_wk  
+  .macro _ASM_PAIR_TRAINER_FREE ev_id_wk, move_code_wk  
   _PUSH_WORK  SCWK_PARAM0
+  _PUSH_WORK  SCWK_PARAM1
 
-  _ASM_LDWKVAL  SCWK_PARAM0,\move_code_wk
+  _ASM_LDWKVAL  SCWK_PARAM0,\ev_id_wk
+  _ASM_LDWKVAL  SCWK_PARAM1,\move_code_wk
   _CHG_COMMON_SCR SCRID_PAIR_TRAINER_FREE_CALL
   
+  _POP_WORK   SCWK_PARAM1
   _POP_WORK   SCWK_PARAM0
   .endm
 

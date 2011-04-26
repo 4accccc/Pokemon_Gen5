@@ -58,7 +58,8 @@ _END
 //====================================================================
 /*
   フィールドトレーナー連れ歩き解放処理コモン
-  @param  SCWK_PARAM0 連れ歩き対象に設定する新しい動作コード
+  @param  SCWK_PARAM0 連れ歩き対象に設定する新しいイベントID
+  @param  SCWK_PARAM1 連れ歩き対象に設定する新しい動作コード
 */
 //====================================================================
 ev_pair_trainer_free_call:
@@ -67,11 +68,8 @@ ev_pair_trainer_free_call:
     _CHG_LOCAL_SCR  //連れ歩きがいない場合スルー
   ENDIF
 
-  //動作コード変更
-//  _MOVE_CODE_CHANGE( PAIR_TRAINER_01, SCWK_PARAM0 )
-  _PAIR_TRAINER_PARAM_FREE( SCWK_PARAM0 )
-  //連れ歩きフラグリセット
-//  _FLAG_RESET( SYS_FLAG_PAIR )
+  //連れ歩き解除
+  _PAIR_TRAINER_PARAM_FREE( SCWK_PARAM0, SCWK_PARAM1 )
 
   _CHG_LOCAL_SCR                          //ローカルスクリプトに切り替え
 }
@@ -108,7 +106,6 @@ EVENT_START ev_pos_d06r0101_pair
 
   //連れ歩き開始
   _PAIR_TRAINER_SET( D06R0101_PAIR, PAIR_ID_NATURAL, PAIR_TYPE_OPEN, TRID_RIVAL_07 )
-//  $WK_SYS_PAIR_ID = PAIR_ID_NATURAL 
   $WK_SCENE_D06_PAIR = 1
   _FLAG_SET( FV_D06R0101_PAIR )
 }
@@ -118,7 +115,7 @@ EVENT_END
 EVENT_START ev_pos_d06r0101_pair_return
 {
   //連れ歩き解除
-  _PAIR_TRAINER_FREE( MV_DMY )
+  _PAIR_TRAINER_FREE( SCRID_D06_PAIR, MV_DMY )
   $WK_SCENE_D06_PAIR = 0
   _FLAG_RESET( FV_D06R0101_PAIR )
 }
@@ -128,7 +125,7 @@ EVENT_END
 EVENT_START ev_d06_pair
 {
 	_TALK_OBJ_START()
-  _BALLOONWIN_OBJMSG( msg_pair_d06_01, PAIR_TRAINER_01 )
+  _BALLOONWIN_OBJMSG( msg_pair_d06_01, SCWK_TARGET_OBJID )
   _LAST_KEYWAIT()
   _MSGWIN_CLOSE()
 }

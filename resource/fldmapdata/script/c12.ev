@@ -1079,7 +1079,7 @@ EVENT_START ev_pos_c12_rival_pair_return_01
   _MSGWIN_CLOSE()
   
   //連れ歩き解除
-  _PAIR_TRAINER_FREE( MV_DMY )
+  _PAIR_TRAINER_FREE( 0, MV_DMY )
   
   //アニメ：定位置に行く
   _OBJ_ANIME_AUTO( C12_SWRIVAL_01, 35, 714, FORCE_TYPE_NPC, 8, DIR_LR)

@@ -62,11 +62,13 @@ VMCMD_RESULT EvCmdPairTrainerParamSet( VMHANDLE * core, void *wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdPairTrainerParamFree( VMHANDLE * core, void *wk )
 {
+  u16 ev_id = SCRCMD_GetVMWorkValue( core, wk );  //EventID
   u16 move_code = SCRCMD_GetVMWorkValue( core, wk );  //MoveCode
   GAMEDATA * gdata = SCRCMD_WORK_GetGameData( wk );
   MMDL *mmdl = MMDLSYS_SearchOBJID( GAMEDATA_GetMMdlSys( gdata ), MMDL_ID_PAIR );
 
   if( mmdl != NULL ){
+    MMDL_SetEventID( mmdl, ev_id );
     MMDL_ChangeMoveCode( mmdl, move_code );
     MMDL_ChangeOBJID( mmdl, PAIRSYS_GetPairTrainerOriginalObjID(gdata) );
     MMDL_SetStatusBitNotZoneDelete( mmdl, FALSE );

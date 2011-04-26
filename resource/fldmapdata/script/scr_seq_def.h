@@ -2031,14 +2031,16 @@
 /**
  *  @def    _PAIR_TRAINER_PARAM_FREE
  *  @brief  連れ歩きトレーナーパラメータ解放
+ *  @param  ev_id 連れ歩いていたOBJに設定する新しいスクリプトID
  *  @param  move_code 連れ歩いていたOBJに設定する新しい動作コード
  */
 //--------------------------------------------------------------
-#define _PAIR_TRAINER_PARAM_FREE( move_code ) \
-  _ASM_PAIR_TRAINER_PARAM_FREE move_code
+#define _PAIR_TRAINER_PARAM_FREE( ev_id, move_code ) \
+  _ASM_PAIR_TRAINER_PARAM_FREE ev_id, move_code
 
-  .macro  _ASM_PAIR_TRAINER_PARAM_FREE move_code
+  .macro  _ASM_PAIR_TRAINER_PARAM_FREE ev_id, move_code
   .short  EV_SEQ_PAIR_TRAINER_PARAM_FREE
+  .short  \ev_id
   .short  \move_code
   .endm
 
@@ -8854,12 +8856,12 @@
 /**
  * @def _PAIR_TRAINER_FREE
  * @brief  トレーナー連れ歩き解除
- * @param obj_id    連れ歩いたOBJのID
+ * @param ev_id      連れ歩いたOBJに設定する新しいイベントID
  * @param move_code  連れ歩いたOBJに設定する新しい動作コード
  */
 //--------------------------------------------------------------
-#define _PAIR_TRAINER_FREE( obj_id )  \
-    _ASM_PAIR_TRAINER_FREE  obj_id
+#define _PAIR_TRAINER_FREE( ev_id, obj_id )  \
+    _ASM_PAIR_TRAINER_FREE  ev_id, obj_id
 
 
 //======================================================================
