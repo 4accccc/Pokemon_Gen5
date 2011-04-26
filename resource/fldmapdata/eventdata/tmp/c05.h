@@ -13,8 +13,8 @@
 #define DOOR_ID_C05_C05PC0101_EXIT01      8
 #define DOOR_ID_C05_C05GYM0201_EXIT01     9
 #define DOOR_ID_C05_C05R0501_EXIT01      10
-#define DOOR_ID_C05_C05R0701_EXIT01      11
-#define DOOR_ID_C05_C05R0601_EXIT04      12
+#define DOOR_ID_C05_C05R0601_EXIT04      11
+#define DOOR_ID_C05_C05R0701_EXIT01      12
 
 #endif //ZONE_C05_EVD_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c05.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
