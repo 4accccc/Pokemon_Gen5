@@ -56,13 +56,13 @@
 #define GYM_POISON_UNIT_IDX (0)
 #define GYM_POISON_TMP_ASSIGN_ID  (1)
 
-#define SPEAKER1_X    (32 << FX32_SHIFT)      // スピーカー1　X座標
+#define SPEAKER1_X    (29 << FX32_SHIFT)      // スピーカー1　X座標
 #define SPEAKER1_Y    (0 << FX32_SHIFT)      // スピーカー1　Y座標
 #define SPEAKER1_Z    (78 << FX32_SHIFT)     // スピーカー1　Z座標
-#define SPEAKER2_X    (240 << FX32_SHIFT)     // スピーカー2  X座標
+#define SPEAKER2_X    (243 << FX32_SHIFT)     // スピーカー2  X座標
 #define SPEAKER2_Y    (0 << FX32_SHIFT)      // スピーカー2  Y座標
 #define SPEAKER2_Z    (78 << FX32_SHIFT)      // スピーカー2  Z座標
-#define SPEAKER3_X    (224 << FX32_SHIFT)     // スピーカー3  X座標
+#define SPEAKER3_X    (227 << FX32_SHIFT)     // スピーカー3  X座標
 #define SPEAKER3_Y    (18 << FX32_SHIFT)      // スピーカー3  Y座標
 #define SPEAKER3_Z    (25 << FX32_SHIFT)      // スピーカー3  Z座標
 
