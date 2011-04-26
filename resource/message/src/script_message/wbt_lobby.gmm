@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00253" date="2011-04-25T21:57:38"/>
+	<create user="matsumiya" host="W00224" date="2011-04-26T20:23:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -378,7 +378,7 @@
 		</language>
 	</columns>
 
-	<dialog left="6" top="97" right="711" bottom="717" maximized="no" rayout="Vertical2">
+	<dialog left="1530" top="270" right="2235" bottom="890" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -386,7 +386,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -807,9 +807,9 @@ msg_wbt_info_11へ</comment>
 ・つづけてトーナメントリスト表示</comment>
 		<attribute name="キャラ指定">INFORMATIONW</attribute>
 		<language name="JPN" width="256">さんか　うけつけが　おわりました
-トーナメントリストを　ごらんください▼</language>
+では　こちらへ……▼</language>
 		<language name="JPN_KANJI" width="256">参加受付が　完了しました
-トーナメントリストを　ご覧ください▼</language>
+では　こちらへ……▼</language>
 	</row>
 
 	<row id="msg_wbt_info_error1" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
