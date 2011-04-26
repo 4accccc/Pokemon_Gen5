@@ -238,7 +238,12 @@ void BTLV_FIELD_ChangeAnime( BTLV_FIELD_WORK *bfw, int anime )
 {
   BATT_BG_TBL_BG_TABLE* bbtbt = GFL_ARC_LoadDataAlloc( ARCID_BATT_BG_TBL, NARC_batt_bg_tbl_batt_bg_bin,
                                                        GFL_HEAP_LOWID( bfw->heapID ) );
-  GF_ASSERT( bfw->anm_count );
+  // アニメ適用チェック
+  if( bfw->anm_count==0 ){
+    GFL_HEAP_FreeMemory( bbtbt );  //アニメ適用していないのであれば即終了
+    OS_Printf("背景モデルにアニメ無いよ\n");
+    return;
+  }
 
   // もともと適用していたアニメーションを破棄する
   _field_anime_delete( bfw );

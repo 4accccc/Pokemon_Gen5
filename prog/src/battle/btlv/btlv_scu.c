@@ -107,7 +107,16 @@ enum {
 
 
   BBGP_CLIENT_ID_NONE = BTL_CLIENT_NUM,
+
+  // ポケウッド用
+  POKEWOOD_WIN0_TOP_Y       =   8,
+  POKEWOOD_WIN0_BOTTOM_Y    = 176,
+  POKEWOOD_MSGWIN_SLIDE_Y   =  16,
+  BATTLE_WINFRAME_CHARANUM  =   8,
+  
+
 };
+
 
 /**
  *  とくせいウィンドウ用SE指定
@@ -300,7 +309,7 @@ static void taskFakeDisable( GFL_TCBL* tcbl, void* wk_adrs );
 static void taskTransform( GFL_TCBL* tcbl, void* wk_adrs );
 static void msgWinVisible_Init( MSGWIN_VISIBLE* wk, GFL_BMPWIN* win );
 static void msgWinVisible_Hide( MSGWIN_VISIBLE* wk );
-static void msgWinVisible_Disp( MSGWIN_VISIBLE* wk, BOOL printAtOnceFlag );
+static void msgWinVisible_Disp( MSGWIN_VISIBLE* wk, BOOL printAtOnceFlag, u16 clear_colno );
 static BOOL msgWinVisible_Update( MSGWIN_VISIBLE* wk );
 static void taskMsgWinHide( GFL_TCBL* tcbl, void* wk_adrs );
 static void statwin_setupAll( BTLV_SCU* wk );
@@ -324,6 +333,7 @@ static void bbgp_make( BTLV_SCU* wk, BTLV_BALL_GAUGE_PARAM* bbgp, u8 clientID_1,
 static BOOL lvupWinProc_Disp( int* seq, void* wk_adrs );
 static BOOL lvupWinProc_Fwd( int* seq, void* wk_adrs );
 static BOOL lvupWinProc_Hide( int* seq, void* wk_adrs );
+static  u16 _get_msgwin_clear_color( BTLV_SCU *wk, u16 clear_color );
 
 
 
@@ -419,7 +429,11 @@ void BTLV_SCU_Setup( BTLV_SCU* wk )
           PALIDX_MSGWIN, GFL_BMP_CHRAREA_GET_F );
   wk->bmp = GFL_BMPWIN_GetBmp( wk->win );
   GFL_BMPWIN_MakeScreen( wk->win );
-  GFL_BMPWIN_MakeFrameScreen( wk->win, winfrm_charpos, PALIDX_MSGWIN );
+
+  // ポケウッドのときはメッセージウインドウのフレームを作らない
+  if(BTL_MAIN_GetPokewoodMode(wk->mainModule)!=BTL_POKEWOOD_SHOW){
+    GFL_BMPWIN_MakeFrameScreen( wk->win, winfrm_charpos, PALIDX_MSGWIN );
+  }
 
   GFL_BMP_Clear( wk->bmp, COLIDX_MSGWIN_CLEAR );
   GFL_BMPWIN_TransVramCharacter( wk->win );
@@ -454,7 +468,24 @@ void BTLV_SCU_Setup( BTLV_SCU* wk )
   GFL_BG_SetVisible( BGFRAME_TOKWIN_FRIEND,  VISIBLE_ON );
   GFL_BG_SetVisible( BGFRAME_TOKWIN_ENEMY,   VISIBLE_ON );
   ///<obj
-  GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+
+  // ポケウッド上映時は体力メーターを出さない
+  // また、メッセージBG面をズラし、ハードウェアマスクをかける
+  if(BTL_MAIN_GetPokewoodMode(wk->mainModule)!=BTL_POKEWOOD_SHOW){
+    GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+  }else{
+    // 上画面の上下をマスクする
+    G2_SetWnd0InsidePlane( GX_WND_PLANEMASK_BG0 | GX_WND_PLANEMASK_BG1 |
+                           GX_WND_PLANEMASK_BG2 | GX_WND_PLANEMASK_BG3 |
+                           GX_WND_PLANEMASK_OBJ, TRUE );
+    G2_SetWndOutsidePlane( GX_WND_PLANEMASK_NONE, FALSE );
+    GX_SetVisibleWnd( GX_WNDMASK_W0 );
+    G2_SetWnd0Position( 0, POKEWOOD_WIN0_TOP_Y, 255, POKEWOOD_WIN0_BOTTOM_Y);
+    GFL_BG_SetScroll( GFL_BG_FRAME1_M, GFL_BG_SCROLL_Y_SET, POKEWOOD_MSGWIN_SLIDE_Y );
+    GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_OFF );
+  
+  }
+
 }
 /**
  *  WindowFrame CGX 転送して転送位置キャラナンバーを返す
@@ -2640,8 +2671,11 @@ static u16 btlfinEffsub_getOpponentPokeInStrID( BTLV_SCU* wk, u8 pokeCount )
 //=============================================================================================
 void BTLV_SCU_PrintMsgAtOnce( BTLV_SCU* wk, const STRBUF* str )
 {
-  GFL_BMP_Clear( wk->bmp, COLIDX_MSGWIN_CLEAR );
-  GFL_FONTSYS_SetColor( COLIDX_MSGWIN_LETTER, COLIDX_MSGWIN_SHADOW, COLIDX_MSGWIN_CLEAR );
+  //ポケウッド用にBMPWINクリアカラーを変更する
+  u16 msgwin_clear_colno = _get_msgwin_clear_color( wk, COLIDX_MSGWIN_CLEAR ); 
+
+  GFL_BMP_Clear( wk->bmp, msgwin_clear_colno );
+  GFL_FONTSYS_SetColor( COLIDX_MSGWIN_LETTER, COLIDX_MSGWIN_SHADOW, msgwin_clear_colno );
 
 #if 1
   PRINTSYS_Print( wk->bmp, 0, 0, str, wk->defaultFont );
@@ -2674,14 +2708,18 @@ void BTLV_SCU_PrintMsgAtOnce( BTLV_SCU* wk, const STRBUF* str )
 //=============================================================================================
 void BTLV_SCU_StartMsg( BTLV_SCU* wk, const STRBUF* str, u16 wait, pPrintCallBack callbackFunc )
 {
+  //ポケウッド用にBMPWINクリアカラーを変更する
+  u16 msgwin_clear_colno = _get_msgwin_clear_color( wk, COLIDX_MSGWIN_CLEAR ); 
+
   GF_ASSERT( wk->printStream == NULL );
 
-  GFL_BMP_Clear( wk->bmp, COLIDX_MSGWIN_CLEAR );
-  GFL_FONTSYS_SetColor( COLIDX_MSGWIN_LETTER, COLIDX_MSGWIN_SHADOW, COLIDX_MSGWIN_CLEAR );
+  GFL_BMP_Clear( wk->bmp, msgwin_clear_colno );
+  GFL_FONTSYS_SetColor( COLIDX_MSGWIN_LETTER, COLIDX_MSGWIN_SHADOW, msgwin_clear_colno );
+
 
   wk->printStream = PRINTSYS_PrintStreamCallBack(
         wk->win, 0, 0, str, wk->defaultFont, BTL_MAIN_GetPrintWait(wk->mainModule), wk->tcbl, BTLV_TASKPRI_MAIN_WINDOW,
-        wk->heapID, COLIDX_MSGWIN_CLEAR, callbackFunc
+        wk->heapID, msgwin_clear_colno, callbackFunc
   );
   PRINTSYS_PrintStreamStop( wk->printStream );
 
@@ -2741,8 +2779,11 @@ BOOL BTLV_SCU_WaitMsg( BTLV_SCU* wk )
 
   switch( wk->printSeq ){
   case SEQ_START_MSGWIN_VISIBLE:
-    msgWinVisible_Disp( &wk->msgwinVisibleWork, wk->printAtOnceFlag );
-    wk->printSeq++;
+    {
+      u16 colno = _get_msgwin_clear_color( wk, COLIDX_MSGWIN_CLEAR);
+      msgWinVisible_Disp( &wk->msgwinVisibleWork, wk->printAtOnceFlag, colno );
+      wk->printSeq++;
+    }
     /* fallthru */
   case SEQ_WAIT_MSGWIN_VISIBLE:
     if( !msgWinVisible_Update(&wk->msgwinVisibleWork) ){
@@ -3589,7 +3630,7 @@ static void msgWinVisible_Hide( MSGWIN_VISIBLE* wk )
     wk->state = MSGWIN_STATE_TO_HIDE;
   }
 }
-static void msgWinVisible_Disp( MSGWIN_VISIBLE* wk, BOOL printAtOnceFlag )
+static void msgWinVisible_Disp( MSGWIN_VISIBLE* wk, BOOL printAtOnceFlag, u16 clear_colno )
 {
   if( wk->state == MSGWIN_STATE_HIDE
   ||  wk->state == MSGWIN_STATE_TO_HIDE
@@ -3597,7 +3638,7 @@ static void msgWinVisible_Disp( MSGWIN_VISIBLE* wk, BOOL printAtOnceFlag )
     if( !printAtOnceFlag )
     {
       GFL_BMP_DATA* bmp = GFL_BMPWIN_GetBmp( wk->win );
-      GFL_BMP_Clear( bmp, COLIDX_MSGWIN_CLEAR );
+      GFL_BMP_Clear( bmp, clear_colno );
       GFL_BMPWIN_TransVramCharacter( wk->win );
     }
 
@@ -4582,4 +4623,21 @@ static BOOL lvupWinProc_Hide( int* seq, void* wk_adrs )
 
 
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief	BMPWINの背景色取得（ポケウッドの時には無色にする）
+ *
+ * @param   wk		      BTLV_SCU
+ * @param   clear_color	背景色
+ *
+ * @retval  u16		状況に応じた背景色
+ */
+//----------------------------------------------------------------------------------
+static u16 _get_msgwin_clear_color( BTLV_SCU *wk, u16 clear_color )
+{
+  if(BTL_MAIN_GetPokewoodMode(wk->mainModule)==BTL_POKEWOOD_SHOW){
+    return 0;
+  }
+  return clear_color;
+}
 

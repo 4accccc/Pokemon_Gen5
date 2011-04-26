@@ -39,6 +39,8 @@ extern TrItemResult  BTL_SVFSUB_TrainerItemProc( BTL_SVFLOW_WORK* wk, BTL_POKEPA
  */
 extern BtlResult BTL_SVFSUB_CheckBattleResult( BTL_SVFLOW_WORK* wk );
 
+extern int BTL_SVSUB_CheckPokewoodSenario( const BTL_MAIN_MODULE *mainModule, BTL_POKE_CONTAINER *pokeCon );
+
 
 /*====================================================================================================*/
 /*                                                                                                    */

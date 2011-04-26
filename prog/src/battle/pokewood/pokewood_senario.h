@@ -10,13 +10,14 @@
 #ifndef __POKEWOOD_SENARIO_H__
 #define __POKEWOOD_SENARIO_H__
 
-#define EVENT_TALK_TURN_MAX   (  7 )  ///< イベント中の会話の最大数
-#define EVENT_REACTION_MAX    (  4 )  ///< 選択肢リアクションの最大数
-#define ENEMY_POKE_MAX        (  6 )  ///< 敵トレーナーの最大数
-#define SELECT_MSG_NUM        (  9 )  ///< 選択時状況メッセージの最大種類
-#define SITUATION_MSG_NUM     (  6 )  ///< シチュエーションメッセージの最大種類
-#define EVENT_DATA_MAX        (  5 )  ///< イベントデータの最大数
-#define POKEWOOD_TALK_MSG_MAX ( 20 )  ///< ターン毎会話の最大数
+#define EVENT_TALK_TURN_MAX     (  7 )  ///< イベント中の会話の最大数
+#define EVENT_REACTION_MAX      (  4 )  ///< 選択肢リアクションの最大数
+#define ENEMY_POKE_MAX          (  6 )  ///< 敵トレーナーの最大数
+#define SELECT_MSG_NUM          (  9 )  ///< 選択時状況メッセージの最大種類
+#define SITUATION_MSG_NUM       (  6 )  ///< シチュエーションメッセージの最大種類
+#define EVENT_DATA_MAX          (  5 )  ///< イベントデータの最大数
+#define POKEWOOD_TALK_MSG_MAX   ( 20 )  ///< ターン毎会話の最大数
+#define POKEWOOD_NORMAL_VFX_MAX (  3 )  ///< ターン開始時に背景チェンジを行う最大回数
 
 // ポケウッド敵トレーナー所持ポケモン情報
 typedef struct {
@@ -50,11 +51,18 @@ typedef struct{
   s16 item_ok;        ///< 道具使用OKかどうか
   s16 turn_max;       ///< ターン最大数
   s16 etc1,etc2;      ///< パディング
+  
+  s16 bg_change[POKEWOOD_NORMAL_VFX_MAX][2];  ///< 背景チェンジターン
+  s16 etc3,etc4;
+  
   POKEWOOD_ENEMY_POKE enemy_poke[ENEMY_POKE_MAX]; ///< 敵トレーナーのポケモンの最大数
   s16 select_msg[2][SELECT_MSG_NUM];              ///< メッセージ選択時の会話ID(自分・敵）
   s16 situation_msg[2][SITUATION_MSG_NUM];        ///< 状況別会話ID(自分・敵）
   s16 turn_msg[2][POKEWOOD_TALK_MSG_MAX];         ///< ターン毎の会話ID(自分・敵）
   POKEWOOD_EVENT_DATA event[EVENT_DATA_MAX];      ///< イベントデータ
 }POKEWOOD_SENARIO;
+
+extern POKEWOOD_SENARIO *BTL_MAIN_GetPokewoodSenario( BTL_MAIN_MODULE *wk );
+
 
 #endif

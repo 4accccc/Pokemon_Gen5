@@ -1991,6 +1991,57 @@ static u8 ShooterEff_FlatCall( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 item
 /*  勝敗判定                                                                                          */
 /*                                                                                                    */
 /*====================================================================================================*/
+int BTL_SVSUB_CheckPokewoodSenario( const BTL_MAIN_MODULE *mainModule, BTL_POKE_CONTAINER *pokeCon )
+{
+  int senario_no = BTL_MAIN_GetPokewoodSenarioNo( mainModule );
+  int win_flag =0, lose_flag=0;
+
+  OS_Printf("ポケウッドシナリオ %d\n", senario_no);
+  switch(senario_no){
+  case 0:   // UFOが倒れればOK、ワシボンが落ちると負け
+    { 
+      int ufo_index,i;
+      BTL_PARTY* party = BTL_POKECON_GetPartyData( pokeCon, 1 );
+      const BTL_POKEPARAM* bpp; 
+
+      // UFOは倒れているか
+      for(i=0;i<BTL_PARTY_GetMemberCount(party);i++){
+        bpp = BTL_PARTY_GetMemberDataConst( party, i );
+        if(BPP_GetMonsNo( bpp )==MONSNO_ufo){
+          if(BPP_IsDead(bpp)){
+            ufo_index=i;
+            win_flag = 1;
+          }
+        }
+      }
+
+      // UFO以外が倒れていないか
+      for(i=0;i<BTL_PARTY_GetMemberCount(party);i++){
+        bpp = BTL_PARTY_GetMemberDataConst( party, i );
+        if(i!=ufo_index){
+          if(BPP_IsDead(bpp)){
+            lose_flag = 1;
+          }
+        }
+      }
+      
+    }
+    break;
+  case 1:
+    break;
+  }
+
+  OS_Printf(" win_flag=%d, lose_flag=%d\n", win_flag, lose_flag);
+  if(win_flag && lose_flag==0){
+    return 1;   // 勝ち目的達成
+  }
+  
+  if(lose_flag){
+    return -1;  // 負け条件達成
+  }
+  
+  return 0; //勝敗無し
+}
 
 //=============================================================================================
 /**
@@ -2010,6 +2061,8 @@ BtlResult BTL_SVFSUB_CheckBattleResult( BTL_SVFLOW_WORK* wk )
 // 両陣営の生き残りポケ数＆総ポケ数カウント
   alivePokeCnt[0] = alivePokeCnt[1] = 0;
   totalPokeCnt[0] = totalPokeCnt[1] = 0;
+
+  OS_Printf("勝敗判定\n");
 
   for(i=0; i<BTL_CLIENT_MAX; ++i)
   {
@@ -2041,10 +2094,24 @@ BtlResult BTL_SVFSUB_CheckBattleResult( BTL_SVFLOW_WORK* wk )
       return BTL_RESULT_WIN;
     }
 
+    // ポケウッド専用勝敗判定
+    if(BTL_MAIN_GetPokewoodMode(wk->mainModule)==BTL_POKEWOOD_REC || 
+       BTL_MAIN_GetPokewoodMode(wk->mainModule)==BTL_POKEWOOD_SHOW){
+      int win_lose;
+      OS_Printf("ポケウッド ENDチェック\n");
+      win_lose = BTL_SVSUB_CheckPokewoodSenario( wk->mainModule, wk->pokeCon );
+      if(win_lose>0){
+        return BTL_RESULT_WIN;
+      }else if(win_lose<0){
+        return BTL_RESULT_LOSE;
+      }
+    }
+
     // 厳密判定が不要ならこの時点で引き分け
     if( !BTL_MAIN_IsResultStrictMode(wk->mainModule) ){
       return BTL_RESULT_DRAW;
     }
+
 
     //---------------------------------------------------
     /*

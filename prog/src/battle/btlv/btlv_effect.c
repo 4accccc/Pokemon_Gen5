@@ -34,7 +34,7 @@
 #include "debug/debug_hudson.h"
 
 //#define DEBUG_DUMP_TEXVRAM      // デバッグボタンを押すとTEX-VRAMのデバッグプリントが出る
-//#define DEBUG_BG_ANIME_CHANGE   // デバッグボタンを押すと背景アニメが切り替わる
+#define DEBUG_BG_ANIME_CHANGE   // デバッグボタンを押すと背景アニメが切り替わる
 
 //============================================================================================
 /**
@@ -216,7 +216,7 @@ BTLV_EFFECT_SETUP_PARAM*  BTLV_EFFECT_MakeSetUpParam( BtlRule rule, BtlCompetito
   besp->scu         = scu;
   besp->mainModule  = mainModule;
   besp->pokewood        = BTL_MAIN_GetPokewoodMode( mainModule );
-  besp->pokewoodsenario = BTL_MAIN_GetPokewoodSenario( mainModule );
+  besp->pokewoodsenario = BTL_MAIN_GetPokewoodSenarioNo( mainModule );
 
   for( i = 0 ; i < 4 ; i++ )
   {
@@ -347,7 +347,7 @@ void  BTLV_EFFECT_Init( BTLV_EFFECT_SETUP_PARAM* besp, GFL_FONT* fontHandle, HEA
   }
 
   bew->bcw  = BTLV_CAMERA_Init( bew->tcb_sys, heapID );
-  bew->bclw = BTLV_CLACT_Init( bew->tcb_sys, heapID );
+  bew->bclw = BTLV_CLACT_Init( bew->tcb_sys, heapID, BTL_MAIN_GetPokewoodMode(bew->besp.mainModule) );
   bew->bgw  = BTLV_GAUGE_Init( fontHandle, heapID );
   bew->btw  = BTLV_TIMER_Init( heapID );
   bew->bbw  = BTLV_BG_Init( bew->tcb_sys, heapID );
@@ -493,7 +493,7 @@ void  BTLV_EFFECT_Main( void )
   GFL_TCB_Main( bew->tcb_sys );
 
 #ifdef DEBUG_BG_ANIME_CHANGE
-  if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_DEBUG){
+  if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_X){
     BTLV_FIELD_ChangeAnime( bew->bfw, debug_anime );
     if(++debug_anime>2){ debug_anime=0; }
   }
@@ -1856,6 +1856,18 @@ void  BTLV_EFFECT_SetTrainerBGMChangeFlag( int bgm_no )
 
   // テストで場面転換を入れる
   BTLV_FIELD_ChangeAnime( bew->bfw, 1 );
+}
+
+//=============================================================================================
+/**
+ * @brief	戦闘背景BGアニメ切り替え（アニメ適用が無い場合はスルー）
+ *
+ * @param   bg_anime_no		切り替えるBGアニメNo(0～3)→batt_bg_tbl.xlsで定義しているはず
+ */
+//=============================================================================================
+void BTLV_EFFECT_ChangeBgAnime( int bg_anime_no )
+{
+  BTLV_FIELD_ChangeAnime( BTLV_EFFECT_GetEffectWork()->bfw, bg_anime_no );
 }
 
 //============================================================================================

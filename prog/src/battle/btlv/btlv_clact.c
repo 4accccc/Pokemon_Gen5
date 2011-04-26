@@ -11,6 +11,8 @@
 #include <gflib.h>
 
 #include "system/gfl_use.h"
+#include "arc_def.h"
+#include "battle/battgra_wb.naix"
 
 #include "btlv_effect.h"
 #include "btlv_clact.h"
@@ -40,8 +42,10 @@ struct _BTLV_CLACT_WORK
   GFL_TCBSYS*     tcb_sys;
   GFL_CLUNIT*     clunit;
   BTLV_CLACT_CLWK bccl[ BTLV_CLACT_CLWK_MAX ];
+  BTLV_CLACT_CLWK rec_meter[ BTLV_CLACT_REC_MAX ];
   u32             clact_tcb_move_execute;
   u32             clact_tcb_scale_execute;
+  int             pokewood;
   HEAPID          heapID;
 };
 
@@ -74,14 +78,18 @@ static  void  TCB_BTLV_CLACT_Scale_CB( GFL_TCB *tcb );
  * @retval  bclw  BTLV_CLACT_WORK管理構造体へのポインタ
  */
 //============================================================================================
-BTLV_CLACT_WORK*  BTLV_CLACT_Init( GFL_TCBSYS *tcb_sys, HEAPID heapID )
+BTLV_CLACT_WORK*  BTLV_CLACT_Init( GFL_TCBSYS *tcb_sys, HEAPID heapID, int pokewood )
 {
   BTLV_CLACT_WORK *bclw = GFL_HEAP_AllocClearMemory( heapID, sizeof( BTLV_CLACT_WORK ) );
 
-  bclw->tcb_sys = tcb_sys;
-  bclw->heapID  = heapID;
+  bclw->tcb_sys  = tcb_sys;
+  bclw->heapID   = heapID;
+  bclw->pokewood = pokewood;
 
-  bclw->clunit = GFL_CLACT_UNIT_Create( BTLV_CLACT_CLWK_MAX, 0, heapID );
+  bclw->clunit = GFL_CLACT_UNIT_Create( BTLV_CLACT_CLWK_MAX+BTLV_CLACT_REC_MAX, 0, heapID );
+
+
+  BTLV_CLACT_AddRecMeter( bclw );
 
   return bclw;
 }
@@ -97,6 +105,10 @@ void  BTLV_CLACT_Exit( BTLV_CLACT_WORK *bclw )
 {
   int index;
 
+  // ポケウッドモードなら録画メーター解放
+  BTLV_CLACT_DeleteRecMeter( bclw );
+
+  // 登録済みセルアクター解放
   for( index = 0 ; index < BTLV_CLACT_CLWK_MAX ; index++ )
   {
     if( bclw->bccl[ index ].clwk )
@@ -104,6 +116,8 @@ void  BTLV_CLACT_Exit( BTLV_CLACT_WORK *bclw )
       BTLV_CLACT_Delete( bclw, index );
     }
   }
+  
+  // セルアクターシステム解放
   GFL_CLACT_UNIT_Delete( bclw->clunit );
   GFL_HEAP_FreeMemory( bclw );
 }
@@ -199,6 +213,7 @@ int BTLV_CLACT_AddEx( BTLV_CLACT_WORK *bclw, ARCID arcID,
 	  CLSYS_AFFINETYPE_NORMAL,  // 上書きアフィンタイプ（CLSYS_AFFINETYPE）
   };
 
+
   hdl = GFL_ARC_OpenDataHandle( arcID, GFL_HEAP_LOWID( bclw->heapID ) );
 
   for( index = 0 ; index < BTLV_CLACT_CLWK_MAX ; index++ )
@@ -249,6 +264,110 @@ int BTLV_CLACT_AddEx( BTLV_CLACT_WORK *bclw, ARCID arcID,
   return index;
 }
 
+//=============================================================================================
+/**
+ * @brief	ポケウッド用撮影メーター登録
+ *
+ * @param   bclw		
+ */
+//=============================================================================================
+
+void BTLV_CLACT_AddRecMeter( BTLV_CLACT_WORK *bclw )
+{
+  ARCHANDLE *hdl;
+  int       i;
+  GFL_CLWK_DATA AddParam = {
+    16,16,
+    0,0,0,
+  };
+
+  // ポケウッド録画モードじゃなかったら撮影ターンメーターを登録しない
+  if(bclw->pokewood!=BTL_POKEWOOD_REC){
+    return;
+  }
+
+  // リソース登録
+  hdl = GFL_ARC_OpenDataHandle( ARCID_BATTGRA, GFL_HEAP_LOWID( bclw->heapID ) );
+  bclw->rec_meter[ 0 ].charID = GFL_CLGRP_CGR_Register( hdl, NARC_battgra_wb_pkwd_icon_NCGR, 
+                                                   FALSE, CLSYS_DRAW_MAIN, bclw->heapID );
+  bclw->rec_meter[ 0 ].plttID = GFL_CLGRP_PLTT_Register( hdl, NARC_battgra_wb_pkwd_icon_NCLR, CLSYS_DRAW_MAIN,
+                                                       BTLV_OBJ_PLTT_CLACT + 0x20 * 3, bclw->heapID );
+  bclw->rec_meter[ 0 ].cellID = GFL_CLGRP_CELLANIM_Register( hdl, NARC_battgra_wb_pkwd_icon_NCER, 
+                                                             NARC_battgra_wb_pkwd_icon_NANR, bclw->heapID );
+  //パレットをPaletteWorkにロード
+  PaletteWorkSet_Arc( BTLV_EFFECT_GetPfd(), ARCID_BATTGRA, NARC_battgra_wb_pkwd_icon_NCLR, 
+                      bclw->heapID, FADE_MAIN_OBJ, 0x20, 
+                      ( GFL_CLGRP_PLTT_GetAddr( bclw->bccl[ 0 ].plttID, CLSYS_DRAW_MAIN ) & 0x3ff ) / 2 );
+
+  // 録画メーターCLACT登録
+  for(i=0;i<BTLV_CLACT_REC_MAX;i++){
+    AddParam.pos_x = 8*i;
+    bclw->rec_meter[ i ].clwk = GFL_CLACT_WK_Create( bclw->clunit,
+                                                    bclw->rec_meter[ 0 ].charID,
+                                                    bclw->rec_meter[ 0 ].plttID,
+                                                    bclw->rec_meter[ 0 ].cellID,
+                                                    &AddParam, CLSYS_DEFREND_MAIN, bclw->heapID );
+    GFL_CLACT_WK_SetAutoAnmFlag( bclw->rec_meter[ i ].clwk, TRUE );
+  }
+  BTLV_CLACT_SetRecMeterAnime( bclw, 10, 0 );
+  
+  // ハンドルクローズ
+  GFL_ARC_CloseDataHandle( hdl );
+  
+}
+
+
+#define REC_METER_PAT_YET_FRAME  (  0 ) // まだ撮影してないフレーム
+#define REC_METER_PAT_PAST_FRAME (  1 ) // 撮影済みフレーム
+#define REC_METER_PAT_NOW_FRAME  (  2 ) // 現在のフレーム
+#define REC_METER_PAT_START_0    (  3 ) // 0ターン目の時のフィルム左端
+#define REC_METER_PAT_START      (  4 ) // フィルム左端
+#define REC_METER_PAT_END        (  5 ) // フィルム右端
+#define REC_METER_PAT_FRAMENUM   (  6 ) // 数字のフレームのスタート番号（10から)
+#define REC_METER_PAT_BLANK      ( 17 ) // 画像無しパターン
+
+//=============================================================================================
+/**
+ * @brief   現在の撮影フレームをセット
+ *
+ * @param   bclw		
+ * @param   max_frame		
+ * @param   now_frame		
+ */
+//=============================================================================================
+void BTLV_CLACT_SetRecMeterAnime( BTLV_CLACT_WORK *bclw, int max_frame, int now_frame )
+{
+  int i,frame_num,set_pat;
+  GF_ASSERT( max_frame>=10 && max_frame<=20 );
+
+  frame_num = max_frame-10;
+  GFL_CLACT_WK_SetAnmSeq( bclw->rec_meter[0].clwk, REC_METER_PAT_FRAMENUM+frame_num );
+  if(now_frame==0){
+    
+    GFL_CLACT_WK_SetAnmSeq( bclw->rec_meter[1].clwk, REC_METER_PAT_START_0 );
+  }else{
+    GFL_CLACT_WK_SetAnmSeq( bclw->rec_meter[1].clwk, REC_METER_PAT_START );
+  }
+
+  for( i=0; i<max_frame; i++ ){
+    if(i<now_frame){
+      set_pat = REC_METER_PAT_PAST_FRAME;
+    }else if(i==now_frame){
+      set_pat = REC_METER_PAT_NOW_FRAME;
+    }else if(i>now_frame){
+      set_pat = REC_METER_PAT_YET_FRAME;
+    }
+    GFL_CLACT_WK_SetAnmSeq( bclw->rec_meter[i+2].clwk, set_pat );
+  }
+  GFL_CLACT_WK_SetAnmSeq( bclw->rec_meter[i+2].clwk, REC_METER_PAT_END );
+
+  i+=3;
+  for(;i<BTLV_CLACT_REC_MAX;i++){
+    GFL_CLACT_WK_SetAnmSeq( bclw->rec_meter[i].clwk, REC_METER_PAT_BLANK );
+  }
+
+}
+
 //============================================================================================
 /**
  *  CLWKの破棄
@@ -269,6 +388,31 @@ void  BTLV_CLACT_Delete( BTLV_CLACT_WORK *bclw, int index )
   GFL_CLACT_WK_Remove( bclw->bccl[ index ].clwk );
 
   bclw->bccl[ index ].clwk = NULL;
+}
+
+//=============================================================================================
+/**
+ * @brief	撮影ターンメーターの破棄
+ *
+ * @param   bclw		
+ */
+//=============================================================================================
+void BTLV_CLACT_DeleteRecMeter( BTLV_CLACT_WORK *bclw )
+{
+  int i;
+  GF_ASSERT( bclw );
+  
+  // ポケウッド録画モードならメーターを解放
+  if(bclw->pokewood==BTL_POKEWOOD_REC){
+    for(i=0;i<BTLV_CLACT_REC_MAX;i++){
+      GFL_CLACT_WK_Remove( bclw->rec_meter[ i ].clwk );
+      bclw->rec_meter[ i ].clwk = NULL;
+    }
+    GFL_CLGRP_CGR_Release(      bclw->bccl[ 0 ].charID );
+    GFL_CLGRP_PLTT_Release(     bclw->bccl[ 0 ].plttID );
+    GFL_CLGRP_CELLANIM_Release( bclw->bccl[ 0 ].cellID );
+  }
+  
 }
 
 //============================================================================================

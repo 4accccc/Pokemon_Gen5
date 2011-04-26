@@ -1182,6 +1182,14 @@ static BOOL scproc_CheckShowdown( BTL_SVFLOW_WORK* wk )
 
   BPP_IsHP41( BTL_POKECON_GetPokeParam(wk->pokeCon, 0) );
 
+  if(BTL_MAIN_GetPokewoodMode(wk->mainModule)==BTL_POKEWOOD_REC || 
+     BTL_MAIN_GetPokewoodMode(wk->mainModule)==BTL_POKEWOOD_SHOW){
+    OS_Printf("ポケウッド ENDチェック\n");
+    if(BTL_SVSUB_CheckPokewoodSenario( wk->mainModule, wk->pokeCon )!=0){
+      return TRUE;
+    }
+  }
+
   if( (pokeExist[0] == FALSE) || (pokeExist[1] == FALSE) ){
     return TRUE;
   }

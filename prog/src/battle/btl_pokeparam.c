@@ -3551,12 +3551,12 @@ BOOL BPP_IsHP41( const BTL_POKEPARAM* bpp )
 {
   if( bpp->coreParam.hp == 41 )
   {
-    OS_TPrintf("ID=%d, HP==41‚Å‚·\n", bpp->coreParam.myID);
+//    OS_TPrintf("ID=%d, HP==41‚Å‚·\n", bpp->coreParam.myID);
     return TRUE;
   }
   else
   {
-    OS_TPrintf("ID=%d, HP41‚¶‚á‚È‚¢‚æ %d‚¾‚æ\n", bpp->coreParam.myID, bpp->coreParam.hp);
+//    OS_TPrintf("ID=%d, HP41‚¶‚á‚È‚¢‚æ %d‚¾‚æ\n", bpp->coreParam.myID, bpp->coreParam.hp);
     return FALSE;
   }
 }

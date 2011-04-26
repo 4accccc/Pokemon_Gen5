@@ -2506,7 +2506,9 @@ BOOL BTL_MAIN_IsExpSeqEnable( const BTL_MAIN_MODULE* wk )
   ||  (wk->setupParam->competitor == BTL_COMPETITOR_TRAINER)
   ){
     if( !BTL_MAIN_GetSetupStatusFlag(wk, BTL_STATUS_FLAG_LEGEND_EX) ){
-      return TRUE;
+      if(BTL_MAIN_GetPokewoodMode(wk)==BTL_POKEWOOD_NONE){ // ポケウッドも経験地処理しない
+        return TRUE;
+      }
     }
   }
   return FALSE;
@@ -3925,7 +3927,10 @@ BOOL BTL_MAIN_IsRecordPlayMode( const BTL_MAIN_MODULE* wk )
  *
  * @param   wk
  *
- * @retval  int 0:ポケウッドじゃない、1:ポケウッド撮影モード、2:ポケウッド上映モード
+ * @retval    BTL_POKEWOOD_NONE ポケウッドじゃない
+ *            BTL_POKEWOOD_REC  ポケウッド撮影モード
+ *            BTL_POKEWOOD_SHOW ポケウッド上映モード
+ *
  */
 //=============================================================================================
 int BTL_MAIN_GetPokewoodMode( const BTL_MAIN_MODULE* wk )
@@ -3944,7 +3949,7 @@ int BTL_MAIN_GetPokewoodMode( const BTL_MAIN_MODULE* wk )
  * @retval  int ポケウッドのシナリオNO
  */
 //=============================================================================================
-int BTL_MAIN_GetPokewoodSenario( const BTL_MAIN_MODULE* wk )
+int BTL_MAIN_GetPokewoodSenarioNo( const BTL_MAIN_MODULE* wk )
 {
   if(wk!=NULL){
     return wk->setupParam->pokewoodSenario;
@@ -6262,10 +6267,17 @@ void POKEWOOD_Exit( BTL_MAIN_MODULE* wk )
   
 }
 
+POKEWOOD_SENARIO *BTL_MAIN_GetPokewoodSenario( BTL_MAIN_MODULE *wk )
+{
+  if(wk->pokewood_senario!=NULL){
+    return wk->pokewood_senario;
+  }
+  return NULL;
+}
 
 static void _print_pokewood_senario( POKEWOOD_SENARIO *senario )
 {
-#ifdef DEBUG_ONLY_FOR_hudson
+#ifdef DEBUG_ONLY_FOR_mori
 
   int i;
   OS_Printf("=================================================\n");
@@ -6275,6 +6287,10 @@ static void _print_pokewood_senario( POKEWOOD_SENARIO *senario )
   OS_Printf("pokenum_limit=%d", senario->pokenum_limit);
   OS_Printf("item_ok=%d\n", senario->item_ok);
   OS_Printf("turn_max=%d\n", senario->turn_max);
+  
+  OS_Printf("bg_change0: turn=%d, change_no=%d\n", senario->bg_change[0][0], senario->bg_change[0][1]  );
+  OS_Printf("bg_change1: turn=%d, change_no=%d\n", senario->bg_change[1][0], senario->bg_change[1][1]  );
+  OS_Printf("bg_change2: turn=%d, change_no=%d\n", senario->bg_change[2][0], senario->bg_change[2][1]  );
   
   OS_Printf("enemy_poke:monsno=%d, sex=%d, level=%d\n", senario->enemy_poke[0].monsno,
                                                         senario->enemy_poke[0].sex,
@@ -6310,6 +6326,21 @@ static void _print_pokewood_senario( POKEWOOD_SENARIO *senario )
                   senario->event[0].reaction[i].enemy_message,
                   senario->event[0].reaction[i].select_enemy_waza,
                   senario->event[0].reaction[i].visual_effect);
+  }
+
+  OS_Printf("EventData:type=%d, start_turn=%d\n", senario->event[1].type, senario->event[1].start_turn);
+  OS_Printf("event_msg=");
+  for(i=0;i<EVENT_TALK_TURN_MAX*2;i++){
+    OS_Printf("%d,", senario->event[1].talk_msg[0][i]);
+  }
+  OS_Printf("\n");
+  for(i=0;i<4;i++){
+    OS_Printf(" reaction=%d:msg=%d, e_msg=%d, waza=%d, vfx=%d\n",
+                  i,
+                  senario->event[1].reaction[i].my_message,
+                  senario->event[1].reaction[i].enemy_message,
+                  senario->event[1].reaction[i].select_enemy_waza,
+                  senario->event[1].reaction[i].visual_effect);
   }
   
   OS_Printf("=================================================\n");

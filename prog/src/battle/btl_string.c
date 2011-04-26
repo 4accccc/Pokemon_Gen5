@@ -83,6 +83,7 @@ typedef enum {
   MSGSRC_YESNO,
   MSGSRC_SUBWAY,
   MSGSRC_WBT,
+  MSGSRC_POKEWOOD,
 
   MSGDATA_MAX,
 }MsgSrcID;
@@ -164,6 +165,7 @@ void BTL_STR_InitSystem( const BTL_MAIN_MODULE* mainModule, u8 playerClientID, c
     NARC_message_yesnomenu_dat,
     NARC_message_tower_trainer_dat,
     NARC_message_wbt_trmsg_dat,
+    NARC_message_pw_senario001_dat,
   };
 
   int i;
@@ -1085,6 +1087,22 @@ void BTL_STR_MakeString_LvupInfo_Param( STRBUF* dst, u32 hp, u32 atk, u32 def, u
 }
 
 
+//=============================================================================================
+/**
+ * @brief	ポケウッド文字列生成
+ *
+ * @param   dst		
+ * @param   senario_no		
+ * @param   msgid		
+ */
+//=============================================================================================
+void BTL_STR_MakeString_Pokewood_Param( STRBUF *dst, int senario_no, int msgid )
+{
 
+  GFL_MSG_GetString( SysWork.msg[MSGSRC_POKEWOOD], msgid, SysWork.tmpBuf );
+
+  WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
+
+}
 
 

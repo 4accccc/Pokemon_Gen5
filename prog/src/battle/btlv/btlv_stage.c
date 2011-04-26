@@ -107,6 +107,8 @@ BTLV_STAGE_WORK *BTLV_STAGE_Init( BtlRule rule, int index, u8 season, HEAPID hea
 
   bsw->heapID = heapID;
 
+  OS_Printf("battle stage index=%d\n", index);
+
   // ポケウッドフラグの参照
   if( pokewood==BTL_POKEWOOD_REC ){
     index = BATT_BG_OBONID_25;

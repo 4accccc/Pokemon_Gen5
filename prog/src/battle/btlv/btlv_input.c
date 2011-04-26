@@ -403,6 +403,11 @@ enum
   BTLV_INPUT_WARUAGAKI_2x4_START = 0xfd,
 };
 
+// ポケウッド観客
+enum{
+  BTLV_INPUT_AUDIENCE_MAX = 27,
+};
+
 enum
 {
   BTLV_INPUT_FADE_OUT = 1,
@@ -587,6 +592,14 @@ struct _BTLV_INPUT_WORK
   GFL_CLUNIT*           waruagaki_clunit;
   GFL_CLWK*             waruagaki_wk;
   BOOL                  waruagaki_flag;
+
+  //ポケウッド観客
+  u32                   audience_charID;
+  u32                   audience_plttID;
+  u32                   audience_cellID;
+  GFL_CLUNIT*           audience_clunit;
+  GFL_CLWK*             audience_wk[ BTLV_INPUT_AUDIENCE_MAX*3 ]; //体と頭と（手・寝言）の３つで一人分
+  BOOL                  audience_flag;
 
   //フォント
   GFL_FONT*             font;
@@ -840,6 +853,9 @@ static  void  set_cursor_pos( BTLV_INPUT_WORK* biw );
 static  void  change_bag_button_pal( BTLV_INPUT_WORK* biw );
 static  void  pop_bag_button_pal( BTLV_INPUT_WORK* biw );
 static  ARCDATID  get_command_screen( BTLV_INPUT_WORK* biw );
+static  void  BTLV_INPUT_CreateAudienceObj( BTLV_INPUT_WORK *biw );
+static  void  BTLV_INPUT_DeleteAudienceObj( BTLV_INPUT_WORK* biw );
+
 
 static  void  SePlayOpen( BTLV_INPUT_WORK* biw );
 static  void  SePlaySelect( BTLV_INPUT_WORK* biw );
@@ -849,6 +865,8 @@ static  void  SePlayRotateSelect( BTLV_INPUT_WORK* biw );
 static  void  SePlayRotateDecide( BTLV_INPUT_WORK* biw );
 static  void  SePlayRotation( BTLV_INPUT_WORK* biw );
 static  void  SePlayBeep( BTLV_INPUT_WORK* biw );
+
+
 
 static  void  BTLV_INPUT_VBlank( GFL_TCB *tcb, void *work );
 
@@ -913,6 +931,7 @@ BTLV_INPUT_WORK*  BTLV_INPUT_Init( GAMEDATA* gameData, BTLV_INPUT_TYPE type, Btl
  *  @param[in]  cursor_flag   カーソル表示するかどうかフラグのポインタ（他のアプリとも共用するため）
  *  @param[in]  bagMdoe       バッグモード
  *  @param[in]  multiMode     マルチ対戦の状態を表す（BtlMultiModeはbattle.hに定義）
+ *  @param[in]  pokewood      ポケウッドモードを表す（battle.hに定義）
  *  @param[in]  heapID        ヒープID
  *
  *  @retval システム管理構造体のポインタ
@@ -1060,6 +1079,7 @@ void  BTLV_INPUT_InitBG( BTLV_INPUT_WORK *biw )
   biw->pokeicon_clunit  = GFL_CLACT_UNIT_Create( BTLV_INPUT_POKEICON_MAX, 2, biw->heapID );
   biw->weather_clunit   = GFL_CLACT_UNIT_Create( BTLV_INPUT_WEATHER_ICON_MAX, 2, biw->heapID );
   biw->waruagaki_clunit = GFL_CLACT_UNIT_Create( BTLV_INPUT_WARUAGAKI_MAX, 1, biw->heapID );
+  biw->audience_clunit  = GFL_CLACT_UNIT_Create( BTLV_INPUT_AUDIENCE_MAX*3, 1, biw->heapID );
 
   BTLV_INPUT_SetFrame( biw );
   BTLV_INPUT_LoadResource( biw );
@@ -1196,6 +1216,15 @@ void  BTLV_INPUT_ExitBG( BTLV_INPUT_WORK *biw )
   {
     GFL_CLACT_UNIT_Delete( biw->waruagaki_clunit );
     biw->waruagaki_clunit = NULL;
+  }
+
+  if(biw->audience_clunit!=NULL){
+    GFL_CLACT_UNIT_Delete( biw->audience_clunit );
+  }
+
+  if(biw->audience_flag){
+    BTLV_INPUT_DeleteAudienceObj(biw);
+    biw->audience_flag = 0;
   }
 
   if( biw->bmp_win )
@@ -2116,10 +2145,10 @@ BTLV_INPUT_SCRTYPE  BTLV_INPUT_GetScrType( BTLV_INPUT_WORK* biw )
 /**
  * @brief	ポケウッド用リソース取得
  *
- * @param   arcid		
- * @param   biw		
+ * @param   arcid	読み込もうとするリソースのID
+ * @param   biw		BTLV_INPUT_WORK
  *
- * @retval  u32		
+ * @retval  u32		ポケウッドモードの場合は専用リソースIDを、違う場合はIDをそのまま返す
  */
 //----------------------------------------------------------------------------------
 static u32 _get_arcid( int arcid, BTLV_INPUT_WORK *biw )
@@ -2778,6 +2807,9 @@ static  void  TCB_TransformStandby2Rotate( GFL_TCB* tcb, void* work )
 #endif
 }
 
+static  void  BTLV_INPUT_CreateAudienceObj( BTLV_INPUT_WORK *biw );
+static  void  BTLV_INPUT_DeleteAudienceObj( BTLV_INPUT_WORK* biw );
+
 //============================================================================================
 /**
  *  @brief  下画面変形タスク（スタンバイ→バトルレコーダー）
@@ -2789,10 +2821,10 @@ static  void  TCB_TransformStandby2BattleRecorder( GFL_TCB* tcb, void* work )
 
   switch( ttw->seq_no ){
   case 0:
-    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, _get_arcid(NARC_battgra_wb_battle_w_bg0f_NSCR,ttw->biw),
-                                     GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
-    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, _get_arcid(NARC_battgra_wb_battle_w_bg1f_NSCR,ttw->biw),
-                                     GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
+//    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, _get_arcid(NARC_battgra_wb_battle_w_bg0f_NSCR,ttw->biw),
+//                                     GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
+//    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, _get_arcid(NARC_battgra_wb_battle_w_bg1f_NSCR,ttw->biw),
+//                                     GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
     SePlayOpen( ttw->biw );
     //GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TTS2C_FRAME1_SCROLL_X );
     //GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TTS2C_FRAME1_SCROLL_Y );
@@ -2826,9 +2858,133 @@ static  void  TCB_TransformStandby2BattleRecorder( GFL_TCB* tcb, void* work )
       SetupSetScroll( ttw->biw, GFL_BG_FRAME0_S, ttw->scr_x, ttw->scr_y,
                       BG_VISIBLE_ON, BG_VISIBLE_ON, BG_VISIBLE_NO_SET, BG_VISIBLE_OFF );
       BTLV_INPUT_FreeTCB( ttw->biw, tcb );
+
+//    if(BTL_MAIN_GetPokewoodMode(BTLV_EFFECT_GetMainModule())==BTL_POKEWOOD_SHOW){
+        // BGリソース転送
+        GFL_ARCHDL_UTIL_TransVramBgCharacter( ttw->biw->handle, NARC_battgra_wb_pkwd_movie_NCGR,
+                                            GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
+        PaletteWorkSet_ArcHandle( ttw->biw->pfd, ttw->biw->handle, NARC_battgra_wb_pkwd_movie_NCLR, 
+                                  ttw->biw->heapID, FADE_SUB_BG, 0x1e0, 0 );
+        PaletteTransSwitch( ttw->biw->pfd, TRUE );
+        GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_pkwd_movie02_NSCR,
+                                         GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
+        // OBJリソース転送・登録
+//        BTLV_INPUT_CreateAudienceObj( ttw->biw );
+
+//      }
     }
     break;
   }
+}
+
+
+static const u8 audience_xy[][2]={
+{ 32,   56, },
+{ 80,   56, },
+{ 128,  56, },
+{ 176,  56, },
+{ 224,  56, },
+{   8,  88, },
+{  56,  88, },
+{ 104,  88, },
+{ 152,  88, },
+{ 200,  88, }, // 10
+{ 248,  88, },
+{ 32,  118, },
+{ 80,  118, },
+{ 128, 118, },
+{ 176, 118, },
+{ 224, 118, },
+{   8, 152, },
+{  56, 152, },
+{ 104, 152, },
+{ 152, 152, }, // 20
+{ 200, 152, },
+{ 248, 152, },
+};
+
+static const GFL_CLWK_DATA audience_param[] =
+{
+  {                     // ボディ
+    0, 0,   //x, y
+    4, 2, 0,  //アニメ番号、優先順位、BGプライオリティ
+  },
+  {                     // 頭
+    0, 0,   //x, y
+    3, 1, 0,  //アニメ番号、優先順位、BGプライオリティ
+  },
+  {                     // 手
+    0, 0,   //x, y
+    0, 0, 0,  //アニメ番号、優先順位、BGプライオリティ
+  }
+};
+
+//--------------------------------------------------------------
+/**
+ * @brief   ポケウッド画面観客OBJ
+ */
+//--------------------------------------------------------------
+static  void  BTLV_INPUT_CreateAudienceObj( BTLV_INPUT_WORK *biw )
+{
+  int i;
+  
+  // リソース転送
+  biw->audience_cellID = GFL_CLGRP_CELLANIM_Register( biw->handle, NARC_battgra_wb_pkwd_obj_NCER, NARC_battgra_wb_pkwd_obj_NANR,
+                                                      biw->heapID );
+  biw->audience_plttID = GFL_CLGRP_PLTT_Register( biw->handle, NARC_battgra_wb_pkwd_ui_obj_NCLR, CLSYS_DRAW_SUB,
+                                                 0x20 * 2, biw->heapID );
+
+  biw->audience_charID = GFL_CLGRP_CGR_Register( biw->handle, NARC_battgra_wb_pkwd_obj_NCGR,
+                                                 FALSE, CLSYS_DRAW_SUB, biw->heapID );
+
+  PaletteWorkSet_VramCopy( biw->pfd, FADE_SUB_OBJ,
+                           GFL_CLGRP_PLTT_GetAddr( biw->audience_plttID, CLSYS_DRAW_SUB ) / 2, 0x20 * 2 );
+
+  for( i = 0 ; i < BTLV_INPUT_AUDIENCE_MAX ; i++ )
+  {
+    GFL_CLWK_DATA param = audience_param[0];
+    param.pos_x = audience_xy[i][0];  param.pos_y = audience_xy[i][1];
+    biw->audience_wk[ i ] = GFL_CLACT_WK_Create( biw->audience_clunit, biw->audience_charID,
+                                                 biw->audience_plttID, biw->audience_cellID,
+                                                 &param, CLSYS_DEFREND_SUB, biw->heapID );
+    param = audience_param[1];
+    param.pos_x = audience_xy[i][0];  param.pos_y = audience_xy[i][1];
+    biw->audience_wk[ BTLV_INPUT_AUDIENCE_MAX+i ] = GFL_CLACT_WK_Create( biw->audience_clunit, biw->audience_charID,
+                                                                         biw->audience_plttID, biw->audience_cellID,
+                                                                         &param, CLSYS_DEFREND_SUB, biw->heapID );
+//    param = audience_param[2];
+//    param.pos_x = audience_xy[i][0];  param.pos_y = audience_xy[i][1];
+//    biw->audience_wk[ BTLV_INPUT_AUDIENCE_MAX*2+i ] = GFL_CLACT_WK_Create( biw->audience_clunit, biw->audience_charID,
+//                                                                           biw->audience_plttID, biw->audience_cellID,
+//                                                                           &param, CLSYS_DEFREND_SUB, biw->heapID );
+
+//    GFL_CLACT_WK_SetPos( biw->pokeicon_wk[ i ], &pokeicon_pos[ i ], CLSYS_DEFREND_SUB );
+    GFL_CLACT_WK_SetAutoAnmFlag( biw->audience_wk[ i ], TRUE );
+    GFL_CLACT_WK_SetAutoAnmFlag( biw->audience_wk[ BTLV_INPUT_AUDIENCE_MAX*1+i ], TRUE );
+//    GFL_CLACT_WK_SetAutoAnmFlag( biw->audience_wk[ BTLV_INPUT_AUDIENCE_MAX*2+i ], TRUE );
+//    GFL_CLACT_WK_SetAnmSeq( biw->pokeicon_wk[ i ].clwk, 1 );
+//    GFL_CLACT_WK_SetPlttOffs( biw->pokeicon_wk[ i ].clwk,
+//                              POKEICON_GetPalNum( mons_no, form_no, sex, FALSE ), CLWK_PLTTOFFS_MODE_OAM_COLOR );
+    GFL_CLACT_WK_SetDrawEnable( biw->audience_wk[ i ], TRUE );
+    GFL_CLACT_WK_SetDrawEnable( biw->audience_wk[ BTLV_INPUT_AUDIENCE_MAX*1+i ], TRUE );
+//    GFL_CLACT_WK_SetDrawEnable( biw->audience_wk[ BTLV_INPUT_AUDIENCE_MAX*2+i ], TRUE );
+  }
+
+  biw->audience_flag = 1;
+}
+
+
+static  void  BTLV_INPUT_DeleteAudienceObj( BTLV_INPUT_WORK* biw )
+{
+  int i;
+
+  for( i = 0 ; i < BTLV_INPUT_AUDIENCE_MAX*2 ; i++ )
+  {
+    GFL_CLACT_WK_Remove( biw->audience_wk[ i ] );
+  }
+  GFL_CLGRP_CGR_Release( biw->audience_charID );
+  GFL_CLGRP_CELLANIM_Release( biw->audience_cellID );
+  GFL_CLGRP_PLTT_Release( biw->audience_plttID );
 }
 
 //============================================================================================
@@ -4893,6 +5049,52 @@ static  void  BTLV_INPUT_DeleteWaruagakiButton( BTLV_INPUT_WORK* biw )
   }
 }
 
+#ifdef PM_DEBUG
+
+static debug_y=8;
+static debug_text_y=16;
+static debug_maxframe = 10;
+static debug_frame    = 0;
+
+
+static void _debug_cinescope(void)
+{
+  int flag=0;
+  if( GFL_UI_KEY_GetRepeat()&PAD_KEY_UP ){
+    if(debug_y<192/2){
+      debug_y++;
+    }
+    flag++;
+  }else if(GFL_UI_KEY_GetRepeat()&PAD_KEY_DOWN ){
+    if(debug_y>0){
+      debug_y--;
+    }
+    flag++;
+  }else if(GFL_UI_KEY_GetRepeat()&PAD_BUTTON_L){
+   debug_text_y--;
+    flag++;
+  }else if(GFL_UI_KEY_GetRepeat()&PAD_BUTTON_R){
+   debug_text_y++;
+    flag++;
+  }else if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_X){
+    BTLV_CLACT_SetRecMeterAnime( BTLV_EFFECT_GetCLWK(), debug_maxframe, debug_frame );
+    debug_frame++;
+    if(debug_frame==debug_maxframe){ debug_frame=0; }
+  }else if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_Y){
+    BTLV_CLACT_SetRecMeterAnime( BTLV_EFFECT_GetCLWK(), debug_maxframe, debug_frame );
+    debug_maxframe++;
+    if(debug_maxframe==21){ debug_maxframe=10; }
+  }
+
+  if(flag){
+    G2_SetWnd0Position( 0, debug_y, 255, 191-debug_y*2);
+    GFL_BG_SetScroll( GFL_BG_FRAME1_M, GFL_BG_SCROLL_Y_SET, debug_text_y );
+  }
+
+
+}
+#endif
+
 //--------------------------------------------------------------
 /**
  * @brief   キー操作チェック
@@ -4910,6 +5112,9 @@ static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL
   int cont  = GFL_UI_KEY_GetCont();
   BOOL decide_flag = FALSE;
 
+#ifdef PM_DEBUG
+//  _debug_cinescope();
+#endif
 
   //Bボタン無効ならBボタンを押していないことにする
   if( biw->b_button_flag == FALSE )

@@ -25,6 +25,7 @@
 #include "../btl_tables.h"
 #include "../app/b_bag.h"
 #include "../app/b_plist.h"
+#include "../btl_server_flow.h"
 
 #include "btlv_scu.h"
 #include "btlv_scd.h"
@@ -886,6 +887,7 @@ void BTLV_UI_SelectAction_Start( BTLV_CORE* core, const BTL_POKEPARAM* bpp, BOOL
   core->actionParam = dest;
   core->playerAction = BTL_ACTION_NULL;
   core->fActionPrevButton = fPrevButton;
+
   mainproc_setup( core, CmdProc_SelectAction );
 }
 //=============================================================================================
@@ -2051,6 +2053,9 @@ static void StrParamToString( const BTLV_STRPARAM* param, STRBUF* dst )
   case BTL_STRTYPE_SUBWAY_LOCALTRAINER:
     BTL_STR_MakeStringSubway( dst, param->args[0], param->args[1] );
     break;
+  case BTL_STRTYPE_POKEWOOD_TURNTALK:
+    BTL_STR_MakeString_Pokewood_Param( dst, 0, param->strID );
+    break;
   default:
     GF_ASSERT(0);
     return;
@@ -3006,6 +3011,26 @@ u8 BTLV_CORE_GetPlayerClientID( const BTLV_CORE* core )
   return core->myClientID;
 }
 
+
+
+//=============================================================================================
+// ポケウッド撮影専用処理
+//=============================================================================================
+//=============================================================================================
+/**
+ * @brief	ポケウッド撮影用ターンメーター反映処理
+ *
+ * @param   core		  BTLV_CORE
+ * @param   maxframe	最大撮影ターン
+ * @param   nowframe	現在のターン
+ */
+//=============================================================================================
+void BTLV_CORE_SetRecMeterAnime( const BTLV_CORE* core, int maxframe, int nowframe )
+{
+  if(BTL_MAIN_GetPokewoodMode(core->mainModule)==BTL_POKEWOOD_REC){
+    BTLV_CLACT_SetRecMeterAnime( BTLV_EFFECT_GetCLWK(), maxframe, nowframe );
+  }
+}
 
 #ifdef PM_DEBUG
 //=============================================================================================

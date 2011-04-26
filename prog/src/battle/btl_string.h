@@ -22,6 +22,7 @@ typedef enum {
   BTL_STRTYPE_WAZAOBOE,
   BTL_STRTYPE_YESNO,
   BTL_STRTYPE_SUBWAY_LOCALTRAINER,
+  BTL_STRTYPE_POKEWOOD_TURNTALK,
 }BtlStrType;
 
 enum {
@@ -136,3 +137,5 @@ extern void BTL_STR_MakeStringYesNoWithArgArray( STRBUF* buf, BtlStrID_YESNO str
 extern void BTL_STR_MakeString_LvupInfo_Diff( STRBUF* buf, u32 hp, u32 atk, u32 def, u32 sp_atk, u32 sp_def, u32 agi );
 extern void BTL_STR_MakeString_LvupInfo_Param( STRBUF* buf, u32 hp, u32 atk, u32 def, u32 sp_atk, u32 sp_def, u32 agi );
 
+
+extern void BTL_STR_MakeString_Pokewood_Param( STRBUF *dst, int senario_no, int msgid );

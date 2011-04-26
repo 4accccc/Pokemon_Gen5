@@ -16,6 +16,8 @@ EVENT_MAX      = 5       # イベント最大数
 EVENT_TALK_MAX = 7       # イベント中のメッセージの最大数(自分・敵）
 EVENT_REACTION_MAX   = 4 # イベント中の選択肢データ最大数
 EVENT_REACTION_ARRAY = 4 # 選択肢データ内の項目数（自分会話・相手会話・技指定・背景チェンジ）
+EVENT_CLEARTURN_KEYWORD = "クリア"
+EVENT_LOSETURN_KEYWORD  = "失敗"
 
 EVENT_LINE_HEIGHT = 14   # イベントデータの行数
 EVENT1_START_LINE = 69	 # イベントデータスタート位置
@@ -161,14 +163,20 @@ class POKEWOOD_SENARIO
   
   #イベントデータセット
   def set_event_data( data, index, start )
-    @event[index].start_turn = data[start][3].to_i
+    if data[start][3]==EVENT_CLEARTURN_KEYWORD then
+      @event[index].start_turn = 100
+    elsif data[start][3]==EVENT_LOSETURN_KEYWORD then
+      @event[index].start_turn = 101
+    else
+      @event[index].start_turn = data[start][3].to_i
+    end
     EVENT_TALK_MAX.times{|i|
        @event[index].set_event_msg(               i, data[start+i+2][1] )
        @event[index].set_event_msg(i+EVENT_TALK_MAX, data[start+i+2][3])
     }
     EVENT_REACTION_MAX.times{|i|
       @event[index].set_reaction_data(i, data[start+9+i][1],
-                                      data[start+9+i][3],data[start+9+i][5],0)
+                                      data[start+9+i][3],data[start+9+i][5],data[start+9+i][6])
     }
 #    printf("%s\n", @start_turn)
   end
@@ -185,6 +193,13 @@ class POKEWOOD_SENARIO
     array << @turn_max
     array << 0
     array << 0
+    
+    6.times{|i|
+      array << @bg_change[i]
+    }
+    array << 0
+    array << 0
+    
     ENEMY_POKE_NUM.times{|i|
       array = array+@enemy_poke[i].pack
     }
