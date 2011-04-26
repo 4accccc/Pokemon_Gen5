@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2011-04-26T18:44:18"/>
+	<create user="shimoyamada" host="W00184" date="2011-04-27T02:29:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -554,10 +554,8 @@ GTSの　ごりよう　ありがとうございます！</language>
 	<row id="resort_resident_spot_warp_00" back-color=",,,,,#ffff00,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">0：観光客名
 1：観光客フリーワード</attribute>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]『いってきますー！
-[1:37:リゾートフリーワード:1]！▼</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『いってきますー！
-[1:37:リゾートフリーワード:1]！▼</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]『いってきますー！▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『いってきますー！▼</language>
 	</row>
 
 	<row id="resort_visitor_greet_00" back-color=",,,,,#c0c0c0,,,,,,,,,,,,,">
@@ -665,8 +663,7 @@ GTSの　ごりよう　ありがとうございます！</language>
 
 	<row id="resort_sys_select_00" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#c0c0c0,,#80ff80,#c0c0c0,,,#c0c0c0,,">
 		<comment>選択質問文</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]さんが　やってきました
-どうしますか？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さんが　やってきました！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんが　やってきました
 どうしますか？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -985,15 +982,15 @@ GTSの　ごりよう　ありがとうございます！</language>
 
 効果なし</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『……　……
-……[1:38:リゾート店名:1]！▽
-ここじゃない！▼
+……[1:38:リゾート店名:1]！？▽
+ちょっと　ちがう……！！▼
 [1:00:トレーナー名:0]は
-かえって　しまった……▼</language>
+かえって　いった……▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『……　……
-……　……　[1:38:リゾート店名:1]！▽
-ここじゃない！▼
+……[1:38:リゾート店名:1]！？▽
+ちょっと　ちがう……！！▼
 [1:00:トレーナー名:0]は
-かえって　しまった……▼</language>
+かえって　いった……▼</language>
 	</row>
 
 	<row id="resort_sys_09" back-color="#80ff80,,,,,#ffff00,,#80ff80,,,,,,,,,,,">
@@ -1079,7 +1076,6 @@ GTSの　ごりよう　ありがとうございます！</language>
 [1:00:トレーナー名:0]が　やってきた！▼
 [1:00:トレーナー名:0]『[1:37:リゾートフリーワード:4]！▼
 [1:00:トレーナー名:2]『[1:37:リゾートフリーワード:3]！▼
-……　……　……　……　……　……
 ……　……　……　……　……　……▼</language>
 		<language name="JPN_KANJI" width="256">[1:38:リゾート店名:1]に
 [1:00:トレーナー名:0]が　やってきた！▼
@@ -1123,14 +1119,16 @@ GTSの　ごりよう　ありがとうございます！</language>
 [1:39:リゾート街名:0]は
 レベル　[2:03:４桁:5]に　なった！▼
 『[1:39:リゾート街名:2]』　として
-うわさが　ひろまった！▼</language>
+[1:39:リゾート街名:0]の　うわさが▽
+ちょっぴり　ひろまった！！▼</language>
 		<language name="JPN_KANJI" width="256">……！！▼
 [1:39:リゾート街名:0]の
 レベルが　あがった！▼
 [1:39:リゾート街名:0]は
 レベル　[2:03:４桁:5]に　なった！▼
 『[1:39:リゾート街名:2]』　として
-うわさが　ひろまった！▼</language>
+[1:39:リゾート街名:0]の　うわさが▽
+ちょっぴり　ひろまった！！▼</language>
 	</row>
 
 	<row id="resort_shop_genre_00" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
@@ -1196,23 +1194,23 @@ GTSの　ごりよう　ありがとうございます！</language>
 
 	<row id="resort_shop_00" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
 		<attribute name="キャラ指定">ポケモンくじ</attribute>
-		<language name="JPN" width="256">ドリーム[1:00:トレーナー名:0]</language>
-		<language name="JPN_KANJI" width="256">ドリーム[1:00:トレーナー名:0]</language>
+		<language name="JPN" width="256">ドリーム★[1:00:トレーナー名:0]</language>
+		<language name="JPN_KANJI" width="256">ドリーム★[1:00:トレーナー名:0]</language>
 	</row>
 
 	<row id="resort_shop_00_01" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
-		<language name="JPN" width="256">ラッキー・[1:00:トレーナー名:0]</language>
-		<language name="JPN_KANJI" width="256">ラッキー・[1:00:トレーナー名:0]</language>
+		<language name="JPN" width="256">ラッキー★[1:00:トレーナー名:0]</language>
+		<language name="JPN_KANJI" width="256">ラッキー★[1:00:トレーナー名:0]</language>
 	</row>
 
 	<row id="resort_shop_00_02" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
-		<language name="JPN" width="256">ハッピー・[1:00:トレーナー名:0]</language>
-		<language name="JPN_KANJI" width="256">ハッピー・[1:00:トレーナー名:0]</language>
+		<language name="JPN" width="256">ハッピー★[1:00:トレーナー名:0]</language>
+		<language name="JPN_KANJI" width="256">ハッピー★[1:00:トレーナー名:0]</language>
 	</row>
 
 	<row id="resort_shop_00_03" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
-		<language name="JPN" width="256">ドリーム・[1:00:トレーナー名:0]</language>
-		<language name="JPN_KANJI" width="256">ドリーム・[1:00:トレーナー名:0]</language>
+		<language name="JPN" width="256">ドリーム★[1:00:トレーナー名:0]</language>
+		<language name="JPN_KANJI" width="256">ドリーム★[1:00:トレーナー名:0]</language>
 	</row>
 
 	<row id="resort_shop_01" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
@@ -1224,22 +1222,22 @@ GTSの　ごりよう　ありがとうございます！</language>
 	<row id="resort_shop_01_01" back-color="#ff78ff,,,,,#ffff00,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
 		<attribute name="キャラ指定">美容室
 α版１</attribute>
-		<language name="JPN" width="256">バーバー[1:00:トレーナー名:0]</language>
-		<language name="JPN_KANJI" width="256">バーバー[1:00:トレーナー名:0]</language>
+		<language name="JPN" width="256">バーバー★[1:00:トレーナー名:0]</language>
+		<language name="JPN_KANJI" width="256">バーバー★[1:00:トレーナー名:0]</language>
 	</row>
 
 	<row id="resort_shop_01_02" back-color="#ff78ff,,,,,#ffff00,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
 		<attribute name="キャラ指定">美容室
 α版２</attribute>
-		<language name="JPN" width="256">ビューティ[1:00:トレーナー名:0]</language>
-		<language name="JPN_KANJI" width="256">ビューティ[1:00:トレーナー名:0]</language>
+		<language name="JPN" width="256">ビューティ★[1:00:トレーナー名:0]</language>
+		<language name="JPN_KANJI" width="256">ビューティ★[1:00:トレーナー名:0]</language>
 	</row>
 
 	<row id="resort_shop_01_03" back-color="#ff78ff,,,,,#ffff00,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
 		<attribute name="キャラ指定">美容室
 α版３</attribute>
-		<language name="JPN" width="256">サロン[1:00:トレーナー名:0]</language>
-		<language name="JPN_KANJI" width="256">サロン[1:00:トレーナー名:0]</language>
+		<language name="JPN" width="256">サロン★[1:00:トレーナー名:0]</language>
+		<language name="JPN_KANJI" width="256">サロン★[1:00:トレーナー名:0]</language>
 	</row>
 
 	<row id="resort_shop_02" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
@@ -1273,14 +1271,14 @@ GTSの　ごりよう　ありがとうございます！</language>
 	<row id="resort_shop_03" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
 		<attribute name="キャラ指定">マーケット</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]や</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]屋</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]や</language>
 	</row>
 
 	<row id="resort_shop_03_01" back-color="#ff78ff,,,,,#ffff00,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
 		<attribute name="キャラ指定">マーケット
 α版１</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]や</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]屋</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]や</language>
 	</row>
 
 	<row id="resort_shop_03_02" back-color="#ff78ff,,,,,#ffff00,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
@@ -1311,14 +1309,14 @@ GTSの　ごりよう　ありがとうございます！</language>
 
 	<row id="resort_shop_04_02" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
 		<attribute name="キャラ指定">花屋</attribute>
-		<language name="JPN" width="256">フラワー[1:00:トレーナー名:0]</language>
-		<language name="JPN_KANJI" width="256">フラワー[1:00:トレーナー名:0]</language>
+		<language name="JPN" width="256">フラワー[1:00:トレーナー名:0]２</language>
+		<language name="JPN_KANJI" width="256">フラワー[1:00:トレーナー名:0]２</language>
 	</row>
 
 	<row id="resort_shop_04_03" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
 		<attribute name="キャラ指定">花屋</attribute>
-		<language name="JPN" width="256">フラワー[1:00:トレーナー名:0]</language>
-		<language name="JPN_KANJI" width="256">フラワー[1:00:トレーナー名:0]</language>
+		<language name="JPN" width="256">フラワー[1:00:トレーナー名:0]３</language>
+		<language name="JPN_KANJI" width="256">フラワー[1:00:トレーナー名:0]３</language>
 	</row>
 
 	<row id="resort_shop_05" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
@@ -1335,14 +1333,14 @@ GTSの　ごりよう　ありがとうございます！</language>
 
 	<row id="resort_shop_05_02" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
 		<attribute name="キャラ指定">道場</attribute>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]どうじょう</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]道場</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]どうじょう２</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]道場２</language>
 	</row>
 
 	<row id="resort_shop_05_03" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
 		<attribute name="キャラ指定">道場</attribute>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]どうじょう</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]道場</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]どうじょう３</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]道場３</language>
 	</row>
 
 	<row id="resort_shop_06" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
@@ -1359,14 +1357,14 @@ GTSの　ごりよう　ありがとうございます！</language>
 
 	<row id="resort_shop_06_02" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
 		<attribute name="キャラ指定">保育所</attribute>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]えん</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]園</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]えん２</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]園２</language>
 	</row>
 
 	<row id="resort_shop_06_03" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
 		<attribute name="キャラ指定">保育所</attribute>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]えん</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]園</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]えん３</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]園３</language>
 	</row>
 
 	<row id="resort_shop_07" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
@@ -1383,14 +1381,14 @@ GTSの　ごりよう　ありがとうございます！</language>
 
 	<row id="resort_shop_07_02" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
 		<attribute name="キャラ指定">宝石店</attribute>
-		<language name="JPN" width="256">ジュエリー[1:00:トレーナー名:0]</language>
-		<language name="JPN_KANJI" width="256">ジュエリー[1:00:トレーナー名:0]</language>
+		<language name="JPN" width="256">ジュエリー[1:00:トレーナー名:0]２</language>
+		<language name="JPN_KANJI" width="256">ジュエリー[1:00:トレーナー名:0]２</language>
 	</row>
 
 	<row id="resort_shop_07_03" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
 		<attribute name="キャラ指定">宝石店</attribute>
-		<language name="JPN" width="256">ジュエリー[1:00:トレーナー名:0]</language>
-		<language name="JPN_KANJI" width="256">ジュエリー[1:00:トレーナー名:0]</language>
+		<language name="JPN" width="256">ジュエリー[1:00:トレーナー名:0]３</language>
+		<language name="JPN_KANJI" width="256">ジュエリー[1:00:トレーナー名:0]３</language>
 	</row>
 
 	<row id="resort_shop_08" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
@@ -1407,14 +1405,14 @@ GTSの　ごりよう　ありがとうございます！</language>
 
 	<row id="resort_shop_08_02" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
 		<attribute name="キャラ指定">古道具屋</attribute>
-		<language name="JPN" width="256">アンティーク[1:00:トレーナー名:0]</language>
-		<language name="JPN_KANJI" width="256">アンティーク[1:00:トレーナー名:0]</language>
+		<language name="JPN" width="256">アンティーク[1:00:トレーナー名:0]２</language>
+		<language name="JPN_KANJI" width="256">アンティーク[1:00:トレーナー名:0]２</language>
 	</row>
 
 	<row id="resort_shop_08_03" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
 		<attribute name="キャラ指定">古道具屋</attribute>
-		<language name="JPN" width="256">アンティーク[1:00:トレーナー名:0]</language>
-		<language name="JPN_KANJI" width="256">アンティーク[1:00:トレーナー名:0]</language>
+		<language name="JPN" width="256">アンティーク[1:00:トレーナー名:0]３</language>
+		<language name="JPN_KANJI" width="256">アンティーク[1:00:トレーナー名:0]３</language>
 	</row>
 
 	<row id="resort_shop_09" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
@@ -1656,9 +1654,10 @@ GTSの　ごりよう　ありがとうございます！</language>
 	</row>
 
 	<row id="resort_parlor_00" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
-		<attribute name="キャラ指定">美容室</attribute>
-		<language name="JPN" width="256">どの　ポケモンを　きれいに　しますか？▼</language>
-		<language name="JPN_KANJI" width="256">どの　ポケモンを　きれいに　しますか？▼</language>
+		<attribute name="キャラ指定">美容室
+（レストランも兼用）2011.4.26</attribute>
+		<language name="JPN" width="256">どの　ポケモンに　しますか？▼</language>
+		<language name="JPN_KANJI" width="256">どの　ポケモンに　しますか？▼</language>
 	</row>
 
 	<row id="resort_parlor_01" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
@@ -1677,7 +1676,7 @@ GTSの　ごりよう　ありがとうございます！</language>
 		<language name="JPN" width="256">はい！
 これで　このこも　ごきげんね！▼</language>
 		<language name="JPN_KANJI" width="256">はい！
-これで　この子も　ご機嫌ね！▼</language>
+これで　このこも　ごきげんね！▼</language>
 	</row>
 
 	<row id="resort_parlor_04" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
@@ -2185,20 +2184,20 @@ GTSの　ごりよう　ありがとうございます！</language>
 
 	<row id="resort_service_30" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
 		<attribute name="キャラ指定">レストラン用１</attribute>
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN" width="256">ケーキセット</language>
+		<language name="JPN_KANJI" width="256">ケーキセット</language>
 	</row>
 
 	<row id="resort_service_31" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
 		<attribute name="キャラ指定">レストラン用２</attribute>
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN" width="256">ランチセット</language>
+		<language name="JPN_KANJI" width="256">ランチセット</language>
 	</row>
 
 	<row id="resort_service_32" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
 		<attribute name="キャラ指定">レストラン用３</attribute>
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN" width="256">とくせいジュース</language>
+		<language name="JPN_KANJI" width="256">とくせいジュース</language>
 	</row>
 
 	<row id="resort_service_33" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
@@ -2215,20 +2214,30 @@ GTSの　ごりよう　ありがとうございます！</language>
 
 	<row id="resort_service_35" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
 		<attribute name="キャラ指定">レストラン用説明１</attribute>
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN" width="256">おいしい　ケーキに　ドリンクが
+ついた　おとくな　セット。
+たべた　ポケモンが　なつく。</language>
+		<language name="JPN_KANJI" width="256">おいしい　ケーキに　ドリンクが
+ついた　おとくな　セット。
+たべた　ポケモンが　なつく。</language>
 	</row>
 
 	<row id="resort_service_36" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
 		<attribute name="キャラ指定">レストラン用説明２</attribute>
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN" width="256">おいしい　ランチに　ドリンクが
+ついた　おとくな　セット。
+たべた　ポケモンが　とても　なつく。</language>
+		<language name="JPN_KANJI" width="256">おいしい　ランチに　ドリンクが
+ついた　おとくな　セット。
+たべた　ポケモンが　とても　なつく。</language>
 	</row>
 
 	<row id="resort_service_37" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
 		<attribute name="キャラ指定">レストラン用説明３</attribute>
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN" width="256">てづくりの　スペシャル　ジュース。
+のんだ　ポケモンが　かなり　なつく。</language>
+		<language name="JPN_KANJI" width="256">てづくりの　スペシャル　ジュース。
+のんだ　ポケモンが　かなり　なつく。</language>
 	</row>
 
 	<row id="resort_service_38" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
@@ -2282,8 +2291,6 @@ GTSの　ごりよう　ありがとうございます！</language>
 いいぞ　あと　すこしだ！▼
 ……　……　……　……　……　……　
 ……　……　……　……　……　……　▼
-……　……　……　……　……　……　
-……　……　……　……　……　……　▼
 [1:00:トレーナー名:0]『……　よし！▼
 </language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『[1:37:リゾートフリーワード:1]
@@ -2307,8 +2314,6 @@ GTSの　ごりよう　ありがとうございます！</language>
 ……　……　……　……　……　……　▼
 [1:00:トレーナー名:0]『[1:02:ポケモンニックネーム:2]！
 いいぞ　あと　すこしだ！▼
-……　……　……　……　……　……　
-……　……　……　……　……　……　▼
 ……　……　……　……　……　……　
 ……　……　……　……　……　……　▼
 [1:00:トレーナー名:0]『……　よし！▼
@@ -2346,8 +2351,6 @@ GTSの　ごりよう　ありがとうございます！</language>
 いいぞ　あと　すこしだ！▼
 ……　……　……　……　……　……　
 ……　……　……　……　……　……　▼
-……　……　……　……　……　……　
-……　……　……　……　……　……　▼
 [1:00:トレーナー名:0]『……　よし！▼
 </language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『[1:37:リゾートフリーワード:1]
@@ -2371,8 +2374,6 @@ GTSの　ごりよう　ありがとうございます！</language>
 ……　……　……　……　……　……　▼
 [1:00:トレーナー名:0]『[1:02:ポケモンニックネーム:2]！
 いいぞ　あと　すこしだ！▼
-……　……　……　……　……　……　
-……　……　……　……　……　……　▼
 ……　……　……　……　……　……　
 ……　……　……　……　……　……　▼
 [1:00:トレーナー名:0]『……　よし！▼
@@ -2410,8 +2411,6 @@ GTSの　ごりよう　ありがとうございます！</language>
 いいぞ　あと　すこしだ！▼
 ……　……　……　……　……　……　
 ……　……　……　……　……　……　▼
-……　……　……　……　……　……　
-……　……　……　……　……　……　▼
 [1:00:トレーナー名:0]『……　よし！▼
 </language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『[1:37:リゾートフリーワード:1]
@@ -2437,8 +2436,6 @@ GTSの　ごりよう　ありがとうございます！</language>
 いいぞ　あと　すこしだ！▼
 ……　……　……　……　……　……　
 ……　……　……　……　……　……　▼
-……　……　……　……　……　……　
-……　……　……　……　……　……　▼
 [1:00:トレーナー名:0]『……　よし！▼
 </language>
 	</row>
@@ -2462,10 +2459,6 @@ GTSの　ごりよう　ありがとうございます！</language>
 スリスリ　サッサ！　スリスリ　サッサ！▼
 ……　……　……　……　……　……　
 ……　……　……　……　……　……　▼
-スリスリ　サッサ！　スリスリ　サッサ！
-スリスリ　サッサ！　スリスリ　サッサ！▼
-……　……　……　……　……　……　
-……　……　……　……　……　……　▼
 [1:00:トレーナー名:0]『……　……
 ……まだ　まだ　かかりそう！▼
 ……　……　……　……　……　……　
@@ -2475,8 +2468,6 @@ GTSの　ごりよう　ありがとうございます！</language>
 [1:00:トレーナー名:0]『……　もうすこしかな？▼
 ……　……　……　……　……　……　
 ……　……　……　……　……　……　▼
-スリスリ　サッサ！　スリスリ　サッサ！
-スリスリ　サッサ！　スリスリ　サッサ！▼
 スリスリ　サッサ！　スリスリ　サッサ！
 スリスリ　サッサ！　スリスリ　サッサ！▼
 ……！！！！！！！▼
@@ -2496,10 +2487,6 @@ GTSの　ごりよう　ありがとうございます！</language>
 スリスリ　サッサ！　スリスリ　サッサ！▼
 ……　……　……　……　……　……　
 ……　……　……　……　……　……　▼
-スリスリ　サッサ！　スリスリ　サッサ！
-スリスリ　サッサ！　スリスリ　サッサ！▼
-……　……　……　……　……　……　
-……　……　……　……　……　……　▼
 [1:00:トレーナー名:0]『……　……
 ……まだ　まだ　かかりそう！▼
 ……　……　……　……　……　……　
@@ -2509,8 +2496,6 @@ GTSの　ごりよう　ありがとうございます！</language>
 [1:00:トレーナー名:0]『……　もうすこしかな？▼
 ……　……　……　……　……　……　
 ……　……　……　……　……　……　▼
-スリスリ　サッサ！　スリスリ　サッサ！
-スリスリ　サッサ！　スリスリ　サッサ！▼
 スリスリ　サッサ！　スリスリ　サッサ！
 スリスリ　サッサ！　スリスリ　サッサ！▼
 ……！！！！！！！▼
@@ -2623,12 +2608,8 @@ GTSの　ごりよう　ありがとうございます！</language>
 がんばれー！▼
 [1:00:トレーナー名:0]『[1:02:ポケモンニックネーム:2]！
 がんばれー！▼
-……　……　……　……　……　……　
-……　……　……　……　……　……　▼
 [1:00:トレーナー名:0]『[1:02:ポケモンニックネーム:2]！
 もっと　がんばって！▼
-[1:00:トレーナー名:0]『[1:02:ポケモンニックネーム:2]！
-もっと　もっと　がんばって！▼
 [1:00:トレーナー名:0]『[1:02:ポケモンニックネーム:2]！
 もっと　もっと　がんばって！▼
 ……　……　……　……　……　……　
@@ -2651,12 +2632,8 @@ GTSの　ごりよう　ありがとうございます！</language>
 がんばれー！▼
 [1:00:トレーナー名:0]『[1:02:ポケモンニックネーム:2]！
 がんばれー！▼
-……　……　……　……　……　……　
-……　……　……　……　……　……　▼
 [1:00:トレーナー名:0]『[1:02:ポケモンニックネーム:2]！
 もっと　がんばって！▼
-[1:00:トレーナー名:0]『[1:02:ポケモンニックネーム:2]！
-もっと　もっと　がんばって！▼
 [1:00:トレーナー名:0]『[1:02:ポケモンニックネーム:2]！
 もっと　もっと　がんばって！▼
 ……　……　……　……　……　……　
@@ -2687,12 +2664,8 @@ GTSの　ごりよう　ありがとうございます！</language>
 がんばれー！▼
 [1:00:トレーナー名:0]『[1:02:ポケモンニックネーム:2]！
 がんばれー！▼
-……　……　……　……　……　……　
-……　……　……　……　……　……　▼
 [1:00:トレーナー名:0]『[1:02:ポケモンニックネーム:2]！
 もっと　がんばって！▼
-[1:00:トレーナー名:0]『[1:02:ポケモンニックネーム:2]！
-もっと　もっと　がんばって！▼
 [1:00:トレーナー名:0]『[1:02:ポケモンニックネーム:2]！
 もっと　もっと　がんばって！▼
 ……　……　……　……　……　……　
@@ -2715,12 +2688,8 @@ GTSの　ごりよう　ありがとうございます！</language>
 がんばれー！▼
 [1:00:トレーナー名:0]『[1:02:ポケモンニックネーム:2]！
 がんばれー！▼
-……　……　……　……　……　……　
-……　……　……　……　……　……　▼
 [1:00:トレーナー名:0]『[1:02:ポケモンニックネーム:2]！
 もっと　がんばって！▼
-[1:00:トレーナー名:0]『[1:02:ポケモンニックネーム:2]！
-もっと　もっと　がんばって！▼
 [1:00:トレーナー名:0]『[1:02:ポケモンニックネーム:2]！
 もっと　もっと　がんばって！▼
 ……　……　……　……　……　……　
@@ -2751,12 +2720,8 @@ GTSの　ごりよう　ありがとうございます！</language>
 がんばれー！▼
 [1:00:トレーナー名:0]『[1:02:ポケモンニックネーム:2]！
 がんばれー！▼
-……　……　……　……　……　……　
-……　……　……　……　……　……　▼
 [1:00:トレーナー名:0]『[1:02:ポケモンニックネーム:2]！
 もっと　がんばって！▼
-[1:00:トレーナー名:0]『[1:02:ポケモンニックネーム:2]！
-もっと　もっと　がんばって！▼
 [1:00:トレーナー名:0]『[1:02:ポケモンニックネーム:2]！
 もっと　もっと　がんばって！▼
 ……　……　……　……　……　……　
@@ -2779,12 +2744,8 @@ GTSの　ごりよう　ありがとうございます！</language>
 がんばれー！▼
 [1:00:トレーナー名:0]『[1:02:ポケモンニックネーム:2]！
 がんばれー！▼
-……　……　……　……　……　……　
-……　……　……　……　……　……　▼
 [1:00:トレーナー名:0]『[1:02:ポケモンニックネーム:2]！
 もっと　がんばって！▼
-[1:00:トレーナー名:0]『[1:02:ポケモンニックネーム:2]！
-もっと　もっと　がんばって！▼
 [1:00:トレーナー名:0]『[1:02:ポケモンニックネーム:2]！
 もっと　もっと　がんばって！▼
 ……　……　……　……　……　……　
@@ -2806,24 +2767,63 @@ GTSの　ごりよう　ありがとうございます！</language>
 	</row>
 
 	<row id="resort_service_txt_04_01" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
-		<language name="JPN" width="256">[FF:00:色:2]（スクリプトによる演出とテキストを
-入れます）▼</language>
-		<language name="JPN_KANJI" width="256">[FF:00:色:2]（スクリプトによる演出とテキストを
-入れます）▼</language>
+		<attribute name="キャラ指定">レストラン・ランチ
+
+0：店主名
+1：クチグセ
+2：ニックネーム</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]『[1:37:リゾートフリーワード:1]
+さあ　めしあがれ▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[1:02:ポケモンニックネーム:2]は
+おいしく　たべた！！▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『[1:37:リゾートフリーワード:1]
+さあ　めしあがれ▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[1:02:ポケモンニックネーム:2]は
+おいしく　たべた！！▼</language>
 	</row>
 
 	<row id="resort_service_txt_04_02" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
-		<language name="JPN" width="256">[FF:00:色:2]（スクリプトによる演出とテキストを
-入れます）▼</language>
-		<language name="JPN_KANJI" width="256">[FF:00:色:2]（スクリプトによる演出とテキストを
-入れます）▼</language>
+		<attribute name="キャラ指定">レストラン・ランチ
+
+0：店主名
+1：クチグセ
+2：ニックネーム</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]『[1:37:リゾートフリーワード:1]
+さあ　めしあがれ▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[1:02:ポケモンニックネーム:2]は
+おいしく　たべた！！▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『[1:37:リゾートフリーワード:1]
+さあ　めしあがれ▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[1:02:ポケモンニックネーム:2]は
+おいしく　たべた！！▼</language>
 	</row>
 
 	<row id="resort_service_txt_04_03" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
-		<language name="JPN" width="256">[FF:00:色:2]（スクリプトによる演出とテキストを
-入れます）▼</language>
-		<language name="JPN_KANJI" width="256">[FF:00:色:2]（スクリプトによる演出とテキストを
-入れます）▼</language>
+		<attribute name="キャラ指定">レストラン・ランチ
+
+0：店主名
+1：クチグセ
+2：ニックネーム</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]『[1:37:リゾートフリーワード:1]
+さあ　めしあがれ▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[1:02:ポケモンニックネーム:2]は
+おいしく　のんだ！！▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『[1:37:リゾートフリーワード:1]
+さあ　めしあがれ▼
+……　……　……　……　……　……　
+……　……　……　……　……　……　▼
+[1:02:ポケモンニックネーム:2]は
+おいしく　のんだ！！▼</language>
 	</row>
 
 	<row id="resort_service_txt_04_04" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
@@ -2876,11 +2876,11 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にちに
+２０１１ねん　４がつ３０にち　に
 イッシュずかんを▽
 かんせい　させました！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にちに
+２０１１ねん　４がつ３０にち　に
 イッシュずかんを▽
 かんせい　させました！▼</language>
 	</row>
@@ -2893,11 +2893,11 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にちに
+２０１１ねん　４がつ３０にち　に
 ぜんこくずかんを▽
 かんせい　させました！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にちに
+２０１１ねん　４がつ３０にち　に
 ぜんこくずかんを▽
 かんせい　させました！▼</language>
 	</row>
@@ -2910,10 +2910,10 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にちに
+２０１１ねん　４がつ３０にち　に
 メダルを　てにいれました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にちに
+２０１１ねん　４がつ３０にち　に
 メダルを　てにいれました▼</language>
 	</row>
 
@@ -2925,11 +2925,11 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にちに
+２０１１ねん　４がつ３０にち　に
 めずらしい　メダルを▽
 てにいれました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にちに
+２０１１ねん　４がつ３０にち　に
 めずらしい　メダルを▽
 てにいれました▼</language>
 	</row>
@@ -2942,11 +2942,11 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にちに
+２０１１ねん　４がつ３０にち　に
 ものすごく　めずらしい　メダルを▽
 てにいれました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にちに
+２０１１ねん　４がつ３０にち　に
 ものすごく　めずらしい　メダルを▽
 てにいれました▼</language>
 	</row>
@@ -2959,11 +2959,11 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にちに
+２０１１ねん　４がつ３０にち　に
 バトルサブウェイで▽
 ７れんしょう　しました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にちに
+２０１１ねん　４がつ３０にち　に
 バトルサブウェイで▽
 ７れんしょう　しました▼</language>
 	</row>
@@ -2976,11 +2976,11 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にちに
+２０１１ねん　４がつ３０にち　に
 バトルサブウェイで▽
 サブウェイマスターを　たおしました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にちに
+２０１１ねん　４がつ３０にち　に
 バトルサブウェイで▽
 サブウェイマスターを　たおしました▼</language>
 	</row>
@@ -2993,11 +2993,11 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にちに
+２０１１ねん　４がつ３０にち　に
 サブウェイの　スーパートレインで▽
 サブウェイマスターを　たおしました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にちに
+２０１１ねん　４がつ３０にち　に
 サブウェイの　スーパートレインで▽
 サブウェイマスターを　たおしました▼</language>
 	</row>
@@ -3010,11 +3010,11 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にちに
+２０１１ねん　４がつ３０にち　に
 ポケウッドで▽
 えいがを　さつえいしました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にちに
+２０１１ねん　４がつ３０にち　に
 ポケウッドで▽
 えいがを　さつえいしました▼</language>
 	</row>
@@ -3027,11 +3027,11 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち
 ポケウッドで　さつえいした　えいがを▽
 ポケデミーしょうを　とりました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち
 ポケウッドで　さつえいした　えいがを▽
 ポケデミーしょうを　とりました▼</language>
 	</row>
@@ -3044,11 +3044,11 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　にに
 ポケモンミュージカルに▽
 さんか　しました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 ポケモンミュージカルに▽
 さんか　しました▼</language>
 	</row>
@@ -3061,10 +3061,10 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 ハイリンクで　しんにゅう　しました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 ハイリンクで　しんにゅう　しました▼</language>
 	</row>
 
@@ -3076,10 +3076,10 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 ハイリンクで　しんにゅう　されました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 ハイリンクで　しんにゅう　されました▼</language>
 	</row>
 
@@ -3091,10 +3091,10 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 タマゴを　ふかさせました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 タマゴを　ふかさせました▼</language>
 	</row>
 
@@ -3106,10 +3106,10 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 ポケモンの　レベルを　あげました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 ポケモンの　レベルを　あげました▼</language>
 	</row>
 
@@ -3121,11 +3121,11 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 マックスアップで　ポケモンを▽
 パワーアップ　させました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 マックスアップで　ポケモンを▽
 パワーアップ　させました▼</language>
 	</row>
@@ -3138,11 +3138,11 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 キトサンで　ポケモンを▽
 パワーアップ　させました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 キトサンで　ポケモンを▽
 パワーアップ　させました▼</language>
 	</row>
@@ -3155,11 +3155,11 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 マックスアップで　ポケモンを▽
 パワーアップ　させました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 マックスアップで　ポケモンを▽
 パワーアップ　させました▼</language>
 	</row>
@@ -3172,11 +3172,11 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 キトサンで　ポケモンを▽
 パワーアップ　させました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 キトサンで　ポケモンを▽
 パワーアップ　させました▼</language>
 	</row>
@@ -3189,11 +3189,11 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 マックスアップで　ポケモンを▽
 パワーアップ　させました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 マックスアップで　ポケモンを▽
 パワーアップ　させました▼</language>
 	</row>
@@ -3206,11 +3206,11 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 キトサンで　ポケモンを▽
 パワーアップ　させました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 キトサンで　ポケモンを▽
 パワーアップ　させました▼</language>
 	</row>
@@ -3223,10 +3223,10 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 テレビを　みました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 テレビを　みました▼</language>
 	</row>
 
@@ -3238,10 +3238,10 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 ごみばこの　なかを　しらべました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 ごみばこの　なかを　しらべました▼</language>
 	</row>
 
@@ -3253,12 +3253,12 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 なんと……▼
 いろちがい　ポケモンを
 つかまえました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 なんと……▼
 いろちがい　ポケモンを
 つかまえました▼</language>
@@ -3272,11 +3272,11 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 ポケモンに　ニックネームを▽
 つけました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 ポケモンに　ニックネームを▽
 つけました▼</language>
 	</row>
@@ -3289,11 +3289,11 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 ボックスの　トレイに▽
 なまえを　つけました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 ボックスの　トレイに▽
 なまえを　つけました▼</language>
 	</row>
@@ -3306,11 +3306,11 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 １つの　ボックスを▽
 タマゴで　いっぱいに　しました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 １つの　ボックスを▽
 タマゴで　いっぱいに　しました▼</language>
 	</row>
@@ -3323,10 +3323,10 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 ポケモンを　つりあげました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 ポケモンを　つりあげました▼</language>
 	</row>
 
@@ -3338,10 +3338,10 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 タマゴを　もらいました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 タマゴを　もらいました▼</language>
 	</row>
 
@@ -3353,10 +3353,10 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 かくしアイテムを　みつけました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 かくしアイテムを　みつけました▼</language>
 	</row>
 
@@ -3368,10 +3368,10 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 かせきを　ふくげん　しました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 かせきを　ふくげん　しました▼</language>
 	</row>
 
@@ -3383,12 +3383,12 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 なんと……！▼
 キュレムと　レシラムを
 がったい　させました！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 なんと……！▼
 キュレムと　レシラムを
 がったい　させました！▼</language>
@@ -3402,12 +3402,12 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 なんと……！▼
 キュレムと　ゼクロムを
 がったい　させました！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 なんと……！▼
 キュレムと　ゼクロムを
 がったい　させました！▼</language>
@@ -3421,10 +3421,10 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 ぐるぐるこうかんを　しました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 ぐるぐるこうかんを　しました▼</language>
 	</row>
 
@@ -3436,10 +3436,10 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 おえかきをを　しました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 おえかきをを　しました▼</language>
 	</row>
 
@@ -3451,10 +3451,10 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 つうしんたいせんを　しました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 つうしんたいせんを　しました▼</language>
 	</row>
 
@@ -3466,10 +3466,10 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 でんこうけいじばんを　みました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 でんこうけいじばんを　みました▼</language>
 	</row>
 
@@ -3481,10 +3481,10 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 あいしょうしんだんを　しました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 あいしょうしんだんを　しました▼</language>
 	</row>
 
@@ -3496,10 +3496,10 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 ともだちコードこうかんを　しました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 ともだちコードこうかんを　しました▼</language>
 	</row>
 
@@ -3511,10 +3511,10 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 ふしぎなおくりものを　もらいました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 ふしぎなおくりものを　もらいました▼</language>
 	</row>
 
@@ -3526,10 +3526,10 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 かんらんしゃで　デート　しました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 かんらんしゃで　デート　しました▼</language>
 	</row>
 
@@ -3541,11 +3541,11 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 ランダムマッチで▽
 シングルバトルを　しました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 ランダムマッチで▽
 シングルバトルを　しました▼</language>
 	</row>
@@ -3558,11 +3558,11 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 ランダムマッチで▽
 ダブルバトルを　しました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 ランダムマッチで▽
 ダブルバトルを　しました▼</language>
 	</row>
@@ -3575,11 +3575,11 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 ランダムマッチで▽
 トリプルバトルを　しました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 ランダムマッチで▽
 トリプルバトルを　しました▼</language>
 	</row>
@@ -3592,11 +3592,11 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 ランダムマッチで▽
 ローテーションバトルを　しました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 ランダムマッチで▽
 ローテーションバトルを　しました▼</language>
 	</row>
@@ -3609,11 +3609,11 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 ランダムマッチで▽
 シューターバトルを　しました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 ランダムマッチで▽
 シューターバトルを　しました▼</language>
 	</row>
@@ -3626,11 +3626,11 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 メダルボックスを▽
 パワーアップ　させました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 メダルボックスを▽
 パワーアップ　させました▼</language>
 	</row>
@@ -3643,11 +3643,11 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 むげんダンジョンに▽
 ちょうせん　しました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 むげんダンジョンに▽
 ちょうせん　しました▼</language>
 	</row>
@@ -3660,11 +3660,11 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 むげんダンジョンの　１０Ｆに▽
 とうたつ　しました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 むげんダンジョンの　１０Ｆに▽
 とうたつ　しました▼</language>
 	</row>
@@ -3677,11 +3677,11 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 むげんダンジョンの　２０Ｆに▽
 とうたつ　しました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 むげんダンジョンの　２０Ｆに▽
 とうたつ　しました▼</language>
 	</row>
@@ -3694,11 +3694,11 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 むげんダンジョンの　３０Ｆに▽
 とうたつ　しました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 むげんダンジョンの　３０Ｆに▽
 とうたつ　しました▼</language>
 	</row>
@@ -3711,11 +3711,11 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 むげんダンジョンの　４０Ｆに▽
 とうたつ　しました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 むげんダンジョンの　４０Ｆに▽
 とうたつ　しました▼</language>
 	</row>
@@ -3728,11 +3728,11 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 むげんダンジョンの　５０Ｆに▽
 とうたつ　しました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 むげんダンジョンの　５０Ｆに▽
 とうたつ　しました▼</language>
 	</row>
@@ -3745,10 +3745,10 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 ＷＢＴに　ちょうせん　しました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 ＷＢＴに　ちょうせん　しました▼</language>
 	</row>
 
@@ -3760,11 +3760,11 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 ＷＢＴの　ノーマル　トーナメントで▽
 ゆうしょう　しました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 ＷＢＴの　ノーマル　トーナメントで▽
 ゆうしょう　しました▼</language>
 	</row>
@@ -3777,11 +3777,11 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 ＷＢＴの　チャンピオン・トーナメントで▽
 ゆうしょう　しました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 ＷＢＴの　チャンピオン・トーナメントで▽
 ゆうしょう　しました▼</language>
 	</row>
@@ -3794,11 +3794,11 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 レゾナンスリゾートで▽
 スポットの　レベルを　あげました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 レゾナンスリゾートで▽
 スポットの　レベルを　あげました▼</language>
 	</row>
@@ -3811,11 +3811,11 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 レゾナンスリゾートで▽
 リゾートの　レベルを　あげました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 レゾナンスリゾートで▽
 リゾートの　レベルを　あげました▼</language>
 	</row>
@@ -3828,11 +3828,11 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 ライブキャスターで▽
 ふうせんわりゲームを　しました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 ライブキャスターで▽
 ふうせんわりゲームを　しました▼</language>
 	</row>
@@ -3845,11 +3845,11 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 ライブキャスターで▽
 ふうせんわりゲームを　しました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 ライブキャスターで▽
 ふうせんわりゲームを　しました▼</language>
 	</row>
@@ -3862,11 +3862,11 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 トライアルハウスに▽
 ちょうせん　しました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 トライアルハウスに▽
 ちょうせん　しました▼</language>
 	</row>
@@ -3879,11 +3879,11 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 ジャッジに　ポケモンを▽
 みてもらいました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 ジャッジに　ポケモンを▽
 みてもらいました▼</language>
 	</row>
@@ -3896,11 +3896,11 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 メールを　かいて▽
 ポケモンに　もたせました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 メールを　かいて▽
 ポケモンに　もたせました▼</language>
 	</row>
@@ -3913,11 +3913,11 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 ゆめとくせいを　もった▽
 ポケモンを　つかまえました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 ゆめとくせいを　もった▽
 ポケモンを　つかまえました▼</language>
 	</row>
@@ -3930,11 +3930,11 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 ポケガイダンスの▽
 ミッションを　クリアしました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 ポケガイダンスの▽
 ミッションを　クリアしました▼</language>
 	</row>
@@ -3947,11 +3947,11 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 キーシステムで▽
 すごいこと　しました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 キーシステムで▽
 すごいこと　しました▼</language>
 	</row>
@@ -3964,11 +3964,11 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 ライブキャスターで▽
 かいわを　たのしみました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 ライブキャスターで▽
 かいわを　たのしみました▼</language>
 	</row>
@@ -3981,19 +3981,21 @@ GTSの　ごりよう　ありがとうございます！</language>
 3：月
 4：日</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 Ｗｉ－Ｆｉクラブで　あそびました▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さいきんは　ですね……▼
-２０１１ねん４がつ１８にち
+２０１１ねん　４がつ３０にち　に
 Ｗｉ－Ｆｉクラブで　あそびました▼</language>
 	</row>
 
 	<row id="resort_appeal_00" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
 		<attribute name="キャラ指定">アピール　ポケモンくじ</attribute>
-		<language name="JPN" width="256">この　まちで　くらしたら……▼
+		<language name="JPN" width="256">もしも　この　まちで
+くらすことが　できたら……▼
 みんなを
 ドキドキ　ワクワクさせたいな▼</language>
-		<language name="JPN_KANJI" width="256">この　まちで　くらしたら……▼
+		<language name="JPN_KANJI" width="256">もしも　この　まちで
+くらすことが　できたら……▼
 みんなを
 ドキドキ　ワクワクさせたいな▼</language>
 	</row>
@@ -4001,11 +4003,11 @@ GTSの　ごりよう　ありがとうございます！</language>
 	<row id="resort_appeal_01" back-color="#ff0000,,,,,#ffff00,,#ff0000,,,#ff0000,,,#ff0000,,,#ff0000,,">
 		<attribute name="キャラ指定">美容室</attribute>
 		<language name="JPN" width="256">もしも　この　まちで
-くらせすとが　できたら……▼
+くらすことが　できたら……▼
 いろいろな　ポケモンを
 きれいに　したいな▼</language>
 		<language name="JPN_KANJI" width="256">もしも　この　まちで
-くらせすとが　できたら……▼
+くらすことが　できたら……▼
 いろいろな　ポケモンを
 きれいに　したいな▼</language>
 	</row>
@@ -4013,11 +4015,11 @@ GTSの　ごりよう　ありがとうございます！</language>
 	<row id="resort_appeal_02" back-color="#ff0000,,,,,#ffff00,,#ff0000,,,#ff0000,,,#ff0000,,,#ff0000,,">
 		<attribute name="キャラ指定">育て屋</attribute>
 		<language name="JPN" width="256">もしも　この　まちで
-くらせすとが　できたら……▼
+くらすことが　できたら……▼
 ポケモンを　きたえて　きたえて
 つよく　したいな▼</language>
 		<language name="JPN_KANJI" width="256">もしも　この　まちで
-くらせすとが　できたら……▼
+くらすことが　できたら……▼
 ポケモンを　きたえて　きたえて
 つよく　したいな▼</language>
 	</row>
@@ -4025,11 +4027,11 @@ GTSの　ごりよう　ありがとうございます！</language>
 	<row id="resort_appeal_03" back-color="#ff0000,,,,,#ffff00,,#ff0000,,,#ff0000,,,#ff0000,,,#ff0000,,">
 		<attribute name="キャラ指定">マーケット</attribute>
 		<language name="JPN" width="256">もしも　この　まちで
-くらせすとが　できたら……▼
+くらすことが　できたら……▼
 いいものを　いっぱい　あつめて
 みんなを　おどろかせたいな▼</language>
 		<language name="JPN_KANJI" width="256">もしも　この　まちで
-くらせすとが　できたら……▼
+くらすことが　できたら……▼
 いいものを　いっぱい　あつめて
 みんなを　おどろかせたいな▼</language>
 	</row>
@@ -4037,11 +4039,11 @@ GTSの　ごりよう　ありがとうございます！</language>
 	<row id="resort_appeal_04" back-color="#ff0000,,,,,#ffff00,,#ff0000,,,#ff0000,,,#ff0000,,,#ff0000,,">
 		<attribute name="キャラ指定">花屋</attribute>
 		<language name="JPN" width="256">もしも　この　まちで
-くらせすとが　できたら……▼
+くらすことが　できたら……▼
 きれいな　はなで
 みんなを　いやしたいな▼</language>
 		<language name="JPN_KANJI" width="256">もしも　この　まちで
-くらせすとが　できたら……▼
+くらすことが　できたら……▼
 きれいな　はなで
 みんなを　いやしたいな▼</language>
 	</row>
@@ -4049,11 +4051,11 @@ GTSの　ごりよう　ありがとうございます！</language>
 	<row id="resort_appeal_05" back-color="#ff0000,,,,,#ffff00,,#ff0000,,,#ff0000,,,#ff0000,,,#ff0000,,">
 		<attribute name="キャラ指定">道場</attribute>
 		<language name="JPN" width="256">もしも　この　まちで
-くらせすとが　できたら……▼
+くらすことが　できたら……▼
 いろんな　ポケモンを　きたえて
 きたえて　つよく　したいな▼</language>
 		<language name="JPN_KANJI" width="256">もしも　この　まちで
-くらせすとが　できたら……▼
+くらすことが　できたら……▼
 いろんな　ポケモンを　きたえて
 きたえて　つよく　したいな▼</language>
 	</row>
@@ -4061,11 +4063,11 @@ GTSの　ごりよう　ありがとうございます！</language>
 	<row id="resort_appeal_06" back-color="#ff0000,,,,,#ffff00,,#ff0000,,,#ff0000,,,#ff0000,,,#ff0000,,">
 		<attribute name="キャラ指定">保育所</attribute>
 		<language name="JPN" width="256">もしも　この　まちで
-くらせすとが　できたら……▼
+くらすことが　できたら……▼
 ポケモンの　タマゴを
 かえす　しごとが　いたいな▼</language>
 		<language name="JPN_KANJI" width="256">もしも　この　まちで
-くらせすとが　できたら……▼
+くらすことが　できたら……▼
 ポケモンの　タマゴを
 かえす　しごとが　いたいな▼</language>
 	</row>
@@ -4073,11 +4075,11 @@ GTSの　ごりよう　ありがとうございます！</language>
 	<row id="resort_appeal_07" back-color="#ff0000,,,,,#ffff00,,#ff0000,,,#ff0000,,,#ff0000,,,#ff0000,,">
 		<attribute name="キャラ指定">宝石店</attribute>
 		<language name="JPN" width="256">もしも　この　まちで
-くらせすとが　できたら……▼
+くらすことが　できたら……▼
 キラキラ　ひかる　きれいなものに
 かこまれた　せいかつが　したいな▼</language>
 		<language name="JPN_KANJI" width="256">もしも　この　まちで
-くらせすとが　できたら……▼
+くらすことが　できたら……▼
 キラキラ　ひかる　きれいなものに
 かこまれた　せいかつが　したいな▼</language>
 	</row>
@@ -4085,11 +4087,11 @@ GTSの　ごりよう　ありがとうございます！</language>
 	<row id="resort_appeal_08" back-color="#ff0000,,,,,#ffff00,,#ff0000,,,#ff0000,,,#ff0000,,,#ff0000,,">
 		<attribute name="キャラ指定">古道具屋</attribute>
 		<language name="JPN" width="256">もしも　この　まちで
-くらせすとが　できたら……▼
+くらすことが　できたら……▼
 こだわりの　どうぐを　そろえて
 みんなを　おどろかせたいな！▼</language>
 		<language name="JPN_KANJI" width="256">もしも　この　まちで
-くらせすとが　できたら……▼
+くらすことが　できたら……▼
 こだわりの　どうぐを　そろえて
 みんなを　おどろかせたいな！▼</language>
 	</row>
@@ -4097,12 +4099,12 @@ GTSの　ごりよう　ありがとうございます！</language>
 	<row id="resort_appeal_09" back-color="#ff0000,,,,,#ffff00,,#ff0000,,,#ff0000,,,#ff0000,,,#ff0000,,">
 		<attribute name="キャラ指定">レストラン</attribute>
 		<language name="JPN" width="256">もしも　この　まちで
-くらせすとが　できたら……▼
+くらすことが　できたら……▼
 ポケモンの　ために
 おいしい　ごはんを　つくって▽
 ポケモンを　しあわせにしたいな▼</language>
 		<language name="JPN_KANJI" width="256">もしも　この　まちで
-くらせすとが　できたら……▼
+くらすことが　できたら……▼
 ポケモンの　ために
 おいしい　ごはんを　つくって▽
 ポケモンを　しあわせにしたいな▼</language>
@@ -4725,71 +4727,59 @@ GTSの　ごりよう　ありがとうございます！</language>
 もっている　ひと　いる？▼</language>
 	</row>
 
-	<row id="resort_go_63" back-color="#ffff80,,,,,#c0c0c0,#c0c0c0,#ffff80,,,#ffff80,,#c0c0c0,#ffff80,,,#ffff80,,">
+	<row id="resort_go_63" back-color="#ffff80,,,,,#ffffff,#ffffff,#ffff80,,,#ffff80,,#ffffff,#ffff80,,,#ffff80,,">
 		<attribute name="キャラ指定">強
 
-レコード</attribute>
-		<language name="JPN" width="256">レコードを　しょうぶ　したい▼
-ポケモンつりで　１００ひき
-ポケモンを　つったんだけど▼
-１００ひき　いじょう
-ポケモンを　つった　ひと　いる？▼</language>
-		<language name="JPN_KANJI" width="256">レコードを　しょうぶ　したい▼
-ポケモンつりで　１００ひき
-ポケモンを　つったんだけど▼
-１００ひき　いじょう
-ポケモンを　つった　ひと　いる？▼</language>
+クチコミ
+友達のタイプ</attribute>
+		<language name="JPN" width="256">ともだちを　つくりたい▼
+おとこのこの　ともだちが
+おおい　ひと　いない？▼</language>
+		<language name="JPN_KANJI" width="256">ともだちを　つくりたい▼
+おとこのこの　ともだちが
+おおい　ひと　いない？▼</language>
 	</row>
 
-	<row id="resort_go_64" back-color="#ffff80,,,,,#c0c0c0,#c0c0c0,#ffff80,,,#ffff80,,#c0c0c0,#ffff80,,,#ffff80,,">
+	<row id="resort_go_64" back-color="#ffff80,,,,,#ffffff,#ffffff,#ffff80,,,#ffff80,,#ffffff,#ffff80,,,#ffff80,,">
 		<attribute name="キャラ指定">強
 
-レコード</attribute>
-		<language name="JPN" width="256">レコードを　しょうぶ　したい▼
-タマゴを　１００こ
-ふか　させたんだけど▼
-１００こ　いじょう
-ふか　させた　ひと　いる？▼</language>
-		<language name="JPN_KANJI" width="256">レコードを　しょうぶ　したい▼
-タマゴを　１００こ
-ふか　させたんだけど▼
-１００こ　いじょう
-ふか　させた　ひと　いる？▼</language>
+クチコミ
+友達のタイプ</attribute>
+		<language name="JPN" width="256">ともだちを　つくりたい▼
+おんなのこの　ともだちが
+おおい　ひと　いない？▼</language>
+		<language name="JPN_KANJI" width="256">ともだちを　つくりたい▼
+おんなのこの　ともだちが
+おおい　ひと　いない？▼</language>
 	</row>
 
-	<row id="resort_go_65" back-color="#ffff80,,,,,#c0c0c0,#c0c0c0,#ffff80,,,#ffff80,,#c0c0c0,#ffff80,,,#ffff80,,">
+	<row id="resort_go_65" back-color="#ffff80,,,,,#ffffff,#ffffff,#ffff80,,,#ffff80,,#ffffff,#ffff80,,,#ffff80,,">
 		<attribute name="キャラ指定">強
 
-レコード</attribute>
-		<language name="JPN" width="256">レコードを　しょうぶ　したい▼
-つうしんたいせんを　２００かい
-しいるんだけど▼
-２００かい　いじょう
-たいせんを　しているひと　いる？▼</language>
-		<language name="JPN_KANJI" width="256">レコードを　しょうぶ　したい▼
-つうしんたいせんを　２００かい
-しいるんだけど▼
-２００かい　いじょう
-たいせんを　しているひと　いる？▼</language>
+クチコミ
+友達のタイプ</attribute>
+		<language name="JPN" width="256">ともだちを　つくりたい▼
+おとこのひとの　ともだちが
+おおい　ひと　いない？▼</language>
+		<language name="JPN_KANJI" width="256">ともだちを　つくりたい▼
+おとこのひとの　ともだちが
+おおい　ひと　いない？▼</language>
 	</row>
 
-	<row id="resort_go_66" back-color="#ffff80,,,,,#c0c0c0,#c0c0c0,#ffff80,,,#ffff80,,#c0c0c0,#ffff80,,,#ffff80,,">
+	<row id="resort_go_66" back-color="#ffff80,,,,,#ffffff,#ffffff,#ffff80,,,#ffff80,,#ffffff,#ffff80,,,#ffff80,,">
 		<attribute name="キャラ指定">強
 
-レコード</attribute>
-		<language name="JPN" width="256">レコードを　しょうぶ　したい▼
-つうしんこうかんを　５０かい
-しいるんだけど▼
-５０かい　いじょう
-こうかんを　しているひと　いる？▼</language>
-		<language name="JPN_KANJI" width="256">レコードを　しょうぶ　したい▼
-つうしんこうかんを　５０かい
-しいるんだけど▼
-５０かい　いじょう
-こうかんを　しているひと　いる？▼</language>
+クチコミ
+友達のタイプ</attribute>
+		<language name="JPN" width="256">ともだちを　つくりたい▼
+おんなのひとの　ともだちが
+おおい　ひと　いない？▼</language>
+		<language name="JPN_KANJI" width="256">ともだちを　つくりたい▼
+おんなのひとの　ともだちが
+おおい　ひと　いない？▼</language>
 	</row>
 
-	<row id="resort_go_67" back-color="#ffff80,,,,,#c0c0c0,#c0c0c0,#ffff80,,,#ffff80,,#c0c0c0,#ffff80,,,#ffff80,,">
+	<row id="resort_go_67" back-color="#ffff80,,,#ffffff,,#ffffff,#ffffff,#ffff80,,,#ffff80,,#ffffff,#ffff80,,,#ffff80,,">
 		<attribute name="キャラ指定">強
 
 レコード</attribute>
@@ -5348,10 +5338,10 @@ GTSの　ごりよう　ありがとうございます！</language>
 	</row>
 
 	<row id="resort_go_eff_02" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
-		<language name="JPN" width="256">[1:00:トレーナー名:0]の　ポケモンの
-レベルが　あがった▼</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　ポケモンの
-レベルが　あがった▼</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]の　ポケモンは
+つよく　きたえられた▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　ポケモンは
+つよく　きたえられた▼</language>
 	</row>
 
 	<row id="resort_go_eff_03" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
@@ -5385,11 +5375,11 @@ GTSの　ごりよう　ありがとうございます！</language>
 	<row id="resort_go_eff_07" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<attribute name="キャラ指定">汎用</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『……　……
-[1:38:リゾート店名:1]……！▽
-ステキな　ところ　だね▼</language>
+[1:38:リゾート店名:1]……！？▽
+ステキな　ところ　だね！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『……　……
-[1:38:リゾート店名:1]……！▽
-ステキな　ところ　だね▼</language>
+[1:38:リゾート店名:1]……！？▽
+ステキな　ところ　だね！▼</language>
 	</row>
 
 	<row id="resort_go_eff_08" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
@@ -5409,12 +5399,11 @@ GTSの　ごりよう　ありがとうございます！</language>
 	</row>
 
 	<row id="resort_go_eff_09" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
-		<language name="JPN" width="256">[1:00:トレーナー名:0]『
-[1:38:リゾート店名:1]……！▽
-ステキな　ところ　だね▼</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『
-[1:38:リゾート店名:1]……！▽
-ステキな　ところ　だね▼</language>
+		<attribute name="キャラ指定">くじ用</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]は　くじびきを　ひいて
+ドキドキ　ワクワク　した▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　くじびきを　ひいて
+ドキドキ　ワクワク　した▼</language>
 	</row>
 
 	<row id="resort_go_eff_10" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
@@ -6213,7 +6202,7 @@ GTSの　ごりよう　ありがとうございます！</language>
 		<attribute name="キャラ指定">回答６
 「おすすめを　おしえる」って？</attribute>
 		<language name="JPN" width="256">ゲストルームに　いる　ひとへ
-「おすすめを　おしえる」を▽
+「あんないする」を▽
 やってみましょう▼
 ゲストが　まんぞくすると
 あんない　した　スポットと▽
@@ -6234,7 +6223,7 @@ GTSの　ごりよう　ありがとうございます！</language>
 うまく　あんないして▽
 にんきを　あげて　いきましょう▼</language>
 		<language name="JPN_KANJI" width="256">ゲストルームに　いる　ひとへ
-「おすすめを　おしえる」を▽
+「あんないする」を▽
 やってみましょう▼
 ゲストが　まんぞくすると
 あんない　した　スポットと▽
@@ -6299,8 +6288,8 @@ GTSの　ごりよう　ありがとうございます！</language>
 
 	<row id="resort_drill_sel_06" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
 		<attribute name="キャラ指定">選択肢６</attribute>
-		<language name="JPN" width="256">おすすめをおしえる　って？</language>
-		<language name="JPN_KANJI" width="256">おすすめをおしえる　って？</language>
+		<language name="JPN" width="256">あんないする　って？</language>
+		<language name="JPN_KANJI" width="256">あんないする　って？</language>
 	</row>
 
 	<row id="resort_drill_sel_07" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
@@ -7124,11 +7113,11 @@ GTSの　ごりよう　ありがとうございます！</language>
 兄弟</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]さんって
 ひとりっこ　なんだって▼
-ひとりでも　へいき　って
+ちょっと　わがままって
 かんじするよねー▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんって
 ひとりっこ　なんだって▼
-ひとりでも　へいき　って
+ちょっと　わがままって
 かんじするよねー▼</language>
 	</row>
 
@@ -7784,8 +7773,8 @@ GTSの　ごりよう　ありがとうございます！</language>
 
 	<row id="resort_mouthcomm_sys_02_01" back-color="#00ffff,,,,,,,#00ffff,,,#00ffff,,,#00ffff,,,#00ffff,,">
 		<attribute name="キャラ指定">外見と中身どっちが大事？</attribute>
-		<language name="JPN" width="256">へー！▼</language>
-		<language name="JPN_KANJI" width="256">へー！▼</language>
+		<language name="JPN" width="256">そっちね！▼</language>
+		<language name="JPN_KANJI" width="256">そっちね！▼</language>
 	</row>
 
 	<row id="resort_mouthcomm_sys_02_02" back-color="#00ffff,,,,,,,#00ffff,,,#00ffff,,,#00ffff,,,#00ffff,,">
@@ -7920,8 +7909,8 @@ GTSの　ごりよう　ありがとうございます！</language>
 	</row>
 
 	<row id="resort_mouthcomm_sys_05_07" back-color="#00ffff,,,,,,,#00ffff,,,#00ffff,,,#00ffff,,,#00ffff,,">
-		<language name="JPN" width="256">まだまだ　あるの</language>
-		<language name="JPN_KANJI" width="256">まだまだ　あるの</language>
+		<language name="JPN" width="256">……かんがえ　させるよね</language>
+		<language name="JPN_KANJI" width="256">……かんがえ　させるよね</language>
 	</row>
 
 	<row id="resort_mouthcomm_sys_05_08" back-color="#00ffff,,,,,,,#00ffff,,,#00ffff,,,#00ffff,,,#00ffff,,">
@@ -8070,10 +8059,12 @@ GTSの　ごりよう　ありがとうございます！</language>
 		<attribute name="キャラ指定">一番大事にしているのは？
 
 ２回目</attribute>
-		<language name="JPN" width="256">えらぶのが　むずかしいかも？▼
+		<language name="JPN" width="256">この　しつもんに
+こたえるの　むずかしいかも？▼
 『たいせつなもの』に　ついて
 みんなに　きいているの▼</language>
-		<language name="JPN_KANJI" width="256">えらぶのが　むずかしいかも？▼
+		<language name="JPN_KANJI" width="256">この　しつもんに
+こたえるの　むずかしいかも？▼
 『たいせつなもの』に　ついて
 みんなに　きいているの▼</language>
 	</row>
