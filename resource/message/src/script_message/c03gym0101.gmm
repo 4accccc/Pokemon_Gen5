@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-04T19:54:38"/>
+	<create user="matsumiya" host="W00224" date="2011-04-26T15:23:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1294" top="205" right="1999" bottom="833" maximized="no" rayout="Vertical2">
+	<dialog left="1297" top="169" right="2002" bottom="797" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -418,16 +418,16 @@ jugglimg_11</attribute>
 ・No030「おいしいみず」入手</comment>
 		<attribute name="キャラ指定">DANPEI
 ダンペイ</attribute>
-		<language name="JPN" width="256">いやあ
-ヒウンシティは　どうですか？[BE:01:ページ切り替え（クリア）]
-ひとが　おおくて　ジムに
-くるだけで　へたばったでしょ？[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ガイドー『いやあ
+ジムリーダーを　さがして▼
+ヒウンシティを　みぎひだり
+ひとが　おおくて　へたばったでしょ？▼
 というわけで
 これを　さしあげるっす！▼</language>
-		<language name="JPN_KANJI" width="256">いやあ
-ヒウンシティは　どうですか？[BE:01:ページ切り替え（クリア）]
-人が　多くて　ジムに
-来るだけで　へたばったでしょ？[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">ガイドー『いやあ
+ジムリーダーを　探して▼
+ヒウンシティを　右往左往
+人が　多くて　へたばったでしょ？▼
 というわけで
 これを　さしあげるっす！▼</language>
 	</row>
@@ -460,16 +460,16 @@ jugglimg_11</attribute>
 ・ジムバッジ取得後</comment>
 		<attribute name="キャラ指定">DANPEI
 ダンペイ</attribute>
-		<language name="JPN" width="256">いやーッ　すごいっすね！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">いやーッ　すごいっすね！▼
 ジムリーダー　アーティの
-トリッキーな　こうげきを[BE:00:ページ切り替え（行送り）]
-ものともせずに　はねかえす……[BE:01:ページ切り替え（クリア）]
+トリッキーな　こうげきを▽
+ものともせずに　はねかえす……▼
 いやー　どこまで　つよくなるのか
 ぜんぜん　そうぞう　つかないっすよ！</language>
-		<language name="JPN_KANJI" width="256">いやーッ　すごいっすね！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">いやーッ　すごいっすね！▼
 ジムリーダー　アーティの
-トリッキーな　攻撃を[BE:00:ページ切り替え（行送り）]
-ものともせずに　跳ね返す……[BE:01:ページ切り替え（クリア）]
+トリッキーな　攻撃を▽
+ものともせずに　跳ね返す……▼
 いやー　どこまで　強くなるのか
 ぜんぜん　想像つかないっすよ！</language>
 	</row>
@@ -517,11 +517,11 @@ jugglimg_11</attribute>
 ・ジムバッジ取得前
 ※SWANで内容変更</comment>
 		<attribute name="キャラ指定">ポケモン像</attribute>
-		<language name="JPN" width="256">ヒウン　ポケモンジム[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ヒウン　ポケモンジム▼
 ジムリーダー　アーティ
 にんてい　トレーナー！▽
 ？？？？？</language>
-		<language name="JPN_KANJI" width="256">ヒウン　ポケモンジム[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">ヒウン　ポケモンジム▼
 ジムリーダー　アーティ
 認定　トレーナー！▽
 ？？？？？</language>
@@ -532,35 +532,23 @@ jugglimg_11</attribute>
 ・ジムバッジ取得後
 ※SWANで内容変更</comment>
 		<attribute name="キャラ指定">ポケモン像</attribute>
-		<language name="JPN" width="256">ヒウン　ポケモンジム[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ヒウン　ポケモンジム▼
 ジムリーダー　アーティ
-にんてい　トレーナー！[BE:00:ページ切り替え（行送り）]
+にんてい　トレーナー！▽
 ？？？？？▽
 [1:00:トレーナー名:0]</language>
-		<language name="JPN_KANJI" width="256">ヒウン　ポケモンジム[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">ヒウン　ポケモンジム▼
 ジムリーダー　アーティ
-認定　トレーナー！[BE:00:ページ切り替え（行送り）]
+認定　トレーナー！▽
 ？？？？？▽
 [1:00:トレーナー名:0]</language>
 	</row>
 
 	<row id="msg_c03gym0101_statue_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>BGメッセージ
-・c04でのプラズマ団イベント発生時
-※SWANでは削除予定</comment>
+		<comment>SWANでは削除</comment>
 		<attribute name="キャラ指定">ポケモン像</attribute>
-		<language name="JPN" width="256">ヒウン　ポケモンジム[BE:01:ページ切り替え（クリア）]
-ジムリーダー　アーティ
-にんてい　トレーナー！[BE:00:ページ切り替え（行送り）]
-チェレン▽
-[1:00:トレーナー名:0]▽
-ベル</language>
-		<language name="JPN_KANJI" width="256">ヒウン　ポケモンジム[BE:01:ページ切り替え（クリア）]
-ジムリーダー　アーティ
-認定　トレーナー！[BE:00:ページ切り替え（行送り）]
-チェレン▽
-[1:00:トレーナー名:0]▽
-ベル</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<flowchart-group-list>

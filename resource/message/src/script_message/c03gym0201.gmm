@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-04T19:54:15"/>
+	<create user="matsumiya" host="W00224" date="2011-04-26T15:27:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1417" top="297" right="2122" bottom="917" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -301,14 +301,14 @@
 アーティ</attribute>
 		<language name="JPN" width="256">さっきは　ありがとー！▼
 ボクの　むしポケモンが　きみと
-たたかいたいって　さわいでさ[BE:01:ページ切り替え（クリア）]
+たたかいたいって　さわいでさ▼
 ではでは
-さっそくだけど　しょうぶ　だね[BE:01:ページ切り替え（クリア）]</language>
+さっそくだけど　しょうぶ　だね▼</language>
 		<language name="JPN_KANJI" width="256">さっきは　ありがとー！▼
 ボクの　むしポケモンが　きみと
-戦いたいって　騒いでさ[BE:01:ページ切り替え（クリア）]
+戦いたいって　騒いでさ▼
 ではでは
-早速だけど　勝負だね[BE:01:ページ切り替え（クリア）]</language>
+早速だけど　勝負だね▼</language>
 	</row>
 
 	<row id="msg_c03gym0201_leader_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
@@ -318,49 +318,47 @@
 ※SWANでメッセージ変更予定</comment>
 		<attribute name="キャラ指定">LEADER3</attribute>
 		<language name="JPN" width="256">あうう
-まけちゃったよ……[BE:01:ページ切り替え（クリア）]
+まけちゃったよ……▼
 それにしても　きみ
-すっごく　つよいんだねえ[BE:01:ページ切り替え（クリア）]
+すっごく　つよいんだねえ▼
 これ　ジムバッジ！
-ボクに　かったから　あげる！[BE:01:ページ切り替え（クリア）]</language>
+ボクに　かったから　あげる！▼</language>
 		<language name="JPN_KANJI" width="256">あうう
-負けちゃったよ……[BE:01:ページ切り替え（クリア）]
+負けちゃったよ……▼
 それにしても　きみ
-すっごく　強いんだねえ[BE:01:ページ切り替え（クリア）]
+すっごく　強いんだねえ▼
 これ　ジムバッジ！
-ボクに　勝ったから　あげる！[BE:01:ページ切り替え（クリア）]</language>
+ボクに　勝ったから　あげる！▼</language>
 	</row>
 
 	<row id="msg_c03gym0201_leader_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>ファンファーレ＋バッジ入手処理</comment>
 		<attribute name="キャラ指定">LEADER3</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は　アーティから
-ビートルバッジを　もらった！[BE:01:ページ切り替え（クリア）]</language>
+ビートルバッジを　もらった！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　アーティから
-ビートルバッジを　もらった！[BE:01:ページ切り替え（クリア）]</language>
+ビートルバッジを　もらった！▼</language>
 	</row>
 
-	<row id="msg_c03gym0201_leader_04" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c03gym0201_leader_04" text-color=",,,#000000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・アイテム入手処理
-　No403「むしのていこう」
-
-※SWANでメッセージ変更予定</comment>
+　No403「むしのていこう」</comment>
 		<attribute name="キャラ指定">LEADER3</attribute>
 		<language name="JPN" width="256">ビートルバッジ
-かっこいいでしょ！[BE:01:ページ切り替え（クリア）]
+かっこいいでしょ！▼
 それに　バッジを　３コ　もっていれば
 レベル４０までの　ポケモンは▽
 いうことを　きいてくれるしね▼
 えーっと　そうだ
-これも　あげるよ[BE:01:ページ切り替え（クリア）]</language>
+これも　あげるよ▼</language>
 		<language name="JPN_KANJI" width="256">ビートルバッジ
-かっこいいでしょ！[BE:01:ページ切り替え（クリア）]
+かっこいいでしょ！▼
 それに　バッジを　３個　持っていれば
 レベル４０までの　ポケモンは▽
 いうことを　きいてくれるしね▼
 えーっと　そうだ
-これも　あげるよ[BE:01:ページ切り替え（クリア）]</language>
+これも　あげるよ▼</language>
 	</row>
 
 	<row id="msg_c03gym0201_leader_05" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
