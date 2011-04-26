@@ -64,6 +64,7 @@ static const u16 sc_extend_frame_max[RESORT_EXTEND_TYPE_MAX] =
   30,
   30,
   30,
+  30,
 };
 
 //==============================================================================
@@ -826,40 +827,21 @@ static void BeaconInfo_SetResortData( GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_
 
     //ビーコン情報取得
     RESORT_BEACON_DATA *p_beacon  = RESORT_BEACON_DATA_Init( GFL_HEAP_LOWID(GFL_HEAPID_APP) );
-    u32 trainerID;
-    BOOL is_in = FALSE;
 
     RESORT_BEACON_DATA_SetBeaconInfo( p_beacon, info );
-    trainerID = RESORT_BEACON_DATA_GetTrainerID( p_beacon );
 
-    //連続で受信チェック
-    if( RESORT_CITY_DATA_CheckTrainerID(p_city, trainerID ) == FALSE )
+    //マージチェック
+    if( !RESORT_PEOPLE_ALL_DATA_MergeBeacon( p_all_people, p_beacon ) )
     {
-      //マージチェック
-      if( !RESORT_PEOPLE_ALL_DATA_MergeBeacon( p_all_people, p_beacon ) )
+      //ビーコン追加
+      if( RESORT_RECV_BUFF_AddBeacon( p_buff, p_beacon ) == FALSE )
       {
-        //ビーコン追加
-        if( RESORT_RECV_BUFF_AddBeacon( p_buff, p_beacon ) == FALSE )
+        //セーブデータに入らなかったら、拡張バッファがあるか調べて入れる
+        if( GameBeaconSys->p_resort_buff )
         {
-          //セーブデータに入らなかったら、拡張バッファがあるか調べて入れる
-          if( GameBeaconSys->p_resort_buff )
-          {
-            NAGI_Printf( "セーブデータに入らなかったので拡張領域にいれるよ！\n" );
-            if( RESORT_RECV_BUFF_AddBeacon( GameBeaconSys->p_resort_buff, p_beacon ) )
-            {
-              is_in = TRUE;
-            }
-          }
+          NAGI_Printf( "セーブデータに入らなかったので拡張領域にいれるよ！\n" );
+          RESORT_RECV_BUFF_AddBeacon( GameBeaconSys->p_resort_buff, p_beacon );
         }
-        else
-        {
-          is_in = TRUE;
-        }
-      }
-
-      if( is_in )
-      {
-        RESORT_CITY_DATA_AddTrainerID( p_city, trainerID );
       }
     }
 
@@ -1908,13 +1890,23 @@ static void GAMEBEACON_Set_ResortData( GAMEBEACON_SYSTEM *bsys )
   {
     if( bsys->resort_enable )
     {
+
       RESORT_BEACON_DATA *p_data  = RESORT_BEACON_DATA_Init( GFL_HEAP_LOWID( GFL_HEAPID_APP ) );
 
       GAMEBEACON_INFO *info   = &bsys->send.info;
+
+      void * p_extend_adrs = (u8 *)info->action.extend_buff + RESORT_BASIC2_DATA_SIZE;
+
       RESORT_EXTEND_TYPE  type;
+
       RESORT_BEACON_DATA_SetMyData( p_data, bsys->resort_extend_index, bsys->gamedata );
 
-      RESORT_BEACON_DATA_GetExtendData( p_data, info->action.extend_buff, &type );
+      //TODO
+      //BASIC2をいれる
+
+      RESORT_BEACON_DATA_GetExtendData( p_data, 
+          p_extend_adrs, 
+          &type );
       info->action.resort_extend_type = type;
 
       GAMEBEACON_SUB_SendBeaconSetCommon(&bsys->send);

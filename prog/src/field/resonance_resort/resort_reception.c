@@ -735,6 +735,8 @@ static void Reception_People_CreateEnterTask( GFL_TCBLSYS * p_tcblsys, RESORT_PE
   GFL_STD_MemClear( p_act, sizeof(RECEPTION_PEOPLE_ACT) );
 
   p_act->p_people = p_people;
+
+  RESORT_PEOPLE_SetTalkFlag( p_act->p_people, FALSE );
 }
 //----------------------------------------------------------------------------
 /**
@@ -768,6 +770,7 @@ static void Reception_People_Act_Enter( GFL_TCBL *p_tcbl, void *p_wk_adrs )
     }
     break;
   case SEQ_END:
+    RESORT_PEOPLE_SetTalkFlag( p_wk->p_people, TRUE );
     GFL_TCBL_Delete(p_tcbl);
     break;
   default:
@@ -789,6 +792,8 @@ static void Reception_People_CreateLeaveTask( GFL_TCBLSYS * p_tcblsys, RESORT_PE
   GFL_STD_MemClear( p_act, sizeof(RECEPTION_PEOPLE_ACT) );
 
   p_act->p_people = p_people;
+
+  RESORT_PEOPLE_SetTalkFlag( p_act->p_people, FALSE );
 }
 //----------------------------------------------------------------------------
 /**
@@ -822,6 +827,7 @@ static void Reception_People_Act_Leave( GFL_TCBL *p_tcbl, void *p_wk_adrs )
     }
     break;
   case SEQ_END:
+    RESORT_PEOPLE_SetTalkFlag( p_wk->p_people, TRUE );
     GFL_TCBL_Delete(p_tcbl);
     break;
   default:
@@ -841,8 +847,10 @@ static void Reception_People_CreateReplaceTask( GFL_TCBLSYS * p_tcblsys, RESORT_
   GFL_TCBL * p_tcbl = GFL_TCBL_Create(p_tcblsys, Reception_People_Act_Replace, sizeof(RECEPTION_PEOPLE_ACT), 0);
   RECEPTION_PEOPLE_ACT *p_act = GFL_TCBL_GetWork(p_tcbl);
   GFL_STD_MemClear( p_act, sizeof(RECEPTION_PEOPLE_ACT) );
-
   p_act->p_people = p_people;
+
+  //˜b‚µ‚©‚¯‚Å‚«‚È‚­‚·‚é
+  RESORT_PEOPLE_SetTalkFlag( p_act->p_people, FALSE );
 }
 //----------------------------------------------------------------------------
 /**
@@ -874,6 +882,7 @@ static void Reception_People_Act_Replace( GFL_TCBL *p_tcbl, void *p_wk_adrs )
   case SEQ_REAVE_WAIT:
     if( RESORT_PEOPLE_IsActionEnd( p_wk->p_people ) )
     {
+      RESORT_PEOPLE_ChangeOBJCode( p_wk->p_people );
       p_wk->seq++;
     }
     break;
@@ -888,6 +897,7 @@ static void Reception_People_Act_Replace( GFL_TCBL *p_tcbl, void *p_wk_adrs )
     }
     break;
   case SEQ_END:
+    RESORT_PEOPLE_SetTalkFlag( p_wk->p_people, TRUE );
     GFL_TCBL_Delete(p_tcbl);
     break;
   default:

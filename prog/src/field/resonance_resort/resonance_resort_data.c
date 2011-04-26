@@ -1050,6 +1050,7 @@ SDK_COMPILER_ASSERT(sizeof(RESORT_PROXY_DATA)==RESORT_PROXY_DATA_SIZE);
  */
 //=============================================================================
 static void Resort_Recv_Data_SetWantJob( RESORT_RECV_DATA *p_wk );
+static void Resort_Recv_Data_SetBeaconExtendData( RESORT_RECV_DATA *p_wk, const RESORT_BEACON_DATA *cp_beacon );
 
 //=============================================================================
 /**
@@ -1105,7 +1106,7 @@ void RESORT_RECV_DATA_SetMyData( RESORT_RECV_DATA *p_wk, const GAMEDATA *cp_game
     }
   }
 
-  p_wk->extend_flag = 0xFF;
+  p_wk->extend_flag = 0x1F;
 }
 //----------------------------------------------------------------------------
 /**
@@ -1117,6 +1118,7 @@ void RESORT_RECV_DATA_SetMyData( RESORT_RECV_DATA *p_wk, const GAMEDATA *cp_game
 void RESORT_RECV_DATA_InitInstance( RESORT_RECV_DATA *p_wk )
 {
   GFL_STD_MemClear( p_wk, sizeof(RESORT_RECV_DATA) );
+  p_wk->extend9.phrase[0] = GFL_STR_GetEOMCode();
 
   RESORT_INSTITUTION_DATA_InitInstance( &p_wk->institution );
 }
@@ -1290,22 +1292,19 @@ BOOL RESORT_RECV_DATA_MergeBeacon( RESORT_RECV_DATA *p_wk, const RESORT_BEACON_D
     p_wk->basic1  = cp_beacon->basic1;
 
     //中身があったら入れる
-    if( cp_beacon->extend_type !=  RESORT_EXTEND_TYPE_NULL )
+    if( cp_beacon->extend_type <  RESORT_EXTEND_TYPE_NULL )
     {
       p_wk->basic2  = cp_beacon->basic2;
-    
-      //入れる処理
-      //TODO
 
-      //拡張マージフラグ
-      p_wk->extend_flag |=  1<<cp_beacon->extend_type;
+      //入れる処理
+      Resort_Recv_Data_SetBeaconExtendData( p_wk, cp_beacon );
     }
 
     //初期生成データ
-    RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_UPDATE,RESORT_RECV_DATA_UPDATE_FIRST);
     Resort_Recv_Data_InitSetup( p_wk, RESORT_COMM_TYPE_BEACON );
+    RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_UPDATE,RESORT_RECV_DATA_UPDATE_FIRST);
 
-    if( p_wk->extend_flag == 0xFF )
+    if( p_wk->extend_flag == 0x1F )
     {
       RESORT_Printf( "!!!すべてマージ完了\n!!!" );
     }
@@ -1315,26 +1314,24 @@ BOOL RESORT_RECV_DATA_MergeBeacon( RESORT_RECV_DATA *p_wk, const RESORT_BEACON_D
     //空だったら、全部いれる
     p_wk->basic1  = cp_beacon->basic1;
 
-
     //中身があったら入れる
-    if( cp_beacon->extend_type !=  RESORT_EXTEND_TYPE_NULL )
+    if( cp_beacon->extend_type <  RESORT_EXTEND_TYPE_NULL )
     {
       p_wk->basic2  = cp_beacon->basic2;
 
       //入れる処理
-      //TODO
-
-      //拡張マージフラグ
-      p_wk->extend_flag |=  1<<cp_beacon->extend_type;
+      Resort_Recv_Data_SetBeaconExtendData( p_wk, cp_beacon );
     };
 
-    if( p_wk->extend_flag == 0xFF )
+    if( p_wk->extend_flag == 0x1F )
     {
       RESORT_Printf( "!!!すべてマージ完了\n!!!" );
     }
 
     if( change_view )
     {
+
+      NAGI_Printf( "recv view %d\n", p_wk->basic1.trainer_view );
       RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_UPDATE,RESORT_RECV_DATA_UPDATE_MERGE_VIEW);
     }
     else
@@ -1374,8 +1371,8 @@ BOOL RESORT_RECV_DATA_MergeRecv( RESORT_RECV_DATA *p_wk, const RESORT_RECV_DATA 
   {
     GFL_STD_MemCopy( cp_recv, p_wk, sizeof(RESORT_RECV_DATA) );
 
-    RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_UPDATE,RESORT_RECV_DATA_UPDATE_FIRST);
     Resort_Recv_Data_InitSetup( p_wk, type );
+    RESORT_RECV_DATA_SetData(p_wk,RESORT_DATA_PARAM_UPDATE,RESORT_RECV_DATA_UPDATE_FIRST);
   }
   else
   {
@@ -1467,7 +1464,8 @@ u32 RESORT_RECV_DATA_GetData( const RESORT_RECV_DATA *cp_wk, RESORT_DATA_PARAM p
     return 0; //TODO
   case RESORT_DATA_PARAM_PHRASE:
     //もしパックがなかったら通常の挨拶文
-    if( cp_wk->extend_flag & 1<<RESORT_EXTEND_TYPE_09 )
+    if( ( cp_wk->extend_flag & 1<<RESORT_EXTEND_TYPE_09 )
+        && ( cp_wk->extend9.phrase[0] != GFL_STR_GetEOMCode() ) )
     {
       RESORT_EXTEND9_DATA_GetPhrase( &cp_wk->extend9, p_ret_adrs );
     }
@@ -1692,7 +1690,7 @@ u32 RESORT_RECV_DATA_GetData( const RESORT_RECV_DATA *cp_wk, RESORT_DATA_PARAM p
     {
       RESORT_EXTEND9_DATA_GetPhrase( &cp_wk->extend9, (STRCODE *)p_ret_adrs );
     }
-    return (u32)&cp_wk->extend9;
+    return (u32)cp_wk->extend9.phrase;
   default:
     GF_ASSERT(0);
     return 0;
@@ -1831,7 +1829,15 @@ void RESORT_RECV_DATA_SetData( RESORT_RECV_DATA *p_wk, RESORT_DATA_PARAM param, 
     p_wk->lock = data;
     break;
   case RESORT_DATA_PARAM_UPDATE:
-    p_wk->update = data;
+    //優先度高くないと入れられない
+    if( p_wk->update == RESORT_RECV_DATA_UPDATE_NONE )
+    {
+      p_wk->update = data;
+    }
+    else if( p_wk->update > data )
+    {
+      p_wk->update = data;
+    }
     break;
   case RESORT_DATA_PARAM_KEEP:
     p_wk->keep_flag = data;
@@ -2706,17 +2712,26 @@ BOOL RESORT_RECV_BUFF_AddBeacon( RESORT_RECV_BUFF *p_wk, const RESORT_BEACON_DAT
     return TRUE;
   }
 
-  //空のデータがあったら入れる
-  p_data  = Resort_Recv_Buff_GetEmptyData( p_wk );
-  if( p_data )
   {
-    RESORT_RECV_DATA_MergeBeacon( p_data, cp_beacon );
+    u32 trainerID = RESORT_BEACON_DATA_GetTrainerID( cp_beacon );
+    //連続で受信チェック
+    if( RESORT_CITY_DATA_CheckTrainerID(sp_city_data, trainerID ) == FALSE )
+    {
+      //空のデータがあったら入れる
+      p_data  = Resort_Recv_Buff_GetEmptyData( p_wk );
+      if( p_data )
+      {
+        RESORT_RECV_DATA_MergeBeacon( p_data, cp_beacon );
 
 #ifdef  PM_DEBUG
-    RESORT_BASIC1_DATA_PrintDebug( &cp_beacon->basic1 );
+        RESORT_BASIC1_DATA_PrintDebug( &cp_beacon->basic1 );
 #endif
-    RESORT_Printf( "空のデータに入れた！%d\n", cp_beacon->extend_type );
-    return TRUE;
+        RESORT_Printf( "空のデータに入れた！%d\n", cp_beacon->extend_type );
+
+        RESORT_CITY_DATA_AddTrainerID( sp_city_data, trainerID );
+        return TRUE;
+      }
+    }
   }
 
   RESORT_Printf( "ビーコンを受け取ったが、バッファがいっぱい！\n" );
@@ -2851,7 +2866,13 @@ void RESORT_RESIDENT_DATA_SetRecv( RESORT_RESIDENT_DATA *p_wk, const RESORT_RECV
   Resort_Recv_Data_SetWantJob( p_wk );
 }
 
-
+//----------------------------------------------------------------------------
+/**
+ *	@brief  職業設定
+ *
+ *	@param	RESORT_RECV_DATA *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
 static void Resort_Recv_Data_SetWantJob( RESORT_RECV_DATA *p_wk )
 {
   RESORT_BINARY_SHOP *p_shop = RESORT_BINARY_SHOP_Init( GFL_HEAP_LOWID(GFL_HEAPID_APP) );
@@ -2859,6 +2880,26 @@ static void Resort_Recv_Data_SetWantJob( RESORT_RECV_DATA *p_wk )
   RESORT_INSTITUTION_DATA *p_institution = RESORT_RESIDENT_DATA_GetInstitution(p_wk);
   RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_ID, shopID );
   RESORT_BINARY_SHOP_Exit( p_shop );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ビーコンの拡張情報を設定
+ *
+ *	@param	RESORT_RECV_DATA *p_wk　ワーク
+ *	@param	RESORT_BEACON_DATA *cp_beacon ビーコン
+ */
+//-----------------------------------------------------------------------------
+static void Resort_Recv_Data_SetBeaconExtendData( RESORT_RECV_DATA *p_wk, const RESORT_BEACON_DATA *cp_beacon )
+{
+  if( cp_beacon->extend_type < RESORT_EXTEND_TYPE_NULL )
+  {
+    u8  *p_extend_adrs  = (u8*)&p_wk->extend1;
+    p_extend_adrs += (RESORT_EXTEND_DATA_SIZE * cp_beacon->extend_type);
+    GFL_STD_MemCopy( cp_beacon->extend, p_extend_adrs, RESORT_EXTEND_DATA_SIZE );
+
+    //拡張マージフラグ
+    p_wk->extend_flag |=  1<<cp_beacon->extend_type;
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -3327,6 +3368,8 @@ void RESORT_PEOPLE_ALL_DATA_InitInstance( RESORT_PEOPLE_ALL_DATA *p_wk )
   {
     RESORT_SECRETARY_DATA_InitInstance(&p_wk->secretary[i]);
   }
+
+  RESORT_RESIDENT_DATA_InitInstance(&p_wk->owner );
 }
 //----------------------------------------------------------------------------
 /**

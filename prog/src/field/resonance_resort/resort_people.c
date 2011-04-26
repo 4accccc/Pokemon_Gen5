@@ -247,6 +247,32 @@ void * RESORT_PEOPLE_GetDataAdrs( RESORT_PEOPLE *p_wk )
 }
 //----------------------------------------------------------------------------
 /**
+ *	@brief  OBJコードを変更
+ *
+ *	@param	RESORT_PEOPLE *p_people 人物
+ */
+//-----------------------------------------------------------------------------
+void RESORT_PEOPLE_ChangeOBJCode( RESORT_PEOPLE *p_wk )
+{
+  MMDL *p_mmdl = RESORT_PEOPLE_GetMmdl( p_wk );
+  u16 code = RESORT_ABSTRUCT_DATA_GetData( p_wk->p_abstruct_data, RESORT_DATA_PARAM_TRAINERVIEW, NULL );
+  MMDL_ChangeOBJCode( p_mmdl, UnionView_GetObjCode( code ) );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  話しかけ許可フラグ操作
+ *
+ *	@param	RESORT_PEOPLE *p_wk ワーク
+ *	@param	is_talk TRUEで話せる  FALSEで話せない
+ */
+//-----------------------------------------------------------------------------
+void RESORT_PEOPLE_SetTalkFlag( RESORT_PEOPLE *p_wk, BOOL is_talk )
+{
+  MMDL *p_mmdl = RESORT_PEOPLE_GetMmdl( p_wk );
+  MMDL_SetStatusBitTalkOFF( p_mmdl, !is_talk );
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief 施設データを取得
  *
  *	@param	RESORT_PEOPLE *p_wk   ワーク
@@ -475,6 +501,7 @@ static void Proxy_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder )
 static void Tourist_SetupMmdHeader( RESORT_PEOPLE *p_wk, MMDL_HEADER *p_hedder )
 {
   u8 trainer_view = RESORT_ABSTRUCT_DATA_GetData( p_wk->p_abstruct_data, RESORT_DATA_PARAM_TRAINERVIEW, NULL );
+  NAGI_Printf( "mmdl view %d\n", trainer_view );
   p_hedder->obj_code = UnionView_GetObjCode( trainer_view );
   p_hedder->move_code = MV_DIR_RND;
   p_hedder->event_id = RESORT_BINARY_PEOPLE_DATA_GetScrID( p_wk->cp_binary );

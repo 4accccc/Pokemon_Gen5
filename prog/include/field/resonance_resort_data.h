@@ -327,10 +327,10 @@ typedef enum
 //=====================================
 typedef enum
 {
-  RESORT_RECV_DATA_UPDATE_NONE,   //更新していない
-  RESORT_RECV_DATA_UPDATE_FIRST,  //初回更新
-  RESORT_RECV_DATA_UPDATE_MERGE_DATA,   //データ更新
-  RESORT_RECV_DATA_UPDATE_MERGE_VIEW,   //見た目更新
+  RESORT_RECV_DATA_UPDATE_NONE,         //更新していない    
+  RESORT_RECV_DATA_UPDATE_FIRST,        //初回更新        優先度：高
+  RESORT_RECV_DATA_UPDATE_MERGE_VIEW,   //見た目更新    
+  RESORT_RECV_DATA_UPDATE_MERGE_DATA,   //データ更新      優先度：低
 
   RESORT_RECV_DATA_UPDATE_MAX,
 } RESORT_RECV_DATA_UPDATE;

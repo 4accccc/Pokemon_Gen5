@@ -3131,7 +3131,14 @@ static MMDL * getFrontTalkOBJ( EV_REQUEST *req, FIELDMAP_WORK *fieldMap )
   mmdl = MMDLSYS_SearchGridPosEx(
       FIELDMAP_GetMMdlSys(fieldMap), gx, gz, MMDL_GetVectorPosY(jiki), FRONT_TALKOBJ_HEIGHT_DIFF, FALSE );
   
-  return( mmdl );
+  if( mmdl != NULL && MMDL_CheckStatusBitTalk( mmdl ) )
+  {
+    return( mmdl );
+  }
+  else
+  {
+    return NULL;
+  }
 }
 
 

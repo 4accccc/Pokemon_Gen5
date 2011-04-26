@@ -61,6 +61,9 @@ extern u32 RESORT_PEOPLE_GetPeopleData( const RESORT_PEOPLE *cp_wk, RESORT_PEOPL
 extern u32 RESORT_PEOPLE_GetMsgID( const RESORT_PEOPLE *cp_wk, u32 index );
 extern MMDL * RESORT_PEOPLE_GetMmdl( const RESORT_PEOPLE *cp_wk );
 extern void * RESORT_PEOPLE_GetDataAdrs( RESORT_PEOPLE *p_wk );
+extern void RESORT_PEOPLE_ChangeOBJCode( RESORT_PEOPLE *p_wk );
+extern void RESORT_PEOPLE_SetTalkFlag( RESORT_PEOPLE *p_wk, BOOL is_talk );
+
 //èZêlÇµÇ©égÇ¶Ç»Ç¢
 extern RESORT_INSTITUTION_DATA * RESORT_PEOPLE_GetInstitution( RESORT_PEOPLE *p_wk );
 

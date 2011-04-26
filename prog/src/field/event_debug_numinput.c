@@ -1782,7 +1782,7 @@ static void DebugSetLivecasterSecretNotRnd(GAMESYS_WORK * gsys, GAMEDATA * gdata
  */
 //=============================================================================
 extern GAMEBEACON_SYSTEM * GameBeaconSys;
-extern u16 sc_extend_frame_max[8];
+extern u16 sc_extend_frame_max[9];
 static u32 DebugGetRResortBeaconFlag( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param )
 {
   return GameBeaconSys->resort_enable;
