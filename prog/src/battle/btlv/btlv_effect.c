@@ -34,7 +34,7 @@
 #include "debug/debug_hudson.h"
 
 //#define DEBUG_DUMP_TEXVRAM      // デバッグボタンを押すとTEX-VRAMのデバッグプリントが出る
-#define DEBUG_BG_ANIME_CHANGE   // デバッグボタンを押すと背景アニメが切り替わる
+//#define DEBUG_BG_ANIME_CHANGE   // デバッグボタンを押すと背景アニメが切り替わる
 
 //============================================================================================
 /**
