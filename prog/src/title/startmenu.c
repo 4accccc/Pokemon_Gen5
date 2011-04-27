@@ -498,7 +498,8 @@ static GFL_PROC_RESULT START_MENU_ProcEnd( GFL_PROC * proc, int * seq, void * pw
 
 	case LIST_ITEM_NEW_GAME:			// 最初から
     GAMEBEACON_AMPROTECT_SetTask(); //マジコン対策
-		GameStart_Beginning();
+    GameStart_DebugNet(); //αバージョン対処：WBのさいしょは遊ばせない
+		//GameStart_Beginning();
 		break;
 
 	case LIST_ITEM_HUSHIGI:				// 不思議な贈り物
