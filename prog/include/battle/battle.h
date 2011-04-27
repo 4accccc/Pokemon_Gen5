@@ -353,6 +353,8 @@ typedef struct {
   u8 WifiBadNameFlag     : 1;  // Wifiで対戦相手が不正名だったらTRUE。それ以外はFALSE
   u8 PokewoodMode        : 2;  // 0:通常(ポケウッドじゃない）、1:撮影モード、2：上映モード
 
+  u8 bag_nouse_flag       :1;  // アイテム使用禁止フラグ
+
   u16 pokewoodSenario;         // ポケウッドのシナリオＮＯ(アライメント合わせに２バイト使ってます）
 
   u8 fightPokeIndex[ TEMOTI_POKEMAX ];  // 戦闘に出たポケモンのパーティ内Indexと同じ位置がTRUEになる（それ以外はFALSE）

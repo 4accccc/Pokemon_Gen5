@@ -849,6 +849,9 @@ int FIELDMENU_GetMenuType( GAMEDATA * gamedata, EVENTWORK *ev, int zoneId )
   }else if(EVENTWORK_CheckEventFlag(ev,SYS_FLAG_ZUKAN_GET) == FALSE ){
     OS_Printf("図鑑なし\n");
     type  = FIELD_MENU_NO_ZUKAN;            // 図鑑無し
+  }else if( ZONEDATA_IsInfinityDungeon(zoneId) ){
+    OS_Printf("バッグなし\n");
+    type  = FIELD_MENU_NO_BAG;            // バッグなし
   }
 
 
@@ -898,6 +901,15 @@ static const FIELD_MENU_ITEM_TYPE typeArr[FIELD_MENU_TYPE_MAX][7] =
     FMIT_ZUKAN,
     FMIT_ITEMMENU,
     FMIT_TRAINERCARD,
+    FMIT_CONFING,
+    FMIT_NONE,
+    FMIT_EXIT,
+  },
+  { //バッグなし
+    FMIT_POKEMON,
+    FMIT_ZUKAN,
+    FMIT_TRAINERCARD,
+    FMIT_REPORT,
     FMIT_CONFING,
     FMIT_NONE,
     FMIT_EXIT,

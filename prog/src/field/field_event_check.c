@@ -673,16 +673,18 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
 //☆☆☆自機位置に関係ないキー入力イベントチェック
   //便利ボタンチェック
   if( req.convRequest ){
-    if(WIPE_SYS_EndCheck()){
-      FIELD_SUBSCREEN_WORK* subscreen = FIELDMAP_GetFieldSubscreenWork(fieldWork);
-      //メニューの終了後の１フレーム程度にYボタンを起動すると、
-      //先にYボタンメニューの初期化が走り、その後メニューの終了処理で上画面のスクリーンをクリアして
-      //しまうため、メニューの終了を待ってから動作させる
-      if( EVENT_ShortCutMenu_IsOpen(gsys) && FIELD_SUBSCREEN_CanChange( subscreen) )
-      { 
-        event = EVENT_ShortCutMenu( gsys, fieldWork, req.heapID );
-        if( event != NULL ){
-          return event;
+    if(ZONEDATA_IsInfinityDungeon(req.map_id) == FALSE){
+      if(WIPE_SYS_EndCheck()){
+        FIELD_SUBSCREEN_WORK* subscreen = FIELDMAP_GetFieldSubscreenWork(fieldWork);
+        //メニューの終了後の１フレーム程度にYボタンを起動すると、
+        //先にYボタンメニューの初期化が走り、その後メニューの終了処理で上画面のスクリーンをクリアして
+        //しまうため、メニューの終了を待ってから動作させる
+        if( EVENT_ShortCutMenu_IsOpen(gsys) && FIELD_SUBSCREEN_CanChange( subscreen) )
+        { 
+          event = EVENT_ShortCutMenu( gsys, fieldWork, req.heapID );
+          if( event != NULL ){
+            return event;
+          }
         }
       }
     }

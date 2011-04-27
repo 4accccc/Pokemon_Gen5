@@ -504,7 +504,10 @@ GMEVENT * EVENT_InfinityDungeonTrainerBattle(
   
   event = GMEVENT_Create(
       gsys, NULL, fieldBattleEvent, sizeof(BATTLE_EVENT_WORK) );
-  
+   
+  // アイテム使用禁止
+  bp->bag_nouse_flag = TRUE;
+   
 #ifdef PM_DEBUG
   debug_FieldDebugFlagSet( bp );
 #endif

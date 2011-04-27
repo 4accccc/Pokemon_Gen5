@@ -80,6 +80,25 @@ static u16 ZONEDATA_CHANGE_ID_TBL[ ZONEDATA_CHANGE_MAX ][ ZONEDATA_CHANGE_ID_TBL
   { ZONE_ID_PLC10, ZONE_ID_PLCW10 },   // ZONEDATA_CHANGE_BC_WF_ID BCをWFに変更する。
 };
 
+//------------------------------------------------------------------
+/**
+ * @brief 無限ダンジョンゾーンIDテーブル
+ */
+//------------------------------------------------------------------
+static u16 INF_ZONEID_TABLE[] =
+{
+  ZONE_ID_D31R0301,
+  ZONE_ID_D31R0401,
+  ZONE_ID_D31R0501,
+  ZONE_ID_D31R0601,
+  ZONE_ID_D31R0701,
+  ZONE_ID_D31R0801,
+  ZONE_ID_D31R0901,
+  ZONE_ID_D31R1001,
+  ZONE_ID_D31R1101,
+  ZONE_ID_D31R1201,
+};
+
 
 
 //============================================================================================
@@ -734,6 +753,28 @@ BOOL ZONEDATA_IsPlBoat(u16 zone_id)
   zone_id = ControlZoneID(zone_id);
 
   return (zone_id == ZONE_ID_C03R0801);
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief  無限ダンジョンマップかどうかのチェック
+ * @param  zoneid ゾーン指定ID
+ * @return BOOL 遊覧船内だったらTRUE
+ */
+//------------------------------------------------------------------
+BOOL ZONEDATA_IsInfinityDungeon(u16 zone_id)
+{
+  int i;
+  zone_id = ControlZoneID(zone_id);
+
+  for( i = 0 ;i < NELEMS(INF_ZONEID_TABLE) ;i++ )
+  {
+    if( INF_ZONEID_TABLE[i] == zone_id )
+    {
+       return TRUE;
+    }
+  }
+  return FALSE;
 }
 
 //------------------------------------------------------------------
