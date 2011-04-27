@@ -1080,14 +1080,22 @@ static void wr_exit( WIN_RECORD_MAIN_WORK* wk )
 	//------------------
 	// ×で終了 => フリームーブとなる
 	if(wk->Flag & FLG_MW_CROSS_END){
-		wk->Param->result = TRUE;
+		if(wk->Param->result_work != NULL){
+			*wk->Param->result_work = TRUE;
+		}
 	}
 	// RETURNで終了 => パソコン画面へ
 	else{
-		wk->Param->result = FALSE;
+		if(wk->Param->result_work != NULL){
+			*wk->Param->result_work = FALSE;
+		}
 	}
 #if 1	// 結果
-	OS_Printf("result : %d\n",wk->Param->result);
+	if(wk->Param->result_work != NULL){
+		OS_Printf("result : %d\n",*wk->Param->result_work);
+	}else{
+		OS_Printf("result : null(debug)\n");
+	}
 #endif
 	// 上、下画面をまとめて処理
 	// emptyのバッファクリア
