@@ -717,6 +717,8 @@ EVENT_START ev_wbt_entry_checker
     SWITCH $LWK_SELECT_POS
     CASE msg_wbt_pc_menu_01 THEN
       _CALL ev_victory_checker
+      IF $SCWK_ANSWER == TRUE THEN
+      ENDIF
     CASE msg_wbt_pc_menu_02 THEN
       _CALL ev_downloader
     CASE msg_wbt_pc_menu_03 THEN
@@ -739,6 +741,9 @@ ev_victory_checker:
   _SYSWIN_MSG( msg_wbt_pc_select_01, POS_DOWN )
   _SYSWIN_CLOSE()
   _WBT_ENTRY_CHECKER_VICTORY_RECORD( SCWK_ANSWER )
+  IF $SCWK_ANSWER == TRUE THEN
+    $LOG_OUT = TRUE
+  ENDIF
   _RET
 
 /********************************************************************/
