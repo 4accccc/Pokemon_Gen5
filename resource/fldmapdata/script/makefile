@@ -26,6 +26,7 @@ HEADER_TARGETS += $(UNIQ_DEBUG_EVENT_SCRFILES)
 
 do-build:
 		@ruby scr_tools/make_depend.rb $(HEADER_TARGETS) > makefile_h.depend
+		@ruby scr_tools/ev_depend.rb $(SCRIPTFILES) > makefile_ev.depend
 		make -f makefile_sc do-build
 		make -j $(NUMBER_OF_PROCESSORS) -f makefile_h do-build
 		make -j $(NUMBER_OF_PROCESSORS) -f makefile_ev do-build

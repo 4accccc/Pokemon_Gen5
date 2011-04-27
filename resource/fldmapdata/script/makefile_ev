@@ -19,6 +19,9 @@ DEPENDHEADERS = usescript.h scr_seq_def.h easy_event_def.h \
 								../../sound/swan_sound_data.sadl ../zonetable/zone_id.h \
 								$(PROJECT_PROGDIR)version
 
+MSGHEADERDIR	=	../../message/dst/script/
+EVENTHEADERDIR	= ../eventdata/tmp/
+
 #マップ依存のスクリプト（t01.ev,sp_t01.ev etc.）：定義ファイルは自動生成
 SCRIPTFILES	=
 include zone_script.list
@@ -62,13 +65,14 @@ TARGET_NARC = script_seq.narc
 TARGET_NAIX = $(TARGET_NARC:.narc=.naix)
 
 #eventdata/tmp参照
-ADD_MACRO = -I../eventdata/tmp/ -I../../message/dst/script/ -I../../personal/
+ADD_MACRO = -I$(EVENTHEADERDIR) -I$(MSGHEADERDIR) -I../../personal/
 
 #(PM_DEBUG == yes)のときのみデバッグバージョン
 ifeq ($(PM_DEBUG),yes)
 ADD_MACRO += -DPM_DEBUG
 endif
 
+include makefile_ev.depend
 #----------------------------------------------------------------------------
 #	clean
 # Makeで生成される*.narcはmake cleanの削除対象にする
