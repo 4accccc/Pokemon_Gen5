@@ -64,9 +64,9 @@ static BOOL debugMenuCallProc_PresenRecvAdd( DEBUG_MENU_EVENT_WORK *p_wk );
 static const DEBUG_MENU_LIST DATA_SubMenuList[] =
 {
   { DEBUG_FIELD_RESORT_18, debugMenuCallProc_ChangeMap, GFL_OVERLAY_BLANK_ID },
-  { DEBUG_FIELD_RESORT_38, debugMenuCallProc_DesignerSetup, GFL_OVERLAY_BLANK_ID },
   { DEBUG_FIELD_RESORT_39, debugMenuCallProc_PresenSetup, GFL_OVERLAY_BLANK_ID },
   { DEBUG_FIELD_RESORT_40, debugMenuCallProc_PresenRecvAdd, GFL_OVERLAY_BLANK_ID },
+  { DEBUG_FIELD_RESORT_38, debugMenuCallProc_DesignerSetup, GFL_OVERLAY_BLANK_ID },
   { DEBUG_FIELD_RESORT_16, debugMenuCallProc_Input, GFL_OVERLAY_BLANK_ID},
   { DEBUG_FIELD_RESORT_01, debugMenuCallProc_SetRecv, GFL_OVERLAY_BLANK_ID },
   { DEBUG_FIELD_RESORT_05, debugMenuCallProc_AllRecv, GFL_OVERLAY_BLANK_ID},
@@ -78,7 +78,6 @@ static const DEBUG_MENU_LIST DATA_SubMenuList[] =
   { DEBUG_FIELD_RESORT_09, debugMenuCallProc_AllResident, GFL_OVERLAY_BLANK_ID},
   { DEBUG_FIELD_RESORT_10, debugMenuCallProc_AllClear, GFL_OVERLAY_BLANK_ID},
   { DEBUG_FIELD_RESORT_11, debugMenuCallProc_UpdateDay, GFL_OVERLAY_BLANK_ID},
-
 };
 
 static const DEBUG_MENU_INITIALIZER DebugSubMenuData = {
@@ -580,6 +579,12 @@ static BOOL debugMenuCallProc_AllClear( DEBUG_MENU_EVENT_WORK *p_wk )
   SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(p_wk->gdata);
   RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( pSave );
 
+  //迎賓館では使えない
+  if( FIELDMAP_GetZoneID( p_wk->fieldWork) == RESORT_ZONE_ID_RECEPTION )
+  {
+    return FALSE;
+  }
+
   //バッファクリア
   {
     RESORT_RECV_BUFF *p_recv_buff = RESONANCE_RESORT_SV_GetDataBuff( p_resort );
@@ -944,6 +949,12 @@ static BOOL debugMenuCallProc_PresenSetup( DEBUG_MENU_EVENT_WORK *p_wk )
   GFL_MSGDATA *p_msg = GFL_MSG_Create(GFL_MSG_LOAD_NORMAL,ARCID_DEBUG_MESSAGE,NARC_debug_message_debug_resort2_dat, GFL_HEAP_LOWID(p_wk->heapID) );
   RESORT_RECV_DATA *p_recv = RESORT_RECV_DATA_Init( GFL_HEAP_LOWID(p_wk->heapID) );
   int i;
+
+  //迎賓館では使えない
+  if( FIELDMAP_GetZoneID( p_wk->fieldWork) == RESORT_ZONE_ID_RECEPTION )
+  {
+    return FALSE;
+  }
 
   //まずはデータクリア
   debugMenuCallProc_AllClear( p_wk );
