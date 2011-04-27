@@ -1310,7 +1310,7 @@ VMCMD_RESULT EvCmdResortSetSpot( VMHANDLE *p_core, void *p_wk_adrs )
     if( is_good )
     {
       *ret_grade_msg = resort_sys_03 + grade;
-      WORDSET_RegisterNumber( p_wordset, 2, add_exp, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+      WORDSET_RegisterNumber( p_wordset, 5, add_exp, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
       exp = RESORT_INSTITUTION_DATA_GetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_EXP );
       next_exp = RESORT_BINARY_SHOP_DATA_GetData( cp_binary_shop_data, RESORT_BINARY_SHOP_PARAM_NEXT_EXP );
       if( exp + add_exp >= next_exp )
@@ -1325,7 +1325,7 @@ VMCMD_RESULT EvCmdResortSetSpot( VMHANDLE *p_core, void *p_wk_adrs )
         shopID = RESORT_BINARY_SHOP_SearchShopID( p_shop, p_resident );
         RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_ID, shopID );
 
-        WORDSET_RegisterNumber( p_wordset, 3, lv+1, 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+        WORDSET_RegisterNumber( p_wordset, 6, lv+1, 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
       }
       else
       {
@@ -1341,7 +1341,7 @@ VMCMD_RESULT EvCmdResortSetSpot( VMHANDLE *p_core, void *p_wk_adrs )
       lv = RESORT_CITY_DATA_GetData( p_city_data, RESORT_CITY_DATA_PARAM_LV, NULL );
       exp = RESORT_CITY_DATA_GetData( p_city_data, RESORT_CITY_DATA_PARAM_EXP, NULL );
 
-      WORDSET_RegisterNumber( p_wordset, 4, add_exp, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+      WORDSET_RegisterNumber( p_wordset, 7, add_exp, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
 
       city_idx = RESORT_BINARY_CITY_GetIndexByCityLv( p_city, lv );
       next_exp = RESORT_BINARY_CITY_GetData( p_city, city_idx, RESORT_BINARY_CITY_PARAM_EXP );
@@ -1350,7 +1350,7 @@ VMCMD_RESULT EvCmdResortSetSpot( VMHANDLE *p_core, void *p_wk_adrs )
         lv++;
         exp = 0;
         *ret_city_lvup = TRUE;
-        WORDSET_RegisterNumber( p_wordset, 5, lv+1, 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+        WORDSET_RegisterNumber( p_wordset, 8, lv+1, 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
       }
       else
       {
