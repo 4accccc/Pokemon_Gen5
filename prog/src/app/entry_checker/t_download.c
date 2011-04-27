@@ -2451,7 +2451,8 @@ static BOOL td_chk_view_key_input( T_DOWNLOAD_MAIN_WORK* wk )
 	// 戻る
 	else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
 		// ×アニメ
-		td_set_cmn_anim( wk, CLWKID_CMN_CROSS );
+//		td_set_cmn_anim( wk, CLWKID_CMN_CROSS );
+		td_set_cmn_anim( wk, CLWKID_CMN_RETURN );
 	}
 	// 決定(削除)
 	else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
@@ -2590,7 +2591,8 @@ static BOOL td_chk_select_key_input( T_DOWNLOAD_MAIN_WORK* wk )
 		// 戻る
 		else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
 			// ×アニメ
-			td_set_cmn_anim( wk, CLWKID_CMN_CROSS );
+//			td_set_cmn_anim( wk, CLWKID_CMN_CROSS );
+			td_set_cmn_anim( wk, CLWKID_CMN_RETURN );
 		}
 		// 決定(追加)
 		else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
@@ -2641,7 +2643,8 @@ static BOOL td_chk_select_key_input( T_DOWNLOAD_MAIN_WORK* wk )
 		// 戻る
 		else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
 			// 戻るアニメ
-			td_set_cmn_anim( wk, CLWKID_CMN_CROSS );
+//			td_set_cmn_anim( wk, CLWKID_CMN_CROSS );
+			td_set_cmn_anim( wk, CLWKID_CMN_RETURN );
 		}
 		// 決定(削除)
 		else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){

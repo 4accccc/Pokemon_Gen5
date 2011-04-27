@@ -55,8 +55,7 @@ typedef struct{
 	GAMESYS_WORK		*gamesys;
 	//
 	T_DOWNLOAD_STATUS	status;
-	BOOL				result;
-  u16 *       result_work;
+	u16 *				result_work;	///<結果 (1:フリー移動に戻る、0:パソコン画面に戻る)
 }T_DOWNLOAD_PARAM;
 
 

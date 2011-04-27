@@ -59,8 +59,7 @@ typedef struct{
 	GAMESYS_WORK		*gamesys;		///<システム
 	//
 	WIN_RECORD_STATUS	status;			///<クリア状態
-	BOOL				result;			///<結果 (TRUE:フリー移動に戻る、FALSE:パソコン画面に戻る)
-  u16 *       result_work;
+	u16 *				result_work;	///<結果 (1:フリー移動に戻る、0:パソコン画面に戻る)
 	//
 	const WBTSAVE		*wbtsave;		///<セーブデータ：優勝回数参照用(include/savedata/wbt_save.h)
 	const MYSTATUS		*my_status;		///<セーブデータ：自分情報（include/savedata/mystatus.h)

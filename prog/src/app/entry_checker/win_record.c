@@ -2271,9 +2271,11 @@ static BOOL wr_chk_key_input( WIN_RECORD_MAIN_WORK* wk )
 	// 戻る
 	else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
 		// アニメ再生
-		wnum = CLWKID_CMN_CROSS;
+//		wnum = CLWKID_CMN_CROSS;
+		wnum = CLWKID_CMN_RETURN;
 		wr_chg_objseq( wk, CLWKMODE_CMN, wnum, wr_cmn_btn_tbl[wnum*4+1] );
-		wk->Flag |= FLG_MW_ANM_CROSS;
+//		wk->Flag |= FLG_MW_ANM_CROSS;
+		wk->Flag |= (1<<wnum);
 	}
 	//
 	// 更新
