@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00270" date="2011-04-27T13:08:27"/>
+	<create user="iwasawa" host="W00270" date="2011-04-27T21:28:48"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -356,8 +356,8 @@
 	</row>
 
 	<row id="msg_fmission_evtitle00" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
-		<language name="JPN" width="256">あの　かねを　ならせ！</language>
-		<language name="JPN_KANJI" width="256">あの　鐘を　鳴らせ！</language>
+		<language name="JPN" width="256">かねを　ならせ！</language>
+		<language name="JPN_KANJI" width="256">鐘を　鳴らせ！</language>
 	</row>
 
 	<row id="msg_fmission_evexp00" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
