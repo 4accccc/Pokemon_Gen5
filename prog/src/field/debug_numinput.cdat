@@ -398,9 +398,14 @@ static const DEBUG_NUMINPUT_PARAM DNI_RResortBeaconDiv  =
 {
   0,  0xFFFF, DebugGetRResortBeaconDiv, DebugSetRResortBeaconDiv,
 };
+static const DEBUG_NUMINPUT_PARAM DNI_RResortLv  =
+{
+  0,  0xFFFF, DebugGetRResortLv, DebugSetRResortLv,
+};
 
 static const DEBUG_NUMINPUT_LIST DNI_ResonanceResort[] = { 
   //gmm_id, param, dni_param
+  { dni_resort_11, 0, &DNI_RResortLv },  //街レベル変更
   { dni_resort_01, 0, &DNI_RResortBeaconFlag }, //ビーコン配信On,OFF
   { dni_resort_02, 0, &DNI_RResortBeaconDiv }, //リゾートビーコン拡張分割シンク
   { dni_resort_03, 1, &DNI_RResortBeaconDiv }, //リゾートビーコン拡張分割シンク
@@ -410,6 +415,7 @@ static const DEBUG_NUMINPUT_LIST DNI_ResonanceResort[] = {
   { dni_resort_07, 5, &DNI_RResortBeaconDiv }, //リゾートビーコン拡張分割シンク
   { dni_resort_08, 6, &DNI_RResortBeaconDiv }, //リゾートビーコン拡張分割シンク
   { dni_resort_09, 7, &DNI_RResortBeaconDiv }, //リゾートビーコン拡張分割シンク
+  { dni_resort_10, 8, &DNI_RResortBeaconDiv }, //リゾートビーコン拡張分割シンク
 };
 //////////////////////////////////////////////////////
 static const DEBUG_NUMINPUT_PARAM DNI_WBTSaveCounter =

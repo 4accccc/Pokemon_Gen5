@@ -52,6 +52,7 @@
 #include "savedata/bsubway_savedata.h"
 #include "savedata/save_tbl.h"
 #include "savedata/perapvoice.h"
+#include "savedata/resonance_resort_sv.h"
 
 #include "savedata/person_state.h"
 #include "app/local_tvt/local_tvt_call.h"
@@ -230,6 +231,8 @@ static u32 DebugGetRResortBeaconFlag( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 p
 static void DebugSetRResortBeaconFlag(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value );
 static u32 DebugGetRResortBeaconDiv( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param );
 static void DebugSetRResortBeaconDiv(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value );
+static u32 DebugGetRResortLv( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param );
+static void DebugSetRResortLv(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value );
 
 //WBTÉZÅ[Éu
 static u32 DebugGetWBTSaveCounter( GAMESYS_WORK * gsys, GAMEDATA* gdata, u32 param );
@@ -1798,6 +1801,26 @@ static u32 DebugGetRResortBeaconDiv( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 pa
 static void DebugSetRResortBeaconDiv(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value )
 {
   sc_extend_frame_max[ param ]  = value;
+}
+static u32 DebugGetRResortLv( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param )
+{
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( gdata );
+  RESONANCE_RESORT_SV *p_resort_sv = RESONANCE_RESORT_SV_GetWork( p_sv );
+  RESORT_CITY_DATA *p_city_data = RESONANCE_RESORT_SV_GetCityData( p_resort_sv );
+
+  return RESORT_CITY_DATA_GetData( p_city_data, RESORT_CITY_DATA_PARAM_LV, NULL );
+}
+static void DebugSetRResortLv(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value )
+{
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( gdata );
+  RESONANCE_RESORT_SV *p_resort_sv = RESONANCE_RESORT_SV_GetWork( p_sv );
+  RESORT_CITY_DATA *p_city_data = RESONANCE_RESORT_SV_GetCityData( p_resort_sv );
+
+  if( RESORT_CITY_DATA_GetData( p_city_data, RESORT_CITY_DATA_PARAM_LV, NULL ) != value )
+  {
+    RESORT_CITY_DATA_SetData( p_city_data, RESORT_CITY_DATA_PARAM_LV, value );
+    RESORT_CITY_DATA_SetData( p_city_data, RESORT_CITY_DATA_PARAM_EXP, 0 );
+  }
 }
 //=============================================================================
 //=============================================================================
