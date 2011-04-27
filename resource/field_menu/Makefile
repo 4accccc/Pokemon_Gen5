@@ -6,7 +6,7 @@
 #------------------------------------------------------------------------------
 #※コンバートを行う人のユーザーIDをここに書く
 #------------------------------------------------------------------------------
-USERS	= ibe_mana mori toyama
+USERS	= ibe_mana mori toyama ichiraku_katsuhiko
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
@@ -48,7 +48,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 .SUFFIXES: .NCLR .ncl .NCGR .ncg .NSCR .nsc .NCER .nce .nsbtx .imd
 
 .ncl.NCLR:
-	g2dcvtr $< -pcm
+	g2dcvtr $<
 
 .ncg.NCGR:
 	g2dcvtr $< -bg
