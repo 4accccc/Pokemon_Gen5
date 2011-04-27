@@ -350,6 +350,12 @@ static BOOL debugMenuCallProc_ClearRecvBuff( DEBUG_MENU_EVENT_WORK *p_wk )
   RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( pSave );
   RESORT_RECV_BUFF *p_recv_buff = RESONANCE_RESORT_SV_GetDataBuff( p_resort );
 
+  //迎賓館では使えない
+  if( FIELDMAP_GetZoneID( p_wk->fieldWork) == RESORT_ZONE_ID_RECEPTION )
+  {
+    return FALSE;
+  }
+
   RESORT_RECV_BUFF_InitInstance( p_recv_buff, RESONANCE_RESORT_SV_RECV_BUFF_NUM );
   return FALSE;
 }
@@ -358,6 +364,12 @@ static BOOL debugMenuCallProc_ClearProxyBuff( DEBUG_MENU_EVENT_WORK *p_wk )
   SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(p_wk->gdata);
   RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( pSave );
   RESORT_PROXY_BUFF *p_proxy_buff = RESONANCE_RESORT_SV_GetProxyBuff( p_resort );
+
+  //迎賓館では使えない
+  if( FIELDMAP_GetZoneID( p_wk->fieldWork) == RESORT_ZONE_ID_RECEPTION )
+  {
+    return FALSE;
+  }
 
   RESORT_PROXY_BUFF_InitInstance( p_proxy_buff, RESONANCE_RESORT_SV_PROXY_BUFF_NUM );
   return FALSE;
@@ -946,8 +958,8 @@ static BOOL debugMenuCallProc_PresenSetup( DEBUG_MENU_EVENT_WORK *p_wk )
   RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( pSave );
   RESORT_PEOPLE_ALL_DATA *p_all_people = RESONANCE_RESORT_SV_GetPeopleAllData( p_resort );
 
-  GFL_MSGDATA *p_msg = GFL_MSG_Create(GFL_MSG_LOAD_NORMAL,ARCID_DEBUG_MESSAGE,NARC_debug_message_debug_resort2_dat, GFL_HEAP_LOWID(p_wk->heapID) );
-  RESORT_RECV_DATA *p_recv = RESORT_RECV_DATA_Init( GFL_HEAP_LOWID(p_wk->heapID) );
+  GFL_MSGDATA *p_msg;
+  RESORT_RECV_DATA *p_recv;
   int i;
 
   //迎賓館では使えない
@@ -955,6 +967,9 @@ static BOOL debugMenuCallProc_PresenSetup( DEBUG_MENU_EVENT_WORK *p_wk )
   {
     return FALSE;
   }
+
+  p_msg = GFL_MSG_Create(GFL_MSG_LOAD_NORMAL,ARCID_DEBUG_MESSAGE,NARC_debug_message_debug_resort2_dat, GFL_HEAP_LOWID(p_wk->heapID) );
+  p_recv = RESORT_RECV_DATA_Init( GFL_HEAP_LOWID(p_wk->heapID) );
 
   //まずはデータクリア
   debugMenuCallProc_AllClear( p_wk );
