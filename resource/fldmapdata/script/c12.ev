@@ -1045,13 +1045,14 @@ EVENT_START ev_pos_c12_rival_pair_01
   //ライバル妹の動作OBJを非表示
 	_OBJ_DEL(C12_SWSISTER_01)
   
-  //アニメ：ライバル主人公に隣接
-  DEFINE_LOCAL  i_x
-  DEFINE_LOCAL  i_z
-
-  _PLAYER_POS_GET( i_x, i_z )
-  $i_x -= 1
-  _OBJ_ANIME_AUTO( C12_SWRIVAL_01, i_x, i_z, FORCE_TYPE_NOT, 8, DIR_LR )
+  _PLAYER_POS_GET( LCW_POSX, LCW_POSZ )
+  IF $LCW_POSX == 41 THEN
+    $LCW_POSX += 1
+  ELSE
+    $LCW_POSX -= 1
+  ENDIF
+  
+  _OBJ_ANIME_AUTO( C12_SWRIVAL_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NOT, 8, DIR_LR )
   _OBJ_ANIME_WAIT()
 
   //連れ歩き開始
