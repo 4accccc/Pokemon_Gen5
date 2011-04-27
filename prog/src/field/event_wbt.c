@@ -53,26 +53,6 @@ FS_EXTERN_OVERLAY(pokelist);
 //  proto
 //======================================================================
 
-//============================================================================================
-//============================================================================================
-//-----------------------------------------------------------------------------
-/**
- * @brief WBTSYSが保持するスクリプトのワークに値を返す処理
- */
-//-----------------------------------------------------------------------------
-static void setWBTScriptAnswer( GAMESYS_WORK * gsys, u16 value )
-{
-  GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
-  WBTSYS ** wbtsys = GAMEDATA_GetWBTSysPointer( gamedata );
-  if ( *wbtsys )
-  {
-    u16 * answer_work = WBTSYS_GetScriptAnswerWork( *wbtsys );
-    if ( answer_work )
-    {
-      *answer_work = value;
-    }
-  }
-}
 
 //============================================================================================
 //  WBT　イベント　ポケモンリスト
@@ -415,8 +395,6 @@ static GMEVENT_RESULT eventWinRecord( GMEVENT *p_event, int *p_seq, void *p_wk_a
     break;
 
   case SEQ_EXIT:
-    //結果を返す
-    setWBTScriptAnswer( p_wk->gsys, p_wk->wr_param->result );
     WIN_RECORD_PARAM_Delete( p_wk->wr_param );
     return GMEVENT_RES_FINISH;
   }
@@ -502,8 +480,6 @@ static GMEVENT_RESULT eventTDownload( GMEVENT *p_event, int *p_seq, void *p_wk_a
     break;
 
   case SEQ_EXIT:
-    //結果を返す
-    setWBTScriptAnswer( p_wk->gsys, p_wk->td_param->result );
     T_DOWNLOAD_PARAM_Delete( p_wk->td_param );
     return GMEVENT_RES_FINISH;
   }
