@@ -37,6 +37,7 @@ typedef enum{
  FMISSION_WSET_DEFAULT,   ///<デフォルト
  FMISSION_WSET_MONSNAME,  ///<ポケモン種族名
  FMISSION_WSET_ITEMNAME,  ///<アイテム名
+ FMISSION_WSET_EVENT,     ///<イベント
  FMISSION_WSET_MAX,
 }FMISSION_WSET;
 

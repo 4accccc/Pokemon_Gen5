@@ -13,6 +13,12 @@
 
 #include "gamesystem/gamesystem.h"
 
+typedef enum{
+  FM_CHECK_SCORE_FAILED,  //
+  FM_CHECK_SCORE_SUCCESS,  //
+  FM_CHECK_SCORE_SUCCESS_UP,  //
+}FM_CHECK_SCORE_RET;
+
 //==============================================================================
 //  構造体定義
 //==============================================================================
@@ -107,14 +113,13 @@ extern void GAMEBEACON_SUB_SendBeaconSetFMission( GAMEBEACON_INFO *info, u16 act
 /**
  * @brief フェスミッションのエントリーチェックとスコア計算を行う
  *
- * @param   action  LINK_FESTIVAL_MissionScoreCalc()に引き渡す actionナンバー
- * @param   param LINK_FESTIVAL_MissionScoreCalc()に引き渡すパラメータ
+ * @param   action      LINK_FESTIVAL_MissionScoreCalc()に引き渡す actionナンバー
+ * @param   param       LINK_FESTIVAL_MissionScoreCalc()に引き渡すパラメータ
  *
- * @retval  TRUE  ミッションエントリー中なのでスコアチェックをした
- * @retval  FALSE ミッションエントリーしていないのでスコアチェックをスルーした
+ * @retval  FM_CHECK_SCORE_RET型
  */
 //--------------------------------------------------------------
-extern BOOL GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACTION action, u16 param );
+extern FM_CHECK_SCORE_RET GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACTION action, u16 param );
 
 //--------------------------------------------------------------
 /**

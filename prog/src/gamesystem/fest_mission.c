@@ -213,6 +213,9 @@ BOOL FEST_MISSION_ScoreCalc( FEST_MISSION* fmwk,  FMISSION_LOG_ACTION action, u1
   if( !FEST_MISSION_IsScoreUp( fmwk, action, param )){
     return FALSE;
   }
+  if( fmwk->type == FMISSION_TYPE_EVENT && fmwk->my_score > 0){
+    return FALSE; //イベントタイプは一回しかスコアがあがらない
+  }
   if( (fmwk->my_score + inc ) > FMISSION_SCORE_MAX ){
     fmwk->my_score = FMISSION_SCORE_MAX;
   }else{

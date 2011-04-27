@@ -49,6 +49,10 @@ static const FMISSION_ARCDATA DATA_MissionArcData[] = {
     FMISSION_TYPE_BALL_ITEM, MIN2SEC(5), 0,
     9, ITEM_DERUDAMA, 10, 0, FMISSION_ENDTYPE_TIME, 0
   },
+  { //è‡Çñ¬ÇÁÇπÉ~ÉbÉVÉáÉì
+    FMISSION_TYPE_EVENT, MIN2SEC(5), 0,
+    2, ITEM_DERUDAMA, 10, 0, FMISSION_ENDTYPE_TIME, 0
+  },
 };
 
 //------------------------------------------------------------

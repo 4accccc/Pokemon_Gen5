@@ -1200,7 +1200,9 @@ void BEACONINFO_Set_SuretigaiCount(GAMEBEACON_INFO *info, u32 count)
 //==================================================================
 void GAMEBEACON_Set_FMissionEventClear( u16 ev_id )
 {
-  if( GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_EVENT_CLEAR, ev_id ) ){
+  FM_CHECK_SCORE_RET ret = GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_EVENT_CLEAR, ev_id );
+
+  if( ret == FM_CHECK_SCORE_SUCCESS_UP ){ //スコアアップした時のみ送信
     GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_EVENT_CLEAR, ev_id );
   }
 }

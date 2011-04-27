@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00270" date="2011-04-13T16:10:54"/>
+	<create user="iwasawa" host="W00270" date="2011-04-27T13:08:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -294,28 +294,33 @@
 	</row>
 
 	<row id="msg_fmission_title01">
-		<comment>0：ポケモン種族名</comment>
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]を　さがせ！</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]を　探せ！</language>
+		<comment>◆ポケモンサーチ型
+0：ポケモン種族名</comment>
+		<language name="JPN" width="256">[1:01:ポケモン種族名:0]を　さがせ　[2:02:３桁:1]</language>
+		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]を　探せ　[2:02:３桁:1]</language>
 	</row>
 
 	<row id="msg_fmission_title02">
-		<language name="JPN" width="256">あの　かねを　ならせ！</language>
-		<language name="JPN_KANJI" width="256">あの　鐘を　鳴らせ！</language>
+		<comment>◆イベントクリア型
+1：イベント内容文</comment>
+		<language name="JPN" width="256">[1:05:マップ名:0]</language>
+		<language name="JPN_KANJI" width="256">[1:05:マップ名:0]</language>
 	</row>
 
 	<row id="msg_fmission_title03">
+		<comment>◆アイテム探し型</comment>
 		<language name="JPN" width="256">おちている　どうぐを　さがせ！</language>
 		<language name="JPN_KANJI" width="256">落ちている　道具を　探せ！</language>
 	</row>
 
-	<row id="msg_fmission_exp00">
+	<row id="msg_fmission_exp00" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">ミッションダミー</language>
 		<language name="JPN_KANJI" width="256">ミッションダミー</language>
 	</row>
 
-	<row id="msg_fmission_exp01">
-		<comment>0：分(1-30)
+	<row id="msg_fmission_exp01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>◆ポケモンサーチ型
+0：分(1-30)
 1：ポケモンの数(1-999)
 2：ポケモン種族名
 
@@ -326,19 +331,21 @@
 [1:01:ポケモン種族名:2]を　探せ！</language>
 	</row>
 
-	<row id="msg_fmission_exp02">
-		<comment>0：分(1-30)
-1：アイテムの数(1-999)
+	<row id="msg_fmission_exp02" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>◆イベントクリア型
+0：分(1-30)
+2：イベント内容説明文
 
 </comment>
 		<language name="JPN" width="256">[2:04:５桁:0]びょう　いないに
-タワーオブヘブンの　かねを　ならせ！</language>
+[1:05:マップ名:2]</language>
 		<language name="JPN_KANJI" width="256">[2:04:５桁:0]秒　いないに
-タワーオブヘブンの　鐘を　ならせ！</language>
+[1:05:マップ名:2]</language>
 	</row>
 
-	<row id="msg_fmission_exp03">
-		<comment>0：分(1-30)
+	<row id="msg_fmission_exp03" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>◆アイテム探し型
+0：分(1-30)
 1：アイテムの数(1-999)
 
 </comment>
@@ -346,6 +353,18 @@
 アイテムを　さがせ！</language>
 		<language name="JPN_KANJI" width="256">[2:04:５桁:0]びょう　以内に　[2:01:２桁:1]この
 アイテムを　探せ！</language>
+	</row>
+
+	<row id="msg_fmission_evtitle00" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
+		<language name="JPN" width="256">あの　かねを　ならせ！</language>
+		<language name="JPN_KANJI" width="256">あの　鐘を　鳴らせ！</language>
+	</row>
+
+	<row id="msg_fmission_evexp00" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>
+</comment>
+		<language name="JPN" width="256">タワーオブヘブンの　かねを　ならせ！</language>
+		<language name="JPN_KANJI" width="256">タワーオブヘブンの　鐘を　ならせ！</language>
 	</row>
 
 	<flowchart-group-list>

@@ -992,24 +992,22 @@ void GAMEBEACON_SUB_SendBeaconSetFMission( GAMEBEACON_INFO *info, u16 action, u1
  * @param   action  LINK_FESTIVAL_MissionScoreCalc()に引き渡す actionナンバー
  * @param   param LINK_FESTIVAL_MissionScoreCalc()に引き渡すパラメータ
  *
- * @retval  TRUE  ミッションエントリー中なのでスコアチェックをした
- * @retval  FALSE ミッションエントリーしていないのでスコアチェックをスルーした
+ * @retval  FM_CHECK_SCORE_RET型
  */
 //--------------------------------------------------------------
-BOOL GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACTION action, u16 param )
+FM_CHECK_SCORE_RET GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACTION action, u16 param )
 {
   LINK_FESTIVAL* fest_sys;
-  
+
   if( GameBeaconSys->gsys == NULL ){
-    return FALSE;
+    return FM_CHECK_SCORE_FAILED;
   }
   fest_sys = GAMESYSTEM_GetLinkFestivalWork( GameBeaconSys->gsys );
 
   if( !LINK_FESTIVAL_IsMissionEntry( fest_sys ) ){
-    return FALSE;
+    return FM_CHECK_SCORE_FAILED;
   }
-  LINK_FESTIVAL_MissionScoreCalc( GameBeaconSys->gsys, action, param );
-  return TRUE;
+  return ( LINK_FESTIVAL_MissionScoreCalc( GameBeaconSys->gsys, action, param ) + FM_CHECK_SCORE_SUCCESS);
 }
 
 //--------------------------------------------------------------

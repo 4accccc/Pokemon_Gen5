@@ -602,8 +602,8 @@ static GFL_PROC_RESULT MonolithFMissionSelectProc_Main( GFL_PROC * proc, int * s
         GAME_COMM_NO comm_no = GameCommSys_BootCheck( mfw->gcsp );
 
         //ミッション開始
-        IWASAWA_Printf("mission no %d->%d\n", mission_no,mission_no%3);
-        FMISSION_DATA_GetMissionParam( mfw->fmd_man, mission_no%3, &mission);
+        IWASAWA_Printf("mission no %d->%d\n", mission_no,mission_no%4);
+        FMISSION_DATA_GetMissionParam( mfw->fmd_man, mission_no%4, &mission);
         LINK_FESTIVAL_MissionStart( mfw->fest_sys, &mission, FALSE );
 
 //        GAMEDATA_SetSubScreenMode(GAMESYSTEM_GetGameData(appwk->parent->gsys), FIELD_SUBSCREEN_FMISSION_VIEW );
@@ -1110,7 +1110,7 @@ static BOOL _MissionNameBMPDraw(MONOLITH_FMSELECT_WORK *mfw, MONOLITH_SETUP *set
     if(i >= _DUMMY_PANEL_UP_NUM && i < mfw->power_list_num - _DUMMY_PANEL_DOWN_NUM){
       GF_ASSERT(mfw->use_power[i] < NELEMS(print_color));
      
-      FMISSION_DATA_GetMissionParam( mfw->fmd_man, mfw->use_gpower_id[i]%3, &mission );
+      FMISSION_DATA_GetMissionParam( mfw->fmd_man, mfw->use_gpower_id[i]%4, &mission );
       FEST_MISSION_GetTitleStr( mfw->mm_fmission, str, &mission, GFL_HEAP_LOWID(HEAPID_MONOLITH) );
 
 //      GFL_MSG_GetString(mfw->mm_fmission, /*mfw->use_gpower_id[i]*/, str);
