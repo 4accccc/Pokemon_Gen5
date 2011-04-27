@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="kawamoto_yuki" host="W00239" date="2011-04-19T17:32:08" source="m_gym0101_00_00.mb"/>
+	<create user="kawamoto_yuki" host="W00239" date="2011-04-27T11:54:12" source="m_gym0101_00_00.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="kawamoto_yuki" host="W00239" date="2011-04-19T17:32:08" source="m_gym0101_00_00.mb"/>
+<original_create user="kawamoto_yuki" host="W00239" date="2011-04-27T11:54:12" source="m_gym0101_00_00.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -498,19 +498,19 @@
 	<tex_image index="13" name="in05_sch02"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette16"
-		color0_mode="color"
+		color0_mode="transparency"
 		palette_name="in05_sch02_pl"
 		path="C:/home/swan_data3d/field/in05/chip/tex/in05_sch02.tga"
 	>
 		<bitmap size="64">
 			4444 4444 4444 4444 4444 4444 1124 1111
 			4444 4444 aa14 aaaa 7777 7777 aa14 aaaa
-			cc55 55cc aa14 aaaa cc44 44cc aa14 aaaa
-			cc44 44cc 1124 1111 cc77 77cc 4444 4444
-			3333 3333 7e33 8b00 4444 4444 5e34 8866
-			5534 4355 7e34 8866 9954 4599 7d34 8866
-			9994 4999 8d34 8866 3354 4533 8d34 8888
-			4444 4444 8d34 9988 4444 4444 8f34 9999
+			0055 5500 aa14 aaaa 0044 4400 aa14 aaaa
+			0044 4400 1124 1111 0077 7700 4444 4444
+			3333 3333 7c33 8888 4444 4444 5c34 8866
+			5534 4355 7c34 8866 9954 4599 7b34 8866
+			9994 4999 8b34 8866 3354 4533 8b34 8888
+			4444 4444 8b34 9988 4444 4444 8d34 9999
 		</bitmap>
 	</tex_image>
 	<tex_image index="14" name="in05_sch_b2"
@@ -1069,8 +1069,8 @@
 		4e50 7fb9 460e 5692 7ffe 7bde 77bd 739c
 	</tex_palette>
 	<tex_palette index="13" name="in05_sch02_pl" color_size="16">
-		081c 62f6 5eb2 566f 4a0c 39aa 56b0 2527
-		420d 2d6a 6bbd 0b9e 7fff 5294 4631 2d6b
+		7fc0 62f6 5eb2 566f 4a0c 39aa 56b0 2527
+		420d 2d6a 6bbd 5294 4631 2d6b 7fff 7fff
 	</tex_palette>
 	<tex_palette index="14" name="in05_sch_b2_pl" color_size="16">
 		627e 4e53 2120 18e0 2560 4247 4aac 3670
