@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nagihashi_toru" host="W00268" date="2011-04-27T11:46:31"/>
+	<create user="nagihashi_toru" host="W00268" date="2011-04-28T15:16:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -398,14 +398,14 @@
 		</language>
 	</columns>
 
-	<dialog left="-721" top="250" right="-221" bottom="803" maximized="no" rayout="Vertical2">
+	<dialog left="-1202" top="131" right="-497" bottom="751" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="414" top="364" right="886" bottom="762" visible="yes"/>
-		<band id="0" index="1" style="0000" width="492"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="325"/>
-		<band id="3" index="4" style="0000" width="492"/>
-		<band id="4" index="0" style="0000" width="591"/>
+		<band id="3" index="4" style="0000" width="370"/>
+		<band id="4" index="0" style="0000" width="697"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -6161,7 +6161,7 @@ GTSの　ごりよう　ありがとうございます！</language>
 とにかく　つうしんする　こと　です▼
 Ｃ－ＧＥＡＲを　ＯＮにしておけば
 すれちがった　あいてが　やってきます▼
-ハイリンクで　しんちゅうされたり
+ハイリンクで　しんにゅうされたり
 ユニオンルームや　ＩＲつうしん▽
 ランダムマッチ　ＧＴＳ　などで▽
 あそんだ　あいても　やってきます▼
@@ -6171,7 +6171,7 @@ GTSの　ごりよう　ありがとうございます！</language>
 とにかく　つうしんする　こと　です▼
 Ｃ－ＧＥＡＲを　ＯＮにしておけば
 すれちがった　あいてが　やってきます▼
-ハイリンクで　しんちゅうされたり
+ハイリンクで　しんにゅうされたり
 ユニオンルームや　ＩＲつうしん▽
 ランダムマッチ　ＧＴＳ　などで▽
 あそんだ　あいても　やってきます▼
