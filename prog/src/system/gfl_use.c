@@ -253,7 +253,7 @@ void GFLUser_Init(void)
   }
 
   //OVERLAYシステム初期化
-  GFL_OVERLAY_boot(GFL_HEAPID_SYSTEM, 16, 4, 4);
+  GFL_OVERLAY_boot(GFL_HEAPID_SYSTEM, 20, 4, 4);
 
   //PROCシステム初期化
   GFL_PROC_boot(GFL_HEAPID_SYSTEM);
