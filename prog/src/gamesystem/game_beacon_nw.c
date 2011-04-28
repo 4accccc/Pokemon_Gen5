@@ -187,6 +187,9 @@ void BEACONINFO_Set_BattleSpPokeVictory(GAMEBEACON_INFO *info, u16 monsno)
 //==================================================================
 void GAMEBEACON_Set_BattleTrainerStart(u16 tr_no)
 {
+  if( tr_no >= TRID_MAX ){
+    return; //無限ダンジョン等でTRID_MAX以上の特殊IDを扱う場合があるのでフック
+  }
   if( GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_TR_ENCOUNT, tr_no ) ){
     GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_TR_ENCOUNT, tr_no );
     return;
@@ -219,6 +222,9 @@ void BEACONINFO_Set_BattleTrainerStart(GAMEBEACON_INFO *info, u16 tr_no)
 //==================================================================
 void GAMEBEACON_Set_BattleTrainerVictory(u16 tr_no)
 {
+  if( tr_no >= TRID_MAX ){
+    return; //無限ダンジョン等でTRID_MAX以上の特殊IDを扱う場合があるのでフック
+  }
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_BATTLE_TRAINER_VICTORY) == FALSE){ return; };
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
   BEACONINFO_Set_BattleTrainerVictory(&GameBeaconSys->send.info, tr_no);
@@ -247,6 +253,9 @@ void BEACONINFO_Set_BattleTrainerVictory(GAMEBEACON_INFO *info, u16 tr_no)
 //==================================================================
 void GAMEBEACON_Set_BattleLeaderStart(u16 tr_no)
 {
+  if( tr_no >= TRID_MAX ){
+    return; //無限ダンジョン等でTRID_MAX以上の特殊IDを扱う場合があるのでフック
+  }
   if( GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_TR_ENCOUNT, tr_no ) ){
     GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_TR_ENCOUNT, tr_no );
     return;
@@ -279,6 +288,9 @@ void BEACONINFO_Set_BattleLeaderStart(GAMEBEACON_INFO *info, u16 tr_no)
 //==================================================================
 void GAMEBEACON_Set_BattleLeaderVictory(u16 tr_no)
 {
+  if( tr_no >= TRID_MAX ){
+    return; //無限ダンジョン等でTRID_MAX以上の特殊IDを扱う場合があるのでフック
+  }
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_BATTLE_LEADER_VICTORY) == FALSE){ return; };
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
   BEACONINFO_Set_BattleLeaderVictory(&GameBeaconSys->send.info, tr_no);
@@ -307,6 +319,9 @@ void BEACONINFO_Set_BattleLeaderVictory(GAMEBEACON_INFO *info, u16 tr_no)
 //==================================================================
 void GAMEBEACON_Set_BattleSpTrainerStart(u16 tr_no)
 {
+  if( tr_no >= TRID_MAX ){
+    return; //無限ダンジョン等でTRID_MAX以上の特殊IDを扱う場合があるのでフック
+  }
   if( GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_TR_ENCOUNT, tr_no ) ){
     GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_TR_ENCOUNT, tr_no );
     return;
@@ -339,6 +354,9 @@ void BEACONINFO_Set_BattleSpTrainerStart(GAMEBEACON_INFO *info, u16 tr_no)
 //==================================================================
 void GAMEBEACON_Set_BattleSpTrainerVictory(u16 tr_no)
 {
+  if( tr_no >= TRID_MAX ){
+    return; //無限ダンジョン等でTRID_MAX以上の特殊IDを扱う場合があるのでフック
+  }
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_BATTLE_SP_TRAINER_VICTORY) == FALSE){ return; };
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
   BEACONINFO_Set_BattleSpTrainerVictory(&GameBeaconSys->send.info, tr_no);
@@ -367,6 +385,9 @@ void BEACONINFO_Set_BattleSpTrainerVictory(GAMEBEACON_INFO *info, u16 tr_no)
 //==================================================================
 void GAMEBEACON_Set_BattleChampionStart(u16 tr_no)
 {
+  if( tr_no >= TRID_MAX ){
+    return; //無限ダンジョン等でTRID_MAX以上の特殊IDを扱う場合があるのでフック
+  }
   if( GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_TR_ENCOUNT, tr_no ) ){
     GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_TR_ENCOUNT, tr_no );
     return;
@@ -399,6 +420,9 @@ void BEACONINFO_Set_BattleChampionStart(GAMEBEACON_INFO *info, u16 tr_no)
 //==================================================================
 void GAMEBEACON_Set_BattleChampionVictory(u16 tr_no)
 {
+  if( tr_no >= TRID_MAX ){
+    return; //無限ダンジョン等でTRID_MAX以上の特殊IDを扱う場合があるのでフック
+  }
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_BATTLE_CHAMPION_VICTORY) == FALSE){ return; };
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
   BEACONINFO_Set_BattleChampionVictory(&GameBeaconSys->send.info, tr_no);
