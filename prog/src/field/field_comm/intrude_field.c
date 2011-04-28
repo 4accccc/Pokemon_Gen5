@@ -1744,7 +1744,7 @@ void IntrudeField_PlayerDisguise(INTRUDE_COMM_SYS_PTR intcomm, GAMESYS_WORK *gsy
   }
   else{
     disguise_code = DISGUISE_NO_NULL;
-    obj_code = sex == PM_MALE ? HERO : HEROINE;
+    obj_code = sex == PM_MALE ? SWHERO : SWHEROINE;
   }
 
   fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);

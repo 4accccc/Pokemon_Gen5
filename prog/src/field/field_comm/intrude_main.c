@@ -1189,10 +1189,10 @@ u16 Intrude_GetObjCode(const INTRUDE_STATUS *sta, const MYSTATUS *myst)
 
   if(sta->disguise_no == DISGUISE_NO_NULL){
     if(sta->player_pack.player_form == PLAYER_MOVE_FORM_CYCLE){
-      obj_code = (MyStatus_GetMySex(myst) == PM_MALE) ? CYCLEHERO : CYCLEHEROINE;
+      obj_code = (MyStatus_GetMySex(myst) == PM_MALE) ? SWCYCLEHERO : SWCYCLEHEROINE;
     }
     else{
-      obj_code = (MyStatus_GetMySex(myst) == PM_MALE) ? HERO : HEROINE;
+      obj_code = (MyStatus_GetMySex(myst) == PM_MALE) ? SWHERO : SWHEROINE;
     }
   }
   else if(sta->disguise_no == DISGUISE_NO_NORMAL){
