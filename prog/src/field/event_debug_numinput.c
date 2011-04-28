@@ -60,6 +60,8 @@
 #include "gamesystem/game_beacon.h"
 #include "gamesystem/game_beacon_local.h"
 
+#include "../app/local_tvt/local_tvt_call.h"
+
 //======================================================================
 //======================================================================
 ///項目選択用データの定義

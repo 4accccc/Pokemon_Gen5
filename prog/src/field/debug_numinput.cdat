@@ -333,8 +333,23 @@ static const DEBUG_NUMINPUT_LIST DNI_PalaceTime[] = {
 
 //////////////////////////////////////////////////////
 ///ローカルライブキャスタ
-static const DEBUG_NUMINPUT_PARAM DNI_LivecasterState = { 
-  0, 999, DebugGetLivecasterState, DebugSetLivecasterState, 
+static const DEBUG_NUMINPUT_PARAM DNI_LivecasterStateDoc = { 
+  0, DOCTOR_STATE_MAX-1, DebugGetLivecasterState, DebugSetLivecasterState, 
+};
+static const DEBUG_NUMINPUT_PARAM DNI_LivecasterStateRiv = { 
+  0, RIVAL_STATE_MAX-1, DebugGetLivecasterState, DebugSetLivecasterState, 
+};
+static const DEBUG_NUMINPUT_PARAM DNI_LivecasterStateChe = { 
+  0, CHELEN_STATE_MAX-1, DebugGetLivecasterState, DebugSetLivecasterState, 
+};
+static const DEBUG_NUMINPUT_PARAM DNI_LivecasterStateBell = { 
+  0, BELL_STATE_MAX-1, DebugGetLivecasterState, DebugSetLivecasterState, 
+};
+static const DEBUG_NUMINPUT_PARAM DNI_LivecasterStateMom = { 
+  0, MOTHER_STATE_MAX-1, DebugGetLivecasterState, DebugSetLivecasterState, 
+};
+static const DEBUG_NUMINPUT_PARAM DNI_LivecasterStateSec = { 
+  0, SECRET_STATE_MAX-1, DebugGetLivecasterState, DebugSetLivecasterState, 
 };
 static const DEBUG_NUMINPUT_PARAM DNI_LivecasterCall = { 
   0, 1, DebugGetLivecasterCall, DebugSetLivecasterCall, 
@@ -366,12 +381,12 @@ static const DEBUG_NUMINPUT_PARAM DNI_LivecasterSecretNotRnd  =
 };
 static const DEBUG_NUMINPUT_LIST DNI_Livecaster[] = { 
   //gmm_id, param, dni_param
-  { dni_ltvt_01, LOCAL_TVT_PERSON_DOCTOR, &DNI_LivecasterState }, //博士状態
-  { dni_ltvt_02, LOCAL_TVT_PERSON_RIVAL, &DNI_LivecasterState }, //ライバル状態
-  { dni_ltvt_03, LOCAL_TVT_PERSON_CHELEN, &DNI_LivecasterState }, //チェレン状態
-  { dni_ltvt_04, LOCAL_TVT_PERSON_BELL, &DNI_LivecasterState }, //ベル状態
-  { dni_ltvt_05, LOCAL_TVT_PERSON_MOTHER, &DNI_LivecasterState }, //ママ状態
-  { dni_ltvt_06, LOCAL_TVT_PERSON_SECRET, &DNI_LivecasterState }, //隠し状態
+  { dni_ltvt_01, LOCAL_TVT_PERSON_DOCTOR, &DNI_LivecasterStateDoc }, //博士状態
+  { dni_ltvt_02, LOCAL_TVT_PERSON_RIVAL, &DNI_LivecasterStateRiv }, //ライバル状態
+  { dni_ltvt_03, LOCAL_TVT_PERSON_CHELEN, &DNI_LivecasterStateChe }, //チェレン状態
+  { dni_ltvt_04, LOCAL_TVT_PERSON_BELL, &DNI_LivecasterStateBell }, //ベル状態
+  { dni_ltvt_05, LOCAL_TVT_PERSON_MOTHER, &DNI_LivecasterStateMom }, //ママ状態
+  { dni_ltvt_06, LOCAL_TVT_PERSON_SECRET, &DNI_LivecasterStateSec }, //隠し状態
   { dni_ltvt_07, LOCAL_TVT_PERSON_DOCTOR, &DNI_LivecasterCall }, //博士電話
   { dni_ltvt_08, LOCAL_TVT_PERSON_RIVAL, &DNI_LivecasterCall }, //ライバル電話
   { dni_ltvt_09, LOCAL_TVT_PERSON_CHELEN, &DNI_LivecasterCall }, //チェレン電話
