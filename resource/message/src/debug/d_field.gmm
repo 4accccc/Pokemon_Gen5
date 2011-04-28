@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nagihashi_toru" host="W00268" date="2011-04-22T13:03:08"/>
+	<create user="tamada" host="W00253" date="2011-04-27T21:48:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -382,7 +382,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Source" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Source" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -2495,6 +2495,21 @@ LR→補完&quot;</language>
 	<row id="DEBUG_FIELD_INFINITY">
 		<language name="JPN" width="240">無限ダンジョン</language>
 		<language name="JPN_KANJI" width="240">無限ダンジョン</language>
+	</row>
+
+	<row id="DEBUG_FIELD_POKEWOOD_TITLE">
+		<language name="JPN" width="240">ポケウッド</language>
+		<language name="JPN_KANJI" width="240">ポケウッド</language>
+	</row>
+
+	<row id="DEBUG_FIELD_POKEWOOD_REC">
+		<language name="JPN" width="240">ポケウッド：さつえい</language>
+		<language name="JPN_KANJI" width="240">ポケウッド：さつえい</language>
+	</row>
+
+	<row id="DEBUG_FIELD_POKEWOOD_SHOW">
+		<language name="JPN" width="240">ポケウッド：再生</language>
+		<language name="JPN_KANJI" width="240">ポケウッド：再生</language>
 	</row>
 
 	<flowchart-group-list>
