@@ -206,6 +206,11 @@ static GMEVENT_RESULT pokewoodBattleEvent( GMEVENT * event, int *seq, void * wor
       prew->bp->pokewoodSenario = 0;
       call_event = EVENT_PokewoodBattle( gsys, fieldmap, prew->bp );
       GMEVENT_CallEvent( event, call_event );
+      if ( prew->bp->PokewoodMode == BTL_POKEWOOD_SHOW )
+      {
+        prew->bp->musicDefault = SEQ_BGM_EYE_09;
+        prew->bp->musicWin = SEQ_BGM_E_LAST;
+      }
     }
     *seq = PRE_SEQ_FADE_IN;
     break;

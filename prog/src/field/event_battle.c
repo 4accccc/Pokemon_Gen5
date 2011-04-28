@@ -792,9 +792,12 @@ static GMEVENT_RESULT fieldBattleEvent(
     break;
     
   case 4:
-    bew->btlret_param.btlResult = bew->battle_param;
-    bew->btlret_param.gameData  = gamedata;
-    GMEVENT_CallProc( event, FS_OVERLAY_ID(battle_return), &BtlRet_ProcData, &bew->btlret_param );
+    if ( bew->battle_param->PokewoodMode == BTL_POKEWOOD_NONE )
+    {
+      bew->btlret_param.btlResult = bew->battle_param;
+      bew->btlret_param.gameData  = gamedata;
+      GMEVENT_CallProc( event, FS_OVERLAY_ID(battle_return), &BtlRet_ProcData, &bew->btlret_param );
+    }
     (*seq)++;
     break;
 
