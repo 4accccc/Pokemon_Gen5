@@ -567,6 +567,48 @@ GMEVENT * EVENT_WBTBattle(
   return event;
 }
 
+//--------------------------------------------------------------
+/**
+ * ポケウッド用バトル呼び出しイベント
+ * @param gsys  GAMESYS_WORK
+ * @param fieldmap FIELDMAP_WORK
+ * @param bp
+ * @retval GMEVENT*
+ */
+//--------------------------------------------------------------
+GMEVENT * EVENT_PokewoodBattle(
+    GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, BATTLE_SETUP_PARAM *bp )
+{
+  GMEVENT * event;
+  BATTLE_EVENT_WORK *bew;
+  
+  event = GMEVENT_Create(
+      gsys, NULL, fieldBattleEvent, sizeof(BATTLE_EVENT_WORK) );
+  
+#ifdef PM_DEBUG
+  debug_FieldDebugFlagSet( bp );
+#endif
+  
+  bew = GMEVENT_GetEventWork(event);
+  BEW_Initialize( bew, gsys, bp );
+  TAMADA_Printf("pokewood mode     = %d\n", bp->PokewoodMode );
+  TAMADA_Printf("pokewood scenario = %d\n", bp->pokewoodSenario );
+  
+  bew->is_sub_event = TRUE; //サブイベント呼び出し
+  
+  bew->is_no_lose = TRUE; //敗戦処理無し
+  bew->not_free_bsp = FALSE; //開放する
+  
+  //エンカウントエフェクトとＢＧＭセット(サブウェイ固有)
+  bew->EncEffNo = ENCEFFID_SUBWAY;
+   
+  //エフェクトエンカウント　エフェクト復帰キャンセル
+  EFFECT_ENC_EffectRecoverCancel( FIELDMAP_GetEncount(fieldmap));
+  return event;
+}
+
+
+
 
 //--------------------------------------------------------------
 /**
@@ -743,6 +785,7 @@ static GMEVENT_RESULT fieldBattleEvent(
       FIELD_STATUS_SetProcAction( fldstatus, PROC_ACTION_BATTLE );
       COMM_PLAYER_SUPPORT_Init(GAMEDATA_GetCommPlayerSupportPtr(gamedata));
     }
+    TAMADA_Printf(" BSP ADDRESS %08x\n", bew->battle_param );
     //バトルプロセス呼び出し：プロセスが終了したらこのイベントに復帰する
     GMEVENT_CallProc( event, FS_OVERLAY_ID(battle), &BtlProcData, bew->battle_param );
     (*seq)++;

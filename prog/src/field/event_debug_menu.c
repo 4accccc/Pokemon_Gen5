@@ -44,6 +44,7 @@
 #include "event_debug_menu_ov_bsubway.h"
 #include "event_debug_menu_ov_wbt.h"
 #include "event_debug_menu_ov_infinity.h"
+#include "event_debug_menu_ov_pokewood.h"
 
 
 
@@ -179,6 +180,9 @@ static const DEBUG_MENU_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_STR44, debugMenuCallProc_UITemplate, FS_OVERLAY_ID(debugmenu_app) },        //UIテンプレート
   { DEBUG_FIELD_DEMO3D,   debugMenuCallProc_Demo3d, FS_OVERLAY_ID(debugmenu_app) },             //３Dデモ
   { DEBUG_FIELD_WBT,      debugMenuCallProc_WBT, FS_OVERLAY_ID(debugmenu_app) },      //WBT
+  { DEBUG_FIELD_POKEWOOD_TITLE, (void*)BMPMENULIST_LABEL, GFL_OVERLAY_BLANK_ID }, //○ポケウッド
+  { DEBUG_FIELD_POKEWOOD_REC, debugMenuCallProc_PokewoodRec, FS_OVERLAY_ID(debugmenu_app) },
+  { DEBUG_FIELD_POKEWOOD_SHOW, debugMenuCallProc_PokewoodShow, FS_OVERLAY_ID(debugmenu_app) },
 
   //event_debug_menu_ov_staff.c
   { DEBUG_FIELD_TITLE_05, (void*)BMPMENULIST_LABEL, GFL_OVERLAY_BLANK_ID },       //○スタッフ用

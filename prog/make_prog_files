@@ -533,10 +533,15 @@ SRCS_OVERLAY_NOTWIFI_EVENT_POKE_STATUS = field/event_poke_status.c
 #GROUP_OVERLAY_NOTWIFI_EVENT_ALL
 SRCS_OVERLAY_NOTWIFI_EVENT_FMISSION_APP = field/event_fmission_app.c
 
-#フェスミッションアプリ呼び出しイベント
+#WBT（アプリ呼び出しなど）イベント
 #===> SRCS_OVERLAY_NOTWIFI
 #GROUP_OVERLAY_NOTWIFI_EVENT_ALL
 SRCS_OVERLAY_NOTWIFI_EVENT_WBT = field/event_wbt.c
+
+#ポケウッドアプリ呼び出しイベント
+#===> SRCS_OVERLAY_NOTWIFI
+#GROUP_OVERLAY_NOTWIFI_EVENT_ALL
+SRCS_OVERLAY_NOTWIFI_EVENT_POKEWOOD = field/event_pokewood.c
 
 #侵入システムでほぼ常駐に置かなければいけないもの(ユニオンの常駐物と並列化)
 #===> GROUP_OVERLAY_NOTWIFI_EVENT_ALL
@@ -889,7 +894,8 @@ SRCS_OVERLAY_DEBUGMENU_NET  = field/event_debug_menu_ov_net.c
 #===> SRCS_OVERLAY_FIELDMAP
 #GROUP_OVERLAY_DEBUGMENU
 SRCS_OVERLAY_DEBUGMENU_APP  = field/event_debug_menu_ov_app.c \
-                              field/event_debug_menu_ov_wbt.c
+                              field/event_debug_menu_ov_wbt.c \
+                              field/event_debug_menu_ov_pokewood.c
 
 # デバッグメニュー並列化  スタッフ系
 #===> SRCS_OVERLAY_FIELDMAP

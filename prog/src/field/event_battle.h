@@ -51,6 +51,9 @@ extern GMEVENT * EVENT_InfinityDungeonTrainerBattle(
 extern GMEVENT * EVENT_WBTBattle(
     GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, BATTLE_SETUP_PARAM *bp );
 
+extern GMEVENT * EVENT_PokewoodBattle(
+    GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, BATTLE_SETUP_PARAM *bp );
+
 //--------------------------------------------------------------
 /**
  * @brief ÅuîsñkèàóùÅvÇ∆Ç∑ÇÈÇ◊Ç´Ç©Ç«Ç§Ç©ÇÃîªíË
