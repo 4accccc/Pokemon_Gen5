@@ -312,7 +312,11 @@ void LOCAL_TVT_CALLSELECT_Main( LOCAL_TVT_CALLSELECT *p_wk )
     if( !BARSET_IsMoveScrollbar( &p_wk->barset ) )
     {
       //UIのメイン
-      LIST_UI_Main( p_wk->p_ui );
+      //最大値がないときは選べない
+      if( p_wk->param.max != 0 )
+      {
+        LIST_UI_Main( p_wk->p_ui );
+      }
 
       //タッチバー動作
       LOCAL_TVT_TOUCHBAR_Main( p_wk->p_touchbar );
