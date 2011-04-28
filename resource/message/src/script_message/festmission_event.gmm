@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00270" date="2011-02-28T12:31:40"/>
+	<create user="iwasawa" host="W00270" date="2011-04-28T12:10:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -363,8 +363,8 @@
 	</row>
 
 	<row id="msg_fmission_reward">
-		<language name="JPN" width="256">ほうしゅう　[BD:03:Ｘ右寄せ:8][1:09:どうぐ名:3][2:03:４桁:4]こ</language>
-		<language name="JPN_KANJI" width="256">ほうしゅう　[BD:03:Ｘ右寄せ:0][1:09:どうぐ名:3][2:03:４桁:4]こ</language>
+		<language name="JPN" width="256">ほうしゅう　[BD:03:Ｘ右寄せ:8][1:09:どうぐ名:3][2:03:４桁:4]こ～</language>
+		<language name="JPN_KANJI" width="256">ほうしゅう　[BD:03:Ｘ右寄せ:0][1:09:どうぐ名:3][2:03:４桁:4]こ～</language>
 	</row>
 
 	<row id="msg_fmission_life01">
@@ -373,8 +373,8 @@
 	</row>
 
 	<row id="msg_fmission_life02">
-		<language name="JPN" width="256">のこりじかん　[BD:03:Ｘ右寄せ:8][2:01:２桁:5]びょう</language>
-		<language name="JPN_KANJI" width="256">残り時間　[BD:03:Ｘ右寄せ:0][2:01:２桁:5]秒</language>
+		<language name="JPN" width="256">のこりじかん　[BD:03:Ｘ右寄せ:8][2:01:２桁:6]びょう</language>
+		<language name="JPN_KANJI" width="256">残り時間　[BD:03:Ｘ右寄せ:0][2:01:２桁:6]秒</language>
 	</row>
 
 	<row id="msg_fmission_score">
