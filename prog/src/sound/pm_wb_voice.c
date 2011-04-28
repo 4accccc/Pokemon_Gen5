@@ -62,7 +62,8 @@ void PMV_GetVoiceWaveIdx( u32 pokeNo,     // [in]ポケモンナンバー
 {
   if(( pokeNo < MONSNO_HUSIGIDANE)||( pokeNo > MONSNO_END) ){
     //指定範囲外
-    *waveIdx = PMVOICE_POKE001;
+//    *waveIdx = PMVOICE_POKE001;
+    *waveIdx = MONSNO_ZIBAKOIRU; // 仮で範囲外の泣き声をジバコイルにした 2011.04.28 by mori
     return;
   }
   if( pokeNo == MONSNO_SHEIMI ){          //シェイミの時のみ、フォルムチェック
@@ -98,7 +99,8 @@ BOOL PMV_CustomVoiceWave( u32     pokeNo,     // [in]ポケモンナンバー
 
   if(( pokeNo < MONSNO_HUSIGIDANE)||( pokeNo > MONSNO_END) ){
     //指定範囲外
-    pokeNo = MONSNO_HUSIGIDANE;
+    OS_Printf("ジバコイルの泣き声\n");
+    pokeNo = MONSNO_ZIBAKOIRU;
   }
 
 
