@@ -11,6 +11,7 @@
 
 #include <gflib.h>
 #include "fieldmap.h"
+#include "fldmmdl.h"
 #include "savedata/gimmickwork.h"
 #include "infinity_dungeon_gimmick.h"
 #include "gmk_tmp_wk.h"
@@ -257,6 +258,7 @@ static GMEVENT_RESULT ElevatorOpenEvent( GMEVENT *p_event, int *seq, void *wk );
 //-----------------------------------------------------------------------------
 void INFINITY_DUNGEON_Setup( FIELDMAP_WORK *p_fieldmap )
 {
+  MMDLSYS               *p_mmdlsys;
   INF_GIMMICK_WK        *p_gmk_wk = NULL;
   SAVE_CONTROL_WORK     *p_save_data;
   INFINITYDUNGEON_SAVE  *p_save;
@@ -282,6 +284,10 @@ void INFINITY_DUNGEON_Setup( FIELDMAP_WORK *p_fieldmap )
 
   // モデルの読み込み
   MapModelInit( &p_gmk_wk->elev_wk );
+
+  // ビルボードアクターのライトを設定する（鏡面床の影）
+  p_mmdlsys = FIELDMAP_GetMMdlSys( p_fieldmap );
+  MMDLSYS_SetReflectionShadowLightMask( p_mmdlsys ,GFL_BBD_LIGHTMASK_3 );
 }
 
 //----------------------------------------------------------------------------
@@ -295,6 +301,7 @@ void INFINITY_DUNGEON_Setup( FIELDMAP_WORK *p_fieldmap )
 //-----------------------------------------------------------------------------
 void INFINITY_DUNGEON_End( FIELDMAP_WORK *p_fieldmap )
 {
+  MMDLSYS               *p_mmdlsys;
   INF_GIMMICK_WK *p_wk = NULL;
   p_wk = GMK_TMP_WK_GetWork(p_fieldmap, INF_GIMMICK_WORK_ASSIGN_ID);
 
@@ -306,6 +313,10 @@ void INFINITY_DUNGEON_End( FIELDMAP_WORK *p_fieldmap )
 
   // 汎用ワーク解放
   GMK_TMP_WK_FreeWork(p_fieldmap, INF_GIMMICK_WORK_ASSIGN_ID);
+  
+  // ライトマスクを戻す
+  p_mmdlsys = FIELDMAP_GetMMdlSys( p_fieldmap );
+  MMDLSYS_SetReflectionShadowLightMask( p_mmdlsys ,GFL_BBD_LIGHTMASK_0 );
 }
 
 //----------------------------------------------------------------------------

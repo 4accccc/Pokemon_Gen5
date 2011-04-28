@@ -40,6 +40,8 @@ struct _TAG_MMDLSYS
   s16 tcb_pri;          ///<TCBプライオリティ
   u8 padding0;
   u8 padding1;
+
+  GFL_BBD_LIGHTMASK     reflection_shadow_light_mask; // 反射影に指定するライトマスク
   
   ARCHANDLE *arcH_res; ///<動作モデルリソースアーカイブハンドル
   ARCHANDLE *arcH_param; ///<動作モデルパラメタアーカイブハンドル

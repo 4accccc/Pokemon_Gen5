@@ -198,6 +198,7 @@ MMDLSYS * MMDLSYS_CreateSystem(
   mmdlsys->sysHeapID = heapID;
   mmdlsys->rockpos = rockpos;
   mmdlsys->tcb_pri = MMDL_TCBPRI_STANDARD;
+  mmdlsys->reflection_shadow_light_mask = GFL_BBD_LIGHTMASK_0;
   mmdlsys_InitOBJCodeParam( mmdlsys, heapID );
 
   {
@@ -1441,6 +1442,33 @@ u16 MMDLSYS_GetTargetCameraAngleYaw( const MMDLSYS *mmdlsys )
     return( *mmdlsys->targetCameraAngleYaw );
   }
   return( 0 );
+}
+
+//--------------------------------------------------------------
+/**
+ * MMDLSYS 反射影用ライトマスク取得
+ * @param  mmdlsys MMDLSYS
+ * @retval  MMDL_BLACTCONT*
+ */
+//--------------------------------------------------------------
+GFL_BBD_LIGHTMASK MMDLSYS_GetReflectionShadowLightMask( MMDLSYS *mmdlsys )
+{
+  GF_ASSERT( mmdlsys );
+  return( mmdlsys->reflection_shadow_light_mask );
+}
+
+//--------------------------------------------------------------
+/**
+ * MMDLSYS 反射影用アクター用ライトマスク設定
+ * @param  mmdlsys MMDLSYS
+ * @param  light_mask GFL_BBD_LIGHTMASK
+ * @retval  
+ */
+//--------------------------------------------------------------
+void MMDLSYS_SetReflectionShadowLightMask( MMDLSYS *mmdlsys ,GFL_BBD_LIGHTMASK light_mask )
+{
+  GF_ASSERT( mmdlsys );
+  mmdlsys->reflection_shadow_light_mask = light_mask;
 }
 
 //======================================================================

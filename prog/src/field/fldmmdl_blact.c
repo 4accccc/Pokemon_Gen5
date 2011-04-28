@@ -279,6 +279,10 @@ static GFL_BBDACT_RESUNIT_ID BlActRes_AddResCore(
     MMDL_BLACTCONT *pBlActCont,
     u16 code, u8 mdl_size, u8 tex_size,
     GFL_G3D_RES *g3dres, GFL_BBDACT_RESTYPE type );
+static GFL_BBDACT_ACTUNIT_ID blact_AddActorCoreEx(
+  MMDLSYS *mmdlsys , const VecFx32 *pos,
+  MMDL_BLACT_MDLSIZE mdl_size, MMDL_BLACT_ANMTBLNO anm_id, u16 resID ,GFL_BBD_LIGHTMASK	lightMask );
+
 #if 0
 static GFL_BBDACT_RESUNIT_ID BlActRes_AddRes(
     MMDL_BLACTCONT *pBlActCont, u16 code,
@@ -597,6 +601,22 @@ static GFL_BBDACT_ACTUNIT_ID blact_AddActorCore(
   MMDLSYS *mmdlsys , const VecFx32 *pos,
   MMDL_BLACT_MDLSIZE mdl_size, MMDL_BLACT_ANMTBLNO anm_id, u16 resID )
 {
+  GFL_BBDACT_ACTUNIT_ID actID;
+  actID = blact_AddActorCoreEx( mmdlsys ,pos ,mdl_size ,anm_id ,resID ,GFL_BBD_LIGHTMASK_0);
+  return( actID );
+}
+
+//--------------------------------------------------------------
+/**
+ * ビルボードアクター　アクター追加(ライトマスク指定版)
+ * @param mmdlsys MMDLSYS
+ * @retval GFL_BBDACT_ACYUNIT_ID
+ */
+//--------------------------------------------------------------
+static GFL_BBDACT_ACTUNIT_ID blact_AddActorCoreEx(
+  MMDLSYS *mmdlsys , const VecFx32 *pos,
+  MMDL_BLACT_MDLSIZE mdl_size, MMDL_BLACT_ANMTBLNO anm_id, u16 resID ,GFL_BBD_LIGHTMASK	lightMask )
+{
   GFL_BBDACT_ACTDATA actData;
   GFL_BBDACT_ACTUNIT_ID actID;
   MMDL_BLACTCONT *pBlActCont = MMDLSYS_GetBlActCont( mmdlsys );
@@ -612,7 +632,7 @@ static GFL_BBDACT_ACTUNIT_ID blact_AddActorCore(
   actData.trans = *pos;
   actData.alpha = 31;
   actData.drawEnable = TRUE;
-  actData.lightMask = GFL_BBD_LIGHTMASK_0;
+  actData.lightMask = lightMask;
   actData.work = pBlActCont;
   actData.func = BlActFunc;
   
@@ -1014,6 +1034,7 @@ void MMDL_BLACTCONT_DeleteActor( MMDL *mmdl, u32 actID )
  * @param pos 表示座標
  * @param init_proc アクター追加完了時に呼び出す関数 NULL=呼び出し無し
  * @param init_work init_procに指定する引数ワーク
+ * @param light_mask ビルボードアクターに指定するライトマスク
  * @retval BOOL TRUE=追加。FALSE=追加中。
  * @note 必要なリソースは予め追加されている事が前提。
  */
@@ -1021,7 +1042,7 @@ void MMDL_BLACTCONT_DeleteActor( MMDL *mmdl, u32 actID )
 BOOL MMDL_BLACTCONT_USER_AddActor( MMDLSYS *mmdlsys,
     const OBJCODE_PARAM *pParam,
     MMDL_BLACTWORK_USER *userAct, const VecFx32 *pos,
-    MMDL_BLACTCONT_ADDACT_USERPROC init_proc, void *init_work )
+    MMDL_BLACTCONT_ADDACT_USERPROC init_proc, void *init_work ,GFL_BBD_LIGHTMASK light_mask )
 {
   u16 resID,flag;
   MMDL_BLACTCONT *pBlActCont = MMDLSYS_GetBlActCont( mmdlsys );
@@ -1031,8 +1052,8 @@ BOOL MMDL_BLACTCONT_USER_AddActor( MMDLSYS *mmdlsys,
   GF_ASSERT( resID != REGIDCODE_MAX ); //リソース無し
   
   if( (userAct->flag&BBDRESBIT_TRANS) == 0 ){
-    userAct->actID = blact_AddActorCore(
-        mmdlsys, pos, pParam->mdl_size, pParam->anm_id, resID );
+    userAct->actID = blact_AddActorCoreEx(
+        mmdlsys, pos, pParam->mdl_size, pParam->anm_id, resID ,light_mask );
     return( TRUE );
   }
   

@@ -280,10 +280,11 @@ static void reflectTask_Update( FLDEFF_TASK *task, void *wk )
     }else{
       VecFx32 pos = {0,0,0};
       const OBJCODE_PARAM *param = MMDL_GetOBJCodeParam( work->head.mmdl );
-      
+      GFL_BBD_LIGHTMASK light_mask = MMDLSYS_GetReflectionShadowLightMask( work->head.mmdlsys );
+
       MMDL_BLACTCONT_USER_AddActor( work->head.mmdlsys,
           param, &work->actWork, &pos,
-          reflectTask_UpdateBlAct, work );
+          reflectTask_UpdateBlAct, work ,light_mask);
       
       work->flag_initact = TRUE;
     }

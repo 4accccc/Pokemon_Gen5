@@ -812,6 +812,8 @@ extern FLDNOGRID_MAPPER * MMDLSYS_GetNOGRIDMapper( const MMDLSYS *fos );
 extern void * MMDLSYS_GetFieldMapWork( MMDLSYS *fos );
 extern GAMEDATA * MMDLSYS_GetGameData( MMDLSYS *fos );
 extern u16 MMDLSYS_GetTargetCameraAngleYaw( const MMDLSYS *mmdlsys );
+extern GFL_BBD_LIGHTMASK MMDLSYS_GetReflectionShadowLightMask( MMDLSYS *mmdlsys );
+extern void MMDLSYS_SetReflectionShadowLightMask( MMDLSYS *mmdlsys ,GFL_BBD_LIGHTMASK light_mask );
 
 extern void MMDL_OnStatusBit( MMDL *mmdl, MMDL_STABIT bit );
 extern void MMDL_OffStatusBit( MMDL *mmdl, MMDL_STABIT bit );
@@ -1219,7 +1221,7 @@ extern void MMDL_BLACTCONT_DeleteActor( MMDL *mmdl, u32 actID );
 extern BOOL MMDL_BLACTCONT_USER_AddActor( MMDLSYS *mmdlsys,
     const OBJCODE_PARAM *pParam,
     MMDL_BLACTWORK_USER *userAct, const VecFx32 *pos,
-    MMDL_BLACTCONT_ADDACT_USERPROC init_proc, void *init_work );
+    MMDL_BLACTCONT_ADDACT_USERPROC init_proc, void *init_work ,GFL_BBD_LIGHTMASK light_mask );
 
 extern void MMDL_BLACTCONT_USER_DeleteActor(
     MMDLSYS *mmdlsys, MMDL_BLACTWORK_USER *userAct );
