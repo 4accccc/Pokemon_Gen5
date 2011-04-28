@@ -364,8 +364,13 @@ void FMISSION_LOG_ActionWordset( FMISSION_LOG* p_log,  WORDSET* wset, HEAPID tmp
     WORDSET_RegisterWord( wset, 0, s_buf, p_log->sex, TRUE, PM_LANG);
     WORDSET_RegisterGPowerName( wset, 1, p_log->param );
     break;
-  default:
+  case FMISSION_LOG_ACT_POKE_ENCOUNT:  ///<ポケモンとエンカウントした
+  case FMISSION_LOG_ACT_POKE_WIN:      ///<ポケモンを倒した
+  case FMISSION_LOG_ACT_POKE_CAPTURE:  ///<ポケモンを捕まえた
+  case FMISSION_LOG_ACT_POKE_ESCAPE:   ///<ポケモンに逃げられたor逃げた
     WORDSET_RegisterPokeMonsNameNo( wset, 0, p_log->param );
+    break;
+  default:
     break;
   }
  
