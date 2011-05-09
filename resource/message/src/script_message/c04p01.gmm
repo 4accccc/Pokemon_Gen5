@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-04T22:58:13"/>
+	<create user="matsumiya" host="W00224" date="2011-05-09T15:42:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1294" top="205" right="1999" bottom="833" maximized="no" rayout="Vertical2">
+	<dialog left="1297" top="143" right="2002" bottom="771" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -547,8 +547,9 @@
 ボクは　とめられないよ[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_c04p01_clown1_01">
-		<comment>♂</comment>
+	<row id="msg_c04p01_clown1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+※swanでメッセージ修正予定</comment>
 		<attribute name="キャラ指定">CLOWN
 ピエロ</attribute>
 		<language name="JPN" width="256">まわる　まわる　ジェットコースター
@@ -557,8 +558,9 @@
 ぐるぐるぐるぐるぐるりんこ！</language>
 	</row>
 
-	<row id="msg_c04p01_clown2_01">
-		<comment>♂</comment>
+	<row id="msg_c04p01_clown2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+※swanでメッセージ修正予定</comment>
 		<attribute name="キャラ指定">CLOWN
 ピエロ</attribute>
 		<language name="JPN" width="256">まわる　まわる　かんらんしゃ！
@@ -567,8 +569,9 @@
 のぼる　のぼる　観覧車！</language>
 	</row>
 
-	<row id="msg_c04p01_middlewoman2_01">
-		<comment>♀</comment>
+	<row id="msg_c04p01_middlewoman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+※swanでメッセージ修正予定</comment>
 		<attribute name="キャラ指定">MIDDLEWOMAN2</attribute>
 		<language name="JPN" width="256">ゆうえんちって　いくつになっても
 こころおどる　くうかん　よね</language>
@@ -576,8 +579,9 @@
 心躍る　空間よね</language>
 	</row>
 
-	<row id="msg_c04p01_girl1_01">
-		<comment>♀</comment>
+	<row id="msg_c04p01_girl1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+※swanでメッセージ修正予定</comment>
 		<attribute name="キャラ指定">GIRL1</attribute>
 		<language name="JPN" width="256">ねーねー！
 ピエロさんが　いるよ！</language>
