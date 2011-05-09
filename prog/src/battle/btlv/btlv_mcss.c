@@ -102,7 +102,8 @@ struct  _BTLV_MCSS
   u32             henge_flag          :1;     //変化した
   u32             push_vanish_flag    :1;     //バニッシュフラグのプッシュ領域
   u32             anm_restart_flag    :1;     //アニメリスタートフラグ
-  u32                                 :20;
+  u32             shadow_on           :1;     //影を表示するか
+  u32                                 :19;
   int             evy;
   int             evy_dir;
   int             evy_wait;
@@ -117,7 +118,8 @@ struct _BTLV_MCSS_WORK
   u32             mcss_pos_3vs3             :1;
   u32             mcss_pos_rotate           :1;
   u32             mcss_tcb_rotation_execute :1;
-  u32                                       :29;
+  u32             mcss_shadow_enable        :1;   // MCSS全体として影をつけるか？（OFFだと全てで影を有効にしない）
+  u32                                       :28;
   u32             mcss_tcb_move_execute;
   u32             mcss_tcb_scale_execute;
   u32             mcss_tcb_rotate_execute;
@@ -460,6 +462,7 @@ void  BTLV_MCSS_Main( BTLV_MCSS_WORK *bmw )
     }
   }
 
+
   MCSS_Main( bmw->mcss_sys );
 
   {
@@ -645,7 +648,8 @@ void  BTLV_MCSS_Add( BTLV_MCSS_WORK *bmw, const POKEMON_PARAM *pp, int position 
   bmw->btlv_mcss[ index ].mepachi_always_flag = 0;
   bmw->btlv_mcss[ index ].sick_set_flag       = 0;
   bmw->btlv_mcss[ index ].effect_vanish_flag  = 0;
-  bmw->btlv_mcss[ index ].mcss_proj_mode = bmw->proj;
+  bmw->btlv_mcss[ index ].mcss_proj_mode      = bmw->proj;
+  bmw->btlv_mcss[ index ].shadow_on           = bmw->mcss_shadow_enable;
 
   //立ち位置を保存
   bmw->btlv_mcss[ index ].position = position;
@@ -699,7 +703,7 @@ void  BTLV_MCSS_Add( BTLV_MCSS_WORK *bmw, const POKEMON_PARAM *pp, int position 
   { 
     VecFx32 ofs;
     u16     rot_z;
-    BOOL    flag;
+    BOOL    flag=FALSE;
 
     //個別対処するポケモンをチェック
     if( check_shadow_offset( bmw->btlv_mcss[ index ].param.mons_no, position, &ofs, &rot_z, &flag ) == FALSE )
@@ -717,6 +721,7 @@ void  BTLV_MCSS_Add( BTLV_MCSS_WORK *bmw, const POKEMON_PARAM *pp, int position 
       MCSS_SetShadowOffset( bmw->btlv_mcss[ index ].mcss, &ofs );
       MCSS_SetShadowRotateZ( bmw->btlv_mcss[ index ].mcss, rot_z );
     }
+    
   }
 
   bmw->btlv_mcss[ index ].stop_anime_count = BTLV_MCSS_STOP_ANIME_COUNT;
@@ -759,6 +764,12 @@ void  BTLV_MCSS_AddTrainer( BTLV_MCSS_WORK *bmw, int tr_type, int position )
 
   //立ち位置を保存
   bmw->btlv_mcss[ index ].position = position;
+
+  bmw->btlv_mcss[ index ].shadow_on           = bmw->mcss_shadow_enable;
+//  if( bmw->btlv_mcss[ index ].shadow_on==FALSE ){
+//    BTLV_MCSS_SetShadowVanishFlag( bmw, index, TRUE );
+//  }
+
 
   BTLV_MCSS_MakeMAWTrainer( tr_type, &maw, position );
   BTLV_MCSS_GetDefaultPos( bmw, &pos, position );
@@ -1221,9 +1232,50 @@ void  BTLV_MCSS_SetScale( BTLV_MCSS_WORK *bmw, int position, VecFx32 *scale )
   MCSS_SetScale( bmw->btlv_mcss[ index ].mcss, scale );
 }
 
+//=============================================================================================
+/**
+ * @brief	MCSS全体として影をだすかどうか制御する(FALSEだとすべてのMCSSに影がでなくなる）
+ *
+ * @param   bmw		
+ * @param   flag	
+ */
+//=============================================================================================
+void BTLV_MCSS_SetGlobalShadowEnable( BTLV_MCSS_WORK *bmw, BOOL flag )
+{
+  if(bmw!=NULL){
+    if(flag==FALSE){
+      OS_Printf("全体的に影を出さない\n");
+    }
+    bmw->mcss_shadow_enable = flag;
+  }
+}
+
+//=============================================================================================
+/**
+ * @brief	MCSSの影の常時表示の制御。影無効にすると常に表示されません。
+ *        （有効の場合は、技エフェクトや繰り出しのときにOFFになったり、その後ONになったりする）
+ *
+ * @param   bmw		
+ * @param   position		
+ * @param   flag		
+ */
+//=============================================================================================
+void BTLV_MCSS_SetShadowEnable( BTLV_MCSS_WORK *bmw, int position, u8 flag )
+{
+  int index = BTLV_MCSS_GetIndex( bmw, position );
+  GF_ASSERT( index != BTLV_MCSS_NO_INDEX );
+  if( index == BTLV_MCSS_NO_INDEX ) { return; }
+  GF_ASSERT( bmw->btlv_mcss[ index ].mcss != NULL );
+  if( bmw->btlv_mcss[ index ].mcss == NULL ) { return; }
+  
+  bmw->btlv_mcss[index].shadow_on = (flag & (bmw->mcss_shadow_enable));
+}
+
+
 //============================================================================================
 /**
  * @brief ポケモンの影バニッシュフラグを格納
+ *        BTLV_MCSS_SetShadowEnableの方が強い存在です。
  *
  * @param[in] bmw       BTLV_MCSS管理ワークへのポインタ
  * @param[in] position  格納するポケモンの立ち位置
@@ -1233,11 +1285,21 @@ void  BTLV_MCSS_SetScale( BTLV_MCSS_WORK *bmw, int position, VecFx32 *scale )
 void  BTLV_MCSS_SetShadowVanishFlag( BTLV_MCSS_WORK *bmw, int position, u8 flag )
 {
   int index = BTLV_MCSS_GetIndex( bmw, position );
+  OS_Printf("position=%d, index=%d\n", position, index);
+
   GF_ASSERT( index != BTLV_MCSS_NO_INDEX );
   if( index == BTLV_MCSS_NO_INDEX ) { return; }
   GF_ASSERT( bmw->btlv_mcss[ index ].mcss != NULL );
-  if( bmw->btlv_mcss[ index ].mcss == NULL ) { return; }
+  if( bmw->btlv_mcss[ index ].mcss == NULL ) { 
+    return; 
+  }
+//  if( !bmw->btlv_mcss[ index ].shadow_on ){ 
+//    return; 
+//  }
 
+  if(bmw->mcss_shadow_enable==FALSE){
+    flag = TRUE;
+  }
   MCSS_SetShadowVanishFlag( bmw->btlv_mcss[ index ].mcss, flag );
 }
 

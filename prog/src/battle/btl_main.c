@@ -2495,7 +2495,9 @@ BOOL BTL_MAIN_IsExpSeqEnable( const BTL_MAIN_MODULE* wk )
     }
 
     if( !BTL_MAIN_GetSetupStatusFlag(wk, BTL_STATUS_FLAG_LEGEND_EX) ){
-      return TRUE;
+      if(BTL_MAIN_GetPokewoodMode(wk)==BTL_POKEWOOD_NONE){ // ポケウッドも経験地処理しない
+        return TRUE;
+      }
     }
   }
 
@@ -6257,6 +6259,7 @@ void POKEWOOD_Init( BTL_MAIN_MODULE* wk, int senario_no )
   wk->pokewood_work = GFL_HEAP_AllocMemory( HEAPID_BTL_SYSTEM, sizeof(POKEWOOD_WORK) );
   OS_Printf("pokewood senario size=%d\n", sizeof(POKEWOOD_SENARIO));
   _print_pokewood_senario( wk->pokewood_senario );
+  wk->pokewood_work->enemy_waza[0]=-1;
 
 }
 
@@ -6278,6 +6281,14 @@ POKEWOOD_SENARIO *BTL_MAIN_GetPokewoodSenario( BTL_MAIN_MODULE *wk )
 {
   if(wk->pokewood_senario!=NULL){
     return wk->pokewood_senario;
+  }
+  return NULL;
+}
+
+POKEWOOD_WORK *BTL_MAIN_GetPokewoodWork( const BTL_MAIN_MODULE *wk )
+{
+  if(wk->pokewood_work!=NULL){
+    return wk->pokewood_work;
   }
   return NULL;
 }

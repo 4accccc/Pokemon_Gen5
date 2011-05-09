@@ -27,4 +27,6 @@ typedef struct{
   
 }POKEWOOD_WORK;
 
+extern POKEWOOD_WORK *BTL_MAIN_GetPokewoodWork( const BTL_MAIN_MODULE* wk );
+
 #endif // __POKEWOOD_WORK_H__

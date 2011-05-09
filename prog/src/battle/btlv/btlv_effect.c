@@ -291,7 +291,7 @@ void  BTLV_EFFECT_Init( BTLV_EFFECT_SETUP_PARAM* besp, GFL_FONT* fontHandle, HEA
   bew->heapID = heapID;
 
   bew->tcb_work = GFL_HEAP_AllocClearMemory( heapID, GFL_TCB_CalcSystemWorkSize( BTLV_EFFECT_TCB_MAX ) );
-  bew->tcb_sys = GFL_TCB_Init( BTLV_EFFECT_TCB_MAX, bew->tcb_work );
+  bew->tcb_sys  = GFL_TCB_Init( BTLV_EFFECT_TCB_MAX, bew->tcb_work );
 
   bew->vm_core = BTLV_EFFVM_Init( bew->tcb_sys, heapID );
 
@@ -304,6 +304,9 @@ void  BTLV_EFFECT_Init( BTLV_EFFECT_SETUP_PARAM* besp, GFL_FONT* fontHandle, HEA
   PaletteFadeWorkAllocSet( bew->pfd, FADE_SUB_OBJ, 0x1e0, heapID );
 
   bew->bmw  = BTLV_MCSS_Init( besp->rule, bew->tcb_sys, heapID );
+  if(BTL_MAIN_GetPokewoodMode(besp->mainModule)==BTL_POKEWOOD_SHOW){
+    BTLV_MCSS_SetGlobalShadowEnable( bew->bmw, FALSE );
+  }
 
   {
     BATT_BG_TBL_ZONE_SPEC_TABLE*  bbtzst = GFL_ARC_LoadDataAlloc( ARCID_BATT_BG_TBL,

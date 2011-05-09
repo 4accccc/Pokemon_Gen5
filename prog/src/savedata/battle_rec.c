@@ -58,6 +58,8 @@
 #define BATTLE_REC_Printf(...) OS_TPrintf(__VA_ARGS__)
 #elif defined( DEBUG_ONLY_FOR_nagihashi_toru )
 #define BATTLE_REC_Printf(...) OS_TFPrintf(0,__VA_ARGS__)
+#elif defined( DEBUG_ONLY_FOR_mori )
+#define BATTLE_REC_Printf(...) OS_TFPrintf(0,__VA_ARGS__)
 #endif //defined
 #endif //DEBUG_BATTLE_REC_PRINT_ON
 

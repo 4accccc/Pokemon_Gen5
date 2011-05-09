@@ -1184,7 +1184,7 @@ static BOOL scproc_CheckShowdown( BTL_SVFLOW_WORK* wk )
 
   if(BTL_MAIN_GetPokewoodMode(wk->mainModule)==BTL_POKEWOOD_REC || 
      BTL_MAIN_GetPokewoodMode(wk->mainModule)==BTL_POKEWOOD_SHOW){
-    OS_Printf("ポケウッド ENDチェック\n");
+//    OS_Printf("ポケウッド ENDチェック\n");
     if(BTL_SVSUB_CheckPokewoodSenario( wk->mainModule, wk->pokeCon )!=0){
       return TRUE;
     }
@@ -2196,6 +2196,12 @@ static SabotageType CheckSabotageType( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM*
   ){
     const POKEMON_PARAM* pp = BPP_GetSrcData( bpp );
     const MYSTATUS* status = BTL_MAIN_GetPlayerStatus( wk->mainModule );
+
+    // ポケウッドのときは言うことを必ず聞く
+    if(BTL_MAIN_GetPokewoodMode( wk->mainModule )!=BTL_POKEWOOD_NONE){
+      return SABOTAGE_NONE;
+    }
+
     if( !PP_IsMatchOya(pp, status) )
     {
       u8 badgeCnt = BTL_MAIN_GetPlayerBadgeCount( wk->mainModule );

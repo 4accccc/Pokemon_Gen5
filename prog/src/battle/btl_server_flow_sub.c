@@ -1996,7 +1996,7 @@ int BTL_SVSUB_CheckPokewoodSenario( const BTL_MAIN_MODULE *mainModule, BTL_POKE_
   int senario_no = BTL_MAIN_GetPokewoodSenarioNo( mainModule );
   int win_flag =0, lose_flag=0;
 
-  OS_Printf("ポケウッドシナリオ %d\n", senario_no);
+//  OS_Printf("ポケウッドシナリオ %d\n", senario_no);
   switch(senario_no){
   case 0:   // UFOが倒れればOK、ワシボンが落ちると負け
     { 
@@ -2031,7 +2031,7 @@ int BTL_SVSUB_CheckPokewoodSenario( const BTL_MAIN_MODULE *mainModule, BTL_POKE_
     break;
   }
 
-  OS_Printf(" win_flag=%d, lose_flag=%d\n", win_flag, lose_flag);
+//  OS_Printf(" win_flag=%d, lose_flag=%d\n", win_flag, lose_flag);
   if(win_flag && lose_flag==0){
     return 1;   // 勝ち目的達成
   }

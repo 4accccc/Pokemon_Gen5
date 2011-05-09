@@ -2560,6 +2560,17 @@ FS_EXTERN_OVERLAY(battle);
     break;
 
   case SEQ_BTL_START:
+
+    // ポケウッド
+    {
+      int pokewoodflag = btltype_GetPokewood(wk->saveData.btlType);
+      if(pokewoodflag != BTL_POKEWOOD_NONE){
+        wk->setupParam.PokewoodMode = pokewoodflag;
+      }
+
+      wk->setupParam.pokewoodSenario = wk->saveData.pokewoodSenario;
+    }
+
     changeScene_start( wk );
     PMSND_PlayBGM( wk->setupParam.musicDefault );
     GFL_PROC_LOCAL_CallProc( wk->subProc, FS_OVERLAY_ID(battle), &BtlProcData, &wk->setupParam );

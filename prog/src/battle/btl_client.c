@@ -1751,7 +1751,8 @@ static const u8 virtual_response[]={ 0,0,0,0,0,0, };
 static BOOL SubSeq_POKEWOOD_Event_Sequence( BTL_CLIENT *wk )
 {
   POKEWOOD_SENARIO *senario = BTL_MAIN_GetPokewoodSenario(wk->mainModule);
-  
+  POKEWOOD_WORK    *p_work  = BTL_MAIN_GetPokewoodWork(wk->mainModule);
+
 
   switch(wk->pw_seq){
   // イベントスタート
@@ -1874,10 +1875,11 @@ static BOOL SubSeq_POKEWOOD_Event_Sequence( BTL_CLIENT *wk )
     if(senario->event[wk->pw_event_no].reaction[0].my_message!=-1){
       wk->pw_seq    = POKEWOOD_EVENT_SEQ_MY_REACTION;
       wk->pw_choice = virtual_response[wk->pw_event_no];
+      p_work->enemy_waza[0] = senario->event[wk->pw_event_no].reaction[wk->pw_choice].select_enemy_waza;
 
       // 確定させた選択肢にVFX指定がある場合はVFX予約を代入
       if(senario->event[wk->pw_event_no].reaction[wk->pw_choice].visual_effect!=-1){
-        wk->pw_vfx = senario->event[wk->pw_event_no].reaction[wk->pw_choice].visual_effect;
+        wk->pw_vfx            = senario->event[wk->pw_event_no].reaction[wk->pw_choice].visual_effect;
       }
     }else{
       wk->pw_seq = POKEWOOD_EVENT_SEQ_TRAINER_OUT;  // 無かったらトレーナー退場
@@ -1960,11 +1962,32 @@ static BOOL SubSeq_POKEWOOD_Vfx_Effect( BTL_CLIENT *wk )
 }
 
 
+enum{
+  SUBSEQ_REC_S_START,     // 録画データ読み込み処理
+  SUBSEQ_REC_S_TIMEOVER,  // タイムオーバー検出時
+  SUBSEQ_REC_S_DATAOVER,  // データバッファオーバー検出時
+  SUBSEQ_REC_S_POKEWOOD_CHECK,
+  SUBSEQ_REC_S_POKEWOOD_EVENT,    // SWANで追加：ポケウッドイベント処理
+  SUBSEQ_REC_S_POKEWOOD_VFX,
+  SUBSEQ_REC_S_POKEWOOD_REACTION, // SWANで追加：ポケウッドリアクション処理
+};
 
-static BOOL SubProc_REC_SelectAction( BTL_CLIENT* wk, int* seq )
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	SubProc_REC_SelectActionを呼び分けるためのサブ関数
+ *
+ * @param   wk		BTL_CLIENT
+ * @param   seq		サブシーケンス
+ * @param   flag	ポケウッド処理を行うか？
+ *
+ * @retval  BOOL	処理終了=TRUE まだ実行中=FALSE
+ */
+//----------------------------------------------------------------------------------
+static BOOL SubProc_REC_SelectActionSub( BTL_CLIENT* wk, int* seq, BOOL flag )
 {
   switch( *seq ){
-  case 0:
+  case SUBSEQ_REC_S_START:
     if( wk->fRecPlayEndBufOver )
     {
       setNullActionRecplay( wk );
@@ -1994,7 +2017,7 @@ static BOOL SubProc_REC_SelectAction( BTL_CLIENT* wk, int* seq )
         {
           BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_BattleTimeOver );
           BTLV_StartMsg( wk->viewCore, &wk->strParam );
-          (*seq)++;
+          (*seq) = SUBSEQ_REC_S_TIMEOVER;
         // 描画クライアントではないので終了
         }else{
           setNullActionRecplay( wk );
@@ -2014,7 +2037,7 @@ static BOOL SubProc_REC_SelectAction( BTL_CLIENT* wk, int* seq )
         {
           BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_BatteRecBufferOver );
           BTLV_StartMsg( wk->viewCore, &wk->strParam );
-          (*seq) += 2;
+          (*seq) = SUBSEQ_REC_S_DATAOVER;
         }
         else
         {
@@ -2022,6 +2045,7 @@ static BOOL SubProc_REC_SelectAction( BTL_CLIENT* wk, int* seq )
           return TRUE;
         }
       }
+      // 正常に再生できる
       else
       {
         BTL_N_Printf( DBGSTR_CLIENT_ReadRecAct, wk->myID, numAction);
@@ -2034,13 +2058,14 @@ static BOOL SubProc_REC_SelectAction( BTL_CLIENT* wk, int* seq )
         if( act->gen.cmd  == BTL_ACTION_MOVE ){
           BTL_N_Printf( DBGSTR_CLIENT_ReadRecAct_Move );
         }
-        return TRUE;
+//        return TRUE;
+        (*seq) = SUBSEQ_REC_S_POKEWOOD_CHECK;
       }
     }
     break;
 
   // タイムオーバー検出後、描画クライアントのみここに来る
-  case 1:
+  case SUBSEQ_REC_S_TIMEOVER:
     if( BTLV_WaitMsg(wk->viewCore) ){
       setNullActionRecplay( wk );
       wk->fRecPlayEndTimeOver = TRUE;
@@ -2049,16 +2074,68 @@ static BOOL SubProc_REC_SelectAction( BTL_CLIENT* wk, int* seq )
     break;
 
   // 録画データバッファ読み取りオーバー検出後、描画クライアントのみここに来る
-  case 2:
+  case SUBSEQ_REC_S_DATAOVER:
     if( BTLV_WaitMsg(wk->viewCore) ){
       setNullActionRecplay( wk );
       return TRUE;
     }
     break;
-
+  // ポケウッドでなければ即終了
+  case SUBSEQ_REC_S_POKEWOOD_CHECK:
+    if( BTL_MAIN_GetPokewoodMode(wk->mainModule)==BTL_POKEWOOD_NONE){
+      wk->pw_seq=0;
+      return TRUE;
+    }else{
+      if(wk->viewCore && flag){
+        wk->pw_seq=0;
+        (*seq)=SUBSEQ_REC_S_POKEWOOD_EVENT;
+      }else{
+        return TRUE;
+      }
+    }
+    break;
+  // ポケウッドイベント
+  case SUBSEQ_REC_S_POKEWOOD_EVENT:
+    if(SubSeq_POKEWOOD_Event_Sequence( wk )){
+      (*seq)=SUBSEQ_REC_S_POKEWOOD_VFX;
+    }
+    break;
+  // 背景変更エフェクト
+  case SUBSEQ_REC_S_POKEWOOD_VFX:
+    if(SubSeq_POKEWOOD_Vfx_Effect(wk)){
+      wk->pw_seq=0;
+      wk->clientTurnCount++; // クライアント内でターンを数える
+      (*seq)=SUBSEQ_REC_S_POKEWOOD_REACTION;
+    }
+    break;
+  // ポケウッドリアクション会話
+  case SUBSEQ_REC_S_POKEWOOD_REACTION:
+    if(SubSeq_POKEWOOD_Sequence( wk )){
+      return TRUE;
+    }
+    break;
   }
   return FALSE;
 }
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	再生時のデータ読み込み実行処理
+ *
+ * @param   wk		
+ * @param   seq		
+ *
+ * @retval  BOOL	終了=TRUE, まだ実行中=FALSE
+ */
+//----------------------------------------------------------------------------------
+static BOOL SubProc_REC_SelectAction( BTL_CLIENT* wk, int* seq )
+{
+  return SubProc_REC_SelectActionSub( wk, seq, TRUE );
+}
+
+
+
+
 /**
  *  タイムオーバー検出時などの無効アクションパラメータ返信設定
  */
@@ -4667,8 +4744,20 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
       if( wazaIdx != AI_ENEMY_ESCAPE )
       {
         u8 targetPos = TR_AI_GetSelectWazaDir( wk->AIHandle );
+        WazaID waza;
 
-        WazaID  waza = BPP_WAZA_GetID( wk->procPoke, wazaIdx );
+        // ポケウッドイベント用処理
+        {
+          POKEWOOD_WORK *p_work = BTL_MAIN_GetPokewoodWork(wk->mainModule);
+          if(p_work!=NULL){
+            if(p_work->enemy_waza[0]>=0){
+              wazaIdx = p_work->enemy_waza[0];
+              OS_Printf("技を%dにかきかえ\n", wazaIdx);
+            }
+          }
+        }
+        waza = BPP_WAZA_GetID( wk->procPoke, wazaIdx );
+
         BTL_ACTION_SetFightParam( wk->procAction, waza, targetPos );
         (*seq) = SEQ_INC;
       }
@@ -5120,7 +5209,7 @@ static BOOL SubProc_AI_SelectPokemon( BTL_CLIENT* wk, int* seq )
 //----------------------------------------------------------------------------------
 static BOOL SubProc_REC_SelectPokemon( BTL_CLIENT* wk, int* seq )
 {
-  return SubProc_REC_SelectAction( wk, seq );
+  return SubProc_REC_SelectActionSub( wk, seq, FALSE );
 }
 
 /**

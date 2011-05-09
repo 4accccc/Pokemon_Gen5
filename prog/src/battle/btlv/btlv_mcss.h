@@ -174,6 +174,9 @@ extern  fx32            BTLV_MCSS_GetPokeDefaultScaleEx( BTLV_MCSS_WORK *bmw, in
 extern  void            BTLV_MCSS_GetScale( BTLV_MCSS_WORK *bmw, int position, VecFx32 *scale );
 extern  void            BTLV_MCSS_SetScale( BTLV_MCSS_WORK *bmw, int position, VecFx32 *scale );
 extern  void            BTLV_MCSS_SetShadowVanishFlag( BTLV_MCSS_WORK *bmw, int position, u8 flag );
+extern  void            BTLV_MCSS_SetGlobalShadowEnable( BTLV_MCSS_WORK *bmw, BOOL flag );
+extern  void            BTLV_MCSS_SetShadowEnable( BTLV_MCSS_WORK *bmw, int position, u8 flag );
+
 extern  void            BTLV_MCSS_SetAnmSpeed( BTLV_MCSS_WORK *bmw, int position, fx32 speed );
 extern  void            BTLV_MCSS_MovePosition( BTLV_MCSS_WORK *bmw, int position, int move_type,
                                                 VecFx32 *pos, int frame, int wait, int count );
