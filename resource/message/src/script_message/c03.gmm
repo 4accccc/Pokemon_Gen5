@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-05-09T20:03:25"/>
+	<create user="matsumiya" host="W00224" date="2011-05-09T20:16:57"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1300" top="217" right="2005" bottom="845" maximized="no" rayout="Vertical2">
+	<dialog left="1291" top="135" right="1996" bottom="763" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -458,6 +458,28 @@
 ジムリーダーなら街に詳しいかも
 ・ジムの場所について</language>
 		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c03_swchampion_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・c03p07イベント後に出現
+・posイベント
+・メッセージ表示後、c03p09へ</comment>
+		<attribute name="キャラ指定">アイリス</attribute>
+		<language name="JPN" width="256">アイリス『おーい！
+こっちが　サムピア！▼
+ヒウンで　あやしいと　いえば
+？？ストリートか
+ここかなと　思うんだ▼
+きみも　準備が　できたら
+このさきに　きてみて▼</language>
+		<language name="JPN_KANJI" width="256">アイリス『おーい！
+こっちが　サムピア！▼
+ヒウンで　あやしいと　いえば
+？？ストリートか
+ここかなと　思うんだ▼
+きみも　準備が　できたら
+このさきに　きてみて▼</language>
 	</row>
 
 	<row id="msg_c03_leader3_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">

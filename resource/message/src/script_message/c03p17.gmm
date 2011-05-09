@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-25T20:43:58"/>
+	<create user="matsumiya" host="W00224" date="2011-05-09T20:19:02"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1297" top="169" right="2002" bottom="797" maximized="no" rayout="Vertical2">
+	<dialog left="1291" top="135" right="1996" bottom="763" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -291,6 +291,108 @@
 		<operation add_message="no" header_setting="no" tag_setting="no" output_setting="no" display="no" sort="no" flowchart_window="no"/>
 	</lock>
 
+
+	<row id="msg_c03p17_swchampion_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・続けて</comment>
+		<attribute name="キャラ指定">アイリス</attribute>
+		<language name="JPN" width="256">アイリス『
+・下水道に入れない理由</language>
+		<language name="JPN_KANJI" width="256">アイリス『
+・下水道に入れない理由</language>
+	</row>
+
+	<row id="msg_c03p17_swrival_01">
+		<comment>♂
+・はい/いいえ選択肢表示
+・はい　→
+　いいえ→</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">ライバル名『主人公名前！
+ＮＰだんは　みつかったか？</language>
+		<language name="JPN_KANJI" width="256">ライバル名『主人公名前！
+ＮＰだんは　みつかったか？</language>
+	</row>
+
+	<row id="msg_c03p17_swrival_02">
+		<comment>・はい選択時
+・続けて</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">よろこばせたいからって
+ウソは　ダメだろ？</language>
+		<language name="JPN_KANJI" width="256">よろこばせたいからって
+ウソは　ダメだろ？</language>
+	</row>
+
+	<row id="msg_c03p17_swrival_03">
+		<comment>・いいえ選択時
+・続けて</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">そうか……
+（怒りの理由？）</language>
+		<language name="JPN_KANJI" width="256">そうか……</language>
+	</row>
+
+	<row id="msg_c03p17_swrival_04">
+		<comment>♂
+・表示後、水上飛行機前に移動
+・続けて</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">きいたんだが
+レゾナンスリゾート
+そこに　いるかもしれない
+というわけで　のりこむぞ！▼</language>
+		<language name="JPN_KANJI" width="256">きいたんだが
+レゾナンスリゾート
+そこに　いるかもしれない
+というわけで　のりこむぞ！▼</language>
+	</row>
+
+	<row id="msg_c03p17_swchampion_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・続けて
+・繰り返し</comment>
+		<attribute name="キャラ指定">アイリス</attribute>
+		<language name="JPN" width="256">アイリス『うん　いいんじゃない？▼
+レゾナンスリゾートの説明
+・最近できた
+・変わる町並みがコンセプト
+せっかくだから　いってみれば？</language>
+		<language name="JPN_KANJI" width="256">アイリス『
+レゾナンスリゾートの説明
+せっかくだから　いってみれば？</language>
+	</row>
+
+	<row id="msg_c03p17_pilot_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・msg_c03_swchampion_01で登場
+・はい/いいえ選択肢表示
+・はい　→
+　いいえ→</comment>
+		<attribute name="キャラ指定">パイロット</attribute>
+		<language name="JPN" width="256">レゾナンスリゾートまで　ひとっとび！
+どうです　のってみませんか？</language>
+		<language name="JPN_KANJI" width="256">レゾナンスリゾートまで　ひとっとび！
+どうです　乗ってみませんか？</language>
+	</row>
+
+	<row id="msg_c03p17_pilot_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・はい選択時</comment>
+		<attribute name="キャラ指定">パイロット</attribute>
+		<language name="JPN" width="256">レッツ　フライ！▼</language>
+		<language name="JPN_KANJI" width="256">レッツ　フライ！▼</language>
+	</row>
+
+	<row id="msg_c03p17_pilot_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・いいえ選択時</comment>
+		<attribute name="キャラ指定">パイロット</attribute>
+		<language name="JPN" width="256">オー　ノー！
+のりたくなったら　はなしかけてよ！</language>
+		<language name="JPN_KANJI" width="256">オー　ノー！
+乗りたくなったら　話しかけてよ！</language>
+	</row>
 
 	<row id="msg_c03p17_stop_01">
 		<comment>♂
