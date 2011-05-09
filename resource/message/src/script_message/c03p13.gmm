@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-25T20:07:52"/>
+	<create user="matsumiya" host="W00224" date="2011-05-09T14:51:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,8 +292,9 @@
 	</lock>
 
 
-	<row id="msg_c03p13_boy2_01">
-		<comment>♂</comment>
+	<row id="msg_c03p13_boy2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+※SWANで変更予定</comment>
 		<attribute name="キャラ指定">BOY2</attribute>
 		<language name="JPN" width="256">すごいよな　ポケモンって！▼
 たとえ　あいてが　じぶんより
@@ -303,8 +304,9 @@
 でっかくても　立ち向かうんだぜ！</language>
 	</row>
 
-	<row id="msg_c03p13_veteranm_01">
-		<comment>♂</comment>
+	<row id="msg_c03p13_veteranm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+※SWANで変更予定</comment>
 		<attribute name="キャラ指定">VETERANM</attribute>
 		<language name="JPN" width="256">ふぉふぉふぉ！　つよさとは
 からだの　おおきさでは　ない▽
@@ -359,7 +361,7 @@
 船長</attribute>
 		<language name="JPN" width="256">ちょうど　よい　タイミングでした▼
 そろそろ　しゅっこう　しますので
-じょうせんして　おまちください▼</language>
+ふねに　のって　おまちください▼</language>
 		<language name="JPN_KANJI" width="256">ちょうど　よい　タイミングでした▼
 そろそろ　出航しますので
 乗船して　お待ちください▼</language>

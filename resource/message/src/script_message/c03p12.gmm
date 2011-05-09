@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-04T19:59:25"/>
+	<create user="matsumiya" host="W00224" date="2011-05-09T11:43:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1294" top="205" right="1999" bottom="833" maximized="no" rayout="Vertical2">
+	<dialog left="1297" top="169" right="2002" bottom="797" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -390,7 +390,7 @@
 		<language name="JPN_KANJI" width="256">ウヒヒ……</language>
 	</row>
 
-	<row id="msg_c03p12_dancer2_01" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c03p12_dancer2_01" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・wk_scene_c03centerが0の場合
 　ダンサーイベント開始前</comment>
@@ -407,7 +407,7 @@
 仲間だと　おもうんだよね</language>
 	</row>
 
-	<row id="msg_c03p12_dancer2_02" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c03p12_dancer2_02" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・wk_scene_c03centerが1の場合
 ・はい/いいえの選択肢表示
@@ -432,7 +432,7 @@
 ぼくと　勝負しようぜ？</language>
 	</row>
 
-	<row id="msg_c03p12_dancer2_03" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ffff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c03p12_dancer2_03" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・はい選択時
 ・メッセージ表示後、トレーナー戦闘に
@@ -444,7 +444,7 @@
 じゃ　はじめよう！▼</language>
 	</row>
 
-	<row id="msg_c03p12_dancer2_04" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ffff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c03p12_dancer2_04" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・いいえ選択時
 ・再度会話は、dancer2_02から</comment>
@@ -453,7 +453,7 @@
 		<language name="JPN_KANJI" width="256">ふーん</language>
 	</row>
 
-	<row id="msg_c03p12_dancer2_05" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ffff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c03p12_dancer2_05" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・wk_scene_c03centerが1の場合
 ・戦闘後、フィールド復帰時に
