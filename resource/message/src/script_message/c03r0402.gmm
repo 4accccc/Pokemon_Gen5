@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-25T20:48:39"/>
+	<create user="matsumiya" host="W00224" date="2011-05-09T15:26:48"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -341,10 +341,11 @@
 表彰しましょう！！▼</language>
 	</row>
 
-	<row id="msg_c03r0402_director_02a" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03r0402_director_02a" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・02表示後1回のみ、このメッセージを表示
-・あわせてt01r0102にイッシュ図鑑の表彰状の動作モデル追加</comment>
+・あわせてc12r0101に
+　イッシュ図鑑の表彰状の動作モデル追加</comment>
 		<attribute name="キャラ指定">MAN2</attribute>
 		<language name="JPN" width="256">この　ひょうしょうじょう　ですが
 きみの　いえに　おくっておきますね！</language>
@@ -393,7 +394,7 @@
 じぶんで　つかまえたり
 おともだちに　もらったり▽
 せかいじゅうの　ひとと▽
-こうかん　したり…▼
+こうかん　したり……▼
 おなじ　ポケモンずかんでも
 ひとり　ひとり　ちがうんだね！</language>
 		<language name="JPN_KANJI" width="256">きみは
@@ -401,15 +402,16 @@
 どうやって　出会ったの？▼
 自分で　捕まえたり
 お友達に　もらったり▽
-世界中の　人と　交換したり…▼
+世界中の　人と　交換したり……▼
 おなじ　ポケモン図鑑でも
 ひとり　ひとり　違うんだね！</language>
 	</row>
 
-	<row id="msg_c03r0402_director_04a" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03r0402_director_04a" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・04表示後1回のみ、このメッセージを表示
-・あわせてt01r0102に全国図鑑の表彰状の動作モデル追加</comment>
+・あわせてc12r0101に
+　全国図鑑の表彰状の動作モデル追加</comment>
 		<attribute name="キャラ指定">MAN2</attribute>
 		<language name="JPN" width="256">この　ひょうしょうじょう　も
 きみの　いえに　おくっておきますね！</language>
@@ -417,8 +419,9 @@
 きみの　家に　送っておきますね！</language>
 	</row>
 
-	<row id="msg_c03r0402_01_01">
-		<comment>♂</comment>
+	<row id="msg_c03r0402_01_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+※swanでメッセージ変更予定</comment>
 		<attribute name="キャラ指定">ASSISTANTM</attribute>
 		<language name="JPN" width="256">おっと！　いま　つくっているのは
 ゲームの　エンディング　なんだ▼
@@ -430,8 +433,9 @@
 自分の　目で　確かめてよ</language>
 	</row>
 
-	<row id="msg_c03r0402_02_01">
-		<comment>♀</comment>
+	<row id="msg_c03r0402_02_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+※swanでメッセージ変更予定</comment>
 		<attribute name="キャラ指定">WOMAN1</attribute>
 		<language name="JPN" width="256">あたし　グラフィッカーなの
 １ドットに　たましいを　こめてます！▼
