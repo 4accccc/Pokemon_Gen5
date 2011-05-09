@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-21T15:33:37"/>
+	<create user="matsumiya" host="W00224" date="2011-05-09T11:49:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -371,18 +371,18 @@
 	<row id="msg_c03r0201_juggling_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・はい/いいえの選択肢
-　はい→juggling_01a
+　はい　→juggling_01a
 　いいえ→juggling_05
 ・0＝ポケモンのタイプ（日替わりでランダム）</comment>
 		<attribute name="キャラ指定">JUGGLING</attribute>
 		<language name="JPN" width="256">ミーも　アーティさんほどでは　ないが
-ちょいと　えを　たしなんでいてね[BE:01:ページ切り替え（クリア）]
+ちょいと　えを　たしなんでいてね▼
 そうですねー！　きょうは　タイプが
 [1:03:ポケモンタイプ:0]の　ポケモンを　かきたーい！▼
 きみ　どんな　ポケモンを
 つれているか　みせてくれない？</language>
 		<language name="JPN_KANJI" width="256">ミーも　アーティさんほどでは　ないが
-ちょいと　絵を　たしなんでいてね[BE:01:ページ切り替え（クリア）]
+ちょいと　絵を　たしなんでいてね▼
 そうですねー！　今日は　タイプが
 [1:03:ポケモンタイプ:0]の　ポケモンを　描きたーい！▼
 きみ　どんな　ポケモンを
@@ -494,10 +494,10 @@ No153「ナナシのみ」</comment>
 ・0＝ポケモンのタイプ</comment>
 		<attribute name="キャラ指定">JUGGLING</attribute>
 		<language name="JPN" width="256">[1:03:ポケモンタイプ:0]タイプの　ポケモンを
-つかまえていたら　みせてほしいなー！[BE:00:ページ切り替え（行送り）]
+つかまえていたら　みせてほしいなー！▽
 ちょっとしたモノ　あげるからねー</language>
 		<language name="JPN_KANJI" width="256">[1:03:ポケモンタイプ:0]タイプの　ポケモンを
-捕まえていたら　みせてほしいなー！[BE:00:ページ切り替え（行送り）]
+捕まえていたら　みせてほしいなー！▽
 ちょっとしたモノ　あげるからねー</language>
 	</row>
 
