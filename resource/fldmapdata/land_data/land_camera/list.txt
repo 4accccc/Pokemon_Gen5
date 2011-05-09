@@ -327,6 +327,7 @@
 "DUN2405.bin"
 "white2402.bin"
 "white2403.bin"
+"DUN3401.bin"
 "DUN2701.bin"
 "DUN2702.bin"
 "DUN2703.bin"

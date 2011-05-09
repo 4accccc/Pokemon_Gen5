@@ -3554,3 +3554,15 @@ $(DIR_WBTMP)/m_hotel03_00_00.tbl: $(DIR_RES)/m_hotel03_00_00.bin
 	@echo create_bintbl m_hotel03_00_00
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_hotel03_00_00.bin
 
+$(DIR_WBTMP)/m_gym0501_01_00.tbl: $(DIR_RES)/m_gym0501_01_00.bin
+	@echo create_bintbl m_gym0501_01_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_gym0501_01_00.bin
+
+$(DIR_WBTMP)/m_gym0501_01_01.tbl: $(DIR_RES)/m_gym0501_01_01.bin
+	@echo create_bintbl m_gym0501_01_01
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_gym0501_01_01.bin
+
+$(DIR_WBTMP)/m_gym0501_01_01.tbl: $(DIR_RES)/m_gym0501_01_01.bin
+	@echo create_bintbl m_gym0501_01_01
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_gym0501_01_01.bin
+
