@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-21T16:12:10"/>
+	<create user="matsumiya" host="W00224" date="2011-05-09T11:46:28"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1290" top="221" right="1995" bottom="849" maximized="no" rayout="Vertical2">
+	<dialog left="1297" top="169" right="2002" bottom="797" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -324,10 +324,10 @@
 出航する　遊覧船です▼</language>
 	</row>
 
-	<row id="msg_c03p16_cabinguide_01b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_c03p16_cabinguide_01b" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>時間外の場合
 
-※SWANで削除予定</comment>
+※SWANで削除</comment>
 		<attribute name="キャラ指定">WAITRESS
 </attribute>
 		<language name="JPN" width="256">ロイヤルイッシュごうは
@@ -489,9 +489,10 @@
 お受け取り　くださいませ！▼</language>
 	</row>
 
-	<row id="msg_c03p16_cabinguide_10" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_c03p16_cabinguide_10" text-color="#ff0000,,,#ffffff,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>ゲームクリア前の場合
-※swanで削除</comment>
+
+※SWANで削除</comment>
 		<attribute name="キャラ指定">WAITRESS
 </attribute>
 		<language name="JPN" width="256">このふね　ロイヤルイッシュごうは
