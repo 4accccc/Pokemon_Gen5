@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-25T20:36:24"/>
+	<create user="matsumiya" host="W00224" date="2011-05-09T14:44:28"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -296,7 +296,7 @@
 		<comment>♀
 ・ユナイテッドタワーに行ける状態
 ・はい/いいえ/なにそれ？の選択肢表示
-　はい→infomationw_02
+　はい　→infomationw_02
 　いいえ→infomationw_04
 　なにそれ？→infomationw_05</comment>
 		<attribute name="キャラ指定">INFORMATIONW</attribute>
@@ -385,22 +385,35 @@
 
 	<row id="msg_c03p14_girl4_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
-
-※SWANでメッセージ修正予定
-・アイテム入手処理
-　「あかいいと」</comment>
+・メッセージ表示後
+　アイテム入手処理
+　「あかいいと」
+※SWANでメッセージ修正</comment>
 		<attribute name="キャラ指定">GIRL4</attribute>
-		<language name="JPN" width="256">ポケモンも　ひとも　いつかは
-うんめいの　あいてに　であうんだって！▼
-けっこん　した　おねえちゃんが
-そういってたから　しんじてるの！</language>
-		<language name="JPN_KANJI" width="256">ポケモンも　人も　いつかは
-運命の　相手に　出会うんだって！▼
-結婚した　おねえちゃんが
-そういってたから　信じてるの！</language>
+		<language name="JPN" width="256">うんめいの　あかいいと　って
+いっぽん　だけじゃなく▽
+いくつかある　なかから　えらぶの▼
+というわけで　あなたにも　これを▼</language>
+		<language name="JPN_KANJI" width="256">運命の　あかいいと　って
+一本だけじゃなく▽
+いくつかある　中から　選ぶの▼
+というわけで　あなたにも　これを▼</language>
 	</row>
 
-	<row id="msg_c03p14_dancer3_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c03p14_girl4_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・アイテム入手後
+※SWANでメッセージ追加</comment>
+		<attribute name="キャラ指定">GIRL4</attribute>
+		<language name="JPN" width="256">その　あかいいとを　もっている
+ポケモンは　メロメロに　されたとき▽
+あいても　メロメロに　しちゃうの！</language>
+		<language name="JPN_KANJI" width="256">その　あかいいとを　持っている
+ポケモンは　メロメロに　されたとき▽
+相手も　メロメロに　しちゃうの！</language>
+	</row>
+
+	<row id="msg_c03p14_dancer3_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・wk_scene_c03centerが0の場合
 　ダンサーイベント開始前</comment>
@@ -411,7 +424,7 @@
 ヒウンシティに　来たんだよー！</language>
 	</row>
 
-	<row id="msg_c03p14_dancer3_02" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c03p14_dancer3_02" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・wk_scene_c03centerが1の場合
 ・はい/いいえの選択肢表示
@@ -430,7 +443,7 @@
 オレと　ポケモン勝負　だぜ！</language>
 	</row>
 
-	<row id="msg_c03p14_dancer3_03" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c03p14_dancer3_03" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・はい選択時
 ・メッセージ表示後、トレーナー戦闘に
@@ -442,7 +455,7 @@
 ばっちり　なんだぜ！▼</language>
 	</row>
 
-	<row id="msg_c03p14_dancer3_04" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c03p14_dancer3_04" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・いいえ選択時
 ・再度会話は、dancer3_02から</comment>
@@ -453,7 +466,7 @@
 誘うなら　強くないとねー！</language>
 	</row>
 
-	<row id="msg_c03p14_dancer3_05" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c03p14_dancer3_05" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・wk_scene_c03centerが1の場合
 ・戦闘後、フィールド復帰時に
