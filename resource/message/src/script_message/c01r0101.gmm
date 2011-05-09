@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-04T19:07:32"/>
+	<create user="matsumiya" host="W00224" date="2011-05-09T16:55:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1294" top="205" right="1999" bottom="833" maximized="no" rayout="Vertical2">
+	<dialog left="1300" top="217" right="2005" bottom="845" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_c01r0101_inventor_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_c01r0101_inventor_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・c01ジムバッジ取得後に出現
 ・メッセージ表示後、階段の前まで移動
@@ -310,7 +310,7 @@
 階段は　こっちよ！▼</language>
 	</row>
 
-	<row id="msg_c01r0101_inventor_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_c01r0101_inventor_02" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・階段の前で主人公のほうを向いて
 　メッセージ表示
@@ -328,8 +328,9 @@
 さ　あがって！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c01r0101_bigman_01">
-		<comment>♂</comment>
+	<row id="msg_c01r0101_bigman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・swanでメッセージ変更予定</comment>
 		<attribute name="キャラ指定">BIGMAN
 太った青年</attribute>
 		<language name="JPN" width="256">オレの　ポケモンだけど
@@ -342,8 +343,9 @@
 姿かたちが　変わったんだ！</language>
 	</row>
 
-	<row id="msg_c01r0101_woman1_01">
-		<comment>♀</comment>
+	<row id="msg_c01r0101_woman1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・swanでメッセージ変更予定</comment>
 		<attribute name="キャラ指定">WOMAN1
 女性</attribute>
 		<language name="JPN" width="256">しんか　したり　しなかったり……[BE:01:ページ切り替え（クリア）]
@@ -359,7 +361,7 @@
 ・c01ジムバッジ取得まで
 　階段前に配置、２Fへのストッパー
 
-・SWANでメッセージ変更予定</comment>
+・swanでメッセージ変更予定</comment>
 		<attribute name="キャラ指定">BOY3
 少年（聡明）</attribute>
 		<language name="JPN" width="256">うえは　ダメダメ！！
@@ -376,7 +378,7 @@
 		<comment>♂
 ・c01ジムバッジ取得後、座標移動
 
-・SWANでメッセージ変更予定</comment>
+・swanでメッセージ変更予定</comment>
 		<attribute name="キャラ指定">BOY3
 少年（聡明）</attribute>
 		<language name="JPN" width="256">うえの　マコモねえちゃん
