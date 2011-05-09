@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>MO_OpenMovie</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">MO_OpenMovie</h1>
+<h2>構文</h2>
+<dl>
+  <dd>
+  	<CODE>#include &lt;nitro/Mobiclip.h&gt;</CODE><BR><BR>
+		<a href="MO_Types.html"><code>MOHandle</code></a><CODE>    MO_OpenMovie        ( FSFile *file, u32 nbBufferedFrameMax );</code>		
+  </dd>
+</dl>
+
+<h2>説明</h2>
+<p>
+ファイルからMobiclipムービーを開きます。<br>
+<a href="MO_MallocFree.html"><code>MO_Malloc</code></a> はこの関数内で呼び出されます。
+</p>
+
+<h2>引数</h2>
+<table border="1">
+	<TBODY>
+	  <tr>
+	    <TD><B><I>file</I></B></TD>
+	    <td>既に開かれているnitroファイルのハンドル。</td>
+	  </tr>
+	  <tr>
+	    <TD><B><I>nbBufferedFrameMax</I></B></TD>
+	    <td>blit転送やスキップなしで問題なく解凍できるフレームの最大数。<br>値を <a href="MO_Types.html"><code>MO_NB_BUFFERED_FRAME_MIN</code></a> 以下にすることはできません。</td>
+	  </tr>
+	</TBODY>
+</table>
+
+<h2>返り値</h2>
+<p>
+成功の場合は <a href="MO_Types.html"><code>MOHandle</code></a> 型の値、エラーの場合は <a href="MO_Types.html"><code>MO_INVALID_HANDLE</code></a> を返します。
+</p>
+<p>
+エラーの原因：
+	<dl><dd>
+	- Mobiclip ヘッダが読み込めない<br>
+	- ファイルフォーマットに互換性がない（有効なMobiclipムービーでない場合が典型的です）<br>
+	- 誤ったムービー解像度（256x192を超えてはいけません）<br>
+	- メモリが足りない（割り当てエラー）<br>
+	- nbBufferedFrameMax の値が許容する最低限の値より低い<br>
+	</dd></dl>
+</p>
+
+<h2>参照</h2>
+<P>
+<a href="MO_CloseMovie.html"><code>MO_CloseMovie</code></a>
+</P>
+
+<h2>履歴</h2>
+<p>
+2008/03/03 初版
+</p>
+</body>
+</html>

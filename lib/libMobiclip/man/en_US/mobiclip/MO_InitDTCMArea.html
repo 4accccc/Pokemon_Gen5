@@ -1,0 +1,75 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>MO_InitDTCMArea</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">MO_InitDTCMArea</h1>
+<h2>C Specification</h2>
+<dl>
+  <dd>
+  	<CODE>#include &lt;nitro/Mobiclip.h&gt;</CODE><BR><BR>
+		<CODE>void    MO_InitDTCMArea        ( void* dtcmPtr, u32 size );</CODE>
+  </dd>
+</dl>
+
+<h2>Description</h2>
+<p>
+Give to Mobiclip the address and size in bytes of the usable DTCM area.<br>
+This function is used for data relocation management.
+</p>
+<p>
+If this function is not called or the size given in parameter is 0, Mobiclip core data will reside in main memory.<br>
+If the size given in parameter is greater or equal to the value returned by <a href="MO_GetOptimalDTCMSize.html"><strong>MO_GetOptimalDTCMSize</strong></a> function,<br>
+all the core data of Mobiclip will be relocated to this area.<br>
+If the size given in parameter is less than the value returned by <a href="MO_GetOptimalDTCMSize.html"><strong>MO_GetOptimalDTCMSize</strong></a> function,<br> 
+Mobiclip will try to relocate parts of its core data to this area.<br> 
+If only parts or none of the core data resides in DTCM, playback performance will <strong>NOT</strong> be optimal.
+</p>
+<p>
+You can call this function several times with different paramaters; for each call the data relocation state will be resetted.<br>
+This function <strong>MUST NOT</strong> be called when a Mobiclip movie handle is still opened.<br>
+<p>
+To reallocate DTCM, sufficient free space in DTCM arena is required.<br>
+The default settings given to the linker program do not reserve any free space in the DTCM arena, all available DTCM space is reserved for stack usage of the main thread.<br>
+For stack size settings, lcf (linker command file) is used.<br>
+Please refer to NitroSDK's reference manual for details.<br>
+</p>
+
+<h2>Arguments</h2>
+<table border="1">
+	<TBODY>
+	  <tr>
+	    <TD><B><I>dtcmPtr</I></B></TD>
+	    <td>Address of the usable DTCM area.</td>
+	  </tr>
+	  <tr>
+	    <TD><B><I>size</I></B></TD>
+	    <td>Size in bytes of the usable DTCM area.</td>
+	  </tr>
+	 </TBODY>
+</table>
+
+<h2>Return Values</h2>
+<p>Nothing.</p>
+
+<h2>See Also</h2>
+<P>
+<a href="MO_GetOptimalITCMSize.html"><code>MO_GetOptimalITCMSize</code></a><br>
+<a href="MO_GetOptimalDTCMSize.html"><code>MO_GetOptimalDTCMSize</code></a><br>
+<a href="MO_InitITCMArea.html"><code>MO_InitITCMArea</code></a><br>
+</P>
+
+<h2>Revision History</h2>
+<p>
+03/13/2008 Added paragraph about linker settings<br>
+03/03/2008 Initial Version
+</p>
+</body>
+</html>

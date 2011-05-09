@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>MO_GetFrameNbAudioPacket</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">MO_GetFrameNbAudioPacket</h1>
+<h2>C Specification</h2>
+<dl>
+  <dd>
+  	<CODE>#include &lt;nitro/Mobiclip.h&gt;</CODE><br><br>
+		<CODE>u32         MO_GetFrameNbAudioPacket        ( <a href="MO_Types.html"><code>MOHandle</code></a> handle );</code>
+  </dd>
+</dl>
+
+<h2>Description</h2>
+<P>
+Get the number of audio packets per track for the current frame.
+</P>
+
+<h2>Arguments</h2>
+<table border="1">
+  <TBODY>
+	  <tr>
+	    <TD><B><I>handle</I></B></TD>
+	    <td>Valid handle movie.</td>
+	  </tr>
+	</TBODY>
+</table>
+
+<h2>Return Values</h2>
+<p>
+The number of audio packets for the current frame for each audio track.<br>
+0 if the handle is <a href="MO_Types.html"><code>MO_INVALID_HANDLE</code></a> or when there is no audio track in the movie.
+</p>
+<p>
+An audio packet size is either 128 or 256 samples of PCM 16 bits.
+</p>
+<p>
+Each audio track has the same number of packets for any given frame.<br>
+Total number of audio packets for a given frame will be MO_GetFrameNbAudioPacket(handle) * <a href="MO_GetNbAudioTrack.html"><code>MO_GetNbAudioTrack</code></a>(handle).<br>
+If you have more than one audio track, the audio packets of the different tracks are interleaved.<br>
+For example if you have 2 audio tracks, the audio packets are interleaved in this manner :<br>
+Packet0_Track0, Packet0_Track1, Packet1_Track0, Packet1_Track1, etc ...
+</p>
+
+<h2>Revision History</h2>
+<P>03/03/2008 Initial Version</P>
+</body>
+</html>

@@ -1,0 +1,25 @@
+Static $(TARGET_NAME)
+{
+	Address		$(ADDRESS_STATIC)
+	Object		$(OBJS_STATIC)
+	Library		$(LLIBS) $(GLIBS) $(CW_LIBS)
+	StackSize	4096	1024
+}
+
+Autoload ITCM
+{
+	Address		$(ADDRESS_ITCM)
+	Object		*     		 (.itcm)
+	Object		$(OBJS_AUTOLOAD) (.text)
+}
+
+Autoload DTCM
+{
+	Address		$(ADDRESS_DTCM)
+	Object		*     		 (.dtcm)
+	Object		$(OBJS_AUTOLOAD) (.data)
+	Object		$(OBJS_AUTOLOAD) (.bss)
+}
+
+
+

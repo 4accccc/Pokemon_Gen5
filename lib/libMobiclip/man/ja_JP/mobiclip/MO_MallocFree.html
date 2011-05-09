@@ -1,0 +1,46 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>MO_Malloc and MO_Free</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">MO_Malloc &#12392; MO_Free</h1>
+<h2>構文</h2>
+<dl>
+  <dd>
+  	<CODE>#include &lt;nitro/Mobiclip.h&gt;</CODE><BR><BR>
+		<CODE>extern void*    MO_Malloc   ( u32 size );</CODE><BR>
+		<CODE>extern void     MO_Free     ( void* mem_p );</CODE>
+  </dd>
+</dl>
+
+<h2>説明</h2>
+<p>
+割り当て／割り当て解除の関数です。<br>
+MO_Malloc および MO_Free は、Mobiclip ライブラリで行われたダイナミック割り当て／割り当て解除を実行します。<br>
+MO_Malloc および MO_Free は、Mobiclip ライブラリに実装されていません。外部から宣言されます。<br>
+<strong>あなたのプログラムに、これらの関数を実装して下さい。</strong><br>
+これにより、古典的なmalloc/free関数や、カスタム割り当てルーチンを自在に使うことが可能になります。
+</p>
+<p>
+MO_Malloc は、<a href="MO_OpenMovie.html"><code>MO_OpenMovie</code></a> と <a href="MO_BlitFrameImage.html"><code>MO_BlitFrameImage</code></a> 関数によってのみ使用されます。 
+<br>
+MO_Free は、<a href="MO_CloseMovie.html"><code>MO_CloseMovie</code></a> 関数によってのみ使用されます。
+</p>
+
+<h2>引数</h2>
+<p>標準の malloc/free 関数と同じです。</p>
+
+<h2>返り値</h2>
+<p>標準の malloc/free 関数と同じです。</p>
+
+<h2>履歴</h2>
+<P>2008/03/03 初版</P>
+</body>
+</html>

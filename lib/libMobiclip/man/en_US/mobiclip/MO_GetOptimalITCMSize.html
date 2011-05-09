@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>MO_GetOptimalITCMSize</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">MO_GetOptimalITCMSize</h1>
+<h2>C Specification</h2>
+<dl>
+  <dd>
+  	<CODE>#include &lt;nitro/Mobiclip.h&gt;</CODE><br><br>
+		<CODE>u32         MO_GetOptimalITCMSize               ( void );</code>
+  </dd>
+</dl>
+
+<h2>Description</h2>
+<P>
+Retrieve the quantity in bytes of ITCM needed by Mobiclip to achieve optimal playback performance.<br>
+This function is used for the code relocation management.
+</P>
+
+<h2>Arguments</h2>
+<table border="1">
+	<body>
+	  <tr>
+	    <td>None.</td>
+	  </tr>
+	</body>	  
+</table>
+
+<h2>Return Values</h2>
+<p>Size in bytes of the desired ITCM quantity.</p>
+
+<h2>See Also</h2>
+<P>
+<a href="MO_GetOptimalDTCMSize.html"><code>MO_GetOptimalDTCMSize</code></a><br>
+<a href="MO_InitITCMArea.html"><code>MO_InitITCMArea</code></a><br>
+<a href="MO_InitDTCMArea.html"><code>MO_InitDTCMArea</code></a><br>
+</P>
+
+<h2>Revision History</h2>
+<P>03/03/2008 Initial Version</P>
+</body>
+</html>

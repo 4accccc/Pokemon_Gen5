@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<META http-equiv="Content-Style-Type" content="text/css">
+<link rel="stylesheet" type="text/css" href="../css/nitro.css">
+<title>Mobiclip Demos</title>
+
+</head>
+
+<body>
+
+<h1>effectiveUsage</h1>
+
+<h2>Location</h2>
+<p><code>libMobiclip/build/demos/Mobiclip/effectiveUsage</code></p>
+
+<h2>Compile Method</h2>
+<P>From a Cygwin prompt go to the <code>libMobiclip/build/demos/Mobiclip/effectiveUsage</code> directory, and enter</P>
+<BLOCKQUOTE><CODE>% make</CODE></BLOCKQUOTE>
+<P> Compiling will begin, and the SRL executable file and the NEF or TEF files with binary information will be generated in <CODE>libMobiclip/build/demos/Mobiclip/effectiveUsage/bin/<strong>platform</strong>/<strong>target</strong>.</P>
+<BLOCKQUOTE></BLOCKQUOTE>
+<P>For example:</P>
+<BLOCKQUOTE><CODE>libMobiclip/build/demos/Mobiclip/effectiveUsage/bin/ARM9-TS/Release/effectiveUsage.srl</CODE></BLOCKQUOTE>
+<P>will be the executable file for the <CODE>effectiveUsage</CODE> demo.</P>
+
+<h2>Execution</h2>
+<H3>For NITRO ROMs</H3>
+<P>If using IS-NITRO-DEBUGGER:</P>
+<UL>
+<LI>Load and execute an NLF file with IS-NITRO-DEBUGGER
+<LI>Execute an SRL file with IS-NITRO-DEBUGGER
+<LI>Execute an SRL file with IS-NITRO-DEBUGGER using the <CODE>loadrun.exe</CODE> tool from a command line
+</UL>
+<P>If using IS-TWL-DEBUGGER:</P>
+<UL>
+<LI>Load and execute an NLF file with IS-TWL-DEBUGGER.
+<LI>Execute an SRL file with IS-TWL-DEBUGGER
+<LI>Execute an SRL file with IS-TWL-DEBUGGER using the <CODE>loadrun.TWL.exe</CODE> tool from a command line
+</UL>
+<H3>For TWL/NITRO HYBRID ROMs</H3>
+<P>If using IS-NITRO-DEBUGGER:</P>
+<UL>
+<LI>Execute an SRL file with IS-NITRO-DEBUGGER
+<LI>Execute an SRL file with IS-NITRO-DEBUGGER using the <CODE>loadrun.exe</CODE> tool from a command line
+</UL>
+<P>If using IS-TWL-DEBUGGER:</P>
+<UL>
+<LI>Load and execute a TLF file with IS-TWL-DEBUGGER
+<LI>Execute an SRL file with IS-TWL-DEBUGGER
+<LI>Execute an SRL file with IS-TWL-DEBUGGER using the <CODE>loadrun.TWL.exe</CODE> tool from a command line
+</UL>
+<H3>For TWL LIMITED ROMs</H3>
+<P>If using IS-TWL-DEBUGGER:</P>
+<UL>
+<LI>Load and execute a TLF file with IS-TWL-DEBUGGER
+<LI>Execute an SRL file with IS-TWL-DEBUGGER
+<LI>Execute an SRL file with IS-TWL-DEBUGGER using the <CODE>loadrun.TWL.exe</CODE> tool from a command line
+</UL>
+
+<h2>Description</h2>
+
+<p>
+Plays a Mobiclip movie from a file with a mono soundtrack on the upper screen.
+</p>
+<p>
+This is a very basic program:<br> 
+ - no user interaction is provided.<br>
+ - video doesn't loop.<br>
+ - Nintendo DS cover management is not implemented.
+</p>
+<p><strong>
+The main purpose of this sample is to provide the most efficient playback method.<br>
+Compared to other samples, this method is better either to avoid skipping frame or to implement efficiently visual quality improvement feature.
+</strong></p>
+<p>
+Feature list :<br>
+ - Use code and data relocation features.<br>
+ - Unpack video in the main program while blitting in an alarm callback (better use of free CPU time, less frame skipping).<br>
+ - Use free CPU time to apply advanced blitting techniques with visual quality enhancements.<br>
+ - Frame buffering increased to 12 frames instead of the minimum required value (i.e. 6).<br>
+ - Display (in the debug console at the end of the playback) statistics about visual quality enhancements usage.
+</p> 
+	  
+<h2>Operating Environment</h2>
+<p>We have confirmed normal operation for all of the samples using either IS-NITRO-EMULATOR or IS-TWL-DEBUGGER.</p>
+
+<h2>See Also</h2>
+<p><A href="../mobiclip/list_MO.html">Mobiclip Library API Functions</A></p>
+
+<h2>Revision history</h2>
+<p>10/22/2009 main.srl file renamed effectiveUsage.srl in 'Compile Method' section</p>
+<p>04/23/2009 Added buid and execution description for TWL targets</p>
+<p>03/03/2008 Initial version</p>
+
+</body>
+</html>

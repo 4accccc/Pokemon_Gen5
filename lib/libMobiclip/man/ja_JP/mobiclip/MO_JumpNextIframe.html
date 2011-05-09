@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>MO_JumpNextIframe</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">MO_JumpNextIframe</h1>
+<h2>構文</h2>
+<dl>
+  <dd>
+  	<CODE>#include &lt;nitro/Mobiclip.h&gt;</CODE><br><br>
+		<CODE>u32         MO_JumpNextIframe           ( <a href="MO_Types.html"><code>MOHandle</code></a> handle );</code>
+  </dd>
+</dl>
+
+<h2>説明</h2>
+<P>
+ムービーの次のI-Frame（キーフレーム）に移動します。<br />
+現在のフレームがキーフレームの場合は次のキーフレームに移動します。<br />現在のフレームがキーフレームでない場合は次のキーフレームをスキップし、その次のキーフレームに移動します。
+</P>
+
+<h2>引数</h2>
+<table border="1">
+  <TBODY>
+	  <tr>
+	    <TD><B><I>handle</I></B></TD>
+	    <td>有効なムービーのハンドル。</td>
+	  </tr>
+	</TBODY>
+</table>
+
+<h2>返り値</h2>
+<p>エラーがない場合は"1"、エラーが起こったか、もしくはハンドルが <a href="MO_Types.html"><code>MO_INVALID_HANDLE</code></a> の場合は"0"。</p>
+
+<h2>参照</h2>
+<P>
+<a href="MO_JumpBeginning.html"><code>MO_JumpBeginning</code></a><br>
+<a href="MO_JumpPreviousIframe.html"><code>MO_JumpPreviousIframe</code></a><br>
+<a href="MO_JumpToIframe.html"><code>MO_JumpToIframe</code></a><br>
+<a href="MO_GetNbIFrame.html"><code>MO_GetNbIFrame</code></a>
+</P>
+
+<h2>履歴</h2>
+<P>2010/09/03 MO_JumpNextIframe 関数の挙動の詳細を記載しました</P>
+<P>2008/03/03 初版</P>
+</body>
+</html>

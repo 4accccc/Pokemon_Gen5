@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>MO_InitITCMArea</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">MO_InitITCMArea</h1>
+<h2>構文</h2>
+
+<dl>
+  <dd>
+		<CODE>#include &lt;nitro/Mobiclip.h&gt;</CODE><BR><BR>
+		<CODE>void    MO_InitITCMArea        ( void* itcmPtr, u32 size );</CODE>
+	</dd>
+</dl>
+
+<h2>説明</h2>
+<P>
+使用可能な命令TCM領域をアドレスおよびバイト単位のサイズでMobiclipに伝えます。<br>
+この機能はコードの再配置を管理するために使用されます。<br>
+</p>
+<P>
+もし、この機能がコールされなかったり、伝えられるパラメータの数値が"0"の場合、Mobiclipの
+コアルーチンはメインメモリから起動されます。<br>
+もし、伝えられるパラメータの数値が <a href="MO_GetOptimalITCMSize.html"><strong>MO_GetOptimalITCMSize</strong></a> 関数によって返された数値と同じかそれより大きい場合、Mobiclipのコアルーチンはすべてこの領域に再配置されます。<br>
+もし、伝えられるパラメータの数値が <a href="MO_GetOptimalITCMSize.html"><strong>MO_GetOptimalITCMSize</strong></a> 関数によって返された数値より少ない場合、Mobiclipはそのコアルーチンの一部をこの領域に再配置しようとします。<br>
+もし、コアルーチンが命令TCM内に無かったり、一部のみしかない場合、再生パフォーマンスは<strong>最適なものとはなりません。</strong><br>
+</P>
+<P>
+この機能は他のパラメータと共に、何度でも呼び出すことが可能です。なお、呼び出されるたびにコードの再配置はリセットされます。
+<br>
+Mobiclipムービーのハンドルがまだオープンしているときは、この機能を<strong>呼び出すことはできません。</strong>
+</P>
+
+<h2>引数</h2>
+<table border="1">
+	<TBODY>
+  	<tr>
+    	<TD><B><I>itcmPtr</I></B></TD>
+    	<td>使用可能な命令TCM領域のアドレス。</td>
+  	</tr>
+  	<tr>
+    	<TD><B><I>size</I></B></TD>
+    	<td>使用可能な命令TCM領域のサイズをバイト単位で返します。</td>
+  	</tr>
+  </TBODY>
+</table>
+
+<h2>返り値</h2>
+<p>なし。</p>
+
+<h2>参照</h2>
+<P>
+<a href="MO_GetOptimalITCMSize.html"><code>MO_GetOptimalITCMSize</code></a><br>
+<a href="MO_GetOptimalDTCMSize.html"><code>MO_GetOptimalDTCMSize</code></a><br>
+<a href="MO_InitDTCMArea.html"><code>MO_InitDTCMArea</code></a><br>
+</P>
+
+<h2>履歴</h2>
+<p>
+2008/03/13 "SDRAMメモリ"の記述を"メインメモリ"に訂正しました。<br>
+2008/03/03 初版
+</p>
+</body>
+</html>

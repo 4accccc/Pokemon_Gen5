@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>MO_SkipFrameSoundOnePacket</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">MO_SkipFrameSoundOnePacket</h1>
+<h2>構文</h2>
+<dl>
+  <dd>
+  	<CODE>#include &lt;nitro/Mobiclip.h&gt;</CODE><br><br>
+		<CODE>u32     MO_SkipFrameSoundOnePacket  ( <a href="MO_Types.html"><code>MOHandle</code></a> handle );</code>
+  </dd>
+</dl>
+
+<h2>説明</h2>
+<p>
+解凍されたカレントサウンドのパケットをスキップします。<br>
+この関数は、一つかそれ以上のオーディオトラックを読み飛ばしたい場合に有効です。<br><br>
+例：オーディオトラックが二つあり、最初のトラックが英語、二番目のトラックが日本語だとします。
+<dl>
+  <dd>
+・英語のトラックを再生したい場合、コードシーケンスは次のようになります。<br>
+	<a href="MO_BlitFrameSoundOnePacket.html"><code>MO_BlitFrameSoundOnePacket</code></a> , MO_SkipFrameSoundOnePacket 上記二つの関数をこの順番で<br><a href="MO_GetFrameNbAudioPacket.html"><code>MO_GetFrameNbAudioPacket</code></a> で返される値（回数）分、繰り返します。<br><br>
+・日本語のトラックを再生したい場合、コードシーケンスは次のようになります。<br>
+	MO_SkipFrameSoundOnePacket , <a href="MO_BlitFrameSoundOnePacket.html"><code>MO_BlitFrameSoundOnePacket</code></a> 上記二つの関数をこの順番で<br><a href="MO_GetFrameNbAudioPacket.html"><code>MO_GetFrameNbAudioPacket</code></a> で返される値（回数）分、繰り返します。<br>
+	</dd>
+</dl>
+</p>
+
+<h2>注意</h2>
+<p>
+映像と同様に、オーディオトラックのデコードについても I-Frame（キーフレーム） からの差分情報に基づいてデコードが行われます。<br> 
+そのため、再生中にオーディオトラックを切り替える場合には、I-Frame がデコード対象となったタイミングで切り替える必要があります。<br>
+
+<dl>
+	<dd>
+・再生中にオーディオトラックを変更する場合：<br>
+この場合、<a href="MO_BlitFrameSoundOnePacket.html"><code>MO_BlitFrameSoundOnePacket</code></a>/MO_SkipFrameSoundOnePacket のシーケンスを<br>I-Frame間のみに変えなくてはなりません。（<a href="../demos/multitrackAudio.html" target="_self">multitrackAudio</a></th>のサンプルコードを参照してください）<br><br>
+	</dd>
+</dl>
+</p>
+
+<h2>引数</h2>
+<table border="1">
+  <TBODY>
+	  <tr>
+	    <TD><B><I>handle</I></B></TD>
+	    <td>有効なムービーのハンドル。</td>
+	  </tr>
+	</TBODY>
+</table>
+
+<h2>返り値</h2>
+<p>エラーがない場合は"1"、使用可能なオーディオパケットがこれ以上ないか、もしくはハンドルが <a href="MO_Types.html"><code>MO_INVALID_HANDLE</code></a> の場合は"0"。</p>
+
+<h2>参照</h2>
+<P>
+<a href="MO_BlitFrameSoundOnePacket.html"><code>MO_BlitFrameSoundOnePacket</code></a>
+</P>
+
+<h2>履歴</h2>
+<P>2008/11/21 再生中にオーディオトラックを切り替える場合の注意を追記</P>
+<P>2008/03/03 初版</P>
+</body>
+</html>

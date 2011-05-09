@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<META http-equiv="Content-Style-Type" content="text/css">
+<link rel="stylesheet" type="text/css" href="../css/nitro.css">
+<title>Mobiclip Demos</title>
+
+</head>
+
+<body>
+
+<h1>Mobiclip dualScreen Sample Demo</h1>
+
+<h2>Location</h2>
+<p><code>libMobiclip/build/demos/Mobiclip/dualScreen</code></p>
+
+<h2>Compile Method</h2>
+<P>From a Cygwin prompt go to the <code>libMobiclip/build/demos/Mobiclip/dualScreen</code> directory, and enter</P>
+<BLOCKQUOTE><CODE>% make</CODE></BLOCKQUOTE>
+<P> Compiling will begin, and the SRL executable file and the NEF or TEF files with binary information will be generated in <CODE>libMobiclip/build/demos/Mobiclip/dualScreen/bin/<strong>platform</strong>/<strong>target</strong>.</P>
+<BLOCKQUOTE></BLOCKQUOTE>
+<P>For example:</P>
+<BLOCKQUOTE><CODE>libMobiclip/build/demos/Mobiclip/dualScreen/bin/ARM9-TS/Release/dualScreen.srl</CODE></BLOCKQUOTE>
+<P>will be the executable file for the <CODE>dualScreen</CODE> demo.</P>
+
+<h2>Execution</h2>
+<H3>For NITRO ROMs</H3>
+<P>If using IS-NITRO-DEBUGGER:</P>
+<UL>
+<LI>Load and execute an NLF file with IS-NITRO-DEBUGGER
+<LI>Execute an SRL file with IS-NITRO-DEBUGGER
+<LI>Execute an SRL file with IS-NITRO-DEBUGGER using the <CODE>loadrun.exe</CODE> tool from a command line
+</UL>
+<P>If using IS-TWL-DEBUGGER:</P>
+<UL>
+<LI>Load and execute an NLF file with IS-TWL-DEBUGGER.
+<LI>Execute an SRL file with IS-TWL-DEBUGGER
+<LI>Execute an SRL file with IS-TWL-DEBUGGER using the <CODE>loadrun.TWL.exe</CODE> tool from a command line
+</UL>
+<H3>For TWL/NITRO HYBRID ROMs</H3>
+<P>If using IS-NITRO-DEBUGGER:</P>
+<UL>
+<LI>Execute an SRL file with IS-NITRO-DEBUGGER
+<LI>Execute an SRL file with IS-NITRO-DEBUGGER using the <CODE>loadrun.exe</CODE> tool from a command line
+</UL>
+<P>If using IS-TWL-DEBUGGER:</P>
+<UL>
+<LI>Load and execute a TLF file with IS-TWL-DEBUGGER
+<LI>Execute an SRL file with IS-TWL-DEBUGGER
+<LI>Execute an SRL file with IS-TWL-DEBUGGER using the <CODE>loadrun.TWL.exe</CODE> tool from a command line
+</UL>
+<H3>For TWL LIMITED ROMs</H3>
+<P>If using IS-TWL-DEBUGGER:</P>
+<UL>
+<LI>Load and execute a TLF file with IS-TWL-DEBUGGER
+<LI>Execute an SRL file with IS-TWL-DEBUGGER
+<LI>Execute an SRL file with IS-TWL-DEBUGGER using the <CODE>loadrun.TWL.exe</CODE> tool from a command line
+</UL>
+
+<h2>Description</h2>
+
+<p>
+Plays two Mobiclip movies from two different files on the upper and lower screen.<br>
+A mono soundtrack is included in the Mobiclip movie of the upper screen.<br>
+You can pause/resume video playback by using START button.<br>
+You can stop video playback by using B button.<br>
+You can restart video playback by using A button.<br>
+You can select loop disable/enable by using SELECT button.<br>
+LCD power is off/on when DS cover is closed/opened.
+</p>
+
+<h2>Operating Environment</h2>
+<p>We have confirmed normal operation for all of the samples using either IS-NITRO-EMULATOR or IS-TWL-DEBUGGER.</p>
+
+<h2>See Also</h2>
+<p><A href="../mobiclip/list_MO.html">Mobiclip Library API Functions</A></p>
+
+<h2>Revision history</h2>
+<p>10/22/2009 main.srl file renamed dualScreen.srl in 'Compile Method' section</p>
+<p>04/23/2009 Added buid and execution description for TWL targets</p>
+<p>03/03/2008 Initial version</p>
+
+</body>
+</html>

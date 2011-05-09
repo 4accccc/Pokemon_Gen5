@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>MO_GetNbAudioTrack</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">MO_GetNbAudioTrack</h1>
+<h2>構文</h2>
+<dl>
+  <dd>
+  	<CODE>#include &lt;nitro/Mobiclip.h&gt;</CODE><br><br>
+		<CODE>u32         MO_GetNbAudioTrack      ( <a href="MO_Types.html">MOHandle</a> handle );</code>
+  </dd>
+</dl>
+
+<h2>説明</h2>
+<P>
+ムービーのオーディオトラックの数を取得します。
+</P>
+
+<h2>引数</h2>
+<table border="1">
+  <TBODY>
+	  <tr>
+	    <TD><B><I>handle</I></B></TD>
+	    <td>有効なムービーのハンドル。</td>
+	  </tr>
+	</TBODY>
+</table>
+
+<h2>返り値</h2>
+<p>ムービーのオーディオトラック数。ハンドルが <a href="MO_Types.html"><code>MO_INVALID_HANDLE</code></a>  またはムービーにオーディオトラックがない場合は"0"。</p>
+
+<h2>参照</h2>
+<P>
+<a href="MO_GetVideoWidth.html"><code>MO_GetVideoWidth</code></a><br>
+<a href="MO_GetVideoHeight.html"><code>MO_GetVideoHeight</code></a><br>
+<a href="MO_GetVideoFps.html"><code>MO_GetVideoFps</code></a><br>
+<a href="MO_GetNbIFrame.html"><code>MO_GetNbIFrame</code></a><br>
+<a href="MO_GetNbFrame.html"><code>MO_GetNbFrame</code></a><br>
+<a href="MO_GetAudioFrequency.html"><code>MO_GetAudioFrequency</code></a>
+</P>
+
+<h2>履歴</h2>
+<P>2008/03/03 初版</P>
+</body>
+</html>

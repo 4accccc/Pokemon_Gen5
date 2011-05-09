@@ -1,0 +1,171 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"><html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<title>Mobiclip Library API Functions</title>
+<link rel="stylesheet" href="../css/apilist.css">
+</head>
+<body>
+<h1>Mobiclip Library API Functions</h1>
+<hr>
+<h2></h2>
+
+<!-- *************************** -->
+<h3><a name="Types">Types</a></h3>
+<table border="1" width="100%">
+<tbody>
+<tr>
+<th width="25%"><a href="MO_Types.html" target="_self">Mobiclip Types</a></th>
+</tr>
+</tbody>
+</table>
+
+<!-- *************************** -->
+<h3><a name="Code and data relocation">Code and data relocation</a></h3>
+<table border="1" width="100%">
+<tbody>
+<tr>
+<th width="25%"><a href="MO_GetOptimalITCMSize.html" target="_self">MO_GetOptimalITCMSize</a></th>
+<td>Retrieve the quantity in bytes of ITCM needed by Mobiclip to achieve optimal playback performance.</td>
+</tr>
+<tr>
+<tr>
+<th width="25%"><a href="MO_GetOptimalDTCMSize.html" target="_self">MO_GetOptimalDTCMSize</a></th>
+<td>Retrieve the quantity in bytes of DTCM needed by Mobiclip to achieve optimal playback performance.</td>
+</tr>
+<tr>
+<th width="25%"><a href="MO_InitITCMArea.html" target="_self">MO_InitITCMArea</a></th>
+<td>Give to Mobiclip the address and size in bytes of the usable ITCM area.</td>
+</tr>
+<tr>
+<th width="25%"><a href="MO_InitDTCMArea.html" target="_self">MO_InitDTCMArea</a></th>
+<td>Give to Mobiclip the address and size in bytes of the usable DTCM area.</td>
+</tr>
+</tbody>
+</table>
+
+<!-- *************************** -->
+<h3><a name="Initialization">Initialization</a></h3>
+<table border="1" width="100%">
+<tbody>
+<tr>
+<th width="25%"><a href="MO_MallocFree.html" target="_self">MO_Malloc and MO_Free</a></th>
+<td>Allocator/Deallocator functions.</td>
+</tr>
+</tbody>
+</table>
+
+<!-- *************************** -->
+<h3><a name="OpenClose">Open/Close</a></h3>
+<table border="1" width="100%">
+<tbody>
+<tr>
+<th width="25%"><a href="MO_OpenMovie.html" target="_self">MO_OpenMovie</a></th>
+<td>Open a Mobiclip movie from a file.</td>
+</tr>
+<tr>
+<th width="25%"><a href="MO_CloseMovie.html" target="_self">MO_CloseMovie</a></th>
+<td>Close a Mobiclip movie.</td>
+</tr>
+</tbody>
+</table>
+
+<!-- *************************** -->
+<h3><a name="Retrieve information about movie">Retrieve information about movie</a></h3>
+<table border="1" width="100%">
+<tbody>
+<tr>
+<th width="25%"><a href="MO_GetVideoWidth.html" target="_self">MO_GetVideoWidth</a></th>
+<td>Get the width of the movie in pixels.</td>
+</tr>
+<tr>
+<th width="25%"><a href="MO_GetVideoHeight.html" target="_self">MO_GetVideoHeight</a></th>
+<td>Get the height of the movie in pixels.</td>
+</tr>
+<tr>
+<th width="25%"><a href="MO_GetVideoFps.html" target="_self">MO_GetVideoFps</a></th>
+<td>Get the framerate of the movie.</td>
+</tr>
+<tr>
+<th width="25%"><a href="MO_GetNbFrame.html" target="_self">MO_GetNbFrame</a></th>
+<td>Get the number of frames of the movie.</td>
+</tr>
+<tr>
+<th width="25%"><a href="MO_GetNbIFrame.html" target="_self">MO_GetNbIFrame</a></th>
+<td>Get the number of I-Frames (keyframe) in the movie.</td>
+</tr>
+<tr>
+<th width="25%"><a href="MO_GetNbAudioTrack.html" target="_self">MO_GetNbAudioTrack</a></th>
+<td>Get the number of audio tracks in the movie.</td>
+</tr>
+<tr>
+<th width="25%"><a href="MO_GetNbSamplePerAudioPacket.html" target="_self">MO_GetNbSamplePerAudioPacket</a></th>
+<td>Get the number of samples of each audio packet stored in the movie.</td>
+</tr>
+<tr>
+<th width="25%"><a href="MO_GetAudioFrequency.html" target="_self">MO_GetAudioFrequency</a></th>
+<td>Get the frequency of the movie audio in Hertz.</td>
+</tr>
+</tbody>
+</table>
+
+<!-- *************************** -->
+<h3><a name="Playback">Playback</a></h3>
+<table border="1" width="100%">
+<tbody>
+<tr>
+<th width="25%"><a href="MO_ReadFrame.html" target="_self">MO_ReadFrame</a></th>
+<td>Read a movie frame.</td>
+</tr>
+<tr>
+<th width="25%"><a href="MO_UnpackFrameImage.html" target="_self">MO_UnpackFrameImage</a></th>
+<td>Unpack the image of a frame and puts it in the internal image frame FIFO.</td>
+</tr>
+<tr>
+<th width="25%"><a href="MO_BlitFrameImage.html" target="_self">MO_BlitFrameImage</a></th>
+<td>Blit the oldest unpacked image from the internal FIFO into a user buffer and removes it from the FIFO.</td>
+</tr>
+<tr>
+<th width="25%"><a href="MO_SkipFrameImage.html" target="_self">MO_SkipFrameImage</a></th>
+<td>Skip the oldest unpacked image, which means removes the oldest unpacked image from the internal FIFO without blitting it.</td>
+</tr>
+<tr>
+<th width="25%"><a href="MO_BlitFrameSoundOnePacket.html" target="_self">MO_BlitFrameSoundOnePacket</a></th>
+<td>Blit a packet of the current unpacked sound to a user buffer.</td>
+</tr>
+<tr>
+<th width="25%"><a href="MO_SkipFrameSoundOnePacket.html" target="_self">MO_SkipFrameSoundOnePacket</a></th>
+<td>Skip a packet of the current unpacked sound.</td>
+</tr>
+<tr>
+<th width="25%"><a href="MO_GetCurrentFrameNumber.html" target="_self">MO_GetCurrentFrameNumber</a></th>
+<td>Get the current read frame number of the movie.</td>
+</tr>
+<tr>
+<th width="25%"><a href="MO_GetFrameNbAudioPacket.html" target="_self">MO_GetFrameNbAudioPacket</a></th>
+<td>Get the number of audio packets per track for the current frame.</td>
+</tr>
+<tr>
+<th width="25%"><a href="MO_GetIFrameInfo.html" target="_self">MO_GetIFrameInfo</a></th>
+<td>Get the frame number of an indexed I-frame (keyframe).</td>
+</tr>
+<tr>
+<th width="25%"><a href="MO_JumpBeginning.html" target="_self">MO_JumpBeginning</a></th>
+<td>Go to the beginning of the movie.</td>
+</tr>
+<tr>
+<th width="25%"><a href="MO_JumpNextIframe.html" target="_self">MO_JumpNextIframe</a></th>
+<td>Go to the next movie I-frame (keyframe).</td>
+</tr>
+<tr>
+<th width="25%"><a href="MO_JumpPreviousIframe.html" target="_self">MO_JumpPreviousIframe</a></th>
+<td>Go to the previous movie I-frame (keyframe).</td>
+</tr>
+<tr>
+<th width="25%"><a href="MO_JumpToIframe.html" target="_self">MO_JumpToIframe</a></th>
+<td>Go to an indexed I-frame (keyframe).</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

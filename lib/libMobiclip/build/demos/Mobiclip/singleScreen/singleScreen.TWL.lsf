@@ -1,0 +1,37 @@
+Static $(TARGET_NAME)
+{
+	Address		$(ADDRESS_STATIC)
+	Object		$(OBJS_STATIC)
+	Library		$(LLIBS) $(GLIBS) $(CC_LIBS)
+	StackSize	4096	2048
+}
+
+Autoload ITCM
+{
+	Address		$(ADDRESS_ITCM)
+	Object		*     		 (.itcm)
+	Object		$(OBJS_AUTOLOAD) (.text)
+	Object		$(OBJS_AUTOLOAD) (.rodata)
+	Object		$(OBJS_AUTOLOAD) (.init)
+	Object		$(OBJS_AUTOLOAD) (.ctor)
+	Object		$(OBJS_AUTOLOAD) (.sinit)
+}
+
+Autoload DTCM
+{
+	Address		$(ADDRESS_DTCM)
+	Object		*     		 (.dtcm)
+	Object		$(OBJS_AUTOLOAD) (.data)
+	Object		$(OBJS_AUTOLOAD) (.sdata)
+	Object		$(OBJS_AUTOLOAD) (.bss)
+	Object		$(OBJS_AUTOLOAD) (.sbss)
+}
+
+Ltdautoload LTDMAIN
+{
+	# NITRO/TWL
+	After		$(TARGET_NAME)
+	Object		* (.ltdmain)
+	Object		$(OBJS_LTDAUTOLOAD)
+	Library		$(LLIBS_EX) $(GLIBS_EX)
+}

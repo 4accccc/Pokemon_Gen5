@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>MO_BlitFrameImage</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">MO_BlitFrameImage</h1>
+<h2>構文</h2>
+<dl>
+  <dd>
+  	<CODE>#include &lt;nitro/Mobiclip.h&gt;</CODE><br><br>
+		<CODE>u32     MO_BlitFrameImage           ( <a href="MO_Types.html"><code>MOHandle</code></a> handle, 
+                                      u16* outFrameBufferPtr, u32 outFrameBufferPitch, u32 qualityEnhancement );</code>
+  </dd>
+</dl>
+
+<h2>説明</h2>
+<p>
+最も以前に解凍されたイメージを、内部FIFOからユーザバッファにblit転送して、その後FIFOから取り除きます。
+</p>
+<p>
+出力はNITROダイレクトカラーフォーマット(16 bits)です。<br>
+不要なコピーを避けるには、<strong>outFrameBufferPtr</strong> でビデオメモリのダイレクトアドレスを指定して下さい。
+</p>
+<p>
+<strong>qualityEnhancement</strong> パラメータには、以下の値を設定できます ：
+<dl>
+  <dd>
+  - <a href="MO_Types.html"><code>MO_QUALITY_ENHANCEMENT_NONE</code></a> ：簡単なカラーコンバージョンが実行されます。<br>
+  - <a href="MO_Types.html"><code>MO_QUALITY_ENHANCEMENT_MEDIUM</code></a> ：<br>
+  - <a href="MO_Types.html"><code>MO_QUALITY_ENHANCEMENT_HIGH</code></a> ：カラーコンバージョンの前にポストフィルタリングが行われます。これはビデオ圧縮によるアーティファクト（ブロックノイズなど非可逆圧縮した際に生成されるデータ上の歪み）を低減させるために使います。<br>
+画質を向上させるほど、CPUを必要とします。使用方法についての例は、<strong>Mobiclip effectiveUsage サンプルデモ</strong> を参照して下さい。<br>
+	</dd>
+</dl>
+</p>
+<p>
+画質の向上と共にblit転送が最初に実行される場合、この関数の中で <a href="MO_MallocFree.html"><code>MO_Malloc</code></a> が呼び出されます。
+</p>
+
+<h2>引数</h2>
+<table border="1">
+	<body>
+	  <tr>
+	    <TD><B><I>handle</code></strong></em></td>
+	    <td>有効なムービーのハンドル。</td>
+	  </tr> 
+	  <tr>
+	    <TD><B><I>outFrameBufferPtr</I></B></TD>
+	    <td>画像フレームの転送先のポインタ。</td>
+	  </tr> 
+	  <tr>
+	    <TD><B><I>outFrameBufferPitch</I></B></TD>
+	    <td>転送先フレームバッファの、ピクセル単位でのピッチ（または走査線）。</td>
+	  </tr> 
+	  <TD><B><I>qualityEnhancement</I></B></TD>
+	  <td>要求された画質向上機能。</td>
+	</body>	  
+</table>
+
+<h2>返り値</h2>
+<p>エラーがない場合は"1"、 エラー（blit転送が実行されなかった）が起こったか、もしくはハンドルが <a href="MO_Types.html"><code>MO_INVALID_HANDLE</code></a> の場合は"0"。</p>
+
+<h2>参照</h2>
+<P>
+<a href="MO_UnpackFrameImage.html"><code>MO_UnpackFrameImage</code></a><br>
+<a href="MO_SkipFrameImage.html"><code>MO_SkipFrameImage</code></a><br>
+</P>
+
+<h2>履歴</h2>
+<P>2008/03/03 初版</P>
+</body>
+</html>

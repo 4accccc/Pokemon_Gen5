@@ -1,0 +1,170 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"><html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<title>Mobiclip Library API Functions</title>
+<link rel="stylesheet" href="../css/apilist.css">
+</head>
+<body>
+<h1>Mobiclip ライブラリ API 関数</h1>
+<hr>
+<h2></h2>
+
+<!-- *************************** -->
+<h3><a name="Types">型</a></h3>
+<table border="1" width="100%">
+<tbody>
+<tr>
+<th width="25%"><a href="MO_Types.html" target="_self">Mobiclip Types</a></th>
+</tr>
+</tbody>
+</table>
+
+<!-- *************************** -->
+<h3><a name="Code and data relocation">コードおよびデータの再配置(TCM)</a></h3>
+<table border="1" width="100%">
+<tbody>
+<tr>
+<th width="25%"><a href="MO_GetOptimalITCMSize.html" target="_self">MO_GetOptimalITCMSize</a></th>
+<td>最適なパフォーマンスを実行するのにMobiclipが必要とする命令TCMをバイト単位で読み出します。</td>
+</tr>
+<tr>
+<th width="25%"><a href="MO_GetOptimalDTCMSize.html" target="_self">MO_GetOptimalDTCMSize</a></th>
+<td>最適なパフォーマンスを実行するのにMobiclipが必要とするデータTCMをバイト単位で読み出します。</td>
+</tr>
+<tr>
+<th width="25%"><a href="MO_InitITCMArea.html" target="_self">MO_InitITCMArea</a></th>
+<td>使用可能な命令TCM領域をアドレスおよびバイト単位のサイズでMobiclipに伝えます。</td>
+</tr>
+<tr>
+<th width="25%"><a href="MO_InitDTCMArea.html" target="_self">MO_InitDTCMArea</a></th>
+<td>使用可能なデータTCM領域をアドレスおよびバイト単位のサイズでMobiclipに伝えます。</td>
+</tr>
+</tbody>
+</table>
+
+<!-- *************************** -->
+<h3><a name="Initialization">初期化</a></h3>
+<table border="1" width="100%">
+<tbody>
+<tr>
+<th width="25%"><a href="MO_MallocFree.html" target="_self">MO_Malloc and MO_Free</a></th>
+<td>Allocator/Deallocator 関数。</td>
+</tr>
+</tbody>
+</table>
+
+<!-- *************************** -->
+<h3><a name="OpenClose">開く/閉じる</a></h3>
+<table border="1" width="100%">
+<tbody>
+<tr>
+<th width="25%"><a href="MO_OpenMovie.html" target="_self">MO_OpenMovie</a></th>
+<td>ファイルからMobiclipムービーを開きます。</td>
+</tr>
+<tr>
+<th width="25%"><a href="MO_CloseMovie.html" target="_self">MO_CloseMovie</a></th>
+<td>Mobiclipムービーを閉じます。</td>
+</tr>
+</tbody>
+</table>
+
+<!-- *************************** -->
+<h3><a name="Retrieve information about movie">ムービーに関する情報の取得</a></h3>
+<table border="1" width="100%">
+<tbody>
+<tr>
+<th width="25%"><a href="MO_GetVideoWidth.html" target="_self">MO_GetVideoWidth</a></th>
+<td>ムービーの幅をピクセル数で取得します。</td>
+</tr>
+<tr>
+<th width="25%"><a href="MO_GetVideoHeight.html" target="_self">MO_GetVideoHeight</a></th>
+<td>ムービーの高さをピクセル数で取得します。</td>
+</tr>
+<tr>
+<th width="25%"><a href="MO_GetVideoFps.html" target="_self">MO_GetVideoFps</a></th>
+<td>ムービーのフレームレートを取得します。</td>
+</tr>
+<tr>
+<th width="25%"><a href="MO_GetNbFrame.html" target="_self">MO_GetNbFrame</a></th>
+<td>ムービーのフレーム数を取得します。</td>
+</tr>
+<tr>
+<th width="25%"><a href="MO_GetNbIFrame.html" target="_self">MO_GetNbIFrame</a></th>
+<td>ムービーのI-Frame(キーフレーム)の数を取得します。</td>
+</tr>
+<tr>
+<th width="25%"><a href="MO_GetNbAudioTrack.html" target="_self">MO_GetNbAudioTrack</a></th>
+<td>ムービーのオーディオトラックの数を取得します。</td>
+</tr>
+<tr>
+<th width="25%"><a href="MO_GetNbSamplePerAudioPacket.html" target="_self">MO_GetNbSamplePerAudioPacket</a></th>
+<td>ムービー内に格納されたそれぞれのオーディオパケットのサンプル数を取得します。</td>
+</tr>
+<tr>
+<th width="25%"><a href="MO_GetAudioFrequency.html" target="_self">MO_GetAudioFrequency</a></th>
+<td>ムービーのオーディオの周波数をHzで取得します。</td>
+</tr>
+</tbody>
+</table>
+
+<!-- *************************** -->
+<h3><a name="Playback">再生</a></h3>
+<table border="1" width="100%">
+<tbody>
+<tr>
+<th width="25%"><a href="MO_ReadFrame.html" target="_self">MO_ReadFrame</a></th>
+<td>ムービーフレームを読み込みます。</td>
+</tr>
+<tr>
+<th width="25%"><a href="MO_UnpackFrameImage.html" target="_self">MO_UnpackFrameImage</a></th>
+<td>フレームのイメージを解凍し、それを内部イメージフレームFIFOに書きます。</td>
+</tr>
+<tr>
+<th width="25%"><a href="MO_BlitFrameImage.html" target="_self">MO_BlitFrameImage</a></th>
+<td>最も以前に解凍されたイメージを、内部FIFOからユーザバッファにblit転送して、その後FIFOから取り除きます。</td>
+</tr>
+<tr>
+<th width="25%"><a href="MO_SkipFrameImage.html" target="_self">MO_SkipFrameImage</a></th>
+<td>最も以前に解凍されたイメージをスキップします。つまり、最も以前に解凍されたイメージをblit転送することなく、内部FIFOから取り除きます。</td>
+</tr>
+<tr>
+<th width="25%"><a href="MO_BlitFrameSoundOnePacket.html" target="_self">MO_BlitFrameSoundOnePacket</a></th>
+<td>解凍されたカレントサウンドのパケットをユーザバッファへblit転送します。</td>
+</tr>
+<tr>
+<th width="25%"><a href="MO_SkipFrameSoundOnePacket.html" target="_self">MO_SkipFrameSoundOnePacket</a></th>
+<td>カレントサウンドのパケットをスキップします（解凍に時間を割かれません）。</td>
+</tr>
+<tr>
+<th width="25%"><a href="MO_GetCurrentFrameNumber.html" target="_self">MO_GetCurrentFrameNumber</a></th>
+<td>ムービーの、現在読み込んでいるフレームの番号を取得します。</td>
+</tr>
+<tr>
+<th width="25%"><a href="MO_GetFrameNbAudioPacket.html" target="_self">MO_GetFrameNbAudioPacket</a></th>
+<td>カレントフレームの、トラックごとのオーディオパケットの数を取得します。</td>
+</tr>
+<tr>
+<th width="25%"><a href="MO_GetIFrameInfo.html" target="_self">MO_GetIFrameInfo</a></th>
+<td>'index'でインデックス付けされたI-Frame(キーフレーム)のフレーム番号を取得します。</td>
+</tr>
+<tr>
+<th width="25%"><a href="MO_JumpBeginning.html" target="_self">MO_JumpBeginning</a></th>
+<td>ムービーの先頭に移動します。</td>
+</tr>
+<tr>
+<th width="25%"><a href="MO_JumpNextIframe.html" target="_self">MO_JumpNextIframe</a></th>
+<td>ムービーの次のI-Frame(キーフレーム)に移動します。</td>
+</tr>
+<tr>
+<th width="25%"><a href="MO_JumpPreviousIframe.html" target="_self">MO_JumpPreviousIframe</a></th>
+<td>ムービーの前のI-Frame(キーフレーム)に移動します。</td>
+</tr>
+<tr>
+<th width="25%"><a href="MO_JumpToIframe.html" target="_self">MO_JumpToIframe</a></th>
+<td>インデックス指定でI-Frame(キーフレーム)に移動します。</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

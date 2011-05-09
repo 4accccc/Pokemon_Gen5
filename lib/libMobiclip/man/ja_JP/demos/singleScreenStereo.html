@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<link rel="stylesheet" type="text/css" href="../css/nitro.css">
+<title>Mobiclip Demos</title>
+
+</head>
+
+<body>
+
+<h1>Mobiclip singleScreenStereo サンプルデモ</h1>
+
+<h2>場所</h2>
+<p><code>libMobiclip/build/demos/Mobiclip/singleScreenStereo</code></p>
+
+<h2>コンパイル方法</h2>
+<p>Cygwin プロンプトから <code>libMobiclip/build/demos/Mobiclip/singleScreenStereo</code> ディレクトリに移り、</p>
+<BLOCKQUOTE><CODE>% make</CODE></BLOCKQUOTE>
+<p>と入力します。
+コンパイルが始まり、実行ファイルである <code>.srl</code> ファイルやバイナリ情報を記述した <code>.nef</code> または <code>.tef</code> ファイルが、</p>
+<p><CODE>libMobiclip/build/demos/Mobiclip/singleScreenStereo/bin/<em><strong>platform</strong></em>/<em><strong>target</strong></em>/</CODE></p>
+<p>の下に生成されます。例えば、</p>
+
+<BLOCKQUOTE><CODE>libMobiclip/build/demos/Mobiclip/singleScreenStereo/bin/ARM9-TS/Release/singleScreenStereo.srl</CODE></BLOCKQUOTE>
+<p>が <CODE>singleScreenStereo</CODE> デモの実行ファイルになります。</p>
+
+<h2>実行方法</h2>
+<H3>NITRO ROM の場合</H3>
+<p>IS-NITRO-DEBUGGER を用いる場合</p>
+<UL>
+<LI>IS-NITRO-DEBUGGER で <CODE>*.nlf</CODE> ファイルを読み込んで実行します。
+<LI>IS-NITRO-DEBUGGER で <CODE>*.srl</CODE> を実行します。
+<LI>コマンドラインから <CODE>loadrun.exe</CODE> で IS-NITRO-DEBUGGER で <CODE>*.srl</CODE> を実行します。
+</UL>
+
+<p>IS-TWL-DEBUGGER を用いる場合</p>
+<UL>
+<LI>IS-TWL-DEBUGGER で <CODE>*.nlf</CODE> ファイルを読み込んで実行します。
+<LI>IS-TWL-DEBUGGER で <CODE>*.srl</CODE> を実行します。
+<LI>コマンドラインから <CODE>loadrun.TWL.exe</CODE> で IS-TWL-DEBUGGER で <CODE>*.srl</CODE> を実行します。
+</UL>
+
+<H3>TWL/NITRO HYBRID ROM の場合</H3>
+
+<p>IS-NITRO-DEBUGGER を用いる場合</p>
+<UL>
+<LI>IS-NITRO-DEBUGGER で <CODE>*.srl</CODE> を実行します。
+<LI>コマンドラインから <CODE>loadrun.exe</CODE> で IS-NITRO-DEBUGGER で <CODE>*.srl</CODE> を実行します。
+</UL>
+
+<p>IS-TWL-DEBUGGER を用いる場合</p>
+
+<UL>
+<LI>IS-TWL-DEBUGGER で <CODE>*.tlf</CODE> ファイルを読み込んで実行します。
+<LI>IS-TWL-DEBUGGER で <CODE>*.srl</CODE> を実行します。
+<LI>コマンドラインから <CODE>loadrun.TWL.exe</CODE> で IS-TWL-DEBUGGER で <CODE>*.srl</CODE> を実行します。
+</UL>
+
+<H3>TWL LIMITED ROM の場合</H3>
+
+<p>IS-TWL-DEBUGGER を用いる場合</p>
+<UL>
+<LI>IS-TWL-DEBUGGER で <CODE>*.tlf</CODE> ファイルを読み込んで実行します。
+<LI>IS-TWL-DEBUGGER で <CODE>*.srl</CODE> を実行します。
+<LI>コマンドラインから <CODE>loadrun.TWL.exe</CODE> で IS-TWL-DEBUGGER で <CODE>*.srl</CODE> を実行します。
+</UL>
+
+<h2>説明</h2>
+
+<p>
+スクリーン上画面で、ステレオサウンドトラックを含むシンプルなMobiclipムービーをファイルから再生する方法を示したサンプルです。
+<br><br>
+・STARTボタンでビデオを一時停止 / 再生<br>
+・Bボタンでビデオを停止<br>
+・Aボタンでビデオを再生<br>
+・SELECTボタンでループを無効 / 有効の切り替え<br>
+・DSカバーを閉じる / 開ける ときにLCDの電源をオフ / オン</p>
+
+<h2>動作環境</h2>
+<p>すべてのサンプルについて、IS-NITRO-EMULATOR と IS-TWL-DEBUGGER での正常動作を確認しています。</p>
+
+<h2>参照</h2>
+<p><A href="../mobiclip/list_MO.html">Mobiclip ライブラリ API 関数</A></p>
+
+<h2>履歴</h2>
+<p>2009/10/22 コンパイル方法で生成されるファイル名を main.srl から singleScreenStereo.srl に変更しました</p>
+<p>2009/04/23 TWLターゲットのビルドと実行の説明を追加しました</p>
+<p>2008/03/03 初版</p>
+
+</body>
+</html>

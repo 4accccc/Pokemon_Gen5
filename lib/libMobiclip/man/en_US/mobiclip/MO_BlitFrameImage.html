@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>MO_BlitFrameImage</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">MO_BlitFrameImage</h1>
+<h2>C Specification</h2>
+<dl>
+  <dd>
+  	<CODE>#include &lt;nitro/Mobiclip.h&gt;</CODE><br><br>
+		<CODE>u32     MO_BlitFrameImage           ( <a href="MO_Types.html"><code>MOHandle</code></a> handle, 
+                                      u16* outFrameBufferPtr, u32 outFrameBufferPitch, u32 qualityEnhancement );</code>
+  </dd>
+</dl>
+
+<h2>Description</h2>
+<p>
+Blit the oldest unpacked image from the internal FIFO into a user buffer and remove it from the FIFO.
+</p>
+<p>
+The output is in NITRO Direct Color format(16 bits).<br>
+To avoid unnecessary copies, give a direct address to video memory in <strong>outFrameBufferPtr</strong>.
+</p>
+<p>
+The <strong>qualityEnhancement</strong> parameter can have the following values:
+<dl>
+  <dd>
+  - <a href="MO_Types.html"><code>MO_QUALITY_ENHANCEMENT_NONE</code></a>: a simple color conversion is performed.<br>
+  - <a href="MO_Types.html"><code>MO_QUALITY_ENHANCEMENT_MEDIUM</code></a>:<br>
+  - <a href="MO_Types.html"><code>MO_QUALITY_ENHANCEMENT_HIGH</code></a>: apply a post-filtering before color conversion, used to reduce video compression artefacts.<br>
+  The higher the quality enhancement is, the higher the CPU requirements will be. See <strong>effectiveUsage</strong> sample for an example on how to use this feature.<br>
+	</dd>
+</dl>
+</p>
+<p>
+<a href="MO_MallocFree.html"><code>MO_Malloc</code></a> is called inside this function the first time a blit is performed with visual quality enhancement.
+</p>
+
+<h2>Arguments</h2>
+<table border="1">
+	<body>
+	  <tr>
+	    <TD><B><I>handle</code></strong></em></td>
+	    <td>Valid handle movie</td>
+	  </tr> 
+	  <tr>
+	    <TD><B><I>outFrameBufferPtr</I></B></TD>
+	    <td>Pointer where the image frame must be blitted</td>
+	  </tr> 
+	  <tr>
+	    <TD><B><I>outFrameBufferPitch</I></B></TD>
+	    <td>Pitch (scanline) in pixels of the destination frame buffer</td>
+	  </tr> 
+	  <TD><B><I>qualityEnhancement</I></B></TD>
+	  <td>The kind of visual quality enhancement wanted.</td>
+	</body>	  
+</table>
+
+<h2>Return Values</h2>
+<p>1 if no error, 0 if error (blit not performed or allocation error) or if the handle is <a href="MO_Types.html"><code>MO_INVALID_HANDLE</code></a>.</p>
+
+<h2>See Also</h2>
+<P>
+<a href="MO_UnpackFrameImage.html"><code>MO_UnpackFrameImage</code></a><br>
+<a href="MO_SkipFrameImage.html"><code>MO_SkipFrameImage</code></a><br>
+</P>
+
+<h2>Revision History</h2>
+<P>03/03/2008 Initial Version</P>
+</body>
+</html>

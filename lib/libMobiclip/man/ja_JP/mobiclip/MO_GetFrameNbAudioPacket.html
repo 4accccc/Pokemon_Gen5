@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>MO_GetFrameNbAudioPacket</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">MO_GetFrameNbAudioPacket</h1>
+<h2>構文</h2>
+<dl>
+  <dd>
+  	<CODE>#include &lt;nitro/Mobiclip.h&gt;</CODE><br><br>
+		<CODE>u32         MO_GetFrameNbAudioPacket        ( <a href="MO_Types.html"><code>MOHandle</code></a> handle );</code>
+  </dd>
+</dl>
+
+<h2>説明</h2>
+<P>
+カレントフレームの、トラックごとのオーディオパケットの数を取得します。
+</P>
+
+<h2>引数</h2>
+<table border="1">
+  <TBODY>
+	  <tr>
+	    <TD><B><I>handle</I></B></TD>
+	    <td>有効なムービーのハンドル。</td>
+	  </tr>
+	</TBODY>
+</table>
+
+<h2>返り値</h2>
+<p>
+各オーディオトラックのカレントフレームのオーディオパケット数。<br>
+ハンドルが <a href="MO_Types.html"><code>MO_INVALID_HANDLE</code></a> か、あるいはムービーにオーディオトラックがない場合は"0"。
+</p>
+<p>
+オーディオパケットのサイズは、PCM 16ビットの128サンプルです。
+</p>
+<p>
+オーディオトラックにはそれぞれ、指定したフレーム毎に同じ数のパケットがあります。<br>
+指定フレームのオーディオパケットの総数は次のようになります： <br>
+MO_GetFrameNbAudioPacket(handle) * <a href="MO_GetNbAudioTrack.html"><code>MO_GetNbAudioTrack</code></a> (handle).<br>
+オーディオトラックが二つ以上ある場合、各トラックのオーディオパケットはインタリーブされます。<br>
+例えば、オーディオトラックが二つある場合、オーディオパケットは次のようにインタリーブされます。<br>
+Packet0_Track0, Packet0_Track1, Packet1_Track0, Packet1_Track1, etc ...
+</p>
+
+<h2>履歴</h2>
+<P>2008/03/03 初版</P>
+</body>
+</html>

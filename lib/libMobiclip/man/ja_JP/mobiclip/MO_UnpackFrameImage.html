@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>MO_UnpackFrameImage</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">MO_UnpackFrameImage</h1>
+<h2>構文</h2>
+<dl>
+  <dd>
+  	<CODE>#include &lt;nitro/Mobiclip.h&gt;</CODE><br><br>
+		<CODE>u32     MO_UnpackFrameImage         ( <a href="MO_Types.html">MOHandle</a> handle );</code>
+  </dd>
+</dl>
+
+<h2>説明</h2>
+<p>
+フレームのイメージを解凍し、それを内部イメージフレームFIFOに書きます。
+</p>
+<p>
+Mobiclipは、内部FIFOに解凍されたイメージフレームを格納します。<br>
+<a href="MO_UnpackFrameImage.html"><code>MO_UnpackFrameImage</code></a> が呼び出されるたびに、新しく解凍されたイメージがFIFOに追加されます。<br>
+<a href="MO_BlitFrameImage.html"><code>MO_BlitFrameImage</code></a> もしくは <a href="MO_SkipFrameImage.html"><code>MO_SkipFrameImage</code></a> 関数が呼び出されるたびに、最も以前に解凍されたイメージがFIFOから取り除かれます（blit転送もしくスキップされた後）。
+</p>
+<p>
+<a href="MO_BlitFrameImage.html"><code>MO_BlitFrameImage</code></a> や <a href="MO_SkipFrameImage.html"><code>MO_SkipFrameImage</code></a> を呼び出すことなく、
+MO_UnpackFrameImage の <strong>nbBufferedFrameMax</strong> （<a href="MO_OpenMovie.html"><code>MO_OpenMovie</code></a> を参照）を呼び出すことができます。<br>
+これは、フレームバッファリングを許可するという役立つ機能です。<br>
+動画再生のある時点で <a href="MO_UnpackFrameImage.html"><code>MO_UnpackFrameImage</code></a> を呼び出すと、作業に時間がかかるため、サウンドバッファアンダーフローを引き起こすことになります。<br>
+事前にイメージフレームをバッファすることで、時おり発生するCPUピークをスムーズにします。<br>このようにしてサウンドバッファアンダーフローを回避することができます。
+</p>
+
+<h2>引数</h2>
+<table border="1">
+  <TBODY>
+	  <tr>
+	    <TD><B><I>handle</I></B></TD>
+	    <td>有効なムービーのハンドル。</td>
+	  </tr>
+	</TBODY>
+</table>
+
+<h2>返り値</h2>
+<p>エラーがない場合は"1"、エラー（内部で使用可能なバッファがないとき）が起こったか、 もしくはハンドルが <a href="MO_Types.html"><code>MO_INVALID_HANDLE</code></a> の場合は"0"。</p>
+
+<h2>参照</h2>
+<P>
+<a href="MO_ReadFrame.html"><code>MO_ReadFrame</code></a><br>
+<a href="MO_BlitFrameImage.html"><code>MO_BlitFrameImage</code></a><br>
+<a href="MO_SkipFrameImage.html"><code>MO_SkipFrameImage</code></a><br>
+</P>
+
+<h2>履歴</h2>
+<P>2008/03/03 初版</P>
+</body>
+</html>

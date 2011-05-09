@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>MO_SkipFrameImage</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">MO_SkipFrameImage</h1>
+<h2>構文</h2>
+<dl>
+  <dd>
+  	<CODE>#include &lt;nitro/Mobiclip.h&gt;</CODE><br><br>
+		<CODE>u32     MO_SkipFrameImage           ( <a href="MO_Types.html">MOHandle</a> handle );</code>
+  </dd>
+</dl>
+
+<h2>説明</h2>
+<p>
+最も以前に解凍されたイメージをスキップします。つまり、最も以前に解凍されたイメージをblit転送することなく、内部FIFOから取り除きます。
+</p>
+<p>
+時おり、フレームバッファリングをしている場合でさえ、サウンドバッファアンダーフローが発生します。<br>
+これは通常、とても高いクオリティ設定で圧縮されたビデオで見られます。<br>
+この関数は、最も以前に解凍されたイメージをblit転送しないことによって時間稼ぎをするために利用されます。
+</p>
+
+<h2>引数</h2>
+<table border="1">
+  <TBODY>
+	  <tr>
+	    <TD><B><I>handle</I></B></TD>
+	    <td>有効なムービーのハンドル。</td>
+	  </tr>
+	</TBODY>
+</table>
+
+<h2>返り値</h2>
+<p>エラーがない場合は"1"、エラー（スキップが実行されなかった）が起こったか、もしくはハンドルが <a href="MO_Types.html"><code>MO_INVALID_HANDLE</code></a> の場合は"0"。</p>
+
+<h2>参照</h2>
+<P>
+<a href="MO_UnpackFrameImage.html"><code>MO_UnpackFrameImage</code></a><br>
+<a href="MO_BlitFrameImage.html"><code>MO_BlitFrameImage</code></a><br>
+</P>
+
+<h2>履歴</h2>
+<P>2008/03/03 初版</P>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<META http-equiv="Content-Style-Type" content="text/css">
+<title>MO_OpenMovie</title>
+<LINK rel="stylesheet" href="../css/nitro.css" type="text/css">
+</head>
+
+<body>
+
+<h1 align="left">MO_OpenMovie</h1>
+<h2>C Specification</h2>
+<dl>
+  <dd>
+  	<CODE>#include &lt;nitro/Mobiclip.h&gt;</CODE><BR><BR>
+		<a href="MO_Types.html"><code>MOHandle</code></a><CODE>    MO_OpenMovie        ( FSFile *file, u32 nbBufferedFrameMax );</code>		
+  </dd>
+</dl>
+
+<h2>Description</h2>
+<p>
+Open a Mobiclip movie from a file.<br>
+<a href="MO_MallocFree.html"><code>MO_Malloc</code></a> is called inside this function.
+</p>
+
+<h2>Arguments</h2>
+<table border="1">
+	<TBODY>
+	  <tr>
+	    <TD><B><I>file</I></B></TD>
+	    <td>Already opened NITRO file handle.</td>
+	  </tr>
+	  <tr>
+	    <TD><B><I>nbBufferedFrameMax</I></B></TD>
+	    <td>Maximum number of frames who can be successively unpacked without been blitted or skipped. <a href="MO_Types.html"><code>MO_NB_BUFFERED_FRAME_MIN</code></a> is the minimum value allowed.</td>
+	  </tr>
+	</TBODY>
+</table>
+
+<h2>Return Values</h2>
+<p>
+Return a <a href="MO_Types.html"><code>MOHandle</code></a> value if ok, <a href="MO_Types.html"><code>MO_INVALID_HANDLE</code></a> if error.
+</p>
+<p>
+Cause of error :
+	<dl><dd>
+	- impossible to Read Mobiclip header.<br>
+	- incompatible file format (typically, this is not a valid Mobiclip movie).<br>
+	- wrong movie resolution (it must not exceed 256x192).<br>
+	- not enough memory (allocation error).<br>
+	- nbBufferedFrameMax value is below the minimum allowed<br>
+	</dd></dl>
+</p>
+
+<h2>See Also</h2>
+<P>
+<a href="MO_CloseMovie.html"><code>MO_CloseMovie</code></a>
+</P>
+
+<h2>Revision History</h2>
+<p>
+03/03/2008 Initial Version
+</p>
+</body>
+</html>

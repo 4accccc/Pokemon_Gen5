@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<META http-equiv="Content-Style-Type" content="text/css">
+<link rel="stylesheet" type="text/css" href="../css/nitro.css">
+<title>Mobiclip Demos</title>
+
+</head>
+
+<body>
+
+<h1>Mobiclip effectiveUsage サンプルデモ</h1>
+
+<h2>場所</h2>
+<p><code>libMobiclip/build/demos/Mobiclip/effectiveUsage</code></p>
+
+<h2>コンパイル方法</h2>
+
+<p>Cygwin プロンプトから <code>libMobiclip/build/demos/Mobiclip/effectiveUsage</code> ディレクトリに移り、</p>
+<BLOCKQUOTE><CODE>% make</CODE></BLOCKQUOTE>
+<p>と入力します。
+コンパイルが始まり、実行ファイルである <code>.srl</code> ファイルやバイナリ情報を記述した <code>.nef</code> または <code>.tef</code> ファイルが、</p>
+<p><CODE>libMobiclip/build/demos/Mobiclip/effectiveUsage/bin/<em><strong>platform</strong></em>/<em><strong>target</strong></em>/</CODE></p>
+<p>の下に生成されます。例えば、</p>
+
+<BLOCKQUOTE><CODE>libMobiclip/build/demos/Mobiclip/effectiveUsage/bin/ARM9-TS/Release/effectiveUsage.srl</CODE></BLOCKQUOTE>
+<p>が <CODE>effectiveUsage</CODE> デモの実行ファイルになります。</p>
+
+
+<h2>実行方法</h2>
+<H3>NITRO ROM の場合</H3>
+<p>IS-NITRO-DEBUGGER を用いる場合</p>
+<UL>
+<LI>IS-NITRO-DEBUGGER で <CODE>*.nlf</CODE> ファイルを読み込んで実行します。
+<LI>IS-NITRO-DEBUGGER で <CODE>*.srl</CODE> を実行します。
+<LI>コマンドラインから <CODE>loadrun.exe</CODE> で IS-NITRO-DEBUGGER で <CODE>*.srl</CODE> を実行します。
+</UL>
+
+<p>IS-TWL-DEBUGGER を用いる場合</p>
+<UL>
+<LI>IS-TWL-DEBUGGER で <CODE>*.nlf</CODE> ファイルを読み込んで実行します。
+<LI>IS-TWL-DEBUGGER で <CODE>*.srl</CODE> を実行します。
+<LI>コマンドラインから <CODE>loadrun.TWL.exe</CODE> で IS-TWL-DEBUGGER で <CODE>*.srl</CODE> を実行します。
+</UL>
+
+<H3>TWL/NITRO HYBRID ROM の場合</H3>
+
+<p>IS-NITRO-DEBUGGER を用いる場合</p>
+<UL>
+<LI>IS-NITRO-DEBUGGER で <CODE>*.srl</CODE> を実行します。
+<LI>コマンドラインから <CODE>loadrun.exe</CODE> で IS-NITRO-DEBUGGER で <CODE>*.srl</CODE> を実行します。
+</UL>
+
+<p>IS-TWL-DEBUGGER を用いる場合</p>
+
+<UL>
+<LI>IS-TWL-DEBUGGER で <CODE>*.tlf</CODE> ファイルを読み込んで実行します。
+<LI>IS-TWL-DEBUGGER で <CODE>*.srl</CODE> を実行します。
+<LI>コマンドラインから <CODE>loadrun.TWL.exe</CODE> で IS-TWL-DEBUGGER で <CODE>*.srl</CODE> を実行します。
+</UL>
+
+<H3>TWL LIMITED ROM の場合</H3>
+
+<p>IS-TWL-DEBUGGER を用いる場合</p>
+<UL>
+<LI>IS-TWL-DEBUGGER で <CODE>*.tlf</CODE> ファイルを読み込んで実行します。
+<LI>IS-TWL-DEBUGGER で <CODE>*.srl</CODE> を実行します。
+<LI>コマンドラインから <CODE>loadrun.TWL.exe</CODE> で IS-TWL-DEBUGGER で <CODE>*.srl</CODE> を実行します。
+</UL>
+
+<h2>説明</h2>
+
+<p>
+スクリーン上画面で、モノラルサウンドトラックを含むシンプルなMobiclipムービーをファイルから再生する方法を示したサンプルです。
+</p>
+<p>
+これは非常に基本的なプログラムです：<br> 
+ - キーやボタンを押下してMobiclipムービーを制御する機能は実装されていません<br>
+ - Mobiclipムービーはループしません<br>
+ - ニンテンドーDS本体の開閉制御機能は実装されていません
+</p>
+<p><strong>
+このサンプルデモの主な目的は、もっとも効果的な再生方法を提供するためのものです。<br>
+この方法は他のサンプルと比べて、フレームのスキップをなくしたり、<br>
+画質向上機能を効果的に実行するのに適しています。<br>
+</strong></p>
+<p>
+機能リスト：<br>
+ - コードおよびデータの再配置機能を使う<br>
+ - アラームのコールバックでのblit転送中に、メインプログラムでMobiclipムービーを解凍する<br>   （CPUの空き時間を効率よく使うので、フレームのスキップが少ない）<br>
+ - CPUの空き時間を使って、画質向上とともに高度なblit転送の技術を適応する<br>
+ - フレームバッファリングを最低値（例えば6）ではなく、12に上げる<br>
+ - 画質向上の経過を表示する（再生が終了した時点で、デバッグコンソール（IS-NITRO-DEBUGGER）上に表示される）
+</p> 
+	  
+<h2>動作環境</h2>
+<p>すべてのサンプルについて、IS-NITRO-EMULATOR と IS-TWL-DEBUGGER での正常動作を確認しています。</p>
+
+<h2>参照</h2>
+<p><A href="../mobiclip/list_MO.html">Mobiclip ライブラリ API 関数</A></p>
+
+<h2>履歴</h2>
+<p>2009/10/22 コンパイル方法で生成されるファイル名を main.srl から effectiveUsage.srl に変更しました</p>
+<p>2009/04/23 TWLターゲットのビルドと実行の説明を追加しました</p>
+<p>2008/03/03 初版</p>
+
+</body>
+</html>
