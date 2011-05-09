@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-25T21:03:22"/>
+	<create user="matsumiya" host="W00224" date="2011-05-09T16:00:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1297" top="169" right="2002" bottom="797" maximized="no" rayout="Vertical2">
+	<dialog left="1300" top="217" right="2005" bottom="845" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,176 +292,64 @@
 	</lock>
 
 
-	<row id="msg_c04r0601_hakase2_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・pos起動（GRIDX=2～7、GRIDZ=10）
-※当たり判定の不具合があるので
-　GRIDX=1～7の設定でもいいかも
-・続けてblack_01
-・0＝主人公名前</comment>
-		<attribute name="キャラ指定">HAKASE2
-アララギ博士娘</attribute>
-		<language name="JPN" width="256">アララギ『ハーイ！
-[1:00:トレーナー名:0]！！▼</language>
-		<language name="JPN_KANJI" width="256">アララギ『ハーイ！
-[1:00:トレーナー名:0]！！▼</language>
+	<row id="msg_c04r0601_hakase2_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c04r0601_black_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・メッセージ表示後、主人公を誘導
-　所定の位置(アララギの前）に到達すると
-　hakase2_02表示</comment>
-		<attribute name="キャラ指定">友達♂
-チェレン</attribute>
-		<language name="JPN" width="256">チェレン『こっちに　きなよ▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『こっちに　来なよ▼</language>
+	<row id="msg_c04r0601_black_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c04r0601_hakase2_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・続けてhakase2_03</comment>
-		<attribute name="キャラ指定">HAKASE2
-アララギ博士娘</attribute>
-		<language name="JPN" width="256">アララギ『カミツレに　よばれて
-でんきタイプの　ポケモンのこと▽
-いろいろ　きかれている　ときに▽
-きみたちのこと　おもいだして……▼
-で　ようじと　いうのは　これ！
-ドドーンと　サービスよ！！▼</language>
-		<language name="JPN_KANJI" width="256">アララギ『カミツレに　呼ばれて
-でんきタイプの　ポケモンのこと▽
-いろいろ　きかれている　ときに▽
-きみたちのこと　思い出して……▼
-で　用事と　いうのは　これ！
-ドドーンと　サービスよ！！▼</language>
+	<row id="msg_c04r0601_hakase2_02" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c04r0601_hakase2_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・まずチェレンの前に移動して
-　hakase2_04</comment>
-		<attribute name="キャラ指定">HAKASE2
-アララギ博士娘</attribute>
-		<language name="JPN" width="256">はい　チェレン！▼</language>
-		<language name="JPN_KANJI" width="256">はい　チェレン！▼</language>
+	<row id="msg_c04r0601_hakase2_03" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c04r0601_hakase2_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・主人公の前に移動して
-・アイテム入手処理
-　No002「ハイパーボール」×10
-・続けてhakase2_05
-・0＝主人公名前</comment>
-		<attribute name="キャラ指定">HAKASE2
-アララギ博士娘</attribute>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]も▼</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]も▼</language>
+	<row id="msg_c04r0601_hakase2_04" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c04r0601_hakase2_05" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・アイテム入手後
-・続けてhakase2_06</comment>
-		<attribute name="キャラ指定">HAKASE2
-アララギ博士娘</attribute>
-		<language name="JPN" width="256">いっしょに　いたい　ポケモンと
-であったら　おしむことなく▽
-いい　ボールを　つかいなさいな▼
-その　ポケモンとの　であいは
-それが　さいしょで▽
-さいごかも　しれないんだから！▼</language>
-		<language name="JPN_KANJI" width="256">一緒に　いたい　ポケモンと
-出会ったら　惜しむことなく▽
-いい　ボールを　使いなさいな▼
-その　ポケモンとの　出会いは
-それが　最初で▽
-最後かも　しれないんだから！▼</language>
+	<row id="msg_c04r0601_hakase2_05" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c04r0601_hakase2_06" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・横を向いてメッセージ表示
-・hakase2_07</comment>
-		<attribute name="キャラ指定">HAKASE2
-アララギ博士娘</attribute>
-		<language name="JPN" width="256">……それと　ポケモンずかんの
-かんせいを　おねがいした▽
-わたしが　こんなことを　いうのも▼
-ちょっと　おかしいけど
-たびを　たのしみなさいね！▼</language>
-		<language name="JPN_KANJI" width="256">……それと　ポケモン図鑑の
-完成を　お願いした▽
-わたしが　こんなことを　いうのも▼
-ちょっと　おかしいけど
-旅を　楽しみなさいね！▼</language>
+	<row id="msg_c04r0601_hakase2_06" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c04r0601_hakase2_07" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・メッセージ後、画面下に移動
-・画面外に消えるとblack_02</comment>
-		<attribute name="キャラ指定">HAKASE2
-アララギ博士娘</attribute>
-		<language name="JPN" width="256">……あっ！▼
-ポケモンずかんのこと
-なにもしなくて　いいって▼
-いみ　じゃないのは　わかってるよね▼
-さてと……
-ベルに　あわなきゃね▼</language>
-		<language name="JPN_KANJI" width="256">……あっ！▼
-ポケモン図鑑のこと
-なにも　しなくて　いいって▼
-意味じゃないのは　わかってるよね▼
-さてと……
-ベルに　会わなきゃね▼</language>
+	<row id="msg_c04r0601_hakase2_07" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c04r0601_black_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・下を向いたままメッセージ表示
-　続けてblack_03</comment>
-		<attribute name="キャラ指定">友達♂
-チェレン</attribute>
-		<language name="JPN" width="256">チェレン『……ぼくたちを
-たびに　ださせるため▽
-ポケモンと　ずかんを　くれた……▼
-そういうこと　らしいね
-かあさんが　おしえてくれたよ▼
-ぼくたちに　せかいを　みせたいからって
-きみのママと　ベルのママ　３にんで▽
-アララギはかせに　たのんでね▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『……ぼくたちを
-旅立たせるため▽
-ポケモンと　図鑑を　くれた……▼
-そういうこと　らしいね
-かあさんが　教えてくれたよ▼
-ぼくたちに　世界を　みせたいからって
-きみのママと　ベルのママ　３人で▽
-アララギ博士に　頼んでね▼</language>
+	<row id="msg_c04r0601_black_02" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c04r0601_black_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・主人公と向き合って
-・メッセージ表示後、下に移動
-　画面外に消えると主人公、操作可能
-・0＝主人公名前</comment>
-		<attribute name="キャラ指定">友達♂
-チェレン</attribute>
-		<language name="JPN" width="256">さて　[1:00:トレーナー名:0]
-これから　どうしようか▼
-そうだな……　４ばんどうろで
-まだ　つかまえていない▽
-ポケモンを　つかまえることで▽
-おれいと　させてもらうかな▼</language>
-		<language name="JPN_KANJI" width="256">さて　[1:00:トレーナー名:0]
-これから　どうしようか▼
-そうだな……　４番道路で
-まだ　捕まえていない▽
-ポケモンを　捕まえることで▽
-感謝の気持ちと　させてもらうかな▼</language>
+	<row id="msg_c04r0601_black_03" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c04r0601_infomationw_01">
