@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-24T18:53:57"/>
+	<create user="matsumiya" host="W00224" date="2011-05-09T16:50:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1300" top="217" right="2005" bottom="845" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -402,10 +402,10 @@
 　試合中は非表示</comment>
 		<attribute name="キャラ指定">BOY2</attribute>
 		<language name="JPN" width="256">ぼくが　モンスターボールを
-なげるときは　あの　アメフトの[BE:00:ページ切り替え（行送り）]
+なげるときは　あの　アメフトの▽
 なげかたを　マネしているんだ！</language>
 		<language name="JPN_KANJI" width="256">ぼくが　モンスターボールを
-投げるときは　あの　アメフトの[BE:00:ページ切り替え（行送り）]
+投げるときは　あの　アメフトの▽
 投げ方を　マネしているんだ！</language>
 	</row>
 
@@ -415,10 +415,10 @@
 　試合中は非表示</comment>
 		<attribute name="キャラ指定">BOY2</attribute>
 		<language name="JPN" width="256">ぼくが　モンスターボールを
-なげるときは　あの　ピッチャーの[BE:00:ページ切り替え（行送り）]
+なげるときは　あの　ピッチャーの▽
 フォームを　マネしているんだ！</language>
 		<language name="JPN_KANJI" width="256">ぼくが　モンスターボールを
-投げるときは　あの　ピッチャーの[BE:00:ページ切り替え（行送り）]
+投げるときは　あの　ピッチャーの▽
 フォームを　マネしているんだ！</language>
 	</row>
 
@@ -428,10 +428,10 @@
 　試合中は非表示</comment>
 		<attribute name="キャラ指定">BOY2</attribute>
 		<language name="JPN" width="256">ぼくが　モンスターボールを
-なげるときは　あの　キーパーの[BE:00:ページ切り替え（行送り）]
+なげるときは　あの　キーパーの▽
 スローイングを　マネしているんだ！</language>
 		<language name="JPN_KANJI" width="256">ぼくが　モンスターボールを
-投げるときは　あの　キーパーの[BE:00:ページ切り替え（行送り）]
+投げるときは　あの　キーパーの▽
 スローイングを　マネしているんだ！</language>
 	</row>
 
@@ -440,14 +440,14 @@
 ・アメフトのとき
 　試合中は非表示</comment>
 		<attribute name="キャラ指定">FOOTBALLM</attribute>
-		<language name="JPN" width="256">あはは！　ぼく　アメフトせんしゅ！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">あはは！　ぼく　アメフトせんしゅ！▼
 てを　けがしているから
-サインは　できないんだ！　ごめん！[BE:01:ページ切り替え（クリア）]
+サインは　できないんだ！　ごめん！▼
 で　キミは　トレーナーカードに
 どんな　サインを　かいているのかな？</language>
-		<language name="JPN_KANJI" width="256">あはは！　ボク　アメフト選手！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">あはは！　ボク　アメフト選手！▼
 手を　怪我しているから
-サインは　できないんだ！　ごめん！[BE:01:ページ切り替え（クリア）]
+サインは　できないんだ！　ごめん！▼
 で　キミは　トレーナーカードに
 どんな　サインを　かいているのかな？</language>
 	</row>
@@ -457,14 +457,14 @@
 ・野球のとき
 　試合中は非表示</comment>
 		<attribute name="キャラ指定">BASEBALLM</attribute>
-		<language name="JPN" width="256">あはは！　ぼく　やきゅうせんしゅ！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">あはは！　ぼく　やきゅうせんしゅ！▼
 てを　けがしているから
-サインは　できないんだ！　ごめん！[BE:01:ページ切り替え（クリア）]
+サインは　できないんだ！　ごめん！▼
 で　キミは　トレーナーカードに
 どんな　サインを　かいているのかな？</language>
-		<language name="JPN_KANJI" width="256">あはは！　ボク　野球選手！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">あはは！　ボク　野球選手！▼
 手を　怪我しているから
-サインは　できないんだ！　ごめん！[BE:01:ページ切り替え（クリア）]
+サインは　できないんだ！　ごめん！▼
 で　キミは　トレーナーカードに
 どんな　サインを　かいているのかな？</language>
 	</row>
@@ -474,14 +474,14 @@
 ・サッカーのとき
 　試合中は非表示</comment>
 		<attribute name="キャラ指定">SOCCERM</attribute>
-		<language name="JPN" width="256">あはは！　ぼく　サッカーせんしゅ！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">あはは！　ぼく　サッカーせんしゅ！▼
 てを　けがしているから
-サインは　できないんだ！　ごめん！[BE:01:ページ切り替え（クリア）]
+サインは　できないんだ！　ごめん！▼
 で　キミは　トレーナーカードに
 どんな　サインを　かいているのかな？</language>
-		<language name="JPN_KANJI" width="256">あはは！　ボク　サッカー選手！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">あはは！　ボク　サッカー選手！▼
 手を　怪我しているから
-サインは　できないんだ！　ごめん！[BE:01:ページ切り替え（クリア）]
+サインは　できないんだ！　ごめん！▼
 で　キミは　トレーナーカードに
 どんな　サインを　かいているのかな？</language>
 	</row>
