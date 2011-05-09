@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-25T18:23:37"/>
+	<create user="matsumiya" host="W00224" date="2011-05-09T20:03:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1297" top="169" right="2002" bottom="797" maximized="no" rayout="Vertical2">
+	<dialog left="1300" top="217" right="2005" bottom="845" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -331,57 +331,61 @@
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03_inventor_04_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c03_cgear_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>システムメッセージ
 ＭＥ再生</comment>
+		<attribute name="キャラ指定">システム</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は
 [FF:00:色:2]Ｃギア[FF:00:色:0]を　てにいれた！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
 [FF:00:色:2]Ｃ－ＧＥＡＲ[FF:00:色:0]を　手に入れた！</language>
 	</row>
 
-	<row id="msg_c03_inventor_04_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c03_cgear_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>システムメッセージ
 ・はい/いいえの選択肢表示
-・はい→Ｃギアをアクティブで起動
+・はい　→Ｃギアをアクティブで起動
 　いいえ→Ｃギアをパッシブで起動</comment>
+		<attribute name="キャラ指定">システム</attribute>
 		<language name="JPN" width="256">Ｃギアの　でんげんを　いれて
 つうしんを　はじめますか？</language>
 		<language name="JPN_KANJI" width="256">Ｃ－ＧＥＡＲの　電源を入れて
 通信を　始めますか？</language>
 	</row>
 
-	<row id="msg_c03_inventor_04_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>選択肢
-・はい／いいえを特殊な位置に表示するため
-　選択肢メニューとして作成している</comment>
+	<row id="msg_c03_cgear_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>システムメッセージ
+・選択肢用</comment>
+		<attribute name="キャラ指定">システム</attribute>
 		<language name="JPN" width="256">はい</language>
 		<language name="JPN_KANJI" width="256">はい</language>
 	</row>
 
-	<row id="msg_c03_inventor_04_04" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>選択肢
-・はい／いいえを特殊な位置に表示するため
-　選択肢メニューとして作成している</comment>
+	<row id="msg_c03_cgear_04" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>システムメッセージ
+・選択肢用</comment>
+		<attribute name="キャラ指定">システム</attribute>
 		<language name="JPN" width="256">いいえ</language>
 		<language name="JPN_KANJI" width="256">いいえ</language>
 	</row>
 
-	<row id="msg_c03_inventor_04_05" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c03_cgear_05" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>システムメッセージ
 ・いいえを選択したときの再確認</comment>
+		<attribute name="キャラ指定">システム</attribute>
 		<language name="JPN" width="256">Ｃギアの　きのうが
 せいげんされますが　よろしいですか？</language>
 		<language name="JPN_KANJI" width="256">Ｃ－ＧＥＡＲの　機能が
 制限されますが　よろしいですか？</language>
 	</row>
 
-	<row id="msg_c03_inventor_04_06" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c03_cgear_06" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>システムメッセージ
-・『はい』を選択したが
+・はい選択だが
 　本体設定で無線通信をOFFにしているとき
 　（TWL限定）
-・続けてmsg_c01r0102_inventor_08_01</comment>
+・続けてinventor_06</comment>
+		<attribute name="キャラ指定">システム</attribute>
 		<language name="JPN" width="256">ほんたいの　せっていにより
 むせんつうしんが　つかえません▼
 むせんつうしんを　つかうには
@@ -394,12 +398,12 @@
 ＯＮにしてください　（５０６９９）▼</language>
 	</row>
 
-	<row id="msg_c03_inventor_04_07" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c03_inventor_05" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
-■d01r0101イベント後
-・主人公に近づいてメッセージ表示
 ・はい選択時
 ・続けてinventor_09</comment>
+		<attribute name="キャラ指定">ASSISTANTW
+発明家</attribute>
 		<language name="JPN" width="256">ほら！　Ｃギアが　きどうして
 がめんが　あらわれたでしょ！▼
 その　がめんの　みぎしたに　ある
@@ -412,7 +416,29 @@
 Ｃ－ＧＥＡＲの　説明が　読めるわ▼</language>
 	</row>
 
-	<row id="msg_c03_inventor_05">
+	<row id="msg_c03_inventor_06" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+・いいえ選択時
+・続けてinventor_07</comment>
+		<attribute name="キャラ指定">ASSISTANTW
+発明家</attribute>
+		<language name="JPN" width="256">Ｃギアの　でんげんを　いれるなら
+がめん　みぎしたの▽
+でんげんマークを　タッチするのよ▼
+そして　でんげんを　いれたあとは
+がめんの　みぎしたに　ある▽
+？マークに　タッチすれば▽
+Ｃギアの　せつめいが　よめます▼</language>
+		<language name="JPN_KANJI" width="256">Ｃ－ＧＥＡＲの　電源を　入れるなら
+画面　右下の▽
+電源マークを　タッチすれば　いいわ▼
+そして　電源を　入れたあとは
+画面　右下に　表示される▽
+？マークに　タッチすれば▽
+Ｃ－ＧＥＡＲの　説明が　読めます▼</language>
+	</row>
+
+	<row id="msg_c03_inventor_07" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・メッセージ表示後、？？？に移動
 　画面外に消えると操作可能に</comment>
@@ -424,7 +450,9 @@
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03_inventor_06">
+	<row id="msg_c03_inventor_08" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<attribute name="キャラ指定">ASSISTANTW
+発明家</attribute>
 		<language name="JPN" width="256">なにしてたの？
 ↓
 ジムリーダーなら街に詳しいかも
@@ -441,7 +469,7 @@
 	</row>
 
 	<row id="msg_c03_leader3_02" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>未使用</comment>
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">LEADER3
 アーティ</attribute>
 		<language name="JPN" width="256">no data</language>
@@ -449,7 +477,7 @@
 	</row>
 
 	<row id="msg_c03_leader3_03" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>未使用</comment>
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">LEADER3
 アーティ</attribute>
 		<language name="JPN" width="256">no data</language>
