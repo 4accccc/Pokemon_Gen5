@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-25T20:36:43"/>
+	<create user="matsumiya" host="W00224" date="2011-05-09T14:11:17"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,17 +305,17 @@
 ヒウンに　到着で　ございます▼</language>
 	</row>
 
-	<row id="msg_c03p15_swrival_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#ffffff,,,#ffffff,,#80ff80,#ffffff,,,#ffffff,,">
+	<row id="msg_c03p15_swrival_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#ffffff,,,#ffffff,,#80ff80,#ffffff,,,#ffffff,,">
 		<comment>♂
 ・続けてswrival_02
 ・1＝ライバル名</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ここが　ヒウンか……
-きいてよりも　はるかに　でかいな▼
+きいてたよりも　はるかに　でかいな▼
 フン！　どこに　にげても
 ネオプラズマだんは　さがしだすぜ▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ここが　ヒウンか……
-きいてよりも　はるかに　でかいな▼
+きいてたよりも　はるかに　でかいな▼
 フン！　どこに　逃げても
 ネオプラズマ団は　探しだすぜ▼</language>
 	</row>
@@ -507,7 +507,7 @@
 		<language name="JPN" width="256">ガマンを　ためこむぐらいなら
 うみに　むかって　さけべばいいよ</language>
 		<language name="JPN_KANJI" width="256">ガマンを　ためこむぐらいなら
-うみに　むかって　さけべばいいよ</language>
+海に　向かって　叫べばいいよ</language>
 	</row>
 
 	<row id="msg_c03p15_gentleman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffffff,,,#ffffff,,#ffff80,#ffffff,,,#ffffff,,">
