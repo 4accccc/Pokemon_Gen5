@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-25T21:01:04"/>
+	<create user="matsumiya" host="W00224" date="2011-05-09T14:02:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -299,8 +299,8 @@
 　はい＋主人公♀→sunglasses_03
 　いいえ→sunglasses_05</comment>
 		<attribute name="キャラ指定">SUNGLASSES</attribute>
-		<language name="JPN" width="256">うえに　あがるつもり　か？</language>
-		<language name="JPN_KANJI" width="256">上に　あがるつもり　か？</language>
+		<language name="JPN" width="256">あがるつもり　か？</language>
+		<language name="JPN_KANJI" width="256">あがるつもり　か？</language>
 	</row>
 
 	<row id="msg_c03r1301_sunglasses_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
