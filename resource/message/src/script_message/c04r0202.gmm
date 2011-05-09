@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00248" date="2011-04-20T19:39:04"/>
+	<create user="matsumiya" host="W00224" date="2011-05-09T16:44:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -380,7 +380,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="144"/>
+		<comment position="4" width="266"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="186">
 		</attribute>
@@ -408,7 +408,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1369" top="326" right="2082" bottom="954" maximized="no" rayout="Vertical2">
+	<dialog left="1300" top="217" right="2005" bottom="845" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="610" top="37" right="1083" bottom="440" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -416,7 +416,7 @@
 		<band id="2" index="3" style="0000" width="325"/>
 		<band id="3" index="4" style="0000" width="370"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -437,22 +437,19 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>？？？</comment>
+	<row id="msg_mapscript_dummy" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除</comment>
 		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_mus_01_001">
 		<comment>オーナーメッセージ
-演目の確認と
-ミュージカル高得点のヒント
-
-メッセージ後ドレスアップ画面
-
-参加者と参加者のポケモンを
-画面上で見た左側から読み
-上げていく</comment>
+・演目の確認と
+　ミュージカル高得点のヒント
+・メッセージ後ドレスアップ画面
+・参加者と参加者のポケモンを
+　画面上で見た左側から読みあげていく</comment>
 		<attribute name="キャラ指定">オーナー
 ドレスアップ前</attribute>
 		<language name="JPN" width="256">ようこそ　ミュージカルへ！▼
@@ -494,8 +491,7 @@
 
 	<row id="msg_mus_02_001">
 		<comment>オーナーメッセージ
-ドレスアップ後、
-ミュージカル前</comment>
+・ドレスアップ後～ミュージカル前</comment>
 		<attribute name="キャラ指定">オーナー
 ドレスアップ後
 ショー前</attribute>
@@ -507,10 +503,7 @@
 
 	<row id="msg_mus_03_001_01">
 		<comment>オーナーメッセージ
-ミュージカルの総評
-
-
-50→70に変更</comment>
+・ミュージカルの総評</comment>
 		<attribute name="キャラ指定">オーナー
 ショー後
 全体評価：全員70点以上</attribute>
@@ -540,9 +533,8 @@
 
 	<row id="msg_mus_03_001_02">
 		<comment>オーナーメッセージ
-ミュージカルの総評
-
-参加者全員が平均以上</comment>
+・ミュージカルの総評
+・参加者全員が平均以上</comment>
 		<attribute name="キャラ指定">オーナー
 ショー後
 全体評価：全員30点以上</attribute>
@@ -566,9 +558,8 @@
 
 	<row id="msg_mus_03_001_03">
 		<comment>オーナーメッセージ
-ミュージカルの総評
-
-通常評価</comment>
+・ミュージカルの総評
+・通常評価</comment>
 		<attribute name="キャラ指定">オーナー
 ショー後
 全体評価：それ以外</attribute>
@@ -590,10 +581,8 @@
 
 	<row id="msg_mus_03_001_04">
 		<comment>オーナーメッセージ
-ミュージカルの総評
-
-特定の参加者が
-飛びぬけて高得点</comment>
+・ミュージカルの総評
+・特定の参加者が飛びぬけて高得点</comment>
 		<attribute name="キャラ指定">オーナー
 ショー後
 全体評価：一人100以上</attribute>
@@ -650,10 +639,8 @@
 
 	<row id="msg_mus_03_003_01">
 		<comment>ファンレター
-二行目
-
-最高評価
-
+・二行目
+・最高評価
 ０：トレーナー名</comment>
 		<attribute name="キャラ指定">オーナー
 個人評価2：評価点100以上</attribute>
@@ -671,9 +658,8 @@
 
 	<row id="msg_mus_03_003_02">
 		<comment>ファンレター
-二言目
-
-平均以上評価</comment>
+・二言目
+・平均以上評価</comment>
 		<attribute name="キャラ指定">オーナー
 個人評価2：評価点70以上</attribute>
 		<language name="JPN">ドレスアップされた　ポケモンからも
@@ -688,9 +674,8 @@
 
 	<row id="msg_mus_03_003_03">
 		<comment>ファンレター
-二言目
-
-並評価
+・二言目
+・並評価
 １：コンディション</comment>
 		<attribute name="キャラ指定">オーナー
 個人評価2：評価点50以上</attribute>
@@ -704,9 +689,8 @@
 
 	<row id="msg_mus_03_003_04">
 		<comment>ファンレター
-二言目
-
-そこそこ評価</comment>
+・二言目
+・そこそこ評価</comment>
 		<attribute name="キャラ指定">オーナー
 個人評価2：評価点30以上</attribute>
 		<language name="JPN">ポケモンも　じぶんの　やくわりを
@@ -719,9 +703,8 @@
 
 	<row id="msg_mus_03_003_05">
 		<comment>ファンレター
-二言目
-
-微妙評価</comment>
+・二言目
+・微妙評価</comment>
 		<attribute name="キャラ指定">オーナー
 個人評価2：評価点20以上</attribute>
 		<language name="JPN">ポケモンも　それに　こたえようと
@@ -736,9 +719,8 @@
 
 	<row id="msg_mus_03_003_06">
 		<comment>ファンレター
-二言目
-
-最低評価</comment>
+・二言目
+・最低評価</comment>
 		<attribute name="キャラ指定">オーナー
 個人評価2：評価点20未満</attribute>
 		<language name="JPN">なんだか　あまり
@@ -753,9 +735,8 @@
 
 	<row id="msg_mus_03_004_01">
 		<comment>オーナーメッセージ
-締めの挨拶
-メッセージ後マップ遷移し
-解放</comment>
+・締めの挨拶
+・メッセージ後マップ遷移し解放</comment>
 		<attribute name="キャラ指定">オーナー
 閉めの言葉</attribute>
 		<language name="JPN">ほんじつは　ごさんかいただき

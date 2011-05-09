@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-04T22:59:20"/>
+	<create user="matsumiya" host="W00224" date="2011-05-09T15:55:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -349,7 +349,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1294" top="205" right="1999" bottom="833" maximized="no" rayout="Vertical2">
+	<dialog left="1297" top="143" right="2002" bottom="771" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="16" right="1280" bottom="414" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -378,17 +378,10 @@
 	</lock>
 
 
-	<row id="msg_c04r0201_white_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・主人公の左。主人公と共に入り口から前に3歩移動
-・主人公と向き合って
-・続けてowner_demo_01</comment>
-		<attribute name="キャラ指定">友達♀
-ベル</attribute>
-		<language name="JPN" width="256">ベル『ねっ！
-すっごいでしょ！？▼</language>
-		<language name="JPN_KANJI" width="256">ベル『ねっ！
-すっごいでしょ！？▼</language>
+	<row id="msg_c04r0201_white_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c04r0201_owner_demo_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -561,28 +554,10 @@
 楽しみに　しております！▼</language>
 	</row>
 
-	<row id="msg_c04r0201_white_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・主人公の方向（右）を向く
-・メッセージ表示後
-　サポート、外に
-・画面外に消えると、主人公操作可能</comment>
-		<attribute name="キャラ指定">友達♀
-ベル</attribute>
-		<language name="JPN" width="256">ベル『うーん
-どうしようかなー？▼
-ミュージカルも　ステキだけど
-ほかにも　きになる　ところ　あるし▼
-きーめた！　さきに
-ライモンけんぶつ　しちゃお▼
-じゃあね　[1:00:トレーナー名:0]！▼</language>
-		<language name="JPN_KANJI" width="256">ベル『うーん
-どうしようかなー？▼
-ミュージカルも　ステキだけど
-他にも　気になる　ところ　あるし▼
-決ーめた！　さきに
-ライモン見物　しちゃお▼
-じゃあね　[1:00:トレーナー名:0]！▼</language>
+	<row id="msg_c04r0201_white_03" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c04r0201_owner_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
