@@ -325,6 +325,8 @@
   ARCID_WBT_GIMMICK_DATA   "fieldmap/wbt_gmk.narc"   #WBTギミックデータ
   ARCID_GYM_POISON "fieldmap/gym_poison.narc"  #毒ジム
   ARCID_WIN_RECORD_GRA   "win_record_gra.narc"   #エントリーチェックデータ
+  ARCID_OPENING_1 "opening_1.mods"  #オープニング1 デモ
+  ARCID_OPENING_2 "opening_2.mods"  #オープニング2 デモ
 
   ARCID_POKEWOOD   "pokewood.narc"   #ポケウッドシナリオデータ
   ARCID_FMISSION_APP "fmission_app.narc" #フェスミッションアプリグラフィックアーカイブ

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00253" date="2011-04-27T21:48:32"/>
+	<create user="ichiraku_katsuhiko" host="W00271" date="2011-05-09T17:10:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -375,13 +375,13 @@
 		</language>
 	</columns>
 
-	<dialog left="6" top="97" right="711" bottom="717" maximized="no" rayout="Vertical2">
+	<dialog left="-171" top="97" right="534" bottom="717" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="752" top="215" right="1280" bottom="737" visible="yes"/>
-		<band id="0" index="0" style="0000" width="530"/>
+		<band id="0" index="0" style="0000" width="522"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="697"/>
-		<band id="3" index="3" style="0000" width="697"/>
+		<band id="2" index="2" style="0000" width="689"/>
+		<band id="3" index="3" style="0000" width="689"/>
 		<edit entry="0" language="JPN_KANJI" mode="Source" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -2510,6 +2510,21 @@ LR→補完&quot;</language>
 	<row id="DEBUG_FIELD_POKEWOOD_SHOW">
 		<language name="JPN" width="240">ポケウッド：再生</language>
 		<language name="JPN_KANJI" width="240">ポケウッド：再生</language>
+	</row>
+
+	<row id="DEBUG_FIELD_MOBICLIP">
+		<language name="JPN" width="240">Mobiclip</language>
+		<language name="JPN_KANJI" width="240">Mobiclip</language>
+	</row>
+
+	<row id="DEBUG_FIELD_MOBICLIP_01">
+		<language name="JPN" width="240">OPENING_01</language>
+		<language name="JPN_KANJI" width="240">OPENING_01</language>
+	</row>
+
+	<row id="DEBUG_FIELD_MOBICLIP_02">
+		<language name="JPN" width="240">OPENING_02</language>
+		<language name="JPN_KANJI" width="240">OPENING_02</language>
 	</row>
 
 	<flowchart-group-list>

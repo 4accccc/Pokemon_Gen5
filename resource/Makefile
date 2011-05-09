@@ -181,7 +181,8 @@ SUBDIRS	=	wmi \
 			assert_err \
 			field_goout_effect \
 			resonance_resort \
-			pokewood
+			pokewood \
+			mobiclip
 
 
 include $(RESOURCE_MACRO)

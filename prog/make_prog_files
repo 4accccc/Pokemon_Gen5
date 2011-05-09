@@ -1283,6 +1283,11 @@ SRCS_OVERLAY_TOWNMAP = app/townmap/townmap.c \
 SRCS_OVERLAY_MEDALBOX = app/medal_box/medalbox_sys.c \
                         app/medal_box/medalbox_data_sys.c
 
+# Mobiclip再生アプリ
+#===> SRCS_OVERLAY_DEV_WIFI
+#===> GROUP_OVERLAY_UNION_INTRUDE
+#LIB=>          libMobiclip.$HYB.a
+SRCS_OVERLAY_MOBICLIP = mobiclip/mobiclip.c
 
 # エンカウントエフェクト
 #===> GROUP_OVERLAY_GIMMICK
