@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nishino" host="W00221" date="2011-01-25T12:45:04"/>
+	<create user="nagihashi_toru" host="W00268" date="2011-05-09T12:00:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1098,6 +1098,174 @@
 		<comment>海底遺跡</comment>
 		<language name="JPN" width="256">かいていいせき</language>
 		<language name="JPN_KANJI" width="256">海底遺跡</language>
+	</row>
+
+	<row id="MAP_STR_118">
+		<comment>ヒオウギシティ</comment>
+		<language name="JPN" width="256">ヒオウギシティ</language>
+		<language name="JPN_KANJI" width="256">ヒオウギシティ</language>
+	</row>
+
+	<row id="MAP_STR_119">
+		<comment>タテワキシティ</comment>
+		<language name="JPN" width="256">タテワキシティ</language>
+		<language name="JPN_KANJI" width="256">タテワキシティ</language>
+	</row>
+
+	<row id="MAP_STR_120">
+		<comment>セイガイハシティ</comment>
+		<language name="JPN" width="256">セイガイハシティ</language>
+		<language name="JPN_KANJI" width="256">セイガイハシティ</language>
+	</row>
+
+	<row id="MAP_STR_121">
+		<comment>ポケウッド</comment>
+		<language name="JPN" width="256">ポケウッド</language>
+		<language name="JPN_KANJI" width="256">ポケウッド</language>
+	</row>
+
+	<row id="MAP_STR_122">
+		<comment>レゾナンスリゾート</comment>
+		<language name="JPN" width="256">レゾナンスリゾート</language>
+		<language name="JPN_KANJI" width="256">レゾナンスリゾート</language>
+	</row>
+
+	<row id="MAP_STR_123">
+		<comment>サンギタウン</comment>
+		<language name="JPN" width="256">サンギタウン</language>
+		<language name="JPN_KANJI" width="256">サンギタウン</language>
+	</row>
+
+	<row id="MAP_STR_124">
+		<comment>ヤマジタウン</comment>
+		<language name="JPN" width="256">ヤマジタウン</language>
+		<language name="JPN_KANJI" width="256">ヤマジタウン</language>
+	</row>
+
+	<row id="MAP_STR_125">
+		<comment>１９ばんどうろ</comment>
+		<language name="JPN" width="256">１９ばんどうろ</language>
+		<language name="JPN_KANJI" width="256">１９番道路</language>
+	</row>
+
+	<row id="MAP_STR_126">
+		<comment>２０ばんどうろ</comment>
+		<language name="JPN" width="256">２０ばんどうろ</language>
+		<language name="JPN_KANJI" width="256">２０番道路</language>
+	</row>
+
+	<row id="MAP_STR_127">
+		<comment>２１ばんすいどう</comment>
+		<language name="JPN" width="256">２１ばんすいどう</language>
+		<language name="JPN_KANJI" width="256">２１番水道</language>
+	</row>
+
+	<row id="MAP_STR_128">
+		<comment>２２ばんどうろ</comment>
+		<language name="JPN" width="256">２２ばんどうろ</language>
+		<language name="JPN_KANJI" width="256">２２番道路</language>
+	</row>
+
+	<row id="MAP_STR_129">
+		<comment>２３ばんどうろ</comment>
+		<language name="JPN" width="256">２３ばんどうろ</language>
+		<language name="JPN_KANJI" width="256">２３番道路</language>
+	</row>
+
+	<row id="MAP_STR_130">
+		<comment>ヒウンげすいどう（仮）</comment>
+		<language name="JPN" width="256">ヒウンげすいどう（仮）</language>
+		<language name="JPN_KANJI" width="256">ヒウン下水道（仮）</language>
+	</row>
+
+	<row id="MAP_STR_131">
+		<comment>ぼくじょう（仮）</comment>
+		<language name="JPN" width="256">ぼくじょう（仮）</language>
+		<language name="JPN_KANJI" width="256">牧場（仮）</language>
+	</row>
+
+	<row id="MAP_STR_132">
+		<comment>コンビナート（仮）</comment>
+		<language name="JPN" width="256">コンビナート（仮）</language>
+		<language name="JPN_KANJI" width="256">コンビナート（仮）</language>
+	</row>
+
+	<row id="MAP_STR_133">
+		<comment>かざん（仮）</comment>
+		<language name="JPN" width="256">かざん（仮）</language>
+		<language name="JPN_KANJI" width="256">火山（仮）</language>
+	</row>
+
+	<row id="MAP_STR_134">
+		<comment>ミステリーハウス（仮）</comment>
+		<language name="JPN" width="256">ミステリーハウス（仮）</language>
+		<language name="JPN_KANJI" width="256">ミステリーハウス（仮）</language>
+	</row>
+
+	<row id="MAP_STR_135">
+		<comment>ネオチャンピオンロード（仮）</comment>
+		<language name="JPN" width="256">ネオチャンピオンロード（仮）</language>
+		<language name="JPN_KANJI" width="256">ネオチャンピオンロード（仮）</language>
+	</row>
+
+	<row id="MAP_STR_136">
+		<comment>アジトせん（仮）</comment>
+		<language name="JPN" width="256">アジトせん（仮）</language>
+		<language name="JPN_KANJI" width="256">アジト船（仮）</language>
+	</row>
+
+	<row id="MAP_STR_137">
+		<comment>ぬけみち（仮）</comment>
+		<language name="JPN" width="256">ぬけみち（仮）</language>
+		<language name="JPN_KANJI" width="256">抜け道（仮）</language>
+	</row>
+
+	<row id="MAP_STR_138">
+		<comment>こうどう（仮）</comment>
+		<language name="JPN" width="256">こうどう（仮）</language>
+		<language name="JPN_KANJI" width="256">坑道（仮）</language>
+	</row>
+
+	<row id="MAP_STR_139">
+		<comment>－－－－－－－－－－</comment>
+		<language name="JPN" width="256">－－－－－－－－－－</language>
+		<language name="JPN_KANJI" width="256">－－－－－－－－－－</language>
+	</row>
+
+	<row id="MAP_STR_140">
+		<comment>しろのたいじゅ（仮）</comment>
+		<language name="JPN" width="256">しろのたいじゅ（仮）</language>
+		<language name="JPN_KANJI" width="256">白の大樹（仮）</language>
+	</row>
+
+	<row id="MAP_STR_141">
+		<comment>くろのまてんろう（仮）</comment>
+		<language name="JPN" width="256">くろのまてんろう（仮）</language>
+		<language name="JPN_KANJI" width="256">黒の摩天楼（仮）</language>
+	</row>
+
+	<row id="MAP_STR_142">
+		<comment>ゲートどうくつ（仮）</comment>
+		<language name="JPN" width="256">ゲートどうくつ（仮）</language>
+		<language name="JPN_KANJI" width="256">ゲート洞くつ（仮）</language>
+	</row>
+
+	<row id="MAP_STR_143">
+		<comment>かがみのどうくつ（仮）</comment>
+		<language name="JPN" width="256">かがみのどうくつ（仮）</language>
+		<language name="JPN_KANJI" width="256">鏡の洞くつ（仮）</language>
+	</row>
+
+	<row id="MAP_STR_144">
+		<comment>かがみのどうくつ（仮）</comment>
+		<language name="JPN" width="256">かがみのどうくつ（仮）</language>
+		<language name="JPN_KANJI" width="256">鏡の洞くつ（仮）</language>
+	</row>
+
+	<row id="MAP_STR_145">
+		<comment>すいちゅうばし（仮）</comment>
+		<language name="JPN" width="256">すいちゅうばし（仮）</language>
+		<language name="JPN_KANJI" width="256">水中橋（仮）</language>
 	</row>
 
 	<flowchart-group-list>

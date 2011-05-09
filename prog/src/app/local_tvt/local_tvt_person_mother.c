@@ -20,6 +20,7 @@
 #include "arc_def.h"
 #include "message.naix"
 #include "msg/msg_tvt_map.h"
+#include "msg/msg_place_name.h"
 
 //自分のモジュール
 #include "local_tvt_local_def.h"
@@ -34,6 +35,11 @@
  *					定数宣言
 */
 //=============================================================================
+//地名表示とママのセリフのGMMのタグ数が異なったらアサート
+#if defined(DEBUG_ONLY_FOR_nagihashi_toru) || defined(DEBUG_ONLY_FOR_nishino)
+SDK_COMPILER_ASSERT( ( msg_tvt_map_max == msg_place_name_max ) );
+#endif
+
 
 //=============================================================================
 /**
