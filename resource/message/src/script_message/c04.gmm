@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-25T21:48:05"/>
+	<create user="matsumiya" host="W00224" date="2011-05-09T15:51:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1297" top="169" right="2002" bottom="797" maximized="no" rayout="Vertical2">
+	<dialog left="1297" top="143" right="2002" bottom="771" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,635 +292,244 @@
 	</lock>
 
 
-	<row id="msg_c04_hakaim1_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_c04_hakaim1_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_hakaim2_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_oldman_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_oldman_02" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_hakaim1_02" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_hakaim1_03" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_hakaim2_02" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_oldman_03" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_oldman_04" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_white_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_white_01a" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_white_02" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_white_03" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_white_04" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_white_04a" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_white_05" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_white_06" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_white_07" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_white_08" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_middleman1_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_white_09" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_middleman1_02" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_white_10" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_leader_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_middleman1_03" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_leader_02" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_leader_03" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_middleman1_04" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_leader_04" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_white_11" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_middleman1_05" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_middleman1_06" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_middleman1_07" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_white_12" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_leader_05" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_leader_06" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_leader_07" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_leader_08" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_white_13" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_footballm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
-・pos（GRIDX=427~433、GRIDZ=476）を踏むとメッセージ表示
-・続けてhakaim2_01</comment>
-		<attribute name="キャラ指定">プラズマ団したっぱ♂</attribute>
-		<language name="JPN" width="256">プラズマだん『じいさん！　あんたが
-そだてや　ってのは　しっているんだ！[BE:01:ページ切り替え（クリア）]
-なんたって　オレたち
-プラズマだん　だからさ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">プラズマ団『じいさん！　あんたが
-育て屋　ってのは　知っているんだ！[BE:01:ページ切り替え（クリア）]
-なんたって　オレたち
-プラズマ団　だからさ！[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_c04_hakaim2_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・続けてoldman_01</comment>
-		<attribute name="キャラ指定">プラズマ団したっぱ♂</attribute>
-		<language name="JPN" width="256">プラズマだん『オレたち
-ひとの　ポケモン　うばってんだよ▼
-そだてやと　いったら
-いろんな　ポケモン　あずかってんだろ▽
-それを　オレらに　よこせよ！▼</language>
-		<language name="JPN_KANJI" width="256">プラズマ団『オレたち
-人の　ポケモン　奪ってんだよ▼
-育て屋と　いったら
-いろんな　ポケモン　預かってんだろ▽
-それを　オレらに　よこせよ！▼</language>
-	</row>
-
-	<row id="msg_c04_oldman_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・メッセージ表示後、左右を振り向いてから
-　頭上に！マーク表示
-・その後、主人公に隣接しoldman_02</comment>
-		<attribute name="キャラ指定">OLDMAN
-育て屋じいさん</attribute>
-		<language name="JPN" width="256">じいさん『なんという　ムチャを！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">じいさん『なんという　ムチャを！[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_c04_oldman_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・続けてhakaim1_02</comment>
-		<attribute name="キャラ指定">OLDMAN
-育て屋じいさん</attribute>
-		<language name="JPN" width="256">おお！　つよそうな　トレーナーさん
-たすけておくれ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">おお！　強そうな　トレーナーさん
-助けておくれ！[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_c04_hakaim1_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・メッセージ表示後、戦闘に
-・ただしすごく弱くてOK（ポケセンに行く前なので）</comment>
-		<attribute name="キャラ指定">プラズマ団したっぱ♂</attribute>
-		<language name="JPN" width="256">プラズマだん『ジャマするなら
-オマエの　ポケモンを　うばうぜ！▼</language>
-		<language name="JPN_KANJI" width="256">プラズマ団『ジャマだて　するなら
-オマエの　ポケモンを　奪うぜ！▼</language>
-	</row>
-
-	<row id="msg_c04_hakaim1_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・戦闘後、フィールドに復帰してこのメッセージ表示
-・続けてhakaim2_02</comment>
-		<attribute name="キャラ指定">プラズマ団したっぱ♂</attribute>
-		<language name="JPN" width="256">プラズマだん『！！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">プラズマ団『！！▼</language>
-	</row>
-
-	<row id="msg_c04_hakaim2_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・表示後、画面上（できれば右寄り）に移動
-・画面外に消えるとoldman_03</comment>
-		<attribute name="キャラ指定">プラズマ団したっぱ♂</attribute>
-		<language name="JPN" width="256">プラズマだん『なんだ　コイツ！
-ひとまず　にげると　するか！[BE:01:ページ切り替え（クリア）]
-ゆうえんちで　やりすごそう！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">プラズマ団『なんだ　コイツ！
-ひとまず　逃げると　するか！[BE:01:ページ切り替え（クリア）]
-遊園地で　やり過ごそう！[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_c04_oldman_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・メッセージ表示後
-　アイテム入手処理
-　No457「じてんしゃ」</comment>
-		<attribute name="キャラ指定">OLDMAN
-育て屋じいさん</attribute>
-		<language name="JPN" width="256">じいさん『ありがとうよ！[BE:01:ページ切り替え（クリア）]
-こいつは　きもちじゃ
-えんりょせずに　もらってくれ！[BE:01:ページ切り替え（クリア）]
-しんぴんの　じてんしゃで
-ライモンシティを　かんこうする▽
-よてい　だったが……▽
-けっきょく　のらずじまい　でな▼</language>
-		<language name="JPN_KANJI" width="256">じいさん『ありがとうよ！[BE:01:ページ切り替え（クリア）]
-こいつは　気持ちじゃ
-遠慮せずに　もらってくれ！[BE:01:ページ切り替え（クリア）]
-新品の　じてんしゃで
-ライモンシティを　観光する▽
-予定だったが……▽
-結局　乗らずじまい　でな▼</language>
-	</row>
-
-	<row id="msg_c04_oldman_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・アイテム入手後、自動で表示
-・表示後、4番道路側に移動
-・消えると入れ替わりで、サポート登場
-　続けてwhite_01</comment>
-		<attribute name="キャラ指定">OLDMAN
-育て屋じいさん</attribute>
-		<language name="JPN" width="256">じいさん『わしは　３ばんどうろで
-そだてやを　やっておるんじゃ！[BE:01:ページ切り替え（クリア）]
-そだててほしい　ポケモンが　いれば
-えんりょせずに　あずけておくれ！[BE:01:ページ切り替え（クリア）]
-……ふう　かんこうに　きて
-エライめに　あったもんじゃ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">じいさん『わしは　３番道路で
-育て屋を　やっておるんじゃ！[BE:01:ページ切り替え（クリア）]
-育ててほしい　ポケモンが　いれば
-遠慮せずに　預けておくれ！[BE:01:ページ切り替え（クリア）]
-……ふう　観光に　来て
-エライめに　あったもんじゃ！[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_c04_white_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・主人公性別：♂
-・ゲートをでたところでメッセージ表示
-・続けて隣接してwhite_02
-・0＝主人公名前</comment>
-		<attribute name="キャラ指定">友達♀
-ベル</attribute>
-		<language name="JPN" width="256">ベル『おうい！　[1:00:トレーナー名:0]！▼</language>
-		<language name="JPN_KANJI" width="256">ベル『おうい！　[1:00:トレーナー名:0]！▼</language>
-	</row>
-
-	<row id="msg_c04_white_01a" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・主人公性別：♀
-・ゲートをでたところでメッセージ表示
-・続けて隣接してwhite_02
-・0＝主人公名前</comment>
-		<attribute name="キャラ指定">友達♀
-ベル</attribute>
-		<language name="JPN" width="256">ベル『ねえねえ！　[1:00:トレーナー名:0]！▼</language>
-		<language name="JPN_KANJI" width="256">ベル『ねえねえ！　[1:00:トレーナー名:0]！▼</language>
-	</row>
-
-	<row id="msg_c04_white_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・表示後、その場で一回転アニメ
-・続けてwhite_04</comment>
-		<attribute name="キャラ指定">友達♀
-ベル</attribute>
-		<language name="JPN" width="256">はかせに　おしえてもらったけど
-ライモンシティって▽
-みどころ　いっぱい　なんでしょ！▼
-ゆうえんち　でしょ
-ビッグスタジアムに　リトルコート▼
-それに　バトルサブウェイ！▼</language>
-		<language name="JPN_KANJI" width="256">博士に　教えてもらったけど
-ライモンシティって▽
-見所　いっぱい　なんでしょ！▼
-遊園地　でしょ
-ビッグスタジアムに　リトルコート▼
-それに　バトルサブウェイ！▼</language>
-	</row>
-
-	<row id="msg_c04_white_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・表示後、画面上に移動
-・画面外に消えると、主人公操作可能に</comment>
-		<attribute name="キャラ指定">友達♀
-ベル</attribute>
-		<language name="JPN" width="256">あたしは　ミュージカルに
-いくつもりなの！　じゃあねえ！！▼</language>
-		<language name="JPN_KANJI" width="256">あたしは　ミュージカルに
-行くつもりなの！　じゃあねえ！！▼</language>
-	</row>
-
-	<row id="msg_c04_white_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・主人公性別：♂
-・グッズケースを持たずに
-　pos（GRIDX=390、GRIDZ=436～440）を踏んだとき
-・0＝主人公名前
-・msg_c04_white_07表示後は
-　このイベントは発生しない</comment>
-		<attribute name="キャラ指定">友達♀
-ベル</attribute>
-		<language name="JPN" width="256">ベル『おうい！　[1:00:トレーナー名:0]！▼</language>
-		<language name="JPN_KANJI" width="256">ベル『おうい！　[1:00:トレーナー名:0]！▼</language>
-	</row>
-
-	<row id="msg_c04_white_04a" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・主人公性別：♀
-・グッズケースを持たずに
-　pos（GRIDX=390、GRIDZ=436～440）を踏んだとき
-・0＝主人公名前
-・msg_c04_white_07表示後は
-　このイベントは発生しない</comment>
-		<attribute name="キャラ指定">友達♀
-ベル</attribute>
-		<language name="JPN" width="256">ベル『ねえねえ！　[1:00:トレーナー名:0]！▼</language>
-		<language name="JPN_KANJI" width="256">ベル『ねえねえ！　[1:00:トレーナー名:0]！▼</language>
-	</row>
-
-	<row id="msg_c04_white_05" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・メッセージ表示後、連れ歩き状態で
-　ミュージカルホールに
-・0＝主人公名前</comment>
-		<attribute name="キャラ指定">友達♀
-ベル</attribute>
-		<language name="JPN" width="256">さっき　ミュージカルホールを
-のぞいたんだけど　すごいよー！？▼
-せっかくだからさー
-[1:00:トレーナー名:0]も　いこうよー！▼
-はい
-こっちこっちー！▼</language>
-		<language name="JPN_KANJI" width="256">さっき　ミュージカルホールを
-のぞいたんだけど　すごいよー！？▼
-せっかくだからさー
-[1:00:トレーナー名:0]も　行こうよー！▼
-はい
-こっちこっちー！▼</language>
-	</row>
-
-	<row id="msg_c04_white_06" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・ミュージカルホールの前に到達時に
-　このメッセージ表示
-・表示後、サポートと主人公、ミュージカルホール内へ</comment>
-		<attribute name="キャラ指定">友達♀
-ベル</attribute>
-		<language name="JPN" width="256">はい　とうちゃくー！
-じゃあ　はいろうっ！▼</language>
-		<language name="JPN_KANJI" width="256">はい　到着ー！
-じゃあ　入ろうっ！▼</language>
-	</row>
-
-	<row id="msg_c04_white_07" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・msg_c04_white_04イベント発生させずに
-　ミュージカルホールの前に到達したときは
-　このメッセージ表示
-・表示後、サポートと主人公、ミュージカルホール内へ
-・0＝主人公名前</comment>
-		<attribute name="キャラ指定">友達♀
-ベル</attribute>
-		<language name="JPN" width="256">ベル『あっ　[1:00:トレーナー名:0]！▼
-ミュージカルが　きになる？
-じゃあ　いっしょに　はいろうっ！▼</language>
-		<language name="JPN_KANJI" width="256">ベル『あっ　[1:00:トレーナー名:0]！▼
-ミュージカルが　気になる？
-じゃあ　一緒に　入ろうっ！▼</language>
-	</row>
-
-	<row id="msg_c04_white_08" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・GRIDX=433、GRIDZ=436に配置
-・主人公がミュージカルからでると
-　さらに一歩前進してイベント開始
-　続けてmiddleman1_01</comment>
-		<attribute name="キャラ指定">友達♀
-ベル</attribute>
-		<language name="JPN" width="256">ベル『パパ！？
-どうしたの　こんなところで？▼</language>
-		<language name="JPN_KANJI" width="256">ベル『パパ！？
-どうしたの　こんなところで？▼</language>
-	</row>
-
-	<row id="msg_c04_middleman1_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・GRIDX=433、GRIDZ=438に配置
-・続けてwhite_09</comment>
-		<attribute name="キャラ指定">男性
-サポートの父親</attribute>
-		<language name="JPN" width="256">ベルのパパ『どうもこうも
-おまえを　つれもどしに　きたんだよ▼
-ママから　きいたけれど
-ここまで　たびを　したんだ▽
-もう　じゅうぶん　じゃないか▼</language>
-		<language name="JPN_KANJI" width="256">ベルのパパ『どうもこうも
-おまえを　連れ戻しに　来たんだよ▼
-ママから　きいたけれど
-ここまで　旅を　したんだ▽
-もう　充分じゃないか▼</language>
-	</row>
-
-	<row id="msg_c04_white_09" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・続けてmiddleman1_02
-・0＝主人公名前</comment>
-		<attribute name="キャラ指定">友達♀
-ベル</attribute>
-		<language name="JPN" width="256">ベル『やだあ！！▼
-[1:00:トレーナー名:0]や　ポケモンと
-いっしょに　たび　するんだもん！▼</language>
-		<language name="JPN_KANJI" width="256">ベル『やだあ！！▼
-[1:00:トレーナー名:0]や　ポケモンと
-一緒に　旅するんだもん！▼</language>
-	</row>
-
-	<row id="msg_c04_middleman1_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・続けてwhite_10</comment>
-		<attribute name="キャラ指定">男性
-サポートの父親</attribute>
-		<language name="JPN" width="256">ベルのパパ『ダメだ！
-よそはよそ　うちはうち　だよ▼</language>
-		<language name="JPN_KANJI" width="256">ベルのパパ『ダメだ！
-他所は他所　うちはうち　だよ▼</language>
-	</row>
-
-	<row id="msg_c04_white_10" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・続けてleader_01</comment>
-		<attribute name="キャラ指定">友達♀
-ベル</attribute>
-		<language name="JPN" width="256">ベル『だったら▼
-アタシは　アタシ！
-パパは　パパ　だもん！▼</language>
-		<language name="JPN_KANJI" width="256">ベル『だったら▼
-アタシは　アタシ！
-パパは　パパ　だもん！▼</language>
-	</row>
-
-	<row id="msg_c04_leader_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・まずメッセージのみ
-　その後所定位置
-　GRIDX=434、GRIDZ=438に移動
-・続けてmiddleman1_03</comment>
-		<attribute name="キャラ指定">LEADER4
-カミツレ</attribute>
-		<language name="JPN" width="256">おじょうさん
-たびを　つづけなさいな▼</language>
-		<language name="JPN_KANJI" width="256">お嬢さん
-旅を　続けなさいな▼</language>
-	</row>
-
-	<row id="msg_c04_middleman1_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・主人公たちの頭上に「？」表示
-・続けてleader_02</comment>
-		<attribute name="キャラ指定">男性
-サポートの父親</attribute>
-		<language name="JPN" width="256">ベルのパパ『ちょっと！
-どなたです？　おやこの　はなしに▼</language>
-		<language name="JPN_KANJI" width="256">ベルのパパ『ちょっと！
-どなたです？　親子の　話に▼</language>
-	</row>
-
-	<row id="msg_c04_leader_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・サポート父親と向き合って
-・表示後、サポートの隣に移動
-・続けてleader_03</comment>
-		<attribute name="キャラ指定">LEADER4
-カミツレ</attribute>
-		<language name="JPN" width="256">カミツレと　もうします▼
-この　まちの　ジムリーダーや
-モデルを　しています▼</language>
-		<language name="JPN_KANJI" width="256">カミツレと　申します▼
-この　ライモンの　ジムリーダーや
-モデルを　しています▼</language>
-	</row>
-
-	<row id="msg_c04_leader_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・サポート父親を見ながらメッセージ表示
-・続けてmiddleman1_04</comment>
-		<attribute name="キャラ指定">LEADER4
-カミツレ</attribute>
-		<language name="JPN" width="256">もちろん　せかいには
-いろんな　ひとが　います▼
-じぶんとは　かんがえが
-まったく　ことなる　ひとも　いて▽
-ときには　きずつくことも　あるかも▼</language>
-		<language name="JPN_KANJI" width="256">もちろん　世界には
-いろんな　人が　います▼
-自分とは　考えが
-まったく　異なる　人もいて▽
-ときには　傷つくことも　あるかも▼</language>
-	</row>
-
-	<row id="msg_c04_middleman1_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・続けてleader_03</comment>
-		<attribute name="キャラ指定">男性
-サポートの父親</attribute>
-		<language name="JPN" width="256">ベルのパパ『そうでしょうとも！▼
-そうなんです！
-わたしは　それが　しんぱいで……▼</language>
-		<language name="JPN_KANJI" width="256">ベルのパパ『そうでしょうとも！▼
-そうなんです！
-わたしは　それが　心配で……▼</language>
-	</row>
-
-	<row id="msg_c04_leader_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・続けてwhite_11</comment>
-		<attribute name="キャラ指定">LEADER4
-カミツレ</attribute>
-		<language name="JPN" width="256">カミツレ『ですが▼
-そうしたことを　くりかえし
-じぶんと　たにんは　ちがうことを▽
-そして　ちがっていて　とうぜんだと▽
-しっていくのが　だいじ　ですよね▼
-それに　しんぱい　しなくとも
-トレーナーの　そばには　いつも▽
-ポケモンが　いてくれます▼
-いつもは　かわいいのに
-いざとなれば　すごく　たよれる▽
-すてきな　ポケモン……▼</language>
-		<language name="JPN_KANJI" width="256">カミツレ『ですが▼
-そうしたことを　くりかえし
-自分と　他人は　違うことを▽
-そして　違っていて　当然だと▽
-知っていくのが　大事ですよね▼
-それに　心配しなくとも
-トレーナーの　そばには　いつも▽
-ポケモンが　いてくれます▼
-いつもは　かわいいのに
-いざとなれば　すごく　頼れる▽
-すてきな　ポケモン……▼</language>
-	</row>
-
-	<row id="msg_c04_white_11" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-（一歩前に出て）
-・続けてmiddleman1_05</comment>
-		<attribute name="キャラ指定">友達♀
-ベル</attribute>
-		<language name="JPN" width="256">ベル『おねがい！▼
-パパが　しんぱい　するように
-たいへんなことが　あるのは▽
-しってるよ……　しってるもん！▼
-だけど！
-いい　ひとも　いるし▼
-ポケモンと　いっしょに
-あたしも　ちょっとは▽
-つよくなったんだよ！　だから！▼</language>
-		<language name="JPN_KANJI" width="256">ベル『おねがい！▼
-パパが　心配するように
-大変なことが　あるのは▽
-知ってるよ……　知ってるもん！▼
-だけど！
-いい　人も　いるし▼
-ポケモンと　いっしょに
-あたしも　ちょっとは▽
-強くなったんだよ！　だから！▼</language>
-	</row>
-
-	<row id="msg_c04_middleman1_05" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・画面下を向いてメッセージ表示
-・続けてmiddleman1_06</comment>
-		<attribute name="キャラ指定">男性
-サポートの父親</attribute>
-		<language name="JPN" width="256">ベルのパパ『……むむっ▼
-……　……　……
-……　……　そうだよねえ▼
-たびを　つづけたいのが
-ベルの　ワガママと　いうなら▼
-たびを　やめさせたいのは
-わたしの　ワガママ　だ▼
-しかも　どう　かんがえても
-わたしの　ほうが　こどもっぽい▼</language>
-		<language name="JPN_KANJI" width="256">ベルのパパ『……むむっ▼
-……　……　……
-……　……　そうだよねえ▼
-旅を　続けたいのが
-ベルの　ワガママと　いうなら▼
-旅を　やめさせたいのは
-わたしの　ワガママ　だ▼
-しかも　どう　考えても
-わたしの　ほうが　子供っぽい▼</language>
-	</row>
-
-	<row id="msg_c04_middleman1_06" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・続けてmiddleman1_07</comment>
-		<attribute name="キャラ指定">男性
-サポートの父親</attribute>
-		<language name="JPN" width="256">ジムリーダーさんに
-いわれて　きづいたよ▼
-そうだね　ベル
-いまは　きみが　したいことを▽
-したほうが　いいんだよ　きっと▼
-パパは　きみの　たびが
-たのしいものであるよう　いのるさ▼</language>
-		<language name="JPN_KANJI" width="256">ジムリーダーさんに
-いわれて　気づいたよ▼
-そうだね　ベル
-今は　君が　したいことを▽
-したほうが　いいんだよ　きっと▼
-パパは　君の　旅が
-楽しいものであるよう　祈るさ▼</language>
-	</row>
-
-	<row id="msg_c04_middleman1_07" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・画面上を向いてメッセージ表示
-・表示後、画面下に移動
-・画面外に動作モデルが消えると
-　続けてmiddleman1_06</comment>
-		<attribute name="キャラ指定">男性
-サポートの父親</attribute>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]
-ベルを　よろしく　たのむね▼</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]
-ベルを　よろしく　頼むね▼</language>
-	</row>
-
-	<row id="msg_c04_white_12" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-（一歩前に出て）
-・続けてleader_05</comment>
-		<attribute name="キャラ指定">友達♀
-サポート</attribute>
-		<language name="JPN" width="256">ベル『パパ▼
-あたし　やりたいことを　みつけたら
-ちゃんと　いえに　かえるから！▼</language>
-		<language name="JPN_KANJI" width="256">ベル『パパ▼
-あたし　やりたいことを　みつけたら
-ちゃんと　家に　帰るから！▼</language>
-	</row>
-
-	<row id="msg_c04_leader_05" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-（位置調整が必要かも）
-・画面下を向いたままメッセージ
-・続けて画面上を見てleader_06</comment>
-		<attribute name="キャラ指定">LEADER4
-カミツレ</attribute>
-		<language name="JPN" width="256">カミツレ『あのひとも　きっと
-むかしは　トレーナーとして▽
-たびを　してたはず　なのに……▽
-おやって　たいへん　なのね▼</language>
-		<language name="JPN_KANJI" width="256">カミツレ『あの人も　きっと
-昔は　トレーナーとして▽
-旅を　してたはず　なのに……▽
-親って　大変なのね▼</language>
-	</row>
-
-	<row id="msg_c04_leader_06" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・メッセージ分岐
-　c04ジムバッジ入手前→leader_07
-　c04ジムバッジ入手後→leader_08</comment>
-		<attribute name="キャラ指定">LEADER4
-カミツレ</attribute>
-		<language name="JPN" width="256">おせっかい　だった？▼
-なんだか　こまっているように
-みえたから　こえを　かけちゃった▼</language>
-		<language name="JPN_KANJI" width="256">おせっかい　だった？▼
-なんだか　困っているように
-みえたから　声を　かけちゃった▼</language>
-	</row>
-
-	<row id="msg_c04_leader_07" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・c04ジムバッジ入手前
-・表示後、画面下に移動する
-　画面外に消えるとmsg_c04_white_13</comment>
-		<attribute name="キャラ指定">LEADER4
-カミツレ</attribute>
-		<language name="JPN" width="256">あなたたち　トレーナーなら
-ポケモンジムに　いらっしゃい▼
-わたしが　たびの　きびしさ
-おしえて　あげるから▼</language>
-		<language name="JPN_KANJI" width="256">あなたたち　トレーナーなら
-ポケモンジムに　いらっしゃい▼
-わたしが　旅の　厳しさ
-教えて　あげるから▼</language>
-	</row>
-
-	<row id="msg_c04_leader_08" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・c04ジムバッジ入手後
-・表示後、r05方面に移動する
-　画面外に消えるとmsg_c04_white_13
-・0＝主人公名前</comment>
-		<attribute name="キャラ指定">LEADER4
-カミツレ</attribute>
-		<language name="JPN" width="256">ごめんなさいね　[1:00:トレーナー名:0]
-５ばんどうろで　まっているから▼</language>
-		<language name="JPN_KANJI" width="256">ごめんなさいね　[1:00:トレーナー名:0]
-５番道路で　待っているから▼</language>
-	</row>
-
-	<row id="msg_c04_white_13" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・表示後、画面下に移動
-　画面外に消えると主人公操作可能に
-・0＝主人公名前</comment>
-		<attribute name="キャラ指定">友達♀
-サポート</attribute>
-		<language name="JPN" width="256">ベル『かっこいい！▼
-あたし　カミツレさんの　ような
-ステキな　じょせいに　なりたい！▼
-……はあ　あたしに
-なにが　できるのかな？▼
-って　そのまえに　あたしの
-やりたいことを　みつけないとね！▽
-じゃあね　[1:00:トレーナー名:0]！▼</language>
-		<language name="JPN_KANJI" width="256">ベル『かっこいい！▼
-あたし　カミツレさんの　ような
-ステキな　女性に　なりたい！▼
-……はあ　あたしに
-なにが　できるのかな？▼
-って　その前に　あたしの
-やりたいことを　みつけないとね！▽
-じゃあね　[1:00:トレーナー名:0]！▼</language>
-	</row>
-
-	<row id="msg_c04_footballm_01">
-		<comment>♂
-・ビッグスタジアム、リトルコートへの誘導</comment>
+・ビッグスタジアム、リトルコートへの誘導
+※swanでメッセージ変更予定</comment>
 		<attribute name="キャラ指定">FOOTBALLM
 アメフト選手</attribute>
 		<language name="JPN" width="256">オレたち　スポーツマンの
@@ -933,8 +542,9 @@
 披露するから　ぜひ　来てくれよ！</language>
 	</row>
 
-	<row id="msg_c04_clown_01">
-		<comment>♂</comment>
+	<row id="msg_c04_clown_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+※swanでメッセージ変更予定</comment>
 		<attribute name="キャラ指定">CLOWN
 ピエロ</attribute>
 		<language name="JPN" width="256">……じつは　ライモンシティって
@@ -947,8 +557,9 @@
 ポケモントレーナーが　いますから</language>
 	</row>
 
-	<row id="msg_c04_badman_01">
-		<comment>♂</comment>
+	<row id="msg_c04_badman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+※swanでメッセージ変更予定</comment>
 		<attribute name="キャラ指定">BADMAN
 不良</attribute>
 		<language name="JPN" width="256">ぶらり　でんしゃの　たび……▼
@@ -961,8 +572,9 @@
 ちょいとした　夢気分だぜ</language>
 	</row>
 
-	<row id="msg_c04_middleman2_01">
-		<comment>♂</comment>
+	<row id="msg_c04_middleman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+※swanでメッセージ変更予定</comment>
 		<attribute name="キャラ指定">MIDDLEMAN2
 太ったおじさん</attribute>
 		<language name="JPN" width="256">はではで　ライモンシティに　くると
@@ -973,9 +585,10 @@
 体が　フワフワした　感じ！</language>
 	</row>
 
-	<row id="msg_c04_backpackerw_01">
+	<row id="msg_c04_backpackerw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
-・５番道路への誘導</comment>
+・５番道路への誘導
+※swanでメッセージ変更予定</comment>
 		<attribute name="キャラ指定">BACKPACKERW
 バックパッカー♀</attribute>
 		<language name="JPN" width="256">５ばんどうろで　ひしめく
@@ -990,9 +603,10 @@
 心に　エネルギーが　たまります！</language>
 	</row>
 
-	<row id="msg_c04_girl3_01">
+	<row id="msg_c04_girl3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
-・babygirl1、middlewoman1とセット</comment>
+・babygirl1、middlewoman1とセット
+※swanでメッセージ変更予定</comment>
 		<attribute name="キャラ指定">GIRL3
 少女：聡明</attribute>
 		<language name="JPN" width="256">おりこうにしてた　ごほうびに
@@ -1001,8 +615,9 @@
 遊園地に　連れてきてもらったの！</language>
 	</row>
 
-	<row id="msg_c04_babygirl1_01">
-		<comment>♀</comment>
+	<row id="msg_c04_babygirl1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♀
+※swanでメッセージ変更予定</comment>
 		<attribute name="キャラ指定">BABYGIRL1
 女の子</attribute>
 		<language name="JPN" width="256">かんらんしゃ！　かんらんしゃ！
@@ -1011,9 +626,10 @@
 あたし　かんらんしゃ　だいすきッ！！</language>
 	</row>
 
-	<row id="msg_c04_middlewoman1_02">
+	<row id="msg_c04_middlewoman1_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
-・ポケモンジムへの誘導</comment>
+・ポケモンジムへの誘導
+※swanでメッセージ変更予定</comment>
 		<attribute name="キャラ指定">MIDDLEWOMAN1
 おばさん</attribute>
 		<language name="JPN" width="256">ライモンの　ポケモンジムは
