@@ -243,6 +243,7 @@
 #define WK_SCENE_C12GYM0201              16631 /* 0x40f7 C12：ジム進行管理用ワーク */
 #define WK_SCENE_C13GYM0101_GUIDE        16632 /* 0x40f8 スワン飛行ジム：ガイド POS制御ワーク */
 #define WK_SCENE_R20                     16633 /* 0x40f9 20番道路：POS制御ワーク */
+#define WK_SCENE_C13                     16634 /* 0x40fa C13：ジムリーダーとの出会い用ワーク */
 
 #define WK_SCENE_AREA_END                16655 /* 0x410f  */
 

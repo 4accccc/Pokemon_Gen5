@@ -364,6 +364,14 @@ init_flags:
 	
 	//T06ÇÃÉÅÉ_ÉãÇ®Ç‚Ç∂ÇîÒï\é¶
 	_FLAG_SET( FV_T06_SUNGLASSES_01 )
+	
+	//C13
+	_FLAG_SET( FV_C13_SWPLAZMA )
+	_FLAG_SET( FV_C13R0401_PILOT )
+	_FLAG_SET( FV_C13R0401_SWRIVAL )
+	
+	//PC
+	_FLAG_SET( FV_PC_MEDALOYAJI )
 
 }
 _RET

@@ -396,9 +396,9 @@
 #define FE_INF_AREA3_ARRIVAL               380 /* 0x017c 無限ダンジョンエリア３到着フラグ */
 #define FE_INF_AREA4_ARRIVAL               381 /* 0x017d 無限ダンジョンエリア４到着フラグ */
 #define FE_INF_AREA5_ARRIVAL               382 /* 0x017e 無限ダンジョンエリア５到着フラグ */
-		/* not used   383(0x017f) */
-		/* not used   384(0x0180) */
-		/* not used   385(0x0181) */
+#define FE_C12R0402_ITEMGET_01             383 /* 0x017f ヒオウギシティ：アイテム入手フラグ */
+#define FE_T06R0201_ITEMGET_01             384 /* 0x0180 サンギタウン：アイテム入手フラグ */
+#define FE_C13R0201_ITEMGET_01             385 /* 0x0181 C12R0201：アイテム入手フラグ */
 		/* not used   386(0x0182) */
 		/* not used   387(0x0183) */
 		/* not used   388(0x0184) */
@@ -895,11 +895,11 @@
 		/* not used   871(0x0367) */
 		/* not used   872(0x0368) */
 		/* not used   873(0x0369) */
-		/* not used   874(0x036a) */
-		/* not used   875(0x036b) */
-		/* not used   876(0x036c) */
-		/* not used   877(0x036d) */
-		/* not used   878(0x036e) */
+#define FV_C13R0401_SWRIVAL                874 /* 0x036a C13：船舶所のライバル */
+#define FV_C13R0401_PILOT                  875 /* 0x036b C13：船舶所の船長 */
+#define FV_C13_SWPLAZMA                    876 /* 0x036c C13：ネオプラズマ団イベント用 */
+#define FV_C13_SUNGLASSES                  877 /* 0x036d C13：ポケウッド用 */
+#define FV_C13_SWLEADER2_MEET              878 /* 0x036e C13：ホミカとホミカ父用 */
 #define FV_D22R0101_BREEDER_01             879 /* 0x036f 牧場：ブリーダー */
 #define FV_D22R0101_POKEMON_01             880 /* 0x0370 牧場：ヨーテリー */
 #define FV_D22R0101_SWRIVAL_01             881 /* 0x0371 牧場：ライバル */
