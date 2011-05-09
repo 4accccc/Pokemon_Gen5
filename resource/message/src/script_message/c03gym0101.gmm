@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-26T15:23:51"/>
+	<create user="matsumiya" host="W00224" date="2011-05-09T17:50:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1297" top="169" right="2002" bottom="797" maximized="no" rayout="Vertical2">
+	<dialog left="1300" top="217" right="2005" bottom="845" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -329,7 +329,7 @@ jugglimg_05</attribute>
 勝負の　カンが　鈍るんだよ</language>
 	</row>
 
-	<row id="msg_c03gym0101_jugglimg_06_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c03gym0101_jugglimg_06_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・戦闘前メッセージ（登場時）
 
@@ -348,7 +348,7 @@ jugglimg_06</attribute>
 きみに　届けさせて　もらうよ！▼</language>
 	</row>
 
-	<row id="msg_c03gym0101_jugglimg_06_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c03gym0101_jugglimg_06_02" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・戦闘後メッセージ
 
@@ -365,7 +365,7 @@ jugglimg_06</attribute>
 トレーナーを　むしするってこと……</language>
 	</row>
 
-	<row id="msg_c03gym0101_jugglimg_06_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c03gym0101_jugglimg_06_03" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・2回目以降
 
@@ -474,13 +474,13 @@ jugglimg_11</attribute>
 ぜんぜん　想像つかないっすよ！</language>
 	</row>
 
-	<row id="msg_c03gym0101_glasses_stop_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c03gym0101_glasses_stop_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・ジムストッパー
 　c03r1201イベント終了まで
 ・会話時
 
-※SWANで処理、メッセージ変更予定</comment>
+※SWANで削除</comment>
 		<attribute name="キャラ指定">DANPEI
 ダンペイ</attribute>
 		<language name="JPN" width="256">ジムリーダー　なんですけど▼
@@ -493,13 +493,13 @@ jugglimg_11</attribute>
 よければ　探して　きてください</language>
 	</row>
 
-	<row id="msg_c03gym0101_glasses_stop_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c03gym0101_glasses_stop_02" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・ジムストッパー
 　c03r1201イベント終了まで
 ・pos時
 
-※SWANで処理、メッセージ変更予定</comment>
+※SWANで削除</comment>
 		<attribute name="キャラ指定">DANPEI
 ダンペイ</attribute>
 		<language name="JPN" width="256">ジムリーダー　なんですけど▼
