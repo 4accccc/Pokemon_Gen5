@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-02-27T16:07:52"/>
+	<create user="matsumiya" host="W00224" date="2011-05-09T16:33:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1548" top="228" right="2253" bottom="856" maximized="no" rayout="Vertical2">
+	<dialog left="1300" top="217" right="2005" bottom="845" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -306,12 +306,10 @@
 		<comment>♂</comment>
 		<attribute name="キャラ指定">RAILMAN
 鉄道員</attribute>
-		<language name="JPN" width="256">バトルサブウェイ！▼
-そのなのとおり　トレーナーが
-しょうぶを　くりひろげる　ちかてつです</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイ！▼
-その名のとおり　トレーナーが
-勝負を　繰り広げる　地下鉄です</language>
+		<language name="JPN" width="256">バトルサブウェイとは　トレーナーが
+つよさを　きそう　ちかてつ　です！</language>
+		<language name="JPN_KANJI" width="256">バトルサブウェイとは　トレーナーが
+強さを　競う　地下鉄です！</language>
 	</row>
 
 	<row id="msg_c04r0101_fighterm_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -427,7 +425,7 @@
 少年</attribute>
 		<language name="JPN" width="256">わかったよ　ありがとう！
 そうか　[1:1C:簡易会話単語:0]　か……</language>
-		<language name="JPN_KANJI" width="256">分かったよ　ありがとう！
+		<language name="JPN_KANJI" width="256">わかったよ　ありがとう！
 そうか　[1:1C:簡易会話単語:0]　か……</language>
 	</row>
 
@@ -459,7 +457,7 @@
 		<attribute name="キャラ指定">BOY1
 少年</attribute>
 		<language name="JPN" width="256">わかったよ　ありがとう！</language>
-		<language name="JPN_KANJI" width="256">分かったよ　ありがとう！</language>
+		<language name="JPN_KANJI" width="256">わかったよ　ありがとう！</language>
 	</row>
 
 	<row id="msg_touroku__win_01" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
