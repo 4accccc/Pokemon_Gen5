@@ -18,3 +18,4 @@
 //=============================================================================
 extern BOOL debugMenuCallProc_UITemplate( DEBUG_MENU_EVENT_WORK *p_wk );
 extern BOOL debugMenuCallProc_Demo3d( DEBUG_MENU_EVENT_WORK *p_wk );
+extern BOOL debugMenuCallProc_Mobiclip( DEBUG_MENU_EVENT_WORK *p_wk );

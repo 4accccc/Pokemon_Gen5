@@ -1972,6 +1972,10 @@ SRCS_OVERLAY_D_LIVECOMM = field/event_debug_livecomm.c
 #===> GROUP_OVERLAY_GIMMICK
 SRCS_OVERLAY_DEBUG_DEMO3D = field/event_debug_demo3d.c
 
+#DEBUG_MOBICLIPライブラリ
+#===> GROUP_OVERLAY_GIMMICK
+SRCS_OVERLAY_DEBUG_MOBICLIP = field/event_debug_mobiclip.c
+
 #DEBUG_ITEMライブラリ
 #===> GROUP_OVERLAY_GIMMICK
 SRCS_OVERLAY_DEBUG_ITEM = field/event_debug_item.c

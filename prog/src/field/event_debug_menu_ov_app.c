@@ -36,6 +36,8 @@
 #include "event_debug_menu.h"
 #include "field_debug.h" 
 
+#include "event_debug_mobiclip.h"
+
 //ŠO•”ŒöŠJ
 #include "event_debug_menu_ov_app.h"
 
@@ -147,6 +149,22 @@ BOOL debugMenuCallProc_Demo3d( DEBUG_MENU_EVENT_WORK* wk )
 {
   GMEVENT * event = GMEVENT_CreateOverlayEventCall( wk->gmSys,
       FS_OVERLAY_ID( debug_demo3d ), DEBUG_EVENT_FLDMENU_Demo3DSelect, NULL );
+
+  GMEVENT_ChangeEvent( wk->gmEvent, event );
+
+  return TRUE;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief MobiclipÄ¶
+ */
+//-----------------------------------------------------------------------------
+FS_EXTERN_OVERLAY( debug_mobiclip );
+BOOL debugMenuCallProc_Mobiclip( DEBUG_MENU_EVENT_WORK* wk )
+{
+  GMEVENT * event = GMEVENT_CreateOverlayEventCall( wk->gmSys,
+      FS_OVERLAY_ID( debug_mobiclip ), DEBUG_EVENT_FLDMENU_MobiclipSelect, NULL );
 
   GMEVENT_ChangeEvent( wk->gmEvent, event );
 

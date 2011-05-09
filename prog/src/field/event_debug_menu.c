@@ -180,6 +180,7 @@ static const DEBUG_MENU_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_STR44, debugMenuCallProc_UITemplate, FS_OVERLAY_ID(debugmenu_app) },        //UIテンプレート
   { DEBUG_FIELD_DEMO3D,   debugMenuCallProc_Demo3d, FS_OVERLAY_ID(debugmenu_app) },             //３Dデモ
   { DEBUG_FIELD_WBT,      debugMenuCallProc_WBT, FS_OVERLAY_ID(debugmenu_app) },      //WBT
+  { DEBUG_FIELD_MOBICLIP, debugMenuCallProc_Mobiclip, FS_OVERLAY_ID(debugmenu_app) }, //Mobiclip
   { DEBUG_FIELD_POKEWOOD_TITLE, (void*)BMPMENULIST_LABEL, GFL_OVERLAY_BLANK_ID }, //○ポケウッド
   { DEBUG_FIELD_POKEWOOD_REC, debugMenuCallProc_PokewoodRec, FS_OVERLAY_ID(debugmenu_app) },
   { DEBUG_FIELD_POKEWOOD_SHOW, debugMenuCallProc_PokewoodShow, FS_OVERLAY_ID(debugmenu_app) },
@@ -246,6 +247,9 @@ static const DEBUG_MENU_LIST DATA_DebugMenuList[] =
 #elif defined DEBUG_ONLY_FOR_ibe_mana
 #define QuickJumpStart   DEBUG_FIELD_INFINITY
 #define QuickJumpSelect  DEBUG_FIELD_INFINITY
+#elif defined DEBUG_ONLY_FOR_ichiraku_katsuhiko
+#define QuickJumpStart   DEBUG_FIELD_MOBICLIP
+#define QuickJumpSelect  DEBUG_FIELD_MOBICLIP
 #endif
 
 //--------------------------------------------------------------
