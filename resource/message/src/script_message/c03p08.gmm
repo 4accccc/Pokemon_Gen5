@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-25T18:55:55"/>
+	<create user="matsumiya" host="W00224" date="2011-05-09T17:37:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1297" top="169" right="2002" bottom="797" maximized="no" rayout="Vertical2">
+	<dialog left="1300" top="217" right="2005" bottom="845" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -294,7 +294,7 @@
 
 	<row id="msg_c03p08_bussinesman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
-※SWANでメッセージ修正予定</comment>
+※swanでメッセージ修正予定</comment>
 		<attribute name="キャラ指定">BUSSINESMAN</attribute>
 		<language name="JPN" width="256">しごとさきの　ライモンシティで
 ミュージカルを　みてきたんですよ▼
@@ -313,31 +313,31 @@
 	<row id="msg_c03p08_trainerw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・WHITEver
-※SWANでメッセージ修正予定</comment>
+※swanでメッセージ変更</comment>
 		<attribute name="キャラ指定">TRAINERW</attribute>
-		<language name="JPN" width="256">４ばんどうろに　いる
-ポケモントレーナーたちは▼
-どうろこうじでも　ポケモンとの
-コンビネーションを　みせているわ！</language>
-		<language name="JPN_KANJI" width="256">４番道路に　いる
-ポケモントレーナーたちは▼
-道路工事でも　ポケモンとの
-コンビネーションを　みせているわ！</language>
+		<language name="JPN" width="256">トレーナーと　ポケモンたちの
+バツグンの　コンビネーション！▼
+４ばんどうろでも　いせきが
+みつかったのは　かれらの　おかげね！</language>
+		<language name="JPN_KANJI" width="256">トレーナーと　ポケモンたちの
+バツグンの　コンビネーション！▼
+４番道路でも　遺跡が
+みつかったのは　かれらの　おかげね！</language>
 	</row>
 
 	<row id="msg_c03p08_trainerw_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・BLACKver
-※SWANでメッセージ修正予定</comment>
+※swanでメッセージ変更</comment>
 		<attribute name="キャラ指定">TRAINERW</attribute>
-		<language name="JPN" width="256">４ばんどうろに　いる
-ポケモントレーナーたちは▼
-どうろこうじでも　ポケモンとの
-コンビネーションを　みせているわ！</language>
-		<language name="JPN_KANJI" width="256">４番道路に　いる
-ポケモントレーナーたちは▼
-道路工事でも　ポケモンとの
-コンビネーションを　みせているわ！</language>
+		<language name="JPN" width="256">トレーナーと　ポケモンたちの
+バツグンの　コンビネーション！▼
+４ばんどうろに　ビルが　ならぶのは
+かれらの　おかげね！</language>
+		<language name="JPN_KANJI" width="256">トレーナーと　ポケモンたちの
+バツグンの　コンビネーション！▼
+４ばんどうろに　ビルが　並ぶのは
+かれらの　おかげね！</language>
 	</row>
 
 	<row id="msg_c03p08_sign_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
