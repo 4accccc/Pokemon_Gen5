@@ -177,7 +177,9 @@ void GAMEBEACON_Update(void)
     bsys->backup_hour = play_hour;
   }
 
-  GAMEBEACON_Set_ResortData( bsys );
+  if(bsys->gamedata != NULL){
+    GAMEBEACON_Set_ResortData( bsys );
+  }
 
   SendBeacon_Update(&bsys->send);
   
@@ -259,7 +261,9 @@ static void SendBeacon_Update(GAMEBEACON_SEND_MANAGER *send)
       send->info.action.action_no = GAMEBEACON_ACTION_SEARCH;
       send->info.version_bit = GAMEBEACON_RECV_VERSION_FULL; //全バージョン指定に戻す
 
-      GAMEBEACON_Set_ResortData( GameBeaconSys );
+      if(GameBeaconSys->gamedata != NULL){
+        GAMEBEACON_Set_ResortData( GameBeaconSys );
+      }
     }
   }
 }
