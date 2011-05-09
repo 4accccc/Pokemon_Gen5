@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-21T16:08:08"/>
+	<create user="matsumiya" host="W00224" date="2011-05-09T15:21:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1290" top="221" right="1995" bottom="849" maximized="no" rayout="Vertical2">
+	<dialog left="1297" top="169" right="2002" bottom="797" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -296,16 +296,14 @@
 		<comment>♂
 ・SWANでメッセージ変更</comment>
 		<attribute name="キャラ指定">MOUNTAIN</attribute>
-		<language name="JPN" width="256">おれの　ことを　しんぱいして▼
-おだいじに　という
-ニックネームの　ポケモンを▽
-こうかんしてくれた　あいつ……▽
+		<language name="JPN" width="256">おれの　ことを　しんぱいして
+こうかんする　ポケモンに▽
+おだいじに　となづけた　あいつ……▼
 いまも　げんきに　しているだろうか？</language>
-		<language name="JPN_KANJI" width="256">おれの　身を　案じて▼
-おだいじに　という
-ニックネームの　ポケモンを▽
-交換してくれた　あいつ……▽
-いまも　達者に　しているだろうか？</language>
+		<language name="JPN_KANJI" width="256">おれの　ことを　心配して
+交換する　ポケモンに▽
+おだいじに　となづけた　あいつ……▼
+今も　達者に　しているだろうか？</language>
 	</row>
 
 	<row id="msg_c03r0501_poke_01">
@@ -318,11 +316,13 @@
 	<row id="msg_c03r0501_infomationw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・GRIDX=3、GRIDZ=3
-・SWANでメッセージ変更</comment>
+・SWANでメッセージ変更予定</comment>
 		<attribute name="キャラ指定">INFOMATIONW
 受付</attribute>
-		<language name="JPN" width="256">かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">こちらの　ビルには　ミスターロックなる
+じんぶつが　いらっしゃいます</language>
+		<language name="JPN_KANJI" width="256">こちらの　ビルには　ミスターロックなる
+じんぶつが　いらっしゃいます</language>
 	</row>
 
 	<flowchart-group-list>
