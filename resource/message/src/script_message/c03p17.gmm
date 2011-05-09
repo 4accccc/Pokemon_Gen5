@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-05-09T20:19:02"/>
+	<create user="matsumiya" host="W00224" date="2011-05-09T20:24:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -302,7 +302,7 @@
 ・下水道に入れない理由</language>
 	</row>
 
-	<row id="msg_c03p17_swrival_01">
+	<row id="msg_c03p17_swrival_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・はい/いいえ選択肢表示
 ・はい　→
@@ -314,7 +314,7 @@
 ＮＰだんは　みつかったか？</language>
 	</row>
 
-	<row id="msg_c03p17_swrival_02">
+	<row id="msg_c03p17_swrival_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>・はい選択時
 ・続けて</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
@@ -324,7 +324,7 @@
 ウソは　ダメだろ？</language>
 	</row>
 
-	<row id="msg_c03p17_swrival_03">
+	<row id="msg_c03p17_swrival_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>・いいえ選択時
 ・続けて</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
@@ -333,7 +333,7 @@
 		<language name="JPN_KANJI" width="256">そうか……</language>
 	</row>
 
-	<row id="msg_c03p17_swrival_04">
+	<row id="msg_c03p17_swrival_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・表示後、水上飛行機前に移動
 ・続けて</comment>
@@ -363,7 +363,66 @@
 せっかくだから　いってみれば？</language>
 	</row>
 
-	<row id="msg_c03p17_pilot_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c03p17_swrival_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">ライバル名『ＮＰだんは　いなかったか
+レゾナンスリゾートは　おもしろかったけど
+しかたない
+また　てわけして　さがすか▼
+なにかあれば　れんらくするから
+ライブキャスターに　とうろく　しろ▼</language>
+		<language name="JPN_KANJI" width="256">ライバル名『ＮＰだんは　いなかったか
+レゾナンスリゾートは　おもしろかったけど
+しかたない
+また　てわけして　さがすか▼
+なにかあれば　れんらくするから
+ライブキャスターに　とうろく　しろ▼</language>
+	</row>
+
+	<row id="msg_c03p17_swrival_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">ライブキャスター登録</language>
+		<language name="JPN_KANJI" width="256">ライブキャスター登録</language>
+	</row>
+
+	<row id="msg_c03p17_swrival_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">退場メッセージ▼</language>
+		<language name="JPN_KANJI" width="256">退場メッセージ▼</language>
+	</row>
+
+	<row id="msg_c03p17_swchampion_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・表示後、d11r0101：下水道ダンジョンへ
+・アイリスが画面外に消えると操作可能に</comment>
+		<attribute name="キャラ指定">アイリス</attribute>
+		<language name="JPN" width="256">アイリス『きみの　ともだち
+（感想、ライバルのキャラ立て）▼
+下水道には入れるよう頼んだの
+中を　探すなら　一緒に行こ！▼</language>
+		<language name="JPN_KANJI" width="256">アイリス『きみの　ともだち
+（感想、ライバルのキャラ立て）▼
+下水道には入れるよう頼んだの
+中を　探すなら　一緒に行こ！▼</language>
+	</row>
+
+	<row id="msg_c03p17_swrival_08" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・下水道の外に出るとメッセージ
+・フラグ成立まで
+　下水道にいるとか（要検討）</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">ライバル『きいたぜ
+アーティって　ひとから
+しばらく　ヒウンをぶらつく
+残党がいるかも</language>
+		<language name="JPN_KANJI" width="256">ライバル『きいたぜ
+アーティって　ひとから
+しばらく　ヒウンをぶらつく
+残党がいるかも</language>
+	</row>
+
+	<row id="msg_c03p17_pilot_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・msg_c03_swchampion_01で登場
 ・はい/いいえ選択肢表示
@@ -376,7 +435,7 @@
 どうです　乗ってみませんか？</language>
 	</row>
 
-	<row id="msg_c03p17_pilot_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c03p17_pilot_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・はい選択時</comment>
 		<attribute name="キャラ指定">パイロット</attribute>
@@ -384,7 +443,7 @@
 		<language name="JPN_KANJI" width="256">レッツ　フライ！▼</language>
 	</row>
 
-	<row id="msg_c03p17_pilot_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c03p17_pilot_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・いいえ選択時</comment>
 		<attribute name="キャラ指定">パイロット</attribute>
