@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-05-09T15:42:55"/>
+	<create user="matsumiya" host="W00224" date="2011-05-09T16:30:17"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1297" top="143" right="2002" bottom="771" maximized="no" rayout="Vertical2">
+	<dialog left="1300" top="217" right="2005" bottom="845" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -359,192 +359,64 @@
 	</lock>
 
 
-	<row id="msg_c04p01_boss_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・最初からGRIDX=23、GRIDZ=13）下向きで待機
-・pos（GRIDX=20.GRIDZ=12^16）を踏むと
-　！マーク表示後、隣接してメッセージ表示
-・表示後、画面左へ誘導</comment>
-		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]……プラズマだんを
-さがして　いるんだろう？▼
-かれらは　ゆうえんちの
-おくに　にげていったよ▽
-ついてきたまえ[BE:09:速度コントロール:0]▼</language>
-		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]……プラズマ団を
-探して　いるんだろう？▼
-彼らは　遊園地の
-奥に　逃げていったよ▽
-ついてきたまえ[BE:09:速度コントロール:0]▼</language>
+	<row id="msg_c04p01_boss_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c04p01_boss_02" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・観覧車前に到達して
-　辺りを見回す動きの後にメッセージ表示
-・メッセージ表示後、観覧車に乗る演出
-・観覧車デモに切り替え
-　観覧車内でのメッセージは別ファイルで管理予定</comment>
-		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]……いないね▼
-かんらんしゃに　のって
-さがすことに　しよう▼
-ボクは　かんらんしゃが
-だいすき　なんだ▼
-あの　えんうんどう……　りきがく……
-うつくしい　すうしきの　あつまり……[BE:09:速度コントロール:0]▼</language>
-		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]……いないね▼
-観覧車に　乗って
-探すことに　しよう▼
-ボクは　観覧車が
-大好きなんだ▼
-あの　円運動……　力学……
-美しい　数式の　集まり……[BE:09:速度コントロール:0]▼</language>
+	<row id="msg_c04p01_boss_02" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c04p01_hakaim1_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・観覧車から降りるとプラズマ団が近づいてきて
-　メッセージ表示
-・続けてhakaim2_01</comment>
-		<attribute name="キャラ指定">プラズマ団したっぱ♂</attribute>
-		<language name="JPN" width="256">プラズマだん『Ｎさま！▼</language>
-		<language name="JPN_KANJI" width="256">プラズマ団『Ｎさま！▼</language>
+	<row id="msg_c04p01_hakaim1_01" text-color="#000000,,,#ffffff,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c04p01_hakaim2_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・続けてboss_03
-・戦闘後には削除済みで</comment>
-		<attribute name="キャラ指定">プラズマ団したっぱ♂</attribute>
-		<language name="JPN" width="256">プラズマだん『ごぶじ　ですか！▼</language>
-		<language name="JPN_KANJI" width="256">プラズマ団『ご無事ですか！▼</language>
+	<row id="msg_c04p01_hakaim2_01" text-color="#000000,,,#ffffff,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c04p01_boss_03" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・プラズマ団のほうは向かない(気にしていない）
-・はい/いいえの選択
-　どちらを選んだか保存しておく</comment>
-		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]だいじょうぶ▼
-ポケモンを　すくうために
-あつまった　ひとも……▽
-ボクが　まもるよ▼
-ボクが　たたかう　あいだに
-キミたちは　ここから　にげたまえ▼
-……さて　[1:00:トレーナー名:0]
-ボクの　かんがえ　わかるかい？[BE:09:速度コントロール:0]</language>
-		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]問題ない▼
-ポケモンを　救うために
-集った　人々も……▽
-ボクが　守るよ▼
-ボクが　戦うあいだに
-キミたちは　この場を　離れたまえ▼
-……さて　[1:00:トレーナー名:0]
-ボクの　考え　理解できるかい？[BE:09:速度コントロール:0]</language>
+	<row id="msg_c04p01_boss_03" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c04p01_boss_04" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・はい選択時
-・トレーナー戦闘に</comment>
-		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">[BE:09:速度コントロール:1]その　ことば
-ほんとうだと　うれしいね▼
-さて……
-ボクに　みえた　みらい▼
-ここでは　キミに　かてないが
-にげる　プラズマだんの　ため▽
-あいて　してもらうよ[BE:09:速度コントロール:0]▼</language>
-		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]その言葉
-真意だと　うれしいね▼
-さて……
-ボクに　みえた　未来▼
-ここでは　キミに　勝てないが
-逃げる　プラズマ団の　ため▽
-相手してもらうよ[BE:09:速度コントロール:0]▼</language>
+	<row id="msg_c04p01_boss_04" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c04p01_boss_05" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・いいえ選択時
-・トレーナー戦闘に</comment>
-		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">[BE:09:速度コントロール:1]そうかい……
-それは　ざんねんだ▼
-さて……
-ボクに　みえた　みらい▼
-ここでは　キミに　かてないが
-にげる　プラズマだんの　ため▽
-あいて　してもらうよ[BE:09:速度コントロール:0]▼</language>
-		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]そうかい……
-それは　残念▼
-さて……
-ボクに　みえた　未来▼
-ここでは　キミに　勝てないが
-逃げる　プラズマ団の　ため▽
-相手してもらうよ[BE:09:速度コントロール:0]▼</language>
+	<row id="msg_c04p01_boss_05" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c04p01_boss_06" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・戦闘後、フィールドに復帰すると
-　このメッセージ表示
-・メッセージ後、一歩近づく
-・続けてboss_07</comment>
-		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]……キミは　つよい▼
-だが　ボクには　かえるべき
-みらいが　ある▽
-そのために……！[BE:09:速度コントロール:0]▼</language>
-		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]……キミは　強いな▼
-だが　ボクには　変えるべき
-未来が　ある▽
-そのために……！[BE:09:速度コントロール:0]▼</language>
+	<row id="msg_c04p01_boss_06" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c04p01_boss_07" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・カットイン
-・続けてboss_08</comment>
-		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">ボクは　チャンピオンを　こえる▼
-だれにも　まけない
-そんざいと　なり▼
-すべての　トレーナーに
-ポケモンを　かいほう　させる！▼
-キミが　ポケモンと
-いっしょに　いたい……！▼
-そう　のぞむなら
-かくちの　ジムバッジを　あつめ▽
-ポケモンリーグに　むかえ！▼
-そこで　ボクを　とめてみせるんだ▼</language>
-		<language name="JPN_KANJI" width="256">ボクは　チャンピオンを　超える▼
-だれにも　負けることのない
-唯一無二の　存在と　なり▼
-すべての　トレーナーに
-ポケモンを　解放させる！▼
-キミが　ポケモンと
-いつまでも　一緒……！▼
-そう　望むなら
-各地の　ジムバッジを　集め▽
-ポケモンリーグに　向かえ！▼
-そこで　ボクを　とめてみせるんだ▼</language>
+	<row id="msg_c04p01_boss_07" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c04p01_boss_08" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・フィールドに戻り、メッセージ表示後
-　画面左に退場していく
-・画面外に消えると、主人公操作可能に</comment>
-		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">[BE:09:速度コントロール:1]それほどの
-つよい　きもちで　なければ▽
-ボクは　とめられないよ[BE:09:速度コントロール:0]▼</language>
-		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]それほどの
-強い　気持ちで　なければ▽
-ボクは　とめられないよ[BE:09:速度コントロール:0]▼</language>
+	<row id="msg_c04p01_boss_08" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c04p01_clown1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
