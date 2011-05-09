@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-05-09T15:44:59"/>
+	<create user="matsumiya" host="W00224" date="2011-05-09T16:06:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1297" top="143" right="2002" bottom="771" maximized="no" rayout="Vertical2">
+	<dialog left="1300" top="217" right="2005" bottom="845" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -336,336 +336,112 @@
 	</lock>
 
 
-	<row id="msg_c05_leader_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・橋を渡ったところにpos設定
-・続けてblack_01</comment>
-		<attribute name="キャラクター">LEADER5
-ヤーコン</attribute>
-		<language name="JPN" width="256">フン！　おまえらが　カミツレの
-はなしていた　トレーナーか▼
-ワシが　この　まちの
-ジムリーダー　ヤーコンだ！▼
-かんげいなんか　しないぞ▼
-なにしろ　はしをおろした　せいで
-とらえていた　プラズマだんが▽
-まちなかに　にげて　しまったからな！▼</language>
-		<language name="JPN_KANJI" width="256">フン！　おまえらが　カミツレの
-話していた　トレーナーか▼
-ワシが　この街の
-ジムリーダー　ヤーコンだ！▼
-歓迎なんか　しないぞ▼
-なにしろ　橋をおろした　せいで
-捕らえていた　プラズマ団が▽
-街中に　逃げて　しまったからな！！▼</language>
+	<row id="msg_c05_leader_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c05_black_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・続けてleader_02</comment>
-		<attribute name="キャラクター">友達♂
-チェレン</attribute>
-		<language name="JPN" width="256">チェレン『……メンドーだな▼
-はしを　おろしてくれて
-かんしゃ　してますけど▽
-それとは　むかんけい　ですよね？▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『……メンドーだな▼
-橋を　おろしてくれて
-感謝してますけど▽
-それとは　無関係ですよね？▼</language>
+	<row id="msg_c05_black_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c05_leader_02" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・メッセージ表示後、画面左に移動
-　数歩移動後、振り向き、続けてleader_03</comment>
-		<attribute name="キャラクター">LEADER5
-ヤーコン</attribute>
-		<language name="JPN" width="256">ヤーコン『なんとでも　いえ▼
-だいじなのは　おまえたちが　きた……
-そして　プラズマだんが　まちなかに▽
-にげていったと　いうことだ▼
-じぶんでも　ごういんだと　おもうが
-おまえらも　プラズマだんを　さがせ▽
-すごうでの　トレーナー　なんだろ？▼</language>
-		<language name="JPN_KANJI" width="256">ヤーコン『なんとでも　いえ▼
-大事なのは　おまえたちが　来た……
-そして　プラズマ団が　街中に▽
-逃げていったと　いうことだ▼
-自分でも　強引だと　思うが
-おまえらも　プラズマ団を　探せ▽
-すごうでの　トレーナー　なんだろ？▼</language>
+	<row id="msg_c05_leader_02" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c05_leader_03" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・メッセージ表示後、画面左に移動
-　画面外に消えると続けてblack_03</comment>
-		<attribute name="キャラクター">LEADER5
-ヤーコン</attribute>
-		<language name="JPN" width="256">そうだな……▼
-プラズマだんを　みつけだしたら
-ジムで　ちょうせんを　うけてやるぞ！▽
-じんせいは　ギブ　アンド　テイク！▼</language>
-		<language name="JPN_KANJI" width="256">そうだな……▼
-プラズマ団を　みつけだしたら
-ジムで　挑戦を　受けてやるぞ！▽
-人生は　ギブ　アンド　テイク！▼</language>
+	<row id="msg_c05_leader_03" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c05_black_03" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・メッセージ表示後、主人公を見る
-・続けてblack_03a</comment>
-		<attribute name="キャラクター">友達♂
-チェレン</attribute>
-		<language name="JPN" width="256">チェレン『わかりました▼
-いわれなくても
-プラズマだんは　さがしますよ▼
-メンドーな　れんちゅうを　たおしつつ
-つよくなれる　からね……▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『わかりました▼
-いわれなくても
-プラズマ団は　探しますよ▼
-メンドーな　連中を　倒しつつ
-強くなれるからね……▼</language>
+	<row id="msg_c05_black_03" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c05_black_03a" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・メッセージ表示後、ライバル、画面左に移動
-・画面外に消えると、主人公操作可能</comment>
-		<attribute name="キャラクター">友達♂
-チェレン</attribute>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]！
-ぼくは　さきに　いく▼</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]！
-ぼくは　先に　行く▼</language>
+	<row id="msg_c05_black_03a" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c05_sage1_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・コンテナ内でプラズマ団に勝利すると
-　ジム前にゲーチスたちを配置
-・七賢人×１
-　プラズマ団したっぱ♂×２も配置
-・続けてleader_04</comment>
-		<attribute name="キャラクター">七賢人
-ゲーチス</attribute>
-		<language name="JPN" width="256">ゲーチス『ヤーコンさん
-はじめまして▼
-ワタクシ　プラズマだんの
-ゲーチスと　もうします▼
-おせわに　なった
-どうしを　ひきとりに　きました▼</language>
-		<language name="JPN_KANJI" width="256">ゲーチス『ヤーコンさん
-はじめまして▼
-ワタクシ　プラズマ団の
-ゲーチスと　申します▼
-お世話に　なった
-同志を　引き取りに　来ました▼</language>
+	<row id="msg_c05_sage1_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c05_leader_04" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・続けてsage1_02</comment>
-		<attribute name="キャラクター">LEADER5
-ヤーコン</attribute>
-		<language name="JPN" width="256">ヤーコン『いやいや　れいは　いらんよ▼
-あんたの　おなかまが
-ポケモンを　うばおうとしていたんでね▼</language>
-		<language name="JPN_KANJI" width="256">ヤーコン『いやいや　礼はいらんよ▼
-あんたの　お仲間が
-ポケモンを　奪おうとしていたんでね▼</language>
+	<row id="msg_c05_leader_04" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c05_sage1_02" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・続けてleader_05</comment>
-		<attribute name="キャラクター">七賢人
-ゲーチス</attribute>
-		<language name="JPN" width="256">ゲーチス『おや　ごかいが　あるようで▼
-ワタクシどもは　ポケモンを　わるい
-ひとから　にがしている　だけですよ▼</language>
-		<language name="JPN_KANJI" width="256">ゲーチス『おや　誤解があるようで▼
-ワタクシどもは　ポケモンを
-悪い　人間たちから▽
-解放している　だけですよ▼</language>
+	<row id="msg_c05_sage1_02" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c05_leader_05" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・続けてsage1_03</comment>
-		<attribute name="キャラクター">LEADER5
-ヤーコン</attribute>
-		<language name="JPN" width="256">ヤーコン『そうだと　いいがね▼
-ワシは　しょうじきもの　ゆえ
-ことばづかいが　わるい▼
-それに　はんして　あんたは
-ことばは　きれいだが▽
-どうも　ウソくさくてな▼
-で　なんだと　いうんだ？▼</language>
-		<language name="JPN_KANJI" width="256">ヤーコン『そうだと　いいがね▼
-ワシは　正直者ゆえ
-言葉遣いが　悪い▼
-それに　反して　あんたの
-言葉は　きれいだが▽
-どうも　きなくさくてな▼
-で　なんだと　いうんだ？▼</language>
+	<row id="msg_c05_leader_05" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c05_sage1_03" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・続けてleader_06</comment>
-		<attribute name="キャラクター">七賢人
-ゲーチス</attribute>
-		<language name="JPN" width="256">ゲーチス『プラズマだん　としても
-ホドモエシティに▽
-きょうみが　ありまして▼
-ここにいる　いがいにも
-たくさんの　ぶかが　いるのですよ……▼</language>
-		<language name="JPN_KANJI" width="256">ゲーチス『プラズマ団としても
-ホドモエシティに　興味がありまして▼
-ここにいる　以外にも
-たくさんの　部下が　いるのですよ……▼</language>
+	<row id="msg_c05_sage1_03" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c05_leader_06" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・続けてsage1_04</comment>
-		<attribute name="キャラクター">LEADER5
-ヤーコン</attribute>
-		<language name="JPN" width="256">ヤーコン『……その　ことば
-ウソか　ほんとか　わからんが▼
-たたかわずして　かつ　とはね
-たいした　もんだよ▼
-フン！　わかった
-こいつらを　つれて　かえりな！▼</language>
-		<language name="JPN_KANJI" width="256">ヤーコン『……その言葉
-ウソか　ほんとか　わからんが▼
-戦わずして　勝つ　とはね
-たいした　もんだよ▼
-フン！　わかった
-こいつらを　連れて　帰りな！▼</language>
+	<row id="msg_c05_leader_06" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c05_sage1_04" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・メッセージ表示後、七賢人のOBJ
-　ヤーコンのほうに移動</comment>
-		<attribute name="キャラクター">七賢人
-ゲーチス</attribute>
-		<language name="JPN" width="256">ゲーチス『さすが　こうざんおうと
-よばれる　しょうばいにん……▼
-すばらしい　はんだんりょくの
-もちぬしで　あられる▼
-では……　そちらの　しちけんじんを
-ひきとらせて　いただきます……▼</language>
-		<language name="JPN_KANJI" width="256">ゲーチス『さすが　鉱山王と
-呼ばれる　商売人……▽
-状況を　見る目に　優れておられる▼
-では……　そちらの　七賢人を
-引き取らせて　いただきます……▼</language>
+	<row id="msg_c05_sage1_04" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c05_sage2_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-･七賢人、ゲーチスのそばで
-　このメッセージ表示
-・続けてmsg_c05_sage1_05</comment>
-		<attribute name="キャラクター">SAGE7
-七賢人その７</attribute>
-		<language name="JPN" width="256">ヴィオ『ゲーチスさま……
-ありがとう　ございます……▼</language>
-		<language name="JPN_KANJI" width="256">ヴィオ『ゲーチスさま……
-ありがとう　ございます……▼</language>
+	<row id="msg_c05_sage2_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c05_sage1_05" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・その後、画面暗転し
-　プラズマ団のOBJ削除</comment>
-		<attribute name="キャラクター">七賢人
-ゲーチス</attribute>
-		<language name="JPN" width="256">ゲーチス『よいのです▼
-ともに　おうのため　はたらく　なかま……
-おなじ　しちけんじん　ではないですか▼
-それでは　みなさん
-また　いつの　ひか▽
-おあいすることも　あるでしょう▼</language>
-		<language name="JPN_KANJI" width="256">ゲーチス『よいのです▼
-共に　王のため　働く　同志……
-同じ　七賢人では　ないですか▼
-それでは　みなさん
-また　いつの日か▽
-お会いすることも　あるでしょう▼</language>
+	<row id="msg_c05_sage1_05" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c05_leader_07" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・画面暗転し、プラズマ団の動作も出る削除後
-・主人公に隣接してメッセージ表示
-・表示後、ジム内に入るアニメ
-　ジム挑戦が可能に
-・続けてblack_02</comment>
-		<attribute name="キャラクター">LEADER5
-ヤーコン</attribute>
-		<language name="JPN" width="256">ヤーコン『おまえら　わるいな
-せっかく　プラズマだんを　みつけたのに▼
-まあ　きをとりなおして
-ポケモンしょうぶと　いくか！▽
-あんまり　ワシを　またせるなよ▼</language>
-		<language name="JPN_KANJI" width="256">ヤーコン『おまえら　悪いな
-せっかく　プラズマ団を　みつけたのに▼
-まあ　気を取り直して
-ポケモン勝負と　いくか！▽
-あんまり　ワシを　待たせるなよ▼</language>
+	<row id="msg_c05_leader_07" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c05_black_02" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・メッセージ表示後、画面左に移動</comment>
-		<attribute name="キャラクター">友達♂
-チェレン</attribute>
-		<language name="JPN" width="256">チェレン『……おたがいに
-まちなかでの　あらそいは　さけたか▼
-それにしても　あの　ゲーチス
-ただもの　じゃないって　かんじだ▼
-……さてと　ぼくは
-ポケモンを　きたえてくる▼
-あの　ヤーコンって　ひとには
-ぜったい　まけたくないからね▼
-というか　かんぜん　しょうりで
-ジムバッジを　もらうよ▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『……お互いに
-街中での　争いは　避けたか▼
-それにしても　あの　ゲーチス
-ただもの　じゃないって　感じだ▼
-……さてと　ぼくは
-ポケモンを　鍛えてくる▼
-あの　ヤーコンって　人には
-絶対　負けたくないからね▼
-というか　完全勝利で
-ジムバッジを　もらうよ▼</language>
+	<row id="msg_c05_black_02" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c05_workman1_02" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・h02付近に配置
-・c05ジムバッジ入手のタイミングで削除</comment>
-		<attribute name="キャラクター">WORKMANその１</attribute>
-		<language name="JPN" width="256">はねばしを　あげたり　さげたりすると
-みんなが　ちゅうもく　するんだよね▼
-……で　その　すきに
-プラズマだんに　にげられたのさ▼
-はしのほうでは　みなかったから
-まちの　どこかに　いるんだろうけど</language>
-		<language name="JPN_KANJI" width="256">跳ね橋を　上げたり　下げたりすると
-みんなが　注目するんだよね▼
-……で　その　すきに
-プラズマ団に　逃げられたのさ▼
-橋のほうでは　みなかったから
-きっと　街中に　いるんだろうけど</language>
+	<row id="msg_c05_workman1_02" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c05_businessman_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -681,124 +457,40 @@
 また　のちほど　いらしてください</language>
 	</row>
 
-	<row id="msg_c05_white_01" text-color="#000000,,,,,#000000,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・主人公性別：♂
-・c05ジムバッジ入手後に発動
-・pos起動（GRIDX=168、GRIDZ=403~407）
-　メッセージのみ表示
-・続けてwhite_02
-・0＝主人公名前</comment>
-		<attribute name="キャラクター">友達♀
-ベル</attribute>
-		<language name="JPN" width="256">ベル『おうい！
-[1:00:トレーナー名:0]！！▼</language>
-		<language name="JPN_KANJI" width="256">ベル『おうい！
-[1:00:トレーナー名:0]！！▼</language>
+	<row id="msg_c05_white_01" text-color="#000000,,,#ffffff,,#000000,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c05_white_01a" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・主人公性別：♀
-・c05ジムバッジ入手後に発動
-・pos起動（GRIDX=168、GRIDZ=403~407）
-　メッセージのみ表示
-・続けてwhite_02
-・0＝主人公名前</comment>
-		<attribute name="キャラクター">友達♀
-ベル</attribute>
-		<language name="JPN" width="256">ベル『ねえねえ！
-[1:00:トレーナー名:0]！！▼</language>
-		<language name="JPN_KANJI" width="256">ベル『ねえねえ！
-[1:00:トレーナー名:0]！！▼</language>
+	<row id="msg_c05_white_01a" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c05_white_02" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・主人公に隣接してメッセージ表示
-・続けてwhite_03</comment>
-		<attribute name="キャラクター">友達♀
-ベル</attribute>
-		<language name="JPN" width="256">あのね　もしかして
-ひょっとして　ジムに　いってた？▼
-うわああ～！
-これが　ホドモエの　ジムバッジ▽
-いいなあ！　すごいなあ！！▼</language>
-		<language name="JPN_KANJI" width="256">あのね　もしかして
-ひょっとして　ジムに　いってた？▼
-うわああ～！
-これが　ホドモエの　ジムバッジ▽
-いいなあ！　すごいなあ！！▼</language>
+	<row id="msg_c05_white_02" text-color="#000000,,,#ffffff,,#000000,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c05_white_03" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・サポート頭上に「！」マーク表示後
-　メッセージ表示、続けてトレーナー戦闘に</comment>
-		<attribute name="キャラクター">友達♀
-ベル</attribute>
-		<language name="JPN" width="256">ダメダメ！
-かんしん　してばかりじゃ▼
-あたしも　トレーナーだもの
-こういうときは　しょうぶ　よね！▼</language>
-		<language name="JPN_KANJI" width="256">ダメダメ！
-感心して　ばかりじゃ▼
-あたしも　トレーナーだもの
-こういうときは　勝負よね！▼</language>
+	<row id="msg_c05_white_03" text-color="#000000,,,#ffffff,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c05_white_04" text-color="#000000,,,,,#000000,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・戦闘後、フィールド復帰時に自動で表示
-・No603「わざマシン９７「そらをとぶ」」入手
-・続けてwhite_05
-・0＝主人公名前</comment>
-		<attribute name="キャラクター">友達♀
-ベル</attribute>
-		<language name="JPN" width="256">ベル『[1:00:トレーナー名:0]とは　ひさびさの
-ポケモンしょうぶ　だったけど▽
-ものすごーく　つよくなってるのね！▼
-あたし　つよくないから
-じょうずに　いえないけれど▼
-[1:00:トレーナー名:0]は　ポケモンの　きもち
-よく　わかっていると　おもう！▼
-そうだ！　この　ひでんマシン
-[1:00:トレーナー名:0]にも　わけてあげるね▼</language>
-		<language name="JPN_KANJI" width="256">ベル『[1:00:トレーナー名:0]とは　ひさびさの
-ポケモン勝負　だったけど▽
-ものすごーく　強くなってるのね！▼
-あたし　強くないから
-じょうずに　いえないけれど▼
-[1:00:トレーナー名:0]は　ポケモンの　気持ち
-よく　わかっていると　思う！▼
-そうだ！　この　ひでんマシン
-[1:00:トレーナー名:0]にも　わけてあげるね▼</language>
+	<row id="msg_c05_white_04" text-color="#000000,,,#ffffff,,#000000,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c05_white_05" text-color="#000000,,,,,#000000,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・アイテム入手処理後、自動で表示
-・その後画面外（ポケセン方向）へ移動
-・画面外に消えると主人公、操作可能に
-・0＝主人公名前</comment>
-		<attribute name="キャラクター">友達♀
-ベル</attribute>
-		<language name="JPN" width="256">ベル『あのあと　パパが　くれたの！▼
-きっと　いつでも　すぐに
-かえって　これるように！▽
-ってことだと　おもうんだけど……▼
-そうだ　チェレンにも
-わけてあげないと……▼
-じゃあね
-[1:00:トレーナー名:0]！　バイバイ！！▼</language>
-		<language name="JPN_KANJI" width="256">ベル『あのあと　パパが　くれたの！▼
-きっと　いつでも　すぐに
-帰って　これるように！▽
-ってことだと　思うんだけど……▼
-そうだ　チェレンにも
-わけてあげないと……▼
-じゃあね
-[1:00:トレーナー名:0]！　バイバイ！！▼</language>
+	<row id="msg_c05_white_05" text-color="#000000,,,#ffffff,,#000000,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c05_woman2_01">

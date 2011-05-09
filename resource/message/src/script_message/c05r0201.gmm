@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-07-09T12:08:23"/>
+	<create user="matsumiya" host="W00224" date="2011-05-09T16:25:38"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1990" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1300" top="217" right="2005" bottom="845" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="529"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="542"/>
+		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="696"/>
+		<band id="4" index="0" style="0000" width="697"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -297,15 +297,15 @@
 ・条件を満たしていないとき</comment>
 		<attribute name="キャラ指定">OLDMAN1</attribute>
 		<language name="JPN" width="256">ほう！　おぬし
-ポケモンずかんを　もっておるのか[BE:01:ページ切り替え（クリア）]
+ポケモンずかんを　もっておるのか▼
 それで　みつけた　ポケモンの　かずは
-なんびき　なんじゃ？[BE:01:ページ切り替え（クリア）]
+なんびき　なんじゃ？▼
 ５０ひき　いじょうなら
 いいものを　やろうでは　ないか！</language>
 		<language name="JPN_KANJI" width="256">ほう！　おぬし
-ポケモン図鑑を　持っておるのか[BE:01:ページ切り替え（クリア）]
+ポケモン図鑑を　持っておるのか▼
 それで　見つけた　ポケモンの　数は
-何匹　なんじゃ？[BE:01:ページ切り替え（クリア）]
+何匹　なんじゃ？▼
 ５０匹　以上なら
 いいものを　やろうでは　ないか！</language>
 	</row>
@@ -317,17 +317,17 @@
 　No253「かいがらのすず」</comment>
 		<attribute name="キャラ指定">OLDMAN1</attribute>
 		<language name="JPN" width="256">ほう！　おぬし
-ポケモンずかんを　もっておるのか[BE:01:ページ切り替え（クリア）]
+ポケモンずかんを　もっておるのか▼
 それで　みつけた　ポケモンの　かずは
-なんびき　なんじゃ？[BE:01:ページ切り替え（クリア）]
+なんびき　なんじゃ？▼
 ほう！　５０ひき　いじょうか！
-では　これを　やろうでは　ないか！[BE:01:ページ切り替え（クリア）]</language>
+では　これを　やろうでは　ないか！▼</language>
 		<language name="JPN_KANJI" width="256">ほう！　おぬし
-ポケモン図鑑を　持っておるのか[BE:01:ページ切り替え（クリア）]
+ポケモン図鑑を　持っておるのか▼
 それで　見つけた　ポケモンの　数は
-何匹　なんじゃ？[BE:01:ページ切り替え（クリア）]
+何匹　なんじゃ？▼
 ほう！　５０匹　以上か！
-では　これを　やろうでは　ないか！[BE:01:ページ切り替え（クリア）]</language>
+では　これを　やろうでは　ないか！▼</language>
 	</row>
 
 	<row id="msg_c05r0201_oldman1_03">
