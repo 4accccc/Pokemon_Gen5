@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-04T23:16:45"/>
+	<create user="matsumiya" host="W00224" date="2011-05-09T15:44:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1294" top="205" right="1999" bottom="833" maximized="no" rayout="Vertical2">
+	<dialog left="1297" top="143" right="2002" bottom="771" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -315,7 +315,7 @@
 		<band id="2" index="3" style="0000" width="540"/>
 		<band id="3" index="4" style="0000" width="155"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -343,21 +343,21 @@
 		<attribute name="キャラクター">LEADER5
 ヤーコン</attribute>
 		<language name="JPN" width="256">フン！　おまえらが　カミツレの
-はなしていた　トレーナーか[BE:01:ページ切り替え（クリア）]
+はなしていた　トレーナーか▼
 ワシが　この　まちの
-ジムリーダー　ヤーコンだ！[BE:01:ページ切り替え（クリア）]
-かんげいなんか　しないぞ[BE:01:ページ切り替え（クリア）]
+ジムリーダー　ヤーコンだ！▼
+かんげいなんか　しないぞ▼
 なにしろ　はしをおろした　せいで
 とらえていた　プラズマだんが▽
-まちなかに　にげて　しまったからな！[BE:01:ページ切り替え（クリア）]</language>
+まちなかに　にげて　しまったからな！▼</language>
 		<language name="JPN_KANJI" width="256">フン！　おまえらが　カミツレの
-話していた　トレーナーか[BE:01:ページ切り替え（クリア）]
+話していた　トレーナーか▼
 ワシが　この街の
-ジムリーダー　ヤーコンだ！[BE:01:ページ切り替え（クリア）]
-歓迎なんか　しないぞ[BE:01:ページ切り替え（クリア）]
+ジムリーダー　ヤーコンだ！▼
+歓迎なんか　しないぞ▼
 なにしろ　橋をおろした　せいで
 捕らえていた　プラズマ団が▽
-街中に　逃げて　しまったからな！！[BE:01:ページ切り替え（クリア）]</language>
+街中に　逃げて　しまったからな！！▼</language>
 	</row>
 
 	<row id="msg_c05_black_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
@@ -381,20 +381,20 @@
 　数歩移動後、振り向き、続けてleader_03</comment>
 		<attribute name="キャラクター">LEADER5
 ヤーコン</attribute>
-		<language name="JPN" width="256">ヤーコン『なんとでも　いえ[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ヤーコン『なんとでも　いえ▼
 だいじなのは　おまえたちが　きた……
 そして　プラズマだんが　まちなかに▽
-にげていったと　いうことだ[BE:01:ページ切り替え（クリア）]
+にげていったと　いうことだ▼
 じぶんでも　ごういんだと　おもうが
-おまえらも　プラズマだんを　さがせ[BE:00:ページ切り替え（行送り）]
-すごうでの　トレーナー　なんだろ？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ヤーコン『なんとでも　いえ[BE:01:ページ切り替え（クリア）]
+おまえらも　プラズマだんを　さがせ▽
+すごうでの　トレーナー　なんだろ？▼</language>
+		<language name="JPN_KANJI" width="256">ヤーコン『なんとでも　いえ▼
 大事なのは　おまえたちが　来た……
 そして　プラズマ団が　街中に▽
-逃げていったと　いうことだ[BE:01:ページ切り替え（クリア）]
+逃げていったと　いうことだ▼
 自分でも　強引だと　思うが
-おまえらも　プラズマ団を　探せ[BE:00:ページ切り替え（行送り）]
-すごうでの　トレーナー　なんだろ？[BE:01:ページ切り替え（クリア）]</language>
+おまえらも　プラズマ団を　探せ▽
+すごうでの　トレーナー　なんだろ？▼</language>
 	</row>
 
 	<row id="msg_c05_leader_03" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
@@ -403,14 +403,14 @@
 　画面外に消えると続けてblack_03</comment>
 		<attribute name="キャラクター">LEADER5
 ヤーコン</attribute>
-		<language name="JPN" width="256">そうだな……[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">そうだな……▼
 プラズマだんを　みつけだしたら
-ジムで　ちょうせんを　うけてやるぞ！[BE:00:ページ切り替え（行送り）]
-じんせいは　ギブ　アンド　テイク！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">そうだな……[BE:01:ページ切り替え（クリア）]
+ジムで　ちょうせんを　うけてやるぞ！▽
+じんせいは　ギブ　アンド　テイク！▼</language>
+		<language name="JPN_KANJI" width="256">そうだな……▼
 プラズマ団を　みつけだしたら
-ジムで　挑戦を　受けてやるぞ！[BE:00:ページ切り替え（行送り）]
-人生は　ギブ　アンド　テイク！[BE:01:ページ切り替え（クリア）]</language>
+ジムで　挑戦を　受けてやるぞ！▽
+人生は　ギブ　アンド　テイク！▼</language>
 	</row>
 
 	<row id="msg_c05_black_03" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
@@ -438,9 +438,9 @@
 		<attribute name="キャラクター">友達♂
 チェレン</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]！
-ぼくは　さきに　いく[BE:01:ページ切り替え（クリア）]</language>
+ぼくは　さきに　いく▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]！
-ぼくは　先に　行く[BE:01:ページ切り替え（クリア）]</language>
+ぼくは　先に　行く▼</language>
 	</row>
 
 	<row id="msg_c05_sage1_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
@@ -453,17 +453,17 @@
 		<attribute name="キャラクター">七賢人
 ゲーチス</attribute>
 		<language name="JPN" width="256">ゲーチス『ヤーコンさん
-はじめまして[BE:01:ページ切り替え（クリア）]
+はじめまして▼
 ワタクシ　プラズマだんの
-ゲーチスと　もうします[BE:01:ページ切り替え（クリア）]
+ゲーチスと　もうします▼
 おせわに　なった
-どうしを　ひきとりに　きました[BE:01:ページ切り替え（クリア）]</language>
+どうしを　ひきとりに　きました▼</language>
 		<language name="JPN_KANJI" width="256">ゲーチス『ヤーコンさん
-はじめまして[BE:01:ページ切り替え（クリア）]
+はじめまして▼
 ワタクシ　プラズマ団の
-ゲーチスと　申します[BE:01:ページ切り替え（クリア）]
+ゲーチスと　申します▼
 お世話に　なった
-同志を　引き取りに　来ました[BE:01:ページ切り替え（クリア）]</language>
+同志を　引き取りに　来ました▼</language>
 	</row>
 
 	<row id="msg_c05_leader_04" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
@@ -471,12 +471,12 @@
 ・続けてsage1_02</comment>
 		<attribute name="キャラクター">LEADER5
 ヤーコン</attribute>
-		<language name="JPN" width="256">ヤーコン『いやいや　れいは　いらんよ[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ヤーコン『いやいや　れいは　いらんよ▼
 あんたの　おなかまが
-ポケモンを　うばおうとしていたんでね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ヤーコン『いやいや　礼はいらんよ[BE:01:ページ切り替え（クリア）]
+ポケモンを　うばおうとしていたんでね▼</language>
+		<language name="JPN_KANJI" width="256">ヤーコン『いやいや　礼はいらんよ▼
 あんたの　お仲間が
-ポケモンを　奪おうとしていたんでね[BE:01:ページ切り替え（クリア）]</language>
+ポケモンを　奪おうとしていたんでね▼</language>
 	</row>
 
 	<row id="msg_c05_sage1_02" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
@@ -484,13 +484,13 @@
 ・続けてleader_05</comment>
 		<attribute name="キャラクター">七賢人
 ゲーチス</attribute>
-		<language name="JPN" width="256">ゲーチス『おや　ごかいが　あるようで[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ゲーチス『おや　ごかいが　あるようで▼
 ワタクシどもは　ポケモンを　わるい
-ひとから　にがしている　だけですよ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ゲーチス『おや　誤解があるようで[BE:01:ページ切り替え（クリア）]
+ひとから　にがしている　だけですよ▼</language>
+		<language name="JPN_KANJI" width="256">ゲーチス『おや　誤解があるようで▼
 ワタクシどもは　ポケモンを
 悪い　人間たちから▽
-解放している　だけですよ[BE:01:ページ切り替え（クリア）]</language>
+解放している　だけですよ▼</language>
 	</row>
 
 	<row id="msg_c05_leader_05" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
@@ -504,14 +504,14 @@
 それに　はんして　あんたは
 ことばは　きれいだが▽
 どうも　ウソくさくてな▼
-で　なんだと　いうんだ？[BE:01:ページ切り替え（クリア）]</language>
+で　なんだと　いうんだ？▼</language>
 		<language name="JPN_KANJI" width="256">ヤーコン『そうだと　いいがね▼
 ワシは　正直者ゆえ
 言葉遣いが　悪い▼
 それに　反して　あんたの
 言葉は　きれいだが▽
 どうも　きなくさくてな▼
-で　なんだと　いうんだ？[BE:01:ページ切り替え（クリア）]</language>
+で　なんだと　いうんだ？▼</language>
 	</row>
 
 	<row id="msg_c05_sage1_03" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
@@ -520,14 +520,14 @@
 		<attribute name="キャラクター">七賢人
 ゲーチス</attribute>
 		<language name="JPN" width="256">ゲーチス『プラズマだん　としても
-ホドモエシティに[BE:00:ページ切り替え（行送り）]
-きょうみが　ありまして[BE:01:ページ切り替え（クリア）]
+ホドモエシティに▽
+きょうみが　ありまして▼
 ここにいる　いがいにも
-たくさんの　ぶかが　いるのですよ……[BE:01:ページ切り替え（クリア）]</language>
+たくさんの　ぶかが　いるのですよ……▼</language>
 		<language name="JPN_KANJI" width="256">ゲーチス『プラズマ団としても
-ホドモエシティに　興味がありまして[BE:01:ページ切り替え（クリア）]
+ホドモエシティに　興味がありまして▼
 ここにいる　以外にも
-たくさんの　部下が　いるのですよ……[BE:01:ページ切り替え（クリア）]</language>
+たくさんの　部下が　いるのですよ……▼</language>
 	</row>
 
 	<row id="msg_c05_leader_06" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
@@ -558,14 +558,14 @@
 		<language name="JPN" width="256">ゲーチス『さすが　こうざんおうと
 よばれる　しょうばいにん……▼
 すばらしい　はんだんりょくの
-もちぬしで　あられる[BE:01:ページ切り替え（クリア）]
+もちぬしで　あられる▼
 では……　そちらの　しちけんじんを
-ひきとらせて　いただきます……[BE:01:ページ切り替え（クリア）]</language>
+ひきとらせて　いただきます……▼</language>
 		<language name="JPN_KANJI" width="256">ゲーチス『さすが　鉱山王と
 呼ばれる　商売人……▽
 状況を　見る目に　優れておられる▼
 では……　そちらの　七賢人を
-引き取らせて　いただきます……[BE:01:ページ切り替え（クリア）]</language>
+引き取らせて　いただきます……▼</language>
 	</row>
 
 	<row id="msg_c05_sage2_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
@@ -576,9 +576,9 @@
 		<attribute name="キャラクター">SAGE7
 七賢人その７</attribute>
 		<language name="JPN" width="256">ヴィオ『ゲーチスさま……
-ありがとう　ございます……[BE:01:ページ切り替え（クリア）]</language>
+ありがとう　ございます……▼</language>
 		<language name="JPN_KANJI" width="256">ヴィオ『ゲーチスさま……
-ありがとう　ございます……[BE:01:ページ切り替え（クリア）]</language>
+ありがとう　ございます……▼</language>
 	</row>
 
 	<row id="msg_c05_sage1_05" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
@@ -597,8 +597,8 @@
 共に　王のため　働く　同志……
 同じ　七賢人では　ないですか▼
 それでは　みなさん
-また　いつの日か[BE:00:ページ切り替え（行送り）]
-お会いすることも　あるでしょう[BE:01:ページ切り替え（クリア）]</language>
+また　いつの日か▽
+お会いすることも　あるでしょう▼</language>
 	</row>
 
 	<row id="msg_c05_leader_07" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
@@ -611,15 +611,15 @@
 		<attribute name="キャラクター">LEADER5
 ヤーコン</attribute>
 		<language name="JPN" width="256">ヤーコン『おまえら　わるいな
-せっかく　プラズマだんを　みつけたのに[BE:01:ページ切り替え（クリア）]
+せっかく　プラズマだんを　みつけたのに▼
 まあ　きをとりなおして
 ポケモンしょうぶと　いくか！▽
-あんまり　ワシを　またせるなよ[BE:01:ページ切り替え（クリア）]</language>
+あんまり　ワシを　またせるなよ▼</language>
 		<language name="JPN_KANJI" width="256">ヤーコン『おまえら　悪いな
-せっかく　プラズマ団を　みつけたのに[BE:01:ページ切り替え（クリア）]
+せっかく　プラズマ団を　みつけたのに▼
 まあ　気を取り直して
 ポケモン勝負と　いくか！▽
-あんまり　ワシを　待たせるなよ[BE:01:ページ切り替え（クリア）]</language>
+あんまり　ワシを　待たせるなよ▼</language>
 	</row>
 
 	<row id="msg_c05_black_02" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
@@ -674,10 +674,10 @@
 ・d05r0101イベントクリアで削除</comment>
 		<attribute name="キャラクター">BUSINESSMAN</attribute>
 		<language name="JPN" width="256">ジムリーダーの　ヤーコンさまですが
-ただいま　とりこみちゅう　でして[BE:00:ページ切り替え（行送り）]
+ただいま　とりこみちゅう　でして▽
 また　のちほど　いらしてください</language>
 		<language name="JPN_KANJI" width="256">ジムリーダーの　ヤーコン様ですが
-ただいま　取り込み中　でして[BE:00:ページ切り替え（行送り）]
+ただいま　取り込み中　でして▽
 また　のちほど　いらしてください</language>
 	</row>
 
@@ -805,26 +805,26 @@
 		<comment>♀</comment>
 		<attribute name="キャラクター">WOMAN2</attribute>
 		<language name="JPN" width="256">どうですか
-この　まち　じまんの　はねばし[BE:01:ページ切り替え（クリア）]
+この　まち　じまんの　はねばし▼
 あの　うつくしい　すがたから
-べつめい　リザードンばし　とも[BE:00:ページ切り替え（行送り）]
+べつめい　リザードンばし　とも▽
 よばれて　いるんですよ</language>
 		<language name="JPN_KANJI" width="256">どうですか
-この街　自慢の　跳開橋[BE:01:ページ切り替え（クリア）]
+この街　自慢の　跳開橋▼
 あの　美しい　姿から
-別名　リザードン橋　とも[BE:00:ページ切り替え（行送り）]
+別名　リザードン橋　とも▽
 呼ばれて　いるんですよ</language>
 	</row>
 
 	<row id="msg_c05_babygirl1_01">
 		<comment>♀</comment>
 		<attribute name="キャラクター">BABYGIRL1</attribute>
-		<language name="JPN" width="256">ねえねえ　トレーナーさん[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ねえねえ　トレーナーさん▼
 ポケモンリーグ　してんのう　と
 たたかったことは　ある？▼
 ジムバッジを　８こ　もってないと
 たたかえないんだよ？</language>
-		<language name="JPN_KANJI" width="256">ねえねえ　トレーナーさん[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">ねえねえ　トレーナーさん▼
 ポケモンリーグ　してんのう　と
 たたかったことは　ある？▼
 ジムバッジを　８こ　もってないと
@@ -834,10 +834,10 @@
 	<row id="msg_c05_backpackerw_01">
 		<comment>♀</comment>
 		<attribute name="キャラクター">BACKPACKERW</attribute>
-		<language name="JPN" width="256">うみ……[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">うみ……▼
 わたしが　ここで　こぼした　なみだは
 アサギシティまで　ながれるのかしら</language>
-		<language name="JPN_KANJI" width="256">海……[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">海……▼
 私が　ここで　零した　涙は
 アサギシティまで　流れるのかしら</language>
 	</row>
@@ -846,12 +846,12 @@
 		<comment>♂</comment>
 		<attribute name="キャラクター">TRAINERM</attribute>
 		<language name="JPN" width="256">プラズマだんの　やつらに
-むりやり　ポケモンしょうぶを[BE:00:ページ切り替え（行送り）]
-いどまれたあげく　まけて[BE:00:ページ切り替え（行送り）]
+むりやり　ポケモンしょうぶを▽
+いどまれたあげく　まけて▽
 ポケモン　うばわれちゃったよ……</language>
 		<language name="JPN_KANJI" width="256">プラズマ団の　やつらに
-無理やり　ポケモン勝負を[BE:00:ページ切り替え（行送り）]
-挑まれたあげく　負けて[BE:00:ページ切り替え（行送り）]
+無理やり　ポケモン勝負を▽
+挑まれたあげく　負けて▽
 ポケモン　奪われちゃったよ……</language>
 	</row>
 
@@ -937,12 +937,12 @@
 	<row id="msg_c05_man2_01">
 		<comment>♂</comment>
 		<attribute name="キャラクター">MAN2</attribute>
-		<language name="JPN" width="256">はしって　すごいよな！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">はしって　すごいよな！▼
 だって　はしは　せかいを
 つなぐ　シンボル　なんだから！▼
 って　５ばんどうろの
 ヤツも　おなじこと　いってただろ！？</language>
-		<language name="JPN_KANJI" width="256">橋って　すごいよな！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">橋って　すごいよな！▼
 だって　橋は　世界を
 つなぐ　シンボル　なんだから！▼
 って　５番道路の
@@ -1319,7 +1319,7 @@
 		<language name="JPN_KANJI" width="256">ホドモエの　マーケット</language>
 	</row>
 
-	<row id="msg_c05_gymsign_01" text-color="#000000,,,,,#000000,#000000,,,,,,#000000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c05_gymsign_01" text-color="#000000,,,,,#000000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>ポケモンジム</comment>
 		<attribute name="キャラクター">看板</attribute>
 		<language name="JPN" width="256">ホドモエシティ　ポケモンジム
