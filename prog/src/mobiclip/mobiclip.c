@@ -374,7 +374,8 @@ static GFL_PROC_RESULT MOBICLIP_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p
   }
 
   // ムービーSkip
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SKIP )
+  if( p_wk->p_param->skip_enable == TRUE &&
+      GFL_UI_KEY_GetTrg() & PAD_BUTTON_SKIP )
   {
     is_end = TRUE;
   }
@@ -438,7 +439,7 @@ static BOOL MO_Open( MO_WORK *p_wk, ARCID arcID )
     }
     OS_Printf("Mobiclip データTCM:%d byte\n", sizeDTCM);
 
-    //MO_InitITCMArea( OS_GetITCMArenaLo(), sizeITCM );
+    MO_InitITCMArea( OS_GetITCMArenaLo(), sizeITCM );
     //MO_InitDTCMArea( OS_GetDTCMArenaLo(), sizeDTCM );
   }
 

@@ -185,6 +185,9 @@ static GMEVENT_RESULT debugMenuMobiclipSelectEvent( GMEVENT *event, int *seq, vo
     break;
   case 3:
     {
+      // フェードアウト
+      //GMEVENT_CallEvent(event, EVENT_FieldFadeOut_White( work->gsys, work->fieldmap, FIELD_FADE_WAIT));
+
       // BGM停止
       PMSND_FadeOutBGM(PMSND_FADE_FAST);
       (*seq)++;
@@ -192,11 +195,19 @@ static GMEVENT_RESULT debugMenuMobiclipSelectEvent( GMEVENT *event, int *seq, vo
 		break;
   case 4:
     {
-      //work->p_param = MOBICLIP_PARAM_Alloc( work->heapID, work->arcID, MOBICLIP_MODE_DEFAULT, FALSE );
-
+      //work->p_param = MOBICLIP_PARAM_Alloc( work->heapID, work->arcID, MOBICLIP_MODE_DEFAULT, TRUE );
+      
       // BGM退避
       PMSND_PauseBGM(TRUE);
       PMSND_PushBGM();
+
+      // Rボタン押しながらだとSKIPできない
+      if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+      {
+        work->param.skip_enable = FALSE;
+      }else{
+        work->param.skip_enable = TRUE;
+      }
 
       work->param.arcID = work->arcID;
       GMEVENT_CallEvent( event, EVENT_FieldSubProc( work->gsys, work->fieldmap,
@@ -211,16 +222,13 @@ static GMEVENT_RESULT debugMenuMobiclipSelectEvent( GMEVENT *event, int *seq, vo
       //ネットOffフラグを落とすタイミングがフィールド復帰に間に合わないので強制復帰させる
       GAMESYSTEM_CommBootAlways(work->gsys);
 
-      // 強制Cギア画面
-      {
-        //FIELD_SUBSCREEN_WORK * subscreen = FIELDMAP_GetFieldSubscreenWork(work->fieldmap);
-        //FIELD_SUBSCREEN_ChangeForce(subscreen, FIELD_SUBSCREEN_NORMAL);
-      }
-
       // BGM復帰
       PMSND_PopBGM();
       PMSND_PauseBGM(FALSE);
       PMSND_FadeInBGM(PMSND_FADE_NORMAL);
+
+      // フェードイン
+      //GMEVENT_CallEvent(event, EVENT_FieldFadeIn_White( work->gsys, work->fieldmap, FIELD_FADE_WAIT));
 
       (*seq)++;
     }
