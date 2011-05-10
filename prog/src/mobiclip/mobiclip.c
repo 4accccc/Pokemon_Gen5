@@ -76,7 +76,7 @@ typedef struct {
   MOHandle        handle;           // Mobiclipムービーハンドル
   FILEHANDLE      *file;            // FSハンドル
 
-  BOOL            is_open;          // 初期化出来たか
+  BOOL            isOpen;           // 初期化出来たか
   BOOL            coverClosed;      // 蓋が折り畳まれている時にTRUE
   
   // image
@@ -84,6 +84,8 @@ typedef struct {
   BOOL	          skipDone;         // 処理落ち時に毎フレームSkipするの防止用
   GFL_TCB         *VblankTcb;       // 登録したVblankFuncのポインタ
   OSAlarm         alarm;            // タイミング用
+  u8              lastQue;          // 終了時
+  BOOL            isCancel;         // 再生Skipしたか
 
 
   // sound
@@ -126,6 +128,7 @@ static void MO_Close( MO_WORK *p_wk );
 static BOOL MO_IMAGE_Init( MO_WORK *p_wk );
 static BOOL MO_IMAGE_Main( MO_WORK *p_wk, MOHandle handle );
 static void MO_IMAGE_Exit( MO_WORK *p_wk );
+static void MO_IMAGE_Trans( MO_WORK *p_wk, MOHandle handle );
 static u16* MO_IMAGE_GetBackBuffer( void );
 static void MO_IMAGE_Flip( void );
 static void MO_IMAGE_BlitAndFlip( MOHandle handle );
@@ -272,10 +275,10 @@ static GFL_PROC_RESULT MOBICLIP_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p
   p_wk->coverClosed = FALSE;
 
   // ファイル開く
-  p_wk->is_open = MO_Open( p_wk, p_wk->p_param->arcID );
+  p_wk->isOpen = MO_Open( p_wk, p_wk->p_param->arcID );
 
   // 初期化
-  if( p_wk->is_open == TRUE )
+  if( p_wk->isOpen == TRUE )
   {
     BOOL ret;
 
@@ -310,7 +313,7 @@ static GFL_PROC_RESULT MOBICLIP_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p
   MO_WORK *p_wk = p_wk_adrs;
 
   // 破棄
-  if( p_wk->is_open == TRUE )
+  if( p_wk->isOpen == TRUE )
   {
     MO_IMAGE_Exit( p_wk );
     MO_SOUND_Exit( p_wk );
@@ -348,10 +351,14 @@ static GFL_PROC_RESULT MOBICLIP_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p
 {
   MO_WORK *p_wk = p_wk_adrs;
 
-  BOOL  is_end = FALSE;     // 終了
+  // シーケンス定義
+  enum{
+    SEQ_MOVIE_PLAY,       // ムービー再生
+    SEQ_MOVIE_LAST_PLAY,  // 終了前ムービー再生
+  };
 
   // ファイルオープンに失敗していたら、終了させる
-  if( p_wk->is_open == FALSE )
+  if( p_wk->isOpen == FALSE )
   {
     return GFL_PROC_RES_FINISH;
   }
@@ -362,27 +369,58 @@ static GFL_PROC_RESULT MOBICLIP_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p
     return GFL_PROC_RES_CONTINUE;
   }
 
-  // イメージメイン
-  if( MO_IMAGE_Main( p_wk, p_wk->handle ) )
-  {
-    is_end = TRUE;
-  }
-  // サウンドメイン
-  if( MO_SOUND_Main( p_wk, p_wk->handle ) )
-  {
-    is_end = TRUE;
+  // シーケンス別処理
+  switch( *p_seq ){
+  case SEQ_MOVIE_PLAY:
+    {
+      BOOL  is_end = FALSE;     // 終了
+
+      // イメージメイン
+      if( MO_IMAGE_Main( p_wk, p_wk->handle ) )
+      {
+        is_end = TRUE;
+      }
+      
+      // サウンドメイン
+      MO_SOUND_Main( p_wk, p_wk->handle );
+
+      // ムービーSkip
+      if( p_wk->p_param->skip_enable == TRUE &&
+          GFL_UI_KEY_GetTrg() & PAD_BUTTON_SKIP )
+      {
+        p_wk->isCancel = TRUE;
+        is_end = TRUE;
+      }
+
+      // シーケンス移行
+      if( is_end )
+      {
+        (*p_seq) = SEQ_MOVIE_LAST_PLAY;
+      }
+    }
+    break;
+
+  case SEQ_MOVIE_LAST_PLAY:
+    {
+      // ※終了する前に、キューに残っているイメージを処理する
+      if( p_wk->isCancel == FALSE )
+      {
+        if( p_wk->lastQue++ < MO_NB_BUFFERED_FRAME_MIN-1 )
+        {
+          MO_IMAGE_BlitAndFlip( p_wk->handle );
+          ICHI_Printf("lastQue = %d \n", p_wk->lastQue);
+          return GFL_PROC_RES_CONTINUE;
+        }
+      }
+
+      // 終了
+      return GFL_PROC_RES_FINISH;
+    }
+    break;
+
+  default: GF_ASSERT(0);
   }
 
-  // ムービーSkip
-  if( p_wk->p_param->skip_enable == TRUE &&
-      GFL_UI_KEY_GetTrg() & PAD_BUTTON_SKIP )
-  {
-    is_end = TRUE;
-  }
-  
-  // 終了
-  if( is_end ){ return GFL_PROC_RES_FINISH; }
-  else        { return GFL_PROC_RES_CONTINUE; }
 
   return GFL_PROC_RES_CONTINUE;
 }
@@ -483,7 +521,7 @@ static BOOL MO_Open( MO_WORK *p_wk, ARCID arcID )
 //-----------------------------------------------------------------------------
 static void MO_Close( MO_WORK *p_wk )
 {
-  if( p_wk->is_open == TRUE )
+  if( p_wk->isOpen == TRUE )
   {
     // ムービー閉じる
     MO_CloseMovie( p_wk->handle );
@@ -566,6 +604,8 @@ static BOOL MO_IMAGE_Init( MO_WORK *p_wk )
   // 値初期化
   p_wk->nbFrameBuffered = 0;
   p_wk->skipDone        = FALSE;
+  p_wk->lastQue         = 0;
+  p_wk->isCancel        = FALSE;
   g_BlitImageFlag       = 0;
   g_DispBuffer          = 0;
 	g_FlipStatus          = 0;
@@ -606,12 +646,45 @@ static BOOL MO_IMAGE_Main( MO_WORK *p_wk, MOHandle handle )
 
   // ムービーフレームのイメージを解凍して、
   // イメージフレームFIFOに格納する。
-  MO_UnpackFrameImage( handle );
+  MO_UnpackFrameImage( p_wk->handle );
 
   // フレームを解凍した回数
   p_wk->nbFrameBuffered++;
 
+  // イメージ転送
+  MO_IMAGE_Trans( p_wk, handle );
 
+  return FALSE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ムービーイメージ  終了
+ *
+ *	@param	*p_wk   ワーク
+ */
+//-----------------------------------------------------------------------------
+static void MO_IMAGE_Exit( MO_WORK *p_wk )
+{
+  // Flipするまで待ち
+  while (g_FlipStatus == 0){};
+
+  // Cancel the alarm 
+  OS_CancelAlarm( &p_wk->alarm );
+
+  // Vblank関数破棄
+  GFL_TCB_DeleteTask( p_wk->VblankTcb );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  イメージ転送
+ *
+ *	@param	*p_wk   ワーク
+ *	@param	handle  mobiclipハンドル 
+ */
+//-----------------------------------------------------------------------------
+static void MO_IMAGE_Trans( MO_WORK *p_wk, MOHandle handle )
+{
   // フレームを解凍した回数が指定した回数に達したら、イメージ転送をする
   if (p_wk->nbFrameBuffered >= BUFFERED_FRAME_MAX || MO_GetAudioFrequency(handle) == 0)
   {
@@ -644,27 +717,8 @@ static BOOL MO_IMAGE_Main( MO_WORK *p_wk, MOHandle handle )
       p_wk->skipDone = FALSE;
     }
   }
-
-  return FALSE;
 }
-//----------------------------------------------------------------------------
-/**
- *	@brief  ムービーイメージ  終了
- *
- *	@param	*p_wk   ワーク
- */
-//-----------------------------------------------------------------------------
-static void MO_IMAGE_Exit( MO_WORK *p_wk )
-{
-  // Flipするまで待ち
-  while (g_FlipStatus == 0){};
 
-  // Cancel the alarm 
-  OS_CancelAlarm( &p_wk->alarm );
-
-  // Vblank関数破棄
-  GFL_TCB_DeleteTask( p_wk->VblankTcb );
-}
 //----------------------------------------------------------------------------
 /**
  *	@brief  表示VRAM取得
@@ -749,7 +803,6 @@ static void AlarmIntr( void* arg )
  *        MO_SOUND
  */
 //=============================================================================
-
 
 //----------------------------------------------------------------------------
 /**
@@ -869,9 +922,11 @@ static BOOL MO_SOUND_Main( MO_WORK *p_wk, MOHandle handle )
         DC_StoreRange(p_wk->audioSampleBufferRight+p_wk->audioSampleBufferIndex,nbSamplePerAudioPacket * 2);
 
         // アドレスをパケット分加算
-        p_wk->audioSampleBufferIndex+=nbSamplePerAudioPacket;
+        p_wk->audioSampleBufferIndex += nbSamplePerAudioPacket;
         if (p_wk->audioSampleBufferIndex == p_wk->soundBufferNbPackets * nbSamplePerAudioPacket)
+        {
           p_wk->audioSampleBufferIndex = 0;
+        }
       }
 
       // パケット転送した回数インクリメント
@@ -958,6 +1013,8 @@ static void MO_SOUND_StartSound( MO_WORK *p_wk, u32 frequency, u32 nbSamplePerAu
         SND_CHANNEL_DATASHIFT_NONE,           // データシフト設定
         (int)soundClockTick,                  // タイマー値。SND_TIMER_CLOCK/rate[hZ]
         0);                                   // パン値。0(左),127(右)
+
+  ICHI_Printf("ループ長 %d \n", (int)(p_wk->soundBufferNbPackets*nbSamplePerAudioPacket/2));
         
   // チャンネル1 セットアップ
   SND_SetupChannelPcm(
