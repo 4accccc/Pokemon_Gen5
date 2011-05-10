@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-20T20:12:57"/>
+	<create user="matsumiya" host="W00224" date="2011-05-10T20:25:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="199"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -298,6 +298,148 @@
 マコモ</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_c03r1103_inventor_02">
+		<comment>♀</comment>
+		<attribute name="キャラ指定">ASSISTANTW
+マコモ</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_c03r1103_inventor_03">
+		<comment>♀</comment>
+		<attribute name="キャラ指定">ASSISTANTW
+マコモ</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_c03r1103_pc_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>調べたとき</comment>
+		<attribute name="キャラ指定">パソコン</attribute>
+		<language name="JPN" width="256">マコモの　メモ▼</language>
+		<language name="JPN_KANJI" width="256">マコモの　メモ▼</language>
+	</row>
+
+	<row id="msg_c03r1103_pc_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>選択肢表示</comment>
+		<attribute name="キャラ指定">パソコン</attribute>
+		<language name="JPN" width="256">どの　こうもくを　よみますか？</language>
+		<language name="JPN_KANJI" width="256">どの　項目を　読みますか？</language>
+	</row>
+
+	<row id="msg_c03r1103_pc_select_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>選択肢
+・選ぶとpc_03</comment>
+		<attribute name="キャラ指定">パソコン</attribute>
+		<language name="JPN" width="256">ゲームシンク</language>
+		<language name="JPN_KANJI" width="256">ゲームシンク</language>
+	</row>
+
+	<row id="msg_c03r1103_pc_select_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>選択肢
+・選ぶとpc_04</comment>
+		<attribute name="キャラ指定">パソコン</attribute>
+		<language name="JPN" width="256">ポケモンのゆめ</language>
+		<language name="JPN_KANJI" width="256">ポケモンの夢</language>
+	</row>
+
+	<row id="msg_c03r1103_pc_select_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>選択肢
+・選ぶとウインドウが閉じる</comment>
+		<attribute name="キャラ指定">パソコン</attribute>
+		<language name="JPN" width="256">やめる</language>
+		<language name="JPN_KANJI" width="256">やめる</language>
+	</row>
+
+	<row id="msg_c03r1103_pc_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>解説文
+・続けてpc_02表示</comment>
+		<attribute name="キャラ指定">パソコン</attribute>
+		<language name="JPN" width="256">ゲームシンクとは……▼
+ポケモンを　ねむらせて
+きおくを　とりだすことで▼
+Ｗｉ－Ｆｉコネクションを　つうじて
+せかいじゅうの　トレーナーの▽
+レポートを　あつめる　システム▼
+Ｃギアの　がめんに　ある
+Ｗｉ－Ｆｉを　タッチして　あらわれる▽
+[FF:00:色:1]ゲームシンク[FF:00:色:0]という　ボタンで▼
+ねむらせる　ポケモンを　えらび
+Ｗｉ－Ｆｉコネクションで▽
+レポートを　おくることが　できる▼
+ねむらせることの　できる
+ポケモンは　けんきゅうの　けっか▽
+しだいに　ふえていく　よてい▼</language>
+		<language name="JPN_KANJI" width="256">ゲームシンクとは……▼
+ポケモンを　眠らせて
+記憶を　とりだすことで▼
+Ｗｉ－Ｆｉコネクションを　通じて
+世界中の　トレーナーの▽
+レポートを　集める　システム▼
+Ｃ－ＧＥＡＲの　画面に　ある
+Ｗｉ－Ｆｉを　タッチして　表示される▽
+[FF:00:色:1]ＧＡＭＥ　ＳＹＮＣ[FF:00:色:0]という　ボタンで▼
+眠らせる　ポケモンを　選び
+Ｗｉ－Ｆｉコネクションで▽
+レポートを　送信することが　できる▼
+眠らせることの　できる
+ポケモンは　研究の　結果▽
+次第に　増えていく　予定▼</language>
+	</row>
+
+	<row id="msg_c03r1103_pc_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>解説文
+・続けてpc_02表示</comment>
+		<attribute name="キャラ指定">パソコン</attribute>
+		<language name="JPN" width="256">ポケモンのゆめ　とは……▼
+ねむらせた　ポケモンは
+ねている　あいだに　ゆめをみる▼
+ゲームシンクで　ねむらせた
+ポケモンを　おこすと▽
+その　あいだに　みた　ゆめは▼
+イッシュちほうの　ちゅうしんに　ある
+[FF:00:色:1]ハイリンク[FF:00:色:0]という　くうかんで▽
+げんじつと　なっている　ようす……▼</language>
+		<language name="JPN_KANJI" width="256">ポケモンの夢　とは……▼
+眠らせた　ポケモンは
+寝ている　あいだに　夢をみる▼
+ゲームシンクで　眠らせた
+ポケモンを　起こすと▽
+その　あいだに　みた　夢は▼
+イッシュ地方の　中心に　ある
+[FF:00:色:1]ハイリンク[FF:00:色:0]という　空間で▽
+現実と　なっている　様子……▼</language>
+	</row>
+
+	<row id="msg_c01r0101_books_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>本棚その１
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">本棚その１</attribute>
+		<language name="JPN" width="256">Ｃギア　マニュアル▼
+そうさに　こまったら
+がめんの　？を　タッチ！</language>
+		<language name="JPN_KANJI" width="256">Ｃ－ＧＥＡＲ　マニュアル▼
+操作に　困ったら
+画面の　？を　タッチ！</language>
+	</row>
+
+	<row id="msg_c01r0101_books2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>本棚その２
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">本棚その２</attribute>
+		<language name="JPN" width="256">ポケモン　あずかり　システムとは？▼
+パソコンつうしん　の
+ポケモン　あずかり　システムを▽
+かいはつ　したのは▽
+カントーちほうの　マサキである</language>
+		<language name="JPN_KANJI" width="256">ポケモン預かりシステム　とは？▼
+パソコン通信の
+ポケモン預かりシステムを▽
+開発したのは▽
+カントー地方の　マサキである</language>
 	</row>
 
 	<flowchart-group-list>
