@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-05-09T20:28:54"/>
+	<create user="matsumiya" host="W00224" date="2011-05-10T21:21:07"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1291" top="135" right="1996" bottom="763" maximized="no" rayout="Vertical2">
+	<dialog left="1297" top="225" right="2002" bottom="853" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -304,8 +304,8 @@
 	<row id="msg_c03p01_swboss_02">
 		<comment>♂
 ・はい/いいえの選択肢表示
-・はい　→
-　いいえ→</comment>
+・はい　→swboss_03
+　いいえ→swboss_04</comment>
 		<attribute name="キャラ指定">アクロマ</attribute>
 		<language name="JPN" width="256">もし　さしつかえ　なければ
 きみの　ポケモンを　みせてください！▼</language>
@@ -315,21 +315,23 @@
 
 	<row id="msg_c03p01_swboss_03">
 		<comment>♂
-・はい選択時</comment>
+・はい選択時
+・続けてswboss_05</comment>
 		<attribute name="キャラ指定">アクロマ</attribute>
-		<language name="JPN" width="256">？？？『よろしい！</language>
-		<language name="JPN_KANJI" width="256">？？？『よろしい！</language>
+		<language name="JPN" width="256">？？？『よろしい！▼</language>
+		<language name="JPN_KANJI" width="256">？？？『よろしい！▼</language>
 	</row>
 
 	<row id="msg_c03p01_swboss_04">
 		<comment>♂
-・いいえ選択時</comment>
+・いいえ選択時
+・続けてswboss_05</comment>
 		<attribute name="キャラ指定">アクロマ</attribute>
 		<language name="JPN" width="256">？？？『その　いけんですが
-けんきゅうの　ためです
+けんきゅうの　ためです▽
 むし　しますよ！▼</language>
 		<language name="JPN_KANJI" width="256">？？？『その　意見ですが
-けんきゅうの　ためです
+研究の　ためです▽
 無視しますよ！▼</language>
 	</row>
 
@@ -341,12 +343,12 @@
 他の　ポケモンより　強いようです！▼
 だが　君自身は
 ヒオウギを　旅立ったばかり……▽
-バッジも　まだ　３個ですし……！</language>
+バッジも　まだ　３個ですし……！▼</language>
 		<language name="JPN_KANJI" width="256">ふむ……
 他の　ポケモンより　強いようです！
 だが　君自身は
 ヒオウギを　旅立ったばかり……▽
-バッジも　まだ　３個ですし……！</language>
+バッジも　まだ　３個ですし……！▼</language>
 	</row>
 
 	<row id="msg_c03p01_swboss_06">
@@ -354,11 +356,11 @@
 ・</comment>
 		<attribute name="キャラ指定">アクロマ</attribute>
 		<language name="JPN" width="256">君は　じつに　おもしろい
-ポケモントレーナー　ですよ！▼
+ポケモントレーナー　です！▼
 はっきりとした　理由は　不明ですが
 ポケモンの　力を　引きだしています！▼</language>
 		<language name="JPN_KANJI" width="256">君は　じつに　おもしろい
-ポケモントレーナー　ですよ！▼
+ポケモントレーナー　です！▼
 はっきりとした　理由は　不明ですが
 ポケモンの　力を　引きだしています！▼</language>
 	</row>
@@ -368,10 +370,10 @@
 ・！マーク表示後</comment>
 		<attribute name="キャラ指定">アクロマ</attribute>
 		<language name="JPN" width="256">失敬！　わたしは
-アクロマという　科学者です
+アクロマという　科学者です▽
 以後　よろしく！▼</language>
 		<language name="JPN_KANJI" width="256">失敬！　わたしは
-アクロマという　科学者です
+アクロマという　科学者です▽
 以後　よろしく！▼</language>
 	</row>
 
@@ -391,15 +393,16 @@
 
 	<row id="msg_c03p01_swboss_09">
 		<comment>♂
-・</comment>
+・メッセージ表示後、画面上に移動
+・画面外に消えると主人公操作可能</comment>
 		<attribute name="キャラ指定">アクロマ</attribute>
 		<language name="JPN" width="256">それを！▼
 きみと　たたかうことで　たしかめたい
-いいですね▽
+よろしいですね▽
 では　４番道路で　会いましょう！</language>
 		<language name="JPN_KANJI" width="256">それを！▼
 きみと　戦うことで　確かめたい
-いいですね▽
+よろしいですね▽
 では　４番道路で　会いましょう！</language>
 	</row>
 
