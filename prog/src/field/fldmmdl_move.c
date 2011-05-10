@@ -380,6 +380,8 @@ static void MMdl_MapAttrProc_MoveStartFirst( MMDL * mmdl )
       MMdl_MapAttrShadowProc_01( mmdl, &data );
       MMdl_MapAttrHeight_02( mmdl, &data );
       MMdl_MapAttrReflect_01( mmdl, &data );
+
+      MMdl_MapAttrLight( mmdl, &data );
     }
   }
 }
