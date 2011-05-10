@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-05-10T14:23:39"/>
+	<create user="matsumiya" host="W00224" date="2011-05-10T21:09:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1291" top="135" right="1996" bottom="763" maximized="no" rayout="Vertical2">
+	<dialog left="1297" top="225" right="2002" bottom="853" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -294,48 +294,63 @@
 
 	<row id="msg_c16_swrival_01">
 		<comment>♂
-・到着時＝目的提示</comment>
+・到着時＝目的提示
+・1＝ライバル名</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">ライバル名『いっぷう　かわった
-ふんいきの　いい　ばしょだな▼
-でだ　主人公名前
-オマエは　？？？してくれよ！▼</language>
-		<language name="JPN_KANJI" width="256">ライバル名『……一風　変わった
-雰囲気の　イイ　場所だな▼
-でだ　主人公名前
-オマエは　？？？してくれよ！▼</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『なんというか
+いっぷう　かわった　ばしょ　だな▼
+でだ　[1:00:トレーナー名:0]
+オマエは　ききこみを　してくれよ！▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『なんというか
+一風　変わった　場所だな▼
+でだ　[1:00:トレーナー名:0]
+オマエは　ききこみを　してくれよ！▼</language>
 	</row>
 
 	<row id="msg_c16_swrival_02">
 		<comment>♂
-・目的未達成時＝目的提示</comment>
+・目的未達成時＝目的提示
+・1＝ライバル名</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">ライバル名『なんだよ？
-・プレイヤーがやること提示</language>
-		<language name="JPN_KANJI" width="256">ライバル名『なんだよ？
-・プレイヤーがやること提示</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『なんだよ？▼
+ききこみ　ってのは　いろんな　ひとに
+はなしを　きいてまわることだよ▼
+だれか　ネオプラズマだんの　こと
+しっているかも　しれないからな</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『なんだよ？▼
+ききこみ　ってのは　いろんな　人に
+話を　きいてまわることだよ▼
+だれか　ネオプラズマ団の　こと
+知っているかも　しれないからな</language>
 	</row>
 
 	<row id="msg_c16_swrival_03">
 		<comment>♂
-・目的達成時</comment>
+・目的達成時
+・メッセージ表示後、
+　水上飛行機に乗れるようになる
+・1＝ライバル名</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">ライバル名『いろいろ　きいてまわったが
-どうやら　ここに　ＮＰ団は　いないな▼
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『どうやら　ここに
+ネオプラズマだんは　いないようだな▼
 というわけでだ
-ヒウンシティに　もどるぞ</language>
-		<language name="JPN_KANJI" width="256">ライバル名『主人公
-いろいろ　きいてまわったが
-どうやら　ここに　ＮＰ団は　いないな
-ヒウンシティに　もどるぜ</language>
+オレは　ヒウンシティに　もどる▼
+オマエは　この　レゾナンスリゾートが
+きにいったなら　ノンビリしてな</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『どうやら　ここに
+ネオプラズマ団は　いないようだな▼
+というわけでだ
+オレは　ヒウンシティに　戻る▼
+オマエは　この　レゾナンスリゾートが
+きにいったなら　ノンビリしてな</language>
 	</row>
 
 	<row id="msg_c16_pilot_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・チュートリアルイベント後
 ・はい/いいえ選択肢表示
-・はい　→
-　いいえ→</comment>
+・はい　→pilot_02
+　いいえ→pilot_03</comment>
 		<attribute name="キャラ指定">パイロット</attribute>
 		<language name="JPN" width="256">ヒウンシティまで　ひとっとび！
 どうです　のってみませんか？</language>
