@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-25T20:55:36"/>
+	<create user="matsumiya" host="W00224" date="2011-05-10T20:13:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1297" top="169" right="2002" bottom="797" maximized="no" rayout="Vertical2">
+	<dialog left="1291" top="135" right="1996" bottom="763" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="8" top="31" right="481" bottom="429" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -435,7 +435,7 @@
 		<language name="JPN" width="256">なみの　うごきに　あわせて
 はしってるんだけどさ▽
 なかなか　むずかしいね！</language>
-		<language name="JPN_KANJI" width="256">波の　動きに　合わせて
+		<language name="JPN_KANJI" width="256">波の　動きに　わせて
 走ってるんだけどさ▽
 なかなか　難しいね！</language>
 	</row>
@@ -448,7 +448,7 @@
 かんぱんで　けしきを　みたり……▽
 さいこう　だね　このふねは！</language>
 		<language name="JPN_KANJI" width="256">船の上で　勝負を　したり
-甲板で　景色を　見たり……▽
+甲板で　景色を　みたり……▽
 最高だね　この船は！</language>
 	</row>
 
@@ -470,7 +470,7 @@
 		<language name="JPN" width="256">ジョウトから　しごとで　きたけど
 ここは　なにもかも　ダイナミックだな</language>
 		<language name="JPN_KANJI" width="256">ジョウトから　仕事で　来たけど
-ここは　何もかも　ダイナミックだな</language>
+ここは　なにもかも　ダイナミックだな</language>
 	</row>
 
 	<row id="msg_c03r0801_businessman_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -513,7 +513,7 @@
 		<language name="JPN_KANJI" width="256">あぁ！　汽笛が　鳴ってる！
 ごめんよ　引き止めちゃって……▼
 でも　話が　できて
-面白かったよ　ありがとう！</language>
+おもしろかったよ　ありがとう！</language>
 	</row>
 
 	<row id="msg_c03r0801_businessman_04" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -522,7 +522,7 @@
 		<language name="JPN" width="256">しごとの　あいまに　ひとしょうぶ！
 これが　また　かくべつ　なんだ▼</language>
 		<language name="JPN_KANJI" width="256">仕事の　合間に　一勝負！
-これが　また　格別　なんだ▼</language>
+これが　また　格別なんだ▼</language>
 	</row>
 
 	<row id="msg_c03r0801_businessman_05" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -566,7 +566,7 @@
 はるばる　シンオウから　きたんだ！▽
 ポケモンしょうぶ　たのしませてね！▼</language>
 		<language name="JPN_KANJI" width="256">強い　トレーナーが
-集まるって　聞いて▽
+集まるって　きいて▽
 はるばる　シンオウから　来たんだ！▽
 ポケモン勝負　楽しませてね！▼</language>
 	</row>
@@ -589,14 +589,12 @@
 ・短い話</comment>
 		<attribute name="キャラ指定">TRAINERW
 </attribute>
-		<language name="JPN" width="256">この　ふねの　トレーナーは
-うみの　むこうから　きたひとが▽
-おおい　らしいわ▼
+		<language name="JPN" width="256">この　ふねには　ちほうから　きた
+トレーナーが　おおいらしいわ▼
 かくいう　わたしも
 カントーから　きたの！</language>
-		<language name="JPN_KANJI" width="256">この　船の　トレーナーは
-海の向こうから　来た人が▽
-多いらしいわ▼
+		<language name="JPN_KANJI" width="256">この船には　地方から　来た
+トレーナーが　多いらしいわ▼
 かくいう　わたしも
 カントーから　来たの！</language>
 	</row>
@@ -672,7 +670,7 @@
 おいらが　華麗に　みせてやるよ！▼</language>
 	</row>
 
-	<row id="msg_c03r0801_boy2_04" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c03r0801_boy2_04" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#ffff80,,,,,,">
 		<comment>トレーナー後</comment>
 		<attribute name="キャラ指定">BOY2</attribute>
 		<language name="JPN" width="256">アッチャー！　まけちゃったー！
@@ -729,7 +727,7 @@
 でも　たのしかった　ありがと！</language>
 		<language name="JPN_KANJI" width="256">あ！　汽笛！▼
 ごめんね　私の　話に
-付き合わせちゃって……▽
+つきあわせちゃって……▽
 でも　楽しかった　ありがと！</language>
 	</row>
 
@@ -774,11 +772,11 @@
 		<comment>お客さん
 ・短い話２</comment>
 		<attribute name="キャラ指定">BOY4</attribute>
-		<language name="JPN" width="256">きてきは　ぜんぶで　５かい！
-きいてない　フリ　してても▽
+		<language name="JPN" width="256">きてきは　ぜんぶで　５かい！▼
+きいてない　フリ　してても
 ５かい　なったら　おわりかー……</language>
-		<language name="JPN_KANJI" width="256">汽笛は　全部で　５回！
-聞いてない　フリ　してても▽
+		<language name="JPN_KANJI" width="256">汽笛は　全部で　５回！▼
+聞いてない　フリ　してても
 ５回　鳴ったら　終わりかー……</language>
 	</row>
 
@@ -787,22 +785,18 @@
 		<attribute name="キャラ指定">BOY4
 </attribute>
 		<language name="JPN" width="256">きひんの　ある　このふねで
-じょうひんな　たたかいを▽
-みせて　あげるよ！▼</language>
-		<language name="JPN_KANJI" width="256">気品の　ある　この船で
-上品な　たたかいを▽
-みせて　あげるよ！▼</language>
+じょうひんな　たたかいを　みせるよ！▼</language>
+		<language name="JPN_KANJI" width="256">気品のある　この船で
+上品な　戦いを　みせるよ！▼</language>
 	</row>
 
 	<row id="msg_c03r0801_boy4_04" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>トレーナー後</comment>
 		<attribute name="キャラ指定">BOY4</attribute>
-		<language name="JPN" width="256">まけても　きひんを　わすれない
-それが　このぼく▽
-おぼっちゃま　なのさ</language>
-		<language name="JPN_KANJI" width="256">負けても　気品を　忘れない
-それが　このぼく▽
-おぼっちゃま　なのさ</language>
+		<language name="JPN" width="256">まけても　きひんを　わすれない……
+それが　おぼっちゃまの　ぼく　なのさ</language>
+		<language name="JPN_KANJI" width="256">負けても　気品を　忘れない……
+それが　おぼっちゃまの　ぼく　なのさ</language>
 	</row>
 
 	<row id="msg_c03r0801_girl4_01" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
@@ -835,12 +829,10 @@
 		<comment>トレーナー前</comment>
 		<attribute name="キャラ指定">GIRL4
 </attribute>
-		<language name="JPN" width="256">ワルツを　おどる　ステップで
-ポケモンしょうぶを　ロイヤルに▽
-えんしゅつ　しますわ！▼</language>
-		<language name="JPN_KANJI" width="256">ワルツを　踊る　ステップで
-ポケモン勝負を　ロイヤルに▽
-演出　しますわ！▼</language>
+		<language name="JPN" width="256">ワルツの　ステップで　ロイヤルに
+ポケモンしょうぶを　えんしゅつよ！▼</language>
+		<language name="JPN_KANJI" width="256">ワルツの　ステップで　ロイヤルに
+ポケモン勝負を　演出よ！▼</language>
 	</row>
 
 	<row id="msg_c03r0801_girl4_04" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
@@ -961,11 +953,11 @@
 		<comment>お客さん
 ・長い話後</comment>
 		<attribute name="キャラ指定">LADY</attribute>
-		<language name="JPN" width="256">あらやだ！　きてきのおと！
-ごめんなさいね▽
+		<language name="JPN" width="256">あらやだ！　きてきの　おと！▼
+ごめんなさいね
 ついつい　はなしこんじゃった！</language>
-		<language name="JPN_KANJI" width="256">あらやだ！　汽笛の音！
-ごめんなさいね▽
+		<language name="JPN_KANJI" width="256">あらやだ！　汽笛の音！▼
+ごめんなさいね
 ついつい　話しこんじゃった！</language>
 	</row>
 
@@ -985,7 +977,7 @@
 		<language name="JPN" width="256">かわいいだけ　じゃなく
 ポケモンしょうぶも　つよいのね！</language>
 		<language name="JPN_KANJI" width="256">かわいいだけ　じゃなく
-ポケモン勝負も　つよいのね！</language>
+ポケモン勝負も　強いのね！</language>
 	</row>
 
 	<row id="msg_c03r0801_man3_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -1046,9 +1038,9 @@
 わたしの　スペシャルな　ポケモンと▽
 いざ　じんじょうに　しょうぶです！▼</language>
 		<language name="JPN_KANJI" width="256">わたしより　強い人を　探し▼
-山を　こえて　谷を　こえて
-海を　こえて　ここに　来ました▼
-かずかずの　困難を　のりこえた
+山を　越えて　谷を　越えて
+海を　越えて　ここに　来ました▼
+数々の　困難を　乗り越えた
 わたしの　スペシャルな　ポケモンと▽
 いざ　じんじょうに　勝負です！▼</language>
 	</row>
