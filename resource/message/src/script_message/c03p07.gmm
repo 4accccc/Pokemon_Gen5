@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-05-09T20:14:39"/>
+	<create user="matsumiya" host="W00224" date="2011-05-10T19:21:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1310" top="268" right="2015" bottom="896" maximized="no" rayout="Vertical2">
+	<dialog left="1291" top="135" right="1996" bottom="763" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -320,7 +320,8 @@
 	<row id="msg_c03p07_glasses_02">
 		<comment>♂
 ・続けて</comment>
-		<attribute name="キャラ指定">ガイドー</attribute>
+		<attribute name="キャラ指定">DANPEI
+ダンペイ</attribute>
 		<language name="JPN" width="256">ガイドー『お！　アイリスさん
 ・かくかくしかじか　でね▼</language>
 		<language name="JPN_KANJI" width="256">ガイドー『お！　アイリスさん
@@ -396,7 +397,8 @@
 	<row id="msg_c03p07_glasses_03">
 		<comment>♂
 ・クリアまで繰り返し</comment>
-		<attribute name="キャラ指定">ガイドー</attribute>
+		<attribute name="キャラ指定">DANPEI
+ダンペイ</attribute>
 		<language name="JPN" width="256">ガイドー『やれやれ▼
 アーティさんも　アイリスさんも……
 ほんのうで　うごく　というか……▼
