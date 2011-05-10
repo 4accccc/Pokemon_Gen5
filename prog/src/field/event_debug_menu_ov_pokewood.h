@@ -12,6 +12,9 @@
 //=============================================================================
 //    ŠO•”ŒöŠJ
 //=============================================================================
-extern BOOL debugMenuCallProc_PokewoodShow( DEBUG_MENU_EVENT_WORK * wk );
+extern BOOL debugMenuCallProc_PokewoodShow1( DEBUG_MENU_EVENT_WORK * wk );
+extern BOOL debugMenuCallProc_PokewoodShow2( DEBUG_MENU_EVENT_WORK * wk );
+extern BOOL debugMenuCallProc_PokewoodShow3( DEBUG_MENU_EVENT_WORK * wk );
+extern BOOL debugMenuCallProc_PokewoodShowRom( DEBUG_MENU_EVENT_WORK * wk );
 extern BOOL debugMenuCallProc_PokewoodRec( DEBUG_MENU_EVENT_WORK * wk );
 

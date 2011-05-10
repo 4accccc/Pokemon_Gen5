@@ -52,7 +52,7 @@
 
 //============================================================================================
 //
-//    ポケウッド再生呼び出し
+//    ポケウッド呼び出し
 //
 //============================================================================================
 //-----------------------------------------------------------------------------
@@ -60,11 +60,22 @@
 typedef struct {
   GAMESYS_WORK * gsys;
   //POKEWOOD_WORK * pokewood_work;
-  BATTLE_SETUP_PARAM * bp;
   u8 PokewoodMode;
+  int parent_value;
   HEAPID heapID;
-  MYSTATUS dmyMyStatus;
+
+  u16 EncEffNo;
+  u32 musicDefault;
+  u32 musicWin;
 }POKEWOOD_REPLAY_EVENT_WORK, PREW;
+
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+typedef struct {
+  BATTLE_SETUP_PARAM * bp;
+  PREW * prew;
+}POKEWOOD_BATTLE_EVENT_WORK, PBEW;
+
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -109,6 +120,8 @@ static const POKEWOOD_MONS_DATA enemyData[2] = {
   }
 };
 
+//============================================================================================
+//============================================================================================
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 static void setupPokemon( const MYSTATUS * mystat, POKEPARTY * party, HEAPID heapID, const POKEWOOD_MONS_DATA * mons_data, u32 max )
@@ -142,8 +155,13 @@ static void setupPokemon( const MYSTATUS * mystat, POKEPARTY * party, HEAPID hea
 }
 
 //-----------------------------------------------------------------------------
+/**
+ * @brief ポケウッド録画用セットアップ
+ * @todo  録画への対応
+ * @todo  シナリオへの対応
+ */
 //-----------------------------------------------------------------------------
-static BATTLE_SETUP_PARAM * createPokewoodReplayBattleParam(
+static BATTLE_SETUP_PARAM * createPokewoodRecBattleParam(
     GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, HEAPID heapID )
 {
   GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
@@ -173,19 +191,271 @@ static BATTLE_SETUP_PARAM * createPokewoodReplayBattleParam(
   }
 
   GFL_HEAP_FreeMemory( pp );
+  bsp->PokewoodMode = BTL_POKEWOOD_REC;
+  bsp->pokewoodSenario = 0; //仮
 
   TAMADA_Printf(" POKEWOOD BSP %08x\n", bsp );
   return bsp;
 }
 
 //-----------------------------------------------------------------------------
+/**
+ * @brief ポケウッド再生用セットアップ
+ * @todo  正式録画データへの対応
+ */
+//-----------------------------------------------------------------------------
+static BATTLE_SETUP_PARAM * createPokewoodShowBattleParam(
+    GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, HEAPID heapID, u8 replay_id )
+{
+  GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
+  SAVE_CONTROL_WORK * sv = GAMEDATA_GetSaveControlWork( gamedata );
+  LOAD_RESULT result;
+
+  BattleRec_Load( sv, heapID, &result, replay_id );
+  if ( result == LOAD_RESULT_OK )
+  {
+
+    BATTLE_SETUP_PARAM * bsp;
+    bsp = BATTLE_PARAM_Create( heapID );
+    BATTLE_PARAM_Init( bsp );
+    BTL_SETUP_InitForRecordPlay( bsp, gamedata, heapID );
+    BattleRec_LoadToolModule(); //gimmickのオーバーレイと干渉するので注意
+    BattleRec_RestoreSetupParam( bsp, heapID );
+    BattleRec_UnloadToolModule();
+    bsp->PokewoodMode = BTL_POKEWOOD_SHOW;
+    bsp->pokewoodSenario = 0; //仮
+    return bsp;
+  }
+  else
+  { //仮：再生データがない場合への対応
+    return createPokewoodRecBattleParam( gsys, fieldmap, heapID );
+  }
+}
+
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+static BATTLE_SETUP_PARAM * createPokewoodBSP(
+    const PREW * prew, GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, HEAPID heapID )
+{
+  BATTLE_SETUP_PARAM * bsp;
+  switch ( prew->PokewoodMode )
+  {
+  case BTL_POKEWOOD_NONE:
+    GF_ASSERT( 0 );
+    /* FALL THROUGH */
+  case BTL_POKEWOOD_REC:
+    bsp = createPokewoodRecBattleParam( gsys, fieldmap, heapID );
+    break;
+  case BTL_POKEWOOD_SHOW:
+    bsp = createPokewoodShowBattleParam( gsys, fieldmap, heapID, prew->parent_value );
+    break;
+  }
+  bsp->musicDefault = prew->musicDefault;
+  bsp->musicWin = prew->musicWin;
+  bsp->badgeCount = 8; //無理やりいうことをきかせる
+  return bsp;
+}
+
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+static void deletePokewoodBSP( BATTLE_SETUP_PARAM * bsp )
+{
+  if ( bsp->PokewoodMode == BTL_POKEWOOD_SHOW )
+  {
+    GFL_HEAP_FreeMemory( bsp->playerStatus[ BTL_CLIENT_PLAYER ] );  //プレイヤーのMySatusは開放されないので
+    BTL_SETUP_QuitForRecordPlay( bsp );
+    BattleRec_Exit();
+  }
+  BATTLE_PARAM_Delete( bsp );
+}
+
+//============================================================================================
+//============================================================================================
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+typedef struct {
+  u8 bufID;
+  BATTLE_SETUP_PARAM * bsp;
+  GAMEDATA * gamedata;
+  HEAPID heapID;
+
+  u16 saveSeq0;
+  u16 saveSeq1;
+
+}POKEWOOD_SAVE_EVENT_WORK, PSEW;
+
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+static GMEVENT_RESULT pokewoodSaveEvent( GMEVENT * event, int * seq, void * work )
+{
+  PSEW * psew = (PSEW *)work;
+  u8 bufID = psew->bufID;
+
+  switch ( *seq )
+  {
+  case 0:
+    /**
+     *  BATTLE_SETUP_PARAM の録画データセーブ開始
+     */
+    BattleRec_StoreSetupParam( psew->bsp );
+    psew->saveSeq0 = 0;
+    psew->saveSeq1 = 0;
+    break;
+
+  case 1:
+    /**
+     *  BATTLE_SETUP_PARAM の録画データセーブ終了待ち
+     */
+    {
+      SAVE_RESULT result;
+      result = BattleRec_Save(
+          psew->gamedata, psew->heapID, 0, 0, bufID, &psew->saveSeq0, &psew->saveSeq1);
+      switch( result ){
+      case SAVE_RESULT_OK:
+        {
+          u32* dataPtr = (u32*)BattleRec_GetOperationBufferPtr();
+          OS_Printf("録画データ正常にセーブ完了 (bufID=%d, dataPtr=%p, dump=%08x)\n", bufID, dataPtr, *dataPtr);
+        }
+        (*seq)++;
+        break;
+      case SAVE_RESULT_NG:
+        {
+          u32* dataPtr = (u32*)BattleRec_GetOperationBufferPtr();
+          OS_Printf("録画データセーブ失敗 ... (bufID=%d, dataPtr=%p, dump=%08x)\n", bufID, dataPtr, *dataPtr);
+        }
+        (*seq)++;
+        break;
+
+      default:
+        break;
+      }
+    }
+    break;
+
+  case 2:
+    return GMEVENT_RES_FINISH;
+  }
+  return GMEVENT_RES_CONTINUE;
+}
+
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+static GMEVENT * createPokewoodSaveEvent(
+    GAMESYS_WORK * gsys, u8 bufID, BATTLE_SETUP_PARAM * bsp, HEAPID heapID )
+{
+  GMEVENT * event;
+  PSEW * psew;
+  event = GMEVENT_Create( gsys, NULL, pokewoodSaveEvent, sizeof( PSEW ) );
+  psew = GMEVENT_GetEventWork( event );
+  GFL_STD_MemClear( psew, sizeof(PSEW) );
+  psew->bufID = bufID;
+  psew->bsp = bsp;
+  psew->heapID = heapID;
+  psew->gamedata = GAMESYSTEM_GetGameData( gsys );
+  return event;
+}
+//============================================================================================
+//============================================================================================
+//-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 static GMEVENT_RESULT pokewoodBattleEvent( GMEVENT * event, int *seq, void * work )
 {
+  PBEW * pbew = (PBEW*)work;
+  PREW * prew = pbew->prew;
+
+  GAMESYS_WORK * gsys = prew->gsys;
+  FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+
+  switch( *seq ) {
+  // 戦闘用ＢＧＭセット
+  case 0:
+    GMEVENT_CallEvent(event, EVENT_FSND_PushPlayBattleBGM(gsys, prew->musicDefault));
+    (*seq)++;
+    break;
+
+  //エンカウントエフェクト
+  case 1:
+    ENCEFF_SetEncEff(FIELDMAP_GetEncEffCntPtr(fieldmap), event, prew->EncEffNo);
+    (*seq)++;
+    break;
+
+  // フィールドマップ終了
+  case 2:
+    GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, fieldmap));
+    (*seq)++;
+    break;
+
+  case 3:
+    pbew->bp = createPokewoodBSP( prew, gsys, fieldmap, prew->heapID );
+    //侵入システムに戦闘中であることを伝える
+    TAMADA_Printf(" BSP ADDRESS %08x\n", pbew->bp );
+    //バトルプロセス呼び出し：プロセスが終了したらこのイベントに復帰する
+    GMEVENT_CallProc( event, FS_OVERLAY_ID(battle), &BtlProcData, pbew->bp );
+    (*seq)++;
+    break;
+    
+  case 4:
+    deletePokewoodBSP( pbew->bp );
+    (*seq)++;
+    break;
+
+  case 5:
+    //侵入システムにフィールド中であることを伝える
+    (*seq) ++;
+    break;
+
+  case 6: 
+    //戦闘結果反映処理
+    (*seq) ++;
+    break;
+
+  case 7:
+    // フィールドBGMを復帰
+    GMEVENT_CallEvent( event, EVENT_FSND_PopPlayBGM_fromBattle( gsys ) );
+    (*seq) ++;
+    break;
+
+  case 8: 
+    //勝ち負け判定
+    GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
+    (*seq) ++;
+    break;
+
+  // BGMの復帰待ち
+  case 9:
+    GMEVENT_CallEvent( event, EVENT_FSND_WaitBGMPop( gsys ) );
+    (*seq) ++;
+    break;
+
+  case 10:
+    GMEVENT_CallEvent( event, 
+        EVENT_FieldFadeIn_Black( gsys, fieldmap, FIELD_FADE_WAIT ) );
+    (*seq) ++;
+    break;
+
+  case 11:
+    //BEW_Destructor( bew );
+    return GMEVENT_RES_FINISH;
+  }
+  return GMEVENT_RES_CONTINUE;
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+static GMEVENT * createPokewoodBattleEvent(
+    GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, PREW * prew )
+{
+  GMEVENT * event = GMEVENT_Create( gsys, NULL, pokewoodBattleEvent, sizeof(PBEW) );
+  PBEW * pbew = GMEVENT_GetEventWork( event );
+  pbew->prew = prew;
+  return event;
+}
+
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+static GMEVENT_RESULT pokewoodCallEvent( GMEVENT * event, int *seq, void * work )
+{
   enum {
     PRE_SEQ_START = 0,
-    PRE_SEQ_FADE_IN,
-    PRE_SEQ_FADE_WAIT,
     PRE_SEQ_END,
   };
   PREW * prew = work;
@@ -196,45 +466,35 @@ static GMEVENT_RESULT pokewoodBattleEvent( GMEVENT * event, int *seq, void * wor
   switch ( *seq )
   {
   case PRE_SEQ_START:
+    //仮：本来はシナリオなどから反映する
+    if ( prew->PokewoodMode == BTL_POKEWOOD_SHOW )
+    {
+      prew->musicDefault = SEQ_BGM_EYE_09;
+      prew->musicWin = SEQ_BGM_E_LAST;
+    } else {
+      prew->musicDefault = SEQ_BGM_VS_NORAPOKE;
+      prew->musicWin = SEQ_BGM_WIN1;
+    }
     {
       GMEVENT * call_event;
-      //MyStatus_Copy( GAMEDATA_GetMyStatus( gamedata ), &prew->dmyMyStatus );
-      prew->bp = createPokewoodReplayBattleParam( gsys, fieldmap, heapID );
-      prew->bp->badgeCount = 8; //無理やりいうことをきかせる
-      prew->bp->PokewoodMode = prew->PokewoodMode;
-      GF_ASSERT( prew->bp->PokewoodMode != BTL_POKEWOOD_NONE );
-      prew->bp->pokewoodSenario = 0;
-      call_event = EVENT_PokewoodBattle( gsys, fieldmap, prew->bp );
+      call_event = createPokewoodBattleEvent( gsys, fieldmap, prew );
       GMEVENT_CallEvent( event, call_event );
-      if ( prew->bp->PokewoodMode == BTL_POKEWOOD_SHOW )
-      {
-        prew->bp->musicDefault = SEQ_BGM_EYE_09;
-        prew->bp->musicWin = SEQ_BGM_E_LAST;
-      }
     }
-    *seq = PRE_SEQ_FADE_IN;
-    break;
-
-  case PRE_SEQ_FADE_IN:
-    FIELDMAP_CreateMapFadeReqTask( gsys, fieldmap, FMAP_FADE_IN, FIELD_FADE_BLACK, FIELD_FADE_WAIT );
-    *seq = PRE_SEQ_FADE_WAIT;
-    break;
-
-  case PRE_SEQ_FADE_WAIT:
-    if( FIELDMAP_CheckMapFadeReqFlg( fieldmap ) == FALSE )
-    {
-      *seq = PRE_SEQ_END;
-    }
+    *seq = PRE_SEQ_END;
     break;
 
   case PRE_SEQ_END:
-    BATTLE_PARAM_Delete( prew->bp );
     return GMEVENT_RES_FINISH;
   }
 
   return GMEVENT_RES_CONTINUE;
 }
 
+//============================================================================================
+//
+//    外部公開関数
+//
+//============================================================================================
 //-----------------------------------------------------------------------------
 /**
  * @brief ポケウッド再生イベントの生成
@@ -248,7 +508,7 @@ GMEVENT * POKEWOOD_EVENT_Rec( GAMESYS_WORK *gsys, void * parent_work )
   PREW * prew;
   //POKEWOOD_WORK * pokewood_work = (POKEWOOD_WORK*)parent_work;
 
-  event = GMEVENT_Create( gsys, NULL, pokewoodBattleEvent, sizeof(PREW) );
+  event = GMEVENT_Create( gsys, NULL, pokewoodCallEvent, sizeof(PREW) );
   prew = GMEVENT_GetEventWork( event );
   prew->gsys = gsys;
   //prew->pokewood_work = pokewood_work;
@@ -272,218 +532,17 @@ GMEVENT * POKEWOOD_EVENT_Show( GAMESYS_WORK *gsys, void * parent_work )
   PREW * prew;
   //POKEWOOD_WORK * pokewood_work = (POKEWOOD_WORK*)parent_work;
 
-  event = GMEVENT_Create( gsys, NULL, pokewoodBattleEvent, sizeof(PREW) );
+  event = GMEVENT_Create( gsys, NULL, pokewoodCallEvent, sizeof(PREW) );
   prew = GMEVENT_GetEventWork( event );
   prew->gsys = gsys;
   //prew->pokewood_work = pokewood_work;
   prew->heapID = HEAPID_PROC;
+  prew->parent_value = (int)parent_work;
   OS_Printf(" POKEWOOD EVENT Parent Value = %x\n", parent_work );
   prew->PokewoodMode = BTL_POKEWOOD_SHOW;
 
   return event;
 }
-
-
-#if 0
-//============================================================================================
-//  WBT　イベント　ポケモンリスト
-//============================================================================================
-//--------------------------------------------------------------
-/// ポケモンリスト選択イベント
-//--------------------------------------------------------------
-typedef struct
-{
-  GAMESYS_WORK *gsys;
-  FIELDMAP_WORK *fieldmap;
-  WBTSYS * wbtsys;
-  
-  PSTATUS_DATA status_data;
-
-  PLIST_DATA list_data;
-  
-}EVENT_WORK_POKE_LIST;
-
-//--------------------------------------------------------------
-/**
- * ポケモンリスト選択イベント
- * @param event GMEVENT
- * @param seq event sequence
- * @param wk event work
- * @retval GMEVENT_RESULT
- */
-//--------------------------------------------------------------
-static GMEVENT_RESULT ev_SelectPokeList( GMEVENT *event, int *seq, void *wk )
-{
-  EVENT_WORK_POKE_LIST *work = wk;
-  GAMESYS_WORK *gsys = work->gsys;
-  
-  switch( *seq )
-  {
-  case 0:
-		GMEVENT_CallEvent( event,
-        EVENT_FieldFadeOut_Black(gsys,work->fieldmap,FIELD_FADE_WAIT) );
-    (*seq)++;
-    break;
-  case 1:
-		GMEVENT_CallEvent( event, EVENT_FieldClose(gsys,work->fieldmap) );
-    (*seq)++;
-    break;
-  case 2:
-    GMEVENT_CallEvent( event, EVENT_PokeSelect(
-          gsys,work->fieldmap,&work->list_data,&work->status_data) );
-    (*seq)++;
-    break;
-  case 3:
-		GMEVENT_CallEvent( event, EVENT_FieldOpen(gsys) );
-    (*seq)++;
-    break;
-  case 4:
-    GMEVENT_CallEvent( event, EVENT_FieldFadeIn_Black(
-          gsys,work->fieldmap, FIELD_FADE_WAIT) );
-    (*seq)++;
-    break;
-  case 5:
-    WBTSYS_SetPokelistResult( work->wbtsys, &work->list_data );
-    return( GMEVENT_RES_FINISH );
-  }
-  
-  return( GMEVENT_RES_CONTINUE );
-}
-
-//--------------------------------------------------------------
-/**
- * ポケモンリスト選択イベント　呼び出し
- * @param
- * @retval
- */
-//--------------------------------------------------------------
-GMEVENT * WBT_EVENT_SetSelectPokeList( GAMESYS_WORK * gsys, void * parent_work )
-{
-  GMEVENT *event;
-  GAMEDATA *gamedata;
-  WBTSYS * wbtsys;
-  POKEPARTY *pp;
-  FIELDMAP_WORK *fieldmap;
-  EVENT_WORK_POKE_LIST *work;
-  
-  wbtsys   = (WBTSYS *)parent_work;
-  gamedata = GAMESYSTEM_GetGameData( gsys );
-  fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
-  
-  
-  event = GMEVENT_Create( gsys, NULL,
-      ev_SelectPokeList, sizeof(EVENT_WORK_POKE_LIST) );
-  
-  work = GMEVENT_GetEventWork( event );
-  work->gsys = gsys;
-  work->fieldmap = fieldmap;
-  work->wbtsys = wbtsys;
-  
-  WBTSYS_SetupPokeListData( wbtsys, gamedata, &work->list_data );
-  
-  WBTSYS_SetupPokeStatusData( wbtsys, gamedata, &work->status_data );
-   
-  return( event );
-}
-
-//============================================================================================
-//
-//    WBTトーナメントリスト画面呼び出し
-//
-//============================================================================================
-//-------------------------------------
-///
-//=====================================
-typedef struct
-{
-  GAMESYS_WORK        *gsys;
-  FIELDMAP_WORK       *fieldmap;
-  WBTLIST_PARAM       *wbtlist_param;
-  BOOL                call_fade_flag;
-} WBTLIST_EVENT_WORK;
-
-static GMEVENT_RESULT eventWBTList( GMEVENT *p_event, int *p_seq, void *p_wk_adrs );
-
-//----------------------------------------------------------------------------
-/**
- *  @brief  
- *
- *
- *  @return 終了コード
- */
-//-----------------------------------------------------------------------------
-GMEVENT * WBT_EVENT_ShowTournamentList(
-    GAMESYS_WORK * gsys, void * parent_work )
-{ 
-  WBTLIST_PARAM * wbtlist_param = (WBTLIST_PARAM *) parent_work;
-  FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
-  WBTLIST_EVENT_WORK *p_param;
-  GMEVENT * new_event;
-
-  //イヴェント
-  new_event = GMEVENT_Create( gsys, NULL, eventWBTList, sizeof(WBTLIST_EVENT_WORK) );
-  p_param = GMEVENT_GetEventWork( new_event );
-  GFL_STD_MemClear( p_param, sizeof(WBTLIST_EVENT_WORK) );
-
-  p_param->gsys  = gsys;
-  p_param->fieldmap    = fieldmap;
-  p_param->wbtlist_param = wbtlist_param;
-  p_param->call_fade_flag = wbtlist_param->call_fade_flag;
-
-  OS_Printf( "WBT List Start\n" );
-
-  return new_event;
-
-}
-//----------------------------------------------------------------------------
-/**
- *  @brief  WBTリストアプリ呼び出し用イベント
- *
- *  @param  GMEVENT *event  GMEVENT
- *  @param  *seq            シーケンス
- *  @param  *work           ワーク
- *
- *  @return 終了コード
- */
-//-----------------------------------------------------------------------------
-static GMEVENT_RESULT eventWBTList( GMEVENT *p_event, int *p_seq, void *p_wk_adrs )
-{
-  enum
-  {
-    SEQ_CALL_PROC,
-    SEQ_EXIT,
-  };
-
-  WBTLIST_EVENT_WORK *p_wk = p_wk_adrs;
-  GMEVENT * call_event;
-
-  switch(*p_seq )
-  {
-  case SEQ_CALL_PROC:
-    PMSND_PlayerSetVolume( SEPLAYER_SE2, 63 );
-    if ( p_wk->call_fade_flag )
-    {
-      call_event = EVENT_FieldSubProc( p_wk->gsys, p_wk->fieldmap,
-          FS_OVERLAY_ID(wbtlist), &WBTListProcData, p_wk->wbtlist_param );
-    } else {
-      call_event = EVENT_FieldSubProcNoFade( p_wk->gsys, p_wk->fieldmap,
-          FS_OVERLAY_ID(wbtlist), &WBTListProcData, p_wk->wbtlist_param );
-    }
-    GMEVENT_CallEvent( p_event, call_event );
-    *p_seq  = SEQ_EXIT;
-    break;
-
-  case SEQ_EXIT:
-    WBTLIST_PARAM_Delete( p_wk->wbtlist_param );
-    PMSND_PlayerSetVolume( SEPLAYER_SE2, 127 );
-    return GMEVENT_RES_FINISH;
-  }
-
-  return GMEVENT_RES_CONTINUE ;
-}
-
-
-#endif
 
 
 

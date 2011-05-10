@@ -41,6 +41,30 @@
 //=============================================================================
 //=============================================================================
 #include "event_pokewood.h"
+
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+typedef enum {
+  DEBUG_SHOW_01 = 0,
+  DEBUG_SHOW_02 = 1,
+  DEBUG_SHOW_03 = 2,
+  DEBUG_SHOW_ROM,
+}DEBUG_SHOW_TYPE;
+
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+static BOOL callShowProc( DEBUG_MENU_EVENT_WORK * wk, DEBUG_SHOW_TYPE type )
+{
+  GMEVENT *event = wk->gmEvent;
+  FIELDMAP_WORK *fieldWork = wk->fieldWork;
+  GAMESYS_WORK  *gameSys  = wk->gmSys;
+  GMEVENT *next_event;
+  next_event = GMEVENT_CreateOverlayEventCall( gameSys,
+      FS_OVERLAY_ID(notwifi_event_pokewood), POKEWOOD_EVENT_Show, (void*)type );
+  GMEVENT_ChangeEvent( event, next_event );
+
+  return TRUE;
+}
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 BOOL debugMenuCallProc_PokewoodRec( DEBUG_MENU_EVENT_WORK * wk )
@@ -58,15 +82,30 @@ BOOL debugMenuCallProc_PokewoodRec( DEBUG_MENU_EVENT_WORK * wk )
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-BOOL debugMenuCallProc_PokewoodShow( DEBUG_MENU_EVENT_WORK * wk )
+BOOL debugMenuCallProc_PokewoodShow1( DEBUG_MENU_EVENT_WORK * wk )
 {
-  GMEVENT *event = wk->gmEvent;
-  FIELDMAP_WORK *fieldWork = wk->fieldWork;
-  GAMESYS_WORK  *gameSys  = wk->gmSys;
-  GMEVENT *next_event;
-  next_event = GMEVENT_CreateOverlayEventCall( gameSys,
-      FS_OVERLAY_ID(notwifi_event_pokewood), POKEWOOD_EVENT_Show, NULL );
-  GMEVENT_ChangeEvent( event, next_event );
-
-  return TRUE;
+  return callShowProc( wk, DEBUG_SHOW_01 );
 }
+
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+BOOL debugMenuCallProc_PokewoodShow2( DEBUG_MENU_EVENT_WORK * wk )
+{
+  return callShowProc( wk, DEBUG_SHOW_02 );
+}
+
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+BOOL debugMenuCallProc_PokewoodShow3( DEBUG_MENU_EVENT_WORK * wk )
+{
+  return callShowProc( wk, DEBUG_SHOW_03 );
+}
+
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+BOOL debugMenuCallProc_PokewoodShowRom( DEBUG_MENU_EVENT_WORK * wk )
+{
+  return callShowProc( wk, DEBUG_SHOW_ROM );
+}
+
+
