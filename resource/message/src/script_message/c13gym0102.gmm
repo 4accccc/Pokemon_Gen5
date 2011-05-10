@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-19T16:33:00"/>
+	<create user="matsumiya" host="W00224" date="2011-05-10T21:49:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1319" top="198" right="2024" bottom="826" maximized="no" rayout="Vertical2">
+	<dialog left="1297" top="225" right="2002" bottom="853" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -312,8 +312,12 @@
 		<attribute name="キャラ指定">SWLEADER2
 ジムリーダー
 ホミカ</attribute>
-		<language name="JPN" width="256">せんとうまえメッセージ▼</language>
-		<language name="JPN_KANJI" width="256">戦闘前メッセージ▼</language>
+		<language name="JPN" width="256">せんとうまえメッセージ▼
+あんたの　りせい
+ぶっとばして　あ・げ・る！▼</language>
+		<language name="JPN_KANJI" width="256">戦闘前メッセージ▼
+あんたの　理性
+ぶっとばして　あ・げ・る！▼</language>
 	</row>
 
 	<row id="msg_c13gym0102_swleader_02">
@@ -338,13 +342,19 @@
 	<row id="msg_c13gym0102_swleader_04">
 		<comment>♀
 ・アイテム入手処理
-　No???「（調整中）」</comment>
+　No336「わざマシン０９」</comment>
 		<attribute name="キャラ指定">ジムリーダー
 ホミカ</attribute>
-		<language name="JPN" width="256">トシキックバッジの　せつめい
-わざマシンを　あげる▼</language>
-		<language name="JPN_KANJI" width="256">トシキックバッジの　せつめい
-わざマシンを　あげる▼</language>
+		<language name="JPN" width="256">バッジが　２つ！▼
+レベル３０までの　ポケモンなら
+あんたに　すなおに　したがうよ▼
+あと　この　わざマシン……
+その　つよさを　みとめて　あげる！▼</language>
+		<language name="JPN_KANJI" width="256">バッジが　２つ！▼
+レベル３０までの　ポケモンなら
+あんたに　すなおに　したがうよ▼
+あと　この　わざマシン……
+その　つよさを　みとめて　あげる！▼</language>
 	</row>
 
 	<row id="msg_c13gym0102_swleader_05">
@@ -352,18 +362,33 @@
 ・アイテム入手処理後</comment>
 		<attribute name="キャラ指定">ジムリーダー
 ホミカ</attribute>
-		<language name="JPN" width="256">わざマシンの　せつめい</language>
-		<language name="JPN_KANJI" width="256">わざマシンの　説明</language>
+		<language name="JPN" width="256">わざマシン０９は　ベノムショック！
+とくしゅな　どくえきを　あびせるの！▼
+しかも　あいてが　どくじょうたいなら
+いりょくは　なんと　２ばいよ！</language>
+		<language name="JPN_KANJI" width="256">わざマシン０９は　ベノムショック！
+特殊な　毒液を　浴びせるの！▼
+しかも　相手が　どく状態なら
+威力は　なんと　２倍よ！</language>
 	</row>
 
 	<row id="msg_c13gym0102_swleader_06">
 		<comment>♀
 ・leader_05表示後
-・msg_c13gym0102_sunglasses_02まで</comment>
+・msg_c13gym0102_sunglasses_02まで
+・あとポケウッドイベント後からクリアまで</comment>
 		<attribute name="キャラ指定">ジムリーダー
 ホミカ</attribute>
-		<language name="JPN" width="256">クリアまでの　メッセージ</language>
-		<language name="JPN_KANJI" width="256">クリア前の　メッセージ</language>
+		<language name="JPN" width="256">やるじゃない！▼
+あんたと！　あんたの　ポケモン！
+ぶっとばすって　パワーに　あふれてた▼
+その　ちょうしで
+ぜーんぶ　ぶっとばしなよ！</language>
+		<language name="JPN_KANJI" width="256">やるじゃない！▼
+あんたと！　あんたの　ポケモン！
+ぶっとばすって　パワーに　あふれてた▼
+その　ちょうしで
+ぜーんぶ　ぶっとばしなよ！</language>
 	</row>
 
 	<row id="msg_c13gym0102_swleader_07">
@@ -380,11 +405,11 @@
 やっぱ　いって　きかせないと
 せんちょう　なんだろ　って！！▼</language>
 		<language name="JPN_KANJI" width="256">ホミカ『なに？　あんた
-ポケウッドに　いくわけ？▼
+ポケウッドに　行くわけ？▼
 あー　もう！
-オヤジのこと　おもいだしちゃった！▼
+オヤジのこと　思い出しちゃった！▼
 やっぱ　いって　きかせないと
-せんちょう　なんだろ　って！！▼</language>
+船長なんだろ　って！！▼</language>
 	</row>
 
 	<row id="msg_c13gym0102_swleader_08">
@@ -392,8 +417,14 @@
 ・殿堂入り後（仮）</comment>
 		<attribute name="キャラ指定">ジムリーダー
 ホミカ</attribute>
-		<language name="JPN" width="256">クリアしてからの　メッセージ</language>
-		<language name="JPN_KANJI" width="256">クリア後の　メッセージ</language>
+		<language name="JPN" width="256">いい？　なにが　ただしいかなんて
+かんがえても　わかるわけないの▼
+だから　すきなことを
+ほんきで　やるしかないんだよ！ </language>
+		<language name="JPN_KANJI" width="256">いい？　なにが　ただしいかなんて
+かんがえても　わかるわけないの▼
+だから　すきなことを
+ほんきで　やるしかないんだよ！ </language>
 	</row>
 
 	<row id="msg_c13gym0102_sunglasses_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -405,9 +436,9 @@
 だが　かのじょは　ここでの
 かつどうに　むちゅう　だからな……</language>
 		<language name="JPN_KANJI" width="256">ジムリーダーなら　ポケモンの
-みりょくを　ひきだすのも　うまい……▼
-だが　かのじょは　ここでの
-かつどうに　むちゅう　だからな……</language>
+魅力を　ひきだすのも　うまい……▼
+だが　彼女は　ここでの
+活動に　夢中だからな……</language>
 	</row>
 
 	<row id="msg_c13gym0102_sunglasses_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -419,11 +450,11 @@
 		<attribute name="キャラ指定">SUNGLASSES</attribute>
 		<language name="JPN" width="256">ヘイ　あなた！▼
 いまの　ジムリーダー　ホミカとの
-たたかいに　かがやきを　かんじました
+たたかいに　かがやきを　かんじました▼
 ぜひ　ポケウッドに　いらしてください▼</language>
 		<language name="JPN_KANJI" width="256">ヘイ　あなた！▼
 いまの　ジムリーダー　ホミカとの
-たたかいに　かがやきを　かんじました
+戦いに　輝きを　感じました▼
 ぜひ　ポケウッドに　いらしてください▼</language>
 	</row>
 
