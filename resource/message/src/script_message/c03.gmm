@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-05-09T20:16:57"/>
+	<create user="matsumiya" host="W00224" date="2011-05-10T20:45:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1291" top="135" right="1996" bottom="763" maximized="no" rayout="Vertical2">
+	<dialog left="1297" top="225" right="2002" bottom="853" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -294,6 +294,7 @@
 
 	<row id="msg_c03_inventor_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
 		<comment>♀
+・c03p15からマップ切り替えでイベント発動
 ・主人公に隣接してメッセージ表示
 ・表示後、連れ歩きでｃ01ｒ0101へ</comment>
 		<attribute name="キャラ指定">ASSISTANTW
@@ -331,7 +332,7 @@
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03_cgear_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c03_cgear_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>システムメッセージ
 ＭＥ再生</comment>
 		<attribute name="キャラ指定">システム</attribute>
@@ -341,7 +342,7 @@
 [FF:00:色:2]Ｃ－ＧＥＡＲ[FF:00:色:0]を　手に入れた！</language>
 	</row>
 
-	<row id="msg_c03_cgear_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c03_cgear_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>システムメッセージ
 ・はい/いいえの選択肢表示
 ・はい　→Ｃギアをアクティブで起動
@@ -353,7 +354,7 @@
 通信を　始めますか？</language>
 	</row>
 
-	<row id="msg_c03_cgear_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c03_cgear_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>システムメッセージ
 ・選択肢用</comment>
 		<attribute name="キャラ指定">システム</attribute>
@@ -361,7 +362,7 @@
 		<language name="JPN_KANJI" width="256">はい</language>
 	</row>
 
-	<row id="msg_c03_cgear_04" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c03_cgear_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>システムメッセージ
 ・選択肢用</comment>
 		<attribute name="キャラ指定">システム</attribute>
@@ -369,7 +370,7 @@
 		<language name="JPN_KANJI" width="256">いいえ</language>
 	</row>
 
-	<row id="msg_c03_cgear_05" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c03_cgear_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>システムメッセージ
 ・いいえを選択したときの再確認</comment>
 		<attribute name="キャラ指定">システム</attribute>
@@ -379,7 +380,7 @@
 制限されますが　よろしいですか？</language>
 	</row>
 
-	<row id="msg_c03_cgear_06" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c03_cgear_06" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>システムメッセージ
 ・はい選択だが
 　本体設定で無線通信をOFFにしているとき
@@ -464,22 +465,23 @@
 		<comment>♀
 ・c03p07イベント後に出現
 ・posイベント
-・メッセージ表示後、c03p09へ</comment>
+・メッセージ表示後、c03p09へ移動
+　画面外に消えると主人公操作可能に</comment>
 		<attribute name="キャラ指定">アイリス</attribute>
 		<language name="JPN" width="256">アイリス『おーい！
 こっちが　サムピア！▼
 ヒウンで　あやしいと　いえば
-？？ストリートか
-ここかなと　思うんだ▼
-きみも　準備が　できたら
-このさきに　きてみて▼</language>
+？？ストリートか▽
+ここかなと　おもうんだ▼
+きみも　じゅんびが　できたら
+この　さきに　きてみて！▼</language>
 		<language name="JPN_KANJI" width="256">アイリス『おーい！
 こっちが　サムピア！▼
-ヒウンで　あやしいと　いえば
+ヒウンで　怪しいと　いえば
 ？？ストリートか
 ここかなと　思うんだ▼
 きみも　準備が　できたら
-このさきに　きてみて▼</language>
+この先に　来てみて▼</language>
 	</row>
 
 	<row id="msg_c03_leader3_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-05-09T20:24:32"/>
+	<create user="matsumiya" host="W00224" date="2011-05-10T20:35:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1291" top="135" right="1996" bottom="763" maximized="no" rayout="Vertical2">
+	<dialog left="1297" top="225" right="2002" bottom="853" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -306,7 +306,8 @@
 		<comment>♂
 ・はい/いいえ選択肢表示
 ・はい　→
-　いいえ→</comment>
+　いいえ→
+・1＝ライバル名</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
 		<language name="JPN" width="256">ライバル名『主人公名前！
 ＮＰだんは　みつかったか？</language>
@@ -364,6 +365,8 @@
 	</row>
 
 	<row id="msg_c03p17_swrival_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・1＝ライバル名</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
 		<language name="JPN" width="256">ライバル名『ＮＰだんは　いなかったか
 レゾナンスリゾートは　おもしろかったけど
@@ -410,7 +413,8 @@
 		<comment>♂
 ・下水道の外に出るとメッセージ
 ・フラグ成立まで
-　下水道にいるとか（要検討）</comment>
+　下水道にいるとか（要検討）
+・1＝ライバル名</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
 		<language name="JPN" width="256">ライバル『きいたぜ
 アーティって　ひとから
@@ -426,8 +430,8 @@
 		<comment>♂
 ・msg_c03_swchampion_01で登場
 ・はい/いいえ選択肢表示
-・はい　→
-　いいえ→</comment>
+・はい　→pilot_02
+　いいえ→pilot_03</comment>
 		<attribute name="キャラ指定">パイロット</attribute>
 		<language name="JPN" width="256">レゾナンスリゾートまで　ひとっとび！
 どうです　のってみませんか？</language>
