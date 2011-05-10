@@ -1,10 +1,9 @@
 #---------------------------------------------------------------
 #	コンバート対象ユーザー定義
 #---------------------------------------------------------------
-USERS = kagaya \
-  tamada \
-  lee_hyunjung fuchino_hiroki ibe_mana tanoue_reiko \
+USERS = lee_hyunjung fuchino_hiroki ibe_mana tanoue_reiko \
   fujiwara_maiko unno \
+  tamada \
   nakatsui \
   iwao_kazumasa suginaka_katsunori nakamura_hiroki \
   unno \
@@ -21,4 +20,4 @@ USERS = kagaya \
   kawamoto_yuki ohtani_mayo \
   nakamura_akira matsuzaki_tsubasa \
   nagihashi_toru \
-  map01 map02
+  map01 map02 shiiyama_yukiko
