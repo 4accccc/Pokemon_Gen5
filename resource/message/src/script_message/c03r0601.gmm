@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-05-09T15:05:53"/>
+	<create user="matsumiya" host="W00224" date="2011-05-10T20:00:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1297" top="169" right="2002" bottom="797" maximized="no" rayout="Vertical2">
+	<dialog left="1291" top="135" right="1996" bottom="763" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -341,7 +341,7 @@
 	<row id="msg_c03r0601_middleman2_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・ストッパー解除後
-・BLACK</comment>
+・WHITEver</comment>
 		<attribute name="キャラ指定">MIDDLEMAN2</attribute>
 		<language name="JPN" width="256">４ばんどうろは　ながい！
 こえる　つもりなら　きをつけな！</language>
@@ -349,10 +349,10 @@
 越えるつもりなら　気をつけな！</language>
 	</row>
 
-	<row id="msg_c03r0601_middleman2_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c03r0601_middleman2_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
 		<comment>♂
 ・ストッパー解除後
-・WHITE
+・BLACKver
 ※SWANでラベル追加</comment>
 		<attribute name="キャラ指定">MIDDLEMAN2</attribute>
 		<language name="JPN" width="256">４ばんどうろは　ながい！
