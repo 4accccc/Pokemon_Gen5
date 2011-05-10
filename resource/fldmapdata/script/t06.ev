@@ -36,9 +36,10 @@ DEFINE_LOCAL	DOOR_ANIME_ID
 /*		ZONE_CHANGE                             */
 /************************************************************/
 INIT_EVENT_START   ev_zone_t06
-  
-//
-  
+  //イベント進行でアデクの配置を分岐
+  IF $WK_SCENE_T06 < 4 && $WK_SCENE_T06 >= 1 THEN
+    _SXY_MOVE_NPC_POS( T06_CHAMPION_01, DIR_UP , 113, 2, 669 )
+  ENDIF
 INIT_EVENT_END
 
 /************************************************************/
@@ -46,7 +47,7 @@ INIT_EVENT_END
 /************************************************************/
 INIT_EVENT_START ev_init_t06
   //イベント進行でアデクの配置を分岐
-  IF $WK_SCENE_T06 < 4 && $WK_SCENE_T06 != 0 THEN
+  IF $WK_SCENE_T06 < 4 && $WK_SCENE_T06 >= 1 THEN
     _OBJ_POS_CHANGE( T06_CHAMPION_01, 113, 2, 669, DIR_UP )
   ENDIF
 INIT_EVENT_END
@@ -99,7 +100,10 @@ _ANIME_LABEL	anm_champion_guide01_bye
 /* POS：アデクのガイド                                         */
 /**************************************************************/
 EVENT_START   ev_pos_t06_champion_guide_02
-
+  
+  _OBJ_ANIME( T06_CHAMPION_01, anm_dir_d )
+  _OBJ_ANIME_WAIT()
+  
   //メッセージ：こっちだ！
   _BALLOONWIN_OBJMSG_POS( msg_t06_champion_03,T06_CHAMPION_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
@@ -141,9 +145,9 @@ EVENT_START   ev_pos_t06_champion_guide_02
   _MSGWIN_CLOSE()
   
   //アニメ：上に移動
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
-  _TIME_WAIT(8)
   _OBJ_ANIME( T06_CHAMPION_01, anm_champion_look_r20 )
+  _TIME_WAIT(8)
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
   _OBJ_ANIME_WAIT()
   
   //メッセージ：20ばんどうろなら
