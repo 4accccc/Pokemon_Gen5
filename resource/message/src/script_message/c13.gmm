@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-05-09T18:10:51"/>
+	<create user="matsumiya" host="W00224" date="2011-05-10T22:03:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1300" top="217" right="2005" bottom="845" maximized="no" rayout="Vertical2">
+	<dialog left="1318" top="171" right="2023" bottom="796" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -305,11 +305,11 @@
 えいがも　とれる
 せんちょうを　めざすのです！▼</language>
 		<language name="JPN_KANJI" width="256">？？？『ホミカよ　
-ちちを　とめないでおくれ▼
-わたしは　じぶんの　かのうせいを
-さぐるため　ポケウッドに　いきます！▼
-えいがも　とれる
-せんちょうを　めざすのです！▼</language>
+父を　とめないでおくれ▼
+わたしは　自分の　可能性を
+探るため　ポケウッドに　行きます！▼
+映画も　撮れる
+船長を　めざすのです！▼</language>
 	</row>
 
 	<row id="msg_c13_swleader2_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -319,13 +319,13 @@
 ジムリーダー
 ホミカ</attribute>
 		<language name="JPN" width="256">ホミカ『あのね！
-アンタ　せんちょう　でしょ？▼
+あんた　せんちょう　でしょ？▼
 ふね　うごかしてくれないと
 こまる　ひと　いるでしょーが！▼</language>
 		<language name="JPN_KANJI" width="256">ホミカ『あのね！
-アンタ　せんちょう　でしょ？▼
-ふね　うごかしてくれないと
-こまる　ひと　いるでしょーが！▼</language>
+あんた　船長でしょ？▼
+船　動かしてくれないと
+こまる　人　いるでしょーが！▼</language>
 	</row>
 
 	<row id="msg_c13_pilot_02" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
@@ -338,9 +338,9 @@
 きみは　ジムリーダーと　バンドを
 かけもち　しているではないですか？▽
 わたしにも　できるはずなのです！▼</language>
-		<language name="JPN_KANJI" width="256">せんちょう『いとしの　むすめよ▼
+		<language name="JPN_KANJI" width="256">船長『愛しの　娘よ▼
 きみは　ジムリーダーと　バンドを
-かけもち　しているではないですか？▽
+掛け持ち　しているではないですか？▽
 わたしにも　できるはずなのです！▼</language>
 	</row>
 
@@ -357,18 +357,18 @@
 かけもちが　わるいんじゃ　なくて
 めいわく　かけるな！　っていいたいの▼
 せんちょうの　つごうで
-ふねに　のれないとか　ないでしょーが▼
+ふね　のれないとか　ないでしょーが▼
 あー　もう！
 ジムに　いこッ！▼</language>
 		<language name="JPN_KANJI" width="256">ホミカ『あー　もう！！▼
 バカ！　バカ！　バカ！　バカ！
 バカ！　バカ！　バカ！　バカーー！▼
-かけもちが　わるいんじゃ　なくて
-めいわく　かけるな！　っていいたいの▼
-せんちょうの　つごうで
-ふねに　のれないとか　ないでしょーが▼
+掛け持ちが　悪いんじゃ　なくて
+迷惑かけるな！　っていいたいの▼
+船長の　都合で
+船　乗れないとか　ないでしょーが▼
 あー　もう！
-ジムに　いこッ！▼</language>
+ジムに　行こッ！▼</language>
 	</row>
 
 	<row id="msg_c13_stop_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -441,8 +441,8 @@
 ホミカ</attribute>
 		<language name="JPN" width="256">ホミカ『あんたらの　その　かっこう
 もしかして　プラズマだん？▼</language>
-		<language name="JPN_KANJI" width="256">ホミカ『あんたらの　その　かっこう
-もしかして　プラズマだん？▼</language>
+		<language name="JPN_KANJI" width="256">ホミカ『あんたらの　その格好
+もしかして　プラズマ団？▼</language>
 	</row>
 
 	<row id="msg_c13_swplazmam1_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
@@ -456,8 +456,8 @@
 おれらは　ネオプラズマだん
 ネオ　ってところが　だいじだぜ▼</language>
 		<language name="JPN_KANJI" width="256">？？？『ノーノーノー！▼
-おれらは　ネオプラズマだん
-ネオ　ってところが　だいじだぜ▼</language>
+おれらは　ネオプラズマ団
+ネオ　ってところが　大事だぜ▼</language>
 	</row>
 
 	<row id="msg_c13_swrival_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -472,11 +472,11 @@
 ただの　ポケモンどろぼう　だった▽
 おまえらだ！　どうせ　ここでも▽
 なにか　わるいこと　してたんだろ？▼</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『プラズマだん　ふっかつ？▼
-ポケモンを　すくう　といいつつ
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『プラズマ団　復活？▼
+ポケモンを　救う　といいつつ
 ただの　ポケモンどろぼう　だった▽
 おまえらだ！　どうせ　ここでも▽
-なにか　わるいこと　してたんだろ？▼</language>
+なにか　悪いこと　してたんだろ？▼</language>
 	</row>
 
 	<row id="msg_c13_swplazmam2_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
@@ -488,8 +488,8 @@
 ネオプラズマ団♂</attribute>
 		<language name="JPN" width="256">なぞのおとこ『ぼくじょう　では
 ヨーテリーに　おいかけられるし▼</language>
-		<language name="JPN_KANJI" width="256">なぞのおとこ『ぼくじょう　では
-ヨーテリーに　おいかけられるし▼</language>
+		<language name="JPN_KANJI" width="256">なぞのおとこ『牧場では
+ヨーテリーに　追いかけられるし▼</language>
 	</row>
 
 	<row id="msg_c13_swplazmaw_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
@@ -517,9 +517,9 @@
 じゅんびが　できたら　かかってきな？▼</language>
 		<language name="JPN_KANJI" width="256">なぞのおとこ『まあ　いいさ▼
 こいつら　ボコボコにして
-ポケモンを　うばえば　いいだけさ▼
+ポケモンを　奪えば　いいだけさ▼
 ボーイ　アンド　ガール
-じゅんびが　できたら　かかってきな？▼</language>
+準備が　できたら　かかってきな？▼</language>
 	</row>
 
 	<row id="msg_c13_swrival_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -541,10 +541,10 @@
 		<attribute name="キャラ指定">SWLEADER2
 ジムリーダー
 ホミカ</attribute>
-		<language name="JPN" width="256">ホミカ『[1:00:トレーナー名:0]
-アナタも　てつだって！</language>
-		<language name="JPN_KANJI" width="256">ホミカ『[1:00:トレーナー名:0]
-アナタも　てつだって！</language>
+		<language name="JPN" width="256">ホミカ『[1:00:トレーナー名:0]！
+あんたも　おてつだい！</language>
+		<language name="JPN_KANJI" width="256">ホミカ『[1:00:トレーナー名:0]！
+あんたも　おてつだい！</language>
 	</row>
 
 	<row id="msg_c13_swrival_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -552,8 +552,10 @@
 ・戦闘するまで繰り返し
 ・1＝ライバル名</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『！</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『それぞれ
+ひとりずつ　あいて　するぜ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『それぞれ
+ひとりずつ　相手するぜ！</language>
 	</row>
 
 	<row id="msg_c13_swplazmam1_03" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
@@ -565,8 +567,8 @@
 ネオプラズマ団♂</attribute>
 		<language name="JPN" width="256">ネオプラズマだん『どうする？
 オレと　たたかうかい？</language>
-		<language name="JPN_KANJI" width="256">ネオプラズマだん『どうする？
-オレと　たたかうかい？</language>
+		<language name="JPN_KANJI" width="256">ネオプラズマ団『どうする？
+オレと　戦うかい？</language>
 	</row>
 
 	<row id="msg_c13_swplazmam1_04" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
@@ -606,10 +608,10 @@
 こどもたちに　ふかくを　とるとは……▼
 クッ……　ヒウンシティに　もどり▽
 たいせいを　たてなおすぞ！▼</language>
-		<language name="JPN_KANJI" width="256">ネオプラズマだん『まさか！　こんな
-こどもたちに　ふかくを　とるとは……▼
-クッ……　ヒウンシティに　もどり▽
-たいせいを　たてなおすぞ！▼</language>
+		<language name="JPN_KANJI" width="256">ネオプラズマ団『まさか！　こんな
+こどもたちに　不覚を　とるとは……▼
+クッ……　ヒウンシティに　戻り▽
+体制を　たてなおすぞ！▼</language>
 	</row>
 
 	<row id="msg_c13_swrival_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -619,8 +621,8 @@
 		<attribute name="キャラ指定">ライバル</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『あいつら！　にげるための
 ふねを　ようい　してたのか▼</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『あいつら！　にげるための
-ふねを　ようい　してたのか▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『あいつら！
+逃走用の　船を　用意してたのか▼</language>
 	</row>
 
 	<row id="msg_c13_swleader2_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -635,9 +637,9 @@
 あいつらが　なにかしてないか
 アタシ　まちを　みてまわるから▼</language>
 		<language name="JPN_KANJI" width="256">ホミカ『アタシの　オヤジに　いえば
-ヒウンまで　つれていってくれるけどネ▼
+ヒウンまで　連れていってくれるけどネ▼
 あいつらが　なにかしてないか
-アタシ　まちを　みてまわるから▼</language>
+アタシ　街を　みてまわるから▼</language>
 	</row>
 
 	<row id="msg_c13_swleader2_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -652,12 +654,12 @@
 ホミカ</attribute>
 		<language name="JPN" width="256">……まけていたら　たいせつな
 ポケモンを　とられるところ　だったわ▼
-あなたたち　アリガトね
+あんたたち　アリガトね
 これは　ほんの　きもち！▼</language>
-		<language name="JPN_KANJI" width="256">……まけていたら　たいせつな
+		<language name="JPN_KANJI" width="256">……負けていたら　大切な
 ポケモンを　とられるところ　だったわ▼
-あなたたち　アリガトね
-これは　ほんの　きもち！▼</language>
+あんたたち　アリガトね
+これは　ほんの　気持ち！▼</language>
 	</row>
 
 	<row id="msg_c13_swrival_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -666,13 +668,21 @@
 ・1＝ライバル名</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『それ……
-・ひでんマシンの説明▼
-よし！
-オマエ　おいかけるぞ！▼</language>
+ひでんマシン　だな▼
+しかも　なかみは　いあいぎり！
+それを　おぼえた　ポケモンは▼
+たたかって　いないときでも
+みちの　ほそい　きを　きれる！▼
+それはそうと
+プラズマだんを　おいかけるぞ！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『それ……
-・ひでんマシンの説明▼
-よし！
-オマエ　おいかけるぞ！▼</language>
+ひでんマシン　だな▼
+しかも　中は　いあいぎり！
+いあいぎりを　覚えた　ポケモンは▼
+戦って　いないときでも
+道路の　細い木を　切れる！▼
+それはそうと
+プラズマ団を　追いかけるぞ！▼</language>
 	</row>
 
 	<row id="msg_c13_badman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
