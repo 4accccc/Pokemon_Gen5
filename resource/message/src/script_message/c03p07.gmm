@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-05-10T19:21:03"/>
+	<create user="matsumiya" host="W00224" date="2011-05-10T20:55:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1291" top="135" right="1996" bottom="763" maximized="no" rayout="Vertical2">
+	<dialog left="1297" top="225" right="2002" bottom="853" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -294,7 +294,9 @@
 
 	<row id="msg_c03p07_glasses_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
-・下水道イベントを終えるまでのストッパー</comment>
+・下水道イベントを終えるまでのストッパー
+・ジム入り口に配置
+・続けてswchampion_01</comment>
 		<attribute name="キャラ指定">DANPEI
 ダンペイ</attribute>
 		<language name="JPN" width="256">ジムリーダー　なんですけど▼
@@ -309,7 +311,10 @@
 
 	<row id="msg_c03p07_swchampion_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
-・続けて</comment>
+・画面上からメッセージのみ表示
+　主人公、ガイドーに！マーク
+・表示後にアイリス登場
+・続けてglasses_02</comment>
 		<attribute name="キャラ指定">アイリス</attribute>
 		<language name="JPN" width="256">？？？『あれ？
 アーティさん　また　いないの？▼</language>
@@ -319,18 +324,20 @@
 
 	<row id="msg_c03p07_glasses_02">
 		<comment>♂
-・続けて</comment>
+・続けてswchampion_02</comment>
 		<attribute name="キャラ指定">DANPEI
 ダンペイ</attribute>
-		<language name="JPN" width="256">ガイドー『お！　アイリスさん
-・かくかくしかじか　でね▼</language>
-		<language name="JPN_KANJI" width="256">ガイドー『お！　アイリスさん
-・かくかくしかじか　でね▼</language>
+		<language name="JPN" width="256">ガイドー『お！　アイリスさん▼
+じつは　かくかくしかじか　でね
+アーティさん　いないんっすよね▼</language>
+		<language name="JPN_KANJI" width="256">ガイドー『お！　アイリスさん▼
+じつは　かくかくしかじか　でね
+アーティさん　いないんっすよね▼</language>
 	</row>
 
 	<row id="msg_c03p07_swchampion_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
-・続けて</comment>
+・続けてswchampion_03</comment>
 		<attribute name="キャラ指定">アイリス</attribute>
 		<language name="JPN" width="256">アイリス『ふうん……▼
 アーティって　いつも
@@ -347,8 +354,7 @@
 	<row id="msg_c03p07_swchampion_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・主人公を振り向いて
-・続けて
-
+・続けてswchampion_05
 
 ※アイリスの二人称を検討</comment>
 		<attribute name="キャラ指定">アイリス</attribute>
@@ -366,8 +372,8 @@
 ……　……　……▼
 ネオ……　プラズマ団を
 探してる？▼
-でも　プラズマ団って　２年前に
-解散したんじゃ……▼
+でも　プラズマ団って
+２年前に　解散したんじゃ……▼
 って　いっか！　いま　実際に
 こまってるんだもんね（探してる）▼</language>
 	</row>
@@ -375,12 +381,12 @@
 	<row id="msg_c03p07_swchampion_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・下向き
-・続けて</comment>
+・続けてswchampion_05</comment>
 		<attribute name="キャラ指定">アイリス</attribute>
 		<language name="JPN" width="256">うーん……
 あやしい　ひとが　いそうな　ばしょ▼</language>
 		<language name="JPN_KANJI" width="256">うーん……
-あやしい　人が　いそうな　場所▼</language>
+怪しい人が　いそうな　場所▼</language>
 	</row>
 
 	<row id="msg_c03p07_swchampion_05" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
