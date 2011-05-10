@@ -2821,10 +2821,10 @@ static  void  TCB_TransformStandby2BattleRecorder( GFL_TCB* tcb, void* work )
 
   switch( ttw->seq_no ){
   case 0:
-//    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, _get_arcid(NARC_battgra_wb_battle_w_bg0f_NSCR,ttw->biw),
-//                                     GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
-//    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, _get_arcid(NARC_battgra_wb_battle_w_bg1f_NSCR,ttw->biw),
-//                                     GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
+    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, _get_arcid(NARC_battgra_wb_battle_w_bg0f_NSCR,ttw->biw),
+                                     GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
+    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, _get_arcid(NARC_battgra_wb_battle_w_bg1f_NSCR,ttw->biw),
+                                     GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
     SePlayOpen( ttw->biw );
     //GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TTS2C_FRAME1_SCROLL_X );
     //GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TTS2C_FRAME1_SCROLL_Y );
@@ -2859,7 +2859,7 @@ static  void  TCB_TransformStandby2BattleRecorder( GFL_TCB* tcb, void* work )
                       BG_VISIBLE_ON, BG_VISIBLE_ON, BG_VISIBLE_NO_SET, BG_VISIBLE_OFF );
       BTLV_INPUT_FreeTCB( ttw->biw, tcb );
 
-//    if(BTL_MAIN_GetPokewoodMode(BTLV_EFFECT_GetMainModule())==BTL_POKEWOOD_SHOW){
+    if(BTL_MAIN_GetPokewoodMode(BTLV_EFFECT_GetMainModule())==BTL_POKEWOOD_SHOW){
         // BGƒŠƒ\[ƒX“]‘—
         GFL_ARCHDL_UTIL_TransVramBgCharacter( ttw->biw->handle, NARC_battgra_wb_pkwd_movie_NCGR,
                                             GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
@@ -2871,7 +2871,7 @@ static  void  TCB_TransformStandby2BattleRecorder( GFL_TCB* tcb, void* work )
         // OBJƒŠƒ\[ƒX“]‘—E“o˜^
 //        BTLV_INPUT_CreateAudienceObj( ttw->biw );
 
-//      }
+      }
     }
     break;
   }
