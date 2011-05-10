@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-04T19:35:49"/>
+	<create user="matsumiya" host="W00224" date="2011-05-10T10:44:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1291" top="135" right="1996" bottom="763" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -294,7 +294,7 @@
 
 	<row id="msg_c12r0101_swmama_01">
 		<comment>♀
-・主人公初期配置（13.5）下向き
+・主人公初期配置（12.5）下向き
 ・pos（local　8.10）を踏むと室外から登場
 ・続けてswmama_02
 ・0＝主人公名前</comment>
