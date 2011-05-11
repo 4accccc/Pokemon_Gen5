@@ -2590,6 +2590,9 @@ static void ITEM_Sub( FIELD_ITEMMENU_WORK* pWork, int sub_num )
     BOOL is_cursor_end = FALSE;
     BOOL is_list_end = FALSE;
 
+    // 選択中のアイテムを保管データからも取り除く
+    BAGITEM_PosItemDelete( &pWork->bag_item , now_pos);
+
     // カーソル一番下判定
     if( length == now_pos+1 )
     {
