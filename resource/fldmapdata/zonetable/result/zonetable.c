@@ -6557,9 +6557,9 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
 		MATRIX_ID_WBT01, // camera_area
 		19,   // padding > placeicon
-		5,
+		15,
 		0,
-		4,
+		8,
 	},
 	{//ZONE_ID_D05R0201 = 193
 		RSC_GRID_DEFAULT,
