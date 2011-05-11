@@ -389,13 +389,13 @@ EVENT_START ev_c12gym0201_girl2_01
   //ジム未クリア
     IF $SCWK_TEMP0 == 0 THEN
     //既に戦ったかチェック
-    _TRAINER_FLAG_CHECK( TRID_MINI_14, SCWK_ANSWER )
+    _TRAINER_FLAG_CHECK( TRID_MINI_15, SCWK_ANSWER )
     
     //まだ勝利していない
     IF $SCWK_ANSWER ==  FALSE THEN
       
       //トレーナー曲再生
-      _TRAINER_BGM_SET(  TRID_MINI_14 )
+      _TRAINER_BGM_SET(  TRID_MINI_15 )
       
       //
       _BALLOONWIN_OBJMSG( msg_c12gym0201_girl2_01 , C12GYM0201_GIRL2_01 )
@@ -403,7 +403,7 @@ EVENT_START ev_c12gym0201_girl2_01
       _BALLOONWIN_CLOSE()
       
       //トレーナー戦呼び出し
-      _TRAINER_BTL_SET( TRID_MINI_14, 0 )
+      _TRAINER_BTL_SET( TRID_MINI_15, 0 )
       
       //結果チェック
       _CALL ev_battle_check
@@ -413,7 +413,7 @@ EVENT_START ev_c12gym0201_girl2_01
        $WK_SCENE_C12GYM0201 += 1
        
        //トレーナーフラグセット
-       _TRAINER_FLAG_SET( TRID_MINI_14 )
+       _TRAINER_FLAG_SET( TRID_MINI_15 )
        
        //========================================/
       
