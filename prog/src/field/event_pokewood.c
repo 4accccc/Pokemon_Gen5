@@ -264,6 +264,9 @@ static void deletePokewoodBSP( BATTLE_SETUP_PARAM * bsp )
   {
     GFL_HEAP_FreeMemory( bsp->playerStatus[ BTL_CLIENT_PLAYER ] );  //プレイヤーのMySatusは開放されないので
     BTL_SETUP_QuitForRecordPlay( bsp );
+  }
+  if ( BattleRec_DataExistCheck() )
+  {
     BattleRec_Exit();
   }
   BATTLE_PARAM_Delete( bsp );
