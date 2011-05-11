@@ -1723,6 +1723,76 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
   biw->scr_type = type;
 }
 
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	バトルレコーダー用のタッチ判定処理
+ *
+ * @param   biw		  BTLV_INPUT_WORK*
+ * @param   tp_tbl	BTLV_INPUT_HITTBL*
+ * @param   hit		  それまでのタッチ情報
+ *
+ * @retval  int		入力結果
+ */
+//----------------------------------------------------------------------------------
+static int _input_BattleRecorder( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl, int hit )
+{
+  hit = GFL_UI_TP_HitTrg( tp_tbl->hit_tbl );
+  if( hit != GFL_UI_TP_HIT_NONE )
+  {
+    if( biw->button_exist[ hit ] == FALSE )
+    {
+      hit = GFL_UI_TP_HIT_NONE;
+    }
+    else
+    {
+      if( hit == BTLV_INPUT_BR_SEL_STOP )
+      {
+        SePlayCancel( biw );
+      }
+      else
+      {
+        SePlayDecide( biw );
+      }
+    }
+  }
+  else
+  {
+    hit = BTLV_INPUT_CheckKeyBR( biw );
+  }
+  if( hit != GFL_UI_TP_HIT_NONE )
+  {
+    hit = BTLV_INPUT_SetButtonReaction( biw, hit, tp_tbl->button_pltt[ hit ] );
+  }
+  return hit;
+
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	仮ポケウッド上映画面操作入力処理
+ *
+ * @param   biw		
+ * @param   tp_tbl		
+ * @param   hit		
+ *
+ * @retval  int		
+ */
+//----------------------------------------------------------------------------------
+static int _input_PokewoodPlay( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl, int hit )
+{
+  int rp = GFL_UI_KEY_GetRepeat();
+  hit = GFL_UI_TP_HIT_NONE;
+
+  if( rp & PAD_BUTTON_B )
+  {
+    SePlayCancel( biw );
+    return BTLV_INPUT_BR_SEL_STOP;
+  }
+  
+}
+
+
 //============================================================================================
 /**
  *  @brief  入力チェック
@@ -1813,34 +1883,13 @@ int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl
   //バトルレコーダーは、別判定をする
   if( biw->scr_type == BTLV_INPUT_SCRTYPE_BATTLE_RECORDER )
   {
-    hit = GFL_UI_TP_HitTrg( tp_tbl->hit_tbl );
-    if( hit != GFL_UI_TP_HIT_NONE )
-    {
-      if( biw->button_exist[ hit ] == FALSE )
-      {
-        hit = GFL_UI_TP_HIT_NONE;
-      }
-      else
-      {
-        if( hit == BTLV_INPUT_BR_SEL_STOP )
-        {
-          SePlayCancel( biw );
-        }
-        else
-        {
-          SePlayDecide( biw );
-        }
-      }
+    // ポケウッド上映じゃなければ通常の再生画面
+    if(biw->pokewood!=BTL_POKEWOOD_SHOW){
+      return _input_BattleRecorder( biw, tp_tbl, hit );
+    }else{
+      // ポケウッド再生画面用入力処理
+      return _input_PokewoodPlay( biw, tp_tbl, hit );
     }
-    else
-    {
-      hit = BTLV_INPUT_CheckKeyBR( biw );
-    }
-    if( hit != GFL_UI_TP_HIT_NONE )
-    {
-      hit = BTLV_INPUT_SetButtonReaction( biw, hit, tp_tbl->button_pltt[ hit ] );
-    }
-    return hit;
   }
 
   hit = hit_tp = GFL_UI_TP_HitTrg( tp_tbl->hit_tbl );
