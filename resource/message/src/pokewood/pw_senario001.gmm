@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="mori" host="W00269" date="2011-03-28T10:42:37"/>
+	<create user="nakatsui" host="DB5YGPBX" date="2011-05-11T16:01:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -395,13 +395,13 @@
 		</language>
 	</columns>
 
-	<dialog left="6" top="97" right="711" bottom="717" maximized="no" rayout="Vertical2">
+	<dialog left="215" top="176" right="920" bottom="796" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="542" visible="no"/>
-		<band id="0" index="0" style="0000" width="522"/>
+		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="689"/>
-		<band id="3" index="3" style="0000" width="689"/>
+		<band id="2" index="2" style="0000" width="697"/>
+		<band id="3" index="3" style="0000" width="697"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -424,436 +424,449 @@
 
 
 	<row id="pw_scenario_000_besthit_m">
-		<language name="JPN" width="256">まちを　はかいするのを　やめろ！
+		<language name="JPN" width="256">スワン『まちの　はかいを　やめろ！
 いいかげんに　めを　さましてっ！</language>
-		<language name="JPN_KANJI" width="256">まちを　はかいするのを　やめろ！
+		<language name="JPN_KANJI" width="256">スワン『まちの　はかいを　やめろ！
 いいかげんに　めを　さましてっ！</language>
 	</row>
 
 	<row id="pw_scenario_000_hit_m">
-		<language name="JPN" width="256">いますぐ　ＵＦＯを　とめるんだっ！</language>
-		<language name="JPN_KANJI" width="256">いますぐ　ＵＦＯを　とめるんだっ！</language>
+		<language name="JPN" width="256">スワン『いますぐ　ＵＦＯを
+とめるんだっ！</language>
+		<language name="JPN_KANJI" width="256">スワン『いますぐ　ＵＦＯを
+とめるんだっ！</language>
 	</row>
 
 	<row id="pw_scenario_000_badhit_m">
-		<language name="JPN" width="256">うう……
+		<language name="JPN" width="256">スワン『くっ……
 なんて　がんじょうな　ボディだ……</language>
-		<language name="JPN_KANJI" width="256">うう……
+		<language name="JPN_KANJI" width="256">スワン『くっ……
 なんて　がんじょうな　ボディだ……</language>
 	</row>
 
 	<row id="pw_scenario_000_nohit_m">
-		<language name="JPN" width="256">ダメだ……　ぜんぜん　きかない……
-クッ　このままでは　ヒウンが……</language>
-		<language name="JPN_KANJI" width="256">ダメだ……　ぜんぜん　きかない……
-クッ　このままでは　ヒウンが……</language>
+		<language name="JPN" width="256">スワン『ダメだ……　きいていない……
+このままでは　ヒウンが……</language>
+		<language name="JPN_KANJI" width="256">スワン『ダメだ……　きいていない……
+このままでは　ヒウンが……</language>
 	</row>
 
 	<row id="pw_scenario_000_assist01_m">
-		<language name="JPN" width="256">クールに……　おちつくんだ……
+		<language name="JPN" width="256">スワン『おちつくんだ……
 ここは　ようすを　みるんだ……</language>
-		<language name="JPN_KANJI" width="256">クールに……　おちつくんだ……
+		<language name="JPN_KANJI" width="256">スワン『おちつくんだ……
 ここは　ようすを　みるんだ……</language>
 	</row>
 
 	<row id="pw_scenario_000_assist02_m">
-		<language name="JPN" width="256">れいせいに……　れいせいに……
+		<language name="JPN" width="256">スワン『れいせいに……
 ここは　ようすを　みるんだ……</language>
-		<language name="JPN_KANJI" width="256">れいせいに……　れいせいに……
+		<language name="JPN_KANJI" width="256">スワン『れいせいに……
 ここは　ようすを　みるんだ……</language>
 	</row>
 
 	<row id="pw_scenario_000_other_m">
-		<language name="JPN" width="256">クッ……　あのＵＦ０を
+		<language name="JPN" width="256">スワン『かのじょを
 とめる　ほうほうは　ないのか……</language>
-		<language name="JPN_KANJI" width="256">クッ……　あのＵＦ０を
+		<language name="JPN_KANJI" width="256">スワン『かのじょを
 とめる　ほうほうは　ないのか……</language>
 	</row>
 
 	<row id="pw_scenario_000_exchange_m">
-		<language name="JPN" width="256">グズグズしていらない……
+		<language name="JPN" width="256">スワン『グズグズ　できないな……
 このままでは　ヒウンの　まちが……</language>
-		<language name="JPN_KANJI" width="256">グズグズしていらない……
+		<language name="JPN_KANJI" width="256">スワン『グズグズ　できないな……
 このままでは　ヒウンの　まちが……</language>
 	</row>
 
 	<row id="pw_scenario_000_besthit_e">
-		<language name="JPN" width="256">わたしの　かがくりょくの　まえでは
-すべて　むりょく　なのよ！</language>
-		<language name="JPN_KANJI" width="256">わたしの　かがくりょくの　まえでは
-すべて　むりょく　なのよ！</language>
+		<language name="JPN" width="256">サトミ『わたしの　かがくの　まえでは
+すべてが　むりょく　なる！</language>
+		<language name="JPN_KANJI" width="256">サトミ『わたしの　かがくの　まえでは
+すべてが　むりょく　なる！</language>
 	</row>
 
 	<row id="pw_scenario_000_hit_e">
-		<language name="JPN" width="256">ヒウンの　まちと　いっしょに
-あなたも　しずむ　つもり？</language>
-		<language name="JPN_KANJI" width="256">ヒウンの　まちと　いっしょに
-あなたも　しずむ　つもり？</language>
+		<language name="JPN" width="256">サトミ『この　まちと　いっしょに
+あなたも　ほろぶ　つもり　なの？</language>
+		<language name="JPN_KANJI" width="256">サトミ『この　まちと　いっしょに
+あなたも　ほろぶ　つもり　なの？</language>
 	</row>
 
 	<row id="pw_scenario_000_badhit_e">
-		<language name="JPN" width="256">フン……　うんが　いいわね……</language>
-		<language name="JPN_KANJI" width="256">フン……　うんが　いいわね……</language>
+		<language name="JPN" width="256">サトミ『フン……　うんが　いいわね……
+つぎは　こうは　いかないわ……</language>
+		<language name="JPN_KANJI" width="256">サトミ『フン……　うんが　いいわね……
+つぎは　こうは　いかないわ……</language>
 	</row>
 
 	<row id="pw_scenario_000_nohit_e">
-		<language name="JPN" width="256">わたしの　いだいな　けんきゅうを
+		<language name="JPN" width="256">サトミ『いだいな　けんきゅうを
 みとめない　せかい　なんて……</language>
-		<language name="JPN_KANJI" width="256">わたしの　いだいな　けんきゅうを
+		<language name="JPN_KANJI" width="256">サトミ『いだいな　けんきゅうを
 みとめない　せかい　なんて……</language>
 	</row>
 
 	<row id="pw_scenario_000_assist01_e">
-		<language name="JPN" width="256">わたしの　ずのうを　このイッシュに
-みとめさせる……</language>
-		<language name="JPN_KANJI" width="256">わたしの　ずのうを　このイッシュに
-みとめさせる……</language>
+		<language name="JPN" width="256">サトミ『わたしの　ずのうを
+イッシュに　みとめさせる……</language>
+		<language name="JPN_KANJI" width="256">サトミ『わたしの　ずのうを
+イッシュに　みとめさせる……</language>
 	</row>
 
 	<row id="pw_scenario_000_assist02_e">
-		<language name="JPN" width="256">わたしの　けいさんに　いちミリの
-くるいも　あるはずが　ない</language>
-		<language name="JPN_KANJI" width="256">わたしの　けいさんに　いちミリの
-くるいも　あるはずが　ない</language>
+		<language name="JPN" width="256">サトミ『わたしの　けいさんには
+いちミリの　くるいも　ないの！</language>
+		<language name="JPN_KANJI" width="256">サトミ『わたしの　けいさんには
+いちミリの　くるいも　ないの！</language>
 	</row>
 
 	<row id="pw_scenario_000_other_e">
-		<language name="JPN" width="256">わたしの　けいさんに　いちミリの
-くるいも　あるはずが　ない</language>
-		<language name="JPN_KANJI" width="256">わたしの　けいさんに　いちミリの
-くるいも　あるはずが　ない</language>
+		<language name="JPN" width="256">サトミ『わたしの　けいさんには
+いちミリの　くるいも　ないの！</language>
+		<language name="JPN_KANJI" width="256">サトミ『わたしの　けいさんには
+いちミリの　くるいも　ないの！</language>
 	</row>
 
 	<row id="pw_scenario_000_exchange_e">
-		<language name="JPN" width="256">わたしの　じゃまを　しないでっ！</language>
-		<language name="JPN_KANJI" width="256">わたしの　じゃまを　しないでっ！</language>
+		<language name="JPN" width="256">サトミ『じゃまを　しないでっ！
+はやく　きえてちょうだい！</language>
+		<language name="JPN_KANJI" width="256">サトミ『じゃまを　しないでっ！
+はやく　きえてちょうだい！</language>
 	</row>
 
 	<row id="pw_scenario_000_situation01_m">
-		<language name="JPN" width="256">クッ……　このままでは……
+		<language name="JPN" width="256">スワン『このままでは……
 ヒウンシティが……</language>
-		<language name="JPN_KANJI" width="256">クッ……　このままでは……
+		<language name="JPN_KANJI" width="256">スワン『このままでは……
 ヒウンシティが……</language>
 	</row>
 
 	<row id="pw_scenario_000_situation01_e">
-		<language name="JPN" width="256">わたしの　けんきゅうの
+		<language name="JPN" width="256">サトミ『わたしの　けんきゅうの
 じゃまするから　こうなるのよ！　</language>
-		<language name="JPN_KANJI" width="256">わたしの　けんきゅうの
+		<language name="JPN_KANJI" width="256">サトミ『わたしの　けんきゅうの
 じゃまするから　こうなるのよ！　</language>
 	</row>
 
 	<row id="pw_scenario_000_situation02_m">
-		<language name="JPN" width="256">もう　いいだろう！　はかいをやめて
+		<language name="JPN" width="256">スワン『いいかげんに　しろ！
 いますぐ　ＵＦＯを　とめるんだっ！</language>
-		<language name="JPN_KANJI" width="256">もう　いいだろう！　はかいをやめて
+		<language name="JPN_KANJI" width="256">スワン『いいかげんに　しろ！
 いますぐ　ＵＦＯを　とめるんだっ！</language>
 	</row>
 
 	<row id="pw_scenario_000_situation02_e">
-		<language name="JPN" width="256">せいぎの　みかたの　きどりで
+		<language name="JPN" width="256">サトミ『せいぎのみかた　きどり？
 わたしの　じゃまを　しないで！</language>
-		<language name="JPN_KANJI" width="256">せいぎの　みかたの　きどりで
+		<language name="JPN_KANJI" width="256">サトミ『せいぎのみかた　きどり？
 わたしの　じゃまを　しないで！</language>
 	</row>
 
 	<row id="pw_scenario_000_situation03_m">
-		<language name="JPN" width="256">さあ！　もう　あきらめるんだ！</language>
-		<language name="JPN_KANJI" width="256">さあ！　もう　あきらめるんだ！</language>
+		<language name="JPN" width="256">スワン『もう　あきらめるんだ！</language>
+		<language name="JPN_KANJI" width="256">スワン『もう　あきらめるんだ！</language>
 	</row>
 
 	<row id="pw_scenario_000_situation03_e">
-		<language name="JPN" width="256">そんな……　そんな……
+		<language name="JPN" width="256">サトミ『そんな……
 わたしのゆめが……　けんきゅうが……</language>
-		<language name="JPN_KANJI" width="256">そんな……　そんな……
+		<language name="JPN_KANJI" width="256">サトミ『そんな……
 わたしのゆめが……　けんきゅうが……</language>
 	</row>
 
 	<row id="pw_scenario_000_situation04_m">
-		<language name="JPN" width="256">クッ……　ヒウンの　まちが……</language>
-		<language name="JPN_KANJI" width="256">クッ……　ヒウンの　まちが……</language>
+		<language name="JPN" width="256">スワン『クッ……　なんてことだ……
+ヒウンの　まちが……</language>
+		<language name="JPN_KANJI" width="256">スワン『クッ……　なんてことだ……
+ヒウンの　まちが……</language>
 	</row>
 
 	<row id="pw_scenario_000_situation04_e">
-		<language name="JPN" width="256">じゃま　するからよ……　　
-ヒウンも　キミも　もうおしまいね……</language>
-		<language name="JPN_KANJI" width="256">じゃま　するからよ……　　
-ヒウンも　キミも　もうおしまいね……</language>
+		<language name="JPN" width="256">スワン『じゃま　するからよ……　　
+ヒウンも　キミも　もうおしまい……</language>
+		<language name="JPN_KANJI" width="256">スワン『じゃま　するからよ……　　
+ヒウンも　キミも　もうおしまい……</language>
 	</row>
 
 	<row id="pw_scenario_000_situation05_m">
-		<language name="JPN" width="256">まて！　にげるのかっ！</language>
-		<language name="JPN_KANJI" width="256">まて！　にげるのかっ！</language>
+		<language name="JPN" width="256">スワン『まて！　にげるのかっ！</language>
+		<language name="JPN_KANJI" width="256">スワン『まて！　にげるのかっ！</language>
 	</row>
 
 	<row id="pw_scenario_000_situation05_e">
-		<language name="JPN" width="256">もくてきは　はたしたわ……
+		<language name="JPN" width="256">サトミ『もくてきは　はたした……
 つぎは　どのまちに　しようかしら？</language>
-		<language name="JPN_KANJI" width="256">もくてきは　はたしたわ……
+		<language name="JPN_KANJI" width="256">サトミ『もくてきは　はたした……
 つぎは　どのまちに　しようかしら？</language>
 	</row>
 
 	<row id="pw_scenario_000_situation06_m">
-		<language name="JPN" width="256">クッ……　もう……　ダメだ……</language>
-		<language name="JPN_KANJI" width="256">クッ……　もう……　ダメだ……</language>
+		<language name="JPN" width="256">スワン『もう……　ダメだ……</language>
+		<language name="JPN_KANJI" width="256">スワン『もう……　ダメだ……</language>
 	</row>
 
 	<row id="pw_scenario_000_situation06_e">
-		<language name="JPN" width="256">じゃま　するからよ……　　
+		<language name="JPN" width="256">サトミ『じゃま　するからよ……　　
 ヒウンも　キミも　もうおしまいね……</language>
-		<language name="JPN_KANJI" width="256">じゃま　するからよ……　　
+		<language name="JPN_KANJI" width="256">サトミ『じゃま　するからよ……　　
 ヒウンも　キミも　もうおしまいね……</language>
 	</row>
 
 	<row id="pw_scenario_000_situation07_m">
-		<language name="JPN" width="256">クッ……　なんてことだ……</language>
-		<language name="JPN_KANJI" width="256">クッ……　なんてことだ……</language>
+		<language name="JPN" width="256">スワン『クッ……　なんてことだ……
+ヒウンの　まちが……</language>
+		<language name="JPN_KANJI" width="256">スワン『クッ……　なんてことだ……
+ヒウンの　まちが……</language>
 	</row>
 
 	<row id="pw_scenario_000_situation07_e">
-		<language name="JPN" width="256">フフフ……　せかいじゅうに
+		<language name="JPN" width="256">サトミ『フフ……　せかいじゅうに
 この　ずのうを　みとめさせる……　</language>
-		<language name="JPN_KANJI" width="256">フフフ……　せかいじゅうに
+		<language name="JPN_KANJI" width="256">サトミ『フフ……　せかいじゅうに
 この　ずのうを　みとめさせる……　</language>
 	</row>
 
 	<row id="pw_scenario_000_tum01">
-		<language name="JPN" width="256">アナタ　とっても　べんりだったわ　
+		<language name="JPN" width="256">サトミ『アナタ　べんり　だったわ　
 ゆうしゅうで　だまされやすくて……</language>
-		<language name="JPN_KANJI" width="256">アナタ　とっても　便利だったわ　
-優秀で　ダマされやすくて……</language>
+		<language name="JPN_KANJI" width="256">サトミ『アナタ　べんり　だったわ　
+ゆうしゅうで　だまされやすくて……</language>
 	</row>
 
 	<row id="pw_scenario_000_tum02">
-		<language name="JPN" width="256">この　ひを　まちのぞんでいた……
-フ　フフ　フフフフッ！！</language>
-		<language name="JPN_KANJI" width="256">この　ひを　まちのぞんでいた……
-フ　フフ　フフフフッ！！</language>
+		<language name="JPN" width="256">サトミ『この　ひを　まちのぞんでいた
+フッ　フフ　フフフフッ！！</language>
+		<language name="JPN_KANJI" width="256">サトミ『この　ひを　まちのぞんでいた
+フッ　フフ　フフフフッ！！</language>
 	</row>
 
 	<row id="pw_scenario_000_tum03">
-		<language name="JPN" width="256">わたしの　ずのうを　みとめなかった
+		<language name="JPN" width="256">サトミ『この　ずのうを　みとめなかった
 せかいへ　ふくしゅうが　はじまるの！</language>
-		<language name="JPN_KANJI" width="256">わたしの　ずのうを　みとめなかった
+		<language name="JPN_KANJI" width="256">サトミ『この　ずのうを　みとめなかった
 せかいへ　ふくしゅうが　はじまるの！</language>
 	</row>
 
 	<row id="pw_scenario_000_tum04">
-		<language name="JPN" width="256">どう？　わたしのＵＦＯの　ちからは？
-すばらしいでしょう！</language>
-		<language name="JPN_KANJI" width="256">どう？　わたしのＵＦＯの　ちからは？
-すばらしいでしょう！</language>
+		<language name="JPN" width="256">サトミ『どう？　ＵＦＯの　ちからは？
+じつに　すばらしいでしょう！</language>
+		<language name="JPN_KANJI" width="256">サトミ『どう？　ＵＦＯの　ちからは？
+じつに　すばらしいでしょう！</language>
 	</row>
 
 	<row id="pw_scenario_000_tum05">
-		<language name="JPN" width="256">このＵＦＯで　ヒウンを　はかいして
+		<language name="JPN" width="256">サトミ『ヒウンを　はかいして
 イッシュに　わたしの　なを　しめす！</language>
-		<language name="JPN_KANJI" width="256">このＵＦＯで　ヒウンを　はかいして
+		<language name="JPN_KANJI" width="256">サトミ『ヒウンを　はかいして
 イッシュに　わたしの　なを　しめす！</language>
 	</row>
 
 	<row id="pw_scenario_000_tum06">
-		<language name="JPN" width="256">フフ………　すばらしい　ちから……
+		<language name="JPN" width="256">サトミ『すばらしい　ちから……
 まちも　ビルも　もえていく……　</language>
-		<language name="JPN_KANJI" width="256">フフ………　すばらしい　ちから……
+		<language name="JPN_KANJI" width="256">サトミ『すばらしい　ちから……
 まちも　ビルも　もえていく……　</language>
 	</row>
 
 	<row id="pw_scenario_000_tum07">
-		<language name="JPN" width="256">しぶとい　こどもね……▼
+		<language name="JPN" width="256">サトミ『しぶとい　こども……▼
 こんなことなら　もっと　まえに
 たおしておけば　よかったわ</language>
-		<language name="JPN_KANJI" width="256">しぶとい　こどもね……▼
+		<language name="JPN_KANJI" width="256">サトミ『しぶとい　こども……▼
 こんなことなら　もっと　まえに
 たおしておけば　よかったわ</language>
 	</row>
 
 	<row id="pw_scenario_000_tum08">
-		<language name="JPN" width="256">ヒウンシティも　これで　おしまい……
+		<language name="JPN" width="256">サトミ『ヒウンも　これで　おしまい……
 サヨナラさせて　もらうかしら？</language>
-		<language name="JPN_KANJI" width="256">ヒウンシティも　これで　おしまい……
+		<language name="JPN_KANJI" width="256">サトミ『ヒウンも　これで　おしまい……
 サヨナラさせて　もらうかしら？</language>
 	</row>
 
 	<row id="pw_scenario_000_evt00_01">
-		<language name="JPN" width="256">まさか　あの　ＵＦＯは……！！
+		<language name="JPN" width="256">スワン『まさか　あれは……！！
 なぜ　こんなところに……</language>
-		<language name="JPN_KANJI" width="256">まさか　あの　ＵＦＯは……！！
+		<language name="JPN_KANJI" width="256">スワン『まさか　あれは……！！
 なぜ　こんなところに……</language>
 	</row>
 
 	<row id="pw_scenario_000_evt00_02">
-		<language name="JPN" width="256">フフフ　ついに　このひが　きた……　
+		<language name="JPN" width="256">サトミ『ついに　このひが　きた……　
 かんせいした　ＵＦＯの　ちから！▽
 この　ヒウンで　ためしてやる</language>
-		<language name="JPN_KANJI" width="256">フフフ　ついに　この日が　きた……　
-かんせいした　ＵＦＯの　力！▽
-この　ヒウンで　試してやる</language>
+		<language name="JPN_KANJI" width="256">サトミ『ついに　このひが　きた……　
+かんせいした　ＵＦＯの　ちから！▽
+この　ヒウンで　ためしてやる</language>
 	</row>
 
 	<row id="pw_scenario_000_evt00_choice01">
-		<language name="JPN" width="256">バカな！　なにを　かんがえてる！</language>
-		<language name="JPN_KANJI" width="256">バカな！　なにを　かんがえてる！</language>
+		<language name="JPN" width="256">スワン『バカな！　なにを　かんがえてる！</language>
+		<language name="JPN_KANJI" width="256">スワン『バカな！　なにを　かんがえてる！</language>
 	</row>
 
 	<row id="pw_scenario_000_evt00_choice02">
-		<language name="JPN" width="256">やはり　あなたが……</language>
-		<language name="JPN_KANJI" width="256">やはり　あなたが……</language>
+		<language name="JPN" width="256">スワン『やはり　あなたが……</language>
+		<language name="JPN_KANJI" width="256">スワン『やはり　あなたが……</language>
 	</row>
 
 	<row id="pw_scenario_000_evt00_choice03">
-		<language name="JPN" width="256">あわわ……</language>
-		<language name="JPN_KANJI" width="256">あわわ……</language>
+		<language name="JPN" width="256">スワン『あわわ……</language>
+		<language name="JPN_KANJI" width="256">スワン『あわわ……</language>
 	</row>
 
 	<row id="pw_scenario_000_evt00_choice01_res01">
-		<language name="JPN" width="256">あら？　このわたしを　バカよばわり？　
+		<language name="JPN" width="256">サトミ『このわたしを　バカよばわり？　
 なら　キミの　ちからで　とめてみたら？</language>
-		<language name="JPN_KANJI" width="256">あら？　このわたしを　バカ呼ばわり？　
-なら　キミの　力で　止めてみたら？</language>
+		<language name="JPN_KANJI" width="256">サトミ『このわたしを　バカよばわり？　
+なら　キミの　ちからで　とめてみたら？</language>
 	</row>
 
 	<row id="pw_scenario_000_evt00_choice01_res02">
-		<language name="JPN" width="256">やっぱり　きがついて　いたの？
-フフッ　あなどれないわね……　</language>
-		<language name="JPN_KANJI" width="256">やっぱり　気がついて　いたの？
-フフッ　あなどれないわね……　</language>
+		<language name="JPN" width="256">サトミ『やはり　きがついていたわね
+フフッ　あなどれないわ……　</language>
+		<language name="JPN_KANJI" width="256">サトミ『やはり　きがついていたわね
+フフッ　あなどれないわ……　</language>
 	</row>
 
 	<row id="pw_scenario_000_evt00_choice01_res03">
-		<language name="JPN" width="256">まだ　わからないの？
+		<language name="JPN" width="256">サトミ『まだ　わからないの？
 だまされたのよ　キミは▼
 いままでの　できごとは　すべて
 このＵＦＯを　かんせいさせる▽
 じっけんと　ちょうさ　だったのよ</language>
-		<language name="JPN_KANJI" width="256">まだ　わからないの？
+		<language name="JPN_KANJI" width="256">サトミ『まだ　わからないの？
 だまされたのよ　キミは▼
-今までの　出来事は　すべて
-このＵＦＯを　完成させる▽
-実験と　調査だったのよ</language>
+いままでの　できごとは　すべて
+このＵＦＯを　かんせいさせる▽
+じっけんと　ちょうさ　だったのよ</language>
 	</row>
 
 	<row id="pw_scenario_000_evt01_01">
-		<language name="JPN" width="256">あのポケモンたち……　まさか……
+		<language name="JPN" width="256">スワン『あのポケモン……　まさか
 ……あやつられて　いる？</language>
-		<language name="JPN_KANJI" width="256">あのポケモンたち……　まさか……
+		<language name="JPN_KANJI" width="256">スワン『あのポケモン……　まさか
 ……あやつられて　いる？</language>
 	</row>
 
 	<row id="pw_scenario_000_evt01_02">
-		<language name="JPN" width="256">フフ　わたしの　かがくりょくで
+		<language name="JPN" width="256">サトミ『わたしの　かがくりょくで
 ポケモンは　おもいのまま……▼
 さあ……　つみもない　ポケモンを
 キミは　たおせるのかしら？▼</language>
-		<language name="JPN_KANJI" width="256">フフ　わたしの　かがくりょくで
+		<language name="JPN_KANJI" width="256">サトミ『わたしの　かがくりょくで
 ポケモンは　おもいのまま……▼
 さあ……　つみもない　ポケモンを
 キミは　たおせるのかしら？▼</language>
 	</row>
 
 	<row id="pw_scenario_000_evt01_choice01">
-		<language name="JPN" width="256">みんな！　めを　さますんだっ！</language>
-		<language name="JPN_KANJI" width="256">みんな！　めを　さますんだっ！</language>
+		<language name="JPN" width="256">スワン『みんな！　めを　さますんだ！</language>
+		<language name="JPN_KANJI" width="256">スワン『みんな！　めを　さますんだ！</language>
 	</row>
 
 	<row id="pw_scenario_000_evt01_choice02">
-		<language name="JPN" width="256">クッ！　まとめて　たおしてやる！</language>
-		<language name="JPN_KANJI" width="256">クッ！　まとめて　たおしてやる！</language>
+		<language name="JPN" width="256">スワン『まとめて　たおしてやる！</language>
+		<language name="JPN_KANJI" width="256">スワン『まとめて　たおしてやる！</language>
 	</row>
 
 	<row id="pw_scenario_000_evt01_choice03">
-		<language name="JPN" width="256">あやつられて……　いや　これは……</language>
-		<language name="JPN_KANJI" width="256">あやつられて……　いや　これは……</language>
+		<language name="JPN" width="256">スワン『あやつられて……　いや……</language>
+		<language name="JPN_KANJI" width="256">スワン『あやつられて……　いや……</language>
 	</row>
 
 	<row id="pw_scenario_000_evt01_choice01_res01">
-		<language name="JPN" width="256">フフ　なにを　いっても　ムダよ！
+		<language name="JPN" width="256">サトミ『なにを　いっても　ムダよ
 これで　オシマイに　するわっ！</language>
-		<language name="JPN_KANJI" width="256">フフ　何を　言っても　ムダよ！
+		<language name="JPN_KANJI" width="256">サトミ『なにを　いっても　ムダよ
 これで　オシマイに　するわっ！</language>
 	</row>
 
 	<row id="pw_scenario_000_evt01_choice01_res02">
-		<language name="JPN" width="256">フン　いがいと　つめたいのね……
+		<language name="JPN" width="256">サトミ『いがいと　つめたいのね……
 ステキよ　そういう　れいせいな　こ</language>
-		<language name="JPN_KANJI" width="256">フン　意外と　冷たいのね……
-素敵よ　そういう　冷静な子</language>
+		<language name="JPN_KANJI" width="256">サトミ『いがいと　つめたいのね……
+ステキよ　そういう　れいせいな　こ</language>
 	</row>
 
 	<row id="pw_scenario_000_evt01_choice01_res03">
-		<language name="JPN" width="256">なにを　ブツブツ　いってるの！　
+		<language name="JPN" width="256">サトミ『なにを　ブツブツいってるの！　
 もう　あきらめるのかしら？</language>
-		<language name="JPN_KANJI" width="256">何を　ブツブツ　言ってるの！　
+		<language name="JPN_KANJI" width="256">サトミ『なにを　ブツブツいってるの！　
 もう　あきらめるのかしら？</language>
 	</row>
 
 	<row id="pw_scenario_000_evt03_01">
-		<language name="JPN" width="256">なぜ……　きまじめだった　あなたが
+		<language name="JPN" width="256">スワン『なぜ……
+きまじめだった　あなたが▽
 こんな　おそろしい　ことを……</language>
-		<language name="JPN_KANJI" width="256">なぜ……　きまじめだった　あなたが
+		<language name="JPN_KANJI" width="256">スワン『なぜ……
+きまじめだった　あなたが▽
 こんな　おそろしい　ことを……</language>
 	</row>
 
 	<row id="pw_scenario_000_evt03_02">
-		<language name="JPN" width="256">キミには　わからないわ……
+		<language name="JPN" width="256">サトミ『キミには　わからないわ……
 てんさいゆえの　こどく……▽
 みとめられない　くるしみなど……</language>
-		<language name="JPN_KANJI" width="256">どうせ　キミには　わからない……
+		<language name="JPN_KANJI" width="256">サトミ『キミには　わからないわ……
 てんさいゆえの　こどく……▽
 みとめられない　くるしみなど……</language>
 	</row>
 
 	<row id="pw_scenario_000_evt03_03">
-		<language name="JPN" width="256">……　……　……</language>
-		<language name="JPN_KANJI" width="256">……　……　……</language>
+		<language name="JPN" width="256">スワン『……　……　……</language>
+		<language name="JPN_KANJI" width="256">スワン『……　……　……</language>
 	</row>
 
 	<row id="pw_scenario_000_evt03_04">
-		<language name="JPN" width="256">せかいも！
+		<language name="JPN" width="256">サトミ『せかいも！
 がっかいも！▽
 だれも！▽
 だれも　わたしを　みとめない！</language>
-		<language name="JPN_KANJI" width="256">せかいも！
+		<language name="JPN_KANJI" width="256">サトミ『せかいも！
 がっかいも！▽
 だれも！▽
 だれも　わたしを　みとめない！</language>
 	</row>
 
 	<row id="pw_scenario_000_evt03_05">
-		<language name="JPN" width="256">……そんなことは　ない</language>
-		<language name="JPN_KANJI" width="256">……そんなことは　ない</language>
+		<language name="JPN" width="256">スワン『……そんなことは　ない</language>
+		<language name="JPN_KANJI" width="256">スワン『……そんなことは　ない</language>
 	</row>
 
 	<row id="pw_scenario_000_evt03_06">
-		<language name="JPN" width="256">……なにを　いっているの？</language>
-		<language name="JPN_KANJI" width="256">……なにを　いっているの？
-なぐさめの　つもり？</language>
+		<language name="JPN" width="256">サトミ『……あなた
+なにを　いっているの？</language>
+		<language name="JPN_KANJI" width="256">サトミ『……あなた
+なにを　いっているの？</language>
 	</row>
 
 	<row id="pw_scenario_000_evt03_07">
-		<language name="JPN" width="256">……あなたは
+		<language name="JPN" width="256">スワン『……あなたは
 ポケモンたちを　コントロールしたと▽
 いいましたね……▽
 それは　まちがいだ……　かれらは……</language>
-		<language name="JPN_KANJI" width="256">……あなたは
+		<language name="JPN_KANJI" width="256">スワン『……あなたは
 ポケモンたちを　コントロールしたと▽
 いいましたね……▽
 それは　まちがいだ……　かれらは……</language>
 	</row>
 
 	<row id="pw_scenario_000_evt03_08">
-		<language name="JPN" width="256">……　……　……</language>
-		<language name="JPN_KANJI" width="256">……　……　……</language>
+		<language name="JPN" width="256">サトミ『……　……　……</language>
+		<language name="JPN_KANJI" width="256">サトミ『……　……　……</language>
 	</row>
 
 	<row id="pw_scenario_000_evt03_09">
-		<language name="JPN" width="256">たたかった　わたしには　わかる……▼
+		<language name="JPN" width="256">スワン『わたしには　わかる……▼
 かれらは　あなたに
 あやつられてなど　いなかった……▼
 じぶんの　いしで……
 あなたを　まもるために▽
 たたかって　いたんですよ……</language>
-		<language name="JPN_KANJI" width="256">たたかった　わたしには　わかる……▼
+		<language name="JPN_KANJI" width="256">スワン『わたしには　わかる……▼
 かれらは　あなたに
 あやつられてなど　いなかった……▼
 じぶんの　いしで……
@@ -862,33 +875,37 @@
 	</row>
 
 	<row id="pw_scenario_000_evt03_10">
-		<language name="JPN" width="256">まさか……</language>
-		<language name="JPN_KANJI" width="256">まさか……</language>
+		<language name="JPN" width="256">サトミ『まさか……</language>
+		<language name="JPN_KANJI" width="256">サトミ『まさか……</language>
 	</row>
 
 	<row id="pw_scenario_000_evt03_11">
-		<language name="JPN" width="256">そばにいる　ポケモンの　きもちを
-わすれた　あなたに　せかいが▽
-ひとが　ふりむくはずも　ない……</language>
-		<language name="JPN_KANJI" width="256">そばにいる　ポケモンの　きもちを
-わすれた　あなたに　せかいが▽
-ひとが　ふりむくはずも　ない……</language>
+		<language name="JPN" width="256">スワン『そばにいる　ポケモンの
+きもちを　わすれた　あなたに▽
+せかいが▽
+ひとが▽
+ふりむくはずも　ない……</language>
+		<language name="JPN_KANJI" width="256">スワン『そばにいる　ポケモンの
+きもちを　わすれた　あなたに▽
+せかいが▽
+ひとが▽
+ふりむくはずも　ない……</language>
 	</row>
 
 	<row id="pw_scenario_000_evt03_12">
-		<language name="JPN" width="256">そんな……</language>
-		<language name="JPN_KANJI" width="256">そんな……</language>
+		<language name="JPN" width="256">サトミ『そんな……</language>
+		<language name="JPN_KANJI" width="256">サトミ『そんな……</language>
 	</row>
 
 	<row id="pw_scenario_000_evt03_13">
-		<language name="JPN" width="256">わたしは　こくさい　けいさつとして
+		<language name="JPN" width="256">スワン『こくさい　けいさつとして
 ここで　あなたを　たいほ　します▼
 あなたは……
 けんきゅうしゃで　あるまえに▽
 ひとりの　トレーナーとして▽　
 ほんとうに　たいせつなことを▽
 おもいだして　ください……</language>
-		<language name="JPN_KANJI" width="256">わたしは　こくさい　けいさつとして
+		<language name="JPN_KANJI" width="256">スワン『こくさい　けいさつとして
 ここで　あなたを　たいほ　します▼
 あなたは……
 けんきゅうしゃで　あるまえに▽
