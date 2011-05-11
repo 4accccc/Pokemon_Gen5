@@ -14,7 +14,7 @@
 #include "gamesystem/game_data.h"
 #include "gamesystem/game_event.h"
 #include "arc_def.h"
-//#include "system/main.h" //for HEAPID_FIELDMAP
+#include "system/main.h" //for HEAPID_FIELDMAP
 //#include "system/bmp_winframe.h"
 
 #include "font/font.naix"
@@ -31,6 +31,7 @@
 #include "event_mapchange.h"
 
 //アプリ
+#include "savedata/battle_rec.h"
 
 //デバッグ
 #include "event_debug_menu.h"
@@ -55,16 +56,28 @@ typedef enum {
 //-----------------------------------------------------------------------------
 static BOOL callShowProc( DEBUG_MENU_EVENT_WORK * wk, DEBUG_SHOW_TYPE type )
 {
-  GMEVENT *event = wk->gmEvent;
-  FIELDMAP_WORK *fieldWork = wk->fieldWork;
-  GAMESYS_WORK  *gameSys  = wk->gmSys;
-  GMEVENT *next_event;
-  next_event = GMEVENT_CreateOverlayEventCall( gameSys,
-      FS_OVERLAY_ID(notwifi_event_pokewood), POKEWOOD_EVENT_Show, (void*)type );
-  GMEVENT_ChangeEvent( event, next_event );
+  LOAD_RESULT result;
+  SAVE_CONTROL_WORK * sv = GAMEDATA_GetSaveControlWork( GAMESYSTEM_GetGameData( wk->gmSys ) );
 
-  return TRUE;
+  if ( BattleRec_DataOccCheck( sv, HEAPID_FIELDMAP, &result, type ) == FALSE )
+  { //対応する録画データが存在しないときにはなにもせずに戻る
+    PMSND_PlaySE( SEQ_SE_BEEP );
+    return FALSE;
+  }
+  else
+  {
+    GMEVENT *event = wk->gmEvent;
+    FIELDMAP_WORK *fieldWork = wk->fieldWork;
+    GAMESYS_WORK  *gameSys  = wk->gmSys;
+    GMEVENT *next_event;
+    next_event = GMEVENT_CreateOverlayEventCall( gameSys,
+        FS_OVERLAY_ID(notwifi_event_pokewood), POKEWOOD_EVENT_Show, (void*)type );
+    GMEVENT_ChangeEvent( event, next_event );
+
+    return TRUE;
+  }
 }
+
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 BOOL debugMenuCallProc_PokewoodRec( DEBUG_MENU_EVENT_WORK * wk )
