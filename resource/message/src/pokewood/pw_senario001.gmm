@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakatsui" host="DB5YGPBX" date="2011-05-11T16:01:03"/>
+	<create user="nakatsui" host="DB5YGPBX" date="2011-05-12T11:03:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -583,9 +583,9 @@
 	</row>
 
 	<row id="pw_scenario_000_situation04_e">
-		<language name="JPN" width="256">スワン『じゃま　するからよ……　　
+		<language name="JPN" width="256">サトミ『じゃま　するからよ……　　
 ヒウンも　キミも　もうおしまい……</language>
-		<language name="JPN_KANJI" width="256">スワン『じゃま　するからよ……　　
+		<language name="JPN_KANJI" width="256">サトミ『じゃま　するからよ……　　
 ヒウンも　キミも　もうおしまい……</language>
 	</row>
 
@@ -882,7 +882,7 @@
 	<row id="pw_scenario_000_evt03_11">
 		<language name="JPN" width="256">スワン『そばにいる　ポケモンの
 きもちを　わすれた　あなたに▽
-せかいが▽
+せかいが……▽
 ひとが▽
 ふりむくはずも　ない……</language>
 		<language name="JPN_KANJI" width="256">スワン『そばにいる　ポケモンの
@@ -902,7 +902,7 @@
 ここで　あなたを　たいほ　します▼
 あなたは……
 けんきゅうしゃで　あるまえに▽
-ひとりの　トレーナーとして▽　
+ひとりの　トレーナーとして▽
 ほんとうに　たいせつなことを▽
 おもいだして　ください……</language>
 		<language name="JPN_KANJI" width="256">スワン『こくさい　けいさつとして
