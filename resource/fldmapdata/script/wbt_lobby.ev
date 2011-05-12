@@ -343,8 +343,10 @@ _BMPMENU_INIT_RIGHT( MENU_X1,MENU_Y1,0,1,LWK_MENU )
 
 _BMPMENU_MAKE_LIST( msg_wbt_menu_rule_single, SCR_WBT_RULE_SINGLE )	//シングルバトル
 _BMPMENU_MAKE_LIST( msg_wbt_menu_rule_double, SCR_WBT_RULE_DOUBLE )	//ダブルバトル
-_BMPMENU_MAKE_LIST( msg_wbt_menu_rule_triple, SCR_WBT_RULE_TRIPLE )	//トリプルバトル
-_BMPMENU_MAKE_LIST( msg_wbt_menu_rule_rotation, SCR_WBT_RULE_ROTATION )	//ローテーションバトル
+//_BMPMENU_MAKE_LIST( msg_wbt_menu_rule_triple, SCR_WBT_RULE_TRIPLE )	//トリプルバトル
+//_BMPMENU_MAKE_LIST( msg_wbt_menu_rule_rotation, SCR_WBT_RULE_ROTATION )	//ローテーションバトル
+_BMPMENU_MAKE_LIST( msg_wbt_menu_rule_triple, SCR_WBT_RULE_NULL )	//トリプルバトル
+_BMPMENU_MAKE_LIST( msg_wbt_menu_rule_rotation, SCR_WBT_RULE_NULL )	//ローテーションバトル
 _BMPMENU_MAKE_LIST( msg_wbt_menu_back, SCR_WBT_RULE_NULL )			//もどる
 
 //メニュー表示
