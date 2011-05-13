@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-05-10T20:35:35"/>
+	<create user="matsumiya" host="W00224" date="2011-05-13T19:54:15"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="1297" top="225" right="2002" bottom="853" maximized="no" rayout="Vertical2">
+	<dialog left="1293" top="156" right="1998" bottom="784" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -294,104 +294,122 @@
 
 	<row id="msg_c03p17_swchampion_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
-・続けて</comment>
+・続けてswrival_01</comment>
 		<attribute name="キャラ指定">アイリス</attribute>
-		<language name="JPN" width="256">アイリス『
-・下水道に入れない理由</language>
-		<language name="JPN_KANJI" width="256">アイリス『
-・下水道に入れない理由</language>
+		<language name="JPN" width="256">アイリス『ここにね
+げすいどうが　つながったんだよ！▽
+あやしい　かんじが　するでしょ？▼</language>
+		<language name="JPN_KANJI" width="256">アイリス『ここにね
+下水道が　つながったんだよ！▽
+怪しい　感じが　するでしょ？▼</language>
 	</row>
 
 	<row id="msg_c03p17_swrival_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
+・
 ・はい/いいえ選択肢表示
-・はい　→
-　いいえ→
+・はい　→swrival_02
+　いいえ→swrival_03
+・0＝主人公名前
 ・1＝ライバル名</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">ライバル名『主人公名前！
-ＮＰだんは　みつかったか？</language>
-		<language name="JPN_KANJI" width="256">ライバル名『主人公名前！
-ＮＰだんは　みつかったか？</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:00:トレーナー名:0]！
+プラズマだんは　みつかったか？</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:00:トレーナー名:0]！
+プラズマだんは　みつかったか？</language>
 	</row>
 
 	<row id="msg_c03p17_swrival_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>・はい選択時
-・続けて</comment>
+・続けてswrival_04</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">よろこばせたいからって
-ウソは　ダメだろ？</language>
-		<language name="JPN_KANJI" width="256">よろこばせたいからって
-ウソは　ダメだろ？</language>
+		<language name="JPN" width="256">そんな　ウソじゃ
+よろこばないんだぜ？▼</language>
+		<language name="JPN_KANJI" width="256">そんな　ウソじゃ
+よろこばないんだぜ？▼</language>
 	</row>
 
 	<row id="msg_c03p17_swrival_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>・いいえ選択時
-・続けて</comment>
+・続けてswrival_04</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
 		<language name="JPN" width="256">そうか……
-（怒りの理由？）</language>
-		<language name="JPN_KANJI" width="256">そうか……</language>
+ポケモンどろぼう　め！▼</language>
+		<language name="JPN_KANJI" width="256">そうか……
+ポケモンどろぼう　め！▼</language>
 	</row>
 
 	<row id="msg_c03p17_swrival_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・表示後、水上飛行機前に移動
-・続けて</comment>
+・続けてswchampion_02</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">きいたんだが
-レゾナンスリゾート
-そこに　いるかもしれない
-というわけで　のりこむぞ！▼</language>
-		<language name="JPN_KANJI" width="256">きいたんだが
-レゾナンスリゾート
-そこに　いるかもしれない
-というわけで　のりこむぞ！▼</language>
+		<language name="JPN" width="256">きいたんだが　レゾナンスリゾートって
+ばしょが　あるらしいんだ！▼
+そこに　いるかもしれないからさ
+オレと　オマエで　のりこむぞ！▼</language>
+		<language name="JPN_KANJI" width="256">きいたんだが　レゾナンスリゾートって
+場所が　あるらしいんだ！▼
+そこに　いるかも　しれないからさ
+オレと　オマエで　乗り込むぞ！▼</language>
 	</row>
 
 	<row id="msg_c03p17_swchampion_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・続けて
-・繰り返し</comment>
+・レゾナンスリゾートへ行くまで繰り返し</comment>
 		<attribute name="キャラ指定">アイリス</attribute>
 		<language name="JPN" width="256">アイリス『うん　いいんじゃない？▼
-レゾナンスリゾートの説明
-・最近できた
-・変わる町並みがコンセプト
+レゾナンスリゾートは
+さいきん　できた　かんこうめいしょ▽
 せっかくだから　いってみれば？</language>
-		<language name="JPN_KANJI" width="256">アイリス『
-レゾナンスリゾートの説明
-せっかくだから　いってみれば？</language>
+		<language name="JPN_KANJI" width="256">アイリス『うん　いいんじゃない？▼
+レゾナンスリゾートは
+最近　できた　観光名所▽
+せっかくだから　行ってみれば？</language>
 	</row>
 
 	<row id="msg_c03p17_swrival_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・1＝ライバル名</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">ライバル名『ＮＰだんは　いなかったか
-レゾナンスリゾートは　おもしろかったけど
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『フン
+ネオプラズマだん　いなかったな▼
+たしかに　レゾナンスリゾートは
+おもしろかった　けど……▼
 しかたない
 また　てわけして　さがすか▼
-なにかあれば　れんらくするから
+なにか　あれば　しらせるから
+オレの　れんらくさきを▽
 ライブキャスターに　とうろく　しろ▼</language>
-		<language name="JPN_KANJI" width="256">ライバル名『ＮＰだんは　いなかったか
-レゾナンスリゾートは　おもしろかったけど
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『フン
+ネオプラズマだん　いなかったな▼
+確かに　レゾナンスリゾートは
+おもしろかった　けど……▼
 しかたない
-また　てわけして　さがすか▼
-なにかあれば　れんらくするから
-ライブキャスターに　とうろく　しろ▼</language>
+また　手分けして　探すか▼
+なにか　あれば　知らせるから
+オレの　連絡先を▽
+ライブキャスターに　登録しろ▼</language>
 	</row>
 
 	<row id="msg_c03p17_swrival_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・ライブキャスターの連絡先に
+　ライバル追加処理</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
 		<language name="JPN" width="256">ライブキャスター登録</language>
 		<language name="JPN_KANJI" width="256">ライブキャスター登録</language>
 	</row>
 
 	<row id="msg_c03p17_swrival_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・メッセージ表示後、c03方面に移動
+・画面外に消えると続けてswchampion_03</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">退場メッセージ▼</language>
-		<language name="JPN_KANJI" width="256">退場メッセージ▼</language>
+		<language name="JPN" width="256">オレ……　ポケモンどろぼう　とか
+ぜったいに　ゆるさないからッ！！▼</language>
+		<language name="JPN_KANJI" width="256">オレ……　ポケモンどろぼう　とか
+ぜったいに　許さないからッ！！▼</language>
 	</row>
 
 	<row id="msg_c03p17_swchampion_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -409,21 +427,25 @@
 中を　探すなら　一緒に行こ！▼</language>
 	</row>
 
-	<row id="msg_c03p17_swrival_08" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c03p17_swrival_08" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・下水道の外に出るとメッセージ
 ・フラグ成立まで
 　下水道にいるとか（要検討）
 ・1＝ライバル名</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">ライバル『きいたぜ
-アーティって　ひとから
-しばらく　ヒウンをぶらつく
-残党がいるかも</language>
-		<language name="JPN_KANJI" width="256">ライバル『きいたぜ
-アーティって　ひとから
-しばらく　ヒウンをぶらつく
-残党がいるかも</language>
+		<language name="JPN" width="256">ライバル『きいたよ
+アーティって　ひとから▼
+げすいどうの　なかに
+プラズマだんが　いたんだってな▼
+だから　しばらく　ヒウンをぶらつくよ
+ざんとうが　いるかもしれないし</language>
+		<language name="JPN_KANJI" width="256">ライバル『聞いたよ
+アーティって　人から▼
+下水道の　中に
+プラズマ団が　いたんだってな▼
+だから　しばらく　ヒウンをぶらつくよ
+残党が　いるかもしれないし</language>
 	</row>
 
 	<row id="msg_c03p17_pilot_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -462,90 +484,122 @@
 ・下水道ストッパー
 ・c03p07イベントまで</comment>
 		<attribute name="キャラ指定">WORKMAN</attribute>
-		<language name="JPN" width="256">げすいどうに　ついて</language>
-		<language name="JPN_KANJI" width="256">下水道について</language>
+		<language name="JPN" width="256">げすいどう　ですか？▼
+やせいポケモンが　でて　あぶないから
+はいらない　ほうが　いいですよ</language>
+		<language name="JPN_KANJI" width="256">下水道　ですか？▼
+野生ポケモンが　でて　あぶないから
+入らない　方が　いいですよ</language>
 	</row>
 
-	<row id="msg_c03p17_assistantm_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
+	<row id="msg_c03p17_stop_02">
+		<comment>♂
+・下水道ストッパー
+・c03p07イベント後から</comment>
+		<attribute name="キャラ指定">WORKMAN</attribute>
+		<language name="JPN" width="256">アイリスさんから　ききましたよ
+なんでも　どろぼうが　いるかもって▼
+はいっても　いいですけど
+ポケモンとか　きをつけて　くださいよ</language>
+		<language name="JPN_KANJI" width="256">アイリスさんから　ききましたよ
+なんでも　どろぼうが　いるかもって▼
+入っても　いいですけど
+ポケモンとか　気をつけて　くださいよ</language>
+	</row>
+
+	<row id="msg_c03p17_stop_03">
+		<comment>♂
+・下水道ストッパー
+・c03p07イベント後から</comment>
+		<attribute name="キャラ指定">WORKMAN</attribute>
+		<language name="JPN" width="256">この　げすいどうは　ですね
+しおの　みちひきの　かんけいで▽
+いける　ばしょが　かわるんですよね</language>
+		<language name="JPN_KANJI" width="256">この　下水道は　ですね
+干満の　関係で▽
+行ける　場所が　変わるんですよね</language>
+	</row>
+
+	<row id="msg_c03p17_assistantm_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c03p17_assistantm_02" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
+		<comment>※swanで削除</comment>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c03p17_assistantm_03" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
+		<comment>※swanで削除</comment>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c03p17_assistantm_04" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
+		<comment>※swanで削除</comment>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c03p17_assistantm_05" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
+		<comment>※swanで削除</comment>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c03p17_select_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
+		<comment>※swanで削除</comment>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c03p17_select_02" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
+		<comment>※swanで削除</comment>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c03p17_select_03" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
+		<comment>※swanで削除</comment>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c03p17_select_04" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
+		<comment>※swanで削除</comment>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c03p17_assistantm_06" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
+		<comment>※swanで削除</comment>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c03p17_assistantm_07" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
+		<comment>※swanで削除</comment>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c03p17_assistantm_08" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
+		<comment>※swanで削除</comment>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c03p17_assistantm_09" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
+		<comment>※swanで削除</comment>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c03p17_assistantm_10" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
+		<comment>※swanで削除</comment>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
