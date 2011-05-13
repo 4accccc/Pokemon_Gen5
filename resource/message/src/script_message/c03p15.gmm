@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-05-09T14:11:17"/>
+	<create user="matsumiya" host="W00224" date="2011-05-13T15:44:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1297" top="169" right="2002" bottom="797" maximized="no" rayout="Vertical2">
+	<dialog left="1292" top="141" right="1997" bottom="769" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="209" right="1280" bottom="607" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -357,9 +357,9 @@
 		<attribute name="キャラ指定">PILOT
 船長</attribute>
 		<language name="JPN" width="256">おや？　どうなさいました
-タチワキまで　ふねに　のられますか？</language>
+タチワキまで　ふねを　だしますよ？</language>
 		<language name="JPN_KANJI" width="256">おや？　どうなさいました
-タチワキまで　船に　乗られますか？</language>
+タチワキまで　船に　だしますよ？</language>
 	</row>
 
 	<row id="msg_c03p15_pilot_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color=",,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
