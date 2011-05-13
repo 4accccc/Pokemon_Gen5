@@ -3526,8 +3526,8 @@
 	</row>
 
 	<row id="princess_08">
-		<language name="JPN" width="216">ニコラ</language>
-		<language name="JPN_KANJI" width="216">ニコラ</language>
+		<language name="JPN" width="216">リナ</language>
+		<language name="JPN_KANJI" width="216">リナ</language>
 	</row>
 
 	<row id="princess_09">
@@ -4188,11 +4188,6 @@
 	<row id="prince_08">
 		<language name="JPN" width="216">ケンヤ</language>
 		<language name="JPN_KANJI" width="216">ケンヤ</language>
-	</row>
-
-	<row id="princess_11">
-		<language name="JPN" width="216">リナ</language>
-		<language name="JPN_KANJI" width="216">リナ</language>
 	</row>
 
 	<row id="backpackerm_18">
