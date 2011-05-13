@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-05-09T20:27:25"/>
+	<create user="matsumiya" host="W00224" date="2011-05-13T20:54:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="185"/>
+		<comment position="4" width="232"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="1632" top="219" right="2337" bottom="839" maximized="no" rayout="Vertical2">
+	<dialog left="1293" top="156" right="1998" bottom="784" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -295,10 +295,18 @@
 	<row id="msg_d11r0101_swchampion_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・連れ歩き確認
-・はい/いいえの選択肢表示</comment>
+・はい/いいえの選択肢表示
+　はい　→swchampion_03
+　いいえ→swchampion_02</comment>
 		<attribute name="キャラ指定">アイリス</attribute>
-		<language name="JPN" width="256">アイリス『？？？▼</language>
-		<language name="JPN_KANJI" width="256">アイリス『？？？▼</language>
+		<language name="JPN" width="256">アイリス『あのね　ほんとうに
+プラズマだんが　いるかも　しれないし▼
+それに　やせいポケモンも　いるから
+いっしょに　いこうよ？</language>
+		<language name="JPN_KANJI" width="256">アイリス『あのね　ほんとうに
+プラズマだんが　いるかも　しれないし▼
+それに　やせいポケモンも　いるから
+いっしょに　いこうよ？</language>
 	</row>
 
 	<row id="msg_d11r0101_swchampion_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -306,8 +314,10 @@
 ・いいえ選択
 　押し戻される？</comment>
 		<attribute name="キャラ指定">アイリス</attribute>
-		<language name="JPN" width="256">アイリス『？？？▼</language>
-		<language name="JPN_KANJI" width="256">アイリス『？？？▼</language>
+		<language name="JPN" width="256">アイリス『うん　わかった！
+じゃあ　じゅんび　してきてね▼</language>
+		<language name="JPN_KANJI" width="256">アイリス『うん　わかった！
+じゃあ　じゅんび　してきてね▼</language>
 	</row>
 
 	<row id="msg_d11r0101_swchampion_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -315,72 +325,98 @@
 ・はい選択
 ・連れ歩き開始</comment>
 		<attribute name="キャラ指定">アイリス</attribute>
-		<language name="JPN" width="256">アイリス『？？？▼</language>
-		<language name="JPN_KANJI" width="256">アイリス『？？？▼</language>
+		<language name="JPN" width="256">アイリス『うん　いきましょ！▼
+あっ　きみが　さがしたい　ばしょを
+すきに　さがして　いいからね▼
+ポケモンが　きずついたら
+あたしが　かいふく　してあげるから！</language>
+		<language name="JPN_KANJI" width="256">アイリス『うん　いきましょ！▼
+あっ　きみが　さがしたい　ばしょを
+すきに　さがして　いいからね▼
+ポケモンが　きずついたら
+あたしが　かいふく　してあげるから！</language>
 	</row>
 
 	<row id="msg_d11r0101_swchampion_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
-・連れ歩き終了確認（出入り口のpos）</comment>
+・連れ歩き終了確認（出入り口のpos）
+・はい/いいえの選択肢表示
+　はい　→swchampion_02
+　いいえ→swchampion_03</comment>
 		<attribute name="キャラ指定">アイリス</attribute>
-		<language name="JPN" width="256">アイリス『？？？▼</language>
-		<language name="JPN_KANJI" width="256">アイリス『？？？▼</language>
+		<language name="JPN" width="256">アイリス『いちど　そとに　でる？▼</language>
+		<language name="JPN_KANJI" width="256">アイリス『いちど　そとに　でる？▼</language>
 	</row>
 
 	<row id="msg_d11r0101_swchampion_05" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・振り向き会話その１</comment>
 		<attribute name="キャラ指定">アイリス</attribute>
-		<language name="JPN" width="256">アイリス『？？？▼</language>
-		<language name="JPN_KANJI" width="256">アイリス『？？？▼</language>
+		<language name="JPN" width="256">アイリス『ほんとうに　プラズマだん？
+２ねんまえに　かいさんしたはずだけど</language>
+		<language name="JPN_KANJI" width="256">アイリス『ほんとうに　プラズマだん？
+２ねんまえに　かいさんしたはずだけど</language>
 	</row>
 
 	<row id="msg_d11r0101_swchampion_06" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・振り向き会話その２</comment>
 		<attribute name="キャラ指定">アイリス</attribute>
-		<language name="JPN" width="256">アイリス『？？？▼</language>
-		<language name="JPN_KANJI" width="256">アイリス『？？？▼</language>
+		<language name="JPN" width="256">アイリス『下水道って
+ドラゴンタイプの　ポケモン▼</language>
+		<language name="JPN_KANJI" width="256">アイリス『下水道って
+ドラゴンタイプの　ポケモン▼</language>
 	</row>
 
 	<row id="msg_d11r0101_swchampion_07" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・振り向き会話その３</comment>
 		<attribute name="キャラ指定">アイリス</attribute>
-		<language name="JPN" width="256">アイリス『？？？▼</language>
-		<language name="JPN_KANJI" width="256">アイリス『？？？▼</language>
+		<language name="JPN" width="256">アイリス『ポケモン図鑑？▼</language>
+		<language name="JPN_KANJI" width="256">アイリス『ポケモン図鑑？▼</language>
 	</row>
 
 	<row id="msg_d11r0101_swchampion_08" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・振り向き会話その４</comment>
 		<attribute name="キャラ指定">アイリス</attribute>
-		<language name="JPN" width="256">アイリス『？？？▼</language>
-		<language name="JPN_KANJI" width="256">アイリス『？？？▼</language>
+		<language name="JPN" width="256">アイリス『あたしはね
+・竜の里について▼</language>
+		<language name="JPN_KANJI" width="256">アイリス『あたしはね
+・竜の里について▼</language>
 	</row>
 
 	<row id="msg_d11r0101_swchampion_09" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
-・振り向き会話その５</comment>
+・振り向き会話その５
+・以降、このメッセージを繰り返し</comment>
 		<attribute name="キャラ指定">アイリス</attribute>
-		<language name="JPN" width="256">アイリス『？？？▼</language>
-		<language name="JPN_KANJI" width="256">アイリス『？？？▼</language>
+		<language name="JPN" width="256">アイリス『さ　さがしましょ！▼</language>
+		<language name="JPN_KANJI" width="256">アイリス『さ　さがしましょ！▼</language>
 	</row>
 
 	<row id="msg_d11r0101_swchampion_10" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・禁則処理：道具「あなぬけのヒモ」</comment>
 		<attribute name="キャラ指定">アイリス</attribute>
-		<language name="JPN" width="256">アイリス『？？？▼</language>
-		<language name="JPN_KANJI" width="256">アイリス『？？？▼</language>
+		<language name="JPN" width="256">アイリス『あなぬけのヒモ？▼
+それを　つかわれたら　あたし
+ここで　おいてけぼりに　なるよ▼</language>
+		<language name="JPN_KANJI" width="256">アイリス『あなぬけのヒモ？▼
+それを　つかわれたら　あたし
+ここで　おいてけぼりに　なるよ▼</language>
 	</row>
 
 	<row id="msg_d11r0101_swchampion_11" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・禁則処理：わざ「あなをほる」</comment>
 		<attribute name="キャラ指定">アイリス</attribute>
-		<language name="JPN" width="256">アイリス『？？？▼</language>
-		<language name="JPN_KANJI" width="256">アイリス『？？？▼</language>
+		<language name="JPN" width="256">アイリス『あなをほる？▼
+その　わざを　つかわれたら　あたし
+ここで　おいてけぼりに　なるよ▼</language>
+		<language name="JPN_KANJI" width="256">アイリス『あなをほる？▼
+その　わざを　つかわれたら　あたし
+ここで　おいてけぼりに　なるよ▼</language>
 	</row>
 
 	<row id="msg_d11r0101_swchampion_12" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -392,26 +428,114 @@
 	</row>
 
 	<row id="msg_d11r0101_swplazmam1_01">
-		<attribute name="キャラ指定">ＮＰ団♂</attribute>
-		<language name="JPN" width="256">ネオプラズマ団『戦闘前▼
-・タチワキ？
-・俺たちは～</language>
+		<comment>♂
+・続けて</comment>
+		<attribute name="キャラ指定">プラズマ団♂</attribute>
+		<language name="JPN" width="256">したっぱ『なんだ　おまえら？▼</language>
 		<language name="JPN_KANJI" width="256">ネオプラズマ団『戦闘前▼</language>
-	</row>
-
-	<row id="msg_d11r0101_swplazmam1_02">
-		<attribute name="キャラ指定">ＮＰ団♂</attribute>
-		<language name="JPN" width="256">ネオプラズマ団『戦闘後▼
-・状況説明</language>
-		<language name="JPN_KANJI" width="256">ネオプラズマ団『戦闘後▼</language>
 	</row>
 
 	<row id="msg_d11r0101_swchampion_13" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
+・続けて</comment>
+		<attribute name="キャラ指定">アイリス</attribute>
+		<language name="JPN" width="256">アイリス『プラズマだん　なの？▼
+なんだか　２ねんまえと
+かっこうが　ちがってるけれど……▼</language>
+		<language name="JPN_KANJI" width="256">アイリス『プラズマだん　なの？▼
+なんだか　２ねんまえと
+かっこうが　ちがってるけれど……▼</language>
+	</row>
+
+	<row id="msg_d11r0101_swplazmam1_02">
+		<comment>♂
+・続けて</comment>
+		<attribute name="キャラ指定">プラズマ団♂</attribute>
+		<language name="JPN" width="256">したっぱ『そうとも！
+われわれは　プラズマだん！▼
+こんどこそ　せかいを　てにするため
+にちや　かつどうを　つづけている！▼
+で　おまえら
+いったい　なんの　ようだ？▼</language>
+		<language name="JPN_KANJI" width="256">したっぱ『そうとも！
+われわれは　プラズマだん！▼
+こんどこそ　せかいを　てにするため
+にちや　かつどうを　つづけている！▼
+で　おまえら
+いったい　なんの　ようだ？▼</language>
+	</row>
+
+	<row id="msg_d11r0101_swchampion_14" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・続けて</comment>
+		<attribute name="キャラ指定">アイリス</attribute>
+		<language name="JPN" width="256">アイリス『あきれた……！▼
+２ねんまえに　あんなことが　あったのに
+まだ　あきらめて　なかったんだ……▼
+じゃ　タチワキで　ポケモンを
+うばったのも　あなたたち　ね！▼</language>
+		<language name="JPN_KANJI" width="256">アイリス『あきれた……！▼
+２ねんまえに　あんなことが　あったのに
+まだ　あきらめて　なかったんだ……▼
+じゃ　タチワキで　ポケモンを
+うばったのも　あなたたち　ね！▼</language>
+	</row>
+
+	<row id="msg_d11r0101_swplazmam1_03">
+		<comment>♂
+・続けて</comment>
+		<attribute name="キャラ指定">プラズマ団♂</attribute>
+		<language name="JPN" width="256">したっぱ『タチワキ？　そいつらは
+おれたちと　べつの　チームだな▼
+だが　おまえらは　ジャマだな
+ここで　かたづけておくか！▼</language>
+		<language name="JPN_KANJI" width="256">したっぱ『タチワキ？　そいつらは
+おれたちと　べつの　チームだな▼
+だが　おまえらは　ジャマだな
+ここで　かたづけておくか！▼</language>
+	</row>
+
+	<row id="msg_d11r0101_swchampion_15" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・主人公と向き合って
+・メッセージ表示後、トレーナー戦闘に</comment>
+		<attribute name="キャラ指定">アイリス</attribute>
+		<language name="JPN" width="256">アイリス『きみ！
+２ｖｓ２で　たたかうよ！！▼</language>
+		<language name="JPN_KANJI" width="256">アイリス『きみ！
+２ｖｓ２で　たたかうよ！！▼</language>
+	</row>
+
+	<row id="msg_d11r0101_swplazmam1_04">
+		<comment>♂
+・続けて</comment>
+		<attribute name="キャラ指定">プラズマ団♂</attribute>
+		<language name="JPN" width="256">したっぱ『チッ！
+こいつら　つよいな！▼
+まあいい！　もくてきの　ポケモンは
+つかまえることが　できた▽
+ここは　ひきあげる！▼</language>
+		<language name="JPN_KANJI" width="256">したっぱ『チッ！
+こいつら　つよいな！▼
+まあいい！　もくてきの　ポケモンは
+つかまえることが　できた▽
+ここは　ひきあげる！▼</language>
+	</row>
+
+	<row id="msg_d11r0101_swchampion_16" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
 ・イベント戦闘後</comment>
 		<attribute name="キャラ指定">アイリス</attribute>
-		<language name="JPN" width="256">アイリス『？？？▼</language>
-		<language name="JPN_KANJI" width="256">アイリス『？？？▼</language>
+		<language name="JPN" width="256">アイリス『まちなさいよ！！▼
+もー！　なんて　にげあし！
+（ポケモンみたい）▼
+ほんとうに　ポケモンどろぼうが　いたんだ
+じゃ　おくも　しらべたほうが　いいかも▼</language>
+		<language name="JPN_KANJI" width="256">アイリス『まちなさいよ！！▼
+もー！　なんて　にげあし！
+（ポケモンみたい）▼
+ほんとうに　ポケモンどろぼうが　いたんだ
+じゃ　おくも　しらべたほうが　いいかも▼</language>
 	</row>
 
 	<row id="msg_d11r0101_swleader3_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -424,7 +548,7 @@
 その　必要は　ないっぽいね▼</language>
 	</row>
 
-	<row id="msg_d11r0101_swchampion_14" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d11r0101_swchampion_17" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・続けて</comment>
 		<attribute name="キャラ指定">アイリス</attribute>
@@ -436,22 +560,28 @@
 		<comment>♂
 ・続けて</comment>
 		<attribute name="キャラ指定">アーティ</attribute>
-		<language name="JPN" width="256">アーティ『この　おくを　しらべたけれど
-ほかには　だれも　いなかったよ▼</language>
-		<language name="JPN_KANJI" width="256">アーティ『この　奥を　調べたけれど
-他には　だれも　いなかったよ▼</language>
+		<language name="JPN" width="256">アーティ『おくは　しらべたけれど
+ほかには　だれも　いなかったよ▼
+ボクが　さいしょに　ここを　しらべてて
+つぎに　あいつらが　きてさ▽
+さいご　キミたちが　きたんだね▼</language>
+		<language name="JPN_KANJI" width="256">アーティ『おくは　しらべたけれど
+ほかには　だれも　いなかったよ▼
+ボクが　さいしょに　ここを　しらべてて
+つぎに　あいつらが　きてさ▽
+さいご　キミたちが　きたんだね▼</language>
 	</row>
 
-	<row id="msg_d11r0101_swchampion_15" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d11r0101_swchampion_18" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・続けて</comment>
 		<attribute name="キャラ指定">アイリス</attribute>
-		<language name="JPN" width="256">アイリス『ふうん
-じゃあ　きみが　さがしていた
-ネオ　プラズマ団～▼</language>
-		<language name="JPN_KANJI" width="256">アイリス『ふうん
-じゃあ　きみが　さがしていた
-ネオ　プラズマ団～▼</language>
+		<language name="JPN" width="256">アイリス『ふうん　そっか……▼
+それにしても　プラズマだんが
+ふっかつ　だなんて　どうしよう？▼</language>
+		<language name="JPN_KANJI" width="256">アイリス『ふうん　そっか……▼
+それにしても　プラズマだんが
+ふっかつ　だなんて　どうしよう？▼</language>
 	</row>
 
 	<row id="msg_d11r0101_swleader3_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -459,42 +589,65 @@
 ・続けて</comment>
 		<attribute name="キャラ指定">アーティ</attribute>
 		<language name="JPN" width="256">アーティ『そうだねー▼
-げすいどうは　なんだか
+それについては
+シャガさんや　ヤーコンさんにも▽
+れんらく　しておくよ▼
+それよりも　ここから　でないかい？
+げすいどうは　なんだか▽
 ムシムシしている　からね▼</language>
 		<language name="JPN_KANJI" width="256">アーティ『そうだねー▼
-下水道は　なんだか
+それについては
+シャガさんや　ヤーコンさんにも▽
+れんらく　しておくよ▼
+それよりも　ここから　でないかい？
+げすいどうは　なんだか▽
 ムシムシしている　からね▼</language>
 	</row>
 
-	<row id="msg_d11r0101_swchampion_16" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d11r0101_swchampion_19" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・続けて</comment>
+		<attribute name="キャラ指定">アイリス</attribute>
+		<language name="JPN" width="256">アイリス『……そうだね
+ここに　プラズマだんは　いないんだし▼</language>
+		<language name="JPN_KANJI" width="256">アイリス『……そうだね
+ここに　プラズマだんは　いないんだし▼</language>
+	</row>
+
+	<row id="msg_d11r0101_swchampion_20" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・アイテム入手処理
-　No000「ヤチェのみ」</comment>
+　No188「ヤチェのみ」×３
+・0＝主人公名前</comment>
 		<attribute name="キャラ指定">アイリス</attribute>
-		<language name="JPN" width="256">アイリス『主人公
-いっしょに　たんけんできて～
+		<language name="JPN" width="256">[1:00:トレーナー名:0]！▼
+いっしょに　たんけん　できて
+とても　おもしろかったよ！▼
 これは　その　おれい！▼</language>
-		<language name="JPN_KANJI" width="256">アイリス『主人公
-いっしょに　たんけんできて～
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]！▼
+いっしょに　たんけん　できて
+とても　おもしろかったよ！▼
 これは　その　おれい！▼</language>
 	</row>
 
-	<row id="msg_d11r0101_swchampion_17" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d11r0101_swchampion_21" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・アイテム入手後
 ・表示後、アーティ、アイリス退場
 　主人公操作可能に</comment>
 		<attribute name="キャラ指定">アイリス</attribute>
-		<language name="JPN" width="256">アイリス『アーティは
-こうみえても　ヒウンの　ジムリーダー
-プラズマ団も～
-挑戦してみると　いいんじゃない？
-主人公　じゃーねー！▼</language>
-		<language name="JPN_KANJI" width="256">アイリス『アーティは
-こうみえても　ヒウンの　ジムリーダー
-プラズマ団も～
-挑戦してみると　いいんじゃない？
-主人公　じゃーねー！▼</language>
+		<language name="JPN" width="256">アイリス『アーティはね
+ヒウンの　ジムリーダー　なの！▼
+しかも　こんな　かんじなのに
+いがいと　つよいからね　ここで▽
+ポケモン　きたえたら　どう？▼
+[1:00:トレーナー名:0]　じゃねー！▼</language>
+		<language name="JPN_KANJI" width="256">アイリス『アーティはね
+ヒウンの　ジムリーダー　なの！▼
+しかも　こんな　かんじなのに
+いがいと　つよいからね　ここで▽
+ポケモン　きたえたら　どう？▼
+[1:00:トレーナー名:0]　じゃねー！▼</language>
 	</row>
 
 	<flowchart-group-list>
