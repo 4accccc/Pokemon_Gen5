@@ -9,9 +9,10 @@
 #ifndef ZONE_C13GYM0102_EVC_H
 #define ZONE_C13GYM0102_EVC_H
 
-#define C13GYM0102_LEADER2_01              0
+#define C13GYM0102_SWLEADER2_01            0
 #define C13GYM0102_HEADS_01                1
 #define C13GYM0102_GUITARW_01              2
+#define C13GYM0102_SUNGLASSES_01           3
 
 #endif //ZONE_C13GYM0102_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c13gym0102.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

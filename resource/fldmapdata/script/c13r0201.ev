@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_c13r0201.h"
-  //.include  "c13r0201.h"
+  .include  "c13r0201.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,7 +19,8 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c13r0201
+_EVENT_DATA		ev_c13r0201_workman2_01
+_EVENT_DATA		ev_c13r0201_middlewoman1_01
 _EVENT_DATA_END
 
 
@@ -30,9 +31,15 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*		C13R0201	WORKMAN2	一言メッセージ				  */
 /**************************************************************/
-ev_c13r0201:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START		ev_c13r0201_workman2_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c13r0201_workman2_01 )
+EVENT_END
 
+/**************************************************************/
+/*		C13R0201	MIDDLEWOMAN1	アイテム入手イベント	  */
+/**************************************************************/
+EVENT_START		ev_c13r0201_middlewoman1_01
+	_EASY_TALK_ITEM_EVENT(ITEM_YAKEDONAOSI, 1, FE_C13R0201_ITEMGET_01, msg_c13r0201_middlewoman1_01, msg_c13r0201_middlewoman1_02, msg_c13r0201_middlewoman1_02 )
+EVENT_END

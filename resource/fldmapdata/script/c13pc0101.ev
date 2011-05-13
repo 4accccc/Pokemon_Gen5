@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_c13pc0101.h"
-  //.include  "c13pc0101.h"
+  .include  "c13pc0101.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +19,139 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c13pc0101
+_EVENT_DATA		ev_c13pc0101_shop
+_EVENT_DATA		ev_c13pc0101_fix_shop
+_EVENT_DATA		ev_c13pc0101_babygirl1_01
+_EVENT_DATA		ev_c13pc0101_workman2_01
+_EVENT_DATA		ev_c13pc0101_girl1_01
 _EVENT_DATA_END
 
+//=============================================================
+//ショップカウンター 変動ショップ
+//=============================================================
+EVENT_START ev_c13pc0101_shop
+  _TALK_OBJ_START()
+  _SHOP_CALL()
+EVENT_END
+
+//=============================================================
+//ショップカウンター 固定ショップ
+//=============================================================
+EVENT_START ev_c13pc0101_fix_shop
+  _TALK_OBJ_START()
+  //【仮】ショップカウンターの処理は仮
+  _FIX_SHOP_CALL( C10_FS )
+EVENT_END
 
 /**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
+/*		C13PC0101	BABYGIRL1	一言メッセージ				  */
 /**************************************************************/
-//ev_zone_c13pc0101:
-//  _END
+EVENT_START		ev_c13pc0101_babygirl1_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c13pc0101_babygirl1_01 )
+EVENT_END
 
 /**************************************************************/
-/*                                                            */
+/*		C13PC0101	WORKMAN2	バッジ分岐メッセージ		  */
 /**************************************************************/
-ev_c13pc0101:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START		ev_c13pc0101_workman2_01
+_TALK_OBJ_START()
+	
+	//バッジ取得の変数を定義
+	DEFINE_LOCAL	LWK_BADGE
+	
+	//バッジ数を取得
+	_GET_BADGE_COUNT( LWK_BADGE )
 
+	//バッジの取得数に応じてメッセージを変化
+	IF $LWK_BADGE == 1 THEN
+		_BALLOONWIN_OBJMSG( msg_c13pc0101_workman2_01 , C13PC0101_WORKMAN2_01 )
+	
+	//バッジ取得数が２個以上
+	ELSE
+		//バッジの取得数をセット
+		_NUMBER( 0, LWK_BADGE, 1 )
+		
+		_BALLOONWIN_OBJMSG( msg_c13pc0101_workman2_01 , C13PC0101_WORKMAN2_01 )
+	
+	ENDIF
+	
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+	
+EVENT_END
+
+/**************************************************************/
+/*		C13PC0101	GIRL1	質問イベント					  */
+/**************************************************************/
+EVENT_START		ev_c13pc0101_girl1_01
+
+	_TALK_OBJ_START()
+	_BALLOONWIN_OBJMSG_POS(msg_c13pc0101_girl1_01,C13PC0101_GIRL1_01,POS_DOWN)
+	_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 0, SCWK_ANSWER )
+	
+	//リスト追加
+	_BMPMENU_MAKE_LIST( msg_c13pc0101_choice0, 1 )	
+	_BMPMENU_MAKE_LIST( msg_c13pc0101_choice1, 2 )	
+	_BMPMENU_MAKE_LIST( msg_c13pc0101_choice2, 3 )	
+	
+	//メニュー表示
+	_BMPMENU_START()
+	
+	//性格診断1
+	IF$SCWK_ANSWER == 1 THEN
+		$SCWK_TEMP0 = 1 
+	ELSIF$SCWK_ANSWER == 2 THEN
+		$SCWK_TEMP0 = 2
+	ELSIF$SCWK_ANSWER == 3 THEN
+		$SCWK_TEMP0 = 3
+	ENDIF
+
+	_BALLOONWIN_OBJMSG_POS(msg_c13pc0101_girl1_02,C13PC0101_GIRL1_01,POS_DOWN)
+	_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 0, SCWK_ANSWER )
+	
+	//リスト追加
+	_BMPMENU_MAKE_LIST( msg_c13pc0101_choice3, 1 )	
+	_BMPMENU_MAKE_LIST( msg_c13pc0101_choice4, 2 )	
+	_BMPMENU_MAKE_LIST( msg_c13pc0101_choice2, 3 )	
+
+	//メニュー表示
+	_BMPMENU_START()
+	
+	//性格診断2
+	IF$SCWK_ANSWER == 1 THEN
+		$SCWK_TEMP1 = 1
+	ELSIF$SCWK_ANSWER == 2 THEN
+		$SCWK_TEMP1 = 2
+	ELSIF$SCWK_ANSWER == 3 THEN
+		$SCWK_TEMP1 = 3
+	ENDIF
+	
+	_BALLOONWIN_OBJMSG_POS(msg_c13pc0101_girl1_03,C13PC0101_GIRL1_01,POS_DOWN)
+	//性格診断の結果によってメッセージ分岐
+	IF$SCWK_TEMP0 == 3 || $SCWK_TEMP1 == 3 THEN
+		_BALLOONWIN_OBJMSG_POS(msg_c13pc0101_girl1_04,C13PC0101_GIRL1_01,POS_DOWN)
+		_UN_SET_MY_NATURE( NATURE_DEF )
+	ELSE
+		//家の外、みんなが知っている
+		IF$SCWK_TEMP0 == 1 && $SCWK_TEMP1== 1 THEN
+			_BALLOONWIN_OBJMSG_POS(msg_c13pc0101_girl1_05,C13PC0101_GIRL1_01,POS_DOWN)
+			_UN_SET_MY_NATURE( NATURE_LEADER )
+		//家の外、誰も知らない
+		ELSIF$SCWK_TEMP0 == 1 && $SCWK_TEMP1== 2 THEN
+			_BALLOONWIN_OBJMSG_POS(msg_c13pc0101_girl1_06,C13PC0101_GIRL1_01,POS_DOWN)
+			_UN_SET_MY_NATURE( NATURE_STRANGER )
+		//家の中、みんなが知っている
+		ELSIF$SCWK_TEMP0 == 2 && $SCWK_TEMP1== 1 THEN
+			_BALLOONWIN_OBJMSG_POS(msg_c13pc0101_girl1_07,C13PC0101_GIRL1_01,POS_DOWN)
+			_UN_SET_MY_NATURE( NATURE_QUIET )
+		//家の中、誰も知らない
+		ELSIF$SCWK_TEMP0 == 2 && $SCWK_TEMP1== 2 THEN
+			_BALLOONWIN_OBJMSG_POS(msg_c13pc0101_girl1_08,C13PC0101_GIRL1_01,POS_DOWN)
+			_UN_SET_MY_NATURE( NATURE_SCHOLAR )
+		ENDIF
+	ENDIF
+	
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+	
+EVENT_END

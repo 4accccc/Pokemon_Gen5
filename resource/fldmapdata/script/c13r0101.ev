@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_c13r0101.h"
-  //.include  "c13r0101.h"
+  .include  "c13r0101.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,7 +19,9 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c13r0101
+_EVENT_DATA		ev_c13r0101_fighterw_01
+_EVENT_DATA		ev_c13r0101_woman2_01
+_EVENT_DATA		ev_c13r0101_poke_01
 _EVENT_DATA_END
 
 
@@ -30,9 +32,33 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*		C13R0101	FIGHTERW	一言メッセージ				  */
 /**************************************************************/
-ev_c13r0101:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START		ev_c13r0101_fighterw_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c13r0101_fighterw_01 )
+EVENT_END
 
+/**************************************************************/
+/*		C13R0101	WOMAN2		分岐メッセージ				  */
+/**************************************************************/
+EVENT_START		ev_c13r0101_woman2_01
+_TALK_OBJ_START()
+	
+	//ポケウッドを解放していない場合
+	IF $WK_SCENE_C13 == 1 THEN 
+		_BALLOONWIN_TALKOBJ_MSG( msg_c13r0101_woman2_01 )	
+	//ポケウッドを解放している場合
+	ELSE
+		_BALLOONWIN_TALKOBJ_MSG( msg_c13r0101_woman2_02 )
+	ENDIF
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
+EVENT_END
+
+/**************************************************************/
+/*		C13R0101	チョロネコ	一言メッセージ				  */
+/**************************************************************/
+EVENT_START		ev_c13r0101_poke_01
+	_EASY_TALK_POKEVOICE( MONSNO_TYORONEKO, msg_c13r0101_poke_01 )
+EVENT_END

@@ -9,6 +9,9 @@
 #ifndef ZONE_C13R0301_EVC_H
 #define ZONE_C13R0301_EVC_H
 
+#define C13R0301_BABYBOY1_01               0
+#define C13R0301_OLDMAN1_01                1
+#define C13R0301_OLDWOMAN1_01              2
 
 #endif //ZONE_C13R0301_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c13r0301.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

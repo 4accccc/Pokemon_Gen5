@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_c13r0401.h"
-  //.include  "c13r0401.h"
+  .include  "c13r0401.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,7 +19,10 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c13r0401
+_EVENT_DATA		ev_c13r0401_boy1_01
+_EVENT_DATA		ev_c13r0401_veteranw_01
+_EVENT_DATA		ev_c13r0401_pilot_01
+_EVENT_DATA		ev_c13r0401_swrival_01
 _EVENT_DATA_END
 
 
@@ -30,9 +33,169 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*		C13R0401	BOY1	一言メッセージ					  */
 /**************************************************************/
-ev_c13r0401:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START		ev_c13r0401_boy1_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c13r0401_boy1_01 )
+EVENT_END
 
+/**************************************************************/
+/*		C13R0401	VETERANW	分岐メッセージ				  */
+/**************************************************************/
+EVENT_START		ev_c13r0401_veteranw_01
+_TALK_OBJ_START()
+	
+	//船長がいない場合
+	IF FLAG_ON( FV_C13R0401_PILOT ) THEN
+		_BALLOONWIN_TALKOBJ_MSG( msg_c13r0401_veteranw_01 )	
+	//船長がいる場合
+	ELSE
+		_BALLOONWIN_TALKOBJ_MSG( msg_c13r0401_veteranw_02 )
+	ENDIF
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+	
+EVENT_END
+
+/**************************************************************/
+/*		C13R0401	PILOT		出航イベント				  */
+/**************************************************************/
+EVENT_START		ev_c13r0401_pilot_01
+_TALK_OBJ_START()
+
+	//おや？　どうなさいました
+	_BALLOONWIN_OBJMSG_POS( msg_c13r0401_pilot_01 , C13R0401_PILOT_01, POS_DOWN )
+	
+	//はい/いいえ分岐
+	_YES_NO_WIN( SCWK_ANSWER )
+
+	//はいの場合
+	IF $SCWK_ANSWER == SCR_YES THEN
+
+		//よろしいですとも！
+		_BALLOONWIN_OBJMSG_POS( msg_c13r0401_pilot_02 , C13R0401_PILOT_01, POS_DOWN )
+		_MSGWIN_CLOSE()
+		
+		//暗転・出航デモ再生
+
+		//マップチェンジ
+		_MAP_CHANGE( ZONE_ID_C03P15, 15, 21, DIR_DOWN )
+
+	//いいえの場合
+	ELSE
+		
+		//わかりました！　のりたくなったときは
+		_BALLOONWIN_OBJMSG_POS( msg_c13r0401_pilot_03 , C13R0401_PILOT_01, POS_DOWN )	
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+
+	ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*		C13R0401	SWRIVAL		出航イベント				  */
+/**************************************************************/
+EVENT_START		ev_c13r0401_swrival_01
+_TALK_OBJ_START()
+
+	//オマエ　ヒウンに　いくんだろ？
+	_BALLOONWIN_OBJMSG_POS( msg_c13r0401_swrival_01 , C13R0401_SWRIVAL_01, POS_DOWN )
+	
+	//はい/いいえ分岐
+	_YES_NO_WIN( SCWK_ANSWER )
+
+	//はいの場合
+	IF $SCWK_ANSWER == SCR_YES THEN
+
+		//プラズマだん　おいかけるからな
+		_BALLOONWIN_OBJMSG_POS( msg_c13r0401_swrival_02 , C13R0401_SWRIVAL_01, POS_DOWN )
+		_MSGWIN_CLOSE()
+		
+		//スワンライバル：上を向いて
+		_OBJ_ANIME( C13R0401_SWRIVAL_01, anm_staystep_u )
+		_OBJ_ANIME_WAIT()
+		
+		//な！　ヒウンいきの　ふね
+		_BALLOONWIN_OBJMSG_POS( msg_c13r0401_swrival_03 , C13R0401_SWRIVAL_01, POS_DOWN )
+		_MSGWIN_CLOSE()
+		
+		//プレイヤー：上を向く
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
+		_OBJ_ANIME_WAIT()
+		
+		//よろしいですとも！
+		_BALLOONWIN_OBJMSG_POS( msg_c13r0401_pilot_02 , C13R0401_PILOT_01, POS_DOWN )
+		_MSGWIN_CLOSE()
+		
+		//【仮】暗転・出航デモ再生
+
+		//スワンライバルのOBJを削除する
+		_OBJ_DEL( C13R0401_SWRIVAL_01 )
+
+		//マップチェンジ
+		_MAP_CHANGE( ZONE_ID_C03P15, 15, 21, DIR_DOWN )
+
+		//========================================/
+		
+		//スワンライバルのバニシュフラグをセットする
+		_FLAG_SET(FV_C13R0401_SWRIVAL)
+
+		//========================================/
+
+	//いいえの場合
+	ELSE
+		
+		//なんだよ！
+		_BALLOONWIN_OBJMSG_POS( msg_c13r0401_swrival_04 , C13R0401_SWRIVAL_01, POS_DOWN )	
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+
+	ENDIF
+
+EVENT_END
+
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staystep_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0

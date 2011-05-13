@@ -9,6 +9,10 @@
 #ifndef ZONE_C13R0401_EVC_H
 #define ZONE_C13R0401_EVC_H
 
+#define C13R0401_BOY1_01                   0
+#define C13R0401_VETERANW_01               1
+#define C13R0401_PILOT_01                  2
+#define C13R0401_SWRIVAL_01                3
 
 #endif //ZONE_C13R0401_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c13r0401.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

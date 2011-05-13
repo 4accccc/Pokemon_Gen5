@@ -9,6 +9,8 @@
 #ifndef ZONE_C13R0201_EVC_H
 #define ZONE_C13R0201_EVC_H
 
+#define C13R0201_WORKMAN2_01               0
+#define C13R0201_MIDDLEWOMAN1_01           1
 
 #endif //ZONE_C13R0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c13r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

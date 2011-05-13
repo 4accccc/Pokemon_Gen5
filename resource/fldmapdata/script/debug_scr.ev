@@ -540,12 +540,13 @@ EVENT_START   ev_debug_suginaka
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_04, 0 )	//ＷＢＴ１回戦
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_05, 1 )	//ＷＢＴ２回戦
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_06, 2 )	//ＷＢＴ決勝戦
-		_BMPMENU_MAKE_LIST( msg_debug_suginaka_09, 5 )	//D02プラズマ団
-		_BMPMENU_MAKE_LIST( msg_debug_suginaka_12, 6 )	//C03のゲーチスイベント
-		_BMPMENU_MAKE_LIST( msg_debug_suginaka_07, 80 )		//ラストイベント１・はじめから
-		_BMPMENU_MAKE_LIST( msg_debug_suginaka_08, 90 )		//ラストイベント２・伝説捕獲前
-		_BMPMENU_MAKE_LIST( msg_debug_suginaka_10, 100 )	//ラストイベント３・Ｎ戦前
-		_BMPMENU_MAKE_LIST( msg_debug_suginaka_13, 110 )	//ラストイベント４・ゲーチス戦前
+		_BMPMENU_MAKE_LIST( msg_debug_suginaka_07, 3 )	//Ｃ１３ネオプラズマ団イベント
+		//_BMPMENU_MAKE_LIST( msg_debug_suginaka_09, 5 )	//D02プラズマ団
+		//_BMPMENU_MAKE_LIST( msg_debug_suginaka_12, 6 )	//C03のゲーチスイベント
+		//_BMPMENU_MAKE_LIST( msg_debug_suginaka_07, 80 )		//ラストイベント１・はじめから
+		//_BMPMENU_MAKE_LIST( msg_debug_suginaka_08, 90 )		//ラストイベント２・伝説捕獲前
+		//_BMPMENU_MAKE_LIST( msg_debug_suginaka_10, 100 )	//ラストイベント３・Ｎ戦前
+		//_BMPMENU_MAKE_LIST( msg_debug_suginaka_13, 110 )	//ラストイベント４・ゲーチス戦前
 		_BMPMENU_MAKE_LIST( msg_debug_00, 800 )	//やめる
 		//メニュー表示
 		_BMPMENU_START()
@@ -587,18 +588,16 @@ EVENT_START   ev_debug_suginaka
 			
 			$SCWK_TEMP0 = 428
 			
-		ELSIF $SCWK_ANSWER == 5 THEN
-			//D02のイベント
-			$WK_SCENE_D02 = 1
+		ELSIF $SCWK_ANSWER == 3 THEN
+			//C13：ネオプラズマ団イベント
+			$WK_SCENE_C13 = 5
 
-			_FLAG_RESET( FV_D02R0101_LEADER3 )	//盗難イベント用アーティ表示
-			_FLAG_SET( FV_D02R0101_HAKAI )		//ヤグルマの森ストッパーの解除	
-			_FLAG_RESET( FV_D02_LEADER3 )	//D02のジムリーダー3を表示	
+			_FLAG_RESET( FV_C13_SWPLAZMA )	//ネオプラズマ団イベント用　表示
 
 			$SCWK_TEMP0 = 428
 
 			//マップチェンジ
-			_MAP_CHANGE( ZONE_ID_D02, 593, 584, DIR_LEFT )
+			_MAP_CHANGE( ZONE_ID_C13, 237, 670, DIR_RIGHT )
 
 		ELSIF $SCWK_ANSWER == 6 THEN
 		

@@ -21,9 +21,11 @@
 //--------------------------------------------------------------
 _EVENT_DATA   ev_zone_c13gym0102
 _EVENT_DATA   ev_init_c13gym0102
-_EVENT_DATA   ev_c13gym0102_leader2_01    // ジムリーダー
+_EVENT_DATA   ev_c13gym0102_swleader2_01    // ジムリーダー
 _EVENT_DATA   ev_c13gym0102_heads_01      // スキンヘッド
 _EVENT_DATA   ev_c13gym0102_guitarw_01    // ギター
+_EVENT_DATA   ev_c13gym0102_sunglasses_01
+_EVENT_DATA   ev_pos_c13gym0102_pokewood
 _EVENT_DATA_END
 
 
@@ -107,7 +109,7 @@ INIT_EVENT_END
 /************************************************************/
 /*			ジムリーダー戦のスクリプトイベント				*/
 /************************************************************/
-EVENT_START	ev_c13gym0102_leader2_01
+EVENT_START	ev_c13gym0102_swleader2_01
 {
 
   // ジムトレーナー全員のフラグがたっていない
@@ -135,13 +137,13 @@ EVENT_START	ev_c13gym0102_leader2_01
         //ゲームクリア前なら
         IF FLAG_OFF( SYS_FLAG_GAME_CLEAR )  THEN
           //ホミカ『クリアまえメッセージ』
-          _BALLOONWIN_OBJMSG( msg_c13gym0102_swleader_06 , C13GYM0102_LEADER2_01 )
+          _BALLOONWIN_OBJMSG( msg_c13gym0102_swleader_06 , C13GYM0102_SWLEADER2_01 )
           _LAST_KEYWAIT()
           _BALLOONWIN_CLOSE()
         //ゲームクリア後なら
         ELSE
           //ホミカ『クリア後メッセージ』
-          _BALLOONWIN_OBJMSG( msg_c13gym0102_swleader_07 , C13GYM0102_LEADER2_01 )
+          _BALLOONWIN_OBJMSG( msg_c13gym0102_swleader_07 , C13GYM0102_SWLEADER2_01 )
           _LAST_KEYWAIT()
           _BALLOONWIN_CLOSE()
         ENDIF
@@ -218,12 +220,12 @@ ev_leader2_btl:
 	_SYSWIN_CLOSE()
 
 	//バッジの説明
-  //技マシンをあげる
+	//技マシンをあげる
 	_BALLOONWIN_TALKOBJ_MSG( msg_c13gym0102_swleader_04)
 	_BALLOONWIN_CLOSE()
 
 	//わざマシン入手処理　「アクロバット」
-  // 【仮】なんの技マシンをもらうか決まってない
+	//【仮】なんの技マシンをもらうか決まってない
 	//_ITEM_EVENT_KEYWAIT( ITEM_WAZAMASIN62, 1 )
 
 	//リーダー：わざマシンの解説
@@ -236,11 +238,14 @@ ev_leader2_btl:
 	//ジムトレーナーのフラグOFF
 	_TRAINER_FLAG_SET( TRID_HEADS_06 )
 	_TRAINER_FLAG_SET( TRID_GUITARW_01 )
+	
+	//ポケウッドイベント開始
+	$WK_SCENE_C13GYM0102 = 1
 
 	//================================================//
 	//電光掲示板フラグセット
-  //【仮】
-  // C13GYMのフラグがないのでC02GYMのものを仮で使っている
+	//【仮】
+	// C13GYMのフラグがないのでC02GYMのものを仮で使っている
 	_FLAG_SET( SYS_FLAG_ELBOARD_C02GYMWIN )
 
 	//================================================//
@@ -292,7 +297,7 @@ EVENT_START	ev_c13gym0102_heads_01
 EVENT_END
 
 /************************************************************/
-/*			ジムトレーナー戦のスクリプトイベント				*/
+/*			ジムトレーナー戦のスクリプトイベント			*/
 /************************************************************/
 EVENT_START	ev_c13gym0102_guitarw_01
 {
@@ -407,3 +412,258 @@ sub_trainer_battle:
   _TRAINER_BTL_SET( LWK_TR_ID, 0 )
 _RET
 
+/**************************************************************/
+/*		C13GYM0102	SUNGLASSES	一言メッセージ				  */
+/**************************************************************/
+EVENT_START		ev_c13gym0102_sunglasses_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c13gym0102_sunglasses_01 )
+EVENT_END
+
+/**************************************************************/
+/*		C13GYM0102	ポケウッドPOSイベント					  */
+/**************************************************************/
+EVENT_START		ev_pos_c13gym0102_pokewood
+
+	//座標用の変数を定義
+	DEFINE_LOCAL	LWK_POSX
+	DEFINE_LOCAL	LWK_POSZ
+	
+	//プレイヤーの座標取得
+	_PLAYER_POS_GET( LWK_POSX, LWK_POSZ )
+
+	//サングラス：プレイヤーに近づいてくる
+	//X座標が３の場合
+	IF $LWK_POSX == 3 THEN
+	
+		_OBJ_ANIME( C13GYM0102_SUNGLASSES_01, anm_sunglasses_come_x3 )
+	
+	//X座標が４の場合
+	ELSE
+	
+		_OBJ_ANIME( C13GYM0102_SUNGLASSES_01, anm_sunglasses_come_x4 )
+	
+	ENDIF
+	
+	_OBJ_ANIME_WAIT()
+	
+	//ヘイ　あなた！
+	_BALLOONWIN_OBJMSG( msg_c13gym0102_sunglasses_02 , C13GYM0102_SUNGLASSES_01 )
+	_MSGWIN_CLOSE()
+	
+	//サングラス：退場
+	//X座標が３の場合
+	IF $LWK_POSX == 3 THEN
+	
+		_OBJ_ANIME( C13GYM0102_SUNGLASSES_01, anm_sunglasses_leave_x3 )
+		_TIME_WAIT( 10 )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_r )
+	
+	//X座標が４の場合
+	ELSE
+	
+		_OBJ_ANIME( C13GYM0102_SUNGLASSES_01, anm_sunglasses_leave_x4 )
+		_TIME_WAIT( 10 )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_r )
+	
+	ENDIF
+	
+	//ホミカ：プレイヤーに近づく
+	//X座標が３の場合
+	IF $LWK_POSX == 3 THEN
+		_TIME_WAIT( 30 )
+		_OBJ_ANIME( C13GYM0102_SWLEADER2_01, anm_swleader2_come_x3 )
+	
+	//X座標が４の場合
+	ELSE
+		_TIME_WAIT( 30 )
+		_OBJ_ANIME( C13GYM0102_SWLEADER2_01, anm_swleader2_come_x4 )
+	
+	ENDIF
+	
+	_OBJ_ANIME_WAIT()
+	
+	//プレイヤー：ホミカのほうを向く
+	//X座標が３の場合
+	IF $LWK_POSX == 3 THEN
+	
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_r )
+	
+	//X座標が４の場合
+	ELSE
+	
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_l )
+	
+	ENDIF
+	
+	_OBJ_ANIME_WAIT()
+	
+	//なに？　あんた　ポケウッドに　いくわけ？
+	_BALLOONWIN_OBJMSG( msg_c13gym0102_swleader_07 , C13GYM0102_SWLEADER2_01 )
+	_MSGWIN_CLOSE()
+	
+	//ホミカ：退場
+	//X座標が３の場合
+	IF $LWK_POSX == 3 THEN
+	
+		_OBJ_ANIME( C13GYM0102_SWLEADER2_01, anm_swleader2_leave_x3 )
+	
+	//X座標が４の場合
+	ELSE
+	
+		_OBJ_ANIME( C13GYM0102_SWLEADER2_01, anm_swleader2_leave_x4 )
+		_TIME_WAIT( 20 )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_r )
+		
+	ENDIF
+	
+	_OBJ_ANIME_WAIT()
+
+	//ホミカ・サングラスのOBJ削除
+	_OBJ_DEL( C13GYM0102_SUNGLASSES_01 )
+	_OBJ_DEL( C13GYM0102_SWLEADER2_01 )
+
+	//========================================/
+	
+	//ポケウッドイベント終了
+	$WK_SCENE_C13GYM0102 = 2
+	
+	//ホミカとサングラスを非表示にする
+	_FLAG_SET(FV_C13GYM0102_SWLEADER2)
+	_FLAG_SET(FV_C13GYM0102_SUNGLASSES)
+
+	//ポケウッドゲート前ＯＢＪのバニシュフラグをセット
+	_FLAG_SET(FV_C13_SUNGLASSES)
+	
+	//ライブキャスターイベント起動
+	$WK_SCENE_C13 = 3
+
+	//========================================/
+
+EVENT_END
+
+//--------------------------------------------------------------------
+//	◆サングラス：イベントアニメ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_sunglasses_come_x3
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_sunglasses_come_x4
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_sunglasses_leave_x3
+	_ANIME_DATA	AC_WALK_R_8F,10
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_sunglasses_leave_x4
+	_ANIME_DATA	AC_WALK_R_8F,9
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	◆ホミカ：イベントアニメ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swleader2_come_x3
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,3
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_swleader2_come_x4
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,4
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_swleader2_leave_x3
+	_ANIME_DATA	AC_WALK_R_8F,10
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_swleader2_leave_x4
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,10
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：下に1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_d
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：上に1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_u
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+
+//--------------------------------------------------------------------
+//	☆共通処理：右に1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_r
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：左に1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_l
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staystep_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0

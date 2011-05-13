@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ichiraku_katsuhiko" host="W00271" date="2011-04-11T10:24:03"/>
+	<create user="suginaka_katsunori" host="W00227" date="2011-05-13T12:29:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -266,11 +266,11 @@
 	<dialog left="102" top="163" right="807" bottom="778" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="542" visible="no"/>
-		<band id="0" index="1" style="0000" width="522"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="530"/>
+		<band id="2" index="3" style="0000" width="538"/>
 		<band id="3" index="4" style="0000" width="157"/>
-		<band id="4" index="0" style="0000" width="689"/>
+		<band id="4" index="0" style="0000" width="697"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -473,8 +473,8 @@
 	</row>
 
 	<row id="msg_debug_suginaka_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<language name="JPN" width="256">N01R0502ラスト1・デモ前</language>
-		<language name="JPN_KANJI" width="256">N01R0502ラスト1・デモ前</language>
+		<language name="JPN" width="256">C13：ネオプラズマ団イベント</language>
+		<language name="JPN_KANJI" width="256">C13：ネオプラズマ団イベント</language>
 	</row>
 
 	<row id="msg_debug_suginaka_08" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
