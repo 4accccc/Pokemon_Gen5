@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-05-10T20:55:39"/>
+	<create user="matsumiya" host="W00224" date="2011-05-13T15:33:02"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="1297" top="225" right="2002" bottom="853" maximized="no" rayout="Vertical2">
+	<dialog left="1292" top="144" right="1996" bottom="769" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="529"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="542"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<band id="4" index="0" style="0000" width="696"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -316,10 +316,10 @@
 ・表示後にアイリス登場
 ・続けてglasses_02</comment>
 		<attribute name="キャラ指定">アイリス</attribute>
-		<language name="JPN" width="256">？？？『あれ？
-アーティさん　また　いないの？▼</language>
-		<language name="JPN_KANJI" width="256">？？？『あれ？
-アーティさん　また　いないの？▼</language>
+		<language name="JPN" width="256">？？？『あれ？　アーティさん
+また　どこか　いっちゃったの？▼</language>
+		<language name="JPN_KANJI" width="256">？？？『あれ？　アーティさん
+また　どこか　行っちゃったの？▼</language>
 	</row>
 
 	<row id="msg_c03p07_glasses_02">
@@ -341,14 +341,14 @@
 		<attribute name="キャラ指定">アイリス</attribute>
 		<language name="JPN" width="256">アイリス『ふうん……▼
 アーティって　いつも
-どこかに　いってない？▼
+どこかに　きえてない？▼
 そうさくに　いきづまったと　いっては
-ポケモンジムから　ふらっと　きえたり▼</language>
+ふらっと　ジムから　いなくなったり▼</language>
 		<language name="JPN_KANJI" width="256">アイリス『ふうん……▼
 アーティって　いつも
-どこかに　いったりしてない？▼
+どこかに　消えてない？▼
 創作に　行き詰まったと　いっては
-ふらっと　ジムから　消えたり▼</language>
+ふらっと　ジムから　いなくなったり▼</language>
 	</row>
 
 	<row id="msg_c03p07_swchampion_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -365,8 +365,8 @@
 さがしてる？▼
 でも　プラズマだんって　２ねんまえに
 かいさん　したんじゃ……▼
-って　いっか！　いま　じっさいに
-こまってるんだもんね（探してる）▼</language>
+って　いっか！
+いま　こまってるんだもんね▼</language>
 		<language name="JPN_KANJI" width="256">きみは？▼
 ……　……　……
 ……　……　……▼
@@ -374,8 +374,8 @@
 探してる？▼
 でも　プラズマ団って
 ２年前に　解散したんじゃ……▼
-って　いっか！　いま　実際に
-こまってるんだもんね（探してる）▼</language>
+って　いっか！
+いま　こまってるんだもんね▼</language>
 	</row>
 
 	<row id="msg_c03p07_swchampion_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -408,13 +408,19 @@
 		<language name="JPN" width="256">ガイドー『やれやれ▼
 アーティさんも　アイリスさんも……
 ほんのうで　うごく　というか……▼
-この　とおりの　さきで　まがったから～
-スカイアローブリッジの　ほうに
-・レゾナンス？</language>
+この　さきで　まがったから
+スカイアローブリッジの　ほうに▽
+いっちゃったんですかね？▼
+だとしたら　レゾナンスリゾート？
+ま　よければ　さがして　きてください</language>
 		<language name="JPN_KANJI" width="256">ガイドー『やれやれ▼
 アーティさんも　アイリスさんも……
 本能で　動く　というか……▼
-（行き先を誘導するセリフ）</language>
+この先で　曲がったから
+スカイアローブリッジの　方に▽
+行っちゃったんですかね？▼
+だとしたら　レゾナンスリゾート？
+ま　よければ　探して　きてください</language>
 	</row>
 
 	<row id="msg_c03p07_black_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
