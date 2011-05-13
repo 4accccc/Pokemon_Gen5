@@ -319,6 +319,10 @@ static int DrawPoint_to_Line(  GFL_BMPWIN *win,
 static void Stock_OldTouch( TOUCH_INFO *all, TOUCH_INFO *stock );
 static  int DrawBrushLine( GFL_BMPWIN *win, TOUCH_INFO *all, TOUCH_INFO *old, int draw, u8 *SignData, u8 sign_mode, u8 scale_side );
 static void SetBookMark( TR_CARD_WORK *wk);
+//
+// 誘導マーク
+static void tc_set_visible( TR_CARD_WORK * wk, const s32 num, const BOOL bflg );
+static void tc_chk_mark_visible( TR_CARD_WORK * wk, const s32 mode );
 
 
 //============================================================================================
@@ -1229,6 +1233,9 @@ static void CardDataDraw(TR_CARD_WORK* wk)
   DispTouchBarObj( wk, wk->is_back );
 
   TRCBmp_TransTrWinInfo(wk,wk->win);
+  //
+  // カードの誘導マーク表示/非表示
+  tc_chk_mark_visible( wk, 0 );
 }
 
 
@@ -1411,6 +1418,8 @@ static BOOL CardRev( TR_CARD_WORK *wk )
     if(wk->is_back==0){
       PMS_DRAW_SetPmsObjVisible( wk->PmsDrawWork, 0, FALSE );
     }
+    // カードの誘導マーク
+    tc_chk_mark_visible( wk, 2 );
     wk->sub_seq++;
     break;
   case 1:
@@ -1467,6 +1476,8 @@ static BOOL CardRev( TR_CARD_WORK *wk )
         PMS_DRAW_VisibleSet( wk->PmsDrawWork, 0, TRUE );
         PMS_DRAW_SetPmsObjVisible( wk->PmsDrawWork, 0, TRUE );
       }
+      // カードの誘導マーク
+      tc_chk_mark_visible( wk, wk->is_back );
     }
     break;
   }
@@ -1535,6 +1546,9 @@ enum{
   CARDSCALE_MOVE_RIGHT_START,
   CARDSCALE_MOVE_RIGHT_CALC,
   CARDSCALE_MOVE_RIGHT_END,
+  //
+  CARDSCALE_MOVE_LEFT_TRG,		// 即、左移動
+  CARDSCALE_MOVE_RIGHT_TRG,		// 即、右移動
 };
 
 //----------------------------------------------------------------------------------
@@ -1562,6 +1576,9 @@ static BOOL CardScaling( TR_CARD_WORK *wk )
     wk->CardScaleX = START_SCALE;
     wk->CardScaleY = START_SCALE;
     wk->sub_seq = 1;
+    //
+    // カードの誘導マーク
+    tc_chk_mark_visible( wk, 2 );
     break;
   case CARDSCALE_WIDE_CALC:
     wk->CardScaleX+=0x100;
@@ -1598,6 +1615,8 @@ static BOOL CardScaling( TR_CARD_WORK *wk )
     wk->ScaleMode = 0;
     DispTouchBarObj( wk, wk->is_back ); // タッチバーOBJ周りの再描画
     _blend_win_set(-1);
+    // カードの誘導マーク
+    tc_chk_mark_visible( wk, 1 );
     return TRUE;
     break;
 
@@ -1617,7 +1636,13 @@ static BOOL CardScaling( TR_CARD_WORK *wk )
     _blend_win_set(wk->ScaleSide);
     return TRUE;
     break;
-
+  // 即、左移動
+  case CARDSCALE_MOVE_LEFT_TRG:
+    // 1フレームはaffine変換を通す必要あり
+    wk->CardCenterX	= TRCARD_LEFT_SCALE_CENTER_POSX;
+    wk->sub_seq		= CARDSCALE_MOVE_LEFT_END;
+    break;
+  
   // 拡大状態の際に右側の拡大面に移動する処理
   case CARDSCALE_MOVE_RIGHT_START:
     wk->sub_seq = CARDSCALE_MOVE_RIGHT_CALC;
@@ -1633,6 +1658,12 @@ static BOOL CardScaling( TR_CARD_WORK *wk )
     wk->ScaleSide ^= 1;
     _blend_win_set(wk->ScaleSide);
     return TRUE;
+    break;
+  // 即、右移動
+  case CARDSCALE_MOVE_RIGHT_TRG:
+    // 1フレームはaffine変換を通す必要あり
+    wk->CardCenterX	= TRCARD_RIGHT_SCALE_CENTER_POSX;
+    wk->sub_seq		= CARDSCALE_MOVE_RIGHT_END;
     break;
 
   }
@@ -1753,6 +1784,28 @@ static int CheckKey(TR_CARD_WORK* wk)
       PMSND_PlaySE( SND_TRCARD_DECIDE );
       SetSActDrawSt( &wk->ObjWork, ACTS_BTN_CHANGE, ANMS_BADGE_G, TRUE);
       return TRC_KEY_REQ_BADGE_CALL;
+    }
+  }
+  // Lボタンを押した
+  else if(keyTrg & PAD_BUTTON_L){
+    // 自分のカードで拡大画面の場合 => 即、切り替え
+    if((wk->TrCardData->OtherTrCard==FALSE)&&(wk->ScaleMode==1)){
+      if(wk->ScaleSide==1){
+        PMSND_PlaySE( SND_TRCARD_ANIME );
+        wk->sub_seq = CARDSCALE_MOVE_LEFT_TRG;
+        return TRC_KEY_REQ_SCALE_BUTTON;
+      }
+    }
+  }
+  // Rボタンを押した
+  else if(keyTrg & PAD_BUTTON_R){
+    // 自分のカードで拡大画面の場合 => 即、切り替え
+    if((wk->TrCardData->OtherTrCard==FALSE)&&(wk->ScaleMode==1)){
+      if(wk->ScaleSide==0){
+        PMSND_PlaySE( SND_TRCARD_ANIME );
+        wk->sub_seq = CARDSCALE_MOVE_RIGHT_TRG;
+        return TRC_KEY_REQ_SCALE_BUTTON;
+      }
     }
   }
 
@@ -3019,4 +3072,61 @@ static  int DrawBrushLine( GFL_BMPWIN *win, TOUCH_INFO *all, TOUCH_INFO *old, in
   
   return line;
 }
+
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief 誘導マークの表示
+ *
+ * @param   TR_CARD_WORK	ワーク
+ * @param   const s32		番号
+ * @param   const BOOL		(TRUE:表示、FALSE:非表示)
+ *
+ * @retval
+ */
+//----------------------------------------------------------------------------------
+static void tc_set_visible( TR_CARD_WORK * wk, const s32 num, const BOOL bflg )
+{
+	// 表示非表示セット
+	SetSActVisible( &wk->ObjWork, num, bflg );
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief 誘導マークの表示(まとめ:要整理)
+ *
+ * @param   TR_CARD_WORK	ワーク
+ * @param   const s32		(0:表、1:裏、2:回転中(両方消し))
+ *
+ * @retval
+ */
+//----------------------------------------------------------------------------------
+static void tc_chk_mark_visible( TR_CARD_WORK * wk, const s32 mode )
+{
+	// 表
+	if(mode == 0){
+		tc_set_visible( wk, ACTS_MARK_00, TRUE );	// 表用
+		tc_set_visible( wk, ACTS_MARK_01, TRUE );
+		tc_set_visible( wk, ACTS_MARK_02, TRUE );
+		tc_set_visible( wk, ACTS_MARK_10, FALSE );	// 裏用
+		tc_set_visible( wk, ACTS_MARK_11, FALSE );
+		tc_set_visible( wk, ACTS_MARK_MEDAL, TRUE ); // メダル(test)
+	}else if(mode == 1){
+		tc_set_visible( wk, ACTS_MARK_00, FALSE );	// 表用
+		tc_set_visible( wk, ACTS_MARK_01, FALSE );
+		tc_set_visible( wk, ACTS_MARK_02, FALSE );
+		tc_set_visible( wk, ACTS_MARK_10, TRUE );	// 裏用
+		tc_set_visible( wk, ACTS_MARK_11, TRUE );
+		tc_set_visible( wk, ACTS_MARK_MEDAL, FALSE ); // メダル(test)
+	}else{
+		tc_set_visible( wk, ACTS_MARK_00, FALSE );	// 表用
+		tc_set_visible( wk, ACTS_MARK_01, FALSE );
+		tc_set_visible( wk, ACTS_MARK_02, FALSE );
+		tc_set_visible( wk, ACTS_MARK_10, FALSE );	// 裏用
+		tc_set_visible( wk, ACTS_MARK_11, FALSE );
+		tc_set_visible( wk, ACTS_MARK_MEDAL, FALSE ); // メダル(test)
+	}
+}
+
+
 

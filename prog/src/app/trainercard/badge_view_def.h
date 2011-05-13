@@ -81,6 +81,9 @@ enum{
   BV_OBJ_KIRAKIRA7_0,
   BV_OBJ_KIRAKIRA7_1,
   BV_OBJ_KIRAKIRA7_2,
+  //
+//  BV_OBJ_CUTIN,		///< カットイン
+  //
   BV_OBJ_MAX,
 };
 
@@ -92,6 +95,11 @@ enum{
   BV_RES_COMMON_PLTT,
   BV_RES_COMMON_CHR,
   BV_RES_COMMON_CELL,
+  //
+//  BV_RES_PLTT_UP,
+//  BV_RES_CHR_UP,
+//  BV_RES_CELL_UP,
+  //
   BV_RES_MAX,
 };
 

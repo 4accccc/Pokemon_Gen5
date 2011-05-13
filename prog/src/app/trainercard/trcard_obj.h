@@ -15,7 +15,8 @@
 #define TR_CARD_STAR_ACT_MAX        ( 8)
 #define TR_CARD_GRATE_STAR_ACT_MAX  ( 8)
 #define TR_CARD_BTNEFF_ACT_MAX      ( 1)
-#define TR_CARD_CLACT_RES_NUM       ( 2)
+//#define TR_CARD_CLACT_RES_NUM       ( 2)
+#define TR_CARD_CLACT_RES_NUM       ( 3)		// add
 
 #define TR_CARD_MAIN_ACT_MAX  (TR_CARD_BADGE_ACT_MAX+TR_CARD_STAR_ACT_MAX+\
     TR_CARD_GRATE_STAR_ACT_MAX+TR_CARD_BTNEFF_ACT_MAX)
@@ -28,6 +29,15 @@ enum{
  ACTS_BTN_PEN,      // ペン先黒白切り替えボタン
  ACTS_BTN_TURN,     // カード裏返しボタン
  ACTS_BTN_BOOKMARK, // ブックマークボタン
+ // 追加
+ ACTS_MARK_00,		// 点滅マーク(00)(前面)
+ ACTS_MARK_01,		// 点滅マーク(01)
+ ACTS_MARK_02,		// 点滅マーク(02)
+ ACTS_MARK_10,		// 点滅マーク(10)(裏面)
+ ACTS_MARK_11,		// 点滅マーク(11)
+ //
+ ACTS_MARK_MEDAL,	// メダル
+ //
  TR_CARD_SUB_ACT_MAX,
 };
 
@@ -105,6 +115,9 @@ extern void RereaseCellObject(TR_CARD_OBJ_WORK *wk);
 
 extern void SetSActDrawSt( TR_CARD_OBJ_WORK *wk, u8 act_id, u8 anm_pat ,u8 draw_f);
 extern void SetEffActDrawSt( TR_CARD_OBJ_WORK *wk, u8 pat ,u8 draw_f);
+// 追加
+extern void SetSActVisible( TR_CARD_OBJ_WORK *wk, const u8 act_id, const BOOL bflg );
+
 
 #endif //_TRAINER_CARD_OBJ_H_
 

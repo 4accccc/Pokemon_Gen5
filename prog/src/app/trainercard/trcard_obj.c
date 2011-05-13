@@ -114,6 +114,19 @@ void InitTRCardCellActor( TR_CARD_OBJ_WORK *wk , const GFL_DISP_VRAM *vramBank)
                                                        wk->heapId );
   GFL_ARC_CloseDataHandle( p_handle );
   
+  //
+  // 追加データ(test)(パレットは要検討)
+  p_handle = GFL_ARC_OpenDataHandle( ARCID_TRAINERCARD , wk->heapId );
+  wk->resCell[2].pltIdx = GFL_CLGRP_PLTT_RegisterEx( p_handle, NARC_trainer_case_card_button_NCLR, 
+                                                     CLSYS_DRAW_SUB, 0, 0, 5, wk->heapId );
+  wk->resCell[2].ncgIdx = GFL_CLGRP_CGR_Register( p_handle , NARC_trainer_case_card_button_NCGR, FALSE , 
+                                                  CLSYS_DRAW_SUB , wk->heapId );
+  wk->resCell[2].anmIdx = GFL_CLGRP_CELLANIM_Register( p_handle , 
+                                                       NARC_trainer_case_card_button_NCER, 
+                                                       NARC_trainer_case_card_button_NANR, wk->heapId );
+  GFL_ARC_CloseDataHandle( p_handle );
+  
+  //
   GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );    // MAIN DISP OBJ ON
   GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );   // SUB  DISP OBJ ON
 }
@@ -152,7 +165,15 @@ void SetTrCardActorSub( TR_CARD_OBJ_WORK *wk)
     {  68, 21*8, 0,0,0,0, ANMS_BLACK_PEN_L          },   // ペン先ボタン
     { 100, 21*8, 0,0,0,0, ANMS_TURN_L,              },   // カード裏返しボタン
     { 180, 21*8+4, 1,1,1,0, APP_COMMON_BARICON_CHECK_OFF },// ブックマークボタン
-    
+    //
+    // 以下追加(test)
+    {   8,   40, 2,2,2,1, ANMS_SIMPLE_G,            },   // 点滅マーク(00)
+    {   8,   56, 2,2,2,1, ANMS_SIMPLE_G,            },   // 点滅マーク(01)
+    {   8,  120, 2,2,2,1, ANMS_SIMPLE_G,            },   // 点滅マーク(02)
+    { 224,   16, 2,2,2,1, ANMS_SIMPLE_G,            },   // 点滅マーク(10)
+    { 224,   64, 2,2,2,1, ANMS_SIMPLE_G,            },   // 点滅マーク(11)
+    //
+    { 224,   80, 2,2,2,1, ANMS_LOUPE_G,             },   // メダル
   };
 
   {
@@ -265,4 +286,23 @@ void SetEffActDrawSt( TR_CARD_OBJ_WORK *wk, u8 pat ,u8 draw_f)
   GFL_CLACT_WK_ResetAnm(wk->ClActWorkS[ACTS_BTN_EFF]);
   GFL_CLACT_WK_SetDrawEnable(wk->ClActWorkS[ACTS_BTN_EFF],draw_f);  
 }
+
+//--------------------------------------------------------------------------------------------
+/**
+ * サブ画面誘導マーク
+ *
+ * @param wk      	OBJワーク
+ * @param act_id	ActWorkのID
+ * @param bflg		(TRUE:表示、FALSE:非表示)
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
+void SetSActVisible( TR_CARD_OBJ_WORK *wk, const u8 act_id, const BOOL bflg )
+{
+//  GFL_CLACT_WK_SetAnmSeq( wk->ClActWorkS[act_id],anm_pat);
+//  GFL_CLACT_WK_ResetAnm(wk->ClActWorkS[act_id]);
+  GFL_CLACT_WK_SetDrawEnable( wk->ClActWorkS[act_id], bflg );
+}
+
 
