@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-05-10T21:21:07"/>
+	<create user="matsumiya" host="W00224" date="2011-05-13T15:37:41"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="1297" top="225" right="2002" bottom="853" maximized="no" rayout="Vertical2">
+	<dialog left="1292" top="141" right="1997" bottom="769" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -297,8 +297,8 @@
 ・c03ジムバッジ取得後に出現
 ・posを踏むとイベント開始</comment>
 		<attribute name="キャラ指定">アクロマ</attribute>
-		<language name="JPN" width="256">？？？『そこを　あるく　ものよ！▼</language>
-		<language name="JPN_KANJI" width="256">？？？『そこを　歩く　ものよ！▼</language>
+		<language name="JPN" width="256">？？？『そこの　きみっ！▼</language>
+		<language name="JPN_KANJI" width="256">？？？『そこの　きみっ！▼</language>
 	</row>
 
 	<row id="msg_c03p01_swboss_02">
@@ -307,10 +307,10 @@
 ・はい　→swboss_03
 　いいえ→swboss_04</comment>
 		<attribute name="キャラ指定">アクロマ</attribute>
-		<language name="JPN" width="256">もし　さしつかえ　なければ
-きみの　ポケモンを　みせてください！▼</language>
-		<language name="JPN_KANJI" width="256">もし　さしつかえ　なければ
-きみの　ポケモンを　みせてください！▼</language>
+		<language name="JPN" width="256">さしつかえなければ　きみの
+ポケモンを　みせてもらいたいのです▼</language>
+		<language name="JPN_KANJI" width="256">さしつかえなければ　きみの
+ポケモンを　みせてもらいたいのです▼</language>
 	</row>
 
 	<row id="msg_c03p01_swboss_03">
@@ -318,8 +318,8 @@
 ・はい選択時
 ・続けてswboss_05</comment>
 		<attribute name="キャラ指定">アクロマ</attribute>
-		<language name="JPN" width="256">？？？『よろしい！▼</language>
-		<language name="JPN_KANJI" width="256">？？？『よろしい！▼</language>
+		<language name="JPN" width="256">？？？『ありがとう！▼</language>
+		<language name="JPN_KANJI" width="256">？？？『ありがとう！▼</language>
 	</row>
 
 	<row id="msg_c03p01_swboss_04">
@@ -327,93 +327,105 @@
 ・いいえ選択時
 ・続けてswboss_05</comment>
 		<attribute name="キャラ指定">アクロマ</attribute>
-		<language name="JPN" width="256">？？？『その　いけんですが
-けんきゅうの　ためです▽
-むし　しますよ！▼</language>
-		<language name="JPN_KANJI" width="256">？？？『その　意見ですが
-研究の　ためです▽
-無視しますよ！▼</language>
+		<language name="JPN" width="256">？？？『けんきゅう　ですから！▼</language>
+		<language name="JPN_KANJI" width="256">？？？『研究ですから！▼</language>
 	</row>
 
 	<row id="msg_c03p01_swboss_05">
 		<comment>♂
-・</comment>
+・0＝先頭のポケモン名（ひん死/タマゴ除く）
+・続けてswboss_06</comment>
 		<attribute name="キャラ指定">アクロマ</attribute>
-		<language name="JPN" width="256">ふむ……　きみの　？？？？？は
-他の　ポケモンより　強いようです！▼
-だが　君自身は
-ヒオウギを　旅立ったばかり……▽
-バッジも　まだ　３個ですし……！▼</language>
-		<language name="JPN_KANJI" width="256">ふむ……
-他の　ポケモンより　強いようです！
-だが　君自身は
-ヒオウギを　旅立ったばかり……▽
-バッジも　まだ　３個ですし……！▼</language>
+		<language name="JPN" width="256">きみの　[1:01:ポケモン種族名:0]は
+おなじ　しゅるいの▽
+ポケモンよりも　つよい……　ようだね！▼
+だが　きみじしんは　まだ
+バッジが　３コの　トレーナー……！▼</language>
+		<language name="JPN_KANJI" width="256">きみの　[1:01:ポケモン種族名:0]は
+同じ　種類の▽
+ポケモンよりも　強い……　ようだね！▼
+だが　きみ自身は　まだ
+バッジが　３コの　トレーナー……！▼</language>
 	</row>
 
 	<row id="msg_c03p01_swboss_06">
 		<comment>♂
-・</comment>
+・主人公から離れ、横向きでメッセージ表示
+・続けてswboss_07</comment>
 		<attribute name="キャラ指定">アクロマ</attribute>
-		<language name="JPN" width="256">君は　じつに　おもしろい
-ポケモントレーナー　です！▼
-はっきりとした　理由は　不明ですが
-ポケモンの　力を　引きだしています！▼</language>
-		<language name="JPN_KANJI" width="256">君は　じつに　おもしろい
-ポケモントレーナー　です！▼
-はっきりとした　理由は　不明ですが
-ポケモンの　力を　引きだしています！▼</language>
+		<language name="JPN" width="256">グレートだ！▼
+なぜだか　りゆうは　ふめい　ですが
+きみは　パートナーである　ポケモンの▽
+ちからを　ひきだしている！▼</language>
+		<language name="JPN_KANJI" width="256">グレートだ！▼
+なぜだか　理由は　不明ですが
+きみは　パートナーである　ポケモンの▽
+力を　ひきだしている！▼</language>
 	</row>
 
 	<row id="msg_c03p01_swboss_07">
 		<comment>♂
-・！マーク表示後</comment>
+・！マーク表示後
+・主人公と正対してメッセージ表示
+・続けてswboss_08</comment>
 		<attribute name="キャラ指定">アクロマ</attribute>
-		<language name="JPN" width="256">失敬！　わたしは
-アクロマという　科学者です▽
-以後　よろしく！▼</language>
-		<language name="JPN_KANJI" width="256">失敬！　わたしは
-アクロマという　科学者です▽
-以後　よろしく！▼</language>
+		<language name="JPN" width="256">いや　しっけい！　わたしは
+アクロマ　という　かがくしゃ　です▼
+けんきゅうテーマは
+「ポケモンの　ちからは▽
+　なにに　よって　ひきだされるか？」▼</language>
+		<language name="JPN_KANJI" width="256">いや　失敬！　わたしは
+アクロマ　という　科学者です▼
+けんきゅうテーマは
+「ポケモンの　潜在能力は▽
+　なにに　よって　ひきだされるか？」▼</language>
 	</row>
 
 	<row id="msg_c03p01_swboss_08">
 		<comment>♂
-・</comment>
+・swboss_06とは逆方向に移動し
+　横向きでメッセージ表示
+・続けてswboss_09</comment>
 		<attribute name="キャラ指定">アクロマ</attribute>
-		<language name="JPN" width="256">ポケモンの　力を　
-最大限に　引き出すのは
-トレーナーとの　良好な　関係性なのか
-それとも　別の　手段なのか……▼</language>
-		<language name="JPN_KANJI" width="256">ポケモンの　力を　
-最大限に　引き出すのは▼
-トレーナーとの　良好な　関係性なのか
-それとも　別の　手段なのか……▼</language>
+		<language name="JPN" width="256">ポケモンの　ちからを　ひきだすのは！
+それも　さいだいげんに　ひきだすのは▼
+トレーナーとの　きずな　なのか
+それとも　べつの　しゅだん　なのか？▼</language>
+		<language name="JPN_KANJI" width="256">ポケモンの　力を　ひきだすのは！
+それも　最大限に　ひきだすのは▼
+トレーナーとの　きずな　なのか
+それとも　別の　手段なのか？▼</language>
 	</row>
 
 	<row id="msg_c03p01_swboss_09">
 		<comment>♂
+・主人公と正対してメッセージ表示
+・はい/いいえの選択肢表示
+・どちらを選んでもswboss_10</comment>
+		<attribute name="キャラ指定">アクロマ</attribute>
+		<language name="JPN" width="256">それを　きみと
+たたかうことで　たしかめたい……！▽
+よろしいですね？▼</language>
+		<language name="JPN_KANJI" width="256">それを　きみと
+戦うことで　確かめたい……！▽
+よろしいですね？▼</language>
+	</row>
+
+	<row id="msg_c03p01_swboss_10">
+		<comment>♂
 ・メッセージ表示後、画面上に移動
 ・画面外に消えると主人公操作可能</comment>
 		<attribute name="キャラ指定">アクロマ</attribute>
-		<language name="JPN" width="256">それを！▼
-きみと　たたかうことで　たしかめたい
-よろしいですね▽
-では　４番道路で　会いましょう！</language>
-		<language name="JPN_KANJI" width="256">それを！▼
-きみと　戦うことで　確かめたい
-よろしいですね▽
-では　４番道路で　会いましょう！</language>
+		<language name="JPN" width="256">では　このさき
+４ばんどうろで　あいましょう！▼</language>
+		<language name="JPN_KANJI" width="256">では　この先
+４番道路で　会いましょう！▼</language>
 	</row>
 
 	<row id="msg_c03p01_leader3_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>swanで削除</comment>
-		<attribute name="キャラ指定">ジムリーダー
-アーティ</attribute>
-		<language name="JPN" width="256">アーティ『あっち！▼
-んぬん　ジムの　ほうこうだな！？▼</language>
-		<language name="JPN_KANJI" width="256">アーティ『あっち！▼
-んぬん　ジムの　方向だな！？▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c03p01_dancer1_00" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
