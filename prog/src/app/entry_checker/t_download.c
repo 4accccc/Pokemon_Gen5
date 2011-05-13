@@ -57,11 +57,9 @@
 
 #include "app/t_download.h"
 
-//@TODO BG読み込み とりあえずマイクテストのリソース
 #include "message.naix"
 
 //=============================================================================
-// 下記defineをコメントアウトすると、機能を取り除けます
 //=============================================================================
 
 FS_EXTERN_OVERLAY(ui_common);
@@ -100,16 +98,20 @@ enum{
 };
 
 // パレット
+// 上：BG (0-2:BG、3:FONT)
+// 上：OBJ
+// 下：BG (0,1:BG、8,9,11,12:FONT,WIN)
+// 下：OBJ(0-10:パネル、11-14:cmn)
 enum{
 	// 何本目か
-	PLTID_SYSWIN_BASE			= 8,	// font(syswin)(注：必ずこの次にフォントを指定)
+	PLTID_SYSWIN_BASE			= 8,	// font(syswin)
 	PLTID_SYSWIN_FONT			= 9,	// font(syswin)
 	PLTID_YESNO_WIN_BASE		= 11,	// win(yes/no window)(注：2本使用する(色変え含む:11,12))
 	//
-	PLTID_UP_FONT				= 2,	// font(up)
+	PLTID_UP_FONT				= 3,	// font(up)
 	//
 	// (obj)
-	PLTID_OBJ_CMN				= 12,	// cmnのpalのoffset
+	PLTID_OBJ_CMN				= 11,	// cmnのpalのoffset
 	PLTID_OBJ_CMN_NUM			= 4,	// cmnのpalの本数
 	//
 	// 何番目か
@@ -129,6 +131,7 @@ enum{
 	T_DOWNLOAD_BGNUM_MAXNUM		= 8,	// bg
 	//
 //	T_DOWNLOAD_UP_OBJ_MAXNUM	= 1,	// obj(up)
+	T_DOWNLOAD_MSG_MAX			= 2,	// message
 };
 
 
@@ -157,7 +160,7 @@ enum
 	CLWKID_PANEL_01,					// パネル
 	CLWKID_PANEL_02,					// パネル
 	CLWKID_PANEL_03,					// パネル
-	CLWKID_BAR,							// バー
+	CLWKID_BAR,							// スクロールバー
 	CLWKID_CURSOR,						// カーソル(仮)
 	//
 	CLWKID_MAX,
@@ -242,6 +245,9 @@ enum{
 	SAVE_BUFFER_MAX		= 3,			// セーブ個数最大
 	//
 	ITEM_BUFFER_MAX		= 30,			// バッファ最大数
+	//
+	PANEL_DISP4			= 4,			// パネル表示(4枚)
+	PANEL_DISP3			= 3,			// パネル表示(3枚)
 };
 
 // タッチペンエリア
@@ -253,7 +259,9 @@ enum{
 	AREA_TD_TP_RETURN,					// RETURN
 	AREA_TD_TP_SCROLL,					// スクロール領域
 	//
-	AREA_TD_TP_PANEL3_0,				// パネル3行
+	AREA_TD_TP_CMN_MAX,					// ここまではデータにセット
+	//
+	AREA_TD_TP_PANEL3_0 = AREA_TD_TP_CMN_MAX, // パネル3行
 	AREA_TD_TP_PANEL3_1,
 	AREA_TD_TP_PANEL3_2,
 	//
@@ -275,6 +283,13 @@ enum{
 enum{
 	KEY_INPUT_BEFORE = 0,				// 前
 	KEY_INPUT_AFTER,					// 後
+};
+
+// スクロール
+enum{
+	SCRL_TOP_Y			= 32,			// レール上部のY座標
+	SCRL_DOWN_Y			= 160,			// レール下部のY座標
+	SCRL_BAR_SIZE		= 16,			// バーのサイズ
 };
 
 //-------------------
@@ -307,19 +322,12 @@ enum{
 	FLG_MW_RET_END		= (1<<12),		// RETURNで終了
 	FLG_MW_CROSS_END	= (1<<13),		// ×で終了
 	FLG_MW_BAR_UPDATE	= (1<<14),		// バー更新
+	FLG_MW_BAR_HIDE		= (1<<15),		// バー非表示
 	//
 	FLG_MW_END			= (1<<20),		// 終了
 	//
 	// アニメまとめ
 	FLG_MW_ANM_ALL		= (FLG_MW_ANM_LEFT|FLG_MW_ANM_RIGHT|FLG_MW_ANM_CROSS|FLG_MW_ANM_RETURN),
-};
-
-// T_DOWNLOAD_ITEM.Flag
-// (パネルのシーケンスと対応)
-enum{
-	FLG_ITEM_NOREAD		= (1<<0),		// 未読
-	FLG_ITEM_READ		= (1<<1),		// 既読
-	FLG_ITEM_SAVED		= (1<<2),		// セーブ済み
 };
 
 //=============================================================================
@@ -365,7 +373,7 @@ typedef struct
 	GFL_FONT				*font;
 	//プリントキュー
 	PRINT_QUE				*print_que;
-	GFL_MSGDATA				*msg[2];						// 0:メッセージ,1:未使用
+	GFL_MSGDATA				*msg[T_DOWNLOAD_MSG_MAX];		// 0:メッセージ,1:未使用
 	PRINT_UTIL				PrintUtil[T_DOWNLOAD_CANVAS_MAXNUM];	// 文字表示用
 	PRINT_STREAM			*PrintStream;					// 文字表示用(PrintStream)
 	GFL_TCBLSYS				*MsgTcblSys;					// メッセージ用タスク
@@ -387,7 +395,6 @@ typedef struct
 	s32						CurPos;							// カーソル位置(view)
 	s32						TopNum;							// 先頭番号(select)
 	s32						SubNum;							// カーソル位置(select)
-	s32						DebugNum;						// debug
 	s32						SaveBuffer[SAVE_BUFFER_MAX];	// セーブ領域
 	T_DOWNLOAD_ITEM			ItemBuffer[ITEM_BUFFER_MAX];	// アイテム領域
 	//
@@ -574,12 +581,12 @@ static const T_DOWNLOAD_BMPOAM_DATA td_bmpoam_tbl[] = {
 //---------------
 // (printutilと対応)
 static const T_DOWNLOAD_CANVAS_DATA td_canvas_tbl[] = {
-	{ GFL_BG_FRAME1_S,	1,	1,	30,	2,	2,},		// 上：配信日トーナメントリスト
-	{ GFL_BG_FRAME1_S,	10,	4,	20,	2,	2,},		// 上：配信日
-	{ GFL_BG_FRAME1_S,	1,	7,	30,	2,	2,},		// 上：ルール名
-	{ GFL_BG_FRAME1_S,	1,	10,	28,	6,	2,},		// 上：レベル制限
-	{ GFL_BG_FRAME1_S,	1,	17,	18,	2,	2,},		// 上：トーナメント名
-	{ GFL_BG_FRAME1_S,	1,	20,	28,	4,	2,},		// 上：内容
+	{ GFL_BG_FRAME1_S,	1,	1,	30,	2,	3,},		// 上：配信日トーナメントリスト
+	{ GFL_BG_FRAME1_S,	10,	4,	20,	2,	3,},		// 上：配信日
+	{ GFL_BG_FRAME1_S,	1,	7,	30,	2,	3,},		// 上：ルール名
+	{ GFL_BG_FRAME1_S,	1,	10,	28,	6,	3,},		// 上：レベル制限
+	{ GFL_BG_FRAME1_S,	1,	17,	18,	2,	3,},		// 上：トーナメント名
+	{ GFL_BG_FRAME1_S,	1,	20,	28,	4,	3,},		// 上：内容
 	//
 	{ GFL_BG_FRAME1_M,	1,	1,	30,	2,	9,},		// 下：タイトル
 	{ GFL_BG_FRAME0_M,	1,	1,	30,	4,	9,},		// 下：meswin
@@ -591,6 +598,7 @@ static const T_DOWNLOAD_CANVAS_DATA td_canvas_tbl[] = {
 //---------------------------------
 // 共通ボタン
 // (通常、オン、オフ(操作不可)、0)
+// 全部は必要ないが、念のため用意しておく
 //---------------------------------
 static const s16 td_cmn_btn_tbl[] = {
 	CMN_LEFT_SEQ,   CMN_LEFT_ON_SEQ,   CMN_LEFT_OFF_SEQ,  0,	// 左
@@ -662,10 +670,15 @@ static BOOL td_chk_view_key_input( T_DOWNLOAD_MAIN_WORK* wk );
 static BOOL td_chk_anim( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode );
 static void td_init_param( T_DOWNLOAD_MAIN_WORK* wk );
 static BOOL td_chk_view_tp_input( T_DOWNLOAD_MAIN_WORK* wk );
+static BOOL td_chk_select_tp_input( T_DOWNLOAD_MAIN_WORK* wk );
+static BOOL td_chk_my_tp( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode, const s32 num );
+static BOOL td_set_scrollbar( T_DOWNLOAD_MAIN_WORK* wk );
+static void td_calc_scrollbar_pos( T_DOWNLOAD_MAIN_WORK* wk, const s32 num );
 
 //
 // バッファ
 static s32  td_calc_savebuffer( T_DOWNLOAD_MAIN_WORK* wk );
+static BOOL td_chk_savebuffer( T_DOWNLOAD_MAIN_WORK* wk, const s32 num );
 static s32  td_del_savebuffer( T_DOWNLOAD_MAIN_WORK* wk, const s32 wnum );
 static void td_chk_delete( T_DOWNLOAD_MAIN_WORK* wk );
 //
@@ -693,8 +706,6 @@ static void td_chg_brightness( T_DOWNLOAD_MAIN_WORK* wk, const s32 rate );
 // タッチペン
 static void td_get_tp_area( T_DOWNLOAD_MAIN_WORK* wk, const s32 num, GFL_UI_TP_HITTBL *tpbuffer );
 //
-// debug
-static void td_debug( T_DOWNLOAD_MAIN_WORK* wk );
 
 //------------------
 // 関数のテーブル
@@ -800,6 +811,7 @@ static GFL_PROC_RESULT TDownloadProc_Init( GFL_PROC *proc, int *seq, void *pwk, 
 //-----------------------------------------------------------------------------
 static GFL_PROC_RESULT TDownloadProc_Exit( GFL_PROC *proc, int *seq, void *pwk, void *mywk )
 { 
+	s32		i;
 	T_DOWNLOAD_MAIN_WORK* wk = mywk;
 	
 	//----------------
@@ -811,12 +823,12 @@ static GFL_PROC_RESULT TDownloadProc_Exit( GFL_PROC *proc, int *seq, void *pwk, 
 	APP_TASKMENU_RES_Delete( wk->pAppTaskRes );
 	
 	//メッセージ破棄
-	if(wk->msg[0]){
-		GFL_MSG_Delete( wk->msg[0] );
+	for(i=0;i<T_DOWNLOAD_MSG_MAX;i++){
+		if( wk->msg[i] ){
+			GFL_MSG_Delete( wk->msg[i] );
+			wk->msg[i] = 0;
+		}
 	}
-//	if(wk->msg[1]){
-//		GFL_MSG_Delete( wk->msg[1] );
-//	}
 	
 	//PRINT_QUE
 	PRINTSYS_QUE_Delete( wk->print_que );
@@ -922,7 +934,6 @@ static GFL_PROC_RESULT TDownloadProc_Main( GFL_PROC *proc, int *seq, void *pwk, 
 static void td_init( T_DOWNLOAD_MAIN_WORK* wk )
 {
 	s32			i;
-	ARCHANDLE	*p_handle;
 	
 	// バッファを確保
 	wk->MsgBuffer = GFL_STR_CreateBuffer( 256, wk->heapID );
@@ -936,7 +947,6 @@ static void td_init( T_DOWNLOAD_MAIN_WORK* wk )
 	wk->CurPos		= 0;
 	wk->TopNum		= 0;
 	wk->SubNum		= 0;
-	wk->DebugNum	= 0;
 	//
 	for(i=0;i<SAVE_BUFFER_MAX;i++){
 		wk->SaveBuffer[i] = -1;
@@ -959,7 +969,6 @@ static void td_init( T_DOWNLOAD_MAIN_WORK* wk )
 	// パラメータ用のバッファ取得(必ず破棄すること)
 	wk->ParamBuffer = GFL_ARC_LoadDataAlloc( ARCID_WIN_RECORD_GRA, NARC_win_record_gra_t_download_param_tblbin, wk->heapID );
 	
-	
 	//---------------
 	// bgの初期化
 	//---------------
@@ -969,14 +978,6 @@ static void td_init( T_DOWNLOAD_MAIN_WORK* wk )
 	// 文字初期化
 	//---------------
 	td_init_string( wk );
-	//
-	// パレットは2番に転送(上画面)
-	p_handle  = GFL_ARC_OpenDataHandle( ARCID_FONT, wk->heapID );
-	// Main
-	GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_font_talkwin_nclr, PALTYPE_MAIN_BG, PLTID_SYSWIN_FONT*0x20, 0x20, wk->heapID );
-	// Sub
-	GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_font_talkwin_nclr, PALTYPE_SUB_BG,  PLTID_UP_FONT*0x20, 0x20, wk->heapID );
-	GFL_ARC_CloseDataHandle( p_handle );
 	
 	//------------
 	// OBJ初期化
@@ -988,16 +989,17 @@ static void td_init( T_DOWNLOAD_MAIN_WORK* wk )
 	//-------------
 	td_disp_downinfo( wk );
 	//
-	//
-	// パラメータ
+	//--------------
+	// 内部パラメータセット
+	//---------------
 	td_init_param( wk );
-	//
 	//
 	wk->Flag |= FLG_MW_UPDATE;
 	// 表示モードの場合
 	if(wk->Mode == MODE_VIEW){
 		wk->Flag |= FLG_MW_DISP3;
 		wk->Flag |= (FLG_MW_LEFT_HIDE|FLG_MW_RIGHT_HIDE);
+		wk->Flag |= FLG_MW_BAR_HIDE;
 		//
 		td_param_view_update( wk );
 		// バー非表示
@@ -1005,6 +1007,8 @@ static void td_init( T_DOWNLOAD_MAIN_WORK* wk )
 	}
 	// 通常モードの場合
 	else{
+		wk->Flag &= ~FLG_MW_BAR_HIDE;
+		//
 		wk->SaveBuffer[0] = -1;
 		wk->SaveBuffer[1] = -1;
 		wk->SaveBuffer[2] = -1;
@@ -1013,10 +1017,6 @@ static void td_init( T_DOWNLOAD_MAIN_WORK* wk )
 		// バー非表示
 		td_set_obj_visible( wk, CLWKMODE_NORMAL, CLWKID_BAR, TRUE );
 	}
-	
-	//----------
-	// 更新
-	//----------
 	
 	//--------------
 	// meswin
@@ -1232,7 +1232,10 @@ static void td_key_select( T_DOWNLOAD_MAIN_WORK* wk )
 			// アニメチェック
 			td_chk_anim( wk, 0 );
 			// キー入力(select)
-			td_chk_select_key_input( wk );
+			bflg = td_chk_select_key_input( wk );
+			if(bflg == FALSE){
+				td_chk_select_tp_input( wk );
+			}
 			// 更新(select)
 			td_param_select_update( wk );
 			break;
@@ -1270,6 +1273,7 @@ static void td_key_select( T_DOWNLOAD_MAIN_WORK* wk )
 						wk->Flag |= FLG_MW_DISP3;
 						wk->Flag |= FLG_MW_UPDATE;
 						wk->Flag |= (FLG_MW_RIGHT_HIDE|FLG_MW_LEFT_HIDE);
+						wk->Flag |= FLG_MW_BAR_HIDE;
 					}
 				}
 				// 輝度戻し(test)
@@ -1282,7 +1286,10 @@ static void td_key_select( T_DOWNLOAD_MAIN_WORK* wk )
 			// アニメチェック
 			td_chk_anim( wk, 1 );
 			// キー入力(select)
-			td_chk_select_key_input( wk );
+			bflg = td_chk_select_key_input( wk );
+			if(bflg == FALSE){
+				td_chk_select_tp_input( wk );
+			}
 			// 更新(select)
 			td_param_select_update( wk );
 			break;
@@ -1314,6 +1321,7 @@ static void td_key_select( T_DOWNLOAD_MAIN_WORK* wk )
 					wk->Flag |= FLG_MW_UPDATE;
 					wk->Flag &= ~FLG_MW_DISP3;
 					wk->Flag &= ~(FLG_MW_RIGHT_HIDE|FLG_MW_LEFT_HIDE);
+					wk->Flag &= ~FLG_MW_BAR_HIDE;
 					wk->Step = STEP_LV1;
 					// アイテム戻し
 					tmp = wk->SaveBuffer[wk->CurPos];
@@ -1878,6 +1886,18 @@ static void td_init_string( T_DOWNLOAD_MAIN_WORK* wk )
 		GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(wk->PrintUtil[i].win) );
 		adr++;
 	}
+	//
+	//-----------------
+	// fontパレット転送
+	//-----------------
+	{
+		ARCHANDLE	*p_handle  = GFL_ARC_OpenDataHandle( ARCID_FONT, wk->heapID );
+		// Main
+		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_font_talkwin_nclr, PALTYPE_MAIN_BG, PLTID_SYSWIN_FONT*0x20, 0x20, wk->heapID );
+		// Sub
+		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_font_talkwin_nclr, PALTYPE_SUB_BG,  PLTID_UP_FONT*0x20, 0x20, wk->heapID );
+		GFL_ARC_CloseDataHandle( p_handle );
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -1933,7 +1953,12 @@ static void td_disp_string_number( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode, con
 	// 数字を桁分0うめ表示
 	strbuf = GFL_STR_CreateBuffer( 128, wk->heapID );
 	STRTOOL_SetNumber( strbuf, num, lnum, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
-	td_disp_string( wk, mode, x, y, strbuf, pmode, PRINTSYS_LSB_Make(1,2,0) );
+	//
+	if(mode == CVS_MAIN_TITLE){
+		td_disp_string( wk, mode, x, y, strbuf, pmode, PRINTSYS_LSB_Make(15,2,0) );
+	}else{
+		td_disp_string( wk, mode, x, y, strbuf, pmode, PRINTSYS_LSB_Make(1,2,0) );
+	}
 	//
 	GFL_STR_DeleteBuffer( strbuf );
 }
@@ -2201,9 +2226,6 @@ static void td_disp_downinfo( T_DOWNLOAD_MAIN_WORK* wk )
 	for(i=0;i<buf[0];i++){
 		td_update_string( wk, CVS_UP_MES_MAX+i );
 	}
-	//
-	// バー非表示
-//	td_set_obj_visible( wk, CLWKMODE_NORMAL, CLWKID_BAR, FALSE );
 }
 
 //-----------------------------------------------------------------------------
@@ -2341,10 +2363,18 @@ static void td_param_select_update( T_DOWNLOAD_MAIN_WORK* wk )
 			}else{
 				td_disp_upinfo( wk, -1 );
 			}
+			//
 			// バー更新
+			bflg = TRUE;
+			if(wk->Flag & FLG_MW_BAR_HIDE){
+				bflg = FALSE;
+			}
+			// バー表示/非表示
+			td_set_obj_visible( wk, CLWKMODE_NORMAL, CLWKID_BAR, bflg );
+			//
 			if(wk->Flag & FLG_MW_BAR_UPDATE){
 				if(!(wk->Flag & FLG_MW_NOITEM)){
-					py = SCROLLBAR_GetPosY( num-1, wk->TopNum+wk->SubNum, 32, 160, 16 );
+					py = SCROLLBAR_GetPosY( num-1, wk->TopNum+wk->SubNum, SCRL_TOP_Y, SCRL_DOWN_Y, SCRL_BAR_SIZE );
 					// 座標の更新
 					GFL_CLACT_WK_GetPos( wk->wk_obj.clwk[CLWKID_BAR], &pos, CLSYS_DEFREND_MAIN );
 //					pos.x = 238;	// test
@@ -2384,6 +2414,13 @@ static void td_param_select_update( T_DOWNLOAD_MAIN_WORK* wk )
 			}else{
 				td_disp_upinfo( wk, -1 );
 			}
+			// バー更新
+			bflg = TRUE;
+			if(wk->Flag & FLG_MW_BAR_HIDE){
+				bflg = FALSE;
+			}
+			// バー表示/非表示
+			td_set_obj_visible( wk, CLWKMODE_NORMAL, CLWKID_BAR, bflg );
 		}
 		// 共通
 		td_param_cmn_update( wk );
@@ -2450,8 +2487,7 @@ static BOOL td_chk_view_key_input( T_DOWNLOAD_MAIN_WORK* wk )
 	}
 	// 戻る
 	else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
-		// ×アニメ
-//		td_set_cmn_anim( wk, CLWKID_CMN_CROSS );
+		// RETURNアニメ
 		td_set_cmn_anim( wk, CLWKID_CMN_RETURN );
 	}
 	// 決定(削除)
@@ -2496,6 +2532,7 @@ static BOOL td_chk_select_key_input( T_DOWNLOAD_MAIN_WORK* wk )
 	s32		tmp;
 	s32		mode;
 	BOOL	bflg=FALSE;
+	BOOL	sflg;
 	
 	// 終了判定
 	if(wk->Flag & FLG_MW_END){
@@ -2507,15 +2544,15 @@ static BOOL td_chk_select_key_input( T_DOWNLOAD_MAIN_WORK* wk )
 	}
 	//
 	// 後日、正しく処理すること
-	mode = 0;
+	mode = KEY_INPUT_BEFORE;
 	if(wk->Step == STEP_LV3){
-		mode = 1;
+		mode = KEY_INPUT_AFTER;
 	}
 	
 	//------
 	// 前
 	//------
-	if(mode == 0){
+	if(mode == KEY_INPUT_BEFORE){
 		// 上
 		if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP ){
 			// すでに0になっている
@@ -2542,14 +2579,14 @@ static BOOL td_chk_select_key_input( T_DOWNLOAD_MAIN_WORK* wk )
 			else{
 				// すでに3になっている
 				// =>下に変動の可能性あり
-				if(wk->SubNum == 3){
+				if(wk->SubNum == (PANEL_DISP4-1)){
 					wk->TopNum++;
 					if(wk->TopNum >= (j-4)){
 						wk->TopNum = (j-4);
 					}
 				}
-				if(j >= 4){
-					j = 4;
+				if(j >= PANEL_DISP4){
+					j = PANEL_DISP4;
 				}
 				wk->SubNum++;
 				if(wk->SubNum >= (j-1)){
@@ -2564,7 +2601,7 @@ static BOOL td_chk_select_key_input( T_DOWNLOAD_MAIN_WORK* wk )
 			if(wk->TopNum == 0){
 				wk->SubNum = 0;
 			}
-			wk->TopNum -= 4;
+			wk->TopNum -= PANEL_DISP4;
 			if(wk->TopNum < 0){
 				wk->TopNum = 0;
 			}
@@ -2578,9 +2615,9 @@ static BOOL td_chk_select_key_input( T_DOWNLOAD_MAIN_WORK* wk )
 			j = td_calc_itembuffer( wk );
 			// 上限に達している
 			if(wk->TopNum == (j-4)){
-				wk->SubNum = 3;
+				wk->SubNum = (PANEL_DISP4-1);
 			}
-			wk->TopNum +=4 ;
+			wk->TopNum += PANEL_DISP4;
 			if(wk->TopNum >= (j-4)){
 				wk->TopNum = (j-4);
 			}
@@ -2590,20 +2627,24 @@ static BOOL td_chk_select_key_input( T_DOWNLOAD_MAIN_WORK* wk )
 		}
 		// 戻る
 		else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
-			// ×アニメ
-//			td_set_cmn_anim( wk, CLWKID_CMN_CROSS );
+			// RETURNアニメ
 			td_set_cmn_anim( wk, CLWKID_CMN_RETURN );
 		}
 		// 決定(追加)
 		else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
-			// 初期化
-			td_init_meswin( wk, CVS_MAIN_MESWIN );
-			// メッセージウインドウ(test)
-			td_set_meswin( wk, CVS_MAIN_MESWIN, 1 );
-			// 輝度変更(test)
-			td_chg_brightness( wk, TD_PASSIVE_RATE );
-			//
-			wk->Step = STEP_LV2;
+			// 含まれているかチェック
+			// =>なければ追加
+			sflg = td_chk_savebuffer( wk, wk->TopNum+wk->SubNum );
+			if(sflg == FALSE){
+				// 初期化
+				td_init_meswin( wk, CVS_MAIN_MESWIN );
+				// メッセージウインドウ(test)
+				td_set_meswin( wk, CVS_MAIN_MESWIN, 1 );
+				// 輝度変更(test)
+				td_chg_brightness( wk, TD_PASSIVE_RATE );
+				//
+				wk->Step = STEP_LV2;
+			}
 		}
 		//
 		// 更新
@@ -2642,8 +2683,7 @@ static BOOL td_chk_select_key_input( T_DOWNLOAD_MAIN_WORK* wk )
 		}
 		// 戻る
 		else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
-			// 戻るアニメ
-//			td_set_cmn_anim( wk, CLWKID_CMN_CROSS );
+			// RETURNアニメ
 			td_set_cmn_anim( wk, CLWKID_CMN_RETURN );
 		}
 		// 決定(削除)
@@ -2760,6 +2800,7 @@ static BOOL td_chk_anim( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode )
 					wk->Flag |= FLG_MW_UPDATE;
 					wk->Flag &= ~FLG_MW_DISP3;
 					wk->Flag &= ~(FLG_MW_RIGHT_HIDE|FLG_MW_LEFT_HIDE);
+					wk->Flag &= ~FLG_MW_BAR_HIDE;
 				}
 			}
 			rflg = TRUE;
@@ -2783,9 +2824,8 @@ static void td_init_param( T_DOWNLOAD_MAIN_WORK* wk )
 	s16					i;
 	GFL_UI_TP_HITTBL	*adr = &wk->HitBuffer[0];
 	//
-	//
-	// タッチペン領域計算
-	for(i=0;i<AREA_TD_TP_MAX;i++){
+	// タッチペン領域計算(cmnのみ)
+	for(i=0;i<AREA_TD_TP_CMN_MAX;i++){
 		td_get_tp_area( wk, i, adr );
 		adr++;
 	}
@@ -2816,6 +2856,7 @@ static BOOL td_chk_view_tp_input( T_DOWNLOAD_MAIN_WORK* wk )
 	const int cret = GFL_UI_TP_HitCont( adr );
 	// なければ、TP_HIT_NONE
 	BOOL	bflg=FALSE;
+	BOOL	mflg;
 	
 	// 終了判定
 	if(wk->Flag & FLG_MW_END){
@@ -2829,17 +2870,13 @@ static BOOL td_chk_view_tp_input( T_DOWNLOAD_MAIN_WORK* wk )
 	// ×
 	if(ret == AREA_TD_TP_CROSS){
 		// アニメ再生
-		wnum = CLWKID_CMN_CROSS;
-		td_chg_objseq( wk, CLWKMODE_CMN, wnum, td_cmn_btn_tbl[wnum*4+1] );
-		wk->Flag |= FLG_MW_ANM_CROSS;
+		td_set_cmn_anim( wk, CLWKID_CMN_CROSS );
 		flg = 2;
 	}
 	// RETURN
 	else if(ret == AREA_TD_TP_RETURN){
 		// アニメ再生
-		wnum = CLWKID_CMN_RETURN;
-		td_chg_objseq( wk, CLWKMODE_CMN, wnum, td_cmn_btn_tbl[wnum*4+1] );
-		wk->Flag |= FLG_MW_ANM_RETURN;
+		td_set_cmn_anim( wk, CLWKID_CMN_RETURN );
 		flg = 2;
 	}
 	// セーブ領域を調べ、
@@ -2847,8 +2884,10 @@ static BOOL td_chk_view_tp_input( T_DOWNLOAD_MAIN_WORK* wk )
 	if(flg == 0){
 		num = td_calc_savebuffer( wk );
 		for(i=0;i<num;i++){
+			// 個別のタッチペン判定を使用
+			mflg = td_chk_my_tp( wk, 0, AREA_TD_TP_PANEL3_0+i );
 			// 連番なので注意
-			if(ret == AREA_TD_TP_PANEL3_0+i){
+			if(mflg == TRUE){
 				// カーソル位置と同じでないとだめ(仮)
 				if(wk->CurPos == i){
 					// 初期化
@@ -2878,6 +2917,310 @@ static BOOL td_chk_view_tp_input( T_DOWNLOAD_MAIN_WORK* wk )
 	}
 	return( bflg );
 }
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  タッチペン入力(select)
+ *
+ *	@param	T_DOWNLOAD_MAIN_WORK* wk
+ *
+ *	@retval BOOL					(TRUE:タッチあり、FALSE:なし)
+ */
+//-----------------------------------------------------------------------------
+static BOOL td_chk_select_tp_input( T_DOWNLOAD_MAIN_WORK* wk )
+{
+	s16		i;
+	s16		flg=0;
+	s32		num;
+	s32		wnum;
+	s32		mode;
+	const GFL_UI_TP_HITTBL	*adr = &wk->HitBuffer[0];
+	const int ret  = GFL_UI_TP_HitTrg( adr );
+	const int cret = GFL_UI_TP_HitCont( adr );
+	// なければ、TP_HIT_NONE
+	BOOL	bflg=FALSE;
+	BOOL	mflg;
+	BOOL	sflg;
+	
+	// 終了判定
+	if(wk->Flag & FLG_MW_END){
+		return( bflg );
+	}
+	// アニメ再生中
+	if(wk->Flag & FLG_MW_ANM_ALL){
+		return( bflg );
+	}
+	
+	// 後日、正しく処理すること
+	mode = KEY_INPUT_BEFORE;
+	if(wk->Step == STEP_LV3){
+		mode = KEY_INPUT_AFTER;
+	}
+	//-------
+	// 前
+	//-------
+	if(mode == KEY_INPUT_BEFORE){
+		// 左を押した
+		if(ret == AREA_TD_TP_LEFT){
+			// 上限に達した
+			if(wk->TopNum == 0){
+				wk->SubNum = 0;
+			}
+			wk->TopNum -= PANEL_DISP4;
+			if(wk->TopNum < 0){
+				wk->TopNum = 0;
+			}
+			flg = 1;
+			// 左アニメ
+			td_set_cmn_anim( wk, CLWKID_CMN_LEFT );
+		}
+		// 右を押した
+		else if(ret == AREA_TD_TP_RIGHT){
+			// 個数を調べる
+			num = td_calc_itembuffer( wk );
+			// 上限に達している
+			if(wk->TopNum == (num-4)){
+				wk->SubNum = (PANEL_DISP4-1);
+			}
+			wk->TopNum += PANEL_DISP4;
+			if(wk->TopNum >= (num-4)){
+				wk->TopNum = (num-4);
+			}
+			flg = 1;
+			// 右アニメ
+			td_set_cmn_anim( wk, CLWKID_CMN_RIGHT );
+		}
+		// ×
+		else if(ret == AREA_TD_TP_CROSS){
+			// アニメ再生
+			td_set_cmn_anim( wk, CLWKID_CMN_CROSS );
+			flg = 2;
+		}
+		// RETURN
+		else if(ret == AREA_TD_TP_RETURN){
+			// アニメ再生
+			td_set_cmn_anim( wk, CLWKID_CMN_RETURN );
+			flg = 2;
+		}
+		else{
+			// バー
+			// contで取得
+			if(cret == AREA_TD_TP_SCROLL){
+				td_set_scrollbar( wk );
+				flg = 3;
+			}
+		}
+		// アイテムの個数を調べ、
+		// 必要なパネルの分(MAX4)だけチェックする
+		if(flg == 0){
+			num = td_calc_itembuffer( wk );
+			if(num >= PANEL_DISP4){
+				num = PANEL_DISP4;
+			}
+			for(i=0;i<num;i++){
+				// 個別のタッチペン判定を使用
+				mflg = td_chk_my_tp( wk, 0, AREA_TD_TP_PANEL4_0+i );
+				// 連番なので注意
+				if(mflg == TRUE){
+					// カーソル位置と同じでないとだめ(仮)
+					if(wk->SubNum == i){
+						// 含まれているかチェック
+						// =>なければ追加
+						sflg = td_chk_savebuffer( wk, wk->TopNum+wk->SubNum );
+						if(sflg == FALSE){
+							// 初期化
+							td_init_meswin( wk, CVS_MAIN_MESWIN );
+							// メッセージウインドウ(test)
+							td_set_meswin( wk, CVS_MAIN_MESWIN, 1 );
+							//
+							// 輝度変更(test)
+							td_chg_brightness( wk, TD_PASSIVE_RATE );
+							//
+							wk->Step = STEP_LV2;
+						}
+					}
+					// カーソル位置を変更(仮)
+					else{
+						wk->SubNum = i;
+						flg = 1;
+					}
+					break;
+				}
+			}
+		}
+		//
+		// 更新
+		if(flg != 0){
+			wk->Flag |= FLG_MW_UPDATE;
+			wk->Flag |= FLG_MW_BAR_UPDATE;
+			bflg = TRUE;
+		}
+	}
+	//-------
+	// 後
+	//-------
+	else{
+		// ×
+		if(ret == AREA_TD_TP_CROSS){
+			// アニメ再生
+			td_set_cmn_anim( wk, CLWKID_CMN_CROSS );
+			flg = 2;
+		}
+		// RETURN
+		else if(ret == AREA_TD_TP_RETURN){
+			// アニメ再生
+			td_set_cmn_anim( wk, CLWKID_CMN_RETURN );
+			flg = 2;
+		}
+		//
+		if(flg == 0){
+			num = td_calc_savebuffer( wk );
+			for(i=0;i<num;i++){
+				// 個別のタッチペン判定を使用
+				mflg = td_chk_my_tp( wk, 0, AREA_TD_TP_PANEL3_0+i );
+				// 連番なので注意
+				if(mflg == TRUE){
+					// カーソル位置と同じでないとだめ(仮)
+					if(wk->CurPos == i){
+						// 初期化
+						td_init_meswin( wk, CVS_MAIN_MESWIN );
+						// メッセージウインドウ(test)
+						td_set_meswin( wk, CVS_MAIN_MESWIN, 1 );
+						//
+						// 輝度変更(test)
+						td_chg_brightness( wk, TD_PASSIVE_RATE );
+						//
+						wk->Step = STEP_LV4;
+					}
+					// カーソル位置を変更(仮)
+					else{
+						wk->CurPos = i;
+						flg = 1;
+					}
+					break;
+				}
+			}
+		}
+		// 更新
+		if(flg != 0){
+			wk->Flag |= FLG_MW_UPDATE;
+			bflg = TRUE;
+		}
+	}
+	return( bflg );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  タッチペン入力(trg)
+ *
+ *	@param	T_DOWNLOAD_MAIN_WORK* wk
+ *	@param	const s32				(0:Trg、1:Cont)
+ *	@param	const s32				エリア番号(AREA_TD_TP..)
+ *
+ *	@retval BOOL					(TRUE:タッチあり、FALSE:なし)
+ */
+//-----------------------------------------------------------------------------
+static BOOL td_chk_my_tp( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode, const s32 num )
+{
+	s16		sbuf[4];
+	BOOL	bflg;
+	u32		buf[2];
+	//
+	// パネルのように、重複するエリアの場合、
+	// 先に登録したものが優先されるので、
+	// あらかじめテーブルに登録する方法だと処理(準備)が複雑になるので
+	// 個別のエリアを参照できるのも容易しておく
+	// (共有は従来の方法で対応)
+	if(mode == 0){		// trg
+		bflg = GFL_UI_TP_GetPointTrg(  &buf[0], &buf[1] );
+	}else{				// cont
+		bflg = GFL_UI_TP_GetPointCont( &buf[0], &buf[1] );
+	}
+	if(bflg == TRUE){
+		sbuf[0] = wk->ParamBuffer[4*num];
+		sbuf[1] = wk->ParamBuffer[4*num+1];
+		sbuf[2] = wk->ParamBuffer[4*num+2];
+		sbuf[3] = wk->ParamBuffer[4*num+3];
+		//
+		// x方向
+		if((buf[0] >= sbuf[0])&&(buf[0] <= (sbuf[0]+sbuf[2]))){
+			// y方向
+			if((buf[1] >= sbuf[1])&&(buf[1] <= (sbuf[1]+sbuf[3]))){
+				return( TRUE );
+			}
+		}
+	}
+	return( FALSE );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  スクロールバーの処理
+ *
+ *	@param	T_DOWNLOAD_MAIN_WORK* wk
+ *
+ *	@retval BOOL					(TRUE:変更あり、FALSE:なし)
+ */
+//-----------------------------------------------------------------------------
+static BOOL td_set_scrollbar( T_DOWNLOAD_MAIN_WORK* wk )
+{
+	s32				num;
+	u32				cnt;
+	u32				buf[2];
+	BOOL			bflg=FALSE;
+	
+	// ここにくるまでにスクロールバーの領域を
+	// タッチしたかの判定は済んでいる
+	// タッチした座標を取得
+	if( GFL_UI_TP_GetPointCont( &buf[0], &buf[1] ) == TRUE ){
+		// どの段階かが求まる
+		num = td_calc_itembuffer( wk );
+		cnt = SCROLLBAR_GetCount( num-1, buf[1], SCRL_TOP_Y, SCRL_DOWN_Y, SCRL_BAR_SIZE );
+		// 現在の位置計算してセット
+		td_calc_scrollbar_pos( wk, cnt );
+		wk->Flag |= FLG_MW_UPDATE;
+		wk->Flag |= FLG_MW_BAR_UPDATE;
+		//
+		bflg = TRUE;
+	}
+	return( bflg );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  スクロールバーの位置計算
+ *
+ *	@param	T_DOWNLOAD_MAIN_WORK* wk
+ *	@param	const s32				(スクロール値)
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void td_calc_scrollbar_pos( T_DOWNLOAD_MAIN_WORK* wk, const s32 num )
+{
+	// 怪しい気もするが、
+	// ゲージを等分した箇所になるように、
+	// yposの値が丸められるため、
+	// これでいいようだ..
+	//
+	// マイナス方向
+	if(num < wk->TopNum){
+		// 0に固定
+		wk->SubNum = 0;
+		wk->TopNum = num;
+	}
+	// プラス方向(4以上)
+	else if(num > (wk->TopNum+3)){
+		wk->SubNum = 3;
+		wk->TopNum = num-3;
+	}
+	// (0-3)
+	else{
+		// wk->TopNumは変化なし
+		wk->SubNum = num-wk->TopNum;
+	}
+//	OS_Printf("top,sub :(%d),%d,%d,%d\n",flg,num,wk->TopNum,wk->SubNum);
+}
 
 //-------------------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------------------
@@ -2905,6 +3248,32 @@ static s32 td_calc_savebuffer( T_DOWNLOAD_MAIN_WORK* wk )
 	}
 	// 個数取得
 	return( j );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief	バッファにあるかチェック
+ *
+ *	@param	T_DOWNLOAD_MAIN_WORK* wk
+ *	@param	const s32			番号
+ *
+ *	@retval s32					個数
+ */
+//-----------------------------------------------------------------------------
+static BOOL td_chk_savebuffer( T_DOWNLOAD_MAIN_WORK* wk, const s32 num )
+{
+	s32		i;
+	BOOL	bflg=FALSE;
+	
+	// 個数の計算
+	for(i=0;i<SAVE_BUFFER_MAX;i++){
+		if( wk->SaveBuffer[i] == num){
+			bflg = TRUE;
+			break;
+		}
+	}
+	//
+	return( bflg );
 }
 
 //-----------------------------------------------------------------------------
@@ -3327,7 +3696,7 @@ static BOOL td_chk_add_item( T_DOWNLOAD_MAIN_WORK* wk )
 	
 	// セーブの個数チェック
 	tmp = td_calc_savebuffer( wk );
-	if(tmp >= 3){
+	if(tmp >= SAVE_BUFFER_MAX){
 		// 最大数を超えている
 	}else{
 		// アイテムの登録
@@ -3363,7 +3732,7 @@ static void td_chg_brightness( T_DOWNLOAD_MAIN_WORK* wk, const s32 rate )
 //---------------------------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 /**
- *	@brief  タッチペン用データ取得
+ *	@brief  タッチペン用データセット
  *
  *	@param	T_DOWNLOAD_MAIN_WORK* wk
  *	@param	const s32				領域の番号
@@ -3406,23 +3775,4 @@ static void td_get_tp_area( T_DOWNLOAD_MAIN_WORK* wk, const s32 num, GFL_UI_TP_H
 //---------------------------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------
-
-//-----------------------------------------------------------------------------
-/**
- *	@brief  デバッグ
- *
- *	@param	T_DOWNLOAD_MAIN_WORK* wk
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-static void td_debug( T_DOWNLOAD_MAIN_WORK* wk )
-{
-#ifdef PM_DEBUG
-	// debug mode
-	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
-		//
-	}
-#endif		// PM_DEBUG
-}
 
