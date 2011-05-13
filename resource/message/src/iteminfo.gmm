@@ -5778,6 +5778,15 @@
 記録する　便利な　道具。</language>
 	</row>
 
+	<row id="ITEMINFO_628">
+		<language name="JPN" width="256">かりせつめいぶん
+かりせつめいぶん
+かりせつめいぶん</language>
+		<language name="JPN_KANJI" width="256">仮説明文
+仮説明文
+仮説明文</language>
+	</row>
+
 
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>

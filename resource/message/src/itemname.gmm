@@ -3270,6 +3270,11 @@
 		<language name="JPN_KANJI" width="256">メダルボックス</language>
 	</row>
 
+	<row id="ITEMNAME_628">
+		<language name="JPN" width="256">いでんしのくさび（仮）</language>
+		<language name="JPN_KANJI" width="256">メダルボックス</language>
+	</row>
+
 
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
