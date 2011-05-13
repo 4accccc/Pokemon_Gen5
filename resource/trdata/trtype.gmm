@@ -1340,6 +1340,11 @@
 		<language name="JPN_KANJI" width="216">ポケモントレーナー</language>
 	</row>
 
+	<row id="MSG_TRTYPE_ADULTW">
+		<language name="JPN" width="216">おとなのおねえさん</language>
+		<language name="JPN_KANJI" width="216">おとなのおねえさん</language>
+	</row>
+
 	<row id="MSG_TRTYPE_HERO_S">
 		<language name="JPN" width="216">ポケモントレーナー</language>
 		<language name="JPN_KANJI" width="216">ポケモントレーナー</language>

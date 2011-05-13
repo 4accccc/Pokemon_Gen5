@@ -189,6 +189,7 @@
 #define	TRTYPE_GSCHAMPION    ( 176 )    //ポケモントレーナー（GSCHAMPION）
 #define	TRTYPE_RSCHAMPION    ( 177 )    //ポケモントレーナー（RSCHAMPION）
 #define	TRTYPE_ECHAMPION    ( 178 )    //ポケモントレーナー（ECHAMPION）
-#define	TRTYPE_HERO_S	    ( 179 )
-#define	TRTYPE_HEROINE_S	( 180 )
-#define	TRTYPE_MAX	( 181 )
+#define	TRTYPE_ADULTW    ( 179 )    //おとなのおねえさん
+#define	TRTYPE_HERO_S	    ( 180 )
+#define	TRTYPE_HEROINE_S	( 181 )
+#define	TRTYPE_MAX	( 182 )

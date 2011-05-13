@@ -4115,6 +4115,236 @@
 		<language name="JPN_KANJI" width="216">トオル</language>
 	</row>
 
+	<row id="adultw_01">
+		<language name="JPN" width="216">ニコラ</language>
+		<language name="JPN_KANJI" width="216">ニコラ</language>
+	</row>
+
+	<row id="adultw_02">
+		<language name="JPN" width="216">フレミー</language>
+		<language name="JPN_KANJI" width="216">フレミー</language>
+	</row>
+
+	<row id="adultw_03">
+		<language name="JPN" width="216">アンペール</language>
+		<language name="JPN_KANJI" width="216">アンペール</language>
+	</row>
+
+	<row id="fishing_13">
+		<language name="JPN" width="216">トシヒロ</language>
+		<language name="JPN_KANJI" width="216">トシヒロ</language>
+	</row>
+
+	<row id="fishing_14">
+		<language name="JPN" width="216">ノリマサ</language>
+		<language name="JPN_KANJI" width="216">ノリマサ</language>
+	</row>
+
+	<row id="police_03">
+		<language name="JPN" width="216">ブルース</language>
+		<language name="JPN_KANJI" width="216">ブルース</language>
+	</row>
+
+	<row id="backpackerm_17">
+		<language name="JPN" width="216">コウスケ</language>
+		<language name="JPN_KANJI" width="216">コウスケ</language>
+	</row>
+
+	<row id="police_04">
+		<language name="JPN" width="216">ダニー</language>
+		<language name="JPN_KANJI" width="216">ダニー</language>
+	</row>
+
+	<row id="police_05">
+		<language name="JPN" width="216">ニコラス</language>
+		<language name="JPN_KANJI" width="216">ニコラス</language>
+	</row>
+
+	<row id="heads_07">
+		<language name="JPN" width="216">ケンゾウ</language>
+		<language name="JPN_KANJI" width="216">ケンゾウ</language>
+	</row>
+
+	<row id="heads_08">
+		<language name="JPN" width="216">シンパチ</language>
+		<language name="JPN_KANJI" width="216">シンパチ</language>
+	</row>
+
+	<row id="badrider_07">
+		<language name="JPN" width="216">スタンリー</language>
+		<language name="JPN_KANJI" width="216">スタンリー</language>
+	</row>
+
+	<row id="badrider_08">
+		<language name="JPN" width="216">ミラー</language>
+		<language name="JPN_KANJI" width="216">ミラー</language>
+	</row>
+
+	<row id="badteam_02">
+		<language name="JPN" width="216">ロブとギン</language>
+		<language name="JPN_KANJI" width="216">ロブとギン</language>
+	</row>
+
+	<row id="prince_08">
+		<language name="JPN" width="216">ケンヤ</language>
+		<language name="JPN_KANJI" width="216">ケンヤ</language>
+	</row>
+
+	<row id="princess_11">
+		<language name="JPN" width="216">リナ</language>
+		<language name="JPN_KANJI" width="216">リナ</language>
+	</row>
+
+	<row id="backpackerm_18">
+		<language name="JPN" width="216">リチャード</language>
+		<language name="JPN_KANJI" width="216">リチャード</language>
+	</row>
+
+	<row id="backpackerw_14">
+		<language name="JPN" width="216">レイチェル</language>
+		<language name="JPN_KANJI" width="216">レイチェル</language>
+	</row>
+
+	<row id="daisukim_04">
+		<language name="JPN" width="216">トモキチ</language>
+		<language name="JPN_KANJI" width="216">トモキチ</language>
+	</row>
+
+	<row id="daisukiw_03">
+		<language name="JPN" width="216">ヨシエ</language>
+		<language name="JPN_KANJI" width="216">ヨシエ</language>
+	</row>
+
+	<row id="futago_06">
+		<language name="JPN" width="216">ユキとサキ</language>
+		<language name="JPN_KANJI" width="216">ユキとサキ</language>
+	</row>
+
+	<row id="football_08">
+		<language name="JPN" width="216">ボブ</language>
+		<language name="JPN_KANJI" width="216">ボブ</language>
+	</row>
+
+	<row id="football_09">
+		<language name="JPN" width="216">ダイスケ</language>
+		<language name="JPN_KANJI" width="216">ダイスケ</language>
+	</row>
+
+	<row id="football_10">
+		<language name="JPN" width="216">ボブ</language>
+		<language name="JPN_KANJI" width="216">ボブ</language>
+	</row>
+
+	<row id="football_11">
+		<language name="JPN" width="216">ダイスケ</language>
+		<language name="JPN_KANJI" width="216">ダイスケ</language>
+	</row>
+
+	<row id="football_12">
+		<language name="JPN" width="216">ダイスケ</language>
+		<language name="JPN_KANJI" width="216">ダイスケ</language>
+	</row>
+
+	<row id="baseball_08">
+		<language name="JPN" width="216">ランディ</language>
+		<language name="JPN_KANJI" width="216">ランディ</language>
+	</row>
+
+	<row id="baseball_09">
+		<language name="JPN" width="216">ジェームス</language>
+		<language name="JPN_KANJI" width="216">ジェームス</language>
+	</row>
+
+	<row id="baseball_10">
+		<language name="JPN" width="216">ランディ</language>
+		<language name="JPN_KANJI" width="216">ランディ</language>
+	</row>
+
+	<row id="baseball_11">
+		<language name="JPN" width="216">ジェームス</language>
+		<language name="JPN_KANJI" width="216">ジェームス</language>
+	</row>
+
+	<row id="baseball_12">
+		<language name="JPN" width="216">ジェームス</language>
+		<language name="JPN_KANJI" width="216">ジェームス</language>
+	</row>
+
+	<row id="soccer_08">
+		<language name="JPN" width="216">ロベルト</language>
+		<language name="JPN_KANJI" width="216">ロベルト</language>
+	</row>
+
+	<row id="soccer_09">
+		<language name="JPN" width="216">マルコ</language>
+		<language name="JPN_KANJI" width="216">マルコ</language>
+	</row>
+
+	<row id="soccer_10">
+		<language name="JPN" width="216">ロベルト</language>
+		<language name="JPN_KANJI" width="216">ロベルト</language>
+	</row>
+
+	<row id="soccer_11">
+		<language name="JPN" width="216">マルコ</language>
+		<language name="JPN_KANJI" width="216">マルコ</language>
+	</row>
+
+	<row id="soccer_12">
+		<language name="JPN" width="216">マルコ</language>
+		<language name="JPN_KANJI" width="216">マルコ</language>
+	</row>
+
+	<row id="basket_08">
+		<language name="JPN" width="216">ジョン</language>
+		<language name="JPN_KANJI" width="216">ジョン</language>
+	</row>
+
+	<row id="basket_09">
+		<language name="JPN" width="216">マイク</language>
+		<language name="JPN_KANJI" width="216">マイク</language>
+	</row>
+
+	<row id="basket_10">
+		<language name="JPN" width="216">ジョン</language>
+		<language name="JPN_KANJI" width="216">ジョン</language>
+	</row>
+
+	<row id="basket_11">
+		<language name="JPN" width="216">マイク</language>
+		<language name="JPN_KANJI" width="216">マイク</language>
+	</row>
+
+	<row id="basket_12">
+		<language name="JPN" width="216">マイク</language>
+		<language name="JPN_KANJI" width="216">マイク</language>
+	</row>
+
+	<row id="tennis_08">
+		<language name="JPN" width="216">アネット</language>
+		<language name="JPN_KANJI" width="216">アネット</language>
+	</row>
+
+	<row id="tennis_09">
+		<language name="JPN" width="216">マリー</language>
+		<language name="JPN_KANJI" width="216">マリー</language>
+	</row>
+
+	<row id="tennis_10">
+		<language name="JPN" width="216">アネット</language>
+		<language name="JPN_KANJI" width="216">アネット</language>
+	</row>
+
+	<row id="tennis_11">
+		<language name="JPN" width="216">マリー</language>
+		<language name="JPN_KANJI" width="216">マリー</language>
+	</row>
+
+	<row id="tennis_12">
+		<language name="JPN" width="216">マリー</language>
+		<language name="JPN_KANJI" width="216">マリー</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>
