@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-05-10T20:45:12"/>
+	<create user="matsumiya" host="W00224" date="2011-05-13T19:16:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1297" top="225" right="2002" bottom="853" maximized="no" rayout="Vertical2">
+	<dialog left="1293" top="156" right="1998" bottom="784" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -296,45 +296,47 @@
 		<comment>♀
 ・c03p15からマップ切り替えでイベント発動
 ・主人公に隣接してメッセージ表示
-・表示後、連れ歩きでｃ01ｒ0101へ</comment>
+・続けて</comment>
 		<attribute name="キャラ指定">ASSISTANTW
 発明家</attribute>
 		<language name="JPN" width="256">ヤッホー！
-アタシは　マコモ</language>
+アタシは　マコモ▼
+アナタ　イッシュちほうの
+すべての　ポケモンと　であうんでしょ？▼</language>
 		<language name="JPN_KANJI" width="256">ヤッホー！
-アタシは　マコモ</language>
+アタシは　マコモ▼
+アナタ　イッシュ地方の
+すべての　ポケモンと　であうんでしょ？▼</language>
 	</row>
 
 	<row id="msg_c03_inventor_02">
 		<comment>♀
-・</comment>
+・！マーク表示してから
+・続けてcgear_01</comment>
 		<attribute name="キャラ指定">ASSISTANTW
 発明家</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_c03_inventor_03">
-		<comment>♀
-・</comment>
-		<attribute name="キャラ指定">ASSISTANTW
-発明家</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_c03_inventor_04">
-		<comment>♀
-・</comment>
-		<attribute name="キャラ指定">ASSISTANTW
-発明家</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
+		<language name="JPN" width="256">あっ　いきなり　ゴメンね
+アタシ　アララギはかせの　ともだちよ▼
+でね　かのじょから
+アナタの　てだすけを　たのまれていて▽
+Ｃギアを　つかえるように　するね！▼
+Ｃギアとは　せきがいせんや
+むせん　Ｗｉ－Ｆｉなど▽
+つうしんに　かんけいする　デバイスよ▼</language>
+		<language name="JPN_KANJI" width="256">あっ　いきなり　ゴメンね
+アタシ　アララギ博士の　友達よ▼
+でね　彼女から
+アナタの　てだすけを　頼まれていて▽
+Ｃ－ＧＥＡＲを　使えるように　するね！▼
+Ｃ－ＧＥＡＲとは　赤外線や
+無線　Ｗｉ－Ｆｉなど▽
+通信に　関係する　デバイスよ▼</language>
 	</row>
 
 	<row id="msg_c03_cgear_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>システムメッセージ
-ＭＥ再生</comment>
+ＭＥ再生
+・0＝主人公名前</comment>
 		<attribute name="キャラ指定">システム</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は
 [FF:00:色:2]Ｃギア[FF:00:色:0]を　てにいれた！</language>
@@ -385,7 +387,7 @@
 ・はい選択だが
 　本体設定で無線通信をOFFにしているとき
 　（TWL限定）
-・続けてinventor_06</comment>
+・続けてinventor_04</comment>
 		<attribute name="キャラ指定">システム</attribute>
 		<language name="JPN" width="256">ほんたいの　せっていにより
 むせんつうしんが　つかえません▼
@@ -399,7 +401,7 @@
 ＯＮにしてください　（５０６９９）▼</language>
 	</row>
 
-	<row id="msg_c03_inventor_05" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c03_inventor_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・はい選択時
 ・続けてinventor_09</comment>
@@ -409,15 +411,15 @@
 がめんが　あらわれたでしょ！▼
 その　がめんの　みぎしたに　ある
 ？マークに　タッチすれば▽
-Ｃギアの　せつめいが　よめるわ▼</language>
+Ｃギアの　せつめいが　よめるの▼</language>
 		<language name="JPN_KANJI" width="256">ほら！　Ｃ－ＧＥＡＲが　起動して
 画面が　あらわれたでしょ！▼
 その　画面の　右下に　ある
 ？マークに　タッチすれば▽
-Ｃ－ＧＥＡＲの　説明が　読めるわ▼</language>
+Ｃ－ＧＥＡＲの　説明が　読めるの▼</language>
 	</row>
 
-	<row id="msg_c03_inventor_06" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c03_inventor_04" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・いいえ選択時
 ・続けてinventor_07</comment>
@@ -425,40 +427,38 @@
 発明家</attribute>
 		<language name="JPN" width="256">Ｃギアの　でんげんを　いれるなら
 がめん　みぎしたの▽
-でんげんマークを　タッチするのよ▼
+でんげんマークを　タッチするの▼
 そして　でんげんを　いれたあとは
 がめんの　みぎしたに　ある▽
 ？マークに　タッチすれば▽
 Ｃギアの　せつめいが　よめます▼</language>
 		<language name="JPN_KANJI" width="256">Ｃ－ＧＥＡＲの　電源を　入れるなら
 画面　右下の▽
-電源マークを　タッチすれば　いいわ▼
+電源マークを　タッチするの▼
 そして　電源を　入れたあとは
 画面　右下に　表示される▽
 ？マークに　タッチすれば▽
 Ｃ－ＧＥＡＲの　説明が　読めます▼</language>
 	</row>
 
-	<row id="msg_c03_inventor_07" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c03_inventor_05" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
-・メッセージ表示後、？？？に移動
+・メッセージ表示後、c03p07方面に移動
 　画面外に消えると操作可能に</comment>
 		<attribute name="キャラ指定">ASSISTANTW
 発明家</attribute>
-		<language name="JPN" width="256">Ｃギアの　くわしい　せつめいは
-あたしの　けんきゅうじょで
-けんきゅうじょは　？？？に　あるわ</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_c03_inventor_08" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<attribute name="キャラ指定">ASSISTANTW
-発明家</attribute>
-		<language name="JPN" width="256">なにしてたの？
-↓
-ジムリーダーなら街に詳しいかも
-・ジムの場所について</language>
-		<language name="JPN_KANJI" width="256">no data</language>
+		<language name="JPN" width="256">Ｃギアについて　くわしい　ことは
+あたしの　けんきゅうじょ　でね▼
+けんきゅうじょは
+ポケモンジムの　ちかくに　あるから！▼
+じゃ　ポケモンずかんを　よろしくね！
+たびの　トレーナーさん▼</language>
+		<language name="JPN_KANJI" width="256">Ｃギアについて　くわしい　ことは
+あたしの　けんきゅうじょ　でね▼
+けんきゅうじょは
+ポケモンジムの　ちかくに　あるから！▼
+じゃ　ポケモンずかんを　よろしくね！
+たびの　トレーナーさん▼</language>
 	</row>
 
 	<row id="msg_c03_swchampion_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -468,24 +468,22 @@
 ・メッセージ表示後、c03p09へ移動
 　画面外に消えると主人公操作可能に</comment>
 		<attribute name="キャラ指定">アイリス</attribute>
-		<language name="JPN" width="256">アイリス『おーい！
-こっちが　サムピア！▼
+		<language name="JPN" width="256">アイリス『こっちが　サムピア！▼
 ヒウンで　あやしいと　いえば
-？？ストリートか▽
+スリムストリート　か▽
 ここかなと　おもうんだ▼
 きみも　じゅんびが　できたら
 この　さきに　きてみて！▼</language>
-		<language name="JPN_KANJI" width="256">アイリス『おーい！
-こっちが　サムピア！▼
+		<language name="JPN_KANJI" width="256">アイリス『こっちが　サムピア！▼
 ヒウンで　怪しいと　いえば
-？？ストリートか
+スリムストリート　か▽
 ここかなと　思うんだ▼
 きみも　準備が　できたら
 この先に　来てみて▼</language>
 	</row>
 
 	<row id="msg_c03_leader3_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
+		<comment>※swanで削除</comment>
 		<attribute name="キャラ指定">ジムリーダー
 アーティ</attribute>
 		<language name="JPN" width="256">no data</language>
@@ -493,7 +491,7 @@
 	</row>
 
 	<row id="msg_c03_leader3_02" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
+		<comment>※swanで削除</comment>
 		<attribute name="キャラ指定">LEADER3
 アーティ</attribute>
 		<language name="JPN" width="256">no data</language>
@@ -501,7 +499,7 @@
 	</row>
 
 	<row id="msg_c03_leader3_03" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
+		<comment>※swanで削除</comment>
 		<attribute name="キャラ指定">LEADER3
 アーティ</attribute>
 		<language name="JPN" width="256">no data</language>
