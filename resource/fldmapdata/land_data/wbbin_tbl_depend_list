@@ -1266,9 +1266,17 @@ $(DIR_WBTMP)/map23_04.tbl: $(DIR_RES)/map23_04.bin
 	@echo create_bintbl map23_04
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/map23_04.bin
 
+$(DIR_WBTMP)/map23_04_ex.tbl: $(DIR_RES)/map23_04_ex.bin
+	@echo create_bintbl map23_04
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/map23_04_ex.bin
+
 $(DIR_WBTMP)/map22_04.tbl: $(DIR_RES)/map22_04.bin
 	@echo create_bintbl map22_04
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/map22_04.bin
+
+$(DIR_WBTMP)/map22_04_ex.tbl: $(DIR_RES)/map22_04_ex.bin
+	@echo create_bintbl map22_04
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/map22_04_ex.bin
 
 $(DIR_WBTMP)/map20_04.tbl: $(DIR_RES)/map20_04.bin
 	@echo create_bintbl map20_04
