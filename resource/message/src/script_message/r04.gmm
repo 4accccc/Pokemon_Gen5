@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-03-05T17:36:18"/>
+	<create user="matsumiya" host="W00224" date="2011-05-13T15:21:56"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1295" top="201" right="2000" bottom="829" maximized="no" rayout="Vertical2">
+	<dialog left="1292" top="141" right="1997" bottom="769" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -349,100 +349,40 @@
 観光地に　なっているぞい！</language>
 	</row>
 
-	<row id="msg_r04_black_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・msg_c03_black_12表示後から出現
-　GRIDX＝00、GRIDZ=00に配置
-・c03ジムバッジ取得前まで</comment>
-		<attribute name="キャラ指定">友達♂
-チェレン</attribute>
-		<language name="JPN" width="256">チェレン『じめんタイプの
-ポケモンを　つかまえておくか▼
-それとも　ポケモンを　きたえるか
-どちらが　つよくなれる……？</language>
-		<language name="JPN_KANJI" width="256">チェレン『じめんタイプの
-ポケモンを　捕まえておくか▼
-それとも　ポケモンを　鍛えるか
-どちらが　強くなれる……？</language>
+	<row id="msg_r04_black_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_r04_black_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・c03ジムバッジ取得後
-・0＝主人公名前</comment>
-		<attribute name="キャラ指定">友達♂
-チェレン</attribute>
-		<language name="JPN" width="256">チェレン『やあ　[1:00:トレーナー名:0]▼
-きみが　ビートルバッジを
-てにいれるのを　まっていた▼
-さっそくだけど
-どちらが　つよい　トレーナーなのか▽
-たしかめさせて　もらうよ▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『やあ　[1:00:トレーナー名:0]▼
-きみが　ビートルバッジを
-手に入れるのを　待っていた▼
-早速だけど
-どちらが　強い　トレーナーなのか▽
-確かめさせて　もらうよ▼</language>
+	<row id="msg_r04_black_02" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_r04_black_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・戦闘後
-・メッセージ表示後
-　msg_r04_tvt_01に
-・0＝ライバルが最初に選んだポケモン
-　　　進化系に合わせて</comment>
-		<attribute name="キャラ指定">友達♂
-チェレン</attribute>
-		<language name="JPN" width="256">チェレン『……なるほど▼
-きみが　つよい　りゆうは
-ポケモンとの　しんらい　かもしれない▼
-だけど　もんだい　ない
-ぼくだって　[1:01:ポケモン種族名:0]たちから▽
-もっと　つよさを　ひきだせるよ▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『……なるほど▼
-きみが　強い　理由は
-ポケモンとの　信頼関係かもしれない▼
-だけど　問題ない
-ぼくだって　[1:01:ポケモン種族名:0]たちから▽
-もっと　強さを　ひきだせるよ▼</language>
+	<row id="msg_r04_black_03" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_r04_tvt_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>・アララギ博士（娘）からの連絡
-・コール音再生と同時に表示
-・コール音終了後にmsg_r04_tvt_02を表示</comment>
-		<attribute name="キャラ指定">システム
-TVトランシーバー</attribute>
-		<language name="JPN" width="256">ライブキャスターが　なっている</language>
-		<language name="JPN_KANJI" width="256">ライブキャスターが　鳴っている</language>
+	<row id="msg_r04_tvt_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_r04_tvt_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>・メッセージ表示後、ライブキャスター画面へ</comment>
-		<attribute name="キャラ指定">システム
-TVトランシーバー</attribute>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]は
-ライブキャスターを　つなげた[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
-ライブキャスターを　つなげた[BE:01:ページ切り替え（クリア）]</language>
+	<row id="msg_r04_tvt_02" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_r04_black_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・ライブキャスター終了後
-・メッセージ表示後、画面上に移動していく</comment>
-		<attribute name="キャラ指定">友達♂
-チェレン</attribute>
-		<language name="JPN" width="256">チェレン『……だって▼
-ライモンシティの　ゲートなら
-この　４ばんどうろを▽
-まっすぐ　すすむだけさ▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『……だって▼
-ライモンシティの　ゲートなら
-この　４番道路を▽
-まっすぐ　進むだけさ▼</language>
+	<row id="msg_r04_black_04" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_r04_man2_01">
