@@ -39,12 +39,12 @@ EVENT_START   ev_pos_r20_mountman_01
 
   IF $LCW_POSZ == 644 THEN
     _OBJ_ANIME( R20_MOUNTMAN_01, anm_mountain_look_pl_z644 )
-    _TIME_WAIT(10)
+    _TIME_WAIT(16)
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
     _OBJ_ANIME_WAIT()
   ELSIF $LCW_POSZ == 646 THEN
     _OBJ_ANIME( R20_MOUNTMAN_01, anm_mountain_look_pl_z646 )
-    _TIME_WAIT(10)
+    _TIME_WAIT(16)
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
     _OBJ_ANIME_WAIT()
   ENDIF

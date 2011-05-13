@@ -893,8 +893,8 @@
 		/* not used   869(0x0365) */
 		/* not used   870(0x0366) */
 		/* not used   871(0x0367) */
-		/* not used   872(0x0368) */
-		/* not used   873(0x0369) */
+#define FV_C13GYM0102_SUNGLASSES           872 /* 0x0368 ポケウッド：サングラス */
+#define FV_C13GYM0102_SWLEADER2            873 /* 0x0369 C12GYM0102：ホミカ */
 #define FV_C13R0401_SWRIVAL                874 /* 0x036a C13：船舶所のライバル */
 #define FV_C13R0401_PILOT                  875 /* 0x036b C13：船舶所の船長 */
 #define FV_C13_SWPLAZMA                    876 /* 0x036c C13：ネオプラズマ団イベント用 */
