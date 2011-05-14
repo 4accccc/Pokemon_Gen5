@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-05-14T16:22:32"/>
+	<create user="matsumiya" host="W00224" date="2011-05-14T16:34:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1293" top="156" right="1998" bottom="784" maximized="no" rayout="Vertical2">
+	<dialog left="1293" top="163" right="1997" bottom="789" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="529"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="542"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="4" index="0" style="0000" width="696"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -352,18 +352,18 @@
 リゾートデザートに　いるぞい！</language>
 	</row>
 
-	<row id="msg_r04_rock_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r04_rock_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>・調べたとき
 ・鳴き声処理は不要</comment>
 		<attribute name="キャラ指定">大きな岩
 イワパレス</attribute>
 		<language name="JPN" width="256">おおきな　いわ　だけど……
 どうしてだか　かいりきで　おせない！</language>
-		<language name="JPN_KANJI" width="256">おおきな　いわ　だけど……
-どうしてだか　かいりきで　おせない！</language>
+		<language name="JPN_KANJI" width="256">大きな　岩だけど……
+どうしてだか　かいりきで　押せない！</language>
 	</row>
 
-	<row id="msg_r04_swboss_01">
+	<row id="msg_r04_swboss_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・c03p01でのイベント後に出現
 ・続けてswboss_03</comment>
@@ -371,12 +371,12 @@
 		<language name="JPN" width="256">アクロマ『まってましたよ！▼
 どうしました？
 うしろが　きになりますか？▼</language>
-		<language name="JPN_KANJI" width="256">アクロマ『まってましたよ！▼
+		<language name="JPN_KANJI" width="256">アクロマ『待ってましたよ！▼
 どうしました？
-うしろが　きになりますか？▼</language>
+後ろが　気になりますか？▼</language>
 	</row>
 
-	<row id="msg_r04_swboss_02">
+	<row id="msg_r04_swboss_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・メッセージ表示後、イワパレスに向かう
 ・アクロマと正対した岩の動作モデルが
@@ -384,14 +384,16 @@
 ・続けてswboss_03</comment>
 		<attribute name="キャラ指定">アクロマ</attribute>
 		<language name="JPN" width="256">これは　いわ　ではなく
-イワパレス　という　ポケモンです▽
-みててください▼</language>
-		<language name="JPN_KANJI" width="256">これは　いわ　ではなく
-イワパレス　という　ポケモンです▽
-みててください▼</language>
+イワパレス　という　ポケモンです▼
+みててください
+わたしの　つくった　どうぐで……▼</language>
+		<language name="JPN_KANJI" width="256">これは　岩ではなく
+イワパレス　という　ポケモンです▼
+みててください
+わたしの　造った　装置で……▼</language>
 	</row>
 
-	<row id="msg_r04_swboss_03">
+	<row id="msg_r04_swboss_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・メッセージ表示後、主人公操作可能に</comment>
 		<attribute name="キャラ指定">アクロマ</attribute>
@@ -402,12 +404,12 @@
 ひきだせる　りゆうが　わかるかも……</language>
 		<language name="JPN_KANJI" width="256">アクロマ『ほら　めざめましたよ▼
 そうだ！　あなた
-イワパレスと　たたかってください！▼
-そうすれば　ポケモンの　つよさを
-ひきだせる　りゆうが　わかるかも……</language>
+イワパレスと　戦ってください！▼
+そうすれば　ポケモンの　強さを
+ひきだせる　理由が　わかるかも……</language>
 	</row>
 
-	<row id="msg_r04_swboss_04">
+	<row id="msg_r04_swboss_04" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・03表示後から
 　イワパレスの動作モデルを調べるまで</comment>
@@ -416,29 +418,29 @@
 イワパレスと　たたかってください！▼
 そうすれば　ポケモンの　つよさを
 ひきだせる　りゆうが　わかるかも……</language>
-		<language name="JPN_KANJI" width="256">アクロマ『おねがいです
-イワパレスと　たたかってください！▼
-そうすれば　ポケモンの　つよさを
-ひきだせる　りゆうが　わかるかも……</language>
+		<language name="JPN_KANJI" width="256">アクロマ『お願いです
+イワパレスと　戦ってください！▼
+そうすれば　ポケモンの　強さを
+ひきだせる　理由が　わかるかも……</language>
 	</row>
 
-	<row id="msg_r04_swboss_05">
+	<row id="msg_r04_swboss_05" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・イワパレスとの戦闘後
 ・倒した場合
 ・続けてswboss_08</comment>
 		<attribute name="キャラ指定">アクロマ</attribute>
 		<language name="JPN" width="256">アクロマ『なるほど！▼
-たしかに　つよいですが　それじしんが
+たしかに　つよいですが　そのことが
 ポケモンの　つよさを▽
 ひきだしている　りゆうでは　ない！▼</language>
 		<language name="JPN_KANJI" width="256">アクロマ『なるほど！▼
-たしかに　つよいですが　それじしんが
-ポケモンの　つよさを▽
-ひきだしている　りゆうでは　ない！▼</language>
+確かに　強いですが　そのことが
+ポケモンの　強さを▽
+ひきだしている　理由では　ない！▼</language>
 	</row>
 
-	<row id="msg_r04_swboss_06">
+	<row id="msg_r04_swboss_06" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・イワパレスとの戦闘後
 ・捕獲した場合
@@ -450,13 +452,13 @@
 ですが　ポケモンの　つよさを
 ひきだしている　りゆうでは　ない！▼</language>
 		<language name="JPN_KANJI" width="256">アクロマ『なるほど！▼
-そのように　なかまに　することで
-あなたじしん　つよさを　えるでしょう▼
-ですが　ポケモンの　つよさを
-ひきだしている　りゆうでは　ない！▼</language>
+そのように　仲間に　することで
+あなた自身　強さを　得るでしょう▼
+ですが　ポケモンの　強さを
+ひきだしている　理由では　ない！▼</language>
 	</row>
 
-	<row id="msg_r04_swboss_07">
+	<row id="msg_r04_swboss_07" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・イワパレスとの戦闘後
 ・逃げた場合
@@ -467,14 +469,13 @@
 ですが　ポケモンの　つよさを
 ひきだしている　りゆうでは　ない！▼</language>
 		<language name="JPN_KANJI" width="256">アクロマ『なるほど
-やさしさ　ですね！▼
-ですが　ポケモンの　つよさを
-ひきだしている　りゆうでは　ない！▼</language>
+優しさ　ですね！▼
+ですが　ポケモンの　強さを
+ひきだしている　理由では　ない！▼</language>
 	</row>
 
-	<row id="msg_r04_swboss_08">
+	<row id="msg_r04_swboss_08" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
-・回復処理
 ・続けてswboss_09
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">アクロマ</attribute>
@@ -489,18 +490,30 @@
 しっけい！　そのまえに　あなたの
 ポケモンを　かいふく　せねば！▼</language>
 		<language name="JPN_KANJI" width="256">そういえば　あなたの
-なまえを　きいていませんでしたね▼
+名前を　きいていませんでしたね▼
 ……　……　……
 ……　……　……▼
 [1:00:トレーナー名:0]さん　ですか
-その　なまえ　おぼえておきます！▼
+その名前　おぼえておきます！▼
 さて　ヒウンシティでの
-やくそくどおり　ポケモンしょうぶを▼
-しっけい！　そのまえに　あなたの
-ポケモンを　かいふく　せねば！▼</language>
+約束どおり　ポケモン勝負を▼
+失敬！　その前に　あなたの
+ポケモンを　回復せねば！▼</language>
 	</row>
 
-	<row id="msg_r04_swboss_09">
+	<row id="msg_r04_swboss_09" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・回復処理
+・続けてswboss_10</comment>
+		<language name="JPN" width="256">チェレンは
+[1:00:トレーナー名:0]の　ポケモンを▽
+かいふく　してくれた！</language>
+		<language name="JPN_KANJI" width="256">チェレンは
+[1:00:トレーナー名:0]の　ポケモンを▽
+回復してくれた！</language>
+	</row>
+
+	<row id="msg_r04_swboss_10" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・表示後、トレーナー戦闘に
 ・0＝主人公名前</comment>
@@ -511,7 +524,7 @@
 ぜんりょくで　いきますよ！▼</language>
 	</row>
 
-	<row id="msg_r04_swboss_10">
+	<row id="msg_r04_swboss_11" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color=",,,#ff78ff,,,,,,,,,,,,,,,">
 		<comment>♂
 ・トレーナー戦後、自動で表示
 ・アイテム入手処理
@@ -520,44 +533,45 @@
 		<language name="JPN" width="256">アクロマ『なるほど！　あなたは
 かくちの　チャンピオンや▽
 ジムリーダーたちの　ように▼
-ポケモンを　だいじにすることで
+ポケモンを　たいせつに　することで
 その　つよさを　みちびきだす▼
 そういった　タイプの　ひとたちに
 にているような　きがしますね▼
 ありがとう
-これは　おれいです▼</language>
+これは　おれい　です▼</language>
 		<language name="JPN_KANJI" width="256">アクロマ『なるほど！　あなたは
-かくちの　チャンピオンや▽
+各地の　チャンピオンや▽
 ジムリーダーたちの　ように▼
-ポケモンを　だいじにすることで
-その　つよさを　みちびきだす▼
-そういった　タイプの　ひとたちに
-にているような　きがしますね▼
+ポケモンを　大切に　することで
+その強さを　導きだす▼
+そういった　タイプの　人たちに
+似ているような　きがしますね▼
 ありがとう
-これは　おれいです▼</language>
+これは　お礼です▼</language>
 	</row>
 
-	<row id="msg_r04_swboss_11">
+	<row id="msg_r04_swboss_12" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・アイテム入手後、画面上に移動
-　画面外に消えると操作可能</comment>
+　画面外に消えると操作可能
+・0＝主人公名前</comment>
 		<attribute name="キャラ指定">アクロマ</attribute>
 		<language name="JPN" width="256">アクロマ『くやしい！！▼
 ポケモンの　きもちが　わかれば！▼
 ポケモンと　はなすことが　できれば！▼
 どうすれば　かれらの　つよさを
-ひきだせるか　わかるのでしょうが▼
+ひきだせるか　わかるのでしょうが▽
 げんじつてき　では　ありませんね……▼
 それでは　[1:00:トレーナー名:0]
 また　あいましょう▼</language>
-		<language name="JPN_KANJI" width="256">アクロマ『くやしい！！▼
-ポケモンの　きもちが　わかれば！▼
-ポケモンと　はなすことが　できれば！▼
-どうすれば　かれらの　つよさを
-ひきだせるか　わかるのでしょうが▼
-げんじつてき　では　ありませんね……▼
+		<language name="JPN_KANJI" width="256">アクロマ『悔しい！！▼
+ポケモンの　気持ちが　わかれば！▼
+ポケモンと　話すことが　できれば！▼
+どうすれば　彼らの　強さを
+ひきだせるか　わかるのでしょうが▽
+現実的では　ありませんね……▼
 それでは　[1:00:トレーナー名:0]
-また　あいましょう▼</language>
+また　会いましょう▼</language>
 	</row>
 
 	<row id="msg_r04_black_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
