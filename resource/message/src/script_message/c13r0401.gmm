@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-05-13T15:45:50"/>
+	<create user="matsumiya" host="W00224" date="2011-05-14T14:13:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1292" top="141" right="1997" bottom="769" maximized="no" rayout="Vertical2">
+	<dialog left="1293" top="156" right="1998" bottom="784" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -303,7 +303,7 @@
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『オマエ
 ヒウンに　いくんだろ？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『オマエ
-ヒウンに　いくんだろ？</language>
+ヒウンに　行くんだろ？</language>
 	</row>
 
 	<row id="msg_c13r0401_swrival_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -311,7 +311,7 @@
 ・続けてswrival_03</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
 		<language name="JPN" width="256">プラズマだん　おいかけるからな▼</language>
-		<language name="JPN_KANJI" width="256">プラズマだん　おいかけるからな▼</language>
+		<language name="JPN_KANJI" width="256">プラズマ団　追いかけるからな▼</language>
 	</row>
 
 	<row id="msg_c13r0401_swrival_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -321,7 +321,7 @@
 		<attribute name="キャラ指定">ライバル</attribute>
 		<language name="JPN" width="256">な！　ヒウンいきの　ふね
 さっさと　だしてくれよ▼</language>
-		<language name="JPN_KANJI" width="256">な！　ヒウンいきの　ふね
+		<language name="JPN_KANJI" width="256">な！　ヒウン行きの　船
 さっさと　だしてくれよ▼</language>
 	</row>
 
@@ -409,7 +409,7 @@
 いろんなことを　やるのも▽
 どちらも　せいかい　なんだよ</language>
 		<language name="JPN_KANJI" width="256">自分の　人生だもの▼
-ひとつのことを　突き詰めつのも
+ひとつのことを　突き詰めるのも
 いろんなことを　やるのも▽
 どちらも　正解なんだよ　きっと</language>
 	</row>
