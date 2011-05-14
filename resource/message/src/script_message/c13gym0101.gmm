@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-16T12:32:19"/>
+	<create user="matsumiya" host="W00224" date="2011-05-14T14:08:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1298" top="167" right="2003" bottom="795" maximized="no" rayout="Vertical2">
+	<dialog left="1293" top="156" right="1998" bottom="784" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -338,7 +338,7 @@
 ポケモンを　繰り出してくるっす！▼
 どくタイプの　ポケモンには
 くさや　むしタイプの　攻撃が▽
-効きにくいので　ちゅうい　っす！▼
+効きにくいので　注意　っす！▼
 あと　どく状態に　なると
 ＨＰが　どんどん　減っていくから▽
 気をつけたほうが　いいっすよ！▼

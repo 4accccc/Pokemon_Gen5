@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-05-10T21:49:55"/>
+	<create user="matsumiya" host="W00224" date="2011-05-14T14:09:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1297" top="225" right="2002" bottom="853" maximized="no" rayout="Vertical2">
+	<dialog left="1293" top="156" right="1998" bottom="784" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -387,7 +387,7 @@
 		<language name="JPN_KANJI" width="256">やるじゃない！▼
 あんたと！　あんたの　ポケモン！
 ぶっとばすって　パワーに　あふれてた▼
-その　ちょうしで
+その　調子で
 ぜーんぶ　ぶっとばしなよ！</language>
 	</row>
 
@@ -420,11 +420,15 @@
 		<language name="JPN" width="256">いい？　なにが　ただしいかなんて
 かんがえても　わかるわけないの▼
 だから　すきなことを
-ほんきで　やるしかないんだよ！ </language>
-		<language name="JPN_KANJI" width="256">いい？　なにが　ただしいかなんて
-かんがえても　わかるわけないの▼
-だから　すきなことを
-ほんきで　やるしかないんだよ！ </language>
+ほんきで　やるしかないんだよ！▼
+もちろん　ほかの　だれかに
+めいわく　かけちゃ　ダメだけど！</language>
+		<language name="JPN_KANJI" width="256">いい？　なにが　正しいかなんて
+考えても　わかるわけないの▼
+だから　好きなことを
+本気で　やるしかないんだよ！▼
+もちろん　他の　だれかに
+迷惑かけちゃ　ダメだけど！</language>
 	</row>
 
 	<row id="msg_c13gym0102_sunglasses_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
