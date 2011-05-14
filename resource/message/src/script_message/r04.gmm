@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-05-14T16:34:52"/>
+	<create user="matsumiya" host="W00224" date="2011-05-14T16:51:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="1293" top="163" right="1997" bottom="789" maximized="no" rayout="Vertical2">
+	<dialog left="1293" top="161" right="1998" bottom="789" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
-		<band id="0" index="1" style="0000" width="529"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="542"/>
+		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="696"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<band id="4" index="0" style="0000" width="697"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -294,19 +294,20 @@
 
 	<row id="msg_r04_stop_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
+・4番道路入ってすぐに配置
 ・posで必須イベントに
 　！マーク表示
 ・アイテム入手処理
 　No000「ひでんマシン」</comment>
 		<attribute name="キャラ指定">WORKMAN</attribute>
 		<language name="JPN" width="256">おい！　トレーナー▼
-いつのまにやら　こんなに
+いつのまにやら　あんなに
 いわが　ならんでいてな……▼
 しかも　ひでんの　かいりきを
 つかっても　おせないぞい……▽
 ほら　ためしてみるぞい！▼</language>
 		<language name="JPN_KANJI" width="256">おい！　トレーナー▼
-いつのまにやら　こんなに
+いつのまにやら　あんなに
 岩が　並んでいてな……▼
 しかも　秘伝の　かいりきを
 使っても　押せないぞい……▽
@@ -319,11 +320,11 @@
 		<attribute name="キャラ指定">WORKMAN</attribute>
 		<language name="JPN" width="256">かいりきの　わざを　つかえば
 おもたい　いわも　おせるぞい！▼
-……これらの　いわは　なぜだか
+……あれらの　いわは　なぜだか
 ちっとも　おせないけれどな</language>
 		<language name="JPN_KANJI" width="256">かいりきの　技を　使えば
 重たい　岩も　押せるぞい！▼
-……これらの　岩は　なぜだか
+……あれらの　岩は　なぜだか
 ちっとも　押せないけれどな</language>
 	</row>
 
@@ -353,7 +354,9 @@
 	</row>
 
 	<row id="msg_r04_rock_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>・調べたとき
+		<comment>ポケモン
+・道幅分並べる
+・調べたとき
 ・鳴き声処理は不要</comment>
 		<attribute name="キャラ指定">大きな岩
 イワパレス</attribute>
@@ -412,7 +415,8 @@
 	<row id="msg_r04_swboss_04" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・03表示後から
-　イワパレスの動作モデルを調べるまで</comment>
+　イワパレスの動作モデルを調べるまで
+・イワパレス</comment>
 		<attribute name="キャラ指定">アクロマ</attribute>
 		<language name="JPN" width="256">アクロマ『おねがいです
 イワパレスと　たたかってください！▼
@@ -422,6 +426,18 @@
 イワパレスと　戦ってください！▼
 そうすれば　ポケモンの　強さを
 ひきだせる　理由が　わかるかも……</language>
+	</row>
+
+	<row id="msg_r04_rock_02" text-color="#000000,,,#ff0000,,#000000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>イワパレス
+・どれでも同じ
+・メッセージ表示後、野生ポケモンとの戦闘に
+・どれか一匹と戦闘すると
+　フィールド復帰時、他の動作モデルも削除</comment>
+		<attribute name="キャラ指定">大きな岩
+イワパレス</attribute>
+		<language name="JPN" width="256">ぱれっしゅ！</language>
+		<language name="JPN_KANJI" width="256">ぱれっしゅ！</language>
 	</row>
 
 	<row id="msg_r04_swboss_05" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
@@ -557,19 +573,19 @@
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">アクロマ</attribute>
 		<language name="JPN" width="256">アクロマ『くやしい！！▼
-ポケモンの　きもちが　わかれば！▼
-ポケモンと　はなすことが　できれば！▼
-どうすれば　かれらの　つよさを
-ひきだせるか　わかるのでしょうが▽
-げんじつてき　では　ありませんね……▼
+ポケモンの　ちからを　ひきだす！▼
+そのために　ポケモンと
+かいわ　できれば　いいのですがね！▼
+……そのような　にんげんが
+せかいに　いる　わけが　ない！▼
 それでは　[1:00:トレーナー名:0]
 また　あいましょう▼</language>
-		<language name="JPN_KANJI" width="256">アクロマ『悔しい！！▼
-ポケモンの　気持ちが　わかれば！▼
-ポケモンと　話すことが　できれば！▼
-どうすれば　彼らの　強さを
-ひきだせるか　わかるのでしょうが▽
-現実的では　ありませんね……▼
+		<language name="JPN_KANJI" width="256">アクロマ『くやしい！！▼
+ポケモンの　能力を　ひきだす！▼
+そのために　ポケモンと
+会話できれば　いいのですがね！▼
+……そのような　人間が
+世界に　いる　わけが　ない！▼
 それでは　[1:00:トレーナー名:0]
 また　会いましょう▼</language>
 	</row>
