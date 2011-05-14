@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-05-13T15:21:56"/>
+	<create user="matsumiya" host="W00224" date="2011-05-14T16:22:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1292" top="141" right="1997" bottom="769" maximized="no" rayout="Vertical2">
+	<dialog left="1293" top="156" right="1998" bottom="784" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,61 +292,272 @@
 	</lock>
 
 
-	<row id="msg_r04_stop_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r04_stop_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・ストッパー
-　GRIDX＝431、GRIDZ=564に配置
-　ｃ03のジムバッジ入手前
-・話しかけたとき
-※福島の方言をチェック</comment>
+・posで必須イベントに
+　！マーク表示
+・アイテム入手処理
+　No000「ひでんマシン」</comment>
 		<attribute name="キャラ指定">WORKMAN</attribute>
 		<language name="JPN" width="256">おい！　トレーナー▼
-このさきで　ちょいと
-やっかいな　ことが　あってな▽
-わるいが　いまは　とおれないぞ▼
-まあ　ヒウンシティの　ジムに
-ちょうせんして　じかんを　つぶすぞい</language>
+いつのまにやら　こんなに
+いわが　ならんでいてな……▼
+しかも　ひでんの　かいりきを
+つかっても　おせないぞい……▽
+ほら　ためしてみるぞい！▼</language>
 		<language name="JPN_KANJI" width="256">おい！　トレーナー▼
-この先で　ちょいと
-やっかいな　ことが　あってな▽
-仲間は　そっちに　行ってるんだ▼
-まあ　ヒウンシティの　ジムに
-挑戦して　時間を　つぶすぞい</language>
+いつのまにやら　こんなに
+岩が　並んでいてな……▼
+しかも　秘伝の　かいりきを
+使っても　押せないぞい……▽
+ほら　試してみるぞい！▼</language>
 	</row>
 
-	<row id="msg_r04_stop_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r04_stop_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・ストッパー
-　GRIDX＝431、GRIDZ=564に配置
-　ｃ03のジムバッジ入手前
-・posを踏んだとき</comment>
+・アイテム入手後</comment>
 		<attribute name="キャラ指定">WORKMAN</attribute>
-		<language name="JPN" width="256">おい！　トレーナー▼
-このさきで　ちょいと
-めんどうな　ことが　あってな▽
-わるいが　いまは　とおれないぞ▼
-まあ　ヒウンシティの　ジムに
-ちょうせんして　じかんを　つぶすぞい▼</language>
-		<language name="JPN_KANJI" width="256">おい！　トレーナー▼
-この先で　ちょいと
-やっかいな　ことが　あってな▽
-仲間は　そっちに　行ってるんだ▼
-まあ　ヒウンシティの　ジムに
-挑戦して　時間を　つぶすぞい▼</language>
+		<language name="JPN" width="256">かいりきの　わざを　つかえば
+おもたい　いわも　おせるぞい！▼
+……これらの　いわは　なぜだか
+ちっとも　おせないけれどな</language>
+		<language name="JPN_KANJI" width="256">かいりきの　技を　使えば
+重たい　岩も　押せるぞい！▼
+……これらの　岩は　なぜだか
+ちっとも　押せないけれどな</language>
 	</row>
 
-	<row id="msg_r04_stop_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r04_stop_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・ジムバッジ取得後</comment>
+・swboss_03表示後から
+　イワパレスと戦闘するまで</comment>
 		<attribute name="キャラ指定">WORKMAN</attribute>
-		<language name="JPN" width="256">このさきの　さばく……
-リゾートデザートの　おくには▼
-いせきが　あって　ちょっとした
-かんこうちに　なっているぞい！</language>
-		<language name="JPN_KANJI" width="256">この先の　砂漠……
-リゾートデザートの　奥には▼
-遺跡が　あって　ちょっとした
-観光地に　なっているぞい！</language>
+		<language name="JPN" width="256">まさか　ポケモンの
+イワパレス　だったとは……▼</language>
+		<language name="JPN_KANJI" width="256">まさか　ポケモンの
+イワパレス　だったとは……▼</language>
+	</row>
+
+	<row id="msg_r04_stop_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・イワパレスと戦闘後</comment>
+		<attribute name="キャラ指定">WORKMAN</attribute>
+		<language name="JPN" width="256">まさか　ポケモンの
+イワパレス　だったとは……▼
+イワパレスなら　このさきの　さばく
+リゾートデザートに　いるぞい！</language>
+		<language name="JPN_KANJI" width="256">まさか　ポケモンの
+イワパレス　だったとは……▼
+イワパレスなら　この先の　砂漠
+リゾートデザートに　いるぞい！</language>
+	</row>
+
+	<row id="msg_r04_rock_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・調べたとき
+・鳴き声処理は不要</comment>
+		<attribute name="キャラ指定">大きな岩
+イワパレス</attribute>
+		<language name="JPN" width="256">おおきな　いわ　だけど……
+どうしてだか　かいりきで　おせない！</language>
+		<language name="JPN_KANJI" width="256">おおきな　いわ　だけど……
+どうしてだか　かいりきで　おせない！</language>
+	</row>
+
+	<row id="msg_r04_swboss_01">
+		<comment>♂
+・c03p01でのイベント後に出現
+・続けてswboss_03</comment>
+		<attribute name="キャラ指定">アクロマ</attribute>
+		<language name="JPN" width="256">アクロマ『まってましたよ！▼
+どうしました？
+うしろが　きになりますか？▼</language>
+		<language name="JPN_KANJI" width="256">アクロマ『まってましたよ！▼
+どうしました？
+うしろが　きになりますか？▼</language>
+	</row>
+
+	<row id="msg_r04_swboss_02">
+		<comment>♂
+・メッセージ表示後、イワパレスに向かう
+・アクロマと正対した岩の動作モデルが
+　イワパレスに置き換わる
+・続けてswboss_03</comment>
+		<attribute name="キャラ指定">アクロマ</attribute>
+		<language name="JPN" width="256">これは　いわ　ではなく
+イワパレス　という　ポケモンです▽
+みててください▼</language>
+		<language name="JPN_KANJI" width="256">これは　いわ　ではなく
+イワパレス　という　ポケモンです▽
+みててください▼</language>
+	</row>
+
+	<row id="msg_r04_swboss_03">
+		<comment>♂
+・メッセージ表示後、主人公操作可能に</comment>
+		<attribute name="キャラ指定">アクロマ</attribute>
+		<language name="JPN" width="256">アクロマ『ほら　めざめましたよ▼
+そうだ！　あなた
+イワパレスと　たたかってください！▼
+そうすれば　ポケモンの　つよさを
+ひきだせる　りゆうが　わかるかも……</language>
+		<language name="JPN_KANJI" width="256">アクロマ『ほら　めざめましたよ▼
+そうだ！　あなた
+イワパレスと　たたかってください！▼
+そうすれば　ポケモンの　つよさを
+ひきだせる　りゆうが　わかるかも……</language>
+	</row>
+
+	<row id="msg_r04_swboss_04">
+		<comment>♂
+・03表示後から
+　イワパレスの動作モデルを調べるまで</comment>
+		<attribute name="キャラ指定">アクロマ</attribute>
+		<language name="JPN" width="256">アクロマ『おねがいです
+イワパレスと　たたかってください！▼
+そうすれば　ポケモンの　つよさを
+ひきだせる　りゆうが　わかるかも……</language>
+		<language name="JPN_KANJI" width="256">アクロマ『おねがいです
+イワパレスと　たたかってください！▼
+そうすれば　ポケモンの　つよさを
+ひきだせる　りゆうが　わかるかも……</language>
+	</row>
+
+	<row id="msg_r04_swboss_05">
+		<comment>♂
+・イワパレスとの戦闘後
+・倒した場合
+・続けてswboss_08</comment>
+		<attribute name="キャラ指定">アクロマ</attribute>
+		<language name="JPN" width="256">アクロマ『なるほど！▼
+たしかに　つよいですが　それじしんが
+ポケモンの　つよさを▽
+ひきだしている　りゆうでは　ない！▼</language>
+		<language name="JPN_KANJI" width="256">アクロマ『なるほど！▼
+たしかに　つよいですが　それじしんが
+ポケモンの　つよさを▽
+ひきだしている　りゆうでは　ない！▼</language>
+	</row>
+
+	<row id="msg_r04_swboss_06">
+		<comment>♂
+・イワパレスとの戦闘後
+・捕獲した場合
+・続けてswboss_08</comment>
+		<attribute name="キャラ指定">アクロマ</attribute>
+		<language name="JPN" width="256">アクロマ『なるほど！▼
+そのように　なかまに　することで
+あなたじしん　つよさを　えるでしょう▼
+ですが　ポケモンの　つよさを
+ひきだしている　りゆうでは　ない！▼</language>
+		<language name="JPN_KANJI" width="256">アクロマ『なるほど！▼
+そのように　なかまに　することで
+あなたじしん　つよさを　えるでしょう▼
+ですが　ポケモンの　つよさを
+ひきだしている　りゆうでは　ない！▼</language>
+	</row>
+
+	<row id="msg_r04_swboss_07">
+		<comment>♂
+・イワパレスとの戦闘後
+・逃げた場合
+・続けてswboss_08</comment>
+		<attribute name="キャラ指定">アクロマ</attribute>
+		<language name="JPN" width="256">アクロマ『なるほど
+やさしさ　ですね！▼
+ですが　ポケモンの　つよさを
+ひきだしている　りゆうでは　ない！▼</language>
+		<language name="JPN_KANJI" width="256">アクロマ『なるほど
+やさしさ　ですね！▼
+ですが　ポケモンの　つよさを
+ひきだしている　りゆうでは　ない！▼</language>
+	</row>
+
+	<row id="msg_r04_swboss_08">
+		<comment>♂
+・回復処理
+・続けてswboss_09
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">アクロマ</attribute>
+		<language name="JPN" width="256">そういえば　あなたの
+なまえを　きいていませんでしたね▼
+……　……　……
+……　……　……▼
+[1:00:トレーナー名:0]さん　ですか
+その　なまえ　おぼえておきます！▼
+さて　ヒウンシティでの
+やくそくどおり　ポケモンしょうぶを▼
+しっけい！　そのまえに　あなたの
+ポケモンを　かいふく　せねば！▼</language>
+		<language name="JPN_KANJI" width="256">そういえば　あなたの
+なまえを　きいていませんでしたね▼
+……　……　……
+……　……　……▼
+[1:00:トレーナー名:0]さん　ですか
+その　なまえ　おぼえておきます！▼
+さて　ヒウンシティでの
+やくそくどおり　ポケモンしょうぶを▼
+しっけい！　そのまえに　あなたの
+ポケモンを　かいふく　せねば！▼</language>
+	</row>
+
+	<row id="msg_r04_swboss_09">
+		<comment>♂
+・表示後、トレーナー戦闘に
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">アクロマ</attribute>
+		<language name="JPN" width="256">それでは　[1:00:トレーナー名:0]さん
+ぜんりょくで　いきますよ！▼</language>
+		<language name="JPN_KANJI" width="256">それでは　[1:00:トレーナー名:0]さん
+ぜんりょくで　いきますよ！▼</language>
+	</row>
+
+	<row id="msg_r04_swboss_10">
+		<comment>♂
+・トレーナー戦後、自動で表示
+・アイテム入手処理
+　No000「」（内容未定）</comment>
+		<attribute name="キャラ指定">アクロマ</attribute>
+		<language name="JPN" width="256">アクロマ『なるほど！　あなたは
+かくちの　チャンピオンや▽
+ジムリーダーたちの　ように▼
+ポケモンを　だいじにすることで
+その　つよさを　みちびきだす▼
+そういった　タイプの　ひとたちに
+にているような　きがしますね▼
+ありがとう
+これは　おれいです▼</language>
+		<language name="JPN_KANJI" width="256">アクロマ『なるほど！　あなたは
+かくちの　チャンピオンや▽
+ジムリーダーたちの　ように▼
+ポケモンを　だいじにすることで
+その　つよさを　みちびきだす▼
+そういった　タイプの　ひとたちに
+にているような　きがしますね▼
+ありがとう
+これは　おれいです▼</language>
+	</row>
+
+	<row id="msg_r04_swboss_11">
+		<comment>♂
+・アイテム入手後、画面上に移動
+　画面外に消えると操作可能</comment>
+		<attribute name="キャラ指定">アクロマ</attribute>
+		<language name="JPN" width="256">アクロマ『くやしい！！▼
+ポケモンの　きもちが　わかれば！▼
+ポケモンと　はなすことが　できれば！▼
+どうすれば　かれらの　つよさを
+ひきだせるか　わかるのでしょうが▼
+げんじつてき　では　ありませんね……▼
+それでは　[1:00:トレーナー名:0]
+また　あいましょう▼</language>
+		<language name="JPN_KANJI" width="256">アクロマ『くやしい！！▼
+ポケモンの　きもちが　わかれば！▼
+ポケモンと　はなすことが　できれば！▼
+どうすれば　かれらの　つよさを
+ひきだせるか　わかるのでしょうが▼
+げんじつてき　では　ありませんね……▼
+それでは　[1:00:トレーナー名:0]
+また　あいましょう▼</language>
 	</row>
 
 	<row id="msg_r04_black_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
@@ -385,9 +596,10 @@
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_r04_man2_01">
+	<row id="msg_r04_man2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
-・高速道路のそばに配置</comment>
+・高速道路のそばに配置
+※swanでメッセージ内容変更</comment>
 		<attribute name="キャラ指定">MAN2</attribute>
 		<language name="JPN" width="256">フリーウェイを　みていると
 なんというか　みたされるんだ……</language>
@@ -395,9 +607,10 @@
 なんというか　満たされるんだ……</language>
 	</row>
 
-	<row id="msg_r04_woman2_01">
+	<row id="msg_r04_woman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
-・砂漠に行く手前に配置</comment>
+・砂漠に行く手前に配置
+※swanでメッセージ内容変更</comment>
 		<attribute name="キャラ指定">WOMAN1</attribute>
 		<language name="JPN" width="256">さばくに　うもれた　いせき……
 そこはかとなく　ロマンティックね</language>
@@ -461,11 +674,11 @@
 ポケモンセンターに　行きましょう！</language>
 	</row>
 
-	<row id="msg_r04_sign4_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_r04_sign4_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・GRIDX=398、GRIDZ=557
-
-※SWANではメッセージ変更予定</comment>
+※swanでメッセージ内容変更
+　もしくは削除ラベル</comment>
 		<attribute name="キャラ指定">看板</attribute>
 		<language name="JPN" width="256">おつかれの　さぎょういんは
 ヒウンシティちかくの　プレハブへ！</language>
