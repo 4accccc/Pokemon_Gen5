@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-05-10T22:03:21"/>
+	<create user="matsumiya" host="W00224" date="2011-05-14T14:03:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1318" top="171" right="2023" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1293" top="156" right="1998" bottom="784" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -295,7 +295,8 @@
 	<row id="msg_c13_pilot_01" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・pos（GRIDX=201、GRIDZ=650～652）を
-　踏むとイベント起動。カメラ移動</comment>
+　踏むとイベント起動。カメラ移動
+・続けてswleader2_01</comment>
 		<attribute name="キャラ指定">PILOT
 船長</attribute>
 		<language name="JPN" width="256">？？？『ホミカよ　
@@ -314,7 +315,7 @@
 
 	<row id="msg_c13_swleader2_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
-・続けて</comment>
+・続けてpilot_02</comment>
 		<attribute name="キャラ指定">SWLEADER2
 ジムリーダー
 ホミカ</attribute>
@@ -331,7 +332,7 @@
 	<row id="msg_c13_pilot_02" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・メッセージ表示後、c13r0501方面へ
-・続けて</comment>
+・続けてswleader2_01</comment>
 		<attribute name="キャラ指定">PILOT
 船長</attribute>
 		<language name="JPN" width="256">せんちょう『いとしの　むすめよ▼
@@ -452,12 +453,10 @@
 ・続けてswrival_01</comment>
 		<attribute name="キャラ指定">SWPLAZMAM
 ネオプラズマ団♂</attribute>
-		<language name="JPN" width="256">？？？『ノーノーノー！▼
-おれらは　ネオプラズマだん
-ネオ　ってところが　だいじだぜ▼</language>
-		<language name="JPN_KANJI" width="256">？？？『ノーノーノー！▼
-おれらは　ネオプラズマ団
-ネオ　ってところが　大事だぜ▼</language>
+		<language name="JPN" width="256">？？？『そうとも！
+おれらは　プラズマだん！▼</language>
+		<language name="JPN_KANJI" width="256">？？？『そうとも！
+おれらは　プラズマ団！▼</language>
 	</row>
 
 	<row id="msg_c13_swrival_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -565,9 +564,9 @@
 　いいえ→neohakaim1_05</comment>
 		<attribute name="キャラ指定">SWPLAZMAM
 ネオプラズマ団♂</attribute>
-		<language name="JPN" width="256">ネオプラズマだん『どうする？
+		<language name="JPN" width="256">プラズマだん『どうする？
 オレと　たたかうかい？</language>
-		<language name="JPN_KANJI" width="256">ネオプラズマ団『どうする？
+		<language name="JPN_KANJI" width="256">プラズマ団『どうする？
 オレと　戦うかい？</language>
 	</row>
 
@@ -604,11 +603,11 @@
 ・続けてswrival_04</comment>
 		<attribute name="キャラ指定">SWPLAZMAM
 ネオプラズマ団♂</attribute>
-		<language name="JPN" width="256">ネオプラズマだん『まさか！　こんな
+		<language name="JPN" width="256">プラズマだん『まさか！　こんな
 こどもたちに　ふかくを　とるとは……▼
 クッ……　ヒウンシティに　もどり▽
 たいせいを　たてなおすぞ！▼</language>
-		<language name="JPN_KANJI" width="256">ネオプラズマ団『まさか！　こんな
+		<language name="JPN_KANJI" width="256">プラズマ団『まさか！　こんな
 こどもたちに　不覚を　とるとは……▼
 クッ……　ヒウンシティに　戻り▽
 体制を　たてなおすぞ！▼</language>
