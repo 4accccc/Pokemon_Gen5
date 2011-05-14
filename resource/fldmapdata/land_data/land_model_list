@@ -337,6 +337,8 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/resort01_00_01.nsbmd \
 	$(DIR_TEMP)/resort01_01_01.nsbmd \
 	$(DIR_TEMP)/resort01_01_01.nsbmd \
+	$(DIR_TEMP)/map05_15.nsbmd \
+	$(DIR_TEMP)/map06_15.nsbmd \
 	$(DIR_TEMP)/m_dun0101_00_00.nsbmd \
 	$(DIR_TEMP)/m_dun0101_01_00.nsbmd \
 	$(DIR_TEMP)/m_dun0101_00_01.nsbmd \

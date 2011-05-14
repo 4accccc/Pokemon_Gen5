@@ -1394,6 +1394,14 @@ $(DIR_WBTMP)/c03_n00_00.tbl: $(DIR_RES)/c03_n00_00.bin
 	@echo create_bintbl c03_n00_00
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/c03_n00_00.bin
 
+$(DIR_WBTMP)/map05_15.tbl: $(DIR_RES)/map05_15.bin
+	@echo create_bintbl map05_15
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/map05_15.bin
+
+$(DIR_WBTMP)/map06_15.tbl: $(DIR_RES)/map06_15.bin
+	@echo create_bintbl map06_15
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/map06_15.bin
+
 $(DIR_WBTMP)/m_dun0101_00_00.tbl: $(DIR_RES)/m_dun0101_00_00.bin
 	@echo create_bintbl m_dun0101_00_00
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun0101_00_00.bin
