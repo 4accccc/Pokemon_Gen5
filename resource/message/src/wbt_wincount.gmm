@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2011-04-14T20:19:02"/>
+	<create user="matsumiya" host="W00224" date="2011-05-15T17:08:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -428,132 +428,132 @@
 	</lock>
 
 
-	<row id="msg_wbt_wincount_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_wbt_wincount_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>主人公名が入る</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]の</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の</language>
 	</row>
 
-	<row id="msg_wbt_wincount_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_wbt_wincount_02" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<language name="JPN" width="256">ゆうしょうかいすう</language>
 		<language name="JPN_KANJI" width="256">優勝回数</language>
 	</row>
 
-	<row id="msg_wbt_wincount_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_wbt_wincount_03" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>優勝回数表示</comment>
 		<language name="JPN" width="256">[2:03:４桁:0]かい</language>
 		<language name="JPN_KANJI" width="256">[2:03:４桁:0]回</language>
 	</row>
 
-	<row id="msg_wbt_wincount_all" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_wbt_wincount_all" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>トーナメント名称</comment>
 		<language name="JPN" width="256">オール</language>
 		<language name="JPN_KANJI" width="256">オール</language>
 	</row>
 
-	<row id="msg_wbt_wincount_champ" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_wbt_wincount_champ" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>トーナメント名称</comment>
 		<language name="JPN" width="256">チャンピオンズ</language>
 		<language name="JPN_KANJI" width="256">チャンピオンズ</language>
 	</row>
 
-	<row id="msg_wbt_wincount_normal" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_wbt_wincount_normal" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>トーナメント名称</comment>
 		<language name="JPN" width="256">ノーマル</language>
 		<language name="JPN_KANJI" width="256">ノーマル</language>
 	</row>
 
-	<row id="msg_wbt_wincount_honoo" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_wbt_wincount_honoo" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>トーナメント名称</comment>
 		<language name="JPN" width="256">ほのお</language>
 		<language name="JPN_KANJI" width="256">ほのお</language>
 	</row>
 
-	<row id="msg_wbt_wincount_mizu" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_wbt_wincount_mizu" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>トーナメント名称</comment>
 		<language name="JPN" width="256">みず</language>
 		<language name="JPN_KANJI" width="256">みず</language>
 	</row>
 
-	<row id="msg_wbt_wincount_kusa" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_wbt_wincount_kusa" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>トーナメント名称</comment>
 		<language name="JPN" width="256">くさ</language>
 		<language name="JPN_KANJI" width="256">くさ</language>
 	</row>
 
-	<row id="msg_wbt_wincount_denki" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_wbt_wincount_denki" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>トーナメント名称</comment>
 		<language name="JPN" width="256">でんき</language>
 		<language name="JPN_KANJI" width="256">でんき</language>
 	</row>
 
-	<row id="msg_wbt_wincount_koori" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_wbt_wincount_koori" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>トーナメント名称</comment>
 		<language name="JPN" width="256">こおり</language>
 		<language name="JPN_KANJI" width="256">こおり</language>
 	</row>
 
-	<row id="msg_wbt_wincount_kakutou" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_wbt_wincount_kakutou" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>トーナメント名称</comment>
 		<language name="JPN" width="256">かくとう</language>
 		<language name="JPN_KANJI" width="256">かくとう</language>
 	</row>
 
-	<row id="msg_wbt_wincount_doku" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_wbt_wincount_doku" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>トーナメント名称</comment>
 		<language name="JPN" width="256">どく</language>
 		<language name="JPN_KANJI" width="256">どく</language>
 	</row>
 
-	<row id="msg_wbt_wincount_zimen" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_wbt_wincount_zimen" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>トーナメント名称</comment>
 		<language name="JPN" width="256">じめん</language>
 		<language name="JPN_KANJI" width="256">じめん</language>
 	</row>
 
-	<row id="msg_wbt_wincount_hikou" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_wbt_wincount_hikou" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>トーナメント名称</comment>
 		<language name="JPN" width="256">ひこう</language>
 		<language name="JPN_KANJI" width="256">ひこう</language>
 	</row>
 
-	<row id="msg_wbt_wincount_esper" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_wbt_wincount_esper" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>トーナメント名称</comment>
 		<language name="JPN" width="256">エスパー</language>
 		<language name="JPN_KANJI" width="256">エスパー</language>
 	</row>
 
-	<row id="msg_wbt_wincount_musi" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_wbt_wincount_musi" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>トーナメント名称</comment>
 		<language name="JPN" width="256">むし</language>
 		<language name="JPN_KANJI" width="256">むし</language>
 	</row>
 
-	<row id="msg_wbt_wincount_iwa" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_wbt_wincount_iwa" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>トーナメント名称</comment>
 		<language name="JPN" width="256">いわ</language>
 		<language name="JPN_KANJI" width="256">いわ</language>
 	</row>
 
-	<row id="msg_wbt_wincount_gorst" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_wbt_wincount_gorst" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>トーナメント名称</comment>
 		<language name="JPN" width="256">ゴースト</language>
 		<language name="JPN_KANJI" width="256">ゴースト</language>
 	</row>
 
-	<row id="msg_wbt_wincount_dragon" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_wbt_wincount_dragon" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>トーナメント名称</comment>
 		<language name="JPN" width="256">ドラゴン</language>
 		<language name="JPN_KANJI" width="256">ドラゴン</language>
 	</row>
 
-	<row id="msg_wbt_wincount_aku" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_wbt_wincount_aku" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>トーナメント名称</comment>
 		<language name="JPN" width="256">あく</language>
 		<language name="JPN_KANJI" width="256">あく</language>
 	</row>
 
-	<row id="msg_wbt_wincount_hagane" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_wbt_wincount_hagane" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>トーナメント名称</comment>
 		<language name="JPN" width="256">はがね</language>
 		<language name="JPN_KANJI" width="256">はがね</language>
