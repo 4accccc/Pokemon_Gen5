@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakatsui" host="DB5YGPBX" date="2010-06-24T15:23:21"/>
+	<create user="matsumiya" host="W00224" date="2011-05-15T17:23:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -745,7 +745,7 @@
 じゃ　またな！　[1:00:トレーナー名:0]！</language>
 	</row>
 
-	<row id="msg_wheel_spring_m_06" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#c0c0c0,,,#c0c0c0,,#ffffff,#c0c0c0,,,#c0c0c0,,">
+	<row id="msg_wheel_spring_m_06" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,,">
 		<comment>春：主人公性別が♀
 
 ※１度観覧車に乗って以降
@@ -767,7 +767,7 @@
 観覧車　乗ったり　してさ？</language>
 	</row>
 
-	<row id="msg_wheel_spring_m_07" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#c0c0c0,,,#c0c0c0,,#ffffff,#c0c0c0,,,#c0c0c0,,">
+	<row id="msg_wheel_spring_m_07" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,,">
 		<comment>春：主人公性別が♀
 
 ※１度観覧車に乗って以降
@@ -788,7 +788,7 @@
 ポケモン勝負　しよーぜ！▼</language>
 	</row>
 
-	<row id="msg_wheel_spring_m_08" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#c0c0c0,,,#c0c0c0,,#ffffff,#c0c0c0,,,#c0c0c0,,">
+	<row id="msg_wheel_spring_m_08" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,,">
 		<comment>春：主人公性別が♀
 
 ※１度観覧車に乗って以降
@@ -810,7 +810,7 @@
 じゃまた！　[1:00:トレーナー名:0]！</language>
 	</row>
 
-	<row id="msg_wheel_spring_m_09" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#c0c0c0,,,#c0c0c0,,#ffffff,#c0c0c0,,,#c0c0c0,,">
+	<row id="msg_wheel_spring_m_09" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,,">
 		<comment>春：主人公性別が♀
 
 ※１度観覧車に乗って以降
@@ -843,7 +843,7 @@
 観覧車　いこーぜ！▼</language>
 	</row>
 
-	<row id="msg_wheel_spring_m_10" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#c0c0c0,,,#c0c0c0,,#ffffff,#c0c0c0,,,#c0c0c0,,">
+	<row id="msg_wheel_spring_m_10" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,,">
 		<comment>春：主人公性別が♀
 
 ※１度観覧車に乗って以降

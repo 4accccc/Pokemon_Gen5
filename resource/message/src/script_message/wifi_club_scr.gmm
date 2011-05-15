@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-06-30T12:54:34"/>
+	<create user="matsumiya" host="W00224" date="2011-05-15T17:23:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1080" top="382" right="1785" bottom="1010" maximized="no" rayout="Vertical2">
+	<dialog left="1815" top="139" right="2015" bottom="767" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="551" top="133" right="1024" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
-		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="325"/>
-		<band id="3" index="4" style="0000" width="370"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="0" index="1" style="0000" width="445"/>
+		<band id="1" index="2" style="0000" width="192"/>
+		<band id="2" index="3" style="0000" width="217"/>
+		<band id="3" index="4" style="0000" width="192"/>
+		<band id="4" index="0" style="0000" width="591"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_wifi_club_01_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_wifi_club_01_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>受付カウンターに話しかけたときのメッセージ
 
 ・Ｗｉ－Ｆｉクラブへ　いく
@@ -319,14 +319,14 @@
 ご利用ですか？</language>
 	</row>
 
-	<row id="msg_wifi_club_01_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_wifi_club_01_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>フィールドへもどる</comment>
 		<attribute name="キャラ指定">受付の人</attribute>
 		<language name="JPN" width="256">それでは　また　おこしください</language>
 		<language name="JPN_KANJI" width="256">それでは　また　お越しください</language>
 	</row>
 
-	<row id="msg_wifi_club_01_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_wifi_club_01_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>Wi-Fi接続をするかどうかの確認メッセージ
 
 「はい」
@@ -343,7 +343,7 @@
 開始しますか？</language>
 	</row>
 
-	<row id="msg_wifi_club_01_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_wifi_club_01_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>主人公がゲートを通って奥へ。
 受付の二人が、主人公のほうを向いて
 見送るような演出。
@@ -354,7 +354,7 @@ Wi-Fi P2P接続画面へ</comment>
 		<language name="JPN_KANJI" width="256">それでは　こちらへ　どうぞ！▼</language>
 	</row>
 
-	<row id="msg_wifi_club_01_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_wifi_club_01_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>・仮ＩＤで、ともだちてちょうに友達の登録がない場合
 の受付メッセージ
 メッセージ後、はい・いいえの選択
@@ -386,7 +386,7 @@ Wi-Fi P2P接続画面へ</comment>
 受け取りますか？[2:00:１桁:0]</language>
 	</row>
 
-	<row id="msg_wifi_club_01_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_wifi_club_01_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>・本ＩＤで、ともだちてちょうに友達の登録がない場合
 の受付メッセージ
 フィールドへもどる</comment>
@@ -413,7 +413,7 @@ Wi-Fi P2P接続画面へ</comment>
 お越しください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_wifi_club_01_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_wifi_club_01_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>msg_wifi_club_01_01での選択肢の
 「せつめいを　きく」選択時</comment>
 		<attribute name="キャラ指定">受付の人</attribute>
@@ -443,7 +443,7 @@ Wi-Fi P2P接続画面へ</comment>
 ご利用ですか？</language>
 	</row>
 
-	<row id="msg_wifi_club_01_err01" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+	<row id="msg_wifi_club_01_err01" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>エラーメッセージ
 C-Gear入手前</comment>
 		<attribute name="キャラ指定">受付の人</attribute>
@@ -453,7 +453,7 @@ C-Gear入手前</comment>
 また　あとで　お越しください</language>
 	</row>
 
-	<row id="msg_wifi_club_01_err02" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+	<row id="msg_wifi_club_01_err02" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>エラーメッセージ
 ダメタマが手持ちにある</comment>
 		<attribute name="キャラ指定">受付の人</attribute>
@@ -463,7 +463,7 @@ C-Gear入手前</comment>
 ポケモンが　います</language>
 	</row>
 
-	<row id="msg_wifi_club_01_err03" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+	<row id="msg_wifi_club_01_err03" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>エラーメッセージ
 フィールド通信接続終了処理エラー時</comment>
 		<attribute name="キャラ指定">受付の人</attribute>
@@ -471,21 +471,21 @@ C-Gear入手前</comment>
 		<language name="JPN_KANJI" width="256">通信エラーが　発生しました</language>
 	</row>
 
-	<row id="msg_wifi_club_01_win01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_wifi_club_01_win01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>msg_wifi_club_01_01での選択肢</comment>
 		<attribute name="キャラ指定">受付の人</attribute>
 		<language name="JPN" width="256">Ｗｉ－Ｆｉクラブへ　いく</language>
 		<language name="JPN_KANJI" width="256">Ｗｉ－Ｆｉクラブへ　いく</language>
 	</row>
 
-	<row id="msg_wifi_club_01_win02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_wifi_club_01_win02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>msg_wifi_club_01_01での選択肢</comment>
 		<attribute name="キャラ指定">受付の人</attribute>
 		<language name="JPN" width="256">せつめいを　きく</language>
 		<language name="JPN_KANJI" width="256">説明を聞く</language>
 	</row>
 
-	<row id="msg_wifi_club_01_win03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_wifi_club_01_win03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>msg_wifi_club_01_01での選択肢</comment>
 		<attribute name="キャラ指定">受付の人</attribute>
 		<language name="JPN" width="256">やめる</language>
