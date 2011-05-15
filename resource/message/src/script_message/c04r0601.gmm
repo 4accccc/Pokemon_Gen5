@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-05-15T16:50:35"/>
+	<create user="matsumiya" host="W00224" date="2011-05-15T16:59:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -303,56 +303,77 @@
 	<row id="msg_c04r0601_rally_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・アイテム入手後</comment>
-		<language name="JPN" width="256">no data</language>
+		<language name="JPN" width="256">ラリーのポイントは
+ギアステーション
+ミュージカルホールに
+ビッグスタジアムに　リトルコート
+じてんしゃで～</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c04r0601_rally_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・残り５箇所</comment>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
+・</comment>
+		<language name="JPN" width="256">ライモンラリーで
+まだ　おとずれて　いないのは……▼</language>
+		<language name="JPN_KANJI" width="256">ライモンラリーで
+まだ　訪れていないのは……▼</language>
 	</row>
 
-	<row id="msg_c04r0601_rally_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04r0601_rally_04" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>♂
-・残り４箇所</comment>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
+・ギアステーションまだ</comment>
+		<language name="JPN" width="256">ギアステーション！▼</language>
+		<language name="JPN_KANJI" width="256">ギアステーション！▼</language>
 	</row>
 
 	<row id="msg_c04r0601_rally_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・残り３箇所</comment>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
+・ミュージカルホールまだ</comment>
+		<language name="JPN" width="256">ミュージカルホール！▼</language>
+		<language name="JPN_KANJI" width="256">ミュージカルホール！▼</language>
 	</row>
 
 	<row id="msg_c04r0601_rally_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・残り２箇所</comment>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
+・ビッグスタジアムまだ</comment>
+		<language name="JPN" width="256">ビッグスタジアム！▼</language>
+		<language name="JPN_KANJI" width="256">ビッグスタジアム！▼</language>
 	</row>
 
 	<row id="msg_c04r0601_rally_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・残り１箇所</comment>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
+・リトルコートまだ</comment>
+		<language name="JPN" width="256">リトルコート！▼</language>
+		<language name="JPN_KANJI" width="256">リトルコート！▼</language>
 	</row>
 
 	<row id="msg_c04r0601_rally_08" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・残り０箇所＝アイテム入手前</comment>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
+・締めの言葉</comment>
+		<language name="JPN" width="256">の　[2:00:１桁:0]かしょ　ですね！
+では　がんばってくださーい！</language>
+		<language name="JPN_KANJI" width="256">の　[2:00:１桁:0]カ所　ですね！
+では　がんばってくださーい！</language>
 	</row>
 
 	<row id="msg_c04r0601_rally_09" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
+・残り０箇所＝アイテム入手前</comment>
+		<language name="JPN" width="256">ライモンラリー
+せいは　おめでとうございます！▼
+これは　ささやかなものですが▼</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04r0601_rally_10" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
 ・残り０箇所＝アイテム入手後</comment>
-		<language name="JPN" width="256">no data</language>
+		<language name="JPN" width="256">ライモンの　かんこう～
+ふやすための　ラリー！
+だから　さいしょに　きまえよく
+じてんしゃも　プレゼントしてして
+これからも　ライモンを　あいしてくださいね</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
