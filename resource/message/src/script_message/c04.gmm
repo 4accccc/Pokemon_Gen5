@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-05-09T15:51:37"/>
+	<create user="matsumiya" host="W00224" date="2011-05-15T17:41:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1297" top="143" right="2002" bottom="771" maximized="no" rayout="Vertical2">
+	<dialog left="1293" top="161" right="1998" bottom="789" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -642,7 +642,7 @@
 ギミックが　あるんでしょうね！</language>
 	</row>
 
-	<row id="msg_c04_trainerw_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04_trainerw_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・pos（GRIDX=421~423、GRIDZ=460）を踏むと
 　GRIDX=422、GRIDZ=459に出現して
@@ -655,7 +655,7 @@
 そして　敗北もしたの……▼</language>
 	</row>
 
-	<row id="msg_c04_trainerw_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04_trainerw_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・階段を降り、上向きでメッセージ表示
 ・続けて下向きでtrainerw_03</comment>
@@ -668,7 +668,7 @@
 バトルサブウェイが　あるのよ！▼</language>
 	</row>
 
-	<row id="msg_c04_trainerw_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04_trainerw_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・アイテム入手処理
 　No465「バトルレコーダー」</comment>
@@ -679,7 +679,7 @@
 なにもいわずに　受け取りなさい▼</language>
 	</row>
 
-	<row id="msg_c04_trainerw_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04_trainerw_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・アイテム入手後、自動で表示
 ・メッセージ表示後退場</comment>
