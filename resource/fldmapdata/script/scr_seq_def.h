@@ -13239,6 +13239,17 @@
   .short \ret_wk
   .endm
 
+//--------------------------------------------------------------
+/**
+ * @brief リゾート用  メダル情報画面呼び出し
+ */
+//--------------------------------------------------------------
+#define _RESORT_CALL_MEDALINFO() \
+      _ASM_RESORT_CALL_MEDALINFO
+
+  .macro _ASM_RESORT_CALL_MEDALINFO
+  .short EV_SEQ_RESORT_CALL_MEDALINFO
+  .endm
 
 //--------------------------------------------------------------
 /**

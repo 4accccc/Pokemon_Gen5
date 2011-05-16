@@ -30,7 +30,7 @@
 
 #include "../event_fieldmap_control.h"
 
-//#include "app/medal_info.h"
+#include "app/medal_info.h"
 
 #include "savedata/resonance_resort_sv.h"
 #include "resort_people.h"
@@ -46,7 +46,6 @@
  *					プロトタイプ宣言
 */
 //=============================================================================
-#if 0
 static void MedalInfoEndCallback( void* p_work );
 
 //scrcmd_resort.cのソースを使う
@@ -62,7 +61,6 @@ typedef struct {
   GAMEDATA            *p_gamedata;
   STRBUF              *p_tr_name;
 } SCR_MEDAL_INFO_WK;
-#endif
 //--------------------------------------------------------------
 /**
  * メダル詳細画面呼び出し
@@ -72,31 +70,43 @@ typedef struct {
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdCallMedalInfo( VMHANDLE *core, void *wk )
 {
-#if 0
   MEDALINFO_INIT_PARAM *p_medal_info_wk;
   SCRCMD_WORK   *p_work     = (SCRCMD_WORK*)wk;
   GAMESYS_WORK  *p_gsys     = SCRCMD_WORK_GetGameSysWork( p_work );
   GAMEDATA      *p_gamedata = GAMESYSTEM_GetGameData( p_gsys );
   FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( p_gsys );
   SCRIPT_WORK   *p_sc       = SCRCMD_WORK_GetScriptWork( p_work );
-  MYSTATUS      *p_my_status= GAMEDATA_GetMyStatus(p_gamedata);
-  const STRCODE *my_name;
+  STRCODE       name[PERSON_NAME_SIZE+EOM_SIZE];
   
-  u16 medal_id  = SCRCMD_GetVMWorkValue( core, p_work );
-  u16 get_year  = SCRCMD_GetVMWorkValue( core, p_work );
-  u16 get_month = SCRCMD_GetVMWorkValue( core, p_work );
-  u16 get_day   = SCRCMD_GetVMWorkValue( core, p_work );
-  u16 medal_cnt = SCRCMD_GetVMWorkValue( core, p_work );
-  u16 box_rank  = SCRCMD_GetVMWorkValue( core, p_work );
+  u16 medal_id;
+  u16 get_year;
+  u16 get_month;
+  u16 get_day;
+  u16 medal_cnt;
+  u16 box_rank;
   GMEVENT *p_ev; 
 
   SCR_MEDAL_INFO_WK *p_call_wk = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(SCR_MEDAL_INFO_WK) );
   p_medal_info_wk = &p_call_wk->p_medal_info_wk;
 
+  //自分のからメダル情報を取得
+  {
+    RESORT_PEOPLE *p_people = Resort_ScrcmdMedalInfo_GetFrontPeople( p_fieldmap );
+    RESORT_DATE date = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_EXT1_RECOMMEND_DATE, NULL );
+
+    RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_NAME, name );
+    medal_id = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_EXT1_RECOMMEND_MEDAL_ID, NULL );
+    get_year  = RESORT_DATE_GET_YEAR(date);
+    get_month = RESORT_DATE_GET_MONTH(date);
+    get_day   = RESORT_DATE_GET_DAY(date);
+    medal_cnt = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_EXT1_MEDAL_NUM, NULL );
+    box_rank  = RESORT_PEOPLE_GetData( p_people, RESORT_DATA_PARAM_EXT1_MEDAL_BOX_RANK, NULL );
+
+  }
+
   // 名前の設定
-  my_name = MyStatus_GetMyName( p_my_status );
   p_call_wk->p_tr_name = GFL_STR_CreateBuffer( PERSON_NAME_SIZE + EOM_SIZE, HEAPID_PROC );
-  GFL_STR_SetStringCode( p_call_wk->p_tr_name ,my_name);
+  GFL_STR_SetStringCode( p_call_wk->p_tr_name , name);
 
   // パラメータの設定
   p_medal_info_wk->p_trainer_name = p_call_wk->p_tr_name;
@@ -122,11 +132,9 @@ VMCMD_RESULT EvCmdCallMedalInfo( VMHANDLE *core, void *wk )
   p_ev = EVENT_FieldSubProc_Callback(p_gsys ,p_fieldmap ,FS_OVERLAY_ID(medalinfo), &medalInfo_ProcData, p_medal_info_wk, MedalInfoEndCallback, p_call_wk);
 
   SCRIPT_CallEvent( p_sc ,p_ev );
-#endif
   return VMCMD_RESULT_SUSPEND;
 }
 
-#if 0
 //----------------------------------------------------------------------------
 /**
  *	@brief  データ開放処理
@@ -176,4 +184,3 @@ static RESORT_PEOPLE * Resort_ScrcmdMedalInfo_GetFrontPeople( FIELDMAP_WORK *p_f
 
   return Resort_Scrcmd_GetFrontPeople( p_fieldmap, p_people_sys );
 }
-#endif

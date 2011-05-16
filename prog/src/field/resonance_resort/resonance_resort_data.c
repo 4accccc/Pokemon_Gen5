@@ -568,6 +568,7 @@ static BOOL RESORT_BASIC2_DATA_IsValid( const RESORT_BASIC2_DATA *cp_wk )
 typedef struct
 {
   u8  medal_bit[RESORT_RECV_MEDAL_BIT_BYTE];
+  u8  medal_box_rank;
   u8  recommend_medalID;
   u8  medal_num;
   RESORT_DATE recommend_date;
@@ -1553,6 +1554,8 @@ u32 RESORT_RECV_DATA_GetData( const RESORT_RECV_DATA *cp_wk, RESORT_DATA_PARAM p
       GFL_STD_MemCopy( cp_wk->extend1.medal_bit, p_ret_adrs, sizeof(u8)*RESORT_RECV_MEDAL_BIT_BYTE );
     }
     return (u32)cp_wk->extend1.medal_bit;
+  case RESORT_DATA_PARAM_EXT1_MEDAL_BOX_RANK:
+    return cp_wk->extend1.medal_box_rank;
   case RESORT_DATA_PARAM_EXT1_RECOMMEND_MEDAL_ID:
     RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_01 );
     return cp_wk->extend1.recommend_medalID;
@@ -1858,6 +1861,9 @@ void RESORT_RECV_DATA_SetData( RESORT_RECV_DATA *p_wk, RESORT_DATA_PARAM param, 
   case RESORT_DATA_PARAM_EXT1_MEDAL_BIT:
     RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_01 );
     GFL_STD_MemCopy( (const void *)data, p_wk->extend1.medal_bit, sizeof(u8)*RESORT_RECV_MEDAL_BIT_BYTE );
+    break;
+  case RESORT_DATA_PARAM_EXT1_MEDAL_BOX_RANK:
+    p_wk->extend1.medal_box_rank = data;
     break;
   case RESORT_DATA_PARAM_EXT1_RECOMMEND_MEDAL_ID:
     RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_01 );
