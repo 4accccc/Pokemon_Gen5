@@ -913,6 +913,11 @@ SRCS_OVERLAY_DEBUGMENU_BSUBWAY  = field/event_debug_menu_ov_bsubway.c
 #GROUP_OVERLAY_DEBUGMENU
 SRCS_OVERLAY_DEBUGMENU_INFINITY  = field/event_debug_menu_ov_infinity.c
 
+# デバッグメニュー並列化  メダル詳細画面
+#===> SRCS_OVERLAY_FIELDMAP
+#GROUP_OVERLAY_DEBUGMENU
+SRCS_OVERLAY_DEBUGMENU_MEDALINFO  = field/event_debug_menu_ov_medalinfo.c
+
 # スクリプトコマンド並列化  バトルサブウェイ
 #===> GROUP_OVERLAY_DEBUGMENU
 #GROUP_OVERLAY_SCRCMD
@@ -1605,6 +1610,14 @@ SRCS_OVERLAY_TRAINERCARD = app/trainercard/trainer_card.c \
       app/trainercard/trcard_bmp.c \
       app/trainercard/trcard_obj.c \
       app/trainercard/badge_view.c
+
+# メダル詳細画面
+#===> SRCS_OVERLAY_DEV_WIFI
+#===> SRCS_OVERLAY_DEV_WIRELESS
+#===> GROUP_OVERLAY_UNION_INTRUDE
+#===> SRCS_OVERLAY_PMSINPUT
+#===> GROUP_OVERLAY_SCRCMD
+SRCS_OVERLAY_MEDALINFO = app/medal_info/medal_info.c
 
 
 #パレス

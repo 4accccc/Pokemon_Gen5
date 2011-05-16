@@ -24,6 +24,7 @@
 #include "print/wordset.h"        // ワードセット
 
 #include "medalbox_gra.naix"      // グラフィックアーカイブ
+#include "medalicon_gra.naix"      // グラフィックアーカイブ
 
 #include "app_menu_common.naix"   // 共通素材
 #include "app/app_menu_common.h"  // 共通素材
@@ -375,6 +376,7 @@ typedef enum
 enum{
   ARC_TYPE_MEDAL_GRA,
   ARC_TYPE_COMMON_BUTTON_GRA,
+  ARC_TYPE_MEDAL_ICON,
   ARC_TYPE_MAX,
 };
 
@@ -1592,18 +1594,19 @@ static void MDLSYS_OBJInit( MEDALBOXSYS_WORK *p_wk )
     // =======================================
     p_handle[ARC_TYPE_MEDAL_GRA] = GFL_ARC_OpenDataHandle( ARCID_MEDALGRA , heapID );
     p_handle[ARC_TYPE_COMMON_BUTTON_GRA] = GFL_ARC_OpenDataHandle( ARCID_APP_MENU_COMMON , heapID );
+    p_handle[ARC_TYPE_MEDAL_ICON] = GFL_ARC_OpenDataHandle( ARCID_MEDALICON , heapID );
 
     // ======================================
     // メダルOBJ
     // ======================================
-    obj_res[ OBJRESID_MEDAL_CELLANM ] = GFL_CLGRP_CELLANIM_Register( p_handle[ARC_TYPE_MEDAL_GRA],
-        NARC_medalbox_gra_medal_obj1_NCER, NARC_medalbox_gra_medal_obj1_NANR , heapID );
+    obj_res[ OBJRESID_MEDAL_CELLANM ] = GFL_CLGRP_CELLANIM_Register( p_handle[ARC_TYPE_MEDAL_ICON],
+        NARC_medalicon_gra_medal_icon_NCER, NARC_medalicon_gra_medal_icon_NANR , heapID );
 
-    obj_res[ OBJRESID_MEDAL_PLTT ]    = GFL_CLGRP_PLTT_RegisterEx( p_handle[ARC_TYPE_MEDAL_GRA],
-        NARC_medalbox_gra_medal_obj1_NCLR , CLSYS_DRAW_MAX ,  0 , 0 , MEDALOBJ_PALETTENUM_MEDAL , heapID );
+    obj_res[ OBJRESID_MEDAL_PLTT ]    = GFL_CLGRP_PLTT_RegisterEx( p_handle[ARC_TYPE_MEDAL_ICON],
+        NARC_medalicon_gra_medal_icon_NCLR , CLSYS_DRAW_MAX ,  0 , 0 , MEDALOBJ_PALETTENUM_MEDAL , heapID );
   
-    obj_res[ OBJRESID_MEDAL_CGR ]     = GFL_CLGRP_CGR_Register( p_handle[ARC_TYPE_MEDAL_GRA],
-        NARC_medalbox_gra_medal_obj1_NCGR , FALSE, CLSYS_DRAW_MAX, heapID );
+    obj_res[ OBJRESID_MEDAL_CGR ]     = GFL_CLGRP_CGR_Register( p_handle[ARC_TYPE_MEDAL_ICON],
+        NARC_medalicon_gra_medal_icon_NCGR , FALSE, CLSYS_DRAW_MAX, heapID );
 
     // ======================================
     // UIOBJ

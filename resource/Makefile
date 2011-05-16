@@ -182,7 +182,8 @@ SUBDIRS	=	wmi \
 			field_goout_effect \
 			resonance_resort \
 			pokewood \
-			mobiclip
+			mobiclip \
+			medal_info
 
 
 include $(RESOURCE_MACRO)

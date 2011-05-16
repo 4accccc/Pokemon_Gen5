@@ -1,0 +1,23 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: medalinfo_gra.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_MEDALINFO_GRA_NAIX_
+#define NARC_MEDALINFO_GRA_NAIX_
+
+enum {
+	NARC_medalinfo_gra_medalinfo_bg_NCLR = 0,
+	NARC_medalinfo_gra_medalinfo_bg_NCGR = 1,
+	NARC_medalinfo_gra_medalinfo_bgd1_NSCR = 2,
+	NARC_medalinfo_gra_medalinfo_bgd2_NSCR = 3,
+	NARC_medalinfo_gra_medalinfo_bgd3_NSCR = 4,
+	NARC_medalinfo_gra_medalinfo_bgu1_NSCR = 5
+};
+
+/* NARC_MEDALINFO_GRA_NAIX_ */
+#endif

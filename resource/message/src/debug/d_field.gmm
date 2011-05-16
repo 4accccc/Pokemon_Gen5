@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00253" date="2011-05-10T16:07:50"/>
+	<create user="onoue_masayuki" host="W00272" date="2011-05-12T09:49:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -375,12 +375,12 @@
 		</language>
 	</columns>
 
-	<dialog left="0" top="97" right="534" bottom="717" maximized="no" rayout="Vertical2">
+	<dialog left="1573" top="202" right="2107" bottom="822" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="752" top="215" right="1280" bottom="737" visible="yes"/>
-		<band id="0" index="0" style="0000" width="526"/>
+		<band id="0" index="0" style="0000" width="518"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="359"/>
+		<band id="2" index="2" style="0000" width="351"/>
 		<band id="3" index="3" style="0000" width="591"/>
 		<edit entry="0" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
@@ -2540,6 +2540,11 @@ LR→補完&quot;</language>
 	<row id="DEBUG_FIELD_MOBICLIP_02">
 		<language name="JPN" width="240">OPENING_02</language>
 		<language name="JPN_KANJI" width="240">OPENING_02</language>
+	</row>
+
+	<row id="DEBUG_FIELD_MEDAL_INFO">
+		<language name="JPN" width="240">メダル詳細画面</language>
+		<language name="JPN_KANJI" width="240">メダル詳細画面</language>
 	</row>
 
 	<flowchart-group-list>

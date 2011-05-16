@@ -45,6 +45,7 @@
 #include "event_debug_menu_ov_wbt.h"
 #include "event_debug_menu_ov_infinity.h"
 #include "event_debug_menu_ov_pokewood.h"
+#include "event_debug_menu_ov_medalinfo.h"
 
 
 
@@ -60,6 +61,7 @@ FS_EXTERN_OVERLAY( debugmenu_app );
 FS_EXTERN_OVERLAY( debugmenu_staff );
 FS_EXTERN_OVERLAY( debugmenu_bsubway );
 FS_EXTERN_OVERLAY( debugmenu_infinity );
+FS_EXTERN_OVERLAY( debugmenu_medalinfo );
 
 //======================================================================
 //  extern
@@ -200,6 +202,7 @@ static const DEBUG_MENU_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_STR66,  debugMenuCallProc_RingTone, FS_OVERLAY_ID(debugmenu_staff) },           //着信音
   { DEBUG_FIELD_STR73, debugMenu_WfbcDebug, FS_OVERLAY_ID(debugmenu_staff) },                   //WFBCオートチェック
   { DEBUG_FIELD_MEDALBOX_01 , debugMenuCallProc_MedalBox , FS_OVERLAY_ID(debugmenu_staff) },    // メダルボックス
+  { DEBUG_FIELD_MEDAL_INFO , debugMenuCallProc_MedalInfo , FS_OVERLAY_ID(debugmenu_medalinfo) },    // メダル詳細画面
   { DEBUG_FIELD_INFINITY , debugMenuCallProc_InfinityDungeon , FS_OVERLAY_ID(debugmenu_infinity) },    // 無限ダンジョン
   // ためしにデバック機能追加してみた
   { DEBUG_FIELD_TEST_ICHI, debugMenuCallProc_DebugTest_Ichi, FS_OVERLAY_ID(debugmenu_staff) },    // いちらくテスト
@@ -243,7 +246,7 @@ static const DEBUG_MENU_LIST DATA_DebugMenuList[] =
 #define QuickJumpSelect  DEBUG_FIELD_RESORT
 #elif defined DEBUG_ONLY_FOR_onoue_masayuki
 #define QuickJumpStart   DEBUG_FIELD_INFINITY
-#define QuickJumpSelect  DEBUG_FIELD_INFINITY
+#define QuickJumpSelect  DEBUG_FIELD_MEDAL_INFO
 #elif defined DEBUG_ONLY_FOR_nakamura_akira
 #define QuickJumpStart   DEBUG_FIELD_INFINITY
 #define QuickJumpSelect  DEBUG_FIELD_INFINITY
