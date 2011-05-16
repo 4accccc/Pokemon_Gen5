@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-05-16T20:41:49"/>
+	<create user="matsumiya" host="W00224" date="2011-05-16T21:25:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1371" top="290" right="2076" bottom="918" maximized="no" rayout="Vertical2">
+	<dialog left="1308" top="164" right="2013" bottom="792" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -293,16 +293,157 @@
 
 
 	<row id="msg_c04_swrival_01" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂</comment>
+		<comment>♂
+・c04ジムバッジ入手後に登場
+・1＝ライバル名</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『まてよ！
+おまえら　ここで　なに　してたんだよ！▼</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_swplazmam1_01" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>♂
+・GRIDX＝405、GRIDZ＝438
+
+・他に
+　GRIDX＝405、GRIDZ＝437
+・GRIDX＝405、GRIDZ＝439
+・GRIDX＝405、GRIDZ＝440に配置</comment>
+		<attribute name="キャラ指定">SWPLAZMAM
+プラズマ団♂</attribute>
+		<language name="JPN" width="256">プラズマだん『ただ　ここに　いただけだ▼
+ぎゃくに　しつもん　するが
+おれたちが　おまえに　なにかしたか？▼</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_swrival_02" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・c04ジムバッジ入手後に登場
+・1＝ライバル名</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『なにも　していない
+だけど　プラズマだんは　ゆるさないッ！！▼</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_swplazmam1_02" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<attribute name="キャラ指定">SWPLAZMAM
+プラズマ団♂</attribute>
+		<language name="JPN" width="256">プラズマだん『やれやれ……
+ちかごろの　トレーナーは　ぶっそうだ▼
+ポケモンの　つよさを
+じぶんの　つよさと　かんちがい　か？▼
+まあ　おまえの　きもちは　どうでもいいが
+オレたちも　ジャマされたくないのでな！</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_swrival_03" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・c04ジムバッジ入手後に登場
+・1＝ライバル名</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:00:トレーナー名:0]！
+そこに　いるんだろ▼
+まきこんで　わるいけどさ
+ふたりずつ　かたづけようぜ！▼</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_swrival_04" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・swrival_03表示後、プラズマ団と戦闘するまで</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:00:トレーナー名:0]！
+はんぶんずつ　かたづけるぜ！▼</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_swplazmam2_01" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#ff8080,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・</comment>
+		<attribute name="キャラ指定">SWPLAZMAM
+プラズマ団♂</attribute>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_swplazmam2_02" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#ff8080,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・</comment>
+		<attribute name="キャラ指定">SWPLAZMAM
+プラズマ団♂</attribute>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_swplazmam2_03" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#ff8080,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・</comment>
+		<attribute name="キャラ指定">SWPLAZMAM
+プラズマ団♂</attribute>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_swplazmaw1_01" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・</comment>
+		<attribute name="キャラ指定">SWPLAZMAM
+プラズマ団♀</attribute>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_swplazmaw1_02" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・</comment>
+		<attribute name="キャラ指定">SWPLAZMAM
+プラズマ団♀</attribute>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_swplazmaw1_03" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・</comment>
+		<attribute name="キャラ指定">SWPLAZMAM
+プラズマ団♀</attribute>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_swplazmam1_03" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>♂
+・</comment>
+		<attribute name="キャラ指定">SWPLAZMAM
+プラズマ団♂</attribute>
+		<language name="JPN" width="256">
+その強さに免じて教えてやろう
+我々プラズマ団はあるものを探している
+それがあれば本当の力を発揮できる……</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_swrival_05" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c04_swplazmam1_01" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
-		<attribute name="キャラ指定">SWPLAZMAM
-プラズマ団♂</attribute>
-		<language name="JPN" width="256">no data</language>
+	<row id="msg_c04_swrival_06" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">
+オレさ……　プラズマ団に
+ポケモンを　うばわれたんだよ……
+おまえが　ひっこしてくるまえ
+ちいさくて　なにも　できなくて</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
