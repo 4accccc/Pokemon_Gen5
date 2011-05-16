@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-05-14T14:03:16"/>
+	<create user="matsumiya" host="W00224" date="2011-05-16T18:37:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1293" top="156" right="1998" bottom="784" maximized="no" rayout="Vertical2">
+	<dialog left="1293" top="161" right="1998" bottom="789" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -452,7 +452,7 @@
 ・GRIDX=240、GRIDZ=670、左向きに配置
 ・続けてswrival_01</comment>
 		<attribute name="キャラ指定">SWPLAZMAM
-ネオプラズマ団♂</attribute>
+プラズマ団♂</attribute>
 		<language name="JPN" width="256">？？？『そうとも！
 おれらは　プラズマだん！▼</language>
 		<language name="JPN_KANJI" width="256">？？？『そうとも！
@@ -484,7 +484,7 @@
 ・GRIDX=241、GRIDZ=671、左向きに配置
 ・続けてneohakaiw_01</comment>
 		<attribute name="キャラ指定">SWPLAZMAM
-ネオプラズマ団♂</attribute>
+プラズマ団♂</attribute>
 		<language name="JPN" width="256">なぞのおとこ『ぼくじょう　では
 ヨーテリーに　おいかけられるし▼</language>
 		<language name="JPN_KANJI" width="256">なぞのおとこ『牧場では
@@ -497,7 +497,7 @@
 ・GRIDX=241、GRIDZ=669、左向きに配置
 ・続けてneohakaim1_02</comment>
 		<attribute name="キャラ指定">SWPLAZMAW
-ネオプラズマ団♀</attribute>
+プラズマ団♀</attribute>
 		<language name="JPN" width="256">なぞのおんな『ここじゃ　からまれるし
 なんだか　イマイチね▼</language>
 		<language name="JPN_KANJI" width="256">なぞのおんな『ここじゃ　からまれるし
@@ -508,7 +508,7 @@
 		<comment>♂
 ・続けてswrival_02</comment>
 		<attribute name="キャラ指定">SWPLAZMAM
-ネオプラズマ団♂</attribute>
+プラズマ団♂</attribute>
 		<language name="JPN" width="256">なぞのおとこ『まあ　いいさ▼
 こいつら　ボコボコにして
 ポケモンを　うばえば　いいだけさ▼
@@ -563,7 +563,7 @@
 ・はい　→neohakaim1_04
 　いいえ→neohakaim1_05</comment>
 		<attribute name="キャラ指定">SWPLAZMAM
-ネオプラズマ団♂</attribute>
+プラズマ団♂</attribute>
 		<language name="JPN" width="256">プラズマだん『どうする？
 オレと　たたかうかい？</language>
 		<language name="JPN_KANJI" width="256">プラズマ団『どうする？
@@ -575,7 +575,7 @@
 ・はい選択時
 ・メッセージ表示後、トレーナー戦闘へ</comment>
 		<attribute name="キャラ指定">SWPLAZMAM
-ネオプラズマ団♂</attribute>
+プラズマ団♂</attribute>
 		<language name="JPN" width="256">オマエの　ポケモン
 いただくと　するぜ！▼</language>
 		<language name="JPN_KANJI" width="256">オマエの　ポケモン
@@ -587,7 +587,7 @@
 ・いいえ選択時
 ・再度話しかけたときはneohakaim1_03から</comment>
 		<attribute name="キャラ指定">SWPLAZMAM
-ネオプラズマ団♂</attribute>
+プラズマ団♂</attribute>
 		<language name="JPN" width="256">そうそう
 オレたちに　さからうなよ</language>
 		<language name="JPN_KANJI" width="256">そうそう
@@ -602,7 +602,7 @@
 ・船のSE？（要検討）
 ・続けてswrival_04</comment>
 		<attribute name="キャラ指定">SWPLAZMAM
-ネオプラズマ団♂</attribute>
+プラズマ団♂</attribute>
 		<language name="JPN" width="256">プラズマだん『まさか！　こんな
 こどもたちに　ふかくを　とるとは……▼
 クッ……　ヒウンシティに　もどり▽
