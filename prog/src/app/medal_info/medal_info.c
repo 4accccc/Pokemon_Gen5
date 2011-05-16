@@ -451,22 +451,22 @@ static void MEDALINFO_InputCheck( MEDALINFO_WK *p_wk )
   int tp_hit;
 
   // キャンセル
-  if( trg & PAD_BUTTON_X )
-  {
-    SetExitButton( p_wk );
-    GFL_UI_SetTouchOrKey(GFL_APP_END_KEY);
-    return;
-  }
-
-  // 戻る
   if( p_wk->call_mode == MEDALINFO_CALL_SUB )
   {
-    if( trg & PAD_BUTTON_B )
+    if( trg & PAD_BUTTON_X )
     {
-      SetReturnButton( p_wk );
+      SetExitButton( p_wk );
       GFL_UI_SetTouchOrKey(GFL_APP_END_KEY);
       return;
     }
+  }
+
+  // 戻る
+  if( trg & PAD_BUTTON_B )
+  {
+    SetReturnButton( p_wk );
+    GFL_UI_SetTouchOrKey(GFL_APP_END_KEY);
+    return;
   }
   
   // タッチによるあたり判定
