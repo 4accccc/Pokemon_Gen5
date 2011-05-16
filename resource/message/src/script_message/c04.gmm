@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-05-16T19:31:39"/>
+	<create user="matsumiya" host="W00224" date="2011-05-16T20:19:38"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1293" top="166" right="1998" bottom="789" maximized="no" rayout="Vertical2">
+	<dialog left="1308" top="164" right="2013" bottom="792" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -309,9 +309,10 @@
 	<row id="msg_c04_heroine_01" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀：主人公♂
 ・ギアステーション前
+　GRIDX=422、GRIDZ=461.上向き
 ・はい/いいえの選択肢表示
-・はい　→
-　いいえ→</comment>
+・はい　→heroine_04
+　いいえ→heroine_02</comment>
 		<attribute name="キャラ指定">HEROINE</attribute>
 		<language name="JPN" width="256">この　ギアステーションって
 ちかてつの　なかで▽
@@ -343,8 +344,8 @@
 		<comment>♀：主人公♂
 ・いいえ選択後再度会話
 ・はい/いいえの選択肢表示
-・はい　→
-　いいえ→</comment>
+・はい　→heroine_04
+　いいえ→heroine_02</comment>
 		<attribute name="キャラ指定">HEROINE</attribute>
 		<language name="JPN" width="256">じゅんびオーケーよね
 いっしょに　たたかってくれる？</language>
@@ -354,7 +355,7 @@
 	<row id="msg_c04_heroine_04" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀：主人公♂
 ・はい選択時
-・続けて</comment>
+・続けてheroine_05</comment>
 		<attribute name="キャラ指定">HEROINE</attribute>
 		<language name="JPN" width="256">ありがとう！▼
 あっ　あたし　？？？？？
@@ -366,7 +367,7 @@
 		<comment>♀：主人公♂
 ・サブウェイマスターのほうを向いて
 　メッセージ表示
-・続けて</comment>
+・続けてtbossbl_02</comment>
 		<attribute name="キャラ指定">HEROINE</attribute>
 		<language name="JPN" width="256">ということで　サブウェイマスターに
 いどませて　もらいます！▼</language>
@@ -376,7 +377,7 @@
 	<row id="msg_c04_heroine_06" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀：主人公♂
 ・戦闘後
-　表示後
+　tbossbl_02表示後
 ・アイテム入手処理
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">HEROINE</attribute>
@@ -440,48 +441,128 @@
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c04_hero_07" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04_tbossbl_01" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・戦闘前</comment>
-		<attribute name="キャラ指定">サブウェイマスター
-クダリ</attribute>
-		<language name="JPN" width="256">どんな　ばしょでも
-ポケモンしょうぶ！▼
-いいね　きみたち！
-ぼくたちと　ポケモンしょうぶ！</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_c04_hero_08" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
-		<comment>♂
-・戦闘前</comment>
+・ギアステーション前
+　GRIDX=423、GRIDZ=460.上向き</comment>
 		<attribute name="キャラ指定">サブウェイマスター
 ノボリ</attribute>
 		<language name="JPN" width="256">わたくし　サブウェイマスターの
 ノボリ　と　もうします！▼
-かたがわに　ひかえるは　おなじく
-サブウェイマスターの　クダリです▼
-ほんらいで　あれば～</language>
-		<language name="JPN_KANJI" width="256">no data</language>
+いつもは　ギアステーションから
+しゅっぱつします　ちかてつにて▽
+ポケモンしょうぶを　しております</language>
+		<language name="JPN_KANJI" width="256">わたくし　サブウェイマスターの
+ノボリ　と　申します！▼
+いつもは　ギアステーションから
+出発します　地下鉄にて▽
+ポケモン勝負を　しております</language>
 	</row>
 
-	<row id="msg_c04_hero_09" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04_tboss_01" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>♂
-・戦闘後</comment>
+・ギアステーション前
+　GRIDX=421、GRIDZ=460.下向き</comment>
 		<attribute name="キャラ指定">サブウェイマスター
 クダリ</attribute>
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256">no data</language>
+		<language name="JPN" width="256">ぼく　クダリ▼
+サブウェイマスターを　してる▼
+ダブルバトルが　すき▼
+２ひきの　ポケモンの
+コンビネーションが　すき</language>
+		<language name="JPN_KANJI" width="256">ぼく　クダリ▼
+サブウェイマスターを　してる▼
+ダブルバトルが　好き▼
+２匹の　ポケモンの
+コンビネーションが　好き</language>
 	</row>
 
-	<row id="msg_c04_hero_10" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c04_tbossbl_02" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・戦闘後</comment>
+・戦闘前
+・表示後
+　続けてtboss_02</comment>
 		<attribute name="キャラ指定">サブウェイマスター
 ノボリ</attribute>
-		<language name="JPN" width="256">いつのひか
-ちょうせんしてくださいまし</language>
-		<language name="JPN_KANJI" width="256">no data</language>
+		<language name="JPN" width="256">ノボリ『このような　ばしょでの
+しょうぶは　イレギュラー　ですが▼
+これも　なにかの　えん
+たたかうことで　みえる　けしき▽
+わかることも　あるでしょう▼
+では　クダリ
+なにかございましたら　どうぞ！▼</language>
+		<language name="JPN_KANJI" width="256">ノボリ『このような　場所での
+勝負は　イレギュラー　ですが▼
+これも　なにかの　縁
+戦うことで　みえる　景色▽
+わかることも　あるでしょう▼
+では　クダリ
+なにかございましたら　どうぞ！▼</language>
+	</row>
+
+	<row id="msg_c04_tboss_02" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・戦闘前
+・表示後、トレーナー戦闘に</comment>
+		<attribute name="キャラ指定">サブウェイマスター
+クダリ</attribute>
+		<language name="JPN" width="256">クダリ『ルールを　まもって
+あんぜん　うんてん！▼
+めざすは　しょうり！
+しゅっぱつ　しんこう！▼</language>
+		<language name="JPN_KANJI" width="256">クダリ『ルールを　守って
+安全　運転！▼
+目指すは　勝利！
+出発　進行！▼</language>
+	</row>
+
+	<row id="msg_c04_tbossbl_03" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・戦闘後
+・続けてtboss_03</comment>
+		<attribute name="キャラ指定">サブウェイマスター
+ノボリ</attribute>
+		<language name="JPN" width="256">ノボリ『ブラボー！！▼
+あなたがたと　ポケモンの
+コンビネーション！　すばらしいです▼</language>
+		<language name="JPN_KANJI" width="256">ノボリ『ブラボー！！▼
+あなたがたと　ポケモンの
+コンビネーション！　すばらしいです▼</language>
+	</row>
+
+	<row id="msg_c04_tboss_03" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・戦闘後
+・続けてtbossbl_02</comment>
+		<attribute name="キャラ指定">サブウェイマスター
+クダリ</attribute>
+		<language name="JPN" width="256">クダリ『ぼく　クダリ▼
+きみたちに　まけちゃった▼
+だけど　おもしろかった！
+また　あそぼうよ！▼</language>
+		<language name="JPN_KANJI" width="256">クダリ『ぼく　クダリ▼
+きみたちに　負けちゃった▼
+だけど　おもしろかった！
+また　遊ぼうよ！▼</language>
+	</row>
+
+	<row id="msg_c04_tbossbl_04" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・戦闘後
+・クダリが先にギアステーションに
+　続けてノボリが建物内に
+・続けて
+　heroine_06かhero_06</comment>
+		<attribute name="キャラ指定">サブウェイマスター
+クダリ</attribute>
+		<language name="JPN" width="256">ノボリ『ぜひ！　ぜひ！　つぎは
+ちかてつに　ごじょうしゃに　なって▽
+しょうぶ　してくださいまし！▼
+それでは　しゅっぱつ　しんこうーッ！！▼</language>
+		<language name="JPN_KANJI" width="256">ノボリ『ぜひ！　ぜひ！　次は
+地下鉄に　ご乗車に　なって▽
+勝負してくださいまし！▼
+それでは　出発　進行ーッ！！▼</language>
 	</row>
 
 	<row id="msg_c04_hakaim1_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
