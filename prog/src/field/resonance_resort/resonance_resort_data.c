@@ -3896,7 +3896,7 @@ u32 RESORT_DATA_GetRnd( u32 ofs, u32 max )
 
   GFL_STD_RandInit( &rnd, (*p_seed) );
   num = GFL_STD_Rand( &rnd, max );
-  OS_TFPrintf(3, "rnd[%d]max[%d]seed_l[%x]seed_h[%x]ofs[%d]grnd[%x]\n",num,max,(u32)((*p_seed)&0xFFFFFFFF),(u32)(((*p_seed)>>32)&0xFFFFFFFF),ofs,general_seed);
+  RESORT_Printf( "rnd[%d]max[%d]seed_l[%x]seed_h[%x]ofs[%d]grnd[%x]\n",num,max,(u32)((*p_seed)&0xFFFFFFFF),(u32)(((*p_seed)>>32)&0xFFFFFFFF),ofs,general_seed);
   return num;
 }
 

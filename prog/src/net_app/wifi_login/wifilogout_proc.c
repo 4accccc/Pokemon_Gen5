@@ -220,6 +220,11 @@ static GFL_PROC_RESULT WIFILOGOUT_PROC_Exit
   WIFILOGIN_MESSAGE_End( p_wk->p_message );
   WIFILOGIN_DISP_End( p_wk->p_display );
 
+  //切断からPROCを終了までの間にコールバックによって
+  //NetErrに値がセットされてしまうことがあるので、
+  //ここで最終的に消す
+  NetErr_ErrWorkInit();
+
 	//プロセスワーク破棄
 	GFL_PROC_FreeWork( p_proc );
 

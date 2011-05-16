@@ -187,5 +187,3 @@
 
 //_RESORT_GET_SERVICE_DATA—p
 #define RESORT_SERVICE_DATA_EFFECT            (0)
-
-

@@ -211,7 +211,7 @@ static const D_MENULIST DebugMenuList[] = {
     //		DEBUG_OHNO_MSG0002,
     DEBUG_OHNO_MSG0022,
     //		&DebugLayoutMainProcData,
-    &NetDeliverySendProcData,
+    &NetDeliveryWbtSendProcData,
     NULL,
     FS_OVERLAY_ID(ohno_debugapp)
     },

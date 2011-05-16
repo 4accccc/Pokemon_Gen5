@@ -45,11 +45,13 @@
 #include "net_app/wifi_logout.h"
 #include "net_app/mystery.h"
 #include "debug_snd_strm.h"
+#include "debug_common_net.h"
 
 #include "savedata/irc_compatible_savedata.h"
 #include "savedata/shortcut.h"
 
 #include "debug_utilproc.h"
+#include "wbt_download_sys.h"
 
 //=============================================================================
 /**
@@ -170,6 +172,7 @@ typedef struct
 //=====================================
 typedef struct
 {
+  GAMEDATA *p_gamedata;
   GRAPHIC_WORK      grp;
   MSG_WORK          msg;
   LIST_WORK         list;
@@ -196,6 +199,7 @@ typedef struct
   CONFIG_PANEL_PARAM    config_param;
   WIFIBATTLEMATCH_PARAM wifibattlematch_param;
   WIFILOGOUT_PARAM      wifilogout_param;
+  WBT_DOWNLOAD_SYS_PARAM wbt_download_param;
   };
   NAMEIN_PARAM          *p_namein_param;
 } DEBUG_NAGI_MAIN_WORK;
@@ -278,6 +282,8 @@ static void LISTDATA_CallWifiLogout( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_CallMystery( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_CallIrcRegulation( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_CallSndStrm( DEBUG_NAGI_MAIN_WORK *p_wk );
+static void LISTDATA_CallCommonDownload( DEBUG_NAGI_MAIN_WORK *p_wk );
+static void LISTDATA_CallWbtDownload( DEBUG_NAGI_MAIN_WORK *p_wk );
 //3d
 static void GRAPHIC_3D_Init( GRAPHIC_3D_WORK *p_wk, HEAPID heapID );
 static void GRAPHIC_3D_Exit( GRAPHIC_3D_WORK *p_wk );
@@ -360,6 +366,8 @@ enum
   LISTDATA_SEQ_PROC_MYSTERY,
   LISTDATA_SEQ_SEND_IRC_REGULATION,
   LISTDATA_SEQ_PROC_SND_STRM,
+  LISTDATA_SEQ_PROC_COMMON_DOWNLOAD,
+  LISTDATA_SEQ_PROC_WBT_DOWNLOAD,
 
   LISTDATA_SEQ_MAX,
 };
@@ -391,6 +399,8 @@ static const LISTDATA_FUNCTION  sc_list_funciton[LISTDATA_SEQ_MAX]  =
   LISTDATA_CallMystery,
   LISTDATA_CallIrcRegulation,
   LISTDATA_CallSndStrm,
+  LISTDATA_CallCommonDownload,
+  LISTDATA_CallWbtDownload,
 };
 
 //-------------------------------------
@@ -404,7 +414,10 @@ static const LIST_SETUP_TBL sc_list_data_home[] =
   },
 #endif
   {
-    L"サウンドストリーム", LISTDATA_SEQ_PROC_SND_STRM
+    L"共通ダウンロード", LISTDATA_SEQ_PROC_COMMON_DOWNLOAD
+  },
+  {
+    L"WBTダウンロード", LISTDATA_SEQ_PROC_WBT_DOWNLOAD
   },
   { 
     L"相性診断（ひとり）", LISTDATA_SEQ_PROC_COMPATIBLE_DEBUG
@@ -530,6 +543,9 @@ static GFL_PROC_RESULT DEBUG_PROC_NAGI_Init( GFL_PROC *p_proc, int *p_seq, void 
   p_wk  = GFL_PROC_AllocWork( p_proc, sizeof(DEBUG_NAGI_MAIN_WORK), HEAPID_NAGI_DEBUG );
   GFL_STD_MemClear( p_wk, sizeof(DEBUG_NAGI_MAIN_WORK) );
 
+
+  p_wk->p_gamedata = GAMEDATA_Create(HEAPID_NAGI_DEBUG);
+
   CreateTemporaryModules( p_wk, HEAPID_NAGI_DEBUG );
   p_wk->p_namein_param  = NAMEIN_AllocParam( HEAPID_NAGI_DEBUG, NAMEIN_FRIENDNAME, NAMEIN_TRAINER_VIEW_UNKNOWN, 0, NAMEIN_FREE_WORD_LENGTH, NULL, p_misc );
 
@@ -570,6 +586,9 @@ static GFL_PROC_RESULT DEBUG_PROC_NAGI_Exit( GFL_PROC *p_proc, int *p_seq, void 
     //次のPROC予約
     GFL_PROC_SysSetNextProc(
         FS_OVERLAY_ID(title), &TitleProcData, NULL );
+
+
+    GAMEDATA_Delete( p_wk->p_gamedata );
   }
 
   NAMEIN_FreeParam( p_wk->p_namein_param );
@@ -983,17 +1002,16 @@ static void LISTDATA_CallProcRankingDebug( DEBUG_NAGI_MAIN_WORK *p_wk )
 FS_EXTERN_OVERLAY(worldtrade);
 static void LISTDATA_CallProcGts( DEBUG_NAGI_MAIN_WORK *p_wk )
 {
-  GAMEDATA * p_gamedata = GAMEDATA_Create(HEAPID_NAGI_DEBUG);
 
-  p_wk->gts_param.savedata        = GAMEDATA_GetSaveControlWork( p_gamedata );
+  p_wk->gts_param.savedata        = GAMEDATA_GetSaveControlWork( p_wk->p_gamedata );
   p_wk->gts_param.worldtrade_data = SaveData_GetWorldTradeData(p_wk->gts_param.savedata);
   p_wk->gts_param.systemdata      = SaveData_GetSystemData(p_wk->gts_param.savedata);
   p_wk->gts_param.myparty         = SaveData_GetTemotiPokemon(p_wk->gts_param.savedata);
   p_wk->gts_param.zukanwork       = NULL;
-  p_wk->gts_param.mybox           = GAMEDATA_GetBoxManager(p_gamedata);
-  p_wk->gts_param.wifilist        = GAMEDATA_GetWiFiList(p_gamedata);
+  p_wk->gts_param.mybox           = GAMEDATA_GetBoxManager(p_wk->p_gamedata);
+  p_wk->gts_param.wifilist        = GAMEDATA_GetWiFiList(p_wk->p_gamedata);
   p_wk->gts_param.wifihistory     = SaveData_GetWifiHistory(p_wk->gts_param.savedata);
-  p_wk->gts_param.mystatus        = GAMEDATA_GetMyStatus(p_gamedata);
+  p_wk->gts_param.mystatus        = GAMEDATA_GetMyStatus(p_wk->p_gamedata);
   p_wk->gts_param.config          = SaveData_GetConfig(p_wk->gts_param.savedata);
   p_wk->gts_param.record          = SaveData_GetRecord(p_wk->gts_param.savedata);
   p_wk->gts_param.myitem          = NULL;
@@ -1006,7 +1024,6 @@ static void LISTDATA_CallProcGts( DEBUG_NAGI_MAIN_WORK *p_wk )
 
   DEBUG_NAGI_COMMAND_CallProc( p_wk, FS_OVERLAY_ID(worldtrade), &WorldTrade_ProcData, &p_wk->gts_param );
 
-  GAMEDATA_Delete( p_gamedata );
 }
 //----------------------------------------------------------------------------
 /**
@@ -1460,6 +1477,29 @@ static void LISTDATA_CallIrcRegulation( DEBUG_NAGI_MAIN_WORK *p_wk )
 static void LISTDATA_CallSndStrm( DEBUG_NAGI_MAIN_WORK *p_wk )
 {
   DEBUG_NAGI_COMMAND_CallProc( p_wk, NO_OVERLAY_ID, &DEBUG_SND_STRM_ProcData, NULL );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  共通ダウンロード
+ *
+ *	@param	DEBUG_NAGI_MAIN_WORK *p_wk  ワーク
+ */
+//-----------------------------------------------------------------------------
+static void LISTDATA_CallCommonDownload( DEBUG_NAGI_MAIN_WORK *p_wk )
+{
+  DEBUG_NAGI_COMMAND_CallProc( p_wk, NO_OVERLAY_ID, &DEBUG_COMMON_NET_ProcData, NULL );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  WBTダウンロード
+ *
+ *	@param	DEBUG_NAGI_MAIN_WORK *p_wk  ワーク
+ */
+//-----------------------------------------------------------------------------
+static void LISTDATA_CallWbtDownload( DEBUG_NAGI_MAIN_WORK *p_wk )
+{
+  p_wk->wbt_download_param.p_gamedata = p_wk->p_gamedata;
+  DEBUG_NAGI_COMMAND_CallProc( p_wk, NO_OVERLAY_ID, &WBT_DOWNLOAD_SYS_ProcData, &p_wk->wbt_download_param );
 }
 //=============================================================================
 /**

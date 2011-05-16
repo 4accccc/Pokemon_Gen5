@@ -799,6 +799,79 @@ static GFL_PROC_RESULT NetDeliverySendProc_Init(GFL_PROC * proc, int * seq, void
   return GFL_PROC_RES_FINISH;
 }
 
+//WBT
+//不思議な贈り物のデータをセット
+static void _wbtDataSet(DEBUG_OHNO_CONTROL * pDOC)
+{
+  static const int sc_debug_data_max  = 2;
+
+  static const int sc_lang_tbl[sc_debug_data_max]  =
+  { 
+    LANG_JAPAN,
+    LANG_ENGLISH,
+  };
+
+  static const u32 sc_version_tbl[sc_debug_data_max]  =
+  { 
+    1<<VERSION_B2,
+    1<<VERSION_W2,
+  };
+  int i;
+
+  
+  pDOC->aInit.NetDevID = WB_NET_WBT_DOWNLOAD;   // //通信種類
+
+  pDOC->aInit.dataNum = sc_debug_data_max;
+  pDOC->aInit.ConfusionID = 0;
+  pDOC->aInit.heapID = HEAPID_OHNO_DEBUG;
+
+  for( i = 0; i <sc_debug_data_max; i++ )
+  {
+    int k,j;
+    u8 *p_data;
+    pDOC->aInit.data[i].datasize = 512;   //データ全体サイズ
+    pDOC->aInit.data[i].pData = GFL_HEAP_AllocClearMemory(HEAPID_OHNO_DEBUG,pDOC->aInit.data[i].datasize);     // データ
+    pDOC->aInit.data[i].LangCode  = sc_lang_tbl[ i ];
+    pDOC->aInit.data[i].version   = sc_version_tbl[ i ];
+    p_data = (u8* )pDOC->aInit.data[i].pData;
+
+    for( j = 0; j < pDOC->aInit.data[0].datasize; j++ )
+    {
+      p_data[j] = j;
+    }
+
+
+    {
+      for(j=0;j<pDOC->aInit.data[0].datasize;){
+        for(k=0;k<16;k++){
+          OS_TPrintf("%x ",pDOC->aInit.data[0].pData[j]);
+          j++;
+        }
+        OS_TPrintf("\n");
+      }
+    }
+  }
+}
+static GFL_PROC_RESULT NetDeliveryWbtSendProc_Init(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
+{
+  DEBUG_OHNO_CONTROL * pDOC;
+
+  
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_OHNO_DEBUG, 0x30000 );
+  pDOC = GFL_PROC_AllocWork( proc, sizeof(DEBUG_OHNO_CONTROL), HEAPID_OHNO_DEBUG );
+  GFL_STD_MemClear(pDOC, sizeof(DEBUG_OHNO_CONTROL));
+
+  {
+    _wbtDataSet(pDOC);
+    pDOC->pDBWork=DELIVERY_BEACON_Init(&pDOC->aInit);
+    GF_ASSERT(DELIVERY_BEACON_SendStart(pDOC->pDBWork));
+  }
+  _CHANGE_STATE( _loop ); // 
+
+  return GFL_PROC_RES_FINISH;
+}
+
+
 
 //トライアルハウスダミーデータ
 static void _debug_bsubDataMain(DEBUG_OHNO_CONTROL * pDOC,int type, int no)
@@ -971,6 +1044,12 @@ const GFL_PROC_DATA NetDeliveryRecvProcData = {
   DebugOhnoMainProcEnd,
 };
 
+// プロセス定義データ  WBTテストデータ送信
+const GFL_PROC_DATA NetDeliveryWbtSendProcData = {
+  NetDeliveryWbtSendProc_Init,
+  DebugOhnoMainProcMain,
+  DebugOhnoMainProcEnd,
+};
 
 
 // プロセス定義データ  トライアルハウスビーコン配信

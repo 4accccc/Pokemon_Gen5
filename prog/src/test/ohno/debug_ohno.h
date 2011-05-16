@@ -36,6 +36,7 @@ extern void DebugOhnoExit(void);
 
 extern const GFL_PROC_DATA NetDeliverySendProcData;
 extern const GFL_PROC_DATA NetDeliveryRecvProcData;
+extern const GFL_PROC_DATA NetDeliveryWbtSendProcData;
 extern const GFL_PROC_DATA NetDeliveryIRCSendProcData;
 extern const GFL_PROC_DATA NetDeliveryIRCRecvProcData;
 extern const GFL_PROC_DATA NetDeliveryTriSendProcData;

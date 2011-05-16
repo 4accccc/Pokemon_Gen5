@@ -51,7 +51,7 @@
   DEF_CMD( EvCmdResortSetWordMouthCommAnswer, EV_SEQ_RESORT_SET_WORD_MOUTHCOMM )
   DEF_CMD( EvCmdResortGetServiceData, EV_SEQ_RESORT_GET_SERVICE_DATA )
   DEF_CMD( EvCmdResortGetOffreco, EV_SEQ_RESORT_GET_OFFRECO )
-  NO_CMD()
-  
+  DEF_CMD( EvCmdCallMedalInfo, EV_SEQ_RESORT_CALL_MEDALINFO )
+
   END_CMD
   //スクリプトコマンドテーブル終了

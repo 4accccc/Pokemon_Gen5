@@ -261,6 +261,7 @@ typedef enum  {
   WB_NET_WIFIRNDMATCH,  ///<WIFIランダムマッチ（ゲームサービスIDをレコードカウントのためWIFIMATCHとわけることになった）
   //ここからSWANのみのID
   WB_NET_PALACE2_SERVICEID, ///< SWANでしか繋がらないハイリンク
+  WB_NET_WBT_DOWNLOAD,  ///< WBTのダウンロード画面
 
   WB_NET_SERVICEID_MAX   // 終端
 } NetworkServiceID_e;
@@ -314,6 +315,7 @@ enum NetworkCommandHeaderNo_e {
   GFL_NET_CMD_IRC_REGULATION  = (WB_NET_IRC_REGULATION<<8),  ///<ライブ大会レギュレーション配信
   //ここからSWANのみのID
   GFL_NET_CMD_PALACE2 = (WB_NET_PALACE2_SERVICEID<<8),   ///< パレスのベース開始番号
+  GFL_NET_CMD_WBT_DOWNLOAD = (WB_NET_WBT_DOWNLOAD<<8), ///< WBTダウンロードの開始番号
 };
 
 
