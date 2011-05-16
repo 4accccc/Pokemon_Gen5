@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-05-16T20:19:38"/>
+	<create user="matsumiya" host="W00224" date="2011-05-16T20:41:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1308" top="164" right="2013" bottom="792" maximized="no" rayout="Vertical2">
+	<dialog left="1371" top="290" right="2076" bottom="918" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -314,7 +314,7 @@
 ・はい　→heroine_04
 　いいえ→heroine_02</comment>
 		<attribute name="キャラ指定">HEROINE</attribute>
-		<language name="JPN" width="256">この　ギアステーションって
+		<language name="JPN" width="256">あの　ギアステーションって
 ちかてつの　なかで▽
 ポケモンしょうぶが　できるの！▼
 でね　うでだめしに　きたら
@@ -326,7 +326,18 @@
 ここで　あいて　してくれる　って！▼
 すっごい　チャンスでしょ！
 おねがい！　いっしょに　たたかって？</language>
-		<language name="JPN_KANJI" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">あの　ギアステーションって
+地下鉄の　中で▽
+ポケモン勝負が　できるの！▼
+でね　腕試しに　来たら
+なんと　サブウェイマスターが　いたの！▼
+すごくない？　だって
+ギアステーションで　一番　強い▽
+トレーナー　なんだよ！▼
+しかも　２ｖｓ２なら　特別に
+ここで　相手してくれる　って！▼
+すっごい　チャンスでしょ！
+お願い！　一緒に　戦って？</language>
 	</row>
 
 	<row id="msg_c04_heroine_02" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -337,7 +348,10 @@
 じゅんびが　できていないのね▼
 じゃあ　ふたりを　ひきとめておくから
 いっしょに　たたかおうよ！</language>
-		<language name="JPN_KANJI" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">あっ　そうか！
+準備が　できていないのね▼
+じゃあ　二人を　ひきとめておくから
+一緒に　戦おうよ！</language>
 	</row>
 
 	<row id="msg_c04_heroine_03" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -347,9 +361,10 @@
 ・はい　→heroine_04
 　いいえ→heroine_02</comment>
 		<attribute name="キャラ指定">HEROINE</attribute>
-		<language name="JPN" width="256">じゅんびオーケーよね
+		<language name="JPN" width="256">じゅんびオーケー　よね
 いっしょに　たたかってくれる？</language>
-		<language name="JPN_KANJI" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">準備オーケー　よね
+一緒に　戦ってくれる？</language>
 	</row>
 
 	<row id="msg_c04_heroine_04" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -359,8 +374,10 @@
 		<attribute name="キャラ指定">HEROINE</attribute>
 		<language name="JPN" width="256">ありがとう！▼
 あっ　あたし　？？？？？
-ちからを　あわせようね！▼</language>
-		<language name="JPN_KANJI" width="256">no data</language>
+ちからと　いきを　あわせようね！▼</language>
+		<language name="JPN_KANJI" width="256">ありがとう！▼
+あっ　あたし　？？？？？
+力と　息を　あわせようね！▼</language>
 	</row>
 
 	<row id="msg_c04_heroine_05" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -371,7 +388,8 @@
 		<attribute name="キャラ指定">HEROINE</attribute>
 		<language name="JPN" width="256">ということで　サブウェイマスターに
 いどませて　もらいます！▼</language>
-		<language name="JPN_KANJI" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">ということで　サブウェイマスターに
+挑ませて　もらいます！▼</language>
 	</row>
 
 	<row id="msg_c04_heroine_06" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -379,15 +397,21 @@
 ・戦闘後
 　tbossbl_02表示後
 ・アイテム入手処理
+　No465「バトルレコーダー」
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">HEROINE</attribute>
 		<language name="JPN" width="256">つよかった……！
 さすが　サブウェイマスター▼
 もっと　きたえて　いつか　ほんきの
 サブウェイマスターと　たたかいたい！▼
-ありがとね　[1:00:トレーナー名:0]
-これは　きもち！　うけとって！▼</language>
-		<language name="JPN_KANJI" width="256">no data</language>
+ありがとね　[1:00:トレーナー名:0]！
+これは　きもちよ！　うけとって！▼</language>
+		<language name="JPN_KANJI" width="256">強かった……！
+さすが　サブウェイマスター▼
+もっと　鍛えて　いつか　本気の
+サブウェイマスターと　戦いたい！▼
+ありがとね　[1:00:トレーナー名:0]！
+これは　気持ちよ！　受け取って！▼</language>
 	</row>
 
 	<row id="msg_c04_heroine_07" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -405,40 +429,151 @@
 あなたと　いっしょに　たたかうの
 とても　おもしろかったよ！▼
 また　つきあってくれると　うれしいな
-じゃね！▼</language>
-		<language name="JPN_KANJI" width="256">no data</language>
+じゃーね！▼</language>
+		<language name="JPN_KANJI" width="256">バトルレコーダーを　持っていると
+友達との　勝負や▽
+バトルサブウェイでの　勝負を▽
+記録することが　できるのよ！▼
+[1:00:トレーナー名:0]！▼
+あなたと　一緒に　戦うの
+とても　おもしろかったよ！▼
+また　つきあってくれると　うれしいな
+じゃーね！▼</language>
 	</row>
 
 	<row id="msg_c04_hero_01" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
-		<comment>♂：主人公♀</comment>
+		<comment>♂：主人公♀
+・ギアステーション前
+　GRIDX=422、GRIDZ=461.上向き
+・はい/いいえの選択肢表示
+・はい　→hero_04
+　いいえ→hero_02</comment>
 		<attribute name="キャラ指定">HERO</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
+		<language name="JPN" width="256">あの　ギアステーションって
+ちかてつの　なかで▽
+ポケモンしょうぶが　できるんだ！▼
+でね　うでだめしに　きたら
+なんと　サブウェイマスターが　いてさ！▼
+すごくない？　だって
+ギアステーションで　さいきょうの▽
+ポケモントレーナー　なんだぜ！▼
+しかも　２ｖｓ２なら　とくべつに
+ここで　あいて　してくれる　って！▼
+すっごい　チャンスだろ！
+だから　いっしょに　たたかってよ！</language>
+		<language name="JPN_KANJI" width="256">あの　ギアステーションって
+地下鉄の　中で▽
+ポケモン勝負が　できるんだ！▼
+でね　腕試しに　来たら
+なんと　サブウェイマスターが　いてさ！▼
+すごくない？　だって
+ギアステーションで　最強の▽
+ポケモントレーナー　なんだぜ！▼
+しかも　２ｖｓ２なら　特別に
+ここで　相手してくれる　って！▼
+すっごい　チャンスだろ！
+だから　一緒に　戦ってよ！</language>
 	</row>
 
 	<row id="msg_c04_hero_02" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
+		<comment>♂：主人公♀
+・いいえ選択時</comment>
+		<attribute name="キャラ指定">HERO</attribute>
+		<language name="JPN" width="256">あっ　そうか！
+じゅんびが　できていないのか▼
+じゃあ　ふたりを　ひきとめておくから
+いっしょに　たたかおうよ！</language>
+		<language name="JPN_KANJI" width="256">あっ　そうか！
+準備が　できていないのか▼
+じゃあ　二人を　ひきとめておくから
+一緒に　戦おうよ！</language>
 	</row>
 
 	<row id="msg_c04_hero_03" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
+		<comment>♂：主人公♀
+・いいえ選択後再度会話
+・はい/いいえの選択肢表示
+・はい　→hero_04
+　いいえ→hero_02</comment>
+		<attribute name="キャラ指定">HERO</attribute>
+		<language name="JPN" width="256">じゅんび　オーケー　だよね
+いっしょに　たたかってよ！</language>
+		<language name="JPN_KANJI" width="256">準備オーケー　だよね
+一緒に　戦ってよ！</language>
 	</row>
 
 	<row id="msg_c04_hero_04" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
+		<comment>♂：主人公♀
+・はい選択時
+・続けてhero_05</comment>
+		<attribute name="キャラ指定">HERO</attribute>
+		<language name="JPN" width="256">ありがとう！▼
+あっ　じぶんは　？？？？？
+コンビネーション　みせようぜ！▼</language>
+		<language name="JPN_KANJI" width="256">ありがとう！▼
+あっ　自分は　？？？？？
+コンビネーション　みせようぜ！▼</language>
 	</row>
 
 	<row id="msg_c04_hero_05" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
+		<comment>♂：主人公♀
+・サブウェイマスターのほうを向いて
+　メッセージ表示
+・続けてtbossbl_02</comment>
+		<attribute name="キャラ指定">HERO</attribute>
+		<language name="JPN" width="256">ということで　サブウェイマスターに
+いどませて　もらうぜ！▼</language>
+		<language name="JPN_KANJI" width="256">ということで　サブウェイマスターに
+挑ませて　もらうぜ！▼</language>
 	</row>
 
 	<row id="msg_c04_hero_06" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
+		<comment>♂：主人公♀
+・戦闘後
+　tbossbl_02表示後
+・アイテム入手処理
+　No465「バトルレコーダー」
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">HERO</attribute>
+		<language name="JPN" width="256">つよかった……！
+さすが　サブウェイマスター▼
+もっと　きたえて　いつか　ほんきの
+サブウェイマスターに　いどむ！▼
+ありがとう　[1:00:トレーナー名:0]！
+これは　ぼくの　きもち！　あげる！▼</language>
+		<language name="JPN_KANJI" width="256">強かった……！
+さすが　サブウェイマスター▼
+もっと　鍛えて　いつか　本気の
+サブウェイマスターに　挑む！▼
+ありがとう　[1:00:トレーナー名:0]！
+これは　ぼくの　気持ち！　あげる！▼</language>
+	</row>
+
+	<row id="msg_c04_hero_07" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<comment>♂：主人公♀
+・
+・メッセージ表示後、ヒロインは
+　ギアステーションにはいっていく
+・建物内に消えると主人公操作可能に</comment>
+		<attribute name="キャラ指定">HERO</attribute>
+		<language name="JPN" width="256">バトルレコーダーを　もっていると
+ともだち　との　しょうぶや▽
+バトルサブウェイでの　しょうぶを▽
+きろく　することが　できるんだ！▼
+[1:00:トレーナー名:0]！▼
+きみと　いっしょに　たたかうの
+とても　おもしろかったよ！▼
+また　つきあってくれると　うれしいな
+じゃね！▼</language>
+		<language name="JPN_KANJI" width="256">バトルレコーダーを　持っていると
+友達との　勝負や▽
+バトルサブウェイでの　勝負を▽
+記録することが　できるんだ！▼
+[1:00:トレーナー名:0]！▼
+きみと　一緒に　戦うの
+とても　おもしろかったよ！▼
+また　つきあってくれると　うれしいな
+じゃね！▼</language>
 	</row>
 
 	<row id="msg_c04_tbossbl_01" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -450,7 +585,7 @@
 		<language name="JPN" width="256">わたくし　サブウェイマスターの
 ノボリ　と　もうします！▼
 いつもは　ギアステーションから
-しゅっぱつします　ちかてつにて▽
+しゅっぱつ　します　ちかてつ　にて▽
 ポケモンしょうぶを　しております</language>
 		<language name="JPN_KANJI" width="256">わたくし　サブウェイマスターの
 ノボリ　と　申します！▼
@@ -915,62 +1050,32 @@
 ギミックが　あるんでしょうね！</language>
 	</row>
 
-	<row id="msg_c04_trainerw_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・pos（GRIDX=421~423、GRIDZ=460）を踏むと
-　GRIDX=422、GRIDZ=459に出現して
-　メッセージ表示
-・続けて</comment>
+	<row id="msg_c04_trainerw_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
 		<attribute name="キャラ指定">TRAINERW</attribute>
-		<language name="JPN" width="256">わたしは　かった！
-そして　まけたの……▼</language>
-		<language name="JPN_KANJI" width="256">わたしは　勝利した！
-そして　敗北もしたの……▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c04_trainerw_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・階段を降り、上向きでメッセージ表示
-・続けて下向きでtrainerw_03</comment>
+	<row id="msg_c04_trainerw_02" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
 		<attribute name="キャラ指定">TRAINERW</attribute>
-		<language name="JPN" width="256">この　ギアステーションには
-トレーナーと　たたかえる　でんしゃ……▽
-バトルサブウェイが　あるのよ！▼</language>
-		<language name="JPN_KANJI" width="256">この　ギアステーションには
-トレーナーと　戦える　電車……▽
-バトルサブウェイが　あるのよ！▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c04_trainerw_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・アイテム入手処理
-　No465「バトルレコーダー」</comment>
+	<row id="msg_c04_trainerw_03" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
 		<attribute name="キャラ指定">TRAINERW</attribute>
-		<language name="JPN" width="256">あなた　トレーナーね！　これを
-なにもいわずに　うけとりなさい▼</language>
-		<language name="JPN_KANJI" width="256">あなた　トレーナーね！　これを
-なにもいわずに　受け取りなさい▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c04_trainerw_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・アイテム入手後、自動で表示
-・メッセージ表示後退場</comment>
+	<row id="msg_c04_trainerw_04" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
 		<attribute name="キャラ指定">TRAINERW</attribute>
-		<language name="JPN" width="256">バトルレコーダーを　もっていると
-ともだち　との　しょうぶや▽
-バトルサブウェイでの　しょうぶを▽
-きろく　することが　できるのよ！▼
-というわけで　なぞのオンナは
-どこかに……　そう！▽
-トライアルハウスに　さっていくわ！▼</language>
-		<language name="JPN_KANJI" width="256">バトルレコーダーを　持っていると
-友達との　勝負や▽
-バトルサブウェイでの　勝負を▽
-記録することが　できるのよ！▼
-というわけで　なぞのオンナは
-どこかに……　そう！▽
-トライアルハウスに　去っていくわ！▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c04_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
