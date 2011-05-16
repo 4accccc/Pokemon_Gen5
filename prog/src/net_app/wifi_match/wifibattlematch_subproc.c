@@ -309,7 +309,6 @@ static void WIFIBATTLEMATCH_SUBPROC_InitListData( WIFIBATTLEMATCH_SUBPROC_PARAM 
   plData->myitem = NULL;
   plData->mailblock = NULL;
   plData->cfg = SaveData_GetConfig(svWork);
-  plData->tvwk = NULL;
   plData->reg = reg;
   
   plData->zone_id = 0;

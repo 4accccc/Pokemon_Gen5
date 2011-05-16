@@ -164,7 +164,7 @@ typedef struct
   void * myitem;    // アイテムデータ
   void * mailblock; // メールデータ
   CONFIG * cfg;   // コンフィグデータ
-  void * tvwk;    // テレビワーク //存在しない？
+//  void * tvwk;    // テレビワーク //存在しない？
   void * reg;     // レギュレーションデータ
   void * zkn;     // 図鑑セーブ(フォルムチェンジ時登録処理
 

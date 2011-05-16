@@ -401,7 +401,6 @@ static void WIFICLUB_BATTLE_SUBPROC_InitListData( WIFICLUB_BATTLE_SUBPROC_PARAM 
   plData->myitem = NULL;
   plData->mailblock = NULL;
   plData->cfg = SaveData_GetConfig(svWork);
-  plData->tvwk = NULL;
   plData->reg = reg;
   
   plData->zone_id = 0;
