@@ -173,6 +173,12 @@ EVENT_START   ev_pos_r19_pokeget_01
   
   //C12R0101のベル表示
   _FLAG_RESET( FV_C12R0101_SWBELL )
+  
+  //C12のママと妹を非表示
+	_FLAG_SET( FV_C12_SWRIVAL_SISTER )
+	_FLAG_SET( FV_C12_SWMAMA )
+	
+	//【仮】C12ライバル宅の妹を表示
 
   //==================================//
   
