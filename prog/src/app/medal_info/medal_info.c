@@ -493,7 +493,7 @@ static void MEDALINFO_InputCheck( MEDALINFO_WK *p_wk )
     switch( tp_hit )
     {
     case UI_HIT_TABLE_TRG_R:
-      SetExitButton( p_wk );
+      SetReturnButton( p_wk );
       GFL_UI_SetTouchOrKey(GFL_APP_END_KEY);
       break;
     }
@@ -1408,17 +1408,6 @@ static void MEDALINFO_OBJInit( MEDALINFO_WK *p_wk )
           p_wk->obj_res[OBJRESID_COMMONUI_CELLANM],
           &cldata, CLSYS_DEFREND_MAIN, heapID );
       GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[OBJ_CLWK_RETURN] , APP_COMMON_BARICON_RETURN );
-
-      
-      // 直接呼出しのときは戻るボタンを非表示にする
-      if( p_wk->call_mode == MEDALINFO_CALL_SUB )
-      {
-        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[OBJ_CLWK_RETURN], TRUE );
-      }
-      else
-      {
-        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[OBJ_CLWK_RETURN], FALSE );
-      }
     }
 
     // キャンセルボタン
@@ -1427,18 +1416,8 @@ static void MEDALINFO_OBJInit( MEDALINFO_WK *p_wk )
       cldata.bgpri   = MEDALINFO_OBJ_PRIORITY_UI;
       cldata.softpri = 0;
 
-       
-      // 直接呼出しのときは戻るボタンの位置に表示する
-      if( p_wk->call_mode == MEDALINFO_CALL_SUB )
-      {
-        cldata.pos_x = OBJ_POS_EXIT_X;
-        cldata.pos_y = OBJ_POS_EXIT_Y;
-      }
-      else
-      {
-        cldata.pos_x = OBJ_POS_RETURN_X;
-        cldata.pos_y = OBJ_POS_RETURN_Y;
-      }
+      cldata.pos_x = OBJ_POS_EXIT_X;
+      cldata.pos_y = OBJ_POS_EXIT_Y;
 
       // ワークの作成
       p_wk->p_clwk[OBJ_CLWK_EXIT]	= GFL_CLACT_WK_Create( p_wk->p_clunit,
@@ -1448,6 +1427,16 @@ static void MEDALINFO_OBJInit( MEDALINFO_WK *p_wk )
           &cldata, CLSYS_DEFREND_MAIN, heapID );
       GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[OBJ_CLWK_EXIT] , APP_COMMON_BARICON_EXIT );
       GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[OBJ_CLWK_EXIT], TRUE );
+     
+      // 直接呼出しのときは終了ボタンを非表示にする
+      if( p_wk->call_mode == MEDALINFO_CALL_SUB )
+      {
+        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[OBJ_CLWK_EXIT], TRUE );
+      }
+      else
+      {
+        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[OBJ_CLWK_EXIT], FALSE );
+      }
     }
   }
 }
