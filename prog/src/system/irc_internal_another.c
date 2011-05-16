@@ -17,6 +17,9 @@
 #include <nitro.h>
 #include <nitro/irc.h>
 
+#include "system/irc_internal_another.h"
+
+
 /*---------------------------------------------------------------------------*/
 /* constants */
 

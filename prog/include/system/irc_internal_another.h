@@ -14,13 +14,14 @@
   $Rev: 10767 $
   $Author: yosizaki $
  *---------------------------------------------------------------------------*/
-#ifndef NITRO_IRC_IRC_INTERNAL_H_
-#define NITRO_IRC_IRC_INTERNAL_H_
+#ifndef NITRO_IRC_IRC_INTERNAL_ANOTHER_H_
+#define NITRO_IRC_IRC_INTERNAL_ANOTHER_H_
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+#if 0 // irc_interrnal.hÇ…ãLèqÇ≥ÇÍÇƒÇ¢ÇÈ
 /*---------------------------------------------------------------------------*/
 /* constants */
 
@@ -72,7 +73,7 @@ typedef enum
     IR_NUM
 
 } IRCommand;
-
+#endif
 
 
 /*---------------------------------------------------------------------------*
@@ -106,4 +107,4 @@ BOOL IRC_Check_Another(void);
 
 
 
-#endif // NITRO_IRC_IRC_INTERNAL_H_
+#endif // NITRO_IRC_IRC_INTERNAL_ANOTHER_H_
