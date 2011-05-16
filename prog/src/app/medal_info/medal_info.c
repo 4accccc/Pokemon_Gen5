@@ -135,7 +135,7 @@ GFL_PROC_DATA medalInfo_ProcData =
 //-------------------------------------
 ///	ヒープサイズ
 //=====================================
-#define MEDALINFO_HEAP_SIZE (0x50000)
+#define MEDALINFO_HEAP_SIZE (0x20000)
 
 //-------------------------------------
 ///	VRAM設定
