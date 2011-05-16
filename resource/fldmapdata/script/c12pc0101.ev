@@ -137,6 +137,8 @@ EVENT_START ev_reserve_c12pc0101_pcguide_01
 	//C12のママと妹を表示
 	_FLAG_RESET( FV_C12_SWRIVAL_SISTER )
 	_FLAG_RESET( FV_C12_SWMAMA )
+	
+	//【仮】C12ライバル宅の妹を非表示
 
 	//==================================//
 	
