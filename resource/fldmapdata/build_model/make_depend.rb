@@ -132,7 +132,7 @@ book.each_index{|sheet_index|
     }
   }
   #ˆË‘¶ŠÖŒW‚ğ‘‚«‚ŞB
-  depend_list.puts "#{filename}: #{bm_id_array} #{nsbmd_array}"
+  depend_list.puts "#{filename}: #{OUTPUT_DEPEND} #{bm_id_array} #{nsbmd_array}"
   depend_list.puts "\t@echo #{filename} output..."
   depend_list.puts "\t@ruby #{CONVERTER} #{bm_id_array} #{nsbmd_array} #{filename} AB"
   depend_list.puts ""
