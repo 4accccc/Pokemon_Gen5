@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-05-15T17:41:10"/>
+	<create user="matsumiya" host="W00224" date="2011-05-16T19:31:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1293" top="161" right="1998" bottom="789" maximized="no" rayout="Vertical2">
+	<dialog left="1293" top="166" right="1998" bottom="789" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -291,6 +291,198 @@
 		<operation add_message="no" header_setting="no" tag_setting="no" output_setting="no" display="no" sort="no" flowchart_window="no"/>
 	</lock>
 
+
+	<row id="msg_c04_swrival_01" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂</comment>
+		<attribute name="キャラ指定">ライバル</attribute>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_swplazmam1_01" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<attribute name="キャラ指定">SWPLAZMAM
+プラズマ団♂</attribute>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_heroine_01" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀：主人公♂
+・ギアステーション前
+・はい/いいえの選択肢表示
+・はい　→
+　いいえ→</comment>
+		<attribute name="キャラ指定">HEROINE</attribute>
+		<language name="JPN" width="256">この　ギアステーションって
+ちかてつの　なかで▽
+ポケモンしょうぶが　できるの！▼
+でね　うでだめしに　きたら
+なんと　サブウェイマスターが　いたの！▼
+すごくない？　だって
+ギアステーションで　いちばん　つよい▽
+トレーナー　なんだよ！▼
+しかも　２ｖｓ２なら　とくべつに
+ここで　あいて　してくれる　って！▼
+すっごい　チャンスでしょ！
+おねがい！　いっしょに　たたかって？</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_heroine_02" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀：主人公♂
+・いいえ選択時</comment>
+		<attribute name="キャラ指定">HEROINE</attribute>
+		<language name="JPN" width="256">あっ　そうか！
+じゅんびが　できていないのね▼
+じゃあ　ふたりを　ひきとめておくから
+いっしょに　たたかおうよ！</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_heroine_03" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀：主人公♂
+・いいえ選択後再度会話
+・はい/いいえの選択肢表示
+・はい　→
+　いいえ→</comment>
+		<attribute name="キャラ指定">HEROINE</attribute>
+		<language name="JPN" width="256">じゅんびオーケーよね
+いっしょに　たたかってくれる？</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_heroine_04" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀：主人公♂
+・はい選択時
+・続けて</comment>
+		<attribute name="キャラ指定">HEROINE</attribute>
+		<language name="JPN" width="256">ありがとう！▼
+あっ　あたし　？？？？？
+ちからを　あわせようね！▼</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_heroine_05" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀：主人公♂
+・サブウェイマスターのほうを向いて
+　メッセージ表示
+・続けて</comment>
+		<attribute name="キャラ指定">HEROINE</attribute>
+		<language name="JPN" width="256">ということで　サブウェイマスターに
+いどませて　もらいます！▼</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_heroine_06" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀：主人公♂
+・戦闘後
+　表示後
+・アイテム入手処理
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">HEROINE</attribute>
+		<language name="JPN" width="256">つよかった……！
+さすが　サブウェイマスター▼
+もっと　きたえて　いつか　ほんきの
+サブウェイマスターと　たたかいたい！▼
+ありがとね　[1:00:トレーナー名:0]
+これは　きもち！　うけとって！▼</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_heroine_07" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀：主人公♂
+・
+・メッセージ表示後、ヒロインは
+　ギアステーションにはいっていく
+・建物内に消えると主人公操作可能に</comment>
+		<attribute name="キャラ指定">HEROINE</attribute>
+		<language name="JPN" width="256">バトルレコーダーを　もっていると
+ともだち　との　しょうぶや▽
+バトルサブウェイでの　しょうぶを▽
+きろく　することが　できるのよ！▼
+[1:00:トレーナー名:0]！▼
+あなたと　いっしょに　たたかうの
+とても　おもしろかったよ！▼
+また　つきあってくれると　うれしいな
+じゃね！▼</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_hero_01" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<comment>♂：主人公♀</comment>
+		<attribute name="キャラ指定">HERO</attribute>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_hero_02" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_hero_03" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_hero_04" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_hero_05" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_hero_06" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_hero_07" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・戦闘前</comment>
+		<attribute name="キャラ指定">サブウェイマスター
+クダリ</attribute>
+		<language name="JPN" width="256">どんな　ばしょでも
+ポケモンしょうぶ！▼
+いいね　きみたち！
+ぼくたちと　ポケモンしょうぶ！</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_hero_08" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・戦闘前</comment>
+		<attribute name="キャラ指定">サブウェイマスター
+ノボリ</attribute>
+		<language name="JPN" width="256">わたくし　サブウェイマスターの
+ノボリ　と　もうします！▼
+かたがわに　ひかえるは　おなじく
+サブウェイマスターの　クダリです▼
+ほんらいで　あれば～</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_hero_09" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・戦闘後</comment>
+		<attribute name="キャラ指定">サブウェイマスター
+クダリ</attribute>
+		<language name="JPN" width="256"></language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04_hero_10" text-color="#000000,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・戦闘後</comment>
+		<attribute name="キャラ指定">サブウェイマスター
+ノボリ</attribute>
+		<language name="JPN" width="256">いつのひか
+ちょうせんしてくださいまし</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
 
 	<row id="msg_c04_hakaim1_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>※swanで削除</comment>
@@ -739,8 +931,10 @@
 	<row id="msg_c04_sign5_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>看板分類：施設</comment>
 		<attribute name="キャラ指定">看板：街</attribute>
-		<language name="JPN" width="256">ミュージカル　ホール</language>
-		<language name="JPN_KANJI" width="256">ミュージカル　ホール</language>
+		<language name="JPN" width="256">ミュージカル　ホール
+グッズ＋おんがく＋ダンス＝かんどう！</language>
+		<language name="JPN_KANJI" width="256">ミュージカル　ホール
+グッズ＋音楽＋ダンス＝感動！</language>
 	</row>
 
 	<row id="msg_c04_sign6_01" text-color="#000000,,,,,#000000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
