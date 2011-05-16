@@ -619,7 +619,7 @@ static const u16 ItemSortByAbc[] = {
 	339,	//No.625 はいたつぶつ３
 	490,	//No.626 ライブキャスター
 	462,	//No.627 メダルボックス
-	41,	//No.628 いでんしのくさび（仮）
+	41,	//No.628 いでんしのくさび
 };
 
 /*
@@ -666,7 +666,7 @@ static const u16 ItemSortByAbc[] = {
   38  ItemNo.446  いいつりざお
   39  ItemNo.300  いかずちプレート
   40  ItemNo.504  いかりまんじゅう
-  41  ItemNo.628  いでんしのくさび（仮）
+  41  ItemNo.628  いでんしのくさび
   42  ItemNo.185  イトケのみ
   43  ItemNo.117  イナズマカセット
   44  ItemNo.270  いのちのたま
