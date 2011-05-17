@@ -63,3 +63,11 @@ extern FIELD_WFBC_CORE_ITEM* RANDOMMAP_SAVE_GetItemData( RANDOMMAP_SAVE* sv );
 // イベント用データ
 //----------------------------------------------------------
 extern FIELD_WFBC_EVENT* RANDOMMAP_SAVE_GetEventData( RANDOMMAP_SAVE* sv );
+
+//----------------------------------------------------------
+// キュレム合体相手のデータ
+//----------------------------------------------------------
+extern void RANDOMMAP_SAVE_GetKyuremuUnionPokeParam( RANDOMMAP_SAVE* sv, POKEMON_PARAM* pp_dest );
+extern void RANDOMMAP_SAVE_SetKyuremuUnionPokeParam( RANDOMMAP_SAVE* sv, const POKEMON_PARAM* pp_src );
+
+
