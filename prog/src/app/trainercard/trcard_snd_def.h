@@ -30,6 +30,19 @@
 #define SND_TRCARD_TRTYPE       (SEQ_SE_SELECT1)  ///< トレーナータイプ
 #define SND_TRCARD_PERSONALITY  (SEQ_SE_SELECT1)  ///< 性格
 #define SND_TRCARD_PMS          (SEQ_SE_SELECT1)  ///< 簡易会話
+//
+// 追加
+#define SND_TRBADGE_00			(SEQ_SE_SW_CARD_14)		///< 音階(ド)
+#define SND_TRBADGE_01			(SEQ_SE_SW_CARD_15)		///< 音階(レ)
+#define SND_TRBADGE_02			(SEQ_SE_SW_CARD_16)		///< 音階(ミ)
+#define SND_TRBADGE_03			(SEQ_SE_SW_CARD_17)		///< 音階(ファ)
+#define SND_TRBADGE_04			(SEQ_SE_SW_CARD_18)		///< 音階(ソ)
+#define SND_TRBADGE_05			(SEQ_SE_SW_CARD_19)		///< 音階(ラ)
+#define SND_TRBADGE_06			(SEQ_SE_SW_CARD_20)		///< 音階(シ)
+#define SND_TRBADGE_07			(SEQ_SE_SW_CARD_21)		///< 音階(ド2)
+//
+#define SND_TRBADGE_SLIDE_IN	(SEQ_SE_SW_CARD_12)		///< スライドイン
+#define SND_TRBADGE_SLIDE_OUT	(SEQ_SE_SW_CARD_13)		///< スライドアウト
 
 
 #endif  //__TRCARD_SND_DEF_H__

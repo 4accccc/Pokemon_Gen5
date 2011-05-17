@@ -728,6 +728,7 @@ static void wr_exit( WIN_RECORD_MAIN_WORK* wk );
 static void wr_up(   WIN_RECORD_MAIN_WORK* wk );
 static void wr_down( WIN_RECORD_MAIN_WORK* wk );
 static void wr_key_all( WIN_RECORD_MAIN_WORK* wk );
+static void wr_main_print( WIN_RECORD_MAIN_WORK* wk );
 //
 static s16 wr_get_empty( WIN_RECORD_MAIN_WORK *wk, const s32 num );
 //
@@ -949,7 +950,8 @@ static GFL_PROC_RESULT WinRecordProc_Main( GFL_PROC *proc, int *seq, void *pwk, 
 	wr_main( wk );
 	
 	//PRINT_QUE
-	PRINTSYS_QUE_Main( wk->print_que );
+	wr_main_print( wk );
+//	PRINTSYS_QUE_Main( wk->print_que );
 	
 	//2D•`‰æ
 	WIN_RECORD_GRAPHIC_2D_Draw( wk->graphic );
@@ -1151,6 +1153,27 @@ static void wr_key_all( WIN_RECORD_MAIN_WORK* wk )
 		//
 		default:
 			break;
+	}
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  Que‚Ìˆ—(Main)
+ *
+ *	@param	WIN_RECORD_MAIN_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void wr_main_print( WIN_RECORD_MAIN_WORK* wk )
+{
+	s32		i;
+	
+	// Que‚Ìˆ—
+	PRINTSYS_QUE_Main( wk->print_que );
+	//
+	for(i=0;i<WIN_RECORD_CANVAS_MAXNUM;i++){
+		PRINT_UTIL_Trans( &wk->PrintUtil[i], wk->print_que );
 	}
 }
 
@@ -1776,6 +1799,7 @@ static void wr_disp_string( WIN_RECORD_MAIN_WORK* wk, const s32 mode, const s32 
 //-----------------------------------------------------------------------------
 static void wr_update_string( WIN_RECORD_MAIN_WORK* wk, const s32 mode )
 {
+#if 0
 	// “]‘—
 	GFL_BMPWIN * bmpwin = wk->PrintUtil[mode].win;
 	//
@@ -1784,6 +1808,7 @@ static void wr_update_string( WIN_RECORD_MAIN_WORK* wk, const s32 mode )
 	//
 	GFL_BMPWIN_TransVramCharacter( bmpwin );					//transfer characters
 	GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame( bmpwin ) );	//transfer screen
+#endif
 }
 
 //-----------------------------------------------------------------------------

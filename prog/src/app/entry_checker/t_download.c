@@ -631,6 +631,8 @@ static void td_down( T_DOWNLOAD_MAIN_WORK* wk );
 static void td_key_view( T_DOWNLOAD_MAIN_WORK* wk );
 static void td_key_select( T_DOWNLOAD_MAIN_WORK* wk );
 //
+static void td_main_print( T_DOWNLOAD_MAIN_WORK *wk );
+//
 static s16  td_get_empty( T_DOWNLOAD_MAIN_WORK *wk, const s32 num );
 //
 static void td_init_bg( T_DOWNLOAD_MAIN_WORK* wk );
@@ -909,7 +911,8 @@ static GFL_PROC_RESULT TDownloadProc_Main( GFL_PROC *proc, int *seq, void *pwk, 
 	GFL_TCBL_Main( wk->MsgTcblSys );
 	
 	//PRINT_QUE
-	PRINTSYS_QUE_Main( wk->print_que );
+	td_main_print( wk );
+//	PRINTSYS_QUE_Main( wk->print_que );
 	
 	//2D•`‰æ
 	T_DOWNLOAD_GRAPHIC_2D_Draw( wk->graphic );
@@ -1342,6 +1345,27 @@ static void td_key_select( T_DOWNLOAD_MAIN_WORK* wk )
 		//
 		default:
 			break;
+	}
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  Que‚Ìˆ—
+ *
+ *	@param	T_DOWNLOAD_MAIN_WORK* wk
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void td_main_print( T_DOWNLOAD_MAIN_WORK *wk )
+{
+	s32		i;
+	
+	// Que‚Ìˆ—
+	PRINTSYS_QUE_Main( wk->print_que );
+	//
+	for(i=0;i<T_DOWNLOAD_CANVAS_MAXNUM;i++){
+		PRINT_UTIL_Trans( &wk->PrintUtil[i], wk->print_que );
 	}
 }
 
@@ -1975,6 +1999,7 @@ static void td_disp_string_number( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode, con
 //-----------------------------------------------------------------------------
 static void td_update_string( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode )
 {
+#if 0
 	// “]‘—
 	GFL_BMPWIN * bmpwin = wk->PrintUtil[mode].win;
 	//
@@ -1983,6 +2008,7 @@ static void td_update_string( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode )
 	//
 	GFL_BMPWIN_TransVramCharacter( bmpwin );					//transfer characters
 	GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame( bmpwin ) );	//transfer screen
+#endif
 }
 
 //-----------------------------------------------------------------------------
