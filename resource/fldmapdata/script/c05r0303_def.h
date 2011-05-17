@@ -5,6 +5,6 @@
 #define _C05R0303_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_C05R0303  (1)
+#define SCRID_C05R0303 (1)
 
 #endif //_C05R0303_DEF_H_

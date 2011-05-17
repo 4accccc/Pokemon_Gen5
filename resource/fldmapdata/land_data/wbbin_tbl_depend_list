@@ -3582,3 +3582,11 @@ $(DIR_WBTMP)/m_gym0501_01_01.tbl: $(DIR_RES)/m_gym0501_01_01.bin
 	@echo create_bintbl m_gym0501_01_01
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_gym0501_01_01.bin
 
+$(DIR_WBTMP)/m_gym0501_00_02.tbl: $(DIR_RES)/m_gym0501_00_02.bin
+	@echo create_bintbl m_gym0501_00_02
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_gym0501_00_02.bin
+
+$(DIR_WBTMP)/m_gym0501_01_02.tbl: $(DIR_RES)/m_gym0501_01_02.bin
+	@echo create_bintbl m_gym0501_01_02
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_gym0501_01_02.bin
+

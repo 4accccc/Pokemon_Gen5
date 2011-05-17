@@ -861,6 +861,8 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/m_gym0501_01_00.3dppack \
 	$(DIR_OUTPUT)/m_gym0501_00_01.3dppack \
 	$(DIR_OUTPUT)/m_gym0501_01_01.3dppack \
+	$(DIR_OUTPUT)/m_gym0501_00_02.3dppack \
+	$(DIR_OUTPUT)/m_gym0501_01_02.3dppack \
 	$(DIR_OUTPUT)/C3_00_00.ngpack \
 	$(DIR_OUTPUT)/C3_00_01.ngpack \
 	$(DIR_OUTPUT)/C3_01_00.ngpack \
