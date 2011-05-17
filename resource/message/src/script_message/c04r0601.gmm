@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-05-15T16:59:30"/>
+	<create user="matsumiya" host="W00224" date="2011-05-17T13:03:38"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -237,7 +237,7 @@
 		<number position="-1" width="100"/>
 		<comment position="4" width="267"/>
 		<erase position="-1" width="100"/>
-		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="110">
+		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="86">
 		</attribute>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="274"/>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1293" top="161" right="1998" bottom="789" maximized="no" rayout="Vertical2">
+	<dialog left="1308" top="164" right="2013" bottom="792" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,89 +292,161 @@
 	</lock>
 
 
-	<row id="msg_c04r0601_rally_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04r0601_rally_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・初回
 ・アイテム入手前</comment>
-		<language name="JPN" width="256">ライモンラリー！</language>
-		<language name="JPN_KANJI" width="256">ライモンラリー！</language>
+		<attribute name="キャラ指定">CLOWN</attribute>
+		<language name="JPN" width="256">ようこそ！　ライモンシティ！！
+レッツ　トライ　ライモンラリー！！▼
+あなた　ライモンに　いらしたのは
+はじめて　ですよね？▼
+よろしい！　では　この
+じてんしゃを　どうぞ！！▼</language>
+		<language name="JPN_KANJI" width="256">ようこそ！　ライモンシティ！！
+レッツ　トライ　ライモンラリー！！▼
+あなた　ライモンに　いらしたのは
+初めて　ですよね？▼
+よろしい！　では　この
+じてんしゃを　どうぞ！！▼</language>
 	</row>
 
-	<row id="msg_c04r0601_rally_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04r0601_rally_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・アイテム入手後</comment>
-		<language name="JPN" width="256">ラリーのポイントは
-ギアステーション
-ミュージカルホールに
-ビッグスタジアムに　リトルコート
-じてんしゃで～</language>
-		<language name="JPN_KANJI" width="256">no data</language>
+		<attribute name="キャラ指定">CLOWN</attribute>
+		<language name="JPN" width="256">ライモンラリーの
+ルールは　かんたん！▼
+きめられた　ポイントを　めぐり
+ピエロに　はなしかけるだけ！▽
+やるも　やらぬも　じゆう　なのです！▼
+ラリーの　ポイントは
+ギアステーション▽
+ミュージカルホールに▽
+ビッグスタジアムに　リトルコート▽
+それに　かんらんしゃ　です！▼
+では　プレゼントした
+じてんしゃに　のって　レッツゴー！</language>
+		<language name="JPN_KANJI" width="256">ライモンラリーの
+ルールは　簡単！▼
+決められた　ポイントを　巡り
+ピエロに　話しかけるだけ！▽
+やるも　やらぬも　自由なのです！▼
+ラリーの　ポイントは
+ギアステーション▽
+ミュージカルホールに▽
+ビッグスタジアムに　リトルコート▽
+それに　観覧車　です！▼
+では　プレゼントした
+じてんしゃに　乗って　レッツゴー！</language>
 	</row>
 
-	<row id="msg_c04r0601_rally_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04r0601_rally_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・</comment>
-		<language name="JPN" width="256">ライモンラリーで
+・rally_02表示後、話しかけたとき
+・すべて訪れたときはrally_10</comment>
+		<attribute name="キャラ指定">CLOWN</attribute>
+		<language name="JPN" width="256">やるも　やらぬも　じゆうの
+ライモンラリー！　あなたが▽
 まだ　おとずれて　いないのは……▼</language>
-		<language name="JPN_KANJI" width="256">ライモンラリーで
-まだ　訪れていないのは……▼</language>
+		<language name="JPN_KANJI" width="256">やるも　やらぬも　自由の
+ライモンラリー！　あなたが▽
+まだ　訪れて　いないのは……▼</language>
 	</row>
 
-	<row id="msg_c04r0601_rally_04" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c04r0601_rally_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・ギアステーションまだ</comment>
+・ギアステーションまだだったら表示</comment>
+		<attribute name="キャラ指定">CLOWN</attribute>
 		<language name="JPN" width="256">ギアステーション！▼</language>
 		<language name="JPN_KANJI" width="256">ギアステーション！▼</language>
 	</row>
 
-	<row id="msg_c04r0601_rally_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04r0601_rally_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・ミュージカルホールまだ</comment>
+・ミュージカルホールまだだったら表示</comment>
+		<attribute name="キャラ指定">CLOWN</attribute>
 		<language name="JPN" width="256">ミュージカルホール！▼</language>
 		<language name="JPN_KANJI" width="256">ミュージカルホール！▼</language>
 	</row>
 
-	<row id="msg_c04r0601_rally_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04r0601_rally_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・ビッグスタジアムまだ</comment>
+・ビッグスタジアムまだだったら表示</comment>
+		<attribute name="キャラ指定">CLOWN</attribute>
 		<language name="JPN" width="256">ビッグスタジアム！▼</language>
 		<language name="JPN_KANJI" width="256">ビッグスタジアム！▼</language>
 	</row>
 
-	<row id="msg_c04r0601_rally_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04r0601_rally_07" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・リトルコートまだ</comment>
+・リトルコートまだだったら表示</comment>
+		<attribute name="キャラ指定">CLOWN</attribute>
 		<language name="JPN" width="256">リトルコート！▼</language>
 		<language name="JPN_KANJI" width="256">リトルコート！▼</language>
 	</row>
 
-	<row id="msg_c04r0601_rally_08" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04r0601_rally_08" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・観覧車まだだったら表示</comment>
+		<attribute name="キャラ指定">CLOWN</attribute>
+		<language name="JPN" width="256">かんらんしゃ！▼</language>
+		<language name="JPN_KANJI" width="256">観覧車！▼</language>
+	</row>
+
+	<row id="msg_c04r0601_rally_09" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・締めの言葉</comment>
-		<language name="JPN" width="256">の　[2:00:１桁:0]かしょ　ですね！
-では　がんばってくださーい！</language>
-		<language name="JPN_KANJI" width="256">の　[2:00:１桁:0]カ所　ですね！
-では　がんばってくださーい！</language>
+		<attribute name="キャラ指定">CLOWN</attribute>
+		<language name="JPN" width="256">の　[2:00:１桁:0]かしょ　ですね！▼
+では　めぐって　めぐって
+ライモンラリー！　レッツ　ゴー！</language>
+		<language name="JPN_KANJI" width="256">の　[2:00:１桁:0]カ所　ですね！▼
+では　巡って　巡って
+ライモンラリー！　レッツ　ゴー！</language>
 	</row>
 
-	<row id="msg_c04r0601_rally_09" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04r0601_rally_10" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・残り０箇所＝アイテム入手前</comment>
-		<language name="JPN" width="256">ライモンラリー
-せいは　おめでとうございます！▼
-これは　ささやかなものですが▼</language>
-		<language name="JPN_KANJI" width="256">no data</language>
+・残り０箇所＝アイテム入手前
+・アイテム入手処理
+　No000「（内容未定）」</comment>
+		<attribute name="キャラ指定">CLOWN</attribute>
+		<language name="JPN" width="256">なんと！　のこり　０！
+……ということは▼
+ライモンラリー　せいは！
+おめでとう　ございます！▼
+これは　ささやかな　ものですが
+きねんひんに　どうぞ！▼</language>
+		<language name="JPN_KANJI" width="256">なんと！　残り　０！
+……ということは▼
+ライモンラリー　制覇！
+おめでとう　ございます！▼
+これは　ささやかな　ものですが
+記念品に　どうぞ！▼</language>
 	</row>
 
-	<row id="msg_c04r0601_rally_10" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04r0601_rally_11" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・残り０箇所＝アイテム入手後</comment>
-		<language name="JPN" width="256">ライモンの　かんこう～
-ふやすための　ラリー！
-だから　さいしょに　きまえよく
-じてんしゃも　プレゼントしてして
-これからも　ライモンを　あいしてくださいね</language>
-		<language name="JPN_KANJI" width="256">no data</language>
+・残り０箇所＝アイテム入手後
+・以降繰り返し</comment>
+		<attribute name="キャラ指定">CLOWN</attribute>
+		<language name="JPN" width="256">ライモンを　あいする
+ひとを　ふやすための　ラリー！▼
+ですから　さいしょに　きまえよく
+じてんしゃも　プレゼント　したのです▼
+これからも　ライモンシティを
+あいして　くださいね！▼
+ラブ　ラブ　ライモン！
+ラブ　ライモンシティ！</language>
+		<language name="JPN_KANJI" width="256">ライモンを　愛する
+人を　増やすための　ラリー！▼
+ですから　最初に　気前よく
+じてんしゃも　プレゼント　したのです▼
+これからも　ライモンシティを
+愛して　くださいね！▼
+ラブ　ラブ　ライモン！
+ラブ　ライモンシティ！</language>
 	</row>
 
 	<row id="msg_c04r0601_hakase2_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
