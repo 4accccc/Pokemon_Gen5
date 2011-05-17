@@ -553,6 +553,7 @@ static GMEVENT * EVENT_SodatePokeSelect(
 
   // ポケモンリスト生成
   pl_data    = GFL_HEAP_AllocMemory( HEAPID_PROC, sizeof(PLIST_DATA) );
+  pl_data->gdata = gdata;
   pl_data->pp = party;
   pl_data->mode = PL_MODE_SODATEYA;
   pl_data->type = PL_TYPE_SINGLE;

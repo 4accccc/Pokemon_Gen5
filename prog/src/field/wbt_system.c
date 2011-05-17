@@ -534,6 +534,7 @@ void WBTSYS_SetupPokeListData( WBTSYS * wbtsys, GAMEDATA * gamedata, PLIST_DATA 
 
   GFL_STD_MemClear32( plist_data, sizeof(PLIST_DATA) );
 
+  plist_data->gdata = gamedata;
   plist_data->pp = getUsePokeParty( wbtsys, gamedata );
 
   switch ( wbtsys->rule )

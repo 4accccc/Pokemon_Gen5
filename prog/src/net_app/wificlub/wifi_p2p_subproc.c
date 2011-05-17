@@ -392,6 +392,7 @@ static void WIFICLUB_BATTLE_SUBPROC_InitListData( WIFICLUB_BATTLE_SUBPROC_PARAM 
   REGULATION *reg = p_param->regulation;
   SAVE_CONTROL_WORK *svWork = GAMEDATA_GetSaveControlWork(p_param->gameData);
   
+  plData->gdata = p_param->gameData;
   //plData->pp = procWork->pokeParty;
   plData->pp = p_param->selfPokeParty;
 

@@ -304,7 +304,8 @@ static void WIFIBATTLEMATCH_SUBPROC_InitListData( WIFIBATTLEMATCH_SUBPROC_PARAM 
   u8 i;
   REGULATION *reg = p_param->regulation;
   SAVE_CONTROL_WORK *svWork = GAMEDATA_GetSaveControlWork(p_param->gameData);
-  
+
+  plData->gdata = p_param->gameData;
   plData->pp = procWork->pokeParty;
   plData->myitem = NULL;
   plData->mailblock = NULL;

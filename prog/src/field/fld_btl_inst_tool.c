@@ -116,6 +116,7 @@ GMEVENT *FBI_TOOL_CreatePokeListEvt(
   {
     PLIST_DATA *list = &work->ListData;
     PokeRegulation_LoadData(inReg, &work->Regulation);  //レギュレーションロード
+    list->gdata = GAMESYSTEM_GetGameData(gsys);
     list->pp = inTargetParty;
     list->reg = &work->Regulation;
     list->type = inType;

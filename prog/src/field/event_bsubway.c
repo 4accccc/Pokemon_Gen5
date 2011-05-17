@@ -189,6 +189,7 @@ GMEVENT * BSUBWAY_EVENT_SetSelectPokeList(
     PLIST_DATA *list = &work->list_data;
     
     MI_CpuClear8( list, sizeof(PLIST_DATA) );
+    list->gdata = gdata;
     list->pp = pp;
     
     switch( bsw_scr->play_mode ){

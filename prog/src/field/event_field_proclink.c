@@ -844,6 +844,7 @@ static void * FMenuCallProc_PokeList(PROCLINK_WORK* wk, u32 param, EVENT_PROCLIN
 
   plistData     = GFL_HEAP_AllocClearMemory(HEAPID_PROC, sizeof(PLIST_DATA));
 
+  plistData->gdata = gmData;
   plistData->pp = GAMEDATA_GetMyPokemon( gmData);
   plistData->scwk = wk->scwk;
   plistData->myitem   = GAMEDATA_GetMyItem( gmData);    // アイテムデータ

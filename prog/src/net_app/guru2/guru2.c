@@ -255,6 +255,7 @@ static PLIST_DATA* Guru2PokeListWorkCreate( GURU2_CALL_WORK *g2call, u32 mode,  
 {
   PLIST_DATA * pld = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(PLIST_DATA) );
 
+  pld->gdata     = g2call->gamedata;
   pld->pp        = GAMEDATA_GetMyPokemon( g2call->gamedata );
   pld->myitem    = GAMEDATA_GetMyItem( g2call->gamedata );
   pld->type      = PL_TYPE_SINGLE;

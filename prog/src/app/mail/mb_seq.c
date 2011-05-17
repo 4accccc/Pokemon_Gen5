@@ -1320,6 +1320,7 @@ static void PokeListWorkCreate( MAILBOX_SYS_WORK * syswk, u32 mode, u16 item, u1
 {
   PLIST_DATA * pld = GFL_HEAP_AllocClearMemory( HEAPID_MAILBOX_SYS, sizeof(PLIST_DATA) );
 
+  pld->gdata     = syswk->dat->gamedata;
   pld->pp        = GAMEDATA_GetMyPokemon( syswk->dat->gamedata );
   pld->myitem    = GAMEDATA_GetMyItem( syswk->dat->gamedata );
   pld->mailblock = syswk->sv_mail;

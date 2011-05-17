@@ -64,7 +64,7 @@ GFL_PROC_DATA PokeList_ProcData =
 static GFL_PROC_RESULT PokeListProc_Init( GFL_PROC * proc, int * seq , void *pwk, void *mywk )
 {
   PLIST_DATA *plData = pwk;
-  PLIST_WORK *plWork = mywk;;
+  PLIST_WORK *plWork = mywk;
 
   switch( *seq )
   {
@@ -75,6 +75,10 @@ static GFL_PROC_RESULT PokeListProc_Init( GFL_PROC * proc, int * seq , void *pwk
     plWork = GFL_PROC_AllocWork( proc, sizeof(PLIST_WORK), HEAPID_POKELIST );
     plWork->heapId = HEAPID_POKELIST;
 
+#ifndef PM_DEBUG
+    GF_ASSERT(pwk);
+
+#else //PM_DEBUG
     //デバグ
     if( pwk == NULL )
     {
@@ -112,7 +116,7 @@ static GFL_PROC_RESULT PokeListProc_Init( GFL_PROC * proc, int * seq , void *pwk
           //PP_Put( pPara , ID_PARA_item , 1 );
           break;
         }
-  #endif
+  #endif  //DEB_ARI&0
         /*/
         //バトル用テスト
         u8 noArr[6] = {1,1,2,3,4,5};
@@ -229,8 +233,12 @@ static GFL_PROC_RESULT PokeListProc_Init( GFL_PROC * proc, int * seq , void *pwk
         
       }
       GFL_UI_SetTouchOrKey( GFL_APP_KTST_TOUCH );
+    }else{
+      //pwk==NULLのデバッグモードで呼び出した場合のみ、plWork->plData->gdataにアクセスできないので注意
+      GF_ASSERT( plData->gdata );
     }
-    
+#endif  //PM_DEBUG
+
     plWork->plData = plData;
     (*seq) = 1;
     

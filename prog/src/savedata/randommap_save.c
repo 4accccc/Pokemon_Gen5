@@ -132,5 +132,34 @@ FIELD_WFBC_EVENT* RANDOMMAP_SAVE_GetEventData( RANDOMMAP_SAVE* sv )
   return &sv->event;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  キュレム合体相手のPOKEMON_PARAMを取得
+ *
+ *	@param	sv  セーブワーク
+ *
+ *	@return セーブデータ
+ */
+//-----------------------------------------------------------------------------
+void RANDOMMAP_SAVE_GetKyuremuUnionPokeParam( RANDOMMAP_SAVE* sv, POKEMON_PARAM* pp_dst )
+{
+  GF_ASSERT( sv );
+  POKETOOL_CopyPPtoPP( &sv->united_pokepara, pp_dst );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  キュレム合体相手のPOKEMON_PARAMを保存 
+ *
+ *	@param	sv  セーブワーク
+ *
+ *	@return セーブデータ
+ */
+//-----------------------------------------------------------------------------
+void RANDOMMAP_SAVE_SetKyuremuUnionPokeParam( RANDOMMAP_SAVE* sv, const POKEMON_PARAM* pp_src )
+{
+  GF_ASSERT( sv );
+  POKETOOL_CopyPPtoPP( (POKEMON_PARAM*)pp_src, &sv->united_pokepara );
+}
 
 

@@ -62,6 +62,7 @@ GMEVENT * EVENT_CreatePokeSelect(
 
   // ポケモンリスト生成
   pl_data    = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(PLIST_DATA) );
+  pl_data->gdata = gdata;
   pl_data->pp = party;
   pl_data->mode = PL_MODE_SET;
   pl_data->type = PL_TYPE_SINGLE;
@@ -99,6 +100,7 @@ GMEVENT * EVENT_CreatePokeSelectWazaOboe(
 
   // ポケモンリスト生成
   pl_data    = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(PLIST_DATA) );
+  pl_data->gdata = gdata;
   pl_data->pp = party;
   pl_data->mode = PL_MODE_SET_WAZA;
   pl_data->type = PL_TYPE_SINGLE;
@@ -141,6 +143,7 @@ GMEVENT * EVENT_CreatePokeSelectMusical(
 
   // ポケモンリスト生成
   pl_data    = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(PLIST_DATA) );
+  pl_data->gdata = gdata;
   pl_data->pp = party;
   pl_data->mode = PL_MODE_SET_MUSICAL;
   pl_data->type = PL_TYPE_SINGLE;
@@ -278,7 +281,7 @@ GMEVENT * EVENT_CreateWazaSelect(
   EVENT_POKESEL_PARAM_WSELECT* prm = (EVENT_POKESEL_PARAM_WSELECT*)parent;
 
   // ポケモンリスト生成
-  ps_data    = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(PLIST_DATA) );
+  ps_data    = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(PSTATUS_DATA) );
   ps_data->ppd = party;
   ps_data->ppt = PST_PP_TYPE_POKEPARTY;
   ps_data->max = PokeParty_GetPokeCount( party );
