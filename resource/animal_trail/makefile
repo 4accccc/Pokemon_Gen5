@@ -52,9 +52,9 @@ do-build: out_end
 out_end: $(ANIMAL_TRAIL_XLS) animal_trail_data_cnv.rb
 	cp ../itemconv/item_hash.rb item_hash.rb
 	cp ../personal/monsno_hash.rb monsno_hash.rb
-#	@for x in 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19;\
-#	do $(EXCELCONV) -o $(TMPDIR)/$(ANIMAL_TRAIL_CSV_NAME)$$x.csv -p $$x -s csv  $(ANIMAL_TRAIL_XLS) ;\
-#	done
+	@for x in 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19;\
+	do $(EXCELCONV) -o $(TMPDIR)/$(ANIMAL_TRAIL_CSV_NAME)$$x.csv -p $$x -s csv  $(ANIMAL_TRAIL_XLS) ;\
+	done
 	@ruby animal_trail_data_cnv.rb $(TMPDIR) $(ANIMAL_TRAIL_CSV_NAME) 20 $(ANIMAL_TRAIL_CDAT)
 	@echo end > out_end
 
