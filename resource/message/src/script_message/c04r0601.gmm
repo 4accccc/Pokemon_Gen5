@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-05-17T13:03:38"/>
+	<create user="matsumiya" host="W00224" date="2011-05-17T15:04:41"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -295,7 +295,10 @@
 	<row id="msg_c04r0601_rally_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・初回
-・アイテム入手前</comment>
+・アイテム入手前
+・posで必須イベントに
+・アイテム入手処理
+　No450「じてんしゃ」</comment>
 		<attribute name="キャラ指定">CLOWN</attribute>
 		<language name="JPN" width="256">ようこそ！　ライモンシティ！！
 レッツ　トライ　ライモンラリー！！▼
