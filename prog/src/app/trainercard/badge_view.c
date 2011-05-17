@@ -90,7 +90,6 @@ enum{
 #define BV_BGFRAME_D_BUTTON ( GFL_BG_FRAME1_S )
 #define BV_BGFRAME_D_BG     ( GFL_BG_FRAME2_S )
 // 以下、追加
-#define BV_BGFRAME_U_NOUSE	( GFL_BG_FRAME3_S )
 #define BV_BGFRAME_D_WIN	( GFL_BG_FRAME3_S )
 //
 #define OBJ_DRAW_UP			( CLSYS_DRAW_MAIN )
@@ -102,7 +101,7 @@ enum{
 #define PALTYPE_BG_UP		( PALTYPE_MAIN_BG )
 //
 #define PAL_TOUCH_BG		( 12 )			// 下画面共通パネル用offset(ウインドウと重なるため変更)
-#define PAL_BADGE_BG		( 10 )			// 下画面バッジ用offset
+//#define PAL_BADGE_BG		( 10 )			// 下画面バッジ用offset
 #define PAL_CUTIN_BG		( 10 )			// 上画面カットイン用offset
 
 // 情報ウインドウ用定義
@@ -623,6 +622,7 @@ static void VBlankFunc( GFL_TCB *tcb, void * work )
   if( wk->Flag & FLG_SET_BGOFFSET ){
     // win
     GFL_BG_SetScroll( BV_BGFRAME_D_WIN, GFL_BG_SCROLL_Y_SET, wk->BgOffY );
+    GFL_BG_SetScroll( BV_BGFRAME_D_MSG, GFL_BG_SCROLL_Y_SET, wk->BgOffY );
     // カットイン(test)
     GFL_BG_SetScroll( BV_BGFRAME_U_CUTIN, GFL_BG_SCROLL_X_SET, wk->BgOffX );
     // 最後の1フレームをセットするため
@@ -806,6 +806,10 @@ static const GFL_DISP_VRAM VramTbl = {
 //----------------------------------------------------------------------------------
 static void VramBankSet(void)
 {
+  //  VRAMクリアー
+  // (ごみが残ることがあったので入れた)
+  GFL_DISP_ClearVRAM( 0 );
+  
   GFL_DISP_SetBank( &VramTbl );
 
   // メイン画面を上に表示
@@ -867,26 +871,26 @@ static void BgInit(BADGEVIEW_WORK *wk)
       },
       //
       //
-      { // 下画面：プレート枠
-        0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-        GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x00000, GFL_BG_CHRSIZ_256x128,
-        GX_BG_EXTPLTT_01,      2, 0, 0, FALSE
+      { // 下画面：メッセージ
+        0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x512, GX_BG_COLORMODE_16,
+        GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x00000, GFL_BG_CHRSIZ_256x128,
+        GX_BG_EXTPLTT_01,      1, 0, 0, FALSE
       },
-      { // 下画面：タッチバー共通
+      { // 下画面：タッチバー(共通)
         0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-        GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x10000, GFL_BG_CHRSIZ_256x128,
+        GX_BG_SCRBASE_0xd000, GX_BG_CHARBASE_0x10000, GFL_BG_CHRSIZ_256x128,
         GX_BG_EXTPLTT_01,      0, 0, 0, FALSE
       },
       { // 下画面：顔入り背景
         0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-        GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x08000, GFL_BG_CHRSIZ_256x128,
+        GX_BG_SCRBASE_0xd800, GX_BG_CHARBASE_0x08000, GFL_BG_CHRSIZ_256x128,
         GX_BG_EXTPLTT_01,      3, 0, 0, FALSE
       },
       //
       { // 下画面：WIN(追加)
         0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x512, GX_BG_COLORMODE_16,
-        GX_BG_SCRBASE_0xd800, GX_BG_CHARBASE_0x18000, GFL_BG_CHRSIZ_256x128,
-        GX_BG_EXTPLTT_01,      1, 0, 0, FALSE
+        GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x18000, GFL_BG_CHRSIZ_256x128,
+        GX_BG_EXTPLTT_01,      2, 0, 0, FALSE
       },
     };
 
@@ -900,8 +904,6 @@ static void BgInit(BADGEVIEW_WORK *wk)
       GFL_BG_SetClearCharacter( bgframe_init_tbl[i], 0x20, 0, HEAPID_TR_CARD );
       GFL_BG_SetVisible(  bgframe_init_tbl[i], VISIBLE_ON     );
     }
-    // 残りのBG面をOFFに
-//    GFL_BG_SetVisible( BV_BGFRAME_U_NOUSE, VISIBLE_OFF );
   }
   
   // 半透明設定
@@ -960,9 +962,13 @@ static void BgGraphicInit(BADGEVIEW_WORK *wk)
                                         BV_BGFRAME_D_BG, 0, 0, FALSE, HEAPID_TR_CARD );
   GFL_ARCHDL_UTIL_TransVramScreen(      handle, NARC_trainer_case_badge_base_NSCR,
                                         BV_BGFRAME_D_BG, 0, 0, FALSE, HEAPID_TR_CARD );
-  GFL_ARCHDL_UTIL_TransVramPalette(     handle, NARC_trainer_case_badge_base02_NCLR, 	// グレー(初期)
-                                        PALTYPE_BG_DOWN, 0, 0, HEAPID_TR_CARD );
+  // test
+  GFL_ARCHDL_UTIL_TransVramPaletteEx(   handle, NARC_trainer_case_badge_base01_NCLR, 	// グレー(バッジ用)
+                                        PALTYPE_BG_DOWN, 0x20*8, 0x20*8, 0x20, HEAPID_TR_CARD );
   
+  GFL_ARCHDL_UTIL_TransVramPalette(     handle, NARC_trainer_case_badge_base02_NCLR, 	// グレー(初期)
+                                        PALTYPE_BG_DOWN, 0, 0x20*8, HEAPID_TR_CARD );
+#if 0
   // 下画面背景転送(プレート枠:なくてもいいかも)
   GFL_ARCHDL_UTIL_TransVramBgCharacter( handle, NARC_trainer_case_badge_bg01_NCGR,
                                         BV_BGFRAME_D_MSG, 0, 0, FALSE, HEAPID_TR_CARD );
@@ -973,7 +979,7 @@ static void BgGraphicInit(BADGEVIEW_WORK *wk)
   // プレート枠のパレット指定を変更
   GFL_BG_ChangeScreenPalette( BV_BGFRAME_D_MSG, 0, 11, 32, 10, PAL_BADGE_BG );
   GFL_BG_LoadScreenReq( BV_BGFRAME_D_MSG );
-  
+#endif
   
   // タッチバーBG転送(共通)
   {
@@ -1010,11 +1016,6 @@ static void BgGraphicInit(BADGEVIEW_WORK *wk)
   // スクリーンのパレット指定変更
   GFL_BG_ChangeScreenPalette( BV_BGFRAME_D_WIN, 0, 0, 32, 12, SYSTEMWIN_FRM_PAL_OFFSET );
   GFL_BG_LoadScreenReq( BV_BGFRAME_D_WIN );
-
-  // システムウインドウリソース転送
-//  BmpWinFrame_PalSet( BV_BGFRAME_D_WIN, SYSTEMWIN_FRM_PAL_OFFSET, MENU_TYPE_SYSTEM, HEAPID_TR_CARD );
-//  BmpWinFrame_CgxSet( BV_BGFRAME_D_WIN, SYSTEMWIN_FRM_CGX_OFFSET, MENU_TYPE_SYSTEM, HEAPID_TR_CARD);
-
 
   // バッジOBJ転送用パレット保持
   for(i=0;i<BADGE_POLISH_PAL_NUM;i++){
@@ -1119,14 +1120,14 @@ static const int clact_dat[][8]={
   { 28*8,  21*8,   1, BV_RES_COMMON_CHR, BV_RES_COMMON_CHR,  BV_RES_COMMON_CHR,   0, OBJ_DEFREND_DOWN, },// もどる
   { 24*8,  21*8,   0, BV_RES_COMMON_CHR, BV_RES_COMMON_CHR,  BV_RES_COMMON_CHR,   0, OBJ_DEFREND_DOWN, },// ×
   { 20*8,  21*8+4,   7, BV_RES_COMMON_CHR, BV_RES_COMMON_CHR,  BV_RES_COMMON_CHR, 0, OBJ_DEFREND_DOWN, },// Ｙチェック
-  {  2*8,  16*8,   0, BV_RES_CHR,        BV_RES_PLTT,        BV_RES_CELL,         2, OBJ_DEFREND_DOWN, },// バッジ0
-  {  6*8,  16*8,   1, BV_RES_CHR,        BV_RES_PLTT,        BV_RES_CELL,         2, OBJ_DEFREND_DOWN, },// バッジ1
-  { 10*8,  16*8,   2, BV_RES_CHR,        BV_RES_PLTT,        BV_RES_CELL,         2, OBJ_DEFREND_DOWN, },// バッジ2
-  { 14*8,  16*8,   3, BV_RES_CHR,        BV_RES_PLTT,        BV_RES_CELL,         2, OBJ_DEFREND_DOWN, },// バッジ3
-  { 18*8,  16*8,   4, BV_RES_CHR,        BV_RES_PLTT,        BV_RES_CELL,         2, OBJ_DEFREND_DOWN, },// バッジ4
-  { 22*8,  16*8,   5, BV_RES_CHR,        BV_RES_PLTT,        BV_RES_CELL,         2, OBJ_DEFREND_DOWN, },// バッジ5
-  { 26*8,  16*8,   6, BV_RES_CHR,        BV_RES_PLTT,        BV_RES_CELL,         2, OBJ_DEFREND_DOWN, },// バッジ6
-  { 30*8,  16*8,   7, BV_RES_CHR,        BV_RES_PLTT,        BV_RES_CELL,         2, OBJ_DEFREND_DOWN, },// バッジ7
+  {  2*8,  16*8,   0, BV_RES_CHR,        BV_RES_PLTT,        BV_RES_CELL,         3, OBJ_DEFREND_DOWN, },// バッジ0
+  {  6*8,  16*8,   1, BV_RES_CHR,        BV_RES_PLTT,        BV_RES_CELL,         3, OBJ_DEFREND_DOWN, },// バッジ1
+  { 10*8,  16*8,   2, BV_RES_CHR,        BV_RES_PLTT,        BV_RES_CELL,         3, OBJ_DEFREND_DOWN, },// バッジ2
+  { 14*8,  16*8,   3, BV_RES_CHR,        BV_RES_PLTT,        BV_RES_CELL,         3, OBJ_DEFREND_DOWN, },// バッジ3
+  { 18*8,  16*8,   4, BV_RES_CHR,        BV_RES_PLTT,        BV_RES_CELL,         3, OBJ_DEFREND_DOWN, },// バッジ4
+  { 22*8,  16*8,   5, BV_RES_CHR,        BV_RES_PLTT,        BV_RES_CELL,         3, OBJ_DEFREND_DOWN, },// バッジ5
+  { 26*8,  16*8,   6, BV_RES_CHR,        BV_RES_PLTT,        BV_RES_CELL,         3, OBJ_DEFREND_DOWN, },// バッジ6
+  { 30*8,  16*8,   7, BV_RES_CHR,        BV_RES_PLTT,        BV_RES_CELL,         3, OBJ_DEFREND_DOWN, },// バッジ7
   // 以下は、いらないのはず
   {  (4*0+2)*8,  14*8,   9, BV_RES_CHR,        BV_RES_PLTT,        BV_RES_CELL,   2, OBJ_DEFREND_DOWN, },// キラキラ0-１
   {  (4*0+4)*8,  17*8,  10, BV_RES_CHR,        BV_RES_PLTT,        BV_RES_CELL,   2, OBJ_DEFREND_DOWN, },// キラキラ0-２
@@ -1557,7 +1558,8 @@ typedef struct{
 
 
 static const BMPWIN_DAT bmpwin_info_dat = {
-  BV_BGFRAME_D_WIN, 1, 1, 30, 9, 15, 0,		// 上
+//  BV_BGFRAME_D_WIN, 1, 1, 30, 9, 15, 0,		// 上
+  BV_BGFRAME_D_MSG, 1, 1, 30, 9, 15, 0,		// 上
 };
 
 //----------------------------------------------------------------------------------
@@ -1579,7 +1581,8 @@ static void BmpWinInit(BADGEVIEW_WORK *wk)
                                    windat->x, windat->y,
                                    windat->w, windat->h,
                                    windat->pal, GFL_BMP_CHRAREA_GET_B );
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->InfoWin), 0x0f0f );
+//  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->InfoWin), 0x0f0f );
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->InfoWin), 0 );
 
 }
 
@@ -1612,6 +1615,7 @@ static void bmpwin_visible( BADGEVIEW_WORK *wk, const BOOL bflg )
 {
 	// サブ画面のWIN非表示
 	GFL_BG_SetVisible( BV_BGFRAME_D_WIN, bflg );
+	GFL_BG_SetVisible( BV_BGFRAME_D_MSG, bflg );
 }
 
 //----------------------------------------------------------------------------------
@@ -1631,7 +1635,7 @@ static void InfoWinPut( BADGEVIEW_WORK *wk )
 }
 
 
-#define BV_COL_BLACK      ( PRINTSYS_LSB_Make(  1,  2, 15) )    // 黒
+#define BV_COL_BLACK      ( PRINTSYS_LSB_Make(  15,  2, 0 ) )    // 黒
 
 //----------------------------------------------------------------------------------
 /**
@@ -1981,7 +1985,7 @@ static void _print_gym_leader_info( BADGEVIEW_WORK *wk, int line, const s32 ypos
 {
   GFL_MSG_GetString( wk->mman, gymleader_text_tbl[no]+line, strbuf );
   PRINT_UTIL_PrintColor( &wk->printUtil, wk->printQue, 
-                         0, 32*ypos, strbuf, wk->font, BV_COL_BLACK );
+                         0, (32+8)*ypos, strbuf, wk->font, BV_COL_BLACK );
 
 }
 
@@ -2004,7 +2008,8 @@ static void InfoWinPrint( BADGEVIEW_WORK *wk, int type, int no, const s32 smode 
   GF_ASSERT( no>=0 && no<8 );
 
   // 描画領域クリア
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->InfoWin), 0x0f0f );
+//  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->InfoWin), 0x0f0f );
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->InfoWin), 0 );
 
   switch(type){
   // バッジ情報
@@ -2027,7 +2032,7 @@ static void InfoWinPrint( BADGEVIEW_WORK *wk, int type, int no, const s32 smode 
     for(i=1;i<3;i++){
       GFL_MSG_GetString( wk->mman, MSG_LEAGUE_BADGE1_01+3*no+i, strbuf );
       PRINT_UTIL_PrintColor( &wk->printUtil, wk->printQue, 
-                             0, 32*i, strbuf, wk->font, BV_COL_BLACK );
+                             0, (32+8)*i, strbuf, wk->font, BV_COL_BLACK );
     }
     break;
 
@@ -3282,6 +3287,7 @@ static void bv_init_bgscroll( BADGEVIEW_WORK* wk, const s32 mode )
 	// 開始座標をセットし、すぐ反映
 	wk->BgOffY = buf[0];
 	GFL_BG_SetScroll( BV_BGFRAME_D_WIN, GFL_BG_SCROLL_Y_SET, wk->BgOffY );
+	GFL_BG_SetScroll( BV_BGFRAME_D_MSG, GFL_BG_SCROLL_Y_SET, wk->BgOffY );
 	// step
 	wk->Step = bv_scr_tbl[4*mode+2];
 	//
@@ -3390,7 +3396,8 @@ static void bv_main_scroll( BADGEVIEW_WORK* wk )
 		// BGスクロール終了
 		case STEP_LV2+20:
 			// 描画領域クリア
-			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->InfoWin), 0x0f0f );
+//			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->InfoWin), 0x0f0f );
+			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->InfoWin), 0 );
 			InfoWinPut( wk );
 			bmpwin_visible( wk, FALSE );
 			//
@@ -3564,6 +3571,8 @@ static void bv_chk_leader( BADGEVIEW_WORK* wk )
 					// 文字転送
 					InfoWinPrint( wk, wk->TypeNum, wk->PageNum, wk->LeaderNum );
 					InfoWinPut( wk );
+					// se(ウインドウタッチ)
+					PMSND_PlaySE( SND_TRBADGE_WIN_TOUCH );
 				}
 				// 終了処理
 				else{
