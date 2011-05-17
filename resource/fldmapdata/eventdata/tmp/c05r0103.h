@@ -1,0 +1,18 @@
+//このファイルは../data/c05r0103.mevから自動生成されました
+#ifndef ZONE_C05R0103_EVD_H
+#define ZONE_C05R0103_EVD_H
+
+
+#endif //ZONE_C05R0103_EVD_H
+//このファイルは../data/c05r0103.mevから自動生成されました
+#ifndef ZONE_C05R0103_EVC_H
+#define ZONE_C05R0103_EVC_H
+
+
+#endif //ZONE_C05R0103_EVC_H
+//このファイルは../data/c05r0103.mevから自動生成されました
+#ifndef ZONE_C05R0103_EVB_H
+#define ZONE_C05R0103_EVB_H
+
+
+#endif //ZONE_C05R0103_EVB_H

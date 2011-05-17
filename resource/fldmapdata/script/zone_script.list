@@ -1120,5 +1120,21 @@ SCRIPTFILES += \
 	sp_d24r0701.ev \
 	d03r0301.ev \
 	sp_d03r0301.ev \
+	c05r0102.ev \
+	sp_c05r0102.ev \
+	c05r0103.ev \
+	sp_c05r0103.ev \
+	c05r0202.ev \
+	sp_c05r0202.ev \
+	c05r0203.ev \
+	sp_c05r0203.ev \
+	c05r0302.ev \
+	sp_c05r0302.ev \
+	c05r0303.ev \
+	sp_c05r0303.ev \
+	c05r0402.ev \
+	sp_c05r0402.ev \
+	c05r0403.ev \
+	sp_c05r0403.ev \
 
 #©“®¶¬ƒtƒ@ƒCƒ‹ zone_script.list ––”ö
