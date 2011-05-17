@@ -82,7 +82,7 @@ static const ZONEID UseZoneIDTbl_un[] =
   ZONE_ID_C11R0101,
   ZONE_ID_C11R0201,
   ZONE_ID_C03P14,     //国連行き船で使用
-  ZONE_ID_C02R0701,   //性格を設定
+  ZONE_ID_C13PC0101,   //性格を設定
   ZONE_ID_C03R0101,    //趣味を設定
   ZONE_ID_C03PC0101,  //国コードをセットしているかどうか
 };
