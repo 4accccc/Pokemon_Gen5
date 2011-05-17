@@ -21,13 +21,13 @@ File.open( ARGV[0],"r"){|file|
 
     # すでにポケウッドデータが組み込まれているか？
     ary = line.split(/,/)
-    if ary[0]=="たまご" then
+    if ary[0]=="たまご" || ary[0]=="\"たまご\""then
       $stderr.printf( "ポケウッドデータ既にはいってます\n" )
       flag=1
     end
 
     # ポケウッドデータが組み込まれていなかったら割り込ませる
-    if ary[0]=="" && flag==0 then
+    if (ary[0]=="" || ary[0]=="\"\"")&& flag==0 then
       printf("%s", tamago_str)        # たまごダミーデータ挿入
       printf("%s", dametamago_str)    # だめたまごダミーデータ挿入
       File.open(ARGV[1],"r"){|inFile|
