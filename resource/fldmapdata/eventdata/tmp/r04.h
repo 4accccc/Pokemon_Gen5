@@ -12,6 +12,17 @@
 #ifndef ZONE_R04_EVC_H
 #define ZONE_R04_EVC_H
 
+#define TR_FISHING_14                      0
+#define TR_FISHING_13                      1
+#define TR_POLICE_03                       2
+#define TR_BADTEAM_02                      3
+#define TR_BADTEAM_02_2                    4
+#define TR_BADRIDER_07                     5
+#define TR_TANPAN_22                       6
+#define TR_HEADS_07                        7
+#define TR_HEADS_08                        8
+#define TR_POLICE_04                       9
+#define TR_POLICE_05                      10
 
 #endif //ZONE_R04_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r04.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
