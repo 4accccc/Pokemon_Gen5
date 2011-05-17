@@ -76,8 +76,8 @@ evo.narc: $(EVOFILES)
 pms.narc: $(PMSFILES)
 	nnsarc -c -l -n pms.narc pms_*.bin
 
-#$(PERSONAL_CSV): personal_wb.csv
-#	ruby ../../tools/personal_conv/wazamachine_split.rb personal_wb.csv $(PERSONAL_CSV)
+#$(PERSONAL_CSV): personal_sw.csv
+#	ruby ../../tools/personal_conv/wazamachine_split.rb personal_ws.csv $(PERSONAL_CSV)
 endif
 
 #------------------------------------------------------------------------------

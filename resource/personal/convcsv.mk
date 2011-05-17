@@ -69,7 +69,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 
 do-build: out_end
 
-out_end: personal_wb.csv
+out_end: personal_sw.csv
 	ruby ../../tools/personal_conv/personal_conv.rb $< ../message/template.gmm
 
 fake:
