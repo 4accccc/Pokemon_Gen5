@@ -1289,9 +1289,9 @@
 	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/rschampion.ncg ./mmdl_res ./mmdl_dmy/t4x4x7.imd 4 4 7
 
 #echampion.imd
-./mmdl_res/echampion.imd: ./mmdl_nchara/echampion.ncg ./mmdl_nchara/echampion.ncl ./mmdl_dmy/t4x4x7.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_flip.csv
+./mmdl_res/echampion.imd: ./mmdl_nchara/echampion.ncg ./mmdl_nchara/echampion.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
 	@echo convert ncg_imd echampion
-	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/echampion.ncg ./mmdl_res ./mmdl_dmy/t4x4x7.imd 4 4 7
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/echampion.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
 
 #swidolm.imd
 ./mmdl_res/swidolm.imd: ./mmdl_nchara/swidolm.ncg ./mmdl_nchara/swidolm.ncl ./mmdl_dmy/t4x4x7.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_flip.csv
