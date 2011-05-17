@@ -396,6 +396,14 @@ static const u32 SaveBreakMessage[][2] =
 		FST_EXTRA_DENDOU_BREAK_BIT,
 		START_MENU_LOAD_WARNING_07
 	},
+  { //ポケウッド００
+    FST_EXTRA_POKEWOOD_00_BREAK_BIT,
+		START_MENU_LOAD_WARNING_07  //TODO メッセージ変更
+  },  
+  { //ポケウッド０１
+    FST_EXTRA_POKEWOOD_01_BREAK_BIT,
+		START_MENU_LOAD_WARNING_07  //TODO メッセージ変更
+  },
 	{	// ふしぎなおくりもの（ビクティ）
 		FST_OUTSIDE_MYSTERY_BREAK_BIT,
 		START_MENU_LOAD_WARNING_08

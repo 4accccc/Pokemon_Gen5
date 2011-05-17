@@ -79,8 +79,7 @@ static void RecHeaderCreate(SAVE_CONTROL_WORK *sv, BATTLE_REC_HEADER *head, cons
 static BOOL BattleRec_DataInitializeCheck(SAVE_CONTROL_WORK *sv, BATTLE_REC_SAVEDATA *src);
 static  BOOL BattleRecordCheckData(SAVE_CONTROL_WORK *sv, const BATTLE_REC_SAVEDATA * src);
 static  void  BattleRec_Decoded(void *data,u32 size,u32 code);
-
-
+static SAVE_EXTRA_ID BattleRec_LoadDataNumToSaveExtraID( int num );
 
 //==============================================================================
 //  データ
@@ -260,10 +259,10 @@ static BOOL _BattleRec_LoadCommon(SAVE_CONTROL_WORK *sv, BATTLE_REC_SAVEDATA *wk
 
   //データをwk_brsにロード
   *result = SaveControl_Extra_LoadWork(
-    sv, SAVE_EXTRA_ID_REC_MINE + num, heapID, wk_brs, SAVESIZE_EXTRA_BATTLE_REC);
+    sv, BattleRec_LoadDataNumToSaveExtraID( num ), heapID, wk_brs, SAVESIZE_EXTRA_BATTLE_REC);
 
   //wk_brsに展開されたのでセーブシステムは破棄
-  SaveControl_Extra_Unload(sv, SAVE_EXTRA_ID_REC_MINE + num);
+  SaveControl_Extra_Unload(sv, BattleRec_LoadDataNumToSaveExtraID( num ));
 
   if(*result == LOAD_RESULT_NULL){
     BATTLE_REC_Printf("録画データが存在しません\n");
@@ -376,16 +375,16 @@ BOOL BattleRec_DataOccCheck(SAVE_CONTROL_WORK *sv,HEAPID heapID,LOAD_RESULT *res
   BATTLE_REC_HEADER *head;
   BATTLE_REC_SAVEDATA *all;
 
-  *result = SaveControl_Extra_Load(sv, SAVE_EXTRA_ID_REC_MINE + num, heapID);
-  all = SaveControl_Extra_DataPtrGet(sv, SAVE_EXTRA_ID_REC_MINE + num, 0);
+  *result = SaveControl_Extra_Load(sv, BattleRec_LoadDataNumToSaveExtraID( num ), heapID);
+  all = SaveControl_Extra_DataPtrGet(sv, BattleRec_LoadDataNumToSaveExtraID( num ), 0);
   if(*result == LOAD_RESULT_NULL){
     *result = RECLOAD_RESULT_NULL;  //初期化データの為、データなし
-    SaveControl_Extra_Unload(sv, SAVE_EXTRA_ID_REC_MINE + num);
+    SaveControl_Extra_Unload(sv, BattleRec_LoadDataNumToSaveExtraID( num ));
     return FALSE;
   }
   else if(*result != LOAD_RESULT_OK){
     *result = RECLOAD_RESULT_ERROR;
-    SaveControl_Extra_Unload(sv, SAVE_EXTRA_ID_REC_MINE + num);
+    SaveControl_Extra_Unload(sv, BattleRec_LoadDataNumToSaveExtraID( num ));
     return FALSE;
   }
 
@@ -399,7 +398,7 @@ BOOL BattleRec_DataOccCheck(SAVE_CONTROL_WORK *sv,HEAPID heapID,LOAD_RESULT *res
   //読み出したデータに録画データが入っているかチェック
   if(BattleRec_DataInitializeCheck(sv, all) == TRUE){
     *result = RECLOAD_RESULT_NULL;  //初期化データの為、データなし
-    SaveControl_Extra_Unload(sv, SAVE_EXTRA_ID_REC_MINE + num);
+    SaveControl_Extra_Unload(sv, BattleRec_LoadDataNumToSaveExtraID( num ));
     return FALSE;
   }
 
@@ -407,12 +406,12 @@ BOOL BattleRec_DataOccCheck(SAVE_CONTROL_WORK *sv,HEAPID heapID,LOAD_RESULT *res
   if(BattleRecordCheckData(sv, all) == FALSE){
     BATTLE_REC_Printf("不正な録画データ\n");
     *result = RECLOAD_RESULT_NG;
-    SaveControl_Extra_Unload(sv, SAVE_EXTRA_ID_REC_MINE + num);
+    SaveControl_Extra_Unload(sv, BattleRec_LoadDataNumToSaveExtraID( num ));
     return FALSE;
   }
 
   *result = RECLOAD_RESULT_OK;
-  SaveControl_Extra_Unload(sv, SAVE_EXTRA_ID_REC_MINE + num);
+  SaveControl_Extra_Unload(sv, BattleRec_LoadDataNumToSaveExtraID( num ));
   return TRUE;
 }
 
@@ -439,17 +438,17 @@ SAVE_RESULT Local_BattleRecSave(GAMEDATA *gamedata, BATTLE_REC_SAVEDATA *work, i
   switch(*seq){
   case 0:
     //セーブ対象の外部セーブ領域のセーブシステムを作成(セーブワークの実体はbrsを渡す)
-    SaveControl_Extra_SystemSetup(sv, SAVE_EXTRA_ID_REC_MINE + num, heap_id, brs, SAVESIZE_EXTRA_BATTLE_REC);
+    SaveControl_Extra_SystemSetup(sv, BattleRec_LoadDataNumToSaveExtraID( num ), heap_id, brs, SAVESIZE_EXTRA_BATTLE_REC);
 
-    GAMEDATA_ExtraSaveAsyncStart(gamedata, SAVE_EXTRA_ID_REC_MINE + num);
+    GAMEDATA_ExtraSaveAsyncStart(gamedata, BattleRec_LoadDataNumToSaveExtraID( num ));
     (*seq)++;
     break;
   case 1:
-    result = GAMEDATA_ExtraSaveAsyncMain(gamedata, SAVE_EXTRA_ID_REC_MINE + num);
+    result = GAMEDATA_ExtraSaveAsyncMain(gamedata, BattleRec_LoadDataNumToSaveExtraID( num ));
 
     if(result == SAVE_RESULT_OK || result == SAVE_RESULT_NG){
       //外部セーブ完了。セーブシステムを破棄
-      SaveControl_Extra_UnloadWork(sv, SAVE_EXTRA_ID_REC_MINE + num);
+      SaveControl_Extra_UnloadWork(sv, BattleRec_LoadDataNumToSaveExtraID( num ));
       return result;
     }
     break;
@@ -656,6 +655,35 @@ static  BOOL BattleRecordCheckData(SAVE_CONTROL_WORK *sv, const BATTLE_REC_SAVED
 static  void  BattleRec_Decoded(void *data,u32 size,u32 code)
 {
   GFL_STD_CODED_Decoded(data,size,code);
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief　ロードデータ番号を外部セーブ番号にする
+ *
+ *	@param	int num LOADDATA_MYREC～LOADDATA_DOWNLOAD2
+ *
+ *	@return SAVE_EXTRA_ID
+ */
+//-----------------------------------------------------------------------------
+static SAVE_EXTRA_ID BattleRec_LoadDataNumToSaveExtraID( int num )
+{
+  switch( num )
+  {
+  default:
+    GF_ASSERT(0);
+  case LOADDATA_MYREC:
+    return SAVE_EXTRA_ID_REC_MINE;
+  case LOADDATA_DOWNLOAD0:
+    return SAVE_EXTRA_ID_REC_DL_0;
+  case LOADDATA_DOWNLOAD1:
+    return SAVE_EXTRA_ID_REC_DL_1;
+  case LOADDATA_DOWNLOAD2:
+    return SAVE_EXTRA_ID_REC_DL_2;
+  case LOADDATA_POKEWOOD0:
+    return SAVE_EXTRA_ID_POKEWOOD_00;
+  case LOADDATA_POKEWOOD1:
+    return SAVE_EXTRA_ID_POKEWOOD_01;
+  }
 }
 //============================================================================================
 /**

@@ -17,9 +17,10 @@
 //======================================================================
 #pragma mark [> define
 //確保するサイズ
-#define MUSICAL_DIST_SAVE_SIZE (127*1024)
+//#define MUSICAL_DIST_SAVE_SIZE (127*1024)   //syachi
+#define MUSICAL_DIST_SAVE_SIZE (95*1024)
 //Allocするサイズ
-#define MUSICAL_DIST_SAVE_WORK_SIZE (128*1024)
+#define MUSICAL_DIST_SAVE_WORK_SIZE (96*1024)
 
 //======================================================================
 //	enum

@@ -105,6 +105,8 @@ SAVE_CONTROL_WORK * SaveControl_SystemInit(HEAPID heap_id)
   }
 #endif
 
+  NAGI_Printf( "extra_size %x, extra_end %x all_end%x\n", EXTRA_MM_SAVE_SIZE, EXTRA_MM_SAVE_END, ALL_SAVE_END );
+
   //---------------- 内部セーブ＆外部セーブ ----------------
 	//データ存在チェックを行っている
 	load_ret = GFL_BACKUP_Load(ctrl->sv_normal, HEAPID_SAVE_TEMP);

@@ -36,6 +36,11 @@ typedef u64 DATA_NUMBER;
 #define LOADDATA_DOWNLOAD1  (2)
 #define LOADDATA_DOWNLOAD2  (3)
 
+//ポケウッド用（のちのちポケウッド用録画データは別になる可能性がある） TODO
+#define LOADDATA_POKEWOOD0  (4)
+#define LOADDATA_POKEWOOD1  (5)
+
+
 ///録画データロード時の結果値
 #define RECLOAD_RESULT_NULL   (0) ///<データなし
 #define RECLOAD_RESULT_OK   (1) ///<正常読み込み

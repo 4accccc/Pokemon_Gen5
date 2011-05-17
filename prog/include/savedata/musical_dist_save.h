@@ -12,7 +12,8 @@
 #include "gamesystem/game_data.h"
 
 //ミュージカル配信のダウンロード実サイズ
-#define MUSICAL_DIST_SAVE_DL_SIZE ((127*1024)-(2-16))
+//#define MUSICAL_DIST_SAVE_DL_SIZE ((127*1024)-(2-16)) //syachi
+#define MUSICAL_DIST_SAVE_DL_SIZE ((95*1024)-(2-16))
 //======================================================================
 //	typedef struct
 //======================================================================

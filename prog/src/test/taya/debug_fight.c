@@ -626,12 +626,12 @@ typedef BOOL (*pMainProc)( DEBUG_BTL_WORK*, int* );
  */
 typedef struct {
   u8  pokeParaArea[ POKEPARA_SAVEAREA_SIZE ];
-
+  u32  recBufID;
   u32  btlType  : 5;
   u32  commMode : 1;
   u32  msgSpeed : 3;
   u32  recMode  : 2;
-  u32  recBufID : 2;
+  u32  dummy : 2;
   u32  backGround      : 5;
   u32  landForm        : 5;
   u32  season          : 2;
@@ -1363,7 +1363,9 @@ static void selItem_Increment( DEBUG_BTL_WORK* wk, u16 itemID, int incValue )
     break;
 
   case SELITEM_REC_BUF:
-    save->recBufID = loopValue( save->recBufID+incValue, 0, 3 );
+    {
+      save->recBufID = loopValue( save->recBufID+incValue, 0, 5 );
+    }
     break;
 
   case SELITEM_BACKGROUND:
