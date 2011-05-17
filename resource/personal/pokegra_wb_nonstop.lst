@@ -1430,6 +1430,10 @@ pfwb_527_autumn.NCEC,586,autumn
 pbwb_527_autumn.NCEC,586,autumn
 pfwb_527_winter.NCEC,586,winter
 pbwb_527_winter.NCEC,586,winter
+pfwb_653_white.NCEC,646,white
+pbwb_653_white.NCEC,646,white
+pfwb_653_black.NCEC,646,black
+pbwb_653_black.NCEC,646,black
 pfwb_655_step.NCEC,648,step
 pbwb_655_step.NCEC,648,step
 pfwb_656_aqua.NCEC,649,aqua

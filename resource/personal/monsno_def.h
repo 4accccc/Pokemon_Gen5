@@ -816,7 +816,9 @@
 
 //キュレム
 #define		FORMNO_KYUREMU_A				( 0 )
-#define		FORMNO_KYUREMU_MAX				( 1 )
+#define		FORMNO_KYUREMU_WHITE				( 1 )
+#define		FORMNO_KYUREMU_BLACK				( 2 )
+#define		FORMNO_KYUREMU_MAX				( 3 )
 
 //メロエッタ
 #define		FORMNO_MEROETTA_VOICE				( 0 )
@@ -837,7 +839,7 @@
 #define		FORMNO_TAMAGO_MAX				( 2 )
 
 //フォルム違いトータル
-#define OTHER_FORM_MAX  ( 60 )
+#define OTHER_FORM_MAX  ( 62 )
 
 //イッシュ図鑑トータル
-#define ZUKANNO_ISSHU_END  ( 155 )
+#define ZUKANNO_ISSHU_END  ( 253 )

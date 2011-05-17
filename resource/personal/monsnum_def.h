@@ -806,7 +806,9 @@
 
 //キュレム
 #define		FORMNO_653_A				( 0 )
-#define		FORMNO_653_MAX				( 1 )
+#define		FORMNO_653_WHITE				( 1 )
+#define		FORMNO_653_BLACK				( 2 )
+#define		FORMNO_653_MAX				( 3 )
 
 //メロエッタ
 #define		FORMNO_655_VOICE				( 0 )
