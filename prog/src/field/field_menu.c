@@ -643,6 +643,7 @@ static const u32 menu_screen_table[] = {
  NARC_field_menu_menu_bg_4_NSCR,    // ポケモン・図鑑両方無し
  NARC_field_menu_menu_bg_5_NSCR,    // 遊覧船
  NARC_field_menu_menu_bg_5_NSCR,    // パレス
+ NARC_field_menu_menu_bg_5_NSCR,    // バッグなし
 };
 
 
@@ -905,15 +906,6 @@ static const FIELD_MENU_ITEM_TYPE typeArr[FIELD_MENU_TYPE_MAX][7] =
     FMIT_NONE,
     FMIT_EXIT,
   },
-  { //バッグなし
-    FMIT_POKEMON,
-    FMIT_ZUKAN,
-    FMIT_TRAINERCARD,
-    FMIT_REPORT,
-    FMIT_CONFING,
-    FMIT_NONE,
-    FMIT_EXIT,
-  },
   { //図鑑無し
     FMIT_POKEMON,
     FMIT_ITEMMENU,
@@ -946,6 +938,15 @@ static const FIELD_MENU_ITEM_TYPE typeArr[FIELD_MENU_TYPE_MAX][7] =
     FMIT_ZUKAN,
     FMIT_ITEMMENU,
     FMIT_TRAINERCARD,
+    FMIT_CONFING,
+    FMIT_NONE,
+    FMIT_EXIT,
+  },
+  { //バッグなし
+    FMIT_POKEMON,
+    FMIT_ZUKAN,
+    FMIT_TRAINERCARD,
+    FMIT_REPORT,
     FMIT_CONFING,
     FMIT_NONE,
     FMIT_EXIT,
