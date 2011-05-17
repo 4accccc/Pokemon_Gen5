@@ -27,6 +27,7 @@
 #include "savedata/my_pms_data.h"
 #include "savedata/zukan_savedata.h"
 #include "savedata/c_gear_data.h"
+#include "savedata/medalbox.h"
 #include "gamesystem/game_beacon.h"
 #include "gamesystem/g_power.h"
 #include "field/monolith_tool_notwifi.h"
@@ -34,6 +35,9 @@
 //#include "app/mysign.h"
 #include "app/trainer_card.h"
 #include "trcard_sys.h"
+
+#include "app/medal_info.h"   // メダル詳細画面呼び出し
+
 
 #include "test/ariizumi/ari_debug.h"
 
@@ -47,6 +51,7 @@
 #define DEBUG_TR_PRINT( ... )  ((void)0)
 #endif
 
+#define TRCARD_SYS_HEAP_SIZE    ( 0x29000 )
 
 //================================================================
 // 構造体定義
@@ -54,12 +59,13 @@
 typedef struct _TR_CARD_SYS{
   int heapId;
 
-  void              *app_wk;          ///< 簡易会話モジュールワークの保存
-  GFL_PROCSYS       *procSys;         ///< サブプロセスワーク
-  PMS_SELECT_PARAM  PmsParam;         ///< 簡易会話アプリ呼び出し用ワーク
+  void              *app_wk;            ///< 簡易会話モジュールワークの保存
+  GFL_PROCSYS       *procSys;           ///< サブプロセスワーク
+  PMS_SELECT_PARAM  PmsParam;           ///< 簡易会話アプリ呼び出し用ワーク
+  MEDALINFO_INIT_PARAM  MedalInfoParam; ///< メダル詳細呼び出し用ワーク
 
-  TRCARD_CALL_PARAM *tcp;
-  int               TrainerView;      ///< トレーナーカード開始時のユニオン見た目
+  TRCARD_CALL_PARAM *tcp;               ///< トレーナーカード呼び出しパラメータ
+  int               TrainerView;        ///< トレーナーカード開始時のユニオン見た目
 
 }TR_CARD_SYS;
 
@@ -99,6 +105,8 @@ enum{
   PMSINPUT_WAIT,
   BADGE_INIT,
   BADGE_WAIT,
+  MEDAL_INIT,
+  MEDAL_WAIT,
   CARDSYS_END,
 };
 
@@ -108,6 +116,8 @@ static int sub_PmsInputInit(TR_CARD_SYS* wk);
 static int sub_PmsInputWait(TR_CARD_SYS* wk);
 static int sub_BadgeInit(TR_CARD_SYS* wk);
 static int sub_BadgeWait(TR_CARD_SYS* wk);
+static int sub_MedalInit(TR_CARD_SYS* wk);
+static int sub_MedalWait(TR_CARD_SYS* wk);
 static int _branch_card_app( TR_CARD_SYS* wk, TRCARD_CALL_PARAM *pp );
 
 
@@ -148,7 +158,7 @@ GFL_PROC_RESULT TrCardSysProc_Init( GFL_PROC * proc, int * seq , void *pwk, void
   TRCARD_CALL_PARAM* pp = (TRCARD_CALL_PARAM*)pwk;
   
   //ヒープ作成
-  GFL_HEAP_CreateHeap(GFL_HEAPID_APP,HEAPID_TRCARD_SYS,0x18000);
+  GFL_HEAP_CreateHeap(GFL_HEAPID_APP,HEAPID_TRCARD_SYS,TRCARD_SYS_HEAP_SIZE );
   wk = GFL_PROC_AllocWork(proc,sizeof(TR_CARD_SYS),HEAPID_TRCARD_SYS);
   MI_CpuClear8(wk,sizeof(TR_CARD_SYS));
 
@@ -160,6 +170,7 @@ GFL_PROC_RESULT TrCardSysProc_Init( GFL_PROC * proc, int * seq , void *pwk, void
   *wk->tcp = *pp;
   wk->tcp->TrCardData = GFL_HEAP_AllocClearMemory( wk->heapId , sizeof( TR_CARD_DATA ) );
   TRAINERCARD_GetSelfData( wk->tcp->TrCardData , pp->gameData , FALSE, wk->tcp->edit_possible, wk->heapId);
+//  TRAINERCARD_GetMedalData( &wk->MedalInfoParam, pp->gameData, wk->heapId );
 
   DEBUG_TR_PRINT("pp->mode=%d\n", pp->mode);
 
@@ -174,7 +185,7 @@ GFL_PROC_RESULT TrCardSysProc_InitComm( GFL_PROC * proc, int * seq , void *pwk, 
   TRCARD_CALL_PARAM* callParam = (TRCARD_CALL_PARAM*)pwk;
   
   //ヒープ作成
-  GFL_HEAP_CreateHeap(GFL_HEAPID_APP,HEAPID_TRCARD_SYS,0x18000);
+  GFL_HEAP_CreateHeap(GFL_HEAPID_APP,HEAPID_TRCARD_SYS,TRCARD_SYS_HEAP_SIZE );
   wk = GFL_PROC_AllocWork(proc,sizeof(TR_CARD_SYS),HEAPID_TRCARD_SYS);
   MI_CpuClear8(wk,sizeof(TR_CARD_SYS));
 
@@ -228,6 +239,12 @@ GFL_PROC_RESULT TrCardSysProc_Main( GFL_PROC * proc, int * seq , void *pwk, void
     break;
   case BADGE_WAIT:
     *seq = sub_BadgeWait(wk);
+    break;
+  case MEDAL_INIT:
+    *seq = sub_MedalInit(wk);
+    break;
+  case MEDAL_WAIT:
+    *seq = sub_MedalWait(wk);
     break;
   case CARDSYS_END:
   default:
@@ -391,6 +408,8 @@ static int sub_CardWait(TR_CARD_SYS* wk)
     return PMSINPUT_INIT;
   }else if(wk->tcp->value==CALL_BADGE){
     return BADGE_INIT;
+  }else if(wk->tcp->value==CALL_MEDAL){
+    return MEDAL_INIT;
   }
   return CARDSYS_END;
 }
@@ -446,7 +465,7 @@ extern const GFL_PROC_DATA BadgeViewProcData;
 
 //----------------------------------------------------------------------------------
 /**
- * @brief 簡易会話呼び出し
+ * @brief ジムバッジ画面呼び出し
  *
  * @param   wk    
  *
@@ -466,7 +485,7 @@ static int sub_BadgeInit(TR_CARD_SYS* wk)
 
 //----------------------------------------------------------------------------------
 /**
- * @brief 簡易会話終了待ち
+ * @brief ジムバッジ画面終了待ち
  *
  * @param   wk    
  *
@@ -486,6 +505,71 @@ static int sub_BadgeWait(TR_CARD_SYS* wk)
 
   return CARDSYS_END;
 }
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief メダル詳細画面呼び出し
+ *
+ * @param   wk    
+ *
+ * @retval  int   
+ */
+//----------------------------------------------------------------------------------
+static int sub_MedalInit(TR_CARD_SYS* wk)
+{
+  MEDALBOX *medalBox = SaveData_GetMedalBox(GAMEDATA_GetSaveControlWork( wk->tcp->gameData ));
+  if( wk->procSys == NULL )
+  { 
+    wk->procSys = GFL_PROC_LOCAL_boot( wk->heapId );
+  }
+  wk->MedalInfoParam.call_mode      = MEDALINFO_CALL_SUB;
+  wk->MedalInfoParam.parent_heap_id = wk->heapId;
+  wk->MedalInfoParam.p_trainer_name = GFL_STR_CreateBuffer( BUFLEN_PERSON_NAME, wk->heapId);
+  GFL_STR_SetStringCode(wk->MedalInfoParam.p_trainer_name, wk->tcp->TrCardData->TrainerName);
+  wk->MedalInfoParam.medal_id       = MEDALBOX_GetPushMedalID( medalBox );
+  wk->MedalInfoParam.medal_cnt      = MEDALBOX_GetMedalCount( medalBox, FALSE );
+  wk->MedalInfoParam.box_rank       = MEDALBOX_GetMedalBoxRank( medalBox );
+  {
+    u8 year, month,day;
+    MEDALBOX_GetDate( medalBox, wk->MedalInfoParam.medal_id, &year, &month, &day );
+    wk->MedalInfoParam.get_year       = year;
+    wk->MedalInfoParam.get_month      = month;
+    wk->MedalInfoParam.get_day        = day;
+  }
+  GFL_PROC_LOCAL_CallProc( wk->procSys, FS_OVERLAY_ID(medalinfo), 
+                           &medalInfo_ProcData, &wk->MedalInfoParam );
+  return MEDAL_WAIT;
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief メダル詳細画面終了待ち
+ *
+ * @param   wk    
+ *
+ * @retval  int   
+ */
+//----------------------------------------------------------------------------------
+static int sub_MedalWait(TR_CARD_SYS* wk)
+{
+  if(!TrCardSysProcCall(&wk->procSys)){
+    return MEDAL_WAIT;
+  }
+  
+  // 名前表示用文字列バッファ解放
+  GFL_STR_DeleteBuffer( wk->MedalInfoParam.p_trainer_name );
+
+  // 「×」ならカード画面終了
+  if(wk->MedalInfoParam.result==MEDALINFO_RESULT_EXIT){
+    wk->tcp->next_proc = TRAINERCARD_NEXTPROC_EXIT;
+    return CARDSYS_END;
+  }
+
+  // カード初期化へ
+  return CARD_INIT;
+  
+}
+
 
 #define TCARD_RECORD_ADD_MAX  ( 7 )
 
@@ -767,7 +851,6 @@ void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , GAMEDATA *gameData , cons
     cardData->PokeBook    = ZUKANSAVE_GetZukanPokeSeeCount( zukan, heapId );
   }
 
-  
   
   
 

@@ -88,6 +88,7 @@ enum {
   SEQ_BADGE_VIEW_CALL,
   SEQ_COVER,
   SEQ_SCALING,
+  SEQ_MEDAL_VIEW_CALL,
 };
 
 typedef enum {
@@ -102,6 +103,7 @@ typedef enum {
   TRC_KEY_REQ_SCALE_BUTTON,
   TRC_KEY_REQ_PMS_CALL,
   TRC_KEY_REQ_BADGE_CALL,
+  TRC_KEY_REQ_MEDAL_CALL
 }TRC_KEY_REQ;
 
 typedef enum {
@@ -189,7 +191,13 @@ enum{
 #define TP_MOVELEFT_H  ( 192-24 )
 
 
-// 左へ移動（拡大時）
+// メダル詳細画面へ
+#define TP_MEDAL_X     (    224 )
+#define TP_MEDAL_Y     (     80 )
+#define TP_MEDAL_W     (     20 )
+#define TP_MEDAL_H     (     20 )
+
+
 
 //============================================
 // 結構広いタッチ範囲定義
@@ -649,7 +657,15 @@ GFL_PROC_RESULT TrCardProc_Main( GFL_PROC * proc, int * seq , void *pwk, void *m
       *seq = SEQ_OUT;
     }
     break;
-
+  case SEQ_MEDAL_VIEW_CALL: //メダル詳細画面呼び出し
+    if(GFL_CLACT_WK_CheckAnmActive(wk->ObjWork.ClActWorkS[ACTS_MARK_MEDAL])==FALSE){
+      WIPE_SYS_Start( WIPE_PATTERN_FSAM, WIPE_TYPE_SHUTTEROUT_UP,
+              WIPE_TYPE_SHUTTEROUT_UP, WIPE_FADE_BLACK,
+              WIPE_DEF_DIV, WIPE_DEF_SYNC, wk->heapId );
+      wk->tcp->value = CALL_MEDAL;
+      *seq = SEQ_OUT;
+    }
+    break;
   }
   
   if(++wk->scrl_ct >= 256){
@@ -1808,6 +1824,14 @@ static int CheckKey(TR_CARD_WORK* wk)
       }
     }
   }
+  // メダル詳細画面呼び出し
+//  else if(keyTrg & PAD_BUTTON_START){
+//    if(wk->TrCardData->OtherTrCard==FALSE && wk->is_back==0){ 
+//      PMSND_PlaySE( SND_TRCARD_DECIDE );
+//      SetSActDrawSt( &wk->ObjWork, ACTS_MARK_MEDAL, ANMS_BADGE_G, TRUE);
+//      return TRC_KEY_REQ_MEDAL_CALL;
+//    }
+//  }
 
   return TRC_KEY_REQ_NONE;
 }
@@ -2021,6 +2045,13 @@ static int normal_touch_func( TR_CARD_WORK *wk, int hitNo )
       return TRC_KEY_REQ_PMS_CALL;
     }
     break;
+  case 12:    // メダル
+    if(wk->is_back==0){
+      PMSND_PlaySE( SND_TRCARD_DECIDE );
+      SetSActDrawSt( &wk->ObjWork, ACTS_MARK_MEDAL, ANMS_BADGE_G, TRUE);
+      return TRC_KEY_REQ_MEDAL_CALL;
+    }
+    break;
   }
   return TRC_KEY_REQ_NONE;
 }
@@ -2186,6 +2217,7 @@ static int CheckTouch(TR_CARD_WORK* wk)
     { TP_PMS_Y,      TP_PMS_Y+TP_PMS_H,          TP_PMS_X,      TP_PMS_X+TP_PMS_W },              //簡易会話
     { TP_MOVERIGHT_Y,TP_MOVERIGHT_Y+TP_MOVERIGHT_H ,TP_MOVERIGHT_X,TP_MOVERIGHT_X+TP_MOVERIGHT_W},//右へ移動(拡大時）
     { TP_MOVELEFT_Y,TP_MOVELEFT_Y+TP_MOVELEFT_H ,TP_MOVELEFT_X,TP_MOVELEFT_X+TP_MOVELEFT_W},      //左へ移動(拡大時）
+    { TP_MEDAL_Y,   TP_MEDAL_Y+TP_MEDAL_H,       TP_MEDAL_X,   TP_MEDAL_X+TP_MEDAL_W },          // 12:メダル
     { GFL_UI_TP_HIT_END, 0, 0, 0 },
   };
   static const GFL_UI_TP_HITTBL Btn_TpRectComm[] = {
@@ -2332,6 +2364,11 @@ static void JumpInputResult( TR_CARD_WORK *wk, int req, int *seq )
   case TRC_KEY_REQ_BADGE_CALL:
     wk->sub_seq = 0;
     *seq = SEQ_BADGE_VIEW_CALL;
+    break;
+  // メダル詳細画面へ
+  case TRC_KEY_REQ_MEDAL_CALL:
+    wk->sub_seq = 0;
+    *seq = SEQ_MEDAL_VIEW_CALL;
     break;
   }
 }
