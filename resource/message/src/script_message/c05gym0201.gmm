@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-04-25T21:21:31"/>
+	<create user="matsumiya" host="W00224" date="2011-05-17T18:37:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1297" top="169" right="2002" bottom="797" maximized="no" rayout="Vertical2">
+	<dialog left="1308" top="164" right="2013" bottom="792" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,59 +292,28 @@
 	</lock>
 
 
-	<row id="msg_c05gym0201_glasses_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
-		<comment>♂
-・ジムバッジ取得前＋アイテム入手前
-・ジムに入ると
-　主人公に隣接してメッセージ表示
-・No030「おいしいみず」入手</comment>
+	<row id="msg_c05gym0201_glasses_01" text-color="#000000,,,#ffffff,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
 		<attribute name="キャラ指定">DANPEI
 ダンペイ</attribute>
-		<language name="JPN" width="256">まちにきて　そうそう
-アレコレあって　たいへんだったっすね▼
-まあ　とりあえずは
-これを　さしあげるっす！▼</language>
-		<language name="JPN_KANJI" width="256">街に来て　早々
-アレコレあって　大変だったっすね▼
-まあ　とりあえずは
-これを　さしあげるっす！▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c05gym0201_glasses_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
-		<comment>♂
-・ジムバッジ取得前＋アイテム入手後
-・ジムバッジ取得まで繰り返し</comment>
+	<row id="msg_c05gym0201_glasses_02" text-color="#000000,,,#ffffff,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
 		<attribute name="キャラ指定">DANPEI
 ダンペイ</attribute>
-		<language name="JPN" width="256">ジムリーダーの　ヤーコンさんは
-じめんタイプ　ポケモンの　つかいて！▼
-まあ　ここだけの　はなし
-じめんタイプの　ポケモンは▽
-みずタイプが　にがて　なんすよね▼
-……じゃあ　なんで　ヤーコンさんは
-みずのそばで　くらしているんですかね</language>
-		<language name="JPN_KANJI" width="256">ジムリーダーの　ヤーコンさんは
-じめんタイプ　ポケモンの　使い手！▼
-まあ　ここだけの話
-じめんタイプの　ポケモンは▽
-みずタイプが　苦手なんすよね▼
-……じゃあ　なんで　ヤーコンさんは
-水のそばで　暮らしているんですかね</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c05gym0201_glasses_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
-		<comment>♂
-・ジムバッジ取得後</comment>
+	<row id="msg_c05gym0201_glasses_03" text-color="#000000,,,#ffffff,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
 		<attribute name="キャラ指定">DANPEI
 ダンペイ</attribute>
-		<language name="JPN" width="256">ときどきは　ここで　てにいれた
-ジムバッジを　みて▼
-この　しょうぶのことを
-おもいだして　ほしいっすね</language>
-		<language name="JPN_KANJI" width="256">ときどきは　ここで　手に入れた
-ジムバッジを　みて▼
-この　勝負のことを
-思い出して　ほしいっすね</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c03r0501_infomationw_01">
@@ -362,13 +331,11 @@
 移動してくださいませ！</language>
 	</row>
 
-	<row id="msg_c05gym0201_swicth_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>BGメッセージ</comment>
+	<row id="msg_c05gym0201_swicth_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
 		<attribute name="キャラ指定">リフトのスイッチ</attribute>
-		<language name="JPN" width="256">この　リフトは
-これいじょう　のぼることは　できない！</language>
-		<language name="JPN_KANJI" width="256">この　リフトは
-これ以上　昇ることは　できない！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c05gym0201_statue_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -397,22 +364,11 @@
 [1:00:トレーナー名:0]</language>
 	</row>
 
-	<row id="msg_c05gym0201_statue_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>BGメッセージ
-・d06でのストッパー解除時</comment>
+	<row id="msg_c05gym0201_statue_03" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
 		<attribute name="キャラ指定">ポケモン像</attribute>
-		<language name="JPN" width="256">ホドモエ　ポケモンジム▼
-ジムリーダー　ヤーコン
-にんてい　トレーナー！▽
-[1:00:トレーナー名:0]▽
-チェレン▽
-ベル</language>
-		<language name="JPN_KANJI" width="256">ホドモエ　ポケモンジム▼
-ジムリーダー　ヤーコン
-認定　トレーナー！▽
-[1:00:トレーナー名:0]▽
-チェレン▽
-ベル</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<flowchart-group-list>
