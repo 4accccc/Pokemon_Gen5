@@ -183,7 +183,8 @@ SUBDIRS	=	wmi \
 			resonance_resort \
 			pokewood \
 			mobiclip \
-			medal_info
+			medal_info \
+			animal_trail
 
 
 include $(RESOURCE_MACRO)
