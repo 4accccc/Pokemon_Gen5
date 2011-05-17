@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2011-05-09T16:30:17"/>
+	<create user="matsumiya" host="W00224" date="2011-05-17T14:05:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1300" top="217" right="2005" bottom="845" maximized="no" rayout="Vertical2">
+	<dialog left="1308" top="164" right="2013" bottom="792" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -421,24 +421,41 @@
 
 	<row id="msg_c04p01_clown1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
-※swanでメッセージ修正予定</comment>
+※swanでメッセージ変更</comment>
 		<attribute name="キャラ指定">CLOWN
 ピエロ</attribute>
-		<language name="JPN" width="256">まわる　まわる　ジェットコースター
-ぐるぐるぐるぐるぐるりんこ！</language>
-		<language name="JPN_KANJI" width="256">まわる　まわる　ジェットコースター
-ぐるぐるぐるぐるぐるりんこ！</language>
+		<language name="JPN" width="256">きらり　きらきら　まばゆい
+ファッションショー！</language>
+		<language name="JPN_KANJI" width="256">きらり　きらきら　まばゆい
+ファッションショー！</language>
 	</row>
 
-	<row id="msg_c04p01_clown2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c04p01_clown2_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>※swanで削除</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
+	</row>
+
+	<row id="msg_c04p01_rally_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-※swanでメッセージ修正予定</comment>
-		<attribute name="キャラ指定">CLOWN
-ピエロ</attribute>
-		<language name="JPN" width="256">まわる　まわる　かんらんしゃ！
-のぼる　のぼる　かんらんしゃ！</language>
-		<language name="JPN_KANJI" width="256">まわる　まわる　観覧車！
-のぼる　のぼる　観覧車！</language>
+・初回会話
+・なにかSE？</comment>
+		<attribute name="キャラ指定">CLOWN</attribute>
+		<language name="JPN" width="256">レッツ　トライ　ライモンラリー！
+かんらんしゃ　オーケー！！</language>
+		<language name="JPN_KANJI" width="256">レッツ　トライ　ライモンラリー！
+かんらんしゃ　オーケー！！</language>
+	</row>
+
+	<row id="msg_c04p01_rally_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・2回目以降
+※観覧車に関する情報メッセージは仮</comment>
+		<attribute name="キャラ指定">CLOWN</attribute>
+		<language name="JPN" width="256">ここの　かんらんしゃは　ふたりのり！
+きみも　だれかと　ぐるぐる　しなよ！</language>
+		<language name="JPN_KANJI" width="256">ここの　かんらんしゃは　ふたりのり！
+きみも　だれかと　ぐるぐる　しなよ！</language>
 	</row>
 
 	<row id="msg_c04p01_middlewoman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
