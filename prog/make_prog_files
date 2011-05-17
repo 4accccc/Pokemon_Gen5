@@ -66,7 +66,9 @@ SAVEDATASRC =   savedata/save_tbl.c \
         savedata/wbt_save.c \
         savedata/person_state.c \
         savedata/resonance_resort_sv.c \
-				savedata/infinity_dungeon_save.c
+				savedata/infinity_dungeon_save.c \
+        savedata/gear_3ds_save.c \
+        savedata/wbt_ex_save.c
 
 
 #’ÊM‚Ìí’“

@@ -38,6 +38,10 @@
 #define SAVESIZE_EXTRA_DENDOU             (0x1800)
 ///EXTRA領域でポケウッドが使用するセーブサイズ
 #define SAVESIZE_EXTRA_POKEWOOD           (SAVESIZE_EXTRA_BATTLE_REC)
+///EXTRA領域でWBTが使用するセーブデータサイズ //TODO 仮
+#define SAVESIZE_EXTRA_WBT                (0x2000)
+///EXTRA領域で3DS連動が使用するセーブデータサイズ //TODO　仮
+#define SAVESIZE_EXTRA_3DS                (0x100)
 ///管理外領域で不思議な贈り物が使用するセーブサイズ
 #define SAVESIZE_OUTSIDE_MYSTERY          (0x400)
 
@@ -85,8 +89,14 @@ enum{
   EXTRA_MM_POKEWOOD_00 = EXTRA_MM_DENDOU_MIRROR + SAVESIZE_EXTRA_DENDOU,
   EXTRA_MM_POKEWOOD_01 = EXTRA_MM_POKEWOOD_00 + SAVESIZE_EXTRA_POKEWOOD,
 
+  EXTRA_MM_WBT_00 = EXTRA_MM_POKEWOOD_01 + SAVESIZE_EXTRA_POKEWOOD,
+  EXTRA_MM_WBT_01 = EXTRA_MM_WBT_00 + SAVESIZE_EXTRA_WBT,
+  EXTRA_MM_WBT_02 = EXTRA_MM_WBT_01 + SAVESIZE_EXTRA_WBT,
+
+  EXTRA_MM_3DS = EXTRA_MM_WBT_02 + SAVESIZE_EXTRA_WBT,
+
   //終端
-  EXTRA_MM_SAVE_END = EXTRA_MM_POKEWOOD_01 + SAVESIZE_EXTRA_POKEWOOD,
+  EXTRA_MM_SAVE_END = EXTRA_MM_3DS + SAVESIZE_EXTRA_3DS,
   EXTRA_MM_SAVE_SIZE = EXTRA_MM_SAVE_END - EXTRA_SAVE_START_ADDRESS,
 };
 
@@ -233,6 +243,26 @@ enum{
 ///外部セーブデータ識別ID：ポケウッド01
 enum{
   EXGMDATA_ID_POKEWOOD_REC_01,
+};
+
+///外部セーブデータ識別ID：WBT0
+enum{
+  EXGMDATA_ID_WBT_00,
+};
+
+///外部セーブデータ識別ID：WBT1
+enum{
+  EXGMDATA_ID_WBT_01,
+};
+
+///外部セーブデータ識別ID：WBT2
+enum{
+  EXGMDATA_ID_WBT_02,
+};
+
+///外部セーブデータ識別ID：3DS連動
+enum{
+  EXGMDATA_ID_3DS,
 };
 
 //==============================================================================

@@ -61,7 +61,8 @@
 #include "savedata/resonance_resort_sv.h"
 #include "savedata/medalbox.h"
 #include "savedata/infinity_dungeon_save.h"
-
+#include "savedata/gear_3ds_save.h"
+#include "savedata/wbt_ex_save.h"
 
 //--------------------------------------------------------------
 //  通常セーブデータのテーブル
@@ -532,6 +533,38 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Extra_PokeWood_01[] = {
     (FUNC_INIT_WORK)BattleRec_WorkInit,
   },
 };
+//WBT00
+static const GFL_SAVEDATA_TABLE SaveDataTbl_Extra_Wbt_00[] = {
+  {
+    EXGMDATA_ID_WBT_00,
+    (FUNC_GET_SIZE)WBTEXSAVE_GetWorkSize,
+    (FUNC_INIT_WORK)WBTEXSAVE_WorkInit,
+  },
+};
+//WBT01
+static const GFL_SAVEDATA_TABLE SaveDataTbl_Extra_Wbt_01[] = {
+  {
+    EXGMDATA_ID_WBT_01,
+    (FUNC_GET_SIZE)WBTEXSAVE_GetWorkSize,
+    (FUNC_INIT_WORK)WBTEXSAVE_WorkInit,
+  },
+};
+//WBT02
+static const GFL_SAVEDATA_TABLE SaveDataTbl_Extra_Wbt_02[] = {
+  {
+    EXGMDATA_ID_WBT_02,
+    (FUNC_GET_SIZE)WBTEXSAVE_GetWorkSize,
+    (FUNC_INIT_WORK)WBTEXSAVE_WorkInit,
+  },
+};
+//3DS
+static const GFL_SAVEDATA_TABLE SaveDataTbl_Extra_3ds[] = {
+  {
+    EXGMDATA_ID_3DS,
+    (FUNC_GET_SIZE)GEAR_3DS_SAVE_GetWorkSize,
+    (FUNC_INIT_WORK)GEAR_3DS_SAVE_WorkInit,
+  },
+};
 
 
 //==============================================================================
@@ -644,6 +677,38 @@ const GFL_SVLD_PARAM SaveParam_ExtraTbl[] = {
     EXTRA_MM_POKEWOOD_01,                    //バックアップ領域先頭アドレス
     EXTRA_MM_POKEWOOD_01,             //ミラーリング領域先頭アドレス ※ミラー無し指定
     SAVESIZE_EXTRA_POKEWOOD,              //使用するバックアップ領域の大きさ
+    SAVE_MAGIC_NUMBER,
+  },
+  {//外部セーブパラメータテーブル：WBT0
+    SaveDataTbl_Extra_Wbt_00,
+    NELEMS(SaveDataTbl_Extra_Wbt_00),
+    EXTRA_MM_WBT_00,                    //バックアップ領域先頭アドレス
+    EXTRA_MM_WBT_00,             //ミラーリング領域先頭アドレス ※ミラー無し指定
+    SAVESIZE_EXTRA_WBT,              //使用するバックアップ領域の大きさ
+    SAVE_MAGIC_NUMBER,
+  },
+  {//外部セーブパラメータテーブル：WBT1
+    SaveDataTbl_Extra_Wbt_01,
+    NELEMS(SaveDataTbl_Extra_Wbt_01),
+    EXTRA_MM_WBT_01,                    //バックアップ領域先頭アドレス
+    EXTRA_MM_WBT_01,             //ミラーリング領域先頭アドレス ※ミラー無し指定
+    SAVESIZE_EXTRA_WBT,              //使用するバックアップ領域の大きさ
+    SAVE_MAGIC_NUMBER,
+  },
+  {//外部セーブパラメータテーブル：WBT0
+    SaveDataTbl_Extra_Wbt_02,
+    NELEMS(SaveDataTbl_Extra_Wbt_02),
+    EXTRA_MM_WBT_02,                    //バックアップ領域先頭アドレス
+    EXTRA_MM_WBT_02,             //ミラーリング領域先頭アドレス ※ミラー無し指定
+    SAVESIZE_EXTRA_WBT,              //使用するバックアップ領域の大きさ
+    SAVE_MAGIC_NUMBER,
+  },
+  {//外部セーブパラメータテーブル：3DS
+    SaveDataTbl_Extra_3ds,
+    NELEMS(SaveDataTbl_Extra_3ds),
+    EXTRA_MM_3DS,                    //バックアップ領域先頭アドレス
+    EXTRA_MM_3DS,             //ミラーリング領域先頭アドレス ※ミラー無し指定
+    SAVESIZE_EXTRA_3DS,              //使用するバックアップ領域の大きさ
     SAVE_MAGIC_NUMBER,
   },
 };
