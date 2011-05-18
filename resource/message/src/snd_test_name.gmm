@@ -9005,6 +9005,14 @@
 		<language name="JPN" width="256">SW-CARD-21</language>
 		<language name="JPN_KANJI" width="256">SW-CARD-21</language>
 	</row>
+	<row id="msg_seq_se_sw_grgym_01">
+		<language name="JPN" width="256">SW-GRGYM-01</language>
+		<language name="JPN_KANJI" width="256">SW-GRGYM-01</language>
+	</row>
+	<row id="msg_seq_se_sw_grgym_02">
+		<language name="JPN" width="256">SW-GRGYM-02</language>
+		<language name="JPN_KANJI" width="256">SW-GRGYM-02</language>
+	</row>
 	<row id="msg_seq_se_dmy_390">
 		<language name="JPN" width="256">DMY-390</language>
 		<language name="JPN_KANJI" width="256">DMY-390</language>
