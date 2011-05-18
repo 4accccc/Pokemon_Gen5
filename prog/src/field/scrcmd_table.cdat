@@ -1002,6 +1002,9 @@
   DEF_CMD( EvCmdGymPoison_AnmStop, EV_SEQ_GYM_POISON_ANM_STOP )
   DEF_CMD( EvCmdGymPoison_IssObjStop, EV_SEQ_GYM_POISON_ISS_OBJ_STOP )
 
+  // 獣道
+  DEF_CMD( EvCmdWarpAnimalTrail, EV_SEQ_ANIMAL_TRAIL_WARP )
+
   END_CMD
   //スクリプトコマンドテーブル終了
 

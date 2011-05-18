@@ -1,0 +1,228 @@
+//[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
+/**
+ *
+ *	@file		animal_trail_scr.ev
+ *	@brief  èbìπÇÃåƒÇ—èoÇµ
+ *	@author	Masayuki Onoue
+ *	@date		2011.05.13
+ *
+ */
+//]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+
+	.text
+
+  .include	"scr_seq_def.h"
+  .include  "animal_trail_scr_def.h"
+  .include  "../../../prog/include/msg/script/msg_animal_trail_scr.h"
+
+//--------------------------------------------------------------------
+//		ÉXÉNÉäÉvÉgÉeÅ[ÉuÉã Å¶ èbìπÇÃêîÅi20å¬ÅjÇæÇØïKóvÇ≈Ç∑
+//--------------------------------------------------------------------
+_EVENT_DATA		ev_animal_trail_01
+_EVENT_DATA		ev_animal_trail_02
+_EVENT_DATA		ev_animal_trail_03
+_EVENT_DATA		ev_animal_trail_04
+_EVENT_DATA		ev_animal_trail_05
+_EVENT_DATA		ev_animal_trail_06
+_EVENT_DATA		ev_animal_trail_07
+_EVENT_DATA		ev_animal_trail_08
+_EVENT_DATA		ev_animal_trail_09
+_EVENT_DATA		ev_animal_trail_10
+_EVENT_DATA		ev_animal_trail_11
+_EVENT_DATA		ev_animal_trail_12
+_EVENT_DATA		ev_animal_trail_13
+_EVENT_DATA		ev_animal_trail_14
+_EVENT_DATA		ev_animal_trail_15
+_EVENT_DATA		ev_animal_trail_16
+_EVENT_DATA		ev_animal_trail_17
+_EVENT_DATA		ev_animal_trail_18
+_EVENT_DATA		ev_animal_trail_19
+_EVENT_DATA		ev_animal_trail_20
+_EVENT_DATA_END
+
+//----------------------------------------------------------------------------
+//	èbìπåƒÇ—èoÇµIDÉèÅ[ÉN
+//-----------------------------------------------------------------------------
+DEFINE_LOCAL  LWK_ANIMAL_TRAIL_ID
+
+//--------------------------------------------------------------------
+// èbìπåƒÇ—èoÇµä÷êî
+//--------------------------------------------------------------------
+animal_trail_call:
+{
+  // êiì¸ämîFÉÅÉbÉZÅ[ÉW
+  _SYSWIN_MSG( msg_animal_trail_01, POS_DOWN )
+
+  // ämîF
+  _YES_NO_WIN( SCWK_ANSWER )
+
+  // ÉÅÉbÉZÅ[ÉWèIóπ
+	_SYSWIN_CLOSE()
+
+  IF $SCWK_ANSWER == SCR_YES THEN
+    // à⁄ìÆåƒÇ—èoÇµ
+    _WARP_ANIMAL_TRAIL( LWK_ANIMAL_TRAIL_ID )
+  ENDIF
+}
+_RET
+
+//----------------------------------------------------------------------------
+//	èbìπ01
+//-----------------------------------------------------------------------------
+EVENT_START  ev_animal_trail_01
+  $LWK_ANIMAL_TRAIL_ID = 0
+  _CALL animal_trail_call
+EVENT_END
+
+//----------------------------------------------------------------------------
+//	èbìπ02
+//-----------------------------------------------------------------------------
+EVENT_START  ev_animal_trail_02
+  $LWK_ANIMAL_TRAIL_ID = 1
+  _CALL animal_trail_call
+EVENT_END
+
+//----------------------------------------------------------------------------
+//	èbìπ03
+//-----------------------------------------------------------------------------
+EVENT_START  ev_animal_trail_03
+  $LWK_ANIMAL_TRAIL_ID = 2
+  _CALL animal_trail_call
+EVENT_END
+
+//----------------------------------------------------------------------------
+//	èbìπ04
+//-----------------------------------------------------------------------------
+EVENT_START  ev_animal_trail_04
+  $LWK_ANIMAL_TRAIL_ID = 3
+  _CALL animal_trail_call
+EVENT_END
+
+//----------------------------------------------------------------------------
+//	èbìπ05
+//-----------------------------------------------------------------------------
+EVENT_START  ev_animal_trail_05
+  $LWK_ANIMAL_TRAIL_ID = 4
+  _CALL animal_trail_call
+EVENT_END
+
+//----------------------------------------------------------------------------
+//	èbìπ06
+//-----------------------------------------------------------------------------
+EVENT_START  ev_animal_trail_06
+  $LWK_ANIMAL_TRAIL_ID = 5
+  _CALL animal_trail_call
+EVENT_END
+
+//----------------------------------------------------------------------------
+//	èbìπ07
+//-----------------------------------------------------------------------------
+EVENT_START  ev_animal_trail_07
+  $LWK_ANIMAL_TRAIL_ID = 6
+  _CALL animal_trail_call
+EVENT_END
+
+//----------------------------------------------------------------------------
+//	èbìπ08
+//-----------------------------------------------------------------------------
+EVENT_START  ev_animal_trail_08
+  $LWK_ANIMAL_TRAIL_ID = 7
+  _CALL animal_trail_call
+EVENT_END
+
+//----------------------------------------------------------------------------
+//	èbìπ09
+//-----------------------------------------------------------------------------
+EVENT_START  ev_animal_trail_09
+  $LWK_ANIMAL_TRAIL_ID = 8
+  _CALL animal_trail_call
+EVENT_END
+
+//----------------------------------------------------------------------------
+//	èbìπ10
+//-----------------------------------------------------------------------------
+EVENT_START  ev_animal_trail_10
+  $LWK_ANIMAL_TRAIL_ID = 9
+  _CALL animal_trail_call
+EVENT_END
+
+//----------------------------------------------------------------------------
+//	èbìπ11
+//-----------------------------------------------------------------------------
+EVENT_START  ev_animal_trail_11
+  $LWK_ANIMAL_TRAIL_ID = 10
+  _CALL animal_trail_call
+EVENT_END
+
+//----------------------------------------------------------------------------
+//	èbìπ12
+//-----------------------------------------------------------------------------
+EVENT_START  ev_animal_trail_12
+  $LWK_ANIMAL_TRAIL_ID = 11
+  _CALL animal_trail_call
+EVENT_END
+
+//----------------------------------------------------------------------------
+//	èbìπ13
+//-----------------------------------------------------------------------------
+EVENT_START  ev_animal_trail_13
+  $LWK_ANIMAL_TRAIL_ID = 12
+  _CALL animal_trail_call
+EVENT_END
+
+//----------------------------------------------------------------------------
+//	èbìπ14
+//-----------------------------------------------------------------------------
+EVENT_START  ev_animal_trail_14
+  $LWK_ANIMAL_TRAIL_ID = 13
+  _CALL animal_trail_call
+EVENT_END
+
+//----------------------------------------------------------------------------
+//	èbìπ15
+//-----------------------------------------------------------------------------
+EVENT_START  ev_animal_trail_15
+  $LWK_ANIMAL_TRAIL_ID = 14
+  _CALL animal_trail_call
+EVENT_END
+
+//----------------------------------------------------------------------------
+//	èbìπ16
+//-----------------------------------------------------------------------------
+EVENT_START  ev_animal_trail_16
+  $LWK_ANIMAL_TRAIL_ID = 15
+  _CALL animal_trail_call
+EVENT_END
+
+//----------------------------------------------------------------------------
+//	èbìπ17
+//-----------------------------------------------------------------------------
+EVENT_START  ev_animal_trail_17
+  $LWK_ANIMAL_TRAIL_ID = 16
+  _CALL animal_trail_call
+EVENT_END
+
+//----------------------------------------------------------------------------
+//	èbìπ18
+//-----------------------------------------------------------------------------
+EVENT_START  ev_animal_trail_18
+  $LWK_ANIMAL_TRAIL_ID = 17
+  _CALL animal_trail_call
+EVENT_END
+
+//----------------------------------------------------------------------------
+//	èbìπ19
+//-----------------------------------------------------------------------------
+EVENT_START  ev_animal_trail_19
+  $LWK_ANIMAL_TRAIL_ID = 18
+  _CALL animal_trail_call
+EVENT_END
+
+//----------------------------------------------------------------------------
+//	èbìπ20
+//-----------------------------------------------------------------------------
+EVENT_START  ev_animal_trail_20
+  $LWK_ANIMAL_TRAIL_ID = 19
+  _CALL animal_trail_call
+EVENT_END
+

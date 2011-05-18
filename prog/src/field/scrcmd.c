@@ -109,6 +109,7 @@
 #include "scrcmd_person.h"
 #include "scrcmd_medal.h"
 #include "scrcmd_fmission.h"
+#include "scrcmd_animal_trail.h"
 
 #include "../../../resource/fldmapdata/script/usescript.h"
 

@@ -46,6 +46,7 @@
 #include "event_debug_menu_ov_infinity.h"
 #include "event_debug_menu_ov_pokewood.h"
 #include "event_debug_menu_ov_medalinfo.h"
+#include "event_debug_menu_ov_animal_trail.h"
 
 
 
@@ -62,6 +63,7 @@ FS_EXTERN_OVERLAY( debugmenu_staff );
 FS_EXTERN_OVERLAY( debugmenu_bsubway );
 FS_EXTERN_OVERLAY( debugmenu_infinity );
 FS_EXTERN_OVERLAY( debugmenu_medalinfo );
+FS_EXTERN_OVERLAY( debugmenu_animal_trail );
 
 //======================================================================
 //  extern
@@ -204,6 +206,7 @@ static const DEBUG_MENU_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_MEDALBOX_01 , debugMenuCallProc_MedalBox , FS_OVERLAY_ID(debugmenu_staff) },    // メダルボックス
   { DEBUG_FIELD_MEDAL_INFO , debugMenuCallProc_MedalInfo , FS_OVERLAY_ID(debugmenu_medalinfo) },    // メダル詳細画面
   { DEBUG_FIELD_INFINITY , debugMenuCallProc_InfinityDungeon , FS_OVERLAY_ID(debugmenu_infinity) },    // 無限ダンジョン
+  { DEBUG_FIELD_ANIMAL_TRAIL , debugMenuCallProc_AnimalTrail , FS_OVERLAY_ID(debugmenu_animal_trail) },    // けものみち
   // ためしにデバック機能追加してみた
   { DEBUG_FIELD_TEST_ICHI, debugMenuCallProc_DebugTest_Ichi, FS_OVERLAY_ID(debugmenu_staff) },    // いちらくテスト
   { DEBUG_FIELD_TEST_ONOUE, debugMenuCallProc_DebugTest_Onoue, FS_OVERLAY_ID(debugmenu_staff) },    // おのうえテスト

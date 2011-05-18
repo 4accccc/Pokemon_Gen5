@@ -13608,5 +13608,20 @@
     .short  \ret_wk
     .endm
 
+//--------------------------------------------------------------
+/**
+ * @def _WARP_ANIMAL_TRAIL
+ * @brief èbìπÉ}ÉbÉvÇ…à⁄ìÆ
+ * @param animal_trail_id   èbìπID
+ */
+//--------------------------------------------------------------
+#define _WARP_ANIMAL_TRAIL( animal_trail_id ) \
+    _ASM_WARP_ANIMAL_TRAIL animal_trail_id
+
+    .macro  _ASM_WARP_ANIMAL_TRAIL animal_trail_id
+    .short  EV_SEQ_ANIMAL_TRAIL_WARP
+    .short  \animal_trail_id
+    .endm
+
 //======================================================================
 //======================================================================

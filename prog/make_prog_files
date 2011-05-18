@@ -865,7 +865,8 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/field_goout_effect.c \
         field/field_goout_effect_data.c\
         field/medal_check.c \
-        field/resonance_resort/resort_mapcreate.c
+        field/resonance_resort/resort_mapcreate.c \
+        field/scrcmd_animal_trail.c
 
 # デバッグメニュー並列化  ジャンプ系
 #===> SRCS_OVERLAY_FIELDMAP
@@ -919,6 +920,11 @@ SRCS_OVERLAY_DEBUGMENU_INFINITY  = field/event_debug_menu_ov_infinity.c
 #===> SRCS_OVERLAY_FIELDMAP
 #GROUP_OVERLAY_DEBUGMENU
 SRCS_OVERLAY_DEBUGMENU_MEDALINFO  = field/event_debug_menu_ov_medalinfo.c
+
+# デバッグメニュー並列化  けものみち
+#===> SRCS_OVERLAY_FIELDMAP
+#GROUP_OVERLAY_DEBUGMENU
+SRCS_OVERLAY_DEBUGMENU_ANIMAL_TRAIL  = field/event_debug_menu_ov_animal_trail.c
 
 # スクリプトコマンド並列化  バトルサブウェイ
 #===> GROUP_OVERLAY_DEBUGMENU

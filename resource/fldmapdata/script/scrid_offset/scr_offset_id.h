@@ -3,7 +3,7 @@
  * @file  scr_offset_id.h
  * @bfief  スクリプトIDのオフセット定義
  * @author  tamada GAMEFREAK inc.
- * @date  2011 04/22 (Fri) 17:35
+ * @date  2011 05/17 (Tue) 13:40
  *
  * このファイルはコンバータにより自動生成されています
  */
@@ -174,6 +174,9 @@
 
 #define ID_FMISSION_SCR_OFFSET           (10775) //フェスミッション用スクリプト
 #define ID_FMISSION_SCR_OFFSET_END       (10784)
+
+#define ID_ANIMAL_TRAIL_SCR_OFFSET       (10785) //けもの道用スクリプト
+#define ID_ANIMAL_TRAIL_SCR_OFFSET_END   (10804)
 
 #define ID_DEBUG_SCR_OFFSET              (12000) //デバッグ用共通スクリプト（この下にはファイルを追加しない！！）
 #define ID_DEBUG_SCR_OFFSET_END          (12199)
