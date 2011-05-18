@@ -233,9 +233,6 @@ static GFL_PROC_RESULT PokeListProc_Init( GFL_PROC * proc, int * seq , void *pwk
         
       }
       GFL_UI_SetTouchOrKey( GFL_APP_KTST_TOUCH );
-    }else{
-      //pwk==NULLのデバッグモードで呼び出した場合のみ、plWork->plData->gdataにアクセスできないので注意
-      GF_ASSERT( plData->gdata );
     }
 #endif  //PM_DEBUG
 

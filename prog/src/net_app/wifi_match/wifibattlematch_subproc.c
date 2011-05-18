@@ -305,15 +305,10 @@ static void WIFIBATTLEMATCH_SUBPROC_InitListData( WIFIBATTLEMATCH_SUBPROC_PARAM 
   REGULATION *reg = p_param->regulation;
   SAVE_CONTROL_WORK *svWork = GAMEDATA_GetSaveControlWork(p_param->gameData);
 
-  plData->gdata = p_param->gameData;
-  plData->pp = procWork->pokeParty;
-  plData->myitem = NULL;
-  plData->mailblock = NULL;
-  plData->cfg = SaveData_GetConfig(svWork);
+  PLIST_DATA_Init( plData, p_param->gameData, PL_MODE_BATTLE_WIFI, procWork->pokeParty );
+  
   plData->reg = reg;
   
-  plData->zone_id = 0;
-  plData->mode = PL_MODE_BATTLE_WIFI;
   switch( reg->BATTLE_TYPE )
   {
   case REGULATION_BATTLE_SINGLE:   ///<ƒVƒ“ƒOƒ‹

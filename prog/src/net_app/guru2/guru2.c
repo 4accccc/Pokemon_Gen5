@@ -253,13 +253,11 @@ static BOOL _seq_Init( GURU2_CALL_WORK *g2call )
 //--------------------------------------------------------------------------------------------
 static PLIST_DATA* Guru2PokeListWorkCreate( GURU2_CALL_WORK *g2call, u32 mode,  u16 pos )
 {
-  PLIST_DATA * pld = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(PLIST_DATA) );
+  PLIST_DATA* pld;
+  
+  pld = PLIST_DATA_AllocInit( g2call->gamedata, mode, 
+          GAMEDATA_GetMyPokemon(g2call->gamedata), HEAPID_PROC );
 
-  pld->gdata     = g2call->gamedata;
-  pld->pp        = GAMEDATA_GetMyPokemon( g2call->gamedata );
-  pld->myitem    = GAMEDATA_GetMyItem( g2call->gamedata );
-  pld->type      = PL_TYPE_SINGLE;
-  pld->mode      = mode;
   pld->ret_sel   = pos;
 
   {

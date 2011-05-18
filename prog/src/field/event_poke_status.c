@@ -61,12 +61,7 @@ GMEVENT * EVENT_CreatePokeSelect(
   EVENT_POKESEL_PARAM* prm = (EVENT_POKESEL_PARAM*)parent;
 
   // ポケモンリスト生成
-  pl_data    = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(PLIST_DATA) );
-  pl_data->gdata = gdata;
-  pl_data->pp = party;
-  pl_data->mode = PL_MODE_SET;
-  pl_data->type = PL_TYPE_SINGLE;
-  pl_data->ret_sel = 0;
+  pl_data = PLIST_DATA_AllocInit( gdata, PL_MODE_SET, party, HEAPID_PROC );
 
   // イベント生成
   event = GMEVENT_Create(gsys, NULL, EVENT_FUNC_PokeSelect, sizeof(SELECT_POKE_WORK));
@@ -99,12 +94,7 @@ GMEVENT * EVENT_CreatePokeSelectWazaOboe(
   EVENT_POKESEL_PARAM_WOBOE* prm = (EVENT_POKESEL_PARAM_WOBOE*)parent;
 
   // ポケモンリスト生成
-  pl_data    = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(PLIST_DATA) );
-  pl_data->gdata = gdata;
-  pl_data->pp = party;
-  pl_data->mode = PL_MODE_SET_WAZA;
-  pl_data->type = PL_TYPE_SINGLE;
-  pl_data->ret_sel = 0;
+  pl_data = PLIST_DATA_AllocInit( gdata, PL_MODE_SET_WAZA, party, HEAPID_PROC );
   pl_data->wazaLearnBit = prm->learnBit;
   pl_data->waza = prm->wazano;
 
@@ -142,12 +132,7 @@ GMEVENT * EVENT_CreatePokeSelectMusical(
   EVENT_POKESEL_PARAM* prm = (EVENT_POKESEL_PARAM*)parent;
 
   // ポケモンリスト生成
-  pl_data    = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(PLIST_DATA) );
-  pl_data->gdata = gdata;
-  pl_data->pp = party;
-  pl_data->mode = PL_MODE_SET_MUSICAL;
-  pl_data->type = PL_TYPE_SINGLE;
-  pl_data->ret_sel = 0;
+  pl_data = PLIST_DATA_AllocInit( gdata, PL_MODE_SET_MUSICAL, party, HEAPID_PROC );
   
   //ステータス作成
   ps_data = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(PSTATUS_DATA) );

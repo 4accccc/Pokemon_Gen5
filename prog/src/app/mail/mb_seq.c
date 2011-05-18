@@ -1318,17 +1318,12 @@ static void SelMailDelete( MAILBOX_SYS_WORK * syswk )
 //--------------------------------------------------------------------------------------------
 static void PokeListWorkCreate( MAILBOX_SYS_WORK * syswk, u32 mode, u16 item, u16 pos )
 {
-  PLIST_DATA * pld = GFL_HEAP_AllocClearMemory( HEAPID_MAILBOX_SYS, sizeof(PLIST_DATA) );
-
-  pld->gdata     = syswk->dat->gamedata;
-  pld->pp        = GAMEDATA_GetMyPokemon( syswk->dat->gamedata );
-  pld->myitem    = GAMEDATA_GetMyItem( syswk->dat->gamedata );
-  pld->mailblock = syswk->sv_mail;
-  pld->type      = PL_TYPE_SINGLE;
-  pld->mode      = mode;
+  PLIST_DATA * pld;
+  
+  pld = PLIST_DATA_AllocInit( syswk->dat->gamedata, mode,
+          GAMEDATA_GetMyPokemon(syswk->dat->gamedata), HEAPID_MAILBOX_SYS );
   pld->item      = item;
   pld->mail_pos  = pos;
-  pld->zkn       = GAMEDATA_GetZukanSave(syswk->dat->gamedata);   // はっきんだまギラティナ用
 
   syswk->subProcWork = pld;
 }

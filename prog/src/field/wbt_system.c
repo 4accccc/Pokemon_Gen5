@@ -532,10 +532,7 @@ void WBTSYS_SetupPokeListData( WBTSYS * wbtsys, GAMEDATA * gamedata, PLIST_DATA 
 {
   int type;
 
-  GFL_STD_MemClear32( plist_data, sizeof(PLIST_DATA) );
-
-  plist_data->gdata = gamedata;
-  plist_data->pp = getUsePokeParty( wbtsys, gamedata );
+  PLIST_DATA_Init( plist_data, gamedata, PL_MODE_BATTLE_SUBWAY, getUsePokeParty( wbtsys, gamedata ) );
 
   switch ( wbtsys->rule )
   {
@@ -557,7 +554,6 @@ void WBTSYS_SetupPokeListData( WBTSYS * wbtsys, GAMEDATA * gamedata, PLIST_DATA 
     break;
   }
   plist_data->reg = (void *)WBTSYS_GetRegulation( wbtsys );
-  plist_data->mode = PL_MODE_BATTLE_SUBWAY;
   plist_data->type = type;
 }
 

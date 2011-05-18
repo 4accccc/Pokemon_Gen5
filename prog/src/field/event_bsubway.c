@@ -188,10 +188,6 @@ GMEVENT * BSUBWAY_EVENT_SetSelectPokeList(
     int type = PL_TYPE_SINGLE;
     PLIST_DATA *list = &work->list_data;
     
-    MI_CpuClear8( list, sizeof(PLIST_DATA) );
-    list->gdata = gdata;
-    list->pp = pp;
-    
     switch( bsw_scr->play_mode ){
     case BSWAY_MODE_DOUBLE:
     case BSWAY_MODE_S_DOUBLE:
@@ -210,9 +206,9 @@ GMEVENT * BSUBWAY_EVENT_SetSelectPokeList(
 #ifdef DEBUG_BSW_PRINT    
     KAGAYA_Printf( "ƒŒƒMƒ…ƒŒ[ƒVƒ‡ƒ“@%d\n", reg );
 #endif
-    
+   
+    PLIST_DATA_Init( list, gdata, PL_MODE_BATTLE_SUBWAY, pp );
     list->reg = (void*)PokeRegulation_LoadDataAlloc( reg, HEAPID_PROC );
-    list->mode = PL_MODE_BATTLE_SUBWAY;
     list->type = type;
     
     //debug

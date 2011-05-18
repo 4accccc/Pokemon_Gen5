@@ -391,21 +391,13 @@ static void WIFICLUB_BATTLE_SUBPROC_InitListData( WIFICLUB_BATTLE_SUBPROC_PARAM 
   u8 i;
   REGULATION *reg = p_param->regulation;
   SAVE_CONTROL_WORK *svWork = GAMEDATA_GetSaveControlWork(p_param->gameData);
-  
-  plData->gdata = p_param->gameData;
-  //plData->pp = procWork->pokeParty;
-  plData->pp = p_param->selfPokeParty;
+ 
+  PLIST_DATA_Init( plData, p_param->gameData, PL_MODE_BATTLE_WIFI, p_param->selfPokeParty );
 
   //レギュレーションにそったレベル補正を行います
   PokeRegulation_ModifyLevelPokeParty( reg, plData->pp );
-
-  plData->myitem = NULL;
-  plData->mailblock = NULL;
-  plData->cfg = SaveData_GetConfig(svWork);
   plData->reg = reg;
   
-  plData->zone_id = 0;
-  plData->mode = PL_MODE_BATTLE_WIFI;
   switch( reg->BATTLE_TYPE )
   {
   case REGULATION_BATTLE_SINGLE:   ///<シングル

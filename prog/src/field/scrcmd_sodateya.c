@@ -552,12 +552,7 @@ static GMEVENT * EVENT_SodatePokeSelect(
   ZUKAN_SAVEDATA *zukanSave = GAMEDATA_GetZukanSave( gdata );
 
   // ポケモンリスト生成
-  pl_data    = GFL_HEAP_AllocMemory( HEAPID_PROC, sizeof(PLIST_DATA) );
-  pl_data->gdata = gdata;
-  pl_data->pp = party;
-  pl_data->mode = PL_MODE_SODATEYA;
-  pl_data->type = PL_TYPE_SINGLE;
-  pl_data->ret_sel = 0;
+  pl_data = PLIST_DATA_AllocInit( gdata, PL_MODE_SODATEYA, party, HEAPID_PROC );
 
   // ポケモンステータス生成
   ps_data = GFL_HEAP_AllocMemory( HEAPID_PROC, sizeof(PSTATUS_DATA) );

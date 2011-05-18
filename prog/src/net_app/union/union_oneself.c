@@ -4346,11 +4346,7 @@ static BOOL OneselfSeq_ColosseumPokelistBattle(UNION_SYSTEM_PTR unisys, UNION_MY
     parent_list = GFL_HEAP_AllocClearMemory(HEAPID_UNION, sizeof(UNION_SUBPROC_PARENT_POKELIST));
 
     plist = &parent_list->plist;
-    plist->gdata = unisys->uniparent->game_data;
-    plist->pp = clsys->recvbuf.pokeparty[my_net_id];
-    plist->myitem = GAMEDATA_GetMyItem(unisys->uniparent->game_data);
-    plist->cfg = SaveData_GetConfig(GAMEDATA_GetSaveControlWork(unisys->uniparent->game_data));
-    plist->mode = PL_MODE_BATTLE_WIFI;
+    PLIST_DATA_Init(&parent_list->plist, unisys->uniparent->game_data, PL_MODE_BATTLE_WIFI, clsys->recvbuf.pokeparty[my_net_id]);
     plist->reg = unisys->alloc.regulation;
 
     parent_list->battle_setup 

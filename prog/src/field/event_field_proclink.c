@@ -842,20 +842,13 @@ static void * FMenuCallProc_PokeList(PROCLINK_WORK* wk, u32 param, EVENT_PROCLIN
   PLIST_DATA *plistData;
   GAMEDATA *gmData = GAMESYSTEM_GetGameData( wk->param->gsys );
 
-  plistData     = GFL_HEAP_AllocClearMemory(HEAPID_PROC, sizeof(PLIST_DATA));
+  plistData = PLIST_DATA_AllocInit( gmData, PL_MODE_FIELD, GAMEDATA_GetMyPokemon(gmData), HEAPID_PROC );
 
-  plistData->gdata = gmData;
-  plistData->pp = GAMEDATA_GetMyPokemon( gmData);
   plistData->scwk = wk->scwk;
-  plistData->myitem   = GAMEDATA_GetMyItem( gmData);    // アイテムデータ
-  plistData->mailblock = GAMEDATA_GetMailBlock( gmData);
-  plistData->zkn = GAMEDATA_GetZukanSave( gmData);
-  plistData->mode     = PL_MODE_FIELD;
   plistData->ret_sel  = wk->param->select_poke;
   plistData->waza = 0;
   plistData->wazaLearnBit = 0xFF;
   plistData->zone_id    = GAMEDATA_GetMyPlayerWork(gmData)->zoneID; 
-  plistData->season     = GAMEDATA_GetSeasonID(gmData); 
 
   if( param == PL_MODE_ITEMUSE )
   { 
