@@ -39,7 +39,7 @@
 ///EXTRA領域でポケウッドが使用するセーブサイズ
 #define SAVESIZE_EXTRA_POKEWOOD           (SAVESIZE_EXTRA_BATTLE_REC)
 ///EXTRA領域でWBTが使用するセーブデータサイズ //TODO 仮
-#define SAVESIZE_EXTRA_WBT                (0x2000)
+#define SAVESIZE_EXTRA_WBT                (0x1800)
 ///EXTRA領域で3DS連動が使用するセーブデータサイズ //TODO　仮
 #define SAVESIZE_EXTRA_3DS                (0x100)
 ///管理外領域で不思議な贈り物が使用するセーブサイズ
@@ -56,9 +56,9 @@
 #define SAVESIZE_NORMAL   (SAVE_SECTOR_SIZE * SECTOR_MAX)
 
 ///ミラーリング領域で使用するセーブ開始アドレス
-#define MIRROR_SAVE_ADDRESS   (SAVESIZE_NORMAL) //(0x24000)
+#define MIRROR_SAVE_ADDRESS   (SAVESIZE_NORMAL) //(0x26000)
 ///外部セーブが使用するセーブ開始アドレス
-#define EXTRA_SAVE_START_ADDRESS    (SAVESIZE_NORMAL*2) //(0x48000)
+#define EXTRA_SAVE_START_ADDRESS    (SAVESIZE_NORMAL*2) //(0x4c000)
 
 ///外部セーブ：メモリマッピング
 enum{
@@ -105,8 +105,11 @@ enum{
   OUTSIDE_MM_MYSTERY = EXTRA_MM_SAVE_END,
   OUTSIDE_MM_MYSTERY_MIRROR = OUTSIDE_MM_MYSTERY + SAVESIZE_OUTSIDE_MYSTERY,
 
-  ALL_SAVE_END,
+  ALL_SAVE_END = OUTSIDE_MM_MYSTERY_MIRROR + SAVESIZE_OUTSIDE_MYSTERY,
 };
+
+//セーブ領域は4Mbit
+SDK_COMPILER_ASSERT( ALL_SAVE_END < 0x400000/8 );
 
 
 //--------------------------------------------------------------

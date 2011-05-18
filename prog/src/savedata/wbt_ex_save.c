@@ -18,7 +18,7 @@
 //=============================================================================
 //TODO âº
 // Ç±Ç±ÇÇ©Ç¶ÇΩÇÁÅ@save_tbl.hÇÃSAVESIZE_EXTRA_WBTÇ‡ïœÇ¶ÇƒÇ≠ÇæÇ≥Ç¢
-#define WBTEXSAVE_WORK_SIZE (8000)
+#define WBTEXSAVE_WORK_SIZE (6000)
 
 SDK_COMPILER_ASSERT( WBTEXSAVE_WORK_SIZE < SAVESIZE_EXTRA_WBT );
 
