@@ -12,6 +12,7 @@
 #include "../../../resource/fld3d_ci/fldci_id_def.h"
 #include "../../arc/enc_ci_face.naix"
 
+//TODO エンカウントカットインで使用する名前を整理する（sptr_name.gmmにメッセージデータが用意されている)
 static const ENC_CUTIN_DAT EncCutinDat[] = 
 {
   {FLDCIID_RIVAL, NARC_enc_ci_face_enc_rival_01_LZ_bin, NARC_enc_ci_face_enc_rival_02_LZ_bin , NARC_enc_ci_face_enc_rival_nclr, SPTR_RIVAL, GRA_TRANS_ALL ,CI_PANEL_4,0x7fff,0x0000}, //ライバル
