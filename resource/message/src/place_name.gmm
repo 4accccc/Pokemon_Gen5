@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2011-04-08T17:16:58"/>
+	<create user="suginaka_katsunori" host="W00227" date="2011-05-16T12:37:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -997,8 +997,8 @@ R14R0101/R15R0101</comment>
 	</row>
 
 	<row id="MAPNAME_C13" text-color="#0000ff,,,,,,,,,,,,,,,,," back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
-		<language name="JPN" width="256">タテワキシティ</language>
-		<language name="JPN_KANJI" width="256">タテワキシティ</language>
+		<language name="JPN" width="256">タチワキシティ</language>
+		<language name="JPN_KANJI" width="256">タチワキシティ</language>
 	</row>
 
 	<row id="MAPNAME_C14" text-color="#0000ff,,,,,,,,,,,,,,,,," back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
