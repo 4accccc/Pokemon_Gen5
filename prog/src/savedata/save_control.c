@@ -107,6 +107,9 @@ SAVE_CONTROL_WORK * SaveControl_SystemInit(HEAPID heap_id)
 
   NAGI_Printf( "extra_size %x, extra_end %x all_end%x\n", EXTRA_MM_SAVE_SIZE, EXTRA_MM_SAVE_END, ALL_SAVE_END );
 
+  //セーブ領域は4Mbit
+  GF_ASSERT_MSG( ALL_SAVE_END < 0x80000, "save size over !! %d < %d\n", ALL_SAVE_END, 0x80000 );
+
   //---------------- 内部セーブ＆外部セーブ ----------------
 	//データ存在チェックを行っている
 	load_ret = GFL_BACKUP_Load(ctrl->sv_normal, HEAPID_SAVE_TEMP);

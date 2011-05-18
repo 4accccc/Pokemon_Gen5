@@ -108,10 +108,6 @@ enum{
   ALL_SAVE_END = OUTSIDE_MM_MYSTERY_MIRROR + SAVESIZE_OUTSIDE_MYSTERY,
 };
 
-//ÉZÅ[ÉuóÃàÊÇÕ4Mbit
-SDK_COMPILER_ASSERT( ALL_SAVE_END < 0x400000/8 );
-
-
 //--------------------------------------------------------------
 //  
 //--------------------------------------------------------------
