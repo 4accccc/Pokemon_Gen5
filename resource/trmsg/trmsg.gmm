@@ -15848,6 +15848,95 @@ può accadere ancora di tutto!</language>
 テストメッセージ</language>
 	</row>
 
+	<row id="TRID_ADULTW_01_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">ようこそ！　ライモンジムへ
+ポケモンと　トレーナーが　おりなす▼
+かれいな　ポケモンしょうぶと
+ファッションショーの　はじまり！▼</language>
+		<language name="JPN_KANJI" width="216">ようこそ！　ライモンジムへ
+ポケモンと　トレーナーが　おりなす▼
+華麗な　ポケモン勝負と
+ファッションショーの　始まり！▼</language>
+	</row>
+
+	<row id="TRID_ADULTW_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">ショーは　これから……▼
+……って　あれ？
+もう　おわり？</language>
+		<language name="JPN_KANJI" width="216">ショーは　これから……▼
+……って　あれ？
+もう　終わり？</language>
+	</row>
+
+	<row id="TRID_ADULTW_01_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">あなたのポケモンと　あなた
+とっても　シャイニングでしたわ！</language>
+		<language name="JPN_KANJI" width="216">あなたのポケモンと　あなた
+とっても　シャイニングでしたわ！</language>
+	</row>
+
+	<row id="TRID_ADULTW_02_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">うつくしいでは　ダメ！
+トレーナーとして　つよくなければ！▼
+わたしたちの　ビューティな
+たたかいぶりに　みとれないでよ！▼</language>
+		<language name="JPN_KANJI" width="216">美しいだけでは　ダメ！
+トレーナーとして　強くなければ！▼
+わたしたちの　ビューティな
+戦いぶりに　みとれないでよ！▼</language>
+	</row>
+
+	<row id="TRID_ADULTW_02_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">……つよくて　ビューティ！▼
+わたしの　ほうが
+あなたに　みとれちゃったわ</language>
+		<language name="JPN_KANJI" width="216">……強くて　ビューティ！▼
+わたしの　ほうが
+あなたに　みとれちゃったわ</language>
+	</row>
+
+	<row id="TRID_ADULTW_02_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">うつくしさ　っていうのは
+みため　だけじゃないの▼
+あなたも　カミツレさまも
+つよさが　うつくしさの　いちぶね</language>
+		<language name="JPN_KANJI" width="216">美しさ　っていうのは
+見た目だけじゃ　ないの▼
+あなたも　カミツレさまも
+強さが　美しさの　一部ね</language>
+	</row>
+
+	<row id="TRID_ADULTW_03_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">ショーも　おおづめ　だけど
+カミツレさまと　おなじ　ステージに▽
+たつ　しかくが　あるか▽
+わたくしが　チェックしてあげる！▼</language>
+		<language name="JPN_KANJI" width="216">ショーも　大詰めだけど
+カミツレさまと　同じ　ステージに▽
+立つ　資格が　あるか▽
+わたくしが　チェックしてあげる！▼</language>
+	</row>
+
+	<row id="TRID_ADULTW_03_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">その　つよさと　うつくしさ……！▼
+カミツレさまの　ステージに
+たっても　いいんじゃない？</language>
+		<language name="JPN_KANJI" width="216">その　強さと　美しさ……！▼
+カミツレさまの　ステージに
+たっても　いいんじゃない？</language>
+	</row>
+
+	<row id="TRID_ADULTW_03_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">あなたと　カミツレさまで　みせた
+きらびやかな　ポケモンしょうぶ▼
+おもわず　みとれちゃったじゃない！
+とても　ステキな　ショーだったわよ！</language>
+		<language name="JPN_KANJI" width="216">あなたと　カミツレさまで　みせた
+きらびやかな　ポケモン勝負▼
+おもわず　みとれちゃったじゃない！
+とても　ステキな　ショーだったわよ！</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>
