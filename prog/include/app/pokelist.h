@@ -157,17 +157,18 @@ typedef struct{
 
 //-----------------------------------------------
 // ポケモンリスト外部作成データ
+// plist_data_setup.c PLIST_DATA_Init()orPLIST_DATA_AllocInit()を用いて最初の初期化をした後
+// 各モードで必要なパラメータを設定すること
 //-----------------------------------------------
 typedef struct 
 {
   POKEPARTY * pp;   // ポケモンデータ
   void * myitem;    // アイテムデータ
   void * mailblock; // メールデータ
-  CONFIG * cfg;   // コンフィグデータ
-//  void * tvwk;    // テレビワーク //存在しない？
-  void * reg;     // レギュレーションデータ
-  void * zkn;     // 図鑑セーブ(フォルムチェンジ時登録処理
-  GAMEDATA* gdata;
+  CONFIG * cfg;     // コンフィグデータ
+  void * rnd_map;   // ランダムマップセーブ(キュレム合体相手のPOKEMON_PARAM領域がある)
+  void * reg;       // レギュレーションデータ
+  void * zkn;       // 図鑑セーブ(フォルムチェンジ時登録処理
 
   FLDSKILL_CHECK_WORK scwk;    // 技使用チェックワーク
 
@@ -213,6 +214,33 @@ typedef struct
   u8 comm_selected_num;   // 通信時：既に選択が終わった人数(外側から操作)
   u8 padding;
 }PLIST_DATA;
+
+//--------------------------------------------------------------
+/*
+ *  @blief  PLIST_DATA構造体のコモン初期化
+ *
+ *  この関数での初期化後、足りないパラメータは自前で初期化すること
+ *
+ *  @param  plist   初期化する構造体へのポインタ
+ *  @param  gdata   GAMEDATAポインタ
+ *  @param  mode    呼び出しモード PL_MODE_TYPE型
+ *  @param  party   パーティポインタ
+ */
+//--------------------------------------------------------------
+extern void PLIST_DATA_Init( PLIST_DATA* plist, GAMEDATA* gdata, PL_MODE_TYPE mode, POKEPARTY* party );
+
+//--------------------------------------------------------------
+/*
+ *  @blief  PLIST_DATA構造体のコモン初期化 メモリアロケート版
+ *  この関数での初期化後、足りないパラメータは自前で初期化すること
+ *
+ *  @param  gdata   GAMEDATAポインタ
+ *  @param  mode    呼び出しモード PL_MODE_TYPE型
+ *  @param  party   パーティポインタ
+ *  @param  heapID  PLIST_DATAワークを確保するヒープ
+ */
+//--------------------------------------------------------------
+extern PLIST_DATA* PLIST_DATA_AllocInit( GAMEDATA* gdata, PL_MODE_TYPE mode, POKEPARTY* party, HEAPID heapID );
 
 //-----------------------------------------------
 //以上GSより移植(09/06/10)

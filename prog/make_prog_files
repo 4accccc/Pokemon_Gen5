@@ -196,6 +196,7 @@ SRCS  +=    $(SOUNDSRC) \
 				system/shortcut_data.c \
         app/bag/bag_param.c\
         app/codein/codein_param.c\
+        app/pokelist/plist_data_setup.c \
         system/screentex.c \
         debug/debug_flg.c \
         debug/debug_hudson.c \
@@ -221,7 +222,7 @@ SRCS  +=    $(SOUNDSRC) \
         field/resonance_resort/resort_map.c \
         field/resonance_resort/resort_binary.c \
         debug/debug_infinity_dungeon.c
-
+        
 
 #================================================
 # ここから下はオーバーレイプログラム定義
