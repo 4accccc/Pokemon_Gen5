@@ -54,12 +54,9 @@
 #define BADGE3D_CAMERA_TARGET_Y  ( 0 )  ///< 座標(0,0,0)のモデリングデータ画面上の位置
 #else	// モデルを90度回転させて横から見る方法
 #define BADGE3D_CAMERA_POS_Y     ( 0  )  ///< ジムリーダーリングの倒れ具合
-#define BADGE3D_CAMERA_POS_Z     ( FX32_ONE*90.0 )  ///< ジムリーダーとカメラの距離（ドットのゆがみ調整）
+#define BADGE3D_CAMERA_POS_Z     ( FX32_ONE*110.0 )  ///< ジムリーダーとカメラの距離（ドットのゆがみ調整）
 #define BADGE3D_CAMERA_TARGET_Y  ( 0 )  ///< 座標(0,0,0)のモデリングデータ画面上の位置
 #endif
-//#define BADGE3D_CAMERA_POS_Y     ( FX32_ONE*1.4  )  ///< ジムリーダーリングの倒れ具合
-//#define BADGE3D_CAMERA_POS_Z     ( FX32_ONE*5.49 )  ///< ジムリーダーとカメラの距離（ドットのゆがみ調整）
-//#define BADGE3D_CAMERA_TARGET_Y  ( FX32_ONE*-1.49 )  ///< 座標(0,0,0)のモデリングデータ画面上の位置
 
 // 上画面文字面ウインドウオフセット
 #define SYSTEMWIN_FRM_CGX_OFFSET  (  1 )
@@ -100,10 +97,6 @@ enum{
 #define PALTYPE_BG_DOWN		( PALTYPE_SUB_BG )
 #define PALTYPE_BG_UP		( PALTYPE_MAIN_BG )
 //
-#define PAL_TOUCH_BG		( 12 )			// 下画面共通パネル用offset(ウインドウと重なるため変更)
-//#define PAL_BADGE_BG		( 10 )			// 下画面バッジ用offset
-#define PAL_CUTIN_BG		( 10 )			// 上画面カットイン用offset
-
 // 情報ウインドウ用定義
 enum{
   INFO_TYPE_BADGE =0,
@@ -146,6 +139,7 @@ enum{
 	FLG_SET_BGOFFSET = (1<<0),		// BGセット
 	FLG_END_BGOFFSET = (1<<1),		// 終了
 	FLG_MODEL_DISP   = (1<<2),		// モデルの表示
+	FLG_PALCHG_ON    = (1<<3),		// パレットチェンジ中
 	//
 	FLG_DECIDE_OFF   = (1<<4),		// 決定ボタン(カードに戻る)表示off
 	FLG_CANCEL_OFF   = (1<<5),		// cancelボタン(リターン)表示off
@@ -217,6 +211,22 @@ enum{
 	CUTIN_SCR_HEIGHT	= 192/8,	// 縦
 	CUTIN_SCR_OFFSET	= 128/8,	// 表示オフセット
 	CUTIN_SCR_MEMSIZE	= (32*24),	// メモリサイズ
+	//
+	PCHG_ANIM_ADD		= (0x400),	// パレットチェンジ用
+};
+
+// パレット番号まとめ
+enum{
+	// 下画面(BG)
+	PAL_DOWN_FACE_BG	= (  0 ),	// 下画面、顔用(0-8)
+	PAL_DOWN_TOUCH_BG	= ( 12 ),	// 下画面、共通パネル用(12)
+	PAL_DOWN_SYSWIN_BG	= ( 13 ),	// 下画面、WIN用(13,14)(13,14間を補完して使用)
+	PAL_DOWN_FONT_BG	= ( 15 ),	// 下画面、フォント用(15)
+	//
+	// 上画面(BG)
+	PAL_UP_BG			= (  0 ),	// 上画面、背景、マーク(0)
+	PAL_UP_CUTIN_BG		= ( 10 ),	// 上画面、カットイン用(10,11)(10:上半身,11:下半身)
+	PAL_UP_FONT_BG		= ( 15 ),	// 上画面、フォント(15)
 };
 
 //--------------------------------------------------------------------------------------------
@@ -322,13 +332,17 @@ typedef struct {
   NNSG2dPaletteData *FacePal;		///< 顔グラフィック
   u16			*MemAdr;			///< スクリーン用
   GFL_G3D_OBJSTATUS	Status;			///< モデル用
-  VecFx32		Vec32;				///< モデル制御用(test)
-  u16			Unit[BADGE_NUM];	///< ユニット
+  VecFx32       Vec32;				///< モデル制御用(test)
+  u16           Unit[BADGE_NUM];	///< ユニット
+  s32           PCount;				///< パレット用カウンタ
+  u16           PalBufferStart[0x10];	///< 開始
+  u16           PalBufferEnd[0x10];		///< 終了
+  u16           PalBufferNow[0x10];		///< 現在
 
-  void              *badgePalBuf[BADGE_POLISH_PAL_NUM]; ///< バッジOBJパレットデータ保存用ワーク
-  NNSG2dPaletteData *badgePal[BADGE_POLISH_PAL_NUM];    ///< バッジ用パレットデータ
-  void              *leaderPalBuf[LEADER_PAL_NUM];      ///< ジムリーダー顔グラパレットデータ保存用ワーク
-  NNSG2dPaletteData *leaderPal[LEADER_PAL_NUM];          ///< ジムリーダー顔グラパレットデータ
+//  void              *badgePalBuf[BADGE_POLISH_PAL_NUM]; ///< バッジOBJパレットデータ保存用ワーク
+//  NNSG2dPaletteData *badgePal[BADGE_POLISH_PAL_NUM];    ///< バッジ用パレットデータ
+//  void              *leaderPalBuf[LEADER_PAL_NUM];      ///< ジムリーダー顔グラパレットデータ保存用ワーク
+//  NNSG2dPaletteData *leaderPal[LEADER_PAL_NUM];          ///< ジムリーダー顔グラパレットデータ
 
   u8          badgeflag[BADGE_NUM];
 
@@ -361,20 +375,52 @@ const GFL_PROC_DATA BadgeViewProcData = {
 //-----------------
 // タイマ
 static const s16 bv_timer_tbl[] = {
-	5*60,		// リーダーのwaitタイマ1
-	8*60,		// リーダーのwaitタイマ2
+	5*60,								// リーダーのwaitタイマ1
+	8*60,								// リーダーのwaitタイマ2
 };
 
 // 音階
 static const u16 bv_snd_tbl[] = {
-	SND_TRBADGE_00,		// ド
-	SND_TRBADGE_01,		// レ
-	SND_TRBADGE_02,		// ミ
-	SND_TRBADGE_03,		// ファ
-	SND_TRBADGE_04,		// ソ
-	SND_TRBADGE_05,		// ラ
-	SND_TRBADGE_06,		// シ
-	SND_TRBADGE_07,		// ド2
+	SND_TRBADGE_00,						// ド
+	SND_TRBADGE_01,						// レ
+	SND_TRBADGE_02,						// ミ
+	SND_TRBADGE_03,						// ファ
+	SND_TRBADGE_04,						// ソ
+	SND_TRBADGE_05,						// ラ
+	SND_TRBADGE_06,						// シ
+	SND_TRBADGE_07,						// ド2
+};
+
+// カットインキャラのID
+static const s16 bv_cutin_tbl[] = {
+	ENC_CUTIN_GYM1A,					// 0
+	ENC_CUTIN_GYM2,						// 1
+	ENC_CUTIN_GYM3,						// 2
+	ENC_CUTIN_GYM4,						// 3
+	ENC_CUTIN_GYM5,						// 4
+	ENC_CUTIN_GYM6,						// 5
+	ENC_CUTIN_GYM7,						// 6
+	ENC_CUTIN_GYM8A,					// 7
+};
+
+// 移動のテーブル(開始、終了、step、spd)(win)
+static const s16 bv_scr_tbl[] = {
+    128,   0, STEP_LV1, SPD_WIN_IN,		// 上から下
+   -208, -80, STEP_LV1, SPD_WIN_IN,		// 下から上
+      0, 128, STEP_LV2, SPD_WIN_OUT,	// 上から下(戻)
+    -80,-208, STEP_LV2, SPD_WIN_OUT,	// 下から上(戻)
+};
+
+// 移動のテーブル(開始、終了、0、spd)(カットイン)
+static const s16 bv_scr_cutin_tbl[] = {
+   -128,   0, 0, SPD_CUTIN,				// 外から中
+	  0,-128, 0, SPD_CUTOUT,			// 中から外
+};
+
+// 移動のテーブル(開始、終了、0、spd)(モデル:桁注意)
+static const s16 bv_scr_model_tbl[] = {
+ -0x400,-0x140, 0, SPD_CUTIN,			// 外から中
+ -0x140,-0x400, 0, SPD_CUTOUT,			// 中から外
 };
 
 //--------------------------------------------------------------------------------------------
@@ -414,15 +460,15 @@ static  int TouchBar_KeyControl( BADGEVIEW_WORK *wk );
 static void ExecFunc( BADGEVIEW_WORK *wk, int trg, BOOL keyflag );
 static void _page_max_init( BADGEVIEW_WORK *wk );
 static void _page_clact_set( BADGEVIEW_WORK *wk, int page, int max );
-static  int _page_move_check( BADGEVIEW_WORK *wk, int touch );
+//static  int _page_move_check( BADGEVIEW_WORK *wk, int touch );
 static void SetupPage( BADGEVIEW_WORK *wk, int page );
 static void CellActorPosSet( BADGEVIEW_WORK *wk, int id, int x, int y );
 static void Draw3D( BADGEVIEW_WORK* wk );
 static void SlideFunc( BADGEVIEW_WORK *wk, int trg, int flag, int x );
 static void SetRtcData( BADGEVIEW_WORK *wk );
 static void RefreshPolishData( BADGEVIEW_WORK *wk );
-static void Trans_BadgePalette( BADGEVIEW_WORK *wk );
-static void BrushBadge( BADGEVIEW_WORK *wk, u32 touch );
+//static void Trans_BadgePalette( BADGEVIEW_WORK *wk );
+//static void BrushBadge( BADGEVIEW_WORK *wk, u32 touch );
 static void CheckBookmark( BADGEVIEW_WORK *wk );
 //
 //-------------
@@ -454,12 +500,17 @@ static void bv_init_cutin( BADGEVIEW_WORK* wk, const s32 cnum );
 static void bv_chg_cutin(  BADGEVIEW_WORK* wk, const s32 num );
 static void bv_set_cutin_visible( BADGEVIEW_WORK *wk, const BOOL bflg );
 static void bv_make_cutin_scr( BADGEVIEW_WORK *wk );
-//
+// モデル表示
 static void bv_rot_model( BADGEVIEW_WORK *wk );
 static void bv_set_model_visible( BADGEVIEW_WORK *wk, const BOOL bflg );
+// パレットチェンジ
+static void bv_init_chgpal( BADGEVIEW_WORK *wk );
+static void bv_main_chgpal( BADGEVIEW_WORK *wk );
+static void bv_set_chgpal(  BADGEVIEW_WORK *wk, const BOOL bflg );
 
 
 #ifdef PM_DEBUG
+static void bv_disp_memsize( BADGEVIEW_WORK *wk );
 static void _debug_data_set( BADGEVIEW_WORK *wk );
 #endif
 
@@ -515,6 +566,11 @@ GFL_PROC_RESULT BadgeViewProc_Init( GFL_PROC * proc, int *seq, void *pwk, void *
   // フェードイン開始
   WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN, 
                   WIPE_FADE_BLACK,  WIPE_DEF_DIV, 1, HEAPID_TR_CARD );
+
+#ifdef PM_DEBUG
+  // 残りサイズ
+  bv_disp_memsize( wk );
+#endif
 
   return GFL_PROC_RES_FINISH;
 }
@@ -615,17 +671,16 @@ static void VBlankFunc( GFL_TCB *tcb, void * work )
   scr = -(wk->scrol_bg/2);
   GFL_BG_SetScroll( BV_BGFRAME_U_BG, GFL_BG_SCROLL_X_SET, scr );
   GFL_BG_SetScroll( BV_BGFRAME_U_BG, GFL_BG_SCROLL_Y_SET, scr );
-//  GFL_BG_SetScroll( BV_BGFRAME_D_BG, GFL_BG_SCROLL_X_SET, scr);
-//  GFL_BG_SetScroll( BV_BGFRAME_D_BG, GFL_BG_SCROLL_Y_SET, scr);
 
   // BGスクロール
   if( wk->Flag & FLG_SET_BGOFFSET ){
-    // win
+    // Win
     GFL_BG_SetScroll( BV_BGFRAME_D_WIN, GFL_BG_SCROLL_Y_SET, wk->BgOffY );
+    // メッセージ
     GFL_BG_SetScroll( BV_BGFRAME_D_MSG, GFL_BG_SCROLL_Y_SET, wk->BgOffY );
-    // カットイン(test)
+    // カットイン
     GFL_BG_SetScroll( BV_BGFRAME_U_CUTIN, GFL_BG_SCROLL_X_SET, wk->BgOffX );
-    // 最後の1フレームをセットするため
+    // 最後の1フレームを確実にセットするため
     if(wk->Flag & FLG_END_BGOFFSET){
       wk->Flag &= ~FLG_SET_BGOFFSET;
       wk->Flag &= ~FLG_END_BGOFFSET;
@@ -723,6 +778,7 @@ static void InitWork( BADGEVIEW_WORK *wk, void *pwk )
   wk->LeaderNum = 0;
   wk->FacePalBuf = 0;
   wk->FacePal	= 0;
+  wk->PCount	= 0;
   //
   for(i=0;i<TIMER_MAX;i++){
     wk->Timer[i] = 0;
@@ -822,10 +878,10 @@ static const int bgframe_init_tbl[]={
   BV_BGFRAME_U_CUTIN,
   BV_BGFRAME_U_MARK,
   BV_BGFRAME_U_BG,
+  // 下画面
   BV_BGFRAME_D_MSG,
   BV_BGFRAME_D_BUTTON,
   BV_BGFRAME_D_BG,
-  //
   BV_BGFRAME_D_WIN,
 };
 
@@ -968,18 +1024,6 @@ static void BgGraphicInit(BADGEVIEW_WORK *wk)
   
   GFL_ARCHDL_UTIL_TransVramPalette(     handle, NARC_trainer_case_badge_base02_NCLR, 	// グレー(初期)
                                         PALTYPE_BG_DOWN, 0, 0x20*8, HEAPID_TR_CARD );
-#if 0
-  // 下画面背景転送(プレート枠:なくてもいいかも)
-  GFL_ARCHDL_UTIL_TransVramBgCharacter( handle, NARC_trainer_case_badge_bg01_NCGR,
-                                        BV_BGFRAME_D_MSG, 0, 0, FALSE, HEAPID_TR_CARD );
-  GFL_ARCHDL_UTIL_TransVramScreen(      handle, NARC_trainer_case_badge_bg01_NSCR,
-                                        BV_BGFRAME_D_MSG, 0, 0, FALSE, HEAPID_TR_CARD );
-  GFL_ARCHDL_UTIL_TransVramPalette(     handle, NARC_trainer_case_badge_bg01_NCLR, 
-                                        PALTYPE_BG_DOWN, PAL_BADGE_BG*0x20, 0x20, HEAPID_TR_CARD );
-  // プレート枠のパレット指定を変更
-  GFL_BG_ChangeScreenPalette( BV_BGFRAME_D_MSG, 0, 11, 32, 10, PAL_BADGE_BG );
-  GFL_BG_LoadScreenReq( BV_BGFRAME_D_MSG );
-#endif
   
   // タッチバーBG転送(共通)
   {
@@ -990,11 +1034,11 @@ static void BgGraphicInit(BADGEVIEW_WORK *wk)
     GFL_ARCHDL_UTIL_TransVramScreen(      c_handle, APP_COMMON_GetBarScrnArcIdx(),
                                           BV_BGFRAME_D_BUTTON, 0, 0, FALSE, HEAPID_TR_CARD );
     GFL_ARCHDL_UTIL_TransVramPaletteEx(   c_handle, APP_COMMON_GetBarPltArcIdx(), PALTYPE_BG_DOWN,
-                                          0, PAL_TOUCH_BG*32, 32, HEAPID_TR_CARD );
+                                          0, PAL_DOWN_TOUCH_BG*32, 32, HEAPID_TR_CARD );
     
     // スクリーンのパレット指定を変更
     GFL_BG_ChangeScreenPalette( BV_BGFRAME_D_BUTTON, TOUCHBAR_X, TOUCHBAR_Y,
-                                                     TOUCHBAR_W, TOUCHBAR_H, PAL_TOUCH_BG );
+                                                     TOUCHBAR_W, TOUCHBAR_H, PAL_DOWN_TOUCH_BG );
     GFL_BG_LoadScreenReq( BV_BGFRAME_D_BUTTON );
 
     GFL_ARC_CloseDataHandle( c_handle );
@@ -1002,9 +1046,9 @@ static void BgGraphicInit(BADGEVIEW_WORK *wk)
   
   // 会話フォントパレット転送
   GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_BG_DOWN, 
-                                 TALKFONT_PAL_OFFSET, 32, HEAPID_TR_CARD );
+                                 PAL_UP_FONT_BG*0x20, 32, HEAPID_TR_CARD );
   GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_BG_UP, 
-                                 TALKFONT_PAL_OFFSET, 32, HEAPID_TR_CARD );
+                                 PAL_DOWN_FONT_BG*0x20, 32, HEAPID_TR_CARD );
 
   // 会話ウインドウ転送
   GFL_ARCHDL_UTIL_TransVramBgCharacter( handle, NARC_trainer_case_badge_win_NCGR,
@@ -1012,27 +1056,35 @@ static void BgGraphicInit(BADGEVIEW_WORK *wk)
   GFL_ARCHDL_UTIL_TransVramScreen(      handle, NARC_trainer_case_badge_win_NSCR,
                                         BV_BGFRAME_D_WIN, 0, 0, FALSE, HEAPID_TR_CARD );
   GFL_ARCHDL_UTIL_TransVramPalette(     handle, NARC_trainer_case_badge_win_NCLR, 
-                                        PALTYPE_BG_DOWN, SYSTEMWIN_FRM_PAL_OFFSET*0x20, 0x20*2, HEAPID_TR_CARD );
+                                        PALTYPE_BG_DOWN, PAL_DOWN_SYSWIN_BG*0x20, 0x20*2, HEAPID_TR_CARD );
   // スクリーンのパレット指定変更
-  GFL_BG_ChangeScreenPalette( BV_BGFRAME_D_WIN, 0, 0, 32, 12, SYSTEMWIN_FRM_PAL_OFFSET );
+  GFL_BG_ChangeScreenPalette( BV_BGFRAME_D_WIN, 0, 0, 32, 12, PAL_DOWN_SYSWIN_BG );
   GFL_BG_LoadScreenReq( BV_BGFRAME_D_WIN );
 
   // バッジOBJ転送用パレット保持
-  for(i=0;i<BADGE_POLISH_PAL_NUM;i++){
-    wk->badgePalBuf[i] = GFL_ARCHDL_UTIL_LoadPalette( handle, NARC_trainer_case_badge_obj03_NCLR-i, 
-                                                      &wk->badgePal[i], HEAPID_TR_CARD );
-  }
-
-  for(i=0;i<LEADER_PAL_NUM;i++){
-    wk->leaderPalBuf[i] = GFL_ARCHDL_UTIL_LoadPalette( handle, NARC_trainer_case_gym_leaders2_NCLR-i, 
-                                                       &wk->leaderPal[i], HEAPID_TR_CARD );
-  }
+//  for(i=0;i<BADGE_POLISH_PAL_NUM;i++){
+//    wk->badgePalBuf[i] = GFL_ARCHDL_UTIL_LoadPalette( handle, NARC_trainer_case_badge_obj03_NCLR-i, 
+//                                                      &wk->badgePal[i], HEAPID_TR_CARD );
+//  }
+//
+//  for(i=0;i<LEADER_PAL_NUM;i++){
+//    wk->leaderPalBuf[i] = GFL_ARCHDL_UTIL_LoadPalette( handle, NARC_trainer_case_gym_leaders2_NCLR-i, 
+//                                                       &wk->leaderPal[i], HEAPID_TR_CARD );
+//  }
 
   // 顔グラフィック用パレット(色つき)
   wk->FacePalBuf = GFL_ARCHDL_UTIL_LoadPalette( handle, NARC_trainer_case_badge_base01_NCLR, &wk->FacePal, HEAPID_TR_CARD );
+  //
+  // パレット取得(Win用)
+  {
+    NNSG2dPaletteData* pal_data;
+    void* buf = GFL_ARC_UTIL_LoadPalette( ARCID_TRAINERCARD, NARC_trainer_case_badge_win_NCLR, &pal_data, HEAPID_TR_CARD );
+    u16* raw_data = pal_data->pRawData;
+    GFL_STD_MemCopy( &raw_data[0],    wk->PalBufferStart, 0x20 );
+    GFL_STD_MemCopy( &raw_data[0x10], wk->PalBufferEnd,   0x20 );
+    GFL_HEAP_FreeMemory( buf );
+  }
 }
-
-
 
 //----------------------------------------------------------------------------------
 /**
@@ -1043,16 +1095,16 @@ static void BgGraphicInit(BADGEVIEW_WORK *wk)
 //----------------------------------------------------------------------------------
 static void BgGraphicExit( BADGEVIEW_WORK *wk )
 {
-  int i;
+//  int i;
   
   // リーダー顔グラ用パレットデータ解放
-  for(i=0;i<LEADER_PAL_NUM;i++){
-    GFL_HEAP_FreeMemory(  wk->leaderPalBuf[i] );
-  }
+//  for(i=0;i<LEADER_PAL_NUM;i++){
+//    GFL_HEAP_FreeMemory(  wk->leaderPalBuf[i] );
+//  }
   // OBJパレット解放
-  for(i=0;i<BADGE_POLISH_PAL_NUM;i++){
-   GFL_HEAP_FreeMemory( wk->badgePalBuf[i] );
-  }
+//  for(i=0;i<BADGE_POLISH_PAL_NUM;i++){
+//   GFL_HEAP_FreeMemory( wk->badgePalBuf[i] );
+//  }
   
   // パレット開放
   GFL_HEAP_FreeMemory( wk->FacePalBuf );
@@ -1377,7 +1429,7 @@ static const GFL_G3D_UTIL_SETUP setup[] =
   { res_table_gymleader, NELEMS(res_table_gymleader), obj_table_gymleader, NELEMS(obj_table_gymleader) },
 };
 
-#endif
+#endif	// 旧モデル
 
 #define SETUP_INDEX_MAX          ( 1 )
 
@@ -1558,8 +1610,7 @@ typedef struct{
 
 
 static const BMPWIN_DAT bmpwin_info_dat = {
-//  BV_BGFRAME_D_WIN, 1, 1, 30, 9, 15, 0,		// 上
-  BV_BGFRAME_D_MSG, 1, 1, 30, 9, 15, 0,		// 上
+  BV_BGFRAME_D_MSG, 1, 1, 30, 9, 15, 0,		// 下画面メッセージwin
 };
 
 //----------------------------------------------------------------------------------
@@ -1581,9 +1632,7 @@ static void BmpWinInit(BADGEVIEW_WORK *wk)
                                    windat->x, windat->y,
                                    windat->w, windat->h,
                                    windat->pal, GFL_BMP_CHRAREA_GET_B );
-//  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->InfoWin), 0x0f0f );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->InfoWin), 0 );
-
 }
 
 //----------------------------------------------------------------------------------
@@ -1613,7 +1662,7 @@ static void BmpWinExit(BADGEVIEW_WORK *wk)
 //----------------------------------------------------------------------------------
 static void bmpwin_visible( BADGEVIEW_WORK *wk, const BOOL bflg )
 {
-	// サブ画面のWIN非表示
+	// サブ画面のWIN(Msg)非表示
 	GFL_BG_SetVisible( BV_BGFRAME_D_WIN, bflg );
 	GFL_BG_SetVisible( BV_BGFRAME_D_MSG, bflg );
 }
@@ -2342,6 +2391,7 @@ static int TouchBar_KeyControl( BADGEVIEW_WORK *wk )
  * @retval  int   0-7
  */
 //----------------------------------------------------------------------------------
+#if 0	// 保留(未使用)
 static int _get_front_gymreader( int frame )
 {
   int i;
@@ -2356,6 +2406,8 @@ static int _get_front_gymreader( int frame )
   
   return i;
 }
+
+#endif	// 保留(未使用)
 
 
 //----------------------------------------------------------------------------------
@@ -2393,19 +2445,20 @@ static void ExecFunc( BADGEVIEW_WORK *wk, int trg, BOOL keyflag )
         if(wk->Mode != MODE_BADGE){
           flg=1;
         }
-        // 初めてのときはスクロール
+        // 初めての時だけ処理
         if(flg == 1){
+          // スクロールイン開始
           bv_init_bgscroll( wk, MODE_UPDOWN );
           bv_set_cutin_visible( wk, TRUE );
           bv_set_model_visible( wk, TRUE );
         }
         bmpwin_visible( wk, TRUE );
-//        PMSND_PlaySE( SEQ_SE_SYS_32 );
         // ページ番号を保存
         wk->PageNum = trg-TOUCH_BADGE_0;
         wk->TypeNum = INFO_TYPE_BADGE;
-        // 続きのときだけ
+        // 続きのときだけの処理
         if(flg == 0){
+          // ウインドウメッセージ切り替え
           InfoWinPrint( wk, INFO_TYPE_BADGE, trg-TOUCH_BADGE_0, 0 );
           InfoWinPut( wk );
           // 音階(スクロールの音と重複させないため)
@@ -2437,14 +2490,14 @@ static void ExecFunc( BADGEVIEW_WORK *wk, int trg, BOOL keyflag )
       {
 //        int pos = _get_front_gymreader(wk->animeFrame);
         int pos = 0;
-//        PMSND_PlaySE( SEQ_SE_SYS_31 );
-        // 追加
+        //
         flg = 0;
         if(wk->Mode != MODE_LEADER){
           flg = 1;
         }
-        // 初めてのときだけスクロール
+        // 初めてのときだけ処理
         if(flg == 1){
+          // スクロールイン開始
           bv_init_bgscroll( wk, MODE_DOWNUP );
           bv_set_cutin_visible( wk, TRUE );
           bv_set_model_visible( wk, TRUE );
@@ -2510,8 +2563,8 @@ static void ExecFunc( BADGEVIEW_WORK *wk, int trg, BOOL keyflag )
     else{
       // トップに戻る
       if(!(wk->Flag & FLG_CANCEL_OFF)){
-//        PMSND_PlaySE( SND_TRCARD_CANCEL );
         GFL_CLACT_WK_SetAnmSeq( wk->clwk[BV_OBJ_RETURN], 9 );
+        //
         // BGのスクロール処理
         num = MODE_UPDOWN_REV;
         if(wk->Mode == MODE_LEADER){
@@ -2644,6 +2697,7 @@ static void _page_clact_set( BADGEVIEW_WORK *wk, int page, int max )
  * @retval  int   
  */
 //----------------------------------------------------------------------------------
+#if 0	// 保留(未使用)
 static int _page_move_check( BADGEVIEW_WORK *wk, int touch )
 {
   int result=FALSE;
@@ -2666,6 +2720,7 @@ static int _page_move_check( BADGEVIEW_WORK *wk, int touch )
   return result;
 }
 
+#endif	// 保留(未使用)
 
 //----------------------------------------------------------------------------------
 /**
@@ -2711,6 +2766,7 @@ static void SetupPage( BADGEVIEW_WORK *wk, int page )
  * @retval  int   
  */
 //----------------------------------------------------------------------------------
+#if 0	// 保留(未使用)
 static int _get_print_num( int page, int max, int trainer_num )
 {
 
@@ -2725,7 +2781,7 @@ static int _get_print_num( int page, int max, int trainer_num )
   return num;
 }
 
-
+#endif	// 保留(未使用)
 
 
 //----------------------------------------------------------------------------------
@@ -2830,6 +2886,7 @@ static void RefreshPolishData( BADGEVIEW_WORK *wk )
  * @param   grade   
  */
 //----------------------------------------------------------------------------------
+#if 0	// 保留
 static void _trans_badge_pal( BADGEVIEW_WORK *wk, int no, int grade )
 {
   int index;
@@ -2845,21 +2902,8 @@ static void _trans_badge_pal( BADGEVIEW_WORK *wk, int no, int grade )
   index = no*16;
   
   GX_LoadOBJPltt( &buf[index], 32*no, 32);
-  
 }
-
-
-// ジムリーダーのパレットテーブルは0-7行の他にもう１行追加してある。
-// ８番目のジムリーダーB/Wで違うトレーナーになるので、
-// BLACKバージョンの場合は９列のパレットを適用する。
-static const pal_leader_table[] = {
-#if PM_VERSION == VERSION_B2
-  0,1,2,3,4,5,6,8,
-#else
-  0,1,2,3,4,5,6,7,
-#endif
-
-};
+#endif	// 保留
 
 
 //----------------------------------------------------------------------------------
@@ -2871,6 +2915,20 @@ static const pal_leader_table[] = {
  * @param   grade   
  */
 //----------------------------------------------------------------------------------
+#if 0	// 保留
+
+// ジムリーダーのパレットテーブルは0-7行の他にもう１行追加してある。
+// ８番目のジムリーダーB/Wで違うトレーナーになるので、
+// BLACKバージョンの場合は９列のパレットを適用する。
+static const pal_leader_table[] = {
+#if PM_VERSION == VERSION_B2
+  0,1,2,3,4,5,6,8,
+#else
+  0,1,2,3,4,5,6,7,
+#endif
+};
+
+
 static void _trans_gymleader_pal( BADGEVIEW_WORK *wk, int no, int grade )
 {
   const GFL_G3D_RES  *mdl_res;
@@ -2897,6 +2955,7 @@ static void _trans_gymleader_pal( BADGEVIEW_WORK *wk, int no, int grade )
                                       &pal[pal_leader_table[no]*16], 32);
 
 }
+#endif	// 保留
 
 //----------------------------------------------------------------------------------
 /**
@@ -2907,6 +2966,7 @@ static void _trans_gymleader_pal( BADGEVIEW_WORK *wk, int no, int grade )
  * @param   grade 
  */
 //----------------------------------------------------------------------------------
+#if 0	// 保留(未使用)
 static void _set_clact_visible( BADGEVIEW_WORK *wk, int no, int grade )
 {
   int num = grade-BADGE_POLISH_PAL_NUM;
@@ -2928,6 +2988,7 @@ static void _set_clact_visible( BADGEVIEW_WORK *wk, int no, int grade )
   }
 }
 
+#endif	// 保留(未使用)
 
 
 //----------------------------------------------------------------------------------
@@ -2937,6 +2998,7 @@ static void _set_clact_visible( BADGEVIEW_WORK *wk, int no, int grade )
  * @param   wk    
  */
 //----------------------------------------------------------------------------------
+#if 0	// 保留(未使用)
 static void Trans_BadgePalette( BADGEVIEW_WORK *wk )
 {
   int i;
@@ -2956,9 +3018,9 @@ static void Trans_BadgePalette( BADGEVIEW_WORK *wk )
     
     // 変更が掛かっていた場合はパレット転送キラキラOBJ表示制御を行う
     if(wk->badge.grade[i]!=wk->badge.old_grade[i]){
-      _trans_badge_pal( wk, i, wk->badge.grade[i] );
-      _trans_gymleader_pal( wk, i, wk->badge.grade[i] );
-      _set_clact_visible( wk, i, wk->badge.grade[i] );
+//      _trans_badge_pal( wk, i, wk->badge.grade[i] );
+//      _trans_gymleader_pal( wk, i, wk->badge.grade[i] );
+//      _set_clact_visible( wk, i, wk->badge.grade[i] );
     }
     wk->badge.old_grade[i] = wk->badge.grade[i];
   }
@@ -2972,6 +3034,8 @@ static void Trans_BadgePalette( BADGEVIEW_WORK *wk )
   }
 #endif
 }
+
+#endif	// 保留(未使用)
 
 
 #define MIN_SCRUCH  (3)
@@ -2988,6 +3052,7 @@ static void Trans_BadgePalette( BADGEVIEW_WORK *wk )
  * @param   polish    
  */
 //----------------------------------------------------------------------------------
+#if 0	// 保留(未使用)
 static void _play_scratch_se( SCRATCH_WORK *sc, int polish )
 {
   if(sc->wait==0){
@@ -3001,6 +3066,7 @@ static void _play_scratch_se( SCRATCH_WORK *sc, int polish )
     sc->wait--;
   }
 }
+#endif	// 保留(未使用)
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -3011,11 +3077,13 @@ static void _play_scratch_se( SCRATCH_WORK *sc, int polish )
  * @return  none  
  */
 //--------------------------------------------------------------------------------------------
+#if 0	// 保留(未使用)
 static void ClearScratchSndNow( SCRATCH_WORK *sc )
 {
   sc->DirX = 0;
   sc->DirY = 0;
 }
+#endif	// 保留(未使用)
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -3026,6 +3094,7 @@ static void ClearScratchSndNow( SCRATCH_WORK *sc )
  * @return  none  
  */
 //--------------------------------------------------------------------------------------------
+#if 0	// 保留(未使用)
 static void ClearScratchSnd( SCRATCH_WORK *sc )
 {
   sc->OldDirX = 0;
@@ -3035,7 +3104,6 @@ static void ClearScratchSnd( SCRATCH_WORK *sc )
   sc->Snd = 0;
 }
 
-
 static void _badge_polish_up( BADGEVIEW_WORK *wk, int no )
 {
   if(wk->badge.polish[no]<(BADGE_POLISH_RATE*6-1)){
@@ -3043,6 +3111,8 @@ static void _badge_polish_up( BADGEVIEW_WORK *wk, int no )
   }
   
 }
+
+#endif	// 保留(未使用)
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -3053,6 +3123,7 @@ static void _badge_polish_up( BADGEVIEW_WORK *wk, int no )
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
+#if 0	// 保留(未使用)
 static void BrushBadge( BADGEVIEW_WORK *wk, u32 touch )
 {
   BOOL scruch=FALSE;
@@ -3123,6 +3194,7 @@ static void BrushBadge( BADGEVIEW_WORK *wk, u32 touch )
   wk->scratch.BeforeY = tp_y;
 }
 
+#endif	// 保留(未使用)
 
 //----------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------
@@ -3242,6 +3314,9 @@ static void bv_main_loop( BADGEVIEW_WORK* wk )
 	
 	// スクロール関連
 	bv_main_scroll( wk );
+	//
+	// パレットチェンジ
+	bv_main_chgpal( wk );
 }
 
 //-----------------------------------------------------------------------------
@@ -3254,32 +3329,14 @@ static void bv_main_loop( BADGEVIEW_WORK* wk )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-// 移動のテーブル(開始、終了、step、spd)(win)
-static const s16 bv_scr_tbl[] = {
-    128,   0, STEP_LV1, SPD_WIN_IN,		// 上から下
-   -208, -80, STEP_LV1, SPD_WIN_IN,		// 下から上
-      0, 128, STEP_LV2, SPD_WIN_OUT,	// 上から下(戻)
-    -80,-208, STEP_LV2, SPD_WIN_OUT,	// 下から上(戻)
-};
-
-// 移動のテーブル(開始、終了、0、spd)(カットイン)
-static const s16 bv_scr_cutin_tbl[] = {
-   -128,   0, 0, SPD_CUTIN,				// 外から中
-	  0,-128, 0, SPD_CUTOUT,			// 中から外
-};
-
-// 移動のテーブル(開始、終了、0、spd)(モデル:桁注意)
-static const s16 bv_scr_model_tbl[] = {
- -0x300,-0x100, 0, SPD_CUTIN,			// 外から中
- -0x100,-0x300, 0, SPD_CUTOUT,			// 中から外
-};
-
 static void bv_init_bgscroll( BADGEVIEW_WORK* wk, const s32 mode )
 {
 	s16		tmp;
 	s32		buf[4];
 	//
-	// スクロール
+	//-----------------
+	// スクロール(win)
+	//-----------------
 	buf[0] = bv_scr_tbl[4*mode];
 	buf[1] = bv_scr_tbl[4*mode+1];
 	buf[2] = bv_scr_tbl[4*mode+3];
@@ -3291,7 +3348,9 @@ static void bv_init_bgscroll( BADGEVIEW_WORK* wk, const s32 mode )
 	// step
 	wk->Step = bv_scr_tbl[4*mode+2];
 	//
-	// カットインもここに記述
+	//-------------
+	// カットイン
+	//-------------
 	tmp = mode/2;
 	buf[0] = bv_scr_cutin_tbl[4*tmp];
 	buf[1] = bv_scr_cutin_tbl[4*tmp+1];
@@ -3301,7 +3360,9 @@ static void bv_init_bgscroll( BADGEVIEW_WORK* wk, const s32 mode )
 	wk->BgOffX = buf[0];
 	GFL_BG_SetScroll( BV_BGFRAME_U_CUTIN, GFL_BG_SCROLL_X_SET, wk->BgOffX );
 	//
-	// モデルもここに記述
+	//------------
+	// モデル
+	//------------
 	tmp = mode/2;
 	buf[0] = bv_scr_model_tbl[4*tmp];
 	buf[1] = bv_scr_model_tbl[4*tmp+1];
@@ -3342,6 +3403,8 @@ static void bv_main_scroll( BADGEVIEW_WORK* wk )
 			bv_set_btn_visible( wk, BUTTON_CARD, FALSE );
 			bv_set_btn_visible( wk, BUTTON_END,  FALSE );
 			bv_set_btn_visible( wk, BUTTON_BOOKMARK,  FALSE );
+			// パレットチェンジ初期化
+			bv_init_chgpal( wk );
 			// se(スライドイン)
 			PMSND_PlaySE( SND_TRBADGE_SLIDE_IN );
 			break;
@@ -3355,6 +3418,7 @@ static void bv_main_scroll( BADGEVIEW_WORK* wk )
 			// カットインも流用
 			wk->BgOffX = bv_main_movework( wk, MWORK_CUTIN );
 			// モデルも流用
+			// 値が大きいのでシフトして使用
 			tx = bv_main_movework( wk, MWORK_MODEL );
 			wk->Status.trans.x = (tx<<8);
 			//
@@ -3365,6 +3429,8 @@ static void bv_main_scroll( BADGEVIEW_WORK* wk )
 			// 転送
 			InfoWinPrint( wk, wk->TypeNum, wk->PageNum, 0 );
 			InfoWinPut( wk );
+			// パレットチェンジ開始
+			bv_set_chgpal( wk, TRUE );
 			wk->Flag |= FLG_END_BGOFFSET;
 			wk->Step = STEP_END;
 			break;
@@ -3389,6 +3455,7 @@ static void bv_main_scroll( BADGEVIEW_WORK* wk )
 			// カットインも流用
 			wk->BgOffX = bv_main_movework( wk, MWORK_CUTIN );
 			// モデルも流用
+			// 値が大きいのでシフトして使用
 			tx = bv_main_movework( wk, MWORK_MODEL );
 			wk->Status.trans.x = (tx<<8);
 			break;
@@ -3396,7 +3463,6 @@ static void bv_main_scroll( BADGEVIEW_WORK* wk )
 		// BGスクロール終了
 		case STEP_LV2+20:
 			// 描画領域クリア
-//			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->InfoWin), 0x0f0f );
 			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->InfoWin), 0 );
 			InfoWinPut( wk );
 			bmpwin_visible( wk, FALSE );
@@ -3411,6 +3477,8 @@ static void bv_main_scroll( BADGEVIEW_WORK* wk )
 			bv_set_btn_visible( wk, BUTTON_END,  TRUE );
 			bv_set_btn_visible( wk, BUTTON_BOOKMARK,  TRUE );
 			//
+			// パレットチェンジ開始
+			bv_set_chgpal( wk, FALSE );
 			wk->Flag |= FLG_END_BGOFFSET;
 			wk->Step = STEP_END;
 			break;
@@ -3587,7 +3655,7 @@ static void bv_chk_leader( BADGEVIEW_WORK* wk )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  バッジの音
+ *	@brief  バッジの音(音階)
  *
  *	@param	BADGEVIEW_WORK* wk
  *	@param	const s32		(0-7)
@@ -3676,6 +3744,7 @@ static void bv_init_cutin( BADGEVIEW_WORK* wk, const s32 cnum )
 										  BV_BGFRAME_U_CUTIN, CUTIN_CHR_OFFSET, CUTIN_CHR_SIZE, TRUE, HEAPID_TR_CARD );
 	// スクリーンはデータ(scn)で持つようにした
 	// 計算で処理してもよいが、複雑になりそうなのでこの方法とした
+	// ただ、メモリをallocしなくてもよいので足りない場合はこれを再度試す
 	// handleに注意(ARCID_ENC_CI_FACEではない)
 //	GFL_ARCHDL_UTIL_TransVramScreen(      wk->g_handle, NARC_trainer_case_cutin00_NSCR,
 //										  BV_BGFRAME_U_CUTIN, 0, 0, FALSE, HEAPID_TR_CARD );
@@ -3684,16 +3753,16 @@ static void bv_init_cutin( BADGEVIEW_WORK* wk, const s32 cnum )
 	
 	// パレット
 	GFL_ARCHDL_UTIL_TransVramPalette(     handle, dat->PltArcIdx,
-										  PALTYPE_BG_UP, PAL_CUTIN_BG*0x20, CUTIN_PAL_SIZE*0x20, HEAPID_TR_CARD );
+										  PALTYPE_BG_UP, PAL_UP_CUTIN_BG*0x20, CUTIN_PAL_SIZE*0x20, HEAPID_TR_CARD );
 	GFL_ARC_CloseDataHandle( handle );
 	
 	// スクリーンのパレットを合わせる
 	// (毎回は転送しなくてもよいはず)
 	// =>(しばらく残し)
 	// 上半身(128x128)
-//	GFL_BG_ChangeScreenPalette( BV_BGFRAME_U_CUTIN, CUTIN_SCR_X0, CUTIN_SCR_Y0, CUTIN_SCR_W0, CUTIN_SCR_H0, PAL_CUTIN_BG   );
+//	GFL_BG_ChangeScreenPalette( BV_BGFRAME_U_CUTIN, CUTIN_SCR_X0, CUTIN_SCR_Y0, CUTIN_SCR_W0, CUTIN_SCR_H0, PAL_UP_CUTIN_BG   );
 	// 下半身(128x64)(pal+1)
-//	GFL_BG_ChangeScreenPalette( BV_BGFRAME_U_CUTIN, CUTIN_SCR_X1, CUTIN_SCR_Y1, CUTIN_SCR_W1, CUTIN_SCR_H1, PAL_CUTIN_BG+1 );
+//	GFL_BG_ChangeScreenPalette( BV_BGFRAME_U_CUTIN, CUTIN_SCR_X1, CUTIN_SCR_Y1, CUTIN_SCR_W1, CUTIN_SCR_H1, PAL_UP_CUTIN_BG+1 );
 //	GFL_BG_LoadScreenReq( BV_BGFRAME_U_CUTIN );
 }
 
@@ -3707,17 +3776,6 @@ static void bv_init_cutin( BADGEVIEW_WORK* wk, const s32 cnum )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static const s16 bv_cutin_tbl[] = {
-	ENC_CUTIN_GYM1A,		// 0
-	ENC_CUTIN_GYM2,			// 1
-	ENC_CUTIN_GYM3,			// 2
-	ENC_CUTIN_GYM4,			// 3
-	ENC_CUTIN_GYM5,			// 4
-	ENC_CUTIN_GYM6,			// 5
-	ENC_CUTIN_GYM7,			// 6
-	ENC_CUTIN_GYM8A,		// 7
-};
-
 static void bv_chg_cutin( BADGEVIEW_WORK* wk, const s32 num )
 {
 	// カットイン
@@ -3770,15 +3828,15 @@ static void bv_make_cutin_scr( BADGEVIEW_WORK *wk )
 	GFL_BG_LoadScreenBuffer( BV_BGFRAME_U_CUTIN, wk->MemAdr, sizeof(u16)*CUTIN_SCR_MEMSIZE );
 	// スクリーンのパレットを合わせる
 	// 上半身(128x128)
-	GFL_BG_ChangeScreenPalette( BV_BGFRAME_U_CUTIN, CUTIN_SCR_X0, CUTIN_SCR_Y0, CUTIN_SCR_W0, CUTIN_SCR_H0, PAL_CUTIN_BG   );
+	GFL_BG_ChangeScreenPalette( BV_BGFRAME_U_CUTIN, CUTIN_SCR_X0, CUTIN_SCR_Y0, CUTIN_SCR_W0, CUTIN_SCR_H0, PAL_UP_CUTIN_BG   );
 	// 下半身(128x64)(pal+1)
-	GFL_BG_ChangeScreenPalette( BV_BGFRAME_U_CUTIN, CUTIN_SCR_X1, CUTIN_SCR_Y1, CUTIN_SCR_W1, CUTIN_SCR_H1, PAL_CUTIN_BG+1 );
+	GFL_BG_ChangeScreenPalette( BV_BGFRAME_U_CUTIN, CUTIN_SCR_X1, CUTIN_SCR_Y1, CUTIN_SCR_W1, CUTIN_SCR_H1, PAL_UP_CUTIN_BG+1 );
 	GFL_BG_LoadScreenReq( BV_BGFRAME_U_CUTIN );
 }
 
 //----------------------------------------------------------------------------------
 /**
- * @brief	モデル表示(回転)
+ * @brief	モデル表示(回転)(要確認)
  *
  * @param	BADGEVIEW_WORK*	wk
  *
@@ -3816,12 +3874,99 @@ static void bv_rot_model( BADGEVIEW_WORK *wk )
 //----------------------------------------------------------------------------------
 static void bv_set_model_visible( BADGEVIEW_WORK *wk, const BOOL bflg )
 {
+	// モデルの表示/非表示は単純にdrawを通さなければよいらしい
 	if(bflg == TRUE){		// 表示
 		wk->Flag |= FLG_MODEL_DISP;
 	}else{					// 非表示
 		wk->Flag &= ~FLG_MODEL_DISP;
 	}
 }
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	パレットチェンジ初期化
+ *
+ * @param	BADGEVIEW_WORK*	wk
+ *
+ * @retval
+ */
+//----------------------------------------------------------------------------------
+static void bv_init_chgpal( BADGEVIEW_WORK *wk )
+{
+	// この値程度がちょうどいいらしい
+	wk->PCount = 0x8000;
+	// 初期パレット転送
+	NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_SUB , PAL_DOWN_SYSWIN_BG*0x20, wk->PalBufferStart, 0x20 );
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	パレットチェンジ(毎フレーム:zukan_detail_touchbar.c参考)
+ *
+ * @param	BADGEVIEW_WORK*	wk
+ *
+ * @retval
+ */
+//----------------------------------------------------------------------------------
+static void bv_main_chgpal( BADGEVIEW_WORK *wk )
+{
+	u8			cbuf[10];
+	s32			i;
+	fx16		cos;
+	
+	// 変更中かどうか
+	if(!(wk->Flag & FLG_PALCHG_ON)){
+		return;
+	}
+	
+	// 加算(0 .. 1.0)にするようだ
+	wk->PCount += PCHG_ANIM_ADD;
+	if(wk->PCount >= 0x10000){
+		wk->PCount -= 0x10000;
+	}
+	cos = ( FX_CosIdx(wk->PCount) + FX16_ONE )/2;
+	//
+	// カラーの計算
+	for(i=0;i<16;i++){
+		// 開始
+		cbuf[0] = ( wk->PalBufferStart[i] & GX_RGB_R_MASK ) >> GX_RGB_R_SHIFT;
+		cbuf[1] = ( wk->PalBufferStart[i] & GX_RGB_G_MASK ) >> GX_RGB_G_SHIFT;
+		cbuf[2] = ( wk->PalBufferStart[i] & GX_RGB_B_MASK ) >> GX_RGB_B_SHIFT;
+		// 終了
+		cbuf[3] = ( wk->PalBufferEnd[i]   & GX_RGB_R_MASK ) >> GX_RGB_R_SHIFT;
+		cbuf[4] = ( wk->PalBufferEnd[i]   & GX_RGB_G_MASK ) >> GX_RGB_G_SHIFT;
+		cbuf[5] = ( wk->PalBufferEnd[i]   & GX_RGB_B_MASK ) >> GX_RGB_B_SHIFT;
+		// RGBを求める
+		cbuf[6] = cbuf[0] + (((cbuf[3]-cbuf[0])*cos)>>FX16_SHIFT);
+		cbuf[7] = cbuf[1] + (((cbuf[4]-cbuf[1])*cos)>>FX16_SHIFT);
+		cbuf[8] = cbuf[2] + (((cbuf[5]-cbuf[2])*cos)>>FX16_SHIFT);
+		//
+		wk->PalBufferNow[i] = GX_RGB( cbuf[6], cbuf[7], cbuf[8] );
+	}
+	// 下画面(とりあえず決めうち)
+	NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_SUB , PAL_DOWN_SYSWIN_BG*0x20, wk->PalBufferNow, 0x20 );
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	パレットチェンジ
+ *
+ * @param	BADGEVIEW_WORK*	wk
+ * @param	const BOOL		(TRUE:開始、FALSE:終了)
+ *
+ * @retval
+ */
+//----------------------------------------------------------------------------------
+static void bv_set_chgpal( BADGEVIEW_WORK *wk, const BOOL bflg )
+{
+	if(bflg == TRUE){	// 開始
+		wk->Flag |= FLG_PALCHG_ON;
+	}else{				// 終了
+		wk->Flag &= ~FLG_PALCHG_ON;
+	}
+}
+
+
 
 
 //----------------------------------------------------------------------------------
@@ -3845,6 +3990,16 @@ static void bv_set_model_visible( BADGEVIEW_WORK *wk, const BOOL bflg )
 // デバッグ用
 //----------------------------------------------------------------------------------
 #ifdef PM_DEBUG
+
+
+// 残りメモリサイズ(HEAPID_TR_CARD)
+static void bv_disp_memsize( BADGEVIEW_WORK *wk )
+{
+	u32		size;
+	
+	size = GFL_HEAP_GetHeapFreeSize( HEAPID_TR_CARD );
+	OS_Printf("free size : 0x%x\n",size);
+}
 
 
   // デバッグ用データセット
