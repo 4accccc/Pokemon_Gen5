@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 #※コンバートを行う人のユーザーIDをここに書く
 #------------------------------------------------------------------------------
-USERS	= obata_toshihiro nakatsui kageyama_shota ichinose satou nagihashi_toru
+USERS	= obata_toshihiro nakatsui kageyama_shota ichinose satou nagihashi_toru ichiraku_katsuhiko
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
@@ -31,6 +31,7 @@ ICACONV     = ..\..\..\..\tools\ica\ica_converter.rb
 XLSCONV     = ../../../tools/exceltool/xls2xml/tab_out.rb
 BIN         = ./bin
 CONVERTDATA = $(BIN)/*.bin
+SOUND_DATA  = ../../../prog/include/sound/swan_sound_data.sadl
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # サフィックスルールを定義することで 依存関係を自動で判断してくれる
@@ -49,7 +50,7 @@ subdir:
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # タブ区切り
-switch.txt: switch.xls
+switch.txt: switch.xls $(SOUND_DATA)
 	ruby $(XLSCONV) $< > $@
 endif
 
