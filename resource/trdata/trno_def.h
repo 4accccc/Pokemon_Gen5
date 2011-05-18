@@ -702,7 +702,7 @@
 #define	TRID_GENTLE_05   ( 689 ) 
 #define	TRID_HEADS_06   ( 690 ) 
 #define	TRID_GUITARW_01   ( 691 ) 
-#define	TRID_TANPAN_21   ( 692 ) 
+#define	TRID_TANPAN_20   ( 692 ) 
 #define	TRID_MINI_16   ( 693 ) 
 #define	TRID_CLEANING_03   ( 694 ) 
 #define	TRID_BREEDERM_1_01   ( 695 ) 
@@ -808,7 +808,7 @@
 #define	TRID_PARASOL_09   ( 795 ) 
 #define	TRID_PARASOL_10   ( 796 ) 
 #define	TRID_MINI_17   ( 797 ) 
-#define	TRID_TANPAN_20   ( 798 ) 
+#define	TRID_TANPAN_21   ( 798 ) 
 #define	TRID_CHILDCARE_06   ( 799 ) 
 #define	TRID_KINDERGARTENM_07   ( 800 ) 
 #define	TRID_KINDERGARTENW_07   ( 801 ) 
@@ -822,7 +822,8 @@
 #define	TRID_KARATE_13   ( 809 ) 
 #define	TRID_BATTLEG_13   ( 810 ) 
 #define	TRID_FISHING_15   ( 811 ) 
-#define TRID_MAX  ( 812 )
+#define	TRID_TANPAN_22   ( 812 ) 
+#define TRID_MAX  ( 813 )
 
 #ifndef __ASM_NO_DEF_  //Ç±ÇÍà»ç~ÇÕÉAÉZÉìÉuÉâÇ≈ÇÕñ≥éã
 typedef  int TrainerID;
