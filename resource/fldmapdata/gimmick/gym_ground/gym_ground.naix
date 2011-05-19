@@ -4,21 +4,26 @@
 
 	This file was created by NINTENDO TWL-System Archiver.
 
-	Update:2011-02-22T11:25:40
+	Update:2011-05-18T18:27:24
  *****************************************************************************/
 
 #ifndef NARC_GYM_GROUND_NAIX_
 #define NARC_GYM_GROUND_NAIX_
 
 enum {
-	NARC_gym_ground_rif_anim01_nsbmd = 0,
-	NARC_gym_ground_mainrif_anim01_nsbmd = 1,
-	NARC_gym_ground_kakuheki_anim01_nsbmd = 2,
-	NARC_gym_ground_rif_anim01_nsbta = 3,
-	NARC_gym_ground_rif_anim02_nsbta = 4,
-	NARC_gym_ground_mainrif_anim01_nsbta = 5,
-	NARC_gym_ground_mainrif_anim02_nsbta = 6,
-	NARC_gym_ground_kakuheki_anim01_nsbca = 7
+	NARC_gym_ground_belt_01_tate_nsbmd = 0,
+	NARC_gym_ground_belt_01_yoko_nsbmd = 1,
+	NARC_gym_ground_belt_02_tate_nsbmd = 2,
+	NARC_gym_ground_belt_02_yoko_nsbmd = 3,
+	NARC_gym_ground_belt_anim01_nsbta = 4,
+	NARC_gym_ground_lift_entrance01_nsbmd = 5,
+	NARC_gym_ground_lift_entrance01_nsbta = 6,
+	NARC_gym_ground_lift_lightup01_nsbmd = 7,
+	NARC_gym_ground_lift_lightup01_nsbca = 8,
+	NARC_gym_ground_lift_work01_nsbmd = 9,
+	NARC_gym_ground_lift_work01_nsbta = 10,
+	NARC_gym_ground_lift_yacon01_nsbmd = 11,
+	NARC_gym_ground_lift_yacon01_nsbta = 12
 };
 
 /* NARC_GYM_GROUND_NAIX_ */

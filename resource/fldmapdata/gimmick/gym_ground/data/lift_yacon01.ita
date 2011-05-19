@@ -3,9 +3,9 @@
 <ita version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2010-06-09T15:17:01" source="mainrif_anim01.mb"/>
+	<create user="fuchino_hiroki" host="W00252" date="2011-05-17T18:02:44" source="lift_yacon01.mb"/>
 	<title>Texture SRT Animation Data for NINTENDO NITRO-System</title>
-	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
@@ -16,7 +16,7 @@
 	tool_end_frame="10"
 	interpolation="frame"
 	tex_matrix_mode="maya"
-	compress_material="on" material_size="5 5"
+	compress_material="on" material_size="4 4"
 	frame_step_mode="1"
 	tolerance_tex_scale="0.100000"
 	tolerance_tex_rotate="0.100000"
@@ -32,12 +32,12 @@
 </tex_rotate_data>
 
 <tex_translate_data size="12">
-	0.000000 1.000000 1.080078 1.159912 1.239990 1.320068 1.399902 1.479980 1.560059 1.639893
-	1.719971 1.800049
+	0.000000 0.000000 -0.142578 -0.285156 -0.350098 -0.336670 -0.301025 -0.249023 -0.186768 -0.120361
+	-0.056152 0.000000
 </tex_translate_data>
 
 <tex_srt_anm_array size="1">
-	<tex_srt_anm index="0" material_name="in27_rft01">
+	<tex_srt_anm index="0" material_name="in27_rft05">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
