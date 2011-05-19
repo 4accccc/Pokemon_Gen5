@@ -828,6 +828,7 @@ _EVENT_DATA ev_TRID_KARATE_13
 _EVENT_DATA ev_TRID_BATTLEG_13
 _EVENT_DATA ev_TRID_FISHING_15
 _EVENT_DATA ev_TRID_TANPAN_22
+_EVENT_DATA ev_TRID_BACKPACKERM_20
 _EVENT_DATA ev_TRID_MAX
 _EVENT_DATA ev_trainer_talk_battle
 _EVENT_DATA ev_trainer_move_battle
@@ -1646,6 +1647,7 @@ ev_TRID_KARATE_13:
 ev_TRID_BATTLEG_13:
 ev_TRID_FISHING_15:
 ev_TRID_TANPAN_22:
+ev_TRID_BACKPACKERM_20:
 ev_TRID_MAX:
 
 //----------------------------------------------------------------------
