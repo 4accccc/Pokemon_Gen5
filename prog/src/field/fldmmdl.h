@@ -1169,6 +1169,7 @@ extern void MMDL_UpdateDraw( MMDL * mmdl );
 extern BOOL MMDL_CheckDrawPause( const MMDL * mmdl );
 extern void MMDL_GetDrawVectorPos(
 		const MMDL * mmdl, VecFx32 *vec );
+extern void MMDL_ResetBBDPos( MMDL *mmdl );
 
 //--------------------------------------------------------------
 //	fldmmdl_draw_0.c

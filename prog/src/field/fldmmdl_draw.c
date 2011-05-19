@@ -8,6 +8,7 @@
  */
 //======================================================================
 #include "fldmmdl.h"
+#include "fieldmap.h" //FIELDMAP_GetBbdActYOffs
 
 //======================================================================
 //	define
@@ -143,4 +144,43 @@ void MMDL_GetDrawVectorPos( const MMDL * fmmdl, VecFx32 *vec )
 	vec->x = vec_pos.x + vec_offs.x + vec_out.x + vec_attr.x + vec_ctrl.x;
 	vec->y = vec_pos.y + vec_offs.y + vec_out.y + vec_attr.y + vec_ctrl.y;
 	vec->z = vec_pos.z + vec_offs.z + vec_out.z + vec_attr.z + vec_ctrl.z;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フィールド動作モデル  描画座標を再設定
+ *          動作モデルの座標を取得し、
+ *          ビルボードOBJの転送座標にセットする
+ *
+ *	@param	MMDL *mmdl 
+ */
+//-----------------------------------------------------------------------------
+void MMDL_ResetBBDPos( MMDL *mmdl )
+{
+  VecFx32 pos;
+  GFL_BBDACT_SYS *actSys;
+  u32 actID;      // ビルボードアクターID
+ 
+  actID = MMDL_CallDrawGetProc( mmdl, 0 );
+  
+  if( actID == MMDL_BLACTID_NULL ){ //未登録
+    return;
+  }
+  
+  actSys = MMDL_BLACTCONT_GetBbdActSys( MMDL_GetBlActCont(mmdl) );
+  
+  MMDL_GetDrawVectorPos( mmdl, &pos );
+  
+  // ビルボードOBJ 共通オフセット座標セット 32x32
+#if 1
+  {
+    MMDLSYS *mmdlsys = MMDL_GetMMdlSys( mmdl );
+    FIELDMAP_WORK * fieldmap = MMDLSYS_GetFieldMapWork( mmdlsys );
+    fx32 y_offs = FIELDMAP_GetBbdActYOffs( fieldmap );
+    pos.y += y_offs;
+  }
+#endif
+
+  GFL_BBD_SetObjectTrans( GFL_BBDACT_GetBBDSystem(actSys), actID, &pos );
 }
