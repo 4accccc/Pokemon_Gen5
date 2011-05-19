@@ -119,6 +119,7 @@ static int sub_BadgeWait(TR_CARD_SYS* wk);
 static int sub_MedalInit(TR_CARD_SYS* wk);
 static int sub_MedalWait(TR_CARD_SYS* wk);
 static int _branch_card_app( TR_CARD_SYS* wk, TRCARD_CALL_PARAM *pp );
+static void TRAINERCARD_GetMedalData( SWAN_TR_CARD_DATA *sw_trcard, GAMEDATA *gameData, HEAPID heapId );
 
 
 //------------------------------------------------------------------
@@ -168,9 +169,10 @@ GFL_PROC_RESULT TrCardSysProc_Init( GFL_PROC * proc, int * seq , void *pwk, void
   //データテンポラリ作成
   wk->tcp = GFL_HEAP_AllocClearMemory( wk->heapId , sizeof( TRCARD_CALL_PARAM ) );
   *wk->tcp = *pp;
-  wk->tcp->TrCardData = GFL_HEAP_AllocClearMemory( wk->heapId , sizeof( TR_CARD_DATA ) );
+  wk->tcp->SwanTrCardData = GFL_HEAP_AllocClearMemory( wk->heapId , sizeof( SWAN_TR_CARD_DATA ) );
+  wk->tcp->TrCardData = &wk->tcp->SwanTrCardData->bw_data;
   TRAINERCARD_GetSelfData( wk->tcp->TrCardData , pp->gameData , FALSE, wk->tcp->edit_possible, wk->heapId);
-//  TRAINERCARD_GetMedalData( &wk->MedalInfoParam, pp->gameData, wk->heapId );
+  TRAINERCARD_GetMedalData( wk->tcp->SwanTrCardData, pp->gameData, wk->heapId );
 
   DEBUG_TR_PRINT("pp->mode=%d\n", pp->mode);
 
@@ -508,6 +510,33 @@ static int sub_BadgeWait(TR_CARD_SYS* wk)
 
 //----------------------------------------------------------------------------------
 /**
+ * @brief	【SWAN専用】送信トレーナーカード用メダル情報取得
+ *
+ * @param   sw_trcard	スワントレーナーカードデータ
+ * @param   gameData	GAMEDATA
+ * @param   heapId		HEAPID
+ */
+//----------------------------------------------------------------------------------
+static void TRAINERCARD_GetMedalData( SWAN_TR_CARD_DATA *sw_trcard, GAMEDATA *gameData, HEAPID heapId )
+{
+  u8 year, month, day;
+  MEDALBOX *medalBox = SaveData_GetMedalBox(GAMEDATA_GetSaveControlWork( gameData ));
+  
+  sw_trcard->medal_id      = MEDALBOX_GetPushMedalID( medalBox );
+  sw_trcard->medal_cnt     = MEDALBOX_GetMedalCount( medalBox, FALSE );
+  sw_trcard->medalbox_rank = MEDALBOX_GetMedalBoxRank( medalBox );
+
+  if( sw_trcard->medal_id < MDLID_MAX ){
+    MEDALBOX_GetDate( medalBox, sw_trcard->medal_id, &year, &month, &day );
+    sw_trcard->medal_get_year  = year;
+    sw_trcard->medal_get_month = month;
+    sw_trcard->medal_get_day   = day;
+  }
+  
+}
+
+//----------------------------------------------------------------------------------
+/**
  * @brief メダル詳細画面呼び出し
  *
  * @param   wk    
@@ -526,16 +555,13 @@ static int sub_MedalInit(TR_CARD_SYS* wk)
   wk->MedalInfoParam.parent_heap_id = wk->heapId;
   wk->MedalInfoParam.p_trainer_name = GFL_STR_CreateBuffer( BUFLEN_PERSON_NAME, wk->heapId);
   GFL_STR_SetStringCode(wk->MedalInfoParam.p_trainer_name, wk->tcp->TrCardData->TrainerName);
-  wk->MedalInfoParam.medal_id       = MEDALBOX_GetPushMedalID( medalBox );
-  wk->MedalInfoParam.medal_cnt      = MEDALBOX_GetMedalCount( medalBox, FALSE );
-  wk->MedalInfoParam.box_rank       = MEDALBOX_GetMedalBoxRank( medalBox );
-  {
-    u8 year, month,day;
-    MEDALBOX_GetDate( medalBox, wk->MedalInfoParam.medal_id, &year, &month, &day );
-    wk->MedalInfoParam.get_year       = year;
-    wk->MedalInfoParam.get_month      = month;
-    wk->MedalInfoParam.get_day        = day;
-  }
+  wk->MedalInfoParam.medal_id       = wk->tcp->SwanTrCardData->medal_id;
+  wk->MedalInfoParam.medal_cnt      = wk->tcp->SwanTrCardData->medal_cnt;
+  wk->MedalInfoParam.box_rank       = wk->tcp->SwanTrCardData->medalbox_rank;
+  wk->MedalInfoParam.get_year       = wk->tcp->SwanTrCardData->medal_get_year;
+  wk->MedalInfoParam.get_month      = wk->tcp->SwanTrCardData->medal_get_month;
+  wk->MedalInfoParam.get_day        = wk->tcp->SwanTrCardData->medal_get_day;
+
   GFL_PROC_LOCAL_CallProc( wk->procSys, FS_OVERLAY_ID(medalinfo), 
                            &medalInfo_ProcData, &wk->MedalInfoParam );
   return MEDAL_WAIT;

@@ -120,19 +120,38 @@ typedef struct TR_CARD_DATA_tag
 }TR_CARD_DATA;
 
 //================================================================================
+/**! @typedef SWAN_TR_CARD_DATA
+  *           スワンで追加されるメダルデータを含んだトレーナーカード構造体
+  */
+//================================================================================
+typedef struct{
+  TR_CARD_DATA bw_data;   ///< BWのトレーナーカードデータ
+                          ///< ---------↓スワン用----------
+  u32 medal_id;           ///< お気に入りメダルのID
+  u16 medal_cnt;          ///< メダル取得個数
+  u8  medalbox_rank;      ///< メダルボックスのランク
+  u8  medal_get_year;     ///< お気に入りメダルの取得年
+  u8  medal_get_month;    ///< お気に入りメダルの取得月
+  u8  medal_get_day;      ///< お気に入りメダルの取得日
+  u16 _xor;               ///< スワンカードデータのXOR
+  u16 reached;            ///< スワンカードデータの到着フラグ
+}SWAN_TR_CARD_DATA;
+
+//================================================================================
 /**! @typedef TRCARD_CALL_PARAM
   *           トレーナーカード呼び出しワーク。トレーナーカード画面に
   *           PROC切り替えする際に必要。
   */          
 //================================================================================
 typedef struct TRCARD_CALL_PARAM_tag{
-  TR_CARD_DATA  *TrCardData;    ///< トレーナーカードデータが入っている場合のポインタ(通信中など）
-  GAMEDATA      *gameData;      ///< ゲームデータアクセス用ポインタ
-  BOOL          edit_possible;  ///< 編集可能か？（TRUE:可能・FALSE：不可能）
-  int           value;          ///< リターン値
-  int           next_proc;      ///< トレーナーカード終了時の戻り値
-  int           mode;           ///< ショートカットからの呼び出し( TRCARD_SHORTCUT_NONE,
-                                ///< TRCARD_SHORTCUT_FRONT, TRCARD_SHORTCUT_BACK, TRCARD_SHORTCUT_BADGE )
+  SWAN_TR_CARD_DATA *SwanTrCardData;///< トレーナーカードデータが入っている場合のポインタ(通信中など）
+  TR_CARD_DATA      *TrCardData;    ///< SwanTrCardDataの中のTR_CARD_DATAへのポインタ
+  GAMEDATA          *gameData;      ///< ゲームデータアクセス用ポインタ
+  BOOL              edit_possible;  ///< 編集可能か？（TRUE:可能・FALSE：不可能）
+  int               value;          ///< リターン値
+  int               next_proc;      ///< トレーナーカード終了時の戻り値
+  int               mode;           ///< ショートカットからの呼び出し( TRCARD_SHORTCUT_NONE,
+                                    ///< TRCARD_SHORTCUT_FRONT, TRCARD_SHORTCUT_BACK, TRCARD_SHORTCUT_BADGE )
 }TRCARD_CALL_PARAM;
 
 FS_EXTERN_OVERLAY(trainercard);
