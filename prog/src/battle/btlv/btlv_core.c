@@ -539,6 +539,10 @@ enum
 //----------------------------------------------------------------------------------
 static BOOL CmdProc_SetupDemo( BTLV_CORE* core, int* seq, void* workBuffer )
 {
+  enum {
+    WAZA_CAPTURE_ATTACK = WAZANO_TAIATARI,  //WAZANO_HATAKU,
+    WAZA_CAPTURE_DEFFENCE = WAZANO_NAKIGOE, //WAZANO_NIRAMITUKERU,
+  };
   CAPTURE_DEMO_WORK*  cdw = ( CAPTURE_DEMO_WORK* )workBuffer;
   switch( *seq ){
   case 0:
@@ -606,7 +610,7 @@ static BOOL CmdProc_SetupDemo( BTLV_CORE* core, int* seq, void* workBuffer )
     if( BTLV_SCD_WaitActionSelect( core->scrnD ) != BTL_ACTION_NULL )
     {
       const BTL_POKEPARAM*  pp  = get_btl_pokeparam( core, BTLV_MCSS_POS_AA );
-      BTLV_StartMsgWaza( core, BPP_GetID( pp ), WAZANO_HATAKU );
+      BTLV_StartMsgWaza( core, BPP_GetID( pp ), WAZA_CAPTURE_ATTACK );
       BTLV_SCD_RestartUI( core->scrnD );
       (*seq)++;
     }
@@ -616,7 +620,7 @@ static BOOL CmdProc_SetupDemo( BTLV_CORE* core, int* seq, void* workBuffer )
     {
       if( BTLV_SCD_WaitRestartUI(core->scrnD) )
       {
-        WazaID  waza = WAZANO_HATAKU;
+        WazaID  waza = WAZA_CAPTURE_ATTACK;
         WazaTarget range = WAZADATA_GetParam( waza, WAZAPARAM_TARGET );
 
         BTLV_SCU_StartWazaEffect( core->scrnU, BTLV_MCSS_POS_AA, BTLV_MCSS_POS_BB,
@@ -632,7 +636,7 @@ static BOOL CmdProc_SetupDemo( BTLV_CORE* core, int* seq, void* workBuffer )
       int value = BPP_GetValue( pp, BPP_MAX_HP ) / 6;
 
       BTLV_EFFECT_CalcGaugeHP( BTLV_MCSS_POS_BB, value );
-      BTLV_EFFECT_Damage( BTLV_MCSS_POS_BB, WAZANO_HATAKU );
+      BTLV_EFFECT_Damage( BTLV_MCSS_POS_BB, WAZA_CAPTURE_ATTACK );
       PlaySELocal( core, SEQ_SE_KOUKA_M );
       (*seq)++;
     }
@@ -641,14 +645,14 @@ static BOOL CmdProc_SetupDemo( BTLV_CORE* core, int* seq, void* workBuffer )
     if( BTLV_SCU_WaitWazaDamageAct( core->scrnU ) )
     {
       const BTL_POKEPARAM*  pp  = get_btl_pokeparam( core, BTLV_MCSS_POS_BB );
-      BTLV_StartMsgWaza( core, BPP_GetID( pp ), WAZANO_NIRAMITUKERU );
+      BTLV_StartMsgWaza( core, BPP_GetID( pp ), WAZA_CAPTURE_DEFFENCE );
       (*seq)++;
     }
     break;
   case 9:
     if( BTLV_WaitMsg( core ) )
     {
-      WazaID  waza = WAZANO_NIRAMITUKERU;
+      WazaID  waza = WAZA_CAPTURE_DEFFENCE;
       WazaTarget range = WAZADATA_GetParam( waza, WAZAPARAM_TARGET );
 
       BTLV_SCU_StartWazaEffect( core->scrnU, BTLV_MCSS_POS_BB, BTLV_MCSS_POS_AA,
@@ -668,8 +672,11 @@ static BOOL CmdProc_SetupDemo( BTLV_CORE* core, int* seq, void* workBuffer )
     {
       BTLV_STRPARAM sp;
       const BTL_POKEPARAM*  pp  = get_btl_pokeparam( core, BTLV_MCSS_POS_AA );
-      BTLV_STRPARAM_Setup( &sp, BTL_STRTYPE_SET, BTL_STRID_SET_Rankdown_DEF );
+      //BTLV_STRPARAM_Setup( &sp, BTL_STRTYPE_SET, BTL_STRID_SET_Rankdown_DEF );
+      BTLV_STRPARAM_Setup( &sp, BTL_STRTYPE_SET, BTL_STRID_SET_Rankdown_ATK );
       BTLV_STRPARAM_AddArg( &sp, BPP_GetID( pp ) );
+      BTLV_STRPARAM_AddArg( &sp, WAZA_RANKEFF_ATTACK );
+      BTLV_STRPARAM_AddArg( &sp, 0 );
       BTLV_STRPARAM_SetWait( &sp, 0 );
       BTLV_StartMsg( core, &sp );
       (*seq)++;

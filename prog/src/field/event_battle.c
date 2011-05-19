@@ -637,8 +637,8 @@ GMEVENT * EVENT_CaptureDemoBattle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, 
     POKEMON_PARAM* pp = GFL_HEAP_AllocClearMemory( tmpHeapID, POKETOOL_GetWorkSize() );
 
     PP_Setup( pp, MONSNO_YOOTERII, 5, 0 );
-    PP_Put( pp, ID_PARA_waza1, WAZANO_NIRAMITUKERU );
-    PP_Put( pp, ID_PARA_waza2, WAZANO_TAIATARI );
+    PP_Put( pp, ID_PARA_waza1, WAZANO_TAIATARI );
+    PP_Put( pp, ID_PARA_waza2, WAZANO_NIRAMITUKERU );
     PP_Put( pp, ID_PARA_waza3, WAZANO_KAGIWAKERU );
     PP_Put( pp, ID_PARA_waza4, WAZANO_NULL );
     PokeParty_Add( partyMine, pp );
