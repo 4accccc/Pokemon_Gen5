@@ -636,16 +636,16 @@ GMEVENT * EVENT_CaptureDemoBattle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, 
     POKEPARTY* partyEnemy = PokeParty_AllocPartyWork( tmpHeapID );
     POKEMON_PARAM* pp = GFL_HEAP_AllocClearMemory( tmpHeapID, POKETOOL_GetWorkSize() );
 
-    PP_Setup( pp, MONSNO_TIRAAMHI, 7, 0 );
-    PP_Put( pp, ID_PARA_waza1, WAZANO_HATAKU );
-    PP_Put( pp, ID_PARA_waza2, WAZANO_NAKIGOE );
-    PP_Put( pp, ID_PARA_waza3, WAZANO_NULL );
+    PP_Setup( pp, MONSNO_YOOTERII, 5, 0 );
+    PP_Put( pp, ID_PARA_waza1, WAZANO_NIRAMITUKERU );
+    PP_Put( pp, ID_PARA_waza2, WAZANO_TAIATARI );
+    PP_Put( pp, ID_PARA_waza3, WAZANO_KAGIWAKERU );
     PP_Put( pp, ID_PARA_waza4, WAZANO_NULL );
     PokeParty_Add( partyMine, pp );
     
-    PP_Setup( pp, MONSNO_MINEZUMI, 2, 0 );
-    PP_Put( pp, ID_PARA_waza1, WAZANO_TAIATARI );
-    PP_Put( pp, ID_PARA_waza2, WAZANO_NIRAMITUKERU );
+    PP_Setup( pp, MONSNO_TYORONEKO, 2, 0 );
+    PP_Put( pp, ID_PARA_waza1, WAZANO_HIKKAKU );
+    PP_Put( pp, ID_PARA_waza2, WAZANO_NAKIGOE );
     PP_Put( pp, ID_PARA_waza3, WAZANO_NULL );
     PP_Put( pp, ID_PARA_waza4, WAZANO_NULL );
     PokeParty_Add( partyEnemy, pp );
@@ -667,7 +667,7 @@ GMEVENT * EVENT_CaptureDemoBattle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, 
   BEW_Initialize( bew, gsys, bp );
   bew->is_sub_event = TRUE;
   //エンカウントエフェクトとＢＧＭをセット
-  ENCEFFNO_GetWildEncEffNoBgmNo( MONSNO_MINEZUMI, ENC_TYPE_DEMO, FALSE, fieldmap, &bew->EncEffNo, &bew->battle_param->musicDefault );
+  ENCEFFNO_GetWildEncEffNoBgmNo( MONSNO_TYORONEKO, ENC_TYPE_DEMO, FALSE, fieldmap, &bew->EncEffNo, &bew->battle_param->musicDefault );
   //捕獲でもは野生弱エンカウントエフェクト固定
   bew->EncEffNo = ENCEFFID_WILD_NORMAL;
 
