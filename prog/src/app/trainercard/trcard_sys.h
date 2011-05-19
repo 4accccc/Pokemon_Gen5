@@ -232,6 +232,7 @@ extern GFL_PROC_RESULT TrCardProc_Main( GFL_PROC * proc, int * seq , void *pwk, 
 extern GFL_PROC_RESULT TrCardProc_End( GFL_PROC * proc, int * seq , void *pwk, void *mywk );
 
 extern int TRAINERCARD_GetMedalCount( SWAN_TR_CARD_DATA *SwanCard );
+extern int TRAINERCARD_GetMedalBoxRank( SWAN_TR_CARD_DATA *SwanCard );
 
 
 #endif //_TRCARD_SYS_H_

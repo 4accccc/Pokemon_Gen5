@@ -1012,3 +1012,17 @@ int TRAINERCARD_GetMedalCount( SWAN_TR_CARD_DATA *SwanCard )
 {
   return SwanCard->medal_cnt;
 }
+
+//=============================================================================================
+/**
+ * @brief	メダルボックスランクをトレーナーカードデータから取得する
+ *
+ * @param   SwanCard		
+ *
+ * @retval  int		メダルランク(medalbox_rank_def.h)
+ */
+//=============================================================================================
+int TRAINERCARD_GetMedalBoxRank( SWAN_TR_CARD_DATA *SwanCard )
+{
+  return SwanCard->medalbox_rank;
+}
