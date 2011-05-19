@@ -998,3 +998,17 @@ int TRAINERCARD_GetCardRank( GAMEDATA *gameData )
 
   return rank;
 }
+
+//=============================================================================================
+/**
+ * @brief	メダル取得個数をトレーナーカードデータから取得する
+ *
+ * @param   SwanCard	SWAN_TR_CARD_DATA
+ *
+ * @retval  int		取得メダル個数（0ならメダル詳細画面を呼び出さない）
+ */
+//=============================================================================================
+int TRAINERCARD_GetMedalCount( SWAN_TR_CARD_DATA *SwanCard )
+{
+  return SwanCard->medal_cnt;
+}
