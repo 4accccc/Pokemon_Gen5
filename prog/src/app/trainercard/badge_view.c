@@ -36,6 +36,9 @@
 #include "arc_def.h"
 #include "system/bmp_oam.h"
 #include "field/enc_cutin_no.h"
+//
+#include "system/tr2dgra.h"
+#include "tr_tool/trtype_def.h"
 
 #include "badge_view_def.h"       // 各種定義等
 
@@ -403,6 +406,18 @@ static const s16 bv_cutin_tbl[] = {
 	ENC_CUTIN_GYM8A,					// 7
 };
 
+// カットインのトレーナーID
+static const s16 bv_trainer_id_tbl[] = {
+	TRTYPE_SWLEADER1,					// トレーナー0
+	TRTYPE_SWLEADER2,					// トレーナー1
+	TRTYPE_SWLEADER3,					// トレーナー2
+	TRTYPE_SWLEADER4,					// トレーナー3
+	TRTYPE_SWLEADER5,					// トレーナー4
+	TRTYPE_SWLEADER6,					// トレーナー5
+	TRTYPE_SWLEADER7,					// トレーナー6
+	TRTYPE_SWLEADER8,					// トレーナー7
+};
+
 // 移動のテーブル(開始、終了、step、spd)(win)
 static const s16 bv_scr_tbl[] = {
     128,   0, STEP_LV1, SPD_WIN_IN,		// 上から下
@@ -413,8 +428,10 @@ static const s16 bv_scr_tbl[] = {
 
 // 移動のテーブル(開始、終了、0、spd)(カットイン)
 static const s16 bv_scr_cutin_tbl[] = {
-   -128,   0, 0, SPD_CUTIN,				// 外から中
-	  0,-128, 0, SPD_CUTOUT,			// 中から外
+   256,  192, 0, SPD_CUTIN,				// 外から中
+   192,  256, 0, SPD_CUTOUT,			// 中から外
+//   -128,   0, 0, SPD_CUTIN,				// 外から中
+//	  0,-128, 0, SPD_CUTOUT,			// 中から外
 };
 
 // 移動のテーブル(開始、終了、0、spd)(モデル:桁注意)
@@ -422,6 +439,7 @@ static const s16 bv_scr_model_tbl[] = {
  -0x400,-0x140, 0, SPD_CUTIN,			// 外から中
  -0x140,-0x400, 0, SPD_CUTOUT,			// 中から外
 };
+
 
 //--------------------------------------------------------------------------------------------
 // 関数プロトタイプ宣言
@@ -437,6 +455,8 @@ static void BgGraphicInit(BADGEVIEW_WORK *wk);
 static void BgGraphicExit( BADGEVIEW_WORK *wk );
 static void ClActInit(BADGEVIEW_WORK *wk);
 static void ClActSet(BADGEVIEW_WORK *wk) ;
+static void ClActSetId( BADGEVIEW_WORK *wk, const s32 id );
+static void ClActClearId( BADGEVIEW_WORK *wk, const s32 id );
 static void ClActExit(BADGEVIEW_WORK *wk);
 static void Graphic3DInit( BADGEVIEW_WORK *wk );
 static void Graphic3DExit( BADGEVIEW_WORK *wk );
@@ -496,10 +516,10 @@ static void bv_snd_badge( BADGEVIEW_WORK* wk, const s32 num );
 static void bv_chg_facepal( BADGEVIEW_WORK* wk, const s32 num );
 static void bv_chk_facepal( BADGEVIEW_WORK* wk );
 // カットイン関連
-static void bv_init_cutin( BADGEVIEW_WORK* wk, const s32 cnum );
+//static void bv_init_cutin( BADGEVIEW_WORK* wk, const s32 cnum );
 static void bv_chg_cutin(  BADGEVIEW_WORK* wk, const s32 num );
 static void bv_set_cutin_visible( BADGEVIEW_WORK *wk, const BOOL bflg );
-static void bv_make_cutin_scr( BADGEVIEW_WORK *wk );
+//static void bv_make_cutin_scr( BADGEVIEW_WORK *wk );
 // モデル表示
 static void bv_rot_model( BADGEVIEW_WORK *wk );
 static void bv_set_model_visible( BADGEVIEW_WORK *wk, const BOOL bflg );
@@ -507,6 +527,11 @@ static void bv_set_model_visible( BADGEVIEW_WORK *wk, const BOOL bflg );
 static void bv_init_chgpal( BADGEVIEW_WORK *wk );
 static void bv_main_chgpal( BADGEVIEW_WORK *wk );
 static void bv_set_chgpal(  BADGEVIEW_WORK *wk, const BOOL bflg );
+// カットイン
+static void bv_init_obj_res_up( BADGEVIEW_WORK *wk, const s32 drawtype, const s32 id );
+static void bv_exit_obj_res_up( BADGEVIEW_WORK *wk );
+static void bv_chg_obj_cutin( BADGEVIEW_WORK *wk, const s32 id );
+static void bv_set_obj_pos( BADGEVIEW_WORK *wk, const s32 id, const s32 px );
 
 
 #ifdef PM_DEBUG
@@ -679,7 +704,7 @@ static void VBlankFunc( GFL_TCB *tcb, void * work )
     // メッセージ
     GFL_BG_SetScroll( BV_BGFRAME_D_MSG, GFL_BG_SCROLL_Y_SET, wk->BgOffY );
     // カットイン
-    GFL_BG_SetScroll( BV_BGFRAME_U_CUTIN, GFL_BG_SCROLL_X_SET, wk->BgOffX );
+//    GFL_BG_SetScroll( BV_BGFRAME_U_CUTIN, GFL_BG_SCROLL_X_SET, wk->BgOffX );
     // 最後の1フレームを確実にセットするため
     if(wk->Flag & FLG_END_BGOFFSET){
       wk->Flag &= ~FLG_SET_BGOFFSET;
@@ -1159,8 +1184,11 @@ static void ClActInit(BADGEVIEW_WORK *wk)
                                                                APP_COMMON_GetBarIconCellArcIdx(APP_COMMON_MAPPING_32K), 
                                                                APP_COMMON_GetBarIconAnimeArcIdx(APP_COMMON_MAPPING_32K), 
                                                                HEAPID_TR_CARD );
-  GFL_ARC_CloseDataHandle( c_handle );
 
+  GFL_ARC_CloseDataHandle( c_handle );
+  
+  // カットイン用初期化
+  bv_init_obj_res_up( wk, OBJ_DRAW_UP, 0 );
 }
 
 //-------------------------------------------
@@ -1206,6 +1234,8 @@ static const int clact_dat[][8]={
   {  (4*7+2)*8,  14*8,   9, BV_RES_CHR,        BV_RES_PLTT,        BV_RES_CELL,   2, OBJ_DEFREND_DOWN, },// キラキラ7-１
   {  (4*7+4)*8,  17*8,  10, BV_RES_CHR,        BV_RES_PLTT,        BV_RES_CELL,   2, OBJ_DEFREND_DOWN, },// キラキラ7-２
   {  (4*7+3)*8,  19*8,   8, BV_RES_CHR,        BV_RES_PLTT,        BV_RES_CELL,   2, OBJ_DEFREND_DOWN, },// キラキラ7-３
+  // 追加
+  {  	   192,    96,   0, BV_RES_CUTIN_CHR,  BV_RES_CUTIN_PLTT,  BV_RES_CUTIN_CELL, 1, OBJ_DEFREND_UP, },// カットイン
 };
 
 //----------------------------------------------------------------------------------
@@ -1239,7 +1269,45 @@ static void ClActSet(BADGEVIEW_WORK *wk)
   
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief セルアクター登録(id指定)(トレーナーID専用)
+ *
+ * @param   wk    
+ * @param   id		objの番号
+ */
+//----------------------------------------------------------------------------------
+static void ClActSetId( BADGEVIEW_WORK *wk, const s32 id )
+{
+  GFL_CLWK_DATA add;
+  
+  // セルアクター登録
+  add.pos_x  = clact_dat[id][0];
+  add.pos_y  = clact_dat[id][1];
+  add.anmseq = clact_dat[id][2];
+  add.bgpri    = clact_dat[id][6];	// bgprio指定
+  add.softpri  = 0;
+  
+  wk->clwk[id] = GFL_CLACT_WK_Create( wk->clUnit,
+                                     wk->clres[clact_dat[id][3]],
+                                     wk->clres[clact_dat[id][4]],
+                                     wk->clres[clact_dat[id][5]],
+                                     &add, clact_dat[id][7], HEAPID_TR_CARD );		// up/down指定
+  GFL_CLACT_WK_SetAutoAnmFlag( wk->clwk[id], TRUE );
+}
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief セルアクター破棄(id指定)(トレーナーID専用)
+ *
+ * @param   wk    
+ * @param   id		objの番号
+ */
+//----------------------------------------------------------------------------------
+static void ClActClearId( BADGEVIEW_WORK *wk, const s32 id )
+{
+	GFL_CLACT_WK_Remove( wk->clwk[id] );
+}
 
 //----------------------------------------------------------------------------------
 /**
@@ -1257,7 +1325,10 @@ static void ClActExit( BADGEVIEW_WORK *wk )
   GFL_CLGRP_CGR_Release(      wk->clres[BV_RES_CHR] );
   GFL_CLGRP_PLTT_Release(     wk->clres[BV_RES_PLTT] );
   GFL_CLGRP_CELLANIM_Release( wk->clres[BV_RES_CELL] );
-
+  
+  // カットイン用破棄
+  bv_exit_obj_res_up( wk );
+  
   // セルアクターユニット破棄
   GFL_CLACT_UNIT_Delete( wk->clUnit );
 
@@ -2446,6 +2517,9 @@ static void ExecFunc( BADGEVIEW_WORK *wk, int trg, BOOL keyflag )
         if(wk->Mode != MODE_BADGE){
           flg=1;
         }
+        // カットインキャラの切り替え
+        bv_chg_cutin( wk, trg-TOUCH_BADGE_0 );
+        //
         // 初めての時だけ処理
         if(flg == 1){
           // スクロールイン開始
@@ -2469,8 +2543,6 @@ static void ExecFunc( BADGEVIEW_WORK *wk, int trg, BOOL keyflag )
 //        wk->targetFrame = target_frame_tbl[trg-TOUCH_BADGE_0];
 //        wk->animeSpeed  = 40000;
         //
-        // カットインキャラの切り替え
-        bv_chg_cutin( wk, trg-TOUCH_BADGE_0 );
         // バッジ
         wk->Mode = MODE_BADGE;
       }
@@ -2496,6 +2568,9 @@ static void ExecFunc( BADGEVIEW_WORK *wk, int trg, BOOL keyflag )
         if(wk->Mode != MODE_LEADER){
           flg = 1;
         }
+        // カットインキャラの切り替え
+        bv_chg_cutin( wk, trg-TOUCH_GYM_READER_0 );
+        
         // 初めてのときだけ処理
         if(flg == 1){
           // スクロールイン開始
@@ -2518,9 +2593,6 @@ static void ExecFunc( BADGEVIEW_WORK *wk, int trg, BOOL keyflag )
         // リーダー情報初期化
         wk->LeaderNum = 0;
         bv_init_timer( wk, TIMER_MES, bv_timer_tbl[wk->LeaderNum]);
-        //
-        // カットインキャラの切り替え
-        bv_chg_cutin( wk, trg-TOUCH_GYM_READER_0 );
         //
         // ジムリーダー
         wk->Mode = MODE_LEADER;
@@ -2754,7 +2826,7 @@ static void SetupPage( BADGEVIEW_WORK *wk, int page )
   bv_chk_facepal( wk );
   
   // スクリーン作成
-  bv_make_cutin_scr( wk );
+//  bv_make_cutin_scr( wk );
 }
 //----------------------------------------------------------------------------------
 /**
@@ -3358,8 +3430,9 @@ static void bv_init_bgscroll( BADGEVIEW_WORK* wk, const s32 mode )
 	buf[2] = bv_scr_cutin_tbl[4*tmp+3];
 	bv_init_movework( wk, MWORK_CUTIN, buf[0], buf[1], buf[2] );
 	// 開始座標をセットし、すぐ反映
-	wk->BgOffX = buf[0];
-	GFL_BG_SetScroll( BV_BGFRAME_U_CUTIN, GFL_BG_SCROLL_X_SET, wk->BgOffX );
+	bv_set_obj_pos( wk, BV_OBJ_CUTIN, buf[0] );
+//	wk->BgOffX = buf[0];
+//	GFL_BG_SetScroll( BV_BGFRAME_U_CUTIN, GFL_BG_SCROLL_X_SET, wk->BgOffX );
 	//
 	//------------
 	// モデル
@@ -3417,7 +3490,9 @@ static void bv_main_scroll( BADGEVIEW_WORK* wk )
 				wk->Step = STEP_LV1+20;
 			}
 			// カットインも流用
-			wk->BgOffX = bv_main_movework( wk, MWORK_CUTIN );
+//			wk->BgOffX = bv_main_movework( wk, MWORK_CUTIN );
+			tmp = bv_main_movework( wk, MWORK_CUTIN );
+			bv_set_obj_pos( wk, BV_OBJ_CUTIN, tmp );
 			// モデルも流用
 			// 値が大きいのでシフトして使用
 			tx = bv_main_movework( wk, MWORK_MODEL );
@@ -3454,7 +3529,9 @@ static void bv_main_scroll( BADGEVIEW_WORK* wk )
 				wk->Step = STEP_LV2+20;
 			}
 			// カットインも流用
-			wk->BgOffX = bv_main_movework( wk, MWORK_CUTIN );
+//			wk->BgOffX = bv_main_movework( wk, MWORK_CUTIN );
+			tmp = bv_main_movework( wk, MWORK_CUTIN );
+			bv_set_obj_pos( wk, BV_OBJ_CUTIN, tmp );
 			// モデルも流用
 			// 値が大きいのでシフトして使用
 			tx = bv_main_movework( wk, MWORK_MODEL );
@@ -3724,6 +3801,7 @@ static void bv_chk_facepal( BADGEVIEW_WORK* wk )
  *	@retval
  */
 //-----------------------------------------------------------------------------
+#if 0	// BGカットイン(保留)
 static void bv_init_cutin( BADGEVIEW_WORK* wk, const s32 cnum )
 {
 	const ENC_CUTIN_DAT *dat;
@@ -3767,6 +3845,8 @@ static void bv_init_cutin( BADGEVIEW_WORK* wk, const s32 cnum )
 //	GFL_BG_LoadScreenReq( BV_BGFRAME_U_CUTIN );
 }
 
+#endif	// BGカットイン
+
 //-----------------------------------------------------------------------------
 /**
  *	@brief  上画面カットインまとめ
@@ -3780,7 +3860,9 @@ static void bv_init_cutin( BADGEVIEW_WORK* wk, const s32 cnum )
 static void bv_chg_cutin( BADGEVIEW_WORK* wk, const s32 num )
 {
 	// カットイン
-	bv_init_cutin( wk, bv_cutin_tbl[num] );
+//	bv_init_cutin( wk, bv_cutin_tbl[num] );
+	// カットイン(obj)
+	bv_chg_obj_cutin( wk, bv_trainer_id_tbl[num] );
 }
 
 //----------------------------------------------------------------------------------
@@ -3796,7 +3878,10 @@ static void bv_chg_cutin( BADGEVIEW_WORK* wk, const s32 num )
 static void bv_set_cutin_visible( BADGEVIEW_WORK *wk, const BOOL bflg )
 {
 	// MAIN画面のCUTIN
-	GFL_BG_SetVisible( BV_BGFRAME_U_CUTIN, bflg );
+//	GFL_BG_SetVisible( BV_BGFRAME_U_CUTIN, bflg );
+	//
+	// カットインobjの表示/非表示
+	bv_set_obj_visible( wk, BV_OBJ_CUTIN, bflg );
 }
 
 //----------------------------------------------------------------------------------
@@ -3808,6 +3893,7 @@ static void bv_set_cutin_visible( BADGEVIEW_WORK *wk, const BOOL bflg )
  * @retval
  */
 //----------------------------------------------------------------------------------
+#if 0	// BGのカットイン(保留)
 static void bv_make_cutin_scr( BADGEVIEW_WORK *wk )
 {
 	s32		i;
@@ -3834,6 +3920,7 @@ static void bv_make_cutin_scr( BADGEVIEW_WORK *wk )
 	GFL_BG_ChangeScreenPalette( BV_BGFRAME_U_CUTIN, CUTIN_SCR_X1, CUTIN_SCR_Y1, CUTIN_SCR_W1, CUTIN_SCR_H1, PAL_UP_CUTIN_BG+1 );
 	GFL_BG_LoadScreenReq( BV_BGFRAME_U_CUTIN );
 }
+#endif
 
 //----------------------------------------------------------------------------------
 /**
@@ -3967,6 +4054,88 @@ static void bv_set_chgpal( BADGEVIEW_WORK *wk, const BOOL bflg )
 	}
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  OBJ初期化(トレーナーデータ)
+ *
+ *	@param	BADGEVIEW_WORK* 	wk
+ *	@param	const s32			drawtype
+ *	@param	const s32			id
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void bv_init_obj_res_up( BADGEVIEW_WORK *wk, const s32 drawtype, const s32 id )
+{
+	ARCHANDLE*	p_handle = TR2DGRA_OpenHandle( HEAPID_TR_CARD );
+	//
+	wk->clres[ BV_RES_CUTIN_PLTT ] = TR2DGRA_OBJ_PLTT_Register( p_handle, id, drawtype, 0, HEAPID_TR_CARD );
+	wk->clres[ BV_RES_CUTIN_CHR  ] = TR2DGRA_OBJ_CGR_Register(  p_handle, id, drawtype, HEAPID_TR_CARD );
+	wk->clres[ BV_RES_CUTIN_CELL ] = TR2DGRA_OBJ_CELLANM_Register( id, APP_COMMON_MAPPING_32K, drawtype, HEAPID_TR_CARD );
+	//
+	GFL_ARC_CloseDataHandle( p_handle );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  OBJ破棄
+ *
+ *	@param	BADGEVIEW_WORK* 	wk
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void bv_exit_obj_res_up( BADGEVIEW_WORK *wk )
+{
+	GFL_CLGRP_CGR_Release(      wk->clres[BV_RES_CUTIN_CHR] );
+	GFL_CLGRP_PLTT_Release(     wk->clres[BV_RES_CUTIN_PLTT] );
+	GFL_CLGRP_CELLANIM_Release( wk->clres[BV_RES_CUTIN_CELL] );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  トレーナーID切り替え(使うタイミング注意)
+ *
+ *	@param	BADGEVIEW_WORK* 	wk
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void bv_chg_obj_cutin( BADGEVIEW_WORK *wk, const s32 id )
+{
+	OS_Printf("id :%d\n",id);
+	//
+	// clwkの破棄
+	ClActClearId( wk, BV_OBJ_CUTIN );
+	// resの破棄
+	bv_exit_obj_res_up( wk );
+	//
+	// resの読み込み
+	bv_init_obj_res_up( wk, OBJ_DRAW_UP, id );
+	// clwkの登録
+	ClActSetId( wk, BV_OBJ_CUTIN );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * セルタクター座標セット(カットイン用決めうち)
+ *
+ * @param work    
+ * @param id    セルアクターインデックス
+ * @param x     位置X
+ *
+ * @return
+ */
+//--------------------------------------------------------------------------------------------
+static void bv_set_obj_pos( BADGEVIEW_WORK *wk, const s32 id, const s32 px )
+{
+	GFL_CLACTPOS pos;
+	
+	// 座標の更新
+	GFL_CLACT_WK_GetPos( wk->clwk[id], &pos, OBJ_DEFREND_UP );
+	pos.x = px;
+	GFL_CLACT_WK_SetPos( wk->clwk[id], &pos, OBJ_DEFREND_UP );
+}
 
 
 
