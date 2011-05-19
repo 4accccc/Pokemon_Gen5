@@ -34,11 +34,14 @@
 #include "trc_union.naix"
 
 #include "savedata/config.h"
+#include "savedata/medalbox.h"
 #include "msg/msg_trainercard.h"
 #include "message.naix"
 #include "system/wipe.h"
 #include "system/pms_draw.h"
 #include "test/ariizumi/ari_debug.h"
+//
+#include "system/medaldata.h"
 
 
 #define MIN_SCRUCH  (3)
@@ -117,6 +120,28 @@ enum{
   SCREEN_SIGN_ALL,
 };
 
+// 以下追加
+// TR_CARD_WORK.Flag
+enum{
+	FLG_DISP_MEDAL	= ( 1<<0 ),		// メダル表示
+	FLG_PALCHG_ON	= ( 1<<1 ),		// パレットチェンジ
+};
+
+// メダルの番号
+enum{
+	MEDAL_NORMAL	= 0,
+	MEDAL_COPPER,
+	MEDAL_SILVER,
+	MEDAL_GOLD,
+	MEDAL_BLACK,
+	MEDAL_WHITE,
+};
+
+// いろいろ
+enum{
+	PCHG_ANIM_ADD		= (0x200),	// パレットチェンジ用
+	PCHG_ANIM_ADD_2		= (0x400),	// パレットチェンジ用
+};
 
 // 戻るボタン座標
 #define TP_RETURN_X   (  228 )
@@ -194,8 +219,8 @@ enum{
 // メダル詳細画面へ
 #define TP_MEDAL_X     (    224 )
 #define TP_MEDAL_Y     (     80 )
-#define TP_MEDAL_W     (     20 )
-#define TP_MEDAL_H     (     20 )
+#define TP_MEDAL_W     (     24 )
+#define TP_MEDAL_H     (     24 )
 
 
 
@@ -276,6 +301,16 @@ static const GFL_DISP_VRAM vramBank = {
   GX_OBJVRAMMODE_CHAR_1D_32K,   // サブOBJマッピングモード
 };
 
+// メダルのシーケンス
+static const s16 tc_medal_seq_tbl[] = {
+	ANMS_MEDAL_BRONZE,		// 通常(IRON)
+	ANMS_MEDAL_COPPER,		// カッパー
+	ANMS_MEDAL_SILVER,		// シルバー
+	ANMS_MEDAL_GOLD,		// ゴールド
+	ANMS_MEDAL_BLACK,		// ブラック
+	ANMS_MEDAL_WHITE,		// ホワイト
+};
+
 //============================================================================================
 //  プロトタイプ宣言
 //============================================================================================
@@ -331,7 +366,14 @@ static void SetBookMark( TR_CARD_WORK *wk);
 // 誘導マーク
 static void tc_set_visible( TR_CARD_WORK * wk, const s32 num, const BOOL bflg );
 static void tc_chk_mark_visible( TR_CARD_WORK * wk, const s32 mode );
-
+//
+// メダル
+static void tc_init_medal( TR_CARD_WORK * wk );
+//
+// パレットアニメ
+static void tc_init_chgpal( TR_CARD_WORK *wk );
+static void tc_main_chgpal( TR_CARD_WORK *wk );
+static void tc_set_chgpal(  TR_CARD_WORK *wk, const BOOL bflg );
 
 //============================================================================================
 //  グローバル変数
@@ -453,6 +495,15 @@ GFL_PROC_RESULT TrCardProc_Init( GFL_PROC * proc, int * seq , void *pwk, void *m
 
   //カードの初期状態表示
   CardDataDraw(wk);
+  //
+  // 追加
+  wk->Flag = 0;
+  wk->MedalNum = 0;
+  wk->card_list_col = 0;
+  // メダル初期化
+  tc_init_medal( wk );
+  // パレットチェンジ用
+  tc_init_chgpal( wk );
 
   wk->vblankFunc = GFUser_VIntr_CreateTCB(VBlankFunc, wk , 1);  // VBlankセット
   wk->vblankTcblSys = GFL_TCBL_Init( wk->heapId , wk->heapId , 3 , 0 );
@@ -600,7 +651,9 @@ GFL_PROC_RESULT TrCardProc_Main( GFL_PROC * proc, int * seq , void *pwk, void *m
       
       UpdateSignAnime(wk);
 //      UpdateTextBlink(wk);
-
+      // パレットアニメ
+      tc_main_chgpal( wk );
+      //
       if(wk->tcp->TrCardData->EditPossible){    // 編集可能なら
         int line = DrawBrushLine( (GFL_BMPWIN*)wk->TrSignData, &wk->AllTouchResult, 
                                    &wk->OldTouch, 1, wk->TrSignData, wk->ScaleMode, wk->ScaleSide );
@@ -2046,10 +2099,13 @@ static int normal_touch_func( TR_CARD_WORK *wk, int hitNo )
     }
     break;
   case 12:    // メダル
-    if(wk->is_back==0){
-      PMSND_PlaySE( SND_TRCARD_DECIDE );
-      SetSActDrawSt( &wk->ObjWork, ACTS_MARK_MEDAL, ANMS_BADGE_G, TRUE);
-      return TRC_KEY_REQ_MEDAL_CALL;
+    // 表示している時のみ反応あり
+    if(wk->Flag & FLG_DISP_MEDAL){
+      if(wk->is_back==0){
+        PMSND_PlaySE( SND_TRCARD_DECIDE );
+        SetSActDrawSt( &wk->ObjWork, ACTS_MARK_MEDAL, tc_medal_seq_tbl[wk->MedalNum], TRUE);
+        return TRC_KEY_REQ_MEDAL_CALL;
+      }
     }
     break;
   }
@@ -2203,8 +2259,26 @@ static int CheckTouch(TR_CARD_WORK* wk)
   int ret;
   u16 pat;
   int hitNo;
-  // タッチバー
+  // タッチバー(通常時)
   static const GFL_UI_TP_HITTBL Btn_TpRect[] = {
+    { TP_RETURN_Y,   TP_RETURN_Y+TP_RETURN_H,    TP_RETURN_X,   TP_RETURN_X+TP_RETURN_W }, // 戻る
+    { TP_END_Y,      TP_END_Y+TP_END_H,          TP_END_X,      TP_END_X+TP_END_W },       // 終了
+    { TP_CARD_Y,     TP_CARD_Y+TP_CARD_H,        TP_CARD_X,     TP_CARD_X+TP_CARD_W },     // カード裏返しボタン
+    { TP_BADGE_Y,    TP_BADGE_Y+TP_BADGE_H,      TP_BADGE_X,    TP_BADGE_X+TP_BADGE_W },   // バッジ画面ボタン
+    { TP_LOUPE_Y,    TP_LOUPE_Y+TP_LOUPE_H,      TP_LOUPE_X,    TP_LOUPE_X+TP_LOUPE_W },   // 精密描画ボタン
+    { TP_PEN_Y,      TP_PEN_Y+TP_PEN_H,          TP_PEN_X,      TP_PEN_X+TP_PEN_W },       // ペン先ボタン
+    { TP_BOOKMARK_Y, TP_BOOKMARK_Y+TP_BOOKMARK_H,TP_BOOKMARK_X, TP_BOOKMARK_X+TP_BOOKMARK_W },    //ブックマークボタン
+    { TP_TRTYPE_Y, TP_TRTYPE_Y+TP_TRTYPE_H,TP_TRTYPE_X, TP_TRTYPE_X+TP_TRTYPE_W },                //トレーナータイプ
+    { TP_PERSONAL_Y, TP_PERSONAL_Y+TP_PERSONAL_H,TP_PERSONAL_X, TP_PERSONAL_X+TP_PERSONAL_W },    //性格
+    { TP_PMS_Y,      TP_PMS_Y+TP_PMS_H,          TP_PMS_X,      TP_PMS_X+TP_PMS_W },              //簡易会話
+    { TP_PMS_Y,      TP_PMS_Y+TP_PMS_H,          TP_PMS_X,      TP_PMS_X+TP_PMS_W },              //右へ移動(拡大時）(dummy)
+    { TP_PMS_Y,      TP_PMS_Y+TP_PMS_H,          TP_PMS_X,      TP_PMS_X+TP_PMS_W },              //左へ移動(拡大時）(dummy)
+    { TP_MEDAL_Y,   TP_MEDAL_Y+TP_MEDAL_H,       TP_MEDAL_X,   TP_MEDAL_X+TP_MEDAL_W },          // 12:メダル
+    { GFL_UI_TP_HIT_END, 0, 0, 0 },
+  };
+  //
+  // タッチ(拡大時:重複するエリアがあるため分けた)
+  static const GFL_UI_TP_HITTBL Btn_TpRect_2[] = {
     { TP_RETURN_Y,   TP_RETURN_Y+TP_RETURN_H,    TP_RETURN_X,   TP_RETURN_X+TP_RETURN_W }, // 戻る
     { TP_END_Y,      TP_END_Y+TP_END_H,          TP_END_X,      TP_END_X+TP_END_W },       // 終了
     { TP_CARD_Y,     TP_CARD_Y+TP_CARD_H,        TP_CARD_X,     TP_CARD_X+TP_CARD_W },     // カード裏返しボタン
@@ -2217,7 +2291,7 @@ static int CheckTouch(TR_CARD_WORK* wk)
     { TP_PMS_Y,      TP_PMS_Y+TP_PMS_H,          TP_PMS_X,      TP_PMS_X+TP_PMS_W },              //簡易会話
     { TP_MOVERIGHT_Y,TP_MOVERIGHT_Y+TP_MOVERIGHT_H ,TP_MOVERIGHT_X,TP_MOVERIGHT_X+TP_MOVERIGHT_W},//右へ移動(拡大時）
     { TP_MOVELEFT_Y,TP_MOVELEFT_Y+TP_MOVELEFT_H ,TP_MOVELEFT_X,TP_MOVELEFT_X+TP_MOVELEFT_W},      //左へ移動(拡大時）
-    { TP_MEDAL_Y,   TP_MEDAL_Y+TP_MEDAL_H,       TP_MEDAL_X,   TP_MEDAL_X+TP_MEDAL_W },          // 12:メダル
+    { TP_MOVELEFT_Y,TP_MOVELEFT_Y+TP_MOVELEFT_H ,TP_MOVELEFT_X,TP_MOVELEFT_X+TP_MOVELEFT_W},      //12:メダル(dummy)
     { GFL_UI_TP_HIT_END, 0, 0, 0 },
   };
   static const GFL_UI_TP_HITTBL Btn_TpRectComm[] = {
@@ -2230,7 +2304,13 @@ static int CheckTouch(TR_CARD_WORK* wk)
 
   // タッチ検出
   if(wk->TrCardData->OtherTrCard==FALSE){
-    hitNo = GFL_UI_TP_HitTrg( Btn_TpRect );
+	if(wk->ScaleMode == 0){
+		// 通常時
+	    hitNo = GFL_UI_TP_HitTrg( Btn_TpRect );
+	}else{
+		// 拡大時
+	    hitNo = GFL_UI_TP_HitTrg( Btn_TpRect_2 );
+	}
   }else{
     hitNo = GFL_UI_TP_HitTrg( Btn_TpRectComm );
   }
@@ -3140,6 +3220,8 @@ static void tc_set_visible( TR_CARD_WORK * wk, const s32 num, const BOOL bflg )
 //----------------------------------------------------------------------------------
 static void tc_chk_mark_visible( TR_CARD_WORK * wk, const s32 mode )
 {
+	BOOL	bflg=FALSE;
+	
 	// 表
 	if(mode == 0){
 		tc_set_visible( wk, ACTS_MARK_00, TRUE );	// 表用
@@ -3147,23 +3229,189 @@ static void tc_chk_mark_visible( TR_CARD_WORK * wk, const s32 mode )
 		tc_set_visible( wk, ACTS_MARK_02, TRUE );
 		tc_set_visible( wk, ACTS_MARK_10, FALSE );	// 裏用
 		tc_set_visible( wk, ACTS_MARK_11, FALSE );
-		tc_set_visible( wk, ACTS_MARK_MEDAL, TRUE ); // メダル(test)
+		// メダル表示
+		if(wk->Flag & FLG_DISP_MEDAL){
+			tc_set_visible( wk, ACTS_MARK_MEDAL, TRUE ); // メダル
+		}
+		bflg = TRUE;
 	}else if(mode == 1){
 		tc_set_visible( wk, ACTS_MARK_00, FALSE );	// 表用
 		tc_set_visible( wk, ACTS_MARK_01, FALSE );
 		tc_set_visible( wk, ACTS_MARK_02, FALSE );
 		tc_set_visible( wk, ACTS_MARK_10, TRUE );	// 裏用
 		tc_set_visible( wk, ACTS_MARK_11, TRUE );
-		tc_set_visible( wk, ACTS_MARK_MEDAL, FALSE ); // メダル(test)
+		tc_set_visible( wk, ACTS_MARK_MEDAL, FALSE ); // メダル
+		bflg = TRUE;
 	}else{
 		tc_set_visible( wk, ACTS_MARK_00, FALSE );	// 表用
 		tc_set_visible( wk, ACTS_MARK_01, FALSE );
 		tc_set_visible( wk, ACTS_MARK_02, FALSE );
 		tc_set_visible( wk, ACTS_MARK_10, FALSE );	// 裏用
 		tc_set_visible( wk, ACTS_MARK_11, FALSE );
-		tc_set_visible( wk, ACTS_MARK_MEDAL, FALSE ); // メダル(test)
+		tc_set_visible( wk, ACTS_MARK_MEDAL, FALSE ); // メダル
+	}
+	// パレットアニメ
+	tc_set_chgpal( wk, bflg );
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief メダル初期化
+ *
+ * @param   TR_CARD_WORK	ワーク
+ *
+ * @retval
+ */
+//----------------------------------------------------------------------------------
+static void tc_init_medal( TR_CARD_WORK * wk )
+{
+	s32		cnt;
+	s32		id;
+	s32		num=0;
+	//
+	// メダル数を取得
+	cnt = TRAINERCARD_GetMedalCount( wk->tcp->SwanTrCardData );
+	OS_Printf("medal count :%d\n",cnt);
+	//
+	// メダルがない=>非表示
+	if(cnt == 0){
+		wk->Flag &= ~FLG_DISP_MEDAL;
+		tc_set_visible( wk, ACTS_MARK_MEDAL, FALSE );
+	}
+	// メダルがある=>ランクを調べる
+	else{
+		id = TRAINERCARD_GetMedalBoxRank( wk->tcp->SwanTrCardData );
+		// 最大数の場合=>バージョン情報を見て判定(pm_version.h)
+		if(id >= MEDALBOX_RANK_BW){
+			// ブラック
+			if(wk->TrCardData->Version == VERSION_B2){
+				num = MEDAL_BLACK;
+			}
+			// ホワイト
+			else{
+				num = MEDAL_WHITE;
+			}
+		}else{
+			// 基本はそのまま
+			num = id;
+		}
+		OS_Printf("medal rank   :%d,%d\n",id,num);
+		//
+		// シーケンスを切り替える
+		wk->MedalNum = num;
+		// 表示onも含まれている
+		SetSActDrawSt( &wk->ObjWork, ACTS_MARK_MEDAL, tc_medal_seq_tbl[num], TRUE);
+		wk->Flag |= FLG_DISP_MEDAL;
 	}
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief	パレットチェンジ初期化
+ *
+ * @param	TR_CARD_WORK*	wk
+ *
+ * @retval
+ */
+//----------------------------------------------------------------------------------
+static void tc_init_chgpal( TR_CARD_WORK *wk )
+{
+	// パレット取得
+	NNSG2dPaletteData* pal_data;
+	void* buf = GFL_ARC_UTIL_LoadPalette( ARCID_TRAINERCARD, NARC_trainer_case_card_button_NCLR, &pal_data, HEAPID_TR_CARD );
+	u16* raw_data = pal_data->pRawData;
+	//
+	GFL_STD_MemCopy( &raw_data[0],    wk->PalBufferStart, 0x20 );
+	GFL_STD_MemCopy( &raw_data[0x10], wk->PalBufferEnd,   0x20 );
+	//
+	GFL_HEAP_FreeMemory( buf );
+	//
+	wk->PCount = 0;
+	// 初期パレット転送
+//	NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_OBJ_PLTT_SUB, wk->PalBufferStart, 0x20 );
+	tc_set_chgpal( wk, TRUE );
+}
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief	パレットチェンジ(毎フレーム:zukan_detail_touchbar.c参考)
+ *
+ * @param	TR_CARD_WORK*	wk
+ *
+ * @retval
+ */
+//----------------------------------------------------------------------------------
+static void tc_main_chgpal( TR_CARD_WORK *wk )
+{
+	u8			cbuf[10];
+	s32			i;
+	s32			rate;
+	fx16		cos;
+	
+	// 変更中かどうか
+	if(!(wk->Flag & FLG_PALCHG_ON)){
+		return;
+	}
+	
+	// 速度チェック
+	// 通常
+	rate = PCHG_ANIM_ADD;
+	if(wk->card_list_col == 1){
+		// タッチ時、加速
+		rate = PCHG_ANIM_ADD_2;
+	}
+	
+	// 加算(0 .. 1.0)にするようだ
+	wk->PCount += rate;
+	if(wk->PCount >= 0x10000){
+		wk->PCount -= 0x10000;
+	}
+	cos = ( FX_CosIdx(wk->PCount) + FX16_ONE )/2;
+	//
+	// カラーの計算
+	for(i=0;i<16;i++){
+		// 開始
+		cbuf[0] = ( wk->PalBufferStart[i] & GX_RGB_R_MASK ) >> GX_RGB_R_SHIFT;
+		cbuf[1] = ( wk->PalBufferStart[i] & GX_RGB_G_MASK ) >> GX_RGB_G_SHIFT;
+		cbuf[2] = ( wk->PalBufferStart[i] & GX_RGB_B_MASK ) >> GX_RGB_B_SHIFT;
+		// 終了
+		cbuf[3] = ( wk->PalBufferEnd[i]   & GX_RGB_R_MASK ) >> GX_RGB_R_SHIFT;
+		cbuf[4] = ( wk->PalBufferEnd[i]   & GX_RGB_G_MASK ) >> GX_RGB_G_SHIFT;
+		cbuf[5] = ( wk->PalBufferEnd[i]   & GX_RGB_B_MASK ) >> GX_RGB_B_SHIFT;
+		// RGBを求める
+		// 変更するのは(0x0c、0x0dのみ)
+		if((i == 0x0c)||(i == 0x0d)){
+			cbuf[6] = cbuf[0] + (((cbuf[3]-cbuf[0])*cos)>>FX16_SHIFT);
+			cbuf[7] = cbuf[1] + (((cbuf[4]-cbuf[1])*cos)>>FX16_SHIFT);
+			cbuf[8] = cbuf[2] + (((cbuf[5]-cbuf[2])*cos)>>FX16_SHIFT);
+		}else{
+			cbuf[6] = cbuf[0];
+			cbuf[7] = cbuf[1];
+			cbuf[8] = cbuf[2];
+		}
+		//
+		wk->PalBufferNow[i] = GX_RGB( cbuf[6], cbuf[7], cbuf[8] );
+	}
+	// 下画面(とりあえず決めうち)
+	NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_OBJ_PLTT_SUB , 0, wk->PalBufferNow, 0x20 );
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	パレットチェンジ
+ *
+ * @param	TR_CARD_WORK*	wk
+ * @param	const BOOL		(TRUE:開始、FALSE:終了)
+ *
+ * @retval
+ */
+//----------------------------------------------------------------------------------
+static void tc_set_chgpal( TR_CARD_WORK *wk, const BOOL bflg )
+{
+	if(bflg == TRUE){	// 開始
+		wk->Flag |= FLG_PALCHG_ON;
+	}else{				// 終了
+		wk->Flag &= ~FLG_PALCHG_ON;
+	}
+}
 

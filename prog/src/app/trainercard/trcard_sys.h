@@ -224,7 +224,14 @@ typedef struct TR_CARD_WORK_tag
   u8  score_max;                  ///< 現在表示できる項目の最大数
   u8  b_touch_scroll; ///< 裏面スクロール開始フラグ
   u8  b_touch_sign;   ///< 裏面サイン開始フラグ
-
+  //
+  // 以下、追加
+	u32		Flag;					///< フラグ
+	s32		MedalNum;				///< メダル番号(0-5)
+	s32		PCount;					///< カウンタ
+	u16		PalBufferStart[0x10];	///< 開始
+	u16		PalBufferEnd[0x10];		///< 終了
+	u16		PalBufferNow[0x10];		///< 現在
 }TR_CARD_WORK;
 
 extern GFL_PROC_RESULT TrCardProc_Init( GFL_PROC * proc, int * seq , void *pwk, void *mywk );

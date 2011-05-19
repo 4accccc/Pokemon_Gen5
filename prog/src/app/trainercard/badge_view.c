@@ -964,7 +964,8 @@ static void BgInit(BADGEVIEW_WORK *wk)
   
   // îºìßñæê›íË
   G2S_BlendNone();
-  G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BG3,7,16);
+//  G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BG3,7,16);
+  G2_BlendNone();
 }
 //----------------------------------------------------------------------------------
 /**
