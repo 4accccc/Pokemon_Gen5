@@ -15,10 +15,7 @@
 #define H03_BADRIDER1_05                   2
 #define H03_BADRIDER1_03                   3
 #define H03_BADRIDER1_02                   4
-#define H03_NINJA_01                       5
-#define H03_NINJA_02                       6
-#define H03_NINJA_03                       7
-#define H03_BADRIDER1_01                   8
+#define H03_BADRIDER1_01                   5
 
 #endif //ZONE_H03_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/h03.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

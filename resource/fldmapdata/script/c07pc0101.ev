@@ -45,5 +45,6 @@ EVENT_END
 /* プレゼントくれるおばあさん                           */
 /**************************************************************/
 EVENT_START   ev_c07pc0101_oldwoman1_01
+  //【仮】配置箇所を変更
   _EASY_TALK_ITEM_EVENT(ITEM_WAZAMASIN31, 1, FE_C07PC0101_ITEM_01, msg_c07pc0101_oldwoman1_01, msg_c07pc0101_oldwoman1_02, msg_c07pc0101_oldwoman1_02 )
 EVENT_END

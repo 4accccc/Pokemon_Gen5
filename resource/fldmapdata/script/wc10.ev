@@ -21,14 +21,6 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_zone_wc10
-_EVENT_DATA    ev_wc10_girl1_01
-_EVENT_DATA    ev_wc10_middleman1_01
-_EVENT_DATA    ev_wc10_girl4_01
-_EVENT_DATA    ev_wc10_man3_01
-_EVENT_DATA    ev_wc10_woman1_01
-_EVENT_DATA    ev_wc10_girl3_01
-_EVENT_DATA    ev_wc10_middleman2_01
-_EVENT_DATA    ev_wc10_oldwoman1_01
 _EVENT_DATA    ev_wf_npc
 _EVENT_DATA    ev_bg_wc10_board_01
 _EVENT_DATA_END
@@ -104,107 +96,9 @@ EVENT_END
 /**************************************************************/
 INIT_EVENT_START ev_zone_wc10
 	
-	//人口に応じてOBJを配置
-
-	//2人以上の表示OBJを全て非表示に
-	_FLAG_SET( FV_WF10_B )
-	_FLAG_SET( FV_WF10_C )
-	_FLAG_SET( FV_WF10_D )
-	_FLAG_SET( FV_WF10_E )
-	
-	//現在のBCの人口を取得
-	DEFINE_LOCAL LWK_POPULATION
-	_WFBC_GET_DATA( WFBC_GET_PARAM_PEOPLE_NUM, LWK_POPULATION )
-	
-	
-	//人口がE層以上の処理
-	IF $LWK_POPULATION >= 9 THEN
-		
-		_FLAG_RESET( FV_WF10_B )
-		_FLAG_RESET( FV_WF10_C )
-		_FLAG_RESET( FV_WF10_D )
-		_FLAG_RESET( FV_WF10_E )
-	
-	//人口がD層以上の処理
-	ELSIF $LWK_POPULATION >= 7 THEN
-		
-		_FLAG_RESET( FV_WF10_B )
-		_FLAG_RESET( FV_WF10_C )
-		_FLAG_RESET( FV_WF10_D )
-	
-	//人口がC層以上の処理
-	ELSIF $LWK_POPULATION >= 5 THEN
-		
-		_FLAG_RESET( FV_WF10_B )
-		_FLAG_RESET( FV_WF10_C )
-	
-	//人口がB層以上の処理
-	ELSIF $LWK_POPULATION >= 3 THEN
-		
-		_FLAG_RESET( FV_WF10_B )
-	
-	ELSE
-	
-	ENDIF
-		
 	
 INIT_EVENT_END
 
-/**************************************************************/
-/* 人口A：girl1_01                                             */
-/**************************************************************/
-EVENT_START   ev_wc10_girl1_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_wc10_girl1_01 )
-EVENT_END
-
-/**************************************************************/
-/* 人口A：middleman1_01                                             */
-/**************************************************************/
-EVENT_START   ev_wc10_middleman1_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_wc10_middleman1_01 )
-EVENT_END
-
-/**************************************************************/
-/* 人口B：girl4_01                                             */
-/**************************************************************/
-EVENT_START   ev_wc10_girl4_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_wc10_girl4_01 )
-EVENT_END
-
-/**************************************************************/
-/* 人口B：man3_01                                             */
-/**************************************************************/
-EVENT_START   ev_wc10_man3_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_wc10_man3_01 )
-EVENT_END
-
-/**************************************************************/
-/* 人口C：woman1_01                                            */
-/**************************************************************/
-EVENT_START   ev_wc10_woman1_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_wc10_woman1_01 )
-EVENT_END
-
-/**************************************************************/
-/* 人口C：girl3_01                                            */
-/**************************************************************/
-EVENT_START   ev_wc10_girl3_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_wc10_girl3_01 )
-EVENT_END
-
-/**************************************************************/
-/* 人口D：middleman2_01                                            */
-/**************************************************************/
-EVENT_START   ev_wc10_middleman2_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_wc10_middleman2_01 )
-EVENT_END
-
-/**************************************************************/
-/* 人口E：oldwoman1_01                                            */
-/**************************************************************/
-EVENT_START   ev_wc10_oldwoman1_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_wc10_oldwoman1_01 )
-EVENT_END
 
 /**************************************************************/
 /*看板01                                                 */

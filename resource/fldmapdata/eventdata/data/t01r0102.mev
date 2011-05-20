@@ -1,5 +1,5 @@
 #event data
-#save date:2011/03/22 15:20:07
+#save date:2011/05/19 17:34:41
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\t01r0102.wms
 #SECTION START:OBJ_EVENT
@@ -14,17 +14,17 @@ C:\home\swan\resource\fldmapdata\eventdata\data\t01r0102.wms
 #type
 1
 #ID name
-T01R0102_PRIZE1_01
+T01R0102_TRORHY3_01
 #OBJ CODE Number
-PRIZE1
+TROPHY3
 #MOVE CODE Number
 MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-FV_T01R0102_AWARD_01
+FV_T01R0102_TROPHY_03
 #Event Script Name
-SCRID_T01R0102_PRIZE1_01
+SCRID_T01R0102_TRORHY3_01
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -40,22 +40,22 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--168 8 216
+-152 8 120
 #event number: 1
 #type
 1
 #ID name
-T01R0102_PRIZE2_01
+T01R0102_TRORHY2_01
 #OBJ CODE Number
-PRIZE2
+TROPHY2
 #MOVE CODE Number
 MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-FV_T01R0102_AWARD_02
+FV_T01R0102_TROPHY_02
 #Event Script Name
-SCRID_T01R0102_PRIZE2_01
+SCRID_T01R0102_TRORHY2_01
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -71,7 +71,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--152 8 216
+-168 8 120
 #event number: 2
 #type
 1
@@ -107,17 +107,17 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-T01R0102_TRORHY2_01
+T01R0102_PRIZE2_01
 #OBJ CODE Number
-TROPHY2
+PRIZE2
 #MOVE CODE Number
 MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-FV_T01R0102_TROPHY_02
+FV_T01R0102_AWARD_02
 #Event Script Name
-SCRID_T01R0102_TRORHY2_01
+SCRID_T01R0102_PRIZE2_01
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -133,22 +133,22 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--168 8 120
+-152 8 216
 #event number: 4
 #type
 1
 #ID name
-T01R0102_TRORHY3_01
+T01R0102_PRIZE1_01
 #OBJ CODE Number
-TROPHY3
+PRIZE1
 #MOVE CODE Number
 MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-FV_T01R0102_TROPHY_03
+FV_T01R0102_AWARD_01
 #Event Script Name
-SCRID_T01R0102_TRORHY3_01
+SCRID_T01R0102_PRIZE1_01
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -164,7 +164,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--152 8 120
+-168 8 216
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

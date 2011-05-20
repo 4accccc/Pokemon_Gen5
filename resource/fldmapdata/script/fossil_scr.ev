@@ -25,12 +25,6 @@ DEFINE_LOCAL RECOVER_POKE     //復元してもらったポケモン
 EVENT_START ev_fossil
   _TALK_OBJ_START()
 
-  //盗難イベント中の場合全ての処理をフックする
-  IF FLAG_ON( FE_MUSEUM_TOUNAN ) THEN
-    //「復元待って」
-    $END_MSG = msg_kaseki_12
-    _CALL end_msg
-  ELSE
     //「化石研究している」クローズいらず
     _BALLOONWIN_TALKOBJ_MSG( msg_kaseki_01 )
 
@@ -59,7 +53,7 @@ EVENT_START ev_fossil
         _CALL end_msg
       ENDIF
     ENDIF
-  ENDIF  
+ 
 EVENT_END
 
 //最終メッセージ共通

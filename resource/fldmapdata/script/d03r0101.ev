@@ -42,18 +42,7 @@ EVENT_START		ev_d03r0101_sunglasses_01
 	
 	//Ç‚ÇÌÇÁÇ©Ç¢Ç∑Ç»ì¸éËå„
 	ELSE
-	
-		//å√ë„ÇÃèÈÇ…çsÇ≠ëO
-		IF FLAG_OFF( FE_D04R0101_ARRIVE ) THEN
-			
-			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d03r0101_sunglasses_02 )
-		
-		//å√ë„ÇÃèÈÇ…çsÇ¡ÇΩå„
-		ELSE
-
-			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d03r0101_sunglasses_03 )
-
-		ENDIF
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d03r0101_sunglasses_02 )
 		
 	ENDIF
 

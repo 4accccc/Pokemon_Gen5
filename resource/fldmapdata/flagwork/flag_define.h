@@ -115,290 +115,290 @@
 
 #define FE_PC_GOLD                         100 /* 0x0064 ポケセンでゴールドカードになっている */
 #define FE_PC_POKERUS                      101 /* 0x0065 ポケルスに感染して、ポケセンに行ったことあり */
-		/* not used   102(0x0066) */
-		/* not used   103(0x0067) */
-		/* not used   104(0x0068) */
-#define FE_CONNECT_UNION_GUIDE_TALK        105 /* 0x0069 ユニオンガイドと会話した */
-		/* not used   106(0x006a) */
-		/* not used   107(0x006b) */
-		/* not used   108(0x006c) */
-#define FE_T02R0302_BALLGET                109 /* 0x006d カノコタウン民家２F：親父からスーパーボール入手した */
-		/* not used   110(0x006e) */
-#define FE_C01R0201_ITEM_GET               111 /* 0x006f サンヨウシティビルＢ １Ｆ：アイテム入手イベント（ピントレンズ） */
-#define FE_SODATEYA_FIRSTTALK              112 /* 0x0070 育て屋受付：初回会話フラグ */
-#define FE_C01R0501_RIVALTALK              113 /* 0x0071 C01トレーナーズスクールのライバルと会話した */
-		/* not used   114(0x0072) */
-#define FE_CGEAR_GET                       115 /* 0x0073 Cギア入手フラグ */
-#define FE_C04GYM0101_TRBTL1               116 /* 0x0074 C04電気ジムのコースタートレーナーの対戦済みチェックフラグ（１台目） */
-#define FE_C04GYM0101_TRBTL2               117 /* 0x0075 C04電気ジムのコースタートレーナーの対戦済みチェックフラグ（２台目） */
-#define FE_C01GYM_ITEM                     118 /* 0x0076 Ｃ01三つ巴ジム：ジムガイドがくれるアイテム入手フラグ */
-#define FE_C02GYM_ITEM                     119 /* 0x0077 Ｃ02ノーマルジム：ジムガイドがくれるアイテム入手フラグ */
-#define FE_C03GYM_ITEM                     120 /* 0x0078 Ｃ03虫ジム：ジムガイドがくれるアイテム入手フラグ */
-#define FE_C04GYM_ITEM                     121 /* 0x0079 Ｃ04電気ジム：ジムガイドがくれるアイテム入手フラグ */
-#define FE_C05GYM_ITEM                     122 /* 0x007a Ｃ05地面ジム：ジムガイドがくれるアイテム入手フラグ */
-#define FE_C06GYM_ITEM                     123 /* 0x007b Ｃ06飛行ジム：ジムガイドがくれるアイテム入手フラグ */
-#define FE_C07GYM_ITEM                     124 /* 0x007c Ｃ07氷ジム：ジムガイドがくれるアイテム入手フラグ */
-#define FE_C08GYM_ITEM                     125 /* 0x007d Ｃ08ドラゴンジム：ジムガイドがくれるアイテム入手フラグ */
-#define FE_MUSEUM_TOUNAN                   126 /* 0x007e 博物館盗難イベントフラグ。盗難イベント中にON */
-		/* not used   127(0x007f) */
-#define FE_C02GYM_TRBTL1                   128 /* 0x0080 C02ノーマルジムトレーナーの対戦済みチェックフラグ（１人目） */
-#define FE_C02GYM_TRBTL2                   129 /* 0x0081 C02ノーマルジムトレーナーの対戦済みチェックフラグ（２人目） */
-#define FE_C03GYM_TRBTL1                   130 /* 0x0082 C03虫ジムトレーナーの対戦済みチェックフラグ（右上） */
-#define FE_C03GYM_TRBTL2                   131 /* 0x0083 C03虫ジムトレーナーの対戦済みチェックフラグ（左下） */
-#define FE_R01_BABYGIRL_01                 132 /* 0x0084 R01：BABYGIRLきずぐすり入手フラグ */
-#define FE_R07_FIGHTREW_01                 133 /* 0x0085 R07：FIGHTREWわざマシン入手フラグ */
-#define FE_C07R0301_IKARI                  134 /* 0x0086 セッカシティ：R0301民家でイカリまんじゅう入手フラグ */
-#define FE_C07PC0101_ITEM_01               135 /* 0x0087 セッカシティ：ポケモンセンターでアイテム入手フラグ */
-#define FE_BADGEGATE01_OPEN                136 /* 0x0088 バッジチェック炎草水ゲートが開いた */
-#define FE_BADGEGATE02_OPEN                137 /* 0x0089 バッジチェックノーマルゲートが開いた */
-#define FE_BADGEGATE03_OPEN                138 /* 0x008a バッジチェック虫ゲートが開いた */
-#define FE_BADGEGATE04_OPEN                139 /* 0x008b バッジチェック電気ゲートが開いた */
-#define FE_BADGEGATE05_OPEN                140 /* 0x008c バッジチェック地面ゲートが開いた */
-#define FE_BADGEGATE06_OPEN                141 /* 0x008d バッジチェック飛行ゲートが開いた */
-#define FE_BADGEGATE07_OPEN                142 /* 0x008e バッジチェック氷ゲートが開いた */
-#define FE_BADGEGATE08_OPEN                143 /* 0x008f バッジチェックドラゴンゲートが開いた */
-#define FE_C06R0101_ITEMGET_01             144 /* 0x0090 C06R0101フキヨセシティ民家のアイテム入手フラグ（アイテム未定） */
-#define FE_D04R0201_KASEKIGET              145 /* 0x0091 D04遺跡でカセキ入手した */
-#define FE_D04R0201_KASEKITALK             146 /* 0x0092 D04遺跡でカセキくれる人に話しかけた */
-#define FE_C05PC0101_ITEM                  147 /* 0x0093 C05PC0101：ホモエドシティPC、アイテム入手フラグ */
-#define FE_C02R0301_POKETRADE              148 /* 0x0094 C02R0301のゲーム内交換フラグ */
-#define FE_PALPARK_FIRSTTALK               149 /* 0x0095 パルパーク受付の初回会話フラグ（説明有り） */
-#define FE_REMIND_FIRSTTALK                150 /* 0x0096 技思い出しオヤジの初回会話フラグ（説明有り） */
-		/* not used   151(0x0097) */
-#define FE_ELBOARD_C02GYMWIN               152 /* 0x0098 未使用　※参照されなくなったら削除 */
-#define FE_SODATEYAOLDMAN_OPEN             153 /* 0x0099 育て屋にじいさんが戻ってくる（２匹預けられるようになる） */
-#define FE_BC10R0401_BOSS                  154 /* 0x009a ブラックシティ：ボス初回会話チェック */
-#define FE_WC10R0101_OLDMAN                155 /* 0x009b ホワイトシティ：村長初回会話チェック */
-#define FE_POKEID_ITEM1                    156 /* 0x009c ポケモンIDイベント用フラグ：アイテム１を入手した */
-#define FE_POKEID_ITEM2                    157 /* 0x009d ポケモンIDイベント用フラグ：アイテム２を入手した */
-#define FE_POKEID_ITEM3                    158 /* 0x009e ポケモンIDイベント用フラグ：アイテム３を入手した */
-#define FE_POKEID_ITEM4                    159 /* 0x009f ポケモンIDイベント用フラグ：アイテム４を入手した */
-#define FE_POKEID_ITEM5                    160 /* 0x00a0 ポケモンIDイベント用フラグ：アイテム５を入手した */
-#define FE_POKEID_ITEM6                    161 /* 0x00a1 ポケモンIDイベント用フラグ：アイテム６を入手した */
-#define FE_POKEID_FIRSTTALK                162 /* 0x00a2 ポケモンIDイベント初回会話フラグ */
-#define FE_C03R0303_CLEANINGM              163 /* 0x00a3 ヒウンシティ バトルカンパニー3F：会長と戦った */
-#define FE_C03R0901_ITEMGET                164 /* 0x00a4 ヒウンシティ バー：アイテムを入手した */
-#define FE_R05_MUSICIAN_WIN                165 /* 0x00a5 ５番道路のミュージシャンに勝利した（グッズ入手済み） */
-#define FE_LEGEND1_GET                     166 /* 0x00a6 伝説ポケモン：アトスをつかまえた */
-#define FE_LEGEND2_GET                     167 /* 0x00a7 伝説ポケモン：ポルトスを捕まえた */
-#define FE_LEGEND3_GET                     168 /* 0x00a8 伝説ポケモン：アラミスを捕まえた */
-#define FE_D06R0201_GOLDGET                169 /* 0x00a9 電気洞窟内：きんのたま入手フラグ */
-#define FE_PALACE01_OLDMANTALK             170 /* 0x00aa パレスじじい初回会話フラグ */
-		/* not used   171(0x00ab) */
-#define FE_MEZAPA_FIRSTTALK                172 /* 0x00ac めざめるパワーのタイプチェックする人の初回会話フラグ */
-		/* not used   173(0x00ad) */
-#define FE_HYOUKA_ITEMGET_01               174 /* 0x00ae 図鑑評価イベント：ポケモンを一定以上捕まえていた時のごほうび１ */
-#define FE_HYOUKA_ITEMGET_02               175 /* 0x00af 図鑑評価イベント：ポケモンを一定以上捕まえていた時のごほうび２ */
-#define FE_HYOUKA_ITEMGET_03               176 /* 0x00b0 図鑑評価イベント：ポケモンを一定以上捕まえていた時のごほうび３ */
-		/* not used   177(0x00b1) */
-		/* not used   178(0x00b2) */
-		/* not used   179(0x00b3) */
-#define FE_C08R0402_ITEMGET_01             180 /* 0x00b4 過去未来サブイベントのごほうび入手フラグ */
-#define FE_C06_ITEMGET_1                   181 /* 0x00b5 フキヨセ滑走路に落ちているアイテムの入手フラグ */
-#define FE_LEGEND1_BATTLE                  182 /* 0x00b6 伝説ポケモン：アトスと戦った */
-		/* not used   183(0x00b7) */
-		/* not used   184(0x00b8) */
-#define FE_C09_FORBIDDEN                   185 /* 0x00b9 ポケモンリーグ立ち入り禁止状態フラグ。Ｎ城出現&#xff5e;チャンプ復帰まで */
-		/* not used   186(0x00ba) */
-#define FE_C01_ITEMGET_01                  187 /* 0x00bb C01サンヨウシティ：釣り人のアイテム入手フラグ */
-#define FE_ZUKAN_COMPLETE_LOCAL_SEE        188 /* 0x00bc 地方図鑑「みた」モードを完成 */
-#define FE_C01_ITEMGET_02                  189 /* 0x00bd C01サンヨウシティ：ビル裏の人アイテム入手フラグ */
-#define FE_C01R0501_QUIZ                   190 /* 0x00be トレーナーズスクール：クイズのごほうび入手フラグ */
-#define FE_C03R0302_ITEM_01                191 /* 0x00bf C0３ヒウンシティ：バトルカンパニーアイテム入手フラグ（ピントレンズ） */
-#define FE_C01R0501_RIVALBATTLE            192 /* 0x00c0 C01トレーナーズスクールのライバルと戦闘した */
-#define FE_C05R0701_WAZALADY               193 /* 0x00c1 C05ホドモエシティ：日替わりわざ見せお嬢様初回会話フラグ */
-#define FE_RES_REQ_WB_COUNT                194 /* 0x00c2 すれ違い調査「ブラックと　ホワイト　おおいのは？」( 人数 )を達成 */
-#define FE_RES_REQ_WB_TIME                 195 /* 0x00c3 すれ違い調査「ブラックと　ホワイト　おおいのは？」( 時間 )を達成 */
-#define FE_RES_REQ_FIRST_POKE_COUNT        196 /* 0x00c4 すれ違い調査「えらんだ　さいしょのポケモンは？」( 人数 )を達成 */
-#define FE_RES_REQ_FIRST_POKE_TIME         197 /* 0x00c5 すれ違い調査「えらんだ　さいしょのポケモンは？」( 時間 )を達成 */
-#define FE_RES_REQ_PLAY_TIME_COUNT         198 /* 0x00c6 すれ違い調査「いちばんおおい　プレイじかんは？」( 人数 )を達成 */
-#define FE_RES_REQ_PLAY_TIME_TIME          199 /* 0x00c7 すれ違い調査「いちばんおおい　プレイじかんは？」( 時間 )を達成 */
-#define FE_RES_REQ_SEX_COUNT               200 /* 0x00c8 すれ違い調査「おとこのこと　おんなのこ　おおいのは？」( 人数 )を達成 */
-#define FE_RES_REQ_SEX_TIME                201 /* 0x00c9 すれ違い調査「おとこのこと　おんなのこ　おおいのは？」( 時間 )を達成 */
-#define FE_RES_REQ_JOB_COUNT               202 /* 0x00ca すれ違い調査「いちばんおおい　しごとは？」( 人数 )を達成 */
-#define FE_RES_REQ_JOB_TIME                203 /* 0x00cb すれ違い調査「いちばんおおい　しごとは？」( 時間 )を達成 */
-#define FE_RES_REQ_HOBBY_COUNT             204 /* 0x00cc すれ違い調査「いちばんおおい　しゅみは？」( 人数 )を達成 */
-#define FE_RES_REQ_HOBBY_TIME              205 /* 0x00cd すれ違い調査「いちばんおおい　しゅみは？」( 時間 )を達成 */
-#define FE_RES_REQ_BTL_OR_TRD_COUNT        206 /* 0x00ce すれ違い調査「たいせんと　こうかん　にんきがあるのは？」( 人数 )を達成 */
-#define FE_RES_REQ_BTL_OR_TRD_TIME         207 /* 0x00cf すれ違い調査「たいせんと　こうかん　にんきがあるのは？」( 時間 )を達成 */
-#define FE_RES_REQ_FAV_POKE_COUNT          208 /* 0x00d0 すれ違い調査「すきな　ポケモンは？」( 人数 )を達成 */
-#define FE_RES_REQ_FAV_POKE_TIME           209 /* 0x00d1 すれ違い調査「すきな　ポケモンは？」( 時間 )を達成 */
-#define FE_RES_REQ_POKE_TYPE_COUNT         210 /* 0x00d2 すれ違い調査「すきな　ポケモンのタイプは？」( 人数 )を達成 */
-#define FE_RES_REQ_POKE_TYPE_TIME          211 /* 0x00d3 すれ違い調査「すきな　ポケモンのタイプは？」( 時間 )を達成 */
-#define FE_RES_REQ_PLACE_COUNT             212 /* 0x00d4 すれ違い調査「とかいと　いなか　すみたいのは？」( 人数 )を達成 */
-#define FE_RES_REQ_PLACE_TIME              213 /* 0x00d5 すれ違い調査「とかいと　いなか　すみたいのは？」( 時間 )を達成 */
-#define FE_RES_REQ_PRECIOUS_COUNT          214 /* 0x00d6 すれ違い調査「だいじにしているものに　ついて」( 人数 )を達成 */
-#define FE_RES_REQ_PRECIOUS_TIME           215 /* 0x00d7 すれ違い調査「だいじにしているものに　ついて」( 時間 )を達成 */
-#define FE_RES_REQ_PARTNER_COUNT           216 /* 0x00d8 すれ違い調査「ひとのみりょくに　ついて」( 人数 )を達成 */
-#define FE_RES_REQ_PARTNER_TIME            217 /* 0x00d9 すれ違い調査「ひとのみりょくに　ついて」( 時間 )を達成 */
-#define FE_RES_REQ_SEASON_COUNT            218 /* 0x00da すれ違い調査「きせつに　ついて」( 人数 )を達成 */
-#define FE_RES_REQ_SEASON_TIME             219 /* 0x00db すれ違い調査「きせつに　ついて」( 時間 )を達成 */
-#define FE_RES_REQ_ART_COUNT               220 /* 0x00dc すれ違い調査「げいじゅつに　ついて」( 人数 )を達成 */
-#define FE_RES_REQ_ART_TIME                221 /* 0x00dd すれ違い調査「げいじゅつに　ついて」( 時間 )を達成 */
-#define FE_RES_REQ_MUSIC_COUNT             222 /* 0x00de すれ違い調査「いちばんすきな　おんがくは？」( 人数 )を達成 */
-#define FE_RES_REQ_MUSIC_TIME              223 /* 0x00df すれ違い調査「いちばんすきな　おんがくは？」( 時間 )を達成 */
-#define FE_RES_REQ_MOVIE_COUNT             224 /* 0x00e0 すれ違い調査「えいぞうに　ついて」( 人数 )を達成 */
-#define FE_RES_REQ_MOVIE_TIME              225 /* 0x00e1 すれ違い調査「えいぞうに　ついて」( 時間 )を達成 */
-#define FE_RES_REQ_SCHOOL_COUNT            226 /* 0x00e2 すれ違い調査「いちばんすきな　がっこうのじかんは？」( 人数 )を達成 */
-#define FE_RES_REQ_SCHOOL_TIME             227 /* 0x00e3 すれ違い調査「いちばんすきな　がっこうのじかんは？」( 時間 )を達成 */
-#define FE_RES_REQ_STUDY_COUNT             228 /* 0x00e4 すれ違い調査「べんきょうに　ついて」( 人数 )を達成 */
-#define FE_RES_REQ_STUDY_TIME              229 /* 0x00e5 すれ違い調査「べんきょうに　ついて」( 時間 )を達成 */
-#define FE_RES_REQ_STORTS_COUNT            230 /* 0x00e6 すれ違い調査「いちばんにんきのある　スポーツは？」( 人数 )を達成 */
-#define FE_RES_REQ_STORTS_TIME             231 /* 0x00e7 すれ違い調査「いちばんにんきのある　スポーツは？」( 時間 )を達成 */
-#define FE_RES_REQ_DAY_OFF_COUNT           232 /* 0x00e8 すれ違い調査「きゅうじつに　ついて」( 人数 )を達成 */
-#define FE_RES_REQ_DAY_OFF_TIME            233 /* 0x00e9 すれ違い調査「きゅうじつに　ついて」( 時間 )を達成 */
-#define FE_RES_REQ_DREAM_COUNT             234 /* 0x00ea すれ違い調査「いちばんなりたいものは？」( 人数 )を達成 */
-#define FE_RES_REQ_DREAM_TIME              235 /* 0x00eb すれ違い調査「いちばんなりたいものは？」( 時間 )を達成 */
-#define FE_RES_REQ_LEADER_COUNT            236 /* 0x00ec すれ違い調査「いちばんにんきのある　ジムリーダーは？」( 人数 )を達成 */
-#define FE_RES_REQ_LEADER_TIME             237 /* 0x00ed すれ違い調査「いちばんにんきのある　ジムリーダーは？」( 時間 )を達成 */
-#define FE_RES_REQ_FUN_COUNT               238 /* 0x00ee すれ違い調査「ポケモンのおもしろいところは？」( 人数 )を達成 */
-#define FE_RES_REQ_FUN_TIME                239 /* 0x00ef すれ違い調査「ポケモンのおもしろいところは？」( 時間 ) を達成 */
-#define FE_RES_QUESTION_YOU                240 /* 0x00f0 調査隊アンケート『どんなひとが　いるか』に回答 */
-#define FE_RES_QUESTION_FAVARITE           241 /* 0x00f1 調査隊アンケート『すきなポケモン』に回答 */
-#define FE_RES_QUESTION_WISH               242 /* 0x00f2 調査隊アンケート『みんなの　りそう』に回答 */
-#define FE_RES_QUESTION_PARTNER            243 /* 0x00f3 調査隊アンケート『すきなひと』に回答 */
-#define FE_RES_QUESTION_TASTE              244 /* 0x00f4 調査隊アンケート『みんなの　このみ』に回答 */
-#define FE_RES_QUESTION_HOBBY              245 /* 0x00f5 調査隊アンケート『みんなの　しゅみ』に回答 */
-#define FE_RES_QUESTION_SCHOOL             246 /* 0x00f6 調査隊アンケート『がっこうせいかつ』に回答 */
-#define FE_RES_QUESTION_PLAY               247 /* 0x00f7 調査隊アンケート『どんな　あそびがすきか』に回答 */
-#define FE_RES_QUESTION_POKEMON            248 /* 0x00f8 調査隊アンケート『ポケモン』に回答 */
-#define FE_C08R0201_BATTLE                 249 /* 0x00f9 ソウリュウシティ：トリプル／ローテーションバトルの館初回話しかけ */
-#define FE_C07R0401_GENTLEMAN_FIRST        250 /* 0x00fa セッカシティだいすきクラブ：会長初回話しかけ */
-#define FE_C07R0401_ITEM_GET_LV01          251 /* 0x00fb セッカシティだいすきクラブ：レベル差ごほうび25&#xff5e;49 */
-#define FE_C07R0401_ITEM_GET_LV02          252 /* 0x00fc セッカシティだいすきクラブ：レベル差ごほうび50&#xff5e;98 */
-#define FE_C07R0401_ITEM_GET_LV03          253 /* 0x00fd セッカシティだいすきクラブ：レベル差ごほうび99 */
-#define FE_RES_LEADER_FIRSTTALK            254 /* 0x00fe すれ違い調査隊隊長の初回会話フラグ */
-#define FE_RES_QUESTION_FIRSTTALK          255 /* 0x00ff すれ違い調査隊アンケート隊員の初回会話フラグ */
-#define FE_RES_HELLO_FIRSTTALK             256 /* 0x0100 すれ違い調査隊挨拶隊員の初回会話フラグ */
-#define FE_RES_THANKS_FIRSTTALK            257 /* 0x0101 すれ違い調査隊お礼隊員の初回会話フラグ */
-#define FE_R08_ITEMGET_01                  258 /* 0x0102 ８番道路：アイテム入手フラグ */
-#define FE_R09_ITEMGET_01                  259 /* 0x0103 ９番道路：アイテム入手フラグ */
-#define FE_H03_ITEMGET_01                  260 /* 0x0104 シリンダーブリッジ：アイテム入手フラグ */
-#define FE_R06R0301_ITEMGET_01             261 /* 0x0105 ６番道路民家：アイテム入手フラグ */
-#define FE_R09R0201_ITEMGET_01             262 /* 0x0106 ショッピングモール：アイテム入手フラグ */
-#define FE_R10_ITEMGET_01                  263 /* 0x0107 10番道路：アイテム入手フラグ */
-#define FE_C05R0201_ITEMGET_01             264 /* 0x0108 ホドモエシティ図鑑評価アイテム入手フラグ */
-#define FE_C03R1002_ITEMGET_01             265 /* 0x0109 ヒウンシティR1002：アイテム入手フラグ */
-#define FE_C03R0302_ITEM_02                266 /* 0x010a C0３ヒウンシティ：バトルカンパニーアイテム入手フラグ（ボール） */
-#define FE_C04R0201_ITEM_01                267 /* 0x010b ミュージカルホール：アイテム入手フラグ（わざマシン：エコーボイス） */
-#define FE_H01R0101_ITEMGET_01             268 /* 0x010c スカイアローブリッジのアイテム入手フラグ */
-#define FE_C03P17_ITEMGET_01               269 /* 0x010d ヒウンシティ路地：アイテム入手フラグ */
-#define FE_C03R1302_ITEMGET_01             270 /* 0x010e ヒウンシティビル：アイテム入手フラグ（わざマシン：メロメロ） */
-#define FE_D02_ITEMGET_01                  271 /* 0x010f ヤグルマの森外側：アイテム入手フラグ（わざマシン：いわくだき） */
-#define FE_R04R0201_ITEMGET_01             272 /* 0x0110 ４番道路：アイテム入手フラグ（わざマシン：あなをほる） */
-#define FE_C04R1002_ITEMGET_01             273 /* 0x0111 ライモンシティ建物２F：アイテム入手フラグ */
-#define FE_SEA_TEMPLE_KAIRIKI              274 /* 0x0112 海底遺跡ギミック：特定の場所でかいりきを使った */
-#define FE_SEA_TEMPLE_FLASH                275 /* 0x0113 海底遺跡ギミック：特定の場所でフラッシュを使った */
-#define FE_D03R0101_ITEMGET_01             276 /* 0x0114 リゾートデザート：アイテム入手フラグ（じてんしゃ） */
-#define FE_D04R0101_ARRIVE                 277 /* 0x0115 古代の城：到着フラグ（イベントでのみ使用） */
-#define FE_R08R0101_LEG_FIRST              278 /* 0x0116 セッカ湿原：ダルタニスの技習得イベントの初回判定フラグ */
-#define FE_R13_TREASURE_FIRSTTALK          279 /* 0x0117 R13お宝イベント：初回会話フラグ */
-#define FE_C05R0201_POKETRADE_01           280 /* 0x0118 ホドエモシティポケモン交換イベント */
-#define FE_C03R0901_MELODY                 281 /* 0x0119 配布イベント：酒場のメロディアイベントを終えた */
-#define FE_D05R0201_PLASMA_01              282 /* 0x011a D05R0201：プラズマ団スクリプト制御戦闘フラグ */
-#define FE_D05R0201_PLASMA_02              283 /* 0x011b D05R0201：プラズマ団スクリプト制御戦闘フラグ */
-#define FE_D05R0201_PLASMA_03              284 /* 0x011c D05R0201：プラズマ団スクリプト制御戦闘フラグ */
-#define FE_D05R0201_PLASMA_04              285 /* 0x011d D05R0201：プラズマ団スクリプト制御戦闘フラグ */
-#define FE_SPORTS_PLAYING                  286 /* 0x011e ビッグスタジアム/リトルコート：競技中フラグ。ON=競技中=競技場に入れない */
-#define FE_AWARD_LOCAL                     287 /* 0x011f ディレクター表彰：地方図鑑完成を表彰された */
-#define FE_AWARD_NATIONAL                  288 /* 0x0120 ディレクター表彰：全国図鑑完成を表彰された */
-#define FE_C03R0401_GIRL2_TALK             289 /* 0x0121 ヒウンシティビル：映画関連ゾロアイベントの少女と会話した */
-#define FE_C04R0501_ITEMGET_01             290 /* 0x0122 ライモンシティ汎用ビル：アイテム入手フラグ（わざマシン：かいりき） */
-#define FE_R16R0201_BACKPACKER_TALK        291 /* 0x0123 まよいの森：ゾロアークイベントの青年と話したフラグ */
-#define FE_R05R0101_APPRAISAL_TALK         292 /* 0x0124 ５番道路トレーラーハウス：グルメ鑑定士と話した */
-#define FE_C07PC0101_APPRAISAL_TALK        293 /* 0x0125 セッカシティＰＣ：鉱石鑑定士と話した */
-#define FE_T04R0101_APPRAISAL_TALK         294 /* 0x0126 サザナミタウン：財宝鑑定士と話した */
-#define FE_C03R0801_HINT_TALK              295 /* 0x0127 遊覧船内：ヒントおやじ */
-#define FE_AMUSEMENT_TR01_TALK             296 /* 0x0128 ライモン遊園地：観覧車トレーナー（春）と会話したフラグ */
-#define FE_AMUSEMENT_TR02_TALK             297 /* 0x0129 ライモン遊園地：観覧車トレーナー（夏）と会話したフラグ */
-#define FE_AMUSEMENT_TR03_TALK             298 /* 0x012a ライモン遊園地：観覧車トレーナー（秋）と会話したフラグ */
-#define FE_AMUSEMENT_TR04_TALK             299 /* 0x012b ライモン遊園地：観覧車トレーナー（冬）と会話したフラグ */
-#define FE_D08_PACKAGEPOKE_END             300 /* 0x012c リュウラセンの塔：Nとパッケージポケモンのイベントを終えた */
-#define FE_C02R0501_ITEMGET_01             301 /* 0x012d シッポウ倉庫：アイテム入手フラグ（初期３匹タイプの威力upアイテム） */
-#define FE_C09_GUIDE_TALK                  302 /* 0x012e 初回挑戦時の解説イベントをみた（ｐｏｓイベント） */
+#define FE_CONNECT_UNION_GUIDE_TALK        102 /* 0x0066 ユニオンガイドと会話した */
+#define FE_T02R0302_BALLGET                103 /* 0x0067 カノコタウン民家２F：親父からスーパーボール入手した */
+#define FE_C01R0201_ITEM_GET               104 /* 0x0068 サンヨウシティビルＢ １Ｆ：アイテム入手イベント（ピントレンズ） */
+#define FE_SODATEYA_FIRSTTALK              105 /* 0x0069 育て屋受付：初回会話フラグ */
+#define FE_CGEAR_GET                       106 /* 0x006a Cギア入手フラグ */
+#define FE_C01GYM_ITEM                     107 /* 0x006b Ｃ01三つ巴ジム：ジムガイドがくれるアイテム入手フラグ（未使用） */
+#define FE_C02GYM_ITEM                     108 /* 0x006c Ｃ02ノーマルジム：ジムガイドがくれるアイテム入手フラグ（未使用） */
+#define FE_C03GYM_ITEM                     109 /* 0x006d Ｃ03虫ジム：ジムガイドがくれるアイテム入手フラグ */
+#define FE_C04GYM_ITEM                     110 /* 0x006e Ｃ04電気ジム：ジムガイドがくれるアイテム入手フラグ */
+#define FE_C05GYM_ITEM                     111 /* 0x006f Ｃ05地面ジム：ジムガイドがくれるアイテム入手フラグ */
+#define FE_C06GYM_ITEM                     112 /* 0x0070 Ｃ06飛行ジム：ジムガイドがくれるアイテム入手フラグ */
+#define FE_C07GYM_ITEM                     113 /* 0x0071 Ｃ07氷ジム：ジムガイドがくれるアイテム入手フラグ（未使用） */
+#define FE_C08GYM_ITEM                     114 /* 0x0072 Ｃ08ドラゴンジム：ジムガイドがくれるアイテム入手フラグ */
+#define FE_C12GYM_ITEM                     115 /* 0x0073 C12ノーマルジム：ジムガイドがくれるアイテム入手フラグ */
+#define FE_C13GYM_ITEM                     116 /* 0x0074 C13どくジム：：ジムガイドがくれるアイテム入手フラグ */
+#define FE_C14GYM_ITEM                     117 /* 0x0075 C14みずジム：ジムガイドがくれるアイテム入手フラグ */
+#define FE_R07_FIGHTREW_01                 118 /* 0x0076 R07：FIGHTREWわざマシン入手フラグ */
+#define FE_C07R0301_IKARI                  119 /* 0x0077 セッカシティ：R0301民家でイカリまんじゅう入手フラグ */
+#define FE_C07PC0101_ITEM_01               120 /* 0x0078 セッカシティ：ポケモンセンターでアイテム入手フラグ */
+#define FE_C06R0101_ITEMGET_01             121 /* 0x0079 C06R0101フキヨセシティ民家のアイテム入手フラグ（アイテム未定） */
+#define FE_C05PC0101_ITEM                  122 /* 0x007a C05PC0101：ホモエドシティPC、アイテム入手フラグ */
+#define FE_PALPARK_FIRSTTALK               123 /* 0x007b パルパーク受付の初回会話フラグ（説明有り） */
+#define FE_REMIND_FIRSTTALK                124 /* 0x007c 技思い出しオヤジの初回会話フラグ（説明有り） */
+#define FE_SODATEYAOLDMAN_OPEN             125 /* 0x007d 育て屋にじいさんが戻ってくる（２匹預けられるようになる） */
+#define FE_POKEID_ITEM1                    126 /* 0x007e ポケモンIDイベント用フラグ：アイテム１を入手した */
+#define FE_POKEID_ITEM2                    127 /* 0x007f ポケモンIDイベント用フラグ：アイテム２を入手した */
+#define FE_POKEID_ITEM3                    128 /* 0x0080 ポケモンIDイベント用フラグ：アイテム３を入手した */
+#define FE_POKEID_ITEM4                    129 /* 0x0081 ポケモンIDイベント用フラグ：アイテム４を入手した */
+#define FE_POKEID_ITEM5                    130 /* 0x0082 ポケモンIDイベント用フラグ：アイテム５を入手した */
+#define FE_POKEID_ITEM6                    131 /* 0x0083 ポケモンIDイベント用フラグ：アイテム６を入手した */
+#define FE_POKEID_FIRSTTALK                132 /* 0x0084 ポケモンIDイベント初回会話フラグ */
+#define FE_C03R0901_ITEMGET                133 /* 0x0085 ヒウンシティ バー：アイテムを入手した */
+#define FE_PALACE01_OLDMANTALK             134 /* 0x0086 パレスじじい初回会話フラグ */
+#define FE_MEZAPA_FIRSTTALK                135 /* 0x0087 めざめるパワーのタイプチェックする人の初回会話フラグ */
+#define FE_HYOUKA_ITEMGET_01               136 /* 0x0088 図鑑評価イベント：ポケモンを一定以上捕まえていた時のごほうび１ */
+#define FE_HYOUKA_ITEMGET_02               137 /* 0x0089 図鑑評価イベント：ポケモンを一定以上捕まえていた時のごほうび２ */
+#define FE_HYOUKA_ITEMGET_03               138 /* 0x008a 図鑑評価イベント：ポケモンを一定以上捕まえていた時のごほうび３ */
+#define FE_C06_ITEMGET_1                   139 /* 0x008b フキヨセ滑走路に落ちているアイテムの入手フラグ */
+#define FE_C01_ITEMGET_01                  140 /* 0x008c C01サンヨウシティ：釣り人のアイテム入手フラグ */
+#define FE_ZUKAN_COMPLETE_LOCAL_SEE        141 /* 0x008d 地方図鑑「みた」モードを完成 */
+#define FE_C01_ITEMGET_02                  142 /* 0x008e C01サンヨウシティ：ビル裏の人アイテム入手フラグ */
+#define FE_C03R0302_ITEM_01                143 /* 0x008f C0３ヒウンシティ：バトルカンパニーアイテム入手フラグ（ピントレンズ） */
+#define FE_C05R0701_WAZALADY               144 /* 0x0090 C05ホドモエシティ：日替わりわざ見せお嬢様初回会話フラグ */
+#define FE_RES_REQ_WB_COUNT                145 /* 0x0091 すれ違い調査「ブラックと　ホワイト　おおいのは？」( 人数 )を達成 */
+#define FE_RES_REQ_WB_TIME                 146 /* 0x0092 すれ違い調査「ブラックと　ホワイト　おおいのは？」( 時間 )を達成 */
+#define FE_RES_REQ_FIRST_POKE_COUNT        147 /* 0x0093 すれ違い調査「えらんだ　さいしょのポケモンは？」( 人数 )を達成 */
+#define FE_RES_REQ_FIRST_POKE_TIME         148 /* 0x0094 すれ違い調査「えらんだ　さいしょのポケモンは？」( 時間 )を達成 */
+#define FE_RES_REQ_PLAY_TIME_COUNT         149 /* 0x0095 すれ違い調査「いちばんおおい　プレイじかんは？」( 人数 )を達成 */
+#define FE_RES_REQ_PLAY_TIME_TIME          150 /* 0x0096 すれ違い調査「いちばんおおい　プレイじかんは？」( 時間 )を達成 */
+#define FE_RES_REQ_SEX_COUNT               151 /* 0x0097 すれ違い調査「おとこのこと　おんなのこ　おおいのは？」( 人数 )を達成 */
+#define FE_RES_REQ_SEX_TIME                152 /* 0x0098 すれ違い調査「おとこのこと　おんなのこ　おおいのは？」( 時間 )を達成 */
+#define FE_RES_REQ_JOB_COUNT               153 /* 0x0099 すれ違い調査「いちばんおおい　しごとは？」( 人数 )を達成 */
+#define FE_RES_REQ_JOB_TIME                154 /* 0x009a すれ違い調査「いちばんおおい　しごとは？」( 時間 )を達成 */
+#define FE_RES_REQ_HOBBY_COUNT             155 /* 0x009b すれ違い調査「いちばんおおい　しゅみは？」( 人数 )を達成 */
+#define FE_RES_REQ_HOBBY_TIME              156 /* 0x009c すれ違い調査「いちばんおおい　しゅみは？」( 時間 )を達成 */
+#define FE_RES_REQ_BTL_OR_TRD_COUNT        157 /* 0x009d すれ違い調査「たいせんと　こうかん　にんきがあるのは？」( 人数 )を達成 */
+#define FE_RES_REQ_BTL_OR_TRD_TIME         158 /* 0x009e すれ違い調査「たいせんと　こうかん　にんきがあるのは？」( 時間 )を達成 */
+#define FE_RES_REQ_FAV_POKE_COUNT          159 /* 0x009f すれ違い調査「すきな　ポケモンは？」( 人数 )を達成 */
+#define FE_RES_REQ_FAV_POKE_TIME           160 /* 0x00a0 すれ違い調査「すきな　ポケモンは？」( 時間 )を達成 */
+#define FE_RES_REQ_POKE_TYPE_COUNT         161 /* 0x00a1 すれ違い調査「すきな　ポケモンのタイプは？」( 人数 )を達成 */
+#define FE_RES_REQ_POKE_TYPE_TIME          162 /* 0x00a2 すれ違い調査「すきな　ポケモンのタイプは？」( 時間 )を達成 */
+#define FE_RES_REQ_PLACE_COUNT             163 /* 0x00a3 すれ違い調査「とかいと　いなか　すみたいのは？」( 人数 )を達成 */
+#define FE_RES_REQ_PLACE_TIME              164 /* 0x00a4 すれ違い調査「とかいと　いなか　すみたいのは？」( 時間 )を達成 */
+#define FE_RES_REQ_PRECIOUS_COUNT          165 /* 0x00a5 すれ違い調査「だいじにしているものに　ついて」( 人数 )を達成 */
+#define FE_RES_REQ_PRECIOUS_TIME           166 /* 0x00a6 すれ違い調査「だいじにしているものに　ついて」( 時間 )を達成 */
+#define FE_RES_REQ_PARTNER_COUNT           167 /* 0x00a7 すれ違い調査「ひとのみりょくに　ついて」( 人数 )を達成 */
+#define FE_RES_REQ_PARTNER_TIME            168 /* 0x00a8 すれ違い調査「ひとのみりょくに　ついて」( 時間 )を達成 */
+#define FE_RES_REQ_SEASON_COUNT            169 /* 0x00a9 すれ違い調査「きせつに　ついて」( 人数 )を達成 */
+#define FE_RES_REQ_SEASON_TIME             170 /* 0x00aa すれ違い調査「きせつに　ついて」( 時間 )を達成 */
+#define FE_RES_REQ_ART_COUNT               171 /* 0x00ab すれ違い調査「げいじゅつに　ついて」( 人数 )を達成 */
+#define FE_RES_REQ_ART_TIME                172 /* 0x00ac すれ違い調査「げいじゅつに　ついて」( 時間 )を達成 */
+#define FE_RES_REQ_MUSIC_COUNT             173 /* 0x00ad すれ違い調査「いちばんすきな　おんがくは？」( 人数 )を達成 */
+#define FE_RES_REQ_MUSIC_TIME              174 /* 0x00ae すれ違い調査「いちばんすきな　おんがくは？」( 時間 )を達成 */
+#define FE_RES_REQ_MOVIE_COUNT             175 /* 0x00af すれ違い調査「えいぞうに　ついて」( 人数 )を達成 */
+#define FE_RES_REQ_MOVIE_TIME              176 /* 0x00b0 すれ違い調査「えいぞうに　ついて」( 時間 )を達成 */
+#define FE_RES_REQ_SCHOOL_COUNT            177 /* 0x00b1 すれ違い調査「いちばんすきな　がっこうのじかんは？」( 人数 )を達成 */
+#define FE_RES_REQ_SCHOOL_TIME             178 /* 0x00b2 すれ違い調査「いちばんすきな　がっこうのじかんは？」( 時間 )を達成 */
+#define FE_RES_REQ_STUDY_COUNT             179 /* 0x00b3 すれ違い調査「べんきょうに　ついて」( 人数 )を達成 */
+#define FE_RES_REQ_STUDY_TIME              180 /* 0x00b4 すれ違い調査「べんきょうに　ついて」( 時間 )を達成 */
+#define FE_RES_REQ_STORTS_COUNT            181 /* 0x00b5 すれ違い調査「いちばんにんきのある　スポーツは？」( 人数 )を達成 */
+#define FE_RES_REQ_STORTS_TIME             182 /* 0x00b6 すれ違い調査「いちばんにんきのある　スポーツは？」( 時間 )を達成 */
+#define FE_RES_REQ_DAY_OFF_COUNT           183 /* 0x00b7 すれ違い調査「きゅうじつに　ついて」( 人数 )を達成 */
+#define FE_RES_REQ_DAY_OFF_TIME            184 /* 0x00b8 すれ違い調査「きゅうじつに　ついて」( 時間 )を達成 */
+#define FE_RES_REQ_DREAM_COUNT             185 /* 0x00b9 すれ違い調査「いちばんなりたいものは？」( 人数 )を達成 */
+#define FE_RES_REQ_DREAM_TIME              186 /* 0x00ba すれ違い調査「いちばんなりたいものは？」( 時間 )を達成 */
+#define FE_RES_REQ_LEADER_COUNT            187 /* 0x00bb すれ違い調査「いちばんにんきのある　ジムリーダーは？」( 人数 )を達成 */
+#define FE_RES_REQ_LEADER_TIME             188 /* 0x00bc すれ違い調査「いちばんにんきのある　ジムリーダーは？」( 時間 )を達成 */
+#define FE_RES_REQ_FUN_COUNT               189 /* 0x00bd すれ違い調査「ポケモンのおもしろいところは？」( 人数 )を達成 */
+#define FE_RES_REQ_FUN_TIME                190 /* 0x00be すれ違い調査「ポケモンのおもしろいところは？」( 時間 ) を達成 */
+#define FE_RES_QUESTION_YOU                191 /* 0x00bf 調査隊アンケート『どんなひとが　いるか』に回答 */
+#define FE_RES_QUESTION_FAVARITE           192 /* 0x00c0 調査隊アンケート『すきなポケモン』に回答 */
+#define FE_RES_QUESTION_WISH               193 /* 0x00c1 調査隊アンケート『みんなの　りそう』に回答 */
+#define FE_RES_QUESTION_PARTNER            194 /* 0x00c2 調査隊アンケート『すきなひと』に回答 */
+#define FE_RES_QUESTION_TASTE              195 /* 0x00c3 調査隊アンケート『みんなの　このみ』に回答 */
+#define FE_RES_QUESTION_HOBBY              196 /* 0x00c4 調査隊アンケート『みんなの　しゅみ』に回答 */
+#define FE_RES_QUESTION_SCHOOL             197 /* 0x00c5 調査隊アンケート『がっこうせいかつ』に回答 */
+#define FE_RES_QUESTION_PLAY               198 /* 0x00c6 調査隊アンケート『どんな　あそびがすきか』に回答 */
+#define FE_RES_QUESTION_POKEMON            199 /* 0x00c7 調査隊アンケート『ポケモン』に回答 */
+#define FE_C07R0401_GENTLEMAN_FIRST        200 /* 0x00c8 セッカシティだいすきクラブ：会長初回話しかけ */
+#define FE_C07R0401_ITEM_GET_LV01          201 /* 0x00c9 セッカシティだいすきクラブ：レベル差ごほうび25&#xff5e;49 */
+#define FE_C07R0401_ITEM_GET_LV02          202 /* 0x00ca セッカシティだいすきクラブ：レベル差ごほうび50&#xff5e;98 */
+#define FE_C07R0401_ITEM_GET_LV03          203 /* 0x00cb セッカシティだいすきクラブ：レベル差ごほうび99 */
+#define FE_RES_LEADER_FIRSTTALK            204 /* 0x00cc すれ違い調査隊隊長の初回会話フラグ */
+#define FE_RES_QUESTION_FIRSTTALK          205 /* 0x00cd すれ違い調査隊アンケート隊員の初回会話フラグ */
+#define FE_RES_HELLO_FIRSTTALK             206 /* 0x00ce すれ違い調査隊挨拶隊員の初回会話フラグ */
+#define FE_RES_THANKS_FIRSTTALK            207 /* 0x00cf すれ違い調査隊お礼隊員の初回会話フラグ */
+#define FE_C05R0201_ITEMGET_01             208 /* 0x00d0 ホドモエシティ図鑑評価アイテム入手フラグ */
+#define FE_C03R1002_ITEMGET_01             209 /* 0x00d1 ヒウンシティR1002：アイテム入手フラグ */
+#define FE_C03R0302_ITEM_02                210 /* 0x00d2 C0３ヒウンシティ：バトルカンパニーアイテム入手フラグ（ボール） */
+#define FE_C04R0201_ITEM_01                211 /* 0x00d3 ミュージカルホール：アイテム入手フラグ（わざマシン：エコーボイス） */
+#define FE_C03P17_ITEMGET_01               212 /* 0x00d4 ヒウンシティ路地：アイテム入手フラグ */
+#define FE_C04R1002_ITEMGET_01             213 /* 0x00d5 ライモンシティ建物２F：アイテム入手フラグ */
+#define FE_SEA_TEMPLE_KAIRIKI              214 /* 0x00d6 海底遺跡ギミック：特定の場所でかいりきを使った */
+#define FE_SEA_TEMPLE_FLASH                215 /* 0x00d7 海底遺跡ギミック：特定の場所でフラッシュを使った */
+#define FE_D03R0101_ITEMGET_01             216 /* 0x00d8 リゾートデザート：アイテム入手フラグ（じてんしゃ） */
+#define FE_R08R0101_LEG_FIRST              217 /* 0x00d9 セッカ湿原：ダルタニスの技習得イベントの初回判定フラグ */
+#define FE_R13_TREASURE_FIRSTTALK          218 /* 0x00da R13お宝イベント：初回会話フラグ */
+#define FE_C03R0901_MELODY                 219 /* 0x00db 配布イベント：酒場のメロディアイベントを終えた */
+#define FE_SPORTS_PLAYING                  220 /* 0x00dc ビッグスタジアム/リトルコート：競技中フラグ。ON=競技中=競技場に入れない */
+#define FE_AWARD_LOCAL                     221 /* 0x00dd ディレクター表彰：地方図鑑完成を表彰された */
+#define FE_AWARD_NATIONAL                  222 /* 0x00de ディレクター表彰：全国図鑑完成を表彰された */
+#define FE_C04R0501_ITEMGET_01             223 /* 0x00df ライモンシティ汎用ビル：アイテム入手フラグ（わざマシン：かいりき） */
+#define FE_R16R0201_BACKPACKER_TALK        224 /* 0x00e0 まよいの森：ゾロアークイベントの青年と話したフラグ */
+#define FE_R05R0101_APPRAISAL_TALK         225 /* 0x00e1 ５番道路トレーラーハウス：グルメ鑑定士と話した */
+#define FE_C07PC0101_APPRAISAL_TALK        226 /* 0x00e2 セッカシティＰＣ：鉱石鑑定士と話した */
+#define FE_T04R0101_APPRAISAL_TALK         227 /* 0x00e3 サザナミタウン：財宝鑑定士と話した */
+#define FE_C03R0801_HINT_TALK              228 /* 0x00e4 遊覧船内：ヒントおやじ */
+#define FE_AMUSEMENT_TR01_TALK             229 /* 0x00e5 ライモン遊園地：観覧車トレーナー（春）と会話したフラグ */
+#define FE_AMUSEMENT_TR02_TALK             230 /* 0x00e6 ライモン遊園地：観覧車トレーナー（夏）と会話したフラグ */
+#define FE_AMUSEMENT_TR03_TALK             231 /* 0x00e7 ライモン遊園地：観覧車トレーナー（秋）と会話したフラグ */
+#define FE_AMUSEMENT_TR04_TALK             232 /* 0x00e8 ライモン遊園地：観覧車トレーナー（冬）と会話したフラグ */
+#define FE_T04R0101_APPRAISAL_CROWN        233 /* 0x00e9 サザナミタウン：財宝鑑定士に古代の王冠について話した */
+#define FE_PACKAGE_POKE_GET                234 /* 0x00ea パッケージポケモン（シン／ム）の捕獲フラグ */
+#define FE_ROCKCAPSULE_END                 235 /* 0x00eb ロックカプセルイベントの終了 */
+#define FE_C08R0801_ITEMGET_01             236 /* 0x00ec ソウリュウシティ：アイテム入手フラグ */
+#define FE_R14R0201_LEG_GET                237 /* 0x00ed ツチノカミイベント：捕獲チェック */
+#define FE_R14R0201_LEG_MEET               238 /* 0x00ee ツチノカミイベント：出会ったチェック */
+#define FE_T05R0301_BTLITEM_TALK           239 /* 0x00ef カナワタウン民家：バトルサブウェイの落し物　初回会話フラグ */
+#define FE_C08R0102_ITEMGET_01             240 /* 0x00f0 ソウリュウシティ：シャガの家2Fアイテム入手フラグ01 */
+#define FE_C08R0102_ITEMGET_02             241 /* 0x00f1 ソウリュウシティ：シャガの家2Fアイテム入手フラグ01 */
+#define FE_C04R0201_STYLIST_TALK           242 /* 0x00f2 ミュージカルホール：スタイリストに話しかけたフラグ */
+#define FE_MUSICAL_COMM_PLAY               243 /* 0x00f3 ミュージカルホール：通信ミュージカルで遊んだ */
+#define FE_C03R1201_ITEM_01                244 /* 0x00f4 ヒウンビル１Ｆ：アイテム入手フラグ */
+#define FE_T03PC0101_ITEMGET_01            245 /* 0x00f5 カゴメタウン：グラシデアのはな入手フラグ */
+#define FE_WALLPAPER_OPEN_MSG_01           246 /* 0x00f6 ボックス壁紙、１段階目追加メッセージを表示した */
+#define FE_WALLPAPER_OPEN_MSG_02           247 /* 0x00f7 ボックス壁紙、２段階目追加メッセージを表示した */
+#define FE_C03P13_PILOT_TALK_01            248 /* 0x00f8 ヒウンシティ：船員の初回会話フラグ */
+#define FE_D10R0401_POKE10_GET             249 /* 0x00f9 ジャイアントホール：ライ捕獲フラグ */
+#define FE_H05_BUY_POKE                    250 /* 0x00fa ワンダーブリッジ：ポケモンセンターコイキング購入フラグ */
+#define FE_R18R0101_APPRAISAL_TALK         251 /* 0x00fb 18番道路：鉱物鑑定士2初回話しかけフラグ */
+#define FE_JUDGE_TALK                      252 /* 0x00fc ジャッジ初回会話フラグ */
+#define FE_TEACH_COALESCENCE_TALK          253 /* 0x00fd 合体技教え初回会話フラグ */
+#define FE_R16R0201_POKE23_ENC             254 /* 0x00fe ゾロアークと出会ったフラグ（C04ゲートのメッセージ分岐に使用） */
+#define FE_PALACE01_OLDMANTALK2            255 /* 0x00ff 裏パレスじいさん初回会話フラグ */
+#define FE_R07R0201_TRADE_01               256 /* 0x0100 ７番道路：ポケモン交換フラグ */
+#define FE_D04R2301_POKE13_GET             257 /* 0x0101 古代の城：ドラー捕獲フラグ */
+#define FE_H05_LOOK_WANDERGIRL             258 /* 0x0102 15番道路：消える少女を見た */
+#define FE_R15R0401_TRADE_01               259 /* 0x0103 15番道路：ポケモン入手イベント */
+#define FE_C03PC0101_GEONET                260 /* 0x0104 ヒウンポケセン：ジオネット誘導イベントの初回会話フラグ */
+#define FE_T05_RAILWAY_TALK                261 /* 0x0105 カナワタウン：鉄道トークを聞いたことがある */
+#define FE_C04R0502_ITEMGET_01             262 /* 0x0106 ライモンシティビル：アイテム入手フラグ */
+#define FE_C04R0801_ITEMGET_01             263 /* 0x0107 ライモン16番道路側ゲート：アイテム入手フラグ */
+#define FE_C04GYM0101_CLEAR                264 /* 0x0108 スワンでんきジム：ジムクリアフラグ */
+#define FE_C03GYM0101_COCCON_01            265 /* 0x0109 スワンむしジム：繭状態フラグ */
+#define FE_C03GYM0101_COCCON_02            266 /* 0x010a スワンむしジム：繭状態フラグ */
+#define FE_C12GYM_OPEN                     267 /* 0x010b スワンノーマルジム：営業フラグ */
+#define FE_D22R0101_BREEEDERW_01           268 /* 0x010c スワン牧場：BREEDERWクリア後会話フラグ */
+#define FE_C12GYM0101_ITEMGET_01           269 /* 0x010d スワン：ノーマルジムアイテム入手フラグ */
+#define FE_C13GYM_TRBTL1                   270 /* 0x010e C13毒ジムトレーナーの対戦済みチェックフラグ（１人目） */
+#define FE_C13GYM_TRBTL2                   271 /* 0x010f C13毒ジムトレーナーの対戦済みチェックフラグ（２人目） */
+#define FE_INF_AREA1_ARRIVAL               272 /* 0x0110 無限ダンジョンエリア１到着フラグ */
+#define FE_INF_AREA2_ARRIVAL               273 /* 0x0111 無限ダンジョンエリア2到着フラグ */
+#define FE_INF_AREA3_ARRIVAL               274 /* 0x0112 無限ダンジョンエリア３到着フラグ */
+#define FE_INF_AREA4_ARRIVAL               275 /* 0x0113 無限ダンジョンエリア４到着フラグ */
+#define FE_INF_AREA5_ARRIVAL               276 /* 0x0114 無限ダンジョンエリア５到着フラグ */
+#define FE_C12R0402_ITEMGET_01             277 /* 0x0115 ヒオウギシティ：アイテム入手フラグ */
+#define FE_T06R0201_ITEMGET_01             278 /* 0x0116 サンギタウン：アイテム入手フラグ */
+#define FE_C13R0201_ITEMGET_01             279 /* 0x0117 C12R0201：アイテム入手フラグ */
+		/* not used   280(0x0118) */
+		/* not used   281(0x0119) */
+		/* not used   282(0x011a) */
+		/* not used   283(0x011b) */
+		/* not used   284(0x011c) */
+		/* not used   285(0x011d) */
+		/* not used   286(0x011e) */
+		/* not used   287(0x011f) */
+		/* not used   288(0x0120) */
+		/* not used   289(0x0121) */
+		/* not used   290(0x0122) */
+		/* not used   291(0x0123) */
+		/* not used   292(0x0124) */
+		/* not used   293(0x0125) */
+		/* not used   294(0x0126) */
+		/* not used   295(0x0127) */
+		/* not used   296(0x0128) */
+		/* not used   297(0x0129) */
+		/* not used   298(0x012a) */
+		/* not used   299(0x012b) */
+		/* not used   300(0x012c) */
+		/* not used   301(0x012d) */
+		/* not used   302(0x012e) */
 		/* not used   303(0x012f) */
 		/* not used   304(0x0130) */
 		/* not used   305(0x0131) */
-#define FE_T04R0101_APPRAISAL_CROWN        306 /* 0x0132 サザナミタウン：財宝鑑定士に古代の王冠について話した */
-#define FE_PACKAGE_POKE_GET                307 /* 0x0133 パッケージポケモン（シン／ム）の捕獲フラグ */
-#define FE_ROCKCAPSULE_END                 308 /* 0x0134 ロックカプセルイベントの終了 */
+		/* not used   306(0x0132) */
+		/* not used   307(0x0133) */
+		/* not used   308(0x0134) */
 		/* not used   309(0x0135) */
-#define FE_D08_ITEMGET_01                  310 /* 0x0136 リュウラセンの塔：アイテム入手フラグ */
+		/* not used   310(0x0136) */
 		/* not used   311(0x0137) */
-#define FE_C08R0801_ITEMGET_01             312 /* 0x0138 ソウリュウシティ：アイテム入手フラグ */
-#define FE_R14R0201_LEG_GET                313 /* 0x0139 ツチノカミイベント：捕獲チェック */
-#define FE_R18R0101_RANGERM_TALK           314 /* 0x013a 18番道路プレハブ：レンジャーと会話した */
-#define FE_R18R0101_POKE_GET               315 /* 0x013b 18番道路プレハブ：ポケモン入手フラグ（ラー） */
-#define FE_D05_ITEMGET_01                  316 /* 0x013c 冷凍コンテナ（外）；アイテム入手フラグ */
-#define FE_R14R0201_LEG_MEET               317 /* 0x013d ツチノカミイベント：出会ったチェック */
-#define FE_H04_ITEM_01                     318 /* 0x013e ビレッジブリッジ：配達物を貰っているかの判定 */
-#define FE_H04_ITEM_03                     319 /* 0x013f ビレッジブリッジ：配達物を貰っているかの判定 */
-#define FE_H04_ITEMHAVING_01               320 /* 0x0140 ビレッジブリッジ：配達物を持っているかのフラグ */
-#define FE_H04_DELIVERY_01                 321 /* 0x0141 13番道路：キャモメのイベントが起動しているかのフラグ ※H04ビレッジブリッジ→13番道路に変更になりました */
-#define FE_H04R0301_FISHING_RECEPT         322 /* 0x0142 ビレッジブリッジ民家：釣りイベント クリアフラグ */
-#define FE_T05R0301_BTLITEM_TALK           323 /* 0x0143 カナワタウン民家：バトルサブウェイの落し物　初回会話フラグ */
-#define FE_C08R0102_ITEMGET_01             324 /* 0x0144 ソウリュウシティ：シャガの家2Fアイテム入手フラグ01 */
-#define FE_C08R0102_ITEMGET_02             325 /* 0x0145 ソウリュウシティ：シャガの家2Fアイテム入手フラグ01 */
-#define FE_C04R0201_STYLIST_TALK           326 /* 0x0146 ミュージカルホール：スタイリストに話しかけたフラグ */
-#define FE_MUSICAL_COMM_PLAY               327 /* 0x0147 ミュージカルホール：通信ミュージカルで遊んだ */
-#define FE_C03R1201_ITEM_01                328 /* 0x0148 ヒウンビル１Ｆ：アイテム入手フラグ */
-#define FE_T03PC0101_ITEMGET_01            329 /* 0x0149 カゴメタウン：グラシデアのはな入手フラグ */
+		/* not used   312(0x0138) */
+		/* not used   313(0x0139) */
+		/* not used   314(0x013a) */
+		/* not used   315(0x013b) */
+		/* not used   316(0x013c) */
+		/* not used   317(0x013d) */
+		/* not used   318(0x013e) */
+		/* not used   319(0x013f) */
+		/* not used   320(0x0140) */
+		/* not used   321(0x0141) */
+		/* not used   322(0x0142) */
+		/* not used   323(0x0143) */
+		/* not used   324(0x0144) */
+		/* not used   325(0x0145) */
+		/* not used   326(0x0146) */
+		/* not used   327(0x0147) */
+		/* not used   328(0x0148) */
+		/* not used   329(0x0149) */
 		/* not used   330(0x014a) */
-#define FE_WALLPAPER_OPEN_MSG_01           331 /* 0x014b ボックス壁紙、１段階目追加メッセージを表示した */
-#define FE_WALLPAPER_OPEN_MSG_02           332 /* 0x014c ボックス壁紙、２段階目追加メッセージを表示した */
-#define FE_BC10R0401_BTL_01                333 /* 0x014d ブラックシティ：ローテーションバトル終了フラグ */
-#define FE_BC10R0401_BTL_02                334 /* 0x014e ブラックシティ：ローテーションバトル終了フラグ */
-#define FE_WC10R0101_BTL_01                335 /* 0x014f ホワイトフォレスト：トリプルバトル終了フラグ */
-#define FE_WC10R0101_BTL_02                336 /* 0x0150 ホワイトフォレスト：トリプルバトル終了フラグ */
-#define FE_C03P13_PILOT_TALK_01            337 /* 0x0151 ヒウンシティ：船員の初回会話フラグ */
-#define FE_D10R0401_POKE10_GET             338 /* 0x0152 ジャイアントホール：ライ捕獲フラグ */
-#define FE_H05_BUY_POKE                    339 /* 0x0153 ワンダーブリッジ：ポケモンセンターコイキング購入フラグ */
-#define FE_N_LASTMESSAGE                   340 /* 0x0154 Nの城 謁見の間：ラストメッセージ分岐用フラグ */
-#define FE_R18R0101_APPRAISAL_TALK         341 /* 0x0155 18番道路：鉱物鑑定士2初回話しかけフラグ */
-#define FE_JUDGE_TALK                      342 /* 0x0156 ジャッジ初回会話フラグ */
-#define FE_TEACH_COALESCENCE_TALK          343 /* 0x0157 合体技教え初回会話フラグ */
-#define FE_R16R0201_POKE23_ENC             344 /* 0x0158 ゾロアークと出会ったフラグ（C04ゲートのメッセージ分岐に使用） */
-#define FE_PALACE01_OLDMANTALK2            345 /* 0x0159 裏パレスじいさん初回会話フラグ */
-#define FE_T04_ITEMGET_01                  346 /* 0x015a サザナミタウン：アイテム入手フラグ（わざマシン：ダイビング） */
-#define FE_R07R0201_TRADE_01               347 /* 0x015b ７番道路：ポケモン交換フラグ */
-#define FE_D04R2301_POKE13_GET             348 /* 0x015c 古代の城：ドラー捕獲フラグ */
-#define FE_R06R0101_EVENT_ON               349 /* 0x015d 季節研究所：シキジカイベント開始 */
-#define FE_R06R0101_ITEMGET_01             350 /* 0x015e 季節研究所：アイテム入手フラグ */
-#define FE_T01R0401_SUPPORT_TALK           351 /* 0x015f 研究所：殿堂入り後サポートと話した */
-#define FE_C05R0201_BTL_01                 352 /* 0x0160 ホドモエシティ：交換後戦闘フラグ（クリア後） */
-#define FE_D09R1401_RIVAL_01               353 /* 0x0161 チャンピオンロード：ライバル初回話しかけフラグ */
+		/* not used   331(0x014b) */
+		/* not used   332(0x014c) */
+		/* not used   333(0x014d) */
+		/* not used   334(0x014e) */
+		/* not used   335(0x014f) */
+		/* not used   336(0x0150) */
+		/* not used   337(0x0151) */
+		/* not used   338(0x0152) */
+		/* not used   339(0x0153) */
+		/* not used   340(0x0154) */
+		/* not used   341(0x0155) */
+		/* not used   342(0x0156) */
+		/* not used   343(0x0157) */
+		/* not used   344(0x0158) */
+		/* not used   345(0x0159) */
+		/* not used   346(0x015a) */
+		/* not used   347(0x015b) */
+		/* not used   348(0x015c) */
+		/* not used   349(0x015d) */
+		/* not used   350(0x015e) */
+		/* not used   351(0x015f) */
+		/* not used   352(0x0160) */
+		/* not used   353(0x0161) */
 		/* not used   354(0x0162) */
-#define FE_C02R0301_BTL_01                 355 /* 0x0163 シッポウ倉庫：交換後戦闘フラグ（クリア後） */
-#define FE_R13R0101_ITEMGET_01             356 /* 0x0164 13番道路民家：アイテム入手フラグ（プレート２種） */
-#define FE_C09P01_GATE_OPEN                357 /* 0x0165 ポケモンリーグフロント：ゲート開放フラグ */
-#define FE_H05_LOOK_WANDERGIRL             358 /* 0x0166 15番道路：消える少女を見た */
-#define FE_T04PC0101_ITEMGET_01            359 /* 0x0167 サザナミポケセン：アイテム入手フラグ */
-#define FE_R15R0401_TRADE_01               360 /* 0x0168 15番道路：ポケモン入手イベント */
-#define FE_C03PC0101_GEONET                361 /* 0x0169 ヒウンポケセン：ジオネット誘導イベントの初回会話フラグ */
-#define FE_N01R0304_TALK                   362 /* 0x016a Nの城：ボールをくれるプラズマ団員・初回会話フラグ */
-#define FE_T05_RAILWAY_TALK                363 /* 0x016b カナワタウン：鉄道トークを聞いたことがある */
+		/* not used   355(0x0163) */
+		/* not used   356(0x0164) */
+		/* not used   357(0x0165) */
+		/* not used   358(0x0166) */
+		/* not used   359(0x0167) */
+		/* not used   360(0x0168) */
+		/* not used   361(0x0169) */
+		/* not used   362(0x016a) */
+		/* not used   363(0x016b) */
 		/* not used   364(0x016c) */
-#define FE_C05R0601_ITEMGET_01             365 /* 0x016d ホドモエマーケット：アイテム入手フラグ */
-#define FE_C04R0502_ITEMGET_01             366 /* 0x016e ライモンシティビル：アイテム入手フラグ */
-#define FE_C04R0801_ITEMGET_01             367 /* 0x016f ライモン16番道路側ゲート：アイテム入手フラグ */
-#define FE_T01R0101_MAMA_RETALK            368 /* 0x0170 自宅１Fお母さんの会話分岐フラグ。オンなら、回復処理にいかず、再会話メッセージ（日常会話）を表示します。 */
-#define FE_BC10R0401_BTL_END               369 /* 0x0171 ブラックシティ：10000人超え達成フラグ */
-#define FE_C04GYM0101_CLEAR                370 /* 0x0172 スワンでんきジム：ジムクリアフラグ */
-#define FE_C03GYM0101_COCCON_01            371 /* 0x0173 スワンむしジム：繭状態フラグ */
-#define FE_C03GYM0101_COCCON_02            372 /* 0x0174 スワンむしジム：繭状態フラグ */
-#define FE_C12GYM_OPEN                     373 /* 0x0175 スワンノーマルジム：営業フラグ */
-#define FE_D22R0101_BREEEDERW_01           374 /* 0x0176 スワン牧場：BREEDERWクリア後会話フラグ */
-#define FE_C12GYM0101_ITEMGET_01           375 /* 0x0177 スワン：ノーマルジムアイテム入手フラグ */
-#define FE_C13GYM_TRBTL1                   376 /* 0x0178 C13毒ジムトレーナーの対戦済みチェックフラグ（１人目） */
-#define FE_C13GYM_TRBTL2                   377 /* 0x0179 C13毒ジムトレーナーの対戦済みチェックフラグ（２人目） */
-#define FE_INF_AREA1_ARRIVAL               378 /* 0x017a 無限ダンジョンエリア１到着フラグ */
-#define FE_INF_AREA2_ARRIVAL               379 /* 0x017b 無限ダンジョンエリア2到着フラグ */
-#define FE_INF_AREA3_ARRIVAL               380 /* 0x017c 無限ダンジョンエリア３到着フラグ */
-#define FE_INF_AREA4_ARRIVAL               381 /* 0x017d 無限ダンジョンエリア４到着フラグ */
-#define FE_INF_AREA5_ARRIVAL               382 /* 0x017e 無限ダンジョンエリア５到着フラグ */
-#define FE_C12R0402_ITEMGET_01             383 /* 0x017f ヒオウギシティ：アイテム入手フラグ */
-#define FE_T06R0201_ITEMGET_01             384 /* 0x0180 サンギタウン：アイテム入手フラグ */
-#define FE_C13R0201_ITEMGET_01             385 /* 0x0181 C12R0201：アイテム入手フラグ */
+		/* not used   365(0x016d) */
+		/* not used   366(0x016e) */
+		/* not used   367(0x016f) */
+		/* not used   368(0x0170) */
+		/* not used   369(0x0171) */
+		/* not used   370(0x0172) */
+		/* not used   371(0x0173) */
+		/* not used   372(0x0174) */
+		/* not used   373(0x0175) */
+		/* not used   374(0x0176) */
+		/* not used   375(0x0177) */
+		/* not used   376(0x0178) */
+		/* not used   377(0x0179) */
+		/* not used   378(0x017a) */
+		/* not used   379(0x017b) */
+		/* not used   380(0x017c) */
+		/* not used   381(0x017d) */
+		/* not used   382(0x017e) */
+		/* not used   383(0x017f) */
+		/* not used   384(0x0180) */
+		/* not used   385(0x0181) */
 		/* not used   386(0x0182) */
 		/* not used   387(0x0183) */
 		/* not used   388(0x0184) */
@@ -407,112 +407,6 @@
 		/* not used   391(0x0187) */
 		/* not used   392(0x0188) */
 		/* not used   393(0x0189) */
-		/* not used   394(0x018a) */
-		/* not used   395(0x018b) */
-		/* not used   396(0x018c) */
-		/* not used   397(0x018d) */
-		/* not used   398(0x018e) */
-		/* not used   399(0x018f) */
-		/* not used   400(0x0190) */
-		/* not used   401(0x0191) */
-		/* not used   402(0x0192) */
-		/* not used   403(0x0193) */
-		/* not used   404(0x0194) */
-		/* not used   405(0x0195) */
-		/* not used   406(0x0196) */
-		/* not used   407(0x0197) */
-		/* not used   408(0x0198) */
-		/* not used   409(0x0199) */
-		/* not used   410(0x019a) */
-		/* not used   411(0x019b) */
-		/* not used   412(0x019c) */
-		/* not used   413(0x019d) */
-		/* not used   414(0x019e) */
-		/* not used   415(0x019f) */
-		/* not used   416(0x01a0) */
-		/* not used   417(0x01a1) */
-		/* not used   418(0x01a2) */
-		/* not used   419(0x01a3) */
-		/* not used   420(0x01a4) */
-		/* not used   421(0x01a5) */
-		/* not used   422(0x01a6) */
-		/* not used   423(0x01a7) */
-		/* not used   424(0x01a8) */
-		/* not used   425(0x01a9) */
-		/* not used   426(0x01aa) */
-		/* not used   427(0x01ab) */
-		/* not used   428(0x01ac) */
-		/* not used   429(0x01ad) */
-		/* not used   430(0x01ae) */
-		/* not used   431(0x01af) */
-		/* not used   432(0x01b0) */
-		/* not used   433(0x01b1) */
-		/* not used   434(0x01b2) */
-		/* not used   435(0x01b3) */
-		/* not used   436(0x01b4) */
-		/* not used   437(0x01b5) */
-		/* not used   438(0x01b6) */
-		/* not used   439(0x01b7) */
-		/* not used   440(0x01b8) */
-		/* not used   441(0x01b9) */
-		/* not used   442(0x01ba) */
-		/* not used   443(0x01bb) */
-		/* not used   444(0x01bc) */
-		/* not used   445(0x01bd) */
-		/* not used   446(0x01be) */
-		/* not used   447(0x01bf) */
-		/* not used   448(0x01c0) */
-		/* not used   449(0x01c1) */
-		/* not used   450(0x01c2) */
-		/* not used   451(0x01c3) */
-		/* not used   452(0x01c4) */
-		/* not used   453(0x01c5) */
-		/* not used   454(0x01c6) */
-		/* not used   455(0x01c7) */
-		/* not used   456(0x01c8) */
-		/* not used   457(0x01c9) */
-		/* not used   458(0x01ca) */
-		/* not used   459(0x01cb) */
-		/* not used   460(0x01cc) */
-		/* not used   461(0x01cd) */
-		/* not used   462(0x01ce) */
-		/* not used   463(0x01cf) */
-		/* not used   464(0x01d0) */
-		/* not used   465(0x01d1) */
-		/* not used   466(0x01d2) */
-		/* not used   467(0x01d3) */
-		/* not used   468(0x01d4) */
-		/* not used   469(0x01d5) */
-		/* not used   470(0x01d6) */
-		/* not used   471(0x01d7) */
-		/* not used   472(0x01d8) */
-		/* not used   473(0x01d9) */
-		/* not used   474(0x01da) */
-		/* not used   475(0x01db) */
-		/* not used   476(0x01dc) */
-		/* not used   477(0x01dd) */
-		/* not used   478(0x01de) */
-		/* not used   479(0x01df) */
-		/* not used   480(0x01e0) */
-		/* not used   481(0x01e1) */
-		/* not used   482(0x01e2) */
-		/* not used   483(0x01e3) */
-		/* not used   484(0x01e4) */
-		/* not used   485(0x01e5) */
-		/* not used   486(0x01e6) */
-		/* not used   487(0x01e7) */
-		/* not used   488(0x01e8) */
-		/* not used   489(0x01e9) */
-		/* not used   490(0x01ea) */
-		/* not used   491(0x01eb) */
-		/* not used   492(0x01ec) */
-		/* not used   493(0x01ed) */
-		/* not used   494(0x01ee) */
-		/* not used   495(0x01ef) */
-		/* not used   496(0x01f0) */
-		/* not used   497(0x01f1) */
-		/* not used   498(0x01f2) */
-		/* not used   499(0x01f3) */
 
 #define FE_AREA_END                        499 /* 0x01f3  */
 
@@ -521,406 +415,154 @@
 
 #define FV_AREA_START                      500 /* 0x01f4  */
 
-#define FV_T01R0102_RIVAL                  500 /* 0x01f4 自宅２階：ポケモン入手イベントのライバル */
-#define FV_T01R0102_SUPPORT                501 /* 0x01f5 自宅２階：ポケモン入手イベントのサポート */
-		/* not used   502(0x01f6) */
-		/* not used   503(0x01f7) */
-		/* not used   504(0x01f8) */
-#define FV_T01R0401_HAKASE2                505 /* 0x01f9 カノコタウン研究所：アララギ博士(娘) */
-#define FV_T01R0401_RIVAL                  506 /* 0x01fa カノコタウン研究所：ライバル */
-#define FV_T01R0401_SUPPORT                507 /* 0x01fb カノコタウン研究所：サポート */
-#define FV_R01_HAKASE                      508 /* 0x01fc １番道路：アララギ博士 */
-		/* not used   509(0x01fd) */
-		/* not used   510(0x01fe) */
-#define FV_T02PC0101_HAKASE                511 /* 0x01ff カラクサタウンＰＣの博士 */
-#define FV_T01R0201_SUPPORT                512 /* 0x0200 サポートの自宅：出発イベントのサポート */
-#define FV_T01_RIVAL                       513 /* 0x0201 研究所前：ストッパーのライバル */
-#define FV_T01_SUPPORT                     514 /* 0x0202 研究所前：サポート */
-#define FV_R01_POKECOUNT_BTL               515 /* 0x0203 １番道路：ポケモン捕獲数勝負（ライバルとサポート） */
-		/* not used   516(0x0204) */
-#define FV_R03_RIVAL_01                    517 /* 0x0205 ３番道路：ライバルと出会い戦闘後イベント */
-#define FV_T02PC0101_SUPPORT               518 /* 0x0206 カラクサタウン：演説イベント終了後 */
-#define FV_T02PC0101_RIVAL                 519 /* 0x0207 カラクサタウン：長草イベント後にT02ポケセンに表示 */
-#define FV_T02_HAKASE                      520 /* 0x0208 カラクサタウン：博士のポケセン案内 */
-#define FV_T02_RIVAL                       521 /* 0x0209 カラクサタウン：ライバルのストッパー */
-#define FV_T02_HAKAI                       522 /* 0x020a カラクサタウン：ハカイ団ストッパー */
-#define FV_T02_SAGE                        523 /* 0x020b カラクサタウン：七賢者の演説 */
-#define FV_T02_NNN                         524 /* 0x020c カラクサタウン：Nとの出会い */
-#define FV_T02_MAN                         525 /* 0x020d カラクサタウン：群集 */
-		/* not used   526(0x020e) */
-		/* not used   527(0x020f) */
-#define FV_T02_RIVAL_02                    528 /* 0x0210 カラクサタウン：イベント誘導 */
-#define FV_R02_MOTHER                      529 /* 0x0211 ２番道路：ランニングシューズ入手イベントのママ */
-#define FV_C01GYM0101_LEADERS              530 /* 0x0212 C01三つ巴ジム：３兄弟リーダーのうち後から出てくる二人 */
-#define FV_D01R0101_GIRL_01                531 /* 0x0213 D01R0101：ジムリーダー対策ポケモンをくれる女の子 */
-#define FV_D01R0101_SUPPORT_01             532 /* 0x0214 D01R0101：夢ポケモンについて教えてくれるサポート */
-#define FV_D01R0101_POKE_01                533 /* 0x0215 D01R0101：夢ポケモン */
-#define FV_D01R0101_ITEM_01                534 /* 0x0216 D01R0101：夢アイテム */
-#define FV_T01R0101_FRIENDS                535 /* 0x0217 主人公自宅１階の友達 */
-#define FV_C04GYM0101_TR_01                536 /* 0x0218 C04電気ジム：コースターに乗っているトレーナー１人目 */
-#define FV_C04GYM0101_TR_02                537 /* 0x0219 C04電気ジム：コースターに乗っているトレーナー２人目 */
-#define FV_C01_GUIDE_01                    538 /* 0x021a C01フィールド：ジム前のジムガイド（ストッパー） */
-#define FV_C01_LEADER1_01                  539 /* 0x021b C01フィールド：ジム前のジムリーダー（コーン） */
-#define FV_C01_INVENTOR_01                 540 /* 0x021c C01フィールド：バッジ入手後に話しかけてくる発明家（マコモ） */
-#define FV_C01R0101_INVENTOR_01            541 /* 0x021d 発明家自宅の１階：発明家（マコモ） （最終的には２階に常駐） */
-#define FV_C01R0501_RIVAL_01               542 /* 0x021e C01トレーナーズスクール：ライバル */
-#define FV_C04_HAKAI_01                    543 /* 0x021f ライモンシティ：プラズマ団POSイベントのしたっぱ２人と育て屋じいさん */
-#define FV_D05R0101_RIVAL_01               544 /* 0x0220 D05R0101：初回入室時イベントライバル01 */
-#define FV_D05R0101_RIVAL_02               545 /* 0x0221 D05R0101：ライバル02 */
-#define FV_D05R0201_WORKMAN_01             546 /* 0x0222 D05R0201：戦闘後表示WORKMAN */
-#define FV_C02GYM0101_FRIENDS              547 /* 0x0223 C02博物館：サポート＆ライバル */
-#define FV_D02_LEADER3                     548 /* 0x0224 Ｄ02（フィールド）：誘導イベントのジムリーダー（アーティ） */
-#define FV_D02_HAKAI                       549 /* 0x0225 Ｄ02（フィールド）：ストッパーイベントのプラズマ団 */
-#define FV_D02R0101_HAKAI                  550 /* 0x0226 ヤグルマの森：盗難イベントのプラズマ団 */
-#define FV_D02R0101_LEADER2                551 /* 0x0227 ヤグルマの森：盗難イベントのジムリーダー（アロエ） */
-#define FV_D02R0101_LEADER3                552 /* 0x0228 ヤグルマの森：盗難イベントのジムリーダー（アーティ） */
-#define FV_C04P01_BOSS_01                  553 /* 0x0229 ライモンシティ遊園地：N */
-#define FV_C05_GYMLEADER_01                554 /* 0x022a C05：ジムリーダー達 */
-#define FV_C05_GYMLEADER_02                555 /* 0x022b C05：ジムリーダー達 */
-		/* not used   556(0x022c) */
-#define FV_C05_SAGE_01                     557 /* 0x022d C05：プラズマ団達 */
-#define FV_D05_RIVAL_01                    558 /* 0x022e D05：ライバル */
-#define FV_D05_WORKMAN_01                  559 /* 0x022f D05：workman */
-#define FV_C05_BUSINESSMAN_01              560 /* 0x0230 C05：ジム前ストッパー */
-#define FV_C04_SUPPORT_01                  561 /* 0x0231 ライモンシティ：ミュージカル前のサポート */
-#define FV_C02_LEADER2                     562 /* 0x0232 C02フィールド：ジムリーダー（アロエ） */
-#define FV_C02_POSEVENT_01                 563 /* 0x0233 C02フィールド：友達とジムリーダー（アーティ）のバニッシュフラグ */
-#define FV_C02GYM0202_LEADER2              564 /* 0x0234 C02ジム：ジムリーダー（アロエ） */
-#define FV_C04GYM0101_LEADER4              565 /* 0x0235 ライモンシティジム：ジムリーダー（カミツレ） */
-#define FV_R05_RIVAL                       566 /* 0x0236 ５番道路：ライバル */
-#define FV_R05_LEADER4                     567 /* 0x0237 ５番道路：ジムリーダー（カミツレ） */
-#define FV_R05_CHAMPION                    568 /* 0x0238 ５番道路：チャンピオンと子供たち */
-#define FV_MUSEUM_TOUNAN                   569 /* 0x0239 博物館：盗難イベントで盗まれるもの */
-#define FV_C03GYM0101_TR01                 570 /* 0x023a Ｃ03虫ジム：トリックアートに隠れているトレーナー（右上） */
-#define FV_C03GYM0101_TR02                 571 /* 0x023b Ｃ03虫ジム：トリックアートに隠れているトレーナー（左下） */
-#define FV_R03_SUPPORT_01                  572 /* 0x023c R03：ストッパーのサポート01 */
-#define FV_R03_RIVAL_02                    573 /* 0x023d R03：ライバル02 */
-#define FV_R03R0301_RIVAL_01               574 /* 0x023e R030101：プラズマ団・ライバル */
-#define FV_D07R0201_GYMLEADER05_01         575 /* 0x023f ネジ山：ヤーコンとライバル */
-#define FV_C07_RIVAL_01                    576 /* 0x0240 C07セッカシティ：ライバル */
-#define FV_C07_SUPPORT_01                  577 /* 0x0241 C07セッカシティ：サポート */
-#define FV_C07_READER7                     578 /* 0x0242 C07セッカシティ：ハチク */
-#define FV_C07_HAKASE1                     579 /* 0x0243 C07セッカシティジム：アララギ（父） */
-#define FV_C07GYM0101_READER7_01           580 /* 0x0244 C07GYM0101セッカシティジム：ハチク */
-#define FV_C06_ZUKANCHK_01                 581 /* 0x0245 C０６フキヨセシティ：図鑑チェックイベントで登場する博士父とジムリーダー（フウロ） */
-#define FV_D06_LEADER5_01                  582 /* 0x0246 D06電気洞窟前に登場するC05ジムリーダー（ヤーコン） */
-#define FV_D06_STOPPER_01                  583 /* 0x0247 D06電気洞窟にあるデンチュラの巣 */
-#define FV_D06R0101_FRIENDS                584 /* 0x0248 D06R0101電気洞窟内部の博士とサポート */
-#define FV_D06R0201_BOSS_01                585 /* 0x0249 D06R0201のN（エヌ）、アイテムを貰う */
-		/* not used   586(0x024a) */
-#define FV_D03R0101_RIVAL_01               587 /* 0x024b D03砂漠のライバル（一人目） */
-#define FV_D03R0101_RIVAL_02               588 /* 0x024c D03砂漠のライバル（二人目） */
-#define FV_D03R0101_CHAMPION_01            589 /* 0x024d D03砂漠のチャンピオン */
-#define FV_D04R0601_EVENT_01               590 /* 0x024e D04遺跡のゲーチス、チャンピオン、ライバル（共有） */
-		/* not used   591(0x024f) */
+#define FV_BC10R0401_B                     500 /* 0x01f4 ブラックシティ：移住人口BのOBJ */
+#define FV_BC10R0401_C                     501 /* 0x01f5 ブラックシティ：移住人口CのOBJ */
+#define FV_BC10R0401_D                     502 /* 0x01f6 ブラックシティ：移住人口DのOBJ */
+#define FV_BC10R0401_E                     503 /* 0x01f7 ブラックシティ：移住人口EのOBJ */
+#define FV_C04R0111_PARTNER                504 /* 0x01f8 バトルサブウェイ、ホーム：パートナー */
+#define FV_C04R0111_NPC                    505 /* 0x01f9 バトルサブウェイ、ホーム：NPC */
+#define FV_C08R0101_LEADER8A_01            506 /* 0x01fa ソウリュウシティR0101：シャガ */
+#define FV_R03_SODATEYA_01                 507 /* 0x01fb ３番道路の育て屋じいさん */
+#define FV_UN_GTSFRIEND_00                 508 /* 0x01fc 国連(内部）：GTSで交換した相手１ */
+#define FV_UN_GTSFRIEND_01                 509 /* 0x01fd 国連(内部）：GTSで交換した相手２ */
+#define FV_UN_GTSFRIEND_02                 510 /* 0x01fe 国連(内部）：GTSで交換した相手３ */
+#define FV_UN_GTSFRIEND_03                 511 /* 0x01ff 国連(内部）：GTSで交換した相手４ */
+#define FV_UN_GTSFRIEND_04                 512 /* 0x0200 国連(内部）：GTSで交換した相手５ */
+#define FV_BSUBWAY_RECEIPT_PARTNER         513 /* 0x0201 バトルサブウェイ、受付：パートナー */
+#define FV_POSTMAN                         514 /* 0x0202 不思議な贈り物配達員 */
+#define FV_C06_MONSTERBALL                 515 /* 0x0203 フキヨセ滑走路のモンスターボール（なみのり入手イベント） */
+#define FV_D03R0101_DARUMA_01              516 /* 0x0204 砂漠のゴリダルマ(瞑想モード)その１ */
+#define FV_D03R0101_DARUMA_02              517 /* 0x0205 砂漠のゴリダルマ(瞑想モード)その２ */
+#define FV_D03R0101_DARUMA_03              518 /* 0x0206 砂漠のゴリダルマ(瞑想モード)その３ */
+#define FV_D03R0101_DARUMA_04              519 /* 0x0207 砂漠のゴリダルマ(瞑想モード)その４ */
+#define FV_D03R0101_DARUMA_05              520 /* 0x0208 砂漠のゴリダルマ(瞑想モード)その５ */
+#define FV_C06_GIRLBOY_01                  521 /* 0x0209 フキヨセ滑走路に出てくる少年少女（なみのり入手イベント） */
+#define FV_MUSICAL_FUN_01                  522 /* 0x020a ミュージカルホール：出待ちのファン１人目 */
+#define FV_MUSICAL_FUN_02                  523 /* 0x020b ミュージカルホール：出待ちのファン２人目 */
+#define FV_MUSICAL_FUN_03                  524 /* 0x020c ミュージカルホール：出待ちのファン３人目 */
+#define FV_MUSICAL_FUN_04                  525 /* 0x020d ミュージカルホール：出待ちのファン４人目 */
+#define FV_MUSICAL_FUN_05                  526 /* 0x020e ミュージカルホール：出待ちのファン５人目 */
+#define FV_T01R0102_AWARD_01               527 /* 0x020f 自宅２F：イッシュ図鑑完成の表彰状 */
+#define FV_T01R0102_AWARD_02               528 /* 0x0210 自宅２F：全国図鑑完成の表彰状 */
+#define FV_T01R0102_TROPHY_01              529 /* 0x0211 自宅２F：バトルサブウェイのトロフィ１ */
+#define FV_T01R0102_TROPHY_02              530 /* 0x0212 自宅２F：バトルサブウェイのトロフィ２ */
+#define FV_T01R0102_TROPHY_03              531 /* 0x0213 自宅２F：バトルサブウェイのトロフィ３ */
+#define FV_R08R0101_POKE4                  532 /* 0x0214 セッカ湿原：ダルタニスイベントのアトス */
+#define FV_R08R0101_POKE5                  533 /* 0x0215 セッカ湿原：ダルタニスイベントのポルトス */
+#define FV_R08R0101_POKE6                  534 /* 0x0216 セッカ湿原：ダルタニスイベントのアラミス */
+#define FV_R08R0101_POKE11                 535 /* 0x0217 セッカ湿原：ダルタニスイベントのダルタニス */
+#define FV_R08R0101_OLDMAN1                536 /* 0x0218 セッカ湿原：事情通の老人 */
+#define FV_C03R0101_MEMBER_A               537 /* 0x0219 調査隊一般隊員A */
+#define FV_C03R0101_MEMBER_B               538 /* 0x021a 調査隊一般隊員B */
+#define FV_C03R0101_MEMBER_C               539 /* 0x021b 調査隊一般隊員C */
+#define FV_C03R0101_MEMBER_D               540 /* 0x021c 調査隊一般隊員D */
+#define FV_C03R0101_MEMBER_E               541 /* 0x021d 調査隊一般隊員E */
+#define FV_C03R0101_MEMBER_F               542 /* 0x021e 調査隊一般隊員F */
+#define FV_C03R0101_MEMBER_G               543 /* 0x021f 調査隊一般隊員G */
+#define FV_C05R0601_OKOU                   544 /* 0x0220 クリア後：お香売り */
+#define FV_POKE_JUDGE_01                   545 /* 0x0221 ジャッジ（ポケモンの個体値を調べてくれる人） */
+#define FV_STADIUM_TRAINER_01              546 /* 0x0222 ビッグスタジアム／リトルコートの選手トレーナー１人目 */
+#define FV_STADIUM_TRAINER_02              547 /* 0x0223 ビッグスタジアム／リトルコートの選手トレーナー２人目 */
+#define FV_STADIUM_TRAINER_03              548 /* 0x0224 ビッグスタジアム／リトルコートの選手トレーナー３人目 */
+#define FV_STADIUM_FAN_01                  549 /* 0x0225 ビッグスタジアム／リトルコートのファンクラブトレーナー１人目 */
+#define FV_STADIUM_FAN_02                  550 /* 0x0226 ビッグスタジアム／リトルコートのファンクラブトレーナー２人目 */
+#define FV_STADIUM_RANDOM_01               551 /* 0x0227 ビッグスタジアム／リトルコートのランダム出現トレーナー１人目 */
+#define FV_STADIUM_RANDOM_02               552 /* 0x0228 ビッグスタジアム／リトルコートのランダム出現トレーナー１人目 */
+#define FV_STADIUM_RANDOM_03               553 /* 0x0229 ビッグスタジアム／リトルコートのランダム出現トレーナー１人目 */
+#define FV_PDW_POSTMAN                     554 /* 0x022a PDWのアイテム配達員 */
+#define FV_STADIUM_PLAYING                 555 /* 0x022b ビッグスタジアム／リトルコート：試合中に表示されるＮＰＣ ・エントランスの警備員 ・スタンドの観客 */
+#define FV_D13R0101_ASSISTANTM_01          556 /* 0x022c P2ラボ：配布インセクタイベントの研究員 */
+#define FV_R16R0201_BACKPACKERM            557 /* 0x022d 迷いの森：ゾロアークイベントの青年 */
+#define FV_R16R0201_WOMAN3                 558 /* 0x022e 毎夜の森：ゾロアークイベントの女性（ゾロアーク） */
+#define FV_R14R0201_GIRL1                  559 /* 0x022f ツチノカミイベント：きょうだい */
+#define FV_R14R0201_LEG                    560 /* 0x0230 ツチノカミイベント：ツチノカミ */
+#define FV_MUSICAL_FUN_06                  561 /* 0x0231 ミュージカルホール：出待ちのファン６人目 */
+#define FV_MUSICAL_FUN_07                  562 /* 0x0232 ミュージカルホール：出待ちのファン７人目 */
+#define FV_MUSICAL_FUN_08                  563 /* 0x0233 ミュージカルホール：出待ちのファン８人目 */
+#define FV_MUSICAL_FUN_09                  564 /* 0x0234 ミュージカルホール：出待ちのファン９人目 */
+#define FV_MUSICAL_FUN_10                  565 /* 0x0235 ミュージカルホール：出待ちのファン１０人目 */
+#define FV_STADIUM_SPORTSMAN               566 /* 0x0236 ビッグスタジアム／リトルコートエントランス：選手とファン */
+#define FV_D08R0901_PACKAGE_POKE           567 /* 0x0237 リュウラセンの塔（屋上）：パッケージポケモン */
+#define FV_H03_BADRIDER                    568 /* 0x0238 シリンダーブリッジ：暴走族リーダーと子分 */
+#define FV_H03_GENERALPERSON               569 /* 0x0239 シリンダーブリッジ：おばさんと格闘家（女） */
+#define FV_D12R0102_POKE14_01              570 /* 0x023a リバティ島：ビクティ */
+#define FV_D12_PEOPLE_01                   571 /* 0x023b リバティーとう：群集 */
+#define FV_D12_HAKAIM_01                   572 /* 0x023c リバティーとう：プラズマ団 */
+#define FV_D12_POLECEMAN_02                573 /* 0x023d リバティーとう：警官 */
+#define FV_D12R0101_POLECEMAN_01           574 /* 0x023e リバティー室内1：警官 */
+#define FV_D12R0102_HAKAIM_01              575 /* 0x023f リバティー室内2：プラズマ団 */
+#define FV_D12_EVENTEND_01                 576 /* 0x0240 リバティーとう：イベント終了時表示OBJ */
+#define FV_D10R0401_POKE10                 577 /* 0x0241 ジャイアントホール：ライ */
+#define FV_T04_SUMMER                      578 /* 0x0242 サザナミタウン：夏だけ町民 */
+#define FV_D04R2301_POKE13                 579 /* 0x0243 古代の城：ドラー */
+#define FV_T05_RAILFAN                     580 /* 0x0244 カナワタウン：電車前の人々（鉄道ファン） */
+#define FV_T05_WEEKEND                     581 /* 0x0245 カナワタウン：電車前の人々 */
+#define FV_D07R0101_WORKMAN2_02            582 /* 0x0246 ネジ山：冬だけ出現する作業員 ※移動可能な場所を示すため冬のみ出現 */
+#define FV_T04R0401_SHIRONA_01             583 /* 0x0247 サザナミタウン別荘：シロナ */
+#define FV_T04R0401_BIGFOUR4_01            584 /* 0x0248 サザナミタウン別荘：カトレア */
+#define FV_T04R0401_BIGFOUR1_01            585 /* 0x0249 サザナミタウン別荘：シキミ */
+#define FV_T04R0401_LEADER8W_01            586 /* 0x024a サザナミタウン別荘：アイリス */
+#define FV_T04R0401_LEADER6_01             587 /* 0x024b サザナミタウン別荘：フウロ */
+#define FV_T04R0401_LEADER4_01             588 /* 0x024c サザナミタウン別荘：カミツレ */
+#define FV_T04R0401_LEADER2_01             589 /* 0x024d サザナミタウン別荘：アロエ */
+#define FV_D07_STONE_01                    590 /* 0x024e ネジ山：季節対応・冬季岩ストッパー */
+#define FV_C03R1101_ITEM_01                591 /* 0x024f ヒウンビル：ゲーチスイベント後のアイテムボール */
 		/* not used   592(0x0250) */
 		/* not used   593(0x0251) */
-#define FV_R10_RIVAL_01                    594 /* 0x0252 10番道路ライバル */
-#define FV_C09R0501_BOSS_01                595 /* 0x0253 チャンピオンの部屋：N城出現イベントのN */
-#define FV_C09R0501_CHAMPION_01            596 /* 0x0254 チャンピオンの部屋：N城出現イベントのチャンピオン */
+		/* not used   594(0x0252) */
+		/* not used   595(0x0253) */
+		/* not used   596(0x0254) */
 		/* not used   597(0x0255) */
-#define FV_C05GYM0101_CORN                 598 /* 0x0256 地面ジム：ストッパー */
-#define FV_C09R0501_CHAMPION_02            599 /* 0x0257 チャンピオンの部屋：ゲームクリア後のチャンピオン */
-#define FV_C09R0501_RIVAL_01               600 /* 0x0258 チャンピオンの部屋：N城出現イベントのライバル */
-#define FV_N01R0101_LEADERS_01             601 /* 0x0259 N城１F大広間：７人衆と対峙するジムリーダー達 */
-#define FV_D08_HAKASE1_01                  602 /* 0x025a リュウラセンの塔（外）：博士（父） */
-#define FV_D08_RIVAL_01                    603 /* 0x025b リュウラセンの塔（外）：ライバル */
-#define FV_D08_SUPORT_01                   604 /* 0x025c リュウラセンの塔（外）：サポート */
-#define FV_D08_CHAMPION_01                 605 /* 0x025d リュウラセンの塔（外）：チャンピオン */
-#define FV_D08_LEADER7_01                  606 /* 0x025e リュウラセンの塔（外）：C07ジムリーダー（ハチク） */
-#define FV_D08R0101_EVENT_01               607 /* 0x025f リュウラセンの塔：博士（父）、C07ジムリーダー（ハチク） */
+		/* not used   598(0x0256) */
+		/* not used   599(0x0257) */
+		/* not used   600(0x0258) */
+		/* not used   601(0x0259) */
+		/* not used   602(0x025a) */
+		/* not used   603(0x025b) */
+		/* not used   604(0x025c) */
+		/* not used   605(0x025d) */
+		/* not used   606(0x025e) */
+		/* not used   607(0x025f) */
 		/* not used   608(0x0260) */
-#define FV_D08R0601_EVENT_01               609 /* 0x0261 リュウラセンの塔４：ライバル、C07ジムリーダー（ハチク）、プラズマ団 */
-#define FV_D08R0801_BOSS_01                610 /* 0x0262 リュウラセンの塔６：N */
-#define FV_D08R0801_EVENT_01               611 /* 0x0263 リュウラセンの塔６：七人衆、プラズマ団したっぱ */
-#define FV_D08R0901_BOSS_01                612 /* 0x0264 リュウラセンの塔７：N */
-#define FV_D08R0901_EVENT_01               613 /* 0x0265 リュウラセンの塔７：ライバル、C07ジムリーダー（ハチク） */
-#define FV_C02_STONEEVENT_01               614 /* 0x0266 C02フィールド：ライト/ダークストーン入手イベント 博士（父・娘）、チャンピオン */
-#define FV_C04R0111_PARTNER                615 /* 0x0267 バトルサブウェイ、ホーム：パートナー */
-#define FV_C04R0111_NPC                    616 /* 0x0268 バトルサブウェイ、ホーム：NPC */
-#define FV_N01R0502_EVENT_01               617 /* 0x0269 N城謁見の間：ゲーチス、ライバル、チャンピオン */
-#define FV_D04R0101_SUNGLASSES_01          618 /* 0x026a D04遺跡のサングラス */
-#define FV_C08_SAGE1_01                    619 /* 0x026b ソウリュウシティ：ゲーヂス・ジムリーダー・チャンピオン・聴衆 */
-#define FV_C08_SUNGLASSES_01               620 /* 0x026c ソウリュウシティ：サングラス */
-#define FV_C08R0101_LEADER8A_01            621 /* 0x026d ソウリュウシティR0101：シャガ */
-#define FV_C08R0101_LEADER8B_01            622 /* 0x026e ソウリュウシティR0101：アイリス */
-#define FV_MUSEUM_STONE                    623 /* 0x026f C02GYM0101博物館：パッケージポケモン関連の&#xff5e;&#xff5e;ストーン */
-#define FV_D08R0101_NONDRAW_01             624 /* 0x0270 リュウラセンの塔入り口：バッジ入手まで接続をブロックするための透明OBJ */
-#define FV_R03_SODATEYA_01                 625 /* 0x0271 ３番道路の育て屋じいさん */
-#define FV_D05R0201_PLASMA                 626 /* 0x0272 れいとうコンテナ：プラズマ団とライバル */
-#define FV_BC10R0401_B                     627 /* 0x0273 ブラックシティ：移住人口BのOBJ */
-#define FV_BC10R0401_C                     628 /* 0x0274 ブラックシティ：移住人口CのOBJ */
-#define FV_BC10R0401_D                     629 /* 0x0275 ブラックシティ：移住人口DのOBJ */
-#define FV_BC10R0401_E                     630 /* 0x0276 ブラックシティ：移住人口EのOBJ */
-#define FV_WF10_B                          631 /* 0x0277 ホワイトフォレスト：移住人口BのOBJ */
-#define FV_WF10_C                          632 /* 0x0278 ホワイトフォレスト：移住人口CのOBJ */
-#define FV_WF10_D                          633 /* 0x0279 ホワイトフォレスト：移住人口DのOBJ */
-#define FV_WF10_E                          634 /* 0x027a ホワイトフォレスト：移住人口EのOBJ */
-#define FV_R03_RIVAL_03                    635 /* 0x027b ３番道路：洞窟前のライバル */
-#define FV_D02R0101_SAGE5                  636 /* 0x027c ヤグルマの森：盗難イベントに出てくる七賢者（５） */
-#define FV_T02_SPEECH_BEFORE               637 /* 0x027d カラクサタウン：演説誘導イベント前に表示されている群集 */
-#define FV_T02_SPEECH_AFTER                638 /* 0x027e カラクサタウン：演説誘導イベント後に表示されている群集 */
-#define FV_C04_SUPPORTPAPA_01              639 /* 0x027f ライモンシティ：サポートのパパ */
-#define FV_R04_RIVAL_01                    640 /* 0x0280 ４番道路：ライバル */
-#define FV_C03_GUIDE_01                    641 /* 0x0281 ヒウンシティ：街案内イベントのライバルとリーダー３ */
-#define FV_UN_GTSFRIEND_00                 642 /* 0x0282 国連(内部）：GTSで交換した相手１ */
-#define FV_UN_GTSFRIEND_01                 643 /* 0x0283 国連(内部）：GTSで交換した相手２ */
-#define FV_UN_GTSFRIEND_02                 644 /* 0x0284 国連(内部）：GTSで交換した相手３ */
-#define FV_UN_GTSFRIEND_03                 645 /* 0x0285 国連(内部）：GTSで交換した相手４ */
-#define FV_UN_GTSFRIEND_04                 646 /* 0x0286 国連(内部）：GTSで交換した相手５ */
-#define FV_C03R0301_CLEANINGM_01           647 /* 0x0287 バトルカンパニー１F：会長 */
-#define FV_C02GYM0101_HAKAI                648 /* 0x0288 C02博物館のプラズマ団（６人） */
-#define FV_R06R0203_LEGEND1                649 /* 0x0289 伝説ポケモン：アトス */
-#define FV_D09R1501_LEGEND2                650 /* 0x028a 伝説ポケモン：ポルトス */
-#define FV_D02R0201_LEGEND3                651 /* 0x028b 伝説ポケモン：アラミス */
-#define FV_D09_ROCK1                       652 /* 0x028c ポルトスのダンジョンを塞ぐ岩 */
-#define FV_D02_ROCK1                       653 /* 0x028d アラミスのダンジョンを塞ぐ岩 */
-#define FV_BSUBWAY_RECEIPT_PARTNER         654 /* 0x028e バトルサブウェイ、受付：パートナー */
-#define FV_D06R0101_HAKAI                  655 /* 0x028f 電気洞窟内のダークトリニティ３人 */
-#define FV_T01R0401_HAKASE1                656 /* 0x0290 カノコタウン研究所：博士（父） */
-#define FV_POSTMAN                         657 /* 0x0291 不思議な贈り物配達員 */
-#define FV_D07_RIVAL_01                    658 /* 0x0292 ネジ山入り口：ライバルとチャンピオン */
-#define FV_D08R0101_HAKAI                  659 /* 0x0293 リュウラセンの塔入り口（破壊前）：プラズマ団 */
-#define FV_N01R0502_LEGEND_01              660 /* 0x0294 N城謁見の間：奥側に表示するパッケージポケモン */
-#define FV_N01R0502_LEGEND_02              661 /* 0x0295 N城謁見の間：手前側に表示するパッケージポケモン */
-#define FV_C06_MONSTERBALL                 662 /* 0x0296 フキヨセ滑走路のモンスターボール（なみのり入手イベント） */
-#define FV_D03R0101_DARUMA_01              663 /* 0x0297 砂漠のゴリダルマ(瞑想モード)その１ */
-#define FV_D03R0101_DARUMA_02              664 /* 0x0298 砂漠のゴリダルマ(瞑想モード)その２ */
-#define FV_D03R0101_DARUMA_03              665 /* 0x0299 砂漠のゴリダルマ(瞑想モード)その３ */
-#define FV_D03R0101_DARUMA_04              666 /* 0x029a 砂漠のゴリダルマ(瞑想モード)その４ */
-#define FV_D03R0101_DARUMA_05              667 /* 0x029b 砂漠のゴリダルマ(瞑想モード)その５ */
-#define FV_C06_GIRLBOY_01                  668 /* 0x029c フキヨセ滑走路に出てくる少年少女（なみのり入手イベント） */
-#define FV_C09R0701_WARPMAN                669 /* 0x029d ポケモンリーグ回復施設：Nの城にワープさせてくれるNPC */
-#define FV_MUSICAL_FUN_01                  670 /* 0x029e ミュージカルホール：出待ちのファン１人目 */
-#define FV_MUSICAL_FUN_02                  671 /* 0x029f ミュージカルホール：出待ちのファン２人目 */
-#define FV_MUSICAL_FUN_03                  672 /* 0x02a0 ミュージカルホール：出待ちのファン３人目 */
-#define FV_MUSICAL_FUN_04                  673 /* 0x02a1 ミュージカルホール：出待ちのファン４人目 */
-#define FV_MUSICAL_FUN_05                  674 /* 0x02a2 ミュージカルホール：出待ちのファン５人目 */
-#define FV_T01R0401_POKEMON_01             675 /* 0x02a3 研究所のミネズミ */
-#define FV_R070105_LEADER6_01              676 /* 0x02a4 タワーオブヘブン5Fのフウロ */
-#define FV_D07R0401PLASMA_01               677 /* 0x02a5 ネジ山出口前：プラズマ団 */
-#define FV_D07R0401RIVAL_01                678 /* 0x02a6 ネジ山出口前：ライバル */
-#define FV_T01_MAMA_01                     679 /* 0x02a7 うずまき島のルギア */
-#define FV_T01R0102_PRESENT                680 /* 0x02a8 自宅２F：ポケモン３匹選択のギフトボックス */
-#define FV_T01R0102_AWARD_01               681 /* 0x02a9 自宅２F：イッシュ図鑑完成の表彰状 */
-#define FV_T01R0102_AWARD_02               682 /* 0x02aa 自宅２F：全国図鑑完成の表彰状 */
-#define FV_T01R0102_TROPHY_01              683 /* 0x02ab 自宅２F：バトルサブウェイのトロフィ１ */
-#define FV_T01R0102_TROPHY_02              684 /* 0x02ac 自宅２F：バトルサブウェイのトロフィ２ */
-#define FV_T01R0102_TROPHY_03              685 /* 0x02ad 自宅２F：バトルサブウェイのトロフィ３ */
-#define FV_C06_GYM_STOPPER                 686 /* 0x02ae フキヨセのジムストッパー */
-#define FV_D07_WORKMAN_STOPPER             687 /* 0x02af ネジ山ストッパー */
-#define FV_D04R0201_SAGE2                  688 /* 0x02b0 古代の城２Fの七賢者２ */
-#define FV_C03P09_SWEETS_01                689 /* 0x02b1 ヒウンシティP09：ヒウンアイス行列 */
-#define FV_C03P09_SWEETS_02                690 /* 0x02b2 ヒウンシティP09：ヒウンアイス行列・後列 */
-		/* not used   691(0x02b3) */
-		/* not used   692(0x02b4) */
-#define FV_R08R0101_POKE4                  693 /* 0x02b5 セッカ湿原：ダルタニスイベントのアトス */
-#define FV_R08R0101_POKE5                  694 /* 0x02b6 セッカ湿原：ダルタニスイベントのポルトス */
-#define FV_R08R0101_POKE6                  695 /* 0x02b7 セッカ湿原：ダルタニスイベントのアラミス */
-#define FV_R08R0101_POKE11                 696 /* 0x02b8 セッカ湿原：ダルタニスイベントのダルタニス */
-#define FV_C04R0601_POS_HAKASE             697 /* 0x02b9 ライモンシティ４番道路側ゲート：博士とライバル */
-#define FV_R08R0101_OLDMAN1                698 /* 0x02ba セッカ湿原：事情通の老人 */
-#define FV_C04P01_HAKAI                    699 /* 0x02bb ライモン遊園地：プラズマ団したっぱ２人 */
-#define FV_C03P12_DANCER_01                700 /* 0x02bc ヒウンダンサーズ：路地のダンサー１ */
-#define FV_C03P14_DANCER_02                701 /* 0x02bd ヒウンダンサーズ：路地のダンサー２ */
-#define FV_C03CENTER_DANCER_01             702 /* 0x02be ヒウンダンサーズ：中央部のダンサー１ */
-#define FV_C03CENTER_DANCER_02             703 /* 0x02bf ヒウンダンサーズ：中央部のダンサー２ */
-		/* not used   704(0x02c0) */
-#define FV_R14_SAGE                        705 /* 0x02c1 クリア後七賢人イベント：14番道路 */
-#define FV_D06R0301_SAGE                   706 /* 0x02c2 クリア後七賢人イベント：電気石の洞穴 */
-#define FV_D01R0101_SAGE                   707 /* 0x02c3 クリア後七賢人イベント：夢の跡地 */
-#define FV_R18_SAGE                        708 /* 0x02c4 クリア後七賢人イベント：18番道路 */
-#define FV_C03R0101_MEMBER_A               709 /* 0x02c5 調査隊一般隊員A */
-#define FV_C03R0101_MEMBER_B               710 /* 0x02c6 調査隊一般隊員B */
-#define FV_C03R0101_MEMBER_C               711 /* 0x02c7 調査隊一般隊員C */
-#define FV_C03R0101_MEMBER_D               712 /* 0x02c8 調査隊一般隊員D */
-#define FV_C03R0101_MEMBER_E               713 /* 0x02c9 調査隊一般隊員E */
-#define FV_C03R0101_MEMBER_F               714 /* 0x02ca 調査隊一般隊員F */
-#define FV_C03R0101_MEMBER_G               715 /* 0x02cb 調査隊一般隊員G */
-#define FV_D05R0201_SAGE7                  716 /* 0x02cc クリア後七賢人イベント：冷凍コンテナ */
-#define FV_C05R0601_OKOU                   717 /* 0x02cd クリア後：お香売り */
-#define FV_POKE_JUDGE_01                   718 /* 0x02ce ジャッジ（ポケモンの個体値を調べてくれる人） */
-#define FV_STADIUM_TRAINER_01              719 /* 0x02cf ビッグスタジアム／リトルコートの選手トレーナー１人目 */
-#define FV_STADIUM_TRAINER_02              720 /* 0x02d0 ビッグスタジアム／リトルコートの選手トレーナー２人目 */
-#define FV_STADIUM_TRAINER_03              721 /* 0x02d1 ビッグスタジアム／リトルコートの選手トレーナー３人目 */
-#define FV_STADIUM_FAN_01                  722 /* 0x02d2 ビッグスタジアム／リトルコートのファンクラブトレーナー１人目 */
-#define FV_STADIUM_FAN_02                  723 /* 0x02d3 ビッグスタジアム／リトルコートのファンクラブトレーナー２人目 */
-#define FV_STADIUM_RANDOM_01               724 /* 0x02d4 ビッグスタジアム／リトルコートのランダム出現トレーナー１人目 */
-#define FV_STADIUM_RANDOM_02               725 /* 0x02d5 ビッグスタジアム／リトルコートのランダム出現トレーナー１人目 */
-#define FV_STADIUM_RANDOM_03               726 /* 0x02d6 ビッグスタジアム／リトルコートのランダム出現トレーナー１人目 */
-#define FV_PDW_POSTMAN                     727 /* 0x02d7 PDWのアイテム配達員 */
-#define FV_STADIUM_PLAYING                 728 /* 0x02d8 ビッグスタジアム／リトルコート：試合中に表示されるＮＰＣ ・エントランスの警備員 ・スタンドの観客 */
-#define FV_C03R0401_BOY1_01                729 /* 0x02d9 ヒウンシティビル：映画関連ゾロアイベントの少年（ゾロア） */
-#define FV_C03R0401_GIRL1_01               730 /* 0x02da ヒウンシティビル：映画関連ゾロアイベントの少女 */
-#define FV_C03R0401_POKE22_01              731 /* 0x02db ヒウンシティビル：映画関連ゾロアイベントのゾロア */
-#define FV_D13R0101_ASSISTANTM_01          732 /* 0x02dc P2ラボ：配布インセクタイベントの研究員 */
-#define FV_R16R0201_BACKPACKERM            733 /* 0x02dd 迷いの森：ゾロアークイベントの青年 */
-#define FV_R16R0201_WOMAN3                 734 /* 0x02de 毎夜の森：ゾロアークイベントの女性（ゾロアーク） */
-#define FV_AMUSEMENT_TRAINER               735 /* 0x02df ライモン遊園地：観覧車トレーナー */
-#define FV_T01R0101_HANDSOME_MAMA          736 /* 0x02e0 自宅１階：ママの変装をしたハンサム */
-#define FV_C08_LEADERB_01                  737 /* 0x02e1 ソウリュウシティ：アイリス */
-#define FV_D06R0201_PLASMA                 738 /* 0x02e2 電気洞窟内のプラズマ団したっぱ（視線トレーナー） */
-#define FV_R08_STOPPER_01                  739 /* 0x02e3 ８番道路のストッパー */
-#define FV_R16_STOPPER_01                  740 /* 0x02e4 ワンダーブリッジ前ストッパー */
-#define FV_T04_BOY3_01                     741 /* 0x02e5 サザナミタウン：波打ち際のバトル家族少年 */
-#define FV_T04R0101_BOY3_01                742 /* 0x02e6 サザナミタウン：巨大別荘少年 */
-#define FV_T04R0101_GIRL4_01               743 /* 0x02e7 サザナミタウン：巨大別荘姉 */
-#define FV_T04R0101_LADY_01                744 /* 0x02e8 サザナミタウン：巨大別荘祖母 */
-#define FV_T04R0101_GENTLEMAN_01           745 /* 0x02e9 サザナミタウン：巨大別荘祖父 */
-#define FV_T04R0101_VETERANW_01            746 /* 0x02ea サザナミタウン：巨大別荘母 */
-#define FV_T04R0101_BOY4_01                747 /* 0x02eb サザナミタウン：巨大別荘兄 */
-#define FV_D01R0201_POKE16_01              748 /* 0x02ec 夢の跡地B2：ムシャーナ */
-#define FV_R14R0201_GIRL1                  749 /* 0x02ed ツチノカミイベント：きょうだい */
-#define FV_R14R0201_LEG                    750 /* 0x02ee ツチノカミイベント：ツチノカミ */
-#define FV_C02_STONEEVENT_02               751 /* 0x02ef C02フィールド：ライト/ダークストーン入手イベント サポート、C02ジムリーダー（アロエ） */
-#define FV_MUSICAL_FUN_06                  752 /* 0x02f0 ミュージカルホール：出待ちのファン６人目 */
-#define FV_MUSICAL_FUN_07                  753 /* 0x02f1 ミュージカルホール：出待ちのファン７人目 */
-#define FV_MUSICAL_FUN_08                  754 /* 0x02f2 ミュージカルホール：出待ちのファン８人目 */
-#define FV_MUSICAL_FUN_09                  755 /* 0x02f3 ミュージカルホール：出待ちのファン９人目 */
-#define FV_MUSICAL_FUN_10                  756 /* 0x02f4 ミュージカルホール：出待ちのファン１０人目 */
-#define FV_D01R0101_GCIS_01                757 /* 0x02f5 夢の跡地：ゲーヂス */
-#define FV_D09_VETERANM_01                 758 /* 0x02f6 チャンピオンロード外側：崖の上のベテラン */
-#define FV_D09_VETERANM_02                 759 /* 0x02f7 チャンピオンロード外側：崖の下のベテラン */
-#define FV_C08R0701_STOPPER_01             760 /* 0x02f8 ソウリュウシティ：11番道路方面ストッパー */
-#define FV_STADIUM_SPORTSMAN               761 /* 0x02f9 ビッグスタジアム／リトルコートエントランス：選手とファン */
-#define FV_H04_POKE_01                     762 /* 0x02fa １３番道路：キャモメ ※H04ビレッジブリッジ→13番道路に変更になりました */
-#define FV_H04_ITEM_02                     763 /* 0x02fb ビレッジブリッジ：モンスターボール */
-#define FV_C08R0201_TRAINERW_01            764 /* 0x02fc ソウリュウシティ：ローテーションバトルの館 */
-#define FV_C08R0201_TRAINERM_01            765 /* 0x02fd ソウリュウシティ：トリプルバトルの館 */
-#define FV_D08R0901_PACKAGE_POKE           766 /* 0x02fe リュウラセンの塔（屋上）：パッケージポケモン */
-#define FV_FLDMONS_01                      767 /* 0x02ff タマゲタケ（フィールドアイテム型）１匹目 */
-#define FV_FLDMONS_02                      768 /* 0x0300 タマゲタケ（フィールドアイテム型）２匹目 */
-#define FV_FLDMONS_03                      769 /* 0x0301 タマゲタケ（フィールドアイテム型）３匹目 */
-#define FV_FLDMONS_04                      770 /* 0x0302 タマゲタケ（フィールドアイテム型）４匹目 */
-#define FV_FLDMONS_05                      771 /* 0x0303 タマゲタケ（フィールドアイテム型）５匹目 */
-#define FV_FLDMONS_06                      772 /* 0x0304 タマゲタケ（フィールドアイテム型）６匹目 */
-		/* not used   773(0x0305) */
-		/* not used   774(0x0306) */
-		/* not used   775(0x0307) */
-		/* not used   776(0x0308) */
-#define FV_H03_BADRIDER                    777 /* 0x0309 シリンダーブリッジ：暴走族リーダーと子分 */
-#define FV_H03_GENERALPERSON               778 /* 0x030a シリンダーブリッジ：おばさんと格闘家（女） */
-#define FV_D12R0102_POKE14_01              779 /* 0x030b リバティ島：ビクティ */
-#define FV_R07R0105_CHAMPION_01            780 /* 0x030c タワーオブヘブン5F：クリア後チャンピオン */
-#define FV_T03_DAYTIME                     781 /* 0x030d カゴメタウン：日中表示OBJ用フラグ */
-#define FV_T03_NIGHT                       782 /* 0x030e カゴメタウン：夜表示OBJ用フラグ */
-#define FV_T03_MON                         783 /* 0x030f カゴメタウン：月曜非表示OBJ用フラグ */
-#define FV_T03_TUE                         784 /* 0x0310 カゴメタウン：火曜非表示OBJ用フラグ */
-#define FV_T03_WED                         785 /* 0x0311 カゴメタウン：水曜非表示OBJ用フラグ */
-#define FV_T03_THU                         786 /* 0x0312 カゴメタウン：木曜非表示OBJ用フラグ */
-#define FV_T03_FRI                         787 /* 0x0313 カゴメタウン：金曜非表示OBJ用フラグ */
-#define FV_T03_SAT                         788 /* 0x0314 カゴメタウン：土曜非表示OBJ用フラグ */
-#define FV_T03_SUN                         789 /* 0x0315 カゴメタウン：日曜非表示OBJ用フラグ */
-#define FV_D12_PEOPLE_01                   790 /* 0x0316 リバティーとう：群集 */
-#define FV_D12_HAKAIM_01                   791 /* 0x0317 リバティーとう：プラズマ団 */
-#define FV_D12_POLECEMAN_02                792 /* 0x0318 リバティーとう：警官 */
-#define FV_D12R0101_POLECEMAN_01           793 /* 0x0319 リバティー室内1：警官 */
-#define FV_D12R0102_HAKAIM_01              794 /* 0x031a リバティー室内2：プラズマ団 */
-#define FV_D12_EVENTEND_01                 795 /* 0x031b リバティーとう：イベント終了時表示OBJ */
-#define FV_C03P07_PLASMA_LEADER3           796 /* 0x031c ヒウンシティ（ジムのある通り）：プラズマ団とアーティ */
-#define FV_C03P07_SUPPORT_LEADER8          797 /* 0x031d ヒウンシティ（ジムのある通り）：ベルとアイリス */
-#define FV_C03P15_SUPPORT_LEADER8          798 /* 0x031e ヒウンシティ（プライムピア）：ベルとアイリス */
-#define FV_C03R1101_PLASMA                 799 /* 0x031f ヒウンシティ（ビル）：プラズマ団の面々・リーダー2人・ベル */
-#define FV_C03P15_LEADER3                  800 /* 0x0320 ヒウンシティ（プライムピア）：アーティ */
-#define FV_D10R0401_POKE10                 801 /* 0x0321 ジャイアントホール：ライ */
-#define FV_T04_SUMMER                      802 /* 0x0322 サザナミタウン：夏だけ町民 */
-#define FV_N01R0501_SAGE1                  803 /* 0x0323 謁見の間前の大広間：ゲーチス */
-#define FV_C06_BOSS                        804 /* 0x0324 フキヨセジム前：N */
-#define FV_D05R0201_RIVAL_01               805 /* 0x0325 冷凍コンテナ室内：ライバル */
-#define FV_H03_PLASMA                      806 /* 0x0326 シリンダーブリッジ：ゲーチス、ダークトリニティ3人 */
-		/* not used   807(0x0327) */
-#define FV_D04R0701_PLASMA                 808 /* 0x0328 古代の城：プラズマ団 */
-#define FV_D04R2201_SAGE4                  809 /* 0x0329 古代の城：七賢人４ */
-#define FV_D04R2301_POKE13                 810 /* 0x032a 古代の城：ドラー */
-#define FV_R06R0101_POKE_SPRING            811 /* 0x032b 季節研究所：シキジカ（春） */
-#define FV_R06R0102_POKE_SUMMER            812 /* 0x032c 季節研究所：シキジカ（夏） */
-#define FV_R06R0103_POKE_AUTUMN            813 /* 0x032d 季節研究所：シキジカ（秋） */
-#define FV_R06R0104_POKE_WINTER            814 /* 0x032e 季節研究所：シキジカ（冬） */
-#define FV_R05_RIVAL_AFTER                 815 /* 0x032f ５番道路：クリア後ライバル */
-#define FV_D09R1401_RIVAL                  816 /* 0x0330 チャンピオンロード：クリア後ライバル */
-#define FV_T01R0401_SUPPORT_AFTER          817 /* 0x0331 研究所：殿堂入り後サポート */
-#define FV_T05_RAILFAN                     818 /* 0x0332 カナワタウン：電車前の人々（鉄道ファン） */
-#define FV_T05_WEEKEND                     819 /* 0x0333 カナワタウン：電車前の人々 */
-#define FV_D01R0101_CORN_01                820 /* 0x0334 夢の跡地のストッパー（コーン） */
-#define FV_D07R0101_WORKMAN2_02            821 /* 0x0335 ネジ山：冬だけ出現する作業員 ※移動可能な場所を示すため冬のみ出現 */
-#define FV_T04R0401_SHIRONA_01             822 /* 0x0336 サザナミタウン別荘：シロナ */
-#define FV_T04R0401_BIGFOUR4_01            823 /* 0x0337 サザナミタウン別荘：カトレア */
-#define FV_T04R0401_BIGFOUR1_01            824 /* 0x0338 サザナミタウン別荘：シキミ */
-#define FV_T04R0401_LEADER8W_01            825 /* 0x0339 サザナミタウン別荘：アイリス */
-#define FV_T04R0401_LEADER6_01             826 /* 0x033a サザナミタウン別荘：フウロ */
-#define FV_T04R0401_LEADER4_01             827 /* 0x033b サザナミタウン別荘：カミツレ */
-#define FV_T04R0401_LEADER2_01             828 /* 0x033c サザナミタウン別荘：アロエ */
-#define FV_H05_NINJA_01                    829 /* 0x033d ワンダーブリッジ：ダークトリニティ×３ */
-#define FV_C08R0202_TRAINER_W              830 /* 0x033e ソウリュウバトルの館：ホワイトバージョンのトレーナー */
-#define FV_C08R0202_TRAINER_B              831 /* 0x033f ソウリュウバトルの館：ブラックバージョンのトレーナー */
-#define FV_R07_TRAINER_W                   832 /* 0x0340 ７番道路：ホワイトバージョンのトレーナー */
-#define FV_R07_TRAINER_B                   833 /* 0x0341 ７番道路：ブラックバージョンのトレーナー */
-#define FV_H05_WANDERGIRL                  834 /* 0x0342 ワンダーブリッジ：消える少女 */
-#define FV_H05_MINEZUMI                    835 /* 0x0343 ワンダーブリッジ：ミネズミゲーム */
-#define FV_H04R0501_MINEZUMI               836 /* 0x0344 ビレッジブリッジ民家：ミネズミ */
-#define FV_H04R0501_GUEST                  837 /* 0x0345 ビレッジブリッジ民家：訪問客（２人） */
-#define FV_H03_NINJA_01                    838 /* 0x0346 シリンダーブリッジ：ゲーチスイベントで登場するダークトリニティ */
-#define FV_D06R0301_HAKAI_01               839 /* 0x0347 クリア後、七賢人イベントで登場するプラズマ団を非表示にする */
-#define FV_D07_STONE_01                    840 /* 0x0348 ネジ山：季節対応・冬季岩ストッパー */
-#define FV_D02R0101_STOP_01                841 /* 0x0349 ヤグルマの森：伝説ポケモン用のストッパー */
-#define FV_C04R0901_TRAINERW_01            842 /* 0x034a トライアルハウス：謎の女 */
-#define FV_C03R1101_ITEM_01                843 /* 0x034b ヒウンビル：ゲーチスイベント後のアイテムボール */
-		/* not used   844(0x034c) */
-		/* not used   845(0x034d) */
-		/* not used   846(0x034e) */
-		/* not used   847(0x034f) */
-		/* not used   848(0x0350) */
-		/* not used   849(0x0351) */
-		/* not used   850(0x0352) */
-		/* not used   851(0x0353) */
-		/* not used   852(0x0354) */
-		/* not used   853(0x0355) */
-		/* not used   854(0x0356) */
-		/* not used   855(0x0357) */
-		/* not used   856(0x0358) */
-		/* not used   857(0x0359) */
-		/* not used   858(0x035a) */
-		/* not used   859(0x035b) */
-		/* not used   860(0x035c) */
-		/* not used   861(0x035d) */
-		/* not used   862(0x035e) */
-		/* not used   863(0x035f) */
-		/* not used   864(0x0360) */
-		/* not used   865(0x0361) */
-		/* not used   866(0x0362) */
-		/* not used   867(0x0363) */
-		/* not used   868(0x0364) */
-		/* not used   869(0x0365) */
-		/* not used   870(0x0366) */
-		/* not used   871(0x0367) */
-#define FV_C13GYM0102_SUNGLASSES           872 /* 0x0368 ポケウッド：サングラス */
-#define FV_C13GYM0102_SWLEADER2            873 /* 0x0369 C12GYM0102：ホミカ */
-#define FV_C13R0401_SWRIVAL                874 /* 0x036a C13：船舶所のライバル */
-#define FV_C13R0401_PILOT                  875 /* 0x036b C13：船舶所の船長 */
-#define FV_C13_SWPLAZMA                    876 /* 0x036c C13：ネオプラズマ団イベント用 */
-#define FV_C13_SUNGLASSES                  877 /* 0x036d C13：ポケウッド用 */
-#define FV_C13_SWLEADER2_MEET              878 /* 0x036e C13：ホミカとホミカ父用 */
-#define FV_D22R0101_BREEDER_01             879 /* 0x036f 牧場：ブリーダー */
-#define FV_D22R0101_POKEMON_01             880 /* 0x0370 牧場：ヨーテリー */
-#define FV_D22R0101_SWRIVAL_01             881 /* 0x0371 牧場：ライバル */
-#define FV_T06_SUNGLASSES_01               882 /* 0x0372 サンギタウン：メダルおやじ */
-#define FV_T06_CHAMPION_01                 883 /* 0x0373 サンギタウン：アデク */
-#define FV_C12PC0101_SWBELL                884 /* 0x0374 ヒオウギシティPC：ベル */
-#define FV_C12R0101_TRORHY1_01             885 /* 0x0375 ヒオウギシティ自宅：バトルサブウェイトロフィー（シングル） */
-#define FV_C12R0101_TRORHY2_01             886 /* 0x0376 ヒオウギシティ自宅：バトルサブウェイトロフィー（ダブル） */
-#define FV_C12R0101_TRORHY3_01             887 /* 0x0377 ヒオウギシティ自宅：バトルサブウェイトロフィー（マルチ） */
-#define FV_C12R0101_PRIZE1_01              888 /* 0x0378 ヒオウギシティ自宅：表彰状（地方） */
-#define FV_C12R0101_PRIZE2_01              889 /* 0x0379 ヒオウギシティ自宅：表彰状（全国） */
-#define FV_R19_CHAMPION_01                 890 /* 0x037a 19ばんどうろ：アデク */
-#define FV_C12R0101_SWBELL                 891 /* 0x037b ヒオウギシティ自宅・ベル */
-#define FV_C12R0101_SWMAMA                 892 /* 0x037c ヒオウギシティ自宅・ママ */
-#define FV_C12_SWANLEADER1                 893 /* 0x037d ヒオウギシティ・チェレン */
-#define FV_C12_SWBELL                      894 /* 0x037e ヒオウギシティ・ベル */
-#define FV_C12_SWMAMA                      895 /* 0x037f ヒオウギシティ・ママ */
-#define FV_C12_SWRIVAL_SISTER              896 /* 0x0380 ヒオウギシティ・ライバル妹 */
-#define FV_C12_SWRIVAL                     897 /* 0x0381 ヒオウギシティ・ライバル */
-#define FV_PC_MEDALOYAJI                   898 /* 0x0382 ポケセンのメダルおやじ */
-#define FV_D06R0101_PAIR                   899 /* 0x0383 電気穴の洞窟連れ歩き */
+		/* not used   609(0x0261) */
+		/* not used   610(0x0262) */
+		/* not used   611(0x0263) */
+		/* not used   612(0x0264) */
+		/* not used   613(0x0265) */
+		/* not used   614(0x0266) */
+		/* not used   615(0x0267) */
+		/* not used   616(0x0268) */
+		/* not used   617(0x0269) */
+		/* not used   618(0x026a) */
+		/* not used   619(0x026b) */
+#define FV_C13GYM0102_SUNGLASSES           620 /* 0x026c ポケウッド：サングラス */
+#define FV_C13GYM0102_SWLEADER2            621 /* 0x026d C12GYM0102：ホミカ */
+#define FV_C13R0401_SWRIVAL                622 /* 0x026e C13：船舶所のライバル */
+#define FV_C13R0401_PILOT                  623 /* 0x026f C13：船舶所の船長 */
+#define FV_C13_SWPLAZMA                    624 /* 0x0270 C13：ネオプラズマ団イベント用 */
+#define FV_C13_SUNGLASSES                  625 /* 0x0271 C13：ポケウッド用 */
+#define FV_C13_SWLEADER2_MEET              626 /* 0x0272 C13：ホミカとホミカ父用 */
+#define FV_D22R0101_BREEDER_01             627 /* 0x0273 牧場：ブリーダー */
+#define FV_D22R0101_POKEMON_01             628 /* 0x0274 牧場：ヨーテリー */
+#define FV_D22R0101_SWRIVAL_01             629 /* 0x0275 牧場：ライバル */
+#define FV_T06_SUNGLASSES_01               630 /* 0x0276 サンギタウン：メダルおやじ */
+#define FV_T06_CHAMPION_01                 631 /* 0x0277 サンギタウン：アデク */
+#define FV_C12PC0101_SWBELL                632 /* 0x0278 ヒオウギシティPC：ベル */
+#define FV_C12R0101_TRORHY1_01             633 /* 0x0279 ヒオウギシティ自宅：バトルサブウェイトロフィー（シングル） */
+#define FV_C12R0101_TRORHY2_01             634 /* 0x027a ヒオウギシティ自宅：バトルサブウェイトロフィー（ダブル） */
+#define FV_C12R0101_TRORHY3_01             635 /* 0x027b ヒオウギシティ自宅：バトルサブウェイトロフィー（マルチ） */
+#define FV_C12R0101_PRIZE1_01              636 /* 0x027c ヒオウギシティ自宅：表彰状（地方） */
+#define FV_C12R0101_PRIZE2_01              637 /* 0x027d ヒオウギシティ自宅：表彰状（全国） */
+#define FV_R19_CHAMPION_01                 638 /* 0x027e 19ばんどうろ：アデク */
+#define FV_C12R0101_SWBELL                 639 /* 0x027f ヒオウギシティ自宅・ベル */
+#define FV_C12R0101_SWMAMA                 640 /* 0x0280 ヒオウギシティ自宅・ママ */
+#define FV_C12_SWANLEADER1                 641 /* 0x0281 ヒオウギシティ・チェレン */
+#define FV_C12_SWBELL                      642 /* 0x0282 ヒオウギシティ・ベル */
+#define FV_C12_SWMAMA                      643 /* 0x0283 ヒオウギシティ・ママ */
+#define FV_C12_SWRIVAL_SISTER              644 /* 0x0284 ヒオウギシティ・ライバル妹 */
+#define FV_C12_SWRIVAL                     645 /* 0x0285 ヒオウギシティ・ライバル */
+#define FV_PC_MEDALOYAJI                   646 /* 0x0286 ポケセンのメダルおやじ */
+#define FV_D06R0101_PAIR                   647 /* 0x0287 電気穴の洞窟連れ歩き */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 
@@ -2370,40 +2012,40 @@
 #define SYS_FLAG_ZUKAN_GET                2402 /* 0x0962 ずかんをもらった */
 #define SYS_FLAG_RUNNINGSHOES             2403 /* 0x0963 ランニングシューズ入手フラグ（Bダッシュ判定に使用） */
 #define SYS_FLAG_KAIRIKI                  2404 /* 0x0964 かいりき状態フラグ */
-		/* not used  2405(0x0965) */
-#define SYS_FLAG_SPEXIT_REQUEST           2406 /* 0x0966 特殊接続リクエスト：これがONのとき、コンティニューは特殊接続から開始 */
-		/* not used  2407(0x0967) */
-#define SYS_FLAG_PAIR                     2408 /* 0x0968 連れ歩きフラグ */
-#define SYS_FLAG_BIGFOUR_GHOSTWIN         2409 /* 0x0969 四天王(ゴースト)を倒した。倒した四天王の部屋入り口の見た目が変わる。挑戦するたびに初期化される。 */
-#define SYS_FLAG_BIGFOUR_EVILWIN          2410 /* 0x096a 四天王(悪)を倒した。倒した四天王の部屋入り口の見た目が変わる。挑戦するたびに初期化される。 */
-#define SYS_FLAG_BIGFOUR_FIGHTWIN         2411 /* 0x096b 四天王(格闘)を倒した。倒した四天王の部屋入り口の見た目が変わる。挑戦するたびに初期化される。 */
-#define SYS_FLAG_BIGFOUR_ESPWIN           2412 /* 0x096c 四天王(エスパー)を倒した。倒した四天王の部屋入り口の見た目が変わる。挑戦するたびに初期化される。 */
-#define SYS_FLAG_PCNAME                   2413 /* 0x096d 「だれかのパソコン」→「○○○のパソコン」の表示切替フラグ */
-#define SYS_FLAG_ZENKOKU_GET              2414 /* 0x096e 全国図鑑入手フラグ */
-#define SYS_FLAG_WEATHER_R07              2415 /* 0x096f 移動ポケモン用天候フラグ：イベント中R07の天気が大荒れになる */
-#define SYS_FLAG_BGM_TOUNAN               2416 /* 0x0970 BGM変更フラグ：盗難イベント中にゾーンBGMを変更する */
-#define SYS_FLAG_ELBOARD_C01GYMWIN        2417 /* 0x0971 電光掲示板用フラグ：臨時ニュースC01ジムクリア */
-#define SYS_FLAG_ELBOARD_C02GYMWIN        2418 /* 0x0972 電光掲示板用フラグ：臨時ニュースC02ジムクリア */
-#define SYS_FLAG_ELBOARD_C03GYMWIN        2419 /* 0x0973 電光掲示板用フラグ：臨時ニュースC03ジムクリア */
-#define SYS_FLAG_ELBOARD_C04GYMWIN        2420 /* 0x0974 電光掲示板用フラグ：臨時ニュースC04ジムクリア */
-#define SYS_FLAG_ELBOARD_C05GYMWIN        2421 /* 0x0975 電光掲示板用フラグ：臨時ニュースC05ジムクリア */
-#define SYS_FLAG_ELBOARD_C06GYMWIN        2422 /* 0x0976 電光掲示板用フラグ：臨時ニュースC06ジムクリア */
-#define SYS_FLAG_ELBOARD_C07GYMWIN        2423 /* 0x0977 電光掲示板用フラグ：臨時ニュースC07ジムクリア */
-#define SYS_FLAG_ELBOARD_C08WGYMWIN       2424 /* 0x0978 電光掲示板用フラグ：臨時ニュースC08ジムクリア（verホワイト） */
-#define SYS_FLAG_ELBOARD_C08BGYMWIN       2425 /* 0x0979 電光掲示板用フラグ：臨時ニュースC08ジムクリア（verブラック） */
-#define SYS_FLAG_ELBOARD_CHAMPWIN         2426 /* 0x097a 電光掲示板用フラグ：臨時ニュースチャンピオンに勝利 */
-#define SYS_FLAG_CHAMPION_WIN             2427 /* 0x097b 殿堂入りフラグ（チャンピオンに勝利） */
-#define SYS_FLAG_BGM_CHAMP                2428 /* 0x097c BGM変更フラグ：Nの城登場後、チャンピオン部屋のBGMを変更する */
-#define SYS_FLAG_BGM_C07HAKASE1           2429 /* 0x097d BGM変更フラグ：C07のアララギ父イベント起動時にBGMを変更する */
-#define SYS_FLAG_BGM_LABO_01              2430 /* 0x097e BGM変更フラグ：図鑑入手イベント中だけ研究所のＢＧＭを変更する */
-#define SYS_FLAG_PALACE_MISSION_START     2431 /* 0x097f ハイリンク：ミッションを初めて開始したフラグ */
-#define SYS_FLAG_PALACE_MISSION_CLEAR     2432 /* 0x0980 ハイリンク：ミッションを初めてクリアしたフラグ */
-#define SYS_FLAG_PALACE_DPOWER            2433 /* 0x0981 ハイリンク：デルパワーを初めて登録したフラグ */
-#define SYS_FLAG_BGM_T01R0102             2434 /* 0x0982 自宅２F：３匹選択のBGM変更フラグ */
-#define SYS_FLAG_BGM_C03R0402             2435 /* 0x0983 ヒウンビル（ゲームフリーク）：サウンドクリエイターのＢＧＭ変更イベント */
-#define SYS_FLAG_BGM_R03R0301PLASMA       2436 /* 0x0984 BGM変更フラグ：地下水脈プラズマ団イベント時にBGMを変更する */
-#define SYS_FLAG_BGM_C04GYM0101_SHOW      2437 /* 0x0985 BGM変更フラグ：スワンでんきジム曲変更フラグ */
-#define SYS_FLAG_BGM_C12PC0101_GUIDE      2438 /* 0x0986 BGM変更フラグ：スワンヒオウギシティPC BGM変更フラグ */
+#define SYS_FLAG_SPEXIT_REQUEST           2405 /* 0x0965 特殊接続リクエスト：これがONのとき、コンティニューは特殊接続から開始 */
+#define SYS_FLAG_PAIR                     2406 /* 0x0966 連れ歩きフラグ */
+#define SYS_FLAG_BIGFOUR_GHOSTWIN         2407 /* 0x0967 四天王(ゴースト)を倒した。倒した四天王の部屋入り口の見た目が変わる。挑戦するたびに初期化される。 */
+#define SYS_FLAG_BIGFOUR_EVILWIN          2408 /* 0x0968 四天王(悪)を倒した。倒した四天王の部屋入り口の見た目が変わる。挑戦するたびに初期化される。 */
+#define SYS_FLAG_BIGFOUR_FIGHTWIN         2409 /* 0x0969 四天王(格闘)を倒した。倒した四天王の部屋入り口の見た目が変わる。挑戦するたびに初期化される。 */
+#define SYS_FLAG_BIGFOUR_ESPWIN           2410 /* 0x096a 四天王(エスパー)を倒した。倒した四天王の部屋入り口の見た目が変わる。挑戦するたびに初期化される。 */
+#define SYS_FLAG_PCNAME                   2411 /* 0x096b 「だれかのパソコン」→「○○○のパソコン」の表示切替フラグ */
+#define SYS_FLAG_ZENKOKU_GET              2412 /* 0x096c 全国図鑑入手フラグ */
+#define SYS_FLAG_WEATHER_R07              2413 /* 0x096d 移動ポケモン用天候フラグ：イベント中R07の天気が大荒れになる */
+#define SYS_FLAG_ELBOARD_C01GYMWIN        2414 /* 0x096e 電光掲示板用フラグ：臨時ニュースC01ジムクリア */
+#define SYS_FLAG_ELBOARD_C02GYMWIN        2415 /* 0x096f 電光掲示板用フラグ：臨時ニュースC02ジムクリア */
+#define SYS_FLAG_ELBOARD_C03GYMWIN        2416 /* 0x0970 電光掲示板用フラグ：臨時ニュースC03ジムクリア */
+#define SYS_FLAG_ELBOARD_C04GYMWIN        2417 /* 0x0971 電光掲示板用フラグ：臨時ニュースC04ジムクリア */
+#define SYS_FLAG_ELBOARD_C05GYMWIN        2418 /* 0x0972 電光掲示板用フラグ：臨時ニュースC05ジムクリア */
+#define SYS_FLAG_ELBOARD_C06GYMWIN        2419 /* 0x0973 電光掲示板用フラグ：臨時ニュースC06ジムクリア */
+#define SYS_FLAG_ELBOARD_C07GYMWIN        2420 /* 0x0974 電光掲示板用フラグ：臨時ニュースC07ジムクリア */
+#define SYS_FLAG_ELBOARD_C08WGYMWIN       2421 /* 0x0975 電光掲示板用フラグ：臨時ニュースC08ジムクリア（verホワイト） */
+#define SYS_FLAG_ELBOARD_C08BGYMWIN       2422 /* 0x0976 電光掲示板用フラグ：臨時ニュースC08ジムクリア（verブラック） */
+#define SYS_FLAG_ELBOARD_CHAMPWIN         2423 /* 0x0977 電光掲示板用フラグ：臨時ニュースチャンピオンに勝利 */
+#define SYS_FLAG_CHAMPION_WIN             2424 /* 0x0978 殿堂入りフラグ（チャンピオンに勝利） */
+#define SYS_FLAG_PALACE_MISSION_START     2425 /* 0x0979 ハイリンク：ミッションを初めて開始したフラグ */
+#define SYS_FLAG_PALACE_MISSION_CLEAR     2426 /* 0x097a ハイリンク：ミッションを初めてクリアしたフラグ */
+#define SYS_FLAG_PALACE_DPOWER            2427 /* 0x097b ハイリンク：デルパワーを初めて登録したフラグ */
+#define SYS_FLAG_BGM_C03R0402             2428 /* 0x097c ヒウンビル（ゲームフリーク）：サウンドクリエイターのＢＧＭ変更イベント */
+#define SYS_FLAG_BGM_C04GYM0101_SHOW      2429 /* 0x097d BGM変更フラグ：スワンでんきジム曲変更フラグ */
+#define SYS_FLAG_BGM_C12PC0101_GUIDE      2430 /* 0x097e BGM変更フラグ：スワンヒオウギシティPC BGM変更フラグ */
+		/* not used  2431(0x097f) */
+		/* not used  2432(0x0980) */
+		/* not used  2433(0x0981) */
+		/* not used  2434(0x0982) */
+		/* not used  2435(0x0983) */
+		/* not used  2436(0x0984) */
+		/* not used  2437(0x0985) */
+		/* not used  2438(0x0986) */
 		/* not used  2439(0x0987) */
 		/* not used  2440(0x0988) */
 		/* not used  2441(0x0989) */
@@ -2437,30 +2079,30 @@
 		/* not used  2469(0x09a5) */
 		/* not used  2470(0x09a6) */
 		/* not used  2471(0x09a7) */
-		/* not used  2472(0x09a8) */
-		/* not used  2473(0x09a9) */
-		/* not used  2474(0x09aa) */
-		/* not used  2475(0x09ab) */
-		/* not used  2476(0x09ac) */
-		/* not used  2477(0x09ad) */
-		/* not used  2478(0x09ae) */
-		/* not used  2479(0x09af) */
-#define SYS_FLAG_ARRIVE_T01               2480 /* 0x09b0 到着フラグ：T01 */
-#define SYS_FLAG_ARRIVE_T02               2481 /* 0x09b1 到着フラグ：T0２ */
-#define SYS_FLAG_ARRIVE_C01               2482 /* 0x09b2 到着フラグ：C01 */
-#define SYS_FLAG_ARRIVE_C02               2483 /* 0x09b3 到着フラグ：C02 */
-#define SYS_FLAG_ARRIVE_C03               2484 /* 0x09b4 到着フラグ：C03 */
-#define SYS_FLAG_ARRIVE_C04               2485 /* 0x09b5 到着フラグ：C04 */
-#define SYS_FLAG_ARRIVE_C05               2486 /* 0x09b6 到着フラグ：C05 */
-#define SYS_FLAG_ARRIVE_C06               2487 /* 0x09b7 到着フラグ：C06 */
-#define SYS_FLAG_ARRIVE_C07               2488 /* 0x09b8 到着フラグ：C07 */
-#define SYS_FLAG_ARRIVE_C08               2489 /* 0x09b9 到着フラグ：C08 */
-#define SYS_FLAG_ARRIVE_T03               2490 /* 0x09ba 到着フラグ：T0３ */
-#define SYS_FLAG_ARRIVE_C09               2491 /* 0x09bb 到着フラグ：C09 */
-#define SYS_FLAG_ARRIVE_C10               2492 /* 0x09bc 到着フラグ：C10 */
-#define SYS_FLAG_ARRIVE_T04               2493 /* 0x09bd 到着フラグ：T04 */
-#define SYS_FLAG_ARRIVE_C11               2494 /* 0x09be 到着フラグ：C11（国連） */
-#define SYS_FLAG_ARRIVE_D09               2495 /* 0x09bf 到着フラグ：チャンピオンロード */
+#define SYS_FLAG_ARRIVE_T01               2472 /* 0x09a8 到着フラグ：T01 */
+#define SYS_FLAG_ARRIVE_T02               2473 /* 0x09a9 到着フラグ：T0２ */
+#define SYS_FLAG_ARRIVE_C01               2474 /* 0x09aa 到着フラグ：C01 */
+#define SYS_FLAG_ARRIVE_C02               2475 /* 0x09ab 到着フラグ：C02 */
+#define SYS_FLAG_ARRIVE_C03               2476 /* 0x09ac 到着フラグ：C03 */
+#define SYS_FLAG_ARRIVE_C04               2477 /* 0x09ad 到着フラグ：C04 */
+#define SYS_FLAG_ARRIVE_C05               2478 /* 0x09ae 到着フラグ：C05 */
+#define SYS_FLAG_ARRIVE_C06               2479 /* 0x09af 到着フラグ：C06 */
+#define SYS_FLAG_ARRIVE_C07               2480 /* 0x09b0 到着フラグ：C07 */
+#define SYS_FLAG_ARRIVE_C08               2481 /* 0x09b1 到着フラグ：C08 */
+#define SYS_FLAG_ARRIVE_T03               2482 /* 0x09b2 到着フラグ：T0３ */
+#define SYS_FLAG_ARRIVE_C09               2483 /* 0x09b3 到着フラグ：C09 */
+#define SYS_FLAG_ARRIVE_C10               2484 /* 0x09b4 到着フラグ：C10 */
+#define SYS_FLAG_ARRIVE_T04               2485 /* 0x09b5 到着フラグ：T04 */
+#define SYS_FLAG_ARRIVE_C11               2486 /* 0x09b6 到着フラグ：C11（国連） */
+#define SYS_FLAG_ARRIVE_D09               2487 /* 0x09b7 到着フラグ：チャンピオンロード */
+		/* not used  2488(0x09b8) */
+		/* not used  2489(0x09b9) */
+		/* not used  2490(0x09ba) */
+		/* not used  2491(0x09bb) */
+		/* not used  2492(0x09bc) */
+		/* not used  2493(0x09bd) */
+		/* not used  2494(0x09be) */
+		/* not used  2495(0x09bf) */
 		/* not used  2496(0x09c0) */
 		/* not used  2497(0x09c1) */
 		/* not used  2498(0x09c2) */
@@ -2475,14 +2117,6 @@
 		/* not used  2507(0x09cb) */
 		/* not used  2508(0x09cc) */
 		/* not used  2509(0x09cd) */
-		/* not used  2510(0x09ce) */
-		/* not used  2511(0x09cf) */
-		/* not used  2512(0x09d0) */
-		/* not used  2513(0x09d1) */
-		/* not used  2514(0x09d2) */
-		/* not used  2515(0x09d3) */
-		/* not used  2516(0x09d4) */
-		/* not used  2517(0x09d5) */
 
 #define SYS_FLAG_AREA_END                 2719 /* 0x0a9f  */
 
@@ -2501,60 +2135,45 @@
 #define TMFLG_WC10_ITEM_08                2727 /* 0x0aa7 WC10のアイテム０８ */
 #define TMFLG_WC10_ITEM_09                2728 /* 0x0aa8 WC10のアイテム０９ */
 #define TMFLG_WC10_ITEM_10                2729 /* 0x0aa9 WC10のアイテム１０ */
-#define TMFLG_WC10R0101_OLDMAN            2730 /* 0x0aaa WC村長 */
-#define TMFLG_C08R0301_GOODS              2731 /* 0x0aab ミュージカル大好きおじさん */
-#define TMFLG_C03R0201_GALLERY_TYPE       2732 /* 0x0aac ギャラリーの日替わりポケモンタイプ */
-#define TMFLG_C03R0201_GALLERY_CLEAR      2733 /* 0x0aad ギャラリーの日替わりミッションクリア判定 */
-#define TMFLG_C03R1001_MASSAGE            2734 /* 0x0aae １日１回なつきマッサージ */
-#define TMFLG_C03P09_SWEETS               2735 /* 0x0aaf １日１個購入制限アイテム */
-#define TMFLG_C02R0601_ITEM               2736 /* 0x0ab0 １日１個入手制限アイテム */
-#define TMFLG_D02_ROCK_01                 2737 /* 0x0ab1 ヤグルマの森：試しの岩１イベント */
-#define TMFLG_D02_ROCK_02                 2738 /* 0x0ab2 ヤグルマの森：試しの岩２イベント */
-#define TMFLG_C05R0701_WAZA_NO            2739 /* 0x0ab3 日替わり技見せ：本日の技ナンバー */
-#define TMFLG_C05R0701_WAZA_CLEAR         2740 /* 0x0ab4 日替わり技見せ：クリア判定 */
-#define TMFLG_C07R0201_QUIZ               2741 /* 0x0ab5 セッカシティ民家：クイズ家挑戦フラグ */
-#define TMFLG_R13_TREASURE                2742 /* 0x0ab6 13番道路：海辺のお宝イベント */
-#define TMFLG_C03R0402_BATTLE             2743 /* 0x0ab7 ゲームフリーク：森本さん戦闘フラグ */
-#define TMFLG_AMUSEMENT_TR_BTL            2744 /* 0x0ab8 ライモン遊園地：観覧車トレーナー対戦フラグ */
-#define TMFLG_STADIUM_TR_BTL              2745 /* 0x0ab9 ビッグスタジアム／リトルコート：トレーナー再配置フラグ */
-		/* not used  2746(0x0aba) */
-#define TMFLG_T04R0101_BTL_FAMILY         2747 /* 0x0abb サザナミタウン：巨大別荘対戦フラグ */
-#define TMFLG_D01R0201_POKE16_BTL         2748 /* 0x0abc 夢の跡地B2：ムシャーナエンカウントフラグ */
-#define TMFLG_H04R0301_FISHING            2749 /* 0x0abd ビレッジブリッジ民家：釣りイベント */
-#define TMFLG_T05R0301_BTLITEM            2750 /* 0x0abe カナワタウン民家：戦闘用アイテム入手イベント */
-#define TMFLG_C08R0201_BTL                2751 /* 0x0abf ソウリュウシティ：バトルの館、再戦チェックフラグ */
-#define TMFLG_H03_EMPEROR_BTL             2752 /* 0x0ac0 シリンダーブリッジ：暴走族と対戦したフラグ */
-#define TMFLG_T03R0401_ITEMGET_01         2753 /* 0x0ac1 カゴメタウン：日曜日限定1日1回アイテム入手イベント */
-#define TMFLG_C03P16_CABIN_01             2754 /* 0x0ac2 ヒウンシティ：遊覧船イベント（1日1回） */
-#define TMFLG_H04_KINOMI_SAND             2755 /* 0x0ac3 ビレッジブリッジ：きのみサンドイベント */
-#define TMFLG_D09R1401_RIVAL              2756 /* 0x0ac4 チャンピオンロード：クリア後ライバル戦闘済みフラグ */
-#define TMFLG_T01R0401_SUP_TALK           2757 /* 0x0ac5 研究所：殿堂入り後サポートの初回会話した。 会話してか一日経過すると曜日イベントに切り替わる */
-#define TMFLG_T01R0401_SUP_BTL            2758 /* 0x0ac6 研究所：殿堂入り後サポートの１日１回戦闘フラグ 土曜、日曜なら対戦イベントが発生。 */
-#define TMFLG_T04R0401_SHIRONA_BTL        2759 /* 0x0ac7 サザナミタウン：春に１日１回シロナと戦闘できる。 */
-#define TMFLG_T04R0401_TALKSET            2760 /* 0x0ac8 サザナミタウン：春と夏にT04R0101に登場する人々の 日替わりのメッセージを設定するフラグ */
-#define TMFLG_H05_MINEZUMI                2761 /* 0x0ac9 ワンダーブリッジ：ミネズミ当てゲーム */
-#define TMFLG_D07R0401_FOSSIL             2762 /* 0x0aca ネジ山：クリア後１日１回カセキ入手イベント */
-#define TMFLG_T04R0401_SHIRONA_TALK       2763 /* 0x0acb サザナミタウン：シロナの春の１日の初回会話フラグ */
-#define TMFLG_R08_STONE_GET               2764 /* 0x0acc ８番道路：天候石入手イベント（１日１回入手） */
-#define TMFLG_R05_KINOMI                  2765 /* 0x0acd スワン：5番道路：木の実購入イベント確定フラグ */
-#define TMFLG_R05_KINOMI_BUY              2766 /* 0x0ace スワン：5番道路：木の実購入イベント済みフラグ */
+#define TMFLG_C08R0301_GOODS              2730 /* 0x0aaa ミュージカル大好きおじさん */
+#define TMFLG_C03R0201_GALLERY_TYPE       2731 /* 0x0aab ギャラリーの日替わりポケモンタイプ */
+#define TMFLG_C03R0201_GALLERY_CLEAR      2732 /* 0x0aac ギャラリーの日替わりミッションクリア判定 */
+#define TMFLG_C03R1001_MASSAGE            2733 /* 0x0aad １日１回なつきマッサージ */
+#define TMFLG_C03P09_SWEETS               2734 /* 0x0aae １日１個購入制限アイテム */
+#define TMFLG_C02R0601_ITEM               2735 /* 0x0aaf １日１個入手制限アイテム */
+#define TMFLG_C05R0701_WAZA_NO            2736 /* 0x0ab0 日替わり技見せ：本日の技ナンバー */
+#define TMFLG_C05R0701_WAZA_CLEAR         2737 /* 0x0ab1 日替わり技見せ：クリア判定 */
+#define TMFLG_R13_TREASURE                2738 /* 0x0ab2 13番道路：海辺のお宝イベント */
+#define TMFLG_C03R0402_BATTLE             2739 /* 0x0ab3 ゲームフリーク：森本さん戦闘フラグ */
+#define TMFLG_AMUSEMENT_TR_BTL            2740 /* 0x0ab4 ライモン遊園地：観覧車トレーナー対戦フラグ */
+#define TMFLG_STADIUM_TR_BTL              2741 /* 0x0ab5 ビッグスタジアム／リトルコート：トレーナー再配置フラグ */
+#define TMFLG_T05R0301_BTLITEM            2742 /* 0x0ab6 カナワタウン民家：戦闘用アイテム入手イベント */
+#define TMFLG_H03_EMPEROR_BTL             2743 /* 0x0ab7 シリンダーブリッジ：暴走族と対戦したフラグ */
+#define TMFLG_C03P16_CABIN_01             2744 /* 0x0ab8 ヒウンシティ：遊覧船イベント（1日1回） */
+#define TMFLG_T04R0401_SHIRONA_BTL        2745 /* 0x0ab9 サザナミタウン：春に１日１回シロナと戦闘できる。 */
+#define TMFLG_T04R0401_TALKSET            2746 /* 0x0aba サザナミタウン：春と夏にT04R0101に登場する人々の 日替わりのメッセージを設定するフラグ */
+#define TMFLG_D07R0401_FOSSIL             2747 /* 0x0abb ネジ山：クリア後１日１回カセキ入手イベント */
+#define TMFLG_T04R0401_SHIRONA_TALK       2748 /* 0x0abc サザナミタウン：シロナの春の１日の初回会話フラグ */
+#define TMFLG_R08_STONE_GET               2749 /* 0x0abd ８番道路：天候石入手イベント（１日１回入手） */
+#define TMFLG_R05_KINOMI                  2750 /* 0x0abe スワン：5番道路：木の実購入イベント確定フラグ */
+#define TMFLG_R05_KINOMI_BUY              2751 /* 0x0abf スワン：5番道路：木の実購入イベント済みフラグ */
+		/* not used  2752(0x0ac0) */
+		/* not used  2753(0x0ac1) */
+		/* not used  2754(0x0ac2) */
+		/* not used  2755(0x0ac3) */
+		/* not used  2756(0x0ac4) */
+		/* not used  2757(0x0ac5) */
+		/* not used  2758(0x0ac6) */
+		/* not used  2759(0x0ac7) */
+		/* not used  2760(0x0ac8) */
+		/* not used  2761(0x0ac9) */
+		/* not used  2762(0x0aca) */
+		/* not used  2763(0x0acb) */
+		/* not used  2764(0x0acc) */
+		/* not used  2765(0x0acd) */
+		/* not used  2766(0x0ace) */
 		/* not used  2767(0x0acf) */
 		/* not used  2768(0x0ad0) */
-		/* not used  2769(0x0ad1) */
-		/* not used  2770(0x0ad2) */
-		/* not used  2771(0x0ad3) */
-		/* not used  2772(0x0ad4) */
-		/* not used  2773(0x0ad5) */
-		/* not used  2774(0x0ad6) */
-		/* not used  2775(0x0ad7) */
-		/* not used  2776(0x0ad8) */
-		/* not used  2777(0x0ad9) */
-		/* not used  2778(0x0ada) */
-		/* not used  2779(0x0adb) */
-		/* not used  2780(0x0adc) */
-		/* not used  2781(0x0add) */
-		/* not used  2782(0x0ade) */
-		/* not used  2783(0x0adf) */
 
 #define TMFLG_AREA_END                    2911 /* 0x0b5f  */
 

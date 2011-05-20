@@ -13,25 +13,18 @@
 #ifndef ZONE_D06R0101_EVC_H
 #define ZONE_D06R0101_EVC_H
 
-#define D06R0101_HEROINE_01                0
-#define D06R0101_HAKASE2_01                1
-#define D06R0101_NINJA_01                  2
-#define D06R0101_NINJA_02                  3
-#define D06R0101_BOSS_01                   4
-#define D06R0101_NINJA_03                  5
-#define D06R0101_FLD_ITEM_01               6
-#define D06R0101_FLD_ITEM_02               7
-#define D06R0101_FLD_ITEM_03               8
-#define D06R0101_FLD_ITEM_04               9
-#define TR_SCIENTISTM_05                  10
-#define TR_ELITEM_03                      11
-#define TR_SCIENTISTW_03                  12
-#define TR_ELITEM_02                      13
-#define TR_MOUNT_02                       14
-#define D05R0101_FLD_ITEM_05              15
-#define D05R0101_FLD_ITEM_06              16
-#define TR_SCIENTISTM_04                  17
-#define D06R0101_PAIR                     18
+#define D06R0101_FLD_ITEM_01               0
+#define D06R0101_FLD_ITEM_02               1
+#define D06R0101_FLD_ITEM_03               2
+#define D06R0101_FLD_ITEM_04               3
+#define TR_SCIENTISTM_05                   4
+#define TR_ELITEM_03                       5
+#define TR_SCIENTISTW_03                   6
+#define TR_ELITEM_02                       7
+#define TR_MOUNT_02                        8
+#define D05R0101_FLD_ITEM_05               9
+#define D05R0101_FLD_ITEM_06              10
+#define TR_SCIENTISTM_04                  11
 
 #endif //ZONE_D06R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d06r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

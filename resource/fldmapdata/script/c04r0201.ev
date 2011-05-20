@@ -175,7 +175,7 @@ EVENT_START		ev_scene_c04r0201_musical_first
 	//C04フィールド：サポートパパイベントを有効にする
 	$WK_SCENE_C04 = 2
 	//サポートパパを表示
-	_FLAG_RESET( FV_C04_SUPPORTPAPA_01 )
+	//_FLAG_RESET( FV_C04_SUPPORTPAPA_01 )
 	
 	//========================================//
 	

@@ -16,17 +16,8 @@
 #define C02GYM0101_OLDMAN_01               3
 #define C02GYM0101_MAN1_01                 4
 #define C02GYM0101_GIRL3_01                5
-#define C02GYM0101_RIVAL_01                6
-#define C02GYM0101_SUPPOT_01               7
-#define C02GYM0101_BONE_01                 8
-#define C02GYM0101_BLACKSTONE_01           9
-#define C02GYM0101_FOSSIL                 10
-#define C02GYM0101_HAKAIM_01              11
-#define C02GYM0101_HAKAIM_04              12
-#define C02GYM0101_HAKAIM_03              13
-#define C02GYM0101_HAKAIM_02              14
-#define C02GYM0101_HAKAIM_05              15
-#define C02GYM0101_HAKAIM_06              16
+#define C02GYM0101_BONE_01                 6
+#define C02GYM0101_FOSSIL                  7
 
 #endif //ZONE_C02GYM0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c02gym0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
