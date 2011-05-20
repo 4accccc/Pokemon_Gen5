@@ -93,8 +93,20 @@ static FIELD_TASK_RETVAL TransPlayer( void* wk )
       GFL_CALC3D_VEC_MulScalar( &work->startPos, w0, &v0 );
       GFL_CALC3D_VEC_MulScalar( &work->endPos,   w1, &v1 );
       VEC_Add( &v0, &v1, &v2 );
+
+      // Y座標のみ更新する
+      // マップの高さそのままに移動したい為
+      {
+        VecFx32 tmp;
+        FIELD_PLAYER_GetPos( player, &tmp );
+        v2.y = tmp.y;
+      }
       FIELD_PLAYER_SetPos( player, &v2 );   // 移動
       MMDL_UpdateCurrentHeight( mmdl );   // 接地
+
+      // 動作モデル座標リセット
+      // ※これをよばないと描画がずれる
+      MMDL_ResetBBDPos( mmdl );
     }
     if( work->endFrame <= work->frame )
     {
