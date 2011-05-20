@@ -533,8 +533,8 @@
   NO_CMD() //DEF_CMD( EvCmdGymAnti_OpenDoor, EV_SEQ_GYM_ANTI_OPEN_DOOR )
   NO_CMD() //DEF_CMD( EvCmdGymAnti_SwOff, EV_SEQ_GYM_ANTI_SW_OFF )
 
-  NO_CMD() //DEF_CMD( EvCmdGymGround_SetEnterPos, EV_SEQ_GYM_GROUND_SET_ENTER_POS )
-  NO_CMD() //DEF_CMD( EvCmdGymGroundEnt_SetEnterPos, EV_SEQ_GYM_GROUND_ENT_SET_ENTER_POS )
+  DEF_CMD( EvCmdGymGround_SetEnterPos, EV_SEQ_GYM_GROUND_SET_ENTER_POS )
+  DEF_CMD( EvCmdGymGroundEnt_SetEnterPos, EV_SEQ_GYM_GROUND_ENT_SET_ENTER_POS )
 
   //虫ジム
   NO_CMD() //DEF_CMD( EvCmdGymInsect_SwOn, EV_SEQ_GYM_INSECT_SW_ON )
@@ -543,9 +543,9 @@
   NO_CMD() //DEF_CMD( EvCmdGymInsect_Init, EV_SEQ_GYM_INSECT_INIT )
 
   //地面ジム
-  NO_CMD() //DEF_CMD( EvCmdGymGround_MvLift, EV_SEQ_GYM_GROUND_MV_LIFT )
-  NO_CMD() //DEF_CMD( EvCmdGymGround_ExitLift, EV_SEQ_GYM_GROUND_EXIT_LIFT )
-  NO_CMD() //DEF_CMD( EvCmdGymGroundEnt_ExitLift, EV_SEQ_GYM_GROUND_ENT_EXIT_LIFT )
+  DEF_CMD( EvCmdGymGround_MvLift, EV_SEQ_GYM_GROUND_MV_LIFT )
+  DEF_CMD( EvCmdGymGround_ExitLift, EV_SEQ_GYM_GROUND_EXIT_LIFT )
+  DEF_CMD( EvCmdGymGroundEnt_ExitLift, EV_SEQ_GYM_GROUND_ENT_EXIT_LIFT )
 
   // 氷ジム
   NO_CMD() //DEF_CMD( EvCmdGymIce_SwAnm, EV_SEQ_GYM_ICE_SW_ANM )

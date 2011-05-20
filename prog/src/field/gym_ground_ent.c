@@ -1,78 +1,468 @@
-//======================================================================
+//[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
 /**
- * @file  gym_ground_ent.c
- * @brief  地面ジムエントランス
- * @author  Saito
- * @date  09.11.11
+ *
+ *	@file		gym_ground_ent.c
+ *	@brief  地面ジムエントランス
+ *	@author	Katsuhiko=Ichiraku
+ *	@date		2011.05.20
+ *
  */
-//======================================================================
-
+//]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+// system
 #include "fieldmap.h"
-//#include "gym_ground_sv.h"
-#include "gym_ground_ent.h"
-#include "field_gimmick_def.h"
+#include "system/main.h"    //for HEAPID_FIELDMAP
 #include "savedata/gimmickwork.h"
-#include "gmk_tmp_wk.h"
 
+// field
 #include "field/field_const.h"  //for FIELD_CONST_GRID_FX32_SIZE
 
-#include "arc/fieldmap/gym_ground.naix"
-#include "system/main.h"    //for HEAPID_FIELDMAP
+// gimmick
+#include "field_gimmick_def.h"
+#include "gmk_tmp_wk.h"
 
+// arc
+#include "arc/fieldmap/gym_ground.naix"
+
+// sound
 #include "sound/pm_sndsys.h"
 
+// mine
 #include "gym_ground_se_def.h"
+#include "gym_ground_ent.h"
 
+//=============================================================================
+/**
+ *					定数宣言
+*/
+//=============================================================================
 #define GYM_GROUND_ENT_UNIT_IDX (0)
 #define GYM_GROUND_ENT_TMP_ASSIGN_ID  (1)
 
+#define GRID_HALF_SIZE ((FIELD_CONST_GRID_SIZE/2)*FX32_ONE)
 
+#define LIFT_ANM_NUM    (1)
+
+#define LIFT_0_GX (7*FIELD_CONST_GRID_FX32_SIZE+GRID_HALF_SIZE)
+#define LIFT_0_GY (0*FIELD_CONST_GRID_FX32_SIZE)
+#define LIFT_0_GZ (4*FIELD_CONST_GRID_FX32_SIZE+GRID_HALF_SIZE)
+
+#define LIFT_MOVE_SPD (2*FX32_ONE)
+
+#define BASE_HEIGHT ( 0*FIELD_CONST_GRID_FX32_SIZE )
+#define DOWN_HEIGHT ( -5*FIELD_CONST_GRID_FX32_SIZE )
+
+//=============================================================================
+/**
+ *					構造体宣言
+*/
+//=============================================================================
 //ジム内部中の一時ワーク
 typedef struct GYM_GROUND_ENT_TMP_tag
 {
-  u32 dummy;
+  fx32          NowHeight;
+  fx32          DstHeight;
+  fx32          AddVal;
+  BOOL          Exit;
+  const VecFx32 *Watch;
 }GYM_GROUND_ENT_TMP;
 
+//=============================================================================
+/**
+ *          3Dリソース
+ */
+//=============================================================================
+//リソースの並び順番
+enum {
+  RES_ID_LIFT_MDL = 0,
+  RES_ID_LIFT_ANM,
+};
+
+//ＯＢＪインデックス
+enum {
+  OBJ_LIFT_0 = 0,
+};
+
+//--リソース関連--
+//読み込む3Dリソース
+static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
+	{ ARCID_GYM_GROUND, NARC_gym_ground_lift_entrance01_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD
+
+  { ARCID_GYM_GROUND, NARC_gym_ground_lift_entrance01_nsbta, GFL_G3D_UTIL_RESARC }, //ITA
+};
+
+//3Dアニメ　リフト
+static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl_lift[] = {
+	{ RES_ID_LIFT_ANM,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
+};
+
+static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl[] = {
+  //リフト
+	{
+		RES_ID_LIFT_MDL, 	//モデルリソースID
+		0, 							  //モデルデータID(リソース内部INDEX)
+		RES_ID_LIFT_MDL, 	//テクスチャリソースID
+		g3Dutil_anmTbl_lift,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anmTbl_lift),	//アニメリソース数
+	},
+};
+
+static const GFL_G3D_UTIL_SETUP Setup = {
+  g3Dutil_resTbl,				//リソーステーブル
+	NELEMS(g3Dutil_resTbl),		//リソース数
+	g3Dutil_objTbl,				//オブジェクト設定テーブル
+	NELEMS(g3Dutil_objTbl),		//オブジェクト数
+};
+//=============================================================================
+/**
+ *					static関数宣言
+*/
+//=============================================================================
+
+static GMEVENT_RESULT ExitLiftEvt( GMEVENT* event, int* seq, void* work );
+static BOOL CheckArrive(GYM_GROUND_ENT_TMP *tmp);
+static void SetExitLiftDefaultSt(FLD_EXP_OBJ_CNT_PTR ptr);
+
+//=============================================================================
+/**
+ *					外部公開関数
+*/
+//=============================================================================
 //--------------------------------------------------------------
 /**
- * セットアップ関数
- * @param	      fieldWork     フィールドワークポインタ
+ * @bried       セットアップ関数
+ * @param	      p_fieldmap     フィールドワークポインタ
  * @return      none
  */
 //--------------------------------------------------------------
-void GYM_GROUND_ENT_Setup(FIELDMAP_WORK *fieldWork)
+void GYM_GROUND_ENT_Setup(FIELDMAP_WORK *p_fieldmap)
 {
+  int i;
   GYM_GROUND_ENT_TMP *tmp;
+  FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
 
   //汎用ワーク確保
   GMK_TMP_WK_AllocWork
-      (fieldWork, GYM_GROUND_ENT_TMP_ASSIGN_ID, FIELDMAP_GetHeapID(fieldWork), sizeof(GYM_GROUND_ENT_TMP));
+      (p_fieldmap, GYM_GROUND_ENT_TMP_ASSIGN_ID, FIELDMAP_GetHeapID(p_fieldmap), sizeof(GYM_GROUND_ENT_TMP));
+
+  //必要なリソースの用意
+  FLD_EXP_OBJ_AddUnitByHandle(ptr, &Setup, GYM_GROUND_ENT_UNIT_IDX);
+
+  //座標セット
+  {
+    int j;
+    EXP_OBJ_ANM_CNT_PTR anm;
+    VecFx32 pos = {LIFT_0_GX, LIFT_0_GY, LIFT_0_GZ};
+    int obj_idx = OBJ_LIFT_0;
+    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, GYM_GROUND_ENT_UNIT_IDX, obj_idx);
+    status->trans = pos;
+    //カリングする
+    FLD_EXP_OBJ_SetCulling(ptr, GYM_GROUND_ENT_UNIT_IDX, obj_idx, TRUE);
+    for (j=0;j<LIFT_ANM_NUM;j++)
+    {
+      //1回再生設定
+      EXP_OBJ_ANM_CNT_PTR anm;
+      anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_GROUND_ENT_UNIT_IDX, obj_idx, j);
+      FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 0);
+      //アニメ停止
+      FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
+    }
+    
+    SetExitLiftDefaultSt(ptr);
+  }
 }
 
 //--------------------------------------------------------------
 /**
- * 解放関数
- * @param	      fieldWork     フィールドワークポインタ
+ * @bried       解放関数
+ * @param	      p_fieldmap     フィールドワークポインタ
  * @return      none
  */
 //--------------------------------------------------------------
-void GYM_GROUND_ENT_End(FIELDMAP_WORK *fieldWork)
+void GYM_GROUND_ENT_End(FIELDMAP_WORK *p_fieldmap)
 {
-  GYM_GROUND_ENT_TMP *tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_GROUND_ENT_TMP_ASSIGN_ID);
+  FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
+  GYM_GROUND_ENT_TMP *tmp = GMK_TMP_WK_GetWork(p_fieldmap, GYM_GROUND_ENT_TMP_ASSIGN_ID);
 
   //汎用ワーク解放
-  GMK_TMP_WK_FreeWork(fieldWork, GYM_GROUND_ENT_TMP_ASSIGN_ID);
+  GMK_TMP_WK_FreeWork(p_fieldmap, GYM_GROUND_ENT_TMP_ASSIGN_ID);
+  //ＯＢＪ解放
+  FLD_EXP_OBJ_DelUnit( ptr, GYM_GROUND_ENT_UNIT_IDX );
 }
 
 //--------------------------------------------------------------
 /**
- * 動作関数
- * @param	      fieldWork     フィールドワークポインタ
+ * @bried       動作関数
+ * @param	      p_fieldmap     フィールドワークポインタ
  * @return      none
  */
 //--------------------------------------------------------------
-void GYM_GROUND_ENT_Move(FIELDMAP_WORK *fieldWork)
+void GYM_GROUND_ENT_Move(FIELDMAP_WORK *p_fieldmap)
 {
-//  GYM_GROUND_ENT_TMP *tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_GROUND_ENT_TMP_ASSIGN_ID);
+  int i;
+  FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
+//  GYM_GROUND_ENT_TMP *tmp = GMK_TMP_WK_GetWork(p_fieldmap, GYM_GROUND_ENT_TMP_ASSIGN_ID);
+
+#ifdef PM_DEBUG
+  if (GFL_UI_KEY_GetCont() & PAD_BUTTON_L){
+    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
+      GAMESYS_WORK *p_gamesys = FIELDMAP_GetGameSysWork( p_fieldmap );
+      GMEVENT *event;
+      {
+        event = GYM_GROUND_ENT_CreateExitLiftMoveEvt(p_gamesys, TRUE);
+        GAMESYSTEM_SetEvent(p_gamesys, event);
+      }
+    }else if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
+      GAMESYS_WORK *p_gamesys = FIELDMAP_GetGameSysWork( p_fieldmap );
+      GMEVENT *event;
+      {
+        event = GYM_GROUND_ENT_CreateExitLiftMoveEvt(p_gamesys, FALSE);
+        GAMESYSTEM_SetEvent(p_gamesys, event);
+      }
+    }
+  }
+#endif
+
+  //アニメーション再生
+  FLD_EXP_OBJ_PlayAnime( ptr );
 }
+
+//=============================================================================
+//  スクリプトコマンド
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  出口昇降イベント作成
+ *
+ *	@param	p_gamesys   ゲームシステムポインタ
+ *	@param	inExit      エントランスを出る（ジムに行く）とき TRUE
+ *
+ *	@return イベント
+ */
+//-----------------------------------------------------------------------------
+GMEVENT *GYM_GROUND_ENT_CreateExitLiftMoveEvt( GAMESYS_WORK *p_gamesys, const BOOL inExit )
+{
+  GMEVENT * event;
+  GYM_GROUND_ENT_TMP *tmp;
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork(p_gamesys);
+    
+  tmp = GMK_TMP_WK_GetWork(p_fieldmap, GYM_GROUND_ENT_TMP_ASSIGN_ID);
+
+  tmp->Exit = inExit;
+
+  //対象リフトの状態を取得
+  if ( inExit )
+  {
+    //基準位置→移動後位置
+    tmp->NowHeight = BASE_HEIGHT;
+    tmp->DstHeight = DOWN_HEIGHT;
+  }
+  else
+  {
+    //移動後位置→基準位置
+    tmp->NowHeight = DOWN_HEIGHT;
+    tmp->DstHeight = BASE_HEIGHT;
+    {
+      int obj_idx = OBJ_LIFT_0;
+      FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
+      FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_GROUND_ENT_UNIT_IDX, obj_idx, 0, TRUE);
+    }
+  }
+  if ( tmp->DstHeight - tmp->NowHeight < 0 ) tmp->AddVal = -LIFT_MOVE_SPD;
+  else tmp->AddVal = LIFT_MOVE_SPD;
+  //イベント作成
+  event = GMEVENT_Create( p_gamesys, NULL, ExitLiftEvt, 0 );
+  return event;
+}
+
+//--------------------------------------------------------------
+/**
+ * 出口昇降イベント
+ * @param	  event   イベントポインタ
+ * @param   seq     シーケンサ
+ * @param   work    ワークポインタ
+ * @return  GMEVENT_RESULT  イベント結果
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT ExitLiftEvt( GMEVENT* event, int* seq, void* work )
+{
+  GAMESYS_WORK *p_gamesys = GMEVENT_GetGameSysWork(event);
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork(p_gamesys);
+  FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
+  GYM_GROUND_ENT_TMP *tmp = GMK_TMP_WK_GetWork(p_fieldmap, GYM_GROUND_ENT_TMP_ASSIGN_ID);
+  FIELD_CAMERA *camera = FIELDMAP_GetFieldCamera( p_fieldmap );
+
+  switch(*seq){
+  case 0:
+    //@note Exit が FLASEのときは GYM_GROUND_ENT_SetEnterPos関数で処理を行っているはずなので、フックする
+    if (tmp->Exit){
+      //現在ウォッチターゲットを保存
+      tmp->Watch = FIELD_CAMERA_GetWatchTarget(camera);
+      //カメラのバインドを切る
+      FIELD_CAMERA_FreeTarget(camera);
+    }
+    //リフト移動ＳＥ
+    if (!tmp->Exit) PMSND_PlaySE(GYM_GROUND_SE_LIFT_MOVE_IN);
+    else PMSND_PlaySE(GYM_GROUND_SE_LIFT_MOVE);
+    (*seq)++;
+    break;
+  case 1:
+    {
+      //変動後の高さに書き換え
+      tmp->NowHeight += tmp->AddVal;
+      //目的の高さに到達したか？
+      if(  CheckArrive(tmp) )
+      {
+        //目的高さで上書き
+        tmp->NowHeight = tmp->DstHeight;
+        if (!tmp->Exit)
+        {
+          //リフト停止音
+          PMSND_PlaySE(GYM_GROUND_SE_LIFT_STOP);
+        }
+        //次のシーケンスへ
+        (*seq)++;
+      }
+      //対象リフト高さ更新
+      {
+        int obj_idx = OBJ_LIFT_0;
+        GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, GYM_GROUND_ENT_UNIT_IDX, obj_idx);
+        status->trans.y = tmp->NowHeight;
+      }
+      //自機の高さを更新
+      {
+        VecFx32 pos;
+        FIELD_PLAYER *fld_player;
+        fld_player = FIELDMAP_GetFieldPlayer( p_fieldmap );
+        FIELD_PLAYER_GetPos( fld_player, &pos );
+        pos.y = tmp->NowHeight;
+        FIELD_PLAYER_SetPos( fld_player, &pos );
+      }
+    }
+    break;
+  case 2:
+    if (tmp->Exit) return GMEVENT_RES_FINISH;
+    else
+    {
+      //カメラを再バインド
+      if ( (tmp->Watch != NULL) ){
+        FIELD_CAMERA_BindTarget(camera, tmp->Watch);
+      }
+      //アニメ開始
+      {
+        EXP_OBJ_ANM_CNT_PTR anm;
+        int obj_idx;
+        int anm_idx;
+        obj_idx = OBJ_LIFT_0;
+        anm_idx = 0;
+        anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_GROUND_ENT_UNIT_IDX, obj_idx, anm_idx );
+        //アニメ停止解除
+        FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
+      }
+      //次のシーケンスへ
+      (*seq)++;
+    }
+    break;
+  case 3:
+    {
+      EXP_OBJ_ANM_CNT_PTR anm;
+      int obj_idx;
+      int anm_idx;
+      obj_idx = OBJ_LIFT_0;
+      anm_idx = 0;
+      anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_GROUND_ENT_UNIT_IDX, obj_idx, anm_idx );
+      //アニメ待ち
+      if( FLD_EXP_OBJ_ChkAnmEnd(anm) ){
+        SetExitLiftDefaultSt(ptr);
+        return GMEVENT_RES_FINISH;
+      }
+    }
+  }
+  return GMEVENT_RES_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  入り口位置（地下から上がってくる位置）にリフトと自機を移動させる
+ *
+ *	@param	GAMESYS_WORK *p_gamesys 
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+void GYM_GROUND_ENT_SetEnterPos( GAMESYS_WORK *p_gamesys )
+{
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork(p_gamesys);
+  FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
+  GYM_GROUND_ENT_TMP *tmp = GMK_TMP_WK_GetWork(p_fieldmap, GYM_GROUND_ENT_TMP_ASSIGN_ID);
+  FIELD_CAMERA *camera = FIELDMAP_GetFieldCamera( p_fieldmap );
+  
+  //現在ウォッチターゲットを保存
+  tmp->Watch = FIELD_CAMERA_GetWatchTarget(camera);
+  //カメラのバインドを切る
+  FIELD_CAMERA_FreeTarget(camera);
+  
+  //対象リフト高さ更新
+  {
+    int obj_idx = OBJ_LIFT_0;
+    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, GYM_GROUND_ENT_UNIT_IDX, obj_idx);
+    status->trans.y = DOWN_HEIGHT;
+  }
+  //自機の高さを更新
+  {
+    VecFx32 pos;
+    FIELD_PLAYER *fld_player;
+    fld_player = FIELDMAP_GetFieldPlayer( p_fieldmap );
+    FIELD_PLAYER_GetPos( fld_player, &pos );
+    pos.y = DOWN_HEIGHT;
+    FIELD_PLAYER_SetPos( fld_player, &pos );
+  }
+}
+
+
+//=============================================================================
+/**
+ *					static関数
+*/
+//=============================================================================
+//--------------------------------------------------------------
+/**
+ * リフト到達チェック
+ * @param	  GYM_GROUND_TMP *tmp
+ * @return  BOOL      TRUEで到達
+ */
+//--------------------------------------------------------------
+static BOOL CheckArrive(GYM_GROUND_ENT_TMP *tmp)
+{
+  if (tmp->AddVal < 0){
+    if ( tmp->DstHeight >= tmp->NowHeight ) return TRUE;
+  }else{
+    if ( tmp->DstHeight <= tmp->NowHeight ) return TRUE;
+  }
+
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * 出口リフトアニメ初期状態セット
+ * @param	  FLD_EXP_OBJ_CNT_PTR ptr   拡張ＯＢＪコントローラポインタ
+ * @return  none
+ */
+//--------------------------------------------------------------
+static void SetExitLiftDefaultSt(FLD_EXP_OBJ_CNT_PTR ptr)
+{
+  EXP_OBJ_ANM_CNT_PTR anm;
+  int obj_idx;
+  int anm_idx;
+  obj_idx = OBJ_LIFT_0;
+  anm_idx = 0;
+
+  FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_GROUND_ENT_UNIT_IDX, obj_idx, 0, FALSE);
+  //頭だし
+  FLD_EXP_OBJ_SetObjAnmFrm( ptr, GYM_GROUND_ENT_UNIT_IDX, obj_idx, anm_idx, 0 );
+  //停止にしておく
+  anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_GROUND_ENT_UNIT_IDX, obj_idx, anm_idx);
+  FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
+}
+
 

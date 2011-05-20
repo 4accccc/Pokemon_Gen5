@@ -34,7 +34,11 @@ extern VMCMD_RESULT EvCmdGymInsect_CocconOpen( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdGymInsect_VacuumAnm( VMHANDLE * core, void *wk );
 
 //ínñ 
-//extern VMCMD_RESULT EvCmdGymGround_( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdGymGround_MvLift( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdGymGround_ExitLift( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdGymGroundEnt_ExitLift( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdGymGround_SetEnterPos( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdGymGroundEnt_SetEnterPos( VMHANDLE *core, void *wk );
 
 //îÚçs
 extern VMCMD_RESULT EvCmdGymFly_Blow( VMHANDLE * core, void *wk );
