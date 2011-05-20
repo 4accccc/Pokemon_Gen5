@@ -3,34 +3,471 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2009-10-15T14:52:36" source="gate_01.mb"/>
+	<create user="ohtani_mayo" host="W00238" date="2011-05-20T11:38:21" source="in69_local_texset.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
-	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="fuchino" host="W00152" date="2009-10-15T14:52:36" source="gate_01.mb"/>
-<original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+<original_create user="ohtani_mayo" host="W00238" date="2011-05-20T11:38:21" source="in69_local_texset.mb"/>
+<original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
-	pos_scale="0"
+	pos_scale="4"
 	scaling_rule="standard"
 	vertex_style="direct"
 	magnify="1.000000"
-	tool_start_frame="1"
+	tool_start_frame="0"
 	tex_matrix_mode="maya"
 	compress_node="merge" node_size="1 1"
-	compress_material="on" material_size="1 1"
+	compress_material="on" material_size="15 15"
 	output_texture="used"
 	force_full_weight="off"
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="0" xyz="-0.500000 -0.500000 -0.500000" whd="1.000000 1.000000 1.000000"/>
+<box_test pos_scale="5" xyz="-0.250000 0.000000 -0.250000" whd="4.000000 0.000000 1.000000"/>
 
-<material_array size="1">
-	<material index="0" name="lambert1"
+<tex_image_array size="15">
+	<tex_image index="0" name="in69_ben01"
+		width="32" height="16" original_width="32" original_height="16"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="in69_ben01_pl"
+		path="C:/home/swan_data3d/field/in69/chip/tex/in69_ben01.tga"
+	>
+		<bitmap size="128">
+			3546 3333 3333 3333 4533 3336 3333 3333
+			2546 1111 1111 1111 4521 2226 2222 2222
+			2546 2222 2222 2222 4522 2226 2222 2222
+			3546 3333 3333 3333 4533 3336 3333 3333
+			2546 1111 1111 1111 4521 7776 7777 7777
+			2546 2222 2222 2222 4522 6666 5556 7555
+			3546 3333 3333 3333 4533 6666 5556 7555
+			2546 1111 1111 1111 4521 7776 7777 7777
+			2546 2222 2222 2222 4522 7776 7777 7777
+			3546 3333 3333 3333 4533 7776 0007 7777
+			0000 0000 0000 0000 0000 6670 0007 7667
+			0000 0000 0000 0000 0000 6670 0007 7667
+			0000 0000 0000 0000 0000 5570 0007 7557
+			0000 0000 0000 0000 0000 5570 0007 7557
+			0000 0000 0000 0000 0000 5570 0007 7557
+			0000 0000 0000 0000 0000 7770 0007 7777
+		</bitmap>
+	</tex_image>
+	<tex_image index="1" name="in69_clock01"
+		width="8" height="16" original_width="8" original_height="16"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="in69_clock01_pl"
+		path="C:/home/swan_data3d/field/in69/chip/tex/in69_clock01.tga"
+	>
+		<bitmap size="32">
+			aaaa aaaa aaaa aaaa 9999 9999 aaaa aaaa
+			2222 2222 2222 2222 3333 3333 1181 1111
+			1161 1111 4444 4444 7777 7777 3333 3333
+			7777 7777 7777 7777 5555 5555 5555 5555
+		</bitmap>
+	</tex_image>
+	<tex_image index="2" name="in69_cou01"
+		width="32" height="16" original_width="32" original_height="16"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="in69_cou01_pl"
+		path="C:/home/swan_data3d/field/in69/chip/tex/in69_cou01.tga"
+	>
+		<bitmap size="128">
+			3112 3333 3333 3333 2211 2222 2222 2222
+			3112 4444 4444 3444 2211 2222 2222 2222
+			3112 3333 3333 3333 2211 2222 2222 2222
+			7777 7777 7777 7777 7777 7777 7777 9999
+			9999 9999 9999 9999 9999 9999 9999 7667
+			9999 5556 9996 9999 5699 9655 9999 7667
+			5879 5555 7855 7999 5558 5555 9978 7887
+			5555 8885 5555 5555 8555 5588 6555 7887
+			8855 9997 5887 5555 9788 8799 6558 7887
+			9768 9999 6799 6888 9997 9999 6867 7887
+			9999 9999 9999 9999 9999 9999 9999 7887
+			7777 7777 7777 7777 7777 7777 7777 7887
+			8888 8888 8888 8888 8888 8888 6888 7887
+			5558 5555 5555 5555 5555 5555 6855 7887
+			5558 5555 5555 5555 5555 5555 6855 7887
+			6666 6666 6666 6666 6666 6666 6666 7887
+		</bitmap>
+	</tex_image>
+	<tex_image index="3" name="in69_kabe01"
+		width="16" height="32" original_width="16" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="in69_kabe01_pl"
+		path="C:/home/swan_data3d/field/in69/chip/tex/in69_kabe01.tga"
+	>
+		<bitmap size="128">
+			6666 6666 6666 6666 6666 6666 6666 6666
+			9999 9999 9999 9999 7777 7777 7777 7777
+			7777 7777 7777 7777 9999 9999 9999 9999
+			6666 6666 6666 6666 2222 2222 2222 2222
+			4444 3444 4444 3444 1111 4511 1111 4511
+			1111 4511 1111 4511 5555 3455 5555 3455
+			5555 3455 5555 3455 5555 3455 5555 3455
+			5555 3455 5555 3455 5555 3455 5555 3455
+			5555 3455 5555 3455 5555 3455 5555 3455
+			5555 3455 5555 3455 5555 3455 5555 3455
+			5555 3455 5555 3455 5555 3455 5555 3455
+			5555 3455 5555 3455 5555 3455 5555 3455
+			4444 3444 4444 3444 4444 3444 4444 3444
+			2222 2222 2222 2222 bbbb bbbb bbbb bbbb
+			aaaa aaaa aaaa aaaa bbbb bbbb bbbb bbbb
+			bbbb bbbb bbbb bbbb 8888 8888 8888 8888
+		</bitmap>
+	</tex_image>
+	<tex_image index="4" name="in69_kabe02"
+		width="8" height="32" original_width="8" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="in69_kabe02_pl"
+		path="C:/home/swan_data3d/field/in69/chip/tex/in69_kabe02.tga"
+	>
+		<bitmap size="64">
+			2444 4444 2444 4444 2222 4222 4442 4244
+			4442 4244 4442 4244 2222 4222 2444 4444
+			2444 4444 2444 4444 2222 4222 4442 4244
+			4442 4244 4442 4244 2222 4222 2444 4444
+			2444 4444 2444 4444 2222 4222 4442 4244
+			4442 4244 4442 4244 2222 4222 2444 4444
+			2444 4444 1111 1111 6666 6666 6666 6666
+			5555 5555 5555 5555 3333 3333 3333 3333
+		</bitmap>
+	</tex_image>
+	<tex_image index="5" name="in69_kage"
+		width="8" height="8" original_width="8" original_height="8"
+		format="a3i5"
+		palette_name="in69_kage_pl"
+		path="C:/home/swan_data3d/field/in69/chip/tex/in69_kage.tga"
+	>
+		<bitmap size="32">
+			2121 2121 2121 2121 2121 2121 2121 2121
+			4141 4141 4141 4141 4141 4141 4141 4141
+			4141 4141 4141 4141 4141 4141 4141 4141
+			4141 4141 4141 4141 4141 4141 4141 4141
+		</bitmap>
+	</tex_image>
+	<tex_image index="6" name="in69_kibako01"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="in69_kibako01_pl"
+		path="C:/home/swan_data3d/field/in69/chip/tex/in69_kibako01.tga"
+	>
+		<bitmap size="64">
+			2222 2222 5222 5344 3333 3333 5333 5344
+			1111 1111 5111 5344 1111 1111 5111 5344
+			2222 2222 5222 5344 3333 3333 5333 5344
+			1111 1111 5111 5344 1111 1111 5111 5344
+			2222 2222 5222 5344 3333 3333 5333 5344
+			1111 1111 5111 5344 1111 1111 5111 5344
+			2222 2222 5222 5344 3333 3333 5333 5344
+			1111 1111 5111 5344 1111 1111 5111 5344
+		</bitmap>
+	</tex_image>
+	<tex_image index="7" name="in69_map01"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="in69_map01_pl"
+		path="C:/home/swan_data3d/field/in69/chip/tex/in69_map01.tga"
+	>
+		<bitmap size="256">
+			6666 6666 6666 6666 6666 6666 6666 0006
+			3336 3333 3333 3333 3333 3333 3333 0006
+			3336 3333 3333 3333 3333 3333 3333 0006
+			3336 4553 4543 3543 4333 5555 3345 0006
+			3336 4553 4543 4553 4333 4444 3344 0006
+			3336 3453 4453 4553 4333 5555 3345 0006
+			3336 3333 3333 3333 3333 3333 3333 0006
+			6336 6666 6666 6666 6666 6666 3366 0006
+			6336 2222 2222 2222 2222 2222 3362 0006
+			6336 2222 2222 2222 2222 2222 3362 0006
+			6336 2222 2222 2222 2222 2222 3362 0006
+			6336 6666 6666 6666 6666 6666 3366 0006
+			6336 1111 3611 3333 3333 3333 3363 0006
+			6336 1111 3611 5355 3535 3355 3363 0006
+			6336 1111 3611 3344 3433 3344 3363 0006
+			6336 6666 6666 6666 6666 6666 3366 0006
+			6336 1111 3611 3333 3333 3333 3363 0006
+			6336 1111 3611 3553 5535 5553 3363 0006
+			6336 1111 3611 3443 3334 3443 3363 0006
+			6336 6666 6666 6666 6666 6666 3366 0006
+			6336 1111 3611 3333 3333 3333 3363 0006
+			6336 1111 3611 3553 5535 5553 3363 0006
+			6336 1111 3611 3443 3334 3443 3363 0006
+			6336 6666 6666 6666 6666 6666 3366 0006
+			6336 2222 2222 2222 2222 2222 3362 0006
+			6336 2222 2222 2222 2222 2222 3362 0006
+			6336 2222 2222 2222 2222 2222 3362 0006
+			6336 6666 6666 6666 6666 6666 3366 0006
+			3336 3333 3333 3333 3333 3333 3333 0006
+			3336 3333 3333 3333 3333 3333 3333 0006
+			3336 3333 3333 3333 3333 3333 3333 0006
+			6666 6666 6666 6666 6666 6666 6666 0006
+		</bitmap>
+	</tex_image>
+	<tex_image index="8" name="in69_photo01"
+		width="16" height="32" original_width="16" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="in69_photo01_pl"
+		path="C:/home/swan_data3d/field/in69/chip/tex/in69_photo01.tga"
+	>
+		<bitmap size="128">
+			bbbb bbbb bbbb bbbb aaab aaaa aaaa aaaa
+			8aab 8888 8888 8888 8aab 8888 8888 8888
+			8aab 8888 8888 8888 5aab 5555 5555 5555
+			3aab 3333 3333 3333 7aab 7777 7777 7777
+			7aab 7777 1177 7777 7aab 7777 9991 7719
+			1aab 9177 9999 1999 9aab 9991 9999 9999
+			9aab 9999 9999 9999 9aab 9999 9999 9999
+			aaab aaaa aaaa aaaa bbbb bbbb bbbb bbbb
+			bbbb bbbb bbbb bbbb aaab aaaa aaaa aaaa
+			8aab 8888 8888 8888 8aab 8888 8888 8888
+			8aab 8888 8888 8888 5aab 5555 5555 5555
+			2aab 2222 2222 2222 4aab 6644 4444 4866
+			4aab 4444 4686 4644 4aab 4464 6444 4468
+			4aab 4444 4664 4446 4aab 4444 4444 4444
+			4aab 4444 6644 4444 4aab 4444 4444 4444
+			aaab aaaa aaaa aaaa bbbb bbbb bbbb bbbb
+		</bitmap>
+	</tex_image>
+	<tex_image index="9" name="in69_poster01"
+		width="16" height="32" original_width="16" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="in69_poster01_pl"
+		path="C:/home/swan_data3d/field/in69/chip/tex/in69_poster01.tga"
+	>
+		<bitmap size="128">
+			0000 4400 0044 0000 0000 1340 0531 0000
+			0000 3134 4112 0000 0000 1214 3121 0004
+			0000 3514 1532 0004 0000 2134 1531 0054
+			0000 2124 3155 0054 0000 1224 4311 0511
+			0000 2224 4222 5111 0000 2224 1422 5111
+			0000 2224 1422 0511 0000 2224 1352 0051
+			0000 2225 1352 0005 4000 2222 3352 0005
+			4000 2222 5335 0000 4000 2223 0535 0000
+			4000 2233 0535 0000 5000 5233 0053 0000
+			2400 5333 0053 0000 3400 4333 0005 0000
+			3500 4233 0000 0000 3500 0533 0000 0000
+			3240 0533 0000 0000 3340 0533 0000 0000
+			3346 7433 0006 0000 3347 7423 0677 0000
+			3477 7753 0677 0000 4776 7774 0067 0000
+			7760 6777 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="10" name="in69_ship01"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="in69_ship01_pl"
+		path="C:/home/swan_data3d/field/in69/chip/tex/in69_ship01.tga"
+	>
+		<bitmap size="256">
+			0000 0000 8000 0008 0000 0000 0000 0000
+			0000 0000 6800 0007 0000 0000 0000 0000
+			0000 0000 6800 0007 0000 0000 0000 0000
+			0000 0000 6800 0078 0000 0000 0000 0000
+			0000 0000 8800 7780 0000 0000 0000 0000
+			0000 0000 0000 8880 0887 0000 0000 0000
+			0000 0000 0000 8780 8668 0008 0000 0000
+			8800 0008 8880 6788 6666 0082 0000 0000
+			8680 8887 7768 8787 2822 8711 0088 0000
+			8680 8667 6767 7786 1711 8661 8766 0008
+			8678 8667 7767 8877 6888 7266 6668 0876
+			7868 8666 6667 6666 6666 1728 6668 9666
+			7868 8666 2287 2288 2288 8117 6667 9866
+			7868 8666 1177 1177 1177 7887 6666 0987
+			8388 7778 8888 8888 7778 6778 8666 0098
+			3879 7883 7777 7777 8877 8888 9888 0009
+			8890 8888 8888 8888 7788 7777 4997 0055
+			8945 7777 7777 7777 8877 9988 4449 0544
+			4445 9999 9999 9999 9999 4499 4444 5444
+			4445 4444 4444 4444 4444 4444 4444 5444
+			4450 4444 4444 4444 4444 4444 4444 0554
+			4500 4444 4444 4444 4444 4444 5544 0000
+			5000 4445 4444 4444 4444 5444 0055 0000
+			0000 5500 5555 5555 5555 0055 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="11" name="in69_ukiwa02"
+		width="32" height="16" original_width="32" original_height="16"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="in69_ukiwa02_pl"
+		path="C:/home/swan_data3d/field/in69/chip/tex/in69_ukiwa02.tga"
+	>
+		<bitmap size="128">
+			0656 0000 0000 0000 0000 0000 6000 9965
+			0656 0000 0000 0000 0000 0000 6000 9965
+			0656 0000 0000 0000 0000 0000 6000 9965
+			0646 0000 0000 0000 0000 0000 6000 9965
+			0646 0000 0000 0000 0000 0000 6000 9965
+			0646 0000 0000 0000 0000 0000 3000 9965
+			0356 0000 0000 0000 0000 0000 5600 9903
+			6430 0000 0000 0000 0000 0000 5600 9906
+			3560 0000 0000 0000 0000 0000 5300 9906
+			4600 0063 0000 0000 0000 0000 6530 9900
+			6000 6645 0006 0000 0000 6000 0653 8100
+			0000 4436 6665 0000 0000 5600 0065 7200
+			0000 6600 5443 0666 0000 3536 0006 7200
+			0000 0000 3660 3444 3666 0655 0000 7200
+			0000 0000 0000 5366 5555 0063 0000 7200
+			0000 0000 0000 6000 6666 0000 0000 8100
+		</bitmap>
+	</tex_image>
+	<tex_image index="12" name="in69_ukiwa03"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="in69_ukiwa03_pl"
+		path="C:/home/swan_data3d/field/in69/chip/tex/in69_ukiwa03.tga"
+	>
+		<bitmap size="64">
+			0033 0000 0000 9900 0011 0000 0000 7790
+			0022 0000 0000 5479 0022 0000 9000 a647
+			0022 0000 8900 5694 0022 0000 8400 6009
+			0022 0000 4890 0000 0022 0000 9840 0000
+			0022 0000 0989 0000 0022 9000 0098 0000
+			0011 8900 0004 0000 0033 8400 0009 0000
+			0000 4890 0000 0000 0000 9849 0000 0000
+			0000 0989 0000 0000 9000 0098 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="13" name="in69_yuka01"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="in69_yuka01_pl"
+		path="C:/home/swan_data3d/field/in69/chip/tex/in69_yuka01.tga"
+	>
+		<bitmap size="256">
+			5555 5555 5555 5555 5555 5555 5555 5555
+			2225 2222 5422 2222 4445 1454 1111 1111
+			2225 2222 5422 2222 4445 1454 1111 1111
+			2225 2222 5422 2222 4445 1454 1111 1111
+			2225 2222 5422 2222 4445 1454 1111 1111
+			5555 5555 5555 2222 4445 3354 3333 3333
+			3335 3333 5333 2222 4445 2354 2222 2222
+			4445 1134 5411 2222 4445 2354 2222 2222
+			4445 1134 5411 2222 4445 2354 2222 2222
+			4445 1134 5411 2222 4445 2354 2222 2222
+			4445 1134 5411 2222 4445 3354 3333 3333
+			4445 1134 5411 2222 5555 5555 5555 5555
+			4445 1134 5411 2222 1115 1111 1111 1111
+			4445 1134 5411 2222 1115 1111 1111 1111
+			4445 1134 5411 2222 1115 1111 1111 1111
+			4445 1134 5411 2222 1115 1111 1111 1111
+			5555 5555 5555 5555 5555 5555 5555 5555
+			1115 4451 4444 4444 4445 1454 1111 1111
+			1115 4451 4444 4444 4445 1454 1111 1111
+			1115 4451 4444 4444 4445 1454 1111 1111
+			1115 4451 4444 4444 4445 1454 1111 1111
+			1115 5551 5555 5555 4445 3354 3333 3333
+			1115 3351 3333 4444 4445 4354 4444 4444
+			1115 2351 3222 1111 4445 4354 4444 4444
+			1115 2351 3222 1111 4445 4354 4444 4444
+			1115 2351 3222 1111 4445 4354 4444 4444
+			1115 2351 3222 1111 4445 3354 3333 3333
+			1115 2351 3222 1111 5555 5555 5555 5555
+			1115 2351 3222 1111 2225 2222 2222 2222
+			1115 2351 3222 1111 2225 2222 2222 2222
+			1115 2351 3222 1111 2225 2222 2222 2222
+			1115 2351 3222 1111 2225 2222 2222 2222
+		</bitmap>
+	</tex_image>
+	<tex_image index="14" name="in69_yuka02"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette4"
+		color0_mode="transparency"
+		palette_name="in69_yuka02_pl"
+		path="C:/home/swan_data3d/field/in69/chip/tex/in69_yuka02.tga"
+	>
+		<bitmap size="32">
+			aaaa aaaa 7ffe 7ffe 7ffe 7ffe 7ffe 7ffe
+			7ffe 7ffe 7ffe 7ffe 7ffe 7ffe 5556 5556
+			aaaa aaaa 7ffe 7ffe 7ffe 7ffe 7ffe 7ffe
+			7ffe 7ffe 7ffe 7ffe 7ffe 7ffe 5556 5556
+		</bitmap>
+	</tex_image>
+</tex_image_array>
+
+<tex_palette_array size="15">
+	<tex_palette index="0" name="in69_ben01_pl" color_size="16">
+		6cfd 6e8a 6624 49a4 77bd 6b5a 5ef7 5294
+		7fff 7fff 7fff 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="1" name="in69_clock01_pl" color_size="16">
+		7fff 73de 4af8 5f5b 6b9d 3636 6319 52da
+		52b6 294a 2108 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="2" name="in69_cou01_pl" color_size="16">
+		7fff 3a54 3612 3e76 46b8 2e19 21d7 1d94
+		25f8 1953 7fff 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="3" name="in69_kabe01_pl" color_size="16">
+		7fff 62d1 4a0a 524c 5a8d 5eae 4231 52b6
+		214c 4a74 2db0 298f 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="4" name="in69_kabe02_pl" color_size="8">
+		7fff 3e10 52b6 214c 4a74 298f 2db0 7fff
+	</tex_palette>
+	<tex_palette index="5" name="in69_kage_pl" color_size="8">
+		7fff 0000 7fff 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="6" name="in69_kibako01_pl" color_size="8">
+		7fff 32ba 2a57 2e78 3adb 2615 7fff 7fff
+	</tex_palette>
+	<tex_palette index="7" name="in69_map01_pl" color_size="8">
+		6cfd 46fe 421e 77bd 6f7b 6739 56b5 7fff
+	</tex_palette>
+	<tex_palette index="8" name="in69_photo01_pl" color_size="16">
+		7fff 4e50 5691 5ab2 5290 6b37 5ad2 4e70
+		6316 35d0 739c 6318 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="9" name="in69_poster01_pl" color_size="16">
+		6cfd 6b7c 4e96 5f1a 35d1 4234 252b 1ce8
+		7fff 7fff 7fff 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="10" name="in69_ship01_pl" color_size="16">
+		6cfd 72f2 6e8c 26bb 29b0 31f4 77bd 6739
+		56b5 4631 7fff 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="11" name="in69_ukiwa02_pl" color_size="16">
+		6cfd 6af8 65ce 29af 3a34 31f2 256d 39d9
+		529a 77be 7fff 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="12" name="in69_ukiwa03_pl" color_size="16">
+		6cfd 569b 41d9 4e3a 29af 1db2 194e 3a34
+		31f2 256d 21d5 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="13" name="in69_yuka01_pl" color_size="8">
+		7fff 2e14 2df3 29d3 2df3 29d2 7fff 7fff
+	</tex_palette>
+	<tex_palette index="14" name="in69_yuka02_pl" color_size="4">
+		7fff 214c 2db0 256e
+	</tex_palette>
+</tex_palette_array>
+
+<material_array size="15">
+	<material index="0" name="in69_ben06"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -42,12 +479,353 @@
 		translucent_update_depth="off"
 		render_1_pixel="off"
 		far_clipping="off"
-		diffuse="12 12 12"
+		diffuse="25 25 25"
 		ambient="0 0 0"
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="-1" tex_palette_idx="-1"
+		tex_image_idx="0" tex_palette_idx="0"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="1" name="in69_clock06"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="1" tex_palette_idx="1"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="2" name="in69_cou06"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="2" tex_palette_idx="2"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="3" name="in69_kabe011"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="3" tex_palette_idx="3"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="4" name="in69_kabe013"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="4" tex_palette_idx="4"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="5" name="in69_kage5"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="5" tex_palette_idx="5"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="6" name="in69_kibako06"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="6" tex_palette_idx="6"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="7" name="in69_map01"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="7" tex_palette_idx="7"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="8" name="in69_photo06"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="8" tex_palette_idx="8"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="9" name="in69_poster03"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="9" tex_palette_idx="9"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="10" name="in69_ship03"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="10" tex_palette_idx="10"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="11" name="in69_ukiwa012"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="11" tex_palette_idx="11"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="12" name="in69_ukiwa014"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="12" tex_palette_idx="12"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="13" name="in69_yuka011"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="13" tex_palette_idx="13"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="14" name="in69_yuka013"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="14" tex_palette_idx="14"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
 	/>
 </material_array>
 
@@ -55,51 +833,408 @@
 	<matrix index="0" mtx_weight="1" node_idx="0"/>
 </matrix_array>
 
-<polygon_array size="1">
+<polygon_array size="15">
 	<polygon index="0" name="polygon0"
-		vertex_size="24" polygon_size="6"
-		triangle_size="0" quad_size="6"
-		volume_min="-0.500000 -0.500000 -0.500000"
-		volume_max="0.500000 0.500000 0.500000"
-		volume_r="0.865967"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="5.500000 0.000000 0.500000"
+		volume_max="6.500000 0.000000 1.500000"
+		volume_r="6.670898"
 		mtx_prim_size="1"
-		nrm_flag="on" clr_flag="off" tex_flag="off"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
 	>
 		<mtx_prim index="0">
 			<mtx_list size="1">0</mtx_list>
 			<primitive_array size="1">
-				<primitive index="0" type="quads" vertex_size="24">
+				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<nrm xyz="-1.000000 0.000000 0.000000"/>
-					<pos_s xyz="-0.500000 -0.500000 -0.500000"/>
-					<pos_xz xz="-0.500000 0.500000"/>
-					<pos_xy xy="-0.500000 0.500000"/>
-					<pos_xz xz="-0.500000 -0.500000"/>
-					<nrm xyz="0.998047 0.000000 0.000000"/>
-					<pos_s xyz="0.500000 -0.500000 0.500000"/>
-					<pos_xz xz="0.500000 -0.500000"/>
-					<pos_xy xy="0.500000 0.500000"/>
-					<pos_xz xz="0.500000 0.500000"/>
-					<nrm xyz="0.000000 -1.000000 0.000000"/>
-					<pos_s xyz="-0.500000 -0.500000 -0.500000"/>
-					<pos_xy xy="0.500000 -0.500000"/>
-					<pos_xz xz="0.500000 0.500000"/>
-					<pos_xy xy="-0.500000 -0.500000"/>
-					<nrm xyz="0.000000 0.000000 -1.000000"/>
-					<pos_yz yz="0.500000 -0.500000"/>
-					<pos_xy xy="0.500000 0.500000"/>
-					<pos_xy xy="0.500000 -0.500000"/>
-					<pos_xy xy="-0.500000 -0.500000"/>
+					<tex st="0.000000 16.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
-					<pos_yz yz="0.500000 0.500000"/>
-					<pos_xy xy="0.500000 0.500000"/>
+					<pos_s xyz="5.500000 0.000000 1.500000"/>
+					<tex st="16.000000 16.000000"/>
+					<pos_xy xy="6.500000 0.000000"/>
+					<tex st="16.000000 0.000000"/>
+					<pos_xz xz="6.500000 0.500000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="5.500000 0.000000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="1" name="polygon1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-0.500000 0.000000 -0.500000"
+		volume_max="0.500000 0.000000 0.500000"
+		volume_r="0.707031"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">0</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="0.000000 16.000000"/>
+					<nrm xyz="0.000000 0.998047 0.000000"/>
+					<pos_s xyz="-0.500000 0.000000 0.500000"/>
+					<tex st="32.000000 16.000000"/>
+					<pos_xy xy="0.500000 0.000000"/>
+					<tex st="32.000000 0.000000"/>
 					<pos_xz xz="0.500000 -0.500000"/>
-					<pos_xy xy="-0.500000 0.500000"/>
-					<nrm xyz="0.000000 0.000000 0.998047"/>
-					<pos_yz yz="-0.500000 0.500000"/>
-					<pos_xy xy="0.500000 -0.500000"/>
-					<pos_xy xy="0.500000 0.500000"/>
-					<pos_xy xy="-0.500000 0.500000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="-0.500000 0.000000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="2" name="polygon2"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="0.500000 0.000000 -0.500000"
+		volume_max="1.500000 0.000000 0.500000"
+		volume_r="1.581055"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">0</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="0.000000 16.000000"/>
+					<nrm xyz="0.000000 0.998047 0.000000"/>
+					<pos_s xyz="0.500000 0.000000 0.500000"/>
+					<tex st="8.000000 16.000000"/>
+					<pos_xy xy="1.500000 0.000000"/>
+					<tex st="8.000000 0.000000"/>
+					<pos_xz xz="1.500000 -0.500000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="0.500000 0.000000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="3" name="polygon3"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="1.500000 0.000000 -0.500000"
+		volume_max="2.500000 0.000000 0.500000"
+		volume_r="2.549561"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">0</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="0.000000 16.000000"/>
+					<nrm xyz="0.000000 0.998047 0.000000"/>
+					<pos_s xyz="1.500000 0.000000 0.500000"/>
+					<tex st="32.000000 16.000000"/>
+					<pos_xy xy="2.500000 0.000000"/>
+					<tex st="32.000000 0.000000"/>
+					<pos_xz xz="2.500000 -0.500000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="1.500000 0.000000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="4" name="polygon4"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="2.500000 0.000000 -0.500000"
+		volume_max="3.500000 0.000000 0.500000"
+		volume_r="3.535645"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">0</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="0.000000 32.000000"/>
+					<nrm xyz="0.000000 0.998047 0.000000"/>
+					<pos_s xyz="2.500000 0.000000 0.500000"/>
+					<tex st="16.000000 32.000000"/>
+					<pos_xy xy="3.500000 0.000000"/>
+					<tex st="16.000000 0.000000"/>
+					<pos_xz xz="3.500000 -0.500000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="2.500000 0.000000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="5" name="polygon5"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="3.500000 0.000000 -0.500000"
+		volume_max="4.500000 0.000000 0.500000"
+		volume_r="4.527588"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">0</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="0.000000 32.000000"/>
+					<nrm xyz="0.000000 0.998047 0.000000"/>
+					<pos_s xyz="3.500000 0.000000 0.500000"/>
+					<tex st="8.000000 32.000000"/>
+					<pos_xy xy="4.500000 0.000000"/>
+					<tex st="8.000000 0.000000"/>
+					<pos_xz xz="4.500000 -0.500000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="3.500000 0.000000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="6" name="polygon6"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="4.500000 0.000000 -0.500000"
+		volume_max="5.500000 0.000000 0.500000"
+		volume_r="5.522705"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">0</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="0.000000 8.000000"/>
+					<nrm xyz="0.000000 0.998047 0.000000"/>
+					<pos_s xyz="4.500000 0.000000 0.500000"/>
+					<tex st="8.000000 8.000000"/>
+					<pos_xy xy="5.500000 0.000000"/>
+					<tex st="8.000000 0.000000"/>
+					<pos_xz xz="5.500000 -0.500000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="4.500000 0.000000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="7" name="polygon7"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="5.500000 0.000000 -0.500000"
+		volume_max="6.500000 0.000000 0.500000"
+		volume_r="6.519287"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">0</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="0.000000 16.000000"/>
+					<nrm xyz="0.000000 0.998047 0.000000"/>
+					<pos_s xyz="5.500000 0.000000 0.500000"/>
+					<tex st="16.000000 16.000000"/>
+					<pos_xy xy="6.500000 0.000000"/>
+					<tex st="16.000000 0.000000"/>
+					<pos_xz xz="6.500000 -0.500000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="5.500000 0.000000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="8" name="polygon8"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="6.500000 0.000000 -0.500000"
+		volume_max="7.500000 0.000000 0.500000"
+		volume_r="7.516602"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">0</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="0.000000 32.000000"/>
+					<nrm xyz="0.000000 0.998047 0.000000"/>
+					<pos_s xyz="6.500000 0.000000 0.500000"/>
+					<tex st="32.000000 32.000000"/>
+					<pos_xy xy="7.500000 0.000000"/>
+					<tex st="32.000000 0.000000"/>
+					<pos_xz xz="7.500000 -0.500000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="6.500000 0.000000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="9" name="polygon9"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-0.500000 0.000000 0.500000"
+		volume_max="0.500000 0.000000 1.500000"
+		volume_r="1.581055"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">0</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="0.000000 32.000000"/>
+					<nrm xyz="0.000000 0.998047 0.000000"/>
+					<pos_s xyz="-0.500000 0.000000 1.500000"/>
+					<tex st="16.000000 32.000000"/>
+					<pos_xy xy="0.500000 0.000000"/>
+					<tex st="16.000000 0.000000"/>
+					<pos_xz xz="0.500000 0.500000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="-0.500000 0.000000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="10" name="polygon10"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="0.500000 0.000000 0.500000"
+		volume_max="1.500000 0.000000 1.500000"
+		volume_r="2.121338"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">0</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="0.000000 32.000000"/>
+					<nrm xyz="0.000000 0.998047 0.000000"/>
+					<pos_s xyz="0.500000 0.000000 1.500000"/>
+					<tex st="16.000000 32.000000"/>
+					<pos_xy xy="1.500000 0.000000"/>
+					<tex st="16.000000 0.000000"/>
+					<pos_xz xz="1.500000 0.500000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="0.500000 0.000000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="11" name="polygon11"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="1.500000 0.000000 0.500000"
+		volume_max="2.500000 0.000000 1.500000"
+		volume_r="2.915527"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">0</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="0.000000 32.000000"/>
+					<nrm xyz="0.000000 0.998047 0.000000"/>
+					<pos_s xyz="1.500000 0.000000 1.500000"/>
+					<tex st="32.000000 32.000000"/>
+					<pos_xy xy="2.500000 0.000000"/>
+					<tex st="32.000000 0.000000"/>
+					<pos_xz xz="2.500000 0.500000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="1.500000 0.000000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="12" name="polygon12"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="2.500000 0.000000 0.500000"
+		volume_max="3.500000 0.000000 1.500000"
+		volume_r="3.807861"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">0</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="0.000000 16.000000"/>
+					<nrm xyz="0.000000 0.998047 0.000000"/>
+					<pos_s xyz="2.500000 0.000000 1.500000"/>
+					<tex st="32.000000 16.000000"/>
+					<pos_xy xy="3.500000 0.000000"/>
+					<tex st="32.000000 0.000000"/>
+					<pos_xz xz="3.500000 0.500000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="2.500000 0.000000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="13" name="polygon13"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="3.500000 0.000000 0.500000"
+		volume_max="4.500000 0.000000 1.500000"
+		volume_r="4.743408"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">0</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="0.000000 16.000000"/>
+					<nrm xyz="0.000000 0.998047 0.000000"/>
+					<pos_s xyz="3.500000 0.000000 1.500000"/>
+					<tex st="16.000000 16.000000"/>
+					<pos_xy xy="4.500000 0.000000"/>
+					<tex st="16.000000 0.000000"/>
+					<pos_xz xz="4.500000 0.500000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="3.500000 0.000000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="14" name="polygon14"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="4.500000 0.000000 0.500000"
+		volume_max="5.500000 0.000000 1.500000"
+		volume_r="5.700928"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">0</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="0.000000 32.000000"/>
+					<nrm xyz="0.000000 0.998047 0.000000"/>
+					<pos_s xyz="4.500000 0.000000 1.500000"/>
+					<tex st="32.000000 32.000000"/>
+					<pos_xy xy="5.500000 0.000000"/>
+					<tex st="32.000000 0.000000"/>
+					<pos_xz xz="5.500000 0.500000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="4.500000 0.000000"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
@@ -107,7 +1242,7 @@
 </polygon_array>
 
 <node_array size="1">
-	<node index="0" name="pCube1" kind="mesh"
+	<node index="0" name="polySurface1" kind="mesh"
 		parent="-1"
 		child="-1"
 		brother_next="-1"
@@ -118,19 +1253,33 @@
 		rotate="0.000000 0.000000 0.000000"
 		translate="0.000000 0.000000 0.000000"
 		visibility="on"
-		display_size="1"
-		vertex_size="24" polygon_size="6"
-		triangle_size="0" quad_size="6"
-		volume_min="-0.500000 -0.500000 -0.500000"
-		volume_max="0.500000 0.500000 0.500000"
-		volume_r="0.865967"
+		display_size="15"
+		vertex_size="60" polygon_size="15"
+		triangle_size="0" quad_size="15"
+		volume_min="-0.500000 0.000000 -0.500000"
+		volume_max="7.500000 0.000000 1.500000"
+		volume_r="7.516602"
 	>
-		<display index="0" material="0" polygon="0" priority="0"/>
+		<display index="0" material="0" polygon="1" priority="0"/>
+		<display index="1" material="1" polygon="2" priority="0"/>
+		<display index="2" material="2" polygon="3" priority="0"/>
+		<display index="3" material="3" polygon="4" priority="0"/>
+		<display index="4" material="4" polygon="5" priority="0"/>
+		<display index="5" material="5" polygon="6" priority="0"/>
+		<display index="6" material="6" polygon="7" priority="0"/>
+		<display index="7" material="7" polygon="8" priority="0"/>
+		<display index="8" material="8" polygon="9" priority="0"/>
+		<display index="9" material="9" polygon="10" priority="0"/>
+		<display index="10" material="10" polygon="11" priority="0"/>
+		<display index="11" material="11" polygon="12" priority="0"/>
+		<display index="12" material="12" polygon="13" priority="0"/>
+		<display index="13" material="13" polygon="14" priority="0"/>
+		<display index="14" material="14" polygon="0" priority="0"/>
 	</node>
 </node_array>
 
-<output_info vertex_size="24" polygon_size="6"
-	triangle_size="0" quad_size="6"/>
+<output_info vertex_size="60" polygon_size="15"
+	triangle_size="0" quad_size="15"/>
 
 </body>
 
