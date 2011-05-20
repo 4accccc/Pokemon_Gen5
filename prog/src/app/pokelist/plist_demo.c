@@ -12,6 +12,7 @@
 #include "system/main.h"
 #include "system/gfl_use.h"
 #include "system/rtc_tool.h"
+#include "system/wipe.h"
 #include "item/item.h"
 #include "sound/pm_wb_voice.h"
 
@@ -36,6 +37,12 @@
 #define PLIST_DEMO_CHANGE_WAIT_GIRATHINA		(65)
 ///パーティクルが出て、この時間だけ経ったらポケモンアイコン変更
 #define PLIST_DEMO_CHANGE_WAIT_SHEIMI			(38)
+///パーティクルが出て、この時間だけ経ったらホワイトアウト開始
+#define PLIST_DEMO_CHANGE_WAIT_KYUREMU_WHITEOUT		(65)
+#define PLIST_DEMO_KYUREMU_WIPEOUT_DIV    (12)
+#define PLIST_DEMO_KYUREMU_WIPEOUT_SYNC   (1)
+#define PLIST_DEMO_KYUREMU_WIPEIN_DIV    (12)
+#define PLIST_DEMO_KYUREMU_WIPEIN_SYNC   (1)
 
 //======================================================================
 //	enum
@@ -54,7 +61,8 @@
 #pragma mark [> proto
 static void PLIST_DEMO_InitEffect( PLIST_WORK *work );
 static void PLIST_DEMO_TermEffect( PLIST_WORK *work );
-
+static BOOL PLIST_DEMO_FormChangeSeq( PLIST_WORK* work );
+static BOOL PLIST_DEMO_FormChangeKyuremuSeq( PLIST_WORK* work );
 
 //--------------------------------------------------------------
 //	デモ初期化
@@ -77,6 +85,7 @@ void PLIST_DEMO_DemoInit( PLIST_WORK *work )
 	//G2_SetBlendAlpha(GX_BLEND_PLANEMASK_NONE, 0x3f, 31, 0);
   
   work->mainSeq = PSMS_FORM_CHANGE_MAIN;
+  work->demoSeq = 0;
 }
 
 //--------------------------------------------------------------
@@ -144,6 +153,23 @@ void PLIST_DEMO_DemoTerm( PLIST_WORK *work )
 //--------------------------------------------------------------
 void PLIST_DEMO_DemoMain( PLIST_WORK *work )
 {
+  BOOL ret = FALSE;
+
+  switch( work->demoType ){
+  case PDT_GIRATHINA_TO_ORIGIN:
+  case PDT_GIRATHINA_TO_ANOTHER:
+  case PDT_SHEIMI_TO_SKY:
+    ret = PLIST_DEMO_FormChangeSeq( work );
+    break;
+  case PDT_KYUREMU_TO_COLOR:
+  case PDT_KYUREMU_TO_NORMAL:
+    ret = PLIST_DEMO_FormChangeKyuremuSeq( work );
+    break;
+  }
+  if(ret){
+    work->mainSeq = PSMS_FORM_CHANGE_TERM;
+  }
+#if 0
   if( work->demoIsChange == FALSE )
   {
     work->demoCnt++;
@@ -188,7 +214,7 @@ void PLIST_DEMO_DemoMain( PLIST_WORK *work )
       }
     }
   }
-  
+#endif
   GFL_PTC_CalcAll();
   
   //3D描画  
@@ -213,22 +239,26 @@ static void PLIST_DEMO_InitEffect( PLIST_WORK *work )
   void* effRes;
   u32 fileIdx = NARC_pokelist_gra_demo_sheimi_spa;
   //リソース読み込み
-  if( work->demoType == PDT_GIRATHINA_TO_ORIGIN ||
-      work->demoType == PDT_GIRATHINA_TO_ANOTHER )
-  {
+  switch( work->demoType ){
+  case PDT_GIRATHINA_TO_ORIGIN:
+  case PDT_GIRATHINA_TO_ANOTHER:
     fileIdx = NARC_pokelist_gra_demo_girathina_spa;
     emmitNum = DEMO_GIRATHINA_SPAMAX;
     work->demoChangeTimming = PLIST_DEMO_CHANGE_WAIT_GIRATHINA;
-  }
-  else
-	if( work->demoType == PDT_SHEIMI_TO_SKY )
-  {
+    break;
+  case PDT_SHEIMI_TO_SKY:
     fileIdx = NARC_pokelist_gra_demo_sheimi_spa;
     emmitNum = DEMO_SHEIMI_SPAMAX;
     work->demoChangeTimming = PLIST_DEMO_CHANGE_WAIT_SHEIMI;
+    break;
+  case PDT_KYUREMU_TO_COLOR:
+  case PDT_KYUREMU_TO_NORMAL:
+    fileIdx = NARC_pokelist_gra_demo_girathina_spa;
+    emmitNum = DEMO_GIRATHINA_SPAMAX;
+    work->demoChangeTimming = PLIST_DEMO_CHANGE_WAIT_KYUREMU_WHITEOUT;
+    break;
   }
   effRes = GFL_PTC_LoadArcResource( ARCID_POKELIST , fileIdx , work->heapId );
-  
   
   //まずマネージャの作成
   work->effTempWork = GFL_NET_Align32Alloc( work->heapId , PLIST_DEMO_EFFECT_WORK_SIZE );
@@ -263,6 +293,125 @@ static void PLIST_DEMO_TermEffect( PLIST_WORK *work )
 
   GFL_PTC_Delete( work->ptcWork );
   GFL_NET_Align32Free( work->effTempWork );
+}
+
+//--------------------------------------------------------------
+//	ギラティナ/シェイミ　フォルムチェンジデモ
+//--------------------------------------------------------------
+static BOOL PLIST_DEMO_FormChangeSeq( PLIST_WORK* work )
+{
+  switch( work->demoSeq ){
+  case 0:
+    //チラツキを消すため一回非表示にした面の再表示
+    GFL_BG_SetVisible( PLIST_BG_3D , TRUE ); 
+
+    //SEの再生
+    if( work->demoType == PDT_GIRATHINA_TO_ORIGIN ||
+        work->demoType == PDT_GIRATHINA_TO_ANOTHER )
+    {
+      PMSND_PlaySystemSE(PLIST_SND_DEMO_GRATHINA);
+    }
+    else
+    if( work->demoType == PDT_SHEIMI_TO_SKY )
+    {
+      PMSND_PlaySystemSE(PLIST_SND_DEMO_SHEIMI);
+    }
+    work->demoSeq++;
+    //break throw
+  case 1:
+    if( ++work->demoCnt > work->demoChangeTimming )
+    {
+      PLIST_PLATE_ResetParam( work , work->plateWork[work->pokeCursor] , work->selectPokePara , 0 );
+      work->demoSeq++;
+    }
+    break;
+  case 2:
+    if( GFL_PTC_GetEmitterNum( work->ptcWork ) <= 0 &&
+        PMSND_CheckPlaySE() == FALSE )
+    {
+      const u32 monsNo = PP_Get( work->selectPokePara , ID_PARA_monsno , NULL );
+      const u32 formNo = PP_Get( work->selectPokePara , ID_PARA_form_no , NULL );
+      work->demoVoicePlayer = PMVOICE_Play( monsNo , formNo , 64 , FALSE , 0 , 0 , FALSE , 0 );
+      work->demoIsPlayVoice = TRUE;
+    
+      work->demoSeq++;
+    }
+    break; 
+  case 3:
+    if( PMVOICE_CheckPlay( work->demoVoicePlayer ) == FALSE )
+    {
+      return TRUE;
+    }
+    break;
+  default:
+    return TRUE;
+  }
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+//	キュレム　フォルムチェンジデモ
+//--------------------------------------------------------------
+static BOOL PLIST_DEMO_FormChangeKyuremuSeq( PLIST_WORK* work )
+{
+  switch( work->demoSeq ){
+  case 0:
+    //チラツキを消すため一回非表示にした面の再表示
+    GFL_BG_SetVisible( PLIST_BG_3D , TRUE ); 
+    //SEの再生
+    PMSND_PlaySystemSE(PLIST_SND_DEMO_KYUREMU);
+    work->demoSeq++;
+    //break throw
+  case 1:
+    if( ++work->demoCnt > work->demoChangeTimming )
+    {
+      WIPE_SYS_Start( WIPE_PATTERN_M , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
+          WIPE_FADE_WHITE , PLIST_DEMO_KYUREMU_WIPEOUT_DIV , PLIST_DEMO_KYUREMU_WIPEOUT_SYNC , work->heapId );
+      PLIST_PLATE_ResetParam( work , work->plateWork[work->pokeCursor] ,
+          PokeParty_GetMemberPointer(work->plData->pp, work->pokeCursor) , 0 );
+      PLIST_PLATE_ResetParam( work , work->plateWork[work->changeTarget] ,
+          PokeParty_GetMemberPointer(work->plData->pp, work->changeTarget) , 0 );
+      work->demoSeq++;
+    }
+    break;
+  case 2:
+    if( WIPE_SYS_EndCheck() == FALSE ||
+        GFL_PTC_GetEmitterNum( work->ptcWork ) > 0 ||
+        PMSND_CheckPlaySE() == TRUE ){
+      break;
+    }
+#if 0
+    //リスト書き換え
+    PokeParty_Delete( work->plData->pp, work->pokeCursor );
+    if( work->pokeCursor < work->changeTarget ){
+      work->pokeCursor = --work->changeTarget;  //カーソルずらしておく
+    }
+#endif
+    {
+      POKEMON_PARAM* pp = PokeParty_GetMemberPointer(work->plData->pp, work->changeTarget );
+      const u32 monsNo = PP_Get( pp , ID_PARA_monsno , NULL );
+      const u32 formNo = PP_Get( pp , ID_PARA_form_no , NULL );
+      work->demoVoicePlayer = PMVOICE_Play( monsNo , formNo , 64 , FALSE , 0 , 0 , FALSE , 0 );
+      work->demoIsPlayVoice = TRUE;
+    
+      work->demoSeq++;
+    }
+    break; 
+  case 3:
+    if( PMVOICE_CheckPlay( work->demoVoicePlayer ) == FALSE )
+    {
+      WIPE_SYS_Start( WIPE_PATTERN_M , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
+        WIPE_FADE_WHITE , PLIST_DEMO_KYUREMU_WIPEIN_DIV , PLIST_DEMO_KYUREMU_WIPEIN_SYNC , work->heapId );
+      work->demoSeq++;
+    }
+    break;
+  case 4:
+  default:
+    if( WIPE_SYS_EndCheck() == TRUE ){
+      return TRUE;
+    }
+  }
+  return FALSE;
 }
 
 
@@ -377,3 +526,133 @@ void PLIST_DEMO_ChangeSheimiToSky( PLIST_WORK *work , POKEMON_PARAM *pp )
   PP_ChangeFormNo( pp , FORMNO_SHEIMI_SKY );
   ZUKANSAVE_SetPokeGet( work->plData->zkn , pp );
 }
+
+//========================================================================
+//キュレム合体/分離処理
+//========================================================================
+static void PLIST_DEMO_KyuremuWazaChange( POKEMON_PARAM* pp, u8 s_idx, u8 d_idx );
+
+#define KYUREMU_WAZA_CHANGE_MAX (2)
+
+static const u16 DATA_KyuremuWazaChange[KYUREMU_WAZA_CHANGE_MAX][3] = {
+  { WAZANO_KOWAIKAO, WAZANO_KUROSUHUREIMU, WAZANO_KUROSUSANDAA },
+  { WAZANO_KOGOERUSEKAI, WAZANO_KOORUDOHUREA, WAZANO_HURIIZUBORUTO },
+};
+
+//--------------------------------------------------------------
+//	キュレム：ノーマル→カラーチェック
+//--------------------------------------------------------------
+const KYUREMU_CHECK_CODE PLIST_DEMO_CheckKyuremuToColor( PLIST_WORK *work , POKEMON_PARAM *pp )
+{
+  if( PP_Get( work->selectPokePara , ID_PARA_monsno , NULL ) != MONSNO_KYUREMU )
+  {
+    //キュレムじゃない！
+    return KYUREMU_CHECK_NG;
+  }
+  if( PP_Get( work->selectPokePara , ID_PARA_form_no , NULL ) != FORMNO_KYUREMU_A )
+  {
+    //ノーマルフォルムじゃない！
+    return KYUREMU_CHECK_NG;
+  }
+  if( PP_Get( work->selectPokePara, ID_PARA_hp, NULL ) == 0 )
+  {
+    //瀕死
+    return KYUREMU_CHECK_NG_DETH;
+  }
+  return KYUREMU_CHECK_OK;
+}
+
+//--------------------------------------------------------------
+//	キュレム：カラー→ノーマルチェック
+//--------------------------------------------------------------
+const BOOL PLIST_DEMO_CheckKyuremuToNormal( PLIST_WORK *work , POKEMON_PARAM *pp )
+{
+  if( PP_Get( work->selectPokePara , ID_PARA_monsno , NULL ) != MONSNO_KYUREMU )
+  {
+    //キュレムじゃない！
+    return FALSE;
+  }
+  if( PP_Get( work->selectPokePara , ID_PARA_form_no , NULL ) == FORMNO_KYUREMU_A )
+  {
+    //すでにノーマルフォルム！
+    return FALSE;
+  }
+  return TRUE;
+}
+
+//--------------------------------------------------------------------------
+//  キュレム合体
+//--------------------------------------------------------------------------
+void PLIST_DEMO_ChangeKyuremuColor( PLIST_WORK *work, KYUREMU_UNION_CHECK mode, POKEMON_PARAM* pp_k, POKEMON_PARAM* pp_t )
+{
+//  POKEMON_PARAM *pp_t = PokeParty_GetMemberPointer(work->plData->pp, target_idx );
+
+  //合体相手のパラメータを丸ごとセーブ保存
+  RANDOMMAP_SAVE_SetKyuremuUnionPokeParam( (RANDOMMAP_SAVE*)work->plData->rnd_map, (const POKEMON_PARAM*)pp_t );
+
+  //キュレム専用技変化
+  PLIST_DEMO_KyuremuWazaChange( pp_k, 0, mode );
+
+  //キュレムフォルムチェンジ
+  PP_ChangeFormNo( pp_k, FORMNO_KYUREMU_WHITE+mode );
+  
+  ZUKANSAVE_SetPokeGet( work->plData->zkn , pp_k );
+}
+
+//--------------------------------------------------------------------------
+//  キュレム分離
+//--------------------------------------------------------------------------
+void PLIST_DEMO_ChangeKyuremuNormal( PLIST_WORK *work, KYUREMU_UNION_CHECK mode, POKEMON_PARAM* pp_k )
+{
+  int form;
+
+  //フォルムNo取得
+  form = PP_Get( pp_k, ID_PARA_form_no, NULL );
+
+  //合体相手のパラメータを丸ごとセーブ保存
+//  RANDOMMAP_SAVE_SetKyuremuUnionPokeParam( (RANDOMMAP_SAVE*)work->plData->rnd_map, (const POKEMON_PARAM*)pp_t );
+
+  //キュレム専用技変化
+  PLIST_DEMO_KyuremuWazaChange( pp_k, form-1, 0 );
+
+  //キュレムフォルムチェンジ
+  PP_ChangeFormNo( pp_k, FORMNO_KYUREMU_A );
+}
+
+//--------------------------------------------------------------------------
+//  キュレム合体/分離時技チェンジ
+//--------------------------------------------------------------------------
+static void PLIST_DEMO_KyuremuWazaChange( POKEMON_PARAM* pp, u8 s_idx, u8 d_idx )
+{
+  int i,j;
+
+  for(i = 0;i < 4;i++){
+    u16 wazano = PP_Get( pp, ID_PARA_waza1+i, NULL ); 
+    u16 waza_pt = PP_Get( pp, ID_PARA_pp1+i, NULL ); 
+
+    if( wazano == WAZANO_NULL ){
+      continue; 
+    }
+    //技入れ替えチェック
+    for(j = 0;j < KYUREMU_WAZA_CHANGE_MAX;j++){
+      u16 no;
+      u16 pt;
+
+      if( DATA_KyuremuWazaChange[i][s_idx] != wazano ){
+        continue;
+      }
+      //ヒットした
+      no = DATA_KyuremuWazaChange[i][d_idx];
+      pt = WAZADATA_GetParam( no, WAZAPARAM_BASE_PP );
+
+      //新しい技のmaxが現在のポイントよりすくなければmaxにあわせて補正
+      PP_Put( pp, ID_PARA_waza1+i, no );
+      if( pt < waza_pt ){
+        PP_Put( pp, ID_PARA_pp1+i, pt ); 
+      }
+      break;
+    }
+  }
+}
+
+

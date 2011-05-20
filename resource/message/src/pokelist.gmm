@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="mori" host="W00155" date="2010-12-01T19:19:52"/>
+	<create user="iwasawa" host="W00270" date="2011-05-16T18:06:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -460,6 +460,13 @@
 タマゴうみ、ミルクのみを使うとき</comment>
 		<language name="JPN" width="160">どのポケモンに　つかう？</language>
 		<language name="JPN_KANJI" width="160">どのポケモンに　使う？</language>
+	</row>
+
+	<row id="mes_pokelist_02_09" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ffff00,,#ff8080,#ffff00,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>１行ウインドウメッセージ
+キュレムと合体させるポケモン選択時（スワン追加）</comment>
+		<language name="JPN" width="160">どのポケモンと　がったい？</language>
+		<language name="JPN_KANJI" width="160">どのポケモンと　合体？</language>
 	</row>
 
 	<row id="mes_pokelist_03_01">
@@ -1035,11 +1042,43 @@ PP値上昇アイテムで技選択するとき</comment>
 		<language name="JPN_KANJI" width="216" line="2">ここでは　使えません</language>
 	</row>
 
-	<row id="mes_pokelist_04_45">
+	<row id="mes_pokelist_04_45_00">
 		<comment>道具を使っても効果がないとき
 </comment>
 		<language name="JPN" width="216" line="2">つかっても　こうかがないよ</language>
 		<language name="JPN_KANJI" width="216" line="2">使っても　効果がないよ</language>
+	</row>
+
+	<row id="mes_pokelist_04_45_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>道具を使っても効果がないとき２（スワン追加）</comment>
+		<language name="JPN" width="216" line="2">ひんしの　ポケモンには
+つかえません</language>
+		<language name="JPN_KANJI" width="216" line="2">ひんしの　ポケモンには
+使えません</language>
+	</row>
+
+	<row id="mes_pokelist_04_46_00" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>キュレム合体NGメッセージ１（スワン追加）</comment>
+		<language name="JPN" width="216" line="2">その　ポケモンとは
+がったい　できません</language>
+		<language name="JPN_KANJI" width="216" line="2">その　ポケモンとは
+合体　できません</language>
+	</row>
+
+	<row id="mes_pokelist_04_46_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>キュレム合体NGメッセージ２（スワン追加）</comment>
+		<language name="JPN" width="216" line="2">ひんしの　ポケモンとは
+がったい　できません</language>
+		<language name="JPN_KANJI" width="216" line="2">ひんしの　ポケモンとは
+合体　できません</language>
+	</row>
+
+	<row id="mes_pokelist_04_46_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>キュレム合体NGメッセージ３（スワン追加）</comment>
+		<language name="JPN" width="216" line="2">タマゴとは　がったい
+できません</language>
+		<language name="JPN_KANJI" width="216" line="2">タマゴとは　合体
+できません</language>
 	</row>
 
 	<row id="mes_pokelist_04_47">

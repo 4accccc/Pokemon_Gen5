@@ -835,7 +835,8 @@ void PLIST_PLATE_SetActivePlate( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork 
   if( isActive == TRUE )
   {
     if( work->mainSeq == PSMS_CHANGE_POKE ||
-        work->mainSeq == PSMS_USE_POKE )
+        work->mainSeq == PSMS_USE_POKE ||
+        work->mainSeq == PSMS_KYUREMU_UNION )
     {
       PLIST_PLATE_ChangeColor( work , plateWork , PPC_CHANGE_SELECT );
     }
@@ -864,6 +865,7 @@ void PLIST_PLATE_SetActivePlate( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork 
   {
     //入れ替え中で、入れ替えターゲットのときは色を戻さない
     if( (work->mainSeq == PSMS_CHANGE_POKE && work->changeTarget == plateWork->idx) ||
+        (work->mainSeq == PSMS_KYUREMU_UNION && work->changeTarget == plateWork->idx) ||
         (work->mainSeq == PSMS_USE_POKE && work->useTarget == plateWork->idx) )
     {
       PLIST_PLATE_ChangeColor( work , plateWork , PPC_CHANGE );

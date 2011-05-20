@@ -193,6 +193,9 @@ typedef enum
   PSMS_FADEOUT_WAIT,
 
   PSMS_MOVE_ITEM,     // どうぐ移動
+
+  //スワン追加
+  PSMS_KYUREMU_UNION,     //キュレム合体 
   PSMS_MAX,
 }PLIST_SYS_MAIN_SEQ;
 
@@ -215,6 +218,8 @@ typedef enum
   PDT_GIRATHINA_TO_ORIGIN,
   PDT_GIRATHINA_TO_ANOTHER,
   PDT_SHEIMI_TO_SKY,
+  PDT_KYUREMU_TO_COLOR,
+  PDT_KYUREMU_TO_NORMAL,
 }PLIST_DEMO_TYPE;
 
 typedef struct _PLIST_WORK PLIST_WORK;
@@ -236,6 +241,7 @@ struct _PLIST_WORK
   u8  mainSeq;
   u8  nextMainSeq;
   u8  subSeq;
+  u8  demoSeq;
   u8  selectState;
   BOOL isActiveWindowMask;  //メニュー出たときのWndMaskのON/OFFのVBlank切り替えよう
   BOOL canExit;   //Xボタンが効くか？

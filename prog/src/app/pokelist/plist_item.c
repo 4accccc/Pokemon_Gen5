@@ -400,22 +400,27 @@ void PLIST_ITEM_CangeInsekutaForm( PLIST_WORK *work , POKEMON_PARAM *pp , const 
 //--------------------------------------------------------------------------
 //  アイテム使えないメッセージの表示
 //--------------------------------------------------------------------------
-void PLIST_ITEM_MSG_CanNotUseItem( PLIST_WORK *work )
+static void PLIST_ITEM_MSG_CanNotUseItemCommon( PLIST_WORK *work, CNUI_MSG_TYPE mes_type, PLIST_CallbackFunc msgCallBack )
 {
   work->plData->ret_mode = PL_RET_BAG;
   PLIST_MSG_CreateWordSet( work , work->msgWork );
   PLIST_MSG_AddWordSet_ItemName( work , work->msgWork , 0 , work->plData->item );
-  PLIST_MessageWaitInit( work , mes_pokelist_04_45 , TRUE , PLIST_MSGCB_ExitCommon );
+  PLIST_MessageWaitInit( work , mes_pokelist_04_45_00+mes_type , TRUE , msgCallBack );
   PLIST_MSG_DeleteWordSet( work , work->msgWork );
+}
+void PLIST_ITEM_MSG_CanNotUseItem( PLIST_WORK *work )
+{
+  PLIST_ITEM_MSG_CanNotUseItemCommon( work, 0, PLIST_MSGCB_ExitCommon );
 }
 //続けて選べるVer
 void PLIST_ITEM_MSG_CanNotUseItemContinue( PLIST_WORK *work )
 {
-  work->plData->ret_mode = PL_RET_BAG;
-  PLIST_MSG_CreateWordSet( work , work->msgWork );
-  PLIST_MSG_AddWordSet_ItemName( work , work->msgWork , 0 , work->plData->item );
-  PLIST_MessageWaitInit( work , mes_pokelist_04_45 , TRUE , PLIST_MSGCB_ReturnSelectCommon );
-  PLIST_MSG_DeleteWordSet( work , work->msgWork );
+  PLIST_ITEM_MSG_CanNotUseItemCommon( work, 0, PLIST_MSGCB_ReturnSelectCommon );
+}
+//続けて選べる＆メッセージタイプを指定できる
+void PLIST_ITEM_MSG_CanNotUseItemContinueEx( PLIST_WORK *work, CNUI_MSG_TYPE mes_type )
+{
+  PLIST_ITEM_MSG_CanNotUseItemCommon( work, mes_type, PLIST_MSGCB_ReturnSelectCommon );
 }
 
 //--------------------------------------------------------------------------

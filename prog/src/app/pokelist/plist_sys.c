@@ -185,6 +185,7 @@ static void PLIST_SelectPokeTerm_Change( PLIST_WORK *work );
 static void PLIST_SelectPokeTerm_Use( PLIST_WORK *work );
 static void PLIST_SelectPokeTerm_BattleDecide( PLIST_WORK *work );
 static void PLIST_SelectPokeTerm_MoveItem( PLIST_WORK *work);
+static void PLIST_SelectPokeTerm_KyuremuUnion( PLIST_WORK *work );
 static void PLIST_SelectPokeMain( PLIST_WORK *work );
 static void PLIST_SelectPokeUpdateKey( PLIST_WORK *work );
 static void PLIST_SelectPokeUpdateTP( PLIST_WORK *work );
@@ -476,6 +477,7 @@ const BOOL PLIST_UpdatePokeList( PLIST_WORK *work )
   case PSMS_CHANGE_POKE:  //基本は一緒だから同じ処理で
   case PSMS_MOVE_ITEM:
   case PSMS_USE_POKE:
+  case PSMS_KYUREMU_UNION:  //キュレム合体(スワン追加)　基本が一緒なので同じ処理で
     PLIST_SelectPoke( work );
     break;
 
@@ -1733,6 +1735,7 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
         }
         else
         {
+          //グラシデアチェック
           if( work->plData->item == ITEM_GURASIDEANOHANA &&
               PLIST_DEMO_CheckSheimiToSky( work , work->selectPokePara ) == TRUE )
           {
@@ -1740,6 +1743,33 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
             work->plData->ret_mode = PL_RET_BAG;
             work->mainSeq = PSMS_FORM_CHANGE_INIT;
             work->demoType = PDT_SHEIMI_TO_SKY;
+          }
+          //いでんしのくさびチェック
+          else if( work->plData->item == ITEM_IDENSINOKUSABI )
+          {
+            KYUREMU_CHECK_CODE  ret = PLIST_DEMO_CheckKyuremuToColor( work, work->selectPokePara );
+            if( ret == KYUREMU_CHECK_NG ){
+              PLIST_ITEM_MSG_CanNotUseItemContinue( work );
+            }
+            else if( ret == KYUREMU_CHECK_NG_DETH ){
+              PLIST_ITEM_MSG_CanNotUseItemContinueEx( work, CNUI_MSG_TYPE_DETH );
+            }
+            else{ //OK
+              //合体する相手を選ぶシーケンスに遷移
+              PLIST_SelectPokeSetCursor( work , work->pokeCursor );
+              PLIST_SelectPokeSetCursor_Change( work , work->pokeCursor );
+    
+              work->changeTarget = work->pokeCursor;
+              work->mainSeq = PSMS_KYUREMU_UNION;
+              work->canExit = FALSE;
+    
+              PLIST_MSG_OpenWindow( work , work->msgWork , PMT_BAR );
+              PLIST_MSG_DrawMessageNoWait( work , work->msgWork , mes_pokelist_02_09 );
+              //ここはモード別処理ではなく、ただのセレクト初期化
+              PLIST_SelectPokeInit( work );
+              
+//              PLIST_ITEM_MSG_CanNotUseItemContinueEx( work, CNUI_MSG_TYPE_DETH );
+            }
           }
           else
           {
@@ -1762,7 +1792,7 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
       }
       else
       {
-        PLIST_MessageWaitInit( work , mes_pokelist_04_45 , TRUE , PLIST_MSGCB_ExitCommon );
+        PLIST_MessageWaitInit( work , mes_pokelist_04_45_00 , TRUE , PLIST_MSGCB_ExitCommon );
       }
     }
     break;
@@ -2117,6 +2147,7 @@ static void PLIST_SelectPoke( PLIST_WORK *work )
     case PSMS_CHANGE_POKE: PLIST_SelectPokeTerm_Change( work );   break;
     case PSMS_USE_POKE:    PLIST_SelectPokeTerm_Use( work );      break;
     case PSMS_MOVE_ITEM:   PLIST_SelectPokeTerm_MoveItem( work ); break;
+    case PSMS_KYUREMU_UNION: PLIST_SelectPokeTerm_KyuremuUnion( work );   break;  //キュレム合体(スワン追加)
     default: PLIST_SelectPokeTerm( work );
     }
 #if 0
@@ -2176,7 +2207,9 @@ static void PLIST_SelectPokeInit( PLIST_WORK *work )
     if( work->pokeCursor <= PL_SEL_POS_POKE6 )
     {
       //通常時はTPはプレート非アクティブ。交換時はアクティブ
-      if( work->mainSeq == PSMS_CHANGE_POKE || work->mainSeq == PSMS_MOVE_ITEM)
+      if( work->mainSeq == PSMS_CHANGE_POKE ||
+          work->mainSeq == PSMS_KYUREMU_UNION ||
+          work->mainSeq == PSMS_MOVE_ITEM)
       {
         PLIST_PLATE_SetActivePlate( work , work->plateWork[work->pokeCursor] , TRUE );
       }
@@ -2349,6 +2382,76 @@ static void PLIST_SelectPokeTerm_Change( PLIST_WORK *work )
     break;
 
   }
+}
+
+//--------------------------------------------------------------------------
+//  キュレム合体対象ポケモンチェック
+//--------------------------------------------------------------------------
+static KYUREMU_UNION_CHECK PLIST_KyuremuUnionCheck( PLIST_WORK* work, u8 target )
+{
+  POKEMON_PARAM *pp = PokeParty_GetMemberPointer(work->plData->pp, target );
+  u16 monsno = PP_Get( pp, ID_PARA_monsno, NULL ); 
+
+  if( PP_Get( pp, ID_PARA_fusei_tamago_flag, NULL) ||
+      PP_Get( pp, ID_PARA_tamago_flag, NULL) ){
+    return KYUREMU_UNION_NG_EGG;  //タマゴはNG
+  }
+  if( PP_Get( pp, ID_PARA_hp, NULL ) <= 0 ){
+    return KYUREMU_UNION_NG_DETH; //瀕死はNG
+  }
+  if( monsno == MONSNO_RESIRAMU ){
+    return KYUREMU_UNION_RESIRAMU;
+  }else if( monsno == MONSNO_ZEKUROMU ){
+    return KYUREMU_UNION_ZEKUROMU;
+  }
+  return KYUREMU_UNION_NG_POKE;
+}
+
+
+//--------------------------------------------------------------------------
+//  キュレム合体対象ポケモン選択画面開放
+//--------------------------------------------------------------------------
+static void PLIST_SelectPokeTerm_KyuremuUnion( PLIST_WORK *work )
+{
+  KYUREMU_UNION_CHECK ret;
+
+  PLIST_MSG_CloseWindow( work , work->msgWork );
+
+  //リターンまたは同じプレートを選んだらキャンセル
+  if( (work->selectState == PSSEL_SELECT && work->pokeCursor == work->changeTarget) )
+  {
+    work->selectPokePara = NULL;
+    work->mainSeq = PSMS_SELECT_POKE;
+
+    PLIST_SelectPokeSetCursor( work , work->pokeCursor );
+    PLIST_PLATE_SetActivePlate( work , work->plateWork[work->changeTarget] , FALSE );
+    GFL_CLACT_WK_SetDrawEnable( work->clwkCursor[1] , FALSE );
+    work->changeTarget = PL_SEL_POS_MAX;
+    work->plData->ret_sel = work->pokeCursor;
+
+    PLIST_InitMode_Select( work );
+    PMSND_PlaySystemSE( PLIST_SND_CANCEL );
+    return;
+  }
+
+  ret = PLIST_KyuremuUnionCheck( work, work->pokeCursor );
+  if( ret == KYUREMU_UNION_RESIRAMU || ret == KYUREMU_UNION_ZEKUROMU ){
+    PLIST_DEMO_ChangeKyuremuColor( work, ret,
+        PokeParty_GetMemberPointer(work->plData->pp, work->changeTarget ),
+        PokeParty_GetMemberPointer(work->plData->pp, work->pokeCursor ));
+
+    work->plData->ret_mode = PL_RET_BAG;
+    work->mainSeq = PSMS_FORM_CHANGE_INIT;
+    work->demoType = PDT_KYUREMU_TO_COLOR;
+    return;
+  }
+  //NG処理
+  PLIST_MessageWaitInit( work , mes_pokelist_04_46_00+(ret-KYUREMU_UNION_NG_POKE) , TRUE , PLIST_MSGCB_ReturnSelectCommon );
+  PLIST_SelectPokeSetCursor( work , work->pokeCursor );
+  PLIST_PLATE_SetActivePlate( work , work->plateWork[work->changeTarget] , FALSE );
+  PLIST_PLATE_SetActivePlate( work , work->plateWork[work->pokeCursor] , FALSE );
+  GFL_CLACT_WK_SetDrawEnable( work->clwkCursor[1] , FALSE );
+  work->plData->ret_sel = work->pokeCursor;
 }
 
 //--------------------------------------------------------------------------
