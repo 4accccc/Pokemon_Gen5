@@ -10,6 +10,14 @@
 #ifndef ZONE_R14_EVC_H
 #define ZONE_R14_EVC_H
 
+#define TR_BATTLEG_13                      0
+#define TR_FISHING_15                      1
+#define TR_KARATE_13                       2
+#define TR_GENTLE_06                       3
+#define TR_MADAM_05                        4
+#define TR_ELITEM_25                       5
+#define TR_ELITEW_24                       6
+#define TR_BACKPACKERM_20                  7
 
 #endif //ZONE_R14_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r14.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

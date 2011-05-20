@@ -11,6 +11,13 @@
 #ifndef ZONE_R06_EVC_H
 #define ZONE_R06_EVC_H
 
+#define TR_SCIENTISTM_13                   0
+#define TR_PARASOL_09                      1
+#define TR_SCHOOLG_10                      2
+#define TR_SCIENTISTM_14                   3
+#define TR_SCIENTISTW_10                   4
+#define TR_PARASOL_10                      5
+#define TR_SCHOOLB_12                      6
 
 #endif //ZONE_R06_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r06.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

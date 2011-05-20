@@ -13,6 +13,13 @@
 
 #define R16_TREE_01                        0
 #define R16_ROCK_01                        1
+#define TR_FANM_12                         2
+#define TR_FANM_12_2                       3
+#define TR_CYCLINGW_02                     4
+#define TR_CYCLINGM_02                     5
+#define TR_BACKPACKERW_15                  6
+#define TR_BACKPACKERM_19                  7
+#define TR_RAIL_02                         8
 
 #endif //ZONE_R16_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r16.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
