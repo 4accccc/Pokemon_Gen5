@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakamura_akira" host="W00280" date="2011-04-25T18:03:58"/>
+	<create user="nakamura_akira" host="W00280" date="2011-04-28T16:00:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="387" top="309" right="887" bottom="942" maximized="no" rayout="Vertical2">
+	<dialog left="692" top="340" right="1192" bottom="973" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="105" right="1280" bottom="514" visible="no"/>
 		<band id="0" index="1" style="0000" width="484"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="317"/>
 		<band id="3" index="4" style="0000" width="484"/>
 		<band id="4" index="0" style="0000" width="591"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1308,10 +1308,11 @@
 じぶんの　つよさの　げんかいに
 ちょうせんしてみては▽
 いかがでしょうか？▼</language>
-		<language name="JPN_KANJI" width="256">エリアクリアには　１０階層で　構成された
-エリアの　どこかにいる▼
-ボストレーナーを　倒すことで　次のエリアに
-挑戦することが　できるようになります▼
+		<language name="JPN_KANJI" width="256">エリアクリアには　１０階層で
+構成された　エリアの　どこかにいる▼
+ボストレーナーを　倒すことで
+次のエリアに　挑戦することが▽
+できるようになります▼
 エリアにいる　トレーナーと
 対戦して　腕を　磨くもよし▼
 ボストレーナーを　探し出し
@@ -1321,24 +1322,11 @@
 	</row>
 
 	<row id="msg_info_help_b_03" text-color="#ffffff,,,#ffffff,,#ffffff,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
-		<language name="JPN" width="256">なお　しせつでは　
-しんけんしょうぶを　していただきます▼
-まんがいち　トレーナーとの
-たいせんに　まけたばあい▼
-もうしわけありませんが
-たいせんあいてに　しょうきんを▽
-おしはらいください▼
-また　バッグにある　どうぐのしようを
-きんししておりますので▽
+		<language name="JPN" width="256">なお　しせつないでは　バッグにある
+どうぐのしようを　きんししております▽
 あらかじめ　ごりょうしょうください▼</language>
-		<language name="JPN_KANJI" width="256">なお　施設では　
-真剣勝負を　していただきます▼
-万が一　トレーナーとの
-対戦に　負けた場合▼
-申し訳ありませんが　対戦相手に
-賞金を　お支払いください▼
-また　バッグにある　どうぐの使用を
-禁止しておりますので▽
+		<language name="JPN_KANJI" width="256">なお　施設内では　バッグにある
+どうぐの使用を　禁止しております▽
 あらかじめ　ご了承ください▼</language>
 	</row>
 
@@ -1441,9 +1429,9 @@
 
 	<row id="msg_info_b_004" text-color="#ffffff,,,#ffffff,,#ffffff,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<language name="JPN" width="256">じゅんびは　よろしいですか？
-それでは　がんばてくださいね！▼</language>
+それでは　がんばってくださいね！▼</language>
 		<language name="JPN_KANJI" width="256">準備は　よろしいですか？
-それでは　がんばてくださいね！▼</language>
+それでは　がんばってくださいね！▼</language>
 	</row>
 
 	<row id="msg_info_b_cancel" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,," back-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
