@@ -1,0 +1,311 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<MessageStudioText
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="msg_c09r0601_champion_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アデク『……ここが
+でんどういりの　へや▼
+まことの　つよさ
+こころからの　やさしさを　もつ▽
+トレーナーと　ポケモンを▽
+れきしに　のこすための　ばしょ▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アデク『……ここが
+殿堂入りの　部屋▼
+真の　強さ
+心からの　優しさを　もつ▽
+トレーナーと　ポケモンを▽
+歴史に　残すための　場所▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・初回
+・続けて、主人公のほうを向いて
+　主人公♂→champion_02
+　主人公♀→champion_03
+
+※SWANでは動作モデルをアイリスに
+　あわせてメッセージ変更予定</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>CHAMPION
+アデク</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c09r0601_champion_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アデク『……なんど　きても
+きざまれた　なまえの　かずかずに▽
+みが　ひきしまるな▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アデク『……何度　来ても
+刻まれた　名前の数々に▽
+身が　引き締まるな▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・2回目以降
+・続けて、主人公のほうを向いて
+　主人公♂→champion_02
+　主人公♀→champion_03
+
+※SWANでは動作モデルをアイリスに
+　あわせてメッセージ変更予定</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>CHAMPION
+アデク</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c09r0601_champion_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>さてと
+[Name:Type Idx="0"]くん▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さてと
+[Name:Type Idx="0"]くん▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けてchampion_05
+・0＝主人公名
+
+※SWANでは動作モデルをアイリスに
+　あわせてメッセージ変更予定</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>CHAMPION
+アデク</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c09r0601_champion_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>さてと
+[Name:Type Idx="0"]さん▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さてと
+[Name:Type Idx="0"]さん▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けてchampion_05
+・0＝主人公名
+
+※SWANでは動作モデルをアイリスに
+　あわせてメッセージ変更予定</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>CHAMPION
+アデク</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c09r0601_champion_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>この　でんどういりの　へやに
+きみたちの　なまえを　きざもう！▼
+なまえと　ともに　のこす
+たびの　おもいで▽
+たたかいの　れきし！▼
+すべてが　これからの　きみを　より
+つよくする　ささえと　なるように！▼
+では　きみと！▼
+ともに　たたかった
+パートナーの　ポケモンを！▽
+この　マシンに　きろく　する！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>この　殿堂入りの　部屋に
+君たちの　名前を　刻もう！▼
+名前と　共に　残す
+旅の　思い出▽
+戦いの　歴史！▼
+すべてが　これからの　君を　より
+強くする　支えと　なるように！▼
+では　君と！▼
+共に　戦った
+パートナーの　ポケモンを！▽
+この　マシンに　記録する！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・メッセージ後、殿堂入りの演出
+・そしてスタッフロールへ
+
+※SWANでは動作モデルをアイリスに
+　あわせてメッセージ変更予定</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>CHAMPION
+アデク</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+	</TextRow>
+</MessageStudioText>

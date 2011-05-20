@@ -1,0 +1,361 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<MessageStudioText
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="msg_t05r0301_railman_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おっと　その　かおは
+ポケモントレーナー！▼
+ぼくは　バトルサブウェイで
+はたらく　てつどういん！▼
+きみは　バトルサブウェイに
+ちょうせん　したことは　あるかな？▼
+いつでも　しんけんしょうぶが　できる
+ホットな　スポットさ▼
+ただね　こまったことに
+しょうぶに　むちゅうに　なるあまり▽
+おとしものが　たえないんだ▼
+そうだ　ひきとりてが　いなかったから
+これを　あげるよ▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おっと　その顔は
+ポケモントレーナー！▼
+ぼくは　バトルサブウェイで
+働く　鉄道員！▼
+きみは　バトルサブウェイに
+挑戦したことは　あるかな？▼
+いつでも　真剣勝負が　できる
+ホットな　スポットさ▼
+ただね　困ったことに
+勝負に　夢中に　なるあまり▽
+落し物が　たえないんだ▼
+そうだ　引き取り手が　いなかったから
+これを　あげるよ▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+バトルサブウェイの落し物
+初回会話
+
+※バトルサブウェイを利用するほど
+　たくさんアイテムがもらえる
+※初回だけは利用していなくてももらえる
+
+→アイテム入手処理へ</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>RAILMAN</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t05r0301_railman_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>また　おとしものが　でちゃってね
+ひきとりてが　いないから▽
+よかったら　もらってちょーだいよ▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>また　落し物が　でちゃってね
+引き取り手が　いないから▽
+よかったら　もらってちょーだいよ▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+バトルサブウェイの落し物
+２回目以降
+→アイテム入手処理へ</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>RAILMAN</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t05r0301_railman_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>お　まってたよ！
+さいきん　りようしゃが　ふえて▽
+おとしものが　おおくてね！▼
+ひきとりてが　いないから
+よかったら　もらってちょーだいよ▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>お　待ってたよ！
+最近　利用者が　増えて▽
+落し物が　多くてね！▼
+引き取り手が　いないから
+よかったら　もらってちょーだいよ▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+バトルサブウェイの落し物
+２回目以降
+（落し物が多い日）
+→アイテム入手処理へ</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>RAILMAN</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t05r0301_railman_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>いいの　いいの
+えんりょ　しないで！▼
+ぼくが　もっているより
+トレーナーさんが　つかったほうが▽
+どうぐも　うれしいだろうから！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>いいの　いいの
+遠慮しないで！▼
+ぼくが　持っているより
+トレーナーさんが　使ったほうが▽
+道具も　うれしいだろうから！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+バトルサブウェイの落し物
+アイテム入手後</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>RAILMAN</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t05r0301_railman_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>また　おとしものが
+でてきたら　もらってちょーだい▼
+そうそう　きがむいたら
+ライモンシティで　バトルサブウェイに▽
+ちょうせん　してくれよ！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>また　落し物が
+でてきたら　もらってちょーだい▼
+そうそう　気が向いたら
+ライモンシティで　バトルサブウェイに▽
+挑戦してくれよ！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+バトルサブウェイの落し物
+入手アイテム無しのとき</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>RAILMAN</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t05r0301_railman_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あらま　[Name:Item Idx="0"]は
+それいじょう　もてないみたい</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あらま　[Name:Item Idx="0"]は
+それ以上　持てないみたい</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+バトルサブウェイの落し物
+アイテムMAXで入手できないとき</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>RAILMAN</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+	</TextRow>
+</MessageStudioText>

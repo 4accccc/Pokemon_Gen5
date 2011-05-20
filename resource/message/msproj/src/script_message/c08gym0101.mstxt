@@ -1,0 +1,1709 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<MessageStudioText
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="msg_c08gym0101_leader_01w"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>はい！　すごく　つよーい
+ジムリーダーの　アイリスです！[Ctrl2:PageClear ]
+ねーねー！　どんな　ポケモンと
+どんなふうに　たたかうの！？[Ctrl2:PageClear ]
+あたし　きょうみしんしん　だから
+もう　はじめちゃうね！[Ctrl2:PageClear ]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>はい！　すごく　つよーい
+ジムリーダーの　アイリスです！[Ctrl2:PageClear ]
+ねーねー！　どんな　ポケモンと
+どんなふうに　たたかうの！？[Ctrl2:PageClear ]
+あたし　きょうみしんしん　だから
+もう　はじめちゃうね！[Ctrl2:PageClear ]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・WHITEver
+　戦闘前メッセージ</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ジムリーダー
+アイリス</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08gym0101_leader_02w"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ほへー[Ctrl2:PageClear ]
+……　……　……
+……　……　……[Ctrl2:PageClear ]
+すごいすごいっ！！[Ctrl2:PageClear ]
+アイリス　こんなに
+つよいトレーナーさんと　たたかえて[Ctrl2:LineFeed ]
+すっごく　うれしー！！[Ctrl2:PageClear ]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ほへー[Ctrl2:PageClear ]
+……　……　……
+……　……　……[Ctrl2:PageClear ]
+すごいすごいっ！！[Ctrl2:PageClear ]
+アイリス　こんなに
+つよいトレーナーさんと　たたかえて[Ctrl2:LineFeed ]
+すっごく　うれしー！！[Ctrl2:PageClear ]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・WHITEver
+　戦闘後メッセージ</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ジムリーダー
+アイリス</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08gym0101_leader_03w"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0"]は　アイリスから
+レジェンドバッジを　もらった！[Ctrl2:PageClear ]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0"]は　アイリスから
+レジェンドバッジを　もらった！[Ctrl2:PageClear ]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・WHITEver
+　ファンファーレ＋バッジ入手処理</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ジムリーダー
+アイリス</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08gym0101_leader_04w"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ジムバッジが　８こ！
+すごいすごい！▼
+ぜーんぶの　ポケモンが
+どんな　おねがいも　きいてくれるよ！▼
+ねーねー
+この　わざマシンも　あげるー！[Ctrl2:PageClear ]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ジムバッジが　８こ！
+すごいすごい！▼
+ぜーんぶの　ポケモンが
+どんな　おねがいも　きいてくれるよ！▼
+ねーねー
+この　わざマシンも　あげるー！[Ctrl2:PageClear ]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・WHITEver
+　アイテム入手処理
+　No409「ドラゴンテール」</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ジムリーダー
+アイリス</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08gym0101_leader_05w"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ドラゴンテールはね
+ダメージを　あたえるだけじゃなくて▼
+あいての　ポケモンを
+ボールに　もどしちゃうんだよ！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ドラゴンテールはね
+ダメージを　あたえるだけじゃなくて▼
+あいての　ポケモンを
+ボールに　もどしちゃうんだよ！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・WHITEver
+　アイテム入手処理後
+・続けてleader_06w
+　一度ウインドウは閉じてください</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ジムリーダー
+アイリス</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08gym0101_leader_06w"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ねーねー
+アデクの　おじーちゃん▽
+どうしてると　おもう？▼
+いまごろ　ポケモンリーグで
+Ｎって　トレーナーと▽
+たたかってるのかなー？▼
+ポケモンリーグ　しってる？▼
+１０ばんどうろの　さきの
+チャンピオンロードを▽
+ぬけたところに　あるんだよ！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ねーねー
+アデクの　おじーちゃん▽
+どうしてると　おもう？▼
+いまごろ　ポケモンリーグで
+Ｎって　トレーナーと▽
+たたかってるのかなー？▼
+ポケモンリーグ　しってる？▼
+１０ばんどうろの　さきの
+チャンピオンロードを▽
+ぬけたところに　あるんだよ！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・WHITEver
+　クリアまで繰り返し</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ジムリーダー
+アイリス</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08gym0101_leader_06w0002"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おにーちゃんも　たびをして
+いろんな　せかいを　みたんだよね！▽
+アイリスも　おんなじ！▼
+すっごい　いなかから　きたんだけど
+いろんな　ひとや　ポケモンと▽
+であえて　すっごい　よかった！！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おにーちゃんも　たびをして
+いろんな　せかいを　みたんだよね！▽
+アイリスも　おんなじ！▼
+すっごい　いなかから　きたんだけど
+いろんな　ひとや　ポケモンと▽
+であえて　すっごい　よかった！！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・WHITEver
+・主人公性別：♂
+　クリア後</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ジムリーダー
+アイリス</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08gym0101_leader_06w0003"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おねーちゃんも　たびをして
+いろんな　せかいを　みたんだよね！▽
+アイリスも　おんなじ！▼
+すっごい　いなかから　きたんだけど
+いろんな　ひとや　ポケモンと▽
+であえて　すっごい　よかった！！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おねーちゃんも　たびをして
+いろんな　せかいを　みたんだよね！▽
+アイリスも　おんなじ！▼
+すっごい　いなかから　きたんだけど
+いろんな　ひとや　ポケモンと▽
+であえて　すっごい　よかった！！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・WHITEver
+・主人公性別：♀
+　クリア後</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ジムリーダー
+アイリス</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08gym0101_leader_01b"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>よくぞ　まいられた[Ctrl2:PageClear ]
+わたしが　ソウリュウ　ポケモンジム
+ジムリーダーの　シャガで　ある[Ctrl2:PageClear ]
+……しちょうとして
+まちの　はってんに　じんりょくし[Ctrl2:PageClear ]
+トレーナーとして　ただ
+つよさを　おいもとめた……[Ctrl2:PageClear ]
+そんないま　もとめるのは
+あかるい　みらいを　みせてくれる[Ctrl2:LineFeed ]
+わかい　トレーナーの　そんざい[Ctrl2:PageClear ]
+きみが　アイリスの　ように
+わたしに　みらいを　みせてくれること[Ctrl2:LineFeed ]
+のぞんでも　いいのだろうか[Ctrl2:PageClear ]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>よくぞ　参られた[Ctrl2:PageClear ]
+私が　ソウリュウ　ポケモンジム
+ジムリーダーの　シャガで　ある[Ctrl2:PageClear ]
+……市長として
+街の　発展に　尽力し[Ctrl2:PageClear ]
+トレーナーとして　ただ
+強さを　追い求めた……[Ctrl2:PageClear ]
+そんな今　求めるのは
+明るい　未来を　みせてくれる[Ctrl2:LineFeed ]
+若い　トレーナーの　存在[Ctrl2:PageClear ]
+君が　アイリスの　ように
+私に　未来を　みせてくれること[Ctrl2:LineFeed ]
+望んでも　いいのだろうか[Ctrl2:PageClear ]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・BLACKver
+　戦闘前メッセージ</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ジムリーダー
+シャガ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08gym0101_leader_02b"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>すばらしい[Ctrl2:PageClear ]
+きみと　であい
+たたかえたこと　かんしゃする[Ctrl2:PageClear ]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>すばらしい[Ctrl2:PageClear ]
+君と　出会い
+戦えたこと　感謝する[Ctrl2:PageClear ]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・BLACKver
+　戦闘後メッセージ</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ジムリーダー
+シャガ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08gym0101_leader_03b"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0"]は　シャガから
+レジェンドバッジを　もらった！[Ctrl2:PageClear ]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0"]は　シャガから
+レジェンドバッジを　もらった！[Ctrl2:PageClear ]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・BLACKver
+　ファンファーレ＋バッジ入手処理</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ジムリーダー
+シャガ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08gym0101_leader_04b"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ふむ！　イッシュ　すべての
+ジムバッジを　てにしたか▼
+いまの　きみなら　どんなポケモンも
+すなおに　したがってくれるだろう！▼
+これも　もらってくれたまえ[Ctrl2:PageClear ]
+わたしが　すきな
+わざマシンの　ひとつ[Ctrl2:PageClear ]
+そのなも　ドラゴンテール[Ctrl2:PageClear ]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ふむ！　イッシュ　すべての
+ジムバッジを　てにしたか▼
+今の　君なら　どんなポケモンも
+素直に　従ってくれるだろう！▼
+これも　もらってくれたまえ[Ctrl2:PageClear ]
+私が　好きな
+わざマシンの　ひとつ[Ctrl2:PageClear ]
+その名も　ドラゴンテール[Ctrl2:PageClear ]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・BLACKver
+　アイテム入手処理
+　No409「ドラゴンテール」</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ジムリーダー
+シャガ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08gym0101_leader_05b"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ドラゴンテールは
+ダメージをあたえた　ポケモンを　その▽
+いきおいで　ボールに　もどす　わざ▼
+つまり　あいては
+ポケモンを　いれかえることに　なる▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ドラゴンテールは
+ダメージを　与えた　ポケモンを▽
+その勢いで　ボールに　戻す　技▼
+つまり　相手は
+ポケモンを　入れ替えることになる▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・BLACKver
+　アイテム入手処理後
+・続けてleader_06b
+　一度ウインドウは閉じてください</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ジムリーダー
+シャガ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08gym0101_leader_06b"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>……きみに　たのみがある▼
+アデクを　おいかけて
+ポケモンリーグに　むかってほしい▼
+ポケモンリーグは
+ソウリュウから　つながる▽
+１０ばんどうろの　さき……▼
+チャンピオンロードを
+こえたところに　ある▼
+アデクの　つよさは　しっているが
+Ｎという　おとこの　つよさ▽
+そこしれぬのだ……</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……君に　頼みがある▼
+アデクを　追いかけて
+ポケモンリーグに　向かってほしい▼
+ポケモンリーグは
+ソウリュウから　つながる▽
+１０番道路の　先……▼
+チャンピオンロードを
+越えたところに　ある▼
+アデクの　強さは　知っているが
+Ｎという　男の　強さ▽
+底知れぬのだ……</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・BLACKver
+　クリアまで繰り返し</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ジムリーダー
+シャガ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08gym0101_leader_06b0002"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンも　ひとも
+ときの　ながれに　よって▽
+おいるのでは　ない▼
+こころに　あふれていた
+エネルギーを　からしてしまったとき▽
+おいていくのだ▼
+こころに　エネルギーを
+みたしてくれるのは▼
+しんじつか　りそうか
+はたまた　ゆめか……▼
+それは　なにを　のぞみ
+いきるのかで　かわるのだろう</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンも　人も
+時の　流れに　よって▽
+老いるのでは　ない▼
+こころに　あふれていた
+エネルギーを　枯らしてしまったとき▽
+老いていくのだ▼
+こころに　エネルギーを
+満たしてくれるのは▼
+真実か　理想か
+はたまた　夢か……▼
+それは　なにを　望み
+生きるのかで　変わるのだろう</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・BLACKver
+　クリア後</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ジムリーダー
+シャガ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08gym0101_veteranm4_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>よく　きたな！
+だいかんげい　だぜ！▼
+ただし……
+しょうしょう　てあらい　けどな！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>よく　来たな！
+大歓迎　だぜ！▼
+ただし……
+少々　手荒い　けどな！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・戦闘前</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>VETERANM
+・トレーナーデータ
+　veteranm_04</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08gym0101_veteranm4_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ひくも　すすむも　おまえしだい▼
+ただし　すすむなら
+かくごを　きめろよ！▼
+はんぱな　きもちは　ともに　あゆむ
+ポケモンに　しつれい　だからな！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>引くも　進むも　オマエ次第▼
+ただし　進むなら
+覚悟を　決めろ！▼
+半端な　気持ちは　共に歩む
+ポケモンに　失礼だからな！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・戦闘後</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>VETERANM
+・トレーナーデータ
+　veteranm_04</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02gym0101_glasses_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ようこそ！　イッシュちほう
+さいきょう　にして▽
+さいだいの　しれん！▽
+といわれる　ソウリュウジムへ！▼
+まずは　この　おいしいみず
+うけとって　くださいっすよ▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ようこそ！　イッシュ地方
+最強にして▽
+最大の　試練！▽
+といわれる　ソウリュウジムへ！▼
+まずは　この　おいしいみず
+受け取って　くださいっすよ▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ジムバッジ取得前＋アイテム入手前
+・ジムに入ると
+　主人公に隣接してメッセージ表示
+・No030「おいしいみず」入手</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>DANPEI
+ダンペイ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02gym0101_glasses_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ソウリュウジムの　しかけに　ついて
+かんたんに　せつめい　するっす！▼
+この　ジムは
+ドラゴンの　せなか　くび　そして▽
+あたまが　とおりみちに　なってるっす▼
+この　とおりみち　ですけど
+ドラゴンの　うでに　ある　スイッチに▽
+のることで　いきさきが　かわるっす▼
+ドラゴンの　くびが　どう　うごくか
+ちゅうい　してくださいっす！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ソウリュウジムの　仕掛けに　ついて
+簡単に　説明するっす！▼
+この　ジムは
+ドラゴンの　背中　首　そして▽
+頭が　通り道に　なってるっす▼
+この　通り道ですけど
+ドラゴンの　腕にある　スイッチに▽
+乗ることで　行き先が　変わるっす▼
+ドラゴンの首が　どう動くか
+注意してくださいっす！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ジムバッジ取得前＋アイテム入手後
+・アイテム入手後、自動で表示
+　ジムバッジ取得まで繰り返し</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>DANPEI
+ダンペイ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02gym0101_glasses_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ジムリーダーに　かったんですか！
+いやー　スゴイっすね！▼
+あっ　いままでに　サービスした
+おいしいみずの　だいきん……▽
+そろそろ　もらえますかね？▼
+……　……　……
+……　……　……▼
+ウソっす！
+ウソですよ！▼
+いやー　ほんとうに
+おめでとう　ございます！！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ジムリーダーに　勝ったんですか！
+いやー　スゴイっすね！▼
+あっ　今までに　サービスした
+おいしいみずの　代金……▽
+そろそろ　もらえますかね？▼
+……　……　……
+……　……　……▼
+ウソっす！
+ウソですよ！▼
+いやー　本当に
+おめでとう　ございます！！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ジムバッジ取得後</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>DANPEI
+ダンペイ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02gym0101_statue_w_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ソウリュウ　ポケモンジム[Ctrl2:PageClear ]
+ジムリーダー　アイリス
+にんてい　トレーナー！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ソウリュウ　ポケモンジム[Ctrl2:PageClear ]
+ジムリーダー　アイリス
+認定　トレーナー！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ：ホワイトver
+・ジムバッジ取得前</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ポケモン像</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02gym0101_statue_w_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ソウリュウ　ポケモンジム[Ctrl2:PageClear ]
+ジムリーダー　アイリス
+にんてい　トレーナー！[Ctrl2:LineFeed ]
+[Name:TrainerName Idx="0"]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ソウリュウ　ポケモンジム[Ctrl2:PageClear ]
+ジムリーダー　アイリス
+認定　トレーナー！[Ctrl2:LineFeed ]
+[Name:TrainerName Idx="0"]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ：ホワイトver
+・ジムバッジ取得後</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ポケモン像</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02gym0101_statue_w_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ソウリュウ　ポケモンジム[Ctrl2:PageClear ]
+ジムリーダー　アイリス
+にんてい　トレーナー！[Ctrl2:LineFeed ]
+[Name:TrainerName Idx="0"][Ctrl2:LineFeed ]
+チェレン[Ctrl2:LineFeed ]
+ベル</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ソウリュウ　ポケモンジム[Ctrl2:PageClear ]
+ジムリーダー　アイリス
+認定　トレーナー！[Ctrl2:LineFeed ]
+[Name:TrainerName Idx="0"][Ctrl2:LineFeed ]
+チェレン[Ctrl2:LineFeed ]
+ベル</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ：ホワイトver
+・r10でのライバル、サポートイベント後</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ポケモン像</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02gym0101_statue_b_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ソウリュウ　ポケモンジム[Ctrl2:PageClear ]
+ジムリーダー　シャガ
+にんてい　トレーナー！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ソウリュウ　ポケモンジム[Ctrl2:PageClear ]
+ジムリーダー　シャガ
+認定　トレーナー！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ：ブラックver
+・ジムバッジ取得前</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ポケモン像</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02gym0101_statue_b_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ソウリュウ　ポケモンジム[Ctrl2:PageClear ]
+ジムリーダー　シャガ
+にんてい　トレーナー！[Ctrl2:LineFeed ]
+[Name:TrainerName Idx="0"]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ソウリュウ　ポケモンジム[Ctrl2:PageClear ]
+ジムリーダー　シャガ
+認定　トレーナー！[Ctrl2:LineFeed ]
+[Name:TrainerName Idx="0"]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ：ブラックver
+・ジムバッジ取得後</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ポケモン像</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02gym0101_statue_b_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ソウリュウ　ポケモンジム[Ctrl2:PageClear ]
+ジムリーダー　シャガ
+にんてい　トレーナー！[Ctrl2:LineFeed ]
+[Name:TrainerName Idx="0"][Ctrl2:LineFeed ]
+チェレン[Ctrl2:LineFeed ]
+ベル</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ソウリュウ　ポケモンジム[Ctrl2:PageClear ]
+ジムリーダー　シャガ
+認定　トレーナー！[Ctrl2:LineFeed ]
+[Name:TrainerName Idx="0"][Ctrl2:LineFeed ]
+チェレン[Ctrl2:LineFeed ]
+ベル</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ：ブラックver
+・r10でのライバル、サポートイベント後</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ポケモン像</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+</MessageStudioText>

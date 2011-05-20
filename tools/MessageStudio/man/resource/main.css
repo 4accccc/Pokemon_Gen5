@@ -1,0 +1,199 @@
+﻿<style type="text/css">
+
+body
+{
+	text-align: center;
+	color: #362016;
+}
+
+:link
+{
+	color: #0000FF;
+}
+
+div.wrap
+{
+	width:850px;
+	text-align:left;
+	margin:0 auto;
+}
+
+div.header
+{
+	font-size: 13pt;
+	color: #362016;
+	margin-bottom: 30px;
+	border-bottom: #000000 2px solid;
+	text-align: center;
+}
+
+div.footer
+{
+	text-align: center;
+	border-top: #000000 2px solid;
+	margin-top: 30px;
+}
+
+div.inner
+{
+	margin:0 10px;
+}
+
+div.mainWrap
+{
+	width:570px;
+	float:right;
+	line-height:1.6em;
+}
+
+div.sideWrap
+{
+	font-size: 9pt;
+	width: 250px;
+	float: left;
+}
+
+div.clear
+{
+	clear:both;
+}
+
+.clear hr
+{
+	display:none;
+}
+
+dl dt
+{
+	font-weight: bold;
+}
+
+
+h1
+{
+    font-size: 160%;
+    color: #362016;
+    background-color: #F1FFE8;
+    padding-left: 5px;
+    border-left: #003399 15px solid;
+    border-bottom: #003399 1px solid;
+}
+
+h2
+{
+    font-size: 130%;
+    color: #362016;
+    padding-left: 20px;
+    border-left: #003399 10px solid;
+    border-bottom: #003399 1px solid;
+}
+
+h3
+{
+    font-size: 110%;
+    color: #362016;
+    padding-left: 5px;
+    border-bottom: #4169E1 1px dotted;
+}
+
+th
+{
+	text-align: center;
+}
+
+img
+{
+	border: none;
+}
+
+
+.sidebarmenu ul
+{
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+	font-size: 12px;
+	width: 220px; /* Main Menu Item widths */
+	border-bottom: 1px solid white;
+}
+ 
+.sidebarmenu ul li
+{
+	position: relative;
+}
+
+/* Top level menu links style */
+.sidebarmenu ul li a
+{
+	display: block;
+	overflow: hidden; /*force hasLayout in IE7 */
+	color: white;
+	text-decoration: none;
+	padding: 6px;
+	border-bottom: 1px solid white;
+	border-right: 1px solid white;
+}
+
+.sidebarmenu ul li a:link,
+.sidebarmenu ul li a:visited,
+.sidebarmenu ul li a:active
+{
+	/*background of tabs (default state)*/
+	background-color: #003399;
+}
+
+.sidebarmenu ul li a:visited
+{
+	color: white;
+}
+
+.sidebarmenu ul li a:hover
+{
+	background-color: #6666FF;
+}
+
+/*Sub level menu items */
+.sidebarmenu ul li ul
+{
+	position: absolute;
+	width: 100; /*Sub Menu Items width */
+	top: 0;
+	visibility: hidden;
+}
+
+.sidebarmenu a.subfolderstyle
+{
+	background: url(arrow.gif) no-repeat 97% 50%;
+}
+
+ 
+/* Holly Hack for IE \*/
+* html .sidebarmenu ul li { float: left; height: 1%; }
+* html .sidebarmenu ul li a { height: 1%; }
+/* End */
+
+td.notyet   { background-color: #FFFFFF; }
+td.editing  { background-color: #FFFF99; }
+td.source_editing { background-color: #FFCC99; }
+td.ready    { background-color: #FF99CC; }
+td.reready  { background-color: fuchsia; }
+td.completed { background-color: #99CCFF; }
+
+th.XMLAttribute		{ background-color: #FFECEC; width: 120px }
+th.XMLAttribute_Exp	{ background-color: #FFECEC; width: 450px }
+th.XMLElement		{ background-color: #D7E0FF; width: 120px }
+th.XMLElement_Exp	{ background-color: #D7E0FF; width: 450px }
+
+pre.XMLSpec			{ backGround-color: #EEEEEE; }
+
+/* table in table */
+tr td tr th { font-size: 90%; }
+tr td tr td { font-size: 80%; }
+
+/* list in table */
+tr td dl dt { font-size: 90%; }
+tr td dl dd { font-size: 80%; }
+
+/* small table */
+.s_table_content { font-size: 90%; }
+

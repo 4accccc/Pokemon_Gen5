@@ -1,0 +1,734 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<MessageStudioText
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="msg_h01r0301_fising_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>オー！　トレーナー！▼
+いきなりだけど　オレ
+チーム　ツリーズの　メンバーなのよ▼
+その　なのとおり
+つりをする　チーム！▼
+キミも　ツリーズに　はいって
+つりを　たのしまないか？　</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>オー！　トレーナー！▼
+いきなりだけど　オレ
+チーム　ツリーズの　メンバーなのよ▼
+その名の通り
+釣りをする　チーム！▼
+キミも　ツリーズに　はいって
+釣りを　楽しまないか？　</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・初回
+・はい/いいえの選択肢表示
+　はい→fising_04
+　いいえ→fising_03
+
+※ツリーズ→釣り’S
+
+※SWANでメッセージ変更予定</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>FISHING</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_h01r0301_fising_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>オー！　トレーナー！▼
+キミも　チーム　ツリーズに　はいって
+つりを　たのしまないか？　</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>オー！　トレーナー！▼
+キミも　チーム　ツリーズに　はいって
+釣りを　楽しまないか？　</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・fising_01表示後にいいえ選択後に再度会話
+・はい/いいえの選択肢表示
+　はい→fising_04
+　いいえ→fising_03</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>FISHING</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_h01r0301_fising_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>オー！　なんてこったい！
+きょうの　なみは　あれもよう！▼
+いやいや　こんなことで　あきらめない
+キミ　きがかわれば　またきてくれよ！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>オー！　なんてこったい！
+今日の　波は　荒れ模様！▼
+いやいや　こんなことで　あきらめない
+キミ　気が変われば　また来てくれよ！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・いいえ選択時
+・再度会話したときはfising_02から</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>FISHING</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_h01r0301_fising_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>よーし！　これで　キミも
+チーム　ツリーズの▽
+メンバー　だい２ごう　だ！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>よーし！　これで　キミも
+チーム　ツリーズの▽
+メンバー　第２号だ！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・はい選択時
+・続けてfising_05</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>FISHING</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_h01r0301_fising_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>さっそく　チーム　ツリーズの
+テーマを　はっぴょう　するぜ！▼
+ほんじつ　つりたい　ポケモンは
+[Name:PokemonName Idx="0"]　だ！▽
+つったら　オレに　みせてくれよ！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さっそく　チーム　ツリーズの
+テーマを　発表するぜ！▼
+本日　釣りたい　ポケモンは
+[Name:PokemonName Idx="0"]　だ！▽
+釣ったら　オレに　みせてくれよ！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・出題
+・0＝ポケモン名
+　WBの釣りテーブルからランダム選出</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>FISHING</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_h01r0301_fising_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ほんじつの　テーマの　ポケモンは
+[Name:PokemonName Idx="0"]　だ！▽
+それとも　もう　つってきたとか？</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>本日の　テーマの　ポケモンは
+[Name:PokemonName Idx="0"]　だ！▽
+それとも　もう　釣ってきたとか？</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・fising_05表示後に会話したとき
+・はい/いいえの選択肢表示
+　はい→fising_07
+　いいえ→fising_11
+・0＝ポケモン名</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>FISHING</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_h01r0301_fising_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>どの　どの　どの　ポケモンか
+オレに　おしえてくれよ！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>どの　どの　どの　ポケモンか
+オレに　教えてくれよ！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・メッセージ表示後、ポケモン選択画面へ</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>FISHING</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_h01r0301_fising_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>オー！　こいつは　みごとな
+[Name:PokemonName Idx="0"]　じゃないか！！▼
+さすが　チーム　ツリーズ
+メンバー　だい２ごう　だな！▼
+よーし
+これを　もっていきなよ！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>オー！　こいつは　見事な
+[Name:PokemonName Idx="0"]　じゃないか！！▼
+さすが　チーム　ツリーズ
+メンバー　第２号だな！▼
+よーし
+これを　もっていきなよ！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・オーダーに合致かつ当日捕獲された場合
+・メッセージ表示後、アイテム入手処理
+　No007「ダイブボール」
+・アイテム入手後、日付変更までfising_12表示
+・0＝ポケモン名</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>FISHING</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_h01r0301_fising_09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>オー！　こいつは　みごとな
+[Name:PokemonName Idx="0"]　じゃないか！！▼
+だけど　ざんねんなことに
+ほんじつ　つった　ポケモンじゃない▼
+オレが　みたいのは
+ほんじつ　つられた　ポケモンだぜ！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>オー！　こいつは　見事な
+[Name:PokemonName Idx="0"]　じゃないか！！▼
+だけど　残念なことに
+本日　釣った　ポケモンじゃない▼
+オレが　みたいのは
+本日　釣られた　ポケモンだぜ！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・オーダーに合致だが当日捕獲されていない場合</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>FISHING</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_h01r0301_fising_10"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>オー！　こいつは　みごとな
+[Name:PokemonName Idx="0"]　じゃないか！！▼
+だけどよ　オレが　テーマにえらんだ
+ポケモンじゃあ　ないよな</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>オー！　こいつは　見事な
+[Name:PokemonName Idx="0"]　じゃないか！！▼
+だけどよ　オレが　テーマに選んだ
+ポケモンじゃあ　ないよな</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・オーダーに合致していない場合</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>FISHING</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_h01r0301_fising_11"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ほんじつ　つりたい　ポケモンは
+[Name:PokemonName Idx="0"]　だ！▽
+たのむぜ！　メンバー　だい２ごう！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>本日　釣りたい　ポケモンは
+[Name:PokemonName Idx="0"]　だ！▽
+たのむぜ！　メンバー　第２号！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・fising_06でいいえ選択
+・再度会話したときはfising_06から</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>FISHING</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_h01r0301_fising_12"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>つりの　みりょく……▼
+あれこれ　かたるよりも
+じっさいに　つれば　わかるさ！▽
+そうだろ？　メンバー　だい２ごう！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>釣りの　魅力……▼
+あれこれ　語るよりも
+実際に　釣れば　わかるさ！▽
+そうだろ？　メンバー　第２号！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・オーダーを達成した後、日付が変わるまで</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>FISHING</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_h01r0301_fising_13"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>よう！　メンバー　だい２ごう
+じだいは　かわったのさ……▼
+そう　ひづけが　かわったから
+つりの　テーマも　チェンジしたよ▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>よう！　メンバー　第２号
+時代は　変わったのさ……▼
+そう　日付が　変わったから
+釣りの　テーマも　チェンジしたよ▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・オーダー発表後に、日付が変更した場合
+・続けて</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>FISHING</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</AttributeCell>
+	</TextRow>
+</MessageStudioText>

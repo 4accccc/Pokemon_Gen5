@@ -1,0 +1,214 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<MessageStudioText
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="msg_c13gym0101_glasses_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ここは　ポケモンジムであり
+ライブハウスにも　なってるんすよ！▼
+ジムリーダーたちは　なかで
+れんしゅう　していますが▽
+どんどん　チャレンジ　してください！▼
+あっ！
+ワンドリンク　どうぞっす！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ここは　ポケモンジムであり
+ライブハウスにも　なってるんすよ！▼
+ジムリーダーたちは　中で
+練習していますが▽
+どんどん　チャレンジ　してください！▼
+あっ！
+ワンドリンク　どうぞっす！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ジムバッジ取得前＋アイテム入手前
+・posを踏むとメッセージ表示
+・アイテム入手処理
+　No030「おいしいみず」</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>DANPEI
+ダンペイ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c13gym0101_glasses_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>この　ポケモンジムの　トレーナーは
+みんな　どくタイプの▽
+ポケモンを　くりだしてくるっす！▼
+どくタイプの　ポケモンには
+くさや　むしタイプの　こうげきが▽
+ききにくいので　ちゅうい　っす！▼
+あと　どく　じょうたいに　なると
+ＨＰが　どんどん　へっていくから▽
+きをつけたほうが　いいっすよ！▼
+ちなみに　どくタイプの　ポケモンは
+どく　じょうたいに　ならないんすよね</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>この　ポケモンジムの　トレーナーは
+みんな　どくタイプの▽
+ポケモンを　繰り出してくるっす！▼
+どくタイプの　ポケモンには
+くさや　むしタイプの　攻撃が▽
+効きにくいので　注意　っす！▼
+あと　どく状態に　なると
+ＨＰが　どんどん　減っていくから▽
+気をつけたほうが　いいっすよ！▼
+ちなみに　どくタイプの　ポケモンは
+どく状態に　ならないんすよね</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ジムバッジ取得前＋アイテム入手後
+・ジムバッジ取得まで繰り返し</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>DANPEI
+ダンペイ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c13gym0101_glasses_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>その　かがやく　ジムバッジは
+ポケモンと　いっしょに　てにいれた▽
+だいじな　もの　なんすよねえ……▽
+それを　ずっと　わすれないでください</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>その　輝く　ジムバッジは
+ポケモンと　一緒に　手に入れた▽
+大事な　もの　なんすよねえ……▽
+それを　ずっと　忘れないでください</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ジムバッジ取得後</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>DANPEI
+ダンペイ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+</MessageStudioText>

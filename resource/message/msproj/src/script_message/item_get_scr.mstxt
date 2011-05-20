@@ -1,0 +1,881 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<MessageStudioText
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="msg_item_get_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0"]は
+[System:Color name="2"][Name:Item Idx="1"][/System:Color]を　てにいれた！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0"]は
+[System:Color name="2"][Name:Item Idx="1"][/System:Color]を　手に入れた！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>アイテムゲット時……ノーマル
+・0＝アイテム名</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_item_get_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0"]は
+[System:Color name="2"][Name:Item Idx="1"][/System:Color]を　てにいれた！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0"]は
+[System:Color name="2"][Name:Item Idx="1"][/System:Color]を　手に入れた！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>アイテムゲット時……たいせつなもの(青文字）
+・0＝主人公名
+・1＝道具名</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_item_get_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0"]は
+[System:Color name="2"][Name:Item Idx="1"][/System:Color]を　てにいれた！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0"]は
+[System:Color name="2"][Name:Item Idx="1"][/System:Color]を　手に入れた！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>アイテムゲット時……フィールドメニューに関係する物
+0＝主人公名
+1＝道具名</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_item_get_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0"]は　[Name:Item Idx="1"]
+「[Name:Move Idx="2"]」を　てにいれた！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0"]は　[Name:Item Idx="1"]
+「[Name:Move Idx="2"]」を　手に入れた！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>アイテムゲット時……わざマシン
+・0＝主人公名
+・1＝道具名
+・2＝わざ名</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_item_get_field_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0"]は
+[System:Color name="2"][Name:Item Idx="1"][/System:Color]を　みつけた！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0"]は
+[System:Color name="2"][Name:Item Idx="1"][/System:Color]を　みつけた！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>アイテムゲット時……フィールドアイテムたいせつなもの(青文字）
+・0＝主人公名
+・1＝道具名</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_item_get_field_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0"]は
+[System:Color name="2"][Name:Item Idx="1"][/System:Color]を　みつけた！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0"]は
+[System:Color name="2"][Name:Item Idx="1"][/System:Color]を　みつけた！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>アイテムゲット時……フィールドアイテム　ノーマル
+・0＝主人公名
+・1＝道具名</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_item_get_field_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0"]は　[Name:Item Idx="1"]
+「[Name:Move Idx="2"]」を　みつけた！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0"]は　[Name:Item Idx="1"]
+「[Name:Move Idx="2"]」を　みつけた！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>アイテムゲット時……フィールドアイテム技マシン
+・0＝主人公名
+・1＝道具名
+・2＝わざ名</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_item_get_fail_keywait"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ざんねん！　[Name:Item Idx="0"]は
+いっぱいで　これいじょう　もてない！[Ctrl2:PageClear ]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>残念！　[Name:Item Idx="0"]は
+一杯で　これ以上　持てない！[Ctrl2:PageClear ]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>アイテム入手失敗（送りカーソル有り）
+・0＝道具名</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_item_get_fail_nowait"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ざんねん！　[Name:Item Idx="0"]は
+いっぱいで　これいじょう　もてない！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>残念！　[Name:Item Idx="0"]は
+一杯で　これ以上　持てない！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>アイテム入手失敗（送りカーソルなし）
+・0＝道具名</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_item_get_fail_field"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:Item Idx="0"]を　てにいれた！[Ctrl2:PageClear ]
+ざんねん！
+バッグが　いっぱいだ……</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:Item Idx="0"]を　手に入れた！[Ctrl2:PageClear ]
+残念！
+バッグが　一杯だ……</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>アイテムゲット時……フィールドアイテム取得失敗
+・0＝主人公名</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_item_get_pocket_keywait"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0"]は　[Name:Item Idx="1"]を[System:Color name="2"]
+[Name:Pocket Idx="2"][/System:Color]ポケットに　しまった[Ctrl2:PageClear ]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0"]は　[Name:Item Idx="1"]を[System:Color name="2"]
+[Name:Pocket Idx="2"][/System:Color]ポケットに　しまった[Ctrl2:PageClear ]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>アイテムをポケットにしまう時（送りカーソル有り）
+・0＝主人公名
+・1＝道具名
+・2＝バッグポケット名</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_item_get_pocket_nowait"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0"]は　[Name:Item Idx="1"]を[System:Color name="2"]
+[Name:Pocket Idx="2"][/System:Color]ポケットに　しまった</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0"]は　[Name:Item Idx="1"]を[System:Color name="2"]
+[Name:Pocket Idx="2"][/System:Color]ポケットに　しまった</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>アイテムをポケットにしまう時（送りカーソルなし）
+・0＝主人公名
+・1＝道具名
+・2＝バッグポケット名</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_accessory_get_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0"]は　[Name:Accessary Idx="1"]を
+アクセサリーいれに　しまった[Ctrl2:PageClear ]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0"]は　[Name:Accessary Idx="1"]を
+アクセサリーいれに　しまった[Ctrl2:PageClear ]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0＝主人公名
+1＝アクセサリー名</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_intrude_secret_item_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>……おや？　みつけた　どうぐに　
+メモが　ついている▼
+[Name:TrainerName Idx="3"]『この　どうぐを
+ぼうけんの　やくに　たててください！▼
+……どうやら　[Name:TrainerName Idx="3"]が
+かくして　いったようだ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……おや？　見つけた　道具に
+メモが　ついている▼
+[Name:TrainerName Idx="3"]『この　道具を
+冒険の　役に立ててください！▼
+……どうやら　[Name:TrainerName Idx="3"]が
+隠して　いったようだ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>隠されアイテム入手後メッセージ
+・3＝隠したトレーナー名</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_intrude_secret_item_fail"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ざんねん！
+バッグが　いっぱい　だ！▼
+[Name:TrainerName Idx="0"]は
+かくされた　どうぐを　あきらめた</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>残念！
+バッグが　一杯だ！▼
+[Name:TrainerName Idx="0"]は
+隠された　道具を　あきらめた</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>隠されアイテム入手できなかったときのメッセージ
+・0＝主人公名</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_clear_item_get"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0"]は
+[System:Color name="2"][Name:Item Idx="1"][/System:Color]を　[Digit:3digits Idx="2"]こ▽
+てにいれた！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0"]は
+[System:Color name="2"][Name:Item Idx="1"][/System:Color]を　[Digit:3digits Idx="2"]個▽
+手にいれた！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>アイテムゲット時……フェスミッションクリア
+・0＝主人公名
+・1＝道具名
+・2＝入手道具数</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_clear_item_get_fail"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ざんねん！　[Name:Item Idx="1"]を
+これいじょう　もてない！▽
+[Name:Item Idx="1"]を　あきらめた</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>残念！　[Name:Item Idx="1"]を
+これ以上　持てない！▽
+[Name:Item Idx="1"]を　あきらめた</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>アイテムゲット時……フェスミッションクリア
+・0＝主人公名
+・1＝道具名
+・2＝入手道具数</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_fld_item_get_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0"]は　さがしていた
+[System:Color name="2"][Name:Item Idx="1"][/System:Color]を　みつけた！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0"]は　さがしていた
+[System:Color name="2"][Name:Item Idx="1"][/System:Color]を　みつけた！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>アイテムゲット時……フィールドアイテム　フェスミッション用
+・0＝主人公名
+・1＝道具名
+
+アイテム入手ＭＥ後、msg_fmission_fld_item_get_02へ</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_fld_item_get_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>フェスミッションの
+スコアが　＋１されます▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>フェスミッションの
+スコアが　＋１されます▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>表示後、入手の成功or失敗でメッセージ分岐
+
+成功→msg_item_get_pocket_nowait
+失敗→msg_item_get_fail_nowait</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:14" />
+		</AttributeCell>
+	</TextRow>
+</MessageStudioText>

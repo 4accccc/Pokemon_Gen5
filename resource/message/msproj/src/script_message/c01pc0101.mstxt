@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<MessageStudioText
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="msg_c01pc0101_man2_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ボク　はじめて　しったけど▼
+ジムバッジを　たくさん　もってるほど
+ショップで　かえる▽
+どうぐの　しゅるいも　ふえるんだって！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ボク　はじめて　知ったけど▼
+ジムバッジを　たくさん　持ってるほど
+ショップで　買える▽
+道具の　種類も　増えるんだって！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+
+※SWANではメッセージ変更予定</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN2
+青年お洒落</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>257</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01pc0101_middleman2_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンを　つかまえているかい？[Ctrl2:PageClear ]
+たくさん　いたほうが
+しょうぶでも　まけにくいし[Ctrl2:PageClear ]
+ポケモンずかんや　ボックスを
+ながめる　たのしみも　うまれる！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンを　捕まえているかい？[Ctrl2:PageClear ]
+たくさん　いたほうが
+勝負でも　負けにくいし[Ctrl2:PageClear ]
+ポケモン図鑑や　ボックスを
+ながめる　楽しみも　うまれる！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+
+※SWANではメッセージ変更予定</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MIDDLEMAN2
+太ったおじさん</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</AttributeCell>
+	</TextRow>
+</MessageStudioText>

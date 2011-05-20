@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<MessageStudioText
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="msg_transceiver_r07_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0"]▼
+ママです
+そっちは　どう？▼
+へえ　７ばんどうろ　なの！？
+ずいぶん　とおくまで　いったのね▼
+ねえ
+あなたの　ポケモンは　げんき？▼
+だって　あなただけじゃ
+そんな　とおくまで　いけないでしょ▼
+いつも　いっしょに　いてくれる
+ポケモンの　おかげなんだから▽
+だいじに　してあげてね！▼
+なーんて　マジメに　かたっちゃった！
+それじゃあ　げんきで　いなさいね！▼
+いじょう　せんぱいトレーナーの
+ママ　からでした！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0"]▼
+ママです
+そっちは　どう？▼
+へえ　７番道路なの！？
+ずいぶん　遠くまで　行ったのね▼
+ねえ
+あなたの　ポケモンは　元気？▼
+だって　あなただけじゃ
+そんな　遠くまで　行けないでしょ▼
+いつも　一緒に　いてくれる
+ポケモンの　おかげなんだから▽
+大事に　してあげてね！▼
+なーんて　マジメに　語っちゃった！
+それじゃあ　元気で　いなさいね！▼
+以上　先輩トレーナーの
+ママから　でした！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>■　r07：７番道路イベント用メッセージ
+・ママの口ぱくアニメーション再生
+・続けて</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>主人公ママ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</AttributeCell>
+	</TextRow>
+</MessageStudioText>

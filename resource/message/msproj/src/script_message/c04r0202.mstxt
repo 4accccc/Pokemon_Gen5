@@ -1,0 +1,964 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<MessageStudioText
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="msg_mapscript_dummy"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>テストメッセージ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>削除</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mus_01_001"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ようこそ　ミュージカルへ！▼
+さんかして　いただけて
+とても　うれしいです！▼
+こんかいの　さんかしゃは▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ようこそ　ミュージカルへ！▼
+参加して　いただけて
+とても　うれしいです！▼
+今回の　参加者は▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>オーナーメッセージ
+・演目の確認と
+　ミュージカル高得点のヒント
+・メッセージ後ドレスアップ画面
+・参加者と参加者のポケモンを
+　画面上で見た左側から読みあげていく</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>オーナー
+ドレスアップ前</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mus_01_002"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonName Idx="2"]で　さんかの
+[Name:TrainerName Idx="3"]さん！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonName Idx="2"]で　参加の
+[Name:TrainerName Idx="3"]さん！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>2:参加ポケモンＮＮ
+3:参加トレーナー名</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mus_01_003"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そして　さんかする　えんもくは
+[Name:MusicalProgram Idx="0"]▼
+[Name:MusicalAudience Idx="1"]の　おきゃくさんに
+にんきのある　えんもくですねえ▼
+それでは　さっそく
+レッツ　ドレスアップで　ございます！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そして　参加する　演目は
+[Name:MusicalProgram Idx="0"]▼
+[Name:MusicalAudience Idx="1"]の　お客さんに
+人気のある　演目ですねえ▼
+それでは　さっそく
+レッツ　ドレスアップで　ございます！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>0:演目名
+1:コンディションに対応した客の
+傾向</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mus_02_001"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>じゅんびが　できた　みたいですねえ
+それでは　ぶたいへ　あがりましょう！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>準備が　できた　みたいですねえ
+それでは　舞台へ　あがりましょう！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>オーナーメッセージ
+・ドレスアップ後～ミュージカル前</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>オーナー
+ドレスアップ後
+ショー前</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mus_03_001_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>いやー　おつかれさまです！▼
+ポケモンたちの　いきが
+みごとなまでに　ピッタリでしたね！▼
+オーナーの　わたしですら
+かんどうを　おさえきれない▽
+さいこうの　ミュージカル　でしたよ！▼
+さいこうの　ミュージカルには
+とうぜん　おきゃくさん　からの▽
+おたよりも　たくさん　きています！▼
+みなさんへの　おたよりも　あるので
+じゅんばんに　おわたししましょう！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>いやー　おつかれさまです！▼
+ポケモンたちの　息が
+見事なまでに　ピッタリでしたよ！▼
+オーナーの　私ですら
+感動を　おさえきれない▽
+最高の　ミュージカル　でしたよ！▼
+最高の　ミュージカルには
+当然　お客さん　からの▽
+お便りも　たくさん　きています！▼
+みなさんへの　お便りも　あるので
+順番に　お渡ししましょう！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>オーナーメッセージ
+・ミュージカルの総評</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>オーナー
+ショー後
+全体評価：全員70点以上</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mus_03_001_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>うーむ　おつかれさまです！▼
+とても　すばらしい
+ミュージカル　でしたねえ！▼
+その　しょうこに　ほら
+おきゃくさんから　みなさんあてに▽
+おたよりを　あずかっています！▼
+いやー　うれしいですねえ
+じゅんばんに　おわたししましょう！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>うーむ　おつかれさまです！▼
+とても　素晴らしい
+ミュージカル　でしたねえ！▼
+その　証拠に　ほら
+お客さんから　みなさんあてに▽
+お便りを　預かっています！▼
+いやー　うれしいですねえ
+順番に　お渡ししましょう！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>オーナーメッセージ
+・ミュージカルの総評
+・参加者全員が平均以上</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>オーナー
+ショー後
+全体評価：全員30点以上</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mus_03_001_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おつかれさまです！▼
+なかなか　みごたえのある
+ミュージカル　でしたねえ！▼
+おきゃくさんから　みなさんあてに
+おたよりを　あずかりましたよ！▼
+いやー　うれしいですねえ
+じゅんばんに　おわたししましょう！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おつかれさまです！▼
+なかなか　みごたえのある
+ミュージカル　でしたねえ！▼
+お客さんから　みなさんあてに
+お便りを　預かりましたよ！▼
+いやー　うれしいですねえ
+順番に　お渡ししましょう！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>オーナーメッセージ
+・ミュージカルの総評
+・通常評価</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>オーナー
+ショー後
+全体評価：それ以外</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mus_03_001_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おつかれさまです！▼
+いちぶで　すごく　もりあがりのある
+ミュージカル　でしたねえ▼
+ところで　えんもくを　みていた
+おきゃくさんから　みなさんあてに▽
+おたよりを　もらいましたよ！▼
+いやー　うれしいですねえ
+じゅんばんに　おわたししましょう！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おつかれさまです！▼
+一部で　すごく　盛り上がりのある
+ミュージカル　でしたねえ▼
+ところで　演目を　みていた
+お客さんから　みなさんあてに▽
+お便りを　もらいましたよ！▼
+いやー　うれしいですねえ
+順番に　お渡ししましょう！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>オーナーメッセージ
+・ミュージカルの総評
+・特定の参加者が飛びぬけて高得点</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>オーナー
+ショー後
+全体評価：一人100以上</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mus_03_002_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0"]さんの　ドレスアップ
+とても　[Name:MusicalResult Idx="1"]でした！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0"]さんの　ドレスアップ
+とても　[Name:MusicalResult Idx="1"]でした！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ファンレター
+一行目
+コンディション評価
+
+０：トレーナー名
+１：コンテストランク
+　（コンディション）</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>オーナー
+個人評価１：コンディション別</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mus_03_002_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0"]さんの　ドレスアップ
+とても　こせいてき　でした！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0"]さんの　ドレスアップ
+とても　個性的　でした！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ファンレター
+一行目
+コンディション評価
+
+コンディションが平均か、
+存在しない場合
+
+０：トレーナー名</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>オーナー
+個人評価１：0か対象複数</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mus_03_003_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>こんかいの　ミュージカルは
+[Name:TrainerName Idx="0"]さんの　ポケモンが▼
+しゅやく　だったと　いっても
+いいすぎでは　ないとおもいます！▽
+また　ぜひぜひ　さんかしてください！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>今回の　ミュージカルは
+[Name:TrainerName Idx="0"]さんの　ポケモンが▼
+主役だったと　いっても
+いいすぎでは　ないと思います！▽
+また　ぜひぜひ　参加してください！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ファンレター
+・二行目
+・最高評価
+０：トレーナー名</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>オーナー
+個人評価2：評価点100以上</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mus_03_003_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ドレスアップされた　ポケモンからも
+ひとが　えんじて　いるかのような▼
+ゆたかな　ひょうげんを　かんじました
+また　ぜひぜひ　さんかしてください！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ドレスアップされた　ポケモンからも
+人が　演じて　いるかのような▼
+豊かな　表現を　感じました
+また　ぜひぜひ　参加してください！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ファンレター
+・二言目
+・平均以上評価</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>オーナー
+個人評価2：評価点70以上</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mus_03_003_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>キレのある　うごきを　みていたら
+わたしまで　[Name:MusicalResult Idx="1"]な　きぶん！▽
+また　ぜひ　さんかしてください！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>キレのある　動きを　みていたら
+私まで　[Name:MusicalResult Idx="1"]な　気分！▽
+また　ぜひ　参加してください！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ファンレター
+・二言目
+・並評価
+１：コンディション</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>オーナー
+個人評価2：評価点50以上</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mus_03_003_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンも　じぶんの　やくわりを
+きちんと　えんじていたと　おもいます▽
+また　さんかしてください！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンも　自分の　役割を
+きちんと　演じていたと　思います▽
+また　参加してください！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ファンレター
+・二言目
+・そこそこ評価</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>オーナー
+個人評価2：評価点30以上</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mus_03_003_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンも　それに　こたえようと
+がんばっている　ように　みえました！▼
+かげながら　おうえん　してます！
+また　いつか　さんかしてください▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンも　それに　応えようと
+頑張っているように　みえました！▼
+影ながら　応援してます！
+また　いつか　参加してください▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ファンレター
+・二言目
+・微妙評価</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>オーナー
+個人評価2：評価点20以上</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mus_03_003_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なんだか　あまり
+めだっては　いなかったけれど……▼
+ぼくは　すき　でした！
+これからも　がんばってください！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なんだか　あまり
+目立っては　いなかったけど……▼
+ぼくは　好きでした！
+これからも　頑張ってください！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ファンレター
+・二言目
+・最低評価</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>オーナー
+個人評価2：評価点20未満</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mus_03_004_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ほんじつは　ごさんかいただき
+まことに　ありがとうございました！▼
+また　ぜひ　ミュージカルに
+さんかして　くださいませ！▼
+それでは　ごきげんようです！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>本日は　ご参加いただき
+まことに　ありがとうございました！▼
+また　ぜひ　ミュージカルに
+参加して　くださいませ！▼
+それでは　ごきげんようです！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>オーナーメッセージ
+・締めの挨拶
+・メッセージ後マップ遷移し解放</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>オーナー
+閉めの言葉</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</AttributeCell>
+	</TextRow>
+</MessageStudioText>

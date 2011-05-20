@@ -1,0 +1,1168 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<MessageStudioText
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="CG_HELP_INFO_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>「ＩＲ」について</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>「ＩＲ」について</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>見出し</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>184</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CG_HELP_INFO_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>「Ｗｉ－Ｆｉ」について</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>「Ｗｉ－Ｆｉ」について</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>見出し</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>184</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CG_HELP_INFO_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>「Ｗｉ－Ｆｉ」について</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>「Ｗｉ－Ｆｉ」について</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>見出し</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>184</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CG_HELP_INFO_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>「Ｗｉｒｅｌｅｓｓ」について</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>「Ｗｉｒｅｌｅｓｓ」について</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>見出し</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>184</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CG_HELP_INFO_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>「Ｗｉｒｅｌｅｓｓ」について</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>「Ｗｉｒｅｌｅｓｓ」について</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>見出し</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>184</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CG_HELP_INFO_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>「Ｗｉｒｅｌｅｓｓ」について</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>「Ｗｉｒｅｌｅｓｓ」について</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>見出し</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>184</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CG_HELP_INFO_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>「Ｗｉｒｅｌｅｓｓ」について</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>「Ｗｉｒｅｌｅｓｓ」について</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>見出し</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>184</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CG_HELP_INFO_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>「Ｗｉｒｅｌｅｓｓ」について</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>「Ｗｉｒｅｌｅｓｓ」について</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>見出し</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>184</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CG_HELP_INFO_09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>「すれちがいログ」について</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>「すれ違いログ」について</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>見出し</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>184</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CG_HELP_INFO_10"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>「ちょうさレーダー」について</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>「調査レーダー」について</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>見出し</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>184</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CG_HELP_INFO_11"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>「カスタム」について</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>「カスタム」について</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>見出し</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>184</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CG_HELP_INFO_12"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>「オン／オフ」について</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>「ＯＮ／ＯＦＦ」について</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>184</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CG_HELP_MSG_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>せきがいせんを　つかって
+めのまえにいる　ともだちと　きがるに
+たいせんや　こうかんが　できます。
+また　あいしょうが　わかる
+フィーリングチェックや
+ともだちコードの　こうかんも　できます。</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>赤外線を　使用して
+目の前にいる　友達と　気軽に
+ポケモン対戦や　交換が　できます。
+また　相性が　わかる
+フィーリングチェックや
+ともだちコードの　交換も　できます。</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>説明文
+「ＩＲ」について</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>224</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CG_HELP_MSG_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲームシンクという　ボタンで
+ねむらせる　ポケモンを　えらび
+Ｗｉ－Ｆｉコネクションで
+レポートを　おくることが　できます。</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＧＡＭＥ　ＳＹＮＣという　ボタンで
+眠らせる　ポケモンを　選び
+Ｗｉ－Ｆｉコネクションで
+レポートを　送信することが　できます。</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>説明文
+「Ｗｉ－Ｆｉ」について</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>224</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CG_HELP_MSG_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｗｉ－Ｆｉの　でんぱを　キャッチしても
+ほんたいせっていが　できていないと
+Ｗｉ－Ｆｉに　せつぞく　できません。</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｗｉ－Ｆｉの　電波を　キャッチしても
+本体設定が　できていないと
+Ｗｉ－Ｆｉに　接続できません。</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>説明文
+「Ｗｉ－Ｆｉ」について</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>224</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CG_HELP_MSG_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ワイヤレスつうしんを　つかって
+ちかくにいる　ともだちと
+つぎの　あそびが　できます。
+・ライブキャスター
+・ハイリンク</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ワイヤレス通信を　使って
+近くにいる　友達と
+次の　遊びが　できます。
+・ライブキャスター
+・ハイリンク</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>説明文
+「ワイヤレス」について</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>224</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CG_HELP_MSG_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ライブキャスターは
+Ｃギアで　ともだちコードを
+こうかんしたり　Ｗｉ－Ｆｉクラブで
+いっしょに　あそんだことの　ある
+ともだちと　ライブキャスターを
+つかって　あそべます。</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ライブキャスターは
+Ｃ－ＧＥＡＲで　ともだちコードを
+交換したり　Ｗｉ－Ｆｉクラブで
+一緒に　遊んだことの　ある　友達と
+ライブキャスターで　遊べます。</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>説明文
+「ワイヤレス」について</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>224</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CG_HELP_MSG_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハイリンクは　ボタンを　タッチすれば
+いっしゅんで　ハイリンクに　いけます。</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハイリンクは　ボタンを　タッチすれば
+一瞬で　ハイリンクに　行けます。</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>説明文
+「ワイヤレス」について</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>224</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CG_HELP_MSG_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>じぶんの　まわりで　げんざい
+ユニオンルームに　はいっている
+にんずうが　わかります。
+また　ちかくで　ワイヤレスの
+はいしんを　おこなっているかも
+わかります。</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>自分の　周りで　現在
+ユニオンルームに　入っている
+人数が　わかります。
+また　近くで　ワイヤレスの
+配信を　行っているかも
+わかります。</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>説明文
+「ワイヤレス」について</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>224</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CG_HELP_MSG_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>それと　Ｃギアの　でんげんを
+オンにしている　ひとが
+まわりに　いるか　わかります。
+ちかくに　ひとが　いると
+すれちがいや　ちょうさレーダーの
+つうしんを　キャッチ　しやすいです。</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>それと　Ｃ－ＧＥＡＲの　電源を
+ＯＮにしている　人が
+周りに　いるか　わかります。
+近くに　人が　いると
+すれ違いや　調査レーダーの
+通信を　キャッチ　しやすいです。</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>説明文
+「ワイヤレス」について</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>224</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CG_HELP_MSG_09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>すれちがった　ひとが
+どんなことを　しているのかが
+リアルタイムで　ひょうじされます。
+タッチすることで　あいてについて
+くわしく　みたり
+じゆうに　はつげん　できます。</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>すれ違った　人が
+どんなことを　しているのかが
+リアルタイムで　表示されます。
+タッチすることで
+相手についての　詳細を　みたり
+自由に　発言することが　できます。</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>説明文
+「すれちがいログ」について</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>224</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CG_HELP_MSG_10"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>すれちがった　ひとの
+このみや　しゅみを　ちょうさできます。
+ちょうさしたい　ないようを　きめれば
+きょう　すれちがった　ひとの　データ
+いままでに　すれちがった　ひとの
+データを　みることが　できます。</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>すれ違った　人の
+好みや　趣味を　調査できます。
+調査したい　内容を　決定すれば
+今日　すれ違った　人の　データと
+今までに　すれ違った　人の
+データを　みることが　できます。</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>説明文
+「ちょうさたんちき」について</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>224</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CG_HELP_MSG_11"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カスタムマークを　タッチすると
+マークが　てんめつ　します。
+その　じょうたいで　ボタンを
+タッチすると　いろが　へんか　します。
+いろの　ボタンを　ならべて
+すきな　もようを　つくれます。</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カスタムマークを　タッチすると
+マークが　点滅します。
+その　状態で　ボタンを
+タッチすると　色が　変化します。
+色の　ボタンを　並べて
+好きな　模様を　つくれます。</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>説明文
+「カスタム」について
+・何の色が変わる？</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>224</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CG_HELP_MSG_12"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>でんげんマークを　タッチすると
+オンと　オフを　きりかえるかの
+かくにんがめんに　かわります。
+オフにすると　タッチぶぶんが
+くらくなり　どうじに
+むせんの　つうしんが　オフになります。</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｃ－ＧＥＡＲの　右下にある
+電源マークを　タッチすると
+ＯＮと　ＯＦＦを　切り替えるかの
+確認画面に　移行します。
+ＯＦＦにすると　タッチ部分が　暗くなり
+同時に　無線通信が　ＯＦＦになります。</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>説明文
+「Ｃ－ＧＥＡＲ　ＯＮ／ＯＦＦ」について</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>224</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CG_HELP_SYS_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>つぎへ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>次へ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CG_HELP_SYS_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>もどる</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>もどる</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CG_HELP_SYS_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>まえへ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>前へ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</AttributeCell>
+	</TextRow>
+</MessageStudioText>

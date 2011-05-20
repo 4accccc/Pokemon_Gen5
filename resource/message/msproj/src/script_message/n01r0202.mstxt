@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<MessageStudioText
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="msg_n01r0202_hakaim_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｎさまは　チャンピオンよりも
+つよい　トレーナーで　あることを▽
+しょうめい　なされた……！▼
+おおくの　トレーナーどもは
+Ｎさまに　あこがれ▽
+ごうれいに　したがうだろう！▽
+つまり　プラズマだんの　いいなりだ！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｎさまは　チャンピオンよりも
+強い　トレーナーで　あることを▽
+証明なされた……！▼
+多くの　トレーナーどもは
+Ｎさまに　あこがれ▽
+号令に　従うだろう！▽
+つまり　プラズマ団の　いいなりだ！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:15" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>HAKAIM
+プラズマ団♂</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:15" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:15" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_n01r0202_hakaiw_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>わたしたち　プラズマだんは
+ひとから　うばった　ポケモンを▽
+つかっていたのよ！▼
+ポケモンって　かわいそうね！
+つかう　ひとの　めいれいを▽
+むしすることなんて　できないもの！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>わたしたち　プラズマ団は
+人から　奪った　ポケモンを▽
+使っていたのよ！▼
+ポケモンって　かわいそうね！
+使う　人の　命令を▽
+無視することなんて　できないもの！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:15" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>HAKAIW
+プラズマ団♀</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:15" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:15" />
+		</AttributeCell>
+	</TextRow>
+</MessageStudioText>

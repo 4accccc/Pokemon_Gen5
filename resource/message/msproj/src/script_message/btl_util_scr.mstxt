@@ -1,0 +1,2449 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<MessageStudioText
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="msg_btl_util_party_select_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>てもちか　バトルボックスの
+どちらを　つかうか　えらんでください</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>手持ちか　バトルボックスの
+どちらを　使うか　選んでください</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>バトルボックス選択メッセージ</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>パーティ選択</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_btl_util_party_select_win01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>てもち</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>手持ち</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>パーティ選択</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>パーティ選択</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_btl_util_party_select_win02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>バトルボックス</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>バトルボックス</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>パーティ選択</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>パーティ選択</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_btl_util_party_select_win03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>やめる</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>やめる</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>パーティ選択</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>パーティ選択</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_btl_util_party_ng_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>さんか　できる
+ポケモンが　いません！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>参加　できる
+ポケモンが　いません！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>その他レギュレーション用メッセージ
+・必要があれば個別にラベル追加し
+　表示スクリプトに手を入れる必要があります　</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_btl_util_party_ng_rndmatch01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>さんかできる　じょうけんを
+みたして　いません！▼
+さんかするには　しゅるいの　ちがう
+ポケモンを　３～６ひき　よういし▽
+もたせる　どうぐも　すべて▽
+ちがう　どうぐに　してください▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>参加できる　条件を
+満たして　いません！▼
+参加するには　種類の　違う
+ポケモンを　３～６匹　用意し▽
+持たせる　道具も　すべて▽
+違う　道具に　してください▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ランダムマッチ・シングルバトル</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_btl_util_party_ng_rndmatch02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>さんかできる　じょうけんを
+みたして　いません！▼
+さんかするには　しゅるいの　ちがう
+ポケモンを　４～６ひき　よういし▽
+もたせる　どうぐも　すべて▽
+ちがう　どうぐに　してください▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>参加できる　条件を
+満たして　いません！▼
+参加するには　種類の　違う
+ポケモンを　４～６匹　用意し▽
+持たせる　道具も　すべて▽
+違う　道具に　してください▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ランダムマッチ・ダブルバトル</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_btl_util_party_ng_rndmatch03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>さんかできる　じょうけんを
+みたして　いません！▼
+さんかするには　しゅるいの　ちがう
+ポケモンを　６ひき　よういし▽
+もたせる　どうぐも　すべて▽
+ちがう　どうぐに　してください▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>参加できる　条件を
+満たして　いません！▼
+参加するには　種類の　違う
+ポケモンを　６匹　用意し▽
+持たせる　道具も　すべて▽
+違う　道具に　してください▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ランダムマッチ・トリプルバトル</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_btl_util_party_ng_rndmatch04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>さんかできる　じょうけんを
+みたして　いません！▼
+さんかするには　しゅるいの　ちがう
+ポケモンを　４～６ひき　よういし▽
+もたせる　どうぐも　すべて▽
+ちがう　どうぐに　してください▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>参加できる　条件を
+満たして　いません！▼
+参加するには　種類の　違う
+ポケモンを　４～６匹　用意し▽
+持たせる　道具も　すべて▽
+違う　道具に　してください▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ランダムマッチ・ローテーションバトル</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_btl_util_party_ng_rndmatch05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>さんかできる　じょうけんを
+みたして　いません！▼
+さんかするには　しゅるいの　ちがう
+ポケモンを　６ひき　よういし▽
+もたせる　どうぐも　すべて▽
+ちがう　どうぐに　してください▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>参加できる　条件を
+満たして　いません！▼
+参加するには　種類の　違う
+ポケモンを　６匹　用意し▽
+持たせる　道具も　すべて▽
+違う　道具に　してください▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ランダムマッチ・シューターバトル</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_btl_util_party_ng_subway01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>さんかできる　ポケモンが
+３ひき　いません！▼
+さんかするには　しゅるいの　ちがう
+ポケモンを　３ひき　よういし▽
+もたせる　どうぐも　すべて▽
+ちがう　どうぐに　してください▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>参加できる　ポケモンが
+３匹　いません！▼
+参加するには　種類の　違う
+ポケモンを　３匹　用意し▽
+持たせる　道具も　すべて▽
+違う　道具に　してください▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>バトルサブウェイ・シングルバトル</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_btl_util_party_ng_subway02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>さんかできる　ポケモンが
+４ひき　いません！▼
+さんかするには　しゅるいの　ちがう
+ポケモンを　４ひき　よういし▽
+もたせる　どうぐも　すべて▽
+ちがう　どうぐに　してください▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>参加できる　ポケモンが
+４匹　いません！▼
+参加するには　種類の　違う
+ポケモンを　４匹　用意し▽
+持たせる　道具も　すべて▽
+違う　道具に　してください▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>バトルサブウェイ・ダブルバトル</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_btl_util_party_ng_subway03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>さんかできる　ポケモンが
+２ひき　いません！▼
+さんかするには　しゅるいの　ちがう
+ポケモンを　２ひき　よういし▽
+もたせる　どうぐも　すべて▽
+ちがう　どうぐに　してください▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>参加できる　ポケモンが
+２匹　いません！▼
+参加するには　種類の　違う
+ポケモンを　２匹　用意し▽
+持たせる　道具も　すべて▽
+違う　道具に　してください▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>バトルサブウェイ・マルチバトル</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_btl_util_party_ng_common00"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なお　タマゴは
+さんか　させることは　できません！▼
+「こころのしずく」を　もたせて
+さんか　させることも　できません！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なお　タマゴは
+参加させることは　できません！▼
+「こころのしずく」を　持たせて
+参加させることも　できません！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＮＧ：0匹</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_btl_util_party_ng_common01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0"]は
+さんか　させることは　できません！▼
+「こころのしずく」を　もたせて
+さんか　させることも　できません！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0"]は
+参加させることは　できません！▼
+「こころのしずく」を　持たせて
+参加させることも　できません！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＮＧ：1匹</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_btl_util_party_ng_common02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0"]　[Name:PokemonName Idx="1"]は
+さんか　させることは　できません！▼
+「こころのしずく」を　もたせて
+さんか　させることも　できません！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0"]　[Name:PokemonName Idx="1"]は
+参加させることは　できません！▼
+「こころのしずく」を　持たせて
+参加させることも　できません！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＮＧ：2匹</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_btl_util_party_ng_common03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0"]　[Name:PokemonName Idx="1"]
+[Name:PokemonName Idx="2"]は▽
+さんか　させることは　できません！▼
+「こころのしずく」を　もたせて
+さんか　させることも　できません！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0"]　[Name:PokemonName Idx="1"]
+[Name:PokemonName Idx="2"]は▽
+参加させることは　できません！▼
+「こころのしずく」を　持たせて
+参加させることも　できません！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＮＧ：3匹</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_btl_util_party_ng_common04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0"]　[Name:PokemonName Idx="1"]
+[Name:PokemonName Idx="2"]　[Name:PokemonName Idx="3"]は▽
+さんか　させることは　できません！▼
+「こころのしずく」を　もたせて
+さんか　させることも　できません！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0"]　[Name:PokemonName Idx="1"]
+[Name:PokemonName Idx="2"]　[Name:PokemonName Idx="3"]は▽
+参加させることは　できません！▼
+「こころのしずく」を　持たせて
+参加させることも　できません！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＮＧ：4匹</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_btl_util_party_ng_common05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0"]　[Name:PokemonName Idx="1"]
+[Name:PokemonName Idx="2"]　[Name:PokemonName Idx="3"]　[Name:PokemonName Idx="4"]は▽
+さんか　させることは　できません！▼
+「こころのしずく」を　もたせて
+さんか　させることも　できません！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0"]　[Name:PokemonName Idx="1"]
+[Name:PokemonName Idx="2"]　[Name:PokemonName Idx="3"]　[Name:PokemonName Idx="4"]は▽
+参加させることは　できません！▼
+「こころのしずく」を　持たせて
+参加させることも　できません！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＮＧ：5匹</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_btl_util_party_ng_common06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0"]　[Name:PokemonName Idx="1"]
+[Name:PokemonName Idx="2"]　[Name:PokemonName Idx="3"]　[Name:PokemonName Idx="4"]▼
+[Name:PokemonName Idx="5"]は
+さんか　させることは　できません！▼
+「こころのしずく」を　もたせて
+さんか　させることも　できません！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0"]　[Name:PokemonName Idx="1"]
+[Name:PokemonName Idx="2"]　[Name:PokemonName Idx="3"]　[Name:PokemonName Idx="4"]▼
+[Name:PokemonName Idx="5"]は
+参加させることは　できません！▼
+「こころのしずく」を　持たせて
+参加させることも　できません！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＮＧ：6匹</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_btl_util_party_ng_common07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0"]　[Name:PokemonName Idx="1"]
+[Name:PokemonName Idx="2"]　[Name:PokemonName Idx="3"]　[Name:PokemonName Idx="4"]▼
+[Name:PokemonName Idx="5"]　[Name:PokemonName Idx="6"]は
+さんか　させることは　できません！▼
+「こころのしずく」を　もたせて
+さんか　させることも　できません！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0"]　[Name:PokemonName Idx="1"]
+[Name:PokemonName Idx="2"]　[Name:PokemonName Idx="3"]　[Name:PokemonName Idx="4"]▼
+[Name:PokemonName Idx="5"]　[Name:PokemonName Idx="6"]は
+参加させることは　できません！▼
+「こころのしずく」を　持たせて
+参加させることも　できません！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＮＧ：7匹</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_btl_util_party_ng_common08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0"]　[Name:PokemonName Idx="1"]
+[Name:PokemonName Idx="2"]　[Name:PokemonName Idx="3"]　[Name:PokemonName Idx="4"]▼
+[Name:PokemonName Idx="5"]　[Name:PokemonName Idx="6"]　[Name:PokemonName Idx="7"]は
+さんか　させることは　できません！▼
+「こころのしずく」を　もたせて
+さんか　させることも　できません！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0"]　[Name:PokemonName Idx="1"]
+[Name:PokemonName Idx="2"]　[Name:PokemonName Idx="3"]　[Name:PokemonName Idx="4"]▼
+[Name:PokemonName Idx="5"]　[Name:PokemonName Idx="6"]　[Name:PokemonName Idx="7"]は
+参加させることは　できません！▼
+「こころのしずく」を　持たせて
+参加させることも　できません！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＮＧ：8匹</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_btl_util_party_ng_common09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0"]　[Name:PokemonName Idx="1"]
+[Name:PokemonName Idx="2"]　[Name:PokemonName Idx="3"]　[Name:PokemonName Idx="4"]▼
+[Name:PokemonName Idx="5"]　[Name:PokemonName Idx="6"]　[Name:PokemonName Idx="7"]
+[Name:PokemonName Idx="8"]は▽
+さんか　させることは　できません！▼
+「こころのしずく」を　もたせて
+さんか　させることも　できません！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0"]　[Name:PokemonName Idx="1"]
+[Name:PokemonName Idx="2"]　[Name:PokemonName Idx="3"]　[Name:PokemonName Idx="4"]▼
+[Name:PokemonName Idx="5"]　[Name:PokemonName Idx="6"]　[Name:PokemonName Idx="7"]
+[Name:PokemonName Idx="8"]は▽
+参加させることは　できません！▼
+「こころのしずく」を　持たせて
+参加させることも　できません！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＮＧ：9匹</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_btl_util_party_ng_common10"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0"]　[Name:PokemonName Idx="1"]
+[Name:PokemonName Idx="2"]　[Name:PokemonName Idx="3"]　[Name:PokemonName Idx="4"]▼
+[Name:PokemonName Idx="5"]　[Name:PokemonName Idx="6"]　[Name:PokemonName Idx="7"]
+[Name:PokemonName Idx="8"]　[Name:PokemonName Idx="9"]は▽
+さんか　させることは　できません！▼
+「こころのしずく」を　もたせて
+さんか　させることも　できません！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0"]　[Name:PokemonName Idx="1"]
+[Name:PokemonName Idx="2"]　[Name:PokemonName Idx="3"]　[Name:PokemonName Idx="4"]▼
+[Name:PokemonName Idx="5"]　[Name:PokemonName Idx="6"]　[Name:PokemonName Idx="7"]
+[Name:PokemonName Idx="8"]　[Name:PokemonName Idx="9"]は▽
+参加させることは　できません！▼
+「こころのしずく」を　持たせて
+参加させることも　できません！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＮＧ：10匹</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_btl_util_party_ng_common11"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0"]　[Name:PokemonName Idx="1"]
+[Name:PokemonName Idx="2"]　[Name:PokemonName Idx="3"]　[Name:PokemonName Idx="4"]▼
+[Name:PokemonName Idx="5"]　[Name:PokemonName Idx="6"]　[Name:PokemonName Idx="7"]
+[Name:PokemonName Idx="8"]　[Name:PokemonName Idx="9"]　[Name:PokemonName Idx="10"]は▽
+さんか　させることは　できません！▼
+「こころのしずく」を　もたせて
+さんか　させることも　できません！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0"]　[Name:PokemonName Idx="1"]
+[Name:PokemonName Idx="2"]　[Name:PokemonName Idx="3"]　[Name:PokemonName Idx="4"]▼
+[Name:PokemonName Idx="5"]　[Name:PokemonName Idx="6"]　[Name:PokemonName Idx="7"]
+[Name:PokemonName Idx="8"]　[Name:PokemonName Idx="9"]　[Name:PokemonName Idx="10"]は▽
+参加させることは　できません！▼
+「こころのしずく」を　持たせて
+参加させることも　できません！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＮＧ：11匹</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_btl_util_party_ng_common12"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0"]　[Name:PokemonName Idx="1"]
+[Name:PokemonName Idx="2"]　[Name:PokemonName Idx="3"]　[Name:PokemonName Idx="4"]▼
+[Name:PokemonName Idx="5"]　[Name:PokemonName Idx="6"]　[Name:PokemonName Idx="7"]
+[Name:PokemonName Idx="8"]　[Name:PokemonName Idx="9"]　[Name:PokemonName Idx="10"]▼
+[Name:PokemonName Idx="11"]は
+さんか　させることは　できません！▼
+「こころのしずく」を　もたせて
+さんか　させることも　できません！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0"]　[Name:PokemonName Idx="1"]
+[Name:PokemonName Idx="2"]　[Name:PokemonName Idx="3"]　[Name:PokemonName Idx="4"]▼
+[Name:PokemonName Idx="5"]　[Name:PokemonName Idx="6"]　[Name:PokemonName Idx="7"]
+[Name:PokemonName Idx="8"]　[Name:PokemonName Idx="9"]　[Name:PokemonName Idx="10"]▼
+[Name:PokemonName Idx="11"]は
+参加させることは　できません！▼
+「こころのしずく」を　持たせて
+参加させることも　できません！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＮＧ：12匹</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_btl_util_party_ng_common13"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0"]　[Name:PokemonName Idx="1"]
+[Name:PokemonName Idx="2"]　[Name:PokemonName Idx="3"]　[Name:PokemonName Idx="4"]▼
+[Name:PokemonName Idx="5"]　[Name:PokemonName Idx="6"]　[Name:PokemonName Idx="7"]
+[Name:PokemonName Idx="8"]　[Name:PokemonName Idx="9"]　[Name:PokemonName Idx="10"]▼
+[Name:PokemonName Idx="11"]　[Name:PokemonName Idx="12"]は
+さんか　させることは　できません！▼
+「こころのしずく」を　もたせて
+さんか　させることも　できません！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0"]　[Name:PokemonName Idx="1"]
+[Name:PokemonName Idx="2"]　[Name:PokemonName Idx="3"]　[Name:PokemonName Idx="4"]▼
+[Name:PokemonName Idx="5"]　[Name:PokemonName Idx="6"]　[Name:PokemonName Idx="7"]
+[Name:PokemonName Idx="8"]　[Name:PokemonName Idx="9"]　[Name:PokemonName Idx="10"]▼
+[Name:PokemonName Idx="11"]　[Name:PokemonName Idx="12"]は
+参加させることは　できません！▼
+「こころのしずく」を　持たせて
+参加させることも　できません！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＮＧ：13匹</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_btl_util_party_ng_common14"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0"]　[Name:PokemonName Idx="1"]
+[Name:PokemonName Idx="2"]　[Name:PokemonName Idx="3"]　[Name:PokemonName Idx="4"]▼
+[Name:PokemonName Idx="5"]　[Name:PokemonName Idx="6"]　[Name:PokemonName Idx="7"]
+[Name:PokemonName Idx="8"]　[Name:PokemonName Idx="9"]　[Name:PokemonName Idx="10"]▼
+[Name:PokemonName Idx="11"]　[Name:PokemonName Idx="12"]　[Name:PokemonName Idx="13"]は
+さんか　させることは　できません！▼
+「こころのしずく」を　もたせて
+さんか　させることも　できません！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0"]　[Name:PokemonName Idx="1"]
+[Name:PokemonName Idx="2"]　[Name:PokemonName Idx="3"]　[Name:PokemonName Idx="4"]▼
+[Name:PokemonName Idx="5"]　[Name:PokemonName Idx="6"]　[Name:PokemonName Idx="7"]
+[Name:PokemonName Idx="8"]　[Name:PokemonName Idx="9"]　[Name:PokemonName Idx="10"]▼
+[Name:PokemonName Idx="11"]　[Name:PokemonName Idx="12"]　[Name:PokemonName Idx="13"]は
+参加させることは　できません！▼
+「こころのしずく」を　持たせて
+参加させることも　できません！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＮＧ：14匹</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_btl_util_party_ng_common15"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0"]　[Name:PokemonName Idx="1"]
+[Name:PokemonName Idx="2"]　[Name:PokemonName Idx="3"]　[Name:PokemonName Idx="4"]▼
+[Name:PokemonName Idx="5"]　[Name:PokemonName Idx="6"]　[Name:PokemonName Idx="7"]
+[Name:PokemonName Idx="8"]　[Name:PokemonName Idx="9"]　[Name:PokemonName Idx="10"]▼
+[Name:PokemonName Idx="11"]　[Name:PokemonName Idx="12"]　[Name:PokemonName Idx="13"]
+[Name:PokemonName Idx="14"]は▽
+さんか　させることは　できません！▼
+「こころのしずく」を　もたせて
+さんか　させることも　できません！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0"]　[Name:PokemonName Idx="1"]
+[Name:PokemonName Idx="2"]　[Name:PokemonName Idx="3"]　[Name:PokemonName Idx="4"]▼
+[Name:PokemonName Idx="5"]　[Name:PokemonName Idx="6"]　[Name:PokemonName Idx="7"]
+[Name:PokemonName Idx="8"]　[Name:PokemonName Idx="9"]　[Name:PokemonName Idx="10"]▼
+[Name:PokemonName Idx="11"]　[Name:PokemonName Idx="12"]　[Name:PokemonName Idx="13"]
+[Name:PokemonName Idx="14"]は▽
+参加させることは　できません！▼
+「こころのしずく」を　持たせて
+参加させることも　できません！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＮＧ：15匹</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_btl_util_party_ng_common16"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0"]　[Name:PokemonName Idx="1"]
+[Name:PokemonName Idx="2"]　[Name:PokemonName Idx="3"]　[Name:PokemonName Idx="4"]▼
+[Name:PokemonName Idx="5"]　[Name:PokemonName Idx="6"]　[Name:PokemonName Idx="7"]
+[Name:PokemonName Idx="8"]　[Name:PokemonName Idx="9"]　[Name:PokemonName Idx="10"]▼
+[Name:PokemonName Idx="11"]　[Name:PokemonName Idx="12"]　[Name:PokemonName Idx="13"]
+[Name:PokemonName Idx="14"]　[Name:PokemonName Idx="15"]は▽
+さんか　させることは　できません！▼
+「こころのしずく」を　もたせて
+さんか　させることも　できません！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0"]　[Name:PokemonName Idx="1"]
+[Name:PokemonName Idx="2"]　[Name:PokemonName Idx="3"]　[Name:PokemonName Idx="4"]▼
+[Name:PokemonName Idx="5"]　[Name:PokemonName Idx="6"]　[Name:PokemonName Idx="7"]
+[Name:PokemonName Idx="8"]　[Name:PokemonName Idx="9"]　[Name:PokemonName Idx="10"]▼
+[Name:PokemonName Idx="11"]　[Name:PokemonName Idx="12"]　[Name:PokemonName Idx="13"]
+[Name:PokemonName Idx="14"]　[Name:PokemonName Idx="15"]は▽
+参加させることは　できません！▼
+「こころのしずく」を　持たせて
+参加させることも　できません！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＮＧ：16匹</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_btl_util_party_ng_common17"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0"]　[Name:PokemonName Idx="1"]
+[Name:PokemonName Idx="2"]　[Name:PokemonName Idx="3"]　[Name:PokemonName Idx="4"]▼
+[Name:PokemonName Idx="5"]　[Name:PokemonName Idx="6"]　[Name:PokemonName Idx="7"]
+[Name:PokemonName Idx="8"]　[Name:PokemonName Idx="9"]　[Name:PokemonName Idx="10"]▼
+[Name:PokemonName Idx="11"]　[Name:PokemonName Idx="12"]　[Name:PokemonName Idx="13"]
+[Name:PokemonName Idx="14"]　[Name:PokemonName Idx="15"]　[Name:PokemonName Idx="16"]は▽
+さんか　させることは　できません！▼
+「こころのしずく」を　もたせて
+さんか　させることも　できません！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0"]　[Name:PokemonName Idx="1"]
+[Name:PokemonName Idx="2"]　[Name:PokemonName Idx="3"]　[Name:PokemonName Idx="4"]▼
+[Name:PokemonName Idx="5"]　[Name:PokemonName Idx="6"]　[Name:PokemonName Idx="7"]
+[Name:PokemonName Idx="8"]　[Name:PokemonName Idx="9"]　[Name:PokemonName Idx="10"]▼
+[Name:PokemonName Idx="11"]　[Name:PokemonName Idx="12"]　[Name:PokemonName Idx="13"]
+[Name:PokemonName Idx="14"]　[Name:PokemonName Idx="15"]　[Name:PokemonName Idx="16"]は▽
+参加させることは　できません！▼
+「こころのしずく」を　持たせて
+参加させることも　できません！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＮＧ：17匹</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_btl_util_party_ng_common18"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0"]　[Name:PokemonName Idx="1"]
+[Name:PokemonName Idx="2"]　[Name:PokemonName Idx="3"]　[Name:PokemonName Idx="4"]▼
+[Name:PokemonName Idx="5"]　[Name:PokemonName Idx="6"]　[Name:PokemonName Idx="7"]
+[Name:PokemonName Idx="8"]　[Name:PokemonName Idx="9"]　[Name:PokemonName Idx="10"]▼
+[Name:PokemonName Idx="11"]　[Name:PokemonName Idx="12"]　[Name:PokemonName Idx="13"]
+[Name:PokemonName Idx="14"]　[Name:PokemonName Idx="15"]　[Name:PokemonName Idx="16"]▼
+[Name:PokemonName Idx="17"]は
+さんか　させることは　できません！▼
+「こころのしずく」を　もたせて
+さんか　させることも　できません！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0"]　[Name:PokemonName Idx="1"]
+[Name:PokemonName Idx="2"]　[Name:PokemonName Idx="3"]　[Name:PokemonName Idx="4"]▼
+[Name:PokemonName Idx="5"]　[Name:PokemonName Idx="6"]　[Name:PokemonName Idx="7"]
+[Name:PokemonName Idx="8"]　[Name:PokemonName Idx="9"]　[Name:PokemonName Idx="10"]▼
+[Name:PokemonName Idx="11"]　[Name:PokemonName Idx="12"]　[Name:PokemonName Idx="13"]
+[Name:PokemonName Idx="14"]　[Name:PokemonName Idx="15"]　[Name:PokemonName Idx="16"]▼
+[Name:PokemonName Idx="17"]は
+参加させることは　できません！▼
+「こころのしずく」を　持たせて
+参加させることも　できません！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＮＧ：18匹</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_btl_util_party_ng_common19"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0"]　[Name:PokemonName Idx="1"]
+[Name:PokemonName Idx="2"]　[Name:PokemonName Idx="3"]　[Name:PokemonName Idx="4"]▼
+[Name:PokemonName Idx="5"]　[Name:PokemonName Idx="6"]　[Name:PokemonName Idx="7"]
+[Name:PokemonName Idx="8"]　[Name:PokemonName Idx="9"]　[Name:PokemonName Idx="10"]▼
+[Name:PokemonName Idx="11"]　[Name:PokemonName Idx="12"]　[Name:PokemonName Idx="13"]
+[Name:PokemonName Idx="14"]　[Name:PokemonName Idx="15"]　[Name:PokemonName Idx="16"]▼
+[Name:PokemonName Idx="17"]　[Name:PokemonName Idx="18"]は
+さんか　させることは　できません！▼
+「こころのしずく」を　もたせて
+さんか　させることも　できません！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0"]　[Name:PokemonName Idx="1"]
+[Name:PokemonName Idx="2"]　[Name:PokemonName Idx="3"]　[Name:PokemonName Idx="4"]▼
+[Name:PokemonName Idx="5"]　[Name:PokemonName Idx="6"]　[Name:PokemonName Idx="7"]
+[Name:PokemonName Idx="8"]　[Name:PokemonName Idx="9"]　[Name:PokemonName Idx="10"]▼
+[Name:PokemonName Idx="11"]　[Name:PokemonName Idx="12"]　[Name:PokemonName Idx="13"]
+[Name:PokemonName Idx="14"]　[Name:PokemonName Idx="15"]　[Name:PokemonName Idx="16"]▼
+[Name:PokemonName Idx="17"]　[Name:PokemonName Idx="18"]は
+参加させることは　できません！▼
+「こころのしずく」を　持たせて
+参加させることも　できません！▼
+</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＮＧ：19匹</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_btl_util_party_ng_common20"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0"]　[Name:PokemonName Idx="1"]
+[Name:PokemonName Idx="2"]　[Name:PokemonName Idx="3"]　[Name:PokemonName Idx="4"]▼
+[Name:PokemonName Idx="5"]　[Name:PokemonName Idx="6"]　[Name:PokemonName Idx="7"]
+[Name:PokemonName Idx="8"]　[Name:PokemonName Idx="9"]　[Name:PokemonName Idx="10"]▼
+[Name:PokemonName Idx="11"]　[Name:PokemonName Idx="12"]　[Name:PokemonName Idx="13"]
+[Name:PokemonName Idx="14"]　[Name:PokemonName Idx="15"]　[Name:PokemonName Idx="16"]▼
+[Name:PokemonName Idx="17"]　[Name:PokemonName Idx="18"]　[Name:PokemonName Idx="19"]は
+さんか　させることは　できません！▼
+「こころのしずく」を　もたせて
+さんか　させることも　できません！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0"]　[Name:PokemonName Idx="1"]
+[Name:PokemonName Idx="2"]　[Name:PokemonName Idx="3"]　[Name:PokemonName Idx="4"]▼
+[Name:PokemonName Idx="5"]　[Name:PokemonName Idx="6"]　[Name:PokemonName Idx="7"]
+[Name:PokemonName Idx="8"]　[Name:PokemonName Idx="9"]　[Name:PokemonName Idx="10"]▼
+[Name:PokemonName Idx="11"]　[Name:PokemonName Idx="12"]　[Name:PokemonName Idx="13"]
+[Name:PokemonName Idx="14"]　[Name:PokemonName Idx="15"]　[Name:PokemonName Idx="16"]▼
+[Name:PokemonName Idx="17"]　[Name:PokemonName Idx="18"]　[Name:PokemonName Idx="19"]は
+参加させることは　できません！▼
+「こころのしずく」を　持たせて
+参加させることも　できません！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＮＧ：20匹</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_btl_util_party_ng_common21"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0"]　[Name:PokemonName Idx="1"]
+[Name:PokemonName Idx="2"]　[Name:PokemonName Idx="3"]　[Name:PokemonName Idx="4"]▼
+[Name:PokemonName Idx="5"]　[Name:PokemonName Idx="6"]　[Name:PokemonName Idx="7"]
+[Name:PokemonName Idx="8"]　[Name:PokemonName Idx="9"]　[Name:PokemonName Idx="10"]▼
+[Name:PokemonName Idx="11"]　[Name:PokemonName Idx="12"]　[Name:PokemonName Idx="13"]
+[Name:PokemonName Idx="14"]　[Name:PokemonName Idx="15"]　[Name:PokemonName Idx="16"]▼
+[Name:PokemonName Idx="17"]　[Name:PokemonName Idx="18"]　[Name:PokemonName Idx="19"]
+[Name:PokemonName Idx="20"]は▽
+さんか　させることは　できません！▼
+「こころのしずく」を　もたせて
+さんか　させることも　できません！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0"]　[Name:PokemonName Idx="1"]
+[Name:PokemonName Idx="2"]　[Name:PokemonName Idx="3"]　[Name:PokemonName Idx="4"]▼
+[Name:PokemonName Idx="5"]　[Name:PokemonName Idx="6"]　[Name:PokemonName Idx="7"]
+[Name:PokemonName Idx="8"]　[Name:PokemonName Idx="9"]　[Name:PokemonName Idx="10"]▼
+[Name:PokemonName Idx="11"]　[Name:PokemonName Idx="12"]　[Name:PokemonName Idx="13"]
+[Name:PokemonName Idx="14"]　[Name:PokemonName Idx="15"]　[Name:PokemonName Idx="16"]▼
+[Name:PokemonName Idx="17"]　[Name:PokemonName Idx="18"]　[Name:PokemonName Idx="19"]
+[Name:PokemonName Idx="20"]は▽
+参加させることは　できません！▼
+「こころのしずく」を　持たせて
+参加させることも　できません！▼
+</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＮＧ：21匹</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_btl_util_party_ng_common22"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0"]　[Name:PokemonName Idx="1"]
+[Name:PokemonName Idx="2"]　[Name:PokemonName Idx="3"]　[Name:PokemonName Idx="4"]▼
+[Name:PokemonName Idx="5"]　[Name:PokemonName Idx="6"]　[Name:PokemonName Idx="7"]
+[Name:PokemonName Idx="8"]　[Name:PokemonName Idx="9"]　[Name:PokemonName Idx="10"]▼
+[Name:PokemonName Idx="11"]　[Name:PokemonName Idx="12"]　[Name:PokemonName Idx="13"]
+[Name:PokemonName Idx="14"]　[Name:PokemonName Idx="15"]　[Name:PokemonName Idx="16"]▼
+[Name:PokemonName Idx="17"]　[Name:PokemonName Idx="18"]　[Name:PokemonName Idx="19"]
+[Name:PokemonName Idx="20"]　[Name:PokemonName Idx="21"]は▽
+さんか　させることは　できません！▼
+「こころのしずく」を　もたせて
+さんか　させることも　できません！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0"]　[Name:PokemonName Idx="1"]
+[Name:PokemonName Idx="2"]　[Name:PokemonName Idx="3"]　[Name:PokemonName Idx="4"]▼
+[Name:PokemonName Idx="5"]　[Name:PokemonName Idx="6"]　[Name:PokemonName Idx="7"]
+[Name:PokemonName Idx="8"]　[Name:PokemonName Idx="9"]　[Name:PokemonName Idx="10"]▼
+[Name:PokemonName Idx="11"]　[Name:PokemonName Idx="12"]　[Name:PokemonName Idx="13"]
+[Name:PokemonName Idx="14"]　[Name:PokemonName Idx="15"]　[Name:PokemonName Idx="16"]▼
+[Name:PokemonName Idx="17"]　[Name:PokemonName Idx="18"]　[Name:PokemonName Idx="19"]
+[Name:PokemonName Idx="20"]　[Name:PokemonName Idx="21"]は▽
+参加させることは　できません！▼
+「こころのしずく」を　持たせて
+参加させることも　できません！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＮＧ：22匹</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_btl_util_party_ng_common23"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0"]　[Name:PokemonName Idx="1"]
+[Name:PokemonName Idx="2"]　[Name:PokemonName Idx="3"]　[Name:PokemonName Idx="4"]▼
+[Name:PokemonName Idx="5"]　[Name:PokemonName Idx="6"]　[Name:PokemonName Idx="7"]
+[Name:PokemonName Idx="8"]　[Name:PokemonName Idx="9"]　[Name:PokemonName Idx="10"]▼
+[Name:PokemonName Idx="11"]　[Name:PokemonName Idx="12"]　[Name:PokemonName Idx="13"]
+[Name:PokemonName Idx="14"]　[Name:PokemonName Idx="15"]　[Name:PokemonName Idx="16"]▼
+[Name:PokemonName Idx="17"]　[Name:PokemonName Idx="18"]　[Name:PokemonName Idx="19"]
+[Name:PokemonName Idx="20"]　[Name:PokemonName Idx="21"]　[Name:PokemonName Idx="22"]は▽
+さんか　させることは　できません！▼
+「こころのしずく」を　もたせて
+さんか　させることも　できません！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0"]　[Name:PokemonName Idx="1"]
+[Name:PokemonName Idx="2"]　[Name:PokemonName Idx="3"]　[Name:PokemonName Idx="4"]▼
+[Name:PokemonName Idx="5"]　[Name:PokemonName Idx="6"]　[Name:PokemonName Idx="7"]
+[Name:PokemonName Idx="8"]　[Name:PokemonName Idx="9"]　[Name:PokemonName Idx="10"]▼
+[Name:PokemonName Idx="11"]　[Name:PokemonName Idx="12"]　[Name:PokemonName Idx="13"]
+[Name:PokemonName Idx="14"]　[Name:PokemonName Idx="15"]　[Name:PokemonName Idx="16"]▼
+[Name:PokemonName Idx="17"]　[Name:PokemonName Idx="18"]　[Name:PokemonName Idx="19"]
+[Name:PokemonName Idx="20"]　[Name:PokemonName Idx="21"]　[Name:PokemonName Idx="22"]は▽
+参加させることは　できません！▼
+「こころのしずく」を　持たせて
+参加させることも　できません！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＮＧ：23匹</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_btl_util_party_ng_common24"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0"]　[Name:PokemonName Idx="1"]
+[Name:PokemonName Idx="2"]　[Name:PokemonName Idx="3"]　[Name:PokemonName Idx="4"]▼
+[Name:PokemonName Idx="5"]　[Name:PokemonName Idx="6"]　[Name:PokemonName Idx="7"]
+[Name:PokemonName Idx="8"]　[Name:PokemonName Idx="9"]　[Name:PokemonName Idx="10"]▼
+[Name:PokemonName Idx="11"]　[Name:PokemonName Idx="12"]　[Name:PokemonName Idx="13"]
+[Name:PokemonName Idx="14"]　[Name:PokemonName Idx="15"]　[Name:PokemonName Idx="16"]▼
+[Name:PokemonName Idx="17"]　[Name:PokemonName Idx="18"]　[Name:PokemonName Idx="19"]
+[Name:PokemonName Idx="20"]　[Name:PokemonName Idx="21"]　[Name:PokemonName Idx="22"]▼
+[Name:PokemonName Idx="23"]は
+さんか　させることは　できません！▼
+「こころのしずく」を　もたせて
+さんか　させることも　できません！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0"]　[Name:PokemonName Idx="1"]
+[Name:PokemonName Idx="2"]　[Name:PokemonName Idx="3"]　[Name:PokemonName Idx="4"]▼
+[Name:PokemonName Idx="5"]　[Name:PokemonName Idx="6"]　[Name:PokemonName Idx="7"]
+[Name:PokemonName Idx="8"]　[Name:PokemonName Idx="9"]　[Name:PokemonName Idx="10"]▼
+[Name:PokemonName Idx="11"]　[Name:PokemonName Idx="12"]　[Name:PokemonName Idx="13"]
+[Name:PokemonName Idx="14"]　[Name:PokemonName Idx="15"]　[Name:PokemonName Idx="16"]▼
+[Name:PokemonName Idx="17"]　[Name:PokemonName Idx="18"]　[Name:PokemonName Idx="19"]
+[Name:PokemonName Idx="20"]　[Name:PokemonName Idx="21"]　[Name:PokemonName Idx="22"]▼
+[Name:PokemonName Idx="23"]は
+参加させることは　できません！▼
+「こころのしずく」を　持たせて
+参加させることも　できません！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＮＧ：24匹</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_btl_util_party_ng_common25"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0"]　[Name:PokemonName Idx="1"]
+[Name:PokemonName Idx="2"]　[Name:PokemonName Idx="3"]　[Name:PokemonName Idx="4"]▼
+[Name:PokemonName Idx="5"]　[Name:PokemonName Idx="6"]　[Name:PokemonName Idx="7"]
+[Name:PokemonName Idx="8"]　[Name:PokemonName Idx="9"]　[Name:PokemonName Idx="10"]▼
+[Name:PokemonName Idx="11"]　[Name:PokemonName Idx="12"]　[Name:PokemonName Idx="13"]
+[Name:PokemonName Idx="14"]　[Name:PokemonName Idx="15"]　[Name:PokemonName Idx="16"]▼
+[Name:PokemonName Idx="17"]　[Name:PokemonName Idx="18"]　[Name:PokemonName Idx="19"]
+[Name:PokemonName Idx="20"]　[Name:PokemonName Idx="21"]　[Name:PokemonName Idx="22"]▼
+[Name:PokemonName Idx="23"]　[Name:PokemonName Idx="24"]は
+さんか　させることは　できません！▼
+「こころのしずく」を　もたせて
+さんか　させることも　できません！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0"]　[Name:PokemonName Idx="1"]
+[Name:PokemonName Idx="2"]　[Name:PokemonName Idx="3"]　[Name:PokemonName Idx="4"]▼
+[Name:PokemonName Idx="5"]　[Name:PokemonName Idx="6"]　[Name:PokemonName Idx="7"]
+[Name:PokemonName Idx="8"]　[Name:PokemonName Idx="9"]　[Name:PokemonName Idx="10"]▼
+[Name:PokemonName Idx="11"]　[Name:PokemonName Idx="12"]　[Name:PokemonName Idx="13"]
+[Name:PokemonName Idx="14"]　[Name:PokemonName Idx="15"]　[Name:PokemonName Idx="16"]▼
+[Name:PokemonName Idx="17"]　[Name:PokemonName Idx="18"]　[Name:PokemonName Idx="19"]
+[Name:PokemonName Idx="20"]　[Name:PokemonName Idx="21"]　[Name:PokemonName Idx="22"]▼
+[Name:PokemonName Idx="23"]　[Name:PokemonName Idx="24"]は
+参加させることは　できません！▼
+「こころのしずく」を　持たせて
+参加させることも　できません！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＮＧ：25匹</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_btl_util_party_ng_common26"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0"]　[Name:PokemonName Idx="1"]
+[Name:PokemonName Idx="2"]　[Name:PokemonName Idx="3"]　[Name:PokemonName Idx="4"]▼
+[Name:PokemonName Idx="5"]　[Name:PokemonName Idx="6"]　[Name:PokemonName Idx="7"]
+[Name:PokemonName Idx="8"]　[Name:PokemonName Idx="9"]　[Name:PokemonName Idx="10"]▼
+[Name:PokemonName Idx="11"]　[Name:PokemonName Idx="12"]　[Name:PokemonName Idx="13"]
+[Name:PokemonName Idx="14"]　[Name:PokemonName Idx="15"]　[Name:PokemonName Idx="16"]▼
+[Name:PokemonName Idx="17"]　[Name:PokemonName Idx="18"]　[Name:PokemonName Idx="19"]
+[Name:PokemonName Idx="20"]　[Name:PokemonName Idx="21"]　[Name:PokemonName Idx="22"]▼
+[Name:PokemonName Idx="23"]　[Name:PokemonName Idx="24"]　[Name:PokemonName Idx="25"]は
+さんか　させることは　できません！▼
+「こころのしずく」を　もたせて
+さんか　させることも　できません！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0"]　[Name:PokemonName Idx="1"]
+[Name:PokemonName Idx="2"]　[Name:PokemonName Idx="3"]　[Name:PokemonName Idx="4"]▼
+[Name:PokemonName Idx="5"]　[Name:PokemonName Idx="6"]　[Name:PokemonName Idx="7"]
+[Name:PokemonName Idx="8"]　[Name:PokemonName Idx="9"]　[Name:PokemonName Idx="10"]▼
+[Name:PokemonName Idx="11"]　[Name:PokemonName Idx="12"]　[Name:PokemonName Idx="13"]
+[Name:PokemonName Idx="14"]　[Name:PokemonName Idx="15"]　[Name:PokemonName Idx="16"]▼
+[Name:PokemonName Idx="17"]　[Name:PokemonName Idx="18"]　[Name:PokemonName Idx="19"]
+[Name:PokemonName Idx="20"]　[Name:PokemonName Idx="21"]　[Name:PokemonName Idx="22"]▼
+[Name:PokemonName Idx="23"]　[Name:PokemonName Idx="24"]　[Name:PokemonName Idx="25"]は
+参加させることは　できません！▼
+「こころのしずく」を　持たせて
+参加させることも　できません！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＮＧ：26匹</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_btl_util_party_ng_common27"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0"]　[Name:PokemonName Idx="1"]
+[Name:PokemonName Idx="2"]　[Name:PokemonName Idx="3"]　[Name:PokemonName Idx="4"]▼
+[Name:PokemonName Idx="5"]　[Name:PokemonName Idx="6"]　[Name:PokemonName Idx="7"]
+[Name:PokemonName Idx="8"]　[Name:PokemonName Idx="9"]　[Name:PokemonName Idx="10"]▼
+[Name:PokemonName Idx="11"]　[Name:PokemonName Idx="12"]　[Name:PokemonName Idx="13"]
+[Name:PokemonName Idx="14"]　[Name:PokemonName Idx="15"]　[Name:PokemonName Idx="16"]▼
+[Name:PokemonName Idx="17"]　[Name:PokemonName Idx="18"]　[Name:PokemonName Idx="19"]
+[Name:PokemonName Idx="20"]　[Name:PokemonName Idx="21"]　[Name:PokemonName Idx="22"]▼
+[Name:PokemonName Idx="23"]　[Name:PokemonName Idx="24"]　[Name:PokemonName Idx="25"]
+[Name:PokemonName Idx="26"]は▽
+さんか　させることは　できません！▼
+「こころのしずく」を　もたせて
+さんか　させることも　できません！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なお　タマゴ　[Name:PokemonName Idx="0"]　[Name:PokemonName Idx="1"]
+[Name:PokemonName Idx="2"]　[Name:PokemonName Idx="3"]　[Name:PokemonName Idx="4"]▼
+[Name:PokemonName Idx="5"]　[Name:PokemonName Idx="6"]　[Name:PokemonName Idx="7"]
+[Name:PokemonName Idx="8"]　[Name:PokemonName Idx="9"]　[Name:PokemonName Idx="10"]▼
+[Name:PokemonName Idx="11"]　[Name:PokemonName Idx="12"]　[Name:PokemonName Idx="13"]
+[Name:PokemonName Idx="14"]　[Name:PokemonName Idx="15"]　[Name:PokemonName Idx="16"]▼
+[Name:PokemonName Idx="17"]　[Name:PokemonName Idx="18"]　[Name:PokemonName Idx="19"]
+[Name:PokemonName Idx="20"]　[Name:PokemonName Idx="21"]　[Name:PokemonName Idx="22"]▼
+[Name:PokemonName Idx="23"]　[Name:PokemonName Idx="24"]　[Name:PokemonName Idx="25"]
+[Name:PokemonName Idx="26"]は▽
+参加させることは　できません！▼
+「こころのしずく」を　持たせて
+参加させることも　できません！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＮＧ：27匹</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+</MessageStudioText>

@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<MessageStudioOptions
+	Format="1.1" xmlns="nintendo:msgstudio">
+	<AppDispLanguage>Japanese</AppDispLanguage>
+	<RecentlyProjects>
+		<RecentProject>E:\tools\MessageStudio\samples\projects\simple\sample.msproj</RecentProject>
+		<RecentProject>d:\home\syachi\messagestudio_test\SyachiPack\msproj\syachi_ingame.msproj</RecentProject>
+		<RecentProject>E:\tmp\swantest\msproj2\msproj1.msproj</RecentProject>
+		<RecentProject>D:\home\swan\upper_version\resource\message\msproj\ingame_text.msproj</RecentProject>
+	</RecentlyProjects>
+	<CellStateColors>
+		<CellStateColor
+			State="NotYet"
+			Color="#FFFFFFFF" />
+		<CellStateColor
+			State="Editing"
+			Color="#FFFFFFBB" />
+		<CellStateColor
+			State="SourceEditing"
+			Color="#FFFFCC99" />
+		<CellStateColor
+			State="ReadyToTranslate"
+			Color="#FFFFBBEE" />
+		<CellStateColor
+			State="RereadyToTranslate"
+			Color="#FFFF9999" />
+		<CellStateColor
+			State="Completed"
+			Color="#FF99CCFF" />
+	</CellStateColors>
+	<WindowPos>
+		<Absolete
+			Left="84"
+			Top="269"
+			Width="1215"
+			Height="885" />
+	</WindowPos>
+	<ConfirmQuestion>
+		<NeverShowAgain
+			Message="MessageSort" />
+	</ConfirmQuestion>
+	<IntegratedHelpViewer>True</IntegratedHelpViewer>
+</MessageStudioOptions>

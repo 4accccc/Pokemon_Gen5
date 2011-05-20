@@ -1,0 +1,1596 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<MessageStudioText
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="msg_pc_heal_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おつかれさまです！
+ポケモン　センター　です[Ctrl2:PageClear ]
+ここでは　ポケモンの
+たいりょく　かいふくを　します[Ctrl2:PageClear ]
+あなたの　ポケモンを
+やすませて　あげますか？</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おつかれさまです！
+ポケモン　センター　です[Ctrl2:PageClear ]
+ここでは　ポケモンの
+体力回復を　します[Ctrl2:PageClear ]
+あなたの　ポケモンを
+休ませて　あげますか？</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケセン回復時（夜　17：00：00～3：59：59）
+・はい/いいえの選択
+　はい　→msg_pc_heal_04
+　いいえ→msg_pc_heal_06</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ポケセン受付１</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pc_heal_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おはようございます！
+ポケモン　センター　です[Ctrl2:PageClear ]
+ここでは　ポケモンの
+たいりょく　かいふくを　します[Ctrl2:PageClear ]
+あなたの　ポケモンを
+やすませて　あげますか？</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おはようございます！
+ポケモン　センター　です[Ctrl2:PageClear ]
+ここでは　ポケモンの
+体力回復を　します[Ctrl2:PageClear ]
+あなたの　ポケモンを
+休ませて　あげますか？</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケセン回復時（朝　4：00：00～9：59：59）
+・はい/いいえの選択
+　はい　→msg_pc_heal_04
+　いいえ→msg_pc_heal_06</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ポケセン受付１</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pc_heal_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>こんにちは！
+ポケモン　センター　です[Ctrl2:PageClear ]
+ここでは　ポケモンの
+たいりょく　かいふくを　します[Ctrl2:PageClear ]
+あなたの　ポケモンを
+やすませて　あげますか？</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>こんにちは！
+ポケモン　センター　です[Ctrl2:PageClear ]
+ここでは　ポケモンの
+体力回復を　します[Ctrl2:PageClear ]
+あなたの　ポケモンを
+休ませて　あげますか？</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケセン回復時（昼　10：00：00～16：59：59）
+・はい/いいえの選択
+　はい　→msg_pc_heal_04
+　いいえ→msg_pc_heal_06</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ポケセン受付１</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pc_heal_birthday_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>いらっしゃいませ！
+ポケモン　センター　です▼
+……あら　もしかして
+おたんじょうび　ですか？</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>いらっしゃいませ！
+ポケモン　センター　です▼
+……あら　もしかして
+お誕生日ですか？</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケセン回復時
+・誕生日(DSに登録されたデータ参照）
+・はい/いいえの選択
+　はい　→msg_pc_heal_birthday_02
+　いいえ→msg_pc_heal_birthday_03
+・msg_pc_heal_birthday_02が表示されるまで
+　誕生日の間は回復のたびにこのメッセージ表示</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ポケセン受付１</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pc_heal_birthday_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おたんじょうび
+おめでとうございます！！▼
+これからも　ポケモンセンターを
+ごりように　なってくださいね▼
+それでは　あなたの　ポケモンを
+やすませて　あげますか？</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>お誕生日
+おめでとうございます！！▼
+これからも　ポケモンセンターを
+ご利用に　なってくださいね▼
+それでは　あなたの　ポケモンを
+休ませて　あげますか？</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケセン回復時
+・誕生日(DSに登録されたデータ参照）
+・はい/いいえの選択
+　はい　→msg_pc_heal_04
+　いいえ→msg_pc_heal_06</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ポケセン受付１</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pc_heal_birthday_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>……あら　かんちがい　でしたか
+もうしわけ　ございません▼
+あなたの　ポケモンを
+やすませて　あげますか？</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……あら　勘違いでしたか
+申し訳ございません▼
+あなたの　ポケモンを
+休ませて　あげますか？</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケセン回復時
+・誕生日(DSに登録されたデータ参照）
+・はい/いいえの選択
+　はい　→msg_pc_heal_04
+　いいえ→msg_pc_heal_06</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ポケセン受付１</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pc_heal_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>それでは
+おあずかり　いたします！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>それでは
+お預かり　いたします！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケセン回復時
+・はい選択
+・回復終了すると
+　msg_pc_heal_05に</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ポケセン受付１</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pc_heal_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おまちどおさま！[Ctrl2:PageClear ]
+おあずかり　した　ポケモンは
+みんな　げんきに　なりましたよ！[Ctrl2:PageClear ]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おまちどおさま！[Ctrl2:PageClear ]
+お預かりした　ポケモンは
+みんな　元気に　なりましたよ！[Ctrl2:PageClear ]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケセン回復時
+・お姉さん、お辞儀アニメ
+　続けてmsg_pc_heal_06に</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ポケセン受付１</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pc_heal_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>またの
+ごりようを　おまち　してます！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>またの
+ご利用を　お待ちしてます！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケセン回復時</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ポケセン受付１</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pc_heal_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おつかれさまです！
+ポケモン　センター　です[Ctrl2:PageClear ]
+ここでは　ポケモンの
+たいりょく　かいふくを　します[Ctrl2:PageClear ]
+あなたの　ポケモンを……[Ctrl2:PageClear ]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おつかれさまです！
+ポケモン　センター　です[Ctrl2:PageClear ]
+ここでは　ポケモンの
+体力回復を　します[Ctrl2:PageClear ]
+あなたの　ポケモンを……[Ctrl2:PageClear ]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケセン回復時
+・ゴールドカードで初めて
+　来店したときの歓迎の挨拶
+・表示後、頭上に「！」表示
+　続けてmsg_pc_heal_08</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ポケセン受付１</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pc_heal_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そ　その　カードは！？[Ctrl2:PageClear ]
+その　いろ！！
+その　かがやき！！[Ctrl2:PageClear ]
+わたしも　これまでに
+シルバーカードの　トレーナーさんなら[Ctrl2:LineFeed ]
+なんにんか　みてきましたが[Ctrl2:PageClear ]
+それより　すごい
+トレーナーカードを　おもちの　かたは[Ctrl2:LineFeed ]
+[Name:TrainerName Idx="0"]さんが　はじめて　です！[Ctrl2:PageClear ]
+さあ　[Name:TrainerName Idx="0"]さんの
+ポケモンを　やすませて　あげましょう！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そ　その　カードは！？[Ctrl2:PageClear ]
+その色！！
+その輝き！！[Ctrl2:PageClear ]
+わたしも　これまでに
+シルバーカードの　トレーナーさんなら[Ctrl2:LineFeed ]
+何人か　みてきましたが[Ctrl2:PageClear ]
+それより　すごい
+トレーナーカードを　お持ちの　方は[Ctrl2:LineFeed ]
+[Name:TrainerName Idx="0"]さんが　初めてです！[Ctrl2:PageClear ]
+さあ　[Name:TrainerName Idx="0"]さんの
+ポケモンを　休ませてあげましょう！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケセン回復時
+・はい/いいえの選択
+　はい　→msg_pc_heal_04
+　いいえ→msg_pc_heal_06
+0＝主人公名</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ポケセン受付１</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pc_heal_09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0"]さん　おつかれさまです！
+いつもので　よろしい　ですね！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0"]さん　おつかれさまです！
+いつもので　よろしい　ですね！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケセン回復時
+・ゴールドカードで２度目以降に
+　来店したときの歓迎の挨拶
+・はい/いいえの選択
+　はい　→msg_pc_heal_04
+　いいえ→msg_pc_heal_06</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ポケセン受付１</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pc_heal_10"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おあずかりした　ポケモンに
+ポケルスが　ついて　いるようです[Ctrl2:PageClear ]
+くわしいことは　わかって　いませんが
+ポケルスと　いうのは[Ctrl2:LineFeed ]
+ポケモンに　くっつく[Ctrl2:LineFeed ]
+ちいさな　せいめいたい　だそうです[Ctrl2:PageClear ]
+これが　ついている　あいだ
+ポケモンが　よく　そだつ　みたいです</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>お預かりした　ポケモンに
+ポケルスが　ついて　いるようです[Ctrl2:PageClear ]
+詳しいことは　わかって　いませんが
+ポケルスと　いうのは[Ctrl2:LineFeed ]
+ポケモンに　くっつく[Ctrl2:LineFeed ]
+小さな　生命体　だそうです[Ctrl2:PageClear ]
+これが　ついている　あいだ
+ポケモンが　よく　育つみたいです</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ポケルス発生時</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ポケセン受付１</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pc_union_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモン　ワイヤレス　クラブ
+ユニオンルームに　ようこそ！▼
+こちらでは　おおくの　ともだちと
+やりとり　できます▼
+へやに　はいりますか？</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモン　ワイヤレス　クラブ
+ユニオンルームに　ようこそ！▼
+こちらでは　多くの　友達と
+やりとり　できます▼
+部屋に　入りますか？</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ユニオン受付時、最初のメッセージ
+・はい/いいえ/せつめいをきく の選択
+　はい　　　　　→msg_union_03
+　いいえ　　　　→msg_union_07
+　せつめいをきく→msg_union_02</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ユニオン受付</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pc_union_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ユニオンルームは　あなたの
+ちかくで　ユニオンルームに▽
+はいっている　ひとが　あらわれます▼
+ふたりや　４にんで　たいせんしたり
+ポケモンを　こうかん　できます▼
+また　みんなで
+タマゴを　こうかんしたり▽
+おえかきで　たのしめます▼
+チャットを　つかって　へやにいる
+みんなと　おはなしが　できますし▼
+おはなしした　ことばを　タッチすれば
+ともだちを　さがすことも　できます▼
+へやに　はいりますか？</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ユニオンルーム　は　あなたの
+近くで　ユニオンルームに▽
+入っている　人が　現れます▼
+２人や　４人で　対戦したり
+ポケモンを　交換できます▼
+また　みんなで
+タマゴを　交換したり▽
+お絵描きで　楽しめます▼
+チャットで　部屋にいる
+みんなと　お話が　できますし▼
+お話した　言葉を　タッチすれば
+友達を　探すことも　できます▼
+部屋に　入りますか？</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ユニオンルームの説明
+・はい/いいえの選択
+　はい　→msg_union_03
+　いいえ→msg_union_07</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ユニオン受付</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pc_union_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＤＳワイヤレスつうしんを
+かいし　します</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＤＳワイヤレス通信を
+開始します</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ワイヤレス通信開始の確認
+・はい/いいえの選択
+　はい　→msg_union_03
+　いいえ→msg_union_07</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ユニオン受付</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pc_union_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>それでは　ユニオンルームで
+おたのしみ　ください▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>それでは　ユニオンルームで
+お楽しみください▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ユニオンルームに入る場合のメッセージ</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ユニオン受付</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pc_union_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>それでは また おこしください</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>それでは また お越しください</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>キャンセル時のメッセージ</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ユニオン受付</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pc_union_menu_yes"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ユニオンルームへ　いく</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ユニオンルームへ　いく</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>メニュー用</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ユニオン受付</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pc_union_menu_no"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>やめる</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>やめる</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>メニュー用</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ユニオン受付</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pc_union_menu_explain"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>せつめいを　きく</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>説明を　聞く</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>メニュー用</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ユニオン受付</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pc_union_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>もうしわけ　ございませんが
+おきゃくさまは　まだ▽
+ユニオンルームに　はいれません▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>申し訳ございませんが
+お客さまは　まだ▽
+ユニオンルームに　入れません▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ユニオンルーム受付
+・ユニオンルーム入室不可能時</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ユニオン受付</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pc_union_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>てもちに　つれていけない
+ポケモンが　います▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>手持ちに　連れていけない
+ポケモンが　います▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>･ダメタマゴ所有時</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ユニオン受付</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pc_union_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そういえば　おきゃくさま▼
+トレーナーカードに　かいてある
+ごじぶんの　かたがきが▽
+ポケモントレーナーの　ままですね？▼
+かたがきを　かえておくと
+ユニオンルームで　あいさつを▽
+するときに　イメージが▽
+つたわりやすくて　べんりですよ▼
+そうですねー▼
+たとえば　[Name:TrainerType Idx="0"]
+など　いかがでしょうか？▼
+わたしから　みた　いんしょう　ですが
+まずは　かたがきを　かえてみましょう▼
+おきに　めさない　ようでしたら
+トレーナーカードで　かたがきを▽
+タッチすれば　へんこうできますよ▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そういえば　お客さま▼
+トレーナーカードに　書いてある
+ご自分の　肩書きが▽
+ポケモントレーナーの　ままですね？▼
+肩書きを　変えておくと
+ユニオンルームで　あいさつを▽
+するときに　イメージが▽
+伝わりやすくて　便利ですよ▼
+そうですねー▼
+たとえば　[Name:TrainerType Idx="0"]
+など　いかがでしょうか？▼
+私から　みた　印象ですが
+まずは　肩書きを　変えてみましょう▼
+お気に召さない　ようでしたら
+トレーナーカードで　肩書きを▽
+タッチすれば　変更できますよ▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>初めてユニオンに接続する際にそれまで一度も
+トレーナーカード内のトレーナータイプを変更して
+いない場合、店員が隠してあるトレーナータイプを告知
+
+事前にトレーナータイプを触っていた場合は起こさない
+
+・0:トレーナータイプ
+
+
+告知が終わると続いてmsg_pc_union_03</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ユニオン受付</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pc_geonet_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>いまは　まだ　つかえないみたい</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>今は　まだ　使えないみたい</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ジオネット
+・C-GEAR入手前</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ジオネット</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pc_tvt_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ライブキャスターが　なっている</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ライブキャスターが　鳴っている</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・着信MEの再生と同時に表示
+　続けてblack_11aへ</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>システム
+ライブキャスター</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pc_tvt_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0"]は
+ライブキャスターを　つなげた[Ctrl2:PageClear ]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0"]は
+ライブキャスターを　つなげた[Ctrl2:PageClear ]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・続けて
+　tvt.gmmのmsg_transceiver_r01_01呼び出し
+・0＝主人公名前</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>システム
+ライブキャスター</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+	</TextRow>
+</MessageStudioText>

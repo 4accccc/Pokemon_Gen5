@@ -1,0 +1,486 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<MessageStudioText
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="msg_c09r0301_bigfour3_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ちょうせんしゃ　よ……
+わたしの　なまえは　レンブ▼
+かくとうの　みちを　きわめるべく
+ししょう　アデクの　もと▽
+しゅぎょうを　つづけている……▼
+そして　おまえも　わが　ししょうが
+みとめた　トレーナー！▼
+その　つよさ……
+どれほどの　ものか▽
+みせて　もらいたいッ！！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>挑戦者よ……
+わたしの　名前は　レンブ▼
+格闘の　道を　極めるべく
+師匠　アデクの　もと▽
+修行を　続けている……▼
+そして　おまえも　我が　師匠が
+認めた　トレーナー！▼
+その　強さ……
+どれほどの　ものか▽
+みせて　もらいたいッ！！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：クリア前
+・戦闘前：フィールド
+　メッセージ表示後、トレーナー戦闘に</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>四天王：格闘
+レンブ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c09r0301_bigfour3_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>さすが　だな！▼
+ほかの　してんのう　とも　たたかい
+さらなる　たかみを　めざせ……！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>流石だな！▼
+他の　四天王とも　戦い
+さらなる　高みを　めざせ……！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：クリア前
+・戦闘後：フィールド</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c09r0301_bigfour3_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>……チャンピオン　ふざいの
+ポケモンリーグを　まもるのは▽
+でしである　わたしの　やくめ▼
+そう　きめていたが
+つよさの　ともなわぬ　ことば　ほど▽
+うつろなものは　ないな……▼
+つよき　ちょうせんしゃ　よ
+ほかの　してんのうは▽
+はるかに　てごわい……▽
+ゆめゆめ　あなどるなよ！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……チャンピオン不在の
+ポケモンリーグを　守るのは▽
+弟子である　わたしの　役目▼
+そう　決めていたが
+強さの　伴わぬ　言葉ほど▽
+うつろなものは　ないな……▼
+たくましき　挑戦者よ
+他の　四天王は▽
+はるかに　手強い……▽
+ゆめゆめ　あなどるなよ！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：クリア前
+・bigfour3_02表示後に再度会話</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c09r0301_bigfour3_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>いま……　おまえは
+この　ポケモンリーグで▽
+さいきょうの　トレーナーとなった▼
+ちゅうおうの　へやの　ぞうに　のり
+チャンピオンの　へやに　いけッ！▼
+われら　イッシュの　してんのうは
+チャンピオンの　めいれいで▽
+ぜったい　ちゅうりつ！▽
+あとは　おまえに　たくす！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>今……　おまえは
+この　ポケモンリーグで▽
+最強の　トレーナーとなった▼
+中央の部屋にある　像に　乗り
+チャンピオンの　部屋に　行けッ！▼
+われら　イッシュの　四天王は
+チャンピオンの　命令で▽
+絶対　中立！▽
+あとは　おまえに　託す！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：クリア前
+・条件（＝四天王全員に勝利）を満たしていれば
+　戦闘後フィールド復帰時に自動で表示
+・チャンピオン部屋に行くまで繰り返し</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c09r0301_bigfour3_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>……また　こうして
+こぶしを　まじえられること▽
+こころより　かんしゃする▼
+かくとうの　つよさを　もとめる
+この　レンブ▼
+こわすのは　よわき　おのれ▼
+つらぬくのは　つよき　しんねん▼
+そして
+のぞむは　あっとうてき　しょうり！▼
+たくましき　ちょうせんしゃ　よ！
+いざ　まいる！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……また　こうして
+こぶしを　交えられること▽
+心より　感謝する▼
+格闘の　強さを　求める
+この　レンブ▼
+砕くのは　弱き　己▼
+貫くのは　強き　信念▼
+そして
+望むは　圧倒的　勝利！▼
+たくましき　挑戦者よ！
+いざ　参る！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：クリア後
+・戦闘前：フィールド
+　メッセージ表示後、トレーナー戦闘に</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c09r0301_bigfour3_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>この　ポケモンリーグには
+まだまだ　つよい　トレーナーがいる▼
+きみは　かれらと　たたかうことで
+ポケモンとの　きずな▽
+さらに　ふかめるが　いい</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>この　ポケモンリーグには
+まだまだ　強い　トレーナーがいる▼
+きみは　彼らと　戦うことで
+ポケモンとの　きずな▽
+さらに　深めるが　いい</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：クリア後
+・戦闘後：フィールド</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c09r0301_bigfour3_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>……せかいかっこくを　めぐり
+ただ　ひたすらに▽
+つよさを　おいもとめた　ひび……▼
+ししょうと　であい
+つよさを　のみこむ▽
+おおきさを　しり▼
+ここで　してんのうに　なると
+きめた　あのひ……▼
+きみとの　たたかいで
+なぜか　そんなことを　おもいだしたよ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……世界各国を　めぐり
+ただ　ひたすらに▽
+強さを　追い求めた　日々……▼
+師匠と　出会い
+強さを　飲み込む▽
+大きさを　教わり▼
+ここで　四天王に　なると
+誓った　あの日……▼
+きみとの　戦いで
+なぜか　そんなことを　思い出したよ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：クリア後
+・bigfour3_06表示後に再度会話</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c09r0301_bigfour3_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>きみたちの　つよさ
+こころに　きざみこんだ……▼
+つぎの　へやに　すすみ
+そこで　イッシュちほう▽
+さいきょうの　トレーナーと▽
+たたかいたまえ……！！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>きみたちの　強さ
+心に　刻み込んだ……▼
+次の　部屋に　進み
+そこで　イッシュ地方▽
+最強の　トレーナーと▽
+戦いたまえ……！！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：クリア後
+・条件（＝四天王全員に勝利）を満たしていれば
+　戦闘後フィールド復帰時に自動で表示
+・チャンピオン部屋に行くまで繰り返し</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+	</TextRow>
+</MessageStudioText>

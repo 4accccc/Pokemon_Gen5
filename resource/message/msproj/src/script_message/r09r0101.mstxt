@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<MessageStudioText
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="msg_r09r0101_boy2_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>９ばんどうろは　みじかいのに
+トレーナーが　たくさん　いるんだよ▼
+はしれる　ばしょが　あると
+にたような　ひとが　あつまるんだね！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>９番道路は　短いのに
+トレーナーが　たくさん　いるんだよ▼
+走れる　場所が　あると
+似たような　人が　集まるんだね！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・橋ゲート</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOY2
+活発</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r09r0101_woman2_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>はふう……
+がんばりすぎちゃったな[Ctrl2:PageClear ]
+ショッピングモールで
+かいもの　しすぎちゃった！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>はふう……
+がんばりすぎちゃったな[Ctrl2:PageClear ]
+ショッピングモールで
+買い物　しすぎちゃった！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・橋ゲート</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WOMAN2
+お洒落（金髪）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+	</TextRow>
+</MessageStudioText>

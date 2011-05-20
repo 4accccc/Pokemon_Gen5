@@ -1,0 +1,670 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF8">
+		<title>Nintendo MessageStudio ヘルプ</title>
+		<link rel="Stylesheet" type="text/css" href="../resource/main.css" />
+		<link type="text/css" rel="stylesheet" href="../resource/SyntaxHighlighter.css" />
+		<script type="text/javascript" src="../resource/shCore.js"></script>
+		<script type="text/javascript" src="../resource/shBrushCpp.js"></script>
+		<script type="text/javascript" src="../resource/shBrushCSharp.js"></script>
+		<script type="text/javascript" src="../resource/shBrushPython.js"></script>
+		<script type="text/javascript" src="../resource/shBrushRuby.js"></script>
+		<script type="text/javascript" src="../resource/shBrushBat.js"></script>
+		<script type="text/javascript" src="../resource/shBrushReg.js"></script>
+		<script type="text/javascript" src="../resource/shBrushXml.js"></script>
+		<script type="text/javascript" src="../resource/shBrushTag.js"></script>
+		<script type="text/javascript">
+		<!--
+			//===================================================================
+			// ページの変数
+			//===================================================================
+			//Enter id(s) of each Side Bar Menu's main UL, separated by commas
+			var menuids=["sidebarmenu1"];
+			var menuBottomPos=[];
+
+			//===================================================================
+			//イベントの登録
+			//===================================================================
+			if ( window.addEventListener ) {
+				window.addEventListener( "load", InitPage, false );
+				window.addEventListener( "resize", UpdateSidebarMenu, false );
+				window.addEventListener( "scroll", UpdateSidebarMenu, false );
+			}
+			else if ( window.attachEvent ) {
+				window.attachEvent( "onload", InitPage );
+				window.attachEvent( "onresize", UpdateSidebarMenu );
+				window.attachEvent( "onscroll", UpdateSidebarMenu );
+			}
+			else {
+				window.onload = InitPage;
+				window.onresize = UpdateSidebarMenu;
+				window.onscroll = UpdateSidebarMenu;
+			}
+			
+			//===================================================================
+			// Function : InitPage ページ内の初期化処理（初回のみ呼び出し）
+			//===================================================================
+			function InitPage(){
+
+				// シンタックスハイライトの初期化
+				InitSyntaxHighlighter();
+
+				// メニューの初期化
+				InitSidebarMenu();
+
+				// アップデートしておく
+				UpdateSidebarMenu();
+			}
+
+			//===================================================================
+			// Function : InitSidebarMenu メニューの初期化
+			//===================================================================
+			function InitSidebarMenu()
+			{
+				for ( var i = 0; i < menuids.length; i++ )
+				{
+					// 処理対象となるメニューを取得する
+					var ultags = document.getElementById( menuids[i] ).getElementsByTagName("ul");
+
+					// 各メニューに対する処理
+					for ( var t = 0; t < ultags.length; t++ )
+					{
+						ultags[t].parentNode.getElementsByTagName("a")[0].className += " subfolderstyle"
+						
+						//if this is a first level submenu
+						if ( ultags[t].parentNode.parentNode.id == menuids[i] )
+						{
+							//dynamically position first level submenus to be width of main menu item
+							ultags[t].style.left = ultags[t].parentNode.offsetWidth + "px";
+						}
+						//else if this is a sub level submenu (ul)
+						else
+						{
+							//position menu to the right of menu item that activated it
+							ultags[t].style.left = ultags[t-1].getElementsByTagName("a")[0].offsetWidth + "px";
+						}
+
+						// 高さの初期位置をセット
+						var atags = ultags[t].getElementsByTagName( "a" );
+						var innerUlTags = ultags[t].getElementsByTagName( "ul" );
+
+						var childatagNum = atags.length;
+						for ( var nUl = 0; nUl < innerUlTags.length; nUl++ ) childatagNum -= innerUlTags[nUl].getElementsByTagName( "a" ).length;
+						var menuHeight = childatagNum * atags[0].offsetHeight;
+						// このメニューの一番下の位置を取得
+						var parentRect = ultags[t].parentNode.getBoundingClientRect();	// 親ノードの境界サイズ
+
+						// メニューの下の初期位置を保存しておく
+						menuBottomPos[t]  = parentRect.top + menuHeight;
+
+						// マウスオーバー時の処理を登録
+						ultags[t].parentNode.onmouseover = function()
+						{
+							this.getElementsByTagName("ul")[0].style.display = "block"
+						}
+						ultags[t].parentNode.onmouseout = function()
+						{
+							this.getElementsByTagName("ul")[0].style.display = "none"
+						}
+					}
+					
+					// loop through all sub menus again, and use "display:none" to hide menus (to prevent possible page scrollbars
+					for ( var t = ultags.length - 1; t > -1; t-- )
+					{
+						ultags[t].style.visibility	= "visible"
+						ultags[t].style.display		= "none"
+					}
+				}
+			}
+
+			//===================================================================
+			// Function : InitSyntaxHighlighter SyntaxHighlighterの初期化
+			//===================================================================
+			function InitSyntaxHighlighter()
+			{
+				dp.SyntaxHighlighter.ClipboardSwf = '../resource/clipboard.swf';
+				dp.SyntaxHighlighter.HighlightAll('code');
+			}
+
+			//===================================================================
+			// Function : UpdateSidebarMenu メニューの位置を更新します。
+			//===================================================================
+			function UpdateSidebarMenu()
+			{
+				for ( var i = 0; i < menuids.length; i++ )
+				{
+					// 処理対象となるメニューを取得する
+					var ultags = document.getElementById( menuids[i] ).getElementsByTagName("ul");
+
+					// 各メニューに対する処理
+					for ( var t = 0; t < ultags.length; t++ )
+					{
+						// メニューの高さを調節する
+						var atags = ultags[t].getElementsByTagName( "a" );
+						var innerUlTags = ultags[t].getElementsByTagName( "ul" );
+						
+						var childatagNum = atags.length;
+						for ( var nUl = 0; nUl < innerUlTags.length; nUl++ ) childatagNum -= innerUlTags[nUl].getElementsByTagName( "a" ).length;
+						var menuHeight = childatagNum * atags[0].offsetHeight;
+
+						// このメニューの一番下の位置を取得
+						var parentRect = ultags[t].parentNode.getBoundingClientRect();	// 親ノードの境界サイズ
+						
+						// クライアント領域の底とメニューの底の距離を計算
+						var clientHeight = getClientHeight();
+						
+						var scTop = document.body.scrollTop || document.documentElement.scrollTop;
+						var btobLen = clientHeight - menuBottomPos[t];
+						
+						// メニューが潜らないように調整
+						if ( btobLen + scTop < 0 )
+						{
+							// 潜っている分だけ上にシフトする
+							ultags[t].style.top = (Math.max( (-1 * parentRect.top), btobLen-1)-15) + scTop + "px";
+						}
+						else
+						{
+							// 潜らないので初期位置
+							ultags[t].style.top = "0px";
+						}
+					}
+				}
+			}
+
+			//===================================================================
+			// Function : UpdateSidebarMenu メニューの位置を更新します。
+			//===================================================================
+			function getClientHeight(){
+				// IE以外。
+				if ((!document.all || window.opera) && document.getElementById) {
+					return window.innerHeight;
+				}
+				// ウィンドウズIE 6・標準モード。
+				else if (document.getElementById && (document.compatMode=='CSS1Compat')) {
+					return document.documentElement.clientHeight;
+				}
+				// その他のIE。
+				else if (document.all) {
+					return document.body.clientHeight;
+				}
+			}
+		-->
+		</script>
+	</head>
+	<body>
+		<div class="wrap">
+			<div class="header">
+				Nintendo MessageStudio ヘルプ
+			</div>
+			<div class="inner">
+				<div class="mainWrap">
+					<h1>よくある質問と答え</h1>
+
+
+<h2>メッセージ編集関連</h2>
+<h3>カラムの幅を変更して保存しましたが、ファイルの内容が変わっていません。</h3>
+<p>仕様です。
+カラムの幅を変更しても、その内容はmstxtファイルに保存されずに、
+別の個人設定ファイルに保存されています。
+編集のやりやすい環境は各個人によって違うため、
+ファイルを共有したとしても、このような設定情報まで
+共有されることがないように設計されています。</p>
+
+
+<h2>ファイル関連</h2>
+
+<h3>データを特定の形式でエクスポートできますか？</h3>
+<p>メッセージファイル(*.mstxt)などを別の形式でエクスポートして、
+Message Studioが扱えない人(例えばデバッグ担当者、声優など)に引き渡す必要がある場合があります。
+しかし、データのエクスポートは、ゲームの仕様や渡す相手によって仕様が大きく異なるため、
+Message Studioでは標準機能としてデータのエクスポートをサポートしていません。</p>
+<p>Message Studioでデータのエクスポートを行うにはプラグインとして機能を実装するか、
+あるいはメッセージファイル(*.mstxt)をXMLファイルとして読み込み、それを変換する必要があります。
+プラグインによる実装を行う場合、メッセージファイル(*.mstxt)を変換してHTMLファイルを
+出力するためのサンプルプログラムが、samplesディレクトリ以下に収められています。
+また、XMLファイルの仕様書は<a href="XMLSpec_Text.html#">ヘルプ</a>に記載があります。
+</p>
+<p>非常に単純な、タブ区切りファイル(*.tsv)形式でのエクスポートを行うためのプラグインは、
+公式リリースされている、ミニプラグイン集の中にも収められています。</p>
+
+<h3>Perlなどを使って外部からファイルを書き換えても問題ないですか？</h3>
+<p>外部からXML仕様書に従ってファイルを書き換えることは問題ありません。
+ただし、Message Studioが立ち上がっている最中に外部から書き換えを行うと、
+問題が発生する可能性があります。</p>
+<p>ビルドサーバなど、Message Studioが確実に立ち上がっていないことが保証できる場合は、
+特にこの点を考慮する必要はありませんが、ユーザーがMessage Studioを利用している可能性が
+ある場合、Message Studioを確実に終了しておく必要があります。
+ミニプラグイン集の中には、Message Studioを終了させる信号を送るための、
+KillSignalSenderアプリケーションと、その信号を受信するためのKillSignalReceiverプラグインが
+同梱されています。それらを利用することで、Message Studioを確実に終了した状態に出来ます。</p>
+
+
+<h2>スタイルと幅計算関連</h2>
+<h3>幅計算はどのぐらい信頼できますか？</h3>
+<p>スタイルおよび幅計算機能を利用することで、どのぐらいの大きさで画面上に表示されるかを
+Message Studio上で事前に知ることが出来ます。
+ところが、この機能は、あくまでも画面上にどのように表示されるかを推測しているにすぎないため、
+参考にはできますが信頼性が高いとはいえません。</p>
+<p>表示されるテキストは必ず画面上で確認し、
+正確に全てのテキストが枠内に収まっていることを確かめた上で
+製品を出荷するようにしてください。</p>
+
+<h3>フォントサイズを変更する特殊なタグを利用したい</h3>
+<p>ゲームによっては、フォントサイズを変更するための独自のタグを用いることがあります。
+それをMessage Studioのプレビューや幅計算でも適用させるためには、
+プラグインによる実装を行う必要があります。</p>
+
+<h3>ゲーム中にてどのようにフォントの大きさを計算するのがよいでしょうか？</h3>
+<p>Nintendo Ware for Revolutionや、TWL Systemをスタイルに設定すると、
+スタイルとしてもフォントのサイズを設定できる項目があります。
+それにも関わらず、フォントサイズをパーセント単位で変更可能なタグもあります。
+ゲームでフォントサイズを設定する場合、これらを掛け合わせて以下のような数式としてください。</p>
+<i>( fontSize / 100 ) * fontScale</i>
+<p>上の数式の中で、fontSizeはタグによって設定されたフォントサイズを表します。
+fontSizeはパーセント単位で数値が来ますので、100で割った値を掛け合わせます。
+もう一方の、fontScale値は、スタイルに設定された値が入ります。</p>
+
+<h2>チーム管理機能関連</h2>
+<h3>他のクライアントも併用できますか？</h3>
+<p>Message Studio以外にも、Subversion(Message Studioが利用するバージョン管理システム)にアクセスする方法があります。
+たとえば有名なところですとTortoiseSVNと呼ばれるクライアントソフトウエアを使えばSubversionへのアクセスが可能です。
+Message Studioは、チーム管理機能については独自の実装は行っていませんので、これらのソフトウエアを同時に利用することが可能です。</P>
+<p>ただし、他のクライアントソフトウエアを利用する場合はSubversionのバージョン情報に注意してください。
+作業コピーのバージョン番号が異なると、他のクライアントソフトでアクセスできない可能性があります。
+特にMessage Studioは最新版に近いSubversionを利用しているため、Message Studioで作業コピーにアクセスしたあとに問題が発生してしまうことがあるかもしれません。
+その場合は、クライアントソフトのバージョンをアップデートするなどして対応してください。
+なお、採用しているSubversionのバージョン番号はクライアントソフトのバージョン番号と一致しないことがあります。
+どのSubversionに対応しているかはそのソフトウエアのマニュアル等をご覧ください。
+Message Studioが利用しているSubversionのバージョン番号は、「ヘルプ」から「バージョン情報」メニューを選択すると見ることが出来ます。</P>
+
+<p>
+TortoiseSVN<br />
+http://tortoisesvn.net/
+</p>
+
+<h3>「ロックされています」と表示されます</h3>
+<p>特定の操作に失敗した場合、作業コピーがロックされたまま、
+チーム関連の機能が一切使えなくなってしまうことがあります。
+これは、<b>サーバー上のファイルがロックされているのではなく、
+あなたのパソコン上のファイルがロックされているために表示されるエラーメッセージです</b>。
+このような状況に陥った場合、ロックを解除するために、「クリーンアップ」コマンドを実行します。
+こうすることで、パソコン上のロックが解除されてチーム管理機能を再び利用することが出来るようになります。
+ロックについて詳しくは、<a href="TEAM_Usage.html#">基本操作</a>のページをご覧ください。</p>
+
+<h3>大文字小文字のみのファイル名変更が出来ません</h3>
+<p>チーム管理機能を利用していると、
+プロジェクトエクスプローラから大文字と小文字のみを変更できなくなります。
+たとえば、MyFile.mstxtをMYFILE.mstxtに変更することはできません。</p>
+<p>これは、Subversionのファイルシステムは大文字と小文字を区別しますが、
+Windowsのファイルシステムは大文字と小文字を区別しないために発生します。
+Windowsを利用している以上はこの制限から逃れることが出来ません。
+他のSubversionのクライアントソフトウエア(たとえばTortoiseSVNなど)を利用していても回避できません。</p>
+<p>Message Studioを利用して、ファイル名の大文字と小文字を変更するには、以下の手順を行ってください。</p>
+
+<ul>
+<li>MyFile.mstxtを、プロジェクトエクスプローラでMyFile1.mstxtに変更します。</li>
+<li>「チーム」から「コミット」を選択して、<b>まず一度、ファイルをサーバに上げてください。</b></li>
+<li>再びプロジェクトエクスプローラに戻り、先ほど変更したばかりのMyFile1.mstxtをMYFILE.mstxtに変更してください。
+このときにエラーが出ないことを確認してください。</li>
+<li>再度、「チーム」から「コミット」を選択してください。</li>
+</ul>
+
+<h3>オフラインで作業を行うことが出来ますか？</h3>
+<p>Message Studioでチーム管理機能を利用していて、
+サーバとネットワークが繋がっていない場合、サーバを利用するいくつかの機能が利用できなくなります。
+具体的には「更新」「コミット」「チェックイン」「チェックアウト」
+「ログの表示」「差分の表示」が利用できなくなります。
+「クリーンアップ」「編集内容をすべて元に戻す」などの機能はサーバを利用しないため利用可能です。
+そのほか、テキストの編集作業などは問題なく行うことが出来ます。
+作業したデータは、サーバと繋がった後にコミットすることが可能です。</p>
+<p>プロジェクトの設定で、開いたときに自動的に更新するようになっている場合、
+最初にサーバに接続できない旨のエラーが表示されます。
+そのままエラーダイアログを閉じれば、編集作業を続けることが出来ます。</p>
+<p>ただし、前述のように技術的には可能ではありますが、
+ノートパソコンなどを利用して社外で作業を行うことは情報漏えいなどの危険性を伴います。
+ゲーム内で表示される文章はゲーム内容そのものに関わってくる可能性もありますので、
+このような利用方法は推奨されません。
+なお、Message Studioが利用するファイルは基本的に汎用性を重視して設計されているため、
+暗号化処理などが施されていません。
+そのため、知識のあるユーザーであれば、Message Studioなしでも情報を解析し、可視化することが可能です。</p>
+
+<h3>ファイル操作を行った際に作業コピーに反映されますか？</h3>
+<p>ユーザーがSubversionによってプロジェクトの管理設定を行っているとします。
+この状態で、ユーザーがプロジェクトエクスプローラからファイルの追加、フォルダの追加や、削除、ファイル名の変更などを行うと、
+バックグラウンドではファイルの操作命令を発行する代わりにSubversion経由で操作を実行するような仕様になっています。
+つまり、言い換えればユーザーがファイルを追加されたときには裏で勝手にsvn addというコマンドが実行されているような形になります。</p>
+<p>従って、プロジェクトエクスプローラなどで実行された操作は、必ず次のコミット操作のときにサーバにアップロードするための「予約」を行うことになります。
+もちろん、この状態で別のクライアントソフトを使用してファイルをコミットしてもかまいません。</p>
+
+<h3>「更新」が遅いですが何とかならないですか？</h3>
+<p>Subversionは非常に利便性の高いソフトウエアですが、管理ファイルが多くなると「更新」操作に非常に多くの時間がかかってしまうことがあります。
+これ自体はSubversionの根本的な問題なので解決することは難しいのが現状ですが、ディレクトリ構造を工夫することで問題を発生しにくくすることが出来ます。</p>
+<p>コンバート時に出力されるリソースファイルが大量になることが多いので、それらのファイルを無視設定にしておくとよいかもしれません。
+無視設定にする場合は、Subversionのディレクトリにsvn:ignoreというプロパティを追加し、ワイルドカードで無視するファイルやディレクトリの名称を設定します。
+この操作はMessage Studio上で行うことはできませんので他のクライアントソフトなどを利用してください。</p>
+<p>プロジェクトファイルが置かれているディレクトリの下には、必要なファイルのみが置かれていることが理想的です。
+Message Studioはsvn updateしたタイミングでプロジェクトディレクトリ以下全体の更新を行う仕様になっています。
+従って、プロジェクトファイルがあるディレクトリ以下に余分なファイル
+(たとえば、プログラムのソースコードなど)が管理されていると、それらのファイルまで更新の対象となってしまい時間がかかります。</p>
+
+
+<h2>そのほか</h2>
+<h3>このハードウエアには対応しますか？</h3>
+<p>Message Studioが標準機能として搭載していない
+特定ハードウエア向けの機能に関しては、機密情報の関係上
+意図的に非公開としている場合があります。
+別パッケージのプラグインなどで機能が存在している場合がありますので、
+直接個別にお問い合わせください。</p>
+
+				</div>
+				<div class="sidebarmenu">
+				<ul id="sidebarmenu1">
+					<!-- Index -->
+					<li><a href="index.html"><img src="../resource/everyone.png" />  はじめに</a></li>
+					<!-- Introduction -->
+					<li><a href="#"><img src="../resource/everyone.png" />  Message Studioの基礎</a>
+						<ul>
+						<li><a href="Intro_Tour.html"><img src="../resource/everyone.png" />  ゲーム製作のフロー</a></li>
+						<li><a href="Intro_Project.html"><img src="../resource/everyone.png" />  プロジェクトファイルについて</a></li>
+						<li><a href="Intro_Project_Explorer.html"><img src="../resource/everyone.png" />  プロジェクトエクスプローラの操作</a></li>
+						<li><a href="Intro_WindowOperation.html"><img src="../resource/everyone.png" />  ウインドウ操作</a></li>
+						<li><a href="LANG_Setting.html"><img src="../resource/administrators.png" />  言語設定</a></li>
+						<li><a href="ColorSetting.html"><img src="../resource/administrators.png" />  カラーの設定</a></li>
+						<li><a href="AttributeSetting.html"><img src="../resource/administrators.png" />  属性の設定</a></li>
+						</ul>
+					</li>
+					
+					<!-- Message Editting -->
+					<li><a href="#"><img src="../resource/editors.png" />  メッセージ編集</a>
+						<ul>
+						<li><a href="MSG_BasicUsage.html">基本操作</a>
+						<li><a href="MSG_Category.html">テキストの種類</a>
+						<li><a href="MSG_Clipboard.html">クリップボードを利用した操作</a>
+						<li><a href="MSG_CellStatus.html">言語セルステータス</a></li>
+						<li><a href="MSG_Customize.html">表示のカスタマイズ</a>
+						<li><a href="MSG_Tips.html">メッセージ一覧画面のTips</a></li>
+						</ul>
+					</li>
+					
+					<!-- Tag -->
+					<li><a href="#"><img src="../resource/everyone.png" />  タグ</a>
+						<ul>
+						<li><a href="Tag_Overview.html"><img src="../resource/everyone.png" />  概要</a></li>
+						<li><a href="Tag_Input.html"><img src="../resource/editors.png" />  タグを用いた編集</a></li>
+						<li><a href="Tag_Source.html"><img src="../resource/administrators.png" />  タグのソース文字列</a></li>
+						<li><a href="Tag_Compare.html"><img src="../resource/editors.png" />  タグ比較について</a></li>
+						</ul>
+					</li>
+					
+					<!-- Search -->
+					<li><a href="#"><img src="../resource/editors.png" />  検索機能</a>
+						<ul>
+						<li><a href="Intro_Search_Overview.html">概要</a></li>
+						<li><a href="Intro_Search_Simple.html">簡易検索</a></li>
+						<li><a href="Intro_Search_Detail.html">詳細検索</a></li>
+						<li><a href="Intro_Search_RegEx.html">正規表現</a></li>
+						</ul>
+					</li>
+					
+					<!-- Spell checking -->
+					<li><a href="#"><img src="../resource/editors.png" />  スペルチェック</a>
+						<ul>
+						<li><a href="SpellCheck_Overview.html">スペルチェックについて</a></li>
+						<li><a href="SpellCheck_Usage.html">スペルチェックの利用方法</a></li>
+						</ul>
+					</li>
+					
+					<!-- Roles and Permissions -->
+					<li><a href="#"><img src="../resource/editors.png" />  ロールとパーミッション</a>
+						<ul>
+						<li><a href="Intro_Role_Overview.html">概要</a></li>
+						<li><a href="Intro_Role_AddRole.html">ロールの追加とパーミッションの設定</a></li>
+						<li><a href="Intro_Role_SelectRole.html">ロールの選択</a></li>
+						</ul>
+					</li>
+					
+					<!-- Progress -->
+					<li><a href="#"><img src="../resource/editors.png" />  メッセージの統計情報</a>
+						<ul>
+						<li><a href="Progress_Overview.html">統計情報について</a></li>
+						<li><a href="Progress_Usage.html">統計情報の利用方法</a></li>
+						</ul>
+					</li>
+					
+					<!-- Style -->
+					<li><a href="#"><img src="../resource/everyone.png" />  スタイル機能と幅計算</a>
+						<ul>
+						<li><a href="Style_Overview.html"><img src="../resource/everyone.png" />  スタイルと幅計算について</a></li>
+						<li><a href="Intro_TextWidthCheck_Check.html"><img src="../resource/everyone.png" />  テキスト幅の全体チェック</a></li>
+						<li><a href="Style_RenderMode.html"><img src="../resource/administrators.png" />  レンダリング方式について</a></li>
+						<li><a href="Style_Setting.html"><img src="../resource/administrators.png" />  スタイルの設定方法</a></li>
+						</ul>
+					</li>
+					
+					<!-- Font -->
+					<li><a href="#"><img src="../resource/everyone.png" />  フォント</a>
+						<ul>
+						<li><a href="Font_Overview.html"><img src="../resource/everyone.png" />  フォント機能の概要</a></li>
+						<li><a href="Font_Workflow.html"><img src="../resource/administrators.png" />  フォントに関するワークフローについて</a></li>
+						<li><a href="Font_Setting.html"><img src="../resource/administrators.png" />  フォントの設定</a></li>
+						</ul>
+					</li>
+					
+					<!-- Team -->
+					<li><a href="#"><img src="../resource/everyone.png" />  チーム管理機能</a>
+						<ul>
+						<li><a href="TEAM_Overview.html"><img src="../resource/everyone.png" />  概要</a></li>
+						<li><a href="TEAM_CaseByCase.html"><img src="../resource/editors.png" />  ファイル管理のされ方</a></li>
+						<li><a href="TEAM_StartUse.html"><img src="../resource/editors.png" />  チーム管理機能を利用する</a></li>
+						<li><a href="TEAM_Usage.html"><img src="../resource/editors.png" />  基本操作</a></li>
+						<li><a href="TEAM_Log.html"><img src="../resource/editors.png" />  コミットログを表示する</a></li>
+						<li><a href="TEAM_Diff.html"><img src="../resource/editors.png" />  差分(diff)を表示する</a></li>
+						<li><a href="TEAM_Merge.html"><img src="../resource/editors.png" />  競合とマージ</a></li>
+						<li><a href="TEAM_Proxy.html"><img src="../resource/administrators.png" />  プロキシサーバの設定</a></li>
+						<li><a href="TEAM_Server.html"><img src="../resource/administrators.png" />  サーバーの設定</a></li>
+						</ul>
+					</li>
+					
+					<!-- Meta -->
+					<li><a href="#"><img src="../resource/everyone.png" />  メタ情報の設定</a>
+						<ul>
+						<li><a href="Meta_Overview.html">メタ情報の設定について</a></li>
+						<li><a href="Meta_List.html">設定可能なメタ情報一覧</a></li>
+						</ul>
+					</li>
+					
+					<!-- Resource -->
+					<li><a href="#"><img src="../resource/everyone.png" />  リソースファイル関連</a>
+						<ul>
+						<li><a href="RES_Overview.html"><img src="../resource/administrators.png" />  リソースについての概要</a></li>
+						<li><a href="RES_Build.html"><img src="../resource/everyone.png" />  リソースファイルを出力する</a></li>
+						<li><a href="RES_Setting.html"><img src="../resource/administrators.png" />  出力設定を行う</a></li>
+						<li><a href="RES_BuildEvent.html"><img src="../resource/administrators.png" />  ビルドイベントについて</a></li>
+						<li><a href="RES_FMT_blocks.html"><img src="../resource/programmer.png" />  共通のバイナリフォーマット</a></li>
+						<li><a href="RES_FMT_msbt.html"><img src="../resource/programmer.png" />  メッセージバイナリフォーマット</a></li>
+						<li><a href="RES_FMT_msbf.html"><img src="../resource/programmer.png" />  フローチャートバイナリフォーマット</a></li>
+						<li><a href="RES_FMT_msbp.html"><img src="../resource/programmer.png" />  プロジェクトバイナリフォーマット</a>
+							<ul>
+							<li><a href="RES_FMT_msbp.html">プロジェクトバイナリフォーマット</a></li>
+							<li><a href="RES_FMT_msbp_color.html">カラー情報</a></li>
+							<li><a href="RES_FMT_msbp_content.html">コンテンツ情報</a></li>
+							<li><a href="RES_FMT_msbp_attr.html">属性情報</a></li>
+							<li><a href="RES_FMT_msbp_tag.html">タグ情報</a></li>
+							<li><a href="RES_FMT_msbp_style.html">スタイル情報</a></li>
+							</ul>
+						</li>
+						<li><a href="RES_Tags.html"><img src="../resource/programmer.png" />  タグについて</a></li>
+						</ul>
+					</li>
+					
+					<!-- Macro -->
+					<li><a href="#"><img src="../resource/administrators.png" />  マクロ文字列展開機能</a>
+						<ul>
+						<li><a href="Macro_Introduction.html">マクロ文字列とは</a></li>
+						<li><a href="Macro_List.html">利用可能なマクロ一覧</a></li>
+						</ul>
+					<li><a href="#"><img src="../resource/administrators.png" />  コマンドライン関連</a>
+						<ul>
+						<li><a href="CMD_Overview.html">コマンドライン制御について</a></li>
+						<li><a href="CMD_Convert.html">/convertスイッチについて</a></li>
+						</ul>
+					</li>
+					
+					<!-- Plug-in system -->
+					<li><a href="#"><img src="../resource/administrators.png" />  プラグインについて</a>
+						<ul>
+						<li><a href="Plugin_Overview.html">プラグインの概要</a></li>
+						<li><a href="Plugin_Types.html">プラグインの種類について</a></li>
+						</ul>
+					</li>
+					
+					<!-- Plug-in system -->
+					<li><a href="#"><img src="../resource/programmer.png" />  プラグインの作成方法</a>
+						<ul>
+						<li><a href="MakePlugin_Overview.html">単純なプラグイン作成チュートリアル</a></li>
+						<li><a href="MakePlugin_CommandLine.html">開発環境を利用しない作成方法</a></li>
+						<li><a href="MakePlugin_AboutSamples.html">サンプルについて</a></li>
+						</ul>
+					</li>
+					
+					<!-- Assembly security -->
+					<li><a href="#"><img src="../resource/administrators.png" />  Message Studioのアセンブリ設定</a>
+						<ul>
+						<li><a href="Assembly_Caspol.html">Caspol：アセンブリセキュリティ設定</a></li>
+						<li><a href="Assembly_Ngen.html">Ngen：ネイティブイメージ生成</a></li>
+						</ul>
+					</li>
+					
+					<!-- XML Spec -->
+					<li><a href="#"><img src="../resource/programmer.png" />  XML仕様</a>
+						<ul>
+						<li><a href="XMLSpec_Overview.html">概要</a></li>
+						<li><a href="XMLSpec_Project.html">プロジェクトファイル（.msproj）のXML仕様</a></li>
+						<li><a href="XMLSpec_Text.html">メッセージファイル（.mstxt）のXML仕様</a></li>
+						</ul>
+					</li>
+					
+					<!-- libms_overview -->
+					<li><a href="#"><img src="../resource/programmer.png" />  libmsについて</a>
+						<ul>
+							<li><a href="LMS_Overview.html">概要</a></li>
+							<li><a href="LMS_Compile.html">コンパイルの仕方</a></li>
+						</ul>
+					</li>
+					
+					<!-- libms_common -->
+					<li><a href="#"><img src="../resource/programmer.png" />  共通の関数</a>
+						<ul>
+						<li><a href="LMS_SetMemFuncs.html">LMS_SetMemFuncs</a></li>
+						</ul>
+					</li>
+					
+					<!-- libms_message -->
+					<li><a href="#"><img src="../resource/programmer.png" />  メッセージに関する関数</a>
+						<ul>
+							<li><a href="LMS_InitMessage.html">LMS_InitMessage</a></li>
+							<li><a href="LMS_CloseMessage.html">LMS_CloseMessage</a></li>
+							<li><a href="LMS_SearchMessageBlockByName.html">LMS_SearchMessageBlockByName</a></li>
+							<li><a href="LMS_GetMessageBlockInfoByName.html">LMS_GetMessageBlockInfoByName</a></li>
+							<li><a href="LMS_GetTextNum.html">LMS_GetTextNum</a></li>
+							<li><a href="LMS_GetTextIndexByLabel.html">LMS_GetTextIndexByLabel</a></li>
+							<li><a href="LMS_GetText.html">LMS_GetText</a></li>
+							<li><a href="LMS_GetTextSize.html">LMS_GetTextSize</a></li>
+							<li><a href="LMS_GetTextByLabel.html">LMS_GetTextByLabel</a></li>
+							<li><a href="LMS_GetLabelByTextIndex.html">LMS_GetLabelByTextIndex</a></li>
+							<li><a href="LMS_GetTextStyle.html">LMS_GetTextStyle</a></li>
+							<li><a href="LMS_GetTextStyleByLabel.html">LMS_GetTextStyleByLabel</a></li>
+							<li><a href="LMS_GetAttributeSize.html">LMS_GetAttributeSize</a></li>
+							<li><a href="LMS_GetAttribute.html">LMS_GetAttribute</a></li>
+							<li><a href="LMS_GetAttributeText.html">LMS_GetAttributeText</a></li>
+						</ul>
+					</li>
+					
+					<!-- libms_flowchart -->
+					<li><a href="#"><img src="../resource/programmer.png" />  フローチャートに関する関数</a>
+						<ul>
+							<li><a href="LMS_InitFlowchart.html">LMS_InitFlowchart</a></li>
+							<li><a href="LMS_CloseFlowchart.html">LMS_CloseFlowchart</a></li>
+							<li><a href="LMS_GetNodeNum.html">LMS_GetNodeNum</a></li>
+							<li><a href="LMS_GetEntryNodeIndex.html">LMS_GetEntryNodeIndex</a></li>
+							<li><a href="LMS_GetNodeDataPtr.html">LMS_GetNodeDataPtr</a></li>
+							<li><a href="LMS_GetFlowNodeIndex.html">LMS_GetFlowNodeIndex</a></li>
+							<li><a href="LMS_GetCaseIndexesFromBranchNode.html">LMS_GetCaseIndexesFromBranchNode</a></li>
+							<li><a href="LMS_GetFlowParamText.html">LMS_GetFlowParamText</a></li>
+						</ul>
+					</li>
+					
+					<!-- libms_project -->
+					<li><a href="#"><img src="../resource/programmer.png" />  プロジェクトに関する関数</a>
+						<ul>
+							<li><a href="LMS_InitProject.html">LMS_InitProject</a></li>
+							<li><a href="LMS_CloseProject.html">LMS_CloseProject</a></li>
+							<li><a href="LMS_SearchProjectBlockByName.html">LMS_SearchProjectBlockByName</a></li>
+							<li><a href="#">カラー情報に関する関数</a>
+								<ul>
+								<li><a href="LMS_GetColorIndexByName.html">LMS_GetColorIndexByName</a></li>
+								<li><a href="LMS_GetColor.html">LMS_GetColor</a></li>
+								<li><a href="LMS_GetColorByName.html">LMS_GetColorByName</a></li>
+								<li><a href="LMS_GetColorNum.html">LMS_GetColorNum</a></li>
+								</ul>
+							</li>
+							<li><a href="#">コンテンツ情報に関する関数</a>
+								<ul>
+								<li><a href="LMS_GetContentsNum.html">LMS_GetContentsNum</a></li>
+								<li><a href="LMS_GetContentPath.html">LMS_GetContentPath</a></li>
+								</ul>
+							</li>
+							<li><a href="#">属性情報に関する関数</a>
+								<ul>
+								<li><a href="LMS_GetAttrInfoIndexByName.html">LMS_GetAttrInfoIndexByName</a></li>
+								<li><a href="LMS_GetAttrType.html">LMS_GetAttrType</a></li>
+								<li><a href="LMS_GetAttrTypeByName.html">LMS_GetAttrTypeByName</a></li>
+								<li><a href="LMS_GetAttrOffset.html">LMS_GetAttrOffset</a></li>
+								<li><a href="LMS_GetAttrOffsetByName.html">LMS_GetAttrOffsetByName</a></li>
+								<li><a href="LMS_GetAttrListItemName.html">LMS_GetAttrListItemName</a></li>
+								<li><a href="LMS_GetAttrListItemNameByName.html">LMS_GetAttrListItemNameByName</a></li>
+								<li><a href="LMS_GetAttrNum.html">LMS_GetAttrNum</a></li>
+								<li><a href="LMS_GetAttrListItemNum.html">LMS_GetAttrListItemNum</a></li>
+								</ul>
+							</li>
+							<li><a href="#">タグ情報に関する関数</a>
+								<ul>
+								<li><a href="LMS_GetTagGroupName.html">LMS_GetTagGroupName</a></li>
+								<li><a href="LMS_GetTagName.html">LMS_GetTagName</a></li>
+								<li><a href="LMS_GetTagParamName.html">LMS_GetTagParamName</a></li>
+								<li><a href="LMS_GetTagParamType.html">LMS_GetTagParamType</a></li>
+								<li><a href="LMS_GetTagListItemName.html">LMS_GetTagListItemName</a></li>
+								<li><a href="LMS_GetTagGroupNum.html">LMS_GetTagGroupNum</a></li>
+								<li><a href="LMS_GetTagNum.html">LMS_GetTagNum</a></li>
+								<li><a href="LMS_GetTagParamNum.html">LMS_GetTagParamNum</a></li>
+								<li><a href="LMS_GetTagListItemNum.html">LMS_GetTagListItemNum</a></li>
+								</ul>
+							</li>
+							<li><a href="#">スタイル情報に関する関数</a>
+								<ul>
+								<li><a href="LMS_GetStyleIndexByName.html">LMS_GetStyleIndexByName</a></li>
+								<li><a href="LMS_GetRegionWidth.html">LMS_GetRegionWidth</a></li>
+								<li><a href="LMS_GetRegionWidthByName.html">LMS_GetRegionWidthByName</a></li>
+								<li><a href="LMS_GetLineNum.html">LMS_GetLineNum</a></li>
+								<li><a href="LMS_GetLineNumByName.html">LMS_GetLineNumByName</a></li>
+								<li><a href="LMS_GetFontIndex.html">LMS_GetFontIndex</a></li>
+								<li><a href="LMS_GetFontIndexByName.html">LMS_GetFontIndexByName</a></li>
+								<li><a href="LMS_GetStyleNum.html">LMS_GetStyleNum</a></li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					
+					<li><a href="Intro_Extensions.html"><img src="../resource/everyone.png" />  扱うファイルの拡張子一覧</a></li>
+					<li><a href="FAQ.html"><img src="../resource/everyone.png" />  よくある質問</a></li>
+				</ul>
+				</div>
+				<div class="clear"><hr/></div>
+			</div>
+			<div class="footer">
+				Copyright &copy; 2008 - 2010 Nintendo EAD
+			</div>
+		</div>
+	</body>
+</html>

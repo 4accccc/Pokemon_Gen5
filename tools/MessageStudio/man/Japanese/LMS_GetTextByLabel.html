@@ -1,0 +1,541 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF8">
+		<title>Nintendo MessageStudio ヘルプ</title>
+		<link rel="Stylesheet" type="text/css" href="../resource/main.css" />
+		<link type="text/css" rel="stylesheet" href="../resource/SyntaxHighlighter.css" />
+		<script type="text/javascript" src="../resource/shCore.js"></script>
+		<script type="text/javascript" src="../resource/shBrushCpp.js"></script>
+		<script type="text/javascript" src="../resource/shBrushCSharp.js"></script>
+		<script type="text/javascript" src="../resource/shBrushPython.js"></script>
+		<script type="text/javascript" src="../resource/shBrushRuby.js"></script>
+		<script type="text/javascript" src="../resource/shBrushBat.js"></script>
+		<script type="text/javascript" src="../resource/shBrushReg.js"></script>
+		<script type="text/javascript" src="../resource/shBrushXml.js"></script>
+		<script type="text/javascript" src="../resource/shBrushTag.js"></script>
+		<script type="text/javascript">
+		<!--
+			//===================================================================
+			// ページの変数
+			//===================================================================
+			//Enter id(s) of each Side Bar Menu's main UL, separated by commas
+			var menuids=["sidebarmenu1"];
+			var menuBottomPos=[];
+
+			//===================================================================
+			//イベントの登録
+			//===================================================================
+			if ( window.addEventListener ) {
+				window.addEventListener( "load", InitPage, false );
+				window.addEventListener( "resize", UpdateSidebarMenu, false );
+				window.addEventListener( "scroll", UpdateSidebarMenu, false );
+			}
+			else if ( window.attachEvent ) {
+				window.attachEvent( "onload", InitPage );
+				window.attachEvent( "onresize", UpdateSidebarMenu );
+				window.attachEvent( "onscroll", UpdateSidebarMenu );
+			}
+			else {
+				window.onload = InitPage;
+				window.onresize = UpdateSidebarMenu;
+				window.onscroll = UpdateSidebarMenu;
+			}
+			
+			//===================================================================
+			// Function : InitPage ページ内の初期化処理（初回のみ呼び出し）
+			//===================================================================
+			function InitPage(){
+
+				// シンタックスハイライトの初期化
+				InitSyntaxHighlighter();
+
+				// メニューの初期化
+				InitSidebarMenu();
+
+				// アップデートしておく
+				UpdateSidebarMenu();
+			}
+
+			//===================================================================
+			// Function : InitSidebarMenu メニューの初期化
+			//===================================================================
+			function InitSidebarMenu()
+			{
+				for ( var i = 0; i < menuids.length; i++ )
+				{
+					// 処理対象となるメニューを取得する
+					var ultags = document.getElementById( menuids[i] ).getElementsByTagName("ul");
+
+					// 各メニューに対する処理
+					for ( var t = 0; t < ultags.length; t++ )
+					{
+						ultags[t].parentNode.getElementsByTagName("a")[0].className += " subfolderstyle"
+						
+						//if this is a first level submenu
+						if ( ultags[t].parentNode.parentNode.id == menuids[i] )
+						{
+							//dynamically position first level submenus to be width of main menu item
+							ultags[t].style.left = ultags[t].parentNode.offsetWidth + "px";
+						}
+						//else if this is a sub level submenu (ul)
+						else
+						{
+							//position menu to the right of menu item that activated it
+							ultags[t].style.left = ultags[t-1].getElementsByTagName("a")[0].offsetWidth + "px";
+						}
+
+						// 高さの初期位置をセット
+						var atags = ultags[t].getElementsByTagName( "a" );
+						var innerUlTags = ultags[t].getElementsByTagName( "ul" );
+
+						var childatagNum = atags.length;
+						for ( var nUl = 0; nUl < innerUlTags.length; nUl++ ) childatagNum -= innerUlTags[nUl].getElementsByTagName( "a" ).length;
+						var menuHeight = childatagNum * atags[0].offsetHeight;
+						// このメニューの一番下の位置を取得
+						var parentRect = ultags[t].parentNode.getBoundingClientRect();	// 親ノードの境界サイズ
+
+						// メニューの下の初期位置を保存しておく
+						menuBottomPos[t]  = parentRect.top + menuHeight;
+
+						// マウスオーバー時の処理を登録
+						ultags[t].parentNode.onmouseover = function()
+						{
+							this.getElementsByTagName("ul")[0].style.display = "block"
+						}
+						ultags[t].parentNode.onmouseout = function()
+						{
+							this.getElementsByTagName("ul")[0].style.display = "none"
+						}
+					}
+					
+					// loop through all sub menus again, and use "display:none" to hide menus (to prevent possible page scrollbars
+					for ( var t = ultags.length - 1; t > -1; t-- )
+					{
+						ultags[t].style.visibility	= "visible"
+						ultags[t].style.display		= "none"
+					}
+				}
+			}
+
+			//===================================================================
+			// Function : InitSyntaxHighlighter SyntaxHighlighterの初期化
+			//===================================================================
+			function InitSyntaxHighlighter()
+			{
+				dp.SyntaxHighlighter.ClipboardSwf = '../resource/clipboard.swf';
+				dp.SyntaxHighlighter.HighlightAll('code');
+			}
+
+			//===================================================================
+			// Function : UpdateSidebarMenu メニューの位置を更新します。
+			//===================================================================
+			function UpdateSidebarMenu()
+			{
+				for ( var i = 0; i < menuids.length; i++ )
+				{
+					// 処理対象となるメニューを取得する
+					var ultags = document.getElementById( menuids[i] ).getElementsByTagName("ul");
+
+					// 各メニューに対する処理
+					for ( var t = 0; t < ultags.length; t++ )
+					{
+						// メニューの高さを調節する
+						var atags = ultags[t].getElementsByTagName( "a" );
+						var innerUlTags = ultags[t].getElementsByTagName( "ul" );
+						
+						var childatagNum = atags.length;
+						for ( var nUl = 0; nUl < innerUlTags.length; nUl++ ) childatagNum -= innerUlTags[nUl].getElementsByTagName( "a" ).length;
+						var menuHeight = childatagNum * atags[0].offsetHeight;
+
+						// このメニューの一番下の位置を取得
+						var parentRect = ultags[t].parentNode.getBoundingClientRect();	// 親ノードの境界サイズ
+						
+						// クライアント領域の底とメニューの底の距離を計算
+						var clientHeight = getClientHeight();
+						
+						var scTop = document.body.scrollTop || document.documentElement.scrollTop;
+						var btobLen = clientHeight - menuBottomPos[t];
+						
+						// メニューが潜らないように調整
+						if ( btobLen + scTop < 0 )
+						{
+							// 潜っている分だけ上にシフトする
+							ultags[t].style.top = (Math.max( (-1 * parentRect.top), btobLen-1)-15) + scTop + "px";
+						}
+						else
+						{
+							// 潜らないので初期位置
+							ultags[t].style.top = "0px";
+						}
+					}
+				}
+			}
+
+			//===================================================================
+			// Function : UpdateSidebarMenu メニューの位置を更新します。
+			//===================================================================
+			function getClientHeight(){
+				// IE以外。
+				if ((!document.all || window.opera) && document.getElementById) {
+					return window.innerHeight;
+				}
+				// ウィンドウズIE 6・標準モード。
+				else if (document.getElementById && (document.compatMode=='CSS1Compat')) {
+					return document.documentElement.clientHeight;
+				}
+				// その他のIE。
+				else if (document.all) {
+					return document.body.clientHeight;
+				}
+			}
+		-->
+		</script>
+	</head>
+	<body>
+		<div class="wrap">
+			<div class="header">
+				Nintendo MessageStudio ヘルプ
+			</div>
+			<div class="inner">
+				<div class="mainWrap">
+					<h1>LMS_GetTextByLabel</h1>
+<p>この関数は、関数の呼び出しを単純化する目的で設けられたヘルパ関数です。内部的には<a href="LMS_GetTextIndexByLabel.html#">LMS_GetTextIndexByLabel関数</a>と<a href="LMS_GetText.html#">LMS_GetText関数</a>の二つの関数を順番に呼び出しているだけです。</p>
+
+<h2>構文</h2>
+<pre name="code" class="c">
+const void* LMS_GetTextByLabel( LMSMsgFile *pFile, const char* pLabel );
+</pre>
+
+<h2>引数</h2>
+<table border="1">
+<tr>
+	<th>引数名</th><th>型</th><th>意味</th>
+</tr>
+<tr>
+	<td>pFile</td><td>LMSMsgFile*</td><td>インデックス番号を検索する対象のメッセージファイルオブジェクトを指定してください(<a href="LMS_InitMessage.html#">LMS_InitMessage関数</a>で返ってきた値)。</td>
+</tr>
+<tr>
+	<td>pLabel</td><td>const char*</td><td>検索したいラベル文字列へのポインタを指定してください。NULL終端のASCII文字列である必要があります。</td>
+</tr>
+</table>
+<h2>戻り値</h2>
+実際のテキスト情報が返ります。この値はconst void*型になっていますのでキャストして使用してください
+(テキストのエンコーディング形式を設定できるのでこのような形になっています)。
+入力されたテキスト情報は、タグを含む場合があります。
+このタグはアプリケーション側でハンドリングする必要があります。
+詳しくは<a href="RES_Tags.html#">タグの入ったテキストフォーマット</a>の項をご覧ください。
+<h2>注意事項</h2>
+<p>この関数を利用する場合、データの出力設定で「テキストラベルの対応情報ブロック(LBL1)を埋め込む」にチェックを入れておく必要があります(規定値は出力する設定になっています)。</p>
+
+				</div>
+				<div class="sidebarmenu">
+				<ul id="sidebarmenu1">
+					<!-- Index -->
+					<li><a href="index.html"><img src="../resource/everyone.png" />  はじめに</a></li>
+					<!-- Introduction -->
+					<li><a href="#"><img src="../resource/everyone.png" />  Message Studioの基礎</a>
+						<ul>
+						<li><a href="Intro_Tour.html"><img src="../resource/everyone.png" />  ゲーム製作のフロー</a></li>
+						<li><a href="Intro_Project.html"><img src="../resource/everyone.png" />  プロジェクトファイルについて</a></li>
+						<li><a href="Intro_Project_Explorer.html"><img src="../resource/everyone.png" />  プロジェクトエクスプローラの操作</a></li>
+						<li><a href="Intro_WindowOperation.html"><img src="../resource/everyone.png" />  ウインドウ操作</a></li>
+						<li><a href="LANG_Setting.html"><img src="../resource/administrators.png" />  言語設定</a></li>
+						<li><a href="ColorSetting.html"><img src="../resource/administrators.png" />  カラーの設定</a></li>
+						<li><a href="AttributeSetting.html"><img src="../resource/administrators.png" />  属性の設定</a></li>
+						</ul>
+					</li>
+					
+					<!-- Message Editting -->
+					<li><a href="#"><img src="../resource/editors.png" />  メッセージ編集</a>
+						<ul>
+						<li><a href="MSG_BasicUsage.html">基本操作</a>
+						<li><a href="MSG_Category.html">テキストの種類</a>
+						<li><a href="MSG_Clipboard.html">クリップボードを利用した操作</a>
+						<li><a href="MSG_CellStatus.html">言語セルステータス</a></li>
+						<li><a href="MSG_Customize.html">表示のカスタマイズ</a>
+						<li><a href="MSG_Tips.html">メッセージ一覧画面のTips</a></li>
+						</ul>
+					</li>
+					
+					<!-- Tag -->
+					<li><a href="#"><img src="../resource/everyone.png" />  タグ</a>
+						<ul>
+						<li><a href="Tag_Overview.html"><img src="../resource/everyone.png" />  概要</a></li>
+						<li><a href="Tag_Input.html"><img src="../resource/editors.png" />  タグを用いた編集</a></li>
+						<li><a href="Tag_Source.html"><img src="../resource/administrators.png" />  タグのソース文字列</a></li>
+						<li><a href="Tag_Compare.html"><img src="../resource/editors.png" />  タグ比較について</a></li>
+						</ul>
+					</li>
+					
+					<!-- Search -->
+					<li><a href="#"><img src="../resource/editors.png" />  検索機能</a>
+						<ul>
+						<li><a href="Intro_Search_Overview.html">概要</a></li>
+						<li><a href="Intro_Search_Simple.html">簡易検索</a></li>
+						<li><a href="Intro_Search_Detail.html">詳細検索</a></li>
+						<li><a href="Intro_Search_RegEx.html">正規表現</a></li>
+						</ul>
+					</li>
+					
+					<!-- Spell checking -->
+					<li><a href="#"><img src="../resource/editors.png" />  スペルチェック</a>
+						<ul>
+						<li><a href="SpellCheck_Overview.html">スペルチェックについて</a></li>
+						<li><a href="SpellCheck_Usage.html">スペルチェックの利用方法</a></li>
+						</ul>
+					</li>
+					
+					<!-- Roles and Permissions -->
+					<li><a href="#"><img src="../resource/editors.png" />  ロールとパーミッション</a>
+						<ul>
+						<li><a href="Intro_Role_Overview.html">概要</a></li>
+						<li><a href="Intro_Role_AddRole.html">ロールの追加とパーミッションの設定</a></li>
+						<li><a href="Intro_Role_SelectRole.html">ロールの選択</a></li>
+						</ul>
+					</li>
+					
+					<!-- Progress -->
+					<li><a href="#"><img src="../resource/editors.png" />  メッセージの統計情報</a>
+						<ul>
+						<li><a href="Progress_Overview.html">統計情報について</a></li>
+						<li><a href="Progress_Usage.html">統計情報の利用方法</a></li>
+						</ul>
+					</li>
+					
+					<!-- Style -->
+					<li><a href="#"><img src="../resource/everyone.png" />  スタイル機能と幅計算</a>
+						<ul>
+						<li><a href="Style_Overview.html"><img src="../resource/everyone.png" />  スタイルと幅計算について</a></li>
+						<li><a href="Intro_TextWidthCheck_Check.html"><img src="../resource/everyone.png" />  テキスト幅の全体チェック</a></li>
+						<li><a href="Style_RenderMode.html"><img src="../resource/administrators.png" />  レンダリング方式について</a></li>
+						<li><a href="Style_Setting.html"><img src="../resource/administrators.png" />  スタイルの設定方法</a></li>
+						</ul>
+					</li>
+					
+					<!-- Font -->
+					<li><a href="#"><img src="../resource/everyone.png" />  フォント</a>
+						<ul>
+						<li><a href="Font_Overview.html"><img src="../resource/everyone.png" />  フォント機能の概要</a></li>
+						<li><a href="Font_Workflow.html"><img src="../resource/administrators.png" />  フォントに関するワークフローについて</a></li>
+						<li><a href="Font_Setting.html"><img src="../resource/administrators.png" />  フォントの設定</a></li>
+						</ul>
+					</li>
+					
+					<!-- Team -->
+					<li><a href="#"><img src="../resource/everyone.png" />  チーム管理機能</a>
+						<ul>
+						<li><a href="TEAM_Overview.html"><img src="../resource/everyone.png" />  概要</a></li>
+						<li><a href="TEAM_CaseByCase.html"><img src="../resource/editors.png" />  ファイル管理のされ方</a></li>
+						<li><a href="TEAM_StartUse.html"><img src="../resource/editors.png" />  チーム管理機能を利用する</a></li>
+						<li><a href="TEAM_Usage.html"><img src="../resource/editors.png" />  基本操作</a></li>
+						<li><a href="TEAM_Log.html"><img src="../resource/editors.png" />  コミットログを表示する</a></li>
+						<li><a href="TEAM_Diff.html"><img src="../resource/editors.png" />  差分(diff)を表示する</a></li>
+						<li><a href="TEAM_Merge.html"><img src="../resource/editors.png" />  競合とマージ</a></li>
+						<li><a href="TEAM_Proxy.html"><img src="../resource/administrators.png" />  プロキシサーバの設定</a></li>
+						<li><a href="TEAM_Server.html"><img src="../resource/administrators.png" />  サーバーの設定</a></li>
+						</ul>
+					</li>
+					
+					<!-- Meta -->
+					<li><a href="#"><img src="../resource/everyone.png" />  メタ情報の設定</a>
+						<ul>
+						<li><a href="Meta_Overview.html">メタ情報の設定について</a></li>
+						<li><a href="Meta_List.html">設定可能なメタ情報一覧</a></li>
+						</ul>
+					</li>
+					
+					<!-- Resource -->
+					<li><a href="#"><img src="../resource/everyone.png" />  リソースファイル関連</a>
+						<ul>
+						<li><a href="RES_Overview.html"><img src="../resource/administrators.png" />  リソースについての概要</a></li>
+						<li><a href="RES_Build.html"><img src="../resource/everyone.png" />  リソースファイルを出力する</a></li>
+						<li><a href="RES_Setting.html"><img src="../resource/administrators.png" />  出力設定を行う</a></li>
+						<li><a href="RES_BuildEvent.html"><img src="../resource/administrators.png" />  ビルドイベントについて</a></li>
+						<li><a href="RES_FMT_blocks.html"><img src="../resource/programmer.png" />  共通のバイナリフォーマット</a></li>
+						<li><a href="RES_FMT_msbt.html"><img src="../resource/programmer.png" />  メッセージバイナリフォーマット</a></li>
+						<li><a href="RES_FMT_msbf.html"><img src="../resource/programmer.png" />  フローチャートバイナリフォーマット</a></li>
+						<li><a href="RES_FMT_msbp.html"><img src="../resource/programmer.png" />  プロジェクトバイナリフォーマット</a>
+							<ul>
+							<li><a href="RES_FMT_msbp.html">プロジェクトバイナリフォーマット</a></li>
+							<li><a href="RES_FMT_msbp_color.html">カラー情報</a></li>
+							<li><a href="RES_FMT_msbp_content.html">コンテンツ情報</a></li>
+							<li><a href="RES_FMT_msbp_attr.html">属性情報</a></li>
+							<li><a href="RES_FMT_msbp_tag.html">タグ情報</a></li>
+							<li><a href="RES_FMT_msbp_style.html">スタイル情報</a></li>
+							</ul>
+						</li>
+						<li><a href="RES_Tags.html"><img src="../resource/programmer.png" />  タグについて</a></li>
+						</ul>
+					</li>
+					
+					<!-- Macro -->
+					<li><a href="#"><img src="../resource/administrators.png" />  マクロ文字列展開機能</a>
+						<ul>
+						<li><a href="Macro_Introduction.html">マクロ文字列とは</a></li>
+						<li><a href="Macro_List.html">利用可能なマクロ一覧</a></li>
+						</ul>
+					<li><a href="#"><img src="../resource/administrators.png" />  コマンドライン関連</a>
+						<ul>
+						<li><a href="CMD_Overview.html">コマンドライン制御について</a></li>
+						<li><a href="CMD_Convert.html">/convertスイッチについて</a></li>
+						</ul>
+					</li>
+					
+					<!-- Plug-in system -->
+					<li><a href="#"><img src="../resource/administrators.png" />  プラグインについて</a>
+						<ul>
+						<li><a href="Plugin_Overview.html">プラグインの概要</a></li>
+						<li><a href="Plugin_Types.html">プラグインの種類について</a></li>
+						</ul>
+					</li>
+					
+					<!-- Plug-in system -->
+					<li><a href="#"><img src="../resource/programmer.png" />  プラグインの作成方法</a>
+						<ul>
+						<li><a href="MakePlugin_Overview.html">単純なプラグイン作成チュートリアル</a></li>
+						<li><a href="MakePlugin_CommandLine.html">開発環境を利用しない作成方法</a></li>
+						<li><a href="MakePlugin_AboutSamples.html">サンプルについて</a></li>
+						</ul>
+					</li>
+					
+					<!-- Assembly security -->
+					<li><a href="#"><img src="../resource/administrators.png" />  Message Studioのアセンブリ設定</a>
+						<ul>
+						<li><a href="Assembly_Caspol.html">Caspol：アセンブリセキュリティ設定</a></li>
+						<li><a href="Assembly_Ngen.html">Ngen：ネイティブイメージ生成</a></li>
+						</ul>
+					</li>
+					
+					<!-- XML Spec -->
+					<li><a href="#"><img src="../resource/programmer.png" />  XML仕様</a>
+						<ul>
+						<li><a href="XMLSpec_Overview.html">概要</a></li>
+						<li><a href="XMLSpec_Project.html">プロジェクトファイル（.msproj）のXML仕様</a></li>
+						<li><a href="XMLSpec_Text.html">メッセージファイル（.mstxt）のXML仕様</a></li>
+						</ul>
+					</li>
+					
+					<!-- libms_overview -->
+					<li><a href="#"><img src="../resource/programmer.png" />  libmsについて</a>
+						<ul>
+							<li><a href="LMS_Overview.html">概要</a></li>
+							<li><a href="LMS_Compile.html">コンパイルの仕方</a></li>
+						</ul>
+					</li>
+					
+					<!-- libms_common -->
+					<li><a href="#"><img src="../resource/programmer.png" />  共通の関数</a>
+						<ul>
+						<li><a href="LMS_SetMemFuncs.html">LMS_SetMemFuncs</a></li>
+						</ul>
+					</li>
+					
+					<!-- libms_message -->
+					<li><a href="#"><img src="../resource/programmer.png" />  メッセージに関する関数</a>
+						<ul>
+							<li><a href="LMS_InitMessage.html">LMS_InitMessage</a></li>
+							<li><a href="LMS_CloseMessage.html">LMS_CloseMessage</a></li>
+							<li><a href="LMS_SearchMessageBlockByName.html">LMS_SearchMessageBlockByName</a></li>
+							<li><a href="LMS_GetMessageBlockInfoByName.html">LMS_GetMessageBlockInfoByName</a></li>
+							<li><a href="LMS_GetTextNum.html">LMS_GetTextNum</a></li>
+							<li><a href="LMS_GetTextIndexByLabel.html">LMS_GetTextIndexByLabel</a></li>
+							<li><a href="LMS_GetText.html">LMS_GetText</a></li>
+							<li><a href="LMS_GetTextSize.html">LMS_GetTextSize</a></li>
+							<li><a href="LMS_GetTextByLabel.html">LMS_GetTextByLabel</a></li>
+							<li><a href="LMS_GetLabelByTextIndex.html">LMS_GetLabelByTextIndex</a></li>
+							<li><a href="LMS_GetTextStyle.html">LMS_GetTextStyle</a></li>
+							<li><a href="LMS_GetTextStyleByLabel.html">LMS_GetTextStyleByLabel</a></li>
+							<li><a href="LMS_GetAttributeSize.html">LMS_GetAttributeSize</a></li>
+							<li><a href="LMS_GetAttribute.html">LMS_GetAttribute</a></li>
+							<li><a href="LMS_GetAttributeText.html">LMS_GetAttributeText</a></li>
+						</ul>
+					</li>
+					
+					<!-- libms_flowchart -->
+					<li><a href="#"><img src="../resource/programmer.png" />  フローチャートに関する関数</a>
+						<ul>
+							<li><a href="LMS_InitFlowchart.html">LMS_InitFlowchart</a></li>
+							<li><a href="LMS_CloseFlowchart.html">LMS_CloseFlowchart</a></li>
+							<li><a href="LMS_GetNodeNum.html">LMS_GetNodeNum</a></li>
+							<li><a href="LMS_GetEntryNodeIndex.html">LMS_GetEntryNodeIndex</a></li>
+							<li><a href="LMS_GetNodeDataPtr.html">LMS_GetNodeDataPtr</a></li>
+							<li><a href="LMS_GetFlowNodeIndex.html">LMS_GetFlowNodeIndex</a></li>
+							<li><a href="LMS_GetCaseIndexesFromBranchNode.html">LMS_GetCaseIndexesFromBranchNode</a></li>
+							<li><a href="LMS_GetFlowParamText.html">LMS_GetFlowParamText</a></li>
+						</ul>
+					</li>
+					
+					<!-- libms_project -->
+					<li><a href="#"><img src="../resource/programmer.png" />  プロジェクトに関する関数</a>
+						<ul>
+							<li><a href="LMS_InitProject.html">LMS_InitProject</a></li>
+							<li><a href="LMS_CloseProject.html">LMS_CloseProject</a></li>
+							<li><a href="LMS_SearchProjectBlockByName.html">LMS_SearchProjectBlockByName</a></li>
+							<li><a href="#">カラー情報に関する関数</a>
+								<ul>
+								<li><a href="LMS_GetColorIndexByName.html">LMS_GetColorIndexByName</a></li>
+								<li><a href="LMS_GetColor.html">LMS_GetColor</a></li>
+								<li><a href="LMS_GetColorByName.html">LMS_GetColorByName</a></li>
+								<li><a href="LMS_GetColorNum.html">LMS_GetColorNum</a></li>
+								</ul>
+							</li>
+							<li><a href="#">コンテンツ情報に関する関数</a>
+								<ul>
+								<li><a href="LMS_GetContentsNum.html">LMS_GetContentsNum</a></li>
+								<li><a href="LMS_GetContentPath.html">LMS_GetContentPath</a></li>
+								</ul>
+							</li>
+							<li><a href="#">属性情報に関する関数</a>
+								<ul>
+								<li><a href="LMS_GetAttrInfoIndexByName.html">LMS_GetAttrInfoIndexByName</a></li>
+								<li><a href="LMS_GetAttrType.html">LMS_GetAttrType</a></li>
+								<li><a href="LMS_GetAttrTypeByName.html">LMS_GetAttrTypeByName</a></li>
+								<li><a href="LMS_GetAttrOffset.html">LMS_GetAttrOffset</a></li>
+								<li><a href="LMS_GetAttrOffsetByName.html">LMS_GetAttrOffsetByName</a></li>
+								<li><a href="LMS_GetAttrListItemName.html">LMS_GetAttrListItemName</a></li>
+								<li><a href="LMS_GetAttrListItemNameByName.html">LMS_GetAttrListItemNameByName</a></li>
+								<li><a href="LMS_GetAttrNum.html">LMS_GetAttrNum</a></li>
+								<li><a href="LMS_GetAttrListItemNum.html">LMS_GetAttrListItemNum</a></li>
+								</ul>
+							</li>
+							<li><a href="#">タグ情報に関する関数</a>
+								<ul>
+								<li><a href="LMS_GetTagGroupName.html">LMS_GetTagGroupName</a></li>
+								<li><a href="LMS_GetTagName.html">LMS_GetTagName</a></li>
+								<li><a href="LMS_GetTagParamName.html">LMS_GetTagParamName</a></li>
+								<li><a href="LMS_GetTagParamType.html">LMS_GetTagParamType</a></li>
+								<li><a href="LMS_GetTagListItemName.html">LMS_GetTagListItemName</a></li>
+								<li><a href="LMS_GetTagGroupNum.html">LMS_GetTagGroupNum</a></li>
+								<li><a href="LMS_GetTagNum.html">LMS_GetTagNum</a></li>
+								<li><a href="LMS_GetTagParamNum.html">LMS_GetTagParamNum</a></li>
+								<li><a href="LMS_GetTagListItemNum.html">LMS_GetTagListItemNum</a></li>
+								</ul>
+							</li>
+							<li><a href="#">スタイル情報に関する関数</a>
+								<ul>
+								<li><a href="LMS_GetStyleIndexByName.html">LMS_GetStyleIndexByName</a></li>
+								<li><a href="LMS_GetRegionWidth.html">LMS_GetRegionWidth</a></li>
+								<li><a href="LMS_GetRegionWidthByName.html">LMS_GetRegionWidthByName</a></li>
+								<li><a href="LMS_GetLineNum.html">LMS_GetLineNum</a></li>
+								<li><a href="LMS_GetLineNumByName.html">LMS_GetLineNumByName</a></li>
+								<li><a href="LMS_GetFontIndex.html">LMS_GetFontIndex</a></li>
+								<li><a href="LMS_GetFontIndexByName.html">LMS_GetFontIndexByName</a></li>
+								<li><a href="LMS_GetStyleNum.html">LMS_GetStyleNum</a></li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					
+					<li><a href="Intro_Extensions.html"><img src="../resource/everyone.png" />  扱うファイルの拡張子一覧</a></li>
+					<li><a href="FAQ.html"><img src="../resource/everyone.png" />  よくある質問</a></li>
+				</ul>
+				</div>
+				<div class="clear"><hr/></div>
+			</div>
+			<div class="footer">
+				Copyright &copy; 2008 - 2010 Nintendo EAD
+			</div>
+		</div>
+	</body>
+</html>

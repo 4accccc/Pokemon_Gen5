@@ -1,0 +1,4759 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<MessageStudioProject
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<PluginInfo
+		PluginDir="$(ProjectDir)\plugins\"
+		Recursive="True" />
+	<Contents>
+		<Directory
+			Name="src">
+			<Directory
+				Name="battle">
+				<ContentItem
+					Name="btl_std.mstxt" />
+				<ContentItem
+					Name="btl_ui.mstxt" />
+			</Directory>
+			<Directory
+				Name="debug">
+				<ContentItem
+					Name="d_comm_menu.mstxt" />
+				<ContentItem
+					Name="d_dlplay.mstxt" />
+				<ContentItem
+					Name="d_field.mstxt" />
+				<ContentItem
+					Name="d_iwasawa.mstxt" />
+				<ContentItem
+					Name="d_kawada.mstxt" />
+				<ContentItem
+					Name="d_linkfest.mstxt" />
+				<ContentItem
+					Name="d_livecomm.mstxt" />
+				<ContentItem
+					Name="d_matsu.mstxt" />
+				<ContentItem
+					Name="d_nagihashi.mstxt" />
+				<ContentItem
+					Name="d_nakahiro.mstxt" />
+				<ContentItem
+					Name="d_ncl.mstxt" />
+				<ContentItem
+					Name="d_numinput.mstxt" />
+				<ContentItem
+					Name="d_numinput_r.mstxt" />
+				<ContentItem
+					Name="d_numinput_record.mstxt" />
+				<ContentItem
+					Name="d_ohno.mstxt" />
+				<ContentItem
+					Name="d_soga.mstxt" />
+				<ContentItem
+					Name="d_taya.mstxt" />
+				<ContentItem
+					Name="d_tetsu.mstxt" />
+				<ContentItem
+					Name="d_tomoya.mstxt" />
+				<ContentItem
+					Name="debug_animal_trail.mstxt" />
+				<ContentItem
+					Name="debug_beacon_friendcode.mstxt" />
+				<ContentItem
+					Name="debug_fight.mstxt" />
+				<ContentItem
+					Name="debug_hiroba.mstxt" />
+				<ContentItem
+					Name="debug_infinity.mstxt" />
+				<ContentItem
+					Name="debug_intrude.mstxt" />
+				<ContentItem
+					Name="debug_make_egg.mstxt" />
+				<ContentItem
+					Name="debug_make_undata.mstxt" />
+				<ContentItem
+					Name="debug_makepoke.mstxt" />
+				<ContentItem
+					Name="debug_medal.mstxt" />
+				<ContentItem
+					Name="debug_medalinfo.mstxt" />
+				<ContentItem
+					Name="debug_resort.mstxt" />
+				<ContentItem
+					Name="debug_resort2.mstxt" />
+				<ContentItem
+					Name="debug_scr.mstxt" />
+				<ContentItem
+					Name="debug_sodateya.mstxt" />
+				<ContentItem
+					Name="debug_wbt.mstxt" />
+				<ContentItem
+					Name="debug_wifi_match.mstxt" />
+				<ContentItem
+					Name="debug_zone_jump.mstxt" />
+				<ContentItem
+					Name="debugname.mstxt" />
+			</Directory>
+			<Directory
+				Name="demo3d">
+				<ContentItem
+					Name="wheel_demo.mstxt" />
+			</Directory>
+			<Directory
+				Name="local_tvt">
+				<ContentItem
+					Name="tvt_call.mstxt" />
+				<ContentItem
+					Name="tvt_event_01.mstxt" />
+				<ContentItem
+					Name="tvt_event_02.mstxt" />
+				<ContentItem
+					Name="tvt_event_03.mstxt" />
+				<ContentItem
+					Name="tvt_event_04.mstxt" />
+				<ContentItem
+					Name="tvt_event_05.mstxt" />
+				<ContentItem
+					Name="tvt_event_06.mstxt" />
+				<ContentItem
+					Name="tvt_event_system.mstxt" />
+				<ContentItem
+					Name="tvt_map.mstxt" />
+				<ContentItem
+					Name="tvt_shinka.mstxt" />
+				<ContentItem
+					Name="tvt_tokusei.mstxt" />
+				<ContentItem
+					Name="tvt_type.mstxt" />
+			</Directory>
+			<Directory
+				Name="musical">
+				<ContentItem
+					Name="dress_up.mstxt" />
+				<ContentItem
+					Name="mus_item_name.mstxt" />
+				<ContentItem
+					Name="musical_00.mstxt" />
+				<ContentItem
+					Name="musical_comm.mstxt" />
+				<ContentItem
+					Name="musical_common.mstxt" />
+				<ContentItem
+					Name="musical_extra.mstxt" />
+				<ContentItem
+					Name="musical_extrapoke.mstxt" />
+				<ContentItem
+					Name="musical_shot.mstxt" />
+			</Directory>
+			<Directory
+				Name="palace">
+				<ContentItem
+					Name="invasion.mstxt" />
+				<ContentItem
+					Name="mission.mstxt" />
+				<ContentItem
+					Name="mission_monolith.mstxt" />
+				<ContentItem
+					Name="mission_msg.mstxt" />
+				<ContentItem
+					Name="monolith.mstxt" />
+				<ContentItem
+					Name="power.mstxt" />
+				<ContentItem
+					Name="power_explain.mstxt" />
+				<ContentItem
+					Name="power_name.mstxt" />
+			</Directory>
+			<Directory
+				Name="pms">
+				<Directory
+					Name="abc">
+					<ContentItem
+						Name="pms_abc00.mstxt" />
+					<ContentItem
+						Name="pms_abc01.mstxt" />
+					<ContentItem
+						Name="pms_abc02.mstxt" />
+					<ContentItem
+						Name="pms_abc03.mstxt" />
+					<ContentItem
+						Name="pms_abc04.mstxt" />
+					<ContentItem
+						Name="pms_abc05.mstxt" />
+					<ContentItem
+						Name="pms_abc06.mstxt" />
+					<ContentItem
+						Name="pms_abc07.mstxt" />
+					<ContentItem
+						Name="pms_abc08.mstxt" />
+					<ContentItem
+						Name="pms_abc09.mstxt" />
+					<ContentItem
+						Name="pms_abc10.mstxt" />
+					<ContentItem
+						Name="pms_abc11.mstxt" />
+					<ContentItem
+						Name="pms_abc12.mstxt" />
+					<ContentItem
+						Name="pms_abc13.mstxt" />
+					<ContentItem
+						Name="pms_abc14.mstxt" />
+					<ContentItem
+						Name="pms_abc15.mstxt" />
+					<ContentItem
+						Name="pms_abc16.mstxt" />
+					<ContentItem
+						Name="pms_abc17.mstxt" />
+					<ContentItem
+						Name="pms_abc18.mstxt" />
+					<ContentItem
+						Name="pms_abc19.mstxt" />
+					<ContentItem
+						Name="pms_abc20.mstxt" />
+					<ContentItem
+						Name="pms_abc21.mstxt" />
+					<ContentItem
+						Name="pms_abc22.mstxt" />
+					<ContentItem
+						Name="pms_abc23.mstxt" />
+					<ContentItem
+						Name="pms_abc24.mstxt" />
+					<ContentItem
+						Name="pms_abc25.mstxt" />
+					<ContentItem
+						Name="pms_abc26.mstxt" />
+					<ContentItem
+						Name="pms_abc27.mstxt" />
+					<ContentItem
+						Name="pms_abc28.mstxt" />
+					<ContentItem
+						Name="pms_abc29.mstxt" />
+					<ContentItem
+						Name="pms_abc30.mstxt" />
+					<ContentItem
+						Name="pms_abc31.mstxt" />
+					<ContentItem
+						Name="pms_abc32.mstxt" />
+					<ContentItem
+						Name="pms_abc33.mstxt" />
+					<ContentItem
+						Name="pms_abc34.mstxt" />
+					<ContentItem
+						Name="pms_abc35.mstxt" />
+					<ContentItem
+						Name="pms_abc36.mstxt" />
+					<ContentItem
+						Name="pms_abc37.mstxt" />
+					<ContentItem
+						Name="pms_abc38.mstxt" />
+					<ContentItem
+						Name="pms_abc39.mstxt" />
+					<ContentItem
+						Name="pms_abc40.mstxt" />
+					<ContentItem
+						Name="pms_abc41.mstxt" />
+					<ContentItem
+						Name="pms_abc42.mstxt" />
+					<ContentItem
+						Name="pms_abc43.mstxt" />
+					<ContentItem
+						Name="pms_abc44.mstxt" />
+				</Directory>
+				<ContentItem
+					Name="pms_category.mstxt" />
+				<ContentItem
+					Name="pms_input.mstxt" />
+				<ContentItem
+					Name="pms_input_button.mstxt" />
+				<ContentItem
+					Name="pms_picture.mstxt" />
+				<ContentItem
+					Name="pms_word06.mstxt" />
+				<ContentItem
+					Name="pms_word07.mstxt" />
+				<ContentItem
+					Name="pms_word08.mstxt" />
+				<ContentItem
+					Name="pms_word09.mstxt" />
+				<ContentItem
+					Name="pms_word10.mstxt" />
+				<ContentItem
+					Name="pms_word11.mstxt" />
+				<ContentItem
+					Name="pms_word12.mstxt" />
+				<ContentItem
+					Name="pms_word13.mstxt" />
+				<ContentItem
+					Name="pmss_lost.mstxt" />
+				<ContentItem
+					Name="pmss_mail.mstxt" />
+				<ContentItem
+					Name="pmss_peculiar.mstxt" />
+				<ContentItem
+					Name="pmss_ready.mstxt" />
+				<ContentItem
+					Name="pmss_system.mstxt" />
+				<ContentItem
+					Name="pmss_union.mstxt" />
+				<ContentItem
+					Name="pmss_won.mstxt" />
+			</Directory>
+			<Directory
+				Name="pokewood">
+				<ContentItem
+					Name="pw_movietitle.mstxt" />
+				<ContentItem
+					Name="pw_senario001.mstxt" />
+				<ContentItem
+					Name="pw_senario002.mstxt" />
+				<ContentItem
+					Name="pw_senario003.mstxt" />
+			</Directory>
+			<Directory
+				Name="script_message">
+				<ContentItem
+					Name="animal_trail_scr.mstxt" />
+				<ContentItem
+					Name="appraisal_scr.mstxt" />
+				<ContentItem
+					Name="award.mstxt" />
+				<ContentItem
+					Name="bc10.mstxt" />
+				<ContentItem
+					Name="bc10pcr0101.mstxt" />
+				<ContentItem
+					Name="bc10r0101.mstxt" />
+				<ContentItem
+					Name="bc10r0201.mstxt" />
+				<ContentItem
+					Name="bc10r0301.mstxt" />
+				<ContentItem
+					Name="bc10r0401.mstxt" />
+				<ContentItem
+					Name="bg_attr.mstxt" />
+				<ContentItem
+					Name="bsubway_scr.mstxt" />
+				<ContentItem
+					Name="btl_util_scr.mstxt" />
+				<ContentItem
+					Name="c01.mstxt" />
+				<ContentItem
+					Name="c01gym0101.mstxt" />
+				<ContentItem
+					Name="c01pc0101.mstxt" />
+				<ContentItem
+					Name="c01r0101.mstxt" />
+				<ContentItem
+					Name="c01r0102.mstxt" />
+				<ContentItem
+					Name="c01r0201.mstxt" />
+				<ContentItem
+					Name="c01r0202.mstxt" />
+				<ContentItem
+					Name="c01r0301.mstxt" />
+				<ContentItem
+					Name="c01r0302.mstxt" />
+				<ContentItem
+					Name="c01r0501.mstxt" />
+				<ContentItem
+					Name="c02.mstxt" />
+				<ContentItem
+					Name="c02gym0101.mstxt" />
+				<ContentItem
+					Name="c02gym0201.mstxt" />
+				<ContentItem
+					Name="c02gym0202.mstxt" />
+				<ContentItem
+					Name="c02pc0101.mstxt" />
+				<ContentItem
+					Name="c02r0101.mstxt" />
+				<ContentItem
+					Name="c02r0201.mstxt" />
+				<ContentItem
+					Name="c02r0301.mstxt" />
+				<ContentItem
+					Name="c02r0401.mstxt" />
+				<ContentItem
+					Name="c02r0501.mstxt" />
+				<ContentItem
+					Name="c02r0601.mstxt" />
+				<ContentItem
+					Name="c02r0701.mstxt" />
+				<ContentItem
+					Name="c03.mstxt" />
+				<ContentItem
+					Name="c03gym0101.mstxt" />
+				<ContentItem
+					Name="c03gym0201.mstxt" />
+				<ContentItem
+					Name="c03p01.mstxt" />
+				<ContentItem
+					Name="c03p07.mstxt" />
+				<ContentItem
+					Name="c03p08.mstxt" />
+				<ContentItem
+					Name="c03p09.mstxt" />
+				<ContentItem
+					Name="c03p10.mstxt" />
+				<ContentItem
+					Name="c03p12.mstxt" />
+				<ContentItem
+					Name="c03p13.mstxt" />
+				<ContentItem
+					Name="c03p14.mstxt" />
+				<ContentItem
+					Name="c03p15.mstxt" />
+				<ContentItem
+					Name="c03p16.mstxt" />
+				<ContentItem
+					Name="c03p17.mstxt" />
+				<ContentItem
+					Name="c03p18.mstxt" />
+				<ContentItem
+					Name="c03p19.mstxt" />
+				<ContentItem
+					Name="c03pc0101.mstxt" />
+				<ContentItem
+					Name="c03r0101.mstxt" />
+				<ContentItem
+					Name="c03r0201.mstxt" />
+				<ContentItem
+					Name="c03r0301.mstxt" />
+				<ContentItem
+					Name="c03r0302.mstxt" />
+				<ContentItem
+					Name="c03r0303.mstxt" />
+				<ContentItem
+					Name="c03r0401.mstxt" />
+				<ContentItem
+					Name="c03r0402.mstxt" />
+				<ContentItem
+					Name="c03r0501.mstxt" />
+				<ContentItem
+					Name="c03r0502.mstxt" />
+				<ContentItem
+					Name="c03r0601.mstxt" />
+				<ContentItem
+					Name="c03r0801.mstxt" />
+				<ContentItem
+					Name="c03r0901.mstxt" />
+				<ContentItem
+					Name="c03r1001.mstxt" />
+				<ContentItem
+					Name="c03r1002.mstxt" />
+				<ContentItem
+					Name="c03r1101.mstxt" />
+				<ContentItem
+					Name="c03r1102.mstxt" />
+				<ContentItem
+					Name="c03r1103.mstxt" />
+				<ContentItem
+					Name="c03r1201.mstxt" />
+				<ContentItem
+					Name="c03r1202.mstxt" />
+				<ContentItem
+					Name="c03r1301.mstxt" />
+				<ContentItem
+					Name="c03r1302.mstxt" />
+				<ContentItem
+					Name="c04.mstxt" />
+				<ContentItem
+					Name="c04gym0101.mstxt" />
+				<ContentItem
+					Name="c04p01.mstxt" />
+				<ContentItem
+					Name="c04pc0101.mstxt" />
+				<ContentItem
+					Name="c04r0101.mstxt" />
+				<ContentItem
+					Name="c04r0102.mstxt" />
+				<ContentItem
+					Name="c04r0103.mstxt" />
+				<ContentItem
+					Name="c04r0104.mstxt" />
+				<ContentItem
+					Name="c04r0105.mstxt" />
+				<ContentItem
+					Name="c04r0106.mstxt" />
+				<ContentItem
+					Name="c04r0107.mstxt" />
+				<ContentItem
+					Name="c04r0108.mstxt" />
+				<ContentItem
+					Name="c04r0109.mstxt" />
+				<ContentItem
+					Name="c04r0110.mstxt" />
+				<ContentItem
+					Name="c04r0111.mstxt" />
+				<ContentItem
+					Name="c04r0201.mstxt" />
+				<ContentItem
+					Name="c04r0202.mstxt" />
+				<ContentItem
+					Name="c04r0301.mstxt" />
+				<ContentItem
+					Name="c04r0302.mstxt" />
+				<ContentItem
+					Name="c04r0303.mstxt" />
+				<ContentItem
+					Name="c04r0304.mstxt" />
+				<ContentItem
+					Name="c04r0305.mstxt" />
+				<ContentItem
+					Name="c04r0401.mstxt" />
+				<ContentItem
+					Name="c04r0402.mstxt" />
+				<ContentItem
+					Name="c04r0403.mstxt" />
+				<ContentItem
+					Name="c04r0404.mstxt" />
+				<ContentItem
+					Name="c04r0501.mstxt" />
+				<ContentItem
+					Name="c04r0502.mstxt" />
+				<ContentItem
+					Name="c04r0601.mstxt" />
+				<ContentItem
+					Name="c04r0701.mstxt" />
+				<ContentItem
+					Name="c04r0801.mstxt" />
+				<ContentItem
+					Name="c04r0901.mstxt" />
+				<ContentItem
+					Name="c04r1001.mstxt" />
+				<ContentItem
+					Name="c04r1002.mstxt" />
+				<ContentItem
+					Name="c05.mstxt" />
+				<ContentItem
+					Name="c05gym0101.mstxt" />
+				<ContentItem
+					Name="c05gym0201.mstxt" />
+				<ContentItem
+					Name="c05pc0101.mstxt" />
+				<ContentItem
+					Name="c05r0101.mstxt" />
+				<ContentItem
+					Name="c05r0102.mstxt" />
+				<ContentItem
+					Name="c05r0103.mstxt" />
+				<ContentItem
+					Name="c05r0201.mstxt" />
+				<ContentItem
+					Name="c05r0202.mstxt" />
+				<ContentItem
+					Name="c05r0203.mstxt" />
+				<ContentItem
+					Name="c05r0301.mstxt" />
+				<ContentItem
+					Name="c05r0302.mstxt" />
+				<ContentItem
+					Name="c05r0303.mstxt" />
+				<ContentItem
+					Name="c05r0401.mstxt" />
+				<ContentItem
+					Name="c05r0402.mstxt" />
+				<ContentItem
+					Name="c05r0403.mstxt" />
+				<ContentItem
+					Name="c05r0501.mstxt" />
+				<ContentItem
+					Name="c05r0601.mstxt" />
+				<ContentItem
+					Name="c05r0701.mstxt" />
+				<ContentItem
+					Name="c06.mstxt" />
+				<ContentItem
+					Name="c06gym0101.mstxt" />
+				<ContentItem
+					Name="c06pc0101.mstxt" />
+				<ContentItem
+					Name="c06r0101.mstxt" />
+				<ContentItem
+					Name="c06r0201.mstxt" />
+				<ContentItem
+					Name="c06r0301.mstxt" />
+				<ContentItem
+					Name="c07.mstxt" />
+				<ContentItem
+					Name="c07gym0101.mstxt" />
+				<ContentItem
+					Name="c07pc0101.mstxt" />
+				<ContentItem
+					Name="c07r0101.mstxt" />
+				<ContentItem
+					Name="c07r0201.mstxt" />
+				<ContentItem
+					Name="c07r0301.mstxt" />
+				<ContentItem
+					Name="c07r0401.mstxt" />
+				<ContentItem
+					Name="c08.mstxt" />
+				<ContentItem
+					Name="c08gym0101.mstxt" />
+				<ContentItem
+					Name="c08pc0101.mstxt" />
+				<ContentItem
+					Name="c08r0101.mstxt" />
+				<ContentItem
+					Name="c08r0102.mstxt" />
+				<ContentItem
+					Name="c08r0201.mstxt" />
+				<ContentItem
+					Name="c08r0202.mstxt" />
+				<ContentItem
+					Name="c08r0301.mstxt" />
+				<ContentItem
+					Name="c08r0302.mstxt" />
+				<ContentItem
+					Name="c08r0401.mstxt" />
+				<ContentItem
+					Name="c08r0402.mstxt" />
+				<ContentItem
+					Name="c08r0501.mstxt" />
+				<ContentItem
+					Name="c08r0601.mstxt" />
+				<ContentItem
+					Name="c08r0701.mstxt" />
+				<ContentItem
+					Name="c08r0801.mstxt" />
+				<ContentItem
+					Name="c08r0802.mstxt" />
+				<ContentItem
+					Name="c09.mstxt" />
+				<ContentItem
+					Name="c09p01.mstxt" />
+				<ContentItem
+					Name="c09p02.mstxt" />
+				<ContentItem
+					Name="c09p03.mstxt" />
+				<ContentItem
+					Name="c09r0101.mstxt" />
+				<ContentItem
+					Name="c09r0201.mstxt" />
+				<ContentItem
+					Name="c09r0301.mstxt" />
+				<ContentItem
+					Name="c09r0401.mstxt" />
+				<ContentItem
+					Name="c09r0501.mstxt" />
+				<ContentItem
+					Name="c09r0601.mstxt" />
+				<ContentItem
+					Name="c09r0701.mstxt" />
+				<ContentItem
+					Name="c11.mstxt" />
+				<ContentItem
+					Name="c11r0101.mstxt" />
+				<ContentItem
+					Name="c11r0201.mstxt" />
+				<ContentItem
+					Name="c12.mstxt" />
+				<ContentItem
+					Name="c12gym0101.mstxt" />
+				<ContentItem
+					Name="c12gym0201.mstxt" />
+				<ContentItem
+					Name="c12p01.mstxt" />
+				<ContentItem
+					Name="c12pc0101.mstxt" />
+				<ContentItem
+					Name="c12r0101.mstxt" />
+				<ContentItem
+					Name="c12r0201.mstxt" />
+				<ContentItem
+					Name="c12r0202.mstxt" />
+				<ContentItem
+					Name="c12r0301.mstxt" />
+				<ContentItem
+					Name="c12r0302.mstxt" />
+				<ContentItem
+					Name="c12r0401.mstxt" />
+				<ContentItem
+					Name="c12r0402.mstxt" />
+				<ContentItem
+					Name="c13.mstxt" />
+				<ContentItem
+					Name="c13gym0101.mstxt" />
+				<ContentItem
+					Name="c13gym0102.mstxt" />
+				<ContentItem
+					Name="c13pc0101.mstxt" />
+				<ContentItem
+					Name="c13r0101.mstxt" />
+				<ContentItem
+					Name="c13r0201.mstxt" />
+				<ContentItem
+					Name="c13r0301.mstxt" />
+				<ContentItem
+					Name="c13r0401.mstxt" />
+				<ContentItem
+					Name="c13r0501.mstxt" />
+				<ContentItem
+					Name="c14.mstxt" />
+				<ContentItem
+					Name="c14gym0101.mstxt" />
+				<ContentItem
+					Name="c14pc0101.mstxt" />
+				<ContentItem
+					Name="c14r0101.mstxt" />
+				<ContentItem
+					Name="c14r0201.mstxt" />
+				<ContentItem
+					Name="c14r0301.mstxt" />
+				<ContentItem
+					Name="c14r0401.mstxt" />
+				<ContentItem
+					Name="c14r0501.mstxt" />
+				<ContentItem
+					Name="c14r0601.mstxt" />
+				<ContentItem
+					Name="c16.mstxt" />
+				<ContentItem
+					Name="c16r0101.mstxt" />
+				<ContentItem
+					Name="c16r0201.mstxt" />
+				<ContentItem
+					Name="c16r0301.mstxt" />
+				<ContentItem
+					Name="c16r0401.mstxt" />
+				<ContentItem
+					Name="c16r0501.mstxt" />
+				<ContentItem
+					Name="c16r0601.mstxt" />
+				<ContentItem
+					Name="c16r0701.mstxt" />
+				<ContentItem
+					Name="c16r0801.mstxt" />
+				<ContentItem
+					Name="c16r0901.mstxt" />
+				<ContentItem
+					Name="c16r1001.mstxt" />
+				<ContentItem
+					Name="c16r1101.mstxt" />
+				<ContentItem
+					Name="c16r1201.mstxt" />
+				<ContentItem
+					Name="c16r1301.mstxt" />
+				<ContentItem
+					Name="c16r1401.mstxt" />
+				<ContentItem
+					Name="c16r1501.mstxt" />
+				<ContentItem
+					Name="c16r1601.mstxt" />
+				<ContentItem
+					Name="c3center_scr.mstxt" />
+				<ContentItem
+					Name="closseum.mstxt" />
+				<ContentItem
+					Name="closseum02.mstxt" />
+				<ContentItem
+					Name="common_scr.mstxt" />
+				<ContentItem
+					Name="crowd_people_scr.mstxt" />
+				<ContentItem
+					Name="d01r0101.mstxt" />
+				<ContentItem
+					Name="d01r0201.mstxt" />
+				<ContentItem
+					Name="d02.mstxt" />
+				<ContentItem
+					Name="d02r0101.mstxt" />
+				<ContentItem
+					Name="d02r0201.mstxt" />
+				<ContentItem
+					Name="d03.mstxt" />
+				<ContentItem
+					Name="d03r0101.mstxt" />
+				<ContentItem
+					Name="d03r0201.mstxt" />
+				<ContentItem
+					Name="d03r0301.mstxt" />
+				<ContentItem
+					Name="d04r0101.mstxt" />
+				<ContentItem
+					Name="d04r0201.mstxt" />
+				<ContentItem
+					Name="d04r0301.mstxt" />
+				<ContentItem
+					Name="d04r0401.mstxt" />
+				<ContentItem
+					Name="d04r0501.mstxt" />
+				<ContentItem
+					Name="d04r0601.mstxt" />
+				<ContentItem
+					Name="d04r0701.mstxt" />
+				<ContentItem
+					Name="d04r0801.mstxt" />
+				<ContentItem
+					Name="d04r0901.mstxt" />
+				<ContentItem
+					Name="d04r1001.mstxt" />
+				<ContentItem
+					Name="d04r1101.mstxt" />
+				<ContentItem
+					Name="d04r1201.mstxt" />
+				<ContentItem
+					Name="d04r1301.mstxt" />
+				<ContentItem
+					Name="d04r1401.mstxt" />
+				<ContentItem
+					Name="d04r1501.mstxt" />
+				<ContentItem
+					Name="d04r1601.mstxt" />
+				<ContentItem
+					Name="d04r1701.mstxt" />
+				<ContentItem
+					Name="d04r1801.mstxt" />
+				<ContentItem
+					Name="d04r1901.mstxt" />
+				<ContentItem
+					Name="d04r2001.mstxt" />
+				<ContentItem
+					Name="d04r2101.mstxt" />
+				<ContentItem
+					Name="d04r2201.mstxt" />
+				<ContentItem
+					Name="d04r2301.mstxt" />
+				<ContentItem
+					Name="d04r2501.mstxt" />
+				<ContentItem
+					Name="d04r2601.mstxt" />
+				<ContentItem
+					Name="d04r2801.mstxt" />
+				<ContentItem
+					Name="d04r2901.mstxt" />
+				<ContentItem
+					Name="d04r3101.mstxt" />
+				<ContentItem
+					Name="d04r3201.mstxt" />
+				<ContentItem
+					Name="d04r3301.mstxt" />
+				<ContentItem
+					Name="d04r3401.mstxt" />
+				<ContentItem
+					Name="d05.mstxt" />
+				<ContentItem
+					Name="d05r0101.mstxt" />
+				<ContentItem
+					Name="d05r0201.mstxt" />
+				<ContentItem
+					Name="d06.mstxt" />
+				<ContentItem
+					Name="d06r0101.mstxt" />
+				<ContentItem
+					Name="d06r0201.mstxt" />
+				<ContentItem
+					Name="d06r0301.mstxt" />
+				<ContentItem
+					Name="d07.mstxt" />
+				<ContentItem
+					Name="d07r0101.mstxt" />
+				<ContentItem
+					Name="d07r0201.mstxt" />
+				<ContentItem
+					Name="d07r0301.mstxt" />
+				<ContentItem
+					Name="d07r0401.mstxt" />
+				<ContentItem
+					Name="d07r0501.mstxt" />
+				<ContentItem
+					Name="d07r0701.mstxt" />
+				<ContentItem
+					Name="d07r601.mstxt" />
+				<ContentItem
+					Name="d08.mstxt" />
+				<ContentItem
+					Name="d08r0101.mstxt" />
+				<ContentItem
+					Name="d08r0301.mstxt" />
+				<ContentItem
+					Name="d08r0401.mstxt" />
+				<ContentItem
+					Name="d08r0501.mstxt" />
+				<ContentItem
+					Name="d08r0601.mstxt" />
+				<ContentItem
+					Name="d08r0701.mstxt" />
+				<ContentItem
+					Name="d08r0801.mstxt" />
+				<ContentItem
+					Name="d08r0901.mstxt" />
+				<ContentItem
+					Name="d09.mstxt" />
+				<ContentItem
+					Name="d09r0101.mstxt" />
+				<ContentItem
+					Name="d09r0201.mstxt" />
+				<ContentItem
+					Name="d09r0301.mstxt" />
+				<ContentItem
+					Name="d09r0401.mstxt" />
+				<ContentItem
+					Name="d09r0501.mstxt" />
+				<ContentItem
+					Name="d09r0601.mstxt" />
+				<ContentItem
+					Name="d09r0701.mstxt" />
+				<ContentItem
+					Name="d09r0801.mstxt" />
+				<ContentItem
+					Name="d09r0901.mstxt" />
+				<ContentItem
+					Name="d09r1001.mstxt" />
+				<ContentItem
+					Name="d09r1101.mstxt" />
+				<ContentItem
+					Name="d09r1201.mstxt" />
+				<ContentItem
+					Name="d09r1301.mstxt" />
+				<ContentItem
+					Name="d09r1401.mstxt" />
+				<ContentItem
+					Name="d09r1501.mstxt" />
+				<ContentItem
+					Name="d10.mstxt" />
+				<ContentItem
+					Name="d10r0101.mstxt" />
+				<ContentItem
+					Name="d10r0201.mstxt" />
+				<ContentItem
+					Name="d10r0301.mstxt" />
+				<ContentItem
+					Name="d10r0401.mstxt" />
+				<ContentItem
+					Name="d11r0101.mstxt" />
+				<ContentItem
+					Name="d11r0201.mstxt" />
+				<ContentItem
+					Name="d11r0301.mstxt" />
+				<ContentItem
+					Name="d11r0401.mstxt" />
+				<ContentItem
+					Name="d11r0501.mstxt" />
+				<ContentItem
+					Name="d12.mstxt" />
+				<ContentItem
+					Name="d12r0101.mstxt" />
+				<ContentItem
+					Name="d12r0102.mstxt" />
+				<ContentItem
+					Name="d13.mstxt" />
+				<ContentItem
+					Name="d13r0101.mstxt" />
+				<ContentItem
+					Name="d20.mstxt" />
+				<ContentItem
+					Name="d20r0101.mstxt" />
+				<ContentItem
+					Name="d20r0201.mstxt" />
+				<ContentItem
+					Name="d20r0301.mstxt" />
+				<ContentItem
+					Name="d20r0401.mstxt" />
+				<ContentItem
+					Name="d20r0501.mstxt" />
+				<ContentItem
+					Name="d20r0601.mstxt" />
+				<ContentItem
+					Name="d20r0701.mstxt" />
+				<ContentItem
+					Name="d20r0801.mstxt" />
+				<ContentItem
+					Name="d22.mstxt" />
+				<ContentItem
+					Name="d22r0101.mstxt" />
+				<ContentItem
+					Name="d22r0201.mstxt" />
+				<ContentItem
+					Name="d23.mstxt" />
+				<ContentItem
+					Name="d23r0101.mstxt" />
+				<ContentItem
+					Name="d24.mstxt" />
+				<ContentItem
+					Name="d24r0101.mstxt" />
+				<ContentItem
+					Name="d24r0201.mstxt" />
+				<ContentItem
+					Name="d24r0301.mstxt" />
+				<ContentItem
+					Name="d24r0401.mstxt" />
+				<ContentItem
+					Name="d24r0501.mstxt" />
+				<ContentItem
+					Name="d24r0601.mstxt" />
+				<ContentItem
+					Name="d24r0701.mstxt" />
+				<ContentItem
+					Name="d25r0101.mstxt" />
+				<ContentItem
+					Name="d25r0201.mstxt" />
+				<ContentItem
+					Name="d25r0301.mstxt" />
+				<ContentItem
+					Name="d25r0401.mstxt" />
+				<ContentItem
+					Name="d25r0501.mstxt" />
+				<ContentItem
+					Name="d25r0601.mstxt" />
+				<ContentItem
+					Name="d26.mstxt" />
+				<ContentItem
+					Name="d27.mstxt" />
+				<ContentItem
+					Name="d28r0101.mstxt" />
+				<ContentItem
+					Name="d28r0201.mstxt" />
+				<ContentItem
+					Name="d28r0301.mstxt" />
+				<ContentItem
+					Name="d29r0101.mstxt" />
+				<ContentItem
+					Name="d29r0201.mstxt" />
+				<ContentItem
+					Name="d29r0301.mstxt" />
+				<ContentItem
+					Name="d31r0101.mstxt" />
+				<ContentItem
+					Name="d31r0201.mstxt" />
+				<ContentItem
+					Name="d31r0301.mstxt" />
+				<ContentItem
+					Name="d31r0401.mstxt" />
+				<ContentItem
+					Name="d31r0501.mstxt" />
+				<ContentItem
+					Name="d31r0601.mstxt" />
+				<ContentItem
+					Name="d31r0701.mstxt" />
+				<ContentItem
+					Name="d31r0801.mstxt" />
+				<ContentItem
+					Name="d31r0901.mstxt" />
+				<ContentItem
+					Name="d31r1001.mstxt" />
+				<ContentItem
+					Name="d31r1101.mstxt" />
+				<ContentItem
+					Name="d31r1201.mstxt" />
+				<ContentItem
+					Name="d32r0101.mstxt" />
+				<ContentItem
+					Name="d32r0201.mstxt" />
+				<ContentItem
+					Name="d33r0101.mstxt" />
+				<ContentItem
+					Name="d34r0101.mstxt" />
+				<ContentItem
+					Name="deox_change_scr.mstxt" />
+				<ContentItem
+					Name="dradonskill_scr.mstxt" />
+				<ContentItem
+					Name="dream_postman.mstxt" />
+				<ContentItem
+					Name="egg_event.mstxt" />
+				<ContentItem
+					Name="elevator.mstxt" />
+				<ContentItem
+					Name="ev_win.mstxt" />
+				<ContentItem
+					Name="festmission_event.mstxt" />
+				<ContentItem
+					Name="field_ev_scr.mstxt" />
+				<ContentItem
+					Name="fmission_scr.mstxt" />
+				<ContentItem
+					Name="gpower_event.mstxt" />
+				<ContentItem
+					Name="h01.mstxt" />
+				<ContentItem
+					Name="h01p01.mstxt" />
+				<ContentItem
+					Name="h01r0101.mstxt" />
+				<ContentItem
+					Name="h01r0201.mstxt" />
+				<ContentItem
+					Name="h02.mstxt" />
+				<ContentItem
+					Name="h03.mstxt" />
+				<ContentItem
+					Name="h04.mstxt" />
+				<ContentItem
+					Name="h04r0101.mstxt" />
+				<ContentItem
+					Name="h04r0201.mstxt" />
+				<ContentItem
+					Name="h04r0301.mstxt" />
+				<ContentItem
+					Name="h04r0401.mstxt" />
+				<ContentItem
+					Name="h04r0501.mstxt" />
+				<ContentItem
+					Name="h04r0601.mstxt" />
+				<ContentItem
+					Name="h04r0701.mstxt" />
+				<ContentItem
+					Name="h05.mstxt" />
+				<ContentItem
+					Name="h06.mstxt" />
+				<ContentItem
+					Name="hiden.mstxt" />
+				<ContentItem
+					Name="hyouka_scr.mstxt" />
+				<ContentItem
+					Name="id_present_scr.mstxt" />
+				<ContentItem
+					Name="infinity_dungeon_scr.mstxt" />
+				<ContentItem
+					Name="item_get_scr.mstxt" />
+				<ContentItem
+					Name="judge_scr.mstxt" />
+				<ContentItem
+					Name="kaseki_scr.mstxt" />
+				<ContentItem
+					Name="medal_ev.mstxt" />
+				<ContentItem
+					Name="musical_scr.mstxt" />
+				<ContentItem
+					Name="n01r0101.mstxt" />
+				<ContentItem
+					Name="n01r0201.mstxt" />
+				<ContentItem
+					Name="n01r0202.mstxt" />
+				<ContentItem
+					Name="n01r0203.mstxt" />
+				<ContentItem
+					Name="n01r0204.mstxt" />
+				<ContentItem
+					Name="n01r0301.mstxt" />
+				<ContentItem
+					Name="n01r0302.mstxt" />
+				<ContentItem
+					Name="n01r0303.mstxt" />
+				<ContentItem
+					Name="n01r0304.mstxt" />
+				<ContentItem
+					Name="n01r0401.mstxt" />
+				<ContentItem
+					Name="n01r0402.mstxt" />
+				<ContentItem
+					Name="n01r0403.mstxt" />
+				<ContentItem
+					Name="n01r0404.mstxt" />
+				<ContentItem
+					Name="n01r0501.mstxt" />
+				<ContentItem
+					Name="n01r0502.mstxt" />
+				<ContentItem
+					Name="namechange_scr.mstxt" />
+				<ContentItem
+					Name="pair_scr.mstxt" />
+				<ContentItem
+					Name="palace01.mstxt" />
+				<ContentItem
+					Name="palace02.mstxt" />
+				<ContentItem
+					Name="palace03.mstxt" />
+				<ContentItem
+					Name="palace04.mstxt" />
+				<ContentItem
+					Name="palace05.mstxt" />
+				<ContentItem
+					Name="palace06.mstxt" />
+				<ContentItem
+					Name="palace07.mstxt" />
+				<ContentItem
+					Name="palace08.mstxt" />
+				<ContentItem
+					Name="palace09.mstxt" />
+				<ContentItem
+					Name="palace10.mstxt" />
+				<ContentItem
+					Name="palpark_scr.mstxt" />
+				<ContentItem
+					Name="pasokon.mstxt" />
+				<ContentItem
+					Name="pdw_postman.mstxt" />
+				<ContentItem
+					Name="pdw_scr.mstxt" />
+				<ContentItem
+					Name="plc04.mstxt" />
+				<ContentItem
+					Name="plc05.mstxt" />
+				<ContentItem
+					Name="plc06.mstxt" />
+				<ContentItem
+					Name="plc07.mstxt" />
+				<ContentItem
+					Name="plc08.mstxt" />
+				<ContentItem
+					Name="plc10.mstxt" />
+				<ContentItem
+					Name="plcw10.mstxt" />
+				<ContentItem
+					Name="pld05.mstxt" />
+				<ContentItem
+					Name="pld06.mstxt" />
+				<ContentItem
+					Name="pld07.mstxt" />
+				<ContentItem
+					Name="pld08.mstxt" />
+				<ContentItem
+					Name="pld10.mstxt" />
+				<ContentItem
+					Name="plh02.mstxt" />
+				<ContentItem
+					Name="plh03.mstxt" />
+				<ContentItem
+					Name="plh05.mstxt" />
+				<ContentItem
+					Name="plp01.mstxt" />
+				<ContentItem
+					Name="plr05.mstxt" />
+				<ContentItem
+					Name="plr06.mstxt" />
+				<ContentItem
+					Name="plr07.mstxt" />
+				<ContentItem
+					Name="plr08.mstxt" />
+				<ContentItem
+					Name="plr09.mstxt" />
+				<ContentItem
+					Name="plr11.mstxt" />
+				<ContentItem
+					Name="plr12.mstxt" />
+				<ContentItem
+					Name="plr13.mstxt" />
+				<ContentItem
+					Name="plr14.mstxt" />
+				<ContentItem
+					Name="plr15.mstxt" />
+				<ContentItem
+					Name="plr16.mstxt" />
+				<ContentItem
+					Name="plt03.mstxt" />
+				<ContentItem
+					Name="plt04.mstxt" />
+				<ContentItem
+					Name="poke_waza.mstxt" />
+				<ContentItem
+					Name="pokecen_scr.mstxt" />
+				<ContentItem
+					Name="postman.mstxt" />
+				<ContentItem
+					Name="r01.mstxt" />
+				<ContentItem
+					Name="r01r0101.mstxt" />
+				<ContentItem
+					Name="r02.mstxt" />
+				<ContentItem
+					Name="r02r0101.mstxt" />
+				<ContentItem
+					Name="r03.mstxt" />
+				<ContentItem
+					Name="r03r0101.mstxt" />
+				<ContentItem
+					Name="r03r0201.mstxt" />
+				<ContentItem
+					Name="r03r0301.mstxt" />
+				<ContentItem
+					Name="r03r0302.mstxt" />
+				<ContentItem
+					Name="r04.mstxt" />
+				<ContentItem
+					Name="r04r0101.mstxt" />
+				<ContentItem
+					Name="r04r0102.mstxt" />
+				<ContentItem
+					Name="r04r0201.mstxt" />
+				<ContentItem
+					Name="r04r0301.mstxt" />
+				<ContentItem
+					Name="r04r0302.mstxt" />
+				<ContentItem
+					Name="r04r0401.mstxt" />
+				<ContentItem
+					Name="r04r0402.mstxt" />
+				<ContentItem
+					Name="r04r0501.mstxt" />
+				<ContentItem
+					Name="r04r0502.mstxt" />
+				<ContentItem
+					Name="r04r0601.mstxt" />
+				<ContentItem
+					Name="r04r0701.mstxt" />
+				<ContentItem
+					Name="r04r0801.mstxt" />
+				<ContentItem
+					Name="r04r0901.mstxt" />
+				<ContentItem
+					Name="r04r1001.mstxt" />
+				<ContentItem
+					Name="r05.mstxt" />
+				<ContentItem
+					Name="r05r0101.mstxt" />
+				<ContentItem
+					Name="r06.mstxt" />
+				<ContentItem
+					Name="r06r0101.mstxt" />
+				<ContentItem
+					Name="r06r0201.mstxt" />
+				<ContentItem
+					Name="r06r0202.mstxt" />
+				<ContentItem
+					Name="r06r0203.mstxt" />
+				<ContentItem
+					Name="r06r0301.mstxt" />
+				<ContentItem
+					Name="r07.mstxt" />
+				<ContentItem
+					Name="r07r0101.mstxt" />
+				<ContentItem
+					Name="r07r0102.mstxt" />
+				<ContentItem
+					Name="r07r0103.mstxt" />
+				<ContentItem
+					Name="r07r0104.mstxt" />
+				<ContentItem
+					Name="r07r0105.mstxt" />
+				<ContentItem
+					Name="r07r0201.mstxt" />
+				<ContentItem
+					Name="r07r0301.mstxt" />
+				<ContentItem
+					Name="r08.mstxt" />
+				<ContentItem
+					Name="r08r0101.mstxt" />
+				<ContentItem
+					Name="r08r0201.mstxt" />
+				<ContentItem
+					Name="r09.mstxt" />
+				<ContentItem
+					Name="r09r0101.mstxt" />
+				<ContentItem
+					Name="r09r0201.mstxt" />
+				<ContentItem
+					Name="r09r0202.mstxt" />
+				<ContentItem
+					Name="r09r0301.mstxt" />
+				<ContentItem
+					Name="r09r0302.mstxt" />
+				<ContentItem
+					Name="r09r0303.mstxt" />
+				<ContentItem
+					Name="r10.mstxt" />
+				<ContentItem
+					Name="r10r0101.mstxt" />
+				<ContentItem
+					Name="r10r0201.mstxt" />
+				<ContentItem
+					Name="r10r0301.mstxt" />
+				<ContentItem
+					Name="r10r0401.mstxt" />
+				<ContentItem
+					Name="r10r0501.mstxt" />
+				<ContentItem
+					Name="r10r0601.mstxt" />
+				<ContentItem
+					Name="r10r0701.mstxt" />
+				<ContentItem
+					Name="r10r0801.mstxt" />
+				<ContentItem
+					Name="r10r0901.mstxt" />
+				<ContentItem
+					Name="r11.mstxt" />
+				<ContentItem
+					Name="r11r0101.mstxt" />
+				<ContentItem
+					Name="r11r0201.mstxt" />
+				<ContentItem
+					Name="r12.mstxt" />
+				<ContentItem
+					Name="r12r0101.mstxt" />
+				<ContentItem
+					Name="r13.mstxt" />
+				<ContentItem
+					Name="r13r0101.mstxt" />
+				<ContentItem
+					Name="r13r0201.mstxt" />
+				<ContentItem
+					Name="r13r0301.mstxt" />
+				<ContentItem
+					Name="r14.mstxt" />
+				<ContentItem
+					Name="r14r0101.mstxt" />
+				<ContentItem
+					Name="r14r0201.mstxt" />
+				<ContentItem
+					Name="r14r0202.mstxt" />
+				<ContentItem
+					Name="r15.mstxt" />
+				<ContentItem
+					Name="r15r0101.mstxt" />
+				<ContentItem
+					Name="r15r0201.mstxt" />
+				<ContentItem
+					Name="r15r0301.mstxt" />
+				<ContentItem
+					Name="r15r0401.mstxt" />
+				<ContentItem
+					Name="r16.mstxt" />
+				<ContentItem
+					Name="r16r0101.mstxt" />
+				<ContentItem
+					Name="r16r0201.mstxt" />
+				<ContentItem
+					Name="r16r0301.mstxt" />
+				<ContentItem
+					Name="r18.mstxt" />
+				<ContentItem
+					Name="r18r0101.mstxt" />
+				<ContentItem
+					Name="r19.mstxt" />
+				<ContentItem
+					Name="r19r0101.mstxt" />
+				<ContentItem
+					Name="r20.mstxt" />
+				<ContentItem
+					Name="r20r0101.mstxt" />
+				<ContentItem
+					Name="r22.mstxt" />
+				<ContentItem
+					Name="r22r0101.mstxt" />
+				<ContentItem
+					Name="r23.mstxt" />
+				<ContentItem
+					Name="r23r0101.mstxt" />
+				<ContentItem
+					Name="r23r0201.mstxt" />
+				<ContentItem
+					Name="resort_scr.mstxt" />
+				<ContentItem
+					Name="resort_shop.mstxt" />
+				<ContentItem
+					Name="rotom_wb_scr.mstxt" />
+				<ContentItem
+					Name="seatemple_scr.mstxt" />
+				<ContentItem
+					Name="shop.mstxt" />
+				<ContentItem
+					Name="shop_scr.mstxt" />
+				<ContentItem
+					Name="skill_teach_scr.mstxt" />
+				<ContentItem
+					Name="sodateya_scr.mstxt" />
+				<ContentItem
+					Name="symbol_encount_scr.mstxt" />
+				<ContentItem
+					Name="t01.mstxt" />
+				<ContentItem
+					Name="t01r0101.mstxt" />
+				<ContentItem
+					Name="t01r0102.mstxt" />
+				<ContentItem
+					Name="t01r0201.mstxt" />
+				<ContentItem
+					Name="t01r0202.mstxt" />
+				<ContentItem
+					Name="t01r0301.mstxt" />
+				<ContentItem
+					Name="t01r0302.mstxt" />
+				<ContentItem
+					Name="t01r0401.mstxt" />
+				<ContentItem
+					Name="t02.mstxt" />
+				<ContentItem
+					Name="t02pc0101.mstxt" />
+				<ContentItem
+					Name="t02r0101.mstxt" />
+				<ContentItem
+					Name="t02r0102.mstxt" />
+				<ContentItem
+					Name="t02r0201.mstxt" />
+				<ContentItem
+					Name="t02r0202.mstxt" />
+				<ContentItem
+					Name="t02r0301.mstxt" />
+				<ContentItem
+					Name="t02r0302.mstxt" />
+				<ContentItem
+					Name="t02r0401.mstxt" />
+				<ContentItem
+					Name="t03.mstxt" />
+				<ContentItem
+					Name="t03pc0101.mstxt" />
+				<ContentItem
+					Name="t03r0101.mstxt" />
+				<ContentItem
+					Name="t03r0201.mstxt" />
+				<ContentItem
+					Name="t03r0301.mstxt" />
+				<ContentItem
+					Name="t03r0401.mstxt" />
+				<ContentItem
+					Name="t04.mstxt" />
+				<ContentItem
+					Name="t04pc0101.mstxt" />
+				<ContentItem
+					Name="t04r0101.mstxt" />
+				<ContentItem
+					Name="t04r0201.mstxt" />
+				<ContentItem
+					Name="t04r0301.mstxt" />
+				<ContentItem
+					Name="t04r0401.mstxt" />
+				<ContentItem
+					Name="t05.mstxt" />
+				<ContentItem
+					Name="t05r0101.mstxt" />
+				<ContentItem
+					Name="t05r0201.mstxt" />
+				<ContentItem
+					Name="t05r0301.mstxt" />
+				<ContentItem
+					Name="t06.mstxt" />
+				<ContentItem
+					Name="t06pc0101.mstxt" />
+				<ContentItem
+					Name="t06r0101.mstxt" />
+				<ContentItem
+					Name="t06r0201.mstxt" />
+				<ContentItem
+					Name="t06r0301.mstxt" />
+				<ContentItem
+					Name="t07.mstxt" />
+				<ContentItem
+					Name="t07pc0101.mstxt" />
+				<ContentItem
+					Name="t07r0101.mstxt" />
+				<ContentItem
+					Name="trialhouse.mstxt" />
+				<ContentItem
+					Name="tv_01_scr.mstxt" />
+				<ContentItem
+					Name="union.mstxt" />
+				<ContentItem
+					Name="vender_scr.mstxt" />
+				<ContentItem
+					Name="w17.mstxt" />
+				<ContentItem
+					Name="w21.mstxt" />
+				<ContentItem
+					Name="w21r0101.mstxt" />
+				<ContentItem
+					Name="wbt_hall.mstxt" />
+				<ContentItem
+					Name="wbt_lobby.mstxt" />
+				<ContentItem
+					Name="wc10.mstxt" />
+				<ContentItem
+					Name="wc10pcr0101.mstxt" />
+				<ContentItem
+					Name="wc10r0101.mstxt" />
+				<ContentItem
+					Name="wheel_scr.mstxt" />
+				<ContentItem
+					Name="wifi_club_scr.mstxt" />
+				<ContentItem
+					Name="wifi_counter_scr.mstxt" />
+			</Directory>
+			<Directory
+				Name="wifi_earth">
+				<ContentItem
+					Name="wifi_earth_guide.mstxt" />
+				<ContentItem
+					Name="wifi_place_msg_ARG.mstxt" />
+				<ContentItem
+					Name="wifi_place_msg_AUS.mstxt" />
+				<ContentItem
+					Name="wifi_place_msg_BRA.mstxt" />
+				<ContentItem
+					Name="wifi_place_msg_CAN.mstxt" />
+				<ContentItem
+					Name="wifi_place_msg_CHN.mstxt" />
+				<ContentItem
+					Name="wifi_place_msg_DEU.mstxt" />
+				<ContentItem
+					Name="wifi_place_msg_ESP.mstxt" />
+				<ContentItem
+					Name="wifi_place_msg_FIN.mstxt" />
+				<ContentItem
+					Name="wifi_place_msg_FRA.mstxt" />
+				<ContentItem
+					Name="wifi_place_msg_GBR.mstxt" />
+				<ContentItem
+					Name="wifi_place_msg_IND.mstxt" />
+				<ContentItem
+					Name="wifi_place_msg_ITA.mstxt" />
+				<ContentItem
+					Name="wifi_place_msg_JPN.mstxt" />
+				<ContentItem
+					Name="wifi_place_msg_NOR.mstxt" />
+				<ContentItem
+					Name="wifi_place_msg_POL.mstxt" />
+				<ContentItem
+					Name="wifi_place_msg_RUS.mstxt" />
+				<ContentItem
+					Name="wifi_place_msg_SWE.mstxt" />
+				<ContentItem
+					Name="wifi_place_msg_UN.mstxt" />
+				<ContentItem
+					Name="wifi_place_msg_USA.mstxt" />
+				<ContentItem
+					Name="wifi_place_msg_world.mstxt" />
+			</Directory>
+			<ContentItem
+				Name="b_bag.mstxt" />
+			<ContentItem
+				Name="b_plist.mstxt" />
+			<ContentItem
+				Name="b_record.mstxt" />
+			<ContentItem
+				Name="backup_erase.mstxt" />
+			<ContentItem
+				Name="backup_err.mstxt" />
+			<ContentItem
+				Name="bag.mstxt" />
+			<ContentItem
+				Name="battle_championship.mstxt" />
+			<ContentItem
+				Name="battle_rec.mstxt" />
+			<ContentItem
+				Name="battle_room.mstxt" />
+			<ContentItem
+				Name="beacon_detail.mstxt" />
+			<ContentItem
+				Name="beacon_status.mstxt" />
+			<ContentItem
+				Name="beacon_view_common.mstxt" />
+			<ContentItem
+				Name="boxmenu.mstxt" />
+			<ContentItem
+				Name="boxmes.mstxt" />
+			<ContentItem
+				Name="btdtrname.mstxt" />
+			<ContentItem
+				Name="btlv_input.mstxt" />
+			<ContentItem
+				Name="c_gear.mstxt" />
+			<ContentItem
+				Name="capturedemo.mstxt" />
+			<ContentItem
+				Name="cg_help.mstxt" />
+			<ContentItem
+				Name="cg_power.mstxt" />
+			<ContentItem
+				Name="cg_wireless.mstxt" />
+			<ContentItem
+				Name="chr.mstxt" />
+			<ContentItem
+				Name="code_input.mstxt" />
+			<ContentItem
+				Name="comm_tvt.mstxt" />
+			<ContentItem
+				Name="communication.mstxt" />
+			<ContentItem
+				Name="compati_check.mstxt" />
+			<ContentItem
+				Name="config.mstxt" />
+			<ContentItem
+				Name="connect.mstxt" />
+			<ContentItem
+				Name="dendou_demo.mstxt" />
+			<ContentItem
+				Name="fest_mission.mstxt" />
+			<ContentItem
+				Name="fldmapmenu.mstxt" />
+			<ContentItem
+				Name="fmission_log.mstxt" />
+			<ContentItem
+				Name="gameclear.mstxt" />
+			<ContentItem
+				Name="gameover.mstxt" />
+			<ContentItem
+				Name="gate.mstxt" />
+			<ContentItem
+				Name="gsync.mstxt" />
+			<ContentItem
+				Name="gtsnego.mstxt" />
+			<ContentItem
+				Name="guru2.mstxt" />
+			<ContentItem
+				Name="guru2_receipt.mstxt" />
+			<ContentItem
+				Name="infinity_dungeon_btl_losemsg.mstxt" />
+			<ContentItem
+				Name="infinity_dungeon_btl_startmsg.mstxt" />
+			<ContentItem
+				Name="infinity_trname.mstxt" />
+			<ContentItem
+				Name="intro.mstxt" />
+			<ContentItem
+				Name="irc_aura.mstxt" />
+			<ContentItem
+				Name="irc_battle.mstxt" />
+			<ContentItem
+				Name="irc_compatible.mstxt" />
+			<ContentItem
+				Name="irc_ranking.mstxt" />
+			<ContentItem
+				Name="irc_result.mstxt" />
+			<ContentItem
+				Name="irc_rhythm.mstxt" />
+			<ContentItem
+				Name="ircbattle.mstxt" />
+			<ContentItem
+				Name="iteminfo.mstxt" />
+			<ContentItem
+				Name="itemname.mstxt" />
+			<ContentItem
+				Name="itempocket.mstxt" />
+			<ContentItem
+				Name="leader_board.mstxt" />
+			<ContentItem
+				Name="live_match.mstxt" />
+			<ContentItem
+				Name="mailbox.mstxt" />
+			<ContentItem
+				Name="mailview.mstxt" />
+			<ContentItem
+				Name="manual.mstxt" />
+			<ContentItem
+				Name="mb_child_movie.mstxt" />
+			<ContentItem
+				Name="medalbox.mstxt" />
+			<ContentItem
+				Name="medalinfo.mstxt" />
+			<ContentItem
+				Name="medalrank.mstxt" />
+			<ContentItem
+				Name="mictest.mstxt" />
+			<ContentItem
+				Name="multiboot_child.mstxt" />
+			<ContentItem
+				Name="multiboot_parent.mstxt" />
+			<ContentItem
+				Name="mystery.mstxt" />
+			<ContentItem
+				Name="namein.mstxt" />
+			<ContentItem
+				Name="net_err.mstxt" />
+			<ContentItem
+				Name="oekaki.mstxt" />
+			<ContentItem
+				Name="party_select_list.mstxt" />
+			<ContentItem
+				Name="pc_dendou.mstxt" />
+			<ContentItem
+				Name="pdc.mstxt" />
+			<ContentItem
+				Name="pdwacc.mstxt" />
+			<ContentItem
+				Name="perap.mstxt" />
+			<ContentItem
+				Name="place_name.mstxt" />
+			<ContentItem
+				Name="place_name_out.mstxt" />
+			<ContentItem
+				Name="place_name_per.mstxt" />
+			<ContentItem
+				Name="place_name_spe.mstxt" />
+			<ContentItem
+				Name="poke_trade.mstxt" />
+			<ContentItem
+				Name="pokelist.mstxt" />
+			<ContentItem
+				Name="pokestatus.mstxt" />
+			<ContentItem
+				Name="print_tool.mstxt" />
+			<ContentItem
+				Name="regulation.mstxt" />
+			<ContentItem
+				Name="regulation_cup.mstxt" />
+			<ContentItem
+				Name="regulation_rule.mstxt" />
+			<ContentItem
+				Name="report.mstxt" />
+			<ContentItem
+				Name="research_radar.mstxt" />
+			<ContentItem
+				Name="ribbon.mstxt" />
+			<ContentItem
+				Name="select_moji_mode.mstxt" />
+			<ContentItem
+				Name="shinka_demo.mstxt" />
+			<ContentItem
+				Name="shortcut_menu.mstxt" />
+			<ContentItem
+				Name="snd_test_str.mstxt" />
+			<ContentItem
+				Name="sptr_name.mstxt" />
+			<ContentItem
+				Name="staff_list_eng.mstxt" />
+			<ContentItem
+				Name="staff_list_jp.mstxt" />
+			<ContentItem
+				Name="startmenu.mstxt" />
+			<ContentItem
+				Name="status.mstxt" />
+			<ContentItem
+				Name="title.mstxt" />
+			<ContentItem
+				Name="tower_trainer.mstxt" />
+			<ContentItem
+				Name="townmap.mstxt" />
+			<ContentItem
+				Name="trainercard.mstxt" />
+			<ContentItem
+				Name="trainermemo.mstxt" />
+			<ContentItem
+				Name="typename.mstxt" />
+			<ContentItem
+				Name="union_room.mstxt" />
+			<ContentItem
+				Name="union_sub_disp.mstxt" />
+			<ContentItem
+				Name="waza_oboe.mstxt" />
+			<ContentItem
+				Name="wbt_system.mstxt" />
+			<ContentItem
+				Name="wbt_tournament.mstxt" />
+			<ContentItem
+				Name="wbt_trmsg.mstxt" />
+			<ContentItem
+				Name="wbt_wincount.mstxt" />
+			<ContentItem
+				Name="wifi_bsubway.mstxt" />
+			<ContentItem
+				Name="wifi_gts.mstxt" />
+			<ContentItem
+				Name="wifi_lobby.mstxt" />
+			<ContentItem
+				Name="wifi_match.mstxt" />
+			<ContentItem
+				Name="wifi_note.mstxt" />
+			<ContentItem
+				Name="wifi_system.mstxt" />
+			<ContentItem
+				Name="yesnomenu.mstxt" />
+			<ContentItem
+				Name="zkn.mstxt" />
+			<ContentItem
+				Name="zkn_comment_e.mstxt" />
+			<ContentItem
+				Name="zkn_comment_fra.mstxt" />
+			<ContentItem
+				Name="zkn_comment_ger.mstxt" />
+			<ContentItem
+				Name="zkn_comment_ita.mstxt" />
+			<ContentItem
+				Name="zkn_comment_kor.mstxt" />
+			<ContentItem
+				Name="zkn_comment_spa.mstxt" />
+			<ContentItem
+				Name="zkn_height_e.mstxt" />
+			<ContentItem
+				Name="zkn_height_fra.mstxt" />
+			<ContentItem
+				Name="zkn_height_ger.mstxt" />
+			<ContentItem
+				Name="zkn_height_ita.mstxt" />
+			<ContentItem
+				Name="zkn_height_kor.mstxt" />
+			<ContentItem
+				Name="zkn_height_spa.mstxt" />
+			<ContentItem
+				Name="zkn_monsname_e.mstxt" />
+			<ContentItem
+				Name="zkn_monsname_fra.mstxt" />
+			<ContentItem
+				Name="zkn_monsname_ger.mstxt" />
+			<ContentItem
+				Name="zkn_monsname_ita.mstxt" />
+			<ContentItem
+				Name="zkn_monsname_kor.mstxt" />
+			<ContentItem
+				Name="zkn_monsname_spa.mstxt" />
+			<ContentItem
+				Name="zkn_type_e.mstxt" />
+			<ContentItem
+				Name="zkn_type_fra.mstxt" />
+			<ContentItem
+				Name="zkn_type_ger.mstxt" />
+			<ContentItem
+				Name="zkn_type_ita.mstxt" />
+			<ContentItem
+				Name="zkn_type_kor.mstxt" />
+			<ContentItem
+				Name="zkn_type_spa.mstxt" />
+			<ContentItem
+				Name="zkn_weight_e.mstxt" />
+			<ContentItem
+				Name="zkn_weight_fra.mstxt" />
+			<ContentItem
+				Name="zkn_weight_ger.mstxt" />
+			<ContentItem
+				Name="zkn_weight_ita.mstxt" />
+			<ContentItem
+				Name="zkn_weight_kor.mstxt" />
+			<ContentItem
+				Name="zkn_weight_spa.mstxt" />
+			<ContentItem
+				Name="zukan_list.mstxt" />
+			<ContentItem
+				Name="zukan_search.mstxt" />
+		</Directory>
+	</Contents>
+	<Properties>
+		<PreBuildEvent />
+		<PostBuildEvent />
+		<TeamSettings
+			AutoUpdate="False"
+			AutoCommit="False"
+			AutoCloseOnAutoUpdate="False" />
+	</Properties>
+	<Language
+		LanguageName="JPN"
+		OutputBinary="True"
+		ReviewEnabled="False"
+		RubyWarning="False"
+		SpellEnabled="False"
+		Dictionary="en_GB">
+		<Language
+			LanguageName="JPN_KANJI"
+			OutputBinary="True"
+			ReviewEnabled="False"
+			RubyWarning="False"
+			SpellEnabled="False"
+			Dictionary="en_GB" />
+		<Language
+			LanguageName="US_English"
+			OutputBinary="True"
+			ReviewEnabled="False"
+			RubyWarning="False"
+			SpellEnabled="False"
+			Dictionary="en_GB" />
+		<Language
+			LanguageName="EU_French"
+			OutputBinary="True"
+			ReviewEnabled="False"
+			RubyWarning="False"
+			SpellEnabled="False"
+			Dictionary="en_GB" />
+		<Language
+			LanguageName="EU_Italian"
+			OutputBinary="True"
+			ReviewEnabled="False"
+			RubyWarning="False"
+			SpellEnabled="False"
+			Dictionary="en_GB" />
+		<Language
+			LanguageName="EU_German"
+			OutputBinary="True"
+			ReviewEnabled="False"
+			RubyWarning="False"
+			SpellEnabled="False"
+			Dictionary="en_GB" />
+		<Language
+			LanguageName="EU_Spanish"
+			OutputBinary="True"
+			ReviewEnabled="False"
+			RubyWarning="False"
+			SpellEnabled="False"
+			Dictionary="en_GB" />
+		<Language
+			LanguageName="KR_Korean"
+			OutputBinary="True"
+			ReviewEnabled="False"
+			RubyWarning="False"
+			SpellEnabled="False"
+			Dictionary="en_GB" />
+	</Language>
+	<Fonts>
+		<FontSetting
+			FontName="Large"
+			Loader="d49e3633-eff9-4e78-99cf-1aab102691b1">
+			<FontPath>$(ProjectDir)../../../font/lalge.nftr</FontPath>
+		</FontSetting>
+	</Fonts>
+	<Styles>
+		<StyleClass
+			StyleName="Large">
+			<Default
+				RegionWidth="256"
+				LineNum="16"
+				FontName="Large"
+				RenderMode="fa2d70c6-3009-43a2-a1a0-cfe9148a4911">
+				<!--TWL System-->
+				<HorizontalSpace>0</HorizontalSpace>
+				<VerticalSpace>0</VerticalSpace>
+			</Default>
+		</StyleClass>
+	</Styles>
+	<Colors>
+		<Color
+			Name="0"
+			R="0"
+			G="0"
+			B="0"
+			A="255" />
+		<Color
+			Name="1"
+			R="255"
+			G="0"
+			B="0"
+			A="255" />
+		<Color
+			Name="2"
+			R="0"
+			G="255"
+			B="0"
+			A="255" />
+		<Color
+			Name="3"
+			R="0"
+			G="0"
+			B="255"
+			A="255" />
+	</Colors>
+	<TagGroups>
+		<TagGroup
+			GroupName="Name">
+			<MultilingualName>
+				<US_English>Name</US_English>
+				<Japanese>単語</Japanese>
+			</MultilingualName>
+			<Tag
+				TagName="TrainerName"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>TrainerName</US_English>
+					<Japanese>トレーナー名</Japanese>
+				</MultilingualName>
+				<Comment />
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>Index</US_English>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="PokemonName"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>PokemonName</US_English>
+					<Japanese>ポケモン種族名</Japanese>
+				</MultilingualName>
+				<Comment>
+					<Japanese>ポケモンの名前。
+ピカチュウとかフシギダネとか。</Japanese>
+				</Comment>
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>Index</US_English>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="PokemonNickname"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>PokemonNickname</US_English>
+					<Japanese>ポケモンニックネーム</Japanese>
+				</MultilingualName>
+				<Comment>
+					<Japanese>ポケモンのニックネーム</Japanese>
+				</Comment>
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>Index</US_English>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="Type"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>Type</US_English>
+					<Japanese>ポケモンタイプ</Japanese>
+				</MultilingualName>
+				<Comment>
+					<Japanese>みず、くさ、ほのお…とか。</Japanese>
+				</Comment>
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>Index</US_English>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="PokedexType"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>PokedexType</US_English>
+					<Japanese>ポケモン分類</Japanese>
+				</MultilingualName>
+				<Comment>
+					<Japanese>「DNAポケモン」など。</Japanese>
+				</Comment>
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>Index</US_English>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="Place"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>Place</US_English>
+					<Japanese>マップ名</Japanese>
+				</MultilingualName>
+				<Comment />
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>Index</US_English>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="Ability"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>Ability</US_English>
+					<Japanese>とくせい名</Japanese>
+				</MultilingualName>
+				<Comment />
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>Index</US_English>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="Move"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>Move</US_English>
+					<Japanese>わざ名</Japanese>
+				</MultilingualName>
+				<Comment />
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>Index</US_English>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="Nature"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>Nature</US_English>
+					<Japanese>せいかく</Japanese>
+				</MultilingualName>
+				<Comment />
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>Index</US_English>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="Item"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>Item</US_English>
+					<Japanese>どうぐ名</Japanese>
+				</MultilingualName>
+				<Comment />
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>Index</US_English>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="MusicalGoods"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>MusicalGoods</US_English>
+					<Japanese>グッズ名</Japanese>
+				</MultilingualName>
+				<Comment />
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>Index</US_English>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="BoxName"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>BoxName</US_English>
+					<Japanese>ボックス名</Japanese>
+				</MultilingualName>
+				<Comment />
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>Index</US_English>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="PokemonNickname2"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>PokemonNickname</US_English>
+					<Japanese>ポケモンニックネーム（正体）</Japanese>
+				</MultilingualName>
+				<Comment>
+					<Japanese>バトル用。イリュージョンの影響を受けないニックネーム取得。</Japanese>
+				</Comment>
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>Index</US_English>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="Status"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>Status</US_English>
+					<Japanese>ステータス名</Japanese>
+				</MultilingualName>
+				<Comment>
+					<Japanese>たいりょく、こうげきりょく、ぼうぎょりょく、とくこう、とくぼう、すばやさ、かいひりつ、めいちゅう</Japanese>
+				</Comment>
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>Index</US_English>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="TrainerType"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>TrainerType</US_English>
+					<Japanese>トレーナー種別名</Japanese>
+				</MultilingualName>
+				<Comment>
+					<Japanese>「たんぱんこぞう」「エリートトレーナー」など</Japanese>
+				</Comment>
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>Index</US_English>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="Hobby"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>Hobby</US_English>
+					<Japanese>趣味（調査レーダー）</Japanese>
+				</MultilingualName>
+				<Comment />
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>Index</US_English>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="GPower"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>GPower</US_English>
+					<Japanese>Gパワー名称</Japanese>
+				</MultilingualName>
+				<Comment>
+					<Japanese>Gパワーの名称です</Japanese>
+				</Comment>
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>Index</US_English>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="Pocket"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>Pocket</US_English>
+					<Japanese>バッグのポケット名</Japanese>
+				</MultilingualName>
+				<Comment>
+					<Japanese>バッグのポケットの名前。「ポケット」の部分も含む。</Japanese>
+				</Comment>
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>Index</US_English>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="Answer"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>Answer</US_English>
+					<Japanese>アンケート回答</Japanese>
+				</MultilingualName>
+				<Comment />
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>Index</US_English>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="CupName"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>CupName</US_English>
+					<Japanese>カップ名</Japanese>
+				</MultilingualName>
+				<Comment>
+					<Japanese>対戦のレギュレーション名</Japanese>
+				</Comment>
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>Index</US_English>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="PMS"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>PMS</US_English>
+					<Japanese>簡易会話単語</Japanese>
+				</MultilingualName>
+				<Comment />
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>Index</US_English>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="Accessary"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>アクセサリー名</US_English>
+					<Japanese>アクセサリー名</Japanese>
+				</MultilingualName>
+				<Comment>
+					<Japanese>ポケモンにつけるアクセサリー</Japanese>
+				</Comment>
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>Index</US_English>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="GymName"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>GymName</US_English>
+					<Japanese>ジム名</Japanese>
+				</MultilingualName>
+				<Comment />
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>Index</US_English>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="TimeSlot"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>TimeSlot</US_English>
+					<Japanese>時間帯</Japanese>
+				</MultilingualName>
+				<Comment>
+					<Japanese>ぼうけんノートなどで使う</Japanese>
+				</Comment>
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>Index</US_English>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="MusicalProgram"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>MusicalProgram</US_English>
+					<Japanese>ミュージカル演目名</Japanese>
+				</MultilingualName>
+				<Comment>
+					<Japanese>ミュージカルの演目名</Japanese>
+				</Comment>
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>Index</US_English>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="MusicalResult"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>MusicalResult</US_English>
+					<Japanese>ミュージカルコンディション</Japanese>
+				</MultilingualName>
+				<Comment>
+					<Japanese>ミュージカルのコンディション
+クール・キュート・エレガント・ユニーク</Japanese>
+				</Comment>
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>Index</US_English>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="Location"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>Location</US_English>
+					<Japanese>国名</Japanese>
+				</MultilingualName>
+				<Comment>
+					<Japanese>プレイヤーが入力する、自分が住んでいる国名</Japanese>
+				</Comment>
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>Index</US_English>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="Area"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>Area</US_English>
+					<Japanese>地域名</Japanese>
+				</MultilingualName>
+				<Comment>
+					<Japanese>プレイヤーが入力する、自分が住んでいる地域名</Japanese>
+				</Comment>
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>Index</US_English>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="Ribbon"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>Ribbon</US_English>
+					<Japanese>リボンの名前</Japanese>
+				</MultilingualName>
+				<Comment>
+					<Japanese>リボンの名前</Japanese>
+				</Comment>
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>Index</US_English>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="BodyPart"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>BodyPart</US_English>
+					<Japanese>ミュージカルグッズ部位</Japanese>
+				</MultilingualName>
+				<Comment />
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>Index</US_English>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="Furniture"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>Furniture</US_English>
+					<Japanese>PDW家具名</Japanese>
+				</MultilingualName>
+				<Comment />
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>Index</US_English>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="MusicalAudience"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>MusicalAudience</US_English>
+					<Japanese>ミュージカル客層</Japanese>
+				</MultilingualName>
+				<Comment>
+					<Japanese>おとこのひと、女の子等</Japanese>
+				</Comment>
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>Index</US_English>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="DSOwner"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>DSOwner</US_English>
+					<Japanese>DS本体名</Japanese>
+				</MultilingualName>
+				<Comment>
+					<Japanese>DS本体のユーザー名</Japanese>
+				</Comment>
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>Index</US_English>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="Medal"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>Medal</US_English>
+					<Japanese>メダル名</Japanese>
+				</MultilingualName>
+				<Comment>
+					<Japanese>様々なことをするともらえる称号をあらわすメダルの名前</Japanese>
+				</Comment>
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>Index</US_English>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="MedalistRank"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>MedalistRank</US_English>
+					<Japanese>メダリストランク名</Japanese>
+				</MultilingualName>
+				<Comment>
+					<Japanese>メダルを集めると上昇するメダルボックスのランク名</Japanese>
+				</Comment>
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>Index</US_English>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="ResortGreet"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>ResortGreet</US_English>
+					<Japanese>リゾートフリーワード</Japanese>
+				</MultilingualName>
+				<Comment>
+					<Japanese>リゾートで使用する自由入力の挨拶文です。</Japanese>
+				</Comment>
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>Index</US_English>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="ResortShop"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>ResortShop</US_English>
+					<Japanese>リゾート店名</Japanese>
+				</MultilingualName>
+				<Comment>
+					<Japanese>リゾートで使用する店の名前です。</Japanese>
+				</Comment>
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>Index</US_English>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="ResortTown"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>ResortTown</US_English>
+					<Japanese>リゾート街名</Japanese>
+				</MultilingualName>
+				<Comment>
+					<Japanese>リゾートで使用する自由入力の街名です。</Japanese>
+				</Comment>
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>Index</US_English>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="ResortMayor"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>ResortMayor</US_English>
+					<Japanese>リゾート市長名</Japanese>
+				</MultilingualName>
+				<Comment>
+					<Japanese>リゾートで使用する自由入力の市長名です。</Japanese>
+				</Comment>
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>Index</US_English>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="WBTTournament"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>WBTトーナメント名</US_English>
+					<Japanese>WBTトーナメント名</Japanese>
+				</MultilingualName>
+				<Comment>
+					<Japanese>WBTのトーナメント名称</Japanese>
+				</Comment>
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>Index</US_English>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="Undefined"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>未設定タグ</US_English>
+					<Japanese>未設定タグ</Japanese>
+				</MultilingualName>
+				<Comment>
+					<Japanese>開発中の決定していないタグに使用する</Japanese>
+				</Comment>
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>Index</US_English>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="TrialhouseRank"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>TrialhouseRank</US_English>
+					<Japanese>トライアルハウスランク</Japanese>
+				</MultilingualName>
+				<Comment>
+					<Japanese>トライアルハウスでのランクです。
+「マスターランク」など</Japanese>
+				</Comment>
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>Index</US_English>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="Weather"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>Weather</US_English>
+					<Japanese>天候</Japanese>
+				</MultilingualName>
+				<Comment>
+					<Japanese>ゲートの電光掲示板に表示されます。「はれ」・「すなあらし」など</Japanese>
+				</Comment>
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>Index</US_English>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="Month"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>month</US_English>
+					<Japanese>month</Japanese>
+				</MultilingualName>
+				<Comment>
+					<Japanese>月の名前</Japanese>
+				</Comment>
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>Index</US_English>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+		</TagGroup>
+		<TagGroup
+			GroupName="Digit">
+			<MultilingualName>
+				<US_English>Digit</US_English>
+				<Japanese>数値</Japanese>
+			</MultilingualName>
+			<Tag
+				TagName="1digit"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>1digit</US_English>
+					<Japanese>１桁</Japanese>
+				</MultilingualName>
+				<Comment />
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>Index</US_English>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="2digits"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>2digits</US_English>
+					<Japanese>２桁</Japanese>
+				</MultilingualName>
+				<Comment />
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>Index</US_English>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="3digits"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>3digits</US_English>
+					<Japanese>３桁</Japanese>
+				</MultilingualName>
+				<Comment />
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>Index</US_English>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="4digits"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>4digits</US_English>
+					<Japanese>４桁</Japanese>
+				</MultilingualName>
+				<Comment />
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>Index</US_English>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="5digits"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>5digits</US_English>
+					<Japanese>５桁</Japanese>
+				</MultilingualName>
+				<Comment />
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>Index</US_English>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="6digits"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>6digits</US_English>
+					<Japanese>６桁</Japanese>
+				</MultilingualName>
+				<Comment />
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>Index</US_English>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="7digits"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>7digits</US_English>
+					<Japanese>７桁</Japanese>
+				</MultilingualName>
+				<Comment />
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>Index</US_English>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="8digits"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>8digits</US_English>
+					<Japanese>８桁</Japanese>
+				</MultilingualName>
+				<Comment />
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>Index</US_English>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="9digits"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>9digits</US_English>
+					<Japanese>９桁</Japanese>
+				</MultilingualName>
+				<Comment />
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>Index</US_English>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="10digits"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>10digits</US_English>
+					<Japanese>10桁</Japanese>
+				</MultilingualName>
+				<Comment />
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>Index</US_English>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+		</TagGroup>
+		<TagGroup
+			GroupName="Character1">
+			<MultilingualName>
+				<US_English>Character1</US_English>
+				<Japanese>Character1</Japanese>
+			</MultilingualName>
+			<Tag
+				TagName="heart"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>heart</US_English>
+					<Japanese>heart</Japanese>
+				</MultilingualName>
+				<Comment>
+					<Japanese>ハートマーク(半角)</Japanese>
+				</Comment>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="music"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>music</US_English>
+					<Japanese>music</Japanese>
+				</MultilingualName>
+				<Comment>
+					<Japanese>音符マーク(半角)</Japanese>
+				</Comment>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="male"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>male</US_English>
+					<Japanese>male</Japanese>
+				</MultilingualName>
+				<Comment>
+					<Japanese>♂(半角)</Japanese>
+				</Comment>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="female"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>female</US_English>
+					<Japanese>female</Japanese>
+				</MultilingualName>
+				<Comment>
+					<Japanese>♀(半角)</Japanese>
+				</Comment>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="10"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>10</US_English>
+					<Japanese>10</Japanese>
+				</MultilingualName>
+				<Comment>
+					<Japanese>神殿文字の10</Japanese>
+				</Comment>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="100"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>100</US_English>
+					<Japanese>100</Japanese>
+				</MultilingualName>
+				<Comment>
+					<Japanese>神殿文字の100</Japanese>
+				</Comment>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="1000"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>1000</US_English>
+					<Japanese>1000</Japanese>
+				</MultilingualName>
+				<Comment>
+					<Japanese>神殿文字の1000</Japanese>
+				</Comment>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="10000"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>10000</US_English>
+					<Japanese>10000</Japanese>
+				</MultilingualName>
+				<Comment>
+					<Japanese>神殿文字の10000</Japanese>
+				</Comment>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="100000"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>100000</US_English>
+					<Japanese>100000</Japanese>
+				</MultilingualName>
+				<Comment>
+					<Japanese>神殿文字の100000</Japanese>
+				</Comment>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="1000000"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>1000000</US_English>
+					<Japanese>1000000</Japanese>
+				</MultilingualName>
+				<Comment>
+					<Japanese>神殿文字の1000000</Japanese>
+				</Comment>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+		</TagGroup>
+		<TagGroup
+			GroupName="Character2">
+			<MultilingualName>
+				<US_English>Character2</US_English>
+				<Japanese>Character2</Japanese>
+			</MultilingualName>
+			<Tag
+				TagName="Upper_er"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>Upper_er</US_English>
+					<Japanese>Upper_er</Japanese>
+				</MultilingualName>
+				<Comment />
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="Upper_re"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>Upper_re</US_English>
+					<Japanese>Upper_re</Japanese>
+				</MultilingualName>
+				<Comment />
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="Upper_r"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>Upper_r</US_English>
+					<Japanese>Upper_r</Japanese>
+				</MultilingualName>
+				<Comment />
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="Upper_e"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>Upper_e</US_English>
+					<Japanese>Upper_e</Japanese>
+				</MultilingualName>
+				<Comment />
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="Abbrev."
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>Abbrev.</US_English>
+					<Japanese>Abbrev.</Japanese>
+				</MultilingualName>
+				<Comment />
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="Center_dot"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>Center_dot</US_English>
+					<Japanese>Center_dot</Japanese>
+				</MultilingualName>
+				<Comment />
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="L_SingleQuot."
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>L_SingleQuot.</US_English>
+					<Japanese>L_SingleQuot.</Japanese>
+				</MultilingualName>
+				<Comment />
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="L_DoubleQuot."
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>L_DoubleQuot.</US_English>
+					<Japanese>L_DoubleQuot.</Japanese>
+				</MultilingualName>
+				<Comment />
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="PKMN"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>PKMN</US_English>
+					<Japanese>PKMN</Japanese>
+				</MultilingualName>
+				<Comment />
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="null"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>null</US_English>
+					<Japanese>null</Japanese>
+				</MultilingualName>
+				<Comment />
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+		</TagGroup>
+		<TagGroup
+			GroupName="Kor">
+			<MultilingualName>
+				<US_English>Kor</US_English>
+				<Japanese>韓国</Japanese>
+			</MultilingualName>
+			<Tag
+				TagName="Article"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>Article</US_English>
+					<Japanese>助詞</Japanese>
+				</MultilingualName>
+				<Comment>
+					<Japanese>韓国語の助詞です。直前の文字に応じて変化します。現状では直前に単語タグが存在する必要があります。</Japanese>
+				</Comment>
+				<Parameter
+					Name="char"
+					Type="List"
+					Default=""
+					LimitType="None">
+					<MultilingualName>
+						<US_English>char</US_English>
+						<Japanese>字</Japanese>
+					</MultilingualName>
+					<ListItem
+						Name="none">
+						<MultilingualName>
+							<Japanese>なし</Japanese>
+						</MultilingualName>
+					</ListItem>
+					<ListItem
+						Name="ha">
+						<MultilingualName>
+							<Japanese>는/은</Japanese>
+						</MultilingualName>
+					</ListItem>
+					<ListItem
+						Name="wo">
+						<MultilingualName>
+							<Japanese>를/을</Japanese>
+						</MultilingualName>
+					</ListItem>
+					<ListItem
+						Name="ga">
+						<MultilingualName>
+							<Japanese>가/이</Japanese>
+						</MultilingualName>
+					</ListItem>
+					<ListItem
+						Name="to">
+						<MultilingualName>
+							<Japanese>와/과</Japanese>
+						</MultilingualName>
+					</ListItem>
+					<ListItem
+						Name="ni">
+						<MultilingualName>
+							<Japanese>  /으</Japanese>
+						</MultilingualName>
+					</ListItem>
+					<ListItem
+						Name="ya">
+						<MultilingualName>
+							<Japanese>  /이</Japanese>
+						</MultilingualName>
+					</ListItem>
+					<ListItem
+						Name="san">
+						<MultilingualName>
+							<Japanese>야/아</Japanese>
+						</MultilingualName>
+					</ListItem>
+					<ListItem
+						Name="c0_ha">
+						<MultilingualName>
+							<Japanese>(色0)는/은</Japanese>
+						</MultilingualName>
+					</ListItem>
+					<ListItem
+						Name="c0_wo">
+						<MultilingualName>
+							<Japanese>(色0)를/을</Japanese>
+						</MultilingualName>
+					</ListItem>
+					<ListItem
+						Name="c0_ga">
+						<MultilingualName>
+							<Japanese>(色0)가/이</Japanese>
+						</MultilingualName>
+					</ListItem>
+					<ListItem
+						Name="c0_to">
+						<MultilingualName>
+							<Japanese>(色0)와/과</Japanese>
+						</MultilingualName>
+					</ListItem>
+					<ListItem
+						Name="c0_ni">
+						<MultilingualName>
+							<Japanese>(色0)  /으</Japanese>
+						</MultilingualName>
+					</ListItem>
+					<ListItem
+						Name="c0_ya">
+						<MultilingualName>
+							<Japanese>(色0)  /이</Japanese>
+						</MultilingualName>
+					</ListItem>
+					<ListItem
+						Name="c0_san">
+						<MultilingualName>
+							<Japanese>(色0)야/아</Japanese>
+						</MultilingualName>
+					</ListItem>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+		</TagGroup>
+		<TagGroup
+			GroupName="Ctrl1">
+			<MultilingualName>
+				<US_English>Ctrl1</US_English>
+				<Japanese>汎用コントロール</Japanese>
+			</MultilingualName>
+			<Tag
+				TagName="Color"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>カラー変更</US_English>
+					<Japanese>カラー変更</Japanese>
+				</MultilingualName>
+				<Comment>
+					<Japanese>システムのカラータグより細かい設定が可能な低レベル版。
+ほとんどの場合、システムタグを使えば問題ないと思います。</Japanese>
+				</Comment>
+				<Parameter
+					Name="Letter"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>文字色番号</US_English>
+						<Japanese>文字色番号</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Parameter
+					Name="Shadow"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>影色番号</US_English>
+						<Japanese>影色番号</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Parameter
+					Name="Back"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>背景色番号</US_English>
+						<Japanese>背景色番号</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="ColorReset"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>カラー変更リセット</US_English>
+					<Japanese>カラー変更リセット</Japanese>
+				</MultilingualName>
+				<Comment />
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="xcenter"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>Ｘセンタリング</US_English>
+					<Japanese>Ｘセンタリング</Japanese>
+				</MultilingualName>
+				<Comment />
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="xright"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>Ｘ右寄せ</US_English>
+					<Japanese>Ｘ右寄せ</Japanese>
+				</MultilingualName>
+				<Comment>
+					<Japanese>当該行の文字列を
+ウィンドウ内で右寄せします。</Japanese>
+				</Comment>
+				<Parameter
+					Name="value"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>右スペース</US_English>
+						<Japanese>右スペース</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="xadd"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>X加算</US_English>
+					<Japanese>X加算</Japanese>
+				</MultilingualName>
+				<Comment>
+					<Japanese>描画X座標を加算します。
+使用は許可制です。</Japanese>
+				</Comment>
+				<Parameter
+					Name="value"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>加算値</US_English>
+						<Japanese>加算値</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="xset"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>X指定</US_English>
+					<Japanese>X指定</Japanese>
+				</MultilingualName>
+				<Comment>
+					<Japanese>描画Ｘ座標を指定値に変更。
+使用は許可制です。</Japanese>
+				</Comment>
+				<Parameter
+					Name="value"
+					Type="UInt16"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>Ｘ座標</US_English>
+						<Japanese>Ｘ座標</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+		</TagGroup>
+		<TagGroup
+			GroupName="Ctrl2">
+			<MultilingualName>
+				<US_English>Ctrl2</US_English>
+				<Japanese>動的コントロール</Japanese>
+			</MultilingualName>
+			<Tag
+				TagName="LineFeed"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>ページ切り替え（行送り）</US_English>
+					<Japanese>ページ切り替え（行送り）</Japanese>
+				</MultilingualName>
+				<Comment />
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="PageClear"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>ページ切り替え（クリア）</US_English>
+					<Japanese>ページ切り替え（クリア）</Japanese>
+				</MultilingualName>
+				<Comment />
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="WaitOne"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>ウェイト変更（単発）</US_English>
+					<Japanese>ウェイト変更（単発）</Japanese>
+				</MultilingualName>
+				<Comment />
+				<Parameter
+					Name="frame"
+					Type="UInt16"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>フレーム数</US_English>
+						<Japanese>フレーム数</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="WaitCont"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>ウェイト変更（継続）</US_English>
+					<Japanese>ウェイト変更（継続）</Japanese>
+				</MultilingualName>
+				<Comment />
+				<Parameter
+					Name="frame"
+					Type="UInt16"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>フレーム数</US_English>
+						<Japanese>フレーム数</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="WaitReset"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>ウェイトリセット</US_English>
+					<Japanese>ウェイトリセット</Japanese>
+				</MultilingualName>
+				<Comment />
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="CallBackOne"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>コールバック引数変更（単発）</US_English>
+					<Japanese>コールバック引数変更（単発）</Japanese>
+				</MultilingualName>
+				<Comment />
+				<Parameter
+					Name="arg"
+					Type="UInt16"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>引数</US_English>
+						<Japanese>引数</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="CallBackCont"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>コールバック引数変更（継続）</US_English>
+					<Japanese>コールバック引数変更（継続）</Japanese>
+				</MultilingualName>
+				<Comment />
+				<Parameter
+					Name="arg"
+					Type="UInt16"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>引数</US_English>
+						<Japanese>引数</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="CallBackReset"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>コールバック引数リセット</US_English>
+					<Japanese>コールバック引数リセット</Japanese>
+				</MultilingualName>
+				<Comment />
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="ClearWin"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>描画領域クリア</US_English>
+					<Japanese>描画領域クリア</Japanese>
+				</MultilingualName>
+				<Comment />
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+			<Tag
+				TagName="CtrlSpeed"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<US_English>Ctrl_Speed</US_English>
+					<Japanese>速度コントロール</Japanese>
+				</MultilingualName>
+				<Comment>
+					<Japanese>ユーザConfig設定に応じて
+相対的に速い（遅い）速度になるように、ウェイトフレーム値などを操作します。</Japanese>
+				</Comment>
+				<Parameter
+					Name="mode"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<US_English>モード</US_English>
+						<Japanese>モード</Japanese>
+					</MultilingualName>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="ada1419c-1f0f-459c-85c1-fd398a784f83" />
+				</Default>
+			</Tag>
+		</TagGroup>
+	</TagGroups>
+	<Attributes>
+		<Attribute
+			Name="Width"
+			Type="Int16"
+			Default="0"
+			LimitEnabled="False">
+			<MultilingualName />
+			<MultilingualComment />
+			<Item
+				Name="NewItem">
+				<MultilingualName />
+			</Item>
+		</Attribute>
+		<Attribute
+			Name="Character"
+			Type="String"
+			Default=""
+			LimitEnabled="False">
+			<MultilingualName />
+			<MultilingualComment />
+			<Item
+				Name="NewItem">
+				<MultilingualName />
+			</Item>
+		</Attribute>
+	</Attributes>
+	<Dictionaries />
+	<BuildSettings>
+		<BuildSetting
+			Builder="8857dfd8-959a-4029-afcc-7db874bd58e8">
+			<MessageBinInfo
+				OutputDir="$(ProjectDir)\bin\$(LanguageName)\$(InputFileName).msbt"
+				Encoding="UTF16"
+				Newline="LF"
+				IsLittleEndian="True"
+				HasLabelBlock="True"
+				HashSize="101"
+				HasAttributeBlock="True"
+				DirectColor="True"
+				HasStyleBlock="False" />
+		</BuildSetting>
+	</BuildSettings>
+	<Roles>
+		<Administrator />
+		<RestrictedRole
+			Name="JP_Japanese editor">
+			<Forbidden
+				Permission="234a7423-2b39-47ed-a343-8207b935fe06">
+				<Subkey
+					Name="US_English" />
+				<Subkey
+					Name="EU_German" />
+				<Subkey
+					Name="EU_French" />
+				<Subkey
+					Name="EU_Spanish" />
+				<Subkey
+					Name="EU_Italian" />
+				<Subkey
+					Name="KR_Korean" />
+			</Forbidden>
+			<Forbidden
+				Permission="4040d647-c07f-4e9b-9334-95b62ef0e00a" />
+			<Forbidden
+				Permission="40bc80ae-4158-413a-8a89-0620daecd70e" />
+			<Forbidden
+				Permission="40cf3951-4434-4379-af25-79e64376ead7" />
+			<Forbidden
+				Permission="4aeb7342-0473-430f-8bdc-3f6073190677" />
+			<Forbidden
+				Permission="4f634920-4d8a-47fb-b881-b3c16f8d5bff" />
+			<Forbidden
+				Permission="5cdb90b4-9bd7-47cd-9fc3-a149f9ebe156" />
+			<Forbidden
+				Permission="668e48de-db63-444f-932a-851dcfdff32f" />
+			<Forbidden
+				Permission="71218de2-8918-4333-b8e3-2a80d852f535" />
+			<Forbidden
+				Permission="78b7a979-390e-49d5-a487-388825f74f8f" />
+			<Forbidden
+				Permission="9158efec-c105-47a4-9c51-8072c63756db" />
+			<Forbidden
+				Permission="9a80c1cd-1dcc-42d3-8d38-ce37dc8f7391" />
+			<Forbidden
+				Permission="b5a13cbe-dea5-4d1b-ad9d-ef3239b915bc" />
+			<Forbidden
+				Permission="cba00abd-ac99-498a-b8fe-6d88b1071fd9" />
+			<Forbidden
+				Permission="ddb6d136-9572-4bc6-8340-3ec7752d49e5" />
+			<Forbidden
+				Permission="f2efbd0e-a233-4e5c-b452-136ef38ced2f" />
+			<Forbidden
+				Permission="fb505ac2-14c1-4902-9307-b25c8cdfb5c5">
+				<Subkey
+					Name="US_English" />
+				<Subkey
+					Name="EU_German" />
+				<Subkey
+					Name="EU_French" />
+				<Subkey
+					Name="EU_Spanish" />
+				<Subkey
+					Name="EU_Italian" />
+				<Subkey
+					Name="KR_Korean" />
+			</Forbidden>
+		</RestrictedRole>
+		<RestrictedRole
+			Name="US_English translator">
+			<Forbidden
+				Permission="234a7423-2b39-47ed-a343-8207b935fe06">
+				<Subkey
+					Name="JPN" />
+				<Subkey
+					Name="EU_German" />
+				<Subkey
+					Name="EU_French" />
+				<Subkey
+					Name="EU_Spanish" />
+				<Subkey
+					Name="EU_Italian" />
+				<Subkey
+					Name="KR_Korean" />
+				<Subkey
+					Name="JPN_KANJI" />
+			</Forbidden>
+			<Forbidden
+				Permission="2e3b3d79-ee4d-418e-905c-e73aa1b1b3e3" />
+			<Forbidden
+				Permission="4040d647-c07f-4e9b-9334-95b62ef0e00a" />
+			<Forbidden
+				Permission="40bc80ae-4158-413a-8a89-0620daecd70e" />
+			<Forbidden
+				Permission="40cf3951-4434-4379-af25-79e64376ead7" />
+			<Forbidden
+				Permission="47389605-b6d1-4556-abbf-1359a1441533" />
+			<Forbidden
+				Permission="4aeb7342-0473-430f-8bdc-3f6073190677" />
+			<Forbidden
+				Permission="4f634920-4d8a-47fb-b881-b3c16f8d5bff" />
+			<Forbidden
+				Permission="5cdb90b4-9bd7-47cd-9fc3-a149f9ebe156" />
+			<Forbidden
+				Permission="668e48de-db63-444f-932a-851dcfdff32f" />
+			<Forbidden
+				Permission="8f39e889-4053-48df-93a1-209f2b5c3332" />
+			<Forbidden
+				Permission="9158efec-c105-47a4-9c51-8072c63756db" />
+			<Forbidden
+				Permission="9a80c1cd-1dcc-42d3-8d38-ce37dc8f7391" />
+			<Forbidden
+				Permission="b5a13cbe-dea5-4d1b-ad9d-ef3239b915bc" />
+			<Forbidden
+				Permission="cba00abd-ac99-498a-b8fe-6d88b1071fd9" />
+			<Forbidden
+				Permission="ddb6d136-9572-4bc6-8340-3ec7752d49e5" />
+			<Forbidden
+				Permission="f0e8a48b-f1a5-4fff-84b5-bdf12f9fde50" />
+			<Forbidden
+				Permission="f2efbd0e-a233-4e5c-b452-136ef38ced2f" />
+			<Forbidden
+				Permission="f67639fb-bf2e-4aad-9077-8dfb52051397">
+				<Subkey
+					Name="BackColor" />
+			</Forbidden>
+			<Forbidden
+				Permission="fb505ac2-14c1-4902-9307-b25c8cdfb5c5">
+				<Subkey
+					Name="JPN" />
+				<Subkey
+					Name="EU_German" />
+				<Subkey
+					Name="EU_French" />
+				<Subkey
+					Name="EU_Spanish" />
+				<Subkey
+					Name="EU_Italian" />
+				<Subkey
+					Name="KR_Korean" />
+				<Subkey
+					Name="JPN_KANJI" />
+			</Forbidden>
+		</RestrictedRole>
+		<RestrictedRole
+			Name="EU_German translator">
+			<Forbidden
+				Permission="234a7423-2b39-47ed-a343-8207b935fe06">
+				<Subkey
+					Name="JPN" />
+				<Subkey
+					Name="US_English" />
+				<Subkey
+					Name="EU_French" />
+				<Subkey
+					Name="EU_Spanish" />
+				<Subkey
+					Name="EU_Italian" />
+				<Subkey
+					Name="KR_Korean" />
+				<Subkey
+					Name="JPN_KANJI" />
+			</Forbidden>
+			<Forbidden
+				Permission="2e3b3d79-ee4d-418e-905c-e73aa1b1b3e3" />
+			<Forbidden
+				Permission="4040d647-c07f-4e9b-9334-95b62ef0e00a" />
+			<Forbidden
+				Permission="40bc80ae-4158-413a-8a89-0620daecd70e" />
+			<Forbidden
+				Permission="40cf3951-4434-4379-af25-79e64376ead7" />
+			<Forbidden
+				Permission="47389605-b6d1-4556-abbf-1359a1441533" />
+			<Forbidden
+				Permission="4aeb7342-0473-430f-8bdc-3f6073190677" />
+			<Forbidden
+				Permission="4f634920-4d8a-47fb-b881-b3c16f8d5bff" />
+			<Forbidden
+				Permission="5cdb90b4-9bd7-47cd-9fc3-a149f9ebe156" />
+			<Forbidden
+				Permission="668e48de-db63-444f-932a-851dcfdff32f" />
+			<Forbidden
+				Permission="8f39e889-4053-48df-93a1-209f2b5c3332" />
+			<Forbidden
+				Permission="9158efec-c105-47a4-9c51-8072c63756db" />
+			<Forbidden
+				Permission="9a80c1cd-1dcc-42d3-8d38-ce37dc8f7391" />
+			<Forbidden
+				Permission="b5a13cbe-dea5-4d1b-ad9d-ef3239b915bc" />
+			<Forbidden
+				Permission="cba00abd-ac99-498a-b8fe-6d88b1071fd9" />
+			<Forbidden
+				Permission="ddb6d136-9572-4bc6-8340-3ec7752d49e5" />
+			<Forbidden
+				Permission="f0e8a48b-f1a5-4fff-84b5-bdf12f9fde50" />
+			<Forbidden
+				Permission="f2efbd0e-a233-4e5c-b452-136ef38ced2f" />
+			<Forbidden
+				Permission="f67639fb-bf2e-4aad-9077-8dfb52051397">
+				<Subkey
+					Name="BackColor" />
+			</Forbidden>
+			<Forbidden
+				Permission="fb505ac2-14c1-4902-9307-b25c8cdfb5c5">
+				<Subkey
+					Name="JPN" />
+				<Subkey
+					Name="US_English" />
+				<Subkey
+					Name="EU_French" />
+				<Subkey
+					Name="EU_Spanish" />
+				<Subkey
+					Name="EU_Italian" />
+				<Subkey
+					Name="KR_Korean" />
+				<Subkey
+					Name="JPN_KANJI" />
+			</Forbidden>
+		</RestrictedRole>
+		<RestrictedRole
+			Name="EU_French translator">
+			<Forbidden
+				Permission="234a7423-2b39-47ed-a343-8207b935fe06">
+				<Subkey
+					Name="JPN" />
+				<Subkey
+					Name="US_English" />
+				<Subkey
+					Name="EU_German" />
+				<Subkey
+					Name="EU_Spanish" />
+				<Subkey
+					Name="EU_Italian" />
+				<Subkey
+					Name="KR_Korean" />
+				<Subkey
+					Name="JPN_KANJI" />
+			</Forbidden>
+			<Forbidden
+				Permission="2e3b3d79-ee4d-418e-905c-e73aa1b1b3e3" />
+			<Forbidden
+				Permission="4040d647-c07f-4e9b-9334-95b62ef0e00a" />
+			<Forbidden
+				Permission="40bc80ae-4158-413a-8a89-0620daecd70e" />
+			<Forbidden
+				Permission="40cf3951-4434-4379-af25-79e64376ead7" />
+			<Forbidden
+				Permission="47389605-b6d1-4556-abbf-1359a1441533" />
+			<Forbidden
+				Permission="4aeb7342-0473-430f-8bdc-3f6073190677" />
+			<Forbidden
+				Permission="4f634920-4d8a-47fb-b881-b3c16f8d5bff" />
+			<Forbidden
+				Permission="5cdb90b4-9bd7-47cd-9fc3-a149f9ebe156" />
+			<Forbidden
+				Permission="668e48de-db63-444f-932a-851dcfdff32f" />
+			<Forbidden
+				Permission="8f39e889-4053-48df-93a1-209f2b5c3332" />
+			<Forbidden
+				Permission="9158efec-c105-47a4-9c51-8072c63756db" />
+			<Forbidden
+				Permission="9a80c1cd-1dcc-42d3-8d38-ce37dc8f7391" />
+			<Forbidden
+				Permission="b5a13cbe-dea5-4d1b-ad9d-ef3239b915bc" />
+			<Forbidden
+				Permission="cba00abd-ac99-498a-b8fe-6d88b1071fd9" />
+			<Forbidden
+				Permission="ddb6d136-9572-4bc6-8340-3ec7752d49e5" />
+			<Forbidden
+				Permission="f0e8a48b-f1a5-4fff-84b5-bdf12f9fde50" />
+			<Forbidden
+				Permission="f2efbd0e-a233-4e5c-b452-136ef38ced2f" />
+			<Forbidden
+				Permission="f67639fb-bf2e-4aad-9077-8dfb52051397">
+				<Subkey
+					Name="BackColor" />
+			</Forbidden>
+			<Forbidden
+				Permission="fb505ac2-14c1-4902-9307-b25c8cdfb5c5">
+				<Subkey
+					Name="JPN" />
+				<Subkey
+					Name="US_English" />
+				<Subkey
+					Name="EU_German" />
+				<Subkey
+					Name="EU_Spanish" />
+				<Subkey
+					Name="EU_Italian" />
+				<Subkey
+					Name="KR_Korean" />
+				<Subkey
+					Name="JPN_KANJI" />
+			</Forbidden>
+		</RestrictedRole>
+		<RestrictedRole
+			Name="EU_Spanish translator">
+			<Forbidden
+				Permission="234a7423-2b39-47ed-a343-8207b935fe06">
+				<Subkey
+					Name="JPN" />
+				<Subkey
+					Name="US_English" />
+				<Subkey
+					Name="EU_German" />
+				<Subkey
+					Name="EU_French" />
+				<Subkey
+					Name="EU_Italian" />
+				<Subkey
+					Name="KR_Korean" />
+				<Subkey
+					Name="JPN_KANJI" />
+			</Forbidden>
+			<Forbidden
+				Permission="2e3b3d79-ee4d-418e-905c-e73aa1b1b3e3" />
+			<Forbidden
+				Permission="4040d647-c07f-4e9b-9334-95b62ef0e00a" />
+			<Forbidden
+				Permission="40bc80ae-4158-413a-8a89-0620daecd70e" />
+			<Forbidden
+				Permission="40cf3951-4434-4379-af25-79e64376ead7" />
+			<Forbidden
+				Permission="47389605-b6d1-4556-abbf-1359a1441533" />
+			<Forbidden
+				Permission="4aeb7342-0473-430f-8bdc-3f6073190677" />
+			<Forbidden
+				Permission="4f634920-4d8a-47fb-b881-b3c16f8d5bff" />
+			<Forbidden
+				Permission="5cdb90b4-9bd7-47cd-9fc3-a149f9ebe156" />
+			<Forbidden
+				Permission="668e48de-db63-444f-932a-851dcfdff32f" />
+			<Forbidden
+				Permission="8f39e889-4053-48df-93a1-209f2b5c3332" />
+			<Forbidden
+				Permission="9158efec-c105-47a4-9c51-8072c63756db" />
+			<Forbidden
+				Permission="9a80c1cd-1dcc-42d3-8d38-ce37dc8f7391" />
+			<Forbidden
+				Permission="b5a13cbe-dea5-4d1b-ad9d-ef3239b915bc" />
+			<Forbidden
+				Permission="cba00abd-ac99-498a-b8fe-6d88b1071fd9" />
+			<Forbidden
+				Permission="ddb6d136-9572-4bc6-8340-3ec7752d49e5" />
+			<Forbidden
+				Permission="f0e8a48b-f1a5-4fff-84b5-bdf12f9fde50" />
+			<Forbidden
+				Permission="f2efbd0e-a233-4e5c-b452-136ef38ced2f" />
+			<Forbidden
+				Permission="f67639fb-bf2e-4aad-9077-8dfb52051397">
+				<Subkey
+					Name="BackColor" />
+			</Forbidden>
+			<Forbidden
+				Permission="fb505ac2-14c1-4902-9307-b25c8cdfb5c5">
+				<Subkey
+					Name="JPN" />
+				<Subkey
+					Name="US_English" />
+				<Subkey
+					Name="EU_German" />
+				<Subkey
+					Name="EU_French" />
+				<Subkey
+					Name="EU_Italian" />
+				<Subkey
+					Name="KR_Korean" />
+				<Subkey
+					Name="JPN_KANJI" />
+			</Forbidden>
+		</RestrictedRole>
+		<RestrictedRole
+			Name="EU_Italian translator">
+			<Forbidden
+				Permission="234a7423-2b39-47ed-a343-8207b935fe06">
+				<Subkey
+					Name="JPN" />
+				<Subkey
+					Name="US_English" />
+				<Subkey
+					Name="EU_German" />
+				<Subkey
+					Name="EU_French" />
+				<Subkey
+					Name="EU_Spanish" />
+				<Subkey
+					Name="KR_Korean" />
+				<Subkey
+					Name="JPN_KANJI" />
+			</Forbidden>
+			<Forbidden
+				Permission="2e3b3d79-ee4d-418e-905c-e73aa1b1b3e3" />
+			<Forbidden
+				Permission="4040d647-c07f-4e9b-9334-95b62ef0e00a" />
+			<Forbidden
+				Permission="40bc80ae-4158-413a-8a89-0620daecd70e" />
+			<Forbidden
+				Permission="40cf3951-4434-4379-af25-79e64376ead7" />
+			<Forbidden
+				Permission="47389605-b6d1-4556-abbf-1359a1441533" />
+			<Forbidden
+				Permission="4aeb7342-0473-430f-8bdc-3f6073190677" />
+			<Forbidden
+				Permission="4f634920-4d8a-47fb-b881-b3c16f8d5bff" />
+			<Forbidden
+				Permission="5cdb90b4-9bd7-47cd-9fc3-a149f9ebe156" />
+			<Forbidden
+				Permission="668e48de-db63-444f-932a-851dcfdff32f" />
+			<Forbidden
+				Permission="8f39e889-4053-48df-93a1-209f2b5c3332" />
+			<Forbidden
+				Permission="9158efec-c105-47a4-9c51-8072c63756db" />
+			<Forbidden
+				Permission="9a80c1cd-1dcc-42d3-8d38-ce37dc8f7391" />
+			<Forbidden
+				Permission="b5a13cbe-dea5-4d1b-ad9d-ef3239b915bc" />
+			<Forbidden
+				Permission="cba00abd-ac99-498a-b8fe-6d88b1071fd9" />
+			<Forbidden
+				Permission="ddb6d136-9572-4bc6-8340-3ec7752d49e5" />
+			<Forbidden
+				Permission="f0e8a48b-f1a5-4fff-84b5-bdf12f9fde50" />
+			<Forbidden
+				Permission="f2efbd0e-a233-4e5c-b452-136ef38ced2f" />
+			<Forbidden
+				Permission="f67639fb-bf2e-4aad-9077-8dfb52051397">
+				<Subkey
+					Name="BackColor" />
+			</Forbidden>
+			<Forbidden
+				Permission="fb505ac2-14c1-4902-9307-b25c8cdfb5c5">
+				<Subkey
+					Name="JPN" />
+				<Subkey
+					Name="US_English" />
+				<Subkey
+					Name="EU_German" />
+				<Subkey
+					Name="EU_French" />
+				<Subkey
+					Name="EU_Spanish" />
+				<Subkey
+					Name="KR_Korean" />
+				<Subkey
+					Name="JPN_KANJI" />
+			</Forbidden>
+		</RestrictedRole>
+		<RestrictedRole
+			Name="KR_Korean translator">
+			<Forbidden
+				Permission="234a7423-2b39-47ed-a343-8207b935fe06">
+				<Subkey
+					Name="JPN" />
+				<Subkey
+					Name="US_English" />
+				<Subkey
+					Name="EU_German" />
+				<Subkey
+					Name="EU_French" />
+				<Subkey
+					Name="EU_Spanish" />
+				<Subkey
+					Name="EU_Italian" />
+				<Subkey
+					Name="JPN_KANJI" />
+			</Forbidden>
+			<Forbidden
+				Permission="2e3b3d79-ee4d-418e-905c-e73aa1b1b3e3" />
+			<Forbidden
+				Permission="4040d647-c07f-4e9b-9334-95b62ef0e00a" />
+			<Forbidden
+				Permission="40bc80ae-4158-413a-8a89-0620daecd70e" />
+			<Forbidden
+				Permission="40cf3951-4434-4379-af25-79e64376ead7" />
+			<Forbidden
+				Permission="47389605-b6d1-4556-abbf-1359a1441533" />
+			<Forbidden
+				Permission="4aeb7342-0473-430f-8bdc-3f6073190677" />
+			<Forbidden
+				Permission="4f634920-4d8a-47fb-b881-b3c16f8d5bff" />
+			<Forbidden
+				Permission="5cdb90b4-9bd7-47cd-9fc3-a149f9ebe156" />
+			<Forbidden
+				Permission="668e48de-db63-444f-932a-851dcfdff32f" />
+			<Forbidden
+				Permission="8f39e889-4053-48df-93a1-209f2b5c3332" />
+			<Forbidden
+				Permission="9158efec-c105-47a4-9c51-8072c63756db" />
+			<Forbidden
+				Permission="9a80c1cd-1dcc-42d3-8d38-ce37dc8f7391" />
+			<Forbidden
+				Permission="b5a13cbe-dea5-4d1b-ad9d-ef3239b915bc" />
+			<Forbidden
+				Permission="cba00abd-ac99-498a-b8fe-6d88b1071fd9" />
+			<Forbidden
+				Permission="ddb6d136-9572-4bc6-8340-3ec7752d49e5" />
+			<Forbidden
+				Permission="f0e8a48b-f1a5-4fff-84b5-bdf12f9fde50" />
+			<Forbidden
+				Permission="f2efbd0e-a233-4e5c-b452-136ef38ced2f" />
+			<Forbidden
+				Permission="f67639fb-bf2e-4aad-9077-8dfb52051397">
+				<Subkey
+					Name="BackColor" />
+			</Forbidden>
+			<Forbidden
+				Permission="fb505ac2-14c1-4902-9307-b25c8cdfb5c5">
+				<Subkey
+					Name="JPN" />
+				<Subkey
+					Name="US_English" />
+				<Subkey
+					Name="EU_German" />
+				<Subkey
+					Name="EU_French" />
+				<Subkey
+					Name="EU_Spanish" />
+				<Subkey
+					Name="EU_Italian" />
+				<Subkey
+					Name="JPN_KANJI" />
+			</Forbidden>
+		</RestrictedRole>
+	</Roles>
+	<ExtraSettings />
+</MessageStudioProject>

@@ -1,5 +1,4 @@
 
-SRC_ROOT_DIR	= src
 DST_ROOT_DIR	= dst
 DST_SCRIPT_DIR	= $(DST_ROOT_DIR)/script
 DST_DEBUG_DIR		= $(DST_ROOT_DIR)/debug
@@ -79,8 +78,9 @@ $(BTLSET): $(BTLSET_SRC)
 #	depend & target list ‚ð¶¬
 #=========================================================
 depend:
-	$(shell find src|grep gmm$$ > $(RESOURCE_LIST)) 
-	perl  makedepend.pl $(SRC_ROOT_DIR) $(DST_ROOT_DIR) $(RESOURCE_LIST) $(DEPEND_LIST) $(TARGET_LIST) $(CONVERT_TARGET_LANGS)
+	$(shell cat gmm_resource.list > $(RESOURCE_LIST))
+	$(shell find msproj/src|grep mstxt$$ >> $(RESOURCE_LIST)) 
+	perl  makedepend.pl $(DST_ROOT_DIR) $(RESOURCE_LIST) $(DEPEND_LIST) $(TARGET_LIST) $(CONVERT_TARGET_LANGS)
 	-rm $(RESOURCE_LIST)
 
 
@@ -144,4 +144,7 @@ clean:
 	-rm $(DEBUG_HEADER_COPY_DIR)/*.h
 	-rm $(DEPEND_LIST)
 	-rm $(TARGET_LIST)
+	-rm pseudo_target_*
+	-rm log/error_*.txt
+	-rm log/unused_*.txt
 

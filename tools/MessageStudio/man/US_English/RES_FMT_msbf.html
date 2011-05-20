@@ -1,0 +1,770 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF8">
+		<title><font color="gray">Nintendo MessageStudio Help</font></title>
+		<link rel="Stylesheet" type="text/css" href="../resource/main.css" />
+		<link type="text/css" rel="stylesheet" href="../resource/SyntaxHighlighter.css" />
+		<script type="text/javascript" src="../resource/shCore.js"></script>
+		<script type="text/javascript" src="../resource/shBrushCpp.js"></script>
+		<script type="text/javascript" src="../resource/shBrushCSharp.js"></script>
+		<script type="text/javascript" src="../resource/shBrushPython.js"></script>
+		<script type="text/javascript" src="../resource/shBrushRuby.js"></script>
+		<script type="text/javascript" src="../resource/shBrushBat.js"></script>
+		<script type="text/javascript" src="../resource/shBrushReg.js"></script>
+		<script type="text/javascript" src="../resource/shBrushXml.js"></script>
+		<script type="text/javascript" src="../resource/shBrushTag.js"></script>
+		<script type="text/javascript">
+		<!--
+			//===================================================================
+			// ページの変数
+			//===================================================================
+			//Enter id(s) of each Side Bar Menu's main UL, separated by commas
+			var menuids=["sidebarmenu1"];
+			var menuBottomPos=[];
+
+			//===================================================================
+			//イベントの登録
+			//===================================================================
+			if ( window.addEventListener ) {
+				window.addEventListener( "load", InitPage, false );
+				window.addEventListener( "resize", UpdateSidebarMenu, false );
+				window.addEventListener( "scroll", UpdateSidebarMenu, false );
+			}
+			else if ( window.attachEvent ) {
+				window.attachEvent( "onload", InitPage );
+				window.attachEvent( "onresize", UpdateSidebarMenu );
+				window.attachEvent( "onscroll", UpdateSidebarMenu );
+			}
+			else {
+				window.onload = InitPage;
+				window.onresize = UpdateSidebarMenu;
+				window.onscroll = UpdateSidebarMenu;
+			}
+			
+			//===================================================================
+			// Function : InitPage ページ内の初期化処理（初回のみ呼び出し）
+			//===================================================================
+			function InitPage(){
+
+				// シンタックスハイライトの初期化
+				InitSyntaxHighlighter();
+
+				// メニューの初期化
+				InitSidebarMenu();
+
+				// アップデートしておく
+				UpdateSidebarMenu();
+			}
+
+			//===================================================================
+			// Function : InitSidebarMenu メニューの初期化
+			//===================================================================
+			function InitSidebarMenu()
+			{
+				for ( var i = 0; i < menuids.length; i++ )
+				{
+					// 処理対象となるメニューを取得する
+					var ultags = document.getElementById( menuids[i] ).getElementsByTagName("ul");
+
+					// 各メニューに対する処理
+					for ( var t = 0; t < ultags.length; t++ )
+					{
+						ultags[t].parentNode.getElementsByTagName("a")[0].className += " subfolderstyle"
+						
+						//if this is a first level submenu
+						if ( ultags[t].parentNode.parentNode.id == menuids[i] )
+						{
+							//dynamically position first level submenus to be width of main menu item
+							ultags[t].style.left = ultags[t].parentNode.offsetWidth + "px";
+						}
+						//else if this is a sub level submenu (ul)
+						else
+						{
+							//position menu to the right of menu item that activated it
+							ultags[t].style.left = ultags[t-1].getElementsByTagName("a")[0].offsetWidth + "px";
+						}
+
+						// 高さの初期位置をセット
+						var atags = ultags[t].getElementsByTagName( "a" );
+						var innerUlTags = ultags[t].getElementsByTagName( "ul" );
+
+						var childatagNum = atags.length;
+						for ( var nUl = 0; nUl < innerUlTags.length; nUl++ ) childatagNum -= innerUlTags[nUl].getElementsByTagName( "a" ).length;
+						var menuHeight = childatagNum * atags[0].offsetHeight;
+						// このメニューの一番下の位置を取得
+						var parentRect = ultags[t].parentNode.getBoundingClientRect();	// 親ノードの境界サイズ
+
+						// メニューの下の初期位置を保存しておく
+						menuBottomPos[t]  = parentRect.top + menuHeight;
+
+						// マウスオーバー時の処理を登録
+						ultags[t].parentNode.onmouseover = function()
+						{
+							this.getElementsByTagName("ul")[0].style.display = "block"
+						}
+						ultags[t].parentNode.onmouseout = function()
+						{
+							this.getElementsByTagName("ul")[0].style.display = "none"
+						}
+					}
+					
+					// loop through all sub menus again, and use "display:none" to hide menus (to prevent possible page scrollbars
+					for ( var t = ultags.length - 1; t > -1; t-- )
+					{
+						ultags[t].style.visibility	= "visible"
+						ultags[t].style.display		= "none"
+					}
+				}
+			}
+
+			//===================================================================
+			// Function : InitSyntaxHighlighter SyntaxHighlighterの初期化
+			//===================================================================
+			function InitSyntaxHighlighter()
+			{
+				dp.SyntaxHighlighter.ClipboardSwf = '../resource/clipboard.swf';
+				dp.SyntaxHighlighter.HighlightAll('code');
+			}
+
+			//===================================================================
+			// Function : UpdateSidebarMenu メニューの位置を更新します。
+			//===================================================================
+			function UpdateSidebarMenu()
+			{
+				for ( var i = 0; i < menuids.length; i++ )
+				{
+					// 処理対象となるメニューを取得する
+					var ultags = document.getElementById( menuids[i] ).getElementsByTagName("ul");
+
+					// 各メニューに対する処理
+					for ( var t = 0; t < ultags.length; t++ )
+					{
+						// メニューの高さを調節する
+						var atags = ultags[t].getElementsByTagName( "a" );
+						var innerUlTags = ultags[t].getElementsByTagName( "ul" );
+						
+						var childatagNum = atags.length;
+						for ( var nUl = 0; nUl < innerUlTags.length; nUl++ ) childatagNum -= innerUlTags[nUl].getElementsByTagName( "a" ).length;
+						var menuHeight = childatagNum * atags[0].offsetHeight;
+
+						// このメニューの一番下の位置を取得
+						var parentRect = ultags[t].parentNode.getBoundingClientRect();	// 親ノードの境界サイズ
+						
+						// クライアント領域の底とメニューの底の距離を計算
+						var clientHeight = getClientHeight();
+						
+						var scTop = document.body.scrollTop || document.documentElement.scrollTop;
+						var btobLen = clientHeight - menuBottomPos[t];
+						
+						// メニューが潜らないように調整
+						if ( btobLen + scTop < 0 )
+						{
+							// 潜っている分だけ上にシフトする
+							ultags[t].style.top = (Math.max( (-1 * parentRect.top), btobLen-1)-15) + scTop + "px";
+						}
+						else
+						{
+							// 潜らないので初期位置
+							ultags[t].style.top = "0px";
+						}
+					}
+				}
+			}
+
+			//===================================================================
+			// Function : UpdateSidebarMenu メニューの位置を更新します。
+			//===================================================================
+			function getClientHeight(){
+				// IE以外。
+				if ((!document.all || window.opera) && document.getElementById) {
+					return window.innerHeight;
+				}
+				// ウィンドウズIE 6・標準モード。
+				else if (document.getElementById && (document.compatMode=='CSS1Compat')) {
+					return document.documentElement.clientHeight;
+				}
+				// その他のIE。
+				else if (document.all) {
+					return document.body.clientHeight;
+				}
+			}
+		-->
+		</script>
+	</head>
+	<body>
+		<div class="wrap">
+			<div class="header">
+				<font color="gray">Nintendo MessageStudio Help</font>
+			</div>
+			<div class="inner">
+				<div class="mainWrap">
+					<h1><font color="gray">Flowchart Binary Format</font></h1>
+<p><font color="gray">The format of flowchart binary files (*.msbf) will be explained here.
+They are configured based on the block format so please refer <a href="RES_FMT_blocks.html#">to that explanation</a> as well.
+In order to create a flowchart binary file,  it is necessary to make it possible to use a separate flowchart plug-in on the project.</font></p>
+<p><font color="gray">Normally it's not necessary to worry about the contents of these pages but it will help to understand <a href="LMS_Overview.html#">libms</a> when you use them. When accessing the binary format, using a libms API can make it easier to access it.</font></p>
+
+<h2><font color="gray">Flowchart Node Block (FLW2)</font></h2>
+<P><font color="gray">This block maintains how the flowchart node (a singular box on the flowchart) is connected.
+Also, this block only stores information on how the block is connected.
+Layout coordinates (location data) is all discarded. 
+The flowchart nodes are all assigned consecutive index numbers from the beginning.</font></p>
+<h3><font color="gray">Count Data</font></h3>
+<p><font color="gray">First the count data will be saved.</font></p>
+<img src="../resource/RES_FMT_msbf0.png" />
+<br />
+<table border="1">
+<tr>
+<td width="100">NODE NUM</td><td><font color="gray">The flow chart node count saved to this block is  displayed.
+0 to 65535 are saved.
+This flowchart node data is saved to the saved to the first half of the block.</font></td>
+</tr>
+<tr>
+<td>CASE NUM</td><td><font color="gray">This displays the jump count saved to this block.
+Many branch paths can be set with the flowchart branch node.
+The number is represented by the "jump target index information" in the second half of the block.</font></td>
+</tr>
+<tr>
+<td>RESERVED</td><td><font color="gray">Reserved area.
+Data might be added to this location in the future.
+</font></td>
+</tr>
+</table>
+
+<p><font color="gray">After the count data, flowchart node information will be inserted as a programming array.
+A singular flowchart node is saved as a 12-byte fixed length cell
+and is saved in the order specified by the index number. 
+Among these, the branch nodes will exceed 12-bytes due to the branch count.
+In addition to this range, there is another area where branch target information in saved.</font></p>
+<p><font color="gray">Node data is structured in the following way.</font></p>
+
+<img src="../resource/RES_FMT_msbf1.png" />
+<br /><br />
+
+<table border="1">
+<tr>
+<td width="100">NODE TYPE</td><td><font color="gray">The node type is included.
+This range is read first and then determine which node should be designated.</font></td>
+</tr>
+<tr>
+<td>PRM TYPE</td><td><font color="gray">パラメータの種類が入ります。
+標準のフローチャートでは、分岐ノードとイベントノードにパラメータを指定できます。</font><br />
+
+<table border="1">
+	<tr>
+	<th><font color="gray">Type</font></th>
+	<th><font color="gray">Description</font></th>
+	</tr>
+	<tr>
+	<td>BYTE4</td>
+	<td><font color="gray">The value representing this type (0) is used.</font></td>
+	</tr>
+	<tr>
+	<td>BYTE22</td>
+	<td><font color="gray">The value representing this type (1) is used.</font></td>
+	</tr>
+	<tr>
+	<td>BYTE211</td>
+	<td><font color="gray">The value representing this type (2) is used.</font></td>
+	</tr>
+	<tr>
+	<td>BYTE112</td>
+	<td><font color="gray">The value representing this type (3) is used.</font></td>
+	</tr>
+	<tr>
+	<td>BYTE1111</td>
+	<td><font color="gray">The value representing this type (4) is used.</font></td>
+	</tr>
+	<tr>
+	<td>TEXT</td>
+	<td><font color="gray">The value representing this type (5) is used.</font></td>
+	</tr>
+	<tr>
+	<td>LIST</td>
+	<td><font color="gray">The value representing this type (6) is used.</font></td>
+	</tr>
+</table>
+
+</td>
+</tr>
+<tr>
+<td>PRM VALUE</td><td><font color="gray">The value of parameter is saved.</font></td>
+</tr>
+<tr>
+<td>NODE DATA</td><td><font color="gray">This meaning will differ depending on the type of node defined by the NODE TYPE.
+Node specific information is saved.
+More information on this follows.</font></td>
+</tr>
+</table>
+<br />
+ 
+<h3><font color="gray">Message Node</font></h3>
+<p><font color="gray">When then NODE TYPE is 1, that means that that is a message node.</font></p>
+<img src="../resource/RES_FMT_msbf2.png" />
+<table border="1">
+<tr>
+<td width="100">NODE TYPE</td><td><font color="gray">The value representing a message (1) is used.</font></td>
+</tr>
+<tr>
+<td>PRM TYPE</td><td></td>
+</tr>
+<tr>
+<td>PRM VALUE</td><td></td>
+</tr>
+<tr>
+<td>NEXT IDX</td><td><font color="gray">Index to the next node.
+(When one does not exist, 0xFFFF will be used.)</font></td>
+</tr>
+<tr>
+<td>CONTENT ID</td><td><font color="gray">This is the index to the file name saved to the computer memory in the <a href="RES_FMT_msbp_content.html#">content data block </a> of the project binary.
+When one does not exist, 0xFFFF will be used.)</font></td>
+</tr>
+<tr>
+<td>TEXT IDX</td><td><font color="gray">Message index within the message binary file.
+(When one does not exist, 0xFFFF will be used.)</font></td>
+</tr>
+<tr>
+<td>RESERVED</td><td><font color="gray">(Not currently used)</font></td>
+</tr>
+</table>
+
+
+<h3><font color="gray">Branch Node</font></h3>
+<p><font color="gray">When the NODE TYPE is 2, that means that it is a branch node.</font></p>
+<img src="../resource/RES_FMT_msbf3.png" />
+<table border="1">
+<tr>
+<td width="100">NODE TYPE</td><td><font color="gray">The value representing a branch (2) is used.</font></td>
+</tr>
+<tr>
+<td>PRM TYPE</td><td></td>
+</tr>
+<tr>
+<td>PRM VALUE</td><td></td>
+</tr>
+<tr>
+<td>NEXT IDX</td><td><font color="gray">Index to the next node.
+(not used, always 0xFFFF in branch node.)</font></td>
+</tr>
+<tr>
+<td>QUERY ID</td><td><font color="gray">This ID identifies the conditional branch (query) set for the project.</font></td>
+</tr>
+<tr>
+<td>CASE NUM</td><td><font color="gray">When there is a branch, there will be multiple node candidates.
+This value represents the number of branch targets there are for the following node candidate.</font></td>
+</tr>
+<tr>
+<td>CASE IDX</td><td><font color="gray">This is the index to the next node that can be accessed through the node index.
+When there is a branch, the index will be preceded by a CASE NUM candidate.
+(When a branch does not exist, 0xFFFF will be used.)</font></td>
+</tr>
+<tr>
+<td>RESERVED</td><td><font color="gray">(Not currently used.)</font></td>
+</tr>
+</table>
+
+<h3><font color="gray">Event Node</font></h3>
+<p><font color="gray">When the NODE TYPE is 3, that means it's a event node.</font></p>
+<img src="../resource/RES_FMT_msbf4.png" />
+<table border="1">
+<tr>
+<td width="200">NODE TYPE</td><td><font color="gray">The value representing an event is used.</font></td>
+</tr>
+<tr>
+<td>PRM TYPE</td><td></td>
+</tr>
+<tr>
+<td>PRM VALUE</td><td></td>
+</tr>
+<tr>
+<td>NEXT INDEX</td><td><font color="gray">This is the index to the next node.
+(When one does not exist, 0xFFFF will be used.)</font></td>
+</tr>
+<tr>
+<td>EVENT ID</td><td><font color="gray">This ID represents an event that is set by the project.</font></td>
+</tr>
+<tr>
+<td>RESERVED</td><td><font color="gray">(Not currently used)</font></td>
+</tr>
+</table>
+
+
+
+<h3><font color="gray">Entry Node</font></h3>
+<p><font color="gray">When the NODE TYPE is 4, that represents an entry node type.</font></p>
+<img src="../resource/RES_FMT_msbf5.png" />
+<table border="1">
+<tr>
+<td width="110">NODE TYPE</td><td><font color="gray">The value representing an entry (4) is used.</font></td>
+</tr>
+<tr>
+<td>PRM TYPE</td><td></td>
+</tr>
+<tr>
+<td>PRM VALUE</td><td></td>
+</tr>
+<tr>
+<td>NEXT INDEX</td><td><font color="gray">This is the index to the next node.
+(When one does not exist, 0xFFFF will be used.)</font></td>
+</tr>
+<tr>
+<td>RESERVED</td><td><font color="gray">(Not currently used)</font></td>
+</tr>
+</table>
+
+<h3><font color="gray">Jump node</font></h3>
+<p><font color="gray">When the NODE TYPE is 5, that represents a jump node.</font></p>
+<img src="../resource/RES_FMT_msbf6.png" />
+<table border="1">
+<tr>
+<td width="110">NODE TYPE</td><td><font color="gray">The value representing a jump (5) is used.</font></td>
+</tr>
+<tr>
+<td>PRM TYPE</td><td></td>
+</tr>
+<tr>
+<td>PRM VALUE</td><td></td>
+</tr>
+<tr>
+<td>NEXT INDEX</td><td><font color="gray">The index to the next node.
+(When one does not exist, 0xFFFF is used.)</font></td>
+</tr>
+<tr>
+<td>CONTENT ID</td><td><font color="gray">The content id of message file include next entry node.</font></td>
+</tr>
+<tr>
+<td>RESERVED</td><td><font color="gray">(Currently not used.)</font></td>
+</tr>
+</table>
+
+<h3><font color="gray">Branch information and text parameter value.</font></h3>
+<p><font color="gray">After this data, the branch node branch index list will be entered at the end.</font></p>
+<br/>
+<img src="../resource/RES_FMT_msbf7.png" />
+<br/>
+<p><font color="gray">This data is set as 2-byte arrays. 
+They each show branch target flow chart node index numbers and
+when there isn't a connection 0xFFFF is used.</font></p>
+<p><font color="gray">分岐情報に続く、テキスト型のパラメータ値は、NULL終端のASCII文字列となっています。この文字列は、ノードのパラメータのタイプがテキストの場合に取得されるパラメータ値を、データ部先頭からのオフセット値として利用することで取得できます。</font></p>
+
+<h2><font color="gray">Flow chart entry block (FEN1)</font></h2>
+<br/>
+<img src="../resource/RES_FMT_msbf8.png" />
+<br/>
+<p><font color="gray">This block serves to carry through the flow chart node index number using
+the entry node name as its basis.
+The basic structure of the data is very similar to the <a href="RES_FMT_msbt.html#LBL_Block">label block (LBL1)</a> of the message 
+binary file (*.msbt) so please refer to that.</font></p>
+
+				</div>
+				<div class="sidebarmenu">
+				<ul id="sidebarmenu1">
+					<!-- Index -->
+					<li><a href="index.html"><img src="../resource/everyone.png" />  <font color="gray">Introduction</font></a></li>
+					<!-- Introduction -->
+					<li><a href="#"><img src="../resource/everyone.png" />  <font color="gray">Message Studio Basics</font></a>
+						<ul>
+						<li><a href="Intro_Tour.html"><img src="../resource/everyone.png" />  <font color="gray">Game Production Flow</font></a></li>
+						<li><a href="Intro_Project.html"><img src="../resource/everyone.png" />  <font color="gray">Project Files Overview</font></a></li>
+						<li><a href="Intro_Project_Explorer.html"><img src="../resource/everyone.png" />  <font color="gray">Operating the Project Explorer</font></a></li>
+						<li><a href="Intro_WindowOperation.html"><img src="../resource/everyone.png" />  <font color="gray">Window Operations</font></a></li>
+						<li><a href="LANG_Setting.html"><img src="../resource/administrators.png" />  <font color="gray">Language Settings</font></a></li>
+						<li><a href="ColorSetting.html"><img src="../resource/administrators.png" />  <font color="gray">Color Settings</font></a></li>
+						<li><a href="AttributeSetting.html"><img src="../resource/administrators.png" />  <font color="gray">Configuring Attributes</font></a></li>
+						</ul>
+					</li>
+					
+					<!-- Message Editting -->
+					<li><a href="#"><img src="../resource/editors.png" />  <font color="gray">Editing Messages</font></a>
+						<ul>
+						<li><a href="MSG_BasicUsage.html"><font color="gray">Basic Operations</font></a>
+						<li><a href="MSG_Category.html"><font color="gray">Text Types</font></a>
+						<li><a href="MSG_Clipboard.html"><font color="gray">Using the Clipboard</font></a>
+						<li><a href="MSG_CellStatus.html"><font color="gray">Language Cell Status</font></a></li>
+						<li><a href="MSG_Customize.html"><font color="gray">Customized Views</font></a>
+						<li><a href="MSG_Tips.html"><font color="gray">Tips for Using the Message List Screen</font></a></li>
+						</ul>
+					</li>
+					
+					<!-- Tag -->
+					<li><a href="#"><img src="../resource/everyone.png" />  <font color="gray">Tags</font></a>
+						<ul>
+						<li><a href="Tag_Overview.html"><img src="../resource/everyone.png" />  <font color="gray">Overview</font></a></li>
+						<li><a href="Tag_Input.html"><img src="../resource/editors.png" />  <font color="gray">Editing Using Tags</font></a></li>
+						<li><a href="Tag_Source.html"><img src="../resource/administrators.png" />  <font color="gray">Tag Source Strings</font></a></li>
+						<li><a href="Tag_Compare.html"><img src="../resource/editors.png" />  <font color="gray">Overview of Tag Comparison</font></a></li>
+						</ul>
+					</li>
+					
+					<!-- Search -->
+					<li><a href="#"><img src="../resource/editors.png" />  <font color="gray">Search Features</font></a>
+						<ul>
+						<li><a href="Intro_Search_Overview.html"><font color="gray">Overview</font></a></li>
+						<li><a href="Intro_Search_Simple.html"><font color="gray">Simple Search</font></a></li>
+						<li><a href="Intro_Search_Detail.html"><font color="gray">Advanced Search</font></a></li>
+						<li><a href="Intro_Search_RegEx.html"><font color="gray">Regular Expressions</font></a></li>
+						</ul>
+					</li>
+					
+					<!-- Spell checking -->
+					<li><a href="#"><img src="../resource/editors.png" />  <font color="gray">Spell Check</font></a>
+						<ul>
+						<li><a href="SpellCheck_Overview.html"><font color="gray">Spell Check Overview</font></a></li>
+						<li><a href="SpellCheck_Usage.html"><font color="gray">How to Use Spell Check</font></a></li>
+						</ul>
+					</li>
+					
+					<!-- Roles and Permissions -->
+					<li><a href="#"><img src="../resource/editors.png" />  <font color="gray">Roles and Permissions</font></a>
+						<ul>
+						<li><a href="Intro_Role_Overview.html"><font color="gray">Overview</font></a></li>
+						<li><a href="Intro_Role_AddRole.html"><font color="gray">Adding a Role and Setting Permissions</font></a></li>
+						<li><a href="Intro_Role_SelectRole.html"><font color="gray">Selecting a Role</font></a></li>
+						</ul>
+					</li>
+					
+					<!-- Progress -->
+					<li><a href="#"><img src="../resource/editors.png" />  <font color="gray">Message Statistics</font></a>
+						<ul>
+						<li><a href="Progress_Overview.html"><font color="gray">About the Statistics</font></a></li>
+						<li><a href="Progress_Usage.html"><font color="gray">How to Use the Statistics</font></a></li>
+						</ul>
+					</li>
+					
+					<!-- Style -->
+					<li><a href="#"><img src="../resource/everyone.png" />  <font color="gray">Style Features and Width Calculation</font></a>
+						<ul>
+						<li><a href="Style_Overview.html"><img src="../resource/everyone.png" />  <font color="gray">Styles and Width Calculation Overview</font></a></li>
+						<li><a href="Intro_TextWidthCheck_Check.html"><img src="../resource/everyone.png" />  <font color="gray">Global Text Width Check</font></a></li>
+						<li><a href="Style_RenderMode.html"><img src="../resource/administrators.png" />  <font color="gray">Rendering Methods Overview</font></a></li>
+						<li><a href="Style_Setting.html"><img src="../resource/administrators.png" />  <font color="gray">Configuring Styles</font></a></li>
+						</ul>
+					</li>
+					
+					<!-- Font -->
+					<li><a href="#"><img src="../resource/everyone.png" />  <font color="gray">Fonts</font></a>
+						<ul>
+						<li><a href="Font_Overview.html"><img src="../resource/everyone.png" />  <font color="gray">Font Features Overview</font></a></li>
+						<li><a href="Font_Workflow.html"><img src="../resource/administrators.png" />  <font color="gray">Font Workflows Overview</font></a></li>
+						<li><a href="Font_Setting.html"><img src="../resource/administrators.png" />  <font color="gray">Configuring Fonts</font></a></li>
+						</ul>
+					</li>
+					
+					<!-- Team -->
+					<li><a href="#"><img src="../resource/everyone.png" />  <font color="gray">Team Management Features</font></a>
+						<ul>
+						<li><a href="TEAM_Overview.html"><img src="../resource/everyone.png" />  <font color="gray">Overview</font></a></li>
+						<li><a href="TEAM_CaseByCase.html"><img src="../resource/editors.png" />  <font color="gray">Managing Files</font></a></li>
+						<li><a href="TEAM_StartUse.html"><img src="../resource/editors.png" />  <font color="gray">Using the Team Management Features</font></a></li>
+						<li><a href="TEAM_Usage.html"><img src="../resource/editors.png" />  <font color="gray">Basic Operations</font></a></li>
+						<li><a href="TEAM_Log.html"><img src="../resource/editors.png" />  <font color="gray">Displaying the Commit Log</font></a></li>
+						<li><a href="TEAM_Diff.html"><img src="../resource/editors.png" />  <font color="gray">Displaying Diffs</font></a></li>
+						<li><a href="TEAM_Merge.html"><img src="../resource/editors.png" />  <font color="gray">Conflicts and Merges</font></a></li>
+						<li><a href="TEAM_Proxy.html"><img src="../resource/administrators.png" />  <font color="gray">Proxy Server Settings</font></a></li>
+						<li><a href="TEAM_Server.html"><img src="../resource/administrators.png" />  <font color="gray">Server Settings</font></a></li>
+						</ul>
+					</li>
+					
+					<!-- Meta -->
+					<li><a href="#"><img src="../resource/everyone.png" />  <font color="gray">Meta Data</font></a>
+						<ul>
+						<li><a href="Meta_Overview.html"><font color="gray">Meta Data Overview</font></a></li>
+						<li><a href="Meta_List.html"><font color="gray">List of Meta Data</font></a></li>
+						</ul>
+					</li>
+					
+					<!-- Resource -->
+					<li><a href="#"><img src="../resource/everyone.png" />  <font color="gray">Resource File-Related</font></a>
+						<ul>
+						<li><a href="RES_Overview.html"><img src="../resource/administrators.png" />  <font color="gray">Resources Overview</font></a></li>
+						<li><a href="RES_Build.html"><img src="../resource/everyone.png" />  <font color="gray">Outputting Resource Files</font></a></li>
+						<li><a href="RES_Setting.html"><img src="../resource/administrators.png" />  <font color="gray">Configuring Output</font></a></li>
+						<li><a href="RES_BuildEvent.html"><img src="../resource/administrators.png" />  <font color="gray">About Build Events</font></a></li>
+						<li><a href="RES_FMT_blocks.html"><img src="../resource/programmer.png" />  <font color="gray">Shared Binary Format</font></a></li>
+						<li><a href="RES_FMT_msbt.html"><img src="../resource/programmer.png" />  <font color="gray">Message Binary Format</font></a></li>
+						<li><a href="RES_FMT_msbf.html"><img src="../resource/programmer.png" />  <font color="gray">Flowchart Binary Format</font></a></li>
+						<li><a href="RES_FMT_msbp.html"><img src="../resource/programmer.png" />  <font color="gray">Project Binary Format</font></a>
+							<ul>
+							<li><a href="RES_FMT_msbp.html"><font color="gray">Project Binary Format</font></a></li>
+							<li><a href="RES_FMT_msbp_color.html"><font color="gray">Color Data</font></a></li>
+							<li><a href="RES_FMT_msbp_content.html"><font color="gray">Content Data</font></a></li>
+							<li><a href="RES_FMT_msbp_attr.html"><font color="gray">Attribute Data</font></a></li>
+							<li><a href="RES_FMT_msbp_tag.html"><font color="gray">Tag Data</font></a></li>
+							<li><a href="RES_FMT_msbp_style.html"><font color="gray">Style Data</font></a></li>
+							</ul>
+						</li>
+						<li><a href="RES_Tags.html"><img src="../resource/programmer.png" />  <font color="gray">Tags Overview</font></a></li>
+						</ul>
+					</li>
+					
+					<!-- Macro -->
+					<li><a href="#"><img src="../resource/administrators.png" />  <font color="gray">Macro String Expansion Feature</font></a>
+						<ul>
+						<li><a href="Macro_Introduction.html"><font color="gray">What Are Macro Strings?</font></a></li>
+						<li><a href="Macro_List.html"><font color="gray">List of Available Macros</font></a></li>
+						</ul>
+					<li><a href="#"><img src="../resource/administrators.png" />  <font color="gray">Command Line-Related</font></a>
+						<ul>
+						<li><a href="CMD_Overview.html"><font color="gray">Command Line Control Overview</font></a></li>
+						<li><a href="CMD_Convert.html"><font color="gray">/convert Switch Overview</font></a></li>
+						</ul>
+					</li>
+					
+					<!-- Plug-in system -->
+					<li><a href="#"><img src="../resource/administrators.png" />  <font color="gray">Plug-Ins</font></a>
+						<ul>
+						<li><a href="Plugin_Overview.html"><font color="gray">Plug-Ins Overview</font></a></li>
+						<li><a href="Plugin_Types.html"><font color="gray">Types of Plug-Ins</font></a></li>
+						</ul>
+					</li>
+					
+					<!-- Plug-in system -->
+					<li><a href="#"><img src="../resource/programmer.png" />  <font color="gray">Creating Plug-Ins</font></a>
+						<ul>
+						<li><a href="MakePlugin_Overview.html"><font color="gray">Simple Plug-In Creation Tutorial</font></a></li>
+						<li><a href="MakePlugin_CommandLine.html"><font color="gray">Creation Without Using a Development Environment</font></a></li>
+						<li><a href="MakePlugin_AboutSamples.html"><font color="gray">Samples</font></a></li>
+						</ul>
+					</li>
+					
+					<!-- Assembly security -->
+					<li><a href="#"><img src="../resource/administrators.png" />  <font color="gray">MessageStudio Assembly Settings</font></a>
+						<ul>
+						<li><a href="Assembly_Caspol.html"><font color="gray">Caspol: Assembly Security Settings</font></a></li>
+						<li><a href="Assembly_Ngen.html"><font color="gray">Ngen: Generating Native Images</font></a></li>
+						</ul>
+					</li>
+					
+					<!-- XML Spec -->
+					<li><a href="#"><img src="../resource/programmer.png" />  <font color="gray">XML Specifications</font></a>
+						<ul>
+						<li><a href="XMLSpec_Overview.html"><font color="gray">Overview</font></a></li>
+						<li><a href="XMLSpec_Project.html"><font color="gray">XML Specifications for Project Files (.msproj)</font></a></li>
+						<li><a href="XMLSpec_Text.html"><font color="gray">XML Specifications for Message Files (.mstxt)</font></a></li>
+						</ul>
+					</li>
+					
+					<!-- libms_overview -->
+					<li><a href="#"><img src="../resource/programmer.png" />  <font color="gray">libms Overview</font></a>
+						<ul>
+							<li><a href="LMS_Overview.html"><font color="gray">Overview</font></a></li>
+							<li><a href="LMS_Compile.html"><font color="gray">How to Compile</font></a></li>
+						</ul>
+					</li>
+					
+					<!-- libms_common -->
+					<li><a href="#"><img src="../resource/programmer.png" />  <font color="gray">Shared Functions</font></a>
+						<ul>
+						<li><a href="LMS_SetMemFuncs.html">LMS_SetMemFuncs</a></li>
+						</ul>
+					</li>
+					
+					<!-- libms_message -->
+					<li><a href="#"><img src="../resource/programmer.png" />  <font color="gray">Message-Related Functions</font></a>
+						<ul>
+							<li><a href="LMS_InitMessage.html">LMS_InitMessage</a></li>
+							<li><a href="LMS_CloseMessage.html">LMS_CloseMessage</a></li>
+							<li><a href="LMS_SearchMessageBlockByName.html">LMS_SearchMessageBlockByName</a></li>
+							<li><a href="LMS_GetMessageBlockInfoByName.html">LMS_GetMessageBlockInfoByName</a></li>
+							<li><a href="LMS_GetTextNum.html">LMS_GetTextNum</a></li>
+							<li><a href="LMS_GetTextIndexByLabel.html">LMS_GetTextIndexByLabel</a></li>
+							<li><a href="LMS_GetText.html">LMS_GetText</a></li>
+							<li><a href="LMS_GetTextSize.html">LMS_GetTextSize</a></li>
+							<li><a href="LMS_GetTextByLabel.html">LMS_GetTextByLabel</a></li>
+							<li><a href="LMS_GetLabelByTextIndex.html">LMS_GetLabelByTextIndex</a></li>
+							<li><a href="LMS_GetTextStyle.html">LMS_GetTextStyle</a></li>
+							<li><a href="LMS_GetTextStyleByLabel.html">LMS_GetTextStyleByLabel</a></li>
+							<li><a href="LMS_GetAttributeSize.html">LMS_GetAttributeSize</a></li>
+							<li><a href="LMS_GetAttribute.html">LMS_GetAttribute</a></li>
+							<li><a href="LMS_GetAttributeText.html">LMS_GetAttributeText</a></li>
+						</ul>
+					</li>
+					
+					<!-- libms_flowchart -->
+					<li><a href="#"><img src="../resource/programmer.png" />  <font color="gray">Flowchart-Related Functions</font></a>
+						<ul>
+							<li><a href="LMS_InitFlowchart.html">LMS_InitFlowchart</a></li>
+							<li><a href="LMS_CloseFlowchart.html">LMS_CloseFlowchart</a></li>
+							<li><a href="LMS_GetNodeNum.html">LMS_GetNodeNum</a></li>
+							<li><a href="LMS_GetEntryNodeIndex.html">LMS_GetEntryNodeIndex</a></li>
+							<li><a href="LMS_GetNodeDataPtr.html">LMS_GetNodeDataPtr</a></li>
+							<li><a href="LMS_GetFlowNodeIndex.html">LMS_GetFlowNodeIndex</a></li>
+							<li><a href="LMS_GetCaseIndexesFromBranchNode.html">LMS_GetCaseIndexesFromBranchNode</a></li>
+							<li><a href="LMS_GetFlowParamText.html">LMS_GetFlowParamText</a></li>
+						</ul>
+					</li>
+					
+					<!-- libms_project -->
+					<li><a href="#"><img src="../resource/programmer.png" />  <font color="gray">Project-Related Functions</font></a>
+						<ul>
+							<li><a href="LMS_InitProject.html">LMS_InitProject</a></li>
+							<li><a href="LMS_CloseProject.html">LMS_CloseProject</a></li>
+							<li><a href="LMS_SearchProjectBlockByName.html">LMS_SearchProjectBlockByName</a></li>
+							<li><a href="#"><font color="gray">Color Data-Related Functions</font></a>
+								<ul>
+								<li><a href="LMS_GetColorIndexByName.html">LMS_GetColorIndexByName</a></li>
+								<li><a href="LMS_GetColor.html">LMS_GetColor</a></li>
+								<li><a href="LMS_GetColorByName.html">LMS_GetColorByName</a></li>
+								<li><a href="LMS_GetColorNum.html">LMS_GetColorNum</a></li>
+								</ul>
+							</li>
+							<li><a href="#"><font color="gray">Content Data-Related Functions</font></a>
+								<ul>
+								<li><a href="LMS_GetContentsNum.html">LMS_GetContentsNum</a></li>
+								<li><a href="LMS_GetContentPath.html">LMS_GetContentPath</a></li>
+								</ul>
+							</li>
+							<li><a href="#"><font color="gray">Attribute Data-Related Functions</font></a>
+								<ul>
+								<li><a href="LMS_GetAttrInfoIndexByName.html">LMS_GetAttrInfoIndexByName</a></li>
+								<li><a href="LMS_GetAttrType.html">LMS_GetAttrType</a></li>
+								<li><a href="LMS_GetAttrTypeByName.html">LMS_GetAttrTypeByName</a></li>
+								<li><a href="LMS_GetAttrOffset.html">LMS_GetAttrOffset</a></li>
+								<li><a href="LMS_GetAttrOffsetByName.html">LMS_GetAttrOffsetByName</a></li>
+								<li><a href="LMS_GetAttrListItemName.html">LMS_GetAttrListItemName</a></li>
+								<li><a href="LMS_GetAttrListItemNameByName.html">LMS_GetAttrListItemNameByName</a></li>
+								<li><a href="LMS_GetAttrNum.html">LMS_GetAttrNum</a></li>
+								<li><a href="LMS_GetAttrListItemNum.html">LMS_GetAttrListItemNum</a></li>
+								</ul>
+							</li>
+							<li><a href="#"><font color="gray">Tag Data-Related Functions</font></a>
+								<ul>
+								<li><a href="LMS_GetTagGroupName.html">LMS_GetTagGroupName</a></li>
+								<li><a href="LMS_GetTagName.html">LMS_GetTagName</a></li>
+								<li><a href="LMS_GetTagParamName.html">LMS_GetTagParamName</a></li>
+								<li><a href="LMS_GetTagParamType.html">LMS_GetTagParamType</a></li>
+								<li><a href="LMS_GetTagListItemName.html">LMS_GetTagListItemName</a></li>
+								<li><a href="LMS_GetTagGroupNum.html">LMS_GetTagGroupNum</a></li>
+								<li><a href="LMS_GetTagNum.html">LMS_GetTagNum</a></li>
+								<li><a href="LMS_GetTagParamNum.html">LMS_GetTagParamNum</a></li>
+								<li><a href="LMS_GetTagListItemNum.html">LMS_GetTagListItemNum</a></li>
+								</ul>
+							</li>
+							<li><a href="#"><font color="gray">Style Data-Related Functions</font></a>
+								<ul>
+								<li><a href="LMS_GetStyleIndexByName.html">LMS_GetStyleIndexByName</a></li>
+								<li><a href="LMS_GetRegionWidth.html">LMS_GetRegionWidth</a></li>
+								<li><a href="LMS_GetRegionWidthByName.html">LMS_GetRegionWidthByName</a></li>
+								<li><a href="LMS_GetLineNum.html">LMS_GetLineNum</a></li>
+								<li><a href="LMS_GetLineNumByName.html">LMS_GetLineNumByName</a></li>
+								<li><a href="LMS_GetFontIndex.html">LMS_GetFontIndex</a></li>
+								<li><a href="LMS_GetFontIndexByName.html">LMS_GetFontIndexByName</a></li>
+								<li><a href="LMS_GetStyleNum.html">LMS_GetStyleNum</a></li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					
+					<li><a href="Intro_Extensions.html"><img src="../resource/everyone.png" />  <font color="gray">List of Supported File Extensions</font></a></li>
+					<li><a href="FAQ.html"><img src="../resource/everyone.png" />  <font color="gray">FAQ</font></a></li>
+				</ul>
+				</div>
+				<div class="clear"><hr/></div>
+			</div>
+			<div class="footer">
+				Copyright &copy; 2008 - 2010 Nintendo EAD
+			</div>
+		</div>
+	</body>
+</html>

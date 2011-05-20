@@ -1,0 +1,647 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<MessageStudioText
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="BTLMSG_UI_SEL_FIGHT"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>たたかう</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>戦う</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>128</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="BTLMSG_UI_SEL_ESCAPE"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>にげる</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>逃げる</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>128</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="BTLMSG_UI_SEL_POKEMON"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモン</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモン</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>128</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="BTLMSG_UI_SEL_ITEM"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>どうぐ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>道具</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>128</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="BTLMSG_UI_SEL_BACK"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>もどる</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>戻る</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>128</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="BTLMSG_UI_SEL_NEXT_POKE"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>つぎの　ポケモンを　つかう</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>次の　ポケモンを　使う</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>128</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="BTLMSG_UI_SEL_IREKAE_YES"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンを　いれかえる</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンを　入れ替える</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>128</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="BTLMSG_UI_SEL_IREKAE_NO"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そのまま　たたかう</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そのまま　戦う</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>128</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="BTLMSG_UI_SEL_YES"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>はい</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>はい</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>勝負をあきらめますか？　に対して返答</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>128</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="BTLMSG_UI_SEL_NO"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>いいえ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>いいえ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>128</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="BTLMSG_UI_SEL_WAZA"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:Move Idx="0"]
+　　[Digit:2digits Idx="1"]/[Digit:2digits Idx="2"]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:Move Idx="0"]
+　　[Digit:2digits Idx="1"]/[Digit:2digits Idx="2"]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>128</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="BTLSTR_UI_StatWinForm"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonNickname Idx="0"]
+[Digit:3digits Idx="1"]/[Digit:3digits Idx="2"]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonNickname Idx="0"]
+[Digit:3digits Idx="1"]/[Digit:3digits Idx="2"]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>128</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="BTLSTR_UI_WARN_NotAlivePoke"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonNickname Idx="0"]は　もう
+たたかう　ちからが　のこっていない！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonNickname Idx="0"]は　もう
+戦う力が残っていない！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="BTLSTR_UI_WARN_FightingPoke"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonNickname Idx="0"]は
+すでに　せんとうに　でています！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonNickname Idx="0"]は
+すでに　戦闘に出ています！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="BTLSTR_UI_WARN_SelectedPoke"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonNickname Idx="0"]は　もう　えらんだよ！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonNickname Idx="0"]は　もう　選んだよ！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="BTLSTR_UI_COMM_WAIT"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>つうしんたいきちゅう…</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>通信待機中…</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="BTLSTR_UI_LVUP_DIFF"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｈ　Ｐ[Ctrl1:xset value="60"]＋[Digit:2digits Idx="0"]
+こうげき[Ctrl1:xset value="60"]＋[Digit:2digits Idx="1"]
+ぼうぎょ[Ctrl1:xset value="60"]＋[Digit:2digits Idx="2"]
+とくこう[Ctrl1:xset value="60"]＋[Digit:2digits Idx="3"]
+とくぼう[Ctrl1:xset value="60"]＋[Digit:2digits Idx="4"]
+すばやさ[Ctrl1:xset value="60"]＋[Digit:2digits Idx="5"]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｈ　Ｐ[Ctrl1:xset value="60"]＋[Digit:2digits Idx="0"]
+こうげき[Ctrl1:xset value="60"]＋[Digit:2digits Idx="1"]
+ぼうぎょ[Ctrl1:xset value="60"]＋[Digit:2digits Idx="2"]
+とくこう[Ctrl1:xset value="60"]＋[Digit:2digits Idx="3"]
+とくぼう[Ctrl1:xset value="60"]＋[Digit:2digits Idx="4"]
+すばやさ[Ctrl1:xset value="60"]＋[Digit:2digits Idx="5"]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>80</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="BTLSTR_UI_LVUP_PARAM"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｈ　Ｐ[Ctrl1:xright value="0"][Digit:3digits Idx="0"]
+こうげき[Ctrl1:xright value="0"][Digit:3digits Idx="1"]
+ぼうぎょ[Ctrl1:xright value="0"][Digit:3digits Idx="2"]
+とくこう[Ctrl1:xright value="0"][Digit:3digits Idx="3"]
+とくぼう[Ctrl1:xright value="0"][Digit:3digits Idx="4"]
+すばやさ[Ctrl1:xright value="0"][Digit:3digits Idx="5"]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｈ　Ｐ[Ctrl1:xright value="0"][Digit:3digits Idx="0"]
+こうげき[Ctrl1:xright value="0"][Digit:3digits Idx="1"]
+ぼうぎょ[Ctrl1:xright value="0"][Digit:3digits Idx="2"]
+とくこう[Ctrl1:xright value="0"][Digit:3digits Idx="3"]
+とくぼう[Ctrl1:xright value="0"][Digit:3digits Idx="4"]
+すばやさ[Ctrl1:xright value="0"][Digit:3digits Idx="5"]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>80</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:05" />
+		</AttributeCell>
+	</TextRow>
+</MessageStudioText>

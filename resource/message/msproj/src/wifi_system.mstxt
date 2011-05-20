@@ -1,0 +1,3449 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<MessageStudioText
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="dwc_error_0001"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｗｉ－Ｆｉコネクションに
+せつぞく　できません
+
+くわしくは　ガイドブックを
+ごらん　ください
+（[Digit:5digits Idx="0"]）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｗｉ－Ｆｉコネクションに
+接続できません
+
+詳しくは　ガイドブックを
+ご覧ください
+（[Digit:5digits Idx="0"]）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>専用ウインドウ</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>192</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="dwc_error_0002"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｗｉ－Ｆｉコネクションが
+こみあっている　か
+サービスが
+ていし　しているために
+せつぞく　できません
+しばらく　まって
+やりなおして　ください
+（[Digit:5digits Idx="0"]）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｗｉ－Ｆｉコネクションが
+混み合っているか
+サービスが
+停止しているために
+接続できません
+しばらく　待って
+やりなおして　ください
+（[Digit:5digits Idx="0"]）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>専用ウインドウ</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>192</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="dwc_error_0003"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おきゃくさま　の
+Ｗｉ－ＦｉコネクションＩＤは
+ながい　あいだ
+しよう　されなかったため
+さくじょ　されました
+
+くわしくは　ガイドブックを
+ごらん　ください（[Digit:5digits Idx="0"]）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>お客様の
+Ｗｉ－ＦｉコネクションＩＤは
+長い間
+使用されなかったため
+削除されました
+
+詳しくは　ガイドブックを
+ご覧ください（[Digit:5digits Idx="0"]）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>専用ウインドウ</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>192</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="dwc_error_0004"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>この　ソフトの
+Ｗｉ－Ｆｉコネクション　サービスは
+しゅうりょう　しました
+
+ごりよう　ありがとう　ございました
+（[Digit:5digits Idx="0"]）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>この　ソフトの
+Ｗｉ－Ｆｉコネクション　サービスは
+終了しました
+
+ご利用　ありがとう　ございました
+（[Digit:5digits Idx="0"]）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>専用ウインドウ</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>192</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="dwc_error_0005"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アクセスポイントが
+こみあっている　ため
+せつぞく　できません
+
+しばらく　まって
+やりなおして　ください
+（[Digit:5digits Idx="0"]）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アクセスポイントが
+混み合っている　ため
+接続できません
+
+しばらく　待って
+やりなおして　ください
+（[Digit:5digits Idx="0"]）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>専用ウインドウ</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>192</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="dwc_error_0006"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アクセスポイントが
+みつかりません
+
+アクセスポイントに　ちかづいて
+もういちど　おためし　ください
+（[Digit:5digits Idx="0"]）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アクセスポイントが
+みつかりません
+
+アクセスポイントに　近づいて
+もう一度　お試しください
+（[Digit:5digits Idx="0"]）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>専用ウインドウ</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>192</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="dwc_error_0007"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>せつぞく　できる
+アクセスポイント　が
+みつかりません
+
+Ｗｉ－Ｆｉコネクションせってい　で
+せつぞくさきの　せっていを
+ごかくにん　ください
+（[Digit:5digits Idx="0"]）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>接続できる
+アクセスポイント　が
+みつかりません
+
+Ｗｉ－Ｆｉコネクション設定で
+接続先の　設定を
+ご確認ください
+（[Digit:5digits Idx="0"]）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>専用ウインドウ</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>192</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="dwc_error_0008"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ニンテンドーＷｉ－Ｆｉコネクタ　に
+せつぞく　できません
+
+Ｗｉ－Ｆｉコネクションせってい　で
+ニンテンドーＷｉ－Ｆｉコネクタ　の
+せつぞく　を　ごかくにん　ください
+（[Digit:5digits Idx="0"]）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ニンテンドーＷｉ－Ｆｉコネクタに
+接続できません
+
+Ｗｉ－Ｆｉコネクション設定で
+ニンテンドーＷｉ－Ｆｉコネクタの
+接続を　ご確認ください
+（[Digit:5digits Idx="0"]）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>専用ウインドウ</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>192</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="dwc_error_0009"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｗｉ－Ｆｉコネクション　に
+せつぞく　できません
+
+Ｗｉ－Ｆｉコネクションせってい　で
+せつぞくさきの　せっていを
+ごかくにん　ください
+（[Digit:5digits Idx="0"]）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｗｉ－Ｆｉコネクションに
+接続できません
+
+Ｗｉ－Ｆｉコネクション設定で
+接続先の　設定を
+ご確認ください
+（[Digit:5digits Idx="0"]）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>専用ウインドウ</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>192</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="dwc_error_0010"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あいてからの
+おうとうが　ありません
+すでに　あいてが
+Ｗｉ－Ｆｉコネクション　に
+せつぞく　していない　か
+あいての　ともだちてちょう　から
+とうろくが　なくなった
+かのうせいが　あります（[Digit:5digits Idx="0"]）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>相手からの
+応答が　ありません
+すでに　相手が
+Ｗｉ－Ｆｉコネクションに
+接続していないか
+相手の　ともだちてちょう　から
+登録が　なくなった
+可能性が　あります（[Digit:5digits Idx="0"]）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>専用ウインドウ</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>192</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="dwc_error_0011"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>つうしんエラーに　よって
+Ｗｉ－Ｆｉコネクション　から
+せつだん　されました
+（[Digit:5digits Idx="0"]）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>通信エラーに　よって
+Ｗｉ－Ｆｉコネクションから
+切断されました
+（[Digit:5digits Idx="0"]）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>専用ウインドウ</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>192</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="dwc_error_0012"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>つうしんエラーが
+はっせい　しました　（[Digit:5digits Idx="0"])</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>通信エラーが
+発生しました　（[Digit:5digits Idx="0"])</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>192</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="dwc_error_0013"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダウンロードに　しっぱい　しました
+（[Digit:5digits Idx="0"]）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダウンロードに　失敗しました
+（[Digit:5digits Idx="0"]）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="dwc_error_0014"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>つうしんエラー　に　よって
+Ｗｉ－Ｆｉコネクション　から
+せつだん　されました</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>通信エラーに　よって
+Ｗｉ－Ｆｉコネクション　から
+切断されました</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="dwc_error_0015"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>つうしんエラーが
+はっせい　しました</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>通信エラーが
+発生しました</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="dwc_error_0016"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>エラーが　はっせいした　ため
+Ｗｉ－Ｆｉコネクションの
+きのうを　しよう　できません
+でんげんを　きって
+やりなおして　ください
+（[Digit:5digits Idx="0"]）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>エラーが　発生したため
+Ｗｉ－Ｆｉコネクションの
+機能を　使用できません
+電源を　切って
+やりなおして　ください
+（[Digit:5digits Idx="0"]）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="dwc_message_0001"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ほんたい　の
+Ｗｉ－Ｆｉユーザーじょうほう　が
+きえた　かのうせい　が　あります
+
+Ｗｉ－Ｆｉコネクションせってい　で
+せつぞくさきの　せってい　を
+ごかくにん　ください</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>本体の
+Ｗｉ－Ｆｉユーザー情報が
+消えた　可能性が　あります
+
+Ｗｉ－Ｆｉコネクション設定で
+接続先の　設定を
+ご確認ください</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>専用ウインドウ</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>192</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="dwc_message_0002"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｗｉ－Ｆｉコネクションに
+せつぞく　しますか？</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｗｉ－Ｆｉコネクションに
+接続しますか？</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>進行ウインドウ</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="dwc_message_0003"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｗｉ－Ｆｉコネクション　では
+ＤＳカードと　ほんたいを
+セットで　あつかいます
+ＤＳカードに　ほんたいの
+Ｗｉ－Ｆｉユーザーじょうほう　を
+ほぞん　して
+Ｗｉ－Ｆｉコネクションに
+せつぞく　しますか？</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｗｉ－Ｆｉコネクションでは
+ＤＳカードと　本体を
+セットで　扱います
+ＤＳカードに　本体の
+Ｗｉ－Ｆｉユーザー情報を　保存して
+Ｗｉ－Ｆｉコネクションに
+接続しますか？</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>専用ウインドウ</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>192</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="dwc_message_0004"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>この　ほんたい　の
+Ｗｉ－Ｆｉユーザーじょうほう　を
+ＤＳカードに　ほぞん　しました
+
+こんごの　Ｗｉ－Ｆｉコネクションへの
+せつぞく　は
+この　ほんたいを
+おつかい　ください</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>この　本体の
+Ｗｉ－Ｆｉユーザー情報を
+ＤＳカードに　保存しました
+
+今後の　Ｗｉ－Ｆｉコネクションへの
+接続は
+この　本体を　お使いください</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>専用ウインドウ</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>192</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="dwc_message_0005"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ほんたいと　ＤＳカードの
+Ｗｉ－Ｆｉユーザーじょうほう　が
+ちがうため
+Ｗｉ－Ｆｉコネクションに
+せつぞく　できません</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>本体と　ＤＳカードの
+Ｗｉ－Ｆｉユーザー情報が
+違うため
+Ｗｉ－Ｆｉコネクションに
+接続できません</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>専用ウインドウ</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>192</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="dwc_message_0006"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＤＳカードに　ほぞん　されている
+Ｗｉ－Ｆｉユーザーじょうほう　を
+こうしん　しますか？
+Ｗｉ－Ｆｉユーザーじょうほう　を
+こうしん　すると
+Ｗｉ－Ｆｉコネクションで
+これまで　おつかいに　なっていた
+データは　うしなわれてしまいます</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＤＳカードに　保存されている
+Ｗｉ－Ｆｉユーザー情報を
+更新しますか？
+Ｗｉ－Ｆｉユーザー情報を
+更新すると
+Ｗｉ－Ｆｉコネクションで
+これまで　お使いに　なっていた
+データは　失われてしまいます</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>専用ウインドウ</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>192</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="dwc_message_0007"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｗｉ－Ｆｉコネクションに　せつぞくして
+Ｗｉ－Ｆｉユーザーじょうほうを
+こうしん　します。ほんとうに
+こうしん　しても　よろしいですか？
+ちゅうい！　ともだちてちょうに
+とうろくした　ともだち　すべてと
+ランダムマッチの　レーティングモードの
+せいせきが　きえて　しまいます</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｗｉ－Ｆｉコネクションに　接続して
+Ｗｉ－Ｆｉユーザー情報を　更新します
+本当に　更新しても　
+よろしいですか？
+注意！　ともだちてちょうに
+登録した　友達　すべてと
+ランダムマッチの　レーティングモードの
+成績が　消えてしまいます</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>専用ウインドウ</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>192</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dwc_message_0008"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｗｉ－Ｆｉコネクションに　せつぞく
+しています。しばらく　おまち　ください</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｗｉ－Ｆｉコネクションに　接続
+しています。しばらく　お待ちください</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>進行ウインドウ</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="dwc_message_0009"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おつかいの　なまえ　では
+Ｗｉ－Ｆｉコネクションを
+りよう　できません
+
+なまえを　へんこう　して
+せつぞく　しなおして　ください</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>お使いの　名前は
+Ｗｉ－Ｆｉコネクションを
+利用できません
+
+名前を　変更して
+接続しなおしてください</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>専用ウインドウ</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>192</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="dwc_message_0010"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｗｉ－Ｆｉコネクションから
+せつだん　しても　よろしいですか？</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｗｉ－Ｆｉコネクションから
+切断しても　よろしいですか？</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>進行ウインドウ</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="dwc_message_0011"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｗｉ－Ｆｉコネクションから
+せつだん　しています</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｗｉ－Ｆｉコネクションから
+切断しています</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>進行ウインドウ</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="dwc_message_0012"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｗｉ－Ｆｉコネクションから
+せつだん　しました[Ctrl2:WaitOne frame="100"]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｗｉ－Ｆｉコネクションから
+切断しました[Ctrl2:WaitOne frame="100"]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>進行ウインドウ</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="dwc_message_0013"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>はい</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>はい</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>選択項目</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="dwc_message_0014"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>いいえ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>いいえ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>選択項目</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="dwc_message_0015"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>レポートに　かきこんでいます
+でんげんを　きらないでください</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>レポートに　書き込んでいます
+電源を　切らないでください</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="dwc_message_0016"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>もうしこみを　ちゅうだん　しています
+しばらく　おまちください</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>申し込みを　中断しています
+しばらく　お待ちください</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="dwc_message_0017"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｗｉ－Ｆｉコネクションの
+せっていを　おこなうには
+ほんたいせっていの
+インターネットの　こうもくまで
+いどうして　ください</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｗｉ－Ｆｉコネクションの
+設定を　行うには
+本体設定の
+インターネットの　項目まで
+移動してください</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>DSiはWiFi設定を
+本体でしか行えない</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dwc_lobby_0001"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｗｉ－Ｆｉひろばで　つうしんエラーが
+はっせい　しました
+（[Digit:5digits Idx="0"]）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｗｉ－Ｆｉ広場で
+通信エラーが　発生しました
+（[Digit:5digits Idx="0"]）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>「Ｗｉ－Ｆｉひろば」での通信エラーメッセージ
+プラチナで追加。</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="dwc_message_0018"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>りようきやく　に
+どういする　ひつようが　あります
+ほんたいせっていで　りようきやく　に
+どういして　ください
+（５０５９９）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>利用規約に
+同意する　必要があります
+本体設定で　利用規約に
+同意して　ください
+（５０５９９）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>AgreeEULA 番号が直接書いてあるのは
+エラー関数がエラーを返さない為</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="dwc_title_0000"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Ctrl1:xcenter ]Ｗｉ－Ｆｉコネクションへ　せつぞく</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Ctrl1:xcenter ]Ｗｉ－Ｆｉコネクションへ　接続</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="dwc_title_0001"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Ctrl1:xcenter ]Ｗｉ－Ｆｉコネクションから　せつだん</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Ctrl1:xcenter ]Ｗｉ－Ｆｉコネクションから　切断</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="dwc_message_0019"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>つうしんエラー　に　よって
+Ｗｉ－Ｆｉコネクション　から
+せつだん　されました
+
+もういちど　
+Ｗｉ－Ｆｉコネクションに
+せつぞく　しますか？</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>通信エラー　に　よって
+Ｗｉ－Ｆｉコネクション　から
+切断されました
+
+もう一度
+Ｗｉ－Ｆｉコネクションに
+接続しますか？</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>専用ウインドウ</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="dwc_message_0020"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ほんとうに　こうしん　しても
+よろしいですか？
+
+ちゅうい
+いま　とうろく　している
+Ｗｉ－Ｆｉたいかいは
+さんかが　かいじょに　なります</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>本当に　更新しても
+よろしいですか？
+
+注意
+今　登録している
+Ｗｉ－Ｆｉ大会は
+参加が　解除に　なります</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>専用ウインドウ</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="dwc_message_0021"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ほんたいの　むせんつうしんが
+オフに　なっています
+ほんたいせっていで　むせんつうしんを
+オンに　してください
+（５０６９９）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>本体の　無線通信が
+ＯＦＦになっています
+本体設定で　無線通信を
+ＯＮに　してください
+（５０６９９）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>専用ウインドウ
+番号が直接書いてあるのはエラーが帰らない為</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="dwc_message_0022"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あいてとの　せつぞくが
+せつだん　されました</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>相手との　接続が
+切断されました</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>専用ウインドウ
+相手とのタイムアウト時のメッセージ
+・ＧＴＳネゴ
+・ランダムマッチ
+・Wi-Fi大会
+・Wi-Fiクラブ</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dwc_message_0023"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>つうしんエラーが　はっせいしました
+でんげんを　きってください</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>通信エラーが　発生しました
+電源を　切ってください</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>交換中にエラーになった場合</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dwctwl_message_0001"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ほんたいの
+Ｗｉ－Ｆｉユーザーじょうほう　が
+きえた　かのうせい　が　あります
+
+ほんたい　せっていの
+インターネットの　せってい　で
+せつぞくさきの　せってい　を
+ごかくにん　ください</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>本体のＷｉ－Ｆｉユーザー情報が
+消えた可能性があります
+
+本体設定のインターネットの設定で
+接続先の設定をご確認ください</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>専用ウインドウ</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dwctwl_message_0003"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｗｉ－Ｆｉコネクションでは
+セーブデータと　ほんたいを
+セットで　あつかいます
+セーブデータに　ほんたいの
+Ｗｉ－Ｆｉユーザーじょうほう　を
+ほぞん　して
+Ｗｉ－Ｆｉコネクションに
+せつぞく　しますか？</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｗｉ－Ｆｉコネクションでは
+セーブデータと
+本体をセットで扱います
+セーブデータに　本体の
+Ｗｉ－Ｆｉユーザー情報を　保存して
+Ｗｉ－Ｆｉコネクションに
+接続しますか？</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>専用ウインドウ</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dwctwl_message_0004"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>この　ほんたいの
+Ｗｉ－Ｆｉユーザーじょうほう　を
+セーブデータに
+ほぞん　しました
+こんごの　Ｗｉ－Ｆｉコネクションへの
+せつぞくは
+この　ほんたいを
+おつかい　ください</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>この　本体の
+Ｗｉ－Ｆｉユーザー情報を
+セーブデータに　保存しました
+
+今後の　Ｗｉ－Ｆｉコネクションへの
+接続は
+この　本体を　お使いください</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>専用ウインドウ</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dwctwl_message_0005"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ほんたいと　セーブデータの
+Ｗｉ－Ｆｉユーザーじょうほう　が
+ちがうため
+Ｗｉ－Ｆｉコネクションに
+せつぞく　できません</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>本体と　セーブデータの
+Ｗｉ－Ｆｉユーザー情報が
+違うため
+Ｗｉ－Ｆｉコネクションに
+接続できません</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>専用ウインドウ</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dwctwl_message_0006"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>セーブデータに　ほぞん　されている
+Ｗｉ－Ｆｉユーザーじょうほう　を
+こうしん　しますか？
+Ｗｉ－Ｆｉユーザーじょうほう　を
+こうしん　すると
+Ｗｉ－Ｆｉコネクションで
+これまで　おつかいに　なっていた
+データは　うしなわれてしまいます</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>セーブデータに　保存されている
+Ｗｉ－Ｆｉユーザー情報を
+更新しますか？
+Ｗｉ－Ｆｉユーザー情報を
+更新すると
+Ｗｉ－Ｆｉコネクションで
+これまで　お使いに　なっていた
+データは　失われてしまいます</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>専用ウインドウ</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dwctwl_error_0001"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｗｉ－Ｆｉコネクションに
+せつぞく　できません
+くわしくは　ほんたいの
+とりあつかい　せつめいしょを
+ごらんください
+（[Digit:5digits Idx="0"]）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｗｉ－Ｆｉコネクションに
+接続できません
+詳しくは　本体の
+取扱説明書を　ご覧ください
+（[Digit:5digits Idx="0"]）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dwctwl_error_0003"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おきゃくさまの
+Ｗｉ－ＦｉコネクションＩＤは
+ながい　あいだ
+しよう　されなかったため
+さくじょ　されました
+くわしくは　ほんたいの
+とりあつかい　せつめいしょを
+ごらんください（[Digit:5digits Idx="0"]）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>お客様の
+Ｗｉ－ＦｉコネクションＩＤは
+長い間　使用されなかったため
+削除されました
+詳しくは　本体の
+取扱説明書を　ご覧ください
+（[Digit:5digits Idx="0"]）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dwctwl_error_0007"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>せつぞく　できる
+アクセスポイントが　みつかりません
+ほんたいせっていの
+インターネットの　せっていで
+せつぞくさきの　せっていを
+ごかくにん　ください
+（[Digit:5digits Idx="0"]）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>接続できる
+アクセスポイントが　みつかりません
+本体設定の
+インターネットの　設定で
+接続先の　設定を　ご確認ください
+（[Digit:5digits Idx="0"]）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dwctwl_error_0009"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｗｉ－Ｆｉコネクションに
+せつぞく　できません
+ほんたいせっていの
+インターネットの　せっていで
+せつぞくさきの　せっていを
+ごかくにん　ください
+（[Digit:5digits Idx="0"]）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｗｉ－Ｆｉコネクションに
+接続できません
+本体設定の
+インターネットの　設定で
+接続先の　設定を　ご確認ください
+（[Digit:5digits Idx="0"]）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dwctwl_error_0016"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>エラーが　はっせい　したため、
+Ｗｉ－Ｆｉコネクションの
+きのうを　しようできません
+リセットして
+やりなおしてください
+（[Digit:5digits Idx="0"]）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>エラーが発生したため、
+Ｗｉ－Ｆｉコネクションの
+機能を　使用できません
+リセットして
+やり直してください
+（[Digit:5digits Idx="0"]）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="WIFI_GSYNC_ERR001"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>サーバーでエラーが　はっせいしました
+もういちど　おためしください
+もんだいが　かいけつしないばあいは
+とりあつかいせつめいしょの
+こまったときは…　を　ごらんください
+（エラーコード：１３２０１）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>サーバーでエラーが　発生しました
+もう一度　おためしください
+問題が　解決しない場合は
+取扱説明書の　困ったときは…　を
+ご覧ください
+（エラーコード：１３２０１）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>追加
+サーバーの容量オーバー</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="WIFI_GSYNC_ERR002"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>サーバーでエラーが　はっせいしました
+もういちど　おためしください
+もんだいが　かいけつしないばあいは
+とりあつかいせつめいしょの
+こまったときは…　を　ごらんください
+（エラーコード：１３２０２）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>サーバーでエラーが　発生しました
+もう一度　おためしください
+問題が　解決しない場合は
+取扱説明書の　困ったときは…　を
+ご覧ください
+（エラーコード：１３２０２）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>追加
+サーバーに既にデータがある</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="WIFI_GSYNC_ERR003"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>つうしんでエラーが　はっせいしました
+もういちど　おためしください
+もんだいが　かいけつしないばあいは
+とりあつかいせつめいしょの
+こまったときは…　を　ごらんください
+（エラーコード：１３２０３）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>通信でエラーが　発生しました
+もう一度　おためしください
+問題が　解決しない場合は
+取扱説明書の　困ったときは…　を
+ご覧ください
+（エラーコード：１３２０３）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>追加
+アップロードされたデータが
+壊れている</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="WIFI_GSYNC_ERR004"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>つうしんでエラーが　はっせいしました
+もういちど　おためしください
+もんだいが　かいけつしないばあいは
+とりあつかいせつめいしょの
+こまったときは…　を　ごらんください
+（エラーコード：１３２０４）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>通信でエラーが　発生しました
+もう一度　おためしください
+問題が　解決しない場合は
+取扱説明書の　困ったときは…　を
+ご覧ください
+（エラーコード：１３２０４）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>追加
+アップロードされた
+データが不正</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="WIFI_GSYNC_ERR005"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>サーバーでエラーが　はっせいしました
+もういちど　おためしください
+もんだいが　かいけつしないばあいは
+とりあつかいせつめいしょの
+こまったときは…　を　ごらんください
+（エラーコード：１３２０５）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>サーバーでエラーが　発生しました
+もう一度　おためしください
+問題が　解決しない場合は
+取扱説明書の　困ったときは…　を
+ご覧ください
+（エラーコード：１３２０５）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>追加
+サーバーに指定された
+ゲームシンクIDコードの
+データが存在せず</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="WIFI_GSYNC_ERR006"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ごりようの　サービスは
+しゅうりょう　いたしました
+（エラーコード：１３２０６）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ごりようの　サービスは
+終了　いたしました
+（エラーコード：１３２０６）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>追加
+サービス終了</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="WIFI_GSYNC_ERR007"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>つうしんでエラーが　はっせいしました
+もういちど　おためしください
+もんだいが　かいけつしないばあいは
+とりあつかいせつめいしょの
+こまったときは…　を　ごらんください
+（エラーコード：１３２０７）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>通信でエラーが　発生しました
+もう一度　おためしください
+問題が　解決しない場合は
+取扱説明書の　困ったときは…　を
+ご覧ください
+（エラーコード：１３２０７）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>追加
+サーバーとの接続失敗</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="WIFI_GSYNC_ERR008"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>サーバーでエラーが　はっせいしました
+もういちど　おためしください
+もんだいが　かいけつしないばあいは
+とりあつかいせつめいしょの
+こまったときは…　を　ごらんください
+（エラーコード：１３２０８）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>サーバーでエラーが　発生しました
+もう一度　おためしください
+問題が　解決しない場合は
+取扱説明書の　困ったときは…　を
+ご覧ください
+（エラーコード：１３２０８）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>追加
+サーバー内に指定された
+アカウントが存在しない</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="WIFI_GSYNC_ERR009"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>つうしんでエラーが　はっせいしました
+もういちど　おためしください
+もんだいが　かいけつしないばあいは
+とりあつかいせつめいしょの
+こまったときは…　を　ごらんください
+（エラーコード：１３２０９）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>通信でエラーが　発生しました
+もう一度　おためしください
+問題が　解決しない場合は
+取扱説明書の　困ったときは…　を
+ご覧ください
+（エラーコード：１３２０９）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>追加
+その他の理由で
+接続が失敗</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="WIFI_GSYNC_ERR010"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>サーバーでエラーが　はっせいしました
+もういちど　おためしください
+もんだいが　かいけつしないばあいは
+とりあつかいせつめいしょの
+こまったときは…　を　ごらんください
+（エラーコード：１３２１０）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>サーバーでエラーが　発生しました
+もう一度　おためしください
+問題が　解決しない場合は
+取扱説明書の　困ったときは…　を
+ご覧ください
+（エラーコード：１３２１０）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>追加
+指定されたDLコンテンツが
+データが存在しなかった</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="WIFI_GSYNC_ERR011"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>サーバーが　こんざつ　しています
+せつぞく　に　しっぱいしました
+じかんを　おいて　さいど
+おためしください
+（エラーコード：１３２１１）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>サーバーが　混雑　しています
+接続　に　失敗しました
+時間を　おいて　再度
+おためしください
+（エラーコード：１３２１１）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>HTTPエラーコード
+503 混雑</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="WIFI_GSYNC_ERR012"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>サーバーは　げんざい
+メンテナンスちゅうです
+メンテナンスの　しょうさいは
+ポケモングローバルリンクの
+ウェブサイトをごらんください
+http://www.pokemon-gl.com/
+（エラーコード：１３２１２）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>サーバーは　現在メンテナンス中です
+メンテナンスの　詳細は
+ポケモングローバルリンクの
+ウェブサイトをご覧ください
+http://www.pokemon-gl.com/
+（エラーコード：１３２１２）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>HTTPエラーコード
+502 メンテナンス中</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="WIFI_DISCONNECT_WAIT"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>エラーが　はっせいしました
+せつだんしています</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>エラーが　発生しました
+切断しています</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>エラー前の切断待ち</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="NHTTP_RESPONSE_400"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>つうしんエラーが　はっせいしました
+（エラーコード：１３２８０）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>通信エラーが　発生しました
+（エラーコード：１３２８０）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>不正チェックサーバーで400が帰ってきた場合</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="NHTTP_RESPONSE_401"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>つうしんエラーが　はっせいしました
+（エラーコード：１３２８１）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>通信エラーが　発生しました
+（エラーコード：１３２８１）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>不正チェックサーバーで401が帰ってきた場合</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="NHTTP_RESPONSE_ETC"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>つうしんエラーが　はっせいしました
+（エラーコード：１３２８２）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>通信エラーが　発生しました
+（エラーコード：１３２８２）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>不正チェックサーバーでその他エラーが帰ってきた場合</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="NHTTP_RESPONSE_TIMEOUT"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>つうしんエラーが　はっせいしました
+（エラーコード：１３２８３）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>通信エラーが　発生しました
+（エラーコード：１３２８３）</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>不正チェックサーバーでタイムアウトが帰ってきた場合</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:26" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+</MessageStudioText>

@@ -1,0 +1,53 @@
+			JPN	JPN_KANJI	English	French	German	Italian	Spanish	Korean
+1	0	トレーナー名	すずがただ	すずがただ	WWWWWWWWWW	WWWWWWWWWW	WWWWWWWWWW	WWWWWWWWWW	WWWWWWWWWW	아아아아알
+1	1	ポケモン種族名	クサイハナ	クサイハナ	CHARMANDER	BULBIZARRE	KNUDDELUFF	CHARMANDER	CHARMANDER	아아아아알
+1	2	ポケモンニックネーム	ばばばばば	ばばばばば	WWWWWWWWWW	WWWWWWWWWW	WWWWWWWWWW	WWWWWWWWWW	WWWWWWWWWW	아아아아알
+1	3	ポケモンタイプ	*typename.gmm							
+1	4	ポケモン分類	未使用	未使用	未使用	未使用	未使用	未使用	未使用	未使用
+1	5	マップ名	ネジやまネジやまネジ	ネジやまネジやまネジ	>マップ名	>マップ名	>マップ名	>マップ名	>マップ名	>マップ名
+1	6	とくせい名	マグマのよろい	マグマのよろい	Compoundeyes	Paratonnerre	Facettenauge	Grassospesso	Ojocompuesto	마그마의무장
+1	7	わざ名	ほのおのパンチ	ほのおのパンチ	ThunderPunch	Extrasenseur	Donnerschock	Corposcontro	Fuegosagrado	벌레의야단법석
+1	8	せいかく	がんばりや		Adamant	Modeste	Zaghaft	Ingenua	modesta	장난꾸러기
+1	9	どうぐ名	きあいのハチマキ	きあいのハチマキ	EnergyPowder	Cendresacrée	Sonderbonbon	Spettrotarga	Escamadragón	고라파덕물뿌리개
+1	10	グッズ名	*mus_item_name.gmm							
+1	11	ボックス名	ばばばばばばばば	ばばばばばばばば	WWWWWWWW	WWWWWWWW	WWWWWWWW	WWWWWWWW	WWWWWWWW	아아아아아아아알
+1	12	ポケモンニックネーム（正体）	ばばばばば	ばばばばば	WWWWWWWWWW	WWWWWWWWWW	WWWWWWWWWW	WWWWWWWWWW	WWWWWWWWWW	아아아아알
+1	13	ステータス名	めいちゅうりつ	めいちゅうりつ	evasiveness	Attaque Spé.	Verteidigung	precisione	Def. Esp.	특수방어
+1	14	トレーナー種別名	*trtype.gmm	*trtype.gmm	Sœur Parasol	Sœur Parasol	Sœur Parasol	Sœur Parasol	Sœur Parasol	*trtype.gmm
+1	15	趣味（調査レーダー）	*hobby.gmm							
+1	16	Gパワー名称	*power.gmm							
+1	17	特殊状態名	*power.gmm							
+1	18	バッグのポケット名	*itempocket.gmm							
+1	19	アンケート回答	*answer.gmm							
+1	26	カップ名	*regulation_cup.gmm							
+1	28	簡易会話単語	PMSWORDPMSWORD	PMSWORDPMSWORD	PMSWORDPMSWORD	PMSWORDPMSWORD	PMSWORDPMSWORD	PMSWORDPMSWORD	PMSWORDPMSWORD	PMSWORDPMSWORD
+1	31	アクセサリー名	未使用	未使用	未使用	未使用	未使用	未使用	未使用	未使用
+1	32	ジム名	未使用	未使用	未使用	未使用	未使用	未使用	未使用	未使用
+1	33	時間帯	不明	不明	不明	不明	不明	不明	不明	不明
+1	34	ミュージカル演目名	不明	不明	不明	不明	不明	不明	不明	不明
+1	35	ミュージカルコンディション	*musical_common.gmm:MUSICAL_AUDIENCE_CON							
+1	36	国名	フォークランド（マルビナス)しょとう	フォークランド（マルビナス)しょとう	Democratic Republic of Timor-Leste	République démocratique du Congo	Demokratische Volksrepublik Korea 	Repubblica Democratica del Congo	Rep. Democrática de Timor Oriental	마케도니아 구 유고슬라비아
+1	37	地域名	オーストラリアしゅととくべつちいき	オーストラリアしゅととくべつちいき	Ciudad Autonoma de Buenos Aires 	Mecklembourg-Poméranie-Occidentale	Autonome Stadt Buenos Aires	Distretto Federale Nordoccidentale	Distrito Federal del Lejano Oriente	부에노스아이레스 특별구
+1	39	リボンの名前	RIBBONNAMERIBBONNAMERIBBONNA	RIBBONNAMERIBBONNAMERIBBONNA	RIBBONNAMERIBBONNAMERIBBONNA	RIBBONNAMERIBBONNAMERIBBONNA	RIBBONNAMERIBBONNAMERIBBONNA	RIBBONNAMERIBBONNAMERIBBONNA	RIBBONNAMERIBBONNAMERIBBONNA	RIBBONNAMERIBBONNAMERIBBONNA
+1	40	趣味（調査レーダー）	*hobby.gmm							
+1	41	広場イベント名	未使用	未使用	未使用	未使用	未使用	未使用	未使用	未使用
+1	42	広場アイテム名	未使用	未使用	未使用	未使用	未使用	未使用	未使用	未使用
+1	43	日本の挨拶	未使用	未使用	未使用	未使用	未使用	未使用	未使用	未使用
+1	44	英語の挨拶	未使用	未使用	未使用	未使用	未使用	未使用	未使用	未使用
+1	45	フランス語の挨拶	未使用	未使用	未使用	未使用	未使用	未使用	未使用	未使用
+1	46	ドイツ語の挨拶	未使用	未使用	未使用	未使用	未使用	未使用	未使用	未使用
+1	47	イタリア語の挨拶	未使用	未使用	未使用	未使用	未使用	未使用	未使用	未使用
+1	48	スペイン語の挨拶	未使用	未使用	未使用	未使用	未使用	未使用	未使用	未使用
+1	49	ミュージカルグッズ部位	*musical_common.gmm:MUSICAL_GOODS_POS							
+1	50	PDW家具名	不明	不明	不明	不明	不明	不明	不明	不明
+1	51	ミュージカル客層	不明	不明	不明	不明	不明	不明	不明	不明
+1	128	月	１２がつ	１２月	Dec.	août	Dez.	nov.	nov.	未使用
+1	129	trialhouse_rank	*trialhouse.gmm:msg_trialhouse_rank							
+2	0	１桁	9	9	9	9	9	9	9	9
+2	1	２桁	99	99	99	99	99	99	99	99
+2	2	３桁	999	999	999	999	999	999	999	999
+2	3	４桁	9999	9999	9999	9999	9999	9999	9999	9999
+2	4	５桁	99999	99999	99999	99999	99999	99999	99999	99999
+2	5	６桁	999999	999999	999999	999999	999999	999999	999999	999999
+2	6	７桁	9999999	9999999	9999999	9999999	9999999	9999999	9999999	9999999
+2	7	８桁	99999999	99999999	99999999	99999999	99999999	99999999	99999999	99999999

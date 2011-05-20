@@ -1,0 +1,332 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<MessageStudioText
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="msg_n01r0203_goddess1_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>わたしは　あいの　めがみ……▼
+Ｎと　ことを　かまえる　トレーナーよ
+さあ　やすみなさい……[Ctrl2:PageClear ]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>わたしは　愛の女神……▼
+Ｎと　事を構える　トレーナーよ
+さあ　やすみなさい……[Ctrl2:PageClear ]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・続けて画面暗転と回復処理</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:15" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GODDESS1</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:15" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:15" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_n01r0203_goddess1_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>げんきに　なったわね
+あなたも　あなたの　ポケモンも……▼
+トレーナーが　たたかうのは
+けっして　ポケモンを▽
+きずつけるためでは　ありません▼
+Ｎも　こころの　おくそこでは
+そのことを　きづいているのに▼
+それを　みとめるには
+あまりにも　かなしい　じかんを▽
+この　しろで　すごしたのです……</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>元気に　なったわね
+あなたも　あなたの　ポケモンも……▼
+トレーナーが　戦うのは
+けっして　ポケモンを▽
+きずつけるためでは　ありません▼
+Ｎも　心の　奥底では
+そのことを　気づいているのに▼
+それを　認めるには
+あまりにも　悲しい　時間を▽
+この城で　過ごしたのです……</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・goddess1_01後の回復処理がすんで
+　画面復帰すると自動で表示</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:15" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GODDESS1</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:15" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:15" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_n01r0203_goddess2_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>未使用</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:15" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:15" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_n01r0203_goddess2_01w"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>わたしは　へいわの　めがみ……▼
+Ｎに　へいおんを　あたえるもの……▼
+……Ｎは　おさなきころより
+ひとと　はなされ▽
+ポケモンと　ともに　そだちました▼
+わるい　ひとに　うらぎられ
+しいたげられ　きずついた　ポケモン▼
+ゲーチスは　あえて
+そうした　ポケモンばかり▽
+Ｎに　ちかづけていたのです▼
+Ｎは　その　きずを　わかちあい
+ポケモンの　ことだけを　かんがえ▽
+しんじつを　もとめるように　なりました▼
+あまりにも　ピュアで
+イノセントな　Ｎの　こころ……▼
+イノセントほど
+うつくしく　こわいものは　ないのに</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>わたしは　平和の　女神……▼
+Ｎに　平穏を　与えるもの……▼
+……Ｎは　幼きころより
+人と　離され▽
+ポケモンと　共に　育ちました▼
+……悪意ある　人に　裏切られ
+虐げられ　傷ついた　ポケモン▼
+ゲーチスは　あえて
+そうした　ポケモンばかり▽
+Ｎに　近づけていたのです▼
+Ｎは　その傷を　分かち合い
+ポケモンの　ことだけを　考え▽
+真実を　求めるように　なりました▼
+あまりにも　ピュアで
+イノセントな　Ｎの　心……▼
+イノセントほど
+美しく　怖いものは　ないのに</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・WHITEver
+　N＝レシラム＝真実</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:15" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GODDESS2</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:15" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:15" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_n01r0203_goddess2_01b"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>わたしは　へいわの　めがみ……▼
+Ｎに　へいおんを　あたえるもの……▼
+……Ｎは　おさなきころより
+ひとと　はなされ▽
+ポケモンと　ともに　そだちました▼
+わるい　ひとに　うらぎられ
+しいたげられ　きずついた　ポケモン▼
+ゲーチスは　あえて
+そうした　ポケモンばかり▽
+Ｎに　ちかづけていたのです▼
+Ｎは　その　きずを　わかちあい
+ポケモンの　ことだけを　かんがえ▽
+りそうを　もとめるように　なりました▼
+あまりにも　ピュアで
+イノセントな　Ｎの　こころ……▼
+イノセントほど
+うつくしく　こわいものは　ないのに</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>わたしは　平和の　女神……▼
+Ｎに　平穏を　与えるもの……▼
+……Ｎは　幼きころより
+人と　離され▽
+ポケモンと　共に　育ちました▼
+……悪意ある　人に　裏切られ
+虐げられ　傷ついた　ポケモン▼
+ゲーチスは　あえて
+そうした　ポケモンばかり▽
+Ｎに　近づけていたのです▼
+Ｎは　その傷を　分かち合い
+ポケモンの　ことだけを　考え▽
+理想を　求めるように　なりました▼
+あまりにも　ピュアで
+イノセントな　Ｎの　心……▼
+イノセントほど
+美しく　怖いものは　ないのに</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・BLACKver
+　N＝ゼクロム＝理想</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:15" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GODDESS2</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:15" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:15" />
+		</AttributeCell>
+	</TextRow>
+</MessageStudioText>

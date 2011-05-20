@@ -1,0 +1,554 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<MessageStudioText
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="msg_c09r0201_bigfour2_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>やれやれ……
+きょうは　どういう　ひ　かな？▼
+つづけざまに　ちょうせんしゃが
+やってくるとは……▼
+まあいいさ
+してんのう　ギーマ▼
+その　やくわりに　したがい
+おあいて　するまで▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>やれやれ……
+きょうは　どういう　日かな？▼
+続けざまに　挑戦者が
+やってくるとは……▼
+まあいいさ
+四天王　ギーマ▼
+その　役割に　従い
+お相手　するまで▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：クリア前
+・戦闘前：フィールド
+　メッセージ表示後、トレーナー戦闘に</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>四天王：悪
+ギーマ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c09r0201_bigfour2_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ぜんりょくを　つくそうと
+うんが　あろうと　なかろうと▽
+まけは　まけ……▼
+だからこそさ
+しょうりは　ひかりかがやく▼
+そう　いまの　きみたち
+すごく　まぶしいよ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>全力を　尽くそうと
+運が　あろうと　なかろうと▽
+負けは　負け……▼
+だからこそさ
+勝利は　光り　輝く▼
+そう　いまの　きみたち
+すごく　まぶしいよ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：クリア前
+・戦闘後：フィールド</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>四天王：悪
+ギーマ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c09r0201_bigfour2_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そう　いまの　わたしは
+ぶざまな　はいぼくしゃ……▽
+それいじょうでも　いかでもない▼
+さて……
+きみの　その　つよさ……▼
+ほかの　してんのう　あいてに
+ためすが　いい</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そう　今の　わたしは
+無様な　敗北者……▽
+それ以上でも　以下でもない▼
+さて……
+きみの　その　強さ……▼
+他の　四天王　相手に
+試すが　いい</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：クリア前
+・bigfour2_02表示後に再度会話</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>四天王：悪
+ギーマ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c09r0201_bigfour2_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>……すごいね▼
+きみは　ポケモンリーグ　すべての
+してんのうに　しょうりした▼
+だが　まだ　おわりではない！▼
+きみの　その　つよさを　しめすべき
+あいてが　もうひとり　いる▼
+ポケモンリーグ　さいきょうの
+チャンピオン　アデク……▼
+もしくは……
+Ｎという　おとこ▼
+どちらが　あいてか　わからぬが
+ちゅうおうひろばの　ぞうを　しらべ▽
+さいごの　へやに　すすむが　いい</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……すごいね▼
+きみは　ポケモンリーグ　すべての
+四天王に　勝利した▼
+だが　まだ　終わりではない！▼
+きみの　その　強さを　示すべき
+相手が　もう１人　いる▼
+ポケモンリーグ　最強の
+チャンピオン　アデク……▼
+もしくは……
+Ｎという　男▼
+どちらが　相手か　わからぬが
+中央広場の　像を　調べ▽
+最後の　部屋に　進むが　いい</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：クリア前
+・条件（＝四天王全員に勝利）を満たしていれば
+　戦闘後フィールド復帰時に自動で表示
+・チャンピオン部屋に行くまで繰り返し</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>四天王：悪
+ギーマ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c09r0201_bigfour2_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>じんせいは　あたえられた
+カードでの　しんけんしょうぶ▼
+くばられた　カードに
+もんくを　いうよりも▽
+どう　つかいこなすかが　だいじなのさ▼
+さあ　はじめよう……▼
+かったものが　すべてを　てにいれ
+まけたものには　なにも　のこらない▼
+そんな　しょうぶ　こそが
+いきている　あかし……▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>人生は　与えられた
+カードでの　真剣勝負▼
+配られた　カードに
+文句を　いうよりも▽
+どう使いこなすかが　大事なのさ▼
+さあ　はじめよう……▼
+勝ったものが　すべてを　手に入れ
+負けたものには　なにも　残らない▼
+そんな　勝負こそが
+生きている　証……▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：クリア後
+・戦闘前：フィールド
+　メッセージ表示後、トレーナー戦闘に</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>四天王：悪
+ギーマ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c09r0201_bigfour2_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>さて　よのなか　には
+わるい　かちかた……▽
+いい　まけかたも　あってね▼
+そう　かんたんに　わりきれないのが
+おもしろく　なやましい　ところさ▼
+なげた　コインだって
+かならず　オモテか　ウラの▽
+どちらかに　なるわけじゃない▼
+おちてこないことだって　あるだろ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さて　世の中には
+悪い　勝ち方……▽
+いい　負け方も　あってね▼
+そう　簡単に　わりきれないのが
+おもしろく　悩ましいところさ▼
+投げた　コインだって
+必ず　表か　裏の▽
+どちらかに　なるわけじゃない▼
+落ちてこないことだって　あるだろ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：クリア後
+・戦闘後：フィールド</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>四天王：悪
+ギーマ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c09r0201_bigfour2_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おみごと……！▼
+ポケモンしょうぶの　いいところは
+まけた　ものにも▽
+なにかを　おしえてくれること　かな？▼
+さて……
+きみの　その　つよさ……▼
+ほかの　してんのう　あいてにも
+つうじるか　ためすが　いい！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おみごと……！▼
+ポケモン勝負の　いいところは
+敗れた　トレーナーにも▽
+なにかを　教えてくれること　かな？▼
+さて……
+きみの　その　強さ……▼
+他の　四天王　相手にも
+通じるか　試すが　いい！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：クリア後
+・bigfour2_06表示後に再度会話</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>四天王：悪
+ギーマ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c09r0201_bigfour2_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>……すごいね▼
+きみは　ポケモンリーグ　すべての
+してんのうに　しょうりした▼
+だが　まだ　おわりではない！▼
+きみの　その　つよさを　しめすべき
+あいてが　もうひとり　いる▼
+ちゅうおうひろばの　ぞうを　しらべ
+さいごの　へやに　すすむが　いいさ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……すごいね▼
+きみは　ポケモンリーグ　すべての
+四天王に　勝利した▼
+だが　まだ　終わりではない！▼
+きみの　その　強さを　示すべき
+相手が　もう一人　いる▼
+中央広場の　像を　調べ
+最後の部屋に　進むが　いいさ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：クリア後
+・条件（＝四天王全員に勝利）を満たしていれば
+　戦闘後フィールド復帰時に自動で表示
+・チャンピオン部屋に行くまで繰り返し</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>四天王：悪
+ギーマ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+	</TextRow>
+</MessageStudioText>

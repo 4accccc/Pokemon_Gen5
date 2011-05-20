@@ -1,0 +1,655 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF8">
+		<title><font color="gray">Nintendo MessageStudio Help</font></title>
+		<link rel="Stylesheet" type="text/css" href="../resource/main.css" />
+		<link type="text/css" rel="stylesheet" href="../resource/SyntaxHighlighter.css" />
+		<script type="text/javascript" src="../resource/shCore.js"></script>
+		<script type="text/javascript" src="../resource/shBrushCpp.js"></script>
+		<script type="text/javascript" src="../resource/shBrushCSharp.js"></script>
+		<script type="text/javascript" src="../resource/shBrushPython.js"></script>
+		<script type="text/javascript" src="../resource/shBrushRuby.js"></script>
+		<script type="text/javascript" src="../resource/shBrushBat.js"></script>
+		<script type="text/javascript" src="../resource/shBrushReg.js"></script>
+		<script type="text/javascript" src="../resource/shBrushXml.js"></script>
+		<script type="text/javascript" src="../resource/shBrushTag.js"></script>
+		<script type="text/javascript">
+		<!--
+			//===================================================================
+			// ページの変数
+			//===================================================================
+			//Enter id(s) of each Side Bar Menu's main UL, separated by commas
+			var menuids=["sidebarmenu1"];
+			var menuBottomPos=[];
+
+			//===================================================================
+			//イベントの登録
+			//===================================================================
+			if ( window.addEventListener ) {
+				window.addEventListener( "load", InitPage, false );
+				window.addEventListener( "resize", UpdateSidebarMenu, false );
+				window.addEventListener( "scroll", UpdateSidebarMenu, false );
+			}
+			else if ( window.attachEvent ) {
+				window.attachEvent( "onload", InitPage );
+				window.attachEvent( "onresize", UpdateSidebarMenu );
+				window.attachEvent( "onscroll", UpdateSidebarMenu );
+			}
+			else {
+				window.onload = InitPage;
+				window.onresize = UpdateSidebarMenu;
+				window.onscroll = UpdateSidebarMenu;
+			}
+			
+			//===================================================================
+			// Function : InitPage ページ内の初期化処理（初回のみ呼び出し）
+			//===================================================================
+			function InitPage(){
+
+				// シンタックスハイライトの初期化
+				InitSyntaxHighlighter();
+
+				// メニューの初期化
+				InitSidebarMenu();
+
+				// アップデートしておく
+				UpdateSidebarMenu();
+			}
+
+			//===================================================================
+			// Function : InitSidebarMenu メニューの初期化
+			//===================================================================
+			function InitSidebarMenu()
+			{
+				for ( var i = 0; i < menuids.length; i++ )
+				{
+					// 処理対象となるメニューを取得する
+					var ultags = document.getElementById( menuids[i] ).getElementsByTagName("ul");
+
+					// 各メニューに対する処理
+					for ( var t = 0; t < ultags.length; t++ )
+					{
+						ultags[t].parentNode.getElementsByTagName("a")[0].className += " subfolderstyle"
+						
+						//if this is a first level submenu
+						if ( ultags[t].parentNode.parentNode.id == menuids[i] )
+						{
+							//dynamically position first level submenus to be width of main menu item
+							ultags[t].style.left = ultags[t].parentNode.offsetWidth + "px";
+						}
+						//else if this is a sub level submenu (ul)
+						else
+						{
+							//position menu to the right of menu item that activated it
+							ultags[t].style.left = ultags[t-1].getElementsByTagName("a")[0].offsetWidth + "px";
+						}
+
+						// 高さの初期位置をセット
+						var atags = ultags[t].getElementsByTagName( "a" );
+						var innerUlTags = ultags[t].getElementsByTagName( "ul" );
+
+						var childatagNum = atags.length;
+						for ( var nUl = 0; nUl < innerUlTags.length; nUl++ ) childatagNum -= innerUlTags[nUl].getElementsByTagName( "a" ).length;
+						var menuHeight = childatagNum * atags[0].offsetHeight;
+						// このメニューの一番下の位置を取得
+						var parentRect = ultags[t].parentNode.getBoundingClientRect();	// 親ノードの境界サイズ
+
+						// メニューの下の初期位置を保存しておく
+						menuBottomPos[t]  = parentRect.top + menuHeight;
+
+						// マウスオーバー時の処理を登録
+						ultags[t].parentNode.onmouseover = function()
+						{
+							this.getElementsByTagName("ul")[0].style.display = "block"
+						}
+						ultags[t].parentNode.onmouseout = function()
+						{
+							this.getElementsByTagName("ul")[0].style.display = "none"
+						}
+					}
+					
+					// loop through all sub menus again, and use "display:none" to hide menus (to prevent possible page scrollbars
+					for ( var t = ultags.length - 1; t > -1; t-- )
+					{
+						ultags[t].style.visibility	= "visible"
+						ultags[t].style.display		= "none"
+					}
+				}
+			}
+
+			//===================================================================
+			// Function : InitSyntaxHighlighter SyntaxHighlighterの初期化
+			//===================================================================
+			function InitSyntaxHighlighter()
+			{
+				dp.SyntaxHighlighter.ClipboardSwf = '../resource/clipboard.swf';
+				dp.SyntaxHighlighter.HighlightAll('code');
+			}
+
+			//===================================================================
+			// Function : UpdateSidebarMenu メニューの位置を更新します。
+			//===================================================================
+			function UpdateSidebarMenu()
+			{
+				for ( var i = 0; i < menuids.length; i++ )
+				{
+					// 処理対象となるメニューを取得する
+					var ultags = document.getElementById( menuids[i] ).getElementsByTagName("ul");
+
+					// 各メニューに対する処理
+					for ( var t = 0; t < ultags.length; t++ )
+					{
+						// メニューの高さを調節する
+						var atags = ultags[t].getElementsByTagName( "a" );
+						var innerUlTags = ultags[t].getElementsByTagName( "ul" );
+						
+						var childatagNum = atags.length;
+						for ( var nUl = 0; nUl < innerUlTags.length; nUl++ ) childatagNum -= innerUlTags[nUl].getElementsByTagName( "a" ).length;
+						var menuHeight = childatagNum * atags[0].offsetHeight;
+
+						// このメニューの一番下の位置を取得
+						var parentRect = ultags[t].parentNode.getBoundingClientRect();	// 親ノードの境界サイズ
+						
+						// クライアント領域の底とメニューの底の距離を計算
+						var clientHeight = getClientHeight();
+						
+						var scTop = document.body.scrollTop || document.documentElement.scrollTop;
+						var btobLen = clientHeight - menuBottomPos[t];
+						
+						// メニューが潜らないように調整
+						if ( btobLen + scTop < 0 )
+						{
+							// 潜っている分だけ上にシフトする
+							ultags[t].style.top = (Math.max( (-1 * parentRect.top), btobLen-1)-15) + scTop + "px";
+						}
+						else
+						{
+							// 潜らないので初期位置
+							ultags[t].style.top = "0px";
+						}
+					}
+				}
+			}
+
+			//===================================================================
+			// Function : UpdateSidebarMenu メニューの位置を更新します。
+			//===================================================================
+			function getClientHeight(){
+				// IE以外。
+				if ((!document.all || window.opera) && document.getElementById) {
+					return window.innerHeight;
+				}
+				// ウィンドウズIE 6・標準モード。
+				else if (document.getElementById && (document.compatMode=='CSS1Compat')) {
+					return document.documentElement.clientHeight;
+				}
+				// その他のIE。
+				else if (document.all) {
+					return document.body.clientHeight;
+				}
+			}
+		-->
+		</script>
+	</head>
+	<body>
+		<div class="wrap">
+			<div class="header">
+				<font color="gray">Nintendo MessageStudio Help</font>
+			</div>
+			<div class="inner">
+				<div class="mainWrap">
+					<h1><font color="gray">Project Binary Attribute Information</font></h1>
+
+<p><font color="gray">It is possible to export attribute data to the message binary as an attribute block (ATR1) but there is no telling what size attribute will be positioned in what order. Normally, the structure of this type of information has it output as a header file (*.h) and and the attribute data is accessed but in this case, each time the attribute settings are changed, the program will need to be re-compiled once again.</font></p>
+<p><font color="gray">Attribute information that can be output to the project binary includes the attribute size and arrangement data which are saved and used to address attribute setting changes without the program having to be compiled.</font></p>
+<p><font color="gray">Also, if the attribute is a list type, it is also possible to associate index numbers and item names for that attribute.</font></p>
+
+<!-- ALB1 block -->
+<h2><font color="gray">Attribute Name Block (ALB1)</font></h2>
+<p><font color="gray">It is the same structure as the <a href="RES_FMT_msbt.html#">message binary LBL block</a>.</font></p>
+<p><font color="gray">It is possible to associate the attribute name block (AfLB1) with the attribute name and the related index number.
+The index number is the number that represents the attribute data storage sequence in the below mentioned attribute information block (ATI2).
+Index numbers start with 0.</font></p>
+<p><font color="gray">Attribute names are assigned using ASCII code and contain 255 characters or less, and can be set using the Message Studio.
+For details see <a href="Attribute_Settings.html#">attribute settings</a>.
+Because the attribute name character string can be looked up using a hash value, even though the attribute count may go up, this block should be searchable without much of a loss of efficiency.</font></p>
+<p><font color="gray">After the block header, the style name block will have the following data structure.</font></p>
+
+<!-- Image -->
+<img src="../resource/RES_Project_ALB.png" />
+<p><font color="gray">※That values in this image are random.</font></p>
+
+<!-- Table -->
+<table border="1">
+<tr>
+	<td width="180">HASH TABLE SIZE</td><td><font color="gray">The hash table size will be explained.
+The hash table size can be set using the Message Studio and depending on the size the speed and memory usage can be adjusted.
+The default value is 29 but please try to set it as a prime number. This is 4-bytes of data.</font><br /><br /><font color="gray">Depending on the value assigned to the hash table, the following 8-bytes of data will be repeated.
+If the hash table size is 29,  the total of this section will be 232-bytes.</font></td>
+</tr>
+<tr>
+	<td>STYLE NUM IN HASH <i>n</i></td><td><font color="gray">This describes how many attribute names are included in the hash value n. It's 4-bytes.</font></td>
+</tr>
+<tr>
+	<td>OFFSET OF HASH <i>n</i></td><td><font color="gray">The offset value of the attribute name information for hash value n is written in 4-bytes.
+The offset is counted from the beginning of the block.
+As written above, if the number of attribute names included in the hash value n is 0, the offset value is indefinite.</font></td>
+</tr>
+</table>
+<p><font color="gray">Immediately after the above mentioned portion is complete, the attribute name and index number map list description will appear.
+The program will access this region after requesting the offset from the block top hash value.</font></p>
+<table border="1">
+<tr>
+	<td width="180">LEN</td><td><font color="gray">The attribute will be described in 1-byte.</font></td>
+</tr>
+<tr>
+	<td>STYLE NAME</td><td><font color="gray">The attribute name is described.
+Regardless of the output setting, the attribute name is always written as an ASCII character string and follows the previously mentioned label length volumes only.</font></td>
+</tr>
+<tr>
+	<td>STYLE INDEX</td><td><font color="gray">The attribute index (ATI2 block appearance position) number is described in 4-bytes.</font></td>
+</tr>
+</table>
+<p><font color="gray">The above attribute name attribute index combination will appear in order based on the number of attributes there are.
+There are situations where directly below the offset position sought, different attribute name information exists.
+This happens because multiple attribute names are registered to a given hash value.
+In this case, skip the read and see if it matched the next attribute name.</font></p>
+
+
+
+
+<!-- ATI1 block -->
+<h2><font color="gray">Attribute information block (ATI2)</font></h2>
+<p><font color="gray">So that the appropriate data is accessed from the message binary ATR block, necessary information is described in the attribute information block 
+Also, information needed to refer to the list entry data block (ALI) is also described.</font></p>
+<p><font color="gray">Attribute information clocks will have the following data structure following the block header.</font></p>
+
+<!-- Image -->
+<img src="../resource/RES_Project_ATI.png" />
+<p><font color="gray">※That values in this image are random.</font></p>
+
+<!-- Table -->
+<table border="1">
+<tr>
+	<td width="180">ATTRIBUTE NUM</td><td><font color="gray">The attribute data count will be described with 4-bytes.<br>
+<br>
+The following 8-bytes of information will be repeated based on the ATTR NUM value.</font></td>
+</tr>
+<tr>
+	<td>TYPE <i>n</i></td>
+	<td>
+		<font color="gray">The attribute configuration will be described with 1-byte. The value and configuration will be addressed per the below.</font><br/>
+		<table border="3">
+		<tr><td>0x00</td><td><font color="gray">Codeless 8-bit integer</font></td></tr>
+		<tr><td>0x01</td><td><font color="gray">Codeless 16-bit integer</font></td></tr>
+		<tr><td>0x02</td><td><font color="gray">Codeless 32-bit integer</font></td></tr>
+		<tr><td>0x03</td><td><font color="gray">Coded 8-bit integer</font></td></tr>
+		<tr><td>0x04</td><td><font color="gray">Coded 18-bit integer</font></td></tr>
+		<tr><td>0x05</td><td><font color="gray">Coded 32-bit integer</font></td></tr>
+		<tr><td>0x06</td><td><font color="gray">32bit single precision floating point number </font></td></tr>
+		<tr><td>0x07</td><td><font color="gray">64-bit single precision floating point number </font></td></tr>
+		<tr><td>0x08</td><td><font color="gray">NULL final character</font></td></tr>
+		<tr><td>0x09</td><td><font color="gray">List</font></td></tr>
+		</table>
+	</td>
+</tr>
+<tr>
+	<td>PADDING <i>n</i></td><td><font color="gray">This is 1-byte of padding. This is always 0.</font></td>
+</tr>
+<tr>
+	<td>INDEX OF LISTINFO <i>n</i></td><td><font color="gray">The list content information index number (appearing in the ALI2 block below)  will be described with 4-bytes. However, this value is only valid when the TYPE is equal to 0x09 (in other words, in a list format) and in all other instances will always be equal to 0. If the attributes are in a list format, this index number will be used and the ALI1 block referenced making it possible for the content names to constantly be pulled.</font></td>
+</tr>
+<tr>
+	<td>OFFSET OF ATTR IN STRUCTURE <i>n</i></td><td><font color="gray">The starting point of the ATR1 block structure of attribute data will be described in 4-bytes.</font></td>
+</tr>
+</table>
+<p><font color="gray">One way of getting the appropriate data from the ATR1 block of a message binary is to use this ATI2 block. In your program, you can get data from the ATR1 block by using OFFSET OF ATTR IN ATR STRUCTURE to get the offset position of attributes within the structure, and by using TYPE to determine the type and size of the data. The ATI2 block is normally used in combination with the ALB1 block. These methods make it possible to access the attribute data within strings."</font></p>
+<p><font color="gray">With game projects where the sequence of attribute data is frequently being updated, by using an ATI2 block to reference the attribute data, there is the advantage of not needing to create new builds in order to update the message resources. However, accessing data will become significantly less efficient than when accessed by simply using the structure defined by the attribute definition header. In other words, on a case by case basis, use a (C/C++) macro to access attribute data, and when using a debug build use character strings, and when using a resource build use a member variable definition, etc. to achieve the most benefit out of what you are doing.</font></p>
+
+
+
+
+<!-- ALI block -->
+<h2><font color="gray">List entry data block (ALI2)</font></h2>
+<p><font color="gray">The names of the entries in a attribute list are stored to the list entry data block. This information can be used when, for example, you want to use an entry name for a file name.</font></p>
+<p><font color="gray">A list entry data block following the block header will have the following data structure.</font></p>
+
+<!-- Image -->
+<img src="../resource/RES_Project_ALI.png" />
+<p><font color="gray">※That values in this image are random.</font></p>
+
+<!-- Table -->
+<table border="1">
+<tr>
+	<td width="180">ITEMINFO NUM</td><td><font color="gray">List entry data will be described as 4-bytes. This equal to the attribute list count.</font></td>
+</tr>
+<tr>
+	<td>OFFSET OF ITEMINFO <i>n</i></td><td><font color="gray">Counting from the beginning of this block, the offset value where the list entry data starts will be described in 4-bytes.. This information will be repeated  ITEMINFO NUM times.</font></td>
+</tr>
+</table>
+
+<p><font color="gray">In addition, the contents of the list entry data will have the following data structure.</font></p>
+
+<table border="1">
+<tr>
+	<td width="180">ITEM NUM</td><td><font color="gray">The number of entries in this list will be described in 4-bytes.</font></td>
+</tr>
+<tr>
+	<td>OFFSET OF ITEM NAME <i>m</i></td><td><font color="gray">Counting from the beginning of this list entry data, the offset value where the entry names start will be described in 4-bytes.</font></td>
+</tr>
+<tr>
+	<td>ITEM NAME <i>m</i></td><td><font color="gray">The actual entry name will appear. The encoding format will be ASCII with a NULL terminal edge.</font></td>
+</tr>
+</table>
+				</div>
+				<div class="sidebarmenu">
+				<ul id="sidebarmenu1">
+					<!-- Index -->
+					<li><a href="index.html"><img src="../resource/everyone.png" />  <font color="gray">Introduction</font></a></li>
+					<!-- Introduction -->
+					<li><a href="#"><img src="../resource/everyone.png" />  <font color="gray">Message Studio Basics</font></a>
+						<ul>
+						<li><a href="Intro_Tour.html"><img src="../resource/everyone.png" />  <font color="gray">Game Production Flow</font></a></li>
+						<li><a href="Intro_Project.html"><img src="../resource/everyone.png" />  <font color="gray">Project Files Overview</font></a></li>
+						<li><a href="Intro_Project_Explorer.html"><img src="../resource/everyone.png" />  <font color="gray">Operating the Project Explorer</font></a></li>
+						<li><a href="Intro_WindowOperation.html"><img src="../resource/everyone.png" />  <font color="gray">Window Operations</font></a></li>
+						<li><a href="LANG_Setting.html"><img src="../resource/administrators.png" />  <font color="gray">Language Settings</font></a></li>
+						<li><a href="ColorSetting.html"><img src="../resource/administrators.png" />  <font color="gray">Color Settings</font></a></li>
+						<li><a href="AttributeSetting.html"><img src="../resource/administrators.png" />  <font color="gray">Configuring Attributes</font></a></li>
+						</ul>
+					</li>
+					
+					<!-- Message Editting -->
+					<li><a href="#"><img src="../resource/editors.png" />  <font color="gray">Editing Messages</font></a>
+						<ul>
+						<li><a href="MSG_BasicUsage.html"><font color="gray">Basic Operations</font></a>
+						<li><a href="MSG_Category.html"><font color="gray">Text Types</font></a>
+						<li><a href="MSG_Clipboard.html"><font color="gray">Using the Clipboard</font></a>
+						<li><a href="MSG_CellStatus.html"><font color="gray">Language Cell Status</font></a></li>
+						<li><a href="MSG_Customize.html"><font color="gray">Customized Views</font></a>
+						<li><a href="MSG_Tips.html"><font color="gray">Tips for Using the Message List Screen</font></a></li>
+						</ul>
+					</li>
+					
+					<!-- Tag -->
+					<li><a href="#"><img src="../resource/everyone.png" />  <font color="gray">Tags</font></a>
+						<ul>
+						<li><a href="Tag_Overview.html"><img src="../resource/everyone.png" />  <font color="gray">Overview</font></a></li>
+						<li><a href="Tag_Input.html"><img src="../resource/editors.png" />  <font color="gray">Editing Using Tags</font></a></li>
+						<li><a href="Tag_Source.html"><img src="../resource/administrators.png" />  <font color="gray">Tag Source Strings</font></a></li>
+						<li><a href="Tag_Compare.html"><img src="../resource/editors.png" />  <font color="gray">Overview of Tag Comparison</font></a></li>
+						</ul>
+					</li>
+					
+					<!-- Search -->
+					<li><a href="#"><img src="../resource/editors.png" />  <font color="gray">Search Features</font></a>
+						<ul>
+						<li><a href="Intro_Search_Overview.html"><font color="gray">Overview</font></a></li>
+						<li><a href="Intro_Search_Simple.html"><font color="gray">Simple Search</font></a></li>
+						<li><a href="Intro_Search_Detail.html"><font color="gray">Advanced Search</font></a></li>
+						<li><a href="Intro_Search_RegEx.html"><font color="gray">Regular Expressions</font></a></li>
+						</ul>
+					</li>
+					
+					<!-- Spell checking -->
+					<li><a href="#"><img src="../resource/editors.png" />  <font color="gray">Spell Check</font></a>
+						<ul>
+						<li><a href="SpellCheck_Overview.html"><font color="gray">Spell Check Overview</font></a></li>
+						<li><a href="SpellCheck_Usage.html"><font color="gray">How to Use Spell Check</font></a></li>
+						</ul>
+					</li>
+					
+					<!-- Roles and Permissions -->
+					<li><a href="#"><img src="../resource/editors.png" />  <font color="gray">Roles and Permissions</font></a>
+						<ul>
+						<li><a href="Intro_Role_Overview.html"><font color="gray">Overview</font></a></li>
+						<li><a href="Intro_Role_AddRole.html"><font color="gray">Adding a Role and Setting Permissions</font></a></li>
+						<li><a href="Intro_Role_SelectRole.html"><font color="gray">Selecting a Role</font></a></li>
+						</ul>
+					</li>
+					
+					<!-- Progress -->
+					<li><a href="#"><img src="../resource/editors.png" />  <font color="gray">Message Statistics</font></a>
+						<ul>
+						<li><a href="Progress_Overview.html"><font color="gray">About the Statistics</font></a></li>
+						<li><a href="Progress_Usage.html"><font color="gray">How to Use the Statistics</font></a></li>
+						</ul>
+					</li>
+					
+					<!-- Style -->
+					<li><a href="#"><img src="../resource/everyone.png" />  <font color="gray">Style Features and Width Calculation</font></a>
+						<ul>
+						<li><a href="Style_Overview.html"><img src="../resource/everyone.png" />  <font color="gray">Styles and Width Calculation Overview</font></a></li>
+						<li><a href="Intro_TextWidthCheck_Check.html"><img src="../resource/everyone.png" />  <font color="gray">Global Text Width Check</font></a></li>
+						<li><a href="Style_RenderMode.html"><img src="../resource/administrators.png" />  <font color="gray">Rendering Methods Overview</font></a></li>
+						<li><a href="Style_Setting.html"><img src="../resource/administrators.png" />  <font color="gray">Configuring Styles</font></a></li>
+						</ul>
+					</li>
+					
+					<!-- Font -->
+					<li><a href="#"><img src="../resource/everyone.png" />  <font color="gray">Fonts</font></a>
+						<ul>
+						<li><a href="Font_Overview.html"><img src="../resource/everyone.png" />  <font color="gray">Font Features Overview</font></a></li>
+						<li><a href="Font_Workflow.html"><img src="../resource/administrators.png" />  <font color="gray">Font Workflows Overview</font></a></li>
+						<li><a href="Font_Setting.html"><img src="../resource/administrators.png" />  <font color="gray">Configuring Fonts</font></a></li>
+						</ul>
+					</li>
+					
+					<!-- Team -->
+					<li><a href="#"><img src="../resource/everyone.png" />  <font color="gray">Team Management Features</font></a>
+						<ul>
+						<li><a href="TEAM_Overview.html"><img src="../resource/everyone.png" />  <font color="gray">Overview</font></a></li>
+						<li><a href="TEAM_CaseByCase.html"><img src="../resource/editors.png" />  <font color="gray">Managing Files</font></a></li>
+						<li><a href="TEAM_StartUse.html"><img src="../resource/editors.png" />  <font color="gray">Using the Team Management Features</font></a></li>
+						<li><a href="TEAM_Usage.html"><img src="../resource/editors.png" />  <font color="gray">Basic Operations</font></a></li>
+						<li><a href="TEAM_Log.html"><img src="../resource/editors.png" />  <font color="gray">Displaying the Commit Log</font></a></li>
+						<li><a href="TEAM_Diff.html"><img src="../resource/editors.png" />  <font color="gray">Displaying Diffs</font></a></li>
+						<li><a href="TEAM_Merge.html"><img src="../resource/editors.png" />  <font color="gray">Conflicts and Merges</font></a></li>
+						<li><a href="TEAM_Proxy.html"><img src="../resource/administrators.png" />  <font color="gray">Proxy Server Settings</font></a></li>
+						<li><a href="TEAM_Server.html"><img src="../resource/administrators.png" />  <font color="gray">Server Settings</font></a></li>
+						</ul>
+					</li>
+					
+					<!-- Meta -->
+					<li><a href="#"><img src="../resource/everyone.png" />  <font color="gray">Meta Data</font></a>
+						<ul>
+						<li><a href="Meta_Overview.html"><font color="gray">Meta Data Overview</font></a></li>
+						<li><a href="Meta_List.html"><font color="gray">List of Meta Data</font></a></li>
+						</ul>
+					</li>
+					
+					<!-- Resource -->
+					<li><a href="#"><img src="../resource/everyone.png" />  <font color="gray">Resource File-Related</font></a>
+						<ul>
+						<li><a href="RES_Overview.html"><img src="../resource/administrators.png" />  <font color="gray">Resources Overview</font></a></li>
+						<li><a href="RES_Build.html"><img src="../resource/everyone.png" />  <font color="gray">Outputting Resource Files</font></a></li>
+						<li><a href="RES_Setting.html"><img src="../resource/administrators.png" />  <font color="gray">Configuring Output</font></a></li>
+						<li><a href="RES_BuildEvent.html"><img src="../resource/administrators.png" />  <font color="gray">About Build Events</font></a></li>
+						<li><a href="RES_FMT_blocks.html"><img src="../resource/programmer.png" />  <font color="gray">Shared Binary Format</font></a></li>
+						<li><a href="RES_FMT_msbt.html"><img src="../resource/programmer.png" />  <font color="gray">Message Binary Format</font></a></li>
+						<li><a href="RES_FMT_msbf.html"><img src="../resource/programmer.png" />  <font color="gray">Flowchart Binary Format</font></a></li>
+						<li><a href="RES_FMT_msbp.html"><img src="../resource/programmer.png" />  <font color="gray">Project Binary Format</font></a>
+							<ul>
+							<li><a href="RES_FMT_msbp.html"><font color="gray">Project Binary Format</font></a></li>
+							<li><a href="RES_FMT_msbp_color.html"><font color="gray">Color Data</font></a></li>
+							<li><a href="RES_FMT_msbp_content.html"><font color="gray">Content Data</font></a></li>
+							<li><a href="RES_FMT_msbp_attr.html"><font color="gray">Attribute Data</font></a></li>
+							<li><a href="RES_FMT_msbp_tag.html"><font color="gray">Tag Data</font></a></li>
+							<li><a href="RES_FMT_msbp_style.html"><font color="gray">Style Data</font></a></li>
+							</ul>
+						</li>
+						<li><a href="RES_Tags.html"><img src="../resource/programmer.png" />  <font color="gray">Tags Overview</font></a></li>
+						</ul>
+					</li>
+					
+					<!-- Macro -->
+					<li><a href="#"><img src="../resource/administrators.png" />  <font color="gray">Macro String Expansion Feature</font></a>
+						<ul>
+						<li><a href="Macro_Introduction.html"><font color="gray">What Are Macro Strings?</font></a></li>
+						<li><a href="Macro_List.html"><font color="gray">List of Available Macros</font></a></li>
+						</ul>
+					<li><a href="#"><img src="../resource/administrators.png" />  <font color="gray">Command Line-Related</font></a>
+						<ul>
+						<li><a href="CMD_Overview.html"><font color="gray">Command Line Control Overview</font></a></li>
+						<li><a href="CMD_Convert.html"><font color="gray">/convert Switch Overview</font></a></li>
+						</ul>
+					</li>
+					
+					<!-- Plug-in system -->
+					<li><a href="#"><img src="../resource/administrators.png" />  <font color="gray">Plug-Ins</font></a>
+						<ul>
+						<li><a href="Plugin_Overview.html"><font color="gray">Plug-Ins Overview</font></a></li>
+						<li><a href="Plugin_Types.html"><font color="gray">Types of Plug-Ins</font></a></li>
+						</ul>
+					</li>
+					
+					<!-- Plug-in system -->
+					<li><a href="#"><img src="../resource/programmer.png" />  <font color="gray">Creating Plug-Ins</font></a>
+						<ul>
+						<li><a href="MakePlugin_Overview.html"><font color="gray">Simple Plug-In Creation Tutorial</font></a></li>
+						<li><a href="MakePlugin_CommandLine.html"><font color="gray">Creation Without Using a Development Environment</font></a></li>
+						<li><a href="MakePlugin_AboutSamples.html"><font color="gray">Samples</font></a></li>
+						</ul>
+					</li>
+					
+					<!-- Assembly security -->
+					<li><a href="#"><img src="../resource/administrators.png" />  <font color="gray">MessageStudio Assembly Settings</font></a>
+						<ul>
+						<li><a href="Assembly_Caspol.html"><font color="gray">Caspol: Assembly Security Settings</font></a></li>
+						<li><a href="Assembly_Ngen.html"><font color="gray">Ngen: Generating Native Images</font></a></li>
+						</ul>
+					</li>
+					
+					<!-- XML Spec -->
+					<li><a href="#"><img src="../resource/programmer.png" />  <font color="gray">XML Specifications</font></a>
+						<ul>
+						<li><a href="XMLSpec_Overview.html"><font color="gray">Overview</font></a></li>
+						<li><a href="XMLSpec_Project.html"><font color="gray">XML Specifications for Project Files (.msproj)</font></a></li>
+						<li><a href="XMLSpec_Text.html"><font color="gray">XML Specifications for Message Files (.mstxt)</font></a></li>
+						</ul>
+					</li>
+					
+					<!-- libms_overview -->
+					<li><a href="#"><img src="../resource/programmer.png" />  <font color="gray">libms Overview</font></a>
+						<ul>
+							<li><a href="LMS_Overview.html"><font color="gray">Overview</font></a></li>
+							<li><a href="LMS_Compile.html"><font color="gray">How to Compile</font></a></li>
+						</ul>
+					</li>
+					
+					<!-- libms_common -->
+					<li><a href="#"><img src="../resource/programmer.png" />  <font color="gray">Shared Functions</font></a>
+						<ul>
+						<li><a href="LMS_SetMemFuncs.html">LMS_SetMemFuncs</a></li>
+						</ul>
+					</li>
+					
+					<!-- libms_message -->
+					<li><a href="#"><img src="../resource/programmer.png" />  <font color="gray">Message-Related Functions</font></a>
+						<ul>
+							<li><a href="LMS_InitMessage.html">LMS_InitMessage</a></li>
+							<li><a href="LMS_CloseMessage.html">LMS_CloseMessage</a></li>
+							<li><a href="LMS_SearchMessageBlockByName.html">LMS_SearchMessageBlockByName</a></li>
+							<li><a href="LMS_GetMessageBlockInfoByName.html">LMS_GetMessageBlockInfoByName</a></li>
+							<li><a href="LMS_GetTextNum.html">LMS_GetTextNum</a></li>
+							<li><a href="LMS_GetTextIndexByLabel.html">LMS_GetTextIndexByLabel</a></li>
+							<li><a href="LMS_GetText.html">LMS_GetText</a></li>
+							<li><a href="LMS_GetTextSize.html">LMS_GetTextSize</a></li>
+							<li><a href="LMS_GetTextByLabel.html">LMS_GetTextByLabel</a></li>
+							<li><a href="LMS_GetLabelByTextIndex.html">LMS_GetLabelByTextIndex</a></li>
+							<li><a href="LMS_GetTextStyle.html">LMS_GetTextStyle</a></li>
+							<li><a href="LMS_GetTextStyleByLabel.html">LMS_GetTextStyleByLabel</a></li>
+							<li><a href="LMS_GetAttributeSize.html">LMS_GetAttributeSize</a></li>
+							<li><a href="LMS_GetAttribute.html">LMS_GetAttribute</a></li>
+							<li><a href="LMS_GetAttributeText.html">LMS_GetAttributeText</a></li>
+						</ul>
+					</li>
+					
+					<!-- libms_flowchart -->
+					<li><a href="#"><img src="../resource/programmer.png" />  <font color="gray">Flowchart-Related Functions</font></a>
+						<ul>
+							<li><a href="LMS_InitFlowchart.html">LMS_InitFlowchart</a></li>
+							<li><a href="LMS_CloseFlowchart.html">LMS_CloseFlowchart</a></li>
+							<li><a href="LMS_GetNodeNum.html">LMS_GetNodeNum</a></li>
+							<li><a href="LMS_GetEntryNodeIndex.html">LMS_GetEntryNodeIndex</a></li>
+							<li><a href="LMS_GetNodeDataPtr.html">LMS_GetNodeDataPtr</a></li>
+							<li><a href="LMS_GetFlowNodeIndex.html">LMS_GetFlowNodeIndex</a></li>
+							<li><a href="LMS_GetCaseIndexesFromBranchNode.html">LMS_GetCaseIndexesFromBranchNode</a></li>
+							<li><a href="LMS_GetFlowParamText.html">LMS_GetFlowParamText</a></li>
+						</ul>
+					</li>
+					
+					<!-- libms_project -->
+					<li><a href="#"><img src="../resource/programmer.png" />  <font color="gray">Project-Related Functions</font></a>
+						<ul>
+							<li><a href="LMS_InitProject.html">LMS_InitProject</a></li>
+							<li><a href="LMS_CloseProject.html">LMS_CloseProject</a></li>
+							<li><a href="LMS_SearchProjectBlockByName.html">LMS_SearchProjectBlockByName</a></li>
+							<li><a href="#"><font color="gray">Color Data-Related Functions</font></a>
+								<ul>
+								<li><a href="LMS_GetColorIndexByName.html">LMS_GetColorIndexByName</a></li>
+								<li><a href="LMS_GetColor.html">LMS_GetColor</a></li>
+								<li><a href="LMS_GetColorByName.html">LMS_GetColorByName</a></li>
+								<li><a href="LMS_GetColorNum.html">LMS_GetColorNum</a></li>
+								</ul>
+							</li>
+							<li><a href="#"><font color="gray">Content Data-Related Functions</font></a>
+								<ul>
+								<li><a href="LMS_GetContentsNum.html">LMS_GetContentsNum</a></li>
+								<li><a href="LMS_GetContentPath.html">LMS_GetContentPath</a></li>
+								</ul>
+							</li>
+							<li><a href="#"><font color="gray">Attribute Data-Related Functions</font></a>
+								<ul>
+								<li><a href="LMS_GetAttrInfoIndexByName.html">LMS_GetAttrInfoIndexByName</a></li>
+								<li><a href="LMS_GetAttrType.html">LMS_GetAttrType</a></li>
+								<li><a href="LMS_GetAttrTypeByName.html">LMS_GetAttrTypeByName</a></li>
+								<li><a href="LMS_GetAttrOffset.html">LMS_GetAttrOffset</a></li>
+								<li><a href="LMS_GetAttrOffsetByName.html">LMS_GetAttrOffsetByName</a></li>
+								<li><a href="LMS_GetAttrListItemName.html">LMS_GetAttrListItemName</a></li>
+								<li><a href="LMS_GetAttrListItemNameByName.html">LMS_GetAttrListItemNameByName</a></li>
+								<li><a href="LMS_GetAttrNum.html">LMS_GetAttrNum</a></li>
+								<li><a href="LMS_GetAttrListItemNum.html">LMS_GetAttrListItemNum</a></li>
+								</ul>
+							</li>
+							<li><a href="#"><font color="gray">Tag Data-Related Functions</font></a>
+								<ul>
+								<li><a href="LMS_GetTagGroupName.html">LMS_GetTagGroupName</a></li>
+								<li><a href="LMS_GetTagName.html">LMS_GetTagName</a></li>
+								<li><a href="LMS_GetTagParamName.html">LMS_GetTagParamName</a></li>
+								<li><a href="LMS_GetTagParamType.html">LMS_GetTagParamType</a></li>
+								<li><a href="LMS_GetTagListItemName.html">LMS_GetTagListItemName</a></li>
+								<li><a href="LMS_GetTagGroupNum.html">LMS_GetTagGroupNum</a></li>
+								<li><a href="LMS_GetTagNum.html">LMS_GetTagNum</a></li>
+								<li><a href="LMS_GetTagParamNum.html">LMS_GetTagParamNum</a></li>
+								<li><a href="LMS_GetTagListItemNum.html">LMS_GetTagListItemNum</a></li>
+								</ul>
+							</li>
+							<li><a href="#"><font color="gray">Style Data-Related Functions</font></a>
+								<ul>
+								<li><a href="LMS_GetStyleIndexByName.html">LMS_GetStyleIndexByName</a></li>
+								<li><a href="LMS_GetRegionWidth.html">LMS_GetRegionWidth</a></li>
+								<li><a href="LMS_GetRegionWidthByName.html">LMS_GetRegionWidthByName</a></li>
+								<li><a href="LMS_GetLineNum.html">LMS_GetLineNum</a></li>
+								<li><a href="LMS_GetLineNumByName.html">LMS_GetLineNumByName</a></li>
+								<li><a href="LMS_GetFontIndex.html">LMS_GetFontIndex</a></li>
+								<li><a href="LMS_GetFontIndexByName.html">LMS_GetFontIndexByName</a></li>
+								<li><a href="LMS_GetStyleNum.html">LMS_GetStyleNum</a></li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					
+					<li><a href="Intro_Extensions.html"><img src="../resource/everyone.png" />  <font color="gray">List of Supported File Extensions</font></a></li>
+					<li><a href="FAQ.html"><img src="../resource/everyone.png" />  <font color="gray">FAQ</font></a></li>
+				</ul>
+				</div>
+				<div class="clear"><hr/></div>
+			</div>
+			<div class="footer">
+				Copyright &copy; 2008 - 2010 Nintendo EAD
+			</div>
+		</div>
+	</body>
+</html>

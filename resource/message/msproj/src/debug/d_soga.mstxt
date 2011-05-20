@@ -1,0 +1,1459 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<MessageStudioText
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="DSMSG_EFFECT_VIEWER"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>エフェクトビューワー</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="DSMSG_POKEMON_VIEWER"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンビューワー</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="DSMSG_TRAINER_VIEWER"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>トレーナービューワー</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="DSMSG_BATTLE_TEST"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>バトルテスト</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="DSMSG_CAPTURE"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>キャプチャじっけん</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="PVMSG_PERS"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>透視射影</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="PVMSG_ORTH"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>正射影</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="PVMSG_POS_AA"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>POS AA</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="PVMSG_POS_BB"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>POS BB</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="PVMSG_POS_A"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>POS A</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="PVMSG_POS_B"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>POS B</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="PVMSG_POS_C"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>POS C</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="PVMSG_POS_D"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>POS D</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="PVMSG_POS_E"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>POS E</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="PVMSG_POS_F"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>POS F</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="PVMSG_MONSNAME"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Digit:3digits Idx="0"]：[Name:PokemonName Idx="1"]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="PVMSG_FORMNAME"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Digit:2digits Idx="0"]／[Digit:2digits Idx="1"]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_CURSOR"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>→</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_NUM0"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>0</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_NUM1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>1</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_NUM2"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>2</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_NUM3"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>3</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_NUM4"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>4</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_NUM5"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>5</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_NUM6"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>6</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_NUM7"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>7</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_NUM8"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>8</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_NUM9"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>9</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_NUMA"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>A</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_NUMB"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>B</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_NUMC"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>C</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_NUMD"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>D</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_NUME"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>E</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_NUMF"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>F</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_NUMDOT"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>.</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_TITLE"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンエフェクトビューワー</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_ATTACK"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かいしいち</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_DEFENCE"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ほうこう</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_DECIDE"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>けってい</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_CANCEL"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>キャンセル</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_POS_AA"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＰＯＳ＿ＡＡ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_POS_BB"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＰＯＳ＿ＢＢ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_POS_A"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＰＯＳ＿Ａ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_POS_B"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＰＯＳ＿Ｂ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_POS_C"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＰＯＳ＿Ｃ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_POS_D"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＰＯＳ＿Ｄ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_POS_E"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＰＯＳ＿Ｅ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_POS_F"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＰＯＳ＿Ｆ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_PPLAY_EDIT"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>パーティクルさいせい</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_PPLAY_OFSY"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>エミッタたかさ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_PPLAY_ANGLE"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>エミッタかくど</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="WazaNameMsg"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:Move Idx="0"]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="PPMsg"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＰＰ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="PPNowMaxMsg"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Digit:2digits Idx="0"]／[Digit:2digits Idx="1"]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="BINPUT_FIGHT"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>たたかう</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="BINPUT_BAG"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>バッグ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="BINPUT_POKEMON"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモン</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="BINPUT_ESCAPE"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>にげる</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="BINPUT_MODORU"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>もどる</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TargetPokemonMaleMsg"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonNickname Idx="0"]♂</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TargetPokemonFemaleMsg"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonNickname Idx="0"]♀</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TargetPokemonMsg"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonNickname Idx="0"]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EV_MUS_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>SEQ_VS_NORAPOKE</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TVMSG_TRTYPE"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Digit:3digits Idx="0"]：[Name:TrainerType Idx="1"]</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_STATUS_EFFECT"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ステータスエフェクト</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_AA2BB"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>AA→BB</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_BB2AA"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>BB→AA</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_A2B"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>A→B</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_A2C"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>A→C</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_A2D"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>A→D</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_A2E"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>A→E</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_A2F"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>A→F</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_B2A"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>B→A</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_B2C"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>B→C</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_B2D"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>B→D</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_B2E"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>B→E</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_B2F"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>B→F</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_C2A"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>C→A</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_C2B"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>C→B</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_C2D"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>C→D</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_C2E"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>C→E</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_C2F"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>C→F</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_D2A"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>D→A</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_D2B"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>D→B</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_D2C"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>D→C</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_D2E"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>D→E</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_D2F"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>D→F</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_E2A"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>E→A</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_E2B"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>E→B</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_E2C"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>E→C</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_E2D"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>E→D</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_E2F"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>E→F</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_F2A"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>F→A</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_F2B"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>F→B</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_F2C"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>F→C</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_F2D"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>F→D</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="EVMSG_F2E"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>F→E</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:07" />
+		</LanguageCell>
+	</TextRow>
+</MessageStudioText>

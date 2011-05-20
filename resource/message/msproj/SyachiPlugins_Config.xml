@@ -1,0 +1,7 @@
+<?xml version='1.0'?>
+<Config>
+<TagDef path="$(ProjectDir)\..\..\..\tools\message\message_tags.csv"/>
+<LayoutCsv path="$(ProjectDir)\..\..\..\tools\message\layout.csv"/>
+<SceneDir path="$(ProjectDir)\"/>
+<TagValue path="$(ProjectDir)\..\..\..\tools\message\TagValue.txt"/>
+</Config>

@@ -1,0 +1,258 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<MessageStudioText
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="msg_t03r0201_oldwoman1_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ぐごご……　ぐごごご………▼
+……ん　んんう？
+なんじゃ？　おまえさんは？▼
+バーさんの　はなしでも
+ききに　きたんか……？</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ぐごご……　ぐごごご………▼
+……ん　んんう？
+なんじゃ？　おまえさんは？▼
+バーさんの　話でも
+聞きに　来たんか……？</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+※朝になるといなくなる
+※消すタイミングはzoneチェンジ＋時間参照
+
+はい→msg_t03_oldwoman1_02
+いいいえ→msg_t03_oldwoman1_03</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLDWOMAN1</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t03r0201_oldwoman1_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>んん……　じゃあ　はなしてやろう……▼
+この　カゴメタウンの　うらには……
+でっかい　あなが　あいとるんじゃ▼
+そのあなはな　むかし　むかし……▼
+ふあ……　だめじゃ　ねむい……▼
+そらから　おおきな……▼
+……が　ふってきて　できた……▼
+そして　その……　なかには
+よにも　おそろしい……▼
+……　……　よにも……▼
+ぐう……　ぐう……　ぐごご……</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>んん……　じゃあ　話してやろう……▼
+この　カゴメタウンの　裏には……
+でっかい　穴が　開いとるんじゃ▼
+その穴はな　昔々……▼
+ふあ……　だめじゃ　眠いわ……▼
+空から　大きな……
+……が　降って　出来た……▼
+そして　その……　中には
+世にも　恐ろしい……▼
+……　……　世にも……▼
+ぐう……　ぐう……　ぐごご……</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>※朝になるといなくなる
+※消すタイミングはzoneチェンジ＋時間参照
+</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLDWOMAN1</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t03r0201_oldwoman1_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ふあ……　ああ　そうかい……
+じゃあ　ワシは　ねる……▼
+おやすみな……　ぐう……
+ぐう……　ぐう……</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ふあ……　ああ　そうかい……
+じゃあ　ワシは　寝る……▼
+おやすみな……　ぐう……
+ぐう……　ぐう……</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>イベント終了</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLDWOMAN1</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t03r0201_badman_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>オイラの　バーちゃん
+むかしばなしが　すきでよ▽
+しょっちゅう　なげー　はなしに▽
+つきあわされるんだぜ▼
+よるに　なったら　はなしてる
+とちゅうでも　ねちまうし▽
+ったく　げんき　っていうより▽
+フリーダムな　バーちゃんだよ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>オイラの　バーちゃん
+昔話が　好きでよ▽
+しょっちゅう　なげー　話に▽
+付き合わされるんだぜ▼
+夜に　なったら　話してる
+途中でも　寝ちまうし▽
+ったく　元気　っていうより▽
+フリーダムな　バーちゃんだよ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+※水曜日のみ出現しない
+
+※朝になるといなくなる
+※消すタイミングはzoneチェンジ＋時間参照</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BADMAN</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+</MessageStudioText>

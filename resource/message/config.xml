@@ -1,0 +1,27 @@
+<?xml version='1.0'?>
+<Config>
+<MsDir path="%PROJECT_ROOT%\tools\MessageStudio\bin\"/>
+<MsProj path="%PROJECT_ROOT%\resource\message\msproj\ingame_text.msproj"/>
+<TagDef path="%PROJECT_ROOT%\tools\message\message_tags.csv"/>
+<LayoutCsv path="%PROJECT_ROOT%\tools\message\layout.csv"/>
+<TagValue path="%PROJECT_ROOT%\tools\message\TagValue.txt"/>
+<CheckOnly>False</CheckOnly>
+<Fonts>
+<Font id="0" path="%PROJECT_ROOT%\tools\message\font\large.nftr"/>
+<Font id="1" path="%PROJECT_ROOT%\tools\message\font\small.nftr"/>
+<Font id="2" path="%PROJECT_ROOT%\tools\message\font\small_batt.nftr"/>
+<Font id="3" path="%PROJECT_ROOT%\tools\message\font\num.nftr"/>
+<Font id="4" path="%PROJECT_ROOT%\tools\message\font\shinden.nftr"/>
+<Font id="5" path="%PROJECT_ROOT%\tools\message\font\num_eng.nftr"/>
+<Font id="6" path="%PROJECT_ROOT%\tools\message\font\num_fra.nftr"/>
+<Font id="7" path="%PROJECT_ROOT%\tools\message\font\num_ger.nftr"/>
+<Font id="8" path="%PROJECT_ROOT%\tools\message\font\num_ita.nftr"/>
+<Font id="9" path="%PROJECT_ROOT%\tools\message\font\num_spa.nftr"/>
+<Font id="10" path="%PROJECT_ROOT%\tools\message\font\num_kor.nftr"/>
+</Fonts>
+<ErrorCheckExclude>
+<Status>debug</Status>
+<Status>unused</Status>
+<CheckType>UnknownWindow</CheckType>
+</ErrorCheckExclude>
+</Config>

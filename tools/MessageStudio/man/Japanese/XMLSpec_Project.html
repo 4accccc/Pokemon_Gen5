@@ -1,0 +1,1588 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF8">
+		<title>Nintendo MessageStudio ヘルプ</title>
+		<link rel="Stylesheet" type="text/css" href="../resource/main.css" />
+		<link type="text/css" rel="stylesheet" href="../resource/SyntaxHighlighter.css" />
+		<script type="text/javascript" src="../resource/shCore.js"></script>
+		<script type="text/javascript" src="../resource/shBrushCpp.js"></script>
+		<script type="text/javascript" src="../resource/shBrushCSharp.js"></script>
+		<script type="text/javascript" src="../resource/shBrushPython.js"></script>
+		<script type="text/javascript" src="../resource/shBrushRuby.js"></script>
+		<script type="text/javascript" src="../resource/shBrushBat.js"></script>
+		<script type="text/javascript" src="../resource/shBrushReg.js"></script>
+		<script type="text/javascript" src="../resource/shBrushXml.js"></script>
+		<script type="text/javascript" src="../resource/shBrushTag.js"></script>
+		<script type="text/javascript">
+		<!--
+			//===================================================================
+			// ページの変数
+			//===================================================================
+			//Enter id(s) of each Side Bar Menu's main UL, separated by commas
+			var menuids=["sidebarmenu1"];
+			var menuBottomPos=[];
+
+			//===================================================================
+			//イベントの登録
+			//===================================================================
+			if ( window.addEventListener ) {
+				window.addEventListener( "load", InitPage, false );
+				window.addEventListener( "resize", UpdateSidebarMenu, false );
+				window.addEventListener( "scroll", UpdateSidebarMenu, false );
+			}
+			else if ( window.attachEvent ) {
+				window.attachEvent( "onload", InitPage );
+				window.attachEvent( "onresize", UpdateSidebarMenu );
+				window.attachEvent( "onscroll", UpdateSidebarMenu );
+			}
+			else {
+				window.onload = InitPage;
+				window.onresize = UpdateSidebarMenu;
+				window.onscroll = UpdateSidebarMenu;
+			}
+			
+			//===================================================================
+			// Function : InitPage ページ内の初期化処理（初回のみ呼び出し）
+			//===================================================================
+			function InitPage(){
+
+				// シンタックスハイライトの初期化
+				InitSyntaxHighlighter();
+
+				// メニューの初期化
+				InitSidebarMenu();
+
+				// アップデートしておく
+				UpdateSidebarMenu();
+			}
+
+			//===================================================================
+			// Function : InitSidebarMenu メニューの初期化
+			//===================================================================
+			function InitSidebarMenu()
+			{
+				for ( var i = 0; i < menuids.length; i++ )
+				{
+					// 処理対象となるメニューを取得する
+					var ultags = document.getElementById( menuids[i] ).getElementsByTagName("ul");
+
+					// 各メニューに対する処理
+					for ( var t = 0; t < ultags.length; t++ )
+					{
+						ultags[t].parentNode.getElementsByTagName("a")[0].className += " subfolderstyle"
+						
+						//if this is a first level submenu
+						if ( ultags[t].parentNode.parentNode.id == menuids[i] )
+						{
+							//dynamically position first level submenus to be width of main menu item
+							ultags[t].style.left = ultags[t].parentNode.offsetWidth + "px";
+						}
+						//else if this is a sub level submenu (ul)
+						else
+						{
+							//position menu to the right of menu item that activated it
+							ultags[t].style.left = ultags[t-1].getElementsByTagName("a")[0].offsetWidth + "px";
+						}
+
+						// 高さの初期位置をセット
+						var atags = ultags[t].getElementsByTagName( "a" );
+						var innerUlTags = ultags[t].getElementsByTagName( "ul" );
+
+						var childatagNum = atags.length;
+						for ( var nUl = 0; nUl < innerUlTags.length; nUl++ ) childatagNum -= innerUlTags[nUl].getElementsByTagName( "a" ).length;
+						var menuHeight = childatagNum * atags[0].offsetHeight;
+						// このメニューの一番下の位置を取得
+						var parentRect = ultags[t].parentNode.getBoundingClientRect();	// 親ノードの境界サイズ
+
+						// メニューの下の初期位置を保存しておく
+						menuBottomPos[t]  = parentRect.top + menuHeight;
+
+						// マウスオーバー時の処理を登録
+						ultags[t].parentNode.onmouseover = function()
+						{
+							this.getElementsByTagName("ul")[0].style.display = "block"
+						}
+						ultags[t].parentNode.onmouseout = function()
+						{
+							this.getElementsByTagName("ul")[0].style.display = "none"
+						}
+					}
+					
+					// loop through all sub menus again, and use "display:none" to hide menus (to prevent possible page scrollbars
+					for ( var t = ultags.length - 1; t > -1; t-- )
+					{
+						ultags[t].style.visibility	= "visible"
+						ultags[t].style.display		= "none"
+					}
+				}
+			}
+
+			//===================================================================
+			// Function : InitSyntaxHighlighter SyntaxHighlighterの初期化
+			//===================================================================
+			function InitSyntaxHighlighter()
+			{
+				dp.SyntaxHighlighter.ClipboardSwf = '../resource/clipboard.swf';
+				dp.SyntaxHighlighter.HighlightAll('code');
+			}
+
+			//===================================================================
+			// Function : UpdateSidebarMenu メニューの位置を更新します。
+			//===================================================================
+			function UpdateSidebarMenu()
+			{
+				for ( var i = 0; i < menuids.length; i++ )
+				{
+					// 処理対象となるメニューを取得する
+					var ultags = document.getElementById( menuids[i] ).getElementsByTagName("ul");
+
+					// 各メニューに対する処理
+					for ( var t = 0; t < ultags.length; t++ )
+					{
+						// メニューの高さを調節する
+						var atags = ultags[t].getElementsByTagName( "a" );
+						var innerUlTags = ultags[t].getElementsByTagName( "ul" );
+						
+						var childatagNum = atags.length;
+						for ( var nUl = 0; nUl < innerUlTags.length; nUl++ ) childatagNum -= innerUlTags[nUl].getElementsByTagName( "a" ).length;
+						var menuHeight = childatagNum * atags[0].offsetHeight;
+
+						// このメニューの一番下の位置を取得
+						var parentRect = ultags[t].parentNode.getBoundingClientRect();	// 親ノードの境界サイズ
+						
+						// クライアント領域の底とメニューの底の距離を計算
+						var clientHeight = getClientHeight();
+						
+						var scTop = document.body.scrollTop || document.documentElement.scrollTop;
+						var btobLen = clientHeight - menuBottomPos[t];
+						
+						// メニューが潜らないように調整
+						if ( btobLen + scTop < 0 )
+						{
+							// 潜っている分だけ上にシフトする
+							ultags[t].style.top = (Math.max( (-1 * parentRect.top), btobLen-1)-15) + scTop + "px";
+						}
+						else
+						{
+							// 潜らないので初期位置
+							ultags[t].style.top = "0px";
+						}
+					}
+				}
+			}
+
+			//===================================================================
+			// Function : UpdateSidebarMenu メニューの位置を更新します。
+			//===================================================================
+			function getClientHeight(){
+				// IE以外。
+				if ((!document.all || window.opera) && document.getElementById) {
+					return window.innerHeight;
+				}
+				// ウィンドウズIE 6・標準モード。
+				else if (document.getElementById && (document.compatMode=='CSS1Compat')) {
+					return document.documentElement.clientHeight;
+				}
+				// その他のIE。
+				else if (document.all) {
+					return document.body.clientHeight;
+				}
+			}
+		-->
+		</script>
+	</head>
+	<body>
+		<div class="wrap">
+			<div class="header">
+				Nintendo MessageStudio ヘルプ
+			</div>
+			<div class="inner">
+				<div class="mainWrap">
+					<h1>プロジェクトファイル （.msproj）のXML仕様</h1>
+
+<!-- Main Element List -->
+<h2>ルート要素およびルート直下に展開される要素の一覧</h2>
+<p><a href="#markMessageStudioProject">MessageStudioProject</a>(Root Element)</p>
+<p><a href="#markPluginInfo">PluginInfo</a></p>
+<p><a href="#markContents">Contents</a></p>
+<p><a href="#markProperties">Properties</a></p>
+<p><a href="#markLanguage">Language</a></p>
+<p><a href="#markFonts">Fonts</a></p>
+<p><a href="#markStyles">Styles</a></p>
+<p><a href="#markColors">Colors</a></p>
+<p><a href="#markTagGroups">TagGroups</a></p>
+<p><a href="#markAttributes">Attributes</a></p>
+<p><a href="#markDictionaries">Dictionaries</a></p>
+<p><a href="#markBuildSettings">BuildSettings</a></p>
+<p><a href="#markRoles">Roles</a></p>
+<p><a href="#markExtraSettings">ExtraSettings</a></p>
+
+
+
+<!-- MessageStudioProject -->
+<h2 id="markMessageStudioProject">MessageStudioProject 要素 ( Root Element )</h2>
+
+<!-- Declaration -->
+<h3>宣言</h3>
+<pre name="code" class="xml">
+&lt;?xml version="1.0" encoding="utf-8" standalone="yes"?&gt;
+&lt;MessageStudioProject Format="1.1" xmlns="nintendo:msgstudio"&gt;
+	...
+&lt;/MessageStudioProject&gt;
+</pre>
+
+<!-- Explanation -->
+<h3>説明</h3>
+<p>MessageStudioProject要素は、プロジェクトファイルのルート要素となります。
+この要素は以下の属性を持ちます。</p>
+<table border="1">
+	<tr>
+		<th class="XMLAttribute">属性名</th><th class="XMLAttribute_Exp">説明</th>
+	</tr>
+	<tr>
+		<td>xmlns</td><td>XML名前空間です。
+この値は常に <b>nintendo:msgstudio</b> となります。</td>
+	</tr>
+	<tr>
+		<td>Format</td><td>プロジェクトファイルのフォーマットバージョンです。
+このフォーマットバージョンは、プロジェクトファイルのフォーマットバージョンであり、
+Message Studio本体のバージョンとは異なることに注意して下さい。
+現在のバージョンは1.0です。</td>
+	</tr>
+</table>
+<p>また、MessageStudioProject要素はルート要素ですので、これ以下の要素全てを子として持ちます。</p>
+
+
+<!-- PluginInfo -->
+<h2 id="markPluginInfo">PluginInfo 要素</h2>
+
+<!-- Declaration -->
+<h3>宣言</h3>
+<pre name="code" class="xml">
+&lt;PluginInfo
+	PluginDir="&amp;(ProjectDir)\plugins"
+	Recursive="True"&gt; /&gt;
+</pre>
+
+<!-- Explanation -->
+<h3>説明</h3>
+<p>PluginInfo要素は、プラグインの配置場所に関する情報を持ちます。
+この要素は以下の属性を持ちます。</p>
+<table border="1">
+	<tr>
+		<th class="XMLAttribute">属性名</th><th class="XMLAttribute_Exp">説明</th>
+	</tr>
+	<tr>
+		<td>PluginDir</td><td>プラグインが配置されているディレクトリ名です。
+MessageStudioはこのディレクトリからプラグイン読み込みを
+試みます。
+この記述には<a href="Macro_List.html#">マクロ文字列</a>が使用できます。</td>
+	</tr>
+	<tr>
+		<td>Recursive</td><td>ProjectDir属性が示すディレクトリ以下のディレクトリに対して
+再帰的にプラグイン読み込みを試みるかを指定します。
+TrueまたはFalseを指定できます。
+</td>
+	</tr>
+</table>
+
+
+<!-- Contents -->
+<h2 id="markContents">Contents 要素</h2>
+
+<!-- Declaration -->
+<h3>宣言</h3>
+<pre name="code" class="xml">
+&lt;Contents&gt;
+	&lt;Directory Name="System"&gt;
+		&lt;ContentItem Name="Errors.mstxt"&gt;
+		&lt;ContentItem Name="Items.mstxt"&gt;
+		...
+	&lt;/Directory&gt;
+	&lt;Directory Name="Test"&gt;
+		&lt;Meta Key="F4CD8CBE-4A0C-4d3f-BA69-BD1C25B8DC2A"&gt;
+			*.mstxt
+		&lt;/Meta&gt;
+		&lt;ContentItem Name="Test0.mstxt"&gt;
+		...
+	&lt;/Directory&gt;
+	...
+	&lt;ContentItem Name="Readme.txt"&gt;
+	...
+&lt;/Contents&gt;
+</pre>
+
+<!-- Explanation -->
+<h3>説明</h3>
+<p>Contents要素は、プロジェクトファイルが管理するコンテンツファイルに関する
+情報を持ちます。</p>
+<p>Contents要素およびDirectory要素は、ContentItem要素およびDirectory要素を含むことが出来ます。
+Directory要素とContentItem要素は、Nameという共通の属性を持ちます。Name要素にはそれぞれ、
+ディレクトリ名およびファイル名が入ります。</p>
+<p>Contents要素、Directory要素、ContentItem要素はMeta要素を含むことができます。
+Meta要素はKeyという属性を1つだけ持ち、これは<a href="Plugin_Types.html#markMeta">メタ情報プラグイン</a>
+を一意に識別するGUIDになります。
+Meta要素に含まれる文字列は、メタ情報プラグインが設定する任意の値であり、
+Message Studio本体がこの値を用いて何かをすることはありません。
+どのように処理するかはメタ情報プラグイン次第です。</p>
+
+
+
+<!-- Properties -->
+<h2 id="markProperties">Properties要素</h2>
+
+<!-- Declaration -->
+<h3>宣言</h3>
+<pre name="code" class="xml">
+&lt;Properties&gt;
+	&lt;PreBuildEvent&gt;echo hello world&lt;/PreBuildEvent&gt;
+	&lt;PostBuildEvent&gt;echo good bye&lt;/PostBuildEvent&gt;
+	&lt;TeamSettings
+		AutoUpdate="False"
+		AutoCommit="False"
+		AutoCloseOnAutoUpdate="False" /&gt;
+&lt;/Properties&gt;
+</pre>
+
+<!-- Explanation -->
+<h3>説明</h3>
+<p>Properties要素はプロジェクト設定に関する情報を持ちます。
+この要素は、以下の要素を含みます。</p>
+<table border="1">
+	<tr>
+		<th class="XMLElement">要素名</th><th class="XMLElement_Exp">説明</th>
+	</tr>
+	<tr>
+		<td>PreBuildEvent</td><td>ビルド前の処理を記述します。
+ここに記述されたシェルコマンドがビルド前に実行されます。
+ここには<a href="Macro_List.html#">マクロ文字列</a>を使用することができます。</td>
+	</tr>
+	<tr>
+		<td>PostBuildEvent</td><td>ビルド後の処理を記述します。
+ここに記述されたシェルコマンドがビルド後に実行されます。
+ここには<a href="Macro_List.html#">マクロ文字列</a>を使用することができます。</td>
+	</tr>
+	<tr>
+		<td>TeamSettings</td>
+		<td>
+			<a href="TEAM_Usage.html#markSettings">チーム管理機能に関する設定</a>情報を持ちます。
+この要素は以下の属性を持ちます。
+			<table border="1">
+				<tr>
+					<th class="XMLAttribute">属性名</th><th class="XMLAttribute_Exp">説明</th>
+				</tr>
+				<tr>
+					<td>AutoUpdate</td><td>TrueかFalseが設定できます。
+Trueの場合、プロジェクトを開いたタイミングで自動で更新がかかります。</td>
+				</tr>
+				<tr>
+					<td>AutoCommit</td><td>TrueかFalseが設定できます。
+Trueの場合、プロジェクトを閉じるときにコミットされていないファイルがあった場合、
+コミットを促すメッセージが表示されるようになります。</td>
+				</tr>
+				<tr>
+					<td>AutoCloseOnAutoUpdate</td><td>TrueかFalseが設定できます。
+Trueの場合、自動更新されたときにエラーがなかったら
+更新ダイアログを自動的に閉じます。
+AutoUpdate属性がTrueの場合に使用されます。</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+
+
+<!-- Language -->
+<h2 id="markLanguage">Language 要素</h2>
+
+<!-- Declaration -->
+<h3>宣言</h3>
+<pre name="code" class="xml">
+&lt;Language
+	LanguageName="JP_Japanese"
+	OutputBinary="True"
+	ReviewEnabled="True"
+	RubyWarning="True"
+	SpellEnabled="False"
+	Dictionary="en_GB"&gt;
+	&lt;Language
+		LanguageName="US_English"
+		OutputBinary="True"
+		ReviewEnabled="False"
+		RubyWarning="False"
+		SpellEnabled="True"
+		Dictionary="en_US"&gt;
+		...
+	&lt;/Language&gt;
+	...
+&lt;/Language&gt;
+</pre>
+
+<!-- Explanation -->
+<h3>説明</h3>
+<p>Language要素は、言語設定に関する情報を持ちます。
+Language要素は、別のLanguage要素を子に含むことができます。
+このLanguage要素の親子構造は、そのまま<a href="LANG_Setting.html#markTree">言語ツリー</a>として
+Message Studioに取り込まれます。</p>
+<table border="1">
+	<tr>
+		<th class="XMLAttribute">属性名</th><th class="XMLAttribute_Exp">説明</th>
+	</tr>
+	<tr>
+		<td>LanguageName</td><td>言語名です。</td>
+	</tr>
+	<tr>
+		<td>OutputBinary</td><td>TrueかFalseを指定できます。
+<a href="RES_Setting.html#">ビルダー</a>が、この言語に関する
+テキストデータなどを出力すべきかどうかを示し、Trueなら出力すべきです。</td>
+	</tr>
+	<tr>
+		<td>ReviewEnabled</td><td>TrueかFalseが指定できます。
+Trueなら<a href="MSG_CellStatus.html#Review">レビュー機能</a>が
+有効になります。</td>
+	</tr>
+	<tr>
+		<td>RubyWarning</td><td>TrueかFalseを指定できます。
+Trueなら、<a href="RES_Setting.html#">ビルダー</a>が、
+この言語に関するテキストをビルドする際、漢字にルビ<a href="Tag_Overview.html#">タグ</a>（ふりがな）が
+設定されていなければ警告を出してくれるようになります。
+ただし、中国語に対してこの機能を有効にしてはいけません。（すべての文字に対して
+警告が出ることになります。）</td>
+	</tr>
+	<tr>
+		<td>SpellEnabled</td><td>TrueかFalseを指定できます。
+Trueならこの言語に対して<a href="SpellCheck_Overview.html#">スペルチェック機能</a>が有効になります。</td>
+	</tr>
+	<tr>
+		<td>Dictionary</td><td>スペルチェックに用いる辞書の名前です。</td>
+	</tr>
+</table>
+
+
+<!-- Fonts -->
+<h2 id="markFonts">Fonts 要素</h2>
+
+<!-- Declaration -->
+<h3>宣言</h3>
+<pre name="code" class="xml">
+&lt;Fonts&gt;
+	&lt;FontSetting
+		FontName="MyFont"
+		Loader="e5d705a4-ee19-4b1c-a3da-eccc4ed6fdf8"&gt;
+		&lt;FontPath&gt;$(ProjectDir)\..\Font\MyFont.brfnt&lt;/FontPath&gt;
+	&lt;/FontSetting&gt;
+	...
+&lt;/Fonts&gt;
+</pre>
+
+<!-- Explanation -->
+<h3>説明</h3>
+<p>Fonts要素は、フォント設定に関する情報を持ちます。
+Fonts要素は、0個以上のFontSetting要素を含みます。</p>
+
+
+<h3>FontSetting要素</h3>
+<p>FontSetting要素は以下の属性を持ちます。</p>
+
+<!-- Attribute -->
+<table border="1">
+	<tr>
+		<th class="XMLAttribute">属性名</th><th class="XMLAttribute_Exp">説明</th>
+	</tr>
+	<tr>
+		<td>FontName</td><td>フォントの名前です。</td>
+	</tr>
+	<tr>
+		<td>Loader</td><td>フォントリソースを読み込むための<a href="Plugin_Types.html#markFontLoader">フォントローダープラグイン</a>を
+示すGUIDです。</td>
+	</tr>
+</table>
+
+<p>また、<b>宣言</b>のFontType要素の例ように、FontSetting要素は任意の要素を含むことができます。
+これらの要素はLoader属性に設定されているフォントローダープラグインが
+独自に追加可能な要素であり、Message Studio本体がこれらの要素を直接扱うことは
+ありません。</p>
+
+
+<!-- Styles -->
+<h2 id="markStyles">Styles 要素</h2>
+
+<!-- Declaration -->
+<h3>宣言</h3>
+<pre name="code" class="xml">
+&lt;Styles&gt;
+	&lt;StyleClass StyleName="MyStyle"&gt;
+		&lt;Default
+			RegionWidth="400"
+			LineNum="3"
+			FontName="MyFont_A"
+			RenderMode="f23e335b-192a-4a51-87f8-2ca98cac9a57"&gt;
+			&lt;Nw4rTextWriter
+				ScaleH="1"
+				ScaleV="1"
+				LineSpace="0"
+				CharSpace="0"
+				TabWidth="4"
+				EnableFixedWidth="False"
+				FixedWidth="0" /&gt;
+		&lt;/Default&gt;
+		&lt;Substitute
+			Language="JP_Japanese"
+			RegionWidth="410"
+			LineNum="4"
+			FontName="MyFont_B"
+			RenderMode="f23e335b-192a-4a51-87f8-2ca98cac9a57"/&gt;
+			&lt;Nw4rTextWriter
+				ScaleH="1"
+				ScaleV="1"
+				LineSpace="0"
+				CharSpace="0"
+				TabWidth="4"
+				EnableFixedWidth="False"
+				FixedWidth="0" /&gt;
+		&lt;/Substitute&gt;
+		...
+	&lt;/StyleClass&gt;
+	...
+&lt;/Styles&gt;
+</pre>
+
+<!-- Explanation -->
+<h3>説明</h3>
+<p>Styles要素は、<a href="Style_Overview.html#markStyle">スタイル設定</a>に関する情報を持ちます。
+Styles要素は、0個以上のStyleClass要素を含みます。</p>
+
+<h3>StyleClass 要素</h3>
+
+<p>StyleClass要素は1つの属性を持ちます。</p>
+
+<!-- Attribute -->
+<table border="1">
+	<tr>
+		<th class="XMLAttribute">属性名</th><th class="XMLAttribute_Exp">説明</th>
+	</tr>
+	<tr>
+		<td>StyleName</td><td>スタイルの名前です。</td>
+	</tr>
+</table>
+
+<p>また、StyleClass要素は1つのDefault要素および0個以上のSubstitute要素を含みます。
+Default要素とSubstitute要素はほぼ共通のフォーマットを持ちます。以下に
+Default要素とSubstitute要素のフォーマットを示します。</p>
+
+<h3>Default要素、Substitute要素</h3>
+
+<table border="1">
+	<tr>
+		<th class="XMLAttribute">属性名</th><th class="XMLAttribute_Exp">説明</th>
+	</tr>
+	<tr>
+		<td>Language</td><td>スタイル設定を特殊化した言語の名前です。
+この属性はSubstitute要素にのみ含まれます。</td>
+	</tr>
+	<tr>
+		<td>RegionWidth</td><td>表示可能領域幅です。
+ピクセル単位で指定します。</td>
+	</tr>
+	<tr>
+		<td>LineNum</td><td>表示可能行数です。</td>
+	</tr>
+	<tr>
+		<td>FontName</td><td>フォントの名前です。</td>
+	</tr>
+	<tr>
+		<td>RenderMode</td><td>このスタイルで使用する<a href="Plugin_Types.html#markLenderMode">レンダリング方式プラグイン</a>を
+示すGUIDです。（レンダリング方式については<a href="Sytle_RenderMode.html#">こちら</a>）</td>
+	</tr>
+</table>
+
+<p>また、<b>宣言</b>のNw4rTextWriter要素の例ように、
+Default要素およびSubstitute要素は、0個以上の任意の要素を含むことができます。
+これらの要素はRenderMode属性に設定されているレンダリング方式プラグインが
+独自に追加可能な要素であり、Message Studio本体がこれらの要素を直接扱うことは
+ありません。</p>
+
+
+<!-- Colors -->
+<h2 id="markColors">Colors要素</h2>
+
+<!-- Declaration -->
+<h3>宣言</h3>
+<pre name="code" class="xml">
+&lt;Colors&gt;
+	&lt;Color Name="Red" R="255" G="0" B="0" A="255" /&gt;
+	&lt;Color Name="Blue" R="0" G="0" B="255" A="255" /&gt;
+	...
+&lt;/Colors&gt;
+</pre>
+
+<!-- Explanation -->
+<h3>説明</h3>
+<p>Colors要素は0個以上のColor要素を含みます。
+Color要素は以下の属性を持ちます。</p>
+
+<h3>Color要素</h3>
+
+<!-- Attribute -->
+<table border="1">
+	<tr>
+		<th class="XMLAttribute">属性名</th><th class="XMLAttribute_Exp">説明</th>
+	</tr>
+	<tr>
+		<td>Name</td><td>カラーの名前です。</td>
+	</tr>
+	<tr>
+		<td>R, G, B, A</td><td>RGBA形式で表される色の各成分の値です。
+各成分は8bitで、全体として32bitのカラーになります。</td>
+	</tr>
+</table>
+
+
+<!-- TagGroups -->
+<h2 id="markTagGroups">TagGrooups要素</h2>
+
+<!-- Declaration -->
+<h3>宣言</h3>
+<pre name="code" class="xml">
+&lt;TagGroups&gt;
+	&lt;TagGroup GroupName="MY_GROUP"&gt;
+		&lt;MultilingualName&gt;
+			&lt;Japanese>My group&lt;/Japanese&gt;
+		&lt;/MultilingualName&gt;
+		&lt;Tag
+			TagName="MY_TAG"
+			HasInside="False"
+			CompareError="Strict"&gt;
+			&lt;MultilingualName&gt;
+				&lt;Japanese>My tag&lt;/Japanese&gt;
+			&lt;/MultilingualName&gt;
+			&lt;Comment&gt;
+				&lt;Japanese&gt;This is Comment&lt;/Japanese&gt;
+			&lt;/Comment&gt;
+			&lt;Parameter
+				Name="MY_PARAM"
+				Type="String"
+				Default="This is String Type parameter."
+				LimitType="None"&gt;
+				&lt;MultilingualName&gt;
+					&lt;Japanese&gt;My parameter&lt;/Japanese&gt;
+				&lt;/MultilingualName&gt;
+				&lt;ListItem
+					Name="New_Item"&gt;
+					&lt;MultilingualName /&gt;
+				&lt;/ListItem&gt;
+			&lt;/Parameter&gt;
+			&lt;Default&gt;
+				&lt;WidthCalcInfo
+					Calculator="d545ff2d-63d0-43a4-b954-eba129dc7381"&gt;
+					&lt;Pixels&gt;15&lt;/Pixels&gt;
+				&lt;/WidthCalcInfo&gt;
+			&lt;/Default&gt;
+		&lt;/Tag&gt;
+	&lt;/TagGroup&gt;
+&lt;/pre&gt;
+</pre>
+
+<!-- Explanation -->
+<h3>説明</h3>
+<p>TagGroups要素は、タグ設定に関する情報を持ちます。
+TagGroups要素は、0個以上のTagGroup要素を含みます。</p>
+
+<p>TagGroup要素は、1つのタググループに関する情報を持ちます。
+TagGroup要素は、以下の属性と要素を持ちます。</p>
+
+<!-- TagGroup -->
+<h3 id="markTagGroup">TagGrooup要素</h3>
+<table border="1">
+	<tr>
+		<th class="XMLAttribute">属性名</th><th class="XMLAttribute_Exp">説明</th>
+	</tr>
+	<tr>
+		<td>GroupName</td><td>タググループの定義名です。
+定義名にはASCIIで表すことができる文字しか使用することができず、
+また255文字以内である必要があります。</td>
+	</tr>
+	<tr>
+		<th class="XMLElement">要素名</th><th class="XMLElement_Exp">説明</th>
+	</tr>
+	<tr>
+		<td>MultilingualName</td>
+		<td>
+			多言語に対応した名前付けが可能な要素です。
+MultiligualName要素は以下の要素を含むことができます。
+これらの要素は、Message Studioで設定されていない場合は
+記述されず、Message Studioでは定義名で表示されることになります。
+			<table border="1">
+			<tr>
+				<th class="XMLElement">要素名</th><th class="XMLElement_Exp">説明</th>
+			</tr>
+			<tr>
+				<td>Japanese</td><td>アプリケーションの言語設定が「日本語」のときに
+表示される名前です。任意の文字を使用することができます。</td>
+			</tr>
+			<tr>
+				<td>US_English</td><td>アプリケーションの言語設定が「US_English」のときに
+表示される名前です。任意の文字を使用することができます。</td>
+			</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td>Tag</td><td>このタググループに含まれるタグ1つ分の情報を持ちます。
+<a href="#markTag">Tag要素</a>は複数個含まれる可能性があります。</td>
+	</tr>
+</table>
+
+<!-- Tag -->
+<h3 id="markTag">Tag要素</h3>
+<p>Tag要素は、タグに関する情報を持ちます。
+Tag要素は以下の属性と要素を持ちます。</p>
+<table border="1">
+	<tr>
+		<th class="XMLAttribute">属性名</th><th class="XMLAttribute_Exp">説明</th>
+	</tr>
+	<tr>
+		<td>TagName</td><td>タグの定義名です。
+定義名にはASCIIで表すことができる文字しか使用することができず、
+また255文字以内である必要があります。</td>
+	</tr>
+	<tr>
+		<td>HasInside</td><td>TrueかFalseを指定できます。
+Trueの場合、そのタグは<a href="Tag_Overview.html#markRange">範囲タグ</a>として扱われます。
+範囲タグとは内部にテキストを持つことができるタグのことを言います。</td>
+	</tr>
+	<tr>
+		<td>CompareError</td>
+		<td>
+			<a href="Tag_Compare.html#">タグ使用状況比較</a>を行ったときの、比較条件を示します。
+以下の値のいずれかである必要があります。
+			<dl>
+				<dt>Strict</dt><dd>Warningに加え、パラメータまで完全に一致していない場合に警告します。
+</dd>
+				<dt>Warning</dt><dd>メッセージ中に存在する数が一致しなければ警告します。</dd>
+				<dt>Ignore</dt><dd>このタグに関しては警告しません。</dd>
+			</dl>
+		</td>
+	</tr>
+	
+	<tr>
+		<th class="XMLElement">要素名</th><th class="XMLElement_Exp">説明</th>
+	</tr>
+	<tr>
+		<td>MultilingualName</td><td>多言語に対応した名前付けが可能な要素です。
+TagGroup要素のMultilingual要素と同じ構造を持ちます。</td>
+	</tr>
+	<tr>
+		<td>Comment</td><td>タグに関するコメントです。
+多言語に対応しており、MultilingualName要素と同じ構造をもちます。</td>
+	</tr>
+	<tr>
+		<td>Parameter</td><td>このタグに含まれるタグパラメータ1つ分の情報を持ちます。
+<a href="#markTagParam">Parameter要素</a>は複数個含まれる可能性があります。</td>
+	</tr>
+	<tr>
+		<td>Default</td>
+		<td>
+			デフォルトの<a href="Tag_Overview.html#">タグの幅設定</a>に関する情報を保持します。
+特に、Substitute要素で言語別に特殊化されない限り、タグの幅情報としてこのデフォルト設定が使用されます。
+タグの幅計算方法はプラグインによって拡張できるため、どのプラグインを利用するのかという情報が埋め込まれます。
+			<table border="1">
+			<tr>
+				<th class="XMLAttribute">属性名</th><th class="XMLAttribute_Exp">説明</th>
+			</tr>
+			<tr>
+				<td>Calculator</td><td>タグ幅計算方法のプラグインのGUID値を書き込みます。</td>
+			</tr>
+			</table>
+			このXML要素の中身は、プラグインの仕様によって内容が異なります。
+		</td>
+	</tr>
+	<tr>
+		<td>Substitute</td>
+		<td>
+			言語別に特殊化されたタグの幅情報を保持します。
+Substitute要素は、Default要素のに加え、以下の要素を持ちます。
+			<table border="1">
+			<tr>
+				<th class="XMLAttribute">属性名</th><th class="XMLAttribute_Exp">説明</th>
+			</tr>
+			<tr>
+				<td>Language</td><td>特殊化されている言語の名前です。</td>
+			</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+
+
+<!-- TagParameter -->
+<h3 id="markTagParam">Parameter要素</h3>
+<p>Parameter要素は、タグパラメータに関する情報を持ちます。
+Parameter要素は以下の属性と要素を持ちます。</p>
+
+<table border="1">
+	<tr>
+		<th class="XMLAttribute">属性名</th><th class="XMLAttribute_Exp">説明</th>
+	</tr>
+	<tr>
+		<td>Name</td><td>タグパラメータの定義名です。
+定義名にはASCIIで表すことができる文字しか使用することができず、
+また255文字以内である必要があります。</td>
+	</tr>
+	<tr>
+		<td>Type</td>
+		<td>
+			パラメータの型を示します。
+この値は以下のいずれかである必要があります。
+			<dl>
+				<dt>UInt8</dt><dd>符号なし8bit整数です。</dd>
+				<dt>UInt16</dt><dd>符号なし16bit整数です。</dd>
+				<dt>UInt32</dt><dd>符号なし32bit整数です。</dd>
+				<dt>Int8</dt><dd>符号付き8bit整数です。</dd>
+				<dt>Int16</dt><dd>符号付き16bit整数です。</dd>
+				<dt>Int32</dt><dd>符号付き32bit整数です。</dd>
+				<dt>Float</dt><dd>32bit単精度浮動小数点数です。</dd>
+				<dt>Double</dt><dd>64bit倍精度浮動小数点数です。</dd>
+				<dt>String</dt><dd>文字列です。</dd>
+				<dt>List</dt><dd>リスト型です。
+この値である場合、ListItem要素が意味を持ちます。</dd>
+			</dl>
+		</td>
+	</tr>
+	<tr>
+		<td>Default</td><td>このパラメータのデフォルト値です。
+テキストへのタグ挿入時に、特にパラメータが指定されなかった場合はこのデフォルト値が使用されます。
+また、LimitType属性でFixedが指定された場合はこの値が固定値として扱われます。</td>
+	</tr>
+	<tr>
+		<td>LimitEnabled</td><td>この属性は現在使用されていません。
+互換性のために残っています。
+代わりにLimitType属性を使用して下さい。</td>
+	</tr>
+	<tr>
+		<td>LimitType</td>
+		<td>
+			このパラメータの入力制限の種類を示します。
+この値は以下のいずれかである必要があります。
+			<dl>
+				<dt>None</dt><dd>値に制限は設けません。
+Type属性が数値型でだった場合は、その型の
+最小値・最大値が制限になります。</dd>
+				<dt>UserLimit</dt><dd>最小値・最大値を設定します。
+最小値はUserMinValue要素、最大値はUserMaxValue要素に格納されます。</dd>
+				<dt>Fixed</dt><dd>このパラメータの値は固定値です。
+Default属性の値が固定値として使用されます。</dd>
+			</dl>
+		</td>
+	</tr>
+	
+	<tr>
+		<th class="XMLElement">要素名</th><th class="XMLElement_Exp">説明</th>
+	</tr>
+	<tr>
+		<td>UserMaxValue</td><td>このパラメータの最大値です。
+LimitType属性でUserLimitが指定された場合に使用されます。</td>
+	</tr>
+	<tr>
+		<td>UserMinValue</td><td>このパラメータの最小値です。
+LimitType属性でUserLimitが指定された場合に使用されます。</td>
+	</tr>
+	<tr>
+		<td>MultilingualName</td><td>多言語に対応した名前付けが可能な要素です。
+TagGroup要素のMultilingual要素と同じ構造を持ちます。</td>
+	</tr>
+	<tr>
+		<td>ListItem</td>
+		<td>
+			このパラメータに設定されているリストアイテム（項目）です。
+Type属性がListだった場合に使用されます。
+この要素は複数個含まれる可能性があります。
+			<table border="1">
+				<tr>
+					<th class="XMLAttribute">属性名</th><th class="XMLAttribute_Exp">説明</th>
+				</tr>
+				<tr>
+					<td>Name</td><td>アイテム（項目）の定義名です。
+定義名にはASCIIで表すことができる文字しか使用することができず、
+また255文字以内である必要があります。</td>
+				</tr>
+				<tr>
+					<th class="XMLElement">要素名</th><th class="XMLElement_Exp">説明</th>
+				</tr>
+				<tr>
+					<td>MultilingualName</td><td>多言語に対応した名前付けが可能な要素です。
+TagGroup要素のMultilingual要素と同じ構造を持ちます。</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+
+
+<!-- Attributes -->
+<h2 id="markAttributes">Attributes要素</h2>
+<!-- Declaration -->
+<h3>宣言</h3>
+<pre name="code" class="xml">
+&lt;Attributes&gt;
+	&lt;Attribute
+		Name="MY_ATTRIBUTE"
+		Type="UInt8"
+		Default="5"
+		LimitEnabled="True"&gt;
+		&lt;UserMaxValue&gt;10&lt;/UserMaxValue&gt;
+		&lt;UserMinValue&gt;0&lt;/UserMinValue&gt;
+		&lt;MultilingualName&gt;
+			&lt;Japanese&gt;My Attr&lt;/Japanese&gt;
+		&lt;/MultilingualName&gt;
+		&lt;MultilingualComment&gt;
+			&lt;Japanese&gt;This is Comment.&lt;/Japanese&gt;
+		&lt;/MultilingualComment&gt;
+		&lt;Item
+			Name="New_Item"&gt;
+			&lt;MultilingualName /&gt;
+		&lt;/Item&gt;
+	&lt;/Attribute&gt;
+&lt;/Attributes&gt;
+</pre>
+
+<!-- Explanation -->
+<h3>説明</h3>
+<p>Attributes要素は、属性設定に関する情報を持ちます。
+Attributes要素は、0個以上のAttribute要素を含みます。</p>
+
+<h3 id="markMsAttribute">Attribute要素</h3>
+<p>Attribute要素は、1つの属性に関する情報を持ちます。
+Attribute要素は、以下の属性と要素を持ちます。</p>
+
+<table border="1">
+	<tr>
+		<th class="XMLAttribute">属性名</th><th class="XMLAttribute_Exp">説明</th>
+	</tr>
+	<tr>
+		<td>Name</td><td>この属性の定義名です。
+定義名にはASCIIで表すことができる文字しか使用することができず、
+また255文字以内である必要があります。</td>
+	</tr>
+	<tr>
+		<td>Type</td>
+		<td>
+			属性の型を示します。
+この値は以下のいずれかである必要があります。
+			<dl>
+				<dt>UInt8</dt><dd>符号なし8bit整数です。</dd>
+				<dt>UInt16</dt><dd>符号なし16bit整数です。</dd>
+				<dt>UInt32</dt><dd>符号なし32bit整数です。</dd>
+				<dt>Int8</dt><dd>符号付き8bit整数です。</dd>
+				<dt>Int16</dt><dd>符号付き16bit整数です。</dd>
+				<dt>Int32</dt><dd>符号付き32bit整数です。</dd>
+				<dt>Float</dt><dd>32bit単精度浮動小数点数です。</dd>
+				<dt>Double</dt><dd>64bit倍精度浮動小数点数です。</dd>
+				<dt>String</dt><dd>文字列です。</dd>
+				<dt>List</dt><dd>リスト型です。 この値である場合、Item要素が意味を持ちます。</dd>
+			</dl>
+		</td>
+	</tr>
+	<tr>
+		<td>Comment</td><td>この属性は現在使用されていません。
+互換性のために残っています。
+代わりにMultiligualComment要素を使用します。</td>
+	</tr>
+	<tr>
+		<td>Default</td><td>この属性のデフォルト値です。
+特にパラメータが設定されない場合はこのデフォルト値が使用されます。</td>
+	</tr>
+	<tr>
+		<td>LimitEnabled</td><td>この属性の値に入力制限を設けるか否かです。
+TrueかFalseが指定できます。
+Trueの場合、最大値としてUserMaxValue要素、
+最小値としてUserMinValue要素を使用します。
+</td>
+	</tr>
+	
+	<tr>
+		<th class="XMLElement">要素名</th><th class="XMLElement_Exp">説明</th>
+	</tr>
+	<tr>
+		<td>UserMaxValue</td><td>このパラメータの最大値です。
+LimitEnabled属性がTrueの場合に使用されます。</td>
+	</tr>
+	<tr>
+		<td>UserMinValue</td><td>このパラメータの最小値です。
+LimitEnabled属性がTrueの場合に使用されます。</td>
+	</tr>
+	<tr>
+		<td>MultilingualName</td><td>多言語に対応した名前付けが可能な要素です。
+TagGroup要素のMultilingual要素と同じ構造を持ちます。</td>
+	</tr>
+	<tr>
+		<td>MultilingualComment</td><td>属性に関するコメントです。
+多言語に対応しており、MultilingualName要素と同じ構造をもちます。</td>
+	</tr>
+	<tr>
+		<td>Item</td>
+		<td>
+			この属性に設定されているリストアイテム（項目）です。
+Type属性がListだった場合に使用されます。
+この要素は複数個含まれる可能性があります。
+			<table border="1">
+				<tr>
+					<th class="XMLAttribute">属性名</th><th class="XMLAttribute_Exp">説明</th>
+				</tr>
+				<tr>
+					<td>Name</td><td>アイテム（項目）の定義名です。
+定義名にはASCIIで表すことができる文字しか使用することができず、
+また255文字以内である必要があります。</td>
+				</tr>
+				<tr>
+					<td>DisplayName</td><td>この属性は現在使用されていません。
+互換性のために残っています。
+代わりにMultiligualName要素を使用します。</td>
+				</tr>
+				<tr>
+					<th class="XMLElement">要素名</th><th class="XMLElement_Exp">説明</th>
+				</tr>
+				<tr>
+					<td>MultilingualName</td><td>多言語に対応した名前付けが可能な要素です。
+TagGroup要素のMultilingual要素と同じ構造を持ちます。</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+
+
+
+<!-- Dictionaries -->
+<h2 id="markDictionaries">Dictionaries要素</h2>
+
+<!-- Declaration -->
+<h3>宣言</h3>
+<pre name="code" class="xml">
+&lt;Dictionaries&gt;
+	&lt;Dictionary Name="en_US"&gt;
+		&lt;ExtraWord&gt;mstxt&lt;/ExtraWord&gt;
+		&lt;ExtraWord&gt;gmm&lt;/ExtraWord&gt;
+		...
+	&lt;/Dictionary&gt;
+	...
+&lt;/Dictionaries&gt;
+</pre>
+
+<!-- Explanation -->
+<h3>説明</h3>
+<p>Dictionaries要素は、辞書への追加単語に関する情報を持ちます。
+辞書や、辞書への単語追加に関しては<a href="SpellCheck_Usage.html#">こちら</a>をご覧下さい。
+Dictionaries要素は、0個以上のDictionary要素を含みます。</p>
+
+<h3>Dictionary要素</h3>
+
+<!-- Attribute -->
+<table border="1">
+	<tr>
+		<th class="XMLAttribute">属性名</th><th class="XMLAttribute_Exp">説明</th>
+	</tr>
+	<tr>
+		<td>Name</td><td>単語が追加される辞書の名前です。</td>
+	</tr>
+	
+	<tr>
+		<th class="XMLElement">要素名</th><th class="XMLElement_Exp">説明</th>
+	</tr>
+	<tr>
+		<td>ExtraWord</td><td>追加される単語1つ分を示します。
+この要素は複数含まれる可能性があります。</td>
+	</tr>
+</table>
+
+
+<!-- BuildSettings -->
+<h2 id="markBuildSettings">BuilderSettings要素</h2>
+
+<!-- Declaration -->
+<h3>宣言</h3>
+<pre name="code" class="xml">
+&lt;BuildSettings&gt;
+	&lt;BuildSetting
+		Builder="45e0d427-0349-45b3-8015-c5e4cc773460"&gt;
+		&lt;AttributeHeader
+			HeaderPath="$(ProjectDir)\include\ms_attributes.h"
+			Encoding="932"
+			ItemPrefix="MSATTRITEM_" /&gt;
+	&lt;/BuildSetting&gt;
+	&lt;BuildSetting
+		Builder="8857dfd8-959a-4029-afcc-7db874bd58e8"&gt;
+		&lt;MessageBinInfo
+			OutputDir="$(ProjectDir)\bin\$(LanguageName)\$(InputFileName).msbt"
+			Encoding="UTF16"
+			Newline="LF"
+			IsLittleEndian="False"
+			HasLabelBlock="True"
+			HashSize="101"
+			HasAttributeBlock="True"
+			DirectColor="True" /&gt;
+	&lt;/BuildSetting&gt;
+	...
+&lt;/BuildSettings&gt;
+</pre>
+
+<!-- Explanation -->
+<h3>説明</h3>
+<p>BuilderSettings要素は、各<a href="Plugin_Types.html#markBuilder">ビルダープラグイン</a>の設定情報を持ちます。
+BuilderSettings要素は、0個以上のBuilderSetting要素を含みます。</p>
+
+<h3>BuilderSetting要素</h3>
+
+<p>BuilderSetting要素は、ビルダープラグイン1つ分の設定情報を持ちます。
+BuilderSetting要素は以下の属性を持ちます。</p>
+
+<table border="1">
+	<tr>
+		<th class="XMLAttribute">属性名</th><th class="XMLAttribute_Exp">説明</th>
+	</tr>
+	<tr>
+		<td>Builder</td><td>ビルダープラグインを示すGUIDです。</td>
+	</tr>
+</table>
+
+<p>また、<b>宣言</b>のAttributeHeader要素やMessageBinInfo要素の例ように、
+BuilderSetting要素は任意の要素を含むことができます。
+これらの要素はBuilder属性に設定されているビルダープラグインが
+独自に追加可能な要素であり、Message Studio本体がこれらの要素を直接扱うことは
+ありません。</p>
+
+
+
+<!-- Roles -->
+<h2 id="markRoles">Roles 要素</h2>
+
+<!-- Declaration -->
+<h3>宣言</h3>
+<pre name="code" class="xml">
+&lt;Roles&gt;
+	&lt;Administrator
+		Password="kmPKnUp79QbJSj1k/WjaE3tIXKPmSp0j2Xoh0IEk5sk=" /&gt;
+	&lt;RestrictedRole Name="JP_Japanese editor"&gt;
+		&lt;Forbidden Permission="234a7423-2b39-47ed-a343-8207b935fe06"&gt;
+			&lt;Subkey Name="US_English" /&gt;
+		&lt;/Forbidden&gt;
+		&lt;Forbidden Permission="4040d647-c07f-4e9b-9334-95b62ef0e00a" /&gt;
+		&lt;Forbidden Permission="40bc80ae-4158-413a-8a89-0620daecd70e" /&gt;
+		...
+	&lt;/RestrictedRole&gt;
+	...
+&lt;/Roles&gt;
+</pre>
+
+<p>Roles要素は、<a href="Intro_Role_Overview.html#">ロールとパーミッション</a>に関する情報を持ちます。
+Roles要素は、以下の属性と要素を持ちます。</p>
+
+<table border="1">
+	<tr>
+		<th class="XMLElement">要素名</th><th class="XMLElement_Exp">説明</th>
+	</tr>
+	<tr>
+		<td>Administrator</td>
+		<td>
+			<a href="Intro_Role_AddRole.html#markAdmin">管理者</a>に関する情報を持ちます。
+管理者には全ての操作を行う権限が与えられています。
+この要素は以下の属性を持ちます。
+			<table border="1">
+				<tr>
+					<th class="XMLAttribute">属性名</th><th class="XMLAttribute_Exp">説明</th>
+				</tr>
+				<tr>
+					<td>Password</td><td>管理者を選択する際に必要なパスワードです。
+この値はSHA256およびBASE64でエンコードされています。</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td>RestrictedRole</td>
+		<td>
+			ロール1つ分を示します。
+RestrictedRole要素は複数個含まれる可能性があります。
+ロールにはパーミッションが設定されており、各パーミッションはForbidden要素で示されます。
+Forbidden要素は以下の属性と要素を持ちます。
+			<h3>Forbidden要素</h3>
+			<table border="1">
+				<tr>
+					<th class="XMLAttribute">属性名</th><th class="XMLAttribute_Exp">説明</th>
+				</tr>
+				<tr>
+					<td>Permission</td><td><a href="Plugin_Types.html#markPermission">パーミッションプラグイン</a>を示すGUIDです。</td>
+				</tr>
+				<tr>
+					<th class="XMLElement">要素名</th><th class="XMLElement_Exp">説明</th>
+				</tr>
+				<tr>
+					<td>Subkey</td><td>Name属性を持ち、その値としてパーミッションプラグインが独自に定義する
+データを持ちます。</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+
+
+
+<!-- ExtraSettings -->
+<h2 id="markExtraSettings">ExtraSettings要素</h2>
+
+<!-- Declaration -->
+<h3>宣言</h3>
+<pre name="code" class="xml">
+&lt;ExtraSettings&gt;
+	&lt;ExtData DataHolder="4520d7e7-1449-498b-bd1d-784ee068c2d7" /&gt;
+	&lt;ExtData DataHolder="d5290830-ab71-4923-a9b3-ad88cfaf7f2c"&gt;
+		&lt;SaveBuild_ButtonName xmlns="nintendo:msgstudio"&gt;
+			Commit
+		&lt;/SaveBuild_ButtonName&gt;
+		&lt;SaveBuild_CommitMessage xmlns="nintendo:msgstudio"&gt;
+			commit by @(USERNAME)
+		&lt;/SaveBuild_CommitMessage&gt;
+		&lt;SaveBuild_PostProcess xmlns="nintendo:msgstudio" /&gt;
+		&lt;Execute_ButtonName xmlns="nintendo:msgstudio"&gt;
+			Run
+		&lt;/Execute_ButtonName&gt;
+		&lt;Execute_Process xmlns="nintendo:msgstudio" /&gt;
+	&lt;/ExtData&gt;
+	...
+&lt;/ExtraSettings&gt;
+</pre>
+
+<!-- Explanation -->
+<h3>説明</h3>
+<p>ExtraSettings要素は、<a href="Plugin_Types.html#">各種プラグイン</a>に関する設定を持ちます。
+この要素は、0個以上のExtraData要素を含みます。</p>
+
+<h3>ExtraData要素</h3>
+<p>ExtraData要素は、以下の属性を持ちます。</p>
+
+<!-- Attributes -->
+<table border="1">
+	<tr>
+		<th class="XMLAttribute">属性名</th><th class="XMLAttribute_Exp">説明</th>
+	</tr>
+	<tr>
+		<td>DataHolder</td><td>プラグインを識別するためのGUIDです。</td>
+	</tr>
+</table>
+
+<p>また、ExtraData属性には、<b>宣言</b>のSaveBuild要素やExecute要素の例のように、
+任意の要素を追加することができます。
+これらの要素はDataHolder属性に設定されているプラグインが独自に追加可能な要素であり、
+Message Studio本体がこれらの要素を直接扱うことはありません。</p>
+				</div>
+				<div class="sidebarmenu">
+				<ul id="sidebarmenu1">
+					<!-- Index -->
+					<li><a href="index.html"><img src="../resource/everyone.png" />  はじめに</a></li>
+					<!-- Introduction -->
+					<li><a href="#"><img src="../resource/everyone.png" />  Message Studioの基礎</a>
+						<ul>
+						<li><a href="Intro_Tour.html"><img src="../resource/everyone.png" />  ゲーム製作のフロー</a></li>
+						<li><a href="Intro_Project.html"><img src="../resource/everyone.png" />  プロジェクトファイルについて</a></li>
+						<li><a href="Intro_Project_Explorer.html"><img src="../resource/everyone.png" />  プロジェクトエクスプローラの操作</a></li>
+						<li><a href="Intro_WindowOperation.html"><img src="../resource/everyone.png" />  ウインドウ操作</a></li>
+						<li><a href="LANG_Setting.html"><img src="../resource/administrators.png" />  言語設定</a></li>
+						<li><a href="ColorSetting.html"><img src="../resource/administrators.png" />  カラーの設定</a></li>
+						<li><a href="AttributeSetting.html"><img src="../resource/administrators.png" />  属性の設定</a></li>
+						</ul>
+					</li>
+					
+					<!-- Message Editting -->
+					<li><a href="#"><img src="../resource/editors.png" />  メッセージ編集</a>
+						<ul>
+						<li><a href="MSG_BasicUsage.html">基本操作</a>
+						<li><a href="MSG_Category.html">テキストの種類</a>
+						<li><a href="MSG_Clipboard.html">クリップボードを利用した操作</a>
+						<li><a href="MSG_CellStatus.html">言語セルステータス</a></li>
+						<li><a href="MSG_Customize.html">表示のカスタマイズ</a>
+						<li><a href="MSG_Tips.html">メッセージ一覧画面のTips</a></li>
+						</ul>
+					</li>
+					
+					<!-- Tag -->
+					<li><a href="#"><img src="../resource/everyone.png" />  タグ</a>
+						<ul>
+						<li><a href="Tag_Overview.html"><img src="../resource/everyone.png" />  概要</a></li>
+						<li><a href="Tag_Input.html"><img src="../resource/editors.png" />  タグを用いた編集</a></li>
+						<li><a href="Tag_Source.html"><img src="../resource/administrators.png" />  タグのソース文字列</a></li>
+						<li><a href="Tag_Compare.html"><img src="../resource/editors.png" />  タグ比較について</a></li>
+						</ul>
+					</li>
+					
+					<!-- Search -->
+					<li><a href="#"><img src="../resource/editors.png" />  検索機能</a>
+						<ul>
+						<li><a href="Intro_Search_Overview.html">概要</a></li>
+						<li><a href="Intro_Search_Simple.html">簡易検索</a></li>
+						<li><a href="Intro_Search_Detail.html">詳細検索</a></li>
+						<li><a href="Intro_Search_RegEx.html">正規表現</a></li>
+						</ul>
+					</li>
+					
+					<!-- Spell checking -->
+					<li><a href="#"><img src="../resource/editors.png" />  スペルチェック</a>
+						<ul>
+						<li><a href="SpellCheck_Overview.html">スペルチェックについて</a></li>
+						<li><a href="SpellCheck_Usage.html">スペルチェックの利用方法</a></li>
+						</ul>
+					</li>
+					
+					<!-- Roles and Permissions -->
+					<li><a href="#"><img src="../resource/editors.png" />  ロールとパーミッション</a>
+						<ul>
+						<li><a href="Intro_Role_Overview.html">概要</a></li>
+						<li><a href="Intro_Role_AddRole.html">ロールの追加とパーミッションの設定</a></li>
+						<li><a href="Intro_Role_SelectRole.html">ロールの選択</a></li>
+						</ul>
+					</li>
+					
+					<!-- Progress -->
+					<li><a href="#"><img src="../resource/editors.png" />  メッセージの統計情報</a>
+						<ul>
+						<li><a href="Progress_Overview.html">統計情報について</a></li>
+						<li><a href="Progress_Usage.html">統計情報の利用方法</a></li>
+						</ul>
+					</li>
+					
+					<!-- Style -->
+					<li><a href="#"><img src="../resource/everyone.png" />  スタイル機能と幅計算</a>
+						<ul>
+						<li><a href="Style_Overview.html"><img src="../resource/everyone.png" />  スタイルと幅計算について</a></li>
+						<li><a href="Intro_TextWidthCheck_Check.html"><img src="../resource/everyone.png" />  テキスト幅の全体チェック</a></li>
+						<li><a href="Style_RenderMode.html"><img src="../resource/administrators.png" />  レンダリング方式について</a></li>
+						<li><a href="Style_Setting.html"><img src="../resource/administrators.png" />  スタイルの設定方法</a></li>
+						</ul>
+					</li>
+					
+					<!-- Font -->
+					<li><a href="#"><img src="../resource/everyone.png" />  フォント</a>
+						<ul>
+						<li><a href="Font_Overview.html"><img src="../resource/everyone.png" />  フォント機能の概要</a></li>
+						<li><a href="Font_Workflow.html"><img src="../resource/administrators.png" />  フォントに関するワークフローについて</a></li>
+						<li><a href="Font_Setting.html"><img src="../resource/administrators.png" />  フォントの設定</a></li>
+						</ul>
+					</li>
+					
+					<!-- Team -->
+					<li><a href="#"><img src="../resource/everyone.png" />  チーム管理機能</a>
+						<ul>
+						<li><a href="TEAM_Overview.html"><img src="../resource/everyone.png" />  概要</a></li>
+						<li><a href="TEAM_CaseByCase.html"><img src="../resource/editors.png" />  ファイル管理のされ方</a></li>
+						<li><a href="TEAM_StartUse.html"><img src="../resource/editors.png" />  チーム管理機能を利用する</a></li>
+						<li><a href="TEAM_Usage.html"><img src="../resource/editors.png" />  基本操作</a></li>
+						<li><a href="TEAM_Log.html"><img src="../resource/editors.png" />  コミットログを表示する</a></li>
+						<li><a href="TEAM_Diff.html"><img src="../resource/editors.png" />  差分(diff)を表示する</a></li>
+						<li><a href="TEAM_Merge.html"><img src="../resource/editors.png" />  競合とマージ</a></li>
+						<li><a href="TEAM_Proxy.html"><img src="../resource/administrators.png" />  プロキシサーバの設定</a></li>
+						<li><a href="TEAM_Server.html"><img src="../resource/administrators.png" />  サーバーの設定</a></li>
+						</ul>
+					</li>
+					
+					<!-- Meta -->
+					<li><a href="#"><img src="../resource/everyone.png" />  メタ情報の設定</a>
+						<ul>
+						<li><a href="Meta_Overview.html">メタ情報の設定について</a></li>
+						<li><a href="Meta_List.html">設定可能なメタ情報一覧</a></li>
+						</ul>
+					</li>
+					
+					<!-- Resource -->
+					<li><a href="#"><img src="../resource/everyone.png" />  リソースファイル関連</a>
+						<ul>
+						<li><a href="RES_Overview.html"><img src="../resource/administrators.png" />  リソースについての概要</a></li>
+						<li><a href="RES_Build.html"><img src="../resource/everyone.png" />  リソースファイルを出力する</a></li>
+						<li><a href="RES_Setting.html"><img src="../resource/administrators.png" />  出力設定を行う</a></li>
+						<li><a href="RES_BuildEvent.html"><img src="../resource/administrators.png" />  ビルドイベントについて</a></li>
+						<li><a href="RES_FMT_blocks.html"><img src="../resource/programmer.png" />  共通のバイナリフォーマット</a></li>
+						<li><a href="RES_FMT_msbt.html"><img src="../resource/programmer.png" />  メッセージバイナリフォーマット</a></li>
+						<li><a href="RES_FMT_msbf.html"><img src="../resource/programmer.png" />  フローチャートバイナリフォーマット</a></li>
+						<li><a href="RES_FMT_msbp.html"><img src="../resource/programmer.png" />  プロジェクトバイナリフォーマット</a>
+							<ul>
+							<li><a href="RES_FMT_msbp.html">プロジェクトバイナリフォーマット</a></li>
+							<li><a href="RES_FMT_msbp_color.html">カラー情報</a></li>
+							<li><a href="RES_FMT_msbp_content.html">コンテンツ情報</a></li>
+							<li><a href="RES_FMT_msbp_attr.html">属性情報</a></li>
+							<li><a href="RES_FMT_msbp_tag.html">タグ情報</a></li>
+							<li><a href="RES_FMT_msbp_style.html">スタイル情報</a></li>
+							</ul>
+						</li>
+						<li><a href="RES_Tags.html"><img src="../resource/programmer.png" />  タグについて</a></li>
+						</ul>
+					</li>
+					
+					<!-- Macro -->
+					<li><a href="#"><img src="../resource/administrators.png" />  マクロ文字列展開機能</a>
+						<ul>
+						<li><a href="Macro_Introduction.html">マクロ文字列とは</a></li>
+						<li><a href="Macro_List.html">利用可能なマクロ一覧</a></li>
+						</ul>
+					<li><a href="#"><img src="../resource/administrators.png" />  コマンドライン関連</a>
+						<ul>
+						<li><a href="CMD_Overview.html">コマンドライン制御について</a></li>
+						<li><a href="CMD_Convert.html">/convertスイッチについて</a></li>
+						</ul>
+					</li>
+					
+					<!-- Plug-in system -->
+					<li><a href="#"><img src="../resource/administrators.png" />  プラグインについて</a>
+						<ul>
+						<li><a href="Plugin_Overview.html">プラグインの概要</a></li>
+						<li><a href="Plugin_Types.html">プラグインの種類について</a></li>
+						</ul>
+					</li>
+					
+					<!-- Plug-in system -->
+					<li><a href="#"><img src="../resource/programmer.png" />  プラグインの作成方法</a>
+						<ul>
+						<li><a href="MakePlugin_Overview.html">単純なプラグイン作成チュートリアル</a></li>
+						<li><a href="MakePlugin_CommandLine.html">開発環境を利用しない作成方法</a></li>
+						<li><a href="MakePlugin_AboutSamples.html">サンプルについて</a></li>
+						</ul>
+					</li>
+					
+					<!-- Assembly security -->
+					<li><a href="#"><img src="../resource/administrators.png" />  Message Studioのアセンブリ設定</a>
+						<ul>
+						<li><a href="Assembly_Caspol.html">Caspol：アセンブリセキュリティ設定</a></li>
+						<li><a href="Assembly_Ngen.html">Ngen：ネイティブイメージ生成</a></li>
+						</ul>
+					</li>
+					
+					<!-- XML Spec -->
+					<li><a href="#"><img src="../resource/programmer.png" />  XML仕様</a>
+						<ul>
+						<li><a href="XMLSpec_Overview.html">概要</a></li>
+						<li><a href="XMLSpec_Project.html">プロジェクトファイル（.msproj）のXML仕様</a></li>
+						<li><a href="XMLSpec_Text.html">メッセージファイル（.mstxt）のXML仕様</a></li>
+						</ul>
+					</li>
+					
+					<!-- libms_overview -->
+					<li><a href="#"><img src="../resource/programmer.png" />  libmsについて</a>
+						<ul>
+							<li><a href="LMS_Overview.html">概要</a></li>
+							<li><a href="LMS_Compile.html">コンパイルの仕方</a></li>
+						</ul>
+					</li>
+					
+					<!-- libms_common -->
+					<li><a href="#"><img src="../resource/programmer.png" />  共通の関数</a>
+						<ul>
+						<li><a href="LMS_SetMemFuncs.html">LMS_SetMemFuncs</a></li>
+						</ul>
+					</li>
+					
+					<!-- libms_message -->
+					<li><a href="#"><img src="../resource/programmer.png" />  メッセージに関する関数</a>
+						<ul>
+							<li><a href="LMS_InitMessage.html">LMS_InitMessage</a></li>
+							<li><a href="LMS_CloseMessage.html">LMS_CloseMessage</a></li>
+							<li><a href="LMS_SearchMessageBlockByName.html">LMS_SearchMessageBlockByName</a></li>
+							<li><a href="LMS_GetMessageBlockInfoByName.html">LMS_GetMessageBlockInfoByName</a></li>
+							<li><a href="LMS_GetTextNum.html">LMS_GetTextNum</a></li>
+							<li><a href="LMS_GetTextIndexByLabel.html">LMS_GetTextIndexByLabel</a></li>
+							<li><a href="LMS_GetText.html">LMS_GetText</a></li>
+							<li><a href="LMS_GetTextSize.html">LMS_GetTextSize</a></li>
+							<li><a href="LMS_GetTextByLabel.html">LMS_GetTextByLabel</a></li>
+							<li><a href="LMS_GetLabelByTextIndex.html">LMS_GetLabelByTextIndex</a></li>
+							<li><a href="LMS_GetTextStyle.html">LMS_GetTextStyle</a></li>
+							<li><a href="LMS_GetTextStyleByLabel.html">LMS_GetTextStyleByLabel</a></li>
+							<li><a href="LMS_GetAttributeSize.html">LMS_GetAttributeSize</a></li>
+							<li><a href="LMS_GetAttribute.html">LMS_GetAttribute</a></li>
+							<li><a href="LMS_GetAttributeText.html">LMS_GetAttributeText</a></li>
+						</ul>
+					</li>
+					
+					<!-- libms_flowchart -->
+					<li><a href="#"><img src="../resource/programmer.png" />  フローチャートに関する関数</a>
+						<ul>
+							<li><a href="LMS_InitFlowchart.html">LMS_InitFlowchart</a></li>
+							<li><a href="LMS_CloseFlowchart.html">LMS_CloseFlowchart</a></li>
+							<li><a href="LMS_GetNodeNum.html">LMS_GetNodeNum</a></li>
+							<li><a href="LMS_GetEntryNodeIndex.html">LMS_GetEntryNodeIndex</a></li>
+							<li><a href="LMS_GetNodeDataPtr.html">LMS_GetNodeDataPtr</a></li>
+							<li><a href="LMS_GetFlowNodeIndex.html">LMS_GetFlowNodeIndex</a></li>
+							<li><a href="LMS_GetCaseIndexesFromBranchNode.html">LMS_GetCaseIndexesFromBranchNode</a></li>
+							<li><a href="LMS_GetFlowParamText.html">LMS_GetFlowParamText</a></li>
+						</ul>
+					</li>
+					
+					<!-- libms_project -->
+					<li><a href="#"><img src="../resource/programmer.png" />  プロジェクトに関する関数</a>
+						<ul>
+							<li><a href="LMS_InitProject.html">LMS_InitProject</a></li>
+							<li><a href="LMS_CloseProject.html">LMS_CloseProject</a></li>
+							<li><a href="LMS_SearchProjectBlockByName.html">LMS_SearchProjectBlockByName</a></li>
+							<li><a href="#">カラー情報に関する関数</a>
+								<ul>
+								<li><a href="LMS_GetColorIndexByName.html">LMS_GetColorIndexByName</a></li>
+								<li><a href="LMS_GetColor.html">LMS_GetColor</a></li>
+								<li><a href="LMS_GetColorByName.html">LMS_GetColorByName</a></li>
+								<li><a href="LMS_GetColorNum.html">LMS_GetColorNum</a></li>
+								</ul>
+							</li>
+							<li><a href="#">コンテンツ情報に関する関数</a>
+								<ul>
+								<li><a href="LMS_GetContentsNum.html">LMS_GetContentsNum</a></li>
+								<li><a href="LMS_GetContentPath.html">LMS_GetContentPath</a></li>
+								</ul>
+							</li>
+							<li><a href="#">属性情報に関する関数</a>
+								<ul>
+								<li><a href="LMS_GetAttrInfoIndexByName.html">LMS_GetAttrInfoIndexByName</a></li>
+								<li><a href="LMS_GetAttrType.html">LMS_GetAttrType</a></li>
+								<li><a href="LMS_GetAttrTypeByName.html">LMS_GetAttrTypeByName</a></li>
+								<li><a href="LMS_GetAttrOffset.html">LMS_GetAttrOffset</a></li>
+								<li><a href="LMS_GetAttrOffsetByName.html">LMS_GetAttrOffsetByName</a></li>
+								<li><a href="LMS_GetAttrListItemName.html">LMS_GetAttrListItemName</a></li>
+								<li><a href="LMS_GetAttrListItemNameByName.html">LMS_GetAttrListItemNameByName</a></li>
+								<li><a href="LMS_GetAttrNum.html">LMS_GetAttrNum</a></li>
+								<li><a href="LMS_GetAttrListItemNum.html">LMS_GetAttrListItemNum</a></li>
+								</ul>
+							</li>
+							<li><a href="#">タグ情報に関する関数</a>
+								<ul>
+								<li><a href="LMS_GetTagGroupName.html">LMS_GetTagGroupName</a></li>
+								<li><a href="LMS_GetTagName.html">LMS_GetTagName</a></li>
+								<li><a href="LMS_GetTagParamName.html">LMS_GetTagParamName</a></li>
+								<li><a href="LMS_GetTagParamType.html">LMS_GetTagParamType</a></li>
+								<li><a href="LMS_GetTagListItemName.html">LMS_GetTagListItemName</a></li>
+								<li><a href="LMS_GetTagGroupNum.html">LMS_GetTagGroupNum</a></li>
+								<li><a href="LMS_GetTagNum.html">LMS_GetTagNum</a></li>
+								<li><a href="LMS_GetTagParamNum.html">LMS_GetTagParamNum</a></li>
+								<li><a href="LMS_GetTagListItemNum.html">LMS_GetTagListItemNum</a></li>
+								</ul>
+							</li>
+							<li><a href="#">スタイル情報に関する関数</a>
+								<ul>
+								<li><a href="LMS_GetStyleIndexByName.html">LMS_GetStyleIndexByName</a></li>
+								<li><a href="LMS_GetRegionWidth.html">LMS_GetRegionWidth</a></li>
+								<li><a href="LMS_GetRegionWidthByName.html">LMS_GetRegionWidthByName</a></li>
+								<li><a href="LMS_GetLineNum.html">LMS_GetLineNum</a></li>
+								<li><a href="LMS_GetLineNumByName.html">LMS_GetLineNumByName</a></li>
+								<li><a href="LMS_GetFontIndex.html">LMS_GetFontIndex</a></li>
+								<li><a href="LMS_GetFontIndexByName.html">LMS_GetFontIndexByName</a></li>
+								<li><a href="LMS_GetStyleNum.html">LMS_GetStyleNum</a></li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					
+					<li><a href="Intro_Extensions.html"><img src="../resource/everyone.png" />  扱うファイルの拡張子一覧</a></li>
+					<li><a href="FAQ.html"><img src="../resource/everyone.png" />  よくある質問</a></li>
+				</ul>
+				</div>
+				<div class="clear"><hr/></div>
+			</div>
+			<div class="footer">
+				Copyright &copy; 2008 - 2010 Nintendo EAD
+			</div>
+		</div>
+	</body>
+</html>

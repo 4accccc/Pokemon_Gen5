@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+	Project:  Message Studio
+	File:     MessageStudioTypes.xsd
+	
+	Copyright (C) 2008, 2009 Nintendo All Rights Reserved.
+
+	These coded instructions, statements, and computer programs contain
+	proprietary information of Nintendo of America Inc. and/or Nintendo
+	Company Ltd., and are protected by Federal copyright law.  They may
+	not be disclosed to third parties or copied or duplicated in any form,
+	in whole or in part, without the prior written consent of Nintendo.
+
+	WARNING : DO NOT MODIFY THIS FILE.
+
+	[Change Log]
+	<Date>				<Author>				<comments>
+	Sep. 27, 2008		Shinji Watanabe			added GuidType
+												added MultilingualString
+												added DispLanguageType
+	Oct.  2, 2008		Shinji Watanabe			added CsBoolean
+	Oct. 10, 2008		Shinji Watanabe			added DockType
+	Dec.  1, 2008		Shinji Watanabe			added DateTime
+	Dec. 11, 2008		Ryota Maruko			added CellState and CellColor
+	Apl. 06, 2009		Ryota Maruko			added ModifiedString
+	Apl. 17, 2009		Shinji Watanabe			removed out-of-date types
+	May. 08, 2009		Shinji Watanabe			changed "pattern" to "enumeration" if possible
+	Jun. 15, 2009		Shinji Watanabe			removed "Confirmed" from "ViewCellState"
+	Jun. 19, 2009		Shinji Watanabe			removed some languages.
+	Jul. 14, 2009		Hisashi Sekoguchi		change "DefaultString" use to optional from require
+												rename "English" to "US_English"
+	Nov. 04, 2009		Shinji Watanabe			removed DockType type
+-->
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns="nintendo:msgstudio"
+	elementFormDefault="qualified"
+	targetNamespace="nintendo:msgstudio"
+>
+
+	<!-- comments -->
+	<xsd:annotation>
+		<xsd:appinfo>http://www.nintendo.co.jp/</xsd:appinfo>
+		<xsd:documentation>
+			This XSD file will be included other XSD files.
+		</xsd:documentation>
+	</xsd:annotation>
+
+	<!-- boolean string for .NET framework -->
+	<xsd:simpleType name = "CsBoolean" >
+		<xsd:restriction base="xsd:string" >
+			<xsd:pattern value="[Tt]rue" />
+			<xsd:pattern value="[Ff]alse" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<!-- multilingual string-->
+	<xsd:complexType name="MultilingualString">
+		<xsd:all>
+			<xsd:element name="Japanese"	type="xsd:string" minOccurs="0" maxOccurs="1" />
+			<xsd:element name="US_English"	type="xsd:string" minOccurs="0" maxOccurs="1" />
+		</xsd:all>
+		<xsd:attribute name="DefaultString" type="xsd:string" use="optional" />
+	</xsd:complexType>
+
+	<!-- languages that MessageStudio supports -->
+	<xsd:simpleType name="DispLanguageType">
+		<xsd:restriction base="xsd:string" >
+			<xsd:enumeration value="Japanese" />
+			<xsd:enumeration value="US_English" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<!-- Global Unique IDentifier -->
+	<xsd:simpleType name="GuidType" >
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<!-- cell status type -->
+	<xsd:simpleType name="InnerCellState">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="NotYet" />
+			<xsd:enumeration value="Editing" />
+			<xsd:enumeration value="Completed" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<!-- cell status type -->
+	<xsd:simpleType name="ViewCellState">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="NotYet" />
+			<xsd:enumeration value="Editing" />
+			<xsd:enumeration value="SourceEditing" />
+			<xsd:enumeration value="ReadyToTranslate" />
+			<xsd:enumeration value="RereadyToTranslate" />
+			<xsd:enumeration value="Completed" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<!-- review state type -->
+	<xsd:simpleType name="ReviewState">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="NotYet" />
+			<xsd:enumeration value="ReviewRequested" />
+			<xsd:enumeration value="ReviewRejected" />
+			<xsd:enumeration value="ReviewConfirmed" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<!-- cell status type -->
+	<xsd:simpleType name="CellColor">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="#[0-9a-fA-F]{8}" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<!-- MAC (Media Access Control ) address -->
+	<xsd:simpleType name="MacAddressType">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[0-9a-fA-F]{12}" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<!-- modified infomation -->
+	<xsd:simpleType name="ModifedString">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="\S*" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+</xsd:schema>
+
+<!-- end of XML schema -->

@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<MessageStudioText
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="msg_c08r0302_man2_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>……ここだけの　はなし▼
+オレ　むかし
+プラズマだんに　いたんだ▼
+だけどな　みんなが　おなじ
+かんがえって　おかしいだろ？▼
+だから　じぶんは　どうしたいか
+かんがえるため　だんを　ぬけたのさ▼
+この　はなしは　はんたいがわに　いる
+アイツには　ないしょ　だぜ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……ここだけの　話▼
+オレ　むかし
+プラズマ団に　いたんだ▼
+だけどな　みんなが　同じ
+考えって　おかしいだろ？▼
+だから　じぶんは　どうしたいか
+考えるため　団を　ぬけたのさ▼
+この話は　部屋の　反対側にいる
+アイツには　内緒だぜ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・SWANでメッセージ変更予定</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN2
+青年２</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08r0302_man2a_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>……ここだけの　はなし▼
+オレは　トレーナーとして
+よわっちいからさ▼
+トレーナーから　ポケモンを
+うばっている　プラズマだんに▽
+けっこう　さんせい　なんだ▼
+……とられた　ひとには
+ちょっと　わるいけどさ▼
+この　はなしは　はんたいがわに　いる
+アイツには　ないしょ　だぜ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……ここだけの　話▼
+オレは　トレーナーとして
+弱っちいからさ▼
+トレーナーから　ポケモンを
+奪っている　プラズマ団に▽
+けっこう　賛成なんだ▼
+……取られた　人には
+ちょっと　悪いけどさ▼
+この話は　部屋の　反対側にいる
+アイツには　内緒だぜ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・SWANでメッセージ変更予定</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN2
+青年２</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+	</TextRow>
+</MessageStudioText>

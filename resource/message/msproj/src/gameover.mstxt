@@ -1,0 +1,256 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<MessageStudioText
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="msg_all_dead_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:Type Idx="0"]は　たおれた！▼
+[Name:TrainerName Idx="1"]の　てもとには
+たたかえる　ポケモンが　いない！▼
+[Name:TrainerType Idx="2"]の　[Name:TrainerName Idx="3"]
+との　しょうぶに　まけた……▼
+[Name:TrainerName Idx="1"]は　しょうきんとして
+[Digit:6digits Idx="4"]円　しはらった▼
+……　……　……
+……　……　……▼
+[Name:TrainerName Idx="1"]は
+めのまえが　まっくらに　なった！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:Type Idx="0"]は　倒れた！▼
+[Name:TrainerName Idx="1"]の　手元には
+戦える　ポケモンが　いない！▼
+[Name:TrainerType Idx="2"]の　[Name:TrainerName Idx="3"]
+との　勝負に　負けた……▼
+[Name:TrainerName Idx="1"]は　賞金として
+[Digit:6digits Idx="3"]円　しはらった▼
+……　……　……
+……　……　……▼
+[Name:TrainerName Idx="1"]は
+目の前が　真っ暗に　なった！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>■ゲームオーバーメッセージ
+・対トレーナー戦闘
+
+・0＝ポケモン名
+・1＝主人公名
+・2＝対戦トレーナー種族名
+・3＝対戦トレーナー名
+・4＝金額
+
+・フェードアウト後
+　ｃ01ジムバッジ入手まで
+　→common_scr.gmmのmsg_all_dead_08
+　ｃ01ジムバッジ入手後
+　→common_scr.gmmのmsg_all_dead_07</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_all_dead_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:Type Idx="0"]は　たおれた！▼
+[Name:TrainerName Idx="1"]の　てもとには
+たたかえる　ポケモンが　いない！▼
+[Name:TrainerName Idx="1"]は　あわてて
+[Digit:6digits Idx="3"]円　なくしてしまった……▼
+……　……　……
+……　……　……▼
+[Name:TrainerName Idx="1"]は
+めのまえが　まっくらに　なった！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:Type Idx="0"]は　倒れた！▼
+[Name:TrainerName Idx="1"]の　手元には
+戦える　ポケモンが　いない！▼
+[Name:TrainerName Idx="1"]は　慌てて
+[Digit:6digits Idx="3"]円　なくしてしまった……▼
+……　……　……
+……　……　……▼
+[Name:TrainerName Idx="1"]は
+目の前が　真っ暗に　なった！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>■ゲームオーバーメッセージ
+・対野生ポケモン
+
+・0＝ポケモン名
+・1＝主人公名
+・2＝対戦トレーナー種族名
+・3＝金額
+
+・フェードアウト後
+　ｒ01で野生ポケモンに全滅
+　→common_scr.gmmのmsg_all_dead_11
+　ｃ01ジムバッジ入手まで
+　→common_scr.gmmのmsg_aa_dead_08
+　ｃ01ジムバッジ入手後
+　→common_scr.gmmのmsg_all_dead_07</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_all_dead_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>つかれて　うごけなくなった　ひんしの
+ポケモンたちを　かばいながら
+[Name:TrainerName Idx="1"]は　いそいで
+ポケモンセンターに　もどるのであった</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>つかれて　動けなくなった　ひんしの
+ポケモンたちを　かばいながら
+[Name:TrainerName Idx="1"]は　急いで
+ポケモンセンターに　戻るのであった</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>■フェードアウト後、ブラック画面での表示
+・画面中央一発表示）
+・１８文字を超えています。
+
+・ボタン待ち。
+・フェードイン。
+
+・戻りの処理
+　１：ポケモンセンター
+　１－１：１ｓｔジム勝利後、ポケモンセンターの場合</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_all_dead_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>つかれて　うごけなくなった　ひんしの
+ポケモンたちを　かばいながら
+[Name:TrainerName Idx="1"]は　いそいで
+じたくに　もどるのであった</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>つかれて　動けなくなった　ひんしの
+ポケモンたちを　かばいながら
+[Name:TrainerName Idx="1"]は　急いで
+自宅に　戻るのであった</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>■フェードアウト後、ブラック画面での表示
+・画面中央一発表示）
+・１８文字を超えています。
+
+・ボタン待ち。
+・フェードイン。
+
+・戻りの処理
+　２：自宅</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:20" />
+		</AttributeCell>
+	</TextRow>
+</MessageStudioText>

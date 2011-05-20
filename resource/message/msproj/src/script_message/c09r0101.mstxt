@@ -1,0 +1,876 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<MessageStudioText
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="msg_c09r0101_bigfour1_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>『その　おとこ
+　ひとみに　くらき　ほのおを　たたえ▼
+　ただひとつの　せいぎを　なすため
+　じぶんいがいの　すべてを　こばむ』▼
+……いま　よんだのは
+アタシの　しょうせつ　なんです▼
+……さきほどの　ちょうせんしゃを
+だいざいに　してみたのですが▽
+なんだか　かなしく　なっちゃいました▼
+ごめんなさい
+ちょうせんしゃの　かた　ですよね▼
+ゴーストポケモンつかいの　してんのう
+シキミ　おあいて　いたします！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>『その　男
+　ひとみに　暗き　炎を　たたえ▼
+　ただひとつの　正義を　なすため
+　自分以外の　すべてを　拒む』▼
+……いま　読んだのは
+アタシの　小説　なんです▼
+……さきほどの　挑戦者を
+題材に　してみたのですが▽
+なんだか　悲しく　なっちゃいました▼
+ごめんなさい
+挑戦者の　方ですよね▼
+ゴーストポケモン使いの　四天王
+シキミ　お相手　いたします！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀：クリア前
+・戦闘前：フィールド
+　メッセージ表示後、トレーナー戦闘に
+
+※SWANでメッセージ変更予定</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>四天王：ゴースト
+シキミ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c09r0101_bigfour1_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ごごごめんなさい！
+まず　ポケモンに　あやまらないと……▼
+アタシの　せいで
+つらい　おもいを　させちゃって▽
+ほんとうに　ごめんね！▼
+ああ！　アナタは　わるくないです
+こうなるのは　しょうぶの　つね▽
+それを　ふまえて▽
+アタシも　してんのう　してますから！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ごごごめんなさい！
+まず　ポケモンに　謝らないと……▼
+アタシの　せいで
+つらい　おもいを　させちゃって▽
+本当に　ごめんね！▼
+ああ！　アナタは　悪くないです
+こうなるのは　勝負の　常▽
+それを　ふまえて▽
+アタシも　四天王　してますから！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀：クリア前
+・戦闘後：フィールド</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>四天王：ゴースト
+シキミ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c09r0101_bigfour1_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ひとには　ひとの
+ポケモンには　ポケモンの▽
+ものがたりが　あるんです！▼
+そして　ひとだけ……
+ポケモンだけの　おはなし　よりも▼
+ひとと　ポケモンが　たすけあう
+おはなしの　ほうが▽
+ぜったいに　おもしろいんです！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>人には　人の
+ポケモンには　ポケモンの▽
+物語が　あるんです！▼
+そして　人だけ……
+ポケモンだけの　お話　よりも▼
+人と　ポケモンが　助け合う
+お話の　ほうが▽
+絶対に　おもしろいんです！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀：クリア前
+・bigfour1_02表示後に再度会話</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>四天王：ゴースト
+シキミ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c09r0101_bigfour1_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あの……
+ちょうせんしゃ　のかた▼
+ポケモンリーグは
+してんのう　ぜんいんに　かてば▽
+チャンピオンの　へやに　いけます▼
+はい！　アナタは
+その　しかくを　えましたよ▼
+ちゅうおうの　ひろばに　もどり
+ぞうを　しらべてくださいね</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あの……
+挑戦者の　方▼
+ポケモンリーグは
+四天王　全員に　勝てば▽
+チャンピオンの　部屋に　行けます▼
+はい！　アナタは
+その　資格を　得ましたよ▼
+中央の　広場に　戻り
+像を　調べてくださいね</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀：クリア前
+・条件（＝四天王全員に勝利）を満たしていれば
+　戦闘後フィールド復帰時に自動で表示
+・チャンピオン部屋に行くまで繰り返し</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>四天王：ゴースト
+シキミ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c09r0101_bigfour1_05a"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>『トレーナーと　ポケモンの
+　おもいが　あわさり　くりだされた▽
+　アクアリングの　きらめき……』▼
+いま　よんだのは
+アタシが　かいた　しょうせつの▽
+いちぶ　なんです▼
+ここに　ちょうせん　しにきた
+トレーナーと　ポケモンの▽
+こころの　ふれあいを▽
+ものがたりに　するのが　だいすきで！▼
+というわけで　アナタたちの　こと
+しゅざい　させてくださいね！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>『トレーナーと　ポケモンの
+　想いが　重なり　繰りだされた▽
+　アクアリングの　きらめき……』▼
+いま　読んだのは
+アタシが　書いた　小説の▽
+一部なんです▼
+ここに　挑戦しに　来た
+トレーナーと　ポケモンの▽
+心の　ふれあいを▽
+物語に　するのが　大好きで！▼
+というわけで　アナタたちの　こと
+取材させて　くださいね！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀：クリア後
+・戦闘前：フィールド
+　メッセージ表示後、トレーナー戦闘に
+※bigfour1_05aから
+　bigfour1_05eまではランダム</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>四天王：ゴースト
+シキミ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c09r0101_bigfour1_05b"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>『１０まんボルトって　しってる？▼
+　あいさつがわりに　そういった
+　おとこの　なまえが▼
+　デンジだと　しるのは
+　ポケモンしょうぶの　あとだった』▼
+いま　よんだのは
+アタシが　かいた　しょうせつの▽
+いちぶ　なんです▼
+ここに　ちょうせん　しにきた
+トレーナーと　ポケモンの▽
+こころの　ふれあいを▽
+ものがたりに　するのが　だいすきで！▼
+というわけで　アナタたちの　こと
+しゅざい　させてくださいね！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>『１０まんボルトって　知ってる？▼
+　あいさつがわりに　そういった
+　男の　名前が▼
+　デンジだと　知るのは
+　ポケモン勝負の　あとだった』▼
+いま　読んだのは
+アタシが　書いた　小説の▽
+一部なんです▼
+ここに　挑戦しに　来た
+トレーナーと　ポケモンの▽
+心の　ふれあいを▽
+物語に　するのが　大好きで！▼
+というわけで　アナタたちの　こと
+取材させて　くださいね！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀：クリア後
+・戦闘前：フィールド
+　メッセージ表示後、トレーナー戦闘に</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>四天王：ゴースト
+シキミ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c09r0101_bigfour1_05c"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>『ちいさくも　たくましい　ポケモンは
+　じんせいで　いちばんの　あいてと▽
+　むきあい　こころに　おびえの▽
+　めが　いぶいた　トレーナーをみつめ▼
+　ちいさく……
+　そして　やさしく　ほえた』▼
+いま　よんだのは
+アタシが　かいた　しょうせつの▽
+いちぶ　なんです▼
+ここに　ちょうせん　しにきた
+トレーナーと　ポケモンの▽
+こころの　ふれあいを▽
+ものがたりに　するのが　だいすきで！▼
+というわけで　アナタたちの　こと
+しゅざい　させてくださいね！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>『小さくも　たくましい　ポケモンは
+　人生で　一番の　難敵と▽
+　向き合い　心に　おびえの▽
+　芽が　息吹いた　トレーナーをみつめ▼
+　ちいさく……
+　そして　やさしく　ほえた』▼
+いま　読んだのは
+アタシが　書いた　小説の▽
+一部なんです▼
+ここに　挑戦しに　来た
+トレーナーと　ポケモンの▽
+心の　ふれあいを▽
+物語に　するのが　大好きで！▼
+というわけで　アナタたちの　こと
+取材させて　くださいね！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀：クリア後
+・戦闘前：フィールド
+　メッセージ表示後、トレーナー戦闘に</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>四天王：ゴースト
+シキミ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c09r0101_bigfour1_05d"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>『この　せかいは
+　きみの　ためだけに▽
+　そんざい　していない▽
+　なぜならば……』▼
+いま　よんだのは
+アタシが　かいた　しょうせつの▽
+いちぶ　なんです▼
+ここに　ちょうせん　しにきた
+トレーナーと　ポケモンの▽
+こころの　ふれあいを▽
+ものがたりに　するのが　だいすきで！▼
+というわけで　アナタたちの　こと
+しゅざい　させてくださいね！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>『この世界は
+　君の　ためだけに▽
+　存在していない▽
+　なぜならば……』▼
+いま　読んだのは
+アタシが　書いた　小説の▽
+一部なんです▼
+ここに　挑戦しに　来た
+トレーナーと　ポケモンの▽
+心の　ふれあいを▽
+物語に　するのが　大好きで！▼
+というわけで　アナタたちの　こと
+取材させて　くださいね！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀：クリア後
+・戦闘前：フィールド
+　メッセージ表示後、トレーナー戦闘に</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>四天王：ゴースト
+シキミ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c09r0101_bigfour1_05e"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>『きょうが　なんにちで　あるか
+　わたしには　わからないが▽
+　いっしょう　わすれないだろう』▼
+いま　よんだのは
+アタシが　かいた　しょうせつの▽
+いちぶ　なんです▼
+ここに　ちょうせん　しにきた
+トレーナーと　ポケモンの▽
+こころの　ふれあいを▽
+ものがたりに　するのが　だいすきで！▼
+というわけで　アナタたちの　こと
+しゅざい　させてくださいね！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>『今日が　何日で　あるか
+　わたしには　わからないが▽
+　一生　忘れないだろう』▼
+いま　読んだのは
+アタシが　書いた　小説の▽
+一部なんです▼
+ここに　挑戦しに　来た
+トレーナーと　ポケモンの▽
+心の　ふれあいを▽
+物語に　するのが　大好きで！▼
+というわけで　アナタたちの　こと
+取材させて　くださいね！▼</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀：クリア後
+・戦闘前：フィールド
+　メッセージ表示後、トレーナー戦闘に</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>四天王：ゴースト
+シキミ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c09r0101_bigfour1_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ごごごめんなさい！
+まず　ポケモンに　あやまらないと……▼
+アタシの　せいで
+つらい　おもいを　させちゃって▽
+ほんとうに　ゴメンね！▼
+ああ！　アナタは　わるくないです
+こうなるのは　しょうぶの　つね▽
+それを　ふまえて▽
+アタシも　してんのう　してますから！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ごごごめんなさい！
+まず　ポケモンに　謝らないと……▼
+アタシの　せいで
+つらい　おもいを　させちゃって▽
+本当に　ごめんね！▼
+ああ！　アナタは　悪くないです
+こうなるのは　勝負の　常▽
+それを　ふまえて▽
+アタシも　四天王　してますから！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀：クリア後
+・戦闘後：フィールド</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>四天王：ゴースト
+シキミ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c09r0101_bigfour1_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ひとには　ひとの
+ポケモンには　ポケモンの▽
+ものがたりが　あるんです！▼
+そして　ひとだけ……
+ポケモンだけ　よりも▼
+ひとと　ポケモンが　たすけあう
+おはなしの　ほうが▽
+ぜったいに　おもしろいんです！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>人には　人の
+ポケモンには　ポケモンの▽
+物語が　あるんです！▼
+そして　人だけ……
+ポケモンだけの　お話　よりも▼
+人と　ポケモンが　助け合う
+お話の　ほうが▽
+絶対に　おもしろいんです！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀：クリア後
+・bigfour1_06表示後に再度会話</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>四天王：ゴースト
+シキミ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c09r0101_bigfour1_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あの……
+ちょうせんしゃ　のかた▼
+ポケモンリーグは
+してんのう　ぜんいんに　かてば▽
+チャンピオンの　へやに　いけます▼
+はい！　アナタは
+その　しかくを　えました▼
+……アナタの　ものがたりは
+アナタだけの　もの　です！▼
+ぜひ！　すてきな　ものがたりを
+つむいで　くださいね！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あの……
+挑戦者の　方▼
+ポケモンリーグは
+四天王　全員に　勝てば▽
+チャンピオンの　部屋に　行けます▼
+はい！　アナタは
+その資格を　得ました▼
+……アナタの　物語は
+アナタだけの　もの　です！▼
+ぜひ！　すてきな　物語を
+つむいで　くださいね！</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀：クリア後
+・条件（＝四天王全員に勝利）を満たしていれば
+　戦闘後フィールド復帰時に自動で表示
+・チャンピオン部屋に行くまで繰り返し</Comment>
+			<CommentModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>四天王：ゴースト
+シキミ</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+	</TextRow>
+</MessageStudioText>
