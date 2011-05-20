@@ -505,6 +505,8 @@ static void bv_set_btn_visible( BADGEVIEW_WORK* wk, const s32 mode, const BOOL b
 static void bv_init_timer( BADGEVIEW_WORK* wk, const s32 mode, const s32 timer );
 static s32  bv_chk_timer(  BADGEVIEW_WORK* wk, const s32 mode );
 static void bv_chk_leader( BADGEVIEW_WORK* wk );
+static void bv_chk_badge( BADGEVIEW_WORK* wk );
+
 // サウンド
 static void bv_snd_badge( BADGEVIEW_WORK* wk, const s32 num );
 // パレット変更
@@ -522,6 +524,8 @@ static void bv_set_model_visible( BADGEVIEW_WORK *wk, const BOOL bflg );
 static void bv_init_chgpal( BADGEVIEW_WORK *wk );
 static void bv_main_chgpal( BADGEVIEW_WORK *wk );
 static void bv_set_chgpal(  BADGEVIEW_WORK *wk, const BOOL bflg );
+static BOOL bv_is_chgpal( BADGEVIEW_WORK *wk );
+
 // カットイン
 static void bv_init_obj_res_up( BADGEVIEW_WORK *wk, const s32 drawtype, const s32 id );
 static void bv_exit_obj_res_up( BADGEVIEW_WORK *wk );
@@ -2358,9 +2362,16 @@ static const GFL_UI_TP_HITTBL SlideTbl[]={
   { GFL_UI_TP_HIT_END, 0, 0, 0 }
 };
 
-// ウインドウ領域 => タッチするとトップ画面へ移行
+// ウインドウ領域 => タッチするとトップ画面へ移行(リーダーwin領域)
 static const GFL_UI_TP_HITTBL leader_hit_tbl[] = {
-  { BADGE_TP_Y, BADGE_TP_Y+BADGE_TP_H,   BADGE_TP_X,  BADGE_TP_X+BADGE_TP_W*8-1 },   // バッジ領域
+  { BADGE_TP_Y, BADGE_TP_Y+BADGE_TP_H,   BADGE_TP_X,  BADGE_TP_X+BADGE_TP_W*8-1 },   // リーダー領域
+  //
+  { GFL_UI_TP_HIT_END, 0, 0, 0 }
+};
+
+// ウインドウ領域 => タッチするとトップ画面へ移行(バッジwin領域)
+static const GFL_UI_TP_HITTBL badge_hit_tbl[] = {
+  { BADGE_TP_Y2, BADGE_TP_Y2+BADGE_TP_H,   BADGE_TP_X,  BADGE_TP_X+BADGE_TP_W*8-1 },   // バッジ領域
   //
   { GFL_UI_TP_HIT_END, 0, 0, 0 }
 };
@@ -2478,6 +2489,7 @@ static void ExecFunc( BADGEVIEW_WORK *wk, int trg, BOOL keyflag )
 {
   s32	num=0;
   s32	flg=0;
+  BOOL	bflg;
   
   if(trg==GFL_UI_TP_HIT_NONE){
     return;
@@ -2552,15 +2564,36 @@ static void ExecFunc( BADGEVIEW_WORK *wk, int trg, BOOL keyflag )
         if(wk->Mode != MODE_LEADER){
           flg = 1;
         }
-        // カットインキャラの切り替え
-        bv_chg_cutin( wk, trg-TOUCH_GYM_READER_0 );
+        // バッジを持っているときだけ表示
+        if(wk->badgeflag[(trg-TOUCH_GYM_READER_0+pos)%BADGE_NUM]){
+          // カットインキャラの切り替え
+          bv_chg_cutin( wk, trg-TOUCH_GYM_READER_0 );
+          bv_set_cutin_visible( wk, TRUE );
+          bv_set_model_visible( wk, TRUE );
+          //
+          // 初期化して開始
+          bflg = bv_is_chgpal( wk );
+          if(bflg == FALSE){
+            // 初期化
+            bv_init_chgpal( wk );
+            // パレットチェンジ開始
+            bv_set_chgpal( wk, TRUE );
+          }
+        }else{
+          bv_set_cutin_visible( wk, FALSE );
+          bv_set_model_visible( wk, FALSE );
+          // 初期化して開始
+          bv_init_chgpal( wk );
+          // パレットチェンジ開始
+          bv_set_chgpal( wk, FALSE );
+        }
         
         // 初めてのときだけ処理
         if(flg == 1){
           // スクロールイン開始
           bv_init_bgscroll( wk, MODE_DOWNUP );
-          bv_set_cutin_visible( wk, TRUE );
-          bv_set_model_visible( wk, TRUE );
+//          bv_set_cutin_visible( wk, TRUE );
+//          bv_set_model_visible( wk, TRUE );
         }
         bmpwin_visible( wk, TRUE );
         //
@@ -3369,6 +3402,9 @@ static void bv_main_loop( BADGEVIEW_WORK* wk )
 	// リーダー関連(タイマ処理)など
 	bv_chk_leader( wk );
 	
+	// バッジ関連
+	bv_chk_badge( wk );
+	
 	// スクロール関連
 	bv_main_scroll( wk );
 	//
@@ -3440,6 +3476,7 @@ static void bv_init_bgscroll( BADGEVIEW_WORK* wk, const s32 mode )
 //-----------------------------------------------------------------------------
 static void bv_main_scroll( BADGEVIEW_WORK* wk )
 {
+	s16		flg;
 	s16		tmp;
 	s32		tx;
 	
@@ -3490,7 +3527,15 @@ static void bv_main_scroll( BADGEVIEW_WORK* wk )
 			InfoWinPrint( wk, wk->TypeNum, wk->PageNum, 0 );
 			InfoWinPut( wk );
 			// パレットチェンジ開始
-			bv_set_chgpal( wk, TRUE );
+			flg = 0;
+			if(wk->Mode == MODE_LEADER){
+				if(wk->badgeflag[wk->PageNum] == 0){
+					flg = 1;
+				}
+			}
+			if(flg == 0){
+				bv_set_chgpal( wk, TRUE );
+			}
 			wk->Flag |= FLG_END_BGOFFSET;
 			wk->Step = STEP_END;
 			break;
@@ -3671,46 +3716,91 @@ static void bv_chk_leader( BADGEVIEW_WORK* wk )
 {
 	int		trg;
 	s32		timer;
+	s32		mflg=0;
 	s32		flg=0;
 	
 	// リーダー情報表示
 	if(wk->Mode == MODE_LEADER){
-		// タイマー処理
-		timer = bv_chk_timer( wk, TIMER_MES );
-		if(timer <= 0){
-			// 番号切り替え
-			wk->LeaderNum = 1-wk->LeaderNum;
-			// タイマ初期化
-			bv_init_timer( wk, TIMER_MES, bv_timer_tbl[wk->LeaderNum]);
-			// 文字転送
-			InfoWinPrint( wk, wk->TypeNum, wk->PageNum, wk->LeaderNum );
-			InfoWinPut( wk );
-			flg = 1;
+		// バッジ取得前は処理しない
+		if( wk->badgeflag[wk->PageNum] ){
+			mflg = 1;
 		}
-		// とりあえずここに入れておく(要検討)
-		// タッチ判定
-		if(flg == 0){
+		//
+		// 取得前
+		if(mflg == 0){
 			// タッチ判定
 			trg = GFL_UI_TP_HitTrg( leader_hit_tbl );
 			if(trg == 0){
-				// メッセージ変更
-				if(wk->LeaderNum == 0){
-					wk->LeaderNum = 1;
-					// タイマ初期化
-					bv_init_timer( wk, TIMER_MES, bv_timer_tbl[wk->LeaderNum]);
-					// 文字転送
-					InfoWinPrint( wk, wk->TypeNum, wk->PageNum, wk->LeaderNum );
-					InfoWinPut( wk );
-					// se(ウインドウタッチ)
-					PMSND_PlaySE( SND_TRBADGE_WIN_TOUCH );
-				}
 				// 終了処理
-				else{
-					bv_init_bgscroll( wk, MODE_DOWNUP_REV );
-					// ウインドウを消す
-					wk->Mode = MODE_NORMAL;
+				bv_init_bgscroll( wk, MODE_DOWNUP_REV );
+				// ウインドウを消す
+				wk->Mode = MODE_NORMAL;
+			}
+		}
+		// 取得後
+		else if(mflg == 1){
+			// タイマー処理
+			timer = bv_chk_timer( wk, TIMER_MES );
+			if(timer <= 0){
+				// 番号切り替え
+				wk->LeaderNum = 1-wk->LeaderNum;
+				// タイマ初期化
+				bv_init_timer( wk, TIMER_MES, bv_timer_tbl[wk->LeaderNum]);
+				// 文字転送
+				InfoWinPrint( wk, wk->TypeNum, wk->PageNum, wk->LeaderNum );
+				InfoWinPut( wk );
+				flg = 1;
+			}
+			// とりあえずここに入れておく(要検討)
+			// タッチ判定
+			if(flg == 0){
+				// タッチ判定
+				trg = GFL_UI_TP_HitTrg( leader_hit_tbl );
+				if(trg == 0){
+					// メッセージ変更
+					if(wk->LeaderNum == 0){
+						wk->LeaderNum = 1;
+						// タイマ初期化
+						bv_init_timer( wk, TIMER_MES, bv_timer_tbl[wk->LeaderNum]);
+						// 文字転送
+						InfoWinPrint( wk, wk->TypeNum, wk->PageNum, wk->LeaderNum );
+						InfoWinPut( wk );
+						// se(ウインドウタッチ)
+						PMSND_PlaySE( SND_TRBADGE_WIN_TOUCH );
+					}
+					// 終了処理
+					else{
+						bv_init_bgscroll( wk, MODE_DOWNUP_REV );
+						// ウインドウを消す
+						wk->Mode = MODE_NORMAL;
+					}
 				}
 			}
+		}
+	}
+}
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  バッジ関連の処理(上画面をタッチ)
+ *
+ *	@param	BADGEVIEW_WORK* wk	ワーク
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void bv_chk_badge( BADGEVIEW_WORK* wk )
+{
+	int		trg;
+	
+	// バッジ情報表示
+	if(wk->Mode == MODE_BADGE){
+		// タッチ判定
+		trg = GFL_UI_TP_HitTrg( badge_hit_tbl );
+		if(trg == 0){
+			// 終了処理
+			bv_init_bgscroll( wk, MODE_UPDOWN_REV );
+			// ウインドウを消す
+			wk->Mode = MODE_NORMAL;
 		}
 	}
 }
@@ -4036,6 +4126,26 @@ static void bv_set_chgpal( BADGEVIEW_WORK *wk, const BOOL bflg )
 	}else{				// 終了
 		wk->Flag &= ~FLG_PALCHG_ON;
 	}
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	パレットチェンジ中
+ *
+ * @param	BADGEVIEW_WORK*	wk	ワーク
+ *
+ * @retval	const BOOL			(TRUE:チェンジ中、FALSE:してない)
+ */
+//----------------------------------------------------------------------------------
+static BOOL bv_is_chgpal( BADGEVIEW_WORK *wk )
+{
+	BOOL	bflg=FALSE;
+	
+	// チェンジ中
+	if(wk->Flag & FLG_PALCHG_ON){
+		bflg = TRUE;
+	}
+	return( bflg );
 }
 
 //-----------------------------------------------------------------------------
