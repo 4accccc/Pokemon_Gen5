@@ -1,0 +1,951 @@
+//[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
+/**
+ *
+ *	@file		gym_ground.cdat
+ *	@brief  じめんジムデータ
+ *	@author	Katsuhiko=Ichiraku
+ *	@date		2011.05.17
+ *
+ */
+//]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+#pragma once
+
+//=============================================================================
+/**
+ *          ベルトコンベア座標データ
+ */
+//=============================================================================
+
+#define	BELT_UD_1_X   ( 6 * FIELD_CONST_GRID_FX32_SIZE )	// 縦1  X座標
+#define	BELT_UD_1_Z   (12 * FIELD_CONST_GRID_FX32_SIZE )	// 縦1  Z座標
+#define	BELT_UD_2_X   (16 * FIELD_CONST_GRID_FX32_SIZE )	// 縦2  X座標
+#define	BELT_UD_2_Z   (12 * FIELD_CONST_GRID_FX32_SIZE )	// 縦2  Z座標
+#define	BELT_UD_3_X   (26 * FIELD_CONST_GRID_FX32_SIZE )	// 縦3  X座標
+#define	BELT_UD_3_Z   (12 * FIELD_CONST_GRID_FX32_SIZE )	// 縦3  Z座標
+#define	BELT_UD_4_X   (36 * FIELD_CONST_GRID_FX32_SIZE )	// 縦4  X座標
+#define	BELT_UD_4_Z   (12 * FIELD_CONST_GRID_FX32_SIZE )	// 縦4  Z座標
+#define	BELT_UD_5_X   ( 6 * FIELD_CONST_GRID_FX32_SIZE )	// 縦5  X座標
+#define	BELT_UD_5_Z   (23 * FIELD_CONST_GRID_FX32_SIZE )	// 縦5  Z座標
+#define	BELT_UD_6_X   (16 * FIELD_CONST_GRID_FX32_SIZE )	// 縦6  X座標
+#define	BELT_UD_6_Z   (23 * FIELD_CONST_GRID_FX32_SIZE )	// 縦6  Z座標
+#define	BELT_UD_7_X   (26 * FIELD_CONST_GRID_FX32_SIZE )	// 縦7  X座標
+#define	BELT_UD_7_Z   (23 * FIELD_CONST_GRID_FX32_SIZE )	// 縦7  Z座標
+#define	BELT_UD_8_X   (56 * FIELD_CONST_GRID_FX32_SIZE )	// 縦8  X座標
+#define	BELT_UD_8_Z   (23 * FIELD_CONST_GRID_FX32_SIZE )	// 縦8  Z座標
+#define	BELT_UD_9_X   ( 6 * FIELD_CONST_GRID_FX32_SIZE )	// 縦9  X座標
+#define	BELT_UD_9_Z   (34 * FIELD_CONST_GRID_FX32_SIZE )	// 縦9  Z座標
+#define	BELT_UD_10_X	(26 * FIELD_CONST_GRID_FX32_SIZE )	// 縦10  X座標
+#define	BELT_UD_10_Z	(34 * FIELD_CONST_GRID_FX32_SIZE )	// 縦10  Z座標
+#define	BELT_UD_11_X	(56 * FIELD_CONST_GRID_FX32_SIZE )	// 縦11  X座標
+#define	BELT_UD_11_Z	(34 * FIELD_CONST_GRID_FX32_SIZE )	// 縦11  Z座標
+#define	BELT_UD_12_X	(16 * FIELD_CONST_GRID_FX32_SIZE )	// 縦12  X座標
+#define	BELT_UD_12_Z	(45 * FIELD_CONST_GRID_FX32_SIZE )	// 縦12  Z座標
+#define	BELT_UD_13_X	(26 * FIELD_CONST_GRID_FX32_SIZE )	// 縦13  X座標
+#define	BELT_UD_13_Z	(45 * FIELD_CONST_GRID_FX32_SIZE )	// 縦13  Z座標
+#define	BELT_UD_14_X	(56 * FIELD_CONST_GRID_FX32_SIZE )	// 縦14  X座標
+#define	BELT_UD_14_Z	(45 * FIELD_CONST_GRID_FX32_SIZE )	// 縦14  Z座標
+#define	BELT_UD_15_X	( 6 * FIELD_CONST_GRID_FX32_SIZE )	// 縦15  X座標
+#define	BELT_UD_15_Z	(56 * FIELD_CONST_GRID_FX32_SIZE )	// 縦15  Z座標
+#define	BELT_UD_16_X	(16 * FIELD_CONST_GRID_FX32_SIZE )	// 縦16  X座標
+#define	BELT_UD_16_Z	(56 * FIELD_CONST_GRID_FX32_SIZE )	// 縦16  Z座標
+#define	BELT_UD_17_X	(26 * FIELD_CONST_GRID_FX32_SIZE )	// 縦17  X座標
+#define	BELT_UD_17_Z	(56 * FIELD_CONST_GRID_FX32_SIZE )	// 縦17  Z座標
+#define	BELT_UD_18_X	(36 * FIELD_CONST_GRID_FX32_SIZE )	// 縦18  X座標
+#define	BELT_UD_18_Z	(56 * FIELD_CONST_GRID_FX32_SIZE )	// 縦18  Z座標
+#define	BELT_UD_19_X	(46 * FIELD_CONST_GRID_FX32_SIZE )	// 縦19  X座標
+#define	BELT_UD_19_Z	(56 * FIELD_CONST_GRID_FX32_SIZE )	// 縦19  Z座標
+#define	BELT_UD_20_X	(56 * FIELD_CONST_GRID_FX32_SIZE )	// 縦20  X座標
+#define	BELT_UD_20_Z	(56 * FIELD_CONST_GRID_FX32_SIZE )	// 縦20  Z座標
+
+#define	BELT_LR_1_X	  (11 * FIELD_CONST_GRID_FX32_SIZE )	// 横1  X座標
+#define	BELT_LR_1_Z	  ( 7 * FIELD_CONST_GRID_FX32_SIZE )	// 横1  Z座標
+#define	BELT_LR_2_X	  (41 * FIELD_CONST_GRID_FX32_SIZE )	// 横2  X座標
+#define	BELT_LR_2_Z	  ( 7 * FIELD_CONST_GRID_FX32_SIZE )	// 横2  Z座標
+#define	BELT_LR_3_X	  (51 * FIELD_CONST_GRID_FX32_SIZE )	// 横3  X座標
+#define	BELT_LR_3_Z	  ( 7 * FIELD_CONST_GRID_FX32_SIZE )	// 横3  Z座標
+#define	BELT_LR_4_X	  (11 * FIELD_CONST_GRID_FX32_SIZE )	// 横4  X座標
+#define	BELT_LR_4_Z	  (18 * FIELD_CONST_GRID_FX32_SIZE )	// 横4  Z座標
+#define	BELT_LR_5_X	  (21 * FIELD_CONST_GRID_FX32_SIZE )	// 横5  X座標
+#define	BELT_LR_5_Z	  (18 * FIELD_CONST_GRID_FX32_SIZE )	// 横5  Z座標
+#define	BELT_LR_6_X	  (31 * FIELD_CONST_GRID_FX32_SIZE )	// 横6  X座標
+#define	BELT_LR_6_Z	  (18 * FIELD_CONST_GRID_FX32_SIZE )	// 横6  Z座標
+#define	BELT_LR_7_X	  (11 * FIELD_CONST_GRID_FX32_SIZE )	// 横7  X座標
+#define	BELT_LR_7_Z	  (29 * FIELD_CONST_GRID_FX32_SIZE )	// 横7  Z座標
+#define	BELT_LR_8_X	  (21 * FIELD_CONST_GRID_FX32_SIZE )	// 横8  X座標
+#define	BELT_LR_8_Z	  (29 * FIELD_CONST_GRID_FX32_SIZE )	// 横8  Z座標
+#define	BELT_LR_9_X	  (31 * FIELD_CONST_GRID_FX32_SIZE )	// 横9  X座標
+#define	BELT_LR_9_Z	  (29 * FIELD_CONST_GRID_FX32_SIZE )	// 横9  Z座標
+#define	BELT_LR_10_X	(41 * FIELD_CONST_GRID_FX32_SIZE )	// 横10  X座標
+#define	BELT_LR_10_Z	(29 * FIELD_CONST_GRID_FX32_SIZE )	// 横10  Z座標
+#define	BELT_LR_11_X	(51 * FIELD_CONST_GRID_FX32_SIZE )	// 横11  X座標
+#define	BELT_LR_11_Z	(29 * FIELD_CONST_GRID_FX32_SIZE )	// 横11  Z座標
+#define	BELT_LR_12_X	(41 * FIELD_CONST_GRID_FX32_SIZE )	// 横12  X座標
+#define	BELT_LR_12_Z	(40 * FIELD_CONST_GRID_FX32_SIZE )	// 横12  Z座標
+#define	BELT_LR_13_X	(11 * FIELD_CONST_GRID_FX32_SIZE )	// 横13  X座標
+#define	BELT_LR_13_Z	(51 * FIELD_CONST_GRID_FX32_SIZE )	// 横13  Z座標
+#define	BELT_LR_14_X	(51 * FIELD_CONST_GRID_FX32_SIZE )	// 横14  X座標
+#define	BELT_LR_14_Z	(51 * FIELD_CONST_GRID_FX32_SIZE )	// 横14  Z座標
+#define	BELT_LR_15_X	(41 * FIELD_CONST_GRID_FX32_SIZE )	// 横15  X座標
+#define	BELT_LR_15_Z	(62 * FIELD_CONST_GRID_FX32_SIZE )	// 横15  Z座標
+#define	BELT_LR_16_X	(51 * FIELD_CONST_GRID_FX32_SIZE )	// 横16  X座標
+#define	BELT_LR_16_Z	(62 * FIELD_CONST_GRID_FX32_SIZE )	// 横16  Z座標
+
+#define BELT_SP_UD_1_X   (36 * FIELD_CONST_GRID_FX32_SIZE )   // 縦1  X座標
+#define BELT_SP_UD_1_Z   (29 * FIELD_CONST_GRID_FX32_SIZE )   // 縦1  Z座標
+#define BELT_SP_UD_2_X   (46 * FIELD_CONST_GRID_FX32_SIZE )   // 縦2  X座標
+#define BELT_SP_UD_2_Z   (29 * FIELD_CONST_GRID_FX32_SIZE )   // 縦2  Z座標
+
+#define BELT_SP_LR_1_X   (26 * FIELD_CONST_GRID_FX32_SIZE )   // 横1  X座標
+#define BELT_SP_LR_1_Z   ( 7 * FIELD_CONST_GRID_FX32_SIZE )   // 横1  Z座標
+#define BELT_SP_LR_2_X   (36 * FIELD_CONST_GRID_FX32_SIZE )   // 横2  X座標
+#define BELT_SP_LR_2_Z   (51 * FIELD_CONST_GRID_FX32_SIZE )   // 横2  Z座標
+#define BELT_SP_LR_3_X   (26 * FIELD_CONST_GRID_FX32_SIZE )   // 横3  X座標
+#define BELT_SP_LR_3_Z   (62 * FIELD_CONST_GRID_FX32_SIZE )   // 横3  Z座標
+
+//=============================================================================
+/**
+ *          3Dリソース
+ */
+//=============================================================================
+// リソースの並び順
+enum {
+  RESID_BELT_UD_MDL = 0,    // ベルトコンベア(縦)
+  RESID_BELT_LR_MDL,        // ベルトコンベア(横)
+  RESID_BELT_SP_UD_MDL,     // 立体交差ベルトコンベア(縦)
+  RESID_BELT_SP_LR_MDL,     // 立体交差ベルトコンベア(横)
+  RESID_BELT_ANM_ITA,       // ベルトコンベアアニメ
+
+  RESID_LIFT_MDL,           // リフト
+  RESID_LIFT_ITA,           // リフト
+  RESID_LIFT_YACON_MDL,     // ヤーコンリフト
+  RESID_LIFT_YACON_ITA,     // ヤーコンリフト
+  RESID_LIFT_ENT_MDL,       // エントランスリフト
+  RESID_LIFT_ENT_ITA,       // エントランスリフト
+  RESID_LIFT_LIGHTUP_MDL,   // ライトアップ用
+  RESID_LIFT_LIGHTUP_ICA,   // ライトアップ用
+};
+
+// OBJインデックス
+// ※各ベルトコンベアの個数
+//   ベルトコンベア(縦)   ･･･ 20
+//   ベルトコンベア(横)   ･･･ 16
+//   立体交差ベルトコンベア(縦) ･･･ 2
+//   立体交差ベルトコンベア(横) ･･･ 3
+enum {
+  OBJ_BELT_UD_1,    // ベルトコンベア(縦)
+  OBJ_BELT_UD_2,
+  OBJ_BELT_UD_3,
+  OBJ_BELT_UD_4,
+  OBJ_BELT_UD_5,
+  OBJ_BELT_UD_6,
+  OBJ_BELT_UD_7,
+  OBJ_BELT_UD_8,
+  OBJ_BELT_UD_9,
+  OBJ_BELT_UD_10,
+  OBJ_BELT_UD_11,
+  OBJ_BELT_UD_12,
+  OBJ_BELT_UD_13,
+  OBJ_BELT_UD_14,
+  OBJ_BELT_UD_15,
+  OBJ_BELT_UD_16,
+  OBJ_BELT_UD_17,
+  OBJ_BELT_UD_18,
+  OBJ_BELT_UD_19,
+  OBJ_BELT_UD_20,
+  OBJ_BELT_LR_1,    // ベルトコンベア(横)
+  OBJ_BELT_LR_2,
+  OBJ_BELT_LR_3,
+  OBJ_BELT_LR_4,
+  OBJ_BELT_LR_5,
+  OBJ_BELT_LR_6,
+  OBJ_BELT_LR_7,
+  OBJ_BELT_LR_8,
+  OBJ_BELT_LR_9,
+  OBJ_BELT_LR_10,
+  OBJ_BELT_LR_11,
+  OBJ_BELT_LR_12,
+  OBJ_BELT_LR_13,
+  OBJ_BELT_LR_14,
+  OBJ_BELT_LR_15,
+  OBJ_BELT_LR_16,
+  OBJ_BELT_SP_UD_1, // 立体交差ベルトコンベア(縦)
+  OBJ_BELT_SP_UD_2,
+  OBJ_BELT_SP_LR_1, // 立体交差ベルトコンベア(横)
+  OBJ_BELT_SP_LR_2,
+  OBJ_BELT_SP_LR_3,
+
+  OBJ_BELT_NUM,
+  
+  OBJ_LIFT_LIGHTUP_1 = OBJ_BELT_NUM,// ライトアップ用
+  OBJ_LIFT_LIGHTUP_2,
+  OBJ_LIFT_LIGHTUP_3,
+  OBJ_LIFT_LIGHTUP_4,
+  OBJ_LIFT_LIGHTUP_5,
+  OBJ_LIFT_LIGHTUP_6,
+  OBJ_LIFT_LIGHTUP_7,
+  OBJ_LIFT_LIGHTUP_8,
+  OBJ_LIFT_LIGHTUP_9,
+  OBJ_LIFT_LIGHTUP_10,
+  OBJ_LIFT_LIGHTUP_11,
+  OBJ_LIFT_LIGHTUP_12,
+  OBJ_LIFT_LIGHTUP_13,
+  OBJ_LIFT_LIGHTUP_14,
+  OBJ_LIFT_LIGHTUP_15,
+  OBJ_LIFT_LIGHTUP_16,
+  OBJ_LIFT_LIGHTUP_17,
+  OBJ_LIFT_LIGHTUP_18,
+  OBJ_LIFT_LIGHTUP_19,
+  OBJ_LIFT_LIGHTUP_20,
+  OBJ_LIFT_LIGHTUP_21,
+  OBJ_LIFT_LIGHTUP_22,
+  OBJ_LIFT_LIGHTUP_23,
+  OBJ_LIFT_LIGHTUP_24,
+  OBJ_LIFT_LIGHTUP_25,
+  OBJ_LIFT_LIGHTUP_26,
+  OBJ_LIFT_LIGHTUP_27,
+  OBJ_LIFT_LIGHTUP_28,
+  OBJ_LIFT_LIGHTUP_29,
+  OBJ_LIFT_LIGHTUP_30,
+  OBJ_LIFT_LIGHTUP_31,
+  OBJ_LIFT_LIGHTUP_32,
+  OBJ_LIFT_LIGHTUP_33,
+  OBJ_LIFT_LIGHTUP_34,
+  OBJ_LIFT_LIGHTUP_35,
+  OBJ_LIFT_LIGHTUP_36,
+
+  OBJ_LIFT_1,       // 昇降リフト
+  OBJ_LIFT_2,
+  OBJ_LIFT_3,
+  OBJ_LIFT_4,
+
+  OBJ_LIFT_YACON,   // ヤーコンリフト
+  OBJ_LIFT_ENT,     // エントランスリフト
+
+  OBJ_NUM,
+};
+
+// RES
+static const GFL_G3D_UTIL_RES res_3d_table[] =
+{
+  // ベルトコンベア
+  { ARCID_GYM_GROUND, NARC_gym_ground_belt_01_tate_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
+  { ARCID_GYM_GROUND, NARC_gym_ground_belt_01_yoko_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
+  { ARCID_GYM_GROUND, NARC_gym_ground_belt_02_tate_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
+  { ARCID_GYM_GROUND, NARC_gym_ground_belt_02_yoko_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
+  { ARCID_GYM_GROUND, NARC_gym_ground_belt_anim01_nsbta, GFL_G3D_UTIL_RESARC }, // ITA
+
+  // リフト
+	{ ARCID_GYM_GROUND, NARC_gym_ground_lift_work01_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD
+	{ ARCID_GYM_GROUND, NARC_gym_ground_lift_work01_nsbta, GFL_G3D_UTIL_RESARC }, //ITA
+	{ ARCID_GYM_GROUND, NARC_gym_ground_lift_yacon01_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD
+	{ ARCID_GYM_GROUND, NARC_gym_ground_lift_yacon01_nsbta, GFL_G3D_UTIL_RESARC }, //ITA
+	{ ARCID_GYM_GROUND, NARC_gym_ground_lift_entrance01_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD
+	{ ARCID_GYM_GROUND, NARC_gym_ground_lift_entrance01_nsbta, GFL_G3D_UTIL_RESARC }, //ITA
+	{ ARCID_GYM_GROUND, NARC_gym_ground_lift_lightup01_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD
+	{ ARCID_GYM_GROUND, NARC_gym_ground_lift_lightup01_nsbca, GFL_G3D_UTIL_RESARC }, //ITA
+};
+
+// ANIME
+static const GFL_G3D_UTIL_ANM anm_belt[] =
+{
+  { RESID_BELT_ANM_ITA, 0 }, // nsbta
+};
+static const GFL_G3D_UTIL_ANM anm_lift[] =
+{
+  { RESID_LIFT_ITA, 0 }, // nsbta
+};
+static const GFL_G3D_UTIL_ANM anm_lift_yacon[] =
+{
+  { RESID_LIFT_YACON_ITA, 0 }, // nsbta
+};
+static const GFL_G3D_UTIL_ANM anm_lift_ent[] =
+{
+  { RESID_LIFT_ENT_ITA, 0 }, // nsbta
+};
+static const GFL_G3D_UTIL_ANM anm_lift_lightup[] =
+{
+  { RESID_LIFT_LIGHTUP_ICA, 0 }, // nsbca
+};
+
+// OBJ
+static const GFL_G3D_UTIL_OBJ obj_3d_table[] =
+{
+  // OBJ_BELT_UD_1
+  {
+    RESID_BELT_UD_MDL,      // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_BELT_UD_MDL,      // テクスチャリソースID
+    anm_belt,            // アニメテーブル(複数指定のため)
+    NELEMS(anm_belt),    // アニメリソース数
+  },
+  // OBJ_BELT_UD_2
+  {
+    RESID_BELT_UD_MDL,      // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_BELT_UD_MDL,      // テクスチャリソースID
+    anm_belt,            // アニメテーブル(複数指定のため)
+    NELEMS(anm_belt),    // アニメリソース数
+  },
+  // OBJ_BELT_UD_3
+  {
+    RESID_BELT_UD_MDL,      // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_BELT_UD_MDL,      // テクスチャリソースID
+    anm_belt,            // アニメテーブル(複数指定のため)
+    NELEMS(anm_belt),    // アニメリソース数
+  },
+  // OBJ_BELT_UD_4
+  {
+    RESID_BELT_UD_MDL,      // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_BELT_UD_MDL,      // テクスチャリソースID
+    anm_belt,            // アニメテーブル(複数指定のため)
+    NELEMS(anm_belt),    // アニメリソース数
+  },
+  // OBJ_BELT_UD_5
+  {
+    RESID_BELT_UD_MDL,      // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_BELT_UD_MDL,      // テクスチャリソースID
+    anm_belt,            // アニメテーブル(複数指定のため)
+    NELEMS(anm_belt),    // アニメリソース数
+  },
+  // OBJ_BELT_UD_6
+  {
+    RESID_BELT_UD_MDL,      // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_BELT_UD_MDL,      // テクスチャリソースID
+    anm_belt,            // アニメテーブル(複数指定のため)
+    NELEMS(anm_belt),    // アニメリソース数
+  },
+  // OBJ_BELT_UD_7
+  {
+    RESID_BELT_UD_MDL,      // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_BELT_UD_MDL,      // テクスチャリソースID
+    anm_belt,            // アニメテーブル(複数指定のため)
+    NELEMS(anm_belt),    // アニメリソース数
+  },
+  // OBJ_BELT_UD_8
+  {
+    RESID_BELT_UD_MDL,      // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_BELT_UD_MDL,      // テクスチャリソースID
+    anm_belt,            // アニメテーブル(複数指定のため)
+    NELEMS(anm_belt),    // アニメリソース数
+  },
+  // OBJ_BELT_UD_9
+  {
+    RESID_BELT_UD_MDL,      // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_BELT_UD_MDL,      // テクスチャリソースID
+    anm_belt,            // アニメテーブル(複数指定のため)
+    NELEMS(anm_belt),    // アニメリソース数
+  },
+  // OBJ_BELT_UD_10
+  {
+    RESID_BELT_UD_MDL,      // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_BELT_UD_MDL,      // テクスチャリソースID
+    anm_belt,            // アニメテーブル(複数指定のため)
+    NELEMS(anm_belt),    // アニメリソース数
+  },
+  // OBJ_BELT_UD_11
+  {
+    RESID_BELT_UD_MDL,      // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_BELT_UD_MDL,      // テクスチャリソースID
+    anm_belt,            // アニメテーブル(複数指定のため)
+    NELEMS(anm_belt),    // アニメリソース数
+  },
+  // OBJ_BELT_UD_12
+  {
+    RESID_BELT_UD_MDL,      // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_BELT_UD_MDL,      // テクスチャリソースID
+    anm_belt,            // アニメテーブル(複数指定のため)
+    NELEMS(anm_belt),    // アニメリソース数
+  },
+  // OBJ_BELT_UD_13
+  {
+    RESID_BELT_UD_MDL,      // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_BELT_UD_MDL,      // テクスチャリソースID
+    anm_belt,            // アニメテーブル(複数指定のため)
+    NELEMS(anm_belt),    // アニメリソース数
+  },
+  // OBJ_BELT_UD_14
+  {
+    RESID_BELT_UD_MDL,      // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_BELT_UD_MDL,      // テクスチャリソースID
+    anm_belt,            // アニメテーブル(複数指定のため)
+    NELEMS(anm_belt),    // アニメリソース数
+  },
+  // OBJ_BELT_UD_15
+  {
+    RESID_BELT_UD_MDL,      // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_BELT_UD_MDL,      // テクスチャリソースID
+    anm_belt,            // アニメテーブル(複数指定のため)
+    NELEMS(anm_belt),    // アニメリソース数
+  },
+  // OBJ_BELT_UD_16
+  {
+    RESID_BELT_UD_MDL,      // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_BELT_UD_MDL,      // テクスチャリソースID
+    anm_belt,            // アニメテーブル(複数指定のため)
+    NELEMS(anm_belt),    // アニメリソース数
+  },
+  // OBJ_BELT_UD_17
+  {
+    RESID_BELT_UD_MDL,      // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_BELT_UD_MDL,      // テクスチャリソースID
+    anm_belt,            // アニメテーブル(複数指定のため)
+    NELEMS(anm_belt),    // アニメリソース数
+  },
+  // OBJ_BELT_UD_18
+  {
+    RESID_BELT_UD_MDL,      // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_BELT_UD_MDL,      // テクスチャリソースID
+    anm_belt,            // アニメテーブル(複数指定のため)
+    NELEMS(anm_belt),    // アニメリソース数
+  },
+  // OBJ_BELT_UD_19
+  {
+    RESID_BELT_UD_MDL,      // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_BELT_UD_MDL,      // テクスチャリソースID
+    anm_belt,            // アニメテーブル(複数指定のため)
+    NELEMS(anm_belt),    // アニメリソース数
+  },
+  // OBJ_BELT_UD_20
+  {
+    RESID_BELT_UD_MDL,      // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_BELT_UD_MDL,      // テクスチャリソースID
+    anm_belt,            // アニメテーブル(複数指定のため)
+    NELEMS(anm_belt),    // アニメリソース数
+  },
+
+  // OBJ_BELT_LR_1
+  {
+    RESID_BELT_LR_MDL,      // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_BELT_LR_MDL,      // テクスチャリソースID
+    anm_belt,            // アニメテーブル(複数指定のため)
+    NELEMS(anm_belt),    // アニメリソース数
+  },
+  // OBJ_BELT_LR_2
+  {
+    RESID_BELT_LR_MDL,      // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_BELT_LR_MDL,      // テクスチャリソースID
+    anm_belt,            // アニメテーブル(複数指定のため)
+    NELEMS(anm_belt),    // アニメリソース数
+  },
+  // OBJ_BELT_LR_3
+  {
+    RESID_BELT_LR_MDL,      // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_BELT_LR_MDL,      // テクスチャリソースID
+    anm_belt,            // アニメテーブル(複数指定のため)
+    NELEMS(anm_belt),    // アニメリソース数
+  },
+  // OBJ_BELT_LR_4
+  {
+    RESID_BELT_LR_MDL,      // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_BELT_LR_MDL,      // テクスチャリソースID
+    anm_belt,            // アニメテーブル(複数指定のため)
+    NELEMS(anm_belt),    // アニメリソース数
+  },
+  // OBJ_BELT_LR_5
+  {
+    RESID_BELT_LR_MDL,      // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_BELT_LR_MDL,      // テクスチャリソースID
+    anm_belt,            // アニメテーブル(複数指定のため)
+    NELEMS(anm_belt),    // アニメリソース数
+  },
+  // OBJ_BELT_LR_6
+  {
+    RESID_BELT_LR_MDL,      // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_BELT_LR_MDL,      // テクスチャリソースID
+    anm_belt,            // アニメテーブル(複数指定のため)
+    NELEMS(anm_belt),    // アニメリソース数
+  },
+  // OBJ_BELT_LR_7
+  {
+    RESID_BELT_LR_MDL,      // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_BELT_LR_MDL,      // テクスチャリソースID
+    anm_belt,            // アニメテーブル(複数指定のため)
+    NELEMS(anm_belt),    // アニメリソース数
+  },
+  // OBJ_BELT_LR_8
+  {
+    RESID_BELT_LR_MDL,      // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_BELT_LR_MDL,      // テクスチャリソースID
+    anm_belt,            // アニメテーブル(複数指定のため)
+    NELEMS(anm_belt),    // アニメリソース数
+  },
+  // OBJ_BELT_LR_9
+  {
+    RESID_BELT_LR_MDL,      // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_BELT_LR_MDL,      // テクスチャリソースID
+    anm_belt,            // アニメテーブル(複数指定のため)
+    NELEMS(anm_belt),    // アニメリソース数
+  },
+  // OBJ_BELT_LR_10
+  {
+    RESID_BELT_LR_MDL,      // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_BELT_LR_MDL,      // テクスチャリソースID
+    anm_belt,            // アニメテーブル(複数指定のため)
+    NELEMS(anm_belt),    // アニメリソース数
+  },
+  // OBJ_BELT_LR_11
+  {
+    RESID_BELT_LR_MDL,      // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_BELT_LR_MDL,      // テクスチャリソースID
+    anm_belt,            // アニメテーブル(複数指定のため)
+    NELEMS(anm_belt),    // アニメリソース数
+  },
+  // OBJ_BELT_LR_12
+  {
+    RESID_BELT_LR_MDL,      // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_BELT_LR_MDL,      // テクスチャリソースID
+    anm_belt,            // アニメテーブル(複数指定のため)
+    NELEMS(anm_belt),    // アニメリソース数
+  },
+  // OBJ_BELT_LR_13
+  {
+    RESID_BELT_LR_MDL,      // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_BELT_LR_MDL,      // テクスチャリソースID
+    anm_belt,            // アニメテーブル(複数指定のため)
+    NELEMS(anm_belt),    // アニメリソース数
+  },
+  // OBJ_BELT_LR_14
+  {
+    RESID_BELT_LR_MDL,      // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_BELT_LR_MDL,      // テクスチャリソースID
+    anm_belt,            // アニメテーブル(複数指定のため)
+    NELEMS(anm_belt),    // アニメリソース数
+  },
+  // OBJ_BELT_LR_15
+  {
+    RESID_BELT_LR_MDL,      // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_BELT_LR_MDL,      // テクスチャリソースID
+    anm_belt,            // アニメテーブル(複数指定のため)
+    NELEMS(anm_belt),    // アニメリソース数
+  },
+  // OBJ_BELT_LR_16
+  {
+    RESID_BELT_LR_MDL,      // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_BELT_LR_MDL,      // テクスチャリソースID
+    anm_belt,            // アニメテーブル(複数指定のため)
+    NELEMS(anm_belt),    // アニメリソース数
+  },
+
+  // OBJ_BELT_SP_UD_1
+  {
+    RESID_BELT_SP_UD_MDL,   // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_BELT_SP_UD_MDL,   // テクスチャリソースID
+    anm_belt,         // アニメテーブル(複数指定のため)
+    NELEMS(anm_belt), // アニメリソース数
+  },
+  // OBJ_BELT_SP_UD_2
+  {
+    RESID_BELT_SP_UD_MDL,   // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_BELT_SP_UD_MDL,   // テクスチャリソースID
+    anm_belt,         // アニメテーブル(複数指定のため)
+    NELEMS(anm_belt), // アニメリソース数
+  },
+
+  // OBJ_BELT_SP_LR_1
+  {
+    RESID_BELT_SP_LR_MDL,   // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_BELT_SP_LR_MDL,   // テクスチャリソースID
+    anm_belt,         // アニメテーブル(複数指定のため)
+    NELEMS(anm_belt), // アニメリソース数
+  },
+  // OBJ_BELT_SP_LR_2
+  {
+    RESID_BELT_SP_LR_MDL,   // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_BELT_SP_LR_MDL,   // テクスチャリソースID
+    anm_belt,         // アニメテーブル(複数指定のため)
+    NELEMS(anm_belt), // アニメリソース数
+  },
+  // OBJ_BELT_SP_LR_3
+  {
+    RESID_BELT_SP_LR_MDL,   // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_BELT_SP_LR_MDL,   // テクスチャリソースID
+    anm_belt,         // アニメテーブル(複数指定のため)
+    NELEMS(anm_belt), // アニメリソース数
+  },
+
+  // OBJ_LIFT_LIGHTUP_1
+  {
+    RESID_LIFT_LIGHTUP_MDL, // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_LIFT_LIGHTUP_MDL, // テクスチャリソースID
+    anm_lift_lightup,       // アニメテーブル(複数指定のため)
+    NELEMS(anm_lift_lightup),// アニメリソース数
+  },
+  // OBJ_LIFT_LIGHTUP_2
+  {
+    RESID_LIFT_LIGHTUP_MDL, // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_LIFT_LIGHTUP_MDL, // テクスチャリソースID
+    anm_lift_lightup,       // アニメテーブル(複数指定のため)
+    NELEMS(anm_lift_lightup),// アニメリソース数
+  },
+  // OBJ_LIFT_LIGHTUP_3
+  {
+    RESID_LIFT_LIGHTUP_MDL, // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_LIFT_LIGHTUP_MDL, // テクスチャリソースID
+    anm_lift_lightup,       // アニメテーブル(複数指定のため)
+    NELEMS(anm_lift_lightup),// アニメリソース数
+  },
+  // OBJ_LIFT_LIGHTUP_4
+  {
+    RESID_LIFT_LIGHTUP_MDL, // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_LIFT_LIGHTUP_MDL, // テクスチャリソースID
+    anm_lift_lightup,       // アニメテーブル(複数指定のため)
+    NELEMS(anm_lift_lightup),// アニメリソース数
+  },
+  // OBJ_LIFT_LIGHTUP_5
+  {
+    RESID_LIFT_LIGHTUP_MDL, // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_LIFT_LIGHTUP_MDL, // テクスチャリソースID
+    anm_lift_lightup,       // アニメテーブル(複数指定のため)
+    NELEMS(anm_lift_lightup),// アニメリソース数
+  },
+  // OBJ_LIFT_LIGHTUP_6
+  {
+    RESID_LIFT_LIGHTUP_MDL, // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_LIFT_LIGHTUP_MDL, // テクスチャリソースID
+    anm_lift_lightup,       // アニメテーブル(複数指定のため)
+    NELEMS(anm_lift_lightup),// アニメリソース数
+  },
+  // OBJ_LIFT_LIGHTUP_7
+  {
+    RESID_LIFT_LIGHTUP_MDL, // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_LIFT_LIGHTUP_MDL, // テクスチャリソースID
+    anm_lift_lightup,       // アニメテーブル(複数指定のため)
+    NELEMS(anm_lift_lightup),// アニメリソース数
+  },
+  // OBJ_LIFT_LIGHTUP_8
+  {
+    RESID_LIFT_LIGHTUP_MDL, // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_LIFT_LIGHTUP_MDL, // テクスチャリソースID
+    anm_lift_lightup,       // アニメテーブル(複数指定のため)
+    NELEMS(anm_lift_lightup),// アニメリソース数
+  },
+  // OBJ_LIFT_LIGHTUP_9
+  {
+    RESID_LIFT_LIGHTUP_MDL, // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_LIFT_LIGHTUP_MDL, // テクスチャリソースID
+    anm_lift_lightup,       // アニメテーブル(複数指定のため)
+    NELEMS(anm_lift_lightup),// アニメリソース数
+  },
+  // OBJ_LIFT_LIGHTUP_10
+  {
+    RESID_LIFT_LIGHTUP_MDL, // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_LIFT_LIGHTUP_MDL, // テクスチャリソースID
+    anm_lift_lightup,       // アニメテーブル(複数指定のため)
+    NELEMS(anm_lift_lightup),// アニメリソース数
+  },
+  // OBJ_LIFT_LIGHTUP_11
+  {
+    RESID_LIFT_LIGHTUP_MDL, // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_LIFT_LIGHTUP_MDL, // テクスチャリソースID
+    anm_lift_lightup,       // アニメテーブル(複数指定のため)
+    NELEMS(anm_lift_lightup),// アニメリソース数
+  },
+  // OBJ_LIFT_LIGHTUP_12
+  {
+    RESID_LIFT_LIGHTUP_MDL, // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_LIFT_LIGHTUP_MDL, // テクスチャリソースID
+    anm_lift_lightup,       // アニメテーブル(複数指定のため)
+    NELEMS(anm_lift_lightup),// アニメリソース数
+  },
+  // OBJ_LIFT_LIGHTUP_13
+  {
+    RESID_LIFT_LIGHTUP_MDL, // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_LIFT_LIGHTUP_MDL, // テクスチャリソースID
+    anm_lift_lightup,       // アニメテーブル(複数指定のため)
+    NELEMS(anm_lift_lightup),// アニメリソース数
+  },
+  // OBJ_LIFT_LIGHTUP_14
+  {
+    RESID_LIFT_LIGHTUP_MDL, // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_LIFT_LIGHTUP_MDL, // テクスチャリソースID
+    anm_lift_lightup,       // アニメテーブル(複数指定のため)
+    NELEMS(anm_lift_lightup),// アニメリソース数
+  },
+  // OBJ_LIFT_LIGHTUP_15
+  {
+    RESID_LIFT_LIGHTUP_MDL, // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_LIFT_LIGHTUP_MDL, // テクスチャリソースID
+    anm_lift_lightup,       // アニメテーブル(複数指定のため)
+    NELEMS(anm_lift_lightup),// アニメリソース数
+  },
+  // OBJ_LIFT_LIGHTUP_16
+  {
+    RESID_LIFT_LIGHTUP_MDL, // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_LIFT_LIGHTUP_MDL, // テクスチャリソースID
+    anm_lift_lightup,       // アニメテーブル(複数指定のため)
+    NELEMS(anm_lift_lightup),// アニメリソース数
+  },
+  // OBJ_LIFT_LIGHTUP_17
+  {
+    RESID_LIFT_LIGHTUP_MDL, // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_LIFT_LIGHTUP_MDL, // テクスチャリソースID
+    anm_lift_lightup,       // アニメテーブル(複数指定のため)
+    NELEMS(anm_lift_lightup),// アニメリソース数
+  },
+  // OBJ_LIFT_LIGHTUP_18
+  {
+    RESID_LIFT_LIGHTUP_MDL, // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_LIFT_LIGHTUP_MDL, // テクスチャリソースID
+    anm_lift_lightup,       // アニメテーブル(複数指定のため)
+    NELEMS(anm_lift_lightup),// アニメリソース数
+  },
+  // OBJ_LIFT_LIGHTUP_19
+  {
+    RESID_LIFT_LIGHTUP_MDL, // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_LIFT_LIGHTUP_MDL, // テクスチャリソースID
+    anm_lift_lightup,       // アニメテーブル(複数指定のため)
+    NELEMS(anm_lift_lightup),// アニメリソース数
+  },
+  // OBJ_LIFT_LIGHTUP_20
+  {
+    RESID_LIFT_LIGHTUP_MDL, // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_LIFT_LIGHTUP_MDL, // テクスチャリソースID
+    anm_lift_lightup,       // アニメテーブル(複数指定のため)
+    NELEMS(anm_lift_lightup),// アニメリソース数
+  },
+  // OBJ_LIFT_LIGHTUP_21
+  {
+    RESID_LIFT_LIGHTUP_MDL, // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_LIFT_LIGHTUP_MDL, // テクスチャリソースID
+    anm_lift_lightup,       // アニメテーブル(複数指定のため)
+    NELEMS(anm_lift_lightup),// アニメリソース数
+  },
+  // OBJ_LIFT_LIGHTUP_22
+  {
+    RESID_LIFT_LIGHTUP_MDL, // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_LIFT_LIGHTUP_MDL, // テクスチャリソースID
+    anm_lift_lightup,       // アニメテーブル(複数指定のため)
+    NELEMS(anm_lift_lightup),// アニメリソース数
+  },
+  // OBJ_LIFT_LIGHTUP_23
+  {
+    RESID_LIFT_LIGHTUP_MDL, // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_LIFT_LIGHTUP_MDL, // テクスチャリソースID
+    anm_lift_lightup,       // アニメテーブル(複数指定のため)
+    NELEMS(anm_lift_lightup),// アニメリソース数
+  },
+  // OBJ_LIFT_LIGHTUP_24
+  {
+    RESID_LIFT_LIGHTUP_MDL, // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_LIFT_LIGHTUP_MDL, // テクスチャリソースID
+    anm_lift_lightup,       // アニメテーブル(複数指定のため)
+    NELEMS(anm_lift_lightup),// アニメリソース数
+  },
+  // OBJ_LIFT_LIGHTUP_25
+  {
+    RESID_LIFT_LIGHTUP_MDL, // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_LIFT_LIGHTUP_MDL, // テクスチャリソースID
+    anm_lift_lightup,       // アニメテーブル(複数指定のため)
+    NELEMS(anm_lift_lightup),// アニメリソース数
+  },
+  // OBJ_LIFT_LIGHTUP_26
+  {
+    RESID_LIFT_LIGHTUP_MDL, // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_LIFT_LIGHTUP_MDL, // テクスチャリソースID
+    anm_lift_lightup,       // アニメテーブル(複数指定のため)
+    NELEMS(anm_lift_lightup),// アニメリソース数
+  },
+  // OBJ_LIFT_LIGHTUP_27
+  {
+    RESID_LIFT_LIGHTUP_MDL, // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_LIFT_LIGHTUP_MDL, // テクスチャリソースID
+    anm_lift_lightup,       // アニメテーブル(複数指定のため)
+    NELEMS(anm_lift_lightup),// アニメリソース数
+  },
+  // OBJ_LIFT_LIGHTUP_28
+  {
+    RESID_LIFT_LIGHTUP_MDL, // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_LIFT_LIGHTUP_MDL, // テクスチャリソースID
+    anm_lift_lightup,       // アニメテーブル(複数指定のため)
+    NELEMS(anm_lift_lightup),// アニメリソース数
+  },
+  // OBJ_LIFT_LIGHTUP_29
+  {
+    RESID_LIFT_LIGHTUP_MDL, // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_LIFT_LIGHTUP_MDL, // テクスチャリソースID
+    anm_lift_lightup,       // アニメテーブル(複数指定のため)
+    NELEMS(anm_lift_lightup),// アニメリソース数
+  },
+  // OBJ_LIFT_LIGHTUP_30
+  {
+    RESID_LIFT_LIGHTUP_MDL, // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_LIFT_LIGHTUP_MDL, // テクスチャリソースID
+    anm_lift_lightup,       // アニメテーブル(複数指定のため)
+    NELEMS(anm_lift_lightup),// アニメリソース数
+  },
+  // OBJ_LIFT_LIGHTUP_31
+  {
+    RESID_LIFT_LIGHTUP_MDL, // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_LIFT_LIGHTUP_MDL, // テクスチャリソースID
+    anm_lift_lightup,       // アニメテーブル(複数指定のため)
+    NELEMS(anm_lift_lightup),// アニメリソース数
+  },
+  // OBJ_LIFT_LIGHTUP_32
+  {
+    RESID_LIFT_LIGHTUP_MDL, // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_LIFT_LIGHTUP_MDL, // テクスチャリソースID
+    anm_lift_lightup,       // アニメテーブル(複数指定のため)
+    NELEMS(anm_lift_lightup),// アニメリソース数
+  },
+  // OBJ_LIFT_LIGHTUP_33
+  {
+    RESID_LIFT_LIGHTUP_MDL, // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_LIFT_LIGHTUP_MDL, // テクスチャリソースID
+    anm_lift_lightup,       // アニメテーブル(複数指定のため)
+    NELEMS(anm_lift_lightup),// アニメリソース数
+  },
+  // OBJ_LIFT_LIGHTUP_34
+  {
+    RESID_LIFT_LIGHTUP_MDL, // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_LIFT_LIGHTUP_MDL, // テクスチャリソースID
+    anm_lift_lightup,       // アニメテーブル(複数指定のため)
+    NELEMS(anm_lift_lightup),// アニメリソース数
+  },
+  // OBJ_LIFT_LIGHTUP_35
+  {
+    RESID_LIFT_LIGHTUP_MDL, // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_LIFT_LIGHTUP_MDL, // テクスチャリソースID
+    anm_lift_lightup,       // アニメテーブル(複数指定のため)
+    NELEMS(anm_lift_lightup),// アニメリソース数
+  },
+  // OBJ_LIFT_LIGHTUP_36
+  {
+    RESID_LIFT_LIGHTUP_MDL, // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_LIFT_LIGHTUP_MDL, // テクスチャリソースID
+    anm_lift_lightup,       // アニメテーブル(複数指定のため)
+    NELEMS(anm_lift_lightup),// アニメリソース数
+  },
+
+  // OBJ_LIFT_1
+  {
+    RESID_LIFT_MDL,         // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_LIFT_MDL,         // テクスチャリソースID
+    anm_lift,               // アニメテーブル(複数指定のため)
+    NELEMS(anm_lift),       // アニメリソース数
+  },
+  // OBJ_LIFT_2
+  {
+    RESID_LIFT_MDL,         // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_LIFT_MDL,         // テクスチャリソースID
+    anm_lift,               // アニメテーブル(複数指定のため)
+    NELEMS(anm_lift),       // アニメリソース数
+  },
+  // OBJ_LIFT_3
+  {
+    RESID_LIFT_MDL,         // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_LIFT_MDL,         // テクスチャリソースID
+    anm_lift,               // アニメテーブル(複数指定のため)
+    NELEMS(anm_lift),       // アニメリソース数
+  },
+  // OBJ_LIFT_4
+  {
+    RESID_LIFT_MDL,         // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_LIFT_MDL,         // テクスチャリソースID
+    anm_lift,               // アニメテーブル(複数指定のため)
+    NELEMS(anm_lift),       // アニメリソース数
+  },
+
+  // OBJ_LIFT_YACON
+  {
+    RESID_LIFT_YACON_MDL,   // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_LIFT_YACON_MDL,   // テクスチャリソースID
+    anm_lift_yacon,         // アニメテーブル(複数指定のため)
+    NELEMS(anm_lift_yacon), // アニメリソース数
+  },
+  // OBJ_LIFT_ENT
+  {
+    RESID_LIFT_ENT_MDL,     // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_LIFT_ENT_MDL,     // テクスチャリソースID
+    anm_lift_ent,           // アニメテーブル(複数指定のため)
+    NELEMS(anm_lift_ent),   // アニメリソース数
+  },
+};
+
+// セットアップデータ
+static const GFL_G3D_UTIL_SETUP g3Dutil_Setup = {
+  res_3d_table,				    //リソーステーブル
+	NELEMS(res_3d_table),		//リソース数
+	obj_3d_table,				    //オブジェクト設定テーブル
+	NELEMS(obj_3d_table),		//オブジェクト数
+};

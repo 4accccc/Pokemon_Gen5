@@ -74,6 +74,7 @@
 #include "gym_elec.h"     //for GYM_ELEC_CreateMoveEvt
 #include "gym_fly.h"     //for GYM_FLY_CheckEvent
 #include "gym_insect.h"     //for GYM_INSECT_CreateGateInEvent
+#include "gym_ground.h"     //for GYM_GROUND_CheckBeltEvent
 #include "field_gimmick_d06.h"
 
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"
@@ -2474,6 +2475,14 @@ static GMEVENT * checkPushGimmick(const EV_REQUEST * req,
 
   setFrontPos(req, &front_pos);
   
+  // ギミックが割り当てられているかを調べて、
+  // ジムソースのオーバレイがなされていることを確認する
+  if( FLDGMK_GimmickCodeCheck(fieldWork, FLD_GIMMICK_GYM_GROUND) )
+  {
+    // 地面ジム
+    return GYM_GROUND_CheckBeltEvent( gsys );
+  }
+
   //D06電気洞窟
   if( FLDGMK_GimmickCodeCheck(fieldWork, FLD_GIMMICK_D06R0101) ||
       FLDGMK_GimmickCodeCheck(fieldWork, FLD_GIMMICK_D06R0201) ||
