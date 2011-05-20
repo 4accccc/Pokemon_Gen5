@@ -51,15 +51,10 @@
 //--------------------------------------------------------------------------------------------
 
 // ３Ｄカメラ設定
-#if 0	// 上から見た(効果薄い)
-#define BADGE3D_CAMERA_POS_Y     ( FX32_ONE*90.0  )  ///< ジムリーダーリングの倒れ具合
-#define BADGE3D_CAMERA_POS_Z     ( 0 )  ///< ジムリーダーとカメラの距離（ドットのゆがみ調整）
-#define BADGE3D_CAMERA_TARGET_Y  ( 0 )  ///< 座標(0,0,0)のモデリングデータ画面上の位置
-#else	// モデルを90度回転させて横から見る方法
+// モデルを90度回転させて横から見る方法
 #define BADGE3D_CAMERA_POS_Y     ( 0  )  ///< ジムリーダーリングの倒れ具合
 #define BADGE3D_CAMERA_POS_Z     ( FX32_ONE*110.0 )  ///< ジムリーダーとカメラの距離（ドットのゆがみ調整）
 #define BADGE3D_CAMERA_TARGET_Y  ( 0 )  ///< 座標(0,0,0)のモデリングデータ画面上の位置
-#endif
 
 // 上画面文字面ウインドウオフセット
 #define SYSTEMWIN_FRM_CGX_OFFSET  (  1 )
@@ -137,7 +132,7 @@ enum{
 	STEP_END		= 10000,
 };
 
-// Flag
+// BADGEVIEW_WORK.Flag
 enum{
 	FLG_SET_BGOFFSET = (1<<0),		// BGセット
 	FLG_END_BGOFFSET = (1<<1),		// 終了
@@ -164,8 +159,8 @@ enum{
 enum{
 	MODE_UPDOWN = 0,				// 上から下
 	MODE_DOWNUP,					// 下から上
-	MODE_UPDOWN_REV,				// 上から下(逆)
-	MODE_DOWNUP_REV,				// 下から上(逆)
+	MODE_UPDOWN_REV,				// 上から下(逆:戻り)
+	MODE_DOWNUP_REV,				// 下から上(逆:戻り)
 };
 
 // 移動のワーク
@@ -188,10 +183,10 @@ enum{
 
 // スクロールスピード
 enum{
-	SPD_WIN_IN	= 32,				// WIN入
-	SPD_WIN_OUT	= 32,				// WIN出
-	SPD_CUTIN 	= 32,				// カットイン
-	SPD_CUTOUT	= 32,				// カットアウト
+	SPD_WIN_IN	= 16,				// WIN入
+	SPD_WIN_OUT	= 16,				// WIN出
+	SPD_CUTIN 	= 16,				// カットイン
+	SPD_CUTOUT	= 16,				// カットアウト
 };
 
 // いろいろ
@@ -394,7 +389,8 @@ static const u16 bv_snd_tbl[] = {
 	SND_TRBADGE_07,						// ド2
 };
 
-// カットインキャラのID
+#if 0
+// カットインキャラのID(BG)
 static const s16 bv_cutin_tbl[] = {
 	ENC_CUTIN_GYM1A,					// 0
 	ENC_CUTIN_GYM2,						// 1
@@ -405,6 +401,7 @@ static const s16 bv_cutin_tbl[] = {
 	ENC_CUTIN_GYM7,						// 6
 	ENC_CUTIN_GYM8A,					// 7
 };
+#endif
 
 // カットインのトレーナーID
 static const s16 bv_trainer_id_tbl[] = {
@@ -426,12 +423,10 @@ static const s16 bv_scr_tbl[] = {
     -80,-208, STEP_LV2, SPD_WIN_OUT,	// 下から上(戻)
 };
 
-// 移動のテーブル(開始、終了、0、spd)(カットイン)
+// 移動のテーブル(開始、終了、0、spd)(カットインobj)
 static const s16 bv_scr_cutin_tbl[] = {
    256,  192, 0, SPD_CUTIN,				// 外から中
    192,  256, 0, SPD_CUTOUT,			// 中から外
-//   -128,   0, 0, SPD_CUTIN,				// 外から中
-//	  0,-128, 0, SPD_CUTOUT,			// 中から外
 };
 
 // 移動のテーブル(開始、終了、0、spd)(モデル:桁注意)
@@ -2342,7 +2337,6 @@ static const GFL_UI_TP_HITTBL TouchButtonHitTbl[] =
   { BADGE_TP_Y, BADGE_TP_Y+BADGE_TP_H,   BADGE_TP_X+BADGE_TP_W*5,  BADGE_TP_X+BADGE_TP_W*6 },   // 
   { BADGE_TP_Y, BADGE_TP_Y+BADGE_TP_H,   BADGE_TP_X+BADGE_TP_W*6,  BADGE_TP_X+BADGE_TP_W*7 },   // 
   { BADGE_TP_Y, BADGE_TP_Y+BADGE_TP_H,   BADGE_TP_X+BADGE_TP_W*7,  BADGE_TP_X+BADGE_TP_W*8 },   // 
-#if 1	// 領域は要調整
   { BADGE_TP_Y2, BADGE_TP_Y2+BADGE_TP_H,   BADGE_TP_X+BADGE_TP_W*0,  BADGE_TP_X+BADGE_TP_W*1 },   // ジムリーダー
   { BADGE_TP_Y2, BADGE_TP_Y2+BADGE_TP_H,   BADGE_TP_X+BADGE_TP_W*1,  BADGE_TP_X+BADGE_TP_W*2 },   // 
   { BADGE_TP_Y2, BADGE_TP_Y2+BADGE_TP_H,   BADGE_TP_X+BADGE_TP_W*2,  BADGE_TP_X+BADGE_TP_W*3 },   // 
@@ -2351,16 +2345,6 @@ static const GFL_UI_TP_HITTBL TouchButtonHitTbl[] =
   { BADGE_TP_Y2, BADGE_TP_Y2+BADGE_TP_H,   BADGE_TP_X+BADGE_TP_W*5,  BADGE_TP_X+BADGE_TP_W*6 },   // 
   { BADGE_TP_Y2, BADGE_TP_Y2+BADGE_TP_H,   BADGE_TP_X+BADGE_TP_W*6,  BADGE_TP_X+BADGE_TP_W*7 },   // 
   { BADGE_TP_Y2, BADGE_TP_Y2+BADGE_TP_H,   BADGE_TP_X+BADGE_TP_W*7,  BADGE_TP_X+BADGE_TP_W*8 },   // 
-#else
-  { GR0_SY, GR0_EY, GR0_SX, GR0_EX },   // ジムリーダー
-  { GR1_SY, GR1_EY, GR1_SX, GR1_EX },   // 
-  { GR2_SY, GR2_EY, GR2_SX, GR2_EX },   // 
-  { GR3_SY, GR3_EY, GR3_SX, GR3_EX },   // 
-  { GR4_SY, GR4_EY, GR4_SX, GR4_EX },   // 
-  { GR5_SY, GR5_EY, GR5_SX, GR5_EX },   // 
-  { GR6_SY, GR6_EY, GR6_SX, GR6_EX },   // 
-  { GR7_SY, GR7_EY, GR7_SX, GR7_EX },   // 
-#endif
   { 168, 191,    8,  8+32  },   // TOUCH_CHANGE_CARD
   { 168, 191, 20*8, 24*8-1 },   // TOUCH_SHORTCUT
   { 168, 191, 24*8, 28*8-1 },   // TOUCH_END
@@ -3275,7 +3259,7 @@ static void BrushBadge( BADGEVIEW_WORK *wk, u32 touch )
 /**
  * 移動初期化
  *
- * @param wk    画面のワーク
+ * @param wk    				画面のワーク
  * @param	const s32			ワーク番号
  * @param	const s16			始点、終点
  * @param	const s16			フレーム数
@@ -3302,10 +3286,10 @@ static void bv_init_movework( BADGEVIEW_WORK *wk, const s32 wnum, const s16 sx, 
 /**
  * 移動処理
  *
- * @param wk    画面のワーク
- * @param s32	ワーク番号
+ * @param wk					画面のワーク
+ * @param const s32				ワーク番号
  *
- * @return  none
+ * @return s16					移動座標
  */
 //--------------------------------------------------------------------------------------------
 static s16 bv_main_movework( BADGEVIEW_WORK *wk, const s32 wnum )
@@ -3352,7 +3336,7 @@ static s16 bv_main_movework( BADGEVIEW_WORK *wk, const s32 wnum )
 /**
  *	@brief  移動判定
  *
- *	@param	wk
+ *	@param	wk					ワーク
  *	@param	const s32			ワーク番号
  *
  *	@retval BOOL 				(移動中:TRUE、停止、未使用:FALSE)
@@ -3375,7 +3359,7 @@ static BOOL bv_is_movework( BADGEVIEW_WORK *wk, const s32 wnum )
 /**
  *	@brief  処理まとめ
  *
- *	@param	wk
+ *	@param	wk					ワーク
  *
  *	@retval
  */
@@ -3396,7 +3380,7 @@ static void bv_main_loop( BADGEVIEW_WORK* wk )
 /**
  *	@brief  BG移動初期化(調整)
  *
- *	@param	wk
+ *	@param	wk					ワーク
  *	@param	const s32 			(0:上から下、1:下から上)
  *
  *	@retval
@@ -3449,7 +3433,7 @@ static void bv_init_bgscroll( BADGEVIEW_WORK* wk, const s32 mode )
 /**
  *	@brief  処理まとめ
  *
- *	@param	wk
+ *	@param	wk					ワーク
  *
  *	@retval
  */
@@ -3574,9 +3558,9 @@ static void bv_main_scroll( BADGEVIEW_WORK* wk )
 /**
  *	@brief  スクロール中か
  *
- *	@param	wk
+ *	@param	wk					ワーク
  *
- *	@retval BOOL (FALSE:まだ、停止、TRUE:再生中)
+ *	@retval BOOL 				(FALSE:まだ、停止、TRUE:再生中)
  */
 //-----------------------------------------------------------------------------
 static BOOL bv_is_bgscroll( BADGEVIEW_WORK* wk )
@@ -3594,9 +3578,9 @@ static BOOL bv_is_bgscroll( BADGEVIEW_WORK* wk )
 /**
  *	@brief  objの表示/非表示
  *
- *	@param	wk
- *	@param	s32         番号
- *	@param  const BOOL  (TRUE:表示、FALSE:非表示)
+ *	@param	wk					ワーク
+ *	@param	s32         		番号
+ *	@param  const BOOL  		(TRUE:表示、FALSE:非表示)
  *
  *	@retval
  */
@@ -3610,9 +3594,9 @@ static void bv_set_obj_visible( BADGEVIEW_WORK* wk, const s32 num, const BOOL bf
 /**
  *	@brief  ボタン表示(on/off)
  *
- *	@param	wk
- *	@param	s32         (ボタンの番号)
- *	@param  const BOOL  (TRUE:表示、FALSE:非表示)
+ *	@param	wk					ワーク
+ *	@param	const s32			(ボタンの番号)
+ *	@param  const BOOL			(TRUE:表示、FALSE:非表示)
  *
  *	@retval
  */
@@ -3643,7 +3627,7 @@ static void bv_set_btn_visible( BADGEVIEW_WORK* wk, const s32 mode, const BOOL b
 /**
  *	@brief  タイマ処理初期化
  *
- *	@param	BADGEVIEW_WORK* wk
+ *	@param	BADGEVIEW_WORK* wk	ワーク
  *	@param	const s32 mode		タイマの種類
  *	@param	const s32 timer		フレーム数
  *
@@ -3659,7 +3643,7 @@ static void bv_init_timer( BADGEVIEW_WORK* wk, const s32 mode, const s32 timer )
 /**
  *	@brief  タイマ処理
  *
- *	@param	BADGEVIEW_WORK* wk
+ *	@param	BADGEVIEW_WORK* wk	ワーク
  *	@param	const s32 mode		タイマの種類
  *
  *	@retval s32					時間
@@ -3676,11 +3660,11 @@ static s32 bv_chk_timer( BADGEVIEW_WORK* wk, const s32 mode )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  リーダー関連の処理
+ *	@brief  リーダー関連の処理(下画面をタッチ、タイマ処理)
  *
- *	@param	BADGEVIEW_WORK* wk
+ *	@param	BADGEVIEW_WORK* wk	ワーク
  *
- *	@retval s32					時間
+ *	@retval
  */
 //-----------------------------------------------------------------------------
 static void bv_chk_leader( BADGEVIEW_WORK* wk )
@@ -3735,8 +3719,8 @@ static void bv_chk_leader( BADGEVIEW_WORK* wk )
 /**
  *	@brief  バッジの音(音階)
  *
- *	@param	BADGEVIEW_WORK* wk
- *	@param	const s32		(0-7)
+ *	@param	BADGEVIEW_WORK* wk	ワーク
+ *	@param	const s32			ドレミ(0-7)
  *
  *	@retval
  */
@@ -3750,8 +3734,8 @@ static void bv_snd_badge( BADGEVIEW_WORK* wk, const s32 num )
 /**
  *	@brief  パレット変更(グレー=>色つき)
  *
- *	@param	BADGEVIEW_WORK* wk
- *	@param	const s32		(0-7)
+ *	@param	BADGEVIEW_WORK* wk	ワーク
+ *	@param	const s32			キャラの番号(0-7)
  *
  *	@retval
  */
@@ -3772,9 +3756,9 @@ static void bv_chg_facepal( BADGEVIEW_WORK* wk, const s32 num )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  顔グラフィック判定
+ *	@brief  顔グラフィック色変え判定
  *
- *	@param	BADGEVIEW_WORK* wk
+ *	@param	BADGEVIEW_WORK* wk	ワーク
  *
  *	@retval
  */
@@ -3795,8 +3779,8 @@ static void bv_chk_facepal( BADGEVIEW_WORK* wk )
 /**
  *	@brief  上画面カットインキャラ表示
  *
- *	@param	BADGEVIEW_WORK* wk
- *	@param	const s32		番号(field/enc_cutin_no.h)
+ *	@param	BADGEVIEW_WORK* wk	ワーク
+ *	@param	const s32			キャラ番号(field/enc_cutin_no.h)
  *
  *	@retval
  */
@@ -3851,8 +3835,8 @@ static void bv_init_cutin( BADGEVIEW_WORK* wk, const s32 cnum )
 /**
  *	@brief  上画面カットインまとめ
  *
- *	@param	BADGEVIEW_WORK* wk
- *	@param	const s32		番号(0-7)
+ *	@param	BADGEVIEW_WORK* wk	ワーク
+ *	@param	const s32			番号(0-7)
  *
  *	@retval
  */
@@ -3869,8 +3853,8 @@ static void bv_chg_cutin( BADGEVIEW_WORK* wk, const s32 num )
 /**
  * @brief	上画面カットイン表示/非表示
  *
- * @param	BADGEVIEW_WORK*	wk
- * @param	const BOOL		(TRUE:表示、FALSE:非表示)
+ * @param	BADGEVIEW_WORK*	wk	ワーク
+ * @param	const BOOL			(TRUE:表示、FALSE:非表示)
  *
  * @retval
  */
@@ -3888,7 +3872,7 @@ static void bv_set_cutin_visible( BADGEVIEW_WORK *wk, const BOOL bflg )
 /**
  * @brief	スクリーン情報の作成(一度作ればよいはず)
  *
- * @param	BADGEVIEW_WORK*	wk
+ * @param	BADGEVIEW_WORK*	wk	ワーク
  *
  * @retval
  */
@@ -3926,7 +3910,7 @@ static void bv_make_cutin_scr( BADGEVIEW_WORK *wk )
 /**
  * @brief	モデル表示(回転)(要確認)
  *
- * @param	BADGEVIEW_WORK*	wk
+ * @param	BADGEVIEW_WORK*	wk	ワーク
  *
  * @retval
  */
@@ -3954,8 +3938,8 @@ static void bv_rot_model( BADGEVIEW_WORK *wk )
 /**
  * @brief	モデル表示/非表示
  *
- * @param	BADGEVIEW_WORK*	wk
- * @param	const BOOL		(TRUE:表示、FALSE:非表示)
+ * @param	BADGEVIEW_WORK*	wk	ワーク
+ * @param	const BOOL			(TRUE:表示、FALSE:非表示)
  *
  * @retval
  */
@@ -3974,7 +3958,7 @@ static void bv_set_model_visible( BADGEVIEW_WORK *wk, const BOOL bflg )
 /**
  * @brief	パレットチェンジ初期化
  *
- * @param	BADGEVIEW_WORK*	wk
+ * @param	BADGEVIEW_WORK*	wk	ワーク
  *
  * @retval
  */
@@ -3991,7 +3975,7 @@ static void bv_init_chgpal( BADGEVIEW_WORK *wk )
 /**
  * @brief	パレットチェンジ(毎フレーム:zukan_detail_touchbar.c参考)
  *
- * @param	BADGEVIEW_WORK*	wk
+ * @param	BADGEVIEW_WORK*	wk	ワーク
  *
  * @retval
  */
@@ -4039,8 +4023,8 @@ static void bv_main_chgpal( BADGEVIEW_WORK *wk )
 /**
  * @brief	パレットチェンジ
  *
- * @param	BADGEVIEW_WORK*	wk
- * @param	const BOOL		(TRUE:開始、FALSE:終了)
+ * @param	BADGEVIEW_WORK*	wk	ワーク
+ * @param	const BOOL			(TRUE:開始、FALSE:終了)
  *
  * @retval
  */
@@ -4056,11 +4040,11 @@ static void bv_set_chgpal( BADGEVIEW_WORK *wk, const BOOL bflg )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  OBJ初期化(トレーナーデータ)
+ *	@brief  OBJ初期化(カットインデータ)
  *
- *	@param	BADGEVIEW_WORK* 	wk
- *	@param	const s32			drawtype
- *	@param	const s32			id
+ *	@param	BADGEVIEW_WORK* wk	ワーク
+ *	@param	const s32 drawtype	表示タイプ
+ *	@param	const s32 id		トレーナーid
  *
  *	@retval
  */
@@ -4078,9 +4062,9 @@ static void bv_init_obj_res_up( BADGEVIEW_WORK *wk, const s32 drawtype, const s3
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  OBJ破棄
+ *	@brief  OBJ破棄(カットインデータ)
  *
- *	@param	BADGEVIEW_WORK* 	wk
+ *	@param	BADGEVIEW_WORK* wk	ワーク
  *
  *	@retval
  */
@@ -4096,7 +4080,8 @@ static void bv_exit_obj_res_up( BADGEVIEW_WORK *wk )
 /**
  *	@brief  トレーナーID切り替え(使うタイミング注意)
  *
- *	@param	BADGEVIEW_WORK* 	wk
+ *	@param	BADGEVIEW_WORK* wk	ワーク
+ *	@param	const s32	id		トレーナーid
  *
  *	@retval
  */
@@ -4118,11 +4103,11 @@ static void bv_chg_obj_cutin( BADGEVIEW_WORK *wk, const s32 id )
 
 //--------------------------------------------------------------------------------------------
 /**
- * セルタクター座標セット(カットイン用決めうち)
+ * obj座標セット(カットイン用決めうち)
  *
- * @param work    
- * @param id    セルアクターインデックス
- * @param x     位置X
+ * @param BADGEVIEW_WORK* wk	ワーク
+ * @param const s32 id			objの番号
+ * @param const s32	px			x座標
  *
  * @return
  */
