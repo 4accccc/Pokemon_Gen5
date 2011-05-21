@@ -173,12 +173,14 @@ static BATTLE_SETUP_PARAM * createPokewoodRecBattleParam(
 
   int i;
 
+  BattleRec_Init( heapID );
   {
     BTL_FIELD_SITUATION sit;
     BTL_FIELD_SITUATION_Init( &sit );
-    BTL_SETUP_Single_Trainer( bsp, gamedata, &sit, tr_id, heapID );
+    BTL_SETUP_Single_Trainer( bsp, gamedata, &sit, TRID_NULL, heapID );
+    BTL_SETUP_AllocRecBuffer( bsp, heapID );
   }
-  //TT_EncountTrainerPersonalDataMake( tr_id, bsp->tr_data[BTL_CLIENT_ENEMY1], heapID );
+  TT_EncountTrainerPersonalDataMake( tr_id, bsp->tr_data[BTL_CLIENT_ENEMY1], heapID );
   setupPokemon( mystatus, bsp->party[BTL_CLIENT_ENEMY1], heapID, enemyData, NELEMS(enemyData) );
 
   //プレイヤーセット
@@ -300,9 +302,12 @@ static GMEVENT_RESULT pokewoodSaveEvent( GMEVENT * event, int * seq, void * work
     /**
      *  BATTLE_SETUP_PARAM の録画データセーブ開始
      */
+    BattleRec_LoadToolModule(); //gimmickのオーバーレイと干渉するので注意
     BattleRec_StoreSetupParam( psew->bsp );
     psew->saveSeq0 = 0;
     psew->saveSeq1 = 0;
+    OS_Printf("ポケウッドセーブ開始\n");
+    (*seq) ++;
     break;
 
   case 1:
@@ -336,6 +341,7 @@ static GMEVENT_RESULT pokewoodSaveEvent( GMEVENT * event, int * seq, void * work
     break;
 
   case 2:
+    BattleRec_UnloadToolModule();
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;
@@ -398,11 +404,17 @@ static GMEVENT_RESULT pokewoodBattleEvent( GMEVENT * event, int *seq, void * wor
     break;
     
   case 4:
-    deletePokewoodBSP( pbew->bp );
+    if ( prew->PokewoodMode == BTL_POKEWOOD_REC )
+    { //とりあえず無理やりセーブしてみる
+      u8 bufID = 0; //仮
+      GMEVENT * new_event = createPokewoodSaveEvent( gsys, bufID, pbew->bp, GFL_HEAPID_APP );
+      GMEVENT_CallEvent( event, new_event );
+    }
     (*seq)++;
     break;
 
   case 5:
+    deletePokewoodBSP( pbew->bp );
     //侵入システムにフィールド中であることを伝える
     (*seq) ++;
     break;
