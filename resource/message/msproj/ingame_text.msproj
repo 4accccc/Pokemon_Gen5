@@ -4277,6 +4277,8 @@
 			<Forbidden
 				Permission="9a80c1cd-1dcc-42d3-8d38-ce37dc8f7391" />
 			<Forbidden
+				Permission="9be2a40c-7848-412f-9e34-2975d3f4703f" />
+			<Forbidden
 				Permission="b5a13cbe-dea5-4d1b-ad9d-ef3239b915bc" />
 			<Forbidden
 				Permission="cba00abd-ac99-498a-b8fe-6d88b1071fd9" />
