@@ -1446,8 +1446,6 @@ d_comm_menu.gmm	DEB_COMM_NO		JPNテキスト採用
 d_comm_menu.gmm	DEB_COMM_MENU_END		JPNテキスト採用
 d_comm_menu.gmm	DEB_COMM_EMPTYNAME		JPNテキスト採用
 d_comm_menu.gmm	DEB_COMM_START		JPNテキスト採用
-d_field.gmm	DEBUG_FIELD_RESORT_17		JPNテキスト採用
-d_field.gmm	DEBUG_FIELD_RESORT_17		JPNテキスト採用
 d_matsu.gmm	DM_MSG_MATCH003		JPNテキスト採用
 d_matsu.gmm	DM_MSG_MATCH004		JPNテキスト採用
 d_matsu.gmm	DM_MSG_MATCH005		JPNテキスト採用

@@ -185,11 +185,13 @@ static const DEBUG_MENU_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_DEMO3D,   debugMenuCallProc_Demo3d, FS_OVERLAY_ID(debugmenu_app) },             //３Dデモ
   { DEBUG_FIELD_WBT,      debugMenuCallProc_WBT, FS_OVERLAY_ID(debugmenu_app) },      //WBT
   { DEBUG_FIELD_MOBICLIP, debugMenuCallProc_Mobiclip, FS_OVERLAY_ID(debugmenu_app) }, //Mobiclip
-  { DEBUG_FIELD_POKEWOOD_TITLE, (void*)BMPMENULIST_LABEL, GFL_OVERLAY_BLANK_ID }, //○ポケウッド
-  { DEBUG_FIELD_POKEWOOD_REC, debugMenuCallProc_PokewoodRec, FS_OVERLAY_ID(debugmenu_app) },
-  { DEBUG_FIELD_POKEWOOD_SHOW01, debugMenuCallProc_PokewoodShow1, FS_OVERLAY_ID(debugmenu_app) },
-  { DEBUG_FIELD_POKEWOOD_SHOW02, debugMenuCallProc_PokewoodShow2, FS_OVERLAY_ID(debugmenu_app) },
-  { DEBUG_FIELD_POKEWOOD_SHOW03, debugMenuCallProc_PokewoodShow3, FS_OVERLAY_ID(debugmenu_app) },
+  { DEBUG_FIELD_POKEWOOD_TITLE, debugMenuCallProc_Pokewood, FS_OVERLAY_ID(debugmenu_app) }, //ポケウッド
+  //{ DEBUG_FIELD_POKEWOOD_TITLE, (void*)BMPMENULIST_LABEL, GFL_OVERLAY_BLANK_ID }, //○ポケウッド
+  //{ DEBUG_FIELD_POKEWOOD_REC_01, debugMenuCallProc_PokewoodRec1, FS_OVERLAY_ID(debugmenu_app) },
+  //{ DEBUG_FIELD_POKEWOOD_REC_02, debugMenuCallProc_PokewoodRec2, FS_OVERLAY_ID(debugmenu_app) },
+  //{ DEBUG_FIELD_POKEWOOD_SHOW_01, debugMenuCallProc_PokewoodShow1, FS_OVERLAY_ID(debugmenu_app) },
+  //{ DEBUG_FIELD_POKEWOOD_SHOW_02, debugMenuCallProc_PokewoodShow2, FS_OVERLAY_ID(debugmenu_app) },
+  //{ DEBUG_FIELD_POKEWOOD_SHOW_03, debugMenuCallProc_PokewoodShow3, FS_OVERLAY_ID(debugmenu_app) },
   //{ DEBUG_FIELD_POKEWOOD_SHOW_ROM, debugMenuCallProc_PokewoodShowRom, FS_OVERLAY_ID(debugmenu_app) },
 
   //event_debug_menu_ov_staff.c

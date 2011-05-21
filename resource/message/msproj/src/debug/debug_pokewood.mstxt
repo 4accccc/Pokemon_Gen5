@@ -1,0 +1,232 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<MessageStudioText
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="DEBUG_STRID_POKEWOOD_REC_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケウッド：さつえい１</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-21T04:52:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-21T04:52:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケウッド：さつえい１</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-21T04:52:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:06" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>240</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:06" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="DEBUG_STRID_POKEWOOD_REC_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケウッド：さつえい２</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-21T05:16:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-21T05:16:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケウッド：さつえい２</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-21T05:16:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-21T05:16:15" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>240</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-21T05:16:15" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="DEBUG_STRID_POKEWOOD_SHOW_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケウッド：再生１</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-21T05:16:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-21T05:16:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケウッド：再生１</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-21T05:16:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-21T05:16:24" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>240</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-21T05:16:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="DEBUG_STRID_POKEWOOD_SHOW_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケウッド：再生２</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-21T05:17:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-21T05:17:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケウッド：再生２</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-21T05:17:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-21T05:17:08" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>240</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-21T05:17:08" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="DEBUG_STRID_POKEWOOD_SHOW_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケウッド：再生３</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-21T05:17:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-21T05:17:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケウッド：再生３</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-21T05:17:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-21T05:17:16" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>240</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-21T05:17:16" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="DEBUG_STRID_POKEWOOD_SHOW_ROM">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケウッド：再生ロム</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-21T05:17:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-21T05:17:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケウッド：再生ロム</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-21T05:17:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-21T05:17:29" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>240</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-21T05:17:29" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+</MessageStudioText>
