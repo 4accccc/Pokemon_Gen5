@@ -195,7 +195,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="DEBUG_STRID_POKEWOOD_SHOW_ROM"
+		Label="DEBUG_STRID_POKEWOOD_SHOW_ROM_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -233,5 +233,38 @@
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="DEBUG_STRID_POKEWOOD_SHOW_ROM_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケウッド：再生ロム</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-21T07:56:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-21T07:56:30" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケウッド：再生ロム</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-21T07:56:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-21T07:56:30" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>240</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-21T07:56:32" />
+		</AttributeCell>
 	</TextRow>
 </MessageStudioText>
