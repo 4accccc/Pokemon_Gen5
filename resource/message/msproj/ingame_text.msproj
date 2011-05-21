@@ -1975,7 +1975,7 @@
 		<FontSetting
 			FontName="Large"
 			Loader="d49e3633-eff9-4e78-99cf-1aab102691b1">
-			<FontPath>$(ProjectDir)../../../font/lalge.nftr</FontPath>
+			<FontPath>$(ProjectDir)../../../font/large.nftr</FontPath>
 		</FontSetting>
 	</Fonts>
 	<Styles>
