@@ -35,7 +35,8 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="DEBUG_STRID_POKEWOOD_REC_02">
+		Label="DEBUG_STRID_POKEWOOD_REC_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケウッド：さつえい２</Text>
@@ -74,7 +75,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="DEBUG_STRID_POKEWOOD_SHOW_01">
+		Label="DEBUG_STRID_POKEWOOD_SHOW_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケウッド：再生１</Text>
@@ -113,7 +115,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="DEBUG_STRID_POKEWOOD_SHOW_02">
+		Label="DEBUG_STRID_POKEWOOD_SHOW_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケウッド：再生２</Text>
@@ -152,7 +155,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="DEBUG_STRID_POKEWOOD_SHOW_03">
+		Label="DEBUG_STRID_POKEWOOD_SHOW_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケウッド：再生３</Text>
@@ -191,7 +195,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="DEBUG_STRID_POKEWOOD_SHOW_ROM">
+		Label="DEBUG_STRID_POKEWOOD_SHOW_ROM"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケウッド：再生ロム</Text>

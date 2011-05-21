@@ -77,6 +77,8 @@
 				<ContentItem
 					Name="debug_medalinfo.mstxt" />
 				<ContentItem
+					Name="debug_pokewood.mstxt" />
+				<ContentItem
 					Name="debug_resort.mstxt" />
 				<ContentItem
 					Name="debug_resort2.mstxt" />
