@@ -930,10 +930,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わたしは　あいの　めがみ……</Text>
+			<Text>プラズマだん　とは
+ゲーチスなる　おとこが　つくりあげた▽
+そしき　なのです▼
+ゲーチスは　イッシュちほうの
+せいふくを　もくろんでいました▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:02:15" />
+				Time="2011-05-22T06:40:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -952,10 +956,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀</Comment>
+			<Comment>♀
+・愛の女神</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:02:41" />
+				Time="2011-05-22T06:40:28" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -985,10 +990,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わたしは　へいわの　めがみ……</Text>
+			<Text>Ｎは　孤児でした
+なんでも　生まれた　ときから
+まわりの　ことばが
+・能力発揮
+・忌み子～
+もりのなかで　ポケモン……
+ヒヒダルマや　ゾロアと　くらして～
+ゲーチスという　おとこに～</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:02:27" />
+				Time="2011-05-22T06:40:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1008,11 +1020,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・WHITEver
-　N＝レシラム＝真実</Comment>
+・平和の女神</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:02:38" />
+				Time="2011-05-22T06:40:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1042,10 +1053,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>？？？？？</Text>
+			<Text>Ｎさまが　おもどりに　なるのを
+ただ　まっているのです
+Ｎさまは　ポケモンと　はなせる～</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:09:06" />
+				Time="2011-05-22T06:39:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1089,10 +1102,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>？？？？？</Text>
+			<Text>元の　持ち主が　見つからない
+ポケモンを　世話してるんだ
+せめてもの～</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:09:06" />
+				Time="2011-05-22T06:39:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1136,10 +1151,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>？？？？？</Text>
+			<Text>こんな格好ですが
+元プラズマ団として
+・やり方は間違っていたが
+・（肯定と否定）</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:09:06" />
+				Time="2011-05-22T06:40:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
