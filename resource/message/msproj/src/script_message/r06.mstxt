@@ -2,23 +2,175 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
+		Label="msg_r06_swleader1_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>チェレン『あっ　[Name:TrainerName ]
+ちょっと　つきあってくれるかな</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:32:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:32:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>チェレン『あっ　[Name:TrainerName ]
+ちょっと　つきあってくれるかな</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:35:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:35:43" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・posでイベント起動
+・0＝主人公名前</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:35:57" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:26:22" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:26:38" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r06_poke4_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>こふおおおおーっ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:26:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:26:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>こふおおおおーっ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:26:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:26:33" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・d05のアジトイベント後に、pos起動
+・画面右から登場し
+　主人公と数歩離れ向き合って
+　メッセージ表示
+・あわせて鳴き声再生
+・その後、？？？に移動
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:28:10" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>コバルオン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:26:29" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:26:38" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r06_sage6_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ロット『いまの　ポケモンは……！？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:31:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:31:07" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ロット『いまの　ポケモンは……！？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:31:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:31:07" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:31:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>七賢人ロット</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:28:35" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:32:36" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8000ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_r06_oldman1_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>この　６ばんどうろに　ある
-フキヨセのほらあな……▼
-その　おくには
-おおむかし　イッシュの　ポケモンを▽
-ひのうみから　まもったといわれる▼
-すごい　ポケモン……
-コバルオンが　いると　いう▼
-みずのうえを　すすめるという
-なみのりの　わざが　つかえるなら▽
-その　コバルオンにも　あえるかもな</Text>
+			<Text>ろうじん『でんせつの　ポケモン
+コバルオン　じゃな！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:31:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -26,19 +178,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この　６番道路に　ある
-フキヨセの洞穴……▼
-その奥には
-大昔　イッシュの　ポケモンを▽
-火の海から　守ったといわれる▼
-すごい　ポケモン……
-コバルオンが　いると　いう▼
-水上を　進めるという
-なみのりの　技が　使えるなら▽
-その　コバルオンにも　会えるかもな</Text>
+			<Text>老人『伝説の　ポケモン
+コバルオン　じゃな！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:31:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -47,13 +191,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・コバルオンとエンカウント前
-・r06r0201の近くに配置
-
-※SWANでは場所、メッセージ変更予定</Comment>
+・
+※swanでメッセージ変更</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:28:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -78,15 +220,75 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_r06_sage6_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ロット『おお！　あの　けだかい
+ふんいきの　ポケモンが　コバルオン！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:31:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:31:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ロット『おお！　あの　気高い
+雰囲気の　ポケモンが　コバルオン！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:31:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:31:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:31:54" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>七賢人ロット</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:28:55" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:29:49" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8000ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_r06_oldman1_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>コバルオンには　なかまとも　いうべき
-ポケモンが　いるとも　きいたが……</Text>
+			<Text>ろうじん『コバルオン　ビリジオン
+そして　テラキオンの　３びきは▼
+ひとが　はじめた　いくさから
+なかまを　まもるため　ひとびとに▽
+たたかいを　いどんだ　という……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:31:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -94,11 +296,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>コバルオンには　仲間ともいうべき
-ポケモンが　いるとも　きいたが……</Text>
+			<Text>老人『コバルオン　ビリジオン
+そして　テラキオンの　３びきは▼
+人が　はじめた　戦から
+仲間を　守るため　人々に▽
+戦いを　挑んだ　という……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:31:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -107,10 +312,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・コバルオンとエンカウント後</Comment>
+・続けて</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:31:53" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -125,6 +330,378 @@
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r06_oldman1_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ひとが　たたかいを　やめなければ
+ポケモンたちの　へいわも　ない▼
+ひとの　おこないに　よって
+おおくの　いのちが　うしなわれると▽
+かれらは　わかっていたのじゃな……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:31:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:31:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>人が　争いを　やめなければ
+ポケモンたちの　平和も　ない▼
+人の　行いに　よって
+多くの　命が　失われると▽
+彼らは　わかっていたのじゃな……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:31:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:31:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:31:57" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLDMAN1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:29:24" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:29:49" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r06_oldman1_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>……しかし　なぜ
+ひとの　まえに　すがたを？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:31:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:31:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……しかし　なぜ
+人の　前に　姿を？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:31:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:31:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:31:57" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLDMAN1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:29:24" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:29:49" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r06_oldman1_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>２ねんまえ　プラズマだんが　おこした
+さわぎに　きけんを　かんじて▼
+ああして　イッシュちほうを
+パトロール　しているのか？▼
+あるいは　あらたな　そうどうの
+よかんを　さっち　したのか……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:31:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:31:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>２年前　プラズマ団の　野望に
+危険を　感じて▼
+ああして　イッシュ地方を
+巡回しているのか？▼
+あるいは　新たな　騒動の
+予兆を　察知したのか……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:31:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:31:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:31:57" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLDMAN1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:29:24" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:29:49" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r06_sage6_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ロット『ぐぬぬ……▼
+ゲーチスさまの　やぼう　あくいは
+いまも　ひろがりつづけ……▽
+ほかの　だれかを　ゆがめていくのだな▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:35:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:31:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ロット『ぐぬぬ……▼
+ゲーチスさまの　やぼう　あくいは
+いまも　ひろがりつづけ……▽
+ほかの　だれかを　ゆがめていくのだな▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:35:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:31:21" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:31:57" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>七賢人ロット</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:29:39" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:29:49" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8000ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r06_sage6_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>コバルオンが　おまえの　まえに
+すがたを　みせたのは　たまたまか▼
+それとも　さわぎを　おさめてほしいと
+うったえる　ため　なのか……？▼
+もっとも　わたしには　ポケモンの
+きもちは　はかりかねるがな▼
+だた　おまえが　コバルオンを
+なかまに　できたなら　これからの▽
+おおきな　ちからと　なるだろう▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:31:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:31:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>コバルオンが　おまえの　まえに
+すがたを　みせたのは　たまたまか▼
+それとも　さわぎを　おさめてほしいと
+うったえる　ため　なのか……？▼
+もっとも　わたしには　ポケモンの
+きもちは　はかりかねるがな▼
+だた　おまえが　コバルオンを
+なかまに　できたなら　これからの▽
+おおきな　ちからと　なるだろう▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:35:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:31:21" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:31:57" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>七賢人ロット</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:29:45" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:29:49" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8000ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r06_oldman1_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>三銃士の話</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:31:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:31:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>三銃士の話</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:31:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:31:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・座標指定</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:32:06" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLDMAN1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:29:35" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:29:49" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -400,10 +977,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>未使用</Comment>
+			<Comment>※swanで削除予定</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:25:43" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
