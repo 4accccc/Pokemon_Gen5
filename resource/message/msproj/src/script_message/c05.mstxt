@@ -1155,10 +1155,10 @@ HAKAIM</Text>
 ・メッセージ表示後
 　ロット、ポケモンハウスに入る
 ・画面暗転して
-　ポケモンハウス内へ</Comment>
+　ポケモンハウス（＝c05r0501）内へ</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T03:38:23" />
+				Time="2011-05-22T04:16:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1178,6 +1178,515 @@ HAKAIM</Text>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#8080c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05_swrival_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『ちょうせん　かよ？
+ヤーコンさん　てごわいぜ▼
+じめんタイプに　たいして
+みずタイプの　わざが　あるだけなら▽
+ちょいと　くろう　するかもな</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T04:17:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T04:17:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『挑戦かよ？
+ヤーコンさん　手強いぜ▼
+じめんタイプに　対して
+みずタイプの　技が　あるだけなら▽
+ちょいと　苦労するかもな</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T04:17:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T04:17:36" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・c05r0501でのイベント後、ジム付近に出現
+・ジムバッジ取得前（会話は任意）
+・1＝ライバル名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T04:16:39" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T04:15:16" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T04:17:21" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05_swrival_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『オマエも
+ジムバッジ　にゅうしゅ　したか▼
+あのさ……
+しょうぶして　おもったことが　あるんだ▼
+うばわれた　オレの　ポケモンが
+どうなっているか　しんぱい　だけど▼
+いま　ともに　たびしている
+ポケモンたちも　だいじ　なんだよな▼
+こいつらと　いっしょなら　いつか　きっと
+うばわれた　ポケモンとも　あえるよな▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T04:25:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T04:19:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『オマエも
+ジムバッジ　入手したか▼
+あのさ……
+勝負して　思ったことが　あるんだ▼
+奪われた　オレの　ポケモンが
+どうなっているか　心配だけど▼
+いま　ともに　旅している
+ポケモンたちも　大事なんだよな▼
+こいつらと　一緒なら　いつか　きっと
+奪われた　ポケモンとも　会えるよな▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T04:24:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T04:20:30" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ジムバッジ取得後
+・続けてswleader5_01
+・1＝ライバル名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T04:22:04" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T04:15:16" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T04:17:21" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05_swleader5_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヤーコン「おう！　まだいたか▼
+なかなかの　たたかい　だったからな
+いいところへ　つれて　いってやるぞ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T04:23:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T04:23:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヤーコン「おう！　まだいたか▼
+なかなかの　戦い　だったからな
+いいところへ　連れて　いってやるぞ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T04:24:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T04:23:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けてswrival_06</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T04:27:50" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ヤーコン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T04:20:51" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T04:21:05" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05_swrival_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『あのさ　なんで
+プラズマだんを　ゆるしてるんだ？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T04:22:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T04:22:30" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『あのさ　なんで
+プラズマ団を　赦してるんだ？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T04:23:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T04:22:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けてswleader5_02
+・1＝ライバル名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T04:27:47" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T04:22:15" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T04:27:32" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05_swleader5_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヤーコン『なんにだって
+うけざらは　ひつようさ▼
+それに　ただしさ　ばかりを　もとめると
+じぶんたち　いがいの　すべての▽
+いけん　かんがえを　ひていしかねない▽
+それが　どんなに　あぶないことか▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T04:38:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T04:27:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヤーコン『なんにだって
+受け皿は　必要さ▼
+それに　正しさ　ばかりを　求めると
+自分たち　以外の　すべての▽
+意見　考えを　否定しかねない▽
+それが　どんなに　危ないことか▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T04:37:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T04:35:11" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けてswrival_07</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T04:31:18" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ヤーコン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T04:25:35" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T04:27:32" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05_swrival_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『フウン
+それが　おとなの　はんだん　てやつ？▼
+まあ　いいさ！　オレは　オレで
+プラズマだんと　むきあうからさ▼
+で　オッサンが　いってた
+いい　ところ　って　なんだよ？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T04:33:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T04:32:34" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『フウン
+それが　大人の　判断て　やつ？▼
+まあ　いいさ！　オレは　オレで
+プラズマ団と　向き合うからさ▼
+で　オッサンが　いってた
+いい　ところ　って　なんだよ？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T04:37:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T04:35:11" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けてswleader5_03
+・1＝ライバル名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T04:33:35" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T04:28:43" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T04:28:09" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05_swleader5_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヤーコン『きいたことが　ないか？
+ワールドバトルトーナメント▼
+かくちの　トレーナーを　あつめ
+つよいのは　だれか　きめるのさ！▼
+まちの　みなみに　あるからな
+では　まってるぞ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T04:34:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T04:34:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヤーコン『きいたことが　ないか？
+ワールドバトルトーナメント▼
+各地の　トレーナーを　集め
+強いのは　だれか　決めるのさ！▼
+街の　南に　あるからな
+では　待ってるぞ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T04:37:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T04:35:11" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・表示後、ＷＢＴのほうへ移動
+・続けてswrival_08</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T04:35:39" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ヤーコン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T04:30:37" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T04:30:43" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05_swrival_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『つよい　ヤツを　きめる
+トーナメントか！　おもしろそうだな！！▽
+いっちょ　うでだめしに　いくか！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T04:35:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T04:34:42" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『強い　ヤツを　決める
+トーナメントか！　おもしろそうだな！！▽
+いっちょ　腕試しに　行くか！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T04:36:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T04:35:11" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・表示後、ＷＢＴのほうへ移動
+　画面外に消えると主人公操作可能に
+・c05r0701のストッパー解除
+・1＝ライバル名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T04:36:06" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T04:30:56" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T04:31:02" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
