@@ -141,10 +141,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>七賢人ロット</Text>
+			<Text>元プラズマ団
+七賢人ロット</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:28:35" />
+				Time="2011-05-22T06:13:50" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -155,7 +156,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#8000ff</CellData>
+			<CellData>#8080c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -256,10 +257,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>七賢人ロット</Text>
+			<Text>元プラズマ団
+七賢人ロット</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:28:55" />
+				Time="2011-05-22T06:13:51" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -270,7 +272,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#8000ff</CellData>
+			<CellData>#8080c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -565,10 +567,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>七賢人ロット</Text>
+			<Text>元プラズマ団
+七賢人ロット</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:29:39" />
+				Time="2011-05-22T06:13:52" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -579,7 +582,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#8000ff</CellData>
+			<CellData>#8080c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -636,10 +639,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>七賢人ロット</Text>
+			<Text>元プラズマ団
+七賢人ロット</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:29:45" />
+				Time="2011-05-22T06:13:53" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -650,7 +654,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#8000ff</CellData>
+			<CellData>#8080c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
