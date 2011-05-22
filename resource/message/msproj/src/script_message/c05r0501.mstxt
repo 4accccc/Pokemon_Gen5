@@ -2,16 +2,938 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
+		Label="msg_c05r0501_sage6_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あらためて　なのりましょう
+わたしの　なまえは　ロット　です▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:21:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:12:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あらためて　名乗りましょう
+わたしの　名前は　ロット　です▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:21:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:12:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:10:30" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>元プラズマ団
+七賢人ロット</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:13:38" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:10:32" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05r0501_swrival_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『なあ　オマエも
+プラズマだん　だよな？▼
+さっきの　プラズマだんと
+なにが　ちがうか　おしえろよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:21:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:13:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『なあ　オマエも
+プラズマだん　だよな？▼
+さっきの　プラズマだんと
+なにが　ちがうか　おしえろよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:24:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:14:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて
+・1＝ライバル名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:17:04" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:13:25" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:12:49" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05r0501_sage6_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ロット『ただしく　いうなら
+もとプラズマだん　だ▼
+２ねんまえの　けんを　きっかけに
+つみほろぼし　として　もちぬしと▽
+はぐれた　ポケモンの　せわをしている▼
+で　おまえは？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:22:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:15:03" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ロット『ただしく　いうなら
+もとプラズマだん　だ▼
+２ねんまえの　けんを　きっかけに
+つみほろぼし　として　もちぬしと▽
+はぐれた　ポケモンの　せわをしている▼
+で　おまえは？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:24:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:15:53" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:16:56" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>元プラズマ団
+七賢人ロット</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:15:05" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:12:49" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05r0501_swrival_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>オレは　ヒュウ！▼
+すうねんまえ　オマエら　プラズマだんに
+だいじな　ポケモンを　うばわれた▽
+なさけない　トレーナー　だよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:15:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:15:28" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>オレは　ヒュウ！▼
+すうねんまえ　オマエら　プラズマだんに
+だいじな　ポケモンを　うばわれた▽
+なさけない　トレーナー　だよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:15:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:15:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ギザウインで
+・続けて
+・1＝ライバル名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:17:22" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:15:24" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:12:49" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05r0501_sage6_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ロット『そうであったか……
+それは　ほんとうに　すまないことをした</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:25:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:25:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>？？？？？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:29:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:29:04" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:16:56" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>元プラズマ団
+七賢人ロット</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:17:35" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:12:49" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05r0501_swrival_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『あやまって　おわりかよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:25:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:24:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>？？？？？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:29:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:29:04" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて
+・1＝ライバル名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:25:44" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:17:38" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:12:49" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05r0501_swrival_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>コイツらは
+プラズマだんに　うばわれた▽
+ポケモンたち　なんだな！？▼
+で　オレの　ポケモンは！？▼
+ポケモン名＋特徴▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:25:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:20:00" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>で　オレの　ポケモンは！？▼
+ポケモン名＋特徴▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:20:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:20:20" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:16:56" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:17:39" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:12:49" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05r0501_sage6_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ロット『おまえの　ポケモンは　いない
+おそらくだが　いまも
+プラズマだんに　つかわれているだろう
+・補足するか？
+そして　そなたの　いうとおり
+あやまっても　なにも　かいけつしない
+だが　あやまらねば
+さきに　すすめないのだ……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:26:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:26:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>？？？？？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:29:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:29:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:16:56" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>元プラズマ団
+七賢人ロット</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:17:48" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:12:49" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05r0501_swrival_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『もう　いいって！▼
+あやまられても　オレの　ポケモン
+ここに　いないんだろ！▼
+[Name:TrainerName ]！
+オレは　ポケモンジムに　いくよ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:27:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:26:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>？？？？？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:29:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:29:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて
+・0＝主人公名
+・1＝ライバル名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:27:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:17:54" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:12:49" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05r0501_sage6_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ロット『われわれ　プラズマだんは
+かれのような～
+なんと　おろかで　あったか……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:27:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:27:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>？？？？？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:29:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:29:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ライバルを見送り</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:18:17" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>元プラズマ団
+七賢人ロット</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:18:04" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:12:49" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05r0501_sage6_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>主人公名前
+本来であれば　礼をせねば＝
+代わりに　頼みを聞いてくれぬか
+この　ポケモンの　面倒を見てほしい</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:28:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:27:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>？？？？？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:29:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:29:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・はい/いいえの選択し
+・はい→sage6_00
+・はい選択だが手持ち一杯→sage6_00
+・いいえ→sage6_00</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:19:24" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>元プラズマ団
+七賢人ロット</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:18:04" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:12:49" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05r0501_sage6_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ロット『</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:28:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:28:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>？？？？？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:29:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:29:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ゾロア入手前に再度会話
+・はい/いいえの選択し
+・はい→sage6_00
+　はい選択だが手持ち一杯→sage6_00
+　いいえ→sage6_00</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:19:39" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>元プラズマ団
+七賢人ロット</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:18:05" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:12:49" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05r0501_sage6_09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ロット『</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:28:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:28:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>？？？？？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:29:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:29:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・はい選択
+・ポケモン追加処理
+※ニックネーム変更処理は、なし</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:18:17" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>元プラズマ団
+七賢人ロット</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:18:11" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:12:49" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05r0501_sage6_10"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ロット『</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:28:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:28:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>？？？？？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:29:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:29:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・はい選択だが手持ち一杯</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:18:17" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>元プラズマ団
+七賢人ロット</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:18:11" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:12:49" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05r0501_sage6_11"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ロット『</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:28:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:28:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>？？？？？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:29:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:29:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・いいえ選択</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:18:17" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>元プラズマ団
+七賢人ロット</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:18:11" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:12:49" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05r0501_sage6_12">
+		<LanguageCell
+			Language="JPN">
+			<Text>その　ゾロアは～（説明）
+
+Ｎさまは～（説明）</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:28:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:28:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>？？？？？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:28:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:28:56" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>元プラズマ団
+七賢人ロット</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:28:26" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c05r0501_goddess1_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わたしは　あいの　めがみ……▼
-Ｎと　ことを　かまえる　トレーナーよ
-さあ　やすみなさい……</Text>
+			<Text>わたしは　あいの　めがみ……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:02:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19,12 +941,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わたしは　愛の女神……▼
-Ｎと　事を構える　トレーナーよ
-さあ　やすみなさい……</Text>
+			<Text>わたしは　愛の女神……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:02:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -32,11 +952,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-仮メッセージ</Comment>
+			<Comment>♀</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:02:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -66,26 +985,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わたしは　へいわの　めがみ……▼
-Ｎに　へいおんを　あたえるもの……▼
-……Ｎは　おさなきころより
-ひとと　はなされ▽
-ポケモンと　ともに　そだちました▼
-わるい　ひとに　うらぎられ
-しいたげられ　きずついた　ポケモン▼
-ゲーチスは　あえて
-そうした　ポケモンばかり▽
-Ｎに　ちかづけていたのです▼
-Ｎは　その　きずを　わかちあい
-ポケモンの　ことだけを　かんがえ▽
-しんじつを　もとめるように　なりました▼
-あまりにも　ピュアで
-イノセントな　Ｎの　こころ……▼
-イノセントほど
-うつくしく　こわいものは　ないのに</Text>
+			<Text>わたしは　へいわの　めがみ……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:02:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -93,26 +996,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わたしは　平和の　女神……▼
-Ｎに　平穏を　与えるもの……▼
-……Ｎは　幼きころより
-人と　離され▽
-ポケモンと　共に　育ちました▼
-……悪意ある　人に　裏切られ
-虐げられ　傷ついた　ポケモン▼
-ゲーチスは　あえて
-そうした　ポケモンばかり▽
-Ｎに　近づけていたのです▼
-Ｎは　その傷を　分かち合い
-ポケモンの　ことだけを　考え▽
-真実を　求めるように　なりました▼
-あまりにも　ピュアで
-イノセントな　Ｎの　心……▼
-イノセントほど
-美しく　怖いものは　ないのに</Text>
+			<Text>わたしは　平和の　女神……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:02:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -122,12 +1009,10 @@
 			Language="JPN">
 			<Comment>♀
 ・WHITEver
-　N＝レシラム＝真実
-
-仮メッセージ</Comment>
+　N＝レシラム＝真実</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:02:38" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -151,6 +1036,446 @@
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05r0701_hakaim1_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>？？？？？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:09:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:09:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>？？？？？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:09:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:09:08" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:09:13" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>元プラズマ団♂１</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:06:47" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:06:49" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05r0701_hakaim2_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>？？？？？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:09:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:09:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>？？？？？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:09:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:09:08" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:09:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>元プラズマ団♂２</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:06:43" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:06:49" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05r0701_hakaim3_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>？？？？？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:09:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:09:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>？？？？？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:09:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:09:08" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:09:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MOUNTAIN
+山男＝元プラズマ団</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:06:26" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:06:49" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05r0701_hakaiw_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>この　ミネズミ
+あたしに　なついちゃって……▼
+だから　どうぐあつかいを　やめて
+きちんと　むきあうことに　したのよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:09:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:09:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>この　ミネズミ
+あたしに　なついちゃって……▼
+だから　道具扱いを　やめて
+きちんと　向き合うことに　したのよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:09:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:09:08" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ミネズミと隣接して配置</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:09:28" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>元プラズマ団♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:06:36" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:06:49" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05r0501_poke1_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>？？？？？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:08:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:08:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>？？？？？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:09:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:09:02" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声SE</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:03:48" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ポケモン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:03:38" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:06:49" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05r0501_poke2_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>？？？？？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:09:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:09:02" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>？？？？？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:09:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:09:02" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声SE</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:03:50" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ポケモン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:03:40" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:06:49" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05r0501_poke3_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>？？？？？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:09:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:09:02" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>？？？？？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:09:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:09:02" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声SE</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:03:50" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ポケモン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:03:40" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:06:49" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05r0501_poke4_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ぎりぎりぃ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:03:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:03:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ぎりぎりぃ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:03:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:03:57" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声SE
+・hakaiwと隣接して配置</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:09:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ポケモン
+ミネズミ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:04:01" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:06:49" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05r0501_poke5_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>きゅぬーん！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:08:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:03:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>きゅぬーん！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:08:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:03:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声SE
+・主人公が入手のタイミングで削除</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:08:34" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ポケモン
+ゾロア</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:04:03" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:06:49" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c05r0501_veteranw_01"
@@ -179,10 +1504,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>削除ラベル</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:01:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -226,10 +1551,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>削除ラベル</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:01:59" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -273,10 +1598,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>削除ラベル</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:01:59" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -320,10 +1645,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>削除ラベル</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:01:59" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -367,10 +1692,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>削除ラベル</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:01:59" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -414,10 +1739,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>削除ラベル</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:01:59" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -461,10 +1786,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>削除ラベル</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:01:59" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -508,10 +1833,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>削除ラベル</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:01:59" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -555,10 +1880,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>削除ラベル</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:01:59" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -602,10 +1927,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>削除ラベル</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:01:59" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
