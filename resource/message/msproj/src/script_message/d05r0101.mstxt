@@ -2,6 +2,366 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
+		Label="msg_d05r0101_swleader5_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヤーコン『・説明
+ま　ひとことで　いえば
+８にん　さんかの　トーナメント▽
+３かい　かてば　ゆうしょうだ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:44:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:44:38" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>？？？？？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:47:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:47:13" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・中にチェレン待機</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:45:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ヤーコン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:44:38" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:44:52" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d05r0101_swleader1_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>チェレン『なぜ　ぼくまで……
+しらべることが　あるのに</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:47:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:47:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>？？？？？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:47:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:47:13" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:47:39" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:45:41" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:46:53" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d05r0101_swleader5_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヤーコン『わかるか　チェレン
+おまえの～
+・主人公はいないしさ
+あとは　わかい　ちから　なんだよ
+みんな　みらいの
+スターが　だいすき　だからな！▼
+さあ！　じゅんびが　できたら
+うけつけカウンターに　いくんだ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:47:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:47:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>？？？？？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:47:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:47:13" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:47:40" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ヤーコン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:45:43" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:46:53" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d05r0101_swleader5_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヤーコン『じゅんびが　できたら
+うけつけカウンターに　いくんだぞ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:47:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:47:04" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヤーコン『準備が　できたら
+受付カウンターに　行くんだぞ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:47:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:47:04" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・参加まで繰り返し</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:47:04" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ヤーコン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:45:43" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:46:53" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d05r0101_swleader1_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>チェレン『やれやれ……
+かわらないね　ヤーコンさんは▼
+だけど　トーナメントそのものは
+おもしろそう　なんだよね
+ぼくは　うけつけ　してくるよ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:47:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:47:04" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>？？？？？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:47:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:47:08" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・メッセージ表示後、受付に
+・数秒会話した感じの演出後、中に消えて行く
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:47:04" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:45:45" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:46:53" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d05r0101_swrival_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『あっ　オレも！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:46:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:46:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『あっ　オレも！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:46:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:46:27" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて
+・1＝ライバル名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:46:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:45:49" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:46:53" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d05r0101_swrival_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]も　はやくな！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:46:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:46:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>主人公名前も　はやくな！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:46:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:46:27" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・メッセージ表示後、受付に
+・数秒会話した感じの演出後、中に消えて行く
+・主人公操作可能に
+・0＝主人公名
+・1＝ライバル名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:46:22" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:45:50" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T06:46:53" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="msg_d05r0101_trainerm_01"
 		Style="Large">
 		<LanguageCell
