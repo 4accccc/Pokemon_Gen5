@@ -2,15 +2,414 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
+		Label="msg_d06r0101_swbell_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おうい！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:44:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:44:28" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おうい！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:44:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:44:28" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・posで起動
+・主人公＝男
+・続けてswbell_03</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:45:11" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:40:42" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:51" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d06r0101_swbell_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ねえねえ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:44:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:44:28" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ねえねえ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:44:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:44:28" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・posで起動
+・主人公＝♀
+・続けてswbell_03</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:45:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:44:24" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:51" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d06r0101_swbell_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ベル『[Name:TrainerName ]　しってる？▼
+ういている　いしは
+おせば　うごくんだよ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:47:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:44:28" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ベル『[Name:TrainerName ]　知ってる？▼
+浮いている　石は
+押せば　動くんだよ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:47:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:44:28" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・続けて
+・0＝主人公名前</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:47:59" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:44:24" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:51" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d06r0101_swbell_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>それにしても　ここ　あいかわらず
+ポケモンが　すきそうな　でんきを▽
+たっぷり　おびているよねえ！▼
+だから　でんきと　でんきが
+はんぱつ　しあって▽
+うかぶ　いしが　あるんだよお▼
+もっとも　ぜんぶの　いしを
+おせるわけじゃ　ないんだけどねえ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:44:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:44:28" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>それにしても　ここ　あいかわらず
+ポケモンが　好きそうな　電気を▽
+たっぷり　帯びているよねえ！▼
+だから　電気と　でんきが
+反発しあって▽
+浮かぶ　石が　あるんだよお▼
+もっとも　全部の　石を
+押せるわけじゃ　ないんだけどねえ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:44:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:44:28" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・周囲を見回してから
+　メッセージ表示</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:48:06" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:44:24" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:51" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d06r0101_swbell_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ベル『あたしね
+アララギはかせに　たのまれて▼
+シビシラス　という　ポケモンの
+せいたいけいを　しらべているの！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:50:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:44:28" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ベル『あたしね
+アララギ博士に　頼まれて▼
+シビシラス　という　ポケモンの
+生態系を　調べているの！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:51:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:44:28" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・？？まで繰り返し</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:48:17" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:44:24" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:51" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d06r0101_boss_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]でんきいしの　ほらあな……
+やはり　ここ　いいよね▼
+でんきを　あらわすのは　すうしき
+ポケモンとの　つながり▽
+そして　ヒトと　ポケモン▼
+ボクの　りそうの　ばしょ　だ[Ctrl2:CtrlSpeed ]▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:43:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]電気石の　洞穴……
+やはり　ここ　いいよね▼
+電気を　表すのは　数式
+ポケモンとの　つながり▽
+そして　ヒトと　ポケモン▼
+ボクの　理想の　場所だ[Ctrl2:CtrlSpeed ]▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:44:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・posで起動
+・メッセージのみ表示
+　動作モデルの配置としては画面外
+・続けてboss_02</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:46:47" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>Ｎ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:44:16" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:51" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d06r0101_boss_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ボクは　いかねば　ならない
+ポケモンたちを　すくうために▼
+ボクは　とめねば　ならない
+トモダチを　まもるために！[Ctrl2:CtrlSpeed ]▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:44:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ボクは　行かねば　ならない
+ポケモンたちを　救うために▼
+ボクは　止めねば　ならない
+トモダチを　守るために！[Ctrl2:CtrlSpeed ]▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:44:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・表示後、足音ＳＥ？
+・遠ざかって行く演出</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:47:00" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>Ｎ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:44:18" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:51" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_d06r0101_ninja_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……　……　……▼
-……　……　こい▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -18,11 +417,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……　……　……▼
-……　……　来い▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -30,21 +428,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・pos（GRIDX=6~8、GRIDZ=55）を踏むと
-　主人公の上下にダークトリニティ出現
-・続けてninja_01a</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:07" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ＮＩＮＪＡ
-ダークトリニティ</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:07" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -66,11 +460,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……　……　……▼
-Ｎさま　つれてきました▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -78,11 +471,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……　……　……▼
-Ｎさま　連れてきました▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -90,24 +482,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・主人公に？マーク表示後
-　GRIDX=10、GRIDZ=52まで主人公を連れ歩き
-　（移動速度はやい：要調整）
-・上記座標で、主人公を上向き＆Nは下向き
-・メッセージ表示、ダークトリニティ削除
-・続けてboss_10</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:07" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ＮＩＮＪＡ
-ダークトリニティ</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:07" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -129,17 +514,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]……ありがとう▼
-いまの　れんちゅうは
-ダークトリニティ▼
-ゲーチスが　あつめた
-プラズマだんの　メンバーだよ▼
-ちなみに　この　ほらあなの
-いりぐちに　デンチュラの　すを▽
-よういしたのも　かれら　らしいね▼[Ctrl2:CtrlSpeed mode="0"]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -147,17 +525,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]……ありがとう▼
-今の　連中は
-ダークトリニティ▼
-ゲーチスが　集めた
-プラズマ団の　メンバーだよ▼
-ちなみに　この　洞穴の
-入り口に　デンチュラの　巣を▽
-用意したのも　カレら　らしいね▼[Ctrl2:CtrlSpeed mode="0"]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -165,19 +536,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・GRIDX=10、GRIDZ=50、右向きに配置
-・再度、右を向いてメッセージ表示</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:07" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>Ｎ</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:07" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -199,17 +568,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]でんきいしの　ほらあな……
-ここ　いいよね▼
-でんきを　あらわすのは　すうしき
-そして　ポケモンとの　つながり▼
-……ひとが　いなければ
-ボクの　りそうの　ばしょ　だ▼
-さて　キミは　えらばれた……
-そういうと　おどろくかい？[Ctrl2:CtrlSpeed mode="0"]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -217,17 +579,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]電気石の洞穴……
-ここ　いいよね▼
-電気を　表すのは　数式
-そして　ポケモンとの　つながり▼
-……人が　いなければ
-ボクの　理想の　場所だ▼
-さて　キミは　選ばれた……
-そういうと　驚くかい？[Ctrl2:CtrlSpeed mode="0"]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -235,19 +590,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・下を向き
-・はい/いいえの選択肢表示</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>Ｎ</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:05" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -269,11 +622,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]まあ　そうだよね
-おどろくだろうさ[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -281,11 +633,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]まあ　そうだよね
-驚くだろうさ[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -293,19 +644,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・はい選択時
-・続けてboss_04</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>Ｎ</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:05" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -327,12 +676,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]……フウン▼
-やはり　いみが　わからないと
-おどろくことも　できないか[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -340,12 +687,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]……フウン▼
-やはり　意味が　理解できないと
-驚くことも　できないか[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -353,19 +698,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・いいえ選択時
-・続けてboss_04</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>Ｎ</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:05" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -387,25 +730,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]キミたちの　ことを
-ゲーチスに　はなした▼
-すると　ダークトリニティを　つかい
-キミたちのことを　しらべたらしいよ▼
-チェレンは　つよさ　という
-りそうを　もとめている……▼
-ベルとやらは　だれもが
-つよくなれる　わけではない　という▽
-しんじつを　しっている▼
-キミは　どっちにも　そまっていない
-いわば　ニュートラルな　そんざい……▽
-それが　いいらしいんだ▼
-このさきで　プラズマだんが
-キミを　まっている▼
-ゲーチスは　キミが　どれほどの
-ポケモントレーナーか　ためすそうだよ[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -413,25 +741,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]キミたちの　ことを
-ゲーチスに　話した▼
-すると　ダークトリニティを　使い
-キミたちのことを　調べたらしいよ▼
-チェレンは　強さ　という
-甘い　理想を　求めている……▼
-ベルとやらは　だれもが
-強くなれる　わけではない　という▽
-悲しい　真実を　知っている▼
-キミは　どっちにも　染まっていない
-いわば　ニュートラルな　存在……▽
-それが　いいらしいんだ▼
-この先で　プラズマ団が
-キミを　待ち構えている▼
-ゲーチスは　キミが　どれほどの
-ポケモントレーナーか　試すそうだよ[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -439,19 +752,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・表示後、画面上に移動する
-・画面外に消えると主人公操作可能に</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>Ｎ</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:05" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -473,10 +784,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おうい！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -484,10 +795,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おうい！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -495,21 +806,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀：シーン1
-・主人公性別：♂
-・pos（GRIDX=11、GRIDZ=45~47）で発動
-・メッセージ表示後、主人公に！マーク</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>友達♀
-ベル</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:02" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -531,10 +838,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ねえねえ！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -542,10 +849,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ねえねえ！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -553,21 +860,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀：シーン1
-・主人公性別：♀
-・pos（GRIDX=11、GRIDZ=45~47）で発動
-・メッセージ表示後、主人公に！マーク</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>友達♀
-ベル</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:02" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -589,12 +892,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ベル『[Name:TrainerName Idx="0"]　しってる？▼
-ういている　いしは
-おせば　うごくんだよ▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -602,12 +903,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ベル『[Name:TrainerName Idx="0"]　知ってる？▼
-浮いている　石は
-押せば　動くんだよ▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -615,23 +914,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀：シーン1
-・ｒ06側から登場
-　所定の位置（GRIDX=9、GRIDZ=46）に
-　移動してメッセージ表示
-・メッセージ表示後、下を向いてwhite_02表示
-・0＝主人公名前</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>友達♀
-ベル</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:02" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -653,10 +946,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ですよね！　はかせ！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -664,10 +957,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ですよね！　博士！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -675,19 +968,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・続けてhakase2_01</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>友達♀
-ベル</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:02" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -709,11 +1000,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アララギ『ハーイ！
-げんきしてる？　[Name:TrainerName Idx="0"]！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -721,11 +1011,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アララギ『ハーイ！
-元気してる？　[Name:TrainerName Idx="0"]！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -733,22 +1022,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・画面外から登場
-　GRIDX=9、GRIDZ=47に配置してメッセージ表示
-・続けてhakase2_02
-・0＝主人公名前</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>HAKASE2
-アララギ博士娘</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:02" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -770,17 +1054,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あいかわらず　ここ
-ポケモンが　すきそうな　でんきを▽
-たっぷり　おびているわねー！▼
-だから　でんきと　でんきが
-はんぱつ　しあって▽
-うかぶ　いしが　あるんだよね▼
-もっとも　すべての　いしを
-おせるわけじゃ　ないけど▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -788,16 +1065,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>相変わらず　ここは
-ポケモン好みの　電気を▽
-たっぷり　帯びているわねー！▼
-だから　電気同士　反発しあって
-浮かぶ　石が　あるんだよね▼
-もっとも　すべての　石を
-押せるわけじゃ　ないけど▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -805,22 +1076,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・GRIDX=8、GRIDZ=47に移動
-　その場で上下を見た後、主人公と向き合って
-　メッセージ表示
-・続けてhakase2_03</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>HAKASE2
-アララギ博士娘</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:00" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -842,19 +1108,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わたしはね　パパに　たのまれて
-ギアルって　はぐるま　みたいな▽
-ポケモンのこと　しらべているの▼
-わたしが　ポケモンの　きげん……
-うまれた　じきを　しらべているからって▽
-ひとづかいが　あらいよね……▼
-もっとも　わたしも　すきで
-しらべているから　たのしいんだけどね！▼
-そうだ！　[Name:TrainerName Idx="0"]
-これを　もっていきなさいな！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -862,19 +1119,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わたしはね　パパに　頼まれて
-ギアルって　歯車みたいな▽
-ポケモンのこと　調べているの▼
-わたしが　ポケモンの　起源……
-誕生時期を　調べているからって▽
-人使いが　荒いよね……▼
-もっとも　わたしも　好きで
-調べているから　楽しいんだけどね！▼
-そうだ！　[Name:TrainerName Idx="0"]
-これを　持っていきなさいな！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -882,23 +1130,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・メッセージ表示後
-　アイテム入手処理
-　No231「しあわせタマゴ」
-・続けてhakase2_03a
-・0＝主人公名前</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>HAKASE2
-アララギ博士娘</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:00" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -920,15 +1162,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アララギ『その　しあわせタマゴを
-ポケモンに　もたせておくと▼
-たたかいで　もらえる
-けいけんちが　ちょっぴり　ふえるの！▼
-ポケモンが　たくましくなった　ほうが
-ずかんの　ページも　うめやすいよね！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -936,15 +1173,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アララギ『その　しあわせタマゴを
-ポケモンに　持たせておくと▼
-戦いで　もらえる
-経験値が　ちょっぴり　増えるの！▼
-ポケモンが　たくましくなった　ほうが
-図鑑の　ページも　埋めやすいよね！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -952,19 +1184,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・アイテム入手後</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>HAKASE2
-アララギ博士娘</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:00" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -986,13 +1216,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アララギ『[Name:TrainerName Idx="0"]！
-ポケモンずかんは　うまってる？▼
-どんどん　ポケモンと　であって
-どんどん　ページを　うめてね！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1000,13 +1227,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アララギ『[Name:TrainerName Idx="0"]！
-ポケモン図鑑は　埋まってる？▼
-どんどん　ポケモンと　出会って
-どんどん　ページを　埋めてね！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1014,20 +1238,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・hakase2_03a表示後からシーン2まで繰り返し
-　できればその場で四方を振り向きつつ待機</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>HAKASE2
-アララギ博士娘</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:42:00" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1049,13 +1270,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ベル『あたしはね
-はかせの　ボディーガードなの！▼
-って　そんな　ひつようないけど……
-だいじなものは　まもらないと　ね！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1063,13 +1281,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ベル『あたしはね
-博士の　ボディーガードなの！▼
-って　そんな　必要ないけど……
-大事なものは　守らないと　ね！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1077,20 +1292,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・シーン2まで繰り返し
-　できればその場で四方を振り向きつつ待機</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>友達♀
-ベル</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:58" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1112,13 +1324,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アララギ『ハーイ！
-なにか　みつかった？▼
-こっちは　おおよその　データを
-あつめおえたところ　かな▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1126,13 +1335,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アララギ『ハーイ！
-なにか　みつかった？▼
-こっちは　おおよその　データを
-集め終えたところ　かな▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1140,22 +1346,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀：シーン2
-・pos（GRIDX=33、GRIDZ=24~26）を踏むと
-　博士　　GRIDX=30、GRIDZ=25
-　サポートGRIDX=29、GRIDZ=26に配置
-・続けてhakase2_06</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>HAKASE2
-アララギ博士娘</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:58" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1177,19 +1378,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>この　ほらあなは
-はるか　むかしから　あるんだけど……▼
-ギアルが　そんざいしたと
-しょうめいできる　データは▼
-１００ねんより　さきになると
-まったく　みつからないの▼
-そう！▼
-ギアルは　１００ねんまえに
-とつぜんはっせい　した……▽
-そういうことに　なるの！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1197,18 +1389,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この　洞穴は
-はるか　昔から　あるんだけど……▼
-ギアルが　存在したと
-証明できる　データは　１００年より▽
-昔からは　発見できないの▼
-そう！▼
-ギアルは　１００年前に
-突然発生した……▽
-そういうことに　なるの！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1216,20 +1400,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・左を向いてメッセージ表示
-・続けてhakase2_07</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>HAKASE2
-アララギ博士娘</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:58" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1251,15 +1432,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンたちが
-どこから　きたのか▽
-そして　どこへ　いくのか……▼
-それを　しることが　できれば
-わたしたちは　もっと　なかよくなれる▽
-そう　しんじているのよね！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1267,15 +1443,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンたちが
-どこから　来たのか▽
-そして　どこへ　向かうのか……▼
-それを　知ることが　できれば
-わたしたちは　もっと　親しくなれる▽
-そう　信じているのよね！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1283,20 +1454,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・主人公と向き合ってメッセージ表示
-・続けてwhite_04</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>HAKASE2
-アララギ博士娘</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:58" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1318,14 +1486,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ベル『ねえねえ　[Name:TrainerName Idx="0"]！
-ポケモンって　ふしぎ　だよね！▼
-どうして　こんなに
-すごいコたちが　あたしたちと▽
-いっしょに　いてくれるのかな？</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1333,14 +1497,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ベル『ねえねえ　[Name:TrainerName Idx="0"]！
-ポケモンって　不思議だよね！▼
-どうして　こんなに
-すごいコたちが　あたしたちと▽
-一緒に　いてくれるのかな？</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1348,18 +1508,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>友達♀
-ベル</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:58" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1381,15 +1540,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アララギ『ポケモンたちが
-どこから　きたのか▽
-そして　どこへ　いくのか……▼
-それを　しることが　できれば
-わたしたちは　もっと　なかよくなれる▽
-そう　しんじているのよね！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1397,15 +1551,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アララギ『ポケモンたちが
-どこから　来たのか▽
-そして　どこへ　向かうのか……▼
-それを　知ることが　できれば
-わたしたちは　もっと　親しくなれる▽
-そう　信じているのよね！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1413,21 +1562,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・msg_d06r0101_white_04表示後から
-　d06r0101出口付近のNイベント発生まで
-　繰り返し表示</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>HAKASE2
-アララギ博士娘</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:56" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1449,12 +1594,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ベル『あたしは　ここでも
-ポケモン　つかまえるつもり！▽
-だって　たびは　であい　なんだもん！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1462,12 +1605,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ベル『あたしは　ここでも
-ポケモン　捕まえるつもり！▽
-だって　旅は　出会い　なんだもん！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1475,21 +1616,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・msg_d06r0101_white_04表示後から
-　d06r0101出口付近のNイベント発生まで
-　繰り返し表示</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>友達♀
-ベル</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:56" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1511,11 +1648,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……　……　……▼
-……　……　こい▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1523,11 +1659,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……　……　……▼
-……　……　来い▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1535,22 +1670,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・pos（GRIDX=38、GRIDZ=41~42）を踏むと
-　主人公を囲むようにダークトリニティ3人出現
-・そのままGRIDX=58、GRIDZ=41~42まで連れ歩き
-　（移動速度はやい：要調整）</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ＮＩＮＪＡ
-ダークトリニティ</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:56" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1572,14 +1702,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……　……　……▼
-……　……　このさきに
-したに　おりる　かいだんが　ある▼
-そこで　プラズマだんが
-おまえを　まちかまえている▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1587,14 +1713,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……　……　……▼
-……　……　この先に
-下りの　階段が　ある▼
-そこで　プラズマ団が
-おまえを　待ち構えている▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1602,163 +1724,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・上記の所定位置につくと
-　メッセージ表示後に3人を削除</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ＮＩＮＪＡ
-ダークトリニティ</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_d06r0101_boss_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]おおくの　かんがえが　まじりあい
-せかいは　はいいろに　なっていく……▽
-ボクには　それが　ゆるせない▼
-ポケモンと　にんげんを　きりはなし
-しろ　くろ　はっきり　わける▼
-そうしてこそ
-ポケモンは　かんぜんな▽
-そんざいに　なれるんだ▼
-そう！　これこそが　ボクの　ゆめ！
-かなえるべき　ゆめ　なんだ！▼
-[Name:TrainerName Idx="0"]！
-キミにも　ゆめは　あるのか？[Ctrl2:CtrlSpeed mode="0"]</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]多くの　価値観が　交じり合い
-世界は　灰色になっていく……▽
-ボクには　それが　許せない▼
-ポケモンと　人間を　区分し
-白黒　はっきり　わける▼
-そうしてこそ
-ポケモンは　完全な▽
-存在に　なれるんだ▼
-そう！　これこそが　ボクの　夢！
-かなえるべき　夢なんだ！▼
-[Name:TrainerName Idx="0"]！
-キミにも　夢は　あるのか？[Ctrl2:CtrlSpeed mode="0"]</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・GRIDX=69、GRIDZ=13、左向きで待機
-・pos（GRIDX=67、GRIDZ=12~14）を踏むと
-　主人公に隣接してメッセージ表示
-・はい/いいえの選択肢表示
-・0＝主人公名前</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>N</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_d06r0101_boss_02"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]ゆめが　ある……
-それは　すばらしい▼
-……キミの　ゆめが　どれほどか
-しょうぶで　たしかめるよ[Ctrl2:CtrlSpeed mode="0"]▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]夢が　ある……
-それは　すばらしい▼
-……キミの　夢が　どれほどか
-勝負で　確かめるよ[Ctrl2:CtrlSpeed mode="0"]▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・はい選択時
-・メッセージ表示後、戦闘へ</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>N</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:56" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1780,13 +1756,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]……ゆめを　もたない
-にんげんに　ボクが　りかい　できるか！▼
-くっ……　キミの……
-ココロを　おるしかないのか！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1794,13 +1767,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]……夢を　持たない
-人間に　ボクが　理解できるか！▼
-くっ……　キミの……
-ココロを　折るしかないのか！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1808,19 +1778,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・いいえ選択時
-・メッセージ表示後、戦闘へ</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>N</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:56" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1864,10 +1832,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>未使用</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:42" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1889,17 +1857,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]……どうしてだ？▼
-トレーナーで　あることを
-くるしく　おもうまま▽
-たたかっていても　かてないのか……▼
-クッ！　こんなことで
-しんじつを　おいもとめられるか！▼
-でんせつの　ポケモンと……
-トモダチに　なれるものか……！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1907,17 +1868,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]……どうしてだ？▼
-トレーナーで　あることを
-苦しく　思うまま▽
-戦っていても　勝てないのか……▼
-クッ！　こんなことで
-真実を　追究できるか！▼
-伝説の　ポケモンと……
-トモダチに　なれるものか……！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1925,20 +1879,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・WHITEver
-・戦闘後メッセージ
-・続けて_white_06</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>N</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:50" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1960,17 +1911,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]……どうしてだ？▼
-トレーナーで　あることを
-くるしく　おもうまま▽
-たたかっていても　かてないのか……▼
-クッ！　こんなことで
-りそうを　おいもとめられるか！▼
-でんせつの　ポケモンと……
-トモダチに　なれるものか……！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1978,17 +1922,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]……どうしてだ？▼
-トレーナーで　あることを
-苦しく　思うまま▽
-戦っていても　勝てないのか……▼
-クッ！　こんなことで
-理想を　追究できるか！▼
-伝説の　ポケモンと……
-トモダチに　なれるものか……！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1996,20 +1933,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・BLACKver
-・戦闘後メッセージ
-・続けて_white_06</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>N</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:50" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -2031,10 +1965,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ベル『[Name:TrainerName Idx="0"]！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2042,10 +1976,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ベル『[Name:TrainerName Idx="0"]！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2053,21 +1987,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・先にメッセージだけ表示
-・続けてwhite_07表示
-・0＝主人公名前</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>友達♀
-ベル</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:50" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -2089,10 +2019,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>もうすぐ　フキヨセシティだね▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2100,10 +2030,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>もうすぐ　フキヨセシティだね▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2111,20 +2041,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・主人公に近づくと、メッセージ表示
-・続けてhakase2_09表示</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>友達♀
-ベル</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:50" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -2146,15 +2073,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アララギ『……ベルは
-みみが　いいのね▼
-あんな　とおくからでも
-[Name:TrainerName Idx="0"]の　こえが　きこえるなんて▼
-で　[Name:TrainerName Idx="0"]
-そちらの　トレーナーは　どなた……？▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2162,15 +2084,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アララギ『……ベルは
-耳が　いいのね▼
-あんな　遠くからでも
-[Name:TrainerName Idx="0"]の　声が　聞こえるなんて▼
-で　[Name:TrainerName Idx="0"]
-そちらの　トレーナーは　どなた……？▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2178,22 +2095,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・サポートに遅れて登場
-　主人公とNの間に移動するとメッセージ表示
-・続けてmsg_d06r0101_boss_05表示
-・0＝主人公の名前</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>HAKASE2
-アララギ博士娘</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:50" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -2215,18 +2127,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]……アララギか▼
-トレーナーと　ポケモンの
-かんけいに　ぎもんも　もたず▼
-にんげんの　かってな　ルールで
-ポケモンを　ぶんるいし▽
-わかった　つもりになる……▼
-そんな　ポケモンずかんが
-ゆるせないが　アナタは▽
-なにを　かんがえているんだ？[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2234,19 +2138,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]……アララギか▼
-トレーナーと　ポケモンの
-関係に　疑問も　もたず▼
-人間の　勝手な　ルールで
-ポケモンを　分類し▼
-ポケモンという　存在を
-理解した　つもりになる……▼
-そんな　ポケモン図鑑が
-許せないのだが　アナタは▽
-なにを　考えているんだ？[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2254,18 +2149,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・続けてhakase2_10表示</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>N</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:50" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -2287,18 +2181,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アララギ『あら……
-ずいぶんと　きらわれているのね▼
-だけど　あなたの　いけんも
-ひとつの　かんがえかた　なら▼
-わたしの　ねがうところも　おなじく
-ひとつの　かんがえかた　よ▼
-ポケモンと　どう　つきあうべきか
-それは　ひとりひとりが　かんがえ▽
-きめれば　いいんじゃない？▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2306,18 +2192,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アララギ『あら……
-ずいぶんと　嫌われているようね▼
-だけど　あなたの　意見も
-ひとつの　考え方なら▼
-わたしの　願うところも
-同じく　ひとつの　考え方よ▼
-ポケモンと　どう　付き合うべきか
-それは　一人一人が　考え▽
-決めれば　いいんじゃない？▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2325,19 +2203,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・続けてboss_06表示</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>HAKASE2
-アララギ博士娘</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:50" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -2359,14 +2235,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]……それでは
-まちがった　かんがえの　にんげんが▽
-ポケモンを　くるしめる……▼
-そんな　おろかな　せかいを
-ボクは　みすごすわけには　いかない！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2374,14 +2246,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]……それでは
-間違った　考えの　人間が▽
-ポケモンを　苦しめる……▼
-そんな　愚かな　世界を
-ボクは　見過ごすわけには　いかない！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2389,24 +2257,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・メッセージ表示後、出口方面に移動
-　このとき主人公や博士、サポート
-　画面のうえ方向を見る
-・画面外に消えると
-　続けてmsg_d06r0101_hakase2_11表示
-・このとき洞窟内のプラズマ団員削除
-・0＝主人公名前</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>N</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:50" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -2428,13 +2289,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アララギ『……まあ　いきなり
-わかってもらえるとは　おもわないけど▼
-すこしずつで　いいから
-みんなの　きもちを　しってほしいな▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2442,13 +2300,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アララギ『……まあ　いきなり
-わかってもらえるとは　思わないけど▼
-少しずつで　いいから
-みんなの　気持ちを　知ってほしいな▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2456,19 +2311,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・続けてhakase2_12</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>HAKASE2
-アララギ博士娘</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:50" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -2490,14 +2343,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>さてと……
-もうすこし　データを　あつめるかなー▼
-わたしたちと　ポケモンが
-もっと　なかよくなる　ためにも▽
-あいてのことを　しらないとね！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2505,14 +2354,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さてと……
-もう少し　データを　集めるかなー▼
-わたしたちと　ポケモンが
-もっと　仲良くなる　ためにも▽
-相手のことを　知らないとね！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2520,21 +2365,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・主人公と向き合ってメッセージ表示
-・表示後、画面下のほうに移動
-・続けてwhite_08</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>HAKASE2
-アララギ博士娘</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:50" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -2556,13 +2397,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ベル『えーっと　[Name:TrainerName Idx="0"]！▼
-あたし　いま　アララギはかせの
-ボディーガードだから▽
-はかせと　いっしょに　いくね！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2570,13 +2408,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ベル『えーっと　[Name:TrainerName Idx="0"]！▼
-あたし　いま　アララギ博士の
-ボディーガードだから▽
-博士と　一緒に　行くね！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2584,21 +2419,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・表示後、あわてた感じで画面下に移動
-　画面外に消えると、主人公操作可能に
-・0＝主人公名前</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>友達♀
-ベル</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-22T05:41:50" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
