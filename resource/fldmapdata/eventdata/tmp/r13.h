@@ -16,6 +16,17 @@
 #define R13_TREE_01                        2
 #define R13_TREE_02                        3
 #define R13_TREE_03                        4
+#define TR_ELITEW_20                       5
+#define TR_RANGERW_14                      6
+#define TR_FISHING_16                      7
+#define TR_FISHING_17                      8
+#define TR_RANGERM_14                      9
+#define TR_FISHING_19                     10
+#define TR_ELITEM_20                      11
+#define TR_FISHING_18                     12
+#define TR_PRINCE_09                      13
+#define TR_PRINCESS_09                    14
+#define TR_PARASOL_11                     15
 
 #endif //ZONE_R13_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r13.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
