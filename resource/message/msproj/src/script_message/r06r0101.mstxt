@@ -2,6 +2,213 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
+		Label="msg_r06r0101_swleader1_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>チェレン『あまり
+わだいに　なっていないけれど▼
+１０ばんどうろで
+きになることが　あったんだよね▼
+いっしゅん　とはいえ
+－５０ど　にもなる　すうちが▽
+けいそく　されたんだ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:53:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:52:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>チェレン『あまり
+話題に　なっていないけれど▼
+１０番道路で
+気になることが　あったんだよね▼
+一瞬　とはいえ
+－５０度　にもなる　数値が▽
+計測されたんだ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:53:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:52:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:52:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ジムリーダー
+チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:51:39" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r06r0101_swleader1_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>それだけじゃない▼
+おなじような　すうちが
+ヒウンシティと　ホドモエシティでも▽
+けいそく　されてね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:52:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:52:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>それだけじゃない▼
+同じような　数値が
+ヒウンシティと　ホドモエシティでも▽
+計測されてね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:53:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:52:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:52:43" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ジムリーダー
+チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:51:49" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r06r0101_swleader1_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>で　さきほどの　プラズマだんの
+いっけんが　あるだろ？▼
+これは　しらべておかないと
+まずい　きが　するんだよね▼
+……さむいのは　にがて　なんだけどな▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:52:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:52:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>で　さきほどの　プラズマだんの
+一件が　あるだろ？▼
+これは　調べておかないと
+まずい　気が　するんだよね▼
+……寒いのは　苦手なんだけどな▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:54:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:52:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:52:43" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ジムリーダー
+チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:51:49" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r06r0101_swleader1_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あしどめ　して　わるかったね▼
+ただ　なにか
+おかしなことが　あるかも　しれない▼
+きをつけて　たびを　つづけてね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:52:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:52:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>足止めして　悪かったね▼
+ただ　なにか
+おかしなことが　あるかも　しれない▼
+気をつけて　旅を　つづけてね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:54:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:52:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・？？？まで繰り返し（条件保留）</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:52:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ジムリーダー
+チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:51:49" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="msg_r06r0101_assistantm1_01"
 		Style="Large">
 		<LanguageCell
