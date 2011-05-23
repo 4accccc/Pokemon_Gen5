@@ -6,14 +6,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]どう　[Name:TrainerName Idx="0"]▼
-せかいを　みちびく　えいゆうのもと
-その　すがたを　あらわし▼
-ともに　たたかう
-ポケモンの　うつくしい　すがたは！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:36:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -21,14 +17,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]どう　[Name:TrainerName Idx="0"]▼
-世界を　導く　英雄のもと
-その姿を　あらわし▼
-共に　戦う
-ポケモンの　美しい　姿は！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:36:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -36,26 +28,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂：WHITEver
-・NはGRIDX=16、GRIDZ=12に配置
-・pos（GRIDX=16、GRIDZ=18）起動
-・デモシーンへ
-
-・デモ後、主人公、まっすぐ上
-　GRIDX=16、GRIDZ=14まで移動して
-　このメッセージ表示
-・続けてboss_02w
-・0＝主人公名前</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:36:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>Ｎ</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:36:40" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -77,14 +60,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]どう　[Name:TrainerName Idx="0"]▼
-せかいを　みちびく　えいゆうのもと
-その　すがたを　あらわし▼
-ともに　たたかう
-ポケモンの　ちからづよい　すがたは！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:36:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -92,14 +71,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]どう　[Name:TrainerName Idx="0"]▼
-世界を　導く　英雄のもと
-その姿を　あらわし▼
-共に　戦う
-ポケモンの　力強い　姿は！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:36:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -107,18 +82,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂：BLACKver
-・</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:36:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>Ｎ</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:36:40" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -140,17 +114,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]これから　ボクは
-レシラムと　ともに▽
-ポケモンリーグに　むかい▽
-チャンピオンを　こえる！▼
-ポケモンを　きずつけてしまう
-ポケモンしょうぶは　それで　さいご▼
-ポケモンだけの　せかい……
-ようやく　じつげんする[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:36:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -158,17 +125,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]これから　ボクは
-レシラムと　共に▽
-ポケモンリーグに　向かい▽
-チャンピオンを　超える！▼
-ポケモンを　傷つけてしまう
-ポケモン勝負は　それで　最後▼
-ポケモンだけの　世界……
-ようやく　実現する[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:36:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -176,19 +136,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂：WHITEver
-・画面上（ポケモン）を見ながらメッセージ
-・続けてboss_03w</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:36:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>Ｎ</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:36:40" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -210,17 +168,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]これから　ボクは
-ゼクロムと　ともに▽
-ポケモンリーグに　むかい▽
-チャンピオンを　こえる！▼
-ポケモンを　きずつけてしまう
-ポケモンしょうぶは　それで　さいご▼
-ポケモンだけの　せかい……
-ようやく　じつげんする[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:36:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -228,17 +179,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]これから　ボクは
-ゼクロムと　共に▽
-ポケモンリーグに　向かい▽
-チャンピオンを　超える！▼
-ポケモンを　傷つけてしまう
-ポケモン勝負は　それで　最後▼
-ポケモンだけの　世界……
-ようやく　実現する[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:36:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -246,18 +190,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂：BLACKver
-・</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:36:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>Ｎ</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:36:40" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -279,16 +222,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]ボクたちを　とめるなら
-キミも　えいゆうに　なればいい！▼
-そう！　レシラムと　ついをなす
-ポケモン　ゼクロムに▽
-みとめられてこそ▽
-ようやく　ごかくに　なれる！▽
-ボクたちを　とめられる！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:36:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -296,16 +233,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]ボクたちを　止めるなら
-キミも　英雄に　なるんだ！▼
-そう！　レシラムと　対をなす
-ポケモン　ゼクロムに▽
-認められてこそ▽
-ようやく　対等に　なれる！▽
-ボクたちを　阻止できる！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:36:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -313,21 +244,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂：WHITEver
-・N、下向きに
-・このメッセージ表示前に
-　ポケモン羽ばたき画面上に移動
-・続けてboss_04w</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:36:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>Ｎ</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:36:40" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -349,16 +276,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]ボクたちを　とめるなら
-キミも　えいゆうに　なればいい！▼
-そう！　ゼクロムと　ついをなす
-ポケモン　レシラムに▽
-みとめられてこそ▽
-ようやく　ごかくに　なれる！▽
-ボクたちを　とめられる！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:36:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -366,16 +287,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]ボクたちを　止めるなら
-キミも　英雄に　なればいい！▼
-そう！　ゼクロムと　対をなす
-ポケモン　レシラムに▽
-認められてこそ▽
-ようやく　対等に　なれる！▽
-ボクたちを　阻止できる！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:36:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -383,18 +298,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂：BLACKver
-・</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:36:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>Ｎ</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:36:40" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -416,24 +330,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]さて　どうする？▼
-ボクの　よそく……
-ボクに　みえる　みらいなら▽
-キミは　ゼクロムと　であうだろう▼
-ともに　あゆむ　ポケモンに
-しんじられている　キミは……！▼
-せかいを　かえるための　すうしき……
-キミは　それを▽
-ジャマする　そんざいと　なれるか？▼
-ポケモンと　ひとの
-きずなを　まもりたいなら▽
-ゼクロムを　さがすんだ！▼
-……きっと　ゼクロムは
-ダークストーンの　じょうたいで▽
-キミを　まっている[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:36:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -441,24 +341,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]さて　どうする？▼
-ボクの　予測……
-ボクに　みえる　未来なら▽
-キミは　ゼクロムと　出会うだろう▼
-共に　歩む　ポケモンに
-信じられている　キミは……！▼
-世界を　変えるための　数式……
-キミは　その▽
-不確定要素と　なれるか？▼
-ポケモンと　人の
-きずなを　守りたいなら▽
-ゼクロムを　探すんだ！▼
-……きっと　ゼクロムは
-ダークストーンの　状態で▽
-キミを　待っている[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:36:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -466,15 +352,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂：WHITEver
-・メッセージ表示後、N、3歩上に移動
-・移動すると画面右から左へシンが横切る
-・Nと重なったときに、Nの動作モデル削除
-・飛び去る方向を見る主人公
-・BGM終了で、black_01</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:36:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -496,24 +377,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]さて　どうする？▼
-ボクの　よそく……
-ボクに　みえる　みらいなら▽
-キミは　レシラムと　であうだろう▼
-ともに　あゆむ　ポケモンに
-しんじられている　キミは……！▼
-せかいを　かえるための　すうしき……
-キミは　それを▽
-ジャマする　そんざいと　なれるか？▼
-ポケモンと　ひとの
-きずなを　まもりたいなら▽
-レシラムを　さがすんだ！▼
-……きっと　レシラムは
-ライトストーンの　じょうたいで▽
-キミを　まっている[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:36:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -521,24 +388,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]さて　どうする？▼
-ボクの　予測……
-ボクに　みえる　未来なら▽
-キミは　レシラムと　出会うだろう▼
-共に　歩む　ポケモンに
-信じられている　キミは……！▼
-世界を　変えるための　数式……
-キミは　その▽
-不確定要素と　なれるか？▼
-ポケモンと　人の
-きずなを　守りたいなら▽
-レシラムを　探すんだ！▼
-……きっと　レシラムは
-ライトストーンの　状態で▽
-キミを　待っている[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:36:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -546,11 +399,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂：BLACKver
-・</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:36:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -572,11 +424,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チェレン『[Name:TrainerName Idx="0"]
-いま　とびさったのって……▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:36:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -584,11 +435,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チェレン『[Name:TrainerName Idx="0"]
-いま　飛び去ったのって……▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:36:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -596,21 +446,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・主人公の2歩下に走ってきてメッセージ
-　このときジムリーダーも来る
-・続けてleader7_01</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:36:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>友達♂
-チェレン</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:36:40" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -632,10 +478,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハチク『なんたること！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:36:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -643,10 +489,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハチク『なんたること！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:36:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -654,19 +500,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・続けてblack_02</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:36:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>LEADER7
-ハチク</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:36:40" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -688,18 +532,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チェレン『なぜだ？▼
-いまのって
-Ｎって　ヤツ　だよな？▼
-どうして　でんせつの　ポケモンと
-いっしょに　いたんだ？▼
-まさか　かれは　ほんとうに
-えいゆうだと　いうのか！？▼
-それに　きこえたけど
-でんせつの　ポケモンを　さがせって！？▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:36:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -707,18 +543,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チェレン『なぜだ？▼
-いまのって
-Ｎって　ヤツ　だよな？▼
-どうして　伝説の　ポケモンと
-一緒に　いたんだ？▼
-まさか　彼は　本当に
-英雄だと　いうのか！？▼
-それに　聞こえたけど
-伝説の　ポケモンを　探せって！？▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:36:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -726,19 +554,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・続けてleader7_02</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:36:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>友達♂
-チェレン</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:36:40" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -760,14 +586,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハチク『おちつけ！
-まずは　もどるぞ▼
-いま　だいじ　なのは
-おきたことを　かいめい　するより▽
-これから　なにをするか　だ▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:36:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -775,14 +597,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハチク『落ち着け！
-まずは　戻るぞ▼
-いま　大事なのは
-起きたことを　解明するより▽
-これから　なにをするか　だ▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:36:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -790,20 +608,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・メッセージ表示後、画面暗転し
-　d08：リュウラセンの塔（外）へ切り替え</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:36:34" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>LEADER7
-ハチク</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:36:40" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -821,29 +636,131 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d08r0901_poke7_01"
+		Label="msg_d08r0901_dstone_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ンバーニンガガッ！！</Text>
+			<Text>バッグの　なか……
+ダークストーンが　うごめいている！？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:37:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:37:55" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ンバーニンガガッ！！</Text>
+			<Text>バッグの　なか……
+ダークストーンが　うごめいている！？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:37:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:37:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システム
+・BLACK２ver
+・posで表示
+・はい/いいえの選択肢表示
+・はい　→
+・いいえ→</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:41:35" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ダークストーン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:37:55" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:44:37" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d08r0901_dstone_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>まわりの　オーラを　とりこんだ
+ダークストーンが▽
+それを　きょうれつな　パワーとし▼
+いま……▼
+ときはなつ……！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:38:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:38:42" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>周囲の　オーラを　取りこんだ
+ダークストーンが▽
+それを　強烈な　パワーに　変換し▼
+いま……▼
+解き放つ……！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:38:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:38:42" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ダークストーン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:39:22" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:44:37" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d08r0901_poke8_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ババリバリッシュ！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:44:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:44:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ババリバリッシュ！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:44:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:44:23" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -854,16 +771,137 @@
 　つづけてポケモン戦闘に
 ・倒した場合は、殿堂入りで復活処理</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:44:23" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>ポケモン
-レシラム</Text>
+ゼクロム</Text>
 			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:44:23" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:44:37" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d08r0901_poke8_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゼクロムは　どこかに
+とびさって　いった……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:44:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:44:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゼクロムは　どこかに
+飛び去って　いった……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:44:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:44:23" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・WHITEver
+・倒した場合、フィールド復帰時に
+　このメッセージを表示</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:44:23" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ポケモン
+ゼクロム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:44:23" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:44:37" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d08r0901_lstone_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>バッグの　なか……
+ライトストーンが　うごめいている！？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:38:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:13" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>バッグの　なか……
+ライトストーンが　うごめいている！？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:38:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:13" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システム
+・WHITE２ver
+・posで表示
+・はい/いいえの選択肢表示
+・はい　→
+・いいえ→</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:41:42" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライトストーン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:38:34" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -871,6 +909,114 @@
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:13" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d08r0901_ｌstone_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>まわりの　オーラを　とりこんだ
+ライトストーンが▽
+それを　きょうれつな　パワーとし▼
+いま……▼
+ときはなつ……！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:38:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:38:52" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>周囲の　オーラを　取りこんだ
+ライトストーンが▽
+それを　強烈な　パワーに　変換し▼
+いま……▼
+解き放つ……！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:38:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:38:52" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライトストーン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:39:23" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:44:37" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d08r0901_poke7_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ンバーニンガガッ！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:38:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:38:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ンバーニンガガッ！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:38:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:38:25" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・WHITEver
+・クリア後に登場
+・メッセージ表示とともに鳴き声再生
+　つづけてポケモン戦闘に
+・倒した場合は、殿堂入りで復活処理</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:38:25" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ポケモン
+レシラム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:38:25" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T02:44:37" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -935,126 +1081,6 @@
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_d08r0901_poke8_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ババリバリッシュ！！</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ババリバリッシュ！！</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>ポケモン
-・WHITEver
-・クリア後に登場
-・メッセージ表示とともに鳴き声再生
-　つづけてポケモン戦闘に
-・倒した場合は、殿堂入りで復活処理</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>ポケモン
-ゼクロム</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff00</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_d08r0901_poke8_02"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ゼクロムは　どこかに
-とびさって　いった……</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ゼクロムは　どこかに
-飛び去って　いった……</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>ポケモン
-・WHITEver
-・倒した場合、フィールド復帰時に
-　このメッセージを表示</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>ポケモン
-ゼクロム</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff00</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
