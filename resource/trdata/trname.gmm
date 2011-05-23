@@ -4630,6 +4630,61 @@
 		<language name="JPN_KANJI" width="216">●</language>
 	</row>
 
+	<row id="swimmerm_06">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="swimmerw_06">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="swimmerm_07">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="swimmerw_07">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="fishing_20">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="elitew_25">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="swimmerm_08">
+		<language name="JPN" width="216">シゲキ</language>
+		<language name="JPN_KANJI" width="216">シゲキ</language>
+	</row>
+
+	<row id="swimmerm_09">
+		<language name="JPN" width="216">エイスケ</language>
+		<language name="JPN_KANJI" width="216">エイスケ</language>
+	</row>
+
+	<row id="swimmerm_10">
+		<language name="JPN" width="216">ヨウタ</language>
+		<language name="JPN_KANJI" width="216">ヨウタ</language>
+	</row>
+
+	<row id="swimmerw_08">
+		<language name="JPN" width="216">ナツキ</language>
+		<language name="JPN_KANJI" width="216">ナツキ</language>
+	</row>
+
+	<row id="swimmerw_09">
+		<language name="JPN" width="216">ミチル</language>
+		<language name="JPN_KANJI" width="216">ミチル</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>

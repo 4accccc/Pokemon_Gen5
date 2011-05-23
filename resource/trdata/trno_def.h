@@ -847,7 +847,18 @@
 #define	TRID_PRINCE_09   ( 834 ) 
 #define	TRID_BACKPACKERW_16   ( 835 ) 
 #define	TRID_BACKPACKERM_21   ( 836 ) 
-#define TRID_MAX  ( 837 )
+#define	TRID_SWIMMERM_06   ( 837 ) 
+#define	TRID_SWIMMERW_06   ( 838 ) 
+#define	TRID_SWIMMERM_07   ( 839 ) 
+#define	TRID_SWIMMERW_07   ( 840 ) 
+#define	TRID_FISHING_20   ( 841 ) 
+#define	TRID_ELITEW_25   ( 842 ) 
+#define	TRID_SWIMMERM_08   ( 843 ) 
+#define	TRID_SWIMMERM_09   ( 844 ) 
+#define	TRID_SWIMMERM_10   ( 845 ) 
+#define	TRID_SWIMMERW_08   ( 846 ) 
+#define	TRID_SWIMMERW_09   ( 847 ) 
+#define TRID_MAX  ( 848 )
 
 #ifndef __ASM_NO_DEF_  //Ç±ÇÍà»ç~ÇÕÉAÉZÉìÉuÉâÇ≈ÇÕñ≥éã
 typedef  int TrainerID;
