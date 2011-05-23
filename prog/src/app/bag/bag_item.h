@@ -57,7 +57,7 @@ enum
 extern void BAGITEM_InitData(BAGITEM_WORK* p_wk,MYITEM_PTR p_myitem , HEAPID heapID);
 extern void BAGITEM_DeleteData(BAGITEM_WORK* p_wk);
 extern ITEM_ST * BAGITEM_PosItemGet( BAGITEM_WORK *p_wk, u16 pocket, u16 pos );
-extern void BAGITEM_PosItemDelete( BAGITEM_WORK *p_wk ,u16 pos );
+extern void BAGITEM_DeleteRepositoryItem( BAGITEM_WORK *p_wk ,u16 pos );
 extern void BAGITEM_AddRepositoryItem( BAGITEM_WORK *p_wk ,u32 item_id ,s16 pocket_no );
 extern void BAGITEM_SortRepositoryItem( BAGITEM_WORK *p_wk , u16 SortType );
 extern u32 BAGITEM_GetItemPocketNumber( BAGITEM_WORK *p_wk , u32 pocket );

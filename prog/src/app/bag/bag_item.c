@@ -225,7 +225,7 @@ ITEM_ST * BAGITEM_PosItemGet( BAGITEM_WORK *p_wk, u16 pocket, u16 pos )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-void BAGITEM_PosItemDelete( BAGITEM_WORK *p_wk ,u16 pos )
+void BAGITEM_DeleteRepositoryItem( BAGITEM_WORK *p_wk ,u16 pos )
 {
   REPOSITORY_ITEM_ST *rep_st;
   s32   index = 0;
@@ -238,6 +238,9 @@ void BAGITEM_PosItemDelete( BAGITEM_WORK *p_wk ,u16 pos )
     {
       if( index == pos )
       {
+        // 保管フラグを取り除く
+        MYITEM_SetRepositoryFlag( p_wk->p_myitem , p_wk->repository_item[i].id , FALSE );
+
         // アイテムを一番下に移動
         MYITEM_MoveBottom( p_wk->p_myitem ,p_wk->repository_item[i].id );
 
@@ -275,6 +278,10 @@ void BAGITEM_AddRepositoryItem( BAGITEM_WORK *p_wk ,u32 item_id ,s16 pocket_no )
   {
     if( p_wk->repository_item[i].id == ITEM_DUMMY_DATA)
     {
+      // 保管フラグを立てる
+      MYITEM_SetRepositoryFlag( p_wk->p_myitem ,item_id , TRUE );
+
+      /// データをリストに追加する
       p_wk->repository_item[i].id = item_id;
       p_wk->repository_item[i].pocket = pocket_no;
       p_wk->repository_item[i].visible = TRUE;

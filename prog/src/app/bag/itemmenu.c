@@ -141,6 +141,7 @@ static void _itemSellExit( FIELD_ITEMMENU_WORK* pWork );
 static void _itemRepositoryInOutInit(FIELD_ITEMMENU_WORK* pWork);
 static void _itemRepositoryInOutWait(FIELD_ITEMMENU_WORK* pWork);
 static void ITEM_Sub( FIELD_ITEMMENU_WORK* pWork, int sub_num );
+static void CursorPosRefresh( FIELD_ITEMMENU_WORK* pWork );
 static void InputNum_Start( FIELD_ITEMMENU_WORK* pWork, BAG_INPUT_MODE mode );
 static void InputNum_Exit( FIELD_ITEMMENU_WORK* pWork );
 static BOOL InputNum_Main( FIELD_ITEMMENU_WORK* pWork );
@@ -1960,14 +1961,12 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
         u32 pocket_id = MYITEM_GetPocketID( pWork->pMyItem , item_id );
         if( pocket_id != BAG_POKE_MAX )
         {
-          MYITEM_SetRepositoryFlag( pWork->pMyItem , item_id , TRUE );
           BAGITEM_AddRepositoryItem( &pWork->bag_item ,item_id , pocket_id );
         }
       }
     }
     pWork->oamlistpos_old = 0xffff;
     _windowRewrite(pWork);
-    pWork->bCursorChange = 1;
     ITEMDISP_ScrollCursorChangePos( pWork );
   }
 #endif
@@ -2575,6 +2574,7 @@ static void ITEM_Sub( FIELD_ITEMMENU_WORK* pWork, int sub_num )
 {
   BOOL rslt;
   ITEM_ST * item = ITEMMENU_GetItem( pWork,ITEMMENU_GetItemIndex(pWork) ); // 選択中のアイテム
+  BOOL is_in = MYITEM_GetRepositoryFlag( pWork->pMyItem ,pWork->ret_item);  // MYITEM_SubItemないで変更があるので、先に取得する
 
   // 手持ちからアイテム削除
   rslt = MYITEM_SubItem(pWork->pMyItem, pWork->ret_item, sub_num, pWork->heapID );
@@ -2584,61 +2584,80 @@ static void ITEM_Sub( FIELD_ITEMMENU_WORK* pWork, int sub_num )
   // アイテムがなくなった場合
   if( MYITEM_GetItemNum( pWork->pMyItem, pWork->ret_item, pWork->heapID ) == 0 )
   {
-    // カーソル位置を修正
-    int now_pos = ITEMMENU_GetItemIndex( pWork );         // 現在のカーソル位置のアイテム
-    int length = ITEMMENU_GetItemPocketNumber( pWork) + 1;  // 捨てる前の数と比べないとダメなので＋１
-    BOOL is_cursor_end = FALSE;
-    BOOL is_list_end = FALSE;
-
-    // カーソル一番下判定
-    if( length == now_pos+1 )
+    if( is_in == TRUE )
     {
-      is_cursor_end = TRUE;
+      // 保管ポケットから取り除く
+      BAGITEM_DeleteRepositoryItem( &pWork->bag_item , ITEMMENU_GetItemIndex( pWork ));
     }
+    CursorPosRefresh( pWork );
+  }
+}    
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アイテムが減った場合の位置にカーソル位置を更新する
+ *
+ *	@param	pWork 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void CursorPosRefresh( FIELD_ITEMMENU_WORK* pWork )
+{
+  // カーソル位置を修正
+  int now_pos = ITEMMENU_GetItemIndex( pWork );         // 現在のカーソル位置のアイテム
+  int length = ITEMMENU_GetItemPocketNumber( pWork) + 1;  // 捨てる前の数と比べないとダメなので＋１
+  BOOL is_cursor_end = FALSE;
+  BOOL is_list_end = FALSE;
+
+  // カーソル一番下判定
+  if( length == now_pos+1 )
+  {
+    is_cursor_end = TRUE;
+  }
+
+  // リスト一番下判定
+  if( pWork->oamlistpos == length - 7 )
+  {
+    is_list_end = TRUE;
+  }
+
+
+  // スクロールバーが無効なら
+  if( length < ITEMMENU_SCROLLBAR_ENABLE_NUM )
+  {
+    // 一番下のときのみひとつ上を選ぶ
+    if( is_cursor_end == TRUE )
+    {
+      pWork->curpos = MATH_IMax( 0, pWork->curpos-1 );
+      OS_Printf("ケース１\n");
+    }
+  }
+  else
+  {
     // リスト一番下判定
-    if( pWork->oamlistpos == length - 7 )
+    if( is_list_end == FALSE )
     {
-      is_list_end = TRUE;
-    }
-
-
-    // スクロールバーが無効なら
-    if( length < ITEMMENU_SCROLLBAR_ENABLE_NUM )
-    {
-      // 一番下のときのみひとつ上を選ぶ
-      if( is_cursor_end == TRUE )
-      {
-        pWork->curpos = MATH_IMax( 0, pWork->curpos-1 );
-        OS_Printf("ケース１\n");
-      }
+      //pWork->oamlistpos = MATH_IMax( pWork->oamlistpos + 1 , -1 );
+      OS_Printf("ケース2\n");
     }
     else
     {
-      // リスト一番下判定
-      if( is_list_end == FALSE )
+      // カーソルが一番下
+      if( is_cursor_end == FALSE )
       {
-        //pWork->oamlistpos = MATH_IMax( pWork->oamlistpos + 1 , -1 );
-        OS_Printf("ケース2\n");
+        pWork->curpos += 1;
+        pWork->oamlistpos = MATH_IMax( pWork->oamlistpos-1 , -1 );
+        OS_Printf("ケース3A\n");
       }
       else
       {
-        // カーソルが一番下
-        if( is_cursor_end == FALSE )
-        {
-          pWork->curpos += 1;
-          pWork->oamlistpos = MATH_IMax( pWork->oamlistpos-1 , -1 );
-          OS_Printf("ケース3A\n");
-        }
-        else
-        {
-          pWork->oamlistpos = MATH_IMax( pWork->oamlistpos-1 , -1 );
-          OS_Printf("ケース3B\n");
-        }
+        pWork->oamlistpos = MATH_IMax( pWork->oamlistpos-1 , -1 );
+        OS_Printf("ケース3B\n");
       }
     }
   }
-}    
+}
 
 //-----------------------------------------------------------------------------
 /**
@@ -2837,7 +2856,6 @@ static void _itemRepositoryInOutInit(FIELD_ITEMMENU_WORK* pWork)
     GFL_MSG_GetString( pWork->MsgManager, mes_bag_124, pWork->pStrBuf );
     ITEMMENU_WordsetItemName( pWork, 1,  pWork->ret_item );
     ITEMMENU_WordsetPocketName( pWork, 0, BAG_POKE_REPOSITORY );
-    MYITEM_SetRepositoryFlag( pWork->pMyItem , pWork->ret_item , TRUE );
     BAGITEM_AddRepositoryItem( &pWork->bag_item , pWork->ret_item , pocket_id );
   }
   else
@@ -2846,8 +2864,7 @@ static void _itemRepositoryInOutInit(FIELD_ITEMMENU_WORK* pWork)
     GFL_MSG_GetString( pWork->MsgManager, mes_bag_125, pWork->pStrBuf );
     ITEMMENU_WordsetItemName( pWork, 1,  pWork->ret_item );
     ITEMMENU_WordsetPocketName( pWork, 0, pocket_id );
-    BAGITEM_PosItemDelete( &pWork->bag_item , ITEMMENU_GetItemIndex( pWork ));
-    MYITEM_SetRepositoryFlag( pWork->pMyItem , pWork->ret_item , FALSE );
+    BAGITEM_DeleteRepositoryItem( &pWork->bag_item , ITEMMENU_GetItemIndex( pWork ));
   }
   WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
   ITEMDISP_ItemInfoWindowDispEx( pWork, FALSE );
@@ -2857,62 +2874,8 @@ static void _itemRepositoryInOutInit(FIELD_ITEMMENU_WORK* pWork)
 
   ITEMDISP_ChangeRetButtonActive( pWork, FALSE );   // 戻るボタンを無効に
 
-   
   // カーソル位置を修正
-  {
-    int now_pos = ITEMMENU_GetItemIndex( pWork );         // 現在のカーソル位置のアイテム
-    int length = ITEMMENU_GetItemPocketNumber( pWork) + 1;  // 捨てる前の数と比べないとダメなので＋１
-    BOOL is_cursor_end = FALSE;
-    BOOL is_list_end = FALSE;
-
-    // カーソル一番下判定
-    if( length == now_pos+1 )
-    {
-      is_cursor_end = TRUE;
-    }
-
-    // リスト一番下判定
-    if( pWork->oamlistpos == length - 7 )
-    {
-      is_list_end = TRUE;
-    }
-
-
-    // スクロールバーが無効なら
-    if( length < ITEMMENU_SCROLLBAR_ENABLE_NUM )
-    {
-      // 一番下のときのみひとつ上を選ぶ
-      if( is_cursor_end == TRUE )
-      {
-        pWork->curpos = MATH_IMax( 0, pWork->curpos-1 );
-        OS_Printf("ケース１\n");
-      }
-    }
-    else
-    {
-      // リスト一番下判定
-      if( is_list_end == FALSE )
-      {
-        //pWork->oamlistpos = MATH_IMax( pWork->oamlistpos + 1 , -1 );
-        OS_Printf("ケース2\n");
-      }
-      else
-      {
-        // カーソルが一番下
-        if( is_cursor_end == FALSE )
-        {
-          pWork->curpos += 1;
-          pWork->oamlistpos = MATH_IMax( pWork->oamlistpos-1 , -1 );
-          OS_Printf("ケース3A\n");
-        }
-        else
-        {
-          pWork->oamlistpos = MATH_IMax( pWork->oamlistpos-1 , -1 );
-          OS_Printf("ケース3B\n");
-        }
-      }
-    }
-  }
+  CursorPosRefresh( pWork );
 
   _CHANGE_STATE( pWork, _itemRepositoryInOutWait );
 }
@@ -3425,6 +3388,8 @@ static void SORT_Repository_Data( FIELD_ITEMMENU_WORK* p_wk , s32 sort_mode )
   p_wk->curpos = 0;
   p_wk->oamlistpos = -1;
   p_wk->oamlistpos_old = 0xffff;
+  p_wk->bCursorChange = 1;
+  ITEMDISP_ScrollCursorChangePos( p_wk ); // カーソル位置を即時反映
 }
 
 //-----------------------------------------------------------------------------
