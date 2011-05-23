@@ -2008,14 +2008,14 @@
 		<Color
 			Name="2"
 			R="0"
-			G="255"
-			B="0"
+			G="0"
+			B="255"
 			A="255" />
 		<Color
 			Name="3"
 			R="0"
-			G="0"
-			B="255"
+			G="255"
+			B="0"
 			A="255" />
 	</Colors>
 	<TagGroups>
@@ -4197,7 +4197,7 @@
 		<Attribute
 			Name="Width"
 			Type="Int16"
-			Default="0"
+			Default="256"
 			LimitEnabled="False">
 			<MultilingualName />
 			<MultilingualComment />
