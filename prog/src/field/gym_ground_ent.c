@@ -162,9 +162,10 @@ void GYM_GROUND_ENT_Setup(FIELDMAP_WORK *p_fieldmap)
       //1回再生設定
       EXP_OBJ_ANM_CNT_PTR anm;
       anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_GROUND_ENT_UNIT_IDX, obj_idx, j);
-      FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 0);
+      FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_GROUND_ENT_UNIT_IDX, obj_idx, j, TRUE);
+      FLD_EXP_OBJ_ChgAnmLoopFlg(anm, TRUE);
       //アニメ停止
-      FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
+      FLD_EXP_OBJ_ChgAnmStopFlg(anm, TRUE);
     }
     
     SetExitLiftDefaultSt(ptr);
@@ -261,12 +262,17 @@ GMEVENT *GYM_GROUND_ENT_CreateExitLiftMoveEvt( GAMESYS_WORK *p_gamesys, const BO
     //移動後位置→基準位置
     tmp->NowHeight = DOWN_HEIGHT;
     tmp->DstHeight = BASE_HEIGHT;
-    {
-      int obj_idx = OBJ_LIFT_0;
-      FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
-      FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_GROUND_ENT_UNIT_IDX, obj_idx, 0, TRUE);
-    }
   }
+
+  {
+    int obj_idx = OBJ_LIFT_0;
+    FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
+    EXP_OBJ_ANM_CNT_PTR anm;
+    anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_GROUND_ENT_UNIT_IDX, obj_idx, 0);
+    // アニメ再生
+    FLD_EXP_OBJ_ChgAnmStopFlg(anm, FALSE);
+  }
+
   if ( tmp->DstHeight - tmp->NowHeight < 0 ) tmp->AddVal = -LIFT_MOVE_SPD;
   else tmp->AddVal = LIFT_MOVE_SPD;
   //イベント作成
@@ -310,7 +316,7 @@ static GMEVENT_RESULT ExitLiftEvt( GMEVENT* event, int* seq, void* work )
       //変動後の高さに書き換え
       tmp->NowHeight += tmp->AddVal;
       //目的の高さに到達したか？
-      if(  CheckArrive(tmp) )
+      if( CheckArrive(tmp) )
       {
         //目的高さで上書き
         tmp->NowHeight = tmp->DstHeight;
@@ -348,6 +354,7 @@ static GMEVENT_RESULT ExitLiftEvt( GMEVENT* event, int* seq, void* work )
         FIELD_CAMERA_BindTarget(camera, tmp->Watch);
       }
       //アニメ開始
+#if 1
       {
         EXP_OBJ_ANM_CNT_PTR anm;
         int obj_idx;
@@ -358,6 +365,7 @@ static GMEVENT_RESULT ExitLiftEvt( GMEVENT* event, int* seq, void* work )
         //アニメ停止解除
         FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
       }
+#endif
       //次のシーケンスへ
       (*seq)++;
     }
@@ -457,12 +465,12 @@ static void SetExitLiftDefaultSt(FLD_EXP_OBJ_CNT_PTR ptr)
   obj_idx = OBJ_LIFT_0;
   anm_idx = 0;
 
-  FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_GROUND_ENT_UNIT_IDX, obj_idx, 0, FALSE);
+  FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_GROUND_ENT_UNIT_IDX, obj_idx, 0, TRUE);
   //頭だし
   FLD_EXP_OBJ_SetObjAnmFrm( ptr, GYM_GROUND_ENT_UNIT_IDX, obj_idx, anm_idx, 0 );
   //停止にしておく
   anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_GROUND_ENT_UNIT_IDX, obj_idx, anm_idx);
-  FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
+  FLD_EXP_OBJ_ChgAnmStopFlg(anm, TRUE);
 }
 
 

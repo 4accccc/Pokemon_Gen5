@@ -20,4 +20,99 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA    ev_reserve_c05gym0101_gymstart_01
+_EVENT_DATA    ev_c05gym0101_sunglasses_01
+_EVENT_DATA    ev_bg_c05gym0101_exitlift_00u
 _EVENT_DATA_END
+
+/************************************************************/
+/*				接続イベント エントランスから降下			*/
+/************************************************************/
+EVENT_START	ev_reserve_c05gym0101_gymstart_01
+  //リフトと自機の位置をセット
+  _GYM_GROUND_SET_ENTER_POS()
+	//マップブラックイン
+	_MAP_FADE_BLACK_IN_SLOW()
+	//エントランスからリフトが降りる演出（引数0 = 降下アニメ）
+	_GYM_GROUND_EXIT_LIFT( 0 )
+  //マップフェード待ち
+	_MAP_FADE_END_CHECK()
+
+	//========================================//
+
+	//リフトの上下位置フラグを初期化（初期位置が下のリフトのフラグをたてておく）
+	//ゾーンチェンジではローカルフラグの操作ができないためゾーン進入時に必ず発動するこのイベントで初期化
+
+	//========================================//
+
+EVENT_END
+
+/************************************************************/
+/*						ジムガイド							*/
+/************************************************************/
+EVENT_START	ev_c05gym0101_sunglasses_01
+	_TALK_OBJ_START()
+
+	//バッジフラグ取得
+	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_05 )
+
+	//バッジフラグで分岐
+	IF $SCWK_TEMP0 == 0 THEN
+		//バッジ入手前の処理
+
+		//アイテム入手フラグで分岐
+		IF FLAG_OFF( FE_C05GYM_ITEM ) THEN
+			//アイテム未入手なら、おいしいみず入手イベント
+			_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0101_glasses_01 )
+			_BALLOONWIN_CLOSE()
+			_ITEM_EVENT_KEYWAIT( ITEM_OISIIMIZU, 1 )
+			_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0101_glasses_02 )
+			_LAST_KEYWAIT()
+			_BALLOONWIN_CLOSE()
+
+			_FLAG_SET( FE_C05GYM_ITEM )			//アイテム入手フラグをセット
+
+		ELSE
+			//入手済みならメッセージのみ
+			_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0101_glasses_02 )
+			_LAST_KEYWAIT()
+			_BALLOONWIN_CLOSE()
+		ENDIF
+
+	ELSE
+		//バッジ入手後の処理
+
+		//思い出してほしいっすね
+		_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0101_glasses_03 )
+		_LAST_KEYWAIT()
+		_BALLOONWIN_CLOSE()
+
+	ENDIF
+
+EVENT_END
+
+/************************************************************/
+/*				接続リフト 至ジムエントランス				*/
+/************************************************************/
+EVENT_START	ev_bg_c05gym0101_exitlift_00u
+
+	//リフト起動
+	_SE_PLAY( SEQ_SE_FLD_61 )		//スイッチＳＥを再生
+	_SE_WAIT()
+		
+	//マップブラックアウト
+	_MAP_FADE_BLACK_OUT_SLOW()
+
+	//リフトを上昇させる（1 = エントランスに移動アニメ）
+	_GYM_GROUND_EXIT_LIFT( 1 )
+
+	_MAP_FADE_END_CHECK()
+
+	//スクリプト予約 マップチェンジ後にエントランスのリフト上昇演出を起動
+	_RESERVE_SCRIPT( SCRID_RESERVE_C05GYM0201_GYMBACK_01 )
+
+	//マップチェンジ
+	_MAP_CHANGE_NO_FADE( ZONE_ID_C05GYM0201, 8, 0, 4, DIR_UP )
+
+EVENT_END
+

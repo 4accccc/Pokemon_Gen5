@@ -34,4 +34,9 @@ extern void GYM_GROUND_Move(FIELDMAP_WORK *p_fieldmap);
 // ベルトコンベア イベント
 extern GMEVENT * GYM_GROUND_CheckBeltEvent( GAMESYS_WORK *p_gamesys );
 
+// スクリプトコマンド用
+extern GMEVENT *GYM_GROUND_CreateLiftMoveEvent( GAMESYS_WORK *p_gamesys, const int lift_id );
+extern GMEVENT *GYM_GROUND_CreateExitLiftMoveEvent( GAMESYS_WORK *p_gamesys, const BOOL exit );
+extern void GYM_GROUND_SetEnterPos( GAMESYS_WORK *p_gamesys );
+
 

@@ -71,11 +71,29 @@
 
 #define BELT_ANM_SPD  (0x1000)  // ベルトコンベアのアニメ速度
 
+// WBの出口リフト移動から移植
+#define F0_HEIGHT ( HEIGHT0*FIELD_CONST_GRID_FX32_SIZE )
+#define EXIT_LIFT_MOVE_SPD (2*FX32_ONE)
+
 //=============================================================================
 /**
  *					構造体宣言
 */
 //=============================================================================
+
+// WBのソースから移植
+typedef struct SHAKE_WORK_tag
+{
+  u8 Seq;
+  u8 AddCount;
+  u8 ShakeCount;
+  u8 ShakeMargin;
+  fx32 AddVal;
+  FIELD_CAMERA *Camera;
+  const VecFx32 *Watch;
+  VecFx32 OrgOffset;
+}SHAKE_WORK;
+
 //-------------------------------------
 // ジム内部中の一時ワーク
 //=====================================
@@ -88,6 +106,14 @@ typedef struct GYM_GROUND_TMP_tag
 
   u8              lift_id;      // 現在リフトのID 左上から連番
   BOOL            lift_arrival[ LIFT_NUM ]; // リフト到達フラグ
+
+  // WBの出口リフト処理に必要なもの
+  fx32          now_height;
+  fx32          dst_height;
+  fx32          add_val;
+  const VecFx32 *watch;
+  SHAKE_WORK    ShakeWork;
+  BOOL          exit;
 
 } GYM_GROUND_TMP;
 
@@ -253,6 +279,19 @@ static void LIFT_SetAriivalFlag( GYM_GROUND_TMP *p_wk, const u8 lift_id );
 static BOOL LIFT_CheckAllAriival( GYM_GROUND_TMP *p_wk );
 static void LIFT_AllArrival( GYM_GROUND_TMP *p_wk );
 
+// スクリプトコマンド用
+// 出口リフト
+static GMEVENT* EXIT_LIFT_CreateEvent( GMEVENT* parent, GAMESYS_WORK* gsys, const BOOL exit );
+static GMEVENT_RESULT ExitLiftEvent( GMEVENT* event, int* seq, void* wk );
+static BOOL EXIT_LIFT_CheckArrive( GYM_GROUND_TMP *p_wk );
+static void InitLiftShake(  const fx32 inAddVal,
+                            const BOOL inStart,
+                            FIELD_CAMERA *camera,
+                            SHAKE_WORK *outWork );
+static BOOL ShakeLift( SHAKE_WORK *work);
+static void SetExitLiftDefaultSt(FLD_EXP_OBJ_CNT_PTR ptr);
+
+
 #ifdef GYM_GROUND_DEBUG_MENU
 //-------------------------------------
 ///	デバッグメニュー
@@ -414,6 +453,64 @@ GMEVENT * GYM_GROUND_CheckBeltEvent( GAMESYS_WORK *p_gamesys )
   }
 
   return NULL;
+}
+
+GMEVENT *GYM_GROUND_CreateLiftMoveEvent( GAMESYS_WORK *p_gamesys, const int lift_id )
+{
+
+  return NULL;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  出口昇降イベント作成
+ *
+ *	@param	*p_gamesys    ゲームシステムポインタ
+ *	@param	inExit        ジムから出るとき TRUE
+ *
+ *	@return イベント
+ */
+//-----------------------------------------------------------------------------
+GMEVENT *GYM_GROUND_CreateExitLiftMoveEvent( GAMESYS_WORK *p_gamesys, const BOOL exit )
+{
+  GMEVENT *event;
+  event = EXIT_LIFT_CreateEvent( NULL, p_gamesys, exit );
+  return event;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  入り口位置にリフトと自機を移動させる
+ *
+ *	@param	*p_gamesys    ゲームシステムポインタ
+ */
+//-----------------------------------------------------------------------------
+void GYM_GROUND_SetEnterPos( GAMESYS_WORK *p_gamesys )
+{
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( p_gamesys );
+  FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
+  GYM_GROUND_TMP *p_wk = GMK_TMP_WK_GetWork(p_fieldmap, GYM_GROUND_TMP_ASSIGN_ID);
+  FIELD_CAMERA *camera = FIELDMAP_GetFieldCamera( p_fieldmap );
+  
+  //現在ウォッチターゲットを保存
+  p_wk->watch = FIELD_CAMERA_GetWatchTarget(camera);
+  //カメラのバインドを切る
+  FIELD_CAMERA_FreeTarget(camera);
+  
+  //対象リフト高さ更新
+  {
+    int obj_idx = OBJ_LIFT_ENT;
+    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, GYM_GROUND_UNIT_IDX, obj_idx);
+    status->trans.y = F0_HEIGHT;
+  }
+  //自機の高さを更新
+  {
+    VecFx32 pos;
+    FIELD_PLAYER *fld_player;
+    fld_player = FIELDMAP_GetFieldPlayer( p_fieldmap );
+    FIELD_PLAYER_GetPos( fld_player, &pos );
+    pos.y = F0_HEIGHT;
+    FIELD_PLAYER_SetPos( fld_player, &pos );
+  }
 }
 
 //=============================================================================
@@ -639,7 +736,7 @@ static void EXPOBJ_ObjSet( GYM_GROUND_TMP *p_wk )
       EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, GYM_GROUND_UNIT_IDX, obj_idx, 0 );
       FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, GYM_GROUND_UNIT_IDX, obj_idx, 0, TRUE );
       FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, TRUE );   // ループ再生設定
-      FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE );    // アニメ停止
+      FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, TRUE );    // アニメ停止
     }
   }
 
@@ -1063,6 +1160,312 @@ static BOOL LIFT_CheckAllAriival( GYM_GROUND_TMP *p_wk )
 static void LIFT_AllArrival( GYM_GROUND_TMP *p_wk )
 {
   ICHI_Printf("全リフト到着した\n");
+}
+
+
+//=============================================================================
+/**
+ *          スクリプトコマンド用
+ */
+//=============================================================================
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  出口リフトイベント作成
+ *
+ *	@param	parent  親イベント
+ *	@param	gsys    ゲームシステムポインタ
+ *	@param	exit    ジムから出るとき TRUE
+ *
+ *	@return イベント
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT* EXIT_LIFT_CreateEvent( GMEVENT* parent, GAMESYS_WORK* gsys, const BOOL exit )
+{
+  GMEVENT * event;
+  GYM_GROUND_TMP *p_wk;
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+
+  p_wk = GMK_TMP_WK_GetWork( p_fieldmap, GYM_GROUND_TMP_ASSIGN_ID );
+
+  p_wk->exit = exit;
+
+  //対象リフトの状態を取得
+  if ( exit )
+  {
+    //基準位置→移動後位置
+    p_wk->now_height = 0;
+    p_wk->dst_height = F0_HEIGHT;
+  }
+  else
+  {
+    //移動後位置→基準位置
+    p_wk->now_height = F0_HEIGHT;
+    p_wk->dst_height = 0;
+  }
+
+  {
+    int obj_idx = OBJ_LIFT_ENT;
+    FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
+    EXP_OBJ_ANM_CNT_PTR anm;
+    anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_GROUND_UNIT_IDX, obj_idx, 0);
+    // アニメ再生
+    FLD_EXP_OBJ_ChgAnmStopFlg(anm, FALSE);
+  }
+
+  if ( p_wk->dst_height - p_wk->now_height < 0 ) p_wk->add_val = -EXIT_LIFT_MOVE_SPD;
+  else p_wk->add_val = EXIT_LIFT_MOVE_SPD;
+  //イベント作成
+  event = GMEVENT_Create( gsys, NULL, ExitLiftEvent, 0 );
+  return event;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  出口リフトイベント
+ *
+ *	@param	* event イベント
+ *	@param	seq     シーケンス
+ *	@param	wk      ワーク
+ *
+ *	@return GMEVENT_RESULT 
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT_RESULT ExitLiftEvent( GMEVENT* event, int* seq, void* wk )
+{
+  GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
+  FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
+  GYM_GROUND_TMP *p_wk = GMK_TMP_WK_GetWork(p_fieldmap, GYM_GROUND_TMP_ASSIGN_ID);
+  FIELD_CAMERA *camera = FIELDMAP_GetFieldCamera( p_fieldmap );
+
+  switch( *seq ){
+  case 0:
+    //@note Exit が FLASEのときは GYM_GROUND_SetEnterPos関数で処理を行っているはずなので、フックする
+    if (p_wk->exit)
+    {
+      //現在ウォッチターゲットを保存
+      p_wk->watch = FIELD_CAMERA_GetWatchTarget(camera);
+      //カメラのバインドを切る
+      FIELD_CAMERA_FreeTarget(camera);
+    }    
+    //リフト移動ＳＥ
+    if ( !p_wk->exit ) PMSND_PlaySE(GYM_GROUND_SE_LIFT_MOVE_IN);
+    else PMSND_PlaySE(GYM_GROUND_SE_LIFT_MOVE);
+    (*seq)++;
+    break;
+  case 1:
+    {
+      //変動後の高さに書き換え
+      p_wk->now_height += p_wk->add_val;
+      //目的の高さに到達したか？
+      if(  EXIT_LIFT_CheckArrive(p_wk) )
+      {
+        //目的高さで上書き
+        p_wk->now_height = p_wk->dst_height;
+        //リフト振動セットアップ
+        if (!p_wk->exit)
+        {
+          InitLiftShake( p_wk->add_val, FALSE, camera, &p_wk->ShakeWork);
+          //リフト停止ＳＥ
+          PMSND_PlaySE(GYM_GROUND_SE_LIFT_STOP);
+        }
+        //次のシーケンスへ
+        (*seq)++;
+      }
+      //対象リフト高さ更新
+      {
+        int obj_idx = OBJ_LIFT_ENT;
+        GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, GYM_GROUND_UNIT_IDX, obj_idx);
+        status->trans.y = p_wk->now_height;
+      }
+      //自機の高さを更新
+      {
+        VecFx32 pos;
+        FIELD_PLAYER *fld_player;
+        fld_player = FIELDMAP_GetFieldPlayer( p_fieldmap );
+        FIELD_PLAYER_GetPos( fld_player, &pos );
+        pos.y = p_wk->now_height;
+        FIELD_PLAYER_SetPos( fld_player, &pos );
+      }
+    }
+    break;
+  case 2:
+    if (p_wk->exit) return GMEVENT_RES_FINISH;
+    else
+    {
+      //振動終わるまで処理をフック
+      {
+        SHAKE_WORK *shake = &p_wk->ShakeWork;
+        if ( !ShakeLift(shake) ) break;
+      }
+
+      //カメラを再バインド
+      if ( (p_wk->watch != NULL) ){
+        FIELD_CAMERA_BindTarget(camera, p_wk->watch);
+      }
+      //アニメ開始
+      {
+        EXP_OBJ_ANM_CNT_PTR anm;
+        int obj_idx;
+        int anm_idx;
+        obj_idx = OBJ_LIFT_ENT;
+        anm_idx = 0;
+        anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_GROUND_UNIT_IDX, obj_idx, anm_idx );
+        //アニメ停止解除
+        FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
+      }
+      //次のシーケンスへ
+      (*seq)++;
+    }
+    break;
+  case 3:
+    {
+      EXP_OBJ_ANM_CNT_PTR anm;
+      int obj_idx;
+      int anm_idx;
+      obj_idx = OBJ_LIFT_ENT;
+      anm_idx = 0;
+      anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_GROUND_UNIT_IDX, obj_idx, anm_idx );
+      //アニメ待ち
+      if( FLD_EXP_OBJ_ChkAnmEnd(anm) ){
+        SetExitLiftDefaultSt(ptr);
+        return GMEVENT_RES_FINISH;
+      }
+    }
+  }
+
+  return GMEVENT_RES_CONTINUE;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  出口リフト到達チェック
+ *
+ *	@param	*p_wk ワーク 
+ *
+ *	@return TRUEで到達
+ */
+//-----------------------------------------------------------------------------
+static BOOL EXIT_LIFT_CheckArrive( GYM_GROUND_TMP *p_wk )
+{
+  if (p_wk->add_val < 0){
+    if ( p_wk->dst_height >= p_wk->now_height ) return TRUE;
+  }else{
+    if ( p_wk->dst_height <= p_wk->now_height ) return TRUE;
+  }
+
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * リフト振動初期化
+ * @param   inAddVal       昇降速度
+ * @param   inStart     起動時 OR 到着時 TRUEで起動時
+ * @param   camera      フィールドカメラポインタ
+ * @param   outWork     格納バッファ
+ * @return  none
+ */
+//--------------------------------------------------------------
+static void InitLiftShake(  const fx32 inAddVal,
+                            const BOOL inStart,
+                            FIELD_CAMERA *camera,
+                            SHAKE_WORK *outWork )
+{
+  SHAKE_WORK *work;
+
+  work = outWork;
+  work->Seq = 0;
+  work->AddCount = 0;
+  work->Camera = camera;
+  //現在ウォッチターゲットを保存
+  work->Watch = FIELD_CAMERA_GetWatchTarget(camera);
+  //復帰オフセット値保存
+  FIELD_CAMERA_GetTargetOffset( camera, &work->OrgOffset );
+
+  if (inStart)
+  {
+    work->AddVal = LIFT_START_SHAKE_VAL*FX32_ONE;
+    work->ShakeCount = LIFT_START_SHAKE_COUNT;
+  }
+  else
+  {
+    work->AddVal = LIFT_SHAKE_VAL*FX32_ONE;
+    work->ShakeCount = LIFT_SHAKE_COUNT;
+  }
+  //進行方向で加算値変更
+  if (inAddVal < 0) work->AddVal *= -1;
+}
+
+//--------------------------------------------------------------
+/**
+ * リフト振動関数
+ * @param	  work    振動ワークポインタ
+ * @return  BOOL    TRUEで振動終了
+ */
+//--------------------------------------------------------------
+static BOOL ShakeLift( SHAKE_WORK *work)
+{
+  switch(work->Seq){
+  case 0:
+    //カメラのバインドを切る
+    FIELD_CAMERA_FreeTarget(work->Camera);
+    
+    work->Seq++;
+    //none break
+  case 1:
+    if (work->ShakeMargin % SHAKE_MARGIN == 0)
+    {
+      //値加算
+      {
+        VecFx32 offset;
+        FIELD_CAMERA_GetTargetOffset( work->Camera, &offset );
+        offset.y += work->AddVal;
+        FIELD_CAMERA_SetTargetOffset( work->Camera, &offset );
+      }
+      //値逆転
+      work->AddVal *= -1;
+      //加算回数インクリメント
+      work->AddCount++;
+      //終了判定
+      if ( work->AddCount >= work->ShakeCount*2 ){
+        //カメラを再バインド
+        if ( (work->Watch != NULL) ) FIELD_CAMERA_BindTarget(work->Camera, work->Watch);
+
+        //オフセット戻し
+        FIELD_CAMERA_SetTargetOffset( work->Camera, &work->OrgOffset );
+
+        return TRUE;
+      }
+    }
+    work->ShakeMargin = (work->ShakeMargin+1)%SHAKE_MARGIN;
+  }
+
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * 出口リフトアニメ初期状態セット
+ * @param	  FLD_EXP_OBJ_CNT_PTR ptr   拡張ＯＢＪコントローラポインタ
+ * @return  none
+ */
+//--------------------------------------------------------------
+static void SetExitLiftDefaultSt(FLD_EXP_OBJ_CNT_PTR ptr)
+{
+  EXP_OBJ_ANM_CNT_PTR anm;
+  int obj_idx;
+  int anm_idx;
+  obj_idx = OBJ_LIFT_ENT;
+  anm_idx = 0;
+
+  FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_GROUND_UNIT_IDX, obj_idx, 0, TRUE);
+  //頭だし
+  FLD_EXP_OBJ_SetObjAnmFrm( ptr, GYM_GROUND_UNIT_IDX, obj_idx, anm_idx, 0 );
+  //停止にしておく
+  anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_GROUND_UNIT_IDX, obj_idx, anm_idx);
+  FLD_EXP_OBJ_ChgAnmStopFlg(anm, TRUE);
 }
 
 #ifdef GYM_GROUND_DEBUG_MENU

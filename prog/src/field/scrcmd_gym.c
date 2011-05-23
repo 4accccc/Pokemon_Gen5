@@ -243,25 +243,6 @@ VMCMD_RESULT EvCmdGymInsect_VacuumAnm( VMHANDLE * core, void *wk )
 }
 
 //--地面--
-#if 0
-//--------------------------------------------------------------
-/**
- * 地面ジムギミック　リフト移動
- * @param  core    仮想マシン制御構造体へのポインタ
- * @retval VMCMD_RESULT
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdGymGround_( VMHANDLE *core, void *wk )
-{
-  u16 lift_idx;
-  GMEVENT *call_event;
-  SCRCMD_WORK *work = wk;
-  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
-
-  return VMCMD_RESULT_SUSPEND;
-}
-#endif
 //--------------------------------------------------------------
 /**
  * @brief   地面ジムギミック　昇降用リフト
@@ -280,7 +261,7 @@ VMCMD_RESULT EvCmdGymGround_MvLift( VMHANDLE *core, void *wk )
   // リフトのID 0～4
   lift_id  = VMGetU16( core );
 
-  //call_event = GYM_GROUND_CreateLiftMoveEvt( gsys, lift_id );
+  call_event = GYM_GROUND_CreateLiftMoveEvent( gsys, lift_id );
 
   if (call_event == NULL){
     GF_ASSERT(0);
@@ -312,7 +293,7 @@ VMCMD_RESULT EvCmdGymGround_ExitLift( VMHANDLE *core, void *wk )
   if (exit) exit_flg = TRUE;
   else exit_flg = FALSE;
 
-  //call_event = GYM_GROUND_CreateExitLiftMoveEvt(gsys, exit_flg);
+  call_event = GYM_GROUND_CreateExitLiftMoveEvent(gsys, exit_flg);
   if (call_event == NULL){
     GF_ASSERT(0);
     return VMCMD_RESULT_SUSPEND;
@@ -365,7 +346,7 @@ VMCMD_RESULT EvCmdGymGround_SetEnterPos( VMHANDLE *core, void *wk )
   SCRCMD_WORK *work = wk;
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
 
-  //GYM_GROUND_SetEnterPos(gsys);
+  GYM_GROUND_SetEnterPos(gsys);
   return VMCMD_RESULT_CONTINUE;
 }
 //--------------------------------------------------------------

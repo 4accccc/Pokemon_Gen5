@@ -8,11 +8,13 @@
 #ifndef ZONE_C05GYM0101_EVC_H
 #define ZONE_C05GYM0101_EVC_H
 
+#define C05GYM0101_SUNGLASSES_01           0
 
 #endif //ZONE_C05GYM0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c05gym0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
 #ifndef ZONE_C05GYM0101_EVB_H
 #define ZONE_C05GYM0101_EVB_H
 
+#define C05GYM0101_EXITLIFT_00U           0
 
 #endif //ZONE_C05GYM0101_EVB_H
