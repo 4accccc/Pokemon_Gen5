@@ -349,11 +349,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>やあやあ　わたしは
-きんのたま　おじさん　あに！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:10:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -361,11 +360,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>やあやあ　わたしは
-きんのたま　おじさん　兄！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:10:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -373,19 +371,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・どちらに話しかけても、このメッセージから開始
-・続けてgold2_01</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:11:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>MIDDLEMAN</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:10:47" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -407,11 +403,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そして　わたしは
-きんのたま　おじさん　おとうと！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:11:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -419,11 +414,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そして　わたしは
-きんのたま　おじさん　弟！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:11:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -431,19 +425,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・
-・続けてgold1_02</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:11:07" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>MIDDLEMAN</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:11:07" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -465,11 +457,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>やってきたね　よくきたね！
-きみに　これを　あげちゃうよ！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:11:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -477,11 +468,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>やってきたね　よくきたね！
-きみに　これを　あげちゃうよ！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:11:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -489,19 +479,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・アイテム入手処理
-・続けてgold2_02</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:11:07" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>MIDDLEMAN</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:11:07" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -523,10 +511,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わたしも　これを　あげちゃうよ！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:11:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -534,10 +522,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わたしも　これを　あげちゃうよ！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:11:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -545,18 +533,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・アイテム入手処理</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:11:07" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>MIDDLEMAN</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:11:07" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -578,13 +565,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>それは　おじさんの　きんのたま！
-ゆうこうに　かつよう　してくれ！▼
-なんたって　おとうとより　すごい
-おじさんの　きんのたま　だからね！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:11:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -592,13 +576,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>それは　おじさんの　きんのたま！
-有効に　活用してくれ！▼
-なんたって　弟より　すごい
-おじさんの　きんのたま　だからね！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:11:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -606,18 +587,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・アイテム入手後</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:11:07" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>MIDDLEMAN</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:11:07" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -639,13 +619,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>それは　おじさんの　きんのたま！
-ゆうこうに　かつよう　してくれ！▼
-なんたって　あにより　りっぱな
-おじさんの　きんのたま　だからね！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:11:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -653,13 +630,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>それは　おじさんの　きんのたま！
-有効に　活用してくれ！▼
-なんたって　兄より　立派な
-おじさんの　きんのたま　だからね！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:11:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -667,18 +641,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・アイテム入手後</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:11:07" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>MIDDLEMAN</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:11:07" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">

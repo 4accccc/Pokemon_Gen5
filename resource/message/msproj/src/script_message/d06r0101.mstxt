@@ -50,6 +50,13 @@
 				User="matsumiya:W00224"
 				Time="2011-05-22T05:42:51" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d06r0101_swbell_02"
@@ -100,6 +107,13 @@
 				User="matsumiya:W00224"
 				Time="2011-05-22T05:42:51" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d06r0101_swbell_03"
@@ -133,11 +147,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・続けて
+・続けてswbell_04
 ・0＝主人公名前</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:47:59" />
+				Time="2011-05-23T09:09:19" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -153,6 +167,13 @@
 				User="matsumiya:W00224"
 				Time="2011-05-22T05:42:51" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d06r0101_swbell_04"
@@ -180,14 +201,14 @@
 			<Text>それにしても　ここ　あいかわらず
 ポケモンが　好きそうな　電気を▽
 たっぷり　帯びているよねえ！▼
-だから　電気と　でんきが
+だから　電気と　電気が
 反発しあって▽
 浮かぶ　石が　あるんだよお▼
 もっとも　全部の　石を
 押せるわけじゃ　ないんだけどねえ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:44:28" />
+				Time="2011-05-23T09:09:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -216,6 +237,13 @@
 				User="matsumiya:W00224"
 				Time="2011-05-22T05:42:51" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d06r0101_swbell_05"
@@ -255,10 +283,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・？？まで繰り返し</Comment>
+・？？まで繰り返し（条件未定）</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:48:17" />
+				Time="2011-05-23T09:09:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -274,6 +302,13 @@
 				User="matsumiya:W00224"
 				Time="2011-05-22T05:42:51" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d06r0101_boss_01"

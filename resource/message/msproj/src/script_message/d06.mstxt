@@ -62,10 +62,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヤーコン『またせたな[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:06:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -73,10 +73,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヤーコン『待たせたな[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:06:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -84,22 +84,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・c05ジムクリア後に巣を調べるとメッセージだけ表示
-・メッセージ後、主人公！マーク表示して
-　下向きになり一歩下へ移動
-・ヤーコン登場する</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:06:31" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>LEADER5
-ヤーコン</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:06:33" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -121,15 +116,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>これは　デンチュラという
-でんきタイプ　ポケモンの　すだな[Ctrl2:PageClear ]
-なんで　こんな　ところに
-すが　あるのか　わからんが▼
-こまっている　にんげんが　いるなら
-なんとかするのも　ジムリーダーよ▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:06:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -137,15 +127,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>これは　デンチュラという
-でんきタイプ　ポケモンの　巣だな[Ctrl2:PageClear ]
-なんで　こんな　ところに
-巣があるのか　わからんが▼
-困っている　人間がいるなら
-なんとかするのも　ジムリーダーよ▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:06:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -153,21 +138,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・メッセージ表示後
-　ポケモン「ミネズミ」の動作モデル出現
-・続けてmsg_d06_leader_03</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:06:45" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>LEADER5
-ヤーコン</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:06:45" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -189,11 +170,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>やれい！
-ワルビルっ！！[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:06:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -201,11 +181,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>やれい！
-ワルビルっ！！[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:06:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -213,21 +192,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・ポケモンが巣に向かい技を出したような演出
-・巣を削除する処理
-・続けてleader_04</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:06:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>LEADER5
-ヤーコン</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:06:46" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -249,14 +224,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ほらよ！
-この　わざマシンを　くれてやる[Ctrl2:PageClear ]
-オレさま　じまんの　わざマシンだ[Ctrl2:PageClear ]
-ぜんぶの　ポケモンに
-おぼえさせても　いいぞ！[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:06:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -264,14 +235,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ほらよ！
-この　わざマシンを　くれてやる[Ctrl2:PageClear ]
-オレさま　自慢の　わざマシンだ[Ctrl2:PageClear ]
-全部の　ポケモンに
-覚えさせても　いいぞ！[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:06:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -279,21 +246,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・主人公と向き合ってアイテム入手処理
-　No405「じならし」
-・続けてleader_05</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:06:47" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>LEADER5
-ヤーコン</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:06:47" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -315,16 +278,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>その「じならし」はだな……
-ダメージを　あたえつつ▽
-あいての　すばやさを　さげる　わざ▼
-じめんタイプの　ポケモンには
-すばやさが　ひくい　ものも　いる▼
-「じならし」を　つかいこなせば
-その　じゃくてんを　カバーできるだろ▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:06:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -332,16 +289,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>その「じならし」はだな……
-ダメージを　与えつつ▽
-相手の　すばやさを　さげる　技▼
-じめんタイプの　ポケモンには
-すばやさが　低いものも　いる▼
-「じならし」を　使いこなせば
-その　弱点を　カバーできるだろ▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:06:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -349,19 +300,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・続けてleader_06</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:06:48" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>LEADER5
-ヤーコン</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:06:48" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -383,16 +332,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ワシには　おまえの　さいのうが
-どれほどのものか　わからんが[Ctrl2:PageClear ]
-いけると　おもうなら　どこまでも[Ctrl2:PageClear ]
-やれると　おもうなら　いつまでも[Ctrl2:PageClear ]
-すきなように　やればいいじゃねえか[Ctrl2:PageClear ]
-げんかいを　きめるのは
-じぶん　ってことだ[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:06:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -400,15 +343,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ワシには　おまえの　才能が
-どれほどのものか　わからんが[Ctrl2:PageClear ]
-行けると思うなら　どこまでも[Ctrl2:PageClear ]
-やれると思うなら　いつまでも[Ctrl2:PageClear ]
-好きなように　やればいいじゃねえか
-限界を決めるのは　自分ってことだ[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:06:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -416,20 +354,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・表示後、道をくだりc05方面へ移動
-　画面外に消えると、主人公操作可能に</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:06:48" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>LEADER5
-ヤーコン</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:06:48" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
