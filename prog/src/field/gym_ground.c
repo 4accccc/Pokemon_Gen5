@@ -71,7 +71,7 @@
 
 #define LIFT_NUM      (36)      // リフト数     
 
-#define BELT_ANM_SPD  (0x1000)  // ベルトコンベアのアニメ速度
+#define BELT_ANM_SPD  (0x1200)  // ベルトコンベアのアニメ速度
 
 // WBの出口リフト移動から移植
 #define F0_HEIGHT ( HEIGHT0*FIELD_CONST_GRID_FX32_SIZE )
@@ -653,11 +653,7 @@ static void EXPOBJ_ObjSet( GYM_GROUND_TMP *p_wk )
         FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, GYM_GROUND_UNIT_IDX, obj_idx, 0, TRUE );
         FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, TRUE );  // ループ再生設定
         FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, TRUE );  // アニメ再生設定
-#ifdef GYM_GROUND_DEBUG_MENU
-        FLD_EXP_OBJ_ChgAddFrame( exp_anm, debug_anm_spd ); // アニメSPD
-#else
         FLD_EXP_OBJ_ChgAddFrame( exp_anm, BELT_ANM_SPD ); // アニメSPD
-#endif
       }
     }
   }
@@ -1046,20 +1042,30 @@ static void BELT_AnmStart( FLD_EXP_OBJ_CNT_PTR exp_obj, const u16 belt_id, const
   if( FLD_EXP_OBJ_GetAnmStopFlg( exp_anm ) == TRUE )
   {
     //FLD_EXP_OBJ_SetObjAnmFrm( exp_obj, GYM_GROUND_UNIT_IDX, obj_idx, 0, 0 );
+    fx32  anm_spd;
 
     switch( dir ){
     case DIR_UP:
     case DIR_RIGHT:
-      FLD_EXP_OBJ_ChgAddFrame( exp_anm, FX32_ONE );
+#ifdef GYM_GROUND_DEBUG_MENU
+      anm_spd = debug_anm_spd;
+#else
+      anm_spd = BELT_ANM_SPD;
+#endif
       break;
     case DIR_DOWN:
     case DIR_LEFT:
-      FLD_EXP_OBJ_ChgAddFrame( exp_anm, -FX32_ONE );
+#ifdef GYM_GROUND_DEBUG_MENU
+      anm_spd = -debug_anm_spd;
+#else
+      anm_spd = -BELT_ANM_SPD;
+#endif
       break;
     default:
       GF_ASSERT(0);
     }
 
+    FLD_EXP_OBJ_ChgAddFrame( exp_anm, anm_spd ); // アニメSPD
     FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE ); //アニメ開始
   }
 
