@@ -125,6 +125,8 @@ static BOOL debugCommand_printf( DEBUG_WBT_WORK *p_wk );
 // test
 static BOOL debugMenuCallProc_WinRecord( DEBUG_WBT_WORK *p_wk );
 static BOOL debugMenuCallProc_TDownload( DEBUG_WBT_WORK *p_wk );
+static BOOL debugMenuCallProc_PkwdCount( DEBUG_WBT_WORK *p_wk );
+
 //
 static BOOL debugMenuMain( DEBUG_WBT_WORK *wk );
 static BOOL debugMenuKeyInput( DEBUG_WBT_WORK *wk );
@@ -327,8 +329,9 @@ static GMEVENT_RESULT debugMenuWBTEvent( GMEVENT *event, int *seq, void *wk )
       debugCommand_printf( NULL );
       return GMEVENT_RES_CONTINUE;
 #else
-      	work->call_func = debugMenuCallProc_TDownload;
-      	work->t_status = T_DOWNLOAD_STATUS_VIEW;
+//      	work->call_func = debugMenuCallProc_TDownload;
+      	work->call_func = debugMenuCallProc_PkwdCount;
+//      	work->t_status = T_DOWNLOAD_STATUS_VIEW;
 		(*seq)++;
 		break;
 #endif
@@ -972,6 +975,36 @@ static BOOL debugMenuCallProc_TDownload( DEBUG_WBT_WORK *p_wk )
 	GMEVENT_ChangeEvent( p_wk->gmEvent, new_event );
 	//
 	OS_Printf( "T Download Start\n" );
+	return TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  デバッグ用PkwdCount
+ *
+ *  @param  DEBUG_WBT_WORK *p_wk   ワーク
+ *
+ *  @return 終了コード
+ */
+//-----------------------------------------------------------------------------
+static BOOL debugMenuCallProc_PkwdCount( DEBUG_WBT_WORK *p_wk )
+{
+	GMEVENT 			*new_event;
+	PKWD_COUNT_PARAM 	*pkwd_param;
+	pkwd_param = PKWD_COUNT_PARAM_Create( HEAPID_PROC, p_wk->gmSys, NULL );
+	//
+	// なくても大丈夫なので保留
+//	WIN_RECORD_PARAM_Setup_Debug(
+//		p_wk->gmSys, wr_param,
+//		WBTTYPE_ALL, WBTRULE_SINGLE, p_wk->stage, p_wk->Trbuffer, p_wk->DebugNum );
+	// debug用
+//	td_param->status = p_wk->t_status;
+	//
+	new_event = GMEVENT_CreateOverlayEventCall( p_wk->gmSys,
+      FS_OVERLAY_ID(notwifi_event_wbt), PKWD_COUNT_EVENT_Show, (void *)pkwd_param );
+	GMEVENT_ChangeEvent( p_wk->gmEvent, new_event );
+	//
+	OS_Printf( "Pkwd Count Start\n" );
 	return TRUE;
 }
 

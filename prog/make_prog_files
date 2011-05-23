@@ -2596,6 +2596,11 @@ SRCS_OVERLAY_MANUAL = app/manual/manual.c \
 SRCS_OVERLAY_WBTLIST = app/wbt_list/wbt_list.c \
                       app/wbt_list/wbt_list_graphic.c
 
+# PKWD ANNOUNCE
+#===> SRCS_OVERLAY_UI_COMMON
+SRCS_OVERLAY_PKWD_ANNOUNCE = app/pkwd_announce/pkwd_count.c \
+                      app/pkwd_announce/pkwd_count_graphic.c
+
 # エントリーチェッカー
 #===> SRCS_OVERLAY_UI_COMMON
 SRCS_OVERLAY_ENTRY_CHECKER = app/entry_checker/win_record.c \

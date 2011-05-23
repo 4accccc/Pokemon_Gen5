@@ -184,6 +184,7 @@ SUBDIRS	=	wmi \
 			pokewood \
 			mobiclip \
 			medal_info \
+			pkwd_announce \
 			animal_trail
 
 

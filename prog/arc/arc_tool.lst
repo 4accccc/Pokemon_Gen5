@@ -332,4 +332,5 @@
 
   ARCID_POKEWOOD   "pokewood.narc"   #ポケウッドシナリオデータ
   ARCID_FMISSION_APP "fmission_app.narc" #フェスミッションアプリグラフィックアーカイブ
+  ARCID_PKWD_ANNOUNCE "pkwd_announce_gra.narc" #ポケウッドアナウンスデータ
   

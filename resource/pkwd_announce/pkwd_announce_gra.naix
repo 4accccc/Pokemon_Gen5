@@ -1,0 +1,27 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: pkwd_announce_gra.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_PKWD_ANNOUNCE_GRA_NAIX_
+#define NARC_PKWD_ANNOUNCE_GRA_NAIX_
+
+enum {
+	NARC_pkwd_announce_gra_pkwd_count_bg_NCLR = 0,
+	NARC_pkwd_announce_gra_pkwd_count_obj_NCLR = 1,
+	NARC_pkwd_announce_gra_pkwd_count_bg1_NCGR = 2,
+	NARC_pkwd_announce_gra_pkwd_count_bg2_NCGR = 3,
+	NARC_pkwd_announce_gra_pkwd_count_obj_NCGR = 4,
+	NARC_pkwd_announce_gra_pkwd_count_obj_NCER = 5,
+	NARC_pkwd_announce_gra_pkwd_count_bg1_NSCR = 6,
+	NARC_pkwd_announce_gra_pkwd_count_bg2_NSCR = 7,
+	NARC_pkwd_announce_gra_pkwd_count_obj_NANR = 8,
+	NARC_pkwd_announce_gra_pkwd_count_pos_tblbin = 9
+};
+
+/* NARC_PKWD_ANNOUNCE_GRA_NAIX_ */
+#endif

@@ -33,4 +33,6 @@ extern GMEVENT * WIN_RECORD_EVENT_Show( GAMESYS_WORK * gsys, void * parent_work 
 //
 extern GMEVENT * T_DOWNLOAD_EVENT_Show( GAMESYS_WORK * gsys, void * parent_work );
 
+extern GMEVENT * PKWD_COUNT_EVENT_Show( GAMESYS_WORK * gsys, void * parent_work );
+
 

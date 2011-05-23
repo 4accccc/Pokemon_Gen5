@@ -15,6 +15,8 @@
 #include "app/win_record.h"		// WIN_RECORD_PARAM
 #include "app/t_download.h"		// T_DOWNLOAD_PARAM
 
+#include "app/pkwd_count.h"
+
 
 //============================================================================================
 //============================================================================================
@@ -55,6 +57,15 @@ extern T_DOWNLOAD_PARAM * T_DOWNLOAD_PARAM_Create( HEAPID heapID, GAMESYS_WORK *
 extern void T_DOWNLOAD_PARAM_Delete( T_DOWNLOAD_PARAM * td_param );
 #ifdef PM_DEBUG
 extern void T_DOWNLOAD_PARAM_Setup_Debug( GAMESYS_WORK * gsys, T_DOWNLOAD_PARAM * td_param );
+#endif
+
+//------------------------------------------------------------------
+//
+//------------------------------------------------------------------
+extern PKWD_COUNT_PARAM * PKWD_COUNT_PARAM_Create( HEAPID heapID, GAMESYS_WORK * gsys, u16 * res_work );
+extern void PKWD_COUNT_PARAM_Delete( PKWD_COUNT_PARAM * pkwd_param );
+#ifdef PM_DEBUG
+extern void PKWD_COUNT_PARAM_Setup_Debug( GAMESYS_WORK * gsys, PKWD_COUNT_PARAM * pkwd_param );
 #endif
 
 
