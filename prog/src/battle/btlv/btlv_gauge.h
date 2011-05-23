@@ -38,7 +38,7 @@ typedef enum
 typedef struct _BTLV_GAUGE_WORK           BTLV_GAUGE_WORK;
 typedef struct _BTLV_GAUGE_CLWK           BTLV_GAUGE_CLWK;
 
-extern  BTLV_GAUGE_WORK*  BTLV_GAUGE_Init( GFL_FONT* fontHandle, HEAPID heapID );
+extern  BTLV_GAUGE_WORK*  BTLV_GAUGE_Init( GFL_FONT* fontHandle, int pokewood, HEAPID heapID );
 extern  void              BTLV_GAUGE_Exit( BTLV_GAUGE_WORK *bgw );
 extern  void              BTLV_GAUGE_Main( BTLV_GAUGE_WORK *bgw );
 extern  void              BTLV_GAUGE_Add( BTLV_GAUGE_WORK *bgw, const BTL_MAIN_MODULE* wk, const BTL_POKEPARAM* bpp,
@@ -67,4 +67,7 @@ extern  BOOL              BTLV_GAUGE_GetGaugeStatus( BTLV_GAUGE_WORK* bgw, BtlvM
 extern  void              BTLV_GAUGE_SwitchGaugeMode( BTLV_GAUGE_WORK* bgw );
 extern  void              BTLV_GAUGE_SetMovePosFlag( BTLV_GAUGE_WORK* bgw, BtlvMcssPos pos );
 extern   u32              BTLV_GAUGE_GetPlttFileId( void );
+
+extern  void              BTLV_GAUGE_LoadResorce( BTLV_GAUGE_WORK* bgw );
+extern  void              BTLV_GAUGE_ReleaseResorce( BTLV_GAUGE_WORK* bgw );
 

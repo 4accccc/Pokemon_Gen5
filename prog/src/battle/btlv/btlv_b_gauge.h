@@ -50,9 +50,13 @@ typedef struct
 { 
   BTLV_BALL_GAUGE_TYPE  type;
   int                   status[ TEMOTI_POKEMAX ];
+  int                   pokewood;
 }BTLV_BALL_GAUGE_PARAM;
 
 
 extern  BTLV_BALL_GAUGE_WORK* BTLV_BALL_GAUGE_Create( const BTLV_BALL_GAUGE_PARAM* bbgp, HEAPID heapID );
 extern  void                  BTLV_BALL_GAUGE_Delete( BTLV_BALL_GAUGE_WORK* bbgw );
 extern  BOOL                  BTLV_BALL_GAUGE_CheckExecute( BTLV_BALL_GAUGE_WORK* bbgw );
+
+extern void                   BTLV_BALL_GAUGE_LoadResouce( BTLV_BALL_GAUGE_WORK* bbgw );
+extern void                   BTLV_BALL_GAUGE_ReleaseResouce( BTLV_BALL_GAUGE_WORK* bbgw );

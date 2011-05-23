@@ -93,6 +93,10 @@ struct _BTLV_BALL_GAUGE_WORK
   int                   player_no;
 
   HEAPID                heapID;
+
+  BOOL                  clwk_load;
+
+  BTLV_BALL_GAUGE_PARAM   bbgp;
 };
 
 typedef struct
@@ -120,10 +124,72 @@ static  void  TCB_BTLV_BALL_GAUGE_Anime_CB( GFL_TCB* tcb );
 BTLV_BALL_GAUGE_WORK* BTLV_BALL_GAUGE_Create( const BTLV_BALL_GAUGE_PARAM* bbgp, HEAPID heapID )
 {
   BTLV_BALL_GAUGE_WORK* bbgw    = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID( heapID ), sizeof( BTLV_BALL_GAUGE_WORK ) );
-  ARCHANDLE*            handle  = GFL_ARC_OpenDataHandle( ARCID_BATTGRA, GFL_HEAP_LOWID( heapID ) );
+  bbgw->bbgp   = *bbgp;
 
   bbgw->heapID = GFL_HEAP_LOWID( heapID );
   bbgw->clunit = GFL_CLACT_UNIT_Create( BTLV_BALL_GAUGE_CLWK_MAX, 0, bbgw->heapID );
+
+  //CLWK
+  if( bbgp->pokewood != BTL_POKEWOOD_SHOW )
+  {
+    BTLV_BALL_GAUGE_LoadResouce( bbgw );
+  }
+
+  { 
+    TCB_BALL_GAUGE_ANIME* tbga = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( heapID ), sizeof( TCB_BALL_GAUGE_ANIME ) );
+    tbga->bbgw = bbgw;
+    BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( BTLV_EFFECT_GetTCBSYS(), TCB_BTLV_BALL_GAUGE_Anime, tbga, 0 ),
+                                         TCB_BTLV_BALL_GAUGE_Anime_CB, GROUP_DEFAULT );
+  }
+  bbgw->tcb_execute = 1;
+
+  PMSND_PlaySE( SEQ_SE_TB_START );
+
+  return bbgw;
+}
+
+//============================================================================================
+/**
+ *  @brief  システム終了
+ *
+ *  @param[in]  bbgw  BTLV_BALL_GAUGE_WORK管理構造体へのポインタ
+ */
+//============================================================================================
+void  BTLV_BALL_GAUGE_Delete( BTLV_BALL_GAUGE_WORK* bbgw )
+{
+  BTLV_BALL_GAUGE_ReleaseResouce( bbgw );
+
+  GFL_CLACT_UNIT_Delete( bbgw->clunit );
+  GFL_HEAP_FreeMemory( bbgw );
+}
+
+//============================================================================================
+/**
+ *  @brief  ボールゲージエフェクトが起動中かチェック
+ *
+ *  @param[in]  bbgw  BTLV_BALL_GAUGE_WORK管理構造体へのポインタ
+ *
+ *  @retval FALSE:終了　TRUE:起動中
+ */
+//============================================================================================
+BOOL  BTLV_BALL_GAUGE_CheckExecute( BTLV_BALL_GAUGE_WORK* bbgw )
+{ 
+  return ( bbgw->tcb_execute != 0 );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  リソース読み込み
+ *
+ *	@param	BTLV_BALL_GAUGE_WORK* bbgw ワーク
+ */
+//-----------------------------------------------------------------------------
+void BTLV_BALL_GAUGE_LoadResouce( BTLV_BALL_GAUGE_WORK* bbgw )
+{
+
+  ARCHANDLE*            handle  = GFL_ARC_OpenDataHandle( ARCID_BATTGRA, GFL_HEAP_LOWID( bbgw->heapID ) );
+
+  bbgw->clwk_load  = TRUE;
 
   //リソース読み込み
   bbgw->charID = GFL_CLGRP_CGR_Register( handle, NARC_battgra_wb_gauge_m_ball_NCGR, FALSE, CLSYS_DRAW_MAIN, bbgw->heapID );
@@ -182,6 +248,7 @@ BTLV_BALL_GAUGE_WORK* BTLV_BALL_GAUGE_Create( const BTLV_BALL_GAUGE_PARAM* bbgp,
         BTLV_BALL_GAUGE_ANM_ARROW_E,
       },
     };
+    const BTLV_BALL_GAUGE_PARAM* bbgp = &bbgw->bbgp;
     int stop_pos = pos[ bbgp->type ][ 0 ].x;
 
     ball_gauge.pos_x = pos[ bbgp->type ][ 0 ].x + ( ( bbgp->type == BTLV_BALL_GAUGE_TYPE_MINE ) ?
@@ -232,58 +299,37 @@ BTLV_BALL_GAUGE_WORK* BTLV_BALL_GAUGE_Create( const BTLV_BALL_GAUGE_PARAM* bbgp,
                                  BTLV_BALL_GAUGE_ARROW_MOVE_SPEED;
   }
 
-  { 
-    TCB_BALL_GAUGE_ANIME* tbga = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( heapID ), sizeof( TCB_BALL_GAUGE_ANIME ) );
-    tbga->bbgw = bbgw;
-    BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( BTLV_EFFECT_GetTCBSYS(), TCB_BTLV_BALL_GAUGE_Anime, tbga, 0 ),
-                                         TCB_BTLV_BALL_GAUGE_Anime_CB, GROUP_DEFAULT );
-  }
-  bbgw->tcb_execute = 1;
 
   GFL_ARC_CloseDataHandle( handle );
 
-  PMSND_PlaySE( SEQ_SE_TB_START );
-
-  return bbgw;
 }
-
-//============================================================================================
+//----------------------------------------------------------------------------
 /**
- *  @brief  システム終了
+ *	@brief  リソース破棄
  *
- *  @param[in]  bbgw  BTLV_BALL_GAUGE_WORK管理構造体へのポインタ
+ *	@param	BTLV_BALL_GAUGE_WORK* bbgw ワーク
  */
-//============================================================================================
-void  BTLV_BALL_GAUGE_Delete( BTLV_BALL_GAUGE_WORK* bbgw )
-{ 
-  int i;
+//-----------------------------------------------------------------------------
+void BTLV_BALL_GAUGE_ReleaseResouce( BTLV_BALL_GAUGE_WORK* bbgw )
+{
 
-  for( i = 0 ; i < BTLV_BALL_GAUGE_CLWK_MAX ; i++ )
-  { 
-    GFL_CLACT_WK_Remove( bbgw->bbgcl[ i ].clwk );
+  if( bbgw->clwk_load == TRUE )
+  {
+    int i;
+
+
+    for( i = 0 ; i < BTLV_BALL_GAUGE_CLWK_MAX ; i++ )
+    { 
+      GFL_CLACT_WK_Remove( bbgw->bbgcl[ i ].clwk );
+    }
+
+    GFL_CLGRP_CGR_Release( bbgw->charID );
+    GFL_CLGRP_PLTT_Release( bbgw->plttID );
+    GFL_CLGRP_CELLANIM_Release( bbgw->cellID );
+
+    bbgw->clwk_load  = FALSE;
   }
-
-  GFL_CLGRP_CGR_Release( bbgw->charID );
-  GFL_CLGRP_PLTT_Release( bbgw->plttID );
-  GFL_CLGRP_CELLANIM_Release( bbgw->cellID );
-  GFL_CLACT_UNIT_Delete( bbgw->clunit );
-  GFL_HEAP_FreeMemory( bbgw );
 }
-
-//============================================================================================
-/**
- *  @brief  ボールゲージエフェクトが起動中かチェック
- *
- *  @param[in]  bbgw  BTLV_BALL_GAUGE_WORK管理構造体へのポインタ
- *
- *  @retval FALSE:終了　TRUE:起動中
- */
-//============================================================================================
-BOOL  BTLV_BALL_GAUGE_CheckExecute( BTLV_BALL_GAUGE_WORK* bbgw )
-{ 
-  return ( bbgw->tcb_execute != 0 );
-}
-
 //============================================================================================
 /**
  *  @brief  ボールゲージアニメ
@@ -296,8 +342,14 @@ BOOL  BTLV_BALL_GAUGE_CheckExecute( BTLV_BALL_GAUGE_WORK* bbgw )
 static  void  TCB_BTLV_BALL_GAUGE_Anime( GFL_TCB* tcb, void* work )
 { 
   TCB_BALL_GAUGE_ANIME* tbga = ( TCB_BALL_GAUGE_ANIME* )work;
+  BTLV_BALL_GAUGE_WORK* bbgw = tbga->bbgw;
   BOOL flag = FALSE;
   int i;
+  if( bbgw->clwk_load == FALSE )
+  {
+    BTLV_EFFECT_FreeTCB( tcb );
+    return;
+  }
 
   switch( tbga->bbgw->seq_no ){ 
   case 0:

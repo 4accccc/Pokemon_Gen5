@@ -213,8 +213,14 @@ int BTLV_CLACT_AddEx( BTLV_CLACT_WORK *bclw, ARCID arcID,
 	  CLSYS_AFFINETYPE_NORMAL,  // 上書きアフィンタイプ（CLSYS_AFFINETYPE）
   };
 
+  //上映中はOBJの作成を許さない
+  if( bclw->pokewood == BTL_POKEWOOD_SHOW )
+  {
+    return 0;
+  }
 
   hdl = GFL_ARC_OpenDataHandle( arcID, GFL_HEAP_LOWID( bclw->heapID ) );
+
 
   for( index = 0 ; index < BTLV_CLACT_CLWK_MAX ; index++ )
   {
@@ -379,15 +385,18 @@ void BTLV_CLACT_SetRecMeterAnime( BTLV_CLACT_WORK *bclw, int max_frame, int now_
 void  BTLV_CLACT_Delete( BTLV_CLACT_WORK *bclw, int index )
 {
   GF_ASSERT( bclw );
-  GF_ASSERT( bclw->bccl[ index ].clwk != NULL );
+  
+  if( bclw->bccl[ index ].clwk != NULL )
+  {
 
-  GFL_CLGRP_CGR_Release( bclw->bccl[ index ].charID );
-  GFL_CLGRP_PLTT_Release( bclw->bccl[ index ].plttID );
-  GFL_CLGRP_CELLANIM_Release( bclw->bccl[ index ].cellID );
+    GFL_CLGRP_CGR_Release( bclw->bccl[ index ].charID );
+    GFL_CLGRP_PLTT_Release( bclw->bccl[ index ].plttID );
+    GFL_CLGRP_CELLANIM_Release( bclw->bccl[ index ].cellID );
 
-  GFL_CLACT_WK_Remove( bclw->bccl[ index ].clwk );
+    GFL_CLACT_WK_Remove( bclw->bccl[ index ].clwk );
 
-  bclw->bccl[ index ].clwk = NULL;
+    bclw->bccl[ index ].clwk = NULL;
+  }
 }
 
 //=============================================================================================
@@ -436,6 +445,11 @@ void  BTLV_CLACT_MovePosition( BTLV_CLACT_WORK *bclw, int index, int type, GFL_C
   VecFx32       start_fx32;
   VecFx32       pos_fx32;
 
+  if( bclw->bccl[ index ].clwk == NULL )
+  {
+    return;
+  }
+
   pos_fx32.x = pos->x << FX32_SHIFT;
   pos_fx32.y = pos->y << FX32_SHIFT;
   pos_fx32.z = 0;
@@ -477,6 +491,11 @@ void  BTLV_CLACT_MoveScale( BTLV_CLACT_WORK *bclw, int index, int type, VecFx32 
 {
   VecFx32 start;
 
+  if( bclw->bccl[ index ].clwk == NULL )
+  {
+    return;
+  }
+
   start.x = FX32_ONE;
   start.y = FX32_ONE;
   start.z = FX32_ONE;
@@ -498,6 +517,10 @@ void  BTLV_CLACT_MoveScale( BTLV_CLACT_WORK *bclw, int index, int type, VecFx32 
 //============================================================================================
 void  BTLV_CLACT_SetAnime( BTLV_CLACT_WORK *bclw, int index, int anm_no )
 {
+  if( bclw->bccl[ index ].clwk == NULL )
+  {
+    return;
+  }
   GFL_CLACT_WK_SetAnmSeq( bclw->bccl[ index ].clwk, anm_no );
 }
 
@@ -515,9 +538,17 @@ void  BTLV_CLACT_SetAnime( BTLV_CLACT_WORK *bclw, int index, int anm_no )
 //============================================================================================
 void  BTLV_CLACT_SetPaletteFade( BTLV_CLACT_WORK *bclw, int index, u8 start_evy, u8 end_evy, s8 wait, u16 rgb )
 { 
-  u16 pltt_bit = 1 << ( ( GFL_CLGRP_PLTT_GetAddr( bclw->bccl[ index ].plttID, CLSYS_DRAW_MAIN ) & 0x3ff ) / 0x20 );
 
-  PaletteFadeReq( BTLV_EFFECT_GetPfd(), PF_BIT_MAIN_OBJ, pltt_bit, wait, start_evy, end_evy, rgb, BTLV_EFFECT_GetTCBSYS() );
+  if( bclw->bccl[ index ].clwk == NULL )
+  {
+    return;
+  }
+  else
+  {
+    u16 pltt_bit = 1 << ( ( GFL_CLGRP_PLTT_GetAddr( bclw->bccl[ index ].plttID, CLSYS_DRAW_MAIN ) & 0x3ff ) / 0x20 );
+
+    PaletteFadeReq( BTLV_EFFECT_GetPfd(), PF_BIT_MAIN_OBJ, pltt_bit, wait, start_evy, end_evy, rgb, BTLV_EFFECT_GetTCBSYS() );
+  }
 }
 
 //============================================================================================

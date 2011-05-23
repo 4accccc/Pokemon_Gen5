@@ -482,7 +482,8 @@ void BTLV_SCU_Setup( BTLV_SCU* wk )
     GX_SetVisibleWnd( GX_WNDMASK_W0 );
     G2_SetWnd0Position( 0, POKEWOOD_WIN0_TOP_Y, 255, POKEWOOD_WIN0_BOTTOM_Y);
     GFL_BG_SetScroll( GFL_BG_FRAME1_M, GFL_BG_SCROLL_Y_SET, POKEWOOD_MSGWIN_SLIDE_Y );
-    GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_OFF );
+    GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+    //obj‚ð“Ç‚Ýž‚ÝAì¬‚µ‚È‚­‚È‚Á‚½‚Ì‚Å‚¢‚ç‚È‚­‚È‚è‚Ü‚µ‚½
   
   }
 
@@ -4366,6 +4367,7 @@ static void bbgp_make( BTLV_SCU* wk, BTLV_BALL_GAUGE_PARAM* bbgp, u8 clientID_1,
 
 
   bbgp->type = type;
+  bbgp->pokewood = BTL_MAIN_GetPokewoodMode( wk->mainModule );
 
 
   for( i = 0 ; i < TEMOTI_POKEMAX ; i++ )

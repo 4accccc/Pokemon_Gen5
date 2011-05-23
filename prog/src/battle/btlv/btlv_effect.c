@@ -351,7 +351,7 @@ void  BTLV_EFFECT_Init( BTLV_EFFECT_SETUP_PARAM* besp, GFL_FONT* fontHandle, HEA
 
   bew->bcw  = BTLV_CAMERA_Init( bew->tcb_sys, heapID );
   bew->bclw = BTLV_CLACT_Init( bew->tcb_sys, heapID, BTL_MAIN_GetPokewoodMode(bew->besp.mainModule) );
-  bew->bgw  = BTLV_GAUGE_Init( fontHandle, heapID );
+  bew->bgw  = BTLV_GAUGE_Init( fontHandle, besp->pokewood, heapID );
   bew->btw  = BTLV_TIMER_Init( heapID );
   bew->bbw  = BTLV_BG_Init( bew->tcb_sys, heapID );
 
