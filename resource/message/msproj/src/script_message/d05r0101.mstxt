@@ -6,13 +6,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヤーコン『・説明
-ま　ひとことで　いえば
-８にん　さんかの　トーナメント▽
-３かい　かてば　ゆうしょうだ！▼</Text>
+			<Text>ヤーコン『こんかい　おまえたちに
+さんか　してもらうのは▼
+オールトーナメント！
+なんでも　オーケーの　たいかいだ！▼
+８にん　さんかの　トーナメントで
+３かい　かてば　ゆうしょう　だぞ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:44:38" />
+				Time="2011-05-23T08:03:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -20,10 +22,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？？？</Text>
+			<Text>ヤーコン『今回　おまえたちに
+参加してもらうのは▼
+オールトーナメント！
+なんでも　オーケーの　大会だ！▼
+８人参加の　トーナメントで
+３回　勝てば　優勝だぞ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:47:13" />
+				Time="2011-05-23T08:04:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -32,17 +39,19 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・中にチェレン待機</Comment>
+・中にチェレン待機
+・続けてswleader1_01</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:45:16" />
+				Time="2011-05-23T08:03:22" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ヤーコン</Text>
+			<Text>ジムリーダー
+ヤーコン</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:44:38" />
+				Time="2011-05-23T07:22:15" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -58,10 +67,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>チェレン『なぜ　ぼくまで……
-しらべることが　あるのに</Text>
+しらべることが　あるのに▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:47:19" />
+				Time="2011-05-23T07:56:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -69,10 +78,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？？？</Text>
+			<Text>チェレン『なぜ　ぼくまで……
+調べることが　あるのに▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:47:13" />
+				Time="2011-05-23T07:56:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -81,17 +91,18 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・</Comment>
+・続けてswleader5_02</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:47:39" />
+				Time="2011-05-23T08:03:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>チェレン</Text>
+			<Text>ジムリーダー
+チェレン</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:45:41" />
+				Time="2011-05-23T07:22:24" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -107,16 +118,18 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ヤーコン『わかるか　チェレン
-おまえの～
-・主人公はいないしさ
-あとは　わかい　ちから　なんだよ
+ポケモンと　ともに　たたかう　いみを▽
+つたえられるのは　おまえ　なんだよ▼
+それに　おまえの
+ともだちだった　あいつは　いないしさ▼
+あとは　わかい　ちから　だ！▼
 みんな　みらいの
 スターが　だいすき　だからな！▼
 さあ！　じゅんびが　できたら
 うけつけカウンターに　いくんだ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:47:19" />
+				Time="2011-05-23T07:59:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -124,10 +137,19 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？？？</Text>
+			<Text>ヤーコン『わかるか　チェレン
+ポケモンと　共に戦う　意味を▽
+伝えられるのは　おまえ　なんだよ▼
+それに　おまえの
+友達だった　あいつは　いないしさ▼
+あとは　若い　力だ！▼
+みんな　未来の
+スターが　大好き　だからな！▼
+さあ！　準備が　できたら
+受付カウンターに　いくんだ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:47:13" />
+				Time="2011-05-23T07:59:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -136,17 +158,18 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・</Comment>
+・続けてswleader1_02</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:47:40" />
+				Time="2011-05-23T08:01:34" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ヤーコン</Text>
+			<Text>ジムリーダー
+ヤーコン</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:45:43" />
+				Time="2011-05-23T07:22:16" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -193,10 +216,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ヤーコン</Text>
+			<Text>ジムリーダー
+ヤーコン</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:45:43" />
+				Time="2011-05-23T07:22:18" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -214,11 +238,12 @@
 			<Text>チェレン『やれやれ……
 かわらないね　ヤーコンさんは▼
 だけど　トーナメントそのものは
-おもしろそう　なんだよね
-ぼくは　うけつけ　してくるよ▼</Text>
+たしかに　おもしろそう　なんだよね▼
+というわけで
+ぼくは　うけつけを　してくるよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:47:04" />
+				Time="2011-05-23T08:01:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -226,10 +251,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？？？</Text>
+			<Text>チェレン『やれやれ……
+変わらないね　ヤーコンさんは▼
+だけど　トーナメントそのものは
+たしかに　おもしろそう　なんだよね▼
+というわけで
+ぼくは　受付を　してくるよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:47:10" />
+				Time="2011-05-23T08:01:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -240,17 +270,18 @@
 			<Comment>♂
 ・メッセージ表示後、受付に
 ・数秒会話した感じの演出後、中に消えて行く
-・続けて</Comment>
+・続けてswrival_01</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:47:04" />
+				Time="2011-05-23T08:01:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>チェレン</Text>
+			<Text>ジムリーダー
+チェレン</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:45:45" />
+				Time="2011-05-23T07:22:27" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -288,11 +319,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・続けて
+・続けてswrival_02
 ・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:46:14" />
+				Time="2011-05-23T08:01:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -308,6 +339,13 @@
 				User="matsumiya:W00224"
 				Time="2011-05-22T06:46:53" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d05r0101_swrival_02"
@@ -325,10 +363,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>主人公名前も　はやくな！▼</Text>
+			<Text>[Name:TrainerName ]も　はやくな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:46:27" />
+				Time="2011-05-23T07:50:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -337,14 +375,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・メッセージ表示後、受付に
+・主人公をみてメッセージ表示後、受付に
 ・数秒会話した感じの演出後、中に消えて行く
 ・主人公操作可能に
-・0＝主人公名
-・1＝ライバル名</Comment>
+・0＝主人公名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:46:22" />
+				Time="2011-05-23T07:55:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -360,6 +397,13 @@
 				User="matsumiya:W00224"
 				Time="2011-05-22T06:46:53" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d05r0101_trainerm_01"
@@ -383,8 +427,8 @@
 名を　はせる　男！▼
 ……今は　ただの　観客だ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T07:56:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
