@@ -858,7 +858,13 @@
 #define	TRID_SWIMMERM_10   ( 845 ) 
 #define	TRID_SWIMMERW_08   ( 846 ) 
 #define	TRID_SWIMMERW_09   ( 847 ) 
-#define TRID_MAX  ( 848 )
+#define	TRID_WORKER2_24   ( 848 ) 
+#define	TRID_WORKER2_25   ( 849 ) 
+#define	TRID_WORKER2_26   ( 850 ) 
+#define	TRID_WORKER2_27   ( 851 ) 
+#define	TRID_WORKER2_28   ( 852 ) 
+#define	TRID_WORKER2_29   ( 853 ) 
+#define TRID_MAX  ( 854 )
 
 #ifndef __ASM_NO_DEF_  //Ç±ÇÍà»ç~ÇÕÉAÉZÉìÉuÉâÇ≈ÇÕñ≥éã
 typedef  int TrainerID;
