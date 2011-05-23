@@ -15,7 +15,6 @@
 #include "print/str_tool.h"
 
 
-
 //==============================================================================
 //  定数定義
 //==============================================================================
@@ -26,9 +25,61 @@
 #define MANUAL_SECTOR_BIT       ( 32 )
 #define MANUAL_FLAG_WORK_MAX    ( MANUAL_FLAG_MAX/MANUAL_SECTOR_BIT ) ///< 1bit対応なので
 
+#define ANIMAL_TRAIL_WORK_SIZE  (44)  // けものみちセーブデータサイズ
+
+//-------------------------------------
+///	けものみち：テーブルごとのオブジェクトタイプ
+//=====================================
+static const AT_OBJ_TYPE sc_obj_type_table[ANIMAL_TRAIL_TABLE_NUM] =
+{
+  AT_OBJ_TYPE_MONSTER,
+  AT_OBJ_TYPE_MONSTER,
+  AT_OBJ_TYPE_MONSTER,
+  AT_OBJ_TYPE_ITEM,
+  AT_OBJ_TYPE_ITEM,
+  AT_OBJ_TYPE_ITEM,
+  AT_OBJ_TYPE_ITEM,
+  AT_OBJ_TYPE_HIDE_ITEM,
+  AT_OBJ_TYPE_HIDE_ITEM,
+  AT_OBJ_TYPE_HIDE_ITEM,
+  AT_OBJ_TYPE_HIDE_ITEM,
+};
+
 //==============================================================================
 //  構造体定義
 //==============================================================================
+
+//-------------------------------------
+///	獣道セーブデータ
+//=====================================
+typedef struct {
+  u16 trail_data[ANIMAL_TRAIL_NUM];
+  u8 now_trail_id; // 現在のけものみち番号
+  u8 padding[3];
+}ANIMAL_TRAIL_SAVE;
+
+SDK_COMPILER_ASSERT( ANIMAL_TRAIL_WORK_SIZE == sizeof(ANIMAL_TRAIL_SAVE) );
+
+//-------------------------------------
+///	獣道データ
+//=====================================
+typedef struct{
+  u16 is_set:1;         // 置かれている
+  u16 table_index:4;    // テーブルのインデックス
+  u16 data_index:3;     // データテーブルのインデックス
+  u16 female_num:7;     // メスかどうか
+  u16 pad:1;            // パディング
+  u16 dummy;
+}ANIMAL_TRAIL_DATA;
+
+//-------------------------------------
+///	データ格納用共用体
+//=====================================
+typedef union{
+  ANIMAL_TRAIL_DATA at;
+  u16               data;
+}ANIMAL_TRAIL_UNION;
+
 struct _ETC_SAVE_WORK{
   u32 acquaintance_trainer_id[ACQUAINTANCE_ID_MAX];
   u32 acquaintance_occ_num;   ///<acquaintance_trainer_idの何番目までデータが入っているか
@@ -38,10 +89,20 @@ struct _ETC_SAVE_WORK{
   STRCODE rival_name[PERSON_NAME_SIZE + EOM_SIZE];    // 16
 
   PERSON_STATE  person_state;
-  u8 dummy[72-PERSON_STATE_WORK_SIZE];    ///<将来用に1ブロック分のアライメント全てを確保
+
+  ANIMAL_TRAIL_SAVE animal_trail;
+
+  u8 dummy[72-PERSON_STATE_WORK_SIZE - ANIMAL_TRAIL_WORK_SIZE];    ///<将来用に1ブロック分のアライメント全てを確保
 };
 
 
+//=============================================================================
+/**
+ *					プロトタイプ宣言
+*/
+//=============================================================================
+static void GetTrailData( const ANIMAL_TRAIL_SAVE *p_at ,ANIMAL_TRAIL_DATA *p_trail ,u8 index);
+static void SetTrailData( ANIMAL_TRAIL_SAVE *p_at ,const ANIMAL_TRAIL_DATA *p_trail ,u8 index);
 
 //==============================================================================
 //
@@ -292,5 +353,221 @@ void EtcSave_SetManualFlag( ETC_SAVE_WORK *etcsave, int id )
     etcsave->manual_flag[sector] |= 1<<bit; 
 
   }
+}
+
+
+//=============================================================================
+/**
+ *					けものみち：非公開関数
+*/
+//=============================================================================
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  獣道データを取得する
+ *
+ *	@param	*p_at     獣道セーブデータ
+ *	@param	*p_trail  獣道データ
+ *	@param	index     獣道ID
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void GetTrailData( const ANIMAL_TRAIL_SAVE *p_at ,ANIMAL_TRAIL_DATA *p_trail ,u8 index)
+{
+  ANIMAL_TRAIL_UNION at_union;  
+  at_union.data = p_at->trail_data[index];
+  *p_trail = at_union.at;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  獣道データを保存する
+ *
+ *	@param	*p_at 
+ *	@param	*p_trail 
+ *	@param	index
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void SetTrailData( ANIMAL_TRAIL_SAVE *p_at ,const ANIMAL_TRAIL_DATA *p_trail ,u8 index)
+{
+  ANIMAL_TRAIL_UNION at_union;  
+  at_union.at   = *p_trail;
+  p_at->trail_data[index] = (u16)at_union.data;
+}
+
+//=============================================================================
+/**
+ *					けものみち：公開関数
+*/
+//=============================================================================
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  配置されているオブジェクトタイプを取得
+ *
+ *	@param	*p_trail  獣道セーブデータ
+ *	@param	index     獣道の番号
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+AT_OBJ_TYPE ANIMAL_TRAIL_SAVE_GetObjType( const ETC_SAVE_WORK *p_save, u8 index)
+{
+  ANIMAL_TRAIL_DATA trail_data;
+  GetTrailData( &p_save->animal_trail ,&trail_data ,index);
+
+  if( trail_data.is_set == FALSE )
+  {
+    return AT_OBJ_TYPE_NONE;
+  }
+
+  return sc_obj_type_table[trail_data.table_index];
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  獣道のメインテーブルインデックスを設定する
+ *
+ *	@param	*p_save 
+ *	@param	trail_id    獣道のID
+ *	@param	table_index テーブルインデックス
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void ANIMAL_TRAIL_SAVE_SetMainTableIndex( ETC_SAVE_WORK *p_save ,u8 trail_id ,u8 table_index)
+{
+  ANIMAL_TRAIL_DATA trail_data;
+  GetTrailData( &p_save->animal_trail ,&trail_data ,trail_id);
+  trail_data.table_index = table_index;
+  SetTrailData( &p_save->animal_trail ,&trail_data ,trail_id);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  獣道のデータテーブルインデックスを設定する
+ *
+ *	@param	*p_save 
+ *	@param	trail_id    獣道のID
+ *	@param	table_index テーブルインデックス
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void ANIMAL_TRAIL_SAVE_SetDataTableIndex( ETC_SAVE_WORK *p_save ,u8 trail_id ,u8 table_index)
+{
+  ANIMAL_TRAIL_DATA trail_data;
+  GetTrailData( &p_save->animal_trail ,&trail_data ,trail_id);
+  trail_data.data_index = table_index;
+  SetTrailData( &p_save->animal_trail ,&trail_data ,trail_id);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  けものみちに物が置かれているか設定する
+ *
+ *	@param	*p_save 
+ *	@param	trail_id  獣道のID
+ *	@param	is_set    オブジェクトがセットされている = TRUE
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void ANIMAL_TRAIL_SAVE_SetObjectSetFlag( ETC_SAVE_WORK *p_save ,u8 trail_id ,BOOL is_set)
+{
+  ANIMAL_TRAIL_DATA trail_data;
+  GetTrailData( &p_save->animal_trail ,&trail_data ,trail_id);
+  trail_data.is_set = is_set;
+  SetTrailData( &p_save->animal_trail ,&trail_data ,trail_id);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  けものみちに物が置かれているか取得する
+ *
+ *	@param	*p_save 
+ *	@param	trail_id  獣道のID
+ *
+ *	@retval TRUE = セットされている
+ */
+//-----------------------------------------------------------------------------
+BOOL ANIMAL_TRAIL_SAVE_GetObjectSetFlag( ETC_SAVE_WORK *p_save ,u8 trail_id )
+{
+  ANIMAL_TRAIL_DATA trail_data;
+  GetTrailData( &p_save->animal_trail ,&trail_data ,trail_id);
+  return trail_data.is_set;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  メインテーブルインデックスを取得
+ *
+ *	@param	*p_save 
+ *	@param	trail_id  獣道のID
+ *
+ *	@retval メインテーブルのインデックス
+ */
+//-----------------------------------------------------------------------------
+u8 ANIMAL_TRAIL_SAVE_GetMainTableIndex( ETC_SAVE_WORK *p_save ,u8 trail_id )
+{
+  ANIMAL_TRAIL_DATA trail_data;
+  GetTrailData( &p_save->animal_trail ,&trail_data ,trail_id);
+  return trail_data.table_index;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  データテーブルインデックスを取得
+ *
+ *	@param	*p_save 
+ *	@param	trail_id  獣道のID
+ *
+ *	@retval データテーブルのインデックス
+ */
+//-----------------------------------------------------------------------------
+u8 ANIMAL_TRAIL_SAVE_GetDataTableIndex( ETC_SAVE_WORK *p_save ,u8 trail_id )
+{
+  ANIMAL_TRAIL_DATA trail_data;
+  GetTrailData( &p_save->animal_trail ,&trail_data ,trail_id);
+  return trail_data.data_index;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  メスになるかどうか判定用パラメータを取得
+ *
+ *	@param	*p_save 
+ *	@param	trail_id  獣道のID
+ *
+ *	@retval 判定用パラメータ
+ */
+//-----------------------------------------------------------------------------
+u8 ANIMAL_TRAIL_SAVE_GetFemaleNum( ETC_SAVE_WORK *p_save ,u8 trail_id )
+{
+  ANIMAL_TRAIL_DATA trail_data;
+  GetTrailData( &p_save->animal_trail ,&trail_data ,trail_id);
+  return trail_data.female_num;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  けものみちに物が置かれているか設定する
+ *
+ *	@param	*p_save 
+ *	@param	trail_id  獣道のID
+ *	@param	is_set    オブジェクトがセットされている = TRUE
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void ANIMAL_TRAIL_SAVE_SetFemaleNum( ETC_SAVE_WORK *p_save ,u8 trail_id ,u8 female_num)
+{
+  ANIMAL_TRAIL_DATA trail_data;
+  GetTrailData( &p_save->animal_trail ,&trail_data ,trail_id);
+  trail_data.female_num = female_num;
+  SetTrailData( &p_save->animal_trail ,&trail_data ,trail_id);
 }
 

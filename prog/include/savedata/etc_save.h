@@ -7,6 +7,7 @@
  */
 //==============================================================================
 #pragma once
+#include "field/animal_trail_def.h" // for AT_OBJ_TYPE
 
 
 //==============================================================================
@@ -35,3 +36,20 @@ extern void EtcSave_SetRivalName( ETC_SAVE_WORK *etcsave, const STRCODE *name );
 extern const STRCODE * EtcSave_GetRivalName( const ETC_SAVE_WORK *etcsave );
 
 extern void *EtcSave_GetPersonStatePtr( ETC_SAVE_WORK *etcsave );
+
+#ifdef PM_DEBUG
+extern void EtcSave_DebugPrintOutAcuaintance( ETC_SAVE_WORK *etcsave );
+#endif
+
+// ‚¯‚à‚Ì‚Ý‚¿
+extern AT_OBJ_TYPE ANIMAL_TRAIL_SAVE_GetObjType( const ETC_SAVE_WORK *p_save, u8 index);
+extern void ANIMAL_TRAIL_SAVE_SetMainTableIndex( ETC_SAVE_WORK *p_save ,u8 trail_id ,u8 table_index);
+extern void ANIMAL_TRAIL_SAVE_SetDataTableIndex( ETC_SAVE_WORK *p_save ,u8 trail_id ,u8 table_index);
+extern BOOL ANIMAL_TRAIL_SAVE_GetObjectSetFlag( ETC_SAVE_WORK *p_save ,u8 trail_id );
+
+extern void ANIMAL_TRAIL_SAVE_SetObjectSetFlag( ETC_SAVE_WORK *p_save ,u8 trail_id ,BOOL is_set);
+extern u8 ANIMAL_TRAIL_SAVE_GetMainTableIndex( ETC_SAVE_WORK *p_save ,u8 trail_id );
+extern u8 ANIMAL_TRAIL_SAVE_GetDataTableIndex( ETC_SAVE_WORK *p_save ,u8 trail_id );
+extern void ANIMAL_TRAIL_SAVE_SetFemaleNum( ETC_SAVE_WORK *p_save ,u8 trail_id ,u8 female_num);
+extern u8 ANIMAL_TRAIL_SAVE_GetFemaleNum( ETC_SAVE_WORK *p_save ,u8 trail_id );
+
