@@ -39,10 +39,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>チェレン</Text>
+			<Text>ジムリーダー
+チェレン</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:26:22" />
+				Time="2011-05-23T08:45:55" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -86,10 +87,10 @@
 　メッセージ表示
 ・あわせて鳴き声再生
 ・その後、？？？に移動
-・続けて</Comment>
+・続けてsage6_01</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:28:10" />
+				Time="2011-05-23T08:59:04" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -134,10 +135,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・続けて</Comment>
+・老人とロット、ゆっくり現われ
+・続けてoldman1_01</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:31:55" />
+				Time="2011-05-23T08:59:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -168,10 +170,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ろうじん『でんせつの　ポケモン
-コバルオン　じゃな！▼</Text>
+コバルオン　じゃな！▼
+こないだ　はなしを　しただろ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:31:11" />
+				Time="2011-05-23T08:58:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -180,10 +183,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>老人『伝説の　ポケモン
-コバルオン　じゃな！▼</Text>
+コバルオン　じゃな！▼
+こないだ　話を　しただろ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:31:11" />
+				Time="2011-05-23T08:58:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -192,11 +196,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・
+・続けてsage6_02
 ※swanでメッセージ変更</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:28:50" />
+				Time="2011-05-23T08:58:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -250,10 +254,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・続けて</Comment>
+・続けてoldman1_02</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:31:54" />
+				Time="2011-05-23T08:59:26" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -299,13 +303,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>老人『コバルオン　ビリジオン
-そして　テラキオンの　３びきは▼
+そして　テラキオンの　３匹は▼
 人が　はじめた　戦から
 仲間を　守るため　人々に▽
 戦いを　挑んだ　という……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:31:15" />
+				Time="2011-05-23T08:55:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -314,10 +318,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・続けて</Comment>
+・続けてoldman1_03</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:31:53" />
+				Time="2011-05-23T08:59:29" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -377,10 +381,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・続けて</Comment>
+・続けてoldman1_04</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:31:57" />
+				Time="2011-05-23T08:59:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -434,10 +438,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・続けて</Comment>
+・？マーク表示後
+・続けてoldman1_05</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:31:57" />
+				Time="2011-05-23T08:59:47" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -499,10 +504,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・続けて</Comment>
+・続けてsage6_03</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:31:57" />
+				Time="2011-05-23T09:00:06" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -546,12 +551,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ロット『ぐぬぬ……▼
-ゲーチスさまの　やぼう　あくいは
-いまも　ひろがりつづけ……▽
-ほかの　だれかを　ゆがめていくのだな▼</Text>
+ゲーチスさまの　野望　悪意は
+いまも　広がりつづけ……▽
+他の　だれかを　ゆがめていくのだな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:35:38" />
+				Time="2011-05-23T08:55:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -560,10 +565,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・続けて</Comment>
+・続けてsage6_04</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:31:57" />
+				Time="2011-05-23T09:00:10" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -601,10 +606,10 @@
 きもちは　はかりかねるがな▼
 だた　おまえが　コバルオンを
 なかまに　できたなら　これからの▽
-おおきな　ちからと　なるだろう▼</Text>
+おおきな　ちからと　なるだろうな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:31:21" />
+				Time="2011-05-23T08:54:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -613,17 +618,17 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>コバルオンが　おまえの　まえに
-すがたを　みせたのは　たまたまか▼
-それとも　さわぎを　おさめてほしいと
-うったえる　ため　なのか……？▼
+姿を　みせたのは　たまたまか▼
+それとも　騒ぎを　治めてほしいと
+訴える　ため　なのか……？▼
 もっとも　わたしには　ポケモンの
-きもちは　はかりかねるがな▼
+気持ちは　はかりかねるがな▼
 だた　おまえが　コバルオンを
-なかまに　できたなら　これからの▽
-おおきな　ちからと　なるだろう▼</Text>
+仲間に　できたなら　これからの▽
+大きな　力と　なるだろうな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:35:38" />
+				Time="2011-05-23T08:54:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -632,10 +637,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・続けて</Comment>
+・マップ切り替えするとここから削除
+・c05r0501での扱いは保留</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:31:57" />
+				Time="2011-05-23T09:00:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -665,10 +671,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>三銃士の話</Text>
+			<Text>ひとと　ポケモン　だけではない……▼
+いきものは　おたがいに　みとめあい
+しんらいしあって　いきていくことが▽
+いちばん　なんじゃ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:31:37" />
+				Time="2011-05-23T09:03:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -676,10 +685,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>三銃士の話</Text>
+			<Text>ひとと　ポケモン　だけではない……▼
+いきものは　おたがいに　みとめあい
+しんらいしあって　いきていくことが▽
+いちばん　なんじゃ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:31:41" />
+				Time="2011-05-23T09:03:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -688,10 +700,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・座標指定</Comment>
+・座標指定
+・仮メッセージ</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:32:06" />
+				Time="2011-05-23T09:03:22" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -758,11 +771,10 @@
 			Language="JPN">
 			<Comment>♂
 ・d06洞窟前ストッパー解除前
-
 ※SWANではメッセージ変更予定</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T08:46:07" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
