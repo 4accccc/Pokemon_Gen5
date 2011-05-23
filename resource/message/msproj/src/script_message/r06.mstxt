@@ -7,10 +7,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>チェレン『あっ　[Name:TrainerName ]
-ちょっと　つきあってくれるかな</Text>
+ちょっと　つきあってくれるかな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:32:25" />
+				Time="2011-05-23T09:21:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -19,10 +19,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>チェレン『あっ　[Name:TrainerName ]
-ちょっと　つきあってくれるかな</Text>
+ちょっと　つきあってくれるかな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:35:43" />
+				Time="2011-05-23T09:21:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -31,11 +31,14 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
+・GRIDX=137、GRIDZ=373に配置、右向き
 ・posでイベント起動
+　GRIDX=137、GRIDZ=370～375
+・メッセージ表示後、r06r0101へ
 ・0＝主人公名前</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:35:57" />
+				Time="2011-05-23T09:21:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -82,15 +85,16 @@
 			Language="JPN">
 			<Comment>ポケモン
 ・d05のアジトイベント後に、pos起動
-・画面右から登場し
+　GRIDX=102～104、GRIDZ=366
+・画面上から登場し
 　主人公と数歩離れ向き合って
 　メッセージ表示
 ・あわせて鳴き声再生
-・その後、？？？に移動
+・その後、画面右に移動
 ・続けてsage6_01</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T08:59:04" />
+				Time="2011-05-23T09:22:47" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
