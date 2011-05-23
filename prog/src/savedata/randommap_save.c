@@ -141,10 +141,11 @@ FIELD_WFBC_EVENT* RANDOMMAP_SAVE_GetEventData( RANDOMMAP_SAVE* sv )
  *	@return セーブデータ
  */
 //-----------------------------------------------------------------------------
-void RANDOMMAP_SAVE_GetKyuremuUnionPokeParam( RANDOMMAP_SAVE* sv, POKEMON_PARAM* pp_dst )
+const POKEMON_PARAM* RANDOMMAP_SAVE_GetKyuremuUnionPokeParam( RANDOMMAP_SAVE* sv )
 {
   GF_ASSERT( sv );
-  POKETOOL_CopyPPtoPP( &sv->united_pokepara, pp_dst );
+  return (const POKEMON_PARAM*)(&sv->united_pokepara);
+//  POKETOOL_CopyPPtoPP( &sv->united_pokepara, pp_dst );
 }
 
 //----------------------------------------------------------------------------
