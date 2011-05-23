@@ -31,10 +31,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・続けて</Comment>
+・c05でのイベント後、主人公少し歩いて
+　所定の位置に到達するとイベント開始
+・続けてswrival_01</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:10:30" />
+				Time="2011-05-23T06:18:53" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -79,12 +81,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『なあ　オマエも
-プラズマだん　だよな？▼
-さっきの　プラズマだんと
-なにが　ちがうか　おしえろよ！▼</Text>
+プラズマ団　だよな？▼
+さっきの　プラズマ団と
+なにが　違うか　教えろよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:24:55" />
+				Time="2011-05-23T05:52:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -93,11 +95,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・続けて
+・続けてsage6_02
 ・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:17:04" />
+				Time="2011-05-23T05:54:09" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -122,12 +124,13 @@
 			<Text>ロット『ただしく　いうなら
 もとプラズマだん　だ▼
 ２ねんまえの　けんを　きっかけに
-つみほろぼし　として　もちぬしと▽
-はぐれた　ポケモンの　せわをしている▼
+つみほろぼし　として▼
+もちぬしと　はなればなれに　なった
+ポケモンの　せわをしている▼
 で　おまえは？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:22:59" />
+				Time="2011-05-23T06:51:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -135,15 +138,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ロット『ただしく　いうなら
-もとプラズマだん　だ▼
-２ねんまえの　けんを　きっかけに
-つみほろぼし　として　もちぬしと▽
-はぐれた　ポケモンの　せわをしている▼
+			<Text>ロット『正しく　いうなら
+元プラズマ団　だ▼
+２年前の　件を　きっかけに
+罪滅ぼし　として▼
+持ち主と　離れ離れに　なった
+ポケモンの　世話を　している▼
 で　おまえは？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:24:55" />
+				Time="2011-05-23T06:52:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -152,10 +156,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・続けて</Comment>
+・続けてswrival_02</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:16:56" />
+				Time="2011-05-23T05:54:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -185,13 +189,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>オレは　ヒュウ！▼
+			<Text>オレは　ヒュウ！
+ヒオウギシティの　ヒュウだ！▼
 すうねんまえ　オマエら　プラズマだんに
 だいじな　ポケモンを　うばわれた▽
-なさけない　トレーナー　だよ！▼</Text>
+なさけない　トレーナー　だよ！▼
+なにが　はなればなれ　だ！
+そうしたのは　オマエらだろ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:15:41" />
+				Time="2011-05-23T06:52:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -199,13 +206,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>オレは　ヒュウ！▼
-すうねんまえ　オマエら　プラズマだんに
-だいじな　ポケモンを　うばわれた▽
-なさけない　トレーナー　だよ！▼</Text>
+			<Text>オレは　ヒュウ！
+ヒオウギシティの　ヒュウだ！▼
+数年前　オマエら　プラズマ団に
+大事な　ポケモンを　奪われた▽
+情けない　トレーナー　だよ！▼
+なにが　離ればなれ　だ！
+そうしたのは　オマエらだろ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:15:44" />
+				Time="2011-05-23T06:52:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -215,11 +225,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ギザウインで
-・続けて
+・続けてsage6_03
 ・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:17:22" />
+				Time="2011-05-23T05:54:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -242,10 +252,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ロット『そうであったか……
-それは　ほんとうに　すまないことをした</Text>
+それは　まことに　もうしわけない……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:25:09" />
+				Time="2011-05-23T06:10:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -253,10 +263,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？？？</Text>
+			<Text>ロット『そうであったか……
+それは　誠に　申し訳ない……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:29:04" />
+				Time="2011-05-23T06:14:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -265,10 +276,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・続けて</Comment>
+・！マーク表示後
+・続けてswrival_03</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:16:56" />
+				Time="2011-05-23T06:54:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -298,10 +310,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『あやまって　おわりかよ！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『あやまるだけかよ！
+それで　おわり　なのかよ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:25:36" />
+				Time="2011-05-23T06:10:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -309,10 +322,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？？？</Text>
+			<Text>[Name:TrainerName Idx="1" ]『あやまるだけかよ！
+それで　おわり　なのかよ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:29:04" />
+				Time="2011-05-23T06:10:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -321,11 +335,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・続けて
+・続けてswrival_04
 ・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:25:44" />
+				Time="2011-05-23T05:54:25" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -354,14 +368,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>コイツらは
-プラズマだんに　うばわれた▽
-ポケモンたち　なんだな！？▼
-で　オレの　ポケモンは！？▼
-ポケモン名＋特徴▼</Text>
+			<Text>で　オレの　ポケモンは！？▼
+ポケモン名＋特徴は？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:25:21" />
+				Time="2011-05-23T06:21:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -370,10 +381,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>で　オレの　ポケモンは！？▼
-ポケモン名＋特徴▼</Text>
+ポケモン名＋特徴は？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:20:20" />
+				Time="2011-05-23T06:21:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -382,10 +393,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・続けて</Comment>
+・ギザウインで
+・続けてsage6_05</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:16:56" />
+				Time="2011-05-23T06:21:19" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -414,17 +426,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ロット『おまえの　ポケモンは　いない
-おそらくだが　いまも
-プラズマだんに　つかわれているだろう
-・補足するか？
+			<Text>ロット『おまえの　ポケモンは
+ここには　いない……▼
+おそらくだが　いまも　プラズマだんに
+こきつかわれて　いるのだろう▼
 そして　そなたの　いうとおり
-あやまっても　なにも　かいけつしない
+あやまっても　なにも　かいけつしない▼
 だが　あやまらねば
-さきに　すすめないのだ……</Text>
+さきに　すすめないのだ……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:26:25" />
+				Time="2011-05-23T06:21:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -432,10 +444,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？？？</Text>
+			<Text>ロット『おまえの　ポケモンは
+ここには　いない……▼
+おそらくだが　いまも　プラズマ団に
+こきつかわれて　いるのだろう▼
+そして　そなたの　いうとおり
+謝っても　なにも　解決しない▼
+だが　謝らねば
+先に　進めないのだ……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:29:03" />
+				Time="2011-05-23T06:55:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -444,10 +463,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・続けて</Comment>
+・続けてswrival_05</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:16:56" />
+				Time="2011-05-23T06:17:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -481,10 +500,12 @@
 あやまられても　オレの　ポケモン
 ここに　いないんだろ！▼
 [Name:TrainerName ]！
-オレは　ポケモンジムに　いくよ▼</Text>
+オレは　ポケモンジムに　いく▼
+もっと　つよくなって　プラズマだんを
+ぜんいん　やっつけるのさ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:27:02" />
+				Time="2011-05-23T06:27:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -492,10 +513,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？？？</Text>
+			<Text>[Name:TrainerName Idx="1" ]『もう　いいって！▼
+あやまられても　オレの　ポケモン
+ここに　いないんだろ！▼
+[Name:TrainerName ]！
+オレは　ポケモンジムに　行く▼
+もっと　強くなって　プラズマ団を
+全員　やっつけるのさ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:29:03" />
+				Time="2011-05-23T06:27:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -504,12 +531,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・続けて
+・メッセージ後、室外へダッシュで移動
+・続けてsage6_06
 ・0＝主人公名
 ・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:27:09" />
+				Time="2011-05-23T06:17:52" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -539,11 +567,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ロット『われわれ　プラズマだんは
-かれのような～
+かれの　ような　トレーナーを……▼
+あらためて　おもう……
 なんと　おろかで　あったか……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:27:17" />
+				Time="2011-05-23T06:57:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -551,10 +580,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？？？</Text>
+			<Text>ロット『われわれ　プラズマ団は
+彼の　ような　トレーナーを……▼
+あらためて　思う……
+なんと　愚かで　あったか……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:29:03" />
+				Time="2011-05-23T06:57:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -596,13 +628,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>主人公名前
-本来であれば　礼をせねば＝
-代わりに　頼みを聞いてくれぬか
-この　ポケモンの　面倒を見てほしい</Text>
+			<Text>[Name:TrainerName ]　ごらんのとおりだ
+わたしに　できる　おれいなど　ない▼
+むしろ　かわりに
+たのみを　きいてほしいのだ▼
+この　ポケモンの……
+ゾロアの　めんどうを　みてくれぬか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:28:03" />
+				Time="2011-05-23T07:13:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -610,10 +644,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？？？</Text>
+			<Text>[Name:TrainerName ]　ご覧のとおりだ
+わたしに　できる　お礼など　ない▼
+むしろ　代わりに
+頼みを　きいてほしいのだ▼
+この　ポケモンの……
+ゾロアの　面倒を　みてくれぬか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:29:01" />
+				Time="2011-05-23T07:16:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -622,13 +661,14 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・はい/いいえの選択し
-・はい→sage6_00
-・はい選択だが手持ち一杯→sage6_00
-・いいえ→sage6_00</Comment>
+・はい/いいえの選択肢表示
+・はい→sage6_09
+・はい選択だが手持ち一杯→sage6_10
+・いいえ→sage6_11
+・0＝主人公名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:19:24" />
+				Time="2011-05-23T07:14:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -658,10 +698,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ロット『</Text>
+			<Text>ロット『この　ポケモンの……
+ゾロアの　めんどうを　みてくれぬか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:28:12" />
+				Time="2011-05-23T06:25:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -669,10 +710,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？？？</Text>
+			<Text>ロット『この　ポケモンの……
+ゾロアの　面倒を　みてくれぬか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:29:01" />
+				Time="2011-05-23T07:16:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -682,13 +724,13 @@
 			Language="JPN">
 			<Comment>♂
 ・ゾロア入手前に再度会話
-・はい/いいえの選択し
-・はい→sage6_00
-　はい選択だが手持ち一杯→sage6_00
-　いいえ→sage6_00</Comment>
+・はい/いいえの選択肢表示
+・はい→sage6_09
+・はい選択だが手持ち一杯→sage6_10
+・いいえ→sage6_11</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:19:39" />
+				Time="2011-05-23T07:14:40" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -718,10 +760,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ロット『</Text>
+			<Text>ロット『おお！
+よろしく　たのむぞ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:28:16" />
+				Time="2011-05-23T06:25:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -729,10 +772,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？？？</Text>
+			<Text>ロット『おお！
+よろしく　頼むぞ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:29:01" />
+				Time="2011-05-23T07:16:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -743,10 +787,10 @@
 			<Comment>♂
 ・はい選択
 ・ポケモン追加処理
-※ニックネーム変更処理は、なし</Comment>
+※ニックネーム変更確認は不要</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:18:17" />
+				Time="2011-05-23T07:16:08" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -776,10 +820,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ロット『</Text>
+			<Text>ロット『おお！
+よろしく　たのむぞ！▼
+うむ？　これいじょう　ポケモンを
+つれていけぬ　ようだが？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:28:16" />
+				Time="2011-05-23T07:07:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -787,10 +834,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？？？</Text>
+			<Text>ロット『おお！
+よろしく　頼むぞ！▼
+うむ？　これ以上　ポケモンを
+連れていけぬ　ようだが？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:29:01" />
+				Time="2011-05-23T07:07:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -832,10 +882,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ロット『</Text>
+			<Text>ロット『……きが　かわれば
+また　はなしかけてくれ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:28:16" />
+				Time="2011-05-23T07:17:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -843,10 +894,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？？？</Text>
+			<Text>ロット『……気が　変われば
+また　話しかけてくれ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:29:01" />
+				Time="2011-05-23T07:17:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -884,15 +936,19 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c05r0501_sage6_12">
+		Label="msg_c05r0501_sage6_12"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>その　ゾロアは～（説明）
-
-Ｎさまは～（説明）</Text>
+			<Text>その　ゾロアは　たびをしていた
+Ｎさまが　トモダチとして▽
+たのみに　なされた　ポケモンだ▼
+イッシュには　ゾロアの　ほかにも
+Ｎさまが　トモダチと　なさった▽
+ポケモンが　おおく　いるらしいぞ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:28:49" />
+				Time="2011-05-23T07:08:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -900,15 +956,28 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？？？</Text>
+			<Text>その　ゾロアは　旅をしていた
+Ｎさまが　トモダチとして▽
+頼みに　なされた　ポケモンだ▼
+イッシュには　ゾロアの　他にも
+Ｎさまが　トモダチと　なさった▽
+ポケモンが　多く　いるらしいぞ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:28:58" />
+				Time="2011-05-23T07:08:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-05-22T06:28:56" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ポケモン入手後、自動で表示</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T06:28:31" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>元プラズマ団
@@ -916,6 +985,75 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-05-22T06:28:26" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T06:32:22" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05r0501_sage6_13"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>いまも　ゲーチスさまを　したうもの
+おのれの　みちを　ゆく　もの……▼
+わたしたち　しちけんじんも
+いまでは　バラバラです</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T07:11:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T06:31:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>いまも　ゲーチスさまを　慕う者
+己の　道を　往く　者……▼
+わたしたち　七賢人も
+いまでは　バラバラです</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T07:11:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T06:48:06" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ゾロア入手以降、繰り返し</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T06:32:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>元プラズマ団
+七賢人ロット</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T06:28:35" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T06:32:22" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -931,13 +1069,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>プラズマだん　とは
-ゲーチスなる　おとこが　つくりあげた▽
-そしき　なのです▼
-ゲーチスは　イッシュちほうの
-せいふくを　もくろんでいました▼</Text>
+ゲーチスなる　おとこが▼
+イッシュちほうを　しはい　するために
+つくりあげた　そしき　なのです▼
+そのために　よういされたのが
+Ｎという　わかもの　でした</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:40:20" />
+				Time="2011-05-23T06:40:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -945,10 +1084,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わたしは　愛の女神……</Text>
+			<Text>プラズマ団とは
+ゲーチスなる　男が▼
+イッシュ地方を　支配するために
+つくりあげた　組織なのです▼
+そのために　用意されたのが
+Ｎという　若者でした</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:02:19" />
+				Time="2011-05-23T06:40:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -986,21 +1130,78 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_c05r0501_goddess1_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T06:49:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T06:49:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T06:49:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T06:49:33" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・愛の女神</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T06:51:03" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GODDESS1
+愛の女神</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T06:18:16" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T06:32:22" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c05r0501_goddess2_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎは　孤児でした
-なんでも　生まれた　ときから
-まわりの　ことばが
-・能力発揮
-・忌み子～
-もりのなかで　ポケモン……
-ヒヒダルマや　ゾロアと　くらして～
-ゲーチスという　おとこに～</Text>
+			<Text>Ｎは　みなしご　でした▼
+なんでも　うまれて　すぐ
+ポケモンたちと　はなせるような▽
+そぶりをみせ　きみわるがられて……▼
+もりのなか　ヒヒダルマや　ゾロアと
+いっしょに　くらしていたところ▼
+ゲーチスに　ひろわれた　とのことです▼
+わたしたちも　Ｎのせわを　するため
+あつめられた　みなしご　なのです</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:40:41" />
+				Time="2011-05-23T06:40:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1008,10 +1209,18 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わたしは　平和の　女神……</Text>
+			<Text>Ｎは　みなしご　でした▼
+なんでも　産まれて　すぐ
+ポケモンたちと　話せるような▽
+そぶりをみせ　気味悪がられて……▼
+森の中　ヒヒダルマや　ゾロアと
+一緒に　暮らしていたところ▼
+ゲーチスに　拾われた　とのことです▼
+わたしたちも　Ｎの世話を　するため
+集められた　みなしご　なのです</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:02:31" />
+				Time="2011-05-23T06:39:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1049,16 +1258,73 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_c05r0501_goddess2_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T06:49:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T06:49:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T06:49:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T06:49:37" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・平和の女神</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T06:51:05" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GODDESS2
+平和の女神</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T06:18:18" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T06:32:22" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c05r0701_hakaim1_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎさまが　おもどりに　なるのを
-ただ　まっているのです
-Ｎさまは　ポケモンと　はなせる～</Text>
+			<Text>Ｎさまが　おもどりを　まっています
+Ｎさまは　ポケモンと　はなせます▼
+そうすれば　ここにいる
+ポケモンたちの　のぞみが　わかります</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:39:58" />
+				Time="2011-05-23T06:42:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1066,10 +1332,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？？？</Text>
+			<Text>Ｎさまが　おもどりを　まっています
+Ｎさまは　ポケモンと　はなせます▼
+そうすれば　ここにいる
+ポケモンたちの　のぞみが　わかります</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:09:08" />
+				Time="2011-05-23T06:42:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1102,12 +1371,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>元の　持ち主が　見つからない
-ポケモンを　世話してるんだ
-せめてもの～</Text>
+			<Text>もとの　もちぬしが　みつからない
+ポケモンを　せわしてるんだ▼
+じこまんぞく　って　わかってるけど
+せめてもの　つぐない　だよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:39:50" />
+				Time="2011-05-23T06:45:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1115,10 +1385,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？？？</Text>
+			<Text>元の　持ち主が　みつからない
+ポケモンを　世話してるんだ▼
+自己満足って　わかってるけど
+せめてもの　つぐない　だよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:09:08" />
+				Time="2011-05-23T06:45:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1151,13 +1424,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こんな格好ですが
-元プラズマ団として
-・やり方は間違っていたが
-・（肯定と否定）</Text>
+			<Text>かこは　かえられないが
+みらいは　かえられる……！▼
+そうおもい　とりあえず　プラズマだんの
+かっこうだけ　かえてみました</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:40:06" />
+				Time="2011-05-23T06:44:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1165,10 +1438,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？？？</Text>
+			<Text>過去は　変えられないが
+未来は　変えられる……！▼
+そう思い　とりあえず　プラズマ団の
+格好だけ　変えてみました</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:09:08" />
+				Time="2011-05-23T06:44:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1256,10 +1532,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>？？？？？</Text>
+			<Text>？？？？？
+かりメッセージ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:08:59" />
+				Time="2011-05-23T06:47:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1267,10 +1544,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？？？</Text>
+			<Text>？？？？？
+仮メッセージ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:09:02" />
+				Time="2011-05-23T06:47:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1286,10 +1564,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ポケモン</Text>
+			<Text>ポケモン
+？？？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:03:38" />
+				Time="2011-05-23T06:45:49" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1304,10 +1583,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>？？？？？</Text>
+			<Text>？？？？？
+かりメッセージ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:09:02" />
+				Time="2011-05-23T06:47:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1315,10 +1595,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？？？</Text>
+			<Text>？？？？？
+仮メッセージ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:09:02" />
+				Time="2011-05-23T06:47:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1334,10 +1615,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ポケモン</Text>
+			<Text>ポケモン
+？？？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:03:40" />
+				Time="2011-05-23T06:45:50" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1352,10 +1634,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>？？？？？</Text>
+			<Text>？？？？？
+かりメッセージ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:09:02" />
+				Time="2011-05-23T06:47:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1363,10 +1646,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？？？</Text>
+			<Text>？？？？？
+仮メッセージ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:09:02" />
+				Time="2011-05-23T06:47:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1382,10 +1666,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ポケモン</Text>
+			<Text>ポケモン
+？？？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:03:40" />
+				Time="2011-05-23T06:45:50" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
