@@ -406,6 +406,248 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_d05r0101_swleader5_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヤーコン『おまえら！
+いい　しょうぶ　だったぞ！▼
+これなら　みんなが　われこそはと
+トーナメントに　さんか　したくなる！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T08:22:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T08:18:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヤーコン『おまえら！
+いい　勝負だったぞ！▼
+これなら　みんなが　われこそはと
+トーナメントに　参加したくなる！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T08:22:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T08:21:48" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・トーナメント終了後
+　受付から出てくるとイベント開始
+・このときホミカをセットしておく
+・続けてswleader2_01</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T08:24:13" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ジムリーダー
+ヤーコン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T08:18:08" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d05r0101_swleader2_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ホミカ『[Name:TrainerName ]たち　ひさしぶり！▼
+たまたま　テレビ　みてたら
+みんな　すっごい　しょうぶ　してて！▼
+とうぜん　グッと　きちゃうよね！
+あたしも　まけてられないし！▼
+つぎの　トーナメントに
+エントリー　しちゃおっと！▼
+こんかいは　せんせんふこく
+みんな　ぶっとばしちゃうから！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T08:32:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T08:19:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ホミカ『[Name:TrainerName ]たち　ひさしぶり！▼
+たまたま　テレビ　みてたら
+みんな　すっごい　勝負してて！▼
+とうぜん　グッと　きちゃうよね！
+あたしも　負けてられないし！▼
+次の　トーナメントに
+エントリー　しちゃおっと！▼
+こんかいは　宣戦布告
+みんな　ぶっとばしちゃうから！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T08:33:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T08:32:48" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・表示後、退場
+・続けてswleader5_05
+・0＝主人公名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T08:29:10" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ジムリーダー
+ホミカ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T08:19:11" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d05r0101_swleader5_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヤーコン『ほら　どうだ！
+さっそく　きたぞ！！▼
+こうして　かくちの　きょうごうが
+つどい　もりあがっていけば▼
+ホドモエは　さらに
+はってんして　かねも　もうかる……▼
+ではなく　トレーナーたちの
+りきりょうも　たかまるってもんだ！▼
+じゃあな！　おまえらも　どんどん
+さんかして　もりあげてくれよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T08:23:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T08:20:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヤーコン『ほら　どうだ！
+さっそく　来たぞ！！▼
+こうして　各地の　強豪が
+集い　盛り上がっていけば▼
+ホドモエは　さらに
+発展して　金も　もうかる……▼
+ではなく　トレーナーたちの
+力量も　高まるってもんだ！▼
+じゃあな！　おまえらも　どんどん
+参加して　盛り上げてくれよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T08:23:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T08:22:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・表示後、退場
+・続けてswboss_01</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T08:33:24" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ジムリーダー
+ヤーコン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T08:20:16" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d05r0101_swboss_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アクロマ『おおくの　トレーナーが
+しょうぶを　つうじて▽
+ポケモンの　のうりょくを　ひきだす▼
+だが　まだ！
+せいかいでは　ない！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T08:34:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T08:29:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アクロマ『数多の　トレーナーが
+ポケモン勝負を　通じて▽
+ポケモンの　能力を　ひきだす▼
+だが　まだ！
+正解では　ない！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T08:34:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T08:34:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・外にでるまで繰り返し</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T08:34:33" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アクロマ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-23T08:29:39" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="msg_d05r0101_trainerm_01"
 		Style="Large">
 		<LanguageCell

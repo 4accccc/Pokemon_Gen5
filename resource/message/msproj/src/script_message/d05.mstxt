@@ -200,11 +200,11 @@
 			Language="JPN">
 			<Comment>♂
 ・！マーク表示後
-・続けてswboss_01
+・続けてswrival_02
 ・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:08:58" />
+				Time="2011-05-23T08:35:44" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -227,54 +227,6 @@
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_d05_swboss_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>アクロマ『なにか　ありましたか？▼</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-22T04:54:00" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-22T04:53:54" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>アクロマ『なにか　ありましたか？▼</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-22T04:54:42" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-22T04:54:42" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・続けてswrival_02</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-22T05:05:19" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>アクロマ</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-22T04:53:25" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-22T04:53:29" />
-		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d05_swrival_02"
@@ -308,12 +260,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・続けてswboss_02
+・主人公と向き合ってメッセージ表示
+・続けてswboss_01
 ・0＝主人公名
 ・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:05:16" />
+				Time="2011-05-23T08:35:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -338,16 +291,17 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d05_swboss_02"
+		Label="msg_d05_swboss_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アクロマ『およしなさい▼
+			<Text>アクロマ『はなしは　きこえましたが
+およしなさい▼
 わざわざ　きけんなことに
 くびを　はさむ　ひつようは　ない！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T04:57:50" />
+				Time="2011-05-23T08:36:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -355,12 +309,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アクロマ『およしなさい▼
+			<Text>アクロマ『話は　聞こえましたが
+およしなさい▼
 わざわざ　危険なことに
-くびを　はさむ　必要は　ない！▼</Text>
+首を　はさむ　必要は　ない！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T04:58:00" />
+				Time="2011-05-23T08:36:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -369,10 +324,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
+・WBTから登場してメッセージ
 ・続けてswrival_03</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:05:10" />
+				Time="2011-05-23T08:36:04" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -488,10 +444,10 @@
 			Language="JPN">
 			<Comment>♂
 ・画面左へ移動
-・続けてswboss_03</Comment>
+・続けてswboss_02</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:05:06" />
+				Time="2011-05-23T08:36:57" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -517,7 +473,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d05_swboss_03"
+		Label="msg_d05_swboss_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -581,7 +537,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d05_swboss_04"
+		Label="msg_d05_swboss_03"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -596,10 +552,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アクロマ『しんじる……　ね</Text>
+			<Text>アクロマ『信じる……　ね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T04:59:04" />
+				Time="2011-05-23T08:37:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -608,10 +564,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・アジト船イベント終了まで繰り返し</Comment>
+・swboss_02表示後から
+　アジト船イベント終了まで繰り返し</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T04:59:15" />
+				Time="2011-05-23T08:37:19" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
