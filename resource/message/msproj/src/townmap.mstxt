@@ -3022,11 +3022,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かんこうきゃくに　にんきだが
-リゾートとよぶには　きびしい　さばく</Text>
+			<Text>かりメッセージ
+リゾートデザート　Ｗ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:24" />
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:48:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3034,11 +3034,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>観光客に　人気の　スポットだが
-リゾートと呼ぶには　厳しい　砂漠</Text>
+			<Text>仮メッセージ
+リゾートデザート　Ｗ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:24" />
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:48:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3046,10 +3046,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>リゾートデザ－ト</Comment>
+			<Comment>リゾートデザ－ト
+ホワイト</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:24" />
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:47:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3060,7 +3061,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ff80ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -3071,11 +3072,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かつて　えいがを　ほこるも　いつしか
-すなにうもれた　おおむかしの　いせき</Text>
+			<Text>かりメッセージ
+こだいのしろ　Ｗ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:24" />
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:50:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3083,11 +3084,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かつて　栄華を　誇るも　いつしか
-砂に埋もれた　大昔の　遺跡</Text>
+			<Text>仮メッセージ
+古代の城　Ｗ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:24" />
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:50:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3095,10 +3096,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>こだいのしろ</Comment>
+			<Comment>こだいのしろ
+ホワイト</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:24" />
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:49:22" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3109,7 +3111,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#ff80ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -3120,11 +3122,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あつめられた　たいりょうの　しなを
-いっていの　おんどで　ほぞんしている</Text>
+			<Text>かりメッセージ
+ＷＢＴ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:24" />
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T06:16:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3132,11 +3134,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>集められた　大量の　品を
-一定の　温度で　保存している</Text>
+			<Text>仮メッセージ
+ＷＢＴ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:24" />
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T06:16:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3144,10 +3146,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>れいとうコンテナ</Comment>
+			<Comment>ＷＢＴ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:24" />
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T06:16:48" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3158,7 +3160,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ff80ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -4002,11 +4004,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すなあらしのため　２つの　としを
-つなぐ　こうじが　おくれている　みち</Text>
+			<Text>かりメッセージ
+４ばんどうろ　Ｗ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:24" />
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T02:12:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4014,11 +4016,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>砂あらしのため　２つの都市を　つなぐ
-舗装工事が　遅れている　道路</Text>
+			<Text>仮メッセージ
+４番道路　Ｗ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:24" />
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T02:12:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4026,10 +4028,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>４ばんどうろ</Comment>
+			<Comment>４ばんどうろ
+ホワイト</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:24" />
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T02:12:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -4040,7 +4043,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ff80ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -5117,6 +5120,1949 @@
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="TM_GUIDE_C12_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ
+ヒオウギシティ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:41:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ
+ヒオウギシティ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:41:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ヒオウギシティ</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:41:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="TM_PLACE_C12_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヒオウギシティジム</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:42:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヒオウギシティジム</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:42:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>名所１</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:42:01" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="TM_PLACE_C12_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>トレーナーズスクール</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:42:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>トレーナーズスクール</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:42:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>名所２</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:42:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="TM_PLACE_C12_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンセンター</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:43:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンセンター</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:43:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>名所３</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:43:08" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="TM_GUIDE_C13_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ
+タチワキシティ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:43:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ
+タチワキシティ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:43:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>タチワキシティ</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:43:52" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="TM_PLACE_C13_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>タチワキシティジム</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:44:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>タチワキシティジム</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:44:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>名所１</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:44:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="TM_PLACE_C13_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンセンター</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:44:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンセンター</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:44:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>名所２</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:44:34" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="TM_GUIDE_C14_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ
+セイガイハシティ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:45:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ
+セイガイハシティ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:45:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>セイガイハシティ</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:44:58" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="TM_PLACE_C14_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>セイガイハシティジム</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:45:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>セイガイハシティジム</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:45:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>名所１</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:45:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="TM_PLACE_C14_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンセンター</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:45:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンセンター</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:45:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>名所２</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:45:46" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="TM_GUIDE_C15_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ
+ポケウッド</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:46:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ
+ポケウッド</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:46:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケウッド（仮）</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:46:22" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="TM_GUIDE_C16_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ
+レゾナンスリゾート</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:46:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ
+レゾナンスリゾート</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:46:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>レゾナンスリゾート（仮）</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:46:46" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="TM_GUIDE_T06_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ
+サンギタウン</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:37:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ
+サンギタウン</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:37:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>サンギタウン</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:37:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="TM_PLACE_T06_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンセンター</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:37:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンセンター</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:37:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>名所１</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:37:50" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="TM_GUIDE_T07_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ
+ヤマジタウン</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:38:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ
+ヤマジタウン</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:38:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ヤマジタウン</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:38:23" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="TM_PLACE_T07_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンセンター</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:39:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンセンター</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:39:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>名所１</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:39:01" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="TM_PLACE_BC10_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>くろのまてんろう（かり）</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:39:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>黒の摩天楼（仮）</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:39:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>名所２</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:39:35" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="TM_PLACE_WF10_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>しろのたいじゅ（かり）</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:40:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>白の大樹（仮）</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:40:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>名所２</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:39:59" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="TM_GUIDE_D03_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ
+リゾートデザート　Ｂ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:47:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ
+リゾートデザート　Ｂ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:47:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>リゾートデザ－ト
+ブラック</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:47:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="TM_GUIDE_D04_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ
+こだいのしろ　Ｂ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:50:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ
+古代の城　Ｂ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:50:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>こだいのしろ
+ブラック</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:49:11" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="TM_GUIDE_D11_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ
+げすいどう</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:51:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ
+下水道</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:51:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>げすいどう（仮）</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:51:42" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="TM_GUIDE_D22_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ
+ぼくじょう</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:52:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ
+牧場</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:52:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ぼくじょう（仮）</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:52:39" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="TM_GUIDE_D23_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ
+コンビナート</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:53:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ
+コンビナート</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:53:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>コンビナート（仮）</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:53:03" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="TM_GUIDE_D24_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ
+かざん　Ｗ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:54:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ
+火山　Ｗ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:54:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>かざん（仮）
+ホワイト</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:53:45" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="TM_GUIDE_D24_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ
+かざん　Ｂ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:54:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ
+火山　Ｂ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:54:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>かざん（仮）
+ブラック</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:53:52" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="TM_GUIDE_D25_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ
+ミステリーハウス</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:55:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ
+ミステリーハウス</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:55:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ミステリ－ハウス（仮）</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:55:28" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="TM_GUIDE_D26_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ
+ネオチャンピオンロード</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:55:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ
+新チャンピオンロード</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:55:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ネオチャンピオンロード（仮）</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:55:57" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="TM_GUIDE_D27_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ
+アジトせん</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:56:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ
+アジト船</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:56:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>アジトせん（仮）</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:56:40" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="TM_GUIDE_D28_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ
+ぬけみち</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T02:55:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ
+抜け道</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T02:55:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ぬけみち（仮）</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T02:55:34" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="TM_GUIDE_D29_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ
+こうどう</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T02:55:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ
+坑道</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T02:55:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>こうどう（仮）</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T02:55:43" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="TM_GUIDE_D30_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ
+Ｎのしろ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:57:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ
+Ｎの城</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:57:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>Ｎのしろ（仮）</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T01:57:57" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="TM_GUIDE_D32_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ
+ゲートどうくつ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T02:11:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ
+ゲートどうくつ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T02:11:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ゲートどうくつ（仮）</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T02:11:44" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="TM_GUIDE_D33_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ
+かがみのどうくつ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T02:12:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ
+鏡のどうくつ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T02:12:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>かがみのどうくつ（仮）</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T02:12:01" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="TM_GUIDE_R04_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ
+４ばんどうろ　Ｂ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T02:13:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ
+４番道路　Ｂ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T02:13:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>４ばんどうろ
+ブラック</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T02:13:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="TM_GUIDE_R19_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ
+１９ばんどうろ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T02:13:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ
+１９番道路</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T02:13:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>１９ばんどうろ</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T02:13:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="TM_GUIDE_R20_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ
+２０ばんどうろ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T02:14:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ
+２０番道路</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T02:14:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>２０ばんどうろ</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T02:14:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="TM_GUIDE_W21_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ
+２１ばんすいどう</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T02:14:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ
+２１番道路</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T02:14:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>２１ばんすいどう</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T02:14:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="TM_GUIDE_R22_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ
+２２ばんどうろ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T02:16:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ
+２２番道路</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T02:16:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>２２ばんどうろ</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T02:16:18" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="TM_GUIDE_R23_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ
+２３ばんどうろ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T02:16:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ
+２３番道路</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T02:16:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>２３ばんどうろ</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T02:16:30" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="TM_GUIDE_H06_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ
+すいちゅうばし</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T02:16:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ
+水中橋</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T02:16:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>すいちゅうばし（仮）</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-23T02:16:53" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
