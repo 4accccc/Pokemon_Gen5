@@ -6991,14 +6991,16 @@
 /**
  * ジムコマンド　地面ジム 昇降用リフト移動
  * @param lift_idx   インデックス0～3
+ * @param way     移動方向 0=上がる  1=下がる
  */
 //--------------------------------------------------------------
-#define _GYM_GROUND_MV_LIFT(lift_idx) \
-    _ASM_GYM_GROUND_MV_LIFT lift_idx
+#define _GYM_GROUND_MV_LIFT(lift_idx, way) \
+    _ASM_GYM_GROUND_MV_LIFT lift_idx, way
 
-  .macro  _ASM_GYM_GROUND_MV_LIFT lift_idx
+  .macro  _ASM_GYM_GROUND_MV_LIFT lift_idx, way
   .short  EV_SEQ_GYM_GROUND_MV_LIFT
   .short  \lift_idx
+  .short  \way
   .endm
 
 //--------------------------------------------------------------

@@ -16,5 +16,9 @@
 #define ZONE_C05GYM0101_EVB_H
 
 #define C05GYM0101_EXITLIFT_00U           0
+#define C05GYM0101_LIFT_00                1
+#define C05GYM0101_LIFT_01                2
+#define C05GYM0101_LIFT_02                3
+#define C05GYM0101_LIFT_03                4
 
 #endif //ZONE_C05GYM0101_EVB_H

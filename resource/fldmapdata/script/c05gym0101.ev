@@ -22,8 +22,18 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_reserve_c05gym0101_gymstart_01
 _EVENT_DATA    ev_c05gym0101_sunglasses_01
+_EVENT_DATA    ev_bg_c05gym0101_lift_00
+_EVENT_DATA    ev_bg_c05gym0101_lift_01
+_EVENT_DATA    ev_bg_c05gym0101_lift_02
+_EVENT_DATA    ev_bg_c05gym0101_lift_03
 _EVENT_DATA    ev_bg_c05gym0101_exitlift_00u
 _EVENT_DATA_END
+
+//--------------------------------------------------------------
+//               ローカル変数
+//--------------------------------------------------------------
+// 昇降リフトID
+DEFINE_LOCAL  lift_id
 
 /************************************************************/
 /*				接続イベント エントランスから降下			*/
@@ -37,13 +47,6 @@ EVENT_START	ev_reserve_c05gym0101_gymstart_01
 	_GYM_GROUND_EXIT_LIFT( 0 )
   //マップフェード待ち
 	_MAP_FADE_END_CHECK()
-
-	//========================================//
-
-	//リフトの上下位置フラグを初期化（初期位置が下のリフトのフラグをたてておく）
-	//ゾーンチェンジではローカルフラグの操作ができないためゾーン進入時に必ず発動するこのイベントで初期化
-
-	//========================================//
 
 EVENT_END
 
@@ -90,6 +93,128 @@ EVENT_START	ev_c05gym0101_sunglasses_01
 	ENDIF
 
 EVENT_END
+
+/*
+    昇降リフトの処理の流れ
+
+    カメラ操作(Script) 
+    リフト上昇(Program)
+    ↓
+    リフトが最高高さになった時の待ち(Script)
+    ↓
+    リフト下降(Program)
+    カメラ操作(Script)
+
+    リフト昇降はプログラムで行っているが、
+    パラメータは、デバッグで変更可能
+    ・高さ
+    ・速度
+*/
+/************************************************************/
+/*				昇降リフト 左上                     */
+/************************************************************/
+EVENT_START ev_bg_c05gym0101_lift_00
+  $lift_id = 0                 // リフトのIDを代入
+	_SE_PLAY( SEQ_SE_FLD_61 )		//スイッチＳＥを再生
+  _CALL move_camera_start
+	_GYM_GROUND_MV_LIFT( 0, 0 )
+  _CALL move_camera_wait
+	_GYM_GROUND_MV_LIFT( 0, 1 )
+  _CALL move_camera_end
+	_SE_WAIT()
+EVENT_END
+
+/************************************************************/
+/*				昇降リフト 右上                     */
+/************************************************************/
+EVENT_START ev_bg_c05gym0101_lift_01
+  $lift_id = 1                 // リフトのIDを代入
+	_SE_PLAY( SEQ_SE_FLD_61 )		//スイッチＳＥを再生
+  _CALL move_camera_start
+	_GYM_GROUND_MV_LIFT( 1, 0 )
+  _CALL move_camera_wait
+	_GYM_GROUND_MV_LIFT( 1, 1 )
+  _CALL move_camera_end
+	_SE_WAIT()
+EVENT_END
+
+/************************************************************/
+/*				昇降リフト 左下                     */
+/************************************************************/
+EVENT_START ev_bg_c05gym0101_lift_02
+  $lift_id = 2                 // リフトのIDを代入
+	_SE_PLAY( SEQ_SE_FLD_61 )		//スイッチＳＥを再生
+  _CALL move_camera_start
+	_GYM_GROUND_MV_LIFT( 2, 0 )
+  _CALL move_camera_wait
+	_GYM_GROUND_MV_LIFT( 2, 1 )
+  _CALL move_camera_end
+	_SE_WAIT()
+EVENT_END
+
+/************************************************************/
+/*				昇降リフト 右下                     */
+/************************************************************/
+EVENT_START ev_bg_c05gym0101_lift_03
+  $lift_id = 3                 // リフトのIDを代入
+	_SE_PLAY( SEQ_SE_FLD_61 )		//スイッチＳＥを再生
+  _CALL move_camera_start
+	_GYM_GROUND_MV_LIFT( 3, 0 )
+  _CALL move_camera_wait
+	_GYM_GROUND_MV_LIFT( 3, 1 )
+  _CALL move_camera_end
+	_SE_WAIT()
+EVENT_END
+
+/************************************************************/
+/*				カメラ操作				*/
+/************************************************************/
+move_camera_start:
+{
+  _CAMERA_START()       // カメラ操作開始
+  _CAMERA_PURGE()		    // カメラのバインドを解く
+
+  // カメラ操作(リフト別)
+  SWITCH $lift_id
+  CASE 0 THEN   // 左上
+    _CAMERA_MOVE( 9688,0,970752,1146880,589824,1826816,30 )
+  CASE 1 THEN   // 右上
+    _CAMERA_MOVE( 9688,0,970752,3112960,589824,1826816,30 )
+  CASE 2 THEN   // 左下
+    _CAMERA_MOVE( 9688,0,970752,1146880,589824,3989504,30 )
+  CASE 3 THEN   // 右下
+    _CAMERA_MOVE( 9688,0,970752,3112960,589824,3989504,30 )
+  ENDSWITCH
+}
+_RET
+
+move_camera_wait:
+{
+  _CAMERA_WAIT_MOVE()   // カメラ移動待ち
+  _TIME_WAIT(30)        // 高さMAXでの待機時間
+
+  // デフォルトカメラに戻す(リフト別)
+  // _CAMERA_DEF_MOVEで戻すとちらつくので、座標を直指定
+  SWITCH $lift_id
+  CASE 0 THEN   // 左上
+    _CAMERA_MOVE( 9688,0,970752,1146880,0,1933312,30 )
+  CASE 1 THEN   // 右上
+    _CAMERA_MOVE( 9688,0,970752,3112960,0,1933312,30 )
+  CASE 2 THEN   // 左下
+    _CAMERA_MOVE( 9688,0,970752,1146880,0,4096000,30 )
+  CASE 3 THEN   // 右下
+    _CAMERA_MOVE( 9688,0,970752,3112960,0,4096000,30 )
+  ENDSWITCH
+}
+_RET
+
+move_camera_end:
+{
+  _CAMERA_WAIT_MOVE()   // カメラ移動待ち
+  _CAMERA_BIND()        // カメラバインド
+  _CAMERA_END()         // カメラ操作終了
+}
+_RET
 
 /************************************************************/
 /*				接続リフト 至ジムエントランス				*/

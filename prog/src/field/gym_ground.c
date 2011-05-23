@@ -53,6 +53,8 @@
 #define GRID_HALF_SIZE ((FIELD_CONST_GRID_SIZE/2)*FX32_ONE)
 
 #define LIFT_MOVE_NUM      (4)   // 昇降リフト数
+#define LIFT_MOVE_SPD ( LIFT_MOVE_SPEED * FX32_ONE )              // 昇降リフトY座標加算値
+#define LIFT_Y        ( HEIGHT1 * FIELD_CONST_GRID_FX32_SIZE )    // 昇降リフトが上がった時の高さ
 #define LIFT_1_X      (16 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE  )    // リフト1 X座標
 #define LIFT_1_Z      (29 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE  )    // リフト1 Z座標
 #define LIFT_2_X      (46 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE  )    // リフト2 X座標
@@ -126,8 +128,23 @@ typedef struct {
   FIELD_PLAYER    *player;      // 自機
 
   u8              belt_id;      // ベルトコンベア情報ID
-
 } BELT_EVENT_WORK;
+
+//-------------------------------------
+///	昇降リフトイベントワーク
+//=====================================
+typedef struct {
+  GAMESYS_WORK    *gsys;        // ゲームシステム
+  FIELDMAP_WORK   *p_fieldmap;  // フィールドマップ
+  FIELD_PLAYER    *player;      // 自機
+
+  int             lift_id;      // 昇降リフトID 0-3
+  u8              way;
+  fx32            now_height;   // 現在位置
+  fx32            dst_height;   // 移動後位置
+  fx32            add_val;      // 加算値
+} LIFT_EVENT_WORK;
+
 
 // 3Dリソース
 #include "gym_ground.cdat"
@@ -280,6 +297,12 @@ static BOOL LIFT_CheckAllAriival( GYM_GROUND_TMP *p_wk );
 static void LIFT_AllArrival( GYM_GROUND_TMP *p_wk );
 
 // スクリプトコマンド用
+// 昇降リフト
+static GMEVENT* LIFT_CreateEvent( GMEVENT* parent, GAMESYS_WORK* gsys, const int lift_id, const int way );
+static GMEVENT_RESULT LiftEvent( GMEVENT* event, int* seq, void* wk );
+static void LIFT_EVENT_SetPos( LIFT_EVENT_WORK *p_wk );
+static BOOL LIFT_EVENT_CheckArrive( LIFT_EVENT_WORK *p_wk );
+
 // 出口リフト
 static GMEVENT* EXIT_LIFT_CreateEvent( GMEVENT* parent, GAMESYS_WORK* gsys, const BOOL exit );
 static GMEVENT_RESULT ExitLiftEvent( GMEVENT* event, int* seq, void* wk );
@@ -300,6 +323,8 @@ static void DEBUGMENU_Init( void *p_wk, FIELDMAP_WORK *p_fieldmap, HEAPID heapID
 static void DEBUGMENU_Exit( void );
 
 static fx32  debug_anm_spd = BELT_ANM_SPD;
+static int   debug_height1 = HEIGHT1;
+static int   debug_lift_move_speed = LIFT_MOVE_SPEED;
 
 #endif // GYM_GROUND_DEBUG_MENU
 
@@ -413,9 +438,6 @@ void GYM_GROUND_Move(FIELDMAP_WORK *p_fieldmap)
 
   // EXPOBJアニメメイン
   EXPOBJ_ObjMain( p_wk );
-
-
-
 }
 
 //----------------------------------------------------------------------------
@@ -455,10 +477,29 @@ GMEVENT * GYM_GROUND_CheckBeltEvent( GAMESYS_WORK *p_gamesys )
   return NULL;
 }
 
-GMEVENT *GYM_GROUND_CreateLiftMoveEvent( GAMESYS_WORK *p_gamesys, const int lift_id )
+//----------------------------------------------------------------------------
+/**
+ *	@brief  昇降リフトイベント作成
+ *
+ *	@param	*p_gamesys    ゲームシステムポインタ
+ *	@param	lift_id       リフトID(0～3 左上から右下の連番)
+ *  @param  way           移動方向 0=上がる  1=下がる
+ *
+ *	@return イベント
+ */
+//-----------------------------------------------------------------------------
+GMEVENT *GYM_GROUND_CreateLiftMoveEvent( GAMESYS_WORK *p_gamesys, const int lift_id, const int way )
 {
+  GMEVENT*    event;
 
-  return NULL;
+  if( lift_id >= LIFT_MOVE_NUM )
+  {
+    GF_ASSERT_MSG( 0, "LIFT_ID OVER %d\n", lift_id );
+  }
+  GF_ASSERT_MSG( way<2,"WAY の値が違います\n");
+
+  event = LIFT_CreateEvent( NULL, p_gamesys, lift_id, way );
+  return event;
 }
 
 //----------------------------------------------------------------------------
@@ -487,7 +528,7 @@ GMEVENT *GYM_GROUND_CreateExitLiftMoveEvent( GAMESYS_WORK *p_gamesys, const BOOL
 void GYM_GROUND_SetEnterPos( GAMESYS_WORK *p_gamesys )
 {
   FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( p_gamesys );
-  FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
+  FLD_EXP_OBJ_CNT_PTR exp_obj = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
   GYM_GROUND_TMP *p_wk = GMK_TMP_WK_GetWork(p_fieldmap, GYM_GROUND_TMP_ASSIGN_ID);
   FIELD_CAMERA *camera = FIELDMAP_GetFieldCamera( p_fieldmap );
   
@@ -499,7 +540,7 @@ void GYM_GROUND_SetEnterPos( GAMESYS_WORK *p_gamesys )
   //対象リフト高さ更新
   {
     int obj_idx = OBJ_LIFT_ENT;
-    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, GYM_GROUND_UNIT_IDX, obj_idx);
+    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(exp_obj, GYM_GROUND_UNIT_IDX, obj_idx);
     status->trans.y = F0_HEIGHT;
   }
   //自機の高さを更新
@@ -693,7 +734,7 @@ static void EXPOBJ_ObjSet( GYM_GROUND_TMP *p_wk )
         // ITA
         FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, GYM_GROUND_UNIT_IDX, obj_idx, 0, TRUE );
         FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, TRUE );  // ループ再生設定
-        FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE );  // アニメ再生設定
+        FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, TRUE );  // アニメ再生設定
       }
     }
   }
@@ -1171,6 +1212,212 @@ static void LIFT_AllArrival( GYM_GROUND_TMP *p_wk )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  昇降リフトイベント作成
+ *
+ *	@param	parent    親イベント
+ *	@param	gsys      ゲームシステムポインタ
+ *	@param	lift_id   リフトID 0-3
+ *  @param  way       移動方向 0=上がる  1=下がる
+ *
+ *	@return イベント
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT* LIFT_CreateEvent( GMEVENT* parent, GAMESYS_WORK* gsys, const int lift_id, const int way )
+{
+  GMEVENT         *event;
+  LIFT_EVENT_WORK *work;
+  FIELD_PLAYER    *p_player;
+  FIELDMAP_WORK   *p_fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+
+  p_player = FIELDMAP_GetFieldPlayer( p_fieldmap );
+
+  // イベント作成
+  event = GMEVENT_Create( gsys, parent, LiftEvent, sizeof(LIFT_EVENT_WORK) );
+
+  // 初期化
+  work = GMEVENT_GetEventWork( event );
+  work->gsys        = gsys;
+  work->p_fieldmap  = p_fieldmap;
+  work->player      = p_player;
+  work->lift_id     = lift_id;
+  work->way         = way;
+
+  // 上がる
+  if( way == 0 )
+  {
+    work->now_height  = 0;
+#ifdef GYM_GROUND_DEBUG_MENU
+    work->dst_height  = ( debug_height1 * FIELD_CONST_GRID_FX32_SIZE );
+    work->add_val     = ( debug_lift_move_speed * FX32_ONE );
+#else
+    work->dst_height  = LIFT_Y;
+    work->add_val     = LIFT_MOVE_SPD;
+#endif
+  }
+  // 下がる 
+  else
+  {
+    work->dst_height  = 0;
+#ifdef GYM_GROUND_DEBUG_MENU
+    work->now_height  = ( debug_height1 * FIELD_CONST_GRID_FX32_SIZE );
+    work->add_val     = -( debug_lift_move_speed * FX32_ONE );
+#else
+    work->now_height  = LIFT_Y;
+    work->add_val     = -LIFT_MOVE_SPD;
+#endif
+  }
+
+  return event;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  昇降リフトイベント
+ *
+ *	@param	* event イベント
+ *	@param	seq     シーケンス
+ *	@param	wk      ワーク
+ *
+ *	@return GMEVENT_RESULT 
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT_RESULT LiftEvent( GMEVENT* event, int* seq, void* wk )
+{
+  LIFT_EVENT_WORK *p_wk = (LIFT_EVENT_WORK*)wk;
+  GYM_GROUND_TMP  *p_gym_wk = GMK_TMP_WK_GetWork( p_wk->p_fieldmap, GYM_GROUND_TMP_ASSIGN_ID );
+  FIELD_CAMERA *camera = FIELDMAP_GetFieldCamera( p_wk->p_fieldmap );
+  FLD_EXP_OBJ_CNT_PTR exp_obj = FIELDMAP_GetExpObjCntPtr( p_wk->p_fieldmap );
+
+  // 処理シーケンス
+  enum{
+    SEQ_INIT,     // 初期化
+    SEQ_INIT_WAIT,// 初期化待ち
+    SEQ_MOVE,     // リフト下がる
+    SEQ_EXIT,     // イベント終了
+  };
+
+  switch( *seq ){
+  // 初期化
+  case SEQ_INIT:
+    {
+      // アニメ再生
+      if( p_wk->way == 0 )
+      {
+        int obj_idx = OBJ_LIFT_1 + p_wk->lift_id;
+        EXP_OBJ_ANM_CNT_PTR anm;
+        anm = FLD_EXP_OBJ_GetAnmCnt( exp_obj, GYM_GROUND_UNIT_IDX, obj_idx, 0);
+        FLD_EXP_OBJ_ChgAnmStopFlg(anm, FALSE);
+      }
+
+      *seq = SEQ_INIT_WAIT;
+    }
+    break;
+
+  // 初期化待ち
+  case SEQ_INIT_WAIT:
+    {
+      // SE再生
+      PMSND_PlaySE(GYM_GROUND_SE_LIFT_MOVE);    // リフト移動音
+      *seq = SEQ_MOVE;
+    }
+  /* break throw */
+  // リフト上がる
+  case SEQ_MOVE: 
+    {
+      // 高さ加算
+      p_wk->now_height += p_wk->add_val;
+      // 到達チェック
+      if( LIFT_EVENT_CheckArrive(p_wk) )
+      {
+        //目的高さで上書き
+        p_wk->now_height = p_wk->dst_height;
+
+        *seq = SEQ_EXIT;
+      }
+
+      // 自機とリフトの位置更新
+      LIFT_EVENT_SetPos( p_wk );
+    }
+    break;
+
+  // イベント終了
+  case SEQ_EXIT:
+    {
+      // アニメ停止
+      if( p_wk->way == 1 )
+      {
+        int obj_idx = OBJ_LIFT_1 + p_wk->lift_id;
+        EXP_OBJ_ANM_CNT_PTR anm;
+        anm = FLD_EXP_OBJ_GetAnmCnt( exp_obj, GYM_GROUND_UNIT_IDX, obj_idx, 0);
+        FLD_EXP_OBJ_SetObjAnmFrm( exp_obj, GYM_GROUND_UNIT_IDX, obj_idx, 0, 0 );
+        FLD_EXP_OBJ_ChgAnmStopFlg(anm, TRUE);
+      }
+      // SE停止
+      {
+        SEPLAYER_ID player_ID = PMSND_GetSE_DefaultPlayerID( GYM_GROUND_SE_LIFT_MOVE );
+        PMSND_StopSE_byPlayerID( player_ID );
+      }
+    }
+    return GMEVENT_RES_FINISH;
+
+  default:
+    GF_ASSERT(0);
+  }
+
+  return GMEVENT_RES_CONTINUE;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  位置(リフトと自機)の更新
+ *
+ *	@param	LIFT_EVENT_WORK *p_wk   イベントワーク
+ */
+//-----------------------------------------------------------------------------
+static void LIFT_EVENT_SetPos( LIFT_EVENT_WORK *p_wk )
+{
+  FLD_EXP_OBJ_CNT_PTR exp_obj = FIELDMAP_GetExpObjCntPtr( p_wk->p_fieldmap );
+
+  // 対象リフト高さ更新
+  {
+    int obj_idx = OBJ_LIFT_1 + p_wk->lift_id;
+    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(exp_obj, GYM_GROUND_UNIT_IDX, obj_idx);
+    status->trans.y = p_wk->now_height;
+  }
+
+  //自機の高さを更新
+  {
+    VecFx32 pos;
+    FIELD_PLAYER_GetPos( p_wk->player, &pos );
+    pos.y = p_wk->now_height;
+    FIELD_PLAYER_SetPos( p_wk->player, &pos );
+  }
+
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  リフト到達チェック
+ *
+ *	@param	LIFT_WORK *p_wk 
+ *
+ *	@return TRUEで到達
+ */
+//-----------------------------------------------------------------------------
+static BOOL LIFT_EVENT_CheckArrive( LIFT_EVENT_WORK *p_wk )
+{
+  if (p_wk->add_val < 0){
+    if ( p_wk->dst_height >= p_wk->now_height ) return TRUE;
+  }else{
+    if ( p_wk->dst_height <= p_wk->now_height ) return TRUE;
+  }
+
+  return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  出口リフトイベント作成
  *
  *	@param	parent  親イベント
@@ -1206,9 +1453,9 @@ static GMEVENT* EXIT_LIFT_CreateEvent( GMEVENT* parent, GAMESYS_WORK* gsys, cons
 
   {
     int obj_idx = OBJ_LIFT_ENT;
-    FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
+    FLD_EXP_OBJ_CNT_PTR exp_obj = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
     EXP_OBJ_ANM_CNT_PTR anm;
-    anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_GROUND_UNIT_IDX, obj_idx, 0);
+    anm = FLD_EXP_OBJ_GetAnmCnt( exp_obj, GYM_GROUND_UNIT_IDX, obj_idx, 0);
     // アニメ再生
     FLD_EXP_OBJ_ChgAnmStopFlg(anm, FALSE);
   }
@@ -1234,7 +1481,7 @@ static GMEVENT_RESULT ExitLiftEvent( GMEVENT* event, int* seq, void* wk )
 {
   GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
   FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
-  FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
+  FLD_EXP_OBJ_CNT_PTR exp_obj = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
   GYM_GROUND_TMP *p_wk = GMK_TMP_WK_GetWork(p_fieldmap, GYM_GROUND_TMP_ASSIGN_ID);
   FIELD_CAMERA *camera = FIELDMAP_GetFieldCamera( p_fieldmap );
 
@@ -1275,7 +1522,7 @@ static GMEVENT_RESULT ExitLiftEvent( GMEVENT* event, int* seq, void* wk )
       //対象リフト高さ更新
       {
         int obj_idx = OBJ_LIFT_ENT;
-        GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, GYM_GROUND_UNIT_IDX, obj_idx);
+        GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(exp_obj, GYM_GROUND_UNIT_IDX, obj_idx);
         status->trans.y = p_wk->now_height;
       }
       //自機の高さを更新
@@ -1310,7 +1557,7 @@ static GMEVENT_RESULT ExitLiftEvent( GMEVENT* event, int* seq, void* wk )
         int anm_idx;
         obj_idx = OBJ_LIFT_ENT;
         anm_idx = 0;
-        anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_GROUND_UNIT_IDX, obj_idx, anm_idx );
+        anm = FLD_EXP_OBJ_GetAnmCnt( exp_obj, GYM_GROUND_UNIT_IDX, obj_idx, anm_idx );
         //アニメ停止解除
         FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
       }
@@ -1325,10 +1572,10 @@ static GMEVENT_RESULT ExitLiftEvent( GMEVENT* event, int* seq, void* wk )
       int anm_idx;
       obj_idx = OBJ_LIFT_ENT;
       anm_idx = 0;
-      anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_GROUND_UNIT_IDX, obj_idx, anm_idx );
+      anm = FLD_EXP_OBJ_GetAnmCnt( exp_obj, GYM_GROUND_UNIT_IDX, obj_idx, anm_idx );
       //アニメ待ち
       if( FLD_EXP_OBJ_ChkAnmEnd(anm) ){
-        SetExitLiftDefaultSt(ptr);
+        SetExitLiftDefaultSt(exp_obj);
         return GMEVENT_RES_FINISH;
       }
     }
@@ -1483,15 +1730,15 @@ static void SetExitLiftDefaultSt(FLD_EXP_OBJ_CNT_PTR ptr)
 ///	static
 //=====================================
 // キー入力でデータ変更
-static BOOL DebugWin_ChangeData( fx32 *p_param, fx32 min, fx32 max );
+static BOOL DebugWin_ChangeData( int *p_param, int min, int max );
+static BOOL DebugWin_ChangeDataHex( fx32 *p_param, fx32 min, fx32 max );
 // 音量の変更
-static void DebugWin_Update_ChangeVolume1( void *userWork, DEBUGWIN_ITEM *item );
-static void DebugWin_Draw_ChangeVolume1( void *userWork, DEBUGWIN_ITEM *item );
-static void DebugWin_Update_ChangeVolume2( void *userWork, DEBUGWIN_ITEM *item );
-static void DebugWin_Draw_ChangeVolume2( void *userWork, DEBUGWIN_ITEM *item );
-static void DebugWin_Update_ChangeVolumeFade( void *userWork, DEBUGWIN_ITEM *item );
-static void DebugWin_Draw_ChangeVolumeFade( void *userWork, DEBUGWIN_ITEM *item );
-
+static void DebugWin_Update_ChangeAnmSpd( void *userWork, DEBUGWIN_ITEM *item );
+static void DebugWin_Draw_ChangeAnmSpd( void *userWork, DEBUGWIN_ITEM *item );
+static void DebugWin_Update_ChangeHeight1( void *userWork, DEBUGWIN_ITEM *item );
+static void DebugWin_Draw_ChangeHeight1( void *userWork, DEBUGWIN_ITEM *item );
+static void DebugWin_Update_ChangeLiftMoveSpd( void *userWork, DEBUGWIN_ITEM *item );
+static void DebugWin_Draw_ChangeLiftMoveSpd( void *userWork, DEBUGWIN_ITEM *item );
 //----------------------------------------------------------------------------
 /**
  *	@brief  R+Yにデバッグメニュー追加
@@ -1508,8 +1755,18 @@ static void DEBUGMENU_Init( void *p_wk, FIELDMAP_WORK *p_fieldmap, HEAPID heapID
   DEBUGWIN_AddGroupToTop( DEBUGMENU_GYM_GROUND, "じめんジム", heapID );
 
   // 
-  DEBUGWIN_AddItemToGroupEx(  DebugWin_Update_ChangeVolume1,
-                              DebugWin_Draw_ChangeVolume1,
+  DEBUGWIN_AddItemToGroupEx(  DebugWin_Update_ChangeAnmSpd,
+                              DebugWin_Draw_ChangeAnmSpd,
+                              p_fieldmap,
+                              DEBUGMENU_GYM_GROUND,
+                              heapID );
+  DEBUGWIN_AddItemToGroupEx(  DebugWin_Update_ChangeHeight1,
+                              DebugWin_Draw_ChangeHeight1,
+                              p_fieldmap,
+                              DEBUGMENU_GYM_GROUND,
+                              heapID );
+  DEBUGWIN_AddItemToGroupEx(  DebugWin_Update_ChangeLiftMoveSpd,
+                              DebugWin_Draw_ChangeLiftMoveSpd,
                               p_fieldmap,
                               DEBUGMENU_GYM_GROUND,
                               heapID );
@@ -1537,7 +1794,32 @@ static void DEBUGMENU_Exit( void )
  *	@retval FALSE 入力なし
  */
 //-----------------------------------------------------------------------------
-static BOOL DebugWin_ChangeData( fx32 *p_param, fx32 min, fx32 max )
+static BOOL DebugWin_ChangeData( int *p_param, int min, int max )
+{
+  int value = 0;
+
+  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT )
+  { 
+    value = -1;
+  }
+  else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT )
+  { 
+    value = +1;
+  }
+
+  (*p_param) += value;
+  (*p_param)  = MATH_CLAMP( (*p_param), min, max );
+
+  if( value == 0 )
+  {
+    return FALSE;
+  }
+  else
+  {
+    return TRUE;
+  }
+}
+static BOOL DebugWin_ChangeDataHex( fx32 *p_param, fx32 min, fx32 max )
 {
   int value = 0;
 
@@ -1565,18 +1847,18 @@ static BOOL DebugWin_ChangeData( fx32 *p_param, fx32 min, fx32 max )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  音量1変更 更新
+ *	@brief  ベルトアニメスピード変更 更新
  *
  *	@param	*userWork ワーク
  *	@param	*item     アイテム
  */
 //-----------------------------------------------------------------------------
-static void DebugWin_Update_ChangeVolume1( void *userWork, DEBUGWIN_ITEM *item )
+static void DebugWin_Update_ChangeAnmSpd( void *userWork, DEBUGWIN_ITEM *item )
 {
   FIELDMAP_WORK *p_fieldmap = userWork;
   fx32 value = debug_anm_spd;
 
-  if( DebugWin_ChangeData( &value, FX32_ONE, 0xF000 ) )
+  if( DebugWin_ChangeDataHex( &value, FX32_ONE, 0xF000 ) )
   {
     // 更新あり
     debug_anm_spd = value;
@@ -1585,16 +1867,67 @@ static void DebugWin_Update_ChangeVolume1( void *userWork, DEBUGWIN_ITEM *item )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  音量1変更 描画
+ *	@brief  ベルトアニメスピード変更 描画
  *
  *	@param	*userWork ワーク
  *	@param	*item     アイテム
  */
 //-----------------------------------------------------------------------------
-static void DebugWin_Draw_ChangeVolume1( void *userWork, DEBUGWIN_ITEM *item )
+static void DebugWin_Draw_ChangeAnmSpd( void *userWork, DEBUGWIN_ITEM *item )
 {
   DEBUGWIN_ITEM_SetNameV( item, "ベルトアニメSPD[%x]", debug_anm_spd );
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ベルトアニメスピード変更 更新
+ */
+//-----------------------------------------------------------------------------
+static void DebugWin_Update_ChangeHeight1( void *userWork, DEBUGWIN_ITEM *item )
+{
+  FIELDMAP_WORK *p_fieldmap = userWork;
+  int value = debug_height1;
 
+  if( DebugWin_ChangeData( &value, 0, 10 ) )
+  {
+    // 更新あり
+    debug_height1 = value;
+    DEBUGWIN_RefreshScreen();
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ベルトアニメスピード変更 描画
+ */
+//-----------------------------------------------------------------------------
+static void DebugWin_Draw_ChangeHeight1( void *userWork, DEBUGWIN_ITEM *item )
+{
+  DEBUGWIN_ITEM_SetNameV( item, "リフトたかさ[%d]", debug_height1 );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ベルトアニメスピード変更 更新
+ */
+//-----------------------------------------------------------------------------
+static void DebugWin_Update_ChangeLiftMoveSpd( void *userWork, DEBUGWIN_ITEM *item )
+{
+  FIELDMAP_WORK *p_fieldmap = userWork;
+  int value = debug_lift_move_speed;
+
+  if( DebugWin_ChangeData( &value, 0, 30 ) )
+  {
+    // 更新あり
+    debug_lift_move_speed = value;
+    DEBUGWIN_RefreshScreen();
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ベルトアニメスピード変更 描画
+ */
+//-----------------------------------------------------------------------------
+static void DebugWin_Draw_ChangeLiftMoveSpd( void *userWork, DEBUGWIN_ITEM *item )
+{
+  DEBUGWIN_ITEM_SetNameV( item, "リフトそくど[%d]", debug_lift_move_speed );
+}
 
 #endif // GYM_GROUND_DEBUG_MENU

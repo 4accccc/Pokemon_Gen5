@@ -253,15 +253,17 @@ VMCMD_RESULT EvCmdGymInsect_VacuumAnm( VMHANDLE * core, void *wk )
 VMCMD_RESULT EvCmdGymGround_MvLift( VMHANDLE *core, void *wk )
 {
   u16 lift_id;
+  u16 way;
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
   GMEVENT *call_event;
 
-  // リフトのID 0～4
+  // リフトのID 0～3
   lift_id  = VMGetU16( core );
+  way  = VMGetU16( core );
 
-  call_event = GYM_GROUND_CreateLiftMoveEvent( gsys, lift_id );
+  call_event = GYM_GROUND_CreateLiftMoveEvent( gsys, lift_id, way );
 
   if (call_event == NULL){
     GF_ASSERT(0);
