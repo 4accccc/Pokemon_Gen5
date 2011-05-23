@@ -29,19 +29,21 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・
+・posでイベント起動
+　（暫定、場合によっては話しかけ）
 ・表示後、カメラ移動で建物を写す
 ・続けてswleader5_02</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T04:47:51" />
+				Time="2011-05-23T08:11:28" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ヤーコン</Text>
+			<Text>ジムリーダー
+ヤーコン</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T04:46:44" />
+				Time="2011-05-23T08:07:37" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -93,10 +95,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ヤーコン</Text>
+			<Text>ジムリーダー
+ヤーコン</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T04:46:45" />
+				Time="2011-05-23T08:07:37" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -154,10 +157,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>チェレン</Text>
+			<Text>ジムリーダー
+チェレン</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T04:48:41" />
+				Time="2011-05-23T08:07:51" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -491,10 +495,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>チェレン</Text>
+			<Text>ジムリーダー
+チェレン</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T04:58:24" />
+				Time="2011-05-23T08:07:47" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -731,10 +736,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>チェレン</Text>
+			<Text>ジムリーダー
+チェレン</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:12:56" />
+				Time="2011-05-23T08:07:48" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -787,17 +793,19 @@
 			<Comment>♂
 ・主人公と向き合ってメッセージ表示
 ・表示後、6番道路方面へ
-・画面外に消えると主人公操作可能に</Comment>
+・画面外に消えると主人公操作可能に
+・0＝主人公名前</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:20:17" />
+				Time="2011-05-23T08:08:25" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>チェレン</Text>
+			<Text>ジムリーダー
+チェレン</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:13:02" />
+				Time="2011-05-23T08:07:48" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1622,10 +1630,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・？？？</Comment>
+・GRIDX＝???、GRIDZ＝???</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T02:52:17" />
+				Time="2011-05-23T08:12:03" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1670,10 +1678,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀</Comment>
+			<Comment>♀
+・GRIDX＝???、GRIDZ＝???</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T03:53:57" />
+				Time="2011-05-23T08:12:04" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1718,10 +1727,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀</Comment>
+			<Comment>♀
+・GRIDX＝???、GRIDZ＝???</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T02:52:26" />
+				Time="2011-05-23T08:12:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1766,10 +1776,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀</Comment>
+			<Comment>♀
+・GRIDX＝???、GRIDZ＝???</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T02:52:29" />
+				Time="2011-05-23T08:12:06" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
