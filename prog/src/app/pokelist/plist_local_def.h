@@ -241,8 +241,9 @@ struct _PLIST_WORK
   u8  mainSeq;
   u8  nextMainSeq;
   u8  subSeq;
-  u8  demoSeq;
   u8  selectState;
+  u8  demoSeq;
+  u8  demoParam;
   BOOL isActiveWindowMask;  //メニュー出たときのWndMaskのON/OFFのVBlank切り替えよう
   BOOL canExit;   //Xボタンが効くか？
   BOOL isSetWazaMode;     //技用のMODE_SELECTか？

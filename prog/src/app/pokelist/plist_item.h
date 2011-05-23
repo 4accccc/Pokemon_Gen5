@@ -57,6 +57,7 @@ typedef enum
 typedef enum{
   CNUI_MSG_TYPE_NORMAL, ///<使っても効果がない
   CNUI_MSG_TYPE_DETH,   ///<瀕死のポケモンには使えない
+  CNUI_MSG_TYPE_LIST_MAX,   ///<リストに空きがないので使えない
 }CNUI_MSG_TYPE;
 
 extern void PLIST_UpdateDispParam( PLIST_WORK *work );

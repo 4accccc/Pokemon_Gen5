@@ -142,11 +142,107 @@ static void PLIST_PLATE_CalcCellPos( PLIST_PLATE_WORK *plateWork , const s16 x ,
 
 static void PLIST_PLATE_CheckBattleOrder( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork );
 
+
+//--------------------------------------------------------------
+//	プレート作成初期化
+//--------------------------------------------------------------
+static PLIST_PLATE_WORK* PLIST_PLATE_CreatePlateInit( PLIST_WORK *work , const u8 idx , POKEMON_PARAM *pp )
+{
+  u8 i;
+  const u8 baseX = PLIST_PLATE_POS_ARR[idx][0];
+  const u8 baseY = PLIST_PLATE_POS_ARR[idx][1];
+  PLIST_PLATE_WORK *plateWork;
+
+  plateWork = GFL_HEAP_AllocMemory( work->heapId , sizeof(PLIST_PLATE_WORK) );
+  plateWork->idx = idx;
+  plateWork->pp = pp;
+  plateWork->isBlank = (pp==NULL);
+  plateWork->isActive = FALSE;
+  plateWork->isUpdateStr = FALSE;
+
+  //BG系
+  {
+    u8  px, py;
+
+    if( pp != NULL ){
+      px = PLATE_SCR_POS_ARR[(idx==0?0:1)][0];
+      py = PLATE_SCR_POS_ARR[(idx==0?0:1)][1];
+    }else{
+      px = 0;
+      py = 19;
+    }
+    GFL_BG_WriteScreenExpand( PLIST_BG_PLATE , 
+                      baseX+PLIST_BG_SCROLL_X_CHAR ,baseY ,
+                      PLIST_PLATE_WIDTH , PLIST_PLATE_HEIGHT ,
+                      &work->plateScrData->rawData , 
+                      px , py ,
+                      32 , 32 );  //←グラフィックデータのサイズ
+  } 
+  //Obj系
+  {
+    //ユニットとレンダーをそれぞれ作る
+    GFL_REND_SURFACE_INIT renderInit;
+    renderInit.lefttop_x = 0;
+    renderInit.lefttop_y = 0;
+    renderInit.width  = 256;
+    renderInit.height = 192;
+    renderInit.type = CLSYS_DRAW_MAIN;
+    renderInit.culling = CLSYS_REND_CULLING_TYPE_NORMAL;
+    plateWork->cellRender = GFL_CLACT_USERREND_Create( &renderInit , 1 , work->heapId );
+    plateWork->cellUnit = GFL_CLACT_UNIT_Create( PLIST_PLATE_CELLNUM , PLIST_CELLUNIT_PRI_PLATE , work->heapId );
+    GFL_CLACT_UNIT_SetUserRend( plateWork->cellUnit , plateWork->cellRender );
+  }
+  //セル作成
+  PLIST_PLATE_CreateCell( work , plateWork );
+  PLIST_PLATE_CreatePokeIcon( work , plateWork );
+  {
+    //設定が終わったらレンダラを動かす
+    GFL_CLACTPOS surfacePos;
+    surfacePos.x = -baseX*8;
+    surfacePos.y = -baseY*8;
+    GFL_CLACT_USERREND_SetSurfacePos( plateWork->cellRender , PLIST_RENDER_MAIN , &surfacePos );
+  }
+  
+  plateWork->bmpWin = GFL_BMPWIN_Create( PLIST_BG_PARAM , baseX+PLIST_BG_SCROLL_X_CHAR , baseY , 
+          PLIST_PLATE_WIDTH , PLIST_PLATE_HEIGHT , PLIST_BG_PLT_HP_BAR , GFL_BMP_CHRAREA_GET_B );
+  
+  if( pp != NULL ){
+    //タマゴチェック
+    plateWork->isEgg =  PP_Get( plateWork->pp , ID_PARA_tamago_flag , NULL );
+
+    //HPだけアニメのため値を保存する
+    plateWork->dispHp = PP_Get( plateWork->pp , ID_PARA_hp , NULL );
+    plateWork->nowHp = plateWork->dispHp;
+    GFL_CLACT_WK_SetDrawEnable( plateWork->hpBase , TRUE );
+
+    //バトルチェック
+    PLIST_PLATE_CheckBattleOrder( work , plateWork );
+      
+    //参加番号のチェック
+    if( PLIST_UTIL_IsBattleMenu(work) == TRUE )
+    {
+      for( i=0;i<6;i++ )
+      {
+        if( work->plData->in_num[i] == plateWork->idx +1 )
+        {
+          plateWork->btlOrder = i;
+        }
+      }
+    }
+    PLIST_PLATE_SetActivePlate( work , plateWork , FALSE );
+    PLIST_PLATE_DrawParamMain( work , plateWork , FALSE );
+  }else{
+    plateWork->btlOrder = PPBO_INVALID;
+    GFL_BG_LoadScreenV_Req( PLIST_BG_PLATE );
+  }
+  return plateWork;
+}
 //--------------------------------------------------------------
 //	プレート作成
 //--------------------------------------------------------------
 PLIST_PLATE_WORK* PLIST_PLATE_CreatePlate( PLIST_WORK *work , const u8 idx , POKEMON_PARAM *pp )
 {
+#if 0
   u8 i;
   const u8 baseX = PLIST_PLATE_POS_ARR[idx][0];
   const u8 baseY = PLIST_PLATE_POS_ARR[idx][1];
@@ -214,9 +310,11 @@ PLIST_PLATE_WORK* PLIST_PLATE_CreatePlate( PLIST_WORK *work , const u8 idx , POK
   }
   
   PLIST_PLATE_SetActivePlate( work , plateWork , FALSE );
-  //PLIST_PLATE_ChangeColor( work , plateWork , PPC_NORMAL );
   PLIST_PLATE_DrawParamMain( work , plateWork , FALSE );
   return plateWork;
+#else
+  return PLIST_PLATE_CreatePlateInit( work, idx , pp );
+#endif
 }
 
 //--------------------------------------------------------------
@@ -224,6 +322,7 @@ PLIST_PLATE_WORK* PLIST_PLATE_CreatePlate( PLIST_WORK *work , const u8 idx , POK
 //--------------------------------------------------------------
 PLIST_PLATE_WORK* PLIST_PLATE_CreatePlate_Blank( PLIST_WORK *work , const u8 idx )
 {
+#if 0
   PLIST_PLATE_WORK *plateWork;
   static const u8 PLATE_SCR_POS_ARR[2][2] ={{0,1},{16,2}};
   plateWork = GFL_HEAP_AllocMemory( work->heapId , sizeof(PLIST_PLATE_WORK) );
@@ -239,8 +338,10 @@ PLIST_PLATE_WORK* PLIST_PLATE_CreatePlate_Blank( PLIST_WORK *work , const u8 idx
   plateWork->isBlank = TRUE;
   plateWork->btlOrder = PPBO_INVALID;
   GFL_BG_LoadScreenV_Req( PLIST_BG_PLATE );
-
   return plateWork;
+#else
+  return PLIST_PLATE_CreatePlateInit( work, idx , NULL );
+#endif
 }
 
 //--------------------------------------------------------------
@@ -248,7 +349,7 @@ PLIST_PLATE_WORK* PLIST_PLATE_CreatePlate_Blank( PLIST_WORK *work , const u8 idx
 //--------------------------------------------------------------
 void PLIST_PLATE_DeletePlate( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork )
 {
-  if( plateWork->isBlank == FALSE )
+//  if( plateWork->isBlank == FALSE )
   {
     GFL_BMPWIN_Delete( plateWork->bmpWin );
     
@@ -261,6 +362,14 @@ void PLIST_PLATE_DeletePlate( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork )
     GFL_CLGRP_CGR_Release( plateWork->pokeIconNcgRes );
   }
   GFL_HEAP_FreeMemory( plateWork );
+}
+
+//--------------------------------------------------------------
+//	プレート更新チェック
+//--------------------------------------------------------------
+BOOL PLIST_PLATE_IsUpdatePlate( PLIST_PLATE_WORK *plateWork )
+{
+  return plateWork->isUpdateStr;
 }
 
 //--------------------------------------------------------------
@@ -348,6 +457,7 @@ static void PLIST_PLATE_CreateCell( PLIST_WORK *work , PLIST_PLATE_WORK *plateWo
               work->cellRes[PCR_PLT_HP_BASE],
               work->cellRes[PCR_ANM_HP_BASE],
               &cellInitData ,PLIST_RENDER_MAIN , work->heapId );
+    GFL_CLACT_WK_SetDrawEnable( plateWork->hpBase , FALSE );
   }
   //アイテムアイコン
   {
@@ -388,18 +498,28 @@ static void PLIST_PLATE_CreatePokeIcon( PLIST_WORK *work , PLIST_PLATE_WORK *pla
 {
   //ポケアイコン
   {
-    ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( ARCID_POKEICON , work->heapId );
-    const POKEMON_PARAM *pokePara = PokeParty_GetMemberPointer( work->plData->pp , plateWork->idx );
-    const POKEMON_PASO_PARAM *ppp = PP_GetPPPPointerConst( pokePara );
+    ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( ARCID_POKEICON , GFL_HEAP_LOWID(work->heapId) );
+//    const POKEMON_PARAM *pokePara = PokeParty_GetMemberPointer( work->plData->pp , plateWork->idx );
+//    const POKEMON_PASO_PARAM *ppp = PP_GetPPPPointerConst( pokePara );
     GFL_CLWK_DATA cellInitData;
+    int cgrNum;
     u8 pltNum;
 
+    if( plateWork->pp != NULL ){
+      const POKEMON_PASO_PARAM *ppp = PP_GetPPPPointerConst( plateWork->pp );
+      cgrNum = POKEICON_GetCgxArcIndex(ppp);
+      pltNum =  POKEICON_GetPalNumGetByPPP( ppp );
+    }else{
+      //ブランクパネルのための仮指定
+      cgrNum = POKEICON_GetCgxArcIndexByMonsNumber( 1, 0, 0, TRUE );
+      pltNum = POKEICON_GetPalNum( 1, 0, 0, TRUE );
+    }
+
     plateWork->pokeIconNcgRes = GFL_CLGRP_CGR_Register( arcHandle , 
-        POKEICON_GetCgxArcIndex(ppp) , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
+        cgrNum , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
     
     GFL_ARC_CloseDataHandle(arcHandle);
 
-    pltNum = POKEICON_GetPalNumGetByPPP( ppp );
     cellInitData.pos_x = PLIST_PLATE_POKE_POS_X;
     cellInitData.pos_y = PLIST_PLATE_POKE_POS_Y;
     cellInitData.anmseq = POKEICON_ANM_HPMAX;
@@ -412,6 +532,7 @@ static void PLIST_PLATE_CreatePokeIcon( PLIST_WORK *work , PLIST_PLATE_WORK *pla
               &cellInitData ,PLIST_RENDER_MAIN , work->heapId );
     GFL_CLACT_WK_SetPlttOffs( plateWork->pokeIcon , pltNum , CLWK_PLTTOFFS_MODE_PLTT_TOP );
     GFL_CLACT_WK_SetAutoAnmFlag( plateWork->pokeIcon , TRUE );
+    GFL_CLACT_WK_SetDrawEnable( plateWork->pokeIcon , plateWork->pp != NULL );
   }
 }
 

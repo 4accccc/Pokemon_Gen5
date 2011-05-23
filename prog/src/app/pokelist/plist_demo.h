@@ -20,14 +20,18 @@
 #pragma mark [> define
 
 typedef enum{
-  KYUREMU_CHECK_OK, //フォルムチェンジOK
+  KYUREMU_CHECK_OK_UNION, //フォルムチェンジOK
+  KYUREMU_CHECK_OK_PERGE, //フォルムチェンジOK
   KYUREMU_CHECK_NG, //NGデフォルトコード
   KYUREMU_CHECK_NG_DETH,  //NGひんし
+  KYUREMU_CHECK_NG_FORM,  //NGフォルム
+  KYUREMU_CHECK_NG_LIST_MAX,  //NG手持ちいっぱい
 }KYUREMU_CHECK_CODE;
 
 typedef enum{
   KYUREMU_UNION_RESIRAMU, //レシラムと合体
   KYUREMU_UNION_ZEKUROMU, //ゼクロムと合体
+  KYUREMU_UNION_PERGE,    //合体解除
   KYUREMU_UNION_NG_POKE,  //レシゼクでないのでNG
   KYUREMU_UNION_NG_DETH,  //瀕死なのでNG
   KYUREMU_UNION_NG_EGG,   //タマゴはNG
@@ -60,6 +64,6 @@ extern const BOOL PLIST_DEMO_CheckSheimiToSky( PLIST_WORK *work , POKEMON_PARAM 
 extern void PLIST_DEMO_ChangeSheimiToSky( PLIST_WORK *work , POKEMON_PARAM *pp );
 extern const KYUREMU_CHECK_CODE PLIST_DEMO_CheckKyuremuToColor( PLIST_WORK *work , POKEMON_PARAM *pp );
 extern const BOOL PLIST_DEMO_CheckKyuremuToNormal( PLIST_WORK *work , POKEMON_PARAM *pp );
-extern void PLIST_DEMO_ChangeKyuremuColor( PLIST_WORK *work, KYUREMU_UNION_CHECK mode, POKEMON_PARAM* pp_k, POKEMON_PARAM* pp_t );
-extern void PLIST_DEMO_ChangeKyuremuNormal( PLIST_WORK *work, KYUREMU_UNION_CHECK mode, POKEMON_PARAM* pp_k );
+extern void PLIST_DEMO_ChangeKyuremuColor( PLIST_WORK *work, KYUREMU_UNION_CHECK mode, int kyuremu_idx, int target_idx );
+extern void PLIST_DEMO_ChangeKyuremuNormal( PLIST_WORK *work, POKEMON_PARAM* pp_k );
 

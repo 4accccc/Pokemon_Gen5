@@ -1754,7 +1754,7 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
             else if( ret == KYUREMU_CHECK_NG_DETH ){
               PLIST_ITEM_MSG_CanNotUseItemContinueEx( work, CNUI_MSG_TYPE_DETH );
             }
-            else{ //OK
+            else if( ret == KYUREMU_CHECK_OK_UNION ){ //OK
               //合体する相手を選ぶシーケンスに遷移
               PLIST_SelectPokeSetCursor( work , work->pokeCursor );
               PLIST_SelectPokeSetCursor_Change( work , work->pokeCursor );
@@ -1769,6 +1769,25 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
               PLIST_SelectPokeInit( work );
               
 //              PLIST_ITEM_MSG_CanNotUseItemContinueEx( work, CNUI_MSG_TYPE_DETH );
+            }
+            else
+            {
+              ret = PLIST_DEMO_CheckKyuremuToNormal( work, work->selectPokePara );
+            
+              if( ret == KYUREMU_CHECK_NG_LIST_MAX){
+                PLIST_ITEM_MSG_CanNotUseItemContinueEx( work, CNUI_MSG_TYPE_LIST_MAX );
+              }
+              else if( ret == KYUREMU_CHECK_NG_FORM ){
+                PLIST_ITEM_MSG_CanNotUseItemContinue( work );
+              }
+              else
+              {
+                work->changeTarget = work->pokeCursor;
+                work->plData->ret_mode = PL_RET_BAG;
+                work->mainSeq = PSMS_FORM_CHANGE_INIT;
+                work->demoType = PDT_KYUREMU_TO_NORMAL;
+                work->demoParam = KYUREMU_UNION_PERGE;
+              }
             }
           }
           else
@@ -2436,13 +2455,11 @@ static void PLIST_SelectPokeTerm_KyuremuUnion( PLIST_WORK *work )
 
   ret = PLIST_KyuremuUnionCheck( work, work->pokeCursor );
   if( ret == KYUREMU_UNION_RESIRAMU || ret == KYUREMU_UNION_ZEKUROMU ){
-    PLIST_DEMO_ChangeKyuremuColor( work, ret,
-        PokeParty_GetMemberPointer(work->plData->pp, work->changeTarget ),
-        PokeParty_GetMemberPointer(work->plData->pp, work->pokeCursor ));
-
+    //パラメータ変化はデモシーケンスの中で行う
     work->plData->ret_mode = PL_RET_BAG;
     work->mainSeq = PSMS_FORM_CHANGE_INIT;
     work->demoType = PDT_KYUREMU_TO_COLOR;
+    work->demoParam = ret;
     return;
   }
   //NG処理
