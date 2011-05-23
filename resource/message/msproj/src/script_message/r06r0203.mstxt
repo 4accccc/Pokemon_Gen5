@@ -6,10 +6,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こふおおおおーっ！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17,10 +17,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こふおおおおーっ！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -28,20 +28,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>●コバルオン初期位置（GRIDX=7 GRIDZ=4）
-
-・話し掛けたとき
-・戦闘開始前</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>伝説アトス</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:40" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -63,11 +60,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンは　いわかべを　かけあがり
-ほらあなの　どこかへ　きえてしまった…▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -75,11 +71,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンは　岩壁を　駆け上がり
-洞穴の　どこかへ　消えてしまった…▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -87,21 +82,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・戦闘後
-・ポケモンを倒した場合のメッセージ
-・初回時（続けてじいさんが出てくる）
-
-●殿堂入り後に復活</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:52" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>メッセージ</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:52" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -123,11 +114,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンは　いわかべを　かけあがり
-ほらあなの　どこかへ　きえてしまった…</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -135,11 +125,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンは　岩壁を　駆け上がり
-洞穴の　どこかへ　消えてしまった…</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -147,21 +136,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・戦闘後
-・ポケモンを倒した場合のメッセージ
-・２回目以降（メッセージ表示後にイベント終了）
-
-●殿堂入り後に復活</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:52" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>メッセージ</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:52" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -183,15 +168,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おぬしが　ポケモンと　こころを
-かよわせて　はっきした　つよさは[Ctrl2:LineFeed ]
-コバルオンにも　つうじたじゃろう[Ctrl2:PageClear ]
-おぬしと　おぬしの　ポケモンが
-さらに　きたえられ　つよくなれば[Ctrl2:LineFeed ]
-また　ここに　もどってくるじゃろう[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -199,15 +179,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おぬしが　ポケモンと　心を
-通わせて　発揮した　強さは[Ctrl2:LineFeed ]
-コバルオンにも　通じたじゃろう[Ctrl2:PageClear ]
-おぬしと　おぬしの　ポケモンが
-さらに　きたえられ　強くなれば[Ctrl2:LineFeed ]
-また　ここに　もどってくるじゃろう[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -215,23 +190,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>●コバルオンに勝利した場合
-・コバルオン戦闘後、事情通老人が歩み寄る。
-・主人公の左隣まで進む。
-（GRIDX=5 GRIDZ=4）
-
-
-・セリフ後、msg_d06r0203_guide_03へ。</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:52" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>事情通老人</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:52" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -246,15 +215,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>コバルオンは　おぬしを　つうじて
-ひとと　ポケモンが　たすけあい[Ctrl2:LineFeed ]
-くらす　せかいに　かわった　ことを[Ctrl2:LineFeed ]
-かんじとった　ようじゃな[Ctrl2:PageClear ]
-コバルオンは　おぬしと　ともに
-いきる　ことを　のぞんだのじゃろう[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -262,15 +226,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>コバルオンは　おぬしを　通じて
-人と　ポケモンが　助け合い[Ctrl2:LineFeed ]
-暮らす　世界に　変わった　ことを[Ctrl2:LineFeed ]
-感じとった　ようじゃな[Ctrl2:PageClear ]
-コバルオンは　おぬしと　ともに
-生きる　ことを　望んだのじゃろう[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -278,20 +237,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>●コバルオンを捕獲した場合
-・戦闘終了後、事情通老人が歩み寄る。
-
-・セリフ後、msg_d06r0203_guide_03へ。</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:53" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>事情通老人</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:52" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -306,16 +262,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>コバルオンが　おぬしと　たたかい
-こころを　かよわせた　ことは[Ctrl2:PageClear ]
-つよい　きずなで　むすばれている
-テラキオンと　ビリジオンにも[Ctrl2:LineFeed ]
-すぐに　つたわる　はずじゃ[Ctrl2:PageClear ]
-かれらも　おぬしの　こころを
-みきわめたいと　おもっとる　じゃろう[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -323,16 +273,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>コバルオンが　おぬしと　戦い
-心を　通わせた　ことは[Ctrl2:PageClear ]
-強い　きずなで　結ばれている
-テラキオンと　ビリジオンにも[Ctrl2:LineFeed ]
-すぐに　伝わる　はずじゃ[Ctrl2:PageClear ]
-彼らも　おぬしの　心を
-みきわめたいと　思っとる　じゃろう[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -340,21 +284,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・喋ったあと、来た道を戻っていく。
-
-●テラキオン（D09R1501）と
-　ビリジオン（D02R0201）を
-　塞ぐ岩が外れます。</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:53" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>事情通老人</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:53" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -369,16 +309,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テラキオンと　ビリジオンが
-ひとを　とおざける　ための[Ctrl2:LineFeed ]
-しょうがいぶつは　なくなるじゃろう[Ctrl2:PageClear ]
-かれらを　さがすか　どうかは
-おぬし　しだい　じゃがな…[Ctrl2:PageClear ]
-かれらは　まちがいなく
-おぬしを　まっておるぞ…[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -386,16 +320,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>テラキオンと　ビリジオンが
-人を　遠ざける　ための[Ctrl2:LineFeed ]
-障害物は　なくなるじゃろう[Ctrl2:PageClear ]
-彼らを　探すか　どうかは
-おぬし　しだい　じゃがな…[Ctrl2:PageClear ]
-彼らは　まちがいなく
-おぬしを　待っておるぞ…[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -403,19 +331,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・数歩、歩いたところで主人公を見て、セリフ。
-
-・喋り終えると、帰っていく。</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:53" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>事情通老人</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:53" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -430,17 +356,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おぬし　その　わかさで
-なかなかの　うでまえと　みた…[Ctrl2:PageClear ]
-おぬしなら　もしかしたら…
-ううむ…[Ctrl2:LineFeed ]
-ありえるかも　しれんのう…[Ctrl2:PageClear ]
-どうじゃ？
-じじいの　むかしばなしに[Ctrl2:LineFeed ]
-みみを　かたむけてみんか？</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -448,17 +367,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おぬし　その　若さで
-なかなかの　腕前と　みた…[Ctrl2:PageClear ]
-おぬしなら　もしかしたら…
-ううむ…[Ctrl2:LineFeed ]
-ありえるかも　しれんのう…[Ctrl2:PageClear ]
-どうじゃ？
-じじいの　昔話に[Ctrl2:LineFeed ]
-耳を　傾けてみんか？</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -466,25 +378,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・pos起動（GRIDX=17~19 GRIDZ=15）
-※r0203へ通じる階段の手前。
-
-※老人の初期配置はGRIDX=19 GRIDZ=13
-
-・主人公に歩み寄り、1グリッド押し戻す。
-・その後、喋り始める。
-
-・はい／いいえ選択肢</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:53" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>事情通老人</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:53" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -506,27 +410,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ひとと　ポケモンが　べつべつの
-せかいで　くらしていた　おおむかし…[Ctrl2:PageClear ]
-ひとが　はじめた　いくさで
-ポケモンたちの　くらす　もりが[Ctrl2:LineFeed ]
-はげしい　ほのおに　つつまれたのじゃ[Ctrl2:PageClear ]
-ポケモンたちは　ほのおと　けむりに
-まかれて　にげばを　うしなった…[Ctrl2:PageClear ]
-そこに　あらわれたのが　でんせつの
-コバルオン[Ctrl2:LineFeed ]
-テラキオン[Ctrl2:LineFeed ]
-ビリジオン　じゃった！[Ctrl2:PageClear ]
-テラキオンは　もちまえの　かいりきで
-にげみちを　ふさぐ　いわを　こわした[Ctrl2:PageClear ]
-ビリジオンは　すばやい　みのこなしで
-ひのこから　ポケモンを　まもった[Ctrl2:PageClear ]
-そして　コバルオンは
-おびえる　ポケモンたちを　みちびき[Ctrl2:LineFeed ]
-やける　もりから　にがしたのじゃ[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -534,27 +421,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>人と　ポケモンが　べつべつの
-世界で　暮らしていた　大昔…[Ctrl2:PageClear ]
-人が　はじめた　戦で
-ポケモンたちの　暮らす　森が[Ctrl2:LineFeed ]
-はげしい　炎に　包まれたのじゃ[Ctrl2:PageClear ]
-ポケモンたちは　炎と　煙に
-まかれて　逃げ場を　失った…[Ctrl2:PageClear ]
-そこに　あらわれたのが　伝説の
-コバルオン[Ctrl2:LineFeed ]
-テラキオン[Ctrl2:LineFeed ]
-ビリジオン　じゃった！[Ctrl2:PageClear ]
-テラキオンは　持ち前の　怪力で
-逃げ道を　ふさぐ　岩を　壊した[Ctrl2:PageClear ]
-ビリジオンは　すばやい　身のこなしで
-火の粉から　ポケモンを　守った[Ctrl2:PageClear ]
-そして　コバルオンは
-おびえる　ポケモンたちを　導き[Ctrl2:LineFeed ]
-焼ける　森から　逃がしたのじゃ[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -562,21 +432,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>●「はい」
-
-・戦争と大火事と伝説ポケモンの昔話　その１
-
-・喋り終えると、間を置くために、1グリッド右へ移動。</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:53" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>事情通老人</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:53" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -598,15 +464,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>コバルオン　テラキオン　ビリジオンは
-いくさを　はじめた　れんちゅうを[Ctrl2:LineFeed ]
-あっとうてきな　ちからで　けちらした[Ctrl2:PageClear ]
-れんちゅうは　３ひきの　ちからに
-おそれを　なして[Ctrl2:LineFeed ]
-ようやく　いくさを　やめたのじゃ…[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -614,15 +475,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>コバルオン　テラキオン　ビリジオンは
-戦を　はじめた　連中を[Ctrl2:LineFeed ]
-圧倒的な　力で　けちらした[Ctrl2:PageClear ]
-連中は　３匹の　力に
-おそれを　なして[Ctrl2:LineFeed ]
-ようやく　戦を　やめたのじゃ…[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -630,21 +486,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・戦争と大火事と伝説ポケモンの昔話　その２
-
-・正面を向いてから、セリフ。
-
-</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:53" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>事情通老人</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:53" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -666,14 +518,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ひとが　たたかいを　やめなければ
-ポケモンたちの　へいわも　ない[Ctrl2:PageClear ]
-ひとの　おこないに　よって
-おおくの　いのちが　うしなわれると[Ctrl2:LineFeed ]
-かれらは　わかっていたのじゃな…[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -681,14 +529,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>人が　戦いを　やめなければ
-ポケモンたちの　平和も　ない[Ctrl2:PageClear ]
-人の　おこないに　よって
-多くの　命が　失われると[Ctrl2:LineFeed ]
-彼らは　わかっていたのじゃな…[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -696,20 +540,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・戦争と大火事と伝説ポケモンの昔話　その３
-
-・再び主人公の正面に戻ってきてから、セリフ。
-</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:53" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>事情通老人</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:53" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -731,14 +572,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ひと　との　かかわりを　さけて
-かれらは　いずこかへ　さっていった…[Ctrl2:PageClear ]
-それから　かれら　３ひきの　すがたは
-ほとんど　みられなくなり[Ctrl2:LineFeed ]
-かれらは　でんせつに　なったのじゃ…[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -746,14 +583,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>人との　かかわりを　避けて
-彼らは　いずこかへ　去っていった…[Ctrl2:PageClear ]
-それから　彼ら　３匹の　姿は
-ほとんど　みられなくなり[Ctrl2:LineFeed ]
-彼らは　伝説に　なったのじゃ…[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -761,19 +594,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・戦争と大火事と伝説ポケモンの昔話　その４
-
-・段差を上り、背中を向けたまま、セリフ。</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:53" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>事情通老人</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:53" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -795,17 +626,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わしは　なんじゅうねんも
-かれらを　さがし　つづけてきた…[Ctrl2:PageClear ]
-そして　ようやく　この　ほらあなの
-おくに　いることを　つきとめたのじゃ[Ctrl2:PageClear ]
-しかし　でんせつの　３ひきは
-ひとを　しんようしておらん[Ctrl2:PageClear ]
-ひとが　ちかよれば　キバを　むき
-おそいかかって　くるじゃろう[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -813,17 +637,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わしは　何十年も
-彼らを　探し続けてきた…[Ctrl2:PageClear ]
-そして　ようやく　この　洞穴の
-奥に　いることを　つきとめたのじゃ[Ctrl2:PageClear ]
-しかし　伝説の　３匹は
-人を　信用しておらん[Ctrl2:PageClear ]
-人が　近寄れば　キバを　むき
-襲いかかって　くるじゃろう[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -831,19 +648,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・戦争と大火事と伝説ポケモンの昔話　その５
-
-・正面を向いて、セリフ。</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:53" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>事情通老人</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:53" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -865,15 +680,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かれらは　おおむかしの　せかいしか
-しらんのじゃから　しかたないのう…[Ctrl2:PageClear ]
-ひとと　ポケモンが
-おたがいに　わかりあい　たすけあう[Ctrl2:LineFeed ]
-そんな　せかいに　なった　ことを[Ctrl2:LineFeed ]
-かれらは　しらないまま　なのじゃ[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -881,15 +691,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>彼らは　大昔の　世界しか
-知らんのじゃから　しかたないのう…[Ctrl2:PageClear ]
-人と　ポケモンが
-おたがいに　わかりあい　助け合う[Ctrl2:LineFeed ]
-そんな　世界に　なった　ことを[Ctrl2:LineFeed ]
-彼らは　知らないまま　なのじゃ[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -897,19 +702,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・戦争と大火事と伝説ポケモンの昔話　その６
-
-・段差の途中で、セリフ。</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:53" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>事情通老人</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:53" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -931,16 +734,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ひとと　ポケモンが　しんらい　しあい
-ともに　いきている　すがたを[Ctrl2:LineFeed ]
-かれらに　わからせる　ことが[Ctrl2:LineFeed ]
-おぬしなら　できそうじゃ…[Ctrl2:PageClear ]
-ひとを　みなおし　みとめれば
-ひとと　ともに　いきることを[Ctrl2:LineFeed ]
-かれらも　えらぶじゃろう…[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -948,16 +745,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>人と　ポケモンが　信頼しあい
-ともに　生きている　姿を[Ctrl2:LineFeed ]
-彼らに　わからせる　ことが[Ctrl2:LineFeed ]
-おぬしなら　できそうじゃ…[Ctrl2:PageClear ]
-人を　見直し　認めれば
-人と　ともに　生きることを[Ctrl2:LineFeed ]
-彼らも　選ぶじゃろう…[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -965,19 +756,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・戦争と大火事と伝説ポケモンの昔話　その７
-
-・もう1歩進み、主人公の前に立ち、セリフ。</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:53" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>事情通老人</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:53" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -999,13 +788,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ひとと　ポケモン　だけではない…
-いきものは　おたがいに　みとめあい[Ctrl2:LineFeed ]
-しんらいしあって　いきていくことが[Ctrl2:LineFeed ]
-いちばん　なんじゃ…</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1013,13 +799,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>人と　ポケモン　だけではない…
-生き物は　おたがいに　認め合い[Ctrl2:LineFeed ]
-信頼しあって　生きていくことが[Ctrl2:LineFeed ]
-一番なんじゃ…</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1027,17 +810,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・繰り返しのセリフ</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:53" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>事情通老人</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:53" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1059,14 +842,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>としよりの　はなしを
-すなおに　きけない　ようじゃと[Ctrl2:LineFeed ]
-なにも　きたい　できないのう…[Ctrl2:PageClear ]
-おぬしの　くる　ばしょではない！
-たちさるのじゃ！[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1074,14 +853,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>年寄りの　話を
-素直に　聞けない　ようじゃと[Ctrl2:LineFeed ]
-なにも　期待できないのう…[Ctrl2:PageClear ]
-おぬしの　来る　場所ではない！
-立ち去るのじゃ！[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1089,19 +864,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>●「いいえ」のセリフ
-
-・喋り終えると、初期グリッドへ戻る。</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:53" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>事情通老人</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-23T09:31:53" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
