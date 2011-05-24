@@ -233,6 +233,31 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
+		Label="msg_shortcut_menu_01_09">
+		<LanguageCell
+			Language="JPN">
+			<Text>[System:Color name="2" ]いでんしのくさび[/System:Color]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-05-23T02:57:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-05-23T02:54:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[System:Color name="2"]いでんしのくさび[/System:Color]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-05-23T02:55:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-05-23T02:54:57" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
 		Label="msg_shortcut_menu_02_01"
 		Style="Large">
 		<LanguageCell
