@@ -581,10 +581,10 @@
 		<AttributeCell
 			Name="Character">
 			<Text>ネオプラズマ団♂
-SWPLAZMAM</Text>
+したっぱ３</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T06:18:21" />
+				Time="2011-05-24T07:45:39" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -789,22 +789,22 @@ SWPLAZMAM</Text>
 		<AttributeCell
 			Name="Character">
 			<Text>ネオプラズマ団♂
-SWPLAZMAM</Text>
+したっぱ４</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T05:57:40" />
+				Time="2011-05-24T07:45:43" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d27r0101_swplazmam4_02"
+		Label="msg_d27r0101_swplazmam5_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>したっぱ４『コイツ……
+			<Text>したっぱ５『コイツ……
 なんだか　つよいというか　こわい！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T07:05:04" />
+				Time="2011-05-24T07:48:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -834,22 +834,22 @@ SWPLAZMAM</Text>
 		<AttributeCell
 			Name="Character">
 			<Text>ネオプラズマ団♂
-SWPLAZMAM</Text>
+したっぱ５</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T05:57:40" />
+				Time="2011-05-24T07:45:46" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d27r0101_swplazmaw_01"
+		Label="msg_d27r0101_swplazmaw1_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>したっぱ５『どうして　いつもいつも
-ジャマされちまうんだ　おれたち？</Text>
+			<Text>したっぱ６『どうして　いつもいつも
+ジャマされちちゃうの　あたしたち？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T07:05:57" />
+				Time="2011-05-24T07:48:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -858,10 +858,10 @@ SWPLAZMAM</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>したっぱ５『どうして　いつもいつも
-ジャマされちまうんだ　おれたち？</Text>
+ジャマされちちゃうの　あたしたち？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T07:06:01" />
+				Time="2011-05-24T07:45:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -879,11 +879,276 @@ SWPLAZMAM</Text>
 		<AttributeCell
 			Name="Character">
 			<Text>ネオプラズマ団♀
-SWPLAZMAW</Text>
+したっぱ６</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T06:31:26" />
+				Time="2011-05-24T07:45:50" />
 		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0101_swplazmam7_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>したっぱ７『まけた
+・かりメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T07:48:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T07:47:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>したっぱ７『まけた
+・かりメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T07:48:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T07:48:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・負けたプラズマ団したっぱ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T07:48:50" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ネオプラズマ団♂
+したっぱ７</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T07:46:14" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0101_swplazmam8_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>したっぱ８『まけた
+・かりメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T07:48:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T07:47:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>したっぱ８『まけた
+・かりメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T07:48:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T07:48:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・負けたプラズマ団したっぱ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T07:48:52" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ネオプラズマ団♂
+したっぱ８</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T07:46:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0101_swplazmam9_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>したっぱ９『まけた
+・かりメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T07:48:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T07:47:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>したっぱ９『まけた
+・かりメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T07:48:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T07:48:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・負けたプラズマ団したっぱ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T07:48:52" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ネオプラズマ団♂
+したっぱ９</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T07:46:20" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0101_swplazmam10_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>したっぱ１０『まけた
+・かりメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T07:48:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T07:47:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>したっぱ１０『まけた
+・かりメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T07:48:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T07:48:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・負けたプラズマ団したっぱ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T07:48:52" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ネオプラズマ団♂
+したっぱ１０</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T07:46:22" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0101_swplazmam11_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>したっぱ１１『まけた
+・かりメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T07:48:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T07:47:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>したっぱ１１『まけた
+・かりメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T07:48:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T07:48:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・負けたプラズマ団したっぱ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T07:48:52" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ネオプラズマ団♂
+したっぱ１１</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T07:46:25" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0101_swplazmaw2_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>したっぱ１２『まけた
+・かりメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T07:48:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T07:47:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>したっぱ１２『まけた
+・かりメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T07:48:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T07:48:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・負けたプラズマ団したっぱ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T07:48:56" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ネオプラズマ団♀
+したっぱ１２</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T07:46:03" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d27r0101_swrival_04"
