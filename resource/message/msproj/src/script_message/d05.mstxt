@@ -565,10 +565,11 @@
 			Language="JPN">
 			<Comment>♂
 ・swboss_02表示後から
-　アジト船イベント終了まで繰り返し</Comment>
+　アジト船イベント終了まで繰り返し
+・アジト船イベント終了時に削除</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T08:37:19" />
+				Time="2011-05-24T07:15:11" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
