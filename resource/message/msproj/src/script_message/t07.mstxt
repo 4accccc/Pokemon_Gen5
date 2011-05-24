@@ -2,6 +2,92 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
+		Label="msg_t07_hakase2_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>２ねんまえのはなし
+・ゼクロム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T11:41:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T11:41:53" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>２ねんまえのはなし
+・ゼクロム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T11:42:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T11:42:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀：WHITE
+・</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T11:42:34" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士（娘）</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T11:41:47" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t07_hakase2_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>２ねんまえのはなし
+・レシラム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T11:42:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T11:42:00" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>２ねんまえのはなし
+・レシラム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T11:42:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T11:42:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀：BLACK
+・</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T11:42:39" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士（娘）</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T11:42:21" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="msg_t07_01_01"
 		Style="Large">
 		<LanguageCell
