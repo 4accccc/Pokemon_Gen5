@@ -109,13 +109,8 @@ typedef struct GYM_GROUND_TMP_tag
   u8              lift_id;      // 現在リフトのID 左上から連番
   BOOL            lift_arrival[ LIFT_NUM ]; // リフト到達フラグ
 
-  // WBの出口リフト処理に必要なもの
-  fx32          now_height;
-  fx32          dst_height;
-  fx32          add_val;
+  // 出口リフト用
   const VecFx32 *watch;
-  SHAKE_WORK    ShakeWork;
-  BOOL          exit;
 
 } GYM_GROUND_TMP;
 
@@ -145,6 +140,18 @@ typedef struct {
   fx32            add_val;      // 加算値
 } LIFT_EVENT_WORK;
 
+//-------------------------------------
+///	出口リフトイベントワーク
+//=====================================
+typedef struct {
+  // WBの出口リフト処理と同じ
+  fx32          now_height;
+  fx32          dst_height;
+  fx32          add_val;
+  SHAKE_WORK    ShakeWork;
+  BOOL          exit;
+} EXIT_LIFT_EVENT_WORK;
+
 
 // 3Dリソース
 #include "gym_ground.cdat"
@@ -170,9 +177,9 @@ typedef enum {
 // ベルトコンベア情報構造体
 typedef struct {
   BELT_TYPE   type;   // 種類
-  int         x;      // Xグリッド座標
-  int         z;      // Zグリッド座標
-  u16         dir;    // 向き
+  u8          x;      // Xグリッド座標
+  u8          z;      // Zグリッド座標
+  u8          dir;    // 向き
   u8          lift_id;// 移動後のリフトのID
 } BELT_INFO;
 
@@ -287,7 +294,7 @@ static GMEVENT_RESULT BeltEvent( GMEVENT* event, int* seq, void* wk );
 
 // 座標からベルトコンベアIDを調べる
 static u8 BELT_GetId( const int x, const int z, const u16 dir ); 
-static void BELT_AnmStart( FLD_EXP_OBJ_CNT_PTR exp_obj, const u16 belt_id, const u16 dir );
+static void BELT_AnmStart( FLD_EXP_OBJ_CNT_PTR exp_obj, const u16 belt_id, const u8 dir );
 static void BELT_AnmStop( FLD_EXP_OBJ_CNT_PTR exp_obj, const u16 belt_id );
 
 // リフト
@@ -306,7 +313,7 @@ static BOOL LIFT_EVENT_CheckArrive( LIFT_EVENT_WORK *p_wk );
 // 出口リフト
 static GMEVENT* EXIT_LIFT_CreateEvent( GMEVENT* parent, GAMESYS_WORK* gsys, const BOOL exit );
 static GMEVENT_RESULT ExitLiftEvent( GMEVENT* event, int* seq, void* wk );
-static BOOL EXIT_LIFT_CheckArrive( GYM_GROUND_TMP *p_wk );
+static BOOL EXIT_LIFT_CheckArrive( EXIT_LIFT_EVENT_WORK *p_wk );
 static void InitLiftShake(  const fx32 inAddVal,
                             const BOOL inStart,
                             FIELD_CAMERA *camera,
@@ -344,15 +351,19 @@ void GYM_GROUND_Setup(FIELDMAP_WORK *p_fieldmap)
 {
   GAMESYS_WORK* p_gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
   GAMEDATA* p_gdata = GAMESYSTEM_GetGameData( p_gsys );
+  GYM_GROUND_TMP *p_wk;
+
+  ICHI_Printf( "汎用ワーク確保前 HeapFreeSize %x \n",GFL_HEAP_GetHeapFreeSize(HEAPID_FIELDMAP) );
 
   //汎用ワーク確保
-  GYM_GROUND_TMP *p_wk = GMK_TMP_WK_AllocWork(p_fieldmap, GYM_GROUND_TMP_ASSIGN_ID,
+  p_wk = GMK_TMP_WK_AllocWork(p_fieldmap, GYM_GROUND_TMP_ASSIGN_ID,
       FIELDMAP_GetHeapID(p_fieldmap), sizeof(GYM_GROUND_TMP));
 
   p_wk->heapID    = HEAPID_FIELDMAP;
   p_wk->exp_obj   = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
   p_wk->player    = FIELDMAP_GetFieldPlayer( p_fieldmap );
 
+  ICHI_Printf( "EXP_OBJ確保前 HeapFreeSize %x \n",GFL_HEAP_GetHeapFreeSize(p_wk->heapID) );
   // EXPOBJセット
   EXPOBJ_ObjSet( p_wk );
 
@@ -360,10 +371,12 @@ void GYM_GROUND_Setup(FIELDMAP_WORK *p_fieldmap)
   // リフト情報初期化
   LIFT_Init( p_wk );
 
+  ICHI_Printf( "EXP_OBJ確保後 HeapFreeSize %x \n",GFL_HEAP_GetHeapFreeSize(p_wk->heapID) );
 
 #ifdef GYM_GROUND_DEBUG_MENU
   DEBUGMENU_Init( p_wk, p_fieldmap, HEAPID_FIELDMAP );
 #endif // GYM_GROUND_DEBUG_MENU
+  ICHI_Printf( "セットアップ完了後HeapFreeSize %x \n",GFL_HEAP_GetHeapFreeSize(p_wk->heapID) );
 }
 
 //--------------------------------------------------------------
@@ -938,10 +951,27 @@ static GMEVENT_RESULT BeltEvent( GMEVENT* event, int* seq, void* wk )
   // メイン処理
   case SEQ_MAIN:
     {
+      // 移動タスク終了待ち
       FIELD_TASK_MAN* taskMan;
       taskMan = FIELDMAP_GetTaskManager( p_wk->p_fieldmap );
       if( FIELD_TASK_MAN_IsAllTaskEnd(taskMan) ){
         *seq = SEQ_EXIT;
+      }
+
+      // 立体交差ベルトコンベアは、自力で座標を下げる
+      // 立体交差マップをなくした為。
+      if( BeltInfo[ p_wk->belt_id ].type == BELT_TYPE_SP_LR ||
+          BeltInfo[ p_wk->belt_id ].type == BELT_TYPE_SP_UD )
+      {
+        VecFx32 tmp;
+        FIELD_PLAYER_GetPos( p_wk->player, &tmp );
+
+        if( tmp.y > -33 )
+        {
+          // 1グリッドで16下がる
+          tmp.y -= (16/4);
+          FIELD_PLAYER_SetPos( p_wk->player, &tmp );   // 移動
+        }
       }
     }
     break;
@@ -1030,7 +1060,7 @@ static u8 BELT_GetId( const int x, const int z, const u16 dir )
  *	@param  dir     向き
  */
 //-----------------------------------------------------------------------------
-static void BELT_AnmStart( FLD_EXP_OBJ_CNT_PTR exp_obj, const u16 belt_id, const u16 dir )
+static void BELT_AnmStart( FLD_EXP_OBJ_CNT_PTR exp_obj, const u16 belt_id, const u8 dir )
 {
   // OBJ1つにつきbelt_idが2つあるので2で割っている
   u16 obj_idx = belt_id/2;    // OBJインデックス
@@ -1436,25 +1466,29 @@ static BOOL LIFT_EVENT_CheckArrive( LIFT_EVENT_WORK *p_wk )
 static GMEVENT* EXIT_LIFT_CreateEvent( GMEVENT* parent, GAMESYS_WORK* gsys, const BOOL exit )
 {
   GMEVENT * event;
-  GYM_GROUND_TMP *p_wk;
+  EXIT_LIFT_EVENT_WORK  *work;
   FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
 
-  p_wk = GMK_TMP_WK_GetWork( p_fieldmap, GYM_GROUND_TMP_ASSIGN_ID );
+  // イベント作成
+  event = GMEVENT_Create( gsys, parent, ExitLiftEvent, sizeof(EXIT_LIFT_EVENT_WORK) );
 
-  p_wk->exit = exit;
+  // 初期化
+  work = GMEVENT_GetEventWork( event );
+
+  work->exit = exit;
 
   //対象リフトの状態を取得
   if ( exit )
   {
     //基準位置→移動後位置
-    p_wk->now_height = 0;
-    p_wk->dst_height = F0_HEIGHT;
+    work->now_height = 0;
+    work->dst_height = F0_HEIGHT;
   }
   else
   {
     //移動後位置→基準位置
-    p_wk->now_height = F0_HEIGHT;
-    p_wk->dst_height = 0;
+    work->now_height = F0_HEIGHT;
+    work->dst_height = 0;
   }
 
   {
@@ -1466,10 +1500,9 @@ static GMEVENT* EXIT_LIFT_CreateEvent( GMEVENT* parent, GAMESYS_WORK* gsys, cons
     FLD_EXP_OBJ_ChgAnmStopFlg(anm, FALSE);
   }
 
-  if ( p_wk->dst_height - p_wk->now_height < 0 ) p_wk->add_val = -EXIT_LIFT_MOVE_SPD;
-  else p_wk->add_val = EXIT_LIFT_MOVE_SPD;
-  //イベント作成
-  event = GMEVENT_Create( gsys, NULL, ExitLiftEvent, 0 );
+  if ( work->dst_height - work->now_height < 0 ) work->add_val = -EXIT_LIFT_MOVE_SPD;
+  else work->add_val = EXIT_LIFT_MOVE_SPD;
+
   return event;
 }
 //----------------------------------------------------------------------------
@@ -1485,10 +1518,11 @@ static GMEVENT* EXIT_LIFT_CreateEvent( GMEVENT* parent, GAMESYS_WORK* gsys, cons
 //-----------------------------------------------------------------------------
 static GMEVENT_RESULT ExitLiftEvent( GMEVENT* event, int* seq, void* wk )
 {
+  EXIT_LIFT_EVENT_WORK *p_wk = (EXIT_LIFT_EVENT_WORK*)wk;
   GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
   FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
   FLD_EXP_OBJ_CNT_PTR exp_obj = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
-  GYM_GROUND_TMP *p_wk = GMK_TMP_WK_GetWork(p_fieldmap, GYM_GROUND_TMP_ASSIGN_ID);
+  GYM_GROUND_TMP *p_gym_wk = GMK_TMP_WK_GetWork(p_fieldmap, GYM_GROUND_TMP_ASSIGN_ID);
   FIELD_CAMERA *camera = FIELDMAP_GetFieldCamera( p_fieldmap );
 
   switch( *seq ){
@@ -1497,7 +1531,7 @@ static GMEVENT_RESULT ExitLiftEvent( GMEVENT* event, int* seq, void* wk )
     if (p_wk->exit)
     {
       //現在ウォッチターゲットを保存
-      p_wk->watch = FIELD_CAMERA_GetWatchTarget(camera);
+      p_gym_wk->watch = FIELD_CAMERA_GetWatchTarget(camera);
       //カメラのバインドを切る
       FIELD_CAMERA_FreeTarget(camera);
     }    
@@ -1553,8 +1587,8 @@ static GMEVENT_RESULT ExitLiftEvent( GMEVENT* event, int* seq, void* wk )
       }
 
       //カメラを再バインド
-      if ( (p_wk->watch != NULL) ){
-        FIELD_CAMERA_BindTarget(camera, p_wk->watch);
+      if ( (p_gym_wk->watch != NULL) ){
+        FIELD_CAMERA_BindTarget(camera, p_gym_wk->watch);
       }
       //アニメ開始
       {
@@ -1600,7 +1634,7 @@ static GMEVENT_RESULT ExitLiftEvent( GMEVENT* event, int* seq, void* wk )
  *	@return TRUEで到達
  */
 //-----------------------------------------------------------------------------
-static BOOL EXIT_LIFT_CheckArrive( GYM_GROUND_TMP *p_wk )
+static BOOL EXIT_LIFT_CheckArrive( EXIT_LIFT_EVENT_WORK *p_wk )
 {
   if (p_wk->add_val < 0){
     if ( p_wk->dst_height >= p_wk->now_height ) return TRUE;
