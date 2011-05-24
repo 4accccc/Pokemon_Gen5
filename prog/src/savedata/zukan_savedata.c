@@ -61,6 +61,9 @@ static const u16 FormTable[][2] =
 	{ MONSNO_HIHIDARUMA, FORM_MAX_HIHIDARUMA },		// ヒヒダルマ ※新規
 	{ MONSNO_BASURAO, FORM_MAX_BASURAO },					// バスラオ ※新規
 
+  //スワン新規フォルムテーブル
+	{ MONSNO_KYUREMU, FORM_MAX_KYUREMU },					// キュレム ※スワン新規
+
 	{ 0, 0 },
 };
 

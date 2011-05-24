@@ -39,9 +39,12 @@ enum {
 	FORM_MAX_MERODHIA = 2,				// メロディア ※新規
 	FORM_MAX_HIHIDARUMA = 2,			// ヒヒダルマ ※新規
 	FORM_MAX_BASURAO = 2,					// バスラオ ※新規
-	/* 合計: 72 */
+	/* BW時合計: 72 */
+	
+  FORM_MAX_KYUREMU = 3,					// キュレム ※スワン新規
+	/* スワン合計: 75 */
 
-	FORM_ARRAY_LEN = 9,		///< フォルムフラグ配列の大きさ 9 * 8 = 72まで大丈夫
+	FORM_ARRAY_LEN = 10,		///< フォルムフラグ配列の大きさ 10 * 8 = 80まで大丈夫
 
 	// 色定義
 	COLOR_NORMAL = 0,		// 通常カラー	
