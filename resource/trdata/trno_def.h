@@ -864,7 +864,8 @@
 #define	TRID_WORKER2_27   ( 851 ) 
 #define	TRID_WORKER2_28   ( 852 ) 
 #define	TRID_WORKER2_29   ( 853 ) 
-#define TRID_MAX  ( 854 )
+#define	TRID_WORKER2_30   ( 854 ) 
+#define TRID_MAX  ( 855 )
 
 #ifndef __ASM_NO_DEF_  //‚±‚êˆÈ~‚ÍƒAƒZƒ“ƒuƒ‰‚Å‚Í–³‹
 typedef  int TrainerID;
