@@ -6293,6 +6293,31 @@ POKEWOOD_WORK *BTL_MAIN_GetPokewoodWork( const BTL_MAIN_MODULE *wk )
   return NULL;
 }
 
+static void _print_pokewood_event_data(POKEWOOD_SENARIO *senario, int event)
+{
+  int i;
+  
+  OS_Printf("EventData:type=%d, start_turn=%d\n", senario->event[event].type, senario->event[1].start_turn);
+  OS_Printf("event_msg=");
+  for(i=0;i<EVENT_TALK_TURN_MAX*2;i++){
+    OS_Printf("%d,", senario->event[event].talk_msg[0][i]);
+  }
+  OS_Printf("\n");
+  OS_Printf("stage_cast=");
+  for(i=0;i<EVENT_TALK_TURN_MAX;i++){
+    OS_Printf("%d,", senario->event[event].stage_cast[i]);
+  }
+  OS_Printf("\n");
+  for(i=0;i<4;i++){
+    OS_Printf(" reaction=%d:msg=%d, e_msg=%d, waza=%d, vfx=%d\n",
+                  i,
+                  senario->event[event].reaction[i].my_message,
+                  senario->event[event].reaction[i].enemy_message,
+                  senario->event[event].reaction[i].select_enemy_waza,
+                  senario->event[event].reaction[i].visual_effect);
+  }
+  
+}
 static void _print_pokewood_senario( POKEWOOD_SENARIO *senario )
 {
 #ifdef DEBUG_ONLY_FOR_mori
@@ -6331,35 +6356,9 @@ static void _print_pokewood_senario( POKEWOOD_SENARIO *senario )
   }
   OS_Printf("\n");
 
-  OS_Printf("EventData:type=%d, start_turn=%d\n", senario->event[0].type, senario->event[0].start_turn);
-  OS_Printf("event_msg=");
-  for(i=0;i<EVENT_TALK_TURN_MAX*2;i++){
-    OS_Printf("%d,", senario->event[0].talk_msg[0][i]);
-  }
-  OS_Printf("\n");
-  for(i=0;i<4;i++){
-    OS_Printf(" reaction=%d:msg=%d, e_msg=%d, waza=%d, vfx=%d\n",
-                  i,
-                  senario->event[0].reaction[i].my_message,
-                  senario->event[0].reaction[i].enemy_message,
-                  senario->event[0].reaction[i].select_enemy_waza,
-                  senario->event[0].reaction[i].visual_effect);
-  }
+  _print_pokewood_event_data(senario,0);
+  _print_pokewood_event_data(senario,1);
 
-  OS_Printf("EventData:type=%d, start_turn=%d\n", senario->event[1].type, senario->event[1].start_turn);
-  OS_Printf("event_msg=");
-  for(i=0;i<EVENT_TALK_TURN_MAX*2;i++){
-    OS_Printf("%d,", senario->event[1].talk_msg[0][i]);
-  }
-  OS_Printf("\n");
-  for(i=0;i<4;i++){
-    OS_Printf(" reaction=%d:msg=%d, e_msg=%d, waza=%d, vfx=%d\n",
-                  i,
-                  senario->event[1].reaction[i].my_message,
-                  senario->event[1].reaction[i].enemy_message,
-                  senario->event[1].reaction[i].select_enemy_waza,
-                  senario->event[1].reaction[i].visual_effect);
-  }
   
   OS_Printf("=================================================\n");
 

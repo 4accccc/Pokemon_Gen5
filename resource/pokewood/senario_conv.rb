@@ -32,6 +32,7 @@ $batt_hash     = {"シングル"=>0, "ダブル"=>1}
 $regu_hash     = {"制限なし"=>0, "フラットルール"=>1}
 $itemok_hash   = {"使用可"=>0, "使用不可"=>1}
 $sex_hash      = {"♂"=>0, "♀"=>1, "なし"=>2 }
+$stage_hash    = {"両方役者"=>0, "両方ポケ"=>1,"敵役者"=>2,"自分役者"=>3,"無人"=>704}
 #----------------------------------------------------
 # ポケモンデータクラス
 #----------------------------------------------------
@@ -66,11 +67,12 @@ class EVENT_DATA
     @start_turn   = -1
     @talk_msg     = Array.new( EVENT_TALK_MAX*2 ).fill(-1)
     @reaction_data = Array.new( EVENT_REACTION_MAX ).fill(-1)
+    @stage_cast    = Array.new(EVENT_TALK_MAX).fill(-1)
     EVENT_REACTION_MAX.times{|i|
       @reaction_data[i] = Array.new( EVENT_REACTION_ARRAY ).fill(-1)
     }
   end
-  attr_accessor :type, :start_turn, :talk_msg, :reaction_data
+  attr_accessor :type, :start_turn, :talk_msg, :reaction_data, :stage_cast
 
   def set_event_msg( index, msg )
     @talk_msg[index] = msg2id( msg )
@@ -83,13 +85,17 @@ class EVENT_DATA
     @reaction_data[index][3] = hash2no( $bg_hash, vfx )
   end
 
+  def set_stage_cast_data( index, dat )
+    @stage_cast[index] = dat;
+  end
+
   #バイナリデータ用に配列に連結
-  # s16(2+14+16) = 32
+  # s16(2+14+7+16) = 78
   def pack
     array = Array.new
     array << @type
     array << @start_turn
-    array = array+talk_msg
+    array = array+@talk_msg+@stage_cast
     EVENT_REACTION_MAX.times{|i|
       array = array+@reaction_data[i]
     }
@@ -173,6 +179,7 @@ class POKEWOOD_SENARIO
     EVENT_TALK_MAX.times{|i|
        @event[index].set_event_msg(               i, data[start+i+2][1] )
        @event[index].set_event_msg(i+EVENT_TALK_MAX, data[start+i+2][3])
+       @event[index].set_stage_cast_data(i, hash2no($stage_hash, data[start+i+2][7]))
     }
     EVENT_REACTION_MAX.times{|i|
       @event[index].set_reaction_data(i, data[start+9+i][1],
@@ -182,7 +189,7 @@ class POKEWOOD_SENARIO
   end
 
   # バイナリデータ用に配列に連結してエンコード
-  # s16(2*8 + 2*4*3 + 9*2*2 + 6*2*2 + 20*2*2 + 32*5) = 500
+  # s16(2*8 + 2*4*3 + 9*2*2 + 6*2*2 + 20*2*2 + 78*5) = 500
   def pack
     array = Array.new
     array << @senario

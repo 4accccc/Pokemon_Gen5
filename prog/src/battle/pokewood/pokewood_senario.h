@@ -19,6 +19,7 @@
 #define POKEWOOD_TALK_MSG_MAX   ( 20 )  ///< ターン毎会話の最大数
 #define POKEWOOD_NORMAL_VFX_MAX (  3 )  ///< ターン開始時に背景チェンジを行う最大回数
 
+
 // ポケウッド敵トレーナー所持ポケモン情報
 typedef struct {
   s16 monsno; ///< 開発NO
@@ -39,6 +40,7 @@ typedef struct {
   s16 type;               ///< イベントタイプ（現在は未使用）
   s16 start_turn;         ///< イベント開始ターン
   s16 talk_msg[2][EVENT_TALK_TURN_MAX];                      ///< メッセージIDが自分７つ、相手７つまで格納。
+  s16 stage_cast[EVENT_TALK_TURN_MAX];                       ///< お盆の上にいるのは役者か？ポケモンか？
   POKEWOOD_EVENT_REACTION_DATA reaction[EVENT_REACTION_MAX]; ///< 選択肢対応データが格納される
 }POKEWOOD_EVENT_DATA;
 
