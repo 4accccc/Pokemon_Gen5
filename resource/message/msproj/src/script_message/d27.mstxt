@@ -309,11 +309,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『ふん！　これぐらい
-てわけして　かたづけちまおう！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『だから　なんだよ
+よわいから　たくさん　いるんだろ？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T06:13:42" />
+				Time="2011-05-24T06:52:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -321,11 +321,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『ふん！　これぐらい
-てわけして　かたづけちまおう！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『だから　なんだよ
+弱いから　たくさん　いるんだろ？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T06:29:31" />
+				Time="2011-05-24T06:52:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -337,10 +337,11 @@
 ・表示後、プラズマ団員が移動
 ・主人公、ライバル、チェレン
 　四方を囲まれる形になる
+・続けてswplazmam1_02
 ・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T06:00:39" />
+				Time="2011-05-24T06:48:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -358,17 +359,31 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d27r0101_swplazmam1_02">
+		Label="msg_d27r0101_swplazmam1_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>したっぱ１『？？？▼</Text>
+			<Text>したっぱ１『うでに　じしんが　あるのか？
+だけど　４れんぞくは　きびしいだろ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T06:22:21" />
+				Time="2011-05-24T06:50:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-05-24T06:12:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>したっぱ１『腕に　自信が　あるのか？
+だけど　４連続は　厳しいだろ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T06:51:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T06:51:16" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -395,26 +410,40 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d27r0101_swplazmam1_03">
+		Label="msg_d27r0101_swplazmam1_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>したっぱ１『？？？▼</Text>
+			<Text>したっぱ１『つぎ　つぎ！
+どんどん　せめつづけるんだ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T06:22:25" />
+				Time="2011-05-24T06:50:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-05-24T06:12:41" />
 		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>したっぱ１『次　次！
+どんどん　攻め続けるんだ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T06:52:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T06:51:16" />
+		</LanguageCell>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
 ・戦闘後メッセージ
-・続けて</Comment>
+・続けてswplazmam2_02</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T06:04:16" />
+				Time="2011-05-24T06:48:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -430,14 +459,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>したっぱ２『？？？▼</Text>
+			<Text>したっぱ２『というわけで
+こんどの　あいては　おれだぜ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T06:22:27" />
+				Time="2011-05-24T06:50:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-05-24T06:12:45" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>したっぱ２『というわけで
+今度の　相手は　おれだぜ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T06:52:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T06:51:16" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -461,23 +503,36 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>したっぱ２『？？？▼</Text>
+			<Text>したっぱ２『なんだよ　こいつ！
+２ねんまえの　あいつ　みたいだな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T06:22:30" />
+				Time="2011-05-24T06:51:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-05-24T06:13:22" />
 		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>したっぱ２『なんだよ　こいつ！
+２年前の　あいつ　みたいだな▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T06:52:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T06:51:16" />
+		</LanguageCell>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
 ・戦闘後メッセージ
-・続けて</Comment>
+・続けてswplazmam3_01</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T06:16:46" />
+				Time="2011-05-24T06:48:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -489,7 +544,8 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d27r0101_swplazmam3_01">
+		Label="msg_d27r0101_swplazmam3_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>したっぱ３『ちっ！
@@ -502,13 +558,25 @@
 				User="matsumiya:W00224"
 				Time="2011-05-24T06:18:23" />
 		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>したっぱ３『ちっ！
+２ｖｓ１で　やっちまうぞ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T06:51:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T06:51:16" />
+		</LanguageCell>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・続けて</Comment>
+・続けてswleader1_03</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T06:19:31" />
+				Time="2011-05-24T06:49:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -527,7 +595,8 @@ SWPLAZMAM</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d27r0101_swleader1_03">
+		Label="msg_d27r0101_swleader1_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>チェレン『[Name:TrainerName ]！
@@ -578,7 +647,8 @@ SWPLAZMAM</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d27r0101_swleader1_04">
+		Label="msg_d27r0101_swleader1_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>チェレン『[Name:TrainerName Idx="1" ]に
@@ -629,7 +699,8 @@ SWPLAZMAM</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d27r0101_swleader1_05">
+		Label="msg_d27r0101_swleader1_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>チェレン『……ったく！
@@ -645,10 +716,10 @@ SWPLAZMAM</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>チェレン『……ったく！
-かずだけは　おおいんだから！</Text>
+数だけは　多いんだから！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T06:26:57" />
+				Time="2011-05-24T06:52:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -729,14 +800,27 @@ SWPLAZMAM</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>したっぱ４『？？？</Text>
+			<Text>したっぱ４『コイツ……
+なんだか　つよいというか　こわい！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T06:36:27" />
+				Time="2011-05-24T07:05:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-05-24T06:32:02" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>したっぱ４『コイツ……
+なんだか　強いというか　怖い！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T07:06:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T07:06:01" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -757,17 +841,31 @@ SWPLAZMAM</Text>
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d27r0101_swplazmaw_01">
+		Label="msg_d27r0101_swplazmaw_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>したっぱ５『？？？</Text>
+			<Text>したっぱ５『どうして　いつもいつも
+ジャマされちまうんだ　おれたち？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T06:36:33" />
+				Time="2011-05-24T07:05:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-05-24T06:32:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>したっぱ５『どうして　いつもいつも
+ジャマされちまうんだ　おれたち？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T07:06:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T07:06:01" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -788,7 +886,8 @@ SWPLAZMAW</Text>
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d27r0101_swrival_04">
+		Label="msg_d27r0101_swrival_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さっさと
@@ -816,11 +915,11 @@ SWPLAZMAW</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・メッセージ後、ライバルとのタッグで２ｖｓ２へ
+・主人公と向き合ってメッセージ表示
 ・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T06:36:50" />
+				Time="2011-05-24T06:53:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -841,25 +940,89 @@ SWPLAZMAW</Text>
 		Label="msg_d27r0101_swrival_05">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『？？？▼</Text>
+			<Text>すうねんまえ　ヒオウギで
+ポケモン名を　うばったのは　おまえか！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T06:37:40" />
+				Time="2011-05-24T06:53:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T06:53:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>数年前　ヒオウギで
+ポケモン名を　奪ったのは　おまえか！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T06:58:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T06:58:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・メッセージ後、ライバルとのタッグで２ｖｓ２へ
+※仮メッセージ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T06:53:54" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T06:53:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0101_swrival_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『チッ！
+オレの　ポケモン　いなかったか……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T07:04:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-05-24T06:37:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『チッ！
+オレの　ポケモン　いなかったか……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T07:04:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T06:58:04" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
 ・ライバルとのタッグ後、フィールドに戻ると
 　自動でメッセージ表示
-・続けて
+・続けてswleader1_06
 ・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T06:37:15" />
+				Time="2011-05-24T06:57:29" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -877,18 +1040,31 @@ SWPLAZMAW</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d27r0101_swleader1_06">
+		Label="msg_d27r0101_swleader1_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>チェレン『さてと……▼
-ふねのなかを　しらべようか▼</Text>
+ふねの　なかを　しらべようか▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T06:37:59" />
+				Time="2011-05-24T07:06:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-05-24T06:37:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>チェレン『さてと……▼
+船の　中を　調べようか▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T07:06:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T06:58:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Character">
@@ -920,14 +1096,26 @@ SWPLAZMAW</Text>
 				User="matsumiya:W00224"
 				Time="2011-05-24T03:42:44" />
 		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>？？？『なにごと　である？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T06:58:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T06:58:24" />
+		</LanguageCell>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
 ・扉から七賢人登場し、メッセージ表示
+・！マーク→？マーク表示
 ・続けて</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T06:38:19" />
+				Time="2011-05-24T07:00:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -945,23 +1133,38 @@ SWPLAZMAW</Text>
 			<Text>チェレン『やれやれ……▼
 あなたは　れいとうコンテナで
 ふるえていた　ひと　ですよね▼
-この　ふねで　なにを　したいのか
+この　ふねで　なにを　するつもりなのか
 なかを　しらべさせて　もらいますよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T06:40:09" />
+				Time="2011-05-24T06:58:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-05-24T03:44:53" />
 		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>チェレン『やれやれ……▼
+あなたは　冷凍コンテナで
+震えていた　人　ですよね▼
+この船で　なにを　するつもりなのか
+中を　調べさせて　もらいますよ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T07:06:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T06:58:26" />
+		</LanguageCell>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・</Comment>
+・チェレン、一歩前にでてメッセージ表示</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T03:45:17" />
+				Time="2011-05-24T06:59:18" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -984,23 +1187,38 @@ SWPLAZMAW</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヴィオ『ものずきな　トレーナーよ！
-すきに　させるものか！▼</Text>
+			<Text>ヴィオ『……ぐぬぬ！▼
+ものずきな　トレーナーよ！
+おまえらの　かってに　させるものか！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T06:40:28" />
+				Time="2011-05-24T06:59:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-05-24T03:44:58" />
 		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヴィオ『……ぐぬぬ！▼
+物好きな　トレーナーよ！
+おまえらの　勝手に　させるものか！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T06:59:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T06:59:30" />
+		</LanguageCell>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・</Comment>
+・ヴィオ、一歩さがってメッセージ表示
+・続けてsage7_03</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T03:45:17" />
+				Time="2011-05-24T07:00:20" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1022,23 +1240,36 @@ SWPLAZMAW</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>だれか！
-だれか　おらぬか！？▼</Text>
+			<Text>だれか！　だれか　おらぬか！？
+こいつらを　つまみだせ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T03:58:19" />
+				Time="2011-05-24T07:01:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-05-24T03:58:15" />
 		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>だれか！　だれか　おらぬか！？
+こいつらを　つまみだせ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T07:01:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-24T07:01:43" />
+		</LanguageCell>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・</Comment>
+・左右（あるいは上下）をみてからメッセージ
+・続けて</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T04:02:57" />
+				Time="2011-05-24T07:02:01" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1077,11 +1308,13 @@ SWPLAZMAW</Text>
 			Language="JPN">
 			<Comment>♂
 ・メッセージ表示後
-　主人公、ライバル、チェレンの
+　主人公、ライバル、チェレンの隣に
+　ダークトリニティの出現アニメを一瞬表示してから
+　メッセージ表示
 ・そのあとd05へ</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T03:58:48" />
+				Time="2011-05-24T07:02:19" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
