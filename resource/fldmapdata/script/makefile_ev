@@ -17,7 +17,8 @@ DEPENDHEADERS = usescript.h scr_seq_def.h easy_event_def.h \
 								$(PROJECT_PROGDIR)src/field/scrcmd_table.cdat \
 								../flagwork/flag_define.h ../flagwork/work_define.h \
 								../../sound/swan_sound_data.sadl ../zonetable/zone_id.h \
-								$(PROJECT_PROGDIR)version
+								$(PROJECT_PROGDIR)version \
+								../../trdata/trno_def.h
 
 MSGHEADERDIR	=	../../message/dst/script/
 EVENTHEADERDIR	= ../eventdata/tmp/
