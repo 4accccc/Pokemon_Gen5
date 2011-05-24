@@ -18,6 +18,7 @@
 #define TR_SCIENTISTW_10                   4
 #define TR_PARASOL_10                      5
 #define TR_SCHOOLB_12                      6
+#define TR_RANGERM_13                      7
 
 #endif //ZONE_R06_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r06.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

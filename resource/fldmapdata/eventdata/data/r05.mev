@@ -1,5 +1,5 @@
 #event data
-#save date:2011/05/19 14:52:35
+#save date:2011/05/20 18:47:16
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\r05.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\r05.wms
 #hold event type:
 1
 #hold event number:
-7
+8
 #event number: 0
 #type
 1
@@ -226,7 +226,38 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-184 0 88
+328 0 104
+#event number: 7
+#type
+1
+#ID name
+TR_RANGERW_13
+#OBJ CODE Number
+RANGERW
+#MOVE CODE Number
+MV_RND_UDL
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_RANGERW_13
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+3
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+40 0 120
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

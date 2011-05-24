@@ -23,6 +23,7 @@
 #define TR_HEADS_08                        8
 #define TR_POLICE_04                       9
 #define TR_POLICE_05                      10
+#define TR_BREEDERW_04                    11
 
 #endif //ZONE_R04_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r04.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

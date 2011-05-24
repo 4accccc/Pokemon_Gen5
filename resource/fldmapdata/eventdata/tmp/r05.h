@@ -18,6 +18,7 @@
 #define TR_FANW_11                         4
 #define TR_FANW_11_2                       5
 #define TR_ARTIST_04                       6
+#define TR_RANGERW_13                      7
 
 #endif //ZONE_R05_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r05.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
