@@ -3596,66 +3596,6 @@
 	</row>
 
 	<row id="ZKN_HEIGHT_650_000">
-		<language name="JPN">４．５ｍ</language>
-		<language name="JPN_KANJI">４．５ｍ</language>
-	</row>
-
-	<row id="ZKN_HEIGHT_651_000">
-		<language name="JPN">４．５ｍ</language>
-		<language name="JPN_KANJI">４．５ｍ</language>
-	</row>
-
-	<row id="ZKN_HEIGHT_652_000">
-		<language name="JPN">４．５ｍ</language>
-		<language name="JPN_KANJI">４．５ｍ</language>
-	</row>
-
-	<row id="ZKN_HEIGHT_653_000">
-		<language name="JPN">４．５ｍ</language>
-		<language name="JPN_KANJI">４．５ｍ</language>
-	</row>
-
-	<row id="ZKN_HEIGHT_654_000">
-		<language name="JPN">４．５ｍ</language>
-		<language name="JPN_KANJI">４．５ｍ</language>
-	</row>
-
-	<row id="ZKN_HEIGHT_655_000">
-		<language name="JPN">４．５ｍ</language>
-		<language name="JPN_KANJI">４．５ｍ</language>
-	</row>
-
-	<row id="ZKN_HEIGHT_656_000">
-		<language name="JPN">４．５ｍ</language>
-		<language name="JPN_KANJI">４．５ｍ</language>
-	</row>
-
-	<row id="ZKN_HEIGHT_657_000">
-		<language name="JPN">４．５ｍ</language>
-		<language name="JPN_KANJI">４．５ｍ</language>
-	</row>
-
-	<row id="ZKN_HEIGHT_658_000">
-		<language name="JPN">４．５ｍ</language>
-		<language name="JPN_KANJI">４．５ｍ</language>
-	</row>
-
-	<row id="ZKN_HEIGHT_659_000">
-		<language name="JPN">４．５ｍ</language>
-		<language name="JPN_KANJI">４．５ｍ</language>
-	</row>
-
-	<row id="ZKN_HEIGHT_660_000">
-		<language name="JPN">４．５ｍ</language>
-		<language name="JPN_KANJI">４．５ｍ</language>
-	</row>
-
-	<row id="ZKN_HEIGHT_661_000">
-		<language name="JPN">４．５ｍ</language>
-		<language name="JPN_KANJI">４．５ｍ</language>
-	</row>
-
-	<row id="ZKN_HEIGHT_662_000">
 		<language name="JPN">？？？．？ｍ</language>
 		<language name="JPN_KANJI">？？？．？ｍ</language>
 	</row>
@@ -4013,6 +3953,16 @@
 	<row id="ZKN_HEIGHT_586_003">
 		<language name="JPN">１．９ｍ</language>
 		<language name="JPN_KANJI">１．９ｍ</language>
+	</row>
+
+	<row id="ZKN_HEIGHT_646_001">
+		<language name="JPN">３．０ｍ</language>
+		<language name="JPN_KANJI">３．０ｍ</language>
+	</row>
+
+	<row id="ZKN_HEIGHT_646_002">
+		<language name="JPN">３．０ｍ</language>
+		<language name="JPN_KANJI">３．０ｍ</language>
 	</row>
 
 	<row id="ZKN_HEIGHT_648_001">

@@ -6191,66 +6191,6 @@
 プラズマ団に　改造された。</language>
 	</row>
 
-	<row id="ZKN_COMMENT_01_650">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
-	</row>
-
-	<row id="ZKN_COMMENT_01_651">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
-	</row>
-
-	<row id="ZKN_COMMENT_01_652">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
-	</row>
-
-	<row id="ZKN_COMMENT_01_653">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
-	</row>
-
-	<row id="ZKN_COMMENT_01_654">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
-	</row>
-
-	<row id="ZKN_COMMENT_01_655">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
-	</row>
-
-	<row id="ZKN_COMMENT_01_656">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
-	</row>
-
-	<row id="ZKN_COMMENT_01_657">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
-	</row>
-
-	<row id="ZKN_COMMENT_01_658">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
-	</row>
-
-	<row id="ZKN_COMMENT_01_659">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
-	</row>
-
-	<row id="ZKN_COMMENT_01_660">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
-	</row>
-
-	<row id="ZKN_COMMENT_01_661">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
-	</row>
-
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>

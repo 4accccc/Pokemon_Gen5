@@ -6191,66 +6191,6 @@
 背中の　大砲が　パワーアップした。</language>
 	</row>
 
-	<row id="ZKN_COMMENT_00_650">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
-	</row>
-
-	<row id="ZKN_COMMENT_00_651">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
-	</row>
-
-	<row id="ZKN_COMMENT_00_652">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
-	</row>
-
-	<row id="ZKN_COMMENT_00_653">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
-	</row>
-
-	<row id="ZKN_COMMENT_00_654">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
-	</row>
-
-	<row id="ZKN_COMMENT_00_655">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
-	</row>
-
-	<row id="ZKN_COMMENT_00_656">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
-	</row>
-
-	<row id="ZKN_COMMENT_00_657">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
-	</row>
-
-	<row id="ZKN_COMMENT_00_658">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
-	</row>
-
-	<row id="ZKN_COMMENT_00_659">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
-	</row>
-
-	<row id="ZKN_COMMENT_00_660">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
-	</row>
-
-	<row id="ZKN_COMMENT_00_661">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
-	</row>
-
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>

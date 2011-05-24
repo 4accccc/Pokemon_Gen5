@@ -3596,66 +3596,6 @@
 	</row>
 
 	<row id="ZKN_WEIGHT_650_000">
-		<language name="JPN">３５２．０ｋｇ</language>
-		<language name="JPN_KANJI">３５２．０ｋｇ</language>
-	</row>
-
-	<row id="ZKN_WEIGHT_651_000">
-		<language name="JPN">３５２．０ｋｇ</language>
-		<language name="JPN_KANJI">３５２．０ｋｇ</language>
-	</row>
-
-	<row id="ZKN_WEIGHT_652_000">
-		<language name="JPN">３５２．０ｋｇ</language>
-		<language name="JPN_KANJI">３５２．０ｋｇ</language>
-	</row>
-
-	<row id="ZKN_WEIGHT_653_000">
-		<language name="JPN">３５２．０ｋｇ</language>
-		<language name="JPN_KANJI">３５２．０ｋｇ</language>
-	</row>
-
-	<row id="ZKN_WEIGHT_654_000">
-		<language name="JPN">３５２．０ｋｇ</language>
-		<language name="JPN_KANJI">３５２．０ｋｇ</language>
-	</row>
-
-	<row id="ZKN_WEIGHT_655_000">
-		<language name="JPN">３５２．０ｋｇ</language>
-		<language name="JPN_KANJI">３５２．０ｋｇ</language>
-	</row>
-
-	<row id="ZKN_WEIGHT_656_000">
-		<language name="JPN">３５２．０ｋｇ</language>
-		<language name="JPN_KANJI">３５２．０ｋｇ</language>
-	</row>
-
-	<row id="ZKN_WEIGHT_657_000">
-		<language name="JPN">３５２．０ｋｇ</language>
-		<language name="JPN_KANJI">３５２．０ｋｇ</language>
-	</row>
-
-	<row id="ZKN_WEIGHT_658_000">
-		<language name="JPN">３５２．０ｋｇ</language>
-		<language name="JPN_KANJI">３５２．０ｋｇ</language>
-	</row>
-
-	<row id="ZKN_WEIGHT_659_000">
-		<language name="JPN">３５２．０ｋｇ</language>
-		<language name="JPN_KANJI">３５２．０ｋｇ</language>
-	</row>
-
-	<row id="ZKN_WEIGHT_660_000">
-		<language name="JPN">３５２．０ｋｇ</language>
-		<language name="JPN_KANJI">３５２．０ｋｇ</language>
-	</row>
-
-	<row id="ZKN_WEIGHT_661_000">
-		<language name="JPN">３５２．０ｋｇ</language>
-		<language name="JPN_KANJI">３５２．０ｋｇ</language>
-	</row>
-
-	<row id="ZKN_WEIGHT_662_000">
 		<language name="JPN">？？？．？ｋｇ</language>
 		<language name="JPN_KANJI">？？？．？ｋｇ</language>
 	</row>
@@ -4013,6 +3953,16 @@
 	<row id="ZKN_WEIGHT_586_003">
 		<language name="JPN">９２．５ｋｇ</language>
 		<language name="JPN_KANJI">９２．５ｋｇ</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_646_001">
+		<language name="JPN">３２５．０ｋｇ</language>
+		<language name="JPN_KANJI">３２５．０ｋｇ</language>
+	</row>
+
+	<row id="ZKN_WEIGHT_646_002">
+		<language name="JPN">３２５．０ｋｇ</language>
+		<language name="JPN_KANJI">３２５．０ｋｇ</language>
 	</row>
 
 	<row id="ZKN_WEIGHT_648_001">

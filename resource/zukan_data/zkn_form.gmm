@@ -3596,66 +3596,6 @@
 	</row>
 
 	<row id="ZKN_FORM_650_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
-	</row>
-
-	<row id="ZKN_FORM_651_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
-	</row>
-
-	<row id="ZKN_FORM_652_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
-	</row>
-
-	<row id="ZKN_FORM_653_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
-	</row>
-
-	<row id="ZKN_FORM_654_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
-	</row>
-
-	<row id="ZKN_FORM_655_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
-	</row>
-
-	<row id="ZKN_FORM_656_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
-	</row>
-
-	<row id="ZKN_FORM_657_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
-	</row>
-
-	<row id="ZKN_FORM_658_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
-	</row>
-
-	<row id="ZKN_FORM_659_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
-	</row>
-
-	<row id="ZKN_FORM_660_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
-	</row>
-
-	<row id="ZKN_FORM_661_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
-	</row>
-
-	<row id="ZKN_FORM_662_000">
 		<language name="JPN"> </language>
 		<language name="JPN_KANJI"> </language>
 	</row>
@@ -4013,6 +3953,16 @@
 	<row id="ZKN_FORM_586_003">
 		<language name="JPN">ふゆのすがた</language>
 		<language name="JPN_KANJI">ふゆのすがた</language>
+	</row>
+
+	<row id="ZKN_FORM_646_001">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_FORM_646_002">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_FORM_648_001">
