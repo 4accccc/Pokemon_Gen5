@@ -34,13 +34,6 @@
 #include "event_debug_menu_ov_medalinfo.h"
 #include "msg/debug/msg_debug_medalinfo.h"
 
-// グローバル変数
-extern int  g_debug_inf_tr_pos_type;
-extern BOOL g_debug_inf_data_change;
-extern u32  g_debug_inf_master_seed;
-extern BOOL g_debug_inf_is_presentation;
-
-
 //=============================================================================
 /**
  *					構造体宣言
