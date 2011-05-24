@@ -601,6 +601,27 @@ const SCENE_DATA resistMapTbl[] = {
 		TRUE,
     HEAPSIZE_FIELDMAP_NORMAL,
 	},
+  //RSC_GRID_GYM_GROUND = 22,
+	{	//実験マップ グリッド移動
+		{
+			MAP_XZ_SIZE, 1024*FX32_ONE, 
+      2,3,
+      FLDMAPPER_MODE_SCROLL_NONE,
+      ARCID_FLDMAP_LANDDATA,
+
+			1,  1, 1,		//dummy map matrix data
+			NULL, 
+
+			FLDMAPPER_TEXTYPE_NONE,	{ 0, 0 },
+			{0,2},	// 地面アニメーション
+
+			GYM_GROUND_MAPPER_BLOCK_MEMSIZE,	// 
+      1,  // topフレームのブロック描画数
+		},
+		&FieldMapCtrl_GridFunctions,
+		TRUE,
+    HEAPSIZE_FIELDMAP_NORMAL,
+	},
 
 };
 
