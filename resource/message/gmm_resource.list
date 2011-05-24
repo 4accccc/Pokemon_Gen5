@@ -28,3 +28,5 @@ src/zkn_type.gmm
 src/zkn_weight.gmm
 src/trade_head.gmm
 src/wbt_trname.gmm
+src/itemname.gmm
+src/iteminfo.gmm

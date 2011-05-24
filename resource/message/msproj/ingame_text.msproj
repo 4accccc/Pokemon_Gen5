@@ -1705,10 +1705,6 @@
 			<ContentItem
 				Name="ircbattle.mstxt" />
 			<ContentItem
-				Name="iteminfo.mstxt" />
-			<ContentItem
-				Name="itemname.mstxt" />
-			<ContentItem
 				Name="itempocket.mstxt" />
 			<ContentItem
 				Name="leader_board.mstxt" />
@@ -2028,7 +2024,7 @@
 			<Tag
 				TagName="TrainerName"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>TrainerName</US_English>
 					<Japanese>トレーナー名</Japanese>
@@ -2055,7 +2051,7 @@
 			<Tag
 				TagName="PokemonName"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>PokemonName</US_English>
 					<Japanese>ポケモン種族名</Japanese>
@@ -2085,7 +2081,7 @@
 			<Tag
 				TagName="PokemonNickname"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>PokemonNickname</US_English>
 					<Japanese>ポケモンニックネーム</Japanese>
@@ -2114,7 +2110,7 @@
 			<Tag
 				TagName="Type"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>Type</US_English>
 					<Japanese>ポケモンタイプ</Japanese>
@@ -2143,7 +2139,7 @@
 			<Tag
 				TagName="PokedexType"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>PokedexType</US_English>
 					<Japanese>ポケモン分類</Japanese>
@@ -2172,7 +2168,7 @@
 			<Tag
 				TagName="Place"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>Place</US_English>
 					<Japanese>マップ名</Japanese>
@@ -2199,7 +2195,7 @@
 			<Tag
 				TagName="Ability"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>Ability</US_English>
 					<Japanese>とくせい名</Japanese>
@@ -2226,7 +2222,7 @@
 			<Tag
 				TagName="Move"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>Move</US_English>
 					<Japanese>わざ名</Japanese>
@@ -2253,7 +2249,7 @@
 			<Tag
 				TagName="Nature"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>Nature</US_English>
 					<Japanese>せいかく</Japanese>
@@ -2280,7 +2276,7 @@
 			<Tag
 				TagName="Item"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>Item</US_English>
 					<Japanese>どうぐ名</Japanese>
@@ -2307,7 +2303,7 @@
 			<Tag
 				TagName="MusicalGoods"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>MusicalGoods</US_English>
 					<Japanese>グッズ名</Japanese>
@@ -2334,7 +2330,7 @@
 			<Tag
 				TagName="BoxName"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>BoxName</US_English>
 					<Japanese>ボックス名</Japanese>
@@ -2361,7 +2357,7 @@
 			<Tag
 				TagName="PokemonNickname2"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>PokemonNickname</US_English>
 					<Japanese>ポケモンニックネーム（正体）</Japanese>
@@ -2390,7 +2386,7 @@
 			<Tag
 				TagName="Status"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>Status</US_English>
 					<Japanese>ステータス名</Japanese>
@@ -2419,7 +2415,7 @@
 			<Tag
 				TagName="TrainerType"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>TrainerType</US_English>
 					<Japanese>トレーナー種別名</Japanese>
@@ -2448,7 +2444,7 @@
 			<Tag
 				TagName="Hobby"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>Hobby</US_English>
 					<Japanese>趣味（調査レーダー）</Japanese>
@@ -2475,7 +2471,7 @@
 			<Tag
 				TagName="GPower"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>GPower</US_English>
 					<Japanese>Gパワー名称</Japanese>
@@ -2504,7 +2500,7 @@
 			<Tag
 				TagName="Pocket"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>Pocket</US_English>
 					<Japanese>バッグのポケット名</Japanese>
@@ -2533,7 +2529,7 @@
 			<Tag
 				TagName="Answer"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>Answer</US_English>
 					<Japanese>アンケート回答</Japanese>
@@ -2560,7 +2556,7 @@
 			<Tag
 				TagName="CupName"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>CupName</US_English>
 					<Japanese>カップ名</Japanese>
@@ -2589,7 +2585,7 @@
 			<Tag
 				TagName="PMS"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>PMS</US_English>
 					<Japanese>簡易会話単語</Japanese>
@@ -2616,7 +2612,7 @@
 			<Tag
 				TagName="Accessary"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>アクセサリー名</US_English>
 					<Japanese>アクセサリー名</Japanese>
@@ -2645,7 +2641,7 @@
 			<Tag
 				TagName="GymName"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>GymName</US_English>
 					<Japanese>ジム名</Japanese>
@@ -2672,7 +2668,7 @@
 			<Tag
 				TagName="TimeSlot"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>TimeSlot</US_English>
 					<Japanese>時間帯</Japanese>
@@ -2701,7 +2697,7 @@
 			<Tag
 				TagName="MusicalProgram"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>MusicalProgram</US_English>
 					<Japanese>ミュージカル演目名</Japanese>
@@ -2730,7 +2726,7 @@
 			<Tag
 				TagName="MusicalResult"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>MusicalResult</US_English>
 					<Japanese>ミュージカルコンディション</Japanese>
@@ -2760,7 +2756,7 @@
 			<Tag
 				TagName="Location"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>Location</US_English>
 					<Japanese>国名</Japanese>
@@ -2789,7 +2785,7 @@
 			<Tag
 				TagName="Area"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>Area</US_English>
 					<Japanese>地域名</Japanese>
@@ -2818,7 +2814,7 @@
 			<Tag
 				TagName="Ribbon"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>Ribbon</US_English>
 					<Japanese>リボンの名前</Japanese>
@@ -2847,7 +2843,7 @@
 			<Tag
 				TagName="BodyPart"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>BodyPart</US_English>
 					<Japanese>ミュージカルグッズ部位</Japanese>
@@ -2874,7 +2870,7 @@
 			<Tag
 				TagName="Furniture"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>Furniture</US_English>
 					<Japanese>PDW家具名</Japanese>
@@ -2901,7 +2897,7 @@
 			<Tag
 				TagName="MusicalAudience"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>MusicalAudience</US_English>
 					<Japanese>ミュージカル客層</Japanese>
@@ -2930,7 +2926,7 @@
 			<Tag
 				TagName="DSOwner"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>DSOwner</US_English>
 					<Japanese>DS本体名</Japanese>
@@ -2959,7 +2955,7 @@
 			<Tag
 				TagName="Medal"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>Medal</US_English>
 					<Japanese>メダル名</Japanese>
@@ -2988,7 +2984,7 @@
 			<Tag
 				TagName="MedalistRank"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>MedalistRank</US_English>
 					<Japanese>メダリストランク名</Japanese>
@@ -3017,7 +3013,7 @@
 			<Tag
 				TagName="ResortGreet"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>ResortGreet</US_English>
 					<Japanese>リゾートフリーワード</Japanese>
@@ -3046,7 +3042,7 @@
 			<Tag
 				TagName="ResortShop"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>ResortShop</US_English>
 					<Japanese>リゾート店名</Japanese>
@@ -3075,7 +3071,7 @@
 			<Tag
 				TagName="ResortTown"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>ResortTown</US_English>
 					<Japanese>リゾート街名</Japanese>
@@ -3104,7 +3100,7 @@
 			<Tag
 				TagName="ResortMayor"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>ResortMayor</US_English>
 					<Japanese>リゾート市長名</Japanese>
@@ -3133,7 +3129,7 @@
 			<Tag
 				TagName="WBTTournament"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>WBTトーナメント名</US_English>
 					<Japanese>WBTトーナメント名</Japanese>
@@ -3162,7 +3158,7 @@
 			<Tag
 				TagName="Undefined"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>未設定タグ</US_English>
 					<Japanese>未設定タグ</Japanese>
@@ -3191,7 +3187,7 @@
 			<Tag
 				TagName="TrialhouseRank"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>TrialhouseRank</US_English>
 					<Japanese>トライアルハウスランク</Japanese>
@@ -3221,7 +3217,7 @@
 			<Tag
 				TagName="Weather"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>Weather</US_English>
 					<Japanese>天候</Japanese>
@@ -3250,7 +3246,7 @@
 			<Tag
 				TagName="Month"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>month</US_English>
 					<Japanese>month</Japanese>
@@ -3286,7 +3282,7 @@
 			<Tag
 				TagName="1digit"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>1digit</US_English>
 					<Japanese>１桁</Japanese>
@@ -3313,7 +3309,7 @@
 			<Tag
 				TagName="2digits"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>2digits</US_English>
 					<Japanese>２桁</Japanese>
@@ -3340,7 +3336,7 @@
 			<Tag
 				TagName="3digits"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>3digits</US_English>
 					<Japanese>３桁</Japanese>
@@ -3367,7 +3363,7 @@
 			<Tag
 				TagName="4digits"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>4digits</US_English>
 					<Japanese>４桁</Japanese>
@@ -3394,7 +3390,7 @@
 			<Tag
 				TagName="5digits"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>5digits</US_English>
 					<Japanese>５桁</Japanese>
@@ -3421,7 +3417,7 @@
 			<Tag
 				TagName="6digits"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>6digits</US_English>
 					<Japanese>６桁</Japanese>
@@ -3448,7 +3444,7 @@
 			<Tag
 				TagName="7digits"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>7digits</US_English>
 					<Japanese>７桁</Japanese>
@@ -3475,7 +3471,7 @@
 			<Tag
 				TagName="8digits"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>8digits</US_English>
 					<Japanese>８桁</Japanese>
@@ -3502,7 +3498,7 @@
 			<Tag
 				TagName="9digits"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>9digits</US_English>
 					<Japanese>９桁</Japanese>
@@ -3529,7 +3525,7 @@
 			<Tag
 				TagName="10digits"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>10digits</US_English>
 					<Japanese>10桁</Japanese>
@@ -3563,7 +3559,7 @@
 			<Tag
 				TagName="heart"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>heart</US_English>
 					<Japanese>heart</Japanese>
@@ -3579,7 +3575,7 @@
 			<Tag
 				TagName="music"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>music</US_English>
 					<Japanese>music</Japanese>
@@ -3595,7 +3591,7 @@
 			<Tag
 				TagName="male"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>male</US_English>
 					<Japanese>male</Japanese>
@@ -3611,7 +3607,7 @@
 			<Tag
 				TagName="female"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>female</US_English>
 					<Japanese>female</Japanese>
@@ -3627,7 +3623,7 @@
 			<Tag
 				TagName="10"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>10</US_English>
 					<Japanese>10</Japanese>
@@ -3643,7 +3639,7 @@
 			<Tag
 				TagName="100"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>100</US_English>
 					<Japanese>100</Japanese>
@@ -3659,7 +3655,7 @@
 			<Tag
 				TagName="1000"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>1000</US_English>
 					<Japanese>1000</Japanese>
@@ -3675,7 +3671,7 @@
 			<Tag
 				TagName="10000"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>10000</US_English>
 					<Japanese>10000</Japanese>
@@ -3691,7 +3687,7 @@
 			<Tag
 				TagName="100000"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>100000</US_English>
 					<Japanese>100000</Japanese>
@@ -3707,7 +3703,7 @@
 			<Tag
 				TagName="1000000"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>1000000</US_English>
 					<Japanese>1000000</Japanese>
@@ -3730,7 +3726,7 @@
 			<Tag
 				TagName="Upper_er"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>Upper_er</US_English>
 					<Japanese>Upper_er</Japanese>
@@ -3744,7 +3740,7 @@
 			<Tag
 				TagName="Upper_re"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>Upper_re</US_English>
 					<Japanese>Upper_re</Japanese>
@@ -3758,7 +3754,7 @@
 			<Tag
 				TagName="Upper_r"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>Upper_r</US_English>
 					<Japanese>Upper_r</Japanese>
@@ -3772,7 +3768,7 @@
 			<Tag
 				TagName="Upper_e"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>Upper_e</US_English>
 					<Japanese>Upper_e</Japanese>
@@ -3786,7 +3782,7 @@
 			<Tag
 				TagName="Abbrev."
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>Abbrev.</US_English>
 					<Japanese>Abbrev.</Japanese>
@@ -3800,7 +3796,7 @@
 			<Tag
 				TagName="Center_dot"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>Center_dot</US_English>
 					<Japanese>Center_dot</Japanese>
@@ -3814,7 +3810,7 @@
 			<Tag
 				TagName="L_SingleQuot."
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>L_SingleQuot.</US_English>
 					<Japanese>L_SingleQuot.</Japanese>
@@ -3828,7 +3824,7 @@
 			<Tag
 				TagName="L_DoubleQuot."
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>L_DoubleQuot.</US_English>
 					<Japanese>L_DoubleQuot.</Japanese>
@@ -3842,7 +3838,7 @@
 			<Tag
 				TagName="PKMN"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>PKMN</US_English>
 					<Japanese>PKMN</Japanese>
@@ -3856,7 +3852,7 @@
 			<Tag
 				TagName="null"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>null</US_English>
 					<Japanese>null</Japanese>
@@ -3877,7 +3873,7 @@
 			<Tag
 				TagName="Article"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>Article</US_English>
 					<Japanese>助詞</Japanese>
@@ -4000,7 +3996,7 @@
 			<Tag
 				TagName="Color"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>カラー変更</US_English>
 					<Japanese>カラー変更</Japanese>
@@ -4050,7 +4046,7 @@
 			<Tag
 				TagName="ColorReset"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>カラー変更リセット</US_English>
 					<Japanese>カラー変更リセット</Japanese>
@@ -4067,7 +4063,7 @@
 			<Tag
 				TagName="xcenter"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>Ｘセンタリング</US_English>
 					<Japanese>Ｘセンタリング</Japanese>
@@ -4084,7 +4080,7 @@
 			<Tag
 				TagName="xright"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>Ｘ右寄せ</US_English>
 					<Japanese>Ｘ右寄せ</Japanese>
@@ -4114,7 +4110,7 @@
 			<Tag
 				TagName="xadd"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>X加算</US_English>
 					<Japanese>X加算</Japanese>
@@ -4144,7 +4140,7 @@
 			<Tag
 				TagName="xset"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>X指定</US_English>
 					<Japanese>X指定</Japanese>
@@ -4181,7 +4177,7 @@
 			<Tag
 				TagName="LineFeed"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>ページ切り替え（行送り）</US_English>
 					<Japanese>ページ切り替え（行送り）</Japanese>
@@ -4198,7 +4194,7 @@
 			<Tag
 				TagName="PageClear"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>ページ切り替え（クリア）</US_English>
 					<Japanese>ページ切り替え（クリア）</Japanese>
@@ -4215,7 +4211,7 @@
 			<Tag
 				TagName="WaitOne"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>ウェイト変更（単発）</US_English>
 					<Japanese>ウェイト変更（単発）</Japanese>
@@ -4242,7 +4238,7 @@
 			<Tag
 				TagName="WaitCont"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>ウェイト変更（継続）</US_English>
 					<Japanese>ウェイト変更（継続）</Japanese>
@@ -4269,7 +4265,7 @@
 			<Tag
 				TagName="WaitReset"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>ウェイトリセット</US_English>
 					<Japanese>ウェイトリセット</Japanese>
@@ -4286,7 +4282,7 @@
 			<Tag
 				TagName="CallBackOne"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>コールバック引数変更（単発）</US_English>
 					<Japanese>コールバック引数変更（単発）</Japanese>
@@ -4313,7 +4309,7 @@
 			<Tag
 				TagName="CallBackCont"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>コールバック引数変更（継続）</US_English>
 					<Japanese>コールバック引数変更（継続）</Japanese>
@@ -4340,7 +4336,7 @@
 			<Tag
 				TagName="CallBackReset"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>コールバック引数リセット</US_English>
 					<Japanese>コールバック引数リセット</Japanese>
@@ -4357,7 +4353,7 @@
 			<Tag
 				TagName="ClearWin"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>描画領域クリア</US_English>
 					<Japanese>描画領域クリア</Japanese>
@@ -4374,7 +4370,7 @@
 			<Tag
 				TagName="CtrlSpeed"
 				HasInside="False"
-				CompareError="Ignore">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>Ctrl_Speed</US_English>
 					<Japanese>速度コントロール</Japanese>
