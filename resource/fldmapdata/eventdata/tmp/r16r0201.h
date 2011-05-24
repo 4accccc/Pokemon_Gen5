@@ -10,6 +10,10 @@
 #ifndef ZONE_R16R0201_EVC_H
 #define ZONE_R16R0201_EVC_H
 
+#define TR_BREEDERM_04                     0
+#define TR_RANGERW_15                      1
+#define TR_RANGERM_15                      2
+#define TR_VETERANM_08                     3
 
 #endif //ZONE_R16R0201_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r16r0201.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

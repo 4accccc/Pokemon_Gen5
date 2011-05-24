@@ -8,6 +8,12 @@
 #ifndef ZONE_D20_EVC_H
 #define ZONE_D20_EVC_H
 
+#define TR_ELITEW_25                       0
+#define TR_SWIMMERW_08                     1
+#define TR_SWIMMERM_08                     2
+#define TR_SWIMMERM_09                     3
+#define TR_SWIMMERW_09                     4
+#define TR_SWIMMERM_10                     5
 
 #endif //ZONE_D20_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d20.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
