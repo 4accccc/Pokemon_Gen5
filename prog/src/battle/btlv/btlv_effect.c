@@ -24,8 +24,8 @@
 
 #include "field/field_light_status.h"
 
+#include "tr_tool/tr_tool.h"  //TT_TrainerTypeSexGet
 #include "tr_tool/trtype_def.h"
-#include "tr_tool/trtype_sex.h"
 
 #include "arc_def.h"
 #include "battle/batt_bg_tbl.h"
@@ -959,7 +959,7 @@ void  BTLV_EFFECT_SetTrainer( int trtype, int position, int pos_x, int pos_y, in
       trtype = 3;
       break;
     default:
-      if( TrTypeSexTable[ trtype ] == PTL_SEX_MALE )
+      if( TT_TrainerTypeSexGet( trtype ) == PTL_SEX_MALE )
       {
         trtype = TRTYPE_HERO;
       }
