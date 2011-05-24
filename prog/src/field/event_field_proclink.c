@@ -850,12 +850,12 @@ static void * FMenuCallProc_PokeList(PROCLINK_WORK* wk, u32 param, EVENT_PROCLIN
   plistData->wazaLearnBit = 0xFF;
   plistData->zone_id    = GAMEDATA_GetMyPlayerWork(gmData)->zoneID; 
 
-  if( param == PL_MODE_ITEMUSE )
+  if( param != EVENT_PROCLINK_DATA_NONE )
   { 
-    //ショートカットからよばれた＝グラシデアのはな
+    //paramに有効なアイテムナンバーが入っていたら、大切な道具使用ショートカット
     plistData->ret_sel  = 0;
     plistData->mode     = PL_MODE_ITEMUSE;
-    plistData->item     = ITEM_GURASIDEANOHANA;
+    plistData->item     = param;
     wk->is_shortcut   = TRUE;
   }
   else
