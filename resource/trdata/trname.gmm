@@ -4576,8 +4576,8 @@
 	</row>
 
 	<row id="rangerm_15">
-		<language name="JPN" width="216">●</language>
-		<language name="JPN_KANJI" width="216">●</language>
+		<language name="JPN" width="216">モリト</language>
+		<language name="JPN_KANJI" width="216">モリト</language>
 	</row>
 
 	<row id="breederm_04">
@@ -4716,6 +4716,16 @@
 	</row>
 
 	<row id="worker2_30">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="karate_15">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="doctor_06">
 		<language name="JPN" width="216">●</language>
 		<language name="JPN_KANJI" width="216">●</language>
 	</row>
