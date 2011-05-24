@@ -1,3 +1,5 @@
+trwb_hero,PTL_SEX_MALE
+trwb_heroine,PTL_SEX_FEMALE
 trwb_tanpan,PTL_SEX_MALE
 trwb_mini,PTL_SEX_FEMALE
 trwb_schoolb,PTL_SEX_MALE
@@ -176,3 +178,5 @@ trwb_gschampion,PTL_SEX_MALE
 trwb_rschampion,PTL_SEX_MALE
 trwb_echampion,PTL_SEX_MALE
 trwb_adultw,PTL_SEX_FEMALE
+trwb_hero_s,PTL_SEX_MALE
+trwb_heroine_s,PTL_SEX_FEMALE

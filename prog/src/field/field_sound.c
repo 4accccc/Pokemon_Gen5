@@ -12,8 +12,7 @@
 #include "gamesystem/playerwork.h"
 #include "gamesystem/game_data.h"
 #include "field/zonedata.h"
-#include "tr_tool/trtype_def.h"
-#include "../../../resource/trtype_bgm/trtype_bgm.cdat" 
+
 #include "../../../resource/fldmapdata/special_bgm/special_bgm.cdat"
 
 
@@ -1302,32 +1301,6 @@ BOOL FSND_CheckValidSpecialBGM( GAMEDATA* gameData, u16 zoneID )
   }
   return TRUE;
 }
-
-//---------------------------------------------------------------------------------
-/**
- * @brief トレーナー視線曲 取得
- *
- * @param trType トレーナータイプ
- *
- * @return 指定したトレーナータイプの視線曲
- */
-//---------------------------------------------------------------------------------
-u32 FSND_GetTrainerEyeBGM( u32 trType )
-{
-  int i = 0;
-  while( DATA_TrainerTypeToEyeBGMNo[i][0] != TRTYPE_MAX )
-  {
-    if( DATA_TrainerTypeToEyeBGMNo[i][0] == trType )
-    {
-      return( DATA_TrainerTypeToEyeBGMNo[i][1]  );
-    }
-    i++;
-  }
-  
-  GF_ASSERT(0 && "FIELD-SOUND: error unknown trainer type\n");
-  return SEQ_BGM_EYE_01;
-} 
-
 
 //=================================================================================
 // ■非公開関数

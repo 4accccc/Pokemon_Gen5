@@ -194,7 +194,11 @@ extern	BOOL	TT_TrainerMessageCheck( int tr_id, int kindID, HEAPID heapID );
 extern	void	TT_TrainerMessageGet( int tr_id, int msgID, STRBUF* msg, HEAPID heapID );
 extern	void	TT_TrainerDataGet( int tr_id, TRAINER_DATA* td );
 extern	void	TT_TrainerPokeDataGet( int tr_id,void* tpd );
+
 extern	u8		TT_TrainerTypeSexGet( int trtype );
+extern  u8    TT_TrainerTypeCGIndexGet( int trtype, int dir );
+extern  u16   TT_TrainerTypeEyeBGMGet( int trtype );
+
 extern  u8 TT_TrainerTypeGrpEntryIdxGet( int trtype );
 extern  TRTYPE_GRP_ID TT_TrainerTypeGrpGet( int trtype );
 extern  BtlBgAttr TT_TrainerTypeBtlBgAttrGet( int trtype );

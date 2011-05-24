@@ -51,7 +51,7 @@ class TRTYPEDATA
   end
 
   def trhash
-    return @name + "(" + @id.upcase + ")"
+    return @id.upcase + @sex + @name
   end
 
   def trsex
@@ -60,6 +60,13 @@ class TRTYPEDATA
     elsif @sex == "♀" then
       return "PTL_SEX_FEMALE"
     end
+  end
+
+  def trbgm
+    if @bgm == "" || !(@bgm =~ /^SEQ_BGM_/) then
+      return "SEQ_BGM_EYE_01"
+    end
+    return @bgm
   end
 
 end
@@ -260,14 +267,80 @@ end
 # swan/tools/hash/trtype_hash.rb
 #------------------------------------------------------------------------------
 def make_hash( filename, ttdata )
-  fp_hash = open( filename, "w" )
-  fp_hash.printf("#! ruby -Ks\n\n" )
-  fp_hash.printf("\t$trtype_hash = {\n" )
+  str = ""
+  str += sprintf("#! ruby -Ks\n\n" )
+  str += sprintf("\t$trtype_hash = {\n" )
   ttdata.each{|ttd|
-    fp_hash.printf("\t\t\"%s\"=>%d,\n", ttd.trhash, ttd.no)
+    str += sprintf("\t\t\"%s\"=>%d,\n", ttd.trhash, ttd.no)
   }
-  fp_hash.printf("\t}\n" )
+  str += sprintf("\t}\n" )
+
+  str += sprintf("#\n")
+  str += sprintf("\t$trtype_id_hash = {\n")
+  ttdata.each{|ttd|
+    str += sprintf("\t\t\"%s\" =>%3d,\n", ttd.trtype, ttd.no)
+  }
+  str += sprintf("\t}\n")
+
+  fp_hash = open( filename, "w" )
+  fp_hash.puts str
   fp_hash.close
+end
+
+#------------------------------------------------------------------------------
+# 視線BGM指定セット
+#------------------------------------------------------------------------------
+def make_bgm( filename, ttdata )
+  str = ""
+  str += "//============================================================================================\n"
+  str += "/**\n"
+  str += " * @file	#{filename}\n"
+	str += " * @bfief	トレーナー視線BGM指定テーブル\n"
+  str += " * @author	#{__FILE__}\n" 
+	str += " * @author	このファイルは、コンバータが吐き出したファイルです\n"
+  str += "*/\n"
+  str += "//============================================================================================\n"
+  str += "unsigned short DATA_TrainerTypeToEyeBGMNo[] = {\n"
+
+  ttdata.each{|ttd|
+    str += "\t#{ttd.trbgm}, // #{ttd.trhash}\n"
+  }
+  str += "};\n\n"
+
+  fp_bgm = File.open(filename,"w")
+  fp_bgm.puts str
+  fp_bgm.close
+
+end
+
+#------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
+def make_cdat( filename, ttdata, gra_list )
+  str = ""
+  str += "//============================================================================================\n"
+  str += "/**\n"
+  str += " * @file	#{filename}\n"
+	str += " * @bfief	トレーナータイプ別テーブル\n"
+  str += " * @author	#{__FILE__}\n" 
+	str += " * @author	このファイルは、コンバータが吐き出したファイルです\n"
+  str += "*/\n"
+  str += "//============================================================================================\n"
+  str += "const TRAINER_TYPE_DATA DATA_TrainerType[] = {\n"
+
+
+  ttdata.each{|ttd|
+    str += sprintf("\t{ // No.%03d %s\n", ttd.no, ttd.trhash )
+    str += sprintf("\t\t%3d,%s,\n", gra_list.index(ttd.grf), ttd.trsex )
+    str += sprintf("\t\t\%s\n", ttd.trbgm )
+    str += "\t},\n"
+  }
+
+  str += "};\n\n"
+
+  fp_cdat = File.open( filename, "w" )
+  fp_cdat.puts str
+  fp_cdat.close
+
 end
 
 #============================================================================================
@@ -278,7 +351,7 @@ end
 ttdata = []
 
 File.open(ARGV[0]).each{|line|
-  column = line.chomp.split
+  column = line.chomp.split(",")
   if column[PARA::NO] =~/\d+/ then
     ttdata << TRTYPEDATA.new( column )
   end
@@ -296,12 +369,6 @@ makeGMM( "trtype.gmm", ARGV[1], ttdata )
 #trtype_def.h
 make_trtype_header( "trtype_def.h", ttdata )
 
-#trtype_sex.cdat
-make_trtypesex( "trtype_sex.cdat", ttdata )
-
-#trtype_gra.cdat
-make_trtype_gra( "trtype_gra.cdat", ttdata, gra_list )
-
 #trfgra_wb.scr
 make_trfgra( "trfgra_wb.scr", gra_list )
 
@@ -311,4 +378,20 @@ make_trf_list( "trfgra_wb.lst", ttdata, gra_list )
 # swan/tools/hash/trtype_hash.rb
 make_hash( "trtype_hash.rb", ttdata )
 
-#
+#trtype_sex.cdat
+#make_trtypesex( "trtype_sex.cdat", ttdata )
+
+#trtype_gra.cdat
+#make_trtype_gra( "trtype_gra.cdat", ttdata, gra_list )
+
+# trtype_bgm.cdat
+#make_bgm( "trtype_bgm.cdat", ttdata )
+
+# trtype_data.cdat
+make_cdat( "trtype_data.cdat", ttdata, gra_list )
+
+
+  #タイムスタンプ比較用のダミーファイルを生成
+  fp_w = open( "out_end", "w" )
+  fp_w.close
+

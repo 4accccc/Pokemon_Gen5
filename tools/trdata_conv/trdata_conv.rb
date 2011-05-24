@@ -1,4 +1,22 @@
 #! ruby -Ks
+#============================================================================================
+#
+# トレーナーデータコンバータ
+#
+# 2009.9.14   sogabe
+# 2011.5.24   tamada  トレーナータイプコンバーターとトレーナーデータコンバータの分離開始
+#
+#============================================================================================
+	#トレーナーグラフィックlstファイル生成  削除
+	#トレーナーグラフィックscrファイル生成  削除
+	#トレーナーグラフィックインデックスファイル生成 削除
+  #トレーナータイプgmm 削除
+	#トレーナー性別定義ファイル生成 削除
+	#トレーナータイプ定義ファイル生成 削除
+  #トレーナータイプHash生成　削除
+
+
+
 
   require File.dirname(__FILE__) + '/../label_make/label_make'
   require File.dirname(__FILE__) + '/../gmm_make/gmm_make'
@@ -7,6 +25,8 @@
   require File.dirname(__FILE__) + '/../hash/wazano_hash.rb'
   require File.dirname(__FILE__) + '/../hash/item_hash.rb'
   require File.dirname(__FILE__) + '/../hash/tokusei_hash.rb'
+
+  require ENV["PROJECT_ROOT"] + '/tools/hash/trtype_hash.rb'
 
 =begin
 	u8			data_type;        //データタイプ
@@ -201,27 +221,6 @@ end
     end
   }
 
-	#トレーナーグラフィックlstファイル生成
-	fp_trgra = open( "trfgra_wb.lst", "w" )
-
-	#トレーナーグラフィックscrファイル生成
-	fp_trfgra = open( "trfgra_wb.scr", "w" )
-  fp_trfgra.print "\"trwb_hero.NCGR\"\n"
-  fp_trfgra.print "\"trwb_hero.NCBR\"\n"
-  fp_trfgra.print "\"trwb_hero.NCER\"\n"
-  fp_trfgra.print "\"trwb_hero.NANR\"\n"
-  fp_trfgra.print "\"trwb_hero.NMCR\"\n"
-  fp_trfgra.print "\"trwb_hero.NMAR\"\n"
-  fp_trfgra.print "\"trwb_hero.NCEC\"\n"
-  fp_trfgra.print "\"trwb_hero.NCLR\"\n"
-  fp_trfgra.print "\"trwb_heroine.NCGR\"\n"
-  fp_trfgra.print "\"trwb_heroine.NCBR\"\n"
-  fp_trfgra.print "\"trwb_heroine.NCER\"\n"
-  fp_trfgra.print "\"trwb_heroine.NANR\"\n"
-  fp_trfgra.print "\"trwb_heroine.NMCR\"\n"
-  fp_trfgra.print "\"trwb_heroine.NMAR\"\n"
-  fp_trfgra.print "\"trwb_heroine.NCEC\"\n"
-  fp_trfgra.print "\"trwb_heroine.NCLR\"\n"
 
 	#トレーナーデータファイル生成
 	fp_trdata = open( "trdata_000.bin", "wb" )
@@ -258,69 +257,15 @@ end
   fp_trno.print( "#define __TRNO_DEF_H_\n\n" )
 	fp_trno.print("#define	TRID_NULL   ( 0 )\n")
 
-	#トレーナータイプ定義ファイル生成
-	fp_trtype = open( "trtype_def.h", "w" )
 
-  fp_trtype.print( "//============================================================================================\n" )
-  fp_trtype.print( "/**\n" )
-  fp_trtype.print( " * @file	trtype_def.h\n" )
-  fp_trtype.print( " * @bfief	トレーナータイプ定義\n");
-  fp_trtype.print( " * @author	TrainerDataConverter\n" )
-	fp_trtype.print( " * @author	このファイルは、コンバータが吐き出したファイルです\n" )
-  fp_trtype.print( "*/\n")
-  fp_trtype.print( "//============================================================================================\n" )
-  fp_trtype.print( "\n#pragma once\n\n" )
-	fp_trtype.print("\n")
-	fp_trtype.print("#define	TRTYPE_HERO	    ( 0 )\n")
-	fp_trtype.print("#define	TRTYPE_HEROINE	( 1 )\n")
-
-	#トレーナー性別定義ファイル生成
-	fp_trtypesex = open( "trtype_sex.h", "w" )
-
-  fp_trtypesex.print( "//============================================================================================\n" )
-  fp_trtypesex.print( "/**\n" )
-  fp_trtypesex.print( " * @file	trtype_sex.h\n" )
-	fp_trtypesex.print( " * @bfief	トレーナー性別定義\n")
-  fp_trtypesex.print( " * @author	TrainerDataConverter\n" )
-	fp_trtypesex.print( " * @author	このファイルは、コンバータが吐き出したファイルです\n" )
-  fp_trtypesex.print( "*/\n")
-  fp_trtypesex.print( "//============================================================================================\n" )
-  fp_trtypesex.print( "\n#pragma once\n\n" )
-	fp_trtypesex.print( "\n" )
-	fp_trtypesex.print( "static	const	u8	TrTypeSexTable[]={\n" )
-	fp_trtypesex.print( "\tPTL_SEX_MALE,		//男主人公\n" )
-	fp_trtypesex.print( "\tPTL_SEX_FEMALE,	//女主人公\n" )
-
-	#トレーナーグラフィックインデックスファイル生成
-	fp_trtypegra = open( "trtype_gra.h", "w" )
-
-  fp_trtypegra.print( "//============================================================================================\n" )
-  fp_trtypegra.print( "/**\n" )
-  fp_trtypegra.print( " * @file	trtype_gra.h\n" )
-	fp_trtypegra.print( " * @bfief	トレーナーグラフィックインデックスファイル定義\n")
-  fp_trtypegra.print( " * @author	TrainerDataConverter\n" )
-	fp_trtypegra.print( " * @author	このファイルは、コンバータが吐き出したファイルです\n" )
-  fp_trtypegra.print( "*/\n")
-  fp_trtypegra.print( "//============================================================================================\n" )
-  fp_trtypegra.print( "\n#pragma once\n\n" )
-	fp_trtypegra.print( "static	const	u8	TrTypeGraTable[]={\n" )
-	fp_trtypegra.print( "\t0, //男主人公\n" )
-	fp_trtypegra.print( "\t1,	//女主人公\n" )
 
 	#gmmファイル生成
   gmm_name = GMM::new
-  gmm_type = GMM::new
   gmm_name.open_gmm( ARGV[ ARGV_READ_GMM_FILE ] , "trname.gmm" )
-  gmm_type.open_gmm( ARGV[ ARGV_READ_GMM_FILE ] , "trtype.gmm" )
 
   gmm_name.make_row_kanji( "TR_NONE","ー","ー" )
 
-  gmm_type.make_row_kanji( "MSG_TRTYPE_HERO", "ポケモントレーナー", "ポケモントレーナー" )
-  gmm_type.make_row_kanji( "MSG_TRTYPE_HEROINE", "ポケモントレーナー", "ポケモントレーナー" )
-
 	trno = 1
-  trainer = []
-  tr_type = Hash::new
 
   read_data.size.times {|i|
     split_data = read_data[ i ].split(/,/)
@@ -481,25 +426,14 @@ end
 			exit( 1 )
     end
 
-		str = "TRTYPE_" + split_data[ PARA::TR_ID ][ 0..split_data[ PARA::TR_ID ].size - 4 ].upcase
 		name = split_data[ PARA::TR_ID ][ 0..split_data[ PARA::TR_ID ].size - 4 ].upcase
+		str = "TRTYPE_" + name
 
-    flag = 0
-    cnt = 0
-		trainer.size.times { |no|
-      if trainer[ no ][ TR::TRTYPE ] == str
-        flag = 1
-				break
-      end
-      cnt += 1
-    }
-		if flag == 0
-      label = split_data[ PARA::TR_ID ][ 0..(split_data[ PARA::TR_ID ].index("_")-1) ]
-      trainer[ cnt ] = [ str, split_data[ PARA::TR_TYPE ], gender[ split_data[ PARA::GENDER ] ], label, split_data[ PARA::TR_TYPE ], name ]
-      tr_type[ str ] = cnt + 2
+    if $trtype_id_hash.has_key?( str ) == false then
+      printf( "未定義のトレーナータイプです！ %s\n", str )
+      exit( 1 )
     end
-
-    type_tr     = tr_type[ str ]
+    type_tr     = $trtype_id_hash[ str ]
     type_fight  = fight_type[ split_data[ PARA::FIGHT_TYPE ] ]
 
     data = [ type_data, type_tr, type_fight, count ].pack( "C4" )
@@ -581,137 +515,11 @@ end
 	fp_trno.print( "#endif __TRNO_DEF_H_\n" )
 	fp_trno.close
 
-  #トレーナータイプHash生成
-  fp_hash = open( "trtype_hash.rb", "w" )
-  fp_hash.printf("#! ruby -Ks\n\n" )
-
-  fp_hash.printf("\t$trtype_hash = {\n" )
-  fp_hash.printf("\t\t\"男主人公\"=>0,\n")
-  fp_hash.printf("\t\t\"女主人公\"=>1,\n")
-
-  #トレーナータイプ名
-  #だぶりチェック
-  trainer.size.times { |i|
-    str = trainer[ i ][ TR::STR_HASH ]
-    find = 0
-    for j in ( i + 1 )..( trainer.size - 1 )
-      if str == trainer[ j ][ TR::STR_HASH ]
-        find = 1
-        break
-      end
-    end
-
-    if find != 0
-      trainer.size.times { |k|
-        if str == trainer[ k ][ TR::STR_HASH ]
-          #_（アンダーバー）が2個ある場合は、LABELを（）付きで連結
-          if trainer[ k ][ TR::TRTYPE ].scan("_").size == 2
-            trainer[ k ][ TR::STR_HASH ] = trainer[ k ][ TR::STR_HASH ] + "（%s）" % [ trainer[ k ][ TR::NAME ].upcase ]
-          elsif trainer[ k ][ TR::TRTYPE ].index(/M[0-9]/) != nil
-            trainer[ k ][ TR::STR_HASH ] = trainer[ k ][ TR::STR_HASH ] + "♂"
-          elsif trainer[ k ][ TR::TRTYPE ].index(/W[0-9]/) != nil
-            trainer[ k ][ TR::STR_HASH ] = trainer[ k ][ TR::STR_HASH ] + "♀"
-          #末尾から数字をサーチして見つかればそれ以降を連結
-          elsif trainer[ k ][ TR::TRTYPE ].index(/[0-9]/) != nil
-            trainer[ k ][ TR::STR_HASH ] = trainer[ k ][ TR::STR_HASH ] + trainer[ k ][ TR::TRTYPE ][ trainer[ k ][ TR::TRTYPE ].index(/[0-9]/)..trainer[ k ][TR::TRTYPE ].size - 1 ]
-          #末尾がMかBなら♂
-          elsif trainer[ k ][ TR::TRTYPE ][ trainer[ k ][TR::TRTYPE ].size - 1 ].chr == "M" ||
-            trainer[ k ][ TR::TRTYPE ][ trainer[ k ][TR::TRTYPE ].size - 1 ].chr == "B"
-            trainer[ k ][ TR::STR_HASH ] = trainer[ k ][ TR::STR_HASH ] + "♂"
-          #末尾がWかGなら♀
-          elsif trainer[ k ][ TR::TRTYPE ][ trainer[ k ][TR::TRTYPE ].size - 1 ].chr == "W" ||
-                trainer[ k ][ TR::TRTYPE ][ trainer[ k ][TR::TRTYPE ].size - 1 ].chr == "G"
-            trainer[ k ][ TR::STR_HASH ] = trainer[ k ][ TR::STR_HASH ] + "♀"
-          #それ以外なら、LABELを（）付きで連結
-          else
-            trainer[ k ][ TR::STR_HASH ] = trainer[ k ][ TR::STR_HASH ] + "（%s）" % [ trainer[ k ][ TR::LABEL ].upcase ]
-          end
-        end
-      }
-    end
-  }
-
-  no = 2
-  idx = 0
-  trfgra = []
-  trainer.size.times { |i|
-    fp_trgra.printf( "trwb_%s,%s\n", trainer[ i ][ TR::LABEL ], trainer[ i ][ TR::GENDER ] )
-    find = 0
-    idx = 2
-    trfgra.size.times {|j|
-      if trfgra[ j ] == trainer[ i ][ TR::LABEL ]
-        find = 1
-        break
-      end
-      idx += 1
-    }
-    if find == 0
-      fp_trfgra.printf( "\"trwb_%s.NCGR\"\n", trainer[ i ][ TR::LABEL ] )
-      fp_trfgra.printf( "\"trwb_%s.NCBR\"\n", trainer[ i ][ TR::LABEL ] )
-      fp_trfgra.printf( "\"trwb_%s.NCER\"\n", trainer[ i ][ TR::LABEL ] )
-      fp_trfgra.printf( "\"trwb_%s.NANR\"\n", trainer[ i ][ TR::LABEL ] )
-      fp_trfgra.printf( "\"trwb_%s.NMCR\"\n", trainer[ i ][ TR::LABEL ] )
-      fp_trfgra.printf( "\"trwb_%s.NMAR\"\n", trainer[ i ][ TR::LABEL ] )
-      fp_trfgra.printf( "\"trwb_%s.NCEC\"\n", trainer[ i ][ TR::LABEL ] )
-      fp_trfgra.printf( "\"trwb_%s.NCLR\"\n", trainer[ i ][ TR::LABEL ] )
-      trfgra << trainer[ i ][ TR::LABEL ]
-    end
-    fp_trtypegra.printf( "\t%d,\t\t//%s\n", idx, trainer[ i ][ TR::STR ] )
-		fp_trtype.printf( "#define	%s    ( %d )    //%s\n", trainer[ i ][ TR::TRTYPE ].upcase, no, trainer[ i ][ TR::STR_HASH ] )
-    str = "MSG_" + trainer[ i ][ TR::TRTYPE ]
-    gmm_type.make_row_kanji( str, trainer[ i ][ TR::STR ], trainer[ i ][ TR::STR ] )
-		fp_trtypesex.printf( "\t%s,\t\t//%s\n", trainer[ i ][ TR::GENDER ], trainer[ i ][ TR::STR_HASH ] )
-    fp_hash.printf("\t\t\"%s\"=>%d,\n", trainer[ i ][ TR::STR_HASH ], no )
-    no += 1
-	}
-	fp_trtype.printf( "#define	TRTYPE_HERO_S	    ( %d )\n", no )
-	fp_trtype.printf( "#define	TRTYPE_HEROINE_S	( %d )\n", no + 1)
-	fp_trtype.printf( "#define	TRTYPE_MAX	( %d )\n", no + 2 )
-
-	fp_trtypegra.printf( "\t%d, //男主人公（シューター）\n", idx + 1 )
-	fp_trtypegra.printf( "\t%d,	//女主人公（シューター）\n", idx + 2 )
-
-  gmm_type.make_row_kanji( "MSG_TRTYPE_HERO_S", "ポケモントレーナー", "ポケモントレーナー" )
-  gmm_type.make_row_kanji( "MSG_TRTYPE_HEROINE_S", "ポケモントレーナー", "ポケモントレーナー" )
-
-	fp_trtypesex.print( "\tPTL_SEX_MALE,		//男主人公（シューター）\n" )
-	fp_trtypesex.print( "\tPTL_SEX_FEMALE,	//女主人公（シューター）\n" )
 
   #gmm後始末
   gmm_name.close_gmm
-  gmm_type.close_gmm
 
-  #シューター用自機グラフィック
-  fp_trfgra.print "\"trwb_hero_s.NCGR\"\n"
-  fp_trfgra.print "\"trwb_hero_s.NCBR\"\n"
-  fp_trfgra.print "\"trwb_hero_s.NCER\"\n"
-  fp_trfgra.print "\"trwb_hero_s.NANR\"\n"
-  fp_trfgra.print "\"trwb_hero_s.NMCR\"\n"
-  fp_trfgra.print "\"trwb_hero_s.NMAR\"\n"
-  fp_trfgra.print "\"trwb_hero_s.NCEC\"\n"
-  fp_trfgra.print "\"trwb_hero_s.NCLR\"\n"
-  fp_trfgra.print "\"trwb_heroine_s.NCGR\"\n"
-  fp_trfgra.print "\"trwb_heroine_s.NCBR\"\n"
-  fp_trfgra.print "\"trwb_heroine_s.NCER\"\n"
-  fp_trfgra.print "\"trwb_heroine_s.NANR\"\n"
-  fp_trfgra.print "\"trwb_heroine_s.NMCR\"\n"
-  fp_trfgra.print "\"trwb_heroine_s.NMAR\"\n"
-  fp_trfgra.print "\"trwb_heroine_s.NCEC\"\n"
-  fp_trfgra.print "\"trwb_heroine_s.NCLR\"\n"
-	fp_trgra.close
-	fp_trfgra.close
-	fp_trtype.close
 
-	fp_trtypegra.print( "};\n" )
-	fp_trtypegra.print( "\n" )
-	fp_trtypegra.close
-
-	fp_trtypesex.print( "};\n" )
-	fp_trtypesex.print( "\n" )
-	fp_trtypesex.close
-
-  fp_hash.printf("\t}\n" )
-  fp_hash.close
 
   #タイムスタンプ比較用のダミーファイルを生成
   fp_w = open( "out_end", "w" )

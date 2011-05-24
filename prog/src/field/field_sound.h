@@ -111,9 +111,6 @@ extern u32 FSND_GetLastBGM( GAMEDATA* gdata );
 // 特殊 BGM があるかどうか
 extern BOOL FSND_CheckValidSpecialBGM( GAMEDATA* gdata, u16 zoneID );
 
-// トレーナー視線 BGM No.
-extern u32 FSND_GetTrainerEyeBGM( u32 trType ); 
-
 
 //=================================================================================
 // ■環境音

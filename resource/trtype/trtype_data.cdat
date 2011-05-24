@@ -1,0 +1,739 @@
+//============================================================================================
+/**
+ * @file	trtype_data.cdat
+ * @bfief	トレーナータイプ別テーブル
+ * @author	trtype_conv.rb
+ * @author	このファイルは、コンバータが吐き出したファイルです
+*/
+//============================================================================================
+const TRAINER_TYPE_DATA DATA_TrainerType[] = {
+	{ // No.000 HERO♂ポケモントレーナー
+		  0,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.001 HEROINE♀ポケモントレーナー
+		  1,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.002 TANPAN♂たんぱんこぞう
+		  2,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.003 MINI♀ミニスカート
+		  3,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_02
+	},
+	{ // No.004 SCHOOLB♂じゅくがえり
+		  4,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.005 SCHOOLG♀じゅくがえり
+		  5,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_02
+	},
+	{ // No.006 TENNIS♀テニスプレイヤー
+		  6,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_11
+	},
+	{ // No.007 FOOTBALL♂フットボーラー
+		  7,PTL_SEX_MALE,
+		SEQ_BGM_EYE_11
+	},
+	{ // No.008 WAITER♂ウエーター
+		  8,PTL_SEX_MALE,
+		SEQ_BGM_EYE_12
+	},
+	{ // No.009 WAITRESS♀ウエートレス
+		  9,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_12
+	},
+	{ // No.010 LEADER1A♂ポケモントレーナー
+		 10,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.011 LEADER1C♂ポケモントレーナー
+		 11,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.012 LEADER1B♂ポケモントレーナー
+		 12,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.013 CHILDCARE♀ほいくし
+		 13,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_06
+	},
+	{ // No.014 KINDERGARTENW♀えんじ
+		 14,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_03
+	},
+	{ // No.015 KINDERGARTENM♂えんじ
+		 15,PTL_SEX_MALE,
+		SEQ_BGM_EYE_03
+	},
+	{ // No.016 FUTAGO♀ふたごちゃん
+		 16,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_03
+	},
+	{ // No.017 BREEDERM♂ポケモンブリーダー
+		 17,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.018 BREEDERW♀ポケモンブリーダー
+		 18,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_06
+	},
+	{ // No.019 LEADER2♀ポケモントレーナー
+		 19,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.020 LEADER3♂ジムリーダー
+		 20,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.021 LEADER4♀ジムリーダー
+		 21,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.022 LEADER5♂ジムリーダー
+		 22,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.023 LEADER6♀ジムリーダー
+		 23,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.024 RANGERM♂ポケモンレンジャー
+		 24,PTL_SEX_MALE,
+		SEQ_BGM_EYE_04
+	},
+	{ // No.025 RANGERW♀ポケモンレンジャー
+		 25,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_04
+	},
+	{ // No.026 WORKER2♂さぎょういん
+		 26,PTL_SEX_MALE,
+		SEQ_BGM_EYE_12
+	},
+	{ // No.027 BACKPACKERM♂バックパッカー
+		 27,PTL_SEX_MALE,
+		SEQ_BGM_EYE_11
+	},
+	{ // No.028 BACKPACKERW♀バックパッカー
+		 28,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_11
+	},
+	{ // No.029 FISHING♂つりびと
+		 29,PTL_SEX_MALE,
+		SEQ_BGM_EYE_11
+	},
+	{ // No.030 MUSICIAN♂ミュージシャン
+		 30,PTL_SEX_MALE,
+		SEQ_BGM_EYE_10
+	},
+	{ // No.031 DANCER♂ダンサー
+		 31,PTL_SEX_MALE,
+		SEQ_BGM_EYE_05
+	},
+	{ // No.032 JUGGLING♂クラウン
+		 32,PTL_SEX_MALE,
+		SEQ_BGM_EYE_10
+	},
+	{ // No.033 ARTIST♂げいじゅつか
+		 33,PTL_SEX_MALE,
+		SEQ_BGM_EYE_13
+	},
+	{ // No.034 BAKER♀ベーカリー
+		 34,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_12
+	},
+	{ // No.035 ESPM♂サイキッカー
+		 35,PTL_SEX_MALE,
+		SEQ_BGM_EYE_08
+	},
+	{ // No.036 ESPW♀サイキッカー
+		 36,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_08
+	},
+	{ // No.037 RIVAL♂ポケモントレーナー
+		 37,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.038 SUPPORT♀ポケモントレーナー
+		 38,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.039 HAKAIM1♂プラズマだん
+		 39,PTL_SEX_MALE,
+		SEQ_BGM_EYE_PLASMA
+	},
+	{ // No.040 BOSS♂ポケモントレーナー
+		 40,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.041 PRINCE♂おぼっちゃま
+		 41,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.042 PRINCESS♀おじょうさま
+		 42,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_02
+	},
+	{ // No.043 PILOT♂パイロット
+		 43,PTL_SEX_MALE,
+		SEQ_BGM_EYE_12
+	},
+	{ // No.044 WORKER1♂さぎょういん
+		 44,PTL_SEX_MALE,
+		SEQ_BGM_EYE_12
+	},
+	{ // No.045 BASKET♂バスケせんしゅ
+		 45,PTL_SEX_MALE,
+		SEQ_BGM_EYE_11
+	},
+	{ // No.046 SCIENTISTW♀けんきゅういん
+		 46,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_09
+	},
+	{ // No.047 BOSS_1♂プラズマだん
+		 40,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.048 OL♀ＯＬ
+		 47,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_06
+	},
+	{ // No.049 ELITEW♀エリートトレーナー
+		 48,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_04
+	},
+	{ // No.050 ELITEM♂エリートトレーナー
+		 49,PTL_SEX_MALE,
+		SEQ_BGM_EYE_04
+	},
+	{ // No.051 KARATE♂カラテおう
+		 50,PTL_SEX_MALE,
+		SEQ_BGM_EYE_08
+	},
+	{ // No.052 SCIENTISTM♂けんきゅういん
+		 51,PTL_SEX_MALE,
+		SEQ_BGM_EYE_09
+	},
+	{ // No.053 SOCCER♂サッカーせんしゅ
+		 52,PTL_SEX_MALE,
+		SEQ_BGM_EYE_11
+	},
+	{ // No.054 LEADER7♂ポケモントレーナー
+		 53,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.055 LEADER8A♀ジムリーダー
+		 54,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.056 LEADER8B♂ジムリーダー
+		 55,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.057 HEADS♂スキンヘッズ
+		 56,PTL_SEX_MALE,
+		SEQ_BGM_EYE_05
+	},
+	{ // No.058 CLEANING♂せいそういん
+		 57,PTL_SEX_MALE,
+		SEQ_BGM_EYE_12
+	},
+	{ // No.059 DAISUKIM♂だいすきクラブ
+		 58,PTL_SEX_MALE,
+		SEQ_BGM_EYE_10
+	},
+	{ // No.060 DAISUKIW♀だいすきクラブ
+		 59,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_10
+	},
+	{ // No.061 DOCTOR♂ドクター
+		 60,PTL_SEX_MALE,
+		SEQ_BGM_EYE_12
+	},
+	{ // No.062 NURSE♀ナース
+		 61,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_12
+	},
+	{ // No.063 BADTEAM♂バッドチーム
+		 62,PTL_SEX_MALE,
+		SEQ_BGM_EYE_05
+	},
+	{ // No.064 BATTLEG♀バトルガール
+		 63,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_08
+	},
+	{ // No.065 PARASOL♀パラソルおねえさん
+		 64,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_06
+	},
+	{ // No.066 BUSINESS1♂ビジネスマン
+		 65,PTL_SEX_MALE,
+		SEQ_BGM_EYE_12
+	},
+	{ // No.067 BUSINESS2♂ビジネスマン
+		 66,PTL_SEX_MALE,
+		SEQ_BGM_EYE_12
+	},
+	{ // No.068 FANM♂ファンクラブ
+		 67,PTL_SEX_MALE,
+		SEQ_BGM_EYE_10
+	},
+	{ // No.069 FANW♀ファンクラブ
+		 68,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_10
+	},
+	{ // No.070 VETERANM♂ベテラントレーナー
+		 69,PTL_SEX_MALE,
+		SEQ_BGM_EYE_04
+	},
+	{ // No.071 VETERANW♀ベテラントレーナー
+		 70,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_04
+	},
+	{ // No.072 BADRIDER♂ぼうそうぞく
+		 71,PTL_SEX_MALE,
+		SEQ_BGM_EYE_08
+	},
+	{ // No.073 BASEBALL♂やきゅうせんしゅ
+		 72,PTL_SEX_MALE,
+		SEQ_BGM_EYE_11
+	},
+	{ // No.074 MOUNT♂やまおとこ
+		 73,PTL_SEX_MALE,
+		SEQ_BGM_EYE_11
+	},
+	{ // No.075 MADAM♀マダム
+		 74,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_13
+	},
+	{ // No.076 GENTLE♂ジェントルマン
+		 75,PTL_SEX_MALE,
+		SEQ_BGM_EYE_13
+	},
+	{ // No.077 HAKAIW1♀プラズマだん
+		 76,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_PLASMA
+	},
+	{ // No.078 BIGFOUR1♀してんのう
+		 77,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.079 BIGFOUR3♂してんのう
+		 78,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.080 BIGFOUR2♂してんのう
+		 79,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.081 BIGFOUR4♀してんのう
+		 80,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.082 SAGE1♂プラズマだん
+		 81,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.083 RAIL♂てつどういん
+		 82,PTL_SEX_MALE,
+		SEQ_BGM_EYE_12
+	},
+	{ // No.084 SWIMMERM♂かいパンやろう
+		 83,PTL_SEX_MALE,
+		SEQ_BGM_EYE_07
+	},
+	{ // No.085 SWIMMERW♀ビキニのおねえさん
+		 84,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_06
+	},
+	{ // No.086 POLICE♂おまわりさん
+		 85,PTL_SEX_MALE,
+		SEQ_BGM_EYE_12
+	},
+	{ // No.087 MAID♀メイド
+		 86,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_13
+	},
+	{ // No.088 BCHAMP♂サブウェイマスター
+		 87,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.089 CHAMPION♂ポケモントレーナー
+		 88,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.090 CYCLINGM♂サイクリング
+		 89,PTL_SEX_MALE,
+		SEQ_BGM_EYE_07
+	},
+	{ // No.091 CYCLINGW♀サイクリング
+		 90,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_07
+	},
+	{ // No.092 BADRIDER_01♂バイクずき
+		 71,PTL_SEX_MALE,
+		SEQ_BGM_EYE_08
+	},
+	{ // No.093 SCHOOLB_1♂ブルジョワールけ
+		  4,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.094 VETERANW_1♀ブルジョワールけ
+		 70,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_04
+	},
+	{ // No.095 MADAM_1♀ブルジョワールけ
+		 74,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_13
+	},
+	{ // No.096 GENTLE_1♂ブルジョワールけ
+		 75,PTL_SEX_MALE,
+		SEQ_BGM_EYE_13
+	},
+	{ // No.097 VETERANM_1♂ゲームフリーク
+		 69,PTL_SEX_MALE,
+		SEQ_BGM_EYE_04
+	},
+	{ // No.098 PRINCESS_1♀ブルジョワールけ
+		 42,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_02
+	},
+	{ // No.099 PRINCE_1♂ブルジョワールけ
+		 41,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.100 DPCHAMPION♀ポケモントレーナー
+		 91,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.101 BOSS_2♂プラズマだん
+		 40,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.102 BCHAMP2♂サブウェイマスター
+		 92,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.103 LEADER1♂ジムリーダー
+		 93,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.104 SCIENTISTM_1♂ポケモントレーナー
+		 51,PTL_SEX_MALE,
+		SEQ_BGM_EYE_09
+	},
+	{ // No.105 MOUNT_1♂ポケモントレーナー
+		 73,PTL_SEX_MALE,
+		SEQ_BGM_EYE_11
+	},
+	{ // No.106 ESPM_1♂ポケモントレーナー
+		 35,PTL_SEX_MALE,
+		SEQ_BGM_EYE_08
+	},
+	{ // No.107 ESPW_1♀ポケモントレーナー
+		 36,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_08
+	},
+	{ // No.108 VETERANM_2♂ポケモントレーナー
+		 69,PTL_SEX_MALE,
+		SEQ_BGM_EYE_04
+	},
+	{ // No.109 VETERANW_2♀ポケモントレーナー
+		 70,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_04
+	},
+	{ // No.110 ELITEM_1♂ポケモントレーナー
+		 49,PTL_SEX_MALE,
+		SEQ_BGM_EYE_04
+	},
+	{ // No.111 ELITEW_1♀ポケモントレーナー
+		 48,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_04
+	},
+	{ // No.112 SWLEADER4♀ジムリーダー
+		 94,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.113 SWLEADER3♂ジムリーダー
+		 95,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.114 SWLEADER6♀ジムリーダー
+		 96,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.115 SWLEADER1♂ジムリーダー
+		 97,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.116 SWLEADER2♀ジムリーダー
+		 98,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.117 SWLEADER5♂ジムリーダー
+		 99,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.118 SWLEADER7♂ジムリーダー
+		100,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.119 SWLEADER8♂ジムリーダー
+		101,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.120 RGLEADER1♂ポケモントレーナー
+		102,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.121 RGLEADER2♀ポケモントレーナー
+		103,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.122 RGLEADER3♂ポケモントレーナー
+		104,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.123 RGLEADER4♀ポケモントレーナー
+		105,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.124 RGLEADER5♀ポケモントレーナー
+		106,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.125 RGLEADER6♂ポケモントレーナー
+		107,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.126 RGLEADER7♂ポケモントレーナー
+		108,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.127 GSLEADER1♂ポケモントレーナー
+		109,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.128 GSLEADER2♂ポケモントレーナー
+		110,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.129 GSLEADER3♀ポケモントレーナー
+		111,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.130 GSLEADER4♂ポケモントレーナー
+		112,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.131 GSLEADER5♂ポケモントレーナー
+		113,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.132 GSLEADER6♀ポケモントレーナー
+		114,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.133 GSLEADER7♂ポケモントレーナー
+		115,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.134 GSLEADER8♀ポケモントレーナー
+		116,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.135 GSLEADER9♀ポケモントレーナー
+		117,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.136 RSLEADER1♀ポケモントレーナー
+		118,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.137 RSLEADER2♂ポケモントレーナー
+		119,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.138 RSLEADER3♂ポケモントレーナー
+		120,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.139 RSLEADER4♀ポケモントレーナー
+		121,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.140 RSLEADER5♂ポケモントレーナー
+		122,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.141 RSLEADER6♀ポケモントレーナー
+		123,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.142 RSLEADER7♂ポケモントレーナー
+		124,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.143 RSLEADER8♀ポケモントレーナー
+		125,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.144 ELEADER1♂ポケモントレーナー
+		126,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.145 SWRIVAL♂ポケモントレーナー
+		127,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.146 GUITARW♀ギタリスト
+		128,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_05
+	},
+	{ // No.147 BREEDERM_1♂むげんボスＷ
+		 17,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.148 BREEDERM_2♂ボストレーナー
+		 17,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.149 BREEDERW_1♀むげんボスＷ
+		 18,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_06
+	},
+	{ // No.150 BREEDERW_2♀むげんボスＢ
+		 18,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_06
+	},
+	{ // No.151 RANGERM_1♂むげんボスＷ
+		 24,PTL_SEX_MALE,
+		SEQ_BGM_EYE_04
+	},
+	{ // No.152 RANGERM_2♂むげんボスＢ
+		 24,PTL_SEX_MALE,
+		SEQ_BGM_EYE_04
+	},
+	{ // No.153 RANGERW_1♀むげんボスＷ
+		 25,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_04
+	},
+	{ // No.154 RANGERW_2♀むげんボスＢ
+		 25,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_04
+	},
+	{ // No.155 BCHAMP_1♂むげんボスＷ
+		 87,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.156 BCHAMP_2♂むげんボスＢ
+		 87,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.157 ELITEM_2♂むげんボスＷ
+		 49,PTL_SEX_MALE,
+		SEQ_BGM_EYE_04
+	},
+	{ // No.158 ELITEM_3♂むげんボスＢ
+		 49,PTL_SEX_MALE,
+		SEQ_BGM_EYE_04
+	},
+	{ // No.159 ELITEW_2♀むげんボスＷ
+		 48,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_04
+	},
+	{ // No.160 ELITEW_3♀むげんボスＢ
+		 48,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_04
+	},
+	{ // No.161 VETERANM_3♂むげんボスＷ
+		 69,PTL_SEX_MALE,
+		SEQ_BGM_EYE_04
+	},
+	{ // No.162 VETERANM_4♂むげんボスＢ
+		 69,PTL_SEX_MALE,
+		SEQ_BGM_EYE_04
+	},
+	{ // No.163 VETERANW_3♀むげんボスＷ
+		 70,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_04
+	},
+	{ // No.164 VETERANW_4♀むげんボスＢ
+		 70,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_04
+	},
+	{ // No.165 BCHAMP2_1♂むげんボスＷ
+		 92,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.166 BCHAMP2_2♂むげんボスＢ
+		 92,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.167 DPLEADER1♂ポケモントレーナー
+		129,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.168 DPLEADER2♀ポケモントレーナー
+		130,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.169 DPLEADER3♀ポケモントレーナー
+		131,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.170 DPLEADER4♀ポケモントレーナー
+		132,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.171 DPLEADER5♂ポケモントレーナー
+		133,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.172 DPLEADER6♂ポケモントレーナー
+		134,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.173 DPLEADER7♀ポケモントレーナー
+		135,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.174 DPLEADER8♂ポケモントレーナー
+		136,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.175 RGCHAMPION♂ポケモントレーナー
+		137,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.176 GSCHAMPION♂ポケモントレーナー
+		138,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.177 RSCHAMPION♂ポケモントレーナー
+		139,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.178 ECHAMPION♂ポケモントレーナー
+		140,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.179 ADULTW♀おとなのおねえさん
+		141,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.180 HERO_S♂ポケモントレーナー
+		142,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.181 HEROINE_S♀ポケモントレーナー
+		143,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_01
+	},
+};
+

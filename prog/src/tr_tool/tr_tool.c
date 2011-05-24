@@ -15,13 +15,14 @@
 #include  "tr_tool/tr_tool.h"
 #include  "tr_tool/trno_def.h"
 #include  "tr_tool/trtype_def.h"
-#include  "tr_tool/trtype_sex.h"
+//#include  "tr_tool/trtype_sex.h"
 #include  "tr_tool/ex_trainer_def.h"
 #include  "poke_tool/poke_tool.h"
 #include  "poke_tool/pokeparty.h"
 
 #include  "pm_define.h"
 
+#include  "sound/swan_sound_data.sadl"
 #include  "message.naix"
 
 #ifdef PM_DEBUG
@@ -45,6 +46,16 @@ typedef struct _TRTYPE_GRP_PARAM{
   u16  btl_bg_attr:5;  ///<戦闘背景BGアトリビュート 5
 }TRTYPE_GRP_PARAM;
 
+/**
+ *  @brief  トレーナータイプ別の設定データ
+ */
+typedef struct {
+  u8 trfno;     ///<グラフィック指定ID（表向き）
+  u8 sex;       ///<性別
+  u16 bgmNo;    ///<視線BGM
+}TRAINER_TYPE_DATA;
+
+#include "trtype_data.cdat"
 //============================================================================================
 /**
  * 定数宣言
@@ -344,7 +355,47 @@ void  TT_TrainerPokeDataGet( TrainerID tr_id, void* tpd )
 //============================================================================================
 u8  TT_TrainerTypeSexGet( int trtype )
 {
-  return TrTypeSexTable[ trtype ];
+  return DATA_TrainerType[ trtype ].sex;
+  //return TrTypeSexTable[ trtype ];
+}
+
+//============================================================================================
+/**
+ *  @brief  トレーナータイプからグラフィックデータへのインデックスを取得する
+ *
+ *  @param[in]  trtype
+ *  @param[in]  dir     0:正面　1:背面
+ *  @return     u8      グラフィックデータへのインデックス
+ *
+ *  @todo   背面の対応（src/battle/btlv/btlv_effect.cの対応も含む）
+ */
+//============================================================================================
+u8  TT_TrainerTypeCGIndexGet( int trtype, int dir )
+{
+  //背面は取得する必要なし
+  if ( dir & 1 )
+  {
+    return trtype;
+  }
+  if ( trtype < NELEMS(DATA_TrainerType) )
+  {
+    return DATA_TrainerType[ trtype ].trfno;
+  }
+  GF_ASSERT( 0 );
+  return 0;
+}
+
+//============================================================================================
+/**
+ *  @brief    トレーナータイプから視線BGM指定を取得する
+ *
+ *  @param[in]  trtype
+ *  @return     u16
+ */
+//============================================================================================
+u16 TT_TrainerTypeEyeBGMGet( int trtype )
+{
+  return DATA_TrainerType[ trtype ].bgmNo;
 }
 
 //----------------------------------------------------------
@@ -763,6 +814,10 @@ static  void  pp_set_param( TrainerID tr_id, POKEMON_PARAM* pp, int form_no, int
 //-----------------------------------------------------------------------------
 u8 TT_ExTrainerTypeCheck( TrainerID tr_id )
 {
+  if( tr_id >= TRID_OFFSET_WBT )
+  {
+    GF_ASSERT( 0 );
+  }
   if( tr_id >= TRID_OFFSET_INFINITY_DUNGEON )
   {
     return EX_TRTYPE_INFINITY_DUNGEON;

@@ -371,7 +371,7 @@ VMCMD_RESULT EvCmdTrainerBgmSet( VMHANDLE *core, void *wk )
   SCRIPT_WORK*    sc = SCRCMD_WORK_GetScriptWork( work );
   u16          tr_id = SCRCMD_GetVMWorkValue(core,wk);
   u32           type = TT_TrainerDataParaGet( tr_id, ID_TD_tr_type );
-  u32            seq = FSND_GetTrainerEyeBGM( type );
+  u32            seq = TT_TrainerTypeEyeBGMGet( type );
   GMEVENT*     event = EVENT_FSND_PushPlayEventBGM( gsys, seq );
   /*
   GMEVENT*     event = EVENT_FSND_PushPlayNextBGM( 
@@ -397,7 +397,7 @@ VMCMD_RESULT EvCmdTrainerBgmSetByTrtype( VMHANDLE *core, void *wk )
   GAMEDATA*    gdata = SCRCMD_WORK_GetGameData( work );
   SCRIPT_WORK*    sc = SCRCMD_WORK_GetScriptWork( work );
   u32           type = SCRCMD_GetVMWorkValue(core,wk);
-  u32            seq = FSND_GetTrainerEyeBGM( type );
+  u32            seq = TT_TrainerTypeEyeBGMGet( type );
   GMEVENT*     event = EVENT_FSND_PushPlayEventBGM( gsys, seq );
   /*
   GMEVENT*     event = EVENT_FSND_PushPlayNextBGM( 

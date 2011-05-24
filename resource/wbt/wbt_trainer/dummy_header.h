@@ -17,6 +17,6 @@ typedef enum {
 #include "../../../prog/src/field/wbt_trlist_struct.h"
 
 #include "..\..\sound\swan_sound_data.sadl"
-#include "..\..\trdata\trtype_def.h"
+#include "..\..\trtype\trtype_def.h"
 #include "..\..\fldmmdl\fldmmdl_objcode.h"
 

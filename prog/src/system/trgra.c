@@ -22,7 +22,9 @@
 //外部参照
 #include "system/trgra.h"
 
-#include "trtype_gra.h"
+#include "tr_tool/tr_tool.h"  //TT_TrainerTypeCGIndexGet
+
+//#include "trtype_gra.h"
 
 //=============================================================================
 /**
@@ -213,6 +215,8 @@ ARCDATID TRGRA_GetNcecArcIndex( int tr_type, int dir )
 
 static  inline  const u8 get_gra_index( int tr_type, int dir )
 { 
+  return TT_TrainerTypeCGIndexGet( tr_type, dir );
+#if 0
   //背面は取得する必要なし
   if( dir & 1 )
   { 
@@ -226,4 +230,5 @@ static  inline  const u8 get_gra_index( int tr_type, int dir )
   }
 
   return TrTypeGraTable[ tr_type ];
+#endif
 }
