@@ -29,6 +29,7 @@ SUBDIRS	=	wmi \
 			itemconv\
 			shooter_item \
 			personal\
+			trtype \
 			trdata \
 			trmsg \
 			sound \
@@ -48,10 +49,10 @@ SUBDIRS	=	wmi \
             staff_roll \
 			manual \
 			medal\
+			fldmmdl \
 			wbt \
 			entry_checker \
 			message\
-			fldmmdl \
 			encount \
 			encount_ex \
 			rebattle_trainer \
@@ -120,7 +121,6 @@ SUBDIRS	=	wmi \
 			shopdata \
 			fld_shortcut_menu \
 			wifi_match \
-			trtype_bgm \
 			local_tvt \
 			palace \
             op_demo \
