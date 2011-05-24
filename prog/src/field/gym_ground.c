@@ -73,6 +73,11 @@
 
 #define BELT_ANM_SPD  (0x1200)  // ベルトコンベアのアニメ速度
 
+// 最初のリフトの位置
+// 最初のみ、歩いてライトが光る
+#define FIRST_LIFT_X  ( 6 )     // Xグリッド座標
+#define FIRST_LIFT_Z  ( 63 )    // Zグリッド座標
+
 // WBの出口リフト移動から移植
 #define F0_HEIGHT ( HEIGHT0*FIELD_CONST_GRID_FX32_SIZE )
 #define EXIT_LIFT_MOVE_SPD (2*FX32_ONE)
@@ -108,6 +113,7 @@ typedef struct GYM_GROUND_TMP_tag
 
   u8              lift_id;      // 現在リフトのID 左上から連番
   BOOL            lift_arrival[ LIFT_NUM ]; // リフト到達フラグ
+  BOOL            first_lift;   // 最初のリフトに到達したか
 
   // 出口リフト用
   const VecFx32 *watch;
@@ -123,6 +129,8 @@ typedef struct {
   FIELD_PLAYER    *player;      // 自機
 
   u8              belt_id;      // ベルトコンベア情報ID
+  u8              move_frame;
+  u8              move_frame_num;
 } BELT_EVENT_WORK;
 
 //-------------------------------------
@@ -419,6 +427,17 @@ void GYM_GROUND_Move(FIELDMAP_WORK *p_fieldmap)
   // 自機グリッド位置
   FIELD_PLAYER_GetGridPos( cp_player, &gx, &gy, &gz );
 
+  // 最初のリフトのみチェックする
+  if( p_wk->first_lift == FALSE )
+  {
+    if( gx == FIRST_LIFT_X && gz == FIRST_LIFT_Z )
+    {
+      // 最初リフト到達フラグを立てる
+      p_wk->first_lift = TRUE;
+      // リフト到着フラグセット
+      LIFT_SetAriivalFlag( p_wk, 30 );
+    }
+  }
 
 #ifdef PM_DEBUG
   // ベルトコンベアイベント起動
@@ -845,6 +864,8 @@ static GMEVENT* BELT_CreateEvent( GMEVENT* parent, GAMESYS_WORK* gsys, u16 belt_
   work->player      = player;
 
   work->belt_id     = belt_id;
+  work->move_frame  = 0;
+  work->move_frame_num = 0;
 
   return event;
 }
@@ -913,6 +934,7 @@ static GMEVENT_RESULT BeltEvent( GMEVENT* event, int* seq, void* wk )
           default:
             GF_ASSERT(0);
           }
+          p_wk->move_frame_num = move_distance*4;
 
           // 移動後位置計算
           {
@@ -963,15 +985,27 @@ static GMEVENT_RESULT BeltEvent( GMEVENT* event, int* seq, void* wk )
       if( BeltInfo[ p_wk->belt_id ].type == BELT_TYPE_SP_LR ||
           BeltInfo[ p_wk->belt_id ].type == BELT_TYPE_SP_UD )
       {
-        VecFx32 tmp;
-        FIELD_PLAYER_GetPos( p_wk->player, &tmp );
 
-        if( tmp.y > -33 )
+        p_wk->move_frame++;
+        // 長さは3グリッド
+        if( p_wk->move_frame == 4*3 )
         {
-          // 1グリッドで16下がる
-          tmp.y -= (16/4);
-          FIELD_PLAYER_SetPos( p_wk->player, &tmp );   // 移動
+          // 高さを変更したくないので
+          // 高さ取得禁止ステータスビットをONにする
+          {
+            MMDL  *mmdl = FIELD_PLAYER_GetMMdl( p_wk->player );
+            MMDL_OnStatusBit( mmdl, MMDL_STABIT_HEIGHT_GET_OFF );
+          }
         }
+        if( p_wk->move_frame == p_wk->move_frame_num - 4*3 )
+        {
+          // 高さ取得禁止ステータスビットをOFFに戻す
+          {
+            MMDL  *mmdl = FIELD_PLAYER_GetMMdl( p_wk->player );
+            MMDL_OffStatusBit( mmdl, MMDL_STABIT_HEIGHT_GET_OFF );
+          }
+        }
+
       }
     }
     break;
