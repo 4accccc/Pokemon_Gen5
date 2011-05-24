@@ -56,7 +56,6 @@ void SHORTCUT_CURSOR_Init( SHORTCUT_CURSOR *p_wk )
 //-----------------------------------------------------------------------------
 SHORTCUT_ID SHORTCUT_DATA_GetItemToShortcutID( u16 item )
 {
-#if 1 //switch case‚ð‚È‚­‚µ‚ÄŒy—Ê‰» by iwasawa 10.05.01
   int i;
   static const ITEM2SHORTCUT_TBL Item2ShortcutTbl[] = {
  	  { ITEM_ZITENSYA, SHORTCUT_ID_ZITENSYA },
@@ -69,6 +68,7 @@ SHORTCUT_ID SHORTCUT_DATA_GetItemToShortcutID( u16 item )
     { ITEM_RAIBUKYASUTAA, SHORTCUT_ID_LIVECASTER },
     { ITEM_RAIBUKYASUTAA_1, SHORTCUT_ID_LIVECASTER },
     { ITEM_MEDARUBOKKUSU, SHORTCUT_ID_MEDALBOX },
+    { ITEM_IDENSINOKUSABI, SHORTCUT_ID_IDENSINOKUSABI },
   };
 
   for( i = 0;i < NELEMS( Item2ShortcutTbl);i++){
@@ -77,38 +77,5 @@ SHORTCUT_ID SHORTCUT_DATA_GetItemToShortcutID( u16 item )
     }
   }
 	return SHORTCUT_ID_NULL;
-#else
-	NAGI_Printf( "ƒAƒCƒeƒ€•ÏŠ· %d\n", item );
-	switch( item )
-	{	
-	case ITEM_ZITENSYA:
-		return SHORTCUT_ID_ZITENSYA;
-
-	case ITEM_BORONOTURIZAO:
-		/* fallthrough */
-	case ITEM_IITURIZAO:
-		/* fallthrough */
-	case ITEM_SUGOITURIZAO:
-		return SHORTCUT_ID_TURIZAO;
-
-	case ITEM_TAUNMAPPU:
-		return SHORTCUT_ID_TOWNMAP;
-	
-	case ITEM_BATORUREKOODAA:
-		return SHORTCUT_ID_BTLRECORDER;
-
-	case ITEM_TOMODATITETYOU:
-		return SHORTCUT_ID_FRIENDNOTE;
-
-	case ITEM_DAUZINGUMASIN:
-		return SHORTCUT_ID_DOWSINGMACHINE;
-
-	case ITEM_GURASIDEANOHANA:
-    return SHORTCUT_ID_GURASHIDEA;
-
-	default:
-		return SHORTCUT_ID_NULL;
-	}
-#endif
 }
 
