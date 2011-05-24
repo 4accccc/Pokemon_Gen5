@@ -183,6 +183,10 @@
 		"ADULTW♀おとなのおねえさん"=>179,
 		"HERO_S♂ポケモントレーナー"=>180,
 		"HEROINE_S♀ポケモントレーナー"=>181,
+		"WBHERO♂ポケモントレーナー"=>182,
+		"WBHEROINE♀ポケモントレーナー"=>183,
+		"WBHERO_S♂ポケモントレーナー"=>184,
+		"WBHEROINE_S♀ポケモントレーナー"=>185,
 	}
 #
 	$trtype_id_hash = {
@@ -368,4 +372,8 @@
 		"TRTYPE_ADULTW" =>179,
 		"TRTYPE_HERO_S" =>180,
 		"TRTYPE_HEROINE_S" =>181,
+		"TRTYPE_WBHERO" =>182,
+		"TRTYPE_WBHEROINE" =>183,
+		"TRTYPE_WBHERO_S" =>184,
+		"TRTYPE_WBHEROINE_S" =>185,
 	}

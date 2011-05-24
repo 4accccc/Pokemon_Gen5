@@ -137,72 +137,6 @@ end
 
 
 #------------------------------------------------------------------------------
-# トレーナー性別定義ファイル生成
-#   trtype_sex.cdat
-#------------------------------------------------------------------------------
-def make_trtypesex( filename, ttdata )
-  str = ""
-
-  str += "//============================================================================================\n"
-  str += "/**\n"
-  str += " * @file	#{filename}\n"
-	str += " * @bfief	トレーナー性別定義\n"
-  str += " * @author	#{__FILE__}\n" 
-	str += " * @author	このファイルは、コンバータが吐き出したファイルです\n"
-  str += "*/\n"
-  str += "//============================================================================================\n"
-  str += "\n#pragma once\n\n"
-	str += "\n"
-	str += "static	const	u8	TrTypeSexTable[]={\n"
-
-  ttdata.each{|ttd|
-    str += sprintf("\t%s,\t\t//%s\n", ttd.trsex, ttd.trhash )
-  }
-
-  #footer
-	str += "};\n"
-	str += "\n"
-
-  fp_trtypesex = File.open( filename, "w" )
-  fp_trtypesex.puts str
-	fp_trtypesex.close
-
-end
-
-
-#------------------------------------------------------------------------------
-# トレーナーグラフィックインデックスファイル生成
-#   trtype_gra.cdat
-#------------------------------------------------------------------------------
-
-def make_trtype_gra( filename, ttdata, gra_list )
-
-  str = ""
-  str += "//============================================================================================\n"
-  str += "/**\n"
-  str += " * @file	#{filename}\n"
-	str += " * @bfief	トレーナーグラフィックインデックスファイル定義\n"
-  str += " * @author	#{__FILE__}\n" 
-	str += " * @author	このファイルは、コンバータが吐き出したファイルです\n"
-  str += "*/\n"
-  str += "//============================================================================================\n"
-  str += "\n#pragma once\n\n"
-	str += "static	const	u8	TrTypeGraTable[]={\n"
-
-  ttdata.each{|ttd|
-    str += sprintf("\t%d,\t\t//%s\n", gra_list.index(ttd.grf), ttd.name )
-  }
-
-	str += "};\n"
-	str += "\n"
-
-	fp_trtypegra = File.open( filename, "w" )
-  fp_trtypegra.puts str
-	fp_trtypegra.close
-end
-
-
-#------------------------------------------------------------------------------
 # トレーナーグラフィックlstファイル生成
 #   trfgra_wb.lst
 #------------------------------------------------------------------------------
@@ -287,33 +221,9 @@ def make_hash( filename, ttdata )
   fp_hash.close
 end
 
-#------------------------------------------------------------------------------
-# 視線BGM指定セット
-#------------------------------------------------------------------------------
-def make_bgm( filename, ttdata )
-  str = ""
-  str += "//============================================================================================\n"
-  str += "/**\n"
-  str += " * @file	#{filename}\n"
-	str += " * @bfief	トレーナー視線BGM指定テーブル\n"
-  str += " * @author	#{__FILE__}\n" 
-	str += " * @author	このファイルは、コンバータが吐き出したファイルです\n"
-  str += "*/\n"
-  str += "//============================================================================================\n"
-  str += "unsigned short DATA_TrainerTypeToEyeBGMNo[] = {\n"
-
-  ttdata.each{|ttd|
-    str += "\t#{ttd.trbgm}, // #{ttd.trhash}\n"
-  }
-  str += "};\n\n"
-
-  fp_bgm = File.open(filename,"w")
-  fp_bgm.puts str
-  fp_bgm.close
-
-end
 
 #------------------------------------------------------------------------------
+# トレーナータイプ別プログラム参照テーブルの生成
 #------------------------------------------------------------------------------
 def make_cdat( filename, ttdata, gra_list )
   str = ""
@@ -377,15 +287,6 @@ make_trf_list( "trfgra_wb.lst", ttdata, gra_list )
 
 # swan/tools/hash/trtype_hash.rb
 make_hash( "trtype_hash.rb", ttdata )
-
-#trtype_sex.cdat
-#make_trtypesex( "trtype_sex.cdat", ttdata )
-
-#trtype_gra.cdat
-#make_trtype_gra( "trtype_gra.cdat", ttdata, gra_list )
-
-# trtype_bgm.cdat
-#make_bgm( "trtype_bgm.cdat", ttdata )
 
 # trtype_data.cdat
 make_cdat( "trtype_data.cdat", ttdata, gra_list )

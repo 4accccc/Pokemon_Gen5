@@ -180,3 +180,7 @@ trwb_echampion,PTL_SEX_MALE
 trwb_adultw,PTL_SEX_FEMALE
 trwb_hero_s,PTL_SEX_MALE
 trwb_heroine_s,PTL_SEX_FEMALE
+trwb_wbhero,PTL_SEX_MALE
+trwb_wbheroine,PTL_SEX_FEMALE
+trwb_wbhero_s,PTL_SEX_MALE
+trwb_wbheroine_s,PTL_SEX_FEMALE

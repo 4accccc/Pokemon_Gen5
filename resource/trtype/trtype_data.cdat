@@ -735,5 +735,21 @@ const TRAINER_TYPE_DATA DATA_TrainerType[] = {
 		143,PTL_SEX_FEMALE,
 		SEQ_BGM_EYE_01
 	},
+	{ // No.182 WBHERO♂ポケモントレーナー
+		144,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.183 WBHEROINE♀ポケモントレーナー
+		145,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.184 WBHERO_S♂ポケモントレーナー
+		146,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.185 WBHEROINE_S♀ポケモントレーナー
+		147,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_01
+	},
 };
 
