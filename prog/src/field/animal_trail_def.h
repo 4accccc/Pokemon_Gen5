@@ -15,9 +15,10 @@
 //					定数宣言
 //
 //=============================================================================
-#define ANIMAL_TRAIL_SELECT_PROBABILITY (5) // 256歩ごとの抽選される確率
-#define ANIMAL_TRAIL_NUM        (20)  // けものみちの数
-#define ANIMAL_TRAIL_TABLE_NUM  (11)  // ランクテーブルの数
+#define ANIMAL_TRAIL_SELECT_WALK_CNT    (256) // 何歩ごとに抽選するか
+#define ANIMAL_TRAIL_SELECT_PROBABILITY (5)   // 256歩ごとの抽選される確率
+#define ANIMAL_TRAIL_NUM        (20)          // けものみちの数
+#define ANIMAL_TRAIL_TABLE_NUM  (11)          // ランクテーブルの数
 
 //-------------------------------------
 ///	けものみち：配置されるオブジェクトのタイプ

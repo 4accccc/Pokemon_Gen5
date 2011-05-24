@@ -2038,7 +2038,7 @@
 #define SYS_FLAG_BGM_C03R0402             2428 /* 0x097c ヒウンビル（ゲームフリーク）：サウンドクリエイターのＢＧＭ変更イベント */
 #define SYS_FLAG_BGM_C04GYM0101_SHOW      2429 /* 0x097d BGM変更フラグ：スワンでんきジム曲変更フラグ */
 #define SYS_FLAG_BGM_C12PC0101_GUIDE      2430 /* 0x097e BGM変更フラグ：スワンヒオウギシティPC BGM変更フラグ */
-		/* not used  2431(0x097f) */
+#define SYS_FLAG_AT_DOWSING_HIT           2431 /* 0x097f 獣道でダウジングマシンが反応する */
 		/* not used  2432(0x0980) */
 		/* not used  2433(0x0981) */
 		/* not used  2434(0x0982) */

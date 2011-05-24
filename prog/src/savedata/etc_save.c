@@ -571,3 +571,32 @@ void ANIMAL_TRAIL_SAVE_SetFemaleNum( ETC_SAVE_WORK *p_save ,u8 trail_id ,u8 fema
   SetTrailData( &p_save->animal_trail ,&trail_data ,trail_id);
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  Œ»İ‚Ìb“¹ID‚ğæ“¾
+ *
+ *	@param	*p_save 
+ *
+ *	@retval b“¹ID
+ */
+//-----------------------------------------------------------------------------
+u8 ANIMAL_TRAIL_SAVE_GetNowAnimalTrailID( ETC_SAVE_WORK *p_save )
+{
+  return p_save->animal_trail.now_trail_id;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  Œ»İ‚Ìb“¹ID‚ğİ’è
+ *
+ *	@param	*p_save 
+ *	@param	trail_id  b“¹ID
+ *
+ *	@retval b“¹ID
+ */
+//-----------------------------------------------------------------------------
+void ANIMAL_TRAIL_SAVE_SetNowAnimalTrailID( ETC_SAVE_WORK *p_save ,u8 trail_id)
+{
+  p_save->animal_trail.now_trail_id = trail_id;
+}
+

@@ -23,6 +23,13 @@ NEXT_TABLE_POS = 7 # 次ランクテーブル位置
 
 TABLE_PROBABILITY = 11 # テーブル抽選データ数
 
+# 帰る先データインデックス
+ZONE_ID_INDEX = 1
+X_INDEX = 2
+Y_INDEX = 3
+Z_INDEX = 4
+TITLE_CNT = 2 # 読み飛ばす行数
+
 $header =  <<EOS
 //[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
 /**
@@ -36,42 +43,35 @@ $header =  <<EOS
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
-#define POKEMON_TABLE_LEN   (4) // ポケモン抽選テーブルの長さ
-#define ITEM_TABLE_LEN      (4) // アイテム抽選テーブルの長さ
-
-#define POKEMON_TABLE_CNT     (3) // ポケモン抽選テーブル数
-#define NORMAL_ITEM_TABLE_CNT (4) // 通常配置アイテムの抽選テーブル数
-#define HIDE_ITEM_TABLE_CNT   (4) // 隠しアイテム抽選テーブル数
-#define TABLE_TABLE_CNT (POKEMON_TABLE_CNT+NORMAL_ITEM_TABLE_CNT+HIDE_ITEM_TABLE_CNT)
-
 //-------------------------------------
-///	アイテムデータ
+///	けもの道ごとの抽選確率テーブル
 //=====================================
-typedef struct {
-  u16 item_id[ITEM_TABLE_LEN];
-}AT_ITEM_DATA;
-
-//-------------------------------------
-///	ポケモンデータ
-//=====================================
-typedef struct {
-  u16 pokemon_id[POKEMON_TABLE_LEN];
-  u8  max_lv[POKEMON_TABLE_LEN];
-  u8  min_lv[POKEMON_TABLE_LEN];
-  u8  female_probability[POKEMON_TABLE_LEN];
-  u8  forum[POKEMON_TABLE_LEN];
-}AT_POKEMON_DATA;
-
-//-------------------------------------
-///	けものみち抽選データ
-//=====================================
-typedef struct {
-  u8 table_probability[TABLE_TABLE_CNT-1];  // 最後のテーブルの確率は保存しない
-  AT_POKEMON_DATA pokemon_table[POKEMON_TABLE_CNT];
-  AT_ITEM_DATA    normal_item_table[NORMAL_ITEM_TABLE_CNT];
-  AT_ITEM_DATA    hide_item_table[HIDE_ITEM_TABLE_CNT];
-}AT_DATA;
-
-static const AT_DATA sc_animal_trail_data_table[20] = {
+static const u8 sc_table_probability[%d][TABLE_TABLE_CNT-1] =
+{
 EOS
 
+$pos_data_header =  <<EOS
+//[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
+/**
+ *
+ *	@file		%s
+ *	@brief  けものみち位置データ
+ *	@author	Masayuki Onoue
+ *	@date		2011.05.24
+ *  @note   コンバータによって出力されたファイルです
+ *
+ */
+//]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+
+//-------------------------------------
+///	けものみち帰る先データ
+//=====================================
+static const struct 
+{
+  u16 zone_id;
+  s32  gx;
+  s32  gy;
+  s32  gz;
+}	sc_exit_data[%d]	=
+{
+EOS

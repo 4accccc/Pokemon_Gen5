@@ -52,4 +52,6 @@ extern u8 ANIMAL_TRAIL_SAVE_GetMainTableIndex( ETC_SAVE_WORK *p_save ,u8 trail_i
 extern u8 ANIMAL_TRAIL_SAVE_GetDataTableIndex( ETC_SAVE_WORK *p_save ,u8 trail_id );
 extern void ANIMAL_TRAIL_SAVE_SetFemaleNum( ETC_SAVE_WORK *p_save ,u8 trail_id ,u8 female_num);
 extern u8 ANIMAL_TRAIL_SAVE_GetFemaleNum( ETC_SAVE_WORK *p_save ,u8 trail_id );
+extern u8 ANIMAL_TRAIL_SAVE_GetNowAnimalTrailID( ETC_SAVE_WORK *p_save );
+extern void ANIMAL_TRAIL_SAVE_SetNowAnimalTrailID( ETC_SAVE_WORK *p_save ,u8 trail_id);
 

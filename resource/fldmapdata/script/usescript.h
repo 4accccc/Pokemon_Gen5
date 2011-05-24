@@ -257,6 +257,8 @@
 #define T01_R01_SUPPORT (MMDL_ID_T01_R01_SUPPORT)
 //連れ歩き用
 #define PAIR_TRAINER_01 ( MMDL_ID_PAIR )
+// けものみち用
+#define ANIMAL_TRAIL_OBJ ( MMDL_ID_ANIMAL_TRAIL_OBJ )
 
 //======================================================================
 // ショップの挨拶コード

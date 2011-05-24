@@ -10,29 +10,119 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_d34r0101.h"
-  //.include  "d34r0101.h"
 
-//--------------------------------------------------------------
-//               スクリプト本体
-//--------------------------------------------------------------
+//------------------------------注意--------------------------------//
+//	LOCALWORK1⇒隠しアイテム取得可能フラグ
+//　フィールド初期化時にセットされ、隠しアイテムを取得するとリセットされます
+//------------------------------------------------------------------//
 
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_d34r0101
+_EVENT_DATA    ev_animal_trail_battle
+_EVENT_DATA    ev_animal_trail_normal_item
+_EVENT_DATA    ev_animal_trail_hide_item
+_EVENT_DATA    ev_init_d34r0101
+_EVENT_DATA    ev_animal_trail_back_zone
 _EVENT_DATA_END
 
+//--------------------------------------------------------------
+//               バトル呼び出し
+//--------------------------------------------------------------
+EVENT_START ev_animal_trail_battle
+{
+  DEFINE_LOCAL  LWK_LV
+  DEFINE_LOCAL  LWK_MONSNO
+  DEFINE_LOCAL  LWK_IS_FEMALE
+  DEFINE_LOCAL  LWK_BATTLE_FLAG
+  DEFINE_LOCAL	LWK_LOSE2
+  
+  // 振り向き
+  _TURN_HERO_SITE()
+
+  _ANIMAL_TRAIL_DATA_GET( SCR_ANIMAL_TRAIL_GET_MONSNO, LWK_MONSNO )
+  _ANIMAL_TRAIL_DATA_GET( SCR_ANIMAL_TRAIL_GET_LV, LWK_LV )
+  _ANIMAL_TRAIL_DATA_GET( SCR_ANIMAL_TRAIL_GET_IS_FEMALE, LWK_IS_FEMALE )
+
+  $LWK_BATTLE_FLAG = SCR_WILD_BTL_FLAG_NONE
+  $LWK_BATTLE_FLAG |= SCR_WILD_BTL_FLAG_SPEABI3
+  $LWK_BATTLE_FLAG |= SCR_WILD_BTL_FLAG_NO_RARE
+  $LWK_BATTLE_FLAG |= SCR_WILD_BTL_FLAG_WILD_TALK
+
+  // オス・メス判定
+  IF $LWK_IS_FEMALE == TRUE THEN
+    $LWK_BATTLE_FLAG |= SCR_WILD_BTL_FLAG_FEMALE
+  ELSE
+    $LWK_BATTLE_FLAG |= SCR_WILD_BTL_FLAG_MALE
+  ENDIF
+
+  // 戦闘開始
+  _WILD_BTL_SET_EX( LWK_MONSNO, LWK_LV, LWK_BATTLE_FLAG )
+  _WILD_LOSE_CHECK( LWK_LOSE2 )
+
+  // 負け
+  IF $LWK_LOSE2 == SCR_BATTLE_RESULT_WIN THEN
+    _OBJ_DEL(ANIMAL_TRAIL_OBJ)
+    _WILD_WIN()
+  ELSE
+    _WILD_LOSE()    //負けなら敗北処理へ（ここでスクリプト終了）
+  ENDIF
+  
+  _ANIMAL_TRAIL_RESET_OBJECT()
+}
+EVENT_END
+
+//--------------------------------------------------------------
+//               通常アイテム取得
+//--------------------------------------------------------------
+EVENT_START ev_animal_trail_normal_item
+{
+  DEFINE_LOCAL  LWK_ITEMNO
+  _ANIMAL_TRAIL_DATA_GET( SCR_ANIMAL_TRAIL_GET_ITEM_ID, LWK_ITEMNO )
+  _OBJ_DEL(ANIMAL_TRAIL_OBJ) // アイテムカプセルの削除
+  _ITEM_EVENT_FIELD( LWK_ITEMNO ,1 )
+  _ANIMAL_TRAIL_RESET_OBJECT()
+  _FLAG_RESET( SYS_FLAG_AT_DOWSING_HIT )
+}
+EVENT_END
+
+//--------------------------------------------------------------
+//               隠しアイテム取得
+//--------------------------------------------------------------
+EVENT_START ev_animal_trail_hide_item
+{
+  DEFINE_LOCAL  LWK_ITEMNO
+  IF $LOCALWORK1 == TRUE THEN
+    _ANIMAL_TRAIL_DATA_GET( SCR_ANIMAL_TRAIL_GET_HIDE_ITEM_ID, LWK_ITEMNO )
+    _ITEM_EVENT_FIELD( LWK_ITEMNO ,1 )
+    _ANIMAL_TRAIL_RESET_OBJECT()
+    _FLAG_RESET( SYS_FLAG_AT_DOWSING_HIT )
+    $LOCALWORK1 = FALSE
+  ENDIF
+}
+EVENT_END
 
 /**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
+/*            特殊スクリプト：ゾーン切り替えタイミング  　    */
 /**************************************************************/
-//ev_zone_d34r0101:
-//  _END
+INIT_EVENT_START ev_init_d34r0101
+{
+  DEFINE_LOCAL  LWK_IS_SET
+  _ANIMAL_TRAIL_DATA_GET( SCR_ANIMAL_TRAIL_GET_IS_HIDE_ITEM, LWK_IS_SET )
+  IF $LWK_IS_SET == TRUE THEN
+    $LOCALWORK1 = TRUE
+  ELSE
+    $LOCALWORK1 = FALSE
+  ENDIF
+}
+INIT_EVENT_END
 
-/**************************************************************/
-/*                                                            */
-/**************************************************************/
-ev_d34r0101:
-  //とりあえず最初のラベルだけ生成している
-  _END
+//--------------------------------------------------------------
+//               前のゾーンに戻る
+//--------------------------------------------------------------
+EVENT_START ev_animal_trail_back_zone
+{
+  _ANIMAL_TRAIL_EXIT_MAP()
+}
+EVENT_END
 

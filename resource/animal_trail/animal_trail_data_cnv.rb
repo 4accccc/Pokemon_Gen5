@@ -49,77 +49,13 @@ end
 # データ表示関数
 ##================================
 def put_animal_trail_data( out_file ,data ,index )
-  out_file.puts "  // けものみち%d"%index
-  out_file.puts "  {"
 
   # 抽選データ
-  out_file.print "    { "
+  out_file.print "  {"
   data.probability.each{|probability|
     out_file.print probability.to_s+","
   }
-  out_file.puts "}, // テーブルごとの抽選確率"
-
-  # ポケモンデータ
-  out_file.puts "    {"
-  data.pokemon.each{|pt|
-    out_file.puts "    {"
-    #ID
-    out_file.puts "      {"
-    pt.each{|pd|
-      out_file.puts "        " + pd.id.to_s + ",\t// " + pd.name
-    }
-    out_file.puts "      },"
-    #max_lv
-    out_file.print "      { "
-    pt.each{|pd|
-      out_file.print pd.max_lv.to_s + ", "
-    }
-    out_file.puts "}, // 最大Lv"
-    #min_lv
-    out_file.print "      { "
-    pt.each{|pd|
-      out_file.print pd.min_lv.to_s + ", "
-    }
-    out_file.puts "}, // 最小Lv"
-    #female_probability
-    out_file.print "      { "
-    pt.each{|pd|
-      out_file.print pd.female_probability.to_s + ", "
-    }
-    out_file.puts "}, // メスになる確率"
-    #forum
-    out_file.print "      { "
-    pt.each{|pd|
-      out_file.print pd.forum.to_s + ", "
-    }
-    out_file.puts "}, // フォルム"
-    out_file.puts "    },"
-  }
-  out_file.puts "    },"
- 
-  # 通常アイテムデータ
-  out_file.puts "    { // 通常アイテムデータ"
-  data.item.each{|it|
-  out_file.puts "      {"
-    it.each{|item_data|
-      out_file.puts "        " + item_data.id.to_s + ",\t// " + item_data.name
-    }
-  out_file.puts "      },"
-  }
-  out_file.puts "    },"
-
-  # 隠しアイテムデータ
-  out_file.puts "    { // 隠しアイテムデータ"
-  data.item_hide.each{|it|
-  out_file.puts "      {"
-    it.each{|item_data|
-      out_file.puts "        " + item_data.id.to_s + ",\t// " + item_data.name
-    }
-  out_file.puts "      },"
-  }
-  out_file.puts "    },"
-
-  out_file.puts "  },"
+  out_file.puts "},  // けものみち%d"%index
  
 end
 
@@ -191,10 +127,46 @@ data_cnt.times{|index|
 
 # ファイルへの書き込み
 out_file = open( out_data_name ,"w" )
-out_file.puts $header % [out_data_name]
+out_file.puts $header % [out_data_name,data_cnt]
 
 data_cnt.times{|index|
   put_animal_trail_data( out_file ,animal_trail_data_list[index] ,index )
+}
+
+data_cnt.times{|index|
+  data_bin = open( dir_name+"/"+in_data_name+index.to_s+".dat", "wb" )
+  # ポケモン
+  animal_trail_data_list[index].pokemon.each{|pt|
+    pt.each{|pd|
+      data_bin << [ pd.id.to_i ].pack( "S" )
+    }
+    pt.each{|pd|
+      data_bin << [ pd.max_lv.to_i ].pack( "C" )
+    }
+    pt.each{|pd|
+      data_bin << [ pd.min_lv.to_i ].pack( "C" )
+    }
+    pt.each{|pd|
+      data_bin << [ pd.female_probability.to_i ].pack( "C" )
+    }
+    pt.each{|pd|
+      data_bin << [ pd.forum.to_i ].pack( "C" )
+    }
+    data_bin << [ 0 ].pack( "S" ) # パディング
+  }
+  # アイテム
+  animal_trail_data_list[index].item.each{|it|
+    it.each{|item_data|
+      data_bin << [ item_data.id ].pack( "S" )
+    }
+  }
+  # 隠しアイテム
+  animal_trail_data_list[index].item_hide.each{|it|
+    it.each{|item_data|
+      data_bin << [ item_data.id ].pack( "S" )
+    }
+  }
+  data_bin.close
 }
  
 out_file.puts "};"

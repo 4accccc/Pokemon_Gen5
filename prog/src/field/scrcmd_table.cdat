@@ -1004,6 +1004,9 @@
 
   // 獣道
   DEF_CMD( EvCmdWarpAnimalTrail, EV_SEQ_ANIMAL_TRAIL_WARP )
+  DEF_CMD( EvCmdGetAnimalTrailData, EV_SEQ_ANIMAL_TRAIL_GET_DATA )
+  DEF_CMD( EvCmdResetNowAnimalTrailObject, EV_SEQ_ANIMAL_TRAIL_RESET_NOW_OBJECT )
+  DEF_CMD( EvCmdExitAnimalTrail, EV_SEQ_ANIMAL_TRAIL_EXIT_MAP )
 
   END_CMD
   //スクリプトコマンドテーブル終了

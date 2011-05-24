@@ -13625,5 +13625,48 @@
     .short  \animal_trail_id
     .endm
 
+//--------------------------------------------------------------
+/**
+ * @def _ANIMAL_TRAIL_DATA_GET
+ * @brief 獣道のデータ取得
+ * @param data_type   データの種類
+ * @param ret_wk      取得したデータ
+ */
+//--------------------------------------------------------------
+#define _ANIMAL_TRAIL_DATA_GET( data_type ,ret_wk ) \
+    _ASM_ANIMAL_TRAIL_DATA_GET data_type ,ret_wk
+
+    .macro  _ASM_ANIMAL_TRAIL_DATA_GET data_type ,ret_wk
+    .short  EV_SEQ_ANIMAL_TRAIL_GET_DATA
+    .short  \data_type
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _ANIMAL_TRAIL_RESET_OBJECT
+ * @brief 獣道に設置してあるオブジェクトをリセット
+ */
+//--------------------------------------------------------------
+#define _ANIMAL_TRAIL_RESET_OBJECT() \
+    _ASM_ANIMAL_TRAIL_RESET_OBJECT
+
+    .macro  _ASM_ANIMAL_TRAIL_RESET_OBJECT
+    .short  EV_SEQ_ANIMAL_TRAIL_RESET_NOW_OBJECT
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _ANIMAL_TRAIL_EXIT_MAP
+ * @brief 獣道から元の場所に戻る
+ */
+//--------------------------------------------------------------
+#define _ANIMAL_TRAIL_EXIT_MAP() \
+    _ASM_ANIMAL_TRAIL_EXIT_MAP
+
+    .macro  _ASM_ANIMAL_TRAIL_EXIT_MAP
+    .short  EV_SEQ_ANIMAL_TRAIL_EXIT_MAP
+    .endm
+
 //======================================================================
 //======================================================================

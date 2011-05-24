@@ -117,6 +117,7 @@
 #include "poke_tool/natsuki.h"  //NATSUKI_CalcTsurearuki
 #include "poke_tool/tokusyu_def.h" //TOKUSYU_xxxx
 
+#include "field/animal_trail.h" //ANIMAL_TRAIL_SelectRandomTable
 
 #ifdef PM_DEBUG
 extern BOOL DebugBGInitEnd;    //BG初期化監視フラグ             宣言元　fieldmap.c
@@ -153,6 +154,7 @@ extern BOOL MapFadeReqFlg;    //マップフェードリクエストフラグ  宣言元　script.c
 //======================================================================
 //======================================================================
 #define FRONT_TALKOBJ_HEIGHT_DIFF (FX32_CONST(16)) //話しかけ可能なOBJのY値差分
+#define WALK_COUNT_MAX  (9999)                     //歩数カウンタの最大値
 
 //--------------------------------------------------------------
 /**
@@ -218,6 +220,7 @@ static GMEVENT * checkMoveEvent(const EV_REQUEST * req, FIELDMAP_WORK * fieldWor
 static GMEVENT* CheckSodateya(
     const EV_REQUEST * req, FIELDMAP_WORK * fieldWork, GAMESYS_WORK* gsys, GAMEDATA* gdata );
 static GMEVENT* CheckSpray( FIELDMAP_WORK * fieldWork, GAMESYS_WORK* gsys, GAMEDATA* gdata );
+static void CheckAnimalTrail( GAMEDATA* gdata );
 static GMEVENT* CheckEffectEncount( FIELDMAP_WORK * fieldWork, GAMESYS_WORK* gsys, GAMEDATA* gdata );
 static GMEVENT* CheckGPowerEffectEnd( GAMESYS_WORK* gsys );
 static GMEVENT* CheckFestMissionEnd( GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldWork );
@@ -1488,8 +1491,17 @@ static void stopTVTSE( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap )
 //--------------------------------------------------------------
 static void incWalkCount( GAMEDATA * gamedata )
 {
+  int walk_count;
   RECORD* record = GAMEDATA_GetRecordPtr( gamedata );
   RECORD_Inc( record, RECID_WALK_COUNT );
+ 
+  walk_count = GAMEDATA_GetFieldMapWalkCount( gamedata );
+  walk_count++;
+  if( walk_count > WALK_COUNT_MAX )
+  {
+    walk_count = 0;
+  }
+  GAMEDATA_SetFieldMapWalkCount( gamedata ,walk_count );
 }
 
 //======================================================================
@@ -1830,6 +1842,9 @@ static GMEVENT * checkMoveEvent(const EV_REQUEST * req, FIELDMAP_WORK * fieldWor
   event = CheckSpray( fieldWork, gsys, gdata );
   if( event != NULL) return event;
 
+  //けものみちチェック
+  CheckAnimalTrail( gdata );
+
   return NULL;
 }
 
@@ -2095,6 +2110,39 @@ static GMEVENT* CheckSpray( FIELDMAP_WORK * fieldWork, GAMESYS_WORK* gsys, GAMED
      return SCRIPT_SetEventScript( gsys, SCRID_FLD_EV_SPRAY_EFFECT_END, NULL, FIELDMAP_GetHeapID( fieldWork ));
   }
   return NULL;
+}
+//======================================================================
+//======================================================================
+//----------------------------------------------------------------------------
+/**
+ *  @brief  けものみち　アイテム抽選
+ *
+ *  @param  gsys  ゲームシステム
+ *
+ *  @return 
+ */
+//-----------------------------------------------------------------------------
+static void CheckAnimalTrail( GAMEDATA* gdata )
+{
+  SAVE_CONTROL_WORK* saveData = GAMEDATA_GetSaveControlWork(gdata);
+  int walk_count = GAMEDATA_GetFieldMapWalkCount( gdata );
+  ETC_SAVE_WORK *p_etc_save = SaveData_GetEtc( saveData );
+  int i;
+ 
+  if( walk_count%ANIMAL_TRAIL_SELECT_WALK_CNT == 0 )
+  {
+    for( i = 0 ; i < ANIMAL_TRAIL_NUM ; i++ )
+    {
+      BOOL is_set = ANIMAL_TRAIL_SAVE_GetObjectSetFlag( p_etc_save ,i  );
+      if( is_set == FALSE )
+      {
+        if( GFUser_GetPublicRand( 100 ) < ANIMAL_TRAIL_SELECT_PROBABILITY )
+        {
+          ANIMAL_TRAIL_SelectRandomTable( p_etc_save ,i);
+        }
+      }
+    }
+  }
 }
 
 //======================================================================

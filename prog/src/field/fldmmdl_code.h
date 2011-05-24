@@ -53,6 +53,9 @@
 #define MMDL_ID_T01_R01_RIVAL (MMDL_ID_EVENTOBJ_01)
 #define MMDL_ID_T01_R01_SUPPORT (MMDL_ID_EVENTOBJ_02)
 
+// けものみちで配置されるOBJID
+#define MMDL_ID_ANIMAL_TRAIL_OBJ (0xBC)  
+
 //--------------------------------------------------------------
 //  エイリアスID 元:PL script_def.h
 //--------------------------------------------------------------

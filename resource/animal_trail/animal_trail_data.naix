@@ -1,0 +1,37 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: animal_trail_data.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_ANIMAL_TRAIL_DATA_NAIX_
+#define NARC_ANIMAL_TRAIL_DATA_NAIX_
+
+enum {
+	NARC_animal_trail_data_animal_trail_data_0_dat = 0,
+	NARC_animal_trail_data_animal_trail_data_1_dat = 1,
+	NARC_animal_trail_data_animal_trail_data_2_dat = 2,
+	NARC_animal_trail_data_animal_trail_data_3_dat = 3,
+	NARC_animal_trail_data_animal_trail_data_4_dat = 4,
+	NARC_animal_trail_data_animal_trail_data_5_dat = 5,
+	NARC_animal_trail_data_animal_trail_data_6_dat = 6,
+	NARC_animal_trail_data_animal_trail_data_7_dat = 7,
+	NARC_animal_trail_data_animal_trail_data_8_dat = 8,
+	NARC_animal_trail_data_animal_trail_data_9_dat = 9,
+	NARC_animal_trail_data_animal_trail_data_10_dat = 10,
+	NARC_animal_trail_data_animal_trail_data_11_dat = 11,
+	NARC_animal_trail_data_animal_trail_data_12_dat = 12,
+	NARC_animal_trail_data_animal_trail_data_13_dat = 13,
+	NARC_animal_trail_data_animal_trail_data_14_dat = 14,
+	NARC_animal_trail_data_animal_trail_data_15_dat = 15,
+	NARC_animal_trail_data_animal_trail_data_16_dat = 16,
+	NARC_animal_trail_data_animal_trail_data_17_dat = 17,
+	NARC_animal_trail_data_animal_trail_data_18_dat = 18,
+	NARC_animal_trail_data_animal_trail_data_19_dat = 19
+};
+
+/* NARC_ANIMAL_TRAIL_DATA_NAIX_ */
+#endif
