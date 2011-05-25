@@ -871,7 +871,8 @@
 #define	TRID_HEADS_09   ( 858 ) 
 #define	TRID_HEADS_10   ( 859 ) 
 #define	TRID_BADRIDER_09   ( 860 ) 
-#define TRID_MAX  ( 861 )
+#define	TRID_PILOT_08   ( 861 ) 
+#define TRID_MAX  ( 862 )
 
 #ifndef __ASM_NO_DEF_  //‚±‚êˆÈ~‚ÍƒAƒZƒ“ƒuƒ‰‚Å‚Í–³‹
 typedef  int TrainerID;

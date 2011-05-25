@@ -4750,6 +4750,11 @@
 		<language name="JPN_KANJI" width="216">フィリップ</language>
 	</row>
 
+	<row id="pilot_08">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>

@@ -876,6 +876,7 @@ _EVENT_DATA ev_TRID_BADTEAM_03
 _EVENT_DATA ev_TRID_HEADS_09
 _EVENT_DATA ev_TRID_HEADS_10
 _EVENT_DATA ev_TRID_BADRIDER_09
+_EVENT_DATA ev_TRID_PILOT_08
 _EVENT_DATA ev_TRID_MAX
 _EVENT_DATA ev_trainer_talk_battle
 _EVENT_DATA ev_trainer_move_battle
@@ -1742,6 +1743,7 @@ ev_TRID_BADTEAM_03:
 ev_TRID_HEADS_09:
 ev_TRID_HEADS_10:
 ev_TRID_BADRIDER_09:
+ev_TRID_PILOT_08:
 ev_TRID_MAX:
 
 //----------------------------------------------------------------------
