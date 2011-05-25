@@ -749,9 +749,13 @@ static CALLTYPE ShortCutMenu_SetCallType( EVENT_PROCLINK_PARAM *p_param, SHORTCU
 		p_param->call	= EVENT_PROCLINK_CALL_POKELIST;
 		p_param->data	= ITEM_GURASIDEANOHANA;
 		return CALLTYPE_PROC;
-	case SHORTCUT_ID_IDENSINOKUSABI:		//いでんしのくさび
+	case SHORTCUT_ID_IDENSINOKUSABI_U:		//いでんしのくさび(合体用)
 		p_param->call	= EVENT_PROCLINK_CALL_POKELIST;
 		p_param->data	= ITEM_IDENSINOKUSABI;
+		return CALLTYPE_PROC;
+	case SHORTCUT_ID_IDENSINOKUSABI_P:		//いでんしのくさび(分離用)
+		p_param->call	= EVENT_PROCLINK_CALL_POKELIST;
+		p_param->data	= ITEM_IDENSINOKUSABI_1;
 		return CALLTYPE_PROC;
   case SHORTCUT_ID_PSTATUS_STATUS:		//ポケモン情報＞ステータス
 		p_param->call = EVENT_PROCLINK_CALL_STATUS;
@@ -882,7 +886,8 @@ static BOOL GetItemCheckEnable( SHORTCUT_ID shortcutID, ITEMCHECK_ENABLE * enabl
 		return TRUE;
 
 	case SHORTCUT_ID_GURASHIDEA:			// グラシデアの花
-	case SHORTCUT_ID_IDENSINOKUSABI:	// いでんしのくさび
+	case SHORTCUT_ID_IDENSINOKUSABI_U:	// いでんしのくさび(合体用)
+	case SHORTCUT_ID_IDENSINOKUSABI_P:	// いでんしのくさび(分離用)
 		return FALSE;
 	}
 

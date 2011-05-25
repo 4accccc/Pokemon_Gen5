@@ -548,7 +548,7 @@ BOOL MYITEM_GetRepositoryFlag( MYITEM_PTR myitem, u16 item_no )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-void MYITEM_SetRepositoryFlag( MYITEM_PTR myitem, u16 item_no , BOOL set )
+static void MYITEM_SetRepositoryFlagCore( MYITEM_PTR myitem, u16 item_no , BOOL set )
 {
   // ビットが入っている配列番号を計算
   int bit_pos  = item_no >> 5;
@@ -580,6 +580,18 @@ void MYITEM_SetRepositoryFlag( MYITEM_PTR myitem, u16 item_no , BOOL set )
         myitem->RepositoryFlag[bit_pos] = myitem->RepositoryFlag[bit_pos] | bit_mask;
       }
     }
+  }
+}
+
+void MYITEM_SetRepositoryFlag( MYITEM_PTR myitem, u16 item_no , BOOL set )
+{
+  MYITEM_SetRepositoryFlagCore( myitem, item_no, set );
+
+  //いでんしのくさびは２つセットで書き換える
+  if(item_no == ITEM_IDENSINOKUSABI){
+    MYITEM_SetRepositoryFlagCore( myitem, ITEM_IDENSINOKUSABI_1, set );
+  }else if( item_no == ITEM_IDENSINOKUSABI_1){
+    MYITEM_SetRepositoryFlagCore( myitem, ITEM_IDENSINOKUSABI, set );
   }
 }
 
@@ -1251,6 +1263,63 @@ ITEM_ST * MYITEM_IdItemGet( MYITEM_PTR myitem ,u16 pocket ,u16 item_no )
   return NULL;
 }
 
+
+//////////////////////////////////////////////////////////
+//キュレム用特殊処理
+//////////////////////////////////////////////////////////
+//----------------------------------------------------------------------------
+/**
+ *	@brief  遺伝子の楔 合体用と分離用をスワップする
+ *
+ *	@param	myitem  手持ちアイテム構造体へのポインタ
+ *	@param	pocket  ポケット番号
+ *	@param	item_no アイテム番号
+ *
+ *	@retval 発見したアイテム構造体
+ *
+ *  キュレム合体用アイテム(いでんしのくさび)があったら、分離用アイテムに挿げ替える
+ *  (元のアイテムがなければ何もしない)
+ */
+//-----------------------------------------------------------------------------
+void MYITEM_KyuremuItemSwap( MYITEM_PTR myitem, KYUREMU_ITEM_SWAP mode )
+{
+  static const u16 swap[2] = { ITEM_IDENSINOKUSABI, ITEM_IDENSINOKUSABI_1 };
+  ITEM_ST* tbl = myitem->MyEventItem;
+  ITEM_ST* item = NULL;
+  int i;
+
+  for(i = 0;i < BAG_EVENT_ITEM_MAX;i++ ){
+#if 0
+    if( tbl[i].id == swap[mode] ){
+      if( item == NULL ){
+        item = &tbl[i];
+        item->id = swap[mode^1];
+        item->no = 1;
+      }else{
+        tbl[i].id = 0;  //同じアイテムが2スロット以上あるのは不正
+        tbl[i].no = 0;
+      }
+    }else if( tbl[i].id == swap[mode-1])
+      //スワップ後のアイテムと同じものが他にあるのは不正
+      tbl[i].id = 0;
+      tbl[i].no = 0;
+    }
+#else
+    if( tbl[i].id == swap[mode] ){
+      OS_Printf("item=%d\n",tbl[i].id);
+      tbl[i].id = swap[mode^1];
+    }
+#endif
+  }
+#if 0
+  //保管ポケットのフラグも制御
+  MYITEM_SetRepositoryFlag( myitem , swap[mode] , FALSE );
+  MYITEM_SetRepositoryFlag( myitem , swap[mode^1] , TRUE );
+  //隙間を詰める	
+  MYITEM_SortSpace( tbl, BAG_EVENT_ITEM_MAX );
+#endif
+}
+
 //------------------------------------------------------------------
 /**
  * @brief		１つのアイテムの最大所持数を取得
@@ -1464,6 +1533,7 @@ void MYITEM_BattleBagPocketPagePosSet( BAG_CURSOR * wk, u16 pocket )
 	wk->btl.pocket = pocket;
 }
 */
+
 
 // 外部参照インデックスを作る時のみ有効(ゲーム中は無効)
 #ifdef CREATE_INDEX

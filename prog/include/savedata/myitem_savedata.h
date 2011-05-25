@@ -47,6 +47,12 @@ typedef struct {
 //
 #define BAG_TOTAL_NUM (BAG_EVENT_ITEM_MAX+BAG_WAZA_ITEM_MAX+BAG_DRUG_ITEM_MAX+BAG_NUTS_ITEM_MAX+BAG_NORMAL_ITEM_MAX)
 
+///キュレム用アイテムスワップ定義
+typedef enum{
+  KYUREMU_ITEM_SWAP_UNION,  ///合体実行時の処理 
+  KYUREMU_ITEM_SWAP_PERGE,  ///分離実行時の処理 
+}KYUREMU_ITEM_SWAP;
+
 //==============================================================================
 //  型定義
 //==============================================================================
@@ -90,6 +96,7 @@ extern void MYITEM_BattlePocketItemMake( MYITEM_PTR myitem, ITEM_ST * make[], HE
 extern BOOL MYITEM_GetRepositoryFlag( MYITEM_PTR myitem, u16 item_no );
 extern  void MYITEM_SetRepositoryFlag( MYITEM_PTR myitem, u16 item_no , BOOL set );
 extern ITEM_ST * MYITEM_IdItemGet( MYITEM_PTR myitem ,u16 pocket ,u16 item_no );
+extern void MYITEM_KyuremuItemSwap( MYITEM_PTR myitem, KYUREMU_ITEM_SWAP mode );
 extern u32 MYITEM_GetPocketID( MYITEM_PTR myitem, u16 item_no );
 
 //extern u32 MYITEM_CnvButtonItemGet( const MYITEM_PTR myitem, int index );

@@ -1744,11 +1744,11 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
             work->mainSeq = PSMS_FORM_CHANGE_INIT;
             work->demoType = PDT_SHEIMI_TO_SKY;
           }
-          //いでんしのくさびチェック
+          //いでんしのくさび(合体用)チェック
           else if( work->plData->item == ITEM_IDENSINOKUSABI )
           {
             KYUREMU_CHECK_CODE  ret = PLIST_DEMO_CheckKyuremuToColor( work, work->selectPokePara );
-            if( ret == KYUREMU_CHECK_NG ){
+            if( ret == KYUREMU_CHECK_NG || ret == KYUREMU_CHECK_NG_FORM ){
               PLIST_ITEM_MSG_CanNotUseItemContinue( work );
             }
             else if( ret == KYUREMU_CHECK_NG_DETH ){
@@ -1770,24 +1770,25 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
               
 //              PLIST_ITEM_MSG_CanNotUseItemContinueEx( work, CNUI_MSG_TYPE_DETH );
             }
+          }
+          //いでんしのくさび(分離用)チェック
+          else if( work->plData->item == ITEM_IDENSINOKUSABI_1 )
+          {
+            KYUREMU_CHECK_CODE ret = PLIST_DEMO_CheckKyuremuToNormal( work, work->selectPokePara );
+            
+            if( ret == KYUREMU_CHECK_NG_LIST_MAX){
+              PLIST_ITEM_MSG_CanNotUseItemContinueEx( work, CNUI_MSG_TYPE_LIST_MAX );
+            }
+            else if( ret == KYUREMU_CHECK_NG || ret == KYUREMU_CHECK_NG_FORM ){
+              PLIST_ITEM_MSG_CanNotUseItemContinue( work );
+            }
             else
             {
-              ret = PLIST_DEMO_CheckKyuremuToNormal( work, work->selectPokePara );
-            
-              if( ret == KYUREMU_CHECK_NG_LIST_MAX){
-                PLIST_ITEM_MSG_CanNotUseItemContinueEx( work, CNUI_MSG_TYPE_LIST_MAX );
-              }
-              else if( ret == KYUREMU_CHECK_NG_FORM ){
-                PLIST_ITEM_MSG_CanNotUseItemContinue( work );
-              }
-              else
-              {
-                work->changeTarget = work->pokeCursor;
-                work->plData->ret_mode = PL_RET_BAG;
-                work->mainSeq = PSMS_FORM_CHANGE_INIT;
-                work->demoType = PDT_KYUREMU_TO_NORMAL;
-                work->demoParam = KYUREMU_UNION_PERGE;
-              }
+              work->changeTarget = work->pokeCursor;
+              work->plData->ret_mode = PL_RET_BAG;
+              work->mainSeq = PSMS_FORM_CHANGE_INIT;
+              work->demoType = PDT_KYUREMU_TO_NORMAL;
+              work->demoParam = KYUREMU_UNION_PERGE;
             }
           }
           else

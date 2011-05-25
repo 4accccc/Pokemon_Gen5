@@ -5779,10 +5779,19 @@
 	</row>
 
 	<row id="ITEMINFO_628">
-		<language name="JPN" width="256">かりせつめいぶん
+		<language name="JPN" width="256">キュレムを　がったい　させる
 かりせつめいぶん
 かりせつめいぶん</language>
-		<language name="JPN_KANJI" width="256">仮説明文
+		<language name="JPN_KANJI" width="256">キュレムを　合体　させる
+仮説明文
+仮説明文</language>
+	</row>
+
+	<row id="ITEMINFO_629">
+		<language name="JPN" width="256">キュレムを　ぶんり　させる
+かりせつめいぶん
+かりせつめいぶん</language>
+		<language name="JPN_KANJI" width="256">キュレムを　分離　させる
 仮説明文
 仮説明文</language>
 	</row>

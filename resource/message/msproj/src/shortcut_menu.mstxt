@@ -233,13 +233,14 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_shortcut_menu_01_09">
+		Label="msg_shortcut_menu_01_09"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[System:Color name="2" ]いでんしのくさび[/System:Color]</Text>
+			<Text>[System:Color name="2" ]いでんしのくびき[/System:Color]</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2011-05-23T02:57:56" />
+				Time="2011-05-25T02:10:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -247,15 +248,69 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[System:Color name="2"]いでんしのくさび[/System:Color]</Text>
+			<Text>[System:Color name="2" ]いでんしのくびき[/System:Color]</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2011-05-23T02:55:39" />
+				Time="2011-05-25T02:10:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
 				Time="2011-05-23T02:54:57" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>swan追加</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-05-25T02:09:57" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_shortcut_menu_01_10"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[System:Color name="2" ]いでんしのくさび[/System:Color]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-05-25T02:09:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-05-25T02:09:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[System:Color name="2"]いでんしのくさび[/System:Color]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-05-25T02:09:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-05-25T02:09:33" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>swan追加</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-05-25T02:09:58" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_shortcut_menu_02_01"

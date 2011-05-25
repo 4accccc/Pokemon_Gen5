@@ -633,6 +633,9 @@ void PLIST_DEMO_ChangeKyuremuColor( PLIST_WORK *work, KYUREMU_UNION_CHECK mode, 
   
   //合体相手を削除
   PokeParty_Delete( work->plData->pp, target_idx );
+
+  //アイテム変化
+  MYITEM_KyuremuItemSwap( (MYITEM_PTR)work->plData->myitem, KYUREMU_ITEM_SWAP_UNION );
 }
 
 //--------------------------------------------------------------------------
@@ -653,6 +656,9 @@ void PLIST_DEMO_ChangeKyuremuNormal( PLIST_WORK *work, POKEMON_PARAM* pp_k )
   
   //合体相手復活
   PokeParty_Add( work->plData->pp, RANDOMMAP_SAVE_GetKyuremuUnionPokeParam( (RANDOMMAP_SAVE*)work->plData->rnd_map ) );
+  
+  //アイテム変化
+  MYITEM_KyuremuItemSwap( (MYITEM_PTR)work->plData->myitem, KYUREMU_ITEM_SWAP_PERGE );
 }
 
 //--------------------------------------------------------------------------
