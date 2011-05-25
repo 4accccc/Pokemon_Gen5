@@ -19,7 +19,7 @@
 //
 //=============================================================================
 
-#define DATA_TABLE_LEN        (4) // ポケモン抽選テーブルの長さ
+#define DATA_TABLE_LEN        (4) // 抽選テーブルの長さ
 #define POKEMON_TABLE_CNT     (3) // ポケモン抽選テーブル数
 #define NORMAL_ITEM_TABLE_CNT (4) // 通常配置アイテムの抽選テーブル数
 #define HIDE_ITEM_TABLE_CNT   (4) // 隠しアイテム抽選テーブル数
@@ -66,9 +66,9 @@ typedef struct {
 ///	ポケモンアーカイブデータ
 //=====================================
 typedef struct {
-  AT_POKEMON_DATA poke_data[3];
-  u16 item_id[4][DATA_TABLE_LEN];
-  u16 hide_item_id[4][4];
+  AT_POKEMON_DATA poke_data[POKEMON_TABLE_CNT];
+  u16 item_id[NORMAL_ITEM_TABLE_CNT][DATA_TABLE_LEN];
+  u16 hide_item_id[HIDE_ITEM_TABLE_CNT][DATA_TABLE_LEN];
 }ANIMAL_TRAIL_ARC_DATA;
 
 //=============================================================================

@@ -61,6 +61,7 @@ animal_trail_call:
 
   IF $SCWK_ANSWER == SCR_YES THEN
     // ˆÚ“®ŒÄ‚Ño‚µ
+    _SE_PLAY( SEQ_SE_KAIDAN )
     _WARP_ANIMAL_TRAIL( LWK_ANIMAL_TRAIL_ID )
   ENDIF
 }

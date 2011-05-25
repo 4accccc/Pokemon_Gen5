@@ -25,6 +25,7 @@
 #include "script.h"
 #include "event_fieldmap_control.h"
 
+#include "field/animal_trail.h" //ANIMAL_TRAIL_SelectRandomTable
 #include "msg/debug/msg_debug_animal_trail.h"
 #include "../../../resource/fldmapdata/script/animal_trail_scr_def.h"  //SCRID_DEBUG_
 
@@ -75,6 +76,8 @@ enum {
   SEQ_MAIN,
   SEQ_NUM_INPUT,
   SEQ_CALL_SCRIPT,
+  SEQ_SET_ANIMAL_TRAIL_OBJ,
+  SEQ_SET_TABLE_ID,
   SEQ_NUM_EXIT,
 };
 //-------------------------------------
@@ -82,12 +85,15 @@ enum {
 //=====================================
 enum {
   STR_NUM_ANIMAL_TRAIL_NO,
+  STR_NUM_ANIMAL_TABLE_NO,
 };
 
 ///メニューリスト
 static const DEBUG_MENU_LIST MenuList[] =
 {
   { DEBUG_STR_GO_ANIMAL_TRAIL , (void*)DEBUG_STR_GO_ANIMAL_TRAIL , GFL_OVERLAY_BLANK_ID },  // 詳細画面起動
+  { DEBUG_STR_ANIMAL_TRAIL_SET_OBJECT , (void*)DEBUG_STR_ANIMAL_TRAIL_SET_OBJECT , GFL_OVERLAY_BLANK_ID },  // アイテム設置
+  { DEBUG_STR_ANIMAL_TRAIL_SET_TABLE_ID , (void*)DEBUG_STR_ANIMAL_TRAIL_SET_TABLE_ID , GFL_OVERLAY_BLANK_ID },  // 指定テーブル配置
 };
 
 ///リスト メニューヘッダー
@@ -167,6 +173,25 @@ static GMEVENT_RESULT debugMenuAnimalTrail( GMEVENT *event, int *seq, void *wk )
         // メニュー削除
         FLDMENUFUNC_DeleteMenu( work->menuFunc );
         work->input_next_seq = SEQ_CALL_SCRIPT;
+        work->num_input_type = STR_NUM_ANIMAL_TRAIL_NO;
+        (*seq) = SEQ_NUM_INPUT;
+      }
+      break;
+    case DEBUG_STR_ANIMAL_TRAIL_SET_OBJECT:
+      {
+        // メニュー削除
+        FLDMENUFUNC_DeleteMenu( work->menuFunc );
+        work->input_next_seq = SEQ_SET_ANIMAL_TRAIL_OBJ;
+        work->num_input_type = STR_NUM_ANIMAL_TRAIL_NO;
+        (*seq) = SEQ_NUM_INPUT;
+      }
+      break;
+    case DEBUG_STR_ANIMAL_TRAIL_SET_TABLE_ID:
+      {
+        // メニュー削除
+        FLDMENUFUNC_DeleteMenu( work->menuFunc );
+        work->input_next_seq = SEQ_SET_TABLE_ID;
+        work->num_input_type = STR_NUM_ANIMAL_TABLE_NO;
         (*seq) = SEQ_NUM_INPUT;
       }
       break;
@@ -184,6 +209,29 @@ static GMEVENT_RESULT debugMenuAnimalTrail( GMEVENT *event, int *seq, void *wk )
       SCRIPT_CallScript( event,SCRID_ANIMAL_TRAIL_01+work->num, NULL, NULL, HEAPID_FIELDMAP );
       (*seq) = SEQ_NUM_EXIT;
     break;
+  case SEQ_SET_ANIMAL_TRAIL_OBJ:
+    {
+      SAVE_CONTROL_WORK* saveData = GAMEDATA_GetSaveControlWork(work->p_gamedata);
+      ETC_SAVE_WORK *p_etc_save = SaveData_GetEtc( saveData );
+      ANIMAL_TRAIL_SelectRandomTable(p_etc_save ,work->num);
+      (*seq) = SEQ_NUM_EXIT;
+    }
+    break;
+  case SEQ_SET_TABLE_ID:
+    {
+      SAVE_CONTROL_WORK* saveData = GAMEDATA_GetSaveControlWork(work->p_gamedata);
+      ETC_SAVE_WORK *p_etc_save = SaveData_GetEtc( saveData );
+      {
+        int i;
+        for( i = 0 ; i<20 ; i++ )
+        {
+          ANIMAL_TRAIL_SelectRandomTable(p_etc_save ,i);
+          OS_Printf("けものみち%d番のテーブルIDを%dに上書き\n",i,work->num);
+          ANIMAL_TRAIL_SAVE_SetMainTableIndex( p_etc_save ,i ,work->num );
+        }
+      }
+      (*seq) = SEQ_NUM_EXIT;
+    }
   case SEQ_NUM_EXIT:
     return GMEVENT_RES_FINISH;
   }
@@ -275,6 +323,9 @@ static BOOL NumInputState( ANIMAL_TRAIL_WORK* p_wk )
       case STR_NUM_ANIMAL_TRAIL_NO:
         p_wk->num = 0;
         break;
+      case STR_NUM_ANIMAL_TABLE_NO:
+        p_wk->num = 0;
+        break;
       defautl:
         p_wk->num = 0;
         break;
@@ -291,16 +342,32 @@ static BOOL NumInputState( ANIMAL_TRAIL_WORK* p_wk )
       switch( p_wk->num_input_type)
       {
       case STR_NUM_ANIMAL_TRAIL_NO:
-        NumInput(p_wk);
-        if( p_wk->num < 0 )
         {
-          p_wk->num = 19;
+          NumInput(p_wk);
+          if( p_wk->num < 0 )
+          {
+            p_wk->num = 19;
+          }
+          if( p_wk->num > 19)
+          {
+            p_wk->num = 0;
+          }
+          DrawNum( p_wk );
         }
-        if( p_wk->num > 19)
+        break;
+      case STR_NUM_ANIMAL_TABLE_NO:
         {
-          p_wk->num = 0;
+          NumInput(p_wk);
+          if( p_wk->num < 0 )
+          {
+            p_wk->num = 10;
+          }
+          if( p_wk->num > 10)
+          {
+            p_wk->num = 0;
+          }
+          DrawNum( p_wk );
         }
-        DrawNum( p_wk );
         break;
       }
       

@@ -324,6 +324,13 @@ void* FIELD_ENCOUNT_SetWildEncount( FIELD_ENCOUNT *enc, u16 mons_no, u8 mons_lv,
   //バトルパラメータセット
   bp = BATTLE_PARAM_Create( HEAPID_BTLPARAM );
   enc_CreateBattleParam( enc, &fld_spa, bp, HEAPID_BTLPARAM, poke_tbl );
+
+  // 獣道用お盆、背景変化
+  if( flags & SCR_WILD_BTL_FLAG_TRAIL )
+  {
+    bp->fieldSituation.bgAttr = BATTLE_BG_ATTR_E_GRASS; // エンカウント草
+    bp->fieldSituation.bgType = BATTLE_BG_TYPE_FOREST;  // 森
+  }
  
   //エンカウントメッセージ変化
   if( flags & SCR_WILD_BTL_FLAG_LEGEND ){

@@ -14,11 +14,11 @@
 #include "scrcmd.h"
 #include "scrcmd_work.h"
 #include "scrcmd_animal_trail.h"
-#include "fieldmap/zone_id.h"
 #include "event_mapchange.h"
 #include "event_field_fade.h"
 #include "field/field_const.h"
 #include "system/main.h"          //HEAPID_FIELDMAP
+#include "fieldmap/zone_id.h"
 #include "field/tpoke_data.h"
 #include "savedata/etc_save.h"
 #include "animal_trail.h"
@@ -26,6 +26,7 @@
 #include "../../../resource/fldmapdata/script/d34r0101_def.h" // for SCRID_*
 #include "fldmmdl_code.h"	// for MMDL_ID_ANIMAL_TRAIL_OBJ
 #include "script_def.h"
+#include "poke_tool/monsnum_def.h"  // for MONSNO_数字
 #include "../../../resource/fldmapdata/flagwork/flag_define.h" // for SYS_FLAG_AT_DOWSING_HIT
 
 //=============================================================================
@@ -81,6 +82,7 @@ static void SetObject( MAP_CHAGE_EVENT_WORK *p_wk );
 static void SetPokemon( MAP_CHAGE_EVENT_WORK *p_wk );
 static void SetItem( MMDLSYS *p_mmdlsys );
 static void SetPokemonMMDL( MMDLSYS *p_mmdlsys ,u16 monsno ,u8 sex ,u16 formno ,HEAPID heapID );
+static BOOL is_ex_monster( u16 monsno );
 
 
 //----------------------------------------------------------------------------
@@ -120,7 +122,7 @@ VMCMD_RESULT EvCmdGetAnimalTrailData( VMHANDLE* core, void* wk )
   // モンスターナンバーを返す
   case SCR_ANIMAL_TRAIL_GET_MONSNO:
     {
-      GFL_ARC_LoadData( &data, ARCID_ANIMAL_TRAIL, main_table_index );
+      GFL_ARC_LoadData( &data, ARCID_ANIMAL_TRAIL, trail_id );
       p_poke = &data.poke_data[main_table_index];
       (*p_ret_wk) = p_poke->pokemon_id[data_table_index];
     }
@@ -129,7 +131,7 @@ VMCMD_RESULT EvCmdGetAnimalTrailData( VMHANDLE* core, void* wk )
     {
       u8 lv_range;
       u8 max_lv,min_lv;
-      GFL_ARC_LoadData( &data, ARCID_ANIMAL_TRAIL, main_table_index );
+      GFL_ARC_LoadData( &data, ARCID_ANIMAL_TRAIL, trail_id );
       p_poke = &data.poke_data[main_table_index];
       max_lv = p_poke->max_lv[data_table_index];
       min_lv = p_poke->min_lv[data_table_index];
@@ -145,7 +147,7 @@ VMCMD_RESULT EvCmdGetAnimalTrailData( VMHANDLE* core, void* wk )
       u8 female_num = ANIMAL_TRAIL_SAVE_GetFemaleNum( p_save, trail_id );
       u8 is_female = FALSE;
 
-      GFL_ARC_LoadData( &data, ARCID_ANIMAL_TRAIL, main_table_index );
+      GFL_ARC_LoadData( &data, ARCID_ANIMAL_TRAIL, trail_id );
       p_poke = &data.poke_data[main_table_index];
       // メス判定
       if( female_num > p_poke->female_probability[data_table_index]  )
@@ -158,14 +160,14 @@ VMCMD_RESULT EvCmdGetAnimalTrailData( VMHANDLE* core, void* wk )
   case SCR_ANIMAL_TRAIL_GET_ITEM_ID:
     {
       u8 table_index = main_table_index-ANIMAL_TRAIL_DATA_TABLE_3;
-      GFL_ARC_LoadData( &data, ARCID_ANIMAL_TRAIL, main_table_index );
+      GFL_ARC_LoadData( &data, ARCID_ANIMAL_TRAIL, trail_id );
       (*p_ret_wk) = data.item_id[table_index][data_table_index];
     }
     break;
   case SCR_ANIMAL_TRAIL_GET_HIDE_ITEM_ID:
     {
       u8 table_index = main_table_index-ANIMAL_TRAIL_DATA_TABLE_7;
-      GFL_ARC_LoadData( &data, ARCID_ANIMAL_TRAIL, main_table_index );
+      GFL_ARC_LoadData( &data, ARCID_ANIMAL_TRAIL, trail_id );
       (*p_ret_wk) = data.hide_item_id[table_index][data_table_index];
     }
     break;
@@ -393,7 +395,7 @@ static void SetPokemon( MAP_CHAGE_EVENT_WORK *p_wk )
 
   // アーカイブ読み込み
   GF_ASSERT( main_table_index < ANIMAL_TRAIL_DATA_TABLE_3 );
-  GFL_ARC_LoadData( &data, ARCID_ANIMAL_TRAIL, main_table_index );
+  GFL_ARC_LoadData( &data, ARCID_ANIMAL_TRAIL, p_wk->trail_id );
   p_poke = &data.poke_data[main_table_index];
 
   // メス判定
@@ -424,16 +426,44 @@ static void SetPokemonMMDL( MMDLSYS *p_mmdlsys ,u16 monsno ,u8 sex ,u16 formno ,
   u16 obj_code;
   MMDL *mmdl;
 
-  // obj_codeの取得
-  TPOKE_DATA *p_tpdata = TPOKE_DATA_Create( HEAPID_FIELDMAP );
-  obj_code = TPOKE_DATA_GetObjCode( p_tpdata ,monsno ,sex ,formno );
-  TPOKE_DATA_Delete( p_tpdata );
-  GF_ASSERT( obj_code );
+  if( is_ex_monster( monsno ) == FALSE )
+  {
+    // obj_codeの取得
+    TPOKE_DATA *p_tpdata = TPOKE_DATA_Create( HEAPID_FIELDMAP );
+    obj_code = TPOKE_DATA_GetObjCode( p_tpdata ,monsno ,sex ,formno );
+    TPOKE_DATA_Delete( p_tpdata );
+    GF_ASSERT( obj_code );
 
-  // 動作モデルの設置
-  mmdl = MMDLSYS_AddMMdlParam( p_mmdlsys, ANIMAL_TRAIL_OBJ_POS_GX, ANIMAL_TRAIL_OBJ_POS_GZ, DIR_DOWN,
-      MMDL_ID_ANIMAL_TRAIL_OBJ ,obj_code, MV_DMY ,ANIMAL_TRAIL_ZONE_ID  );
+    // 動作モデルの設置(ポケモン)
+    mmdl = MMDLSYS_AddMMdlParam( p_mmdlsys, ANIMAL_TRAIL_OBJ_POS_GX, ANIMAL_TRAIL_OBJ_POS_GZ, DIR_DOWN,
+        MMDL_ID_ANIMAL_TRAIL_OBJ ,obj_code, MV_DMY ,ANIMAL_TRAIL_ZONE_ID  );
+  }
+  else
+  {
+    // 動作モデルの設置(タマゲタケ・モロバレル/モンスターボール)
+    mmdl = MMDLSYS_AddMMdlParam( p_mmdlsys, ANIMAL_TRAIL_OBJ_POS_GX, ANIMAL_TRAIL_OBJ_POS_GZ, DIR_DOWN,
+        MMDL_ID_ANIMAL_TRAIL_OBJ ,MONSTERBALL, MV_DMY ,ANIMAL_TRAIL_ZONE_ID  );
+  }
   MMDL_SetEventID( mmdl, SCRID_ANIMAL_TRAIL_BATTLE );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  特殊モンスター判定
+ *
+ *	@param	monsno 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL is_ex_monster( u16 monsno )
+{
+  // タマゲタケ・モロバレル
+  if( monsno != MONSNO_581 && monsno != MONSNO_580 )
+  {
+    return FALSE;
+  }
+  return TRUE;
 }
 
 //----------------------------------------------------------------------------

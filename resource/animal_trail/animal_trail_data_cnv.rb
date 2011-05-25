@@ -70,8 +70,8 @@ out_data_name = ARGV[3]
 animal_trail_data_list = Array.new(data_cnt)
 
 data_cnt.times{|index|
-  puts dir_name+"/"+in_data_name+index.to_s+".csv"
-  data = CSV.readlines(dir_name+"/"+in_data_name+index.to_s+".csv")
+  puts dir_name+"/"+in_data_name+(index+1).to_s+".csv"
+  data = CSV.readlines(dir_name+"/"+in_data_name+(index+1).to_s+".csv")
 
   animal_trail_data_list[index] = ANIMAL_TRAIL_DATA.new
   animal_trail_data_list[index] = animal_trail_data_list[index]
