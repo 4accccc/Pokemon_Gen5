@@ -2,6 +2,58 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
+		Label="msg_c06r0201_infomationw_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>こんにちは！[Ctrl2:PageClear ]
+すばやく　たくさん　おとどけ！
+フキヨセ　カーゴ　サービス　です</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T03:36:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T03:36:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>こんにちは！[Ctrl2:PageClear ]
+すばやく　たくさん　おとどけ！
+フキヨセ　カーゴ　サービス　です</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T03:36:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T03:36:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・仮メッセージ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T03:36:24" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>INFOMATIONW
+汎用受付♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T03:36:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c06r0201_workman1_01"
 		Style="Large">
 		<LanguageCell
@@ -196,10 +248,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>ポケモン
-・メッセージ表示にあわせ鳴き声再生</Comment>
+・あわせて鳴き声再生</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T03:36:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -426,6 +478,14 @@
 				Time="2011-05-20T09:30:12" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>VETERANW
+ベテラン♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T03:36:11" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -439,59 +499,6 @@
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c06r0201_infomationw_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>こんにちは！[Ctrl2:PageClear ]
-すばやく　たくさん　おとどけ！
-フキヨセ　カーゴ　サービス　です</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>こんにちは！[Ctrl2:PageClear ]
-すばやく　たくさん　おとどけ！
-フキヨセ　カーゴ　サービス　です</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・仮メッセージ</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>INFOMATIONW
-汎用受付♀</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
-		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c06r0201_waitress_01"
@@ -629,12 +636,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>なんだか　きょうは
-とくべつ　きぶんー！▼
+とくべつ　きぶん！▼
 あなたの　ハートスイーツ　５まいと
 ハートのウロコを　こうかんしない？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T03:31:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -643,12 +650,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>なんだか　今日は
-スペシャル　気分ー！▼
+スペシャル　気分！▼
 あなたの　ハートスイーツ　５枚と
 ハートのウロコを　交換しない？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T03:31:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -706,11 +713,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ハートスイーツを
-たくさん　もってきてくれたら▽
-いいものと　こうかんしまーす</Text>
+たくさん　持ってきてくれたら▽
+いいものと　交換しまーす</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T03:31:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -813,10 +820,10 @@
 			<Text>あれれ？　ざんねん
 すっごく　ざんねん！▼
 あなたの　ハートのウロコ
-もう　いっぱいなのね</Text>
+もう　いっぱい　なのね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T03:31:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -824,13 +831,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あれれ？　ざんねん
-すっごく　ざんねん！▼
+			<Text>あれれ？　残念
+すっごく　残念！▼
 あなたの　ハートのウロコ
-もう　いっぱいなのね</Text>
+もう　いっぱい　なのね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T03:31:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
