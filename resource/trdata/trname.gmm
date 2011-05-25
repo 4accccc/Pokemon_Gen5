@@ -4176,8 +4176,8 @@
 	</row>
 
 	<row id="badrider_08">
-		<language name="JPN" width="216">ミラー</language>
-		<language name="JPN_KANJI" width="216">ミラー</language>
+		<language name="JPN" width="216">キョウジ</language>
+		<language name="JPN_KANJI" width="216">キョウジ</language>
 	</row>
 
 	<row id="badteam_02">
@@ -4728,6 +4728,26 @@
 	<row id="doctor_06">
 		<language name="JPN" width="216">●</language>
 		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="badteam_03">
+		<language name="JPN" width="216">ジムとサブ</language>
+		<language name="JPN_KANJI" width="216">ジムとサブ</language>
+	</row>
+
+	<row id="heads_09">
+		<language name="JPN" width="216">エイキチ</language>
+		<language name="JPN_KANJI" width="216">エイキチ</language>
+	</row>
+
+	<row id="heads_10">
+		<language name="JPN" width="216">リュウジ</language>
+		<language name="JPN_KANJI" width="216">リュウジ</language>
+	</row>
+
+	<row id="badrider_09">
+		<language name="JPN" width="216">フィリップ</language>
+		<language name="JPN_KANJI" width="216">フィリップ</language>
 	</row>
 
 	<flowchart-group-list>
