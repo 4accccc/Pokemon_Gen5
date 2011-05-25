@@ -495,12 +495,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おおお！　ふたりとも
+			<Text>おおお！　あなた　センスあります！
 すばらしい　コーディネートでしたよ▽
 とても　みりょくてき　でございます！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="ito_hiroto:W00178"
+				Time="2011-05-24T13:59:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -508,12 +508,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おおお！　２人とも
+			<Text>おおお！　あなた　センスあります！
 すばらしい　コーディネートでしたよ▽
 とても　魅力的で　ございます！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="ito_hiroto:W00178"
+				Time="2011-05-24T13:59:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -527,10 +527,12 @@
 ・ドレスアップアプリ中にグッズをつけたか否かで
 　owner_demo_03bかowner_demo_04に分岐
 ・コンディションを引っ張ってくるタグは未完成（発注済）
-・続けてowner_demo_05</Comment>
+・続けてowner_demo_05
+
+※SWANで人称を一人用に変更</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="ito_hiroto:W00178"
+				Time="2011-05-24T14:01:09" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -549,7 +551,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#008000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -562,15 +564,15 @@
 			Language="JPN">
 			<Text>ドレスアップさえ　できれば　だれでも
 ミュージカルに　さんかできます！▼
-きみたちも　ミュージカルに
+あなたも　ミュージカルに
 ぜひ　さんか　してくださいませ！▼
 ミュージカルに　ついての　せつめいは
 うけつけでも　きけますよ▼
 では　ぶたいで　あえる　ひを
-たのしみに　しております！▼</Text>
+たのしみに　しております！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="ito_hiroto:W00178"
+				Time="2011-05-24T14:00:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -580,15 +582,15 @@
 			Language="JPN_KANJI">
 			<Text>ドレスアップさえ　できれば　だれでも
 ミュージカルに　参加できます！▼
-きみたちも　ミュージカルに
+あなたも　ミュージカルに
 ぜひ　参加して　くださいませ！▼
 ミュージカルに　ついての　説明は
 受付でも　聞けますよ▼
 では　舞台で　会える　日を
-楽しみに　しております！▼</Text>
+楽しみに　しております！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="ito_hiroto:W00178"
+				Time="2011-05-24T14:00:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -601,10 +603,12 @@
 　初期配置箇所に戻る
 ・続けてmsg_c04r0201_white_03
 ・これ以降、オーナーにはなしかけると
-　msg_c04r0201_owner_01を表示</Comment>
+　msg_c04r0201_owner_01を表示
+
+※SWANで人称を一人用に変更・キー待ち記号削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="ito_hiroto:W00178"
+				Time="2011-05-24T14:01:07" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -623,7 +627,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#008000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2434,6 +2438,431 @@
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c04r0201_owner_demo_swan_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>やあ　はじめまして！▼
+わたしは　この　ミュージカルの
+オーナーです　よろしく！▼</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-24T13:55:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>やあ　はじめまして！▼
+わたしは　この　ミュージカルの
+オーナーです　よろしく！▼</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-24T13:55:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・話しかけイベント
+・メッセージ表示後、[！]を出す
+・続けてowner_demo_swan_02</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-24T13:56:00" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>CLOWN</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c04r0201_owner_demo_swan_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>ふーむ！　なんというか　あなた
+いい　かんじの　トレーナーですねえ！▼
+ポケモンに　グッズを　つけて
+きかざってあげることを▽
+ドレスアップと　いうのですが▽
+ぜひ　やってみて　くれませんか？▼
+こちらの　グッズケースを
+プレゼント　しますから！▼</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-24T13:56:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-24T13:56:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ふーむ！　なんというか　あなた
+いい　感じの　トレーナーですねえ！▼
+ポケモンに　グッズを　つけて
+着飾ってあげることを▽
+ドレスアップと　いうのですが▽
+ぜひ　やってみて　くれませんか？▼
+こちらの　グッズケースを
+プレゼント　しますから！▼</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-24T14:09:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-24T13:56:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・メッセージ表示後
+　グッズケース入手処理
+・続けてowner_demo_03</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-24T13:56:34" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c04r0201_owner_demo_swan_01a">
+		<LanguageCell
+			Language="JPN">
+			<Text>おや　あなた　どこかで
+おあい　したこと･･････▽
+いや　おもいすごし　でした▼
+わたしは　この　ミュージカルの
+オーナーです　よろしく！▼</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-24T13:56:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-24T13:56:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おや　あなた　どこかで
+お会い　したこと･･････▽
+いや　思い過ごし　でした▼
+わたしは　この　ミュージカルの
+オーナーです　よろしく！▼</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-24T14:09:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-24T13:56:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+●データコンバート時
+・話しかけイベント
+・メッセージ表示後、[！]を出す
+・続けてowner_demo_swan_02a</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-24T13:56:59" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8000ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c04r0201_owner_demo_swan_02a">
+		<LanguageCell
+			Language="JPN">
+			<Text>ふーむ！　なんというか　あなたから
+ただならない　オーラを　かんじます！▼
+かつて　ミュージカルを　さわがせた
+とある　スーパースターと▽
+よく　にた　オーラを……▼
+ところで　トレーナーさん
+ドレスアップを　ごぞんじですか？▼</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-24T13:57:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-24T13:56:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ふーむ！　なんというか　あなたから
+ただならない　オーラを　感じます！▼
+かつて　ミュージカルを　騒がせた
+とある　スーパースターと▽
+よく　似た　オーラを……▼
+ところで　トレーナーさん
+ドレスアップを　ごぞんじですか？▼</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-24T14:10:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-24T13:56:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+●データコンバート時
+・メッセージ表示後 はい／いいえ選択肢
+・はい
+　owner_demo_swan_02b
+・いいえ
+　owner_demo_swan_02c</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-24T13:57:26" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8000ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c04r0201_owner_demo_swan_02b">
+		<LanguageCell
+			Language="JPN">
+			<Text>ならば　はなしは　はやい
+では　こちらの　グッズケースを……▼</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-24T13:57:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-24T13:56:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ならば　話は　早い
+では　こちらの　グッズケースを……▼</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-24T14:10:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-24T13:56:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+●データコンバート時
+・続けてowner_demo_swan_02d</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-24T13:57:40" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8000ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c04r0201_owner_demo_swan_02c">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンに　グッズを　つけて
+きかざってあげることを▽
+ドレスアップと　いうのです▼
+グッズを　しまう　グッズケースは
+プレゼントとして　さしあげます▼</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-24T13:57:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-24T13:56:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンに　グッズを　つけて
+着飾ってあげることを▽
+ドレスアップと　いうのです▼
+グッズを　しまう　グッズケースは
+プレゼントとして　さしあげます▼</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-24T14:10:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-24T13:56:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+●データコンバート時
+・続けてowner_demo_swan_02d</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-24T13:57:40" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8000ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c04r0201_owner_demo_swan_02d">
+		<LanguageCell
+			Language="JPN">
+			<Text>そうだ！　あなたに　さしあげる
+グッズケースは　コレにしよう！▼
+かつての　スーパースターが
+つかっていた　グッズと▽
+おなじものが　はいっている▽
+グッズケース　です！▼</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-24T13:58:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-24T13:56:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そうだ！　あなたに　さしあげる
+グッズケースは　コレにしよう！▼
+かつての　スーパースターが
+使っていた　グッズと▽
+同じものが　入っている▽
+グッズケース　です！▼</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-24T14:10:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-24T13:56:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+●データコンバート時
+・メッセージ表示後
+　グッズケース入手処理
+・続けてowner_demo_swan_03a</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-24T13:58:11" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8000ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c04r0201_owner_demo_swan_03a">
+		<LanguageCell
+			Language="JPN">
+			<Text>あなたなら　きっと　しんせだいの
+スーパースターに　なれるでしょう！▼
+では　さっそく　ポケモンを
+きかざって　くださいませ！▼</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-24T13:58:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-24T13:56:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あなたなら　きっと　新世代の
+スーパースターに　なれるでしょう！▼
+では　さっそく　ポケモンを
+着飾って　くださいませ！▼</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-24T14:13:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-24T13:56:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+●データコンバート時
+・メッセージ表示後 ポケモン選択画面へ
+・ポケモンを選択したらドレスアップのみのアプリへ
+　owner_demo_03d
+・選択画面でキャンセルを押した時は
+　owner_demo_03c
+・ドレスアップできないときは
+　owner_demo_03a
+・ドレスアップ画面で何もつけずに終わったとき
+　owner_demo_03b</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-05-24T13:58:23" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8000ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
