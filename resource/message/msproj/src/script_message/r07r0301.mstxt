@@ -64,11 +64,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>りょうりを　している　ときは
-おしゃべりが　とまるからな[Ctrl2:LineFeed ]
+おしゃべりが　とまるからな▽
 わしも　らくちん　なんじゃよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:03:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -77,11 +77,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>料理を　している　ときは
-おしゃべりが　とまるからな[Ctrl2:LineFeed ]
+おしゃべりが　とまるからな▽
 わしも　らくちん　なんじゃよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:03:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -123,13 +123,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>わけえ　からってな
-つめてー　あめに　うたれとったら[Ctrl2:LineFeed ]
-カゼさんに　なっちまうぞー[Ctrl2:PageClear ]
+つめてー　あめに　うたれとったら▽
+カゼさんに　なっちまうぞー▼
 スープでも　のむかー？
 くちに　あうか　わからんがのー</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:05:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -138,13 +138,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>わけえ　からってな
-つめてー　雨に　うたれとったら[Ctrl2:LineFeed ]
-カゼさんに　なっちまうぞー[Ctrl2:PageClear ]
+つめてー　雨に　うたれとったら▽
+カゼさんに　なっちまうぞー▼
 スープでも　飲むかー？
 口に　合うか　わからんがのー</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:05:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -188,11 +188,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>それで　ええのじゃー
-わかい　うちは　えんりょなんか[Ctrl2:LineFeed ]
-するもんじゃ　ねえぞー[Ctrl2:PageClear ]</Text>
+わかい　うちは　えんりょなんか▽
+するもんじゃ　ねえぞー▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:08:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -201,11 +201,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>それで　ええのじゃー
-わかい　うちは　遠慮なんか[Ctrl2:LineFeed ]
-するもんじゃ　ねえぞー[Ctrl2:PageClear ]</Text>
+わかい　うちは　遠慮なんか▽
+するもんじゃ　ねえぞー▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:05:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -249,12 +249,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そう　いわんと　すこし　のめばええー[Ctrl2:PageClear ]
+			<Text>そう　いわんと　すこし　のめばええー▼
 ばあちゃんの　はなしに
-すこし　つきあって　くれんかのー[Ctrl2:PageClear ]</Text>
+すこし　つきあって　くれんかのー▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:08:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -262,12 +262,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そう　いわんと　すこし　飲めばええー[Ctrl2:PageClear ]
+			<Text>そう　いわんと　すこし　飲めばええー▼
 ばあちゃんの　話に
-すこし　つきあって　くれんかのー[Ctrl2:PageClear ]</Text>
+すこし　つきあって　くれんかのー▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:05:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -312,15 +312,15 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>イッシュちほう　にはなー
-こんな　らいうを　おこす[Ctrl2:LineFeed ]
-ボルトロス　って　なまえの[Ctrl2:LineFeed ]
-ポケモンさんが　おるんじゃよー[Ctrl2:PageClear ]
+こんな　らいうを　おこす▽
+ボルトロス　って　なまえの▽
+ポケモンさんが　おるんじゃよー▼
 このちほうを　ぐるぐる　とびまわって
-すんげー　かぜと　かみなりを[Ctrl2:LineFeed ]
-ごろんごろん　ならすんじゃー[Ctrl2:PageClear ]</Text>
+すんげー　かぜと　かみなりを▽
+ごろんごろん　ならすんじゃー▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:10:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -329,15 +329,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>イッシュ地方　にはなー
-こんな　雷雨を　起こす[Ctrl2:LineFeed ]
-ボルトロス　って　名前の[Ctrl2:LineFeed ]
-ポケモンさんが　おるんじゃよー[Ctrl2:PageClear ]
+こんな　雷雨を　起こす▽
+ボルトロス　って　名前の▽
+ポケモンさんが　おるんじゃよー▼
 この地方を　ぐるぐる　飛びまわって
-すんげー　風と　カミナリを[Ctrl2:LineFeed ]
-ごろんごろん　鳴らすんじゃー[Ctrl2:PageClear ]</Text>
+すんげー　風と　カミナリを▽
+ごろんごろん　鳴らすんじゃー▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:06:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -379,15 +379,15 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>イッシュちほう　にはなー
-こんな　おおあらしを　おこす[Ctrl2:LineFeed ]
-トルネロス　って　なまえの[Ctrl2:LineFeed ]
-ポケモンさんが　おるんじゃよー[Ctrl2:PageClear ]
+こんな　おおあらしを　おこす▽
+トルネロス　って　なまえの▽
+ポケモンさんが　おるんじゃよー▼
 このちほうを　ぐるぐる　とびまわって
-すんげー　かぜと　あめを[Ctrl2:LineFeed ]
-ざんざか　ふらしているんじゃー[Ctrl2:PageClear ]</Text>
+すんげー　かぜと　あめを▽
+ざんざか　ふらしているんじゃー▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:10:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -396,15 +396,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>イッシュ地方　にはなー
-こんな　おおあらしを　起こす[Ctrl2:LineFeed ]
-トルネロス　って　名前の[Ctrl2:LineFeed ]
-ポケモンさんが　おるんじゃよー[Ctrl2:PageClear ]
+こんな　おおあらしを　起こす▽
+トルネロス　って　名前の▽
+ポケモンさんが　おるんじゃよー▼
 この地方を　ぐるぐる　飛びまわって
-すんげー　風と　雨を[Ctrl2:LineFeed ]
-ざんざか　ふらしているんじゃー[Ctrl2:PageClear ]</Text>
+すんげー　風と　雨を▽
+ざんざか　ふらしているんじゃー▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:06:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -446,10 +446,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ほれ　のんでみなさいー
-あったまるぞー[Ctrl2:PageClear ]</Text>
+あったまるぞー▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:08:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -458,10 +458,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ほれ　飲んでみなさいー
-あったまるぞー[Ctrl2:PageClear ]</Text>
+温まるぞー▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:06:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -503,10 +503,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>やさいが　たっぷりの　スープ！
-とっても　おいしい！[Ctrl2:PageClear ]</Text>
+とっても　おいしい！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:08:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -515,10 +515,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>野菜が　たっぷりの　スープ！
-とっても　おいしい！[Ctrl2:PageClear ]</Text>
+とっても　おいしい！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:08:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -559,11 +559,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>だいじに　そだてとった　さくもつが
-おおあめで　ダメに　なるんよー[Ctrl2:PageClear ]
-ほんとに　こまった　ポケモンじゃー[Ctrl2:PageClear ]</Text>
+おおあめで　ダメに　なるんよー▼
+ほんとに　こまった　ポケモンじゃー▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:09:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -572,11 +572,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>大事に　育てとった　作物が
-大雨で　ダメに　なるんよー[Ctrl2:PageClear ]
-ほんとに　こまった　ポケモンじゃー[Ctrl2:PageClear ]</Text>
+大雨で　ダメに　なるんよー▼
+ほんとに　こまった　ポケモンじゃー▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:06:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -617,12 +617,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>つかまえようと　おもってもなー
-あっちこっち　とびまわっとって[Ctrl2:LineFeed ]
-みつけたー　おもっても[Ctrl2:LineFeed ]
-すぐに　にげて　しまうんじゃー[Ctrl2:PageClear ]</Text>
+あっちこっち　とびまわっとって▽
+みつけたー　おもっても▽
+すぐに　にげて　しまうんじゃー▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:10:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -631,12 +631,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>捕まえようと　おもってもなー
-あっちこっち　飛びまわっとって[Ctrl2:LineFeed ]
-みつけたー　おもっても[Ctrl2:LineFeed ]
-すぐに　逃げて　しまうんじゃー[Ctrl2:PageClear ]</Text>
+あっちこっち　飛びまわっとって▽
+みつけたー　おもっても▽
+すぐに　逃げて　しまうんじゃー▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:06:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -677,14 +677,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>１にち　かけて　イッシュちほうを
-ぐるっと　１しゅう　するんじゃー[Ctrl2:PageClear ]
+ぐるっと　１しゅう　するんじゃー▼
 あさは　みなみの　とち
-よるは　きたの　とちに　いるんじゃと[Ctrl2:PageClear ]
+よるは　きたの　とちに　いるんじゃと▼
 このあたりは　ゆうがた　ごろに
 やってくるんじゃよー</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:09:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -693,14 +693,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>１日　かけて　イッシュ地方を
-ぐるっと　１周　するんじゃー[Ctrl2:PageClear ]
+ぐるっと　１周　するんじゃー▼
 朝は　南の　土地
-夜は　北の　土地に　いるんじゃと[Ctrl2:PageClear ]
+夜は　北の　土地に　いるんじゃと▼
 このあたりは　夕方　ごろに
 やってくるんじゃよー</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:09:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -744,12 +744,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>どこぞの　だれかが
-ポケモンさんを　こらしめたようじゃー[Ctrl2:PageClear ]
+ポケモンさんを　こらしめたようじゃー▼
 もしかしたら
 あの　ポケモンさんかのー？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:09:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -758,12 +758,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>どこぞの　だれかが
-ポケモンさんを　こらしめたようじゃー[Ctrl2:PageClear ]
+ポケモンさんを　こらしめたようじゃー▼
 もしかしたら
 あの　ポケモンさんかのー？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:09:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -811,17 +811,17 @@ msg_r07r0301_oldwoman_00
 		<LanguageCell
 			Language="JPN">
 			<Text>わしが　ムッキムキの　びだんし
-ばあさんも　ピッチピチの　むすめっこ[Ctrl2:LineFeed ]
-そんな　じだいの　はなしじゃ[Ctrl2:PageClear ]
+ばあさんも　ピッチピチの　むすめっこ▽
+そんな　じだいの　はなしじゃ▼
 すぐ　ちかくで　ある　ポケモンが
-らいうを　おこして　わるさする[Ctrl2:LineFeed ]
-ボルトロスを　こらしめたんじゃ[Ctrl2:PageClear ]
+らいうを　おこして　わるさする▽
+ボルトロスを　こらしめたんじゃ▼
 それから　３０ねんほどは
-ボルトロスも　おとなしかったんじゃが[Ctrl2:LineFeed ]
+ボルトロスも　おとなしかったんじゃが▽
 このあたりに　かくれておったんじゃな</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:10:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -830,17 +830,17 @@ msg_r07r0301_oldwoman_00
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>わしが　ムッキムキの　美男子
-ばあさんも　ピッチピチの　娘っこ[Ctrl2:LineFeed ]
-そんな　時代の　話じゃ[Ctrl2:PageClear ]
+ばあさんも　ピッチピチの　娘っこ▽
+そんな　時代の　話じゃ▼
 すぐ　近くで　ある　ポケモンが
-雷雨を　起こして　わるさする[Ctrl2:LineFeed ]
-ボルトロスを　こらしめたんじゃ[Ctrl2:PageClear ]
+雷雨を　起こして　わるさする▽
+ボルトロスを　こらしめたんじゃ▼
 それから　３０年ほどは
-ボルトロスも　おとなしかったんじゃが[Ctrl2:LineFeed ]
+ボルトロスも　おとなしかったんじゃが▽
 このあたりに　隠れておったんじゃな</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:10:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -883,17 +883,17 @@ msg_r07r0301_oldwoman_00
 		<LanguageCell
 			Language="JPN">
 			<Text>わしが　ムッキムキの　びだんし
-ばあさんも　ピッチピチの　むすめっこ[Ctrl2:LineFeed ]
-そんな　じだいの　はなしじゃ[Ctrl2:PageClear ]
+ばあさんも　ピッチピチの　むすめっこ▽
+そんな　じだいの　はなしじゃ▼
 すぐ　ちかくで　ある　ポケモンが
-おおあらしを　おこして　わるさする[Ctrl2:LineFeed ]
-トルネロスを　こらしめたんじゃ[Ctrl2:PageClear ]
+おおあらしを　おこして　わるさする▽
+トルネロスを　こらしめたんじゃ▼
 それから　３０ねんほどは
-トルネロスも　おとなしかったんじゃが[Ctrl2:LineFeed ]
+トルネロスも　おとなしかったんじゃが▽
 このあたりに　かくれておったんじゃな</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:11:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -902,17 +902,17 @@ msg_r07r0301_oldwoman_00
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>わしが　ムッキムキの　美男子
-ばあさんも　ピッチピチの　娘っこ[Ctrl2:LineFeed ]
-そんな　時代の　話じゃ[Ctrl2:PageClear ]
+ばあさんも　ピッチピチの　娘っこ▽
+そんな　時代の　話じゃ▼
 すぐ　近くで　ある　ポケモンが
-おおあらしを　起こして　わるさする[Ctrl2:LineFeed ]
-トルネロスを　こらしめたんじゃ[Ctrl2:PageClear ]
+おおあらしを　起こして　わるさする▽
+トルネロスを　こらしめたんじゃ▼
 それから　３０年ほどは
-トルネロスも　おとなしかったんじゃが[Ctrl2:LineFeed ]
+トルネロスも　おとなしかったんじゃが▽
 このあたりに　隠れておったんじゃな</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:11:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1011,13 +1011,13 @@ msg_r07r0301_oldwoman_00
 		<LanguageCell
 			Language="JPN">
 			<Text>わるさを　していた　ボルトロスを
-こらしめる　ポケモンが　いるんじゃ[Ctrl2:PageClear ]
+こらしめる　ポケモンが　いるんじゃ▼
 たしか…　１４ばんどうろ　あたりに
-その　ポケモンを　まつった　ほこらが[Ctrl2:LineFeed ]
+その　ポケモンを　まつった　ほこらが▽
 あったと　きいたことが　あるのう…</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:11:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1026,13 +1026,13 @@ msg_r07r0301_oldwoman_00
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>わるさを　していた　ボルトロスを
-こらしめる　ポケモンが　いるんじゃ[Ctrl2:PageClear ]
+こらしめる　ポケモンが　いるんじゃ▼
 確か…　１４番道路　あたりに
-その　ポケモンを　まつった　ほこらが[Ctrl2:LineFeed ]
+その　ポケモンを　まつった　ほこらが▽
 あったと　きいたことが　あるのう…</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:11:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1079,13 +1079,13 @@ msg_r07r0301_oldman_00
 		<LanguageCell
 			Language="JPN">
 			<Text>わるさを　していた　トルネロスを
-こらしめる　ポケモンが　いるんじゃ[Ctrl2:PageClear ]
+こらしめる　ポケモンが　いるんじゃ▼
 たしか…　１４ばんどうろ　あたりに
-その　ポケモンを　まつった　ほこらが[Ctrl2:LineFeed ]
+その　ポケモンを　まつった　ほこらが▽
 あったと　きいたことが　あるのう…</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:11:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1094,13 +1094,13 @@ msg_r07r0301_oldman_00
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>わるさを　していた　トルネロスを
-こらしめる　ポケモンが　いるんじゃ[Ctrl2:PageClear ]
+こらしめる　ポケモンが　いるんじゃ▼
 確か…　１４番道路　あたりに
-その　ポケモンを　まつった　ほこらが[Ctrl2:LineFeed ]
+その　ポケモンを　まつった　ほこらが▽
 あったと　きいたことが　あるのう…</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:11:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1146,12 +1146,12 @@ msg_r07r0301_oldman_00
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あら　あなたの　ポケモン…[Ctrl2:PageClear ]
+			<Text>あら　あなたの　ポケモン……▼
 つかれている　みたいね
-ひとやすみして　いきなさいな！[Ctrl2:PageClear ]</Text>
+ひとやすみして　いきなさいな！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:07:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1159,12 +1159,12 @@ msg_r07r0301_oldman_00
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あら　あなたの　ポケモン…[Ctrl2:PageClear ]
+			<Text>あら　あなたの　ポケモン……▼
 つかれている　みたいね
-ひと休みして　いきなさいな！[Ctrl2:PageClear ]</Text>
+ひと休みして　いきなさいな！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:07:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1320,14 +1320,14 @@ BOY1</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>でんこーけーじばん　って　しってる？[Ctrl2:PageClear ]
+			<Text>でんこーけーじばん　って　しってる？▼
 カミナリが　どどーんて
-おっこちてる　ところを[Ctrl2:PageClear ]
+おっこちてる　ところを▼
 でんこーけーじばんが
 おしえて　くれるんだよ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:07:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1335,14 +1335,14 @@ BOY1</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>電光掲示板って　知ってる？[Ctrl2:PageClear ]
+			<Text>電光掲示板って　知ってる？▼
 カミナリが　どどーんて
-落っこちてる　ところを[Ctrl2:PageClear ]
+落っこちてる　ところを▼
 電光掲示板が
 教えて　くれるんだよ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:06:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1384,14 +1384,14 @@ BOY1</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>でんこーけーじばん　って　しってる？[Ctrl2:PageClear ]
+			<Text>でんこーけーじばん　って　しってる？▼
 かぜが　びゅーびゅー
-ふいてる　ところを[Ctrl2:PageClear ]
+ふいてる　ところを▼
 でんこーけーじばんが
 おしえて　くれるんだよ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:07:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1399,14 +1399,14 @@ BOY1</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>電光掲示板って　知ってる？[Ctrl2:PageClear ]
+			<Text>電光掲示板って　知ってる？▼
 風が　びゅーびゅー
-吹いてる　ところを[Ctrl2:PageClear ]
+吹いてる　ところを▼
 電光掲示板が
 教えて　くれるんだよ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:06:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

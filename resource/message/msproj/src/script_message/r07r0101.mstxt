@@ -2,6 +2,102 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
+		Label="msg_r07r0101_hakase2_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アララギ『</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:02:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:02:58" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アララギ『</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:03:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:03:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・c06ジムバッジ取得前</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:02:30" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士（娘）</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:01:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r07r0101_hakase2_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アララギ『</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:03:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:03:03" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アララギ『</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:03:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:03:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・c06ジムバッジ取得後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:03:07" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士（娘）</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:02:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_r07r0101_policeman_01"
 		Style="Large">
 		<LanguageCell
