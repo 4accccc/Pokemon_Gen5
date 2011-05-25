@@ -45,6 +45,7 @@
 #include "print/gf_font.h"
 #include "system/gfl_use.h"
 
+#include "system/palanm.h"
 //外部公開
 #include "pkwd_count_graphic.h"
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_
@@ -391,6 +392,8 @@ struct _PKWD_COUNT_GRAPHIC_WORK
 	GRAPHIC_OBJ_WORK	obj;
 	GRAPHIC_G3D_WORK	g3d;
 	GFL_TCB				*p_vblank_task;
+	//
+	PALETTE_FADE_PTR	PalPtr;	// パレットアニメ用(vblank中の処理となるのでここで対応)
 };
 
 //=============================================================================
@@ -486,6 +489,9 @@ PKWD_COUNT_GRAPHIC_WORK * PKWD_COUNT_GRAPHIC_Init( int display_select, HEAPID he
 	GRAPHIC_G3D_Init( &p_wk->g3d, heapID );
 #endif //GRAPHIC_G3D_USE
 
+	// パレットアニメ
+	p_wk->PalPtr = PaletteFadeInit( heapID );
+
 	//VBlankTask登録
 	p_wk->p_vblank_task	= GFUser_VIntr_CreateTCB(Graphic_VBlankTask, p_wk, 0 );
 
@@ -513,6 +519,9 @@ void PKWD_COUNT_GRAPHIC_Exit( PKWD_COUNT_GRAPHIC_WORK *p_wk )
 #ifdef GRAPHIC_BG_USE
 	GRAPHIC_BG_Exit( &p_wk->bg );
 #endif //GRAPHIC_BG_USE
+	//
+	// パレット
+	PaletteFadeFree( p_wk->PalPtr );
 
 	//デフォルト色へ戻す
 	GFL_FONTSYS_SetDefaultColor();
@@ -586,6 +595,21 @@ GFL_CLUNIT * PKWD_COUNT_GRAPHIC_GetClunit( const PKWD_COUNT_GRAPHIC_WORK *cp_wk 
 	return NULL;
 #endif //GRAPHIC_OBJ_USE
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	パレットの取得
+ *
+ *	@param	const GRAPHIC_WORK *cp_wk		ワーク
+ *
+ *	@return	PALETTE_FADE_PTR
+ */
+//-----------------------------------------------------------------------------
+PALETTE_FADE_PTR PKWD_COUNT_GRAPHIC_GetPalFadePtr( const PKWD_COUNT_GRAPHIC_WORK *cp_wk )
+{
+	return( cp_wk->PalPtr );
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief	G3D_CAMERAの取得
@@ -625,7 +649,10 @@ static void Graphic_VBlankTask( GFL_TCB *p_tcb, void *p_work )
 #ifdef GRAPHIC_OBJ_USE
 	GRAPHIC_OBJ_VBlankFunction( &p_wk->obj );
 #endif //GRAPHIC_OBJ_USE
+	// パレットアニメ
+	PaletteFadeTrans( p_wk->PalPtr );
 }
+
 //=============================================================================
 /**
  *						BG

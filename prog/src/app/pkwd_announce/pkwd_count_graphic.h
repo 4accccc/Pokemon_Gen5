@@ -11,6 +11,8 @@
 #pragma once
 #include <gflib.h>
 
+#include "system/palanm.h"
+
 //=============================================================================
 /**
  *          定数宣言
@@ -64,4 +66,7 @@ extern GFL_CLUNIT * PKWD_COUNT_GRAPHIC_GetClunit( const PKWD_COUNT_GRAPHIC_WORK 
 ///情報取得 内部で設定したカメラを返します  3D使わない場合NULL
 //=====================================
 extern GFL_G3D_CAMERA * PKWD_COUNT_GRAPHIC_GetCamera( const PKWD_COUNT_GRAPHIC_WORK *cp_wk );
+
+// パレットアニメ用
+extern PALETTE_FADE_PTR PKWD_COUNT_GRAPHIC_GetPalFadePtr( const PKWD_COUNT_GRAPHIC_WORK *cp_wk );
 
