@@ -167,6 +167,15 @@
 #define WK_SCENE_R20                     16555 /* 0x40ab 20番道路：POS制御ワーク */
 #define WK_SCENE_C13                     16556 /* 0x40ac C13：ジムリーダーとの出会い用ワーク */
 #define WK_SCENE_C13GYM0102              16557 /* 0x40ad C13GYM0102：ジムリーダーとの出会い用ワーク */
+#define WK_SCENE_C03P15                  16558 /* 0x40ae C13R15：船着場到着イベント管理ワーク */
+#define WK_SCENE_H01R0201                16559 /* 0x40af H01R0201：スカイアローブリッジストッパー（クリアまで） */
+#define WK_SCENE_C03                     16560 /* 0x40b0 C03：マコモと出会うイベント管理ワーク */
+#define WK_SCENE_C03GYM_STOPPER          16561 /* 0x40b1 C03ジムまわり：下水道クリアまでストッパー管理ワーク */
+#define WK_SCENE_C03P17                  16562 /* 0x40b2 C03P17：下水道まわりイベント管理ワーク */
+#define WK_SCENE_D11R0101                16563 /* 0x40b3 D11R0101：下水道連れ歩き管理ワーク */
+#define WK_SCENE_C03P01                  16564 /* 0x40b4 C03P01：アクロマとの出会い用ワーク */
+#define WK_SCENE_R04_POKE                16565 /* 0x40b5 R04：イワパレスイベント管理ワーク */
+#define WK_SCENE_R04_SWBOSS              16566 /* 0x40b6 R04：アクロマイベント管理ワーク */
 
 #define WK_SCENE_AREA_END                16655 /* 0x410f  */
 
@@ -195,7 +204,7 @@
 #define WK_OTHER_SPORTS_RND_TR4          16673 /* 0x4121 リトルコートのランダム配置トレーナー２人目 */
 #define WK_OTHER_SPORTS_RND_TR5          16674 /* 0x4122 リトルコートのランダム配置トレーナー３人目 */
 #define WK_OTHER_WHEEL_SEASON            16675 /* 0x4123 観覧車イベント：季節を保存しておくワーク。 C04P01のゾーンチェンジで季節を取得し、前回から季節が変化していたら、観覧車トレーナー用のタイムフラグをリセットする */
-		/* not used 16676(0x4124) */
+#define WK_OTHER_D11R0101_PAIR           16676 /* 0x4124 下水道：アイリス連れ歩きセリフ */
 		/* not used 16677(0x4125) */
 		/* not used 16678(0x4126) */
 		/* not used 16679(0x4127) */

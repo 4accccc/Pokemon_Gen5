@@ -293,7 +293,7 @@
 #define FE_C12R0402_ITEMGET_01             277 /* 0x0115 ヒオウギシティ：アイテム入手フラグ */
 #define FE_T06R0201_ITEMGET_01             278 /* 0x0116 サンギタウン：アイテム入手フラグ */
 #define FE_C13R0201_ITEMGET_01             279 /* 0x0117 C12R0201：アイテム入手フラグ */
-		/* not used   280(0x0118) */
+#define FE_D11R0101_PAIR_01                280 /* 0x0118 D11R0101：連れ歩き用フラグ（将来的に廃止） */
 		/* not used   281(0x0119) */
 		/* not used   282(0x011a) */
 		/* not used   283(0x011b) */
@@ -563,6 +563,18 @@
 #define FV_C12_SWRIVAL                     645 /* 0x0285 ヒオウギシティ・ライバル */
 #define FV_PC_MEDALOYAJI                   646 /* 0x0286 ポケセンのメダルおやじ */
 #define FV_D06R0101_PAIR                   647 /* 0x0287 電気穴の洞窟連れ歩き */
+#define FV_C03P15_SWRIVAL_01               648 /* 0x0288 ヒウンシティ：船着場ライバル */
+#define FV_H01R0201_STOPPER_01             649 /* 0x0289 スカイアローブリッジ：ストッパー */
+#define FV_C03_MACOMO_01                   650 /* 0x028a ヒウンシティ外周：マコモ */
+#define FV_C03_SWCHAMPION_01               651 /* 0x028b ヒウンシティ外周：アイリス */
+#define FV_C03P07_SUNGLASSES_01            652 /* 0x028c ヒウンシティジム前：ダンペイ */
+#define FV_C03P17_SWCHAMPION_01            653 /* 0x028d ヒウンシティ下水道前：アイリス */
+#define FV_C03P17_SWRIVAL_01               654 /* 0x028e ヒウンシティ下水道前：ライバル */
+#define FV_D11R0101_SWCHAMPION_01          655 /* 0x028f ヒウンシティ下水道：アイリスとプラズマ団 */
+#define FV_C03P01_SWBOSS_01                656 /* 0x0290 ヒウンシティセントラルエリア：アクロマ */
+#define FV_R04_BIGROCK_01                  657 /* 0x0291 4番道路：イワパレス擬態大きな岩 */
+#define FV_R04_SWBOSS_01                   658 /* 0x0292 4番道路：アクロマ */
+#define FV_C03P17_PILOT_01                 659 /* 0x0293 ヒウンシティ下水道前：パイロット */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 
