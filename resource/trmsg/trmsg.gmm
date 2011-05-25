@@ -15048,6 +15048,33 @@ può accadere ancora di tutto!</language>
 最後まで　気を抜くんじゃないぜ</language>
 	</row>
 
+	<row id="TRID_PILOT_08_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">わたしに　かてれば
+つぎは　ジムリーダー……▼
+そうおもうのは　ゆだんたいてき！
+まだまだ　きを　ぬくなよ！▼</language>
+		<language name="JPN_KANJI" width="216">わたしに　勝てれば
+次は　ジムリーダー……▼
+そう思っているなら　油断大敵
+まだまだ　気を抜くなよ！▼</language>
+	</row>
+
+	<row id="TRID_PILOT_08_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">まさか！？
+ゆだんなど　していなかったのに！</language>
+		<language name="JPN_KANJI" width="216">まさか！？
+油断など　していなかったのに！</language>
+	</row>
+
+	<row id="TRID_PILOT_08_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">ひこうきの　そうじゅうは
+ちゃくりくが　いちばん　むずかしい▽
+さいごまで　ゆだん　するなよ</language>
+		<language name="JPN_KANJI" width="216">飛行機の　操縦は
+着陸が　一番　難しい……▽
+最後まで　気を抜くんじゃないぜ</language>
+	</row>
+
 	<row id="TRID_LEADER6_02_TRMSG_FIGHT_FIRST_DAMAGE">
 		<language name="JPN" width="216">アナタが　どんな　トレーナーか
 ちょっと　ドキドキするわね</language>
@@ -18074,6 +18101,111 @@ può accadere ancora di tutto!</language>
 	</row>
 
 	<row id="TRID_BACKPACKERW_16_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">せんとうご
+テストメッセージ</language>
+		<language name="JPN_KANJI" width="216">戦闘後
+テストメッセージ</language>
+	</row>
+
+	<row id="TRID_HEADS_09_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">せんとうまえ
+テストメッセージ</language>
+		<language name="JPN_KANJI" width="216">戦闘前
+仮メッセージ</language>
+	</row>
+
+	<row id="TRID_HEADS_09_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">せんとうまけ
+テストメッセージ</language>
+		<language name="JPN_KANJI" width="216">戦闘負け
+テストメッセージ</language>
+	</row>
+
+	<row id="TRID_HEADS_09_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">せんとうご
+テストメッセージ</language>
+		<language name="JPN_KANJI" width="216">戦闘後
+テストメッセージ</language>
+	</row>
+
+	<row id="TRID_HEADS_10_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">せんとうまえ
+テストメッセージ</language>
+		<language name="JPN_KANJI" width="216">戦闘前
+仮メッセージ</language>
+	</row>
+
+	<row id="TRID_HEADS_10_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">せんとうまけ
+テストメッセージ</language>
+		<language name="JPN_KANJI" width="216">戦闘負け
+テストメッセージ</language>
+	</row>
+
+	<row id="TRID_HEADS_10_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">せんとうご
+テストメッセージ</language>
+		<language name="JPN_KANJI" width="216">戦闘後
+テストメッセージ</language>
+	</row>
+
+	<row id="TRID_BADRIDER_08_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">せんとうまえ
+テストメッセージ</language>
+		<language name="JPN_KANJI" width="216">戦闘前
+仮メッセージ</language>
+	</row>
+
+	<row id="TRID_BADRIDER_08_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">せんとうまけ
+テストメッセージ</language>
+		<language name="JPN_KANJI" width="216">戦闘負け
+テストメッセージ</language>
+	</row>
+
+	<row id="TRID_BADRIDER_08_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">せんとうご
+テストメッセージ</language>
+		<language name="JPN_KANJI" width="216">戦闘後
+テストメッセージ</language>
+	</row>
+
+	<row id="TRID_BADRIDER_09_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">せんとうまえ
+テストメッセージ</language>
+		<language name="JPN_KANJI" width="216">戦闘前
+仮メッセージ</language>
+	</row>
+
+	<row id="TRID_BADRIDER_09_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">せんとうまけ
+テストメッセージ</language>
+		<language name="JPN_KANJI" width="216">戦闘負け
+テストメッセージ</language>
+	</row>
+
+	<row id="TRID_BADRIDER_09_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">せんとうご
+テストメッセージ</language>
+		<language name="JPN_KANJI" width="216">戦闘後
+テストメッセージ</language>
+	</row>
+
+	<row id="TRID_BADTEAM_03_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">せんとうまえ
+テストメッセージ</language>
+		<language name="JPN_KANJI" width="216">戦闘前
+仮メッセージ</language>
+	</row>
+
+	<row id="TRID_BADTEAM_03_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">せんとうまけ
+テストメッセージ</language>
+		<language name="JPN_KANJI" width="216">戦闘負け
+テストメッセージ</language>
+	</row>
+
+	<row id="TRID_BADTEAM_03_TRMSG_FIGHT_AFTER">
 		<language name="JPN" width="216">せんとうご
 テストメッセージ</language>
 		<language name="JPN_KANJI" width="216">戦闘後
