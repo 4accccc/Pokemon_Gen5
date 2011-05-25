@@ -27,7 +27,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
+			<Comment>♀
 ・pos（GRIDX=100~104、GRIDZ=301）で発動
 ・画面左上方向から博士（娘）登場
 ・博士（娘）、GRIDX=86、GRIDZ=294に到達すると
@@ -36,7 +36,7 @@
 ・0＝主人公名前</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T08:16:59" />
+				Time="2011-05-25T03:59:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -45,6 +45,88 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-05-24T08:16:39" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c06_hakase2_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T04:08:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T04:08:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T04:08:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T04:08:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T03:59:06" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>HAKASE2
+アララギ博士娘</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T03:58:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c06_swleader6_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T04:08:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T04:08:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T04:08:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T04:08:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T03:59:05" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ジムリーダー
+フウロ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T03:59:00" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -1125,14 +1207,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>フウロさん▼
-かもつきの　そうじゅうを　おえて
-どこに　いっちゃったんですかね▼
-ひょっとして　７ばんどうろの
-タワーオブヘブン　っすか？</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T04:07:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1140,14 +1218,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>フウロさん▼
-貨物機の　操縦を　終えて
-どこに　行っちゃったんですかね▼
-ひょっとして　７番道路の
-タワーオブヘブン　っすか？</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T04:07:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1155,19 +1229,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・ジムストッパー
-・r07r0105で鐘を鳴らすと削除</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T04:07:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>DANPEI</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T04:07:14" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1622,12 +1694,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ひこうき！　この　フォルム！
-まさに　とぶための　デザイン！[Ctrl2:PageClear ]
+まさに　とぶための　デザイン！▼
 そして　とぶための　メカニックも
 いっさいの　むだが　ないんです！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T04:03:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1636,12 +1708,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>飛行機！　この　フォルム！
-まさに　飛ぶための　デザイン！[Ctrl2:PageClear ]
+まさに　飛ぶための　デザイン！▼
 そして　飛ぶための　メカニックも
 いっさいの　無駄が　ないんです！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T04:03:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1675,12 +1747,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>この　フキヨセの　くうこうから
-とびたつのは　かもつき　ばかりさ[Ctrl2:PageClear ]
+とびたつのは　かもつき　ばかりさ▼
 トレーナーが　とびたいときは
 そらをとぶ　って　わざがあるもんね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T04:03:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1689,12 +1761,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>この　フキヨセの　空港から
-飛び立つのは　貨物機　ばかりさ[Ctrl2:PageClear ]
+飛び立つのは　貨物機　ばかりさ▼
 トレーナーが　飛びたいときは
 そらをとぶ　って　技があるもんね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T04:03:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1702,10 +1774,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂</Comment>
+			<Comment>♂
+・メッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T04:04:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1728,13 +1801,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>フウロさんの　おじいちゃん
-でんせつの　ひこうきのり　だったの[Ctrl2:PageClear ]
+でんせつの　ひこうきのり　だったの▼
 あっ　フウロさん　てのは
-このまちの　ジムリーダー！[Ctrl2:LineFeed ]
+このまちの　ジムリーダー！▽
 やさしい　おねえさん　なんだから！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T04:03:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1743,13 +1816,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>フウロさんの　おじいちゃん
-伝説の　飛行機乗り　だったの[Ctrl2:PageClear ]
+伝説の　飛行機乗り　だったの▼
 あっ　フウロさん　てのは
-この街の　ジムリーダー！[Ctrl2:LineFeed ]
+この街の　ジムリーダー！▽
 優しい　お姉さん　なんだから！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T04:04:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1783,13 +1856,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンと　ひと　とで
-あれはてた　とちを　きりひらき[Ctrl2:LineFeed ]
-みんなが　くらせるように　したの[Ctrl2:PageClear ]
+あれはてた　とちを　きりひらき▽
+みんなが　くらせるように　したの▼
 きっと　これからも
 その　せいしんは　かわらないわ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T04:03:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1798,13 +1871,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポケモンと　人とで
-荒れ果てた　土地を　切り開き[Ctrl2:LineFeed ]
-みんなが　暮らせるように　したの[Ctrl2:PageClear ]
+荒れ果てた　土地を　切り開き▽
+みんなが　暮らせるように　したの▼
 きっと　これからも
 その　精神は　変わらないわ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T04:03:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1838,12 +1911,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>きをつけるなら　かっそうろで
-あそんでも　かまわんぞ[Ctrl2:PageClear ]
+あそんでも　かまわんぞ▼
 うちの　かもつきが　とぶのは
 １にちに　１びん　ぐらいだしな</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1852,12 +1925,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>気をつけるなら　滑走路で
-遊んでも　かまわんぞ[Ctrl2:PageClear ]
+遊んでも　かまわんぞ▼
 うちの　貨物機が　飛ぶのは
 １日に　１便　ぐらいだしな</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T04:03:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1916,10 +1989,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀</Comment>
+			<Comment>♀
+・swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-05-25T03:59:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
