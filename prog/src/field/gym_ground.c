@@ -109,10 +109,12 @@ typedef struct GYM_GROUND_TMP_tag
   HEAPID          heapID;       // ヒープID
 
   FLD_EXP_OBJ_CNT_PTR exp_obj;  // 拡張3Dモデルコントローラ
+  FIELDMAP_WORK       *p_fieldmap;  // フィールドマップ
   FIELD_PLAYER        *player;  // 自機
 
   BOOL            lift_arrival[ LIFT_NUM ]; // リフト到達フラグ
   BOOL            first_lift;   // 最初のリフトに到達したか
+  BOOL            fog_off;      // フォグをOFFにするフラグ
 
   // 出口リフト用
   const VecFx32 *watch;
@@ -374,6 +376,7 @@ void GYM_GROUND_Setup(FIELDMAP_WORK *p_fieldmap)
       FIELDMAP_GetHeapID(p_fieldmap), sizeof(GYM_GROUND_TMP));
 
   p_wk->heapID    = HEAPID_FIELDMAP;
+  p_wk->p_fieldmap= p_fieldmap;
   p_wk->exp_obj   = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
   p_wk->player    = FIELDMAP_GetFieldPlayer( p_fieldmap );
 
@@ -453,6 +456,23 @@ void GYM_GROUND_Move(FIELDMAP_WORK *p_fieldmap)
     }
   }
 
+  // ギミックのセットアップでフォグをOFFにしても、
+  // その後の処理で、ONにされてしまうため、
+  // ここでフォグをOFFにする
+  if( p_wk->fog_off == TRUE )
+  {
+    FIELD_FOG_WORK *fog = FIELDMAP_GetFieldFog( p_wk->p_fieldmap );
+    if( FIELD_FOG_GetFlag( fog ) == TRUE )
+    {
+      FIELD_FOG_SetFlag( fog, FALSE );
+    }
+    else
+    {
+      p_wk->fog_off = FALSE;
+      LIFT_AllArrival( p_wk );
+    }
+  }
+
 #ifdef PM_DEBUG
   // ベルトコンベアイベント起動
   if (GFL_UI_KEY_GetCont() & PAD_BUTTON_L){
@@ -460,10 +480,13 @@ void GYM_GROUND_Move(FIELDMAP_WORK *p_fieldmap)
       OS_Printf( "HeapFreeSize %x \n",GFL_HEAP_GetHeapFreeSize(p_wk->heapID) );
     }
     if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
-      GMEVENT *event;
-      GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
-      event = GYM_GROUND_CheckBeltEvent(gsys);
-      GAMESYSTEM_SetEvent(gsys, event);
+      // ヤーコンリフト以外到着
+      u8 i;
+      for( i=0; i<LIFT_NUM; i++ )
+      {
+        p_wk->lift_arrival[i] = TRUE;
+      }
+      p_wk->lift_arrival[10] = FALSE;
     }
     // リフトリセット
     if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
@@ -1215,11 +1238,22 @@ static void LIFT_Init( GYM_GROUND_TMP *p_wk )
       // アニメ再生
       {
         EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, GYM_GROUND_UNIT_IDX, obj_idx, 0 );
+        FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, GYM_GROUND_UNIT_IDX, obj_idx, 0, TRUE );
         FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE );  // アニメ再生設定
+      }
+
+      // 最初のリフトチェック
+      if( i == 30 )
+      {
+        p_wk->first_lift = TRUE;
       }
     }
   }
   
+  // 全リフト到着チェック
+  // フォグをOFF
+  if( LIFT_CheckAllAriival( p_wk ) == TRUE ){ p_wk->fog_off = TRUE; }
+  else                                      { p_wk->fog_off = FALSE; }
 }
 
 //----------------------------------------------------------------------------
@@ -1252,6 +1286,7 @@ static void LIFT_SetAriivalFlag( GYM_GROUND_TMP *p_wk, const u8 lift_id )
     // アニメ再生
     {
       EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, GYM_GROUND_UNIT_IDX, obj_idx, 0 );
+      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, GYM_GROUND_UNIT_IDX, obj_idx, 0, TRUE );
       FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE );  // アニメ再生設定
     }
   }
@@ -1265,6 +1300,14 @@ static void LIFT_SetAriivalFlag( GYM_GROUND_TMP *p_wk, const u8 lift_id )
 
   // SE再生
   PMSND_PlaySE( GYM_GROUND_SE_SWITCH );
+
+  // ※セーブ
+  {
+    GAMESYS_WORK* p_gsys = FIELDMAP_GetGameSysWork( p_wk->p_fieldmap );
+    GAMEDATA*     p_gdata = GAMESYSTEM_GetGameData( p_gsys );
+    GIMMICKWORK   *p_gmkwk = GAMEDATA_GetGimmickWork(p_gdata);
+    SAVE_SetLiftArrival( p_gmkwk, p_wk->lift_arrival );
+  }
 
   ICHI_Printf("リフトID %dの到着フラグセット\n", lift_id);
 }
@@ -1303,6 +1346,26 @@ static BOOL LIFT_CheckAllAriival( GYM_GROUND_TMP *p_wk )
 //-----------------------------------------------------------------------------
 static void LIFT_AllArrival( GYM_GROUND_TMP *p_wk )
 {
+
+  // フォグをOFFにする
+  {
+    FIELD_FOG_WORK *fog = FIELDMAP_GetFieldFog( p_wk->p_fieldmap );
+    FIELD_FOG_SetFlag( fog, FALSE );
+  }
+
+  // ライトアップも消す
+  {
+    u8 i;
+    for( i=0; i<LIFT_NUM; i++ )
+    {
+      u16 obj_idx = OBJ_LIFT_LIGHTUP_1 + i;    // OBJインデックス
+
+      // 非表示
+      FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GYM_GROUND_UNIT_IDX, obj_idx, TRUE );
+      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, GYM_GROUND_UNIT_IDX, obj_idx, 0, FALSE );
+    }
+  }
+
   ICHI_Printf("全リフト到着した\n");
 }
 
@@ -1485,6 +1548,19 @@ static void LIFT_EVENT_SetPos( LIFT_EVENT_WORK *p_wk )
   // 対象リフト高さ更新
   {
     int obj_idx = OBJ_LIFT_1 + p_wk->lift_id;
+    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(exp_obj, GYM_GROUND_UNIT_IDX, obj_idx);
+    status->trans.y = p_wk->now_height;
+  }
+
+  // 対象フォグ高さ更新
+  {
+    const int obj_tbl[LIFT_MOVE_NUM] = {
+      OBJ_LIFT_LIGHTUP_14,
+      OBJ_LIFT_LIGHTUP_17,
+      OBJ_LIFT_LIGHTUP_32,
+      OBJ_LIFT_LIGHTUP_35,
+    };
+    int obj_idx = obj_tbl[ p_wk->lift_id ];
     GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(exp_obj, GYM_GROUND_UNIT_IDX, obj_idx);
     status->trans.y = p_wk->now_height;
   }
