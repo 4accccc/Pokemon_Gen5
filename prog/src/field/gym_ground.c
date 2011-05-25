@@ -490,16 +490,14 @@ void GYM_GROUND_Move(FIELDMAP_WORK *p_fieldmap)
     }
     // リフトリセット
     if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
-      u8 i;
       GFL_STD_MemClear( p_wk->lift_arrival, (sizeof(BOOL)*LIFT_NUM) );
-      for( i=0; i<OBJ_BELT_NUM; i++ )
       {
-        u16 obj_idx = i;    // OBJインデックス
-        // アニメ再生
-        EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, GYM_GROUND_UNIT_IDX, obj_idx, 0 );
-        FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, TRUE );  // アニメ再生設定
-        // 表示
-        FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GYM_GROUND_UNIT_IDX, obj_idx, FALSE );
+        GAMESYS_WORK* p_gsys = FIELDMAP_GetGameSysWork( p_wk->p_fieldmap );
+        GAMEDATA*     p_gdata = GAMESYSTEM_GetGameData( p_gsys );
+        GIMMICKWORK   *p_gmkwk = GAMEDATA_GetGimmickWork(p_gdata);
+        u16 *ex_wk;
+        ex_wk = GIMMICKWORK_GetExWork( p_gmkwk, FLD_GIMMICK_GYM_GROUND );
+        GFL_STD_MemClear( ex_wk, (sizeof(u8)*5) );
       }
     }
   }
@@ -745,9 +743,9 @@ static void EXPOBJ_ObjSet( GYM_GROUND_TMP *p_wk )
       GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( p_wk->exp_obj, GYM_GROUND_UNIT_IDX, obj_idx );
 
       // 座標
-      status->trans.x = base_x + (base_w * (i%6));
+      status->trans.x = base_x + (base_w * (i%6)) + GRID_HALF_SIZE;
       status->trans.y = 0;
-      status->trans.z = base_z + (base_h * (i/6));
+      status->trans.z = base_z + (base_h * (i/6)) + GRID_HALF_SIZE;
 
       // カリングする
       FLD_EXP_OBJ_SetCulling( p_wk->exp_obj, GYM_GROUND_UNIT_IDX, obj_idx, TRUE );
