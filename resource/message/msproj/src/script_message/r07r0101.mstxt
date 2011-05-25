@@ -6,10 +6,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アララギ『</Text>
+			<Text>アララギ『はーい!
+フウロちゃんは　どうだった？▽
+あら？　まだ　かててないのね▼
+だとしたら　ひこうきが　とぶまで
+ばっちり　フィールドワークね！▼
+そうだ！　きみ
+これを　つかってよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T09:02:58" />
+				Time="2011-05-25T09:37:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -29,10 +35,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・c06ジムバッジ取得前</Comment>
+・c06ジムバッジ取得前
+・アイテム入手処理
+　No381「わざマシン５４」（みねうち）</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T09:02:30" />
+				Time="2011-05-25T09:38:27" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -54,10 +62,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アララギ『</Text>
+			<Text>アララギ『みねうちの　わざは
+てかげんを　することで　あいての▽
+たいりょくを　のこせるの！▼
+つまり　ポケモンを　つかまえるのに
+やくだつ　わざ　なのね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T09:03:03" />
+				Time="2011-05-25T09:39:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -77,10 +89,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・c06ジムバッジ取得後</Comment>
+・c06ジムバッジ取得前
+・アイテム入手後</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T09:03:07" />
+				Time="2011-05-25T09:38:40" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -92,6 +105,199 @@
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r07r0101_hakase2_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>アララギ『</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:29:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:29:53" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アララギ『</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:29:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:29:53" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:29:56" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士（娘）</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:29:53" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r07r0101_hakase2_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アララギ『はーい!
+フウロちゃんは　どうだった？▽
+あら！　ジェットバッジ　じゃない！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:40:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:15:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アララギ『</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:15:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:15:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・c06ジムバッジ取得後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:15:24" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士（娘）</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:15:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r07r0101_hakase2_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アララギ『</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:29:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:29:34" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アララギ『</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:29:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:29:34" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・アイテム入手</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:29:27" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士（娘）</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:29:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r07r0101_hakase2_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>それじゃ　フキヨセで　まってるわね！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:28:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:15:34" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>それじゃ　フキヨセで　まってるわね！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:28:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:15:34" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・メッセージ表示後、r07方面へ移動
+　画面外に消えると主人公操作可能に</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:29:07" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士（娘）</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T09:15:34" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
