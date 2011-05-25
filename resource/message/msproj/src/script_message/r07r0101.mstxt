@@ -23,10 +23,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アララギ『</Text>
+			<Text>アララギ『はーい!
+フウロちゃんは　どうだった？▽
+あら？　まだ　かててないのね▼
+だとしたら　ひこうきが　とぶまで
+ばっちり　フィールドワークね！▼
+そうだ！　きみ
+これを　つかってよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T09:03:03" />
+				Time="2011-05-25T11:13:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -37,10 +43,10 @@
 			<Comment>♀
 ・c06ジムバッジ取得前
 ・アイテム入手処理
-　No381「わざマシン５４」（みねうち）</Comment>
+　No000「しあわせタマゴ」</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T09:38:27" />
+				Time="2011-05-25T11:03:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -62,14 +68,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アララギ『みねうちの　わざは
-てかげんを　することで　あいての▽
-たいりょくを　のこせるの！▼
-つまり　ポケモンを　つかまえるのに
-やくだつ　わざ　なのね</Text>
+			<Text>アララギ『その　しあわせタマゴを
+ポケモンに　もたせておくと▼
+たたかいで　もらえる
+けいけんちが　ちょっぴり　ふえるの！▼
+ポケモンが　たくましくなった　ほうが
+ずかんの　ページも　うめやすいよね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T09:39:33" />
+				Time="2011-05-25T11:04:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -77,10 +84,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アララギ『</Text>
+			<Text>アララギ『その　しあわせタマゴを
+ポケモンに　持たせておくと▼
+戦いで　もらえる
+経験値が　ちょっぴり　増えるの！▼
+ポケモンが　たくましくなった　ほうが
+図鑑の　ページも　埋めやすいよね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T09:03:03" />
+				Time="2011-05-25T11:04:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -90,10 +102,11 @@
 			Language="JPN">
 			<Comment>♀
 ・c06ジムバッジ取得前
-・アイテム入手後</Comment>
+・アイテム入手後
+・続けて</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T09:38:40" />
+				Time="2011-05-25T11:06:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -111,13 +124,20 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_r07r0101_hakase2_03">
+		Label="msg_r07r0101_hakase2_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アララギ『</Text>
+			<Text>アララギ『タワーオブヘブン……
+これじたいが　おおきな　おはか……▼
+もともと　ゴーストタイプや
+エスパータイプが　おおいところに▽
+この　たてものが　つくられたのか▼
+それとも　たてられたからこそ
+そうした　ポケモンが　つどうのかしら</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T09:29:53" />
+				Time="2011-05-25T11:14:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -125,10 +145,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アララギ『</Text>
+			<Text>アララギ『タワーオブヘブン……
+おおきな　ぼひょう……▼
+もともと　ゴーストタイプや
+エスパータイプが　おおいところに▽
+この　たてものが　つくられたのか▼
+それとも　たてられたからこそ
+そうした　ポケモンが　つどうのかしら</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T09:29:53" />
+				Time="2011-05-25T11:14:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -136,10 +162,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀</Comment>
+			<Comment>♀
+・c06ジムバッジ入手まで繰り返し
+・c06ジムバッジ入手でここから削除</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T09:29:56" />
+				Time="2011-05-25T11:06:54" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -161,12 +189,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アララギ『はーい!
-フウロちゃんは　どうだった？▽
-あら！　ジェットバッジ　じゃない！</Text>
+			<Text>アララギ『タワーオブヘブン……
+これじたいが　おおきな　おはか……▼
+もともと　ゴーストタイプや
+エスパータイプが　おおいところに▽
+この　たてものが　つくられたのか▼
+それとも　たてられたからこそ
+そうした　ポケモンが　つどうのかしら</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T09:40:11" />
+				Time="2011-05-25T11:14:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -174,10 +206,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アララギ『</Text>
+			<Text>アララギ『タワーオブヘブン……
+おおきな　ぼひょう……▼
+もともと　ゴーストタイプや
+エスパータイプが　おおいところに▽
+この　たてものが　つくられたのか▼
+それとも　たてられたからこそ
+そうした　ポケモンが　つどうのかしら</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T09:15:24" />
+				Time="2011-05-25T11:14:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -186,10 +224,14 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・c06ジムバッジ取得後</Comment>
+・c06ジムバッジ入手まで
+　ここで会話しなかった場合
+・c06ジムバッジ取得後
+・アイテム入手処理
+　No000「しあわせタマゴ」</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T09:15:24" />
+				Time="2011-05-25T11:11:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -211,10 +253,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アララギ『</Text>
+			<Text>アララギ『はーい!
+フウロちゃんは　どうだった？▼
+あら！　ジェットバッジ　じゃない！
+それじゃ　ひこうきが　とぶのね▼
+よびに　きてくれて　ありがとう！
+これは　おれい！▽
+きみ　つかってみてよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T09:29:34" />
+				Time="2011-05-25T11:14:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -222,10 +270,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アララギ『</Text>
+			<Text>アララギ『はーい!
+フウロちゃんは　どうだった？▼
+あら！　ジェットバッジ　じゃない！
+それじゃ　ひこうきが　とぶのね▼
+よびに　きてくれて　ありがとう！
+これは　おれい！▽
+きみ　つかってみてよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T09:29:34" />
+				Time="2011-05-25T11:14:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -234,10 +288,14 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・アイテム入手</Comment>
+・c06ジムバッジ入手まで
+　ここで会話しなかった場合
+・c06ジムバッジ取得後
+・アイテム入手処理
+　No000「しあわせタマゴ」</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T09:29:27" />
+				Time="2011-05-25T11:14:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -259,10 +317,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>それじゃ　フキヨセで　まってるわね！▼</Text>
+			<Text>アララギ『その　しあわせタマゴを
+ポケモンに　もたせておくと▼
+たたかいで　もらえる
+けいけんちが　ちょっぴり　ふえるの！▼
+ポケモンが　たくましくなった　ほうが
+ずかんの　ページも　うめやすいよね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T09:28:32" />
+				Time="2011-05-25T11:14:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -270,10 +333,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>それじゃ　フキヨセで　まってるわね！▼</Text>
+			<Text>アララギ『その　しあわせタマゴを
+ポケモンに　持たせておくと▼
+戦いで　もらえる
+経験値が　ちょっぴり　増えるの！▼
+ポケモンが　たくましくなった　ほうが
+図鑑の　ページも　埋めやすいよね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T09:28:35" />
+				Time="2011-05-25T11:14:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -282,11 +350,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・メッセージ表示後、r07方面へ移動
-　画面外に消えると主人公操作可能に</Comment>
+・アイテム入手</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T09:29:07" />
+				Time="2011-05-25T11:14:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -294,6 +361,55 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-05-25T09:15:34" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r07r0101_hakase2_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>じゃ　フキヨセで　まってるわね！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T11:14:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T11:14:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>じゃ　フキヨセで　まってるわね！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T11:14:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T11:14:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・メッセージ表示後、r07方面へ移動
+　画面外に消えると主人公操作可能に</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T11:14:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士（娘）</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-25T11:14:31" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
