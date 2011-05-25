@@ -185,7 +185,8 @@ SUBDIRS	=	wmi \
 			mobiclip \
 			medal_info \
 			pkwd_announce \
-			animal_trail
+			animal_trail \
+			pokewood_cutin
 
 
 include $(RESOURCE_MACRO)
