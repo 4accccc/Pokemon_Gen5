@@ -111,7 +111,6 @@ typedef struct GYM_GROUND_TMP_tag
   FLD_EXP_OBJ_CNT_PTR exp_obj;  // 拡張3Dモデルコントローラ
   FIELD_PLAYER        *player;  // 自機
 
-  u8              lift_id;      // 現在リフトのID 左上から連番
   BOOL            lift_arrival[ LIFT_NUM ]; // リフト到達フラグ
   BOOL            first_lift;   // 最初のリフトに到達したか
 
@@ -329,6 +328,12 @@ static void InitLiftShake(  const fx32 inAddVal,
 static BOOL ShakeLift( SHAKE_WORK *work);
 static void SetExitLiftDefaultSt(FLD_EXP_OBJ_CNT_PTR ptr);
 
+//-------------------------------------
+///	セーブ情報 ギミック外でも破棄されない
+//=====================================
+static void SAVE_SetLiftArrival( GIMMICKWORK* p_gmkwk, const BOOL *arrival );
+static void SAVE_GetLiftArrival( GIMMICKWORK* p_gmkwk, BOOL *arrival );
+
 
 #ifdef GYM_GROUND_DEBUG_MENU
 //-------------------------------------
@@ -359,6 +364,7 @@ void GYM_GROUND_Setup(FIELDMAP_WORK *p_fieldmap)
 {
   GAMESYS_WORK* p_gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
   GAMEDATA* p_gdata = GAMESYSTEM_GetGameData( p_gsys );
+  GIMMICKWORK   *p_gmkwk = GAMEDATA_GetGimmickWork(p_gdata);
   GYM_GROUND_TMP *p_wk;
 
   ICHI_Printf( "汎用ワーク確保前 HeapFreeSize %x \n",GFL_HEAP_GetHeapFreeSize(HEAPID_FIELDMAP) );
@@ -375,7 +381,9 @@ void GYM_GROUND_Setup(FIELDMAP_WORK *p_fieldmap)
   // EXPOBJセット
   EXPOBJ_ObjSet( p_wk );
 
-  // 【仮】セーブデータから取得する
+  // セーブデータ取得
+  SAVE_GetLiftArrival( p_gmkwk, p_wk->lift_arrival );
+
   // リフト情報初期化
   LIFT_Init( p_wk );
 
@@ -396,11 +404,17 @@ void GYM_GROUND_Setup(FIELDMAP_WORK *p_fieldmap)
 //--------------------------------------------------------------
 void GYM_GROUND_End(FIELDMAP_WORK *p_fieldmap)
 {
+  GAMESYS_WORK* p_gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
+  GAMEDATA*     p_gdata = GAMESYSTEM_GetGameData( p_gsys );
+  GIMMICKWORK   *p_gmkwk = GAMEDATA_GetGimmickWork(p_gdata);
   GYM_GROUND_TMP *p_wk = GMK_TMP_WK_GetWork(p_fieldmap, GYM_GROUND_TMP_ASSIGN_ID);
 
 #ifdef GYM_GROUND_DEBUG_MENU
   DEBUGMENU_Exit();
 #endif // GYM_GROUND_DEBUG_MENU
+
+  // セーブデータ保存
+  SAVE_SetLiftArrival( p_gmkwk, p_wk->lift_arrival );
 
   // EXPOBJ破棄
   EXPOBJ_ObjDell( p_wk );
@@ -454,7 +468,7 @@ void GYM_GROUND_Move(FIELDMAP_WORK *p_fieldmap)
     // リフトリセット
     if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
       u8 i;
-      LIFT_Init( p_wk );
+      GFL_STD_MemClear( p_wk->lift_arrival, (sizeof(BOOL)*LIFT_NUM) );
       for( i=0; i<OBJ_BELT_NUM; i++ )
       {
         u16 obj_idx = i;    // OBJインデックス
@@ -1017,11 +1031,13 @@ static GMEVENT_RESULT BeltEvent( GMEVENT* event, int* seq, void* wk )
       BELT_AnmStop( p_gym_wk->exp_obj, p_wk->belt_id );
 
       // リフトID変更
-      p_gym_wk->lift_id = BeltInfo[ p_wk->belt_id ].lift_id;
-      ICHI_Printf("リフトID %d \n", p_gym_wk->lift_id);
+      {
+        const u8 lift_id = BeltInfo[ p_wk->belt_id ].lift_id;
+        ICHI_Printf("リフトID %d \n", lift_id);
 
-      // リフト到着フラグセット
-      LIFT_SetAriivalFlag( p_gym_wk, p_gym_wk->lift_id );
+        // リフト到着フラグセット
+        LIFT_SetAriivalFlag( p_gym_wk, lift_id );
+      }
 
       *seq = SEQ_JUMP_OUT;
     }
@@ -1184,9 +1200,26 @@ static void BELT_AnmStop( FLD_EXP_OBJ_CNT_PTR exp_obj, const u16 belt_id )
 //-----------------------------------------------------------------------------
 static void LIFT_Init( GYM_GROUND_TMP *p_wk )
 {
-  p_wk->lift_id = 0;
+  u8 i;
 
-  GFL_STD_MemClear( p_wk->lift_arrival, (sizeof(BOOL)*LIFT_NUM) );
+  // 到達フラグがTRUEなら設定
+  for( i=0; i<LIFT_NUM; i++ )
+  {
+    if( p_wk->lift_arrival[i] == TRUE )
+    {
+      // リフトライトアップ
+      u16 obj_idx = OBJ_LIFT_LIGHTUP_1 + i;    // OBJインデックス
+      // 表示
+      FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GYM_GROUND_UNIT_IDX, obj_idx, FALSE );
+      // 
+      // アニメ再生
+      {
+        EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, GYM_GROUND_UNIT_IDX, obj_idx, 0 );
+        FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE );  // アニメ再生設定
+      }
+    }
+  }
+  
 }
 
 //----------------------------------------------------------------------------
@@ -1788,6 +1821,101 @@ static void SetExitLiftDefaultSt(FLD_EXP_OBJ_CNT_PTR ptr)
   anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_GROUND_UNIT_IDX, obj_idx, anm_idx);
   FLD_EXP_OBJ_ChgAnmStopFlg(anm, TRUE);
 }
+
+//=============================================================================
+/**
+ *            セーブ情報
+ */
+//=============================================================================
+#ifdef PM_DEBUG
+const int BitSize = sizeof(u8) * 8; // 整数型のビットサイズを算出
+static void dtob(u8 x) {
+  int bit = 1, i;
+  char c[BitSize];
+ 
+  for (i = 0; i < BitSize; i++) {
+    if (x & bit)
+      c[i] = '1';
+    else
+      c[i] = '0';
+    bit <<= 1;
+  }
+  // 計算結果の表示
+  for ( i = BitSize - 1; i >= 0; i-- ) {
+      ICHI_Printf("%c",c[i]);
+  }
+}
+#endif
+//----------------------------------------------------------------------------
+/**
+ *	@brief  リフト到達フラグを設定
+ *
+ *	@param	GIMMICKWORK* p_gmkwk    ギミックワーク
+ *	@param	BOOL *arrival           到達フラグ配列
+ *
+ *	@note   リフト到達フラグ : BOOL flg[36] 
+ *	        をu8[5]にビットフラグでセーブする
+ */
+//-----------------------------------------------------------------------------
+static void SAVE_SetLiftArrival( GIMMICKWORK* p_gmkwk, const BOOL *arrival )
+{
+  u8 i;
+  u8 *ex_wk;
+  u8 idx = 0;
+
+  ex_wk = GIMMICKWORK_GetExWork( p_gmkwk, FLD_GIMMICK_GYM_GROUND );
+
+  for( i=0; i<LIFT_NUM; i++ )
+  {
+    if( i % 8 == 0 ) idx++;
+
+    // 到達していたら、ビットをたてる
+    if( arrival[i] == TRUE )
+    {
+      ex_wk[ idx ] |= (1 << (i%8));
+      ICHI_Printf("%d 番目 ", i);
+    }
+  }
+
+#ifdef PM_DEBUG
+  ICHI_Printf("セーブ リフト到達フラグ \n 2進数：");
+  for( i=0; i<5; i++ ) dtob( ex_wk[i] );
+  ICHI_Printf("\n");
+#endif
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  リフト到達フラグを取得
+ *
+ *	@param	GIMMICKWORK* p_gmkwk    ギミックワーク
+ *	@param	*arrival                到達フラグ配列
+ */
+//-----------------------------------------------------------------------------
+static void SAVE_GetLiftArrival( GIMMICKWORK* p_gmkwk, BOOL *arrival )
+{
+  u8 i;
+  u8 *ex_wk;
+  u8 idx = 0;
+
+  ex_wk = GIMMICKWORK_GetExWork( p_gmkwk, FLD_GIMMICK_GYM_GROUND );
+
+#ifdef PM_DEBUG
+  ICHI_Printf("セーブ リフト到達フラグ \n 2進数：");
+  for( i=0; i<5; i++ ) dtob( ex_wk[i] );
+  ICHI_Printf("\n");
+#endif
+
+  for( i=0; i<LIFT_NUM; i++ )
+  {
+    if( i % 8 == 0 ) idx++;
+
+    if( ex_wk[ idx ] & (1 << (i%8)) ){ arrival[i] = TRUE; }
+    else                             { arrival[i] = FALSE; }
+    ICHI_Printf("%d",arrival[i]);
+  }
+}
+
+
 
 #ifdef GYM_GROUND_DEBUG_MENU
 //=============================================================================

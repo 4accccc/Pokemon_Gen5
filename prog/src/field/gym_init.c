@@ -116,7 +116,6 @@ void GYM_INIT_Insect(GAMESYS_WORK *gsys, u16 **sw_work)
     GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
     GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
     gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_INSECT );
-    ex_wk = GIMMICKWORK_GetExWork( gmkwork, FLD_GIMMICK_GYM_INSECT );
   }
 
   //gmk_sv_work‚Ö‚Ì‰Šú‘ã“ü“™‚ğs‚¤
