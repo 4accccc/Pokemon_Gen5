@@ -168,7 +168,8 @@ ev_leader6_btl:
 	_TRAINER_FLAG_SET( TRID_PILOT_05 )
 	_TRAINER_FLAG_SET( TRID_PILOT_06 )
 	_TRAINER_FLAG_SET( TRID_PILOT_07 )
-		
+	_TRAINER_FLAG_SET( TRID_PILOT_08 )
+			
 	//================================================//
 
 	//電光掲示板フラグセット
