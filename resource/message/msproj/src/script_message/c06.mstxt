@@ -385,6 +385,13 @@
 				User="matsumiya:W00224"
 				Time="2011-05-25T03:59:00" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#0080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c06_hakase2_08"
@@ -537,7 +544,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
+			<CellData>#0080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -565,14 +572,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アララギ『あはは！　そうだったわね
-だけど　そのまえに　おねがい！▼
-タワーオブヘブンを　しらべたいの！
-だから　それまで　まってて！▼
+だけど　その前に　お願い！▼
+タワーオブヘブンを　調べたいの！
+だから　それまで　待ってて！▼
 それじゃあね　[Name:TrainerName ]！
-どんなときでも　ポケモンと　なかよくよ▼</Text>
+どんなときでも　ポケモンと　仲良くよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T12:32:03" />
+				Time="2011-05-25T13:06:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -610,12 +617,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>フウロ『もう！
-ほんとうに　おやこ　そっくり！▼
+ほんとうに　おやこで　そっくり！▼
 ううん　ちがうわね
 おとうさんの　ほうが～▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T12:36:05" />
+				Time="2011-05-25T13:07:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -635,10 +642,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・続けて</Comment>
+・続けてswleader6_04</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T12:10:19" />
+				Time="2011-05-25T13:06:27" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -650,7 +657,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
+			<CellData>#0080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -680,14 +687,14 @@
 			Language="JPN_KANJI">
 			<Text>さてと　アナタ▼
 ポケモンジムに　きて
-アタシに　ちょうせん　する？▼
-それとも　はかせの　いった
-タワーオブヘブンで　きたえる？▼
-アタシとしては　つよい　トレーナーと
-たたかえるなら　どっちでも　いいけどね▼</Text>
+アタシに　挑戦する？▼
+それとも　博士の　いった
+タワーオブヘブンで　鍛える？▼
+アタシとしては　強い　トレーナーと
+戦えるなら　どっちでも　いいけどね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T12:35:44" />
+				Time="2011-05-25T13:05:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -710,6 +717,13 @@
 				User="matsumiya:W00224"
 				Time="2011-05-25T12:10:27" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#0080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c06_swleader6_05"
@@ -730,11 +744,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>フウロ『さて！
-じゃあ　ひこうきで　ひとっとび！▽
-って　アララギはかせ　は？▼</Text>
+じゃあ　飛行機で　ひとっとび！▽
+って　アララギ博士は？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T12:44:34" />
+				Time="2011-05-25T13:05:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -760,6 +774,13 @@
 				User="matsumiya:W00224"
 				Time="2011-05-25T12:15:37" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#0080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c06_swleader6_06"
@@ -768,15 +789,15 @@
 			Language="JPN">
 			<Text>まだ　タワーオブヘブンを
 しらべて　いるのかな？▼
-あの　ひと　ちょうさちゅう　だと
+はかせ　ちょうさに　むちゅう　だと
 ライブキャスターにも　きづかないし▼
 んー　おねがいだけど　アナタ
-はかせを　よんできて　くれないかな？▼
-アタシは　フライトの
-じゅんびを　しておくから</Text>
+はかせを　よんできて　くれない？▼
+アタシは　フキヨセカーゴサービスで
+フライトの　じゅんびを　しておくから▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T12:51:10" />
+				Time="2011-05-25T13:09:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -785,16 +806,16 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>まだ　タワーオブヘブンを
-しらべて　いるのかな？▼
-あの　ひと　ちょうさちゅう　だと
+調べて　いるのかな？▼
+博士　調査に　夢中だと
 ライブキャスターにも　きづかないし▼
-んー　おねがいだけど　アナタ
-はかせを　よんできて　くれないかな？▼
-アタシは　フライトの
-じゅんびを　しておくから</Text>
+んー　お願いだけど　アナタ
+博士を　呼んできて　くれない？▼
+アタシは　フキヨセカーゴサービスで
+フライトの　準備を　しておくから▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T12:51:13" />
+				Time="2011-05-25T13:10:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -803,10 +824,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・会話していない場合</Comment>
+・会話していない場合
+・？マーク表示後にメッセージ表示
+・表示後、c06r0201方面へ移動
+　c06r0201に出現</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T12:43:18" />
+				Time="2011-05-25T13:10:22" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -816,55 +840,13 @@
 				User="matsumiya:W00224"
 				Time="2011-05-25T12:43:04" />
 		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c06_swleader6_07"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>タワーオブヘブンは
-７ばんどうろを　いった　さき！▼
-とちゅうで　まよわないよう
-かんばんに　ちゅうい　してね！</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-25T12:44:30" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-25T12:44:02" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>タワーオブヘブンは
-７ばんどうろを　いった　さき！▼
-とちゅうで　まよわないよう
-かんばんに　ちゅうい　してね！</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-25T12:44:33" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-25T12:44:33" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・swleader6_06表示後
-　r07r0101で博士と会話するまで繰り返し</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-25T12:44:47" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>ジムリーダー
-フウロ</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-25T12:43:04" />
-		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#0080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c06_hakase2_11"
@@ -872,14 +854,16 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>アララギ『はーい！▼
+・良い研究ができた
+・次は山を越えて▼
 [Name:TrainerName ]
-
 わたしと　いっしょに
-ひこうきに　のりましょ！
-というのも　ポケモン図鑑のためなんだけど</Text>
+ひこうきに　のりましょ！▼
+というのも
+ポケモンずかんの　ためなんだけど</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T12:56:04" />
+				Time="2011-05-25T13:00:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -930,10 +914,14 @@
 		Label="msg_c06_hakase2_12">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>それに　ソウリュウシティに
+あってほしい　ひとが　いるんだ▼
+というわけで
+フキヨセ　カーゴ　サービスで▽
+まってまーす！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T12:56:08" />
+				Time="2011-05-25T13:19:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -941,10 +929,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>それに　ソウリュウシティに
+会ってほしい　人が　いるんだ▼
+というわけで
+フキヨセ　カーゴ　サービスで▽
+待ってまーす！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T12:56:08" />
+				Time="2011-05-25T13:19:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -953,10 +945,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・</Comment>
+・メッセージ表示後、c06r0201方面へ移動
+　c06r0201に出現
+・続けて</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T12:56:09" />
+				Time="2011-05-25T13:12:54" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -975,42 +969,41 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c06_swleader6_08"
-		Style="Large">
+		Label="msg_c06_swleader6_07">
 		<LanguageCell
 			Language="JPN">
-			<Text>フウロ『それでは
-フキヨセ　カーゴ　サービスで▽
-まってまーす！▼</Text>
+			<Text>フウロ『あっ　まってよ　はかせ！▼
+もう！　ほんとに
+マイペース　なんだから！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T12:48:29" />
+				Time="2011-05-25T13:19:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T12:48:08" />
+				Time="2011-05-25T13:12:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>フウロ『それでは
-フキヨセ　カーゴ　サービスで▽
-まってまーす！▼</Text>
+			<Text>フウロ『あっ　待ってよ　博士！▼
+もう！　ほんとに
+マイペース　なんだから！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T12:48:57" />
+				Time="2011-05-25T13:19:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T12:48:57" />
+				Time="2011-05-25T13:15:48" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・メッセージ表示後、c06r0201方面へ移動
-・続けて</Comment>
+・画面右を向いてメッセージ表示
+・続けてswleader6_08</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T12:52:53" />
+				Time="2011-05-25T13:16:09" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1018,53 +1011,60 @@
 フウロ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T12:44:39" />
+				Time="2011-05-25T13:12:45" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#0080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c06_hakase2_13"
-		Style="Large">
+		Label="msg_c06_swleader6_08">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>じゃ　アナタも　きてね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T12:53:15" />
+				Time="2011-05-25T13:20:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T12:53:15" />
+				Time="2011-05-25T13:15:32" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>じゃ　アナタも　来てね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T12:53:15" />
+				Time="2011-05-25T13:20:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T12:53:15" />
+				Time="2011-05-25T13:15:48" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・</Comment>
+・表示後、c06r0201方面へ移動
+　画面外に消えると主人公操作可能に</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T12:53:19" />
+				Time="2011-05-25T13:16:26" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>HAKASE2
-アララギ博士娘</Text>
+			<Text>ジムリーダー
+フウロ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T12:53:08" />
+				Time="2011-05-25T13:15:30" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#0080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
