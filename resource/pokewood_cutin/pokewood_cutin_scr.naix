@@ -1,0 +1,18 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: pokewood_cutin_scr.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_POKEWOOD_CUTIN_SCR_NAIX_
+#define NARC_POKEWOOD_CUTIN_SCR_NAIX_
+
+enum {
+	NARC_pokewood_cutin_scr_pokewood_cutin_scr1_dat = 0
+};
+
+/* NARC_POKEWOOD_CUTIN_SCR_NAIX_ */
+#endif
