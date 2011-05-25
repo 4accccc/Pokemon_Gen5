@@ -1,20 +1,237 @@
 #event data
-#save date:2009/10/13 21:30:10
+#save date:2011/05/24 19:14:51
 # linked worldmap file name
-C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\w21.wms
+C:\home\swan\resource\fldmapdata\eventdata\data\w21.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/10/13 21:30:10
+#save date:
 2
 #hold event type:
 1
 #hold event number:
+7
+#event number: 0
+#type
+1
+#ID name
+TR_SWIMMERW_06
+#OBJ CODE Number
+SWIMMERW
+#MOVE CODE Number
+MV_RND_V
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
 0
+#Event Script Name
+SCRID_TRID_SWIMMERW_06
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+3
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+72 -88 -72
+#event number: 1
+#type
+1
+#ID name
+TR_SWIMMERM_06
+#OBJ CODE Number
+SWIMMERM
+#MOVE CODE Number
+MV_RTRD         
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_SWIMMERM_06
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+1
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+5
+#Move Limit Z Number
+3
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+40 -88 -232
+#event number: 2
+#type
+1
+#ID name
+TR_SWIMMERM_07
+#OBJ CODE Number
+SWIMMERM
+#MOVE CODE Number
+MV_RIGHT
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_SWIMMERM_07
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+6
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-184 -88 -104
+#event number: 3
+#type
+1
+#ID name
+TR_SWIMMERW_07
+#OBJ CODE Number
+SWIMMERW
+#MOVE CODE Number
+MV_LEFT
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_SWIMMERW_07
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+7
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-40 -88 136
+#event number: 4
+#type
+1
+#ID name
+TR_FISHING_20
+#OBJ CODE Number
+FISHING
+#MOVE CODE Number
+MV_LEFT
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_FISHING_20
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-136 -80 -520
+#event number: 5
+#type
+1
+#ID name
+TR_DOCTOR_06
+#OBJ CODE Number
+DOCTOR
+#MOVE CODE Number
+MV_RIGHT
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_DOCTOR_06
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+2
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-184 -80 -408
+#event number: 6
+#type
+1
+#ID name
+TR_KARATE_15
+#OBJ CODE Number
+FIGHTERM
+#MOVE CODE Number
+MV_UP
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_KARATE_15
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+3
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-152 -80 -408
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/10/13 21:30:10
+#save date:
 2
 #hold event type:
 1
@@ -24,7 +241,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\w21.wms
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/10/13 21:30:10
+#save date:
 2
 #hold event type:
 1
@@ -34,7 +251,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\w21.wms
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/10/13 21:30:10
+#save date:
 2
 #hold event type:
 1
