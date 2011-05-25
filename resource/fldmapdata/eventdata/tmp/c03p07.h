@@ -12,6 +12,7 @@
 #ifndef ZONE_C03P07_EVC_H
 #define ZONE_C03P07_EVC_H
 
+#define C03P07_SUNGLASSES_01               0
 
 #endif //ZONE_C03P07_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c03p07.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

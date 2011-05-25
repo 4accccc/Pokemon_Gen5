@@ -10,6 +10,8 @@
 #ifndef ZONE_C03P15_EVC_H
 #define ZONE_C03P15_EVC_H
 
+#define C03P15_PILOT_01                    0
+#define C03P15_SWRIVAL_01                  1
 
 #endif //ZONE_C03P15_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c03p15.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

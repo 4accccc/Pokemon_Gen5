@@ -24,6 +24,11 @@
 #define TR_POLICE_04                       9
 #define TR_POLICE_05                      10
 #define TR_BREEDERW_04                    11
+#define R04_BIGROCK_01                    12
+#define R04_BIGROCK_02                    13
+#define R04_BIGROCK_03                    14
+#define R04_SWBOSS_01                     15
+#define R04_OLDMAN1_01                    16
 
 #endif //ZONE_R04_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r04.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

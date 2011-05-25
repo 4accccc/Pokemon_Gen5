@@ -28,6 +28,8 @@
 #ifndef ZONE_C03_EVC_H
 #define ZONE_C03_EVC_H
 
+#define C03_MACOMO_01                      0
+#define C03_SWCHAMPION_01                  1
 
 #endif //ZONE_C03_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c03.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

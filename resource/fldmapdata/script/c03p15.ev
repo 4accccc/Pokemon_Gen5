@@ -18,4 +18,196 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA		ev_c03p15_pilot_01
+_EVENT_DATA		ev_scene_c03p15_first_01
 _EVENT_DATA_END
+
+/************************************************************/
+/*				SCENE_CHANGE：船から下りたところ                                */
+/************************************************************/
+EVENT_START	ev_scene_c03p15_first_01
+
+  //【仮】下船演出
+
+  //PILOT：みなさま！
+  _BALLOONWIN_OBJMSG_POS( msg_c03p15_pilot_01,C03P15_PILOT_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：ライバル上を向く
+  _OBJ_ANIME( C03P15_SWRIVAL_01, anm_staystep_u )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
+  _OBJ_ANIME_WAIT()
+  
+  //ライバル：ここがヒウンか
+  _BALLOONWIN_OBJMSG_POS( msg_c03p15_swrival_01,C03P15_SWRIVAL_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：ライバル振り向く
+  _OBJ_ANIME( C03P15_SWRIVAL_01, anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+  
+  //ライバル：そうだ！
+  _BALLOONWIN_OBJMSG_POS( msg_c03p15_swrival_02,C03P15_SWRIVAL_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //【仮】ライブキャスター登録処理
+  //【仮】ライブキャスターME再生
+  
+  //アニメ：ライバル停泊している船を見てコメント
+  _OBJ_ANIME( C03P15_SWRIVAL_01, anm_staystep_r )
+  
+  //カメラ移動
+  _CAMERA_START()		//カメラ操作開始
+  _CAMERA_PURGE()		//カメラのバインドを解く
+  _CAMERA_MOVE( 9467,0,1552384,1269760,0,622592,56 )
+  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+  
+  _OBJ_ANIME_WAIT()
+  
+  //ライバル：変な船
+  _BALLOONWIN_OBJMSG_POS( msg_c03p15_swrival_03,C03P15_SWRIVAL_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //自機にカメラを戻す
+  _CAMERA_DEF_MOVE (56)
+  
+  //アニメ：ライバル去る
+  _OBJ_ANIME( C03P15_SWRIVAL_01,anm_swrival_bye )
+   
+  //カメラ待ち
+  _CAMERA_WAIT_MOVE()
+  _CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+  _CAMERA_END()		//カメラ操作終了
+  
+  _OBJ_ANIME_WAIT()
+  
+  //階段SE再生
+  _SE_PLAY( SEQ_SE_KAIDAN )
+  _SE_WAIT()
+  
+  _OBJ_DEL( C03P15_SWRIVAL_01 )
+  
+  //==================================//
+  
+  //c03p15のPOS無効
+  $WK_SCENE_C03P15 = 2
+  
+  //C03のSCENE_CHANGE有効
+  $WK_SCENE_C03 = 1
+  
+  //C03P15のライバル非表示
+  _FLAG_SET( FV_C03P15_SWRIVAL_01 )
+  
+  //==================================//
+    
+EVENT_END
+
+//--------------------------------------------------------------------
+//	☆ライバル退場
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swrival_bye
+  _ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,10
+	_ANIME_DATA	ACMD_END,0
+	
+/************************************************************/
+/*				船長に話しかけ                                */
+/************************************************************/
+EVENT_START	ev_c03p15_pilot_01
+  
+  //PILOT：タチワキまで船をだしますよ？
+  _BALLOONWIN_OBJMSG_POS( msg_c03p15_pilot_02,C03P15_PILOT_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  {
+  _YES_NO_WIN( SCWK_ANSWER )
+  
+  //はい
+  IF $SCWK_ANSWER == SCR_YES THEN
+    //PILOT：よろしいですとも！
+    _BALLOONWIN_OBJMSG_POS(msg_c03p15_pilot_03,C03P15_PILOT_01, POS_DEFAULT )
+    _MSGWIN_CLOSE()
+    
+    //【仮】移動
+    _MAP_CHANGE( ZONE_ID_C13, 250, 669, DIR_RIGHT )
+     
+  //いいえ
+  ELSE
+    //PILOT：よろしいですとも！
+    _BALLOONWIN_OBJMSG_POS(msg_c03p15_pilot_04,C03P15_PILOT_01, POS_DEFAULT )
+    _MSGWIN_CLOSE()
+  ENDIF
+  }
+EVENT_END
+
+//--------------------------------------------------------------------
+//	☆共通処理：1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_d
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_u
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_r
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_l
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staystep_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：はてな
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_hatena
+	_ANIME_DATA	AC_MARK_HATENA,1
+	_ANIME_DATA	ACMD_END,0
+	

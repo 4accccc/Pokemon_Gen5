@@ -205,6 +205,10 @@ ev_leader3_btl:
 
 	//電光掲示板フラグセット
 	_FLAG_SET( SYS_FLAG_ELBOARD_C03GYMWIN )
+	
+  //C03P01アクロマイベント開始
+  $WK_SCENE_C03P01 = 1
+  _FLAG_RESET( FV_C03P01_SWBOSS_01 )
 
 	//================================================//
 

@@ -10,7 +10,8 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_d11r0101.h"
-  //.include  "d11r0101.h"
+  .include  "d11r0101.h"
+  .include  "d11r0101_def.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +20,387 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_d11r0101
+_EVENT_DATA		ev_zone_d11r0101
+_EVENT_DATA		ev_init_d11r0101
+_EVENT_DATA		ev_pos_d11r0101_plasma_01
+_EVENT_DATA		ev_pos_d11r0101_swchampion_01
+_EVENT_DATA		ev_d11r0101_swchampion_02
 _EVENT_DATA_END
 
 
-/**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_zone_d11r0101:
-//  _END
+/************************************************************/
+/*		ZONE_CHANGE                             */
+/************************************************************/
+INIT_EVENT_START  ev_zone_d11r0101
+  
+//
+  
+INIT_EVENT_END
+
+/************************************************************/
+/*					FIELD_INIT_SCRIPT						*/
+/************************************************************/
+INIT_EVENT_START  ev_init_d11r0101
+//
+INIT_EVENT_END
 
 /**************************************************************/
-/*                                                            */
+/*		POS：アイリス連れ歩き解除確認イベント
 /**************************************************************/
-ev_d11r0101:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START		ev_pos_d11r0101_swchampion_01
 
+  //【仮】アニメ：主人公振り向き
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
+  _OBJ_ANIME_WAIT()
+  
+  //アイリス：いちどそとにでる？
+  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swchampion_04, PAIR_TRAINER_01, POS_DEFAULT )
+  
+   {
+  _YES_NO_WIN( SCWK_ANSWER )
+  
+  //はい
+  IF $SCWK_ANSWER == SCR_YES THEN
+    _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swchampion_02, PAIR_TRAINER_01, POS_DEFAULT )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+    
+    //連れ歩き解除
+    _PAIR_TRAINER_FREE( SCRID_D11R0101_SWCHAMPION_02, MV_DMY )
+    
+    //==================================//
+    //【仮】連れ歩き終了フラグ
+    _FLAG_RESET(FE_D11R0101_PAIR_01)
+    //==================================//
+  
+  //いいえ
+  ELSE
+    _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swchampion_03, PAIR_TRAINER_01, POS_DEFAULT )
+    _MSGWIN_CLOSE()
+    
+    //アニメ：主人公戻す
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_l )
+    _OBJ_ANIME_WAIT()
+  ENDIF
+  }
+EVENT_END
+
+/**************************************************************/
+/*		アイリス話しかけ
+/**************************************************************/
+EVENT_START		ev_d11r0101_swchampion_02
+  _TALK_START_SE_PLAY()
+  
+  //連れ歩きチェック
+  IF FLAG_ON(FE_D11R0101_PAIR_01) THEN
+    
+    //連れ歩き話しかけ
+    _CALL ev_d11r0101_swchampion_pair_01
+  
+  //連れ歩いていない
+  ELSE
+    _CALL ev_d11r0101_pairstart_01
+  ENDIF
+  
+EVENT_END
+
+//連れ歩き中話しかけスクリプト
+ev_d11r0101_pairstart_01:
+  
+  //【仮】POSにした方がいいのでマップ確定後に変更
+  
+  //一緒に行こう！
+  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swchampion_01, D11R0101_SWCHAMPION_01, POS_DEFAULT )
+  
+   {
+  _YES_NO_WIN( SCWK_ANSWER )
+  
+  //はい
+  IF $SCWK_ANSWER == SCR_YES THEN
+    _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swchampion_03, D11R0101_SWCHAMPION_01, POS_DEFAULT )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+    
+    //【仮】連れ歩き開始（連れ歩きIDが仮）
+    _PAIR_TRAINER_SET( D11R0101_SWCHAMPION_01, PAIR_ID_NATURAL, PAIR_TYPE_OPEN, TRID_RIVAL_07 )
+    //==================================//
+    //【仮】連れ歩き開始フラグ
+    _FLAG_SET(FE_D11R0101_PAIR_01)
+    //==================================//
+  //いいえ
+  ELSE
+    _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swchampion_02, D11R0101_SWCHAMPION_01, POS_DEFAULT )
+    _MSGWIN_CLOSE()
+    
+    //アニメ：主人公戻す
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_r )
+    _OBJ_ANIME_WAIT()
+  ENDIF
+  }
+_RET
+
+//====================================================================
+// D11R0101：話しかけ 
+//====================================================================
+
+//連れ歩き中話しかけスクリプト
+ev_d11r0101_swchampion_pair_01:
+
+ _PLAYER_NAME( 0 )
+
+  //話しかけるごとに0～4のセリフを順番に表示（4で終わり）
+  $SCWK_TEMP0 = msg_d11r0101_swchampion_05
+  $SCWK_TEMP0 += $WK_OTHER_D11R0101_PAIR
+  
+  _TALK_OBJ_START()
+  _BALLOONWIN_OBJMSG( SCWK_TEMP0, PAIR_TRAINER_01 )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+  
+  IF $WK_OTHER_D11R0101_PAIR != 4 THEN
+    $WK_OTHER_D11R0101_PAIR += 1
+  ENDIF
+  
+_RET
+
+/**************************************************************/
+/*		POS：プラズマ団戦
+/**************************************************************/
+EVENT_START		ev_pos_d11r0101_plasma_01
+
+  //連れ歩き解除
+  _PAIR_TRAINER_FREE( SCRID_D11R0101_SWCHAMPION_02, MV_DMY )
+  
+  //==================================//
+  //【仮】連れ歩き終了フラグ
+  _FLAG_RESET(FE_D11R0101_PAIR_01)
+  //==================================//
+
+  _PLAYER_NAME( 0 )
+  
+  //【仮】人物の配置を変更（マップ確定し次第変更）
+  _OBJ_POS_CHANGE( MMDL_ID_PLAYER, 81, 0, 19, DIR_UP )
+	_OBJ_POS_CHANGE( D11R0101_SWCHAMPION_01, 82, 0, 19, DIR_UP )
+	
+  //アイリス：「！」
+  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swchampion_12, D11R0101_SWCHAMPION_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //プラズマ団：なんだ？おまえら
+  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swplazmam1_01, D11R0101_PLASMAM_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アイリス：プラズマ団なの？
+  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swchampion_13, D11R0101_SWCHAMPION_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //プラズマ団：そうとも！
+  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swplazmam1_02, D11R0101_PLASMAM_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アイリス：あきれた…！
+  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swchampion_14, D11R0101_SWCHAMPION_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //プラズマ団：タチワキ？
+  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swplazmam1_03, D11R0101_PLASMAM_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //【仮】アニメ：主人公の方を向く（マップに伴う演出の調整で修正）
+  _OBJ_ANIME( D11R0101_SWCHAMPION_01, anm_staystep_l )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
+  _OBJ_ANIME_WAIT()
+  
+  //アイリス：きみ！
+  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swchampion_15, D11R0101_SWCHAMPION_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+   //【仮】アニメ：プラズマ団に向き合う
+  _OBJ_ANIME( D11R0101_SWCHAMPION_01, anm_staystep_u )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
+  _OBJ_ANIME_WAIT()
+   
+  //【仮】トレーナーラベルが仮
+  _TRAINER_BTL_SET( TRID_SWRIVAL_04, 0 )
+  //結果チェック
+  _TRAINER_LOSE_CHECK( SCWK_ANSWER )
+  IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+    _TRAINER_WIN()
+  ELSE
+    _TRAINER_LOSE()
+  ENDIF
+  
+  
+  //プラズマ団：チッ
+  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swplazmam1_04, D11R0101_PLASMAM_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //暗転処理
+  _BLACK_OUT()
+	_DISP_FADE_END_CHECK()
+	
+	//プラズマ団員の動作モデルを削除
+	_OBJ_DEL( D11R0101_PLASMAM_01 )
+  _OBJ_DEL( D11R0101_PLASMAM_02 )
+	
+	//暗転復帰
+	_BLACK_IN()
+	_DISP_FADE_END_CHECK()
+  
+  //アイリス：まちなさいよ！
+  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swchampion_16, D11R0101_SWCHAMPION_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //？？？：そのひつようはないっぽいよ
+  _PLAINWIN_MSG_DOWN(msg_d11r0101_swleader3_01 )
+	_MSGWIN_CLOSE()
+	
+	//フィールド上にアーティ表示
+  _OBJ_ADD_EX( 77, 17, DIR_RIGHT, MMDL_ID_EVENTOBJ_00, SWLEADER3, MV_DMY )
+  
+  //アーティ隣接
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_gyoe )
+  _OBJ_ANIME( D11R0101_SWCHAMPION_01, anm_common_gyoe )
+  _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 82,17, FORCE_TYPE_NOT, 8, DIR_LR )
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+  
+  //アイリス：あっ　アーティ！
+  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swchampion_17, D11R0101_SWCHAMPION_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アーティ：奥は調べたけど
+  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swleader3_02, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アイリス：それにしても
+  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swchampion_18, D11R0101_SWCHAMPION_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アーティ：そうだねー
+  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swleader3_03, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アイリス：…そうだね
+  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swchampion_19, D11R0101_SWCHAMPION_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //【仮】アニメ：主人公の方を向く（マップに伴う演出の調整で修正）
+  _OBJ_ANIME( D11R0101_SWCHAMPION_01, anm_staystep_l )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
+  _OBJ_ANIME_WAIT()
+  
+  //アイリス：（主人公名）！いっしょに
+  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swchampion_20, D11R0101_SWCHAMPION_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //ヤチェのみ入手処理
+	_ITEM_EVENT_KEYWAIT(ITEM_YATHENOMI, 3)
+	
+	//アイリス：アーティはね！
+  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swchampion_21, D11R0101_SWCHAMPION_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //【仮】アニメ：アーティ・アイリス退場（マップに伴う演出の調整で修正）
+  _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 88,20, FORCE_TYPE_NOT, 8, DIR_LR )
+  _OBJ_ANIME_AUTO( D11R0101_SWCHAMPION_01, 88,20, FORCE_TYPE_NOT, 8, DIR_LR )
+  _OBJ_ANIME_WAIT()
+  
+  //【仮】階段SE再生
+  _SE_PLAY( SEQ_SE_KAIDAN )
+  _SE_WAIT()
+  
+  //プラズマ団イベント関連の動作モデル削除
+  _OBJ_DEL( D11R0101_SWCHAMPION_01 )
+  _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+  
+  //==================================//
+  //下水道クリア
+  $WK_SCENE_D11R0101 = 1
+  $WK_SCENE_C03P17 = 5
+  
+  //プラズマ団・アイリスを非表示に
+  _FLAG_SET( FV_D11R0101_SWCHAMPION_01 )
+  
+  //C03P07サングラスを非表示に
+  _FLAG_SET( FV_C03P07_SUNGLASSES_01 )
+  
+  //【仮】C03P17ライバル表示
+  _FLAG_RESET( FV_C03P17_SWRIVAL_01 )
+  
+  //==================================//
+
+EVENT_END
+
+//--------------------------------------------------------------------
+//	☆共通処理：1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_d
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_u
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_r
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_l
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staystep_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：はてな
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_hatena
+	_ANIME_DATA	AC_MARK_HATENA,1
+	_ANIME_DATA	ACMD_END,0
+	

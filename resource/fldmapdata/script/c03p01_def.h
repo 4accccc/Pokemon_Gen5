@@ -7,5 +7,6 @@
 //スクリプトデータID定義
 #define SCRID_BG_C03P01_SIGN_01 (1)
 #define SCRID_BG_C03P01_SIGN_02 (2)
+#define SCRID_POS_C03P01_SWBOSS_01 (3)
 
 #endif //_C03P01_DEF_H_

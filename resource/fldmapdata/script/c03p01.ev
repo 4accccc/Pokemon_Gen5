@@ -21,7 +21,201 @@
 //--------------------------------------------------------------
 _EVENT_DATA		ev_bg_c03p01_sign_01
 _EVENT_DATA		ev_bg_c03p01_sign_02
+_EVENT_DATA		ev_pos_c03P01_swboss_01
 _EVENT_DATA_END
+
+//話しかけた方向取得変数
+DEFINE_LOCAL LWK_DIR
+DEFINE_LOCAL  LCW_POSX
+DEFINE_LOCAL  LCW_POSZ
+/**************************************************************/
+/*				POS：SWBOSS_01								  */
+/**************************************************************/
+EVENT_START		ev_pos_c03P01_swboss_01
+
+  //アニメ：向きなおる
+   IF $LCW_POSX ==18 THEN
+    _OBJ_ANIME( C03P01_SWBOSS_01, anm_staystep_r)
+  ELSE
+    _OBJ_ANIME( C03P01_SWBOSS_01, anm_staystep_l)
+  ENDIF
+  _OBJ_ANIME_WAIT()
+  
+  //アニメ：アクロマ「！」
+  _OBJ_ANIME( C03P01_SWBOSS_01, anm_common_gyoe )
+  _OBJ_ANIME_WAIT()
+  
+  //アクロマ：そこのあなたっ！
+  _BALLOONWIN_OBJMSG_POS( msg_c03p01_swboss_01, C03P01_SWBOSS_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  
+  //自機の位置でアクロマの移動を変更
+  IF $LCW_POSX ==18 THEN
+    $LCW_POSX -= 1
+  ELSE
+    $LCW_POSX += 1
+  ENDIF
+  //アニメ：アクロマ接近
+  _OBJ_ANIME_AUTO( C03P01_SWBOSS_01, LCW_POSX,LCW_POSZ, FORCE_TYPE_NOT, 8, DIR_LR )
+  _OBJ_ANIME_WAIT()
+  
+  //アニメ：向きなおる
+   IF $LCW_POSX ==18 THEN
+    _OBJ_ANIME( C03P01_SWBOSS_01, anm_staystep_r)
+  ELSE
+    _OBJ_ANIME( C03P01_SWBOSS_01, anm_staystep_l)
+  ENDIF
+  _OBJ_ANIME_WAIT()
+  
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  
+  //アクロマ：さしつかえなければ
+  _BALLOONWIN_OBJMSG_POS( msg_c03p01_swboss_02, C03P01_SWBOSS_01, POS_DEFAULT )
+  
+   {
+  _YES_NO_WIN( SCWK_ANSWER )
+  
+  //はい
+  IF $SCWK_ANSWER == SCR_YES THEN
+    _BALLOONWIN_OBJMSG_POS( msg_c03p01_swboss_03, C03P01_SWBOSS_01, POS_DEFAULT )
+  ELSE
+    _BALLOONWIN_OBJMSG_POS( msg_c03p01_swboss_04, C03P01_SWBOSS_01, POS_DEFAULT )
+  ENDIF
+  
+  //瀕死・タマゴを除くポケモンの先頭を選択
+  DEFINE_LOCAL LWK_FRONT
+  _GET_PARTY_FRONT_POKEMON  ( LWK_FRONT , POKECOUNT_MODE_BATTLE_ENABLE )
+  //先頭ポケモンの名前を取得
+  _TEMOTI_MONS_NAME  (  0 , LWK_FRONT  )
+  
+  //アクロマ：あなたの～
+  _BALLOONWIN_OBJMSG_POS( msg_c03p01_swboss_05, C03P01_SWBOSS_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：アクロマ1歩離れる
+  IF $LCW_POSX ==18 THEN
+    _OBJ_ANIME( C03P01_SWBOSS_01, anm_walk_l)
+  ELSE
+    _OBJ_ANIME( C03P01_SWBOSS_01, anm_walk_r)
+  ENDIF
+  _OBJ_ANIME_WAIT()
+  
+  //アクロマ：グレートだ！
+  _BALLOONWIN_OBJMSG_POS( msg_c03p01_swboss_06, C03P01_SWBOSS_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：「！」向きなおす
+   IF $LCW_POSX ==18 THEN
+    _OBJ_ANIME( C03P01_SWBOSS_01, anm_swboss_ret_x18)
+  ELSE
+    _OBJ_ANIME( C03P01_SWBOSS_01, anm_swboss_ret_x13)
+  ENDIF
+  _OBJ_ANIME_WAIT()
+  
+  //アクロマ：しっけい
+  _BALLOONWIN_OBJMSG_POS( msg_c03p01_swboss_07, C03P01_SWBOSS_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：思索にふけってゆっくり歩く
+   IF $LCW_POSX ==18 THEN
+    _OBJ_ANIME( C03P01_SWBOSS_01, anm_swboss_16fw_x18)
+  ELSE
+    _OBJ_ANIME( C03P01_SWBOSS_01, anm_swboss_16fw_x13)
+  ENDIF
+  _OBJ_ANIME_WAIT()
+  
+  //アクロマ：ポケモンのちからを
+  _BALLOONWIN_OBJMSG_POS( msg_c03p01_swboss_08, C03P01_SWBOSS_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：戻る
+   IF $LCW_POSX ==18 THEN
+    _OBJ_ANIME( C03P01_SWBOSS_01, anm_walk_r)
+  ELSE
+    _OBJ_ANIME( C03P01_SWBOSS_01, anm_walk_l)
+  ENDIF
+  _OBJ_ANIME_WAIT()
+  
+  //アクロマ：それをあなたと
+  _BALLOONWIN_OBJMSG_POS( msg_c03p01_swboss_09, C03P01_SWBOSS_01, POS_DEFAULT )
+  _YES_NO_WIN( SCWK_ANSWER )
+  
+  //アクロマ：ではこのさき
+  _BALLOONWIN_OBJMSG_POS( msg_c03p01_swboss_10, C03P01_SWBOSS_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  }
+  
+  //アニメ：退場
+   IF $LCW_POSX ==18 THEN
+    _OBJ_ANIME( C03P01_SWBOSS_01, anm_swboss_bye_x18)
+  ELSE
+    _OBJ_ANIME( C03P01_SWBOSS_01, anm_swboss_bye_x13)
+  ENDIF
+  _OBJ_ANIME_WAIT()
+  
+  //階段SE再生
+  _SE_PLAY( SEQ_SE_KAIDAN )
+  _SE_WAIT()
+  
+  //アクロマ動作OBJ非表示
+  _OBJ_DEL(C03P01_SWBOSS_01)
+  
+  //==================================//
+  
+  //C03P01のPOS無効
+  $WK_SCENE_C03P01 = 2
+  //C03P01のSWBOSS非表示
+  _FLAG_SET( FV_C03P01_SWBOSS_01 )
+  
+  //R04のアクロマ表示
+  _FLAG_RESET( FV_R04_SWBOSS_01 )
+  //R04のアクロマPOS有効
+  $WK_SCENE_R04_SWBOSS = 1
+  
+  //==================================//
+EVENT_END
+
+//--------------------------------------------------------------------
+//	☆アクロマ：「！」の後、主人公の方を向く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swboss_ret_x13
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_swboss_ret_x18
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆アクロマ：ゆっくり逆に歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swboss_16fw_x13
+	_ANIME_DATA	AC_WALK_R_16F,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_swboss_16fw_x18
+	_ANIME_DATA	AC_WALK_L_16F,1
+	_ANIME_DATA	ACMD_END,0
+
+
+//--------------------------------------------------------------------
+//	☆アクロマ：退場
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swboss_bye_x13
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_WALK_U_8F,12
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_swboss_bye_x18
+	_ANIME_DATA	AC_WALK_L_8F,3
+	_ANIME_DATA	AC_WALK_U_8F,12
+	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
 /*				看板1								  */
@@ -36,3 +230,76 @@ EVENT_END
 EVENT_START		ev_bg_c03p01_sign_02
 	_EASY_BGWIN_MSG( msg_c03p01_sign2_01, TYPE_POST)	//簡易メッセージＢＧ用
 EVENT_END
+
+
+//--------------------------------------------------------------------
+//	☆共通処理：1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_d
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_u
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_r
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_l
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staystep_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：はてな
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_hatena
+	_ANIME_DATA	AC_MARK_HATENA,1
+	_ANIME_DATA	ACMD_END,0
+	

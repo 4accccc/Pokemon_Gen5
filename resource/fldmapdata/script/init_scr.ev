@@ -31,152 +31,9 @@ INIT_EVENT_END
 
 init_flags:
 {
-	//R03道路：ハカイ団と遭遇イベント
-	//_FLAG_SET( FV_R03_RIVAL_01 )
-	//_FLAG_SET( FV_R03_SUPPORT_01 )
 	//R03道路：育て屋じいさん
 	_FLAG_SET( FV_R03_SODATEYA_01 )
-	//R03R0301：地下水脈の曲をプラズマ団曲に設定
-	//_FLAG_SET( SYS_FLAG_BGM_R03R0301PLASMA )
 
-	//カラクサタウン：演説イベント
-	//_FLAG_SET( FV_T02_SAGE )
-	//_FLAG_SET( FV_T02_NNN )
-	//_FLAG_SET( FV_T02_MAN )
-	//_FLAG_SET( FV_T02_RIVAL_02 )
-	//_FLAG_SET( FV_T02_SPEECH_BEFORE )
-
-	//２番道路：イベント後、カラクサタウンＰＣ内に出現
-	//_FLAG_SET( FV_T02PC0101_RIVAL )
-
-	//自宅２階：サポート（後から出現するため）
-	//_FLAG_SET( FV_T01R0102_SUPPORT )
-
-	//サンヨウシティジム：ジムリーダー２人（演出で出現するため）
-	//_FLAG_SET( FV_C01GYM0101_LEADERS )
-	
-	//R02・2番道路ランニングシューズイベントが始まるまで非表示
-	//_FLAG_SET(FV_R02_MOTHER)
-	
-	//C02：サポート・ライバル・アーティ・アロエを盗難事件が起きるまで非表示
-	//_FLAG_SET( FV_C02_LEADER2)
-	
-	//C02：博物館内のプラズマ団を盗難事件が起きるまで非表示
-	//_FLAG_SET( FV_C02GYM0101_HAKAI)
-	
-	//C02：博物館内のサポート・ライバルを盗難事件イベントまで非表示
-	//_FLAG_SET( FV_C02GYM0101_FRIENDS)
-
-	//C04電気ジム：コースターのトレーナー・プレイヤーが乗ろうとするまで非表示
-	//_FLAG_SET( FV_C04GYM0101_TR_01 )
-	//_FLAG_SET( FV_C04GYM0101_TR_02 )
-
-	//サンヨウシティ・トレーナーズスクール、夢の跡地に行くまで非表示、バッジ取得まで非表示
-	//_FLAG_SET( FV_C01_LEADER1_01 )
-	//_FLAG_SET( FV_C01_INVENTOR_01 )
-	
-	//D05:ライバルPOSを踏んだ後に表示
-	//_FLAG_SET( FV_D05_RIVAL_01 )
-	//D05R0101：入室時に表示
-	//_FLAG_SET( FV_D05R0101_RIVAL_01 )
-	//D05R0101:ライバルPOSを踏んだ後に表示
-	//_FLAG_SET( FV_D05R0101_RIVAL_02 )
-	//D05R0201:入室した際のイベント中に表示
-	//_FLAG_SET( FV_D05R0201_RIVAL_01 )
-	
-	//D05R0201:コンテナworkmanを戦闘後まで非表示に設定
-	//_FLAG_SET( FV_D05R0201_WORKMAN_01 )
-	
-	//C05：ゲーヂスとジムリーダー会話イベント、コンテナクリア後に表示
-	//_FLAG_SET( FV_C05_GYMLEADER_02 )
-	//_FLAG_SET( FV_C05_SAGE_01 )
-	//C05R0601：ホドモエマーケットお香売り表示
-	//_FLAG_SET( FV_C05R0601_OKOU )
-	
-	//D02R0101：盗難イベント
-	//_FLAG_SET( FV_D02R0101_LEADER2 )
-	//_FLAG_SET( FV_D02R0101_SAGE5 )
-
-	//D01R0101：夢アイテム、夢ポケモンと遭遇イベント後に表示
-	//_FLAG_SET( FV_D01R0101_ITEM_01 )
-	
-	//D01R0101：サポート、C01ジムクリア後に表示
-	//_FLAG_SET( FV_D01R0101_SUPPORT_01 )
-	//_FLAG_SET( FV_D01R0101_POKE_01 )
-	//_FLAG_SET( FV_D01R0101_GCIS_01 )
-	//D01R0101：七賢人、ゲームクリア後に表示
-	//_FLAG_SET( FV_D01R0101_SAGE )
-	//D01R0201：ムシャーナ、ゲームクリア後に表示
-	//_FLAG_SET( FV_D01R0201_POKE16_01 )
-
-	//５番道路のジムリーダーとライバル
-	//_FLAG_SET( FV_R05_RIVAL )
-	//_FLAG_SET( FV_R05_LEADER4 )
-	//５番道路のライバル（クリア後表示）
-	//_FLAG_SET( FV_R05_RIVAL_AFTER )
-	
-	//D06のヤーコンをイベントまで非表示
-	//_FLAG_SET( FV_D06_LEADER5_01)
-	
-	//D06R0101のサポートと博士（娘）をイベントまで非表示
-	//_FLAG_SET( FV_D06R0101_FRIENDS )
-
-	//C01R0101：発明家、誘導イベントまで非表示
-	//_FLAG_SET( FV_C01R0101_INVENTOR_01 )
-	
-	//C07：ライバル・サポート・ジムクリア後に表示
-	//_FLAG_SET( FV_C07_RIVAL_01 )
-	//_FLAG_SET( FV_C07_SUPPORT_01 )
-	//C07：ハチク・ジムクリア後に表示
-	//_FLAG_SET( FV_C07_READER7 )
-
-	//D03R0101:ライバル１・D08のイベント後まで非表示
-	//_FLAG_SET( FV_D03R0101_RIVAL_01 )
-	
-	//D08：リュウラセンの塔の外フィールド・ジム7クリアまで
-	//ライバル、サポート、ジムリーダー7を非表示
-	//D080901イベント後まで、チャンピオン非表示
-	//_FLAG_SET( FV_D08_RIVAL_01 )
-	//_FLAG_SET( FV_D08_SUPORT_01 )
-	//_FLAG_SET( FV_D08_CHAMPION_01 )
-	//_FLAG_SET( FV_D08_LEADER7_01 )
-	//_FLAG_SET( FV_D08R0901_EVENT_01 )
-	//_FLAG_SET( FV_D08R0101_EVENT_01 )
-	//_FLAG_SET( FV_D08R0101_HAKAI ) 
-	
-	//C02のサポート、ライバル、チャンピオン、アロエ、博士（父）、博士（娘）
-	//D04R601のイベント終了まで非表示
-	//_FLAG_SET(FV_C02_STONEEVENT_01)
-	//_FLAG_SET(FV_C02_STONEEVENT_02)
-	
-	//D03R0101:ライバル２・チャンピオン・D04R0601のイベント後まで非表示
-	//_FLAG_SET( FV_D03R0101_RIVAL_02 )
-	//_FLAG_SET( FV_D03R0101_CHAMPION_01 )
-	
-	//R10：ライバル・POSイベント後非表示
-	//_FLAG_SET( FV_R10_RIVAL_01 )
-	
-	//チャンピオン部屋のチャンピオン（ゲームクリア後に表示し、戦闘できるようになる）
-	//_FLAG_SET( FV_C09R0501_CHAMPION_02 )
-	
-	//チャンピオン部屋のライバル（Ｎ城出現イベント中に表示、ゲームクリアで非表示）
-	//_FLAG_SET( FV_C09R0501_RIVAL_01 )
-	
-	//Ｎ城１Ｆ大広間のジムリーダー（七人衆VSジムリーダーイベント中に表示）
-	//_FLAG_SET( FV_N01R0101_LEADERS_01 )
-	
-	//Ｎ城謁見の間のゲーチス、ライバル、チャンピオン（Ｎ戦後に表示）
-	//_FLAG_SET( FV_N01R0502_EVENT_01 )
-	
-	//D04R0101：サングラス・D03R0101でおいしいみずをあげるまで非表示
-	//_FLAG_SET( FV_D04R0101_SUNGLASSES_01 )
-	
-	//D02:アーティ・盗難イベントまで非表示
-	//_FLAG_SET( FV_D02_LEADER3 )
-	
-	//D02R0101:アーティ・盗難イベントまで非表示
-	//_FLAG_SET( FV_D02R0101_LEADER3 )
-	
 	//バトルサブウェイ　受付、パートナー
 	_FLAG_SET( FV_BSUBWAY_RECEIPT_PARTNER )
 	//バトルサブウェイ　ホーム、パートナー
@@ -184,160 +41,29 @@ init_flags:
 	//バトルサブウェイ　ホーム、NPC
 	_FLAG_SET( FV_C04R0111_NPC )
 	
-	//ライモンシティのサポートパパ（ミュージカル誘導イベントまで非表示）
-	//_FLAG_SET( FV_C04_SUPPORTPAPA_01 )
-	
-	//R07R0105タワーオブヘブン5F：クリア後チャンピオン
-	//_FLAG_SET( FV_R07R0105_CHAMPION_01 )
-
 	//C06R101のGIRL1に話しかけるまで、C06のモンスターボールを非表示
 	_FLAG_SET( FV_C06_MONSTERBALL )	
 	
 	//C06のモンスターボールをに話しかけるまで、BOY2とBABYGIRL1を非表示
 	_FLAG_SET( FV_C06_GIRLBOY_01 )	
 	
-	//D07：ライバルとチャンピオン（POS起動で表示）
-	//_FLAG_SET( FV_D07_RIVAL_01 )
-	
-	//N01R0502：シンとム
-	//_FLAG_SET( FV_N01R0502_LEGEND_01 )
-	//_FLAG_SET( FV_N01R0502_LEGEND_02 )
-
-	//C03:リーダー３のジム前イベント
-	//_FLAG_SET( FV_C03_GUIDE_01 )
-
 	//各ポケセンにいるふしぎな贈り物配達員
 	_FLAG_SET( FV_POSTMAN )
-	
-	//Ｎの城移動用のワープＮＰＣを非表示
-	//_FLAG_SET( FV_C09R0701_WARPMAN )
-	
-	//５番道路：チャンピオンと少年達を非表示。C04ジムクリア後に表示
-	//_FLAG_SET( FV_R05_CHAMPION )
-	
-	//ポケモン研究所のミネズミ。T02のポケセンイベント後に表示
-	//_FLAG_SET( FV_T01R0401_POKEMON_01 )
-	//ポケモン研究所の博士（父）。C06のイベント後に表示
-	//_FLAG_SET( FV_T01R0401_HAKASE1 )
-	
-	//T01フィールドのママ。図鑑入手イベント後に表示。
-	//_FLAG_SET( FV_T01_MAMA_01 )
-
-	//D04R0201:七賢人２　D03R0101ライバルイベント時に表示
-	//_FLAG_SET( FV_D04R0201_SAGE2 )
-
-	//ライモン遊園地のしたっぱ２人を非表示。Ｎイベント中に表示。
-	//_FLAG_SET( FV_C04P01_HAKAI )
-
-	//C03中央部：ダンサー・サブイベント用
-	//_FLAG_SET( FV_C03CENTER_DANCER_01 )
-	//_FLAG_SET( FV_C03CENTER_DANCER_02 )
-
-	//映画関連ゾロアイベントのゾロア。イベント起動で表示。
-	//_FLAG_SET( FV_C03R0401_POKE22_01 )
 
 	//映画関連ゾロアークイベントの女性（ゾロアーク）。イベント起動で表示。
 	_FLAG_SET( FV_R16R0201_WOMAN3 )
 
-	//観覧車トレーナー
-	//_FLAG_SET( FV_AMUSEMENT_TRAINER )
-
-	//自宅１階：変装ハンサム非表示。クリア後に表示。
-	//_FLAG_SET( FV_T01R0101_HANDSOME_MAMA )
-
-	//クリア後：18番道路の七賢人その６
-	//_FLAG_SET( FV_R18_SAGE )
-	
 	//R14R0201：ツチノカミ
 	_FLAG_SET( FV_R14R0201_LEG )
 
-	//チャンピオンロード外側：崖の下のベテラントレーナー。POSイベント後に表示。
-	//_FLAG_SET( FV_D09_VETERANM_02 )
-	
-	//H04 配達物イベント　イベント起動時まで非表示
-	//_FLAG_SET(FV_H04_ITEM_02)
-
-	//自宅２F：表彰状、バトルサブウェイのトロフィを非表示
-	//_FLAG_SET( FV_T01R0102_AWARD_01 )
-	//_FLAG_SET( FV_T01R0102_AWARD_02 )
-	//_FLAG_SET( FV_T01R0102_TROPHY_01 )
-	//_FLAG_SET( FV_T01R0102_TROPHY_02 )
-	//_FLAG_SET( FV_T01R0102_TROPHY_03 )
-	
-	//T04R0101巨大別荘の家族を非表示
-	/*
-	/_FLAG_SET( FV_T04R0101_BOY3_01 )
-	_FLAG_SET( FV_T04R0101_GIRL4_01 )
-	_FLAG_SET( FV_T04R0101_LADY_01 )
-	_FLAG_SET( FV_T04R0101_GENTLEMAN_01 )
-	_FLAG_SET( FV_T04R0101_VETERANW_01 )
-	_FLAG_SET( FV_T04R0101_BOY4_01 )
-	*/
-	
 	//リュウラセンの塔のパッケージポケモンを消しておく
 	_FLAG_SET(FV_D08R0901_PACKAGE_POKE)
-
-	//C03・プラズマ団イベント用
-	//_FLAG_SET(FV_C03P07_PLASMA_LEADER3)
-	//_FLAG_SET(FV_C03P07_SUPPORT_LEADER8)
-	//_FLAG_SET(FV_C03P15_SUPPORT_LEADER8)
-	//_FLAG_SET(FV_C03R1101_PLASMA)
-	//_FLAG_SET(FV_C03P15_LEADER3)
-	
-	//N01R0501ゲーチス・謁見の間イベントで非表示
-	//_FLAG_SET(FV_N01R0501_SAGE1)
-	
-	//C06　ジムクリアまでNを非表示
-	//_FLAG_SET(FV_C06_BOSS)
-	
-	//R04　ジム前イベントをするまでライバル非表示
-	//_FLAG_SET(FV_R04_RIVAL_01)
-	
-	//T01研究所 図鑑入手イベント中だけ博士(娘)のテーマをゾーン曲にする
-	//_FLAG_SET( SYS_FLAG_BGM_LABO_01 )
-	
-	//クリア後七賢人/電気石の洞穴/を非表示にする
-	//_FLAG_SET(FV_D06R0301_SAGE)
 
 	//ギアステーションのジャッジを非表示
 	_FLAG_SET( FV_POKE_JUDGE_01 )
 	
-	//R06R0101：シキジカをイベント成功まで消す。
-	//_FLAG_SET(FV_R06R0101_POKE_SPRING)
-	//_FLAG_SET(FV_R06R0102_POKE_SUMMER)
-	//_FLAG_SET(FV_R06R0103_POKE_AUTUMN)
-	//_FLAG_SET(FV_R06R0104_POKE_WINTER)
-	
-	//D09R1401チャンピオンロード：ライバル（クリア後に表示）
-	//_FLAG_SET(FV_D09R1401_RIVAL)
-	
 	//カナワ民家：バトルサブウェイの落し物初回入手数をセット
 	$WK_OTHER_BSEVENT_NUM = 1
-	
-	//研究所：殿堂入り後サポートを非表示
-	//_FLAG_SET( FV_T01R0401_SUPPORT_AFTER )
-
-	//ワンダーブリッジ：ダークトリニティ・ミネズミを非表示
-	//_FLAG_SET( FV_H05_NINJA_01 )
-	//_FLAG_SET( FV_H05_MINEZUMI )
-
-	//ビレッジブリッジ民家：引越しにくる人を非表示
-	//_FLAG_SET( FV_H04R0501_GUEST )
-
-	//電気石の洞穴のダークトリニティを非表示
-	//_FLAG_SET(FV_D06R0101_HAKAI) 
-
-	//シリンダーブリッジのダークトリニティを非表示
-	//_FLAG_SET(FV_H03_NINJA_01)
-
-	//電気石の洞穴のプラズマ団を非表示
-	//_FLAG_SET(FV_D06R0301_HAKAI_01)
-
-	//トライアルハウスの謎の女性を非表示
-	//_FLAG_SET( FV_C04R0901_TRAINERW_01 )
-	
-	//c03r1101のモンスターボールを非表示
-	//_FLAG_SET(FV_C03R1101_ITEM_01)
 
 	//★SWAN
 	//c12r0101のベルとママを非表示
@@ -345,14 +71,13 @@ init_flags:
 	_FLAG_SET(FV_C12R0101_SWBELL)
 	
 	//c12r0101の表彰状とトロフィーを非表示
-	/*
+
 	_FLAG_SET(FV_C12R0101_TRORHY1_01)
 	_FLAG_SET(FV_C12R0101_TRORHY2_01)
 	_FLAG_SET(FV_C12R0101_TRORHY3_01)
 	_FLAG_SET(FV_C12R0101_PRIZE1_01)
 	_FLAG_SET(FV_C12R0101_PRIZE2_01)
-	*/
-	
+
 	//d22r0101のbreederを非表示
 	_FLAG_SET(FV_D22R0101_BREEDER_01)
 	
@@ -374,6 +99,17 @@ init_flags:
 	
 	//PC
 	_FLAG_SET( FV_PC_MEDALOYAJI )
+	
+	//C03
+	_FLAG_SET( FV_C03_SWCHAMPION_01 ) //アイリス：ジム前イベント後表示
+	_FLAG_SET( FV_C03P17_SWCHAMPION_01 )  //アイリス：下水道前イベント起動時表示
+	_FLAG_SET( FV_C03P17_SWRIVAL_01 ) //ライバル：下水道前イベント起動時表示
+	_FLAG_SET( FV_C03P17_PILOT_01 ) //ライバル：下水道前イベント起動時表示
+	_FLAG_SET( FV_C03P01_SWBOSS_01 )  //アクロマ：ジムクリア後表示
+	
+	//R04
+	_FLAG_SET( FV_R04_SWBOSS_01 ) //アクロマ：ジムクリア後表示
+
 
 }
 _RET
@@ -453,44 +189,11 @@ INIT_EVENT_START  ev_init_gameclear_script
   //↑で設定した特殊接続先からゲームを開始するリクエスト
   _FLAG_SET( SYS_FLAG_SPEXIT_REQUEST )
 
-  //自宅１Fお母さんのメッセージを回復処理ではなく日常会話にする。BTS2574の対処
-  //_FLAG_SET( FE_T01R0101_MAMA_RETALK )
-
-/*
-  //伝説３体の復活処理
-  IF FLAG_ON( FV_R06R0203_LEGEND1 ) && FLAG_OFF( FE_LEGEND1_GET ) THEN
-      //OBJを消していて、捕まえていなければ復活させる
-      _FLAG_RESET( FV_R06R0203_LEGEND1 )
-  ENDIF
-  IF FLAG_ON( FV_D09R1501_LEGEND2 ) && FLAG_OFF( FE_LEGEND2_GET ) THEN
-      //OBJを消していて、捕まえていなければ復活させる
-      _FLAG_RESET( FV_D09R1501_LEGEND2 )
-  ENDIF
-  IF FLAG_ON( FV_D02R0201_LEGEND3 ) && FLAG_OFF( FE_LEGEND3_GET ) THEN
-      //OBJを消していて、捕まえていなければ復活させる
-      _FLAG_RESET( FV_D02R0201_LEGEND3 )
-  ENDIF
- */
- 
- /*
-    //ツチノカミ未捕獲時の復活処理
-  IF FLAG_ON( FV_R14R0201_LEG ) && FLAG_OFF( FE_R14R0201_LEG_GET ) THEN
-      //OBJを消していて、捕まえていなければ復活させる
-      _FLAG_RESET( FV_R14R0201_LEG )
-  ENDIF
-  
-     //シンとム未捕獲時の復活処理
-  IF FLAG_ON(FV_D08R0901_PACKAGE_POKE) && FLAG_OFF(FE_PACKAGE_POKE_GET) THEN
-      //OBJを消していて、捕まえていなければ復活させる
-      _FLAG_RESET( FV_D08R0901_PACKAGE_POKE )
-  ENDIF
-*/
   //ライの復活処理
   IF FLAG_ON( FV_D10R0401_POKE10 ) && FLAG_OFF( FE_D10R0401_POKE10_GET ) THEN
     //OBJを消していて、捕まえていなければ復活させる
     _FLAG_RESET( FV_D10R0401_POKE10 )
   ENDIF
-
 
      //ドラー未捕獲時の復活処理
   IF FLAG_ON(FV_D04R2301_POKE13) && FLAG_OFF(FE_D04R2301_POKE13_GET) THEN
@@ -509,76 +212,14 @@ ev_first_gameclear:
   //ゲームクリアフラグをセット
   _FLAG_SET( SYS_FLAG_GAME_CLEAR )
 
-  //チャンピオン部屋：マップマトリクス差し替え（壊れた状態から元に戻す）
-  _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_02, FALSE, FALSE )
-  //チャンピオン部屋：BGM変更フラグをリセット
-  //_FLAG_RESET( SYS_FLAG_BGM_CHAMP )
-  //チャンピオン部屋：復帰チャンピオンを表示
-  //_FLAG_RESET( FV_C09R0501_CHAMPION_02 )
-  //復帰チャンピオン戦を有効
-  //$WK_SCENE_C09R0501 = 3
-
-  //ポケモンリーグの封鎖を解除
-  //_FLAG_RESET( FE_C09_FORBIDDEN )
-
   //古代の城のマップ変化
   _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_06, TRUE, FALSE )
-
-  //Ｎの城移動用のワープＮＰＣを非表示
-  //_FLAG_SET( FV_C09R0701_WARPMAN )
-
-  //ボックス壁紙追加
-  _GET_BOX_WALLPAPER( SCR_BOX_EX_WALLPAPER1 )
-  
-  //５番道路のライバル
-  //_FLAG_RESET( FV_R05_RIVAL_AFTER )
-
-  //R07R0105タワーオブヘブン5F：クリア後チャンピオン
-  //_FLAG_RESET( FV_R07R0105_CHAMPION_01 )
-  //$WK_SCENE_R07R0105_CHAMPION = 1
-
-  //クリア後イベント：自宅１階のハンサムイベント有効
-  //$WK_SCENE_T01R0101 = 2
-  //_FLAG_RESET( FV_T01R0101_HANDSOME_MAMA )	//変装ハンサム表示
-
-  //クリア後イベント：１８番道路の七賢人その６を表示
-  //_FLAG_RESET( FV_R18_SAGE )
-  
-  //D01R0101：七賢人、ゲームクリア後に表示
-  //_FLAG_RESET( FV_D01R0101_SAGE )
-  //D01R0101：R0201の手前のストッパーを非表示
-  //_FLAG_SET( FV_D01R0101_CORN_01 )
-
-  //D05R0201：七賢人、ゲームクリア後に表示
-  //_FLAG_RESET( FV_D05R0201_SAGE7 )
-
-  //D06R0301：七賢人、ゲームクリア後に表示
-  //_FLAG_RESET(FV_D06R0301_SAGE)
-	
-  //C05R0601：ホドモエマーケットお香売り表示
-  //_FLAG_RESET( FV_C05R0601_OKOU )
-
-  //FV_R16_STOPPER_01：16番道路ストッパー解除
-  //_FLAG_SET( FV_R16_STOPPER_01 )
-
-  //FV_R16_STOPPER_01：16番道路ストッパー解除
-  //_FLAG_SET( FV_R16_STOPPER_01 )
-
-  //FV_C08R0701_STOPPER_01：ソウリュウシティ11番道路方面ストッパー解除
-  //_FLAG_SET( FV_C08R0701_STOPPER_01 )
-  //$WK_SCENE_C08R0701_STOPPER = 1
 
   //ギアステーションのジャッジを表示
   _FLAG_RESET( FV_POKE_JUDGE_01 )
   
-  //ゲーム内交換の対戦トレーナーとバトル可能にする
-  //_FLAG_SET(FE_C02R0301_BTL_01)
-  
-  //デザートリゾートに博士出現
-  //IF $WK_SCENE_D03R0101_AFTER != 2 THEN
-	//$WK_SCENE_D03R0101_AFTER = 1
-  //ENDIF
-  
+  //スカイアローブリッジのストッパーを非表示
+  _FLAG_RESET( FV_H01R0201_STOPPER_01 )
   
 _RET
 

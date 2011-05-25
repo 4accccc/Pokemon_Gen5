@@ -22,8 +22,277 @@
 _EVENT_DATA		ev_bg_r04_sign3_01
 _EVENT_DATA		ev_bg_r04_sign4_01
 _EVENT_DATA		ev_bg_r04_sign1_01
+_EVENT_DATA		ev_r04_bigrock_01
+_EVENT_DATA		ev_pos_r04_oldman1_02
+_EVENT_DATA		ev_pos_r04_swboss_02
+_EVENT_DATA		ev_r04_oldman1_01
+_EVENT_DATA		ev_r04_swboss_01
 _EVENT_DATA_END
+
+
+//話しかけた方向取得変数
+DEFINE_LOCAL LWK_DIR
+DEFINE_LOCAL  LCW_POSX
+DEFINE_LOCAL  LCW_POSZ
+/**************************************************************/
+/*	R04		POS：かいりき入手								  */
+/**************************************************************/
+EVENT_START  ev_pos_r04_oldman1_02
+  
+  //アニメ：「！」
+  _OBJ_ANIME( R04_OLDMAN1_01,anm_common_gyoe  )
+  _OBJ_ANIME_WAIT()
+
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  $LCW_POSZ -= 1
+   
+  //アニメ：じいさん接近
+  _OBJ_ANIME_AUTO( R04_OLDMAN1_01, LCW_POSX,LCW_POSZ, FORCE_TYPE_NOT, 8, DIR_LR )
+  _OBJ_ANIME_WAIT()
+  
+  //じいさん：おい！トレーナー
+  _BALLOONWIN_OBJMSG_POS( msg_r04_stop_01, R04_OLDMAN1_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //「かいりき」入手処理
+	_ITEM_EVENT_KEYWAIT( ITEM_HIDENMASIN04, 1 )
+  
+  //じいさん：おせないけどな
+  _BALLOONWIN_OBJMSG_POS( msg_r04_stop_02, R04_OLDMAN1_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：もといた位置に戻る
+  _OBJ_ANIME_AUTO( R04_OLDMAN1_01, 427,585, FORCE_TYPE_NOT, 8, DIR_LR )
+  _OBJ_ANIME_WAIT()
+  
+  //==================================//
+  
+  //R04のPOS無効
+  $WK_SCENE_R04_POKE = 1
+  
+  //==================================//
+  
+EVENT_END
+
+/**************************************************************/
+/*	R04		POS：アクロマと会話								  */
+/**************************************************************/
+EVENT_START  ev_pos_r04_swboss_02
+  
+  /*
+  //カメラ移動
+  _CAMERA_START()		//カメラ操作開始
+  _CAMERA_PURGE()		//カメラのバインドを解く
+  _CAMERA_MOVE( 9688,0,970752,28213248,0,38240256,24 )
+  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+  */
+  
+
+  //アクロマ：まってましたよ！
+  _BALLOONWIN_OBJMSG_POS( msg_r04_swboss_01, R04_SWBOSS_01, POS_DEFAULT )
+  //アクロマ：これは
+  _BALLOONWIN_OBJMSG_POS( msg_r04_swboss_02, R04_SWBOSS_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：アクロマ上を見る
+  _OBJ_ANIME( R04_SWBOSS_01, anm_staystep_u)
+  _OBJ_ANIME_WAIT()
+  
+  //アクロマ：ほら　めをさましました
+  _BALLOONWIN_OBJMSG_POS( msg_r04_swboss_03, R04_SWBOSS_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：アクロマ下を見る
+  _OBJ_ANIME( R04_SWBOSS_01, anm_staystep_d)
+  _OBJ_ANIME_WAIT()
+  
+  
+  
+  /*
+  //自機にカメラを戻す
+  _CAMERA_DEF_MOVE (24)
+  //カメラ待ち
+  _CAMERA_WAIT_MOVE()
+  _CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+  _CAMERA_END()		//カメラ操作終了
+  */
+  
+	//==================================//
+  
+  //R04アクロマのPOS無効
+  $WK_SCENE_R04_SWBOSS = 2
+  
+  //==================================//
+EVENT_END
+
+/**************************************************************/
+/*	R04		OLDMAN1								  */
+/**************************************************************/
+EVENT_START  ev_r04_oldman1_01
+  //アクロマイベント終了後
+	IF $WK_SCENE_R04_SWBOSS == 3 THEN
+	  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r04_stop_03 )
+	//それ以外
+  ELSE
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r04_stop_02 )
+  ENDIF
+EVENT_END
+
+/**************************************************************/
+/*	R04		SWBOSS1								  */
+/**************************************************************/
+EVENT_START  ev_r04_swboss_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r04_swboss_04 )
+EVENT_END
+
+/**************************************************************/
+/*	R04		擬態イワパレス								  */
+/**************************************************************/
+EVENT_START  ev_r04_bigrock_01
+
+  //アクロマイベント起動中
+	IF $WK_SCENE_R04_SWBOSS == 2 THEN
+    //イワパレス・アクロマ戦をコール
+    _CALL	ev_vs_r04swboss
+  //アクロマイベント以外
+  ELSE
+    _TALK_START_SE_PLAY()
+    _PLAYER_NAME( 0 )
+    _SYSWIN_MSG( msg_r04_rock_01, POS_DOWN )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+  ENDIF
+  
+EVENT_END
+
+ev_vs_r04swboss:
+  _TALK_START_SE_PLAY()
+  
+  //イワパレス：ぱれっしゅ！
+  _VOICE_PLAY(MONSNO_569,0)
+	 _PLAINWIN_MSG_DOWN(msg_r04_rock_02 )
+	_VOICE_WAIT()
+	_AB_KEYWAIT_MARK()
+	_MSGWIN_CLOSE()
+  
+  //【仮】イワパレス戦をセット（レベルが仮）
+  _WILD_BTL_SET_TALK( MONSNO_569, 30 )
+  _WILD_LOSE_CHECK( SCWK_ANSWER )
+  
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+   
+  //勝利チェック
+  IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+    //大きな岩動作モデル削除
+    _OBJ_DEL( R04_BIGROCK_01 )
+    _OBJ_DEL( R04_BIGROCK_02 )
+    _OBJ_DEL( R04_BIGROCK_03 )
+    
+    //アクロマ隣接
+    IF $LCW_POSX == 433 THEN
+      $LCW_POSX -= 1
+      _OBJ_POS_CHANGE( R04_SWBOSS_01, LCW_POSX, 0, LCW_POSZ, DIR_RIGHT )
+    ELSE
+      $LCW_POSX += 1
+      _OBJ_POS_CHANGE( R04_SWBOSS_01, LCW_POSX, 0, LCW_POSZ, DIR_LEFT )
+    ENDIF
+    
+    _WILD_WIN()
+  ELSE
+    _WILD_LOSE()
+  ENDIF
+  
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  
+  //アニメ：主人公アクロマの方を向く
+  IF $LCW_POSX == 433 THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
+  ELSE
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
+  ENDIF
+  _OBJ_ANIME_WAIT()
+  
+  //【仮】リトライのリストに追加する必要あり。岩澤さんに報告
+  _WILD_RETRY_CHECK( SCWK_ANSWER )
+    
+  SWITCH $SCWK_ANSWER
+  CASE SCR_WILD_BTL_RET_WIN THEN
+  //勝利した場合
+    _BALLOONWIN_OBJMSG_POS( msg_r04_swboss_05, R04_SWBOSS_01, POS_DEFAULT )
+  CASE SCR_WILD_BTL_RET_ESCAPE THEN
+  //逃げた場合
+    _BALLOONWIN_OBJMSG_POS( msg_r04_swboss_07, R04_SWBOSS_01, POS_DEFAULT )
+  CASE SCR_WILD_BTL_RET_CAPTURE THEN
+  //捕まえた場合
+    _BALLOONWIN_OBJMSG_POS( msg_r04_swboss_06, R04_SWBOSS_01, POS_DEFAULT )
+  ENDSWITCH
+  
+  //アクロマ：なまえは？
+  _PLAYER_NAME( 0 )
+  _BALLOONWIN_OBJMSG_POS( msg_r04_swboss_08, R04_SWBOSS_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //システムメッセージ：回復させた
+  _PLAYER_NAME( 0 )
+  _SYSWIN_MSG( msg_r04_swboss_09, POS_DEFAULT )
+  _SE_PLAY( SEQ_SE_RECOVERY )
+  //回復処理
+  _TEMOTI_POKEMON_KAIFUKU()
+  
+  _SE_WAIT()
+  _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
+  
+  //アクロマ：それでは
+  _PLAYER_NAME( 0 )
+  _BALLOONWIN_OBJMSG_POS( msg_r04_swboss_10, R04_SWBOSS_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //【仮】トレーナーラベルが仮
+  _TRAINER_BTL_SET( TRID_SWRIVAL_04, 0 )
+  //結果チェック
+  _TRAINER_LOSE_CHECK( SCWK_ANSWER )
+  IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+    _TRAINER_WIN()
+  ELSE
+    _TRAINER_LOSE()
+  ENDIF
+  
+  //アクロマ：なるほど！
+  _PLAYER_NAME( 0 )
+  _BALLOONWIN_OBJMSG_POS( msg_r04_swboss_11, R04_SWBOSS_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //【仮】どうぐ入手処理（入手内容が仮）
+	_ITEM_EVENT_KEYWAIT(ITEM_ORENNOMI, 5)
 	
+	//アクロマ：くやしい！
+	_PLAYER_NAME( 0 )
+  _BALLOONWIN_OBJMSG_POS( msg_r04_swboss_12, R04_SWBOSS_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  
+  _OBJ_ANIME_AUTO( R04_SWBOSS_01, LCW_POSX,572, FORCE_TYPE_NOT, 8, DIR_LR )
+  _OBJ_ANIME_WAIT()
+  
+  _OBJ_DEL( R04_SWBOSS_01 )
+  
+  //==================================//
+  
+  //R04アクロマイベント終了
+  $WK_SCENE_R04_SWBOSS = 3
+  //R04アクロマ非表示
+  _FLAG_SET( FV_R04_SWBOSS_01 )
+  //R04おおきな岩非表示
+  _FLAG_SET( FV_R04_BIGROCK_01 )
+  
+  //==================================//
+_RET
+
 /**************************************************************/
 /*	R04		お得な掲示板									  */
 /**************************************************************/
@@ -44,3 +313,75 @@ EVENT_END
 EVENT_START  ev_bg_r04_sign1_01
 	_EASY_BGWIN_MSG(msg_r04_sign1_01 , TYPE_ROAD)
 EVENT_END
+
+//--------------------------------------------------------------------
+//	☆共通処理：1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_d
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_u
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_r
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_l
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staystep_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：はてな
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_hatena
+	_ANIME_DATA	AC_MARK_HATENA,1
+	_ANIME_DATA	ACMD_END,0
+	

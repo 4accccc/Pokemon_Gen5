@@ -18,4 +18,355 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA		ev_scene_c03p17_swchampion_02
+_EVENT_DATA		ev_c03p17_swchampion_01
+_EVENT_DATA		ev_c03p17_swrival_01
+_EVENT_DATA		ev_c03p17_workman_01
+_EVENT_DATA		ev_c03p17_pilot_01
+_EVENT_DATA		ev_zone_c03p17
+_EVENT_DATA		ev_init_c03p17
 _EVENT_DATA_END
+
+/************************************************************/
+/*		ZONE_CHANGE                             */
+/************************************************************/
+INIT_EVENT_START   ev_zone_c03p17
+  
+//
+  
+INIT_EVENT_END
+
+/************************************************************/
+/*					FIELD_INIT_SCRIPT						*/
+/************************************************************/
+INIT_EVENT_START ev_init_c03p17
+  
+  //下水道ストッパーをレゾナンスリゾート終了まで配置
+  IF $WK_SCENE_C03P17 < 3 THEN
+    _OBJ_POS_CHANGE( C03P17_WORKMAN_01, 11, -1, 21, DIR_LEFT )
+  ENDIF
+  
+  //イベント進行で配置を分岐
+  IF $WK_SCENE_C03P17 == 2 THEN
+  //レゾナンスリゾート誘導中
+    _OBJ_POS_CHANGE( C03P17_SWRIVAL_01, 8, 0, 19, DIR_RIGHT )
+    _OBJ_POS_CHANGE( C03P17_SWCHAMPION_01, 10, 0, 14, DIR_DOWN )
+    
+  ELSIF $WK_SCENE_C03P17 == 3 THEN
+  //【仮】レゾナンスリゾート誘導復帰後（誘導後の状態を名木橋君に確認）
+  ENDIF
+
+INIT_EVENT_END
+
+/**************************************************************/
+/*		SCENE_CHANGE：アイリス誘導イベント
+/**************************************************************/
+EVENT_START		ev_scene_c03p17_swchampion_02
+
+  //カメラ移動
+  _CAMERA_START()		//カメラ操作開始
+  _CAMERA_PURGE()		//カメラのバインドを解く
+  _CAMERA_MOVE( 9467,0,1191936,528384,0,897024,40 )
+  
+  //アニメ：主人公アイリスの前に移動
+  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 8,14, FORCE_TYPE_NOT, 8, DIR_UD )
+  _OBJ_ANIME_WAIT()
+  
+  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+  
+  //アイリス：こっちが
+  _BALLOONWIN_OBJMSG_POS( msg_c03p17_swchampion_01, C03P17_SWCHAMPION_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：アイリス下を向く
+  _OBJ_ANIME( C03P17_SWCHAMPION_01, anm_staystep_r )
+  
+  //カメラ：下水道に注目して戻す
+  _CAMERA_MOVE( 9688,4480,970752,1130496,0,1155072,50 )
+  _TIME_WAIT(120)
+  _CAMERA_MOVE( 9467,0,1191936,528384,0,897024,40 )
+  
+  _OBJ_ANIME_WAIT()
+  
+  //==================================//
+  //C03P17ライバル表示
+  _FLAG_RESET( FV_C03P17_SWRIVAL_01 )
+  _OBJ_ADD( C03P17_SWRIVAL_01 )
+  //==================================//
+  
+  //アニメ：ライバル主人公わきに移動
+  _OBJ_ANIME( C03P17_SWCHAMPION_01, anm_staystep_l )
+  _OBJ_ANIME_AUTO( C03P17_SWRIVAL_01, 8,15, FORCE_TYPE_NOT, 4, DIR_UD )
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME( C03P17_SWRIVAL_01, anm_staystep_u )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+  
+  //ライバル：こっちが
+  _PLAYER_NAME( 0 )
+  _BALLOONWIN_OBJMSG_POS( msg_c03p17_swrival_01, C03P17_SWRIVAL_01, POS_DEFAULT )
+  
+   {
+  _YES_NO_WIN( SCWK_ANSWER )
+  
+  //はい
+  IF $SCWK_ANSWER == SCR_YES THEN
+    _BALLOONWIN_OBJMSG_POS( msg_c03p17_swrival_02, C03P17_SWRIVAL_01, POS_DEFAULT )
+  ELSE
+    _BALLOONWIN_OBJMSG_POS( msg_c03p17_swrival_03, C03P17_SWRIVAL_01, POS_DEFAULT )
+  ENDIF
+  
+  //ライバル：きいたんだが
+  _BALLOONWIN_OBJMSG_POS( msg_c03p17_swrival_04, C03P17_SWRIVAL_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  }
+  
+  //アニメ：ライバル・船近くに移動
+  _OBJ_ANIME_AUTO( C03P17_SWRIVAL_01, 8,19, FORCE_TYPE_NOT, 8, DIR_UD )
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME( C03P17_SWRIVAL_01, anm_staystep_r )
+  _OBJ_ANIME_WAIT()
+
+  //アイリス：いいんじゃない？
+  _BALLOONWIN_OBJMSG_POS( msg_c03p17_swchampion_02, C03P17_SWCHAMPION_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  //自機にカメラを戻す
+  _CAMERA_DEF_MOVE (40)
+  //カメラ待ち
+  _CAMERA_WAIT_MOVE()
+  _CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+  _CAMERA_END()		//カメラ操作終了
+  
+  //==================================//
+  
+  //C03P17_SCENE_CHANGE無効・レゾナンスリゾート誘導開始
+  $WK_SCENE_C03P17 = 2
+  
+  //==================================//
+EVENT_END
+
+/**************************************************************/
+/*		アイリス話しかけ
+/**************************************************************/
+EVENT_START		ev_c03p17_swchampion_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03p17_swchampion_02 )
+EVENT_END
+
+/**************************************************************/
+/*		ライバル話しかけ
+/**************************************************************/
+EVENT_START		ev_c03p17_swrival_01
+  //下水道クリア後
+  IF $WK_SCENE_C03P17 == 5 THEN
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03p17_swrival_08 )
+  ELSE
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03p17_swrival_04 )
+  ENDIF
+EVENT_END
+
+/**************************************************************/
+/*		ストッパー：workman
+/**************************************************************/
+EVENT_START		ev_c03p17_workman_01
+  //下水道開始前
+  IF $WK_SCENE_C03P17 < 3 THEN
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03p17_stop_01 )
+  //下水道クリア
+  ELSIF $WK_SCENE_C03P17 == 5 THEN
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03p17_stop_03 )
+  //【仮】下水道攻略中（表示条件確認が必要）
+  ELSE
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03p17_stop_02 )
+  ENDIF
+EVENT_END
+
+/**************************************************************/
+/*		パイロット
+/**************************************************************/
+EVENT_START		ev_c03p17_pilot_01
+  
+  //【仮】レゾナンスリゾートへの移動・チュートリアル
+  IF $WK_SCENE_C03P17 <=2 THEN
+    _CALL ev_c03p17_resort_guide_01
+  ELSE
+  
+  ENDIF
+  
+EVENT_END
+
+//【仮】レゾナンスリゾート案内イベント（名木橋君が組む）
+ev_c03p17_resort_guide_01:
+
+  //暗転処理
+  _BLACK_OUT_SLOW()
+	_DISP_FADE_END_CHECK()
+	
+	//【仮】登場人物移動
+	_OBJ_POS_CHANGE( C03P17_SWCHAMPION_01, 10, 0, 17, DIR_DOWN )
+	_OBJ_POS_CHANGE( C03P17_SWRIVAL_01, 9, 0, 19, DIR_RIGHT )
+	_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 10, 0, 19, DIR_LEFT )
+	_OBJ_POS_CHANGE( C03P17_WORKMAN_01, 12, 0, 19, DIR_LEFT )
+  
+	//暗転復帰
+	_BLACK_IN_SLOW()
+	_DISP_FADE_END_CHECK()
+
+  //==================================//
+  
+  //レゾナンスリゾート誘導終了
+  $WK_SCENE_C03P17 = 3
+  
+  //==================================//
+  
+  //アイリス誘導イベント
+  _CALL ev_c03p17_swchampion_d11guide_01
+
+_RET
+
+//下水道誘導イベント
+ev_c03p17_swchampion_d11guide_01:
+
+  //カメラ移動
+  _CAMERA_START()		//カメラ操作開始
+  _CAMERA_PURGE()		//カメラのバインドを解く
+  _CAMERA_MOVE( 9467,0,1552384,688128,0,1277952,40 )
+  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+  
+  //ライバル：いなかった
+  _PLAYER_NAME( 0 )
+  _BALLOONWIN_OBJMSG_POS( msg_c03p17_swrival_05, C03P17_SWRIVAL_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //ライバル：おれ…ぜったいゆるさないから！
+  _BALLOONWIN_OBJMSG_POS( msg_c03p17_swrival_07, C03P17_SWRIVAL_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：ライバル退場
+  _OBJ_ANIME_AUTO( C03P17_SWRIVAL_01, 2,14, FORCE_TYPE_NOT, 8, DIR_UD )
+  _OBJ_ANIME_WAIT()
+  
+  //ライバル動作モデル削除
+  _OBJ_DEL( C03P17_SWRIVAL_01 )
+  
+  //階段SE再生
+  _SE_PLAY( SEQ_SE_KAIDAN )
+  _SE_WAIT()
+  
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
+  _OBJ_ANIME_WAIT()
+  
+  //アイリス：きみのともだち
+  _BALLOONWIN_OBJMSG_POS( msg_c03p17_swchampion_03, C03P17_SWCHAMPION_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：アイリス退場
+  _OBJ_ANIME( C03P17_SWCHAMPION_01, anm_swchampion_go_d11 )
+  _TIME_WAIT(24)
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
+  _OBJ_ANIME_WAIT()
+  
+  //アイリス・ライバル動作モデル削除
+  _OBJ_DEL( C03P17_SWCHAMPION_01 )
+  
+  //自機にカメラを戻す
+  _CAMERA_DEF_MOVE (40)
+  //カメラ待ち
+  _CAMERA_WAIT_MOVE()
+  _CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+  _CAMERA_END()		//カメラ操作終了
+
+  //==================================//
+  
+  //C03P17アイリス非表示
+  _FLAG_SET( FV_C03P17_SWCHAMPION_01 )
+  //C03P17ライバル非表示
+  _FLAG_SET( FV_C03P17_SWRIVAL_01 )
+  //下水道イベント中
+  $WK_SCENE_C03P17 = 4
+  
+  //==================================//
+_RET
+
+//--------------------------------------------------------------------
+//	☆アイリス下水道へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swchampion_go_d11
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,4
+	_ANIME_DATA	AC_WALK_R_8F,8
+	_ANIME_DATA	AC_WALK_U_8F,4
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_d
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_u
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_r
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_l
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staystep_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：はてな
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_hatena
+	_ANIME_DATA	AC_MARK_HATENA,1
+	_ANIME_DATA	ACMD_END,0
+	

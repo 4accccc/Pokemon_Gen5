@@ -1055,7 +1055,7 @@ EVENT_START ev_pos_c12_rival_pair_01
   _OBJ_ANIME_AUTO( C12_SWRIVAL_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NOT, 8, DIR_LR )
   _OBJ_ANIME_WAIT()
 
-  //連れ歩き開始
+  //【仮】連れ歩き開始
   _PAIR_TRAINER_SET( C12_SWRIVAL_01, PAIR_ID_NATURAL, PAIR_TYPE_OPEN, TRID_RIVAL_07 )
   
   //========================================//
@@ -1310,7 +1310,7 @@ EVENT_END
 /* 少年2                                         */
 /**************************************************************/
 EVENT_START   ev_c12_boy2_01
- 	//【仮】ジム開放前
+ 	//ジム開放前
 	IF $WK_SCENE_C12GYM_OPEN < 1 THEN
 		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12_boy2_01 )
 	
@@ -1364,8 +1364,8 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_bg_c12_board_04
 	
-	//【仮】ジム開放前
-	IF $LOCALWORK11 == 0 THEN
+	//ジム開放前
+	IF $WK_SCENE_C12GYM_OPEN < 1 THEN
 		_EASY_BGWIN_MSG( msg_c12_gymsign_01, TYPE_POST )
 	
 	//ジム開放後
@@ -1401,30 +1401,20 @@ _ANIME_LABEL	anm_townmap_bell_bye
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-//	☆共通処理：下に1歩歩く
+//	☆共通処理：1歩歩く
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_walk_d
 	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
-//--------------------------------------------------------------------
-//	☆共通処理：上に1歩歩く
-//--------------------------------------------------------------------
 _ANIME_LABEL	anm_walk_u
 	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
-	
 
-//--------------------------------------------------------------------
-//	☆共通処理：右に1歩歩く
-//--------------------------------------------------------------------
 _ANIME_LABEL	anm_walk_r
 	_ANIME_DATA	AC_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
 
-//--------------------------------------------------------------------
-//	☆共通処理：左に1歩歩く
-//--------------------------------------------------------------------
 _ANIME_LABEL	anm_walk_l
 	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0

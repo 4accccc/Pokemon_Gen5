@@ -15,6 +15,9 @@
 #ifndef ZONE_D11R0101_EVC_H
 #define ZONE_D11R0101_EVC_H
 
+#define D11R0101_SWCHAMPION_01             0
+#define D11R0101_PLASMAM_01                1
+#define D11R0101_PLASMAM_02                2
 
 #endif //ZONE_D11R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d11r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

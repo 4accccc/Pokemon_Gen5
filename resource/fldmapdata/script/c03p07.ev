@@ -20,7 +20,128 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA		ev_bg_c03p07_gymsign_01
+_EVENT_DATA		ev_c03p07_sunglasses_01
 _EVENT_DATA_END
+
+/**************************************************************/
+/*	C03P07	ジムストッパー										  */
+/**************************************************************/
+EVENT_START		ev_c03p07_sunglasses_01
+  
+  //話しかけが初回
+  IF $WK_SCENE_C03GYM_STOPPER == 0 THEN
+  
+    _TALK_OBJ_START()
+    //カメラ移動
+    _CAMERA_START()		//カメラ操作開始
+    _CAMERA_PURGE()		//カメラのバインドを解く
+    _CAMERA_MOVE( 6917,0,835584,1540096,0,3178496,40 )
+    _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+    
+    //ダンペイ：ジムリーダなんですけど
+    _BALLOONWIN_OBJMSG_POS( msg_c03p07_glasses_01, C03P07_SUNGLASSES_01, POS_DEFAULT )
+    _MSGWIN_CLOSE()
+    
+    //【仮】フィールド上にアイリス配置（動作OBJ指定指定が仮）
+    _OBJ_ADD_EX( 20, 20, DIR_DOWN, MMDL_ID_EVENTOBJ_00, LEADER8W, MV_DMY )
+    
+    //？？？：あれ？
+    _PLAINWIN_MSG_UP( msg_c03p07_swchampion_01 )
+	  _MSGWIN_CLOSE()
+	  
+	  //アニメ：アイリス隣接
+	  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_swchampion_comming )
+	  _OBJ_ANIME( C03P07_SUNGLASSES_01, anm_pl_gyoe_up )
+	  _OBJ_ANIME( MMDL_ID_PLAYER, anm_pl_gyoe_up )
+    _OBJ_ANIME_WAIT()
+    
+    //ダンペイ：おー！アイリスさん
+    _BALLOONWIN_OBJMSG_POS( msg_c03p07_glasses_02, C03P07_SUNGLASSES_01, POS_DEFAULT )
+    _MSGWIN_CLOSE()
+    
+    //アイリス：ふうん
+    _BALLOONWIN_OBJMSG_POS( msg_c03p07_swchampion_02, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+    
+     //アイリス：きみは…
+    _BALLOONWIN_OBJMSG_POS( msg_c03p07_swchampion_03, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+    
+    //アイリス：うーん
+    _BALLOONWIN_OBJMSG_POS( msg_c03p07_swchampion_04, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+    
+    //【仮】ウィンドウ閉じタイミングを松宮さんにご相談する
+    _MSGWIN_CLOSE()
+    
+    //アニメ：アイリス「！」
+    _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_common_gyoe )
+    _OBJ_ANIME_WAIT()
+    
+    //アイリス：あそこかも
+    _BALLOONWIN_OBJMSG_POS( msg_c03p07_swchampion_05, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+    _MSGWIN_CLOSE()
+    
+    //アニメ：アイリス退場
+	  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_swchampion_bye )
+	  _TIME_WAIT(40)
+	  _OBJ_ANIME( C03P07_SUNGLASSES_01, anm_staystep_d )
+	  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
+    _OBJ_ANIME_WAIT()
+    
+    //アイリスOBJ消す
+    _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+    
+    //アニメ：サングラスと主人公向き合う
+    _OBJ_ANIME( C03P07_SUNGLASSES_01, anm_staystep_l )
+	  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
+    _OBJ_ANIME_WAIT()
+    
+    //ダンペイ：やれやれ
+    _BALLOONWIN_OBJMSG_POS( msg_c03p07_glasses_03, C03P07_SUNGLASSES_01, POS_DEFAULT )
+    _MSGWIN_CLOSE()
+    
+    //自機にカメラを戻す
+    _CAMERA_DEF_MOVE (40)
+    //カメラ待ち
+    _CAMERA_WAIT_MOVE()
+    _CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+    _CAMERA_END()		//カメラ操作終了
+    
+    //==================================//
+    
+    //初回会話終わり・C03POS起動
+    $WK_SCENE_C03GYM_STOPPER = 1
+    
+    //C03のアイリス表示
+    _FLAG_RESET( FV_C03_SWCHAMPION_01 )
+    
+    //==================================//
+	//二回目以降
+	ELSE
+	  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03p07_glasses_03 )
+	ENDIF
+EVENT_END
+
+//--------------------------------------------------------------------
+//	☆主人公・サングラス驚いて上を見る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_pl_gyoe_up
+  _ANIME_DATA	AC_MARK_GYOE,1
+  _ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆アイリス隣接
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swchampion_comming
+	_ANIME_DATA	AC_WALK_D_8F,25
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆アイリス退場
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swchampion_bye
+  _ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WALK_D_8F,8
+	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
 /*	C03P07	ジム看板										  */
@@ -28,3 +149,75 @@ _EVENT_DATA_END
 EVENT_START		ev_bg_c03p07_gymsign_01
 	_EASY_BGWIN_MSG( msg_c03p07_gymsign_01, TYPE_POST )
 EVENT_END
+
+//--------------------------------------------------------------------
+//	☆共通処理：1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_d
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_u
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_r
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_l
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staystep_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：はてな
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_hatena
+	_ANIME_DATA	AC_MARK_HATENA,1
+	_ANIME_DATA	ACMD_END,0
+	
