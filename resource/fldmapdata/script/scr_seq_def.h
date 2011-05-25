@@ -2014,17 +2014,20 @@
  *  @param id     連れ歩きID (PAIR_ID_01 field/pair_sys_def.h)
  *  @param type   連れ歩きタイプ( PAIR_TYPE_CLOSE他 field/pair_sys_def.h)
  *  @param tr_id  連れ歩きトレーナーID(TRID_NULL可)
+ *  @param ev_id  連れ歩き話しかけイベントID(SCRID_NULLを指定した場合,OBJに関連づいたスクリプトが起動)
+ *  
  */
 //--------------------------------------------------------------
-#define _PAIR_TRAINER_PARAM_SET( obj_id, id, type, tr_id ) \
-  _ASM_PAIR_TRAINER_PARAM_SET obj_id, id, type, tr_id
+#define _PAIR_TRAINER_PARAM_SET( obj_id, id, type, tr_id, ev_id ) \
+  _ASM_PAIR_TRAINER_PARAM_SET obj_id, id, type, tr_id, ev_id
 
-  .macro  _ASM_PAIR_TRAINER_PARAM_SET obj_id, id, type, tr_id
+  .macro  _ASM_PAIR_TRAINER_PARAM_SET obj_id, id, type, tr_id, ev_id
   .short  EV_SEQ_PAIR_TRAINER_PARAM_SET
   .short  \obj_id
   .short  \id
   .short  \type
   .short  \tr_id
+  .short  \ev_id
   .endm
 
 //--------------------------------------------------------------
@@ -8849,10 +8852,11 @@
  * @param pair_id   連れ歩きたいOBJのペアID( PAIR_ID_XXXX field/pair_sys_def.h)
  * @param pair_type 連れ歩きタイプ( PAIR_TYPE_CLOSE他 field/pair_sys_def.h)
  * @param tr_id     設定したいトレーナーID
+ * @param ev_id     設定したい話しかけイベントID(SCRID_NULLを指定した場合,OBJに関連づいたスクリプトが起動)
  */
 //--------------------------------------------------------------
-#define _PAIR_TRAINER_SET( obj_id, pair_id, pair_type, tr_id )  \
-    _ASM_PAIR_TRAINER_SET  obj_id, pair_id, pair_type, tr_id
+#define _PAIR_TRAINER_SET( obj_id, pair_id, pair_type, tr_id, ev_id )  \
+    _ASM_PAIR_TRAINER_SET  obj_id, pair_id, pair_type, tr_id, ev_id
 
 //--------------------------------------------------------------
 /**
@@ -8862,8 +8866,8 @@
  * @param move_code  連れ歩いたOBJに設定する新しい動作コード
  */
 //--------------------------------------------------------------
-#define _PAIR_TRAINER_FREE( ev_id, obj_id )  \
-    _ASM_PAIR_TRAINER_FREE  ev_id, obj_id
+#define _PAIR_TRAINER_FREE( ev_id, move_code )  \
+    _ASM_PAIR_TRAINER_FREE  ev_id, move_code
 
 
 //======================================================================

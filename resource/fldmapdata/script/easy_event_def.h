@@ -580,18 +580,21 @@
  * @param obj_id_wk òAÇÍï‡Ç´ëŒè€Ç…Ç∑ÇÈOBJIDÇäiî[ÇµÇΩÉèÅ[ÉN
  */
 //--------------------------------------------------------------
-  .macro _ASM_PAIR_TRAINER_SET obj_id_wk, pair_id_wk, pair_type_wk, tr_id_wk
+  .macro _ASM_PAIR_TRAINER_SET obj_id_wk, pair_id_wk, pair_type_wk, tr_id_wk, ev_id_wk
   _PUSH_WORK  SCWK_PARAM0
   _PUSH_WORK  SCWK_PARAM1
   _PUSH_WORK  SCWK_PARAM2
   _PUSH_WORK  SCWK_PARAM3
+  _PUSH_WORK  SCWK_PARAM4
 
   _ASM_LDWKVAL  SCWK_PARAM0,\obj_id_wk
   _ASM_LDWKVAL  SCWK_PARAM1,\pair_id_wk
   _ASM_LDWKVAL  SCWK_PARAM2,\pair_type_wk
   _ASM_LDWKVAL  SCWK_PARAM3,\tr_id_wk
+  _ASM_LDWKVAL  SCWK_PARAM4,\ev_id_wk
   _CHG_COMMON_SCR SCRID_PAIR_TRAINER_SET_CALL
   
+  _POP_WORK   SCWK_PARAM4
   _POP_WORK   SCWK_PARAM3
   _POP_WORK   SCWK_PARAM2
   _POP_WORK   SCWK_PARAM1

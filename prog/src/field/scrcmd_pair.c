@@ -37,6 +37,7 @@ VMCMD_RESULT EvCmdPairTrainerParamSet( VMHANDLE * core, void *wk )
   u16 pair_id = SCRCMD_GetVMWorkValue( core, wk );  //ペアID
   u16 pair_type = SCRCMD_GetVMWorkValue( core, wk );  //タイプ
   u16 tr_id = SCRCMD_GetVMWorkValue( core, wk );  //トレーナーID
+  u16 ev_id = SCRCMD_GetVMWorkValue( core, wk );  //イベントID
   
   GAMEDATA* gdata = SCRCMD_WORK_GetGameData( wk );
   MMDL *mmdl = MMDLSYS_SearchOBJID( GAMEDATA_GetMMdlSys( gdata ), obj_id );
@@ -44,8 +45,11 @@ VMCMD_RESULT EvCmdPairTrainerParamSet( VMHANDLE * core, void *wk )
     GF_ASSERT_MSG( 0, " 対象のOBJ(%d)が居ません\n", obj_id );
     return VMCMD_RESULT_SUSPEND;
   }
- 
-  PAIRSYS_PairSet( gdata, pair_id, pair_type, obj_id, MMDL_GetOBJCode(mmdl), MMDL_GetEventID(mmdl), tr_id );
+
+  if( ev_id == 0 ){
+    ev_id = MMDL_GetEventID(mmdl);
+  }
+  PAIRSYS_PairSet( gdata, pair_id, pair_type, obj_id, MMDL_GetOBJCode(mmdl), ev_id, tr_id );
   MMDL_ChangeMoveCode( mmdl, MV_PAIR );
   MMDL_ChangeOBJID( mmdl, MMDL_ID_PAIR );
 
@@ -70,7 +74,10 @@ VMCMD_RESULT EvCmdPairTrainerParamFree( VMHANDLE * core, void *wk )
   if( mmdl != NULL ){
     MMDL_SetEventID( mmdl, ev_id );
     MMDL_ChangeMoveCode( mmdl, move_code );
-    MMDL_ChangeOBJID( mmdl, PAIRSYS_GetPairTrainerOriginalObjID(gdata) );
+  
+    if( PAIRSYS_GetPairType( gdata ) == PAIR_TYPE_CLOSE ){ //クローズ(マップチェンジ無)タイプはOBJIDを元に戻す
+      MMDL_ChangeOBJID( mmdl, PAIRSYS_GetPairTrainerOriginalObjID(gdata) );
+    }
     MMDL_SetStatusBitNotZoneDelete( mmdl, FALSE );
     MMDL_SetStatusBitPlayerHit( mmdl, TRUE );
   }

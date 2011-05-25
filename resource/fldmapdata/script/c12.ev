@@ -51,6 +51,7 @@ _EVENT_DATA    ev_pos_c12_ng_07
 _EVENT_DATA    ev_pos_c12_rival_pair_01_guide
 _EVENT_DATA    ev_scene_c12_gymclear_01
 _EVENT_DATA    ev_c12_swleader1_01
+_EVENT_DATA    ev_c12_rival_pair_01
 _EVENT_DATA_END
 
 //話しかけた方向取得変数
@@ -1056,7 +1057,7 @@ EVENT_START ev_pos_c12_rival_pair_01
   _OBJ_ANIME_WAIT()
 
   //【仮】連れ歩き開始
-  _PAIR_TRAINER_SET( C12_SWRIVAL_01, PAIR_ID_NATURAL, PAIR_TYPE_OPEN, TRID_RIVAL_07 )
+  _PAIR_TRAINER_SET( C12_SWRIVAL_01, PAIR_ID_NATURAL, PAIR_TYPE_OPEN, TRID_RIVAL_07, SCRID_C12_RIVAL_PAIR_01 )
   
   //========================================//
   //POSイベント無効
@@ -1097,6 +1098,31 @@ EVENT_START ev_pos_c12_rival_pair_return_01
   $WK_SCENE_C12_WHITE_MEET = 2
   //========================================//
 }
+EVENT_END
+
+//連れ歩き中話しかけスクリプト
+EVENT_START ev_c12_rival_pair_01
+
+  //【仮】ライバル名代入
+  _NUMBER( 1 , 12345 , 5 )
+
+  //話しかけるごとに0～2のセリフを順番に表示
+  
+  IF $WK_OTHER_C12_RIVAL_PAIR == 3 THEN
+    $WK_OTHER_C12_RIVAL_PAIR = 0
+  ENDIF
+  
+  $SCWK_TEMP0 = msg_c12_swrival_05
+  $SCWK_TEMP0 += $WK_OTHER_C12_RIVAL_PAIR
+  
+  _TALK_OBJ_START()
+  _BALLOONWIN_OBJMSG( SCWK_TEMP0, PAIR_TRAINER_01 )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+  
+  $WK_OTHER_C12_RIVAL_PAIR += 1
+  _DEBUG_PRINT_WK( WK_OTHER_C12_RIVAL_PAIR )
+  
 EVENT_END
 
 /**************************************************************/

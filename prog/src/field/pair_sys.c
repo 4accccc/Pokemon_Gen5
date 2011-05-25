@@ -287,6 +287,22 @@ u16 PAIRSYS_GetPairTrainerOriginalObjID( GAMEDATA* gdata )
   return wk->obj_id;
 }
 
+//---------------------------------------------------
+/*
+ *  @brief  連れ歩きペア タイプ取得
+ *
+ *  @retval PAIR_TYPE_CLOSE マップチェンジ無し
+ *  @retval PAIR_TYPE_OPEN  マップチェンジ有り
+ */
+//---------------------------------------------------
+int PAIRSYS_GetPairType( GAMEDATA* gdata )
+{
+  PAIR_SYSTEM_WORK* wk = GAMEDATA_GetPairSystemWork( gdata );
+
+  return wk->pair_type;
+}
+
+
 //=========================================================
 //サブルーチン
 //=========================================================

@@ -110,6 +110,16 @@ extern u16 PAIRSYS_GetPairTrainerOriginalObjID( GAMEDATA* gdata );
 
 //---------------------------------------------------
 /*
+ *  @brief  連れ歩きペア タイプ取得
+ *
+ *  @retval PAIR_TYPE_CLOSE マップチェンジ無し
+ *  @retval PAIR_TYPE_OPEN  マップチェンジ有り
+ */
+//---------------------------------------------------
+extern int PAIRSYS_GetPairType( GAMEDATA* gdata );
+
+//---------------------------------------------------
+/*
  *  @brief  連れ歩きペア マップチェンジ後復帰
  *  
  *  @com  PAIR_SYS_WORKにセット済みのパラメータを使って初期化する

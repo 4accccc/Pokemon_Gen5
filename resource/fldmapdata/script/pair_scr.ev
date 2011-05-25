@@ -19,7 +19,6 @@
 //--------------------------------------------------------------------
 _EVENT_DATA   ev_pair_trainer_set_call
 _EVENT_DATA   ev_pair_trainer_free_call
-_EVENT_DATA   ev_c12_rival_pair_01
 _EVENT_DATA_END //終了
 
 //話しかけた方向取得変数
@@ -41,7 +40,7 @@ ev_pair_trainer_set_call:
     _CHG_LOCAL_SCR  //既に連れ歩きがいる場合スルー
   ENDIF
 
-  _PAIR_TRAINER_PARAM_SET( SCWK_PARAM0, SCWK_PARAM1, SCWK_PARAM2, SCWK_PARAM3 )
+  _PAIR_TRAINER_PARAM_SET( SCWK_PARAM0, SCWK_PARAM1, SCWK_PARAM2, SCWK_PARAM3, SCWK_PARAM4 )
   //ゾーン切替で消えないOBJに指定
 	_OBJ_SET_NOT_DEL_ZONECHG( PAIR_TRAINER_01 )
   //動作コード変更
@@ -81,37 +80,6 @@ _END
 */
 //====================================================================
 /*******************************************************************/
-
-
-//====================================================================
-// C12：話しかけ 
-//====================================================================
-
-//連れ歩き中話しかけスクリプト
-EVENT_START ev_c12_rival_pair_01
-
-  //【仮】ライバル名代入
-  _NUMBER( 1 , 12345 , 5 )
-
-  //話しかけるごとに0～2のセリフを順番に表示
-  
-  IF $WK_OTHER_C12_RIVAL_PAIR == 3 THEN
-    $WK_OTHER_C12_RIVAL_PAIR = 0
-  ENDIF
-  
-  $SCWK_TEMP0 = msg_c12_swrival_05
-  $SCWK_TEMP0 += $WK_OTHER_C12_RIVAL_PAIR
-  
-  _TALK_OBJ_START()
-  _BALLOONWIN_OBJMSG( SCWK_TEMP0, PAIR_TRAINER_01 )
-  _LAST_KEYWAIT()
-  _MSGWIN_CLOSE()
-  
-  $WK_OTHER_C12_RIVAL_PAIR += 1
-  _DEBUG_PRINT_WK( WK_OTHER_C12_RIVAL_PAIR )
-  
-EVENT_END
-
 
 
 
