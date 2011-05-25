@@ -369,10 +369,13 @@
 		Label="msg_c06r0201_infomationw_02">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>すばやく　たくさん　おとどけ！
+フキヨセ　カーゴ　サービス　です▼
+ひこうきに　のって
+ヤマジタウンに　いかれますか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T13:26:08" />
+				Time="2011-05-25T13:33:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -380,10 +383,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>すばやく　たくさん　おとどけ！
+フキヨセ　カーゴ　サービス　です▼
+飛行機に　乗って
+ヤマジタウンに　行かれますか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T13:26:08" />
+				Time="2011-05-25T13:33:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -392,13 +398,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・飛行機に乗れる状態
+・飛行機に乗れる状態＝t07到着後から
 ・はい/いいえの選択肢表示
-・はい　→
-　いいえ→</Comment>
+・はい　→infomationw_03
+　いいえ→infomationw_04</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T13:26:02" />
+				Time="2011-05-25T13:34:27" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -420,10 +426,12 @@
 		Label="msg_c06r0201_infomationw_03">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>わかりました！　それでは
+フウロさんに　れんらく　しますので▽
+ひこうきに　のって　おまちください▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T13:26:08" />
+				Time="2011-05-25T13:32:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -431,10 +439,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>わかりました！　それでは
+フウロさんに　連絡しますので▽
+飛行機に　乗って　お待ちください▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T13:26:08" />
+				Time="2011-05-25T13:34:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -443,10 +453,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・はい選択時</Comment>
+・はい選択時
+・発着デモへ</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T13:26:06" />
+				Time="2011-05-25T13:32:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -468,10 +479,11 @@
 		Label="msg_c06r0201_infomationw_04">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>はい！
+いつでも　ごりよう　ください！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T13:26:08" />
+				Time="2011-05-25T13:33:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -479,10 +491,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>はい！
+いつでも　ご利用ください！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T13:26:08" />
+				Time="2011-05-25T13:34:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
