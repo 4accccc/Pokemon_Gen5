@@ -278,7 +278,7 @@ void* FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type )
  * @retval  GMEVENT*
  */
 //--------------------------------------------------------------
-void* FIELD_ENCOUNT_SetWildEncount( FIELD_ENCOUNT *enc, u16 mons_no, u8 mons_lv, u16 flags )
+void* FIELD_ENCOUNT_SetWildEncount( FIELD_ENCOUNT *enc, u16 mons_no, u8 mons_lv, u8 formno ,u16 flags )
 {
   BATTLE_SETUP_PARAM* bp;
   ENCOUNT_WORK* ewk;
@@ -297,6 +297,7 @@ void* FIELD_ENCOUNT_SetWildEncount( FIELD_ENCOUNT *enc, u16 mons_no, u8 mons_lv,
     ENC_POKE_PARAM* poke = &poke_tbl[0];
     poke->monsNo = mons_no;
     poke->level = mons_lv;
+    poke->form = formno;
 
     if( flags & SCR_WILD_BTL_FLAG_ITEMNONE ){
       poke->item = 0xFFFF;  //アイテム所持ナシ

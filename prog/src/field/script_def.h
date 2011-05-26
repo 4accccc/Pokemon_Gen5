@@ -683,11 +683,12 @@
 //--------------------------------------------------------------
 #define SCR_ANIMAL_TRAIL_GET_MONSNO     (0) ///<けものみちに配置されているポケモンのNO取得
 #define SCR_ANIMAL_TRAIL_GET_LV         (1) ///<けものみちに配置されているポケモンのレベル取得
-#define SCR_ANIMAL_TRAIL_GET_IS_FEMALE  (2) ///<けものみちに配置されているポケモンがメスかどうか
-#define SCR_ANIMAL_TRAIL_GET_ITEM_ID    (3) ///<けものみちに配置されているアイテムのID
-#define SCR_ANIMAL_TRAIL_GET_HIDE_ITEM_ID    (4) ///<けものみちに配置されている隠しアイテムのID
-#define SCR_ANIMAL_TRAIL_GET_IS_HIDE_ITEM    (5) ///<けものみちに隠しアイテムが設置されているかどうか
-#define SCR_ANIMAL_TRAIL_GET_NOW_TRAIL_ID    (6) ///<現在の獣道IDを取得
+#define SCR_ANIMAL_TRAIL_GET_FORMNO  (2) ///<けものみちに配置されているポケモンのフォルム
+#define SCR_ANIMAL_TRAIL_GET_IS_FEMALE  (3) ///<けものみちに配置されているポケモンがメスかどうか
+#define SCR_ANIMAL_TRAIL_GET_ITEM_ID    (4) ///<けものみちに配置されているアイテムのID
+#define SCR_ANIMAL_TRAIL_GET_HIDE_ITEM_ID    (5) ///<けものみちに配置されている隠しアイテムのID
+#define SCR_ANIMAL_TRAIL_GET_IS_HIDE_ITEM    (6) ///<けものみちに隠しアイテムが設置されているかどうか
+#define SCR_ANIMAL_TRAIL_GET_NOW_TRAIL_ID    (7) ///<現在の獣道IDを取得
 
 //--------------------------------------------------------------
 //  scrcmd_intrude_field.c

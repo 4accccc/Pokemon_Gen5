@@ -140,6 +140,14 @@ VMCMD_RESULT EvCmdGetAnimalTrailData( VMHANDLE* core, void* wk )
       (*p_ret_wk) = min_lv + GFUser_GetPublicRand( lv_range );
     }
     break;
+  // フォルムナンバーを返す
+  case SCR_ANIMAL_TRAIL_GET_FORMNO:
+    {
+      GFL_ARC_LoadData( &data, ARCID_ANIMAL_TRAIL, trail_id );
+      p_poke = &data.poke_data[main_table_index];
+      (*p_ret_wk) = p_poke->forum[data_table_index];
+    }
+    break;
   case SCR_ANIMAL_TRAIL_GET_IS_FEMALE:
     {
       u8 female_num = ANIMAL_TRAIL_SAVE_GetFemaleNum( p_save, trail_id );

@@ -13677,5 +13677,25 @@
     .short  EV_SEQ_ANIMAL_TRAIL_EXIT_MAP
     .endm
 
+//--------------------------------------------------------------
+/**
+ * _WILD_BTL_SET_EX2  野生戦呼び出し(フラグを自前で全部セットするバージョン+フォルム)
+ * @param mons_no エンカウントさせたいモンスターNo 
+ * @param mons_lv エンカウントさせたいモンスターレベル
+ * @param formno  エンカウントさせたいフォルムナンバー
+ * @param flags   SCR_WILD_BTL_FLAG_NONE他 script_def.hに定義
+ */
+//--------------------------------------------------------------
+#define _WILD_BTL_SET_EX2( mons_no, mons_lv, formno, flags ) \
+    _ASM_WILD_BTL_SET_EX2 mons_no, mons_lv, formno, flags
+
+  .macro  _ASM_WILD_BTL_SET_EX2 mons_no, mons_lv, formno, flags
+  .short  EV_SEQ_WILD_BTL_SET_EX
+  .short  \mons_no
+  .short  \mons_lv
+  .short  \formno
+  .short  \flags
+  .endm
+
 //======================================================================
 //======================================================================

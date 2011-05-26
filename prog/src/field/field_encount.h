@@ -59,7 +59,7 @@ extern void ENCOUNT_WORK_EncountProbReset( ENCOUNT_WORK* ewk, MAPATTR attr );
 //チェック
 extern void FIELD_ENCOUNT_EncountProbCalc( FIELD_ENCOUNT* enc, BOOL move_f, BOOL ev_move_f );
 extern void* FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type );
-extern void* FIELD_ENCOUNT_SetWildEncount( FIELD_ENCOUNT *enc, u16 mons_no, u8 mons_lv, u16 flags );
+extern void* FIELD_ENCOUNT_SetWildEncount( FIELD_ENCOUNT *enc, u16 mons_no, u8 mons_lv, u8 formno ,u16 flags );
 extern void* FIELD_ENCOUNT_CheckFishingEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type );
 extern void* FIELD_ENCOUNT_CheckWfbcEncount( FIELD_ENCOUNT *enc, const FIELD_WFBC* cp_wfbcdata );
 

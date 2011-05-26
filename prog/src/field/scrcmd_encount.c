@@ -59,7 +59,35 @@ VMCMD_RESULT EvCmdWildBattleSet( VMHANDLE *core, void *wk )
     SCRIPT_FLDPARAM * fparam = SCRIPT_GetFieldParam( sc );
     GMEVENT *ev_battle =
       (GMEVENT*)FIELD_ENCOUNT_SetWildEncount(
-          FIELDMAP_GetEncount( fparam->fieldMap ), mons_no, mons_lv, flags );
+          FIELDMAP_GetEncount( fparam->fieldMap ), mons_no, mons_lv, 0, flags );
+    SCRIPT_CallEvent( sc, ev_battle );
+  }
+	return VMCMD_RESULT_SUSPEND;
+}
+
+//--------------------------------------------------------------
+/**
+ * 野生戦闘呼び出し(フォルム指定あり）
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @return	"1"
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdWildBattleSetEx( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+	
+	u16 mons_no = SCRCMD_GetVMWorkValue( core, work );
+	u16 mons_lv = SCRCMD_GetVMWorkValue( core, work );
+	u16 formno = SCRCMD_GetVMWorkValue( core, work );
+  u16 flags = SCRCMD_GetVMWorkValue( core, work );
+  
+  {
+    GAMESYS_WORK *gsys = SCRIPT_GetGameSysWork( sc );
+    SCRIPT_FLDPARAM * fparam = SCRIPT_GetFieldParam( sc );
+    GMEVENT *ev_battle =
+      (GMEVENT*)FIELD_ENCOUNT_SetWildEncount(
+          FIELDMAP_GetEncount( fparam->fieldMap ), mons_no, mons_lv, formno, flags );
     SCRIPT_CallEvent( sc, ev_battle );
   }
 	return VMCMD_RESULT_SUSPEND;

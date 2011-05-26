@@ -1008,6 +1008,9 @@
   DEF_CMD( EvCmdResetNowAnimalTrailObject, EV_SEQ_ANIMAL_TRAIL_RESET_NOW_OBJECT )
   DEF_CMD( EvCmdExitAnimalTrail, EV_SEQ_ANIMAL_TRAIL_EXIT_MAP )
 
+  //ポケモン戦関連
+  DEF_CMD( EvCmdWildBattleSetEx, EV_SEQ_WILD_BTL_SET_EX )
+
   END_CMD
   //スクリプトコマンドテーブル終了
 
