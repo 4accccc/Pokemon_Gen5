@@ -20,6 +20,8 @@
 //#include "app/leader_board.h"
 #include "poke_tool/poke_memo.h"
 #include "battle/battle.h"
+#include "app/pkwd_count.h"
+#include "field_sound_system.h"
 
 #include "event_battle.h"
 #include "field/event_battle_call.h"
@@ -31,6 +33,7 @@
 #include "fieldmap.h"
 
 #include "event_pokewood.h"
+//#include "event_debug_menu_ov_pokewood.h"
 
 #include "system/net_err.h"
 
@@ -67,6 +70,7 @@ typedef struct {
   u16 EncEffNo;
   u32 musicDefault;
   u32 musicWin;
+  PKWD_COUNT_PARAM pkwd_count_param;
 }POKEWOOD_REPLAY_EVENT_WORK, PREW;
 
 //-----------------------------------------------------------------------------
@@ -374,11 +378,14 @@ static GMEVENT_RESULT pokewoodBattleEvent( GMEVENT * event, int *seq, void * wor
 
   GAMESYS_WORK * gsys = prew->gsys;
   FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
+  FIELD_SOUND * fsnd  = GAMEDATA_GetFieldSound( gamedata );
 
   switch( *seq ) {
   // 戦闘用ＢＧＭセット
   case 0:
-    GMEVENT_CallEvent(event, EVENT_FSND_PushPlayBattleBGM(gsys, prew->musicDefault));
+    // プレイヤーボリュームをフェードアウト
+    FIELD_SOUND_ChangePlayerVolume( fsnd, 0, 20 );  
     (*seq)++;
     break;
 
@@ -398,11 +405,26 @@ static GMEVENT_RESULT pokewoodBattleEvent( GMEVENT * event, int *seq, void * wor
     pbew->bp = createPokewoodBSP( prew, gsys, fieldmap, prew->heapID );
     //侵入システムに戦闘中であることを伝える
     TAMADA_Printf(" BSP ADDRESS %08x\n", pbew->bp );
+    if ( prew->PokewoodMode == BTL_POKEWOOD_REC ){
+      (*seq)=101;
+    }else{
+      (*seq)=100;
+    }
+    break;
+  case 100:
+    prew->pkwd_count_param.gamesys = gsys;
+    GMEVENT_CallProc( event, FS_OVERLAY_ID(pkwd_announce), &PkwdCountProcData, &prew->pkwd_count_param );
+    (*seq) = 101;
+    break;
+  case 101:
+    // BGM切り替え
+    FIELD_SOUND_ChangePlayerVolume( fsnd, MAX_VOLUME, 1 );  
+    GMEVENT_CallEvent(event, EVENT_FSND_PushPlayBattleBGM(gsys, prew->musicDefault));
+
     //バトルプロセス呼び出し：プロセスが終了したらこのイベントに復帰する
     GMEVENT_CallProc( event, FS_OVERLAY_ID(battle), &BtlProcData, pbew->bp );
-    (*seq)++;
+    (*seq) = 4;
     break;
-    
   case 4:
     if ( prew->PokewoodMode == BTL_POKEWOOD_REC )
     { //とりあえず無理やりセーブしてみる
@@ -465,6 +487,8 @@ static GMEVENT * createPokewoodBattleEvent(
   return event;
 }
 
+#include "app/pkwd_count.h"
+
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 static GMEVENT_RESULT pokewoodCallEvent( GMEVENT * event, int *seq, void * work )
@@ -481,6 +505,7 @@ static GMEVENT_RESULT pokewoodCallEvent( GMEVENT * event, int *seq, void * work 
   switch ( *seq )
   {
   case PRE_SEQ_START:
+     //バトルプロセス呼び出し：プロセスが終了したらこのイベントに復帰する
     //仮：本来はシナリオなどから反映する
     if ( prew->PokewoodMode == BTL_POKEWOOD_SHOW )
     {
@@ -560,4 +585,92 @@ GMEVENT * POKEWOOD_EVENT_Show( GAMESYS_WORK *gsys, void * parent_work )
 }
 
 
+
+
+//============================================================================================
+//
+//    PKWD_COUNT画面呼び出し
+//
+//============================================================================================
+extern void PKWD_COUNT_PARAM_Delete( PKWD_COUNT_PARAM * pkwd_param );
+//-------------------------------------
+///   PKWD_COUNT_PARAM定義
+//=====================================
+typedef struct
+{
+  GAMESYS_WORK        *gsys;
+  FIELDMAP_WORK       *fieldmap;
+  PKWD_COUNT_PARAM    *pkwd_param;
+} PKWD_COUNT_EVENT_WORK;
+
+static GMEVENT_RESULT eventPkwdCount( GMEVENT *p_event, int *p_seq, void *p_wk_adrs );
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  PKWD_COUNT呼び出し
+ *
+ *
+ *  @return 終了コード
+ */
+//-----------------------------------------------------------------------------
+GMEVENT * PKWD_COUNT_EVENT_Show( GAMESYS_WORK * gsys, void * parent_work )
+{
+  FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  PKWD_COUNT_PARAM * pkwd_param = (PKWD_COUNT_PARAM *) parent_work;
+  PKWD_COUNT_EVENT_WORK *p_param;
+  GMEVENT * new_event;
+
+  //イヴェント
+  new_event = GMEVENT_Create( gsys, NULL, eventPkwdCount, sizeof(PKWD_COUNT_EVENT_WORK) );
+  p_param = GMEVENT_GetEventWork( new_event );
+  GFL_STD_MemClear( p_param, sizeof(PKWD_COUNT_EVENT_WORK) );
+
+  p_param->gsys			= gsys;
+  p_param->fieldmap		= fieldmap;
+  p_param->pkwd_param 	= pkwd_param;
+
+  OS_Printf( "PKWD COUNT Start\n" );
+
+  return new_event;
+
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  Pkwd呼び出し用イベント
+ *
+ *  @param  GMEVENT *event  GMEVENT
+ *  @param  *seq            シーケンス
+ *  @param  *work           ワーク
+ *
+ *  @return 終了コード
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT_RESULT eventPkwdCount( GMEVENT *p_event, int *p_seq, void *p_wk_adrs )
+{
+  enum
+  {
+    SEQ_CALL_PROC,
+    SEQ_EXIT,
+  };
+
+  PKWD_COUNT_EVENT_WORK *p_wk = p_wk_adrs;
+  GMEVENT * call_event;
+
+  switch(*p_seq )
+  {
+  case SEQ_CALL_PROC:
+    call_event = EVENT_FieldSubProc( p_wk->gsys, p_wk->fieldmap,
+        FS_OVERLAY_ID( pkwd_announce ), &PkwdCountProcData, p_wk->pkwd_param );
+    GMEVENT_CallEvent( p_event, call_event );
+    *p_seq  = SEQ_EXIT;
+    break;
+
+  case SEQ_EXIT:
+    PKWD_COUNT_PARAM_Delete( p_wk->pkwd_param );
+    return GMEVENT_RES_FINISH;
+  }
+
+  return GMEVENT_RES_CONTINUE ;
+}
 

@@ -430,6 +430,7 @@ void T_DOWNLOAD_PARAM_Setup_Debug( GAMESYS_WORK * gsys, T_DOWNLOAD_PARAM * td_pa
 }
 #endif
 
+#if 0
 //============================================================================================
 //
 //  PKWD COUNT‰æ–ÊŠÖ˜A
@@ -474,7 +475,7 @@ void PKWD_COUNT_PARAM_Setup_Debug( GAMESYS_WORK * gsys, PKWD_COUNT_PARAM * pkwd_
 	
 }
 #endif
-
+#endif
 
 
 

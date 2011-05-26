@@ -34,6 +34,7 @@
 
 //アプリ
 #include "savedata/battle_rec.h"
+#include "app/pkwd_count.h"
 
 //デバッグ
 #include "event_debug_menu.h"
@@ -86,6 +87,7 @@ static BOOL debugMenuCallProc_PokewoodShow1( POKEWOOD_FUNC_WORK * wk );
 static BOOL debugMenuCallProc_PokewoodShow2( POKEWOOD_FUNC_WORK * wk );
 static BOOL debugMenuCallProc_PokewoodShow3( POKEWOOD_FUNC_WORK * wk );
 static BOOL debugMenuCallProc_PokewoodShowRom( POKEWOOD_FUNC_WORK * wk );
+static BOOL debugMenuCallProc_PokewoodAnnounce( POKEWOOD_FUNC_WORK * wk );
 
 //-----------------------------------------------------------------------------
 ///リスト メニューヘッダー
@@ -123,6 +125,8 @@ static const DEBUG_MENU_LIST DebugPokewoodMenuList[] =
   { DEBUG_STRID_POKEWOOD_SHOW_02, (void*)debugMenuCallProc_PokewoodShow2, GFL_OVERLAY_BLANK_ID }, //
   { DEBUG_STRID_POKEWOOD_SHOW_03, (void*)debugMenuCallProc_PokewoodShow3, GFL_OVERLAY_BLANK_ID }, //
   { DEBUG_STRID_POKEWOOD_SHOW_ROM, (void*)debugMenuCallProc_PokewoodShowRom, GFL_OVERLAY_BLANK_ID },
+  { DEBUG_STRID_POKEWOOD_SHOW_ROM, (void*)debugMenuCallProc_PokewoodShowRom, GFL_OVERLAY_BLANK_ID },
+  { DEBUG_STRID_POKEWOOD_ANNOUNCE, (void*)debugMenuCallProc_PokewoodAnnounce, GFL_OVERLAY_BLANK_ID },
 };
 
 //-----------------------------------------------------------------------------
@@ -308,3 +312,72 @@ static BOOL debugMenuCallProc_PokewoodShowRom( POKEWOOD_FUNC_WORK * wk )
   return callShowProc( wk, DEBUG_SHOW_ROM );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *  @brief  デバッグ用ポケウッド上映前アプリ呼び出し
+ *
+ *  @param  DEBUG_WBT_WORK *p_wk   ワーク
+ *
+ *  @return 終了コード
+ */
+//-----------------------------------------------------------------------------
+static BOOL debugMenuCallProc_PokewoodAnnounce( POKEWOOD_FUNC_WORK * wk )
+{
+  GMEVENT *event = wk->gmEvent;
+	GMEVENT *new_event;
+	PKWD_COUNT_PARAM 	*pkwd_param = PKWD_COUNT_PARAM_Create( HEAPID_PROC, wk->gmSys, NULL );
+
+	new_event = GMEVENT_CreateOverlayEventCall( wk->gmSys,
+      FS_OVERLAY_ID(notwifi_event_pokewood), PKWD_COUNT_EVENT_Show, (void *)pkwd_param );
+	GMEVENT_ChangeEvent( event, new_event );
+
+	OS_Printf( "Pkwd Count Start\n" );
+	return TRUE;
+}
+
+
+
+//============================================================================================
+//
+//  PKWD COUNT画面関連
+//
+//============================================================================================
+//------------------------------------------------------------------
+///  PKWD_COUNT用パラメータOBJECT生成
+//------------------------------------------------------------------
+PKWD_COUNT_PARAM * PKWD_COUNT_PARAM_Create( HEAPID heapID, GAMESYS_WORK * gsys, u16 * res_work )
+{
+	GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
+	PKWD_COUNT_PARAM 	*pkwd_param;
+	
+	pkwd_param 			= GFL_HEAP_AllocClearMemory( heapID, sizeof(PKWD_COUNT_PARAM) );
+	pkwd_param->gamesys	= gsys;
+	// 初期化
+//	pkwd_param->status	  = T_DOWNLOAD_STATUS_VIEW;
+	// 戻り値を返す先のポインタ
+//	td_param->result_work = res_work;
+	return pkwd_param;
+}
+
+//------------------------------------------------------------------
+///  PKWD COUNT用パラメータOBJECT削除
+//------------------------------------------------------------------
+void PKWD_COUNT_PARAM_Delete( PKWD_COUNT_PARAM * pkwd_param )
+{
+	// 必要であれば削除を追加
+	GFL_HEAP_FreeMemory( pkwd_param );
+}
+
+#ifdef  PM_DEBUG
+//------------------------------------------------------------------
+/**
+ * @brief PKWD COUNT用パラメータのセットアップ（デバッグ用）
+ *
+ */
+//------------------------------------------------------------------
+void PKWD_COUNT_PARAM_Setup_Debug( GAMESYS_WORK * gsys, PKWD_COUNT_PARAM * pkwd_param )
+{
+	// 必要であれば、ここでパラメータのセットをするらしい
+	
+}
+#endif

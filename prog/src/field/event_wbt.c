@@ -489,7 +489,7 @@ static GMEVENT_RESULT eventTDownload( GMEVENT *p_event, int *p_seq, void *p_wk_a
 }
 
 
-
+#if 0
 //============================================================================================
 //
 //    PKWD_COUNTâÊñ åƒÇ—èoÇµ
@@ -576,3 +576,4 @@ static GMEVENT_RESULT eventPkwdCount( GMEVENT *p_event, int *p_seq, void *p_wk_a
   return GMEVENT_RES_CONTINUE ;
 }
 
+#endif

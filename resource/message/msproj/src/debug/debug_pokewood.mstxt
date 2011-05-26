@@ -234,4 +234,30 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="DEBUG_STRID_POKEWOOD_ANNOUNCE"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>再生前アプリ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-05-26T06:12:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-05-26T03:44:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>再生前アプリ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-05-26T06:13:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-05-26T03:44:56" />
+		</LanguageCell>
+	</TextRow>
 </MessageStudioText>

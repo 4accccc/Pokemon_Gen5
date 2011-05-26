@@ -330,7 +330,7 @@ static GMEVENT_RESULT debugMenuWBTEvent( GMEVENT *event, int *seq, void *wk )
       return GMEVENT_RES_CONTINUE;
 #else
 //      	work->call_func = debugMenuCallProc_TDownload;
-      	work->call_func = debugMenuCallProc_PkwdCount;
+//      	work->call_func = debugMenuCallProc_PkwdCount;
 //      	work->t_status = T_DOWNLOAD_STATUS_VIEW;
 		(*seq)++;
 		break;
@@ -978,6 +978,7 @@ static BOOL debugMenuCallProc_TDownload( DEBUG_WBT_WORK *p_wk )
 	return TRUE;
 }
 
+#if 0
 //----------------------------------------------------------------------------
 /**
  *  @brief  デバッグ用PkwdCount
@@ -1008,7 +1009,7 @@ static BOOL debugMenuCallProc_PkwdCount( DEBUG_WBT_WORK *p_wk )
 	return TRUE;
 }
 
-
+#endif
 
 #if 0
 //--------------------------------------------------------------
