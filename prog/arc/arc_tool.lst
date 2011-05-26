@@ -288,7 +288,6 @@
   $VERSION_B2  ARCID_MANUAL "manual_b.narc" # ゲーム内マニュアルのグラフィックデータ
   ARCID_PALACE_PALETTE "palace_palette.narc" # パレスのグレースケール用テーブル
   ARCID_GF_LOGO_MOVIE   "gf_logo_movie.narc" # ゲームフリークロゴムービー
-  ARCID_OP_DEMO2_MOVIE  "op_demo2.narc" # オープニングムービー２
   ARCID_SYMBOL_LV  "symbol_lv_tbl.narc" # シンボルポケモンの出現レベルテーブル
   ARCID_T01_GMK "fieldmap/t01_gmk.narc" # T01ギミックアーカイブ
   ARCID_BMODEL_OUTDOOR_AREA  "fieldmap/buildmodel_outdoor_area.narc"  #配置モデルエリアデータ（屋外）
