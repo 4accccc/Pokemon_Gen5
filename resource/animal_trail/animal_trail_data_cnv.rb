@@ -116,6 +116,19 @@ data_cnt.times{|index|
       animal_trail_data_list[index].pokemon[rank][i].female_probability = data[POKE1_ROW+i+NEXT_TABLE_POS*rank][POKE1_LINE+3]
       animal_trail_data_list[index].pokemon[rank][i].forum = data[POKE1_ROW+i+NEXT_TABLE_POS*rank][POKE1_LINE+4]
 
+      max_lv = animal_trail_data_list[index].pokemon[rank][i].max_lv
+      min_lv = animal_trail_data_list[index].pokemon[rank][i].min_lv
+      lv_range = max_lv.to_i - min_lv.to_i
+
+      if lv_range < 0 then
+        puts animal_trail_data_list[index].pokemon[rank][i].name+" > 最大、最上レベル設定が間違っています"
+        raise "シート%d:最大レベルと最小レベルが逆転しています"%(index+1)
+      end
+      if lv_range > 7 then
+        puts animal_trail_data_list[index].pokemon[rank][i].name+" > 最大、最上レベル設定が間違っています"
+        raise "シート%d:最大Lvと最小Lvの差が7以上になっています"%(index+1)
+      end
+
       if $monsno_hash.include?(animal_trail_data_list[index].pokemon[rank][i].name) == FALSE then
         puts "???"+animal_trail_data_list[index].pokemon[rank][i].name+"???"
         raise "シート%d:未登録のモンスター名が使用されています"%(index+1)
