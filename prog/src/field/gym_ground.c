@@ -10,6 +10,7 @@
 #include "fieldmap.h"
 #include "system/main.h"    //for HEAPID_FIELDMAP
 #include "savedata/gimmickwork.h"
+#include "system/wipe.h"    //for WIPE_SYS_
 
 // field
 #include "field/field_const.h"  //for FIELD_CONST_GRID_FX32_SIZE
@@ -115,6 +116,7 @@ typedef struct GYM_GROUND_TMP_tag
   BOOL            lift_arrival[ LIFT_NUM ]; // リフト到達フラグ
   BOOL            first_lift;   // 最初のリフトに到達したか
   BOOL            fog_off;      // フォグをOFFにするフラグ
+  BOOL            all_arrival;  // 全リフト到達フラグ
 
   // 出口リフト用
   const VecFx32 *watch;
@@ -382,6 +384,7 @@ void GYM_GROUND_Setup(FIELDMAP_WORK *p_fieldmap)
   p_wk->p_fieldmap= p_fieldmap;
   p_wk->exp_obj   = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
   p_wk->player    = FIELDMAP_GetFieldPlayer( p_fieldmap );
+  p_wk->all_arrival = FALSE;  // 全リフト到達していたら、LIFT_InitでTRUEに変わる
 
   ICHI_Printf( "EXP_OBJ確保前 HeapFreeSize %x \n",GFL_HEAP_GetHeapFreeSize(p_wk->heapID) );
   // EXPOBJセット
@@ -933,6 +936,9 @@ static GMEVENT_RESULT BeltEvent( GMEVENT* event, int* seq, void* wk )
     SEQ_EXIT,   // イベント終了
     SEQ_JUMP_OUT,// ジャンプOUT
     SEQ_JUMP_OUT_WAIT,// ジャンプOUT
+    SEQ_FADE_OUT, // フェードアウト
+    SEQ_FADE_OUT_WAIT, // フェードアウト待ち
+    SEQ_FADE_IN_WAIT, // フェードイン待ち
   };
 
   switch( *seq ){
@@ -1066,6 +1072,8 @@ static GMEVENT_RESULT BeltEvent( GMEVENT* event, int* seq, void* wk )
 
       *seq = SEQ_JUMP_OUT;
     }
+    break;
+
   // ジャンプOUT
   case SEQ_JUMP_OUT:
     {
@@ -1085,7 +1093,48 @@ static GMEVENT_RESULT BeltEvent( GMEVENT* event, int* seq, void* wk )
     // アニメ終了待ち
     if( FIELD_PLAYER_CheckAnimeEnd(p_wk->player) )
     {
-      return GMEVENT_RES_FINISH;
+      // 全リフト到着チェック
+      if( p_gym_wk->all_arrival == FALSE &&
+          LIFT_CheckAllAriival( p_gym_wk ) == TRUE )
+      {
+        *seq = SEQ_FADE_OUT;
+      }
+      else
+      {
+        return GMEVENT_RES_FINISH;
+      }
+    }
+    break;
+
+  // フェードアウト
+  case SEQ_FADE_OUT:
+    // ホワイトフェードアウト
+    WIPE_SYS_Start( WIPE_PATTERN_M, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, 
+        WIPE_FADE_WHITE, WIPE_DEF_DIV, WIPE_DEF_SYNC, p_gym_wk->heapID );
+    *seq = SEQ_FADE_OUT_WAIT;
+    break;
+  // フェードアウト待ち
+  case SEQ_FADE_OUT_WAIT:
+    {
+      if( WIPE_SYS_EndCheck() == TRUE )
+      {
+        // 到着した
+        LIFT_AllArrival( p_gym_wk );
+
+        // ホワイトフェードイン
+        WIPE_SYS_Start( WIPE_PATTERN_M, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN, 
+            WIPE_FADE_WHITE, WIPE_DEF_DIV, WIPE_DEF_SYNC, p_gym_wk->heapID );
+        *seq = SEQ_FADE_IN_WAIT;
+      }
+    }
+    break;
+  // フェードイン待ち
+  case SEQ_FADE_IN_WAIT:
+    {
+      if( WIPE_SYS_EndCheck() == TRUE )
+      {
+        return GMEVENT_RES_FINISH;
+      }
     }
     break;
   default:
@@ -1293,13 +1342,6 @@ static void LIFT_SetAriivalFlag( GYM_GROUND_TMP *p_wk, const u8 lift_id )
     }
   }
 
-  // 全リフト到着チェック
-  if( LIFT_CheckAllAriival( p_wk ) == TRUE )
-  {
-    // 到着した
-    LIFT_AllArrival( p_wk );
-  }
-
   // SE再生
   PMSND_PlaySE( GYM_GROUND_SE_SWITCH );
 
@@ -1367,6 +1409,9 @@ static void LIFT_AllArrival( GYM_GROUND_TMP *p_wk )
       FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, GYM_GROUND_UNIT_IDX, obj_idx, 0, FALSE );
     }
   }
+
+  // フラグを立てる
+  p_wk->all_arrival = TRUE;
 
   ICHI_Printf("全リフト到着した\n");
 }
@@ -1975,7 +2020,6 @@ static void SAVE_SetLiftArrival( GIMMICKWORK* p_gmkwk, const BOOL *arrival )
     if( arrival[i] == TRUE )
     {
       ex_wk[ idx ] |= (1 << (i%8));
-      ICHI_Printf("%d 番目 ", i);
     }
   }
 
@@ -2013,7 +2057,6 @@ static void SAVE_GetLiftArrival( GIMMICKWORK* p_gmkwk, BOOL *arrival )
 
     if( ex_wk[ idx ] & (1 << (i%8)) ){ arrival[i] = TRUE; }
     else                             { arrival[i] = FALSE; }
-    ICHI_Printf("%d",arrival[i]);
   }
 }
 
