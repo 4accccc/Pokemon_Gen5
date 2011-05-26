@@ -32,6 +32,9 @@
 // 外部公開
 #include "event_debug_menu_ov_animal_trail.h"
 
+// デバッグ用グローバル変数
+int DebugAnimalTrailWalkCnt = ANIMAL_TRAIL_SELECT_WALK_CNT;
+
 //=============================================================================
 /**
  *					構造体宣言
@@ -86,6 +89,7 @@ enum {
 enum {
   STR_NUM_ANIMAL_TRAIL_NO,
   STR_NUM_ANIMAL_TABLE_NO,
+  STR_NUM_ANIMAL_WALK_CNT,
 };
 
 ///メニューリスト
@@ -94,6 +98,7 @@ static const DEBUG_MENU_LIST MenuList[] =
   { DEBUG_STR_GO_ANIMAL_TRAIL , (void*)DEBUG_STR_GO_ANIMAL_TRAIL , GFL_OVERLAY_BLANK_ID },  // 詳細画面起動
   { DEBUG_STR_ANIMAL_TRAIL_SET_OBJECT , (void*)DEBUG_STR_ANIMAL_TRAIL_SET_OBJECT , GFL_OVERLAY_BLANK_ID },  // アイテム設置
   { DEBUG_STR_ANIMAL_TRAIL_SET_TABLE_ID , (void*)DEBUG_STR_ANIMAL_TRAIL_SET_TABLE_ID , GFL_OVERLAY_BLANK_ID },  // 指定テーブル配置
+  { DEBUG_STR_ANIMAL_TRAIL_SET_WALK_CNT , (void*)DEBUG_STR_ANIMAL_TRAIL_SET_WALK_CNT , GFL_OVERLAY_BLANK_ID },  // 抽選に必要な歩数
 };
 
 ///リスト メニューヘッダー
@@ -195,6 +200,15 @@ static GMEVENT_RESULT debugMenuAnimalTrail( GMEVENT *event, int *seq, void *wk )
         (*seq) = SEQ_NUM_INPUT;
       }
       break;
+    case DEBUG_STR_ANIMAL_TRAIL_SET_WALK_CNT:
+      {
+        // メニュー削除
+        FLDMENUFUNC_DeleteMenu( work->menuFunc );
+        work->input_next_seq = SEQ_NUM_EXIT;
+        work->num_input_type = STR_NUM_ANIMAL_WALK_CNT;
+        (*seq) = SEQ_NUM_INPUT;
+      }
+      break;
     }
     break;
   case SEQ_NUM_INPUT:
@@ -289,7 +303,7 @@ static void DrawNum( ANIMAL_TRAIL_WORK* work )
   str = GFL_MSG_CreateString( work->msgData, DEBUG_STR_ANIMAL_TRAIL_NUM );
   wset = WORDSET_Create( work->heapID );
   exp  = GFL_STR_CreateBuffer( 128, work->heapID );
-  WORDSET_RegisterNumber( wset, 0, work->num, 4, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+  WORDSET_RegisterNumber( wset, 0, work->num, 5, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
   WORDSET_ExpandStr( wset, exp, str );
 
   msgBG = FIELDMAP_GetFldMsgBG( work->fieldWork );
@@ -325,6 +339,9 @@ static BOOL NumInputState( ANIMAL_TRAIL_WORK* p_wk )
         break;
       case STR_NUM_ANIMAL_TABLE_NO:
         p_wk->num = 0;
+        break;
+      case STR_NUM_ANIMAL_WALK_CNT:
+        p_wk->num = DebugAnimalTrailWalkCnt;
         break;
       defautl:
         p_wk->num = 0;
@@ -366,6 +383,21 @@ static BOOL NumInputState( ANIMAL_TRAIL_WORK* p_wk )
           {
             p_wk->num = 0;
           }
+          DrawNum( p_wk );
+        }
+        break;
+      case STR_NUM_ANIMAL_WALK_CNT:
+        {
+          NumInput(p_wk);
+          if( p_wk->num < 0 )
+          {
+            p_wk->num = 99999;
+          }
+          if( p_wk->num > 99999)
+          {
+            p_wk->num = 0;
+          }
+          DebugAnimalTrailWalkCnt = p_wk->num;
           DrawNum( p_wk );
         }
         break;

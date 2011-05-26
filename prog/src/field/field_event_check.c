@@ -122,6 +122,7 @@
 #ifdef PM_DEBUG
 extern BOOL DebugBGInitEnd;    //BG初期化監視フラグ             宣言元　fieldmap.c
 extern BOOL MapFadeReqFlg;    //マップフェードリクエストフラグ  宣言元　script.c
+extern int DebugAnimalTrailWalkCnt; // 獣道抽選歩数　           宣言元  event_debug_menu_ov_animal_trail.c
 
 #if defined(DEBUG_ONLY_FOR_tomoya_takahashi) | \
     defined(DEBUG_ONLY_FOR_nakatsui) | \
@@ -2128,8 +2129,11 @@ static void CheckAnimalTrail( GAMEDATA* gdata )
   int walk_count = GAMEDATA_GetFieldMapWalkCount( gdata );
   ETC_SAVE_WORK *p_etc_save = SaveData_GetEtc( saveData );
   int i;
- 
+#ifdef PM_DEBUG
+  if( walk_count%DebugAnimalTrailWalkCnt == 0 )
+#else
   if( walk_count%ANIMAL_TRAIL_SELECT_WALK_CNT == 0 )
+#endif
   {
     for( i = 0 ; i < ANIMAL_TRAIL_NUM ; i++ )
     {
