@@ -67,7 +67,7 @@ COPY_DIR	= $(PROJECT_PROGDIR)include/field/
 #参照ヘッダー
 ##########################################
 OBJCODE_HEADER = ../../fldmmdl/fldmmdl_objcode.h
-TRTYPE_HEADER = ../../trdata/trtype_def.h
+TRTYPE_HEADER = ../../trtype/trtype_def.h
 MONSNO_HEADER = ../../personal/monsno_def.h
 MESSAGE_HEADER = ../../message/dst/script/msg_bcwftest.h
 SCRIPT_BC_HEADER = ../../fldmapdata/script/bc10_def.h
