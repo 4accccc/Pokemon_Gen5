@@ -57,7 +57,8 @@ animal_trail_call:
   _YES_NO_WIN( SCWK_ANSWER )
 
   // メッセージ終了
-	_SYSWIN_CLOSE()
+  _SYSWIN_CLOSE()
+  _SE_WAIT()
 
   IF $SCWK_ANSWER == SCR_YES THEN
     // 移動呼び出し

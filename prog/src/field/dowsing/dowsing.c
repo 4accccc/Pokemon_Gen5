@@ -35,6 +35,8 @@
 #include "field/fldmmdl.h"
 #include "field/fieldmap.h"
 #include "field/zonedata.h"
+#include "field/animal_trail_def.h"
+#include "fieldmap/zone_id.h"
 #include "../script_hideitem.h"
 #include "../../../../resource/fldmapdata/flagwork/flag_define.h"  // FLAG_HIDEITEM_AREA_START参照のため
 #include "field/intrude_secret_item.h"
@@ -127,7 +129,7 @@ ITEM_INFO;
 // ワーク
 typedef struct
 {
-  const EVENTWORK*          event_wk;
+  EVENTWORK*          event_wk;
   u16                       hide_search_no;     // 次は[hide_search_no]からサーチする      // hideを全て探した後にintrudeを探す
 
   const INTRUDE_SAVE_WORK*  intrude_wk;
@@ -136,7 +138,7 @@ typedef struct
 ITEM_SEARCH_WORK;
 
 // 初期化処理
-static ITEM_SEARCH_WORK* ItemSearchInit( HEAPID heap_id, const EVENTWORK* event_wk, const INTRUDE_SAVE_WORK* intrude_wk )
+static ITEM_SEARCH_WORK* ItemSearchInit( HEAPID heap_id, EVENTWORK* event_wk, const INTRUDE_SAVE_WORK* intrude_wk )
 {
   ITEM_SEARCH_WORK* work = GFL_HEAP_AllocClearMemory( heap_id, sizeof(ITEM_SEARCH_WORK) );
 
@@ -148,6 +150,17 @@ static ITEM_SEARCH_WORK* ItemSearchInit( HEAPID heap_id, const EVENTWORK* event_
 
   return work;
 }
+
+//-------------------------------------
+///	獣道配置データ（固定）
+//=====================================
+#define ANIMAL_TRAIL_HIDE_ITEM_CNT (1)  // 獣道に隠されているアイテムの最大数
+static const ITEM_DATA sc_animal_trail_item_data = {
+  0,    // index 
+  0,0,  // flags
+  ANIMAL_TRAIL_ZONE_ID, // けものみち
+  ANIMAL_TRAIL_OBJ_POS_GX,ANIMAL_TRAIL_OBJ_POS_GZ, // x, z
+};
 
 // 終了処理
 static void ItemSearchExit( ITEM_SEARCH_WORK* work )
@@ -162,8 +175,16 @@ static BOOL ItemSearchExist( ITEM_SEARCH_WORK* work, const ITEM_INFO* item_info 
 {
   if( item_info->type == ITEM_TYPE_HIDE )
   {
-    u16 flag = FLAG_HIDEITEM_AREA_START + item_info->info.hide.item_data->index;
-    return ( EVENTWORK_CheckEventFlag( (EVENTWORK*)(work->event_wk), flag ) == 0 );
+    if( item_info->info.hide.item_data->zone_id != ANIMAL_TRAIL_ZONE_ID )
+    {
+      u16 flag = FLAG_HIDEITEM_AREA_START + item_info->info.hide.item_data->index;
+      return ( EVENTWORK_CheckEventFlag( (EVENTWORK*)(work->event_wk), flag ) == 0 );
+    }
+    else
+    {
+      BOOL is_set = EVENTWORK_CheckEventFlag(work->event_wk ,SYS_FLAG_AT_DOWSING_HIT);
+      return (is_set);
+    }
   }
   else if( item_info->type == ITEM_TYPE_INTRUDE )
   {
@@ -190,7 +211,7 @@ static void ItemSearchRestart( ITEM_SEARCH_WORK* work )
 // FALSEのときもうアイテムがなくitem_infoのtypeにITEM_TYPE_NONEをいれている
 // search_typeで指定した種類のアイテムを探す(ITEM_TYPE_NONEのときは全種類のアイテムの中から探す)
 // アイテムの情報を得る
-static BOOL ItemSearchGet( ITEM_SEARCH_WORK* work, ITEM_INFO* item_info, ITEM_TYPE search_type )
+static BOOL ItemSearchGet( ITEM_SEARCH_WORK* work, ITEM_INFO* item_info, ITEM_TYPE search_type ,u32 zone_id)
 {
   BOOL      find           = FALSE;
   ITEM_INFO l_item_info;
@@ -208,18 +229,37 @@ static BOOL ItemSearchGet( ITEM_SEARCH_WORK* work, ITEM_INFO* item_info, ITEM_TY
 
   if( search_type == ITEM_TYPE_NONE || search_type == ITEM_TYPE_HIDE )
   {
-    while( work->hide_search_no < hide_item_data_num )
+    if( zone_id != ANIMAL_TRAIL_ZONE_ID ) // けものみち判定
     {
-      l_item_info.type                = ITEM_TYPE_HIDE;
-      l_item_info.info.hide.item_data = &( hide_item_data[ work->hide_search_no ] );
-      if( ItemSearchExist( work, &l_item_info ) )  // アイテムが存在する
+      while( work->hide_search_no < hide_item_data_num )
       {
-        item_info->type                = l_item_info.type;
-        item_info->info.hide.item_data = l_item_info.info.hide.item_data;
-        find = TRUE;
+        l_item_info.type                = ITEM_TYPE_HIDE;
+        l_item_info.info.hide.item_data = &( hide_item_data[ work->hide_search_no ] );
+        if( ItemSearchExist( work, &l_item_info ) )  // アイテムが存在する
+        {
+          item_info->type                = l_item_info.type;
+          item_info->info.hide.item_data = l_item_info.info.hide.item_data;
+          find = TRUE;
+        }
+        work->hide_search_no++;
+        if( find ) return TRUE;
       }
-      work->hide_search_no++;
-      if( find ) return TRUE;
+    }
+    else
+    {
+      if( work->hide_search_no < ANIMAL_TRAIL_HIDE_ITEM_CNT )
+      {
+        BOOL is_set = EVENTWORK_CheckEventFlag(work->event_wk ,SYS_FLAG_AT_DOWSING_HIT);
+        work->hide_search_no++; // 検索数をインクリメント
+        if( is_set == TRUE )
+        {
+          item_info->type                = ITEM_TYPE_HIDE;
+          item_info->info.hide.item_data = &sc_animal_trail_item_data;
+          return TRUE;
+        }
+      }
+      item_info->type = ITEM_TYPE_NONE;
+      return FALSE;
     }
   }
 
@@ -918,7 +958,7 @@ void DOWSING_Update( DOWSING_WORK* work, BOOL active )
 #ifndef DOWSING_SEARCH_DIV
     ItemSearchRestart( work->item_search_wk );
     
-    while( ItemSearchGet( work->item_search_wk, &item_info, item_search_type ) )
+    while( ItemSearchGet( work->item_search_wk, &item_info, item_search_type ,zone_id) )
 #else
     // 1フレームで全アイテムをサーチせずに、何フレームかに分けて全アイテムをサーチするようにする。
     if( work->b_item_search_restart )
@@ -1004,7 +1044,7 @@ void DOWSING_Update( DOWSING_WORK* work, BOOL active )
       }
       else
       {
-        work->b_item_search_restart = !( ItemSearchGet( work->item_search_wk, &item_info, item_search_type ) );
+        work->b_item_search_restart = !( ItemSearchGet( work->item_search_wk, &item_info, item_search_type ,zone_id ) );
         if( work->b_item_search_restart ) break;
       }
 #endif

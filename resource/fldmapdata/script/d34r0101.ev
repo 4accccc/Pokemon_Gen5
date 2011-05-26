@@ -10,11 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_d34r0101.h"
-
-//------------------------------注意--------------------------------//
-//	LOCALWORK1⇒隠しアイテム取得可能フラグ
-//　フィールド初期化時にセットされ、隠しアイテムを取得するとリセットされます
-//------------------------------------------------------------------//
+  .include  "d34r0101.h"
 
 //--------------------------------------------------------------
 //               スクリプトテーブル
@@ -48,6 +44,7 @@ EVENT_START ev_animal_trail_battle
   $LWK_BATTLE_FLAG |= SCR_WILD_BTL_FLAG_SPEABI3
   $LWK_BATTLE_FLAG |= SCR_WILD_BTL_FLAG_NO_RARE
   $LWK_BATTLE_FLAG |= SCR_WILD_BTL_FLAG_WILD_TALK
+  $LWK_BATTLE_FLAG |= SCR_WILD_BTL_FLAG_TRAIL
 
   // オス・メス判定
   IF $LWK_IS_FEMALE == TRUE THEN
@@ -55,7 +52,13 @@ EVENT_START ev_animal_trail_battle
   ELSE
     $LWK_BATTLE_FLAG |= SCR_WILD_BTL_FLAG_MALE
   ENDIF
-
+	
+	//ジャンプ演出(タマゲタケ・モロバレル）
+  IF $LWK_MONSNO == MONSNO_580 || $LWK_MONSNO == MONSNO_581 THEN
+	  _OBJ_ANIME( SCWK_TARGET_OBJID, anm_jump )
+	  _OBJ_ANIME_WAIT()
+  ENDIF
+	
   // 戦闘開始
   _WILD_BTL_SET_EX( LWK_MONSNO, LWK_LV, LWK_BATTLE_FLAG )
   _WILD_LOSE_CHECK( LWK_LOSE2 )
@@ -82,7 +85,6 @@ EVENT_START ev_animal_trail_normal_item
   _OBJ_DEL(ANIMAL_TRAIL_OBJ) // アイテムカプセルの削除
   _ITEM_EVENT_FIELD( LWK_ITEMNO ,1 )
   _ANIMAL_TRAIL_RESET_OBJECT()
-  _FLAG_RESET( SYS_FLAG_AT_DOWSING_HIT )
 }
 EVENT_END
 
@@ -92,13 +94,11 @@ EVENT_END
 EVENT_START ev_animal_trail_hide_item
 {
   DEFINE_LOCAL  LWK_ITEMNO
-  IF $LOCALWORK1 == TRUE THEN
-    _ANIMAL_TRAIL_DATA_GET( SCR_ANIMAL_TRAIL_GET_HIDE_ITEM_ID, LWK_ITEMNO )
-    _ITEM_EVENT_FIELD( LWK_ITEMNO ,1 )
-    _ANIMAL_TRAIL_RESET_OBJECT()
-    _FLAG_RESET( SYS_FLAG_AT_DOWSING_HIT )
-    $LOCALWORK1 = FALSE
-  ENDIF
+  _ANIMAL_TRAIL_DATA_GET( SCR_ANIMAL_TRAIL_GET_HIDE_ITEM_ID, LWK_ITEMNO )
+  _ITEM_EVENT_FIELD( LWK_ITEMNO ,1 )
+  _ANIMAL_TRAIL_RESET_OBJECT()
+  _FLAG_RESET( SYS_FLAG_AT_DOWSING_HIT )
+  _SXY_MOVE_BG_EVENT(BGID_D32R0101_HIDE_ITEM,15,0,31)
 }
 EVENT_END
 
@@ -110,9 +110,7 @@ INIT_EVENT_START ev_init_d34r0101
   DEFINE_LOCAL  LWK_IS_SET
   _ANIMAL_TRAIL_DATA_GET( SCR_ANIMAL_TRAIL_GET_IS_HIDE_ITEM, LWK_IS_SET )
   IF $LWK_IS_SET == TRUE THEN
-    $LOCALWORK1 = TRUE
-  ELSE
-    $LOCALWORK1 = FALSE
+    _SXY_MOVE_BG_EVENT(BGID_D32R0101_HIDE_ITEM,15,0,12)
   ENDIF
 }
 INIT_EVENT_END
@@ -122,7 +120,26 @@ INIT_EVENT_END
 //--------------------------------------------------------------
 EVENT_START ev_animal_trail_back_zone
 {
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_set_down_dir )
+  _OBJ_ANIME_WAIT()
+
+  _SE_PLAY( SEQ_SE_KAIDAN )
   _ANIMAL_TRAIL_EXIT_MAP()
 }
 EVENT_END
+
+//--------------------------------------------------------------------
+//ジャンプ演出（共通）-> tamagetake_scr.evと同じにすること
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_jump
+	_ANIME_DATA	AC_STAY_JUMP_D_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 下に向く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_set_down_dir
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
 

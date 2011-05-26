@@ -19,6 +19,9 @@
 #define ANIMAL_TRAIL_SELECT_PROBABILITY (5)   // 256歩ごとの抽選される確率
 #define ANIMAL_TRAIL_NUM        (20)          // けものみちの数
 #define ANIMAL_TRAIL_TABLE_NUM  (11)          // ランクテーブルの数
+#define ANIMAL_TRAIL_OBJ_POS_GX (15)          // 配置するオブジェクトの位置
+#define ANIMAL_TRAIL_OBJ_POS_GZ (12)          // 配置するオブジェクトの位置
+#define ANIMAL_TRAIL_ZONE_ID    (ZONE_ID_D34R0101)  // けものみちのゾーンID
 
 //-------------------------------------
 ///	けものみち：配置されるオブジェクトのタイプ

@@ -27,6 +27,7 @@
 #include "fldmmdl_code.h"	// for MMDL_ID_ANIMAL_TRAIL_OBJ
 #include "script_def.h"
 #include "poke_tool/monsnum_def.h"  // for MONSNO_数字
+#include "animal_trail_def.h"
 #include "../../../resource/fldmapdata/flagwork/flag_define.h" // for SYS_FLAG_AT_DOWSING_HIT
 
 //=============================================================================
@@ -36,9 +37,6 @@
 //=============================================================================
 #define WARP_POS_X  (15)
 #define WARP_POS_Z  (27)
-#define ANIMAL_TRAIL_ZONE_ID    (ZONE_ID_D34R0101)  // けものみちのゾーンID
-#define ANIMAL_TRAIL_OBJ_POS_GX (15)                // 配置するオブジェクトの位置
-#define ANIMAL_TRAIL_OBJ_POS_GZ (12)                // 配置するオブジェクトの位置
 
 #include "../../../resource/animal_trail/animal_trail_pos_data.cdat"  // 帰る先データ
 
@@ -291,7 +289,7 @@ static GMEVENT_RESULT MapWarpEvent( GMEVENT *event, int *seq, void *wk )
       SetGridPos( &warp_pos ,WARP_POS_X ,0 ,WARP_POS_Z);
       ANIMAL_TRAIL_SAVE_SetNowAnimalTrailID( p_wk->p_save ,p_wk->trail_id );  // 獣道IDを保存
       GMEVENT_CallEvent(event,
-          EVENT_ChangeMapPosNoFade(p_wk->p_gsys, p_wk->p_field_work,ZONE_ID_D34R0101 ,&warp_pos,DIR_UP));
+          EVENT_ChangeMapPosNoFade(p_wk->p_gsys, p_wk->p_field_work,ANIMAL_TRAIL_ZONE_ID ,&warp_pos,DIR_UP));
       (*seq)++;
       break;
     }
@@ -365,10 +363,11 @@ static void SetObject( MAP_CHAGE_EVENT_WORK *p_wk )
   case AT_OBJ_TYPE_ITEM:
     OS_Printf("配置アイテム\n");
     SetItem( p_wk->p_mmdlsys );
-    EVENTWORK_SetEventFlag(p_wk->p_evwork ,SYS_FLAG_AT_DOWSING_HIT);
+    EVENTWORK_ResetEventFlag(p_wk->p_evwork ,SYS_FLAG_AT_DOWSING_HIT);
     break;
   case AT_OBJ_TYPE_HIDE_ITEM:
     // 隠しアイテムイベントはイベントエディタで配置済み
+    OS_Printf("隠しアイテム\n");
     EVENTWORK_SetEventFlag(p_wk->p_evwork ,SYS_FLAG_AT_DOWSING_HIT);
     break;
   }
