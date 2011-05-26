@@ -1,0 +1,12 @@
+EFFSEQ
+$0001
+c:\home\swan\resource\particle\wazaeffect\w_005.spa
+#001
+%00
+制御モード変更	継続
+ポケモンα値	POS_TR_AA	追従	1	16	0	0
+エフェクト終了待ち	すべて
+ポケモンバニッシュ	POS_TR_AA	バニッシュオン
+エフェクト終了待ち	すべて
+エフェクト終了
+&
