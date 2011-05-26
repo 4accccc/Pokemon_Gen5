@@ -122,7 +122,7 @@
 #ifdef PM_DEBUG
 extern BOOL DebugBGInitEnd;    //BG初期化監視フラグ             宣言元　fieldmap.c
 extern BOOL MapFadeReqFlg;    //マップフェードリクエストフラグ  宣言元　script.c
-extern int DebugAnimalTrailWalkCnt; // 獣道抽選歩数　           宣言元  event_debug_menu_ov_animal_trail.c
+extern int DebugAnimalTrailWalkCnt; // 獣道抽選歩数　           宣言元  debug/debug_animal_trail.c
 
 #if defined(DEBUG_ONLY_FOR_tomoya_takahashi) | \
     defined(DEBUG_ONLY_FOR_nakatsui) | \

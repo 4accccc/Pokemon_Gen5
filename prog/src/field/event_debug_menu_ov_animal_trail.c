@@ -33,7 +33,7 @@
 #include "event_debug_menu_ov_animal_trail.h"
 
 // デバッグ用グローバル変数
-int DebugAnimalTrailWalkCnt = ANIMAL_TRAIL_SELECT_WALK_CNT;
+extern int DebugAnimalTrailWalkCnt;
 
 //=============================================================================
 /**

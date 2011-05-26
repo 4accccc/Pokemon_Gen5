@@ -221,7 +221,8 @@ SRCS  +=    $(SOUNDSRC) \
         field/resonance_resort/resonance_resort_data.c \
         field/resonance_resort/resort_map.c \
         field/resonance_resort/resort_binary.c \
-        debug/debug_infinity_dungeon.c
+        debug/debug_infinity_dungeon.c \
+        debug/debug_animal_trail.c
         
 
 #================================================
