@@ -204,6 +204,31 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_t07_hakase2_02b_00">
+		<LanguageCell
+			Language="JPN">
+			<Text>・ひでんマシンそらをとぶ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-26T06:32:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-26T06:32:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>・ひでんマシンそらをとぶ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-26T06:32:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-26T06:32:39" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
 		Label="msg_t07_01_01"
 		Style="Large">
 		<LanguageCell
