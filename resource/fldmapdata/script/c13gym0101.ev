@@ -57,16 +57,13 @@ EVENT_START   ev_pos_c13gym0101_guide
     }
 
     //アイテム入手フラグで分岐
-    // 【仮】
-    // C13GYM用のフラグがないので
-    // C02のもの使用
-		IF FLAG_OFF( FE_C02GYM_ITEM ) THEN
+		IF FLAG_OFF( FE_C13GYM_ITEM ) THEN
       // おいしいみず入手イベント
       _BALLOONWIN_OBJMSG( msg_c13gym0101_glasses_01, C13GYM0101_DANPEI_01 )
       _BALLOONWIN_CLOSE()
       _ITEM_EVENT_KEYWAIT( ITEM_OISIIMIZU, 1 )
 
-      _FLAG_SET( FE_C02GYM_ITEM )			//アイテム入手フラグをセット
+      _FLAG_SET( FE_C13GYM_ITEM )			//アイテム入手フラグをセット
 		ENDIF
 
     // 元の位置に戻る
