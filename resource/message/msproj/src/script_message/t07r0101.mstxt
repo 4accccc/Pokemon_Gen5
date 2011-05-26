@@ -2,14 +2,17 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_t07r0101_01_01"
+		Label="msg_t07r0101_infomationw_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ</Text>
+			<Text>すばやく　たくさん　おとどけ！
+ヤマジ　カーゴ　サービス　です▼
+ひこうきに　のって
+フキヨセシティに　いかれますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-05-26T04:58:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17,10 +20,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>すばやく　たくさん　おとどけ！
+ヤマジ　カーゴ　サービス　です▼
+飛行機に　乗って
+フキヨセシティに　行かれますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-05-26T04:58:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -28,17 +34,22 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>？？？</Comment>
+			<Comment>♀
+・飛行機に乗れる状態＝t07到着後から
+・はい/いいえの選択肢表示
+・はい　→infomationw_03
+　いいえ→infomationw_04</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-05-26T04:57:09" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>？？？</Text>
+			<Text>INFOMATIONW
+汎用受付♀</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-05-26T04:57:09" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -49,14 +60,104 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_t07r0101_02_01"
+		Label="msg_t07r0101_infomationw_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ</Text>
+			<Text>わかりました！　それでは
+ひこうきに　のって　おまちください▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-05-26T04:57:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-26T04:57:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>わかりました！　それでは
+飛行機に　乗って　お待ちください▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-26T04:57:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-26T04:57:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・はい選択時
+・発着デモへ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-26T04:57:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>INFOMATIONW
+汎用受付♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-26T04:57:09" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t07r0101_infomationw_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>はい！
+いつでも　ごりよう　ください！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-26T04:57:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-26T04:57:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>はい！
+いつでも　ご利用ください！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-26T04:57:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-26T04:57:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・いいえ選択時</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-26T04:57:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>INFOMATIONW
+汎用受付♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-26T04:57:09" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t07r0101_assistantm_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ん？　きみも
+かざんを　しらべるのかい？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-26T05:00:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -64,10 +165,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>ん？　きみも
+かざんを　しらべるのかい？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-05-26T05:00:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -75,17 +177,19 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>？？？</Comment>
+			<Comment>♂
+・仮メッセージ
+・ヒードランの伏線</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-05-26T05:02:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>？？？</Text>
+			<Text>ASSISTANTM</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-05-26T05:01:53" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -96,16 +200,16 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_t07r0101_03_01"
+		Label="msg_t07r0101_mountain_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>イッシュちほうを　おうだんする
-ひこうきの　ためだけに　できたのが▽
+ひこうきの　ために　できたのが▽
 この　ヤマジタウンさ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-05-26T04:59:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -114,11 +218,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>イッシュ地方を　横断する
-飛行機便の　ためだけに　できたのが▽
+飛行機便の　ために　できたのが▽
 この　ヤマジタウンさ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-05-26T04:59:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -126,17 +230,18 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂</Comment>
+			<Comment>♂
+・仮メッセージ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-05-26T05:00:38" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>？？？</Text>
+			<Text>MOUNTAIN</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-05-26T05:01:15" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">

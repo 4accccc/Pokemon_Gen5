@@ -88,11 +88,11 @@
 			<Comment>♀
 ・博士と会話後
 ・はい/いいえの選択肢表示
-・はい　→
-　いいえ→</Comment>
+・はい　→swleader6_03
+　いいえ→swleader6_04</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T13:21:06" />
+				Time="2011-05-26T05:36:16" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -115,10 +115,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>じゃいきましょ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T13:21:57" />
+				Time="2011-05-26T05:48:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -138,10 +138,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・はい選択時</Comment>
+・はい選択時
+・発着デモへ（詳細未定）</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T13:21:27" />
+				Time="2011-05-26T05:48:24" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -164,10 +165,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>じゅんびができたらはなしてね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T13:21:57" />
+				Time="2011-05-26T05:48:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -238,11 +239,11 @@
 			<Comment>♀
 ・swleader6_02表示後
 ・はい/いいえの選択肢表示
-・はい　→
-　いいえ→</Comment>
+・はい　→swleader6_03
+　いいえ→swleader6_04</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T13:21:41" />
+				Time="2011-05-26T05:36:18" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -265,10 +266,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>もくてきは？？？
+ヤマジタウンはつうかてん</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T13:22:07" />
+				Time="2011-05-26T05:48:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -454,10 +456,10 @@
 			Language="JPN">
 			<Comment>♀
 ・はい選択時
-・発着デモへ</Comment>
+・発着デモへ（詳細未定）</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T13:32:55" />
+				Time="2011-05-26T05:48:29" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

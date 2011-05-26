@@ -6,11 +6,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かざんの　ウワサ
-・かりメッセージ</Text>
+			<Text>しんとう　めっきゃく　すれば
+ひもまた　すずし！　です</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T11:34:29" />
+				Time="2011-05-26T05:13:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -18,11 +18,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>火山の　ウワサ
-・仮メッセージ</Text>
+			<Text>心頭滅却すれば
+火もまた　涼し！　です</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T11:34:29" />
+				Time="2011-05-26T05:13:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -30,10 +30,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀</Comment>
+			<Comment>♀
+・仮メッセージ</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T11:33:45" />
+				Time="2011-05-26T05:13:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -62,11 +63,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アイテム　あげる
-・かりメッセージ▼</Text>
+			<Text>ひひひ　おまえさん　トレーナーだろ？
+だまって　これを　うけとりな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T11:35:17" />
+				Time="2011-05-26T05:09:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -74,11 +75,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アイテム　あげる
-・仮メッセージ▼</Text>
+			<Text>ひひひ　おまえさん　トレーナーだろ？
+だまって　これを　受け取りな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T11:35:49" />
+				Time="2011-05-26T05:09:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -87,10 +88,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・アイテム入手処理</Comment>
+・アイテム入手処理
+・No247[のろいのおふだ」</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T11:34:57" />
+				Time="2011-05-26T05:07:18" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -118,11 +120,14 @@
 		Label="msg_t07pc0101_oldwoman1_02">
 		<LanguageCell
 			Language="JPN">
-			<Text>くれた　アイテムの　せつめい
-・かりメッセージ</Text>
+			<Text>のろいのおふだを　もたせると
+ゴーストタイプの▽
+わざの　いりょくが　あがるのさ▼
+はて？　のろいのおふだ……
+いったい　どこで　みつけたのかね？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T11:35:34" />
+				Time="2011-05-26T05:08:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -130,11 +135,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>くれた　アイテムの　説明
-・仮メッセージ</Text>
+			<Text>のろいのおふだを　持たせると
+ゴーストタイプの▽
+技の　威力が　あがるのさ▼
+はて？　のろいのおふだ……
+いったい　どこで　みつけたのかね？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T11:35:58" />
+				Time="2011-05-26T05:09:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
