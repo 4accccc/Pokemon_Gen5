@@ -755,6 +755,34 @@ const TRAINER_TYPE_DATA DATA_TrainerType[] = {
 		148,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
+	{ // No.187 SWPLAZMAM♂プラズマだん
+		149,PTL_SEX_MALE,
+		SEQ_BGM_EYE_PLASMA
+	},
+	{ // No.188 SWPLAZMAW♀プラズマだん
+		150,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_PLASMA
+	},
+	{ // No.189 SWSAGE1♂プラズマだん
+		151,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.190 SWSAGE2♂プラズマだん
+		152,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.191 SWSAGE3♂プラズマだん
+		153,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.192 NINJA♂プラズマだん
+		154,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.193 SWCHAMPION♀チャンピオン
+		155,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_01
+	},
 };
 
 const u16 DATA_TrainerBackCGIndex[][2] = {
@@ -769,5 +797,6 @@ const u16 DATA_TrainerBackCGIndex[][2] = {
 		{ TRTYPE_WBHEROINE, 8 },
 		{ TRTYPE_WBHERO_S, 9 },
 		{ TRTYPE_WBHEROINE_S, 10 },
+		{ TRTYPE_SWCHAMPION, 11 },
 };
 

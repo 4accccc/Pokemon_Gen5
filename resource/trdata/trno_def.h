@@ -878,7 +878,17 @@
 #define	TRID_TANPAN_23   ( 865 ) 
 #define	TRID_MINI_18   ( 866 ) 
 #define	TRID_ARTIST_05   ( 867 ) 
-#define TRID_MAX  ( 868 )
+#define	TRID_BADRIDER_01_08   ( 868 ) 
+#define	TRID_BADRIDER_01_09   ( 869 ) 
+#define	TRID_SWCHAMPION_01   ( 870 ) 
+#define	TRID_SWPLAZMAM_01   ( 871 ) 
+#define	TRID_SWPLAZMAW_01   ( 872 ) 
+#define	TRID_SWBOSS_01   ( 873 ) 
+#define	TRID_SWSAGE1_01   ( 874 ) 
+#define	TRID_SWSAGE2_01   ( 875 ) 
+#define	TRID_SWSAGE3_01   ( 876 ) 
+#define	TRID_NINJA_01   ( 877 ) 
+#define TRID_MAX  ( 878 )
 
 #ifndef __ASM_NO_DEF_  //Ç±ÇÍà»ç~ÇÕÉAÉZÉìÉuÉâÇ≈ÇÕñ≥éã
 typedef  int TrainerID;

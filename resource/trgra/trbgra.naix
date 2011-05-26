@@ -98,7 +98,15 @@ enum {
 	NARC_trbgra_tbwb_wbheroine_s_NMCR = 84,
 	NARC_trbgra_tbwb_wbheroine_s_NMAR = 85,
 	NARC_trbgra_tbwb_wbheroine_s_NCEC = 86,
-	NARC_trbgra_tbwb_wbheroine_s_NCLR = 87
+	NARC_trbgra_tbwb_wbheroine_s_NCLR = 87,
+	NARC_trbgra_tbwb_swchampion_NCGR = 88,
+	NARC_trbgra_tbwb_swchampion_NCBR = 89,
+	NARC_trbgra_tbwb_swchampion_NCER = 90,
+	NARC_trbgra_tbwb_swchampion_NANR = 91,
+	NARC_trbgra_tbwb_swchampion_NMCR = 92,
+	NARC_trbgra_tbwb_swchampion_NMAR = 93,
+	NARC_trbgra_tbwb_swchampion_NCEC = 94,
+	NARC_trbgra_tbwb_swchampion_NCLR = 95
 };
 
 /* NARC_TRBGRA_NAIX_ */

@@ -197,4 +197,11 @@
 #define	TRTYPE_WBHERO_S    ( 184 )    //WBHERO_S♂ポケモントレーナー
 #define	TRTYPE_WBHEROINE_S    ( 185 )    //WBHEROINE_S♀ポケモントレーナー
 #define	TRTYPE_SWBOSS    ( 186 )    //SWBOSS♂プラズマだん
-#define	TRTYPE_MAX	( 187 )
+#define	TRTYPE_SWPLAZMAM    ( 187 )    //SWPLAZMAM♂プラズマだん
+#define	TRTYPE_SWPLAZMAW    ( 188 )    //SWPLAZMAW♀プラズマだん
+#define	TRTYPE_SWSAGE1    ( 189 )    //SWSAGE1♂プラズマだん
+#define	TRTYPE_SWSAGE2    ( 190 )    //SWSAGE2♂プラズマだん
+#define	TRTYPE_SWSAGE3    ( 191 )    //SWSAGE3♂プラズマだん
+#define	TRTYPE_NINJA    ( 192 )    //NINJA♂プラズマだん
+#define	TRTYPE_SWCHAMPION    ( 193 )    //SWCHAMPION♀チャンピオン
+#define	TRTYPE_MAX	( 194 )

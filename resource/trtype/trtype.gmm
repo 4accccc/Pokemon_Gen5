@@ -1380,6 +1380,41 @@
 		<language name="JPN_KANJI" width="216">プラズマだん</language>
 	</row>
 
+	<row id="MSG_TRTYPE_SWPLAZMAM">
+		<language name="JPN" width="216">プラズマだん</language>
+		<language name="JPN_KANJI" width="216">プラズマだん</language>
+	</row>
+
+	<row id="MSG_TRTYPE_SWPLAZMAW">
+		<language name="JPN" width="216">プラズマだん</language>
+		<language name="JPN_KANJI" width="216">プラズマだん</language>
+	</row>
+
+	<row id="MSG_TRTYPE_SWSAGE1">
+		<language name="JPN" width="216">プラズマだん</language>
+		<language name="JPN_KANJI" width="216">プラズマだん</language>
+	</row>
+
+	<row id="MSG_TRTYPE_SWSAGE2">
+		<language name="JPN" width="216">プラズマだん</language>
+		<language name="JPN_KANJI" width="216">プラズマだん</language>
+	</row>
+
+	<row id="MSG_TRTYPE_SWSAGE3">
+		<language name="JPN" width="216">プラズマだん</language>
+		<language name="JPN_KANJI" width="216">プラズマだん</language>
+	</row>
+
+	<row id="MSG_TRTYPE_NINJA">
+		<language name="JPN" width="216">プラズマだん</language>
+		<language name="JPN_KANJI" width="216">プラズマだん</language>
+	</row>
+
+	<row id="MSG_TRTYPE_SWCHAMPION">
+		<language name="JPN" width="216">チャンピオン</language>
+		<language name="JPN_KANJI" width="216">チャンピオン</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>

@@ -4785,6 +4785,56 @@
 		<language name="JPN_KANJI" width="216">●</language>
 	</row>
 
+	<row id="badrider_01_08">
+		<language name="JPN" width="216">チャールズ</language>
+		<language name="JPN_KANJI" width="216">チャールズ</language>
+	</row>
+
+	<row id="badrider_01_09">
+		<language name="JPN" width="216">チャールズ</language>
+		<language name="JPN_KANJI" width="216">チャールズ</language>
+	</row>
+
+	<row id="swchampion_01">
+		<language name="JPN" width="216">アイリス</language>
+		<language name="JPN_KANJI" width="216">アイリス</language>
+	</row>
+
+	<row id="swplazmam_01">
+		<language name="JPN" width="216">したっぱ</language>
+		<language name="JPN_KANJI" width="216">したっぱ</language>
+	</row>
+
+	<row id="swplazmaw_01">
+		<language name="JPN" width="216">したっぱ</language>
+		<language name="JPN_KANJI" width="216">したっぱ</language>
+	</row>
+
+	<row id="swboss_01">
+		<language name="JPN" width="216">アクロマ</language>
+		<language name="JPN_KANJI" width="216">アクロマ</language>
+	</row>
+
+	<row id="swsage1_01">
+		<language name="JPN" width="216">ゲーチス</language>
+		<language name="JPN_KANJI" width="216">ゲーチス</language>
+	</row>
+
+	<row id="swsage2_01">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="swsage3_01">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="ninja_01">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>
