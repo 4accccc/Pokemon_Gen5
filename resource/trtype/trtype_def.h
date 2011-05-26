@@ -196,4 +196,5 @@
 #define	TRTYPE_WBHEROINE    ( 183 )    //WBHEROINE♀ポケモントレーナー
 #define	TRTYPE_WBHERO_S    ( 184 )    //WBHERO_S♂ポケモントレーナー
 #define	TRTYPE_WBHEROINE_S    ( 185 )    //WBHEROINE_S♀ポケモントレーナー
-#define	TRTYPE_MAX	( 186 )
+#define	TRTYPE_SWBOSS    ( 186 )    //SWBOSS♂プラズマだん
+#define	TRTYPE_MAX	( 187 )

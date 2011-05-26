@@ -751,5 +751,23 @@ const TRAINER_TYPE_DATA DATA_TrainerType[] = {
 		147,PTL_SEX_FEMALE,
 		SEQ_BGM_EYE_01
 	},
+	{ // No.186 SWBOSSÅâÉvÉâÉYÉ}ÇæÇÒ
+		148,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+};
+
+const u16 DATA_TrainerBackCGIndex[][2] = {
+		{ TRTYPE_HERO, 0 },
+		{ TRTYPE_HEROINE, 1 },
+		{ TRTYPE_RIVAL, 2 },
+		{ TRTYPE_SUPPORT, 3 },
+		{ TRTYPE_DOCTOR, 4 },
+		{ TRTYPE_HERO_S, 5 },
+		{ TRTYPE_HEROINE_S, 6 },
+		{ TRTYPE_WBHERO, 7 },
+		{ TRTYPE_WBHEROINE, 8 },
+		{ TRTYPE_WBHERO_S, 9 },
+		{ TRTYPE_WBHEROINE_S, 10 },
 };
 

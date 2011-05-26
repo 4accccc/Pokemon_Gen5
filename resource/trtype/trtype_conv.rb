@@ -69,6 +69,15 @@ class TRTYPEDATA
     return @bgm
   end
 
+  def grb
+    if @grb == "あり" then
+      return @grf
+    elsif @grb == "" then
+      return nil
+    else
+      return @grb
+    end
+  end
 end
 
 #------------------------------------------------------------------------------
@@ -91,17 +100,32 @@ def check_ttdata( ttdata )
 end
 
 #------------------------------------------------------------------------------
-# 重複を除いたグラフィック名の配列を作成
+# 重複を除いたグラフィック名（正面）の配列を作成
 #------------------------------------------------------------------------------
-def make_gra_list( ttdata )
-  gra_list = []
+def make_trf_list( ttdata )
+  trf_list = []
   ttdata.each{|ttd|
-    index = gra_list.index(ttd.grf)
+    index = trf_list.index(ttd.grf)
     if index == nil then
-      gra_list << ttd.grf
+      trf_list << ttd.grf
     end
   }
-  return gra_list
+  return trf_list
+end
+
+#------------------------------------------------------------------------------
+# 重複を除いたグラフィック名（背面）の配列を作成
+#------------------------------------------------------------------------------
+def make_trb_list( ttdata )
+  trb_list = []
+  ttdata.each{|ttd|
+    if ttd.grb == nil then next end
+    index = trb_list.index(ttd.grb)
+    if index == nil then
+      trb_list << ttd.grb
+    end
+  }
+  return trb_list
 end
 
 #============================================================================================
@@ -140,16 +164,22 @@ end
 # トレーナーグラフィックlstファイル生成
 #   trfgra_wb.lst
 #------------------------------------------------------------------------------
-def make_trf_list( filename,  ttdata, gra_list )
+def make_trgra_check_list( filename, ttdata, trf_list, trb_list )
   str = ""
   #こっちの方が正解のような…
-  #gra_list.each{|graname|
-  #  example = ttdata.detect{|ttd| ttd.grf == graname }
-  #  str += sprintf( "trwb_%s,%s\n", graname, example.trsex )
-  #}
+  trf_list.each{|graname|
+    example = ttdata.detect{|ttd| ttd.grf == graname }
+    str += sprintf( "trwb_%s,%s\n", graname, example.trsex )
+  }
+  trb_list.each{|graname|
+    example = ttdata.detect{|ttd| ttd.grb == graname }
+    str += sprintf( "tbwb_%s,%s\n", graname, example.trsex )
+  }
+=begin
   ttdata.each{|ttd|
     str += sprintf( "trwb_%s,%s\n", ttd.grf, ttd.trsex )
   }
+=end
   fp_trgra = File.open(filename,"w")
   fp_trgra.puts str
 	fp_trgra.close
@@ -173,14 +203,17 @@ def put_gra_set( graname )
   return str
 end
 
-def make_trfgra( filename, gra_list )
+def make_trgra_scr( filename, prefix, trf_list )
   str = ""
-  gra_list.each{|graname|
-    str += put_gra_set( "trwb_" + graname )
+  trf_list.each{|graname|
+    str += put_gra_set( prefix + graname )
   }
   File.open(filename,"w"){|file|
     file.puts str
   }
+end
+
+def make_trbgra( filename, trf_list )
 end
 
 #------------------------------------------------------------------------------
@@ -225,7 +258,7 @@ end
 #------------------------------------------------------------------------------
 # トレーナータイプ別プログラム参照テーブルの生成
 #------------------------------------------------------------------------------
-def make_cdat( filename, ttdata, gra_list )
+def make_cdat( filename, ttdata, trf_list, trb_list )
   str = ""
   str += "//============================================================================================\n"
   str += "/**\n"
@@ -240,11 +273,19 @@ def make_cdat( filename, ttdata, gra_list )
 
   ttdata.each{|ttd|
     str += sprintf("\t{ // No.%03d %s\n", ttd.no, ttd.trhash )
-    str += sprintf("\t\t%3d,%s,\n", gra_list.index(ttd.grf), ttd.trsex )
+    str += sprintf("\t\t%3d,%s,\n", trf_list.index(ttd.grf), ttd.trsex )
     str += sprintf("\t\t\%s\n", ttd.trbgm )
     str += "\t},\n"
   }
 
+  str += "};\n\n"
+
+  str += "const u16 DATA_TrainerBackCGIndex[][2] = {\n"
+  ttdata.each{|ttd|
+    if ttd.grb != nil then
+      str += sprintf( "\t\t{ %s, %d },\n", ttd.trtype, trb_list.index(ttd.grb) )
+    end
+  }
   str += "};\n\n"
 
   fp_cdat = File.open( filename, "w" )
@@ -271,7 +312,8 @@ File.open(ARGV[0]).each{|line|
 check_ttdata( ttdata )
 
 #重複を除いたグラフィック名の配列を作成
-gra_list = make_gra_list( ttdata )
+trf_list = make_trf_list( ttdata )
+trb_list = make_trb_list( ttdata )
 
 #gmm
 makeGMM( "trtype.gmm", ARGV[1], ttdata )
@@ -280,16 +322,17 @@ makeGMM( "trtype.gmm", ARGV[1], ttdata )
 make_trtype_header( "trtype_def.h", ttdata )
 
 #trfgra_wb.scr
-make_trfgra( "trfgra_wb.scr", gra_list )
+make_trgra_scr( "trfgra_wb.scr", "trwb_", trf_list )
+make_trgra_scr( "trbgra_wb.scr", "tbwb_", trb_list )
 
 #trfgra_wb.lst
-make_trf_list( "trfgra_wb.lst", ttdata, gra_list )
+make_trgra_check_list( "trfgra_wb.lst", ttdata, trf_list, trb_list )
 
 # swan/tools/hash/trtype_hash.rb
 make_hash( "trtype_hash.rb", ttdata )
 
 # trtype_data.cdat
-make_cdat( "trtype_data.cdat", ttdata, gra_list )
+make_cdat( "trtype_data.cdat", ttdata, trf_list, trb_list )
 
 
   #タイムスタンプ比較用のダミーファイルを生成

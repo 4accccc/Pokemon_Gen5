@@ -36,8 +36,10 @@ TYPE_GMMFILE = trtype.gmm
 #トレーナータイプ別ハッシュ
 TYPE_HASH = trtype_hash.rb
 
-#トレーナータイプ別グラフィック指定ファイル
-SCRFILE = trfgra_wb.scr
+#トレーナータイプ別グラフィック指定ファイル（正面）
+SCRFILE_FRONT = trfgra_wb.scr
+#トレーナータイプ別グラフィック指定ファイル（背面）
+SCRFILE_BACK = trbgra_wb.scr
 #トレーナーグラフィックリストファイル（trdata_exist.rbで使用する）
 LSTFILE = trfgra_wb.lst
 
@@ -57,7 +59,8 @@ TRTOOLSDIR = $(PROJECT_ROOT)tools/trdata_conv/
 ALL_TARGETS =  $(TARGETDIR)$(TYPE_HEADER) \
 							 $(GMMDIR)$(TYPE_GMMFILE) \
 							 $(HASHDIR)$(TYPE_HASH) \
-							 $(GRADIR)$(SCRFILE) \
+							 $(GRADIR)$(SCRFILE_FRONT) \
+							 $(GRADIR)$(SCRFILE_BACK) \
 							 $(CDATDIR)$(TYPE_CDAT)
 							 #$(CDATDIR)$(GENDER_CDAT) \
 							 #$(GRATBLDIR)$(GRATBL_CDAT) \
@@ -102,7 +105,8 @@ do-build: out_end
 
 out_end: trtype_list.tab
 	ruby trtype_conv.rb $< ../message/template.gmm
-	ruby $(TRTOOLSDIR)file_exist.rb $(LSTFILE) ../../../swan_doc/trgra/
+	ruby file_exist.rb $(LSTFILE) ../../../swan_doc/trgra/
+	#ruby $(TRTOOLSDIR)file_exist.rb $(LSTFILE) ../../../swan_doc/trgra/
 
 trtype_list.tab: trtype_list.xls
 	$(XLS2TAB) trtype_list.xls > trtype_list.tab
@@ -116,8 +120,11 @@ $(TARGETDIR)$(TYPE_HEADER):	$(TYPE_HEADER)
 $(GMMDIR)$(TYPE_GMMFILE):	$(TYPE_GMMFILE)
 	$(COPY)	$(TYPE_GMMFILE) $(GMMDIR)
 
-$(GRADIR)$(SCRFILE):	$(SCRFILE)
-	$(COPY)	$(SCRFILE) $(GRADIR)
+$(GRADIR)$(SCRFILE_FRONT):	$(SCRFILE_FRONT)
+	$(COPY)	$(SCRFILE_FRONT) $(GRADIR)
+
+$(GRADIR)$(SCRFILE_BACK):	$(SCRFILE_BACK)
+	$(COPY)	$(SCRFILE_BACK) $(GRADIR)
 
 $(HASHDIR)$(TYPE_HASH):	$(TYPE_HASH)
 	$(COPY)	$(TYPE_HASH) $(HASHDIR)

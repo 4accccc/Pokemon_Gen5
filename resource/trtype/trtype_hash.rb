@@ -187,6 +187,7 @@
 		"WBHEROINE♀ポケモントレーナー"=>183,
 		"WBHERO_S♂ポケモントレーナー"=>184,
 		"WBHEROINE_S♀ポケモントレーナー"=>185,
+		"SWBOSS♂プラズマだん"=>186,
 	}
 #
 	$trtype_id_hash = {
@@ -376,4 +377,5 @@
 		"TRTYPE_WBHEROINE" =>183,
 		"TRTYPE_WBHERO_S" =>184,
 		"TRTYPE_WBHEROINE_S" =>185,
+		"TRTYPE_SWBOSS" =>186,
 	}
