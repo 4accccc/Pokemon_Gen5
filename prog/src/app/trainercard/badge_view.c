@@ -2414,14 +2414,14 @@ static int TouchBar_KeyControl( BADGEVIEW_WORK *wk )
     if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL){
       // キャンセル
       if(!(wk->Flag & FLG_CANCEL_OFF)){
-        PMSND_PlaySE( SEQ_SE_CANCEL1 );
+        PMSND_PlaySE( SND_TRCARD_CANCEL );
         keyflag = TRUE;
         trg = TOUCH_RETURN;
       }
     }else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X){
       // Xボタン
       if(!(wk->Flag & FLG_XBUTTON_OFF)){
-        PMSND_PlaySE( SEQ_SE_CANCEL1 );
+        PMSND_PlaySE( SND_TRCARD_END );
         trg = TOUCH_END;
       }
     }else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y){
@@ -2605,7 +2605,7 @@ static void ExecFunc( BADGEVIEW_WORK *wk, int trg, BOOL keyflag )
           InfoWinPrint( wk, INFO_TYPE_GYMLEADER, (trg-TOUCH_GYM_READER_0+pos)%BADGE_NUM, 0 );
           InfoWinPut( wk );
           // 選択音(スクロールの音と重複させないため)
-          PMSND_PlaySE( SEQ_SE_SYS_31 );
+          PMSND_PlaySE( SND_TRCARD_CHR_TOUCH );
         }
         // リーダー情報初期化
         wk->LeaderNum = 0;

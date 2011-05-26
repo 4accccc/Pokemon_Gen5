@@ -72,5 +72,7 @@
 #define SND_TRBADGE_SLIDE_OUT	(SEQ_SE_SW_CARD_13)		///< スライドアウト
 //
 #define SND_TRBADGE_WIN_TOUCH	(SEQ_SE_SW_CARD_02)		///< ウインドウタッチ音
-
+//
+#define SND_TRCARD_CHR_TOUCH	(SEQ_SE_SW_CARD_22)		///< キャラタッチ
+//
 #endif  //__TRCARD_SND_DEF_H__
