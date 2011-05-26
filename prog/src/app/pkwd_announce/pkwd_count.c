@@ -817,7 +817,8 @@ static s16 pwc_get_empty( PKWD_COUNT_MAIN_WORK *wk, const s32 num )
 //-----------------------------------------------------------------------------
 static void pwc_init_bg( PKWD_COUNT_MAIN_WORK* wk )
 {
-	s32		i;
+	u16		*adr;
+	s32		i,j,k;
 	s32		tmp;
 	u32		off;
 	const PKWD_COUNT_BGPAL_DATA	*padr = &pwc_bgpal_tbl[0];
@@ -864,7 +865,16 @@ static void pwc_init_bg( PKWD_COUNT_MAIN_WORK* wk )
 		//
 		// スクリーンのパレット指定を変更
 		if(sadr->poff != 0){
-			GFL_BG_ChangeScreenPalette( sadr->frmnumber, 0, 0, 32, 24, sadr->poff );
+			// スクリーンバッファ指定
+			adr = GFL_BG_GetScreenBufferAdrs( sadr->frmnumber );
+			// 1画面分修正
+			for(k=0;k<24;k++){
+				for(j=0;j<32;j++){
+					// オフセットを加算
+					adr[k*32+j] += ((sadr->poff&0x0f)<<12);
+				}
+			}
+//			GFL_BG_ChangeScreenPalette( sadr->frmnumber, 0, 0, 32, 24, sadr->poff );
 			GFL_BG_LoadScreenReq( sadr->frmnumber );
 		}
 		sadr++;
