@@ -148,7 +148,7 @@ VMCMD_RESULT EvCmdGetAnimalTrailData( VMHANDLE* core, void* wk )
       GFL_ARC_LoadData( &data, ARCID_ANIMAL_TRAIL, trail_id );
       p_poke = &data.poke_data[main_table_index];
       // ƒƒX”»’è
-      if( female_num > p_poke->female_probability[data_table_index]  )
+      if( female_num < p_poke->female_probability[data_table_index]  )
       {
         is_female = TRUE;
       }
@@ -398,7 +398,7 @@ static void SetPokemon( MAP_CHAGE_EVENT_WORK *p_wk )
   p_poke = &data.poke_data[main_table_index];
 
   // ƒƒX”»’è
-  if( female_num > p_poke->female_probability[data_table_index]  )
+  if( female_num < p_poke->female_probability[data_table_index]  )
   {
     is_female = TRUE;
   }

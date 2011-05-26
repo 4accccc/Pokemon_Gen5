@@ -48,9 +48,10 @@ void ANIMAL_TRAIL_SelectRandomTable( ETC_SAVE_WORK *p_save ,u8 trail_id )
 
   // セーブデータに格納
   {
-    ANIMAL_TRAIL_SAVE_SetMainTableIndex( p_save ,trail_id ,main_table_index );
-    ANIMAL_TRAIL_SAVE_SetDataTableIndex( p_save ,trail_id ,data_table_index );
-    ANIMAL_TRAIL_SAVE_SetObjectSetFlag( p_save ,trail_id ,TRUE );
+    ANIMAL_TRAIL_SAVE_SetMainTableIndex( p_save ,trail_id ,main_table_index );        // メインテーブルインデックス
+    ANIMAL_TRAIL_SAVE_SetDataTableIndex( p_save ,trail_id ,data_table_index );        // データテーブルインデックス
+    ANIMAL_TRAIL_SAVE_SetFemaleNum( p_save ,trail_id ,GFUser_GetPublicRand( 100 ));   // メスになるかどうか 0~99
+    ANIMAL_TRAIL_SAVE_SetObjectSetFlag( p_save ,trail_id ,TRUE );                     // 設置フラグ
   }
   OS_Printf("けものみち%u番にオブジェクトを配置しました(テーブルID：%u)\n",trail_id,main_table_index);
 

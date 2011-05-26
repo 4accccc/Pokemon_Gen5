@@ -554,11 +554,11 @@ u8 ANIMAL_TRAIL_SAVE_GetFemaleNum( ETC_SAVE_WORK *p_save ,u8 trail_id )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  けものみちに物が置かれているか設定する
+ *	@brief  メスになるかどうか判定用パラメータを取得
  *
  *	@param	*p_save 
- *	@param	trail_id  獣道のID
- *	@param	is_set    オブジェクトがセットされている = TRUE
+ *	@param	trail_id    獣道のID
+ *	@param	female_num  メス判定用パラメータ
  *
  *	@retval
  */
