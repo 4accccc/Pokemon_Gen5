@@ -28,6 +28,8 @@ _EVENT_DATA    ev_bg_c05gym0101_lift_01
 _EVENT_DATA    ev_bg_c05gym0101_lift_02
 _EVENT_DATA    ev_bg_c05gym0101_lift_03
 _EVENT_DATA    ev_bg_c05gym0101_exitlift_00u
+_EVENT_DATA    ev_zone_c05gym0101
+_EVENT_DATA    ev_init_c05gym0101
 _EVENT_DATA_END
 
 //--------------------------------------------------------------
@@ -35,6 +37,35 @@ _EVENT_DATA_END
 //--------------------------------------------------------------
 // 昇降リフトID
 DEFINE_LOCAL  lift_id
+
+/************************************************************/
+/*					ジムギミック初期化						*/
+/*          ZONE_CHANGE_LABEL             */
+/************************************************************/
+INIT_EVENT_START  ev_zone_c05gym0101
+
+INIT_EVENT_END
+
+/************************************************************/
+/*					ジムギミック初期化						*/
+/*          FIELD_INIT_LABEL             */
+/************************************************************/
+INIT_EVENT_START  ev_init_c05gym0101
+
+  //バッジフラグ取得
+	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_05 )
+
+	//バッジフラグで分岐
+	IF $SCWK_TEMP0 == 1 THEN
+		//バッジ入手後の処理
+
+    // ガイド位置変更
+    _OBJ_POS_CHANGE( C05GYM0101_SUNGLASSES_01, 9, 0, 79, DIR_DOWN )
+    // ヤーコン位置変更
+    _OBJ_POS_CHANGE( C05GYM0101_LEADER5_01, 11, 1, 71, DIR_DOWN )
+  ENDIF
+
+INIT_EVENT_END
 
 /************************************************************/
 /*				接続イベント エントランスから降下			*/
@@ -137,6 +168,25 @@ EVENT_START		c05gym0101_leader5_01
 		_FLAG_SET( SYS_FLAG_ELBOARD_C05GYMWIN )
 
 		//========================================//
+
+		//==========エントランスへ移動============//
+		//==========ヤーコンリフト専用============//
+    {
+	    //マップブラックアウト
+	    _MAP_FADE_BLACK_OUT_SLOW()
+
+	    //リフトを上昇させる（2 = ヤーコンリフト専用）
+	    _GYM_GROUND_EXIT_LIFT( 2 )
+
+	    _MAP_FADE_END_CHECK()
+
+	    //スクリプト予約 マップチェンジ後にエントランスのリフト上昇演出を起動
+	    _RESERVE_SCRIPT( SCRID_RESERVE_C05GYM0201_GYMBACK_02 )
+
+	    //マップチェンジ
+	    _MAP_CHANGE_NO_FADE( ZONE_ID_C05GYM0201, 7, 0, 4, DIR_UP )
+    }
+		//========================================//
 		
 	//ジムバッジ入手後
 	ELSE
@@ -225,6 +275,7 @@ EVENT_END
 EVENT_START ev_bg_c05gym0101_lift_00
   $lift_id = 0                 // リフトのIDを代入
 	_SE_PLAY( SEQ_SE_FLD_61 )		//スイッチＳＥを再生
+	_SE_WAIT()
   _CALL move_camera_start
 	_GYM_GROUND_MV_LIFT( 0, 0 )
   _CALL move_camera_wait
@@ -239,6 +290,7 @@ EVENT_END
 EVENT_START ev_bg_c05gym0101_lift_01
   $lift_id = 1                 // リフトのIDを代入
 	_SE_PLAY( SEQ_SE_FLD_61 )		//スイッチＳＥを再生
+	_SE_WAIT()
   _CALL move_camera_start
 	_GYM_GROUND_MV_LIFT( 1, 0 )
   _CALL move_camera_wait
@@ -253,6 +305,7 @@ EVENT_END
 EVENT_START ev_bg_c05gym0101_lift_02
   $lift_id = 2                 // リフトのIDを代入
 	_SE_PLAY( SEQ_SE_FLD_61 )		//スイッチＳＥを再生
+	_SE_WAIT()
   _CALL move_camera_start
 	_GYM_GROUND_MV_LIFT( 2, 0 )
   _CALL move_camera_wait
@@ -267,6 +320,7 @@ EVENT_END
 EVENT_START ev_bg_c05gym0101_lift_03
   $lift_id = 3                 // リフトのIDを代入
 	_SE_PLAY( SEQ_SE_FLD_61 )		//スイッチＳＥを再生
+	_SE_WAIT()
   _CALL move_camera_start
 	_GYM_GROUND_MV_LIFT( 3, 0 )
   _CALL move_camera_wait

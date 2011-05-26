@@ -11,6 +11,7 @@
 
 #define C05GYM0201_STARTLIFT_01            0
 #define C05GYM0201_INFORMATIONW_01         1
+#define C05GYM0201_LEADER5_01              2
 
 #endif //ZONE_C05GYM0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c05gym0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

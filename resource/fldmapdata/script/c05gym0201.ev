@@ -22,17 +22,26 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_c05gym0201_startlift_01
 _EVENT_DATA    ev_reserve_c05gym0201_gymback_01
+_EVENT_DATA    ev_reserve_c05gym0201_gymback_02
 _EVENT_DATA    ev_bg_c05gym0201_statue_01
 _EVENT_DATA    ev_c05gym0201_informationw_01
+_EVENT_DATA    c05gym0201_leader5_01
 _EVENT_DATA_END
 
+//------------------------！注意！------------------------------//
+//																//
+//		LOCALWORK0をジムギミックの制御に使用			//
+//		ゾーン内での使用を禁止します							//
+//    LOCALWORK0 ⇒ ヤーコンリフトか判別用
+//																//
+//--------------------------------------------------------------//
 
 /************************************************************/
 /*			ジムフロアから戻ってくる演出					*/
 /************************************************************/
 EVENT_START	ev_reserve_c05gym0201_gymback_01
-  //リフトと自機の位置をセット
-  _GYM_GROUND_ENT_SET_ENTER_POS()
+  //リフトと自機の位置をセット( 0 = 通常)
+  _GYM_GROUND_ENT_SET_ENTER_POS(0)
   //マップブラックイン
 	_MAP_FADE_BLACK_IN_SLOW()
 	//ジムからリフトが戻ってくる演出（引数0 = 上昇アニメ）
@@ -43,13 +52,40 @@ EVENT_START	ev_reserve_c05gym0201_gymback_01
 EVENT_END
 
 /************************************************************/
+/*			ジムフロアから戻ってくる演出(ヤーコンリフト)				*/
+/************************************************************/
+EVENT_START	ev_reserve_c05gym0201_gymback_02
+
+  // ヤーコンの位置変更
+  _OBJ_POS_CHANGE( C05GYM0201_LEADER5_01, 7, 0, 3, DIR_DOWN )
+
+  //リフトと自機の位置をセット( 1 = ヤーコンリフト専用)
+  _GYM_GROUND_ENT_SET_ENTER_POS(1)
+  //マップブラックイン
+	_MAP_FADE_BLACK_IN_SLOW()
+	//ジムからリフトが戻ってくる演出（引数2 = ヤーコンリフト専用）
+	_GYM_GROUND_ENT_EXIT_LIFT( 2 )
+  //マップフェード待ち
+	_MAP_FADE_END_CHECK()
+
+  // ヤーコンリフトフラグON
+  $LOCALWORK0 = 1
+
+EVENT_END
+
+/************************************************************/
 /*			ジムフロアへ降りるリフトのスイッチ				*/
 /************************************************************/
 EVENT_START	ev_c05gym0201_startlift_01
 	_PLAYER_DIR_GET( SCWK_ANSWER )	//主人公の向き情報を取得
 
+  {
+    _DEBUG_PRINT_WK(LOCALWORK0)
+  }
+
 	//スイッチの下側から話しかけた場合はリフト起動
-	IF $SCWK_ANSWER == DIR_UP THEN
+  // かつ ヤーコンリフトではない
+	IF $SCWK_ANSWER == DIR_UP && $LOCALWORK0 == 0 THEN
 		_SE_PLAY( SEQ_SE_FLD_61 )		//スイッチＳＥを再生
 		_SE_WAIT()
 
@@ -103,5 +139,18 @@ EVENT_END
 /**************************************************************/
 EVENT_START		ev_c05gym0201_informationw_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0501_infomationw_01 )
+EVENT_END
+
+/**************************************************************/
+/*    ジムリーダー会話                                  */
+/**************************************************************/
+EVENT_START		c05gym0201_leader5_01
+	_TALK_OBJ_START()
+
+  // 【仮】
+  // メッセージがないので、仮あて
+  _BALLOONWIN_OBJMSG( msg_c03r0501_infomationw_01 , C05GYM0201_LEADER5_01 )
+  _LAST_KEYWAIT()
+  _BALLOONWIN_CLOSE()
 EVENT_END
 

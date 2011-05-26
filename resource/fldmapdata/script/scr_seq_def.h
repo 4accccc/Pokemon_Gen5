@@ -7021,7 +7021,9 @@
 //--------------------------------------------------------------
 /**
  * ジムコマンド　地面ジム出口リフト移動
- * @param exit   ジムから出るとき1　ジムに入るとき0
+ * @param exit   ジムから出るとき1
+ * 　            ジムに入るとき0
+ *               ヤーコンリフトでジムから出るとき2
  */
 //--------------------------------------------------------------
 #define _GYM_GROUND_EXIT_LIFT(exit) \
@@ -7035,19 +7037,22 @@
 //--------------------------------------------------------------
 /**
  * ジムコマンド　地面ジムエントランス 入り口位置にリフトと自機をセット
+ * @param set   通常0 ヤーコンリフトのとき1
  */
 //--------------------------------------------------------------
-#define _GYM_GROUND_ENT_SET_ENTER_POS() \
-    _ASM_GYM_GROUND_ENT_SET_ENTER_POS
+#define _GYM_GROUND_ENT_SET_ENTER_POS(set) \
+    _ASM_GYM_GROUND_ENT_SET_ENTER_POS set
 
-  .macro  _ASM_GYM_GROUND_ENT_SET_ENTER_POS
+  .macro  _ASM_GYM_GROUND_ENT_SET_ENTER_POS set
   .short  EV_SEQ_GYM_GROUND_ENT_SET_ENTER_POS
+  .short  \set
   .endm  
   
 //--------------------------------------------------------------
 /**
  * ジムコマンド　地面ジムエントランス出口リフト移動
  * @param exit   ジムに行くとき1　ジムから戻るとき0
+ *               ヤーコンリフトでジムから戻るとき2
  */
 //--------------------------------------------------------------
 #define _GYM_GROUND_ENT_EXIT_LIFT(exit) \

@@ -32,6 +32,6 @@ extern void GYM_GROUND_ENT_End(FIELDMAP_WORK *p_fieldmap);
 extern void GYM_GROUND_ENT_Move(FIELDMAP_WORK *p_fieldmap);
 
 // スクリプトコマンド用
-extern GMEVENT *GYM_GROUND_ENT_CreateExitLiftMoveEvt( GAMESYS_WORK *p_gamesys, const BOOL inExit );
-extern void GYM_GROUND_ENT_SetEnterPos( GAMESYS_WORK *p_gamesys );
+extern GMEVENT *GYM_GROUND_ENT_CreateExitLiftMoveEvt( GAMESYS_WORK *p_gamesys, const BOOL exit, const BOOL yacon );
+extern void GYM_GROUND_ENT_SetEnterPos( GAMESYS_WORK *p_gamesys, const u16 set );
 

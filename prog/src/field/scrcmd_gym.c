@@ -284,7 +284,8 @@ VMCMD_RESULT EvCmdGymGround_MvLift( VMHANDLE *core, void *wk )
 VMCMD_RESULT EvCmdGymGround_ExitLift( VMHANDLE *core, void *wk )
 {
   u16 exit;
-  BOOL exit_flg;
+  BOOL exit_flg = FALSE;
+  BOOL yacon_flg = FALSE;
   GMEVENT *call_event;
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
@@ -292,10 +293,19 @@ VMCMD_RESULT EvCmdGymGround_ExitLift( VMHANDLE *core, void *wk )
 
   exit = VMGetU16( core );
 
-  if (exit) exit_flg = TRUE;
-  else exit_flg = FALSE;
+  switch( exit ){
+  case 0: exit_flg = FALSE; break; // ジムに入るとき
+  case 1: exit_flg = TRUE;  break; // ジムからでるとき
+  case 2:
+    // ヤーコンリフトでジムから出るとき
+    exit_flg = TRUE;
+    yacon_flg = TRUE;
+    break;
+  default:
+    GF_ASSERT(0);
+  } 
 
-  call_event = GYM_GROUND_CreateExitLiftMoveEvent(gsys, exit_flg);
+  call_event = GYM_GROUND_CreateExitLiftMoveEvent(gsys, exit_flg, yacon_flg);
   if (call_event == NULL){
     GF_ASSERT(0);
     return VMCMD_RESULT_SUSPEND;
@@ -315,7 +325,8 @@ VMCMD_RESULT EvCmdGymGround_ExitLift( VMHANDLE *core, void *wk )
 VMCMD_RESULT EvCmdGymGroundEnt_ExitLift( VMHANDLE *core, void *wk )
 {
   u16 exit;
-  BOOL exit_flg;
+  BOOL exit_flg = FALSE;
+  BOOL yacon_flg = FALSE;
   GMEVENT *call_event;
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
@@ -326,7 +337,19 @@ VMCMD_RESULT EvCmdGymGroundEnt_ExitLift( VMHANDLE *core, void *wk )
   if (exit) exit_flg = TRUE;
   else exit_flg = FALSE;
 
-  call_event = GYM_GROUND_ENT_CreateExitLiftMoveEvt(gsys, exit_flg);
+  switch( exit ){
+  case 0: exit_flg = FALSE; break; // エントランスに入ってくるとき
+  case 1: exit_flg = TRUE;  break; // エントランスからでるとき
+  case 2:
+    // ヤーコンリフトでエントランスに入ってくるとき
+    exit_flg = FALSE;
+    yacon_flg = TRUE;
+    break;
+  default:
+    GF_ASSERT(0);
+  }
+
+  call_event = GYM_GROUND_ENT_CreateExitLiftMoveEvt(gsys, exit_flg, yacon_flg);
   if (call_event == NULL){
     GF_ASSERT(0);
     return VMCMD_RESULT_SUSPEND;
@@ -360,10 +383,13 @@ VMCMD_RESULT EvCmdGymGround_SetEnterPos( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdGymGroundEnt_SetEnterPos( VMHANDLE *core, void *wk )
 {
+  u16 set;
   SCRCMD_WORK *work = wk;
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
 
-  GYM_GROUND_ENT_SetEnterPos(gsys);
+  set = VMGetU16( core );
+
+  GYM_GROUND_ENT_SetEnterPos(gsys, set);
   return VMCMD_RESULT_CONTINUE;
 }
 

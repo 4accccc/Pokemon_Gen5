@@ -26,6 +26,9 @@
 // sound
 #include "sound/pm_sndsys.h"
 
+// script
+#include "../../../resource/fldmapdata/flagwork/work_define.h"
+
 // mine
 #include "gym_ground_se_def.h"
 #include "gym_ground_ent.h"
@@ -64,6 +67,8 @@ typedef struct GYM_GROUND_ENT_TMP_tag
   fx32          AddVal;
   BOOL          Exit;
   const VecFx32 *Watch;
+  int           obj_idx;
+  MMDL          *yacon_mmdl;
 }GYM_GROUND_ENT_TMP;
 
 //=============================================================================
@@ -75,11 +80,14 @@ typedef struct GYM_GROUND_ENT_TMP_tag
 enum {
   RES_ID_LIFT_MDL = 0,
   RES_ID_LIFT_ANM,
+  RES_ID_LIFT_YACON_MDL,     // ヤーコンリフト
+  RES_ID_LIFT_YACON_ANM,     // ヤーコンリフト
 };
 
 //ＯＢＪインデックス
 enum {
   OBJ_LIFT_0 = 0,
+  OBJ_LIFT_1,     // ヤーコンリフト
 };
 
 //--リソース関連--
@@ -88,11 +96,16 @@ static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
 	{ ARCID_GYM_GROUND, NARC_gym_ground_lift_entrance01_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD
 
   { ARCID_GYM_GROUND, NARC_gym_ground_lift_entrance01_nsbta, GFL_G3D_UTIL_RESARC }, //ITA
+	{ ARCID_GYM_GROUND, NARC_gym_ground_lift_yacon01_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD
+	{ ARCID_GYM_GROUND, NARC_gym_ground_lift_yacon01_nsbta, GFL_G3D_UTIL_RESARC }, //ITA
 };
 
 //3Dアニメ　リフト
 static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl_lift[] = {
 	{ RES_ID_LIFT_ANM,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
+};
+static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl_lift_yacon[] = {
+	{ RES_ID_LIFT_YACON_ANM,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
 };
 
 static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl[] = {
@@ -103,6 +116,13 @@ static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl[] = {
 		RES_ID_LIFT_MDL, 	//テクスチャリソースID
 		g3Dutil_anmTbl_lift,			//アニメテーブル(複数指定のため)
 		NELEMS(g3Dutil_anmTbl_lift),	//アニメリソース数
+	},
+	{
+		RES_ID_LIFT_YACON_MDL, 	//モデルリソースID
+		0, 							  //モデルデータID(リソース内部INDEX)
+		RES_ID_LIFT_YACON_MDL, 	//テクスチャリソースID
+		g3Dutil_anmTbl_lift_yacon,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anmTbl_lift_yacon),	//アニメリソース数
 	},
 };
 
@@ -120,7 +140,7 @@ static const GFL_G3D_UTIL_SETUP Setup = {
 
 static GMEVENT_RESULT ExitLiftEvt( GMEVENT* event, int* seq, void* work );
 static BOOL CheckArrive(GYM_GROUND_ENT_TMP *tmp);
-static void SetExitLiftDefaultSt(FLD_EXP_OBJ_CNT_PTR ptr);
+static void SetExitLiftDefaultSt(FLD_EXP_OBJ_CNT_PTR ptr, int obj_idx);
 
 //=============================================================================
 /**
@@ -168,7 +188,59 @@ void GYM_GROUND_ENT_Setup(FIELDMAP_WORK *p_fieldmap)
       FLD_EXP_OBJ_ChgAnmStopFlg(anm, TRUE);
     }
     
-    SetExitLiftDefaultSt(ptr);
+    SetExitLiftDefaultSt(ptr, obj_idx);
+  }
+
+  // ヤーコンリフト
+  {
+    int j;
+    EXP_OBJ_ANM_CNT_PTR anm;
+    VecFx32 pos = {LIFT_0_GX, LIFT_0_GY, LIFT_0_GZ};
+    int obj_idx = OBJ_LIFT_1;
+    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, GYM_GROUND_ENT_UNIT_IDX, obj_idx);
+    status->trans = pos;
+    //カリングする
+    FLD_EXP_OBJ_SetCulling(ptr, GYM_GROUND_ENT_UNIT_IDX, obj_idx, TRUE);
+    //非表示
+    FLD_EXP_OBJ_SetVanish( ptr, GYM_GROUND_ENT_UNIT_IDX, obj_idx, TRUE );
+    for (j=0;j<LIFT_ANM_NUM;j++)
+    {
+      //1回再生設定
+      EXP_OBJ_ANM_CNT_PTR anm;
+      anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_GROUND_ENT_UNIT_IDX, obj_idx, j);
+      FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_GROUND_ENT_UNIT_IDX, obj_idx, j, TRUE);
+      FLD_EXP_OBJ_ChgAnmLoopFlg(anm, TRUE);
+      //アニメ停止
+      FLD_EXP_OBJ_ChgAnmStopFlg(anm, TRUE);
+    }
+
+    SetExitLiftDefaultSt(ptr, obj_idx);
+  }
+
+  // スクリプト関係
+  // LOCALWORK0 が 1 の場合は、ヤーコンリフトの時なので、
+  // ヤーコンリフトを表示し、出口リフトを非表示にする
+  // ※セーブして、続きから始めた時ようにここに記述する
+  {
+    GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
+    GAMEDATA   *gdata = GAMESYSTEM_GetGameData( gsys );
+    EVENTWORK* p_evwk = GAMEDATA_GetEventWork( gdata );
+    u16 *local_wk0 = EVENTWORK_GetEventWorkAdrs( p_evwk, LOCALWORK0 );
+
+    if( *local_wk0 == 1 )
+    {
+      // 非表示
+      FLD_EXP_OBJ_SetVanish( ptr, GYM_GROUND_ENT_UNIT_IDX, OBJ_LIFT_0, TRUE );
+      // 表示
+      FLD_EXP_OBJ_SetVanish( ptr, GYM_GROUND_ENT_UNIT_IDX, OBJ_LIFT_1, FALSE );
+      {
+        //1回再生設定
+        EXP_OBJ_ANM_CNT_PTR anm;
+        anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_GROUND_ENT_UNIT_IDX, OBJ_LIFT_1, 0);
+        //アニメ再生
+        FLD_EXP_OBJ_ChgAnmStopFlg(anm, FALSE);
+      }
+    }
   }
 }
 
@@ -209,14 +281,14 @@ void GYM_GROUND_ENT_Move(FIELDMAP_WORK *p_fieldmap)
       GAMESYS_WORK *p_gamesys = FIELDMAP_GetGameSysWork( p_fieldmap );
       GMEVENT *event;
       {
-        event = GYM_GROUND_ENT_CreateExitLiftMoveEvt(p_gamesys, TRUE);
+        event = GYM_GROUND_ENT_CreateExitLiftMoveEvt(p_gamesys, TRUE, FALSE);
         GAMESYSTEM_SetEvent(p_gamesys, event);
       }
     }else if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
       GAMESYS_WORK *p_gamesys = FIELDMAP_GetGameSysWork( p_fieldmap );
       GMEVENT *event;
       {
-        event = GYM_GROUND_ENT_CreateExitLiftMoveEvt(p_gamesys, FALSE);
+        event = GYM_GROUND_ENT_CreateExitLiftMoveEvt(p_gamesys, FALSE, FALSE);
         GAMESYSTEM_SetEvent(p_gamesys, event);
       }
     }
@@ -235,12 +307,13 @@ void GYM_GROUND_ENT_Move(FIELDMAP_WORK *p_fieldmap)
  *	@brief  出口昇降イベント作成
  *
  *	@param	p_gamesys   ゲームシステムポインタ
- *	@param	inExit      エントランスを出る（ジムに行く）とき TRUE
+ *	@param	exit        エントランスを出る（ジムに行く）とき TRUE
+ *	@param  yacon       ヤーコンリフトのとき TRUE
  *
  *	@return イベント
  */
 //-----------------------------------------------------------------------------
-GMEVENT *GYM_GROUND_ENT_CreateExitLiftMoveEvt( GAMESYS_WORK *p_gamesys, const BOOL inExit )
+GMEVENT *GYM_GROUND_ENT_CreateExitLiftMoveEvt( GAMESYS_WORK *p_gamesys, const BOOL exit, const BOOL yacon )
 {
   GMEVENT * event;
   GYM_GROUND_ENT_TMP *tmp;
@@ -248,10 +321,24 @@ GMEVENT *GYM_GROUND_ENT_CreateExitLiftMoveEvt( GAMESYS_WORK *p_gamesys, const BO
     
   tmp = GMK_TMP_WK_GetWork(p_fieldmap, GYM_GROUND_ENT_TMP_ASSIGN_ID);
 
-  tmp->Exit = inExit;
+  tmp->Exit = exit;
+  // 出口リフトかヤーコンリフト
+  tmp->obj_idx = (yacon == TRUE) ? OBJ_LIFT_1 : OBJ_LIFT_0;
+
+  // ヤーコンの場合モデルを取得しておく
+  if( yacon == TRUE )
+  {
+    MMDLSYS *mmdlsys = FIELDMAP_GetMMdlSys( p_fieldmap );
+    tmp->yacon_mmdl = MMDLSYS_SearchGridPos( mmdlsys, 7, 3, TRUE );
+    GF_ASSERT_MSG( tmp->yacon_mmdl, "ヤーコンがみつからない\n");
+  }
+  else
+  {
+    tmp->yacon_mmdl = NULL;
+  }
 
   //対象リフトの状態を取得
-  if ( inExit )
+  if ( exit )
   {
     //基準位置→移動後位置
     tmp->NowHeight = BASE_HEIGHT;
@@ -265,10 +352,9 @@ GMEVENT *GYM_GROUND_ENT_CreateExitLiftMoveEvt( GAMESYS_WORK *p_gamesys, const BO
   }
 
   {
-    int obj_idx = OBJ_LIFT_0;
     FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
     EXP_OBJ_ANM_CNT_PTR anm;
-    anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_GROUND_ENT_UNIT_IDX, obj_idx, 0);
+    anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_GROUND_ENT_UNIT_IDX, tmp->obj_idx, 0);
     // アニメ再生
     FLD_EXP_OBJ_ChgAnmStopFlg(anm, FALSE);
   }
@@ -330,8 +416,7 @@ static GMEVENT_RESULT ExitLiftEvt( GMEVENT* event, int* seq, void* work )
       }
       //対象リフト高さ更新
       {
-        int obj_idx = OBJ_LIFT_0;
-        GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, GYM_GROUND_ENT_UNIT_IDX, obj_idx);
+        GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, GYM_GROUND_ENT_UNIT_IDX, tmp->obj_idx);
         status->trans.y = tmp->NowHeight;
       }
       //自機の高さを更新
@@ -342,6 +427,20 @@ static GMEVENT_RESULT ExitLiftEvt( GMEVENT* event, int* seq, void* work )
         FIELD_PLAYER_GetPos( fld_player, &pos );
         pos.y = tmp->NowHeight;
         FIELD_PLAYER_SetPos( fld_player, &pos );
+      }
+      // ヤーコンの高さを更新
+      if( tmp->yacon_mmdl != NULL )
+      {
+        const VecFx32 *mmdl_pos;
+        VecFx32 pos;
+        int gy;
+        //座標更新
+        mmdl_pos = MMDL_GetVectorPosAddress( tmp->yacon_mmdl );
+        pos = *mmdl_pos;
+        pos.y = tmp->NowHeight;
+        gy = SIZE_GRID_FX32( pos.y );
+        MMDL_SetGridPosY( tmp->yacon_mmdl, gy );
+        MMDL_SetVectorPos( tmp->yacon_mmdl, &pos );
       }
     }
     break;
@@ -357,11 +456,9 @@ static GMEVENT_RESULT ExitLiftEvt( GMEVENT* event, int* seq, void* work )
 #if 1
       {
         EXP_OBJ_ANM_CNT_PTR anm;
-        int obj_idx;
         int anm_idx;
-        obj_idx = OBJ_LIFT_0;
         anm_idx = 0;
-        anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_GROUND_ENT_UNIT_IDX, obj_idx, anm_idx );
+        anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_GROUND_ENT_UNIT_IDX, tmp->obj_idx, anm_idx );
         //アニメ停止解除
         FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
       }
@@ -373,14 +470,12 @@ static GMEVENT_RESULT ExitLiftEvt( GMEVENT* event, int* seq, void* work )
   case 3:
     {
       EXP_OBJ_ANM_CNT_PTR anm;
-      int obj_idx;
       int anm_idx;
-      obj_idx = OBJ_LIFT_0;
       anm_idx = 0;
-      anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_GROUND_ENT_UNIT_IDX, obj_idx, anm_idx );
+      anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_GROUND_ENT_UNIT_IDX, tmp->obj_idx, anm_idx );
       //アニメ待ち
       if( FLD_EXP_OBJ_ChkAnmEnd(anm) ){
-        SetExitLiftDefaultSt(ptr);
+        SetExitLiftDefaultSt(ptr, tmp->obj_idx);
         return GMEVENT_RES_FINISH;
       }
     }
@@ -393,11 +488,12 @@ static GMEVENT_RESULT ExitLiftEvt( GMEVENT* event, int* seq, void* work )
  *	@brief  入り口位置（地下から上がってくる位置）にリフトと自機を移動させる
  *
  *	@param	GAMESYS_WORK *p_gamesys 
+ *	@param  set   出口リフトのとき0 ヤーコンリフトのとき1
  *
  *	@return
  */
 //-----------------------------------------------------------------------------
-void GYM_GROUND_ENT_SetEnterPos( GAMESYS_WORK *p_gamesys )
+void GYM_GROUND_ENT_SetEnterPos( GAMESYS_WORK *p_gamesys, const u16 set )
 {
   FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork(p_gamesys);
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
@@ -409,10 +505,22 @@ void GYM_GROUND_ENT_SetEnterPos( GAMESYS_WORK *p_gamesys )
   //カメラのバインドを切る
   FIELD_CAMERA_FreeTarget(camera);
   
+  // ヤーコンリフトの場合は
+  // 出口リフトを非表示にして、ヤーコンリフトを表示させる
+  if( set == 1 )
+  {
+    // 非表示
+    FLD_EXP_OBJ_SetVanish( ptr, GYM_GROUND_ENT_UNIT_IDX, OBJ_LIFT_0, TRUE );
+    // 表示
+    FLD_EXP_OBJ_SetVanish( ptr, GYM_GROUND_ENT_UNIT_IDX, OBJ_LIFT_1, FALSE );
+  }
+
   //対象リフト高さ更新
   {
-    int obj_idx = OBJ_LIFT_0;
-    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, GYM_GROUND_ENT_UNIT_IDX, obj_idx);
+    int obj_idx;
+    GFL_G3D_OBJSTATUS *status;
+    obj_idx = (set == 1) ? OBJ_LIFT_1 : OBJ_LIFT_0;
+    status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, GYM_GROUND_ENT_UNIT_IDX, obj_idx);
     status->trans.y = DOWN_HEIGHT;
   }
   //自機の高さを更新
@@ -423,6 +531,24 @@ void GYM_GROUND_ENT_SetEnterPos( GAMESYS_WORK *p_gamesys )
     FIELD_PLAYER_GetPos( fld_player, &pos );
     pos.y = DOWN_HEIGHT;
     FIELD_PLAYER_SetPos( fld_player, &pos );
+  }
+  // ヤーコンの高さ更新
+  if( set == 1 )
+  {
+    const VecFx32 *mmdl_pos;
+    VecFx32 pos;
+    int gy;
+    MMDLSYS *mmdlsys = FIELDMAP_GetMMdlSys( p_fieldmap );
+    MMDL *mmdl = MMDLSYS_SearchGridPos( mmdlsys, 7, 3, TRUE );
+    GF_ASSERT_MSG( mmdl, "ヤーコンがみつからない\n");
+
+    //座標更新
+    mmdl_pos = MMDL_GetVectorPosAddress( mmdl );
+    pos = *mmdl_pos;
+    pos.y = DOWN_HEIGHT;
+    gy = SIZE_GRID_FX32( pos.y );
+    MMDL_SetGridPosY( mmdl, gy );
+    MMDL_SetVectorPos( mmdl, &pos );
   }
 }
 
@@ -454,15 +580,14 @@ static BOOL CheckArrive(GYM_GROUND_ENT_TMP *tmp)
 /**
  * 出口リフトアニメ初期状態セット
  * @param	  FLD_EXP_OBJ_CNT_PTR ptr   拡張ＯＢＪコントローラポインタ
+ * @param   obj_idx   OBJインデックス
  * @return  none
  */
 //--------------------------------------------------------------
-static void SetExitLiftDefaultSt(FLD_EXP_OBJ_CNT_PTR ptr)
+static void SetExitLiftDefaultSt(FLD_EXP_OBJ_CNT_PTR ptr, int obj_idx)
 {
   EXP_OBJ_ANM_CNT_PTR anm;
-  int obj_idx;
   int anm_idx;
-  obj_idx = OBJ_LIFT_0;
   anm_idx = 0;
 
   FLD_EXP_OBJ_ValidCntAnm(ptr, GYM_GROUND_ENT_UNIT_IDX, obj_idx, 0, TRUE);

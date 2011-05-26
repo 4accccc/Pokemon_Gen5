@@ -36,7 +36,7 @@ extern GMEVENT * GYM_GROUND_CheckBeltEvent( GAMESYS_WORK *p_gamesys );
 
 // スクリプトコマンド用
 extern GMEVENT *GYM_GROUND_CreateLiftMoveEvent( GAMESYS_WORK *p_gamesys, const int lift_id, const int way );
-extern GMEVENT *GYM_GROUND_CreateExitLiftMoveEvent( GAMESYS_WORK *p_gamesys, const BOOL exit );
+extern GMEVENT *GYM_GROUND_CreateExitLiftMoveEvent( GAMESYS_WORK *p_gamesys, const BOOL exit, const BOOL yacon );
 extern void GYM_GROUND_SetEnterPos( GAMESYS_WORK *p_gamesys );
 
 
