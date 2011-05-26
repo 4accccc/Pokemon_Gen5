@@ -364,19 +364,35 @@ u8  TT_TrainerTypeSexGet( int trtype )
  *  @brief  トレーナータイプからグラフィックデータへのインデックスを取得する
  *
  *  @param[in]  trtype
- *  @param[in]  dir     0:正面　1:背面
+ *  @param[in]  dir     最下位ビットが  0:正面　1:背面
  *  @return     u8      グラフィックデータへのインデックス
  *
- *  @todo   背面の対応（src/battle/btlv/btlv_effect.cの対応も含む）
  */
 //============================================================================================
 u8  TT_TrainerTypeCGIndexGet( int trtype, int dir )
 {
-  //背面は取得する必要なし
+  SDK_COMPILER_ASSERT( TRTYPE_HERO == 0 );
+  SDK_COMPILER_ASSERT( TRTYPE_HEROINE == 1 );
+
   if ( dir & 1 )
   {
-    return trtype;
+    //背面の場合の分岐
+    int i;
+    for ( i = 0; i < NELEMS(DATA_TrainerBackCGIndex); i ++ )
+    {
+      if ( DATA_TrainerBackCGIndex[i][0] == trtype )
+      {
+        return DATA_TrainerBackCGIndex[i][1];
+      }
+    }
+    if ( TT_TrainerTypeSexGet( trtype ) == PTL_SEX_FEMALE )
+    {
+      return DATA_TrainerBackCGIndex[0][1]; //0 == TRTYPE_HERO
+    }
+    return DATA_TrainerBackCGIndex[1][1];   //1 == TRTYPE_HEROINE
   }
+
+  //正面の場合は素直にテーブル引き
   if ( trtype < NELEMS(DATA_TrainerType) )
   {
     return DATA_TrainerType[ trtype ].trfno;

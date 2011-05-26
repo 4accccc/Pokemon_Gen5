@@ -946,7 +946,18 @@ void  BTLV_EFFECT_SetTrainer( int trtype, int position, int pos_x, int pos_y, in
   {
     switch( trtype ){
     case TRTYPE_HERO:
+      if( BTLV_EFFECT_CheckShooterEnable() )
+      {
+        trtype = TRTYPE_HERO_S;
+      }
+      break;
     case TRTYPE_HEROINE:
+      if( BTLV_EFFECT_CheckShooterEnable() )
+      {
+        trtype = TRTYPE_HEROINE_S;
+      }
+      break;
+#if 0
       if( BTLV_EFFECT_CheckShooterEnable() )
       {
         trtype += 4;
@@ -968,6 +979,7 @@ void  BTLV_EFFECT_SetTrainer( int trtype, int position, int pos_x, int pos_y, in
         trtype = TRTYPE_HEROINE;
       }
       break;
+#endif
     }
   }
   else
