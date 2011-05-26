@@ -23,6 +23,7 @@ class CsvLoader
   def initialize
     @buffer
     @suffix =''
+    @prefix =''
 
     @row_length  = 0          #行
     @col_length = Array.new   #列
@@ -32,12 +33,26 @@ class CsvLoader
     @suffix = suffix
   end
 
+  def setPrefix( prefix )
+    @prefix = prefix
+  end
+
   def load( filename )
     #suffixがない場合は通常読み込み
     #suffixがあるときはsuffixまで読み込み
 
     #長さ取得
+    is_next = true
     CSV.open( filename, 'r' ) do |row|
+
+      #prefixがある場合はprefixまで飛ばす
+      if @prefix != '' && row[0] != @prefix && is_next == true
+        next
+      end
+
+      #一度prefixを見つけたらもう飛ばさない
+      is_next = false
+
       @row_length  += 1
       @col_length.push( row.size )
 
@@ -45,6 +60,8 @@ class CsvLoader
         break
       end
     end
+
+    p row_length
 
     #二次元配列
     @buffer = Array.new(@row_length)
@@ -55,11 +72,25 @@ class CsvLoader
     #データ取得
     i = 0
     j = 0
+    is_next = true
     CSV.open( filename, 'r' ) do |row|
+
+      #prefixがある場合はprefixまで飛ばす
+      if @prefix != '' && row[0] != @prefix && is_next == true
+        next
+      end
+      is_next = false
+
       row.each do |cell|
         @buffer[j][i] = cell
         i += 1
       end
+
+      #suffixがきたら終了
+      if @suffix != '' && row[0] == @suffix
+        break
+      end
+
       j += 1
       i = 0
     end
