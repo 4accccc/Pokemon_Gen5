@@ -909,6 +909,19 @@ void WORDSET_RegisterMedalRankName( WORDSET* wordset, u32 bufID, u8 rankID, u8 r
   }
   RegisterWordFormMsgArc( wordset, bufID, NARC_message_medalrank_dat, rankID );
 }
+//------------------------------------------------------------------
+/**
+ * @brief 指定バッファにメダルカテゴリ名を展開
+ * @date  2011.05.27
+ * @param   wordset ワードセットオブジェクト
+ * @param   bufID   バッファID
+ * @param   catID  カテゴリを指定するID
+ */
+//------------------------------------------------------------------
+void WORDSET_RegisterMedalCategoryName( WORDSET* wordset, u32 bufID, u8 catID )
+{
+  RegisterWordFormMsgArc( wordset, bufID, NARC_message_medalcategory_dat, catID );
+}
 
 
 //======================================================================================================
