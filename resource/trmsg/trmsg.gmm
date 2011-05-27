@@ -18779,6 +18779,20 @@ può accadere ancora di tutto!</language>
 テストメッセージ</language>
 	</row>
 
+	<row id="TRID_BADRIDER_01_08_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">オレは……　こいする　おとこ
+そのなも　チャールズ</language>
+		<language name="JPN_KANJI" width="216">オレは……　恋する　男
+その名も　チャールズ</language>
+	</row>
+
+	<row id="TRID_BADRIDER_01_09_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">オレは……　こいする　おとこ
+そのなも　チャールズ</language>
+		<language name="JPN_KANJI" width="216">オレは……　恋する　男
+その名も　チャールズ</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>
