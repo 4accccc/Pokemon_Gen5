@@ -662,10 +662,15 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>チェレン『あんなことが　できるのは
-まさか……！？▼</Text>
+まさか……！？▽
+それに　さっきの　ことば……▼
+「われわれは　いまいちど
+でんせつの　ドラゴンポケモンを▽
+したがえ　イッシュを　しはいする！」▽
+だけど……？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:16:32" />
+				Time="2011-05-27T03:55:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -687,10 +692,12 @@
 			Language="JPN">
 			<Comment>♂
 ・アジト船の方向を向いたままメッセージ
-・続けてswleader1_04</Comment>
+・続けてswleader1_04
+
+※メッセージ要調整</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:20:20" />
+				Time="2011-05-27T03:55:52" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -752,10 +759,12 @@
 ・主人公と向き合ってメッセージ表示
 ・表示後、6番道路方面へ
 ・画面外に消えると主人公操作可能に
-・0＝主人公名前</Comment>
+・0＝主人公名前
+
+※メッセージ要調整</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T08:08:25" />
+				Time="2011-05-27T03:55:54" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
