@@ -30,8 +30,8 @@ def GetMonitorAnimeNo( no_str )
   hash_table["BC"]     = 10
   hash_table["D03"]    = 11 
   hash_table["BROKEN"] = 12
-  hash_table["C07"]    = 0 #dummy
-  hash_table["D08"]    = 0 #dummy
+  hash_table["T06"]    = 13
+  hash_table["C13"]    = 14
   hash_table["D10"]    = 0 #dummy
   hash_table["D12"]    = 0 #dummy
   hash_table["D13"]    = 0 #dummy
