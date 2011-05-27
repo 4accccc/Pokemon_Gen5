@@ -4337,4 +4337,54 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_debug_onoue_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>最も獲得率の高いメダルカテゴリ</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-05-27T09:49:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-05-27T09:49:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>最も獲得率の高いメダルカテゴリ</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-05-27T09:49:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-05-27T09:49:16" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_debug_onoue_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>メダル獲得済み確認(ID:1)</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-05-27T10:03:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-05-27T09:49:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>メダル獲得済み確認(ID:1)</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-05-27T10:03:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-05-27T09:49:56" />
+		</LanguageCell>
+	</TextRow>
 </MessageStudioText>

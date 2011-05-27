@@ -12255,6 +12255,35 @@
     .short  \obj_id
     .endm
 
+//--------------------------------------------------------------
+/**
+ * @brief メダルを取得済みか調べる
+ * @param[out]  ret_wk  TRUEのとき、メダル取得済み
+ * @param[out]  medal_id  メダルID
+ */
+//--------------------------------------------------------------
+#define _CHECK_MEDAL_GET( ret_wk, medal_id ) \
+    _ASM_CHECK_MEDAL_GET ret_wk, medal_id
+
+    .macro  _ASM_CHECK_MEDAL_GET ret_wk, medal_id
+    .short  EV_SEQ_MEDAL_IS_GET
+    .short  \ret_wk
+    .short  \medal_id
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief もっとも獲得比率の高いメダルカテゴリを取得
+ * @param[out]  ret_wk  メダルカテゴリID
+ */
+//--------------------------------------------------------------
+#define _GET_MOST_GET_MEDALCATEGORY( ret_wk ) \
+    _ASM_GET_MOST_GET_MEDALCATEGORY ret_wk
+
+    .macro  _ASM_GET_MOST_GET_MEDALCATEGORY ret_wk
+    .short  EV_SEQ_MEDAL_MOSTGET_CATEGORY
+    .short  \ret_wk
+    .endm
 
 //======================================================================
 //

@@ -1021,6 +1021,10 @@
   NO_CMD()
   NO_CMD()
   NO_CMD()
+ 
+  //メダルイベント関連２
+  DEF_CMD( EvCmdCheckIsMedalGet, EV_SEQ_MEDAL_IS_GET )
+  DEF_CMD( EvCmdGetMostGetCategory, EV_SEQ_MEDAL_MOSTGET_CATEGORY )
 
   END_CMD
   //スクリプトコマンドテーブル終了

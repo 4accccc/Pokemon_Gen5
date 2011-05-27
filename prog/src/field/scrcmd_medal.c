@@ -353,6 +353,111 @@ static u32 countRestHintMedal( SCRCMD_WORK * work )
 
 //--------------------------------------------------------------
 /**
+ * @brief 特定のメダルを持っているかチェック
+ * @retval  TRUE  取得済み
+ * @retval  FALSE 未取得
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdCheckIsMedalGet( VMHANDLE * core, void * wk )
+{
+  SCRCMD_WORK*       work     = (SCRCMD_WORK*)wk;
+  GAMEDATA*          gameData = SCRCMD_WORK_GetGameData( work );
+  SAVE_CONTROL_WORK* save     = GAMEDATA_GetSaveControlWork( gameData );
+  const MEDALBOX * medalbox   = SaveData_GetMedalBox( save );
+
+  u16* ret_wk  = SCRCMD_GetVMWork( core, wk );
+  u16 medal_id = SCRCMD_GetVMWorkValue( core, wk );
+  u8 medal_status = MEDALBOX_GetMedalState( medalbox, medal_id );
+
+  *ret_wk = (medal_status == MEDAL_STATE_TITLE_GET);
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief 取得率のもっとも高い比率のカテゴリを取得
+ * @retval  TRUE  取得済み
+ * @retval  FALSE 未取得
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGetMostGetCategory( VMHANDLE * core, void * wk )
+{
+  int i;
+  u32 id;
+  fx32 max_div = 0;
+  fx32 count[SCR_MEDALCATEGORY_MAX] = {0};
+  fx32 max_count[SCR_MEDALCATEGORY_MAX] = {0};
+  SCRCMD_WORK*       work     = (SCRCMD_WORK*)wk;
+  GAMEDATA*          gameData = SCRCMD_WORK_GetGameData( work );
+  SAVE_CONTROL_WORK* save     = GAMEDATA_GetSaveControlWork( gameData );
+  MEDALBOX * medalbox         = SaveData_GetMedalBox( save );
+  ARCHANDLE *p_handle         = GFL_ARC_OpenDataHandle( ARCID_MEDALDATA , SCRCMD_WORK_GetHeapID(work) );
+  MEDALDATA medal_data;
+  
+  u16* ret_wk  = SCRCMD_GetVMWork( core, wk );
+
+  // カテゴリ分けテーブル
+  int category_index[] = {
+    SCR_MEDALCATEGORY_ADVENTURE,SCR_MEDALCATEGORY_ADVENTURE,
+    SCR_MEDALCATEGORY_ADVENTURE,SCR_MEDALCATEGORY_ADVENTURE,
+    SCR_MEDALCATEGORY_ADVENTURE,  // 5
+    SCR_MEDALCATEGORY_BATTLE,SCR_MEDALCATEGORY_BATTLE,
+    SCR_MEDALCATEGORY_BATTLE,SCR_MEDALCATEGORY_BATTLE,
+    SCR_MEDALCATEGORY_BATTLE,     // 5
+    SCR_MEDALCATEGORY_AMUSEMENT,SCR_MEDALCATEGORY_AMUSEMENT,
+    SCR_MEDALCATEGORY_AMUSEMENT,SCR_MEDALCATEGORY_AMUSEMENT,
+    SCR_MEDALCATEGORY_AMUSEMENT,  // 5
+    SCR_MEDALCATEGORY_CHALLENGE,SCR_MEDALCATEGORY_CHALLENGE,
+    SCR_MEDALCATEGORY_CHALLENGE,SCR_MEDALCATEGORY_CHALLENGE,
+    SCR_MEDALCATEGORY_CHALLENGE,  // 5
+    SCR_MEDALCATEGORY_SPECIAL,SCR_MEDALCATEGORY_SPECIAL,
+    SCR_MEDALCATEGORY_SPECIAL,SCR_MEDALCATEGORY_SPECIAL,
+    SCR_MEDALCATEGORY_SPECIAL,SCR_MEDALCATEGORY_SPECIAL,
+    SCR_MEDALCATEGORY_SPECIAL,    // 7
+  };
+
+  // カテゴリごとの数をカウント
+  for ( id = 0; id < MDLID_MAX; id ++ )
+  {
+    GFL_ARC_LoadDataByHandle( p_handle , id, &medal_data );
+    if ( MEDALBOX_GetMedalState( medalbox, id ) == MEDAL_STATE_TITLE_GET )
+    {
+      count[category_index[medal_data.graphic_type]] += FX32_ONE;
+    }
+    max_count[category_index[medal_data.graphic_type]] += FX32_ONE;
+  }
+  GFL_ARC_CloseDataHandle(p_handle);
+
+  // 最大値を調べる
+  {
+    // 比較優先度
+    int cmp_table[ SCR_MEDALCATEGORY_MAX ] =
+    {
+      SCR_MEDALCATEGORY_SPECIAL,    // とくべつ
+      SCR_MEDALCATEGORY_CHALLENGE,  // ちょうせん
+      SCR_MEDALCATEGORY_BATTLE,     // せんとう
+      SCR_MEDALCATEGORY_AMUSEMENT,  // おたのしみ
+      SCR_MEDALCATEGORY_ADVENTURE,  // ぼうけん
+    };
+
+    *ret_wk = 0;
+    for ( i = 0; i < SCR_MEDALCATEGORY_MAX; i ++ )
+    {
+      int index = cmp_table[i];
+      fx32 div = FX_Div(count[index],max_count[index]);
+      if( max_div < div )
+      {
+        max_div = div;
+        *ret_wk = index;
+      }
+    }
+  }
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
  * @brief メダルおやじOBJ検索
  *
  * 現在存在している動作モデルデータからメダルおやじを検索しポインタを返す

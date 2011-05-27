@@ -615,6 +615,12 @@
 #define SCR_MEDALRANK_GOLD            (3)   // メダルランクゴールド
 #define SCR_MEDALRANK_BW              (4)   // メダルランクホワイト or ブラック（最高ランク）
 
+#define SCR_MEDALCATEGORY_ADVENTURE   (0)   // メダルカテゴリ（ぼうけん）
+#define SCR_MEDALCATEGORY_BATTLE      (1)   // メダルカテゴリ（せんとう）
+#define SCR_MEDALCATEGORY_AMUSEMENT   (2)   // メダルカテゴリ（おたのしみ）
+#define SCR_MEDALCATEGORY_CHALLENGE   (3)   // メダルカテゴリ（ぼうけん）
+#define SCR_MEDALCATEGORY_SPECIAL     (4)   // メダルカテゴリ（とくべつ）
+#define SCR_MEDALCATEGORY_MAX         (5)   // メダルカテゴリ数
 
 //--------------------------------------------------------------
 //  scrcmd_wbt.c
