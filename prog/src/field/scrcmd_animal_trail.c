@@ -313,7 +313,7 @@ static GMEVENT_RESULT MapWarpEvent( GMEVENT *event, int *seq, void *wk )
       // オブジェクトの設置
       SetObject( p_wk );
 
-      GMEVENT_CallEvent( event, EVENT_FieldFadeIn_PlayerDir( p_wk->p_gsys, p_wk->p_field_work ) );
+      GMEVENT_CallEvent( event, EVENT_FieldFadeIn_Black( p_wk->p_gsys, p_wk->p_field_work ,FIELD_FADE_NO_WAIT ) );
       (*seq)++;
       break;
     }
@@ -546,7 +546,7 @@ static GMEVENT_RESULT MapExitEvent( GMEVENT *event, int *seq, void *wk )
     {
       // フェードアウト
       MMDLSYS_PauseMoveProc( FIELDMAP_GetMMdlSys( p_wk->p_field_work ) );
-      GMEVENT_CallEvent( event, EVENT_FieldFadeOut_Hole( p_wk->p_gsys, p_wk->p_field_work ) );
+      GMEVENT_CallEvent( event, EVENT_FieldFadeOut_White( p_wk->p_gsys, p_wk->p_field_work ,FIELD_FADE_NO_WAIT ) );
       (*seq)++;
       break;
     }
@@ -569,7 +569,7 @@ static GMEVENT_RESULT MapExitEvent( GMEVENT *event, int *seq, void *wk )
         break;
       }
 
-      GMEVENT_CallEvent( event, EVENT_FieldFadeIn_PlayerDir( p_wk->p_gsys, p_wk->p_field_work ) );
+      GMEVENT_CallEvent( event, EVENT_FieldFadeIn_White( p_wk->p_gsys, p_wk->p_field_work, FIELD_FADE_NO_WAIT ) );
       (*seq)++;
       break;
     }
