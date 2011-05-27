@@ -12,6 +12,9 @@
 require "../resonance_resort/data/conv_tool.rb" #モジュール使い回しのためリゾートのを使っています。
 require "../../tools/headerdata.rb"
 require "pokewood_cutin_def.rb"
+
+
+RESOUSE_PREFIX = "NARC_pokewood_cutin_gra_"
 #-------------------------------------
 # 引数チェック
 # @retval true  問題なし
@@ -121,26 +124,29 @@ def  convertHeader( csv, data, naix )
   ncl     = csv.get( H_ROW_NCL,     H_COL_VALUE )
   ncg     = csv.get( H_ROW_NCG,     H_COL_VALUE )
   nce     = csv.get( H_ROW_NCE,     H_COL_VALUE )
+  nan     = csv.get( H_ROW_NCE,     H_COL_VALUE )
 
   #データ書き込み    
   data.write_u16( senario )
   data.write_u16( event )
   data.write_u16( wnd_num )
   begin
-    ncl = "NARC_pokewood_cutin_gra_"+ncl.sub(/\.ncl/,"_NCLR")
+    ncl = RESOUSE_PREFIX+ncl.sub(/\.ncl/,"_NCLR")
     data.write_u16( naix.search( ncl, "#{H_ROW_NCL}行" ) )
   rescue HeaderSearchError
     exit(1)
   end
   begin
-    ncg = "NARC_pokewood_cutin_gra_"+ncg.sub(/\.ncg/,"_NCGR")
+    ncg = RESOUSE_PREFIX+ncg.sub(/\.ncg/,"_NCGR")
     data.write_u16( naix.search( ncg, "#{H_ROW_NCG}行" ) )
   rescue HeaderSearchError
     exit(1)
   end
   begin
-    nce = "NARC_pokewood_cutin_gra_"+nce.sub(/\.nce/,"_NCER")
+    nce = RESOUSE_PREFIX+nce.sub(/\.nce/,"_NCER")
     data.write_u16( naix.search( nce, "#{H_ROW_NCE}行" ) )
+    nan = RESOUSE_PREFIX+nan.sub(/\.nce/,"_NANR")
+    data.write_u16( naix.search( nan, "#{H_ROW_NCE}行" ) )
   rescue HeaderSearchError
     exit(1)
   end
@@ -168,6 +174,7 @@ def convertScript( csv, data, naix )
 
     data.write_u16( cmd_d[:PG_VALUE] )
 
+    next_param = 0
     for col in SCR_COL_PARAM_START...SCR_COL_PARAM_END
       param = csv.get( row, col )
 
@@ -179,13 +186,43 @@ def convertScript( csv, data, naix )
           exit(1)
         end
 
+        param_name = cmd_d[col-SCR_COL_PARAM_START]
+
         if def_d == nil
-          data.write_u16( param )
+
+          case param_name
+          when "読み替えるパレット"
+            begin
+              param = RESOUSE_PREFIX+param.sub(/\.ncl/,"_NCLR")
+              data.write_u16( naix.search( param, cmd ) )
+            rescue HeaderSearchError
+              exit(1)
+            end
+          when "読み替えるキャラ"
+            begin
+              param = RESOUSE_PREFIX+param.sub(/\.ncg/,"_NCGR")
+              data.write_u16( naix.search( param, cmd ) )
+            rescue HeaderSearchError
+              exit(1)
+            end
+          when "読み替えるセル"
+            begin
+              param = RESOUSE_PREFIX+param.sub(/\.nce/,"_NCER")
+              data.write_u16( naix.search( param, cmd ) )
+              param = param.sub(/_NCER/,"_NANR")
+              next_param = naix.search( param, cmd )
+            rescue HeaderSearchError
+              exit(1)
+            end
+          else
+            data.write_u16( param )
+          end
         else
-          data.write_u16( cmd_d[:PG_VALUE] )
+          data.write_u16( def_d[:PG_VALUE] )
         end
       else
-        data.write_u16(0)
+        data.write_u16(next_param)
+        next_param = 0
       end
 
     end

@@ -47,6 +47,7 @@
 
 #include "pokewood/pokewood_senario.h"
 #include "pokewood/pokewood_work.h"
+#include "pokewood/pokewood_cutin.h"
 
 #include "debug/debug_hudson.h"
 
@@ -1723,6 +1724,9 @@ enum{
   POKEWOOD_EVENT_SEQ_TRAINER_REACTION_WAIT,
 
   POKEWOOD_EVENT_SEQ_END,
+
+  POKEWOOD_EVENT_SEQ_CUTIN,
+  POKEWOOD_EVENT_SEQ_CUTIN_WAIT,
 };
 
 static int _check_pokewood_event( POKEWOOD_SENARIO *senario, int turn )
@@ -1752,6 +1756,7 @@ static BOOL SubSeq_POKEWOOD_Event_Sequence( BTL_CLIENT *wk )
 {
   POKEWOOD_SENARIO *senario = BTL_MAIN_GetPokewoodSenario(wk->mainModule);
   POKEWOOD_WORK    *p_work  = BTL_MAIN_GetPokewoodWork(wk->mainModule);
+  POKEWOOD_CUTIN   *p_cutin = BTL_MAIN_GetPokewoodCutin( wk->mainModule );
 
 
   switch(wk->pw_seq){
@@ -1760,9 +1765,20 @@ static BOOL SubSeq_POKEWOOD_Event_Sequence( BTL_CLIENT *wk )
     // このターンにイベントが存在しているかチェック
     wk->pw_event_no = _check_pokewood_event(senario, wk->clientTurnCount);
     if(wk->pw_event_no>=0){
-      wk->pw_bookmark=0;
-      wk->pw_stage_setup=0;
-      wk->pw_seq++;
+
+      //TODO 本来は選択肢があたりだったとき
+      if( BTL_MAIN_GetPokewoodMode( wk->mainModule ) == BTL_POKEWOOD_SHOW 
+          && POKEWOOD_CUTIN_IsExits( senario, wk->pw_event_no )
+          && 1 )
+      {
+        wk->pw_seq = POKEWOOD_EVENT_SEQ_CUTIN;
+      }
+      else
+      {
+        wk->pw_bookmark=0;
+        wk->pw_stage_setup=0;
+        wk->pw_seq++;
+      }
     }else{
       wk->pw_seq = POKEWOOD_EVENT_SEQ_END;
     }
@@ -1921,6 +1937,22 @@ static BOOL SubSeq_POKEWOOD_Event_Sequence( BTL_CLIENT *wk )
   // 終了
   case POKEWOOD_EVENT_SEQ_END:
     return TRUE;
+    break;
+
+  //カットインスタート
+  case POKEWOOD_EVENT_SEQ_CUTIN:
+    POKEWOOD_CUTIN_AttachViewCore( p_cutin, wk->viewCore );
+    POKEWOOD_CUTIN_Start( p_cutin, senario, wk->pw_event_no );
+    wk->pw_seq++;
+    break;
+
+  //カットイン中
+  case POKEWOOD_EVENT_SEQ_CUTIN_WAIT:
+    POKEWOOD_CUTIN_Main( p_cutin );
+    if( POKEWOOD_CUTIN_IsEnd( p_cutin ) )
+    {
+      wk->pw_seq = POKEWOOD_EVENT_SEQ_END;
+    }
     break;
   }
 

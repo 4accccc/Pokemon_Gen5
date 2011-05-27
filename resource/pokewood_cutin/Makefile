@@ -21,6 +21,7 @@ defconv 	= ruby pokewood_cutin_define_conv.rb
 cmdconv 	= pokewood_cutin_script_conv.rb
 arclistmk	= perl ${PROJECT_ROOT}/tools/arc_list_make.pl
 scrmk			= pokewood_cutin_script_make.rb
+cdatname	= pokewood_cutin_script_search
 
 
 #------------------------------------------------------------------------------
@@ -75,7 +76,7 @@ endif
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	subdir $(TARGETDIR)/$(targetname_gra).narc $(TARGETDIR)/$(targetname_gra).naix $(TARGETDIR)/$(targetname_scr).narc $(TARGETDIR)/$(targetname_scr).naix $(TARGETDIR_H)/$(defname).h
+do-build:	subdir $(TARGETDIR)/$(targetname_gra).narc $(TARGETDIR)/$(targetname_gra).naix $(TARGETDIR)/$(targetname_scr).narc $(TARGETDIR)/$(targetname_scr).naix $(TARGETDIR_H)/$(defname).h $(TARGETDIR_H)/$(cdatname).cdat
 
 subdir:
 	@$(MAKE_SUBDIR)
@@ -92,14 +93,17 @@ $(TARGETDIR)/$(targetname_scr).narc: $(targetname_scr).narc
 $(TARGETDIR_H)/$(defname).h: $(defname).h
 	$(COPY) $(defname).h $(TARGETDIR_H)
 
+$(TARGETDIR_H)/$(cdatname).cdat: $(cdatname).cdat
+	$(COPY) $(cdatname).cdat $(TARGETDIR_H)
+
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
 $(targetname_scr).narc $(targetname_scr).naix: $(scrlist)
 	nnsarc -r -l -n -i $(targetname_scr) -S $(scrlist)
 	$(NAIXCUT) $(targetname_scr).naix
 
-$(scrlist): $(scrtarget) $(defname).rb $(targetname_gra).naix
-	$(scrmk) $(cmdconv) $(targetname_gra).naix $(scrname)
+$(scrlist) $(cdatname).cdat: $(scrtarget) $(defname).rb $(targetname_gra).naix
+	$(scrmk) $(cmdconv) $(targetname_gra).naix $(scrname) $(cdatname)
 	ls $(scrname)*.dat > $(scrlist)
 	$(arclistmk) $(scrlist)
 	rm $(scrtarget)

@@ -43,6 +43,7 @@
 #include "net/dwc_tool.h"
 
 #include "field/ringtone_sys_ext.h"
+#include "pokewood/pokewood_cutin.h"
 
 #include "debug/debug_hudson.h"
 
@@ -176,6 +177,7 @@ struct _BTL_MAIN_MODULE {
 
   POKEWOOD_SENARIO *pokewood_senario;
   POKEWOOD_WORK    *pokewood_work;
+  POKEWOOD_CUTIN    *pokewood_cutin;
 };
 
 
@@ -6261,6 +6263,8 @@ void POKEWOOD_Init( BTL_MAIN_MODULE* wk, int senario_no )
   _print_pokewood_senario( wk->pokewood_senario );
   wk->pokewood_work->enemy_waza[0]=-1;
 
+  wk->pokewood_cutin = POKEWOOD_CUTIN_Init( HEAPID_BTL_SYSTEM );
+
 }
 
 //=============================================================================================
@@ -6272,6 +6276,8 @@ void POKEWOOD_Init( BTL_MAIN_MODULE* wk, int senario_no )
 //=============================================================================================
 void POKEWOOD_Exit( BTL_MAIN_MODULE* wk )
 {
+  POKEWOOD_CUTIN_Exit( wk->pokewood_cutin );
+
   GFL_HEAP_FreeMemory( wk->pokewood_work );
   GFL_HEAP_FreeMemory( wk->pokewood_senario );
   
@@ -6291,6 +6297,12 @@ POKEWOOD_WORK *BTL_MAIN_GetPokewoodWork( const BTL_MAIN_MODULE *wk )
     return wk->pokewood_work;
   }
   return NULL;
+}
+
+
+POKEWOOD_CUTIN * BTL_MAIN_GetPokewoodCutin( BTL_MAIN_MODULE *wk )
+{
+  return wk->pokewood_cutin;
 }
 
 static void _print_pokewood_event_data(POKEWOOD_SENARIO *senario, int event)

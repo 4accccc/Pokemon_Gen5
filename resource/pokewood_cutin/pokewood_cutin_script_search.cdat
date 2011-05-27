@@ -1,0 +1,8 @@
+static const struct{
+	u16 senario;
+	u16 event;
+} sc_pw_cutin_dat_search[] ={
+	{
+		0,2
+	},
+};

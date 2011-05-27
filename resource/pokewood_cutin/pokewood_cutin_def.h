@@ -13,7 +13,7 @@
 #define PW_CUTIN_WND_MOVE_PARAM_NUM (4)
 //コマ動作２
 #define PW_CUTIN_CMD_WND_MOVE_EX  (1)
-#define PW_CUTIN_WND_MOVE_EX_PARAM_NUM (7)
+#define PW_CUTIN_WND_MOVE_EX_PARAM_NUM (5)
 //コマ拡大縮小
 #define PW_CUTIN_CMD_WND_SCALE  (2)
 #define PW_CUTIN_WND_SCALE_PARAM_NUM (2)
@@ -30,10 +30,6 @@
 #define PW_CUTIN_CMD_MESSAGE  (6)
 #define PW_CUTIN_MESSAGE_PARAM_NUM (3)
 //定義情報
-//コマ座標：現在
-#define PW_CUTIN_DEF_WND_POS_NOW  (65535)
-//コマ座標：終了
-#define PW_CUTIN_DEF_WND_POS_END  (65534)
 //移動方向：上から下
 #define PW_CUTIN_DEF_MOVE_DIR_DOWN  (0)
 //移動方向：下から上
@@ -50,13 +46,15 @@
 #define PW_CUTIN_DEF_MOVE_DIR_LEFT_DOWN  (6)
 //移動方向：左上から右下
 #define PW_CUTIN_DEF_MOVE_DIR_RIGHT_DOWN  (7)
-//移動タイプ：直線
-#define PW_CUTIN_DEF_MOVE_TYPE_LINEAR  (8)
+//移動タイプ：等速
+#define PW_CUTIN_DEF_MOVE_TYPE_VELOCITY  (0)
+//移動タイプ：加速
+#define PW_CUTIN_DEF_MOVE_TYPE_ACCELER  (1)
 //メッセージ：自分
-#define PW_CUTIN_DEF_MES_TYPE_PLAYER  (9)
+#define PW_CUTIN_DEF_MES_TYPE_PLAYER  (0)
 //メッセージ：相手
-#define PW_CUTIN_DEF_MES_TYPE_ENEMY  (10)
+#define PW_CUTIN_DEF_MES_TYPE_ENEMY  (1)
 //文字位置：上
-#define PW_CUTIN_DEF_MES_POS_UP  (11)
+#define PW_CUTIN_DEF_MES_POS_UP  (0)
 //文字位置：下
-#define PW_CUTIN_DEF_MES_POS_DOWN  (12)
+#define PW_CUTIN_DEF_MES_POS_DOWN  (1)

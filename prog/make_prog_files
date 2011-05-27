@@ -1451,8 +1451,8 @@ SRCS_OVERLAY_BATTLE =	battle/btl_main.c \
 			battle/btl_rec.c \
 			battle/btl_adapter.c \
 			battle/btl_string.c \
-			battle/btl_field.c
-
+			battle/btl_field.c \
+      battle/pokewood/pokewood_cutin.c
 
 
 
