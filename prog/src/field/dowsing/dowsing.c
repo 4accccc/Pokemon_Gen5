@@ -175,7 +175,7 @@ static BOOL ItemSearchExist( ITEM_SEARCH_WORK* work, const ITEM_INFO* item_info 
 {
   if( item_info->type == ITEM_TYPE_HIDE )
   {
-    if( item_info->info.hide.item_data->zone_id != ANIMAL_TRAIL_ZONE_ID )
+    if( ZONEDATA_IsAnimalTrail( item_info->info.hide.item_data->zone_id ) == FALSE )
     {
       u16 flag = FLAG_HIDEITEM_AREA_START + item_info->info.hide.item_data->index;
       return ( EVENTWORK_CheckEventFlag( (EVENTWORK*)(work->event_wk), flag ) == 0 );
@@ -229,7 +229,7 @@ static BOOL ItemSearchGet( ITEM_SEARCH_WORK* work, ITEM_INFO* item_info, ITEM_TY
 
   if( search_type == ITEM_TYPE_NONE || search_type == ITEM_TYPE_HIDE )
   {
-    if( zone_id != ANIMAL_TRAIL_ZONE_ID ) // ‚¯‚à‚Ì‚Ý‚¿”»’è
+    if( ZONEDATA_IsAnimalTrail( zone_id ) == FALSE )  // b“¹”»’è
     {
       while( work->hide_search_no < hide_item_data_num )
       {

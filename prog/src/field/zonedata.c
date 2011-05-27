@@ -759,7 +759,7 @@ BOOL ZONEDATA_IsPlBoat(u16 zone_id)
 /**
  * @brief  無限ダンジョンマップかどうかのチェック
  * @param  zoneid ゾーン指定ID
- * @return BOOL 遊覧船内だったらTRUE
+ * @return BOOL 無限ダンジョン内だったらTRUE
  */
 //------------------------------------------------------------------
 BOOL ZONEDATA_IsInfinityDungeon(u16 zone_id)
@@ -773,6 +773,25 @@ BOOL ZONEDATA_IsInfinityDungeon(u16 zone_id)
     {
        return TRUE;
     }
+  }
+  return FALSE;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief  獣道マップかどうかのチェック
+ * @param  zoneid ゾーン指定ID
+ * @return BOOL 獣道内だったらTRUE
+ */
+//------------------------------------------------------------------
+BOOL ZONEDATA_IsAnimalTrail(u16 zone_id)
+{
+  int i;
+  zone_id = ControlZoneID(zone_id);
+
+  if( ZONE_ID_D34R0101 == zone_id )
+  {
+    return TRUE;
   }
   return FALSE;
 }
