@@ -250,15 +250,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ベル『あたしね
-アララギはかせに　たのまれて▼
-シビシラス　という　ポケモンの
-せいたいけいを　しらべているの！▼
-かずも　すくないし
-それほど　つよくないんだけどねえ</Text>
+			<Text>そうだった！
+あたし　しらべることが　あるんだ▼
+じゃあね　[Name:TrainerName ]！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:55:01" />
+				Time="2011-05-27T03:14:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -266,15 +263,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ベル『あたしね
-アララギ博士に　頼まれて▼
-シビシラス　という　ポケモンの
-生態系を　調べているの！▼
-個体数も　少ないし
-それほど　強くないんだけどねえ</Text>
+			<Text>そうだった！
+あたし　調べることが　あるんだ▼
+じゃあね　[Name:TrainerName ]！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:55:20" />
+				Time="2011-05-27T03:14:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -283,10 +277,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・？？まで繰り返し（条件未定）</Comment>
+・！マーク表示後にメッセージ表示
+・表示後、d06r0201へ移動
+　画面外に消えると主人公操作可能</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T09:09:33" />
+				Time="2011-05-27T03:13:30" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

@@ -2,6 +2,64 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
+		Label="msg_d06r0201_swbell_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ベル『あたしね
+アララギはかせに　たのまれて▼
+シビシラス　という　ポケモンの
+せいたいけいを　しらべているの！▼
+かずも　すくないし
+それほど　つよくないんだけどねえ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-27T03:11:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-27T03:11:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ベル『あたしね
+アララギ博士に　頼まれて▼
+シビシラス　という　ポケモンの
+生態系を　調べているの！▼
+個体数も　少ないし
+それほど　強くないんだけどねえ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-27T03:11:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-27T03:11:27" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・？？まで繰り返し（条件未定）</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-27T03:11:27" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-27T03:11:27" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_d06r0201_swgold1_01"
 		Style="Large">
 		<LanguageCell
