@@ -184,6 +184,7 @@
 //--------------------------------------------------------------
 #define SCR_POKEPARA_MONSNO           (5)   ///<RO ポケモンナンバー
 #define SCR_POKEPARA_ITEMNO           (6)   ///<RO 保持アイテムナンバー
+#define SCR_POKEPARA_TOKUSEI          (10)  ///<RO とくせいナンバー
 #define SCR_POKEPARA_COUNTRY_CODE     (12)  ///<RO 国コード
 #define SCR_POKEPARA_HP_RND           (70)  ///<WO HP乱数
 #define SCR_POKEPARA_POW_RND          (71)  ///<WO 攻撃力乱数

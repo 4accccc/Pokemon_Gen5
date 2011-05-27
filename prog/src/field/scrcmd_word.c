@@ -616,5 +616,37 @@ VMCMD_RESULT EvCmdMedalRankName( VMHANDLE * core, void *wk )
   WORDSET_RegisterMedalRankName( wordset, idx, rank_id, GET_VERSION() );
   return VMCMD_RESULT_CONTINUE;
 }
+//--------------------------------------------------------------------
+/**
+ * @brief メダルカテゴリ名をバッファにセットする
+ */
+//--------------------------------------------------------------------
+VMCMD_RESULT EvCmdMedalCategoryName( VMHANDLE * core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  WORDSET *wordset    = SCRIPT_GetWordSet( sc );
+ 	u8 idx = VMGetU8( core );
+	u16 category_id = SCRCMD_GetVMWorkValue( core, work );
 
+  WORDSET_RegisterMedalCategoryName( wordset, idx, category_id );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：とくせい名をバッファにセットする
+ */
+//--------------------------------------------------------------------
+VMCMD_RESULT EvCmdTokuseiName( VMHANDLE * core, void * wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  WORDSET *wordset    = SCRIPT_GetWordSet( sc );
+ 	u8 idx = VMGetU8( core );
+	u16 tokusei_id = SCRCMD_GetVMWorkValue( core, work );
+
+  WORDSET_RegisterTokuseiName( wordset, idx, tokusei_id );
+  return VMCMD_RESULT_CONTINUE;
+}
 

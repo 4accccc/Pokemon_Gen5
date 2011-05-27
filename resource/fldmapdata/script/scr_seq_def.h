@@ -2468,6 +2468,22 @@
   .byte  \idx
   .endm
 
+//--------------------------------------------------------------
+/**
+ * @brief 特性名を指定したタグにセット
+ * @param idx         セットするタグナンバー
+ * @param tokusei_id  特性名の指定
+ */
+//--------------------------------------------------------------
+#define _TOKUSEI_NAME( idx, tokusei_id ) \
+    _ASM_TOKUSEI_NAME idx, tokusei_id
+
+  .macro _ASM_TOKUSEI_NAME idx, tokusei_id
+  .short EV_SEQ_TOKUSEI_NAME
+  .byte  \idx
+  .short \tokusei_id
+  .endm
+
 //======================================================================
 //  視線トレーナー関連
 //======================================================================
@@ -12146,6 +12162,21 @@
     .short  EV_SEQ_MEDAL_RANK_NAME
     .byte   \idx
     .short  \rank_id
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief メダルカテゴリランク名を指定タグにセット
+ * @param  idx          タグ位置
+ * @param  category_id  メダルカテゴリ指定
+ */
+//--------------------------------------------------------------
+#define _MEDAL_CATEGORY_NAME( idx, category_id )  \
+    _ASM_MEDAL_CATEGORY_NAME idx, category_id
+    .macro  _ASM_MEDAL_CATEGORY_NAME idx, category_id
+    .short  EV_SEQ_MEDAL_CATEGORY_NAME
+    .byte   \idx
+    .short  \category_id
     .endm
 
 //--------------------------------------------------------------

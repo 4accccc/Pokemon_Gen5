@@ -1011,6 +1011,17 @@
   //ポケモン戦関連
   DEF_CMD( EvCmdWildBattleSetEx, EV_SEQ_WILD_BTL_SET_EX )
 
+  //新規WORDSET関連
+  DEF_CMD( EvCmdMedalCategoryName,    EV_SEQ_MEDAL_CATEGORY_NAME )
+  DEF_CMD( EvCmdTokuseiName,          EV_SEQ_TOKUSEI_NAME )
+  NO_CMD()
+  NO_CMD()
+
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
   END_CMD
   //スクリプトコマンドテーブル終了
 
