@@ -176,6 +176,7 @@
 #define WK_SCENE_C03P01                  16564 /* 0x40b4 C03P01：アクロマとの出会い用ワーク */
 #define WK_SCENE_R04_POKE                16565 /* 0x40b5 R04：イワパレスイベント管理ワーク */
 #define WK_SCENE_R04_SWBOSS              16566 /* 0x40b6 R04：アクロマイベント管理ワーク */
+#define WK_SCENE_C05GYM0101_SHORTCUT     16567 /* 0x40b7 スワン地面ジム：ジム退出ショートカット用ワーク */
 
 #define WK_SCENE_AREA_END                16655 /* 0x410f  */
 
