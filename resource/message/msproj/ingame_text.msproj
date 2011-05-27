@@ -1721,6 +1721,8 @@
 			<ContentItem
 				Name="medalbox.mstxt" />
 			<ContentItem
+				Name="medalcategory.mstxt" />
+			<ContentItem
 				Name="medalinfo.mstxt" />
 			<ContentItem
 				Name="medalrank.mstxt" />

@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<MessageStudioText
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="STR_MEDAL_CATEGORY_1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ぼうけん</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-27T08:12:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-27T08:12:07" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ぼうけん</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-27T08:12:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-27T08:12:23" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="STR_MEDAL_CATEGORY_2"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>せんとう</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-27T08:12:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-27T08:12:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>せんとう</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-27T08:12:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-27T08:12:32" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="STR_MEDAL_CATEGORY_3"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おたのしみ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-27T08:12:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-27T08:12:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おたのしみ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-27T08:12:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-27T08:12:41" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="STR_MEDAL_CATEGORY_4"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ちょうせん</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-27T08:12:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-27T08:12:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ちょうせん</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-27T08:12:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-27T08:12:52" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="STR_MEDAL_CATEGORY_5"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>とくべつ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-27T08:12:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-27T07:55:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>とくべつ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-27T08:13:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-27T07:55:55" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>65</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-27T07:55:55" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+</MessageStudioText>
