@@ -19,6 +19,16 @@
 #define TR_FANW_11_2                       5
 #define TR_ARTIST_04                       6
 #define TR_RANGERW_13                      7
+#define R05_BADRIDER_01                    8
+#define R05_STOP01_01                      9
+#define R05_STOP02_01                     10
+#define R05_STOP03_01                     11
+#define R05_STOP04_01                     12
+#define R05_STOP05_01                     13
+#define R05_STOP06_01                     14
+#define R05_STOP07_01                     15
+#define R05_STOP08_01                     16
+#define R05_STOP09_01                     17
 
 #endif //ZONE_R05_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r05.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

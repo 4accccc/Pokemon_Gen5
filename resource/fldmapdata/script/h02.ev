@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_h02.h"
-  //.include  "h02.h"
+  .include  "h02.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,4 +19,158 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA		ev_h02_middleman1_01
+_EVENT_DATA		ev_h02_woman2_01
+_EVENT_DATA		ev_h02_boy2_01
 _EVENT_DATA_END
+
+/**************************************************************/
+/*		H02		MIDDLEMAN1	一言メッセージ					  */
+/**************************************************************/
+EVENT_START		ev_h02_middleman1_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h02_middleman_01 )
+EVENT_END
+
+/**************************************************************/
+/*		H02		WOMAN2		一言メッセージ					  */
+/**************************************************************/
+EVENT_START		ev_h02_woman2_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h02_woman2_01 )
+EVENT_END
+
+/**************************************************************/
+/*		H02		BOY2		リザードン見せイベント			  */
+/**************************************************************/
+EVENT_START		ev_h02_boy2_01
+
+//アイテム入手イベント終了後の場合
+IF FLAG_ON( FE_H02_ITEMGET_01 ) THEN
+
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h02_boy2_04 )
+
+//まだ終わっていない場合
+ELSE
+
+	DEFINE_LOCAL	FIND_POKE
+	DEFINE_LOCAL	FIND_POS
+
+	_GET_PARTY_POS( MONSNO_006, FIND_POKE, FIND_POS )
+
+	//リザードンを持っていない場合
+	IF $FIND_POKE == 0 THEN
+	
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h02_boy2_01 )
+	
+	//リザードンを持っている場合
+	ELSE
+	
+		_TALK_OBJ_START()
+		
+		_BALLOONWIN_TALKOBJ_MSG( msg_h02_boy2_02 )
+		_MSGWIN_CLOSE()
+		
+		_CALL ev_boy2_anime
+		
+		_BALLOONWIN_TALKOBJ_MSG( msg_h02_boy2_03 )
+		_MSGWIN_CLOSE()
+		
+		_ITEM_EVENT_KEYWAIT( ITEM_BANNOUGONA, 1 )
+	
+		//========================================/
+		
+		//ばんのうごな入手フラグセット
+		_FLAG_SET(FE_H02_ITEMGET_01)
+		
+		//========================================/
+	
+	ENDIF
+
+ENDIF
+
+EVENT_END
+
+ev_boy2_anime:
+{
+DEFINE_LOCAL	LWK_DIR
+
+_PLAYER_DIR_GET( LWK_DIR )
+SWITCH $LWK_DIR
+CASE DIR_UP THEN
+	_OBJ_ANIME( H02_BOY2_01, anm_boy2_chk_u )
+CASE DIR_RIGHT THEN
+	_OBJ_ANIME( H02_BOY2_01, anm_boy2_chk_r )
+CASE DIR_LEFT THEN
+	_OBJ_ANIME( H02_BOY2_01, anm_boy2_chk_l )
+CASE DIR_DOWN THEN
+	_OBJ_ANIME( H02_BOY2_01, anm_boy2_chk_d )
+ENDSWITCH
+_OBJ_ANIME_WAIT()
+
+}
+_RET
+
+//--------------------------------------------------------------------
+//	◆BOY2：プレイヤーの周りを歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_boy2_chk_u
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_boy2_chk_r
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_boy2_chk_l
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_boy2_chk_d
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+
+
