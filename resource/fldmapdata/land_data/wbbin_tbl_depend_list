@@ -1418,6 +1418,38 @@ $(DIR_WBTMP)/map07_21.tbl: $(DIR_RES)/map07_21.bin
 	@echo create_bintbl map07_21
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/map07_21.bin
 
+$(DIR_WBTMP)/freezew12_04.tbl: $(DIR_RES)/freezew12_04.bin
+	@echo create_bintbl freezew12_04
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/freezew12_04.bin
+
+$(DIR_WBTMP)/freezew12_05.tbl: $(DIR_RES)/freezew12_05.bin
+	@echo create_bintbl freezew12_05
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/freezew12_05.bin
+
+$(DIR_WBTMP)/freezew13_04.tbl: $(DIR_RES)/freezew13_04.bin
+	@echo create_bintbl freezew13_04
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/freezew13_04.bin
+
+$(DIR_WBTMP)/freezew13_05.tbl: $(DIR_RES)/freezew13_05.bin
+	@echo create_bintbl freezew13_05
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/freezew13_05.bin
+
+$(DIR_WBTMP)/freezeb12_04.tbl: $(DIR_RES)/freezeb12_04.bin
+	@echo create_bintbl freezeb12_04
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/freezeb12_04.bin
+
+$(DIR_WBTMP)/freezeb12_05.tbl: $(DIR_RES)/freezeb12_05.bin
+	@echo create_bintbl freezeb12_05
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/freezeb12_05.bin
+
+$(DIR_WBTMP)/freezeb13_04.tbl: $(DIR_RES)/freezeb13_04.bin
+	@echo create_bintbl freezeb13_04
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/freezeb13_04.bin
+
+$(DIR_WBTMP)/freezeb13_05.tbl: $(DIR_RES)/freezeb13_05.bin
+	@echo create_bintbl freezeb13_05
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/freezeb13_05.bin
+
 $(DIR_WBTMP)/m_dun0101_00_00.tbl: $(DIR_RES)/m_dun0101_00_00.bin
 	@echo create_bintbl m_dun0101_00_00
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun0101_00_00.bin
