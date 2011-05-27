@@ -9,9 +9,9 @@
 
 //床高さ
 #define HEIGHT0 (5)	//出口
-#define HEIGHT1 (4)	//昇降リフト移動高さ
+#define HEIGHT1 (6)	//昇降リフト移動高さ
 //リフト移動速度
-#define LIFT_MOVE_SPEED (2)
+#define LIFT_MOVE_SPEED (4)
 //リフト振動幅
 #define LIFT_SHAKE_VAL (2)
 //振動回数
