@@ -34,7 +34,8 @@
 void ENCEFFNO_GetWildEncEffNoBgmNo( const int inMonsNo, ENCOUNT_TYPE inEncType, BOOL inDoubleBattle, 
     FIELDMAP_WORK *fieldmap,int *outEffNo, u16 *outBgmNo )
 {
-  u16 zone_group = ZONEDATA_GetGroupID( FIELDMAP_GetZoneID( fieldmap ));
+  u16 zone_id = FIELDMAP_GetZoneID( fieldmap );
+  u16 zone_group = ZONEDATA_GetGroupID( zone_id );
 
   //特定のモンスターかを調べる
   switch (inMonsNo){
@@ -136,6 +137,11 @@ void ENCEFFNO_GetWildEncEffNoBgmNo( const int inMonsNo, ENCOUNT_TYPE inEncType, 
     {
       bgm = SEQ_BGM_VS_NORAPOKE;
       eff = ENCEFFID_WILD_DESERT;
+    }
+    else if( ZONEDATA_IsAnimalTrail( zone_id ) )        // 獣道
+    {
+        bgm = SEQ_BGM_VS_NORAPOKE;
+        eff = ENCEFFID_WILD_NORMAL;
     }
     else  //その他　屋内とみなす
     {
